@@ -1,3 +1,8 @@
+2000-10-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/resize.c: same RINT (gimp_size_entry_get_refval ()) fix as
+	below and cleanup.
+
 2000-10-26  Sven Neumann  <sven@gimp.org>
 
 	* app/channel_ops.c (offset_ok_callback): avoid modulo operation on 
