@@ -1,3 +1,12 @@
+2000-12-27  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/mosaic/mosaic.c
+	* plug-ins/script-fu/scripts/textured-logo.scm
+	Implemented a toggle to ask the user, if he wants to allow some
+	tiles to be split in two pieces. This enables perfect hexagonal/
+	squared/octagonal tiles. Changed the PDB-Interface and changed the
+	script using this plug-in.
+
 2000-12-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimage.h

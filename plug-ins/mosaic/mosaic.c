@@ -78,17 +78,18 @@ typedef struct
 
 typedef struct
 {
-  gdouble tile_size;
-  gdouble tile_height;
-  gdouble tile_spacing;
-  gdouble tile_neatness;
-  gdouble light_dir;
-  gdouble color_variation;
-  gint    antialiasing;
-  gint    color_averaging;
-  gint    tile_type;
-  gint    tile_surface;
-  gint    grout_color;
+  gdouble  tile_size;
+  gdouble  tile_height;
+  gdouble  tile_spacing;
+  gdouble  tile_neatness;
+  gboolean tile_allow_split;
+  gdouble  light_dir;
+  gdouble  color_variation;
+  gboolean antialiasing;
+  gint     color_averaging;
+  gint     tile_type;
+  gint     tile_surface;
+  gint     grout_color;
 } MosaicVals;
 
 typedef struct
@@ -264,9 +265,10 @@ static MosaicVals mvals =
   4.0,         /* tile_height */
   1.0,         /* tile_spacing */
   0.65,        /* tile_neatness */
+  TRUE,        /* tile_allow_split */
   135,         /* light_dir */
   0.2,         /* color_variation */
-  1,           /* antialiasing */
+  TRUE,        /* antialiasing */
   1,           /* color_averaging  */
   HEXAGONS,    /* tile_type */
   SMOOTH,      /* tile_surface */
@@ -301,6 +303,7 @@ query (void)
     { GIMP_PDB_FLOAT, "tile_height", "Apparent height of each tile (in pixels)" },
     { GIMP_PDB_FLOAT, "tile_spacing", "Inter-tile spacing (in pixels)" },
     { GIMP_PDB_FLOAT, "tile_neatness", "Deviation from perfectly formed tiles (0.0 - 1.0)" },
+    { GIMP_PDB_INT32, "tile_allow_split", "Allows splitting tiles at hard edges" },
     { GIMP_PDB_FLOAT, "light_dir", "Direction of light-source (in degrees)" },
     { GIMP_PDB_FLOAT, "color_variation", "Magnitude of random color variations (0.0 - 1.0)" },
     { GIMP_PDB_INT32, "antialiasing", "Enables smoother tile output at the cost of speed" },
@@ -363,7 +366,7 @@ run (gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
-      if (nparams != 14)
+      if (nparams != 15)
 	status = GIMP_PDB_CALLING_ERROR;
       if (status == GIMP_PDB_SUCCESS)
 	{
@@ -371,13 +374,14 @@ run (gchar      *name,
 	  mvals.tile_height = param[4].data.d_float;
 	  mvals.tile_spacing = param[5].data.d_float;
 	  mvals.tile_neatness = param[6].data.d_float;
-	  mvals.light_dir = param[7].data.d_float;
-	  mvals.color_variation = param[8].data.d_float;
-	  mvals.antialiasing = (param[9].data.d_int32) ? TRUE : FALSE;
-	  mvals.color_averaging = (param[10].data.d_int32) ? TRUE : FALSE;
-	  mvals.tile_type = param[11].data.d_int32;
-	  mvals.tile_surface = param[12].data.d_int32;
-	  mvals.grout_color = param[13].data.d_int32;
+	  mvals.tile_allow_split = (param[7].data.d_int32) ? TRUE : FALSE;
+	  mvals.light_dir = param[8].data.d_float;
+	  mvals.color_variation = param[9].data.d_float;
+	  mvals.antialiasing = (param[10].data.d_int32) ? TRUE : FALSE;
+	  mvals.color_averaging = (param[11].data.d_int32) ? TRUE : FALSE;
+	  mvals.tile_type = param[12].data.d_int32;
+	  mvals.tile_surface = param[13].data.d_int32;
+	  mvals.grout_color = param[14].data.d_int32;
 	}
       if (status == GIMP_PDB_SUCCESS &&
 	  (mvals.tile_type < SQUARES || mvals.tile_type > OCTAGONS))
@@ -597,6 +601,15 @@ mosaic_dialog (void)
 		      &mvals.color_averaging);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mvals.color_averaging);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label ( _("Allow Tile splitting"));
+  gtk_box_pack_start (GTK_BOX (toggle_vbox), toggle, FALSE, FALSE, 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
+		      &mvals.tile_allow_split);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+				mvals.tile_allow_split);
   gtk_widget_show (toggle);
 
   toggle = gtk_check_button_new_with_label ( _("Pitted Surfaces"));
@@ -1467,7 +1480,7 @@ grid_render (GimpDrawable *drawable)
 			       grid[index + grid_rowstride].x,
 			       grid[index + grid_rowstride].y);
 
-	    process_poly (&poly, TRUE, drawable, col, vary);
+	    process_poly (&poly, mvals.tile_allow_split, drawable, col, vary);
 	    break;
 
 	  case HEXAGONS:
@@ -1491,7 +1504,7 @@ grid_render (GimpDrawable *drawable)
 	    polygon_add_point (&poly,
 			       grid[index + 3].x,
 			       grid[index + 3].y);
-	    process_poly (&poly, TRUE, drawable, col, vary);
+	    process_poly (&poly, mvals.tile_allow_split, drawable, col, vary);
 
 	    /*  The auxillary hexagon  */
 	    polygon_reset (&poly);
@@ -1513,7 +1526,7 @@ grid_render (GimpDrawable *drawable)
 	    polygon_add_point (&poly,
 			       grid[index + grid_rowstride + 1].x,
 			       grid[index + grid_rowstride + 1].y);
-	    process_poly (&poly, TRUE, drawable, col, vary);
+	    process_poly (&poly, mvals.tile_allow_split, drawable, col, vary);
 	    break;
 
 	  case OCTAGONS:
@@ -1523,7 +1536,7 @@ grid_render (GimpDrawable *drawable)
 	      polygon_add_point (&poly,
 				 grid[index + k].x,
 				 grid[index + k].y);
-	    process_poly (&poly, TRUE, drawable, col, vary);
+	    process_poly (&poly, mvals.tile_allow_split, drawable, col, vary);
 
 	    /*  The auxillary octagon  */
 	    polygon_reset (&poly);
@@ -1551,7 +1564,7 @@ grid_render (GimpDrawable *drawable)
 	    polygon_add_point (&poly,
 			       grid[index + 4].x,
 			       grid[index + 4].y);
-	    process_poly (&poly, TRUE, drawable, col, vary);
+	    process_poly (&poly, mvals.tile_allow_split, drawable, col, vary);
 
 	    /*  The main square  */
 	    polygon_reset (&poly);

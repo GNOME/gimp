@@ -62,7 +62,7 @@
     (gimp-palette-set-foreground blend-fg)
     (gimp-palette-set-background blend-bg)
     (gimp-blend blend-layer FG-BG-RGB NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 0 0 width 0)
-    (plug-in-mosaic 1 img blend-layer 12 1 1 0.7 135 0.2 TRUE FALSE tile-type 1 0)
+    (plug-in-mosaic 1 img blend-layer 12 1 1 0.7 TRUE 135 0.2 TRUE FALSE tile-type 1 0)
     (gimp-layer-translate logo-layer (- b-size-2) (- b-size-2))
     (gimp-layer-translate blend-layer (- b-size) (- b-size))
     (gimp-layer-translate text-shadow-layer (- ts-size) (- ts-size))
