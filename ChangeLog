@@ -1,3 +1,9 @@
+2003-06-14  Sven Neumann  <sven@gimp.org>
+
+	* app/paths_dialog.c (paths_dialog_set_menu_sensitivity): don't
+	set the "Selection to Path" button insensitive if no path exists.
+	Fixes bug #115165.
+
 2003-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_funcs.c (blend_pixels): backed out my changes again.

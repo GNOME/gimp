@@ -249,7 +249,7 @@ paths_dialog_set_menu_sensitivity (void)
   SET_OPS_SENSITIVE (2, pp && gimage);
 
   SET_SENSITIVE ("Selection to Path", gimage);
-  SET_OPS_SENSITIVE (3, pp && gimage);
+  SET_OPS_SENSITIVE (3, gimage);
 
   SET_SENSITIVE ("Stroke Path", pp);
   SET_OPS_SENSITIVE (4, pp && gimage);
