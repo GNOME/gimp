@@ -2058,7 +2058,7 @@ static unsigned short codetab[HSIZE];
 #define HashTabOf(i)       htab[i]
 #define CodeTabOf(i)    codetab[i]
 
-const code_int hsize = HSIZE;	/* the original reason for this being
+static const code_int hsize = HSIZE;	/* the original reason for this being
 				   variable was "for dynamic table sizing",
 				   but since it was never actually changed
 				   I made it const   --Adam. */
@@ -2361,8 +2361,8 @@ rlecompress (int      init_bits,
 
 static void
 normalcompress (int      init_bits,
-	  FILE    *outfile,
-	  ifunptr  ReadValue)
+                FILE    *outfile,
+                ifunptr  ReadValue)
 {
   register long fcode;
   register code_int i /* = 0 */ ;
@@ -2568,9 +2568,8 @@ output (code_int code)
  * Clear out the hash table
  */
 static void
-cl_block ()			/* table clear for block compress */
+cl_block (void)			/* table clear for block compress */
 {
-
   cl_hash ((count_int) hsize);
   free_ent = ClearCode + 2;
   clear_flg = 1;
@@ -2579,7 +2578,7 @@ cl_block ()			/* table clear for block compress */
 }
 
 static void
-cl_hash (register count_int hsize)			/* reset code table */
+cl_hash (count_int hsize)	/* reset code table */
 {
 
   register count_int *htab_p = htab + hsize;
@@ -2615,7 +2614,7 @@ cl_hash (register count_int hsize)			/* reset code table */
 }
 
 static void
-writeerr ()
+writeerr (void)
 {
   g_message (_("Error writing output file."));
   return;
@@ -2636,7 +2635,7 @@ static int a_count;
  * Set up the 'byte output' routine
  */
 static void
-char_init ()
+char_init (void)
 {
   a_count = 0;
 }
