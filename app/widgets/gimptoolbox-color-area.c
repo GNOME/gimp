@@ -100,12 +100,6 @@ static gint           edit_color;
 static GimpRGB        revert_fg;
 static GimpRGB        revert_bg;
 
-/*  dnd stuff  */
-static GtkTargetEntry color_area_target_table[] =
-{
-  GIMP_TARGET_COLOR
-};
-
 
 /*  public functions  */
 
@@ -136,14 +130,7 @@ gimp_toolbox_color_area_create (GimpToolbox *toolbox,
 		    G_CALLBACK (color_area_expose_event),
 		    context);
 
-  /*  dnd stuff  */
-  gtk_drag_source_set (color_area,
-                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                       color_area_target_table,
-                       G_N_ELEMENTS (color_area_target_table),
-                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_color_source_set (color_area, color_area_drag_color, context);
-
+  gimp_dnd_color_source_add (color_area, color_area_drag_color, context);
   gimp_dnd_color_dest_add (color_area, color_area_drop_color, context);
 
   g_signal_connect_swapped (context, "foreground_changed",

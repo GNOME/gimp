@@ -1,5 +1,27 @@
 2003-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.[ch]: changed drag source stuff to allow
+	multiple data types. Changed DND source API to speak in terms of
+	add()/remove() instead of set()/unset(). Added GimpDndDragFileFunc
+	typedef and gimp_dnd_file_source_add().
+
+	Unfortunately GTK+'s DND API lacks symmetry here (no GtkTargetList
+	based API for drag sources), so we cannot really change drag
+	sources on-the-fly and need to set GtkTargetEntry arrays manually.
+
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpmenuitem.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimppreview.c
+	* app/widgets/gimptoolbox-color-area.c: changed accordingly.
+
+	* app/widgets/gimpdocumentview.c: ditto. Additionally offer
+	"text/uri-list" so it's possible to drag images from the document
+	history to the file manager or browser.
+
+2003-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.c: cleanup before doing real changes.
 
 2003-11-19  Manish Singh  <yosh@gimp.org>

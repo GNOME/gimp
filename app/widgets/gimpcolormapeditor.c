@@ -138,11 +138,6 @@ static guint editor_signals[LAST_SIGNAL] = { 0 };
 
 static GimpImageEditorClass *parent_class = NULL;
 
-static GtkTargetEntry color_palette_target_table[] =
-{
-  GIMP_TARGET_COLOR
-};
-
 
 GType
 gimp_colormap_editor_get_type (void)
@@ -367,13 +362,7 @@ gimp_colormap_editor_new (GimpImage       *gimage,
 		    G_CALLBACK (gimp_colormap_preview_button_press),
 		    editor);
 
-  /*  dnd stuff  */
-  gtk_drag_source_set (editor->palette,
-                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                       color_palette_target_table,
-                       G_N_ELEMENTS (color_palette_target_table),
-                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_color_source_set (editor->palette, gimp_colormap_preview_drag_color,
+  gimp_dnd_color_source_add (editor->palette, gimp_colormap_preview_drag_color,
                              editor);
   gimp_dnd_color_dest_add (editor->palette, gimp_colormap_preview_drop_color,
                            editor);

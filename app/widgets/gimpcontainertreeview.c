@@ -442,8 +442,8 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
 
       if (! container)
         {
-          if (gimp_dnd_viewable_source_unset (GTK_WIDGET (tree_view->view),
-                                              view->container->children_type))
+          if (gimp_dnd_viewable_source_remove (GTK_WIDGET (tree_view->view),
+                                               view->container->children_type))
             {
               gtk_drag_source_unset (GTK_WIDGET (tree_view->view));
             }
@@ -460,7 +460,7 @@ gimp_container_tree_view_set_container (GimpContainerView *view,
                                             container->children_type,
                                             GDK_ACTION_COPY))
         {
-          gimp_dnd_viewable_source_set (GTK_WIDGET (tree_view->view),
+          gimp_dnd_viewable_source_add (GTK_WIDGET (tree_view->view),
                                         container->children_type,
                                         gimp_container_tree_view_drag_viewable,
                                         tree_view);

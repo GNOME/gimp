@@ -712,8 +712,8 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 
       if (! viewable && ! preview->renderer->is_popup)
         {
-          if (gimp_dnd_viewable_source_unset (GTK_WIDGET (preview),
-                                              G_TYPE_FROM_INSTANCE (preview->viewable)))
+          if (gimp_dnd_viewable_source_remove (GTK_WIDGET (preview),
+                                               G_TYPE_FROM_INSTANCE (preview->viewable)))
             {
               gtk_drag_source_unset (GTK_WIDGET (preview));
             }
@@ -726,7 +726,7 @@ gimp_preview_set_viewable (GimpPreview  *preview,
                                             viewable_type,
                                             GDK_ACTION_COPY))
         {
-          gimp_dnd_viewable_source_set (GTK_WIDGET (preview),
+          gimp_dnd_viewable_source_add (GTK_WIDGET (preview),
                                         viewable_type,
                                         gimp_preview_drag_viewable,
                                         NULL);

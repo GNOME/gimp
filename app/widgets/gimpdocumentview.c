@@ -76,6 +76,8 @@ static void   gimp_document_view_activate_item   (GimpContainerEditor *editor,
                                                   GimpViewable        *viewable);
 static void   gimp_document_view_open_image      (GimpDocumentView    *view,
                                                   GimpImagefile       *imagefile);
+static GList * gimp_document_view_drag_file      (GtkWidget           *widget,
+                                                  gpointer             data);
 
 
 static GimpContainerEditorClass *parent_class = NULL;
@@ -213,6 +215,24 @@ gimp_document_view_new (GimpViewType            view_type,
   gimp_container_view_enable_dnd (editor->view,
 				  GTK_BUTTON (document_view->remove_button),
 				  GIMP_TYPE_IMAGEFILE);
+
+  if (view_type == GIMP_VIEW_TYPE_LIST)
+    {
+      static const GtkTargetEntry document_view_target_entries[] =
+      {
+        GIMP_TARGET_IMAGEFILE,
+        GIMP_TARGET_URI_LIST
+      };
+
+      gtk_drag_source_set (editor->view->dnd_widget,
+                           GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+                           document_view_target_entries,
+                           G_N_ELEMENTS (document_view_target_entries),
+                           GDK_ACTION_COPY | GDK_ACTION_MOVE);
+      gimp_dnd_file_source_add (editor->view->dnd_widget,
+                                gimp_document_view_drag_file,
+                                editor);
+    }
 
   return GTK_WIDGET (document_view);
 }
@@ -357,7 +377,7 @@ gimp_document_view_delete_dangling_foreach (GimpImagefile     *imagefile,
 
   if (imagefile->state == GIMP_IMAGEFILE_STATE_NOT_FOUND)
     {
-      gimp_container_remove (container_view->container, 
+      gimp_container_remove (container_view->container,
                              GIMP_OBJECT (imagefile));
     }
 }
@@ -461,3 +481,20 @@ gimp_document_view_open_image (GimpDocumentView *view,
     }
 }
 
+static GList *
+gimp_document_view_drag_file (GtkWidget *widget,
+                              gpointer   data)
+{
+  GimpViewable *viewable;
+
+  viewable = gimp_dnd_get_drag_data (widget);
+
+  if (viewable)
+    {
+      GList *list = NULL;
+
+      return g_list_append (list, g_strdup (gimp_object_get_name (GIMP_OBJECT (viewable))));
+    }
+
+  return NULL;
+}

@@ -146,13 +146,6 @@ static void palette_editor_color_notebook_callback (ColorNotebook     *color_not
                                                     gpointer           data);
 
 
-/*  dnd stuff  */
-static GtkTargetEntry color_palette_target_table[] =
-{
-  GIMP_TARGET_COLOR
-};
-
-
 static GimpDataEditorClass *parent_class        = NULL;
 static GimpDockedInterface *parent_docked_iface = NULL;
 
@@ -271,16 +264,9 @@ gimp_palette_editor_init (GimpPaletteEditor *editor)
 		    G_CALLBACK (palette_editor_color_area_button_press),
 		    editor);
 
-  /*  dnd stuff  */
-  gtk_drag_source_set (editor->color_area,
-                       GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                       color_palette_target_table,
-                       G_N_ELEMENTS (color_palette_target_table),
-                       GDK_ACTION_COPY | GDK_ACTION_MOVE);
-  gimp_dnd_color_source_set (editor->color_area,
+  gimp_dnd_color_source_add (editor->color_area,
                              palette_editor_drag_color,
 			     editor);
-
   gimp_dnd_color_dest_add (eventbox, palette_editor_drop_color, editor);
   gimp_dnd_viewable_dest_add (eventbox, GIMP_TYPE_PALETTE,
 			      palette_editor_drop_palette,
