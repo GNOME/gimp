@@ -44,9 +44,6 @@
 #include "gimp-intl.h"
 
 
-typedef gdouble (* BlendRepeatFunc) (gdouble  val);
-
-
 typedef struct
 {
   GimpGradient     *gradient;
@@ -58,7 +55,7 @@ typedef struct
   GimpRGB           fg, bg;
   gdouble           dist;
   gdouble           vec[2];
-  BlendRepeatFunc   repeat_func;
+  GimpRepeatMode    repeat
 } RenderBlendData;
 
 typedef struct
@@ -116,10 +113,6 @@ static gdouble  gradient_calc_shapeburst_spherical_factor (gdouble x,
 static gdouble  gradient_calc_shapeburst_dimpled_factor   (gdouble x,
                                                            gdouble y);
 
-static gdouble  gradient_repeat_none        (gdouble       val);
-static gdouble  gradient_repeat_sawtooth    (gdouble       val);
-static gdouble  gradient_repeat_triangular  (gdouble       val);
-
 static void     gradient_precalc_shapeburst (GimpImage    *gimage,
 					     GimpDrawable *drawable,
                                              PixelRegion  *PR,
@@ -143,7 +136,7 @@ static void     gradient_fill_region        (GimpImage        *gimage,
                                              GimpBlendMode     blend_mode,
                                              GimpGradientType  gradient_type,
                                              gdouble           offset,
-                                              GimpRepeatMode    repeat,
+                                             GimpRepeatMode    repeat,
                                              gboolean          reverse,
                                              gboolean          supersample,
                                              gint              max_depth,
@@ -576,37 +569,6 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
   return value;
 }
 
-
-static gdouble
-gradient_repeat_none (gdouble val)
-{
-  return CLAMP (val, 0.0, 1.0);
-}
-
-static gdouble
-gradient_repeat_sawtooth (gdouble val)
-{
-  return val - floor (val);
-}
-
-static gdouble
-gradient_repeat_triangular (gdouble val)
-{
-  guint ival;
-
-  if (val < 0.0)
-    val = -val;
-
-  ival = (guint) val;
-  val = val - floor (val);
-
-  if (ival & 1)
-    return 1.0 - val;
-  else
-    return val;
-}
-
-
 static void
 gradient_precalc_shapeburst (GimpImage    *gimage,
 			     GimpDrawable *drawable,
@@ -699,10 +661,8 @@ gradient_render_pixel (double    x,
 		       GimpRGB  *color,
 		       gpointer  render_data)
 {
-  RenderBlendData *rbd;
+  RenderBlendData *rbd = render_data;
   gdouble          factor;
-
-  rbd = render_data;
 
   /* Calculate blending factor */
 
@@ -767,7 +727,31 @@ gradient_render_pixel (double    x,
 
   /* Adjust for repeat */
 
-  factor = rbd->repeat_func (factor);
+  switch (rbd->repeat)
+    {
+    case GIMP_REPEAT_NONE:
+      factor = CLAMP (factor, 0.0, 1.0);
+      break;
+
+    case GIMP_REPEAT_SAWTOOTH:
+      factor = factor - floor (factor);
+      break;
+
+    case GIMP_REPEAT_TRIANGULAR:
+      {
+        guint ifactor;
+
+        if (factor < 0.0)
+          factor = -factor;
+
+        ifactor = (guint) factor;
+        factor = factor - floor (factor);
+
+        if (ifactor & 1)
+          factor = 1.0 - factor;
+      }
+      break;
+    }
 
   /* Blend the colors */
 
@@ -802,10 +786,8 @@ gradient_put_pixel (gint      x,
 		    GimpRGB  *color,
 		    gpointer  put_pixel_data)
 {
-  PutPixelData  *ppd;
+  PutPixelData  *ppd = put_pixel_data;
   guchar        *data;
-
-  ppd = put_pixel_data;
 
   /* Paint */
 
@@ -1008,27 +990,6 @@ gradient_fill_region (GimpImage        *gimage,
       break;
     }
 
-  /* Set repeat function */
-
-  switch (repeat)
-    {
-    case GIMP_REPEAT_NONE:
-      rbd.repeat_func = gradient_repeat_none;
-      break;
-
-    case GIMP_REPEAT_SAWTOOTH:
-      rbd.repeat_func = gradient_repeat_sawtooth;
-      break;
-
-    case GIMP_REPEAT_TRIANGULAR:
-      rbd.repeat_func = gradient_repeat_triangular;
-      break;
-
-    default:
-      g_assert_not_reached ();
-      break;
-    }
-
   /* Initialize render data */
 
   rbd.offset        = offset;
@@ -1036,6 +997,7 @@ gradient_fill_region (GimpImage        *gimage,
   rbd.sy            = sy;
   rbd.blend_mode    = blend_mode;
   rbd.gradient_type = gradient_type;
+  rbd.repeat        = repeat;
 
   if (dither)
     dither_rand = g_rand_new ();
@@ -1162,10 +1124,12 @@ gradient_fill_region (GimpImage        *gimage,
                 }
             }
 
-	  progress += PR->w * PR->h;
-	  if (progress_callback)
-	    (* progress_callback) (0, max_progress, progress, progress_data);
-	}
+          if (progress_callback)
+            {
+              progress += PR->w * PR->h;
+              (* progress_callback) (0, max_progress, progress, progress_data);
+            }
+        }
     }
 
   if (dither)

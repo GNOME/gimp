@@ -1,3 +1,10 @@
+2004-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-blend.c (gradient_render_pixel): inline
+	the repeat functions.
+
+	* app/core/gimpgradient.c: inline the curve functions.
+
 2004-06-13  Jakub Steiner <jimmac@ximian.com>
 
 	* cursors/gimp-tool-cursors.xcf
