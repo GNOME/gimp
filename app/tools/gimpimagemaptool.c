@@ -45,7 +45,6 @@
 
 #include "gimpimagemaptool.h"
 #include "gimptoolcontrol.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -218,7 +217,8 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
                                   GIMP_OBJECT (tool_info)->name,
                                   stock_id,
                                   image_map_tool->shell_desc,
-                                  tool_manager_help_func, NULL,
+                                  gimp_standard_help_func,
+                                  tool_info->help_data,
 
                                   GIMP_STOCK_RESET,
                                   gimp_image_map_tool_reset_clicked,

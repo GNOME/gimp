@@ -55,7 +55,6 @@
 
 #include "gimplevelstool.h"
 #include "gimptoolcontrol.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -1527,7 +1526,8 @@ file_dialog_create (GimpLevelsTool *l_tool)
   gtk_file_selection_set_filename (file_dlg, temp);
   g_free (temp);
 
-  gimp_help_connect (l_tool->file_dialog, tool_manager_help_func, NULL);
+  gimp_help_connect (l_tool->file_dialog, gimp_standard_help_func,
+                     GIMP_TOOL (l_tool)->tool_info->help_data);
 }
 
 static void

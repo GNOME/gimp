@@ -355,7 +355,7 @@ histogram_tool_dialog_new (GimpToolInfo *tool_info)
                               GIMP_OBJECT (tool_info)->name,
                               stock_id,
                               _("View Image Histogram"),
-                              tool_manager_help_func, NULL,
+                              gimp_standard_help_func, tool_info->help_data,
 
                               GTK_STOCK_CLOSE, histogram_tool_close_callback,
                               htd, NULL, NULL, TRUE, TRUE,

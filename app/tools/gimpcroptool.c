@@ -54,7 +54,6 @@
 #include "gimpcropoptions.h"
 #include "gimpcroptool.h"
 #include "gimptoolcontrol.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -1003,7 +1002,8 @@ crop_info_create (GimpCropTool *crop)
                                      GIMP_OBJECT (tool->tool_info)->name,
                                      stock_id,
                                      _("Crop & Resize Information"),
-                                     tool_manager_help_func, NULL);
+                                     gimp_standard_help_func,
+                                     tool->tool_info->help_data);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (crop->crop_info->shell),
 

@@ -43,6 +43,7 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+#include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpenummenu.h"
@@ -51,7 +52,6 @@
 
 #include "gimpcurvestool.h"
 #include "gimptoolcontrol.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -1393,7 +1393,8 @@ file_dialog_create (GimpCurvesTool *c_tool)
   gtk_file_selection_set_filename (file_dlg, temp);
   g_free (temp);
 
-  gimp_help_connect (c_tool->file_dialog, tool_manager_help_func, NULL);
+  gimp_help_connect (c_tool->file_dialog, gimp_standard_help_func,
+                     GIMP_TOOL (c_tool)->tool_info->help_data);
 }
 
 static void

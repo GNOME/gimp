@@ -49,7 +49,6 @@
 #include "gimpcolorpickeroptions.h"
 #include "gimpcolorpickertool.h"
 #include "gimptoolcontrol.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -99,7 +98,8 @@ static gboolean   gimp_color_picker_tool_pick_color     (GimpImage            *g
                                                          gboolean              update_active,
                                                          GimpUpdateColorState  update_state);
 
-static InfoDialog * gimp_color_picker_tool_info_create (GimpDrawable *drawable);
+static InfoDialog * gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
+                                                        GimpDrawable *drawable);
 static void         gimp_color_picker_tool_info_close  (GtkWidget    *widget,
                                                         gpointer      data);
 static void         gimp_color_picker_tool_info_update (GimpTool     *tool,
@@ -260,7 +260,9 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
   gimp_tool_control_activate (tool->control);
 
   if (! gimp_color_picker_tool_info)
-    gimp_color_picker_tool_info = gimp_color_picker_tool_info_create (tool->drawable);
+    gimp_color_picker_tool_info =
+      gimp_color_picker_tool_info_create (tool->tool_info,
+                                          tool->drawable);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (gimp_color_picker_tool_info->shell),
                                      GIMP_VIEWABLE (tool->drawable));
@@ -484,7 +486,8 @@ gimp_color_picker_tool_pick_color (GimpImage            *gimage,
 }
 
 static InfoDialog *
-gimp_color_picker_tool_info_create (GimpDrawable *drawable)
+gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
+                                    GimpDrawable *drawable)
 {
   InfoDialog *info_dialog;
   GtkWidget  *hbox;
@@ -495,7 +498,8 @@ gimp_color_picker_tool_info_create (GimpDrawable *drawable)
                                  _("Color Picker"), "color_picker",
                                  GIMP_STOCK_TOOL_COLOR_PICKER,
                                  _("Color Picker Information"),
-                                 tool_manager_help_func, NULL);
+                                 gimp_standard_help_func,
+                                 tool_info->help_data);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (info_dialog->shell),
 

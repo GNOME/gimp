@@ -61,7 +61,6 @@
 #include "gimptransformoptions.h"
 #include "gimptransformtool.h"
 #include "gimptransformtool-undo.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -1129,7 +1128,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                          GIMP_OBJECT (tool_info)->name,
                          stock_id,
                          tr_tool->shell_desc,
-                         tool_manager_help_func, NULL);
+                         gimp_standard_help_func, tool_info->help_data);
 
       gimp_dialog_create_action_area (GIMP_DIALOG (tr_tool->info_dialog->shell),
 

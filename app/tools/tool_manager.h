@@ -73,10 +73,6 @@ void           tool_manager_cursor_update_active  (Gimp             *gimp,
                                                    GdkModifierType   state,
                                                    GimpDisplay      *gdisp);
 
-
-const gchar  * tool_manager_active_get_help_data  (Gimp             *gimp);
-
-
 void           tool_manager_register_tool         (GType             tool_type,
                                                    GType             tool_options_type,
                                                    GimpToolOptionsGUIFunc  options_gui_func,
@@ -93,9 +89,6 @@ void           tool_manager_register_tool         (GType             tool_type,
 
 GimpToolInfo * tool_manager_get_info_by_type      (Gimp             *gimp,
 						   GType             tool_type);
-
-
-void	       tool_manager_help_func             (const gchar      *help_data);
 
 
 #endif  /*  __TOOL_MANAGER_H__  */

@@ -1,5 +1,24 @@
 2003-05-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/tool_manager.[ch] (tool_manager_set,get): Use
+	g_object_[set|get]_qdata(), not just _data() to speed up tool
+	manager access.
+
+	Removed tool_manager_active_get_help_data() and
+	tool_manager_help_func().
+
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimphistogramtool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptransformtool.c: use gimp_standard_help_func and
+	tool->tool_info->help_data instead. Don't #include "tool_manager.h".
+
+2003-05-25  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimphelpui.[ch] (_gimp_help_init): changed again
 	to take no paramaters and use _gimp_standard_help_func from
 	gimpwidgets-private.

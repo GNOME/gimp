@@ -54,7 +54,6 @@
 #include "gimpmeasureoptions.h"
 #include "gimpmeasuretool.h"
 #include "gimptoolcontrol.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -386,7 +385,8 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                                            GIMP_OBJECT (tool->tool_info)->name,
                                            stock_id,
                                            _("Measure Distances and Angles"),
-					   tool_manager_help_func, NULL);
+                                           gimp_standard_help_func,
+                                           tool->tool_info->help_data);
       info_dialog_add_label (measure_tool_info, _("Distance:"), distance_buf);
       info_dialog_add_label (measure_tool_info, _("Angle:"), angle_buf);
 

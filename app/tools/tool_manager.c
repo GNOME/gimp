@@ -657,46 +657,29 @@ tool_manager_get_info_by_type (Gimp  *gimp,
   return NULL;
 }
 
-const gchar *
-tool_manager_active_get_help_data (Gimp *gimp)
-{
-  GimpToolManager *tool_manager;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  tool_manager = tool_manager_get (gimp);
-
-  if (tool_manager->active_tool)
-    {
-      return tool_manager->active_tool->tool_info->help_data;
-    }
-
-  return NULL;
-}
-
-void
-tool_manager_help_func (const gchar *help_data)
-{
-  gimp_standard_help_func (tool_manager_active_get_help_data (the_gimp));
-}
-
 
 /*  private functions  */
 
-#define TOOL_MANAGER_DATA_KEY "gimp-tool-manager"
+static GQuark tool_manager_quark = 0;
+
 
 static GimpToolManager *
 tool_manager_get (Gimp *gimp)
 {
-  return g_object_get_data (G_OBJECT (gimp), TOOL_MANAGER_DATA_KEY);
+  if (! tool_manager_quark)
+    tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
+
+  return g_object_get_qdata (G_OBJECT (gimp), tool_manager_quark);
 }
 
 static void
 tool_manager_set (Gimp            *gimp,
 		  GimpToolManager *tool_manager)
 {
-  g_object_set_data (G_OBJECT (gimp), TOOL_MANAGER_DATA_KEY,
-                     tool_manager);
+  if (! tool_manager_quark)
+    tool_manager_quark = g_quark_from_static_string ("gimp-tool-manager");
+
+  g_object_set_qdata (G_OBJECT (gimp), tool_manager_quark, tool_manager);
 }
 
 static void
@@ -705,7 +688,7 @@ tool_manager_tool_changed (GimpContext  *user_context,
 			   gpointer      data)
 {
   GimpToolManager *tool_manager;
-  GimpTool        *new_tool     = NULL;
+  GimpTool        *new_tool = NULL;
 
   if (! tool_info)
     return;
