@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-01-07 02:25+0100\n"
-"PO-Revision-Date: 2003-12-08 00:54+0100\n"
+"POT-Creation-Date: 2004-01-10 04:03+0100\n"
+"PO-Revision-Date: 2004-01-10 04:09+0100\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -83,31 +83,31 @@ msgstr "%s:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1250
 msgid "Script-Fu Color Selection"
-msgstr "Skript-Fu Izbor boje"
+msgstr "Skript-Fu izbor boje"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1323
 msgid "Script-Fu File Selection"
-msgstr "Skript-Fu Izbor Datoteke"
+msgstr "Skript-Fu izbor datoteke"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1327
 msgid "Script-Fu Folder Selection"
-msgstr "Skript-Fu Izbor Direktorijuma"
+msgstr "Skript-Fu izbor direktorijuma"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1341
 msgid "Script-Fu Font Selection"
-msgstr "Skript-Fu Izbor Fonta"
+msgstr "Skript-Fu izbor fonta"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1348
 msgid "Script-fu Pattern Selection"
-msgstr "Skript-Fu Izbor Uzorka"
+msgstr "Skript-Fu izbor mustre"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1354
 msgid "Script-Fu Gradient Selection"
-msgstr "Skript-Fu Izbor Gradijenta"
+msgstr "Skript-Fu izbor preliva"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1361
 msgid "Script-Fu Brush Selection"
-msgstr "Skript-Fu Izbor Kista"
+msgstr "Skript-Fu izbor četke"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1947
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
@@ -332,7 +332,7 @@ msgstr "Poluprečnik Zamućenja na Slici"
 #: plug-ins/script-fu/scripts/chip-away.scm.h:12
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
-msgstr "Odsečak"
+msgstr "Mustra"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
 msgid "Shadow Blur Radius"
@@ -392,7 +392,7 @@ msgstr "Tekst"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/3D Krivine..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/3D Krivine..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
@@ -502,8 +502,7 @@ msgstr "Delta Vrednost Boje"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr ""
-"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Strelica..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Strelica..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -559,8 +558,7 @@ msgstr "Gore"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr ""
-"<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Hor. Crta..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Vanzemaljsko svetlo/Hor. Crta..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar Height"
@@ -664,12 +662,12 @@ msgid "Width of Gaps"
 msgstr "Širina Pukotina"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:1
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Image>/Skript-Fu/Uslužni/ASCII u sloj slike..."
+msgid "<Image>/Script-Fu/Utils/_ASCII to Layer..."
+msgstr "<Image>/Skript-Fu/Uslužni/_ASCII u sloj..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Uslužni/ASCII u Sliku..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Uslužni/ASCII u sliku..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:5
 #, no-c-format
@@ -730,27 +728,27 @@ msgstr "Boja Gore-Lijevo"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčeni odsečak/Strelica..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčena mustra/Strelica..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčeni odsečak/Metak..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčena mustra/Metak..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
-msgstr "Promjer"
+msgstr "Prečnik"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčeni odsečak/Dugme..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčena mustra/Dugme..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčeni odsečak/Zaglavlje..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčena mustra/Zaglavlje..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčeni odsečak/Hor. Crta..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Ispupčena mustra/Hor. Crta..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -892,7 +890,7 @@ msgstr "Brzina (tačaka/slici)"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Kamuflaža..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/Kamuflaža..."
 
 #: plug-ins/script-fu/scripts/camo.scm.h:2
 msgid "Color 1"
@@ -984,7 +982,7 @@ msgstr "Baci senku"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Fill BG with Pattern"
-msgstr "Ispuni pozadinu odsečkom"
+msgstr "Ispuni pozadinu mustrom"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:9
 msgid "Invert"
@@ -1294,7 +1292,7 @@ msgstr "Koristi rastuću selekciju"
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Ravnica..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/Ravnica..."
 
 #: plug-ins/script-fu/scripts/flatland.scm.h:2
 #: plug-ins/script-fu/scripts/land.scm.h:2
@@ -1483,15 +1481,15 @@ msgstr "Obrnuti preliv za crtež"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Pattern (Outline)"
-msgstr "Odsečak (spoljni)"
+msgstr "Mustra (spoljna)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (Overlay)"
-msgstr "Odsečak (prekrivanje)"
+msgstr "Mustra (prekrivanje)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (Text)"
-msgstr "Odsečak (tekst)"
+msgstr "Mustra (tekst)"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
 #: plug-ins/script-fu/scripts/sphere.scm.h:5
@@ -1504,15 +1502,15 @@ msgstr "Obrnuti tekstulani preliv"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern Overlay"
-msgstr "Koristi prekrivanje odsečkom"
+msgstr "Koristi prekrivanje mustrom"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use Pattern for Outline instead of Gradient"
-msgstr "Koristi odsečak za crtež umesto preliv"
+msgstr "Koristi mustru za crtež umesto preliva"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use Pattern for Text instead of Gradient"
-msgstr "Koristi odsečak za tekst umesto preliv"
+msgstr "Koristi mustru za tekst umesto preliva"
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
@@ -1654,7 +1652,7 @@ msgstr "Razmak među slojevima"
 
 #: plug-ins/script-fu/scripts/land.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Land..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Zemlja..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/Zemlja..."
 
 #: plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land Height"
@@ -1888,7 +1886,7 @@ msgstr "Gornja boja (tekuća)"
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Iscrtaj mapu..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/Iscrtaj mapu..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm.h:2
 msgid "Behaviour"
@@ -2184,7 +2182,7 @@ msgstr "Efektivna veličina (tačaka * 4)"
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Zavijutak..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/Zavijutak-ponavljanje..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
@@ -2192,7 +2190,7 @@ msgstr "Vrednost zavijanja"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/_Zavijutak..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/_Zavijutak..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2276,7 +2274,7 @@ msgstr "Početak stapanja"
 
 #: plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text Pattern"
-msgstr "Odsečak teksta"
+msgstr "Mustra teksta"
 
 #: plug-ins/script-fu/scripts/tileblur.scm.h:1
 msgid "<Image>/Filters/Blur/_Tileable Blur..."
@@ -2308,7 +2306,7 @@ msgstr "<Toolbox>/Proširenja/Skript-Fu/Logotip/Zaglavlje web naslova..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Truchet..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/Truchet..."
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground Color"
@@ -2423,7 +2421,7 @@ msgid "Highlight Y Offset"
 msgstr "Y odstupanje osvetljenosti"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-#~ msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Uvojci (rastavljivo)..."
+#~ msgstr "<Toolbox>/Proširenja/Skript-Fu/Mustre/Uvojci (rastavljivo)..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/Proširenja/Čitač veba/Česta pitanja programera"

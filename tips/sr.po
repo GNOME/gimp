@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-tips 1.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2003-07-21 00:18+0200\n"
-"PO-Revision-Date: 2003-12-08 00:30+0100\n"
+"PO-Revision-Date: 2004-01-10 04:31+0100\n"
 "Last-Translator: Александар Урошевић <urke@users.sourceforge.net>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
 "MIME-Version: 1.0\n"
@@ -46,13 +46,10 @@ msgstr ""
 "боје цртања."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Transform tool in rotation mode will constrain "
 "the rotation to 15 degree angles."
-msgstr ""
-"<tt>Ctrl</tt>-превлачење са алатом за ротацију ће ограничити ротацију на "
-"углове који су умножак 15 степени."
+msgstr "<tt>Ctrl</tt>-превлачење са алатом за трансформације при ротацији ће ограничити ротацију на углове који су умножак 15 степени."
 
 #: tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -76,17 +73,12 @@ msgstr ""
 "мени за обављање ових акција."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
 "you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
 "menu item, and pressing the desired key combination. This is saved when you "
 "exit GIMP."
-msgstr ""
-"Након што омогућите динамичке пречице са тастатуре у прозорчету за поставке, "
-"моћи ћете да промените пречице. То радите тако што прикажете мени, изаберете "
-"ставку менија, и притиснете жељену комбинацију тастера. Уколико је укључено "
-"чување пречица тастатуре, измене ће бити сачуване када затворите ГИМП."
+msgstr "Након што омогућите динамичке пречице са тастатуре у прозорчету за поставке, моћи ћете да промените пречице. То радите тако што прикажете мени, изаберете ставку менија, и притиснете жељену комбинацију тастера. Измене ће бити сачуване када затворите ГИМП."
 
 #: tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -112,15 +104,11 @@ msgstr ""
 "Кривуље)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
 "settings are used. You can use the Paintbrush in gradient mode, the Clone "
 "tool with a pattern or even the Eraser or the Smudge tool."
-msgstr ""
-"Уколико исцртате путању (Уређивање-&gt;Исцртај избор), користи се текући "
-"алат за цртање и његова подешавања. Можете користити четкицу у режиму "
-"претапања или чак гумицу за брисање или алат за размазивање."
+msgstr "Уколико исцртате путању (Уређивање-&gt;Исцртај избор), користи се текући алат за цртање и његова подешавања. Можете користити четкицу у режиму претапања, алат клонирања са мустром или чак гумицу за брисање или алат за размазивање."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -132,7 +120,6 @@ msgstr ""
 "како би омогућили сакривање или приказивање палете алата и осталих дијалога."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Layers-&gt;Flatten Image) if you want the "
@@ -152,7 +139,6 @@ msgstr ""
 "грешка се може опозвати..."
 
 #: tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -234,7 +220,6 @@ msgstr ""
 "добијена селекција аутоматски додирнути вођице."
 
 #: tips/gimp-tips.xml.in.h:22
-#, fuzzy
 msgid ""
 "Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
 "painting the edge of your current selection with the active brush. More "
@@ -284,14 +269,11 @@ msgstr ""
 "превлачите курсор лево и десно."
 
 #: tips/gimp-tips.xml.in.h:27
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Bezier tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
-msgstr ""
-"Можете направити и уређивати сложене изборе помоћу алата за путање. Прозорче "
-"за путање дозвољава рад са више путања и претварање истих у изборе."
+msgstr "Можете направити и уређивати сложене изборе помоћу Безијеровог алата за путање. Прозорче за путање дозвољава рад са више путања и претварање истих у изборе."
 
 #: tips/gimp-tips.xml.in.h:28
 msgid ""
