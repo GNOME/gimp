@@ -1,5 +1,12 @@
 2003-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors-export.[ch]: allow to optionally export
+	all paths from an image into a single SVG file.
+
+	* app/gui/vectors-commands.c: changed accordingly.
+
+2003-09-11  Sven Neumann  <sven@gimp.org>
+
 	* app/text/Makefile.am: define PANGO_DISABLE_DEPRECATED.
 
 	* app/text/gimptext-compat.c: avoid deprecated API.
