@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-1.1.21\n"
-"POT-Creation-Date: 2000-09-25 11:29-0300\n"
+"POT-Creation-Date: 2000-09-27 12:25-0700\n"
 "PO-Revision-Date: 2000-05-08 16:28-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -1506,19 +1506,19 @@ msgstr ""
 msgid "No selection to stroke!"
 msgstr "Nenhuma seleção para ser pressionada!"
 
-#: app/gimpbrush.c:272
+#: app/gimpbrush.c:273
 msgid "Error in GIMP brush file...aborting."
 msgstr "Erro no arquivo de pincéis Gimp...abortando."
 
-#: app/gimpbrush.c:279 app/patterns.c:212
+#: app/gimpbrush.c:280 app/patterns.c:212
 msgid "Unnamed"
 msgstr "Sem nome"
 
-#: app/gimpbrush.c:297
+#: app/gimpbrush.c:298
 msgid "GIMP brush file appears to be truncated."
 msgstr "O arquivo de pincéis Gimp parece estar truncado."
 
-#: app/gimpbrush.c:300
+#: app/gimpbrush.c:301
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"\n"
 msgstr "Versão desconhecida de formato do pincel #%d em \"%s\"\n"

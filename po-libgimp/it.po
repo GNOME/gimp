@@ -16,95 +16,84 @@ msgstr ""
 
 #: libgimp/gimpcolorbutton.c:118
 msgid "/Use Foreground Color"
-msgstr "/Utilizza Colore Primo Piano"
+msgstr "/Utilizza colore primo piano"
 
 #: libgimp/gimpcolorbutton.c:119
 msgid "/Use Background Color"
-msgstr "/Utilizza Colore di Sfondo"
+msgstr "/Utilizza colore di sfondo"
 
 #: libgimp/gimpexport.c:158 libgimp/gimpexport.c:185
-#, fuzzy
 msgid "can't handle layers"
-msgstr "impossibile agire sui Livelli"
+msgstr "non è possibile agire sui livelli"
 
 #: libgimp/gimpexport.c:159 libgimp/gimpexport.c:168
 msgid "Merge Visible Layers"
-msgstr "Incolla Livelli Visibili"
+msgstr "Incolla livelli visibili"
 
 #: libgimp/gimpexport.c:167 libgimp/gimpexport.c:176
-#, fuzzy
 msgid "can only handle layers as animation frames"
-msgstr "è possibile manipolare i Livelli come Frame dell'Animazione"
+msgstr "è possibile gestire i livelli come frame dell'animazione"
 
 #: libgimp/gimpexport.c:168 libgimp/gimpexport.c:177
 msgid "Save as Animation"
-msgstr "Salva come Animazione"
+msgstr "Salva come animazione"
 
 #: libgimp/gimpexport.c:177 libgimp/gimpexport.c:186 libgimp/gimpexport.c:195
 msgid "Flatten Image"
-msgstr "Immagine Appiattita"
+msgstr "Immagine appiattita"
 
 #: libgimp/gimpexport.c:194
-#, fuzzy
 msgid "can't handle transparency"
-msgstr "impossibile manipolare la trasparenza"
+msgstr "non è possibile gestire la trasparenza"
 
 #: libgimp/gimpexport.c:203
-#, fuzzy
 msgid "can only handle RGB images"
-msgstr "è possibile manipolare solo Immagini RGB"
+msgstr "è possibile gestire solo immagini RGB"
 
 #: libgimp/gimpexport.c:204 libgimp/gimpexport.c:232 libgimp/gimpexport.c:241
 msgid "Convert to RGB"
 msgstr "Conversione a RGB"
 
 #: libgimp/gimpexport.c:212
-#, fuzzy
 msgid "can only handle grayscale images"
-msgstr "è possibile manipolare Immagini in Scala di Grigio"
+msgstr "è possibile gestire immagini in scala di grigio"
 
 #: libgimp/gimpexport.c:213 libgimp/gimpexport.c:232 libgimp/gimpexport.c:253
 msgid "Convert to Grayscale"
-msgstr "Converti a Scala di Grigio"
+msgstr "Converti a scala di grigio"
 
 #: libgimp/gimpexport.c:221
-#, fuzzy
 msgid "can only handle indexed images"
-msgstr "è possibile manipolare solo Immagini in Scala di Colore"
+msgstr "è possibile gestire solo immagini in scala di colore"
 
 #: libgimp/gimpexport.c:222 libgimp/gimpexport.c:241 libgimp/gimpexport.c:251
-#, fuzzy
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Conversione a Scala di Colore utilizzando le configurazioni base\n"
+"Conversione a scala di colore utilizzando\n"
+"le configurazioni base\n"
 "(Fatelo manualmente per controllare il risultato)"
 
 #: libgimp/gimpexport.c:231
-#, fuzzy
 msgid "can only handle RGB or grayscale images"
-msgstr "è possibile manipolare solo Immagini RGB o in Scala di Grigio"
+msgstr "è possibile gestire solo Immagini RGB o in scala di grigio"
 
 #: libgimp/gimpexport.c:240
-#, fuzzy
 msgid "can only handle RGB or indexed images"
-msgstr "è possibile manipolare solo Immagini RGB o in Scala di Colore"
+msgstr "è possibile gestire solo immagini RGB o in scala di colore"
 
 #: libgimp/gimpexport.c:250
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
-msgstr ""
-"è possibile manipolare solo Immagini in Scala di Colore o Scala di Grigio"
+msgstr "è possibile gestire solo immagini in scala di colore o scala di grigio"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy
 msgid "needs an alpha channel"
-msgstr "è necessario un Canale Alpha"
+msgstr "è necessario un canale alpha"
 
 #: libgimp/gimpexport.c:262
 msgid "Add Alpha Channel"
-msgstr "Aggiungi Canale Alpha"
+msgstr "Aggiungi canale alpha"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -144,7 +133,7 @@ msgstr "L'esportazione non modificherà l'immagine originale."
 
 #: libgimp/gimpfileselection.c:391
 msgid "Select File"
-msgstr "Seleziona File"
+msgstr "Seleziona file"
 
 #: libgimp/gimpquerybox.c:183 libgimp/gimpquerybox.c:237
 #: libgimp/gimpquerybox.c:293 libgimp/gimpquerybox.c:356
@@ -158,7 +147,7 @@ msgstr "Altri..."
 
 #: libgimp/gimpunitmenu.c:494
 msgid "Unit Selection"
-msgstr "Selezione delle Unità"
+msgstr "Selezione delle unità"
 
 #: libgimp/gimpunitmenu.c:531
 msgid "Unit"

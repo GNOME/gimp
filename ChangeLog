@@ -1,3 +1,7 @@
+Wed Sep 27 12:54:20 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* tips/gimp_tips.it.txt: updates from Daniele Medri <madrid@linux.it>
+
 Wed Sep 27 12:47:53 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* Makefile.am: reordered po dirs in SUBDIRS, so dependencies on

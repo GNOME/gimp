@@ -23,9 +23,10 @@
 
 # FIXME: re-write this welcome message:
 
-Benvenuto in GIMP! - Sito ufficiale italiano: http://gimp.linux.it
-Per inviare suggerimenti o collaborare alla localizzazione dell'applicazione
-in lingua italiana scrivete a: Daniele Medri <madrid@linux.it>
+Benvenuto in GIMP!
+Per maggiori informazioni su questo software si consiglia di
+visitare il sito http://www.it.gimp.org, versione italiana del
+sito ufficiale.
 
 Per accedere ai menù del programma posizionatevi sull'immagine e
 cliccate con il tasto destro. Ogni operazione eseguita può essere
