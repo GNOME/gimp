@@ -935,8 +935,7 @@ gimp_paint_core_get_paint_area (GimpPaintCore *core,
   gint dwidth, dheight;
   gint bwidth, bheight;
 
-  bytes = (gimp_drawable_has_alpha (drawable) ?
-           gimp_drawable_bytes (drawable) : gimp_drawable_bytes (drawable) + 1);
+  bytes = gimp_drawable_bytes_with_alpha (drawable);
 
   gimp_paint_core_calc_brush_size (core,
                                    core->brush->mask,

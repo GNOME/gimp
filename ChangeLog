@@ -1,5 +1,10 @@
 2004-01-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.c (gimp_paint_core_get_paint_area): use
+	gimp_drawable_bytes_with_alpha().
+
+2004-01-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_set_active_layer): don't allow
 	to select anything but the floating selection. Fixes bug #128025.
 
