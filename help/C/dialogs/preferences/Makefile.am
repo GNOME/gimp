@@ -3,6 +3,7 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/preferences
 
 helpdata_DATA = \
+	default_comment.html \
         directories.html \
         display.html \
         environment.html \

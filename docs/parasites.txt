@@ -156,6 +156,11 @@ non-persistant data might be fine as well):
 
 - use the libgimp serialize functions
 
+  NOTE: libgimp/gserialize.[ch] has been excluded from the build for
+        gimp-1.2. This decision was made since noone seemed to use it
+	so far. The files are still in CVS, so if you decide to use
+	them, you will have to include a copy into your plugin source.
+
   Look at the stuff in libgimp/gserialize.h. These functions allow for
   relatively easy serializing/deserializing of structs. The advantages
   are that the gimp-developers have already taken care of endian-ness

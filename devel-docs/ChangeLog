@@ -1,3 +1,10 @@
+Sun Mar 12 01:08:13 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimputils.sgml: new file
+
 Fri Mar 10 11:36:45 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am: fixed bug #7139

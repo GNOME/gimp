@@ -1,0 +1,28 @@
+<!-- ##### SECTION Title ##### -->
+gimputils
+
+<!-- ##### SECTION Short_Description ##### -->
+Simple utility functions that don't have their own category.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Right now all you find here is a function taken from glib-1.3 that 
+we need in several places. Since Gimp doesn't rely on glib-1.3, we
+provide it here.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### FUNCTION gimp_strescape ##### -->
+<para>
+
+</para>
+
+@source: 
+@exceptions: 
+@Returns: 
+
+

@@ -47,9 +47,10 @@
 #include "session.h"
 #include "tools.h"
 
-#include "libgimp/parasite.h"
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpintl.h"
+#include "libgimp/gimputils.h"
+#include "libgimp/parasite.h"
 
 #define ERROR  0
 #define DONE   1
@@ -78,7 +79,8 @@ typedef enum {
   TT_XUNITINFO,
   TT_XPARASITE,
   TT_XNAVPREVSIZE,
-  TT_XHELPBROWSER
+  TT_XHELPBROWSER,
+  TT_XCOMMENT
 } TokenType;
 
 typedef struct _ParseFunc ParseFunc;
@@ -148,6 +150,7 @@ int       default_type = RGB;
 double    default_xresolution = 72.0;
 double    default_yresolution = 72.0;
 GimpUnit  default_resolution_units = GIMP_UNIT_INCH;
+char *    default_comment = NULL;
 int       default_dot_for_dot = TRUE;
 int       show_tips = TRUE;
 int       last_tip = -1;
@@ -219,6 +222,7 @@ static inline char * preview_size_to_str       (gpointer val1p, gpointer val2p);
 static inline char * nav_preview_size_to_str   (gpointer val1p, gpointer val2p);
 static inline char * units_to_str              (gpointer val1p, gpointer val2p);
 static inline char * help_browser_to_str       (gpointer val1p, gpointer val2p);
+static inline char * comment_to_str            (gpointer val1p, gpointer val2p);
 
 static char* transform_path          (char *path, int destroy);
 static void gimprc_set_token         (char *token, char *value);
@@ -300,6 +304,7 @@ static ParseFunc funcs[] =
   { "default-xresolution",       TT_DOUBLE,     &default_xresolution, NULL },
   { "default-yresolution",       TT_DOUBLE,     &default_yresolution, NULL },
   { "default-resolution-units",  TT_XUNIT,      &default_resolution_units, NULL },
+  { "default-comment",           TT_XCOMMENT,	&default_comment, NULL },
   { "default-dot-for-dot",       TT_BOOLEAN,	&default_dot_for_dot, NULL },
   { "plug-in",                   TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",               TT_XPLUGINDEF, NULL, NULL },
@@ -350,6 +355,7 @@ extern char* alternate_gimprc;
 extern char* alternate_system_gimprc;
 
 #define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
+#define DEFAULT_COMMENT            "Created with The GIMP"
 
 static char *
 gimp_system_rc_file (void)
@@ -416,7 +422,9 @@ parse_gimprc (void)
   g_free (libfilename);
  
   if (!image_title_format)
-    image_title_format = g_strdup(DEFAULT_IMAGE_TITLE_FORMAT);
+    image_title_format = g_strdup (DEFAULT_IMAGE_TITLE_FORMAT);
+  if (!default_comment)
+    default_comment = g_strdup (DEFAULT_COMMENT);
 }
 
 gboolean
@@ -859,6 +867,8 @@ parse_statement (void)
 	  return parse_parasite (funcs[i].val1p, funcs[i].val2p);
 	case TT_XHELPBROWSER:
 	  return parse_help_browser (funcs[i].val1p, funcs[i].val2p);
+	case TT_XCOMMENT:
+	  return parse_string (funcs[i].val1p, funcs[i].val2p);
 	}
 
   return parse_unknown (token_sym);
@@ -2562,6 +2572,8 @@ value_to_str (char *name)
 	  return units_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XHELPBROWSER:
 	  return help_browser_to_str (funcs[i].val1p, funcs[i].val2p);
+	case TT_XCOMMENT:
+	  return comment_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
@@ -2578,11 +2590,7 @@ static inline char *
 string_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-#if defined (GLIB_CHECK_VERSION) && GLIB_CHECK_VERSION (1,3,1)
-  gchar *str = g_strescape (*((char **)val1p), NULL);
-#else
-  gchar *str = g_strescape (*((char **)val1p));
-#endif
+  gchar *str = gimp_strescape (*((char **)val1p), NULL);
   gchar *retval;
 
   retval = g_strdup_printf ("%c%s%c", '"', str, '"');
@@ -2747,6 +2755,24 @@ help_browser_to_str (gpointer val1p,
     return g_strdup ("netscape");
   else
     return g_strdup ("gimp");
+}
+
+static inline char *
+comment_to_str (gpointer val1p,
+		gpointer val2p)
+{
+  gchar **str_array;
+  gchar *retval;
+  gchar *str = gimp_strescape (*((char **)val1p), NULL);
+
+  str_array = g_strsplit (str, "\n", 0);
+  g_free (str);
+  str = g_strjoinv ("\\n", str_array);
+  g_strfreev (str_array);
+  retval = g_strdup_printf ("%c%s%c", '"', str, '"');
+  g_free (str);
+
+  return retval;
 }
 
 static void

@@ -27,6 +27,7 @@
 #include "gimage.h"
 
 #include "libgimp/gimpintl.h"
+#include "libgimp/parasite.h"
 
 static GList              *image_base_type_names = NULL;
 static GList              *fill_type_names = NULL;
@@ -190,6 +191,7 @@ image_new_create_image (const GimpImageNewValues *values)
   GDisplay *display;
   Layer *layer;
   GimpImageType type;
+  Parasite *comment_parasite;
   gint width, height;
 
   g_return_if_fail (values != NULL);
@@ -216,6 +218,15 @@ image_new_create_image (const GimpImageNewValues *values)
   gimp_image_set_resolution (image, values->xresolution, values->yresolution);
   gimp_image_set_unit (image, values->unit);
 
+  if (default_comment)
+    {
+      comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
+				       strlen (default_comment)+1,
+				       (gpointer) default_comment);
+      gimp_image_parasite_attach (image, comment_parasite);
+      parasite_free (comment_parasite);
+    }
+  
   /*  Make the background (or first) layer  */
   width = gimp_image_get_width (image);
   height = gimp_image_get_height(image);

@@ -40,6 +40,9 @@
 
 #include "libgimp/gimpintl.h"
 
+/* gimprc will be parsed with a buffer size of 1024, 
+   so don't set this too large */
+#define MAX_COMMENT_LENGTH 512
 
 typedef enum
 {
@@ -61,6 +64,7 @@ static void  file_prefs_nav_preview_size_callback   (GtkWidget *, gpointer);
 static void  file_prefs_mem_size_callback           (GtkWidget *, gpointer);
 static void  file_prefs_mem_size_unit_callback      (GtkWidget *, gpointer);
 static void  file_prefs_string_callback             (GtkWidget *, gpointer);
+static void  file_prefs_text_callback               (GtkWidget *, gpointer);
 static void  file_prefs_filename_callback           (GtkWidget *, gpointer);
 static void  file_prefs_path_callback               (GtkWidget *, gpointer);
 static void  file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
@@ -97,6 +101,7 @@ static gdouble            old_default_xresolution;
 static gdouble            old_default_yresolution;
 static GimpUnit           old_default_resolution_units;
 static gint               old_default_type;
+static gchar *            old_default_comment;
 static gint               old_default_dot_for_dot;
 static gint               old_stingy_memory_use;
 static gint               old_tile_cache_size;
@@ -589,6 +594,10 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "default-image-type");
     }
+  if (file_prefs_strcmp (default_comment, old_default_comment))
+    {
+      update = g_list_append (update, "default-comment");
+    }
   if (default_dot_for_dot != old_default_dot_for_dot)
     {
       update = g_list_append (update, "default-dot-for-dot");
@@ -858,6 +867,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
     }
 
   file_prefs_strset (&image_title_format, old_image_title_format);
+  file_prefs_strset (&default_comment, old_default_comment);
 
   context_manager_set_global_paint_options (old_global_paint_options);
 
@@ -1041,6 +1051,27 @@ file_prefs_string_callback (GtkWidget *widget,
 
   val = data;
   file_prefs_strset (val, gtk_entry_get_text (GTK_ENTRY (widget)));
+}
+
+static void
+file_prefs_text_callback (GtkWidget *widget,
+			  gpointer   data)
+{
+  gchar **val;
+  gchar *text;
+  
+  val = data;
+
+  text = gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1);
+  if (strlen (text) > MAX_COMMENT_LENGTH)
+    {
+      g_message (_("The default comments is limited to %d characters."), 
+		 MAX_COMMENT_LENGTH);
+      gtk_editable_delete_text (GTK_EDITABLE (widget), MAX_COMMENT_LENGTH, -1);
+      g_free (text);
+    }
+  else
+    file_prefs_strset (val, text);
 }
 
 static void
@@ -1349,6 +1380,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   GtkObject *adjustment;
   GtkWidget *sizeentry;
   GtkWidget *sizeentry2;
+  GtkWidget *text;
   GSList    *group;
 
   gint i;
@@ -1430,6 +1462,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_help_browser             = help_browser;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
+  file_prefs_strset (&old_default_comment, default_comment);	
 
   /*  values which will need a restart  */
   old_stingy_memory_use         = edit_stingy_memory_use;
@@ -1686,6 +1719,35 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     _("Maximum Image Size:"), 1.0, 0.5,
 			     hbox, 1, TRUE);
 
+  /* Default Comment page */
+  vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),
+					  _("Default Comment"),
+					  GTK_CTREE (ctree),
+					  _("Default Comment"),
+					  "dialogs/preferences/default_comment.html",
+					  NULL,
+					  &top_insert,
+					  page_index);
+  gtk_widget_show (vbox);
+  page_index++;
+
+  frame = gtk_frame_new (_("Comment Used for New Images"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+ 
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  text = gtk_text_new (NULL, NULL);
+  gtk_text_set_editable (GTK_TEXT (text), TRUE);
+  gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, default_comment, -1);
+  gtk_signal_connect (GTK_OBJECT (text), "changed",
+		      GTK_SIGNAL_FUNC (file_prefs_text_callback),
+		      &default_comment);
+  gtk_container_add (GTK_CONTAINER (hbox), text);
+  gtk_widget_show (text);
 
   /* Display page */
   vbox = file_prefs_notebook_append_page (GTK_NOTEBOOK (notebook),

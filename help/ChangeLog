@@ -1,3 +1,9 @@
+Sun Mar 12 01:04:21 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* C/dialogs/preferences/Makefile.am
+	* C/dialogs/preferences/index.html 
+	* C/dialogs/preferences/default_comment.html: new file
+
 2000-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* C/dialogs/layers/Makefile.am
