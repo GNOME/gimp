@@ -1,3 +1,13 @@
+2000-09-20  Kevin Turner  <acapnotic@users.sourceforge.net>
+
+	* plug-ins/pygimp/plug-ins/pdbbrowse.py (pars): Oops.  When we did
+	s/PARAM_/PDB_/, we forgot to do s/6/4/ (the length of the prefix
+	string changed).
+
+	* plug-ins/pygimp/gimpmodule.c: Filter this through remove_cruft,
+	finishing the libgimp renaming (and further ensuring that it won't
+	work with older libgimps).
+
 2000-09-15  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/print/print-ps.c (ps_parameters): use g_strncasecmp()
