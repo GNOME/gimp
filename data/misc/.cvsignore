@@ -1,4 +1,5 @@
 Makefile.in
 Makefile
-gimp.desktop.in
 gimp.desktop
+gimp.desktop.in
+gimp.desktop.in.in.h
