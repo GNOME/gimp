@@ -8,6 +8,9 @@
  * Added controls for TextAlphaBits and GraphicsAlphaBits
  *   George White <aa056@chebucto.ns.ca>
  *
+ * Added Ascii85 encoding
+ *   Austin Donnelly <austin@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -41,10 +44,11 @@
  * V 1.06, PK, 22-Dec-98: Fix problem with writing color PS files.
  *                        Ghostview may hang when displaying the files.
  * V 1.07, PK, 14-Sep-99: Add resolution to image
+ * V 1.08, PK, 16-Jan-2000: Add PostScript-Level 2 by Austin Donnelly
  */
-#define VERSIO 1.07
-static char dversio[] = "v1.07  14-Sep-99";
-static char ident[]   = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
+#define VERSIO 1.08
+static char dversio[] = "v1.08  16-Jan-2000";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.08  16-Jan-2000";
 
 #include "config.h"
 
@@ -66,7 +70,7 @@ static char ident[]   = "@(#) GIMP PostScript/PDF file-plugin v1.07  14-Sep-99";
 
 #define USE_REAL_OUTPUTFILE
 #endif
- 
+
 #define STR_LENGTH 64
 
 /* Load info */
@@ -111,6 +115,7 @@ typedef struct
   gint unit_mm;               /* Unit of measure (0: inch, 1: mm) */
   gint keep_ratio;            /* Keep aspect ratio */
   gint rotate;                /* Rotation (0, 90, 180, 270) */
+  gint level;                 /* PostScript Level */
   gint eps;                   /* Encapsulated PostScript flag */
   gint preview;               /* Preview Flag */
   gint preview_size;          /* Preview size */
@@ -128,6 +133,7 @@ static PSSaveVals psvals =
   1,              /* Unit is mm */
   1,              /* Keep edge ratio */
   90,             /* Rotate */
+  2,              /* PostScript Level */
   0,              /* Encapsulated PostScript flag */
   0,              /* Preview flag */
   256             /* Preview size */
@@ -238,6 +244,7 @@ typedef struct
   int keep_ratio;
   int unit[2];
   int rot[4];
+  int level;
   int eps;
   int preview;
   int preview_size;
@@ -263,6 +270,82 @@ GPlugInInfo PLUG_IN_INFO =
 
 /* The run mode */
 static GRunModeType l_run_mode;
+
+
+static guint32 ascii85_buf;
+static int ascii85_len = 0;
+static int ascii85_linewidth = 0;
+
+static void
+ascii85_init (void)
+{
+    ascii85_len = 0;
+    ascii85_linewidth = 0;
+}
+
+static void
+ascii85_flush (FILE *ofp)
+{
+    char c[5];
+    int i;
+    gboolean zero_case = (ascii85_buf == 0);
+
+
+    for (i=4; i >= 0; i--)
+    {
+       c[i] = (ascii85_buf % 85) + '!';
+       ascii85_buf /= 85;
+    }
+    /* check for special case: "!!!!!" becomes "z", but only if not
+     * at end of data. */
+    if (zero_case && (ascii85_len == 4))
+    {
+       putc ('z', ofp);
+       ascii85_linewidth++;
+    }
+    else
+    {
+       ascii85_linewidth += ascii85_len+1;
+       for (i=0; i < ascii85_len+1; i++)
+           putc (c[i], ofp);
+    }
+
+    if (ascii85_linewidth >= 75)
+    {
+       putc ('\n', ofp);
+       ascii85_linewidth = 0;
+    }
+
+    ascii85_len = 0;
+    ascii85_buf = 0;
+}
+
+static inline void
+ascii85_out (unsigned char byte, FILE *ofp)
+{
+    if (ascii85_len == 4)
+       ascii85_flush (ofp);
+
+    ascii85_buf <<= 8;
+    ascii85_buf |= byte;
+    ascii85_len++;
+}
+
+static void
+ascii85_done (FILE *ofp)
+{
+    if (ascii85_len)
+    {
+       /* zero any unfilled buffer portion, then flush */
+       ascii85_buf <<= (8 * (4-ascii85_len));
+       ascii85_flush (ofp);
+    }
+
+    putc ('~', ofp);
+    putc ('>', ofp);
+    putc ('\n', ofp);
+}
+
 
 
 MAIN ()
@@ -315,7 +398,8 @@ query (void)
     { PARAM_INT32, "keep_ratio", "0: use width/height, 1: keep aspect ratio" },
     { PARAM_INT32, "rotation", "0, 90, 180, 270" },
     { PARAM_INT32, "eps_flag", "0: PostScript, 1: Encapsulated PostScript" },
-    { PARAM_INT32, "preview", "0: no preview, >0: max. size of preview" }
+    { PARAM_INT32, "preview", "0: no preview, >0: max. size of preview" },
+    { PARAM_INT32, "level", "1: PostScript Level 1, 2: PostScript Level 2" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
@@ -349,7 +433,7 @@ query (void)
                           _("save file in PostScript file format"),
                           _("PostScript saving handles all image types except \
 those with alpha channels."),
-                          "Peter Kirchgessner <pkirchg@aol.com>",
+                          "Peter Kirchgessner <peter@kirchgessner.net>",
                           "Peter Kirchgessner",
                           dversio,
                           "<Save>/PostScript",
@@ -473,20 +557,20 @@ run (char    *name,
       image_ID = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-       /*  eventually export the image */ 
+       /*  eventually export the image */
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
 	case RUN_WITH_LAST_VALS:
 	  init_gtk ();
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PS", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PS",
 				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
 	  if (export == EXPORT_CANCEL)
 	    {
 	      *nreturn_vals = 1;
 	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	      return;
-	    }	  
+	    }
 	  break;
 	default:
 	  break;
@@ -513,7 +597,7 @@ run (char    *name,
 
         case RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
-          if (nparams != 14)
+          if (nparams != 15)
           {
             status = STATUS_CALLING_ERROR;
           }
@@ -529,6 +613,7 @@ run (char    *name,
             psvals.eps = param[12].data.d_int32;
             psvals.preview = (param[13].data.d_int32 != 0);
             psvals.preview_size = param[13].data.d_int32;
+            psvals.level = param[14].data.d_int32;
           }
           break;
 
@@ -561,7 +646,7 @@ run (char    *name,
 
       if (export == EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
-      
+
       values[0].data.d_status = status;
     }
   else if (strcmp (name, "file_ps_load_setargs") == 0)
@@ -663,7 +748,7 @@ load_image (char *filename)
      image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
      if (image_ID == -1) break;
 #ifdef GIMP_HAVE_RESOLUTION_INFO
-     gimp_image_set_resolution (image_ID, 
+     gimp_image_set_resolution (image_ID,
 				(double)plvals.resolution, (double)plvals.resolution);
      gimp_image_set_unit (image_ID, UNIT_INCH);
 #endif
@@ -1099,7 +1184,7 @@ ps_open (char *filename,
    sprintf (cmd, "%s @%s", gs, indirfile);
    fclose (indf);
  }
-#endif      
+#endif
  system (cmd);
 #ifndef __EMX__
  fd_popen = fopen (pnmfile, "r");
@@ -1428,7 +1513,7 @@ by Peter Kirchgessner\n", VERSIO);
   fprintf (ofp, "%%%%Title: %s\n", filename);
   fprintf (ofp, "%%%%CreationDate: %s", ctime (&cutime));
   fprintf (ofp, "%%%%DocumentData: Clean7Bit\n");
-  if (psvals.eps) fprintf (ofp, "%%%%LanguageLevel: 2\n");
+  if (psvals.eps || (psvals.level > 1)) fprintf (ofp,"%%%%LanguageLevel: 2\n");
   fprintf (ofp, "%%%%Pages: 1\n");
 }
 
@@ -1514,12 +1599,14 @@ save_ps_setup (FILE *ofp,
   fprintf (ofp, "%f %f scale\n", 72.0*width_inch, -72.0*height_inch);
 
   /* Write the PostScript procedures to read the image */
-  fprintf (ofp, "%% Variable to keep one line of raster data\n");
-  if (bpp == 1)
-    fprintf (ofp, "/scanline %d string def\n", (width+7)/8);
-  else
-    fprintf (ofp, "/scanline %d %d mul string def\n", width, bpp/8);
-
+  if (psvals.level <= 1)
+  {
+    fprintf (ofp, "%% Variable to keep one line of raster data\n");
+    if (bpp == 1)
+      fprintf (ofp, "/scanline %d string def\n", (width+7)/8);
+    else
+      fprintf (ofp, "/scanline %d %d mul string def\n", width, bpp/8);
+  }
   fprintf (ofp, "%% Image geometry\n%d %d %d\n", width, height,
            (bpp == 1) ? 1 : 8);
   fprintf (ofp, "%% Transformation matrix\n");
@@ -1753,6 +1840,7 @@ save_gray  (FILE *ofp,
   GDrawable *drawable;
   GDrawableType drawable_type;
   static char *hex = "0123456789abcdef";
+  int level2 = (psvals.level > 1);
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -1768,7 +1856,15 @@ save_gray  (FILE *ofp,
   save_ps_setup (ofp, drawable_ID, width, height, 1*8);
 
   /* Write read image procedure */
-  fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
+  if (!level2)
+  {
+    fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
+  }
+  else
+  {
+    fprintf (ofp, "currentfile /ASCII85Decode filter\n");
+    ascii85_init ();
+  }
   fprintf (ofp, "image\n");
 
 #define GET_GRAY_TILE(begin) \
@@ -1780,16 +1876,25 @@ save_gray  (FILE *ofp,
   for (i = 0; i < height; i++)
   {
     if ((i % tile_height) == 0) GET_GRAY_TILE (data); /* Get more data */
-    for (j = 0; j < width; j++)
+    if (!level2)
     {
-      putc (hex[(*src) >> 4], ofp);
-      putc (hex[(*(src++)) & 0x0f], ofp);
-      if (((j+1) % 39) == 0) putc ('\n', ofp);
+      for (j = 0; j < width; j++)
+      {
+        putc (hex[(*src) >> 4], ofp);
+        putc (hex[(*(src++)) & 0x0f], ofp);
+        if (((j+1) % 39) == 0) putc ('\n', ofp);
+      }
+      putc ('\n', ofp);
     }
-    putc ('\n', ofp);
+    else
+    {
+      for (j = 0; j < width; j++)
+        ascii85_out (*(src++), ofp);
+    }
     if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
       gimp_progress_update ((double) i / (double) height);
   }
+  if (level2) ascii85_done (ofp);
   fprintf (ofp, "showpage\n");
   g_free (data);
 
@@ -1821,6 +1926,7 @@ save_bw (FILE *ofp,
   GDrawable *drawable;
   GDrawableType drawable_type;
   static char *hex = "0123456789abcdef";
+  int level2 = (psvals.level > 1);
 
   cmap = gimp_image_get_cmap (image_ID, &ncols);
 
@@ -1841,7 +1947,15 @@ save_bw (FILE *ofp,
   save_ps_setup (ofp, drawable_ID, width, height, 1);
 
   /* Write read image procedure */
-  fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
+  if (!level2)
+  {
+    fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
+  }
+  else
+  {
+    fprintf (ofp, "currentfile /ASCII85Decode filter\n");
+    ascii85_init ();
+  }
   fprintf (ofp, "image\n");
 
 #define GET_BW_TILE(begin) \
@@ -1864,26 +1978,36 @@ save_bw (FILE *ofp,
         *dst |= mask;
       if (mask == 0x01) { mask = 0x80; dst++; } else mask >>= 1;
     }
-    /* Convert to hexstring */
-    for (j = 0; j < nbsl; j++)
+    if (!level2)
     {
-      hex_scanline[j*2] = (unsigned char)hex[scanline[j] >> 4];
-      hex_scanline[j*2+1] = (unsigned char)hex[scanline[j] & 0x0f];
+      /* Convert to hexstring */
+      for (j = 0; j < nbsl; j++)
+      {
+        hex_scanline[j*2] = (unsigned char)hex[scanline[j] >> 4];
+        hex_scanline[j*2+1] = (unsigned char)hex[scanline[j] & 0x0f];
+      }
+      /* Write out hexstring */
+      j = nbsl * 2;
+      dst = hex_scanline;
+      while (j > 0)
+      {
+        nwrite = (j > 78) ? 78 : j;
+        fwrite (dst, nwrite, 1, ofp);
+        putc ('\n', ofp);
+        j -= nwrite;
+        dst += nwrite;
+      }
     }
-    /* Write out hexstring */
-    j = nbsl * 2;
-    dst = hex_scanline;
-    while (j > 0)
+    else
     {
-      nwrite = (j > 78) ? 78 : j;
-      fwrite (dst, nwrite, 1, ofp);
-      putc ('\n', ofp);
-      j -= nwrite;
-      dst += nwrite;
+      dst = scanline;
+      for (j = 0; j < nbsl; j++)
+        ascii85_out (*(dst++), ofp);
     }
     if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
       gimp_progress_update ((double) i / (double) height);
   }
+  if (level2) ascii85_done (ofp);
   fprintf (ofp, "showpage\n");
 
   g_free (hex_scanline);
@@ -1910,7 +2034,7 @@ save_index (FILE *ofp,
 { int height, width, i, j;
   int ncols, bw;
   int tile_height;
-  unsigned char *cmap;
+  unsigned char *cmap, *cmap_start;
   unsigned char *data, *src;
   char coltab[256*6], *ct;
   GPixelRgn pixel_rgn;
@@ -1918,8 +2042,9 @@ save_index (FILE *ofp,
   GDrawableType drawable_type;
   static char *hex = "0123456789abcdef";
   static char *background = "000000";
+  int level2 = (psvals.level > 1);
 
-  cmap = gimp_image_get_cmap (image_ID, &ncols);
+  cmap = cmap_start = gimp_image_get_cmap (image_ID, &ncols);
 
   ct = coltab;
   bw = 1;
@@ -1958,7 +2083,15 @@ save_index (FILE *ofp,
   save_ps_setup (ofp, drawable_ID, width, height, 3*8);
 
   /* Write read image procedure */
-  fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
+  if (!level2)
+  {
+    fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
+  }
+  else
+  {
+    fprintf (ofp, "currentfile /ASCII85Decode filter false 3\n");
+    ascii85_init ();
+  }
   fprintf (ofp, "colorimage\n");
 
 #define GET_INDEX_TILE(begin) \
@@ -1970,15 +2103,29 @@ save_index (FILE *ofp,
   for (i = 0; i < height; i++)
   {
     if ((i % tile_height) == 0) GET_INDEX_TILE (data); /* Get more data */
-    for (j = 0; j < width; j++)
+    if (!level2)
     {
-      fwrite (coltab+(*(src++))*6, 6, 1, ofp);
-      if (((j+1) % 13) == 0) putc ('\n', ofp);
+      for (j = 0; j < width; j++)
+      {
+        fwrite (coltab+(*(src++))*6, 6, 1, ofp);
+        if (((j+1) % 13) == 0) putc ('\n', ofp);
+      }
+      putc ('\n', ofp);
     }
-    putc ('\n', ofp);
+    else
+    {
+      for (j = 0; j < width; j++)
+      {
+        cmap = cmap_start + 3 * (*(src++));
+        ascii85_out (*(cmap++), ofp);
+        ascii85_out (*(cmap++), ofp);
+        ascii85_out (*(cmap++), ofp);
+      }
+    }
     if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
       gimp_progress_update ((double) i / (double) height);
   }
+  if (level2) ascii85_done (ofp);
   fprintf (ofp, "showpage\n");
 
   g_free (data);
@@ -2008,6 +2155,7 @@ save_rgb (FILE *ofp,
   GDrawable *drawable;
   GDrawableType drawable_type;
   static char *hex = "0123456789abcdef";
+  int level2 = (psvals.level > 1);
 
   drawable = gimp_drawable_get (drawable_ID);
   drawable_type = gimp_drawable_type (drawable_ID);
@@ -2023,7 +2171,15 @@ save_rgb (FILE *ofp,
   save_ps_setup (ofp, drawable_ID, width, height, 3*8);
 
   /* Write read image procedure */
-  fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
+  if (!level2)
+  {
+    fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
+  }
+  else
+  {
+    fprintf (ofp, "currentfile /ASCII85Decode filter false 3\n");
+    ascii85_init ();
+  }
   fprintf (ofp, "colorimage\n");
 
 #define GET_RGB_TILE(begin) \
@@ -2035,20 +2191,33 @@ save_rgb (FILE *ofp,
   for (i = 0; i < height; i++)
   {
     if ((i % tile_height) == 0) GET_RGB_TILE (data); /* Get more data */
-    for (j = 0; j < width; j++)
+    if (!level2)
     {
-      putc (hex[(*src) >> 4], ofp);        /* Red */
-      putc (hex[(*(src++)) & 0x0f], ofp);
-      putc (hex[(*src) >> 4], ofp);        /* Green */
-      putc (hex[(*(src++)) & 0x0f], ofp);
-      putc (hex[(*src) >> 4], ofp);        /* Blue */
-      putc (hex[(*(src++)) & 0x0f], ofp);
-      if (((j+1) % 13) == 0) putc ('\n', ofp);
+      for (j = 0; j < width; j++)
+      {
+        putc (hex[(*src) >> 4], ofp);        /* Red */
+        putc (hex[(*(src++)) & 0x0f], ofp);
+        putc (hex[(*src) >> 4], ofp);        /* Green */
+        putc (hex[(*(src++)) & 0x0f], ofp);
+        putc (hex[(*src) >> 4], ofp);        /* Blue */
+        putc (hex[(*(src++)) & 0x0f], ofp);
+        if (((j+1) % 13) == 0) putc ('\n', ofp);
+      }
+      putc ('\n', ofp);
     }
-    putc ('\n', ofp);
+    else
+    {
+      for (j = 0; j < width; j++)
+      {
+        ascii85_out (*(src++), ofp);
+        ascii85_out (*(src++), ofp);
+        ascii85_out (*(src++), ofp);
+      }
+    }
     if ((l_run_mode != RUN_NONINTERACTIVE) && ((i % 20) == 0))
       gimp_progress_update ((double) i / (double) height);
   }
+  if (level2) ascii85_done (ofp);
   fprintf (ofp, "showpage\n");
   g_free (data);
 
@@ -2063,7 +2232,7 @@ save_rgb (FILE *ofp,
 #undef GET_RGB_TILE
 }
 
-static void 
+static void
 init_gtk ()
 {
   gchar **argv;
@@ -2072,7 +2241,7 @@ init_gtk ()
   argc = 1;
   argv = g_new (gchar *, 1);
   argv[0] = g_strdup ("ps");
-  
+
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
@@ -2494,6 +2663,15 @@ save_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
+  toggle = gtk_check_button_new_with_label (_("PostScript Level 2"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  vals->level = (psvals.level > 1);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+                      (GtkSignalFunc) save_toggle_update,
+                      &(vals->level));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), vals->level);
+  gtk_widget_show (toggle);
+
   toggle = gtk_check_button_new_with_label (_("Encapsulated PostScript"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
   vals->eps = (psvals.eps != 0);
@@ -2590,6 +2768,9 @@ save_ok_callback (GtkWidget *widget,
   else if (vals->rot[2] == 1) psvals.rotate = 180;
   else if (vals->rot[3] == 1) psvals.rotate = 270;
   else psvals.rotate = 0;
+
+  /* Read PostScript level 2 flag */
+  psvals.level = vals->level ? 2 : 1;
 
   /* Read EPS flag */
   psvals.eps = (vals->eps != 0);

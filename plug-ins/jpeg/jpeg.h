@@ -103,6 +103,23 @@
  * changed.
  */
 
+/*
+ * 22-DEC-99 - volatiles added
+ * - Austin Donnelly <austin@gimp.org>
+ *
+ * When gcc complains a variable may be clobbered by a longjmp or
+ * vfork, it means the following: setjmp() was called by the JPEG
+ * library for error recovery purposes, but gcc is keeping some
+ * variables in registers without updating the memory locations on the
+ * stack consistently.  If JPEG error recovery is every invoked, the
+ * values of these variable will be inconsistent.  This is almost
+ * always a bug, but not one that's commonly seen unless JPEG recovery
+ * code is exercised frequently.  The correct solution is to tell gcc
+ * to keep the stack version of the affected variables up to date, by
+ * using the "volatile" keyword.   Here endeth the lesson.
+ */
+
+
 #include "config.h"		/* configure cares about HAVE_PROGRESSIVE_JPEG */
 
 #include <glib.h>		/* We want glib.h first because of some
@@ -125,6 +142,7 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include <signal.h>
 
 #define SCALE_WIDTH         125
 
@@ -367,6 +385,11 @@ run (char    *name,
   *return_vals = values;
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
+
+#if 0
+      printf ("JPEG: Waiting (pid %d)...\n", getpid());
+      kill (getpid(), SIGSTOP);
+#endif
 
   if (strcmp (name, "file_jpeg_load") == 0)
     {
@@ -699,7 +722,7 @@ load_image (char         *filename,
   struct my_error_mgr jerr;
   FILE *infile;
   guchar *buf;
-  guchar *padded_buf = NULL;
+  guchar * volatile padded_buf = NULL;
   guchar **rowbuf;
   char *name;
   int image_type;
@@ -710,8 +733,8 @@ load_image (char         *filename,
 
 #ifdef GIMP_HAVE_PARASITES
   JpegSaveVals local_save_vals;
-  Parasite *comment_parasite = NULL;
-  Parasite *vals_parasite = NULL;
+  Parasite * volatile comment_parasite = NULL;
+  Parasite * volatile vals_parasite = NULL;
 #endif /* GIMP_HAVE_PARASITES */
 
   
@@ -775,6 +798,7 @@ load_image (char         *filename,
       {
 	char *string = local_image_comments->str;
 	g_string_free (local_image_comments,FALSE);
+	local_image_comments = NULL;
 	comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
 					 strlen (string) + 1, string);
       } 

@@ -45,8 +45,9 @@ struct _FuzzySelect
   int        op;           /*  selection operation (ADD, SUB, etc)     */
 
   int        x, y;         /*  Point from which to execute seed fill  */
-  int        last_x;       /*                                         */
-  int        last_y;       /*  variables to keep track of sensitivity */
+  int        first_x;      /*                                         */
+  int        first_y;      /*  variables to keep track of sensitivity */
+  double     first_threshold;  /* initial value of threshold slider   */
 };
 
 
@@ -390,8 +391,9 @@ fuzzy_select_button_press (Tool           *tool,
 
   fuzzy_sel->x = bevent->x;
   fuzzy_sel->y = bevent->y;
-  fuzzy_sel->last_x = fuzzy_sel->x;
-  fuzzy_sel->last_y = fuzzy_sel->y;
+  fuzzy_sel->first_x = fuzzy_sel->x;
+  fuzzy_sel->first_y = fuzzy_sel->y;
+  fuzzy_sel->first_threshold = fuzzy_options->threshold;
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK |
@@ -465,23 +467,21 @@ fuzzy_select_motion (Tool           *tool,
   FuzzySelect * fuzzy_sel;
   GdkSegment * new_segs;
   int num_new_segs;
-  int diff, diff_x, diff_y;
+  int diff_x, diff_y;
+  double diff;
 
   if (tool->state != ACTIVE)
     return;
 
   fuzzy_sel = (FuzzySelect *) tool->private;
 
-  diff_x = mevent->x - fuzzy_sel->last_x;
-  diff_y = mevent->y - fuzzy_sel->last_y;
+  diff_x = mevent->x - fuzzy_sel->first_x;
+  diff_y = mevent->y - fuzzy_sel->first_y;
 
-  diff = ((ABS (diff_x) > ABS (diff_y)) ? diff_x : diff_y) / 2;
-
-  fuzzy_sel->last_x = mevent->x;
-  fuzzy_sel->last_y = mevent->y;
+  diff = ((ABS (diff_x) > ABS (diff_y)) ? diff_x : diff_y) / 2.0;
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (fuzzy_options->threshold_w), 
-			    fuzzy_options->threshold + diff);
+			    fuzzy_sel->first_threshold + diff);
       
   /*  calculate the new fuzzy boundary  */
   new_segs = fuzzy_select_calculate (tool, gdisp_ptr, &num_new_segs);

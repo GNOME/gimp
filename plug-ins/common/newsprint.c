@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * newsprint plug-in
- * Copyright (C) 1997-1998 Austin Donnelly <austin@greenend.org.uk>
+ * Copyright (C) 1997-1998 Austin Donnelly <austin@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

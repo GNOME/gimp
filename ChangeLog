@@ -1,3 +1,29 @@
+Sat Jan 22 22:14:18 GMT 2000  Austin Donnelly  <austin@gimp.org>
+
+	* MAINTAINERS: update my entry.
+	* PLUGIN_MAINTAINERS: I maintain newsprint.
+
+	* app/fuzzy_select.c: fix so if you move the pointer back to
+	   where you started, the selection is also the same.  Can people
+	   (tigert?) give this a spin - if it isn't as intuitive as the
+	   old way we should roll this back.
+
+	* plug-ins/common/jpeg.c: use volatile to get rid of "clobber"
+	   warnings from GCC.  Also, fix handling of multiple COM
+	   sections, so can load images such as
+	   /usr/share/pixmaps/backgrounds/space/clem_full_moon_strtrk.jpg or
+	   /usr/share/pixmaps/backgrounds/space/apollo08_earthrise.jpg
+	   which used to segv the jpeg plugin.
+
+	* plug-ins/common/newsprint.c: update my email address.
+
+	* plug-ins/common/ps.c: applied gimp-kirchgessner-000116-0.patch:
+	   save using PostScript level 2 features which result in files
+	   60% smaller than naive level 1 method.  Peter added a
+	   checkbutton to the UI to revert to level 1 algorithm, but we
+	   default to level 2.  Almost everyone should have a level 2
+	   printer, new printers and ghostscript are level 3 these days.
+
 Sat Jan 22 21:38:08 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpdnd.c: corrected off-by-one error in color dnd

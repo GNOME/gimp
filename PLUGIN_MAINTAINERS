@@ -580,7 +580,7 @@ COMMENT    :
 -----------
 NAME       : newsprint
 AUTHOR     : Austin Donnelly
-MAINTAINER : 
+MAINTAINER : Austin Donnelly <austin@gimp.org>
 SIZE       :  64.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
