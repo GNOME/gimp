@@ -282,9 +282,6 @@ gimp_display_shell_canvas_realize (GtkWidget        *canvas,
                     G_CALLBACK (gimp_display_shell_vscrollbar_update),
                     shell);
 
-  /*  setup scale properly  */
-  gimp_display_shell_scale_setup (shell);
-
   /*  set the initial cursor  */
   gimp_display_shell_set_cursor (shell,
                                  GDK_TOP_LEFT_ARROW,

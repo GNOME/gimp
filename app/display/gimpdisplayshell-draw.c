@@ -406,6 +406,10 @@ static void
 gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 {
   gimp_display_shell_update_title (shell);
+
+  /* update the <Image>/View/Zoom menu */
+  gimp_item_factory_update (shell->menubar_factory, shell);
+  gimp_item_factory_update (shell->popup_factory,   shell);
 }
 
 GtkWidget *

@@ -61,12 +61,14 @@
 
 /*  local function prototypes  */
 
-static void   image_menu_foreground_changed (GimpContext     *context,
-                                             const GimpRGB   *color,
-                                             GimpItemFactory *item_factory);
-static void   image_menu_background_changed (GimpContext     *context,
-                                             const GimpRGB   *color,
-                                             GimpItemFactory *item_factory);
+static void   image_menu_foreground_changed (GimpContext      *context,
+                                             const GimpRGB    *color,
+                                             GimpItemFactory  *item_factory);
+static void   image_menu_background_changed (GimpContext      *context,
+                                             const GimpRGB    *color,
+                                             GimpItemFactory  *item_factory);
+static void   image_menu_set_zoom           (GtkItemFactory   *item_factory,
+                                             GimpDisplayShell *shell);
 
 
 GimpItemFactoryEntry image_menu_entries[] =
@@ -283,73 +285,73 @@ GimpItemFactoryEntry image_menu_entries[] =
 
   MENU_BRANCH (N_("/_View")),
 
-  { { N_("/View/Zoom In"), "equal",
+  { { N_("/View/New View"), "",
+      view_new_view_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_NEW },
+    NULL,
+    "view/new_view.html", NULL },
+
+  /*  <Image>/View/Zoom  */
+
+  { { N_("/View/Zoom/Zoom In"), "equal",
       view_zoom_in_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_IN },
     NULL,
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom Out"), "minus",
+  { { N_("/View/Zoom/Zoom Out"), "minus",
       view_zoom_out_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_OUT },
     NULL,
     "view/zoom.html", NULL },
-  { { N_("/View/Zoom to Fit Window"), "<control><shift>E",
+  { { N_("/View/Zoom/Zoom to Fit Window"), "<control><shift>E",
       view_zoom_fit_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_ZOOM_FIT },
     NULL,
     "view/zoom.html", NULL },
-  { { N_("/View/Shrink Wrap"), "<control>E",
-      view_shrink_wrap_cmd_callback, 0 },
-    NULL,
-    "view/shrink_wrap.html", NULL },
 
-  /*  <Image>/View/Zoom  */
+  MENU_SEPARATOR ("/View/Zoom/---"),
 
   { { N_("/View/Zoom/16:1"), NULL,
-      view_zoom_cmd_callback, 1601,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
+      view_zoom_cmd_callback, 1601, "<RadioItem>" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/8:1"), NULL,
-      view_zoom_cmd_callback, 801,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
+      view_zoom_cmd_callback, 801, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/4:1"), NULL,
-      view_zoom_cmd_callback, 401,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
+      view_zoom_cmd_callback, 401, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/2:1"), NULL,
-      view_zoom_cmd_callback, 201,
-      "<StockItem>", GTK_STOCK_ZOOM_IN },
+      view_zoom_cmd_callback, 201, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/1:1"), "1",
-      view_zoom_cmd_callback, 101,
-      "<StockItem>", GTK_STOCK_ZOOM_100 },
+      view_zoom_cmd_callback, 101, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/1:2"), NULL,
-      view_zoom_cmd_callback, 102,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
+      view_zoom_cmd_callback, 102, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/1:4"), NULL,
-      view_zoom_cmd_callback, 104,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
+      view_zoom_cmd_callback, 104, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/1:8"), NULL,
-      view_zoom_cmd_callback, 108,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
+      view_zoom_cmd_callback, 108, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
   { { N_("/View/Zoom/1:16"), NULL,
-      view_zoom_cmd_callback, 116,
-      "<StockItem>", GTK_STOCK_ZOOM_OUT },
+      view_zoom_cmd_callback, 116, "/View/Zoom/16:1" },
     NULL,
     "view/zoom.html", NULL },
+  { { "/View/Zoom/Other", NULL,
+      NULL,                   0,   "/View/Zoom/16:1" },
+    NULL,
+    "view/zoom.html", NULL },
+
 
   { { N_("/View/Dot for Dot"), NULL,
       view_dot_for_dot_cmd_callback, 0, "<ToggleItem>" },
@@ -411,18 +413,17 @@ GimpItemFactoryEntry image_menu_entries[] =
     NULL,
     "view/toggle_statusbar.html", NULL },
 
+  MENU_SEPARATOR ("/View/---"),
+
+  { { N_("/View/Shrink Wrap"), "<control>E",
+      view_shrink_wrap_cmd_callback, 0 },
+    NULL,
+    "view/shrink_wrap.html", NULL },
+
   { { N_("/View/Fullscreen"), "F11",
       view_fullscreen_cmd_callback, 0, "<ToggleItem>" },
     NULL,
     "view/fullscreen.html", NULL },
-
-  MENU_SEPARATOR ("/View/---"),
-
-  { { N_("/View/New View"), "",
-      view_new_view_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_NEW },
-    NULL,
-    "view/new_view.html", NULL },
 
   /*  <Image>/Image  */
 
@@ -1257,19 +1258,25 @@ image_menu_update (GtkItemFactory *item_factory,
 
   /*  View  */
 
-  SET_SENSITIVE ("/View/Zoom In",            gdisp);
-  SET_SENSITIVE ("/View/Zoom Out",           gdisp);
-  SET_SENSITIVE ("/View/Zoom to Fit Window", gdisp);
+  SET_SENSITIVE ("/View/New View",   gdisp);
 
-  SET_SENSITIVE ("/View/Zoom/16:1", gdisp);
-  SET_SENSITIVE ("/View/Zoom/8:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/4:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/2:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:1",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:2",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:4",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:8",  gdisp);
-  SET_SENSITIVE ("/View/Zoom/1:16", gdisp);
+  SET_SENSITIVE ("/View/Zoom/Zoom In",            gdisp);
+  SET_SENSITIVE ("/View/Zoom/Zoom Out",           gdisp);
+  SET_SENSITIVE ("/View/Zoom/Zoom to Fit Window", gdisp);
+
+  SET_SENSITIVE ("/View/Zoom/16:1",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/8:1",   gdisp);
+  SET_SENSITIVE ("/View/Zoom/4:1",   gdisp);
+  SET_SENSITIVE ("/View/Zoom/2:1",   gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:1",   gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:2",   gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:4",   gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:8",   gdisp);
+  SET_SENSITIVE ("/View/Zoom/1:16",  gdisp);
+  SET_SENSITIVE ("/View/Zoom/Other", gdisp);
+
+  if (gdisp)
+    image_menu_set_zoom (item_factory, shell);
 
   SET_SENSITIVE ("/View/Dot for Dot", gdisp);
   SET_ACTIVE    ("/View/Dot for Dot", gdisp && shell->dot_for_dot);
@@ -1279,12 +1286,14 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Display Filters...",   gdisp);
 
   SET_SENSITIVE ("/View/Show Selection",      gdisp);
-  SET_ACTIVE    ("/View/Show Selection",      gdisp && ! shell->select->hidden);
+  SET_ACTIVE    ("/View/Show Selection",      (gdisp && shell->select &&
+                                               ! shell->select->hidden));
   SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && ! shell->select->layer_hidden);
+  SET_ACTIVE    ("/View/Show Layer Boundary", (gdisp && shell->select &&
+                                               ! shell->select->layer_hidden));
 
-  SET_SENSITIVE ("/View/Show Guides",  gdisp);
-  SET_ACTIVE    ("/View/Show Guides",  gdisp && gdisp->draw_guides);
+  SET_SENSITIVE ("/View/Show Guides",    gdisp);
+  SET_ACTIVE    ("/View/Show Guides",    gdisp && gdisp->draw_guides);
   SET_SENSITIVE ("/View/Snap to Guides", gdisp);
   SET_ACTIVE    ("/View/Snap to Guides", gdisp && gdisp->snap_to_guides);
 
@@ -1300,11 +1309,10 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Show Statusbar", gdisp);
   SET_ACTIVE    ("/View/Show Statusbar", gdisp && visibility->statusbar);
 
+  SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
+
   SET_SENSITIVE ("/View/Fullscreen", gdisp);
   SET_ACTIVE    ("/View/Fullscreen", gdisp && fullscreen);
-
-  SET_SENSITIVE ("/View/New View",    gdisp);
-  SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
 
   /*  Image  */
 
@@ -1393,4 +1401,59 @@ image_menu_background_changed (GimpContext     *context,
 {
   gimp_item_factory_set_color (GTK_ITEM_FACTORY (item_factory),
                                "/Edit/Fill with BG Color", color, FALSE);
+}
+
+static void
+image_menu_set_zoom (GtkItemFactory   *item_factory,
+                     GimpDisplayShell *shell)
+{
+  const gchar *menu = NULL;
+  guint        scalesrc;
+  guint        scaledest;
+
+  scalesrc  = SCALESRC (shell);
+  scaledest = SCALEDEST (shell);
+ 
+  if (scaledest == 1)
+    {
+      switch (scalesrc)
+        {
+        case  1:  menu = "/View/Zoom/1:1";   break;
+        case  2:  menu = "/View/Zoom/1:2";   break;
+        case  4:  menu = "/View/Zoom/1:4";   break;
+        case  8:  menu = "/View/Zoom/1:8";   break;
+        case 16:  menu = "/View/Zoom/1:16";  break;
+        }
+    }
+  else if (scalesrc == 1)
+    {
+      switch (scaledest)
+        {
+        case  2:  menu = "/View/Zoom/2:1";   break;
+        case  4:  menu = "/View/Zoom/4:1";   break;
+        case  8:  menu = "/View/Zoom/8:1";   break;
+        case 16:  menu = "/View/Zoom/16:1";  break;
+        }
+    }
+
+  if (menu)
+    {
+      gimp_item_factory_set_label (item_factory, "/View/Zoom/Other",_("Other"));
+      gimp_item_factory_set_sensitive (item_factory, "/View/Zoom/Other", FALSE);
+    }
+  else
+    {
+      gchar *label;
+
+      menu = "/View/Zoom/Other";
+
+      label = g_strdup_printf (_("Other (%d:%d)"), scaledest, scalesrc);
+
+      gimp_item_factory_set_label (item_factory, menu, label);
+      gimp_item_factory_set_sensitive (item_factory, menu, TRUE);
+
+      g_free (label);
+    }
+
+  gimp_item_factory_set_active (item_factory, menu, TRUE);
 }

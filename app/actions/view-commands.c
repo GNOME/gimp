@@ -92,10 +92,22 @@ view_zoom_cmd_callback (GtkWidget *widget,
 			gpointer   data,
 			guint      action)
 {
-  GimpDisplay *gdisp;
+  GimpDisplay      *gdisp;
+  GimpDisplayShell *shell;
+  guchar            scalesrc;
+  guchar            scaledest;
   return_if_no_display (gdisp, data);
 
-  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), action);
+  if (! GTK_CHECK_MENU_ITEM (widget)->active)
+    return;
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  scalesrc  = CLAMP (action % 100, 1, 0xFF);
+  scaledest = CLAMP (action / 100, 1, 0xFF);
+
+  if (scalesrc != SCALESRC (shell) || scaledest != SCALEDEST (shell))
+    gimp_display_shell_scale (shell, action);
 }
 
 void

@@ -1,3 +1,21 @@
+2003-03-12  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/image-menu.c: reordered the View menu, moved all
+	Zoom-related entries into a submenu. Use radio items for the zoom
+	ratio as suggested in bug #74385.
+
+	* app/gui/view-commands.c (view_zoom_cmd_callback): only call
+	gimp_display_shell_scale() if the item is active and the current
+	scale is different from the requested one.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_real_scaled):
+	update the image menu so that the zoom ratio is displayed correctly.
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_realize): don't call
+	gimp_display_shell_scale_setup(), since it is done in the configure
+	event handler already.
+
 2003-03-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]: added descriptions to the
