@@ -28,11 +28,11 @@
 
 #include "config-types.h"
 
-#include "gimpconfig-blurbs.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
 
+#include "gimprc-blurbs.h"
 #include "gimpdisplayconfig.h"
 
 

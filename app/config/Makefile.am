@@ -6,7 +6,6 @@ libappconfig_a_SOURCES = \
 	config-types.h			\
 	gimpconfig.c			\
 	gimpconfig.h			\
-	gimpconfig-blurbs.h		\
 	gimpconfig-deserialize.c	\
 	gimpconfig-deserialize.h	\
 	gimpconfig-params.c		\
@@ -30,6 +29,7 @@ libappconfig_a_SOURCES = \
 	gimpguiconfig.h			\
 	gimprc.c			\
 	gimprc.h			\
+	gimprc-blurbs.h			\
 	gimpscanner.c			\
 	gimpscanner.h
 

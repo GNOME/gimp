@@ -22,11 +22,12 @@
 #ifndef __CONFIG_TYPES_H__
 #define __CONFIG_TYPES_H__
 
+
 typedef struct _GimpBaseConfig      GimpBaseConfig;
 typedef struct _GimpCoreConfig      GimpCoreConfig;
+typedef struct _GimpDisplayConfig   GimpDisplayConfig;
+typedef struct _GimpGuiConfig       GimpGuiConfig;
+typedef struct _GimpRc              GimpRc;
 
-typedef struct _GimpDisplayConfig      GimpDisplayConfig;
-typedef struct _GimpGuiConfig      GimpGuiConfig;
-typedef struct _GimpRc      GimpRc;
 
 #endif /* __CONFIG_TYPES_H__ */

@@ -1,3 +1,19 @@
+2002-12-20  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-blurbs.h: removed ...
+	
+	* app/config/gimprc-blurbs.h: ... and readded under this
+	name. Should have never been named with a gimpconfig prefix since
+	it's not part of the generic GimpConfig system.
+
+	* app/config/config-types.h
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c: changed accordingly.
+
 2002-12-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf.c: use G_N_ELEMENTS().

@@ -27,10 +27,10 @@
 
 #include "config-types.h"
 
-#include "gimpconfig-blurbs.h"
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 
+#include "gimprc-blurbs.h"
 #include "gimpbaseconfig.h"
 
 
