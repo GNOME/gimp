@@ -1,34 +1,3 @@
-## Makefile for compiling the GIMP message
-## Use: make -f makefile.msc install
-## You will need: - msgfmt from GNU gettext,
-##		  - jconv (http://www.oreilly.com/~lunde/j_tools.html)
-##		  - sjis_esc, included here eventually
-
-# Locale directory.
+PACKAGE = gimp
 LOCALEDIR = /gimp/locale
-
-LANGUAGES= cs da de fi fr hu it ja ja.sjis ko nl no pl ru sk sv
-
-################################################################
-
-# Nothing much configurable below
-
-all : $(addsuffix .gmo,$(LANGUAGES))
-
-install : all
-	mkdir -p $(addsuffix /LC_MESSAGES,$(addprefix $(LOCALEDIR)/,$(LANGUAGES)))
-	for l in $(LANGUAGES); do cp $$l.gmo $(LOCALEDIR)/$$l/LC_MESSAGES/gimp.mo; done
-
-.SUFFIXES: .po .gmo
-
-.po.gmo:
-	msgfmt -o $@ $<
-
-# Special case: Japanese, we must convert from EUC-JP to Shift-JIS
-# As Shift-JIS can have " and \ chars as second byte, we need to
-# escape those with the sjis_esc filter
-ja.sjis.po: ja.po
-	jconv -ie -os <ja.po | sjis_esc >ja.sjis.po
-
-clean:
-	rm *.gmo ja.sjis.po
+include ../../gtk+/po/makefile.cygwin

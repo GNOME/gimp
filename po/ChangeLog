@@ -1,3 +1,10 @@
+1999-10-31  Tor Lillqvist  <tml@iki.fi>
+
+	* makefile.cygwin: Use the generic (UTF-8 based) makefile.cygwin
+	from gtk+.
+
+	* makefile.msc: Removed.
+
 1999-10-22  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
@@ -10,7 +17,7 @@
 
 	* makefile.cygwin: New file.
 	
-	* makefile.msc: Add Shift-JIS Japanese version.b
+	* makefile.msc: Add Shift-JIS Japanese version.
 
 1999-10-70  Tomas Ogren  <stric@ing.umu.se>
 
