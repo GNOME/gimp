@@ -1,3 +1,8 @@
+2002-04-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox.c: display the tools' shortcuts in the
+	tool buttons' tooltips (fixes #60273).
+
 2002-04-21  Nathan Summers  <rock@gimp.org>
 
  	* app/tools/gimptoolcontrol.[ch]

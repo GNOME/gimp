@@ -467,13 +467,127 @@ gimp_toolbox_new (GimpDialogFactory *dialog_factory,
 
 /*  private functions  */
 
+static gboolean
+gimp_toolbox_button_accel_find_func (GtkAccelKey *key,
+                                     GClosure    *closure,
+                                     gpointer     data)
+{
+  return (GClosure *) data == closure;
+}
+
+static void
+gimp_toolbox_button_accel_changed (GtkAccelGroup   *accel_group,
+                                   guint            unused1,
+                                   GdkModifierType  unused2,
+                                   GClosure        *accel_closure,
+                                   GtkWidget       *tool_button)
+{
+  GClosure *button_closure;
+
+  button_closure = g_object_get_data (G_OBJECT (tool_button),
+                                      "toolbox-accel-closure");
+
+  if (accel_closure == button_closure)
+    {
+      GimpToolInfo *tool_info;
+      GtkAccelKey  *accel_key;
+      gchar        *tooltip;
+
+      tool_info = g_object_get_data (G_OBJECT (tool_button), "tool-info");
+
+      accel_key = gtk_accel_group_find (accel_group,
+                                        gimp_toolbox_button_accel_find_func,
+                                        accel_closure);
+
+      if (accel_key            &&
+          accel_key->accel_key &&
+          accel_key->accel_flags & GTK_ACCEL_VISIBLE)
+        {
+          /*  mostly taken from gtk-2-0/gtk/gtkaccellabel.c:1.46
+           */
+          GtkAccelLabelClass *accel_label_class;
+          GString            *gstring;
+          gboolean            seen_mod = FALSE;
+          gunichar            ch;
+
+          accel_label_class = g_type_class_peek (GTK_TYPE_ACCEL_LABEL);
+
+          gstring = g_string_new (tool_info->help);
+          g_string_append (gstring, "     ");
+
+          if (accel_key->accel_mods & GDK_SHIFT_MASK)
+            {
+              g_string_append (gstring, accel_label_class->mod_name_shift);
+              seen_mod = TRUE;
+            }
+          if (accel_key->accel_mods & GDK_CONTROL_MASK)
+            {
+              if (seen_mod)
+                g_string_append (gstring, accel_label_class->mod_separator);
+              g_string_append (gstring, accel_label_class->mod_name_control);
+              seen_mod = TRUE;
+            }
+          if (accel_key->accel_mods & GDK_MOD1_MASK)
+            {
+              if (seen_mod)
+                g_string_append (gstring, accel_label_class->mod_separator);
+              g_string_append (gstring, accel_label_class->mod_name_alt);
+              seen_mod = TRUE;
+            }
+          if (seen_mod)
+            g_string_append (gstring, accel_label_class->mod_separator);
+
+          ch = gdk_keyval_to_unicode (accel_key->accel_key);
+          if (ch && (g_unichar_isgraph (ch) || ch == ' ') &&
+              (ch < 0x80 || accel_label_class->latin1_to_char))
+            {
+              switch (ch)
+                {
+                case ' ':
+                  g_string_append (gstring, "Space");
+                  break;
+                case '\\':
+                  g_string_append (gstring, "Backslash");
+                  break;
+                default:
+                  g_string_append_unichar (gstring, g_unichar_toupper (ch));
+                  break;
+                }
+            }
+          else
+            {
+              gchar *tmp;
+
+              tmp = gtk_accelerator_name (accel_key->accel_key, 0);
+              if (tmp[0] != 0 && tmp[1] == 0)
+                tmp[0] = g_ascii_toupper (tmp[0]);
+              g_string_append (gstring, tmp);
+              g_free (tmp);
+            }
+
+          tooltip = g_string_free (gstring, FALSE);
+        }
+      else
+        {
+          tooltip = g_strdup (tool_info->help);
+        }
+
+      gimp_help_set_help_data (tool_button,
+			       tooltip,
+			       tool_info->help_data);
+    }
+}
+
 static void
 toolbox_create_tools (GimpToolbox *toolbox,
                       GimpContext *context)
 {
-  GimpToolInfo *active_tool;
-  GList        *list;
-  GSList       *group = NULL;
+  GimpItemFactory *item_factory;
+  GimpToolInfo    *active_tool;
+  GList           *list;
+  GSList          *group = NULL;
+
+  item_factory = gimp_item_factory_from_path ("<Image>");
 
   active_tool = gimp_context_get_tool (context);
 
@@ -484,6 +598,8 @@ toolbox_create_tools (GimpToolbox *toolbox,
       GimpToolInfo *tool_info;
       GtkWidget    *button;
       GtkWidget    *image;
+      GtkWidget    *menu_item;
+      GList        *accel_closures;
 
       tool_info = (GimpToolInfo *) list->data;
 
@@ -495,6 +611,7 @@ toolbox_create_tools (GimpToolbox *toolbox,
       gtk_widget_show (button);
 
       g_object_set_data (G_OBJECT (tool_info), "toolbox-button", button);
+      g_object_set_data (G_OBJECT (button), "tool-info", tool_info);
 
       image = gtk_image_new_from_stock (tool_info->stock_id,
 					GTK_ICON_SIZE_BUTTON);
@@ -512,10 +629,38 @@ toolbox_create_tools (GimpToolbox *toolbox,
 			G_CALLBACK (toolbox_tool_button_press),
                         toolbox);
 
-      gimp_help_set_help_data (button,
-			       tool_info->help,
-			       tool_info->help_data);
+      menu_item = gtk_item_factory_get_widget (GTK_ITEM_FACTORY (item_factory),
+                                               tool_info->menu_path);
+      accel_closures = gtk_widget_list_accel_closures (menu_item);
 
+      if (g_list_length (accel_closures) != 1)
+        {
+          g_warning (G_STRLOC ": FIXME: g_list_length (accel_closures) != 1");
+        }
+      else
+        {
+          GClosure      *accel_closure;
+          GtkAccelGroup *accel_group;
+
+          accel_closure = (GClosure *) accel_closures->data;
+
+          g_object_set_data (G_OBJECT (button), "toolbox-accel-closure",
+                             accel_closure);
+
+          accel_group = gtk_accel_group_from_accel_closure (accel_closure);
+
+          g_signal_connect (accel_group, "accel_changed",
+                            G_CALLBACK (gimp_toolbox_button_accel_changed),
+                            button);
+
+          gimp_toolbox_button_accel_changed (accel_group,
+                                             0, 0,
+                                             accel_closure,
+                                             button);
+
+        }
+
+      g_list_free (accel_closures);
     }
 }
 
