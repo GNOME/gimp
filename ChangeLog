@@ -1,3 +1,8 @@
+Wed May 20 20:21:45 EST 1998 Stephen Norris <srn@fn.com.au>
+
+	* plug-ins/bz2/bz2.c: Check return code from fopen.
+	* plug-ins/gz/gz.c: Check return code from fopen.
+
 Tue May 19 14:02:41 MET DST 1998 Sven Neumann <sven@gimp.org>
 
 	* added a new script from Wolfgang Hofer (fade-outline.scm)
