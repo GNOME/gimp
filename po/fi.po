@@ -1,0 +1,750 @@
+#  Finnish translation of GIMP 1.1.0
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Ville Hautamäki <villeh@cs.joensuu.fi>, 1998.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 1998-09-11 16:24+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: fi <fi@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: ENCODING\n"
+
+#: app/about_dialog.c:151
+msgid "About the GIMP"
+msgstr "Tietoja GIMPstä"
+
+#: app/about_dialog.c:194
+msgid "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+msgstr "-Adobe-Helvetica-Medium-R-Normal--*-140-*-*-*-*-*-*"
+
+#: app/about_dialog.c:197
+msgid "Version "
+msgstr "Versio"
+
+#: app/about_dialog.c:198
+msgid " brought to you by"
+msgstr " Julkaisi teille"
+
+#: app/about_dialog.c:204
+msgid "Spencer Kimball and Peter Mattis"
+msgstr "Spencer Kimball ja Peter Mattis"
+
+#: app/about_dialog.c:237
+msgid "Please visit http://www.gimp.org/ for more info"
+msgstr "Käy hakemassa http://www.gimp.org/ :sta lisää tietoa" 
+
+#: app/main.c:265
+msgid "GIMP version"
+msgstr "GIMP:n versio"
+
+#: app/main.c:269
+#, c-format
+msgid "Usage: %s [option ...] [files ...]\n"
+msgstr "Käyttö: %s [asetus ...] [tiedostot ...]\"
+
+#: app/main.c:270
+msgid "Valid options are:\n"
+msgstr "Oikeat asetukset ovat:\n"
+
+#: app/main.c:271
+msgid "  -h --help                Output this help.\n"
+msgstr "  -h --help               Tulostaa tämän avun.\n"
+
+#: app/main.c:272
+msgid "  -v --version             Output version info.\n"
+msgstr "  -v --version            Tulostaa versio tiedot.\n"
+
+#: app/main.c:273
+msgid "  -b --batch <commands>    Run in batch mode.\n"
+msgstr "  -b --batch <komennot>   Aja batch moodissa*.\n"
+
+#: app/main.c:274
+msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
+msgstr "  -g --gimprc <gimprc>    Käytä toista gimprc tiedostoa.\n"
+
+#: app/main.c:275
+msgid "  -n --no-interface        Run without a user interface.\n"
+msgstr "  -n --no-interface       Aja ilman käyttöliittymää.\n"
+
+#: app/main.c:276
+msgid "  -r --restore-session     Try to restore saved session.\n"
+msgstr "  -r --restore-session    Yritä palauttaa talletettua istunto.\n"
+
+#: app/main.c:277
+msgid ""
+"  --no-data                Do not load patterns, gradients, palettes, "
+"brushes.\n"
+msgstr ""
+"  --no-data		    Älä lataa kuvioita, murrettujasävyjä, paletteja ja"
+"siveltimiä.\n"
+
+#: app/main.c:278
+msgid "  --verbose                Show startup messages.\n"
+msgstr "  --verbose               Näytä käynnistys tiedot.\n"
+
+#: app/main.c:279
+msgid "  --no-splash              Do not show the startup window.\n"
+msgstr "  --no-splash             Älä näytä alkuikkunaa.\n "
+
+#: app/main.c:280
+msgid "  --no-splash-image        Do not add an image to the startup window.\n"
+msgstr "  --no-splash-image       Älä lisää kuvaa alkuikkunaan.\n"
+
+#: app/main.c:281
+msgid ""
+"  --no-shm                 Do not use shared memory between GIMP and its "
+"plugins.\n"
+msgstr ""
+"  --no-shm                 Älä käytä jaettua muistia GIMP:in ja sen "
+"lisäosien välillä.\n""
+
+#: app/main.c:282
+msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
+msgstr "  --no-xshm               Älä käytä X Shared Memory lisäystä.\n"
+
+#: app/main.c:283
+msgid ""
+"  --console-messages       Display warnings to console instead of a dialog "
+"box.\n"
+msgstr ""
+"  --console-messages       Tulosta varoitukset konsoliin graafisten dialogien"
+"sijasta.\n"
+
+#: app/main.c:284
+msgid "  --debug-handlers         Enable debugging signal handlers.\n"
+msgstr "  --debug-handlers        "
+
+#: app/main.c:285
+msgid ""
+"  --display <display>      Use the designated X display.\n"
+"\n"
+msgstr ""
+"  --display <näyttö>       Käytä osoitettua X näyttöä.\n"
+"\n"
+
+#: app/main.c:286
+msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
+msgstr "  --system-gimprc <gimprc> Käytä alternatiivista järjestelmän gimprc tiedostoa.\n"
+
+#: app/main.c:342
+msgid "sighup caught"
+msgstr "sighup napattu"
+
+#: app/main.c:345
+msgid "sigint caught"
+msgstr "sigint napattu"
+
+#: app/main.c:348
+msgid "sigquit caught"
+msgstr "sigquit napattu"
+
+#: app/main.c:351
+msgid "sigabrt caught"
+msgstr "sigabrt napattu"
+
+#: app/main.c:354
+msgid "sigbus caught"
+msgstr "sigbus napattu"
+
+#: app/main.c:357
+msgid "sigsegv caught"
+msgstr "sigsegv napattu"
+
+#: app/main.c:360
+msgid "sigpipe caught"
+msgstr "sigpipe napattu"
+
+#: app/main.c:363
+msgid "sigterm caught"
+msgstr "sigterm napattu"
+
+#: app/main.c:366
+msgid "sigfpe caught"
+msgstr "sigfpe napattu"
+
+#: app/main.c:369
+msgid "unknown signal"
+msgstr "tuntematon signaali"
+
+#: app/menus.c:49 app/menus.c:75
+msgid "/File/New"
+msgstr "/Tiedosto/Uusi"
+
+#: app/menus.c:50 app/menus.c:76
+msgid "/File/Open"
+msgstr "/Tiedosto/Avaa"
+
+#: app/menus.c:51
+msgid "/File/About..."
+msgstr "/Tiedosto/Tietoja..."
+
+#: app/menus.c:52 app/menus.c:79
+msgid "/File/Preferences..."
+msgstr "/Tiedosto/Asetukset..."
+
+#: app/menus.c:53
+msgid "/File/Tip of the day"
+msgstr "/Tiedosto/Päivän vihje"
+
+#: app/menus.c:54 app/menus.c:65 app/menus.c:70 app/menus.c:80 app/menus.c:85
+msgid "/File/---"
+msgstr "/Tiedosto/---"
+
+#: app/menus.c:55
+msgid "/File/Dialogs/Brushes..."
+msgstr "/Tiedosto/Dialogit/Siveltimet..."
+
+#: app/menus.c:56
+msgid "/File/Dialogs/Patterns..."
+msgstr "/Tiedosto/Dialogit/Kuviot..."
+
+#: app/menus.c:57
+msgid "/File/Dialogs/Palette..."
+msgstr "/Tiedosto/Dialogit/Paletit..."
+
+#: app/menus.c:58
+msgid "/File/Dialogs/Gradient Editor..."
+msgstr "/Tiedosto/Dialogit/Liukuvärien muokkain..."
+
+#: app/menus.c:59
+msgid "/File/Dialogs/Layers & Channels..."
+msgstr "/Tiedosto/Dialogit/Tasot & Kanavat..."
+
+#: app/menus.c:60
+msgid "/File/Dialogs/Tool Options..."
+msgstr "/Tiedosto/Dialogit/Työkalujen Asetukset..."
+
+#: app/menus.c:61
+msgid "/File/Dialogs/Input Devices..."
+msgstr "/Tiedosto/Dialogs/Piirtolaitteet..."
+
+#: app/menus.c:62
+msgid "/File/Dialogs/Device Status..."
+msgstr "/Tiedosto/Dialogit/Laitteiden tila..."
+
+#: app/menus.c:63
+msgid "/File/Dialogs/Document Index..."
+msgstr "/Tiedosto/Dialogit/Dokumenttien indexi..."
+
+#: app/menus.c:64
+msgid "/File/Dialogs/Error Console..."
+msgstr "/Tiedosto/Dialogit/Konsoli virheilmoituksille..."
+
+#: app/menus.c:71 app/menus.c:84
+msgid "/File/Quit"
+msgstr "/Tiedosto/Poistu"
+
+#: app/menus.c:77
+msgid "/File/Save"
+msgstr "/Tiedosto/Talleta"
+
+#: app/menus.c:78
+msgid "/File/Save as"
+msgstr "/Tiedosto/Talleta nimellä"
+
+#: app/menus.c:83
+msgid "/File/Close"
+msgstr "/Tiedosto/Sulje"
+
+#: app/menus.c:87
+msgid "/Edit/Cut"
+msgstr "/Muokkaa/Leikkaa"
+
+#: app/menus.c:88
+msgid "/Edit/Copy"
+msgstr "/Muokkaa/Kopioi"
+
+#: app/menus.c:89
+msgid "/Edit/Paste"
+msgstr "/Muokkaa/Liimaa"
+
+#: app/menus.c:90
+msgid "/Edit/Paste Into"
+msgstr "/Muokkaa/Liimaa johonkin"
+
+#: app/menus.c:91
+msgid "/Edit/Clear"
+msgstr "/Muokkaa/Tyhjennä"
+
+#: app/menus.c:92
+msgid "/Edit/Fill"
+msgstr "/Muokkaa/Täytä"
+
+#: app/menus.c:93
+msgid "/Edit/Stroke"
+msgstr "/Muokkaa/Piirrä"
+
+#: app/menus.c:94
+msgid "/Edit/Undo"
+msgstr "/Tiedosto/Kumoa"
+
+#: app/menus.c:95
+msgid "/Edit/Redo"
+msgstr "/Muokkaa/Uudelleen"
+
+#: app/menus.c:96 app/menus.c:100
+msgid "/Edit/---"
+msgstr "/Muokkaa/---"
+
+#: app/menus.c:97
+msgid "/Edit/Cut Named"
+msgstr "/Muokkaa/Leikkaa nimetty"
+
+#: app/menus.c:98
+msgid "/Edit/Copy Named"
+msgstr "/Muokkaa/Kopioi nimetty"
+
+#: app/menus.c:99
+msgid "/Edit/Paste Named"
+msgstr "/Muokkaa/Liimaa nimetty"
+
+#: app/menus.c:102
+msgid "/Select/Toggle"
+msgstr "/Valitse/Vaihda"
+
+#: app/menus.c:103
+msgid "/Select/Invert"
+msgstr "/Valitse/Invertoi"
+
+#: app/menus.c:104
+msgid "/Select/All"
+msgstr "/Valitse/Kaikki"
+
+#: app/menus.c:105
+msgid "/Select/None"
+msgstr "/Valitse/Ei mitään"
+
+#: app/menus.c:106
+msgid "/Select/Float"
+msgstr "/Valitse/Leijuva"
+
+#: app/menus.c:107
+msgid "/Select/Sharpen"
+msgstr "/Valitse/Terävöitä"
+
+#: app/menus.c:108
+msgid "/Select/Border"
+msgstr "/Valitse/Reuna"
+
+#: app/menus.c:109
+msgid "/Select/Feather"
+msgstr "/Valitse/Höyhen"
+
+#: app/menus.c:110
+msgid "/Select/Grow"
+msgstr "/Valitse/Kasvata"
+
+#: app/menus.c:111
+msgid "/Select/Shrink"
+msgstr "/Valitse/Pienennä"
+
+#: app/menus.c:112
+msgid "/Select/Save To Channel"
+msgstr "/Valitse/Talleta kanavalle"
+
+#.
+#. { "/Select/By Color...", NULL, tools_select_cmd_callback, BY_COLOR_SELECT },
+#.
+#: app/menus.c:117
+msgid "/View/Zoom In"
+msgstr "/Näytä/Zoomaa sisään"
+
+#: app/menus.c:118
+msgid "/View/Zoom Out"
+msgstr "/Näytä/Zoomaa ulos"
+
+#: app/menus.c:119
+msgid "/View/Zoom/16:1"
+msgstr "/Näytä/Zoom/16:1"
+
+#: app/menus.c:120
+msgid "/View/Zoom/8:1"
+msgstr "/Näytä/Zoom/8:1"
+
+#: app/menus.c:121
+msgid "/View/Zoom/4:1"
+msgstr "/Näytä/Zoom/4:1"
+
+#: app/menus.c:122
+msgid "/View/Zoom/2:1"
+msgstr "/Näytä/Zoom/2:1"
+
+#: app/menus.c:123
+msgid "/View/Zoom/1:1"
+msgstr "/Näytä/Zoom/1:1"
+
+#: app/menus.c:124
+msgid "/View/Zoom/1:2"
+msgstr "/Näytä/Zoom/1:2"
+
+#: app/menus.c:125
+msgid "/View/Zoom/1:4"
+msgstr "/Näytä/Zoom/1:4"
+
+#: app/menus.c:126
+msgid "/View/Zoom/1:8"
+msgstr "/Näytä/Zoom/1:8"
+
+#: app/menus.c:127
+msgid "/View/Zoom/1:16"
+msgstr "/Näytä/Zoom/1:16"
+
+#: app/menus.c:128
+msgid "/View/Window Info..."
+msgstr "/Näytä/Ikkunan tiedot..."
+
+#: app/menus.c:129
+msgid "/View/Toggle Rulers"
+msgstr "/Näytä/Vaihda viivottimet"
+
+#: app/menus.c:130
+msgid "/View/Toggle Statusbar"
+msgstr "/Näytä/Vaihda infopalkki"
+
+#: app/menus.c:131
+msgid "/View/Toggle Guides"
+msgstr "/Näytä/Vaihda apuviivat"
+
+#: app/menus.c:132
+msgid "/View/Snap To Guides"
+msgstr "/Näytä/Nappaa apuviivoihin"
+
+#: app/menus.c:133
+msgid "/View/---"
+msgstr "/Näytä/---"
+
+#: app/menus.c:134
+msgid "/View/New View"
+msgstr "/Näytä/Uusi näkymä"
+
+#: app/menus.c:135
+msgid "/View/Shrink Wrap"
+msgstr "/Näytä/Koko kuva"
+
+#: app/menus.c:137
+msgid "/Image/Colors/Equalize"
+msgstr "/Kuva/Värit/Equalize"
+
+#: app/menus.c:138
+msgid "/Image/Colors/Invert"
+msgstr "/Kuva/Värit/Invertoi"
+
+#.
+#. { N_("/Image/Colors/Posterize"), NULL, tools_select_cmd_callback, POSTERIZE },
+#. { N_("/Image/Colors/Threshold"), NULL, tools_select_cmd_callback, THRESHOLD },
+#. { N_("/Image/Colors/---"), NULL, NULL, 0, "<Separator>" },
+#. { N_("/Image/Colors/Color Balance"), NULL, tools_select_cmd_callback, COLOR_BALANCE },
+#. { N_("/Image/Colors/Brightness-Contrast"), NULL, tools_select_cmd_callback, BRIGHTNESS_CONTRAST },
+#. { N_("/Image/Colors/Hue-Saturation"), NULL, tools_select_cmd_callback, 0 },
+#. { N_("/Image/Colors/Curves"), NULL, tools_select_cmd_callback, CURVES },
+#. { N_("/Image/Colors/Levels"), NULL, tools_select_cmd_callback, LEVELS },
+#.
+#: app/menus.c:149
+msgid "/Image/Colors/---"
+msgstr "/Kuva/Värit/---"
+
+#: app/menus.c:150
+msgid "/Image/Colors/Desaturate"
+msgstr "/Kuva/Värit/Desaturate"
+
+#: app/menus.c:151
+msgid "/Image/Channel Ops/Duplicate"
+msgstr "/Kuva/Kanava operaatiot/Duplicate"
+
+#: app/menus.c:152
+msgid "/Image/Channel Ops/Offset"
+msgstr "/Kuva/Kanava operaatiot/Offset"
+
+#: app/menus.c:153
+msgid "/Image/Alpha/Add Alpha Channel"
+msgstr "/Kuva/Alpha/Lisää alpha kanava"
+
+#. { N_("/Image/Histogram"), NULL, tools_select_cmd_callback, HISTOGRAM},
+#: app/menus.c:155 app/menus.c:159 app/menus.c:162 app/menus.c:164
+msgid "/Image/---"
+msgstr "/Kuva/---"
+
+#: app/menus.c:156
+msgid "/Image/RGB"
+msgstr "/Kuva/RGB"
+
+#: app/menus.c:157
+msgid "/Image/Grayscale"
+msgstr "/Kuva/Harmaasävy"
+
+#: app/menus.c:158
+msgid "/Image/Indexed"
+msgstr "/Kuva/Indeksoitu"
+
+#: app/menus.c:160
+msgid "/Image/Resize"
+msgstr "/Kuva/Muokkaa kokoa"
+
+#: app/menus.c:161
+msgid "/Image/Scale"
+msgstr "/Kuva/Skaalaa"
+
+#: app/menus.c:166
+msgid "/Layers/Layers & Channels..."
+msgstr "/Tasot/Tasot & Kanavat..."
+
+#: app/menus.c:167
+msgid "/Layers/Raise Layer"
+msgstr "/Tasot/Nosta taso"
+
+#: app/menus.c:168
+msgid "/Layers/Lower Layer"
+msgstr "/Tasot/Alenna taso"
+
+#: app/menus.c:169
+msgid "/Layers/Anchor Layer"
+msgstr "/Tasot/Ankkuroi taso"
+
+#: app/menus.c:170
+msgid "/Layers/Merge Visible Layers"
+msgstr "/Tasot/Yhdistä näkyvät tasot"
+
+#: app/menus.c:171
+msgid "/Layers/Flatten Image"
+msgstr "/Tasot/Yhdistä kuva"
+
+#: app/menus.c:172
+msgid "/Layers/Alpha To Selection"
+msgstr "/Tasot/Alpha valinnaksi"
+
+#: app/menus.c:173
+msgid "/Layers/Mask To Selection"
+msgstr "/Tasot/Maski valinnaksi"
+
+#: app/menus.c:174
+msgid "/Layers/Add Alpha Channel"
+msgstr "/Tasot/Lisää alpha kanava"
+
+#. { N_("/Tools/Rect Select"), "R", tools_select_cmd_callback, RECT_SELECT },
+#. { N_("/Tools/Ellipse Select"), "E", tools_select_cmd_callback, ELLIPSE_SELECT },
+#. { N_("/Tools/Free Select"), "F", tools_select_cmd_callback, FREE_SELECT },
+#. { N_("/Tools/Fuzzy Select"), "Z", tools_select_cmd_callback, FUZZY_SELECT },
+#. { N_("/Tools/Bezier Select"), "B", tools_select_cmd_callback, BEZIER_SELECT },
+#. { N_("/Tools/Intelligent Scissors"), "I", tools_select_cmd_callback, ISCISSORS },
+#. { N_("/Tools/Move"), "M", tools_select_cmd_callback, MOVE },
+#. { N_("/Tools/Magnify"), "<shift>M", tools_select_cmd_callback, MAGNIFY },
+#. { N_("/Tools/Crop"), "<shift>C", tools_select_cmd_callback, CROP },
+#. { N_("/Tools/Transform"), "<shift>T", tools_select_cmd_callback, ROTATE },
+#. { N_("/Tools/Flip"), "<shift>F", tools_select_cmd_callback, FLIP_HORZ },
+#. { N_("/Tools/Text"), "T", tools_select_cmd_callback, TEXT },
+#. { N_("/Tools/Color Picker"), "O", tools_select_cmd_callback, COLOR_PICKER },
+#. { N_("/Tools/Bucket Fill"), "<shift>B", tools_select_cmd_callback, BUCKET_FILL },
+#. { N_("/Tools/Blend"), "L", tools_select_cmd_callback, BLEND },
+#. { N_("/Tools/Paintbrush"), "P", tools_select_cmd_callback, PAINTBRUSH },
+#. { N_("/Tools/Pencil"), "<shift>P", tools_select_cmd_callback, PENCIL },
+#. { N_("/Tools/Eraser"), "<shift>E", tools_select_cmd_callback, ERASER },
+#. { N_("/Tools/Airbrush"), "A", tools_select_cmd_callback, AIRBRUSH },
+#. { N_("/Tools/Clone"), "C", tools_select_cmd_callback, CLONE },
+#. { N_("/Tools/Convolve"), "V", tools_select_cmd_callback, CONVOLVE },
+#. { N_("/Tools/Ink"), "K", tools_select_cmd_callback, INK },
+#. { N_("/Tools/Default Colors"), "D", tools_default_colors_cmd_callback, 0 },
+#. { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
+#: app/menus.c:200
+msgid "/Tools/Toolbox"
+msgstr "/Työkalut/Työkalulaatikko"
+
+#: app/menus.c:201
+msgid "/Tools/---"
+msgstr "/Työkalut/---"
+
+#: app/menus.c:202
+msgid "/Tools/Default Colors"
+msgstr "/Työkalut/Oletus värit"
+
+#: app/menus.c:203
+msgid "/Tools/Swap Colors"
+msgstr "/Työkalut/Vaihda Värit"
+
+#: app/menus.c:204
+msgid "/Filters/"
+msgstr "/Suotimet/"
+
+#: app/menus.c:205
+msgid "/Filters/Repeat last"
+msgstr "/Suotimet/Toista edellinen"
+
+#: app/menus.c:206
+msgid "/Filters/Re-show last"
+msgstr "/Suotimet/Näytä uudelleen edellinen"
+
+#: app/menus.c:207
+msgid "/Filters/---"
+msgstr "/Suotimet/---"
+
+#: app/menus.c:209
+msgid "/Script-Fu/"
+msgstr "/Script-Fu/"
+
+#: app/menus.c:211
+msgid "/Dialogs/Brushes..."
+msgstr "/Dialogit/Siveltimet..."
+
+#: app/menus.c:212
+msgid "/Dialogs/Patterns..."
+msgstr "/Dialogit/Kuviot..."
+
+#: app/menus.c:213
+msgid "/Dialogs/Palette..."
+msgstr "/Dialogit/Paletit..."
+
+#: app/menus.c:214
+msgid "/Dialogs/Gradient Editor..."
+msgstr "/Dialogit/Liukuvärien muokkain..."
+
+#: app/menus.c:215
+msgid "/Dialogs/Layers & Channels..."
+msgstr "/Dialogit/Tasot & Kanavat..."
+
+#: app/menus.c:216
+msgid "/Dialogs/Indexed Palette..."
+msgstr "/Dialogit/Indeksoitu paletti..."
+
+#: app/menus.c:217
+msgid "/Dialogs/Tool Options..."
+msgstr "/Dialogit/Työkalujen asetukset"
+
+#: app/menus.c:218
+msgid "/Dialogs/Input Devices..."
+msgstr "/Dialogit/Piirtolaitteet..."
+
+#: app/menus.c:219
+msgid "/Dialogs/Device Status..."
+msgstr "/Dialogit/Laitteiden tila..."
+
+#: app/menus.c:226
+msgid "/Automatic"
+msgstr "/Automaattinen"
+
+#: app/menus.c:234
+msgid "/By extension"
+msgstr "/Laajennus"
+
+#: app/menus.c:347
+#, c-format
+msgid ""
+"Unable to set sensitivity for menu which doesn't exist:\n"
+"%s"
+msgstr ""
+"Ei voi asettaa herkkyyttä menulle, jota ei ole:\n"
+"%s"
+
+#: app/menus.c:372
+#, c-format
+msgid ""
+"Unable to set state for menu which doesn't exist:\n"
+"%s"
+msgstr ""
+"Ei voi asettaa tilaa menulle, jota ei ole:\n"
+"%s"
+
+#: app/menus.c:414
+#, c-format
+msgid "Error opening file: %s\n"
+msgstr "Virhe tiedoston avauksessa: %s\n""
+
+#: app/menus.c:436 app/menus.c:506
+#, c-format
+msgid "/File/MRU%02d"
+msgstr "/Tiedosto/MRU%02d"
+
+#: app/regex.c:976
+msgid "Success"
+msgstr "Onnistui"
+
+#. REG_NOERROR
+#: app/regex.c:977
+msgid "No match"
+msgstr "Ei löytynyt"
+
+#. REG_NOMATCH
+#: app/regex.c:978
+msgid "Invalid regular expression"
+msgstr "Väärä säännöllinen lauseke"
+
+#. REG_BADPAT
+#: app/regex.c:979
+msgid "Invalid collation character"
+msgstr "Väärä vertailu merkki"
+
+#. REG_ECOLLATE
+#: app/regex.c:980
+msgid "Invalid character class name"
+msgstr "Väärä merkin luokan nimi"
+
+#. REG_ECTYPE
+#: app/regex.c:981
+msgid "Trailing backslash"
+msgstr "Lopussa oleva kenoviiva"
+
+#. REG_EESCAPE
+#: app/regex.c:982
+msgid "Invalid back reference"
+msgstr "Väärä referenssi"
+
+#. REG_ESUBREG
+#: app/regex.c:983
+msgid "Unmatched [ or [^"
+msgstr "Ei löytynyt [ tai [^"
+
+#. REG_EBRACK
+#: app/regex.c:984
+msgid "Unmatched ( or \\("
+msgstr "Ei löytynyt ( tai \\("
+
+#. REG_EPAREN
+#: app/regex.c:985
+msgid "Unmatched \\{"
+msgstr "Ei löytynyt \\{"
+
+#. REG_EBRACE
+#: app/regex.c:986
+msgid "Invalid content of \\{\\}"
+msgstr "Väärä sisältö \\{\\}"
+
+#. REG_BADBR
+#: app/regex.c:987
+msgid "Invalid range end"
+msgstr "Väärä jakson pää"
+
+#. REG_ERANGE
+#: app/regex.c:988
+msgid "Memory exhausted"
+msgstr "Muisti käytetty"
+
+#. REG_ESPACE
+#: app/regex.c:989
+msgid "Invalid preceding regular expression"
+msgstr "Väärä edeltävä säännöllinen lauseke"
+
+#. REG_BADRPT
+#: app/regex.c:990
+msgid "Premature end of regular expression"
+msgstr "Ennenaikainen säännöllisen lausekkeen loppu"
+
+#. REG_EEND
+#: app/regex.c:991
+msgid "Regular expression too big"
+msgstr "Säännöllinen lauseke on liian suuri"
+
+#. REG_ESIZE
+#: app/regex.c:992
+msgid "Unmatched ) or \\)"
+msgstr "Ei löytynyt ) tai \\)"
+
+#: app/regex.c:5442
+msgid "No previous regular expression"
+msgstr "Ei ole edellistä säännöllistä lauseketta"
+
+
+
+
