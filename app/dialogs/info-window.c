@@ -521,8 +521,7 @@ info_window_update (GimpDisplay *gdisp)
               res_unit == GIMP_UNIT_INCH ? _("dpi") : format_buf);
 
   /*  user zoom ratio  */
-  g_snprintf (iwd->scale_str, MAX_BUF, "%d:%d",
-              SCALEDEST (shell), SCALESRC (shell));
+  g_snprintf (iwd->scale_str, MAX_BUF, "%.2f", shell->scale * 100);
 
   /*  number of layers  */
   g_snprintf (iwd->num_layers_str, MAX_BUF, "%d",

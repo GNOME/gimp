@@ -210,8 +210,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->popup_factory         = NULL;
   shell->qmask_factory         = NULL;
 
-  shell->scale                 = 0x101;
-  shell->other_scale           = 0;
+  shell->scale                 = 1.0;
+  shell->other_scale           = 0.0;
   shell->dot_for_dot           = TRUE;
 
   shell->offset_x              = 0;
@@ -486,7 +486,7 @@ gimp_display_shell_real_scaled (GimpDisplayShell *shell)
 
 GtkWidget *
 gimp_display_shell_new (GimpDisplay     *gdisp,
-                        guint            scale,
+                        gdouble          scale,
                         GimpMenuFactory *menu_factory,
                         GimpItemFactory *popup_factory)
 {
@@ -504,7 +504,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gint               image_width, image_height;
   gint               n_width, n_height;
   gint               s_width, s_height;
-  gint               scalesrc, scaledest;
+  gdouble            new_scale;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
@@ -548,33 +548,31 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   s_width  = gdk_screen_get_width (screen)  * 0.75;
   s_height = gdk_screen_get_height (screen) * 0.75;
 
-  scalesrc  = SCALESRC (shell);
-  scaledest = SCALEDEST (shell);
-
   n_width  = SCALEX (shell, image_width);
-  n_height = SCALEX (shell, image_height);
+  n_height = SCALEY (shell, image_height);
 
   if (config->initial_zoom_to_fit)
     {
       /*  Limit to the size of the screen...  */
-      while (n_width > s_width || n_height > s_height)
+      if (n_width > s_width || n_height > s_height)
         {
-          if (scaledest > 1)
-            scaledest--;
-          else
-            if (scalesrc < 0xFF)
-              scalesrc++;
+          new_scale = shell->scale * MIN (((gdouble) s_height) / n_height,
+                                          ((gdouble) s_width) / n_width);
+         
+          new_scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_OUT,
+                                                          new_scale);
 
-          n_width  = (image_width *
-                      (scaledest * SCREEN_XRES (shell)) /
-                      (scalesrc * gdisp->gimage->xresolution));
+          /* since zooming out might skip a zoom step we zoom in again
+           * and test if we are small enough. */
+          shell->scale = gimp_display_shell_scale_zoom_step (GIMP_ZOOM_IN,
+                                                             new_scale);
 
-          n_height = (image_height *
-                      (scaledest * SCREEN_XRES (shell)) /
-                      (scalesrc * gdisp->gimage->xresolution));
+          if (SCALEX (shell, image_width) > s_width ||
+              SCALEY (shell, image_height) > s_height)
+            shell->scale = new_scale;
 
-          if (scaledest == 1 && scalesrc == 0xFF)
-            break;
+          n_width  = SCALEX (shell, image_width);
+          n_height = SCALEY (shell, image_height);
         }
     }
   else
@@ -589,7 +587,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 	n_height = s_height;
     }
 
-  shell->scale = (scaledest << 8) + scalesrc;
 
   shell->menubar_factory = gimp_menu_factory_menu_new (menu_factory,
                                                        "<Image>",

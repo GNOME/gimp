@@ -68,7 +68,8 @@ view_zoom_out_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_OUT);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell),
+                            GIMP_ZOOM_OUT, 0.0);
 }
 
 void
@@ -78,7 +79,8 @@ view_zoom_in_cmd_callback (GtkWidget *widget,
   GimpDisplay *gdisp;
   return_if_no_display (gdisp, data);
 
-  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell), GIMP_ZOOM_IN);
+  gimp_display_shell_scale (GIMP_DISPLAY_SHELL (gdisp->shell),
+                            GIMP_ZOOM_IN, 0.0);
 }
 
 void
@@ -94,12 +96,10 @@ view_zoom_fit_cmd_callback (GtkWidget *widget,
 void
 view_zoom_cmd_callback (GtkWidget *widget,
 			gpointer   data,
-			guint      action)
+			guint    scale)
 {
   GimpDisplay      *gdisp;
   GimpDisplayShell *shell;
-  guchar            scalesrc;
-  guchar            scaledest;
   return_if_no_display (gdisp, data);
 
   if (! GTK_CHECK_MENU_ITEM (widget)->active)
@@ -107,11 +107,8 @@ view_zoom_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  scalesrc  = CLAMP (action % 100, 1, 0xFF);
-  scaledest = CLAMP (action / 100, 1, 0xFF);
-
-  if (scalesrc != SCALESRC (shell) || scaledest != SCALEDEST (shell))
-    gimp_display_shell_scale (shell, action);
+  if (fabs (scale - shell->scale) > 0.0001)
+    gimp_display_shell_scale (shell, GIMP_ZOOM_TO, (gdouble) scale / 10000);
 }
 
 void

@@ -487,7 +487,7 @@ gimp_navigation_view_new_private (GimpDisplayShell  *shell,
       /* the zoom scale */
 
       view->zoom_adjustment =
-        GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -15.0, 15.0, 1.0, 1.0, 0.0));
+        GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -8.0, 8.0, 0.5, 1.0, 0.0));
 
       g_signal_connect (view->zoom_adjustment, "value_changed",
                         G_CALLBACK (gimp_navigation_view_zoom_adj_changed),
@@ -496,13 +496,13 @@ gimp_navigation_view_new_private (GimpDisplayShell  *shell,
       hscale = gtk_hscale_new (GTK_ADJUSTMENT (view->zoom_adjustment));
       gtk_range_set_update_policy (GTK_RANGE (hscale), GTK_UPDATE_DELAYED);
       gtk_scale_set_draw_value (GTK_SCALE (hscale), FALSE);
-      gtk_scale_set_digits (GTK_SCALE (hscale), 0);
+      gtk_scale_set_digits (GTK_SCALE (hscale), 2);
       gtk_box_pack_end (GTK_BOX (view), hscale, FALSE, FALSE, 0);
       gtk_widget_show (hscale);
 
       /* the zoom label */
 
-      view->zoom_label = gtk_label_new ("1:1");
+      view->zoom_label = gtk_label_new ("100%");
       gtk_box_pack_end (GTK_BOX (view), view->zoom_label, FALSE, FALSE, 0);
       gtk_widget_show (view->zoom_label);
 
@@ -567,9 +567,11 @@ gimp_navigation_view_zoom (GimpNavigationPreview *preview,
                            GimpZoomType           direction,
                            GimpNavigationView    *view)
 {
+  g_return_if_fail (direction != GIMP_ZOOM_TO);
+
   if (view->shell)
     {
-      gimp_display_shell_scale (view->shell, direction);
+      gimp_display_shell_scale (view->shell, direction, 0.0);
     }
 }
 
@@ -623,27 +625,8 @@ static void
 gimp_navigation_view_zoom_adj_changed (GtkAdjustment      *adj,
                                        GimpNavigationView *view)
 {
-  gint value;
-  gint scalesrc;
-  gint scaledest;
-
-  value = RINT (adj->value);
-
-  if (value < 0)
-    {
-      scalesrc  = - value + 1;
-      scaledest = 1;
-    }
-  else
-    {
-      scalesrc  = 1;
-      scaledest = value + 1;
-    }
-
-  g_print ("zoom_adj_changed: %d : %d (%f)\n", scaledest, scalesrc,
-           adj->value);
-
-  gimp_display_shell_scale (view->shell, (scaledest * 100) + scalesrc);
+  gimp_display_shell_scale (view->shell, GIMP_ZOOM_TO,
+                            pow (2.0, adj->value));
 }
 
 static void
@@ -651,7 +634,7 @@ gimp_navigation_view_zoom_out_clicked (GtkWidget          *widget,
                                        GimpNavigationView *view)
 {
   if (view->shell)
-    gimp_display_shell_scale (view->shell, GIMP_ZOOM_OUT);
+    gimp_display_shell_scale (view->shell, GIMP_ZOOM_OUT, 0.0);
 }
 
 static void
@@ -659,7 +642,7 @@ gimp_navigation_view_zoom_in_clicked (GtkWidget          *widget,
                                       GimpNavigationView *view)
 {
   if (view->shell)
-    gimp_display_shell_scale (view->shell, GIMP_ZOOM_IN);
+    gimp_display_shell_scale (view->shell, GIMP_ZOOM_IN, 0.0);
 }
 
 static void
@@ -667,7 +650,7 @@ gimp_navigation_view_zoom_100_clicked (GtkWidget          *widget,
                                        GimpNavigationView *view)
 {
   if (view->shell)
-    gimp_display_shell_scale (view->shell, 101);
+    gimp_display_shell_scale (view->shell, GIMP_ZOOM_TO, 1.0);
 }
 
 static void
@@ -695,25 +678,18 @@ gimp_navigation_view_shell_scaled (GimpDisplayShell   *shell,
       gchar scale_str[MAX_SCALE_BUF];
 
       /* Update the zoom scale string */
-      g_snprintf (scale_str, sizeof (scale_str), "%d:%d",
-                  SCALEDEST (view->shell), 
-                  SCALESRC (view->shell));
+      g_snprintf (scale_str, sizeof (scale_str),
+                  shell->scale >= 0.15 ? "%.0f%%" : "%.2f%%",
+                  view->shell->scale * 100);
 
       gtk_label_set_text (GTK_LABEL (view->zoom_label), scale_str);
     }
 
   if (view->zoom_adjustment)
     {
-      gdouble f;
-      gint    val;
-
-      f = (((gdouble) SCALEDEST (view->shell)) / 
-           ((gdouble) SCALESRC (view->shell)));
+      gdouble val;
   
-      if (f < 1.0)
-        val = - RINT (1.0 / f) + 1;
-      else
-        val = RINT (f) - 1;
+      val = log (CLAMP (view->shell->scale, 1.0 / 256, 256.0) ) / G_LN2;
 
       g_signal_handlers_block_by_func (view->zoom_adjustment,
                                        gimp_navigation_view_zoom_adj_changed,

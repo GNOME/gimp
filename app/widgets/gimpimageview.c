@@ -206,7 +206,7 @@ gimp_image_view_new_clicked (GtkWidget     *widget,
   if (image && gimp_container_have (editor->view->container,
                                     GIMP_OBJECT (image)))
     {
-      gimp_create_display (image->gimp, image, 0x0101);
+      gimp_create_display (image->gimp, image, 1.0);
     }
 }
 

@@ -368,39 +368,39 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_SEPARATOR ("/View/Zoom/---"),
 
   { { N_("/View/Zoom/16:1"), NULL,
-      view_zoom_cmd_callback, 1601, "<RadioItem>" },
+      view_zoom_cmd_callback, 160000, "<RadioItem>" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
   { { N_("/View/Zoom/8:1"), NULL,
-      view_zoom_cmd_callback, 801, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 80000, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
   { { N_("/View/Zoom/4:1"), NULL,
-      view_zoom_cmd_callback, 401, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 40000, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
   { { N_("/View/Zoom/2:1"), NULL,
-      view_zoom_cmd_callback, 201, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 20000, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_IN, NULL },
   { { N_("/View/Zoom/1:1"), "1",
-      view_zoom_cmd_callback, 101, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 10000, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_100, NULL },
   { { N_("/View/Zoom/1:2"), NULL,
-      view_zoom_cmd_callback, 102, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 5000, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
   { { N_("/View/Zoom/1:4"), NULL,
-      view_zoom_cmd_callback, 104, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 2500, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
   { { N_("/View/Zoom/1:8"), NULL,
-      view_zoom_cmd_callback, 108, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 1250, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
   { { N_("/View/Zoom/1:16"), NULL,
-      view_zoom_cmd_callback, 116, "/View/Zoom/16:1" },
+      view_zoom_cmd_callback, 625, "/View/Zoom/16:1" },
     NULL,
     GIMP_HELP_VIEW_ZOOM_OUT, NULL },
 
@@ -1655,40 +1655,33 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
                      GimpDisplayShell *shell)
 {
   const gchar *menu = NULL;
-  guint        scalesrc;
-  guint        scaledest;
+  guint        scale;
   gchar       *label;
 
-  scalesrc  = SCALESRC (shell);
-  scaledest = SCALEDEST (shell);
+  scale = ROUND (shell->scale * 1000);
 
-  if (scaledest == 1)
+  switch (scale)
     {
-      switch (scalesrc)
-        {
-        case  1:  menu = "/View/Zoom/1:1";   break;
-        case  2:  menu = "/View/Zoom/1:2";   break;
-        case  4:  menu = "/View/Zoom/1:4";   break;
-        case  8:  menu = "/View/Zoom/1:8";   break;
-        case 16:  menu = "/View/Zoom/1:16";  break;
-        }
-    }
-  else if (scalesrc == 1)
-    {
-      switch (scaledest)
-        {
-        case  2:  menu = "/View/Zoom/2:1";   break;
-        case  4:  menu = "/View/Zoom/4:1";   break;
-        case  8:  menu = "/View/Zoom/8:1";   break;
-        case 16:  menu = "/View/Zoom/16:1";  break;
-        }
+    case 16000:  menu = "/View/Zoom/16:1";  break;
+    case  8000:  menu = "/View/Zoom/8:1";   break;
+    case  4000:  menu = "/View/Zoom/4:1";   break;
+    case  2000:  menu = "/View/Zoom/2:1";   break;
+    case  1000:  menu = "/View/Zoom/1:1";   break;
+    case   500:  menu = "/View/Zoom/1:2";   break;
+    case   250:  menu = "/View/Zoom/1:4";   break;
+    case   125:  menu = "/View/Zoom/1:8";   break;
+    case    63:
+    case    62:  menu = "/View/Zoom/1:16";  break;
     }
 
   if (!menu)
     {
       menu = "/View/Zoom/Other...";
 
-      label = g_strdup_printf (_("Other (%d:%d) ..."), scaledest, scalesrc);
+      label = g_strdup_printf (shell->scale >= 0.15 ?
+                                  _("Other (%.0f%%) ..."):
+                                  _("Other (%.2f%%) ..."),
+                               shell->scale * 100.0);
       gimp_item_factory_set_label (item_factory, menu, label);
       g_free (label);
 
@@ -1697,10 +1690,13 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
 
   gimp_item_factory_set_active (item_factory, menu, TRUE);
 
-  label = g_strdup_printf (_("_Zoom (%d:%d)"), scaledest, scalesrc);
+  label = g_strdup_printf (shell->scale >= 0.15 ?
+                              _("_Zoom (%.0f%%)") :
+                              _("_Zoom (%.2f%%)"),
+                           shell->scale * 100.0);
   gimp_item_factory_set_label (item_factory, "/View/Zoom", label);
   g_free (label);
 
-  /*  flag as dirty  */
-  shell->other_scale |= (1 << 30);
+  /* flag as dirty */
+  shell->other_scale = - fabs (shell->other_scale);
 }

@@ -26,7 +26,7 @@
 typedef void           (* GimpThreadEnterFunc)     (Gimp          *gimp);
 typedef void           (* GimpThreadLeaveFunc)     (Gimp          *gimp);
 typedef GimpObject   * (* GimpCreateDisplayFunc)   (GimpImage     *gimage,
-                                                    guint          scale);
+                                                    gdouble        scale);
 typedef void           (* GimpSetBusyFunc)         (Gimp          *gimp);
 typedef void           (* GimpUnsetBusyFunc)       (Gimp          *gimp);
 typedef void           (* GimpMessageFunc)         (Gimp          *gimp,
@@ -280,8 +280,8 @@ GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gboolean            attach_comment);
 
 GimpObject  * gimp_create_display       (Gimp               *gimp,
-					 GimpImage          *gimage,
-                                         guint               scale);
+                                         GimpImage          *gimage,
+                                         gdouble             scale);
 
 GimpContext * gimp_get_standard_context (Gimp               *gimp);
 

@@ -1217,8 +1217,8 @@ gimp_create_image (Gimp              *gimp,
 
 GimpObject *
 gimp_create_display (Gimp      *gimp,
-		     GimpImage *gimage,
-                     guint      scale)
+                     GimpImage *gimage,
+                     gdouble    scale)
 {
   GimpObject *display = NULL;
 

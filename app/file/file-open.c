@@ -208,7 +208,7 @@ file_open_with_proc_and_display (Gimp               *gimp,
       /* set the image to clean  */
       gimp_image_clean_all (gimage);
 
-      gimp_create_display (gimage->gimp, gimage, 0x0101);
+      gimp_create_display (gimage->gimp, gimage, 1.0);
 
       g_object_unref (gimage);
 

@@ -279,7 +279,7 @@ image_duplicate_cmd_callback (GtkWidget *widget,
 
   new_gimage = gimp_image_duplicate (gimage);
 
-  gimp_create_display (new_gimage->gimp, new_gimage, 0x0101);
+  gimp_create_display (new_gimage->gimp, new_gimage, 1.0);
 
   g_object_unref (new_gimage);
 }

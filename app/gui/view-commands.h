@@ -28,7 +28,7 @@ void   view_zoom_fit_cmd_callback              (GtkWidget *widget,
                                                 gpointer   data);
 void   view_zoom_cmd_callback                  (GtkWidget *widget,
                                                 gpointer   data,
-                                                guint      action);
+                                                guint      scale);
 void   view_zoom_other_cmd_callback            (GtkWidget *widget,
                                                 gpointer   data);
 void   view_dot_for_dot_cmd_callback           (GtkWidget *widget,

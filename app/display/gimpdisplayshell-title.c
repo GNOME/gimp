@@ -45,6 +45,7 @@
 
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
+#include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-title.h"
 #include "gimpstatusbar.h"
 
@@ -148,11 +149,14 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
                                  const gchar      *format)
 {
   GimpImage *gimage;
+  gint       num, denom;
   gint       i = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimage = shell->gdisp->gimage;
+
+  gimp_display_shell_scale_get_fraction (shell->scale, &num, &denom);
 
   while (i < title_len && *format)
     {
@@ -230,16 +234,17 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 	      break;
 
 	    case 's': /* user source zoom factor */
-	      i += print (title, title_len, i, "%d", SCALESRC (shell));
+	      i += print (title, title_len, i, "%d", denom);
 	      break;
 
 	    case 'd': /* user destination zoom factor */
-	      i += print (title, title_len, i, "%d", SCALEDEST (shell));
+	      i += print (title, title_len, i, "%d", num);
 	      break;
 
 	    case 'z': /* user zoom factor (percentage) */
-	      i += print (title, title_len, i, "%d",
-                          100 * SCALEDEST (shell) / SCALESRC (shell));
+	      i += print (title, title_len, i,
+                          shell->scale >= 0.15 ? "%.0f" : "%.2f",
+                          100 * shell->scale);
 	      break;
 
 	    case 'D': /* dirty flag */

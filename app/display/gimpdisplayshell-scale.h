@@ -20,12 +20,11 @@
 #define __GIMP_DISPLAY_SHELL_SCALE_H__
 
 
-void   gimp_display_shell_scale_zoom_fraction   (GimpZoomType      zoom_type,
-                                                 gint             *scalesrc,
-                                                 gint             *scaledest);
-void   gimp_display_shell_scale_calc_fraction   (gdouble           zoom_factor,
-                                                 gint             *scalesrc,
-                                                 gint             *scaledest);
+gdouble gimp_display_shell_scale_zoom_step      (GimpZoomType      zoom_type,
+                                                 gdouble           scale);
+void   gimp_display_shell_scale_get_fraction    (gdouble           zoom_factor,
+                                                 gint             *numerator,
+                                                 gint             *denominator);
 
 void   gimp_display_shell_scale_setup           (GimpDisplayShell *shell);
 
@@ -33,10 +32,11 @@ void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *gdisp,
                                                  gboolean          dot_for_dot);
 
 void   gimp_display_shell_scale                 (GimpDisplayShell *gdisp,
-                                                 GimpZoomType      zoom_type);
+                                                 GimpZoomType      zoom_type,
+                                                 gdouble           new_scale);
 void   gimp_display_shell_scale_fit             (GimpDisplayShell *gdisp);
 void   gimp_display_shell_scale_by_values       (GimpDisplayShell *gdisp,
-                                                 gint              scale,
+                                                 gdouble           scale,
                                                  gint              offset_x,
                                                  gint              offset_y,
                                                  gboolean          resize_window);

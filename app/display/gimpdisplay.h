@@ -74,7 +74,7 @@ struct _GimpDisplayClass
 GType         gimp_display_get_type             (void) G_GNUC_CONST;
 
 GimpDisplay * gimp_display_new                  (GimpImage       *gimage,
-                                                 guint            scale,
+                                                 gdouble          scale,
                                                  GimpMenuFactory *menu_factory,
                                                  GimpItemFactory *popup_factory);
 void          gimp_display_delete               (GimpDisplay     *gdisp);

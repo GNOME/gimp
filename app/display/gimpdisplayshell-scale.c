@@ -50,8 +50,9 @@ typedef struct _ScaleDialogData ScaleDialogData;
 struct _ScaleDialogData
 {
   GimpDisplayShell *shell;
-  GtkObject        *src_adj;
-  GtkObject        *dest_adj;
+  GtkObject        *scale_adj;
+  GtkObject        *num_adj;
+  GtkObject        *denom_adj;
 };
 
 
@@ -60,6 +61,8 @@ struct _ScaleDialogData
 static void gimp_display_shell_scale_dialog_response (GtkWidget        *widget,
                                                       gint              response_id,
                                                       ScaleDialogData  *dialog);
+static void update_zoom_values                       (GtkAdjustment    *adj,
+                                                      ScaleDialogData  *dialog);
 static gdouble img2real                              (GimpDisplayShell *shell,
                                                       gboolean          xdir,
                                                       gdouble           a);
@@ -67,51 +70,82 @@ static gdouble img2real                              (GimpDisplayShell *shell,
 
 /*  public functions  */
 
-void
-gimp_display_shell_scale_zoom_fraction (GimpZoomType  zoom_type,
-                                        gint         *scalesrc,
-                                        gint         *scaledest)
+gdouble
+gimp_display_shell_scale_zoom_step (GimpZoomType zoom_type,
+                                    gdouble      scale)
 {
-  gdouble ratio;
+  gint    i, n_presets;
+  gdouble new_scale;
 
-  g_return_if_fail (scalesrc != NULL);
-  g_return_if_fail (scaledest != NULL);
+  /* This table is constructed to have fractions, that approximate
+   * sqrt(2)^k. This gives a smooth feeling regardless of the starting
+   * zoom level.
+   *
+   * Zooming in/out always jumps to a zoom step from the list above.
+   * However, we try to guarantee a certain size of the step, to
+   * avoid silly jumps from 101% to 100%.
+   * The factor 1.1 is chosen a bit arbitrary, but feels better
+   * than the geometric median of the zoom steps (2^(1/4)).
+   */
 
-  ratio = (double) *scaledest/ *scalesrc;
+#define ZOOM_MIN_STEP 1.1
 
+  gdouble presets[] = {
+    1.0 / 256, 1.0 / 180, 1.0 / 128, 1.0 / 90,
+    1.0 / 64,  1.0 / 45,  1.0 / 32,  1.0 / 23,
+    1.0 / 16,  1.0 / 11,  1.0 / 8,   2.0 / 11,
+    1.0 / 4,   1.0 / 3,   1.0 / 2,   2.0 / 3,
+      1.0,
+               3.0 / 2,      2.0,      3.0,
+      4.0,    11.0 / 2,      8.0,     11.0,
+      16.0,     23.0,       32.0,     45.0,
+      64.0,     90.0,      128.0,    180.0,
+      256.0,
+  };
+
+  n_presets = G_N_ELEMENTS (presets);
+         
   switch (zoom_type)
     {
     case GIMP_ZOOM_IN:
-      ratio *= G_SQRT2;
+      scale *= ZOOM_MIN_STEP;
+
+      new_scale = presets[n_presets-1];
+
+      for (i = n_presets - 1; i >= 0 && presets[i] > scale; i--)
+        new_scale = presets[i];
+
       break;
 
     case GIMP_ZOOM_OUT:
-      ratio /= G_SQRT2;
+      scale /= ZOOM_MIN_STEP;
+
+      new_scale = presets[0];
+
+      for (i = 0; i < n_presets && presets[i] < scale; i++)
+        new_scale = presets[i];
+
       break;
 
-    default:
-      *scalesrc  = CLAMP (zoom_type % 100, 1, 0xFF);
-      *scaledest = CLAMP (zoom_type / 100, 1, 0xFF);
-      return;
+    case GIMP_ZOOM_TO:
+      new_scale = scale;
       break;
     }
 
-  /* set scalesrc and scaledest to a fraction close to ratio */
-  gimp_display_shell_scale_calc_fraction (ratio, scalesrc, scaledest);
+  return CLAMP (new_scale, 1.0/256.0, 256.0);
 }
 
 void
-gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
-                                        gint    *scalesrc,
-                                        gint    *scaledest)
+gimp_display_shell_scale_get_fraction (gdouble  zoom_factor,
+                                       gint    *numerator,
+                                       gint    *denominator)
 {
   gint     p0, p1, p2;
   gint     q0, q1, q2;
   gdouble  remainder, next_cf;
   gboolean swapped = FALSE;
 
-  g_return_if_fail (scalesrc != NULL);
-  g_return_if_fail (scaledest != NULL);
+  g_return_if_fail (numerator != NULL && denominator != NULL);
 
   /* make sure that zooming behaves symmetrically */
   if (zoom_factor < 1.0)
@@ -139,9 +173,9 @@ gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
       p2 = next_cf * p1 + p0;
       q2 = next_cf * q1 + q0;
 
-      /* Numerator and Denominator are limited by 255 */
+      /* Numerator and Denominator are limited by 256 */
       /* also absurd ratios like 170:171 are excluded */
-      if (p2 > 255 || q2 > 255 || (p2 > 1 && q2 > 1 && p2 * q2 > 200))
+      if (p2 > 256 || q2 > 256 || (p2 > 1 && q2 > 1 && p2 * q2 > 200))
         break;
 
       /* remember the last two fractions */
@@ -157,26 +191,26 @@ gimp_display_shell_scale_calc_fraction (gdouble  zoom_factor,
 
   /* hard upper and lower bounds for zoom ratio */
 
-  if (zoom_factor > 255.0)
+  if (zoom_factor > 256.0)
     {
-      p1 = 255;
+      p1 = 256;
       q1 = 1;
     }
-  else if (zoom_factor < 1.0 / 255.0)
+  else if (zoom_factor < 1.0 / 256.0)
     {
       p1 = 1;
-      q1 = 255;
+      q1 = 256;
     }
 
   if (swapped)
     {
-      *scalesrc = p1;
-      *scaledest = q1;
+      *numerator = q1;
+      *denominator = p1;
     }
   else
     {
-      *scalesrc = q1;
-      *scaledest = p1;
+      *numerator = p1;
+      *denominator = q1;
     }
 }
 
@@ -319,35 +353,36 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
 void
 gimp_display_shell_scale (GimpDisplayShell *shell,
-                          GimpZoomType      zoom_type)
+                          GimpZoomType      zoom_type,
+                          gdouble           new_scale)
 {
   GimpDisplayConfig *config;
-  gint               scalesrc, scaledest;
   gdouble            offset_x, offset_y;
+  gdouble            scale;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  /* user zoom control, so resolution versions not needed -- austin */
-  scalesrc  = SCALESRC (shell);
-  scaledest = SCALEDEST (shell);
 
   offset_x = shell->offset_x + (shell->disp_width  / 2.0);
   offset_y = shell->offset_y + (shell->disp_height / 2.0);
 
-  offset_x *= ((gdouble) scalesrc / (gdouble) scaledest);
-  offset_y *= ((gdouble) scalesrc / (gdouble) scaledest);
+  scale = shell->scale;
 
-  gimp_display_shell_scale_zoom_fraction (zoom_type, &scalesrc, &scaledest);
+  offset_x /= scale;
+  offset_y /= scale;
 
-  offset_x *= ((gdouble) scaledest / (gdouble) scalesrc);
-  offset_y *= ((gdouble) scaledest / (gdouble) scalesrc);
+  if (zoom_type == GIMP_ZOOM_TO)
+    scale = new_scale;
+  else
+    scale = gimp_display_shell_scale_zoom_step (zoom_type, scale);
+
+  offset_x *= scale;
+  offset_y *= scale;
 
   config = GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config);
 
-  gimp_display_shell_scale_by_values (shell,
-                                      (scaledest << 8) + scalesrc,
-                                      (offset_x - (shell->disp_width  / 2)),
-                                      (offset_y - (shell->disp_height / 2)),
+  gimp_display_shell_scale_by_values (shell, scale,
+                                      offset_x - (shell->disp_width  / 2),
+                                      offset_y - (shell->disp_height / 2),
                                       config->resize_windows_on_zoom);
 }
 
@@ -358,9 +393,6 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   gint       image_width;
   gint       image_height;
   gdouble    zoom_factor;
-  gint       scalesrc;
-  gint       scaledest;
-  gint       a, b, gcd;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -380,42 +412,12 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
   zoom_factor = MIN ((gdouble) shell->disp_width  / (gdouble) image_width,
                      (gdouble) shell->disp_height / (gdouble) image_height);
 
-  /* choosing 240 because it has a lot of nice divisors and the
-   * chance of a nice fraction is bigger */
-
-  scalesrc = scaledest = 240;
-
-  if (zoom_factor > 1.0)
-    scalesrc  = CLAMP (ceil (1.0 / zoom_factor * 240.0), 1, 240);
-  else
-    scaledest = CLAMP (floor (zoom_factor * 240.0), 1, 240);
-
-  /* determine gcd to shorten the fraction */
-  a = MAX (scalesrc, scaledest);
-  b = MIN (scalesrc, scaledest);
-
-  gcd = b;
-
-  while (a % b != 0)
-    {
-      gcd = a % b;
-      a = b;
-      b = gcd;
-    }
-
-  scalesrc /= gcd;
-  scaledest /= gcd;
-
-  gimp_display_shell_scale_by_values (shell,
-                                      (scaledest << 8) + scalesrc,
-                                      0,
-                                      0,
-                                      FALSE);
+  gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
 }
 
 void
 gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
-                                    gint              scale,
+                                    gdouble           scale,
                                     gint              offset_x,
                                     gint              offset_y,
                                     gboolean          resize_window)
@@ -480,8 +482,10 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 {
   ScaleDialogData *data;
   GtkWidget       *hbox;
+  GtkWidget       *table;
   GtkWidget       *spin;
   GtkWidget       *label;
+  gint             num, denom, row;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -521,21 +525,29 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_scale_dialog_response),
                     data);
 
+  table = gtk_table_new (2, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell->scale_dialog)->vbox),
+                     table);
+  gtk_widget_show (table);
+
+  row = 0;
+
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell->scale_dialog)->vbox),
-                     hbox);
-  gtk_widget_show (hbox);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Zoom Ratio:"), 1.0, 0.5,
+                             hbox, 1, FALSE);
 
-  label = gtk_label_new (_("Zoom Ratio:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  if (fabs (shell->other_scale) <= 0.0001)
+    shell->other_scale = shell->scale;   /* other_scale not yet initialized */
 
-  if ((shell->other_scale & 0xFFFF) == 0)
-    shell->other_scale = shell->scale;
+  gimp_display_shell_scale_get_fraction (fabs (shell->other_scale),
+                                         &num, &denom);
 
-  spin = gimp_spin_button_new (&data->dest_adj,
-                               (shell->other_scale & 0xFF00) >> 8, 1, 0xFF,
+  spin = gimp_spin_button_new (&data->num_adj,
+                               num, 1, 256,
                                1, 8, 1, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
@@ -544,11 +556,26 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spin = gimp_spin_button_new (&data->src_adj,
-                               (shell->other_scale & 0xFF), 1, 0xFF,
+  spin = gimp_spin_button_new (&data->denom_adj,
+                               denom, 1, 256,
                                1, 8, 1, 1, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spin, TRUE, TRUE, 0);
   gtk_widget_show (spin);
+
+  spin = gimp_spin_button_new (&data->scale_adj,
+                               fabs (shell->other_scale) * 100,
+                               100.0 / 256.0, 25600.0,
+                               10, 50, 0, 1, 2);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                             _("Zoom:"), 1.0, 0.5,
+                             spin, 1, FALSE);
+
+  g_signal_connect (data->scale_adj, "value-changed",
+                    G_CALLBACK (update_zoom_values), data);
+  g_signal_connect (data->num_adj, "value-changed",
+                    G_CALLBACK (update_zoom_values), data);
+  g_signal_connect (data->denom_adj, "value-changed",
+                    G_CALLBACK (update_zoom_values), data);
 
   gtk_widget_show (shell->scale_dialog);
 }
@@ -563,13 +590,11 @@ gimp_display_shell_scale_dialog_response (GtkWidget       *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      gint scale_src;
-      gint scale_dest;
+      gdouble scale;
 
-      scale_src  = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->src_adj));
-      scale_dest = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->dest_adj));
+      scale = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->scale_adj));
 
-      gimp_display_shell_scale (dialog->shell, scale_dest * 100 + scale_src);
+      gimp_display_shell_scale (dialog->shell, GIMP_ZOOM_TO, scale / 100.0);
     }
   else
     {
@@ -577,11 +602,60 @@ gimp_display_shell_scale_dialog_response (GtkWidget       *widget,
       gimp_display_shell_scaled (dialog->shell);
     }
 
-  dialog->shell->other_scale |= (1 << 30);
+  dialog->shell->other_scale = - fabs (dialog->shell->other_scale);
 
   gtk_widget_destroy (dialog->shell->scale_dialog);
 }
 
+
+static void
+update_zoom_values (GtkAdjustment   *adj,
+                    ScaleDialogData *dialog)
+{
+  gint num, denom;
+  gdouble scale;
+  
+  g_signal_handlers_block_by_func (GTK_ADJUSTMENT (dialog->scale_adj),
+                                   G_CALLBACK (update_zoom_values),
+                                   dialog);
+ 
+  g_signal_handlers_block_by_func (GTK_ADJUSTMENT (dialog->num_adj),
+                                   G_CALLBACK (update_zoom_values),
+                                   dialog);
+ 
+  g_signal_handlers_block_by_func (GTK_ADJUSTMENT (dialog->denom_adj),
+                                   G_CALLBACK (update_zoom_values),
+                                   dialog);
+ 
+  if (GTK_OBJECT (adj) == dialog->scale_adj)
+    {
+      scale = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->scale_adj));
+
+      gimp_display_shell_scale_get_fraction (scale / 100.0, &num, &denom);
+
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (dialog->num_adj), num);
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (dialog->denom_adj), denom);
+    }
+  else   /* fraction adjustments */
+    {
+      scale = (gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->num_adj)) /
+               gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->denom_adj)));
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (dialog->scale_adj),
+                                scale * 100);
+    }
+
+  g_signal_handlers_unblock_by_func (GTK_ADJUSTMENT (dialog->scale_adj),
+                                     G_CALLBACK (update_zoom_values),
+                                     dialog);
+ 
+  g_signal_handlers_unblock_by_func (GTK_ADJUSTMENT (dialog->num_adj),
+                                     G_CALLBACK (update_zoom_values),
+                                     dialog);
+ 
+  g_signal_handlers_unblock_by_func (GTK_ADJUSTMENT (dialog->denom_adj),
+                                     G_CALLBACK (update_zoom_values),
+                                     dialog);
+}
 
 /* scale image coord to realworld units (cm, inches, pixels)
  *

@@ -144,7 +144,7 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   gimp_image_undo_enable (new_image);
 
-  gimp_create_display (gimage->gimp, new_image, 0x0101);
+  gimp_create_display (gimage->gimp, new_image, 1.0);
   g_object_unref (new_image);
 }
 

@@ -1,3 +1,40 @@
+2004-01-29  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: Store the zoom factor as
+	float, not as a ratio.
+
+	* app/display/gimpdisplayshell-scale.[ch]: change the API to
+	expose the Float instead a weirdly encoded integer. Implement
+	functions to get a ratio from the scale factor. Implement a set
+	as presets as discussed on the mailinglist. Changed Zoom->Other
+	dialog to enable entering a float.
+
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpnavigationview.c
+	* app/gui/image-menu.c
+	* app/gui/info-window.c
+	* app/tools/gimpmagnifytool.c: changed accordingly.
+
+	* app/core/gimp.[ch]
+	* app/display/gimpdisplay.[ch]
+	* app/gui/gui-vtable.c
+	* app/widgets/widgets-enums.h: Made the various display-creating
+	functions accept a float for the scale. Introduce a new
+	GimpZoomType: GIMP_ZOOM_TO. Generally adjust the API to use
+	floats instead of weird integers.
+
+	* app/core/gimp-edit.c
+	* app/core/gimptemplate.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/file/file-open.c
+	* app/gui/image-commands.c
+	* app/gui/view-commands.[ch]
+	* tools/pdbgen/pdb/display.pdb
+	* app/widgets/gimpimageview.c
+	* app/widgets/gimptoolbox-dnd.c: changed accordingly
+
+	* app/pdb/display_cmds.c: regenerated
+
 2004-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.[ch]: removed the last artefact of context

@@ -201,7 +201,7 @@ gimp_display_get_property (GObject    *object,
 
 GimpDisplay *
 gimp_display_new (GimpImage       *gimage,
-                  guint            scale,
+                  gdouble          scale,
                   GimpMenuFactory *menu_factory,
                   GimpItemFactory *popup_factory)
 {

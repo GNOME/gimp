@@ -33,15 +33,11 @@
 #define  SCREEN_YRES(s)   (s->dot_for_dot ? \
                            s->gdisp->gimage->yresolution : s->monitor_yres)
 
-/* unpacking the user scale level (char) */
-#define  SCALESRC(s)      (s->scale & 0x00ff)
-#define  SCALEDEST(s)     (s->scale >> 8)
-
 /* calculate scale factors (double) */
-#define  SCALEFACTOR_X(s) ((SCALEDEST(s) * SCREEN_XRES(s)) / \
-			   (SCALESRC(s) * s->gdisp->gimage->xresolution))
-#define  SCALEFACTOR_Y(s) ((SCALEDEST(s) * SCREEN_YRES(s)) / \
-			   (SCALESRC(s) * s->gdisp->gimage->yresolution))
+#define  SCALEFACTOR_X(s) (s->scale * SCREEN_XRES(s) / \
+			   s->gdisp->gimage->xresolution)
+#define  SCALEFACTOR_Y(s) (s->scale * SCREEN_YRES(s) / \
+			   s->gdisp->gimage->yresolution)
 
 /* scale values */
 #define  SCALEX(s,x)      ((gint) (x * SCALEFACTOR_X(s)))
@@ -78,8 +74,8 @@ struct _GimpDisplayShell
   gdouble           monitor_xres;
   gdouble           monitor_yres;
 
-  gint              scale;             /*  scale factor from original raw image    */
-  gint              other_scale;       /*  scale factor entered in Zoom->Other     */
+  gdouble           scale;             /*  scale factor from original raw image    */
+  gdouble           other_scale;       /*  scale factor entered in Zoom->Other     */
   gboolean          dot_for_dot;       /*  is monitor resolution being ignored?    */
 
   gint              offset_x;          /*  offset of display image into raw image  */
@@ -174,7 +170,7 @@ struct _GimpDisplayShellClass
 GType       gimp_display_shell_get_type              (void) G_GNUC_CONST;
 
 GtkWidget * gimp_display_shell_new                   (GimpDisplay      *gdisp,
-                                                      guint             scale,
+                                                      gdouble           scale,
                                                       GimpMenuFactory  *menu_factory,
                                                       GimpItemFactory  *popup_factory);
 

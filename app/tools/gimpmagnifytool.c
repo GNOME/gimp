@@ -228,9 +228,9 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
   if (! (state & GDK_BUTTON3_MASK))
     {
       gint x1, y1, x2, y2, w, h;
-      gint scalesrc, scaledest;
       gint win_width, win_height;
       gint offset_x, offset_y;
+      gdouble new_scale;
 
       x1 = (magnify->w < 0) ?  magnify->x + magnify->w : magnify->x;
       y1 = (magnify->h < 0) ?  magnify->y + magnify->h : magnify->y;
@@ -239,12 +239,6 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       x2 = x1 + w;
       y2 = y1 + h;
 
-      /* these change the user zoom level, so should not be changed to
-       * the resolution-aware scale macros -- austin
-       */
-      scalesrc  = SCALESRC (shell);
-      scaledest = SCALEDEST (shell);
-
       win_width  = shell->disp_width;
       win_height = shell->disp_height;
 
@@ -252,8 +246,8 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       if ((SCALEX (shell, w) < options->threshold) ||
           (SCALEY (shell, h) < options->threshold))
         {
-          gimp_display_shell_scale_zoom_fraction (options->zoom_type,
-                                                  &scalesrc, &scaledest);
+          new_scale = gimp_display_shell_scale_zoom_step (options->zoom_type,
+                                                          shell->scale);
         }
       else
         {
@@ -274,19 +268,19 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
               scale = MIN (((gdouble) w / (gdouble) width),
                            ((gdouble) h / (gdouble) height));
               break;
+            
+            case GIMP_ZOOM_TO:
+              break;
             }
 
-          scale = scale * (gdouble) scaledest / (gdouble) scalesrc;
-
-          gimp_display_shell_scale_calc_fraction (scale,
-                                                  &scalesrc, &scaledest);
+          new_scale = shell->scale * scale;
         }
 
-      offset_x = (scaledest * ((x1 + x2) / 2)) / scalesrc - (win_width  / 2);
-      offset_y = (scaledest * ((y1 + y2) / 2)) / scalesrc - (win_height / 2);
+      offset_x = (new_scale * (x1 + x2) / 2) - (win_width  / 2);
+      offset_y = (new_scale * (y1 + y2) / 2) - (win_height / 2);
 
       gimp_display_shell_scale_by_values (shell,
-                                          (scaledest << 8) + scalesrc,
+                                          new_scale,
                                           offset_x, offset_y,
                                           options->allow_resize);
     }

@@ -61,7 +61,7 @@ static void           gui_message              (Gimp          *gimp,
                                                 const gchar   *domain,
                                                 const gchar   *message);
 static GimpObject   * gui_display_new          (GimpImage     *gimage,
-                                                guint          scale);
+                                                gdouble        scale);
 static void           gui_menus_init           (Gimp          *gimp,
                                                 GSList        *plug_in_defs,
                                                 const gchar   *plugins_domain);
@@ -185,7 +185,7 @@ gui_message (Gimp        *gimp,
 
 static GimpObject *
 gui_display_new (GimpImage *gimage,
-                 guint      scale)
+                 gdouble    scale)
 {
   GimpDisplayShell *shell;
   GimpDisplay      *gdisp;

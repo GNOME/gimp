@@ -442,7 +442,7 @@ gimp_template_create_image (Gimp         *gimp,
   gimp_image_undo_enable (gimage);
   gimp_image_clean_all (gimage);
 
-  gimp_create_display (gimp, gimage, 0x0101);
+  gimp_create_display (gimp, gimage, 1.0);
 
   g_object_unref (gimage);
 
