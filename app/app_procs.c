@@ -411,6 +411,8 @@ app_exit_after_callback (Gimp      *gimp,
 #ifdef GIMP_UNSTABLE
   g_main_loop_quit (loop);
 #else
+  /*  make sure that the swap file is removed before we quit */
+  base_exit ();
   exit (EXIT_SUCCESS);
 #endif
 

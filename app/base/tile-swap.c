@@ -150,6 +150,7 @@ static gboolean read_err_msg  = TRUE;
 static gboolean write_err_msg = TRUE;
 
 
+#ifdef GIMP_UNSTABLE
 static void
 tile_swap_print_gaps (DefSwapFile *def_swap_file)
 {
@@ -166,6 +167,7 @@ tile_swap_print_gaps (DefSwapFile *def_swap_file)
                gap->start, gap->end);
     }
 }
+#endif
 
 static void
 tile_swap_exit1 (gpointer key,
@@ -183,12 +185,15 @@ tile_swap_exit1 (gpointer key,
   if (swap_file->swap_func == tile_swap_default)
     {
       def_swap_file = swap_file->user_data;
+
+#ifdef GIMP_UNSTABLE
       if (def_swap_file->swap_file_end != 0)
 	{
 	  g_warning ("swap file not empty: \"%s\"\n",
 		     gimp_filename_to_utf8 (swap_file->filename));
 	  tile_swap_print_gaps (def_swap_file);
 	}
+#endif
 
 #ifdef G_OS_WIN32
       /* should close before unlink */

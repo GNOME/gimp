@@ -1,3 +1,11 @@
+2004-11-22  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c (app_exit_after_callback): call base_exit()
+	before quitting the application using exit(). Fixes bug #159019.
+
+	* app/base/tile-swap.c: moved the warning about a non-empty swap
+	file into #ifdef GIMP_UNSTABLE ... #endif.
+
 2004-11-22  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c: correctly initialize the Antialising
