@@ -962,19 +962,13 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   if (! active_item)
     return;
 
-  if (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
+  if (gimp_display_shell_get_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell)))
     {
-      GimpDisplayShell *shell;
+      gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                             FALSE);
 
-      shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
-
-      if (gimp_display_shell_get_show_transform (shell))
-        {
-          gimp_display_shell_set_show_transform (shell, FALSE);
-
-          /* get rid of preview artifacts left outside the drawable's area */
-          gimp_transform_tool_expose_preview (tr_tool);
-        }
+      /* get rid of preview artifacts left outside the drawable's area */
+      gimp_transform_tool_expose_preview (tr_tool);
     }
 
   gimp_set_busy (gdisp->gimage->gimp);
@@ -1440,8 +1434,12 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
   options =
     GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
-  gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                         options->show_preview);
+  if (options->type == GIMP_TRANSFORM_TYPE_LAYER)
+    gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                           options->show_preview);
+  else
+    gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (gdisp->shell),
+                                           FALSE);
 
   if (tr_tool->info_dialog)
     {
@@ -1554,13 +1552,18 @@ gimp_transform_tool_notify_preview (GimpTransformOptions *options,
 
   shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
 
-  gimp_display_shell_set_show_transform (shell, options->show_preview);
+  if (options->type == GIMP_TRANSFORM_TYPE_LAYER)
+    {
+      gimp_display_shell_set_show_transform (shell, options->show_preview);
 
-  /* expose area to clean up if preview is being turned off */
-  show_preview = options->show_preview;
-  options->show_preview = TRUE;
+      /* expose area to clean up if preview is being turned off */
+      show_preview = options->show_preview;
+      options->show_preview = TRUE;
 
-  gimp_transform_tool_expose_preview (tr_tool);
+      gimp_transform_tool_expose_preview (tr_tool);
 
-  options->show_preview = show_preview;
+      options->show_preview = show_preview;
+    }
+  else
+    gimp_display_shell_set_show_transform (shell, FALSE);
 }

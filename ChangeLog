@@ -1,3 +1,8 @@
+2004-06-14  Philip Lafleur  <plafleur@cvs.gnome.org>
+
+	* app/tools/gimptransformtool.c: Preview is now only used for
+	layer transformations.
+
 2004-06-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpperspectivetool.c
