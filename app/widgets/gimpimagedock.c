@@ -163,7 +163,7 @@ gimp_image_dock_new (GimpDialogFactory *factory,
 
   dock->factory = factory;
 
-  dock->context = gimp_context_new ("Dock Context", factory->context);
+  dock->context = gimp_context_new ("Dock Context", NULL);
   gimp_context_define_args (dock->context,
 			    GIMP_CONTEXT_ALL_ARGS_MASK &
 			    ~(GIMP_CONTEXT_IMAGE_MASK |
@@ -216,9 +216,17 @@ gimp_image_dock_image_changed (GimpContext *context,
 
   image_dock = GIMP_IMAGE_DOCK (dock);
 
+  g_print ("%p: got image %s\n",
+	   context, gimage ? GIMP_OBJECT (gimage)->name : "NULL");
+
   if (! gimage && image_dock->image_container->num_children)
     {
       gimage = GIMP_IMAGE (gimp_container_get_child_by_index (image_dock->image_container, 0));
+
+      gtk_signal_emit_stop_by_name (GTK_OBJECT (context), "image_changed");
+
+      g_print ("%p: set image %s\n",
+	       context, gimage ? GIMP_OBJECT (gimage)->name : "NULL");
 
       gimp_context_set_image (dock->context, gimage);
     }

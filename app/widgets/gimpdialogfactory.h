@@ -40,6 +40,7 @@ struct _GimpDialogFactoryEntry
   GimpDialogNewFunc  new_func;
   gboolean           singleton;
   gboolean           session_managed;
+  gboolean           remember_size;
 };
 
 
@@ -113,7 +114,8 @@ void        gimp_dialog_factory_register         (GimpDialogFactory *factory,
 						  const gchar       *identifier,
 						  GimpDialogNewFunc  new_func,
 						  gboolean           singleton,
-						  gboolean           session_managed);
+						  gboolean           session_managed,
+						  gboolean           remember_size);
 
 GtkWidget * gimp_dialog_factory_dialog_new       (GimpDialogFactory *factory,
 						  const gchar       *identifier);

@@ -524,6 +524,7 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 {
   GimpImage *gimage;
   GtkWidget *view;
+  GtkWidget *dockable;
 
   gimage = gimp_context_get_image (context);
 
@@ -539,10 +540,14 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
      (GimpRemoveDrawableFunc)  gimp_image_remove_layer,
      (GimpCopyDrawableFunc)    gimp_layer_copy);
 
-  return dialogs_dockable_new (view,
-			       "Layer List", "Layers",
-			       NULL,
-			       dialogs_set_drawable_context_func);
+  dockable = dialogs_dockable_new (view,
+				   "Layer List", "Layers",
+				   NULL,
+				   dialogs_set_drawable_context_func);
+
+  dialogs_set_drawable_context_func (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
 }
 
 GtkWidget *
@@ -551,6 +556,7 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
 {
   GimpImage *gimage;
   GtkWidget *view;
+  GtkWidget *dockable;
 
   gimage = gimp_context_get_image (context);
 
@@ -566,10 +572,14 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
      (GimpRemoveDrawableFunc)  gimp_image_remove_channel,
      (GimpCopyDrawableFunc)    gimp_channel_copy);
 
-  return dialogs_dockable_new (view,
-			       "Channel List", "Channels",
-			       NULL,
-			       dialogs_set_drawable_context_func);
+  dockable = dialogs_dockable_new (view,
+				   "Channel List", "Channels",
+				   NULL,
+				   dialogs_set_drawable_context_func);
+
+  dialogs_set_drawable_context_func (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
 }
 
 
@@ -876,5 +886,8 @@ dialogs_drawable_view_image_changed (GimpContext          *context,
 				     GimpImage            *gimage,
 				     GimpDrawableListView *view)
 {
+  g_print ("%p: image changed %s\n",
+	   context, gimage ? GIMP_OBJECT (gimage)->name : "NULL");
+
   gimp_drawable_list_view_set_image (view, gimage);
 }

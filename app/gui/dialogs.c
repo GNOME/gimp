@@ -37,45 +37,45 @@ GimpDialogFactory *global_dock_factory   = NULL;
 
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
-  { "gimp:toolbox",                dialogs_toolbox_get,         TRUE,  TRUE  },
-  { "gimp:lc-dialog",              dialogs_lc_get,              TRUE,  TRUE  },
-  { "gimp:tool-options-dialog",    dialogs_tool_options_get,    TRUE,  TRUE  },
-  { "gimp:device-status-dialog",   dialogs_device_status_get,   TRUE,  TRUE  },
-  { "gimp:brush-select-dialog",    dialogs_brush_select_get,    TRUE,  TRUE  },
-  { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  TRUE,  TRUE  },
-  { "gimp:gradient-select-dialog", dialogs_gradient_select_get, TRUE,  TRUE  },
-  { "gimp:palette-dialog",         dialogs_palette_get,         TRUE,  TRUE  },
-  { "gimp:error-console-dialog",   dialogs_error_console_get,   TRUE,  TRUE  },
-  { "gimp:document-index-dialog",  dialogs_document_index_get,  TRUE,  TRUE  },
-  { "gimp:preferences-dialog",     dialogs_preferences_get,     TRUE,  FALSE },
-  { "gimp:input-devices-dialog",   dialogs_input_devices_get,   TRUE,  FALSE },
-  { "gimp:module-browser-dialog",  dialogs_module_browser_get,  TRUE,  FALSE },
-  { "gimp:indexed-palette-dialog", dialogs_indexed_palette_get, TRUE,  FALSE },
-  { "gimp:undo-history-dialog",    dialogs_undo_history_get,    FALSE, FALSE },
-  { "gimp:display-filters-dialog", dialogs_display_filters_get, FALSE, FALSE },
-  { "gimp:tips-dialog",            dialogs_tips_get,            TRUE,  FALSE },
-  { "gimp:about-dialog",           dialogs_about_get,           TRUE,  FALSE }
+  { "gimp:toolbox",                dialogs_toolbox_get,         TRUE,  TRUE,  TRUE  },
+  { "gimp:lc-dialog",              dialogs_lc_get,              TRUE,  TRUE,  TRUE  },
+  { "gimp:tool-options-dialog",    dialogs_tool_options_get,    TRUE,  TRUE,  FALSE },
+  { "gimp:device-status-dialog",   dialogs_device_status_get,   TRUE,  TRUE,  FALSE },
+  { "gimp:brush-select-dialog",    dialogs_brush_select_get,    TRUE,  TRUE,  FALSE },
+  { "gimp:pattern-select-dialog",  dialogs_pattern_select_get,  TRUE,  TRUE,  FALSE },
+  { "gimp:gradient-select-dialog", dialogs_gradient_select_get, TRUE,  TRUE,  FALSE },
+  { "gimp:palette-dialog",         dialogs_palette_get,         TRUE,  TRUE,  FALSE },
+  { "gimp:error-console-dialog",   dialogs_error_console_get,   TRUE,  TRUE,  TRUE  },
+  { "gimp:document-index-dialog",  dialogs_document_index_get,  TRUE,  TRUE,  TRUE  },
+  { "gimp:preferences-dialog",     dialogs_preferences_get,     TRUE,  FALSE, FALSE },
+  { "gimp:input-devices-dialog",   dialogs_input_devices_get,   TRUE,  FALSE, FALSE },
+  { "gimp:module-browser-dialog",  dialogs_module_browser_get,  TRUE,  FALSE, FALSE },
+  { "gimp:indexed-palette-dialog", dialogs_indexed_palette_get, TRUE,  FALSE, FALSE },
+  { "gimp:undo-history-dialog",    dialogs_undo_history_get,    FALSE, FALSE, FALSE },
+  { "gimp:display-filters-dialog", dialogs_display_filters_get, FALSE, FALSE, FALSE },
+  { "gimp:tips-dialog",            dialogs_tips_get,            TRUE,  FALSE, FALSE },
+  { "gimp:about-dialog",           dialogs_about_get,           TRUE,  FALSE, FALSE }
 };
 static const gint n_toplevel_entries = (sizeof (toplevel_entries) /
 					sizeof (toplevel_entries[0]));
 
 static const GimpDialogFactoryEntry dock_entries[] =
 {
-  { "gimp:image-list",    dialogs_image_list_view_new,    FALSE, FALSE },
-  { "gimp:brush-list",    dialogs_brush_list_view_new,    FALSE, FALSE },
-  { "gimp:pattern-list",  dialogs_pattern_list_view_new,  FALSE, FALSE },
-  { "gimp:gradient-list", dialogs_gradient_list_view_new, FALSE, FALSE },
-  { "gimp:palette-list",  dialogs_palette_list_view_new,  FALSE, FALSE },
-  { "gimp:tool-list",     dialogs_tool_list_view_new,     FALSE, FALSE },
-  { "gimp:image-grid",    dialogs_image_grid_view_new,    FALSE, FALSE },
-  { "gimp:brush-grid",    dialogs_brush_grid_view_new,    FALSE, FALSE },
-  { "gimp:pattern-grid",  dialogs_pattern_grid_view_new,  FALSE, FALSE },
-  { "gimp:gradient-grid", dialogs_gradient_grid_view_new, FALSE, FALSE },
-  { "gimp:palette-grid",  dialogs_palette_grid_view_new,  FALSE, FALSE },
-  { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE },
+  { "gimp:image-list",    dialogs_image_list_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:brush-list",    dialogs_brush_list_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:pattern-list",  dialogs_pattern_list_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:gradient-list", dialogs_gradient_list_view_new, FALSE, FALSE, FALSE },
+  { "gimp:palette-list",  dialogs_palette_list_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:tool-list",     dialogs_tool_list_view_new,     FALSE, FALSE, FALSE },
+  { "gimp:image-grid",    dialogs_image_grid_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:brush-grid",    dialogs_brush_grid_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:pattern-grid",  dialogs_pattern_grid_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:gradient-grid", dialogs_gradient_grid_view_new, FALSE, FALSE, FALSE },
+  { "gimp:palette-grid",  dialogs_palette_grid_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE },
 
-  { "gimp:layer-list",    dialogs_layer_list_view_new,    FALSE, FALSE },
-  { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE }
+  { "gimp:layer-list",    dialogs_layer_list_view_new,    FALSE, FALSE, FALSE },
+  { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE, FALSE }
 };
 static const gint n_dock_entries = (sizeof (dock_entries) /
 				    sizeof (dock_entries[0]));
@@ -105,14 +105,16 @@ dialogs_init (void)
 				  toplevel_entries[i].identifier,
 				  toplevel_entries[i].new_func,
 				  toplevel_entries[i].singleton,
-				  toplevel_entries[i].session_managed);
+				  toplevel_entries[i].session_managed,
+				  toplevel_entries[i].remember_size);
 
   for (i = 0; i < n_dock_entries; i++)
     gimp_dialog_factory_register (global_dock_factory,
 				  dock_entries[i].identifier,
 				  dock_entries[i].new_func,
 				  dock_entries[i].singleton,
-				  dock_entries[i].session_managed);
+				  dock_entries[i].session_managed,
+				  dock_entries[i].remember_size);
 }
 
 void

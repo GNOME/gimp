@@ -217,9 +217,10 @@ gimp_container_menu_impl_remove_item (GimpContainerMenu *menu,
       if (g_list_length (GTK_MENU_SHELL (menu)->children) == 1)
 	{
 	  gtk_widget_show (GIMP_CONTAINER_MENU_IMPL (menu)->empty_item);
-
-	  gimp_container_menu_impl_set_history (menu, 0);
 	}
+
+      /* FIXME: this is due to gtkoptionmenu brokenness */
+      gimp_container_menu_impl_set_history (menu, 0);
     }
 }
 

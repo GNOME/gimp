@@ -1,3 +1,22 @@
+2001-04-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/authors.h: regenerated.
+
+	* app/gui/dialogs-constructors.c: call the drawable views's
+	set_context() function once explicitly after creation.
+
+	* app/gui/dialogs.c
+	* app/widgets/gimpdialogfactory.[ch]: session management correctly
+	remembers the dialogs' sizes again.
+
+	* app/widgets/gimpcontainermenuimpl.c: set the options menu's
+	history to "0" after removing a menu item (temp hack because
+	GtkOptionMenu doesn't handle the removal of the currently active
+	item correctly).
+
+	* app/widgets/gimpimagedock.c: another try to get dock->context's
+	signals handled correctly. Debugging output will disappear soon.
+
 2001-04-23  David Neary  <dneary@eircom.net>
 
         * AUTHORS: Added my name here before being politely

@@ -119,6 +119,7 @@ static gchar *authors[] =
   "Shuji Narazaki",
   "Felix Natter",
   "Michael Natterer",
+  "David Neary",
   "Sven Neumann",
   "Stephen Robert Norris",
   "Tim Newsome",

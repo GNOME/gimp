@@ -43,8 +43,7 @@ static void   gimp_dialog_factory_destroy    (GtkObject              *object);
 static void   gimp_dialog_factory_get_window_info     (GtkWidget       *window, 
 						       GimpSessionInfo *info);
 static void   gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
-						       GimpSessionInfo *info,
-						       gboolean         set_size);
+						       GimpSessionInfo *info);
 
 
 static GimpObjectClass *parent_class = NULL;
@@ -190,7 +189,8 @@ gimp_dialog_factory_register (GimpDialogFactory *factory,
 			      const gchar       *identifier,
 			      GimpDialogNewFunc  new_func,
 			      gboolean           singleton,
-			      gboolean           session_managed)
+			      gboolean           session_managed,
+			      gboolean           remember_size)
 {
   GimpDialogFactoryEntry *entry;
 
@@ -204,6 +204,7 @@ gimp_dialog_factory_register (GimpDialogFactory *factory,
   entry->new_func        = new_func;
   entry->singleton       = singleton ? TRUE : FALSE;
   entry->session_managed = session_managed ? TRUE : FALSE;
+  entry->remember_size   = remember_size ? TRUE : FALSE;
 
   factory->registered_dialogs = g_list_prepend (factory->registered_dialogs,
 						entry);
@@ -437,8 +438,7 @@ gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
 
 	      if (entry->session_managed)
 		{
-		  gimp_dialog_factory_set_window_geometry (info->widget,
-							   info, FALSE);
+		  gimp_dialog_factory_set_window_geometry (info->widget, info);
 		}
 
 	      break;
@@ -467,8 +467,7 @@ gimp_dialog_factory_add_toplevel (GimpDialogFactory *factory,
 	    {
 	      info->widget = toplevel;
 
-	      gimp_dialog_factory_set_window_geometry (info->widget,
-						       info, FALSE);
+	      gimp_dialog_factory_set_window_geometry (info->widget, info);
 
 	      break;
 	    }
@@ -561,7 +560,9 @@ gimp_dialog_factories_session_save_foreach (gchar             *name,
 	       name,
 	       info->toplevel_entry ? info->toplevel_entry->identifier : "dock");
       fprintf (fp, "    (position %d %d)\n", info->x, info->y);
-      fprintf (fp, "    (size %d %d)", info->width, info->height);
+
+      if (info->width > 0 && info->height > 0)
+	fprintf (fp, "    (size %d %d)", info->width, info->height);
 
       if (info->open)
 	fprintf (fp, "\n    (open-on-exit)");
@@ -721,7 +722,16 @@ gimp_dialog_factory_get_window_info (GtkWidget       *window,
   if (window->window)
     {
       gdk_window_get_root_origin (window->window, &info->x, &info->y);
-      gdk_window_get_size (window->window, &info->width, &info->height);
+
+      if (! info->toplevel_entry || info->toplevel_entry->remember_size)
+	{
+	  gdk_window_get_size (window->window, &info->width, &info->height);
+	}
+      else
+	{
+	  info->width  = 0;
+	  info->height = 0;
+	}
     }
 
   info->open = GTK_WIDGET_VISIBLE (window);
@@ -729,8 +739,7 @@ gimp_dialog_factory_get_window_info (GtkWidget       *window,
 
 static void
 gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
-					 GimpSessionInfo *info,
-					 gboolean         set_size)
+					 GimpSessionInfo *info)
 {
   static gint screen_width  = 0;
   static gint screen_height = 0;
@@ -751,9 +760,10 @@ gimp_dialog_factory_set_window_geometry (GtkWidget       *window,
 
   gtk_widget_set_uposition (window, info->x, info->y);
 
-  if (set_size)
+  if (! info->toplevel_entry || info->toplevel_entry->remember_size)
     {
-      gtk_window_set_default_size (GTK_WINDOW (window),
-				   info->width, info->height);
+      if (info->width > 0 && info->height > 0)
+	gtk_window_set_default_size (GTK_WINDOW (window),
+				     info->width, info->height);
     }
 }
