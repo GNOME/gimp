@@ -1,3 +1,11 @@
+2003-08-28  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/xjt/xpdb_calls.[ch]: removed
+
+	* Makefile.am
+	* plug-ins/xjt/xjt.c: major clean-up. All calls that were in xpdb_calls.c are already
+	available in the various libgimp routines.
+
 2003-08-28  Michael Natterer  <mitch@gimp.org>
 
 	Completed the new help infrastructure. Needs some polishing but
@@ -65,6 +73,7 @@
 
 	* app/pdb/image_cmds.c: regenerated.
 
+>>>>>>> 1.6225
 2003-08-28  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimptransformtool.c: Modified the test when to paint

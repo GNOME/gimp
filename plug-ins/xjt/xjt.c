@@ -80,7 +80,6 @@
 
 /* XJT includes */
 #include "xjpeg.h"
-#include "xpdb_calls.h"
 
 #define GIMP_XJ_IMAGE  "GIMP_XJ_IMAGE"
 
@@ -429,8 +428,7 @@ static JpegSaveInterface jsint =
 static gint 
 p_invert(gint value)
 {
-  if(value == FALSE) return(TRUE);
-  return(FALSE);
+  return (value) ? FALSE : TRUE;
 }
 
 int p_system(const gchar *cmd)
@@ -655,7 +653,7 @@ p_my_ascii_strtod (gchar  *nptr,
     */
    ii=0;
    ic = -1;
-   while(nptr)
+   while (nptr)
    {
      if (nptr[ii] == ',')
      {
@@ -674,13 +672,12 @@ p_my_ascii_strtod (gchar  *nptr,
 
    l_rc = g_ascii_strtod(nptr, endptr);
    
-   if(ic >= 0)
+   if (ic >= 0)
    {
        nptr[ii] = ',';   /* restore the comma */
    }
 
-   return(l_rc);
-   
+   return l_rc;   
 }  /* end p_my_ascii_strtod */
 
 /* -- type transformer routines XJT -- GIMP internal enums ----------------- */
@@ -688,14 +685,14 @@ p_my_ascii_strtod (gchar  *nptr,
 gint32
 p_to_GimpOrientation(gint32 orientation)
 {
-  if(orientation == XJT_ORIENTATION_VERTICAL) return(GIMP_ORIENTATION_VERTICAL);
-  return(GIMP_ORIENTATION_HORIZONTAL);
+  return (orientation == XJT_ORIENTATION_VERTICAL)
+    ? GIMP_ORIENTATION_VERTICAL : GIMP_ORIENTATION_HORIZONTAL;
 }
 gint32
 p_to_XJTOrientation(gint32 orientation)
 {
-  if(orientation == GIMP_ORIENTATION_VERTICAL) return(XJT_ORIENTATION_VERTICAL);
-  return(XJT_ORIENTATION_HORIZONTAL);
+  return (orientation == GIMP_ORIENTATION_VERTICAL) 
+    ? XJT_ORIENTATION_VERTICAL : XJT_ORIENTATION_HORIZONTAL;
 }
 
 GimpLayerModeEffects
@@ -703,36 +700,36 @@ p_to_GimpLayerModeEffects(XJTLayerModeEffects intype)
 {
   switch(intype)
   {
-    case XJT_NORMAL_MODE:         return(GIMP_NORMAL_MODE);
-    case XJT_DISSOLVE_MODE:       return(GIMP_DISSOLVE_MODE);
-    case XJT_BEHIND_MODE:         return(GIMP_BEHIND_MODE);
-    case XJT_MULTIPLY_MODE:       return(GIMP_MULTIPLY_MODE);
-    case XJT_SCREEN_MODE:         return(GIMP_SCREEN_MODE);
-    case XJT_OVERLAY_MODE:        return(GIMP_OVERLAY_MODE);
-    case XJT_DIFFERENCE_MODE:     return(GIMP_DIFFERENCE_MODE);
-    case XJT_ADDITION_MODE:       return(GIMP_ADDITION_MODE);
-    case XJT_SUBTRACT_MODE:       return(GIMP_SUBTRACT_MODE);
-    case XJT_DARKEN_ONLY_MODE:    return(GIMP_DARKEN_ONLY_MODE);
-    case XJT_LIGHTEN_ONLY_MODE:   return(GIMP_LIGHTEN_ONLY_MODE);
-    case XJT_HUE_MODE:            return(GIMP_HUE_MODE);
-    case XJT_SATURATION_MODE:     return(GIMP_SATURATION_MODE);
-    case XJT_COLOR_MODE:          return(GIMP_COLOR_MODE);
-    case XJT_VALUE_MODE:          return(GIMP_VALUE_MODE);
-    case XJT_DIVIDE_MODE:         return(GIMP_DIVIDE_MODE);
-    case XJT_DODGE_MODE:          return(GIMP_DODGE_MODE);
-    case XJT_BURN_MODE:           return(GIMP_BURN_MODE);
-    case XJT_HARDLIGHT_MODE:      return(GIMP_HARDLIGHT_MODE);
-    case XJT_SOFTLIGHT_MODE:      return(GIMP_SOFTLIGHT_MODE);
-    case XJT_GRAIN_EXTRACT_MODE:  return(GIMP_GRAIN_EXTRACT_MODE);
-    case XJT_GRAIN_MERGE_MODE:    return(GIMP_GRAIN_MERGE_MODE);
-    case XJT_COLOR_ERASE_MODE:    return(GIMP_COLOR_ERASE_MODE);
+    case XJT_NORMAL_MODE:         return GIMP_NORMAL_MODE;
+    case XJT_DISSOLVE_MODE:       return GIMP_DISSOLVE_MODE;
+    case XJT_BEHIND_MODE:         return GIMP_BEHIND_MODE;
+    case XJT_MULTIPLY_MODE:       return GIMP_MULTIPLY_MODE;
+    case XJT_SCREEN_MODE:         return GIMP_SCREEN_MODE;
+    case XJT_OVERLAY_MODE:        return GIMP_OVERLAY_MODE;
+    case XJT_DIFFERENCE_MODE:     return GIMP_DIFFERENCE_MODE;
+    case XJT_ADDITION_MODE:       return GIMP_ADDITION_MODE;
+    case XJT_SUBTRACT_MODE:       return GIMP_SUBTRACT_MODE;
+    case XJT_DARKEN_ONLY_MODE:    return GIMP_DARKEN_ONLY_MODE;
+    case XJT_LIGHTEN_ONLY_MODE:   return GIMP_LIGHTEN_ONLY_MODE;
+    case XJT_HUE_MODE:            return GIMP_HUE_MODE;
+    case XJT_SATURATION_MODE:     return GIMP_SATURATION_MODE;
+    case XJT_COLOR_MODE:          return GIMP_COLOR_MODE;
+    case XJT_VALUE_MODE:          return GIMP_VALUE_MODE;
+    case XJT_DIVIDE_MODE:         return GIMP_DIVIDE_MODE;
+    case XJT_DODGE_MODE:          return GIMP_DODGE_MODE;
+    case XJT_BURN_MODE:           return GIMP_BURN_MODE;
+    case XJT_HARDLIGHT_MODE:      return GIMP_HARDLIGHT_MODE;
+    case XJT_SOFTLIGHT_MODE:      return GIMP_SOFTLIGHT_MODE;
+    case XJT_GRAIN_EXTRACT_MODE:  return GIMP_GRAIN_EXTRACT_MODE;
+    case XJT_GRAIN_MERGE_MODE:    return GIMP_GRAIN_MERGE_MODE;
+    case XJT_COLOR_ERASE_MODE:    return GIMP_COLOR_ERASE_MODE;
   }
   printf (_("XJT file contains unknown layermode %d"), (int)intype);
   if((gint32)intype > (gint32)XJT_DIVIDE_MODE)
   {
-    return((GimpLayerModeEffects)intype);
+    return (GimpLayerModeEffects)intype;
   }
-  return(GIMP_NORMAL_MODE);
+  return GIMP_NORMAL_MODE;
 }
 
 XJTLayerModeEffects
@@ -740,36 +737,36 @@ p_to_XJTLayerModeEffects(GimpLayerModeEffects intype)
 {
   switch(intype)
   {
-    case GIMP_NORMAL_MODE:         return(XJT_NORMAL_MODE);
-    case GIMP_DISSOLVE_MODE:       return(XJT_DISSOLVE_MODE);
-    case GIMP_BEHIND_MODE:         return(XJT_BEHIND_MODE);
-    case GIMP_MULTIPLY_MODE:       return(XJT_MULTIPLY_MODE);
-    case GIMP_SCREEN_MODE:         return(XJT_SCREEN_MODE);
-    case GIMP_OVERLAY_MODE:        return(XJT_OVERLAY_MODE);
-    case GIMP_DIFFERENCE_MODE:     return(XJT_DIFFERENCE_MODE);
-    case GIMP_ADDITION_MODE:       return(XJT_ADDITION_MODE);
-    case GIMP_SUBTRACT_MODE:       return(XJT_SUBTRACT_MODE);
-    case GIMP_DARKEN_ONLY_MODE:    return(XJT_DARKEN_ONLY_MODE);
-    case GIMP_LIGHTEN_ONLY_MODE:   return(XJT_LIGHTEN_ONLY_MODE);
-    case GIMP_HUE_MODE:            return(XJT_HUE_MODE);
-    case GIMP_SATURATION_MODE:     return(XJT_SATURATION_MODE);
-    case GIMP_COLOR_MODE:          return(XJT_COLOR_MODE);
-    case GIMP_VALUE_MODE:          return(XJT_VALUE_MODE);
-    case GIMP_DIVIDE_MODE:         return(XJT_DIVIDE_MODE);
-    case GIMP_DODGE_MODE:          return(XJT_DODGE_MODE);
-    case GIMP_BURN_MODE:           return(XJT_BURN_MODE);
-    case GIMP_HARDLIGHT_MODE:      return(XJT_HARDLIGHT_MODE);
-    case GIMP_SOFTLIGHT_MODE:      return(XJT_SOFTLIGHT_MODE);
-    case GIMP_GRAIN_EXTRACT_MODE:  return(XJT_GRAIN_EXTRACT_MODE);
-    case GIMP_GRAIN_MERGE_MODE:    return(XJT_GRAIN_MERGE_MODE);
-    case GIMP_COLOR_ERASE_MODE:    return(XJT_COLOR_ERASE_MODE);
+    case GIMP_NORMAL_MODE:         return XJT_NORMAL_MODE;
+    case GIMP_DISSOLVE_MODE:       return XJT_DISSOLVE_MODE;
+    case GIMP_BEHIND_MODE:         return XJT_BEHIND_MODE;
+    case GIMP_MULTIPLY_MODE:       return XJT_MULTIPLY_MODE;
+    case GIMP_SCREEN_MODE:         return XJT_SCREEN_MODE;
+    case GIMP_OVERLAY_MODE:        return XJT_OVERLAY_MODE;
+    case GIMP_DIFFERENCE_MODE:     return XJT_DIFFERENCE_MODE;
+    case GIMP_ADDITION_MODE:       return XJT_ADDITION_MODE;
+    case GIMP_SUBTRACT_MODE:       return XJT_SUBTRACT_MODE;
+    case GIMP_DARKEN_ONLY_MODE:    return XJT_DARKEN_ONLY_MODE;
+    case GIMP_LIGHTEN_ONLY_MODE:   return XJT_LIGHTEN_ONLY_MODE;
+    case GIMP_HUE_MODE:            return XJT_HUE_MODE;
+    case GIMP_SATURATION_MODE:     return XJT_SATURATION_MODE;
+    case GIMP_COLOR_MODE:          return XJT_COLOR_MODE;
+    case GIMP_VALUE_MODE:          return XJT_VALUE_MODE;
+    case GIMP_DIVIDE_MODE:         return XJT_DIVIDE_MODE;
+    case GIMP_DODGE_MODE:          return XJT_DODGE_MODE;
+    case GIMP_BURN_MODE:           return XJT_BURN_MODE;
+    case GIMP_HARDLIGHT_MODE:      return XJT_HARDLIGHT_MODE;
+    case GIMP_SOFTLIGHT_MODE:      return XJT_SOFTLIGHT_MODE;
+    case GIMP_GRAIN_EXTRACT_MODE:  return XJT_GRAIN_EXTRACT_MODE;
+    case GIMP_GRAIN_MERGE_MODE:    return XJT_GRAIN_MERGE_MODE;
+    case GIMP_COLOR_ERASE_MODE:    return XJT_COLOR_ERASE_MODE;
   }
   printf (_("Warning: unsupported layermode %d saved to XJT"), (int)intype);
-  if((gint32)intype > (gint32)XJT_DIVIDE_MODE)
+  if ((gint32)intype > (gint32)XJT_DIVIDE_MODE)
   {
-    return((XJTLayerModeEffects)intype);
+    return (XJTLayerModeEffects)intype;
   }
-  return(XJT_NORMAL_MODE);
+  return XJT_NORMAL_MODE;
 }
 
 gint32
@@ -777,15 +774,15 @@ p_to_GimpPathType(XJTPathType intype)
 {
   switch(intype)
   {
-    case XJT_PATHTYPE_UNDEF:      return(0);
-    case XJT_PATHTYPE_BEZIER:     return(1);
+    case XJT_PATHTYPE_UNDEF:      return 0;
+    case XJT_PATHTYPE_BEZIER:     return 1;
   }
   printf (_("XJT file contains unknown pathtype %d"), (int)intype);
-  if((gint32)intype > (gint32)XJT_PATHTYPE_BEZIER)
+  if ((gint32)intype > (gint32)XJT_PATHTYPE_BEZIER)
   {
-    return((gint32)intype);
+    return (gint32)intype;
   }
-  return(0);
+  return 0;
 }
 
 XJTPathType
@@ -793,8 +790,8 @@ p_to_XJTPathType(gint32 intype)
 {
   switch(intype)
   {
-    case 0:      return(XJT_PATHTYPE_UNDEF);
-    case 1:      return(XJT_PATHTYPE_BEZIER);
+    case 0:      return XJT_PATHTYPE_UNDEF;
+    case 1:      return XJT_PATHTYPE_BEZIER;
   }
   printf (_("Warning: unsupported pathtype %d saved to XJT"), (int)intype);
   if((gint32)intype > (gint32)XJT_PATHTYPE_BEZIER)
@@ -803,7 +800,6 @@ p_to_XJTPathType(gint32 intype)
   }
   return(XJT_PATHTYPE_UNDEF);
 }
-
 
 GimpUnit
 p_to_GimpUnit(XJTUnitType intype)
@@ -959,12 +955,12 @@ p_get_property_index(t_proptype proptype)
   int l_idx;
   
   for (l_idx = 0; l_idx < PROP_TABLE_ENTRIES; l_idx++)
-  {
-    if(g_prop_table[l_idx].prop_id == proptype)
     {
-      return(l_idx);
+      if (g_prop_table[l_idx].prop_id == proptype)
+	{
+	  return l_idx;
+	}
     }
-  }
   return 0;  /* index of PROP_END -- not supported */
 }	/* end p_get_property_index */
 
@@ -1227,10 +1223,10 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
   gchar    *l_buff;
   l_buff = p_write_prop_string(proptype, param, wr_all_prp);
   
-  if(l_buff[0] != '\0')
-  {
-    fprintf(fp, "%s", l_buff);
-  }
+  if (l_buff[0] != '\0')
+    {
+      fprintf(fp, "%s", l_buff);
+    }
   g_free(l_buff);
 }	/* end p_write_prop */
 
@@ -1277,14 +1273,13 @@ p_write_parasite(const gchar  *dirname,
      l_buff2 = p_write_prop_string(PROP_PARASITE_FLAGS, &l_param, wr_all_prp);
 
      l_parasite_buff = g_strdup_printf("p%d%s%s\n"
-             , (int)global_parasite_id
-	     , l_buff
-             , l_buff2
-	      );
+				       , (int)global_parasite_id
+				       , l_buff
+				       , l_buff2);
      g_free(l_buff);
      g_free(l_buff2);
 
-     if(global_parasite_prop_lines == NULL)
+     if (global_parasite_prop_lines == NULL)
      {
        global_parasite_prop_lines = g_strdup(l_parasite_buff);
      }
@@ -1328,19 +1323,18 @@ p_write_image_paths(FILE *fp, gint32 image_id, gint wr_all_prp)
   gint32     l_num_points = 0;
   t_param_prop   l_param;
 
-  l_path_names = p_gimp_path_list(image_id, &l_num_paths);
+  l_path_names = gimp_path_list(image_id, &l_num_paths);
   if(l_path_names == NULL) return;
 
-  l_current_pathname = p_gimp_path_get_current(image_id);
+  l_current_pathname = gimp_path_get_current(image_id);
   
   for(l_idx = 0; l_idx < l_num_paths; l_idx++)
   {
     if(xjt_debug) printf("p_write_image_paths NAME:%s:\n",  l_path_names[l_idx]);
     
-    l_path_points = p_gimp_path_get_points(image_id, l_path_names[l_idx],
-	                           &l_path_type, &l_path_closed, &l_num_points);
-
-    if(l_path_points)
+    l_path_type = gimp_path_get_points(image_id, l_path_names[l_idx],
+				       &l_path_closed, &l_num_points, &l_path_points);
+    if (l_path_points)
     {
        /* write PATH line identifier */
       fprintf(fp, "PATH");
@@ -1348,10 +1342,10 @@ p_write_image_paths(FILE *fp, gint32 image_id, gint wr_all_prp)
       l_param.int_val1 = p_to_XJTPathType(l_path_type);
       p_write_prop (fp, PROP_PATH_TYPE, &l_param, wr_all_prp);
 
-      l_param.int_val1 = p_gimp_path_get_tattoo(image_id, l_path_names[l_idx]);
+      l_param.int_val1 = gimp_path_get_tattoo(image_id, l_path_names[l_idx]);
       p_write_prop (fp, PROP_TATTOO, &l_param, wr_all_prp);
 
-      l_param.int_val1 = p_gimp_path_get_locked(image_id, l_path_names[l_idx]);
+      l_param.int_val1 = gimp_path_get_locked(image_id, l_path_names[l_idx]);
       p_write_prop (fp, PROP_PATH_LOCKED, &l_param, wr_all_prp);
 
       l_param.string_val = l_path_names[l_idx];
@@ -1392,8 +1386,8 @@ p_write_image_parasites(const gchar *dirname,
   gchar        **l_parasite_names = NULL;
   gint32         l_num_parasites = 0;
 
-  l_parasite_names = p_gimp_image_parasite_list (image_id, &l_num_parasites);
-  if(l_parasite_names == NULL) return;
+  if (!gimp_image_parasite_list (image_id, &l_num_parasites, &l_parasite_names))
+    return;
   
   for(l_idx = 0; l_idx < l_num_parasites; l_idx++)
   {
@@ -1418,8 +1412,8 @@ p_write_drawable_parasites (const gchar *dirname,
   gchar        **l_parasite_names = NULL;
   gint32         l_num_parasites = 0;
 
-  l_parasite_names = p_gimp_drawable_parasite_list (drawable_id, &l_num_parasites);
-  if(l_parasite_names == NULL) return;
+  if (!gimp_drawable_parasite_list (drawable_id, &l_num_parasites, &l_parasite_names))
+    return;
   
   for(l_idx = 0; l_idx < l_num_parasites; l_idx++)
   {
@@ -1459,7 +1453,7 @@ p_write_layer_prp(const gchar *dirname,
   p_write_prop (fp, PROP_FLOATING_SELECTION, &l_param, wr_all_prp);
 
   /* check if floating selection is attached to this layer */
-  l_param.int_val1 = (layer_id == p_gimp_image_floating_sel_attached_to(image_id));
+  l_param.int_val1 = (layer_id == gimp_image_floating_sel_attached_to(image_id));
   p_write_prop (fp, PROP_FLOATING_ATTACHED, &l_param, wr_all_prp);
 
   l_param.flt_val1 = gimp_layer_get_opacity(layer_id);
@@ -1471,7 +1465,7 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val1 = p_invert(gimp_layer_get_visible(layer_id));
   p_write_prop (fp, PROP_VISIBLE, &l_param, wr_all_prp);
 
-  l_param.int_val1 = p_layer_get_linked (layer_id);
+  l_param.int_val1 = gimp_layer_get_linked (layer_id);
   p_write_prop (fp, PROP_LINKED, &l_param, wr_all_prp);
   
   l_param.int_val1 = gimp_layer_get_preserve_transparency(layer_id); 
@@ -1491,7 +1485,7 @@ p_write_layer_prp(const gchar *dirname,
   l_param.int_val2 = l_ofsy;
   p_write_prop (fp, PROP_OFFSETS, &l_param, wr_all_prp);
 
-  l_param.int_val1 = p_gimp_layer_get_tattoo(layer_id);
+  l_param.int_val1 = gimp_layer_get_tattoo(layer_id);
   p_write_prop (fp, PROP_TATTOO, &l_param, wr_all_prp);
 
   l_param.string_val = gimp_layer_get_name(layer_id);
@@ -1501,7 +1495,6 @@ p_write_layer_prp(const gchar *dirname,
 
 
   fprintf(fp, "\n");
-
 }	/* end p_write_layer_prp */
 
 
@@ -1533,7 +1526,7 @@ p_write_channel_prp(const gchar *dirname,
   p_write_prop (fp, PROP_SELECTION, &l_param, wr_all_prp);
 
   /* check if floating selection is attached to this channel */
-  l_param.int_val1 = (channel_id == p_gimp_image_floating_sel_attached_to(image_id));
+  l_param.int_val1 = (channel_id == gimp_image_floating_sel_attached_to(image_id));
   p_write_prop (fp, PROP_FLOATING_ATTACHED, &l_param, wr_all_prp);
 
   l_param.flt_val1 = gimp_channel_get_opacity(channel_id);
@@ -1557,7 +1550,7 @@ p_write_channel_prp(const gchar *dirname,
   l_param.int_val2 = l_ofsy;
   p_write_prop (fp, PROP_OFFSETS, &l_param, wr_all_prp);
 
-  l_param.int_val1 = p_gimp_channel_get_tattoo(channel_id);
+  l_param.int_val1 = gimp_channel_get_tattoo (channel_id);
   p_write_prop (fp, PROP_TATTOO, &l_param, wr_all_prp);
 
   l_param.string_val = gimp_channel_get_name(channel_id);
@@ -1567,9 +1560,7 @@ p_write_channel_prp(const gchar *dirname,
 
 
   fprintf(fp, "\n");
-
 }	/* end p_write_channel_prp */
-
 
 /* ============================================================================
  * p_write_image_prp
@@ -1585,7 +1576,7 @@ p_write_image_prp (const gchar *dirname,
 {
    GimpImageBaseType l_image_type;
    guint   l_width, l_height;
-   float  l_xresolution, l_yresolution;
+   gdouble l_xresolution, l_yresolution;
    t_param_prop   l_param;
    gint32 l_guide_id;
 
@@ -1608,7 +1599,7 @@ p_write_image_prp (const gchar *dirname,
    l_param.int_val2 = l_height;
    p_write_prop (fp, PROP_DIMENSION, &l_param, wr_all_prp);
 
-   p_gimp_image_get_resolution(image_id, &l_xresolution, &l_yresolution);
+   gimp_image_get_resolution(image_id, &l_xresolution, &l_yresolution);
    l_param.flt_val1 = l_xresolution;
    l_param.flt_val2 = l_yresolution;
    p_write_prop (fp, PROP_RESOLUTION, &l_param, wr_all_prp);
@@ -1618,29 +1609,29 @@ p_write_image_prp (const gchar *dirname,
    p_write_prop (fp, PROP_UNIT, &l_param, wr_all_prp);
 
    /* write tattoo_state */
-   l_param.int_val1 = p_gimp_image_get_tattoo_state(image_id);
-   if(l_param.int_val1 > 0)
+   l_param.int_val1 = gimp_image_get_tattoo_state(image_id);
+   if (l_param.int_val1 > 0)
    {
      p_write_prop (fp, PROP_TATTOO_STATE, &l_param, wr_all_prp);
    }
 
    /* write guides */
-   l_guide_id = p_gimp_image_findnext_guide(image_id, 0);  /* get 1.st guide */
-   while(l_guide_id > 0)
+   l_guide_id = gimp_image_find_next_guide(image_id, 0);  /* get 1.st guide */
+   while (l_guide_id > 0)
    {
       /* get position and orientation for the current guide ID */
 
-     l_param.int_val1 = p_gimp_image_get_guide_position(image_id, l_guide_id);
-     l_param.int_val2 = p_to_XJTOrientation(p_gimp_image_get_guide_orientation(image_id, l_guide_id));
+     l_param.int_val1 = gimp_image_get_guide_position(image_id, l_guide_id);
+     l_param.int_val2 = p_to_XJTOrientation(gimp_image_get_guide_orientation(image_id, l_guide_id));
      p_write_prop (fp, PROP_GUIDES, &l_param, wr_all_prp);
 
      /* findnext returns 0 if no (more) guides there
       * (or -1 if no PDB interface is available)
       */
-     l_guide_id = p_gimp_image_findnext_guide(image_id, l_guide_id);
+     l_guide_id = gimp_image_find_next_guide(image_id, l_guide_id);
    }
 
-   if(l_image_type == GIMP_GRAY)
+   if (l_image_type == GIMP_GRAY)
    {
      l_param.int_val1 = (gint32)XJT_GRAY;
    }
@@ -1687,6 +1678,7 @@ save_xjt_image (const gchar *filename,
    gint32  l_selection_channel_id;
    int     l_sel;
    gint32  l_x1, l_x2, l_y1, l_y2;
+   gboolean non_empty;
    
    gint    l_wr_all_prp;
 
@@ -1750,12 +1742,12 @@ save_xjt_image (const gchar *filename,
 
 
    l_floating_layer_id = gimp_image_floating_selection(image_id);
-   if(l_floating_layer_id >= 0)
+   if (l_floating_layer_id >= 0)
    {
        if(xjt_debug) printf("XJT-DEBUG: call floating_sel_relax fsel_id=%d\n",
                            (int)l_floating_layer_id);
        
-       p_gimp_floating_sel_relax (l_floating_layer_id, FALSE);
+       gimp_floating_sel_relax (l_floating_layer_id, FALSE);
    }
 
    l_layers_list = gimp_image_get_layers(image_id, &l_nlayers);
@@ -1829,8 +1821,8 @@ save_xjt_image (const gchar *filename,
    /* check and see if we have to save out the selection */
    l_sel = 0;
    l_selection_channel_id = gimp_image_get_selection(image_id);
-   if((p_get_gimp_selection_bounds(image_id, &l_x1, &l_y1, &l_x2, &l_y2))
-   && (l_selection_channel_id >= 0))
+   if ((gimp_selection_bounds(image_id, &non_empty, &l_x1, &l_y1, &l_x2, &l_y2))
+       && (l_selection_channel_id >= 0))
    {
       l_sel = 1;
    }
@@ -1880,7 +1872,6 @@ save_xjt_image (const gchar *filename,
    l_cmd = g_strdup_printf("cd %s; tar -cf \"%s\" *; cd ..", l_dirname, filename);
    l_rc = p_system(l_cmd);
    g_free(l_cmd);
-
     
    l_len = strlen(filename);
    if((l_len > 3) && (l_rc == 0))
@@ -1915,21 +1906,21 @@ save_xjt_image (const gchar *filename,
    }
    
 cleanup:
-   if(l_fp_prp != NULL) 
-   {
-     fclose( l_fp_prp );
-   }
+   if (l_fp_prp) 
+     {
+       fclose (l_fp_prp);
+     }
 
-   if(l_floating_layer_id >= 0)
-   {
-       if(xjt_debug) printf("XJT-DEBUG: here we should call floating_sel_rigor sel_id=%d\n", 
-                           (int)l_floating_layer_id);
-       
-       p_gimp_floating_sel_rigor (l_floating_layer_id, FALSE);
-   }
+   if (l_floating_layer_id >= 0)
+     {
+       if (xjt_debug) 
+	 printf("XJT-DEBUG: here we should call floating_sel_rigor sel_id=%d\n", 
+		(int)l_floating_layer_id);
+       gimp_floating_sel_rigor (l_floating_layer_id, FALSE);
+     }
 
-   if(l_layers_list) g_free (l_layers_list);
-   if(l_channels_list) g_free (l_channels_list);
+   g_free (l_layers_list);
+   g_free (l_channels_list);
 
    /* remove the temorary directory */
    l_cmd = g_strdup_printf("rm -rf \"%s\"", l_dirname);
@@ -1937,14 +1928,12 @@ cleanup:
    if(!xjt_debug) p_system(l_cmd);
    g_free(l_cmd);       
    
-   if(l_dirname) g_free(l_dirname);
-   if(l_prop_file) g_free(l_prop_file);
-   if(l_jpg_file) g_free(l_jpg_file);
+   g_free (l_dirname);
+   g_free (l_prop_file);
+   g_free (l_jpg_file);
    
-   return(l_rc);
-
+   return l_rc;
 }
-
 
 /* ---------------------- LOAD WORKER procedures  -------------------------- */
 
@@ -1959,27 +1948,26 @@ t_layer_props * p_new_layer_prop()
   t_layer_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_layer_props));
-    l_new_prop->active_layer       = g_prop_table[p_get_property_index(PROP_ACTIVE_LAYER)].default_val1;
-    l_new_prop->floating_selection = g_prop_table[p_get_property_index(PROP_FLOATING_SELECTION)].default_val1;
-    l_new_prop->floating_attached = g_prop_table[p_get_property_index(PROP_FLOATING_ATTACHED)].default_val1;
-    l_new_prop->opacity            = g_prop_table[p_get_property_index(PROP_OPACITY)].default_val1;
-    l_new_prop->mode               = g_prop_table[p_get_property_index(PROP_MODE)].default_val1;
-    l_new_prop->visible            = p_invert(g_prop_table[p_get_property_index(PROP_VISIBLE)].default_val1);
-    l_new_prop->linked             = g_prop_table[p_get_property_index(PROP_LINKED)].default_val1;
-    l_new_prop->preserve_transparency = g_prop_table[p_get_property_index(PROP_PRESERVE_TRANSPARENCY)].default_val1;
-    l_new_prop->apply_mask         = g_prop_table[p_get_property_index(PROP_APPLY_MASK)].default_val1;
-    l_new_prop->edit_mask          = g_prop_table[p_get_property_index(PROP_EDIT_MASK)].default_val1;
-    l_new_prop->show_mask          = g_prop_table[p_get_property_index(PROP_SHOW_MASK)].default_val1;
-    l_new_prop->offx               = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val1;
-    l_new_prop->offy               = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val2;
-    l_new_prop->tattoo             = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
-    l_new_prop->name = NULL;
+  l_new_prop->active_layer       = g_prop_table[p_get_property_index(PROP_ACTIVE_LAYER)].default_val1;
+  l_new_prop->floating_selection = g_prop_table[p_get_property_index(PROP_FLOATING_SELECTION)].default_val1;
+  l_new_prop->floating_attached = g_prop_table[p_get_property_index(PROP_FLOATING_ATTACHED)].default_val1;
+  l_new_prop->opacity            = g_prop_table[p_get_property_index(PROP_OPACITY)].default_val1;
+  l_new_prop->mode               = g_prop_table[p_get_property_index(PROP_MODE)].default_val1;
+  l_new_prop->visible            = p_invert(g_prop_table[p_get_property_index(PROP_VISIBLE)].default_val1);
+  l_new_prop->linked             = g_prop_table[p_get_property_index(PROP_LINKED)].default_val1;
+  l_new_prop->preserve_transparency = g_prop_table[p_get_property_index(PROP_PRESERVE_TRANSPARENCY)].default_val1;
+  l_new_prop->apply_mask         = g_prop_table[p_get_property_index(PROP_APPLY_MASK)].default_val1;
+  l_new_prop->edit_mask          = g_prop_table[p_get_property_index(PROP_EDIT_MASK)].default_val1;
+  l_new_prop->show_mask          = g_prop_table[p_get_property_index(PROP_SHOW_MASK)].default_val1;
+  l_new_prop->offx               = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val1;
+  l_new_prop->offy               = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val2;
+  l_new_prop->tattoo             = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
+  l_new_prop->name = NULL;
   
-    l_new_prop->layer_pos = -1;
-    l_new_prop->has_alpha = FALSE;
-    l_new_prop->next = NULL;
-  return(l_new_prop);
-
+  l_new_prop->layer_pos = -1;
+  l_new_prop->has_alpha = FALSE;
+  l_new_prop->next = NULL;
+  return l_new_prop;
 }	/* end p_new_layer_prop */
 
 
@@ -1993,23 +1981,23 @@ t_channel_props * p_new_channel_prop()
   t_channel_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_channel_props));
-    l_new_prop->active_channel    = g_prop_table[p_get_property_index(PROP_ACTIVE_CHANNEL)].default_val1;
-    l_new_prop->selection         = g_prop_table[p_get_property_index(PROP_SELECTION)].default_val1;
-    l_new_prop->floating_attached = g_prop_table[p_get_property_index(PROP_FLOATING_ATTACHED)].default_val1;
-    l_new_prop->opacity           = g_prop_table[p_get_property_index(PROP_OPACITY)].default_val1;
-    l_new_prop->visible           = p_invert(g_prop_table[p_get_property_index(PROP_VISIBLE)].default_val1);
-    l_new_prop->show_masked       = g_prop_table[p_get_property_index(PROP_SHOW_MASKED)].default_val1;
-    l_new_prop->offx              = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val1;
-    l_new_prop->offy              = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val2;
-    l_new_prop->color_r           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val1;
-    l_new_prop->color_g           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val2;
-    l_new_prop->color_b           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val3;
-    l_new_prop->tattoo            = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
-    l_new_prop->name = NULL;
+  l_new_prop->active_channel    = g_prop_table[p_get_property_index(PROP_ACTIVE_CHANNEL)].default_val1;
+  l_new_prop->selection         = g_prop_table[p_get_property_index(PROP_SELECTION)].default_val1;
+  l_new_prop->floating_attached = g_prop_table[p_get_property_index(PROP_FLOATING_ATTACHED)].default_val1;
+  l_new_prop->opacity           = g_prop_table[p_get_property_index(PROP_OPACITY)].default_val1;
+  l_new_prop->visible           = p_invert(g_prop_table[p_get_property_index(PROP_VISIBLE)].default_val1);
+  l_new_prop->show_masked       = g_prop_table[p_get_property_index(PROP_SHOW_MASKED)].default_val1;
+  l_new_prop->offx              = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val1;
+  l_new_prop->offy              = g_prop_table[p_get_property_index(PROP_OFFSETS)].default_val2;
+  l_new_prop->color_r           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val1;
+  l_new_prop->color_g           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val2;
+  l_new_prop->color_b           = g_prop_table[p_get_property_index(PROP_COLOR)].default_val3;
+  l_new_prop->tattoo            = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
+  l_new_prop->name = NULL;
   
-    l_new_prop->channel_pos = -1;
-    l_new_prop->next = NULL;
-  return(l_new_prop);
+  l_new_prop->channel_pos = -1;
+  l_new_prop->next = NULL;
+  return l_new_prop;
 }	/* end p_new_channel_prop */
 
 
@@ -2023,10 +2011,10 @@ t_guide_props * p_new_guide_prop()
   t_guide_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_guide_props));
-    l_new_prop->position = 0;
-    l_new_prop->orientation = 0;
-    l_new_prop->next = NULL;
-  return(l_new_prop);
+  l_new_prop->position = 0;
+  l_new_prop->orientation = 0;
+  l_new_prop->next = NULL;
+  return l_new_prop;
 }	/* end p_new_guide_prop */
 
 /* ============================================================================
@@ -2039,13 +2027,13 @@ t_parasite_props * p_new_parasite_prop()
   t_parasite_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_parasite_props));
-    l_new_prop->parasite_type = XJT_IMAGE_PARASITE;
-    l_new_prop->parasite_id = -1;
-    l_new_prop->name = NULL;
-    l_new_prop->obj_pos = -1;
-    l_new_prop->flags = GIMP_PARASITE_PERSISTENT;
-    l_new_prop->next = NULL;
-  return(l_new_prop);
+  l_new_prop->parasite_type = XJT_IMAGE_PARASITE;
+  l_new_prop->parasite_id = -1;
+  l_new_prop->name = NULL;
+  l_new_prop->obj_pos = -1;
+  l_new_prop->flags = GIMP_PARASITE_PERSISTENT;
+  l_new_prop->next = NULL;
+  return l_new_prop;
 }	/* end p_new_parasite_prop */
 
 /* ============================================================================
@@ -2058,16 +2046,16 @@ t_path_props * p_new_path_prop()
   t_path_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_path_props));
-    l_new_prop->path_type = p_to_GimpPathType(XJT_PATHTYPE_BEZIER);
-    l_new_prop->tattoo    = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
-    l_new_prop->path_locked = FALSE;
-    l_new_prop->path_closed = FALSE;
-    l_new_prop->current_flag = FALSE;
-    l_new_prop->name = NULL;
-    l_new_prop->num_points = 0;
-    l_new_prop->path_points = NULL;
-    l_new_prop->next = NULL;
-  return(l_new_prop);
+  l_new_prop->path_type = p_to_GimpPathType(XJT_PATHTYPE_BEZIER);
+  l_new_prop->tattoo    = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
+  l_new_prop->path_locked = FALSE;
+  l_new_prop->path_closed = FALSE;
+  l_new_prop->current_flag = FALSE;
+  l_new_prop->name = NULL;
+  l_new_prop->num_points = 0;
+  l_new_prop->path_points = NULL;
+  l_new_prop->next = NULL;
+  return l_new_prop;
 }	/* end p_new_path_prop */
 
 /* ============================================================================
@@ -2080,23 +2068,23 @@ t_image_props * p_new_image_prop()
   t_image_props  *l_new_prop;
 
   l_new_prop = g_malloc(sizeof(t_image_props));
-    l_new_prop->image_type       = g_prop_table[p_get_property_index(PROP_TYPE)].default_val1;
-    l_new_prop->image_width      = g_prop_table[p_get_property_index(PROP_DIMENSION)].default_val1;
-    l_new_prop->image_height     = g_prop_table[p_get_property_index(PROP_DIMENSION)].default_val2;
-    l_new_prop->xresolution      = g_prop_table[p_get_property_index(PROP_RESOLUTION)].default_val1;
-    l_new_prop->yresolution      = g_prop_table[p_get_property_index(PROP_RESOLUTION)].default_val2;
-    l_new_prop->unit             = p_to_GimpUnit(g_prop_table[p_get_property_index(PROP_UNIT)].default_val1);
-    l_new_prop->tattoo           = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
-    l_new_prop->tattoo_state     = g_prop_table[p_get_property_index(PROP_TATTOO_STATE)].default_val1;
-    l_new_prop->n_layers = 0;
-    l_new_prop->n_channels = 0;
-    l_new_prop->layer_props = NULL;
-    l_new_prop->channel_props = NULL;
-    l_new_prop->mask_props = NULL;
-    l_new_prop->guide_props = NULL;
-    l_new_prop->parasite_props = NULL;
-    l_new_prop->path_props = NULL;
-  return(l_new_prop);
+  l_new_prop->image_type       = g_prop_table[p_get_property_index(PROP_TYPE)].default_val1;
+  l_new_prop->image_width      = g_prop_table[p_get_property_index(PROP_DIMENSION)].default_val1;
+  l_new_prop->image_height     = g_prop_table[p_get_property_index(PROP_DIMENSION)].default_val2;
+  l_new_prop->xresolution      = g_prop_table[p_get_property_index(PROP_RESOLUTION)].default_val1;
+  l_new_prop->yresolution      = g_prop_table[p_get_property_index(PROP_RESOLUTION)].default_val2;
+  l_new_prop->unit             = p_to_GimpUnit(g_prop_table[p_get_property_index(PROP_UNIT)].default_val1);
+  l_new_prop->tattoo           = g_prop_table[p_get_property_index(PROP_TATTOO)].default_val1;
+  l_new_prop->tattoo_state     = g_prop_table[p_get_property_index(PROP_TATTOO_STATE)].default_val1;
+  l_new_prop->n_layers = 0;
+  l_new_prop->n_channels = 0;
+  l_new_prop->layer_props = NULL;
+  l_new_prop->channel_props = NULL;
+  l_new_prop->mask_props = NULL;
+  l_new_prop->guide_props = NULL;
+  l_new_prop->parasite_props = NULL;
+  l_new_prop->path_props = NULL;
+  return l_new_prop;
 }	/* end p_new_image_prop */
 
 
@@ -3044,7 +3032,6 @@ gint p_scann_parasite_prop(const gchar   *scan_ptr,
 gint p_scann_path_prop (gchar         *scan_ptr,
                         t_image_props *image_prop)
 {
-
   t_path_props  *l_new_prop;
   gchar          *l_ptr;
   t_param_prop    l_param;
@@ -3056,49 +3043,49 @@ gint p_scann_path_prop (gchar         *scan_ptr,
   l_new_prop->next = image_prop->path_props;
   image_prop->path_props = l_new_prop;
 
-  if(strncmp(scan_ptr, "PATH", strlen("PATH")) != 0)
-  {
-     fprintf(stderr, "XJT: PRP scanned bad line:\n%s\n", scan_ptr);
-     return -1; 
-  }
+  if (strncmp(scan_ptr, "PATH", strlen("PATH")) != 0)
+    {
+      fprintf(stderr, "XJT: PRP scanned bad line:\n%s\n", scan_ptr);
+      return -1; 
+    }
   l_ptr = scan_ptr + strlen("PATH");
   
   while(1)
-  {
-     l_ptr = p_skip_blanks(l_ptr);
-     l_ptr = p_scann_token(l_ptr, &l_param, &l_prop_id);
-
-     switch(l_prop_id)
-     {
-       case PROP_END:
-            return 0;
-            break;
-       case PROP_PATH_TYPE:
-            l_new_prop->path_type = p_to_GimpPathType(l_param.int_val1);
-            break;
-       case PROP_PATH_LOCKED:
-            l_new_prop->path_locked = l_param.int_val1;
-            break;
-       case PROP_TATTOO:
-            l_new_prop->tattoo = l_param.int_val1;
-            break;
-       case PROP_NAME:
-            l_new_prop->name  = l_param.string_val;
-            break;
-       case PROP_PATH_CURRENT:
-            l_new_prop->current_flag = l_param.int_val1;
-            break;
-       case PROP_PATH_POINTS:
-            l_new_prop->num_points = l_param.num_fvals;
-            l_new_prop->path_points = l_param.flt_val_list;
-            break;
-       default :
-            /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
-            /* return -1; */ /* skip unknow tokens */
-            break;
-     }
-  }
-
+    {
+      l_ptr = p_skip_blanks(l_ptr);
+      l_ptr = p_scann_token(l_ptr, &l_param, &l_prop_id);
+      
+      switch(l_prop_id)
+	{
+	case PROP_END:
+	  return 0;
+	  break;
+	case PROP_PATH_TYPE:
+	  l_new_prop->path_type = p_to_GimpPathType(l_param.int_val1);
+	  break;
+	case PROP_PATH_LOCKED:
+	  l_new_prop->path_locked = l_param.int_val1;
+	  break;
+	case PROP_TATTOO:
+	  l_new_prop->tattoo = l_param.int_val1;
+	  break;
+	case PROP_NAME:
+	  l_new_prop->name  = l_param.string_val;
+	  break;
+	case PROP_PATH_CURRENT:
+	  l_new_prop->current_flag = l_param.int_val1;
+	  break;
+	case PROP_PATH_POINTS:
+	  l_new_prop->num_points = l_param.num_fvals;
+	  l_new_prop->path_points = l_param.flt_val_list;
+	  break;
+	default :
+	  /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
+	  /* return -1; */ /* skip unknow tokens */
+	  break;
+	}
+    }
+  
 }	/* end p_scann_path_prop */
 
 
@@ -3114,31 +3101,34 @@ p_add_paths(gint32 image_id, t_path_props *path_props)
   
   l_prop = path_props;
   while(l_prop)
-  {
-     if(l_prop->num_points > 0)
-     {
-       if(xjt_debug) printf("XJT: p_add_path name:%s num_points:%d\n", l_prop->name, (int)l_prop->num_points);
-       if(xjt_debug) printf("XJT:                :path_type %d point[0]:%f\n", (int)l_prop->path_type, (float)l_prop->path_points[0]);
-       if(l_prop->current_flag)
-       {
-	 l_current_pathname = l_prop->name;	 
-       }
-       p_gimp_path_set_points(image_id, l_prop->name,
-	                      l_prop->path_type, l_prop->num_points, l_prop->path_points);
-       p_gimp_path_set_locked(image_id, l_prop->name, l_prop->path_locked);
-       if(l_prop->tattoo >= 0)
-       {
-          p_gimp_path_set_tattoo(image_id, l_prop->name, l_prop->tattoo);
-       }
-     }
-     l_prop = (t_path_props *)l_prop->next;
-  }
+    {
+      if(l_prop->num_points > 0)
+	{
+	  if(xjt_debug) 
+	    printf("XJT: p_add_path name:%s num_points:%d\n", l_prop->name, 
+		   (int)l_prop->num_points);
+	  if(xjt_debug) printf("XJT:                :path_type %d point[0]:%f\n", 
+			       (int)l_prop->path_type, (float)l_prop->path_points[0]);
+	  if(l_prop->current_flag)
+	    {
+	      l_current_pathname = l_prop->name;	 
+	    }
+	  gimp_path_set_points(image_id, l_prop->name,
+			       l_prop->path_type, l_prop->num_points, l_prop->path_points);
+	  gimp_path_set_locked(image_id, l_prop->name, l_prop->path_locked);
+	  if(l_prop->tattoo >= 0)
+	    {
+	      gimp_path_set_tattoo(image_id, l_prop->name, l_prop->tattoo);
+	    }
+	}
+      l_prop = (t_path_props *)l_prop->next;
+    }
   
   if(l_current_pathname)
-  {
-     if(xjt_debug) printf("XJT: p_add_path current:%s\n", l_current_pathname);
-     p_gimp_path_set_current(image_id, l_current_pathname);
-  }
+    {
+      if(xjt_debug) printf("XJT: p_add_path current:%s\n", l_current_pathname);
+      gimp_path_set_current(image_id, l_current_pathname);
+    }
 }	/* end p_add_paths */
 
 
@@ -3185,19 +3175,19 @@ p_load_linefile(const gchar *filename, gint32 *len)
 gint32
 p_next_lineindex(const gchar *file_buff, gint32 max_len, gint32 pos)
 {
-  if (pos < 0)       { return (-1); }
-  
-  while(pos < max_len)
-  {
-    if(file_buff[pos] == '\0')
+  if (pos < 0)     
+    return (-1);
+
+  while (pos < max_len)
     {
+      if (file_buff[pos] == '\0')
+	{
+	  pos++;
+	  break;
+	}
       pos++;
-      break;
     }
-    pos++;
-  }
-  if(pos >= max_len) { return (-1); }  
-  return(pos);
+  return (pos >= max_len) ? -1 : pos;
 }
 
 /* ============================================================================
@@ -3299,15 +3289,9 @@ t_image_props * p_load_prop_file(const gchar *prop_filename)
  
   
 cleanup:  
-  if(l_file_buff) g_free(l_file_buff);
+  g_free(l_file_buff);
   
-  if(l_rc == 0)
-  {
-     return(l_image_prop);
-  }
-
-  return NULL;   /* error */
-  
+  return (l_rc) ? NULL : l_image_prop;
 }	/* end p_load_prop_file */
 
 
@@ -3316,408 +3300,406 @@ cleanup:
 static gint32
 load_xjt_image (const gchar *filename)
 {
-   int     l_rc;
-   int     l_len;
-   gchar  *l_dirname;
-   gchar  *l_prop_file;
-   gchar  *l_jpg_file;
-   gchar  *l_cmd;
-   gchar  *l_name;
-   mode_t  l_mode_dir;
+  int     l_rc;
+  int     l_len;
+  gchar  *l_dirname;
+  gchar  *l_prop_file;
+  gchar  *l_jpg_file;
+  gchar  *l_cmd;
+  gchar  *l_name;
+  mode_t  l_mode_dir;
    
-   gint32 *l_layers_list;
-   gint32 *l_channels_list;
-   gint32  l_layer_id;
-   gint32  l_channel_id;
-   gint32  l_image_id;
-   gint32  l_fsel_attached_to_id;         /* the drawable id where the floating selection is attached to */
-   gint32  l_fsel_id;                     /* the drawable id of the floating selection itself */
-   gint32  l_active_layer_id;
-   gint32  l_active_channel_id;
-   t_image_props   *l_image_prp_ptr;
-   t_layer_props   *l_layer_prp_ptr;
-   t_channel_props *l_channel_prp_ptr;
-   t_guide_props   *l_guide_prp_ptr;
+  gint32 *l_layers_list;
+  gint32 *l_channels_list;
+  gint32  l_layer_id;
+  gint32  l_channel_id;
+  gint32  l_image_id;
+  gint32  l_fsel_attached_to_id;         /* the drawable id where the floating selection is attached to */
+  gint32  l_fsel_id;                     /* the drawable id of the floating selection itself */
+  gint32  l_active_layer_id;
+  gint32  l_active_channel_id;
+  t_image_props   *l_image_prp_ptr;
+  t_layer_props   *l_layer_prp_ptr;
+  t_channel_props *l_channel_prp_ptr;
+  t_guide_props   *l_guide_prp_ptr;
    
-   l_rc = -1;  /* init retcode to Errorstate */
-   l_image_id = -1;
-   l_layers_list = NULL;
-   l_channels_list = NULL;
-   l_image_prp_ptr = NULL;
-   l_dirname = NULL;
-   l_prop_file = NULL;
-   l_jpg_file = NULL;
-   l_active_layer_id = -1;
-   l_active_channel_id = -1;
-   l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
-   l_fsel_id = -1;                /* -1  assume there is no floating selection */
+  l_rc = -1;  /* init retcode to Errorstate */
+  l_image_id = -1;
+  l_layers_list = NULL;
+  l_channels_list = NULL;
+  l_image_prp_ptr = NULL;
+  l_dirname = NULL;
+  l_prop_file = NULL;
+  l_jpg_file = NULL;
+  l_active_layer_id = -1;
+  l_active_channel_id = -1;
+  l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
+  l_fsel_id = -1;                /* -1  assume there is no floating selection */
 
-   l_name = g_strdup_printf (_("Opening '%s'..."), filename);
-   gimp_progress_init (l_name);
-   g_free (l_name);
+  l_name = g_strdup_printf (_("Opening '%s'..."), filename);
+  gimp_progress_init (l_name);
+  g_free (l_name);
    
-   /* create temporary directory  <filename>.tmpdir.<PID> */
-   l_dirname = g_strdup_printf("%s.tmpdir.%d", filename, (int)g_pid);
-   l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
-   l_mode_dir = 0777;
-   if(mkdir(l_dirname, l_mode_dir) != 0)
-   {
-     g_message (_("Can't create working dir: %s"), l_dirname);
-     goto cleanup;
-   }
+  /* create temporary directory  <filename>.tmpdir.<PID> */
+  l_dirname = g_strdup_printf("%s.tmpdir.%d", filename, (int)g_pid);
+  l_prop_file = g_strdup_printf("%s%cPRP", l_dirname, G_DIR_SEPARATOR);
+  l_mode_dir = 0777;
+  if(mkdir(l_dirname, l_mode_dir) != 0)
+    {
+      g_message (_("Can't create working dir: %s"), l_dirname);
+      goto cleanup;
+    }
 
 
-   /* prepare for extract tar files directly from filename into l_dirname */
-   if((*filename == G_DIR_SEPARATOR)
-   || (filename[1] == ':'))
-   {
+  /* prepare for extract tar files directly from filename into l_dirname */
+  if((*filename == G_DIR_SEPARATOR)
+     || (filename[1] == ':'))
+    {
       /* filename with absolute path */
       l_cmd = g_strdup_printf("cd %s; tar -xf \"%s\"; cd ..", l_dirname, filename);
-   }
-   else
-   {
+    }
+  else
+    {
       /* filename with relative path */
       l_cmd = g_strdup_printf("cd %s; tar -xf \"..%c%s\" *; cd ..", l_dirname, G_DIR_SEPARATOR, filename);
-   }
+    }
 
-   l_len = strlen(filename);
-   if(l_len > 3)
-   { 
-     /* call optional extracompression programs gzip or bzip2 
-      * (depends on filename's extension)
-      *
-      * used gzip options: (bzip2 uses the same options)
-      *     -c --stdout --to-stdout
-      *          Write  output  on  standard  output
-      *     -d --decompress --uncompress
-      *          Decompress.
-      *     -f --force
-      *           Force compression or decompression even if the file
-      */
-     if(strcmp(&filename[l_len - 3], "bz2") == 0)
-     {
-       g_free(l_cmd);
-       l_cmd = g_strdup_printf("bunzip2 <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
-       l_rc = p_system(l_cmd);
-       g_free(l_cmd);       
-       l_cmd = g_strdup_printf("cd %s; tar -xf arc.tar; cd ..", l_dirname);
-     }
-     else if(strcmp(&filename[l_len - 2], "gz") == 0)
-     {
-       g_free(l_cmd);
-       l_cmd = g_strdup_printf("gzip -cdf <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
-       l_rc = p_system(l_cmd);
-       g_free(l_cmd);       
-       l_cmd = g_strdup_printf("cd %s; tar -xf arc.tar; cd ..", l_dirname);
-     }
-   }
-
-
-   /* now we can extract the unpacked tar archive */
-   l_rc = p_system(l_cmd);
-   g_free(l_cmd);       
-
-   if (l_rc != 0)
-      goto cleanup;
-
-   /* check and read Property file (PRP must exist in each xjt archive) */
-   l_image_prp_ptr = p_load_prop_file(l_prop_file);
-   if (l_image_prp_ptr == NULL)
-   {  l_rc = -1;
-      goto cleanup;
-   }
+  l_len = strlen(filename);
+  if(l_len > 3)
+    { 
+      /* call optional extracompression programs gzip or bzip2 
+       * (depends on filename's extension)
+       *
+       * used gzip options: (bzip2 uses the same options)
+       *     -c --stdout --to-stdout
+       *          Write  output  on  standard  output
+       *     -d --decompress --uncompress
+       *          Decompress.
+       *     -f --force
+       *           Force compression or decompression even if the file
+       */
+      if(strcmp(&filename[l_len - 3], "bz2") == 0)
+	{
+	  g_free(l_cmd);
+	  l_cmd = g_strdup_printf("bunzip2 <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
+	  l_rc = p_system(l_cmd);
+	  g_free(l_cmd);       
+	  l_cmd = g_strdup_printf("cd %s; tar -xf arc.tar; cd ..", l_dirname);
+	}
+      else if(strcmp(&filename[l_len - 2], "gz") == 0)
+	{
+	  g_free(l_cmd);
+	  l_cmd = g_strdup_printf("gzip -cdf <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
+	  l_rc = p_system(l_cmd);
+	  g_free(l_cmd);       
+	  l_cmd = g_strdup_printf("cd %s; tar -xf arc.tar; cd ..", l_dirname);
+	}
+    }
 
 
-   /* create new image (with type and size values from the Property file) */
-   l_image_id = gimp_image_new (l_image_prp_ptr->image_width,
-                                l_image_prp_ptr->image_height,
-				l_image_prp_ptr->image_type);
-   if(l_image_id < 0)
-   { l_rc = -1;
-      goto cleanup;
-   }
+  /* now we can extract the unpacked tar archive */
+  l_rc = p_system(l_cmd);
+  g_free(l_cmd);       
 
-   gimp_image_set_filename (l_image_id, filename);
-   p_gimp_image_set_resolution  (l_image_id, 
-                                 l_image_prp_ptr->xresolution,
-                                 l_image_prp_ptr->yresolution);
-   gimp_image_set_unit(l_image_id, l_image_prp_ptr->unit);
+  if (l_rc != 0)
+    goto cleanup;
 
-   p_check_and_add_parasite(l_image_id,
-                            l_dirname,
-			    l_image_prp_ptr->parasite_props,
-			    0,
-			    XJT_IMAGE_PARASITE);
-   /* load all layers */
+  /* check and read Property file (PRP must exist in each xjt archive) */
+  l_image_prp_ptr = p_load_prop_file(l_prop_file);
+  if (l_image_prp_ptr == NULL)
+    {  l_rc = -1;
+    goto cleanup;
+    }
 
-   for(l_layer_prp_ptr = l_image_prp_ptr->layer_props;
-       l_layer_prp_ptr != NULL;
-       l_layer_prp_ptr = (t_layer_props *)l_layer_prp_ptr->next)
-   {
-     l_jpg_file = g_strdup_printf("%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
-     if(xjt_debug) printf("XJT-DEBUG: loading layer from file %s\n", l_jpg_file);  
 
-     l_layer_id = xjpg_load_layer (l_jpg_file,
-	                           l_image_id,
-                                   l_image_prp_ptr->image_type,
-                                   l_layer_prp_ptr->name,
-			           l_layer_prp_ptr->opacity,
-			           l_layer_prp_ptr->mode);
+  /* create new image (with type and size values from the Property file) */
+  l_image_id = gimp_image_new (l_image_prp_ptr->image_width,
+			       l_image_prp_ptr->image_height,
+			       l_image_prp_ptr->image_type);
+  if(l_image_id < 0)
+    { l_rc = -1;
+    goto cleanup;
+    }
 
-     g_free(l_jpg_file);
-     if(l_layer_id < 0)
-     {
-        l_rc = -1;
-        break;
-     }
+  gimp_image_set_filename (l_image_id, filename);
+  gimp_image_set_resolution  (l_image_id, 
+			      l_image_prp_ptr->xresolution,
+			      l_image_prp_ptr->yresolution);
+  gimp_image_set_unit(l_image_id, l_image_prp_ptr->unit);
 
-     if(l_layer_prp_ptr->floating_selection)
-     {
-        l_fsel_id = l_layer_id;    /* this layer is the floating selection */
-     }
-     else
-     {
-        /* add the layer on top of the images layerstak */
-        gimp_image_add_layer (l_image_id, l_layer_id, 0);
+  p_check_and_add_parasite(l_image_id,
+			   l_dirname,
+			   l_image_prp_ptr->parasite_props,
+			   0,
+			   XJT_IMAGE_PARASITE);
+  /* load all layers */
+
+  for(l_layer_prp_ptr = l_image_prp_ptr->layer_props;
+      l_layer_prp_ptr != NULL;
+      l_layer_prp_ptr = (t_layer_props *)l_layer_prp_ptr->next)
+    {
+      l_jpg_file = g_strdup_printf("%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
+      if(xjt_debug) printf("XJT-DEBUG: loading layer from file %s\n", l_jpg_file);  
+
+      l_layer_id = xjpg_load_layer (l_jpg_file,
+				    l_image_id,
+				    l_image_prp_ptr->image_type,
+				    l_layer_prp_ptr->name,
+				    l_layer_prp_ptr->opacity,
+				    l_layer_prp_ptr->mode);
+
+      g_free(l_jpg_file);
+      if(l_layer_id < 0)
+	{
+	  l_rc = -1;
+	  break;
+	}
+
+      if(l_layer_prp_ptr->floating_selection)
+	{
+	  l_fsel_id = l_layer_id;    /* this layer is the floating selection */
+	}
+      else
+	{
+	  /* add the layer on top of the images layerstak */
+	  gimp_image_add_layer (l_image_id, l_layer_id, 0);
         
-        if(l_layer_prp_ptr->floating_attached)
-        {
-           l_fsel_attached_to_id = l_layer_id;    /* the floating selection is attached to this layer */
-        }
-     }
+	  if(l_layer_prp_ptr->floating_attached)
+	    {
+	      l_fsel_attached_to_id = l_layer_id;    /* the floating selection is attached to this layer */
+	    }
+	}
 
-     /* check for alpha channel */
-     if(l_layer_prp_ptr->has_alpha)
-     {
-       l_jpg_file = g_strdup_printf("%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
-       if(xjt_debug) printf("XJT-DEBUG: loading alpha-channel from file %s\n", l_jpg_file);  
+      /* check for alpha channel */
+      if(l_layer_prp_ptr->has_alpha)
+	{
+	  l_jpg_file = g_strdup_printf("%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
+	  if(xjt_debug) printf("XJT-DEBUG: loading alpha-channel from file %s\n", l_jpg_file);  
 
-       if( xjpg_load_layer_alpha (l_jpg_file, l_image_id, l_layer_id) != 0)
-       {
-          l_rc = -1;
-          break;
-       }
-       g_free(l_jpg_file);
-     }
+	  if( xjpg_load_layer_alpha (l_jpg_file, l_image_id, l_layer_id) != 0)
+	    {
+	      l_rc = -1;
+	      break;
+	    }
+	  g_free(l_jpg_file);
+	}
      
-     /* adjust offsets and other layerproperties */
-     gimp_layer_set_offsets(l_layer_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy);
-     gimp_layer_set_visible (l_layer_id, l_layer_prp_ptr->visible);
-        p_layer_set_linked (l_layer_id, l_layer_prp_ptr->linked);
-     gimp_layer_set_preserve_transparency (l_layer_id, l_layer_prp_ptr->preserve_transparency);
-     if(l_layer_prp_ptr->tattoo >= 0)
-     {
-        p_gimp_layer_set_tattoo(l_layer_id, l_layer_prp_ptr->tattoo);
-     }
+      /* adjust offsets and other layerproperties */
+      gimp_layer_set_offsets(l_layer_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy);
+      gimp_layer_set_visible (l_layer_id, l_layer_prp_ptr->visible);
+      gimp_layer_set_linked (l_layer_id, l_layer_prp_ptr->linked);
+      gimp_layer_set_preserve_transparency (l_layer_id, l_layer_prp_ptr->preserve_transparency);
+      if (l_layer_prp_ptr->tattoo >= 0)
+	{
+	 gimp_layer_set_tattoo(l_layer_id, l_layer_prp_ptr->tattoo);
+	}
 
-     if(l_layer_prp_ptr->active_layer)
-     {
-        l_active_layer_id = l_layer_id;
-     }
+      if (l_layer_prp_ptr->active_layer)
+	{
+	  l_active_layer_id = l_layer_id;
+	}
 
-     /* Handle layer parasites */
-     p_check_and_add_parasite(l_layer_id,
-                            l_dirname,
-			    l_image_prp_ptr->parasite_props,
-			    l_layer_prp_ptr->layer_pos,
-			    XJT_LAYER_PARASITE);
+      /* Handle layer parasites */
+      p_check_and_add_parasite(l_layer_id,
+			       l_dirname,
+			       l_image_prp_ptr->parasite_props,
+			       l_layer_prp_ptr->layer_pos,
+			       XJT_LAYER_PARASITE);
 
 
-     /* search for the properties of the layermask */
-     for(l_channel_prp_ptr = l_image_prp_ptr->mask_props;
-         l_channel_prp_ptr != NULL;
-         l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
-     {
-        if(l_channel_prp_ptr->channel_pos == l_layer_prp_ptr->layer_pos)
-        {
-           /* layermask properties found: load the layermask */
-           l_jpg_file = g_strdup_printf("%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
-           if(xjt_debug) printf("XJT-DEBUG: loading layer-mask from file %s\n", l_jpg_file);  
+      /* search for the properties of the layermask */
+      for(l_channel_prp_ptr = l_image_prp_ptr->mask_props;
+	  l_channel_prp_ptr != NULL;
+	  l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
+	{
+	  if(l_channel_prp_ptr->channel_pos == l_layer_prp_ptr->layer_pos)
+	    {
+	      /* layermask properties found: load the layermask */
+	      l_jpg_file = g_strdup_printf("%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
+	      if(xjt_debug) printf("XJT-DEBUG: loading layer-mask from file %s\n", l_jpg_file);  
 
-           l_channel_id = gimp_layer_create_mask(l_layer_id, 0 /* mask_type 0 = WHITE_MASK */ );
+	      l_channel_id = gimp_layer_create_mask(l_layer_id, 0 /* mask_type 0 = WHITE_MASK */ );
 
-           /* load should overwrite the layer_mask with data from jpeg file */
+	      /* load should overwrite the layer_mask with data from jpeg file */
 
-           l_channel_id = xjpg_load_channel (l_jpg_file,
-					     l_image_id,
-					     l_channel_id,
-					     l_channel_prp_ptr->name,
-					     l_channel_prp_ptr->opacity,
-					     l_channel_prp_ptr->color_r,
-					     l_channel_prp_ptr->color_g,
-					     l_channel_prp_ptr->color_b);
-           g_free(l_jpg_file);
-           if(l_channel_id >= 0)
-           {
+	      l_channel_id = xjpg_load_channel (l_jpg_file,
+						l_image_id,
+						l_channel_id,
+						l_channel_prp_ptr->name,
+						l_channel_prp_ptr->opacity,
+						l_channel_prp_ptr->color_r,
+						l_channel_prp_ptr->color_g,
+						l_channel_prp_ptr->color_b);
+	      g_free(l_jpg_file);
+	      if(l_channel_id >= 0)
+		{
            
-              /* attach the layer_mask to the layer (with identical offsets) */
-              gimp_image_add_layer_mask(l_image_id, l_layer_id, l_channel_id);
+		  /* attach the layer_mask to the layer (with identical offsets) */
+		  gimp_image_add_layer_mask(l_image_id, l_layer_id, l_channel_id);
 
-              if(l_channel_prp_ptr->floating_attached)
-              {
-                 l_fsel_attached_to_id = l_channel_id;    /* the floating selection is attached to this layer_mask */
-              }
+		  if(l_channel_prp_ptr->floating_attached)
+		    {
+		      l_fsel_attached_to_id = l_channel_id;    /* the floating selection is attached to this layer_mask */
+		    }
               
-              if(l_channel_prp_ptr->tattoo >= 0)
-              {
-                 p_gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
-              }
+		  if (l_channel_prp_ptr->tattoo >= 0)
+		    {
+		      gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+		    }
              
-              /* gimp_layer_set_offsets(l_channel_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy); */
+		  /* gimp_layer_set_offsets(l_channel_id, l_layer_prp_ptr->offx, l_layer_prp_ptr->offy); */
 
-              gimp_layer_set_apply_mask (l_layer_id, l_layer_prp_ptr->apply_mask);
-              gimp_layer_set_edit_mask  (l_layer_id, l_layer_prp_ptr->edit_mask);
-              gimp_layer_set_show_mask  (l_layer_id, l_layer_prp_ptr->show_mask);
+		  gimp_layer_set_apply_mask (l_layer_id, l_layer_prp_ptr->apply_mask);
+		  gimp_layer_set_edit_mask  (l_layer_id, l_layer_prp_ptr->edit_mask);
+		  gimp_layer_set_show_mask  (l_layer_id, l_layer_prp_ptr->show_mask);
 
-              /* Handle layermask parasites */
-              p_check_and_add_parasite(l_channel_id,
-                            l_dirname,
-			    l_image_prp_ptr->parasite_props,
-			    l_channel_prp_ptr->channel_pos,
-			    XJT_LAYER_MASK_PARASITE);
-           }
-           break;
-        }
-     }    /* end search for layermask */
-   }
+		  /* Handle layermask parasites */
+		  p_check_and_add_parasite(l_channel_id,
+					   l_dirname,
+					   l_image_prp_ptr->parasite_props,
+					   l_channel_prp_ptr->channel_pos,
+					   XJT_LAYER_MASK_PARASITE);
+		}
+	      break;
+	    }
+	}    /* end search for layermask */
+    }
    
-   /* load all channels */ 
-   for(l_channel_prp_ptr = l_image_prp_ptr->channel_props;
-       l_channel_prp_ptr != NULL;
-       l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
-   {
-     l_jpg_file = g_strdup_printf("%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_channel_prp_ptr->channel_pos);
-     if(xjt_debug) printf("XJT-DEBUG: loading channel from file %s\n", l_jpg_file);  
+  /* load all channels */ 
+  for(l_channel_prp_ptr = l_image_prp_ptr->channel_props;
+      l_channel_prp_ptr != NULL;
+      l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
+    {
+      l_jpg_file = g_strdup_printf("%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_channel_prp_ptr->channel_pos);
+      if(xjt_debug) printf("XJT-DEBUG: loading channel from file %s\n", l_jpg_file);  
 
-     l_channel_id = xjpg_load_channel (l_jpg_file,
-	                           l_image_id,
-	                           -1,
-                                   l_channel_prp_ptr->name,
-			           l_channel_prp_ptr->opacity,
-			           l_channel_prp_ptr->color_r,
-			           l_channel_prp_ptr->color_g,
-			           l_channel_prp_ptr->color_b);
+      l_channel_id = xjpg_load_channel (l_jpg_file,
+					l_image_id,
+					-1,
+					l_channel_prp_ptr->name,
+					l_channel_prp_ptr->opacity,
+					l_channel_prp_ptr->color_r,
+					l_channel_prp_ptr->color_g,
+					l_channel_prp_ptr->color_b);
 
-     g_free(l_jpg_file);
-     if(l_channel_id < 0)
-     {
-        l_rc = -1;
-        break;
-     }
+      g_free(l_jpg_file);
+      if(l_channel_id < 0)
+	{
+	  l_rc = -1;
+	  break;
+	}
 
-     /* Handle channel parasites */
-     p_check_and_add_parasite(l_channel_id,
-                            l_dirname,
-			    l_image_prp_ptr->parasite_props,
-			    l_channel_prp_ptr->channel_pos,
-			    XJT_CHANNEL_PARASITE);
+      /* Handle channel parasites */
+      p_check_and_add_parasite(l_channel_id,
+			       l_dirname,
+			       l_image_prp_ptr->parasite_props,
+			       l_channel_prp_ptr->channel_pos,
+			       XJT_CHANNEL_PARASITE);
      
-     if(l_channel_prp_ptr->tattoo >= 0)
-     {
-        p_gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
-     }
-     if(l_channel_prp_ptr->selection)
-     {
-        if(xjt_debug) printf("XJT-DEBUG: SELECTION loaded channel id = %d\n", (int)l_channel_id);
+      if(l_channel_prp_ptr->tattoo >= 0)
+	{
+	  gimp_channel_set_tattoo(l_channel_id, l_channel_prp_ptr->tattoo);
+	}
+      if(l_channel_prp_ptr->selection)
+	{
+	  if(xjt_debug) printf("XJT-DEBUG: SELECTION loaded channel id = %d\n", (int)l_channel_id);
 	
-	p_gimp_selection_load (l_image_id, l_channel_id);
+	  gimp_selection_load (l_channel_id);
 	
-	/* delete the channel after load into selection */
-	gimp_channel_delete(l_channel_id);
-     }
-     else
-     {
-       /* add channel on top of the channelstack */
-       gimp_image_add_channel (l_image_id, l_channel_id, 0);
+	  /* delete the channel after load into selection */
+	  gimp_channel_delete (l_channel_id);
+	}
+      else
+	{
+	  /* add channel on top of the channelstack */
+	  gimp_image_add_channel (l_image_id, l_channel_id, 0);
 
-       /* adjust offsets and other channelproperties */
-       gimp_channel_set_visible (l_channel_id, l_channel_prp_ptr->visible);
-       gimp_channel_set_show_masked (l_channel_id, l_channel_prp_ptr->show_masked);
+	  /* adjust offsets and other channelproperties */
+	  gimp_channel_set_visible (l_channel_id, l_channel_prp_ptr->visible);
+	  gimp_channel_set_show_masked (l_channel_id, l_channel_prp_ptr->show_masked);
 
-       if(l_channel_prp_ptr->floating_attached)
-       {
-          l_fsel_attached_to_id = l_channel_id;    /* the floating_selection is attached to this channel */
-       }
+	  if(l_channel_prp_ptr->floating_attached)
+	    {
+	      l_fsel_attached_to_id = l_channel_id;    /* the floating_selection is attached to this channel */
+	    }
 
-       if(l_channel_prp_ptr->active_channel)
-       {
-          l_active_channel_id = l_channel_id;
-       }
-     }
-   }
+	  if(l_channel_prp_ptr->active_channel)
+	    {
+	      l_active_channel_id = l_channel_id;
+	    }
+	}
+    }
 
-   /* attach the floating selection... */
-   if((l_fsel_id >= 0) && (l_fsel_attached_to_id >= 0))
-   {
+  /* attach the floating selection... */
+  if ((l_fsel_id >= 0) && (l_fsel_attached_to_id >= 0))
+    {
       if(xjt_debug) printf("XJT-DEBUG: attaching floating_selection id=%d to id %d\n",
-                    (int)l_fsel_id, (int)l_fsel_attached_to_id);
-      if(p_gimp_floating_sel_attach (l_fsel_id, l_fsel_attached_to_id) < 0)
-      {
-         /* in case of error add floating_selection like an ordinary layer
-	  * (if patches are not installed you'll get the error for sure)
-	  */
-         printf("XJT: floating_selection is added as top-layer (attach failed)\n");
-         gimp_image_add_layer (l_image_id, l_fsel_id, 0);
+			   (int)l_fsel_id, (int)l_fsel_attached_to_id);
+      if (gimp_floating_sel_attach (l_fsel_id, l_fsel_attached_to_id) < 0)
+	{
+	  /* in case of error add floating_selection like an ordinary layer
+	   * (if patches are not installed you'll get the error for sure)
+	   */
+	  printf("XJT: floating_selection is added as top-layer (attach failed)\n");
+	  gimp_image_add_layer (l_image_id, l_fsel_id, 0);
+	}
+    }
 
-      }
-   }
+  /* set active layer/channel */
+  if (l_active_channel_id >= 0)
+    {
+      if(xjt_debug) printf("SET active channel\n");     
+      gimp_image_set_active_channel (l_image_id, l_active_channel_id);
+    }
+  if (l_active_layer_id >= 0)
+    {
+      if(xjt_debug) printf("SET active layer\n");     
+      gimp_image_set_active_layer (l_image_id, l_active_layer_id);
+    }
 
-   /* set active layer/channel */
-   if(l_active_channel_id >= 0)
-   {
-       if(xjt_debug) printf("SET active channel\n");     
-       gimp_image_set_active_channel(l_image_id, l_active_channel_id);
-   }
-   if(l_active_layer_id >= 0)
-   {
-       if(xjt_debug) printf("SET active layer\n");     
-       gimp_image_set_active_layer(l_image_id, l_active_layer_id);
-   }
-
-   /* set guides */
-   for(l_guide_prp_ptr = l_image_prp_ptr->guide_props;
+  /* set guides */
+  for (l_guide_prp_ptr = l_image_prp_ptr->guide_props;
        l_guide_prp_ptr != NULL;
        l_guide_prp_ptr = (t_guide_props *)l_guide_prp_ptr->next)
-   {
-      p_gimp_image_add_guide(l_image_id, 
-                             l_guide_prp_ptr->position,
-                             l_guide_prp_ptr->orientation);
-   }
+    {
+      if (l_guide_prp_ptr->orientation == GIMP_ORIENTATION_HORIZONTAL)
+	gimp_image_add_hguide(l_image_id, l_guide_prp_ptr->position);
+      else
+	gimp_image_add_vguide(l_image_id, l_guide_prp_ptr->position);
+    }
 
+  /* create paths */
+  if (l_image_prp_ptr->path_props)
+    {
+      p_add_paths(l_image_id, l_image_prp_ptr->path_props);
+    }
 
-   /* create paths */
-   if(l_image_prp_ptr->path_props)
-   {
-      p_add_paths(l_image_id,  l_image_prp_ptr->path_props);
-   }
+  /* set tattoo_state */
+  if (l_image_prp_ptr->tattoo_state > 0)
+    {
+      gimp_image_set_tattoo_state(l_image_id, l_image_prp_ptr->tattoo_state);
+    }
 
-   /* set tattoo_state */
-   if(l_image_prp_ptr->tattoo_state > 0)
-   {
-     p_gimp_image_set_tattoo_state(l_image_id, l_image_prp_ptr->tattoo_state);
-   }
+ cleanup:
 
-cleanup:
+  g_free (l_layers_list);
+  g_free (l_channels_list);
 
-   if(l_layers_list) g_free (l_layers_list);
-   if(l_channels_list) g_free (l_channels_list);
-
-   /* remove the temorary directory */
-   l_cmd = g_strdup_printf("rm -rf \"%s\"", l_dirname);
-   p_system(l_cmd);
-   g_free(l_cmd);
+  /* remove the temorary directory */
+  l_cmd = g_strdup_printf ("rm -rf \"%s\"", l_dirname);
+  p_system (l_cmd);
+  g_free (l_cmd);
    
-   if(l_dirname) g_free(l_dirname);
-   if(l_prop_file) g_free(l_prop_file);
-   if(l_jpg_file) g_free(l_jpg_file);
+  g_free (l_dirname);
+  g_free (l_prop_file);
+  g_free (l_jpg_file);
    
-   if(l_rc == 0) 
-   {
-     return(l_image_id);             /* all done OK */
-   }
+  if (l_rc == 0) 
+    {
+      return l_image_id;             /* all done OK */
+    }
    
-   /* destroy the tmp image */
-   gimp_image_delete(l_image_id);
-   return -1;
-      
+  /* destroy the tmp image */
+  gimp_image_delete (l_image_id);
+  return -1;      
 }	/* end load_xjt_image */

@@ -11,9 +11,7 @@ EXTRA_DIST = \
 xjt_SOURCES = \
 	xjt.c		\
 	xjpeg.c		\
-	xjpeg.h		\
-	xpdb_calls.c	\
-	xpdb_calls.h
+	xjpeg.h
 
 INCLUDES = \
 	-I$(top_srcdir)	\
