@@ -152,6 +152,7 @@ create_about_dialog (void)
   gtk_window_set_title(GTK_WINDOW(window), _("GDynText: About ..."));
   gtk_window_set_policy(GTK_WINDOW(window), FALSE, FALSE, FALSE);
   gtk_window_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+  gimp_dialog_set_icon (GTK_WINDOW (window));
   gtk_signal_connect(GTK_OBJECT(window), "destroy",
 		     GTK_SIGNAL_FUNC(on_about_dialog_destroy), NULL);
   
@@ -209,7 +210,6 @@ create_main_window (GdtMainWindow **main_window,
   GdtMainWindow *mw;
   GtkObject *font_size_adj;
   GtkObject *line_spacing_adj;
-  GtkTooltips *tooltips;
   GtkWidget *handlebox;
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -259,8 +259,6 @@ create_main_window (GdtMainWindow **main_window,
   mw->font_preview_enabled = FALSE;
   mw->ok_pressed = FALSE;
   
-  tooltips = gtk_tooltips_new();
-
   mw->window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   title = g_strconcat (_("GDynText"), " ", GDYNTEXT_VERSION, NULL);
   gtk_window_set_title(GTK_WINDOW(mw->window), title);
@@ -272,6 +270,9 @@ create_main_window (GdtMainWindow **main_window,
 		     GTK_SIGNAL_FUNC(on_main_window_cancel_clicked), &mw->ok_pressed);
   gtk_widget_realize(mw->window);
   
+  gimp_help_connect_help_accel (mw->window, gimp_standard_help_func, "filters/gdyntext.html");
+  gimp_help_init ();
+
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_add(GTK_CONTAINER(mw->window), vbox);
   gtk_widget_show(vbox);
@@ -412,10 +413,10 @@ create_main_window (GdtMainWindow **main_window,
   gtk_box_pack_start(GTK_BOX(hbox1), label, FALSE, TRUE, 3);
   gtk_widget_show(label);
   
-  optmenu = gtk_option_menu_new();
+  optmenu = gtk_option_menu_new ();
   gtk_box_pack_start(GTK_BOX(hbox1), optmenu, FALSE, TRUE, 3);
   gtk_widget_show(optmenu);
-  gtk_tooltips_set_tip(tooltips, optmenu, _("Set layer alignment"), "");
+  gimp_help_set_help_data (optmenu, _("Set layer alignment"), "#layer_align");
   
   menu = gtk_menu_new();
   for (i = 0; lalign_menu[i] != NULL; i += 2) 
@@ -455,7 +456,6 @@ create_main_window (GdtMainWindow **main_window,
   gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(mw->line_spacing), TRUE);
   gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(mw->line_spacing), GTK_UPDATE_ALWAYS);
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(mw->line_spacing), data->line_spacing);
-  gtk_tooltips_set_tip(tooltips, mw->line_spacing, _("Set line spacing"), "");
   gtk_box_pack_start(GTK_BOX(hbox1), mw->line_spacing, FALSE, TRUE, 2);
   gtk_widget_show(mw->line_spacing);
 
@@ -468,7 +468,7 @@ create_main_window (GdtMainWindow **main_window,
   gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(mw->font_rotation), TRUE);
   gtk_spin_button_set_update_policy(GTK_SPIN_BUTTON(mw->font_rotation), GTK_UPDATE_ALWAYS);
   gtk_spin_button_set_value(GTK_SPIN_BUTTON(mw->font_rotation), data->rotation);
-  gtk_tooltips_set_tip(tooltips, mw->font_rotation, _("Set text rotation (degrees)"), "");
+  gimp_help_set_help_data (mw->font_rotation, _("Set text rotation (degrees)"), NULL);
   gtk_box_pack_start(GTK_BOX(hbox1), mw->font_rotation, FALSE, TRUE, 2);
   gtk_widget_show(mw->font_rotation);
 	
@@ -500,7 +500,7 @@ create_main_window (GdtMainWindow **main_window,
   
   mw->font_preview = gtk_entry_new();
   gtk_entry_set_text(GTK_ENTRY(mw->font_preview), DEFAULT_FONT_PREVIEW_TEXT);
-  gtk_tooltips_set_tip(tooltips, mw->font_preview, _("Editable text sample"), NULL);
+  gimp_help_set_help_data (mw->font_preview, _("Editable text sample"), NULL);
   gtk_box_pack_start(GTK_BOX(mw->hbox_fp), mw->font_preview, TRUE, TRUE, 5);
   gtk_widget_show(mw->font_preview);
   
@@ -571,9 +571,9 @@ create_main_window (GdtMainWindow **main_window,
   gtk_box_pack_start(GTK_BOX(hbbox2), button_ok, FALSE, FALSE, 0);
   gtk_widget_show(button_ok);
   
-  gtk_tooltips_set_tip(tooltips, button_ok,
-		       _("Holding the Shift key while pressing this button will force GDynText "
-			 "in changing the layer name as done in GIMP 1.0."), NULL);
+  gimp_help_set_help_data (button_ok,
+			   _("Holding the Shift key while pressing this button will force GDynText "
+			     "in changing the layer name as done in GIMP 1.0."), NULL);
   
   button_apply = gtk_button_new_with_label(_("Apply"));
   GTK_WIDGET_SET_FLAGS(button_apply, GTK_CAN_DEFAULT);
@@ -630,8 +630,9 @@ gdt_create_ui (GdtVals *data)
   if (MESSAGE_WINDOW(message_window)->contains_messages)
     gtk_widget_show(message_window);
 
-  gtk_main();
-  
+  gtk_main ();
+  gimp_help_free ();
+
   if (main_window->ok_pressed)
     set_gdt_vals(data);
 
