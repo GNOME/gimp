@@ -1,3 +1,16 @@
+2003-09-28  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpscanconvert.c (gimp_scan_convert_free)
+	(gimp_scan_convert_finish): plugged memleaks and added some sanity
+	checks.
+
+	* app/base/pixel-region.c
+	* app/core/gimpdrawable-preview.c: removed trailing whitespace.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_on_vectors_curve):
+	gimp_stroke_nearest_point_get() doesn't set cur_pos when there are
+	no strokes; don't use the uninitialized variable.
+
 2003-09-28  Ville Pätsi <drc@gimp.org>
 
 	* themes/Default/images/stock-join-round-16.png

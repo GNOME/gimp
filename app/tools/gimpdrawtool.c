@@ -1012,7 +1012,7 @@ gimp_draw_tool_on_vectors_curve (GimpDrawTool  *draw_tool,
                                                 &segment_end,
                                                 &cur_pos);
 
-      if (cur_dist < min_dist || min_dist < 0)
+      if (cur_dist < min_dist)
         {
           min_dist   = cur_dist;
           min_coords = cur_coords;
@@ -1097,7 +1097,7 @@ gimp_draw_tool_on_vectors (GimpDrawTool *draw_tool,
   return FALSE;
 }
 
-                          
+
 void
 gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
 			   gdouble      *points,

@@ -74,18 +74,9 @@ gimp_scan_convert_new (guint    width,
 
   sc = g_new0 (GimpScanConvert, 1);
 
-  sc->antialias = antialias;
   sc->width     = width;
   sc->height    = height;
-
-  sc->got_first    = FALSE;
-  sc->need_closing = FALSE;
-
-  sc->have_open = FALSE;
-
-  sc->num_nodes = 0;
-  sc->vpath     = NULL;
-  sc->svp       = NULL;
+  sc->antialias = antialias;
 
   return sc;
 }
@@ -93,8 +84,13 @@ gimp_scan_convert_new (guint    width,
 void
 gimp_scan_convert_free (GimpScanConvert *sc)
 {
-  art_free (sc->vpath);
-  art_free (sc->svp);
+  g_return_if_fail (sc != NULL);
+
+  if (sc->vpath)
+    art_free (sc->vpath);
+  if (sc->svp)
+    art_svp_free (sc->svp);
+
   g_free (sc);
 }
 
@@ -126,10 +122,10 @@ gimp_scan_convert_add_points (GimpScanConvert *sc,
     }
 
   /* We have to compress multiple identical coordinates */
-  
+
   for (i = 0; i < n_points; i++)
     {
-      if (sc->got_first == FALSE || 
+      if (sc->got_first == FALSE ||
           sc->prev.x != points[i].x || sc->prev.y != points[i].y)
         {
           sc->vpath[sc->num_nodes].code = ((! sc->got_first) || new_polygon) ?
@@ -156,7 +152,7 @@ gimp_scan_convert_add_points (GimpScanConvert *sc,
 static void
 gimp_scan_convert_close_add_points (GimpScanConvert *sc)
 {
-  if (sc->need_closing && 
+  if (sc->need_closing &&
       (sc->prev.x != sc->first.x || sc->prev.y != sc->first.y))
     {
       sc->vpath = art_renew (sc->vpath, ArtVpath, sc->num_nodes + 2);
@@ -298,7 +294,7 @@ gimp_scan_convert_stroke (GimpScanConvert *sc,
       dash.offset = dash_offset * width;
 
       dashes = g_new (gdouble, dash_info->len);
-      
+
       for (i=0; i < dash_info->len ; i++)
         dashes[i] = width * g_array_index (dash_info, gdouble, i);
 
@@ -452,10 +448,10 @@ gimp_scan_convert_finish (GimpScanConvert *sc)
   art_free (pert_vpath);
 
   svp2 = art_svp_uncross (svp);
-  art_free (svp);
+  art_svp_free (svp);
 
   svp = art_svp_rewind_uncrossed (svp2, ART_WIND_RULE_ODDEVEN);
-  art_free (svp2);
+  art_svp_free (svp2);
 
   sc->svp = svp;
 }

@@ -206,7 +206,7 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
   TempBuf *ret_buf;
 
   if (drawable->preview_valid &&
-      (ret_buf = gimp_preview_cache_get (&drawable->preview_cache, 
+      (ret_buf = gimp_preview_cache_get (&drawable->preview_cache,
 					 width, height)))
     {
       /*  The easy way  */
@@ -301,9 +301,9 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 			     gint               subsample)
 {
 #define EPSILON 0.000001
-  guchar  *src, *s;
+  guchar  *src,  *s;
   guchar  *dest, *d;
-  gdouble *row, *r;
+  gdouble *row,  *r;
   gint     destwidth;
   gint     src_row, src_col;
   gint     bytes, b;
@@ -352,22 +352,23 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	}
       else
 	{
-	  src_col ++;
+	  src_col++;
 	  x_frac[i] = src_col - x_last;
 	}
+
       x_last += x_frac[i];
     }
 
   /*  counters...  */
   src_row = 0;
-  y_cum = (double) src_row;
+  y_cum = (gdouble) src_row;
   y_last = y_cum;
 
-  pixel_region_get_row (srcPR, 
-			0, 
-			src_row * subsample, 
-			orig_width * subsample, 
-			src, 
+  pixel_region_get_row (srcPR,
+			0,
+			src_row * subsample,
+			orig_width * subsample,
+			src,
 			subsample);
 
   /*  Scale the selected region  */
@@ -385,7 +386,7 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	}
       else
 	{
-	  src_row ++;
+	  src_row++;
 	  y_frac = src_row - y_last;
 	  advance_dest = FALSE;
 	}
@@ -460,11 +461,11 @@ gimp_drawable_preview_scale (GimpImageBaseType  type,
 	}
       else
 	{
-	  pixel_region_get_row (srcPR, 
-				0, 
-				src_row * subsample, 
-				orig_width * subsample, 
-				src, 
+	  pixel_region_get_row (srcPR,
+				0,
+				src_row * subsample,
+				orig_width * subsample,
+				src,
 				subsample);
 	}
     }
