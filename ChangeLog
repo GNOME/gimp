@@ -1,3 +1,8 @@
+2004-07-30  Seth Burgess  <sjburges@gimp.org>
+	
+	* plug-ins/common/gauss.c: added some non-interactive modes (if called 
+	from the pdb with RUN_INTERACTIVE).
+
 2004-07-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorselect.c: minor cleanup.	

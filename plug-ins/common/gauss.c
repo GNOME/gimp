@@ -303,7 +303,7 @@ run (const gchar      *name,
 	  break;
 	}
     }
-  else if (strcmp (name, "plug_in_gauss_iir") == 0) /* can only be noninteractive */
+  else if (strcmp (name, "plug_in_gauss_iir") == 0) 
     {
       if (nparams != 6)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -316,8 +316,13 @@ run (const gchar      *name,
 	}
       if (radius <= 0.0)
 	status = GIMP_PDB_CALLING_ERROR;
+      if (run_mode==GIMP_RUN_INTERACTIVE)
+        {
+	  if (! gauss_dialog (image_ID, drawable))
+	    return;
+        }
     }
-  else if (strcmp (name, "plug_in_gauss_iir2") == 0) /* can only be noninteractive */
+  else if (strcmp (name, "plug_in_gauss_iir2") == 0) 
     {
       if (nparams != 5)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -328,9 +333,14 @@ run (const gchar      *name,
 	  bvals.method     = BLUR_IIR;
 	}
       if (bvals.horizontal <= 0.0 && bvals.vertical <= 0.0)
-	status = GIMP_PDB_CALLING_ERROR;
+ 	status = GIMP_PDB_CALLING_ERROR;
+      if (run_mode==GIMP_RUN_INTERACTIVE)
+        {
+	  if (! gauss_dialog (image_ID, drawable))
+	    return;
+        }
     }
-  else if (strcmp (name, "plug_in_gauss_rle") == 0) /* can only be noninteractive */
+  else if (strcmp (name, "plug_in_gauss_rle") == 0) 
     {
       if (nparams != 6)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -343,8 +353,13 @@ run (const gchar      *name,
 	}
       if (radius <= 0.0)
 	status = GIMP_PDB_CALLING_ERROR;
+      if (run_mode==GIMP_RUN_INTERACTIVE)
+        {
+	  if (! gauss_dialog (image_ID, drawable))
+	    return;
+        }
     }
-  else if (strcmp (name, "plug_in_gauss_rle2") == 0) /* can only be noninteractive */
+  else if (strcmp (name, "plug_in_gauss_rle2") == 0) 
     {
       if (nparams != 5)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -356,6 +371,11 @@ run (const gchar      *name,
 	}
       if (bvals.horizontal <= 0.0 && bvals.vertical <= 0.0)
 	status = GIMP_PDB_CALLING_ERROR;
+      if (run_mode==GIMP_RUN_INTERACTIVE)
+        {
+	  if (! gauss_dialog (image_ID, drawable))
+	    return;
+        }
     }
   else
     status = GIMP_PDB_CALLING_ERROR;
