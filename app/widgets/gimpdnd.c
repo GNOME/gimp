@@ -625,6 +625,24 @@ gimp_dnd_init (Gimp *gimp)
 }
 
 
+/**********************/
+/*  helper functions  */
+/**********************/
+
+static void
+gimp_dnd_target_list_add (GtkTargetList        *list,
+                          const GtkTargetEntry *entry)
+{
+  GdkAtom atom = gdk_atom_intern (entry->target, FALSE);
+  guint   info;
+
+  if (! gtk_target_list_find (list, atom, &info) || info != entry->info)
+    {
+      gtk_target_list_add (list, atom, entry->flags, entry->info);
+    }
+}
+
+
 /********************************/
 /*  general data dnd functions  */
 /********************************/
@@ -878,11 +896,7 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
 
   if (target_list)
     {
-      GdkAtom atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
-
-      gtk_target_list_add (target_list, atom,
-                           dnd_data->target_entry.flags,
-                           dnd_data->target_entry.info);
+      gimp_dnd_target_list_add (target_list, &dnd_data->target_entry);
     }
   else
     {
@@ -972,11 +986,7 @@ gimp_dnd_data_dest_add (GimpDndType  data_type,
 
   if (target_list)
     {
-      GdkAtom atom = gdk_atom_intern (dnd_data->target_entry.target, TRUE);
-
-      gtk_target_list_add (target_list, atom,
-                           dnd_data->target_entry.flags,
-                           dnd_data->target_entry.info);
+      gimp_dnd_target_list_add (target_list, &dnd_data->target_entry);
     }
   else
     {

@@ -1,5 +1,11 @@
 2005-03-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd.c: don't add the same target multiple times.
+	This used to happen when  gimp_dnd_foo_source_add() is called
+	after calling gimp_dnd_drag_source_set_by_type().
+
+2005-03-26  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawablecombobox.c
 	* libgimp/gimpimagecombobox.c: accept DND of image / drawable IDs.
 
