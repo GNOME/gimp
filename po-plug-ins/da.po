@@ -28,8 +28,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2001-10-10 22:04+0200\n"
-"PO-Revision-Date: 2001-10-06 14:40+0200\n"
+"POT-Creation-Date: 2001-10-17 20:14+0200\n"
+"PO-Revision-Date: 2001-10-17 20:14+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -8228,7 +8228,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_main.c:482
 msgid "<Image>/Video/Goto/Next Frame"
-msgstr "<Image>/Video/Gå til/Næste billed"
+msgstr "<Image>/Video/Gå til/Næste billede"
 
 #: plug-ins/gap/gap_main.c:494
 msgid "<Image>/Video/Goto/Previous Frame"
