@@ -299,10 +299,10 @@ typedef struct
 {
   gint     gridspacing;
   GridType gridtype;
-  gint     drawgrid;
-  gint     snap2grid;
-  gint     lockongrid;
-  gint     showcontrol;
+  gboolean drawgrid;
+  gboolean snap2grid;
+  gboolean lockongrid;
+  gboolean showcontrol;
 } GfigOpts;
 
 /* Must keep in step with the above */
@@ -321,19 +321,19 @@ static GfigOptWidgets gfig_opt_widget;
 typedef struct
 {
   GfigOpts      opts;
-  gint          showimage;
+  gboolean      showimage;
   gint          maxundo;
-  gint          showpos;
+  gboolean      showpos;
   gdouble       brushfade;
   gdouble       brushgradient;
   gdouble       airbrushpressure;
   DrawonLayers  onlayers;
   LayersBGType  onlayerbg;
   PaintType     painttype;
-  gint          reverselines;
-  gint          scaletoimage;
+  gboolean      reverselines;
+  gboolean      scaletoimage;
   gdouble       scaletoimagefp;
-  gint          approxcircles;
+  gboolean      approxcircles;
   BrushType     brshtype;
   DobjType      otype;
 } SelectItVals;
@@ -344,18 +344,17 @@ static SelectItVals selvals =
   {
     MIN_GRID + (MAX_GRID - MIN_GRID)/2, /* Gridspacing */
     RECT_GRID, /* Default to rectangle type */
-    0,  /* drawgrid */
-    0,  /* snap2grid */
-    0,  /* lockongrid */
-    1,  /* show control points */
+    FALSE,  /* drawgrid */
+    FALSE,  /* snap2grid */
+    FALSE,  /* lockongrid */
+    TRUE    /* show control points */
   },
-  0,  /* show image */
+  FALSE,  /* show image */
   MIN_UNDO + (MAX_UNDO - MIN_UNDO)/2,  /* Max level of undos */
   FALSE, /* Show pos updates */
   0.0, /* Brush fade */
   0.0, /* Brush gradient */
   20.0, /* Air bursh pressure */
-  TRUE,  /* show Tool tips */
   ORIGINAL_LAYER, /* Draw all objects on one layer */
   LAYER_TRANS_BG, /* New layers background */
   PAINT_BRUSH_TYPE, /* Default to use brushes */

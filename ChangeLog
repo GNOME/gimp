@@ -1,3 +1,8 @@
+2003-01-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/gfig/gfig.c: don't try to initialize the showtooltips
+	member in the selvals struct; it's gone.
+
 2003-01-07  Michael Natterer  <mitch@gimp.org>
 
 	Fixed bug #13296:
