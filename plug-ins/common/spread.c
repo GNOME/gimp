@@ -308,7 +308,8 @@ spread_preview_update (GimpPreview *preview,
 
   bpp = drawable_preview->drawable->bpp;
   dest = buffer = g_new (guchar, width * height * bpp);
-  gimp_preview_get_position (preview, &x_off, &y_off);
+  gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                      &x_off, &y_off);
 
   for (y = 0 ; y < height ; y++)
     for (x = 0 ; x < width ; x++)

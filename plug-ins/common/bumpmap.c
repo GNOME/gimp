@@ -1229,7 +1229,8 @@ dialog_update_preview (GimpPreview *preview)
   gint    width, height;
   gint    bytes;
 
-  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                      &x1, &y1);
   gimp_preview_get_size (preview, &width, &height);
   bytes =drawable->bpp;
 

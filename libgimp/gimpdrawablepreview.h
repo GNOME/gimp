@@ -22,7 +22,7 @@
 #ifndef __GIMP_DRAWABLE_PREVIEW_H__
 #define __GIMP_DRAWABLE_PREVIEW_H__
 
-#include <libgimpwidgets/gimppreview.h>
+#include <libgimpwidgets/gimpscrolledpreview.h>
 
 G_BEGIN_DECLS
 
@@ -42,14 +42,14 @@ typedef struct _GimpDrawablePreviewClass  GimpDrawablePreviewClass;
 
 struct _GimpDrawablePreview
 {
-  GimpPreview   parent_instance;
+  GimpScrolledPreview  parent_instance;
 
-  GimpDrawable *drawable;
+  GimpDrawable        *drawable;
 };
 
 struct _GimpDrawablePreviewClass
 {
-  GimpPreviewClass parent_class;
+  GimpScrolledPreviewClass parent_class;
 };
 
 

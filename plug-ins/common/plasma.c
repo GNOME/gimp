@@ -79,6 +79,7 @@ typedef struct
   guint32   seed;
   gdouble   turbulence;
   gboolean  random_seed;
+  gboolean  preview;
 } PlasmaValues;
 
 
@@ -143,19 +144,19 @@ static PlasmaValues pvals =
   0,     /* seed            */
   1.0,   /* turbulence      */
   FALSE, /* Use random seed */
+  TRUE   /* preview         */
 };
 
 /*
  * Some globals to save passing too many paramaters that don't change.
  */
-#define PREVIEW_SIZE 128
 static GtkWidget *preview;
-static guchar     preview_buffer[PREVIEW_SIZE * PREVIEW_SIZE * 4];
+static guchar    *preview_buffer;
+static gint       preview_width, preview_height;
 
 static gint       ix1, iy1, ix2, iy2;     /* Selected image size. */
 static gint       bpp, alpha;
 static gboolean   has_alpha;
-static gdouble    turbulence;
 static glong      max_progress, progress;
 
 /***** Functions *****/
@@ -291,10 +292,8 @@ run (const gchar      *name,
 static gboolean
 plasma_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *frame;
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *label;
   GtkWidget *table;
   GtkWidget *seed;
@@ -303,38 +302,31 @@ plasma_dialog (GimpDrawable *drawable)
 
   gimp_ui_init ("plasma", TRUE);
 
-  dlg = gimp_dialog_new (_("Plasma"), "plasma",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-plasma",
+  dialog = gimp_dialog_new (_("Plasma"), "plasma",
+                            NULL, 0,
+                            gimp_standard_help_func, "plug-in-plasma",
 
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                         NULL);
+                            NULL);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
-  gtk_widget_show (vbox);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, PREVIEW_SIZE, PREVIEW_SIZE);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  preview = gimp_aspect_preview_new (drawable, &pvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (plasma_seed_changed_callback),
+                            drawable);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
   seed = gimp_random_seed_new (&pvals.seed, &pvals.random_seed);
@@ -346,8 +338,8 @@ plasma_dialog (GimpDrawable *drawable)
 
   g_signal_connect_swapped (GIMP_RANDOM_SEED_SPINBUTTON_ADJ (seed),
                             "value_changed",
-                            G_CALLBACK (plasma_seed_changed_callback),
-                            drawable);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("T_urbulence:"), SCALE_WIDTH, 0,
@@ -359,16 +351,14 @@ plasma_dialog (GimpDrawable *drawable)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &pvals.turbulence);
   g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (plasma_seed_changed_callback),
-                            drawable);
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
-  gtk_widget_show (dlg);
+  gtk_widget_show (dialog);
 
-  plasma_seed_changed_callback (drawable, NULL); /* preview image */
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
+  gtk_widget_destroy (dialog);
 
   return run;
 }
@@ -425,13 +415,14 @@ init_plasma (GimpDrawable *drawable,
 
   g_rand_set_seed (gr, pvals.seed);
 
-  turbulence = pvals.turbulence;
-
   if (preview_mode)
     {
       ix1 = iy1 = 0;
-      ix2 = PREVIEW_SIZE;
-      iy2 = PREVIEW_SIZE;
+      gimp_preview_get_size (GIMP_PREVIEW (preview),
+                             &preview_width, &preview_height);
+      ix2 = preview_width;
+      iy2 = preview_height;
+      preview_buffer = g_new (guchar, ix2 * iy2 * drawable->bpp);
 
       pft = NULL;
     }
@@ -469,11 +460,10 @@ end_plasma (GimpDrawable     *drawable,
     }
   else
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, PREVIEW_SIZE, PREVIEW_SIZE,
-                              gimp_drawable_type (drawable->drawable_id),
-                              preview_buffer,
-                              PREVIEW_SIZE * bpp);
+      gimp_aspect_preview_draw_buffer (GIMP_ASPECT_PREVIEW (preview),
+                                       preview_buffer,
+                                       preview_width * bpp);
+      g_free (preview_buffer);
     }
 
   g_rand_free (gr);
@@ -491,7 +481,7 @@ get_pixel (GimpPixelFetcher *pft,
     }
   else
     {
-      memcpy (pixel, preview_buffer + (y * PREVIEW_SIZE + x) * bpp, bpp);
+      memcpy (pixel, preview_buffer + (y * preview_width + x) * bpp, bpp);
     }
 }
 
@@ -508,7 +498,7 @@ put_pixel (GimpPixelFetcher *pft,
     }
   else
     {
-      memcpy (preview_buffer + (y * PREVIEW_SIZE + x) * bpp, pixel, bpp);
+      memcpy (preview_buffer + (y * preview_width + x) * bpp, pixel, bpp);
     }
 }
 
@@ -618,7 +608,7 @@ do_plasma (GimpPixelFetcher *pft,
       get_pixel (pft, x2, y1, tr);
       get_pixel (pft, x2, y2, br);
 
-      ran = (gint) ((256.0 / (2.0 * scale_depth)) * turbulence);
+      ran = (gint) ((256.0 / (2.0 * scale_depth)) * pvals.turbulence);
 
       xave = (x1 + x2) / 2;
       yave = (y1 + y2) / 2;

@@ -1,3 +1,59 @@
+2004-09-29  DindinX  <dindinx@gimp.org>
+
+	* libgimpwidgets/gimppreview.c
+	* libgimpwidgets/gimppreview.h: split this widget into itself (more
+	abstract now) and ...
+
+	* libgimpwidgets/gimpscrolledpreview.c
+	* libgimpwidgets/gimpscrolledpreview.h: this widget which also have
+	some scrollbars and a nagivation preview.
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgetstypes.h: changed accordingly.
+
+	* libgimp/gimpaspectpreview.c
+	* libgimp/gimpaspectpreview.h: Added this widget, derived from
+	GimpPreview, which has always the same ratio has the given drawable.
+	This widget has almost the same api as GimpDrawablePreview, and is
+	useful for plug-ins that show the whole (scaled) drawable in their
+	preview.
+
+	* libgimp/gimpdrawablepreview.c
+	* libgimp/gimpdrawablepreview.h: GimpDrawablePreview is now derived
+	from GimpScrolledPreview.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpui.h
+	* libgimp/gimpuitypes.h: changed accordingly.
+
+	* plug-ins/common/plasma.c: use a GimpAspectPreview.
+
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/deinterlace.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/dog.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/engrave.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/mblur.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/oilify.c
+	* plug-ins/common/photocopy.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/shift.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/softglow.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/wind.c: use gimp_scrolled_preview_get_position
+	instead of gimp_preview_get_position.
+
 2004-09-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpregioniterator.[ch]: renamed the "run_mode"

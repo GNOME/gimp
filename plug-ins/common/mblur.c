@@ -779,7 +779,8 @@ mblur (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &x, &y);
+      gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                          &x, &y);
       gimp_preview_get_size (preview, &width, &height);
     }
   else

@@ -282,7 +282,8 @@ noisify (GimpDrawablePreview *preview)
   gint          bpp;
   GRand        *gr = g_rand_new ();
 
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+  gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                      &x1, &y1);
   gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
   bpp = preview->drawable->bpp;
 

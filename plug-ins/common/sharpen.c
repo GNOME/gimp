@@ -556,7 +556,8 @@ preview_update (GimpDrawablePreview *preview)
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+  gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                      &x1, &y1);
   gimp_preview_get_size (GIMP_PREVIEW (preview),
                          &preview_width, &preview_height);
   img_bpp = gimp_drawable_bpp (preview->drawable->drawable_id);

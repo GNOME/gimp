@@ -724,7 +724,8 @@ preview_update (GtkWidget *widget)
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (preview, &x1, &y1);
+  gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                      &x1, &y1);
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        x1, y1, preview->width, preview->height,

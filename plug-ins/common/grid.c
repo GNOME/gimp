@@ -384,7 +384,8 @@ grid (gint32        image_ID,
 
   if (preview)
     {
-      gimp_preview_get_position (preview, &sx1, &sy1);
+      gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                          &sx1, &sy1);
       gimp_preview_get_size (preview, &sx2, &sy2);
 
       buffer = g_new (guchar, bytes * sx2 * sy2);

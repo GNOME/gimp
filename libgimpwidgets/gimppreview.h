@@ -48,36 +48,25 @@ struct _GimpPreview
 
   /*< protected >*/
   GtkWidget    *area;
+  GtkWidget    *table;
   GtkWidget    *frame;
-  GtkWidget    *hscr;
-  GtkWidget    *vscr;
-  GtkWidget    *nav_icon;
-  GtkWidget    *nav_popup;
   GtkWidget    *toggle;
-  GdkCursor    *cursor_move;
   GdkCursor    *cursor_busy;
-  GdkGC        *nav_gc;
 
   /*< private >*/
-  gint          xoff, yoff;
   gint          xmin, xmax, ymin, ymax;
-  gint          drag_x, drag_y;
-  gint          drag_xoff, drag_yoff;
   gint          width, height;
 
-  gboolean      in_drag;
   guint         timeout_id;
 };
+
 struct _GimpPreviewClass
 {
   GtkVBoxClass  parent_class;
 
   /* virtuals */
   void   (* draw)        (GimpPreview     *preview);
-  void   (* draw_thumb)  (GimpPreview     *preview,
-                          GimpPreviewArea *area,
-                          gint             width,
-                          gint             height);
+  void   (* set_cursor)  (GimpPreview     *preview);
 
   /* signal */
   void   (* invalidated) (GimpPreview   *preview);
@@ -99,9 +88,6 @@ void      gimp_preview_set_bounds   (GimpPreview *preview,
 void      gimp_preview_get_size     (GimpPreview *preview,
                                      gint        *width,
                                      gint        *height);
-void      gimp_preview_get_position (GimpPreview *preview,
-                                     gint        *x,
-                                     gint        *y);
 
 void      gimp_preview_draw         (GimpPreview *preview);
 void      gimp_preview_invalidate   (GimpPreview *preview);

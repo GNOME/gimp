@@ -28,6 +28,7 @@
 
 #include <libgimp/gimpexport.h>
 #include <libgimp/gimpmenu.h>
+#include <libgimp/gimpaspectpreview.h>
 #include <libgimp/gimpbrushmenu.h>
 #include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpfontmenu.h>
@@ -46,7 +47,7 @@ G_BEGIN_DECLS
 
 
 void gimp_ui_init (const gchar *prog_name,
-		   gboolean     preview);
+                   gboolean     preview);
 
 
 G_END_DECLS

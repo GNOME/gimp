@@ -800,7 +800,8 @@ edge_preview_update (GimpDrawablePreview *preview)
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
+  gimp_scrolled_preview_get_position (GIMP_SCROLLED_PREVIEW (preview),
+                                      &x1, &y1);
   gimp_preview_get_size (GIMP_PREVIEW (preview),
                          &width, &height);
 
