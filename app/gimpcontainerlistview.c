@@ -214,6 +214,7 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
 			      FALSE,
 			      view->preview_width,
 			      view->preview_height,
+			      1,
 			      FALSE,
 			      FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
@@ -311,9 +312,9 @@ gimp_container_list_view_set_preview_size (GimpContainerView  *view)
 
       preview = gtk_object_get_data (GTK_OBJECT (list->data), "preview");
 
-      gtk_preview_size (GTK_PREVIEW (preview),
-			view->preview_width,
-			view->preview_height);
+      gimp_preview_set_size (preview,
+			     view->preview_width,
+			     view->preview_height);
     }
 
   gtk_widget_queue_resize (list_view->gtk_list);

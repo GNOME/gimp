@@ -47,6 +47,13 @@ struct _GimpPreview
   GimpViewable *viewable;
   gboolean      is_popup;
 
+  gint          width;
+  gint          height;
+  gint          border;
+
+  /* TEMP HACK: */
+  guchar        border_color[3];
+
   gboolean      clickable;
   gboolean      show_popup;
 
@@ -73,13 +80,16 @@ GtkWidget *  gimp_preview_new              (GimpViewable  *viewable,
 					    gboolean       is_popup,
 					    gint           width,
 					    gint           height,
+					    gint           border,
 					    gboolean       clickable,
 					    gboolean       show_popup);
 
+void         gimp_preview_set_size         (GimpPreview   *preview,
+					    gint           width,
+					    gint           height);
+
 void         gimp_preview_render_and_flush (GimpPreview   *preview,
 					    TempBuf       *temp_buf,
-					    gint           width,
-					    gint           height,
 					    gint           channel);
 
 

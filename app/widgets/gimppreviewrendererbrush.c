@@ -150,8 +150,8 @@ gimp_brush_preview_render (GimpPreview *preview)
   brush_width  = brush->mask->width;
   brush_height = brush->mask->height;
 
-  width  = GTK_WIDGET (preview)->requisition.width;
-  height = GTK_WIDGET (preview)->requisition.height;
+  width  = preview->width;
+  height = preview->height;
 
   temp_buf = gimp_viewable_get_new_preview (preview->viewable,
 					    width,
@@ -161,8 +161,6 @@ gimp_brush_preview_render (GimpPreview *preview)
     {
       gimp_preview_render_and_flush (preview,
 				     temp_buf,
-				     width,
-				     height,
 				     -1);
 
       temp_buf_free (temp_buf);
@@ -279,8 +277,6 @@ gimp_brush_preview_render (GimpPreview *preview)
 
   gimp_preview_render_and_flush (preview,
 				 temp_buf,
-				 width,
-				 height,
 				 -1);
 
   temp_buf_free (temp_buf);
@@ -299,6 +295,7 @@ gimp_brush_preview_create_popup (GimpPreview *preview)
 			   TRUE,
 			   popup_width,
 			   popup_height,
+			   0,
 			   FALSE, FALSE);
 }
 
@@ -308,19 +305,14 @@ gimp_brush_preview_needs_popup (GimpPreview *preview)
   GimpBrush *brush;
   gint       brush_width;
   gint       brush_height;
-  gint       width;
-  gint       height;
 
   brush        = GIMP_BRUSH (preview->viewable);
   brush_width  = brush->mask->width;
   brush_height = brush->mask->height;
 
-  width  = GTK_WIDGET (preview)->requisition.width;
-  height = GTK_WIDGET (preview)->requisition.height;
-
   if (GIMP_IS_BRUSH_PIPE (brush) ||
-      brush_width  > width       ||
-      brush_height > height)
+      brush_width  > preview->width       ||
+      brush_height > preview->height)
     return TRUE;
 
   return FALSE;
@@ -333,8 +325,6 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
   GimpBrushPipe *brush_pipe;
   GimpBrush     *brush;
   TempBuf       *temp_buf;
-  gint           width;
-  gint           height;
   gint           brush_width;
   gint           brush_height;
 
@@ -352,9 +342,6 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
   brush_width  = brush->mask->width;
   brush_height = brush->mask->height;
 
-  width  = GTK_WIDGET (preview)->requisition.width;
-  height = GTK_WIDGET (preview)->requisition.height;
-
   brush_preview->pipe_animation_index++;
 
   if (brush_preview->pipe_animation_index >= brush_pipe->nbrushes)
@@ -363,13 +350,11 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
   brush = GIMP_BRUSH (brush_pipe->brushes[brush_preview->pipe_animation_index]);
 
   temp_buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (brush),
-					    width,
-					    height);
+					    preview->width,
+					    preview->height);
 
   gimp_preview_render_and_flush (preview,
 				 temp_buf,
-				 width,
-				 height,
 				 -1);
 
   temp_buf_free (temp_buf);

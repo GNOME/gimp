@@ -101,16 +101,14 @@ gimp_pattern_preview_render (GimpPreview *preview)
   pattern_width  = pattern->mask->width;
   pattern_height = pattern->mask->height;
 
-  width  = GTK_WIDGET (preview)->requisition.width;
-  height = GTK_WIDGET (preview)->requisition.height;
+  width  = preview->width;
+  height = preview->height;
 
   if (width  == pattern_width &&
       height == pattern_height)
     {
       gimp_preview_render_and_flush (preview,
 				     pattern->mask,
-				     width,
-				     height,
 				     -1);
 
       return;
@@ -120,8 +118,6 @@ gimp_pattern_preview_render (GimpPreview *preview)
     {
       gimp_preview_render_and_flush (preview,
 				     pattern->mask,
-				     width,
-				     height,
 				     -1);
 
       return;
@@ -132,8 +128,6 @@ gimp_pattern_preview_render (GimpPreview *preview)
 
   gimp_preview_render_and_flush (preview,
                                  temp_buf,
-                                 width,
-                                 height,
                                  -1);
 
   temp_buf_free (temp_buf);
@@ -152,6 +146,7 @@ gimp_pattern_preview_create_popup (GimpPreview *preview)
 			   TRUE,
 			   popup_width,
 			   popup_height,
+			   0,
 			   FALSE, FALSE);
 }
 
@@ -161,17 +156,12 @@ gimp_pattern_preview_needs_popup (GimpPreview *preview)
   GimpPattern *pattern;
   gint         pattern_width;
   gint         pattern_height;
-  gint         width;
-  gint         height;
 
   pattern        = GIMP_PATTERN (preview->viewable);
   pattern_width  = pattern->mask->width;
   pattern_height = pattern->mask->height;
 
-  width  = GTK_WIDGET (preview)->requisition.width;
-  height = GTK_WIDGET (preview)->requisition.height;
-
-  if (pattern_width > width || pattern_height > height)
+  if (pattern_width > preview->width || pattern_height > preview->height)
     return TRUE;
 
   return FALSE;

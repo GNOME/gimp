@@ -107,8 +107,8 @@ gimp_image_preview_render (GimpPreview *preview)
 
   gimage = GIMP_IMAGE (preview->viewable);
 
-  width  = GTK_WIDGET (preview)->allocation.width;
-  height = GTK_WIDGET (preview)->allocation.height;
+  width  = preview->width;
+  height = preview->height;
 
   gimp_image_preview_calc_size (gimage,
 				width,
@@ -159,8 +159,6 @@ gimp_image_preview_render (GimpPreview *preview)
 
       gimp_preview_render_and_flush (preview,
 				     temp_buf,
-				     width,
-				     height,
 				     -1);
 
       temp_buf_free (temp_buf);
@@ -170,8 +168,6 @@ gimp_image_preview_render (GimpPreview *preview)
 
   gimp_preview_render_and_flush (preview,
 				 render_buf,
-				 width,
-				 height,
 				 -1);
 
   temp_buf_free (render_buf);
@@ -189,13 +185,12 @@ gimp_image_preview_create_popup (GimpPreview *preview)
 
   gimage = GIMP_IMAGE (preview->viewable);
 
-  gimp_image_preview_calc_size
-    (gimage,
-     MIN (GTK_WIDGET (preview)->allocation.width  * 2, 256),
-     MIN (GTK_WIDGET (preview)->allocation.height * 2, 256),
-     &popup_width,
-     &popup_height,
-     &scaling_up);
+  gimp_image_preview_calc_size (gimage,
+				MIN (preview->width  * 2, 256),
+				MIN (preview->height * 2, 256),
+				&popup_width,
+				&popup_height,
+				&scaling_up);
 
   if (scaling_up)
     {
@@ -203,6 +198,7 @@ gimp_image_preview_create_popup (GimpPreview *preview)
 			       TRUE,
 			       gimage->width,
 			       gimage->height,
+			       0,
 			       FALSE,
 			       FALSE);
     }
@@ -212,6 +208,7 @@ gimp_image_preview_create_popup (GimpPreview *preview)
 			       TRUE,
 			       popup_width,
 			       popup_height,
+			       0,
 			       FALSE,
 			       FALSE);
     }
