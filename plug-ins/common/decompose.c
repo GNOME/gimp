@@ -527,6 +527,7 @@ decompose (gint32  image_ID,
       gimp_drawable_update (layer_ID_dst[j], 0, 0,
                             gimp_drawable_width (layer_ID_dst[j]),
                             gimp_drawable_height (layer_ID_dst[j]));
+      gimp_layer_add_alpha (layer_ID_dst[j]);
       g_free (dst[j]);
     }
 

@@ -1,3 +1,8 @@
+2004-12-28  Bill Skaggs
+
+	* plug-ins/common/decompose.c: add alpha channels to layers
+	when decomposing as layers.
+
 2004-12-28  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.1 release.
