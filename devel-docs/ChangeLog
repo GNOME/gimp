@@ -1,3 +1,7 @@
+2001-06-08  Michael Natterer  <mitch@gimp.org>
+
+	* pdb/Makefile.am: fixed location of the *_cmds.c files.
+
 2001-05-30  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmath/libgimpmath-docs.sgml: s/libgimpcolor/libgimpmath/.
