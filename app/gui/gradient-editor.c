@@ -578,7 +578,7 @@ static gradient_editor_t *g_editor       = NULL; /* The gradient editor */
 static char *blending_types[] = {
 	"Linear",
 	"Curved",
-	"Sinuosidal",
+	"Sinusoidal",
 	"Spherical (increasing)",
 	"Spherical (decreasing)"
 }; /* blending_types */

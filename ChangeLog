@@ -1,3 +1,7 @@
+1998-08-03  Federico Mena Quintero  <federico@nuclecu.unam.mx>
+
+	* app/gradient.c: Fixed typo (sinuosidal -> sinusoidal).
+
 Sun Aug  2 22:34:43 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/gdisplay.c: Tweaked and applied a patch from Daniel Egger 
