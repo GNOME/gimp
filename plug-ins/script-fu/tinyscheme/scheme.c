@@ -1007,7 +1007,9 @@ INTERFACE static pointer set_array_elem(scheme *sc, pointer a,
       ((gdouble *)elem)[ielem] = sc->vptr->rvalue(v);
       break;
     case array_string:
-      ((gchar **)elem)[ielem] = sc->vptr->string_value(v);
+      if ( ((gchar **)elem)[ielem] != NULL )
+          free ( ((gchar **)elem)[ielem] );
+      ((gchar **)elem)[ielem] = strdup (sc->vptr->string_value(v));
       break;
     }
 
