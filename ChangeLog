@@ -2,6 +2,14 @@
 
 	* configure.in: Add «nb» to ALL_LINGUAS.
 
+2004-09-01  Helvetix Victorinox  <helvetix@gimp.org>
+ 
+	* Merged from HEAD:
+	* app/composite/gimp-composite-*.[ch]
+	* app/composite/make-installer.py: backported changes to composite
+	  code from HEAD branch. Fixes bug #149429 and works around problems
+	  with the Intel compiler (bug #147013).
+
 2004-08-31  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD:
