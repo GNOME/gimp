@@ -148,6 +148,8 @@ gimp_SOURCES = \
 	gimppattern.h		\
 	gimppalette.c		\
 	gimppalette.h		\
+	gimppalette-import.c	\
+	gimppalette-import.h	\
 	gimpparasite.c		\
 	gimpparasite.h		\
 	gimppreviewcache.h	\
@@ -164,7 +166,7 @@ gimp_SOURCES = \
 	global_edit.c		\
 	global_edit.h		\
 	gradient_editor.c	\
-	gradient_editoe.h	\
+	gradient_editor.h	\
 	gradient_select.h	\
 	gradient_select.c	\
 	gximage.c		\

@@ -1,3 +1,11 @@
+2001-02-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimppalette-import.[ch]: new files. The import functions
+	stripped from all UI crap.
+
+	* app/palette_import.c: removed from here.
+
 2001-02-19  Sven Neumann  <sven@gimp.org>
 
 	* app/gimpimage.[ch]: converted gimage->layers and gimage->channels

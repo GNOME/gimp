@@ -35,11 +35,10 @@
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimppalette.h"
+#include "gimppalette-import.h"
 #include "gradient_select.h"
 #include "palette.h"
 #include "palette_import.h"
-#include "paletteP.h"
-#include "pixel_region.h"
 #include "temp_buf.h"
 
 #include "pdb/procedural_db.h"
@@ -49,7 +48,6 @@
 
 #define IMPORT_PREVIEW_WIDTH  80
 #define IMPORT_PREVIEW_HEIGHT 80
-#define MAX_IMAGE_COLORS      (10000 * 2)
 
 typedef enum
 {
@@ -230,6 +228,7 @@ palette_import_update_image_preview (GimpImage *gimage)
 	    buf[x*3+1] = src[x*stride+1];
 	    buf[x*3+2] = src[x*stride+2];
 	  }
+
       gtk_preview_draw_row (GTK_PREVIEW (import_dialog->preview),
 			    (guchar *)buf, 0, y, preview_buf->width);
       src += preview_buf->width * preview_buf->bytes;
@@ -268,9 +267,9 @@ palette_import_image_menu_add (GimpImage *gimage)
   GtkWidget *menuitem;
   gchar     *lab;
 
-  lab= g_strdup_printf ("%s-%d",
-			g_basename (gimp_image_filename (gimage)),
-			pdb_image_to_id (gimage));
+  lab = g_strdup_printf ("%s-%d",
+			 g_basename (gimp_image_filename (gimage)),
+			 pdb_image_to_id (gimage));
 
   menuitem = gtk_menu_item_new_with_label (lab);
 
@@ -361,7 +360,7 @@ palette_import_image_menu_activate (gint        redo,
       gtk_box_pack_start (GTK_BOX (import_dialog->select_area),
             		  optionmenu1, FALSE, FALSE, 0);
 
-      if(last_img != NULL && last_img != del_image)
+      if (last_img != NULL && last_img != del_image)
         palette_import_update_image_preview (last_img);
       else if (first_img != NULL)
 	palette_import_update_image_preview (first_img);
@@ -538,339 +537,6 @@ palette_import_image_renamed (GimpImage* gimage)
     }
 }
 
-/*  create a palette from a gradient  ****************************************/
-
-static void
-palette_import_create_from_grad (gchar *name)
-{
-  GimpPalette *palette;
-  GimpGradient  *gradient;
-
-  gradient = gimp_context_get_gradient (gimp_context_get_user ());
-
-  if (gradient)
-    {
-      /* Add names to entry */
-      gdouble dx, cur_x;
-      GimpRGB color;
-      gint    sample_sz;
-      gint    loop;
-
-      palette = GIMP_PALETTE (gimp_palette_new (name));
-
-      sample_sz = (gint) import_dialog->sample->value;  
-
-      dx    = 1.0 / (sample_sz - 1);
-      cur_x = 0;
-      
-      for (loop = 0; loop < sample_sz; loop++)
-	{
-	  gimp_gradient_get_color_at (gradient, cur_x, &color);
-
-	  cur_x += dx;
-	  gimp_palette_add_entry (palette, NULL, &color);
-	}
-
-      gimp_container_add (global_palette_factory->container,
-			  GIMP_OBJECT (palette));
-    }
-}
-
-/*  create a palette from a non-indexed image  *******************************/
-
-typedef struct _ImgColors ImgColors;
-
-struct _ImgColors
-{
-  guint  count;
-  guint  r_adj;
-  guint  g_adj;
-  guint  b_adj;
-  guchar r;
-  guchar g;
-  guchar b;
-};
-
-static gint count_color_entries = 0;
-
-static GHashTable *
-palette_import_store_colors (GHashTable *h_array, 
-			     guchar     *colors,
-			     guchar     *colors_real, 
-			     gint        sample_sz)
-{
-  gpointer   found_color = NULL;
-  ImgColors *new_color;
-  guint      key_colors = colors[0] * 256 * 256 + colors[1] * 256 + colors[2];
-
-  if (h_array == NULL)
-    {
-      h_array = g_hash_table_new (g_direct_hash, g_direct_equal);
-      count_color_entries = 0;
-    }
-  else
-    {
-      found_color = g_hash_table_lookup (h_array, (gpointer) key_colors);
-    }
-
-  if (found_color == NULL)
-    {
-      if (count_color_entries > MAX_IMAGE_COLORS)
-	{
-	  /* Don't add any more new ones */
-	  return h_array;
-	}
-
-      count_color_entries++;
-
-      new_color = g_new (ImgColors, 1);
-
-      new_color->count = 1;
-      new_color->r_adj = 0;
-      new_color->g_adj = 0;
-      new_color->b_adj = 0;
-      new_color->r = colors[0];
-      new_color->g = colors[1];
-      new_color->b = colors[2];
-
-      g_hash_table_insert (h_array, (gpointer) key_colors, new_color);
-    }
-  else
-    {
-      new_color = (ImgColors *) found_color;
-      if(new_color->count < (G_MAXINT - 1))
-	new_color->count++;
-      
-      /* Now do the adjustments ...*/
-      new_color->r_adj += (colors_real[0] - colors[0]);
-      new_color->g_adj += (colors_real[1] - colors[1]);
-      new_color->b_adj += (colors_real[2] - colors[2]);
-
-      /* Boundary conditions */
-      if(new_color->r_adj > (G_MAXINT - 255))
-	new_color->r_adj /= new_color->count;
-
-      if(new_color->g_adj > (G_MAXINT - 255))
-	new_color->g_adj /= new_color->count;
-
-      if(new_color->b_adj > (G_MAXINT - 255))
-	new_color->b_adj /= new_color->count;
-    }
-
-  return h_array;
-}
-
-static void
-palette_import_create_sorted_list (gpointer key,
-				   gpointer value,
-				   gpointer user_data)
-{
-  GSList    **sorted_list = (GSList**) user_data;
-  ImgColors  *color_tab   = (ImgColors *) value;
-
-  *sorted_list = g_slist_prepend (*sorted_list, color_tab);
-}
-
-static gint
-palette_import_sort_colors (gconstpointer a,
-			    gconstpointer b)
-{
-  ImgColors *s1 = (ImgColors *) a;
-  ImgColors *s2 = (ImgColors *) b;
-
-  if(s1->count > s2->count)
-    return -1;
-  if(s1->count < s2->count)
-    return 1;
-
-  return 0;
-}
-
-static void
-palette_import_create_image_palette (gpointer data,
-				     gpointer user_data)
-{
-  GimpPalette *palette;
-  ImgColors   *color_tab;
-  gint         sample_sz;
-  gchar       *lab;
-  GimpRGB      color;
-
-  palette   = (GimpPalette *) user_data;
-  color_tab = (ImgColors *) data;
-
-  sample_sz = (gint) import_dialog->sample->value;  
-
-  if (palette->n_colors >= sample_sz)
-    return;
-
-  lab = g_strdup_printf ("%s (occurs %u)", _("Untitled"), color_tab->count);
-
-  /* Adjust the colors to the mean of the the sample */
-  gimp_rgba_set_uchar
-    (&color,
-     (guchar) color_tab->r + (color_tab->r_adj / color_tab->count), 
-     (guchar) color_tab->g + (color_tab->g_adj / color_tab->count), 
-     (guchar) color_tab->b + (color_tab->b_adj / color_tab->count),
-     255);
-
-  gimp_palette_add_entry (palette, lab, &color);
-
-  g_free (lab);
-}
-
-static gboolean
-palette_import_color_print_remove (gpointer key,
-				   gpointer value,
-				   gpointer user_data)
-{
-  g_free (value);
-
-  return TRUE;
-}
-
-static void
-palette_import_image_make_palette (GHashTable *h_array,
-				   guchar     *name)
-{
-  GimpPalette *palette;
-  GSList      *sorted_list = NULL;
-
-  g_hash_table_foreach (h_array, palette_import_create_sorted_list,
-			&sorted_list);
-  sorted_list = g_slist_sort (sorted_list, palette_import_sort_colors);
-
-  palette = GIMP_PALETTE (gimp_palette_new (name));
-
-  g_slist_foreach (sorted_list, palette_import_create_image_palette, palette);
-
-  /*  Free up used memory
-   *  Note the same structure is on both the hash list and the sorted
-   *  list. So only delete it once.
-   */
-  g_hash_table_freeze (h_array);
-  g_hash_table_foreach_remove (h_array,
-			       palette_import_color_print_remove, NULL);
-  g_hash_table_thaw (h_array);
-  g_hash_table_destroy (h_array);
-  g_slist_free (sorted_list);
-
-  gimp_container_add (global_palette_factory->container, GIMP_OBJECT (palette));
-}
-
-static void
-palette_import_create_from_image (GImage *gimage,
-				  gchar  *pname)
-{
-  PixelRegion  imagePR;
-  guchar      *image_data;
-  guchar      *idata;
-  guchar       rgb[MAX_CHANNELS];
-  guchar       rgb_real[MAX_CHANNELS];
-  gint         has_alpha, indexed;
-  gint         width, height;
-  gint         bytes, alpha;
-  gint         i, j;
-  void        *pr;
-  gint         d_type;
-  GHashTable  *store_array = NULL;
-  gint         sample_sz;
-  gint         threshold = 1;
-
-  sample_sz = (gint) import_dialog->sample->value;  
-
-  if (gimage == NULL)
-    return;
-
-  /*  Get the image information  */
-  bytes = gimp_image_composite_bytes (gimage);
-  d_type = gimp_image_composite_type (gimage);
-  has_alpha = (d_type == RGBA_GIMAGE ||
-	       d_type == GRAYA_GIMAGE ||
-	       d_type == INDEXEDA_GIMAGE);
-  indexed = d_type == INDEXEDA_GIMAGE || d_type == INDEXED_GIMAGE;
-  width = gimage->width;
-  height = gimage->height;
-  pixel_region_init (&imagePR, gimp_image_composite (gimage), 0, 0,
-		     width, height, FALSE);
-
-  alpha = bytes - 1;
-
-  threshold = (gint) import_dialog->threshold->value;
-
-  if(threshold < 1)
-    threshold = 1;
-
-  /*  iterate over the entire image  */
-  for (pr = pixel_regions_register (1, &imagePR);
-       pr != NULL;
-       pr = pixel_regions_process (pr))
-    {
-      image_data = imagePR.data;
-
-      for (i = 0; i < imagePR.h; i++)
-	{
-	  idata = image_data;
-
-	  for (j = 0; j < imagePR.w; j++)
-	    {
-	      /*  Get the rgb values for the color  */
-	      gimp_image_get_color (gimage, d_type, rgb, idata);
-	      memcpy (rgb_real, rgb, MAX_CHANNELS); /* Structure copy */
-
-	      rgb[0] = (rgb[0] / threshold) * threshold;
-	      rgb[1] = (rgb[1] / threshold) * threshold;
-	      rgb[2] = (rgb[2] / threshold) * threshold;
-
-	      store_array =
-		palette_import_store_colors (store_array, rgb, rgb_real,
-					     sample_sz);
-
-	      idata += bytes;
-	    }
-
-	  image_data += imagePR.rowstride;
-	}
-    }
-
-  /*  Make palette from the store_array  */
-  palette_import_image_make_palette (store_array, pname);
-}
-
-/*  create a palette from an indexed image  **********************************/
-
-static void
-palette_import_create_from_indexed (GImage *gimage,
-				    gchar  *pname)
-{
-  GimpPalette *palette;
-  gint         samples;
-  gint         count;
-  GimpRGB      color;
-
-  samples = (gint) import_dialog->sample->value;  
-
-  if (gimage == NULL)
-    return;
-
-  if (gimp_image_base_type (gimage) != INDEXED)
-    return;
-
-  palette = GIMP_PALETTE (gimp_palette_new (pname));
-
-  for (count= 0; count < samples && count < gimage->num_cols; ++count)
-    {
-      gimp_rgba_set_uchar (&color,
-			   gimage->cmap[count*3],
-			   gimage->cmap[count*3+1],
-			   gimage->cmap[count*3+2],
-			   255);
-
-      gimp_palette_add_entry (palette, NULL, &color);
-    }
-
-  gimp_container_add (global_palette_factory->container, GIMP_OBJECT (palette));
-}
 
 /*  the palette import action area callbacks  ********************************/
 
@@ -887,31 +553,52 @@ static void
 palette_import_import_callback (GtkWidget *widget,
 				gpointer   data)
 {
-  gchar *pname;
+  GimpPalette  *palette = NULL;
+  gchar        *palette_name;
+  GimpGradient *gradient;
+  gint          n_colors;
+  gint          threshold;
 
   if (! import_dialog)
     return;
 
-  pname = gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
-  if (!pname || !strlen (pname))
-    pname = g_strdup ("tmp");
+  palette_name = gtk_entry_get_text (GTK_ENTRY (import_dialog->entry));
+
+  if (! (palette_name && strlen (palette_name)))
+    palette_name = g_strdup (_("Unnamed"));
   else
-    pname = g_strdup (pname);
+    palette_name = g_strdup (palette_name);
+
+  gradient  = gimp_context_get_gradient (gimp_context_get_user ());
+  n_colors  = (gint) import_dialog->sample->value;
+  threshold = (gint) import_dialog->threshold->value;
 
   switch (import_dialog->import_type)
     {
     case GRAD_IMPORT:
-      palette_import_create_from_grad (pname);
+      palette = gimp_palette_import_from_gradient (gradient,
+						   palette_name,
+						   n_colors);
       break;
+
     case IMAGE_IMPORT:
-      palette_import_create_from_image (import_dialog->gimage, pname);
+      palette = gimp_palette_import_from_image (import_dialog->gimage,
+						palette_name,
+						n_colors,
+						threshold);
       break;
+
     case INDEXED_IMPORT:
-      palette_import_create_from_indexed (import_dialog->gimage, pname);
-      break;
-    default:
+      palette = gimp_palette_import_from_indexed_image (import_dialog->gimage,
+							palette_name);
       break;
     }
+
+  g_free (palette_name);
+
+  if (palette)
+    gimp_container_add (global_palette_factory->container,
+			GIMP_OBJECT (palette));
 
   palette_import_close_callback (NULL, NULL);
 }
