@@ -1,8 +1,58 @@
 Issues
 
+
+BRUSHES_C_1_cw
+Need a way to decide what to make default brush precisions.
+Maybe make one of each type supported by the compile options.
+BRUSHES_C_2_cw
+I dont know if there is an analogue to temp_buf_swap to put here. 
+There are a number of these in this file.
+BRUSHES_C_3_cw
+This is a hack for version 2 of the gbr file. We'll have
+version 2 work with 16bit/float but it will still put
+the bytes in this field. Im working on straightening
+this out.
+BRUSHES_C_4_cw
+Just make some default brushes if none found. This is 
+temp --just to see some 16bit/brushes.
+BRUSHES_C_5_cw
+This should be a check for the compiled data types.
+
+
+BRUSH_SELECT_C_1_cw
+These routines should be passed tags when color brushes are
+introduced -- not just generic data like now. So for now
+this will only display gray-scale brushes.
+
+
+BRUSH_HEADER_C_2_cw
+Because I changed the name of this field and since gbr plugin
+actually includes this file (egads!!) I have to change
+the gbr.c plugin. Well I have to alter gbr to
+work with 16bit tags anyway...I didnt change the FILE_VERSION
+of gbrs yet though. Once the gbr.c actually saves 
+the real tag (not just bytes) we'll have to change the
+FILE_VERSION. Someone else may have plans about all this
+-we'll have to check.
+
+
 DRAWABLE_CMDS_C_1_cw
 Here we get the drawable tag and convert it to a plugin
 GDrawableType and pass this to the plugin.
+
+
+GIMAGE_CMDS_C_1_cw
+This is a partial hack to get an appropriate GImageType
+base_type to pass to the plugin (ie need one of the
+extended "RGB,GRAY,...,U16_RGB,U16_GRAY,...,FLOAT_RGB,..)
+types to pass to plugin.
+
+GIMAGE_CMDS_C_2_cw
+This is "glue" to make an appropriate tag for the
+new image from one of the extended GImageTypes from
+the plugin. Calls gimage_new_tag instead of 
+gimage_new.
+
 
 IMAGE_RENDER_C_1_cw 
 The tilebuf (where the display pixels get built) is hard coded
@@ -22,23 +72,10 @@ May want to rewrite render_image_canvas_faults to use
 pixelarea_copy_row (which faults automatically) instead
 of doing the faulting ourselves here.
 
+
 LAYER_CMDS_C_1_cw
 Here we convert the plugin GDrawableType to a drawable tag to
 pass to layer_new_tag.
-
-PIXELAREA_C_1_cw
-Not sure what to do with the subsample parameter here. scale_area
-does use this value. 
-PIXELAREA_C_2_cw
-Same as above .. subsample not used.
-PIXELAREA_C_3_cw
-I fixed a portion width bug. If the width isnt clamped here
-it can actually be as large as the whole canvas (when canvas
-is flat_buf) even if the desired pixelarea width was originally
-set. pixelarea_width() was returning widths bigger than the
-original pixelarea width. 
-PIXELAREA_C_4_cw
-fixed portion height clamp bug (see above).
 
 
 PAINT_CORE_16_C_1_cw
@@ -57,6 +94,21 @@ subsample for 16bit/float. So if using 16bit you have
 to make sure BRUSH_WITH_BORDER is not defined. 
 
 
+PIXELAREA_C_1_cw
+Not sure what to do with the subsample parameter here. scale_area
+does use this value. 
+PIXELAREA_C_2_cw
+Same as above .. subsample not used.
+PIXELAREA_C_3_cw
+I fixed a portion width bug. If the width isnt clamped here
+it can actually be as large as the whole canvas (when canvas
+is flat_buf) even if the desired pixelarea width was originally
+set. pixelarea_width() was returning widths bigger than the
+original pixelarea width. 
+PIXELAREA_C_4_cw
+fixed portion height clamp bug (see above).
+
+
 PLUG_IN_C_1_cw
 Once the shadow canvas for drawable is working set up this.
 PLUG_IN_C_2_cw
@@ -66,49 +118,5 @@ Here the shared memory segment tile to pass
 plugins is allocated to size TILE_WIDTH x TILE_HEIGHT x TAG_MAX_BYTES
 
 
-BRUSHES_C_1_cw
-Need a way to decide what to make default brush precisions.
-Maybe make one of each type supported by the compile options.
-BRUSHES_C_2_cw
-I dont know if there is an analogue to temp_buf_swap to put here. 
-There are a number of these in this file.
-BRUSHES_C_3_cw
-This is a hack for version 2 of the gbr file. We'll have
-version 2 work with 16bit/float but it will still put
-the bytes in this field. Im working on straightening
-this out.
-BRUSHES_C_4_cw
-Just make some default brushes if none found. This is 
-temp --just to see some 16bit/brushes.
-BRUSHES_C_5_cw
-This should be a check for the compiled data types.
-
-BRUSH_SELECT_C_1_cw
-These routines should be passed tags when color brushes are
-introduced -- not just generic data like now. So for now
-this will only display gray-scale brushes.
-
-
-BRUSH_HEADER_C_2_cw
-Because I changed the name of this field and since gbr plugin
-actually includes this file (egads!!) I have to change
-the gbr.c plugin. Well I have to alter gbr to
-work with 16bit tags anyway...I didnt change the FILE_VERSION
-of gbrs yet though. Once the gbr.c actually saves 
-the real tag (not just bytes) we'll have to change the
-FILE_VERSION. Someone else may have plans about all this
--we'll have to check.
-
-GIMAGE_CMDS_C_1_cw
-This is a partial hack to get an appropriate GImageType
-base_type to pass to the plugin (ie need one of the
-extended "RGB,GRAY,...,U16_RGB,U16_GRAY,...,FLOAT_RGB,..)
-types to pass to plugin.
-
-GIMAGE_CMDS_C_2_cw
-This is "glue" to make an appropriate tag for the
-new image from one of the extended GImageTypes from
-the plugin. Calls gimage_new_tag instead of 
-gimage_new.
 
 

@@ -19,13 +19,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
+#include "canvas.h"
 #include "drawable.h"
 #include "general.h"
 #include "gdisplay.h"
 #include "gimage.h"
 #include "gimage_cmds.h"
 #include "floating_sel.h"
-#include "tag.h"
 
 #include "layer_pvt.h"			/* ick. */
 #include "drawable_pvt.h"		/* ick ick. */

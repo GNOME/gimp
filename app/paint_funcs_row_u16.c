@@ -390,7 +390,7 @@ multiply_row_u16 (
       for (b = 0; b < alpha; b++)
 	dest[b] = INT_MULT_16 ((guint32)src1[b], src2[b], t) ;
 
-      if (ha1 == ALPHA_YES && ha2 == ALPHA_YES)
+      if (ha1 && ha2)
 	dest[alpha] = MIN (src1[alpha], src2[alpha]);
       else if (ha2 == ALPHA_YES)
 	dest[alpha] = src2[alpha];
