@@ -1,5 +1,10 @@
+2000-11-26  Sven Neumann  <sven@gimp.org>
+
+	* gimp_splash.ppm: new splash, original photo taken by Garrett.
+
 2000-11-24  Garry R. Osgood <gosgood@idt.net>
-	* app/smudge.c
+
+	* app/smudge.c:
  	Defer tool initialization to first motion event.
 	Fixes latency problem that gave rise to Shift-smudge bug. 
 	Closes #30778. 
