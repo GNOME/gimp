@@ -98,14 +98,18 @@ static gint	save_image                (gchar       *filename,
 					   gint32       drawable_ID,
 					   gint32       orig_image_ID);
 
-static void	respin_cmap		  (png_structp  pp,
-					   png_infop    info,
-					   gint32       image_ID);
+static void	respin_cmap		  (png_structp   pp,
+					   png_infop     info,
+					   gint32        image_ID,
+                                           GimpDrawable *drawable);
 
 static gint	save_dialog               (void);
 static void	save_ok_callback          (GtkWidget   *widget,
 					   gpointer     data);
 
+static int find_unused_ia_colour          (guchar *pixels,
+				           int numpixels,
+				           int* colors);
 
 /*
  * Globals...
@@ -133,6 +137,56 @@ static gboolean runme = FALSE;
  */
 
 MAIN()
+
+/* Try to find a colour in the palette which isn't actually 
+ * used in the image, so that we can use it as the transparency 
+ * index. Taken from gif.c */
+  
+static int find_unused_ia_colour (guchar *pixels,
+				  int numpixels,
+				  int* colors)
+{
+  int i;
+  gboolean ix_used[256];
+
+  g_print ("PNG: fuiac: Image claims to use %d/256 indices - finding free "
+	   "index...\n", (*colors));
+
+  for (i = 0; i < 256; i++)
+    {
+      ix_used[i] = (gboolean)FALSE;
+    }
+
+  for (i = 0; i < numpixels; i++)
+    {
+      /* If there is no alpha, then the index associated with 
+       * this pixel is taken */
+      if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean)TRUE;
+    }
+  
+  for (i = 0; i < 256; i++)
+    {
+      if (ix_used[i] == (gboolean)FALSE)
+	{
+	  g_print ("PNG: Found unused colour index %d.\n", i);
+	  return i;
+	}
+    }
+
+  /* Couldn't find an unused colour index within the number of
+     bits per pixel we wanted.  Will have to increment the number
+     of colours in the image and assign a transparent pixel there. */
+  if ((*colors) < 256)
+    {
+      (*colors)++;
+      g_print ("PNG: 2nd pass - Increasing bounds and using colour index %d.\n"
+	       , (int) (*colors)-1);
+      return ((*colors)-1);
+    }
+  
+  g_message (_("PNG: Couldn't simply reduce colors further.\nSaving as opaque.\n"));
+  return (-1);
+}
 
 /*
  * 'query()' - Respond to a plug-in query...
@@ -827,7 +881,7 @@ save_image (gchar  *filename,	        /* I - File to save to */
     case GIMP_INDEXEDA_IMAGE :
 	bpp		 = 2;
 	info->color_type = PNG_COLOR_TYPE_PALETTE;
-	respin_cmap (pp, info, image_ID); /* fix up transparency */
+	respin_cmap (pp, info, image_ID, drawable); /* fix up transparency */
 	break;
     default:
         g_message ("%s\nImage type can't be saved as PNG", filename);
@@ -999,31 +1053,94 @@ save_ok_callback (GtkWidget *widget,
    are left at the FRONT, this is only needed to reduce the size of the
    tRNS chunk when saving GIF-like transparent images with colormaps */
 
-static void respin_cmap (png_structp pp, png_infop info, gint32 image_ID) {
+static void respin_cmap (png_structp pp, 
+                         png_infop info, 
+                         gint32 image_ID,
+                         GimpDrawable *drawable) 
+{
   static const guchar trans[] = { 0 };
   static guchar after[3 * 256];
   gint    colors;
   guchar *before;
+  gint transparent;
+  gint cols, rows;
+  GimpPixelRgn pixel_rgn;
+  guchar *pixels;
 
   before= gimp_image_get_cmap(image_ID, &colors);
 
+  cols = drawable->width;
+  rows = drawable->height;
+
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
+                       drawable->width, drawable->height, 
+                       FALSE, FALSE);
+
+  pixels = (guchar *) g_malloc (drawable->width *
+                                drawable->height * 2);
+  
+  gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
+                           drawable->width, drawable->height);
+
+
+  /* Try to find an entry which isn't actually used in the
+     image, for a transparency index. */
+	  
+  transparent = find_unused_ia_colour(pixels,
+                                      drawable->width * drawable->height,
+                                      &colors);
+
+  g_free(pixels);
+  
 #if PNG_LIBPNG_VER > 99
-  if (colors < 256) { /* spare space in palette :) */
-    GimpRGB color;
+  if (transparent != -1)  /* we have a winner for a transparent 
+                           * index */
+    {
+      GimpRGB color;
 
-    memcpy(after + 3, before, colors * 3);
+      /* Copy from index 0 to index transparent - 1 to index 1 to 
+       * transparent of after, then from transparent+1 to colors-1 
+       * unchanged, and finally from index transparent to index 0. */
 
-    /* Apps with no natural background will use this instead, see
-       elsewhere for the bKGD chunk being written to use index 0 */
-    gimp_palette_get_background (&color);
-    gimp_rgb_get_uchar (&color, after+0, after+1, after+2);
+      g_print ("PNG: Copying from index 0 to index %d of \"before\" ", 
+          transparent - 1);
+      g_print ("to index 1 to index %d of \"after\".\n", transparent);
+      memcpy(after + 3, before, transparent * 3);
 
-    /* One transparent palette entry, alpha == 0 */
-    png_set_tRNS(pp, info, (png_bytep) trans, 1, NULL);
-    png_set_PLTE(pp, info, (png_colorp) after, colors + 1);
-  } else {
-    png_set_PLTE(pp, info, (png_colorp) before, colors);
-  }
+      /* We need a check that transparent != colors - 1 */
+      
+      if ( transparent < colors - 1)
+        {
+          g_print ("PNG: Copying from index %d to index %d of \"before\" ", 
+                   transparent +1, colors - 1);
+          g_print ("to index %d to index %d of \"after\".\n", 
+                   transparent +1, colors - 1);
+          memcpy(after + 3 * (transparent + 1), 
+                 before + 3 * (transparent + 1), 
+                 (colors - transparent - 1) * 3);
+        }
+
+      g_print ("PNG: Copying from index %d of \"before\" ", 
+          transparent );
+      g_print ("to index 0 of \"after\".\n");
+      memcpy(after, before + 3 * transparent, 3);
+
+      /* Apps with no natural background will use this instead, see
+         elsewhere for the bKGD chunk being written to use index 0 */
+      gimp_palette_get_background (&color);
+      gimp_rgb_get_uchar (&color, after+0, after+1, after+2);
+
+      /* One transparent palette entry, alpha == 0 */
+      png_set_tRNS(pp, info, (png_bytep) trans, 1, NULL);
+      png_set_PLTE(pp, info, (png_colorp) after, colors);
+    } 
+  else 
+    {
+      /* Inform the user that we couldn't losslessly save the 
+       * transparency & just use the full palette */
+      g_message ( _("Couldn't losslessly save transparency, saving opacity instead.\n"));
+      png_set_PLTE (pp, info, (png_colorp) before, colors);
+    }
 #else
   info->valid	  |= PNG_INFO_PLTE;
   info->palette=     (png_colorp) before;

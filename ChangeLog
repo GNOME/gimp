@@ -1,3 +1,9 @@
+2002-09-10  Dave Neary  <bolsh@gimp.org>
+
+        * plug-ins/common/png.c: Handle INDEXA images if the
+        indexed palette is full by looking for an unused colour.
+        Fixes bug #55700.
+
 2002-09-09  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-grow-16.png:
