@@ -248,6 +248,7 @@ GimpDrawable *     gimp_image_active_drawable      (GimpImage *);
 GimpImageBaseType  gimp_image_base_type            (GimpImage *);
 GimpImageType	   gimp_image_base_type_with_alpha (GimpImage *);
 gchar *            gimp_image_filename             (GimpImage *);
+gboolean           gimp_image_undo_is_enabled      (GimpImage *);
 gboolean           gimp_image_undo_enable          (GimpImage *);
 gboolean           gimp_image_undo_disable         (GimpImage *);
 gboolean           gimp_image_undo_freeze          (GimpImage *);

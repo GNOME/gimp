@@ -3155,6 +3155,12 @@ gimp_image_filename (GimpImage *gimage)
 }
 
 gboolean
+gimp_image_undo_is_enabled (GimpImage *gimage)
+{
+  return gimage->undo_on;
+}
+
+gboolean
 gimp_image_undo_freeze (GimpImage *gimage)
 {
   gimage->undo_on = FALSE;
