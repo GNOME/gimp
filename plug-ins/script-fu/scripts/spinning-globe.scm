@@ -43,7 +43,8 @@
 	 (gimp-image-add-layer theImage theFrame 0)
 	 (gimp-layer-set-name theFrame 
 			      (string-append "Anim Frame: " 
-					     (number->string (- inFrames n) 10)))
+					     (number->string (- inFrames n) 10)
+					     " (replace)"))
 	 (plug-in-map-object RUN-NONINTERACTIVE
 			     theImage theFrame 
 			                ; mapping

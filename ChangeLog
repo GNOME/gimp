@@ -1,5 +1,14 @@
 2000-06-05  Sven Neumann  <sven@gimp.org>
 	
+	* plug-ins/script-fu/scripts/ripply-anim.scm
+	* plug-ins/script-fu/scripts/spinning_globe.scm
+	* plug-ins/script-fu/scripts/waves-anim.scm: applied
+	gimp-quinet-000531-2.patch to ensure that the output of
+	these scripts is viewed in "replace" mode and not in
+	"combine" mode.
+
+2000-06-05  Sven Neumann  <sven@gimp.org>
+	
 	* plug-ins/script-fu/scripts/3d-outline.scm
 	* plug-ins/script-fu/scripts/alien-glow-logo.scm
 	* plug-ins/script-fu/scripts/alien-neon-logo.scm

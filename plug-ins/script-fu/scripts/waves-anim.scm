@@ -54,7 +54,8 @@
 		(layer-name (string-append "Frame "
 					   (number->string
 					    (- (+ num-frames 2)
-					       remaining-frames) 10))))
+					       remaining-frames) 10)
+					   " (replace)")))
          (gimp-layer-set-preserve-trans waves-layer FALSE)
 	 (gimp-image-add-layer image waves-layer -1)
 	 (gimp-layer-set-name waves-layer layer-name)

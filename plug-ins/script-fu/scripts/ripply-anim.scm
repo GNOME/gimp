@@ -65,7 +65,8 @@
 	     (gimp-crop dup-image width height xpos ypos)
 	     
 	     (set! layer-name (string-append "Frame "
-			(number->string (- num-frames remaining-frames) 10)))
+			(number->string (- num-frames remaining-frames) 10)
+			" (replace)"))
 	     (set! this-layer (car (gimp-layer-new out-imagestack
 						   width height RGB
 						   layer-name 100 NORMAL)))
