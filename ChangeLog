@@ -1,3 +1,34 @@
+Tue Mar 14 22:13:35 CET 2000  Sven Neumann <sven@gimp.org>
+	                      Michael Natterer <mitch@gimp.org>
+
+	* Makefile.am
+	* pixmaps/folder.xpm: new file.
+	* pixmaps/wilber.xpm: removed the shadows.
+
+	* gimprc.in
+	* user_install: cleanup.
+
+	* app/app_procs.c: only parse unitrc and gimprc if not already
+	done by install.c.
+
+	* app/gimprc.[ch]: cleanups. parse_buffers_init() returns a
+	boolean indicating if the buffers are really initialized.
+
+	* app/gimpui.h: include some more stuff from libgimp.
+
+	* app/install.c: Gimp's most beautiful dialog should blow away
+	first time users.
+	(does not yet work with themes, please help)
+
+	* app/preferences_dialog.c: removed the mem_size_unit stuff.
+
+	* libgimp/gimpchainbutton.c: cleanup.
+
+	* libgimp/gimpwidgets.[ch]: new function gimp_mem_size_entry_new()
+	which does the stuff known from the prefs dialog.
+
+	* plug-ins/script-fu/scripts/tileblur.scm: s/tilable/tileable/
+
 Sun Mar 12 04:26:41 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gfig.c: reduced the preview_size and tweaked the dialog 

@@ -358,6 +358,39 @@ Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
 @sizeentry: The #GimpSizeEntry returned by gimp_coordinates_new().
 
 
+<!-- ##### FUNCTION gimp_mem_size_entry_new ##### -->
+<para>
+
+</para>
+
+@adjustment: 
+@Returns: 
+
+
+<!-- ##### MACRO GIMP_MEM_SIZE_ENTRY_SPINBUTTON ##### -->
+<para>
+
+</para>
+
+@memsize: 
+
+
+<!-- ##### MACRO GIMP_MEM_SIZE_ENTRY_SPINBUTTON_ADJ ##### -->
+<para>
+
+</para>
+
+@memsize: 
+
+
+<!-- ##### MACRO GIMP_MEM_SIZE_ENTRY_OPTIONMENU ##### -->
+<para>
+
+</para>
+
+@memsize: 
+
+
 <!-- ##### FUNCTION gimp_pixmap_button_new ##### -->
 <para>
 

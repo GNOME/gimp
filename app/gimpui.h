@@ -25,9 +25,13 @@
 
 #include "gimphelp.h"
 
+#include "libgimp/gimpchainbutton.h"
 #include "libgimp/gimpdialog.h"
+#include "libgimp/gimpfileselection.h"
 #include "libgimp/gimppixmap.h"
+#include "libgimp/gimppatheditor.h"
 #include "libgimp/gimpquerybox.h"
+#include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpwidgets.h"
 
 /*  a simple message box  */

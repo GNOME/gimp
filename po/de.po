@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-11 19:40+0100\n"
-"PO-Revision-Date: 2000-03-11 14:40+0100\n"
+"POT-Creation-Date: 2000-03-14 23:09+0100\n"
+"PO-Revision-Date: 2000-03-14 23:33+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -62,45 +62,45 @@ msgstr "wurde Euch gebracht von"
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
-#: app/app_procs.c:479 app/gimprc.c:440
+#: app/app_procs.c:479 app/gimprc.c:448
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "bearbeite \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:539
+#: app/app_procs.c:541
 msgid "Looking for data files"
 msgstr "Suche nach Arbeitsdaten"
 
-#: app/app_procs.c:539
+#: app/app_procs.c:541
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:541 app/internal_procs.c:71 app/preferences_dialog.c:2530
+#: app/app_procs.c:543 app/internal_procs.c:71 app/preferences_dialog.c:2397
 msgid "Brushes"
 msgstr "Pinsel"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:543 app/internal_procs.c:143 app/preferences_dialog.c:2538
+#: app/app_procs.c:545 app/internal_procs.c:143 app/preferences_dialog.c:2405
 msgid "Patterns"
 msgstr "Muster"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:545 app/preferences_dialog.c:2542
+#: app/app_procs.c:547 app/preferences_dialog.c:2409
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:547 app/internal_procs.c:113 app/preferences_dialog.c:2546
+#: app/app_procs.c:549 app/internal_procs.c:113 app/preferences_dialog.c:2413
 msgid "Gradients"
 msgstr "Farbverläufe"
 
-#: app/app_procs.c:735
+#: app/app_procs.c:737
 msgid "Really Quit?"
 msgstr "Wirklich Beenden?"
 
-#: app/app_procs.c:739
+#: app/app_procs.c:741
 msgid ""
 "Some files unsaved.\n"
 "\n"
@@ -110,21 +110,21 @@ msgstr ""
 "\n"
 "GIMP wirklich beenden?"
 
-#: app/app_procs.c:740 app/install.c:272 app/install.c:430
+#: app/app_procs.c:742
 msgid "Quit"
 msgstr "Beenden"
 
-#: app/app_procs.c:740 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:742 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2463 app/channels_dialog.c:2637
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:346 app/gimpprogress.c:112
-#: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4839
-#: app/gradient.c:5400 app/hue_saturation.c:377 app/interface.c:984
-#: app/layers_dialog.c:3326 app/layers_dialog.c:3517 app/layers_dialog.c:3617
-#: app/layers_dialog.c:3889 app/levels.c:341 app/palette.c:1826
-#: app/posterize.c:201 app/preferences_dialog.c:1502 app/qmask.c:281
-#: app/resize.c:195 app/resize.c:1345 app/threshold.c:275
+#: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4841
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:532
+#: app/interface.c:984 app/layers_dialog.c:3326 app/layers_dialog.c:3517
+#: app/layers_dialog.c:3617 app/layers_dialog.c:3889 app/levels.c:341
+#: app/palette.c:1826 app/posterize.c:201 app/preferences_dialog.c:1434
+#: app/qmask.c:281 app/resize.c:195 app/resize.c:1345 app/threshold.c:275
 #: modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Abbrechen"
@@ -169,7 +169,7 @@ msgstr "Eigener Farbverlauf"
 msgid "Blend:"
 msgstr "Übergang:"
 
-#: app/blend.c:320 app/gradient.c:533 app/preferences_dialog.c:2271
+#: app/blend.c:320 app/gradient.c:533 app/preferences_dialog.c:2137
 msgid "Linear"
 msgstr "Linear"
 
@@ -217,7 +217,7 @@ msgstr "Spirale (linksdrehend)"
 msgid "Gradient:"
 msgstr "Farbverlauf:"
 
-#: app/blend.c:342 app/preferences_dialog.c:1870
+#: app/blend.c:342 app/preferences_dialog.c:1769
 msgid "None"
 msgstr "Keine"
 
@@ -280,7 +280,7 @@ msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Bildern."
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
 #: app/layers_dialog.c:3324 app/layers_dialog.c:3515 app/layers_dialog.c:3615
 #: app/layers_dialog.c:3887 app/levels.c:337 app/module_db.c:281
-#: app/posterize.c:197 app/preferences_dialog.c:1498 app/qmask.c:279
+#: app/posterize.c:197 app/preferences_dialog.c:1430 app/qmask.c:279
 #: app/resize.c:193 app/resize.c:1345 app/threshold.c:271
 #: modules/cdisplay_gamma.c:351
 msgid "OK"
@@ -324,7 +324,7 @@ msgstr "Pinseleditor"
 #: app/lc_dialog.c:195 app/measure.c:286 app/nav_window.c:1345
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
-#: app/preferences_dialog.c:364 app/tips_dialog.c:171 app/tools.c:1088
+#: app/preferences_dialog.c:359 app/tips_dialog.c:171 app/tools.c:1088
 #: app/undo_history.c:752
 msgid "Close"
 msgstr "Schließen"
@@ -485,8 +485,8 @@ msgid "Offset X:"
 msgstr "Versatz X:"
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/resize.c:332 app/resize.c:417 app/resize.c:575 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82
+#: app/install.c:1108 app/resize.c:332 app/resize.c:417 app/resize.c:575
+#: app/rotate_tool.c:106 app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr "Y:"
 
@@ -975,7 +975,7 @@ msgid "Load"
 msgstr "Öffnen"
 
 #: app/curves.c:704 app/devices.c:753 app/levels.c:608 app/palette.c:2068
-#: app/preferences_dialog.c:362 app/preferences_dialog.c:1500
+#: app/preferences_dialog.c:357 app/preferences_dialog.c:1432
 msgid "Save"
 msgstr "Sichern"
 
@@ -1186,8 +1186,8 @@ msgstr "Bildgröße: %s"
 msgid "New Image"
 msgstr "Neues Bild"
 
-#: app/file_new_dialog.c:453 app/preferences_dialog.c:1573
-#: app/preferences_dialog.c:1610
+#: app/file_new_dialog.c:453 app/install.c:1093 app/preferences_dialog.c:1505
+#: app/preferences_dialog.c:1542
 msgid "Pixels"
 msgstr "Pixel"
 
@@ -1226,7 +1226,7 @@ msgstr ""
 msgid "No Selection."
 msgstr "Keine Auswahl."
 
-#: app/fileops.c:418 app/fileops.c:1624 app/fileops.c:1731
+#: app/fileops.c:418 app/fileops.c:1629 app/fileops.c:1736
 #, c-format
 msgid "Save failed: %s"
 msgstr "Sichern schlug fehl: %s"
@@ -1252,58 +1252,58 @@ msgstr ""
 msgid "Revert failed."
 msgstr "Zurücksetzen schlug fehl."
 
-#: app/fileops.c:1240
+#: app/fileops.c:1245
 msgid "(This thumbnail may be out of date)"
 msgstr "(Diese Vorschau könnte veraltet sein)"
 
-#: app/fileops.c:1241
+#: app/fileops.c:1246
 msgid "(No Information)"
 msgstr "(Keine Information)"
 
-#: app/fileops.c:1251
+#: app/fileops.c:1256
 msgid "(Thumbnail saving is disabled)"
 msgstr "(Vorschau-Sicherung ist abgeschaltet)"
 
-#: app/fileops.c:1255
+#: app/fileops.c:1260
 msgid "(Could not write thumbnail file)"
 msgstr "(Konnte Vorschau-Datei nicht schreiben)"
 
-#: app/fileops.c:1259
+#: app/fileops.c:1264
 msgid "(Thumbnail file not written)"
 msgstr "(Vorschau-Datei nicht geschrieben)"
 
-#: app/fileops.c:1276
+#: app/fileops.c:1281
 msgid "No preview available"
 msgstr "Keine Vorschau verfügbar"
 
-#: app/fileops.c:1394
+#: app/fileops.c:1399
 msgid "(could not make preview)"
 msgstr "(konnte keine Vorschau erstellen)"
 
-#: app/fileops.c:1467 app/fileops.c:1546
+#: app/fileops.c:1472 app/fileops.c:1551
 #, c-format
 msgid "Open failed: %s"
 msgstr "Öffnen schlug fehl: %s"
 
-#: app/fileops.c:1602
+#: app/fileops.c:1607
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s ist keine reguläre Datei (%s)"
 
-#: app/fileops.c:1670
+#: app/fileops.c:1675
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s existiert, überschreiben?"
 
-#: app/fileops.c:1674
+#: app/fileops.c:1679
 msgid "File Exists!"
 msgstr "Datei Existiert!"
 
-#: app/fileops.c:1680
+#: app/fileops.c:1685
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1682
+#: app/fileops.c:1687
 msgid "No"
 msgstr "Nein"
 
@@ -1311,13 +1311,13 @@ msgstr "Nein"
 msgid "Flip Tool"
 msgstr "Spiegeln"
 
-#: app/flip_tool.c:95 app/preferences_dialog.c:1624
-#: app/preferences_dialog.c:2417
+#: app/flip_tool.c:95 app/preferences_dialog.c:1556
+#: app/preferences_dialog.c:2284
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: app/flip_tool.c:97 app/preferences_dialog.c:1626
-#: app/preferences_dialog.c:2419
+#: app/flip_tool.c:97 app/preferences_dialog.c:1558
+#: app/preferences_dialog.c:2286
 msgid "Vertical"
 msgstr "Vertikal"
 
@@ -1343,7 +1343,7 @@ msgstr ""
 msgid "RGB-empty"
 msgstr "RGB leer"
 
-#: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1670
+#: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1602
 msgid "RGB"
 msgstr "RGB"
 
@@ -1612,45 +1612,45 @@ msgstr "Fortschritt"
 msgid "Please wait..."
 msgstr "Bitte warten..."
 
-#: app/gimprc.c:407 app/plug_in.c:304
+#: app/gimprc.c:415 app/plug_in.c:304
 msgid "Resource configuration"
 msgstr "Ressourcen Konfiguration"
 
-#: app/gimprc.c:459
+#: app/gimprc.c:467
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "Fehler bei Bearbeitung von: \"%s\"\n"
 
-#: app/gimprc.c:460
+#: app/gimprc.c:468
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  in Zeile %d Spalte %d\n"
 
-#: app/gimprc.c:461
+#: app/gimprc.c:469
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  unerwartetes Symbol: %s\n"
 
-#: app/gimprc.c:1465
+#: app/gimprc.c:1473
 msgid "error parsing pluginrc"
 msgstr "Fehler beim Lesen der pluginrc"
 
-#: app/gimprc.c:2858
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Kann %s nicht öffnen; %s"
 
-#: app/gimprc.c:2877
+#: app/gimprc.c:2885
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Kann %s nicht in %s.old umbenennen; %s"
 
-#: app/gimprc.c:2883
+#: app/gimprc.c:2891
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Konnte %s nicht wieder öffnen\n"
 
-#: app/gimprc.c:2895
+#: app/gimprc.c:2903
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Kann nicht in %s schreiben; %s"
@@ -1929,7 +1929,7 @@ msgstr "Markerposition: %0.6f"
 msgid "Distance: %0.6f"
 msgstr "Abstand: %0.6f"
 
-#: app/gradient.c:3387 app/gradient.c:4448
+#: app/gradient.c:3387 app/gradient.c:4450
 msgid "Left endpoint's color"
 msgstr "Farbe des linken Endpunktes"
 
@@ -1949,7 +1949,7 @@ msgstr "Rechter Endpunkt"
 msgid "Save to"
 msgstr "Sichern unter"
 
-#: app/gradient.c:3429 app/gradient.c:4526
+#: app/gradient.c:3429 app/gradient.c:4528
 msgid "Right endpoint's color"
 msgstr "Farbe des rechten Endpunktes"
 
@@ -1977,7 +1977,7 @@ msgstr "Farbe für Segment"
 msgid "Split segment at midpoint"
 msgstr "Segment mittig teilen"
 
-#: app/gradient.c:3734 app/gradient.c:4829
+#: app/gradient.c:3734 app/gradient.c:4831
 msgid "Split segment uniformly"
 msgstr "Segment gleichmäßig teilen"
 
@@ -1997,7 +1997,7 @@ msgstr "Punkte gleichmäßig im Segment verteilen"
 msgid "Flip segment"
 msgstr "Segment spiegeln"
 
-#: app/gradient.c:3744 app/gradient.c:5390
+#: app/gradient.c:3744 app/gradient.c:5392
 msgid "Replicate segment"
 msgstr "Segment duplizieren"
 
@@ -2013,7 +2013,7 @@ msgstr "Färbungsart für Auswahl"
 msgid "Split segments at midpoints"
 msgstr "Segment an Mittelpunkten aufteilen"
 
-#: app/gradient.c:3755 app/gradient.c:4830
+#: app/gradient.c:3755 app/gradient.c:4832
 msgid "Split segments uniformly"
 msgstr "Segment gleichmäßig aufteilen"
 
@@ -2033,7 +2033,7 @@ msgstr "Punkte gleichmäßig in Auswahl verteilen"
 msgid "Flip selection"
 msgstr "Auswahl spiegeln"
 
-#: app/gradient.c:3765 app/gradient.c:5391
+#: app/gradient.c:3765 app/gradient.c:5393
 msgid "Replicate selection"
 msgstr "Auswahl duplizieren"
 
@@ -2046,49 +2046,49 @@ msgstr "VG Farbe"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4615 app/gradient.c:4685
+#: app/gradient.c:4617 app/gradient.c:4687
 msgid "(Varies)"
 msgstr "(veränderlich)"
 
-#: app/gradient.c:4837
+#: app/gradient.c:4839
 msgid "Split"
 msgstr "Teilen"
 
 #. Instructions
-#: app/gradient.c:4851
+#: app/gradient.c:4853
 msgid "Please select the number of uniform parts"
 msgstr "Bitte Anzahl der Abschnitte eingeben"
 
-#: app/gradient.c:4857
+#: app/gradient.c:4859
 msgid "in which you want to split the selected segment"
 msgstr "in der Sie das ausgewählte Segment teilen wollen"
 
-#: app/gradient.c:4858
+#: app/gradient.c:4860
 msgid "in which you want to split the segments in the selection"
 msgstr "in der Sie die Segmente in der Auswahl teilen woll"
 
-#: app/gradient.c:5218
+#: app/gradient.c:5220
 msgid "Blend endpoints' colors"
 msgstr "Übergang zwischen den Endpunktfarben"
 
-#: app/gradient.c:5230
+#: app/gradient.c:5232
 msgid "Blend endpoints' opacity"
 msgstr "Übergang zwischen der Endpunktdeckkraft"
 
-#: app/gradient.c:5398
+#: app/gradient.c:5400
 msgid "Replicate"
 msgstr "Duplizieren"
 
 #. Instructions
-#: app/gradient.c:5411
+#: app/gradient.c:5413
 msgid "Please select the number of times"
 msgstr "Bitte Anzahl der Nachbildungen"
 
-#: app/gradient.c:5416
+#: app/gradient.c:5418
 msgid "you want to replicate the selected segment"
 msgstr "des ausgweählten Segments eingeben"
 
-#: app/gradient.c:5417
+#: app/gradient.c:5419
 msgid "you want to replicate the selection"
 msgstr "der Auswahl eingeben"
 
@@ -2193,7 +2193,7 @@ msgid "Saturation"
 msgstr "Sättigung"
 
 #: app/image_new.c:59 app/info_window.c:65 app/info_window.c:534
-#: app/preferences_dialog.c:1671
+#: app/preferences_dialog.c:1603
 msgid "Grayscale"
 msgstr "Graustufen"
 
@@ -2259,8 +2259,8 @@ msgstr ""
 "Der aktive Farbverlauf.\n"
 "Klick öffnet die Farbverlaufsauswahl."
 
-#: app/info_dialog.c:181 app/preferences_dialog.c:1844
-#: app/preferences_dialog.c:1950
+#: app/info_dialog.c:181 app/preferences_dialog.c:1743
+#: app/preferences_dialog.c:1849
 msgid "General"
 msgstr "Allgemein"
 
@@ -2392,11 +2392,11 @@ msgstr "Anpassen:"
 msgid "Shape"
 msgstr "Form"
 
-#: app/install.c:83
+#: app/install.c:95
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr "GIMP ist für den aktuellen Benutzer nicht richtig installiert\n"
 
-#: app/install.c:84
+#: app/install.c:96
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
@@ -2404,418 +2404,495 @@ msgstr ""
 "Benutzerinstallation wurde übersprungen, weil '--nointerface' übergeben "
 "wurde\n"
 
-#: app/install.c:85
+#: app/install.c:97
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "Um die Benutzerinstallation auszuführen, starten sie GIMP ohne "
 "'--nointerface'\n"
 
-#: app/install.c:113
+#: app/install.c:142
+msgid ""
+"The gimprc is used to store personal preferences\n"
+"that affect GIMP's default behavior.\n"
+"Paths to search for brushes, palettes, gradients,\n"
+"patterns, plug-ins and modules can also configured here."
+msgstr ""
+"Die Datei gimprc wird benutzt um persönliche Einstellungen\n"
+"wie GIMPs Standardverhalten zu sichern.\n"
+"Auch die Suchpfade für Pinsel, Paletten, Farbverläufe,\n"
+"Muster, Plugins und Module können hier konfiguriert werden."
+
+#: app/install.c:149
+msgid ""
+"GIMP uses an additional gtkrc file so you can\n"
+"configure it to look differently than other GTK apps."
+msgstr ""
+
+#: app/install.c:154
+msgid ""
+"Plug-ins and extensions are external programs run by\n"
+"the GIMP which provide additional functionality.\n"
+"These programs are searched for at run-time and\n"
+"information about their functionality and mod-times\n"
+"is cached in this file.  This file is intended to\n"
+"be GIMP-readable only, and should not be edited."
+msgstr ""
+"Plugins und Erweiterungen sind externe Programme, die\n"
+"von GIMP gestartet werden und die weitere Funktionalität\n"
+"bereitstellen. Diese Programme werden zur Laufzeit gesucht\n"
+"und die Informationen über ihre Funktionalität und ihr\n"
+"Erzeugungsdatum werden in dieser Datei gesichert.\n"
+"Diese Datei sollte nur von GIMP gelesen und nicht\n"
+"bearbeitet werden."
+
+#: app/install.c:163
+msgid ""
+"Key shortcuts can be dynamically redefined in The GIMP.\n"
+"The menurc is a dump of your configuration so it can.\n"
+"be remembered for the next session. You may edit this\n"
+"file if you wish, but it is much easier to define the\n"
+"keys from within The GIMP. Deleting this file will\n"
+"restore the default shortcuts."
+msgstr ""
+"Tastaturkürzel können in GIMP dynamisch vergeben werden.\n"
+"Die Datei menurc ist eine Sicherung Ihrer Konfiguration,\n"
+"so daß diese auch in der nächsten Sitzung erhalten bleibt.\n"
+"Diese Datei kann editiert werden, aber es ist einfacher,\n"
+"die Tastaturkürzel aus GIMP heraus zu konfigurieren.\n"
+"Wird diese Datei gelöscht, so wird die Standard\n"
+"Tastaturbelegung wiederhergestellt."
+
+#: app/install.c:172
+msgid ""
+"The sessionrc is used to store what dialog windows were\n"
+"open the last time you quit The GIMP. You can configure\n"
+"The GIMP to reopen these dialogs at the saved position."
+msgstr ""
+"Die Datei sessionrc wird benutzt, um zu sichern, welche\n"
+"Fenster beim Schliessen von GIMP geöffnet waren. Sie können\n"
+"GIMP so konfigurieren, daß diese Dialoge beim Start an der\n"
+"gesicherten Position wieder geöffnet werden."
+
+#: app/install.c:178
+msgid ""
+"The unitrc is used to store your user units database.\n"
+"You can define additional units and use them just\n"
+"like you use the built-in units inches, millimeters,\n"
+"points and picas. This file is overwritten each time\n"
+"you quit the GIMP."
+msgstr ""
+"Die Datei unitrc wird benutzt, um Ihre Einheiten-Datenbank\n"
+"zu sichern. Sie können zusätzliche Einheiten definieren\n"
+"und sie wie die vordefinierten Einheiten wie Inch,\n"
+"Millimeter, Punkt und Pica benutzen. Diese Datei wird\n"
+"jedesmal überschrieben, wenn Sie GIMP beenden."
+
+#: app/install.c:186
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined brushes.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide gimp brushes installation when searching for\n"
+"brushes."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte Pinsel zu sichern. Entsprechend der\n"
+"Standard gimprc Datei wird dieses Verzeichnis zusätzlich zum\n"
+"systemweiten Pinselinstallation durchsucht, wenn nach Pinsel\n"
+"gesucht wird."
+
+#: app/install.c:194
+msgid ""
+"This is a subdirectory which is used to store brushes\n"
+"that are created with the brush editor.  The default\n"
+"gimprc file checks this subdirectory when searching for\n"
+"generated brushes."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet wird, um\n"
+"Pinsel zu sichern, die mit dem Pinseleditor erstellt wurden\n"
+"Entsprechend der Standard gimprc wird dieses Verzeichnis\n"
+"durchsucht, wenn nach erzeugten Pinsel gesucht wird."
+
+#: app/install.c:201
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined gradients.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide gimp gradients installation when searching for\n"
+"gradients."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte Farbverläufe zu sichern.\n"
+"Entsprechend der Standard gimprc wird dieses Verzeichnis\n"
+"zusätzlich zur systemweiten Verlaufsinstallation durchsucht,\n"
+"wenn nach Farbverläufen gesucht wird."
+
+#: app/install.c:209
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined palettes.  The default gimprc file\n"
+"checks only this subdirectory (not the system-wide\n"
+"installation) when searching for palettes.  During\n"
+"installation, the system palettes will be copied\n"
+"here.  This is done to allow modifications made to\n"
+"palettes during GIMP execution to persist across\n"
+"sessions."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte Paletten zu sichern. Entsprechend\n"
+"der Standard gimprc Datei wird nur dieses Verzeichnis\n"
+"(nicht die systemweite Installation) durchsucht, wenn nach\n"
+"Paletten gesucht wird. Während der Installation werden die\n"
+"Systempaletten hierher kopiert, damit Änderungen an den\n"
+"Paletten während der Ausführung von GIMP erhalten bleiben."
+
+#: app/install.c:220
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined patterns.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide gimp patterns installation when searching for\n"
+"patterns."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte Füllmuster zu sichern. Entsprechend\n"
+"der Standard gimprc wird dieses Verzeichnis zusätzlich zur\n"
+"systemweiten Musterinstallation durchsucht, wenn nach\n"
+"Füllmustern gesucht wird."
+
+#: app/install.c:228
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user created, temporary, or otherwise non-system-\n"
+"supported plug-ins.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide GIMP plug-in directories when searching for\n"
+"plug-ins."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um selbsterstellte, temporäre oder in anderer Weise nicht\n"
+"systemweit unterstützte Plugins zu speichern. Entsprechend\n"
+"der Standard gimprc wird dieses Verzeichnis zusätzlich zum\n"
+"systemweiten Pluginverzeichnis durchsucht, wenn nach\n"
+"Plugins gesucht wird."
+
+#: app/install.c:237
+msgid ""
+"This subdirectory can be used to store user created,\n"
+"temporary, or otherwise non-system-supported DLL modules.\n"
+"The default gimprc file checks this subdirectory\n"
+"in addition to the system-wide GIMP module directory\n"
+"when searching for modules to load when initializing."
+msgstr ""
+"Dieses Unterverzeichnis kann verwendet werden, um\n"
+"selbsterstellte, temporäre oder in anderer Weise nicht\n"
+"systemweit unterstützte DLL Module zu speichern.\n"
+"Entsprechend der Standard gimprc wird dieses Verzeichnis\n"
+"zusätzlich zum systemweiten Modulverzeichnis durchsucht,\n"
+"wenn nach Modulen gesucht wird."
+
+#: app/install.c:245
+msgid ""
+"This subdirectory is used by the GIMP to store \n"
+"user created and installed scripts. The default gimprc\n"
+"file checks this subdirectory in addition to the system-\n"
+"wide gimp scripts subdirectory when searching for scripts"
+msgstr ""
+"Dieses Unterverzeichnis kann verwendet werden, um\n"
+"selbsterstellte Skripte zu speichern. Entsprechend der\n"
+"Standard gimprc wird dieses Verzeichnis zusätzlich zum\n"
+"systemweiten Skriptverzeichnis durchsucht, wenn nach\n"
+"Skripten gesucht wird."
+
+#: app/install.c:252
+msgid ""
+"This subdirectory is used by the GIMP to temporarily\n"
+"store undo buffers to reduce memory usage.  If GIMP is\n"
+"unceremoniously killed, files may persist in this directory\n"
+"of the form: gimp<#>.<#>.  These files are useless across\n"
+"GIMP sessions and can be destroyed with impunity."
+msgstr ""
+"Dieses Unterverzeichnis wird von GIMP verwendet, um\n"
+"temporär Bilddaten abzulegen, um so den Bedarf an\n"
+"Hauptspeicher zu verringern. When GIMP unschön beendet\n"
+"wird, kann es passieren, das hier Dateien mit Namen wie\n"
+"gimp<#>.<#> zurückbleiben. Diese Dateien sind für eine\n"
+"andere GIMP-Session nutzlos und können bedenkenlos\n"
+"entfernt werden."
+
+#: app/install.c:260
+msgid ""
+"This subdirectory is used to store parameter files for\n"
+"the Curves tool."
+msgstr ""
+
+#: app/install.c:265
+msgid ""
+"This subdirectory is used to store parameter files for\n"
+"the Levels tool."
+msgstr ""
+
+#: app/install.c:270
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined fractals to be used by the FractalExplorer\n"
+"plug-in. The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp FractalExplorer installation\n"
+"when searching for fractals."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte Fraktale zu sichern, die mit dem\n"
+"Fraktalexplorer Plugin benutzt werden. Entsprechend der\n"
+"Standard gimprc wird dieses Verzeichnis zusätzlich zur\n"
+"systemweiten Fraktalinstallation durchsucht, wenn nach\n"
+"Fraktalen gesucht wird."
+
+#: app/install.c:278
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined figures to be used by the gfig plug-in.\n"
+"The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp gfig installation\n"
+"when searching for gfig figures."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte Figuren zu sichern, die mit dem\n"
+"GFig Plugin benutzt werden. Entsprechend der Standard gimprc\n"
+"wird dieses Verzeichnis zusätzlich zur systemweiten GFig\n"
+"Installation  durchsucht, wenn nach GFig Figuren gesucht\n"
+"wird."
+
+#: app/install.c:286
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined gflares to be used by the gflare plug-in.\n"
+"The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp gflares installation\n"
+"when searching for gflares."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte GFlares zu sichern, die mit dem\n"
+"GFlare Plugin benutzt werden. Entsprechend der Standard gimprc\n"
+"wird dieses Verzeichnis zusätzlich zur systemweiten GFlare\n"
+"Installation  durchsucht, wenn nach GFlares gesucht wird."
+
+#: app/install.c:294
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined data to be used by the Gimpressionist\n"
+"plug-in. The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp Gimpressionist installation\n"
+"when searching for data."
+msgstr ""
+"Dies ist ein Unterverzeichnis, das verwendet werden kann,\n"
+"um benutzerdefinierte GFlares zu sichern, die mit dem\n"
+"GFlare Plugin benutzt werden. Entsprechend der Standard gimprc\n"
+"wird dieses Verzeichnis zusätzlich zur systemweiten GFlare\n"
+"Installation  durchsucht, wenn nach GFlares gesucht wird."
+
+#: app/install.c:525
+msgid "GIMP User Installation"
+msgstr "GIMP Benutzer-Installation"
+
+#: app/install.c:530
+msgid "Continue"
+msgstr "Weiter"
+
+#. this is a fontset, e.g. multiple comma-separated font definitions
+#: app/install.c:560
+msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
+msgstr "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
+
+#: app/install.c:578
+msgid ""
+"Welcome to\n"
+"The GIMP User Installation"
+msgstr ""
+"Willkommen zur\n"
+"GIMP Benutzer-Installation"
+
+#: app/install.c:582
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
-"\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
-"The GIMP - GNU Image Manipulation Program\n"
-"GIMP - Das GNU Bildbearbeitungsprogramm\n"
-"\n"
 
-#: app/install.c:118
+#: app/install.c:591
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
 "the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
+"(at your option) any later version."
 msgstr ""
 "Dieses Programm ist freie Software. Sie können es unter\n"
 "den Bedingungen der GNU General Public License, wie von der\n"
 "Free Software Foundation herausgegeben, weitergeben und/oder\n"
 "modifizieren, entweder unter Version 2 der Lizenz oder (wenn\n"
-"Sie es wünschen) jeder späteren Version.\n"
+"Sie es wünschen) jeder späteren Version."
 
-#: app/install.c:123
+#: app/install.c:596
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
 "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details.\n"
+"See the GNU General Public License for more details."
 msgstr ""
 "Die Veröffentlichung dieses Programms erfolgt in der\n"
 "Hoffnung, daß es Ihnen von Nutzen sein wird, aber OHNE JEDE\n"
 "GEWÄHRLEISTUNG - sogar ohne die implizite Gewährleistung\n"
 "der MARKTREIFE oder der EIGNUNG FÜR EINEN BESTIMMTEN ZWECK.\n"
-"Details finden Sie in der GNU General Public License.\n"
+"Details finden Sie in der GNU General Public License."
 
-#: app/install.c:128
+#: app/install.c:601
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
+"MA 02111-1307, USA."
 msgstr ""
 "Sie sollten eine Kopie der GNU General Public License zusammen\n"
 "mit diesem Programm erhalten haben. Falls nicht, schreiben Sie\n"
 "an die Free Software Foundation, Inc., 59 Temple Place - Suite 330,\n"
-"Boston, MA 02111-1307, USA.\n"
+"Boston, MA 02111-1307, USA."
 
-#: app/install.c:134
-msgid ""
-"Personal GIMP Installation\n"
-"\n"
+#: app/install.c:607
+msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr ""
-"Persönliche GIMP Installation\n"
-"\n"
 
-#: app/install.c:135
-msgid "For a proper GIMP installation, a subdirectory called\n"
-msgstr "Für eine ordnungsgemäße GIMP Installation muß ein Verzeichnis names\n"
+#: app/install.c:633
+msgid "Personal GIMP Directory"
+msgstr "Persönliches GIMP Verzeichnis"
 
-#. will be replaced with gimp_directory()
-#: app/install.c:137
+#: app/install.c:650
 msgid ""
-" needs to be created.  This\n"
-"subdirectory will contain a number of important files:\n"
-"\n"
+"For a proper GIMP installation, a subdirectory needs to be created.\n"
+"This subdirectory will contain a number of important files."
 msgstr ""
-" muß erstellt werden. Dieses\n"
-"Unterverzeichnis wird ein paar wichtige Dateien enthalten:\n"
-"\n"
 
-#: app/install.c:141
+#: app/install.c:653
 msgid ""
-"\t\tThe gimprc is used to store personal preferences\n"
-"\t\tthat affect GIMP's default behavior.\n"
-"\t\tPaths to search for brushes, palettes, gradients,\n"
-"\t\tpatterns, plug-ins and modules can also configured here.\n"
+"Click on one of the files or subdirectories in the tree\n"
+"to get more information about the selected item."
 msgstr ""
-"\t\tDie Datei gimprc wird benutzt um persönliche Einstellungen\n"
-"\t\twie GIMPs Standardverhalten zu sichern.\n"
-"\t\tAuch die Suchpfade für Pinsel, Paletten, Farbverläufe,\n"
-"\t\tMuster, Plugins und Module können hier konfiguriert werden.\n"
 
-#: app/install.c:147
-msgid ""
-"\t\tPlug-ins and extensions are external programs run by\n"
-"\t\tthe GIMP which provide additional functionality.\n"
-"\t\tThese programs are searched for at run-time and\n"
-"\t\tinformation about their functionality and mod-times\n"
-"\t\tis cached in this file.  This file is intended to\n"
-"\t\tbe GIMP-readable only, and should not be edited.\n"
+#: app/install.c:656
+msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr ""
-"\t\tPlugins und Erweiterungen sind externe Programme, die\n"
-"\t\tvon GIMP gestartet werden und die weitere Funktionalität\n"
-"\t\tbereitstellen. Diese Programme werden zur Laufzeit gesucht\n"
-"\t\tund die Informationen über ihre Funktionalität und ihr\n"
-"\t\tErzeugungsdatum werden in dieser Datei gesichert.\n"
-"\t\tDiese Datei sollte nur von GIMP gelesen und nicht\n"
-"\t\tbearbeitet werden.\n"
 
-#: app/install.c:155
-msgid ""
-"\t\tKey shortcuts can be dynamically redefined in The GIMP.\n"
-"\t\tThe menurc is a dump of your configuration so it can.\n"
-"\t\tbe remembered for the next session. You may edit this\n"
-"\t\tfile if you wish, but it is much easier to define the\n"
-"\t\tkeys from within The GIMP. Deleting this file will\n"
-"\t\trestore the default shortcuts.\n"
+#: app/install.c:736
+msgid "User Installation Log"
+msgstr "Benutzer-Installation Logbuch"
+
+#: app/install.c:741
+msgid "GIMP Performance Tuning"
 msgstr ""
-"\t\tTastaturkürzel können in GIMP dynamisch vergeben werden.\n"
-"\t\tDie Datei menurc ist eine Sicherung Ihrer Konfiguration,\n"
-"\t\tso daß diese auch in der nächsten Sitzung erhalten bleibt.\n"
-"\t\tDiese Datei kann editiert werden, aber es ist einfacher,\n"
-"\t\tdie Tastaturkürzel aus GIMP heraus zu konfigurieren.\n"
-"\t\tWird diese Datei gelöscht, so wird die Standard\n"
-"\t\tTastaturbelegung wiederhergestellt.\n"
 
-#: app/install.c:163
-msgid ""
-"\t\tThe sessionrc is used to store what dialog windows were\n"
-"\t\topen the last time you quit The GIMP. You can configure\n"
-"\t\tThe GIMP to reopen these dialogs at the saved position.\n"
+#: app/install.c:744
+msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
-"\t\tDie Datei sessionrc wird benutzt, um zu sichern, welche\n"
-"\t\tFenster beim Schliessen von GIMP geöffnet waren. Sie können\n"
-"\t\tGIMP so konfigurieren, daß diese Dialoge beim Start an der\n"
-"\t\tgesicherten Position wieder geöffnet werden.\n"
 
-#: app/install.c:168
-msgid ""
-"\t\tThe unitrc is used to store your user units database.\n"
-"\t\tYou can define additional units and use them just\n"
-"\t\tlike you use the built-in units inches, millimeters,\n"
-"\t\tpoints and picas. This file is overwritten each time\n"
-"\t\tyou quit the GIMP.\n"
+#: app/install.c:751
+msgid "Click \"Continue\" to accept the settings above."
 msgstr ""
-"\t\tDie Datei unitrc wird benutzt, um Ihre Einheiten-Datenbank\n"
-"\t\tzu sichern. Sie können zusätzliche Einheiten definieren\n"
-"\t\tund sie wie die vordefinierten Einheiten wie Inch,\n"
-"\t\tMillimeter, Punkt und Pica benutzen. Diese Datei wird\n"
-"\t\tjedesmal überschrieben, wenn sie GIMP beenden.\n"
 
-#: app/install.c:175
+#: app/install.c:760
+msgid "Monitor Resolution"
+msgstr "Bildschirmauflösung"
+
+#: app/install.c:763
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined brushes.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp brushes installation when searching for\n"
-"\t\tbrushes.\n"
+"To display images in their natural size, GIMP needs to know your monitor "
+"resolution."
 msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum benutzerdefinierte Pinsel zu sichern. Entsprechend der\n"
-"\t\tStandard gimprc Datei wird dieses Verzeichnis zusätzlich zum\n"
-"\t\tsystemweiten Pinselinstallation durchsucht, wenn nach Pinsel\n"
-"\t\tgesucht wird.\n"
 
-#: app/install.c:182
-msgid ""
-"\t\tThis is a subdirectory which is used to store brushes\n"
-"\t\tthat are created with the brush editor.  The default\n"
-"\t\tgimprc file checks this subdirectory when searching for\n"
-"\t\tgenerated brushes.\n"
+#: app/install.c:771
+msgid "Click \"Continue\" to start The GIMP."
 msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet wird, um\n"
-"\t\tPinsel zu sichern, die mit dem Pinseleditor erstellt wurden\n"
-"\t\tEntsprechend der Standard gimprc wird dieses Verzeichnis\n"
-"\t\tdurchsucht, wenn nach erzeugten Pinsel gesucht wird.\n"
 
-#: app/install.c:188
+#: app/install.c:845
+msgid "does not exist.  Cannot install."
+msgstr "existiert nicht. Kann nicht installieren."
+
+#: app/install.c:857
+msgid "has invalid permissions.  Cannot install."
+msgstr "hat falsche Zugriffsrechte. Kann nicht installieren."
+
+#: app/install.c:895
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gradients.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp gradients installation when searching for\n"
-"\t\tgradients.\n"
+"Did you notice any error messages in the console window?\n"
+"If not, installation was successful!\n"
+"Otherwise, quit and investigate the possible reason..."
 msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum benutzerdefinierte Farbverläufe zu sichern.\n"
-"\t\tEntsprechend der Standard gimprc wird dieses Verzeichnis\n"
-"\t\tzusätzlich zur systemweiten Verlaufsinstallation durchsucht,\n"
-"\t\twenn nach Farbverläufen gesucht wird.\n"
+"Haben Sie irgendwelche Fehlermeldungen im Konsolefenster bemerkt?\n"
+"Wenn nicht, war die Installation erfolgreich!\n"
+"Ansonsten beenden Sie die Installation und suchen Sie nach der möglichen Fehlerursache..."
 
-#: app/install.c:195
+#: app/install.c:955
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined figures to be used by the gfig plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gfig installation\n"
-"\t\twhen searching for gfig figures.\n"
-msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum benutzerdefinierte Figuren zu sichern, die mit dem\n"
-"\t\tGFig Plugin benutzt werden. Entsprechend der Standard gimprc\n"
-"\t\twird dieses Verzeichnis zusätzlich zur systemweiten GFig\n"
-"\t\tInstallation  durchsucht, wenn nach GFig Figuren gesucht\n"
-"\t\twird.\n"
-
-#: app/install.c:202
-msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gflares to be used by the gflare plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gflares installation\n"
-"\t\twhen searching for gflares.\n"
-msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum benutzerdefinierte GFlares zu sichern, die mit dem\n"
-"\t\tGFlare Plugin benutzt werden. Entsprechend der Standard gimprc\n"
-"\t\twird dieses Verzeichnis zusätzlich zur systemweiten GFlare\n"
-"\t\tInstallation  durchsucht, wenn nach GFlares gesucht wird.\n"
-
-#: app/install.c:209
-msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined fractals to be used by the FractalExplorer\n"
-"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp FractalExplorer installation\n"
-"\t\twhen searching for fractals.\n"
-msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum benutzerdefinierte Fraktale zu sichern, die mit dem\n"
-"\t\tFraktalexplorer Plugin benutzt werden. Entsprechend der\n"
-"\t\tStandard gimprc wird dieses Verzeichnis zusätzlich zur\n"
-"\t\tsystemweiten Fraktalinstallation durchsucht, wenn nach\n"
-"\t\tFraktalen gesucht wird.\n"
-
-#: app/install.c:216
-msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined palettes.  The default gimprc file\n"
-"\t\tchecks only this subdirectory (not the system-wide\n"
-"\t\tinstallation) when searching for palettes.  During\n"
-"\t\tinstallation, the system palettes will be copied\n"
-"\t\there.  This is done to allow modifications made to\n"
-"\t\tpalettes during GIMP execution to persist across\n"
-"\t\tsessions.\n"
-msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum benutzerdefinierte Paletten zu sichern. Entsprechend\n"
-"\t\tder Standard gimprc Datei wird nur dieses Verzeichnis\n"
-"\t\t(nicht die systemweite Installation) durchsucht, wenn nach\n"
-"\t\tPaletten gesucht wird. Während der Installation werden die\n"
-"\t\tSystempaletten hierher kopiert, damit Änderungen an den\n"
-"\t\tPaletten während der Ausführung von GIMP erhalten bleiben.\n"
-
-#: app/install.c:226
-msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined patterns.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp patterns installation when searching for\n"
-"\t\tpatterns.\n"
-msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum benutzerdefinierte Füllmuster zu sichern. Entsprechend\n"
-"\t\tder Standard gimprc wird dieses Verzeichnis zusätzlich zur\n"
-"\t\tsystemweiten Musterinstallation durchsucht, wenn nach\n"
-"\t\tFüllmustern gesucht wird.\n"
-
-#: app/install.c:233
-msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser created, temporary, or otherwise non-system-\n"
-"\t\tsupported plug-ins.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide GIMP plug-in directories when searching for\n"
-"\t\tplug-ins.\n"
-msgstr ""
-"\t\tDies ist ein Unterverzeichnis, das verwendet werden kann,\n"
-"\t\tum selbsterstellte, temporäre oder in anderer Weise nicht\n"
-"\t\tsystemweit unterstützte Plugins zu speichern. Entsprechend\n"
-"\t\tder Standard gimprc wird dieses Verzeichnis zusätzlich zum\n"
-"\t\tsystemweiten Pluginverzeichnis durchsucht, wenn nach\n"
-"\t\tPlugins gesucht wird.\n"
-
-#: app/install.c:241
-msgid ""
-"\t\tThis subdirectory can be used to store user created,\n"
-"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
-"\t\tThe default gimprc file checks this subdirectory\n"
-"\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initializing.\n"
-msgstr ""
-"\t\tDieses Unterverzeichnis kann verwendet werden, um\n"
-"\t\tselbsterstellte, temporäre oder in anderer Weise nicht\n"
-"\t\tsystemweit unterstützte DLL Module zu speichern.\n"
-"\t\tEntsprechend der Standard gimprc wird dieses Verzeichnis\n"
-"\t\tzusätzlich zum systemweiten Modulverzeichnis durchsucht,\n"
-"\t\twenn nach Modulen gesucht wird.\n"
-
-#: app/install.c:248
-msgid ""
-"\t\tThis subdirectory is used by the GIMP to store \n"
-"\t\tuser created and installed scripts. The default gimprc\n"
-"\t\tfile checks this subdirectory in addition to the system\n"
-"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
-msgstr ""
-"\t\tDieses Unterverzeichnis kann verwendet werden, um\n"
-"\t\tselbsterstellte Skripte zu speichern. Entsprechend der\n"
-"\t\tStandard gimprc wird dieses Verzeichnis zusätzlich zum\n"
-"\t\tsystemweiten Skriptverzeichnis durchsucht, wenn nach\n"
-"\t\tSkripten gesucht wird.\n"
-
-#: app/install.c:254
-msgid ""
-"\t\tThis subdirectory is used by the GIMP to temporarily\n"
-"\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
-"\t\tunceremoniously killed, files may persist in this directory\n"
-"\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
-"\t\tGIMP sessions and can be destroyed with impunity.\n"
-msgstr ""
-"\t\tDieses Unterverzeichnis wird von GIMP verwendet, um\n"
-"\t\ttemporär Bilddaten abzulegen, um so den Bedarf an\n"
-"\t\tHauptspeicher zu verringern. When GIMP unschön beendet\n"
-"\t\twird, kann es passieren, das hier Dateien mit Namen wie\n"
-"\t\tgimp<#>.<#> zurückbleiben. Diese Dateien sind für eine\n"
-"\t\tandere GIMP-Session nutzlos und können bedenkenlos\n"
-"\t\tentfernt werden.\n"
-
-#: app/install.c:263
-msgid "GIMP Installation"
-msgstr "GIMP Installation"
-
-#: app/install.c:268
-msgid "Install"
-msgstr "Installieren"
-
-#: app/install.c:270
-msgid "Ignore"
-msgstr "Ignorieren"
-
-#. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:295 app/install.c:453
-msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
-
-#. this is a font, provide only one single font definition
-#: app/install.c:298
-msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
-
-#. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:301
-msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
-
-#: app/install.c:423
-msgid "Installation Log"
-msgstr "Installation Logbuch"
-
-#: app/install.c:428
-msgid "Continue"
-msgstr "Weiter"
-
-#. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:456
-msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
-
-#: app/install.c:462
-msgid ""
-"User Installation Log\n"
-"\n"
-msgstr ""
-"Benutzerinstallation Logbuch\n"
-"\n"
-
-#: app/install.c:472
-msgid " does not exist.  Cannot install.\n"
-msgstr " existiert nicht.  Kann nicht installieren.\n"
-
-#: app/install.c:480
-msgid ""
-" has invalid permissions.\n"
-"Cannot install."
-msgstr ""
-" hat falsche Zugriffsrechte.\n"
-"Kann nicht installieren."
-
-#: app/install.c:514
-msgid ""
-"Did you notice any error messages\n"
-"in the console window? If not, installation\n"
-"was successful! Otherwise, quit and investigate\n"
-"the possible reason...\n"
+"Did you notice any error messages in the lines above?\n"
+"If not, installation was successful!\n"
+"Otherwise, quit and investigate the possible reason..."
 msgstr ""
 "Haben Sie irgendwelche Fehlermeldungen bemerkt?\n"
 "Wenn nicht, war die Installation erfolgreich!\n"
-"Ansonsten beenden Sie das Programm jetzt und suchen\n"
-"Sie nach der möglichen Fehlerursache...\n"
+"Ansonsten beenden Sie die Installation und suchen Sie nach der möglichen Fehlerursache..."
 
-#: app/install.c:546
-msgid ""
-"\n"
-"Installation successful!\n"
+#: app/install.c:969
+msgid "Click \"Continue\" to complete GIMP installation."
 msgstr ""
-"\n"
-"Installation erfolgreich!\n"
 
-#: app/install.c:555
-msgid ""
-"\n"
-"Installation failed.  Contact system administrator.\n"
+#: app/install.c:978
+msgid "Installation failed.  Contact system administrator."
 msgstr ""
-"\n"
-"Installation fehlgeschlagen. Wenden Sie sich an den System Administrator.\n"
+"Installation fehlgeschlagen. Wenden Sie sich an den Systemverwalter."
+
+#: app/install.c:999
+msgid ""
+"GIMP uses a limited amount of memory to store image data, the so-called\n"
+"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"the amount of memory used by other running processes."
+msgstr ""
+
+#: app/install.c:1015 app/preferences_dialog.c:2102
+msgid "Tile Cache Size:"
+msgstr "Größe des Datenspeichers:"
+
+#: app/install.c:1025
+msgid ""
+"All image and undo data which doesn't fit into the Tile Cache will be\n"
+"written to a swap file. This file should be located on a local filesystem\n"
+"with enough free space (several hundred MB). On a UNIX system, you\n"
+"may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
+msgstr ""
+
+#: app/install.c:1035 app/preferences_dialog.c:2361
+msgid "Select Swap Dir"
+msgstr "Auslagerverzeichnis auswählen"
+
+#: app/install.c:1041
+msgid "Swap Directory:"
+msgstr "Auslagerungsverzeichnis:"
+
+#: app/install.c:1063
+msgid ""
+"GIMP can obtain this information from your X-server.\n"
+"However, most X-servers do not return useful values."
+msgstr ""
+
+#: app/install.c:1070
+#, c-format
+msgid "Get Resolution from X-server (Currently %d x %d dpi)"
+msgstr "Auflösung vom X-Server beziehen (zur Zeit %d x %d dpi)"
+
+#: app/install.c:1087
+msgid "Alternatively, you can set the monitor resolution manually."
+msgstr ""
+
+#: app/install.c:1102
+msgid "Monitor Resolution X:"
+msgstr "Bildschirmauflösung X:"
 
 #: app/interface.c:312
 msgid ""
@@ -2895,8 +2972,8 @@ msgstr "Farbverlauf UI"
 msgid "Guide procedures"
 msgstr "Hilfslinien Prozeduren"
 
-#: app/internal_procs.c:122 app/preferences_dialog.c:1834
-#: app/preferences_dialog.c:1836
+#: app/internal_procs.c:122 app/preferences_dialog.c:1733
+#: app/preferences_dialog.c:1735
 msgid "Interface"
 msgstr "Oberfläche"
 
@@ -4542,55 +4619,55 @@ msgstr "Posterisieren"
 msgid "Posterize Levels:"
 msgstr "Posterisieren Werte:"
 
-#: app/preferences_dialog.c:245
+#: app/preferences_dialog.c:240
 msgid "Error: Levels of undo must be zero or greater."
 msgstr ""
 "Fehler: Die Anzahl der Stufen der Rückgängigmachung\n"
 "muss größer oder gleich Null sein."
 
-#: app/preferences_dialog.c:251
+#: app/preferences_dialog.c:246
 msgid "Error: Marching speed must be 50 or greater."
 msgstr ""
 "Fehler: Die Geschwindigkeit der laufenden Ameisen\n"
 "muss mindestens 50 betragen."
 
-#: app/preferences_dialog.c:257
+#: app/preferences_dialog.c:252
 msgid "Error: Default width must be one or greater."
 msgstr "Fehler: Die Standardbreite muss mindestens 1 sein."
 
-#: app/preferences_dialog.c:263
+#: app/preferences_dialog.c:258
 msgid "Error: Default height must be one or greater."
 msgstr "Fehler: Die Standardhöhe muss mindestens 1 sein."
 
-#: app/preferences_dialog.c:270
+#: app/preferences_dialog.c:265
 msgid "Error: Default unit must be within unit range."
 msgstr "Fehler: Die gewählte Standardeinheit ist ungültig."
 
-#: app/preferences_dialog.c:277
+#: app/preferences_dialog.c:272
 msgid "Error: Default resolution must not be zero."
 msgstr "Fehler: Die Standardauflösung darf nicht Null sein."
 
-#: app/preferences_dialog.c:285
+#: app/preferences_dialog.c:280
 msgid "Error: Default resolution unit must be within unit range."
 msgstr "Fehler: Die gewählte Standardauflösung ist ungültig."
 
-#: app/preferences_dialog.c:292
+#: app/preferences_dialog.c:287
 msgid "Error: Monitor resolution must not be zero."
 msgstr "Fehler: Die Monitorauflöung darf nicht Null sein."
 
-#: app/preferences_dialog.c:299
+#: app/preferences_dialog.c:294
 msgid "Error: Image title format must not be NULL."
 msgstr "Fehler: Der gewählte Fenstertitel ist ungültig."
 
-#: app/preferences_dialog.c:306
+#: app/preferences_dialog.c:301
 msgid "Error: Number of processors must be between 1 and 30."
 msgstr "Fehler: Die Anzahl der Prozessoren muss zwischen 1 und 30 liegen."
 
-#: app/preferences_dialog.c:356
+#: app/preferences_dialog.c:351
 msgid "Save Preferences ?"
 msgstr "Einstellungen sichern ?"
 
-#: app/preferences_dialog.c:377
+#: app/preferences_dialog.c:372
 msgid ""
 "At least one of the changes you made will only\n"
 "take effect after you restart the GIMP.\n"
@@ -4608,494 +4685,474 @@ msgstr ""
 "werden kann, oder Sie wählen 'Schließen' und die\n"
 "fraglichen Änderungen werden nicht angewendet."
 
-#: app/preferences_dialog.c:470
+#: app/preferences_dialog.c:465
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "Sie müssen GIMP neu starten, damit die Änderungen aktiv werden."
 
-#: app/preferences_dialog.c:1068
+#: app/preferences_dialog.c:1002
 #, c-format
 msgid "The default comments is limited to %d characters."
 msgstr "Der Standard-Kommentar ist auf %d Zeichen beschränkt."
 
-#: app/preferences_dialog.c:1492
+#: app/preferences_dialog.c:1424
 msgid "Preferences"
 msgstr "Einstellungen"
 
 #. The categories tree
-#: app/preferences_dialog.c:1514
+#: app/preferences_dialog.c:1446
 msgid "Categories"
 msgstr "Kategorien"
 
-#: app/preferences_dialog.c:1542 app/preferences_dialog.c:1544
+#: app/preferences_dialog.c:1474 app/preferences_dialog.c:1476
 msgid "New File"
 msgstr "Neues Bild"
 
-#: app/preferences_dialog.c:1555
+#: app/preferences_dialog.c:1487
 msgid "Default Image Size and Unit"
 msgstr "Standard Bildgröße und Längeneinheit"
 
-#: app/preferences_dialog.c:1569
+#: app/preferences_dialog.c:1501
 msgid "Width"
 msgstr "Breite"
 
-#: app/preferences_dialog.c:1571
+#: app/preferences_dialog.c:1503
 msgid "Height"
 msgstr "Höhe"
 
-#: app/preferences_dialog.c:1601
+#: app/preferences_dialog.c:1533
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standard Auflösung und Auflösungseinheit"
 
-#: app/preferences_dialog.c:1628 app/preferences_dialog.c:2421
+#: app/preferences_dialog.c:1560 app/preferences_dialog.c:2288
 msgid "dpi"
 msgstr "dpi"
 
-#: app/preferences_dialog.c:1675
+#: app/preferences_dialog.c:1607
 msgid "Default Image Type:"
 msgstr "Standard Bildtyp:"
 
-#: app/preferences_dialog.c:1711 app/preferences_dialog.c:2228
-msgid "Bytes"
-msgstr "Byte"
-
-#: app/preferences_dialog.c:1712 app/preferences_dialog.c:2229
-msgid "KiloBytes"
-msgstr "KiloByte"
-
-#: app/preferences_dialog.c:1713 app/preferences_dialog.c:2230
-msgid "MegaBytes"
-msgstr "MegaByte"
-
-#: app/preferences_dialog.c:1719
+#: app/preferences_dialog.c:1618
 msgid "Maximum Image Size:"
 msgstr "Maximale Bildgröße:"
 
-#: app/preferences_dialog.c:1724 app/preferences_dialog.c:1726
+#: app/preferences_dialog.c:1623 app/preferences_dialog.c:1625
 msgid "Default Comment"
 msgstr "Standard Kommentar"
 
-#: app/preferences_dialog.c:1734
+#: app/preferences_dialog.c:1633
 msgid "Comment Used for New Images"
 msgstr "Kommentar für neue Bilder"
 
-#: app/preferences_dialog.c:1754 app/preferences_dialog.c:1756
+#: app/preferences_dialog.c:1653 app/preferences_dialog.c:1655
 msgid "Display"
 msgstr "Anzeige"
 
-#: app/preferences_dialog.c:1764
+#: app/preferences_dialog.c:1663
 msgid "Transparency"
 msgstr "Transparenz"
 
-#: app/preferences_dialog.c:1783
+#: app/preferences_dialog.c:1682
 msgid "Light Checks"
 msgstr "Helle Quadrate"
 
-#: app/preferences_dialog.c:1784
+#: app/preferences_dialog.c:1683
 msgid "Mid-Tone Checks"
 msgstr "Halbhelle Quadrate"
 
-#: app/preferences_dialog.c:1785
+#: app/preferences_dialog.c:1684
 msgid "Dark Checks"
 msgstr "Dunkle Quadrate"
 
-#: app/preferences_dialog.c:1786
+#: app/preferences_dialog.c:1685
 msgid "White Only"
 msgstr "Nur Weiß"
 
-#: app/preferences_dialog.c:1787
+#: app/preferences_dialog.c:1686
 msgid "Gray Only"
 msgstr "Nur Grau"
 
-#: app/preferences_dialog.c:1788
+#: app/preferences_dialog.c:1687
 msgid "Black Only"
 msgstr "Nur Schwarz"
 
-#: app/preferences_dialog.c:1792
+#: app/preferences_dialog.c:1691
 msgid "Transparency Type:"
 msgstr "Transparenz Typ:"
 
-#: app/preferences_dialog.c:1799 app/preferences_dialog.c:1872
-#: app/preferences_dialog.c:1886
+#: app/preferences_dialog.c:1698 app/preferences_dialog.c:1771
+#: app/preferences_dialog.c:1785
 msgid "Small"
 msgstr "Klein"
 
-#: app/preferences_dialog.c:1800 app/preferences_dialog.c:1873
-#: app/preferences_dialog.c:1887
+#: app/preferences_dialog.c:1699 app/preferences_dialog.c:1772
+#: app/preferences_dialog.c:1786
 msgid "Medium"
 msgstr "Mittel"
 
-#: app/preferences_dialog.c:1801 app/preferences_dialog.c:1874
-#: app/preferences_dialog.c:1888
+#: app/preferences_dialog.c:1700 app/preferences_dialog.c:1773
+#: app/preferences_dialog.c:1787
 msgid "Large"
 msgstr "Groß"
 
-#: app/preferences_dialog.c:1805
+#: app/preferences_dialog.c:1704
 msgid "Check Size:"
 msgstr "Schachbrett Größe:"
 
-#: app/preferences_dialog.c:1808
+#: app/preferences_dialog.c:1707
 msgid "8-Bit Displays"
 msgstr "8-Bit Anzeigen"
 
-#: app/preferences_dialog.c:1813
+#: app/preferences_dialog.c:1712
 msgid "Install Colormap"
 msgstr "Installiere Farbtabelle"
 
-#: app/preferences_dialog.c:1822
+#: app/preferences_dialog.c:1721
 msgid "Colormap Cycling"
 msgstr "Farbtabelle rotieren"
 
-#: app/preferences_dialog.c:1871
+#: app/preferences_dialog.c:1770
 msgid "Tiny"
 msgstr "Winzig"
 
-#: app/preferences_dialog.c:1875
+#: app/preferences_dialog.c:1774
 msgid "Huge"
 msgstr "Riesig"
 
-#: app/preferences_dialog.c:1879
+#: app/preferences_dialog.c:1778
 msgid "Preview Size:"
 msgstr "Vorschaugröße:"
 
-#: app/preferences_dialog.c:1892
+#: app/preferences_dialog.c:1791
 msgid "Nav Preview Size:"
 msgstr "Größe der Navigationsvorschau:"
 
-#: app/preferences_dialog.c:1902
+#: app/preferences_dialog.c:1801
 msgid "Recent Documents List Size:"
 msgstr "Größe der Dokumentenliste:"
 
 #. Indicators
-#: app/preferences_dialog.c:1906
+#: app/preferences_dialog.c:1805
 msgid "Toolbox"
 msgstr "Werkzeugkasten"
 
-#: app/preferences_dialog.c:1909
+#: app/preferences_dialog.c:1808
 msgid "Display Brush, Pattern and Gradient Indicators"
 msgstr "Zeige Pinsel, Muster und Gradienten"
 
-#: app/preferences_dialog.c:1918
+#: app/preferences_dialog.c:1817
 msgid "Dialog Behaviour"
 msgstr "Verhalten von Dialogen"
 
-#: app/preferences_dialog.c:1920
+#: app/preferences_dialog.c:1819
 msgid "Navigation Window per Display"
 msgstr "Ein Navigations-Fenster pro Bildfenster"
 
-#: app/preferences_dialog.c:1929
+#: app/preferences_dialog.c:1828
 msgid "Info Window Follows Mouse"
 msgstr "Info-Fenster folgt der Maus"
 
-#: app/preferences_dialog.c:1940 app/preferences_dialog.c:1942
+#: app/preferences_dialog.c:1839 app/preferences_dialog.c:1841
 msgid "Help System"
 msgstr "Hilfesystem"
 
-#: app/preferences_dialog.c:1952
+#: app/preferences_dialog.c:1851
 msgid "Show Tool Tips"
 msgstr "Zeige Popup-Hilfen"
 
-#: app/preferences_dialog.c:1962
+#: app/preferences_dialog.c:1861
 msgid "Context Sensitive Help with \"F1\""
 msgstr "\"F1\" zeigt kontextabhängige Hilfe"
 
-#: app/preferences_dialog.c:1971
+#: app/preferences_dialog.c:1870
 msgid "Help Browser"
 msgstr "Hilfe Browser"
 
-#: app/preferences_dialog.c:1983
+#: app/preferences_dialog.c:1882
 msgid "Internal"
 msgstr "Intern"
 
-#: app/preferences_dialog.c:1984
+#: app/preferences_dialog.c:1883
 msgid "Netscape"
 msgstr "Netscape"
 
-#: app/preferences_dialog.c:1988
+#: app/preferences_dialog.c:1887
 msgid "Help Browser to Use:"
 msgstr "Programm zum Lesen der Hilfe:"
 
-#: app/preferences_dialog.c:1993 app/preferences_dialog.c:1995
+#: app/preferences_dialog.c:1892 app/preferences_dialog.c:1894
 msgid "Image Windows"
 msgstr "Bildfenster"
 
-#: app/preferences_dialog.c:2003
+#: app/preferences_dialog.c:1902
 msgid "Appearance"
 msgstr "Aussehen"
 
-#: app/preferences_dialog.c:2005
+#: app/preferences_dialog.c:1904
 msgid "Use \"Dot for Dot\" by default"
 msgstr "Benutze standardmäßig \"Punkt für Punkt\""
 
-#: app/preferences_dialog.c:2014
+#: app/preferences_dialog.c:1913
 msgid "Resize Window on Zoom"
 msgstr "Verändere Fenstergröße beim Zoomen"
 
-#: app/preferences_dialog.c:2023
+#: app/preferences_dialog.c:1922
 msgid "Show Rulers"
 msgstr "Zeige Lineale"
 
-#: app/preferences_dialog.c:2032
+#: app/preferences_dialog.c:1931
 msgid "Show Statusbar"
 msgstr "Zeige Statusanzeige"
 
-#: app/preferences_dialog.c:2056
+#: app/preferences_dialog.c:1955
 msgid "Marching Ants Speed:"
 msgstr "Geschwindigkeit der laufenden Ameisen:"
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:2064
+#: app/preferences_dialog.c:1963
 msgid "Custom"
 msgstr "Eigene"
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:2070
+#: app/preferences_dialog.c:1969
 msgid "Standard"
 msgstr "Standard"
 
-#: app/preferences_dialog.c:2075
+#: app/preferences_dialog.c:1974
 msgid "Show zoom percentage"
 msgstr "Vergrößerung prozentual"
 
-#: app/preferences_dialog.c:2080
+#: app/preferences_dialog.c:1979
 msgid "Show zoom ratio"
 msgstr "Vergrößerung als Verhältnis"
 
-#: app/preferences_dialog.c:2085
+#: app/preferences_dialog.c:1984
 msgid "Show reversed zoom ratio"
 msgstr "Vergrößerung als umgekehrtes Verhältnis"
 
-#: app/preferences_dialog.c:2096
+#: app/preferences_dialog.c:1995
 msgid "Image Title Format:"
 msgstr "Bildtitel Format:"
 
 #. End of the title format string
-#: app/preferences_dialog.c:2100
+#: app/preferences_dialog.c:1999
 msgid "Pointer Movement Feedback"
 msgstr "Zeigerbewegung"
 
-#: app/preferences_dialog.c:2103
+#: app/preferences_dialog.c:2002
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr "Genaue aber langsame Mauszeigernachführung"
 
-#: app/preferences_dialog.c:2112
+#: app/preferences_dialog.c:2011
 msgid "Disable Cursor Updating"
 msgstr "Deaktiviere Mauszeigeränderungen"
 
-#: app/preferences_dialog.c:2124 app/preferences_dialog.c:2126
+#: app/preferences_dialog.c:2023 app/preferences_dialog.c:2025
 #: app/tools.c:1080
 msgid "Tool Options"
 msgstr "Werkzeugeinstellungen"
 
-#: app/preferences_dialog.c:2134
+#: app/preferences_dialog.c:2033
 msgid "Paint Options"
 msgstr "Pinseleinstellungen"
 
-#: app/preferences_dialog.c:2137
+#: app/preferences_dialog.c:2036
 msgid "Use Global Paint Options"
 msgstr "Benutze globale Pinseleinstellungen"
 
-#: app/preferences_dialog.c:2152 app/preferences_dialog.c:2154
+#: app/preferences_dialog.c:2051 app/preferences_dialog.c:2053
 msgid "Environment"
 msgstr "Umgebung"
 
-#: app/preferences_dialog.c:2162
+#: app/preferences_dialog.c:2061
 msgid "Resource Consumption"
 msgstr "Ressourcenverbrauch"
 
-#: app/preferences_dialog.c:2164
+#: app/preferences_dialog.c:2063
 msgid "Conservative Memory Usage"
 msgstr "Zurückhaltende Speicherausnutzung"
 
-#: app/preferences_dialog.c:2192
+#: app/preferences_dialog.c:2091
 msgid "Levels of Undo:"
 msgstr "Stufen der Rückgängigmachung:"
 
-#: app/preferences_dialog.c:2236
-msgid "Tile Cache Size:"
-msgstr "Größe des Datenspeichers:"
-
-#: app/preferences_dialog.c:2247
+#: app/preferences_dialog.c:2113
 msgid "Number of Processors to Use:"
 msgstr "Zahl der zu benutzenden Prozessoren:"
 
-#: app/preferences_dialog.c:2251 app/transform_tool.c:215
+#: app/preferences_dialog.c:2117 app/transform_tool.c:215
 msgid "Scaling"
 msgstr "Skalierung"
 
-#: app/preferences_dialog.c:2269
+#: app/preferences_dialog.c:2135
 msgid "Nearest Neighbor (Fast)"
 msgstr "Nächster Nachbar (schnell)"
 
-#: app/preferences_dialog.c:2273
+#: app/preferences_dialog.c:2139
 msgid "Cubic (Slow)"
 msgstr "Kubisch (langsam)"
 
-#: app/preferences_dialog.c:2278
+#: app/preferences_dialog.c:2144
 msgid "Interpolation Type:"
 msgstr "Interpolationsart:"
 
-#: app/preferences_dialog.c:2281
+#: app/preferences_dialog.c:2147
 msgid "File Saving"
 msgstr "Dateien Sichern"
 
-#: app/preferences_dialog.c:2298 app/preferences_dialog.c:2311
+#: app/preferences_dialog.c:2164 app/preferences_dialog.c:2177
 msgid "Always"
 msgstr "Immer"
 
-#: app/preferences_dialog.c:2299
+#: app/preferences_dialog.c:2165
 msgid "Never"
 msgstr "Nie"
 
-#: app/preferences_dialog.c:2303
+#: app/preferences_dialog.c:2169
 msgid "Try to Write a Thumbnail File:"
 msgstr "Schreibe Vorschau-Dateien:"
 
-#: app/preferences_dialog.c:2310
+#: app/preferences_dialog.c:2176
 msgid "Only when Modified"
 msgstr "Nur wenn verändert"
 
-#: app/preferences_dialog.c:2315
+#: app/preferences_dialog.c:2181
 msgid "\"File > Save\" Saves the Image:"
 msgstr "\"Datei > Sichern\" sichert das Bild:"
 
-#: app/preferences_dialog.c:2321
+#: app/preferences_dialog.c:2187
 msgid "Session Management"
 msgstr "Sitzungsmanagement"
 
-#: app/preferences_dialog.c:2323
+#: app/preferences_dialog.c:2189
 msgid "Session"
 msgstr "Sitzung"
 
-#: app/preferences_dialog.c:2331
+#: app/preferences_dialog.c:2197
 msgid "Window Positions"
 msgstr "Fensterpositionen"
 
-#: app/preferences_dialog.c:2333
+#: app/preferences_dialog.c:2199
 msgid "Save Window Positions on Exit"
 msgstr "Fensterpositionen beim Beenden sichern"
 
-#: app/preferences_dialog.c:2347
+#: app/preferences_dialog.c:2213
 msgid "Clear Saved Window Positions Now"
 msgstr "Gesicherte Fensterpositionen jetzt löschen"
 
-#: app/preferences_dialog.c:2355
+#: app/preferences_dialog.c:2221
 msgid "Always Try to Restore Session"
 msgstr "Versuche immer Sitzung wiederherzustellen"
 
-#: app/preferences_dialog.c:2364
+#: app/preferences_dialog.c:2230
 msgid "Devices"
 msgstr "Geräte"
 
-#: app/preferences_dialog.c:2366
+#: app/preferences_dialog.c:2232
 msgid "Save Device Status on Exit"
 msgstr "Gerätestatus beim Beenden sichern"
 
-#: app/preferences_dialog.c:2377 app/preferences_dialog.c:2379
+#: app/preferences_dialog.c:2243 app/preferences_dialog.c:2245
 msgid "Monitor"
 msgstr "Monitor"
 
-#: app/preferences_dialog.c:2387
+#: app/preferences_dialog.c:2253
 msgid "Get Monitor Resolution"
 msgstr "Quelle für Monitorauflösung"
 
-#: app/preferences_dialog.c:2395
+#: app/preferences_dialog.c:2261
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Zur Zeit %d x %d dpi)"
 
-#: app/preferences_dialog.c:2446
+#: app/preferences_dialog.c:2313
 msgid "From X Server"
 msgstr "Vom X Server"
 
-#: app/preferences_dialog.c:2461
+#: app/preferences_dialog.c:2328
 msgid "Manually:"
 msgstr "Manuell:"
 
-#: app/preferences_dialog.c:2474 app/preferences_dialog.c:2476
+#: app/preferences_dialog.c:2341 app/preferences_dialog.c:2343
 msgid "Directories"
 msgstr "Verzeichnisse"
 
-#: app/preferences_dialog.c:2493
+#: app/preferences_dialog.c:2360
 msgid "Temp Dir:"
 msgstr "Temporäres Verzeichnis:"
 
-#: app/preferences_dialog.c:2493
+#: app/preferences_dialog.c:2360
 msgid "Select Temp Dir"
 msgstr "Temporäres Verzeichnis auswählen"
 
-#: app/preferences_dialog.c:2494
+#: app/preferences_dialog.c:2361
 msgid "Swap Dir:"
 msgstr "Auslagerungsverzeichnis:"
 
-#: app/preferences_dialog.c:2494
-msgid "Select Swap Dir"
-msgstr "Auslagerverzeichnis auswählen"
-
-#: app/preferences_dialog.c:2530
+#: app/preferences_dialog.c:2397
 msgid "Brushes Directories"
 msgstr "Pinselverzeichnisse"
 
-#: app/preferences_dialog.c:2532
+#: app/preferences_dialog.c:2399
 msgid "Select Brushes Dir"
 msgstr "Pinselverzeichnis auswählen"
 
-#: app/preferences_dialog.c:2534
+#: app/preferences_dialog.c:2401
 msgid "Generated Brushes"
 msgstr "Erzeugte Pinsel"
 
-#: app/preferences_dialog.c:2534
+#: app/preferences_dialog.c:2401
 msgid "Generated Brushes Directories"
 msgstr "Erzeugte Pinsel Verzeichnisse"
 
-#: app/preferences_dialog.c:2536
+#: app/preferences_dialog.c:2403
 msgid "Select Generated Brushes Dir"
 msgstr "Verzeichnis für erzeugte Pinsel auswählen"
 
-#: app/preferences_dialog.c:2538
+#: app/preferences_dialog.c:2405
 msgid "Patterns Directories"
 msgstr "Musterverzeichnisse"
 
-#: app/preferences_dialog.c:2540
+#: app/preferences_dialog.c:2407
 msgid "Select Patterns Dir"
 msgstr "Musterverzeichnis auswählen"
 
-#: app/preferences_dialog.c:2542
+#: app/preferences_dialog.c:2409
 msgid "Palettes Directories"
 msgstr "Palettenverzeichnisse"
 
-#: app/preferences_dialog.c:2544
+#: app/preferences_dialog.c:2411
 msgid "Select Palettes Dir"
 msgstr "Palettenverzeichnis auswählen"
 
-#: app/preferences_dialog.c:2546
+#: app/preferences_dialog.c:2413
 msgid "Gradients Directories"
 msgstr "Farbverlaufverzeichnisse"
 
-#: app/preferences_dialog.c:2548
+#: app/preferences_dialog.c:2415
 msgid "Select Gradients Dir"
 msgstr "Farbverlaufverzeichnis auswählen"
 
-#: app/preferences_dialog.c:2550
+#: app/preferences_dialog.c:2417
 msgid "Plug-Ins"
 msgstr "Plugins"
 
-#: app/preferences_dialog.c:2550
+#: app/preferences_dialog.c:2417
 msgid "Plug-Ins Directories"
 msgstr "Plugins-Verzeichnisse"
 
-#: app/preferences_dialog.c:2552
+#: app/preferences_dialog.c:2419
 msgid "Select Plug-Ins Dir"
 msgstr "Plugins-Verzeichnis auswählen"
 
-#: app/preferences_dialog.c:2554
+#: app/preferences_dialog.c:2421
 msgid "Modules"
 msgstr "Module"
 
-#: app/preferences_dialog.c:2554
+#: app/preferences_dialog.c:2421
 msgid "Modules Directories"
 msgstr "Modulverzeichnisse"
 
-#: app/preferences_dialog.c:2556
+#: app/preferences_dialog.c:2423
 msgid "Select Modules Dir"
 msgstr "Modulverzeichnis auswählen"
 
@@ -6131,3 +6188,49 @@ msgstr "Wasserfarbe"
 #: modules/colorsel_water.c:640
 msgid "Color History"
 msgstr "Farbliste"
+
+#~ msgid ""
+#~ "The GIMP - GNU Image Manipulation Program\n"
+#~ "\n"
+#~ msgstr ""
+#~ "The GIMP - GNU Image Manipulation Program\n"
+#~ "GIMP - Das GNU Bildbearbeitungsprogramm\n"
+#~ "\n"
+
+#~ msgid "For a proper GIMP installation, a subdirectory called\n"
+#~ msgstr ""
+#~ "Für eine ordnungsgemäße GIMP Installation muß ein Verzeichnis names\n"
+
+#~ msgid "Install"
+#~ msgstr "Installieren"
+
+#~ msgid "Ignore"
+#~ msgstr "Ignorieren"
+
+#~ msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
+#~ msgstr "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
+
+#~ msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+#~ msgstr "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+
+#~ msgid "Installation Log"
+#~ msgstr "Installation Logbuch"
+
+#~ msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
+#~ msgstr "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
+
+#~ msgid ""
+#~ "\n"
+#~ "Installation successful!\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Installation erfolgreich!\n"
+
+#~ msgid "Bytes"
+#~ msgstr "Byte"
+
+#~ msgid "KiloBytes"
+#~ msgstr "KiloByte"
+
+#~ msgid "MegaBytes"
+#~ msgstr "MegaByte"

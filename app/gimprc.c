@@ -57,7 +57,8 @@
 #define OK     2
 #define LOCALE_DEF 3
 
-typedef enum {
+typedef enum
+{
   TT_STRING,
   TT_PATH,
   TT_DOUBLE,
@@ -87,156 +88,156 @@ typedef struct _ParseFunc ParseFunc;
 
 struct _ParseFunc
 {
-  char *name;
-  TokenType type;
-  gpointer val1p;
-  gpointer val2p;
+  gchar     *name;
+  TokenType  type;
+  gpointer   val1p;
+  gpointer   val2p;
 };
 
 typedef struct _UnknownToken UnknownToken;
 
 struct _UnknownToken
 {
-  char *token;
-  char *value;
+  gchar *token;
+  gchar *value;
 };
 
 
 /*  global gimprc variables  */
-char *    plug_in_path = NULL;
-char *    temp_path = NULL;
-char *    swap_path = NULL;
-char *    brush_path = NULL;
-char *    brush_vbr_path = NULL;
-char *    default_brush = NULL;
-char *    pattern_path = NULL;
-char *    default_pattern = NULL;
-char *    palette_path = NULL;
-char *    default_palette = NULL;
-char *    gradient_path = NULL;
-char *    default_gradient = NULL;
-char *    pluginrc_path = NULL;
-char *    module_path = NULL;
-int       tile_cache_size = 10485760;  /* 10 MB */
-int       marching_speed = 300;   /* 300 ms */
-double    gamma_val = 1.0;
-int       transparency_type = 1;  /* Mid-Tone Checks */
-int       perfectmouse = 0;       /* off (fast and sloppy) */
-int       transparency_size = 1;  /* Medium sized */
-int       levels_of_undo = 2;     /* 2 levels of undo default */
-int       last_opened_size = 4;   /* 4 documents in the MRU list */
-int       color_cube_shades[4] = {6, 7, 4, 24};
-int       install_cmap = 0;
-int       cycled_marching_ants = 0;
-int       default_threshold = 15;
-int       stingy_memory_use = 0;
-int       allow_resize_windows = 0;
-int       no_cursor_updating = 0;
-int       preview_size = 32;
-int       nav_preview_size = 112;
-int       show_rulers = TRUE;
-int       show_statusbar = TRUE;
-GimpUnit  default_units = GIMP_UNIT_INCH;
-int       auto_save = TRUE;
-InterpolationType interpolation_type = LINEAR_INTERPOLATION;
-int       confirm_on_close = TRUE;
-int       save_session_info = TRUE;
-int       save_device_status = FALSE;
-int       always_restore_session = FALSE;
-int       default_width = 983;
-int       default_height = 857;
+gchar             *plug_in_path = NULL;
+gchar             *temp_path = NULL;
+gchar             *swap_path = NULL;
+gchar             *brush_path = NULL;
+gchar             *brush_vbr_path = NULL;
+gchar             *default_brush = NULL;
+gchar             *pattern_path = NULL;
+gchar             *default_pattern = NULL;
+gchar             *palette_path = NULL;
+gchar             *default_palette = NULL;
+gchar             *gradient_path = NULL;
+gchar             *default_gradient = NULL;
+gchar             *pluginrc_path = NULL;
+gchar             *module_path = NULL;
+gint               tile_cache_size = 10485760;  /* 10 MB */
+gint               marching_speed = 300;   /* 300 ms */
+gdouble            gamma_val = 1.0;
+gint               transparency_type = 1;  /* Mid-Tone Checks */
+gboolean           perfectmouse = FALSE;   /* off (fast and sloppy) */
+gint               transparency_size = 1;  /* Medium sized */
+gint               levels_of_undo = 2;     /* 2 levels of undo default */
+gint               last_opened_size = 4;   /* 4 documents in the MRU list */
+gint               color_cube_shades[4] = { 6, 7, 4, 24 };
+gboolean           install_cmap = FALSE;
+gint               cycled_marching_ants = 0;
+gint               default_threshold = 15;
+gboolean           stingy_memory_use = FALSE;
+gboolean           allow_resize_windows = FALSE;
+gboolean           no_cursor_updating = FALSE;
+gint               preview_size = 32;
+gint               nav_preview_size = 112;
+gboolean           show_rulers = TRUE;
+gboolean           show_statusbar = TRUE;
+GimpUnit           default_units = GIMP_UNIT_INCH;
+gboolean           auto_save = TRUE;
+InterpolationType  interpolation_type = LINEAR_INTERPOLATION;
+gboolean           confirm_on_close = TRUE;
+gboolean           save_session_info = TRUE;
+gboolean           save_device_status = FALSE;
+gboolean           always_restore_session = FALSE;
+gint               default_width = 983;
+gint               default_height = 857;
 /* temporary default size increase to stress test stuff.  -- austin 7/11/99 */
-int       default_type = RGB;
-double    default_xresolution = 72.0;
-double    default_yresolution = 72.0;
-GimpUnit  default_resolution_units = GIMP_UNIT_INCH;
-char *    default_comment = NULL;
-int       default_dot_for_dot = TRUE;
-int       show_tips = TRUE;
-int       last_tip = -1;
-int       show_tool_tips = TRUE;
-double    monitor_xres = 72.0;
-double    monitor_yres = 72.0;
-int       using_xserver_resolution = FALSE;
-int       num_processors = 1;
-char *    image_title_format = NULL;
-int       global_paint_options = TRUE;
-int       show_indicators = TRUE;
-int       max_new_image_size = 33554432;  /* 32 MB */
-int       thumbnail_mode = 1;
-int	  trust_dirty_flag = FALSE;
-int       use_help = TRUE;
-int       nav_window_per_display = FALSE;
-int       info_window_follows_mouse = FALSE;
-int       help_browser = HELP_BROWSER_GIMP;
+gint               default_type = RGB;
+gdouble            default_xresolution = 72.0;
+gdouble            default_yresolution = 72.0;
+GimpUnit           default_resolution_units = GIMP_UNIT_INCH;
+gchar             *default_comment = NULL;
+gboolean           default_dot_for_dot = TRUE;
+gboolean           show_tips = TRUE;
+gint               last_tip = -1;
+gboolean           show_tool_tips = TRUE;
+gdouble            monitor_xres = 72.0;
+gdouble            monitor_yres = 72.0;
+gboolean           using_xserver_resolution = FALSE;
+gint               num_processors = 1;
+gchar             *image_title_format = NULL;
+gboolean           global_paint_options = TRUE;
+gboolean           show_indicators = TRUE;
+gint               max_new_image_size = 33554432;  /* 32 MB */
+gint               thumbnail_mode = 1;
+gboolean           trust_dirty_flag = FALSE;
+gboolean           use_help = TRUE;
+gboolean           nav_window_per_display = FALSE;
+gboolean           info_window_follows_mouse = FALSE;
+gint               help_browser = HELP_BROWSER_GIMP;
 
 extern char * module_db_load_inhibit;
 
-static int get_next_token  (void);
-static int peek_next_token (void);
-static int parse_statement (void);
+static gint get_next_token  (void);
+static gint peek_next_token (void);
+static gint parse_statement (void);
 
-static int parse_string             (gpointer val1p, gpointer val2p);
-static int parse_path               (gpointer val1p, gpointer val2p);
-static int parse_double             (gpointer val1p, gpointer val2p);
-static int parse_float              (gpointer val1p, gpointer val2p);
-static int parse_int                (gpointer val1p, gpointer val2p);
-static int parse_boolean            (gpointer val1p, gpointer val2p);
-static int parse_position           (gpointer val1p, gpointer val2p);
-static int parse_mem_size           (gpointer val1p, gpointer val2p);
-static int parse_image_type         (gpointer val1p, gpointer val2p);
-static int parse_interpolation_type (gpointer val1p, gpointer val2p);
-static int parse_color_cube         (gpointer val1p, gpointer val2p);
-static int parse_preview_size       (gpointer val1p, gpointer val2p);
-static int parse_nav_preview_size   (gpointer val1p, gpointer val2p);
-static int parse_units              (gpointer val1p, gpointer val2p);
-static int parse_plug_in            (gpointer val1p, gpointer val2p);
-static int parse_plug_in_def        (gpointer val1p, gpointer val2p);
-static int parse_device             (gpointer val1p, gpointer val2p);
-static int parse_menu_path          (gpointer val1p, gpointer val2p);
-static int parse_session_info       (gpointer val1p, gpointer val2p);
-static int parse_unit_info          (gpointer val1p, gpointer val2p);
-static int parse_parasite           (gpointer val1p, gpointer val2p);
-static int parse_help_browser       (gpointer val1p, gpointer val2p);
+static gint parse_string             (gpointer val1p, gpointer val2p);
+static gint parse_path               (gpointer val1p, gpointer val2p);
+static gint parse_double             (gpointer val1p, gpointer val2p);
+static gint parse_float              (gpointer val1p, gpointer val2p);
+static gint parse_int                (gpointer val1p, gpointer val2p);
+static gint parse_boolean            (gpointer val1p, gpointer val2p);
+static gint parse_position           (gpointer val1p, gpointer val2p);
+static gint parse_mem_size           (gpointer val1p, gpointer val2p);
+static gint parse_image_type         (gpointer val1p, gpointer val2p);
+static gint parse_interpolation_type (gpointer val1p, gpointer val2p);
+static gint parse_color_cube         (gpointer val1p, gpointer val2p);
+static gint parse_preview_size       (gpointer val1p, gpointer val2p);
+static gint parse_nav_preview_size   (gpointer val1p, gpointer val2p);
+static gint parse_units              (gpointer val1p, gpointer val2p);
+static gint parse_plug_in            (gpointer val1p, gpointer val2p);
+static gint parse_plug_in_def        (gpointer val1p, gpointer val2p);
+static gint parse_device             (gpointer val1p, gpointer val2p);
+static gint parse_menu_path          (gpointer val1p, gpointer val2p);
+static gint parse_session_info       (gpointer val1p, gpointer val2p);
+static gint parse_unit_info          (gpointer val1p, gpointer val2p);
+static gint parse_parasite           (gpointer val1p, gpointer val2p);
+static gint parse_help_browser       (gpointer val1p, gpointer val2p);
 
-static int parse_locale_def (PlugInDef      *plug_in_def);
-static int parse_proc_def   (PlugInProcDef **proc_def);
-static int parse_proc_arg   (ProcArg        *arg);
-static int parse_unknown    (char           *token_sym);
+static gint parse_locale_def (PlugInDef      *plug_in_def);
+static gint parse_proc_def   (PlugInProcDef **proc_def);
+static gint parse_proc_arg   (ProcArg        *arg);
+static gint parse_unknown    (gchar          *token_sym);
 
-char* gimprc_value_to_str (char *name);
-static char* value_to_str (char *name);
+       gchar *gimprc_value_to_str (gchar *name);
+static gchar *value_to_str        (gchar *name);
 
-static inline char * string_to_str             (gpointer val1p, gpointer val2p);
-static inline char * path_to_str               (gpointer val1p, gpointer val2p);
-static inline char * double_to_str             (gpointer val1p, gpointer val2p);
-static inline char * float_to_str              (gpointer val1p, gpointer val2p);
-static inline char * int_to_str                (gpointer val1p, gpointer val2p);
-static inline char * boolean_to_str            (gpointer val1p, gpointer val2p);
-static inline char * position_to_str           (gpointer val1p, gpointer val2p);
-static inline char * mem_size_to_str           (gpointer val1p, gpointer val2p);
-static inline char * image_type_to_str         (gpointer val1p, gpointer val2p);
-static inline char * interpolation_type_to_str (gpointer val1p, gpointer val2p);
-static inline char * color_cube_to_str         (gpointer val1p, gpointer val2p);
-static inline char * preview_size_to_str       (gpointer val1p, gpointer val2p);
-static inline char * nav_preview_size_to_str   (gpointer val1p, gpointer val2p);
-static inline char * units_to_str              (gpointer val1p, gpointer val2p);
-static inline char * help_browser_to_str       (gpointer val1p, gpointer val2p);
-static inline char * comment_to_str            (gpointer val1p, gpointer val2p);
+static inline gchar * string_to_str             (gpointer val1p, gpointer val2p);
+static inline gchar * path_to_str               (gpointer val1p, gpointer val2p);
+static inline gchar * double_to_str             (gpointer val1p, gpointer val2p);
+static inline gchar * float_to_str              (gpointer val1p, gpointer val2p);
+static inline gchar * int_to_str                (gpointer val1p, gpointer val2p);
+static inline gchar * boolean_to_str            (gpointer val1p, gpointer val2p);
+static inline gchar * position_to_str           (gpointer val1p, gpointer val2p);
+static inline gchar * mem_size_to_str           (gpointer val1p, gpointer val2p);
+static inline gchar * image_type_to_str         (gpointer val1p, gpointer val2p);
+static inline gchar * interpolation_type_to_str (gpointer val1p, gpointer val2p);
+static inline gchar * color_cube_to_str         (gpointer val1p, gpointer val2p);
+static inline gchar * preview_size_to_str       (gpointer val1p, gpointer val2p);
+static inline gchar * nav_preview_size_to_str   (gpointer val1p, gpointer val2p);
+static inline gchar * units_to_str              (gpointer val1p, gpointer val2p);
+static inline gchar * help_browser_to_str       (gpointer val1p, gpointer val2p);
+static inline gchar * comment_to_str            (gpointer val1p, gpointer val2p);
 
-static char* transform_path          (char *path, int destroy);
-static void gimprc_set_token         (char *token, char *value);
-static void add_gimp_directory_token (char *gimp_dir);
+static gchar *transform_path           (gchar *path,  gboolean destroy);
+static void   gimprc_set_token         (gchar *token, gchar *value);
+static void   add_gimp_directory_token (gchar *gimp_dir);
 #ifdef __EMX__
-static void add_x11root_token        (char *x11root);
+static void   add_x11root_token        (gchar *x11root);
 #endif
-static char* open_backup_file (char *filename,
-			       char *secondary_filename,
-			       char **name_used,
-			       FILE **fp_new,
-			       FILE **fp_old);
+static gchar *open_backup_file (gchar  *filename,
+				gchar  *secondary_filename,
+				gchar **name_used,
+				FILE  **fp_new,
+				FILE  **fp_old);
 
-static ParseInfo parse_info;
+static ParseInfo parse_info = { NULL };
 
 static GList *unknown_tokens = NULL;
 
@@ -369,13 +370,20 @@ gimp_system_rc_file (void)
   return value;
 }
 
-void
+gboolean
 parse_buffers_init (void)
 {
-  parse_info.buffer = g_new (char, 4096);
-  parse_info.tokenbuf = parse_info.buffer + 2048;
-  parse_info.buffer_size = 2048;
-  parse_info.tokenbuf_size = 2048;
+  if (!parse_info.buffer)
+    {
+      parse_info.buffer = g_new (gchar, 4096);
+      parse_info.tokenbuf      = parse_info.buffer + 2048;
+      parse_info.buffer_size   = 2048;
+      parse_info.tokenbuf_size = 2048;
+
+      return TRUE;
+    }
+  
+  return FALSE;
 }
 
 static GList *parse_add_directory_tokens (void)
@@ -1784,18 +1792,18 @@ parse_menu_path (gpointer val1p,
   return ERROR;
 }
 
-static char*
-transform_path (char *path,
-		int   destroy)
+static gchar *
+transform_path (gchar    *path,
+		gboolean  destroy)
 {
-  int length;
-  char *new_path;
-  char *home;
-  char *token;
-  char *tmp;
-  char *tmp2;
-  int  substituted;
-  int  is_env;
+  gint   length;
+  gchar *new_path;
+  gchar *home;
+  gchar *token;
+  gchar *tmp;
+  gchar *tmp2;
+  gint   substituted;
+  gint   is_env;
   UnknownToken *ut;
 
   home = g_get_home_dir ();

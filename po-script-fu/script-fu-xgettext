@@ -1,0 +1,89 @@
+#!/usr/bin/perl
+
+use 5.005;
+
+package token;
+
+sub new {
+   my $type = shift;
+   bless [@_],$type;
+}
+
+package main;
+
+my $stream;	# the stream to tokenize from
+my $word;	# the current token-word
+my $tok;	# current token
+
+# parses a new token [ws, tok, ws]
+sub get() {
+   my($ws1,$ctk,$ws2);
+   # could be wrapped into one regex
+   $ws1 = $stream=~s/^((?:\s*(?:(;[^\n]*\n))?)*)// ? $1 : die;
+   $ctk = $stream=~s/^(\(
+                      |\)
+                      |"(?:[^"]+|\\")*"
+                      |'(?:[^()]+)
+                      |[^ \t\r\n()]+
+                      )
+                      (?:[ \t]*(?=\n))?//x ? $1 : undef;
+   $ws2 = $stream=~s/^([ \t]*;[^\n]*\n)// ? $1 : "";
+   $word=$ctk;
+   
+#   print "TOKEN:$ws1:$ctk:$ws2\n";
+   $tok=new token($ws1,$ctk,$ws2);
+}
+
+# returns a parse tree, which is an array
+# of [token, token...] refs.
+sub parse() {
+   my @toks;
+   $depth++;
+   for(;;) {
+#      print "$depth: $word\n";
+      if ($word eq "(") {
+         my $t = $tok; get;
+         my @t = &parse;
+         $word eq ")" or die "missing right paranthese (got $word)\n";
+         push(@toks,[$t,@t,$tok]); get;
+      } elsif ($word eq ")") {
+         $depth--;
+         return @toks;
+      } elsif (!defined $word) {
+         $depth--;
+         return @toks;
+      } else {
+         push(@toks,$tok);
+         get;
+      }
+   }
+}
+
+sub parse_scheme {
+   get;
+   my @t = parse;
+   (@t,$tok);
+}
+
+# dumb dump of the tree structure
+sub dump_menupaths {
+   my $d=shift;
+   if (isa($_[0],token)) {
+      if ($_[0][1] eq "script-fu-register") {
+         print "\nmsgid $_[2][1]\nmsgstr \"\"\n";
+      }
+   }
+   for(@_) {
+      if(!isa($_,token)) {
+         dump_menupaths (@$_);
+      }
+   }
+}
+
+*isa = \&UNIVERSAL::isa;
+
+for (@ARGV) {
+   $file=$_;
+   $stream = do { local($/,*X); open X, $file or die "$file: $!"; <X> };
+   dump_menupaths parse_scheme;
+}

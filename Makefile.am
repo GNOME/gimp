@@ -62,6 +62,7 @@ EXTRA_DIST = \
 	pixmaps/eek.xpm				\
 	pixmaps/eye.xbm				\
 	pixmaps/first.xpm			\
+	pixmaps/folder.xpm			\
 	pixmaps/last.xpm			\
 	pixmaps/layer.xbm			\
 	pixmaps/linked.xbm			\

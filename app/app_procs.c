@@ -505,9 +505,11 @@ app_init (void)
   color_display_init ();
 
   RESET_BAR();
-  parse_buffers_init ();
-  parse_unitrc ();         /*  this needs to be done before gimprc loading  */
-  parse_gimprc ();         /*  parse the local GIMP configuration file      */
+  if (parse_buffers_init ())
+    {
+      parse_unitrc ();   /*  this needs to be done before gimprc loading  */
+      parse_gimprc ();   /*  parse the local GIMP configuration file      */
+    }
 
   if (always_restore_session)
     restore_session = TRUE;

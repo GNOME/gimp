@@ -889,7 +889,9 @@ gimp_coordinates_new (GimpUnit         unit,
   gtk_table_attach_defaults (GTK_TABLE (sizeentry), spinbutton, 1, 2, 0, 1);
   gtk_widget_show (spinbutton);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), GIMP_UNIT_PIXEL);
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
+			    update_policy == GIMP_SIZE_ENTRY_UPDATE_RESOLUTION ?
+			    GIMP_UNIT_INCH : GIMP_UNIT_PIXEL);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0, xres, TRUE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1, yres, TRUE);
@@ -938,6 +940,116 @@ gimp_coordinates_new (GimpUnit         unit,
   gtk_object_set_data (GTK_OBJECT (sizeentry), "chainbutton", chainbutton);
 
   return sizeentry;
+}
+
+typedef struct
+{
+  GtkAdjustment *adjustment;
+  GtkAdjustment *divided_adj;
+  gint           mem_size_unit;
+} GimpMemSizeEntryData;
+
+static void
+gimp_mem_size_entry_callback (GtkAdjustment *adj,
+			      gpointer       data)
+{
+  GimpMemSizeEntryData *gmsed;
+  gint new_value;
+
+  gmsed = (GimpMemSizeEntryData *)data;
+  new_value = adj->value * gmsed->mem_size_unit;
+
+  gtk_adjustment_set_value (gmsed->adjustment, new_value);
+}
+
+static void
+gimp_mem_size_unit_callback (GtkWidget *widget,
+			     gpointer   data)
+{
+  GimpMemSizeEntryData *gmsed;
+  gint divided_mem_size;
+  gint new_unit;
+
+  gmsed = (GimpMemSizeEntryData *)data;
+
+  new_unit = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+
+  if (new_unit && new_unit != gmsed->mem_size_unit)
+    {
+      divided_mem_size = gmsed->adjustment->value / new_unit;
+      gmsed->mem_size_unit = new_unit;
+
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (gmsed->divided_adj), divided_mem_size);
+    }
+}
+
+/**
+ * gimp_mem_size_entry_new:
+ * @adjustment: The adjustment containing the memsize and it's limits.
+ *
+ * Returns: A #GtkHBox with a #GtkSpinButton and a #GtkOptionMenu.
+ */
+GtkWidget *
+gimp_mem_size_entry_new (GtkAdjustment *adjustment)
+{
+  GtkWidget *hbox;
+  GtkObject *divided_adj;
+  GtkWidget *spinbutton;
+  GtkWidget *optionmenu;
+
+  GimpMemSizeEntryData *gmsed;
+  gint mem_size_unit = 1;
+  gint divided_mem_size;  
+  gint i;
+
+  gmsed = g_new (GimpMemSizeEntryData, 1);
+
+  for (i = 0; i < 3; i++)
+    {
+      if ( (gint)adjustment->value % (mem_size_unit * 1024) != 0 )
+	break;
+      mem_size_unit *= 1024;
+    }
+  divided_mem_size =  adjustment->value / mem_size_unit;
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  spinbutton =
+    gimp_spin_button_new (&divided_adj, divided_mem_size,
+			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
+			  1.0, 0.0);
+  gtk_signal_connect (GTK_OBJECT (divided_adj), "value_changed",
+		      GTK_SIGNAL_FUNC (gimp_mem_size_entry_callback),
+		      gmsed);
+  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+  gtk_widget_show (spinbutton);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, gimp_mem_size_unit_callback,
+			   gmsed, (gpointer) mem_size_unit,
+
+			   _("Bytes"),     (gpointer) 1, NULL,
+			   _("KiloBytes"), (gpointer) 1024, NULL,
+			   _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
+
+			   NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
+  gtk_widget_show (optionmenu);
+
+  gtk_signal_connect_object (GTK_OBJECT (hbox), "destroy",
+			     GTK_SIGNAL_FUNC (gtk_object_unref),
+			     GTK_OBJECT (adjustment));
+  gtk_signal_connect_object (GTK_OBJECT (hbox), "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) gmsed);
+
+  gmsed->adjustment = adjustment;
+  gmsed->divided_adj = GTK_ADJUSTMENT (divided_adj);
+  gmsed->mem_size_unit = mem_size_unit;
+
+  gtk_object_set_data (GTK_OBJECT (hbox), "spinbutton", spinbutton);
+  gtk_object_set_data (GTK_OBJECT (hbox), "optionmenu", optionmenu);
+
+  return hbox;
 }
 
 /**

@@ -3903,6 +3903,30 @@ gint               *seed,gint               *use_time,gint                time_t
 <RETURNS>GtkWidget  *</RETURNS>
 GimpUnit            unit,gchar              *unit_format,gboolean            menu_show_pixels,gboolean            menu_show_percent,gint                spinbutton_usize,GimpSizeEntryUpdatePolicy  update_policy,gboolean            chainbutton_active,gboolean            chain_constrains_ratio,gchar              *xlabel,gdouble             x,gdouble             xres,gdouble             lower_boundary_x,gdouble             upper_boundary_x,gdouble             xsize_0,gdouble             xsize_100,gchar              *ylabel,gdouble             y,gdouble             yres,gdouble             lower_boundary_y,gdouble             upper_boundary_y,gdouble             ysize_0,gdouble             ysize_100
 </FUNCTION>
+<MACRO>
+<NAME>GIMP_MEM_SIZE_ENTRY_SPINBUTTON</NAME>
+#define GIMP_MEM_SIZE_ENTRY_SPINBUTTON(memsize) \
+        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (memsize), \
+                                              "spinbutton"))
+</MACRO>
+<MACRO>
+<NAME>GIMP_MEM_SIZE_ENTRY_SPINBUTTON_ADJ</NAME>
+#define GIMP_MEM_SIZE_ENTRY_SPINBUTTON_ADJ(memsize) \
+        gtk_spin_button_get_adjustment \
+        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (memsize), \
+                                               "spinbutton")))
+</MACRO>
+<MACRO>
+<NAME>GIMP_MEM_SIZE_ENTRY_OPTIONMENU</NAME>
+#define GIMP_MEM_SIZE_ENTRY_OPTIONMENU(memsize) \
+        GTK_OPTION_MENU (gtk_object_get_data (GTK_OBJECT (memsize), \
+                                              "optionmenu"))
+</MACRO>
+<FUNCTION>
+<NAME>gimp_mem_size_entry_new</NAME>
+<RETURNS>GtkWidget  *</RETURNS>
+GtkAdjustment      *adjustment
+</FUNCTION>
 <FUNCTION>
 <NAME>gimp_pixmap_button_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>

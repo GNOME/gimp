@@ -3,8 +3,8 @@
 #  Script to perform the default installation steps for the
 #   specified user home directory.
 #
-#  1) Create ~/.gimp if it doesn't exist
-#  2) Copy system gimprc file to ~/.gimp
+#  1) Create ~/.gimp-1.2 if it doesn't exist
+#  2) Copy system gimprc file to ~/.gimp-1.2
 #  3) Create brushes, gradients, palettes, patterns, plug-ins subdirs
 #  4) Create the tmp subdirectory for disk-swapping undo buffers
 #  5) Copy the palette files in system palette directory
@@ -30,6 +30,8 @@ echo "mkdir $2/gradients"
 mkdir $2/gradients
 echo "mkdir $2/palettes"
 mkdir $2/palettes
+echo "cp $1/palettes/* $2/palettes"
+cp $1/palettes/* $2/palettes
 echo "mkdir $2/patterns"
 mkdir $2/patterns
 echo "mkdir $2/plug-ins"
@@ -40,16 +42,16 @@ echo "mkdir $2/scripts"
 mkdir $2/scripts
 echo "mkdir $2/tmp"
 mkdir $2/tmp
-echo "mkdir $2/levels"
-mkdir $2/levels
 echo "mkdir $2/curves"
 mkdir $2/curves
+echo "mkdir $2/levels"
+mkdir $2/levels
+echo "mkdir $2/fractalexplorer"
+mkdir $2/fractalexplorer
 echo "mkdir $2/gfig"
 mkdir $2/gfig
 echo "mkdir $2/gflare"
 mkdir $2/gflare
-echo "mkdir $2/fractalexplorer"
-mkdir $2/fractalexplorer
 echo "mkdir $2/gimpressionist"
 mkdir $2/gimpressionist
 echo "mkdir $2/gimpressionist/Brushes"
@@ -58,8 +60,3 @@ echo "mkdir $2/gimpressionist/Paper"
 mkdir $2/gimpressionist/Paper
 echo "mkdir $2/gimpressionist/Presets"
 mkdir $2/gimpressionist/Presets
-echo "cp $1/palettes/* $2/palettes"
-cp $1/palettes/* $2/palettes
-echo "NOTICE: GIMP uses an additional gtkrc file so you can"
-echo "configure it to look differently than other GTK apps."
-echo "You may wish to edit GIMP's gtkrc (in $2/gtkrc)."

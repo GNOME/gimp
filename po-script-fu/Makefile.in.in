@@ -33,6 +33,7 @@ GENCAT = @GENCAT@
 GMSGFMT = PATH=../src:$$PATH @GMSGFMT@
 MSGFMT = @MSGFMT@
 XGETTEXT = PATH=../src:$$PATH @XGETTEXT@
+SXGETTEXT = ./script-fu-xgettext
 MSGMERGE = PATH=../src:$$PATH msgmerge
 
 DEFS = @DEFS@
@@ -47,9 +48,11 @@ SOURCES = cat-id-tbl.c
 POFILES = @POFILES@
 GMOFILES = @GMOFILES@
 DISTFILES = ChangeLog Makefile.in.in POTFILES.in $(PACKAGE).pot \
-stamp-cat-id $(POFILES) $(GMOFILES) $(SOURCES)
+stamp-cat-id $(POFILES) $(GMOFILES) $(SOURCES) $(SXGETTEXT)
 
 POTFILES = \
+
+POTSCRIPTS = $(top_srcdir)/plug-ins/script-fu/scripts/*.scm
 
 CATALOGS = @CATALOGS@
 CATOBJEXT = @CATOBJEXT@
@@ -86,6 +89,7 @@ $(srcdir)/$(PACKAGE).pot: $(POTFILES)
 	$(XGETTEXT) --default-domain=$(PACKAGE) --directory=$(top_srcdir) \
 	  --add-comments --keyword=_ --keyword=N_ \
 	  --files-from=$(srcdir)/POTFILES.in \
+	&& $(SXGETTEXT) $(POTSCRIPTS) >> $(srcdir)/$(PACKAGE).po \
 	&& test ! -f $(PACKAGE).po \
 	   || ( rm -f $(srcdir)/$(PACKAGE).pot \
 		&& mv $(PACKAGE).po $(srcdir)/$(PACKAGE).pot )

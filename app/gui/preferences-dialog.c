@@ -32,11 +32,8 @@
 #include "session.h"
 #include "tile_cache.h"
 
-#include "libgimp/gimpchainbutton.h"
-#include "libgimp/gimpfileselection.h"
-#include "libgimp/gimppatheditor.h"
-#include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimplimits.h"
+#include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -61,8 +58,6 @@ static void        file_prefs_cancel_callback       (GtkWidget *, GtkWidget *);
 static void  file_prefs_toggle_callback             (GtkWidget *, gpointer);
 static void  file_prefs_preview_size_callback       (GtkWidget *, gpointer);
 static void  file_prefs_nav_preview_size_callback   (GtkWidget *, gpointer);
-static void  file_prefs_mem_size_callback           (GtkWidget *, gpointer);
-static void  file_prefs_mem_size_unit_callback      (GtkWidget *, gpointer);
 static void  file_prefs_string_callback             (GtkWidget *, gpointer);
 static void  file_prefs_text_callback               (GtkWidget *, gpointer);
 static void  file_prefs_filename_callback           (GtkWidget *, gpointer);
@@ -983,67 +978,6 @@ file_prefs_nav_preview_size_callback (GtkWidget *widget,
 }
 
 static void
-file_prefs_mem_size_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  gint *mem_size;
-  gint  divided_mem_size;
-  gint  mem_size_unit;
-
-  if (! (mem_size = gtk_object_get_data (GTK_OBJECT (widget), "mem_size")))
-    return;
-
-  divided_mem_size = (int) gtk_object_get_data (GTK_OBJECT (widget),
-						"divided_mem_size");
-  mem_size_unit = (int) gtk_object_get_data (GTK_OBJECT (widget),
-					     "mem_size_unit");
-
-  divided_mem_size = GTK_ADJUSTMENT (widget)->value;
-  *mem_size = divided_mem_size * mem_size_unit;
-
-  gtk_object_set_data (GTK_OBJECT (widget), "divided_mem_size",
-		       (gpointer) divided_mem_size);
-}
-
-static void
-file_prefs_mem_size_unit_callback (GtkWidget *widget,
-				   gpointer   data)
-{
-  GtkObject *adjustment;
-  gint  new_unit;
-  gint *mem_size;
-  gint  divided_mem_size;
-  gint  mem_size_unit;
-
-  adjustment = GTK_OBJECT (data);
-
-  new_unit = (int) gtk_object_get_user_data (GTK_OBJECT (widget));
-
-  if (! (mem_size = gtk_object_get_data (GTK_OBJECT (adjustment), "mem_size")))
-    return;
-
-  divided_mem_size = (int) gtk_object_get_data (GTK_OBJECT (adjustment),
-						"divided_mem_size");
-  mem_size_unit = (int) gtk_object_get_data (GTK_OBJECT (adjustment),
-					     "mem_size_unit");
-
-  if (new_unit != mem_size_unit)
-    {
-      divided_mem_size = *mem_size / new_unit;
-      mem_size_unit = new_unit;
-
-      gtk_signal_handler_block_by_data (GTK_OBJECT (adjustment), mem_size);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (adjustment), divided_mem_size);
-      gtk_signal_handler_unblock_by_data (GTK_OBJECT (adjustment), mem_size);
-    }
-
-  gtk_object_set_data (GTK_OBJECT (adjustment), "divided_mem_size",
-		       (gpointer) divided_mem_size);
-  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size_unit",
-		       (gpointer) mem_size_unit);
-}
-
-static void
 file_prefs_string_callback (GtkWidget *widget,
 			    gpointer   data)
 {
@@ -1384,8 +1318,6 @@ file_pref_cmd_callback (GtkWidget *widget,
   GSList    *group;
 
   gint i;
-  gint divided_mem_size;
-  gint mem_size_unit;
   gchar *pixels_per_unit;
 
   if (prefs_dlg)
@@ -1675,46 +1607,13 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     _("Default Image Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  /*  The maximum size of a new image  */
-  mem_size_unit = 1;
-  for (i = 0; i < 3; i++)
-    {
-      if (max_new_image_size % (mem_size_unit * 1024) != 0)
-	break;
-      mem_size_unit *= 1024;
-    }
-  divided_mem_size = max_new_image_size / mem_size_unit;
-
-  hbox = gtk_hbox_new (FALSE, 2);
-  spinbutton =
-    gimp_spin_button_new (&adjustment, divided_mem_size,
-			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
-			  1.0, 0.0);
+  /*  The maximum size of a new image  */  
+  adjustment = gtk_adjustment_new (max_new_image_size, 
+				   0, (4069.0 * 1024 * 1024), 1.0, 1.0, 0.0);
+  hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_mem_size_callback),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &max_new_image_size);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  /* for the mem_size_unit callback  */
-  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size",
-		       &max_new_image_size);
-  gtk_object_set_data (GTK_OBJECT (adjustment), "divided_mem_size",
-		       (gpointer) divided_mem_size);
-  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size_unit",
-		       (gpointer) mem_size_unit);
-
-  optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_mem_size_unit_callback,
-			   adjustment, (gpointer) mem_size_unit,
-
-			   _("Bytes"),     (gpointer) 1, NULL,
-			   _("KiloBytes"), (gpointer) 1024, NULL,
-			   _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
-
-			   NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show (optionmenu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Maximum Image Size:"), 1.0, 0.5,
 			     hbox, 1, TRUE);
@@ -1725,8 +1624,8 @@ file_pref_cmd_callback (GtkWidget *widget,
 					  GTK_CTREE (ctree),
 					  _("Default Comment"),
 					  "dialogs/preferences/default_comment.html",
-					  NULL,
-					  &top_insert,
+					  top_insert,
+					  &child_insert,
 					  page_index);
   gtk_widget_show (vbox);
   page_index++;
@@ -2193,45 +2092,12 @@ file_pref_cmd_callback (GtkWidget *widget,
 			     spinbutton, 1, TRUE);
 
   /*  The tile cache size  */
-  mem_size_unit = 1;
-  for (i = 0; i < 3; i++)
-    {
-      if (edit_tile_cache_size % (mem_size_unit * 1024) != 0)
-	break;
-      mem_size_unit *= 1024;
-    }
-  divided_mem_size = edit_tile_cache_size / mem_size_unit;
-
-  hbox = gtk_hbox_new (FALSE, 2);
-  spinbutton =
-    gimp_spin_button_new (&adjustment, divided_mem_size,
-			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
-			  1.0, 0.0);
+  adjustment = gtk_adjustment_new (edit_tile_cache_size, 
+				   0, (4069.0 * 1024 * 1024), 1.0, 1.0, 0.0);
+  hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (file_prefs_mem_size_callback),
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &edit_tile_cache_size);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  gtk_widget_show (spinbutton);
-
-  /* for the mem_size_unit callback  */
-  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size",
-		       &edit_tile_cache_size);
-  gtk_object_set_data (GTK_OBJECT (adjustment), "divided_mem_size",
-		       (gpointer) divided_mem_size);
-  gtk_object_set_data (GTK_OBJECT (adjustment), "mem_size_unit",
-		       (gpointer) mem_size_unit);
-
-  optionmenu =
-    gimp_option_menu_new2 (FALSE, file_prefs_mem_size_unit_callback,
-			   adjustment, (gpointer) mem_size_unit,
-
-			   _("Bytes"),     (gpointer) 1, NULL,
-			   _("KiloBytes"), (gpointer) 1024, NULL, 
-			   _("MegaBytes"), (gpointer) (1024 * 1024), NULL,
-
-			   NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show (optionmenu);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Tile Cache Size:"), 1.0, 0.5,
 			     hbox, 1, TRUE);
@@ -2387,14 +2253,15 @@ file_pref_cmd_callback (GtkWidget *widget,
   vbox2 = file_prefs_frame_new (_("Get Monitor Resolution"), GTK_BOX (vbox));
 
   {
-    gdouble xres, yres;
-    gchar   buf[80];
+    gdouble  xres, yres;
+    gchar   *str;
 
     gdisplay_xserver_resolution (&xres, &yres);
 
-    g_snprintf (buf, sizeof (buf), _("(Currently %d x %d dpi)"),
-		(int) (xres + 0.5), (int) (yres + 0.5));
-    label = gtk_label_new (buf);
+    str = g_strdup_printf (_("(Currently %d x %d dpi)"),
+			   ROUND (xres), ROUND (yres));
+    label = gtk_label_new (str);
+    g_free (str);
   }
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);

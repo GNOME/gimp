@@ -1,3 +1,10 @@
+2000-03-14  Sven Neumann  <sven@gimp.org>
+	    Michael Natterer <mitch@gimp.org>
+
+	* *.po: merged the slightly changed messages from install.c
+	and removed the tabs. You will still have to edit the
+	translations and remove the trailing newlines.
+
 Tue Mar 14 09:58:19 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.

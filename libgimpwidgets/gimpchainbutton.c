@@ -317,13 +317,11 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
   g_return_if_fail (gcb != NULL);
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));
 
-  if (event); /* avoid unused variable compiler warning */
-
   gdk_window_clear_area (widget->window,
 			 0, 0,
 			 widget->allocation.width,
 			 widget->allocation.height);
-  
+
   points[0].x = widget->allocation.width / 2;
   points[0].y = widget->allocation.height / 2;
 

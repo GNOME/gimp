@@ -183,8 +183,22 @@ GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    gdouble             ysize_0,   /* % */
 				    gdouble             ysize_100  /* % */);
 
-GtkWidget * gimp_pixmap_button_new (gchar             **xpm_data,
-				    gchar              *text);
+#define GIMP_MEM_SIZE_ENTRY_SPINBUTTON(memsize) \
+        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (memsize), \
+                                              "spinbutton"))
+#define GIMP_MEM_SIZE_ENTRY_SPINBUTTON_ADJ(memsize) \
+        gtk_spin_button_get_adjustment \
+        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (memsize), \
+                                               "spinbutton")))
+#define GIMP_MEM_SIZE_ENTRY_OPTIONMENU(memsize) \
+        GTK_OPTION_MENU (gtk_object_get_data (GTK_OBJECT (memsize), \
+                                              "optionmenu"))
+
+GtkWidget * gimp_mem_size_entry_new (GtkAdjustment      *adjustment);
+  
+
+GtkWidget * gimp_pixmap_button_new  (gchar             **xpm_data,
+				     gchar              *text);
 
 /*
  *  Standard Callbacks

@@ -299,17 +299,21 @@
 #  the help pages using the "netscape-remote" command.
 (help-browser gimp)
 
-# Gfig search path
-#  This path will be searched for Gfig figures when you use the Gfig plug-in.
-(gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
-
 # Fractalexplorer path
 #  This path will be searched for fractals when you use the Fractalexplorer  
 #  plug-in.
 (fractalexplorer-path "${gimp_dir}/fractalexplorer:${gimp_data_dir}/fractalexplorer")
 
+# Gfig search path
+#  This path will be searched for Gfig figures when you use the Gfig plug-in.
+(gfig-path "${gimp_dir}/gfig:${gimp_data_dir}/gfig")
+
 # GFlare path
 #  This path will be searched for gflares when you use the GFlare plug-in.
 (gflare-path "${gimp_dir}/gflare:${gimp_data_dir}/gflare")
+
+# Gimpressionist path
+#  This path will be searched for data when you use the Gimpressionist plug-in.
+(gimpressionist-path "${gimp_dir}/gimpressionist:${gimp_data_dir}/gimpressionist")
 
 # [end of file]

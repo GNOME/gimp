@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.0\n"
-"POT-Creation-Date: 2000-03-03 17:47-0800\n"
+"POT-Creation-Date: 2000-03-14 23:09+0100\n"
 "PO-Revision-Date: 1998-12-30 03:50+0100\n"
 "Last-Translator: Wing Tung Leung <tg@skynet.be>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -65,46 +65,46 @@ msgstr " u gebracht door"
 msgid "GIMP Startup"
 msgstr "Opstarten van Gimp"
 
-#: app/app_procs.c:479 app/gimprc.c:432
+#: app/app_procs.c:479 app/gimprc.c:448
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "bezig met parsen van \"%s\"\n"
 
 #. initialize the xcf file format routines
-#: app/app_procs.c:539
+#: app/app_procs.c:541
 msgid "Looking for data files"
 msgstr "Bezig met zoeken naar data bestanden"
 
-#: app/app_procs.c:539
+#: app/app_procs.c:541
 #, fuzzy
 msgid "Parasites"
 msgstr "Plakken"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:541 app/internal_procs.c:71 app/preferences_dialog.c:2468
+#: app/app_procs.c:543 app/internal_procs.c:71 app/preferences_dialog.c:2397
 msgid "Brushes"
 msgstr "Penselen"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:543 app/internal_procs.c:143 app/preferences_dialog.c:2476
+#: app/app_procs.c:545 app/internal_procs.c:143 app/preferences_dialog.c:2405
 msgid "Patterns"
 msgstr "Patronen"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:545 app/preferences_dialog.c:2480
+#: app/app_procs.c:547 app/preferences_dialog.c:2409
 msgid "Palettes"
 msgstr "Paletten"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:547 app/internal_procs.c:113 app/preferences_dialog.c:2484
+#: app/app_procs.c:549 app/internal_procs.c:113 app/preferences_dialog.c:2413
 msgid "Gradients"
 msgstr "Gradaties"
 
-#: app/app_procs.c:735
+#: app/app_procs.c:737
 msgid "Really Quit?"
 msgstr "Echt afsluiten?"
 
-#: app/app_procs.c:739
+#: app/app_procs.c:741
 #, fuzzy
 msgid ""
 "Some files unsaved.\n"
@@ -112,21 +112,21 @@ msgid ""
 "Quit the GIMP?"
 msgstr "Sommige bestanden zijn niet bewaard. GIMP afsluiten?"
 
-#: app/app_procs.c:740 app/install.c:272 app/install.c:430
+#: app/app_procs.c:742
 msgid "Quit"
 msgstr "Afsluiten"
 
-#: app/app_procs.c:740 app/brightness_contrast.c:218 app/channel_ops.c:93
+#: app/app_procs.c:742 app/brightness_contrast.c:218 app/channel_ops.c:93
 #: app/channels_dialog.c:2463 app/channels_dialog.c:2637
 #: app/color_balance.c:275 app/color_notebook.c:125 app/convert.c:506
 #: app/curves.c:559 app/file_new_dialog.c:207 app/file_new_dialog.c:357
 #: app/gdisplay_color_ui.c:129 app/gdisplay_ops.c:346 app/gimpprogress.c:112
-#: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4839
-#: app/gradient.c:5400 app/hue_saturation.c:377 app/interface.c:984
-#: app/layers_dialog.c:3326 app/layers_dialog.c:3517 app/layers_dialog.c:3617
-#: app/layers_dialog.c:3889 app/levels.c:341 app/palette.c:1826
-#: app/posterize.c:201 app/preferences_dialog.c:1469 app/qmask.c:281
-#: app/resize.c:193 app/resize.c:1343 app/threshold.c:275
+#: app/global_edit.c:739 app/gradient.c:1769 app/gradient.c:4841
+#: app/gradient.c:5402 app/hue_saturation.c:377 app/install.c:532
+#: app/interface.c:984 app/layers_dialog.c:3326 app/layers_dialog.c:3517
+#: app/layers_dialog.c:3617 app/layers_dialog.c:3889 app/levels.c:341
+#: app/palette.c:1826 app/posterize.c:201 app/preferences_dialog.c:1434
+#: app/qmask.c:281 app/resize.c:195 app/resize.c:1345 app/threshold.c:275
 #: modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "Annuleren"
@@ -149,130 +149,130 @@ msgstr ""
 msgid "Paintbrush operation failed."
 msgstr "Mengopertatie mislukt."
 
-#: app/blend.c:272
+#: app/blend.c:294
 msgid "Offset:"
 msgstr ""
 
-#: app/blend.c:283
+#: app/blend.c:305
 #, fuzzy
 msgid "FG to BG (RGB)"
 msgstr "FG naar BG RGB"
 
-#: app/blend.c:284
+#: app/blend.c:306
 #, fuzzy
 msgid "FG to BG (HSV)"
 msgstr "FG naar BG HSV"
 
-#: app/blend.c:285
+#: app/blend.c:307
 msgid "FG to Transparent"
 msgstr "FG naar Transparant"
 
-#: app/blend.c:286
+#: app/blend.c:308
 #, fuzzy
-msgid "Custom from Editor"
-msgstr "Aangepast van editor"
+msgid "Custom Gradient"
+msgstr "Kopieer gradatie"
 
-#: app/blend.c:290
+#: app/blend.c:312
 msgid "Blend:"
 msgstr "Meng:"
 
-#: app/blend.c:298 app/gradient.c:533 app/preferences_dialog.c:2209
+#: app/blend.c:320 app/gradient.c:533 app/preferences_dialog.c:2137
 msgid "Linear"
 msgstr "Lineair"
 
-#: app/blend.c:299
+#: app/blend.c:321
 msgid "Bi-Linear"
 msgstr "Bi-Lineair"
 
-#: app/blend.c:300
+#: app/blend.c:322
 msgid "Radial"
 msgstr "Radiaal"
 
-#: app/blend.c:301
+#: app/blend.c:323
 msgid "Square"
 msgstr "Vierkant"
 
-#: app/blend.c:302
+#: app/blend.c:324
 msgid "Conical (symmetric)"
 msgstr "Conisch (symmetrisch)"
 
-#: app/blend.c:303
+#: app/blend.c:325
 msgid "Conical (asymmetric)"
 msgstr "Conisch (asymmetrisch)"
 
-#: app/blend.c:304
+#: app/blend.c:326
 msgid "Shapeburst (angular)"
 msgstr ""
 
-#: app/blend.c:305
+#: app/blend.c:327
 msgid "Shapeburst (spherical)"
 msgstr ""
 
-#: app/blend.c:306
+#: app/blend.c:328
 msgid "Shapeburst (dimpled)"
 msgstr ""
 
-#: app/blend.c:307
+#: app/blend.c:329
 #, fuzzy
 msgid "Spiral (clockwise)"
 msgstr "HSV (heu metwijzersmee)"
 
-#: app/blend.c:308
+#: app/blend.c:330
 #, fuzzy
 msgid "Spiral (anticlockwise)"
 msgstr "HSV (heu metwijzersmee)"
 
-#: app/blend.c:312
+#: app/blend.c:334
 msgid "Gradient:"
 msgstr "Gradaties:"
 
-#: app/blend.c:320 app/preferences_dialog.c:1808
+#: app/blend.c:342 app/preferences_dialog.c:1769
 msgid "None"
 msgstr "Geen"
 
-#: app/blend.c:321
+#: app/blend.c:343
 msgid "Sawtooth Wave"
 msgstr ""
 
-#: app/blend.c:322
+#: app/blend.c:344
 msgid "Triangular Wave"
 msgstr ""
 
-#: app/blend.c:326
+#: app/blend.c:348
 msgid "Repeat:"
 msgstr "Herhaal:"
 
-#: app/blend.c:345
+#: app/blend.c:367
 #, fuzzy
 msgid "Adaptive Supersampling"
 msgstr "Adaptieve oversampling"
 
-#: app/blend.c:373
+#: app/blend.c:395
 #, fuzzy
 msgid "Max Depth:"
 msgstr "Max diepte:"
 
-#: app/blend.c:386 app/bucket_fill.c:127 app/fuzzy_select.c:657
+#: app/blend.c:408 app/bucket_fill.c:127 app/fuzzy_select.c:661
 msgid "Threshold:"
 msgstr ""
 
-#: app/blend.c:413
+#: app/blend.c:435
 msgid "Blend: Invalid for indexed images."
 msgstr "Meng: Ongeldig voor geindexeerde beelden."
 
-#: app/blend.c:438
+#: app/blend.c:460
 msgid "Blend: 0, 0"
 msgstr "Meng: 0, 0"
 
-#: app/blend.c:501
+#: app/blend.c:523
 msgid "Blend operation failed."
 msgstr "Mengopertatie mislukt."
 
-#: app/blend.c:507
+#: app/blend.c:529
 msgid "Blending..."
 msgstr ""
 
-#: app/blend.c:585 app/blend.c:595
+#: app/blend.c:607 app/blend.c:617
 #, fuzzy
 msgid "Blend: "
 msgstr "Meng:"
@@ -292,13 +292,13 @@ msgstr "Helderheid-Contrast werkt niet op geindexeerde tekeningen."
 #: app/gdisplay_color_ui.c:127 app/gimpui.c:122 app/hue_saturation.c:373
 #: app/layers_dialog.c:3324 app/layers_dialog.c:3515 app/layers_dialog.c:3615
 #: app/layers_dialog.c:3887 app/levels.c:337 app/module_db.c:281
-#: app/posterize.c:197 app/preferences_dialog.c:1465 app/qmask.c:279
-#: app/resize.c:191 app/resize.c:1343 app/threshold.c:271
+#: app/posterize.c:197 app/preferences_dialog.c:1430 app/qmask.c:279
+#: app/resize.c:193 app/resize.c:1345 app/threshold.c:271
 #: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr ""
 
-#: app/brightness_contrast.c:216 app/by_color_select.c:634
+#: app/brightness_contrast.c:216 app/by_color_select.c:687
 #: app/color_balance.c:273 app/curves.c:557 app/file_new_dialog.c:355
 #: app/hue_saturation.c:375 app/levels.c:339 app/posterize.c:199
 #: app/threshold.c:273 app/tools.c:1086 app/transform_core.c:412
@@ -328,7 +328,7 @@ msgid "Brush Editor"
 msgstr "Penseel Editor"
 
 #. The close button
-#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:636
+#: app/brush_edit.c:216 app/brush_select.c:278 app/by_color_select.c:689
 #: app/color_notebook.c:122 app/color_picker.c:297 app/colormap_dialog.i.c:170
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
 #: app/errorconsole.c:281 app/gdisplay_ops.c:346 app/gradient.c:801
@@ -342,7 +342,7 @@ msgid "Close"
 msgstr "Sluit"
 
 #. the feather radius scale
-#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:200
+#: app/brush_edit.c:276 app/color_picker.c:181 app/tool_options.c:199
 msgid "Radius:"
 msgstr ""
 
@@ -372,11 +372,11 @@ msgstr "Hernieuw"
 msgid "No Brushes available"
 msgstr ""
 
-#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:505
+#: app/brush_select.c:445 app/layers_dialog.c:372 app/tool_options.c:504
 msgid "Opacity:"
 msgstr "Ondoorzichtigheid"
 
-#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:529
+#: app/brush_select.c:453 app/layers_dialog.c:324 app/tool_options.c:528
 msgid "Mode:"
 msgstr "Modus:"
 
@@ -410,7 +410,7 @@ msgstr ""
 msgid "Sorry, this brush can't be deleted."
 msgstr ""
 
-#: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:274
+#: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:273
 msgid "Sample Merged"
 msgstr ""
 
@@ -442,36 +442,36 @@ msgid "No available patterns for this operation."
 msgstr "Geen beschikbare patronen voor deze bewerking."
 
 #. The shell and main vbox
-#: app/by_color_select.c:629
+#: app/by_color_select.c:682
 msgid "By Color Selection"
 msgstr "Door Kleurselectie"
 
-#: app/by_color_select.c:685
+#: app/by_color_select.c:738
 msgid "Inactive"
 msgstr "Inactief"
 
-#: app/by_color_select.c:693
+#: app/by_color_select.c:746
 msgid "Selection Mode"
 msgstr "Selectiemodus"
 
-#: app/by_color_select.c:695 app/paint_funcs.c:100
+#: app/by_color_select.c:748 app/paint_funcs.c:100
 msgid "Replace"
 msgstr "Vervangen"
 
-#: app/by_color_select.c:697 app/colormap_dialog.i.c:127
+#: app/by_color_select.c:750 app/colormap_dialog.i.c:127
 #: app/gdisplay_color_ui.c:114
 msgid "Add"
 msgstr "Toevoegen"
 
-#: app/by_color_select.c:699 app/layers_dialog.c:340 app/tool_options.c:904
+#: app/by_color_select.c:752 app/layers_dialog.c:340 app/tool_options.c:904
 msgid "Subtract"
 msgstr ""
 
-#: app/by_color_select.c:701
+#: app/by_color_select.c:754
 msgid "Intersect"
 msgstr "Intersectie"
 
-#: app/by_color_select.c:713
+#: app/by_color_select.c:766
 msgid "Fuzziness Threshold"
 msgstr ""
 
@@ -489,7 +489,7 @@ msgstr ""
 msgid "Selection Mask"
 msgstr "Selectiemasker"
 
-#: app/channel_ops.c:85 app/resize.c:392
+#: app/channel_ops.c:85 app/resize.c:394
 msgid "Offset"
 msgstr ""
 
@@ -499,8 +499,8 @@ msgid "Offset X:"
 msgstr ""
 
 #: app/channel_ops.c:115 app/crop.c:1063 app/file_new_dialog.c:530
-#: app/resize.c:330 app/resize.c:415 app/resize.c:573 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82
+#: app/install.c:1108 app/resize.c:332 app/resize.c:417 app/resize.c:575
+#: app/rotate_tool.c:106 app/scale_tool.c:100 app/shear_tool.c:82
 msgid "Y:"
 msgstr ""
 
@@ -509,12 +509,12 @@ msgstr ""
 msgid "Wrap Around"
 msgstr ""
 
-#: app/channel_ops.c:174 app/image_new.c:69 app/image_new.c:223
+#: app/channel_ops.c:174 app/image_new.c:70 app/image_new.c:234
 #: app/layers_dialog.c:3422
 msgid "Background"
 msgstr "Achtergrond"
 
-#: app/channel_ops.c:175 app/image_new.c:79 app/layers_dialog.c:3424
+#: app/channel_ops.c:175 app/image_new.c:80 app/layers_dialog.c:3424
 msgid "Transparent"
 msgstr "Transparant"
 
@@ -697,22 +697,22 @@ msgstr "Voorbeeldgrootte"
 msgid "Update Active Color"
 msgstr ""
 
-#: app/color_picker.c:255 app/color_picker.c:265
+#: app/color_picker.c:255 app/color_picker.c:264
 #, fuzzy
 msgid "Red:"
 msgstr "Rood"
 
-#: app/color_picker.c:256 app/color_picker.c:266
+#: app/color_picker.c:256 app/color_picker.c:265
 #, fuzzy
 msgid "Green:"
 msgstr "Groen"
 
-#: app/color_picker.c:257 app/color_picker.c:267
+#: app/color_picker.c:257 app/color_picker.c:266
 #, fuzzy
 msgid "Blue:"
 msgstr "Blauw"
 
-#: app/color_picker.c:258 app/color_picker.c:264 app/color_picker.c:273
+#: app/color_picker.c:258 app/color_picker.c:267 app/color_picker.c:273
 msgid "Alpha:"
 msgstr ""
 
@@ -735,13 +735,13 @@ msgstr "Hex Triple"
 msgid "Intensity:"
 msgstr "Intensiteit"
 
-#: app/color_picker.c:633 app/color_picker.c:634 app/color_picker.c:635
-#: app/color_picker.c:636 app/color_picker.c:637 app/color_picker.c:638
-#: app/color_picker.c:639 app/color_picker.c:657 app/color_picker.c:672
-#: app/color_picker.c:690 app/info_window.c:185 app/info_window.c:191
-#: app/info_window.c:197 app/info_window.c:203 app/info_window.c:422
-#: app/info_window.c:423 app/info_window.c:424 app/info_window.c:425
-#: app/info_window.c:447
+#: app/color_picker.c:626 app/color_picker.c:627 app/color_picker.c:628
+#: app/color_picker.c:629 app/color_picker.c:630 app/color_picker.c:631
+#: app/color_picker.c:632 app/color_picker.c:644 app/color_picker.c:651
+#: app/color_picker.c:669 app/color_picker.c:684 app/info_window.c:185
+#: app/info_window.c:191 app/info_window.c:197 app/info_window.c:203
+#: app/info_window.c:422 app/info_window.c:423 app/info_window.c:424
+#: app/info_window.c:425 app/info_window.c:447
 msgid "N/A"
 msgstr ""
 
@@ -954,14 +954,14 @@ msgstr "X Bron: "
 
 #. the pixel size labels
 #: app/crop.c:1076 app/file_new_dialog.c:389 app/file_new_dialog.c:407
-#: app/tool_options.c:334
+#: app/tool_options.c:333
 #, fuzzy
 msgid "Width:"
 msgstr "Breedte: "
 
 #: app/crop.c:1079 app/file_new_dialog.c:395 app/file_new_dialog.c:413
-#: app/layers_dialog.c:3363 app/resize.c:240 app/resize.c:265 app/resize.c:510
-#: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:350
+#: app/layers_dialog.c:3363 app/resize.c:242 app/resize.c:267 app/resize.c:512
+#: app/scale_tool.c:79 app/scale_tool.c:86 app/tool_options.c:349
 #, fuzzy
 msgid "Height:"
 msgstr "Hoogte: "
@@ -1017,7 +1017,7 @@ msgid "Load"
 msgstr "Laad"
 
 #: app/curves.c:704 app/devices.c:753 app/levels.c:608 app/palette.c:2068
-#: app/preferences_dialog.c:357 app/preferences_dialog.c:1467
+#: app/preferences_dialog.c:357 app/preferences_dialog.c:1432
 msgid "Save"
 msgstr "Bewaar"
 
@@ -1050,7 +1050,7 @@ msgstr "Desatureren werkt enkel op RGB kleurentekeningen."
 msgid "Device Status"
 msgstr "Apperaat Status"
 
-#: app/disp_callbacks.c:755 app/global_edit.c:297 app/global_edit.c:303
+#: app/disp_callbacks.c:760 app/global_edit.c:297 app/global_edit.c:303
 #: app/global_edit.c:375
 #, fuzzy
 msgid "Pasted Layer"
@@ -1231,18 +1231,18 @@ msgstr "Afmeting instellen"
 msgid "New Image"
 msgstr "Nieuwe beeld"
 
-#: app/file_new_dialog.c:453 app/preferences_dialog.c:1540
-#: app/preferences_dialog.c:1577
+#: app/file_new_dialog.c:453 app/install.c:1093 app/preferences_dialog.c:1505
+#: app/preferences_dialog.c:1542
 msgid "Pixels"
 msgstr ""
 
 #. the resolution labels
-#: app/file_new_dialog.c:524 app/resize.c:567
+#: app/file_new_dialog.c:524 app/resize.c:569
 #, fuzzy
 msgid "Resolution X:"
 msgstr "Resolutie"
 
-#: app/file_new_dialog.c:545 app/resize.c:588
+#: app/file_new_dialog.c:545 app/resize.c:590
 msgid "pixels/%a"
 msgstr ""
 
@@ -1272,7 +1272,7 @@ msgstr ""
 msgid "No Selection."
 msgstr "Groeiselectie"
 
-#: app/fileops.c:418 app/fileops.c:1624 app/fileops.c:1731
+#: app/fileops.c:418 app/fileops.c:1629 app/fileops.c:1736
 #, fuzzy, c-format
 msgid "Save failed: %s"
 msgstr "Bewaren mislukt: "
@@ -1299,60 +1299,60 @@ msgstr ""
 msgid "Revert failed."
 msgstr "Bewaren mislukt: "
 
-#: app/fileops.c:1240
+#: app/fileops.c:1245
 msgid "(This thumbnail may be out of date)"
 msgstr ""
 
-#: app/fileops.c:1241
+#: app/fileops.c:1246
 #, fuzzy
 msgid "(No Information)"
 msgstr "Beeldscherminformatie"
 
-#: app/fileops.c:1251
+#: app/fileops.c:1256
 msgid "(Thumbnail saving is disabled)"
 msgstr ""
 
-#: app/fileops.c:1255
+#: app/fileops.c:1260
 msgid "(Could not write thumbnail file)"
 msgstr ""
 
-#: app/fileops.c:1259
+#: app/fileops.c:1264
 msgid "(Thumbnail file not written)"
 msgstr ""
 
-#: app/fileops.c:1276
+#: app/fileops.c:1281
 #, fuzzy
 msgid "No preview available"
 msgstr "Patroon Opvullen"
 
-#: app/fileops.c:1394
+#: app/fileops.c:1399
 msgid "(could not make preview)"
 msgstr ""
 
-#: app/fileops.c:1467 app/fileops.c:1546
+#: app/fileops.c:1472 app/fileops.c:1551
 #, fuzzy, c-format
 msgid "Open failed: %s"
 msgstr "Openen mislukt: "
 
-#: app/fileops.c:1602
+#: app/fileops.c:1607
 #, c-format
 msgid "%s is an irregular file (%s)"
 msgstr "%s is een abnormaal bestand (%s)"
 
-#: app/fileops.c:1670
+#: app/fileops.c:1675
 #, c-format
 msgid "%s exists, overwrite?"
 msgstr "%s bestaat, overschrijven?"
 
-#: app/fileops.c:1674
+#: app/fileops.c:1679
 msgid "File Exists!"
 msgstr "Bestand Bestaat!"
 
-#: app/fileops.c:1680
+#: app/fileops.c:1685
 msgid "Yes"
 msgstr "Ja"
 
-#: app/fileops.c:1682
+#: app/fileops.c:1687
 msgid "No"
 msgstr "Neen"
 
@@ -1361,13 +1361,13 @@ msgstr "Neen"
 msgid "Flip Tool"
 msgstr "Fliphulpopties"
 
-#: app/flip_tool.c:95 app/preferences_dialog.c:1591
-#: app/preferences_dialog.c:2355
+#: app/flip_tool.c:95 app/preferences_dialog.c:1556
+#: app/preferences_dialog.c:2284
 msgid "Horizontal"
 msgstr "Horizontaal"
 
-#: app/flip_tool.c:97 app/preferences_dialog.c:1593
-#: app/preferences_dialog.c:2357
+#: app/flip_tool.c:97 app/preferences_dialog.c:1558
+#: app/preferences_dialog.c:2286
 msgid "Vertical"
 msgstr "Verticaal"
 
@@ -1393,7 +1393,7 @@ msgstr ""
 msgid "RGB-empty"
 msgstr "RGB-leeg"
 
-#: app/gdisplay.c:217 app/image_new.c:53 app/preferences_dialog.c:1637
+#: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1602
 msgid "RGB"
 msgstr ""
 
@@ -1521,25 +1521,25 @@ msgstr ""
 msgid "Failed to load pixmap brush."
 msgstr ""
 
-#: app/gimpdrawable.c:168
+#: app/gimpdrawable.c:166
 msgid "Can't fill unknown image type."
 msgstr "Kan geen onbekend beeldtype vullen."
 
-#: app/gimpdrawable.c:512
+#: app/gimpdrawable.c:498
 #, fuzzy
 msgid "parasite attach to drawable"
 msgstr "Maak het geselecteerde gebied van de tekening vrij"
 
-#: app/gimpdrawable.c:548
+#: app/gimpdrawable.c:533
 #, fuzzy
 msgid "detach parasite from drawable"
 msgstr "de beinvloede tekening"
 
-#: app/gimpdrawable.c:770
+#: app/gimpdrawable.c:740
 msgid "unnamed"
 msgstr "onbenoemd"
 
-#: app/gimpdrawable.c:787
+#: app/gimpdrawable.c:757
 #, c-format
 msgid "Layer type %d not supported."
 msgstr "Laagtype %d niet ondersteund."
@@ -1551,49 +1551,49 @@ msgid ""
 "you don't have GtkXmHTML installed."
 msgstr ""
 
-#: app/gimpimage.c:1154
+#: app/gimpimage.c:1176
 msgid "attach parasite to image"
 msgstr ""
 
-#: app/gimpimage.c:1177
+#: app/gimpimage.c:1201
 msgid "detach parasite from image"
 msgstr ""
 
-#: app/gimpimage.c:2232
+#: app/gimpimage.c:2305
 msgid "Layer cannot be raised any further"
 msgstr "Laag kan niet verder naar boven"
 
-#: app/gimpimage.c:2258
+#: app/gimpimage.c:2333
 msgid "Layer cannot be lowered any further"
 msgstr "Laag kan niet verder naar beneden"
 
-#: app/gimpimage.c:2282
+#: app/gimpimage.c:2359
 msgid "Layer is already on top"
 msgstr "Laag is reeds de bovenste"
 
-#: app/gimpimage.c:2288
+#: app/gimpimage.c:2365
 msgid "Can't raise Layer without alpha"
 msgstr "Kan laag niet verhogen zonder alfa"
 
-#: app/gimpimage.c:2315
+#: app/gimpimage.c:2393
 msgid "Layer is already on bottom"
 msgstr "Laag is reeds op de bodem"
 
-#: app/gimpimage.c:2370
+#: app/gimpimage.c:2448
 msgid "BG has no alpha, layer was placed above"
 msgstr ""
 
-#: app/gimpimage.c:2439
+#: app/gimpimage.c:2519
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
 msgstr ""
 
-#: app/gimpimage.c:2519
+#: app/gimpimage.c:2603
 msgid "There are not enough visible layers for a merge down."
 msgstr "Er zijn niet genoeg zichtbare lagen voor een neerwaarte samenvoeging."
 
-#: app/gimpimage.c:2915
+#: app/gimpimage.c:3005
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1601,7 +1601,7 @@ msgstr ""
 "Kan geen laagmasker toevoegen omdat\n"
 "de laag reeds een heeft."
 
-#: app/gimpimage.c:2919
+#: app/gimpimage.c:3009
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1609,7 +1609,7 @@ msgstr ""
 "Kan geen laagmasker toevoegen\n"
 " ineen laag van een geindexeerd beeld."
 
-#: app/gimpimage.c:2923
+#: app/gimpimage.c:3013
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1617,21 +1617,21 @@ msgstr ""
 "Kan geen laagmasker toevoegen in een laag\n"
 "zonder alfa kanaal."
 
-#: app/gimpimage.c:2930
+#: app/gimpimage.c:3020
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan geen laagmasker met verschillende afmetingen dan gespecifieerde laag "
 "toevoegen "
 
-#: app/gimpimage.c:3033
+#: app/gimpimage.c:3127
 msgid "Channel cannot be raised any further"
 msgstr "Kanaal kan niet verder naar boven"
 
-#: app/gimpimage.c:3082
+#: app/gimpimage.c:3178
 msgid "Channel cannot be lowered any further"
 msgstr "Kanaal kan niet verder naar beneden"
 
-#: app/gimpimage.c:3288 app/palette.c:364 app/palette.c:941 app/palette.c:1077
+#: app/gimpimage.c:3398 app/palette.c:364 app/palette.c:941 app/palette.c:1077
 #: app/palette.c:2022 app/palette.c:2749 app/palette.c:2881
 msgid "Untitled"
 msgstr "Ongetiteld"
@@ -1644,45 +1644,45 @@ msgstr ""
 msgid "Please wait..."
 msgstr ""
 
-#: app/gimprc.c:401 app/plug_in.c:304
+#: app/gimprc.c:415 app/plug_in.c:304
 msgid "Resource configuration"
 msgstr "Bronconfiguratie"
 
-#: app/gimprc.c:451
+#: app/gimprc.c:467
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "fout bij het parsen: \"%s\"\n"
 
-#: app/gimprc.c:452
+#: app/gimprc.c:468
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr " in lijn %d kolom %d\n"
 
-#: app/gimprc.c:453
+#: app/gimprc.c:469
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr " onverwacht teken: %s\n"
 
-#: app/gimprc.c:1455
+#: app/gimprc.c:1473
 msgid "error parsing pluginrc"
 msgstr "fout bij parsen van pluginrc"
 
-#: app/gimprc.c:2832
+#: app/gimprc.c:2866
 #, c-format
 msgid "Can't open %s; %s"
 msgstr ""
 
-#: app/gimprc.c:2851
+#: app/gimprc.c:2885
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr ""
 
-#: app/gimprc.c:2857
+#: app/gimprc.c:2891
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr ""
 
-#: app/gimprc.c:2869
+#: app/gimprc.c:2903
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr ""
@@ -1712,7 +1712,7 @@ msgstr ""
 msgid "pixel"
 msgstr ""
 
-#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:498
+#: app/gimpunit.c:59 app/measure.c:454 app/measure.c:458 app/paint_core.c:511
 msgid "pixels"
 msgstr ""
 
@@ -1973,7 +1973,7 @@ msgstr ""
 msgid "Distance: %0.6f"
 msgstr "Afstand: %0.6f"
 
-#: app/gradient.c:3387 app/gradient.c:4448
+#: app/gradient.c:3387 app/gradient.c:4450
 msgid "Left endpoint's color"
 msgstr "Kleur van linkereindpunt"
 
@@ -1993,7 +1993,7 @@ msgstr "Rechtereindpunt"
 msgid "Save to"
 msgstr "Bewaar in"
 
-#: app/gradient.c:3429 app/gradient.c:4526
+#: app/gradient.c:3429 app/gradient.c:4528
 msgid "Right endpoint's color"
 msgstr "Kleur van rechtereindpunt"
 
@@ -2021,7 +2021,7 @@ msgstr "Kleurtype voor segment"
 msgid "Split segment at midpoint"
 msgstr "Splits segment in middelpunt"
 
-#: app/gradient.c:3734 app/gradient.c:4829
+#: app/gradient.c:3734 app/gradient.c:4831
 msgid "Split segment uniformly"
 msgstr "Splits segment uniform"
 
@@ -2041,7 +2041,7 @@ msgstr "Herverdeel handles in segment"
 msgid "Flip segment"
 msgstr "Draai segment om"
 
-#: app/gradient.c:3744 app/gradient.c:5390
+#: app/gradient.c:3744 app/gradient.c:5392
 msgid "Replicate segment"
 msgstr "Repliceer segment"
 
@@ -2057,7 +2057,7 @@ msgstr "Kleurtype voor selectie"
 msgid "Split segments at midpoints"
 msgstr "Split segmenten op middelpunten"
 
-#: app/gradient.c:3755 app/gradient.c:4830
+#: app/gradient.c:3755 app/gradient.c:4832
 msgid "Split segments uniformly"
 msgstr "Split segmenten uniform"
 
@@ -2077,7 +2077,7 @@ msgstr "Herverdeel handles in de selectie"
 msgid "Flip selection"
 msgstr "Draai selectie om"
 
-#: app/gradient.c:3765 app/gradient.c:5391
+#: app/gradient.c:3765 app/gradient.c:5393
 msgid "Replicate selection"
 msgstr "Repliceer selectie"
 
@@ -2090,49 +2090,49 @@ msgstr "FG kleur"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr ""
 
-#: app/gradient.c:4615 app/gradient.c:4685
+#: app/gradient.c:4617 app/gradient.c:4687
 msgid "(Varies)"
 msgstr "(Allerlei)"
 
-#: app/gradient.c:4837
+#: app/gradient.c:4839
 msgid "Split"
 msgstr "Splits"
 
 #. Instructions
-#: app/gradient.c:4851
+#: app/gradient.c:4853
 msgid "Please select the number of uniform parts"
 msgstr "Gelieve het aantal uniforme delen te selecteren"
 
-#: app/gradient.c:4857
+#: app/gradient.c:4859
 msgid "in which you want to split the selected segment"
 msgstr "waarin u het geselecteerde segment wil splitsen"
 
-#: app/gradient.c:4858
+#: app/gradient.c:4860
 msgid "in which you want to split the segments in the selection"
 msgstr "waarin u de segmenten van de selectie splitsen"
 
-#: app/gradient.c:5218
+#: app/gradient.c:5220
 msgid "Blend endpoints' colors"
 msgstr "Kleuren van Mengeindpunten"
 
-#: app/gradient.c:5230
+#: app/gradient.c:5232
 msgid "Blend endpoints' opacity"
 msgstr "Ondoorzichtigheid van mengeindpunten"
 
-#: app/gradient.c:5398
+#: app/gradient.c:5400
 msgid "Replicate"
 msgstr "Repliceer"
 
 #. Instructions
-#: app/gradient.c:5411
+#: app/gradient.c:5413
 msgid "Please select the number of times"
 msgstr "Gelieve het aantal keren te selecteren"
 
-#: app/gradient.c:5416
+#: app/gradient.c:5418
 msgid "you want to replicate the selected segment"
 msgstr "u wil het geselecteerde segment repliceren"
 
-#: app/gradient.c:5417
+#: app/gradient.c:5419
 msgid "you want to replicate the selection"
 msgstr "u wil de selectie repliceren"
 
@@ -2244,45 +2244,45 @@ msgstr "Helderheid"
 msgid "Saturation"
 msgstr ""
 
-#: app/image_new.c:58 app/info_window.c:65 app/info_window.c:534
-#: app/preferences_dialog.c:1638
+#: app/image_new.c:59 app/info_window.c:65 app/info_window.c:534
+#: app/preferences_dialog.c:1603
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
-#: app/image_new.c:64 app/layers_dialog.c:3421
+#: app/image_new.c:65 app/layers_dialog.c:3421
 msgid "Foreground"
 msgstr "Voorgrond"
 
-#: app/image_new.c:74 app/layers_dialog.c:3423
+#: app/image_new.c:75 app/layers_dialog.c:3423
 msgid "White"
 msgstr "Wit"
 
-#: app/image_new.c:262
+#: app/image_new.c:273
 #, c-format
 msgid "%d Bytes"
 msgstr ""
 
-#: app/image_new.c:264
+#: app/image_new.c:275
 #, c-format
 msgid "%.2f KB"
 msgstr ""
 
-#: app/image_new.c:266
+#: app/image_new.c:277
 #, c-format
 msgid "%.1f KB"
 msgstr ""
 
-#: app/image_new.c:268
+#: app/image_new.c:279
 #, c-format
 msgid "%d KB"
 msgstr ""
 
-#: app/image_new.c:270
+#: app/image_new.c:281
 #, c-format
 msgid "%.2f MB"
 msgstr ""
 
-#: app/image_new.c:272
+#: app/image_new.c:283
 #, c-format
 msgid "%.1f MB"
 msgstr ""
@@ -2305,8 +2305,8 @@ msgid ""
 "Click to open the Gradients Dialog."
 msgstr ""
 
-#: app/info_dialog.c:181 app/preferences_dialog.c:1782
-#: app/preferences_dialog.c:1888
+#: app/info_dialog.c:181 app/preferences_dialog.c:1743
+#: app/preferences_dialog.c:1849
 #, fuzzy
 msgid "General"
 msgstr "Interval:"
@@ -2452,11 +2452,11 @@ msgstr "Hoek:"
 msgid "Shape"
 msgstr "Scherp"
 
-#: app/install.c:83
+#: app/install.c:95
 msgid "The GIMP is not properly installed for the current user\n"
 msgstr "De GIMP is niet correct geinstalleerd voor de huidige gebruiker.\n"
 
-#: app/install.c:84
+#: app/install.c:96
 msgid ""
 "User installation was skipped because the '--nointerface' flag was "
 "encountered\n"
@@ -2464,295 +2464,386 @@ msgstr ""
 "Installatie van gebruikersinterface werd overgeslagen omdat de vlag "
 "'--nointerface' tegengekomen was\n"
 
-#: app/install.c:85
+#: app/install.c:97
 msgid ""
 "To perform user installation, run the GIMP without the '--nointerface' flag\n"
 msgstr ""
 "Om een gebruikersinstallatie uit te voeren, voer GIMP uit zonder de\n"
 "'--nointerface' vlag\n"
 
-#: app/install.c:113
+#: app/install.c:142
 msgid ""
-"The GIMP - GNU Image Manipulation Program\n"
-"\n"
-msgstr ""
-"GIMP - GNU Image Manipulation Program\n"
-"\n"
-
-#: app/install.c:118
-msgid ""
-"This program is free software; you can redistribute it and/or modify\n"
-"it under the terms of the GNU General Public License as published by\n"
-"the Free Software Foundation; either version 2 of the License, or\n"
-"(at your option) any later version.\n"
+"The gimprc is used to store personal preferences\n"
+"that affect GIMP's default behavior.\n"
+"Paths to search for brushes, palettes, gradients,\n"
+"patterns, plug-ins and modules can also configured here."
 msgstr ""
 
-#: app/install.c:123
+#: app/install.c:149
 msgid ""
-"This program is distributed in the hope that it will be useful,\n"
-"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-"See the GNU General Public License for more details.\n"
+"GIMP uses an additional gtkrc file so you can\n"
+"configure it to look differently than other GTK apps."
 msgstr ""
 
-#: app/install.c:128
+#: app/install.c:154
 msgid ""
-"You should have received a copy of the GNU General Public License\n"
-"along with this program; if not, write to the Free Software\n"
-"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-"MA 02111-1307, USA.\n"
-msgstr ""
-
-#: app/install.c:134
-msgid ""
-"Personal GIMP Installation\n"
-"\n"
-msgstr ""
-"Persoonlijke GIMP Installatie\n"
-"\n"
-
-#: app/install.c:135
-msgid "For a proper GIMP installation, a subdirectory called\n"
-msgstr "Voor een correctie GIMP installatie, moet een submap genaamd\n"
-
-#. will be replaced with gimp_directory()
-#: app/install.c:137
-#, fuzzy
-msgid ""
-" needs to be created.  This\n"
-"subdirectory will contain a number of important files:\n"
-"\n"
-msgstr "map zal een aantal belangrijke bestande bevatten:\n"
-
-#: app/install.c:141
-msgid ""
-"\t\tThe gimprc is used to store personal preferences\n"
-"\t\tthat affect GIMP's default behavior.\n"
-"\t\tPaths to search for brushes, palettes, gradients,\n"
-"\t\tpatterns, plug-ins and modules can also configured here.\n"
-msgstr ""
-
-#: app/install.c:147
-msgid ""
-"\t\tPlug-ins and extensions are external programs run by\n"
-"\t\tthe GIMP which provide additional functionality.\n"
-"\t\tThese programs are searched for at run-time and\n"
-"\t\tinformation about their functionality and mod-times\n"
-"\t\tis cached in this file.  This file is intended to\n"
-"\t\tbe GIMP-readable only, and should not be edited.\n"
-msgstr ""
-
-#: app/install.c:155
-msgid ""
-"\t\tKey shortcuts can be dynamically redefined in The GIMP.\n"
-"\t\tThe menurc is a dump of your configuration so it can.\n"
-"\t\tbe remembered for the next session. You may edit this\n"
-"\t\tfile if you wish, but it is much easier to define the\n"
-"\t\tkeys from within The GIMP. Deleting this file will\n"
-"\t\trestore the default shortcuts.\n"
+"Plug-ins and extensions are external programs run by\n"
+"the GIMP which provide additional functionality.\n"
+"These programs are searched for at run-time and\n"
+"information about their functionality and mod-times\n"
+"is cached in this file.  This file is intended to\n"
+"be GIMP-readable only, and should not be edited."
 msgstr ""
 
 #: app/install.c:163
 msgid ""
-"\t\tThe sessionrc is used to store what dialog windows were\n"
-"\t\topen the last time you quit The GIMP. You can configure\n"
-"\t\tThe GIMP to reopen these dialogs at the saved position.\n"
+"Key shortcuts can be dynamically redefined in The GIMP.\n"
+"The menurc is a dump of your configuration so it can.\n"
+"be remembered for the next session. You may edit this\n"
+"file if you wish, but it is much easier to define the\n"
+"keys from within The GIMP. Deleting this file will\n"
+"restore the default shortcuts."
 msgstr ""
 
-#: app/install.c:168
+#: app/install.c:172
 msgid ""
-"\t\tThe unitrc is used to store your user units database.\n"
-"\t\tYou can define additional units and use them just\n"
-"\t\tlike you use the built-in units inches, millimeters,\n"
-"\t\tpoints and picas. This file is overwritten each time\n"
-"\t\tyou quit the GIMP.\n"
+"The sessionrc is used to store what dialog windows were\n"
+"open the last time you quit The GIMP. You can configure\n"
+"The GIMP to reopen these dialogs at the saved position."
 msgstr ""
 
-#: app/install.c:175
+#: app/install.c:178
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined brushes.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp brushes installation when searching for\n"
-"\t\tbrushes.\n"
+"The unitrc is used to store your user units database.\n"
+"You can define additional units and use them just\n"
+"like you use the built-in units inches, millimeters,\n"
+"points and picas. This file is overwritten each time\n"
+"you quit the GIMP."
 msgstr ""
 
-#: app/install.c:182
+#: app/install.c:186
 msgid ""
-"\t\tThis is a subdirectory which is used to store brushes\n"
-"\t\tthat are created with the brush editor.  The default\n"
-"\t\tgimprc file checks this subdirectory when searching for\n"
-"\t\tgenerated brushes.\n"
+"This is a subdirectory which can be used to store\n"
+"user defined brushes.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide gimp brushes installation when searching for\n"
+"brushes."
 msgstr ""
 
-#: app/install.c:188
+#: app/install.c:194
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gradients.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp gradients installation when searching for\n"
-"\t\tgradients.\n"
+"This is a subdirectory which is used to store brushes\n"
+"that are created with the brush editor.  The default\n"
+"gimprc file checks this subdirectory when searching for\n"
+"generated brushes."
 msgstr ""
 
-#: app/install.c:195
+#: app/install.c:201
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined figures to be used by the gfig plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gfig installation\n"
-"\t\twhen searching for gfig figures.\n"
-msgstr ""
-
-#: app/install.c:202
-msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined gflares to be used by the gflare plug-in.\n"
-"\t\tThe default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp gflares installation\n"
-"\t\twhen searching for gflares.\n"
+"This is a subdirectory which can be used to store\n"
+"user defined gradients.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide gimp gradients installation when searching for\n"
+"gradients."
 msgstr ""
 
 #: app/install.c:209
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined fractals to be used by the FractalExplorer\n"
-"\t\tplug-in. The default gimprc file checks this subdirectory in\n"
-"\t\taddition to the systemwide gimp FractalExplorer installation\n"
-"\t\twhen searching for fractals.\n"
+"This is a subdirectory which can be used to store\n"
+"user defined palettes.  The default gimprc file\n"
+"checks only this subdirectory (not the system-wide\n"
+"installation) when searching for palettes.  During\n"
+"installation, the system palettes will be copied\n"
+"here.  This is done to allow modifications made to\n"
+"palettes during GIMP execution to persist across\n"
+"sessions."
 msgstr ""
 
-#: app/install.c:216
+#: app/install.c:220
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined palettes.  The default gimprc file\n"
-"\t\tchecks only this subdirectory (not the system-wide\n"
-"\t\tinstallation) when searching for palettes.  During\n"
-"\t\tinstallation, the system palettes will be copied\n"
-"\t\there.  This is done to allow modifications made to\n"
-"\t\tpalettes during GIMP execution to persist across\n"
-"\t\tsessions.\n"
+"This is a subdirectory which can be used to store\n"
+"user defined patterns.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide gimp patterns installation when searching for\n"
+"patterns."
 msgstr ""
 
-#: app/install.c:226
+#: app/install.c:228
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser defined patterns.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide gimp patterns installation when searching for\n"
-"\t\tpatterns.\n"
+"This is a subdirectory which can be used to store\n"
+"user created, temporary, or otherwise non-system-\n"
+"supported plug-ins.  The default gimprc file\n"
+"checks this subdirectory in addition to the system-\n"
+"wide GIMP plug-in directories when searching for\n"
+"plug-ins."
 msgstr ""
 
-#: app/install.c:233
+#: app/install.c:237
 msgid ""
-"\t\tThis is a subdirectory which can be used to store\n"
-"\t\tuser created, temporary, or otherwise non-system-\n"
-"\t\tsupported plug-ins.  The default gimprc file\n"
-"\t\tchecks this subdirectory in addition to the system-\n"
-"\t\twide GIMP plug-in directories when searching for\n"
-"\t\tplug-ins.\n"
+"This subdirectory can be used to store user created,\n"
+"temporary, or otherwise non-system-supported DLL modules.\n"
+"The default gimprc file checks this subdirectory\n"
+"in addition to the system-wide GIMP module directory\n"
+"when searching for modules to load when initializing."
 msgstr ""
 
-#: app/install.c:241
+#: app/install.c:245
 msgid ""
-"\t\tThis subdirectory can be used to store user created,\n"
-"\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
-"\t\tThe default gimprc file checks this subdirectory\n"
-"\t\tin addition to the system-wide GIMP module directory\n"
-"\t\twhen searching for modules to load when initializing.\n"
+"This subdirectory is used by the GIMP to store \n"
+"user created and installed scripts. The default gimprc\n"
+"file checks this subdirectory in addition to the system-\n"
+"wide gimp scripts subdirectory when searching for scripts"
 msgstr ""
 
-#: app/install.c:248
+#: app/install.c:252
 msgid ""
-"\t\tThis subdirectory is used by the GIMP to store \n"
-"\t\tuser created and installed scripts. The default gimprc\n"
-"\t\tfile checks this subdirectory in addition to the system\n"
-"\t\t-wide gimp scripts subdirectory when searching for scripts\n"
+"This subdirectory is used by the GIMP to temporarily\n"
+"store undo buffers to reduce memory usage.  If GIMP is\n"
+"unceremoniously killed, files may persist in this directory\n"
+"of the form: gimp<#>.<#>.  These files are useless across\n"
+"GIMP sessions and can be destroyed with impunity."
 msgstr ""
 
-#: app/install.c:254
+#: app/install.c:260
+#, fuzzy
 msgid ""
-"\t\tThis subdirectory is used by the GIMP to temporarily\n"
-"\t\tstore undo buffers to reduce memory usage.  If GIMP is\n"
-"\t\tunceremoniously killed, files may persist in this directory\n"
-"\t\tof the form: gimp<#>.<#>.  These files are useless across\n"
-"\t\tGIMP sessions and can be destroyed with impunity.\n"
-msgstr ""
+"This subdirectory is used to store parameter files for\n"
+"the Curves tool."
+msgstr "Dit is een submap dat gebruikt kan worden om door\n"
 
-#: app/install.c:263
-msgid "GIMP Installation"
-msgstr "GIMP Installatie"
-
-#: app/install.c:268
-msgid "Install"
-msgstr "Installeren"
+#: app/install.c:265
+#, fuzzy
+msgid ""
+"This subdirectory is used to store parameter files for\n"
+"the Levels tool."
+msgstr "Dit is een submap dat gebruikt kan worden om door\n"
 
 #: app/install.c:270
-msgid "Ignore"
-msgstr "Negeren"
-
-#. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:295 app/install.c:453
-msgid "-*-helvetica-bold-r-normal-*-*-120-*-*-*-*-*-*,*"
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined fractals to be used by the FractalExplorer\n"
+"plug-in. The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp FractalExplorer installation\n"
+"when searching for fractals."
 msgstr ""
 
-#. this is a font, provide only one single font definition
-#: app/install.c:298
-msgid "-*-helvetica-medium-o-normal-*-*-100-*-*-*-*-*-*"
+#: app/install.c:278
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined figures to be used by the gfig plug-in.\n"
+"The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp gfig installation\n"
+"when searching for gfig figures."
 msgstr ""
 
-#. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:301
-msgid "-*-helvetica-medium-r-normal-*-*-100-*-*-*-*-*-*,*"
+#: app/install.c:286
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined gflares to be used by the gflare plug-in.\n"
+"The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp gflares installation\n"
+"when searching for gflares."
 msgstr ""
 
-#: app/install.c:423
-msgid "Installation Log"
+#: app/install.c:294
+msgid ""
+"This is a subdirectory which can be used to store\n"
+"user defined data to be used by the Gimpressionist\n"
+"plug-in. The default gimprc file checks this subdirectory in\n"
+"addition to the systemwide gimp Gimpressionist installation\n"
+"when searching for data."
 msgstr ""
 
-#: app/install.c:428
+#: app/install.c:525
+#, fuzzy
+msgid "GIMP User Installation"
+msgstr "GIMP Installatie"
+
+#: app/install.c:530
 msgid "Continue"
 msgstr ""
 
 #. this is a fontset, e.g. multiple comma-separated font definitions
-#: app/install.c:456
-msgid "-*-helvetica-medium-r-normal-*-*-120-*-*-*-*-*-*,*"
+#: app/install.c:560
+msgid "-*-helvetica-bold-r-normal-*-*-240-*-*-*-*-*-*,*"
 msgstr ""
 
-#: app/install.c:462
+#: app/install.c:578
+#, fuzzy
 msgid ""
-"User Installation Log\n"
+"Welcome to\n"
+"The GIMP User Installation"
+msgstr "GIMP Installatie"
+
+#: app/install.c:582
+msgid ""
+"The GIMP - GNU Image Manipulation Program\n"
+"Copyright (C) 1995-2000\n"
+"Spencer Kimball, Peter Mattis and the GIMP Development Team."
+msgstr ""
+
+#: app/install.c:591
+msgid ""
+"This program is free software; you can redistribute it and/or modify\n"
+"it under the terms of the GNU General Public License as published by\n"
+"the Free Software Foundation; either version 2 of the License, or\n"
+"(at your option) any later version."
+msgstr ""
+
+#: app/install.c:596
+msgid ""
+"This program is distributed in the hope that it will be useful,\n"
+"but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+"See the GNU General Public License for more details."
+msgstr ""
+
+#: app/install.c:601
+msgid ""
+"You should have received a copy of the GNU General Public License\n"
+"along with this program; if not, write to the Free Software\n"
+"Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+"MA 02111-1307, USA."
+msgstr ""
+
+#: app/install.c:607
+msgid "Click \"Continue\" to enter the GIMP user installation."
+msgstr ""
+
+#: app/install.c:633
+#, fuzzy
+msgid "Personal GIMP Directory"
+msgstr ""
+"Persoonlijke GIMP Installatie\n"
 "\n"
-msgstr ""
 
-#: app/install.c:472
-msgid " does not exist.  Cannot install.\n"
-msgstr ""
-
-#: app/install.c:480
+#: app/install.c:650
+#, fuzzy
 msgid ""
-" has invalid permissions.\n"
-"Cannot install."
+"For a proper GIMP installation, a subdirectory needs to be created.\n"
+"This subdirectory will contain a number of important files."
+msgstr "map zal een aantal belangrijke bestande bevatten:\n"
+
+#: app/install.c:653
+msgid ""
+"Click on one of the files or subdirectories in the tree\n"
+"to get more information about the selected item."
 msgstr ""
 
-#: app/install.c:514
-msgid ""
-"Did you notice any error messages\n"
-"in the console window? If not, installation\n"
-"was successful! Otherwise, quit and investigate\n"
-"the possible reason...\n"
+#: app/install.c:656
+msgid "Click \"Continue\" to create your personal GIMP directory."
 msgstr ""
 
-#: app/install.c:546
-msgid ""
-"\n"
-"Installation successful!\n"
+#: app/install.c:736
+#, fuzzy
+msgid "User Installation Log"
+msgstr "GIMP Installatie"
+
+#: app/install.c:741
+msgid "GIMP Performance Tuning"
 msgstr ""
 
-#: app/install.c:555
-msgid ""
-"\n"
-"Installation failed.  Contact system administrator.\n"
+#: app/install.c:744
+msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr ""
+
+#: app/install.c:751
+msgid "Click \"Continue\" to accept the settings above."
+msgstr ""
+
+#: app/install.c:760
+#, fuzzy
+msgid "Monitor Resolution"
+msgstr "Beeldscherminformatie"
+
+#: app/install.c:763
+msgid ""
+"To display images in their natural size, GIMP needs to know your monitor "
+"resolution."
+msgstr ""
+
+#: app/install.c:771
+msgid "Click \"Continue\" to start The GIMP."
+msgstr ""
+
+#: app/install.c:845
+msgid "does not exist.  Cannot install."
+msgstr ""
+
+#: app/install.c:857
+msgid "has invalid permissions.  Cannot install."
+msgstr ""
+
+#: app/install.c:895
+msgid ""
+"Did you notice any error messages in the console window?\n"
+"If not, installation was successful!\n"
+"Otherwise, quit and investigate the possible reason..."
+msgstr ""
+
+#: app/install.c:955
+msgid ""
+"Did you notice any error messages in the lines above?\n"
+"If not, installation was successful!\n"
+"Otherwise, quit and investigate the possible reason..."
+msgstr ""
+
+#: app/install.c:969
+msgid "Click \"Continue\" to complete GIMP installation."
+msgstr ""
+
+#: app/install.c:978
+msgid "Installation failed.  Contact system administrator."
+msgstr ""
+
+#: app/install.c:999
+msgid ""
+"GIMP uses a limited amount of memory to store image data, the so-called\n"
+"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"the amount of memory used by other running processes."
+msgstr ""
+
+#: app/install.c:1015 app/preferences_dialog.c:2102
+#, fuzzy
+msgid "Tile Cache Size:"
+msgstr "Contreleer grootte"
+
+#: app/install.c:1025
+msgid ""
+"All image and undo data which doesn't fit into the Tile Cache will be\n"
+"written to a swap file. This file should be located on a local filesystem\n"
+"with enough free space (several hundred MB). On a UNIX system, you\n"
+"may want to use the system-wide temp-dir (\"/tmp\" or \"/var/tmp\")."
+msgstr ""
+
+#: app/install.c:1035 app/preferences_dialog.c:2361
+msgid "Select Swap Dir"
+msgstr ""
+
+#: app/install.c:1041
+#, fuzzy
+msgid "Swap Directory:"
+msgstr "Mappen"
+
+#: app/install.c:1063
+msgid ""
+"GIMP can obtain this information from your X-server.\n"
+"However, most X-servers do not return useful values."
+msgstr ""
+
+#: app/install.c:1070
+#, fuzzy, c-format
+msgid "Get Resolution from X-server (Currently %d x %d dpi)"
+msgstr "(huidig %d x %d dpi)"
+
+#: app/install.c:1087
+msgid "Alternatively, you can set the monitor resolution manually."
+msgstr ""
+
+#: app/install.c:1102
+#, fuzzy
+msgid "Monitor Resolution X:"
+msgstr "Beeldscherminformatie"
 
 #: app/interface.c:312
 msgid ""
@@ -2844,8 +2935,8 @@ msgstr "Gradatie"
 msgid "Guide procedures"
 msgstr "Beeldbron"
 
-#: app/internal_procs.c:122 app/preferences_dialog.c:1772
-#: app/preferences_dialog.c:1774
+#: app/internal_procs.c:122 app/preferences_dialog.c:1733
+#: app/preferences_dialog.c:1735
 msgid "Interface"
 msgstr ""
 
@@ -2882,7 +2973,7 @@ msgstr "Patronen"
 #: app/internal_procs.c:146
 #, fuzzy
 msgid "Plug-in"
-msgstr "\t\tplug-ins.\n"
+msgstr "plug-ins.\n"
 
 #: app/internal_procs.c:149
 msgid "Procedural database"
@@ -3275,171 +3366,159 @@ msgid "degrees"
 msgstr ""
 
 #. <Toolbox>/File
-#: app/menus.c:82
+#. the underscore installs an accelerator using the character that follows
+#: app/menus.c:85
 #, fuzzy
 msgid "/_File"
 msgstr "Vultype"
 
-#: app/menus.c:84 app/menus.c:191
+#. <Image>/File
+#: app/menus.c:87 app/menus.c:193
 #, fuzzy
 msgid "/File/New..."
 msgstr "<Beeld>/Bestand/Open"
 
-#: app/menus.c:86 app/menus.c:193
+#: app/menus.c:89 app/menus.c:195
 #, fuzzy
 msgid "/File/Open..."
 msgstr "<Beeld>/Bestand/Open"
 
-#: app/menus.c:93
+#: app/menus.c:96
 #, fuzzy
 msgid "/File/Acquire"
 msgstr "<Beeld>/Bestand/Afsluiten"
 
-#: app/menus.c:98
+#: app/menus.c:101
 msgid "/File/Preferences..."
 msgstr ""
 
-#: app/menus.c:105
-#, fuzzy
-msgid "/File/Dialogs"
-msgstr "<Beeld>/Bestand/Sluit"
-
-#: app/menus.c:107
+#: app/menus.c:108
 #, fuzzy
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "Documentindex"
 
-#: app/menus.c:109
+#: app/menus.c:110
 #, fuzzy
 msgid "/File/Dialogs/Tool Options..."
 msgstr "Fliphulpopties"
 
-#: app/menus.c:114
+#: app/menus.c:115
 #, fuzzy
 msgid "/File/Dialogs/Brushes..."
 msgstr "Documentindex"
 
-#: app/menus.c:116
+#: app/menus.c:117
 #, fuzzy
 msgid "/File/Dialogs/Patterns..."
 msgstr "Fliphulpopties"
 
-#: app/menus.c:118
+#: app/menus.c:119
 #, fuzzy
 msgid "/File/Dialogs/Gradients..."
 msgstr "Documentindex"
 
-#: app/menus.c:120
+#: app/menus.c:121
 #, fuzzy
 msgid "/File/Dialogs/Palette..."
 msgstr "Kleurenpalet"
 
-#: app/menus.c:122
+#: app/menus.c:123
 #, fuzzy
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "Kleurenpalet"
 
-#: app/menus.c:127
+#: app/menus.c:128
 #, fuzzy
 msgid "/File/Dialogs/Input Devices..."
 msgstr "Fliphulpopties"
 
-#: app/menus.c:129
+#: app/menus.c:130
 #, fuzzy
 msgid "/File/Dialogs/Device Status..."
 msgstr "Apperaat Status"
 
-#: app/menus.c:134
+#: app/menus.c:135
 #, fuzzy
 msgid "/File/Dialogs/Document Index..."
 msgstr "Documentindex"
 
-#: app/menus.c:136
+#: app/menus.c:137
 #, fuzzy
 msgid "/File/Dialogs/Error Console..."
 msgstr "Fliphulpopties"
 
-#: app/menus.c:138
+#: app/menus.c:139
 #, fuzzy
 msgid "/File/Dialogs/Display Filters..."
 msgstr "Fliphulpopties"
 
-#: app/menus.c:148 app/menus.c:206
+#: app/menus.c:149 app/menus.c:208
 #, fuzzy
 msgid "/File/Quit"
 msgstr "<Beeld>/Bestand/Afsluiten"
 
 #. <Toolbox>/Xtns
-#: app/menus.c:153
+#. the underscore installs an accelerator using the character that follows
+#: app/menus.c:155
 #, fuzzy
 msgid "/_Xtns"
 msgstr "Selectie"
 
-#: app/menus.c:155
+#: app/menus.c:157
 #, fuzzy
 msgid "/Xtns/Module Browser..."
 msgstr "Fliphulpopties"
 
 #. <Toolbox>/Help
-#: app/menus.c:163
+#. the underscore installs an accelerator using the character that follows
+#: app/menus.c:166
 msgid "/_Help"
 msgstr ""
 
-#: app/menus.c:165
+#: app/menus.c:168
 #, fuzzy
 msgid "/Help/Help..."
 msgstr "<Beeld>/Bestand/Afsluiten"
 
-#: app/menus.c:167
+#: app/menus.c:170
 msgid "/Help/Context Help..."
 msgstr ""
 
-#: app/menus.c:169
+#: app/menus.c:172
 #, fuzzy
 msgid "/Help/Tip of the Day..."
 msgstr "GIMP Tip van de dag"
 
-#: app/menus.c:171
+#: app/menus.c:174
 #, fuzzy
 msgid "/Help/About..."
 msgstr "<Beeld>/Bestand/Afsluiten"
 
-#: app/menus.c:173
+#: app/menus.c:176
 msgid "/Help/Dump Items (Debug)"
 msgstr ""
 
-#. <Image>/File
-#: app/menus.c:189
-#, fuzzy
-msgid "/File"
-msgstr "Vultype"
-
-#: app/menus.c:195
+#: app/menus.c:197
 #, fuzzy
 msgid "/File/Save"
 msgstr "<Beeld>/Bestand/Bewaar"
 
-#: app/menus.c:197
+#: app/menus.c:199
 #, fuzzy
 msgid "/File/Save As..."
 msgstr "<beeld>/Bestand/Bewaar als"
 
-#: app/menus.c:199
+#: app/menus.c:201
 #, fuzzy
 msgid "/File/Revert"
 msgstr "<Beeld>/Bestand/Bewaar"
 
-#: app/menus.c:204
+#: app/menus.c:206
 #, fuzzy
 msgid "/File/Close"
 msgstr "<Beeld>/Bestand/Sluit"
 
 #. <Image>/Edit
-#: app/menus.c:214
-#, fuzzy
-msgid "/Edit"
-msgstr "Verander"
-
 #: app/menus.c:216
 #, fuzzy
 msgid "/Edit/Undo"
@@ -3478,806 +3557,707 @@ msgstr "<Beeld>/Editeer/Plak met naam"
 #. <Image>/Edit/Buffer
 #: app/menus.c:236
 #, fuzzy
-msgid "/Edit/Buffer"
-msgstr "<Beeld>/Editeer/Wis"
-
-#: app/menus.c:238
-#, fuzzy
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "<Beeld>/Editeer/Knip met naam"
 
-#: app/menus.c:240
+#: app/menus.c:238
 #, fuzzy
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "<Beeld>/Editeer/Kopieer met naam"
 
-#: app/menus.c:242
+#: app/menus.c:240
 #, fuzzy
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "<Beeld>/Editeer/Plak met naam"
 
-#: app/menus.c:247
+#: app/menus.c:245
 #, fuzzy
 msgid "/Edit/Clear"
 msgstr "<Beeld>/Editeer/Wis"
 
-#: app/menus.c:249
+#: app/menus.c:247
 #, fuzzy
 msgid "/Edit/Fill"
 msgstr "<Beeld>/Editeer/Vul"
 
-#: app/menus.c:251
+#: app/menus.c:249
 #, fuzzy
 msgid "/Edit/Stroke"
 msgstr "<Beeld>/Editeer/Stroke"
 
 #. <Image>/Select
-#: app/menus.c:259
-#, fuzzy
-msgid "/Select"
-msgstr "Selectie"
-
-#: app/menus.c:261
+#: app/menus.c:257
 #, fuzzy
 msgid "/Select/Invert"
 msgstr "Selectie"
 
-#: app/menus.c:263
+#: app/menus.c:259
 #, fuzzy
 msgid "/Select/All"
 msgstr "Selectie"
 
-#: app/menus.c:265
+#: app/menus.c:261
 #, fuzzy
 msgid "/Select/None"
 msgstr "Selectie"
 
-#: app/menus.c:267
+#: app/menus.c:263
 #, fuzzy
 msgid "/Select/Float"
 msgstr "Selectie"
 
-#: app/menus.c:272
+#: app/menus.c:268
 #, fuzzy
 msgid "/Select/Feather..."
 msgstr "Selectie"
 
-#: app/menus.c:274
+#: app/menus.c:270
 #, fuzzy
 msgid "/Select/Sharpen"
 msgstr "Scherp"
 
-#: app/menus.c:276
+#: app/menus.c:272
 #, fuzzy
 msgid "/Select/Shrink..."
 msgstr "Selectie"
 
-#: app/menus.c:278
+#: app/menus.c:274
 #, fuzzy
 msgid "/Select/Grow..."
 msgstr "Selectie"
 
-#: app/menus.c:280
+#: app/menus.c:276
 #, fuzzy
 msgid "/Select/Border..."
 msgstr "Selectiemodus"
 
-#: app/menus.c:285
+#: app/menus.c:281
 #, fuzzy
 msgid "/Select/Save to Channel"
 msgstr "<Beeld>/Selecteer/Bewaar in kanaal"
 
 #. <Image>/View
-#: app/menus.c:290
-#, fuzzy
-msgid "/View"
-msgstr "<Beeld>/Zicht/Punt voor punt"
-
-#: app/menus.c:292
+#: app/menus.c:286
 msgid "/View/Zoom In"
 msgstr ""
 
-#: app/menus.c:294
+#: app/menus.c:288
 #, fuzzy
 msgid "/View/Zoom Out"
 msgstr "<Beeld>/Zicht/Punt voor punt"
 
 #. <Image>/View/Zoom
-#: app/menus.c:299
-#, fuzzy
-msgid "/View/Zoom"
-msgstr "<Beeld>/Zicht/Punt voor punt"
-
-#: app/menus.c:301
+#: app/menus.c:293
 msgid "/View/Zoom/16:1"
 msgstr ""
 
-#: app/menus.c:303
+#: app/menus.c:295
 msgid "/View/Zoom/8:1"
 msgstr ""
 
-#: app/menus.c:305
+#: app/menus.c:297
 msgid "/View/Zoom/4:1"
 msgstr ""
 
-#: app/menus.c:307
+#: app/menus.c:299
 msgid "/View/Zoom/2:1"
 msgstr ""
 
-#: app/menus.c:309
+#: app/menus.c:301
 msgid "/View/Zoom/1:1"
 msgstr ""
 
-#: app/menus.c:311
+#: app/menus.c:303
 msgid "/View/Zoom/1:2"
 msgstr ""
 
-#: app/menus.c:313
+#: app/menus.c:305
 msgid "/View/Zoom/1:4"
 msgstr ""
 
-#: app/menus.c:315
+#: app/menus.c:307
 msgid "/View/Zoom/1:8"
 msgstr ""
 
-#: app/menus.c:317
+#: app/menus.c:309
 msgid "/View/Zoom/1:16"
 msgstr ""
 
-#: app/menus.c:320
+#: app/menus.c:312
 #, fuzzy
 msgid "/View/Dot for Dot"
 msgstr "<Beeld>/Zicht/Punt voor punt"
 
-#: app/menus.c:325
+#: app/menus.c:317
 msgid "/View/Info Window..."
 msgstr ""
 
-#: app/menus.c:327
+#: app/menus.c:319
 msgid "/View/Nav. Window..."
 msgstr ""
 
-#: app/menus.c:329
-#, fuzzy
-msgid "/View/Undo History..."
-msgstr "<Beeld>/Editeer/Kopieer"
-
-#: app/menus.c:334
+#: app/menus.c:324
 #, fuzzy
 msgid "/View/Toggle Selection"
 msgstr "<Beeld>/Zicht/Linealen"
 
-#: app/menus.c:336
+#: app/menus.c:326
 #, fuzzy
 msgid "/View/Toggle Rulers"
 msgstr "<Beeld>/Zicht/Linealen"
 
-#: app/menus.c:338
+#: app/menus.c:328
 #, fuzzy
 msgid "/View/Toggle Statusbar"
 msgstr "<Beeld>/Zicht/Statusbalk"
 
-#: app/menus.c:340
+#: app/menus.c:330
 #, fuzzy
 msgid "/View/Toggle Guides"
 msgstr "<Beeld>/Zicht/Hulplijnen"
 
-#: app/menus.c:342
+#: app/menus.c:332
 #, fuzzy
 msgid "/View/Snap to Guides"
 msgstr "<Beeld>/Zicht/Snap To Guides"
 
-#: app/menus.c:347
+#: app/menus.c:337
 msgid "/View/New View"
 msgstr ""
 
-#: app/menus.c:349
+#: app/menus.c:339
 msgid "/View/Shrink Wrap"
 msgstr ""
 
-#. <Image>/Image
-#: app/menus.c:357
-#, fuzzy
-msgid "/Image"
-msgstr "Nieuwe beeld"
-
 #. <Image>/Image/Mode
-#: app/menus.c:362
-#, fuzzy
-msgid "/Image/Mode"
-msgstr "<Beeld>/Beeld/RGB"
-
-#: app/menus.c:364
+#: app/menus.c:344
 #, fuzzy
 msgid "/Image/Mode/RGB"
 msgstr "<Beeld>/Beeld/RGB"
 
-#: app/menus.c:366
+#: app/menus.c:346
 #, fuzzy
 msgid "/Image/Mode/Grayscale"
 msgstr "<Beeld>/Beeld/Grijswaarden"
 
-#: app/menus.c:368
+#: app/menus.c:348
 #, fuzzy
 msgid "/Image/Mode/Indexed..."
 msgstr "<Beeld>/Beeld/Geindexeerd"
 
 #. <Image>/Image/Colors
-#: app/menus.c:376
-#, fuzzy
-msgid "/Image/Colors"
-msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
-
-#: app/menus.c:381
+#: app/menus.c:356
 #, fuzzy
 msgid "/Image/Colors/Desaturate"
 msgstr "<Beeld>/Beeld/Kleuren/Desaturate"
 
-#: app/menus.c:383
+#: app/menus.c:358
 #, fuzzy
 msgid "/Image/Colors/Invert"
 msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:391
-#, fuzzy
-msgid "/Image/Colors/Auto"
-msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
-
-#: app/menus.c:393
+#: app/menus.c:366
 #, fuzzy
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "<Beeld>/Beeld/Kleuren/Krommen"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:401
-#, fuzzy
-msgid "/Image/Alpha"
-msgstr "Schaal instellen"
-
-#: app/menus.c:403
+#: app/menus.c:374
 #, fuzzy
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "<Beeld>/Beeld/Alfa/Voeg Alfa Kanaal toe"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:408
-#, fuzzy
-msgid "/Image/Transforms"
-msgstr "<Beeld>/Beeld/Kleuren"
-
-#: app/menus.c:410
+#: app/menus.c:379
 #, fuzzy
 msgid "/Image/Transforms/Offset..."
 msgstr "<Beeld>/Beeld/Kleuren"
 
-#: app/menus.c:412
+#: app/menus.c:381
 #, fuzzy
 msgid "/Image/Transforms/Rotate"
 msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
 
-#: app/menus.c:419
+#: app/menus.c:388
 #, fuzzy
 msgid "/Image/Canvas Size..."
 msgstr "Afmeting instellen"
 
-#: app/menus.c:421
+#: app/menus.c:390
 #, fuzzy
 msgid "/Image/Scale Image..."
 msgstr "Schaal instellen"
 
-#: app/menus.c:423
+#: app/menus.c:392
 #, fuzzy
 msgid "/Image/Duplicate"
 msgstr "<Beeld>/Beeld/Kanaal Ops/Offset"
 
 #. <Image>/Layers
-#: app/menus.c:431
-#, fuzzy
-msgid "/Layers"
-msgstr "Tekstlaag"
-
-#: app/menus.c:433
+#: app/menus.c:400
 #, fuzzy
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
 
-#. <Image>/Layers/Stack
-#: app/menus.c:438
+#: app/menus.c:404
 #, fuzzy
-msgid "/Layers/Stack"
+msgid "/Layers/Layer to Imagesize"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:440
+#. <Image>/Layers/Stack
+#: app/menus.c:409
 #, fuzzy
 msgid "/Layers/Stack/Previous Layer"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:442
+#: app/menus.c:411
 #, fuzzy
 msgid "/Layers/Stack/Next Layer"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:444
+#: app/menus.c:413
 #, fuzzy
 msgid "/Layers/Stack/Raise Layer"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:446
+#: app/menus.c:415
 #, fuzzy
 msgid "/Layers/Stack/Lower Layer"
 msgstr "<Beeld>/Lagen/Verlaag Laag"
 
-#: app/menus.c:448
+#: app/menus.c:417
 #, fuzzy
 msgid "/Layers/Stack/Layer to Top"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:450
+#: app/menus.c:419
 #, fuzzy
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "Laag is reeds op de bodem"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:457
+#: app/menus.c:426
 #, fuzzy
 msgid "/Layers/Rotate"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:460
-#, fuzzy
-msgid "/Layers/Layer to Imagesize"
-msgstr "<Beeld>/Lagen/Verhoog Laag"
-
-#: app/menus.c:465
+#: app/menus.c:431
 #, fuzzy
 msgid "/Layers/Anchor Layer"
 msgstr "<Beeld>/Lagen/Veranker Laag"
 
-#: app/menus.c:467
+#: app/menus.c:433
 #, fuzzy
 msgid "/Layers/Merge Visible Layers..."
 msgstr "<Beeld>/Lagen/Voeg Zichtbare Lagen Samen"
 
-#: app/menus.c:469
+#: app/menus.c:435
 #, fuzzy
 msgid "/Layers/Flatten Image"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:474
+#: app/menus.c:440
 #, fuzzy
 msgid "/Layers/Mask to Selection"
 msgstr "Rand Selectie"
 
-#: app/menus.c:479
+#: app/menus.c:445
 #, fuzzy
 msgid "/Layers/Add Alpha Channel"
 msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
 
-#: app/menus.c:481
+#: app/menus.c:447
 #, fuzzy
 msgid "/Layers/Alpha to Selection"
 msgstr "Penseel Selectie"
 
 #. <Image>/Tools
-#: app/menus.c:489
-msgid "/Tools"
-msgstr ""
-
-#: app/menus.c:491
+#: app/menus.c:455
 msgid "/Tools/Toolbox"
 msgstr ""
 
-#: app/menus.c:493
+#: app/menus.c:457
 msgid "/Tools/Default Colors"
 msgstr ""
 
-#: app/menus.c:495
+#: app/menus.c:459
 msgid "/Tools/Swap Colors"
 msgstr ""
 
-#: app/menus.c:501
-#, fuzzy
-msgid "/Tools/Select Tools"
-msgstr "Selectie"
-
-#: app/menus.c:503
-#, fuzzy
-msgid "/Tools/Transform Tools"
-msgstr "<Beeld>/Beeld/Kleuren"
-
-#: app/menus.c:505
-msgid "/Tools/Paint Tools"
-msgstr ""
-
 #. <Image>/Dialogs
-#: app/menus.c:510
-#, fuzzy
-msgid "/Dialogs"
-msgstr "Kleurenpalet"
-
-#: app/menus.c:512
+#: app/menus.c:466
 #, fuzzy
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "Documentindex"
 
-#: app/menus.c:514
+#: app/menus.c:468
 #, fuzzy
 msgid "/Dialogs/Tool Options..."
 msgstr "Kloonhulp Opties"
 
-#: app/menus.c:519
+#: app/menus.c:473
 #, fuzzy
 msgid "/Dialogs/Brushes..."
 msgstr "Apperaat Status"
 
-#: app/menus.c:521
+#: app/menus.c:475
 #, fuzzy
 msgid "/Dialogs/Patterns..."
 msgstr "Kleurenpalet"
 
-#: app/menus.c:523
+#: app/menus.c:477
 #, fuzzy
 msgid "/Dialogs/Gradients..."
 msgstr "Apperaat Status"
 
-#: app/menus.c:525
+#: app/menus.c:479
 #, fuzzy
 msgid "/Dialogs/Palette..."
 msgstr "Kleurenpalet"
 
-#: app/menus.c:527
+#: app/menus.c:481
 #, fuzzy
 msgid "/Dialogs/Indexed Palette..."
 msgstr "Kleurenpalet"
 
-#: app/menus.c:532
+#: app/menus.c:486
 #, fuzzy
 msgid "/Dialogs/Input Devices..."
 msgstr "Apperaat Status"
 
-#: app/menus.c:534
+#: app/menus.c:488
 #, fuzzy
 msgid "/Dialogs/Device Status..."
 msgstr "Apperaat Status"
 
-#: app/menus.c:539
+#: app/menus.c:493
 #, fuzzy
 msgid "/Dialogs/Document Index..."
 msgstr "Documentindex"
 
-#: app/menus.c:541
+#: app/menus.c:495
 #, fuzzy
 msgid "/Dialogs/Error Console..."
 msgstr "Fliphulpopties"
 
-#: app/menus.c:543
+#: app/menus.c:497
 #, fuzzy
 msgid "/Dialogs/Display Filters..."
 msgstr "Kleurenpalet"
 
-#. <Image>/Filters
-#: app/menus.c:551
+#: app/menus.c:499
 #, fuzzy
-msgid "/Filters"
-msgstr "Vultype"
+msgid "/Dialogs/Undo History..."
+msgstr "<Beeld>/Editeer/Kopieer"
 
-#: app/menus.c:553
+#. <Image>/Filters
+#: app/menus.c:508
 #, fuzzy
 msgid "/Filters/Repeat Last"
 msgstr "<Beeld>/Bestand/Bewaar"
 
-#: app/menus.c:555
+#: app/menus.c:510
 #, fuzzy
 msgid "/Filters/Re-Show Last"
 msgstr "Vultype"
 
-#: app/menus.c:561
+#: app/menus.c:515
 #, fuzzy
 msgid "/Filters/Blur"
 msgstr "Vultype"
 
-#: app/menus.c:564
+#: app/menus.c:517
 #, fuzzy
 msgid "/Filters/Colors"
 msgstr "<Beeld>/Bestand/Sluit"
 
-#: app/menus.c:569
+#: app/menus.c:519
 #, fuzzy
 msgid "/Filters/Noise"
 msgstr "Vultype"
 
-#: app/menus.c:571
+#: app/menus.c:521
 msgid "/Filters/Edge-Detect"
 msgstr ""
 
-#: app/menus.c:573
+#: app/menus.c:523
 #, fuzzy
 msgid "/Filters/Enhance"
 msgstr "Vultype"
 
-#: app/menus.c:575
+#: app/menus.c:525
 #, fuzzy
 msgid "/Filters/Generic"
 msgstr "<Beeld>/Filters"
 
-#: app/menus.c:580
+#: app/menus.c:530
 #, fuzzy
 msgid "/Filters/Glass Effects"
 msgstr "<Beeld>/Filters"
 
-#: app/menus.c:582
+#: app/menus.c:532
 #, fuzzy
 msgid "/Filters/Light Effects"
 msgstr "<Beeld>/Filters"
 
-#: app/menus.c:584
+#: app/menus.c:534
 #, fuzzy
 msgid "/Filters/Distorts"
 msgstr "<Beeld>/Bestand/Sluit"
 
-#: app/menus.c:586
+#: app/menus.c:536
 #, fuzzy
 msgid "/Filters/Artistic"
 msgstr "Vultype"
 
-#: app/menus.c:588
+#: app/menus.c:538
 #, fuzzy
 msgid "/Filters/Map"
 msgstr "Vultype"
 
-#: app/menus.c:590
+#: app/menus.c:540
 #, fuzzy
 msgid "/Filters/Render"
 msgstr "<Beeld>/Bestand/Bewaar"
 
-#: app/menus.c:592
+#: app/menus.c:542
 #, fuzzy
 msgid "/Filters/Web"
 msgstr "Vultype"
 
-#: app/menus.c:597
+#: app/menus.c:547
 #, fuzzy
 msgid "/Filters/Animation"
 msgstr "<Beeld>/Filters"
 
-#: app/menus.c:599
+#: app/menus.c:549
 #, fuzzy
 msgid "/Filters/Combine"
 msgstr "<Beeld>/Bestand/Sluit"
 
-#: app/menus.c:604
+#: app/menus.c:554
 #, fuzzy
 msgid "/Filters/Toys"
 msgstr "Vultype"
 
-#. <Image>/Script-Fu
-#: app/menus.c:609
-msgid "/Script-Fu"
-msgstr ""
-
-#: app/menus.c:620
+#: app/menus.c:567
 msgid "/Automatic"
 msgstr "/Automatisch"
 
-#: app/menus.c:634
+#: app/menus.c:581
 #, fuzzy
 msgid "/By Extension"
 msgstr "/Door extensie"
 
-#: app/menus.c:648
+#: app/menus.c:595
 #, fuzzy
 msgid "/New Layer..."
 msgstr "Tekstlaag"
 
 #. <Layers>/Stack
-#: app/menus.c:653
-#, fuzzy
-msgid "/Stack"
-msgstr "<Beeld>/Lagen/Verhoog Laag"
-
-#: app/menus.c:655
+#: app/menus.c:600
 #, fuzzy
 msgid "/Stack/Raise Layer"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:657
+#: app/menus.c:602
 #, fuzzy
 msgid "/Stack/Lower Layer"
 msgstr "<Beeld>/Lagen/Verlaag Laag"
 
-#: app/menus.c:659
+#: app/menus.c:604
 #, fuzzy
 msgid "/Stack/Layer to Top"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:661
+#: app/menus.c:606
 #, fuzzy
 msgid "/Stack/Layer to Bottom"
 msgstr "Laag is reeds op de bodem"
 
-#: app/menus.c:664
+#: app/menus.c:609
 #, fuzzy
 msgid "/Duplicate Layer"
 msgstr "Dupliceer Kanaal"
 
-#: app/menus.c:666
+#: app/menus.c:611
 #, fuzzy
 msgid "/Anchor Layer"
 msgstr "<Beeld>/Lagen/Veranker Laag"
 
-#: app/menus.c:668
+#: app/menus.c:613
 #, fuzzy
 msgid "/Delete Layer"
 msgstr "Tekstlaag"
 
-#: app/menus.c:673
+#: app/menus.c:618
 msgid "/Layer Boundary Size..."
 msgstr ""
 
-#: app/menus.c:675
+#: app/menus.c:620
 #, fuzzy
 msgid "/Layer to Imagesize"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:677
+#: app/menus.c:622
 #, fuzzy
 msgid "/Scale Layer..."
 msgstr "Tekstlaag"
 
-#: app/menus.c:682
+#: app/menus.c:627
 #, fuzzy
 msgid "/Merge Visible Layers..."
 msgstr "<Beeld>/Lagen/Voeg Zichtbare Lagen Samen"
 
-#: app/menus.c:684
+#: app/menus.c:629
 #, fuzzy
 msgid "/Merge Down"
 msgstr "Samenvoegen"
 
-#: app/menus.c:686
+#: app/menus.c:631
 #, fuzzy
 msgid "/Flatten Image"
 msgstr "<Beeld>/Lagen/Verhoog Laag"
 
-#: app/menus.c:691
+#: app/menus.c:636
 msgid "/Add Layer Mask..."
 msgstr ""
 
-#: app/menus.c:693
+#: app/menus.c:638
 msgid "/Apply Layer Mask"
 msgstr ""
 
-#: app/menus.c:695
+#: app/menus.c:640
 #, fuzzy
 msgid "/Delete Layer Mask"
 msgstr "Tekstlaag"
 
-#: app/menus.c:697
+#: app/menus.c:642
 #, fuzzy
 msgid "/Mask to Selection"
 msgstr "Rand Selectie"
 
-#: app/menus.c:702
+#: app/menus.c:647
 #, fuzzy
 msgid "/Add Alpha Channel"
 msgstr "<Beeld>/Lagen/Voeg Alfa Kanaal toe"
 
-#: app/menus.c:704
+#: app/menus.c:649
 #, fuzzy
 msgid "/Alpha to Selection"
 msgstr "Penseel Selectie"
 
-#: app/menus.c:709
+#: app/menus.c:654
 #, fuzzy
 msgid "/Edit Layer Attributes..."
 msgstr "Editeer Kanaalattributen"
 
-#: app/menus.c:720
+#: app/menus.c:665
 #, fuzzy
 msgid "/New Channel..."
 msgstr "Nieuw kanaal"
 
-#: app/menus.c:722
+#: app/menus.c:667
 #, fuzzy
 msgid "/Raise Channel"
 msgstr "Verhoog Kanaal"
 
-#: app/menus.c:724
+#: app/menus.c:669
 #, fuzzy
 msgid "/Lower Channel"
 msgstr "Verlaag Kanaal"
 
-#: app/menus.c:726
+#: app/menus.c:671
 #, fuzzy
 msgid "/Duplicate Channel"
 msgstr "Dupliceer Kanaal"
 
-#: app/menus.c:731
+#: app/menus.c:676
 #, fuzzy
 msgid "/Channel to Selection"
 msgstr "Kleurselectie"
 
-#: app/menus.c:733
+#: app/menus.c:678
 #, fuzzy
 msgid "/Add to Selection"
 msgstr "Door Kleurselectie"
 
-#: app/menus.c:735
+#: app/menus.c:680
 #, fuzzy
 msgid "/Subtract from Selection"
 msgstr "Door Kleurselectie"
 
-#: app/menus.c:737
+#: app/menus.c:682
 #, fuzzy
 msgid "/Intersect with Selection"
 msgstr "Penseel Selectie"
 
-#: app/menus.c:742
+#: app/menus.c:687
 #, fuzzy
 msgid "/Delete Channel"
 msgstr "Verwijder Kanaal"
 
-#: app/menus.c:747
+#: app/menus.c:692
 #, fuzzy
 msgid "/Edit Channel Attributes..."
 msgstr "Editeer Kanaalattributen"
 
-#: app/menus.c:758
+#: app/menus.c:703
 #, fuzzy
 msgid "/New Path"
 msgstr "Nieuw palet"
 
-#: app/menus.c:760
+#: app/menus.c:705
 #, fuzzy
 msgid "/Duplicate Path"
 msgstr "Dupliceer Kanaal"
 
-#: app/menus.c:762
+#: app/menus.c:707
 #, fuzzy
 msgid "/Path to Selection"
 msgstr "Verwijder selectie"
 
-#: app/menus.c:764
+#: app/menus.c:709
 #, fuzzy
 msgid "/Selection to Path"
 msgstr "Selectie"
 
-#: app/menus.c:766
+#: app/menus.c:711
 msgid "/Stroke Path"
 msgstr ""
 
-#: app/menus.c:768
+#: app/menus.c:713
 #, fuzzy
 msgid "/Delete Path"
 msgstr "Verwijder"
 
-#: app/menus.c:773
+#: app/menus.c:718
 #, fuzzy
 msgid "/Copy Path"
 msgstr "Kopieer gradatie"
 
-#: app/menus.c:775
+#: app/menus.c:720
 #, fuzzy
 msgid "/Paste Path"
 msgstr "Plakken"
 
-#: app/menus.c:777
+#: app/menus.c:722
 #, fuzzy
 msgid "/Import Path..."
 msgstr "Importeer Palet"
 
-#: app/menus.c:779
+#: app/menus.c:724
 #, fuzzy
 msgid "/Export Path..."
 msgstr "Importeer Palet"
 
-#: app/menus.c:784
+#: app/menus.c:729
 #, fuzzy
 msgid "/Edit Path Attributes..."
 msgstr "Editeer Kanaalattributen"
 
-#: app/menus.c:1310
+#: app/menus.c:1260
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr ""
@@ -4385,7 +4365,7 @@ msgstr "Ratio: "
 msgid "Autoload during startup"
 msgstr ""
 
-#: app/move.c:456
+#: app/move.c:458
 #, fuzzy
 msgid "Move Tool"
 msgstr "Kloonhulp Opties"
@@ -4400,7 +4380,7 @@ msgstr "Wis bewaarde vensterposities"
 msgid "Navigation: No Image"
 msgstr ""
 
-#: app/paint_core.c:717
+#: app/paint_core.c:735
 #, fuzzy
 msgid "No brushes available for use with this tool."
 msgstr "Geen patronen beschikbaar voor deze operatie."
@@ -4854,523 +4834,516 @@ msgstr ""
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "U moet GIMP heropstarten om deze veranderingen door te voeren."
 
-#: app/preferences_dialog.c:1459
+#: app/preferences_dialog.c:1002
+#, c-format
+msgid "The default comments is limited to %d characters."
+msgstr ""
+
+#: app/preferences_dialog.c:1424
 msgid "Preferences"
 msgstr ""
 
 #. The categories tree
-#: app/preferences_dialog.c:1481
+#: app/preferences_dialog.c:1446
 msgid "Categories"
 msgstr ""
 
-#: app/preferences_dialog.c:1509 app/preferences_dialog.c:1511
+#: app/preferences_dialog.c:1474 app/preferences_dialog.c:1476
 #, fuzzy
 msgid "New File"
 msgstr "Vultype"
 
-#: app/preferences_dialog.c:1522
+#: app/preferences_dialog.c:1487
 #, fuzzy
 msgid "Default Image Size and Unit"
 msgstr "Standaard beelgrootte"
 
-#: app/preferences_dialog.c:1536
+#: app/preferences_dialog.c:1501
 msgid "Width"
 msgstr "Breedte"
 
-#: app/preferences_dialog.c:1538
+#: app/preferences_dialog.c:1503
 msgid "Height"
 msgstr "Hoogte"
 
-#: app/preferences_dialog.c:1568
+#: app/preferences_dialog.c:1533
 #, fuzzy
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standaard beelgrootte"
 
-#: app/preferences_dialog.c:1595 app/preferences_dialog.c:2359
+#: app/preferences_dialog.c:1560 app/preferences_dialog.c:2288
 msgid "dpi"
 msgstr "dpi"
 
-#: app/preferences_dialog.c:1642
+#: app/preferences_dialog.c:1607
 #, fuzzy
 msgid "Default Image Type:"
 msgstr "Standaard beeldtype"
 
-#: app/preferences_dialog.c:1678 app/preferences_dialog.c:2166
-msgid "Bytes"
-msgstr ""
-
-#: app/preferences_dialog.c:1679 app/preferences_dialog.c:2167
-msgid "KiloBytes"
-msgstr ""
-
-#: app/preferences_dialog.c:1680 app/preferences_dialog.c:2168
-msgid "MegaBytes"
-msgstr ""
-
-#: app/preferences_dialog.c:1686
+#: app/preferences_dialog.c:1618
 msgid "Maximum Image Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:1692 app/preferences_dialog.c:1694
+#: app/preferences_dialog.c:1623 app/preferences_dialog.c:1625
+#, fuzzy
+msgid "Default Comment"
+msgstr "Standaard"
+
+#: app/preferences_dialog.c:1633
+msgid "Comment Used for New Images"
+msgstr ""
+
+#: app/preferences_dialog.c:1653 app/preferences_dialog.c:1655
 msgid "Display"
 msgstr "Toon"
 
-#: app/preferences_dialog.c:1702
+#: app/preferences_dialog.c:1663
 #, fuzzy
 msgid "Transparency"
 msgstr "Transparant"
 
-#: app/preferences_dialog.c:1721
+#: app/preferences_dialog.c:1682
 msgid "Light Checks"
 msgstr ""
 
-#: app/preferences_dialog.c:1722
+#: app/preferences_dialog.c:1683
 msgid "Mid-Tone Checks"
 msgstr ""
 
-#: app/preferences_dialog.c:1723
+#: app/preferences_dialog.c:1684
 msgid "Dark Checks"
 msgstr ""
 
-#: app/preferences_dialog.c:1724
+#: app/preferences_dialog.c:1685
 msgid "White Only"
 msgstr "Enkel wit"
 
-#: app/preferences_dialog.c:1725
+#: app/preferences_dialog.c:1686
 msgid "Gray Only"
 msgstr "Enkel grijs"
 
-#: app/preferences_dialog.c:1726
+#: app/preferences_dialog.c:1687
 msgid "Black Only"
 msgstr "Enkel zwart"
 
-#: app/preferences_dialog.c:1730
+#: app/preferences_dialog.c:1691
 #, fuzzy
 msgid "Transparency Type:"
 msgstr "Transparantietype"
 
-#: app/preferences_dialog.c:1737 app/preferences_dialog.c:1810
-#: app/preferences_dialog.c:1824
+#: app/preferences_dialog.c:1698 app/preferences_dialog.c:1771
+#: app/preferences_dialog.c:1785
 msgid "Small"
 msgstr ""
 
-#: app/preferences_dialog.c:1738 app/preferences_dialog.c:1811
-#: app/preferences_dialog.c:1825
+#: app/preferences_dialog.c:1699 app/preferences_dialog.c:1772
+#: app/preferences_dialog.c:1786
 msgid "Medium"
 msgstr ""
 
-#: app/preferences_dialog.c:1739 app/preferences_dialog.c:1812
-#: app/preferences_dialog.c:1826
+#: app/preferences_dialog.c:1700 app/preferences_dialog.c:1773
+#: app/preferences_dialog.c:1787
 msgid "Large"
 msgstr ""
 
-#: app/preferences_dialog.c:1743
+#: app/preferences_dialog.c:1704
 #, fuzzy
 msgid "Check Size:"
 msgstr "Contreleer grootte"
 
-#: app/preferences_dialog.c:1746
+#: app/preferences_dialog.c:1707
 #, fuzzy
 msgid "8-Bit Displays"
 msgstr "Toon"
 
-#: app/preferences_dialog.c:1751
+#: app/preferences_dialog.c:1712
 #, fuzzy
 msgid "Install Colormap"
 msgstr "Installeer kleurenmap (enkel 8-bit)"
 
-#: app/preferences_dialog.c:1760
+#: app/preferences_dialog.c:1721
 msgid "Colormap Cycling"
 msgstr ""
 
-#: app/preferences_dialog.c:1809
+#: app/preferences_dialog.c:1770
 msgid "Tiny"
 msgstr ""
 
-#: app/preferences_dialog.c:1813
+#: app/preferences_dialog.c:1774
 msgid "Huge"
 msgstr ""
 
-#: app/preferences_dialog.c:1817
+#: app/preferences_dialog.c:1778
 msgid "Preview Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:1830
+#: app/preferences_dialog.c:1791
 msgid "Nav Preview Size:"
 msgstr ""
 
-#: app/preferences_dialog.c:1840
+#: app/preferences_dialog.c:1801
 msgid "Recent Documents List Size:"
 msgstr ""
 
 #. Indicators
-#: app/preferences_dialog.c:1844
+#: app/preferences_dialog.c:1805
 msgid "Toolbox"
 msgstr ""
 
-#: app/preferences_dialog.c:1847
+#: app/preferences_dialog.c:1808
 msgid "Display Brush, Pattern and Gradient Indicators"
 msgstr ""
 
-#: app/preferences_dialog.c:1856
+#: app/preferences_dialog.c:1817
 msgid "Dialog Behaviour"
 msgstr ""
 
-#: app/preferences_dialog.c:1858
+#: app/preferences_dialog.c:1819
 msgid "Navigation Window per Display"
 msgstr ""
 
-#: app/preferences_dialog.c:1867
+#: app/preferences_dialog.c:1828
 msgid "Info Window Follows Mouse"
 msgstr ""
 
-#: app/preferences_dialog.c:1878 app/preferences_dialog.c:1880
+#: app/preferences_dialog.c:1839 app/preferences_dialog.c:1841
 msgid "Help System"
 msgstr ""
 
-#: app/preferences_dialog.c:1890
+#: app/preferences_dialog.c:1851
 #, fuzzy
 msgid "Show Tool Tips"
 msgstr "Toon gereedschaptips"
 
-#: app/preferences_dialog.c:1900
+#: app/preferences_dialog.c:1861
 msgid "Context Sensitive Help with \"F1\""
 msgstr ""
 
-#: app/preferences_dialog.c:1909
+#: app/preferences_dialog.c:1870
 #, fuzzy
 msgid "Help Browser"
 msgstr "Fliphulpopties"
 
-#: app/preferences_dialog.c:1921
+#: app/preferences_dialog.c:1882
 #, fuzzy
 msgid "Internal"
 msgstr "Interval:"
 
-#: app/preferences_dialog.c:1922
+#: app/preferences_dialog.c:1883
 msgid "Netscape"
 msgstr ""
 
-#: app/preferences_dialog.c:1926
+#: app/preferences_dialog.c:1887
 msgid "Help Browser to Use:"
 msgstr ""
 
-#: app/preferences_dialog.c:1931 app/preferences_dialog.c:1933
+#: app/preferences_dialog.c:1892 app/preferences_dialog.c:1894
 msgid "Image Windows"
 msgstr ""
 
-#: app/preferences_dialog.c:1941
+#: app/preferences_dialog.c:1902
 msgid "Appearance"
 msgstr ""
 
-#: app/preferences_dialog.c:1943
+#: app/preferences_dialog.c:1904
 msgid "Use \"Dot for Dot\" by default"
 msgstr ""
 
-#: app/preferences_dialog.c:1952
+#: app/preferences_dialog.c:1913
 #, fuzzy
 msgid "Resize Window on Zoom"
 msgstr "Pas venstergrootte aan bij vergroten/verkleinen"
 
-#: app/preferences_dialog.c:1961
+#: app/preferences_dialog.c:1922
 #, fuzzy
 msgid "Show Rulers"
 msgstr "Toon regels"
 
-#: app/preferences_dialog.c:1970
+#: app/preferences_dialog.c:1931
 #, fuzzy
 msgid "Show Statusbar"
 msgstr "Toon statusbalk"
 
-#: app/preferences_dialog.c:1994
+#: app/preferences_dialog.c:1955
 msgid "Marching Ants Speed:"
 msgstr ""
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:2002
+#: app/preferences_dialog.c:1963
 msgid "Custom"
 msgstr "Eigen"
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:2008
+#: app/preferences_dialog.c:1969
 msgid "Standard"
 msgstr ""
 
-#: app/preferences_dialog.c:2013
+#: app/preferences_dialog.c:1974
 msgid "Show zoom percentage"
 msgstr ""
 
-#: app/preferences_dialog.c:2018
+#: app/preferences_dialog.c:1979
 #, fuzzy
 msgid "Show zoom ratio"
 msgstr "Toon gereedschaptips"
 
-#: app/preferences_dialog.c:2023
+#: app/preferences_dialog.c:1984
 msgid "Show reversed zoom ratio"
 msgstr ""
 
-#: app/preferences_dialog.c:2034
+#: app/preferences_dialog.c:1995
 msgid "Image Title Format:"
 msgstr ""
 
 #. End of the title format string
-#: app/preferences_dialog.c:2038
+#: app/preferences_dialog.c:1999
 msgid "Pointer Movement Feedback"
 msgstr ""
 
-#: app/preferences_dialog.c:2041
+#: app/preferences_dialog.c:2002
 msgid "Perfect-but-Slow Pointer Tracking"
 msgstr ""
 
-#: app/preferences_dialog.c:2050
+#: app/preferences_dialog.c:2011
 msgid "Disable Cursor Updating"
 msgstr ""
 
-#: app/preferences_dialog.c:2062 app/preferences_dialog.c:2064
+#: app/preferences_dialog.c:2023 app/preferences_dialog.c:2025
 #: app/tools.c:1080
 msgid "Tool Options"
 msgstr ""
 
-#: app/preferences_dialog.c:2072
+#: app/preferences_dialog.c:2033
 #, fuzzy
 msgid "Paint Options"
 msgstr "Paletopties"
 
-#: app/preferences_dialog.c:2075
+#: app/preferences_dialog.c:2036
 #, fuzzy
 msgid "Use Global Paint Options"
 msgstr "Opties voor kleurbalans"
 
-#: app/preferences_dialog.c:2090 app/preferences_dialog.c:2092
+#: app/preferences_dialog.c:2051 app/preferences_dialog.c:2053
 msgid "Environment"
 msgstr "Omgeving"
 
-#: app/preferences_dialog.c:2100
+#: app/preferences_dialog.c:2061
 #, fuzzy
 msgid "Resource Consumption"
 msgstr "Bronconfiguratie"
 
-#: app/preferences_dialog.c:2102
+#: app/preferences_dialog.c:2063
 #, fuzzy
 msgid "Conservative Memory Usage"
 msgstr "Conservatief geheugengebruik"
 
-#: app/preferences_dialog.c:2130
+#: app/preferences_dialog.c:2091
 #, fuzzy
 msgid "Levels of Undo:"
 msgstr "Niveau om ongedaan maken"
 
-#: app/preferences_dialog.c:2174
-#, fuzzy
-msgid "Tile Cache Size:"
-msgstr "Contreleer grootte"
-
-#: app/preferences_dialog.c:2185
+#: app/preferences_dialog.c:2113
 msgid "Number of Processors to Use:"
 msgstr ""
 
-#: app/preferences_dialog.c:2189 app/transform_tool.c:215
+#: app/preferences_dialog.c:2117 app/transform_tool.c:215
 msgid "Scaling"
 msgstr "Schalend"
 
-#: app/preferences_dialog.c:2207
+#: app/preferences_dialog.c:2135
 msgid "Nearest Neighbor (Fast)"
 msgstr ""
 
-#: app/preferences_dialog.c:2211
+#: app/preferences_dialog.c:2139
 msgid "Cubic (Slow)"
 msgstr ""
 
-#: app/preferences_dialog.c:2216
+#: app/preferences_dialog.c:2144
 #, fuzzy
 msgid "Interpolation Type:"
 msgstr "Kubische interpolatie"
 
-#: app/preferences_dialog.c:2219
+#: app/preferences_dialog.c:2147
 #, fuzzy
 msgid "File Saving"
 msgstr "<Beeld>/Bestand/Bewaar"
 
-#: app/preferences_dialog.c:2236 app/preferences_dialog.c:2249
+#: app/preferences_dialog.c:2164 app/preferences_dialog.c:2177
 msgid "Always"
 msgstr ""
 
-#: app/preferences_dialog.c:2237
+#: app/preferences_dialog.c:2165
 msgid "Never"
 msgstr ""
 
-#: app/preferences_dialog.c:2241
+#: app/preferences_dialog.c:2169
 msgid "Try to Write a Thumbnail File:"
 msgstr ""
 
-#: app/preferences_dialog.c:2248
+#: app/preferences_dialog.c:2176
 msgid "Only when Modified"
 msgstr ""
 
-#: app/preferences_dialog.c:2253
+#: app/preferences_dialog.c:2181
 msgid "\"File > Save\" Saves the Image:"
 msgstr ""
 
-#: app/preferences_dialog.c:2259
+#: app/preferences_dialog.c:2187
 #, fuzzy
 msgid "Session Management"
 msgstr "Sessiemanagement"
 
-#: app/preferences_dialog.c:2261
+#: app/preferences_dialog.c:2189
 msgid "Session"
 msgstr "Sessie"
 
-#: app/preferences_dialog.c:2269
+#: app/preferences_dialog.c:2197
 #, fuzzy
 msgid "Window Positions"
 msgstr "Wis bewaarde vensterposities"
 
-#: app/preferences_dialog.c:2271
+#: app/preferences_dialog.c:2199
 #, fuzzy
 msgid "Save Window Positions on Exit"
 msgstr "Bewaar vensterposities bij einde"
 
-#: app/preferences_dialog.c:2285
+#: app/preferences_dialog.c:2213
 #, fuzzy
 msgid "Clear Saved Window Positions Now"
 msgstr "Wis bewaarde vensterposities"
 
-#: app/preferences_dialog.c:2293
+#: app/preferences_dialog.c:2221
 #, fuzzy
 msgid "Always Try to Restore Session"
 msgstr "Altijd sessie proberen herstellen"
 
-#: app/preferences_dialog.c:2302
+#: app/preferences_dialog.c:2230
 #, fuzzy
 msgid "Devices"
 msgstr "Apperaat Status"
 
-#: app/preferences_dialog.c:2304
+#: app/preferences_dialog.c:2232
 #, fuzzy
 msgid "Save Device Status on Exit"
 msgstr "Bewaar apperaattoestand bij einde"
 
-#: app/preferences_dialog.c:2315 app/preferences_dialog.c:2317
+#: app/preferences_dialog.c:2243 app/preferences_dialog.c:2245
 msgid "Monitor"
 msgstr "Beeldscherm"
 
-#: app/preferences_dialog.c:2325
+#: app/preferences_dialog.c:2253
 #, fuzzy
 msgid "Get Monitor Resolution"
 msgstr "Beeldscherminformatie"
 
-#: app/preferences_dialog.c:2333
+#: app/preferences_dialog.c:2261
 #, fuzzy, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(huidig %d x %d dpi)"
 
-#: app/preferences_dialog.c:2384
+#: app/preferences_dialog.c:2313
 #, fuzzy
 msgid "From X Server"
 msgstr "van X server"
 
-#: app/preferences_dialog.c:2399
+#: app/preferences_dialog.c:2328
 #, fuzzy
 msgid "Manually:"
 msgstr "handmatig"
 
-#: app/preferences_dialog.c:2412 app/preferences_dialog.c:2414
+#: app/preferences_dialog.c:2341 app/preferences_dialog.c:2343
 msgid "Directories"
 msgstr "Mappen"
 
-#: app/preferences_dialog.c:2431
+#: app/preferences_dialog.c:2360
 msgid "Temp Dir:"
 msgstr ""
 
-#: app/preferences_dialog.c:2431
+#: app/preferences_dialog.c:2360
 msgid "Select Temp Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2432
+#: app/preferences_dialog.c:2361
 msgid "Swap Dir:"
 msgstr ""
 
-#: app/preferences_dialog.c:2432
-msgid "Select Swap Dir"
-msgstr ""
-
-#: app/preferences_dialog.c:2468
+#: app/preferences_dialog.c:2397
 #, fuzzy
 msgid "Brushes Directories"
 msgstr "Mappen"
 
-#: app/preferences_dialog.c:2470
+#: app/preferences_dialog.c:2399
 msgid "Select Brushes Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2472
+#: app/preferences_dialog.c:2401
 msgid "Generated Brushes"
 msgstr ""
 
-#: app/preferences_dialog.c:2472
+#: app/preferences_dialog.c:2401
 #, fuzzy
 msgid "Generated Brushes Directories"
 msgstr "Mappen"
 
-#: app/preferences_dialog.c:2474
+#: app/preferences_dialog.c:2403
 #, fuzzy
 msgid "Select Generated Brushes Dir"
 msgstr "Bewaar Gradaties"
 
-#: app/preferences_dialog.c:2476
+#: app/preferences_dialog.c:2405
 #, fuzzy
 msgid "Patterns Directories"
 msgstr "Mappen"
 
-#: app/preferences_dialog.c:2478
+#: app/preferences_dialog.c:2407
 msgid "Select Patterns Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2480
+#: app/preferences_dialog.c:2409
 #, fuzzy
 msgid "Palettes Directories"
 msgstr "Mappen"
 
-#: app/preferences_dialog.c:2482
+#: app/preferences_dialog.c:2411
 #, fuzzy
 msgid "Select Palettes Dir"
 msgstr "Voeg palet samen"
 
-#: app/preferences_dialog.c:2484
+#: app/preferences_dialog.c:2413
 #, fuzzy
 msgid "Gradients Directories"
 msgstr "Gradatie Editor"
 
-#: app/preferences_dialog.c:2486
+#: app/preferences_dialog.c:2415
 #, fuzzy
 msgid "Select Gradients Dir"
 msgstr "Bewaar Gradaties"
 
-#: app/preferences_dialog.c:2488
+#: app/preferences_dialog.c:2417
 #, fuzzy
 msgid "Plug-Ins"
-msgstr "\t\tplug-ins.\n"
+msgstr "plug-ins.\n"
 
-#: app/preferences_dialog.c:2488
+#: app/preferences_dialog.c:2417
 #, fuzzy
 msgid "Plug-Ins Directories"
 msgstr "Mappen"
 
-#: app/preferences_dialog.c:2490
+#: app/preferences_dialog.c:2419
 msgid "Select Plug-Ins Dir"
 msgstr ""
 
-#: app/preferences_dialog.c:2492
+#: app/preferences_dialog.c:2421
 #, fuzzy
 msgid "Modules"
 msgstr "Modus:"
 
-#: app/preferences_dialog.c:2492
+#: app/preferences_dialog.c:2421
 #, fuzzy
 msgid "Modules Directories"
 msgstr "Mappen"
 
-#: app/preferences_dialog.c:2494
+#: app/preferences_dialog.c:2423
 #, fuzzy
 msgid "Select Modules Dir"
 msgstr "Selectiemodus"
@@ -5403,7 +5376,7 @@ msgstr "Interne GIMP procedure"
 #: app/procedural_db_cmds.c:65
 #, fuzzy
 msgid "GIMP Plug-In"
-msgstr "\t\tplug-ins.\n"
+msgstr "plug-ins.\n"
 
 #: app/procedural_db_cmds.c:66
 msgid "GIMP Extension"
@@ -5445,71 +5418,71 @@ msgstr ""
 msgid "Selection: "
 msgstr "Selectie"
 
-#: app/resize.c:154
+#: app/resize.c:156
 msgid "Scale Layer"
 msgstr ""
 
-#: app/resize.c:156 app/resize.c:181 app/tool_options.c:774
+#: app/resize.c:158 app/resize.c:183 app/tool_options.c:774
 msgid "Size"
 msgstr ""
 
-#: app/resize.c:160
+#: app/resize.c:162
 #, fuzzy
 msgid "Scale Image"
 msgstr "Bewaar Beeld"
 
-#: app/resize.c:162
+#: app/resize.c:164
 msgid "Pixel Dimensions"
 msgstr ""
 
-#: app/resize.c:172
+#: app/resize.c:174
 msgid "Set Layer Boundary Size"
 msgstr ""
 
-#: app/resize.c:177
+#: app/resize.c:179
 msgid "Set Canvas Size"
 msgstr ""
 
 #. the original width & height labels
-#: app/resize.c:234 app/scale_tool.c:77
+#: app/resize.c:236 app/scale_tool.c:77
 #, fuzzy
 msgid "Original Width:"
 msgstr "Originele breedte: "
 
 #. the new size labels
-#: app/resize.c:259 app/resize.c:504
+#: app/resize.c:261 app/resize.c:506
 #, fuzzy
 msgid "New Width:"
 msgstr "Nieuwe breedte:"
 
 #. the scale ratio labels
-#: app/resize.c:324
+#: app/resize.c:326
 #, fuzzy
 msgid "Ratio X:"
 msgstr "X ratio:"
 
 #. the x and y offset labels
-#: app/resize.c:409
+#: app/resize.c:411
 msgid "X:"
 msgstr ""
 
-#: app/resize.c:490
+#: app/resize.c:492
 msgid "Print Size & Display Unit"
 msgstr ""
 
-#: app/resize.c:1252
+#: app/resize.c:1254
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr ""
 "Fout bij instellen van schaal: breedte en hoogte moeten groter zijn dan 0"
 
-#: app/resize.c:1334
+#: app/resize.c:1336
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
 
-#: app/resize.c:1338
+#: app/resize.c:1340
 msgid "Layer Too Small"
 msgstr ""
 
@@ -5562,7 +5535,7 @@ msgstr ""
 msgid "Text Tool"
 msgstr "Tekstgereedschap"
 
-#: app/text_tool.c:162 app/tool_options.c:233
+#: app/text_tool.c:162 app/tool_options.c:232
 msgid "Antialiasing"
 msgstr ""
 
@@ -5640,111 +5613,111 @@ msgstr ""
 "Uw GIMP tipbestand is niet gevonden!\n"
 "Er zou een bestand met de naam "
 
-#: app/tool_options.c:122
+#: app/tool_options.c:121
 msgid "This tool has no options."
 msgstr ""
 
-#: app/tool_options.c:146
+#: app/tool_options.c:145
 #, fuzzy
 msgid "Rectangular Selection"
 msgstr "Rechthoekige Selectie-opties"
 
-#: app/tool_options.c:148
+#: app/tool_options.c:147
 #, fuzzy
 msgid "Elliptical Selection"
 msgstr "Selectieopertaties"
 
-#: app/tool_options.c:150
+#: app/tool_options.c:149
 #, fuzzy
 msgid "Free-Hand Selection"
 msgstr "Selectieopertaties"
 
-#: app/tool_options.c:152
+#: app/tool_options.c:151
 #, fuzzy
 msgid "Fuzzy Selection"
 msgstr "Selectieopertaties"
 
-#: app/tool_options.c:154
+#: app/tool_options.c:153
 #, fuzzy
 msgid "Bezier Selection"
 msgstr "Rand Selectie"
 
-#: app/tool_options.c:156 app/tools.c:178
+#: app/tool_options.c:155 app/tools.c:178
 msgid "Intelligent Scissors"
 msgstr ""
 
-#: app/tool_options.c:158
+#: app/tool_options.c:157
 #, fuzzy
 msgid "By-Color Selection"
 msgstr "Door Kleurselectie"
 
-#: app/tool_options.c:189
+#: app/tool_options.c:188
 #, fuzzy
 msgid "Feather"
 msgstr "Selectie"
 
-#: app/tool_options.c:297
+#: app/tool_options.c:296
 msgid "Fixed Size / Aspect Ratio"
 msgstr ""
 
-#: app/tool_options.c:363
+#: app/tool_options.c:362
 #, fuzzy
 msgid "Unit:"
 msgstr "Ongetiteld"
 
-#: app/tool_options.c:448 app/tools.c:376
+#: app/tool_options.c:447 app/tools.c:376
 msgid "Bucket Fill"
 msgstr ""
 
-#: app/tool_options.c:450
+#: app/tool_options.c:449
 #, fuzzy
 msgid "Blend Tool"
 msgstr "Meng:"
 
-#: app/tool_options.c:452 app/tools.c:412
+#: app/tool_options.c:451 app/tools.c:412
 msgid "Pencil"
 msgstr ""
 
-#: app/tool_options.c:454 app/tools.c:430
+#: app/tool_options.c:453 app/tools.c:430
 msgid "Paintbrush"
 msgstr ""
 
-#: app/tool_options.c:456 app/tools.c:448
+#: app/tool_options.c:455 app/tools.c:448
 msgid "Eraser"
 msgstr ""
 
-#: app/tool_options.c:458 app/tools.c:466
+#: app/tool_options.c:457 app/tools.c:466
 msgid "Airbrush"
 msgstr ""
 
-#: app/tool_options.c:460
+#: app/tool_options.c:459
 #, fuzzy
 msgid "Clone Tool"
 msgstr "Kloonhulp Opties"
 
-#: app/tool_options.c:462
+#: app/tool_options.c:461
 #, fuzzy
 msgid "Convolver"
 msgstr "Type van Kromme: "
 
-#: app/tool_options.c:464
+#: app/tool_options.c:463
 msgid "Ink Tool"
 msgstr ""
 
-#: app/tool_options.c:466 app/tools.c:538 app/tools.c:544
+#: app/tool_options.c:465 app/tools.c:538 app/tools.c:544
 msgid "Dodge or Burn"
 msgstr ""
 
-#: app/tool_options.c:468
+#: app/tool_options.c:467
 #, fuzzy
 msgid "Smudge Tool"
 msgstr "Bewaaropties"
 
-#: app/tool_options.c:583
+#: app/tool_options.c:582
 msgid "Incremental"
 msgstr "Incrementeel"
 
-#: app/tool_options.c:689
+#: app/tool_options.c:688
 #, fuzzy
 msgid "Pressure Sensitivity"
 msgstr "Lichtheid behouden"
@@ -6473,6 +6446,106 @@ msgstr ""
 #, fuzzy
 msgid "Color History"
 msgstr "Kleurpikker"
+
+#, fuzzy
+#~ msgid "Custom from Editor"
+#~ msgstr "Aangepast van editor"
+
+#~ msgid ""
+#~ "The GIMP - GNU Image Manipulation Program\n"
+#~ "\n"
+#~ msgstr ""
+#~ "GIMP - GNU Image Manipulation Program\n"
+#~ "\n"
+
+#~ msgid "For a proper GIMP installation, a subdirectory called\n"
+#~ msgstr "Voor een correctie GIMP installatie, moet een submap genaamd\n"
+
+#~ msgid "Install"
+#~ msgstr "Installeren"
+
+#~ msgid "Ignore"
+#~ msgstr "Negeren"
+
+#, fuzzy
+#~ msgid "/File/Dialogs"
+#~ msgstr "<Beeld>/Bestand/Sluit"
+
+#, fuzzy
+#~ msgid "/File"
+#~ msgstr "Vultype"
+
+#, fuzzy
+#~ msgid "/Edit"
+#~ msgstr "Verander"
+
+#, fuzzy
+#~ msgid "/Edit/Buffer"
+#~ msgstr "<Beeld>/Editeer/Wis"
+
+#, fuzzy
+#~ msgid "/Select"
+#~ msgstr "Selectie"
+
+#, fuzzy
+#~ msgid "/View"
+#~ msgstr "<Beeld>/Zicht/Punt voor punt"
+
+#, fuzzy
+#~ msgid "/View/Zoom"
+#~ msgstr "<Beeld>/Zicht/Punt voor punt"
+
+#, fuzzy
+#~ msgid "/Image"
+#~ msgstr "Nieuwe beeld"
+
+#, fuzzy
+#~ msgid "/Image/Mode"
+#~ msgstr "<Beeld>/Beeld/RGB"
+
+#, fuzzy
+#~ msgid "/Image/Colors"
+#~ msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
+
+#, fuzzy
+#~ msgid "/Image/Colors/Auto"
+#~ msgstr "<Beeld>/Beeld/Kleuren/Inverteren"
+
+#, fuzzy
+#~ msgid "/Image/Alpha"
+#~ msgstr "Schaal instellen"
+
+#, fuzzy
+#~ msgid "/Image/Transforms"
+#~ msgstr "<Beeld>/Beeld/Kleuren"
+
+#, fuzzy
+#~ msgid "/Layers"
+#~ msgstr "Tekstlaag"
+
+#, fuzzy
+#~ msgid "/Layers/Stack"
+#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
+
+#, fuzzy
+#~ msgid "/Tools/Select Tools"
+#~ msgstr "Selectie"
+
+#, fuzzy
+#~ msgid "/Tools/Transform Tools"
+#~ msgstr "<Beeld>/Beeld/Kleuren"
+
+#, fuzzy
+#~ msgid "/Dialogs"
+#~ msgstr "Kleurenpalet"
+
+#, fuzzy
+#~ msgid "/Filters"
+#~ msgstr "Vultype"
+
+#, fuzzy
+#~ msgid "/Stack"
+#~ msgstr "<Beeld>/Lagen/Verhoog Laag"
 
 #, fuzzy
 #~ msgid "Fill Options"
@@ -7280,176 +7353,169 @@ msgstr "Kleurpikker"
 #~ msgid " needs to be created.  This\n"
 #~ msgstr " aangemaakt worden. Deze\n"
 
-#~ msgid "\t\tThe gimprc is used to store personal preferences\n"
-#~ msgstr "\t\tgipmrc wordt gebruikt om persoonlijke instellingen te bewaren\n"
+#~ msgid "The gimprc is used to store personal preferences\n"
+#~ msgstr "gipmrc wordt gebruikt om persoonlijke instellingen te bewaren\n"
 
-#~ msgid "\t\tsuch as default GIMP behaviors & plug-in hotkeys.\n"
-#~ msgstr "\t\tzoals standaard GIMP gedrag & plug-in sneltoetsen.\n"
+#~ msgid "such as default GIMP behaviors & plug-in hotkeys.\n"
+#~ msgstr "zoals standaard GIMP gedrag & plug-in sneltoetsen.\n"
 
-#~ msgid "\t\tPaths to search for brushes, palettes, gradients\n"
-#~ msgstr "\t\tPaden om in zoeken naar penselen, paletten en gradaties\n"
-
-#, fuzzy
-#~ msgid "\t\tpatterns, plug-ins and modules are also configured here.\n"
-#~ msgstr "\t\tpatronen en plug-ins worden ook hier geconfigureerd.\n"
+#~ msgid "Paths to search for brushes, palettes, gradients\n"
+#~ msgstr "Paden om in zoeken naar penselen, paletten en gradaties\n"
 
 #, fuzzy
-#~ msgid "\t\tThe unitrc is used to store your user units database.\n"
-#~ msgstr "\t\tgipmrc wordt gebruikt om persoonlijke instellingen te bewaren\n"
+#~ msgid "patterns, plug-ins and modules are also configured here.\n"
+#~ msgstr "patronen en plug-ins worden ook hier geconfigureerd.\n"
 
 #, fuzzy
-#~ msgid "\t\tpoints and picas. This file is overwritten each time\n"
-#~ msgstr "\t\twordt gebufferd in dit bestand. Dit bestand wordt\n"
+#~ msgid "The unitrc is used to store your user units database.\n"
+#~ msgstr "gipmrc wordt gebruikt om persoonlijke instellingen te bewaren\n"
 
 #, fuzzy
-#~ msgid "\t\tyou quit the GIMP.\n"
+#~ msgid "points and picas. This file is overwritten each time\n"
+#~ msgstr "wordt gebufferd in dit bestand. Dit bestand wordt\n"
+
+#, fuzzy
+#~ msgid "you quit the GIMP.\n"
 #~ msgstr "Over GIMP"
 
 #, fuzzy
-#~ msgid "\t\tPlug-ins and extensions are external programs run by\n"
+#~ msgid "Plug-ins and extensions are external programs run by\n"
+#~ msgstr "Plug-ins en extensies zijn externe programma's uitgevoerd door\n"
+
+#~ msgid "the GIMP which provide additional functionality.\n"
+#~ msgstr "GIMP die extra functionaliteiten voorzien.\n"
+
+#~ msgid "These programs are searched for at run-time and\n"
+#~ msgstr "Deze programma's worden op tijdens executie gezocht en\n"
+
+#~ msgid "information about their functionality and mod-times\n"
+#~ msgstr "informatie over hun functionaliteit en mod-times\n"
+
+#~ msgid "is cached in this file.  This file is intended to\n"
+#~ msgstr "wordt gebufferd in dit bestand. Dit bestand wordt\n"
+
+#~ msgid "be GIMP-readable only, and should not be edited.\n"
+#~ msgstr "enkel door GIMP gelezen, en zou niet ge-editeerd moeten worden.\n"
+
+#~ msgid "This is a subdirectory which can be used to store\n"
+#~ msgstr "Dit is een submap dat gebruikt kan worden om door\n"
+
+#~ msgid "user defined brushes.  The default gimprc file\n"
 #~ msgstr ""
-#~ "\t\tPlug-ins en extensies zijn externe programma's uitgevoerd door\n"
-
-#~ msgid "\t\tthe GIMP which provide additional functionality.\n"
-#~ msgstr "\t\tGIMP die extra functionaliteiten voorzien.\n"
-
-#~ msgid "\t\tThese programs are searched for at run-time and\n"
-#~ msgstr "\t\tDeze programma's worden op tijdens executie gezocht en\n"
-
-#~ msgid "\t\tinformation about their functionality and mod-times\n"
-#~ msgstr "\t\tinformatie over hun functionaliteit en mod-times\n"
-
-#~ msgid "\t\tis cached in this file.  This file is intended to\n"
-#~ msgstr "\t\twordt gebufferd in dit bestand. Dit bestand wordt\n"
-
-#~ msgid "\t\tbe GIMP-readable only, and should not be edited.\n"
-#~ msgstr ""
-#~ "\t\tenkel door GIMP gelezen, en zou niet ge-editeerd moeten worden.\n"
-
-#~ msgid "\t\tThis is a subdirectory which can be used to store\n"
-#~ msgstr "\t\tDit is een submap dat gebruikt kan worden om door\n"
-
-#~ msgid "\t\tuser defined brushes.  The default gimprc file\n"
-#~ msgstr ""
-#~ "\t\tgebruiker gedefinieerde penselen in te bewaren. Het standaard gimprc "
+#~ "gebruiker gedefinieerde penselen in te bewaren. Het standaard gimprc "
 #~ "bestand\n"
 
-#~ msgid "\t\tchecks this subdirectory in addition to the system-\n"
-#~ msgstr "\t\tcontroleert deze submap als optelling bij de systeemwijde\n"
+#~ msgid "checks this subdirectory in addition to the system-\n"
+#~ msgstr "controleert deze submap als optelling bij de systeemwijde\n"
 
-#~ msgid "\t\twide gimp brushes installation when searching for\n"
-#~ msgstr "\t\tgimp installatie van penselen tijdens het zoeken naar\n"
+#~ msgid "wide gimp brushes installation when searching for\n"
+#~ msgstr "gimp installatie van penselen tijdens het zoeken naar\n"
 
-#~ msgid "\t\tbrushes.\n"
-#~ msgstr "\t\tpenselen.\n"
+#~ msgid "brushes.\n"
+#~ msgstr "penselen.\n"
 
-#~ msgid "\t\tuser defined gradients.  The default gimprc file\n"
-#~ msgstr "\t\tzelfgedefinieerde gradaties. Het standaard gimprc bestand\n"
+#~ msgid "user defined gradients.  The default gimprc file\n"
+#~ msgstr "zelfgedefinieerde gradaties. Het standaard gimprc bestand\n"
 
-#~ msgid "\t\twide gimp gradients installation when searching for\n"
-#~ msgstr "\t\tgimp installatie van gradaties tijdens het zoeken naar\n"
+#~ msgid "wide gimp gradients installation when searching for\n"
+#~ msgstr "gimp installatie van gradaties tijdens het zoeken naar\n"
 
-#~ msgid "\t\tgradients.\n"
-#~ msgstr "\t\tgradaties.\n"
+#~ msgid "gradients.\n"
+#~ msgstr "gradaties.\n"
 
-#~ msgid "\t\tuser defined figures to be used by the gfig plug-in.\n"
-#~ msgstr "\t\tzelfgedefinieerde figuren voor de gfig plug-in.\n"
+#~ msgid "user defined figures to be used by the gfig plug-in.\n"
+#~ msgstr "zelfgedefinieerde figuren voor de gfig plug-in.\n"
 
-#~ msgid "\t\tThe default gimprc file checks this subdirectory in\n"
-#~ msgstr "\t\tHet standaard gimprc bestand controleert deze submap\n"
+#~ msgid "The default gimprc file checks this subdirectory in\n"
+#~ msgstr "Het standaard gimprc bestand controleert deze submap\n"
 
-#~ msgid "\t\taddition to the systemwide gimp gfig installation\n"
-#~ msgstr "\t\t bovenop de systeemwijde gimp installatie van gfig\n"
+#~ msgid "addition to the systemwide gimp gfig installation\n"
+#~ msgstr " bovenop de systeemwijde gimp installatie van gfig\n"
 
-#~ msgid "\t\twhen searching for gfig figures.\n"
-#~ msgstr "\t\ttijdens het zoeken naar gfig figuren.\n"
+#~ msgid "when searching for gfig figures.\n"
+#~ msgstr "tijdens het zoeken naar gfig figuren.\n"
 
-#~ msgid "\t\tuser defined gflares to be used by the gflare plug-in.\n"
-#~ msgstr "\t\tzelfgedefinieerde gflares voor de gflare plug-in.\n"
+#~ msgid "user defined gflares to be used by the gflare plug-in.\n"
+#~ msgstr "zelfgedefinieerde gflares voor de gflare plug-in.\n"
 
-#~ msgid "\t\taddition to the systemwide gimp gflares installation\n"
-#~ msgstr "\t\ttoevoeging aan de systeemwijde gimp installatie van gflares\n"
+#~ msgid "addition to the systemwide gimp gflares installation\n"
+#~ msgstr "toevoeging aan de systeemwijde gimp installatie van gflares\n"
 
-#~ msgid "\t\twhen searching for gflares.\n"
-#~ msgstr "\t\ttijdens zoeken naar gflares.\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\t\tuser defined fractals to be used by the FractalExplorer plug-in.\n"
-#~ msgstr "\t\tzelfgedefinieerde gflares voor de gflare plug-in.\n"
+#~ msgid "when searching for gflares.\n"
+#~ msgstr "tijdens zoeken naar gflares.\n"
 
 #, fuzzy
-#~ msgid "\t\taddition to the systemwide gimp FractalExplorer installation\n"
-#~ msgstr "\t\ttoevoeging aan de systeemwijde gimp installatie van gflares\n"
+#~ msgid "user defined fractals to be used by the FractalExplorer plug-in.\n"
+#~ msgstr "zelfgedefinieerde gflares voor de gflare plug-in.\n"
 
 #, fuzzy
-#~ msgid "\t\twhen searching for fractals.\n"
-#~ msgstr "\t\ttijdens zoeken naar gflares.\n"
-
-#~ msgid "\t\tuser defined palettes.  The default gimprc file\n"
-#~ msgstr "\t\tzelfgedefinieerde paletten. Het standaard gimprc bestand\n"
-
-#~ msgid "\t\tchecks only this subdirectory (not the system-wide\n"
-#~ msgstr "\t\tcontroleert enkel deze submap (niet de systeemwijde\n"
-
-#~ msgid "\t\tinstallation) when searching for palettes.  During\n"
-#~ msgstr "\t\tinstallatie) tijdens zoeken voor paletten. Gedurende\n"
-
-#~ msgid "\t\tinstallation, the system palettes will be copied\n"
-#~ msgstr "\t\tinstallatie worden de systeempaletten gekopieerd\n"
-
-#~ msgid "\t\there.  This is done to allow modifications made to\n"
-#~ msgstr "\t\tnaar deze plaats. Dit laat wijzigingen toe aan\n"
-
-#~ msgid "\t\tpalettes during GIMP execution to persist across\n"
-#~ msgstr "\t\tde paletten gedurende de uitvoering van GIMP te blijven\n"
-
-#~ msgid "\t\tsessions.\n"
-#~ msgstr "\t\tbestaan doorheen de sessies.\n"
-
-#~ msgid "\t\tuser defined patterns.  The default gimprc file\n"
-#~ msgstr "\t\tzefgedefinieerde patronen. Het standaard gimprc bestand\n"
-
-#~ msgid "\t\twide gimp patterns installation when searching for\n"
-#~ msgstr "\t\tgimp installatie van patronen tijdens zoeken naar\n"
-
-#~ msgid "\t\tpatterns.\n"
-#~ msgstr "\t\tpatronen.\n"
-
-#~ msgid "\t\tuser created, temporary, or otherwise non-system-\n"
-#~ msgstr "\t\tzelfgemaakte, tijdelijke of anders niet door het systeem\n"
-
-#~ msgid "\t\tsupported plug-ins.  The default gimprc file\n"
-#~ msgstr "\t\tondersteunde plug-ins. Het standaard gimprc bestand\n"
-
-#~ msgid "\t\twide GIMP plug-in directories when searching for\n"
-#~ msgstr "\t\tGIMP plug-in mappen tijdens zoeken naar\n"
-
-#~ msgid "\t\tplug-ins.\n"
-#~ msgstr "\t\tplug-ins.\n"
+#~ msgid "addition to the systemwide gimp FractalExplorer installation\n"
+#~ msgstr "toevoeging aan de systeemwijde gimp installatie van gflares\n"
 
 #, fuzzy
-#~ msgid "\t\tThis subdirectory can be used to store user created,\n"
-#~ msgstr "\t\tDit is een submap dat gebruikt kan worden om door\n"
+#~ msgid "when searching for fractals.\n"
+#~ msgstr "tijdens zoeken naar gflares.\n"
+
+#~ msgid "user defined palettes.  The default gimprc file\n"
+#~ msgstr "zelfgedefinieerde paletten. Het standaard gimprc bestand\n"
+
+#~ msgid "checks only this subdirectory (not the system-wide\n"
+#~ msgstr "controleert enkel deze submap (niet de systeemwijde\n"
+
+#~ msgid "installation) when searching for palettes.  During\n"
+#~ msgstr "installatie) tijdens zoeken voor paletten. Gedurende\n"
+
+#~ msgid "installation, the system palettes will be copied\n"
+#~ msgstr "installatie worden de systeempaletten gekopieerd\n"
+
+#~ msgid "here.  This is done to allow modifications made to\n"
+#~ msgstr "naar deze plaats. Dit laat wijzigingen toe aan\n"
+
+#~ msgid "palettes during GIMP execution to persist across\n"
+#~ msgstr "de paletten gedurende de uitvoering van GIMP te blijven\n"
+
+#~ msgid "sessions.\n"
+#~ msgstr "bestaan doorheen de sessies.\n"
+
+#~ msgid "user defined patterns.  The default gimprc file\n"
+#~ msgstr "zefgedefinieerde patronen. Het standaard gimprc bestand\n"
+
+#~ msgid "wide gimp patterns installation when searching for\n"
+#~ msgstr "gimp installatie van patronen tijdens zoeken naar\n"
+
+#~ msgid "patterns.\n"
+#~ msgstr "patronen.\n"
+
+#~ msgid "user created, temporary, or otherwise non-system-\n"
+#~ msgstr "zelfgemaakte, tijdelijke of anders niet door het systeem\n"
+
+#~ msgid "supported plug-ins.  The default gimprc file\n"
+#~ msgstr "ondersteunde plug-ins. Het standaard gimprc bestand\n"
+
+#~ msgid "wide GIMP plug-in directories when searching for\n"
+#~ msgstr "GIMP plug-in mappen tijdens zoeken naar\n"
+
+#~ msgid "plug-ins.\n"
+#~ msgstr "plug-ins.\n"
 
 #, fuzzy
-#~ msgid "\t\ttemporary, or otherwise non-system-supported DLL modules.\n"
-#~ msgstr "\t\tzelfgemaakte, tijdelijke of anders niet door het systeem\n"
+#~ msgid "temporary, or otherwise non-system-supported DLL modules.\n"
+#~ msgstr "zelfgemaakte, tijdelijke of anders niet door het systeem\n"
 
 #, fuzzy
-#~ msgid "\t\tThe default gimprc file checks this subdirectory\n"
-#~ msgstr "\t\tHet standaard gimprc bestand controleert deze submap\n"
+#~ msgid "The default gimprc file checks this subdirectory\n"
+#~ msgstr "Het standaard gimprc bestand controleert deze submap\n"
 
 #, fuzzy
-#~ msgid "\t\tin addition to the system-wide GIMP module directory\n"
-#~ msgstr "\t\ttoevoeging aan de systeemwijde gimp installatie van gflares\n"
+#~ msgid "in addition to the system-wide GIMP module directory\n"
+#~ msgstr "toevoeging aan de systeemwijde gimp installatie van gflares\n"
 
 #, fuzzy
-#~ msgid "\t\twhen searching for modules to load when initialising.\n"
-#~ msgstr "\t\ttijdens zoeken naar gflares.\n"
+#~ msgid "when searching for modules to load when initialising.\n"
+#~ msgstr "tijdens zoeken naar gflares.\n"
 
-#~ msgid "\t\tThis subdirectory is used by the GIMP to store \n"
-#~ msgstr "\t\tDeze subdirectory wordt door GIMP gebruikt om \n"
+#~ msgid "This subdirectory is used by the GIMP to store \n"
+#~ msgstr "Deze subdirectory wordt door GIMP gebruikt om \n"
 
 #~ msgid "encountered garbage after reading level: %d"
 #~ msgstr "rommel tegengekomen na het lezen van niveau: %d"
