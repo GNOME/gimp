@@ -370,6 +370,7 @@ gimp_layer_copy (const GimpLayer *layer,
  * gimp_layer_new_from_tiles:
  * @tiles:       The buffer to make the new layer from.
  * @dest_gimage: The image the new layer will be added to.
+ * @type:        The #GimpImageType of the new layer.
  * @name:        The new layer's name.
  * @opacity:     The new layer's opacity.
  * @mode:        The new layer's mode.
@@ -383,6 +384,7 @@ gimp_layer_copy (const GimpLayer *layer,
 GimpLayer *
 gimp_layer_new_from_tiles (TileManager          *tiles,
                            GimpImage            *dest_gimage,
+                           GimpImageType         type,
 			   const gchar          *name,
 			   gdouble               opacity,
 			   GimpLayerModeEffects  mode)
@@ -401,7 +403,7 @@ gimp_layer_new_from_tiles (TileManager          *tiles,
 
   new_layer = gimp_layer_new (dest_gimage,
                               width, height,
-			      gimp_image_base_type_with_alpha (dest_gimage),
+			      type,
 			      name,
 			      opacity,
 			      mode);

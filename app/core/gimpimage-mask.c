@@ -394,6 +394,7 @@ gimp_image_mask_float (GimpImage    *gimage,
   /*  Create a new layer from the buffer  */
   layer = gimp_layer_new_from_tiles (tiles,
                                      gimage,
+                                     gimp_image_base_type_with_alpha (gimage),
 				     _("Floating Selection"),
 				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

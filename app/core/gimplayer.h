@@ -87,6 +87,7 @@ GimpLayer     * gimp_layer_copy                (const GimpLayer      *layer,
 
 GimpLayer     * gimp_layer_new_from_tiles      (TileManager          *tiles,
                                                 GimpImage            *dest_gimage,
+                                                GimpImageType         type,
                                                 const gchar          *name,
                                                 gdouble               opacity,
                                                 GimpLayerModeEffects  mode);

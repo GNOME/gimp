@@ -160,9 +160,10 @@ gimp_edit_paste (GimpImage    *gimage,
 		 GimpBuffer   *paste,
 		 gboolean      paste_into)
 {
-  GimpLayer *layer;
-  gint       x1, y1, x2, y2;
-  gint       cx, cy;
+  GimpLayer     *layer;
+  GimpImageType  type;
+  gint           x1, y1, x2, y2;
+  gint           cx, cy;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (! drawable || GIMP_IS_DRAWABLE (drawable), NULL);
@@ -171,16 +172,17 @@ gimp_edit_paste (GimpImage    *gimage,
    *  user is pasting into an empty image.
    */
 
-  if (drawable != NULL)
-    layer = gimp_layer_new_from_tiles (paste->tiles,
-                                       gimage,
-				       _("Pasted Layer"),
-				       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+  if (drawable)
+    type = gimp_drawable_type_with_alpha (drawable);
   else
-    layer = gimp_layer_new_from_tiles (paste->tiles,
-                                       gimage,
-				       _("Pasted Layer"),
-				       GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+    type = gimp_image_base_type_with_alpha (gimage);
+
+  layer = gimp_layer_new_from_tiles (paste->tiles,
+                                     gimage,
+                                     type,
+                                     _("Pasted Layer"),
+                                     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+
 
   if (! layer)
     return NULL;
@@ -254,6 +256,7 @@ gimp_edit_paste_as_new (Gimp       *gimp,
 
   layer = gimp_layer_new_from_tiles (paste->tiles,
                                      gimage,
+                                     gimp_image_base_type_with_alpha (gimage),
 				     _("Pasted Layer"),
 				     GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
 

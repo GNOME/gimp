@@ -1,3 +1,13 @@
+2002-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer.[ch] (gimp_layer_new_from_tiles): added a
+	GimpImageType parameter to specify the desired drawable type. This
+	is needed when pasting into layer masks.
+
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpedit.c
+	* app/core/gimpimage-mask.c: changed accordingly.
+
 2002-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in.c: some more minor cleanup.

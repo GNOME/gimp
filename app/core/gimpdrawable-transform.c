@@ -747,6 +747,7 @@ gimp_drawable_transform_paste (GimpDrawable *drawable,
       layer =
 	gimp_layer_new_from_tiles (tiles,
                                    gimage,
+                                   gimp_drawable_type (drawable),
 				   _("Transformation"),
 				   GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
       if (! layer)
