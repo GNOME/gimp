@@ -1,3 +1,9 @@
+2004-01-30  Michael Schumacher <schumaml@cvs.gnome.org>
+
+	* libgimpwidgets/gimpwidgets.def: added missing symbols.
+	* README.win32: Sven fixed the EXEEXT problem in
+	plug-ins/common. Updated README.win32 accordingly.	
+
 2004-01-29  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: Store the zoom factor as
