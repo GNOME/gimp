@@ -1,3 +1,17 @@
+2004-06-30  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* libgimp/gimppixbuf.c: raised the maximum size for thumbnails
+	from 256 to 512 pixels.
+
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpdrawable_pdb.c: regenerated.
+
+	* plug-ins/gfig/gfig-preview.c
+	* plug-ins/gfig/gfig.c: redone Bill's fix using
+	gimp_image_get_thumbnail(). A lot simpler, renders the alpha
+	checkerboard and also works for grayscale images.
+
 2004-06-30  Michael Natterer  <mitch@gimp.org>
 
 	Fixed a 1.2 -> 2.0 regression that was forgotten:

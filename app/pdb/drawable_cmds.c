@@ -2021,11 +2021,11 @@ drawable_thumbnail_invoker (Gimp        *gimp,
     success = FALSE;
 
   req_width = args[1].value.pdb_int;
-  if (req_width <= 0 || req_width > 256)
+  if (req_width <= 0 || req_width > 512)
     success = FALSE;
 
   req_height = args[2].value.pdb_int;
-  if (req_height <= 0 || req_height > 256)
+  if (req_height <= 0 || req_height > 512)
     success = FALSE;
 
   if (success)
@@ -2134,7 +2134,7 @@ static ProcRecord drawable_thumbnail_proc =
 {
   "gimp_drawable_thumbnail",
   "Get a thumbnail of a drawable.",
-  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 256 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel is also returned if the drawable has one.",
+  "This function gets data from which a thumbnail of a drawable preview can be created. Maximum x or y dimension is 512 pixels. The pixels are returned in the RGB[A] format. The bpp return value gives the number of bytes in the image. The alpha channel is also returned if the drawable has one.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",

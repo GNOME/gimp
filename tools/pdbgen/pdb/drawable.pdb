@@ -565,7 +565,7 @@ sub drawable_thumbnail {
 
     $help = <<'HELP';
 This function gets data from which a thumbnail of a drawable preview can be
-created. Maximum x or y dimension is 256 pixels. The pixels are returned
+created. Maximum x or y dimension is 512 pixels. The pixels are returned
 in the RGB[A] format. The bpp return value gives the number of bytes in
 the image. The alpha channel is also returned if the drawable has one.
 HELP
@@ -575,9 +575,9 @@ HELP
 
     @inargs = (
 	&drawable_arg,
-	{ name => 'width', type => '0 < int32 <= 256',
+	{ name => 'width', type => '0 < int32 <= 512',
 	  desc => 'The thumbnail width', alias => 'req_width' },
-	{ name => 'height', type => '0 < int32 <= 256',
+	{ name => 'height', type => '0 < int32 <= 512',
 	  desc => 'The thumbnail height', alias => 'req_height' }
     );
 

@@ -1117,7 +1117,7 @@ gimp_drawable_offset (gint32         drawable_ID,
  * Get a thumbnail of a drawable.
  *
  * This function gets data from which a thumbnail of a drawable preview
- * can be created. Maximum x or y dimension is 256 pixels. The pixels
+ * can be created. Maximum x or y dimension is 512 pixels. The pixels
  * are returned in the RGB[A] format. The bpp return value gives the
  * number of bytes in the image. The alpha channel is also returned if
  * the drawable has one.

@@ -313,16 +313,15 @@ static void      brush_list_button_callback (BrushDesc *bdesc);
 
 /* globals */
 
-static gint    gfig_run;
-GdkGC  *gfig_gc;
+static gint     gfig_run;
+GdkGC          *gfig_gc;
 
 /* Stuff for the preview bit */
-static gint    sel_x1, sel_y1, sel_x2, sel_y2;
-static gint    sel_width, sel_height;
-gint    preview_width, preview_height;
-gdouble scale_x_factor, scale_y_factor;
-GdkPixbuf *back_pixbuf = NULL;
-static gdouble org_scale_x_factor, org_scale_y_factor;
+static gint     sel_x1, sel_y1, sel_x2, sel_y2;
+static gint     sel_width, sel_height;
+gint            preview_width, preview_height;
+gdouble         scale_x_factor, scale_y_factor;
+static gdouble  org_scale_x_factor, org_scale_y_factor;
 
 MAIN ()
 
@@ -406,7 +405,7 @@ run (const gchar      *name,
       pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
-  
+
 
   preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
   preview_height = MAX (pheight, 2);
@@ -2878,29 +2877,8 @@ gfig_dialog (void)
   GtkWidget *vbox;
   GtkWidget *notebook;
   GtkWidget *page;
-  gint tmpwidth, tmpheight;
-  gint bpp, rowstride;
-  guchar *back_data;
 
   gimp_ui_init ("gfig", TRUE);
-
-  tmpwidth = preview_width;
-  tmpheight = preview_height;
-
-  back_data = gimp_image_get_thumbnail_data (gfig_image,
-                                             &tmpwidth, &tmpheight, &bpp);
-
-  rowstride = tmpwidth * bpp;
-
-  /* we only handle RGB because GdkPixbuf doesn't do grayscale */
-  if (bpp == 3)
-    back_pixbuf = gdk_pixbuf_new_from_data (back_data, GDK_COLORSPACE_RGB, FALSE,
-                                            8, tmpwidth, tmpheight, rowstride, 
-                                            NULL, NULL);
-  else if (bpp == 4)
-    back_pixbuf = gdk_pixbuf_new_from_data (back_data, GDK_COLORSPACE_RGB, TRUE,
-                                            8, tmpwidth, tmpheight, rowstride, 
-                                            NULL, NULL);
 
   gfig_stock_init ();
 

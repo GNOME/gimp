@@ -341,12 +341,22 @@ gfig_preview_realize (GtkWidget *widget)
 }
 
 static void
-draw_background ()
+draw_background (void)
 {
-  if (back_pixbuf)
-    gdk_draw_pixbuf (gfig_preview->window, 
+  static GdkPixbuf *pixbuf = NULL;
+
+  if (! pixbuf)
+    pixbuf = gimp_image_get_thumbnail (gfig_image,
+                                       preview_width, preview_height,
+                                       GIMP_PIXBUF_LARGE_CHECKS);
+
+  if (pixbuf)
+    gdk_draw_pixbuf (gfig_preview->window,
                      gfig_preview->style->fg_gc[GTK_STATE_NORMAL],
-                     back_pixbuf, 0, 0, 0, 0, -1, -1, 
+                     pixbuf, 0, 0,
+                     0, 0,
+                     gdk_pixbuf_get_width (pixbuf),
+                     gdk_pixbuf_get_height (pixbuf),
                      GDK_RGB_DITHER_NONE, 0, 0);
 }
 
