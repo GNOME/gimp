@@ -4,29 +4,29 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-1.1.21\n"
-"POT-Creation-Date: 2000-07-05 15:49+0000\n"
-"PO-Revision-Date: 2000-07-05 15:55+00:00\n"
+"POT-Creation-Date: 2000-07-16 17:15+0000\n"
+"PO-Revision-Date: 2000-07-16 17:16+00:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=koi8-r\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: app/about_dialog.c:256
+#: app/about_dialog.c:278
 msgid "About the GIMP"
 msgstr "О программе GIMP"
 
 #. this is a font, provide only one single font definition
-#: app/about_dialog.c:307
+#: app/about_dialog.c:337
 msgid "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 msgstr "-*-helvetica-medium-r-normal--*-140-*-*-*-*-*-*"
 
-#: app/about_dialog.c:317
+#: app/about_dialog.c:347
 #, c-format
 msgid "Version %s brought to you by"
 msgstr "Версия %s создана для Вас"
 
-#: app/about_dialog.c:357
+#: app/about_dialog.c:387
 msgid "Please visit http://www.gimp.org/ for more info"
 msgstr " Посетите http://www.gimp.org/ "
 
@@ -2862,64 +2862,64 @@ msgstr "Увеличение масштаба"
 msgid "Zoom out"
 msgstr "Уменьшение масштаба"
 
-#: app/main.c:280
+#: app/main.c:296
 msgid "GIMP version"
 msgstr "Версия GIMP"
 
-#: app/main.c:284
+#: app/main.c:300
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Используйте: %s [Параметры ...] [Файлы ...]\n"
 
-#: app/main.c:285
+#: app/main.c:301
 msgid "Valid options are:\n"
 msgstr "Допустимые параметры:\n"
 
-#: app/main.c:286
+#: app/main.c:302
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Вывести эту подсказку.\n"
 
-#: app/main.c:287
+#: app/main.c:303
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Вывести информацию о версии.\n"
 
-#: app/main.c:288
+#: app/main.c:304
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <Befehle>     Запустить в командном режиме.\n"
 
-#: app/main.c:289
+#: app/main.c:305
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Использовать альтернативный файл gimprc.\n"
 
-#: app/main.c:290
+#: app/main.c:306
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Запустить без интерфейса пользователя.\n"
 
-#: app/main.c:291
+#: app/main.c:307
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr ""
 "  -r --restore-session     Попытаться восстановить сохраненный сеанс.\n"
 
-#: app/main.c:292
+#: app/main.c:308
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
 msgstr ""
 " --no-data                Не загружать шаблоны, градиенты, палитры и кисти.\n"
 
-#: app/main.c:293
+#: app/main.c:309
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Показывать сообщения при старте.\n"
 
-#: app/main.c:294
+#: app/main.c:310
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Не показывать окно запуска.\n"
 
-#: app/main.c:295
+#: app/main.c:311
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Не добавлять изображение к окну запуска.\n"
 
-#: app/main.c:296
+#: app/main.c:312
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2927,12 +2927,12 @@ msgstr ""
 "  --no-shm                 Не использовать разделяемую память между GIMP и "
 "его дополнениями.\n"
 
-#: app/main.c:297
+#: app/main.c:313
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Не использовать расширение X Shared Memory.\n"
 
-#: app/main.c:298
+#: app/main.c:314
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2940,23 +2940,33 @@ msgstr ""
 "  --console-messages       Показывать предупреждения на консоли вместо "
 "диалоговых окон.\n"
 
-#: app/main.c:299
-msgid "  --debug-handlers         Enable debugging signal handlers.\n"
-msgstr "  --debug-handlers         Разрешить отладку обработчиков сигналов.\n"
+#: app/main.c:315
+msgid ""
+"  --debug-handlers         Enable debugging signal handlers for non-fatal "
+"signals.\n"
+msgstr "  --debug-handlers         Разрешить отладку обработчиков сигналов для нефатальных сигналов.\n"
 
-#: app/main.c:300
+#: app/main.c:316
+msgid "  --enable-stack-trace {never|query|always}\n"
+msgstr "  --enable-stack-trace {never|query|always}\n"
+
+#: app/main.c:317
+msgid "                           Debugging mode for fatal signals.\n"
+msgstr "                          Режим отладки для фатальных сигналов.\n"
+
+#: app/main.c:318
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr ""
 "  --display <дисплей>      Использовать указанный X-дисплей.\n"
 "\n"
 
-#: app/main.c:301
+#: app/main.c:319
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr ""
 "  --system-gimprc <gimprc> Использовать альтернативный системный файл "
 "gimprc.\n"
 
-#: app/main.c:318
+#: app/main.c:336
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Это консольное окно закроется в течение десяти секунд)\n"
 
@@ -4166,38 +4176,38 @@ msgstr "Матрица:"
 msgid "Perspective..."
 msgstr "Перспектива..."
 
-#: app/plug_in.c:324
+#: app/plug_in.c:329
 msgid "Resource configuration"
 msgstr "Конфигурирование ресурсов"
 
-#: app/plug_in.c:331
+#: app/plug_in.c:336
 msgid "Plug-ins"
 msgstr "Дополнения"
 
-#: app/plug_in.c:343
+#: app/plug_in.c:348
 #, c-format
 msgid "query plug-in: \"%s\"\n"
 msgstr "запрос дополнения: \"%s\"\n"
 
-#: app/plug_in.c:379
+#: app/plug_in.c:384
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "запись \"%s\"\n"
 
-#: app/plug_in.c:394
+#: app/plug_in.c:399
 msgid "Starting extensions: "
 msgstr "Запуск расширений: "
 
-#: app/plug_in.c:395
+#: app/plug_in.c:400
 msgid "Extensions"
 msgstr "Расширения"
 
-#: app/plug_in.c:822
+#: app/plug_in.c:831
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Не удалось обнаружить дополнение: \"%s\""
 
-#: app/plug_in.c:1489
+#: app/plug_in.c:1491
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
