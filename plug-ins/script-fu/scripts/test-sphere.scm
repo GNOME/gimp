@@ -30,7 +30,7 @@
 
 
 ;
-(define (script-fu-test-sphere radius light shadow bg-color sphere-color text font size)
+(define (script-fu-test-sphere radius light shadow bg-color sphere-color text pattern font size)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -65,7 +65,8 @@
 	      (prog1 (set! shadow-x (+ cx shadow-w))
 		     (set! shadow-w (- shadow-w))))
 	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h REPLACE TRUE TRUE 7.5)
-	 (gimp-bucket-fill img drawable BG-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
+	  (gimp-patterns-set-pattern pattern)
+	  (gimp-bucket-fill img drawable PATTERN-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
     (gimp-ellipse-select img (- cx radius) (- cy radius) (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
     (gimp-blend img drawable FG-BG-RGB NORMAL RADIAL 100 offset REPEAT-NONE
 		FALSE 0 0 light-x light-y light-end-x light-end-y)
@@ -97,6 +98,7 @@
 		    SF-COLOR "Background Color" '(255 255 255)
 		    SF-COLOR "Sphere Color" '(255 0 0)
 		    SF-STRING "Text" "Script-Fu rocks!"
+		    SF-PATTERN "Pattern" "Maple Leaves"
 		    SF-FONT "Font" "-freefont-agate-normal-r-normal-*-24-*-*-*-p-*-*-*"
                     SF-ADJUSTMENT "Font size (in pixels)" '(50 1 1000 1 10 0 1))
 

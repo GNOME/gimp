@@ -79,6 +79,7 @@ typedef union
   gchar *       sfa_value;
   SFAdjustment  sfa_adjustment;
   SFFont        sfa_font;
+  gchar *       sfa_pattern;
 } SFArgValue;
 
 typedef struct
@@ -166,6 +167,16 @@ static void       script_fu_about_dialog_close     (GtkWidget *widget,
 static gint       script_fu_about_dialog_delete    (GtkWidget *widget,
 						    GdkEvent  *event,
 						    gpointer   data);
+static void       script_fu_pattern_preview         (gchar    *name,
+						     gint     width,
+						     gint     height,
+						     gint     bytes,
+						     gchar *  mask_data,
+						     gint     closing,
+						     gpointer udata);
+
+
+
 
 /*
  *  Local variables
@@ -549,7 +560,18 @@ script_fu_add_script (LISP a)
 		  args[i + 1].name = "font";
 		  args[i + 1].description = script->arg_labels[i];
 		  break;
-		  
+
+		case SF_PATTERN:
+		  if (!TYPEP (car (a), tc_string))
+		    return my_err ("script-fu-register: pattern defaults must be string values", NIL);
+		  script->arg_defaults[i].sfa_pattern = g_strdup (get_c_string (car (a)));
+		  script->arg_values[i].sfa_pattern =  g_strdup (script->arg_defaults[i].sfa_pattern);
+
+		  args[i + 1].type = PARAM_STRING;
+		  args[i + 1].name = "pattern";
+		  args[i + 1].description = script->arg_labels[i];
+		  break;
+
 		  break;
 		  
 		default:
@@ -700,6 +722,9 @@ script_fu_script_proc (char     *name,
 		  case SF_FONT:
 		    length += strlen (params[i + 1].data.d_string) + 3;
 		    break;
+		  case SF_PATTERN:
+		    length += strlen (params[i + 1].data.d_string) + 3;
+		    break;
 		  default:
 		    break;
 		  }
@@ -746,6 +771,10 @@ script_fu_script_proc (char     *name,
 		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
 		      text = buffer;
 		      break;  
+		    case SF_PATTERN:
+		      g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", params[i + 1].data.d_string);
+		      text = buffer;
+		      break;
 		    default:
 		      break;
 		    }
@@ -839,6 +868,9 @@ script_fu_free_script (SFScript *script)
 	      g_free (script->arg_defaults[i].sfa_font.fontname);
 	      g_free (script->arg_values[i].sfa_font.fontname);
 	      break;
+	    case SF_PATTERN:
+	      g_free (script->arg_defaults[i].sfa_pattern);
+	      g_free (script->arg_values[i].sfa_pattern);
 	    default:
 	      break;
 	    }
@@ -1093,6 +1125,13 @@ script_fu_interface (SFScript *script)
 			      (GtkSignalFunc) script_fu_font_preview_callback,
 			      &script->arg_values[i].sfa_font);	  
 	  break;
+	case SF_PATTERN:
+	  script->args_widgets[i] = gimp_pattern_select_widget("Script-fu Pattern Selection",
+							       script->arg_values[i].sfa_pattern, 
+							       script_fu_pattern_preview,
+							       &script->arg_values[i].sfa_pattern);
+	  break;
+
 	default:
 	  break;
 	}
@@ -1104,7 +1143,7 @@ script_fu_interface (SFScript *script)
 
       gtk_table_attach (GTK_TABLE (table), hbox, /* script->args_widgets[i], */
 			1, 2, i, i + 1,
-                        GTK_FILL | (((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FONT))  
+                        GTK_FILL | (((script->arg_types[i] == SF_VALUE) || (script->arg_types[i] == SF_STRING) || (script->arg_types[i] == SF_FONT))
 				    ? GTK_EXPAND : 0),
                         GTK_FILL, 4, 2);
       gtk_widget_show (script->args_widgets[i]);
@@ -1196,6 +1235,22 @@ script_fu_color_preview (GtkWidget *preview,
   gtk_widget_draw (preview, NULL);
 }
 
+
+static void
+script_fu_pattern_preview(gchar    *name,
+	     gint     width,
+	     gint     height,
+	     gint     bytes,
+	     gchar *  mask_data,
+	     gint     closing,
+	     gpointer udata)
+{
+  gchar ** pname = (gchar **) udata;
+  g_free(*pname);
+  *pname = g_strdup(name);
+}
+
+
 static void
 script_fu_font_preview (GtkWidget *preview,
 			gchar     *data)
@@ -1262,6 +1317,9 @@ script_fu_cleanup_widgets (SFScript *script)
 	    script->arg_values[i].sfa_font.dialog = NULL;
 	  }
 	break;
+      case SF_PATTERN:
+  	gimp_pattern_select_widget_close_popup(script->args_widgets[i]); 
+	break;
       default:
 	break;
       }
@@ -1325,6 +1383,9 @@ script_fu_ok_callback (GtkWidget *widget,
       case SF_FONT:
 	length += strlen (script->arg_values[i].sfa_font.fontname) + 3;
 	break;
+      case SF_PATTERN:
+	length += strlen (script->arg_values[i].sfa_pattern) + 3;
+	break;
       default:
 	break;
       }
@@ -1385,6 +1446,10 @@ script_fu_ok_callback (GtkWidget *widget,
 	  break;
 	case SF_FONT:
 	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"", script->arg_values[i].sfa_font.fontname);
+	  text = buffer;
+	  break;
+	case SF_PATTERN:
+	  g_snprintf (buffer, MAX_STRING_LENGTH, "\"%s\"",script->arg_values[i].sfa_pattern);
 	  text = buffer;
 	  break;
 	default:
@@ -1620,6 +1685,9 @@ script_fu_reset_callback (GtkWidget *widget,
 	  }	
 	script_fu_font_preview (script->arg_values[i].sfa_font.preview,
 				script->arg_values[i].sfa_font.fontname);
+	break;
+      case SF_PATTERN:
+  	gimp_pattern_select_widget_set_popup(script->args_widgets[i],script->arg_defaults[i].sfa_pattern);  
 	break;
       default:
 	break;

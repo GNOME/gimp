@@ -3331,6 +3331,7 @@ paint_page()
 }
 
 #if 0 /* NOT USED */
+
 static void
 gfig_get_brushes(GtkWidget *list)
 {
@@ -3443,7 +3444,8 @@ gfig_brush_invoker(gchar    *name,
 		   gint     width,
 		   gint     height,
 		   gchar *  mask_data,
-		   gint     closing)
+		   gint     closing,
+		   gpointer udata)
 {
   BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); /* Mem leak */
 
@@ -3462,7 +3464,7 @@ select_brush_press(GtkWidget *widget,
 		  gpointer   data)
 {
    BRUSHDESC *bdesc = g_malloc0(sizeof(BRUSHDESC)); 
-   gimp_interactive_selection_brush("Gfig brush selection",mygimp_brush_get(),gfig_brush_invoker);
+   gimp_interactive_selection_brush("Gfig brush selection",mygimp_brush_get(),gfig_brush_invoker,NULL);
 
    bdesc->bpp = 3; 
    bdesc->bname = mygimp_brush_get();

@@ -60,6 +60,7 @@
 #include "paintbrush.h"
 #include "palette.h"
 #include "patterns.h"
+#include "pattern_select.h"
 #include "pencil.h"
 #include "perspective_tool.h"
 #include "posterize.h"
@@ -78,7 +79,7 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 213;
+  gfloat total_pcount = 217;
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
 
@@ -328,6 +329,10 @@ internal_procs_init ()
   procedural_db_register (&patterns_get_pattern_proc); pcount++;
   procedural_db_register (&patterns_set_pattern_proc); pcount++;
   procedural_db_register (&patterns_list_proc); pcount++;
+  procedural_db_register (&patterns_get_pattern_data_proc); pcount++;
+  procedural_db_register (&patterns_popup_proc); pcount++;
+  procedural_db_register (&patterns_close_popup_proc); pcount++;
+  procedural_db_register (&patterns_set_popup_proc); pcount++;
 
   procedural_db_register (&gradients_get_list_proc); pcount++;
   procedural_db_register (&gradients_get_active_proc); pcount++;

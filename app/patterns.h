@@ -50,5 +50,5 @@ extern int          num_patterns;
 extern ProcRecord patterns_get_pattern_proc;
 extern ProcRecord patterns_set_pattern_proc;
 extern ProcRecord patterns_list_proc;
-
+extern ProcRecord patterns_get_pattern_data_proc;
 #endif  /*  __PATTERNS_H__  */

@@ -1,3 +1,20 @@
+Thu Oct  1 22:39:14 BST 1998 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/patterns.c app/pattern_select.c app/internal_procs.c
+	* app/patterns.h app/pattern_select.h app/plug_in.c
+	* libgimp/gimpmenu.h libgimp/gimpmenu.c libgimp/Makefile.am
+	* plug-ins/gfig/gfig.c plug-ins/script-fu/scripts/test-sphere.scm
+	* plug-ins/script-fu/script-fu.c plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-scripts.c
+
+	* New libgimp/gimppatternmenu.c
+
+	Pattern dialog can now be controlled via the PDB. New widget (not true
+	widget) type added to libgimpui (gimp_pattern_select_widget()). Plugins
+	should easily be able to control & select patterns. Script-fu
+	updated to use new widget. See the test script for example.
+
+
 Thu Oct  1 17:10:32 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/gdisplay.c app/gdisplay.h: Okay, that didn't

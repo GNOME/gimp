@@ -35,7 +35,8 @@ libgimp_la_SOURCES = \
 	gimpwire.h
 
 libgimpui_la_SOURCES = \
-	gimpmenu.c
+	gimpmenu.c \
+	gimppatternmenu.c
 
 gimpinclude_HEADERS = \
 	gimp.h		\

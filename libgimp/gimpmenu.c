@@ -35,15 +35,31 @@ struct _GBrushData {
   gchar *brush_mask_data;
   GRunBrushCallback callback;
   gint closing;
+  gpointer udata;
 };
 
 typedef struct _GBrushData GBrushData;
 
+/* Copy data from temp_PDB call */
+struct _GPatternData {
+  gint busy;
+  gchar *pname;
+  gint width;
+  gint height;
+  gint bytes;
+  gchar *pattern_mask_data;
+  GRunPatternCallback callback;
+  gint closing;
+  gpointer udata;
+};
+
+typedef struct _GPatternData GPatternData;
 
 static void    gimp_menu_callback    (GtkWidget        *w,
 				      gint32           *id);
 static void    do_brush_callback     (GBrushData       *bdata);
-static gint    idle_test             (GBrushData       *bdata);
+static gint    idle_test_brush       (GBrushData       *bdata);
+static gint    idle_test_pattern     (GPatternData     *pdata);
 static void    temp_brush_invoker    (char             *name,
 				      int               nparams,
 				      GParam           *param,
@@ -59,7 +75,9 @@ static gchar*  gen_temp_plugin_name  (void);
 void gimp_run_temp (void);
 
 static GHashTable *gbrush_ht = NULL;
+static GHashTable *gpattern_ht = NULL;
 static GBrushData *active_brush_pdb = NULL;
+static GPatternData *active_pattern_pdb = NULL;
 
 
 GtkWidget*
@@ -431,7 +449,8 @@ do_brush_callback(GBrushData * bdata)
 		    bdata->width,
 		    bdata->height,
 		    bdata->brush_mask_data,
-		    bdata->closing);
+		    bdata->closing,
+		    bdata->udata);
 
   if(bdata->bname)
     g_free(bdata->bname);  
@@ -443,13 +462,45 @@ do_brush_callback(GBrushData * bdata)
   bdata->bname = bdata->brush_mask_data = 0;
 }
 
+static void 
+do_pattern_callback(GPatternData * pdata)
+{
+  if(!pdata->busy)
+    return;
+
+  if(pdata->callback)
+    pdata->callback(pdata->pname,
+		    pdata->width,
+		    pdata->height,
+		    pdata->bytes,
+		    pdata->pattern_mask_data,
+		    pdata->closing,
+		    pdata->udata);
+
+  if(pdata->pname)
+    g_free(pdata->pname);  
+  
+  if(pdata->pattern_mask_data)
+    g_free(pdata->pattern_mask_data); 
+
+  pdata->busy = 0;
+  pdata->pname = pdata->pattern_mask_data = 0;
+}
+
 static gint
-idle_test (GBrushData * bdata)
+idle_test_brush (GBrushData * bdata)
 {
   do_brush_callback(bdata);
   return FALSE;
 }
 
+
+static gint
+idle_test_pattern (GPatternData * pdata)
+{
+  do_pattern_callback(pdata);
+  return FALSE;
+}
 
 static void
 temp_brush_invoker(char    *name,
@@ -493,7 +544,47 @@ temp_brush_invoker(char    *name,
 	  active_brush_pdb = bdata;
 	  bdata->busy = 1;
 	  
-	  gtk_idle_add((GtkFunction) idle_test,active_brush_pdb);
+	  gtk_idle_add((GtkFunction) idle_test_brush,active_brush_pdb);
+	}
+    }
+
+  *nreturn_vals = 1;
+  *return_vals = values;
+  
+  values[0].type = PARAM_STATUS;
+  values[0].data.d_status = status;
+}
+
+static void
+temp_pattern_invoker(char    *name,
+	     int      nparams,
+	     GParam  *param,
+	     int     *nreturn_vals,
+	     GParam **return_vals)
+{
+  static GParam values[1];
+  GStatusType status = STATUS_SUCCESS;
+  GPatternData *pdata = (GPatternData *)g_hash_table_lookup(gpattern_ht,name);
+
+  if(!pdata)
+    {
+      g_warning("Can't find internal pattern data");
+    }
+  else
+    {
+      if(!pdata->busy)
+	{
+
+	  pdata->pname = g_strdup(param[0].data.d_string);
+	  pdata->width = param[1].data.d_int32;
+	  pdata->height = param[2].data.d_int32;
+	  pdata->bytes = param[3].data.d_int32;
+	  pdata->pattern_mask_data = g_malloc(param[4].data.d_int32);
+	  g_memmove(pdata->pattern_mask_data,param[5].data.d_int8array,param[4].data.d_int32); 
+	  pdata->closing = param[6].data.d_int32;
+	  active_pattern_pdb = pdata;
+	  pdata->busy = 1;
+	  gtk_idle_add((GtkFunction) idle_test_pattern,active_pattern_pdb);
 	}
     }
 
@@ -553,7 +644,10 @@ gen_temp_plugin_name (void)
  * selection mech.
  */
 void
-gimp_interactive_selection_brush(gchar *dialogname, gchar *brush_name,GRunBrushCallback callback)
+gimp_interactive_selection_brush(gchar *dialogname, 
+				 gchar *brush_name,
+				 GRunBrushCallback callback,
+				 gpointer udata)
 {
   static GParamDef args[] =
   {
@@ -618,5 +712,139 @@ gimp_interactive_selection_brush(gchar *dialogname, gchar *brush_name,GRunBrushC
 				      g_str_equal);
 
   bdata->callback = callback;
+  bdata->udata = udata;
   g_hash_table_insert(gbrush_ht,pdbname,bdata);
+}
+
+
+void *
+gimp_interactive_selection_pattern(gchar *dialogname, 
+				   gchar *pattern_name,
+				   GRunPatternCallback callback,
+				   gpointer udata)
+{
+  static GParamDef args[] =
+  {
+    { PARAM_STRING, "str", "String"},
+    { PARAM_INT32, "mask width","pattern width"},
+    { PARAM_INT32, "mask height","pattern heigth"},
+    { PARAM_INT32, "mask bpp","pattern bytes per pixel"},
+    { PARAM_INT32, "mask len","Length of pattern mask data"},
+    { PARAM_INT8ARRAY,"mask data","The pattern mask data"},
+    { PARAM_INT32, "dialog status","Registers if the dialog was closing [0 = No, 1 = Yes]"},
+  };
+  static GParamDef *return_vals = NULL;
+  static int nargs = sizeof (args) / sizeof (args[0]);
+  static int nreturn_vals = 0;
+  gint bnreturn_vals;
+  GParam *pdbreturn_vals;
+  gchar *pdbname = gen_temp_plugin_name();
+  GPatternData *pdata = g_malloc0(sizeof(struct _GPatternData));
+
+  gimp_install_temp_proc (pdbname,
+			  "Temp PDB for interactive popups",
+			  "More here later",
+			  "Andy Thomas",
+			  "Andy Thomas",
+			  "1997",
+			  NULL,
+			  "RGB*, GRAY*",
+			  PROC_TEMPORARY,
+			  nargs, nreturn_vals,
+			  args, return_vals,
+			  temp_pattern_invoker);
+
+  pdbreturn_vals =
+    gimp_run_procedure("gimp_patterns_popup",
+		       &bnreturn_vals,
+		       PARAM_STRING,pdbname,
+		       PARAM_STRING,dialogname,
+		       PARAM_STRING,pattern_name,/*name*/
+		       PARAM_END);
+
+  gimp_setup_callbacks(); /* New function to allow callbacks to be watched */
+
+  gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
+
+  /* Now add to hash table so we can find it again */
+  if(gpattern_ht == NULL)
+    gpattern_ht = g_hash_table_new (g_str_hash,
+				      g_str_equal);
+
+  pdata->callback = callback;
+  pdata->udata = udata;
+  g_hash_table_insert(gpattern_ht,pdbname,pdata);
+
+  return pdbname;
+}
+
+
+gchar *
+gimp_pattern_get_pattern_data (gchar *pname,
+			       gint  *width,
+			       gint  *height,
+			       gint  *bytes,
+			       gchar  **mask_data)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_data",
+				    &nreturn_vals,
+				    PARAM_STRING, pname,
+				    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+    {
+      ret_name = g_strdup(return_vals[1].data.d_string);
+      *width = return_vals[2].data.d_int32;
+      *height = return_vals[3].data.d_int32;
+      *bytes = return_vals[4].data.d_int32;
+      *mask_data = g_new (gchar,return_vals[5].data.d_int32);
+      g_memmove (*mask_data, return_vals[6].data.d_int32array,return_vals[5].data.d_int32);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+gint 
+gimp_pattern_close_popup(void * popup_pnt)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint retval;
+
+  return_vals = gimp_run_procedure ("gimp_patterns_close_popup",
+				    &nreturn_vals,
+				    PARAM_STRING, popup_pnt,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
+
+  return retval;
+}
+
+gint 
+gimp_pattern_set_popup(void * popup_pnt, gchar * pname)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  gint retval;
+
+  return_vals = gimp_run_procedure ("gimp_patterns_set_popup",
+				    &nreturn_vals,
+				    PARAM_STRING, popup_pnt,
+				    PARAM_STRING, pname,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  retval = (return_vals[0].data.d_status == STATUS_SUCCESS);
+
+  return retval;
 }

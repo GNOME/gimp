@@ -34,13 +34,17 @@
 #define MAX_CELL_SIZE    45
 
 
+/* PDB interface data */
+static int          success;
+static GSList *active_dialogs = NULL; /* List of active dialogs */
+
 /*
 #define STD_PATTERN_COLUMNS 6
 #define STD_PATTERN_ROWS    5 
 */
 
-#define MAX_WIN_WIDTH     (MIN_CELL_SIZE * NUM_PATTERN_COLUMNS)
-#define MAX_WIN_HEIGHT    (MIN_CELL_SIZE * NUM_PATTERN_ROWS)
+#define MAX_WIN_WIDTH(psp)     (MIN_CELL_SIZE * (psp)->NUM_PATTERN_COLUMNS)
+#define MAX_WIN_HEIGHT(psp)    (MIN_CELL_SIZE * (psp)->NUM_PATTERN_ROWS)
 #define MARGIN_WIDTH      1
 #define MARGIN_HEIGHT     1
 #define PATTERN_EVENT_MASK GDK_BUTTON1_MOTION_MASK | \
@@ -76,11 +80,14 @@ gint NUM_PATTERN_COLUMNS = 6;
 gint NUM_PATTERN_ROWS    = 5;
 gint STD_CELL_SIZE = MIN_CELL_SIZE;
 
+extern PatternSelectP pattern_select_dialog;
+
 PatternSelectP
-pattern_select_new ()
+pattern_select_new (gchar * title,
+		    gchar * initial_pattern)
 {
   PatternSelectP psp;
-  GPatternP active;
+  GPatternP active = NULL;
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *sbar;
@@ -88,13 +95,37 @@ pattern_select_new ()
 
   psp = g_malloc (sizeof (_PatternSelect));
   psp->preview = NULL;
+  psp->old_col = psp->old_row = 0;
+  psp->callback_name = NULL;
   psp->pattern_popup = NULL;
+  psp->NUM_PATTERN_COLUMNS = 6;
+  psp->NUM_PATTERN_ROWS    = 5;
+  psp->STD_CELL_SIZE = MIN_CELL_SIZE;
+
 
   /*  The shell and main vbox  */
   psp->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (psp->shell), "patternselection", "Gimp");
-  gtk_window_set_title (GTK_WINDOW (psp->shell), "Pattern Selection");
-  session_set_window_geometry (psp->shell, &pattern_select_session_info, TRUE);
+  if(!title)
+    {
+      gtk_window_set_title (GTK_WINDOW (psp->shell), "Pattern Selection");
+      session_set_window_geometry (psp->shell, &pattern_select_session_info, TRUE);
+    }
+  else
+    {
+      gtk_window_set_title (GTK_WINDOW (psp->shell), title);
+      if(initial_pattern && strlen(initial_pattern))
+	{
+	  active = pattern_list_get_pattern(pattern_list,initial_pattern);
+	}
+    }
+
+  /*  update the active selection  */
+  if(!active)
+    active = get_active_pattern ();
+
+  psp->pattern = active;
+
   gtk_window_set_policy(GTK_WINDOW(psp->shell), FALSE, TRUE, FALSE);
 
   vbox = gtk_vbox_new (FALSE, 1);
@@ -130,7 +161,7 @@ pattern_select_new ()
 
   gtk_box_pack_start (GTK_BOX (hbox), psp->frame, TRUE, TRUE, 0);
 
-  psp->sbar_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, MAX_WIN_HEIGHT, 1, 1, MAX_WIN_HEIGHT));
+  psp->sbar_data = GTK_ADJUSTMENT (gtk_adjustment_new (0, 0, MAX_WIN_HEIGHT(psp), 1, 1, MAX_WIN_HEIGHT(psp)));
   gtk_signal_connect (GTK_OBJECT (psp->sbar_data), "value_changed",
 		      (GtkSignalFunc) pattern_select_scroll_update,
 		      psp);
@@ -141,8 +172,8 @@ pattern_select_new ()
   psp->cell_width = STD_CELL_SIZE;
   psp->cell_height = STD_CELL_SIZE;
 
-  psp->width = MAX_WIN_WIDTH;
-  psp->height = MAX_WIN_HEIGHT;
+  psp->width = MAX_WIN_WIDTH(psp);
+  psp->height = MAX_WIN_HEIGHT(psp);
 
   psp->preview = gtk_preview_new (GTK_PREVIEW_COLOR);
   gtk_preview_size (GTK_PREVIEW (psp->preview), psp->width, psp->height);
@@ -177,13 +208,54 @@ pattern_select_new ()
   preview_calc_scrollbar (psp);
   display_patterns (psp);
 
-  
-  /*  update the active selection  */
-  active = get_active_pattern ();
+
   if (active)
     pattern_select_select (psp, active->index);
 
   return psp;
+}
+
+void
+pattern_change_callbacks(PatternSelectP psp, gint closing)
+{
+  gchar * name;
+  ProcRecord *prec = NULL;
+  GPatternP pattern;
+  int nreturn_vals;
+  static int busy = 0;
+
+  /* Any procs registered to callback? */
+  Argument *return_vals; 
+  
+  if(!psp || !psp->callback_name || busy != 0)
+    return;
+
+  busy = 1;
+  name = psp->callback_name;
+  pattern = psp->pattern;
+
+  /* If its still registered run it */
+  prec = procedural_db_lookup(name);
+
+  if(prec && pattern)
+    {
+      return_vals = procedural_db_run_proc (name,
+					    &nreturn_vals,
+					    PDB_STRING,pattern->name,
+					    PDB_INT32,pattern->mask->width,
+					    PDB_INT32,pattern->mask->height,
+					    PDB_INT32,pattern->mask->bytes,
+					    PDB_INT32,pattern->mask->bytes*pattern->mask->height*pattern->mask->width,
+					    PDB_INT8ARRAY,temp_buf_data (pattern->mask),
+					    PDB_INT32,closing,
+					    PDB_END);
+ 
+      if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
+	g_message ("failed to run pattern callback function");
+      
+      procedural_db_destroy_args (return_vals, nreturn_vals);
+    }
+  busy = 0;
 }
 
 void
@@ -193,8 +265,8 @@ pattern_select_select (PatternSelectP psp,
   int row, col;
 
   update_active_pattern_field (psp);
-  row = index / NUM_PATTERN_COLUMNS;
-  col = index - row * NUM_PATTERN_COLUMNS;
+  row = index / psp->NUM_PATTERN_COLUMNS;
+  col = index - row * psp->NUM_PATTERN_COLUMNS;
 
   pattern_select_show_selected (psp, row, col);
 }
@@ -204,9 +276,19 @@ pattern_select_free (PatternSelectP psp)
 {
   if (psp)
     {
-      session_get_window_info (psp->shell, &pattern_select_session_info);
+      /* Only main one is saved */
+      if(psp == pattern_select_dialog)
+	session_get_window_info (psp->shell, &pattern_select_session_info);
       if (psp->pattern_popup != NULL)
 	gtk_widget_destroy (psp->pattern_popup);
+
+      if(psp->callback_name)
+	g_free(psp->callback_name);
+
+      /* remove from active list */
+
+      active_dialogs = g_slist_remove(active_dialogs,psp);
+
       g_free (psp);
     }
 }
@@ -406,7 +488,7 @@ display_patterns (PatternSelectP psp)
       display_pattern (psp, pattern, col, row);
 
       /*  increment the counts  */
-      if (++col == NUM_PATTERN_COLUMNS)
+      if (++col == psp->NUM_PATTERN_COLUMNS)
 	{
 	  row ++;
 	  col = 0;
@@ -421,8 +503,6 @@ pattern_select_show_selected (PatternSelectP psp,
 			      int            row,
 			      int            col)
 {
-  static int old_row = 0;
-  static int old_col = 0;
   GdkRectangle area;
   unsigned char * buf;
   int yend;
@@ -432,11 +512,11 @@ pattern_select_show_selected (PatternSelectP psp,
 
   buf = (unsigned char *) g_malloc (sizeof (char) * psp->cell_width * 3);
 
-  if (old_col != col || old_row != row)
+  if (psp->old_col != col || psp->old_row != row)
     {
       /*  remove the old selection  */
-      offset_x = old_col * psp->cell_width;
-      offset_y = old_row * psp->cell_height - psp->scroll_offset;
+      offset_x = psp->old_col * psp->cell_width;
+      offset_y = psp->old_row * psp->cell_height - psp->scroll_offset;
 
       ystart = BOUNDS (offset_y , 0, psp->preview->requisition.height);
       yend = BOUNDS (offset_y + psp->cell_height, 0, psp->preview->requisition.height);
@@ -489,8 +569,8 @@ pattern_select_show_selected (PatternSelectP psp,
   area.height = yend - ystart;
   gtk_widget_draw (psp->preview, &area);
 
-  old_row = row;
-  old_col = col;
+  psp->old_row = row;
+  psp->old_col = col;
 
   g_free (buf);
 }
@@ -510,7 +590,7 @@ preview_calc_scrollbar (PatternSelectP psp)
   int max;
 
   psp->scroll_offset = 0;
-  num_rows = (num_patterns + NUM_PATTERN_COLUMNS - 1) / NUM_PATTERN_COLUMNS;
+  num_rows = (num_patterns + psp->NUM_PATTERN_COLUMNS - 1) / psp->NUM_PATTERN_COLUMNS;
   max = num_rows * psp->cell_width;
   if (!num_rows) num_rows = 1;
   page_size = psp->preview->allocation.height;
@@ -530,7 +610,10 @@ update_active_pattern_field (PatternSelectP psp)
   GPatternP pattern;
   char buf[32];
 
-  pattern = get_active_pattern ();
+  if(pattern_select_dialog == psp)
+    pattern = get_active_pattern ();
+  else
+    pattern = psp->pattern;
 
   if (!pattern)
     return;
@@ -554,19 +637,19 @@ pattern_select_resize (GtkWidget      *widget,
 
   wid = widget->allocation.width-4;
 
-  for(now = MIN_CELL_SIZE, STD_CELL_SIZE = MIN_CELL_SIZE;
+  for(now = MIN_CELL_SIZE, psp->STD_CELL_SIZE = MIN_CELL_SIZE;
       now < MAX_CELL_SIZE; ++now)
     {
-      if ((wid % now) < (wid % STD_CELL_SIZE)) STD_CELL_SIZE = now;
-      if ((wid % STD_CELL_SIZE) == 0)
+      if ((wid % now) < (wid % psp->STD_CELL_SIZE)) psp->STD_CELL_SIZE = now;
+      if ((wid % psp->STD_CELL_SIZE) == 0)
         break;
     }
 
-  NUM_PATTERN_COLUMNS = wid / STD_CELL_SIZE;
-  NUM_PATTERN_ROWS = (gint) (num_patterns + NUM_PATTERN_COLUMNS-1) / NUM_PATTERN_COLUMNS;
+  psp->NUM_PATTERN_COLUMNS = wid / psp->STD_CELL_SIZE;
+  psp->NUM_PATTERN_ROWS = (gint) (num_patterns + psp->NUM_PATTERN_COLUMNS-1) / psp->NUM_PATTERN_COLUMNS;
 
-  psp->cell_width = STD_CELL_SIZE;
-  psp->cell_height = STD_CELL_SIZE;
+  psp->cell_width = psp->STD_CELL_SIZE;
+  psp->cell_height = psp->STD_CELL_SIZE;
   psp->width = widget->allocation.width - 4;
   psp->height = widget->allocation.height - 4;
 
@@ -612,7 +695,7 @@ pattern_select_events (GtkWidget      *widget,
 	{
 	  col = bevent->x / psp->cell_width;
 	  row = (bevent->y + psp->scroll_offset) / psp->cell_height;
-	  index = row * NUM_PATTERN_COLUMNS + col;
+	  index = row * psp->NUM_PATTERN_COLUMNS + col;
 
 	  /*  Get the pattern and display the popup pattern preview  */
 	  if ((pattern = get_pattern_by_index (index)))
@@ -623,8 +706,16 @@ pattern_select_events (GtkWidget      *widget,
 				 GDK_BUTTON_RELEASE_MASK),
 				NULL, NULL, bevent->time);
 
-	      /*  Make this pattern the active pattern  */
-	      select_pattern (pattern);
+	      if(pattern_select_dialog == psp)
+		{
+		  /*  Make this pattern the active pattern  */
+		  select_pattern (pattern);
+		}
+	      else
+		{
+		  psp->pattern = pattern;
+		  pattern_select_select (psp, pattern->index);
+		}
 	      /*  Show the pattern popup window if the pattern is too large  */
 	      if (pattern->mask->width > psp->cell_width ||
 		  pattern->mask->height > psp->cell_height)
@@ -643,6 +734,9 @@ pattern_select_events (GtkWidget      *widget,
 
 	  /*  Close the brush popup window  */
 	  pattern_popup_close (psp);
+
+	  /* Call any callbacks registered */
+	  pattern_change_callbacks(psp,0);
 	}
       break;
 
@@ -668,9 +762,20 @@ pattern_select_close_callback (GtkWidget *w,
 			       gpointer   client_data)
 {
   PatternSelectP psp;
+
   psp = (PatternSelectP) client_data;
+
   if (GTK_WIDGET_VISIBLE (psp->shell))
     gtk_widget_hide (psp->shell);
+
+  /* Free memory if poping down dialog which is not the main one */
+  if(psp != pattern_select_dialog)
+    {
+      /* Send data back */
+      pattern_change_callbacks(psp,1);
+      gtk_widget_destroy(psp->shell); 
+      pattern_select_free(psp); 
+    }
 }
 
 static void
@@ -715,14 +820,298 @@ pattern_select_scroll_update (GtkAdjustment *adjustment,
       psp->scroll_offset = adjustment->value;
       display_patterns (psp);
 
-      active = get_active_pattern ();
+      if(pattern_select_dialog == psp)
+	active = get_active_pattern ();
+      else
+	active = psp->pattern;
+
       if (active)
 	{
-	  row = active->index / NUM_PATTERN_COLUMNS;
-	  col = active->index - row * NUM_PATTERN_COLUMNS;
+	  row = active->index / psp->NUM_PATTERN_COLUMNS;
+	  col = active->index - row * psp->NUM_PATTERN_COLUMNS;
 	  pattern_select_show_selected (psp, row, col);
 	}
 
       draw_preview (psp);
     }
 }
+
+
+/* Close active dialogs that no longer have PDB registered for them */
+
+void
+patterns_check_dialogs()
+{
+  GSList *list;
+  PatternSelectP psp;
+  gchar * name;
+  ProcRecord *prec = NULL;
+
+  list = active_dialogs;
+
+  while (list)
+    {
+      psp = (PatternSelectP) list->data;
+      list = list->next;
+
+      name = psp->callback_name;
+      prec = procedural_db_lookup(name);
+      
+      if(!prec)
+	{
+	  active_dialogs = g_slist_remove(active_dialogs,psp);
+
+	  /* Can alter active_dialogs list*/
+	  pattern_select_close_callback(NULL,psp); 
+	}
+    }
+}
+
+
+/************
+ * PDB interfaces.
+ */
+
+
+static Argument *
+patterns_popup_invoker (Argument *args)
+{
+  gchar * name; 
+  gchar * title;
+  gchar * initial_pattern;
+  ProcRecord *prec = NULL;
+  PatternSelectP newdialog;
+
+  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
+  title = (char *) args[1].value.pdb_pointer;
+  initial_pattern = (char *) args[2].value.pdb_pointer;
+
+  /* Check the proc exists */
+  if(!success || (prec = procedural_db_lookup(name)) == NULL)
+    {
+      success = 0;
+      return procedural_db_return_args (&patterns_popup_proc, success);
+    }
+
+  if(initial_pattern && strlen(initial_pattern))
+    newdialog = pattern_select_new(title,
+				 initial_pattern);
+  else
+    newdialog = pattern_select_new(title,NULL);
+
+  /* Add to list of proc to run when pattern changes */
+  newdialog->callback_name = g_strdup(name);
+
+  /* Add to active pattern dialogs list */
+  active_dialogs = g_slist_append(active_dialogs,newdialog);
+
+  return procedural_db_return_args (&patterns_popup_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg patterns_popup_in_args[] =
+{
+  { PDB_STRING,
+    "pattern_callback",
+    "the callback PDB proc to call when pattern selection is made"
+  },
+  { PDB_STRING,
+    "popup title",
+    "title to give the pattern popup window",
+  },
+  { PDB_STRING,
+    "initial pattern",
+    "The name of the pattern to set as the first selected",
+  },
+};
+
+ProcRecord patterns_popup_proc =
+{
+  "gimp_patterns_popup",
+  "Invokes the Gimp pattern selection",
+  "This procedure popups the pattern selection dialog",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(patterns_popup_in_args) / sizeof(patterns_popup_in_args[0]),
+  patterns_popup_in_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { patterns_popup_invoker } },
+};
+
+static PatternSelectP
+patterns_get_patternselect(gchar *name)
+{
+  GSList *list;
+  PatternSelectP psp;
+
+  list = active_dialogs;
+
+  while (list)
+    {
+      psp = (PatternSelectP) list->data;
+      list = list->next;
+      
+      if(strcmp(name,psp->callback_name) == 0)
+	{
+	  return psp;
+	}
+    }
+
+  return NULL;
+}
+
+static Argument *
+patterns_close_popup_invoker (Argument *args)
+{
+  gchar * name; 
+  ProcRecord *prec = NULL;
+  PatternSelectP psp;
+
+  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
+
+  /* Check the proc exists */
+  if(!success || (prec = procedural_db_lookup(name)) == NULL)
+    {
+      success = 0;
+      return procedural_db_return_args (&patterns_close_popup_proc, success);
+    }
+
+  psp = patterns_get_patternselect(name);
+
+  if(psp)
+    {
+      active_dialogs = g_slist_remove(active_dialogs,psp);
+      
+      if (GTK_WIDGET_VISIBLE (psp->shell))
+	gtk_widget_hide (psp->shell);
+      
+      /* Free memory if poping down dialog which is not the main one */
+      if(psp != pattern_select_dialog)
+	{
+	  /* Send data back */
+	  gtk_widget_destroy(psp->shell); 
+	  pattern_select_free(psp); 
+	}
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return procedural_db_return_args (&patterns_close_popup_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg patterns_close_popup_in_args[] =
+{
+  { PDB_STRING,
+    "callback PDB entry name",
+    "The name of the callback registered for this popup",
+  },
+};
+
+ProcRecord patterns_close_popup_proc =
+{
+  "gimp_patterns_close_popup",
+  "Popdown the Gimp pattern selection",
+  "This procedure closes an opened pattern selection dialog",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(patterns_close_popup_in_args) / sizeof(patterns_close_popup_in_args[0]),
+  patterns_close_popup_in_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { patterns_close_popup_invoker } },
+};
+
+static Argument *
+patterns_set_popup_invoker (Argument *args)
+{
+  gchar * pdbname; 
+  gchar * pattern_name;
+  ProcRecord *prec = NULL;
+  PatternSelectP psp;
+
+  success = (pdbname = (char *) args[0].value.pdb_pointer) != NULL;
+  pattern_name = (char *) args[1].value.pdb_pointer;
+
+  /* Check the proc exists */
+  if(!success || (prec = procedural_db_lookup(pdbname)) == NULL)
+    {
+      success = 0;
+      return procedural_db_return_args (&patterns_set_popup_proc, success);
+    }
+
+  psp = patterns_get_patternselect(pdbname);
+
+  if(psp)
+    {
+      /* Can alter active_dialogs list*/
+      GPatternP active = pattern_list_get_pattern(pattern_list,pattern_name);
+      if(active)
+	{
+	  psp->pattern = active;
+	  pattern_select_select (psp, active->index);
+	  success = TRUE;
+	}
+    }
+  else
+    {
+      success = FALSE;
+    }
+
+  return procedural_db_return_args (&patterns_close_popup_proc, success);
+}
+
+/*  The procedure definition  */
+ProcArg patterns_set_popup_in_args[] =
+{
+  { PDB_STRING,
+    "callback PDB entry name",
+    "The name of the callback registered for this popup",
+  },
+  { PDB_STRING,
+    "pattern name to set",
+    "The name of the pattern to set as selected",
+  },
+};
+
+ProcRecord patterns_set_popup_proc =
+{
+  "gimp_patterns_set_popup",
+  "Sets the current pattern selection in a popup",
+  "Sets the current pattern selection in a popup",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(patterns_set_popup_in_args) / sizeof(patterns_set_popup_in_args[0]),
+  patterns_set_popup_in_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { patterns_set_popup_invoker } },
+};
+

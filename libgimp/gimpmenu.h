@@ -42,7 +42,17 @@ typedef void (* GRunBrushCallback) (gchar *, /* Name */
                                     gint,    /* width */
                                     gint,    /* height */
                                     gchar *, /* mask data */
-                                    gint     /* dialog closing */);
+                                    gint,    /* dialog closing */
+				    gpointer /* user data */);
+
+/* Popup the pattern dialog */
+typedef void (*GRunPatternCallback) (gchar *, /* Name */
+				     gint,    /* Width */
+				     gint,    /* Heigth */
+				     gint,    /* bytes pp in mask */
+				     gchar *, /* mask data */
+				     gint,    /* dialog closing */
+				     gpointer /* user data */);
 
 GtkWidget* gimp_image_menu_new    (GimpConstraintFunc constraint,
 				   GimpMenuCallback   callback,
@@ -63,7 +73,32 @@ GtkWidget* gimp_drawable_menu_new (GimpConstraintFunc constraint,
 
 void gimp_interactive_selection_brush (gchar *dialogname,
 				       gchar *brush_name,
-				       GRunBrushCallback callback);
+				       GRunBrushCallback callback,
+				       gpointer udata);
+
+void * gimp_interactive_selection_pattern (gchar *dialogtitle,
+					 gchar *pattern_name,
+					 GRunPatternCallback callback,
+					 gpointer udata);
+
+GtkWidget * gimp_pattern_select_widget(gchar * dname,
+				       gchar * ipattern, 
+				       GRunPatternCallback cback,
+				       gpointer);
+
+gint gimp_pattern_select_widget_close_popup(GtkWidget *w);
+
+gint gimp_pattern_select_widget_set_popup(GtkWidget *w,gchar *pname);
+
+gchar *gimp_pattern_get_pattern_data (gchar *pname,
+			       gint  *width,
+			       gint  *height,
+			       gint  *bytes,
+			       gchar  **mask_data);
+
+gint gimp_pattern_set_popup(void * popup_pnt, gchar * pname);
+
+gint gimp_pattern_close_popup(void * popup_pnt);
 
 #ifdef __cplusplus
 }

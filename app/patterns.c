@@ -305,7 +305,7 @@ create_pattern_dialog ()
   if (!pattern_select_dialog)
     {
       /*  Create the dialog...  */
-      pattern_select_dialog = pattern_select_new ();
+      pattern_select_dialog = pattern_select_new (NULL,NULL);
     }
   else
     {
@@ -392,6 +392,118 @@ ProcRecord patterns_get_pattern_proc =
 
   /*  Exec method  */
   { { patterns_get_pattern_invoker } },
+};
+
+
+/*******************************/
+/*  PATTERNS_GET_PATTERN_DATA  */
+
+static Argument *
+patterns_get_pattern_data_invoker (Argument *args)
+{
+  GPatternP patternp = NULL;
+  GSList *list;
+  char *name;
+
+  success = (name = (char *) args[0].value.pdb_pointer) != NULL;
+
+  if (!success)
+    {
+      /* No name use active pattern */
+      success = (patternp = get_active_pattern ()) != NULL;
+    }
+  else
+    {
+      list = pattern_list;
+      success = FALSE;
+
+      while (list)
+	{
+	  patternp = (GPatternP) list->data;
+
+	  if (!strcmp (patternp->name, name))
+	    {
+	      success = TRUE;
+	      break;
+	    }
+
+	  list = g_slist_next (list);
+	}
+    }
+
+  return_args = procedural_db_return_args (&patterns_get_pattern_data_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_pointer = g_strdup (patternp->name);
+      return_args[2].value.pdb_int = patternp->mask->width;
+      return_args[3].value.pdb_int = patternp->mask->height;
+      return_args[4].value.pdb_int = patternp->mask->bytes;
+      return_args[5].value.pdb_int = patternp->mask->height*patternp->mask->width*patternp->mask->bytes;
+      return_args[6].value.pdb_pointer = g_malloc(return_args[5].value.pdb_int);
+      g_memmove(return_args[6].value.pdb_pointer,
+		temp_buf_data (patternp->mask),
+		return_args[5].value.pdb_int); 
+    }
+
+  return return_args;
+}
+
+/*  The procedure definition  */
+
+ProcArg patterns_get_pattern_data_in_args[] =
+{
+  { PDB_STRING,
+    "name",
+    "the pattern name (\"\" means current active pattern) "
+  }
+};
+
+ProcArg patterns_get_pattern_data_out_args[] =
+{
+  { PDB_STRING,
+    "name",
+    "the pattern name"
+  },
+  { PDB_INT32,
+    "width",
+    "the pattern width"
+  },
+  { PDB_INT32,
+    "height",
+    "the pattern height"
+  },
+  { PDB_INT32, 
+    "mask bpp",
+    "pattern bytes per pixel"},
+  { PDB_INT32, 
+    "mask len",
+    "length of pattern mask data"},
+  { PDB_INT8ARRAY,
+    "mask data",
+    "the pattern mask data"},
+};
+
+ProcRecord patterns_get_pattern_data_proc =
+{
+  "gimp_patterns_get_pattern_data",
+  "Retrieve information about the currently active pattern (including data)",
+  "This procedure retrieves information about the currently active pattern.  This includes the pattern name, and the pattern extents (width and height). It also returns the pattern data",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  sizeof(patterns_get_pattern_data_in_args) / sizeof(patterns_get_pattern_data_in_args[0]),
+  patterns_get_pattern_data_in_args,
+
+  /*  Output arguments  */
+  sizeof(patterns_get_pattern_data_out_args) / sizeof(patterns_get_pattern_data_out_args[0]),
+  patterns_get_pattern_data_out_args,
+
+  /*  Exec method  */
+  { { patterns_get_pattern_data_invoker } },
 };
 
 

@@ -32,7 +32,8 @@ typedef enum
   SF_VALUE,
   SF_STRING,
   SF_ADJUSTMENT,
-  SF_FONT
+  SF_FONT,
+  SF_PATTERN
 } SFArgType;
 
 typedef enum

@@ -18,6 +18,8 @@
 #ifndef  __PATTERN_SELECT_H__
 #define  __PATTERN_SELECT_H__
 
+#include "patterns.h"
+
 typedef struct _PatternSelect _PatternSelect, *PatternSelectP;
 
 struct _PatternSelect {
@@ -35,11 +37,27 @@ struct _PatternSelect {
   /*  Pattern popup  */
   GtkWidget *pattern_popup;
   GtkWidget *pattern_preview;
+  /* Call back function name */
+  gchar * callback_name;
+  gint old_row;
+  gint old_col;
+  /* Current pattern */
+  GPatternP pattern;
+  /* To calc column pos. */
+  gint NUM_PATTERN_COLUMNS;
+  gint NUM_PATTERN_ROWS;
+  gint STD_CELL_SIZE;
 };
 
-PatternSelectP  pattern_select_new     (void);
+PatternSelectP  pattern_select_new     (gchar *,gchar *);
 void            pattern_select_select  (PatternSelectP, int);
 void            pattern_select_free    (PatternSelectP);
+void            patterns_check_dialogs(void);
+
+/* PDB entry */
+extern ProcRecord patterns_popup_proc;
+extern ProcRecord patterns_close_popup_proc;
+extern ProcRecord patterns_set_popup_proc;
 
 
 #endif  /*  __PATTERN_SELECT_H__  */
