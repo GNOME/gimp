@@ -231,6 +231,7 @@
       <xi:include href="xml/gimpimage-flip.xml" />
       <xi:include href="xml/gimpimage-grid.xml" />
       <xi:include href="xml/gimpimage-guides.xml" />
+      <xi:include href="xml/gimpimage-sample-points.xml" />
       <xi:include href="xml/gimpimage-merge.xml" />
       <xi:include href="xml/gimpimage-new.xml" />
       <xi:include href="xml/gimpimage-pick-color.xml" />
@@ -311,6 +312,7 @@
     <xi:include href="xml/gimpvectors-preview.xml" />
     <xi:include href="xml/gimpvectors-import.xml" />
     <xi:include href="xml/gimpvectors-export.xml" />
+    <xi:include href="xml/gimpvectors-warp.xml" />
   </part>
 
   <part id="app-xcf-part">

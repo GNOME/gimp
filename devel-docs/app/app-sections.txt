@@ -249,6 +249,7 @@ gimp_transform_matrix_flip
 gimp_transform_matrix_flip_free
 gimp_transform_matrix_rotate
 gimp_transform_matrix_rotate_center
+gimp_transform_matrix_rotate_rect
 gimp_transform_matrix_scale
 gimp_transform_matrix_shear
 gimp_transform_matrix_perspective
@@ -837,6 +838,7 @@ gimp_image_mode_changed
 gimp_image_alpha_changed
 gimp_image_update
 gimp_image_update_guide
+gimp_image_update_sample_point
 gimp_image_colormap_changed
 gimp_image_selection_control
 gimp_image_qmask_changed
@@ -1198,8 +1200,8 @@ gimp_palette_get_standard
 gimp_palette_load
 gimp_palette_add_entry
 gimp_palette_delete_entry
-gimp_palette_set_num_columns
-gimp_palette_get_num_columns
+gimp_palette_set_columns
+gimp_palette_get_columns
 <SUBSECTION Standard>
 GimpPaletteClass
 GIMP_PALETTE
@@ -1360,6 +1362,7 @@ GIMP_TEMPLATE_GET_CLASS
 <TITLE>GimpStrokeDesc</TITLE>
 GimpStrokeDesc
 gimp_stroke_desc_new
+gimp_stroke_desc_duplicate
 gimp_stroke_desc_prepare
 gimp_stroke_desc_finish
 <SUBSECTION Standard>
@@ -1516,6 +1519,7 @@ gimp_canvas_draw_rectangle
 gimp_canvas_draw_arc
 gimp_canvas_draw_polygon
 gimp_canvas_draw_segments
+gimp_canvas_draw_text
 gimp_canvas_draw_rgb
 gimp_canvas_set_clip_rect
 gimp_canvas_set_clip_region
@@ -1610,11 +1614,13 @@ gimp_display_shell_new
 gimp_display_shell_reconnect
 gimp_display_shell_scaled
 gimp_display_shell_scrolled
+gimp_display_shell_get_unit
 gimp_display_shell_set_unit
 gimp_display_shell_snap_coords
 gimp_display_shell_mask_bounds
 gimp_display_shell_expose_area
 gimp_display_shell_expose_guide
+gimp_display_shell_expose_sample_point
 gimp_display_shell_expose_full
 gimp_display_shell_flush
 gimp_display_shell_pause
@@ -1661,6 +1667,8 @@ gimp_display_shell_set_show_menubar
 gimp_display_shell_get_show_menubar
 gimp_display_shell_set_show_rulers
 gimp_display_shell_get_show_rulers
+gimp_display_shell_set_show_sample_points
+gimp_display_shell_get_show_sample_points
 gimp_display_shell_set_show_scrollbars
 gimp_display_shell_get_show_scrollbars
 gimp_display_shell_set_show_statusbar
@@ -1723,6 +1731,8 @@ gimp_display_shell_dnd_init
 gimp_display_shell_draw_guide
 gimp_display_shell_draw_guides
 gimp_display_shell_draw_grid
+gimp_display_shell_draw_sample_point
+gimp_display_shell_draw_sample_points
 gimp_display_shell_draw_vector
 gimp_display_shell_draw_vectors
 gimp_display_shell_draw_cursor
@@ -2310,6 +2320,7 @@ GIMP_FONT_LIST_GET_CLASS
 <FILE>gimptext</FILE>
 <TITLE>GimpText</TITLE>
 GimpText
+gimp_text_get_transformation
 <SUBSECTION Standard>
 GimpTextClass
 GIMP_TEXT
@@ -2648,6 +2659,7 @@ GimpColorTool
 gimp_color_tool_enable
 gimp_color_tool_disable
 gimp_color_tool_is_enabled
+gimp_color_tool_start_sample_point
 <SUBSECTION Standard>
 GimpColorToolClass
 GIMP_COLOR_TOOL
@@ -3207,7 +3219,6 @@ GIMP_RECTANGLE_TOOL_GET_CLASS
 GimpRectSelectTool
 gimp_rect_select_tool_register
 gimp_rect_select_tool_rect_select
-gimp_rect_select_tool_coords_to_integer
 <SUBSECTION Standard>
 GimpRectSelectToolClass
 GIMP_RECT_SELECT_TOOL
@@ -3384,8 +3395,6 @@ gimp_tool_push_status_coords
 gimp_tool_push_status_length
 gimp_tool_pop_status
 gimp_tool_set_cursor
-gimp_tool_control_dirty_mask
-gimp_tool_control_set_dirty_mask
 <SUBSECTION Standard>
 GIMP_TOOL
 GIMP_IS_TOOL
@@ -3432,6 +3441,20 @@ gimp_tool_control_get_toggle_tool_cursor
 gimp_tool_control_set_toggle_tool_cursor
 gimp_tool_control_get_toggle_cursor_modifier
 gimp_tool_control_set_toggle_cursor_modifier
+gimp_tool_control_dirty_mask
+gimp_tool_control_set_dirty_mask
+gimp_tool_control_get_action_object_1
+gimp_tool_control_set_action_object_1
+gimp_tool_control_get_action_object_2
+gimp_tool_control_set_action_object_2
+gimp_tool_control_get_action_value_1
+gimp_tool_control_set_action_value_1
+gimp_tool_control_get_action_value_2
+gimp_tool_control_set_action_value_2
+gimp_tool_control_get_action_value_3
+gimp_tool_control_set_action_value_3
+gimp_tool_control_get_action_value_4
+gimp_tool_control_set_action_value_4
 <SUBSECTION Standard>
 GimpToolControlClass
 GIMP_TOOL_CONTROL
@@ -3653,6 +3676,13 @@ gimp_vectors_import_buffer
 <TITLE>GimpVectors-export</TITLE>
 gimp_vectors_export_file
 gimp_vectors_export_string
+</SECTION>
+
+<SECTION>
+<FILE>gimpvectors-warp</FILE>
+<TITLE>GimpVectors-warp</TITLE>
+gimp_vectors_warp_point
+gimp_vectors_warp_vectors
 </SECTION>
 
 <SECTION>
@@ -6439,6 +6469,20 @@ gimp_image_find_guide
 </SECTION>
 
 <SECTION>
+<FILE>gimpimage-sample-points</FILE>
+<TITLE>GimpImage-sample-points</TITLE>
+GimpSamplePoint
+GIMP_SAMPLE_POINT_DRAW_SIZE
+gimp_image_add_sample_point
+gimp_image_add_sample_point_at_pos
+gimp_image_remove_sample_point
+gimp_image_sample_point_ref
+gimp_image_sample_point_unref
+gimp_image_move_sample_point
+gimp_image_find_sample_point
+</SECTION>
+
+<SECTION>
 <FILE>gimpimage-merge</FILE>
 <TITLE>GimpImage-merge</TITLE>
 gimp_image_merge_visible_layers
@@ -6520,6 +6564,7 @@ gimp_image_undo_push_image_size
 gimp_image_undo_push_image_resolution
 gimp_image_undo_push_image_grid
 gimp_image_undo_push_image_guide
+gimp_image_undo_push_image_sample_point
 gimp_image_undo_push_image_colormap
 gimp_image_undo_push_drawable
 gimp_image_undo_push_drawable_mod
@@ -7809,6 +7854,7 @@ action_data_get_display
 action_data_get_widget
 action_select_value
 action_select_object
+action_select_property
 return_if_no_gimp
 return_if_no_context
 return_if_no_image
@@ -8369,6 +8415,15 @@ tools_reset_cmd_callback
 tools_select_cmd_callback
 tools_toggle_visibility_cmd_callback
 tools_color_average_radius_cmd_callback
+tools_ink_blob_size_cmd_callback
+tools_ink_blob_aspect_cmd_callback
+tools_ink_blob_angle_cmd_callback
+tools_object_1_cmd_callback
+tools_object_2_cmd_callback
+tools_value_1_cmd_callback
+tools_value_2_cmd_callback
+tools_value_3_cmd_callback
+tools_value_4_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -8417,6 +8472,7 @@ view_toggle_guides_cmd_callback
 view_toggle_layer_boundary_cmd_callback
 view_toggle_menubar_cmd_callback
 view_toggle_rulers_cmd_callback
+view_toggle_sample_points_cmd_callback
 view_toggle_scrollbars_cmd_callback
 view_toggle_selection_cmd_callback
 view_toggle_statusbar_cmd_callback
