@@ -239,6 +239,7 @@ open_dialog (void)
   GtkWidget *box;
   GtkWidget *color_button;
   GtkWidget *sep;
+  GimpRGB    color;
 
   gimp_ui_init ("papertile", TRUE);
 
@@ -394,9 +395,17 @@ open_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
+  gimp_rgba_set (&color,
+		 (gdouble) p.params.background_color[0] / 255.0,
+		 (gdouble) p.params.background_color[1] / 255.0,
+		 (gdouble) p.params.background_color[2] / 255.0,
+		 (gdouble) p.params.background_color[3] / 255.0);
+
   color_button = gimp_color_button_new (_("Background Color"), 100, 16,
-					p.params.background_color,
-					p.drawable_has_alpha ? 4 : 3);
+					&color, p.drawable_has_alpha);
+  gtk_signal_connect (GTK_OBJECT (color_button), "color_changed", 
+		      GTK_SIGNAL_FUNC (gimp_color_update_uchar), 
+		      p.params.background_color);
   gtk_container_add (GTK_CONTAINER (button), color_button);
   gtk_widget_show (color_button);
 

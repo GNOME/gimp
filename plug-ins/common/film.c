@@ -1169,8 +1169,9 @@ film_dialog (gint32 image_ID)
   GtkWidget *button;
   GtkWidget *entry;
   GtkWidget *sep;
-  gint32 *image_id_list;
-  gint    nimages, j, row;
+  GimpRGB    color;
+  gint32    *image_id_list;
+  gint       nimages, j, row;
 
   gimp_ui_init ("film", TRUE);
 
@@ -1248,9 +1249,17 @@ film_dialog (gint32 image_ID)
 				filmvals.keep_height);
 
   /* Film color */
+  gimp_rgb_set (&color,
+		(gdouble) filmvals.film_color[0] / 255.0,
+		(gdouble) filmvals.film_color[1] / 255.0,
+		(gdouble) filmvals.film_color[2] / 255.0);
   button = gimp_color_button_new (_("Select Film Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  filmvals.film_color, 3);
+				  &color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_update_uchar),
+		      filmvals.film_color);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Color:"), 1.0, 0.5,
 			     button, 1, TRUE);
@@ -1292,9 +1301,16 @@ film_dialog (gint32 image_ID)
 			     entry, 1, FALSE);
 
   /* Numbering color */
+  gimp_rgb_set (&color,
+		(gdouble) filmvals.number_color[0] / 255.0,
+		(gdouble) filmvals.number_color[1] / 255.0,
+		(gdouble) filmvals.number_color[2] / 255.0);
   button = gimp_color_button_new (_("Select Number Color"),
 				  COLOR_BUTTON_WIDTH, COLOR_BUTTON_HEIGHT,
-				  filmvals.number_color, 3);
+				  &color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_update_uchar),
+		      filmvals.number_color);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
 			     _("Color:"), 1.0, 0.5,
 			     button, 1, TRUE);

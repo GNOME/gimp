@@ -577,25 +577,17 @@ entry_callback (GtkWidget *widget,
 
 
 static void
-color_callback (GtkWidget *widget, 
+color_callback (GtkWidget *widget,
 		gpointer   data)
 {
-  gint i;
-
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
     {
-      if (widget == hcolor_button)
-	{
-	  for (i = 0; i < 4; i++)
-	    grid_cfg.vcolor[i] = grid_cfg.hcolor[i];
-	  gimp_color_button_update (GIMP_COLOR_BUTTON (vcolor_button));
-	}
-      else
-	{
-	  for (i = 0; i < 4; i++)
-	    grid_cfg.hcolor[i] = grid_cfg.vcolor[i];
-	  gimp_color_button_update (GIMP_COLOR_BUTTON (hcolor_button));
-	}	
+      GimpRGB  color;
+
+      gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
+	
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (vcolor_button), &color);
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (hcolor_button), &color);
     }
 }
 
@@ -645,6 +637,7 @@ dialog (gint32        image_ID,
   GtkWidget *chain_button;
   GtkWidget *table;
   GtkWidget *align;
+  GimpRGB    color;
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
@@ -902,8 +895,9 @@ dialog (gint32        image_ID,
   gtk_table_attach_defaults (GTK_TABLE (table), chain_button, 0, 2, 0, 1);
   gtk_widget_show (chain_button);
 
-  /*  connect to the 'value_changed' and "unit_changed" signals because we have to 
-      take care of keeping the entries in sync when the chainbutton is active        */
+  /*  connect to the 'value_changed' and "unit_changed" signals because we 
+      have to take care of keeping the entries in sync when the chainbutton 
+      is active        */
   gtk_signal_connect (GTK_OBJECT (offset), "value_changed", 
 		      (GtkSignalFunc) entry_callback, chain_button);
   gtk_signal_connect (GTK_OBJECT (offset), "unit_changed",
@@ -917,18 +911,37 @@ dialog (gint32        image_ID,
   gtk_widget_show (chain_button);
 
   /*  attach color selectors  */
-  hcolor_button = gimp_color_button_new (_("Horizontal Color"), COLOR_BUTTON_WIDTH, 16, 
-					 grid_cfg.hcolor, 4);
+  gimp_rgba_set (&color,
+		 (gdouble) grid_cfg.hcolor[0] / 255.0,
+		 (gdouble) grid_cfg.hcolor[1] / 255.0,
+		 (gdouble) grid_cfg.hcolor[2] / 255.0,
+		 (gdouble) grid_cfg.hcolor[3] / 255.0);
+  hcolor_button = gimp_color_button_new (_("Horizontal Color"), 
+					 COLOR_BUTTON_WIDTH, 16, 
+					 &color, TRUE);
   gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
-		      (GtkSignalFunc) color_callback, chain_button);
+		      (GtkSignalFunc) gimp_color_update_uchar, 
+		      grid_cfg.hcolor);
+  gtk_signal_connect (GTK_OBJECT (hcolor_button), "color_changed", 
+		      (GtkSignalFunc) color_callback, 
+		      chain_button);
   align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align),  hcolor_button);
   gtk_table_attach_defaults (GTK_TABLE (table), align, 0, 1, 1, 2);
   gtk_widget_show (hcolor_button);
   gtk_widget_show (align);
 
-  vcolor_button = gimp_color_button_new (_("Vertical Color"), COLOR_BUTTON_WIDTH, 16, 
-					 grid_cfg.vcolor, 4);
+  gimp_rgba_set (&color,
+		 (gdouble) grid_cfg.vcolor[0] / 255.0,
+		 (gdouble) grid_cfg.vcolor[1] / 255.0,
+		 (gdouble) grid_cfg.vcolor[2] / 255.0,
+		 (gdouble) grid_cfg.vcolor[3] / 255.0);
+  vcolor_button = gimp_color_button_new (_("Vertical Color"), 
+					 COLOR_BUTTON_WIDTH, 16, 
+					 &color, TRUE);
+  gtk_signal_connect (GTK_OBJECT (vcolor_button), "color_changed", 
+		      (GtkSignalFunc) gimp_color_update_uchar, 
+		      grid_cfg.vcolor);
   gtk_signal_connect (GTK_OBJECT (vcolor_button), "color_changed", 
 		      (GtkSignalFunc) color_callback, chain_button);  
   align = gtk_alignment_new (0.0, 0.5, 0, 0);
@@ -937,8 +950,17 @@ dialog (gint32        image_ID,
   gtk_widget_show (vcolor_button);
   gtk_widget_show (align);
 
-  button = gimp_color_button_new (_("Intersection Color"), COLOR_BUTTON_WIDTH, 16, 
-				  grid_cfg.icolor, 4);
+  gimp_rgba_set (&color,
+		 (gdouble) grid_cfg.icolor[0] / 255.0,
+		 (gdouble) grid_cfg.icolor[1] / 255.0,
+		 (gdouble) grid_cfg.icolor[2] / 255.0,
+		 (gdouble) grid_cfg.icolor[3] / 255.0);
+  button = gimp_color_button_new (_("Intersection Color"), 
+				  COLOR_BUTTON_WIDTH, 16, 
+				  &color, TRUE);
+  gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
+		      (GtkSignalFunc) gimp_color_update_uchar, 
+		      grid_cfg.icolor);
   align = gtk_alignment_new (0.0, 0.5, 0, 0);
   gtk_container_add (GTK_CONTAINER (align), button);
   gtk_table_attach_defaults (GTK_TABLE (table), align, 2, 3, 1, 2);

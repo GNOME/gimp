@@ -29,21 +29,21 @@ typedef enum
 
 typedef struct
 {
-  gdouble ambient_int;
-  gdouble diffuse_int;
-  gdouble diffuse_ref;
-  gdouble specular_ref;
-  gdouble highlight;
+  gdouble  ambient_int;
+  gdouble  diffuse_int;
+  gdouble  diffuse_ref;
+  gdouble  specular_ref;
+  gdouble  highlight;
   GimpRGB  color;
 } MaterialSettings;
 
 typedef struct
 {
-  LightType   type;
-  GimpVector3 position;
-  GimpVector3 direction;
+  LightType    type;
+  GimpVector3  position;
+  GimpVector3  direction;
   GimpRGB      color;
-  gdouble     intensity;
+  gdouble      intensity;
 } LightSettings;
 
 typedef struct

@@ -41,6 +41,7 @@
 #include "tools.h"
 
 #include "libgimp/gimplimits.h"
+#include "libgimp/gimpcolorarea.h"
 
 #define DRAG_PREVIEW_SIZE 32
 
@@ -491,32 +492,23 @@ gimp_dnd_get_color_icon (GtkWidget     *widget,
 			 GtkSignalFunc  get_color_func,
 			 gpointer       get_color_data)
 {
-  GtkWidget *preview;
+  GtkWidget *color_area;
+  GimpRGB    color;
   guchar     r, g, b, a;
-  guchar     row[DRAG_PREVIEW_SIZE * 3];
-  gint       i;
 
   (* (GimpDndDragColorFunc) get_color_func) (widget, &r, &g, &b, &a,
 					     get_color_data);
 
-  for (i = 0; i < DRAG_PREVIEW_SIZE; i++)
-    {
-      row[i * 3]     = r;
-      row[i * 3 + 1] = g;
-      row[i * 3 + 2] = b;
-    }
+  gimp_rgba_set (&color,
+		 (gdouble) r / 255.0, 
+		 (gdouble) g / 255.0, 
+		 (gdouble) b / 255.0,
+		 (gdouble) a / 255.0);
 
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (preview), 
-                    DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);      
+  color_area = gimp_color_area_new (&color, TRUE, 0);
+  gtk_widget_set_usize (color_area, DRAG_PREVIEW_SIZE, DRAG_PREVIEW_SIZE);
 
-  for (i = 0; i < DRAG_PREVIEW_SIZE; i++)
-    {
-      gtk_preview_draw_row (GTK_PREVIEW (preview), row,
-			    0, i, DRAG_PREVIEW_SIZE);
-    }
-
-  return preview;
+  return color_area;
 }
 
 static guchar *

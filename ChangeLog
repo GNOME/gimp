@@ -1,3 +1,45 @@
+2001-01-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpcolorarea.[ch]: finished new GimpColorArea widget which
+	uses GimpRGB and handles DND and alpha channel.
+
+	* libgimp/gimpcolorbutton.[ch]: use GimpColorArea. The API of the 
+	GimpColorButton has changed!
+
+	* libgimp/gimpwidgets.[ch]: added temporary function 
+	gimp_color_update_uchar() to ease migration of plug-ins to GimpRGB. 
+	This function will go away.
+	
+	* plug-ins/Lighting/lighting_main.h
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_main.h
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/colorify.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/exchange.c
+	* plug-ins/common/film.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/mapcolor.c
+	* plug-ins/common/nova.c
+	* plug-ins/common/papertile.c
+	* plug-ins/common/sinus.c
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/ifscompose/ifscompose.[ch]
+	* plug-ins/ifscompose/ifscompose_storage.c
+	* plug-ins/ifscompose/ifscompose_utils.c
+	* plug-ins/script-fu/script-fu-scripts.c: use new GimpColorArea and
+	GimpColorButton. Started to introduce GimpRGB color type. This change
+	might have broken some of these plug-ins. This is work in progress.
+
+	* libgimp/Makefile.am: added GimpColorArea and GimpColorButton to 
+	libgimpi.
+	
+	* app/gimpcontext.[ch]: added gimp_palette_get_[fore|back]ground() 
+	functions so the app can link against libgimp/gimpcolorbutton.o.
+	These functions will go away.
+
+	* app/gimpdnd.c: use a GimpColorArea for DND
+	
 2001-01-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpdrawable.[ch]: removed the "name" parameter and use

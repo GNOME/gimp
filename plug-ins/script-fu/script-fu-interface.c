@@ -118,7 +118,7 @@ typedef union
   gint32         sfa_drawable;
   gint32         sfa_layer;
   gint32         sfa_channel;
-  guchar         sfa_color[3];
+  GimpRGB        sfa_color;
   gint32         sfa_toggle;
   gchar         *sfa_value;
   SFAdjustment   sfa_adjustment;
@@ -540,10 +540,14 @@ script_fu_add_script (LISP a)
 		  color_list = cdr (color_list);
 		  color[2] = 
 		    (guchar)(CLAMP (get_c_long (car (color_list)), 0, 255));
-		  memcpy (script->arg_defaults[i].sfa_color, 
-			  color, sizeof (guchar) * 3);
-		  memcpy (script->arg_values[i].sfa_color, 
-			  color, sizeof (guchar) * 3);
+		  
+		  gimp_rgb_set (&script->arg_defaults[i].sfa_color,
+				color[0] / 255.0, 
+				color[1] / 255.0,
+				color[2] / 255.0);
+
+		  script->arg_values[i].sfa_color = 
+		    script->arg_defaults[i].sfa_color;
 
 		  args[i + 1].type = GIMP_PDB_COLOR;
 		  args[i + 1].name = "color";
@@ -1303,7 +1307,11 @@ script_fu_interface (SFScript *script)
 	  sf_interface->args_widgets[i] =
 	    gimp_color_button_new (_("Script-Fu Color Selection"),
 				   COLOR_SAMPLE_WIDTH, COLOR_SAMPLE_HEIGHT,
-				   script->arg_values[i].sfa_color, 3);
+				   &script->arg_values[i].sfa_color, FALSE);
+	  gtk_signal_connect (GTK_OBJECT (sf_interface->args_widgets[i]),
+			      "color_changed",
+			      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+			      &script->arg_values[i].sfa_color);
 	  break;
 
 	case SF_TOGGLE:
@@ -1800,9 +1808,9 @@ script_fu_ok_callback (GtkWidget *widget,
 
  	case SF_COLOR:
 	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
-		      script->arg_values[i].sfa_color[0],
-		      script->arg_values[i].sfa_color[1],
-		      script->arg_values[i].sfa_color[2]);
+		      (gint) (script->arg_values[i].sfa_color.r * 255.999),
+		      (gint) (script->arg_values[i].sfa_color.g * 255.999),
+		      (gint) (script->arg_values[i].sfa_color.b * 255.999));
 	  text = buffer;
 	  break;
 
@@ -2056,7 +2064,7 @@ static void
 script_fu_reset_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  gint i, j;
+  gint i;
 
   SFScript *script = (SFScript *) data;
 
@@ -2070,12 +2078,10 @@ script_fu_reset_callback (GtkWidget *widget,
 	break;
 
       case SF_COLOR:
-	for (j = 0; j < 3; j++)
-	  {
-	    script->arg_values[i].sfa_color[j] = 
-	      script->arg_defaults[i].sfa_color[j];
-	  }
-	gimp_color_button_update (GIMP_COLOR_BUTTON (sf_interface->args_widgets[i]));
+	script->arg_values[i].sfa_color = 
+	  script->arg_defaults[i].sfa_color;
+	gimp_color_button_set_color (GIMP_COLOR_BUTTON (sf_interface->args_widgets[i]), 
+				     &script->arg_values[i].sfa_color);
 	break;
 
       case SF_TOGGLE:

@@ -271,6 +271,7 @@ preview_event_handler (GtkWidget *widget,
   guint   red_handler   = 0;
   guint   green_handler = 0;
   guint   blue_handler  = 0;
+  GimpRGB        color;   
   GtkAdjustment *r, *g, *b;
 
   buf = GTK_PREVIEW (widget)->buffer;
@@ -308,7 +309,13 @@ preview_event_handler (GtkWidget *widget,
       gtk_signal_handler_unblock (GTK_OBJECT (g), green_handler);
       gtk_signal_handler_unblock (GTK_OBJECT (b), blue_handler);
 
-      gimp_color_button_update(GIMP_COLOR_BUTTON(from_colorbutton));
+      gimp_rgb_set (&color, 
+		    (gdouble) xargs.fromred   / 255.0,
+		    (gdouble) xargs.fromgreen / 255.0,
+		    (gdouble) xargs.fromblue  / 255.0);
+		    
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (from_colorbutton),
+				   &color);
       update_preview();
       break;
  
@@ -335,6 +342,7 @@ exchange_dialog (void)
   GtkObject *red_threshold   = NULL;
   GtkObject *green_threshold = NULL;
   GtkObject *blue_threshold  = NULL;
+  GimpRGB    color;
   gint       framenumber;
 
   gimp_ui_init ("exchange", TRUE);
@@ -409,19 +417,29 @@ exchange_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
+      if (framenumber)
+	gimp_rgb_set (&color,
+		      (gdouble) xargs.tored   / 255.0,
+		      (gdouble) xargs.togreen / 255.0,
+		      (gdouble) xargs.toblue  / 255.0);
+      else
+	gimp_rgb_set (&color,
+		      (gdouble) xargs.fromred   / 255.0,
+		      (gdouble) xargs.fromgreen / 255.0,
+		      (gdouble) xargs.fromblue  / 255.0);
+	
+		      
       colorbutton = gimp_color_button_new (framenumber ?
 					   _("Color Exchange: To Color") :
 					   _("Color Exchange: From Color"),
 					   SCALE_WIDTH / 2, 16,
-					   framenumber ?
-					   &xargs.tored : &xargs.fromred,
-					   3);
+					   &color, FALSE);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 NULL, 0.0, 0.0,
 				 colorbutton, 1, TRUE);
       gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
 			  GTK_SIGNAL_FUNC (color_button_callback),
-			  NULL);
+			  GINT_TO_POINTER (framenumber));
 
       if (framenumber)
 	to_colorbutton = colorbutton;
@@ -593,10 +611,25 @@ color_button_callback (GtkWidget *widget,
   GtkObject *red_adj;
   GtkObject *green_adj;
   GtkObject *blue_adj;
+  guint      red_handler;
+  guint      green_handler;
+  guint      blue_handler;
+  GimpRGB    color; 
 
-  guint red_handler;
-  guint green_handler;
-  guint blue_handler;
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
+
+  if (data)
+    {
+      xargs.tored   = color.r * 255.0;
+      xargs.togreen = color.g * 255.0;
+      xargs.toblue  = color.b * 255.0;
+    }
+  else
+     {
+      xargs.fromred   = color.r * 255.0;
+      xargs.fromgreen = color.g * 255.0;
+      xargs.fromblue  = color.b * 255.0;
+    }
 
   red_adj   = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "red");
   green_adj = (GtkObject *) gtk_object_get_data (GTK_OBJECT (widget), "green");
@@ -648,7 +681,8 @@ scale_callback (GtkAdjustment *adj,
 
   if (GIMP_IS_COLOR_BUTTON (object))
     {
-      gimp_color_button_update (GIMP_COLOR_BUTTON (object));
+      /*  FIXME  */
+/*        gimp_color_button_update (GIMP_COLOR_BUTTON (object)); */
     }
   else if (GTK_IS_ADJUSTMENT (object) && lock_threshold == TRUE)
     {

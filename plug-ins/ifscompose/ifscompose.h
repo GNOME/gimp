@@ -29,32 +29,28 @@ typedef struct {
 
 typedef struct {
   GdkPoint *points;
-  gint npoints;
+  gint      npoints;
 } IPolygon;
 
 typedef struct {
-  gdouble vals[3];
-} IfsColor;
+  gdouble  x, y;
+  gdouble  theta;
+  gdouble  scale;
+  gdouble  asym;
+  gdouble  shear;
+  gint     flip;
 
-typedef struct {
-  gdouble x, y;
-  gdouble theta;
-  gdouble scale;
-  gdouble asym;
-  gdouble shear;
-  gint flip;
+  GimpRGB  red_color;
+  GimpRGB  green_color;
+  GimpRGB  blue_color;
+  GimpRGB  black_color;
 
-  IfsColor red_color;
-  IfsColor green_color;
-  IfsColor blue_color;
-  IfsColor black_color;
+  GimpRGB  target_color;
+  gdouble  hue_scale;
+  gdouble  value_scale;
 
-  IfsColor target_color;
-  gdouble hue_scale;
-  gdouble value_scale;
-
-  gint simple_color;
-  gdouble prob;
+  gint     simple_color;
+  gdouble  prob;
 } AffElementVals;
 
 typedef struct
@@ -108,7 +104,7 @@ gint      ipolygon_contains    (IPolygon *poly, gint xt, gint yt);
 
 
 /* manipulation of composite transforms */
-AffElement *aff_element_new                  (gdouble x, gdouble y,IfsColor color,gint count);
+AffElement *aff_element_new                  (gdouble x, gdouble y, GimpRGB *color, gint count);
 void        aff_element_free                 (AffElement *elem);
 void        aff_element_compute_trans        (AffElement *elem, gdouble width,
 					      gdouble height,

@@ -1583,16 +1583,19 @@ static void
 alpha_scale_cb (GtkAdjustment *adj,
 		gpointer       data)
 {
-  guchar *val;
+  guchar    *val;
   GtkWidget *color_button;
+  GimpRGB    color;
 
   val = (guchar*) data;
 
   *val = (guchar)(adj->value * 255.0);
 
   color_button = gtk_object_get_user_data (GTK_OBJECT (adj));
-  if (GIMP_IS_COLOR_BUTTON (color_button))
-    gimp_color_button_update (GIMP_COLOR_BUTTON (color_button));
+
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (color_button), &color);
+  color.a = adj->value;
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (color_button), &color);
 }
 
 static void
@@ -1688,9 +1691,10 @@ sinus_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *logo;
-  gint x,y;
-  char buf[3*100];
-  guchar *data;
+  GimpRGB    color;
+  gint       x, y;
+  gchar      buf[3*100];
+  guchar    *data;
 
   gimp_ui_init ("sinus", TRUE);
 
@@ -1896,13 +1900,29 @@ sinus_dialog (void)
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
+      gimp_rgba_set (&color,
+		     (gdouble) svals.col1[0] / 255.0,
+		     (gdouble) svals.col1[1] / 255.0,
+		     (gdouble) svals.col1[2] / 255.0,
+		     (gdouble) svals.col1[3] / 255.0);
       push_col1 = gimp_color_button_new (_("First Color"),
-					 32, 32, svals.col1, 4);
+					 32, 32, &color, TRUE);
+      gtk_signal_connect (GTK_OBJECT (push_col1), "color_changed", 
+			  (GtkSignalFunc) gimp_color_update_uchar, 
+			  svals.col1);
       gtk_box_pack_start (GTK_BOX (hbox), push_col1, FALSE, FALSE, 0);
       gtk_widget_show (push_col1);
 
+      gimp_rgba_set (&color,
+		     (gdouble) svals.col2[0] / 255.0,
+		     (gdouble) svals.col2[1] / 255.0,
+		     (gdouble) svals.col2[2] / 255.0,
+		     (gdouble) svals.col2[3] / 255.0);
       push_col2 = gimp_color_button_new (_("Second Color"),
-					 32, 32, svals.col2, 4);
+					 32, 32, &color, TRUE);
+      gtk_signal_connect (GTK_OBJECT (push_col2), "color_changed", 
+			  (GtkSignalFunc) gimp_color_update_uchar, 
+			  svals.col2);
       gtk_box_pack_start (GTK_BOX (hbox), push_col2, FALSE, FALSE, 0);
       gtk_widget_show (push_col2);
 

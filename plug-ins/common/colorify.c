@@ -66,10 +66,6 @@ static void colorify_ok_callback      (GtkWidget *widget,
 				       gpointer   data);
 static void predefined_color_callback (GtkWidget *widget,
 				       gpointer   data);
-static void set_preview_color         (GtkWidget *preview,
-				       guchar     red,
-				       guchar     green,
-				       guchar     blue);
 
 typedef struct
 {
@@ -81,13 +77,6 @@ typedef struct
   gint run;
 } ColorifyInterface;
 
-typedef struct
-{
-  guchar red;
-  guchar green;
-  guchar blue;
-} ButtonColor;
-
 static ColorifyInterface cint =
 {
   FALSE
@@ -98,15 +87,15 @@ static ColorifyVals cvals =
   { 255, 255, 255 }
 };
 
-static ButtonColor button_color[] =
+static GimpRGB button_color[] =
 {
-  { 255,   0,   0 },
-  { 255, 255,   0 },
-  {   0, 255,   0 },
-  {   0, 255, 255 },
-  {   0,   0, 255 },
-  { 255,   0, 255 },
-  { 255, 255, 255 },
+  { 1.0, 0.0, 0.0, 1.0 },
+  { 1.0, 1.0, 0.0, 1.0 },
+  { 0.0, 1.0, 0.0, 1.0 },
+  { 0.0, 1.0, 1.0, 1.0 },
+  { 0.0, 0.0, 1.0, 1.0 },
+  { 1.0, 0.0, 1.0, 1.0 },
+  { 1.0, 1.0, 1.0, 1.0 },
 };
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -119,7 +108,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 static gint       sel_x1, sel_x2, sel_y1, sel_y2;
 static gint       sel_width, sel_height;
-static GtkWidget *preview;
 static GtkWidget *custum_color_button = NULL;
 
 static gint lum_red_lookup[256];
@@ -315,6 +303,8 @@ colorify_dialog (guchar red,
   GtkWidget *button;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *color_area;
+  GimpRGB    color;
   gint  i;
 
   gimp_ui_init ("colorify", TRUE);
@@ -353,27 +343,33 @@ colorify_dialog (guchar red,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
+  gimp_rgb_set (&color,
+		(gdouble) cvals.color[0] / 255.0,
+		(gdouble) cvals.color[1] / 255.0,
+		(gdouble) cvals.color[2] / 255.0);		
   custum_color_button = gimp_color_button_new (_("Colorify Custom Color"),
 					       COLOR_SIZE, COLOR_SIZE,
-					       cvals.color, 3);
+					       &color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (custum_color_button), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_update_uchar),
+		      cvals.color);
+  
   gtk_table_attach (GTK_TABLE (table), custum_color_button, 6, 7, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (custum_color_button);
 
   for (i = 0; i < 7; i++)
     {
+      /*  should actually use gimp_color_button() here  */
       button = gtk_button_new ();
-      preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (preview), COLOR_SIZE, COLOR_SIZE);
-      gtk_container_add (GTK_CONTAINER (button), preview);
-      set_preview_color (preview,
-			 button_color[i].red,
-			 button_color[i].green,
-			 button_color[i].blue);
+      color_area = gimp_color_area_new (&button_color[i], FALSE,
+					GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+      gtk_widget_set_usize (GTK_WIDGET (color_area), COLOR_SIZE, COLOR_SIZE);
+      gtk_container_add (GTK_CONTAINER (button), color_area);
       gtk_signal_connect (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) predefined_color_callback,
-			  &button_color[i]);
-      gtk_widget_show (preview);
+			  NULL);
+      gtk_widget_show (color_area);
 
       gtk_table_attach (GTK_TABLE (table), button, i, i + 1, 1, 2,
 			GTK_FILL, GTK_FILL, 0, 0);
@@ -398,38 +394,13 @@ colorify_ok_callback (GtkWidget *widget,
 }
 
 static void
-set_preview_color (GtkWidget *preview,
-		   guchar     red,
-		   guchar     green,
-		   guchar     blue)
-{
-  gint i;
-  guchar buf[3 * COLOR_SIZE];
-
-  for (i = 0; i < COLOR_SIZE; i ++)
-    {
-      buf [3 * i] = red;
-      buf [3 * i + 1] = green;
-      buf [3 * i + 2] = blue;
-    }
-
-  for (i = 0; i < COLOR_SIZE; i ++) 
-    gtk_preview_draw_row (GTK_PREVIEW (preview), buf, 0, i, COLOR_SIZE);
-
-  gtk_widget_draw (preview, NULL);
-}
-
-static void
 predefined_color_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  ButtonColor *color;
+  GimpRGB  color;
 
-  color = (ButtonColor *) data;
-
-  cvals.color[0] = color->red;
-  cvals.color[1] = color->green;
-  cvals.color[2] = color->blue;
-
-  gimp_color_button_update (GIMP_COLOR_BUTTON (custum_color_button));
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (custum_color_button), &color);
 }
+
+

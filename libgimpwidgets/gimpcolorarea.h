@@ -50,16 +50,19 @@ struct _GimpColorAreaClass
 {
   GtkPreviewClass parent_class;
 
-  void (* color_changed) (GimpColorArea *gca,
-			  GimpRGB       *color);
+  void (* color_changed) (GimpColorArea *gca);
 };
 
 
 GtkType     gimp_color_area_get_type   (void);
-GtkWidget * gimp_color_area_new        (GimpRGB       *color,
-					gboolean       alpha);
-void        gimp_color_area_set_color  (GimpColorArea *gca,
-					GimpRGB       *color);
+GtkWidget * gimp_color_area_new        (GimpRGB         *color,
+					gboolean         alpha,
+					GdkModifierType  drag_mask);
+void        gimp_color_area_set_color  (GimpColorArea   *gca,
+					GimpRGB         *color);
+void        gimp_color_area_get_color  (GimpColorArea   *gca,
+					GimpRGB         *color); /* returns */
+gboolean    gimp_color_area_has_alpha  (GimpColorArea   *gca);
 
 
 #ifdef __cplusplus

@@ -101,7 +101,10 @@ libgimpi_a_SOURCES = \
 	gimpcolor.h		\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
+	gimpcolorarea.c		\
+	gimpcolorarea.h		\
 	gimpcolorbutton.c	\
+	gimpcolorbutton.h	\
 	gimpcolorspace.c	\
 	gimpcolorspace.h	\
 	gimpdialog.c		\

@@ -19,8 +19,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <glib.h>
 #include <gdk/gdk.h>
+
+#include <libgimp/gimp.h>
+
 #include "ifscompose.h"
 
 enum {
@@ -84,31 +86,41 @@ static struct
 static guint nsymbols = sizeof (symbols) / sizeof (symbols[0]);
 
 static GTokenType 
-ifsvals_parse_color (GScanner *scanner, IfsColor *result)
+ifsvals_parse_color (GScanner *scanner, 
+		     GimpRGB  *result)
 {
   GTokenType token;
-  int i;
 
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_LEFT_CURLY)
     return G_TOKEN_LEFT_CURLY;
 
-  for (i=0; i<3; i++)
-    {
-      if (i != 0)
-	{
-	  token = g_scanner_get_next_token (scanner);
-	  if (token != G_TOKEN_COMMA)
-	    return G_TOKEN_COMMA;
-	}
-
-      token = g_scanner_get_next_token (scanner);
-      if (token != G_TOKEN_FLOAT)
-	return G_TOKEN_FLOAT;
-
-      result->vals[i] = scanner->value.v_float;
-    }
+  token = g_scanner_get_next_token (scanner);
+  if (token != G_TOKEN_FLOAT)
+    return G_TOKEN_FLOAT;
   
+  result->r = scanner->value.v_float;
+  
+  token = g_scanner_get_next_token (scanner);
+  if (token != G_TOKEN_COMMA)
+    return G_TOKEN_COMMA;
+
+  token = g_scanner_get_next_token (scanner);
+  if (token != G_TOKEN_FLOAT)
+    return G_TOKEN_FLOAT;
+  
+  result->g = scanner->value.v_float;
+
+  token = g_scanner_get_next_token (scanner);
+  if (token != G_TOKEN_COMMA)
+    return G_TOKEN_COMMA;
+
+  token = g_scanner_get_next_token (scanner);
+  if (token != G_TOKEN_FLOAT)
+    return G_TOKEN_FLOAT;
+  
+  result->b = scanner->value.v_float;
+
   token = g_scanner_get_next_token (scanner);
   if (token != G_TOKEN_RIGHT_CURLY)
     return G_TOKEN_RIGHT_CURLY;
@@ -286,7 +298,7 @@ ifsvals_parse (GScanner *scanner, IfsComposeVals *vals, AffElement ***elements)
   GTokenType token, expected_token;
   AffElement *el;
   IfsComposeVals new_vals;
-  IfsColor color = {{0.0,0.0,0.0}}; /* Dummy for aff_element_new */
+  GimpRGB  color;
 
   GList *el_list = NULL;
   GList *tmp_list;
@@ -347,7 +359,7 @@ ifsvals_parse (GScanner *scanner, IfsComposeVals *vals, AffElement ***elements)
 	  break;
 	  
 	case TOKEN_ELEMENT:
-	  el = aff_element_new(0.0,0.0,color,++i);
+	  el = aff_element_new (0.0,0.0, &color, ++i);
 	  expected_token = ifsvals_parse_element (scanner, &el->v);
 
 	  if (expected_token == G_TOKEN_NONE)
@@ -455,25 +467,25 @@ ifsvals_stringify (IfsComposeVals *vals, AffElement **elements)
       g_string_sprintfa (result, "    shear %f\n", elements[i]->v.shear);
       g_string_sprintfa (result, "    flip %d\n", elements[i]->v.flip);
       g_string_sprintfa (result, "    red_color { %f,%f,%f }\n",
-			 elements[i]->v.red_color.vals[0],
-			 elements[i]->v.red_color.vals[1],
-			 elements[i]->v.red_color.vals[2]);
+			 elements[i]->v.red_color.r,
+			 elements[i]->v.red_color.g,
+			 elements[i]->v.red_color.b);
       g_string_sprintfa (result, "    green_color { %f,%f,%f }\n",
-			 elements[i]->v.green_color.vals[0],
-			 elements[i]->v.green_color.vals[1],
-			 elements[i]->v.green_color.vals[2]);
+			 elements[i]->v.green_color.r,
+			 elements[i]->v.green_color.g,
+			 elements[i]->v.green_color.b);
       g_string_sprintfa (result, "    blue_color { %f,%f,%f }\n",
-			 elements[i]->v.blue_color.vals[0],
-			 elements[i]->v.blue_color.vals[1],
-			 elements[i]->v.blue_color.vals[2]);
+			 elements[i]->v.blue_color.r,
+			 elements[i]->v.blue_color.g,
+			 elements[i]->v.blue_color.b);
       g_string_sprintfa (result, "    black_color { %f,%f,%f }\n",
-			 elements[i]->v.black_color.vals[0],
-			 elements[i]->v.black_color.vals[1],
-			 elements[i]->v.black_color.vals[2]);
+			 elements[i]->v.black_color.r,
+			 elements[i]->v.black_color.g,
+			 elements[i]->v.black_color.b);
       g_string_sprintfa (result, "    target_color { %f,%f,%f }\n",
-			 elements[i]->v.target_color.vals[0],
-			 elements[i]->v.target_color.vals[1],
-			 elements[i]->v.target_color.vals[2]);
+			 elements[i]->v.target_color.r,
+			 elements[i]->v.target_color.g,
+			 elements[i]->v.target_color.b);
       g_string_sprintfa (result, "    hue_scale %f\n", elements[i]->v.hue_scale);
       g_string_sprintfa (result, "    value_scale %f\n", elements[i]->v.value_scale);
       g_string_sprintfa (result, "    simple_color %d\n", elements[i]->v.simple_color);

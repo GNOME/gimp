@@ -648,6 +648,7 @@ add_color_button (gint       csel_index,
 {
   GtkWidget *label;
   GtkWidget *button;
+  GimpRGB    color;
 
   label = gtk_label_new ((left == 0) ? _("From:") : _("To:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
@@ -655,9 +656,17 @@ add_color_button (gint       csel_index,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
+  gimp_rgb_set (&color,
+		(gdouble) plvals.colors[csel_index][0] / 255.0,
+		(gdouble) plvals.colors[csel_index][1] / 255.0,
+		(gdouble) plvals.colors[csel_index][2] / 255.0);
+
   button = gimp_color_button_new (gettext (csel_title[csel_index]),
 				  PRV_WIDTH, PRV_HEIGHT,
-				  plvals.colors[csel_index], 3);
+				  &color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
+		      (GtkSignalFunc) gimp_color_update_uchar, 
+		      plvals.colors[csel_index]);
   gtk_signal_connect (GTK_OBJECT (button), "color_changed",
                       GTK_SIGNAL_FUNC (color_button_color_changed_callback),
                       NULL);

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
  * gimpcolorbutton.h
- * Copyright (C) 1999 Sven Neumann
+ * Copyright (C) 1999-2001 Sven Neumann
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -52,16 +52,15 @@ struct _GimpColorButtonClass
 
 GtkType     gimp_color_button_get_type   (void);
 GtkWidget * gimp_color_button_new        (const gchar     *title,
-					  gint             width,
-					  gint             height,
-					  guchar          *color,
-					  gint             bpp);
-GtkWidget * gimp_color_button_double_new (const gchar     *title,
-					  gint             width,
-					  gint             height,
-					  gdouble         *color,
-					  gint             bpp);
-void        gimp_color_button_update     (GimpColorButton *gcb);
+					  guint            width,
+					  guint            height,
+					  GimpRGB         *color,
+					  gboolean         alpha);
+void        gimp_color_button_set_color  (GimpColorButton *gcb,
+					  GimpRGB         *color);
+void        gimp_color_button_get_color  (GimpColorButton *gcb,
+					  GimpRGB         *color);/* returns */
+gboolean    gimp_color_button_has_alpha  (GimpColorButton *gcb);
 
 
 #ifdef __cplusplus

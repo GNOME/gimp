@@ -455,6 +455,7 @@ nova_dialog (GimpDrawable *drawable)
   GtkWidget *button;
   GtkWidget *center_frame;
   GtkObject *adj;
+  GimpRGB    color;
 
   gimp_ui_init ("nova", TRUE);
 
@@ -490,9 +491,16 @@ nova_dialog (GimpDrawable *drawable)
   gtk_table_attach (GTK_TABLE (table), center_frame, 0, 3, 0, 1,
                     0, 0, 0, 0);
 
+  gimp_rgb_set (&color,
+		(gdouble) pvals.color[0] / 255.0,
+		(gdouble) pvals.color[1] / 255.0,
+		(gdouble) pvals.color[2] / 255.0);
   button = gimp_color_button_new (_("SuperNova Color Picker"), 
 				  SCALE_WIDTH - 8, 16, 
-				  pvals.color, 3);
+				  &color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "color_changed", 
+		      (GtkSignalFunc) gimp_color_update_uchar, 
+		      pvals.color);
   gtk_signal_connect_object (GTK_OBJECT (button), "color_changed",
 			     GTK_SIGNAL_FUNC (nova),
 			     (gpointer)drawable);

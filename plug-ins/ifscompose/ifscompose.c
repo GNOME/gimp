@@ -99,12 +99,11 @@ typedef struct
 
 typedef struct
 {
-  IfsColor  *color;
-  gchar     *name;
+  GimpRGB   *color;
   GtkWidget *hbox;
   GtkWidget *orig_preview;
   GtkWidget *button;
-  gint       fixed_point;
+  gboolean   fixed_point;
 } ColorMap;
 
 typedef struct
@@ -235,15 +234,13 @@ static void recompute_center_cb           (GtkWidget *widget,
 
 static void ifs_compose                   (GimpDrawable *drawable);
 
-static void color_map_set_preview_color   (GtkWidget *preview,
-					   IfsColor  *color);
 static ColorMap *color_map_create         (gchar     *name,
-					   IfsColor  *orig_color,
-					   IfsColor  *data, 
-					   gint       fixed_point);
+					   GimpRGB   *orig_color,
+					   GimpRGB   *data, 
+					   gboolean   fixed_point);
 static void color_map_color_changed_cb    (GtkWidget *widget,
 					   ColorMap  *color_map);
-static void color_map_update               (ColorMap *color_map);
+static void color_map_update              (ColorMap  *color_map);
 
 /* interface functions */
 static void simple_color_toggled          (GtkWidget *widget,gpointer data);
@@ -634,7 +631,7 @@ ifs_compose_color_page (void)
   GtkWidget *table;
   GtkWidget *label;
   GSList    *group = NULL;
-  IfsColor   color;
+  GimpRGB    color;
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -656,9 +653,6 @@ ifs_compose_color_page (void)
 		      NULL);
   gtk_widget_show (ifsD->simple_button);
 
-  color.vals[0] = 1.0;
-  color.vals[1] = 0.0;
-  color.vals[2] = 0.0;
   ifsD->target_cmap = color_map_create (_("IfsCompose: Target"), NULL,
 					&ifsD->current_vals.target_color, TRUE);
   gtk_table_attach (GTK_TABLE (table), ifsD->target_cmap->hbox, 1, 2, 0, 2,
@@ -703,36 +697,28 @@ ifs_compose_color_page (void)
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (ifsD->full_button));
   gtk_widget_show (ifsD->full_button);
 
-  color.vals[0] = 1.0;
-  color.vals[1] = 0.0;
-  color.vals[2] = 0.0;
-  ifsD->red_cmap = color_map_create (_("IfsCompose: Red"),&color,
+  gimp_rgb_set (&color, 1.0, 0.0, 0.0);
+  ifsD->red_cmap = color_map_create (_("IfsCompose: Red"), &color,
 				     &ifsD->current_vals.red_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->red_cmap->hbox, 1, 2, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->red_cmap->hbox);
 
-  color.vals[0] = 0.0;
-  color.vals[1] = 1.0;
-  color.vals[2] = 0.0;
-  ifsD->green_cmap = color_map_create( _("IfsCompose: Green"),&color,
+  gimp_rgb_set (&color, 0.0, 1.0, 0.0);
+  ifsD->green_cmap = color_map_create( _("IfsCompose: Green"), &color,
 				       &ifsD->current_vals.green_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->green_cmap->hbox, 2, 3, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->green_cmap->hbox);
 
-  color.vals[0] = 0.0;
-  color.vals[1] = 0.0;
-  color.vals[2] = 2.0;
-  ifsD->blue_cmap = color_map_create (_("IfsCompose: Blue"),&color,
+  gimp_rgb_set (&color, 0.0, 0.0, 1.0);
+  ifsD->blue_cmap = color_map_create (_("IfsCompose: Blue"), &color,
 				      &ifsD->current_vals.blue_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->blue_cmap->hbox, 3, 4, 2, 3,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (ifsD->blue_cmap->hbox);
 
-  color.vals[0] = 0.0;
-  color.vals[1] = 0.0;
-  color.vals[2] = 0.0;
+  gimp_rgb_set (&color, 0.0, 0.0, 0.0);
   ifsD->black_cmap = color_map_create (_("IfsCompose: Black"), &color,
 				       &ifsD->current_vals.black_color, FALSE);
   gtk_table_attach (GTK_TABLE (table), ifsD->black_cmap->hbox, 4, 5, 2, 3,
@@ -2007,68 +1993,50 @@ val_changed_update (void)
 
 #define COLOR_SAMPLE_SIZE 30
 
-static void
-color_map_set_preview_color (GtkWidget *preview,
-			     IfsColor  *color)
-{
-  gint i;
-  guchar buf[3*COLOR_SAMPLE_SIZE];
-
-  for (i=0;i<COLOR_SAMPLE_SIZE;i++)
-    {
-      buf[3*i] = (guint)(255.999*color->vals[0]);
-      buf[3*i+1] = (guint)(255.999*color->vals[1]);
-      buf[3*i+2] = (guint)(255.999*color->vals[2]);
-    }
-  for (i=0;i<COLOR_SAMPLE_SIZE;i++)
-    gtk_preview_draw_row(GTK_PREVIEW(preview),buf,0,i,COLOR_SAMPLE_SIZE);
-
-  gtk_widget_draw (preview, NULL);
-}
-
 static ColorMap *
 color_map_create (gchar    *name,
-		  IfsColor *orig_color,
-		  IfsColor *data,
-		  gint      fixed_point)
+		  GimpRGB  *orig_color,
+		  GimpRGB  *data,
+		  gboolean  fixed_point)
 {
   GtkWidget *frame;
   GtkWidget *arrow;
 
   ColorMap *color_map = g_new (ColorMap,1);
-  color_map->name = name;
-  color_map->color = data;
-  color_map->fixed_point = fixed_point;
 
-  color_map->hbox = gtk_hbox_new (FALSE,2);
+  color_map->color       = data;
+  color_map->fixed_point = fixed_point;
+  color_map->hbox        = gtk_hbox_new (FALSE,2);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  color_map->orig_preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (color_map->orig_preview),
-		    COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
+  color_map->orig_preview = 
+    gimp_color_area_new (fixed_point ? data : orig_color, 
+			 FALSE, 0);
+  gtk_drag_dest_unset (color_map->orig_preview);
+  gtk_widget_set_usize (color_map->orig_preview,
+			COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE);
   gtk_container_add (GTK_CONTAINER(frame), color_map->orig_preview);
   gtk_widget_show (color_map->orig_preview);
-
-  if (fixed_point)
-    color_map_set_preview_color(color_map->orig_preview,data);
-  else
-    color_map_set_preview_color(color_map->orig_preview,orig_color);
 
   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), arrow, FALSE, FALSE, 0);
   gtk_widget_show (arrow);
 
-  color_map->button = gimp_color_button_double_new (color_map->name,
-						    COLOR_SAMPLE_SIZE, COLOR_SAMPLE_SIZE,
-						    color_map->color->vals, 3);
-
+  color_map->button = gimp_color_button_new (name,
+					     COLOR_SAMPLE_SIZE, 
+					     COLOR_SAMPLE_SIZE,
+					     data, FALSE);
   gtk_box_pack_start (GTK_BOX (color_map->hbox), color_map->button, 
 		      FALSE, FALSE, 0);
   gtk_widget_show (color_map->button);
+
+  gtk_signal_connect (GTK_OBJECT (color_map->button), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color),
+		      data);
 
   gtk_signal_connect (GTK_OBJECT (color_map->button), "color_changed",
 		      GTK_SIGNAL_FUNC (color_map_color_changed_cb),
@@ -2086,21 +2054,23 @@ color_map_color_changed_cb (GtkWidget *widget,
  
   elements[ifsD->current_element]->v = ifsD->current_vals;
   elements[ifsD->current_element]->v.theta *= G_PI/180.0;
-  aff_element_compute_color_trans(elements[ifsD->current_element]);
+  aff_element_compute_color_trans (elements[ifsD->current_element]);
 
-  update_values();
+  update_values ();
 
   if (ifsD->auto_preview)
-    ifs_compose_preview_callback(NULL,ifsD->preview);
+    ifs_compose_preview_callback (NULL, ifsD->preview);
 }
 
 static void
 color_map_update (ColorMap *color_map)
 {
-  gimp_color_button_update (GIMP_COLOR_BUTTON (color_map->button));
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (color_map->button),
+			       color_map->color);
 
   if (color_map->fixed_point)
-    color_map_set_preview_color(color_map->orig_preview, color_map->color);
+    gimp_color_area_set_color (GIMP_COLOR_AREA (color_map->orig_preview), 
+			       color_map->color);
 }
 
 static void
@@ -2407,7 +2377,7 @@ recompute_center (gboolean save_undo)
 	undo_update(i);
       aff_element_compute_trans(elements[i],1,ifsvals.aspect_ratio,
 				ifsvals.center_x, ifsvals.center_y);
-      aff2_fixed_point(&elements[i]->trans,&x,&y);
+      aff2_fixed_point (&elements[i]->trans, &x, &y);
       center_x += x;
       center_y += y;
     }
@@ -2458,15 +2428,16 @@ flip_check_button_callback (GtkWidget *widget,
 static void
 ifs_compose_set_defaults (void)
 {
-  gint i;
-  IfsColor color;
-  guchar rc,bc,gc;
+  gint     i;
+  GimpRGB  color;
+  guchar   r, g, b;
 
-  gimp_palette_get_foreground (&rc,&gc,&bc);
+  gimp_palette_get_foreground (&r, &g, &b);
 
-  color.vals[0] = (gdouble)rc/255;
-  color.vals[1] = (gdouble)gc/255;
-  color.vals[2] = (gdouble)bc/255;
+  gimp_rgb_set (&color, 
+		(gdouble) r / 255.0,
+		(gdouble) g / 255.0,
+		(gdouble) b / 255.0);
 
   ifsvals.aspect_ratio = (gdouble)ifsD->drawable_height/ifsD->drawable_width;
 
@@ -2479,13 +2450,13 @@ ifs_compose_set_defaults (void)
   element_selected = g_realloc(element_selected,
 			       ifsvals.num_elements*sizeof(gint));
 
-  elements[0] = aff_element_new(0.3,0.37*ifsvals.aspect_ratio,color,
+  elements[0] = aff_element_new(0.3,0.37*ifsvals.aspect_ratio, &color,
 				++count_for_naming);
   element_selected[0] = FALSE;
-  elements[1] = aff_element_new(0.7,0.37*ifsvals.aspect_ratio,color,
+  elements[1] = aff_element_new(0.7,0.37*ifsvals.aspect_ratio, &color,
 				++count_for_naming);
   element_selected[1] = FALSE;
-  elements[2] = aff_element_new(0.5,0.7*ifsvals.aspect_ratio,color,
+  elements[2] = aff_element_new(0.5,0.7*ifsvals.aspect_ratio, &color,
 				++count_for_naming);
   element_selected[2] = FALSE;
 
@@ -2544,8 +2515,8 @@ static void
 ifs_compose_new_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  IfsColor color;
-  guchar rc,bc,gc;
+  GimpRGB color;
+  guchar  r, g, b;
   gint i;
   gdouble width = ifsDesign->area->allocation.width;
   gdouble height = ifsDesign->area->allocation.height;
@@ -2553,13 +2524,13 @@ ifs_compose_new_callback (GtkWidget *widget,
 
   undo_begin();
 
-  gimp_palette_get_foreground (&rc,&gc,&bc);
+  gimp_palette_get_foreground (&r, &g, &b);
+  gimp_rgb_set (&color, 
+		(gdouble) r / 255.0,
+		(gdouble) g / 255.0,
+		(gdouble) b / 255.0);
 
-  color.vals[0] = (gdouble)rc/255;
-  color.vals[1] = (gdouble)gc/255;
-  color.vals[2] = (gdouble)bc/255;
-
-  elem = aff_element_new(0.5, 0.5*height/width,color,
+  elem = aff_element_new(0.5, 0.5*height/width, &color,
 			 ++count_for_naming);
 
   ifsvals.num_elements++;

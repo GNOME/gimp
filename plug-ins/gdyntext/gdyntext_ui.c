@@ -110,7 +110,7 @@ static GtkWidget	*message_window         = NULL;
 static GtkWidget  	*charmap_window         = NULL;
 static GtkWidget	*about_dialog           = NULL;
 static GtkWidget	*load_file_selection    = NULL;
-static guchar		 col[3];
+static GimpRGB	         color;
 
 
 #define COLOR_PREVIEW_WIDTH		20
@@ -322,15 +322,20 @@ create_main_window (GdtMainWindow **main_window,
   gtk_toolbar_append_space(GTK_TOOLBAR(toolbar));
   
   /* FONT COLOR */
-  col[0] = ((guint)data->color) >> 16;
-  col[1] = ((guint)data->color) >> 8;
-  col[2] = (guint)data->color;
+  gimp_rgb_set (&color, 
+		(gdouble) (((guint)data->color) >> 16) / 255.0,
+		(gdouble) (((guint)data->color) >> 8)  / 255.0,
+		(gdouble)  ((guint)data->color)        / 255.0);
   color_button = gimp_color_button_new (_("GDynText: Select Color"), 
 					COLOR_PREVIEW_WIDTH, COLOR_PREVIEW_HEIGHT,
-					col, 3);
+					&color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (color_button), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
+		      &color);
   gtk_button_set_relief (GTK_BUTTON (color_button), GTK_RELIEF_NONE); 
   gtk_widget_show (color_button);
-  gtk_toolbar_append_element (GTK_TOOLBAR(toolbar), GTK_TOOLBAR_CHILD_WIDGET, color_button,
+  gtk_toolbar_append_element (GTK_TOOLBAR (toolbar), GTK_TOOLBAR_CHILD_WIDGET, 
+			      color_button,
 			      NULL, _("Text color"), NULL, 
 			      NULL,
 			      NULL, NULL);
@@ -652,6 +657,8 @@ gdt_create_ui (GdtVals *data)
 static void 
 set_gdt_vals (GdtVals *data) 
 {
+  guint32 col[3];
+
   data->preview = main_window->font_preview_enabled;
   strncpy(data->xlfd,
 	  font_selection_get_font_name(FONT_SELECTION(main_window->font_selection)),
@@ -660,7 +667,11 @@ set_gdt_vals (GdtVals *data)
   data->line_spacing = gtk_spin_button_get_value_as_int (GTK_SPIN_BUTTON (main_window->line_spacing));
   data->layer_alignment = main_window->layer_alignment;
   strncpy(data->text, gtk_editable_get_chars (GTK_EDITABLE(main_window->textarea), 0, -1), sizeof(data->text));
-  data->color = ((gint32)col[0] << 16) + ((gint32)col[1] << 8) + (gint32)col[2];
+
+  col[0] = color.r * 255.0;
+  col[1] = color.g * 255.0;
+  col[2] = color.b * 255.0;
+  data->color = (col[0] << 16) + (col[1] << 8) + col[2];
 }
 
 

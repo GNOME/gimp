@@ -363,55 +363,104 @@ aff_element_compute_color_trans(AffElement *elem)
 
   if (elem->v.simple_color)
     {
-      gdouble mag2 = 0;
-      for (i=0;i<3;i++)
-	mag2 += SQR(elem->v.target_color.vals[i]);
+      gdouble mag2;
+
+      mag2 =  SQR(elem->v.target_color.r);
+      mag2 += SQR(elem->v.target_color.g);
+      mag2 += SQR(elem->v.target_color.b);
 
       /* For mag2 == 0, the transformation blows up in general
 	 but is well defined for hue_scale == value_scale, so
 	 we assume that special case. */
       if (mag2 == 0)
-	for (i=0;i<3;i++)
+	for (i=0; i<3; i++)
 	  {
-	    for (j=0;j<4;j++)
+	    for (j=0; j<4; j++)
 	      elem->color_trans.vals[i][j] = 0.0;
+
 	    elem->color_trans.vals[i][i] = elem->v.hue_scale;
 	  }
       else
-	for (i=0;i<3;i++)
-	  {
-	    for (j=0;j<3;j++)
-	      {
-		elem->color_trans.vals[i][j] = elem->v.target_color.vals[i]
-		  / mag2 * (elem->v.value_scale - elem->v.hue_scale);
-		if (i==j)
-		  elem->color_trans.vals[i][j] += elem->v.hue_scale;
-	      }
-	    elem->color_trans.vals[i][3] = 
-	      (1-elem->v.value_scale)*elem->v.target_color.vals[i];
+	{
+	  /*  red  */
+	  for (j=0; j<3; j++)
+	    {
+	      elem->color_trans.vals[0][j] = elem->v.target_color.r
+		/ mag2 * (elem->v.value_scale - elem->v.hue_scale);
+	    }
+
+	  /*  green  */
+	  for (j=0; j<3; j++)
+	    {
+	      elem->color_trans.vals[1][j] = elem->v.target_color.g
+		/ mag2 * (elem->v.value_scale - elem->v.hue_scale);
+	    }
+	  
+	  /*  blue  */
+	  for (j=0; j<3; j++)
+	    {
+	      elem->color_trans.vals[2][j] = elem->v.target_color.g
+		/ mag2 * (elem->v.value_scale - elem->v.hue_scale);
+	    }
+
+	  elem->color_trans.vals[0][0] += elem->v.hue_scale;
+	  elem->color_trans.vals[1][1] += elem->v.hue_scale;
+	  elem->color_trans.vals[2][2] += elem->v.hue_scale;
+
+
+	  elem->color_trans.vals[0][3] = 
+	    (1-elem->v.value_scale)*elem->v.target_color.r;
+	  elem->color_trans.vals[1][3] = 
+	    (1-elem->v.value_scale)*elem->v.target_color.g;
+	  elem->color_trans.vals[2][3] = 
+	    (1-elem->v.value_scale)*elem->v.target_color.b;
+
 	  }
-      aff3_apply(&elem->color_trans,1.0,0.0,0.0,&elem->v.red_color.vals[0],
-		 &elem->v.red_color.vals[1],&elem->v.red_color.vals[2]);
-      aff3_apply(&elem->color_trans,0.0,1.0,0.0,&elem->v.green_color.vals[0],
-		 &elem->v.green_color.vals[1],&elem->v.green_color.vals[2]);
-      aff3_apply(&elem->color_trans,0.0,0.0,1.0,&elem->v.blue_color.vals[0],
-		 &elem->v.blue_color.vals[1],&elem->v.blue_color.vals[2]);
-      aff3_apply(&elem->color_trans,0.0,0.0,0.0,&elem->v.black_color.vals[0],
-		 &elem->v.black_color.vals[1],&elem->v.black_color.vals[2]);
+
+
+      aff3_apply (&elem->color_trans, 1.0, 0.0, 0.0,
+		  &elem->v.red_color.r,
+		  &elem->v.red_color.g,
+		  &elem->v.red_color.b);
+      aff3_apply (&elem->color_trans, 0.0, 1.0, 0.0,
+		  &elem->v.green_color.r,
+		  &elem->v.green_color.g,
+		  &elem->v.green_color.b);
+      aff3_apply (&elem->color_trans, 0.0, 0.0, 1.0,
+		  &elem->v.blue_color.r,
+		  &elem->v.blue_color.g, 
+		  &elem->v.blue_color.b);
+      aff3_apply (&elem->color_trans, 0.0, 0.0, 0.0,
+		  &elem->v.black_color.r,
+		  &elem->v.black_color.g,
+		  &elem->v.black_color.b);
     }
   else
     {
-      for (i=0;i<3;i++)
-	elem->color_trans.vals[i][0] = elem->v.red_color.vals[i]
-	  - elem->v.black_color.vals[i];
-      for (i=0;i<3;i++)
-	elem->color_trans.vals[i][1] = elem->v.green_color.vals[i]
-	  - elem->v.black_color.vals[i];
-      for (i=0;i<3;i++)
-	elem->color_trans.vals[i][2] = elem->v.blue_color.vals[i]
-	  - elem->v.black_color.vals[i];
-      for (i=0;i<3;i++)
-	elem->color_trans.vals[i][3] = elem->v.black_color.vals[i];
+      elem->color_trans.vals[0][0] = 
+	elem->v.red_color.r - elem->v.black_color.r;
+      elem->color_trans.vals[1][0] = 
+	elem->v.red_color.g - elem->v.black_color.g;
+      elem->color_trans.vals[2][0] = 
+	elem->v.red_color.b - elem->v.black_color.b;
+
+      elem->color_trans.vals[0][1] = 
+	elem->v.green_color.r - elem->v.black_color.r;
+      elem->color_trans.vals[1][1] = 
+	elem->v.green_color.g - elem->v.black_color.g;
+      elem->color_trans.vals[2][1] = 
+	elem->v.green_color.b - elem->v.black_color.b;
+
+      elem->color_trans.vals[0][2] = 
+	elem->v.blue_color.r - elem->v.black_color.r;
+      elem->color_trans.vals[1][2] = 
+	elem->v.blue_color.g - elem->v.black_color.g;
+      elem->color_trans.vals[2][2] = 
+	elem->v.blue_color.b - elem->v.black_color.b;
+
+      elem->color_trans.vals[0][3] = elem->v.black_color.r;
+      elem->color_trans.vals[1][3] = elem->v.black_color.g;
+      elem->color_trans.vals[2][3] = elem->v.black_color.b;
     }
 }
 
@@ -642,10 +691,10 @@ aff_element_draw(AffElement *elem, gint selected,
 }
 
 AffElement *
-aff_element_new(gdouble x, gdouble y, IfsColor color, gint count)
+aff_element_new (gdouble x, gdouble y, GimpRGB *color, gint count)
 {
   AffElement *elem = g_new(AffElement, 1);
-  char buffer[16];
+  gchar buffer[16];
 
   elem->v.x = x;
   elem->v.y = y;
@@ -655,12 +704,12 @@ aff_element_new(gdouble x, gdouble y, IfsColor color, gint count)
   elem->v.shear = 0.0;
   elem->v.flip = 0;
   
-  elem->v.red_color = color;
-  elem->v.blue_color = color;
-  elem->v.green_color = color;
-  elem->v.black_color = color;
+  elem->v.red_color   = *color;
+  elem->v.blue_color  = *color;
+  elem->v.green_color = *color;
+  elem->v.black_color = *color;
 
-  elem->v.target_color = color;
+  elem->v.target_color = *color;
   elem->v.hue_scale = 0.5;
   elem->v.value_scale = 0.5;
 
@@ -669,11 +718,11 @@ aff_element_new(gdouble x, gdouble y, IfsColor color, gint count)
   elem->draw_boundary = NULL;
   elem->click_boundary = NULL;
 
-  aff_element_compute_color_trans(elem);
+  aff_element_compute_color_trans (elem);
 
   elem->v.prob = 1.0;
 
-  sprintf(buffer,"%d",count);
+  sprintf (buffer,"%d",count);
   elem->name = g_strdup(buffer);
   
   return elem;

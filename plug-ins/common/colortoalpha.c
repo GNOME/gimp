@@ -396,6 +396,7 @@ colortoalpha_dialog (GimpDrawable *drawable)
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *label;
+  GimpRGB    color;
 
   gimp_ui_init ("colortoalpha", TRUE);
 
@@ -431,9 +432,16 @@ colortoalpha_dialog (GimpDrawable *drawable)
   gtk_table_attach_defaults (GTK_TABLE(table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
 
+  gimp_rgb_set (&color,
+		(gdouble) pvals.color[0] / 255.0,
+		(gdouble) pvals.color[1] / 255.0,
+		(gdouble) pvals.color[2] / 255.0);		
   button = gimp_color_button_new (_("Color to Alpha Color Picker"), 
 				  PRV_WIDTH, PRV_HEIGHT,
-				  pvals.color, 3);
+				  &color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (button), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_update_uchar),
+		      pvals.color);
   gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1, 
 		    GTK_FILL, GTK_SHRINK, 0, 0) ; 
   gtk_widget_show (button);

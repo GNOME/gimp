@@ -587,9 +587,12 @@ create_light_page (void)
 
   gimp_help_set_help_data (optionmenu, _("Type of light source to apply"), NULL);
 
-  colorbutton = gimp_color_button_double_new (_("Select Lightsource Color"),
-					      64, 16,
-					      &mapvals.lightsource.color.r, 3);
+  colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
+				       64, 16,
+				       &mapvals.lightsource.color, FALSE);
+  gtk_signal_connect (GTK_OBJECT (colorbutton), "color_changed",
+		      GTK_SIGNAL_FUNC (gimp_color_button_get_color), 
+		      &mapvals.lightsource.color);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Light Color:"), 1.0, 0.5,
 			     colorbutton, 1, TRUE);
