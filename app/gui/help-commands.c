@@ -27,6 +27,8 @@
 #include "by_color_select.h"
 #include "channels_dialog.h"
 #include "colormaps.h"
+#include "colormap_dialog.i.h"
+#include "color_area.h"
 #include "color_balance.h"
 #include "commands.h"
 #include "convert.h"
@@ -49,7 +51,6 @@
 #include "histogram_tool.h"
 #include "hue_saturation.h"
 #include "image_render.h"
-#include "indexed_palette.h"
 #include "info_window.h"
 #include "interface.h"
 #include "invert.h"
@@ -1028,15 +1029,30 @@ dialogs_lc_cmd_callback (GtkWidget *widget,
     lc_dialog_create (gdisp->gimage);
 }
 
+static void
+cmap_dlg_sel_cb(ColormapDialog* dlg, gpointer user_data)
+{
+  guchar* c;
+
+  GimpImage* img = colormap_dialog_image(dlg);
+  c = &img->cmap[colormap_dialog_col_index(dlg) * 3];
+  if(active_color == FOREGROUND)
+    palette_set_foreground (c[0], c[1], c[2]);
+  else if(active_color == BACKGROUND)
+    palette_set_background (c[0], c[1], c[2]);
+}
+
 void
 dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
 				      gpointer   client_data)
 {
-  GDisplay *gdisp;
-
-  gdisp = gdisplay_active ();
-
-  indexed_palette_create (gdisp->gimage);
+  static ColormapDialog* cmap_dlg;
+  if(!cmap_dlg){
+    cmap_dlg = colormap_dialog_create (image_context);
+    colormap_dialog_connect_selected(cmap_dlg_sel_cb, NULL,
+				     cmap_dlg);
+  }
+  gtk_widget_show(GTK_WIDGET(cmap_dlg));
 }
 
 void

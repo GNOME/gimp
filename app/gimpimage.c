@@ -93,6 +93,7 @@ enum{
   RENAME,
   RESIZE,
   RESTRUCTURE,
+  COLORMAP_CHANGED,
   LAST_SIGNAL
 };
 static void            gimp_image_destroy                 (GtkObject *);
@@ -123,6 +124,8 @@ gimp_image_class_init (GimpImageClass *klass)
 	  gimp_signal_new ("resize", 0, type, 0, gimp_sigtype_void);
   gimp_image_signals[RESTRUCTURE] =
 	  gimp_signal_new ("restructure", 0, type, 0, gimp_sigtype_void);
+  gimp_image_signals[COLORMAP_CHANGED] =
+	  gimp_signal_new ("colormap_changed", 0, type, 0, gimp_sigtype_int);
   
   gtk_object_class_add_signals (object_class, gimp_image_signals, LAST_SIGNAL);
 }
@@ -923,7 +926,15 @@ gimp_image_get_new_tattoo(GimpImage *image)
   return (image->tattoo_state);
 }
 
-
+void
+gimp_image_colormap_changed (GimpImage *image, gint col){
+  g_return_if_fail (image);
+  g_return_if_fail (col < image->num_cols);
+  gtk_signal_emit (GTK_OBJECT(image),
+			 gimp_image_signals[COLORMAP_CHANGED],
+			 col);
+}
+	
 /************************************************************/
 /*  Projection functions                                    */
 /************************************************************/

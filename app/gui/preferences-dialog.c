@@ -28,7 +28,6 @@
 #include "histogram_tool.h"
 #include "hue_saturation.h"
 #include "image_render.h"
-#include "indexed_palette.h"
 #include "info_window.h"
 #include "interface.h"
 #include "invert.h"

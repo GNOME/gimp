@@ -65,6 +65,7 @@
 #include "xcf.h"
 #include "errors.h"
 #include "docindex.h"
+#include "colormap_dialog.h"
 
 #include "config.h"
 

@@ -28,7 +28,6 @@
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
-#include "indexed_palette.h"
 #include "layer.h"
 #include "paint_core.h"
 #include "paint_funcs.h"
@@ -1987,7 +1986,7 @@ undo_pop_gimage_mod (GImage *gimage,
   gdisplays_update_full (gimage);
   gdisplays_update_title (gimage);
 
-  indexed_palette_update_image_list ();
+  gimp_image_colormap_changed (gimage, -1);
 
   if (gimage->width != (int) data[0] || gimage->height != (int) data[1])
     shrink_wrap = TRUE;

@@ -23,6 +23,7 @@
    remove
 */
 
+typedef guint GimpSetHandlerId;
 
 guint gimp_set_get_type (void);
 
@@ -34,5 +35,12 @@ gboolean	gimp_set_have	(GimpSet* gimpset, gpointer ob);
 void		gimp_set_foreach(GimpSet* gimpset, GFunc func,
 				 gpointer user_data);
 gint		gimp_set_size	(GimpSet* gimpset);
+
+GimpSetHandlerId gimp_set_add_handler (GimpSet* set,
+				       const gchar* signame,
+				       GtkSignalFunc handler,
+				       gpointer user_data);
+void		gimp_set_remove_handler (GimpSet* set,
+					 GimpSetHandlerId id);
 
 #endif

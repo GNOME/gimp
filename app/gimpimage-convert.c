@@ -74,7 +74,6 @@
 #include "floating_sel.h"
 #include "fsdither.h"
 #include "gdisplay.h"
-#include "indexed_palette.h"
 #include "interface.h"
 #include "undo.h"
 #include "palette.h"
@@ -913,7 +912,7 @@ convert_image (GImage *gimage,
   gdisplays_update_title (gimage);
   gdisplays_update_full (gimage);
 
-  indexed_palette_update_image_list ();
+  gimp_image_colormap_changed (gimage, -1);
 }
 
 static void

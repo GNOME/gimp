@@ -4,8 +4,6 @@
 #include "channels_dialog.h"
 #include "layers_dialog.h"
 
-#include "indexed_palette.h"
-
 #include "drawable.h"
 #include "gdisplay.h"
 #include "procedural_db.h"
@@ -27,6 +25,8 @@
 
 static void gimage_dirty_handler (GimpImage* gimage);
 static void gimage_destroy_handler (GimpImage* gimage);
+static void gimage_cmap_change_handler (GimpImage* gimage, gint ncol,
+					gpointer user_data);
 static void gimage_rename_handler (GimpImage* gimage);
 static void gimage_resize_handler (GimpImage* gimage);
 static void gimage_restructure_handler (GimpImage* gimage);
@@ -49,10 +49,11 @@ gimage_new(int width, int height, GimpImageBaseType base_type)
 		      GTK_SIGNAL_FUNC(gimage_restructure_handler), NULL);
   gtk_signal_connect (GTK_OBJECT (gimage), "repaint",
 		      GTK_SIGNAL_FUNC(gimage_repaint_handler), NULL);
+  gtk_signal_connect (GTK_OBJECT (gimage), "colormap_changed",
+		      GTK_SIGNAL_FUNC(gimage_cmap_change_handler), NULL);
 
   
   gimp_set_add(image_context, gimage);
-  indexed_palette_update_image_list ();
 
   palette_import_image_new(gimage);
   return gimage;
@@ -108,17 +109,21 @@ gimage_destroy_handler (GimpImage* gimage)
   /*  free the undo list  */
   undo_free (gimage);
 
-  indexed_palette_update_image_list ();
-
   palette_import_image_destroyed(gimage);
 }
+
+static void gimage_cmap_change_handler (GimpImage* gimage, gint ncol,
+					gpointer user_data)
+{
+  gdisplays_update_full(gimage);
+}
+
 
 static void
 gimage_rename_handler (GimpImage* gimage)
 {
   gdisplays_update_title (gimage);
   lc_dialog_update_image_list ();
-  indexed_palette_update_image_list ();
 
   palette_import_image_renamed(gimage);
 }

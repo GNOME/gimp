@@ -1,0 +1,28 @@
+#include <gimp.gh>
+#include <gtk.gh>
+
+module Gimp.ColormapDialog;
+
+import Gtk, g;
+
+class ColormapDialog : Gtk.Dialog {
+	public static ColormapDialog* create(Set* context);
+	read-only Image* image;
+	read-only int col-index;
+	protected pre-emit void selected ();
+	Widget* vbox;
+	Preview* palette;
+	Widget* image-menu;
+	OptionMenu* option-menu;
+	Set* context;
+	uint event-handler;
+	int xn;
+	int yn;
+	int cellsize;
+	Entry* index-entry;
+	Entry* color-entry;
+	SetHandlerId rename-handler;
+	SetHandlerId cmap-changed-handler;
+	Widget* add-item;
+	.ColorSelectP color-select;
+}

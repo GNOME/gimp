@@ -18,7 +18,7 @@
 
 #define GIMP_IMAGE(obj) GTK_CHECK_CAST (obj, GIMP_TYPE_IMAGE, GimpImage)
      
-#define GIMP_IS_GIMAGE(obj) GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE)
+#define GIMP_IS_IMAGE(obj) GTK_CHECK_TYPE (obj, GIMP_TYPE_IMAGE)
      
 
 /* the image types */
@@ -145,6 +145,15 @@ void            gimp_image_attach_parasite        (GimpImage *, Parasite *);
 void            gimp_image_detach_parasite        (GimpImage *, const char *);
 
 Tattoo          gimp_image_get_new_tattoo         (GimpImage *);
+
+/* Temporary hack till colormap manipulation is encapsulated in functions.
+   Call this whenever you modify an image's colormap. The ncol argument
+   specifies which color has changed, or negative if there's a bigger change.
+   Currently, use this also when the image's base type is changed to/from
+   indexed.  */
+
+void		gimp_image_colormap_changed	  (GimpImage * image,
+						   gint ncol);
 
 
 /*  layer/channel functions  */

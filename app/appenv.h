@@ -22,7 +22,7 @@
 #include "gdk/gdkx.h"
 #include "gtk/gtk.h"
 #include "gimpsetF.h"
-
+#include "colormap_dialog.t.h"
 #define DISPLAY              ((Display *) GDK_DISPLAY())
 
 /*   important macros - we reuse the ones from glib */
@@ -53,7 +53,6 @@ extern int console_messages;
 extern int restore_session;
 extern int we_are_exiting;       /* this is used in session_get_window_info() */
 extern GimpSet* image_context;
-
 extern MessageHandlerType message_handler;
 
 #endif /*  APPENV_H  */

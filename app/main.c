@@ -43,6 +43,10 @@ static RETSIGTYPE on_signal (int);
 static RETSIGTYPE on_sig_child (int);
 static void       init (void);
 static void       test_gserialize();
+static void	  on_error (const gchar* domain,
+			    GLogLevelFlags flags,
+			    const gchar* msg,
+			    gpointer user_data);
 
 /* GLOBAL data */
 int no_interface;
@@ -309,6 +313,11 @@ main (int argc, char **argv)
   /* Handle child exits */
   signal (SIGCHLD, on_sig_child);
 
+  g_log_set_handler(NULL,
+		    G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
+		    on_error,
+		    NULL);
+  
   /* Keep the command line arguments--for use in gimp_init */
   gimp_argc = argc - 1;
   gimp_argv = argv + 1;
@@ -328,6 +337,17 @@ init ()
 {
   /*  Continue initializing  */
   gimp_init (gimp_argc, gimp_argv);
+}
+
+
+static void
+on_error (const gchar* domain,
+	  GLogLevelFlags flags,
+	  const gchar* msg,
+	  gpointer user_data){
+	fprintf(stderr, "%s: fatal error: %s\n",
+		prog_name, msg);
+	g_on_error_query(prog_name);
 }
 
 static int caught_fatal_sig = 0;

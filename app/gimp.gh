@@ -1,0 +1,27 @@
+#include <gcg.gh>
+
+package Gimp <> {
+	module <gimpimage.h>{
+		class Image;
+	}
+	module <gimpobject.h>{
+		class Object;
+	}
+	module <gimplayer.h>{
+		class Layer;
+	}
+	module <gimpdrawable.h>{
+		class Drawable;
+	}
+	module <gimpset.h>{
+		class Set;
+		foreign SetHandlerId;
+	}
+	class ColormapDialog;
+}
+
+package {
+	module <color_select.h>{
+		foreign ColorSelectP;
+	}
+}

@@ -8,6 +8,7 @@ struct _GimpSet{
 	GimpObject gobject;
 	GtkType type;
 	GSList* list;
+	GArray* handlers;
 	gboolean weak;
 };
 

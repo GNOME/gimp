@@ -3,12 +3,33 @@
 
 /* Yep, this can be optimized quite a lot */
 
+
+typedef struct _GimpSetHandler {
+	const gchar* signame;
+	GtkSignalFunc func;
+	gpointer user_data;
+} GimpSetHandler;
+
+typedef struct {
+	GimpObject* object;
+	GArray* handlers;
+	guint destroy_handler;
+} Node;
+
 enum
 {
   ADD,
   REMOVE,
   LAST_SIGNAL
 };
+
+static Node* gimp_set_find_node (GimpSet* set, GimpObject* ob);
+static Node* gimp_set_node_new (GimpSet* set, gpointer ob);
+static void gimp_set_node_free (GimpSet* set, Node* n);
+
+
+
+
 
 static guint gimp_set_signals [LAST_SIGNAL];
 
@@ -18,15 +39,11 @@ static void
 gimp_set_destroy (GtkObject* ob)
 {
 	GimpSet* set=GIMP_SET(ob);
-	GSList* node;
-	for(node=set->list;node;node=node->next){
-		if(!set->weak)
-			gtk_object_unref(GTK_OBJECT(node->data));
-		gtk_signal_emit (GTK_OBJECT(set),
-				 gimp_set_signals[REMOVE],
-				 node->data);
-	}
+	GSList* l;
+	for(l=set->list;l;l=l->next)
+		gimp_set_node_free(set, l->data);
 	g_slist_free(set->list);
+	g_array_free(set->handlers, TRUE);
 	GTK_OBJECT_CLASS(parent_class)->destroy (ob);
 }
 
@@ -35,6 +52,7 @@ gimp_set_init (GimpSet* set)
 {
 	set->list=NULL;
 	set->type=GTK_TYPE_OBJECT;
+	set->handlers=g_array_new(FALSE, FALSE, sizeof(GimpSetHandler));
 }
 
 static void
@@ -83,21 +101,77 @@ gimp_set_destroy_cb (GtkObject* ob, gpointer data){
 	gimp_set_remove(set, ob);
 }
 
+static Node*
+gimp_set_find_node (GimpSet* set, GimpObject* ob)
+{
+	GSList* l = set->list;
+	for(l = set->list; l; l = l->next){
+		Node* n = l->data;
+		if (n->object == ob)
+			return n;
+	}
+	return NULL;
+}
+
+static Node*
+gimp_set_node_new (GimpSet* set, gpointer ob)
+{
+	gint i;
+	Node* n = g_new(Node, 1);
+	n->object = ob;
+	n->handlers = g_array_new(FALSE, FALSE, sizeof(guint));
+	g_array_set_size(n->handlers, set->handlers->len);
+	for(i = 0;i < n->handlers->len; i++){
+		GimpSetHandler* h
+			= &g_array_index(set->handlers, GimpSetHandler, i);
+		if(h->signame)
+			g_array_index(n->handlers, guint, i)
+				= gtk_signal_connect(GTK_OBJECT(ob),
+						     h->signame,
+						     h->func,
+						     h->user_data);
+	}
+	if(set->weak)
+		n->destroy_handler
+			= gtk_signal_connect(GTK_OBJECT(ob),
+					     "destroy",
+					     GTK_SIGNAL_FUNC(gimp_set_destroy_cb),
+					     set);
+	return n;
+}
+
+static void
+gimp_set_node_free (GimpSet* set, Node* n)
+{
+	gint i;
+	GimpObject* ob = n->object;
+	for(i=0;i < set->handlers->len; i++){
+		GimpSetHandler* h
+			= &g_array_index(set->handlers, GimpSetHandler, i);
+		if(h->signame)
+			gtk_signal_disconnect(GTK_OBJECT(ob),
+					      g_array_index(n->handlers,
+							    guint,
+							    i));
+	}
+	if(set->weak)
+		gtk_signal_disconnect(GTK_OBJECT(ob),
+				      n->destroy_handler);
+	g_array_free(n->handlers, TRUE);
+	g_free(n);
+}
+
+		
 gboolean
 gimp_set_add (GimpSet* set, gpointer val)
 {
 	g_return_val_if_fail(set, FALSE);
 	g_return_val_if_fail(GTK_CHECK_TYPE(val, set->type), FALSE);
 	
-	if(g_slist_find(set->list, val))
+	if(gimp_set_find_node(set, val))
 		return FALSE;
 	
-	set->list=g_slist_prepend(set->list, val);
-	if(set->weak)
-		gtk_signal_connect(GTK_OBJECT(val), "destroy",
-				   GTK_SIGNAL_FUNC(gimp_set_destroy_cb), set);
-	else
-		gtk_object_ref(GTK_OBJECT(val));
+	set->list=g_slist_prepend(set->list, gimp_set_node_new(set, val));
 	
 	gtk_signal_emit (GTK_OBJECT(set), gimp_set_signals[ADD], val);
 	return TRUE;
@@ -105,38 +179,92 @@ gimp_set_add (GimpSet* set, gpointer val)
 
 gboolean
 gimp_set_remove (GimpSet* set, gpointer val) {
+	Node* n;
+	
 	g_return_val_if_fail(set, FALSE);
 
-	if(!g_slist_find(set->list, val))
-		return FALSE;
-
-	set->list=g_slist_remove(set->list, val);
+	n = gimp_set_find_node (set, val);
+	g_return_val_if_fail(n, FALSE);
 
 	gtk_signal_emit (GTK_OBJECT(set), gimp_set_signals[REMOVE], val);
 
-	if(set->weak)
-		gtk_signal_disconnect_by_func
-			(GTK_OBJECT(val),
-			 GTK_SIGNAL_FUNC(gimp_set_destroy_cb),
-			 set);
-	else
-		gtk_object_unref(GTK_OBJECT(val));
-
+	gimp_set_node_free(set, n);
+	
+	set->list=g_slist_remove(set->list, n);
 	return TRUE;
 }
 
 gboolean
 gimp_set_have (GimpSet* set, gpointer val) {
-	return g_slist_find(set->list, val)?TRUE:FALSE;
+	return !!gimp_set_find_node(set, val);
 }
 
 void
 gimp_set_foreach(GimpSet* set, GFunc func, gpointer user_data)
 {
-	g_slist_foreach(set->list, func, user_data);
+	GSList* l;
+	for(l=set->list; l;l=l->next){
+		Node* n = l->data;
+		func(n->object, user_data);
+	}
 }
 
 GtkType
 gimp_set_type (GimpSet* set){
 	return set->type;
 }
+
+GimpSetHandlerId
+gimp_set_add_handler(GimpSet* set, const gchar* signame,
+		     GtkSignalFunc handler, gpointer user_data){
+	GimpSetHandler h;
+	GSList* l;
+	guint a;
+
+	g_assert(signame);
+	
+	h.signame = signame;
+	h.func = handler;
+	h.user_data = user_data;
+	
+	for(a=0;a<set->handlers->len;a++)
+		if(!g_array_index(set->handlers, GimpSetHandler, a).signame)
+			break;
+	if(a<set->handlers->len){
+		g_array_index(set->handlers, GimpSetHandler, a) = h;
+		for(l=set->list;l;l=l->next){
+			Node* n = l->data;
+			guint i = gtk_signal_connect(GTK_OBJECT(n->object),
+						     signame,
+						     handler,
+						     user_data);
+			g_array_index(n->handlers, guint, a) = i;
+		}
+	} else{
+		g_array_append_val(set->handlers, h);
+		for(l=set->list;l;l=l->next){
+			Node* n = l->data;
+			guint i = gtk_signal_connect(GTK_OBJECT(n->object),
+						     signame,
+						     handler,
+						     user_data);
+			g_array_append_val(n->handlers, i);
+		}
+	}
+	return a;
+}
+
+void
+gimp_set_remove_handler(GimpSet* set, GimpSetHandlerId id)
+{
+	GSList* l;
+	for(l=set->list;l;l=l->next){
+		Node* n = l->data;
+		gtk_signal_disconnect(GTK_OBJECT(n->object),
+				      g_array_index(n->handlers, guint, id));
+	}
+	g_array_index(set->handlers, GimpSetHandler, id).signame = NULL;
+}
+
+	
+	
