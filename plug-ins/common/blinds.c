@@ -133,7 +133,6 @@ static void      blinds_button_update  (GtkWidget     *widget,
 static void      dialog_update_preview (void);
 static void	 cache_preview         (void);
 static void      apply_blinds          (void);
-static void      blinds_get_bg         (guchar        *bg);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -644,40 +643,6 @@ blindsapply (guchar *srow,
 }
 
 static void
-blinds_get_bg (guchar *bg)
-{
-  GimpRGB  background;
-
-  gimp_palette_get_background (&background);
-
-  switch (gimp_drawable_type (blindsdrawable->drawable_id))
-    {
-    case GIMP_RGB_IMAGE :
-      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
-      bg[3] = 255;
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
-      bg[3] = bvals.bg_trans ? 0 : 255;
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      bg[0] = gimp_rgb_intensity_uchar (&background);
-      bg[1] = 255;
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      bg[0] = gimp_rgb_intensity_uchar (&background);
-      bg[1] = bvals.bg_trans ? 0 : 255;
-      break;
-
-    default:
-      break;
-    }
-}
-
-static void
 dialog_update_preview (void)
 {
   gint    y;
@@ -687,7 +652,8 @@ dialog_update_preview (void)
   
   p = bint.pv_cache;
 
-  blinds_get_bg (bg);
+  /*  blinds_get_bg (bg); */
+  gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
 
   if (bvals.orientation)
     {
@@ -856,7 +822,7 @@ apply_blinds (void)
   int x,y;
   guchar bg[4];
 
-  blinds_get_bg (bg);
+  gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
 
   gimp_pixel_rgn_init (&src_rgn, blindsdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);

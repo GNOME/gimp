@@ -81,9 +81,9 @@ gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf)
 
 void
 gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
-			 gint             x,
-			 gint             y,
-			 guchar          *pixel)
+			      gint             x,
+			      gint             y,
+			      guchar          *pixel)
 {
   gint    col, row;
   gint    coloff, rowoff;
@@ -104,9 +104,83 @@ gimp_pixel_fetcher_get_pixel (GimpPixelFetcher *pf,
   row    = y / pf->tile_height;
   rowoff = y % pf->tile_height;
 
-  if ((col != pf->col) ||
-      (row != pf->row) ||
-      (pf->tile == NULL))
+  if ((col != pf->col) || (row != pf->row) || (pf->tile == NULL))
+    {
+      if (pf->tile != NULL)
+	gimp_tile_unref(pf->tile, FALSE);
+
+      pf->tile = gimp_drawable_get_tile (pf->drawable, FALSE, row, col);
+      gimp_tile_ref (pf->tile);
+
+      pf->col = col;
+      pf->row = row;
+    }
+
+  p = pf->tile->data + pf->img_bpp * (pf->tile->ewidth * rowoff + coloff);
+
+  for (i = pf->img_bpp; i; i--)
+    *pixel++ = *p++;
+}
+
+void
+gimp_pixel_fetcher_get_pixel2 (GimpPixelFetcher *pf,
+			       gint             x,
+			       gint             y,
+			       gint		wrapmode,
+			       guchar          *pixel)
+{
+  gint    col, row;
+  gint    coloff, rowoff;
+  guchar *p;
+  gint    i;
+
+  if (x < 0 || x >= pf->img_width ||
+      y < 0 || y >= pf->img_height)
+    switch (wrapmode)
+      {
+      case PIXEL_WRAP:
+	if (x < 0 || x >= pf->img_width)
+	  {
+	    x %= pf->img_width;
+	    if (x < 0)
+	      x += pf->img_width;
+	  }
+	if (y < 0 || y >= pf->img_height)
+	  {
+	    y %= pf->img_height;
+	    if (y < 0)
+	      y += pf->img_height;
+	  }
+	break;
+      case PIXEL_SMEAR:
+	if (x < 0)
+	  x = 0;
+	if (x >= pf->img_width)
+	  x = pf->img_width - 1;
+	if (y < 0)
+	  y = 0;
+	if (y >= pf->img_height)
+	  y = pf->img_height - 1;
+	break;
+      case PIXEL_BLACK:
+	if (x < 0 || x >= pf->img_width || 
+	    y < 0 || y >= pf->img_height)
+	  {
+	    for (i = 0; i < pf->img_bpp; i++)
+	      pixel[i] = 0;
+	    return;
+	  }
+	break;
+      default:
+	return;
+      }
+
+  col    = x / pf->tile_width;
+  coloff = x % pf->tile_width;
+  row    = y / pf->tile_height;
+  rowoff = y % pf->tile_height;
+
+  if ((col != pf->col) || (row != pf->row) || (pf->tile == NULL))
     {
       if (pf->tile != NULL)
 	gimp_tile_unref(pf->tile, FALSE);
@@ -131,4 +205,40 @@ gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
     gimp_tile_unref (pf->tile, FALSE);
 
   g_free (pf);
+}
+
+void		 
+gimp_get_bg_guchar (GimpDrawable *drawable,
+		    gboolean transparent,
+		    guchar *bg)
+{
+  GimpRGB  background;
+
+  gimp_palette_get_background (&background);
+
+  switch (gimp_drawable_type (drawable->drawable_id))
+    {
+    case GIMP_RGB_IMAGE :
+      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
+      bg[3] = 255;
+      break;
+
+    case GIMP_RGBA_IMAGE:
+      gimp_rgb_get_uchar (&background, &bg[0], &bg[1], &bg[2]);
+      bg[3] = transparent ? 0 : 255;
+      break;
+
+    case GIMP_GRAY_IMAGE:
+      bg[0] = gimp_rgb_intensity_uchar (&background);
+      bg[1] = 255;
+      break;
+
+    case GIMP_GRAYA_IMAGE:
+      bg[0] = gimp_rgb_intensity_uchar (&background);
+      bg[1] = transparent ? 0 : 255;
+      break;
+
+    default:
+      break;
+    }
 }

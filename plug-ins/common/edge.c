@@ -63,13 +63,6 @@ static gchar rcsid[] = "$Id$";
 
 #define TILE_CACHE_SIZE 48
 
-enum
-{
-  WRAP,
-  SMEAR,
-  BLACK
-};
-
 typedef struct
 {
   gdouble amount;
@@ -80,16 +73,6 @@ typedef struct
 {
   gint run;
 } EdgeInterface;
-
-typedef struct
-{
-  GimpTile     *tile;
-  gint	        row, col;  /* tile's row, col */
-  gint          bpp;
-  gint          tile_width, tile_height;
-  GimpDrawable *drawable;
-  gint          drawable_width, drawable_height;
-} TileBuf;
 
 /*
  * Function prototypes.
@@ -107,15 +90,6 @@ static gint      edge_dialog (GimpDrawable *drawable);
 
 static long      long_sqrt   (long n);
 
-static void   init_tile_buf  (TileBuf      *buf,
-			      GimpDrawable *drawable);
-static void   get_tile_pixel (TileBuf      *buf,
-			      gint          x,
-			      gint          y, 
-			      guchar       *pixel,
-			      gint          wrapmode);
-static void   end_tile_buf   (TileBuf      *buf);
-
 /***** Local vars *****/
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -129,7 +103,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 static EdgeVals evals =
 {
   2.0,   /* amount   */
-  SMEAR  /* wrapmode */
+  PIXEL_SMEAR  /* wrapmode */
 };
 
 static EdgeInterface eint =
@@ -258,113 +232,6 @@ run (gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-/*********************************************************************
-
-   TileBuf Util Routines:   Util routines for getting arbitrary pixel
-   CAUTION -- the tile is read only !!
-
- **********************************************************************/
-
-static void
-init_tile_buf (TileBuf      *buf,
-	       GimpDrawable *drawable)
-{
-  buf->tile = NULL;
-  buf->col = 0;
-  buf->row = 0;
-  if (gimp_drawable_is_rgb (drawable->drawable_id))
-    buf->bpp = 3;
-  else
-    buf->bpp = 1;
-  buf->tile_width = gimp_tile_width();
-  buf->tile_height = gimp_tile_height();
-  buf->drawable = drawable;
-  buf->drawable_width = gimp_drawable_width(drawable->drawable_id);
-  buf->drawable_height = gimp_drawable_height(drawable->drawable_id);
-}
-
-static void
-get_tile_pixel (TileBuf *buf,
-		gint     x,
-		gint     y,
-		guchar  *pixel,
-		gint     wrapmode)
-{
-  gint b;
-  gint offx, offy;
-  gint row, col;
-  guchar *ptr;
-
-  if (x < 0 || x >= buf->drawable_width ||
-      y < 0 || y >= buf->drawable_height)
-    switch (wrapmode)
-      {
-      case WRAP:
-	if (x < 0 || x >= buf->drawable_width)
-	  {
-	    x %= buf->drawable_width;
-	    if (x < 0)
-	      x += buf->drawable_width;
-	  }
-	if (y < 0 || y >= buf->drawable_height)
-	  {
-	    y %= buf->drawable_height;
-	    if (y < 0)
-	      y += buf->drawable_height;
-	  }
-	break;
-      case SMEAR:
-	if (x < 0)
-	  x = 0;
-	if (x >= buf->drawable_width)
-	  x = buf->drawable_width - 1;
-	if (y < 0)
-	  y = 0;
-	if (y >= buf->drawable_height)
-	  y = buf->drawable_height - 1;
-	break;
-      case BLACK:
-	if (x < 0 || x >= buf->drawable_width || 
-	    y < 0 || y >= buf->drawable_height)
-	  {
-	    for (b = 0; b < buf->bpp; b++)
-	      pixel[b] = 0;
-	    return;
-	  }
-	break;
-      default:
-	return;
-      }
-
-  col = x / buf->tile_width;
-  offx = x % buf->tile_width;
-  row = y / buf->tile_height;
-  offy = y % buf->tile_height;
-
-  /* retrieve tile */
-  if (!buf->tile || col != buf->col || row != buf->row)
-    {
-      if(buf->tile)
-	gimp_tile_unref (buf->tile, FALSE);
-      buf->col = col;
-      buf->row = row;
-      buf->tile = gimp_drawable_get_tile (buf->drawable, FALSE, row, col);
-      gimp_tile_ref (buf->tile);
-    }
-
-  /* retrieve target pixel */
-  ptr = buf->tile->data + (offy * buf->tile->ewidth + offx) * buf->tile->bpp;
-  for(b = 0; b < buf->bpp; b++)
-    pixel[b] = ptr[b];
-}
-
-static void
-end_tile_buf (TileBuf *buf)
-{
-  if (buf->tile)
-    gimp_tile_unref (buf->tile, FALSE);
-}
-
 /**********************************************************************
    TileBuf Util Routines End
  **********************************************************************/
@@ -466,12 +333,12 @@ edge (GimpDrawable *drawable)
    */
   GimpPixelRgn src_rgn, dest_rgn;
   gpointer pr;
-  TileBuf buf;
+  GimpPixelFetcher *pft;
   guchar *srcrow, *src;
   guchar *destrow, *dest;
-  guchar pix00[3], pix01[3], pix02[3];
-  guchar pix10[3],/*pix11[3],*/ pix12[3];
-  guchar pix20[3], pix21[3], pix22[3];
+  guchar pix00[4], pix01[4], pix02[4];
+  guchar pix10[4],/*pix11[4],*/ pix12[4];
+  guchar pix20[4], pix21[4], pix22[4];
   glong width, height;
   gint alpha, has_alpha, chan;
   gint x, y;
@@ -486,7 +353,7 @@ edge (GimpDrawable *drawable)
   if (evals.amount < 1.0)
     evals.amount = 1.0;
 
-  init_tile_buf (&buf, drawable);
+  pft = gimp_pixel_fetcher_new (drawable);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -572,14 +439,14 @@ edge (GimpDrawable *drawable)
 		   * image, get_tile_pixel() will (should) do the
 		   * right work with `wrapmode'.
 		   */
-		  get_tile_pixel (&buf, x-1, y-1, pix00, wrapmode);
-		  get_tile_pixel (&buf, x  , y-1, pix10, wrapmode);
-		  get_tile_pixel (&buf, x+1, y-1, pix20, wrapmode);
-		  get_tile_pixel (&buf, x-1, y  , pix01, wrapmode);
-		  get_tile_pixel (&buf, x+1, y  , pix21, wrapmode);
-		  get_tile_pixel (&buf, x-1, y+1, pix02, wrapmode);
-		  get_tile_pixel (&buf, x  , y+1, pix12, wrapmode);
-		  get_tile_pixel (&buf, x+1, y+1, pix22, wrapmode);
+		  gimp_pixel_fetcher_get_pixel2(pft, x-1, y-1, wrapmode, pix00);
+		  gimp_pixel_fetcher_get_pixel2(pft, x  , y-1, wrapmode, pix10);
+		  gimp_pixel_fetcher_get_pixel2(pft, x+1, y-1, wrapmode, pix20);
+		  gimp_pixel_fetcher_get_pixel2(pft, x-1, y  , wrapmode, pix01);
+		  gimp_pixel_fetcher_get_pixel2(pft, x+1, y  , wrapmode, pix21);
+		  gimp_pixel_fetcher_get_pixel2(pft, x-1, y+1, wrapmode, pix02);
+		  gimp_pixel_fetcher_get_pixel2(pft, x  , y+1, wrapmode, pix12);
+		  gimp_pixel_fetcher_get_pixel2(pft, x+1, y+1, wrapmode, pix22);
 
 		  for (chan = 0; chan < alpha; chan++)
 		    {
@@ -605,7 +472,8 @@ edge (GimpDrawable *drawable)
       gimp_progress_update ((double) cur_progress / (double) max_progress);
     }
 
-  end_tile_buf (&buf);
+  gimp_pixel_fetcher_destroy (pft);
+
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
@@ -635,9 +503,9 @@ edge_dialog (GimpDrawable *drawable)
   GtkObject *scale_data;
   GSList *group = NULL;
 
-  gint	use_wrap  = (evals.wrapmode == WRAP);
-  gint	use_smear = (evals.wrapmode == SMEAR);
-  gint	use_black = (evals.wrapmode == BLACK);
+  gboolean use_wrap  = (evals.wrapmode == PIXEL_WRAP);
+  gboolean use_smear = (evals.wrapmode == PIXEL_SMEAR);
+  gboolean use_black = (evals.wrapmode == PIXEL_BLACK);
 
   gimp_ui_init ("edge", FALSE);
 
@@ -725,11 +593,11 @@ edge_dialog (GimpDrawable *drawable)
   gdk_flush ();
 
   if (use_wrap)
-    evals.wrapmode = WRAP;
+    evals.wrapmode = PIXEL_WRAP;
   else if (use_smear)
-    evals.wrapmode = SMEAR;
+    evals.wrapmode = PIXEL_SMEAR;
   else if (use_black)
-    evals.wrapmode = BLACK;
+    evals.wrapmode = PIXEL_BLACK;
 
   return eint.run;
 }

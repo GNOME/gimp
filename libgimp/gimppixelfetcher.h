@@ -30,6 +30,13 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+enum
+{
+  PIXEL_WRAP,
+  PIXEL_SMEAR,
+  PIXEL_BLACK
+};
+
 typedef struct
 {
   gint       col, row;
@@ -47,10 +54,20 @@ typedef struct
 GimpPixelFetcher *gimp_pixel_fetcher_new         (GimpDrawable *drawable);
 void             gimp_pixel_fetcher_set_bg_color (GimpPixelFetcher *pf);
 void             gimp_pixel_fetcher_get_pixel    (GimpPixelFetcher *pf, 
-						  int x, 
-						  int y, 
+						  gint x, 
+						  gint y, 
+						  guchar *pixel);
+void             gimp_pixel_fetcher_get_pixel2   (GimpPixelFetcher *pf, 
+						  gint x, 
+						  gint y, 
+						  gint wrapmode,
 						  guchar *pixel);
 void             gimp_pixel_fetcher_destroy      (GimpPixelFetcher *pf);
+
+
+void		 gimp_get_bg_guchar (GimpDrawable *drawable,
+				     gboolean transparent,
+				     guchar *bg);
 
 G_END_DECLS
 

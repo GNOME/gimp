@@ -862,7 +862,6 @@ typedef struct
 } alienmap_interface_t;
 
 
-
 /* Declare local functions. */
 
 static void      query  (void);
@@ -878,7 +877,6 @@ static void      alienmap_render_row (const guchar *src_row,
 				      gint row,
 				      gint row_width,
 				      gint bytes, double, double, double);
-static void      alienmap_get_pixel  (int x, int y, guchar *pixel);
 static void    	 transform           (guchar *, guchar *, guchar *,
 				      double, double, double);
 
@@ -894,9 +892,6 @@ static void      alienmap_toggle_update (GtkWidget *widget,
 static void      alienmap_logo_dialog   (void);
 
 /***** Variables *****/
-
-GtkWidget   *maindlg;
-GtkWidget   *logodlg;
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -925,13 +920,8 @@ static alienmap_vals_t wvals =
 };
 
 static GimpDrawable *drawable;
-static gint          tile_width, tile_height;
-static gint          img_width, img_height, img_bpp;
 static gint          sel_x1, sel_y1, sel_x2, sel_y2;
-static gint          sel_width, sel_height;
 static gint          preview_width, preview_height;
-static GimpTile     *the_tile = NULL;
-static gdouble       cen_x, cen_y;
 static gdouble       scale_x, scale_y;
 
 /***** Functions *****/
@@ -1048,11 +1038,10 @@ run (char       *name,
      GimpParam  **return_vals)
 {
   static GimpParam values[1];
-/*   GDrawable *drawable; */
-/*   gint32 image_ID; */
   GimpRunMode   run_mode;
-  double            xhsiz, yhsiz;
-  int   	    pwidth, pheight;
+  double        xhsiz, yhsiz;
+  gint          sel_width, sel_height;
+  int   	pwidth, pheight;
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
  
   INIT_I18N_UI ();
@@ -1067,22 +1056,12 @@ run (char       *name,
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  /* image_ID = param[1].data.d_image; */
-  tile_width  = gimp_tile_width();
-  tile_height = gimp_tile_height();
-
-  img_width  = gimp_drawable_width(drawable->drawable_id);
-  img_height = gimp_drawable_height(drawable->drawable_id);
-  img_bpp    = gimp_drawable_bpp(drawable->drawable_id);
 
   gimp_drawable_mask_bounds(drawable->drawable_id,
 			    &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
-
-  cen_x = (double) (sel_x2 - 1 + sel_x1) / 2.0;
-  cen_y = (double) (sel_y2 - 1 + sel_y1) / 2.0;
 
   xhsiz = (double) (sel_width - 1) / 2.0;
   yhsiz = (double) (sel_height - 1) / 2.0;
@@ -1189,49 +1168,6 @@ run (char       *name,
 }
 
 static void
-alienmap_get_pixel (int     x,
-		    int     y,
-		    guchar *pixel)
-{
-  static gint row  = -1;
-  static gint col  = -1;
-
-  gint    newcol, newrow;
-  gint    newcoloff, newrowoff;
-  guchar *p;
-  int     i;
-
-  if ((x < 0) || (x >= img_width) || (y < 0) || (y >= img_height))
-    {
-      pixel[0] = 0;
-      pixel[1] = 0;
-      pixel[2] = 0;
-      pixel[3] = 0;
-
-      return;
-    }
-
-  newcol    = x / tile_width; /* The compiler should optimize this */
-  newcoloff = x % tile_width;
-  newrow    = y / tile_height;
-  newrowoff = y % tile_height;
-
-  if ((col != newcol) || (row != newrow) || (the_tile == NULL))
-    {
-      if (the_tile != NULL)
-	gimp_tile_unref(the_tile, FALSE);
-
-      the_tile = gimp_drawable_get_tile(drawable, FALSE, newrow, newcol);
-      gimp_tile_ref(the_tile);
-      col = newcol;
-      row = newrow;
-    }
-  p = the_tile->data + the_tile->bpp * (the_tile->ewidth * newrowoff + newcoloff);
-  for (i = img_bpp; i; i--)
-    *pixel++ = *p++;
-}
-
-static void
 alienmap_render_row (const guchar *src_row,
 		     guchar       *dest_row,
 		     gint          row,
@@ -1328,6 +1264,7 @@ build_preview_source_image (void)
   int     x, y;
   guchar *p;
   guchar  pixel[4];
+  GimpPixelFetcher *pft;
 
   wint.image  = g_new (guchar, preview_width * preview_height * 3);
   wint.wimage = g_new (guchar, preview_width * preview_height * 3);
@@ -1344,12 +1281,14 @@ build_preview_source_image (void)
 
   p = wint.image;
 
+  pft = gimp_pixel_fetcher_new (drawable);
+
   for (y = 0; y < preview_height; y++)
     {
       px = left;
       for (x = 0; x < preview_width; x++)
 	{
-	  alienmap_get_pixel((int) px, (int) py, pixel);
+	  gimp_pixel_fetcher_get_pixel (pft, (gint) px, (gint) py, pixel);
 
 	  *p++ = pixel[0];
 	  *p++ = pixel[1];
@@ -1360,6 +1299,7 @@ build_preview_source_image (void)
 
       py += dy;
     }
+  gimp_pixel_fetcher_destroy (pft);
 }
 
 static gint
@@ -1378,13 +1318,13 @@ alienmap_dialog (void)
 
   build_preview_source_image ();
 
-  dialog = maindlg =
+  dialog =
     gimp_dialog_new (_("AlienMap"), "alienmap",
 		     gimp_standard_help_func, "filters/alienmap.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("About"), alienmap_logo_dialog,
+		     _("About..."), alienmap_logo_dialog,
 		     NULL, NULL, NULL, FALSE, FALSE,
 
 		     GTK_STOCK_CANCEL, gtk_widget_destroy,
@@ -1531,12 +1471,6 @@ alienmap_dialog (void)
   gimp_help_free ();
   gdk_flush ();
 
-  if (the_tile != NULL)
-    {
-      gimp_tile_unref (the_tile, FALSE);
-      the_tile = NULL;
-    }
-
   g_free (wint.image);
   g_free (wint.wimage);
 
@@ -1634,6 +1568,7 @@ alienmap_toggle_update (GtkWidget *widget,
 static void
 alienmap_logo_dialog (void)
 {
+  static GtkWidget *logodlg = NULL;
   GtkWidget *xlabel;
   GtkWidget *xlogo_box;
   GtkWidget *xpreview;

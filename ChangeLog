@@ -1,3 +1,17 @@
+2002-11-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/blinds.c: use gimp_get_bg_guchar
+
+	* libgimp/gimpmisc.[ch]: added gimp_pixel_fetcher routine with 
+	wrapmode and generic get background color routine (gimp_get_bg_guchar)
+
+	* plug-ins/common/edge.c: : use gimp_pixel_fetcher routines
+
+2002-11-21  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c: use gimp_pixel_fetcher routines
+
 2002-11-21  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpdisplayconfig.[ch]
