@@ -87,7 +87,7 @@ void      gimp_container_view_activate_item    (GimpContainerView *view,
 
 void      gimp_container_view_item_selected    (GimpContainerView *view,
 						GimpViewable      *item);
-void      gimp_container_view_item_activate    (GimpContainerView *view,
+void      gimp_container_view_item_activated   (GimpContainerView *view,
 						GimpViewable      *item);
 
 

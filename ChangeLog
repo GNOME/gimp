@@ -1,5 +1,47 @@
+2001-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/apptypes.h
+	* app/Makefile.am
+	* app/gimpdrawablelistview.[ch]: new widget. The upcoming replacement
+	for the layers and channels dialogs.
+
+	* app/test_commands.[ch]: put the test dialogs here...
+
+	* app/commands.[ch]: ... and made this one clean again.
+
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c
+	* app/gimpcontainerview.[ch]: some signal handling fine tuning.
+
+	* app/gimpimage.[ch]: emits "active_layer_changed" and
+	"active_channel_changed" signals now. The semantics of
+	gimage->active_layer and gimage->active_channel have changed a bit.
+	We now have either an active layer _or_ and active channel (there
+	is no active layer any more if a channel is active).
+
+	* app/channel_ops.c
+	* app/floating_sel.c
+	* app/gdisplay.c
+	* app/layers_dialog.c
+	* app/menus.c: changed accordingly.
+
+	* app/tools/gimpcolorpickertool.c: actually assign the draw_class
+	vraiable in the class_init function.
+
+	* app/tools/gimpdrawtool.[ch]
+	* app/tools/tool.c: removed the _new() functions because these
+	objects are abstract superclasses. Did some cleanup.
+	Nathan, please configure you editor to _not_ produce any tabs
+	in the source code.
+
+	* app/tools/gimppaintbrushtool.[ch]: "blurb" and "help" are tagged
+	with _(), not N_(). Put the register function to the header.
+
+	* po/POTFILES.in: made it compile again.
+
 2001-02-26  Nathan Summers <rock@gimp.org>
-app/tools/gimpdrawtool.c
+
+	* app/tools/gimpdrawtool.c
         * app/tools/gimpdrawtool.h
         * app/tools/gimppainttool.c
         * app/tools/gimppainttool.h
@@ -79,8 +121,8 @@ app/tools/gimpdrawtool.c
 	* plug-ins/libgck/gck/Makefile.am: made linking against stable
 	GIMP installed in the same prefix work again by renaming all our
 	libraries explicitly to libgimp<foo>-1.3.* (not as part of the
-	libtool revision but as part of the library name). Removed the
-	libtool revision to avoid double versioning. This has to be
+	libtool release but as part of the library name). Removed the
+	libtool release to avoid double versioning. This has to be
 	hardcoded in the libraries' Makefile.am ...
 
 	* app/Makefile.am
@@ -115,7 +157,7 @@ app/tools/gimpdrawtool.c
 	* plug-ins/sgi/Makefile.am
 	* plug-ins/webbrowser/Makefile.am
 	* plug-ins/xjt/Makefile.am: ... while all other Makefiles can simply
-	link against "libgimp<foo>-$(LT_REVISION).la"
+	link against "libgimp<foo>-$(LT_RELEASE).la"
 
 2001-02-24  Michael Natterer  <mitch@gimp.org>
 

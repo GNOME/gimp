@@ -78,6 +78,8 @@ typedef struct _GimpPalette         GimpPalette;
 typedef struct _GimpToolInfo        GimpToolInfo;
 
 typedef struct _GimpTool            GimpTool;
+typedef struct _GimpPaintTool       GimpPaintTool;
+typedef struct _GimpDrawTool        GimpDrawTool;
 
 
 /*  widgets  */
@@ -95,6 +97,7 @@ typedef struct _GimpContainerView     GimpContainerView;
 typedef struct _GimpContainerListView GimpContainerListView;
 typedef struct _GimpContainerGridView GimpContainerGridView;
 typedef struct _GimpDataFactoryView   GimpDataFactoryView;
+typedef struct _GimpDrawableListView  GimpDrawableListView;
 typedef struct _HistogramWidget       HistogramWidget;
 
 
@@ -111,11 +114,7 @@ typedef struct _BoundSeg            BoundSeg;
 
 typedef struct _ColorNotebook       ColorNotebook;
 
-typedef struct _GimpDrawTool        GimpDrawTool;
-
 typedef struct _GDisplay            GDisplay;
-
-typedef struct _GimpContextPreview  GimpContextPreview;
 
 typedef struct _GimpHistogram       GimpHistogram;
 
@@ -132,8 +131,6 @@ typedef struct _Guide               Guide;
 typedef         gpointer            ImageMap;
 
 typedef struct _InfoDialog          InfoDialog;
-
-typedef struct _GimpPaintTool       GimpPaintTool;
 
 typedef struct _Path                Path;
 typedef struct _PathPoint           PathPoint;

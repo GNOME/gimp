@@ -575,11 +575,11 @@ duplicate (GimpImage *gimage)
   GimpLayer    *floating_layer;
   GimpChannel  *channel, *new_channel;
   GList        *list;
-  Guide        *guide = NULL;
-  GimpLayer    *active_layer   = NULL;
-  GimpChannel  *active_channel = NULL;
+  Guide        *guide                     = NULL;
+  GimpLayer    *active_layer              = NULL;
+  GimpChannel  *active_channel            = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
-  GimpDrawable *floating_sel_drawable = NULL;
+  GimpDrawable *floating_sel_drawable     = NULL;
   ParasiteList *parasites;
   PathList     *paths;
   gint          count;

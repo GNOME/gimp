@@ -20,31 +20,31 @@
 #define __COMMANDS_H__
 
 
-void file_new_cmd_callback            (GtkWidget *, gpointer, guint);
-void file_open_cmd_callback           (GtkWidget *, gpointer);
-void file_save_cmd_callback           (GtkWidget *, gpointer);
-void file_save_as_cmd_callback        (GtkWidget *, gpointer);
-void file_save_a_copy_as_cmd_callback (GtkWidget *, gpointer);
-void file_revert_cmd_callback         (GtkWidget *, gpointer);
-void file_pref_cmd_callback           (GtkWidget *, gpointer);
-void file_close_cmd_callback          (GtkWidget *, gpointer);
-void file_quit_cmd_callback           (GtkWidget *, gpointer);
+void file_new_cmd_callback                 (GtkWidget *, gpointer, guint);
+void file_open_cmd_callback                (GtkWidget *, gpointer);
+void file_save_cmd_callback                (GtkWidget *, gpointer);
+void file_save_as_cmd_callback             (GtkWidget *, gpointer);
+void file_save_a_copy_as_cmd_callback      (GtkWidget *, gpointer);
+void file_revert_cmd_callback              (GtkWidget *, gpointer);
+void file_pref_cmd_callback                (GtkWidget *, gpointer);
+void file_close_cmd_callback               (GtkWidget *, gpointer);
+void file_quit_cmd_callback                (GtkWidget *, gpointer);
 
-void edit_undo_cmd_callback         (GtkWidget *, gpointer);
-void edit_redo_cmd_callback         (GtkWidget *, gpointer);
-void edit_cut_cmd_callback          (GtkWidget *, gpointer);
-void edit_copy_cmd_callback         (GtkWidget *, gpointer);
-void edit_paste_cmd_callback        (GtkWidget *, gpointer);
-void edit_paste_into_cmd_callback   (GtkWidget *, gpointer);
-void edit_paste_as_new_cmd_callback (GtkWidget *, gpointer);
-void edit_named_cut_cmd_callback    (GtkWidget *, gpointer);
-void edit_named_copy_cmd_callback   (GtkWidget *, gpointer);
-void edit_named_paste_cmd_callback  (GtkWidget *, gpointer);
-void edit_clear_cmd_callback        (GtkWidget *, gpointer);
-void edit_fill_cmd_callback         (GtkWidget *widget,
-				     gpointer   callback_data,
-				     guint      callback_action);
-void edit_stroke_cmd_callback       (GtkWidget *, gpointer);
+void edit_undo_cmd_callback                (GtkWidget *, gpointer);
+void edit_redo_cmd_callback                (GtkWidget *, gpointer);
+void edit_cut_cmd_callback                 (GtkWidget *, gpointer);
+void edit_copy_cmd_callback                (GtkWidget *, gpointer);
+void edit_paste_cmd_callback               (GtkWidget *, gpointer);
+void edit_paste_into_cmd_callback          (GtkWidget *, gpointer);
+void edit_paste_as_new_cmd_callback        (GtkWidget *, gpointer);
+void edit_named_cut_cmd_callback           (GtkWidget *, gpointer);
+void edit_named_copy_cmd_callback          (GtkWidget *, gpointer);
+void edit_named_paste_cmd_callback         (GtkWidget *, gpointer);
+void edit_clear_cmd_callback               (GtkWidget *, gpointer);
+void edit_fill_cmd_callback                (GtkWidget *widget,
+				            gpointer   callback_data,
+				            guint      callback_action);
+void edit_stroke_cmd_callback              (GtkWidget *, gpointer);
 
 void select_invert_cmd_callback            (GtkWidget *, gpointer);
 void select_all_cmd_callback               (GtkWidget *, gpointer);
@@ -129,37 +129,16 @@ void dialogs_device_status_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_document_index_cmd_callback   (GtkWidget *, gpointer);
 void dialogs_error_console_cmd_callback    (GtkWidget *, gpointer);
 void dialogs_undo_history_cmd_callback     (GtkWidget *, gpointer);
-
 void dialogs_module_browser_cmd_callback   (GtkWidget *, gpointer);
 
-void dialogs_test_image_container_list_view_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_test_image_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
-
-void dialogs_test_brush_container_list_view_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_test_pattern_container_list_view_cmd_callback  (GtkWidget *, gpointer);
-void dialogs_test_gradient_container_list_view_cmd_callback (GtkWidget *, gpointer);
-void dialogs_test_palette_container_list_view_cmd_callback  (GtkWidget *, gpointer);
-
-void dialogs_test_brush_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_test_pattern_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
-void dialogs_test_gradient_container_grid_view_cmd_callback (GtkWidget *, gpointer);
-void dialogs_test_palette_container_grid_view_cmd_callback  (GtkWidget *, gpointer);
-
-void dialogs_test_multi_container_list_view_cmd_callback    (GtkWidget *, gpointer);
-void dialogs_test_multi_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
-
-void dialogs_test_layer_list_cmd_callback                   (GtkWidget *, gpointer);
-void dialogs_test_layer_grid_cmd_callback                   (GtkWidget *, gpointer);
-void dialogs_test_channel_list_cmd_callback                 (GtkWidget *, gpointer);
-void dialogs_test_channel_grid_cmd_callback                 (GtkWidget *, gpointer);
-
-void help_help_cmd_callback         (GtkWidget *, gpointer);
-void help_context_help_cmd_callback (GtkWidget *, gpointer);
-void help_tips_cmd_callback         (GtkWidget *, gpointer);
-void help_about_cmd_callback        (GtkWidget *, gpointer);
-
 #ifdef DISPLAY_FILTERS
-void dialogs_display_filters_cmd_callback (GtkWidget *, gpointer);
+void dialogs_display_filters_cmd_callback  (GtkWidget *, gpointer);
 #endif /* DISPLAY_FILTERS */
+
+void help_help_cmd_callback                (GtkWidget *, gpointer);
+void help_context_help_cmd_callback        (GtkWidget *, gpointer);
+void help_tips_cmd_callback                (GtkWidget *, gpointer);
+void help_about_cmd_callback               (GtkWidget *, gpointer);
+
 
 #endif /* __COMMANDS_H__ */

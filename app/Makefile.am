@@ -245,6 +245,8 @@ gimp_SOURCES = \
 	selection.h		\
 	session.h		\
 	session.c		\
+	test_commands.c		\
+	test_commands.h		\
 	tips_dialog.c		\
 	tips_dialog.h		\
 	toolbox.c		\
@@ -291,6 +293,8 @@ gimp_SOURCES = \
 	gimpcontainerview.c		\
 	gimpdatafactoryview.h		\
 	gimpdatafactoryview.c		\
+	gimpdrawablelistview.c		\
+	gimpdrawablelistview.h		\
 	gimpdrawablepreview.c		\
 	gimpdrawablepreview.h		\
 	gimpgradientpreview.h		\

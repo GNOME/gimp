@@ -195,6 +195,7 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
 
   object_class = (GtkObjectClass *) klass;
   tool_class   = (GimpToolClass *) klass;
+  draw_class   = (GimpDrawToolClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_DRAW_TOOL);
 

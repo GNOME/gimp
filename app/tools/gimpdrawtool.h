@@ -19,7 +19,14 @@
 #ifndef __GIMP_DRAW_TOOL_H__
 #define __GIMP_DRAW_TOOL_H__
 
+
 #include "tools/tool.h"
+
+
+/*  draw states  */
+#define INVISIBLE   0
+#define VISIBLE     1
+
 
 #define GIMP_TYPE_DRAW_TOOL            (gimp_draw_tool_get_type ())
 #define GIMP_DRAW_TOOL(obj)            (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAW_TOOL, GimpDrawTool))
@@ -27,13 +34,8 @@
 #define GIMP_DRAW_TOOL_CLASS(klass)    (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_DRAW_TOOL, GimpDrawToolClass))
 #define GIMP_IS_DRAW_TOOL_CLASS(klass) (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DRAW_TOOL))
 
-/*  draw states  */
-#define INVISIBLE   0
-#define VISIBLE     1
 
-/*  Structure definitions  */
-
-typedef void (* DrawToolDraw) (GimpDrawTool *);
+typedef struct _GimpDrawToolClass GimpDrawToolClass;
 
 struct _GimpDrawTool
 {
@@ -56,22 +58,17 @@ struct _GimpDrawToolClass
 {
   GimpToolClass   parent_class;
 
-  DrawToolDraw draw;
+  void (* draw) (GimpDrawTool *draw_tool);
 };
 
 
-typedef struct _GimpDrawToolClass GimpDrawToolClass;
-
-/*  draw core functions  */
 GtkType		  gimp_draw_tool_get_type (void);
-void		  gimp_draw_tool_class_init (GimpDrawToolClass *);
 
-GimpDrawTool *    gimp_draw_tool_new    (void); 	     /* create a new, generic DrawTool */
-void              gimp_draw_tool_start  (GimpDrawTool     *,
-					 GdkWindow    	*);
-void       	  gimp_draw_tool_stop   (GimpDrawTool     *);
-void       	  gimp_draw_tool_pause  (GimpDrawTool     *);
-void       	  gimp_draw_tool_resume (GimpDrawTool     *);
+void              gimp_draw_tool_start    (GimpDrawTool *draw_tool,
+					   GdkWindow    *window);
+void       	  gimp_draw_tool_stop     (GimpDrawTool *draw_tool);
+void       	  gimp_draw_tool_pause    (GimpDrawTool *draw_tool);
+void       	  gimp_draw_tool_resume   (GimpDrawTool *draw_tool);
 
 
-#endif  /*  __DRAWTOOL_H__  */
+#endif  /*  __GIMP_DRAW_TOOL_H__  */

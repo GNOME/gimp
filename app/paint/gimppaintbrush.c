@@ -499,10 +499,11 @@ gimp_paintbrush_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_PAINTBRUSH_TOOL,
   			      "gimp:paintbrush_tool",
-  			      N_("Paintbrush"),
-  			      N_("Paint fuzzy brush strokes"),
+  			      _("Paintbrush"),
+  			      _("Paint fuzzy brush strokes"),
       			      N_("/Tools/Paint Tools/Paintbrush"), "P",
-  			      NULL, "tools/paintbrush.html", (const gchar **) paint_bits);
+  			      NULL, "tools/paintbrush.html",
+			      (const gchar **) paint_bits);
 }
 
 

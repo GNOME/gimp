@@ -82,7 +82,6 @@ app/tools/bucket_fill.c
 app/tools/by_color_select.c
 app/tools/clone.c
 app/tools/color_balance.c
-app/tools/color_picker.c
 app/tools/convolve.c
 app/tools/crop.c
 app/tools/curves.c
@@ -91,6 +90,9 @@ app/tools/edit_selection.c
 app/tools/eraser.c
 app/tools/flip_tool.c
 app/tools/fuzzy_select.c
+app/tools/gimpcolorpickertool.c
+app/tools/gimppaintbrushtool.c
+app/tools/gimppainttool.c
 app/tools/histogram_tool.c
 app/tools/hue_saturation.c
 app/tools/ink.c
@@ -98,9 +100,7 @@ app/tools/levels.c
 app/tools/magnify.c
 app/tools/measure.c
 app/tools/move.c
-app/tools/paint_core.c
 app/tools/paint_options.c
-app/tools/paintbrush.c
 app/tools/perspective_tool.c
 app/tools/posterize.c
 app/tools/rect_select.c

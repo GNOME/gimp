@@ -166,12 +166,6 @@ floating_sel_reset (GimpLayer *layer)
   else if (GIMP_IS_CHANNEL (layer->fs.drawable))
     {
       gimp_image_set_active_channel (gimage, GIMP_CHANNEL (layer->fs.drawable));
-
-      if (gimp_container_num_children (gimage->layers))
-	{
-	  gimp_image_set_active_layer (gimage,
-				       (GimpLayer *) gimage->layer_stack->data);
-	}
     }
 }
 

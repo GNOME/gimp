@@ -469,22 +469,6 @@ gimp_tool_real_oper_update (GimpTool       *tool,
 
 /*  Function definitions  */
 
-/*  Create a default tool object
- */
-
-GimpTool *
-gimp_tool_new (void)
-{
-  GimpTool *tool;
-  
-  tool = gtk_type_new (GIMP_TYPE_TOOL);
-
-  return tool;
-}
-
-
-
-
 void
 gimp_tool_help_func (const gchar *help_data)
 {

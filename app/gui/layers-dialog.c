@@ -1191,6 +1191,9 @@ layers_dialog_set_active_layer (GimpLayer *layer)
   GtkStateType  state;
   gint          index;
 
+  if (! layer)
+    return;
+
   layer_widget = layer_widget_get_ID (layer);
   if (!layersD || !layer_widget)
     return;
@@ -1224,6 +1227,9 @@ layers_dialog_unset_layer (GimpLayer *layer)
   LayerWidget  *layer_widget;
   GtkStateType  state;
   gint          index;
+
+  if (! layer)
+    return;
 
   layer_widget = layer_widget_get_ID (layer);
   if (!layersD || !layer_widget)

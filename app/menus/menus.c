@@ -43,6 +43,9 @@
 #include "menus.h"
 #include "paths_dialog.h"
 
+/* test dialogs */
+#include "test_commands.h"
+
 #include "libgimp/gimpenv.h"
 
 #include "libgimp/gimpintl.h"
@@ -157,53 +160,49 @@ static GimpItemFactoryEntry toolbox_entries[] =
     "file/dialogs/display_filters/display_filters.html", NULL },
 #endif /* DISPLAY_FILTERS */
 
-  { { N_("/File/Test Dialogs/Layer List..."), NULL, dialogs_test_layer_list_cmd_callback, 1 },
+  { { N_("/File/Test Dialogs/Layer List..."), NULL, test_layer_list_cmd_callback, 1 },
     NULL, NULL },
-  { { N_("/File/Test Dialogs/Layer Grid..."), NULL, dialogs_test_layer_grid_cmd_callback, 1 },
-    NULL, NULL },
-  { { N_("/File/Test Dialogs/Channel List..."), NULL, dialogs_test_channel_list_cmd_callback, 1 },
-    NULL, NULL },
-  { { N_("/File/Test Dialogs/Channel Grid..."), NULL, dialogs_test_channel_grid_cmd_callback, 1 },
+  { { N_("/File/Test Dialogs/Channel List..."), NULL, test_channel_list_cmd_callback, 1 },
     NULL, NULL },
 
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { "/File/Test Dialogs/Images List...", NULL, dialogs_test_image_container_list_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Images List...", NULL, test_image_container_list_view_cmd_callback, 0 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Images Grid...", NULL, dialogs_test_image_container_grid_view_cmd_callback, 0 },
-    NULL, NULL },
-
-  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
-
-  { { "/File/Test Dialogs/Brushe List...", NULL, dialogs_test_brush_container_list_view_cmd_callback, 0 },
-    NULL, NULL },
-  { { "/File/Test Dialogs/Pattern List...", NULL, dialogs_test_pattern_container_list_view_cmd_callback, 0 },
-    NULL, NULL },
-  { { "/File/Test Dialogs/Gradient List...", NULL, dialogs_test_gradient_container_list_view_cmd_callback, 0 },
-    NULL, NULL },
-  { { "/File/Test Dialogs/Palette List...", NULL, dialogs_test_palette_container_list_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Images Grid...", NULL, test_image_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
 
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { "/File/Test Dialogs/Brushe Grid...", NULL, dialogs_test_brush_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Brushe List...", NULL, test_brush_container_list_view_cmd_callback, 0 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Pattern Grid...", NULL, dialogs_test_pattern_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Pattern List...", NULL, test_pattern_container_list_view_cmd_callback, 0 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Gradient Grid...", NULL, dialogs_test_gradient_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Gradient List...", NULL, test_gradient_container_list_view_cmd_callback, 0 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Palette Grid...", NULL, dialogs_test_palette_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Palette List...", NULL, test_palette_container_list_view_cmd_callback, 0 },
     NULL, NULL },
 
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
 
-  { { "/File/Test Dialogs/Multi List...", NULL, dialogs_test_multi_container_list_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Brushe Grid...", NULL, test_brush_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
-  { { "/File/Test Dialogs/Multi Grid...", NULL, dialogs_test_multi_container_grid_view_cmd_callback, 0 },
+  { { "/File/Test Dialogs/Pattern Grid...", NULL, test_pattern_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Gradient Grid...", NULL, test_gradient_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Palette Grid...", NULL, test_palette_container_grid_view_cmd_callback, 0 },
+    NULL, NULL },
+
+  { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
+    NULL, NULL },
+
+  { { "/File/Test Dialogs/Multi List...", NULL, test_multi_container_list_view_cmd_callback, 0 },
+    NULL, NULL },
+  { { "/File/Test Dialogs/Multi Grid...", NULL, test_multi_container_grid_view_cmd_callback, 0 },
     NULL, NULL },
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },

@@ -37,7 +37,7 @@ struct _GimpPaintbrushToolClass
   GimpPaintToolClass parent_class;
 };
 
-typedef struct _GimpPaintbrushTool GimpPaintbrushTool;
+typedef struct _GimpPaintbrushTool      GimpPaintbrushTool;
 typedef struct _GimpPaintbrushToolClass GimpPaintbrushToolClass;
 
 /* FIXME: this antique code doesn't follow the coding style */
@@ -51,6 +51,8 @@ gboolean   gimp_paintbrush_tool_non_gui    (GimpDrawable *,
 gboolean gimp_paintbrush_tool_non_gui_default (GimpDrawable *,
 				       gint          ,
 				       gdouble      *);
+
+void gimp_paintbrush_tool_register (void);
 
 GimpTool * gimp_paintbrush_tool_new        (void);
 

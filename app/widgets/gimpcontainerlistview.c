@@ -58,7 +58,7 @@ static void     gimp_container_list_view_name_changed (GimpViewable           *v
 static void    gimp_container_list_view_item_selected (GtkWidget              *widget,
 						       GtkWidget              *child,
 						       gpointer                data);
-static gint    gimp_container_list_view_item_activate (GtkWidget              *widget,
+static gint   gimp_container_list_view_item_activated (GtkWidget              *widget,
 						       GdkEventButton         *bevent,
 						       gpointer                data);
 static GimpViewable * gimp_container_list_view_drag_viewable (GtkWidget       *widget,
@@ -243,7 +243,7 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
      GTK_OBJECT (list_view));
 
   gtk_signal_connect (GTK_OBJECT (list_item), "button_press_event",
-		      GTK_SIGNAL_FUNC (gimp_container_list_view_item_activate),
+		      GTK_SIGNAL_FUNC (gimp_container_list_view_item_activated),
 		      list_view);
 
   gimp_gtk_drag_source_set_by_type (list_item,
@@ -382,6 +382,10 @@ gimp_container_list_view_select_item (GimpContainerView *view,
 					  gimp_container_list_view_item_selected,
 					  list_view);
     }
+  else
+    {
+      gtk_list_unselect_all (GTK_LIST (list_view->gtk_list));
+    }
 }
 
 static void
@@ -440,9 +444,9 @@ gimp_container_list_view_item_selected (GtkWidget *widget,
 }
 
 static gint
-gimp_container_list_view_item_activate (GtkWidget      *widget,
-					GdkEventButton *bevent,
-					gpointer        data)
+gimp_container_list_view_item_activated (GtkWidget      *widget,
+					 GdkEventButton *bevent,
+					 gpointer        data)
 {
   if (bevent->type == GDK_2BUTTON_PRESS)
     {
@@ -451,7 +455,7 @@ gimp_container_list_view_item_activate (GtkWidget      *widget,
       viewable = GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (widget),
 						    "preview"))->viewable;
 
-      gimp_container_view_item_activate (GIMP_CONTAINER_VIEW (data), viewable);
+      gimp_container_view_item_activated (GIMP_CONTAINER_VIEW (data), viewable);
     }
 
   return FALSE;

@@ -427,17 +427,19 @@ gimp_container_view_item_selected (GimpContainerView *view,
   g_return_if_fail (viewable != NULL);
   g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
 
-  if (! (view->container && view->context))
-    return;
+  if (view->container && view->context)
+    {
+      gimp_context_set_by_type (view->context,
+				view->container->children_type,
+				GIMP_OBJECT (viewable));
+    }
 
-  gimp_context_set_by_type (view->context,
-			    view->container->children_type,
-			    GIMP_OBJECT (viewable));
+  gimp_container_view_select_item (view, viewable);
 }
 
 void
-gimp_container_view_item_activate (GimpContainerView *view,
-				   GimpViewable      *viewable)
+gimp_container_view_item_activated (GimpContainerView *view,
+				    GimpViewable      *viewable)
 {
   g_return_if_fail (view != NULL);
   g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));

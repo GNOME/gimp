@@ -27,18 +27,19 @@
 #include "tools/gimpdrawtool.h"
 
 
-static void gimp_draw_tool_initialize (GimpDrawTool *);
-
 enum { /* signals */
 	DRAW,
 	LAST_SIGNAL
 };
 
+static void   gimp_draw_tool_class_init (GimpDrawToolClass *klass);
+static void   gimp_draw_tool_init       (GimpDrawTool      *draw_tool);
+
+static void   gimp_draw_tool_real_draw  (GimpDrawTool      *draw_tool);
+
+
 static guint gimp_draw_tool_signals[LAST_SIGNAL] = { 0 };
 
-static void standard_draw_func (GimpDrawTool *tool)
-{
-}
 
 
 GtkType
@@ -54,7 +55,7 @@ gimp_draw_tool_get_type (void)
         sizeof (GimpDrawTool),
         sizeof (GimpDrawToolClass),
         (GtkClassInitFunc) gimp_draw_tool_class_init,
-        (GtkObjectInitFunc) gimp_draw_tool_initialize,
+        (GtkObjectInitFunc) gimp_draw_tool_init,
         /* reserved_1 */ NULL,
         /* reserved_2 */ NULL,
         NULL /* (GtkClassInitFunc) gimp_tool_class_init, */
@@ -66,31 +67,7 @@ gimp_draw_tool_get_type (void)
   return tool_type;
 }
 
-GimpDrawTool *
-gimp_draw_tool_new (void)
-{
-  GimpDrawTool *tool;
-
-  tool = gtk_type_new (GIMP_TYPE_DRAW_TOOL);
-
-  return tool;
-}
-
-
 static void
-gimp_draw_tool_initialize (GimpDrawTool *tool)
-{
-  tool->draw_state   = INVISIBLE;
-  tool->gc           = NULL;
-  tool->paused_count = 0;
-  tool->line_width   = 0;
-  tool->line_style   = GDK_LINE_SOLID;
-  tool->cap_style    = GDK_CAP_NOT_LAST;
-  tool->join_style   = GDK_JOIN_MITER;
-}
-
-
-void
 gimp_draw_tool_class_init (GimpDrawToolClass *klass)
 {
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
@@ -108,13 +85,24 @@ gimp_draw_tool_class_init (GimpDrawToolClass *klass)
     		
   gtk_object_class_add_signals (object_class, gimp_draw_tool_signals, LAST_SIGNAL);
 
-  klass->draw   = standard_draw_func;
+  klass->draw   = gimp_draw_tool_real_draw;
 }
 
+static void
+gimp_draw_tool_init (GimpDrawTool *tool)
+{
+  tool->draw_state   = INVISIBLE;
+  tool->gc           = NULL;
+  tool->paused_count = 0;
+  tool->line_width   = 0;
+  tool->line_style   = GDK_LINE_SOLID;
+  tool->cap_style    = GDK_CAP_NOT_LAST;
+  tool->join_style   = GDK_JOIN_MITER;
+}
 
 void
-gimp_draw_tool_start (GimpDrawTool  *core,
-		 	 GdkWindow 	  *win)
+gimp_draw_tool_start (GimpDrawTool *core,
+		      GdkWindow    *win)
 {
   GdkColor fg, bg;
 
@@ -177,7 +165,6 @@ gimp_draw_tool_pause (GimpDrawTool *core)
   core->paused_count++;
 }
 
-
 /*FIXME: make this get called */
 void
 gimp_draw_tool_destroy (GimpDrawTool *core)
@@ -189,4 +176,7 @@ gimp_draw_tool_destroy (GimpDrawTool *core)
     }
 }
 
-
+static void
+gimp_draw_tool_real_draw (GimpDrawTool *draw_tool)
+{
+}
