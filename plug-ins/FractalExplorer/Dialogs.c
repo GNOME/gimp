@@ -1277,6 +1277,12 @@ make_color_map (void)
   gdouble  bluestretch;
   gdouble  pi = atan (1) * 4;
 
+  /*  get gradient samples if they don't exist -- fixes gradient color
+   *  mode for noninteractive use (bug #103470).
+   */
+  if (gradient_samples == NULL)
+    gradient_samples = gimp_gradients_sample_uniform (wvals.ncolors);
+
   redstretch   = wvals.redstretch * 127.5;
   greenstretch = wvals.greenstretch * 127.5;
   bluestretch  = wvals.bluestretch * 127.5;

@@ -1,5 +1,11 @@
 2003-04-06  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/FractalExplorer/Dialogs.c (make_color_map): get the
+	gradient_samples here if they are NULL. Fixes crash in
+	noninteractive mode (patch from Raphael Quinet, bug #103470).
+
+2003-04-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplist.[ch]: added gimp_list_uniquefy_name() utility
 	function.
 
