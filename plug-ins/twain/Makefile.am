@@ -21,16 +21,15 @@ EXTRA_DIST = \
 	tw_sess.c
 
 INCLUDES = \
-	-I$(top_srcdir)			\
-	$(GLIB_CFLAGS)
-
-AM_CPPFLAGS = \
-        -DLOCALEDIR=\""$(localedir)"\"
+	-I$(top_srcdir)	\
+	$(GLIB_CFLAGS)	\
+	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la	\
-	$(GLIB_LIBS)						\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
+	$(GLIB_LIBS)							\
 	$(RT_LIBS)							\
-	$(INTLLIBS)						\
+	$(INTLLIBS)							\
 	-luser32

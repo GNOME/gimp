@@ -1,5 +1,11 @@
 2004-01-03  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/twain/Makefile.am
+	* plug-ins/winsnap/Makefile.am: minor tweaks, to match changes that
+	were made in the other Makefiles long ago.
+
+2004-01-03  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: fix setting of RT_LIBS.
 
 2004-01-03  Manish Singh  <yosh@gimp.org>

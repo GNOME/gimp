@@ -19,19 +19,18 @@ EXTRA_DIST = \
 
 INCLUDES = \
 	-I$(top_srcdir)			\
-	-I$(top_srcdir)/intl		\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
 
-AM_CPPFLAGS = \
-        -DLOCALEDIR=\""$(localedir)"\"
-
 LDADD = \
-	winsnap-win32res.o					\
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la	\
+	winsnap-win32res.o						\
+	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(RT_LIBS)							\
-	$(GTK_LIBS)						\
+	$(GTK_LIBS)							\
 	$(INTLLIBS)
 
 winsnap-win32res.o: winsnap.rc select.cur small.ico winsnap.ico
