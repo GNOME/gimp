@@ -161,27 +161,26 @@ this one may not necessarily fit.
  not one catalog but many. For a full translation of the GIMP's UI,
  you will have to add translations for the following catalogs:
 
-	 po/gimp20.po                       --  the core
-	 po-libgimp/gimp20-libgimp.pot      --  the libgimp library
-	 po-plugins/gimp20-std-plugins.pot  --  most of the plug-ins
-	 po-script-fu/gimp20-script-fu.pot  --  the script-fu scripts
-         tips/gimp-tips20.pot               --  the startup tips
+   po/gimp20.po                       --  the core
+   po-libgimp/gimp20-libgimp.pot      --  the libgimp library
+   po-plugins/gimp20-std-plugins.pot  --  most of the plug-ins
+   po-script-fu/gimp20-script-fu.pot  --  the script-fu scripts
+   tips/gimp-tips20.pot               --  the startup tips
 
  If you are looking for the translations of gimp-perl, please note that
  gimp-perl has been moved into it's own CVS module called gimp-perl.
 
- When translating menu_paths, please do not translate the name of the
- item_factory (that is the one in brackets at the front), e.g.
- <Image>/Edit/Copy should _not_ be translated to <Bild>/Bearbeiten/Kopieren,
- but to <Image>/Bearbeiten/Kopieren. If you get this wrong, Gimp will
- warn you at startup about bad translations. So do always test your
- translations and watch the console for output.
+ When translating menu paths in Script-Fu, please do not translate the
+ name of the item factory (that is the one in brackets at the front),
+ e.g. <Image>/Script-Fu/Selection should _not_ be translated to
+ <Bild>/Skript-Fu/Kopieren, but to <Image>/Skript-Fu/Kopieren. If you
+ get this wrong, Gimp will warn you at startup about bad translations.
+ So do always test your translations and watch the console for output.
 
- The version of The GIMP you are holding in your hand uses
- GTK+-2.0. GTK+-2.0 requires that all strings are UTF-8
- encoded. Therefore to make internationalisation work, po files need
- to be UTF-8 encoded. Unfortunately most editors don't support UTF-8,
- so to edit your po file, you need to convert it to an encoding your
+ The version of The GIMP you are holding in your hand uses GTK+-2.0.
+ GTK+-2.0 requires that all strings are UTF-8 encoded. Therefore to make
+ internationalisation work, po files need to be UTF-8 encoded. If your
+ editor doesn't support UTF-8, you need to convert it to an encoding your
  editor can handle and convert it back to UTF-8 before commiting your
  changes back. The gnome-i18n module in CVS has some scripts that help
  with this task, but it can also easily done using iconv.
@@ -189,15 +188,14 @@ this one may not necessarily fit.
 7. Adding additional textdomains
 
  Third-party plug-ins (plug-ins that are not distributed with The
- GIMP) can't have their messages in the gimp-std-plugins
- textdomain. We have therefore provided a mechanism that allows
- plug-ins to install their own message catalogs and tell The GIMP to
- bind to that textdomain. This is necessary so that The GIMP can
- correctly translate the menupaths the plug-in registers. Basically
- the plug-in has to call gimp_plugin_domain_add() or
- gimp_domain_plugin_add_with_path() before it registers any
- functions. Have a look at the script-fu plug-in to see how it is done
- in detail.
+ GIMP) can't have their messages in the gimp-std-plugins textdomain. 
+ We have therefore provided a mechanism that allows plug-ins to install
+ their own message catalogs and tell The GIMP to bind to that
+ textdomain. This is necessary so that The GIMP can correctly translate
+ the menu paths the plug-in registers. Basically the plug-in has to call
+ gimp_plugin_domain_add() or gimp_domain_plugin_add_with_path() before
+ it registers any functions. Have a look at the script-fu plug-in to see
+ how this is done in detail.
 
 8. Tip of the Day messages
 
