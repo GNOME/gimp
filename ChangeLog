@@ -1,3 +1,22 @@
+2001-02-04  Nick Lamb  <njl195@zepler.org.uk>
+
+	* app/gimpdrawablepreview.c: add <stdlib.h> or <string.h> where needed
+	* app/gimpobject.c
+	* app/gimpui.c
+	* app/image_new.c
+	* app/layers_dialog.c
+	* app/paint_funcs.c
+	* app/palette.c
+	* app/palette_import.c
+	* app/palette_select.c
+	* app/tile_manager.c
+	* app/toolbox.c
+	* app/user_install.c
+	* app/tools/by_color_select.c
+	* app/tools/curves.c
+	* app/tools/measure.c
+	* app/tools/shear_tool.c
+
 2001-02-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

@@ -19,15 +19,16 @@
 
 #include "config.h"
 
-#include <gtk/gtk.h>
-
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
+
+#include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
