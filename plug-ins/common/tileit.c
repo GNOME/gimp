@@ -472,7 +472,7 @@ tileit_dialog (void)
 
   res_call.vtoggle = toggle;
 
-  button = gtk_button_new_with_label (_("Reset"));
+  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 

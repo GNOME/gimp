@@ -533,7 +533,7 @@ explorer_dialog (void)
   gtk_widget_show (button);
   gimp_help_set_help_data (button, _("Load a fractal from file"), NULL);
 
-  button = gtk_button_new_with_label (_("Reset"));
+  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (dialog_reset_callback),
@@ -542,7 +542,7 @@ explorer_dialog (void)
   gimp_help_set_help_data (button, _("Reset parameters to default values"),
 			   NULL);
 
-  button = gtk_button_new_with_label (_("Save"));
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   gtk_box_pack_start (GTK_BOX (hbbox), button, TRUE, TRUE, 0);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (create_file_selection),

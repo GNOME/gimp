@@ -12,6 +12,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimp/gimpui.h"
+
 #include "gimpressionist.h"
 #include "ppmtool.h"
 
@@ -126,7 +128,7 @@ GtkWidget* create_preview()
   gtk_widget_show(tmpw);
   gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Refresh the Preview window"), NULL);
 
-  resetpreviewbutton = tmpw = gtk_button_new_with_label( _("Reset"));
+  resetpreviewbutton = tmpw = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_signal_connect(GTK_OBJECT(tmpw), "clicked",
                      (GtkSignalFunc)updatepreviewprev, (void *)2);
   gtk_box_pack_start (GTK_BOX (box2), tmpw, TRUE, TRUE, 0);

@@ -332,7 +332,7 @@ sel2path_dialog (SELVALS *sels)
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
-			 _("Reset"), sel2path_reset_callback,
+			 GIMP_STOCK_RESET, sel2path_reset_callback,
 			 NULL, NULL, NULL, FALSE, FALSE,
 
 			 GTK_STOCK_OK, sel2path_ok_callback,

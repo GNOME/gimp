@@ -1167,10 +1167,12 @@ iwarp_dialog (void)
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
 
-			 _("_Reset"), iwarp_reset_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
+
+			 GIMP_STOCK_RESET, iwarp_reset_callback,
+			 NULL, NULL, NULL, FALSE, FALSE,
+
 			 GTK_STOCK_OK, iwarp_ok_callback,
 			 NULL, NULL, NULL, TRUE, FALSE,
 

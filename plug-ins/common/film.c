@@ -1488,7 +1488,7 @@ film_dialog (gint32 image_ID)
 
   row++;
 
-  button = gtk_button_new_with_label (_("Reset to Defaults"));
+  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 4, 0);
   gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);

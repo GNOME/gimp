@@ -1360,16 +1360,21 @@ bender_new_dialog (GimpDrawable *drawable)
 			       GTK_WIN_POS_MOUSE,
 			       FALSE, TRUE, FALSE,
 
-			       _("Reset"), bender_reset_callback,
-			       cd, NULL, NULL, FALSE, FALSE,
-			       _("Copy"), bender_copy_callback,
-			       cd, NULL, NULL, FALSE, FALSE,
-			       _("CopyInv"), bender_copy_inv_callback,
-			       cd, NULL, NULL, FALSE, FALSE,
-			       _("Swap"), bender_swap_callback,
-			       cd, NULL, NULL, FALSE, FALSE,
 			       GTK_STOCK_CANCEL, bender_cancel_callback,
 			       cd, NULL, NULL, FALSE, TRUE,
+
+			       GIMP_STOCK_RESET, bender_reset_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+
+			       _("Copy"), bender_copy_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+
+			       _("CopyInv"), bender_copy_inv_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+
+			       _("Swap"), bender_swap_callback,
+			       cd, NULL, NULL, FALSE, FALSE,
+
 			       GTK_STOCK_OK, bender_ok_callback,
 			       cd, NULL, NULL, TRUE, FALSE,
 

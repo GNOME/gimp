@@ -1366,12 +1366,15 @@ p_smp_dialog (void)
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 
-		     _("Get Sample Colors"), p_smp_get_colors_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
-		     _("Reset"), p_smp_reset_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
 		     GTK_STOCK_CLOSE, gtk_widget_destroy,
 		     NULL, 1, NULL, FALSE, TRUE,
+
+		     GIMP_STOCK_RESET, p_smp_reset_callback,
+		     NULL, NULL, NULL, FALSE, FALSE,
+
+		     _("Get Sample Colors"), p_smp_get_colors_callback,
+		     NULL, NULL, NULL, TRUE, FALSE,
+
 		     _("Apply"), p_smp_apply_callback,
 		     NULL, NULL, NULL, FALSE, FALSE,
 

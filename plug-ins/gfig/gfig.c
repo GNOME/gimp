@@ -3555,7 +3555,7 @@ add_objects_list (void)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("New"));
+  button = gtk_button_new_from_stock (GTK_STOCK_NEW);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (new_button_callback),
 		      "New gfig obj");
@@ -3565,7 +3565,7 @@ add_objects_list (void)
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label (_("Delete"));
+  button = gtk_button_new_from_stock (GTK_STOCK_DELETE);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      GTK_SIGNAL_FUNC (gfig_delete_gfig_callback),
 		      (gpointer) list);

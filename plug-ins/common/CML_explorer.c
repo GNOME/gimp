@@ -1223,7 +1223,7 @@ CML_explorer_dialog (void)
   gtk_container_add (GTK_CONTAINER (pframe), preview);
   gtk_widget_show (preview);
 
-  button = gtk_button_new_with_label (_("Save"));
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

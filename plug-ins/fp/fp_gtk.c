@@ -920,7 +920,7 @@ fp_dialog (void)
 			 GTK_STOCK_CANCEL, gtk_widget_destroy,
 			 NULL, 1, NULL, FALSE, TRUE,
 
-			 _("Reset"), resetFilterPacks,
+			 GIMP_STOCK_RESET, resetFilterPacks,
 			 NULL, NULL, NULL, FALSE, FALSE,
 
 			 GTK_STOCK_OK, fp_ok_callback,
