@@ -57,7 +57,7 @@
 /*  local function prototypes  */
 
 static void   gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass);
-static void   gimp_color_balance_tool_init       (GimpColorBalanceTool      *bc_tool);
+static void   gimp_color_balance_tool_init       (GimpTool                  *tool);
 
 static void   gimp_color_balance_tool_initialize (GimpTool       *tool,
 						  GimpDisplay    *gdisp);
@@ -158,19 +158,12 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 }
 
 static void
-gimp_color_balance_tool_init (GimpColorBalanceTool *bc_tool)
+gimp_color_balance_tool_init (GimpTool *tool)
 {
-  GIMP_TOOL(bc_tool)->control = gimp_tool_control_new  (TRUE,                      /* scroll_lock */
-                                                        TRUE,                       /* auto_snap_to */
-                                                        FALSE,                       /* preserve */
-                                                        FALSE,                      /* handle_empty_image */
-                                                        GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                                        GIMP_MOUSE_CURSOR,          /* cursor */
-                                                        GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
-                                                        GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                                        GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                                        GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                                        GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_HINT);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_NONE);
 }
 
 static void

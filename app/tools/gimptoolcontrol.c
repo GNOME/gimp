@@ -67,45 +67,22 @@ gimp_tool_control_init (GimpToolControl *control)
   control->paused_count           = 0;
 
   control->toggled                = FALSE;
+
+  control->scroll_lock            = FALSE;                  /*  Allow scrolling                  */
+  control->auto_snap_to           = TRUE;                   /*  Snap to guides                   */
+  control->preserve               = TRUE;                   /*  Preserve across drawable change  */
+  control->handle_empty_image     = FALSE;                  /*  Require active drawable          */
+  control->motion_mode            = GIMP_MOTION_MODE_HINT;  /*  Use MOTION_HINT compression      */
+
+  control->cursor                 = GIMP_MOUSE_CURSOR;
+  control->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
+  control->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
+
+  control->toggle_cursor          = GIMP_MOUSE_CURSOR;
+  control->toggle_tool_cursor     = GIMP_TOOL_CURSOR_NONE;
+  control->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
 }
 
-
-GimpToolControl *
-gimp_tool_control_new  (gboolean           scroll_lock,
-	                gboolean           auto_snap_to,
-	                gboolean           preserve,
-	                gboolean           handle_empty_image,
-	                GimpMotionMode     motion_mode,
-			GdkCursorType      cursor,
-			GimpToolCursorType tool_cursor,
-			GimpCursorModifier cursor_modifier,
-		        GdkCursorType      toggle_cursor,
-			GimpToolCursorType toggle_tool_cursor,
-			GimpCursorModifier toggle_cursor_modifier)
-{
-  GimpToolControl *control;
-
-  control = GIMP_TOOL_CONTROL (g_object_new (GIMP_TYPE_TOOL_CONTROL, NULL));
-
-
-  control->scroll_lock            = scroll_lock;
-  control->auto_snap_to           = auto_snap_to;
-  control->preserve               = preserve;
-  control->handle_empty_image     = handle_empty_image;
-  control->motion_mode            = motion_mode;
-  
-  control->cursor                 = cursor;
-  control->tool_cursor            = tool_cursor;
-  control->cursor_modifier        = cursor_modifier;
-  control->toggle_cursor          = toggle_cursor;
-  control->toggle_tool_cursor     = toggle_tool_cursor;
-  control->toggle_cursor_modifier = toggle_cursor_modifier;
-  
-
-  return control;
-}
-			
-	       
 void
 gimp_tool_control_pause            (GimpToolControl   *control)
 {
@@ -164,6 +141,33 @@ gimp_tool_control_set_toggle       (GimpToolControl   *control,
   g_return_if_fail(GIMP_IS_TOOL_CONTROL(control));
 
   control->toggled = toggled; 
+}
+
+void
+gimp_tool_control_set_handles_empty_image (GimpToolControl   *control,
+                                           gboolean           handle_empty) 
+{
+  g_return_if_fail(GIMP_IS_TOOL_CONTROL(control));
+
+  control->handle_empty_image = handle_empty; 
+}
+
+void
+gimp_tool_control_set_snap_to      (GimpToolControl   *control,
+                                    gboolean           snap_to) 
+{
+  g_return_if_fail(GIMP_IS_TOOL_CONTROL(control));
+
+  control->auto_snap_to = snap_to; 
+}
+
+void
+gimp_tool_control_set_motion_mode  (GimpToolControl   *control,
+                                    GimpMotionMode     motion_mode)
+{
+  g_return_if_fail(GIMP_IS_TOOL_CONTROL(control));
+
+  control->motion_mode = motion_mode;
 }
 
 

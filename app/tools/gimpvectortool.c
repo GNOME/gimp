@@ -181,17 +181,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
 
   tool = GIMP_TOOL (vector_tool);
 
-  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          TRUE,                       /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   
   vector_tool->vectors = NULL;
   vector_tool->active_anchors = NULL;

@@ -358,17 +358,8 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
   bezier_select->num_points = 0;
   bezier_select->mask       = NULL;
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          FALSE,                      /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_BEZIER_SELECT_TOOL_CURSOR, /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_preserve(tool->control, FALSE);
+  gimp_tool_control_set_tool_cursor(tool->control, GIMP_BEZIER_SELECT_TOOL_CURSOR);
 
   curCore = draw_tool;
   curSel  = bezier_select;

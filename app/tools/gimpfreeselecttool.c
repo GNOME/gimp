@@ -162,17 +162,8 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
   tool        = GIMP_TOOL (free_select);
   select_tool = GIMP_SELECTION_TOOL (free_select);
 
-  tool->control = gimp_tool_control_new(TRUE,
-				        TRUE,
-				        TRUE,
-				        FALSE,
-				        FALSE,
-				        GIMP_MOUSE_CURSOR,
-				        GIMP_FREE_SELECT_TOOL_CURSOR,
-				        GIMP_CURSOR_MODIFIER_NONE,
-				        GIMP_MOUSE_CURSOR,
-				        GIMP_TOOL_CURSOR_NONE,
-				        GIMP_CURSOR_MODIFIER_NONE);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_FREE_SELECT_TOOL_CURSOR);
 
 
   free_select->points     = NULL;

@@ -25,6 +25,8 @@
 #include "libgimpproxy/gimpproxytypes.h"
 #include "gimptooltypes.h"
 
+/* this is ugly */
+
 /*#include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
 
@@ -133,34 +135,10 @@ gimp_tool_init (GimpTool *tool)
 {
   tool->ID                     = global_tool_ID++;
 
-  tool->control                = NULL;
-
-/* ToolControl stuff MUST be handled by child */
-#if 0
-  tool->state                  = INACTIVE;
-  tool->paused_count           = 0;
-#endif
+  tool->control                = GIMP_TOOL_CONTROL (g_object_new (GIMP_TYPE_TOOL_CONTROL, NULL)); 
 
   tool->gdisp                  = NULL;
   tool->drawable               = NULL;
-
-#if 0
-  tool->scroll_lock            = FALSE;  /*  Allow scrolling                  */
-  tool->auto_snap_to           = TRUE;   /*  Snap to guides                   */
-  tool->preserve               = TRUE;   /*  Preserve across drawable change  */
-  tool->handle_empty_image     = FALSE;  /*  Require active drawable          */
-  tool->perfectmouse           = FALSE;  /*  Use MOTION_HINT compression      */
-
-  tool->cursor                 = GIMP_MOUSE_CURSOR;
-  tool->tool_cursor            = GIMP_TOOL_CURSOR_NONE;
-  tool->cursor_modifier        = GIMP_CURSOR_MODIFIER_NONE;
-
-  tool->toggle_cursor          = GIMP_MOUSE_CURSOR;
-  tool->toggle_tool_cursor     = GIMP_TOOL_CURSOR_NONE;
-  tool->toggle_cursor_modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  tool->toggled                = FALSE;
-#endif
 }
 
 void

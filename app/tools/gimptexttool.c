@@ -202,17 +202,9 @@ gimp_text_tool_init (GimpTextTool *text_tool)
   text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
                                                     gimprc.monitor_yres);
 
-  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          TRUE,                       /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                          GDK_FLEUR,                  /* cursor */
-                                          GIMP_TEXT_TOOL_CURSOR,      /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_cursor      (tool->control, GDK_FLEUR);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TEXT_TOOL_CURSOR);
 }
 
 static void

@@ -116,6 +116,7 @@ typedef struct _GimpItem            GimpItem;
 
 typedef struct _GimpBuffer          GimpBuffer;
 
+typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
 typedef struct _GimpPaintInfo       GimpPaintInfo;
 
 typedef struct _GimpImagefile       GimpImagefile;

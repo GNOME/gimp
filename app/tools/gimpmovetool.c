@@ -187,17 +187,9 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   move_tool->guide = NULL;
   move_tool->disp  = NULL;
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
-                                          FALSE,                      /* auto_snap_to */
-                                          TRUE,                       /* preserve */
-                                          TRUE,                       /* handle_empty_image */
-                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_MOVE_TOOL_CURSOR,      /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_snap_to             (tool->control, FALSE);
+  gimp_tool_control_set_handles_empty_image (tool->control, TRUE);
+  gimp_tool_control_set_tool_cursor         (tool->control, GIMP_MOVE_TOOL_CURSOR);
 
 }
 

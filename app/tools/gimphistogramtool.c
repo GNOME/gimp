@@ -185,17 +185,8 @@ gimp_histogram_tool_init (GimpHistogramTool *bc_tool)
 
   tool = GIMP_TOOL (bc_tool);
 
-  tool->control = gimp_tool_control_new  (TRUE, /* why? */            /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          FALSE,                      /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);  /* why? */
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
 }
 
 static void

@@ -151,17 +151,9 @@ gimp_rotate_tool_init (GimpRotateTool *rotate_tool)
 
   tool = GIMP_TOOL (rotate_tool);
 
-  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          FALSE,                      /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_ROTATE_TOOL_CURSOR,    /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_ROTATE_TOOL_CURSOR);
 }
 
 static TileManager *

@@ -169,17 +169,9 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
   tool        = GIMP_TOOL (fuzzy_select);
   select_tool = GIMP_SELECTION_TOOL (fuzzy_select);
 
-  tool->control = gimp_tool_control_new  (TRUE,                       /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          TRUE,                       /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_COMPRESS,  /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_FUZZY_SELECT_TOOL_CURSOR,      /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_scroll_lock (tool->control, TRUE);
+  gimp_tool_control_set_motion_mode (tool->control, GIMP_MOTION_MODE_COMPRESS);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_FUZZY_SELECT_TOOL_CURSOR);
 
 
   fuzzy_select->fuzzy_mask      = NULL;

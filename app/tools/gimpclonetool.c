@@ -159,18 +159,8 @@ gimp_clone_tool_init (GimpCloneTool *clone)
   tool       = GIMP_TOOL (clone);
   paint_tool = GIMP_PAINT_TOOL (clone);
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          TRUE,                       /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_EXACT,     /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_CLONE_TOOL_CURSOR,     /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
-
+  gimp_tool_control_set_motion_mode(tool->control, GIMP_MOTION_MODE_EXACT);
+  gimp_tool_control_set_tool_cursor(tool->control, GIMP_CLONE_TOOL_CURSOR);
 
   clone_core->init_callback      = gimp_clone_init_callback;
   clone_core->finish_callback    = gimp_clone_finish_callback;

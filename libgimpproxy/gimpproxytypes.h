@@ -53,6 +53,7 @@ typedef enum  /*< proxy-resume >*/ /*< skip >*/
  */
 
 typedef struct _GimpObject          GimpObject; /*< proxy-include >*/
+typedef struct _GimpToolInfo        GimpToolInfo; /*< proxy-include >*/
 typedef struct _GimpDrawable        GimpDrawable; /*< proxy-resume >*/
 
 typedef struct _GimpChannel         GimpChannel;

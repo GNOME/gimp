@@ -40,6 +40,9 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+/* EEEEEEEK! */
+typedef struct _GimpToolInfo GimpToolInfo;
+
 #include "libgimptool/gimptoolmodule.h"
 
 

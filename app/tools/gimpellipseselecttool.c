@@ -132,17 +132,8 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
   tool        = GIMP_TOOL (ellipse_select);
   select_tool = GIMP_SELECTION_TOOL (ellipse_select);
 
-  tool->control = gimp_tool_control_new  (FALSE,                      /* scroll_lock */
-                                          TRUE,                       /* auto_snap_to */
-                                          FALSE,                      /* preserve */
-                                          FALSE,                      /* handle_empty_image */
-                                          GIMP_MOTION_MODE_HINT,      /* motion_mode */
-                                          GIMP_MOUSE_CURSOR,          /* cursor */
-                                          GIMP_ELLIPSE_SELECT_TOOL_CURSOR,      /* tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE,  /* cursor_modifier */
-                                          GIMP_MOUSE_CURSOR,          /* toggle_cursor */
-                                          GIMP_TOOL_CURSOR_NONE,      /* toggle_tool_cursor */
-                                          GIMP_CURSOR_MODIFIER_NONE   /* toggle_cursor_modifier */);
+  gimp_tool_control_set_preserve    (tool->control, FALSE);
+  gimp_tool_control_set_tool_cursor (tool->control, GIMP_ELLIPSE_SELECT_TOOL_CURSOR);
 }
 
 static void
