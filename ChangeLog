@@ -1,3 +1,9 @@
+2000-07-19  Michael Natterer  <mitch@gimp.org>
+
+	* AUTHORS
+	* gimp.1.in
+	* app/about_dialog.c: removed a doubly added author.
+
 Tue Jul 18 23:34:34 BST 2000  Austin Donnelly  <austin@gimp.org>
 
 	* plugs-ins/common/gif.c: The gif save plugin normally asks the

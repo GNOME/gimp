@@ -168,7 +168,6 @@ static gchar *scroll_text[] =
   "Josh MacDonald",
   "Ed Mackey",
   "Vidar Madsen",
-  "Marcelo Malheiros",
   "Ian Main",
   "Kjartan Maraas",
   "Kelly Martin",
@@ -193,7 +192,7 @@ static gchar *scroll_text[] =
   "Erik Nygren",
   "Miles O'Neal",
   "Thom van Os",
-  "Gary Osgood",
+  "Garry R. Osgood",
   "Alan Paeth",
   "Jay Painter",
   "Sergey Panov",
@@ -371,7 +370,8 @@ about_dialog_create (void)
       max_width = 0;
       for (i = 0; i < nscroll_texts; i++)
 	{
-	  scroll_text_widths[i] = gdk_string_width (aboutframe->style->font, scroll_text[i]);
+	  scroll_text_widths[i] = gdk_string_width (aboutframe->style->font,
+						    scroll_text[i]);
 	  max_width = MAX (max_width, scroll_text_widths[i]);
 	}
 
@@ -389,7 +389,8 @@ about_dialog_create (void)
       gtk_widget_show (label);
 
       gtk_widget_realize (scroll_area);
-      gdk_window_set_background (scroll_area->window, &scroll_area->style->white);
+      gdk_window_set_background (scroll_area->window,
+				 &scroll_area->style->white);
     }
 
   if (!GTK_WIDGET_VISIBLE (about_dialog))
@@ -401,25 +402,31 @@ about_dialog_create (void)
       scroll_state = 0;
       frame = 0;
       offset = 0;
+      cur_scroll_text = 0;
 
-      for (i = 0; i < nscroll_texts; i++) 
+      if (!double_speed)
 	{
-	  shuffle_array[i] = i;
-	}
-
-      for (i = 0; i < nscroll_texts; i++) 
-	{
-	  int j;
-	  j = rand() % nscroll_texts;
-	  if (i != j) 
+	  for (i = 0; i < nscroll_texts; i++) 
 	    {
-	      int t;
-	      t = shuffle_array[j];
-	      shuffle_array[j] = shuffle_array[i];
-	      shuffle_array[i] = t;
+	      shuffle_array[i] = i;
 	    }
+
+	  for (i = 0; i < nscroll_texts; i++) 
+	    {
+	      gint j;
+
+	      j = rand() % nscroll_texts;
+	      if (i != j) 
+		{
+		  gint t;
+
+		  t = shuffle_array[j];
+		  shuffle_array[j] = shuffle_array[i];
+		  shuffle_array[i] = t;
+		}
+	    }
+	  cur_scroll_text = rand() % nscroll_texts;
 	}
-      cur_scroll_text = rand() % nscroll_texts;
     }
   else 
     {
@@ -597,6 +604,7 @@ about_dialog_tool_drop (GtkWidget *widget,
   GdkBitmap *mask   = NULL;
   gint width  = 0;
   gint height = 0;
+  gint i;
 
   if (do_animation)
     return;
@@ -648,6 +656,23 @@ about_dialog_tool_drop (GtkWidget *widget,
 
   gdk_pixmap_unref (pixmap);
   gdk_bitmap_unref (mask);
+
+  scroll_text[0] = "We are The GIMP.";
+  scroll_text[1] = "Prepare to be assimilated.";
+  scroll_text[2] = "Resistance is futile.";
+  nscroll_texts = 3;
+
+  for (i = 0; i < nscroll_texts; i++)
+    {
+      shuffle_array[i] = i;
+      scroll_text_widths[i] = gdk_string_width (scroll_area->style->font,
+						scroll_text[i]);
+    }
+
+  scroll_state = 0;
+  cur_scroll_index = 0;
+  cur_scroll_text = 0;
+  offset = 0;
 
   double_speed = TRUE;
 }
