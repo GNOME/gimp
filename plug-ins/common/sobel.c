@@ -312,10 +312,10 @@ sobel_prepare_row (GimpPixelRgn *pixel_rgn,
 {
   gint b;
 
-  if (y == 0)
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y + 1), w);
-  else if (y == pixel_rgn->h)
-    gimp_pixel_rgn_get_row (pixel_rgn, data, x, (y - 1), w);
+  if (y < 0)
+    gimp_pixel_rgn_get_row (pixel_rgn, data, x, 0, w);
+  else if (y >= pixel_rgn->h)
+    gimp_pixel_rgn_get_row (pixel_rgn, data, x, pixel_rgn->h - 1, w);
   else
     gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
 

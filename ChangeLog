@@ -1,4 +1,11 @@
+2001-03-10  Daniel Egger  <egger@suse.de>
+
+	* plug-ins/common/sobel.c: Applied patch from
+	Austin Donnelly to fix rendering of the topmost
+	scanline.
+
 2001-03-10  Garry R. Osgood <grosgood@rcn.com>
+	
 	* app/Makefile.am
 	Inclusion of David's MMX code into Makefile now 
 	depends on prior definition of HAVE_ASM_MMX.
