@@ -1163,7 +1163,7 @@ msgstr "Suuremmilla arvoilla objekti heijastaa enemmän valoa (valoisampi)"
 
 #: plug-ins/Lighting/lighting_ui.c:829 plug-ins/MapObject/mapobject_ui.c:962
 msgid "Specular:"
-msgstr ""
+msgstr "Heijastava:"
 
 #: plug-ins/Lighting/lighting_ui.c:842 plug-ins/MapObject/mapobject_ui.c:975
 msgid "Controls how intense the highlights will be"
@@ -1176,7 +1176,7 @@ msgstr "Korostus:"
 
 #: plug-ins/Lighting/lighting_ui.c:867 plug-ins/MapObject/mapobject_ui.c:1000
 msgid "Higher values makes the highlights more focused"
-msgstr ""
+msgstr "Suuremmat arvot tekevät korostuksista terävämpiä"
 
 #: plug-ins/Lighting/lighting_ui.c:895
 msgid "Bumpmap Settings"
@@ -1296,7 +1296,7 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr ""
+msgstr "Objektin ulkopuolisesti kuvasta läpinäkyvä"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
@@ -1308,33 +1308,33 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1043
 msgid "Object X position in XYZ space"
-msgstr ""
+msgstr "Objektin X paikka XYZ avaruudessa"
 
 #: plug-ins/MapObject/mapobject_ui.c:1054
 msgid "Object Y position in XYZ space"
-msgstr ""
+msgstr "Objektin Y paikka XYZ avaruudessa"
 
 #: plug-ins/MapObject/mapobject_ui.c:1065
 msgid "Object Z position in XYZ space"
-msgstr ""
+msgstr "Objektin Z paikka XYZ avaruudessa"
 
 #. Rotation
 #: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2814
 #: plug-ins/gdyntext/gdyntext_ui.c:500
 msgid "Rotation"
-msgstr ""
+msgstr "Pyörittää"
 
 #: plug-ins/MapObject/mapobject_ui.c:1087
 msgid "Rotation angle about X axis"
-msgstr ""
+msgstr "Pyöritys kulma X akselin ympäri"
 
 #: plug-ins/MapObject/mapobject_ui.c:1096
 msgid "Rotation angle about Y axis"
-msgstr ""
+msgstr "Pyöritys kulma Y akselin ympäri"
 
 #: plug-ins/MapObject/mapobject_ui.c:1105
 msgid "Rotation angle about Z axis"
-msgstr ""
+msgstr "Pyöritys kulma Z akselin ympäri"
 
 #: plug-ins/MapObject/mapobject_ui.c:1129
 msgid "Front:"
@@ -1402,11 +1402,11 @@ msgstr "Koko"
 #: plug-ins/gfig/gfig.c:3185 plug-ins/gflare/gflare.c:2909
 #: plug-ins/imagemap/imap_circle.c:273
 msgid "Radius:"
-msgstr ""
+msgstr "Säde:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1276
 msgid "Cylinder radius"
-msgstr ""
+msgstr "Sylinterin säde"
 
 #: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:804
 msgid "Length:"
@@ -1420,7 +1420,7 @@ msgstr "Sylinterin pituus"
 #: plug-ins/common/ripple.c:634 plug-ins/gimpressionist/orientation.c:52
 #: plug-ins/gimpressionist/orientation.c:57
 msgid "Orientation"
-msgstr ""
+msgstr "Asento"
 
 #: plug-ins/MapObject/mapobject_ui.c:1377
 msgid "Map to Object"
@@ -1428,11 +1428,11 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1462
 msgid "Show Preview Wireframe"
-msgstr ""
+msgstr "Näytä esikatseslu rautalankamallissa"
 
 #: plug-ins/MapObject/mapobject_ui.c:1470
 msgid "Show/hide preview wireframe"
-msgstr ""
+msgstr "Näytä/piilosta esikatselu rautalankamallissa"
 
 #. memory mapped file data
 #. must check file size
@@ -1696,71 +1696,71 @@ msgstr "Käytä käänteistä arvoa"
 
 #: plug-ins/common/CML_explorer.c:203
 msgid "With random power (0,10)"
-msgstr ""
+msgstr "Satunnais potenssiin (0,10)"
 
 #: plug-ins/common/CML_explorer.c:204
 msgid "With random power (0,1)"
-msgstr ""
+msgstr "Satunnais potenssiin (0,1)"
 
 #: plug-ins/common/CML_explorer.c:205
 msgid "With gradient power (0,1)"
-msgstr ""
+msgstr "Gradientti potenssiin (0,1)"
 
 #: plug-ins/common/CML_explorer.c:206
 msgid "Multiply rand. value (0,1)"
-msgstr ""
+msgstr "Kerro satunnais arvolla (0,1)"
 
 #: plug-ins/common/CML_explorer.c:207
 msgid "Multiply rand. value (0,2)"
-msgstr ""
+msgstr "Kerro satunnais arvolla (0,2)"
 
 #: plug-ins/common/CML_explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr ""
+msgstr "Kerro gradientti (0,1)"
 
 #: plug-ins/common/CML_explorer.c:209
 msgid "With p and random (0,1)"
-msgstr ""
+msgstr "P:llä ja satunnaisella (0,1)"
 
 #: plug-ins/common/CML_explorer.c:222
 msgid "All black"
-msgstr ""
+msgstr "Kaikki mustaa"
 
 #: plug-ins/common/CML_explorer.c:223
 msgid "All gray"
-msgstr ""
+msgstr "Kaikki harmaata"
 
 #: plug-ins/common/CML_explorer.c:224
 msgid "All white"
-msgstr ""
+msgstr "Kaikki valkoista"
 
 #: plug-ins/common/CML_explorer.c:225
 msgid "The first row of the image"
-msgstr ""
+msgstr "Ensimmäinen kuvan rivi"
 
 #: plug-ins/common/CML_explorer.c:226
 msgid "Continuous gradient"
-msgstr ""
+msgstr "Jatkuva gradientti"
 
 #: plug-ins/common/CML_explorer.c:227
 msgid "Continuous grad. w/o gap"
-msgstr ""
+msgstr "Jatkuva gradientti ilman aukkoja"
 
 #: plug-ins/common/CML_explorer.c:228
 msgid "Random, ch. independent"
-msgstr ""
+msgstr "Satunnainen, kanava riippumaton"
 
 #: plug-ins/common/CML_explorer.c:229
 msgid "Random shared"
-msgstr ""
+msgstr "Satunnainen jaettu"
 
 #: plug-ins/common/CML_explorer.c:230
 msgid "Randoms from seed"
-msgstr ""
+msgstr "Satunnaiset luvut siemenestä"
 
 #: plug-ins/common/CML_explorer.c:231
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "Satunnaiset luvut siemenestä (jaettu)"
 
 #: plug-ins/common/CML_explorer.c:299 plug-ins/common/CML_explorer.c:1280
 #: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
@@ -1768,14 +1768,14 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:274 plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
 msgid "Hue"
-msgstr ""
+msgstr "Sävy"
 
 #: plug-ins/common/CML_explorer.c:300 plug-ins/common/CML_explorer.c:1285
 #: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
 #: plug-ins/fp/fp_gtk.c:285 plug-ins/fp/fp_gtk.c:417 plug-ins/fp/fp_gtk.c:481
 #: plug-ins/gap/gap_mov_dialog.c:275 plug-ins/rcm/rcm_dialog.c:509
 msgid "Saturation"
-msgstr ""
+msgstr "Saturaatio"
 
 #: plug-ins/common/CML_explorer.c:301 plug-ins/common/CML_explorer.c:1290
 #: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:289
@@ -1783,7 +1783,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
-msgstr ""
+msgstr "Arvo"
 
 #: plug-ins/common/CML_explorer.c:473
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
@@ -1791,7 +1791,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:765
 msgid "CML_explorer: evoluting..."
-msgstr ""
+msgstr "CML_explorer: evoluutiodaan..."
 
 #: plug-ins/common/CML_explorer.c:1169
 msgid "Coupled-Map-Lattice Explorer"
@@ -1799,27 +1799,27 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1238
 msgid "Random Seed"
-msgstr ""
+msgstr "Satunnais siemen"
 
 #: plug-ins/common/CML_explorer.c:1248
 msgid "Fix Seed"
-msgstr ""
+msgstr "Korjaa siemen"
 
 #: plug-ins/common/CML_explorer.c:1258
 msgid "New Seed"
-msgstr ""
+msgstr "Uusi siemen"
 
 #: plug-ins/common/CML_explorer.c:1277
 msgid "Hue Settings"
-msgstr ""
+msgstr "Sävy asetukset"
 
 #: plug-ins/common/CML_explorer.c:1282
 msgid "Saturation Settings"
-msgstr ""
+msgstr "Saturaatio asetukset"
 
 #: plug-ins/common/CML_explorer.c:1287
 msgid "Value (Gray Image) Settings"
-msgstr ""
+msgstr "Arvo (harmaasävy kuva) asetukset"
 
 #: plug-ins/common/CML_explorer.c:1292
 msgid "Advanced Settings"
