@@ -15,6 +15,30 @@
 #
 # include "imagerc"
 
+# Do override some GTK stock icons however.
+
+style "gimp-dialog-icons"
+{
+  stock["gtk-dialog-error"] =
+    {
+      { "images/gimp-dialog-error.png", *, *, "gtk-dialog" }
+    }
+  stock["gtk-dialog-info"] =
+    {
+      { "images/gimp-dialog-info.png", *, *, "gtk-dialog" }
+    }
+  stock["gtk-dialog-question"] =
+    {
+      { "images/gimp-dialog-question.png", *, *, "gtk-dialog" }
+    }
+  stock["gtk-dialog-warning"] =
+    {
+      { "images/gimp-dialog-warning.png", *, *, "gtk-dialog" }
+    }
+}
+
+class "GtkImage" style "gimp-dialog-icons"
+
 
 style "gimp-normal-font-style"
 {

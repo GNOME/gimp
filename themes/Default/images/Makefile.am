@@ -4,6 +4,13 @@ SUBDIRS = tools
 
 themedatadir = $(gimpdatadir)/themes/Default/images
 
+DIALOG_IMAGES = @STRIP_BEGIN@ \
+	gimp-dialog-error.png			\
+	gimp-dialog-info.png			\
+	gimp-dialog-question.png		\
+	gimp-dialog-warning.png			\
+@STRIP_END@
+
 STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-button-anchor.png			\
 	stock-button-delete.png			\
@@ -41,6 +48,10 @@ WILBER_IMAGES = @STRIP_BEGIN@ \
 	stock-wilber-64x64.png			\
 @STRIP_END@
 
-themedata_DATA = $(STOCK_IMAGES)
+themedata_DATA = $(DIALOG_IMAGES)
 
-EXTRA_DIST = $(themedata_DATA) $(WILBER_IMAGES)
+EXTRA_DIST = \
+	$(themedata_DATA)	\
+	$(STOCK_IMAGES)		\
+	$(WILBER_IMAGES)	\
+	gimp-dialog-icons.xcf.gz

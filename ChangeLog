@@ -1,3 +1,35 @@
+2002-01-09  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/gimp-dialog-error.png
+	* themes/Default/images/gimp-dialog-info.png
+	* themes/Default/images/gimp-dialog-question.png
+	* themes/Default/images/gimp-dialog-warning.png: new stock icons to
+	override the standard gtk-dialog icons.
+
+	* themes/Default/images/gimp-dialog-icons.xcf.gz: XCF version of the
+	new dialog icons.
+
+	* themes/Default/gtkrc: override the standard gtk-dialog icons with
+	our versions.
+
+	* libgimpwidgets/gimpquerybox.[ch]: allow to pass a stock_id instead
+	of the boolean eek.
+
+	* app/widgets/gimpwidgets-utils.c: added an icon to the gimp_message
+	dialog. We need to add an API to declare the severity of the message
+	or allow to pass a stock_id. For now all messages habe the Info icon.
+
+	* app/gui/file-commands.c
+	* app/gui/file-new-dialog.c
+	* app/gui/file-save-dialog.c
+	* app/gui/gui.c
+	* app/gui/image-commands.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c: pass a suitable(?) stock_id to 
+	gimp_query_boolean_box().
+
 2002-01-08  Michael Natterer  <mitch@gimp-org>
 
 	* plug-ins/common/tga.c

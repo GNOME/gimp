@@ -36,8 +36,6 @@
 
 #include "libgimp/libgimp-intl.h"
 
-#include "pixmaps/eek.xpm"
-
 
 /*
  *  String, integer, double and size query boxes
@@ -415,8 +413,8 @@ gimp_query_size_box (const gchar           *title,
  * @title:        The query box dialog's title.
  * @help_func:    The help function to show this dialog's help page.
  * @help_data:    A string pointing to this dialog's html help page.
- * @eek:          #TRUE if you want the "Eek" wilber to appear left of
- *                the dialog's message.
+ * @stock_id:     A stock_id to specify an icon to appear on the left
+ *                on the dialog's message.
  * @message:      A string which will be shown in the query box.
  * @true_button:  The string to be shown in the dialog's left button.
  * @false_button: The string to be shown in the dialog's right button.
@@ -433,7 +431,7 @@ GtkWidget *
 gimp_query_boolean_box (const gchar              *title,
 			GimpHelpFunc              help_func,
 			const gchar              *help_data,
-			gboolean                  eek,
+			const gchar              *stock_id,
 			const gchar              *message,
 			const gchar              *true_button,
 			const gchar              *false_button,
@@ -444,13 +442,16 @@ gimp_query_boolean_box (const gchar              *title,
 {
   QueryBox  *query_box;
   GtkWidget *hbox;
-  GtkWidget *pixmap;
+  GtkWidget *image = NULL;
   GtkWidget *label;
+
+  if (stock_id)
+    image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
 
   query_box = create_query_box (title, help_func, help_data,
 				G_CALLBACK (boolean_query_box_true_callback),
 				G_CALLBACK (boolean_query_box_false_callback),
-				eek ? NULL : message,
+				image ? NULL : message,
 				true_button, false_button,
 				object, signal,
 				G_CALLBACK (callback), data);
@@ -458,7 +459,7 @@ gimp_query_boolean_box (const gchar              *title,
   if (! query_box)
     return NULL;
 
-  if (! eek)
+  if (! image)
     return query_box->qbox;
 
   hbox = gtk_hbox_new (FALSE, 10);
@@ -466,9 +467,8 @@ gimp_query_boolean_box (const gchar              *title,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (query_box->qbox)->vbox), hbox);
   gtk_widget_show (hbox);
 
-  pixmap = gimp_pixmap_new (eek_xpm);
-  gtk_box_pack_start (GTK_BOX (hbox), pixmap, FALSE, FALSE, 0);
-  gtk_widget_show (pixmap);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
 
   label = gtk_label_new (message);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);

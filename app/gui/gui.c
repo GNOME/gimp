@@ -378,7 +378,7 @@ gui_really_quit_dialog (GCallback quit_func)
   dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
 				   gimp_standard_help_func,
 				   "dialogs/really_quit.html",
-				   TRUE,
+				   GTK_STOCK_DIALOG_WARNING,
 				   _("Some files are unsaved.\n"
 				     "\nReally quit The GIMP?"),
 				   GTK_STOCK_QUIT, GTK_STOCK_CANCEL,

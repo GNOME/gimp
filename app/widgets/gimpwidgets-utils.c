@@ -65,11 +65,13 @@ gimp_message_box (const gchar *message,
 		  GtkCallback  callback,
 		  gpointer     data)
 {
-  MessageBox *msg_box;
-  GtkWidget  *mbox;
-  GtkWidget  *vbox;
-  GtkWidget  *label;
-  GList      *list;
+  MessageBox  *msg_box;
+  GtkWidget   *mbox;
+  GtkWidget   *hbox;
+  GtkWidget   *image;
+  GtkWidget   *label;
+  GList       *list;
+  const gchar *stock_id = GTK_STOCK_DIALOG_INFO;
 
   if (!message)
     return;
@@ -118,6 +120,7 @@ gimp_message_box (const gchar *message,
       message = _("WARNING:\n"
 		  "Too many open message dialogs.\n"
 		  "Messages are redirected to stderr.");
+      stock_id = GTK_STOCK_DIALOG_WARNING;
     }
   
   msg_box = g_new0 (MessageBox, 1);
@@ -132,14 +135,17 @@ gimp_message_box (const gchar *message,
 
 			  NULL);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (mbox)->vbox), vbox);
-  gtk_widget_show (vbox);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (mbox)->vbox), hbox);
+  gtk_widget_show (hbox);
+
+  image = gtk_image_new_from_stock (stock_id, GTK_ICON_SIZE_DIALOG);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);  
 
   label = gtk_label_new (message);
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
   msg_box->mbox = mbox;

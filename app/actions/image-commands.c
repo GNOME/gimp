@@ -259,7 +259,7 @@ image_scale_callback (GtkWidget *widget,
 	gimp_query_boolean_box (_("Layer Too Small"),
 				gimp_standard_help_func,
 				"dialogs/scale_layer_warn.html",
-				FALSE,
+				GTK_STOCK_DIALOG_QUESTION,
 				_("The chosen image size will shrink\n"
 				  "some layers completely away.\n"
 				  "Is this what you want?"),

@@ -594,7 +594,7 @@ file_new_confirm_dialog (NewImageInfo *info)
     gimp_query_boolean_box (_("Confirm Image Size"),
 			    gimp_standard_help_func,
 			    "dialogs/file_new.html#confirm_size",
-			    FALSE,
+			    GTK_STOCK_DIALOG_INFO,
 			    text,
 			    GTK_STOCK_OK, GTK_STOCK_CANCEL,
 			    NULL, NULL,
