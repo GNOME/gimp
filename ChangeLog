@@ -1,3 +1,12 @@
+2003-09-06  Dave Neary  <bolsh@gimp.org>
+
+	Ooops! Sorry for the oversight.
+	* app/vectors/gimpvectors.[ch]
+	* app/vectors/gimpstroke.[ch]
+	* app/vectors/gimpbezierstroke.c: Changed include order 
+	to conform to the coding standards in devel-docs/includes.txt
+	(which should really be integrated into HACKING).
+
 2003-09-06  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/Makefile.am

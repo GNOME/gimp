@@ -21,10 +21,9 @@
 
 #include "config.h"
 
-/* For ArtVpath */
 #include <libart_lgpl/libart.h>
 
-#include "glib-object.h"
+#include <glib-object.h>
 
 #include "vectors-types.h"
 

@@ -22,7 +22,6 @@
 #ifndef __GIMP_STROKE_H__
 #define __GIMP_STROKE_H__
 
-/* For ArtVpath */
 #include <libart_lgpl/libart.h>
 
 #include "core/gimpobject.h"

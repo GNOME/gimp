@@ -23,6 +23,7 @@
 #define __GIMP_VECTORS_H__
 
 #include <libart_lgpl/libart.h>
+
 #include "core/gimpitem.h"
 
 
