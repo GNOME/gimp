@@ -1,3 +1,8 @@
+Fri May  8 20:51:24 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.c: workaround for text
+	widget crash from Owen
+
 Thu May  7 16:32:15 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: added --install and --install-admin options

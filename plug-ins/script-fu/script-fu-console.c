@@ -356,6 +356,24 @@ script_fu_browse_callback(GtkWidget *widget,
   gtk_quit_add_destroy (1, (GtkObject*) gimp_db_browser (apply_callback));
 }
 
+static gint
+script_fu_console_scroll_end (gpointer data)
+{
+  /* The Text widget in 1.0.1 doesn't like being scrolled before
+   * it is size-allocated, so we wait for it
+   */
+  if ((cint.console->allocation.width > 1) && 
+      (cint.console->allocation.height > 1))
+    {
+      cint.vadj->value = cint.vadj->upper - cint.vadj->page_size;
+      gtk_signal_emit_by_name (GTK_OBJECT (cint.vadj), "changed");
+    }
+  else
+    gtk_idle_add (script_fu_console_scroll_end, NULL);
+  
+  return FALSE;
+}
+
 static void
 script_fu_siod_read (gpointer          data,
 		     gint              id,
@@ -370,8 +388,7 @@ script_fu_siod_read (gpointer          data,
       gtk_text_insert (GTK_TEXT (cint.console), cint.font_weak, NULL, NULL, read_buffer, -1);
       gtk_text_thaw (GTK_TEXT (cint.console));
 
-      cint.vadj->value = cint.vadj->upper - cint.vadj->page_size;
-      gtk_signal_emit_by_name (GTK_OBJECT (cint.vadj), "changed");
+      script_fu_console_scroll_end (NULL);
     }
 }
 
