@@ -1,5 +1,10 @@
 2005-02-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/winicon/icosave.c (ico_image_get_reduced_buf): fixed
+	bug in save routine for 256-slot palette (bug #162742).
+
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: added automake conditional GIMP_UNSTABLE.
 
 	* plug-ins/script-fu/scripts/Makefile.am: install test-sphere.scm

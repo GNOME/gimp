@@ -353,6 +353,9 @@ ico_create_palette(guchar *cmap,
   guchar *palette;
   gint    i;
 
+  g_return_val_if_fail (cmap != NULL, NULL);
+  g_return_val_if_fail (num_colors_used <= num_colors, NULL);
+
   palette = g_new0 (guchar, num_colors * 4);
   *black_slot = -1;
 
@@ -874,7 +877,7 @@ ico_image_get_reduced_buf (guint32   layer,
           cmap = gimp_image_get_colormap (tmp_image, num_colors);
 
           if (*num_colors == (1 << bpp) &&
-              !ico_cmap_contains_black(cmap, *num_colors))
+              !ico_cmap_contains_black (cmap, *num_colors))
             {
               /* Windows icons with color maps need the color black.
                * We need to eliminate one more color to make room for black.
@@ -897,9 +900,9 @@ ico_image_get_reduced_buf (guint32   layer,
                                           "dummy");
 
               cmap = gimp_image_get_colormap (tmp_image, num_colors);
-              *cmap_out = g_memdup (cmap, *num_colors * 3);
             }
 
+          *cmap_out = g_memdup (cmap, *num_colors * 3);
           gimp_image_convert_rgb (tmp_image);
         }
 
