@@ -652,6 +652,7 @@ toolbox_free ()
 {
   int i;
 
+  gdk_window_get_position (toolbox_shell->window, &toolbox_x, &toolbox_y);  
   gtk_widget_destroy (toolbox_shell);
   for (i = 22; i < NUM_TOOLS; i++)
     {

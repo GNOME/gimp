@@ -529,6 +529,20 @@ app_init (void)
 
 }
 
+void 
+app_save_window_positions (void)
+{
+  GList *update = NULL; /* options that should be updated in .gimprc */
+  GList *remove = NULL; /* options that should be commented out */
+
+  update = g_list_append (update, "toolbox-position");
+  update = g_list_append (update, "lc-dialog-position");
+  save_gimprc (&update, &remove);
+
+  g_list_free (update);
+  g_list_free (remove);
+}
+
 int
 app_exit_finish_done (void)
 {
@@ -571,6 +585,10 @@ app_exit_finish (void)
       gximage_free ();
       render_free ();
       tools_options_dialog_free ();
+      if (save_window_positions_on_exit)
+	{
+	  app_save_window_positions();
+	}
     }
   /*  gtk_exit (0); */
   gtk_main_quit();

@@ -1,3 +1,14 @@
+Wed Jun 17 01:56:30 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c
+	* app/gimprc.c
+	* app/gimprc.h
+	* app/layers_dialog.c
+	* app/interface.c
+	* app/preferences_dialog.c: started to implement some sort of
+	session-managment; right now it only saves a few window-positions.
+	I plan to move the saving out of gimprc into a seperate rcfile
+
 Tue Jun 16 15:06:19 CDT 1998 Larry Ewing <lewing@gimp.org>
 
 	* app/interface.c:

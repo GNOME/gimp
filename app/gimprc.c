@@ -107,11 +107,13 @@ int       ruler_units = GTK_PIXELS;
 int       auto_save = TRUE;
 int       cubic_interpolation = FALSE;
 int       toolbox_x = 0, toolbox_y = 0;
+int       lc_x = 0, lc_y = 400;
 int       progress_x = 170, progress_y = 5;
 int       info_x = 165, info_y = 0;
 int       color_select_x = 140, color_select_y = 120;
 int       tool_options_x = 0, tool_options_y = 345;
 int       confirm_on_close = TRUE;
+int       save_window_positions_on_exit = TRUE;
 int       default_width = 256;
 int       default_height = 256;
 int       default_type = RGB;
@@ -208,11 +210,16 @@ static ParseFunc funcs[] =
   { "dont-auto-save",        TT_BOOLEAN,    NULL, &auto_save },
   { "cubic-interpolation",   TT_BOOLEAN,    &cubic_interpolation, NULL },
   { "toolbox-position",      TT_POSITION,   &toolbox_x, &toolbox_y },
+  { "lc-dialog-position",    TT_POSITION,   &lc_x, &lc_y },
   { "progress-position",     TT_POSITION,   &progress_x, &progress_y },
   { "info-position",         TT_POSITION,   &info_x, &info_y },
   { "color-select-position", TT_POSITION,   &color_select_x, &color_select_y },
   { "tool-options-position", TT_POSITION,   &tool_options_x, &tool_options_y },
   { "confirm-on-close",      TT_BOOLEAN,    &confirm_on_close, NULL },
+  { "save-window-positions-on-exit", 
+                             TT_BOOLEAN,    &save_window_positions_on_exit, NULL },
+  { "dont-save-window-positions-on-exit",
+                             TT_BOOLEAN,    NULL, &save_window_positions_on_exit},
   { "dont-confirm-on-close", TT_BOOLEAN,    NULL, &confirm_on_close },
   { "show-tips",             TT_BOOLEAN,    &show_tips, NULL },
   { "dont-show-tips",        TT_BOOLEAN,    NULL, &show_tips },

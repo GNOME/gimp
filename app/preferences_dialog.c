@@ -82,6 +82,7 @@ static   int          old_no_cursor_updating;
 static   int          old_show_tool_tips;
 static   int          old_cubic_interpolation;
 static   int          old_confirm_on_close;
+static   int          old_save_window_positions_on_exit;
 static   int          old_default_width;
 static   int          old_default_height;
 static   int          old_default_type;
@@ -284,6 +285,8 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "cubic-interpolation");
   if (confirm_on_close != old_confirm_on_close)
     update = g_list_append (update, "confirm-on-close");
+  if (confirm_on_close != old_confirm_on_close)
+    update = g_list_append (update, "save_window_positions_on_exit");
   if (default_width != old_default_width ||
       default_height != old_default_height)
     update = g_list_append (update, "default-image-size");
@@ -409,6 +412,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   show_tool_tips = old_show_tool_tips;
   cubic_interpolation = old_cubic_interpolation;
   confirm_on_close = old_confirm_on_close;
+  save_window_positions_on_exit = old_save_window_positions_on_exit;
   default_width = old_default_width;
   default_height = old_default_height;
   default_type = old_default_type;
@@ -662,6 +666,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_show_tool_tips = show_tool_tips;
       old_cubic_interpolation = cubic_interpolation;
       old_confirm_on_close = confirm_on_close;
+      old_save_window_positions_on_exit = save_window_positions_on_exit;
       old_default_width = default_width;
       old_default_height = default_height;
       old_default_type = default_type;
@@ -990,6 +995,15 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &show_tool_tips);
+      gtk_widget_show (button);
+
+      button = gtk_check_button_new_with_label("Save window positions on exit");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   save_window_positions_on_exit);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &save_window_positions_on_exit);
       gtk_widget_show (button);
 
       hbox = gtk_hbox_new (FALSE, 2);
