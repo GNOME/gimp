@@ -493,8 +493,10 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[0].type != GIMP_PDB_INT32))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install procedure \"%s\"\n"
-			 "which does not take the standard Plug-In args.",
+			 "attempted to install <Toolbox> procedure \"%s\"\n"
+			 "which does not take the standard <Toolbox> Plug-In "
+                         "args.\n"
+                         "(INT32)",
 			 plug_in->name,
 			 plug_in->prog,
 			 proc_install->name);
@@ -509,8 +511,10 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[2].type != GIMP_PDB_DRAWABLE))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install procedure \"%s\"\n"
-			 "which does not take the standard Plug-In args.",
+			 "attempted to install <Image> procedure \"%s\"\n"
+			 "which does not take the standard <Image> Plug-In "
+                         "args.\n"
+                         "(INT32, IMAGE, DRAWABLE)",
 			 plug_in->name,
 			 plug_in->prog,
 			 proc_install->name);
@@ -525,8 +529,10 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[2].type != GIMP_PDB_STRING))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install procedure \"%s\"\n"
-			 "which does not take the standard Plug-In args.",
+			 "attempted to install <Load> procedure \"%s\"\n"
+			 "which does not take the standard <Load> Plug-In "
+                         "args.\n"
+                         "(INT32, STRING, STRING)",
 			 plug_in->name,
 			 plug_in->prog,
 			 proc_install->name);
@@ -543,8 +549,10 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 	      (proc_install->params[4].type != GIMP_PDB_STRING))
 	    {
 	      g_message ("Plug-In \"%s\"\n(%s)\n"
-			 "attempted to install procedure \"%s\"\n"
-			 "which does not take the standard Plug-In args.",
+			 "attempted to install <Save> procedure \"%s\"\n"
+			 "which does not take the standard <Save> Plug-In "
+                         "args.\n"
+                         "(INT32, IMAGE, DRAWABLE, STRING, STRING)",
 			 plug_in->name,
 			 plug_in->prog,
 			 proc_install->name);
@@ -572,9 +580,9 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
       if ((proc_install->params[i].type == GIMP_PDB_INT32ARRAY ||
 	   proc_install->params[i].type == GIMP_PDB_INT8ARRAY  ||
 	   proc_install->params[i].type == GIMP_PDB_FLOATARRAY ||
-	   proc_install->params[i].type == GIMP_PDB_STRINGARRAY) 
+	   proc_install->params[i].type == GIMP_PDB_STRINGARRAY)
           &&
-	  proc_install->params[i-1].type != GIMP_PDB_INT32) 
+	  proc_install->params[i-1].type != GIMP_PDB_INT32)
 	{
 	  g_message ("Plug-In \"%s\"\n(%s)\n"
 		     "attempted to install procedure \"%s\"\n"
@@ -625,7 +633,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
   if (! valid_utf8)
     {
       g_message ("Plug-In \"%s\"\n(%s)\n"
-                 "attempted to install a procedure with invalid UTF-8 strings.\n", 
+                 "attempted to install a procedure with invalid UTF-8 strings.", 
                  plug_in->name,
                  plug_in->prog);
       return;

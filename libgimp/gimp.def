@@ -87,6 +87,7 @@ EXPORTS
 	gimp_eraser
 	gimp_eraser_default
 	gimp_extension_ack
+	gimp_extension_enable
 	gimp_extension_process
 	gimp_file_load
 	gimp_file_save

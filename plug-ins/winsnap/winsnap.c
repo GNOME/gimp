@@ -56,7 +56,7 @@
 /*
  * Plug-in Definitions
  */
-#define PLUG_IN_NAME        "extension_winsnap"
+#define PLUG_IN_NAME        "plug_in_winsnap"
 #define PLUG_IN_PRINT_NAME  "WinSnap"
 #define PLUG_IN_DESCRIPTION "Capture a Win32 window or desktop image"
 #define PLUG_IN_HELP        "This plug-in will capture an image of a Win32 window or desktop"
@@ -1071,7 +1071,7 @@ query(void)
 			 PLUG_IN_VERSION,
 			 N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			 NULL,
-			 GIMP_EXTENSION,		
+			 GIMP_PLUGIN,
 			 NUMBER_IN_ARGS,
 			 NUMBER_OUT_ARGS,
 			 args,

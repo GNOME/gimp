@@ -124,7 +124,7 @@ query ()
                           G_N_ELEMENTS (copy_args), 0,
                           copy_args, NULL);
 
-  gimp_install_procedure ("extension_clipboard_paste",
+  gimp_install_procedure ("plug_in_clipboard_paste_as_new",
                           "Get image from clipboard",
                           "Get an image from the Windows clipboard, creating a new image",
                           "Hans Breuer",
@@ -132,8 +132,8 @@ query ()
                           "1999",
                           N_("<Toolbox>/File/Acquire/From Clipboard"),
                           "",
-                          GIMP_EXTENSION,
-                          G_N_ELEMENTS (copy_args), 0,
+                          GIMP_PLUGIN,
+                          1, 0,
                           copy_args, NULL);
 
 }
@@ -177,7 +177,7 @@ run (gchar      *name,
       else
 	values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
     }
-  else if (strcmp (name, "extension_clipboard_paste") == 0)
+  else if (strcmp (name, "plug_in_clipboard_paste_as_new") == 0)
     {
       *nreturn_vals = 1;
       if (CB_PasteImage (GIMP_RUN_INTERACTIVE==run_mode,

@@ -106,7 +106,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive" }
   };
 
-  gimp_install_procedure ("extension_gimp_unit_editor",
+  gimp_install_procedure ("plug_in_unit_editor",
                           "The GIMP unit editor (runs in interactive mode only)",
                           "The GIMP unit editor (runs in interactive mode only)",
                           "Michael Natterer <mitch@gimp.org>",
@@ -114,7 +114,7 @@ query (void)
                           "2000",
 			  N_("<Toolbox>/Xtns/Unit Editor..."),
 			  "",
-                          GIMP_EXTENSION,
+                          GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
@@ -139,7 +139,7 @@ run (gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
 
-  if (strcmp (name, "extension_gimp_unit_editor") == 0)
+  if (strcmp (name, "plug_in_unit_editor") == 0)
     {
       values[0].data.d_status = GIMP_PDB_SUCCESS;
 

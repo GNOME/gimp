@@ -57,19 +57,15 @@ plug_in_run_cmd_callback (GtkWidget *widget,
 {
   GtkItemFactory *item_factory;
   Gimp           *gimp;
-  GimpDisplay    *gdisplay;
   ProcRecord     *proc_rec;
   Argument       *args;
-  gint            i;
   gint            gdisp_ID = -1;
+  gint            i;
   gint            argc     = 0; /* calm down a gcc warning.  */
 
   item_factory = gtk_item_factory_from_widget (widget);
 
   gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
-
-  /* get the active gdisplay */
-  gdisplay = gimp_context_get_display (gimp_get_user_context (gimp));
 
   proc_rec = (ProcRecord *) data;
 
@@ -80,54 +76,56 @@ plug_in_run_cmd_callback (GtkWidget *widget,
   for (i = 0; i < proc_rec->num_args; i++)
     args[i].arg_type = proc_rec->args[i].arg_type;
 
+  /* initialize the first argument  */
+  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
+  argc = 1;
+
   switch (proc_rec->proc_type)
     {
     case GIMP_EXTENSION:
-      /* initialize the first argument  */
-      args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-      argc = 1;
       break;
 
     case GIMP_PLUGIN:
-      if (gdisplay)
-	{
-	  gdisp_ID = gimp_display_get_ID (gdisplay);
-
-	  /* initialize the first 3 plug-in arguments  */
-	  args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-	  args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
-	  args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gdisplay->gimage)));
-	  argc = 3;
-	}
-      else
-	{
-	  g_warning ("Uh-oh, no active gdisplay for the plug-in!");
-	  g_free (args);
-	  return;
-	}
-      break;
-
     case GIMP_TEMPORARY:
-      args[0].value.pdb_int = GIMP_RUN_INTERACTIVE;
-      argc = 1;
-      if (proc_rec->num_args >= 3 &&
-	  proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&
-	  proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
-	{
-	  if (gdisplay)
-	    {
-	      gdisp_ID = gdisplay->ID;
+      if (proc_rec->num_args >= 2 &&
+          proc_rec->args[1].arg_type == GIMP_PDB_IMAGE)
+        {
+          GimpDisplay *gdisplay;
 
-	      args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
-	      args[2].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (gimp_image_active_drawable (gdisplay->gimage)));
-	      argc = 3;
-	    }
-	  else
-	    {
-	      g_warning ("Uh-oh, no active gdisplay for the temporary procedure!");
-	      g_free (args);
-	      return;
-	    }
+          gdisplay = gimp_context_get_display (gimp_get_user_context (gimp));
+
+          if (gdisplay)
+            {
+              args[1].value.pdb_int = gimp_image_get_ID (gdisplay->gimage);
+              argc++;
+
+              if (proc_rec->num_args >= 2 &&
+                  proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
+                {
+                  GimpDrawable *drawable;
+
+                  drawable = gimp_image_active_drawable (gdisplay->gimage);
+
+                  if (drawable)
+                    {
+                      args[2].value.pdb_int =
+                        gimp_item_get_ID (GIMP_ITEM (drawable));
+                      argc++;
+                    }
+                  else
+                    {
+                      g_warning ("Uh-oh, no active drawable for the plug-in!");
+                      g_free (args);
+                      return;
+                    }
+                }
+            }
+          else
+            {
+              g_warning ("Uh-oh, no active display for the plug-in!");
+              g_free (args);
+              return;
+            }
 	}
       break;
 
@@ -140,8 +138,14 @@ plug_in_run_cmd_callback (GtkWidget *widget,
   /* run the plug-in procedure */
   plug_in_run (gimp, proc_rec, args, argc, FALSE, TRUE, gdisp_ID);
 
-  if (proc_rec->proc_type == GIMP_PLUGIN)
-    gimp->last_plug_in = proc_rec;
+  /* remember only "standard" plug-ins */
+  if (proc_rec->proc_type == GIMP_PLUGIN           &&
+      proc_rec->num_args >= 2                      &&
+      proc_rec->args[1].arg_type == GIMP_PDB_IMAGE &&
+      proc_rec->args[2].arg_type == GIMP_PDB_DRAWABLE)
+    {
+      gimp->last_plug_in = proc_rec;
+    }
 
   g_free (args);
 }

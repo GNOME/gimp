@@ -80,7 +80,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, [non-interactive]" }
   };
 
-  gimp_install_procedure ("extension_db_browser",
+  gimp_install_procedure ("plug_in_db_browser",
                           "List available procedures in the PDB",
                           "",
                           "Thomas Noel",
@@ -88,14 +88,14 @@ query (void)
                           "23th june 1997",
                           N_("<Toolbox>/Xtns/DB Browser..."),
 			  "",
-                          GIMP_EXTENSION,
+                          GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
                           args, NULL);
 }
 
 static void
 run (gchar      *name,
-     gint       nparams,
+     gint        nparams,
      GimpParam  *param,
      gint       *nreturn_vals,
      GimpParam  **return_vals)
@@ -133,5 +133,5 @@ run (gchar      *name,
 
     default:
       break;
-    }  
+    }
 }

@@ -70,6 +70,8 @@ plug_in_run (Gimp       *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (proc_rec != NULL, NULL);
   g_return_val_if_fail (argc == 0 || args != NULL, NULL);
+  g_return_val_if_fail (proc_rec->proc_type != GIMP_EXTENSION ||
+                        synchronous == FALSE, NULL);
 
   if (proc_rec->proc_type == GIMP_TEMPORARY)
     {
@@ -77,7 +79,8 @@ plug_in_run (Gimp       *gimp,
       goto done;
     }
 
-  plug_in = plug_in_new (gimp, proc_rec, proc_rec->exec_method.plug_in.filename);
+  plug_in = plug_in_new (gimp, proc_rec,
+                         proc_rec->exec_method.plug_in.filename);
 
   if (plug_in)
     {
@@ -118,10 +121,10 @@ plug_in_run (Gimp       *gimp,
 
       plug_in_ref (plug_in);
 
-      /* If this is an automatically installed extension, wait for an
-       * installation-confirmation message
+      /* If this is an extension,
+       * wait for an installation-confirmation message
        */
-      if ((proc_rec->proc_type == GIMP_EXTENSION) && (proc_rec->num_args == 0))
+      if (proc_rec->proc_type == GIMP_EXTENSION)
         {
           plug_in->starting_ext = TRUE;
 
@@ -130,8 +133,8 @@ plug_in_run (Gimp       *gimp,
           plug_in->starting_ext = FALSE;
         }
 
-      /* If this plug-in is requested to run synchronously, wait for
-       * it's return values
+      /* If this plug-in is requested to run synchronously,
+       * wait for its return values
        */
       if (plug_in->recurse)
         {
@@ -160,8 +163,8 @@ plug_in_repeat (Gimp    *gimp,
                 gint     drawable_ID,
                 gboolean with_interface)
 {
-  Argument    *args;
-  gint         i;
+  Argument *args;
+  gint      i;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 

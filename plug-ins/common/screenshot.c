@@ -47,7 +47,7 @@
 
 
 /* Defines */
-#define PLUG_IN_NAME        "extension_screenshot"
+#define PLUG_IN_NAME "plug_in_screenshot"
 
 #ifndef XWD
 #define XWD "xwd"
@@ -134,7 +134,7 @@ query (void)
 			  "v0.9.5 (2000/10/29)",
 			  N_("<Toolbox>/File/Acquire/Screen Shot..."),
 			  NULL,
-			  GIMP_EXTENSION,		
+			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args),
                           G_N_ELEMENTS (return_vals),
 			  args, return_vals);

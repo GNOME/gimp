@@ -116,7 +116,6 @@ GimpParamDef load_return_vals[] =
 {
   { GIMP_PDB_IMAGE, "image", "Output image" },
 };
-gint nload_args = G_N_ELEMENTS (load_args);
 
 GimpParamDef save_args[] =
 {
@@ -128,20 +127,17 @@ GimpParamDef save_args[] =
   { GIMP_PDB_INT32, "from_frame", "Save beginning from this frame" },
   { GIMP_PDB_INT32, "to_frame", "End saving with this frame" },
 };
-gint nsave_args = G_N_ELEMENTS (save_args);
 
 GimpParamDef info_args[] =
 {
   { GIMP_PDB_STRING, "filename", "The name of the file to get info" },
 };
-
 GimpParamDef info_return_vals[] =
 {
   { GIMP_PDB_INT32, "width", "Width of one frame" },
   { GIMP_PDB_INT32, "height", "Height of one frame" },
   { GIMP_PDB_INT32, "frames", "Number of Frames" },
 };
-gint ninfo_args = G_N_ELEMENTS (info_args);
 
 
 static gint32 from_frame;
@@ -164,8 +160,10 @@ query (void)
 			  "<Load>/FLI",
 			  NULL,
 			  GIMP_PLUGIN,
-			  nload_args - 2, G_N_ELEMENTS (load_return_vals),
-			  load_args, load_return_vals);
+			  G_N_ELEMENTS (load_args) - 2,
+                          G_N_ELEMENTS (load_return_vals),
+			  load_args,
+                          load_return_vals);
 
   gimp_register_magic_load_handler ("file_fli_load",
 				    "fli",
@@ -181,7 +179,7 @@ query (void)
 			  "<Save>/FLI",
 			  "INDEXED,GRAY",
 			  GIMP_PLUGIN,
-			  nsave_args, 0,
+			  G_N_ELEMENTS (save_args), 0,
 			  save_args, NULL);
 
   gimp_register_save_handler ("file_fli_save",
@@ -200,9 +198,11 @@ query (void)
 			  "1997",
 			  NULL,
 			  NULL,
-			  GIMP_EXTENSION,
-			  ninfo_args, G_N_ELEMENTS (info_return_vals),
-			  info_args, info_return_vals);
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (info_args),
+                          G_N_ELEMENTS (info_return_vals),
+			  info_args,
+                          info_return_vals);
 }
 
 GimpParam values[5];
@@ -228,6 +228,7 @@ run (gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
@@ -240,12 +241,13 @@ run (gchar      *name,
 	   * check for valid parameters: 
 	   * (Or can I trust GIMP ?)
 	   */
-	  if ((nparams < nload_args - 2) || (nload_args < nparams))
+	  if ((nparams < G_N_ELEMENTS (load_args) - 2) ||
+              (G_N_ELEMENTS (load_args) < nparams))
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
 	      break;
 	    }
-	  for (pc = 0; pc < nload_args - 2; pc++)
+	  for (pc = 0; pc < G_N_ELEMENTS (load_args) - 2; pc++)
 	    {
 	      if (load_args[pc].type != param[pc].type)
 		{
@@ -253,7 +255,7 @@ run (gchar      *name,
 		  break;
 		}
 	    }
-	  for (pc = nload_args - 2; pc < nparams; pc++)
+	  for (pc = G_N_ELEMENTS (load_args) - 2; pc < nparams; pc++)
 	    {
 	      if (load_args[pc].type != param[pc].type)
 		{
@@ -262,9 +264,12 @@ run (gchar      *name,
 		}
 	    }
 
-	  to_frame   = (nparams < nload_args - 1) ? 1 : param[3].data.d_int32;
-	  from_frame = (nparams < nload_args) ? -1 : param[4].data.d_int32;
-	  image_ID = load_image (param[1].data.d_string,
+	  to_frame   = ((nparams < G_N_ELEMENTS (load_args) - 1) ?
+                        1 : param[3].data.d_int32);
+	  from_frame = ((nparams < G_N_ELEMENTS (load_args)) ?
+                        -1 : param[4].data.d_int32);
+
+          image_ID = load_image (param[1].data.d_string,
 				 from_frame, to_frame);
 
 	  if (image_ID != -1)
@@ -309,12 +314,12 @@ run (gchar      *name,
       switch (run_mode)
 	{
 	case GIMP_RUN_NONINTERACTIVE:
-	  if (nparams!=nsave_args)
+	  if (nparams != G_N_ELEMENTS (save_args))
 	    {
 	      status = GIMP_PDB_CALLING_ERROR;
 	      break;
 	    }
-	  for (pc = 0; pc < nsave_args; pc++)
+	  for (pc = 0; pc < G_N_ELEMENTS (save_args); pc++)
 	    {
 	      if (save_args[pc].type!=param[pc].type)
 		{
@@ -332,10 +337,10 @@ run (gchar      *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("gfli", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "FLI", 
-				      (GIMP_EXPORT_CAN_HANDLE_INDEXED |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY | 
-				       GIMP_EXPORT_CAN_HANDLE_ALPHA  |
-				       GIMP_EXPORT_CAN_HANDLE_LAYERS));
+				      GIMP_EXPORT_CAN_HANDLE_INDEXED |
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    | 
+                                      GIMP_EXPORT_CAN_HANDLE_ALPHA   |
+                                      GIMP_EXPORT_CAN_HANDLE_LAYERS);
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
 	      values[0].data.d_status = GIMP_PDB_CANCEL;
@@ -362,12 +367,12 @@ run (gchar      *name,
       /*
        * check for valid parameters;
        */
-      if (nparams != ninfo_args)
+      if (nparams != G_N_ELEMENTS (info_args))
 	status = GIMP_PDB_CALLING_ERROR;
 
       if (status == GIMP_PDB_SUCCESS)
 	{
-	  for (pc = 0; pc < nsave_args; pc++)
+	  for (pc = 0; pc < G_N_ELEMENTS (save_args); pc++)
 	    {
 	      if (info_args[pc].type != param[pc].type)
 		{

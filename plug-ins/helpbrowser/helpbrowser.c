@@ -110,7 +110,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static gboolean temp_proc_installed = FALSE;
 
 /*  forward declaration  */
 
@@ -338,7 +337,7 @@ load_remote_page (const gchar *ref)
   gint       nreturn_vals;
 
   /*  try to call netscape through the web_browser interface */
-  return_vals = gimp_run_procedure ("extension_web_browser",
+  return_vals = gimp_run_procedure ("plug_in_web_browser",
                                     &nreturn_vals,
                                     GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
                                     GIMP_PDB_STRING, ref,
@@ -772,26 +771,10 @@ run_temp_proc (gchar      *name,
   g_idle_add (idle_load_page, path);  /* frees path */
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-}
-
-/*  from libgimp/gimp.c  */
-void
-gimp_run_temp (void);
-
-static gboolean
-input_callback (GIOChannel   *channel,
-                GIOCondition  condition,
-                gpointer      data)
-{
-  /* We have some data in the wire - read it */
-  /* The below will only ever run a single proc */
-  gimp_run_temp ();
-
-  return TRUE;
 }
 
 static void
@@ -818,24 +801,7 @@ install_temp_proc (void)
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL,
 			  run_temp_proc);
-
-  /* Tie into the gdk input function */
-  g_io_add_watch (_readchannel, G_IO_IN | G_IO_PRI, input_callback, NULL);
-
-  temp_proc_installed = TRUE;
 }
-
-static void
-open_url (const gchar *help_path,
-	  const gchar *locale,
-	  const gchar *help_file)
-{
-  open_browser_dialog (help_path, locale, help_file);
-
-  install_temp_proc ();
-  gtk_main ();
-}
-
 
 MAIN ()
 
@@ -953,7 +919,17 @@ run (gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-       	  open_url (help_path, locale, help_file);
+          open_browser_dialog (help_path, locale, help_file);
+
+          install_temp_proc ();
+
+          /*  we have installed our temp_proc and are ready to run  */
+          gimp_extension_ack ();
+
+          /*  enable asynchronous processing of temp_proc_run requests  */
+          gimp_extension_enable ();
+
+          gtk_main ();
 
 	  g_free (help_path);
 	  g_free (locale);

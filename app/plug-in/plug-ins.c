@@ -301,9 +301,9 @@ plug_ins_init (Gimp               *gimp,
     {
       proc_def = tmp->data;
 
-      if (proc_def->prog &&
-	  (proc_def->db_info.num_args == 0) &&
-	  (proc_def->db_info.proc_type == GIMP_EXTENSION))
+      if (proc_def->prog                                &&
+	  proc_def->db_info.proc_type == GIMP_EXTENSION &&
+	  proc_def->db_info.num_args  == 0)
 	{
           extensions = g_list_prepend (extensions, proc_def);
         }

@@ -46,7 +46,7 @@ plug_in_params_to_args (GPParam  *params,
   if (! (params && nparams))
     return NULL;
 
-  args = g_new (Argument, nparams);
+  args = g_new0 (Argument, nparams);
 
   for (i = 0; i < nparams; i++)
     {
@@ -199,7 +199,7 @@ plug_in_args_to_params (Argument *args,
   if (! (args && nargs))
     return NULL;
 
-  params = g_new (GPParam, nargs);
+  params = g_new0 (GPParam, nargs);
 
   for (i = 0; i < nargs; i++)
     {
@@ -446,11 +446,7 @@ plug_in_args_destroy (Argument *args,
 		      gboolean  full_destroy)
 {
   if (full_destroy)
-    {
-      procedural_db_destroy_args (args, nargs);
-    }
+    procedural_db_destroy_args (args, nargs);
   else
-    {
-      g_free (args);
-    }
+    g_free (args);
 }

@@ -687,16 +687,16 @@ query (void)
                           args,
                           return_vals);
  
-   /* the installation of the Iterator extension for the bend plugin */
+   /* the installation of the Iterator procedure for the bend plugin */
   gimp_install_procedure (PLUG_IN_ITER_NAME,
-                          "This extension calculates the modified values for one iterationstep for the call of plug_in_curve_bend",
+                          "This procedure calculates the modified values for one iterationstep for the call of plug_in_curve_bend",
                           "",
                           PLUG_IN_AUTHOR,
                           PLUG_IN_COPYRIGHT,
                           PLUG_IN_VERSION,
                           NULL,    /* do not appear in menus */
                           NULL,
-                          GIMP_EXTENSION,
+                          GIMP_PLUGIN,
                           G_N_ELEMENTS (args_iter), 0,
                           args_iter, NULL);
 }

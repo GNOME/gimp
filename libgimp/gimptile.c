@@ -49,9 +49,6 @@ static void  gimp_tile_cache_zorch  (void);
 static guint gimp_tile_hash         (GimpTile    *tile);
 
 
-gint _gimp_tile_width  = -1;
-gint _gimp_tile_height = -1;
-
 static GHashTable *tile_hash_table = NULL;
 static GList      *tile_list_head  = NULL;
 static GList      *tile_list_tail  = NULL;
@@ -131,27 +128,15 @@ gimp_tile_cache_size (gulong kilobytes)
 void
 gimp_tile_cache_ntiles (gulong ntiles)
 {
-  gimp_tile_cache_size ((gulong)(ntiles * _gimp_tile_width * _gimp_tile_height * 4 + 1023) / 1024);
+  gimp_tile_cache_size ((gulong) (ntiles *
+                                  gimp_tile_width ()  *
+                                  gimp_tile_height () * 4 + 1023) / 1024);
 }
-
-guint
-gimp_tile_width (void)
-{
-  return _gimp_tile_width;
-}
-
-guint
-gimp_tile_height (void)
-{
-  return _gimp_tile_height;
-}
-
 
 static void
 gimp_tile_get (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
-  extern guchar* _shm_addr;
 
   GPTileReq tile_req;
   GPTileData *tile_data;
@@ -180,7 +165,8 @@ gimp_tile_get (GimpTile *tile)
   if (tile_data->use_shm)
     {
       tile->data = g_new (guchar, tile->ewidth * tile->eheight * tile->bpp);
-      memcpy (tile->data, _shm_addr, tile->ewidth * tile->eheight * tile->bpp);
+      memcpy (tile->data, gimp_shm_addr (),
+              tile->ewidth * tile->eheight * tile->bpp);
     }
   else
     {
@@ -198,7 +184,6 @@ static void
 gimp_tile_put (GimpTile *tile)
 {
   extern GIOChannel *_writechannel;
-  extern guchar *_shm_addr;
 
   GPTileReq tile_req;
   GPTileData tile_data;
@@ -225,7 +210,8 @@ gimp_tile_put (GimpTile *tile)
   tile_data.data        = NULL;
 
   if (tile_info->use_shm)
-    memcpy (_shm_addr, tile->data, tile->ewidth * tile->eheight * tile->bpp);
+    memcpy (gimp_shm_addr (), tile->data,
+            tile->ewidth * tile->eheight * tile->bpp);
   else
     tile_data.data = tile->data;
 

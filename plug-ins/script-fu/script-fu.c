@@ -37,11 +37,6 @@
 
 #include "script-fu-intl.h"
 
-/* External functions
- */
-extern void  gimp_extension_process (guint timeout);
-extern void  gimp_extension_ack     (void);
-
 
 /* Declare local functions.
  */
@@ -118,7 +113,7 @@ script_fu_query (void)
 			  GIMP_EXTENSION,
 			  0, 0, NULL, NULL);
 
-  gimp_install_procedure ("extension_script_fu_console",
+  gimp_install_procedure ("plug_in_script_fu_console",
 			  "Provides a console mode for script-fu development",
 			  "Provides an interface which allows interactive scheme development.",
 			  "Spencer Kimball & Peter Mattis",
@@ -126,11 +121,11 @@ script_fu_query (void)
 			  "1997",
 			  N_("<Toolbox>/Xtns/Script-Fu/Console..."),
 			  NULL,
-			  GIMP_EXTENSION,
+			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (console_args), 0,
 			  console_args, NULL);
 
-  gimp_install_procedure ("extension_script_fu_text_console",
+  gimp_install_procedure ("plug_in_script_fu_text_console",
                           "Provides a text console mode for script-fu development",
                           "Provides an interface which allows interactive scheme development.",
                           "Spencer Kimball & Peter Mattis",
@@ -138,12 +133,12 @@ script_fu_query (void)
                           "1997",
 			  NULL,
                           NULL,
-                          GIMP_EXTENSION,
+                          GIMP_PLUGIN,
                           G_N_ELEMENTS (textconsole_args), 0,
                           textconsole_args, NULL);
 
 #ifndef G_OS_WIN32
-  gimp_install_procedure ("extension_script_fu_server",
+  gimp_install_procedure ("plug_in_script_fu_server",
 			  "Provides a server for remote script-fu operation",
 			  "Provides a server for remote script-fu operation",
 			  "Spencer Kimball & Peter Mattis",
@@ -151,12 +146,12 @@ script_fu_query (void)
 			  "1997",
 			  N_("<Toolbox>/Xtns/Script-Fu/Server..."),
 			  NULL,
-			  GIMP_EXTENSION,
+			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (server_args), 0,
 			  server_args, NULL);
 #endif
 
-  gimp_install_procedure ("extension_script_fu_eval",
+  gimp_install_procedure ("plug_in_script_fu_eval",
 			  "Evaluate scheme code",
 			  "Evaluate the code under the scheme interpeter (primarily for batch mode)",
 			  "Manish Singh",
@@ -164,7 +159,7 @@ script_fu_query (void)
 			  "1998",
 			  NULL,
 			  NULL,
-			  GIMP_EXTENSION,
+			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (eval_args), 0,
 			  eval_args, NULL);
 }
@@ -223,7 +218,7 @@ script_fu_run (gchar      *name,
       values[0].type          = GIMP_PDB_STATUS;
       values[0].data.d_status = status;
     }
-  else if (strcmp (name, "extension_script_fu_text_console") == 0)
+  else if (strcmp (name, "plug_in_script_fu_text_console") == 0)
     {
       /*
        *  The script-fu text console for interactive SIOD development
@@ -232,7 +227,7 @@ script_fu_run (gchar      *name,
       script_fu_text_console_run (name, nparams, param,
 				  nreturn_vals, return_vals);
     }
-  else if (strcmp (name, "extension_script_fu_console") == 0)
+  else if (strcmp (name, "plug_in_script_fu_console") == 0)
     {
       /*
        *  The script-fu console for interactive SIOD development
@@ -242,7 +237,7 @@ script_fu_run (gchar      *name,
 			     nreturn_vals, return_vals);
     }
 #ifndef G_OS_WIN32
-  else if (strcmp (name, "extension_script_fu_server") == 0)
+  else if (strcmp (name, "plug_in_script_fu_server") == 0)
     {
       /*
        *  The script-fu server for remote operation
@@ -252,7 +247,7 @@ script_fu_run (gchar      *name,
 			    nreturn_vals, return_vals);
     }
 #endif
-  else if (strcmp (name, "extension_script_fu_eval") == 0)
+  else if (strcmp (name, "plug_in_script_fu_eval") == 0)
     {
       /*
        *  A non-interactive "console" (for batch mode)

@@ -40,8 +40,8 @@
 #include "gimp.h"
 
 
-#define TILE_WIDTH   _gimp_tile_width
-#define TILE_HEIGHT  _gimp_tile_height
+#define TILE_WIDTH  gimp_tile_width()
+#define TILE_HEIGHT gimp_tile_height()
 
 
 typedef struct _GimpPixelRgnHolder    GimpPixelRgnHolder;
@@ -72,10 +72,6 @@ static gint     gimp_get_portion_height   (GimpPixelRgnIterator *pri);
 static gpointer gimp_pixel_rgns_configure (GimpPixelRgnIterator *pri);
 static void     gimp_pixel_rgn_configure  (GimpPixelRgnHolder   *prh,
 					   GimpPixelRgnIterator *pri);
-
-
-extern gint _gimp_tile_width;
-extern gint _gimp_tile_height;
 
 
 void

@@ -48,8 +48,6 @@ void    gimp_tile_unref        (GimpTile  *tile,
 void    gimp_tile_flush        (GimpTile  *tile);
 void    gimp_tile_cache_size   (gulong     kilobytes);
 void    gimp_tile_cache_ntiles (gulong     ntiles);
-guint   gimp_tile_width        (void);
-guint   gimp_tile_height       (void);
 
 
 G_END_DECLS

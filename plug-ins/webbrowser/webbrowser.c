@@ -131,7 +131,7 @@ query (void)
     { GIMP_PDB_INT32,  "new_window", "Create a new window or use existing one?" },
   };
 
-  gimp_install_procedure ("extension_web_browser",
+  gimp_install_procedure ("plug_in_web_browser",
 			  "open URL in Netscape",
 			  "You need to have Netscape installed",
 			  "Misha Dynin <misha@xcf.berkeley.edu>",
@@ -139,7 +139,7 @@ query (void)
 			  "1997",
 			  N_("<Toolbox>/Xtns/Web Browser/Open URL..."),
 			  NULL,
-			  GIMP_EXTENSION,
+			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
 			  args, NULL);
 }
@@ -165,13 +165,13 @@ run (gchar   *name,
   *nreturn_vals = 1;
   *return_vals  = values;
 
-  if (strcmp (name, "extension_web_browser") == 0)
+  if (strcmp (name, "plug_in_web_browser") == 0)
     {
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /* Possibly retrieve data */
-	  gimp_get_data ("extension_web_browser", &url_info);
+	  gimp_get_data ("plug_in_web_browser", &url_info);
 
 	  if (!open_url_dialog ())
 	    return;
@@ -191,7 +191,7 @@ run (gchar   *name,
 	  break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
-	  gimp_get_data ("extension_web_browser", &url_info);
+	  gimp_get_data ("plug_in_web_browser", &url_info);
 	  break;
 
 	default:
@@ -204,7 +204,7 @@ run (gchar   *name,
 	    values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data ("extension_web_browser", &url_info, sizeof (u_info));
+	    gimp_set_data ("plug_in_web_browser", &url_info, sizeof (u_info));
 
 	  values[0].data.d_status = GIMP_PDB_SUCCESS;
 	}

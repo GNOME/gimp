@@ -24,12 +24,8 @@
 #include "gimp.h"
 
 
-#define TILE_WIDTH   _gimp_tile_width
-#define TILE_HEIGHT  _gimp_tile_height
-
-
-extern gint _gimp_tile_width;
-extern gint _gimp_tile_height;
+#define TILE_WIDTH  gimp_tile_width()
+#define TILE_HEIGHT gimp_tile_height()
 
 
 GimpDrawable *

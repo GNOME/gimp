@@ -1,3 +1,98 @@
+2003-06-19  Michael Natterer  <mitch@gimp.org>
+
+	Changed the semantics of GIMP_EXTENSION and (to some extent)
+	of GIMP_PLUGIN:
+
+	The old meaning of EXTENSION was "I live in the toolbox" and
+	PLUGIN meant "I take RUN-MODE,IMAGE,DRAWABLE args (but only if I
+	am invoked interactively)". This is completely useless, since
+	living in the toolbox means having "<Toolbox>" in the menu_path
+	and taking RUN-MODE,IMAGE,DRAWABLE means just that, regardless of
+	what type of procedure we are.
+
+	The new meaning of GIMP_PLUGIN is just "I am an ordinary procedure,
+	I am invoked, do my job and finish", while GIMP_EXTENSION means
+	"I will install temporary procedures and I will keep running to
+	keep them available".
+
+	(A GIMP_EXTENSION *must* call gimp_extension_ack() now to tell the
+	core that it's ready to run, or the core will block waiting for
+	the message !!!).
+
+	* configure.in: bumped version number to 1.3.16.
+
+	* libgimpbase/gimpprotocol.h: increased protocol version number so
+	old extensions will refuse to load.
+
+	* app/gui/plug-in-commands.c (plug_in_run_cmd_callback): don't
+	blindly pass RUN-MODE,IMAGE,DRAWABLE to GIMP_PLUGIN procedures but
+	look at their parameters and pass them either RUN-MODE, or
+	RUN-MODE,IMAGE, or RUN-MODE,IMAGE,DRAWABLE.
+
+	* app/pdb/procedural_db.c: cleaned up, better error reporting,
+	replaced an impossible error message by g_return_if_fail()
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_install):
+	better error messages.
+
+	* app/plug-in/plug-in-params.c: allocate parameter arrays using
+	g_new0() so we don't have to worry about uninitialized stuff
+	later.
+
+	* app/plug-in/plug-in-run.c (plug_in_run): wait for
+	gimp_extension_ack() installation confirmation for ALL extensions,
+	not just for automatically started ones.
+
+	* app/plug-in/plug-ins.c: cleanup.
+
+	* libgimp/gimp.[ch]: cleaned up and API-documented massively. Made
+	all magic values given in the GPConfig message static and added
+	accessor functions for them. Added gimp_tile_width()/height().
+	Added new function gimp_extension_enable() which turns on
+	asynchronous processing of temp_proc run requests without having
+	to enter an endless gimp_extension_process() loop. Moved all
+	private functions to the end of the file. Added tons of
+	g_return_if_fail() all over the place.  Call gimp_run_procedure2()
+	from gimp_run_procedure() instead of duplicating the
+	code. Indentation, spacing, stuff...
+
+	* libgimp/gimptile.[ch]: removed gimp_tile_width()/height().
+
+	* libgimp/gimpdrawable.c
+	* libgimp/gimppixelrgn.c
+	* libgimp/gimptile.c: use the gimp_tile_width()/height() accessor
+	functions.
+
+	* libgimp/gimp.def: added gimp_extension_enable.
+
+	* libgimp/gimpmenu.c: removed evil code which connected to
+	_readchannel manually and use gimp_extension_enable() for watching
+	temp_procs.
+
+	* plug-ins/helpbrowser/helpbrowser.c: removed the same evil code
+	here and call gimp_extension_enable(). Call gimp_extension_ack()
+	to let the core know that the temp_proc is installed.
+
+	* plug-ins/script-fu/script-fu.c: made all procedures except the
+	permanently running "extension_script_fu" ordinary GIMP_PLUGIN
+	procedures.
+
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/plugindetails.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/common/winclipboard.c
+	* plug-ins/dbbrowser/dbbrowser.c
+	* plug-ins/gfli/gfli.c
+	* plug-ins/twain/twain.c
+	* plug-ins/webbrowser/webbrowser.c
+	* plug-ins/winsnap/winsnap.c: made them all ordinary GIMP_PLUGIN
+	procedures and renamed them from "extension_*" to "plug_in_*".
+	Random cleanups.
+
+	* app/widgets/gimphelp.c
+	* plug-ins/maze/maze_face.c: call "plug_in_web_browser" now.
+
 2003-06-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpmenu.c: when idle dispatching calls to plug-ins, use

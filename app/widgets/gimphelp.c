@@ -284,7 +284,7 @@ gimp_help_netscape (Gimp        *gimp,
 
   return_vals =
     procedural_db_run_proc (gimp,
-			    "extension_web_browser",
+			    "plug_in_web_browser",
 			    &nreturn_vals,
 			    GIMP_PDB_INT32,  GIMP_RUN_NONINTERACTIVE,
 			    GIMP_PDB_STRING, url,

@@ -115,19 +115,12 @@ static void      temp_brush_invoker      (gchar             *name,
                                           GimpParam         *param,
                                           gint              *nreturn_vals,
                                           GimpParam        **return_vals);
-static gboolean  input_callback	         (GIOChannel        *channel,
-                                          GIOCondition       condition,
-                                          gpointer           data);
-static void      gimp_setup_callbacks    (void);
 static gchar   * gen_temp_plugin_name    (void);
 static void      fill_preview_with_thumb (GtkWidget         *widget,
                                           gint32             drawable_ID,
                                           gint               width,
                                           gint               height);
 
-
-/* From gimp.c */
-void gimp_run_temp (void);
 
 static GHashTable  *gbrush_ht    = NULL;
 static GHashTable  *gfont_ht     = NULL;
@@ -955,33 +948,6 @@ temp_pattern_invoker (gchar      *name,
   values[0].data.d_status = status;
 }
 
-
-static gboolean
-input_callback (GIOChannel  *channel,
-		GIOCondition condition,
-		gpointer     data)
-{
-  /* We have some data in the wire - read it */
-  /* The below will only ever run a single proc */
-  gimp_run_temp ();
-
-  return TRUE;
-}
-
-static void
-gimp_setup_callbacks (void)
-{
-  static gboolean first_time = TRUE;
-
-  if (first_time)
-    {
-      /* Tie into the gdk input function only once */
-      g_io_add_watch (_readchannel, G_IO_IN | G_IO_PRI, input_callback, NULL);
-
-      first_time = FALSE;
-    }
-}
-
 static gchar *
 gen_temp_plugin_name (void)
 {
@@ -1058,7 +1024,7 @@ gimp_interactive_selection_brush (const gchar          *title,
 			GIMP_PDB_INT32,  paint_mode,
 			GIMP_PDB_END);
 
-  gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
+  gimp_extension_enable (); /* Allow callbacks to be watched */
 
   gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
 
@@ -1116,7 +1082,7 @@ gimp_interactive_selection_font (const gchar         *title,
                         GIMP_PDB_STRING, font_name,
                         GIMP_PDB_END);
 
-  gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
+  gimp_extension_enable (); /* Allow callbacks to be watched */
 
   gimp_destroy_params (pdbreturn_vals, fnreturn_vals);
 
@@ -1178,7 +1144,7 @@ gimp_interactive_selection_gradient (const gchar             *title,
 			GIMP_PDB_INT32,  sample_size,
 			GIMP_PDB_END);
 
-  gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
+  gimp_extension_enable (); /* Allow callbacks to be watched */
 
   gimp_destroy_params (pdbreturn_vals,bnreturn_vals);
 
@@ -1241,7 +1207,7 @@ gimp_interactive_selection_pattern (const gchar            *title,
 		       GIMP_PDB_STRING, pattern_name,
 		       GIMP_PDB_END);
 
-  gimp_setup_callbacks (); /* New function to allow callbacks to be watched */
+  gimp_extension_enable (); /* Allow callbacks to be watched */
 
   gimp_destroy_params (pdbreturn_vals, bnreturn_vals);
 

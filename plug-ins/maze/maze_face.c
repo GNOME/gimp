@@ -590,7 +590,7 @@ maze_help (GtkWidget *widget,
   gint   baz;
   gchar *message;
 
-  if (gimp_procedural_db_proc_info ("extension_web_browser",
+  if (gimp_procedural_db_proc_info ("plug_in_web_browser",
 				    &proc_blurb, 
 				    &proc_help, 
 				    &proc_author, 
@@ -604,7 +604,7 @@ maze_help (GtkWidget *widget,
       message = g_strdup_printf (_("Opening %s"), MAZE_URL);
       maze_msg (message);
       g_free (message);
-      gimp_run_procedure ("extension_web_browser", &baz,
+      gimp_run_procedure ("plug_in_web_browser", &baz,
 			  GIMP_PDB_INT32, GIMP_RUN_NONINTERACTIVE,
 			  GIMP_PDB_STRING, MAZE_URL,
 			  GIMP_PDB_INT32, HELP_OPENS_NEW_WINDOW,
