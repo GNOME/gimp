@@ -1,3 +1,7 @@
+2000-05-01  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: borderaverage.c is now in plug-ins/common.
+
 2000-04-29  Kjartan Maraas  <kmaraas@online.no>
 
 	* no.po: Updated Norwegian translation.
