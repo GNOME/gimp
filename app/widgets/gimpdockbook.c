@@ -434,7 +434,7 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
 
   tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook, tab_size);
 
-  if (GTK_WIDGET_NO_WINDOW (tab_widget))
+  if (! GIMP_IS_PREVIEW (tab_widget))
     {
       GtkWidget *event_box;
 

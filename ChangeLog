@@ -1,3 +1,11 @@
+2003-04-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_get_tab_widget): check
+	for !GIMP_IS_PREVIEW(widget), not for GTK_WIDGET_NO_WINDOW(widget)
+	when deciding whether to put the tab_widget in a GtkEventBox
+	because GimpPreview is NO_WINDOW now but still handles events.
+	Fixes dockable DND.
+
 2003-04-14  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/preferences-dialog.c: don't try to reparent the children
