@@ -32,6 +32,7 @@
 
 
 static void  gimp_base_config_class_init   (GimpBaseConfigClass *klass);
+static void  gimp_base_config_finalize     (GObject             *object);
 static void  gimp_base_config_set_property (GObject             *object,
                                             guint                property_id,
                                             const GValue        *value,
@@ -52,6 +53,8 @@ enum
   PROP_TILE_CACHE_SIZE,
   PROP_INTERPOLATION_TYPE,
 };
+
+static GObjectClass *parent_class = NULL;
 
 
 GType 
@@ -87,8 +90,11 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
 {
   GObjectClass *object_class;
 
+  parent_class = g_type_class_peek_parent (klass);
+
   object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_base_config_finalize;
   object_class->set_property = gimp_base_config_set_property;
   object_class->get_property = gimp_base_config_get_property;
 
@@ -112,6 +118,19 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  "interpolation-type",
                                  GIMP_TYPE_INTERPOLATION_TYPE, 
                                  GIMP_LINEAR_INTERPOLATION);
+}
+
+static void
+gimp_base_config_finalize (GObject *object)
+{
+  GimpBaseConfig *base_config;
+
+  base_config = GIMP_BASE_CONFIG (object);
+  
+  g_free (base_config->temp_path);
+  g_free (base_config->swap_path);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

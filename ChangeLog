@@ -1,3 +1,10 @@
+2002-02-08  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c: added missing finalizers.
+
 2002-02-07  Nathan Summers  <rock@gimp.org>
 
         * app/tools/gimptoolmodule.[ch]: New class that uses GTypeModule to

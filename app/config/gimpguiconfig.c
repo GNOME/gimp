@@ -33,6 +33,7 @@
 
 
 static void  gimp_gui_config_class_init   (GimpGuiConfigClass *klass);
+static void  gimp_gui_config_finalize     (GObject            *object);
 static void  gimp_gui_config_set_property (GObject            *object,
                                            guint               property_id,
                                            const GValue       *value,
@@ -68,6 +69,8 @@ enum
   PROP_USE_HELP
 };
 
+static GObjectClass *parent_class = NULL;
+
 
 GType 
 gimp_gui_config_get_type (void)
@@ -102,8 +105,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
 {
   GObjectClass *object_class;
 
+  parent_class = g_type_class_peek_parent (klass);
+
   object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_gui_config_finalize;
   object_class->set_property = gimp_gui_config_set_property;
   object_class->get_property = gimp_gui_config_get_property;
 
@@ -170,6 +176,19 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                                     "use-help",
                                     TRUE);
+}
+
+static void
+gimp_gui_config_finalize (GObject *object)
+{
+  GimpGuiConfig *gui_config;
+
+  gui_config = GIMP_GUI_CONFIG (object);
+  
+  g_free (gui_config->theme_path);
+  g_free (gui_config->theme);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

@@ -33,6 +33,7 @@
 
 
 static void  gimp_display_config_class_init   (GimpDisplayConfigClass *klass);
+static void  gimp_display_config_finalize     (GObject      *object);
 static void  gimp_display_config_set_property (GObject      *object,
                                                guint         property_id,
                                                const GValue *value,
@@ -60,6 +61,8 @@ enum
   PROP_MONITOR_YRESOLUTION,
   PROP_MONITOR_RES_FROM_GDK
 };
+
+static GObjectClass *parent_class = NULL;
 
 
 GType 
@@ -95,8 +98,11 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class;
 
+  parent_class = g_type_class_peek_parent (klass);
+
   object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;
   object_class->get_property = gimp_display_config_get_property;
 
@@ -142,6 +148,18 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
                                     "monitor-resolution-from-windowing-system",
                                     TRUE);
+}
+
+static void
+gimp_display_config_finalize (GObject *object)
+{
+  GimpDisplayConfig *display_config;
+
+  display_config = GIMP_DISPLAY_CONFIG (object);
+  
+  g_free (display_config->image_title_format);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

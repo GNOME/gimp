@@ -33,6 +33,7 @@
 
 
 static void  gimp_core_config_class_init   (GimpCoreConfigClass *klass);
+static void  gimp_core_config_finalize     (GObject             *object);
 static void  gimp_core_config_set_property (GObject             *object,
                                             guint                property_id,
                                             const GValue        *value,
@@ -46,6 +47,7 @@ enum
 {
   PROP_0,
   PROP_PLUG_IN_PATH,
+  PROP_TOOL_PLUG_IN_PATH,
   PROP_MODULE_PATH,
   PROP_BRUSH_PATH,
   PROP_PATTERN_PATH,
@@ -70,9 +72,10 @@ enum
   PROP_WRITE_THUMBNAILS,
   PROP_GAMMA_CORRECTION,
   PROP_INSTALL_COLORMAP,
-  PROP_MIN_COLORS,
-  PROP_TOOL_PLUG_IN_PATH
+  PROP_MIN_COLORS
 };
+
+static GObjectClass *parent_class = NULL;
 
 
 GType 
@@ -108,8 +111,11 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 {
   GObjectClass *object_class;
 
+  parent_class = g_type_class_peek_parent (klass);
+
   object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_core_config_finalize;
   object_class->set_property = gimp_core_config_set_property;
   object_class->get_property = gimp_core_config_get_property;
 
@@ -195,6 +201,31 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MIN_COLORS,
                                 "min-colors",
                                 27, 256, 144);
+}
+
+static void
+gimp_core_config_finalize (GObject *object)
+{
+  GimpCoreConfig *core_config;
+
+  core_config = GIMP_CORE_CONFIG (object);
+  
+  g_free (core_config->plug_in_path);
+  g_free (core_config->tool_plug_in_path);
+  g_free (core_config->module_path);
+  g_free (core_config->brush_path);
+  g_free (core_config->pattern_path);
+  g_free (core_config->palette_path);
+  g_free (core_config->gradient_path);
+  g_free (core_config->default_brush);
+  g_free (core_config->default_pattern);
+  g_free (core_config->default_palette);
+  g_free (core_config->default_gradient);
+  g_free (core_config->default_comment);
+  g_free (core_config->plug_in_rc_path);
+  g_free (core_config->module_load_inhibit);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
