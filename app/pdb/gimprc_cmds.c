@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <string.h>
 
 #include <glib-object.h>
 
@@ -70,11 +71,13 @@ gimprc_query_invoker (Gimp         *gimp,
 
   if (success)
     {
-      /*  use edit_config because unknown tokens are set there  */
-      value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
+      if (strlen (token))
+        {
+          /*  use edit_config because unknown tokens are set there  */
+          value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
+        }
 
-      if (! value)
-        success = FALSE;
+      success = (value != NULL);
     }
 
   return_args = procedural_db_return_args (&gimprc_query_proc, success);
@@ -139,8 +142,13 @@ gimprc_set_invoker (Gimp         *gimp,
 
   if (success)
     {
-      /*  use edit_config because that's the one that gets saved  */
-      gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
+      if (strlen (token))
+        {
+          /*  use edit_config because that's the one that gets saved  */
+          gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
+        }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&gimprc_set_proc, success);

@@ -56,11 +56,13 @@ HELP
 	vars => [ 'gchar *value = NULL' ],
 	code => <<'CODE'
 {
-  /*  use edit_config because unknown tokens are set there  */
-  value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
+  if (strlen (token))
+    {
+      /*  use edit_config because unknown tokens are set there  */
+      value = gimp_rc_query (GIMP_RC (gimp->edit_config), token);
+    }
 
-  if (! value)
-    success = FALSE;
+  success = (value != NULL);
 }
 CODE
     );
@@ -91,8 +93,13 @@ HELP
 	headers => [ qw("config/gimpconfig.h") ],
 	code =>  <<'CODE'
 {
-  /*  use edit_config because that's the one that gets saved  */
-  gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
+  if (strlen (token))
+    {
+      /*  use edit_config because that's the one that gets saved  */
+      gimp_rc_set_unknown_token (GIMP_RC (gimp->edit_config), token, value);
+    }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -200,7 +207,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h");
+@headers = qw(<string.h> "core/gimp.h");
 
 @procs = qw(gimprc_query gimprc_set 
 	    get_default_comment get_monitor_resolution get_theme_dir
