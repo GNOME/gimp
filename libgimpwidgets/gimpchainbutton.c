@@ -53,7 +53,7 @@ static void gimp_chain_button_realize          (GtkWidget       *widget);
 static void gimp_chain_button_clicked_callback (GtkWidget       *widget,
 						GimpChainButton *gcb);
 static gint gimp_chain_button_draw_lines       (GtkWidget       *widget,
-						GdkEvent        *event,
+						GdkEventExpose  *eevent,
 						GimpChainButton *gcb);
 
 static GtkTableClass *parent_class = NULL;
@@ -278,6 +278,14 @@ gimp_chain_button_realize (GtkWidget *widget)
     gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->chain, gcb->chain_mask);
   else
     gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->broken, gcb->broken_mask);
+
+  gtk_widget_realize (gcb->line1);
+  gtk_style_set_background (widget->style, gcb->line1->window, GTK_STATE_NORMAL);
+  gdk_window_set_back_pixmap (gcb->line1->window, NULL, TRUE);
+
+  gtk_widget_realize (gcb->line2);
+  gtk_style_set_background (widget->style, gcb->line2->window, GTK_STATE_NORMAL);
+  gdk_window_set_back_pixmap (gcb->line2->window, NULL, TRUE);
 }
 
 static void
@@ -299,7 +307,7 @@ gimp_chain_button_clicked_callback (GtkWidget       *widget,
 
 static gint
 gimp_chain_button_draw_lines (GtkWidget       *widget,
-			      GdkEvent        *event,
+			      GdkEventExpose  *eevent,
 			      GimpChainButton *gcb)
 {
   GdkPoint      points[3];
@@ -312,13 +320,6 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
      the widgets bounds yet (and probably never will be) */
 
   g_return_val_if_fail (GIMP_IS_CHAIN_BUTTON (gcb), FALSE);
-
-  /*
-  gdk_window_clear_area (widget->window,
-			 0, 0,
-			 widget->allocation.width,
-			 widget->allocation.height);
-  */
 
   points[0].x = widget->allocation.width / 2;
   points[0].y = widget->allocation.height / 2;
@@ -371,13 +372,16 @@ gimp_chain_button_draw_lines (GtkWidget       *widget,
       points[2] = buf;
     }
 
-  gtk_draw_polygon (widget->style,
-		    widget->window,
-		    GTK_STATE_NORMAL,
-		    shadow,
-		    points,
-		    3,
-		    FALSE);
+  gtk_paint_polygon (widget->style,
+		     widget->window,
+		     GTK_STATE_NORMAL,
+		     shadow,
+		     &eevent->area,
+		     widget,
+		     "chainbutton",
+		     points,
+		     3,
+		     FALSE);
 
   return TRUE;
 }

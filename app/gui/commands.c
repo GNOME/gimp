@@ -71,7 +71,6 @@ extern void   layers_dialog_layer_merge_query (GImage *, gboolean);
 /*  local functions  */
 static void     image_resize_callback        (GtkWidget *, gpointer);
 static void     image_scale_callback         (GtkWidget *, gpointer);
-static void     image_cancel_callback        (GtkWidget *, gpointer);
 static void     gimage_mask_feather_callback (GtkWidget *, gdouble, GimpUnit,
 					      gpointer);
 static void     gimage_mask_border_callback  (GtkWidget *, gdouble, GimpUnit,
@@ -806,6 +805,7 @@ image_resize_cmd_callback (GtkWidget *widget,
   image_resize->resize = resize_widget_new (ResizeWidget,
 					    ResizeImage,
 					    GTK_OBJECT (gimage),
+					    "destroy",
 					    gimage->width,
 					    gimage->height,
 					    gimage->xresolution,
@@ -813,8 +813,13 @@ image_resize_cmd_callback (GtkWidget *widget,
 					    gimage->unit,
 					    gdisp->dot_for_dot,
 					    image_resize_callback,
-					    image_cancel_callback,
+					    NULL,
 					    image_resize);
+
+  gtk_signal_connect_object (GTK_OBJECT (image_resize->resize->resize_shell),
+			     "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) image_resize);
 
   gtk_widget_show (image_resize->resize->resize_shell);
 }
@@ -837,6 +842,7 @@ image_scale_cmd_callback (GtkWidget *widget,
   image_scale->resize = resize_widget_new (ScaleWidget,
 					   ResizeImage,
 					   GTK_OBJECT (gimage),
+					   "destroy",
 					   gimage->width,
 					   gimage->height,
 					   gimage->xresolution,
@@ -844,8 +850,13 @@ image_scale_cmd_callback (GtkWidget *widget,
 					   gimage->unit,
 					   gdisp->dot_for_dot,
 					   image_scale_callback,
-					   image_cancel_callback,
+					   NULL,
 					   image_scale);
+
+  gtk_signal_connect_object (GTK_OBJECT (image_scale->resize->resize_shell),
+			     "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) image_scale);
 
   gtk_widget_show (image_scale->resize->resize_shell);
 }
@@ -1307,7 +1318,7 @@ image_resize_callback (GtkWidget *widget,
 	}
     }
 
-  resize_widget_free (image_resize->resize);
+  gtk_widget_destroy (image_resize->resize->resize_shell);
   g_free (image_resize);
 }
 
@@ -1317,27 +1328,14 @@ image_scale_callback (GtkWidget *widget,
 {
   ImageResize *image_scale = NULL;
 
-  g_assert((image_scale = (ImageResize *) client_data) != NULL);
-  g_assert(image_scale->gimage != NULL);
- 
-  if(TRUE == resize_check_layer_scaling(image_scale))
+  g_assert ((image_scale = (ImageResize *) client_data) != NULL);
+  g_assert (image_scale->gimage != NULL);
+
+  if (TRUE == resize_check_layer_scaling (image_scale))
     {
-      resize_scale_implement(image_scale);
-      resize_widget_free (image_scale->resize);
-      g_free (image_scale);
+      resize_scale_implement (image_scale);
+      gtk_widget_destroy (image_scale->resize->resize_shell);
     }
-}
-
-static void
-image_cancel_callback (GtkWidget *widget,
-		       gpointer   client_data)
-{
-  ImageResize *image_scale;
-
-  image_scale = (ImageResize *) client_data;
-
-  resize_widget_free (image_scale->resize);
-  g_free (image_scale);
 }
 
 static void

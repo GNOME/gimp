@@ -1077,7 +1077,7 @@ create_display_shell (GDisplay *gdisp,
     }
 
   gtk_widget_realize (gdisp->canvas);
-  gdk_window_set_back_pixmap (gdisp->canvas->window, NULL, 0);
+  gdk_window_set_back_pixmap (gdisp->canvas->window, NULL, FALSE);
 
   /*  we need to realize the cursor_label widget here, so the size gets
    *  computed correctly

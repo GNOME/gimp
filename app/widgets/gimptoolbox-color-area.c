@@ -438,6 +438,14 @@ color_area_events (GtkWidget *widget,
   return FALSE;
 }
 
+static void
+color_area_realize (GtkWidget *widget,
+		    gpointer   data)
+{
+  gtk_style_set_background (widget->style, widget->window, GTK_STATE_NORMAL);
+  gdk_window_set_back_pixmap (widget->window, NULL, TRUE);
+}
+
 GtkWidget *
 color_area_create (gint       width,
 		   gint       height,
@@ -456,6 +464,10 @@ color_area_create (gint       width,
 			 GDK_LEAVE_NOTIFY_MASK);
   gtk_signal_connect (GTK_OBJECT (color_area), "event",
 		      GTK_SIGNAL_FUNC (color_area_events),
+		      NULL);
+
+  gtk_signal_connect (GTK_OBJECT (color_area), "realize",
+		      GTK_SIGNAL_FUNC (color_area_realize),
 		      NULL);
 
   default_pixmap = default_pmap;

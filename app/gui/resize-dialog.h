@@ -37,7 +37,6 @@ typedef struct _Resize Resize;
 
 struct _Resize
 {
-  /*  The calling procedure is respondible for showing this widget  */
   GtkWidget   *resize_shell;
 
   ResizeType   type;
@@ -66,13 +65,18 @@ typedef struct
   GimpImage *gimage;
 } ImageResize;
 
-/* If resolution_x is zero, then don't show resolution modification
- * parts of the dialog. If object is non-NULL, then attach the cancel
- * callback to its destroy signal. */
+/*  If resolution_x is zero, then don't show resolution modification
+ *  parts of the dialog.
+ *
+ *  If object and signal are non-NULL, then attach the cancel callback to signal.
+ *
+ *  If cancel_callback is NULL, then the dialog will be destroyed on "Cancel".
+ */
 
 Resize * resize_widget_new    (ResizeType    type,
 			       ResizeTarget  target,
-			       GtkObject   * object,
+			       GtkObject    *object,
+			       gchar        *signal,
 			       gint          width,
 			       gint          height,
 			       gdouble       resolution_x,
@@ -82,11 +86,10 @@ Resize * resize_widget_new    (ResizeType    type,
 			       GtkSignalFunc ok_cb,
 			       GtkSignalFunc cancel_cb,
 			       gpointer      user_data);
-void     resize_widget_free   (Resize      * resize);
 
 /* Layer scaling sanity check and warning dialogs */
 
-gboolean resize_check_layer_scaling (ImageResize *);
-void     resize_scale_implement     (ImageResize *);
+gboolean resize_check_layer_scaling (ImageResize *image_resize);
+void     resize_scale_implement     (ImageResize *image_resize);
 
 #endif  /*  __RESIZE_H__  */

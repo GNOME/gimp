@@ -1,3 +1,19 @@
+2000-04-06  Michael Natterer  <mitch@gimp.org>
+
+	* app/commands.c
+	* app/layers_dialog.c
+	* app/resize.[ch]: behave like a widget:
+	removed resize_widget_free() and call
+	gtk_widget_destroy(resize->resize_shell) instead.
+
+	* app/interface.c: s/0/FALSE/
+
+	* app/color_area.c
+	* libgimp/gimpchainbutton.c: show the correct background also for
+	engine driven themes. The chainbutton's lines still don't draw
+	with the pixmap theme, which is probably a bug of the theme's
+	draw_polygon method.
+
 2000-04-06  Sven Neumann  <sven@gimp.org>
 
 	* app/gimage_cmds.c

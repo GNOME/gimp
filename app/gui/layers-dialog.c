@@ -1148,7 +1148,7 @@ layers_dialog_set_active_layer (Layer *layer)
 		    layer_widget->list_item);
       gtk_object_set_user_data (GTK_OBJECT (layer_widget->list_item),
 				layer_widget);
- 
+
       layers_dialog_scroll_index (index);
     }
 
@@ -2616,7 +2616,6 @@ layer_widget_button_events (GtkWidget *widget,
 		{
 		  layer_widget_exclusive_visible (layer_widget);
 		}
-
 	      else
 		{
 		  GIMP_DRAWABLE (layer_widget->layer)->visible =
@@ -3073,17 +3072,20 @@ layer_widget_eye_redraw (LayerWidget *layer_widget)
 	{
 	  eye_pixmap[NORMAL] =
 	    gdk_pixmap_create_from_data (layer_widget->eye_widget->window,
-					 (gchar*) eye_bits, eye_width, eye_height, -1,
+					 (gchar*) eye_bits,
+					 eye_width, eye_height, -1,
 					 &layer_widget->eye_widget->style->fg[GTK_STATE_NORMAL],
 					 &layer_widget->eye_widget->style->white);
 	  eye_pixmap[SELECTED] =
 	    gdk_pixmap_create_from_data (layer_widget->eye_widget->window,
-					 (gchar*) eye_bits, eye_width, eye_height, -1,
+					 (gchar*) eye_bits,
+					 eye_width, eye_height, -1,
 					 &layer_widget->eye_widget->style->fg[GTK_STATE_SELECTED],
 					 &layer_widget->eye_widget->style->bg[GTK_STATE_SELECTED]);
 	  eye_pixmap[INSENSITIVE] =
 	    gdk_pixmap_create_from_data (layer_widget->eye_widget->window,
-					 (gchar*) eye_bits, eye_width, eye_height, -1,
+					 (gchar*) eye_bits,
+					 eye_width, eye_height, -1,
 					 &layer_widget->eye_widget->style->fg[GTK_STATE_INSENSITIVE],
 					 &layer_widget->eye_widget->style->bg[GTK_STATE_INSENSITIVE]);
 	}
@@ -3233,13 +3235,15 @@ layer_widget_layer_flush (GtkWidget *widget,
   /*  Set sensitivity  */
 
   /*  to false if there is a floating selection, and this aint it  */
-  if (! layer_is_floating_sel (layer_widget->layer) && layersD->floating_sel != NULL)
+  if (! layer_is_floating_sel (layer_widget->layer) &&
+      layersD->floating_sel != NULL)
     {
       if (GTK_WIDGET_IS_SENSITIVE (layer_widget->list_item))
 	gtk_widget_set_sensitive (layer_widget->list_item, FALSE);
     }
   /*  to true if there is a floating selection, and this is it  */
-  if (layer_is_floating_sel (layer_widget->layer) && layersD->floating_sel != NULL)
+  if (layer_is_floating_sel (layer_widget->layer) &&
+      layersD->floating_sel != NULL)
     {
       if (! GTK_WIDGET_IS_SENSITIVE (layer_widget->list_item))
 	gtk_widget_set_sensitive (layer_widget->list_item, TRUE);
@@ -3779,23 +3783,11 @@ scale_layer_query_ok_callback (GtkWidget *widget,
 	  gdisplays_flush ();
 	}
 
-      resize_widget_free (options->resize);
-      g_free (options);
+      gtk_widget_destroy (options->resize->resize_shell);
     }
   else
     g_message (_("Invalid width or height.\n"
 		 "Both must be positive."));
-}
-
-static void
-scale_layer_query_cancel_callback (GtkWidget *widget,
-				   gpointer   data)
-{
-  ScaleLayerOptions *options;
-  options = (ScaleLayerOptions *) data;
-
-  resize_widget_free (options->resize);
-  g_free (options);
 }
 
 static void
@@ -3810,15 +3802,21 @@ layers_dialog_scale_layer_query (GimpImage *gimage,
   options->resize = resize_widget_new (ScaleWidget,
 				       ResizeLayer,
 				       GTK_OBJECT (layer),
-				       drawable_width (GIMP_DRAWABLE(layer)),
-				       drawable_height (GIMP_DRAWABLE(layer)),
+				       "removed",
+				       drawable_width (GIMP_DRAWABLE (layer)),
+				       drawable_height (GIMP_DRAWABLE (layer)),
 				       gimage->xresolution,
 				       gimage->yresolution,
 				       gimage->unit,
 				       TRUE,
 				       scale_layer_query_ok_callback,
-				       scale_layer_query_cancel_callback,
+				       NULL,
 				       options);
+
+  gtk_signal_connect_object (GTK_OBJECT (options->resize->resize_shell),
+			     "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) options);
 
   gtk_widget_show (options->resize->resize_shell);
 }
@@ -3867,23 +3865,11 @@ resize_layer_query_ok_callback (GtkWidget *widget,
 	  gdisplays_flush ();
 	}
 
-      resize_widget_free (options->resize);
-      g_free (options);
+      gtk_widget_destroy (options->resize->resize_shell);
     }
   else
     g_message (_("Invalid width or height.\n"
 		 "Both must be positive."));
-}
-
-static void
-resize_layer_query_cancel_callback (GtkWidget *widget,
-				    gpointer   data)
-{
-  ResizeLayerOptions *options;
-  options = (ResizeLayerOptions *) data;
-
-  resize_widget_free (options->resize);
-  g_free (options);
 }
 
 static void
@@ -3898,15 +3884,21 @@ layers_dialog_resize_layer_query (GimpImage *gimage,
   options->resize = resize_widget_new (ResizeWidget,
 				       ResizeLayer,
 				       GTK_OBJECT (layer),
-				       drawable_width (GIMP_DRAWABLE(layer)),
-				       drawable_height (GIMP_DRAWABLE(layer)),
+				       "removed",
+				       drawable_width (GIMP_DRAWABLE (layer)),
+				       drawable_height (GIMP_DRAWABLE (layer)),
 				       gimage->xresolution,
 				       gimage->yresolution,
 				       gimage->unit,
 				       TRUE,
 				       resize_layer_query_ok_callback,
-				       resize_layer_query_cancel_callback,
+				       NULL,
 				       options);
+
+  gtk_signal_connect_object (GTK_OBJECT (options->resize->resize_shell),
+			     "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) options);
 
   gtk_widget_show (options->resize->resize_shell);
 }
