@@ -1,5 +1,11 @@
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/user-install-dialog.c: when migrating the user
+	settings, tolerate errors and create the tmp directory that was
+	explicitely not copied.
+
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-utils.c (gimp_config_file_copy): copy the
 	file permissions also.
 

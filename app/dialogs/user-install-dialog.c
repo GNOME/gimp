@@ -1059,13 +1059,13 @@ user_install_file_copy (GtkTextBuffer  *log_buffer,
                         const gchar    *dest,
                         GError        **error)
 {
-  gchar log_line[1024];
+  gchar *msg;
 
-  g_snprintf (log_line, sizeof (log_line),
-              _("Copying file '%s' from '%s'..."),
-              gimp_filename_to_utf8 (dest),
-              gimp_filename_to_utf8 (source));
-  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+  msg = g_strdup_printf (_("Copying file '%s' from '%s'..."),
+                         gimp_filename_to_utf8 (dest),
+                         gimp_filename_to_utf8 (source));
+  gtk_text_buffer_insert_at_cursor (log_buffer, msg, -1);
+  g_free (msg);
 
   while (gtk_events_pending ())
     gtk_main_iteration ();
@@ -1074,27 +1074,16 @@ user_install_file_copy (GtkTextBuffer  *log_buffer,
 }
 
 static gboolean
-user_install_dir_copy (GtkWidget      *log_view,
-                       GtkTextBuffer  *log_buffer,
-                       const gchar    *source,
-                       const gchar    *base,
-                       GError        **error)
+user_install_mkdir (GtkTextBuffer  *log_buffer,
+                    const gchar    *dirname,
+                    GError        **error)
 {
-  GDir  *source_dir = NULL;
-  GDir  *dest_dir   = NULL;
-  gchar  dest[1024];
-  gchar  log_line[1024];
-  gchar *basename;
-  gchar *dirname;
+  gchar *msg;
 
-  basename = g_path_get_basename (source);
-  dirname = g_build_filename (base, basename, NULL);
-  g_free (basename);
-
-  g_snprintf (log_line, sizeof (log_line),
-              _("Creating folder '%s'..."),
-              gimp_filename_to_utf8 (dirname));
-  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
+  msg = g_strdup_printf (_("Creating folder '%s'..."),
+                         gimp_filename_to_utf8 (dirname));
+  gtk_text_buffer_insert_at_cursor (log_buffer, msg, -1);
+  g_free (msg);
 
   while (gtk_events_pending ())
     gtk_main_iteration ();
@@ -1107,6 +1096,31 @@ user_install_dir_copy (GtkWidget      *log_view,
       g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Cannot create folder '%s': %s"),
                    gimp_filename_to_utf8 (dirname), g_strerror (errno));
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+static gboolean
+user_install_dir_copy (GtkWidget      *log_view,
+                       GtkTextBuffer  *log_buffer,
+                       const gchar    *source,
+                       const gchar    *base,
+                       GError        **error)
+{
+  GDir  *source_dir = NULL;
+  GDir  *dest_dir   = NULL;
+  gchar  dest[1024];
+  gchar *basename;
+  gchar *dirname;
+
+  basename = g_path_get_basename (source);
+  dirname = g_build_filename (base, basename, NULL);
+  g_free (basename);
+
+  if (! user_install_mkdir (log_buffer, dirname, error))
+    {
       g_free (dirname);
       return FALSE;
     }
@@ -1160,7 +1174,6 @@ static gboolean
 user_install_create_files (GtkWidget     *log_view,
                            GtkTextBuffer *log_buffer)
 {
-  gchar   log_line[1024];
   gchar   dest[1024];
   gchar   source[1024];
   gint    i;
@@ -1177,24 +1190,8 @@ user_install_create_files (GtkWidget     *log_view,
           break;
 
         case TREE_ITEM_MKDIR:
-          g_snprintf (log_line, sizeof (log_line),
-                      _("Creating folder '%s'..."),
-		      gimp_filename_to_utf8 (dest));
-          gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
-
-          while (gtk_events_pending ())
-            gtk_main_iteration ();
-
-          if (mkdir (dest,
-                     S_IRUSR | S_IWUSR | S_IXUSR |
-                     S_IRGRP | S_IXGRP |
-                     S_IROTH | S_IXOTH) == -1)
-            {
-              g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                           _("Cannot create folder '%s': %s"),
-                           gimp_filename_to_utf8 (dest), g_strerror (errno));
+          if (! user_install_mkdir (log_buffer, dest, &error))
               goto break_out_of_loop;
-            }
           break;
 
         case TREE_ITEM_FROM_SYSCONF_DIR:
@@ -1235,13 +1232,13 @@ user_install_migrate_files (const gchar   *oldgimp,
                             GtkTextBuffer *log_buffer)
 {
   GDir   *dir;
-  gchar  *source = NULL;
   GError *error  = NULL;
 
   dir = g_dir_open (oldgimp, 0, &error);
   if (dir)
     {
       const gchar *basename;
+      gchar       *source = NULL;
       gchar        dest[1024];
 
       while ((basename = g_dir_read_name (dir)) != NULL)
@@ -1254,30 +1251,36 @@ user_install_migrate_files (const gchar   *oldgimp,
               g_snprintf (dest, sizeof (dest), "%s%c%s",
                           gimp_directory (), G_DIR_SEPARATOR, basename);
 
-              if (! user_install_file_copy (log_buffer, source, dest, &error))
-                goto break_out_of_loop;
+              user_install_file_copy (log_buffer, source, dest, &error);
 
               print_log (log_view, log_buffer, error);
+              g_clear_error (&error);
             }
           else if (g_file_test (source, G_FILE_TEST_IS_DIR) &&
                    strcmp (basename, "tmp") != 0)
             {
               if (! user_install_dir_copy (log_view, log_buffer,
                                            source, gimp_directory (), &error))
-                goto break_out_of_loop;
+                {
+                  print_log (log_view, log_buffer, error);
+                  g_clear_error (&error);
+                }
             }
 
           g_free (source);
           source = NULL;
         }
+
+      /*  create the tmp directory that was explicitely not copied  */
+
+      g_snprintf (dest, sizeof (dest), "%s%c%s",
+                  gimp_directory (), G_DIR_SEPARATOR, "tmp");
+
+      if (user_install_mkdir (log_buffer, dest, &error))
+        print_log (log_view, log_buffer, NULL);
+
+      g_dir_close (dir);
     }
-
- break_out_of_loop:
-  if (source)
-    g_free (source);
-
-  if (dir)
-    g_dir_close (dir);
 
   if (error)
     {
@@ -1296,7 +1299,7 @@ user_install_run (const gchar *oldgimp)
   GtkWidget     *scrolled_window;
   GtkTextBuffer *log_buffer;
   GtkWidget     *log_view;
-  gchar          log_line[1024];
+  gchar         *msg;
   GError        *error = NULL;
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -1321,23 +1324,8 @@ user_install_run (const gchar *oldgimp)
   gtk_container_add (GTK_CONTAINER (scrolled_window), log_view);
   gtk_widget_show (log_view);
 
-  g_snprintf (log_line, sizeof (log_line), _("Creating folder '%s'..."),
-              gimp_filename_to_utf8 (gimp_directory ()));
-  gtk_text_buffer_insert_at_cursor (log_buffer, log_line, -1);
-
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
-
-  if (mkdir (gimp_directory (),
-             S_IRUSR | S_IWUSR | S_IXUSR |
-             S_IRGRP | S_IXGRP |
-             S_IROTH | S_IXOTH) == -1)
+  if (! user_install_mkdir (log_buffer, gimp_directory (), &error))
     {
-      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                   _("Cannot create folder '%s': %s"),
-                   gimp_filename_to_utf8 (gimp_directory ()),
-                   g_strerror (errno));
-
       print_log (log_view, log_buffer, error);
       g_clear_error (&error);
 
