@@ -703,28 +703,10 @@ GPL
 
     foreach $group (@main::groups) {
 	my $out = $out{$group};
-        my $widgets_eek = 0;
-        my $display_eek = 0;
-        my $gui_eek = 0;
 
 	foreach (@{$main::grp{$group}->{headers}}) { $out->{headers}->{$_}++ }
 	delete $out->{headers}->{q/"procedural_db.h"/};
 	delete $out->{headers}->{q/"config.h"/};
-
-        if (exists $out->{headers}->{q|"widgets/widgets-types.h"|}) {
-	    $widgets_eek = 1;
-	    delete $out->{headers}->{q|"widgets/widgets-types.h"|};
-	}
-
-        if (exists $out->{headers}->{q|"display/display-types.h"|}) {
-	    $display_eek = 1;
-	    delete $out->{headers}->{q|"display/display-types.h"|};
-	}
-
-        if (exists $out->{headers}->{q|"gui/gui-types.h"|}) {
-	    $gui_eek = 1;
-	    delete $out->{headers}->{q|"gui/gui-types.h"|};
-	}
 
 	my @headers = sort {
 	    my ($x, $y) = ($a, $b);
@@ -760,13 +742,7 @@ GPL
 	    if ($sys == 0 && !/^</) {
 		$sys = 1;
 		$headers .= "\n";
-
-		if ($widgets_eek == 1 || $display_eek == 1 || $gui_eek == 1) {
-		    $headers .= '#include <gtk/gtk.h>';
-		} else {
-		    $headers .= '#include <glib-object.h>';
-		}
-
+		$headers .= '#include <glib-object.h>';
 		$headers .= "\n\n";
 		$headers .= '#include "libgimpbase/gimpbasetypes.h"';
 		$headers .= "\n\n";
@@ -786,22 +762,6 @@ GPL
 
 		    $headers .= '#include "pdb-types.h"';
 		    $headers .= "\n";
-
-		    if ($widgets_eek == 1) {
-			$headers .= '#include "widgets/widgets-types.h"';
-			$headers .= "\n";		    
-		    }
-
-		    if ($display_eek == 1) {
-			$headers .= '#include "display/display-types.h"';
-			$headers .= "\n";		    
-		    }
-
-		    if ($gui_eek == 1) {
-			$headers .= '#include "gui/gui-types.h"';
-			$headers .= "\n";		    
-		    }
-
 		    $headers .= '#include "procedural_db.h"';
 		    $headers .= "\n\n";
 		}

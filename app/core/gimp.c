@@ -210,25 +210,30 @@ gimp_init (Gimp *gimp)
   gimp->stack_trace_mode = GIMP_STACK_TRACE_NEVER;
   gimp->pdb_compat_mode  = GIMP_PDB_COMPAT_OFF;
 
-  gimp->gui_threads_enter_func     = NULL;
-  gimp->gui_threads_leave_func     = NULL;
-  gimp->gui_create_display_func    = NULL;
-  gimp->gui_set_busy_func          = NULL;
-  gimp->gui_unset_busy_func        = NULL;
-  gimp->gui_message_func           = NULL;
-  gimp->gui_menus_init_func        = NULL;
-  gimp->gui_menus_create_func      = NULL;
-  gimp->gui_menus_delete_func      = NULL;
-  gimp->gui_progress_start_func    = NULL;
-  gimp->gui_progress_restart_func  = NULL;
-  gimp->gui_progress_update_func   = NULL;
-  gimp->gui_progress_end_func      = NULL;
-  gimp->gui_get_program_class_func = NULL;
-  gimp->gui_get_display_name_func  = NULL;
-  gimp->gui_get_theme_dir_func     = NULL;
-  gimp->gui_pdb_dialog_set_func    = NULL;
-  gimp->gui_pdb_dialog_close_func  = NULL;
-  gimp->gui_pdb_dialogs_check_func = NULL;
+  gimp->gui_threads_enter_func      = NULL;
+  gimp->gui_threads_leave_func      = NULL;
+  gimp->gui_get_display_by_id_func  = NULL;
+  gimp->gui_get_display_id_func     = NULL;
+  gimp->gui_create_display_func     = NULL;
+  gimp->gui_delete_display_func     = NULL;
+  gimp->gui_reconnect_displays_func = NULL;
+  gimp->gui_set_busy_func           = NULL;
+  gimp->gui_unset_busy_func         = NULL;
+  gimp->gui_message_func            = NULL;
+  gimp->gui_help_func               = NULL;
+  gimp->gui_menus_init_func         = NULL;
+  gimp->gui_menus_create_func       = NULL;
+  gimp->gui_menus_delete_func       = NULL;
+  gimp->gui_progress_start_func     = NULL;
+  gimp->gui_progress_restart_func   = NULL;
+  gimp->gui_progress_update_func    = NULL;
+  gimp->gui_progress_end_func       = NULL;
+  gimp->gui_get_program_class_func  = NULL;
+  gimp->gui_get_display_name_func   = NULL;
+  gimp->gui_get_theme_dir_func      = NULL;
+  gimp->gui_pdb_dialog_set_func     = NULL;
+  gimp->gui_pdb_dialog_close_func   = NULL;
+  gimp->gui_pdb_dialogs_check_func  = NULL;
 
   gimp->busy                = 0;
   gimp->busy_idle_id        = 0;
@@ -957,6 +962,76 @@ gimp_threads_leave (Gimp *gimp)
     gimp->gui_threads_leave_func (gimp);
 }
 
+GimpObject *
+gimp_get_display_by_ID (Gimp *gimp,
+                        gint  ID)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  if (gimp->gui_get_display_by_id_func)
+    return gimp->gui_get_display_by_id_func (gimp, ID);
+
+  return NULL;
+}
+
+gint
+gimp_get_display_ID (Gimp       *gimp,
+                     GimpObject *display)
+{
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), -1);
+  g_return_val_if_fail (GIMP_IS_OBJECT (display), -1);
+
+  if (gimp->gui_get_display_id_func)
+    return gimp->gui_get_display_id_func (display);
+
+  return -1;
+}
+
+GimpObject *
+gimp_create_display (Gimp      *gimp,
+                     GimpImage *gimage,
+                     GimpUnit   unit,
+                     gdouble    scale)
+{
+  GimpObject *display = NULL;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+
+  if (gimp->gui_create_display_func)
+    {
+      display = gimp->gui_create_display_func (gimage, unit, scale);
+
+      gimp_container_add (gimp->displays, display);
+    }
+
+  return display;
+}
+
+void
+gimp_delete_display (Gimp       *gimp,
+                     GimpObject *display)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_OBJECT (display));
+
+  if (gimp->gui_delete_display_func)
+    gimp->gui_delete_display_func (display);
+}
+
+void
+gimp_reconnect_displays (Gimp      *gimp,
+                         GimpImage *old_image,
+                         GimpImage *new_image)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_IMAGE (old_image));
+  g_return_if_fail (GIMP_IS_IMAGE (new_image));
+
+  if (gimp->gui_reconnect_displays_func)
+    gimp->gui_reconnect_displays_func (gimp, old_image, new_image);
+}
+
 void
 gimp_set_busy (Gimp *gimp)
 {
@@ -1041,6 +1116,17 @@ gimp_message (Gimp        *gimp,
     }
 
   g_printerr ("%s: %s\n\n", domain ? domain : _("GIMP"), message);
+}
+
+void
+gimp_help (Gimp        *gimp,
+           const gchar *help_domain,
+           const gchar *help_id)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (gimp->gui_help_func)
+    gimp->gui_help_func (gimp, help_domain, help_id);
 }
 
 void
@@ -1288,27 +1374,6 @@ gimp_create_image (Gimp              *gimp,
     }
 
   return gimage;
-}
-
-GimpObject *
-gimp_create_display (Gimp      *gimp,
-                     GimpImage *gimage,
-                     GimpUnit   unit,
-                     gdouble    scale)
-{
-  GimpObject *display = NULL;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-
-  if (gimp->gui_create_display_func)
-    {
-      display = gimp->gui_create_display_func (gimage, unit, scale);
-
-      gimp_container_add (gimp->displays, display);
-    }
-
-  return display;
 }
 
 void

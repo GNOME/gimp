@@ -138,6 +138,9 @@ gimp_console_2_1_LDFLAGS = $(gimp_2_1_LDFLAGS)
 
 gimp_console_2_1_LDADD = \
 	config/libappconfig.a		\
+	widgets/widgets-enums.o		\
+	display/display-enums.o		\
+	display/gimpdisplayoptions.o	\
 	pdb/libapppdb.a			\
 	core/libappcore.a		\
 	paint/libapppaint.a		\

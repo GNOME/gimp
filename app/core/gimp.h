@@ -25,14 +25,24 @@
 
 typedef void           (* GimpThreadEnterFunc)     (Gimp          *gimp);
 typedef void           (* GimpThreadLeaveFunc)     (Gimp          *gimp);
+typedef GimpObject   * (* GimpGetDisplayByIDFunc)  (Gimp          *gimp,
+                                                    gint           ID);
+typedef gint           (* GimpGetDisplayIDFunc)    (GimpObject    *display);
 typedef GimpObject   * (* GimpCreateDisplayFunc)   (GimpImage     *gimage,
                                                     GimpUnit       unit,
                                                     gdouble        scale);
+typedef void           (* GimpDeleteDisplayFunc)   (GimpObject    *display);
+typedef void           (* GimpReconnDisplaysFunc)  (Gimp          *gimp,
+                                                    GimpImage     *old_image,
+                                                    GimpImage     *new_image);
 typedef void           (* GimpSetBusyFunc)         (Gimp          *gimp);
 typedef void           (* GimpUnsetBusyFunc)       (Gimp          *gimp);
 typedef void           (* GimpMessageFunc)         (Gimp          *gimp,
                                                     const gchar   *domain,
                                                     const gchar   *message);
+typedef void           (* GimpCoreHelpFunc)        (Gimp          *gimp,
+                                                    const gchar   *help_domain,
+                                                    const gchar   *help_id);
 typedef void           (* GimpMenusInitFunc)       (Gimp          *gimp,
                                                     GSList        *plug_in_defs,
                                                     const gchar   *std_domain);
@@ -109,10 +119,15 @@ struct _Gimp
 
   GimpThreadEnterFunc     gui_threads_enter_func;
   GimpThreadLeaveFunc     gui_threads_leave_func;
+  GimpGetDisplayByIDFunc  gui_get_display_by_id_func;
+  GimpGetDisplayIDFunc    gui_get_display_id_func;
   GimpCreateDisplayFunc   gui_create_display_func;
+  GimpDeleteDisplayFunc   gui_delete_display_func;
+  GimpReconnDisplaysFunc  gui_reconnect_displays_func;
   GimpSetBusyFunc         gui_set_busy_func;
   GimpUnsetBusyFunc       gui_unset_busy_func;
   GimpMessageFunc         gui_message_func;
+  GimpCoreHelpFunc        gui_help_func;
   GimpMenusInitFunc       gui_menus_init_func;
   GimpMenusCreateFunc     gui_menus_create_func;
   GimpMenusDeleteFunc     gui_menus_delete_func;
@@ -251,6 +266,20 @@ void          gimp_set_global_buffer    (Gimp               *gimp,
 void          gimp_threads_enter        (Gimp               *gimp);
 void          gimp_threads_leave        (Gimp               *gimp);
 
+GimpObject  * gimp_get_display_by_ID    (Gimp               *gimp,
+                                         gint                ID);
+gint          gimp_get_display_ID       (Gimp               *gimp,
+                                         GimpObject         *display);
+GimpObject  * gimp_create_display       (Gimp               *gimp,
+                                         GimpImage          *gimage,
+                                         GimpUnit            unit,
+                                         gdouble             scale);
+void          gimp_delete_display       (Gimp               *gimp,
+                                         GimpObject         *display);
+void          gimp_reconnect_displays   (Gimp               *gimp,
+                                         GimpImage          *old_image,
+                                         GimpImage          *new_image);
+
 void          gimp_set_busy             (Gimp               *gimp);
 void          gimp_set_busy_until_idle  (Gimp               *gimp);
 void          gimp_unset_busy           (Gimp               *gimp);
@@ -258,6 +287,9 @@ void          gimp_unset_busy           (Gimp               *gimp);
 void          gimp_message              (Gimp               *gimp,
                                          const gchar        *domain,
                                          const gchar        *message);
+void          gimp_help                 (Gimp               *gimp,
+                                         const gchar        *help_domain,
+                                         const gchar        *help_id);
 void          gimp_menus_init           (Gimp               *gimp,
                                          GSList             *plug_in_defs,
                                          const gchar        *std_plugins_domain);
@@ -307,11 +339,6 @@ GimpImage   * gimp_create_image         (Gimp               *gimp,
 					 gint                height,
 					 GimpImageBaseType   type,
 					 gboolean            attach_comment);
-
-GimpObject  * gimp_create_display       (Gimp               *gimp,
-                                         GimpImage          *gimage,
-                                         GimpUnit            unit,
-                                         gdouble             scale);
 
 void          gimp_set_default_context  (Gimp               *gimp,
 					 GimpContext        *context);

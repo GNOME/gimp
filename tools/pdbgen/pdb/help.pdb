@@ -52,8 +52,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-ins.h"
-              "widgets/gimphelp.h");
+@headers = qw("core/gimp.h" "plug-in/plug-in.h" "plug-in/plug-ins.h");
 
 @procs = qw(help);
 %exports = (app => [@procs], lib => [@procs]);

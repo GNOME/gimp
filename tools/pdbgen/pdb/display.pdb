@@ -42,8 +42,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  display = (GimpDisplay *) gimp_create_display (gimp,
-                                                 gimage, GIMP_UNIT_PIXEL, 1.0);
+  display = gimp_create_display (gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
 
   success = (display != NULL);
 
@@ -70,7 +69,7 @@ HELP
 	  desc => 'The display to delete' }
     );
 
-    %invoke = ( code => 'gimp_display_delete (display);' );
+    %invoke = ( code => 'gimp_delete_display (gimp, display);' );
 }
 
 sub displays_flush {
@@ -110,11 +109,10 @@ HELP
 	  desc => 'The new image (must not have a display)' }
      );
 
-   %invoke = ( code => 'gimp_displays_reconnect (gimp, old_image, new_image);' );
+   %invoke = ( code => 'gimp_reconnect_displays (gimp, old_image, new_image);' );
 }
 
-@headers = qw("core/gimp.h" "display/display-types.h" "display/gimpdisplay.h"
-	      "display/gimpdisplay-foreach.h");
+@headers = qw("core/gimp.h");
 
 @procs = qw(display_new display_delete displays_flush displays_reconnect);
 %exports = (app => [@procs], lib => [@procs]);

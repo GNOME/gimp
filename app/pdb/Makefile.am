@@ -56,7 +56,7 @@ AM_CPPFLAGS = \
 INCLUDES = \
 	-I$(top_srcdir)		\
 	-I$(top_srcdir)/app	\
-	$(GTK_CFLAGS)		\
+	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
 EXTRA_DIST = makefile.msc

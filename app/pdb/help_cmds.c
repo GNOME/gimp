@@ -31,7 +31,6 @@
 #include "core/gimp.h"
 #include "plug-in/plug-in.h"
 #include "plug-in/plug-ins.h"
-#include "widgets/gimphelp.h"
 
 static ProcRecord help_proc;
 

@@ -75,9 +75,9 @@ static void      gimp_help_call      (Gimp        *gimp,
 /*  public functions  */
 
 void
-gimp_help (Gimp        *gimp,
-           const gchar *help_domain,
-	   const gchar *help_id)
+gimp_help_show (Gimp        *gimp,
+                const gchar *help_domain,
+                const gchar *help_id)
 {
   GimpGuiConfig *config;
 

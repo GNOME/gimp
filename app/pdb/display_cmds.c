@@ -21,19 +21,16 @@
 #include "config.h"
 
 
-#include <gtk/gtk.h>
+#include <glib-object.h>
 
 #include "libgimpbase/gimpbasetypes.h"
 
 #include "pdb-types.h"
-#include "display/display-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
-#include "display/gimpdisplay-foreach.h"
-#include "display/gimpdisplay.h"
 
 static ProcRecord display_new_proc;
 static ProcRecord display_delete_proc;
@@ -57,7 +54,7 @@ display_new_invoker (Gimp        *gimp,
   gboolean success = TRUE;
   Argument *return_args;
   GimpImage *gimage;
-  GimpDisplay *display = NULL;
+  GimpObject *display = NULL;
 
   gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
   if (! GIMP_IS_IMAGE (gimage))
@@ -65,8 +62,7 @@ display_new_invoker (Gimp        *gimp,
 
   if (success)
     {
-      display = (GimpDisplay *) gimp_create_display (gimp,
-                                                     gimage, GIMP_UNIT_PIXEL, 1.0);
+      display = gimp_create_display (gimp, gimage, GIMP_UNIT_PIXEL, 1.0);
 
       success = (display != NULL);
 
@@ -78,7 +74,7 @@ display_new_invoker (Gimp        *gimp,
   return_args = procedural_db_return_args (&display_new_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = gimp_display_get_ID (display);
+    return_args[1].value.pdb_int = gimp_get_display_ID (gimp, display);
 
   return return_args;
 }
@@ -123,14 +119,14 @@ display_delete_invoker (Gimp        *gimp,
                         Argument    *args)
 {
   gboolean success = TRUE;
-  GimpDisplay *display;
+  GimpObject *display;
 
-  display = gimp_display_get_by_ID (gimp, args[0].value.pdb_int);
-  if (! GIMP_IS_DISPLAY (display))
+  display = gimp_get_display_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_OBJECT (display))
     success = FALSE;
 
   if (success)
-    gimp_display_delete (display);
+    gimp_delete_display (gimp, display);
 
   return procedural_db_return_args (&display_delete_proc, success);
 }
@@ -203,7 +199,7 @@ displays_reconnect_invoker (Gimp        *gimp,
     success = FALSE;
 
   if (success)
-    gimp_displays_reconnect (gimp, old_image, new_image);
+    gimp_reconnect_displays (gimp, old_image, new_image);
 
   return procedural_db_return_args (&displays_reconnect_proc, success);
 }

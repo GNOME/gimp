@@ -1,3 +1,33 @@
+2004-07-10  Michael Natterer  <mitch@gimp.org>
+
+	Removed any remaining GUI dependency from the PDB wrappers:
+
+	* app/core/gimp.[ch]: added vtable entries for the display and
+	help stuff.
+
+	* app/widgets/gimphelp.[ch]: renamed gimp_help() to
+	gimp_help_show().
+
+	* app/gui/gui-vtable.c: implement the new display and help vtable
+	entries.
+
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/help.pdb: use the new functions of the Gimp
+	object instead of using stuff from display/ and widgets/.
+
+	* tools/pdbgen/app.pl: removed bad hacks which enabled including
+	stuff from gui/, display/ and widgets/.
+
+	* app/Makefile.am: link widgets-enums.o, display-enums.o and
+	gimpdisplayoptions.o into the gimp-console binary because they are
+	needed for the config system and don't depend on any GUI stuff.
+
+	* app/pdb/Makefile.am: s/GTK_CFLAGS/GDK_PIXBUF_CFLAGS/
+
+	* app/pdb/display_cmds.c
+	* app/pdb/help_cmds.c: regenerated.
+
 2004-07-10  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/quit-dialog.c (quit_dialog_new): let the labels line-wrap.

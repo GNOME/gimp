@@ -49,6 +49,7 @@
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimpfontselect.h"
 #include "widgets/gimpgradientselect.h"
+#include "widgets/gimphelp.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimppaletteselect.h"
@@ -75,14 +76,24 @@
 
 static void           gui_threads_enter        (Gimp          *gimp);
 static void           gui_threads_leave        (Gimp          *gimp);
+static GimpObject   * gui_get_display_by_ID    (Gimp          *gimp,
+                                                gint           ID);
+static gint           gui_get_display_ID       (GimpObject    *display);
+static GimpObject   * gui_create_display       (GimpImage     *gimage,
+                                                GimpUnit       unit,
+                                                gdouble        scale);
+static void           gui_delete_display       (GimpObject    *display);
+static void           gui_reconnect_displays   (Gimp          *gimp,
+                                                GimpImage     *old_image,
+                                                GimpImage     *new_image);
 static void           gui_set_busy             (Gimp          *gimp);
 static void           gui_unset_busy           (Gimp          *gimp);
 static void           gui_message              (Gimp          *gimp,
                                                 const gchar   *domain,
                                                 const gchar   *message);
-static GimpObject   * gui_create_display       (GimpImage     *gimage,
-                                                GimpUnit       unit,
-                                                gdouble        scale);
+static void           gui_help                 (Gimp          *gimp,
+                                                const gchar   *help_domain,
+                                                const gchar   *help_id);
 static void           gui_menus_init           (Gimp          *gimp,
                                                 GSList        *plug_in_defs,
                                                 const gchar   *plugins_domain);
@@ -135,26 +146,31 @@ gui_vtable_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  gimp->gui_threads_enter_func     = gui_threads_enter;
-  gimp->gui_threads_leave_func     = gui_threads_leave;
-  gimp->gui_set_busy_func          = gui_set_busy;
-  gimp->gui_unset_busy_func        = gui_unset_busy;
-  gimp->gui_message_func           = gui_message;
-  gimp->gui_create_display_func    = gui_create_display;
-  gimp->gui_menus_init_func        = gui_menus_init;
-  gimp->gui_menus_create_func      = gui_menus_create_entry;
-  gimp->gui_menus_delete_func      = gui_menus_delete_entry;
-  gimp->gui_progress_start_func    = gui_start_progress;
-  gimp->gui_progress_restart_func  = gui_restart_progress;
-  gimp->gui_progress_update_func   = gui_update_progress;
-  gimp->gui_progress_end_func      = gui_end_progress;
-  gimp->gui_get_program_class_func = gui_get_program_class;
-  gimp->gui_get_display_name_func  = gui_get_display_name;
-  gimp->gui_get_theme_dir_func     = gui_get_theme_dir;
-  gimp->gui_pdb_dialog_new_func    = gui_pdb_dialog_new;
-  gimp->gui_pdb_dialog_set_func    = gui_pdb_dialog_set;
-  gimp->gui_pdb_dialog_close_func  = gui_pdb_dialog_close;
-  gimp->gui_pdb_dialogs_check_func = gui_pdb_dialogs_check;
+  gimp->gui_threads_enter_func      = gui_threads_enter;
+  gimp->gui_threads_leave_func      = gui_threads_leave;
+  gimp->gui_get_display_by_id_func  = gui_get_display_by_ID;
+  gimp->gui_get_display_id_func     = gui_get_display_ID;
+  gimp->gui_create_display_func     = gui_create_display;
+  gimp->gui_delete_display_func     = gui_delete_display;
+  gimp->gui_reconnect_displays_func = gui_reconnect_displays;
+  gimp->gui_set_busy_func           = gui_set_busy;
+  gimp->gui_unset_busy_func         = gui_unset_busy;
+  gimp->gui_message_func            = gui_message;
+  gimp->gui_help_func               = gui_help;
+  gimp->gui_menus_init_func         = gui_menus_init;
+  gimp->gui_menus_create_func       = gui_menus_create_entry;
+  gimp->gui_menus_delete_func       = gui_menus_delete_entry;
+  gimp->gui_progress_start_func     = gui_start_progress;
+  gimp->gui_progress_restart_func   = gui_restart_progress;
+  gimp->gui_progress_update_func    = gui_update_progress;
+  gimp->gui_progress_end_func       = gui_end_progress;
+  gimp->gui_get_program_class_func  = gui_get_program_class;
+  gimp->gui_get_display_name_func   = gui_get_display_name;
+  gimp->gui_get_theme_dir_func      = gui_get_theme_dir;
+  gimp->gui_pdb_dialog_new_func     = gui_pdb_dialog_new;
+  gimp->gui_pdb_dialog_set_func     = gui_pdb_dialog_set;
+  gimp->gui_pdb_dialog_close_func   = gui_pdb_dialog_close;
+  gimp->gui_pdb_dialogs_check_func  = gui_pdb_dialogs_check;
 }
 
 
@@ -170,6 +186,58 @@ static void
 gui_threads_leave (Gimp *gimp)
 {
   GDK_THREADS_LEAVE ();
+}
+
+static GimpObject *
+gui_get_display_by_ID (Gimp *gimp,
+                       gint  ID)
+{
+  return (GimpObject *) gimp_display_get_by_ID (gimp, ID);
+}
+
+static gint
+gui_get_display_ID (GimpObject *display)
+{
+  return gimp_display_get_ID (GIMP_DISPLAY (display));
+}
+
+static GimpObject *
+gui_create_display (GimpImage *gimage,
+                    GimpUnit   unit,
+                    gdouble    scale)
+{
+  GimpDisplayShell *shell;
+  GimpDisplay      *gdisp;
+  GList            *image_managers;
+
+  image_managers = gimp_ui_managers_from_name ("<Image>");
+
+  gdisp = gimp_display_new (gimage, unit, scale,
+                            global_menu_factory,
+
+                            image_managers->data);
+
+  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
+
+  gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
+
+  gimp_ui_manager_update (shell->menubar_manager, shell);
+
+  return GIMP_OBJECT (gdisp);
+}
+
+static void
+gui_delete_display (GimpObject *display)
+{
+  gimp_display_delete (GIMP_DISPLAY (display));
+}
+
+static void
+gui_reconnect_displays (Gimp      *gimp,
+                        GimpImage *old_image,
+                        GimpImage *new_image)
+{
+  gimp_displays_reconnect (gimp, old_image, new_image);
 }
 
 static void
@@ -220,29 +288,12 @@ gui_message (Gimp        *gimp,
   gimp_message_box (GIMP_STOCK_WARNING, domain, message, NULL, NULL);
 }
 
-static GimpObject *
-gui_create_display (GimpImage *gimage,
-                    GimpUnit   unit,
-                    gdouble    scale)
+void
+gui_help (Gimp        *gimp,
+          const gchar *help_domain,
+          const gchar *help_id)
 {
-  GimpDisplayShell *shell;
-  GimpDisplay      *gdisp;
-  GList            *image_managers;
-
-  image_managers = gimp_ui_managers_from_name ("<Image>");
-
-  gdisp = gimp_display_new (gimage, unit, scale,
-                            global_menu_factory,
-
-                            image_managers->data);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  gimp_context_set_display (gimp_get_user_context (gimage->gimp), gdisp);
-
-  gimp_ui_manager_update (shell->menubar_manager, shell);
-
-  return GIMP_OBJECT (gdisp);
+  gimp_help_show (gimp, help_domain, help_id);
 }
 
 static void
