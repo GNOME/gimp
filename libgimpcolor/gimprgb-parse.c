@@ -234,7 +234,7 @@ gimp_rgb_parse_strip (const gchar *str,
       len = strlen (str);
     }
 
-  while (len > 0 && g_ascii_isspace (str[len]))
+  while (len > 0 && g_ascii_isspace (str[len - 1]))
     len--;
 
   result = g_malloc (len + 1);

@@ -27,6 +27,8 @@ typedef struct
 
 static const ColorSample  samples[] =
 {
+  /* sample                  alpha  fail   red       green     blue     alpha */
+
   { "#000000",               FALSE, FALSE, 0.0,      0.0,      0.0,      0.0 },
   { "#FFff00",               FALSE, FALSE, 1.0,      1.0,      0.0,      0.0 },
   { "#6495ed",               FALSE, FALSE, DBL(100), DBL(149), DBL(237), 0.0 },
@@ -35,9 +37,21 @@ static const ColorSample  samples[] =
   { "rgb(0,0,0)",            FALSE, FALSE, 0.0,      0.0,      0.0,      0.0 },
   { "rgb(100,149,237)",      FALSE, FALSE, DBL(100), DBL(149), DBL(237), 0.0 },
   { "rgba(100%,0,100%,0.5)", TRUE,  FALSE, 255.0,    0.0,      255.0,    0.5 },
+  { "rgba(100%,0,100%,0.5)", FALSE, TRUE,  255.0,    0.0,      255.0,    0.5 },
   { "rgb(100%,149,20%)",     FALSE, FALSE, 1.0,      DBL(149), 0.2,      0.0 },
-  { "red",                   FALSE, FALSE, 1.0,      0.0,      0.0,      0.0 },
-  { "cornflowerblue",        FALSE, FALSE, DBL(100), DBL(149), DBL(237), 0.0 }
+  { "rgb(100%,149,20%)",     TRUE,  TRUE,  1.0,      DBL(149), 0.2,      0.0 },
+  { "rgb(foobar)",           FALSE, TRUE,  0.0,      0.0,      0.0,      0.0 },
+  { "rgb(100,149,237",       FALSE, TRUE,  0.0,      0.0,      0.0,      0.0 },
+  { "rED",                   FALSE, FALSE, 1.0,      0.0,      0.0,      0.0 },
+  { "cornflowerblue",        FALSE, FALSE, DBL(100), DBL(149), DBL(237), 0.0 },
+  { "    red",               FALSE, FALSE, 1.0,      0.0,      0.0,      0.0 },
+  { "red      ",             FALSE, FALSE, 1.0,      0.0,      0.0,      0.0 },
+  { "red",                   TRUE,  TRUE,  1.0,      0.0,      0.0,      0.0 },
+  { "red  blue",             FALSE, TRUE,  0.0,      0.0,      0.0,      0.0 },
+  { "transparent",           FALSE, TRUE,  0.0,      0.0,      0.0,      0.0 },
+  { "transparent",           TRUE,  FALSE, 0.0,      0.0,      0.0,      0.0 },
+  { "23foobar",              FALSE, TRUE,  0.0,      0.0,      0.0,      0.0 },
+  { "",                      FALSE, TRUE,  0.0,      0.0,      0.0,      0.0 }
 };
 
 
@@ -71,7 +85,7 @@ main (void)
   gint failures = 0;
   gint i;
 
-  g_print ("Testing the GIMP color parser ...\n\n");
+  g_print ("\nTesting the GIMP color parser ...\n");
 
   for (i = 0; i < G_N_ELEMENTS (samples); i++)
     {

@@ -1,5 +1,18 @@
 2004-07-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/test-color-parser.c: added more test samples.
+
+	* libgimpcolor/gimprgb-parse.c: fixed a bug that I found with the
+	new tests.
+
+	* app/core/gimpgradient-load.c: changed SVG parser to handle
+	gradients that are defined more deeply in the SVG hierarchy. Added
+	a simplistic CSS style parser to deal with gradient definitions
+	that use CSS to define the gradient stop properties (closes bug
+	#148127).
+
+2004-07-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpdatafactory.c: some newlines to improve error
 	messages.
 
