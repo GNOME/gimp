@@ -79,6 +79,11 @@ GimpItemFactoryEntry vectors_menu_entries[] =
       "<StockItem>", GTK_STOCK_DELETE },
     NULL,
     GIMP_HELP_PATH_DELETE, NULL },
+  { { N_("/Merge _Visible Paths"), "",
+      vectors_merge_visible_cmd_callback, 0,
+      NULL, NULL },
+    NULL,
+    GIMP_HELP_PATH_MERGE_VISIBLE, NULL },
 
   MENU_SEPARATOR ("/---"),
 

@@ -177,6 +177,7 @@
 #define GIMP_HELP_PATH_LOWER_TO_BOTTOM            "gimp-path-lower-to-bottom"
 #define GIMP_HELP_PATH_DUPLICATE                  "gimp-path-duplicate"
 #define GIMP_HELP_PATH_DELETE                     "gimp-path-delete"
+#define GIMP_HELP_PATH_MERGE_VISIBLE              "gimp-path-merge-visible"
 #define GIMP_HELP_PATH_SELECTION_REPLACE          "gimp-path-selection-replace"
 #define GIMP_HELP_PATH_SELECTION_ADD              "gimp-path-selection-add"
 #define GIMP_HELP_PATH_SELECTION_SUBTRACT         "gimp-path-selection-subtract"

@@ -148,6 +148,18 @@ vectors_delete_cmd_callback (GtkWidget *widget,
 }
 
 void
+vectors_merge_visible_cmd_callback (GtkWidget *widget,
+                                    gpointer   data)
+{
+  GimpImage   *gimage;
+  GimpVectors *active_vectors;
+  return_if_no_vectors (gimage, active_vectors, data);
+
+  gimp_image_merge_visible_vectors (gimage);
+  gimp_image_flush (gimage);
+}
+
+void
 vectors_to_selection_cmd_callback (GtkWidget *widget,
                                    gpointer   data,
                                    guint      action)

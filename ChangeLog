@@ -1,3 +1,20 @@
+2003-11-07 Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpvectors.[ch]: New function that appends a
+	duplicate of the source vectors strokes to the list of strokes
+	of a target vectors object.
+
+	* app/core/gimpimage-merge.[ch]
+	* app/core/core-enums.h: Use this new function to merge
+	the visible vectors in an Image. New Undo type for vectors merging.
+
+	* app/core/core-enums.c: regenerated.
+	
+	* app/gui/vectors-menu.c 
+	* app/gui/vectors-commands.[ch]
+	* app/widgets/gimphelp-ids.h: New Menu entry + callback to invoke
+	the merge functionality. New Help ID for the menu entry.
+
 2003-11-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/tool-options-commands.c

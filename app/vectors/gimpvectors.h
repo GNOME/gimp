@@ -94,6 +94,9 @@ void            gimp_vectors_thaw               (GimpVectors       *vectors);
 
 void            gimp_vectors_copy_strokes       (const GimpVectors *src_vectors,
                                                  GimpVectors       *dest_vectors);
+void            gimp_vectors_add_strokes        (const GimpVectors *src_vectors,
+                                                 GimpVectors       *dest_vectors);
+
 
 
 /* accessing / modifying the anchors */

@@ -634,8 +634,6 @@ void
 gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
                            GimpVectors       *dest_vectors)
 {
-  GList *current_lstroke;
-
   g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
   g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
 
@@ -647,14 +645,36 @@ gimp_vectors_copy_strokes (const GimpVectors *src_vectors,
       g_list_free (dest_vectors->strokes);
     }
 
-  dest_vectors->strokes = g_list_copy (src_vectors->strokes);
-  current_lstroke = dest_vectors->strokes;
+  dest_vectors->strokes = NULL;
+
+  gimp_vectors_add_strokes (src_vectors, dest_vectors);
+
+  gimp_vectors_thaw (dest_vectors);
+}
+
+
+void
+gimp_vectors_add_strokes (const GimpVectors *src_vectors,
+                          GimpVectors       *dest_vectors)
+{
+  GList *current_lstroke;
+  GList *strokes_copy;
+
+  g_return_if_fail (GIMP_IS_VECTORS (src_vectors));
+  g_return_if_fail (GIMP_IS_VECTORS (dest_vectors));
+
+  gimp_vectors_freeze (dest_vectors);
+
+  strokes_copy = g_list_copy (src_vectors->strokes);
+  current_lstroke = strokes_copy;
 
   while (current_lstroke)
     {
       current_lstroke->data = gimp_stroke_duplicate (current_lstroke->data);
       current_lstroke = g_list_next (current_lstroke);
     }
+
+  dest_vectors->strokes = g_list_concat (dest_vectors->strokes, strokes_copy);
 
   gimp_vectors_thaw (dest_vectors);
 }

@@ -555,6 +555,7 @@ static const GEnumValue gimp_undo_type_enum_values[] =
   { GIMP_UNDO_GROUP_IMAGE_CONVERT, N_("Convert Image"), "group-image-convert" },
   { GIMP_UNDO_GROUP_IMAGE_CROP, N_("Crop Image"), "group-image-crop" },
   { GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, N_("Merge Layers"), "group-image-layers-merge" },
+  { GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE, N_("Merge Vectors"), "group-image-vectors-merge" },
   { GIMP_UNDO_GROUP_IMAGE_QMASK, N_("QuickMask"), "group-image-qmask" },
   { GIMP_UNDO_GROUP_IMAGE_GRID, N_("Grid"), "group-image-grid" },
   { GIMP_UNDO_GROUP_IMAGE_GUIDE, N_("Guide"), "group-image-guide" },

@@ -394,6 +394,7 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_CONVERT,      /*< desc="Convert Image"               >*/
   GIMP_UNDO_GROUP_IMAGE_CROP,         /*< desc="Crop Image"                  >*/
   GIMP_UNDO_GROUP_IMAGE_LAYERS_MERGE, /*< desc="Merge Layers"                >*/
+  GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,/*< desc="Merge Vectors"               >*/
   GIMP_UNDO_GROUP_IMAGE_QMASK,        /*< desc="QuickMask"                   >*/
   GIMP_UNDO_GROUP_IMAGE_GRID,         /*< desc="Grid"                        >*/
   GIMP_UNDO_GROUP_IMAGE_GUIDE,        /*< desc="Guide"                       >*/

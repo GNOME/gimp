@@ -30,6 +30,8 @@ void   vectors_duplicate_cmd_callback            (GtkWidget   *widget,
                                                   gpointer     data);
 void   vectors_delete_cmd_callback               (GtkWidget   *widget,
                                                   gpointer     data);
+void   vectors_merge_visible_cmd_callback        (GtkWidget   *widget,
+                                                  gpointer     data);
 void   vectors_to_selection_cmd_callback         (GtkWidget   *widget,
                                                   gpointer     data,
                                                   guint        action);
