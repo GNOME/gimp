@@ -623,6 +623,9 @@ gimp_run_procedure (char *name,
         case PARAM_COLOR:
           (void) va_arg (args, guchar*);
           break;
+        case PARAM_PARASITE:
+          (void) va_arg (args, GParasite*);
+          break;
         case PARAM_REGION:
           break;
 	case PARAM_END:
@@ -707,6 +710,22 @@ gimp_run_procedure (char *name,
         case PARAM_PATH:
 	  proc_run.params[i].data.d_path = va_arg (args, gint32);
           break;
+        case PARAM_PARASITE:
+	{
+	  GParasite *p = va_arg (args, GParasite*);
+	  if (p == NULL)
+	    p = gparasite_error();
+	  memcpy(proc_run.params[i].data.d_parasite.creator, p->creator, 4);
+	  memcpy(proc_run.params[i].data.d_parasite.type, p->type, 4);
+	  proc_run.params[i].data.d_parasite.flags   = p->flags;
+	  proc_run.params[i].data.d_parasite.size    = p->size;
+	  if (p->size > 0)
+	    proc_run.params[i].data.d_parasite.data    = g_memdup (p->data,
+								   p->size);
+	  else
+	    proc_run.params[i].data.d_parasite.data    = NULL;
+	    
+	} break;
         case PARAM_STATUS:
 	  proc_run.params[i].data.d_status = va_arg (args, gint32);
           break;

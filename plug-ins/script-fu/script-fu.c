@@ -354,13 +354,14 @@ init_procedures ()
 static void
 init_constants ()
 {
-  GParam *return_vals;
+  GParam *return_vals = NULL;
   gint nreturn_vals;
 
   return_vals = gimp_run_procedure ("gimp_gimprc_query",
 				    &nreturn_vals,
 				    PARAM_STRING, "gimp_data_dir",
 				    PARAM_END);
+
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     setvar (cintern ("gimp-data-dir"), strcons (-1, return_vals[1].data.d_string), NIL);
   gimp_destroy_params (return_vals, nreturn_vals);
@@ -767,6 +768,36 @@ marshall_proc_db_call (LISP a)
 	case PARAM_PATH:
 	  return my_err ("Paths are currently unsupported as arguments", car (a));
 	  break;
+	case PARAM_PARASITE:
+	  if (!TYPEP (car (a), tc_cons))
+	    success = FALSE;
+	  if (success)
+	    {
+	      args[i].type = PARAM_PARASITE;
+
+	      /* parasite->creator */
+	      intermediate_val = car (a);
+	      memcpy(args[i].data.d_parasite.creator,
+		     get_c_string (car (intermediate_val)), 4);
+
+	      /* parasite->type */
+	      intermediate_val = cdr (intermediate_val);
+	      memcpy(args[i].data.d_parasite.type,
+		     get_c_string (car (intermediate_val)), 4);
+
+	      /* parasite->flags */
+	      intermediate_val = cdr (intermediate_val);
+	      args[i].data.d_parasite.flags = get_c_long ( (intermediate_val));
+
+	      /* parasite->size */
+	      intermediate_val = cdr (intermediate_val);
+	      args[i].data.d_parasite.size = (car (intermediate_val))->storage_as.string.dim;
+
+	      /* parasite->data */
+	      args[i].data.d_parasite.data = (void*) (car (intermediate_val))->storage_as.string.data;
+
+	    }
+	  break;
 	case PARAM_STATUS:
 	  return my_err ("Status is for return types, not arguments", car (a));
 	  break;
@@ -916,6 +947,22 @@ marshall_proc_db_call (LISP a)
 	      break;
 	    case PARAM_PATH:
 	      return my_err ("Paths are currently unsupported as return values", NIL);
+	      break;
+	    case PARAM_PARASITE:
+	      {
+		LISP creator, type, flags, data;
+		creator = strcons (4, values[i + 1].data.d_parasite.creator);
+		type    = strcons (4, values[i + 1].data.d_parasite.type);
+		flags   = flocons (values[i + 1].data.d_parasite.flags);
+		data    = arcons (tc_byte_array, values[i+1].data.d_parasite.size, 0);
+		memcpy(data->storage_as.string.data,
+		       values[i+1].data.d_parasite.data, 
+		       values[i+1].data.d_parasite.size); 
+
+		intermediate_val = cons (creator, cons(type, cons(flags,
+								  cons(data, NIL))));
+		return_val = cons (intermediate_val, return_val);
+	      }
 	      break;
 	    case PARAM_STATUS:
 	      return my_err ("Procedural database execution returned multiple status values", NIL);

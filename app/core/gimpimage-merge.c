@@ -25,6 +25,7 @@
 #include "gimage_mask.h"
 #include "paint_funcs.h"
 #include "palette.h"
+#include "parasite.h"
 #include "undo.h"
 #include "gimpsignal.h"
 
@@ -150,6 +151,7 @@ static void gimp_image_init (GimpImage *gimage)
   gimage->comp_preview_valid[1] = FALSE;
   gimage->comp_preview_valid[2] = FALSE;
   gimage->comp_preview = NULL;
+  gimage->parasites = NULL;
   gimage->resolution = 72.0;  /* maybe should be rc-supplied default? */
 }
 
@@ -477,6 +479,8 @@ gimp_image_destroy (GtkObject *object)
 	gimp_image_free_layers (gimage);
 	gimp_image_free_channels (gimage);
 	channel_delete (gimage->selection_mask);
+	if (gimage->parasites)
+	  parasite_gslist_destroy(gimage->parasites);
 }
 
 void
@@ -854,6 +858,26 @@ gimp_image_delete_guide (GimpImage *gimage,
   g_free (guide);
 }
 
+
+Parasite *
+gimp_image_find_parasite (const GimpImage *gimage,
+			  const char *creator, const char *type)
+{
+  return parasite_find_in_gslist(gimage->parasites, creator, type);
+}
+
+void
+gimp_image_attach_parasite (GimpImage *gimage, const Parasite *parasite)
+{
+  gimage->parasites = parasite_add_to_gslist(parasite, gimage->parasites);
+}
+
+void
+gimp_image_detach_parasite (GimpImage *gimage, Parasite *parasite)
+{
+  gimage->parasites = g_slist_remove (gimage->parasites, parasite);
+  parasite_free(parasite);
+}
 
 /************************************************************/
 /*  Projection functions                                    */

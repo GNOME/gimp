@@ -27,6 +27,7 @@
 #include "gimage_mask.h"
 #include "layer.h"
 #include "paint_funcs.h"
+#include "parasite.h"
 #include "temp_buf.h"
 #include "undo.h"
 
@@ -203,6 +204,10 @@ channel_copy (Channel *channel)
 		     GIMP_DRAWABLE(channel)->height, FALSE);
   pixel_region_init (&destPR, GIMP_DRAWABLE(new_channel)->tiles, 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height, TRUE);
   copy_region (&srcPR, &destPR);
+
+  /* copy the parasites */
+  GIMP_DRAWABLE(new_channel)->parasites 
+    = parasite_gslist_copy(GIMP_DRAWABLE(channel)->parasites);
 
   /*  free up the channel_name memory  */
   g_free (channel_name);

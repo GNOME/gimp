@@ -38,6 +38,8 @@ struct _GimpDrawable
   int type;				/* type of drawable */
   int has_alpha;			/* drawable has alpha */
 
+  GSList *parasites;                    /* Plug-in parasite data   */
+
   /*  Preview variables  */
   TempBuf *preview;			/* preview of the channel */
   int preview_valid;			/* is the preview valid? */

@@ -28,6 +28,8 @@
 #include <sys/stat.h>
 #include <time.h>
 #include <unistd.h>
+#include "parasite.h"
+#include "parasiteP.h" /* ick */
 
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
@@ -2624,6 +2626,13 @@ plug_in_params_to_args (GPParam *params,
 	case PDB_PATH:
 	  args[i].value.pdb_int = params[i].data.d_path;
 	  break;
+	case PDB_PARASITE:
+	  if (full_copy)
+	    args[i].value.pdb_pointer = parasite_copy ((Parasite *)
+						&(params[i].data.d_parasite));
+	  else
+	    args[i].value.pdb_pointer = (void *)&(params[i].data.d_parasite);
+	  break;
 	case PDB_STATUS:
 	  args[i].value.pdb_int = params[i].data.d_status;
 	  break;
@@ -2782,6 +2791,35 @@ plug_in_args_to_params (Argument *args,
 	case PDB_PATH:
 	  params[i].data.d_path = args[i].value.pdb_int;
 	  break;
+	case PDB_PARASITE:
+	  if (full_copy)
+	    {
+	      Parasite *tmp;
+	      tmp = parasite_copy (args[i].value.pdb_pointer);
+	      if (tmp == NULL)
+	      {
+		params[i].data.d_parasite.size = 0;
+		params[i].data.d_parasite.data = 0;
+	      }
+	      else
+	      {
+		memcpy (&params[i].data.d_parasite, tmp, sizeof(Parasite));
+		g_free(tmp);
+	      }
+	    }
+	  else
+	    {
+	      if (args[i].value.pdb_pointer == NULL)
+	      {
+		params[i].data.d_parasite.size = 0;
+		params[i].data.d_parasite.data = 0;
+	      }
+	      else
+		memcpy (&params[i].data.d_parasite,
+			(Parasite *)(args[i].value.pdb_pointer),
+			sizeof(Parasite));
+	    }
+	  break;
 	case PDB_STATUS:
 	  params[i].data.d_status = args[i].value.pdb_int;
 	  break;
@@ -2850,6 +2888,15 @@ plug_in_params_destroy (GPParam *params,
 	case PDB_SELECTION:
 	case PDB_BOUNDARY:
 	case PDB_PATH:
+	  break;
+	case PDB_PARASITE:
+	  if (full_destroy)
+	    if (params[i].data.d_parasite.data)
+	    {
+	      g_free (params[i].data.d_parasite.data);
+	      params[i].data.d_parasite.data = 0;
+	    }
+	  break;
 	case PDB_STATUS:
 	  break;
 	case PDB_END:
@@ -2924,6 +2971,14 @@ plug_in_args_destroy (Argument *args,
 	case PDB_SELECTION:
 	case PDB_BOUNDARY:
 	case PDB_PATH:
+	  break;
+	case PDB_PARASITE:
+	  if (full_destroy)
+	  {
+/*	    parasite_free ((Parasite *)(args[i].value.pdb_pointer));
+	    args[i].value.pdb_pointer = NULL; */
+	  }
+	  break;
 	case PDB_STATUS:
 	  break;
 	case PDB_END:

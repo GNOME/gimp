@@ -910,6 +910,66 @@ gimp_image_set_filename (gint32  image_ID,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
+GParasite *
+gimp_image_find_parasite (gint32 image_ID,
+			     const char *creator,
+			     const char *type)
+
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  GParasite *parasite;
+  return_vals = gimp_run_procedure ("gimp_image_find_parasite",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_STRING, creator,
+				    PARAM_STRING, type,
+				    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  {
+    parasite = gparasite_copy(&return_vals[1].data.d_parasite);
+  }
+  else
+    parasite = NULL;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+  
+  return parasite;
+}
+
+void
+gimp_image_attach_parasite (gint32 image_ID,
+			       const GParasite *p)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_image_attach_parasite",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_PARASITE, p,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_image_detach_parasite (gint32 image_ID,
+			       GParasite *p)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_image_detach_parasite",
+				    &nreturn_vals,
+				    PARAM_IMAGE, image_ID,
+				    PARAM_PARASITE, p,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
 float
 gimp_image_get_resolution (gint32  image_ID)
 {
@@ -946,3 +1006,4 @@ gimp_image_set_resolution (gint32  image_ID,
 
   gimp_destroy_params (return_vals, nreturn_vals);
 }
+

@@ -22,7 +22,6 @@
 
 #include <glib.h>
 
-
 /* Increment every time the protocol changes
  */
 #define GP_VERSION 0x0003
@@ -122,6 +121,14 @@ struct _GPParam
     gint32 d_selection;
     gint32 d_boundary;
     gint32 d_path;
+    struct
+    {
+      guchar creator[4];
+      guchar type[4];
+      guint32 flags;
+      guint32 size;
+      void *data;
+    } d_parasite;
     gint32 d_status;
   } data;
 };

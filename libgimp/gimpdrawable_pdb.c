@@ -575,3 +575,66 @@ gimp_drawable_get_tile2 (GDrawable *drawable,
 
   return gimp_drawable_get_tile (drawable, shadow, row, col);
 }
+
+GParasite *
+gimp_drawable_find_parasite (gint32 drawable_ID,
+			     const char *creator,
+			     const char *type)
+
+{
+  GParam *return_vals;
+  int nreturn_vals;
+  GParasite *parasite;
+  return_vals = gimp_run_procedure ("gimp_drawable_find_parasite",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_STRING, creator,
+				    PARAM_STRING, type,
+				    PARAM_END);
+
+  if (return_vals[0].data.d_status == STATUS_SUCCESS)
+  {
+    parasite = gparasite_copy(&return_vals[1].data.d_parasite);
+  }
+  else
+    parasite = NULL;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+  
+  return parasite;
+}
+
+void
+gimp_drawable_attach_parasite (gint32 drawable_ID,
+			       const GParasite *p)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_attach_parasite",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_PARASITE, p,
+				    PARAM_END);
+
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+void
+gimp_drawable_detach_parasite (gint32 drawable_ID,
+			       GParasite *p)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_drawable_detach_parasite",
+				    &nreturn_vals,
+				    PARAM_DRAWABLE, drawable_ID,
+				    PARAM_PARASITE, p,
+				    PARAM_END);
+
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+

@@ -71,6 +71,7 @@
 #include "text_tool.h"
 #include "threshold.h"
 #include "undo_cmds.h"
+#include "parasite_cmds.h"
 #include "procedural_db.h"
 
 
@@ -79,7 +80,8 @@ internal_procs_init ()
 {
   gfloat pcount = 0;
   /* grep -c procedural_db_register internal_procs.c */
-  gfloat total_pcount = 219;
+  gfloat total_pcount = 235;
+
   app_init_update_status("Internal Procedures", "Tool procedures",
 			 pcount/total_pcount);
 
@@ -188,6 +190,9 @@ internal_procs_init ()
   procedural_db_register (&gimp_image_findnext_guide_proc); pcount++;
   procedural_db_register (&gimp_image_get_guide_orientation_proc); pcount++;
   procedural_db_register (&gimp_image_get_guide_position_proc); pcount++;
+  procedural_db_register (&gimp_image_find_parasite_proc); pcount++;
+  procedural_db_register (&gimp_image_attach_parasite_proc); pcount++;
+  procedural_db_register (&gimp_image_detach_parasite_proc); pcount++;
 
   app_init_update_status(NULL, "GImage mask procedures",
 			 pcount/total_pcount);
@@ -285,6 +290,9 @@ internal_procs_init ()
   procedural_db_register (&drawable_channel_proc); pcount++;
   procedural_db_register (&drawable_set_pixel_proc); pcount++;
   procedural_db_register (&drawable_get_pixel_proc); pcount++;
+  procedural_db_register (&gimp_drawable_find_parasite_proc); pcount++;
+  procedural_db_register (&gimp_drawable_attach_parasite_proc); pcount++;
+  procedural_db_register (&gimp_drawable_detach_parasite_proc); pcount++;
 
   app_init_update_status(NULL, "Floating selections",
 			 pcount/total_pcount);
@@ -372,8 +380,16 @@ internal_procs_init ()
   procedural_db_register (&channel_ops_duplicate_proc); pcount++;
   procedural_db_register (&channel_ops_offset_proc); pcount++;
 
+  app_init_update_status(NULL, "gimprc ops",
+			 pcount/total_pcount);
   /*  Gimprc procedures  */
   procedural_db_register (&gimprc_query_proc); pcount++;
+
+  app_init_update_status(NULL, "parasites",
+			 pcount/total_pcount);
+
+  /*  parasite procedures  */
+  procedural_db_register (&parasite_new_proc); pcount++;
 
   app_init_update_status(NULL, "Procedural database",
 			 pcount/total_pcount);

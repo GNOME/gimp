@@ -8,6 +8,7 @@
 #include "drawable.h"
 #include "channel.h"
 #include "layer.h"
+#include "parasiteF.h"
 #include "temp_buf.h"
 #include "tile_manager.h"
 
@@ -126,6 +127,11 @@ void            gimp_image_add_guide              (GimpImage *, Guide *);
 void            gimp_image_remove_guide           (GimpImage *, Guide *);
 void            gimp_image_delete_guide           (GimpImage *, Guide *);
 
+Parasite *      gimp_image_find_parasite          (const GimpImage *,
+						   const char *creator,
+						   const char *type);
+void            gimp_image_attach_parasite        (GimpImage *, const Parasite *);
+void            gimp_image_detach_parasite        (GimpImage *, Parasite *);
 
 /*  layer/channel functions  */
 

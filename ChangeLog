@@ -1,3 +1,48 @@
+Thu Oct  8 01:01:18 1998  Jay Cox  (jaycox@earthlink.net)
+
+	* app/Makefile.am
+	* app/channel.c
+	* app/drawable_cmds.c
+	* app/drawable_cmds.h
+	* app/gimage_cmds.c
+	* app/gimage_cmds.h
+	* app/gimpdrawable.c
+	* app/gimpdrawable.h
+	* app/gimpdrawableP.h
+	* app/gimpimage.c
+	* app/gimpimage.h
+	* app/gimpimageP.h
+	* app/internal_procs.c
+	* app/layer.c
+	* app/plug_in.c
+	* app/procedural_db.c
+	* app/procedural_db.h
+	* libgimp/Makefile.am
+	* libgimp/gimp.c
+	* libgimp/gimp.h
+	* libgimp/gimpdrawable.c
+	* libgimp/gimpenums.h
+	* libgimp/gimpimage.c
+	* libgimp/gimpprotocol.c
+	* libgimp/gimpprotocol.h
+	* libgimp/gimpprotocol.h
+	* libgimp/gimpparasite.c (new file)
+	* libgimp/gimpparasite.h (new file)
+	* app/parasite.h (new file)
+	* app/parasite.c (new file)
+	* app/parasiteP.h (new file)
+	* app/parasiteF.h (new file)
+	* app/parasite_cmds.c (new file)
+	* app/parasite_cmds.h (new file)
+	* plug-ins/dbbrowser/dbbrowser_utils.c
+	* plug-ins/script-fu/script-fu.c:
+	Allow plug-ins (and scripts) to attach arbitrary data
+	(parasites) to images, layers and channels that can be read
+	back at a later time.
+
+	* plug-ins/tiff/tiff.c: Utilize parasites to keep track of the
+	compression type and byte ordering of tiff files.
+
 Wed Oct  7 01:52:01 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/text_tool.[ch]: applied gimp-austin-981007-0, use gtkfontsel

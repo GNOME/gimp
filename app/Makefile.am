@@ -227,6 +227,12 @@ gimp_SOURCES = \
 	paint_funcs.h		\
 	paintbrush.c		\
 	paintbrush.h		\
+	parasite.c		\
+	parasite.h		\
+	parasiteP.h		\
+	parasiteF.h		\
+	parasite_cmds.c		\
+	parasite_cmds.h		\
 	pattern_header.h	\
 	pattern_select.c	\
 	pattern_select.h	\

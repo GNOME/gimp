@@ -24,6 +24,7 @@
 #include "gimpsignal.h"
 #include "gimage.h"
 #include "gimage_mask.h"
+#include "parasite.h"
 
 
 enum {
@@ -358,6 +359,28 @@ gimp_drawable_set_name (GimpDrawable *drawable, char *name)
   drawable->name = g_strdup(name);
 }
 
+
+Parasite *
+gimp_drawable_find_parasite (const GimpDrawable *drawable,
+			  const char *creator, const char *type)
+{
+  return parasite_find_in_gslist(drawable->parasites, creator, type);
+}
+
+void
+gimp_drawable_attach_parasite (GimpDrawable *drawable, const Parasite *parasite)
+{
+  drawable->parasites = parasite_add_to_gslist(parasite, drawable->parasites);
+}
+
+void
+gimp_drawable_detach_parasite (GimpDrawable *drawable, Parasite *parasite)
+{
+  drawable->parasites = g_slist_remove (drawable->parasites, parasite);
+  parasite_free(parasite);
+}
+
+
 int
 gimp_drawable_type_with_alpha (GimpDrawable *drawable)
 {
@@ -515,6 +538,7 @@ gimp_drawable_init (GimpDrawable *drawable)
   drawable->has_alpha = FALSE;
   drawable->preview = NULL;
   drawable->preview_valid = FALSE;
+  drawable->parasites = FALSE;
 
   drawable->ID = global_drawable_ID++;
   if (gimp_drawable_table == NULL)
@@ -542,6 +566,9 @@ gimp_drawable_destroy (GtkObject *object)
 
   if (drawable->preview)
     temp_buf_free (drawable->preview);
+
+  if (drawable->parasites)
+    parasite_gslist_destroy(drawable->parasites);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     (*GTK_OBJECT_CLASS (parent_class)->destroy) (object);

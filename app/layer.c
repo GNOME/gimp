@@ -371,6 +371,10 @@ layer_copy (layer, add_alpha)
       new_layer->show_mask = layer->show_mask;
     }
 
+  /* copy the parasites */
+  GIMP_DRAWABLE(new_layer)->parasites 
+    = parasite_gslist_copy(GIMP_DRAWABLE(layer)->parasites);
+
  cleanup:
   /*  free up the layer_name memory  */
   g_free (layer_name);

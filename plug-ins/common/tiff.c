@@ -186,16 +186,26 @@ run (char    *name,
     }
   else if (strcmp (name, "file_tiff_save") == 0)
     {
+      int image = param[1].data.d_int32;
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
+	{
+	  GParasite *parasite;
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_tiff_save", &tsvals);
+	  parasite = gimp_image_find_parasite(image, "tiff", "sopt");
+	  if (!gparasite_is_error(parasite))
+	  {
+	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
+	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
+	  }
+	  gparasite_free(parasite);
 
 	  /*  First acquire information with a dialog  */
 	  if (! save_dialog ())
 	    return;
-	  break;
+	} break;
 
 	case RUN_NONINTERACTIVE:
 	  /*  Make sure all the arguments are there!  */
@@ -220,7 +230,17 @@ run (char    *name,
 
 	case RUN_WITH_LAST_VALS:
 	  /*  Possibly retrieve data  */
+	{
+	  GParasite *parasite;
 	  gimp_get_data ("file_tiff_save", &tsvals);
+	  parasite = gimp_image_find_parasite(image, "tiff", "sopt");
+	  if (!gparasite_is_error(parasite))
+	  {
+	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
+	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
+	  }
+	  gparasite_free(parasite);
+	}
 	  break;
 
 	default:
@@ -272,6 +292,9 @@ static gint32 load_image (char *filename) {
 
   channel_data *channel= NULL;
 
+  TiffSaveVals save_vals;
+  GParasite *parasite;
+  guint16 tmp;
   tif = TIFFOpen (filename, "r");
   if (!tif) {
     g_message("TIFF Can't open \n%s", filename);
@@ -363,6 +386,19 @@ static gint32 load_image (char *filename) {
     gimp_quit ();
   }
   gimp_image_set_filename (image, filename);
+
+  /* attach a parasite containing the compression/fillorder */
+  if (!TIFFGetField (tif, TIFFTAG_COMPRESSION, &tmp))
+    save_vals.compression = COMPRESSION_NONE;
+  else
+    save_vals.compression = tmp;
+  if (!TIFFGetField (tif, TIFFTAG_FILLORDER, &tmp))
+    save_vals.fillorder = FILLORDER_LSB2MSB;
+  else
+    save_vals.fillorder = tmp;
+  parasite = gparasite_new("tiff", "sopt", 0, sizeof(save_vals), &save_vals);
+  gimp_image_attach_parasite(image, parasite);
+  gparasite_free(parasite);
 
 
   /* any resolution info in the file? */
@@ -741,6 +777,8 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
       break;
     case INDEXEDA_IMAGE:
       return 0;
+     default:
+       return 0;
     }
 
   if (rowsperstrip == 0)

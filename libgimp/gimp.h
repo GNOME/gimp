@@ -23,6 +23,7 @@
 #include <glib.h>
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimpfeatures.h>
+#include <libgimp/gimpparasite.h>
 
 
 #ifdef __cplusplus
@@ -157,6 +158,7 @@ union _GParamData
   gint32 d_selection;
   gint32 d_boundary;
   gint32 d_path;
+  GParasite d_parasite;
   gint32 d_status;
 };
 
@@ -425,6 +427,13 @@ void       gimp_image_set_component_visible (gint32     image_ID,
 					     gint       visible);
 void       gimp_image_set_filename          (gint32     image_ID,
 					     char      *name);
+GParasite *gimp_image_find_parasite         (gint32     image_ID,
+					     const char *creator,
+					     const char *type);
+void       gimp_image_attach_parasite       (gint32      image_ID,
+					     const GParasite *p);
+void       gimp_image_detach_parasite       (gint32      image_ID,
+					     GParasite  *p);
 void       gimp_image_set_resolution        (gint32     image_ID,
 					     float      resolution);
 float      gimp_image_get_resolution        (gint32     image_ID);
@@ -520,6 +529,13 @@ void          gimp_layer_set_show_mask             (gint32        layer_ID,
 						    gint          show_mask);
 void          gimp_layer_set_visible               (gint32        layer_ID,
 						    gint          visible);
+GParasite    *gimp_layer_find_parasite             (gint32        image_ID,
+						    const char   *creator,
+						    const char   *type);
+void          gimp_layer_attach_parasite           (gint32        layer_ID,
+						    const GParasite *p);
+void          gimp_layer_detach_parasite           (gint32        layer_ID,
+						    GParasite    *p);
 
 
 /****************************************
@@ -611,7 +627,13 @@ GTile*        gimp_drawable_get_tile2    (GDrawable *drawable,
 					  gint       shadow,
 					  gint       x,
 					  gint       y);
-
+GParasite *gimp_drawable_find_parasite   (gint32      drawable,
+					  const char *creator,
+					  const char *type);
+void       gimp_drawable_attach_parasite (gint32      drawable,
+					  const GParasite *p);
+void       gimp_drawable_detach_parasite (gint32      drawable,
+					  GParasite  *p);
 
 /****************************************
  *               GTiles                  *

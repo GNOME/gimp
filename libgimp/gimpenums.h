@@ -94,9 +94,11 @@ typedef enum
   PARAM_SELECTION,
   PARAM_BOUNDARY,
   PARAM_PATH,
+  PARAM_PARASITE,
   PARAM_STATUS,
   PARAM_END
 } GParamType;
+
 
 typedef enum
 {

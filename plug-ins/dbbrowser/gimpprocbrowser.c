@@ -649,6 +649,7 @@ GParamType2char(GParamType t)
   case PARAM_SELECTION: return "SELECTION";
   case PARAM_BOUNDARY: return "BOUNDARY";
   case PARAM_PATH: return "PATH";
+  case PARAM_PARASITE: return "PARASITE";
   case PARAM_STATUS: return "STATUS";
   case PARAM_END: return "END";
   default: return "UNKNOWN?";

@@ -25,6 +25,7 @@
 #include "gimage.h"
 #include "gimage_cmds.h"
 #include "floating_sel.h"
+#include "parasite.h"
 #include "undo.h"
 
 #include "layer_pvt.h"			/* ick. */
@@ -44,6 +45,10 @@ static Argument* gimp_image_findnext_guide_invoker        (Argument*);
 static Argument* gimp_image_get_guide_orientation_invoker (Argument*);
 static Argument* gimp_image_get_guide_position_invoker    (Argument*);
 
+/* The Parasite procs prototypes */
+static Argument *gimp_image_find_parasite_invoker (Argument *);
+static Argument *gimp_image_attach_parasite_invoker (Argument *);
+static Argument *gimp_image_detach_parasite_invoker (Argument *);
 
 
 static GImage * duplicate  (GImage *gimage);
@@ -4308,3 +4313,244 @@ gimp_image_get_guide_position_invoker (Argument *args)
 
   return return_args;
 }
+
+/***************** Parasitic Stuff *****************/
+
+/*** gimp_image_find_parasite ***/
+ProcArg gimp_image_find_parasite_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the input image"
+  },
+  { PDB_STRING,
+    "creator",
+    "The creator ID of the parasite to find"
+  },
+  { PDB_STRING,
+    "type",
+    "The type ID of the parasite to find"
+  }
+};
+
+ProcArg gimp_image_find_parasite_out_args[] =
+{
+  { PDB_PARASITE,
+    "parasite",
+    "the found parasite"
+  },
+};
+
+ProcRecord gimp_image_find_parasite_proc =
+{
+  "gimp_image_find_parasite",
+  "Finds a parasite of a specified type and creator in an image.",
+  "Finds a parasite of a specified type and creator in an image.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  3,
+  gimp_image_find_parasite_args,
+
+  /*  Output arguments  */
+  1,
+  gimp_image_find_parasite_out_args,
+
+  /*  Exec method  */
+  { { gimp_image_find_parasite_invoker } },
+};
+
+
+static Argument *
+gimp_image_find_parasite_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GImage *gimage;
+  Argument *return_args;
+  char *creator, *type;
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  /*  creator  */
+  if (success)
+    {
+      creator = (char *) args[1].value.pdb_pointer;
+    }
+
+  /*  type  */
+  if (success)
+    {
+      type = (char *) args[2].value.pdb_pointer;
+    }
+
+  return_args = procedural_db_return_args (&gimp_image_find_parasite_proc,
+					   success);
+  /*  The real work  */
+  if (success)
+    {
+      return_args[1].value.pdb_pointer = 
+	gimp_image_find_parasite (gimage, creator, type);
+      if (return_args[1].value.pdb_pointer == NULL)
+	return_args[1].value.pdb_pointer = parasite_error();
+    }
+
+  return return_args;
+}
+
+/*** gimp_image_attach_parasite ***/
+
+ProcArg gimp_image_attach_parasite_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the input image"
+  },
+  { PDB_PARASITE,
+    "parasite",
+    "The parasite to attach to the image"
+  }
+};
+
+ProcRecord gimp_image_attach_parasite_proc =
+{
+  "gimp_image_attach_parasite",
+  "Add a parasite to an image",
+  "This procedure attaches a parasite to an image.  It has no return values.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimp_image_attach_parasite_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimp_image_attach_parasite_invoker } },
+};
+
+
+static Argument *
+gimp_image_attach_parasite_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GImage *gimage;
+  Parasite *parasite = NULL;
+  Argument *return_args;
+
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      parasite = (Parasite *)args[1].value.pdb_pointer;
+      if (parasite == NULL)
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      gimp_image_attach_parasite (gimage, parasite);
+    }
+
+  return_args = procedural_db_return_args (&gimp_image_attach_parasite_proc,
+					   success);
+
+  return return_args;
+}
+
+
+/*** gimp_image_detach_parasite ***/
+
+ProcArg gimp_image_detach_parasite_args[] =
+{
+  { PDB_IMAGE,
+    "image",
+    "the input image"
+  },
+  { PDB_PARASITE,
+    "parasite",
+    "The parasite to detach to the image"
+  }
+};
+
+ProcRecord gimp_image_detach_parasite_proc =
+{
+  "gimp_image_detach_parasite",
+  "Add a parasite to an image",
+  "This procedure detaches a parasite to an image.  It has no return values.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimp_image_detach_parasite_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimp_image_detach_parasite_invoker } },
+};
+
+
+static Argument *
+gimp_image_detach_parasite_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GImage *gimage;
+  Parasite *parasite = NULL;
+  Argument *return_args;
+
+
+  /*  the gimage  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gimage = gimage_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      parasite = (Parasite *)args[1].value.pdb_pointer;
+      if (parasite == NULL)
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      gimp_image_detach_parasite (gimage, parasite);
+    }
+
+  return_args = procedural_db_return_args (&gimp_image_detach_parasite_proc,
+					   success);
+
+  return return_args;
+}
+

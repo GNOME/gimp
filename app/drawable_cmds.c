@@ -22,6 +22,7 @@
 #include "gimage.h"
 #include "drawable.h"
 #include "drawable_cmds.h"
+#include "parasite.h"
 
 #include "tile.h"			/* ick. */
 
@@ -1442,3 +1443,250 @@ ProcRecord drawable_get_pixel_proc =
   /*  Exec method  */
   { { drawable_get_pixel_invoker } },
 };
+
+/***************** Parasitic Stuff *****************/
+
+/* The Parasite procs prototypes */
+static Argument *gimp_drawable_find_parasite_invoker (Argument *);
+static Argument *gimp_drawable_attach_parasite_invoker (Argument *);
+static Argument *gimp_drawable_detach_parasite_invoker (Argument *);
+
+
+
+/*** gimp_drawable_find_parasite ***/
+ProcArg gimp_drawable_find_parasite_args[] =
+{
+  { PDB_DRAWABLE,
+    "drawable",
+    "the input drawable"
+  },
+  { PDB_STRING,
+    "creator",
+    "The creator ID of the parasite to find"
+  },
+  { PDB_STRING,
+    "type",
+    "The type ID of the parasite to find"
+  }
+};
+
+ProcArg gimp_drawable_find_parasite_out_args[] =
+{
+  { PDB_PARASITE,
+    "parasite",
+    "the found parasite"
+  },
+};
+
+ProcRecord gimp_drawable_find_parasite_proc =
+{
+  "gimp_drawable_find_parasite",
+  "Finds a parasite of a specified type and creator in an drawable.",
+  "Finds a parasite of a specified type and creator in an drawable.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  3,
+  gimp_drawable_find_parasite_args,
+
+  /*  Output arguments  */
+  1,
+  gimp_drawable_find_parasite_out_args,
+
+  /*  Exec method  */
+  { { gimp_drawable_find_parasite_invoker } },
+};
+
+static Argument *
+gimp_drawable_find_parasite_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GimpDrawable *gdrawable;
+  Argument *return_args;
+  char *creator, *type;
+
+  /*  the GimpDrawable  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gdrawable = gimp_drawable_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  /*  creator  */
+  if (success)
+    {
+      creator = (char *) args[1].value.pdb_pointer;
+    }
+
+  /*  type  */
+  if (success)
+    {
+      type = (char *) args[2].value.pdb_pointer;
+    }
+
+  return_args = procedural_db_return_args (&gimp_drawable_find_parasite_proc,
+					   success);
+  /*  The real work  */
+  if (success)
+    {
+      return_args[1].value.pdb_pointer = 
+	gimp_drawable_find_parasite (gdrawable, creator, type);
+      if (return_args[1].value.pdb_pointer == NULL)
+	return_args[1].value.pdb_pointer = parasite_error();
+    }
+
+  return return_args;
+}
+
+/*** gimp_drawable_attach_parasite ***/
+
+ProcArg gimp_drawable_attach_parasite_args[] =
+{
+  { PDB_DRAWABLE,
+    "drawable",
+    "the input drawable"
+  },
+  { PDB_PARASITE,
+    "parasite",
+    "The parasite to attach to the drawable"
+  }
+};
+
+ProcRecord gimp_drawable_attach_parasite_proc =
+{
+  "gimp_drawable_attach_parasite",
+  "Add a parasite to an drawable",
+  "This procedure attaches a parasite to an drawable.  It has no return values.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimp_drawable_attach_parasite_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimp_drawable_attach_parasite_invoker } },
+};
+
+
+static Argument *
+gimp_drawable_attach_parasite_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GimpDrawable *gdrawable;
+  Parasite *parasite = NULL;
+  Argument *return_args;
+
+
+  /*  the GimpDrawable  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gdrawable = gimp_drawable_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      parasite = (Parasite *)args[1].value.pdb_pointer;
+      if (parasite == NULL)
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      gimp_drawable_attach_parasite (gdrawable, parasite);
+    }
+
+  return_args = procedural_db_return_args (&gimp_drawable_attach_parasite_proc,
+					   success);
+
+  return return_args;
+}
+
+
+/*** gimp_drawable_detach_parasite ***/
+
+ProcArg gimp_drawable_detach_parasite_args[] =
+{
+  { PDB_DRAWABLE,
+    "drawable",
+    "the input drawable"
+  },
+  { PDB_PARASITE,
+    "parasite",
+    "The parasite to detach to the drawable"
+  }
+};
+
+ProcRecord gimp_drawable_detach_parasite_proc =
+{
+  "gimp_drawable_detach_parasite",
+  "Add a parasite to an drawable",
+  "This procedure detaches a parasite to an drawable.  It has no return values.",
+  "Jay Cox",
+  "Jay Cox",
+  "1998",
+  PDB_INTERNAL,
+
+  /*  Input arguments  */
+  2,
+  gimp_drawable_detach_parasite_args,
+
+  /*  Output arguments  */
+  0,
+  NULL,
+
+  /*  Exec method  */
+  { { gimp_drawable_detach_parasite_invoker } },
+};
+
+
+static Argument *
+gimp_drawable_detach_parasite_invoker (Argument *args)
+{
+  int success = TRUE;
+  int int_value;
+  GimpDrawable *gdrawable;
+  Parasite *parasite = NULL;
+  Argument *return_args;
+
+
+  /*  the GimpDrawable  */
+  if (success)
+    {
+      int_value = args[0].value.pdb_int;
+      if (! (gdrawable = gimp_drawable_get_ID (int_value)))
+        success = FALSE;
+    }
+
+  if (success)
+    {
+      parasite = (Parasite *)args[1].value.pdb_pointer;
+      if (parasite == NULL)
+	success = FALSE;
+    }
+
+  if (success)
+    {
+      gimp_drawable_detach_parasite (gdrawable, parasite);
+    }
+
+  return_args = procedural_db_return_args (&gimp_drawable_detach_parasite_proc,
+					   success);
+
+  return return_args;
+}
+

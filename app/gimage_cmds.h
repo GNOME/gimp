@@ -77,4 +77,8 @@ extern ProcRecord gimp_image_findnext_guide_proc;
 extern ProcRecord gimp_image_get_guide_orientation_proc;
 extern ProcRecord gimp_image_get_guide_position_proc;
 
+extern ProcRecord gimp_image_find_parasite_proc;
+extern ProcRecord gimp_image_attach_parasite_proc;
+extern ProcRecord gimp_image_detach_parasite_proc;
+
 #endif  /*  __GIMAGE_CMDS_H__  */

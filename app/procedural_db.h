@@ -43,6 +43,7 @@ typedef enum
   PDB_SELECTION,
   PDB_BOUNDARY,
   PDB_PATH,
+  PDB_PARASITE,
   PDB_STATUS,
   PDB_END
 } PDBArgType;

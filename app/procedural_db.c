@@ -26,6 +26,7 @@
 #include "gdisplay.h"
 #include "plug_in.h"
 #include "procedural_db.h"
+#include "parasite.h"
 #include "config.h"
 #include "regex.h"
 
@@ -99,6 +100,7 @@ static char *type_str[] =
   "PDB_SELECTION",
   "PDB_BOUNDARY",
   "PDB_PATH",
+  "PDB_PARASITE",
   "PDB_STATUS",
   "PDB_END"
 };
@@ -234,7 +236,7 @@ static ProcArg procedural_db_proc_arg_out_args[] =
 {
   { PDB_INT32,
     "arg_type",
-    "the type of argument { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_STATUS (20) }"
+    "the type of argument { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }"
   },
   { PDB_STRING,
     "arg_name",
@@ -288,7 +290,7 @@ static ProcArg procedural_db_proc_val_out_args[] =
 {
   { PDB_INT32,
     "val_type",
-    "the type of return value { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_STATUS (20) }"
+    "the type of return value { PDB_INT32 (0), PDB_INT16 (1), PDB_INT8 (2), PDB_FLOAT (3), PDB_STRING (4), PDB_INT32ARRAY (5), PDB_INT16ARRAY (6), PDB_INT8ARRAY (7), PDB_FLOATARRAY (8), PDB_STRINGARRAY (9), PDB_COLOR (10), PDB_REGION (11), PDB_DISPLAY (12), PDB_IMAGE (13), PDB_LAYER (14), PDB_CHANNEL (15), PDB_DRAWABLE (16), PDB_SELECTION (17), PDB_BOUNDARY (18), PDB_PATH (19), PDB_PARASITE (20), PDB_STATUS (21) }"
   },
   { PDB_STRING,
     "val_name",
@@ -734,6 +736,11 @@ procedural_db_run_proc (gchar *name,
         case PDB_SELECTION:
         case PDB_BOUNDARY:
         case PDB_PATH:
+	  params[i].value.pdb_int = (gint32) va_arg (args, int);
+	  break;
+        case PDB_PARASITE:
+          params[i].value.pdb_pointer = va_arg (args, void *);
+          break;
         case PDB_STATUS:
 	  params[i].value.pdb_int = (gint32) va_arg (args, int);
 	  break;
@@ -825,6 +832,7 @@ procedural_db_destroy_args (Argument *args,
 	case PDB_SELECTION:
 	case PDB_BOUNDARY:
 	case PDB_PATH:
+	case PDB_PARASITE:
 	case PDB_STATUS:
 	case PDB_END:
 	  break;

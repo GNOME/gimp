@@ -23,6 +23,7 @@
 #include "tile_manager.h"
 #include "temp_buf.h"
 #include "gimpimageF.h"
+#include "parasiteF.h"
 
 #define GIMP_TYPE_DRAWABLE                  (gimp_drawable_get_type ())
 #define GIMP_DRAWABLE(obj)                  (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
@@ -71,6 +72,12 @@ void             gimp_drawable_offsets            (GimpDrawable *,
 unsigned char *  gimp_drawable_cmap               (GimpDrawable *);
 char *		 gimp_drawable_get_name	          (GimpDrawable *);
 void 		 gimp_drawable_set_name	          (GimpDrawable *, char *);
+
+Parasite *       gimp_drawable_find_parasite      (const GimpDrawable *,
+						   const char *creator,
+						   const char *type);
+void             gimp_drawable_attach_parasite    (GimpDrawable *, const Parasite *);
+void             gimp_drawable_detach_parasite    (GimpDrawable *, Parasite *);
 
 GimpDrawable *   gimp_drawable_get_ID             (int);
 void		 gimp_drawable_deallocate         (GimpDrawable *);

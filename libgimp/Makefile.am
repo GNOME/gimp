@@ -32,7 +32,9 @@ libgimp_la_SOURCES = \
 	gimpprotocol.h	\
 	gimptile.c	\
 	gimpwire.c	\
-	gimpwire.h
+	gimpwire.h	\
+	gimpparasite.c	\
+	gimpparasite.h
 
 libgimpui_la_SOURCES = \
 	gimpmenu.c \
@@ -44,7 +46,8 @@ gimpinclude_HEADERS = \
 	gimpfeatures.h	\
 	gimpmenu.h	\
 	gimpui.h	\
-	gimpintl.h
+	gimpintl.h	\
+	gimpparasite.h
 
 libgimp_la_LDFLAGS = \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) -release $(LT_RELEASE)

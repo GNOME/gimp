@@ -53,6 +53,8 @@ struct _GimpImage
   Layer * floating_sel;               /*  ID of fs layer               */
   Channel * selection_mask;           /*  selection mask channel       */
 
+  GSList *parasites;                  /*  Plug-in parasite data        */
+
   int visible [MAX_CHANNELS];         /*  visible channels             */
   int active  [MAX_CHANNELS];         /*  active channels              */
 

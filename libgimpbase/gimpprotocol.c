@@ -19,6 +19,8 @@
 #include "gimpenums.h"
 #include "gimpprotocol.h"
 #include "gimpwire.h"
+#include "gimpparasite.h"
+#include <stdio.h>
 
 
 static void _gp_quit_read                (int fd, WireMessage *msg);
@@ -907,6 +909,31 @@ _gp_params_read (int fd, GPParam **params, guint *nparams)
 	  if (!wire_read_int32 (fd, (guint32*) &(*params)[i].data.d_path, 1))
 	    return;
           break;
+        case PARAM_PARASITE:
+	{
+	  if (!wire_read_int8 (fd, &((*params)[i].data.d_parasite.creator[0]),
+			       4))
+	    return;
+	  if (!wire_read_int8 (fd, &((*params)[i].data.d_parasite.type[0]), 4))
+	    return;
+	  if (!wire_read_int32 (fd, &((*params)[i].data.d_parasite.flags), 1))
+	    return;
+	  if (!wire_read_int32 (fd, &((*params)[i].data.d_parasite.size), 1))
+	    return;
+	  if ((*params)[i].data.d_parasite.size > 0)
+	  {
+	    (*params)[i].data.d_parasite.data = g_malloc((*params)[i].data.d_parasite.size);
+	    if (!wire_read_int8 (fd, (*params)[i].data.d_parasite.data,
+				 (*params)[i].data.d_parasite.size))
+	    {
+	      g_free((*params)[i].data.d_parasite.data);
+	      (*params)[i].data.d_parasite.data = NULL;
+	      return;
+	    }
+	  }
+	  else
+	    (*params)[i].data.d_parasite.data = NULL;
+	} break;
         case PARAM_STATUS:
 	  if (!wire_read_int32 (fd, (guint32*) &(*params)[i].data.d_status, 1))
 	    return;
@@ -1019,6 +1046,23 @@ _gp_params_write (int fd, GPParam *params, int nparams)
 	  if (!wire_write_int32 (fd, (guint32*) &params[i].data.d_path, 1))
 	    return;
           break;
+        case PARAM_PARASITE:
+	{
+	  GParasite *p = (GParasite *)&params[i].data.d_parasite;
+	  if (!wire_write_int8 (fd, &p->creator[0], 4))
+	    return;
+	  if (!wire_write_int8 (fd, &p->type[0], 4))
+	    return;
+	  if (!wire_write_int32 (fd, &p->flags, 1))
+	    return;
+	  if (!wire_write_int32 (fd, &p->size, 1))
+	    return;
+	  if (p->size > 0)
+	  {
+	    if (!wire_write_int8 (fd, p->data, p->size))
+	      return;
+	  }
+	} break;
         case PARAM_STATUS:
 	  if (!wire_write_int32 (fd, (guint32*) &params[i].data.d_status, 1))
 	    return;
@@ -1094,6 +1138,10 @@ _gp_params_destroy (GPParam *params, int nparams)
 		g_free (params[i].data.d_stringarray[j]);
 	      g_free (params[i].data.d_stringarray);
 	    }
+	  break;
+	case PARAM_PARASITE:
+	  if (params[i].data.d_parasite.data)
+	    g_free(params[i].data.d_parasite.data);
 	  break;
 	case PARAM_END:
 	  break;
