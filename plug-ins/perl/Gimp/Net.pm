@@ -12,7 +12,15 @@ use vars qw(
    $server_fh $trace_level $trace_res $auth $gimp_pid
 );
 use subs qw(gimp_call_procedure);
-use Socket; # IO::Socket is _really_ slow
+use base qw(DynaLoader);
+
+use Socket; # IO::Socket is _really_ slow, so don't use it!
+
+require DynaLoader;
+
+$VERSION = $Gimp::VERSION;
+
+bootstrap Gimp::Net $VERSION;
 
 $default_tcp_port  = 10009;
 $default_unix_dir  = "/tmp/gimp-perl-serv-uid-$>/";
@@ -36,31 +44,6 @@ sub import {
       my $req="DTRY".args2net(@_);
       print $server_fh pack("N",length($req)).$req;
    };
-}
-
-# network to array
-sub net2args($) {
-   no strict 'subs';
-   sub b($$) { bless \(my $x=$_[0]),$_[1] }
-   eval "($_[0])";
-}
-
-sub args2net {
-   my($res,$v);
-   for $v (@_) {
-      if(ref($v)) {
-         if(ref($v) eq "ARRAY" or ref($v) eq Gimp::Color or ref($v) eq Gimp::Parasite) {
-           $res.="[".join(",",map { "qq[".quotemeta($_)."]" } @$v)."],";
-         } else {
-           $res.="b(".$$v.",".ref($v)."),";
-         }
-      } elsif(defined $v) {
-         $res.="qq[".quotemeta($v)."],";
-      } else {
-         $res.="undef,";
-      }
-   }
-   substr($res,0,-1); # may not be worth the effort
 }
 
 sub _gimp_procedure_available {

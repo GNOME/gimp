@@ -1,5 +1,12 @@
 Revision history for Gimp-Perl extension.
 
+1.09
+	- corrected PDL version check to work with version 2.001.
+        - new file Net.xs, containing protocol serializer
+        - new, faster and leaner protocol (bumped protocol version number).
+        - added SvPV_nolen to ppport.h and made use of it everywhere.
+        - renamed nolib => Module.
+
 1.089 Tue May 18 19:55:25 CEST 1999
 	- added colourtoalpha.
 	- made all internal C functions static -> less namespace bloat.
@@ -14,8 +21,6 @@ Revision history for Gimp-Perl extension.
         - made my first attempt at implementing XS-PDL support.
         - transform obnjects ids of -1 into undef and vice versa.
         - Gimp::Fu did not properly supply a default value for PF_COLOUR.
-        - :auto is NO LONGER the default for the import method(!).
-          (NOT YET).
 
 1.083 Wed May 12 03:36:10 CEST 1999
 	- took a modified enums.pl to autogenerate constants. Some constants

@@ -27,6 +27,7 @@ sub MY::const_loadlibs {
 sub MY::install {
    <<EOF;
 install :: all \$(INST_DYNAMIC)
+	\$(RM_F) \$(gimpplugindir)/modules/\$(DLBASE).\$(DLEXT)
 	\$(CP) \$(INST_DYNAMIC) \$(gimpplugindir)/modules/\$(DLBASE).\$(DLEXT)
 	\$(CHMOD) 755 \$(gimpplugindir)/modules/\$(DLBASE).\$(DLEXT)
 

@@ -28,8 +28,10 @@
 # define GIMP_PARASITE 1
 #endif
 
+#ifndef HAVE_EXIT
 /* expect iso-c here.  */
-#include <signal.h>
+# include <signal.h>
+#endif
 
 MODULE = Gimp	PACKAGE = Gimp
 

@@ -10,6 +10,10 @@ make test TEST_VERBOSE=1
 
 bugs
 
+  * KILL :auto from default(!)
+  * gimp-piddle must be written back automatically on destroy, if changed
+  * possibly rename "Brush Selection" to "Paint Settings"
+  * gimp-tile set dirty automatically(!)
   * fatal errors in config.pl (!)
   * disable module build (EMBEDMYALLOC)
 [DONE]  * turn -1 into undef and vice versa.

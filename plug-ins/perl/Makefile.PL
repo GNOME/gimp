@@ -253,7 +253,7 @@ close C;
 print "ok\n";
 
 $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
-@DIRS= 'Gimp';
+@DIRS= qw/Gimp Net/;
 
 $build_module = $IN_GIMP || $ENV{GIMP_PERL_MODULE_INC};
 # temporarily disabled because of politics
@@ -263,7 +263,7 @@ print "building embedded perl module... ";
 if ($build_module) {
    print "yes\n";
    $dont_embed = "false";
-   push(@DIRS,'nolib');
+   push(@DIRS,'Module');
    print "configuring in embed/Makefile...\n";
    system("cd embed && perl Makefile.PL");
 } else {

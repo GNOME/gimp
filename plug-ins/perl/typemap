@@ -52,5 +52,8 @@ OUTPUT
 T_PREF
 	$arg = autobless (newSViv($var), PARAM_$ntype);
 
+T_PREF_ANY
+	$arg = autobless (newSViv($var), PARAM_$ntype);
+
 T_GDRAWABLE
 

@@ -55,6 +55,8 @@
 #define PKG_REGION	GIMP_PKG "Region"
 #if GIMP_PARASITE
 # define PKG_PARASITE	GIMP_PKG "Parasite"
+#else
+# define PKG_PARASITE	((char *)0)
 #endif
 
 #define PKG_GDRAWABLE	GIMP_PKG "GDrawable"
@@ -87,7 +89,8 @@ static void need_pdl (void)
 
       /* Get pointer to structure of core shared C routines */
       if (!(CoreSV = perl_get_sv("PDL::SHARE",FALSE)))
-         Perl_croak("gimp-perl-pixel functions require the PDL::Core module");
+        Perl_croak("gimp-perl-pixel functions require the PDL::Core module");
+
       PDL = (Core*) SvIV(CoreSV);
     }
 }
@@ -254,8 +257,7 @@ static GTile *old_tile (SV *sv)
 /* magic stuff.  literally.  */
 static int gpixelrgn_free (SV *obj, MAGIC *mg)
 {
-  STRLEN dc;
-  GPixelRgn *pr = (GPixelRgn *)SvPV(obj,dc);
+  GPixelRgn *pr = (GPixelRgn *)SvPV_nolen(obj);
 
 /* automatically done on detach */
 /*  if (pr->dirty)
@@ -269,10 +271,9 @@ MGVTBL vtbl_gpixelrgn = {0, 0, 0, 0, gpixelrgn_free};
 static SV *new_gpixelrgn (SV *gdrawable, int x, int y, int width, int height, int dirty, int shadow)
 {
   static HV *stash;
-  STRLEN dc;
   MAGIC *mg;
   SV *sv = newSVn (sizeof (GPixelRgn));
-  GPixelRgn *pr = (GPixelRgn *)SvPV(sv,dc);
+  GPixelRgn *pr = (GPixelRgn *)SvPV_nolen(sv);
 
   if (!(sv_derived_from (gdrawable, PKG_GDRAWABLE)))
     {
@@ -297,12 +298,10 @@ static SV *new_gpixelrgn (SV *gdrawable, int x, int y, int width, int height, in
 
 static GPixelRgn *old_pixelrgn (SV *sv)
 {
-  STRLEN dc;
-  
   if (!sv_derived_from (sv, PKG_PIXELRGN))
     croak ("argument is not of type " PKG_PIXELRGN);
   
-  return (GPixelRgn *)SvPV(SvRV(sv),dc);
+  return (GPixelRgn *)SvPV_nolen(SvRV(sv));
 }
 
 /* tracing stuff.  */
@@ -540,7 +539,6 @@ dump_params (int nparams, GParam *args, GParamDef *params)
 static int
 convert_array2paramdef (AV *av, GParamDef **res)
 {
-  STRLEN dc;
   int count = 0;
   GParamDef *def = 0;
   
@@ -581,8 +579,8 @@ convert_array2paramdef (AV *av, GParamDef **res)
 	              }
 	            
 	            def->type = SvIV (type);
-	            def->name = name ? SvPV (name, dc) : 0;
-	            def->description = help ? SvPV (help, dc) : 0;
+	            def->name = name ? SvPV_nolen (name) : 0;
+	            def->description = help ? SvPV_nolen (help) : 0;
 	            def++;
 	          }
 	        else
@@ -612,10 +610,7 @@ param_stash (GParamType type)
 	                    0		, 0		, 0		, 0		, 0		,
 	                    PKG_COLOR	, PKG_REGION	, PKG_DISPLAY	, PKG_IMAGE	, PKG_LAYER	,
 	                    PKG_CHANNEL	, PKG_DRAWABLE	, PKG_SELECTION	, 0		, 0		,
-#if GIMP_PARASITE
-	                    PKG_PARASITE,
-#endif
-	                    0
+	                    PKG_PARASITE, 0
 	                   };
   
   if (bless [type] && !bless_hv [type])
@@ -633,6 +628,9 @@ autobless (SV *sv, int type)
   
   if (stash)
     sv = sv_bless (newRV_noinc (sv), stash);
+
+  if (stash && !SvOBJECT(SvRV(sv)))
+    croak ("jupp\n");
   
   return sv;
 }
@@ -744,8 +742,7 @@ static int check_int (char *croak_str, SV *sv)
 {
   if (SvTYPE (sv) == SVt_PV && !SvIOKp(sv))
     {
-      STRLEN dc;
-      char *p = SvPV (sv, dc);
+      char *p = SvPV_nolen (sv);
 
       if (*p
           && *p != '0' && *p != '1' && *p != '2' && *p != '3' && *p != '4'
@@ -875,7 +872,7 @@ push_gimp_sv (GParam *arg, int array_as_ref)
   PUTBACK;
 }
 
-#define SvPv(sv) SvPV((sv), dc)
+#define SvPv(sv) SvPV_nolen(sv)
 #define Sv32(sv) unbless ((sv), PKG_ANY, croak_str)
 
 #define av2gimp(arg,sv,datatype,type,svxv) { \
@@ -907,8 +904,6 @@ push_gimp_sv (GParam *arg, int array_as_ref)
 static int
 convert_sv2gimp (char *croak_str, GParam *arg, SV *sv)
 {
-  STRLEN dc;
-  
   switch (arg->type)
     {
       case PARAM_INT32:		check_int (croak_str, sv);
@@ -1104,7 +1099,6 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
   static int nreturn_vals;
   
   dSP;
-  STRLEN dc;
 
   int i, count;
   char *err_msg = 0;
@@ -1174,7 +1168,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
       
       if (SvTRUE (ERRSV))
 	{
-	   if (strEQ ("IGNORE THIS MESSAGE\n", SvPV (ERRSV, dc)))
+	   if (strEQ ("IGNORE THIS MESSAGE\n", SvPV_nolen (ERRSV)))
 	     {
 	       nreturn_vals = 0;
 	       return_vals = g_new (GParam, 1);
@@ -1184,7 +1178,7 @@ static void pii_run(char *name, int nparams, GParam *param, int *xnreturn_vals, 
 	       *xreturn_vals = return_vals;
 	     }
 	   else
-	     err_msg = g_strdup (SvPV (ERRSV, dc));
+	     err_msg = g_strdup (SvPV_nolen (ERRSV));
 	}
       else
 	{
@@ -1314,7 +1308,6 @@ int
 gimp_main(...)
 	PREINIT:
 	CODE:
-		STRLEN dc;
 		SV *sv;
 		
 		if ((sv = perl_get_sv ("Gimp::help", FALSE)) && SvTRUE (sv))
@@ -1328,11 +1321,11 @@ gimp_main(...)
 		      {
 		        AV *av = perl_get_av ("ARGV", FALSE);
 		        
-		        argv [argc++] = SvPV (perl_get_sv ("0", FALSE), dc);
+		        argv [argc++] = SvPV_nolen (perl_get_sv ("0", FALSE));
 		        if (av && av_len (av) < 10-1)
 		          {
 		            while (argc-1 <= av_len (av))
-		              argv [argc] = SvPV (*av_fetch (av, argc-1, 0), dc),
+		              argv [argc] = SvPV_nolen (*av_fetch (av, argc-1, 0)),
 		              argc++;
 		          }
 		        else
@@ -1629,12 +1622,11 @@ gimp_set_data(id, data)
 	CODE:
 	{
 		STRLEN dlen;
-		STRLEN dc;
 		void *dta;
 		
 		dta = SvPV (data, dlen);
 
-		gimp_set_data (SvPV (id, dc), dta, dlen);
+		gimp_set_data (SvPV_nolen (id), dta, dlen);
 	}
 
 void
@@ -1644,14 +1636,13 @@ gimp_get_data(id)
 	{
 		SV *data;
 		STRLEN dlen;
-		STRLEN dc;
 		
-		dlen = get_data_size (SvPV (id, dc));
+		dlen = get_data_size (SvPV_nolen (id));
 		/* I count on dlen being zero if "id" doesn't exist.  */
 		data = newSVpv ("", 0);
-		gimp_get_data (SvPV (id, dc), SvGROW (data, dlen+1));
+		gimp_get_data (SvPV_nolen (id), SvGROW (data, dlen+1));
 		SvCUR_set (data, dlen);
-		*((char *)SvPV (data, dc) + dlen) = 0;
+		*((char *)SvPV_nolen (data) + dlen) = 0;
 	        XPUSHs (sv_2mortal (data));
 	}
 
@@ -1695,12 +1686,6 @@ gimp_tile_width()
 guint
 gimp_tile_height()
 
-#if HAVE_PDL
-
-void
-gimp_tile_flush(tile)
-	GTile *	tile
-
 void
 gimp_tile_cache_size(kilobytes)
 	gulong	kilobytes
@@ -1708,6 +1693,8 @@ gimp_tile_cache_size(kilobytes)
 void
 gimp_tile_cache_ntiles(ntiles)
 	gulong	ntiles
+
+#if HAVE_PDL
 
 SV *
 gimp_drawable_get(drawable_ID)
@@ -1742,19 +1729,6 @@ gimp_drawable_get_tile2(gdrawable, shadow, x, y)
 	RETVAL = new_tile (gimp_drawable_get_tile2 (old_gdrawable (gdrawable), shadow, x, y), gdrawable);
 	OUTPUT:
 	RETVAL
-
-void
-gimp_tile_ref(tile)
-	GTile *	tile
-
-void
-gimp_tile_ref_zero(tile)
-	GTile *	tile
-
-void
-gimp_tile_unref(tile, dirty)
-	GTile *	tile
-	int	dirty
 
 SV *
 gimp_pixel_rgn_init(gdrawable, x, y, width, height, dirty, shadow)
@@ -2100,7 +2074,7 @@ gimp_tile_dirty(tile)
 	OUTPUT:
 	RETVAL
 
-gint32
+DRAWABLE
 gimp_tile_drawable(tile)
 	GTile *tile
 	CODE:
@@ -2155,13 +2129,12 @@ gimp_patterns_get_pattern_data(name)
 	SV *	name
 	PPCODE:
 	{
-		STRLEN dc;
 		GParam *return_vals;
 		int nreturn_vals;
 		
 		return_vals = gimp_run_procedure ("gimp_patterns_get_pattern_data",
 		                                  &nreturn_vals,
-		                                  PARAM_STRING, SvPV (name, dc),
+		                                  PARAM_STRING, SvPV_nolen (name),
 		                                  PARAM_END);
 		
 		if (nreturn_vals == 7

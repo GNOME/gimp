@@ -1,0 +1,80 @@
+#!/usr/bin/perl -w
+
+use Gimp::Feature 'pdl';
+use Gimp 1.084;
+use Gimp::Fu;
+use Gimp::Util;
+use PDL::LiteF;
+
+register "colour_to_alpha",
+         "Converts the specified colour to alpha",
+         "This replaces as much as possible of the specified colour in each pixel by a corresponding "
+         ."amount of alpha, then readjusts the colour accordingly.",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "19990517",
+         "<Image>/Filters/Colors/Colour To Alpha",
+         "RGB*",	
+         [
+           [PF_COLOR,		"colour",	, "The colour to replace"],
+         ],
+         sub {					# es folgt das eigentliche Skript...
+   my($image,$drawable,$colour)=@_;
+
+   $drawable->layer or die "colour_to_alpha only works with layers\n";
+   $drawable->add_alpha unless $drawable->has_alpha;
+
+   Gimp->progress_init ("Replacing colour...");
+
+   my @bounds = $drawable->mask;
+   {
+      # $src and $dst must either be scoped or explicitly undef'ed
+      # before merge_shadow.
+      my $src = new PixelRgn ($drawable->get,@bounds,0,0);
+      my $dst = new PixelRgn ($drawable->get,@bounds,1,1);
+
+      $iter = Gimp->pixel_rgns_register ($src, $dst);
+
+      do {
+         # get the pixels ($pixels will be modified in-place!)
+         $pixels = $src->data;
+
+         # extract the rgb portion only
+         $rgb = $pixels->slice("0:2");
+
+         # calculate difference to destination colour
+         $diff = 255 + minimum $rgb - pdl $colour;
+
+         # adjust alpha part
+         my $alpha = $pixels->slice("(3)");
+         $alpha .= 255-$diff;
+
+         # adjust the colour
+         my $a = ($diff/(255**2))->slice("*3") * pdl $colour;
+         $rgb .= 255-(255-$rgb) / (1-$a);
+
+         # write the pixels into dst
+         $dst->data($pixels);
+
+         Gimp->progress_update (($src->y-$bounds[1])/$bounds[2]);
+      } while (Gimp->pixel_rgns_process ($iter));
+   }
+   Gimp->progress_update (1);
+
+   $drawable->merge_shadow (1);
+   $drawable->update ($drawable->mask);
+
+   ();		# wir haben kein neues Bild erzeugt
+};
+
+exit main;
+
+
+
+
+
+
+
+
+
+

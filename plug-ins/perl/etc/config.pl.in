@@ -82,8 +82,9 @@ $cfg{_DEFS} = $DEFS;
 $INC1    = "-I$topdir";
 $DEFINE1 = $IN_GIMP ? "-DIN_GIMP" : "";
 
-eval "use PDL;";
+eval "use PDL";
 if (!$@) {
+   require PDL::Version;
    if ($PDL::Version::VERSION > 1.99) {
       require PDL::Core::Dev;
       if (!$@) {
