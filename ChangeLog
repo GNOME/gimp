@@ -1,5 +1,10 @@
 2004-07-14  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
+	* devel-docs/objects.txt: . . . and removed because it is
+	redundant with devel-docs/app/app.hierarchy.
+
+2004-07-14  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
 	* devel-docs/objects.txt:  added file containing a map of Gimp's
 	GObject hierarchy .
 
