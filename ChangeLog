@@ -1,3 +1,8 @@
+2003-05-24  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-rotate.c (gimp_image_rotate): fixed offset of
+	layers and vectors after rotation (bug #113611).
+
 2003-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/lic.c (compute_image): always flush the
