@@ -415,9 +415,9 @@ tag_to_drawable_type (
       switch (f)
 	{
         case FORMAT_RGB:
-          return (a == ALPHA_YES)?  FLOAT16_RGBA_GIMAGE: FLOAT_RGB_GIMAGE;
+          return (a == ALPHA_YES)?  FLOAT16_RGBA_GIMAGE: FLOAT16_RGB_GIMAGE;
         case FORMAT_GRAY:
-          return (a == ALPHA_YES)?  FLOAT16_GRAYA_GIMAGE: FLOAT_GRAY_GIMAGE;
+          return (a == ALPHA_YES)?  FLOAT16_GRAYA_GIMAGE: FLOAT16_GRAY_GIMAGE;
         default:
           break; 
 	} 
