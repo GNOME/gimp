@@ -435,11 +435,11 @@ msgstr "Зм╕нити к╕льк╕сть кольор╕в у в╕дображенн╕"
 
 #: plug-ins/FractalExplorer/Dialogs.c:648
 msgid "Use loglog Smoothing"
-msgstr "Використовувати згладжування \"loglog\""
+msgstr "Використовувати згладжування \"log log\""
 
 #: plug-ins/FractalExplorer/Dialogs.c:655
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr ""
+msgstr "Використовувати згладжування \"log log\" для уникнення шв╕в"
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:659
@@ -724,11 +724,15 @@ msgid ""
 "(fractalexplorer-path \"%s\")\n"
 "to your %s file."
 msgstr ""
+"Нема╓ запису fractalexplorer-path у gimprc:\n"
+"Вам необх╕дно додати запис типу\n"
+"(fractalexplorer-path \"%s\")\n"
+"у ваш файл %s."
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1166
 msgid ""
 "fractalexplorer-path misconfigured - the following directories were not found"
-msgstr ""
+msgstr "fractalexplorer-path не зконф╕╜уровано - наступних каталог╕в не знайдено"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1342
 msgid "My first fractal"
@@ -736,16 +740,16 @@ msgstr "М╕й перший фрактал"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1359
 msgid "Choose Fractal by double-clicking on it"
-msgstr ""
+msgstr "Вибер╕ть фрактал подв╕йним клацанням на ньому"
 
 #. Put buttons in
 #: plug-ins/FractalExplorer/FractalExplorer.c:1390 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
-msgstr ""
+msgstr "Актуал╕зувати"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1397
 msgid "Select directory and rescan collection"
-msgstr ""
+msgstr "Вибрати каталог та актуал╕зувати наб╕р"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1408
 msgid "Delete currently selected fractal"
@@ -754,11 +758,11 @@ msgstr "Стерти вибраний фрактал"
 #. the dialog
 #: plug-ins/FractalExplorer/FractalExplorer.c:1460
 msgid "Rescan for Fractals"
-msgstr ""
+msgstr "Актуал╕зувати фрактали"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1478
 msgid "Add FractalExplorer Path"
-msgstr ""
+msgstr "Додати контур досл╕дника фрактал╕в"
 
 #: plug-ins/Lighting/lighting_main.c:169
 msgid "<Image>/Filters/Light Effects/Lighting Effects..."
