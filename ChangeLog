@@ -1,5 +1,11 @@
 2004-11-22  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c: sort the SFMenu structs
+	by their menu_paths *and* the procedure's menu_labels. Fixes menu
+	item sorting after "Refresh".
+
+2004-11-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptextoptions.[ch] (gimp_text_options_editor_new):
 	added a "menu_factory" parameter instead of trying to get it from
 	the toplevel GimpDock (which does not exists if the tool options

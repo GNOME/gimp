@@ -47,8 +47,8 @@
 
 typedef struct
 {
-  gchar *pdb_name;
-  gchar *menu_path;
+  SFScript *script;
+  gchar    *menu_path;
 } SFMenu;
 
 
@@ -566,25 +566,35 @@ script_fu_add_script (LISP a)
 LISP
 script_fu_add_menu (LISP a)
 {
-  SFMenu *menu;
-  gchar  *val;
-  gchar  *s;
+  SFScript *script;
+  SFMenu   *menu;
+  gchar    *val;
+  gchar    *s;
 
   /*  Check the length of a  */
   if (nlength (a) != 2)
     return my_err ("Incorrect number of arguments for script-fu-menu-register",
                    NIL);
 
-  /*  Create a new list of menus  */
-  menu = g_new0 (SFMenu, 1);
-
   /*  Find the script PDB entry name  */
-  val = get_c_string (car (a));
-  menu->pdb_name = g_strdup (val);
-  for (s = menu->pdb_name; *s; s++)
+  val = g_strdup (get_c_string (car (a)));
+  for (s = val; *s; s++)
     if (*s == '-')
       *s = '_';
   a = cdr (a);
+
+  script = script_fu_find_script (val);
+
+  g_free (val);
+
+  if (! script)
+    return my_err ("Nonexisting procedure name in script-fu-menu-register",
+                   NIL);
+
+  /*  Create a new list of menus  */
+  menu = g_new0 (SFMenu, 1);
+
+  menu->script = script;
 
   /*  Find the script menu path  */
   val = get_c_string (car (a));
@@ -678,9 +688,8 @@ static void
 script_fu_install_menu (SFMenu   *menu,
                         gpointer  foo)
 {
-  gimp_plugin_menu_register (menu->pdb_name, menu->menu_path);
+  gimp_plugin_menu_register (menu->script->pdb_name, menu->menu_path);
 
-  g_free (menu->pdb_name);
   g_free (menu->menu_path);
   g_free (menu);
 }
@@ -1003,10 +1012,18 @@ script_fu_menu_compare (gconstpointer a,
 {
   const SFMenu *menu_a = a;
   const SFMenu *menu_b = b;
+  gint          retval = 0;
 
   if (menu_a->menu_path && menu_b->menu_path)
-    return g_utf8_collate (gettext (menu_a->menu_path),
-                           gettext (menu_b->menu_path));
+    {
+      retval = g_utf8_collate (gettext (menu_a->menu_path),
+                               gettext (menu_b->menu_path));
 
-  return 0;
+      if (retval == 0 &&
+          menu_a->script->menu_path && menu_b->script->menu_path)
+        retval = g_utf8_collate (gettext (menu_a->script->menu_path),
+                                 gettext (menu_b->script->menu_path));
+    }
+
+  return retval;
 }
