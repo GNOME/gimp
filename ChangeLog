@@ -1,5 +1,10 @@
 2004-09-21  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-server.c: got rid of two the global
+	file descriptor sets. Use the client hash-table instead.
+
+2004-09-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-server.c: enabled build of the
 	Script-Fu server for the Win32 platform using the winsock API.
 

@@ -146,9 +146,7 @@ static GList       *command_queue   = NULL;
 static gint         queue_length    = 0;
 static gint         request_no      = 0;
 static FILE        *server_log_file = NULL;
-static GHashTable  *clientname_ht   = NULL;
-static SELECT_MASK  server_active;
-static SELECT_MASK  server_read;
+static GHashTable  *clients         = NULL;
 static gboolean     script_fu_done  = FALSE;
 static gboolean     server_mode     = FALSE;
 
@@ -178,7 +176,6 @@ script_fu_server_get_mode (void)
 {
   return server_mode;
 }
-
 
 void
 script_fu_server_run (const gchar      *name,
@@ -228,14 +225,54 @@ script_fu_server_run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
+static void
+script_fu_server_add_fd (gpointer key,
+                         gpointer value,
+                         gpointer data)
+{
+  FD_SET (GPOINTER_TO_INT (key), (SELECT_MASK *) data);
+}
+
+static gboolean
+script_fu_server_read_fd (gpointer key,
+                          gpointer value,
+                          gpointer data)
+{
+  gint fd = GPOINTER_TO_INT (key);
+
+  if (FD_ISSET (fd, (SELECT_MASK *) data))
+    {
+      if (read_from_client (fd) < 0)
+        {
+          GList *list;
+
+          server_log ("Server: disconnect from host %s.\n", (gchar *) value);
+
+          close (fd);
+
+          /*  Invalidate the file descriptor for pending commands
+              from the disconnected client.  */
+          for (list = command_queue; list; list = list->next)
+            {
+              SFCommand *cmd = (SFCommand *) command_queue->data;
+
+              if (cmd->filedes == fd)
+                cmd->filedes = -1;
+            }
+
+          return TRUE;  /*  remove this client from the hash table  */
+        }
+    }
+
+  return FALSE;
+}
+
 void
 script_fu_server_listen (gint timeout)
 {
-  struct sockaddr_in  clientname;
-  struct timeval      tv;
-  struct timeval     *tvp = NULL;
-  gint                i;
-  guint               size;
+  struct timeval  tv;
+  struct timeval *tvp = NULL;
+  SELECT_MASK     fds;
 
   /*  Set time struct  */
   if (timeout)
@@ -245,72 +282,47 @@ script_fu_server_listen (gint timeout)
       tvp = &tv;
     }
 
+  FD_ZERO (&fds);
+  FD_SET (server_sock, &fds);
+  g_hash_table_foreach (clients, script_fu_server_add_fd, &fds);
+
   /* Block until input arrives on one or more active sockets
      or timeout occurs. */
-  server_read = server_active;
-  if (select (FD_SETSIZE, &server_read, NULL, NULL, tvp) < 0)
+
+  if (select (FD_SETSIZE, &fds, NULL, NULL, tvp) < 0)
     {
       perror ("select");
       return;
     }
 
- /* Service all the sockets with input pending. */
-  for (i = 0; i < FD_SETSIZE; ++i)
-    if (FD_ISSET (i, &server_read))
-      {
-	if (i == server_sock)
-	  {
-	    /* Connection request on original socket. */
-	    gint new;
+  /* Service the server socket if it has input pending. */
+  if (FD_ISSET (server_sock, &fds))
+    {
+      struct sockaddr_in  clientname;
 
-	    size = sizeof (clientname);
-	    new = accept (server_sock,
-			  (struct sockaddr *) &clientname,
-			  &size);
-	    if (new < 0)
-	      {
-		perror ("accept");
-		return;
-	      }
+      /* Connection request on original socket. */
+      guint size = sizeof (clientname);
+      gint  new  = accept (server_sock,
+                           (struct sockaddr *) &clientname, &size);
 
-	    /*  Associate the client address with the socket  */
-	    g_hash_table_insert (clientname_ht,
-				 GINT_TO_POINTER (new),
-				 g_strdup (inet_ntoa (clientname.sin_addr)));
-	    server_log ("Server: connect from host %s, port %d.\n",
-			inet_ntoa (clientname.sin_addr),
-			(unsigned int) ntohs (clientname.sin_port));
+      if (new < 0)
+        {
+          perror ("accept");
+          return;
+        }
 
-	    FD_SET (new, &server_active);
-	  }
-	else
-	  {
-	    if (read_from_client (i) < 0)
-	      {
-                GList *list;
+      /*  Associate the client address with the socket  */
+      g_hash_table_insert (clients,
+                           GINT_TO_POINTER (new),
+                           g_strdup (inet_ntoa (clientname.sin_addr)));
 
-		/*  Disassociate the client address with the socket  */
-		g_hash_table_remove (clientname_ht, GINT_TO_POINTER (i));
+      server_log ("Server: connect from host %s, port %d.\n",
+                  inet_ntoa (clientname.sin_addr),
+                  (unsigned int) ntohs (clientname.sin_port));
+    }
 
-		server_log ("Server: disconnect from host %s, port %d.\n",
-			    inet_ntoa (clientname.sin_addr),
-			    (unsigned int) ntohs (clientname.sin_port));
-
-		close (i);
-		FD_CLR (i, &server_active);
-
-                /*  Invalidate the file descriptor for pending commands
-                    from the disconnected client.  */
-                for (list = command_queue; list; list = list->next)
-                  {
-                    SFCommand *cmd = (SFCommand *) command_queue->data;
-
-                    if (cmd->filedes == i)
-                      cmd->filedes = -1;
-                  }
-              }
-	  }
-      }
+  /* Service the client sockets. */
+  g_hash_table_foreach_remove (clients, script_fu_server_read_fd, &fds);
 }
 
 static void
@@ -337,15 +349,10 @@ server_start (gint         port,
     server_log_file = stdout;
 
   /*  Set up the clientname hash table  */
-  clientname_ht = g_hash_table_new_full (g_direct_hash, NULL,
-                                         NULL,
-                                         (GDestroyNotify) g_free);
+  clients = g_hash_table_new_full (g_direct_hash, NULL,
+                                   NULL, (GDestroyNotify) g_free);
 
   server_log ("Script-fu server initialized and listening...\n");
-
-  /* Initialize the set of active sockets. */
-  FD_ZERO (&server_active);
-  FD_SET (server_sock, &server_active);
 
   /*  Loop until the server is finished  */
   while (! script_fu_done)
@@ -502,8 +509,7 @@ read_from_client (gint filedes)
   queue_length ++;
 
   /*  Get the client address from the address/socket table  */
-  clientaddr = g_hash_table_lookup (clientname_ht,
-                                    GINT_TO_POINTER (cmd->filedes));
+  clientaddr = g_hash_table_lookup (clients, GINT_TO_POINTER (cmd->filedes));
   time (&clock);
   server_log ("Received request #%d from IP address %s: %s on %s,"
 	      "[Request queue length: %d]",
@@ -585,20 +591,28 @@ server_log (const gchar *format,
 }
 
 static void
+script_fu_server_shutdown_fd (gpointer key,
+                              gpointer value,
+                              gpointer data)
+{
+  shutdown (GPOINTER_TO_INT (key), 2);
+}
+
+static void
 server_quit (void)
 {
-  gint i;
+  close (server_sock);
 
-  for (i = 0; i < FD_SETSIZE; ++i)
-    if (FD_ISSET (i, &server_active))
-      shutdown (i, 2);
-
-  g_hash_table_destroy (clientname_ht);
-  clientname_ht = NULL;
+  if (clients)
+    {
+      g_hash_table_foreach (clients, script_fu_server_shutdown_fd, NULL);
+      g_hash_table_destroy (clients);
+      clients = NULL;
+    }
 
   while (command_queue)
     {
-      SFCommand *cmd = (SFCommand *) command_queue->data;
+      SFCommand *cmd = command_queue->data;
 
       g_free (cmd->command);
       g_free (cmd);
