@@ -9,11 +9,34 @@
 
 #include "gimp-composite-altivec.h"
 
+static struct install_table {
+  GimpCompositeOperation mode;
+  GimpPixelFormat A;
+  GimpPixelFormat B;
+  GimpPixelFormat D;
+  void (*function)(GimpCompositeContext *);
+} _gimp_composite_altivec[] = {
+#if defined(COMPILE_ALTIVEC_IS_OKAY)
+ { GIMP_COMPOSITE_ADDITION, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_addition_rgba8_rgba8_rgba8_altivec }, 
+ { GIMP_COMPOSITE_SUBTRACT, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_subtract_rgba8_rgba8_rgba8_altivec }, 
+ { GIMP_COMPOSITE_SWAP, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, GIMP_PIXELFORMAT_RGBA8, gimp_composite_swap_rgba8_rgba8_rgba8_altivec }, 
+#endif
+ { 0, 0, 0, 0, NULL }
+};
 
 gboolean
 gimp_composite_altivec_install (void)
 {
-  /* nothing to do */
+  static struct install_table *t = _gimp_composite_altivec;
+
+  if (gimp_composite_altivec_init ())
+    {
+      for (t = &_gimp_composite_altivec[0]; t->function != NULL; t++)
+        {
+          gimp_composite_function[t->mode][t->A][t->B][t->D] = t->function;
+        }
+      return (TRUE);
+    }
 
   return (FALSE);
 }

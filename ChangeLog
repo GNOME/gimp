@@ -1,5 +1,11 @@
 2003-03-06  Manish Singh  <yosh@gimp.org>
 
+	* app/composite/gimp-composite-altivec-installer.c
+	* app/composite/gimp-composite-altivec-test.c: regenerated so the new
+	implementation is actually used.
+	
+2003-03-06  Manish Singh  <yosh@gimp.org>
+
 	* configure.in: revised tests for AltiVec. Define ALTIVEC_EXTRA_CFLAGS
 	for the extra compiler options needed. Also, support runtime checking
 	for AltiVec through the sysctl on Mac OS X, instead of SIGILL assembly
