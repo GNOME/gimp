@@ -1,3 +1,10 @@
+2004-03-19  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/gtkrc
+	* themes/Small/gtkrc: don't set the height of GtkHScales to 11px
+	any longer. This modification was added only because at some time
+	GTK+ 1.3.x (!!!) looked strange with the default size.
+
 2004-03-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_scale_entry_new_internal): if

@@ -66,14 +66,6 @@ style "gimp-tiny-font-style"
 class "*Ruler*" style "gimp-tiny-font-style"
 
 
-style "gimp-hscale-style"
-{
-  GtkRange::slider_width = 11
-}
-
-class "GtkHScale" style "gimp-hscale-style"
-
-
 style "gimp-grid-view-style" = "gimp-default-style"
 {
   bg[NORMAL] = { 1.0, 1.0, 1.0 }

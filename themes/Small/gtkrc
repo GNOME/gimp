@@ -63,14 +63,6 @@ style "gimp-default-style"
 class "GtkWidget" style "gimp-default-style"
 
 
-style "gimp-hscale-style"
-{
-  GtkRange::slider_width = 10
-}
-
-class "GtkHScale" style "gimp-hscale-style"
-
-
 style "gimp-grid-view-style" = "gimp-default-style"
 {
   bg[NORMAL] = { 1.0, 1.0, 1.0 }
