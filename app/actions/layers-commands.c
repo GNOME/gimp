@@ -36,6 +36,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-undo.h"
+#include "core/gimpimage-undo-push.h"
 #include "core/gimpitemundo.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-floating-sel.h"
@@ -610,7 +611,7 @@ layers_mask_edit_cmd_callback (GtkAction *action,
 
       active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_layer_mask_set_edit (mask, active);
+      gimp_layer_mask_set_edit (mask, active, TRUE);
       gimp_image_flush (gimage);
     }
 }
@@ -632,7 +633,7 @@ layers_mask_show_cmd_callback (GtkAction *action,
 
       active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_layer_mask_set_show (mask, active);
+      gimp_layer_mask_set_show (mask, active, TRUE);
       gimp_image_flush (gimage);
     }
 }
@@ -654,8 +655,12 @@ layers_mask_disable_cmd_callback (GtkAction *action,
 
       active = gtk_toggle_action_get_active (GTK_TOGGLE_ACTION (action));
 
-      gimp_layer_mask_set_apply (mask, ! active);
-      gimp_image_flush (gimage);
+      if (active == gimp_layer_mask_get_apply (mask))
+        {
+          gimp_layer_mask_set_apply (mask, ! active, TRUE);
+
+          gimp_image_flush (gimage);
+        }
     }
 }
 

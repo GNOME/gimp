@@ -1,3 +1,12 @@
+2005-03-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]
+	* app/pdb/pdb_glue.h
+	* app/actions/layers-commands.c: make layer mask property changes
+	undoable, should fix bug #148852.  Note that a little shape-layer
+	stuff is in core-enums, will be needed shortly.
+	
 2005-03-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: seperated platform specific code into
