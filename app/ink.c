@@ -43,6 +43,8 @@
 
 /*  the Ink structures  */
 
+typedef Blob *(*BlobFunc) (double, double, double, double, double, double);
+
 typedef struct _InkTool InkTool;
 struct _InkTool
 {
@@ -64,13 +66,18 @@ struct _InkOptions
   double       sensitivity;
   double       tilt_sensitivity;
   double       tilt_angle;
+  BlobFunc     function;
 };
 
 typedef struct _BrushWidget BrushWidget;
 struct _BrushWidget
 {
+  GtkWidget   *widget;
   gboolean     state;
 };
+
+/* Global variable to store brush widget */
+static BrushWidget *brush_widget;
 
 /*  undo blocks variables  */
 static TileManager *  undo_tiles = NULL;
@@ -107,6 +114,15 @@ static void ink_cleanup (void);
 
 static void ink_scale_update              (GtkAdjustment  *adjustment, 
                                            gdouble        *value);
+static void ink_type_update               (GtkWidget      *radio_button,
+                                           BlobFunc        function);
+static GdkPixmap *blob_pixmap (GdkColormap *colormap,
+			       GdkVisual   *visual,
+			       BlobFunc     function);
+static void paint_blob (GdkDrawable  *drawable, 
+			GdkGC        *gc,
+			Blob         *blob);
+
 /* Rendering functions */
 
 static void ink_set_paint_area  (InkTool      *ink_tool, 
@@ -153,18 +169,22 @@ static InkOptions *
 create_ink_options ()
 {
   GtkWidget *vbox;
+  GtkWidget *util_vbox;
   GtkWidget *hbox;
   GtkWidget *label;
+  GtkWidget *radio_button;
+  GtkWidget *pixmap_widget;
   GtkWidget *slider;
   GtkWidget *aspect_frame;
   GtkWidget *darea;
   GtkAdjustment *adj;
 
-  BrushWidget *brush_widget;
+  GdkPixmap *pixmap;
+
   InkOptions *options;
 
   /*  the new options structure  */
-  options = (InkOptions *) g_malloc (sizeof (InkOptions));
+  options = g_new (InkOptions, 1);
 
   options->size = 3.0;
   options->sensitivity = 1.0;
@@ -172,6 +192,7 @@ create_ink_options ()
   options->angle = 0.0;
   options->tilt_sensitivity = 1.0;
   options->tilt_angle = 0.0;
+  options->function = blob_ellipse;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -245,21 +266,80 @@ create_ink_options ()
 		      (GtkSignalFunc) ink_scale_update,
 		      &options->tilt_angle);
 
+  /* Brush type radiobuttons */
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 5);
+
+  util_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX(hbox), util_vbox, FALSE, FALSE, 5);
+
+  label = gtk_label_new (_("Type:"));
+  gtk_box_pack_start (GTK_BOX (util_vbox), label, FALSE, FALSE, 0);
+  
+  pixmap = blob_pixmap (gtk_widget_get_colormap (util_vbox),
+			gtk_widget_get_visual (util_vbox),
+			blob_ellipse);
+
+  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  gdk_pixmap_unref (pixmap);
+
+  radio_button = gtk_radio_button_new (NULL);
+  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+		      GTK_SIGNAL_FUNC (ink_type_update), 
+		      (gpointer)blob_ellipse);
+
+  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_box_pack_start (GTK_BOX (util_vbox), radio_button, FALSE, FALSE, 0);
+
+  pixmap = blob_pixmap (gtk_widget_get_colormap (util_vbox),
+			gtk_widget_get_visual (util_vbox),
+			blob_square);
+
+  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  gdk_pixmap_unref (pixmap);
+
+  radio_button = gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
+  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+		      GTK_SIGNAL_FUNC (ink_type_update), 
+		      (gpointer)blob_square);
+  
+  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_box_pack_start (GTK_BOX (util_vbox), radio_button, FALSE, FALSE, 0);
+
+  pixmap = blob_pixmap (gtk_widget_get_colormap (util_vbox),
+			gtk_widget_get_visual (util_vbox),
+			blob_diamond);
+
+  pixmap_widget = gtk_pixmap_new (pixmap, NULL);
+  gdk_pixmap_unref (pixmap);
+
+  radio_button = gtk_radio_button_new_from_widget (GTK_RADIO_BUTTON (radio_button));
+  gtk_signal_connect (GTK_OBJECT (radio_button), "toggled",
+		      GTK_SIGNAL_FUNC (ink_type_update), 
+		      (gpointer)blob_diamond);
+
+  gtk_container_add (GTK_CONTAINER (radio_button), pixmap_widget);
+  gtk_box_pack_start (GTK_BOX (util_vbox), radio_button, FALSE, FALSE, 0);
+
   /* Brush shape widget */
 
   brush_widget = g_new (BrushWidget, 1);
   brush_widget->state = FALSE;
   
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 5);
+  util_vbox = gtk_vbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX(hbox), util_vbox, FALSE, FALSE, 5);
+
   label = gtk_label_new (_("Shape:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (util_vbox), label, FALSE, FALSE, 0);
   
   aspect_frame = gtk_aspect_frame_new (NULL, 0.5, 0.5, 1.0, FALSE);
   gtk_frame_set_shadow_type (GTK_FRAME(aspect_frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), aspect_frame, TRUE, TRUE, 2);
-  
+  gtk_box_pack_start (GTK_BOX (util_vbox), aspect_frame, TRUE, TRUE, 2);
+
   darea = gtk_drawing_area_new();
+  brush_widget->widget = darea;
+  
   gtk_drawing_area_size (GTK_DRAWING_AREA(darea), 60, 60);
   gtk_container_add (GTK_CONTAINER(aspect_frame), darea);
   
@@ -320,24 +400,15 @@ static void
 brush_widget_draw_brush (BrushWidget *brush_widget, GtkWidget *w,
 			 double xc, double yc, double radius)
 {
-  int i;
   Blob *b;
 
-  b = blob_ellipse(xc,yc,
-		   radius*cos(ink_options->angle),
-		   radius*sin(ink_options->angle),
-		   -(radius/ink_options->aspect)*sin(ink_options->angle),
-		   (radius/ink_options->aspect)*cos(ink_options->angle));
+  b = ink_options->function (xc,yc,
+			     radius*cos(ink_options->angle),
+			     radius*sin(ink_options->angle),
+			     -(radius/ink_options->aspect)*sin(ink_options->angle),
+			     (radius/ink_options->aspect)*cos(ink_options->angle));
 
-  for (i=0;i<b->height;i++)
-    {
-      if (b->data[i].left <= b->data[i].right)
-	gdk_draw_line (w->window,
-		       w->style->fg_gc[w->state],
-		       b->data[i].left,i+b->y,
-		       b->data[i].right+1,i+b->y);
-    }
-  
+  paint_blob (w->window, w->style->fg_gc[w->state],b);
   g_free (b);
 }
 
@@ -431,6 +502,69 @@ ink_scale_update (GtkAdjustment *adjustment, gdouble *value)
   *value = adjustment->value;
 }
 
+static void 
+ink_type_update (GtkWidget      *radio_button,
+		 BlobFunc        function)
+{
+  if (GTK_TOGGLE_BUTTON (radio_button)->active)
+    ink_options->function = function;
+
+  gtk_widget_queue_draw (brush_widget->widget);
+}
+
+/*
+ * Return a black-on white pixmap in the given colormap and
+ * visual that represents the BlobFunc 'function'
+ */
+static GdkPixmap *
+blob_pixmap (GdkColormap *colormap,
+	     GdkVisual *visual,
+	     BlobFunc function)
+{
+  GdkPixmap *pixmap;
+  GdkGC *black_gc, *white_gc;
+  GdkColor tmp_color;
+  Blob *blob;
+
+  pixmap = gdk_pixmap_new (NULL, 22, 21, visual->depth);
+
+  black_gc = gdk_gc_new (pixmap);
+  gdk_color_black (colormap, &tmp_color);
+  gdk_gc_set_foreground (black_gc, &tmp_color);
+
+  white_gc = gdk_gc_new (pixmap);
+  gdk_color_white (colormap, &tmp_color);
+  gdk_gc_set_foreground (white_gc, &tmp_color);
+
+  gdk_draw_rectangle (pixmap, white_gc, TRUE, 0, 0, 21, 20);
+  gdk_draw_rectangle (pixmap, black_gc, FALSE, 0, 0, 21, 20);
+  blob = (*function) (10, 10, 8, 0, 0, 8);
+  paint_blob (pixmap, black_gc, blob);
+
+  gdk_gc_unref (white_gc);
+  gdk_gc_unref (black_gc);
+
+  return pixmap;
+}
+
+/*
+ * Draw a blob onto a drawable with the specified graphics context
+ */
+static void
+paint_blob (GdkDrawable *drawable, GdkGC *gc,
+	    Blob *blob)
+{
+  int i;
+
+  for (i=0;i<blob->height;i++)
+    {
+      if (blob->data[i].left <= blob->data[i].right)
+	gdk_draw_line (drawable, gc,
+		       blob->data[i].left,i+blob->y,
+		       blob->data[i].right+1,i+blob->y);
+    }
+}
+
 static Blob *
 ink_pen_ellipse (gdouble x_center, gdouble y_center,
 		 gdouble pressure, gdouble xtilt, gdouble ytilt)
@@ -484,9 +618,9 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
   radmin = SUBSAMPLE * size/aspect;
   if (radmin < 1.0) radmin = 1.0;
   
-  return blob_ellipse(x_center * SUBSAMPLE, y_center * SUBSAMPLE,
-		      radmin*aspect*tcos, radmin*aspect*tsin,  
-		      -radmin*tsin, radmin*tcos);
+  return ink_options->function (x_center * SUBSAMPLE, y_center * SUBSAMPLE,
+				radmin*aspect*tcos, radmin*aspect*tsin,  
+				-radmin*tsin, radmin*tcos);
 }
 
 static void

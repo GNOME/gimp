@@ -25,8 +25,14 @@
 #ifndef __BLOB_H__
 #define __BLOB_H__
 
+typedef struct _BlobPoint BlobPoint;
 typedef struct _BlobSpan BlobSpan;
 typedef struct _Blob Blob;
+
+struct _BlobPoint {
+  int x;
+  int y;
+};
 
 struct _BlobSpan {
   int left;
@@ -41,6 +47,9 @@ struct _Blob {
 
 
 Blob *blob_convex_union (Blob *b1, Blob *b2);
+Blob *blob_polygon (BlobPoint *points, int npoints);
+Blob *blob_square (double xc, double yc, double xp, double yp, double xq, double yq);
+Blob *blob_diamond (double xc, double yc, double xp, double yp, double xq, double yq);
 Blob *blob_ellipse (double xc, double yc, double xp, double yp, double xq, double yq);
 void blob_bounds(Blob *b, int *x, int *y, int *width, int *height);
 

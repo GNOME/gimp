@@ -1,3 +1,9 @@
+1999-02-02  Owen Taylor  <otaylor@gtk.org>
+
+	* app/blob.[ch] app/ink.c: Let the user choose between
+	elliptical, square, and diamond shaped brushes for
+	the ink tool.
+
 Tue Feb  2 22:25:57 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/fileops.c: GIMP now automagically saves

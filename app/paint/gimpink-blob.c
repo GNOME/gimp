@@ -53,8 +53,8 @@ static void
 blob_fill (Blob *b, EdgeType *present)
 {
   int start;
-  int y, x1, x2, y1, y2, i1, i2;
-  int i, j;
+  int x1, x2, i1, i2;
+  int i;
 
   /* Mark empty lines at top and bottom as unused */
 
@@ -205,8 +205,8 @@ blob_fill (Blob *b, EdgeType *present)
 static void
 blob_make_convex (Blob *b, EdgeType *present)
 {
-  int y, x1, x2, y1, y2, i1, i2;
-  int i, j;
+  int x1, x2, y1, y2, i1, i2;
+  int i;
   int start;
 
   /* Walk through edges, deleting points that aren't on convex hull */
@@ -301,9 +301,8 @@ Blob *
 blob_convex_union (Blob *b1, Blob *b2)
 {
   Blob *result;
-  int y, x1, x2, y1, y2, i1, i2;
+  int y;
   int i, j;
-  int start;
   EdgeType *present;
 
   /* Create the storage for the result */
@@ -454,10 +453,147 @@ blob_line (Blob *b, int x0, int y0, int x1, int y1)
 
 #define ELLIPSE_SHIFT 2
 #define TABLE_SHIFT 14
-#define TOTAL_SHIFT ELLIPSE_SHIFT + TABLE_SHIFT
+#define TOTAL_SHIFT (ELLIPSE_SHIFT + TABLE_SHIFT)
 
 static int trig_initialized = 0;
 static int trig_table[TABLE_SIZE];
+
+/* Return blob for the given (convex) polygon
+ */
+Blob *
+blob_polygon (BlobPoint *points, int npoints)
+{
+  int i;
+  int im1;
+  int ip1;
+  int ymin, ymax;
+  Blob *result;
+  EdgeType *present;
+
+  ymax = points[0].y;
+  ymin = points[0].y;
+
+  for (i=1; i < npoints; i++)
+    {
+      if (points[i].y > ymax)
+	ymax = points[i].y;
+      if (points[i].y < ymin)
+	ymin = points[i].y;
+    }
+
+  result = blob_new (ymin, ymax - ymin + 1);
+  present = g_new0 (EdgeType, result->height);
+
+  im1 = npoints - 1;
+  i = 0;
+  ip1 = 1;
+
+  for (; i < npoints ; i++)
+    {
+      int sides = 0;
+      int j = points[i].y - ymin;
+      
+      if (points[i].y < points[im1].y)
+	sides |= EDGE_RIGHT;
+      else if (points[i].y > points[im1].y)
+	sides |= EDGE_LEFT;
+
+      if (points[ip1].y < points[i].y)
+	sides |= EDGE_RIGHT;
+      else if (points[ip1].y > points[i].y)
+	sides |= EDGE_LEFT;
+
+      if (sides & EDGE_RIGHT)
+	{
+	  if (present[j] & EDGE_RIGHT)
+	    {
+	      result->data[j].right = MAX (result->data[j].right, points[i].x);
+	    }
+	  else
+	    {
+	      present[j] |= EDGE_RIGHT;
+	      result->data[j].right = points[i].x;
+	    }
+	}
+
+      if (sides & EDGE_LEFT)
+	{
+	  if (present[j] & EDGE_LEFT)
+	    {
+	      result->data[j].left = MIN (result->data[j].left, points[i].x);
+	    }
+	  else
+	    {
+	      present[j] |= EDGE_LEFT;
+	      result->data[j].left = points[i].x;
+	    }
+	}
+
+      im1 = i;
+      ip1++;
+      if (ip1 == npoints)
+	ip1 = 0;
+    }
+
+  blob_fill (result, present);
+  g_free (present);
+
+  return result;
+}
+
+/* Scan convert a square specified by _offsets_ of major and
+   minor axes, and by center into a blob */
+Blob *
+blob_square (double xc, double yc, double xp, double yp, double xq, double yq)
+{
+  BlobPoint points[4];
+  
+  /* Make sure we order points ccw */
+
+  if (xp * yq - yq * xp < 0)
+    {
+      xq = -xq;
+      yq = -yq;
+    }
+  
+  points[0].x = xc + xp + xq;
+  points[0].y = yc + yp + yq;
+  points[1].x = xc + xp - xq;
+  points[1].y = yc + yp - yq;
+  points[2].x = xc - xp - xq;
+  points[2].y = yc - yp - yq;
+  points[3].x = xc - xp + xq;
+  points[3].y = yc - yp + yq;
+
+  return blob_polygon (points, 4);
+}
+
+/* Scan convert a diamond specified by _offsets_ of major and
+   minor axes, and by center into a blob */
+Blob *
+blob_diamond (double xc, double yc, double xp, double yp, double xq, double yq)
+{
+  BlobPoint points[4];
+  
+  /* Make sure we order points ccw */
+
+  if (xp * yq - yq * xp < 0)
+    {
+      xq = -xq;
+      yq = -yq;
+    }
+  
+  points[0].x = xc + xp;
+  points[0].y = yc + yp;
+  points[1].x = xc - xq;
+  points[1].y = yc - yq;
+  points[2].x = xc - xp;
+  points[2].y = yc - yp;
+  points[3].x = xc + xq;
+  points[3].y = yc + yq;
+
+  return blob_polygon (points, 4);
+}
 
 /* Scan convert an ellipse specified by _offsets_ of major and
    minor axes, and by center into a blob */
