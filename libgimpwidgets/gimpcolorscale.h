@@ -46,13 +46,21 @@ typedef struct _GimpColorScaleClass  GimpColorScaleClass;
 
 struct _GimpColorScale
 {
-  GtkDrawingArea  parent_instance;
+  GtkDrawingArea            parent_instance;
 
   /*< private >*/
-  guchar         *buf;
-  guint           width;
-  guint           height;
-  guint           rowstride;
+  GtkOrientation            orientation;
+
+  GimpColorSelectorChannel  channel;
+  GimpRGB                   rgb;
+  GimpHSV                   hsv;
+
+  GtkAdjustment            *adj;
+
+  guchar                   *buf;
+  guint                     width;
+  guint                     height;
+  guint                     rowstride;
 };
 
 struct _GimpColorScaleClass
@@ -61,8 +69,23 @@ struct _GimpColorScaleClass
 };
 
 
-GType       gimp_color_scale_get_type (void) G_GNUC_CONST;
-GtkWidget * gimp_color_scale_new      (void);
+GType       gimp_color_scale_get_type        (void) G_GNUC_CONST;
+GtkWidget * gimp_color_scale_new             (GtkOrientation            orientation,
+                                              GimpColorSelectorChannel  channel,
+                                              const GimpRGB            *rgb,
+                                              const GimpHSV            *hsv);
+
+void        gimp_color_scale_set_orientation (GimpColorScale           *scale,
+                                              GtkOrientation            orientation);
+
+void        gimp_color_scale_set_channel     (GimpColorScale           *scale,
+                                              GimpColorSelectorChannel  channel);
+void        gimp_color_scale_set_color       (GimpColorScale           *scale,
+                                              const GimpRGB            *rgb,
+                                              const GimpHSV            *hsv);
+
+void        gimp_color_scale_set_adjustment  (GimpColorScale           *scale,
+                                              GtkAdjustment            *adj);
 
 
 G_END_DECLS

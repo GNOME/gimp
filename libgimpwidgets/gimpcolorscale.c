@@ -34,13 +34,16 @@
 
 
 static void     gimp_color_scale_class_init (GimpColorScaleClass *klass);
-static void     gimp_color_scale_init       (GimpColorScale      *gcs);
-static void     gimp_color_scale_destroy    (GtkObject           *object);
+static void     gimp_color_scale_init       (GimpColorScale      *scale);
 
+static void     gimp_color_scale_destroy       (GtkObject        *object);
 static void     gimp_color_scale_size_allocate (GtkWidget        *widget,
                                                 GtkAllocation    *allocation);
 static gboolean gimp_color_scale_expose        (GtkWidget        *widget,
                                                 GdkEventExpose   *event);
+
+static void     gimp_color_scale_render        (GimpColorScale   *scale);
+
 
 static GtkDrawingAreaClass * parent_class = NULL;
 
@@ -48,11 +51,11 @@ static GtkDrawingAreaClass * parent_class = NULL;
 GType
 gimp_color_scale_get_type (void)
 {
-  static GType gcs_type = 0;
+  static GType scale_type = 0;
 
-  if (! gcs_type)
+  if (! scale_type)
     {
-      static const GTypeInfo gcs_info =
+      static const GTypeInfo scale_info =
       {
         sizeof (GimpColorScaleClass),
         (GBaseInitFunc) NULL,
@@ -65,12 +68,12 @@ gimp_color_scale_get_type (void)
         (GInstanceInitFunc) gimp_color_scale_init,
       };
 
-      gcs_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                         "GimpColorScale", 
-                                         &gcs_info, 0);
+      scale_type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
+                                           "GimpColorScale", 
+                                           &scale_info, 0);
     }
 
-  return gcs_type;
+  return scale_type;
 }
 
 static void
@@ -91,67 +94,76 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
 }
 
 static void
-gimp_color_scale_init (GimpColorScale *gcs)
+gimp_color_scale_init (GimpColorScale *scale)
 {
+  scale->orientation = GTK_ORIENTATION_HORIZONTAL;
+  scale->channel     = GIMP_COLOR_SELECTOR_HUE;
+
+  gimp_rgba_set (&scale->rgb, 0.0, 0.0, 0.0, 1.0);
+  gimp_rgb_to_hsv (&scale->rgb, &scale->hsv);
 }
 
 static void
 gimp_color_scale_destroy (GtkObject *object)
 {
-  GimpColorScale *gcs;
+  GimpColorScale *scale;
 
-  gcs = GIMP_COLOR_SCALE (object);
+  scale = GIMP_COLOR_SCALE (object);
 
-  if (gcs->buf)
+  if (scale->adj)
+    gimp_color_scale_set_adjustment (scale, NULL);
+
+  if (scale->buf)
     {
-      g_free (gcs->buf);
-      gcs->buf       = NULL;
-      gcs->width     = 0;
-      gcs->height    = 0;
-      gcs->rowstride = 0;
+      g_free (scale->buf);
+      scale->buf       = NULL;
+      scale->width     = 0;
+      scale->height    = 0;
+      scale->rowstride = 0;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
 gimp_color_scale_size_allocate (GtkWidget     *widget,
-			       GtkAllocation *allocation)
+                                GtkAllocation *allocation)
 {
-  GimpColorScale *gcs;
+  GimpColorScale *scale;
 
-  gcs = GIMP_COLOR_SCALE (widget);
+  scale = GIMP_COLOR_SCALE (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
     GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
 
-  if (widget->allocation.width  != gcs->width ||
-      widget->allocation.height != gcs->height)
+  if (widget->allocation.width  != scale->width ||
+      widget->allocation.height != scale->height)
     {
-      gcs->width  = widget->allocation.width;
-      gcs->height = widget->allocation.height;
+      scale->width  = widget->allocation.width;
+      scale->height = widget->allocation.height;
 
-      gcs->rowstride = (gcs->width * 3 + 3) & ~0x3;
+      scale->rowstride = (scale->width * 3 + 3) & ~0x3;
 
-      g_free (gcs->buf);
-      gcs->buf = g_new (guchar, gcs->rowstride * gcs->height);
-    } 
+      g_free (scale->buf);
+      scale->buf = g_new (guchar, scale->rowstride * scale->height);
+
+      gimp_color_scale_render (scale);
+    }
 }
 
 static gboolean
 gimp_color_scale_expose (GtkWidget      *widget,
-                        GdkEventExpose *event)
+                         GdkEventExpose *event)
 {
-  GimpColorScale *gcs;
-  guchar        *buf;
+  GimpColorScale *scale;
+  guchar         *buf;
 
-  gcs = GIMP_COLOR_SCALE (widget);
+  scale = GIMP_COLOR_SCALE (widget);
   
-  if (! gcs->buf || ! GTK_WIDGET_DRAWABLE (widget))
+  if (! scale->buf || ! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
-  buf = gcs->buf + event->area.y * gcs->rowstride + event->area.x * 3;
+  buf = scale->buf + event->area.y * scale->rowstride + event->area.x * 3;
 
   gdk_draw_rgb_image_dithalign (widget->window,
                                 widget->style->black_gc,
@@ -161,7 +173,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
                                 event->area.height,
                                 GDK_RGB_DITHER_MAX,
                                 buf,
-                                gcs->rowstride,
+                                scale->rowstride,
                                 event->area.x,
                                 event->area.y);
 
@@ -176,11 +188,94 @@ gimp_color_scale_expose (GtkWidget      *widget,
  * Returns: Pointer to the new #GimpColorScale widget.
  **/
 GtkWidget *
-gimp_color_scale_new (void)
+gimp_color_scale_new (GtkOrientation            orientation,
+                      GimpColorSelectorChannel  channel,
+                      const GimpRGB            *rgb,
+                      const GimpHSV            *hsv)
 {
-  GimpColorScale *gcs;
+  GimpColorScale *scale;
 
-  gcs = g_object_new (GIMP_TYPE_COLOR_SCALE, NULL);
+  scale = g_object_new (GIMP_TYPE_COLOR_SCALE, NULL);
 
-  return GTK_WIDGET (gcs);
+  scale->orientation = orientation;
+  scale->channel     = channel;
+  scale->rgb         = *rgb;
+  scale->hsv         = *hsv;
+
+  return GTK_WIDGET (scale);
+}
+
+void
+gimp_color_scale_set_orientation (GimpColorScale  *scale,
+                                  GtkOrientation   orientation)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+
+  if (orientation != scale->orientation)
+    {
+      scale->orientation = orientation;
+
+      gimp_color_scale_render (scale);
+    }
+}
+
+void
+gimp_color_scale_set_channel (GimpColorScale           *scale,
+                              GimpColorSelectorChannel  channel)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+
+  if (channel != scale->channel)
+    {
+      scale->channel = channel;
+
+      gimp_color_scale_render (scale);
+    }
+}
+
+void
+gimp_color_scale_set_color (GimpColorScale *scale,
+                            const GimpRGB  *rgb,
+                            const GimpHSV  *hsv)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+  g_return_if_fail (rgb != NULL);
+  g_return_if_fail (hsv != NULL);
+
+  scale->rgb = *rgb;
+  scale->hsv = *hsv;
+
+  gimp_color_scale_render (scale);
+}
+
+void
+gimp_color_scale_set_adjustment (GimpColorScale *scale,
+                                 GtkAdjustment  *adj)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+  g_return_if_fail (adj == NULL || GTK_IS_ADJUSTMENT (adj));
+
+  if (adj == scale->adj)
+    return;
+
+  if (scale->adj)
+    {
+      g_object_unref (scale->adj);
+      scale->adj = NULL;
+    }
+
+  scale->adj = adj;
+
+  if (scale->adj)
+    {
+      g_object_ref (scale->adj);
+      gtk_object_sink (GTK_OBJECT (scale->adj));
+    }
+
+  gimp_color_scale_render (scale);
+}
+
+static void
+gimp_color_scale_render (GimpColorScale *scale)
+{
 }
