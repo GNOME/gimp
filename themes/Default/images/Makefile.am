@@ -35,6 +35,7 @@ STOCK_MENU_IMAGES = \
 	stock-cap-butt-16.png				\
 	stock-cap-round-16.png				\
 	stock-cap-square-16.png				\
+	stock-center-16.png				\
 	stock-channel-16.png				\
 	stock-channel-alpha-16.png			\
 	stock-channel-blue-16.png			\
@@ -92,6 +93,7 @@ STOCK_MENU_IMAGES = \
 	stock-paths-16.png				\
 	stock-plugin-16.png				\
 	stock-portrait-16.png				\
+	stock-print-resolution-16.png			\
 	stock-qmask-off-16.png				\
 	stock-qmask-on-16.png				\
 	stock-reshow-filter-16.png			\
@@ -125,6 +127,7 @@ STOCK_MENU_IMAGES = \
 
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
+	stock-center-24.png			\
 	stock-channel-24.png			\
 	stock-channel-alpha-24.png		\
 	stock-channel-blue-24.png		\
@@ -175,6 +178,7 @@ STOCK_BUTTON_IMAGES = \
 	stock-path-stroke-16.png		\
 	stock-path-22.png			\
 	stock-paths-22.png			\
+	stock-print-resolution-24.png		\
 	stock-reset-16.png			\
 	stock-selection-add-16.png		\
 	stock-selection-intersect-16.png	\

@@ -111,6 +111,7 @@ add_sized_with_same_fallback (GtkIconFactory *factory,
 static GtkStockItem gimp_stock_items[] =
 {
   { GIMP_STOCK_ANCHOR,         N_("Anchor"),          0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_CENTER,         N_("C_enter"),         0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_DUPLICATE,      N_("_Duplicate"),      0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_EDIT,           N_("_Edit"),           0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_LINKED,         N_("Linked"),          0, 0, LIBGIMP_DOMAIN },
@@ -170,6 +171,7 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_LINE_SPACING,   N_("L_ine Spacing"),   0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEXT_DIR_LTR,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_TEXT_DIR_RTL,             NULL,        0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_PRINT_RESOLUTION,         NULL,        0, 0, LIBGIMP_DOMAIN },
 
   { GIMP_STOCK_CONVERT_RGB,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -303,6 +305,7 @@ static struct
 gimp_stock_button_pixbufs[] =
 {
   { GIMP_STOCK_ANCHOR,                   stock_anchor_16                   },
+  { GIMP_STOCK_CENTER,                   stock_center_24                   },
   { GIMP_STOCK_DUPLICATE,                stock_duplicate_16                },
   { GIMP_STOCK_EDIT,                     stock_edit_16                     },
   { GIMP_STOCK_PASTE_AS_NEW,             stock_paste_as_new_16             },
@@ -348,6 +351,7 @@ gimp_stock_button_pixbufs[] =
   { GIMP_STOCK_LINE_SPACING,             stock_line_spacing_22             },
   { GIMP_STOCK_TEXT_DIR_LTR,             stock_text_dir_ltr_24             },
   { GIMP_STOCK_TEXT_DIR_RTL,             stock_text_dir_rtl_24             },
+  { GIMP_STOCK_PRINT_RESOLUTION,         stock_print_resolution_24         },
 
   { GIMP_STOCK_IMAGES,                   stock_images_24                   },
   { GIMP_STOCK_LAYERS,                   stock_layers_24                   },
@@ -434,6 +438,8 @@ static struct
 }
 gimp_stock_menu_pixbufs[] =
 {
+  { GIMP_STOCK_CENTER,                   stock_center_16                   },
+
   { GIMP_STOCK_CONVERT_RGB,              stock_convert_rgb_16              },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        stock_convert_grayscale_16        },
   { GIMP_STOCK_CONVERT_INDEXED,          stock_convert_indexed_16          },
@@ -449,6 +455,8 @@ gimp_stock_menu_pixbufs[] =
   { GIMP_STOCK_SCALE,                    stock_scale_16                    },
   { GIMP_STOCK_FLIP_HORIZONTAL,          stock_flip_horizontal_16          },
   { GIMP_STOCK_FLIP_VERTICAL,            stock_flip_vertical_16            },
+
+  { GIMP_STOCK_PRINT_RESOLUTION,         stock_print_resolution_16         },
 
   { GIMP_STOCK_IMAGES,                   stock_images_16                   },
   { GIMP_STOCK_LAYERS,                   stock_layers_16                   },

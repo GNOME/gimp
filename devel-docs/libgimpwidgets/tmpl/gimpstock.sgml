@@ -35,6 +35,14 @@ locales.
 
 
 
+<!-- ##### MACRO GIMP_STOCK_CENTER ##### -->
+<para>
+<inlinegraphic fileref="stock-center-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-center-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_DUPLICATE ##### -->
 <para>
 <inlinegraphic fileref="stock-duplicate-16.png" format="png"></inlinegraphic>
@@ -791,6 +799,14 @@ RTL variant
 <!-- ##### MACRO GIMP_STOCK_TEXT_DIR_RTL ##### -->
 <para>
 <inlinegraphic fileref="stock-text-dir-rtl-24.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_PRINT_RESOLUTION ##### -->
+<para>
+<inlinegraphic fileref="stock-print-resolution-24.png" format="png"></inlinegraphic>
+<inlinegraphic fileref="stock-print-resolution-16.png" format="png"></inlinegraphic>
 </para>
 
 

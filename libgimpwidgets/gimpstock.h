@@ -31,6 +31,7 @@ G_BEGIN_DECLS
 /*  in button size:  */
 
 #define GIMP_STOCK_ANCHOR                   "gimp-anchor"
+#define GIMP_STOCK_CENTER                   "gimp-center"
 #define GIMP_STOCK_DUPLICATE                "gimp-duplicate"
 #define GIMP_STOCK_EDIT                     "gimp-edit"
 #define GIMP_STOCK_LINKED                   "gimp-linked"
@@ -89,6 +90,7 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_CHAR_PICKER              "gimp-char-picker"
 #define GIMP_STOCK_LETTER_SPACING           "gimp-letter-spacing"
 #define GIMP_STOCK_LINE_SPACING             "gimp-line-spacing"
+#define GIMP_STOCK_PRINT_RESOLUTION         "gimp-print-resolution"
 
 #define GIMP_STOCK_TEXT_DIR_LTR             "gimp-text-dir-ltr"
 #define GIMP_STOCK_TEXT_DIR_RTL             "gimp-text-dir-rtl"

@@ -231,8 +231,7 @@ resize_dialog_new (GimpViewable       *viewable,
                     G_CALLBACK (offset_update),
                     private);
 
-  button = gtk_button_new_with_mnemonic (_("C_enter"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  button = gtk_button_new_from_stock (GIMP_STOCK_CENTER);
   gtk_table_attach_defaults (GTK_TABLE (entry), button, 4, 5, 1, 2);
   gtk_widget_show (button);
 

@@ -81,7 +81,7 @@ static GimpActionEntry image_actions[] =
     G_CALLBACK (image_resize_to_layers_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
-  { "image-print-size", GTK_STOCK_PRINT,
+  { "image-print-size", GIMP_STOCK_PRINT_RESOLUTION,
     N_("_Print Size..."), NULL, NULL,
     G_CALLBACK (image_print_size_cmd_callback),
     GIMP_HELP_IMAGE_PRINT_SIZE },

@@ -1,5 +1,21 @@
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-center-16.png
+	* themes/Default/images/stock-center-24.png
+	* themes/Default/images/stock-print-resolution-16.png
+	* themes/Default/images/stock-print-resolution-24.png: new icons
+	drawn by Jimmac.
+
+	* libgimpwidgets/gimpstock.[ch]: registered the new icons.
+
+	* app/actions/image-actions.c
+	* app/dialogs/print-size-dialog.c
+	* app/dialogs/resize-dialog.c
+	* plug-ins/ifscompose/ifscompose.c: use them.
+
+2004-11-14  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: bumped version to 2.2-pre2.
 
 2004-11-13  Manish Singh  <yosh@gimp.org>

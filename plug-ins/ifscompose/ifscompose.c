@@ -1063,7 +1063,7 @@ design_op_menu_create (GtkWidget *window)
       N_("Select _All"), "<control>A", NULL,
       G_CALLBACK (design_area_select_all_callback) },
 
-    { "center", GTK_STOCK_JUSTIFY_CENTER,
+    { "center", GIMP_STOCK_CENTER,
       N_("Re_center"), "<control>C", N_("Recompute Center"),
       G_CALLBACK (recompute_center_cb) },
 

@@ -80,7 +80,8 @@ print_size_dialog_new (GimpImage              *image,
   height = gimp_image_get_height (image);
 
   dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
-                                     title, role, GTK_STOCK_PRINT, title,
+                                     title, role,
+                                     GIMP_STOCK_PRINT_RESOLUTION, title,
                                      parent,
                                      help_func, help_id,
 
