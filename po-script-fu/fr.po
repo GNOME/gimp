@@ -6,13 +6,13 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.1.25\n"
-"POT-Creation-Date: 2000-08-30 00:31-0700\n"
-"PO-Revision-Date: 2000-10-02 12:10+0200\n"
+"Project-Id-Version: gimp-script-fu 1.1.27\n"
+"POT-Creation-Date: 2000-10-09 11:26+0200\n"
+"PO-Revision-Date: 2000-10-09 11:29+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: Gnome French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:156
@@ -172,11 +172,11 @@ msgstr "Fichier de log du serveur :"
 
 #: plug-ins/script-fu/script-fu.c:164
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Console..."
+msgstr "<Toolbox>/Exts/Script-Fu/Console..."
 
 #: plug-ins/script-fu/script-fu.c:177
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Serveur..."
+msgstr "<Toolbox>/Exts/Script-Fu/Serveur..."
 
 #: plug-ins/script-fu/script-fu.c:1022 plug-ins/script-fu/script-fu.c:1023
 msgid "Re-read all available scripts"
@@ -184,7 +184,7 @@ msgstr "Relire la liste des scripts disponibles"
 
 #: plug-ins/script-fu/script-fu.c:1027
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-msgstr "<Toolbox>/Extensions/Script-Fu/Rafraîchir"
+msgstr "<Toolbox>/Exts/Script-Fu/Rafraîchir"
 
 #: plug-ins/script-fu/scripts/copy-visible.scm:0
 msgid "<Image>/Edit/Copy Visible"
@@ -416,343 +416,336 @@ msgstr "<Image>/Script-Fu/Utilitaires/Afficher la structure de l'image..."
 
 #: plug-ins/script-fu/scripts/pupi-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Boutons/Bouton arrondi..."
+msgstr "<Toolbox>/Exts/Script-Fu/Boutons/Bouton arrondi..."
 
 #: plug-ins/script-fu/scripts/beveled-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Boutons/Bouton à bordure simple..."
+msgstr "<Toolbox>/Exts/Script-Fu/Boutons/Bouton à bordure simple..."
 
 #: plug-ins/script-fu/scripts/3d-outline.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/3D Outline..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/3D Outline..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Alien Glow..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien Glow..."
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Alien Neon..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Alien Neon..."
 
 #: plug-ins/script-fu/scripts/basic1-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Basic I..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Basic I..."
 
 #: plug-ins/script-fu/scripts/basic2-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Basic II..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Basic II..."
 
 #: plug-ins/script-fu/scripts/blended-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Blended..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Blended..."
 
 #: plug-ins/script-fu/scripts/bovinated-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Bovination..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Bovination..."
 
 #: plug-ins/script-fu/scripts/carved-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Carved..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Carved..."
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Craie..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Craie..."
 
 #: plug-ins/script-fu/scripts/chip-away.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Chip Away..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Chip Away..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Chrome..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Chrome..."
 
 #: plug-ins/script-fu/scripts/comic-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Comic Book..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Comic Book..."
 
 #: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Cool Metal..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Cool Metal..."
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Crystal..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Crystal..."
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Frosty..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Frosty..."
 
 #: plug-ins/script-fu/scripts/glossy.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Glossy..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glossy..."
 
 #: plug-ins/script-fu/scripts/glowing-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Glowing Hot..."
 
 #: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Gradient Bevel..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Gradient Bevel..."
 
 #: plug-ins/script-fu/scripts/i26-gunya2.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Imigre-26..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Imigre-26..."
 
 #: plug-ins/script-fu/scripts/neon-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Neon..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Neon..."
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Newsprint Text..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Newsprint Text..."
 
 #: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Particle Trace..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Particle Trace..."
 
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/SOTA Chrome..."
 
 #: plug-ins/script-fu/scripts/speed-text.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Speed Text..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Speed Text..."
 
 #: plug-ins/script-fu/scripts/starburst-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Starburst..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Starburst..."
 
 #: plug-ins/script-fu/scripts/starscape-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Starscape..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Starscape..."
 
 #: plug-ins/script-fu/scripts/text-circle.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Text Circle..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Text Circle..."
 
 #: plug-ins/script-fu/scripts/textured-logo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Textured..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Textured..."
 
 #: plug-ins/script-fu/scripts/title-header.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Logos/Web Title Header..."
+msgstr "<Toolbox>/Exts/Script-Fu/Logos/Web Title Header..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Créer brosse/Élliptique, plume..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Élliptique, plume..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Créer brosse/Élliptique..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Élliptique..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Créer brosse/Rectangulaire, plume..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Rectangulaire, plume..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Créer brosse/Rectangulaire..."
+msgstr "<Toolbox>/Exts/Script-Fu/Créer brosse/Rectangulaire..."
 
 #: plug-ins/script-fu/scripts/sphere.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Divers/Sphère..."
+msgstr "<Toolbox>/Exts/Script-Fu/Divers/Sphère..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/3D Truchet..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/3D Truchet..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Camouflage..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Camouflage..."
 
 #: plug-ins/script-fu/scripts/flatland.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Flatland..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Flatland..."
 
 #: plug-ins/script-fu/scripts/land.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Land..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Land..."
 
 #: plug-ins/script-fu/scripts/rendermap.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Render Map..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Render Map..."
 
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Swirl-Tile..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Swirl-Tile..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Swirly (tileable)..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Swirly (tileable)..."
 
 #: plug-ins/script-fu/scripts/trochoid.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Trochoid..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Trochoid..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Motifs/Truchet..."
+msgstr "<Toolbox>/Exts/Script-Fu/Motifs/Truchet..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Utilitaires/ASCII vers image..."
+msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/ASCII vers image..."
 
 #: plug-ins/script-fu/scripts/gradient-example.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Utilitaires/Dégradé personnalisé..."
+msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Dégradé personnalisé..."
 
 #: plug-ins/script-fu/scripts/font-map.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Utilitaires/Carte de police..."
+msgstr "<Toolbox>/Exts/Script-Fu/Utilitaires/Carte de police..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Thèmes Web/Alien Glow/Flèche..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Flèche..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Thèmes Web/Alien Glow/Puce..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Puce..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Thèmes Web/Alien Glow/Bouton..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Bouton..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Thèmes Web/Alien Glow/Tiret..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Alien Glow/Tiret..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Motif à bordures "
-"biseautées/Flèche..."
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Flèche..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Motif à bordures biseautées/Puce..."
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Puce..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Motif à bordures "
-"biseautées/Bouton..."
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Bouton..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Motif à bordures "
-"biseautées/Titre..."
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Titre..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Motif à bordures "
-"biseautées/Tiret..."
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Motif à bordures biseautées/Tiret..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Thèmes Web/Gimp.Org/Gros titre..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Gros titre..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Gimp.Org/Étiquettes 'tube' "
-"générales..."
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Étiquettes 'tube' générales..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Toolbox>/Extensions/Script-Fu/Thèmes Web/Gimp.Org/Petit titre..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Petit titre..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Gimp.Org/Titre de bouton 'tube'..."
+msgstr "<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de bouton 'tube'..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Gimp.Org/Titre de sous-bouton "
-"'tube'..."
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de sous-bouton 'tube'..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm:0
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Extensions/Script-Fu/Thèmes Web/Gimp.Org/Titre de sous-sous-bouton "
+"<Toolbox>/Exts/Script-Fu/Thèmes Web/Gimp.Org/Titre de sous-sous-bouton "
 "'tube'..."
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Extensions/Navigateur Web/FAQ Développeur"
+msgstr "<Toolbox>/Exts/Navigateur Web/FAQ Développeur"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Extensions/Navigateur Web/Bugs GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/Bugs GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Extensions/Navigateur Web/Manuel GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/Manuel GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Extensions/Navigateur Web/Nouvelles GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/Nouvelles GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Extensions/Navigateur Web/Tutoriaux GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/Tutoriaux GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/Documentation"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Documentation"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/Téléchargement"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Téléchargement"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/Art GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Art GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/GTK"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/GTK"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/Liens"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Liens"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/Listes de diffusions"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Listes de diffusions"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/Ressources"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/Ressources"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Extensions/Navigateur Web/GIMP.ORG/The GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/GIMP.ORG/The GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Extensions/Navigateur Web/Gimp-Savvy.com"
+msgstr "<Toolbox>/Exts/Navigateur Web/Gimp-Savvy.com"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Extensions/Navigateur Web/Grokking the GIMP"
+msgstr "<Toolbox>/Exts/Navigateur Web/Grokking the GIMP"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Extensions/Navigateur Web/Base de greffons"
+msgstr "<Toolbox>/Exts/Navigateur Web/Base de greffons"
 
 #: plug-ins/webbrowser/web-browser.scm:0
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Extensions/Navigateur Web/FAQ utilisateur"
+msgstr "<Toolbox>/Exts/Navigateur Web/FAQ utilisateur"
 
 #: plug-ins/script-fu/scripts/round-corners.scm:0
 msgid "Add Background"
@@ -903,7 +896,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Horizontally"
-msgstr ""
+msgstr "Rendre flou horizontalement"
 
 #: plug-ins/script-fu/scripts/drop-shadow.scm:0
 #: plug-ins/script-fu/scripts/news-text.scm:0
@@ -919,15 +912,15 @@ msgstr "Type de flou"
 
 #: plug-ins/script-fu/scripts/tileblur.scm:0
 msgid "Blur Vertically"
-msgstr ""
+msgstr "Rendre flou verticalement"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur X"
-msgstr ""
+msgstr "Flou X"
 
 #: plug-ins/script-fu/scripts/clothify.scm:0
 msgid "Blur Y"
-msgstr ""
+msgstr "Flou Y"
 
 #: plug-ins/script-fu/scripts/addborder.scm:0
 msgid "Border Color"
@@ -979,7 +972,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/news-text.scm:0
 msgid "Cell Size (pixels)"
-msgstr ""
+msgstr "Taille des cellules (pixels)"
 
 #: plug-ins/script-fu/scripts/chalk.scm:0
 msgid "Chalk Color"
@@ -992,23 +985,23 @@ msgstr ""
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Balance"
-msgstr ""
+msgstr "Balance du chrome"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/crystal-logo.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Factor"
-msgstr ""
+msgstr "Facteur de chrome"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Lightness"
-msgstr ""
+msgstr "Luminosité du chrome"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 msgid "Chrome Saturation"
-msgstr ""
+msgstr "Saturation du chrome"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 msgid "Chrome White Areas"
@@ -1375,7 +1368,7 @@ msgstr "Trames"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "From Top-Left to Bottom-Right"
-msgstr ""
+msgstr "Depuis de Haut-Gauche vers le Bas-Droit"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
@@ -1416,7 +1409,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm:0
 msgid "Graph Scale"
-msgstr ""
+msgstr "Échelle du graphe"
 
 #: plug-ins/script-fu/scripts/grid-system.scm:0
 msgid "Grids X"
@@ -1506,7 +1499,7 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Interpolate"
-msgstr ""
+msgstr "Interpoler"
 
 #: plug-ins/script-fu/scripts/waves-anim.scm:0
 msgid "Invert direction"
@@ -2184,4 +2177,4 @@ msgstr "Travailler sur une copie"
 #~ msgstr "Case à cocher (Script-Fu)"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Test/Sphere..."
-#~ msgstr "<Toolbox>/Extensions/Script-Fu/Test/Sphère..."
+#~ msgstr "<Toolbox>/Exts/Script-Fu/Test/Sphère..."

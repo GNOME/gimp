@@ -8,9 +8,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.26\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
-"PO-Revision-Date: 2000-10-02 11:43+0200\n"
+"Project-Id-Version: gimp-std-plugins 1.1.27\n"
+"POT-Creation-Date: 2000-10-09 11:22+0200\n"
+"PO-Revision-Date: 2000-10-09 11:22+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "À propos"
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
 #: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
-#: plug-ins/common/ps.c:2586 plug-ins/common/ps.c:2768
+#: plug-ins/common/ps.c:2615 plug-ins/common/ps.c:2797
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
 #: plug-ins/common/ripple.c:580 plug-ins/common/scatter_hsv.c:375
 #: plug-ins/common/sel_gauss.c:242 plug-ins/common/sharpen.c:523
@@ -148,8 +148,8 @@ msgstr "Valider"
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
 #: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
 #: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:935
-#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2588
-#: plug-ins/common/ps.c:2770 plug-ins/common/psp.c:430
+#: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2617
+#: plug-ins/common/ps.c:2799 plug-ins/common/psp.c:430
 #: plug-ins/common/randomize.c:704 plug-ins/common/ripple.c:582
 #: plug-ins/common/scatter_hsv.c:377 plug-ins/common/screenshot.c:375
 #: plug-ins/common/sel_gauss.c:244 plug-ins/common/sharpen.c:525
@@ -204,7 +204,7 @@ msgstr "Annuler"
 #: plug-ins/common/jigsaw.c:2511 plug-ins/common/mapcolor.c:576
 #: plug-ins/common/max_rgb.c:364 plug-ins/common/nlfilt.c:575
 #: plug-ins/common/noisify.c:506 plug-ins/common/plasma.c:326
-#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2909
+#: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2938
 #: plug-ins/common/sharpen.c:550 plug-ins/common/sinus.c:2123
 #: plug-ins/common/spheredesigner.c:2254 plug-ins/common/tileit.c:407
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
@@ -529,7 +529,7 @@ msgstr "Cosinus"
 #: plug-ins/common/AlienMap.c:1472 plug-ins/common/AlienMap.c:1495
 #: plug-ins/common/AlienMap.c:1518 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:452 plug-ins/common/align_layers.c:485
-#: plug-ins/common/ps.c:2693 plug-ins/common/ps.c:2706
+#: plug-ins/common/ps.c:2722 plug-ins/common/ps.c:2735
 #: plug-ins/common/psp.c:445 plug-ins/common/tiff.c:1551
 #: plug-ins/fits/fits.c:1032 plug-ins/gap/gap_mov_dialog.c:301
 msgid "None"
@@ -1248,7 +1248,7 @@ msgid "Object Z position in XYZ space"
 msgstr "Position Z de la source en espace XYZ"
 
 #. Rotation
-#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2871
+#: plug-ins/MapObject/mapobject_ui.c:1072 plug-ins/common/ps.c:2900
 #: plug-ins/gdyntext/gdyntext_ui.c:470
 msgid "Rotation"
 msgstr "Rotation"
@@ -1456,7 +1456,7 @@ msgstr "Impossible d'ouvrir %s"
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
 #: plug-ins/common/pcx.c:547 plug-ins/common/pix.c:532
 #: plug-ins/common/png.c:775 plug-ins/common/png.c:777
-#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1002
+#: plug-ins/common/pnm.c:786 plug-ins/common/ps.c:1003
 #: plug-ins/common/sunras.c:524 plug-ins/common/tga.c:1196
 #: plug-ins/common/tiff.c:1282 plug-ins/common/xbm.c:983
 #: plug-ins/common/xpm.c:653 plug-ins/common/xwd.c:534
@@ -2619,7 +2619,7 @@ msgid "Colorify"
 msgstr "Coloriser"
 
 #: plug-ins/common/colorify.c:338 plug-ins/common/colortoalpha.c:414
-#: plug-ins/common/ps.c:2678 plug-ins/common/xpm.c:439
+#: plug-ins/common/ps.c:2707 plug-ins/common/xpm.c:439
 #: plug-ins/gap/gap_mov_dialog.c:276 plug-ins/gimpressionist/color.c:51
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:745
@@ -2835,7 +2835,7 @@ msgstr "Diviseur :"
 msgid "Offset:"
 msgstr "Décalage :"
 
-#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2679
+#: plug-ins/common/convmatrix.c:900 plug-ins/common/ps.c:2708
 #: plug-ins/fits/fits.c:1020
 msgid "Automatic"
 msgstr "Automatique"
@@ -3270,7 +3270,7 @@ msgstr "Créer histogramme"
 #. Widht Scale
 #. table col, row
 #: plug-ins/common/destripe.c:670 plug-ins/common/gtm.c:551
-#: plug-ins/common/ps.c:2635 plug-ins/common/ps.c:2811
+#: plug-ins/common/ps.c:2664 plug-ins/common/ps.c:2840
 #: plug-ins/common/smooth_palette.c:430 plug-ins/common/tile.c:406
 #: plug-ins/gap/gap_mov_dialog.c:2139 plug-ins/imagemap/imap_rectangle.c:387
 #: plug-ins/print/gimp_main_window.c:625
@@ -3425,8 +3425,8 @@ msgstr "Limiter la largeur de ligne"
 #. Height Scale
 #. table col, row
 #: plug-ins/common/engrave.c:256 plug-ins/common/film.c:1239
-#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2644
-#: plug-ins/common/ps.c:2820 plug-ins/common/smooth_palette.c:439
+#: plug-ins/common/gtm.c:565 plug-ins/common/ps.c:2673
+#: plug-ins/common/ps.c:2849 plug-ins/common/smooth_palette.c:439
 #: plug-ins/common/tile.c:410 plug-ins/gap/gap_mov_dialog.c:2156
 #: plug-ins/imagemap/imap_rectangle.c:393
 #: plug-ins/print/gimp_main_window.c:639
@@ -5015,7 +5015,7 @@ msgstr "Procédure temporaire "
 
 #: plug-ins/common/plugindetails.c:104
 msgid "<Toolbox>/Xtns/Plugin Details..."
-msgstr "<Toolbox>/Extensions/Détails des Modules..."
+msgstr "<Toolbox>/Exts/Détails des Modules..."
 
 #: plug-ins/common/plugindetails.c:219
 msgid "Details <<"
@@ -5285,109 +5285,109 @@ msgstr ""
 "Si non coché, l'image sera circulairement transformée en un rectangle. Si "
 "cochée, l'image sera transformée en cercle."
 
-#: plug-ins/common/ps.c:874
+#: plug-ins/common/ps.c:875
 msgid "PS: can't open file for reading"
 msgstr "PS: impossible d'ouvrir le fichier en lecture"
 
-#: plug-ins/common/ps.c:881
+#: plug-ins/common/ps.c:882
 #, c-format
 msgid "Interpreting and Loading %s:"
 msgstr "Chargement et interprétation de %s:"
 
-#: plug-ins/common/ps.c:889
+#: plug-ins/common/ps.c:890
 msgid "PS: can't interprete file"
 msgstr "PS: impossible d'interpréter le fichier"
 
-#: plug-ins/common/ps.c:976
+#: plug-ins/common/ps.c:977
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "PostScript ne peux pas gérer les images avec canaux alpha"
 
-#: plug-ins/common/ps.c:987
+#: plug-ins/common/ps.c:988
 msgid "PS: cannot operate on unknown image types"
 msgstr "PS: impossible d'opérer sur un type d'image inconnu"
 
-#: plug-ins/common/ps.c:996
+#: plug-ins/common/ps.c:997
 msgid "PS: can't open file for writing"
 msgstr "PS: impossible d'ouvrir le fichier en écriture"
 
-#: plug-ins/common/ps.c:2164 plug-ins/common/ps.c:2290
-#: plug-ins/common/ps.c:2434 plug-ins/common/ps.c:2556
+#: plug-ins/common/ps.c:2193 plug-ins/common/ps.c:2319
+#: plug-ins/common/ps.c:2463 plug-ins/common/ps.c:2585
 msgid "write error occured"
 msgstr "une erreur d'écriture est survenue"
 
-#: plug-ins/common/ps.c:2581
+#: plug-ins/common/ps.c:2610
 msgid "Load PostScript"
 msgstr "Charger PostScript"
 
 #. Rendering
-#: plug-ins/common/ps.c:2608 plug-ins/flame/flame.c:994
+#: plug-ins/common/ps.c:2637 plug-ins/flame/flame.c:994
 msgid "Rendering"
 msgstr "Interprétation"
 
-#: plug-ins/common/ps.c:2626 plug-ins/print/gimp_main_window.c:534
+#: plug-ins/common/ps.c:2655 plug-ins/print/gimp_main_window.c:534
 msgid "Resolution:"
 msgstr "Résolution :"
 
-#: plug-ins/common/ps.c:2654
+#: plug-ins/common/ps.c:2683
 msgid "Pages:"
 msgstr "Pages :"
 
-#: plug-ins/common/ps.c:2660
+#: plug-ins/common/ps.c:2689
 msgid "Try Bounding Box"
 msgstr "Essayer la BoundingBox"
 
 #. Colouring
-#: plug-ins/common/ps.c:2672
+#: plug-ins/common/ps.c:2701
 msgid "Coloring"
 msgstr "Coloration"
 
-#: plug-ins/common/ps.c:2676
+#: plug-ins/common/ps.c:2705
 msgid "B/W"
 msgstr "N/B"
 
 #. * Gray *
-#: plug-ins/common/ps.c:2677 plug-ins/rcm/rcm_dialog.c:394
+#: plug-ins/common/ps.c:2706 plug-ins/rcm/rcm_dialog.c:394
 msgid "Gray"
 msgstr "Gris"
 
-#: plug-ins/common/ps.c:2689
+#: plug-ins/common/ps.c:2718
 msgid "Text Antialiasing"
 msgstr "Lissage du texte"
 
-#: plug-ins/common/ps.c:2694 plug-ins/common/ps.c:2707
+#: plug-ins/common/ps.c:2723 plug-ins/common/ps.c:2736
 msgid "Weak"
 msgstr "Faible"
 
-#: plug-ins/common/ps.c:2695 plug-ins/common/ps.c:2708
+#: plug-ins/common/ps.c:2724 plug-ins/common/ps.c:2737
 msgid "Strong"
 msgstr "Fort"
 
-#: plug-ins/common/ps.c:2701
+#: plug-ins/common/ps.c:2730
 msgid "Graphic Antialiasing"
 msgstr "Lissage Graphique"
 
-#: plug-ins/common/ps.c:2763
+#: plug-ins/common/ps.c:2792
 msgid "Save as PostScript"
 msgstr "Enregistrer en PostScript"
 
 #. Image Size
-#: plug-ins/common/ps.c:2793
+#: plug-ins/common/ps.c:2822
 msgid "Image Size"
 msgstr "Taille de l'image"
 
-#: plug-ins/common/ps.c:2829
+#: plug-ins/common/ps.c:2858
 msgid "X-Offset:"
 msgstr "Décalage X :"
 
-#: plug-ins/common/ps.c:2838
+#: plug-ins/common/ps.c:2867
 msgid "Y-Offset:"
 msgstr "Décalage Y :"
 
-#: plug-ins/common/ps.c:2844
+#: plug-ins/common/ps.c:2873
 msgid "Keep Aspect Ratio"
 msgstr "conserver le rapport hauteur/largeur"
 
-#: plug-ins/common/ps.c:2845
+#: plug-ins/common/ps.c:2874
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -5396,32 +5396,32 @@ msgstr ""
 "la taille donnée sans changer l'aspect ratio."
 
 #. Unit
-#: plug-ins/common/ps.c:2856
+#: plug-ins/common/ps.c:2885
 msgid "Unit"
 msgstr "Unité"
 
-#: plug-ins/common/ps.c:2860 plug-ins/print/gimp_main_window.c:360
+#: plug-ins/common/ps.c:2889 plug-ins/print/gimp_main_window.c:360
 msgid "Inch"
 msgstr "Pouce"
 
-#: plug-ins/common/ps.c:2861
+#: plug-ins/common/ps.c:2890
 msgid "Millimeter"
 msgstr "Millimètre"
 
 #. Format
-#: plug-ins/common/ps.c:2885
+#: plug-ins/common/ps.c:2914
 msgid "Output"
 msgstr "Sortie"
 
-#: plug-ins/common/ps.c:2893
+#: plug-ins/common/ps.c:2922
 msgid "PostScript Level 2"
 msgstr "PostScript niveau 2"
 
-#: plug-ins/common/ps.c:2901
+#: plug-ins/common/ps.c:2930
 msgid "Encapsulated PostScript"
 msgstr "PostScript Encapsulé"
 
-#: plug-ins/common/ps.c:2929
+#: plug-ins/common/ps.c:2958
 msgid "Preview Size:"
 msgstr "Taille de l'aperçu :"
 
@@ -5667,12 +5667,12 @@ msgstr "Conservation :"
 
 #: plug-ins/common/screenshot.c:149 plug-ins/winsnap/winsnap.c:1076
 msgid "<Toolbox>/File/Acquire/Screen Shot..."
-msgstr "<Toolbox>/Fichier/Acquisition/Screen Shot..."
+msgstr "<Toolbox>/Fichier/Acquisition/Capture d'écran..."
 
 #. Main Dialog
 #: plug-ins/common/screenshot.c:368
 msgid "Screen Shot"
-msgstr "Screen Shot"
+msgstr "Capture d'écran"
 
 #. Action area
 #: plug-ins/common/screenshot.c:373 plug-ins/winsnap/winsnap.c:903
@@ -5681,15 +5681,15 @@ msgstr "Capturer"
 
 #: plug-ins/common/screenshot.c:400
 msgid "Grab a Single Window"
-msgstr "Capturer une Fenêtre Seule"
+msgstr "Capturer une fenêtre seule"
 
 #: plug-ins/common/screenshot.c:414
 msgid "Include Decorations"
-msgstr "Inlure les Décorations"
+msgstr "Inclure les décorations"
 
 #: plug-ins/common/screenshot.c:435
 msgid "Grab the Whole Screen"
-msgstr "Capturer l'Écran en Entier"
+msgstr "Capturer l'écran en entier"
 
 #: plug-ins/common/screenshot.c:449 plug-ins/winsnap/winsnap.c:1011
 msgid "after"
@@ -5697,15 +5697,15 @@ msgstr "après"
 
 #: plug-ins/common/screenshot.c:458 plug-ins/winsnap/winsnap.c:1020
 msgid "Seconds Delay"
-msgstr "Secondes de délai"
+msgstr "secondes de délai"
 
 #: plug-ins/common/sel_gauss.c:125
 msgid "<Image>/Filters/Blur/Selective Gaussian Blur..."
-msgstr "<Image>/Filtres/Flou/Flou Gaussien Sélectif..."
+msgstr "<Image>/Filtres/Flou/Flou gaussien sélectif..."
 
 #: plug-ins/common/sel_gauss.c:201 plug-ins/common/sel_gauss.c:237
 msgid "Selective Gaussian Blur"
-msgstr "Flou Gaussien Sélectif"
+msgstr "Flou gaussien sélectif"
 
 #: plug-ins/common/sel_gauss.c:218
 msgid "sel_gauss: Cannot operate on indexed color images"
@@ -5717,7 +5717,7 @@ msgstr "Max. Delta :"
 
 #: plug-ins/common/semiflatten.c:89
 msgid "<Image>/Filters/Colors/Semi-Flatten"
-msgstr "<Image>/Filtres/Couleurs/Applatir à Moitié"
+msgstr "<Image>/Filtres/Couleurs/Applatir à moitié"
 
 #: plug-ins/common/semiflatten.c:126
 msgid "Semi-Flatten..."
@@ -5758,15 +5758,15 @@ msgstr "Déplacer"
 
 #: plug-ins/common/shift.c:393
 msgid "Shift Horizontally"
-msgstr "Déplacer Horizontalement"
+msgstr "Déplacer horizontalement"
 
 #: plug-ins/common/shift.c:394
 msgid "Shift Vertically"
-msgstr "Déplacer Verticalement"
+msgstr "Déplacer verticalement"
 
 #: plug-ins/common/shift.c:413
 msgid "Shift Amount:"
-msgstr "Nombre de Déplacement :"
+msgstr "Nombre de déplacement :"
 
 #: plug-ins/common/sinus.c:1157
 msgid "<Image>/Filters/Render/Sinus..."
@@ -5821,7 +5821,7 @@ msgstr "Les couleurs sont blanc et noir."
 
 #: plug-ins/common/sinus.c:1881
 msgid "Black & White"
-msgstr " Noir & Blanc"
+msgstr "Noir & Blanc"
 
 #: plug-ins/common/sinus.c:1883
 msgid "Foreground & Background"
@@ -6465,7 +6465,7 @@ msgstr "Carrelage..."
 
 #: plug-ins/common/uniteditor.c:73
 msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Extensions/Éditeur d'unités..."
+msgstr "<Toolbox>/Exts/Éditeur d'unités..."
 
 #: plug-ins/common/uniteditor.c:168 plug-ins/common/uniteditor.c:624
 msgid "New Unit"
@@ -7270,7 +7270,7 @@ msgstr "DécoupageZélé(tm)..."
 
 #: plug-ins/dbbrowser/dbbrowser.c:90
 msgid "<Toolbox>/Xtns/DB Browser..."
-msgstr "<Toolbox>/Extensions/Explorer la base de procédures..."
+msgstr "<Toolbox>/Exts/Explorer la base de procédures..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:148
 #: plug-ins/dbbrowser/dbbrowser_utils.c:167
@@ -7684,7 +7684,7 @@ msgstr "<Image>/Vidéo/Video --> Trames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:102
 msgid "<Toolbox>/Xtns/Split Video to Frames"
-msgstr "<Toolbox>/Extensions/Video --> Trames"
+msgstr "<Toolbox>/Exts/Video --> Trames"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:178
 msgid "<Image>/Video/Split Video to Frames/MPEG1"
@@ -8069,7 +8069,7 @@ msgstr "<Image>/Vidéo/Découper en images/Lisible par XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:139
 msgid "<Toolbox>/Xtns/Split Video to Frames/Any XANIM readable..."
-msgstr "<Toolbox>/Extensions/Découper en images/Lisible par XANIM..."
+msgstr "<Toolbox>/Exts/Découper en images/Lisible par XANIM..."
 
 #: plug-ins/gap/gap_frontends_main.c:151
 msgid "<Image>/Video/Encode/MPEG1..."
@@ -12759,11 +12759,11 @@ msgstr "Netteté des carreaux :"
 
 #: plug-ins/mosaic/mosaic.c:691
 msgid "Light Direction:"
-msgstr "Direction de la Lumière :"
+msgstr "Direction de la lumière :"
 
 #: plug-ins/mosaic/mosaic.c:700
 msgid "Color Variation:"
-msgstr "Variation de Couleur :"
+msgstr "Variation de couleur :"
 
 #: plug-ins/mosaic/mosaic.c:2469
 msgid "Unable to add additional point.\n"
@@ -12771,15 +12771,15 @@ msgstr "Impossible d'ajouter d'autre points.\n"
 
 #: plug-ins/pagecurl/pagecurl.c:216
 msgid "<Image>/Filters/Distorts/Pagecurl..."
-msgstr "<Image>/Filtres/Distorsions/Coin de Page..."
+msgstr "<Image>/Filtres/Distorsions/Coin de page..."
 
 #: plug-ins/pagecurl/pagecurl.c:513
 msgid "Pagecurl Effect"
-msgstr "Effet Coin de Page"
+msgstr "Effet Coin de page"
 
 #: plug-ins/pagecurl/pagecurl.c:534
 msgid "Curl Location"
-msgstr "Emplacement du Coin"
+msgstr "Emplacement du coin"
 
 #: plug-ins/pagecurl/pagecurl.c:601
 msgid "Upper Left"
@@ -12787,23 +12787,23 @@ msgstr "Supérieure gauche"
 
 #: plug-ins/pagecurl/pagecurl.c:602
 msgid "Upper Right"
-msgstr "Supérieure Droite"
+msgstr "Supérieur droit"
 
 #: plug-ins/pagecurl/pagecurl.c:603
 msgid "Lower Left"
-msgstr "Inférieure Gauche"
+msgstr "Inférieur gauche"
 
 #: plug-ins/pagecurl/pagecurl.c:604
 msgid "Lower Right"
-msgstr "Inférieure Droite"
+msgstr "Inférieur droit"
 
 #: plug-ins/pagecurl/pagecurl.c:635
 msgid "Curl Orientation"
-msgstr "Orientation du Coin"
+msgstr "Orientation du coin"
 
 #: plug-ins/pagecurl/pagecurl.c:674
 msgid "Shade under Curl"
-msgstr "Ombre sous le Coin"
+msgstr "Ombre sous le coin"
 
 #: plug-ins/pagecurl/pagecurl.c:684
 msgid ""
@@ -12815,7 +12815,7 @@ msgstr ""
 
 #: plug-ins/pagecurl/pagecurl.c:696
 msgid "Curl Opacity"
-msgstr "Opacité du Coin"
+msgstr "Opacité du coin"
 
 #: plug-ins/pagecurl/pagecurl.c:823
 msgid "Curl Layer"
@@ -12830,7 +12830,6 @@ msgid "Print Color Adjust"
 msgstr "Ajustez les couleurs d'impression"
 
 #: plug-ins/print/gimp_color_window.c:140
-#, fuzzy
 msgid "Set Defaults"
 msgstr "Valeurs par défaut"
 
@@ -12883,14 +12882,12 @@ msgid "cm"
 msgstr "cm"
 
 #: plug-ins/print/gimp_main_window.c:420
-#, fuzzy
 msgid "Right Border:"
-msgstr "Bordure :"
+msgstr "Bordure droite :"
 
 #: plug-ins/print/gimp_main_window.c:443
-#, fuzzy
 msgid "Bottom Border:"
-msgstr "Bordure Basse"
+msgstr "Bordure Basse :"
 
 #: plug-ins/print/gimp_main_window.c:455
 msgid "Portrait"
@@ -12902,12 +12899,11 @@ msgstr "Paysage"
 
 #: plug-ins/print/gimp_main_window.c:461
 msgid "Upside down"
-msgstr ""
+msgstr "Retourner"
 
 #: plug-ins/print/gimp_main_window.c:464
-#, fuzzy
 msgid "Seascape"
-msgstr "Paysage"
+msgstr "Paysage marin"
 
 #.
 #. *  Printer settings frame...
@@ -12936,9 +12932,8 @@ msgstr "Type d'encre :"
 #. * Scaling...
 #.
 #: plug-ins/print/gimp_main_window.c:540
-#, fuzzy
 msgid "Scaling"
-msgstr "Échelle :"
+msgstr "Échelle"
 
 #: plug-ins/print/gimp_main_window.c:567 plug-ins/print/gimp_main_window.c:576
 msgid "Scaling:"
@@ -12960,9 +12955,8 @@ msgstr "Réglage de l'échelle de l'image"
 #. * Image type
 #.
 #: plug-ins/print/gimp_main_window.c:656
-#, fuzzy
 msgid "Image Settings"
-msgstr "Paramètres de Teinte"
+msgstr "Paramètres de l'image"
 
 #: plug-ins/print/gimp_main_window.c:676
 msgid "Line Art"
@@ -13007,9 +13001,8 @@ msgstr "Configuration"
 #. * Printer driver option menu...
 #.
 #: plug-ins/print/gimp_main_window.c:840
-#, fuzzy
 msgid "Printer Model:"
-msgstr "Mode de dessin :"
+msgstr "Modèle d'imprimante :"
 
 #.
 #. * PPD file...
@@ -13048,18 +13041,16 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Ficher/Imprimer..."
 
 #: plug-ins/print/print.c:241
-#, fuzzy
 msgid "<Image>/File/Print (Gtk)..."
-msgstr "<Image>/Ficher/Imprimer..."
+msgstr "<Image>/Ficher/Imprimer (Gtk)..."
 
 #: plug-ins/print/print.c:249
-#, fuzzy
 msgid "<Image>/File/Print (Gimp)..."
-msgstr "<Image>/Ficher/Imprimer..."
+msgstr "<Image>/Ficher/Imprimer (GIMP)..."
 
 #: plug-ins/rcm/rcm.c:118
 msgid "<Image>/Image/Colors/Colormap Rotation..."
-msgstr "<Image>/Image/Couleurs/Rotation de la Carte des Couleurs..."
+msgstr "<Image>/Image/Couleurs/Rotation de la carte des couleurs..."
 
 #: plug-ins/rcm/rcm.c:281
 msgid "Rotating the colormap..."
@@ -13071,7 +13062,7 @@ msgstr "Passer en mode horraire"
 
 #: plug-ins/rcm/rcm_callback.c:151 plug-ins/rcm/rcm_dialog.c:261
 msgid "Switch to c/clockwise"
-msgstr "Passer en mode anti horraire"
+msgstr "Passer en mode anti-horaire"
 
 #: plug-ins/rcm/rcm_dialog.c:269
 msgid "Change order of arrows"
@@ -13087,13 +13078,9 @@ msgid "From"
 msgstr "Depuis"
 
 #. spinbutton 2
-#: plug-ins/rcm/rcm_dialog.c:307
-msgid "to"
-msgstr "vers"
-
-#: plug-ins/rcm/rcm_dialog.c:357
+#: plug-ins/rcm/rcm_dialog.c:307 plug-ins/rcm/rcm_dialog.c:357
 msgid "To"
-msgstr "Vers :"
+msgstr "Vers"
 
 #. Gray: Operation-Mode: two radio buttons
 #: plug-ins/rcm/rcm_dialog.c:480
@@ -13216,7 +13203,7 @@ msgstr "Transfert des donéées TWAIN"
 
 #: plug-ins/webbrowser/webbrowser.c:141
 msgid "<Toolbox>/Xtns/Web Browser/Open URL..."
-msgstr "<Toolbox>/Extensions/Navigateur Web/Ouvrir l'URL..."
+msgstr "<Toolbox>/Exts/Navigateur Web/Ouvrir l'URL..."
 
 #: plug-ins/webbrowser/webbrowser.c:274
 msgid "Open URL"
@@ -13333,6 +13320,9 @@ msgstr "Erreur : Impossible de lire le fichier de propriétés XJT %s"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Erreur : le fichier de propriétés XJT %s est vide"
+
+#~ msgid "to"
+#~ msgstr "vers"
 
 #~ msgid "Output Level:"
 #~ msgstr "Niveau de sortie :"
@@ -13953,16 +13943,16 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ msgstr "Fichier de log du serveur :"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Console..."
-#~ msgstr "<Toolbox>/Extensions/Script-Fu/Console..."
+#~ msgstr "<Toolbox>/Exts/Script-Fu/Console..."
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Server..."
-#~ msgstr "<Toolbox>/Extensions/Script-Fu/Serveur..."
+#~ msgstr "<Toolbox>/Exts/Script-Fu/Serveur..."
 
 #~ msgid "Re-read all available scripts"
 #~ msgstr "Relire tous les scripts disponibles"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
-#~ msgstr "<Toolbox>/Extensions/Script-Fu/Rafraîchir"
+#~ msgstr "<Toolbox>/Exts/Script-Fu/Rafraîchir"
 
 #~ msgid "Film color Color Picker"
 #~ msgstr "Choix de la couleur de fond du film"

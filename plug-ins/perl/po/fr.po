@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1.1.26\n"
-"POT-Creation-Date: Wed Oct  4 16:01:46 2000\n"
-"PO-Revision-Date: 2000-10-02 12:11+0200\n"
+"POT-Creation-Date: 2000-10-04 16:01:46 2000\n"
+"PO-Revision-Date: 2000-10-09 11:21+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@gnomefr.traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -21,11 +21,11 @@ msgstr " (pressez Tab pour terminer)"
 
 #: Gimp/Lib.xs:0
 msgid " = [argument error]\n"
-msgstr ""
+msgstr " = [erreur d'argument]n"
 
 #: examples/PDB:0
 msgid " matching functions"
-msgstr ""
+msgstr " fonctions correspondantes"
 
 #: Gimp/Fu.pm:0
 msgid ""
@@ -132,21 +132,21 @@ msgstr "/Filtres/Logomatic"
 
 #: Perl-Server:0
 msgid "/Xtns/Perl"
-msgstr "/Extensions/Perl"
+msgstr "/Exts/Perl"
 
 #: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0 examples/stamps:0
 msgid "/Xtns/Render"
-msgstr "/Extensions/Rendu"
+msgstr "/Exts/Rendu"
 
 #: examples/fire:0 examples/glowing_steel:0 examples/innerbevel:0
 #: examples/povray:0
 msgid "/Xtns/Render/Logos"
-msgstr "/Extensions/Rendu/Logos"
+msgstr "/Exts/Rendu/Logos"
 
 #: examples/povray:0
 msgid "/Xtns/Render/Povray"
-msgstr "/Extensions/Rendu/POV-Ray"
+msgstr "/Exts/Rendu/POV-Ray"
 
 #: UI/UI.pm:0
 msgid "9x15bold"
@@ -403,99 +403,99 @@ msgstr ""
 
 #: examples/billboard:0
 msgid "<Toolbox>/Xtns/Animation/Billboard..."
-msgstr "<Toolbox>/Extensions/Animation/Billboard..."
+msgstr "<Toolbox>/Exts/Animation/Billboard..."
 
 #: examples/sethspin:0
 msgid "<Toolbox>/Xtns/Animation/Seth Spin..."
-msgstr "<Toolbox>/Extensions/Animation/Seth Spin..."
+msgstr "<Toolbox>/Exts/Animation/Seth Spin..."
 
 #: examples/Create_Images:0
 msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Extensions/Créer images"
+msgstr "<Toolbox>/Exts/Créer images"
 
 #: examples/example-fu:0
 msgid "<Toolbox>/Xtns/Gimp::Fu Example..."
-msgstr "<Toolbox>/Extensions/Gimp::Fu Example..."
+msgstr "<Toolbox>/Exts/Gimp::Fu Example..."
 
 #: examples/homepage-logo:0
 msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Extensions/Logo page d'accueil"
+msgstr "<Toolbox>/Exts/Logo page d'accueil"
 
 #: examples/PDB:0
 msgid "<Toolbox>/Xtns/PDB Explorer..."
-msgstr "<Toolbox>/Extensions/Explorateur PDB..."
+msgstr "<Toolbox>/Exts/Explorateur PDB..."
 
 #: examples/parasite-editor:0
 msgid "<Toolbox>/Xtns/Parasite Editor..."
-msgstr "<Toolbox>/Extensions/Éditeur de parasite..."
+msgstr "<Toolbox>/Exts/Éditeur de parasite..."
 
 #: examples/example-oo:0
 msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Extensions/Exemple de greffon Perl"
+msgstr "<Toolbox>/Exts/Exemple de greffon Perl"
 
 #: examples/perlcc:0
 msgid "<Toolbox>/Xtns/Perl/Control Center..."
-msgstr "<Toolbox>/Extensions/Perl/Panneau de contrôle..."
+msgstr "<Toolbox>/Exts/Perl/Panneau de contrôle..."
 
 #: Perl-Server:0
 msgid "<Toolbox>/Xtns/Perl/Server"
-msgstr "<Toolbox>/Extensions/Perl/Serveur"
+msgstr "<Toolbox>/Exts/Perl/Serveur"
 
 #: examples/bricks:0
 msgid "<Toolbox>/Xtns/Render/Bricks..."
-msgstr "<Toolbox>/Extensions/Rendu/Briques..."
+msgstr "<Toolbox>/Exts/Rendu/Briques..."
 
 #: examples/font_table:0
 msgid "<Toolbox>/Xtns/Render/Font Table..."
-msgstr "<Toolbox>/Extensions/Rendu/Table de police..."
+msgstr "<Toolbox>/Exts/Rendu/Table de police..."
 
 #: examples/goldenmean:0
 msgid "<Toolbox>/Xtns/Render/Golden Mean..."
-msgstr "<Toolbox>/Extensions/Rendu/Golden Mean..."
+msgstr "<Toolbox>/Exts/Rendu/Golden Mean..."
 
 #: examples/fire:0
 msgid "<Toolbox>/Xtns/Render/Logos/Firetext..."
-msgstr "<Toolbox>/Extensions/Rendu/Logos/Firetext..."
+msgstr "<Toolbox>/Exts/Rendu/Logos/Firetext..."
 
 #: examples/glowing_steel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Extensions/Rendu/Logos/Acier et lueur"
+msgstr "<Toolbox>/Exts/Rendu/Logos/Acier et lueur"
 
 #: examples/innerbevel:0
 msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel..."
-msgstr "<Toolbox>/Extensions/Rendu/Logos/Cadre intérieur..."
+msgstr "<Toolbox>/Exts/Rendu/Logos/Cadre intérieur..."
 
 #: examples/pixelmap:0
 msgid "<Toolbox>/Xtns/Render/Pixelgenerator..."
-msgstr "<Toolbox>/Extensions/Rendu/Générateur de pixel..."
+msgstr "<Toolbox>/Exts/Rendu/Générateur de pixel..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Preferences..."
-msgstr "<Toolbox>/Extensions/Rendu/POV-Ray/Préférences..."
+msgstr "<Toolbox>/Exts/Rendu/POV-Ray/Préférences..."
 
 #: examples/povray:0
 msgid "<Toolbox>/Xtns/Render/Povray/Texture..."
-msgstr "<Toolbox>/Extensions/Rendu/POV-Ray/Texture..."
+msgstr "<Toolbox>/Exts/Rendu/POV-Ray/Texture..."
 
 #: examples/randomart1:0
 msgid "<Toolbox>/Xtns/Render/Random Art #1..."
-msgstr "<Toolbox>/Extensions/Rendu/Art aléatoire n°1..."
+msgstr "<Toolbox>/Exts/Rendu/Art aléatoire n°1..."
 
 #: examples/stamps:0
 msgid "<Toolbox>/Xtns/Render/Stamps..."
-msgstr "<Toolbox>/Extensions/Rendu/Timbres..."
+msgstr "<Toolbox>/Exts/Rendu/Timbres..."
 
 #: examples/yinyang:0
 msgid "<Toolbox>/Xtns/Render/Yin-Yang..."
-msgstr "<Toolbox>/Extensions/Rendu/Yin-Yang..."
+msgstr "<Toolbox>/Exts/Rendu/Yin-Yang..."
 
 #: examples/visual:0
 msgid "<Toolbox>/Xtns/Visual Scriptor..."
-msgstr "<Toolbox>/Extensions/Scripteur visuel..."
+msgstr "<Toolbox>/Exts/Scripteur visuel..."
 
 #: examples/PDB:0
 msgid "Accelerator"
-msgstr ""
+msgstr "Accélerateur"
 
 #: examples/sethspin:0
 msgid ""
@@ -662,7 +662,7 @@ msgstr "Suite..."
 
 #: examples/PDB:0
 msgid "NAME"
-msgstr ""
+msgstr "NOM"
 
 #: examples/perlotine:0
 msgid "No horizontal or vertical guides found. Aborted."
@@ -694,11 +694,11 @@ msgstr "Remet tous les paramètres à leur valeur par défaut."
 
 #: UI/UI.pm:0
 msgid "Restore values to the previous ones"
-msgstr ""
+msgstr "Restorer les valeurs à leur valeur précédente"
 
 #: UI/UI.pm:0
 msgid "Save $name"
-msgstr ""
+msgstr "Enregistrer $name"
 
 #: UI/UI.pm:0
 msgid "Save"
@@ -802,7 +802,7 @@ msgstr ""
 
 #: examples/prep4gif:0
 msgid "You need at least 2 layers to perform prep4gif"
-msgstr ""
+msgstr "Vous avez besoin d'au moins deux calques pour effectuer prep4gif"
 
 #: Gimp/Lib.xs:0
 msgid "[undefined]"
