@@ -2536,8 +2536,6 @@ dlg_run (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_init ();
-
   /*
    *    main hbox
    */
@@ -2624,7 +2622,6 @@ dlg_run (void)
   DEBUG_PRINT (("dlg init done\n"));
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return pint.run;

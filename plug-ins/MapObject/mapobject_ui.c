@@ -66,8 +66,6 @@ static void toggle_update              (GtkWidget     *widget,
 
 static void togglegrid_update          (GtkWidget     *widget,
 					gpointer       data);
-static void toggletips_update          (GtkWidget     *widget,
-					gpointer       data);
 
 static void lightmenu_callback         (GtkWidget     *widget,
 					gpointer       data);
@@ -180,22 +178,6 @@ togglegrid_update (GtkWidget *widget,
       clear_wireframe ();
       linetab[0].x1 = -1;
     }
-}
-
-/**************************/
-/* Tooltips toggle update */
-/**************************/
-
-static void
-toggletips_update (GtkWidget *widget,
-		   gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  if (mapvals.tooltips_enabled)
-    gimp_help_enable_tooltips ();
-  else
-    gimp_help_disable_tooltips ();
 }
 
 /*****************************************/
@@ -618,18 +600,6 @@ create_options_page (void)
 
   gimp_help_set_help_data (toggle,
 			   _("Create a new image when applying filter"), NULL);
-
-  toggle = gtk_check_button_new_with_label (_("Enable Tooltips"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				mapvals.tooltips_enabled);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (toggletips_update),
-                    &mapvals.tooltips_enabled);
-
-  gimp_help_set_help_data (toggle, _("Enable/disable tooltip messages"), NULL); 
 
   /* Antialiasing options */
 
@@ -1421,8 +1391,6 @@ main_dialog (GimpDrawable *drawable)
 
 			    NULL);
 
-  gimp_help_init ();
-
   main_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (appwin)->vbox), main_hbox,
@@ -1532,9 +1500,6 @@ main_dialog (GimpDrawable *drawable)
     gdk_flush ();
   }
 
-  if (!mapvals.tooltips_enabled)
-    gimp_help_disable_tooltips ();
-
   image_setup (drawable, TRUE);
 
   gtk_main ();
@@ -1542,8 +1507,6 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_destroy (appwin);
   g_free (preview_rgb_data);
   gck_visualinfo_destroy (visinfo);
-
-  gimp_help_free ();
 
   gdk_flush ();
 

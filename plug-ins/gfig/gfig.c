@@ -188,8 +188,6 @@ static void      dialog_update_preview     (void);
 static void      draw_grid                 (void);
 static void      draw_grid_clear           (void);
 static void      toggle_show_image         (void);
-static void      toggle_tooltips           (GtkWidget *widget,
-					    gpointer   data);
 static void      toggle_obj_type           (GtkWidget *widget,
 					    gpointer   data);
 
@@ -329,7 +327,6 @@ typedef struct
   gdouble       brushfade;
   gdouble       brushgradient;
   gdouble       airbrushpressure;
-  gint          showtooltips;
   DrawonLayers  onlayers;
   LayersBGType  onlayerbg;
   PaintType     painttype;
@@ -3360,16 +3357,6 @@ options_page (void)
   gtk_widget_show (toggle); 
   gfig_opt_widget.showcontrol = toggle;
 
-  toggle = gtk_check_button_new_with_label (_("Show Tooltips"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 5, 6,
-		    GTK_FILL, GTK_FILL, 0, 0);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (toggle_tooltips),
-                    &selvals.showtooltips);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-				selvals.showtooltips);
-  gtk_widget_show (toggle); 
-
   button = gtk_button_new_with_label (_("About"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 8, 0);
   gtk_table_attach (GTK_TABLE (table), button, 1, 3, 5, 6,
@@ -3945,9 +3932,6 @@ gfig_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /* Tooltips bis */
-  gimp_help_init ();
-
   main_hbox = gtk_hbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 4);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (top_level_dlg)->vbox), main_hbox,
@@ -4034,8 +4018,6 @@ gfig_dialog (void)
 
   gimp_image_delete (brush_image_ID);
   brush_image_ID = -1;
-
-  gimp_help_free ();
 
   gdk_flush ();
 
@@ -5821,18 +5803,6 @@ draw_grid_clear ()
   draw_objects (current_obj->obj_list, TRUE);
   gtk_widget_draw (gfig_preview, NULL);
   gdk_flush ();
-}
-
-static void
-toggle_tooltips (GtkWidget *widget,
-		 gpointer   data)
-{
-  gimp_toggle_button_update (widget, data);
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    gimp_help_enable_tooltips ();
-  else
-    gimp_help_disable_tooltips ();
 }
 
 static void

@@ -550,8 +550,6 @@ unit_editor_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_init ();
-
   /*  the main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -675,5 +673,4 @@ unit_editor_dialog (void)
   gtk_widget_show (main_dialog);
 
   gtk_main ();
-  gimp_help_free ();
 }

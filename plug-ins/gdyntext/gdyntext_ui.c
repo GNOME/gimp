@@ -299,7 +299,6 @@ create_main_window (GdtMainWindow **main_window,
   gtk_widget_realize(mw->window);
   
   gimp_help_connect_help_accel (mw->window, gimp_standard_help_func, "filters/gdyntext.html");
-  gimp_help_init ();
 
   vbox = gtk_vbox_new(FALSE, 0);
   gtk_container_add(GTK_CONTAINER(mw->window), vbox);
@@ -680,7 +679,6 @@ gdt_create_ui (GdtVals *data)
     gtk_widget_show(message_window);
 
   gtk_main ();
-  gimp_help_free ();
 
   if (main_window->ok_pressed)
     set_gdt_vals(data);

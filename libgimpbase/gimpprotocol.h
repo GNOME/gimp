@@ -27,7 +27,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GP_VERSION 0x000C
+#define GP_VERSION 0x000D
 
 
 enum
@@ -68,7 +68,7 @@ struct _GPConfig
   gint32  shm_ID;
   gdouble gamma;
   gint8   install_cmap;
-  gint8   unused;       /* used to be use_xshm */
+  gint8   show_tool_tips;
   gint32  min_colors;
   gint32  gdisp_ID;
 };

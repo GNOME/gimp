@@ -1138,8 +1138,6 @@ main_dialog (GimpDrawable *drawable)
 
 			    NULL);
 
-  gimp_help_init ();
-
   main_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (appwin)->vbox), main_hbox,
@@ -1245,8 +1243,6 @@ main_dialog (GimpDrawable *drawable)
 
   gck_visualinfo_destroy (visinfo);
   gtk_widget_destroy (appwin);
-
-  gimp_help_free ();
 
   gdk_flush ();
 

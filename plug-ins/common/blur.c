@@ -601,8 +601,6 @@ blur_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_init ();
-
   /*
    *  Parameter settings
    *
@@ -657,7 +655,6 @@ blur_dialog (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return blur_int.run;

@@ -745,9 +745,6 @@ gint p_array_std_dialog(char *title_txt,
      g_first_call = FALSE;
   }
 
-  /* Initialize Tooltips */
-  gimp_help_init ();
-
   /* dialog */
   g_arrint.dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (g_arrint.dlg), title_txt);

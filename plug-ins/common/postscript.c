@@ -2805,8 +2805,6 @@ save_dialog (void)
   GtkObject *adj;
   gint       j;
 
-  gimp_help_init ();
-
   vals = g_new (SaveDialogVals, 1);
   vals->level = (psvals.level > 1);
 
@@ -3007,7 +3005,6 @@ save_dialog (void)
   gtk_widget_show (dialog);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   psvals.level = (vals->level) ? 2 : 1;

@@ -71,6 +71,8 @@ gimp_widgets_init (void)
 
   g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
   g_list_free (icon_list);
+
+  _gimp_help_init ();
 }
 
 

@@ -899,9 +899,6 @@ dialog_box (GimpDrawable *drawable)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /* init tooltips */
-  gimp_help_init ();
-  
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
@@ -1061,6 +1058,5 @@ dialog_box (GimpDrawable *drawable)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 }

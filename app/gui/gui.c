@@ -198,9 +198,6 @@ gui_themes_init (Gimp *gimp)
 
   g_free (gtkrc);
 
-  /*  tooltips  */
-  gimp_help_init ();
-
   if (! config->show_tool_tips)
     gimp_help_disable_tooltips ();
 
@@ -558,8 +555,6 @@ gui_exit_finish_callback (Gimp     *gimp,
 
   dialogs_exit (gimp);
   gimp_devices_exit (gimp);
-
-  gimp_help_free ();
 
   g_signal_handlers_disconnect_by_func (gimp->config,
                                         gui_show_tooltips_notify,

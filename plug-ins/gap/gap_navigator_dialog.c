@@ -205,7 +205,6 @@ struct _OpenFrameImages{
 
 struct _NaviDialog
 {
-  gint          tooltip_on;
   GtkWidget     *shell;
   GtkWidget     *vbox;
   GtkWidget     *mode_option_menu;
@@ -331,7 +330,6 @@ static void          frame_widget_delete (FrameWidget *fw);
 static gint32        navi_get_preview_size(void);
 static void          frames_timing_update (void);
 static void          frame_widget_time_label_update(FrameWidget *fw);
-static void          navi_dialog_tooltips(void);
 static void          navi_set_waiting_cursor(void);
 static void          navi_set_active_cursor(void);
 
@@ -1035,41 +1033,6 @@ navi_scroll_to_current_frame_nr(void)
     if(gap_debug) printf("navi_scroll_to_current_frame_nr: NEW : %d should be equal to adj_val: %d adj->page_size:%d\n", (int)adj->value, (int)adj_val, (int)adj->page_size);  
   }
 }
-
-static void
-navi_dialog_tooltips(void)
-{
-  char *value_string;
-  gint tooltip_on;
-   
-  if(naviD == NULL) return;
-
-  tooltip_on = TRUE;
-  value_string = p_gimp_gimprc_query("show-tool-tips");
-  
-  if(value_string != NULL)
-  {
-    if (strcmp(value_string, "no") == 0)
-    {
-      tooltip_on = FALSE;
-    }
-  }
-  
-  if(naviD->tooltip_on != tooltip_on)
-  {
-     naviD->tooltip_on = tooltip_on;
-     
-     if(tooltip_on)
-     {
-       gimp_help_enable_tooltips ();
-     }
-     else
-     {
-       gimp_help_disable_tooltips ();
-     }
-  }
-}
-
 
 static gint
 navi_find_OpenFrameList(OpenFrameImages *search_item)
@@ -2479,9 +2442,6 @@ navi_dialog_poll(GtkWidget *w, gpointer   data)
             update_flag = NUPD_ALL;
 	 }
 
-	 /* check and enable/disable tooltips */      
-	 navi_dialog_tooltips ();
-
 	 frame_nr = p_get_frame_nr(naviD->active_imageid);
 	 if(frame_nr < 0 )
 	 {
@@ -2900,9 +2860,6 @@ navi_dialog_create (GtkWidget* shell, gint32 image_id)
       navi_preview_extents ();
   }
 
-  /* creates tooltips */
-  gimp_help_init ();
-  
   /*  The main vbox  */
   naviD->vbox = gtk_event_box_new ();
 

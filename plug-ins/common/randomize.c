@@ -712,8 +712,6 @@ randomize_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_init ();
-
   /*
    *  Parameter settings
    *
@@ -768,7 +766,6 @@ randomize_dialog (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return rndm_int.run;

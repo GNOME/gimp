@@ -73,7 +73,6 @@ static gint jigsaw     (gboolean preview_mode);
 static void  jigsaw_radio_button_update (GtkWidget *widget, gpointer data);
 static void  dialog_box (void);
 static void run_callback          (GtkWidget *widget, gpointer   data);
-static void check_button_callback (GtkWidget *widget, gpointer   data);
 
 static void draw_jigsaw           (guchar    *buffer, 
 				   gint       width, 
@@ -189,7 +188,6 @@ static void check_config           (gint width, gint height);
 			    
 
 #define PLUG_IN_NAME    "jigsaw"
-#define PLUG_IN_STORAGE "jigsaw-storage"
 
 #define XFACTOR2 0.0833
 #define XFACTOR3 0.2083
@@ -327,7 +325,6 @@ struct globals_tag
   gint **blend_inner_cachey1[4];
   gint **blend_inner_cachey2[4];
   gint   dialog_result;
-  gint   tooltips;
 };
 
 typedef struct globals_tag globals_t;
@@ -351,7 +348,6 @@ static globals_t globals =
   {0, 0, 0, 0},
   {0, 0, 0, 0},
   -1,
-  1
 };
 
 /* preview globals */
@@ -429,7 +425,6 @@ run (gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       INIT_I18N_UI();
       gimp_get_data("plug_in_jigsaw", &config);
-      gimp_get_data(PLUG_IN_STORAGE, &globals.tooltips);
       dialog_box();
       if (globals.dialog_result == -1)
 	{
@@ -443,8 +438,6 @@ run (gchar      *name,
 	  break;
 	}
       gimp_set_data("plug_in_jigsaw", &config, sizeof(config_t));
-      gimp_set_data(PLUG_IN_STORAGE, &globals.tooltips,
-		    sizeof(globals.tooltips));
       gimp_displays_flush();
       break;
       
@@ -2455,7 +2448,6 @@ dialog_box (void)
   GtkWidget *frame;
   GtkWidget *rbutton1;
   GtkWidget *rbutton2;
-  GtkWidget *cbutton;
   GtkWidget *hbox;
   GtkWidget *table;
   GtkObject *adj;
@@ -2477,14 +2469,6 @@ dialog_box (void)
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
-
-  /* init tooltips */
-  gimp_help_init ();
-
-  if (globals.tooltips == 0)
-    {
-      gimp_help_disable_tooltips ();
-    }
 
   main_hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
@@ -2603,30 +2587,10 @@ dialog_box (void)
   gimp_help_set_help_data (rbutton1, _("Each piece has straight sides"), NULL);
   gimp_help_set_help_data (rbutton2, _("Each piece has curved sides"), NULL);
 
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  table = gtk_table_new (1, 2, FALSE);
-  gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
-
-  cbutton = gtk_check_button_new_with_mnemonic (_("_Disable Tooltips"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cbutton),
-				globals.tooltips ? FALSE : TRUE);
-  gtk_table_attach (GTK_TABLE (table), cbutton, 0, 1, 1, 2, 0, 0, 0, 20);
-  gtk_widget_show (cbutton);
-
-  gimp_help_set_help_data (cbutton, _("Toggle Tooltips on/off"), NULL);
-
-  g_signal_connect (cbutton, "toggled",
-                    G_CALLBACK (check_button_callback),
-                    NULL);
-
-  gtk_widget_show (table);
   gtk_widget_show (hbox);
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 }
 
@@ -2641,22 +2605,6 @@ run_callback (GtkWidget *widget,
   globals.dialog_result = 1;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-check_button_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    {
-      gimp_help_disable_tooltips ();
-      globals.tooltips = 0;
-    }
-  else
-    {
-      gimp_help_enable_tooltips ();
-      globals.tooltips = 1;
-    }
 }
 
 static void

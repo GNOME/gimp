@@ -43,6 +43,9 @@ G_BEGIN_DECLS
 #define gimp_gradients_get_active gimp_gradients_get_gradient
 #define gimp_gradients_set_active gimp_gradients_set_gradient
 
+#define gimp_help_init()          ((void) 0)
+#define gimp_help_free()          ((void) 0)
+
 
 enum
 {

@@ -465,7 +465,7 @@ _gp_config_read (GIOChannel  *channel,
     goto cleanup;
   if (! wire_read_int8 (channel, (guint8*) &config->install_cmap, 1, user_data))
     goto cleanup;
-  if (! wire_read_int8 (channel, (guint8*) &config->unused, 1, user_data))
+  if (! wire_read_int8 (channel, (guint8*) &config->show_tool_tips, 1, user_data))
     goto cleanup;
   if (! wire_read_int32 (channel, (guint32*) &config->min_colors, 1, user_data))
     goto cleanup;
@@ -499,7 +499,7 @@ _gp_config_write (GIOChannel  *channel,
     return;
   if (! wire_write_int8 (channel, (guint8*) &config->install_cmap, 1, user_data))
     return;
-  if (! wire_write_int8 (channel, (guint8*) &config->unused, 1, user_data))
+  if (! wire_write_int8 (channel, (guint8*) &config->show_tool_tips, 1, user_data))
     return;
   if (! wire_write_int32 (channel, (guint32*) &config->min_colors, 1, user_data))
     return;

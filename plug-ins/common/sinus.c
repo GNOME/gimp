@@ -1708,8 +1708,6 @@ sinus_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_init ();
-
   main_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_hbox,
@@ -2014,7 +2012,6 @@ sinus_dialog (void)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return run_flag;

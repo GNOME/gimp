@@ -86,7 +86,6 @@ set_default_settings (void)
   mapvals.transparent_background = FALSE;
   mapvals.tiled                  = FALSE;
   mapvals.showgrid               = FALSE;
-  mapvals.tooltips_enabled       = TRUE;
 
   mapvals.lightsource.intensity = 1.0;
   gimp_rgba_set (&mapvals.lightsource.color, 1.0, 1.0, 1.0, 1.0);

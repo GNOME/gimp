@@ -1182,8 +1182,6 @@ CML_explorer_dialog (void)
 
   CML_preview_defer = TRUE;
 
-  gimp_help_init ();
-
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
@@ -1548,7 +1546,6 @@ CML_explorer_dialog (void)
   preview_update ();
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return INTERFACE.run;

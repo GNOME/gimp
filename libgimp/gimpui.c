@@ -80,5 +80,8 @@ gimp_ui_init (const gchar *prog_name,
 
   gimp_widgets_init ();
 
+  if (! gimp_show_tool_tips ())
+    gimp_help_disable_tooltips ();
+
   initialized = TRUE;
 }

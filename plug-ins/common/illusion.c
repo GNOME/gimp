@@ -407,9 +407,6 @@ dialog (GimpDrawable *mangle)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /* Initialize Tooltips */
-  gimp_help_init ();
-  
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
@@ -478,7 +475,6 @@ dialog (GimpDrawable *mangle)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return dialog_status;

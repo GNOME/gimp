@@ -1477,7 +1477,6 @@ gimp_create_main_window (void)
    * actually initializing the values at this point; that will be done after
    * the UI is fully created.
    */
-  gimp_help_init ();
 
   create_top_level_structure ();
 

@@ -1,3 +1,71 @@
+2003-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimphelpui.[ch]: removed gimp_help_init() and
+	gimp_help_free(). Added _gimp_help_init() instead.
+
+	* libgimpwidgets/gimpwidgets.def: changed accordingly.
+
+	* libgimpwidgets/gimpwidgets.c (gimp_widgets_init): call
+	_gimp_help_init() so it doesn't need to be done in all plug-ins
+	manually.
+
+	* libgimp/gimpcompat.h: added gimp_help_init() and gimp_help_free()
+	here as COMPAT_CRUFT.
+
+	* app/gui/gui.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/AlienMap.c
+	* plug-ins/common/AlienMap2.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/blur.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/illusion.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/sinus.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/sparkle.c
+	* plug-ins/common/uniteditor.c
+	* plug-ins/common/warp.c
+	* plug-ins/common/wind.c
+	* plug-ins/gap/gap_arr_dialog.c
+	* plug-ins/gap/gap_mov_dialog.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gdyntext/gdyntext_ui.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/maze/maze_face.c
+	* plug-ins/print/gimp_main_window.c
+	* plug-ins/sel2path/sel2path.c: removed the calls to
+	gimp_help_init() and gimp_help_free().
+
+	Fixed bug #81017:
+
+	* libgimpbase/gimpprotocol.[ch]: added "guint8 show_tool_tips"
+	to the GPConfig message. Increased the protocol version number.
+
+	* app/plug-in/plug-in.c: pass the value of gui_config->show_tool_tips.
+
+	* libgimp/gimp.[ch]: added gimp_show_tool_tips() to get the value
+	which was passed in the GPConfig message.
+
+	* libgimp/gimpui.c (gimp_ui_init): disable the tooltips
+	if show_tool_tips is FALSE.
+
+	* plug-ins/MapObject/mapobject_main.[ch]
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/gap/gap_navigator_dialog.c
+	* plug-ins/gfig/gfig.c: removed all plug-in specific GUI for
+	enabling/disabling tooltips.
+
 2003-01-07  Sven Neumann  <sven@gimp.org>
 
 	* plug_ins/common/Makefile.am

@@ -1307,8 +1307,6 @@ bender_new_dialog (GimpDrawable *drawable)
   GtkObject *data;
   int i, j;
 
-  gimp_help_init ();
-
   cd = g_new (BenderDialog, 1);
 
   cd->preview = FALSE;

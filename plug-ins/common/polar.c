@@ -789,9 +789,6 @@ polarize_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  /* Initialize Tooltips */
-  gimp_help_init ();
-	
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG(dialog)->vbox), main_vbox,
@@ -908,7 +905,6 @@ polarize_dialog (void)
   dialog_update_preview ();
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   g_free (pcint.check_row_0);

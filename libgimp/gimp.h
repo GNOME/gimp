@@ -305,6 +305,7 @@ void        gimp_destroy_paramdefs   (GimpParamDef *paramdefs,
 gdouble     gimp_gamma               (void);
 gboolean    gimp_install_cmap        (void);
 gint        gimp_min_colors          (void);
+gboolean    gimp_show_tool_tips      (void);
 
 gchar     * gimp_get_progname        (void);
 

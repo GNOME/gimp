@@ -471,9 +471,6 @@ mov_dialog ( GimpDrawable *drawable, t_mov_path_preview *path_ptr,
 		      (GtkSignalFunc) mov_close_callback,
 		      NULL);
 
-  /* Initialize Tooltips */
-  gimp_help_init ();
-
   /*  Action area  */
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
   gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);

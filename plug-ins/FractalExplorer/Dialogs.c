@@ -298,8 +298,6 @@ explorer_dialog (void)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_init ();
-
   top_hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (top_hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), top_hbox,
@@ -951,7 +949,6 @@ explorer_dialog (void)
   dialog_update_preview ();
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   if (the_tile != NULL)

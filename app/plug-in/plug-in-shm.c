@@ -84,6 +84,7 @@
 
 #include "config/gimpcoreconfig.h"
 #include "config/gimpconfig-path.h"
+#include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
@@ -820,15 +821,15 @@ plug_in_run (Gimp       *gimp,
 
 	  plug_in_push (plug_in);
 
-	  config.version      = GP_VERSION;
-	  config.tile_width   = TILE_WIDTH;
-	  config.tile_height  = TILE_HEIGHT;
-	  config.shm_ID       = shm_ID;
-	  config.gamma        = gimp->config->gamma_val;
-	  config.install_cmap = gimp->config->install_cmap;
-          config.unused       = 0;
-          config.min_colors   = CLAMP (gimp->config->min_colors, 27, 256);
-	  config.gdisp_ID     = gdisp_ID;
+	  config.version        = GP_VERSION;
+	  config.tile_width     = TILE_WIDTH;
+	  config.tile_height    = TILE_HEIGHT;
+	  config.shm_ID         = shm_ID;
+	  config.gamma          = gimp->config->gamma_val;
+	  config.install_cmap   = gimp->config->install_cmap;
+          config.show_tool_tips = GIMP_GUI_CONFIG (gimp->config)->show_tool_tips;
+          config.min_colors     = CLAMP (gimp->config->min_colors, 27, 256);
+	  config.gdisp_ID       = gdisp_ID;
 
 	  proc_run.name    = proc_rec->name;
 	  proc_run.nparams = argc;

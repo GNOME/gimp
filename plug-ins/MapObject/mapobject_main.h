@@ -61,7 +61,6 @@ typedef struct
   gint transparent_background;
   gint tiled;
   gint showgrid;
-  gint tooltips_enabled;
   gint showcaps;
 
   glong preview_zoom_factor;

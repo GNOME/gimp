@@ -181,7 +181,6 @@ maze_dialog (void)
   gchar  *message;
 
   gimp_ui_init ("maze", FALSE);
-  gimp_help_init();
 
   dlg = gimp_dialog_new (MAZE_TITLE, "maze", 
 			 gimp_standard_help_func, "filters/maze.html",
@@ -337,7 +336,6 @@ maze_dialog (void)
   gtk_widget_show_all (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return maze_run;

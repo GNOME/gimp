@@ -73,38 +73,23 @@ static GtkWidget   *tips_query = NULL;
 /*  public functions  */
 
 /**
- * gimp_help_init:
+ * _gimp_help_init:
  *
  * This function initializes GIMP's help system.
  *
  * Currently it only creates a #GtkTooltips object with gtk_tooltips_new()
  * which will be used by gimp_help_set_help_data().
+ *
+ * Nota that this function is called automatically by gimp_widgets_init().
  **/
 void
-gimp_help_init (void)
+_gimp_help_init (void)
 {
   tool_tips = gtk_tooltips_new ();
 
   /* take ownership of the tooltips */
   g_object_ref (tool_tips);
   gtk_object_sink (GTK_OBJECT (tool_tips));
-}
-
-/**
- * gimp_help_free:
- *
- * This function frees the memory used by the #GtkTooltips created by
- * gimp_help_init().
- **/
-void
-gimp_help_free (void)
-{
-  g_object_unref (tool_tips);
-  tool_tips = NULL;
-
-  tips_query->parent = NULL;
-  gtk_widget_destroy (tips_query);
-  tips_query = NULL;
 }
 
 /**

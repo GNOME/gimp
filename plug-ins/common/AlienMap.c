@@ -1281,8 +1281,6 @@ alienmap_dialog (void)
 		      FALSE, FALSE, 0);
   gtk_widget_show (top_table);
 
-  gimp_help_init ();
-
   /* Preview */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
@@ -1402,7 +1400,6 @@ alienmap_dialog (void)
   dialog_update_preview ();
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   g_free (wint.image);

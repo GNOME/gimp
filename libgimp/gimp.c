@@ -139,6 +139,7 @@ static HANDLE shm_handle;
 
 static gdouble  _gamma_val;
 static gboolean _install_cmap;
+static gboolean _show_tool_tips;
 static gint     _min_colors;
 static gint     _gdisp_ID = -1;
 
@@ -755,6 +756,12 @@ gimp_min_colors (void)
   return _min_colors;
 }
 
+gboolean
+gimp_show_tool_tips (void)
+{
+  return _show_tool_tips;
+}
+
 static void
 gimp_process_message (WireMessage *msg)
 {
@@ -1126,6 +1133,7 @@ gimp_config (GPConfig *config)
   _shm_ID           = config->shm_ID;
   _gamma_val        = config->gamma;
   _install_cmap     = config->install_cmap;
+  _show_tool_tips   = config->show_tool_tips;
   _min_colors       = config->min_colors;
   _gdisp_ID         = config->gdisp_ID;
 

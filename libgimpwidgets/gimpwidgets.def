@@ -61,8 +61,6 @@ EXPORTS
 	gimp_help_connect
 	gimp_help_disable_tooltips
 	gimp_help_enable_tooltips
-	gimp_help_free
-	gimp_help_init
 	gimp_help_set_help_data
 	gimp_int_adjustment_update
 	gimp_memsize_entry_new

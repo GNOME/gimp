@@ -323,8 +323,6 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
                     G_CALLBACK (gtk_main_quit),
                     NULL);
 
-  gimp_help_init ();
-
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox, TRUE, TRUE, 0);
@@ -392,7 +390,6 @@ plasma_dialog (GimpDrawable *drawable, GimpImageType drawable_type)
   gtk_widget_show (dlg);
 
   gtk_main ();
-  gimp_help_free ();
   gdk_flush ();
 
   return pint.run;

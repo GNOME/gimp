@@ -484,8 +484,6 @@ static int create_dialog(void)
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (dialog_close_callback), NULL);
 
-  gimp_help_init ();
-
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), box1);
   gtk_widget_show (box1);
@@ -530,7 +528,6 @@ int create_gimpressionist(void)
   }
 
   gtk_main ();
-  gimp_help_free ();
   g_rand_free (gr);
   gdk_flush ();
 
