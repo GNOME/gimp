@@ -48,11 +48,15 @@ struct _GammaContext
   GtkWidget *spinner;
 };
 
-static void       gdisplay_color_detach_real      (GDisplay         *gdisp,
-						   ColorDisplayNode *node,
-						   gboolean          unref);
-static gint       node_name_compare               (ColorDisplayNode *node,
-						   const char       *name);
+static void       color_display_foreach (gpointer key,
+					 gpointer value,
+					 gpointer user_data);
+
+static void       gdisplay_color_detach_real (GDisplay         *gdisp,
+					      ColorDisplayNode *node,
+					      gboolean          unref);
+static gint       node_name_compare          (ColorDisplayNode *node,
+					      const char       *name);
 
 static gpointer   gamma_new                       (int           type);
 static void       gamma_create_lookup_table       (GammaContext *context);
@@ -151,6 +155,35 @@ gimp_color_display_unregister (const char *name)
     }
   
   return TRUE;
+}
+
+typedef struct _DisplayForeachData DisplayForeachData;
+
+struct _DisplayForeachData
+{
+  GimpCDFunc func;
+  gpointer   user_data;
+};
+
+void
+gimp_color_display_foreach (GimpCDFunc func,
+			    gpointer   user_data)
+{
+  DisplayForeachData data;
+
+  data.func = func;
+  data.user_data = user_data;
+
+  g_hash_table_foreach (color_display_table, color_display_foreach, &data);
+}
+
+static void
+color_display_foreach (gpointer key,
+		       gpointer value,
+		       gpointer user_data)
+{
+  DisplayForeachData *data = (DisplayForeachData *) user_data;
+  data->func (key, data->user_data);
 }
 
 void
@@ -348,7 +381,7 @@ gamma_save (gpointer cd_ID)
 
 static void
 gamma_configure_ok_callback (GtkWidget *widget,
-				 gpointer   data)
+			     gpointer   data)
 {
   GammaContext *context = (GammaContext *) data;
 

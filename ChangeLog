@@ -1,3 +1,21 @@
+Mon Aug 30 18:56:19 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* app/apptypes.h
+ 	* app/pathsP.h: removed trailing enum commas
+	
+	* app/gdisplay_color.[ch]: added a foreach function to iterate
+	over the display filter names
+
+	* app/gdisplay_color_ui.[ch]: display filter ui stuff (doesn't do
+	much yet ;)
+
+	* app/commands.[ch]
+	* app/menus.c: hooked the above into the menu system
+
+	* app/Makefile.am: added new files
+
+	* plug-ins/gimpressionist/preview.c: removed bogus // comment
+
 1999-08-30  Tor Lillqvist  <tml@iki.fi>
 
 	* app/gimpbrushgenerated.c (gimp_brush_generated_save): Save the

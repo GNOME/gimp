@@ -57,7 +57,7 @@ typedef struct {
 } PATHIMAGELIST, *PATHIMAGELISTP, PathsList;
 
 typedef enum {
-  BEZIER = 1,
+  BEZIER = 1
 } PathType;
 
 PATHPOINTP    pathpoint_new(gint,gdouble,gdouble);

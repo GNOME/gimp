@@ -78,7 +78,7 @@ typedef enum
   DIVIDE_MODE,
   ERASE_MODE,         /*< skip >*/
   REPLACE_MODE,       /*< skip >*/
-  ANTI_ERASE_MODE,    /*< skip >*/
+  ANTI_ERASE_MODE     /*< skip >*/
 } LayerModeEffects;
 
 /* Types of convolutions  */
@@ -123,7 +123,7 @@ typedef enum {
   ONCE_BACKWARDS,  /* paint once, then stop, but run the gradient the other way */
   LOOP_SAWTOOTH,   /* keep painting, looping through the grad start->end,start->end /|/|/| */
   LOOP_TRIANGLE,   /* keep paiting, looping though the grad start->end,end->start /\/\/\/  */
-  ONCE_END_COLOR,  /* paint once, but keep painting with the end color */
+  ONCE_END_COLOR   /* paint once, but keep painting with the end color */
 } GradientPaintMode;
 
 

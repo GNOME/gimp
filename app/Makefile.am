@@ -6,25 +6,25 @@ bin_PROGRAMS = gimp
 noinst_LIBRARIES = libgimpim.a
 
 libgimpim_a_SOURCES = \
-	gimpdrawable.c	\
-	gimpdrawable.h	\
-	gimpdrawableF.h	\
-	gimpdrawableP.h	\
-	gimpimage.c	\
-	gimpimage.h	\
-	gimpimageF.h	\
-	gimpimageP.h	\
-	gimpobject.c	\
-	gimpobject.h	\
-	gimpobjectF.h	\
-	gimpobjectP.h	\
-	gimppreviewcache.h \
-	gimppreviewcache.c \
-	gimpset.c	\
-	gimpset.h	\
-	gimpsetF.h	\
-	gimpsetP.h	\
-	gimpsignal.c	\
+	gimpdrawable.c		\
+	gimpdrawable.h		\
+	gimpdrawableF.h		\
+	gimpdrawableP.h		\
+	gimpimage.c		\
+	gimpimage.h		\
+	gimpimageF.h		\
+	gimpimageP.h		\
+	gimpobject.c		\
+	gimpobject.h		\
+	gimpobjectF.h		\
+	gimpobjectP.h		\
+	gimppreviewcache.h	\
+	gimppreviewcache.c	\
+	gimpset.c		\
+	gimpset.h		\
+	gimpsetF.h		\
+	gimpsetP.h		\
+	gimpsignal.c		\
 	gimpsignal.h
 
 gimp_SOURCES = \
@@ -170,6 +170,8 @@ gimp_SOURCES = \
 	gdisplayF.h		\
 	gdisplay_color.c	\
 	gdisplay_color.h	\
+	gdisplay_color_ui.c	\
+	gdisplay_color_ui.h	\
 	gdisplay_cmds.c		\
 	gdisplay_ops.c		\
 	gdisplay_ops.h		\

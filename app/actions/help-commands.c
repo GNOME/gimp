@@ -33,6 +33,7 @@
 #include "fileops.h"
 #include "floating_sel.h"
 #include "gdisplay_ops.h"
+#include "gdisplay_color_ui.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
 #include "global_edit.h"
@@ -685,7 +686,7 @@ void
 image_equalize_cmd_callback (GtkWidget *widget,
 			     gpointer   client_data)
 {
-  GDisplay * gdisp;
+  GDisplay *gdisp;
   return_if_no_display (gdisp);
 
   image_equalize (gdisp->gimage);
@@ -1139,6 +1140,16 @@ dialogs_error_console_cmd_callback (GtkWidget *widget,
 				    gpointer   client_data) 
 {
   error_console_add (NULL);
+}
+
+void
+dialogs_display_filters_cmd_callback (GtkWidget *widget,
+				   gpointer   client_data)
+{
+  GDisplay * gdisp;
+  gdisp = gdisplay_active ();
+
+  gdisplay_color_ui(gdisp ? gdisp->gimage : NULL);
 }
 
 void

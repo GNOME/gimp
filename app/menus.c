@@ -80,6 +80,7 @@ static GtkItemFactoryEntry toolbox_entries[] =
   { N_("/File/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
   { N_("/File/Dialogs/Document Index..."), NULL, raise_idea_callback, 0 },
   { N_("/File/Dialogs/Error Console..."), NULL, dialogs_error_console_cmd_callback, 0 },
+  { N_("/File/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 },
 
   { N_("/Xtns/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Xtns/Module Browser"), NULL, dialogs_module_browser_cmd_callback, 0 },
@@ -166,7 +167,7 @@ static GtkItemFactoryEntry image_entries[] =
 
   { N_("/View/New View"), NULL, view_new_view_cmd_callback, 0 },
   { N_("/View/Shrink Wrap"), "<control>E", view_shrink_wrap_cmd_callback, 0 },
-  
+
   { N_("/Image/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Image/Colors/tearoff1"), NULL, tearoff_cmd_callback, 0, "<Tearoff>" },
   { N_("/Image/Colors/Equalize"), NULL, image_equalize_cmd_callback, 0 },
@@ -232,6 +233,7 @@ static GtkItemFactoryEntry image_entries[] =
   { N_("/Dialogs/Tool Options..."), NULL, dialogs_tools_options_cmd_callback, 0 },
   { N_("/Dialogs/Input Devices..."), NULL, dialogs_input_devices_cmd_callback, 0 },
   { N_("/Dialogs/Device Status..."), NULL, dialogs_device_status_cmd_callback, 0 },
+  { N_("/Dialogs/Display Filters..."), NULL, dialogs_display_filters_cmd_callback, 0 }
 };
 static guint n_image_entries = sizeof (image_entries) / sizeof (image_entries[0]);
 static GtkItemFactory *image_factory = NULL;

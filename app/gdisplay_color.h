@@ -36,4 +36,10 @@ void gdisplay_color_detach     (GDisplay   *gdisp,
 				const char *name);
 void gdisplay_color_detach_all (GDisplay   *gdisp);
 
+typedef void (*GimpCDFunc) (const char *name,
+			    gpointer    user_data);
+
+void gimp_color_display_foreach (GimpCDFunc func,
+				 gpointer   user_data);
+
 #endif /* __GDISPLAY_COLOR_H__ */
