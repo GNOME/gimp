@@ -1,5 +1,12 @@
 2004-11-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem-linked.[ch] (gimp_item_linked_get_list):
+	removed redundant "gimage" parameter.
+
+	* app/tools/gimpeditselectiontool.c: changed accordingly.
+
+2004-11-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpchannel-select.c
 	* app/core/gimpchannel.c
 	* app/core/gimpdrawable-desaturate.c

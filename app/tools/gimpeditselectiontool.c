@@ -371,7 +371,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
             GList *linked;
             GList *list;
 
-            linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+            linked = gimp_item_linked_get_list (active_item,
                                                 GIMP_ITEM_LINKED_LAYERS);
 
             /*  Expand the rectangle to include all linked layers as well  */
@@ -414,7 +414,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
               GList *linked;
               GList *list;
 
-              linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+              linked = gimp_item_linked_get_list (active_item,
                                                   GIMP_ITEM_LINKED_VECTORS);
 
               for (list = linked; list; list = g_list_next (list))
@@ -541,7 +541,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
               GList *linked;
               GList *list;
 
-              linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+              linked = gimp_item_linked_get_list (active_item,
                                                   GIMP_ITEM_LINKED_CHANNELS);
 
               for (list = linked; list; list = g_list_next (list))
@@ -668,7 +668,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                 GList *linked;
                 GList *list;
 
-                linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+                linked = gimp_item_linked_get_list (active_item,
                                                     GIMP_ITEM_LINKED_LAYERS |
                                                     GIMP_ITEM_LINKED_VECTORS);
 
@@ -831,7 +831,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *linked;
             GList *list;
 
-            linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+            linked = gimp_item_linked_get_list (active_item,
                                                 GIMP_ITEM_LINKED_LAYERS);
 
             for (list = linked; list; list = g_list_next (list))
@@ -882,7 +882,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             GList *linked;
             GList *list;
 
-            linked = gimp_item_linked_get_list (gdisp->gimage, active_item,
+            linked = gimp_item_linked_get_list (active_item,
                                                 GIMP_ITEM_LINKED_VECTORS);
 
             for (list = linked; list; list = g_list_next (list))
