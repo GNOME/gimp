@@ -1,3 +1,17 @@
+2003-06-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-undo-push.c (undo_pop_image_grid)
+	* app/core/gimpimage.c (gimp_image_set_grid): ref/unref the grid.
+
+	* app/gui/view-commands.c (view_configure_grid_cmd_callback): set
+	the dialog transient for the shell, make shell->grid_dialog a
+	weak pointer of the grid dialog.
+
+	* app/gui/grid-dialog.c: don't set shell->grid_dialog to NULL
+	here, attach the grid using g_object_set_data_full() and don't
+	unref it explicitely. Use gimp_config_is_equal_to() instead of
+	gimp_config_diff().
+
 2003-06-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/grid.c (dialog): update the preview when the

@@ -3271,9 +3271,19 @@ gimp_image_set_grid (GimpImage *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (grid == NULL || GIMP_IS_GRID (grid));
 
-  if (push_undo)
-    gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
+  if (grid != gimage->grid)
+    {
+      if (push_undo)
+        gimp_image_undo_push_image_grid (gimage, _("Grid"), gimage->grid);
 
-  gimage->grid = grid;
+      if (gimage->grid)
+        g_object_unref (gimage->grid);
+
+      gimage->grid = grid;
+
+      if (gimage->grid)
+        g_object_ref (gimage->grid);
+    }
+
   gimp_image_grid_changed (gimage);
 }

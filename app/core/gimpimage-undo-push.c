@@ -669,8 +669,6 @@ gimp_image_undo_push_image_grid (GimpImage   *gimage,
 
       if (grid)
         gu->grid = g_object_ref (grid);
-      else
-        gu->grid = NULL;
 
       return TRUE;
     }
@@ -689,7 +687,15 @@ undo_pop_image_grid (GimpUndo            *undo,
   gu = (GridUndo *) undo->data;
 
   tmp = gimp_image_get_grid (undo->gimage);
+
+  if (tmp)
+    g_object_ref (tmp);
+
   gimp_image_set_grid (undo->gimage, gu->grid, FALSE);
+
+  if (gu->grid)
+    g_object_unref (gu->grid);
+
   gu->grid = tmp;
 
   return TRUE;

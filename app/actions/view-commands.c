@@ -364,11 +364,14 @@ view_configure_grid_cmd_callback (GtkWidget *widget,
   if (! shell->grid_dialog)
     {
       shell->grid_dialog = grid_dialog_new (GIMP_DISPLAY (gdisp));
-      
-      g_signal_connect_object (gdisp, "disconnect",
-                               G_CALLBACK (gtk_widget_destroy),
-                               shell->grid_dialog,
-                               G_CONNECT_SWAPPED);
+
+      gtk_window_set_transient_for (GTK_WINDOW (shell->grid_dialog),
+                                    GTK_WINDOW (shell));
+      gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->grid_dialog),
+                                          TRUE);
+
+      g_object_add_weak_pointer (G_OBJECT (shell->grid_dialog),
+                                 (gpointer *) &shell->grid_dialog);
     }
 
   gtk_window_present (GTK_WINDOW (shell->grid_dialog));

@@ -283,7 +283,8 @@ grid_dialog_new (GimpDisplay *gdisp)
   g_object_set_data (G_OBJECT (dialog), "gimage", gimage);
   g_object_set_data (G_OBJECT (dialog), "shell", shell);
 
-  g_object_set_data (G_OBJECT (dialog), "grid", grid);
+  g_object_set_data_full (G_OBJECT (dialog), "grid", grid,
+                          (GDestroyNotify) g_object_unref);
 
   g_object_set_data (G_OBJECT (dialog), "show-button", show_button);
   g_object_set_data (G_OBJECT (dialog), "snap-button", snap_button);
@@ -353,16 +354,13 @@ remove_callback (GtkWidget  *widget,
 {
   GimpImage        *gimage;
   GimpDisplayShell *shell;
-  GimpGrid         *grid;
   
   gimage = g_object_get_data (G_OBJECT (dialog), "gimage");
   shell  = g_object_get_data (G_OBJECT (dialog), "shell");
-  grid   = g_object_get_data (G_OBJECT (dialog), "grid");
 
   gimp_image_set_grid (gimage, NULL, TRUE);
-  g_object_unref (G_OBJECT (grid));
+
   gtk_widget_destroy (dialog);
-  shell->grid_dialog = NULL;
 }
 
 
@@ -371,14 +369,10 @@ cancel_callback (GtkWidget  *widget,
                  GtkWidget  *dialog)
 {
   GimpDisplayShell *shell;
-  GimpGrid         *grid;
 
   shell = g_object_get_data (G_OBJECT (dialog), "shell");
-  grid  = g_object_get_data (G_OBJECT (dialog), "grid");
 
-  g_object_unref (G_OBJECT (grid));
   gtk_widget_destroy (dialog);
-  shell->grid_dialog = NULL;
 }
 
 static void
@@ -402,10 +396,9 @@ ok_callback (GtkWidget  *widget,
 
   grid_orig   = gimp_image_get_grid (GIMP_IMAGE (gimage));
 
-  if (grid_orig == NULL || gimp_config_diff (G_OBJECT (grid_orig), G_OBJECT (grid), 0))
+  if (grid_orig == NULL || ! gimp_config_is_equal_to (G_OBJECT (grid_orig),
+                                                      G_OBJECT (grid)))
     gimp_image_set_grid (GIMP_IMAGE (gimage), grid, TRUE);
-  else
-    g_object_unref (G_OBJECT (grid));
 
   show_grid = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (show_button));
   gimp_display_shell_set_show_grid (GIMP_DISPLAY_SHELL (shell), show_grid);
@@ -414,5 +407,4 @@ ok_callback (GtkWidget  *widget,
   gimp_display_shell_set_snap_to_grid (GIMP_DISPLAY_SHELL (shell), snap_to_grid);
 
   gtk_widget_destroy (dialog);
-  shell->grid_dialog = NULL;
 }
