@@ -43,6 +43,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpintl.h>
 
 #include <plug-ins/megawidget/megawidget.h>
 
@@ -86,6 +87,7 @@ mw_app_new(gchar *resname, gchar *appname, gint *runpp){
    gint argc;
    GtkWidget *dlg;
    GtkWidget *button;
+   GtkWidget *hbbox;
    
    argc = 1;
    argv = g_new(gchar *, 1);
@@ -104,25 +106,31 @@ mw_app_new(gchar *resname, gchar *appname, gint *runpp){
                       (GtkSignalFunc) ui_close_callback,
                       NULL);
 
-   button = gtk_button_new_with_label("OK");
-   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-   gtk_signal_connect(GTK_OBJECT (button), "clicked",
-                      (GtkSignalFunc) ui_ok_callback,
-                      dlg);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->action_area), button,
-                      TRUE, TRUE, 0);
-   gtk_widget_grab_default(button);
-   gtk_widget_show(button);
-
-   button = gtk_button_new_with_label("Cancel");
-   GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-   gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
-                             (GtkSignalFunc) gtk_widget_destroy,
-                             GTK_OBJECT(dlg));
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->action_area), button,
-                      TRUE, TRUE, 0);
-   gtk_widget_show(button);
-
+   /*  Action area  */
+   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dlg)->action_area), 2);
+   gtk_box_set_homogeneous (GTK_BOX (GTK_DIALOG (dlg)->action_area), FALSE);
+   hbbox = gtk_hbutton_box_new ();
+   gtk_button_box_set_spacing (GTK_BUTTON_BOX (hbbox), 4);
+   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
+   gtk_widget_show (hbbox);
+   
+   button = gtk_button_new_with_label (_("OK"));
+   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+   gtk_signal_connect (GTK_OBJECT (button), "clicked",
+		       (GtkSignalFunc) ui_ok_callback,
+		       dlg);
+   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+   gtk_widget_grab_default (button);
+   gtk_widget_show (button);
+   
+   button = gtk_button_new_with_label (_("Cancel"));
+   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
+   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
+			      (GtkSignalFunc) gtk_widget_destroy,
+			      GTK_OBJECT (dlg));
+   gtk_box_pack_start (GTK_BOX (hbbox), button, FALSE, FALSE, 0);
+   gtk_widget_show (button);
+   
    return dlg;
 }
 
@@ -427,7 +435,7 @@ mw_preview_new(GtkWidget *parent, struct mwPreview *mwp, mw_preview_t *fcn){
    gtk_widget_set_default_visual (gtk_preview_get_visual ());
    gtk_widget_set_default_colormap (gtk_preview_get_cmap ());
 
-   frame = gtk_frame_new("Preview");
+   frame = gtk_frame_new(_("Preview"));
    gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_ETCHED_IN);
    gtk_box_pack_start(GTK_BOX(parent), frame, FALSE, FALSE, 0);
    gtk_widget_show(frame);
@@ -449,7 +457,7 @@ mw_preview_new(GtkWidget *parent, struct mwPreview *mwp, mw_preview_t *fcn){
    gtk_widget_show(preview);
    mw_do_preview = fcn;
 
-   button=gtk_check_button_new_with_label("Do Preview");
+   button=gtk_check_button_new_with_label(_("Do Preview"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), do_preview);
    gtk_signal_connect(GTK_OBJECT(button), "toggled",
                       (GtkSignalFunc) ui_toggle_callback,

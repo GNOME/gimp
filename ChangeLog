@@ -1,3 +1,23 @@
+Sun Oct 31 21:51:10 MET 1999  Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimpcolorbutton.[ch]: new widget which provides a simple
+	button with a color preview together with a completely wired 
+	gtk_color_select_dialog. Color dnd will be added next.
+
+	* libgimp/gimpchainbutton.c
+	* libgimp/gimpchainbutton.h: cleaned up the code a bit and provided
+	a destroy function which takes care of freeing the memory allocated
+	for the pixmaps/bitmaps (well at least I hope it does).
+
+	* libgimp/gimpunit.c: some cases were handled wrong in 
+	gimp_unit_get_digits().
+
+	* plug-ins/megawidget/megawidget.c: follow the GUI conventions when 
+	building the action_area and internationalized the code.
+
+	* plug-ins/common/CML_explorer.c: fixed a typo
+
 1999-10-31  Tor Lillqvist  <tml@iki.fi>
 
 	* app/about_dialog.c (scroll_text): Add a couple of missing commas

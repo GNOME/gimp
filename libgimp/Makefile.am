@@ -29,6 +29,8 @@ libgimpi_a_SOURCES = \
 	gimpenv.h		\
 	gimpchainbutton.c	\
 	gimpchainbutton.h	\
+	gimpcolorbutton.c	\
+	gimpcolorbutton.h	\
 	gimpfileselection.c	\
 	gimpfileselection.h	\
 	gimpmatrix.c		\
@@ -100,6 +102,7 @@ libgimpui_la_SOURCES = \
 	gimppatternmenu.c	\
 	gimpexport.c		\
 	gimpchainbutton.c	\
+	gimpcolorbutton.c	\
 	gimpfileselection.c	\
 	gimppatheditor.c	\
 	gimpsizeentry.c		\
@@ -110,6 +113,7 @@ gimpinclude_HEADERS = \
 	color_selector.h	\
 	gimp.h			\
 	gimpchainbutton.h	\
+	gimpcolorbutton.h	\
         gimpcompat.h		\
 	gimpenums.h		\
 	gimpenv.h		\

@@ -59,8 +59,6 @@ struct _GimpChainButton
   GtkTable table;
 
   GimpChainPosition  position;
-  GtkTooltips       *tooltips;
-  gchar             *tip;
   GtkWidget         *button;
   GtkWidget         *line1;
   GtkWidget         *line2;

@@ -479,7 +479,7 @@ query ()
     { PARAM_INT32, "run_mode", "Interactive, non-interactive"},
     { PARAM_IMAGE, "image", "Input image (not used)"},
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
-    { PARAM_STRING, "parameter_file_name", "the name of paremter file. CML_explorer makes an image with its settings." },
+    { PARAM_STRING, "parameter_file_name", "The name of parameter file. CML_explorer makes an image with its settings." },
   };
   static GParamDef *return_vals = NULL;
   static int nargs = sizeof (args) / sizeof (args[0]);

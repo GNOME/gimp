@@ -31,13 +31,35 @@ static char **gimp_chain_broken_xpm[] = {
   chain_broken_ver_xpm 
 };
 
-static void gimp_chain_button_realize (GtkWidget *widget, GimpChainButton *gcb);
-static void gimp_chain_button_callback (GtkWidget *widget, GimpChainButton *gcb);
-static void gimp_chain_button_draw_lines (GtkWidget *widget,
-					  GdkEvent* event,
-					  GimpChainButton *gcb);
+static void gimp_chain_button_destroy          (GtkObject *object);
+static void gimp_chain_button_realize_callback (GtkWidget *widget, GimpChainButton *gcb);
+static void gimp_chain_button_clicked_callback (GtkWidget *widget, GimpChainButton *gcb);
+static void gimp_chain_button_draw_lines       (GtkWidget *widget,
+						GdkEvent* event,
+						GimpChainButton *gcb);
 
 static GtkWidgetClass *parent_class = NULL;
+
+static void
+gimp_chain_button_destroy (GtkObject *object)
+{
+  GimpChainButton *gcb;
+
+  g_return_if_fail (gcb = GIMP_CHAIN_BUTTON (object));
+
+  if (gcb->broken)
+    gdk_pixmap_unref (gcb->broken);
+  if (gcb->broken_mask)
+    gdk_bitmap_unref (gcb->broken_mask);
+
+  if (gcb->chain)
+    gdk_pixmap_unref (gcb->chain);
+  if (gcb->chain_mask)
+    gdk_bitmap_unref (gcb->chain_mask);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    (* GTK_OBJECT_CLASS (parent_class)->destroy) (object);
+}
 
 static void
 gimp_chain_button_class_init (GimpChainButtonClass *class)
@@ -47,14 +69,14 @@ gimp_chain_button_class_init (GimpChainButtonClass *class)
   object_class = (GtkObjectClass*) class;
 
   parent_class = gtk_type_class (gtk_widget_get_type ());
+
+  object_class->destroy = gimp_chain_button_destroy;
 }
 
 static void
 gimp_chain_button_init (GimpChainButton *gcb)
 {
   gcb->position    = GIMP_CHAIN_TOP;
-  gcb->tooltips    = NULL;
-  gcb->tip         = NULL;
   gcb->button      = gtk_button_new ();
   gcb->line1       = gtk_drawing_area_new ();
   gcb->line2       = gtk_drawing_area_new ();
@@ -66,12 +88,12 @@ gimp_chain_button_init (GimpChainButton *gcb)
   gcb->active      = FALSE;
 
   gtk_signal_connect (GTK_OBJECT(gcb->button), "clicked",
-		      GTK_SIGNAL_FUNC(gimp_chain_button_callback), gcb);
+		      GTK_SIGNAL_FUNC (gimp_chain_button_clicked_callback), gcb);
   /* That's all we do here, since setting the pixmaps won't work before 
      the parent window is realized.
      We connect to the realized-signal instead and do the rest there. */
   gtk_signal_connect (GTK_OBJECT(gcb), "realize",
-		      GTK_SIGNAL_FUNC(gimp_chain_button_realize), gcb);
+		      GTK_SIGNAL_FUNC(gimp_chain_button_realize_callback), gcb);
   gtk_signal_connect (GTK_OBJECT(gcb->line1), "expose_event",
 		      GTK_SIGNAL_FUNC(gimp_chain_button_draw_lines), gcb);
   gtk_signal_connect (GTK_OBJECT(gcb->line2), "expose_event",
@@ -136,8 +158,8 @@ gimp_chain_button_new (GimpChainPosition  position)
 }
 
 static void
-gimp_chain_button_realize (GtkWidget *widget,
-			   GimpChainButton *gcb)
+gimp_chain_button_realize_callback (GtkWidget *widget,
+				    GimpChainButton *gcb)
 {
   GtkStyle  *style;
   GtkWidget *parent;
@@ -167,8 +189,8 @@ gimp_chain_button_realize (GtkWidget *widget,
 }
 
 static void
-gimp_chain_button_callback (GtkWidget *widget,
-			    GimpChainButton *gcb)
+gimp_chain_button_clicked_callback (GtkWidget *widget,
+				    GimpChainButton *gcb)
 {
   g_return_if_fail (gcb != NULL);
   g_return_if_fail (GIMP_IS_CHAIN_BUTTON (gcb));

@@ -209,7 +209,8 @@ gimp_unit_get_digits (GUnit unit)
 
   gint digits;
 
-  g_return_val_if_fail (unit >= UNIT_INCH, 2.0);
+  if (unit < 0)
+    return 0;
 
   if (unit < UNIT_END)
     return gimp_unit_defs[unit].digits;
@@ -219,7 +220,7 @@ gimp_unit_get_digits (GUnit unit)
 				    PARAM_INT32, unit,
 				    PARAM_END);
 
-  digits = 2.0;
+  digits = gimp_unit_defs[UNIT_INCH].digits;
   if (return_vals[0].data.d_status == STATUS_SUCCESS)
     digits = return_vals[1].data.d_int32;
 
