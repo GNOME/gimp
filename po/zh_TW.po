@@ -1488,7 +1488,7 @@ msgid ""
 "Changes were made to %s.\n"
 "Close anyway?"
 msgstr ""
-"%s 曾被修改。\n"
+"「%s」曾被修改。\n"
 "仍然要關閉？"
 
 #: app/gimage_mask.c:213
@@ -2476,8 +2476,10 @@ msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to select a color from a colorrequester."
 msgstr ""
-"前景與背景顏色。黑白方塊會重設顏色。箭號可互換顏色。點兩下則可由顏色選擇器中"
-"選擇顏色。"
+"這是前景與背景顏色。\n"
+"黑白方塊會重設顏色。\n"
+"箭號可互換顏色。\n"
+"點兩下則可由顏色選擇器中選擇顏色。"
 
 #: app/internal_procs.c:68
 msgid "Internal Procedures"
@@ -2987,7 +2989,7 @@ msgstr "度"
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:99
 msgid "/_File"
-msgstr "/檔案(_F)"
+msgstr "/檔案_F"
 
 #. <Image>/File
 #: app/menus.c:101 app/menus.c:211
@@ -3062,7 +3064,7 @@ msgstr "/檔案/離開"
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:171
 msgid "/_Xtns"
-msgstr "/擴展(_X)"
+msgstr "/擴展_X"
 
 #: app/menus.c:173
 msgid "/Xtns/Module Browser..."
@@ -3072,7 +3074,7 @@ msgstr "/擴展/模組瀏覽器..."
 #. the underscore installs an accelerator using the character that follows
 #: app/menus.c:182
 msgid "/_Help"
-msgstr "/說明(_H)"
+msgstr "/說明_H"
 
 #: app/menus.c:184
 msgid "/Help/Help..."

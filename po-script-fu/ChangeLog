@@ -1,3 +1,7 @@
+2001-12-09  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.po: Updated traditional Chinese translation.
+
 2001-12-01  Abel Cheung  <maddog@linux.org.hk>
 
 	* zh_CN.po: Take simplified Chinese translation from HEAD branch.
