@@ -23,7 +23,6 @@
 #include "gimpdrawable.h"
 
 
-gint drawable_ID          (GimpDrawable *drawable);
 void drawable_fill        (GimpDrawable *drawable,
 			   GimpFillType fill_type);
 void drawable_update      (GimpDrawable *drawable,
@@ -36,30 +35,8 @@ void drawable_apply_image (GimpDrawable *drawable,
 			   gint          y1,
 			   gint          x2,
 			   gint          y2, 
-			   TileManager  *,
-			   gint          );
+			   TileManager  *tiles,
+			   gint          sparse);
 
-
-#define drawable_merge_shadow gimp_drawable_merge_shadow
-#define drawable_mask_bounds gimp_drawable_mask_bounds
-#define drawable_invalidate_preview gimp_drawable_invalidate_preview
-#define drawable_type gimp_drawable_type
-#define drawable_has_alpha gimp_drawable_has_alpha
-#define drawable_type_with_alpha gimp_drawable_type_with_alpha
-#define drawable_color gimp_drawable_is_rgb
-#define drawable_gray gimp_drawable_is_gray
-#define drawable_indexed gimp_drawable_is_indexed
-#define drawable_data gimp_drawable_data
-#define drawable_shadow gimp_drawable_shadow
-#define drawable_bytes gimp_drawable_bytes
-#define drawable_width gimp_drawable_width
-#define drawable_height gimp_drawable_height
-#define drawable_visible gimp_drawable_visible	
-#define drawable_offsets gimp_drawable_offsets
-#define drawable_cmap gimp_drawable_cmap
-
-#define drawable_get_ID gimp_drawable_get_ID
-#define drawable_deallocate gimp_drawable_deallocate	
-#define drawable_gimage gimp_drawable_gimage
 
 #endif /* __DRAWABLE_H__ */

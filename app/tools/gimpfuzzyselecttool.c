@@ -328,22 +328,25 @@ find_contiguous_region (GImage       *gimage,
     }
   else
     {
-      pixel_region_init (&srcPR, drawable_data (drawable), 0, 0,
-			 drawable_width (drawable), drawable_height (drawable),
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
+			 0, 0,
+			 gimp_drawable_width (drawable),
+			 gimp_drawable_height (drawable),
 			 FALSE);
-      has_alpha = drawable_has_alpha (drawable);
+      has_alpha = gimp_drawable_has_alpha (drawable);
     }
-  indexed = drawable_indexed (drawable);
-  bytes = drawable_bytes (drawable);
+  indexed = gimp_drawable_is_indexed (drawable);
+  bytes   = gimp_drawable_bytes (drawable);
   
   if (indexed)
     {
       bytes = has_alpha ? 4 : 3;
     }
   mask = channel_new_mask (gimage, srcPR.w, srcPR.h);
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, 
-		     drawable_width (GIMP_DRAWABLE(mask)), 
-		     drawable_height (GIMP_DRAWABLE(mask)), 
+  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
+		     0, 0, 
+		     gimp_drawable_width (GIMP_DRAWABLE(mask)), 
+		     gimp_drawable_height (GIMP_DRAWABLE(mask)), 
 		     TRUE);
 
   tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
@@ -376,7 +379,7 @@ fuzzy_select (GImage       *gimage,
     gimage_mask_undo (gimage);
 
   if (drawable)     /* NULL if sample_merged is active */
-    drawable_offsets (drawable, &off_x, &off_y);
+    gimp_drawable_offsets (drawable, &off_x, &off_y);
   else
     off_x = off_y = 0;
   
@@ -567,14 +570,15 @@ fuzzy_select_calculate (Tool     *tool,
   /*  calculate and allocate a new XSegment array which represents the boundary
    *  of the color-contiguous region
    */
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE (fuzzy_mask)), 0, 0, 
-		     drawable_width (GIMP_DRAWABLE (fuzzy_mask)), 
-		     drawable_height (GIMP_DRAWABLE (fuzzy_mask)), 
+  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (fuzzy_mask)),
+		     0, 0, 
+		     gimp_drawable_width (GIMP_DRAWABLE (fuzzy_mask)), 
+		     gimp_drawable_height (GIMP_DRAWABLE (fuzzy_mask)), 
 		     FALSE);
   bsegs = find_mask_boundary (&maskPR, nsegs, WithinBounds,
 			      0, 0,
-			      drawable_width (GIMP_DRAWABLE (fuzzy_mask)),
-			      drawable_height (GIMP_DRAWABLE (fuzzy_mask)));
+			      gimp_drawable_width (GIMP_DRAWABLE (fuzzy_mask)),
+			      gimp_drawable_height (GIMP_DRAWABLE (fuzzy_mask)));
 
   segs = g_new (GdkSegment, *nsegs);
 

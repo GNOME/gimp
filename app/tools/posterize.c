@@ -165,7 +165,7 @@ tools_free_posterize (Tool *tool)
 void
 posterize_initialize (GDisplay *gdisp)
 {
-  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Posterize does not operate on indexed drawables."));
       return;
@@ -286,7 +286,7 @@ posterize_preview (PosterizeDialog *pd)
     }
 
   active_tool->preserve = TRUE;
-  posterize_lut_setup (pd->lut, pd->levels, gimp_drawable_bytes(pd->drawable));
+  posterize_lut_setup (pd->lut, pd->levels, gimp_drawable_bytes (pd->drawable));
   image_map_apply (pd->image_map,  (ImageMapApplyFunc) gimp_lut_process_2,
 		   (void *) pd->lut);
   active_tool->preserve = FALSE;

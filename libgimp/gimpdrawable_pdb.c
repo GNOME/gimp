@@ -331,7 +331,7 @@ gimp_drawable_is_rgb (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean color = FALSE;
+  gboolean is_rgb = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_is_rgb",
 				    &nreturn_vals,
@@ -339,11 +339,11 @@ gimp_drawable_is_rgb (gint32 drawable_ID)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    color = return_vals[1].data.d_int32;
+    is_rgb = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return color;
+  return is_rgb;
 }
 
 /**
@@ -362,7 +362,7 @@ gimp_drawable_is_gray (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean gray = FALSE;
+  gboolean is_gray = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_is_gray",
 				    &nreturn_vals,
@@ -370,11 +370,11 @@ gimp_drawable_is_gray (gint32 drawable_ID)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    gray = return_vals[1].data.d_int32;
+    is_gray = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return gray;
+  return is_gray;
 }
 
 /**
@@ -393,7 +393,7 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean indexed = FALSE;
+  gboolean is_indexed = FALSE;
 
   return_vals = gimp_run_procedure ("gimp_drawable_is_indexed",
 				    &nreturn_vals,
@@ -401,11 +401,11 @@ gimp_drawable_is_indexed (gint32 drawable_ID)
 				    GIMP_PDB_END);
 
   if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    indexed = return_vals[1].data.d_int32;
+    is_indexed = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return indexed;
+  return is_indexed;
 }
 
 /**

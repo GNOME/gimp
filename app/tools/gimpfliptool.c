@@ -197,14 +197,14 @@ flip_cursor_update (Tool           *tool,
       gint x, y;
       gint off_x, off_y;
 
-      drawable_offsets (drawable, &off_x, &off_y);
+      gimp_drawable_offsets (drawable, &off_x, &off_y);
       gdisplay_untransform_coords (gdisp, 
 				   (double) mevent->x, (double) mevent->y,
 				   &x, &y, TRUE, FALSE);
 
       if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (drawable)) &&
-	  y < (off_y + drawable_height (drawable)))
+	  x < (off_x + gimp_drawable_width (drawable)) &&
+	  y < (off_y + gimp_drawable_height (drawable)))
 	{
 	  /*  Is there a selected region? If so, is cursor inside? */
 	  if (gimage_mask_is_empty (gdisp->gimage) ||

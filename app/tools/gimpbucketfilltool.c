@@ -255,7 +255,7 @@ bucket_fill_button_release (Tool           *tool,
       return_vals =
 	procedural_db_run_proc ("gimp_bucket_fill",
 				&nreturn_vals,
-				PDB_DRAWABLE, drawable_ID (gimp_image_active_drawable (gdisp->gimage)),
+				PDB_DRAWABLE, gimp_drawable_get_ID (gimp_image_active_drawable (gdisp->gimage)),
 				PDB_INT32, (gint32) bucket_options->fill_mode,
 				PDB_INT32, (gint32) gimp_context_get_paint_mode (NULL),
 				PDB_FLOAT, (gdouble) gimp_context_get_opacity (NULL) * 100,
@@ -291,11 +291,11 @@ bucket_fill_cursor_update (Tool           *tool,
 			       &x, &y, FALSE, FALSE);
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
-	  y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
+	  x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	  y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
@@ -396,15 +396,17 @@ bucket_fill (GimpImage      *gimage,
       /*  If the pattern doesn't match the image in terms of color type,
        *  transform it.  (ie  pattern is RGB, image is indexed)
        */
-      if (((pattern->mask->bytes == 3) && !drawable_color (drawable)) ||
-	  ((pattern->mask->bytes == 1) && !drawable_gray (drawable)))
+      if (((pattern->mask->bytes == 3) && !gimp_drawable_is_rgb  (drawable)) ||
+	  ((pattern->mask->bytes == 1) && !gimp_drawable_is_gray (drawable)))
 	{
 	  int size;
 
-	  if ((pattern->mask->bytes == 1) && drawable_color (drawable))
-	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height, 3, 0, 0, NULL);
+	  if ((pattern->mask->bytes == 1) && gimp_drawable_is_rgb (drawable))
+	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height,
+				    3, 0, 0, NULL);
 	  else
-	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height, 1, 0, 0, NULL);
+	    pat_buf = temp_buf_new (pattern->mask->width, pattern->mask->height,
+				    1, 0, 0, NULL);
 
 	  d1 = temp_buf_data (pattern->mask);
 	  d2 = temp_buf_data (pat_buf);
@@ -426,13 +428,13 @@ bucket_fill (GimpImage      *gimage,
 
   gimp_add_busy_cursors ();
 
-  bytes = drawable_bytes (drawable);
-  has_alpha = drawable_has_alpha (drawable);
+  bytes = gimp_drawable_bytes (drawable);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   /*  If there is no selection mask, the do a seed bucket
    *  fill...To do this, calculate a new contiguous region
    */
-  if (! drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
+  if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2))
     {
       mask = find_contiguous_region (gimage, drawable, TRUE, (int) threshold,
 				     (int) x, (int) y, sample_merged);
@@ -445,13 +447,13 @@ bucket_fill (GimpImage      *gimage,
 	  gint off_x, off_y;
 
 	  /*  Limit the channel bounds to the drawable's extents  */
-	  drawable_offsets (drawable, &off_x, &off_y);
-	  x1 = CLAMP (x1, off_x, (off_x + drawable_width (drawable)));
-	  y1 = CLAMP (y1, off_y, (off_y + drawable_height (drawable)));
-	  x2 = CLAMP (x2, off_x, (off_x + drawable_width (drawable)));
-	  y2 = CLAMP (y2, off_y, (off_y + drawable_height (drawable)));
+	  gimp_drawable_offsets (drawable, &off_x, &off_y);
+	  x1 = CLAMP (x1, off_x, (off_x + gimp_drawable_width (drawable)));
+	  y1 = CLAMP (y1, off_y, (off_y + gimp_drawable_height (drawable)));
+	  x2 = CLAMP (x2, off_x, (off_x + gimp_drawable_width (drawable)));
+	  y2 = CLAMP (y2, off_y, (off_y + gimp_drawable_height (drawable)));
 
-	  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE (mask)), 
+	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
 	  /*  translate mask bounds to drawable coords  */
@@ -461,7 +463,7 @@ bucket_fill (GimpImage      *gimage,
 	  y2 -= off_y;
 	}
       else
-	pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE (mask)), 
+	pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			   x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
       /*  if the gimage doesn't have an alpha channel,

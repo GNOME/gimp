@@ -182,7 +182,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
   blend (gimage, drawable, blend_mode, paint_mode, gradient_type, opacity,
 	 offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2,
 	 NULL, NULL);
@@ -241,7 +241,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
   bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity,
 	       threshold, sample_merged, x, y);
 }
@@ -287,7 +287,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
   by_color_select (gimage, drawable, color, threshold, operation,
 		   antialias, feather, feather_radius, sample_merged);
 }
@@ -415,7 +415,7 @@ HELP
 	code => <<'CODE'
 {
   if (!sample_merged)
-    if (!drawable || (drawable_gimage (drawable) != gimage))
+    if (!drawable || (gimp_drawable_gimage (drawable) != gimage))
       success = FALSE;
 
   if (success)
@@ -691,7 +691,7 @@ HELP
 		   'gboolean new_layer' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
 
   /* Start a transform undo group */
   undo_push_group_start (gimage, TRANSFORM_CORE_UNDO); 
@@ -815,7 +815,7 @@ HELP
 	vars => [ 'GimpImage *gimage', 'Channel *new, *old_fuzzy_mask' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
 
   new = find_contiguous_region (gimage, drawable, antialias, threshold,
 				x, y, sample_merged);
@@ -984,7 +984,7 @@ HELP
 		  'GimpMatrix3 m, matrix' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
 
   /* Start a transform undo group */
   undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -1103,7 +1103,7 @@ HELP
 		  'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
 
   /* Start a transform undo group */
   undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -1186,7 +1186,7 @@ HELP
   if (trans_info[X0] < trans_info[X1] &&
       trans_info[Y0] < trans_info[X1])
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
 
       /* Start a transform undo group */
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -1271,7 +1271,7 @@ HELP
 		  'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
 
   /* Start a transform undo group */
   undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -1364,7 +1364,7 @@ HELP
 		  'gboolean new_layer', 'GimpMatrix3 matrix' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
     
   /* Start a transform undo group */
   undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);

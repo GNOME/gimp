@@ -424,12 +424,12 @@ dodgeburn_motion (PaintCore            *paint_core,
   gint opacity;
   gdouble scale;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   /*  If the image type is indexed, don't dodgeburn  */
-  if ((drawable_type (drawable) == INDEXED_GIMAGE) ||
-      (drawable_type (drawable) == INDEXEDA_GIMAGE))
+  if ((gimp_drawable_type (drawable) == INDEXED_GIMAGE) ||
+      (gimp_drawable_type (drawable) == INDEXEDA_GIMAGE))
     return;
 
   if (pressure_options->size)
@@ -447,10 +447,10 @@ dodgeburn_motion (PaintCore            *paint_core,
   {
     gint x1, y1, x2, y2;
 
-    x1 = CLAMP (area->x, 0, drawable_width (drawable));
-    y1 = CLAMP (area->y, 0, drawable_height (drawable));
-    x2 = CLAMP (area->x + area->width, 0, drawable_width (drawable));
-    y2 = CLAMP (area->y + area->height, 0, drawable_height (drawable));
+    x1 = CLAMP (area->x, 0, gimp_drawable_width (drawable));
+    y1 = CLAMP (area->y, 0, gimp_drawable_height (drawable));
+    x2 = CLAMP (area->x + area->width,  0, gimp_drawable_width (drawable));
+    y2 = CLAMP (area->y + area->height, 0, gimp_drawable_height (drawable));
 
     if (!(x2 - x1) || !(y2 - y1))
       return;
@@ -489,7 +489,7 @@ dodgeburn_motion (PaintCore            *paint_core,
 
   /* Now add an alpha to the dodgeburned region 
      and put this in area = canvas_buf */ 
-  if (!drawable_has_alpha (drawable))
+  if (! gimp_drawable_has_alpha (drawable))
     add_alpha_region (&tempPR, &destPR);
   else
     copy_region (&tempPR, &destPR);

@@ -137,7 +137,6 @@ LayerMask     * layer_create_mask           (Layer            *layer,
 					     AddMaskType       add_mask_type);
 LayerMask     * layer_add_mask              (Layer            *layer,
 					     LayerMask        *mask);
-Layer         * layer_get_ID                (gint              ID);
 void            layer_delete                (Layer            *layer);
 void            layer_apply_mask            (Layer            *layer,
 					     MaskApplyMode     mode);
@@ -176,7 +175,6 @@ LayerMask     * layer_mask_new	            (GimpImage       *gimage,
 					     guchar          *col);
 LayerMask     * layer_mask_copy	            (LayerMask       *layer_mask);
 void            layer_mask_delete           (LayerMask       *layer_mask);
-LayerMask     * layer_mask_get_ID           (gint             ID);
 LayerMask     * layer_mask_ref              (LayerMask       *layer_mask);
 void            layer_mask_unref            (LayerMask       *layer_mask);
 void            layer_mask_set_layer        (LayerMask       *layer_mask, 
@@ -205,8 +203,8 @@ Tattoo          layer_get_tattoo            (const Layer     *layer);
 void            layer_set_tattoo            (Layer           *layer, 
 					     Tattoo           value);
 
-#define drawable_layer      GIMP_IS_LAYER
-#define drawable_layer_mask GIMP_IS_LAYER_MASK
+#define gimp_drawable_layer      GIMP_IS_LAYER
+#define gimp_drawable_layer_mask GIMP_IS_LAYER_MASK
 
 void            channel_layer_alpha (Channel *mask, 
 				     Layer   *layer);

@@ -359,7 +359,7 @@ gimp_histogram_calculate_drawable (GimpHistogram *histogram,
   gint        off_x, off_y;
   gboolean    no_mask;
 
-  no_mask = (drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
+  no_mask = (gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) == FALSE);
   pixel_region_init (&region, gimp_drawable_data (drawable), x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
 
@@ -371,7 +371,7 @@ gimp_histogram_calculate_drawable (GimpHistogram *histogram,
       gimage = gimp_drawable_gimage (drawable);
       sel_mask = gimp_image_get_mask (gimage);
 
-      drawable_offsets (drawable, &off_x, &off_y);
+      gimp_drawable_offsets (drawable, &off_x, &off_y);
       pixel_region_init (&mask, gimp_drawable_data (GIMP_DRAWABLE (sel_mask)),
 			 x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
       gimp_histogram_calculate (histogram, &region, &mask);

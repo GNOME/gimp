@@ -288,9 +288,9 @@ scan_converter_to_channel (ScanConverter *sc,
       TRC (("\n"));
     }
 
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 0, 0, 
-		     drawable_width (GIMP_DRAWABLE(mask)), 
-		     drawable_height (GIMP_DRAWABLE(mask)), TRUE);
+  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)), 0, 0, 
+		     gimp_drawable_width (GIMP_DRAWABLE(mask)), 
+		     gimp_drawable_height (GIMP_DRAWABLE(mask)), TRUE);
 
   for (i = 0; i < heighta; i++)
     {

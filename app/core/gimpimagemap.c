@@ -68,7 +68,7 @@ image_map_do (gpointer data)
 
   _image_map = (_ImageMap *) data;
 
-  if (! (gimage = drawable_gimage ( (_image_map->drawable))))
+  if (! (gimage = gimp_drawable_gimage ( (_image_map->drawable))))
     {
       _image_map->state = WAITING;
       return FALSE;
@@ -147,11 +147,11 @@ image_map_apply (ImageMap           image_map,
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! drawable_gimage ( (_image_map->drawable)))
+  if (! gimp_drawable_gimage (_image_map->drawable))
     return;
 
   /*  The application should occur only within selection bounds  */
-  drawable_mask_bounds ( (_image_map->drawable), &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (_image_map->drawable, &x1, &y1, &x2, &y2);
 
   /*  If undo tiles don't exist, or change size, (re)allocate  */
   if (!_image_map->undo_tiles ||
@@ -170,12 +170,14 @@ image_map_apply (ImageMap           image_map,
 	    tile_manager_destroy (_image_map->undo_tiles);
 	  
 	  /*  Allocate new tiles  */
-	  _image_map->undo_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
-						     drawable_bytes ( (_image_map->drawable)));
+	  _image_map->undo_tiles =
+	    tile_manager_new ((x2 - x1), (y2 - y1),
+			      gimp_drawable_bytes (_image_map->drawable));
 	}
 
       /*  Copy from the image to the new tiles  */
-      pixel_region_init (&_image_map->srcPR, drawable_data ( (_image_map->drawable)),
+      pixel_region_init (&_image_map->srcPR,
+			 gimp_drawable_data (_image_map->drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&_image_map->destPR, _image_map->undo_tiles,
 			 0, 0, (x2 - x1), (y2 - y1), TRUE);
@@ -194,7 +196,8 @@ image_map_apply (ImageMap           image_map,
 			 _image_map->undo_tiles->width,
 			 _image_map->undo_tiles->height,
 			 FALSE);
-      pixel_region_init (&_image_map->destPR, drawable_data ( (_image_map->drawable)),
+      pixel_region_init (&_image_map->destPR,
+			 gimp_drawable_data (_image_map->drawable),
 			 _image_map->undo_tiles->x, _image_map->undo_tiles->y,
 			 _image_map->undo_tiles->width,
 			 _image_map->undo_tiles->height,
@@ -208,7 +211,8 @@ image_map_apply (ImageMap           image_map,
 		     0, 0, (x2 - x1), (y2 - y1), FALSE);
 
   /*  Configure the dest as the shadow buffer  */
-  pixel_region_init (&_image_map->destPR, drawable_shadow ( (_image_map->drawable)),
+  pixel_region_init (&_image_map->destPR,
+		     gimp_drawable_shadow (_image_map->drawable),
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   /*  Apply the image transformation to the pixels  */
@@ -236,7 +240,7 @@ image_map_commit (ImageMap image_map)
     }
 
   /*  Make sure the drawable is still valid  */
-  if (! drawable_gimage ( (_image_map->drawable)))
+  if (! gimp_drawable_gimage (_image_map->drawable))
     return;
 
   /* Interactive phase ends: we can commit an undo frame now */
@@ -249,7 +253,8 @@ image_map_commit (ImageMap image_map)
       y1 = _image_map->undo_tiles->y;
       x2 = _image_map->undo_tiles->x + _image_map->undo_tiles->width;
       y2 = _image_map->undo_tiles->y + _image_map->undo_tiles->height;
-      drawable_apply_image ( (_image_map->drawable), x1, y1, x2, y2, _image_map->undo_tiles, FALSE);
+      drawable_apply_image (_image_map->drawable,
+			    x1, y1, x2, y2, _image_map->undo_tiles, FALSE);
     }
 
   gdisplay_set_menu_sensitivity (_image_map->gdisp);
@@ -273,7 +278,7 @@ image_map_clear (ImageMap image_map)
 
   _image_map->state = WAITING;
   /*  Make sure the drawable is still valid  */
-  if (! drawable_gimage ( (_image_map->drawable)))
+  if (! gimp_drawable_gimage (_image_map->drawable))
     return;
 
   /*  restore the original image  */
@@ -284,7 +289,8 @@ image_map_clear (ImageMap image_map)
 			 _image_map->undo_tiles->width,
 			 _image_map->undo_tiles->height,
 			 FALSE);
-      pixel_region_init (&destPR, drawable_data ( (_image_map->drawable)),
+      pixel_region_init (&destPR,
+			 gimp_drawable_data (_image_map->drawable),
 			 _image_map->undo_tiles->x, _image_map->undo_tiles->y,
 			 _image_map->undo_tiles->width,
 			 _image_map->undo_tiles->height,
@@ -304,7 +310,7 @@ image_map_clear (ImageMap image_map)
       copy_region (&srcPR, &destPR);
 
       /*  Update the area  */
-      drawable_update ( (_image_map->drawable),
+      drawable_update (_image_map->drawable,
 		       _image_map->undo_tiles->x, _image_map->undo_tiles->y,
 		       _image_map->undo_tiles->width,
 		       _image_map->undo_tiles->height);
@@ -326,15 +332,15 @@ image_map_abort (ImageMap image_map)
   g_free (image_map);
 }
 
-unsigned char *
+guchar *
 image_map_get_color_at (ImageMap image_map, 
 			gint     x, 
 			gint     y)
 {
-  Tile          *tile;
-  unsigned char *src;
-  unsigned char *dest;
-  _ImageMap     *_image_map;
+  Tile      *tile;
+  guchar    *src;
+  guchar    *dest;
+  _ImageMap *_image_map;
 
   if (!image_map)
     return NULL;
@@ -349,8 +355,8 @@ image_map_get_color_at (ImageMap image_map,
 	return (gimp_drawable_get_color_at (_image_map->drawable, x, y));
 
       if (!image_map ||
-	  (!gimp_drawable_gimage(_image_map->drawable) && 
-	   gimp_drawable_is_indexed(_image_map->drawable)) ||
+	  (!gimp_drawable_gimage (_image_map->drawable) && 
+	   gimp_drawable_is_indexed (_image_map->drawable)) ||
 	  x < 0 || y < 0 ||
 	  x >= _image_map->undo_tiles->width ||
 	  y >= _image_map->undo_tiles->height)
@@ -358,15 +364,16 @@ image_map_get_color_at (ImageMap image_map,
 	  return NULL;
 	}
 
-      dest = g_new(unsigned char, 5);
+      dest = g_new (guchar, 5);
 
       tile = tile_manager_get_tile (_image_map->undo_tiles, x, y,
 				    TRUE, FALSE);
 
       src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
 
-      gimp_image_get_color (gimp_drawable_gimage(_image_map->drawable),
-			    gimp_drawable_type (_image_map->drawable), dest, src);
+      gimp_image_get_color (gimp_drawable_gimage (_image_map->drawable),
+			    gimp_drawable_type (_image_map->drawable),
+			    dest, src);
 
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (_image_map->drawable)))
 	dest[3] = src[gimp_drawable_bytes (_image_map->drawable) - 1];

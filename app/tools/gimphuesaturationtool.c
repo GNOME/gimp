@@ -304,7 +304,7 @@ hue_saturation_initialize (GDisplay *gdisp)
 {
   gint i;
 
-  if (! drawable_color (gimp_image_active_drawable (gdisp->gimage)))
+  if (! gimp_drawable_is_rgb (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Hue-Saturation operates only on RGB color drawables."));
       return;

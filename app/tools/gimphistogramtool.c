@@ -222,7 +222,7 @@ histogram_tool_initialize (GDisplay *gdisp)
 {
   PixelRegion PR;
 
-  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Histogram does not operate on indexed drawables."));
       return;
@@ -235,7 +235,7 @@ histogram_tool_initialize (GDisplay *gdisp)
     gtk_widget_show (histogram_tool_dialog->shell);
 
   histogram_tool_dialog->drawable = gimp_image_active_drawable (gdisp->gimage);
-  histogram_tool_dialog->color = drawable_color (histogram_tool_dialog->drawable);
+  histogram_tool_dialog->color = gimp_drawable_is_rgb (histogram_tool_dialog->drawable);
 
   /*  hide or show the channel menu based on image type  */
   if (histogram_tool_dialog->color)
@@ -244,9 +244,10 @@ histogram_tool_initialize (GDisplay *gdisp)
     gtk_widget_hide (histogram_tool_dialog->channel_menu);
 
   /* calculate the histogram */
-  pixel_region_init (&PR, drawable_data (histogram_tool_dialog->drawable), 0, 0,
-		     drawable_width (histogram_tool_dialog->drawable),
-		     drawable_height (histogram_tool_dialog->drawable),
+  pixel_region_init (&PR, gimp_drawable_data (histogram_tool_dialog->drawable),
+		     0, 0,
+		     gimp_drawable_width (histogram_tool_dialog->drawable),
+		     gimp_drawable_height (histogram_tool_dialog->drawable),
 		     FALSE);
   gimp_histogram_calculate (histogram_tool_dialog->hist, &PR, NULL);
 

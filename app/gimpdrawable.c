@@ -232,8 +232,17 @@ static GHashTable *gimp_drawable_table = NULL;
 /**************************/
 /*  Function definitions  */
 
+gint
+gimp_drawable_get_ID (GimpDrawable *drawable)
+{
+  g_return_val_if_fail (drawable != NULL, -1);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
+
+  return drawable->ID;
+}
+
 GimpDrawable *
-gimp_drawable_get_ID (gint drawable_id)
+gimp_drawable_get_by_ID (gint drawable_id)
 {
   if (gimp_drawable_table == NULL)
     return NULL;

@@ -255,19 +255,6 @@ channel_set_opacity (Channel *channel,
     channel->opacity = (gint) (opacity * 255) / 100;
 }
 
-Channel *
-channel_get_ID (gint ID)
-{
-  GimpDrawable *drawable;
-
-  drawable = drawable_get_ID (ID);
-
-  if (drawable && GIMP_IS_CHANNEL (drawable)) 
-    return GIMP_CHANNEL (drawable);
-  else
-    return NULL;
-}
-
 void
 channel_delete (Channel *channel)
 {

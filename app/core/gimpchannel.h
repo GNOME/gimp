@@ -111,9 +111,7 @@ const guchar  * channel_get_color           (const Channel *channel);
 void 		channel_set_color           (Channel       *channel, 
 					     const guchar  *color);
 
-Channel       * channel_get_ID              (gint           ID);
 void            channel_delete              (Channel       *channel);
-void            channel_removed             (Channel       *channel);
 void            channel_scale               (Channel       *channel, 
 					     gint           new_width, 
 					     gint           new_height);
@@ -221,6 +219,6 @@ void            channel_load                (Channel      *mask,
 
 void		channel_invalidate_bounds   (Channel      *channel);
 
-#define drawable_channel GIMP_IS_CHANNEL
+#define gimp_drawable_channel GIMP_IS_CHANNEL
 
 #endif /* __CHANNEL_H__ */

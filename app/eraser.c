@@ -246,7 +246,7 @@ eraser_motion (PaintCore            *paint_core,
   guchar   col[MAX_CHANNELS];
   gdouble  scale;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   gimp_image_get_background (gimage, drawable, col);

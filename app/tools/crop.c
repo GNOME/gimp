@@ -485,9 +485,9 @@ crop_motion (Tool           *tool,
   if (crop_options->layer_only)
     {
       layer = (gdisp->gimage)->active_layer;
-      drawable_offsets (GIMP_DRAWABLE(layer), &min_x, &min_y);
-      max_x  = drawable_width (GIMP_DRAWABLE(layer)) + min_x;
-      max_y = drawable_height (GIMP_DRAWABLE(layer)) + min_y;
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
+      max_x = gimp_drawable_width (GIMP_DRAWABLE (layer)) + min_x;
+      max_y = gimp_drawable_height (GIMP_DRAWABLE (layer)) + min_y;
     }
   else
     {
@@ -677,9 +677,9 @@ crop_arrow_keys_func (Tool        *tool,
       if (crop_options->layer_only)
 	{
 	  layer = (gdisp->gimage)->active_layer;
-	  drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
-	  max_x  = drawable_width (GIMP_DRAWABLE (layer)) + min_x;
-	  max_y = drawable_height (GIMP_DRAWABLE (layer)) + min_y;
+	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &min_x, &min_y);
+	  max_x = gimp_drawable_width (GIMP_DRAWABLE (layer)) + min_x;
+	  max_y = gimp_drawable_height (GIMP_DRAWABLE (layer)) + min_y;
 	}
       else
 	{
@@ -899,7 +899,7 @@ crop_image (GImage   *gimage,
 	  if (layer_is_floating_sel (layer))
 	    floating_sel_relax (layer, TRUE);
 
-	  drawable_offsets (GIMP_DRAWABLE (layer), &doff_x, &doff_y);
+	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &doff_x, &doff_y);
 
 	  off_x = (doff_x - x1);
 	  off_y = (doff_y - y1);
@@ -952,17 +952,17 @@ crop_image (GImage   *gimage,
 
 	      layer_translate (layer, -x1, -y1);
 
-	      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
 	      if (crop_layers)
 		{
-		  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+		  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
 		  lx1 = CLAMP (off_x, 0, gimage->width);
 		  ly1 = CLAMP (off_y, 0, gimage->height);
-		  lx2 = CLAMP ((drawable_width (GIMP_DRAWABLE (layer)) + off_x),
+		  lx2 = CLAMP ((gimp_drawable_width (GIMP_DRAWABLE (layer)) + off_x),
 			       0, gimage->width);
-		  ly2 = CLAMP ((drawable_height (GIMP_DRAWABLE (layer)) + off_y),
+		  ly2 = CLAMP ((gimp_drawable_height (GIMP_DRAWABLE (layer)) + off_y),
 			       0, gimage->height);
 		  width = lx2 - lx1;
 		  height = ly2 - ly1;
@@ -1268,9 +1268,9 @@ crop_selection_callback (GtkWidget *widget,
       if (crop_options->layer_only)
 	{
 	  layer = (gdisp->gimage)->active_layer;
-	  drawable_offsets (GIMP_DRAWABLE (layer), &crop->tx1, &crop->ty1);
-	  crop->tx2 = drawable_width  (GIMP_DRAWABLE (layer)) + crop->tx1;
-	  crop->ty2 = drawable_height (GIMP_DRAWABLE (layer)) + crop->ty1;
+	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &crop->tx1, &crop->ty1);
+	  crop->tx2 = gimp_drawable_width  (GIMP_DRAWABLE (layer)) + crop->tx1;
+	  crop->ty2 = gimp_drawable_height (GIMP_DRAWABLE (layer)) + crop->ty1;
 	}
       else
 	{
@@ -1319,14 +1319,15 @@ crop_automatic_callback (GtkWidget *widget,
     {
       if (!(active_drawable =  gimp_image_active_drawable (gdisp->gimage)))
 	return;
-      width  = drawable_width  (GIMP_DRAWABLE (active_drawable)); 
-      height = drawable_height (GIMP_DRAWABLE (active_drawable));
-      bytes  = drawable_bytes  (GIMP_DRAWABLE (active_drawable));
-      if (drawable_has_alpha (GIMP_DRAWABLE (active_drawable)))
+      width  = gimp_drawable_width  (GIMP_DRAWABLE (active_drawable)); 
+      height = gimp_drawable_height (GIMP_DRAWABLE (active_drawable));
+      bytes  = gimp_drawable_bytes  (GIMP_DRAWABLE (active_drawable));
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (active_drawable)))
 	has_alpha = TRUE;
       get_color_obj = GTK_OBJECT (active_drawable);
       get_color_func = (GetColorFunc) gimp_drawable_get_color_at;
-      drawable_offsets (GIMP_DRAWABLE (active_drawable), &offset_x, &offset_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (active_drawable),
+			     &offset_x, &offset_y);
     }
   else
     {
@@ -1361,7 +1362,7 @@ crop_automatic_callback (GtkWidget *widget,
   height = y2 - y1;
 
   if (crop_options->layer_only)
-    pixel_region_init (&PR, drawable_data (active_drawable), 
+    pixel_region_init (&PR, gimp_drawable_data (active_drawable), 
 		       x1, y1, width, height, FALSE);
   else
     pixel_region_init (&PR, gimp_image_composite (gdisp->gimage), 

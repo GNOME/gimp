@@ -1448,20 +1448,21 @@ gdisplay_mask_bounds (GDisplay *gdisp,
   /*  If there is a floating selection, handle things differently  */
   if ((layer = gimp_image_floating_sel (gdisp->gimage)))
     {
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+
       if (! channel_bounds (gimp_image_get_mask (gdisp->gimage), x1, y1, x2, y2))
 	{
 	  *x1 = off_x;
 	  *y1 = off_y;
-	  *x2 = off_x + drawable_width (GIMP_DRAWABLE (layer));
-	  *y2 = off_y + drawable_height (GIMP_DRAWABLE (layer));
+	  *x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE (layer));
+	  *y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE (layer));
 	}
       else
 	{
 	  *x1 = MIN (off_x, *x1);
 	  *y1 = MIN (off_y, *y1);
-	  *x2 = MAX (off_x + drawable_width (GIMP_DRAWABLE (layer)), *x2);
-	  *y2 = MAX (off_y + drawable_height (GIMP_DRAWABLE (layer)), *y2);
+	  *x2 = MAX (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), *x2);
+	  *y2 = MAX (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), *y2);
 	}
     }
   else if (! channel_bounds (gimp_image_get_mask (gdisp->gimage), x1, y1, x2, y2))
@@ -1498,8 +1499,8 @@ gdisplay_transform_coords (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-		      &offset_x, &offset_y);
+    gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+			   &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1535,8 +1536,8 @@ gdisplay_untransform_coords (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-		      &offset_x, &offset_y);
+    gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+			   &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1573,8 +1574,8 @@ gdisplay_transform_coords_f (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-		      &offset_x, &offset_y);
+    gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+			   &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1609,8 +1610,8 @@ gdisplay_untransform_coords_f (GDisplay *gdisp,
   scaley = SCALEFACTOR_Y (gdisp);
 
   if (use_offsets)
-    drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
-		      &offset_x, &offset_y);
+    gimp_drawable_offsets (gimp_image_active_drawable (gdisp->gimage),
+			   &offset_x, &offset_y);
   else
     {
       offset_x = offset_y = 0;
@@ -1754,7 +1755,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
 
       drawable = gimp_image_active_drawable (gdisp->gimage);
       if (drawable)
-	type = drawable_type (drawable);
+	type = gimp_drawable_type (drawable);
 
       if (lp)
 	{
@@ -1966,20 +1967,20 @@ gdisplay_active (void)
 
 
 GDisplay *
-gdisplay_get_ID (gint ID)
+gdisplay_get_by_ID (gint ID)
 {
   GDisplay *gdisp;
-  GSList *list = display_list;
+  GSList   *list;
 
-  /*  Traverse the list of displays, returning the one that matches the ID  */
-  /*  If no display in the list is a match, return NULL.                    */
-  while (list)
+  /*  Traverse the list of displays, returning the one that matches the ID
+   *  If no display in the list is a match, return NULL.
+   */
+  for (list = display_list; list; list = g_slist_next (list))
     {
       gdisp = (GDisplay *) list->data;
+
       if (gdisp->ID == ID)
 	return gdisp;
-
-      list = g_slist_next (list);
     }
 
   return NULL;

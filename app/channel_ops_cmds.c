@@ -51,7 +51,7 @@ channel_ops_offset_invoker (Argument *args)
   gint32 offset_y;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -67,7 +67,7 @@ channel_ops_offset_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
     }
 

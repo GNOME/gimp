@@ -81,7 +81,7 @@
 
 #include "app_procs.h"
 #include "appenv.h"
-#include "brush_select.h"  /* Need for closing dialogs */
+#include "brush_select.h"
 #include "drawable.h"
 #include "datafiles.h"
 #include "errors.h"
@@ -92,7 +92,7 @@
 #include "gimprc.h"
 #include "gradient_select.h"
 #include "menus.h"
-#include "pattern_select.h"   /* Needed for closing pattern dialogs */
+#include "pattern_select.h"
 #include "plug_in.h"
 #include "tile.h"
 #include "tile_manager.h"
@@ -1370,7 +1370,7 @@ plug_in_repeat (gboolean with_interface)
       /* initialize the first three plug-in arguments  */
       args[0].value.pdb_int = (with_interface ? RUN_INTERACTIVE : RUN_WITH_LAST_VALS);
       args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
-      args[2].value.pdb_int = drawable_ID (gimp_image_active_drawable (gdisplay->gimage));
+      args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 
       /* run the plug-in procedure */
       plug_in_run (last_plug_in, args, 3, FALSE, TRUE, gdisplay->ID);
@@ -1594,9 +1594,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
       tile_info = msg.data;
 
       if (tile_info->shadow)
-	tm = drawable_shadow (drawable_get_ID (tile_info->drawable_ID));
+	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (tile_info->drawable_ID));
       else
-	tm = drawable_data (drawable_get_ID (tile_info->drawable_ID));
+	tm = gimp_drawable_data (gimp_drawable_get_by_ID (tile_info->drawable_ID));
 
       if (!tm)
 	{
@@ -1631,9 +1631,9 @@ plug_in_handle_tile_req (GPTileReq *tile_req)
   else
     {
       if (tile_req->shadow)
-	tm = drawable_shadow (drawable_get_ID (tile_req->drawable_ID));
+	tm = gimp_drawable_shadow (gimp_drawable_get_by_ID (tile_req->drawable_ID));
       else
-	tm = drawable_data (drawable_get_ID (tile_req->drawable_ID));
+	tm = gimp_drawable_data (gimp_drawable_get_by_ID (tile_req->drawable_ID));
 
       if (!tm)
 	{
@@ -2633,7 +2633,7 @@ plug_in_callback (GtkWidget *widget,
 	  /* initialize the first 3 plug-in arguments  */
 	  args[0].value.pdb_int = RUN_INTERACTIVE;
 	  args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
-	  args[2].value.pdb_int = drawable_ID (gimp_image_active_drawable (gdisplay->gimage));
+	  args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 	  argc = 3;
 	}
       else
@@ -2656,7 +2656,7 @@ plug_in_callback (GtkWidget *widget,
 	      gdisp_ID = gdisplay->ID;
 
 	      args[1].value.pdb_int = pdb_image_to_id (gdisplay->gimage);
-	      args[2].value.pdb_int = drawable_ID (gimp_image_active_drawable (gdisplay->gimage));
+	      args[2].value.pdb_int = gimp_drawable_get_ID (gimp_image_active_drawable (gdisplay->gimage));
 	      argc = 3;
 	    }
 	  else
@@ -3511,8 +3511,8 @@ plug_in_progress_init (PlugIn *plug_in,
   if (!message)
     message = plug_in->args[0];
 
-  if (gdisp_ID > 0) 
-      gdisp = gdisplay_get_ID(gdisp_ID);
+  if (gdisp_ID > 0)
+    gdisp = gdisplay_get_by_ID (gdisp_ID);
 
   if (plug_in->progress)
     plug_in->progress = progress_restart (plug_in->progress, message,

@@ -1863,13 +1863,13 @@ gimp_image_construct (GimpImage *gimage,
       (!g_slist_next(gimage->layers)) &&          /* It's the only layer.  */
       (layer_has_alpha((Layer*)(gimage->layers->data))) && /* It's !flat.  */
                                                   /* It's visible.         */
-      (drawable_visible (GIMP_DRAWABLE ((Layer*)(gimage->layers->data)))) &&
-      (drawable_width (GIMP_DRAWABLE ((Layer*)(gimage->layers->data))) ==
+      (gimp_drawable_visible (GIMP_DRAWABLE ((Layer*)(gimage->layers->data)))) &&
+      (gimp_drawable_width (GIMP_DRAWABLE ((Layer*)(gimage->layers->data))) ==
        gimage->width) &&
-      (drawable_height (GIMP_DRAWABLE ((Layer*)(gimage->layers->data))) ==
+      (gimp_drawable_height (GIMP_DRAWABLE ((Layer*)(gimage->layers->data))) ==
        gimage->height) &&                         /* Covers all.           */
                                                   /* Not indexed.          */
-      (!drawable_indexed (GIMP_DRAWABLE ((Layer*)(gimage->layers->data)))) &&
+      (!gimp_drawable_is_indexed (GIMP_DRAWABLE ((Layer*)(gimage->layers->data)))) &&
       (((Layer*)(gimage->layers->data))->opacity == OPAQUE_OPACITY) /*opaq */
       )
     {
@@ -2590,11 +2590,11 @@ gimp_image_position_layer (GimpImage *gimage,
   gimage->layers = g_slist_insert (list, layer_arg, new_index);
 
   /* update the affected area (== area of layer_arg) */
-  drawable_offsets (GIMP_DRAWABLE(layer_arg), &off_x, &off_y);
+  gimp_drawable_offsets (GIMP_DRAWABLE(layer_arg), &off_x, &off_y);
   x_min = off_x;
   y_min = off_y;
-  x_max = off_x + drawable_width (GIMP_DRAWABLE (layer_arg));
-  y_max = off_y + drawable_height (GIMP_DRAWABLE (layer_arg));
+  x_max = off_x + gimp_drawable_width (GIMP_DRAWABLE (layer_arg));
+  y_max = off_y + gimp_drawable_height (GIMP_DRAWABLE (layer_arg));
   gtk_signal_emit (GTK_OBJECT (gimage),
 		   gimp_image_signals[REPAINT],
 		   x_min, y_min, x_max, y_max);
@@ -2629,7 +2629,7 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
     {
       layer = (Layer *) layer_list->data;
 
-      if (drawable_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (merge_list, layer);
     }
 
@@ -2680,7 +2680,7 @@ gimp_image_flatten (GimpImage *gimage)
     {
       layer = (Layer *) layer_list->data;
 
-      if (drawable_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (merge_list, layer);
     }
 
@@ -2713,7 +2713,7 @@ gimp_image_merge_down (GimpImage *gimage,
 	  while (layer_list)
 	    {
 	      layer = (Layer *) layer_list->data;
-	      if (drawable_visible (GIMP_DRAWABLE (layer)))
+	      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 		{
 		  merge_list = g_slist_append (merge_list, layer);
 		  layer_list = NULL;
@@ -2779,7 +2779,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   while (merge_list)
     {
       layer = (Layer *) merge_list->data;
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       switch (merge_type)
 	{
@@ -2789,8 +2789,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 	    {
 	      x1 = off_x;
 	      y1 = off_y;
-	      x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));
-	      y2 = off_y + drawable_height (GIMP_DRAWABLE(layer));
+	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE(layer));
+	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE(layer));
 	    }
 	  else
 	    {
@@ -2798,10 +2798,10 @@ gimp_image_merge_layers (GimpImage *gimage,
 		x1 = off_x;
 	      if (off_y < y1)
 		y1 = off_y;
-	      if ((off_x + drawable_width (GIMP_DRAWABLE(layer))) > x2)
-		x2 = (off_x + drawable_width (GIMP_DRAWABLE(layer)));
-	      if ((off_y + drawable_height (GIMP_DRAWABLE(layer))) > y2)
-		y2 = (off_y + drawable_height (GIMP_DRAWABLE(layer)));
+	      if ((off_x + gimp_drawable_width (GIMP_DRAWABLE(layer))) > x2)
+		x2 = (off_x + gimp_drawable_width (GIMP_DRAWABLE(layer)));
+	      if ((off_y + gimp_drawable_height (GIMP_DRAWABLE(layer))) > y2)
+		y2 = (off_y + gimp_drawable_height (GIMP_DRAWABLE(layer)));
 	    }
 	  if (merge_type == CLIP_TO_IMAGE)
 	    {
@@ -2817,8 +2817,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 	    {
 	      x1 = off_x;
 	      y1 = off_y;
-	      x2 = off_x + drawable_width (GIMP_DRAWABLE(layer));
-	      y2 = off_y + drawable_height (GIMP_DRAWABLE(layer));
+	      x2 = off_x + gimp_drawable_width (GIMP_DRAWABLE(layer));
+	      y2 = off_y + gimp_drawable_height (GIMP_DRAWABLE(layer));
 	    }
 	  break;
 
@@ -2847,7 +2847,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   name = g_strdup (gimp_object_get_name (GIMP_OBJECT (layer)));
 
   if (merge_type == FLATTEN_IMAGE ||
-      drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
+      gimp_drawable_type (GIMP_DRAWABLE (layer)) == INDEXED_GIMAGE)
     {
       switch (gimp_image_base_type (gimage))
 	{
@@ -2873,7 +2873,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
       /*  init the pixel region  */
       pixel_region_init (&src1PR, 
-			 drawable_data (GIMP_DRAWABLE (merge_layer)), 
+			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)), 
 			 0, 0, 
 			 gimage->width, gimage->height, 
 			 TRUE);
@@ -2891,10 +2891,11 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  Opacity is set to 100% and the MODE is set to normal
        */
 
-      merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
-			       drawable_type_with_alpha (GIMP_DRAWABLE(layer)),
-			       "merged layer",
-			       OPAQUE_OPACITY, NORMAL_MODE);
+      merge_layer =
+	layer_new (gimage, (x2 - x1), (y2 - y1),
+		   gimp_drawable_type_with_alpha (GIMP_DRAWABLE (layer)),
+		   "merged layer",
+		   OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer)
 	{
@@ -2907,7 +2908,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
       /*  Set the layer to transparent  */
       pixel_region_init (&src1PR, 
-			 drawable_data (GIMP_DRAWABLE(merge_layer)), 
+			 gimp_drawable_data (GIMP_DRAWABLE(merge_layer)), 
 			 0, 0, 
 			 (x2 - x1), (y2 - y1), 
 			 TRUE);
@@ -2952,7 +2953,7 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  if it's actually legal...
        */
       operation =
-	valid_combinations[drawable_type (GIMP_DRAWABLE (merge_layer))][drawable_bytes (GIMP_DRAWABLE (layer))];
+	valid_combinations[gimp_drawable_type (GIMP_DRAWABLE (merge_layer))][gimp_drawable_bytes (GIMP_DRAWABLE (layer))];
 
       if (operation == -1)
 	{
@@ -2960,19 +2961,19 @@ gimp_image_merge_layers (GimpImage *gimage,
 	  return NULL;
 	}
 
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
       x3 = CLAMP (off_x, x1, x2);
       y3 = CLAMP (off_y, y1, y2);
-      x4 = CLAMP (off_x + drawable_width (GIMP_DRAWABLE (layer)), x1, x2);
-      y4 = CLAMP (off_y + drawable_height (GIMP_DRAWABLE (layer)), y1, y2);
+      x4 = CLAMP (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)), x1, x2);
+      y4 = CLAMP (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)), y1, y2);
 
       /* configure the pixel regions  */
       pixel_region_init (&src1PR, 
-			 drawable_data (GIMP_DRAWABLE (merge_layer)), 
+			 gimp_drawable_data (GIMP_DRAWABLE (merge_layer)), 
 			 (x3 - x1), (y3 - y1), (x4 - x3), (y4 - y3), 
 			 TRUE);
       pixel_region_init (&src2PR, 
-			 drawable_data (GIMP_DRAWABLE (layer)), 
+			 gimp_drawable_data (GIMP_DRAWABLE (layer)), 
 			 (x3 - off_x), (y3 - off_y),
 			 (x4 - x3), (y4 - y3), 
 			 FALSE);
@@ -2980,7 +2981,7 @@ gimp_image_merge_layers (GimpImage *gimage,
       if (layer->mask && layer->apply_mask)
 	{
 	  pixel_region_init (&maskPR, 
-			     drawable_data (GIMP_DRAWABLE (layer->mask)), 
+			     gimp_drawable_data (GIMP_DRAWABLE (layer->mask)), 
 			     (x3 - off_x), (y3 - off_y),
 			     (x4 - x3), (y4 - y3), 
 			     FALSE);
@@ -3040,8 +3041,8 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   drawable_update (GIMP_DRAWABLE (merge_layer), 
 		   0, 0, 
-		   drawable_width (GIMP_DRAWABLE (merge_layer)), 
-		   drawable_height (GIMP_DRAWABLE (merge_layer)));
+		   gimp_drawable_width (GIMP_DRAWABLE (merge_layer)), 
+		   gimp_drawable_height (GIMP_DRAWABLE (merge_layer)));
 
   /*reinit_layer_idlerender (gimage, merge_layer);*/
 
@@ -3126,8 +3127,8 @@ gimp_image_add_layer (GimpImage *gimage,
   /*  update the new layer's area  */
   drawable_update (GIMP_DRAWABLE (float_layer),
 		   0, 0,
-		   drawable_width  (GIMP_DRAWABLE (float_layer)),
-		   drawable_height (GIMP_DRAWABLE (float_layer)));
+		   gimp_drawable_width  (GIMP_DRAWABLE (float_layer)),
+		   gimp_drawable_height (GIMP_DRAWABLE (float_layer)));
 
   /*  invalidate the composite preview  */
   gimp_image_invalidate_preview (gimage);
@@ -3202,7 +3203,7 @@ gimp_image_add_layer_mask (GimpImage *gimage,
       return (NULL);
     }
 
-  if (drawable_indexed (GIMP_DRAWABLE (layer)))
+  if (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)))
     {
       g_message(_("Unable to add a layer mask to a\nlayer in an indexed image."));
       return (NULL);
@@ -3214,10 +3215,10 @@ gimp_image_add_layer_mask (GimpImage *gimage,
       return (NULL);
     }
 
-  if ((drawable_width (GIMP_DRAWABLE (layer)) !=
-       drawable_width (GIMP_DRAWABLE (mask))) ||
-      (drawable_height (GIMP_DRAWABLE (layer)) !=
-       drawable_height (GIMP_DRAWABLE (mask))))
+  if ((gimp_drawable_width (GIMP_DRAWABLE (layer)) !=
+       gimp_drawable_width (GIMP_DRAWABLE (mask))) ||
+      (gimp_drawable_height (GIMP_DRAWABLE (layer)) !=
+       gimp_drawable_height (GIMP_DRAWABLE (mask))))
     {
       g_message(_("Cannot add layer mask of different dimensions than specified layer."));
       return NULL;
@@ -3280,12 +3281,12 @@ gimp_image_remove_layer_mask (GimpImage     *gimage,
     {
       gimp_image_invalidate_preview (gimage);
 
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
       gtk_signal_emit (GTK_OBJECT (gimage),
 		       gimp_image_signals[REPAINT],
 		       off_x, off_y,
-		       drawable_width  (GIMP_DRAWABLE (layer)),
-		       drawable_height (GIMP_DRAWABLE (layer)));
+		       gimp_drawable_width  (GIMP_DRAWABLE (layer)),
+		       gimp_drawable_height (GIMP_DRAWABLE (layer)));
     }
 
   return NULL;
@@ -3321,8 +3322,8 @@ gimp_image_raise_channel (GimpImage *gimage,
 	      prev->data = channel;
 	      drawable_update (GIMP_DRAWABLE (channel),
 			       0, 0,
-			       drawable_width  (GIMP_DRAWABLE (channel)),
-			       drawable_height (GIMP_DRAWABLE (channel)));
+			       gimp_drawable_width  (GIMP_DRAWABLE (channel)),
+			       gimp_drawable_height (GIMP_DRAWABLE (channel)));
 	      return prev_channel;
 	    }
 	  else
@@ -3372,8 +3373,8 @@ gimp_image_lower_channel (GimpImage *gimage,
 	      next->data = channel;
 	      drawable_update (GIMP_DRAWABLE (channel),
 			       0, 0,
-			       drawable_width  (GIMP_DRAWABLE (channel)),
-			       drawable_height (GIMP_DRAWABLE (channel)));
+			       gimp_drawable_width  (GIMP_DRAWABLE (channel)),
+			       gimp_drawable_height (GIMP_DRAWABLE (channel)));
 	      return next_channel;
 	    }
 	  else
@@ -3436,8 +3437,8 @@ gimp_image_position_channel (GimpImage *gimage,
 
   drawable_update (GIMP_DRAWABLE (channel),
 		   0, 0,
-		   drawable_width  (GIMP_DRAWABLE (channel)),
-		   drawable_height (GIMP_DRAWABLE (channel)));
+		   gimp_drawable_width  (GIMP_DRAWABLE (channel)),
+		   gimp_drawable_height (GIMP_DRAWABLE (channel)));
 
   return channel;
 }
@@ -3484,11 +3485,11 @@ gimp_image_add_channel (GimpImage *gimage,
   gimp_image_set_active_channel (gimage, channel);
 
   /*  if channel is visible, update the image  */
-  if (drawable_visible (GIMP_DRAWABLE(channel)))
-    drawable_update (GIMP_DRAWABLE(channel), 
+  if (gimp_drawable_visible (GIMP_DRAWABLE (channel)))
+    drawable_update (GIMP_DRAWABLE (channel), 
 		     0, 0, 
-		     drawable_width (GIMP_DRAWABLE(channel)), 
-		     drawable_height (GIMP_DRAWABLE(channel)));
+		     gimp_drawable_width (GIMP_DRAWABLE (channel)), 
+		     gimp_drawable_height (GIMP_DRAWABLE (channel)));
 
   return channel;
 }
@@ -3518,11 +3519,11 @@ gimp_image_remove_channel (GimpImage *gimage,
 	gimage->active_channel = NULL;
     }
   
-  if (drawable_visible (GIMP_DRAWABLE(channel)))
-    drawable_update (GIMP_DRAWABLE(channel), 
+  if (gimp_drawable_visible (GIMP_DRAWABLE (channel)))
+    drawable_update (GIMP_DRAWABLE (channel), 
 		     0, 0, 
-		     drawable_width (GIMP_DRAWABLE(channel)), 
-		     drawable_height (GIMP_DRAWABLE(channel)));
+		     gimp_drawable_width (GIMP_DRAWABLE (channel)), 
+		     gimp_drawable_height (GIMP_DRAWABLE (channel)));
 
   /* Send out REMOVED signal from channel */
   gimp_drawable_removed (GIMP_DRAWABLE (channel));
@@ -3749,7 +3750,7 @@ gimp_image_floating_sel (const GimpImage *gimage)
 guchar *
 gimp_image_cmap (const GimpImage *gimage)
 {
-  return drawable_cmap (gimp_image_active_drawable (gimage));
+  return gimp_drawable_cmap (gimp_image_active_drawable (gimage));
 }
 
 /************************************************************/
@@ -3873,7 +3874,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
       layer = (Layer *) list->data;
 
       /*  only add layers that are visible to the list  */
-      if (drawable_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
 	{
 	  /*  floating selections are added right above the layer 
 	      they are attached to  */
@@ -3896,12 +3897,12 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
     {
       layer = (Layer *) reverse_list->data;
 
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       x = (gint) RINT (ratio * off_x);
       y = (gint) RINT (ratio * off_y); 
-      w = (gint) RINT (ratio * drawable_width (GIMP_DRAWABLE (layer))); 
-      h = (gint) RINT (ratio * drawable_height (GIMP_DRAWABLE (layer))); 
+      w = (gint) RINT (ratio * gimp_drawable_width (GIMP_DRAWABLE (layer))); 
+      h = (gint) RINT (ratio * gimp_drawable_height (GIMP_DRAWABLE (layer))); 
       
       x1 = CLAMP (x, 0, width);
       y1 = CLAMP (y, 0, height);
@@ -3946,7 +3947,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
        *  Send in all TRUE for visible since that info doesn't matter
        *   for previews
        */
-      switch (drawable_type (GIMP_DRAWABLE(layer)))
+      switch (gimp_drawable_type (GIMP_DRAWABLE(layer)))
 	{
 	case RGB_GIMAGE: case GRAY_GIMAGE: case INDEXED_GIMAGE:
 	  if (! construct_flag)

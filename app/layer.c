@@ -546,18 +546,6 @@ layer_create_mask (Layer       *layer,
   return mask;
 }
 
-Layer *
-layer_get_ID (gint ID)
-{
-  GimpDrawable *drawable;
-
-  drawable = drawable_get_ID (ID);
-  if (drawable && GIMP_IS_LAYER (drawable)) 
-    return GIMP_LAYER (drawable);
-  else
-    return NULL;
-}
-
 void
 layer_delete (Layer *layer)
 {
@@ -1167,7 +1155,7 @@ layer_invalidate_boundary (Layer *layer)
   Channel *mask;
 
   /*  first get the selection mask channel  */
-  if (! (gimage = drawable_gimage (GIMP_DRAWABLE (layer))))
+  if (! (gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer))))
     return;
 
   /*  Turn the current selection off  */
@@ -1519,7 +1507,7 @@ layer_invalidate_previews (GimpImage *gimage)
   for (tmp = gimage->layers; tmp; tmp = g_slist_next (tmp))
     {
       layer = (Layer *) tmp->data;
-      gimp_drawable_invalidate_preview (GIMP_DRAWABLE(layer), TRUE);
+      gimp_drawable_invalidate_preview (GIMP_DRAWABLE (layer), TRUE);
     }
 }
 
@@ -1802,19 +1790,6 @@ layer_mask_copy (LayerMask *layer_mask)
   g_free (layer_mask_name);
 
   return new_layer_mask;
-}
-
-LayerMask *
-layer_mask_get_ID (gint ID)
-{
-  GimpDrawable *drawable;
-
-  drawable = drawable_get_ID (ID);
-
-  if (drawable && GIMP_IS_LAYER_MASK (drawable)) 
-    return GIMP_LAYER_MASK (drawable);
-  else
-    return NULL;
 }
 
 void

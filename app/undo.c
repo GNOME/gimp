@@ -791,12 +791,12 @@ undo_push_image (GImage       *gimage,
   TileManager *tiles;
   PixelRegion  srcPR, destPR;
 
-  x1 = CLAMP (x1, 0, drawable_width (drawable));
-  y1 = CLAMP (y1, 0, drawable_height (drawable));
-  x2 = CLAMP (x2, 0, drawable_width (drawable));
-  y2 = CLAMP (y2, 0, drawable_height (drawable));
+  x1 = CLAMP (x1, 0, gimp_drawable_width (drawable));
+  y1 = CLAMP (y1, 0, gimp_drawable_height (drawable));
+  x2 = CLAMP (x2, 0, gimp_drawable_width (drawable));
+  y2 = CLAMP (y2, 0, gimp_drawable_height (drawable));
 
-  size = (x2 - x1) * (y2 - y1) * drawable_bytes (drawable) + sizeof (gpointer) * 2;
+  size = (x2 - x1) * (y2 - y1) * gimp_drawable_bytes (drawable) + sizeof (gpointer) * 2;
 
   if ((new = undo_push (gimage, size, IMAGE_UNDO, TRUE)))
     {
@@ -805,8 +805,9 @@ undo_push_image (GImage       *gimage,
       /*  If we cannot create a new temp buf--either because our parameters are
        *  degenerate or something else failed, simply return an unsuccessful push.
        */
-      tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
-      pixel_region_init (&srcPR, drawable_data (drawable),
+      tiles = tile_manager_new ((x2 - x1), (y2 - y1),
+				gimp_drawable_bytes (drawable));
+      pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 			 x1, y1, (x2 - x1), (y2 - y1), FALSE);
       pixel_region_init (&destPR, tiles,
 			 0, 0, (x2 - x1), (y2 - y1), TRUE);
@@ -851,8 +852,8 @@ undo_push_image_mod (GImage       *gimage,
   if (! tiles_ptr)
     return FALSE;
 
-  dwidth = drawable_width (drawable);
-  dheight = drawable_height (drawable);
+  dwidth  = gimp_drawable_width (drawable);
+  dheight = gimp_drawable_height (drawable);
 
   x1 = CLAMP (x1, 0, dwidth);
   y1 = CLAMP (y1, 0, dheight);
@@ -914,7 +915,7 @@ undo_pop_image (GImage    *gimage,
 
       pixel_region_init (&PR1, tiles,
 			 0, 0, w, h, TRUE);
-      pixel_region_init (&PR2, drawable_data (image_undo->drawable),
+      pixel_region_init (&PR2, gimp_drawable_data (image_undo->drawable),
 			 x, y, w, h, TRUE);
 
       /*  swap the regions  */
@@ -939,10 +940,10 @@ undo_pop_image (GImage    *gimage,
 		  /* swap tiles, not pixels! */
 
 		  src_tile = tile_manager_get_tile (tiles, j, i, TRUE, FALSE /* TRUE */);
-		  dest_tile = tile_manager_get_tile (drawable_data (image_undo->drawable), j, i, TRUE, FALSE /* TRUE */);
+		  dest_tile = tile_manager_get_tile (gimp_drawable_data (image_undo->drawable), j, i, TRUE, FALSE /* TRUE */);
 
 		  tile_manager_map_tile (tiles, j, i, dest_tile);
-		  tile_manager_map_tile (drawable_data (image_undo->drawable), j, i, src_tile);
+		  tile_manager_map_tile (gimp_drawable_data (image_undo->drawable), j, i, src_tile);
 #if 0
 		  swap_pixels (tile_data_pointer (src_tile, 0, 0),
 			       tile_data_pointer (dest_tile, 0, 0),
@@ -1142,7 +1143,7 @@ undo_push_layer_displace (GImage    *gimage,
       new->free_func     = undo_free_layer_displace;
 
       ldu = (LayerDisplaceUndo *) new->data;
-      ldu->info[0] = drawable_ID (GIMP_DRAWABLE (layer));
+      ldu->info[0] = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
       ldu->info[1] = GIMP_DRAWABLE (layer)->offset_x;
       ldu->info[2] = GIMP_DRAWABLE (layer)->offset_y;
       ldu->path_undo = path_transform_start_undo (gimage);
@@ -1165,7 +1166,7 @@ undo_pop_layer_displace (GImage     *gimage,
   LayerDisplaceUndo *ldu;
 
   ldu = (LayerDisplaceUndo *) info_ptr;
-  layer = layer_get_ID (ldu->info[0]);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (ldu->info[0]);
   if (layer)
     {
       old_offsets[0] = GIMP_DRAWABLE (layer)->offset_x;
@@ -2099,7 +2100,7 @@ undo_pop_fs_rigor (GImage    *gimage,
 
   layer_ID = *((gint32 *) layer_ptr);
 
-  if ((floating_layer = layer_get_ID (layer_ID)) == NULL)
+  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (layer_ID)) == NULL)
     return FALSE;
 
   if (! layer_is_floating_sel (floating_layer))
@@ -2178,7 +2179,7 @@ undo_pop_fs_relax (GImage    *gimage,
 
   layer_ID = *((gint32 *) layer_ptr);
 
-  if ((floating_layer = layer_get_ID (layer_ID)) == NULL)
+  if ((floating_layer = (GimpLayer *) gimp_drawable_get_by_ID (layer_ID)) == NULL)
     return FALSE;
 
   if (! layer_is_floating_sel (floating_layer))

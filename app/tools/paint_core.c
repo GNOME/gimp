@@ -604,14 +604,14 @@ paint_core_cursor_update (Tool           *tool,
 	{
 	  gint off_x, off_y;
 
-	  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 	  gdisplay_untransform_coords (gdisp,
 				       (double) mevent->x, (double) mevent->y,
 				       &x, &y, TRUE, FALSE);
  
 	  if (x >= off_x && y >= off_y &&
-	       x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
-	       y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
+	       x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	       y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
 	    {
 	      /*  One more test--is there a selected region?
 	       *  if so, is cursor inside?
@@ -819,13 +819,13 @@ paint_core_init (PaintCore    *paint_core,
     tile_manager_destroy (canvas_tiles);
 
   /*  Allocate the undo structure  */
-  undo_tiles = tile_manager_new (drawable_width (drawable),
-				 drawable_height (drawable),
-				 drawable_bytes (drawable));
+  undo_tiles = tile_manager_new (gimp_drawable_width (drawable),
+				 gimp_drawable_height (drawable),
+				 gimp_drawable_bytes (drawable));
 
   /*  Allocate the canvas blocks structure  */
-  canvas_tiles = tile_manager_new (drawable_width (drawable),
-				   drawable_height (drawable), 1);
+  canvas_tiles = tile_manager_new (gimp_drawable_width (drawable),
+				   gimp_drawable_height (drawable), 1);
 
   /*  Get the initial undo extents  */
   paint_core->x1         = paint_core->x2 = paint_core->curx;
@@ -952,7 +952,7 @@ paint_core_finish (PaintCore    *paint_core,
   GImage    *gimage;
   PaintUndo *pu;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   /*  Determine if any part of the image has been altered--
@@ -1058,8 +1058,8 @@ paint_core_get_paint_area (PaintCore    *paint_core,
   gint dwidth, dheight;
   gint bwidth, bheight;
 
-  bytes = drawable_has_alpha (drawable) ?
-    drawable_bytes (drawable) : drawable_bytes (drawable) + 1;
+  bytes = gimp_drawable_has_alpha (drawable) ?
+    gimp_drawable_bytes (drawable) : gimp_drawable_bytes (drawable) + 1;
 
   paint_core_calculate_brush_size (paint_core->brush->mask, scale,
 				   &bwidth, &bheight);
@@ -1068,8 +1068,8 @@ paint_core_get_paint_area (PaintCore    *paint_core,
   x = (gint) floor (paint_core->curx) - (bwidth  >> 1);
   y = (gint) floor (paint_core->cury) - (bheight >> 1);
 
-  dwidth  = drawable_width  (drawable);
-  dheight = drawable_height (drawable);
+  dwidth  = gimp_drawable_width  (drawable);
+  dheight = gimp_drawable_height (drawable);
 
   x1 = CLAMP (x - 1, 0, dwidth);
   y1 = CLAMP (y - 1, 0, dheight);
@@ -1106,11 +1106,11 @@ paint_core_get_orig_image (PaintCore    *paint_core,
   guchar      *d;
   gpointer     pr;
 
-  orig_buf = temp_buf_resize (orig_buf, drawable_bytes (drawable),
+  orig_buf = temp_buf_resize (orig_buf, gimp_drawable_bytes (drawable),
 			      x1, y1, (x2 - x1), (y2 - y1));
 
-  dwidth  = drawable_width  (drawable);
-  dheight = drawable_height (drawable);
+  dwidth  = gimp_drawable_width  (drawable);
+  dheight = gimp_drawable_height (drawable);
 
   x1 = CLAMP (x1, 0, dwidth);
   y1 = CLAMP (y1, 0, dheight);
@@ -1118,7 +1118,7 @@ paint_core_get_orig_image (PaintCore    *paint_core,
   y2 = CLAMP (y2, 0, dheight);
 
   /*  configure the pixel regions  */
-  pixel_region_init (&srcPR, drawable_data (drawable), x1, y1,
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable), x1, y1,
 		     (x2 - x1), (y2 - y1), FALSE);
   destPR.bytes = orig_buf->bytes;
   destPR.x = 0; destPR.y = 0;
@@ -1592,7 +1592,7 @@ paint_core_paste (PaintCore	       *paint_core,
   gint         offx;
   gint         offy;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   /*  set undo blocks  */
@@ -1645,7 +1645,7 @@ paint_core_paste (PaintCore	       *paint_core,
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
-  drawable_offsets (drawable, &offx, &offy);
+  gimp_drawable_offsets (drawable, &offx, &offy);
   gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
 			 canvas_buf->width, canvas_buf->height);
 }
@@ -1673,7 +1673,7 @@ paint_core_replace (PaintCore		 *paint_core,
   gint         offx;
   gint         offy;
 
-  if (! drawable_has_alpha (drawable))
+  if (! gimp_drawable_has_alpha (drawable))
     {
       paint_core_paste (paint_core, brush_mask, drawable,
 			brush_opacity, image_opacity, NORMAL_MODE,
@@ -1681,7 +1681,7 @@ paint_core_replace (PaintCore		 *paint_core,
       return;
     }
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   /*  set undo blocks  */
@@ -1743,7 +1743,7 @@ paint_core_replace (PaintCore		 *paint_core,
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
-  drawable_offsets (drawable, &offx, &offy);
+  gimp_drawable_offsets (drawable, &offx, &offy);
   gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
 			 canvas_buf->width, canvas_buf->height);
 }
@@ -1959,7 +1959,8 @@ set_undo_tiles (GimpDrawable *drawable,
 	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, FALSE, FALSE);
 	  if (tile_is_valid (dest_tile) == FALSE)
 	    {
-	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, TRUE, FALSE);
+	      src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
+						j, i, TRUE, FALSE);
 	      tile_manager_map_tile (undo_tiles, j, i, src_tile);
 	      tile_release (src_tile, FALSE);
 	    }

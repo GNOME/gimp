@@ -558,7 +558,7 @@ image_get_layers_invoker (Argument *args)
 	{
 	  layer_ids = g_new (gint32, num_layers);
 	  for (i = 0; i < num_layers; i++, list = list->next)
-	    layer_ids[i] = drawable_ID (GIMP_DRAWABLE (list->data));
+	    layer_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
 	}
     }
 
@@ -636,7 +636,7 @@ image_get_channels_invoker (Argument *args)
 	{
 	  channel_ids = g_new (gint32, num_channels);
 	  for (i = 0; i < num_channels; i++, list = list->next)
-	    channel_ids[i] = drawable_ID (GIMP_DRAWABLE (list->data));
+	    channel_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
 	}
     }
 
@@ -755,7 +755,7 @@ image_pick_correlate_layer_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_pick_correlate_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
 
   return return_args;
 }
@@ -815,7 +815,7 @@ image_raise_layer_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -866,7 +866,7 @@ image_lower_layer_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -917,7 +917,7 @@ image_raise_layer_to_top_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -968,7 +968,7 @@ image_lower_layer_to_bottom_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1034,7 +1034,7 @@ image_merge_visible_layers_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_merge_visible_layers_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
 
   return return_args;
 }
@@ -1092,7 +1092,7 @@ image_merge_down_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  merge_layer = layer_get_ID (args[1].value.pdb_int);
+  merge_layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (merge_layer == NULL)
     success = FALSE;
 
@@ -1109,7 +1109,7 @@ image_merge_down_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_merge_down_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
 
   return return_args;
 }
@@ -1176,7 +1176,7 @@ image_flatten_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_flatten_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
 
   return return_args;
 }
@@ -1227,7 +1227,7 @@ image_add_layer_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1235,9 +1235,9 @@ image_add_layer_invoker (Argument *args)
 
   if (success)
     {
-      if ((drawable_color (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != RGB) ||
-	  (drawable_gray (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GRAY) ||
-	  (drawable_indexed (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != INDEXED))
+      if ((gimp_drawable_is_rgb (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != RGB) ||
+	  (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GRAY) ||
+	  (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != INDEXED))
 	success = FALSE;
       else
 	success = gimp_image_add_layer (gimage, layer, MAX (position, -1)) != NULL;
@@ -1292,7 +1292,7 @@ image_remove_layer_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1344,11 +1344,11 @@ image_add_layer_mask_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
-  mask = layer_mask_get_ID (args[2].value.pdb_int);
+  mask = (GimpLayerMask *) gimp_drawable_get_by_ID (args[2].value.pdb_int);
   if (mask == NULL)
     success = FALSE;
 
@@ -1405,7 +1405,7 @@ image_remove_layer_mask_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1465,7 +1465,7 @@ image_raise_channel_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  channel = channel_get_ID (args[1].value.pdb_int);
+  channel = (GimpChannel *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
@@ -1516,7 +1516,7 @@ image_lower_channel_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  layer = layer_get_ID (args[1].value.pdb_int);
+  layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (layer == NULL)
     success = FALSE;
 
@@ -1568,7 +1568,7 @@ image_add_channel_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  channel = channel_get_ID (args[1].value.pdb_int);
+  channel = (GimpChannel *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
@@ -1626,7 +1626,7 @@ image_remove_channel_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  channel = channel_get_ID (args[1].value.pdb_int);
+  channel = (GimpChannel *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (channel == NULL)
     success = FALSE;
 
@@ -1684,7 +1684,7 @@ image_active_drawable_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_active_drawable_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
 
   return return_args;
 }
@@ -2264,7 +2264,7 @@ image_floating_selection_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_floating_selection_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = floating_sel ? drawable_ID (GIMP_DRAWABLE (floating_sel)) : -1;
+    return_args[1].value.pdb_int = floating_sel ? gimp_drawable_get_ID (GIMP_DRAWABLE (floating_sel)) : -1;
 
   return return_args;
 }
@@ -2329,7 +2329,7 @@ image_floating_sel_attached_to_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_floating_sel_attached_to_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable ? drawable_ID (GIMP_DRAWABLE (drawable)) : -1;
+    return_args[1].value.pdb_int = drawable ? gimp_drawable_get_ID (GIMP_DRAWABLE (drawable)) : -1;
 
   return return_args;
 }
@@ -2735,7 +2735,7 @@ image_get_active_layer_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_get_active_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = active_layer ? drawable_ID (GIMP_DRAWABLE (active_layer)) : -1;
+    return_args[1].value.pdb_int = active_layer ? gimp_drawable_get_ID (GIMP_DRAWABLE (active_layer)) : -1;
 
   return return_args;
 }
@@ -2785,7 +2785,7 @@ image_set_active_layer_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  active_layer = layer_get_ID (args[1].value.pdb_int);
+  active_layer = (GimpLayer *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (active_layer == NULL)
     success = FALSE;
 
@@ -2843,7 +2843,7 @@ image_get_active_channel_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_get_active_channel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = active_channel ? drawable_ID (GIMP_DRAWABLE (active_channel)) : -1;
+    return_args[1].value.pdb_int = active_channel ? gimp_drawable_get_ID (GIMP_DRAWABLE (active_channel)) : -1;
 
   return return_args;
 }
@@ -2893,7 +2893,7 @@ image_set_active_channel_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  active_channel = channel_get_ID (args[1].value.pdb_int);
+  active_channel = (GimpChannel *) gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (active_channel == NULL)
     success = FALSE;
 
@@ -2951,7 +2951,7 @@ image_get_selection_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_get_selection_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (selection));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (selection));
 
   return return_args;
 }
@@ -3641,7 +3641,7 @@ image_get_layer_by_tattoo_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_get_layer_by_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
 
   return return_args;
 }
@@ -3711,7 +3711,7 @@ image_get_channel_by_tattoo_invoker (Argument *args)
   return_args = procedural_db_return_args (&image_get_channel_by_tattoo_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (channel));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (channel));
 
   return return_args;
 }

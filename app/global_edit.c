@@ -321,8 +321,8 @@ edit_paste (GImage       *gimage,
       /*  Set the offsets to the center of the image  */
       if (drawable != NULL)
 	{
-	  drawable_offsets (drawable, &cx, &cy);
-	  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+	  gimp_drawable_offsets (drawable, &cx, &cy);
+	  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 	  cx += (x1 + x2) >> 1;
 	  cy += (y1 + y2) >> 1;
 	}
@@ -415,15 +415,16 @@ edit_clear (GImage       *gimage,
     return FALSE;
 
   gimp_image_get_background (gimage, drawable, col);
-  if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+  if (gimp_drawable_has_alpha (drawable))
+    col [gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
     return TRUE;  /*  nothing to do, but the clear succeded  */
 
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
+  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
+				gimp_drawable_bytes (drawable));
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_region (&bufPR, col);
 
@@ -453,8 +454,8 @@ edit_fill (GImage       *gimage,
   if (!gimage || drawable == NULL)
     return FALSE;
 
-  if (drawable_has_alpha (drawable))
-    col [drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
+  if (gimp_drawable_has_alpha (drawable))
+    col [gimp_drawable_bytes (drawable) - 1] = OPAQUE_OPACITY;
 
   switch (fill_type)
     {
@@ -476,8 +477,8 @@ edit_fill (GImage       *gimage,
       col[RED_PIX] = 0;
       col[GREEN_PIX] = 0;
       col[BLUE_PIX] = 0;
-      if (drawable_has_alpha (drawable))
-	col [drawable_bytes (drawable) - 1] = TRANSPARENT_OPACITY;
+      if (gimp_drawable_has_alpha (drawable))
+	col [gimp_drawable_bytes (drawable) - 1] = TRANSPARENT_OPACITY;
       break;
 
     case NO_FILL:
@@ -489,12 +490,13 @@ edit_fill (GImage       *gimage,
       break;
     }
 
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   if (!(x2 - x1) || !(y2 - y1))
     return TRUE;  /*  nothing to do, but the fill succeded  */
  
-  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), drawable_bytes (drawable));
+  buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1),
+				gimp_drawable_bytes (drawable));
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
   color_region (&bufPR, col);
 

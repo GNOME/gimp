@@ -261,7 +261,7 @@ drawable_parasite_find_invoker (Argument *args)
   gchar *name;
   GimpParasite *parasite = NULL;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -329,7 +329,7 @@ drawable_parasite_attach_invoker (Argument *args)
   GimpDrawable *drawable;
   GimpParasite *parasite;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -380,7 +380,7 @@ drawable_parasite_detach_invoker (Argument *args)
   GimpDrawable *drawable;
   gchar *name;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -433,7 +433,7 @@ drawable_parasite_list_invoker (Argument *args)
   gint32 num_parasites;
   gchar **parasites = NULL;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 

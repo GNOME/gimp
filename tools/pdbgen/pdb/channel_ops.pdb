@@ -52,7 +52,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
   offset (gimage, drawable, wrap_around, fill_type, offset_x, offset_y);
 }
 CODE

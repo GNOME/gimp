@@ -240,7 +240,7 @@ curves_colour_update (Tool           *tool,
   if (!tool || tool->state != ACTIVE)
     return;
 
-  drawable_offsets (drawable, &offx, &offy);
+  gimp_drawable_offsets (drawable, &offx, &offy);
 
   x -= offx;
   y -= offy;
@@ -333,7 +333,7 @@ curves_button_press (Tool           *tool,
       tool->drawable = drawable;
 
       curves_dialog->drawable = drawable;
-      curves_dialog->color = drawable_color (drawable);
+      curves_dialog->color = gimp_drawable_is_rgb (drawable);
       curves_dialog->image_map = image_map_create (gdisp, drawable);
     }
 
@@ -474,7 +474,7 @@ curves_initialize (GDisplay *gdisp)
 {
   gint i, j;
 
-  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Curves for indexed drawables cannot be adjusted."));
       return;
@@ -498,11 +498,11 @@ curves_initialize (GDisplay *gdisp)
     }
 
   curves_dialog->drawable  = gimp_image_active_drawable (gdisp->gimage);
-  curves_dialog->color     = drawable_color (curves_dialog->drawable);
+  curves_dialog->color     = gimp_drawable_is_rgb (curves_dialog->drawable);
   curves_dialog->image_map = image_map_create (gdisp, curves_dialog->drawable);
 
   /* check for alpha channel */
-  if (drawable_has_alpha (curves_dialog->drawable))
+  if (gimp_drawable_has_alpha (curves_dialog->drawable))
     gtk_widget_set_sensitive (channel_items[4], TRUE);
   else 
     gtk_widget_set_sensitive (channel_items[4], FALSE);

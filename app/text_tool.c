@@ -605,7 +605,7 @@ text_render (GimpImage    *gimage,
 
   /*  determine the layer type  */
   if (drawable)
-    layer_type = drawable_type_with_alpha (drawable);
+    layer_type = gimp_drawable_type_with_alpha (drawable);
   else
     layer_type = gimp_image_base_type_with_alpha (gimage);
 

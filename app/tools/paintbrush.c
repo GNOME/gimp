@@ -504,7 +504,7 @@ paintbrush_motion (PaintCore            *paint_core,
   PaintApplicationMode paint_appl_mode = incremental ? INCREMENTAL : CONSTANT;
 
   position = 0.0;
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   if (pressure_options->size)
@@ -598,7 +598,7 @@ paintbrush_non_gui_paint_func (PaintCore    *paint_core,
   gdouble  gradient_length;	
   gdouble  unit_factor;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return NULL;
 
   switch (non_gui_fade_unit)

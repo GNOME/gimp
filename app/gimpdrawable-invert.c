@@ -50,10 +50,11 @@ image_invert (GimpImage *gimage)
       return;
     }
 
-  return_vals = procedural_db_run_proc ("gimp_invert",
-					&nreturn_vals,
-					PDB_DRAWABLE, drawable_ID (drawable),
-					PDB_END);
+  return_vals =
+    procedural_db_run_proc ("gimp_invert",
+			    &nreturn_vals,
+			    PDB_DRAWABLE, gimp_drawable_get_ID (drawable),
+			    PDB_END);
 
   if (!return_vals || return_vals[0].value.pdb_int != PDB_SUCCESS)
     g_message (_("Invert operation failed."));
@@ -73,10 +74,10 @@ invert (GimpDrawable *drawable)
 
   lut = invert_lut_new (gimp_drawable_bytes (drawable));
 
-  drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  pixel_region_init (&srcPR, drawable_data (drawable),
+  gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 		     x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  pixel_region_init (&destPR, drawable_shadow (drawable),
+  pixel_region_init (&destPR, gimp_drawable_shadow (drawable),
 		     x1, y1, (x2 - x1), (y2 - y1), TRUE);
 
   pixel_regions_process_parallel ((p_func)gimp_lut_process, lut, 
@@ -84,6 +85,6 @@ invert (GimpDrawable *drawable)
 
   gimp_lut_free (lut);
 
-  drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

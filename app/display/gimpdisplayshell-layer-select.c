@@ -443,13 +443,13 @@ preview_redraw (LayerSelect *layer_select)
       gint off_x;
       gint off_y;
 
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
 
       /*  determine width and height  */
       w = (gint) (layer_select->ratio * 
-		  drawable_width (GIMP_DRAWABLE(layer)));
+		  gimp_drawable_width (GIMP_DRAWABLE(layer)));
       h = (gint) (layer_select->ratio * 
-		  drawable_height (GIMP_DRAWABLE(layer)));
+		  gimp_drawable_height (GIMP_DRAWABLE(layer)));
       offx = (gint) (layer_select->ratio * off_x);
       offy = (gint) (layer_select->ratio * off_y);
 

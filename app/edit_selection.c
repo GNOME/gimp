@@ -179,9 +179,9 @@ init_edit_selection (Tool           *tool,
    *  where the translation will result in floating the selection
    *  mask and translating the resulting layer
    */
-  drawable_mask_bounds (gimp_image_active_drawable (gdisp->gimage),
-			&edit_select.x1, &edit_select.y1,
-			&edit_select.x2, &edit_select.y2);
+  gimp_drawable_mask_bounds (gimp_image_active_drawable (gdisp->gimage),
+			     &edit_select.x1, &edit_select.y1,
+			     &edit_select.x2, &edit_select.y2);
 
   edit_selection_snap (gdisp, bevent->x, bevent->y);
 
@@ -566,10 +566,11 @@ edit_selection_draw (Tool *tool)
 
     case EDIT_LAYER_TRANSLATE:
       gdisplay_transform_coords (gdisp, 0, 0, &x1, &y1, TRUE);
-      gdisplay_transform_coords (gdisp,
-				 drawable_width (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
-				 drawable_height (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
-				 &x2, &y2, TRUE);
+      gdisplay_transform_coords
+	(gdisp,
+	 gimp_drawable_width (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
+	 gimp_drawable_height (GIMP_DRAWABLE (gdisp->gimage->active_layer)),
+	 &x2, &y2, TRUE);
 
       /*  Now, expand the rectangle to include all linked layers as well  */
       for (layer_list= gdisp->gimage->layers;
@@ -579,12 +580,14 @@ edit_selection_draw (Tool *tool)
 	  layer = (Layer *) layer_list->data;
 	  if (((layer) != gdisp->gimage->active_layer) && layer_linked (layer))
 	    {
-	      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+	      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 	      gdisplay_transform_coords (gdisp, off_x, off_y, &x3, &y3, FALSE);
-	      gdisplay_transform_coords (gdisp,
-					 off_x + drawable_width (GIMP_DRAWABLE (layer)),
-					 off_y + drawable_height (GIMP_DRAWABLE (layer)),
-					 &x4, &y4, FALSE);
+	      gdisplay_transform_coords
+		(gdisp,
+		 off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)),
+		 off_y + gimp_drawable_height (GIMP_DRAWABLE (layer)),
+		 &x4, &y4, FALSE);
+
 	      if (x3 < x1)
 		x1 = x3;
 	      if (y3 < y1)

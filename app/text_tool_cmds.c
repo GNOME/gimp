@@ -197,7 +197,7 @@ text_fontname_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  drawable = gimp_drawable_get_ID (args[1].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[1].value.pdb_int);
 
   x = args[2].value.pdb_float;
 
@@ -243,7 +243,7 @@ text_fontname_invoker (Argument *args)
   return_args = procedural_db_return_args (&text_fontname_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (text_layer));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (text_layer));
 
   return return_args;
 }

@@ -316,7 +316,7 @@ airbrush_motion (PaintCore	      *paint_core,
   if (!drawable) 
     return;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   if (pressure_options->size)

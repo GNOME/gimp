@@ -67,7 +67,7 @@ HELP
     {
       ${type}_ids = g_new (gint32, num_${type}s);
       for (i = 0; i < num_${type}s; i++, list = list->next)
-	${type}_ids[i] = drawable_ID (GIMP_DRAWABLE (list->data));
+	${type}_ids[i] = gimp_drawable_get_ID (GIMP_DRAWABLE (list->data));
     }
 }
 CODE
@@ -230,7 +230,7 @@ HELP
     for ($invoke{code}) {
 	s/list = .*$/gimage_foreach (gimlist_cb, &list);/m;
 	s/DRAWABLE/IMAGE/;
-	s/drawable_ID/pdb_image_to_id/;
+	s/gimp_drawable_get_ID/pdb_image_to_id/;
     }
 }
 
@@ -571,10 +571,11 @@ HELP
 	my $base = $_ eq 'color' ? 'RGB' : uc($_);
 	$invoke{code} .= ' ' x 6 if $once++;
 	$invoke{code} .= <<CODE
-(drawable_$_ (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != $base) ||
+(gimp_drawable_is_$_ (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != $base) ||
 CODE
     }
     $invoke{code} =~ s/ \|\|\n$/)\n/s;
+    $invoke{code} =~ s/color/rgb/;
 
     $invoke{code} .= <<'CODE';
     success = FALSE;

@@ -173,7 +173,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (drawable);
+  gimage = gimp_drawable_gimage (drawable);
   layer = gimage_mask_float (gimage, drawable, offx, offy);
   success = layer != NULL;
 }
@@ -294,7 +294,7 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (layer));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
   gimage_mask_layer_alpha (gimage, layer);
 }
 CODE
@@ -322,10 +322,10 @@ HELP
 	vars => [ 'GimpImage *gimage' ],
 	code => <<'CODE'
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (channel));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (channel));
    
-  if (drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
-      drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
+  if (gimp_drawable_width  (GIMP_DRAWABLE (channel)) == gimage->width &&
+      gimp_drawable_height (GIMP_DRAWABLE (channel)) == gimage->height)
     gimage_mask_load (gimage, channel);
   else
     success = FALSE;

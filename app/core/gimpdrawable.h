@@ -120,8 +120,9 @@ Tattoo          gimp_drawable_get_tattoo         (const GimpDrawable *drawable);
 void            gimp_drawable_set_tattoo         (GimpDrawable       *drawable,
 						  Tattoo              tattoo);
 
-GimpDrawable *  gimp_drawable_get_ID             (gint);
-void		gimp_drawable_deallocate         (GimpDrawable *);
+gint            gimp_drawable_get_ID             (GimpDrawable       *drawable);
+GimpDrawable *  gimp_drawable_get_by_ID          (gint                id);
+void		gimp_drawable_deallocate         (GimpDrawable       *drawable);
 GimpImage *     gimp_drawable_gimage             (const GimpDrawable *drawable);
 void            gimp_drawable_set_gimage         (GimpDrawable       *drawable,
 						  GimpImage          *gimage);

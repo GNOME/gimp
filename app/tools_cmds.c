@@ -130,7 +130,7 @@ airbrush_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -200,7 +200,7 @@ airbrush_default_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -273,7 +273,7 @@ blend_invoker (Argument *args)
   gdouble y2;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -321,7 +321,7 @@ blend_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       blend (gimage, drawable, blend_mode, paint_mode, gradient_type, opacity,
 	     offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2,
 	     NULL, NULL);
@@ -434,7 +434,7 @@ bucket_fill_invoker (Argument *args)
   gdouble y;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -462,7 +462,7 @@ bucket_fill_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       bucket_fill (gimage, drawable, fill_mode, paint_mode, opacity,
 		   threshold, sample_merged, x, y);
     }
@@ -544,7 +544,7 @@ by_color_select_invoker (Argument *args)
   gboolean sample_merged;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -568,7 +568,7 @@ by_color_select_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       by_color_select (gimage, drawable, color, threshold, operation,
 		       antialias, feather, feather_radius, sample_merged);
     }
@@ -648,11 +648,11 @@ clone_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
-  src_drawable = gimp_drawable_get_ID (args[1].value.pdb_int);
+  src_drawable = gimp_drawable_get_by_ID (args[1].value.pdb_int);
   if (src_drawable == NULL)
     success = FALSE;
 
@@ -742,7 +742,7 @@ clone_default_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -814,7 +814,7 @@ color_picker_invoker (Argument *args)
   if (gimage == NULL)
     success = FALSE;
 
-  drawable = gimp_drawable_get_ID (args[1].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[1].value.pdb_int);
 
   x = args[2].value.pdb_float;
 
@@ -833,7 +833,7 @@ color_picker_invoker (Argument *args)
   if (success)
     {
       if (!sample_merged)
-	if (!drawable || (drawable_gimage (drawable) != gimage))
+	if (!drawable || (gimp_drawable_gimage (drawable) != gimage))
 	  success = FALSE;
     
       if (success)
@@ -936,7 +936,7 @@ convolve_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1015,7 +1015,7 @@ convolve_default_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1168,7 +1168,7 @@ dodgeburn_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1256,7 +1256,7 @@ dodgeburn_default_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1431,7 +1431,7 @@ eraser_invoker (Argument *args)
   gint32 hardness;
   gint32 method;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1510,7 +1510,7 @@ eraser_default_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1574,7 +1574,7 @@ flip_invoker (Argument *args)
   TileManager *float_tiles, *new_tiles;
   gboolean new_layer;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1584,7 +1584,7 @@ flip_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
     
       /* Start a transform undo group */
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO); 
@@ -1623,7 +1623,7 @@ flip_invoker (Argument *args)
   return_args = procedural_db_return_args (&flip_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
 
   return return_args;
 }
@@ -1779,7 +1779,7 @@ fuzzy_select_invoker (Argument *args)
   GimpImage *gimage;
   Channel *new, *old_fuzzy_mask;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1805,7 +1805,7 @@ fuzzy_select_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
     
       new = find_contiguous_region (gimage, drawable, antialias, threshold,
 				    x, y, sample_merged);
@@ -1898,7 +1898,7 @@ paintbrush_invoker (Argument *args)
   gint32 method;
   gdouble gradient_length;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1987,7 +1987,7 @@ paintbrush_default_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2048,7 +2048,7 @@ pencil_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2116,7 +2116,7 @@ perspective_invoker (Argument *args)
   double trans_info[8];
   GimpMatrix3 m, matrix;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2140,7 +2140,7 @@ perspective_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
     
       /* Start a transform undo group */
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -2188,7 +2188,7 @@ perspective_invoker (Argument *args)
   return_args = procedural_db_return_args (&perspective_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
 
   return return_args;
 }
@@ -2391,7 +2391,7 @@ rotate_invoker (Argument *args)
   double cx, cy;
   GimpMatrix3 matrix;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2401,7 +2401,7 @@ rotate_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
     
       /* Start a transform undo group */
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -2437,7 +2437,7 @@ rotate_invoker (Argument *args)
   return_args = procedural_db_return_args (&rotate_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
 
   return return_args;
 }
@@ -2500,7 +2500,7 @@ scale_invoker (Argument *args)
   double trans_info[4];
   GimpMatrix3 matrix;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2519,7 +2519,7 @@ scale_invoker (Argument *args)
       if (trans_info[X0] < trans_info[X1] &&
 	  trans_info[Y0] < trans_info[X1])
 	{
-	  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+	  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
     
 	  /* Start a transform undo group */
 	  undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -2563,7 +2563,7 @@ scale_invoker (Argument *args)
   return_args = procedural_db_return_args (&scale_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
 
   return return_args;
 }
@@ -2642,7 +2642,7 @@ shear_invoker (Argument *args)
   double cx, cy;
   GimpMatrix3 matrix;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2656,7 +2656,7 @@ shear_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
     
       /* Start a transform undo group */
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -2699,7 +2699,7 @@ shear_invoker (Argument *args)
   return_args = procedural_db_return_args (&shear_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
 
   return return_args;
 }
@@ -2762,7 +2762,7 @@ smudge_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2832,7 +2832,7 @@ smudge_default_invoker (Argument *args)
   gint32 num_strokes;
   gdouble *strokes;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2904,7 +2904,7 @@ transform_2d_invoker (Argument *args)
   gboolean new_layer;
   GimpMatrix3 matrix;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -2926,7 +2926,7 @@ transform_2d_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
 	
       /* Start a transform undo group */
       undo_push_group_start (gimage, TRANSFORM_CORE_UNDO);
@@ -2960,7 +2960,7 @@ transform_2d_invoker (Argument *args)
   return_args = procedural_db_return_args (&transform_2d_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (drawable));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (drawable));
 
   return return_args;
 }

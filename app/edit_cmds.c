@@ -58,13 +58,13 @@ edit_cut_invoker (Argument *args)
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       success = edit_cut (gimage, drawable) != NULL;
     }
 
@@ -103,13 +103,13 @@ edit_copy_invoker (Argument *args)
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       success = edit_copy (gimage, drawable) != NULL;
     }
 
@@ -151,7 +151,7 @@ edit_paste_invoker (Argument *args)
   GimpLayer *layer = NULL;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -159,7 +159,7 @@ edit_paste_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       layer = edit_paste (gimage, drawable, global_buf, paste_into);
       success = layer != NULL;
     }
@@ -167,7 +167,7 @@ edit_paste_invoker (Argument *args)
   return_args = procedural_db_return_args (&edit_paste_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_ID (GIMP_DRAWABLE (layer));
+    return_args[1].value.pdb_int = gimp_drawable_get_ID (GIMP_DRAWABLE (layer));
 
   return return_args;
 }
@@ -218,13 +218,13 @@ edit_clear_invoker (Argument *args)
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       success = edit_clear (gimage, drawable);
     }
 
@@ -264,7 +264,7 @@ edit_fill_invoker (Argument *args)
   gint32 fill_type;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -274,7 +274,7 @@ edit_fill_invoker (Argument *args)
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       success = edit_fill (gimage, drawable, (GimpFillType) fill_type);
     }
 
@@ -318,13 +318,13 @@ edit_stroke_invoker (Argument *args)
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   if (success)
     {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+      gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
       success = gimage_mask_stroke (gimage, drawable);
     }
 

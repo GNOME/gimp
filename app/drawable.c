@@ -28,15 +28,6 @@
 #include "undo.h"
 
 
-gint
-drawable_ID (GimpDrawable *drawable)
-{
-  g_return_val_if_fail (drawable != NULL, -1);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
-
-  return drawable->ID;
-}
-
 void
 drawable_fill (GimpDrawable *drawable,
 	       GimpFillType  fill_type)
@@ -75,8 +66,8 @@ drawable_fill (GimpDrawable *drawable,
       break;
     }
 
-  gimp_drawable_fill (drawable,r,g,b,a);
-  
+  gimp_drawable_fill (drawable, r, g, b, a);
+
   drawable_update (drawable, 0, 0,
 		   gimp_drawable_width  (drawable),
 		   gimp_drawable_height (drawable));

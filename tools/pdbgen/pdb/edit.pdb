@@ -32,7 +32,7 @@ sub invoke {
 	vars => [ 'GimpImage *gimage' ],
 	code => <<CODE
 {
-  gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
+  gimage = gimp_drawable_gimage (GIMP_DRAWABLE (drawable));
   success = @{[shift]};
 }
 CODE

@@ -352,12 +352,11 @@ convolve_motion (PaintCore            *paint_core,
   gint             marginx = 0;
   gint             marginy = 0;
 
-  if (!drawable_gimage (drawable))
+  if (! gimp_drawable_gimage (drawable))
     return;
 
   /*  If the image type is indexed, don't convolve  */
-  if ((drawable_type (drawable) == INDEXED_GIMAGE) ||
-      (drawable_type (drawable) == INDEXEDA_GIMAGE))
+  if (gimp_drawable_is_indexed (drawable))
     return;
 
   /* If the brush is smaller than the convolution matrix, don't convolve */
@@ -376,7 +375,7 @@ convolve_motion (PaintCore            *paint_core,
     return;
 
   /*  configure the source pixel region  */
-  pixel_region_init (&srcPR, drawable_data (drawable),
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable),
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /* Configure the destination pixel region - a paint_core TempBuf */
@@ -428,7 +427,7 @@ convolve_motion (PaintCore            *paint_core,
       tempPR.h     = area->height;
       tempPR.tiles = NULL;
 
-      if (!drawable_has_alpha (drawable))
+      if (! gimp_drawable_has_alpha (drawable))
 	{
 	  /* note: this particular approach needlessly convolves the totally-
 	     opaque alpha channel. A faster approach would be to keep
@@ -485,7 +484,7 @@ convolve_motion (PaintCore            *paint_core,
       ovrsz2PR.y         = 0;
       ovrsz2PR.w         = area->width  + marginx;
       ovrsz2PR.h         = area->height + marginy;
-      ovrsz2PR.bytes     = (drawable_has_alpha (drawable))? srcPR.bytes : srcPR.bytes + 1; 
+      ovrsz2PR.bytes     = (gimp_drawable_has_alpha (drawable))? srcPR.bytes : srcPR.bytes + 1; 
       ovrsz2PR.offx      = 0;
       ovrsz2PR.offy      = 0;
       ovrsz2PR.rowstride = ovrsz2PR.bytes * ovrsz2PR.w;
@@ -497,7 +496,7 @@ convolve_motion (PaintCore            *paint_core,
       ovrsz1PR.y         = 0;
       ovrsz1PR.w         = area->width  + marginx;
       ovrsz1PR.h         = area->height + marginy;
-      ovrsz1PR.bytes     = (drawable_has_alpha (drawable))? srcPR.bytes : srcPR.bytes + 1; 
+      ovrsz1PR.bytes     = (gimp_drawable_has_alpha (drawable))? srcPR.bytes : srcPR.bytes + 1; 
       ovrsz1PR.offx      = 0;
       ovrsz1PR.offy      = 0;
       ovrsz1PR.rowstride = ovrsz2PR.bytes * ovrsz2PR.w;
@@ -512,7 +511,7 @@ convolve_motion (PaintCore            *paint_core,
       ovrsz1PR.h         = area->height;
       ovrsz1PR.data      = ovrsz1_data + (ovrsz1PR.rowstride * ovrsz1PR.y) + (ovrsz1PR.bytes * ovrsz1PR.x);
 
-      if (!(drawable_has_alpha (drawable)))
+      if (! gimp_drawable_has_alpha (drawable))
 	add_alpha_region (&srcPR, &ovrsz1PR);
       else
 	copy_region (&srcPR, &ovrsz1PR);

@@ -1,3 +1,87 @@
+2001-01-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/channel.[ch]
+	* app/drawable.[ch]
+	* app/gdisplay.[ch]
+	* app/gimpdrawable.[ch]
+	* app/layer.[ch]:
+
+	- Removed all "typedef drawable_function gimp_drawable_function".
+	- Renamed all *_get_ID() functions to *_get_by_ID().
+	- For symmetry reasons, renamed drawable_ID() to gimp_drawable_get_ID().
+	- Removed the *_get_ID() functions of GimpLayer, GimpLayerMask
+	  and GimpChannel.
+
+	* app/airbrush.c
+	* app/bezier_select.c
+	* app/blend.c
+	* app/brightness_contrast.c
+	* app/bucket_fill.c
+	* app/by_color_select.c
+	* app/clone.c
+	* app/color_balance.c
+	* app/color_picker.c
+	* app/convert.c
+	* app/convolve.c
+	* app/crop.c
+	* app/curves.c
+	* app/desaturate.c
+	* app/dodgeburn.c
+	* app/edit_selection.c
+	* app/eraser.c
+	* app/fileops.c
+	* app/flip_tool.c
+	* app/floating_sel.c
+	* app/fuzzy_select.c
+	* app/gimage.c
+	* app/gimage_mask.c
+	* app/gimphistogram.c
+	* app/gimpimage.c
+	* app/global_edit.c
+	* app/histogram_tool.c
+	* app/hue_saturation.c
+	* app/image_map.c
+	* app/ink.c
+	* app/invert.c
+	* app/layer_select.c
+	* app/layers_dialog.c
+	* app/levels.c
+	* app/paint_core.c
+	* app/paintbrush.c
+	* app/pencil.c
+	* app/plug_in.c
+	* app/posterize.c
+	* app/scan_convert.c
+	* app/smudge.c
+	* app/text_tool.c
+	* app/threshold.c
+	* app/transform_core.c
+	* app/undo.c
+	* app/undo_history.c
+
+	* app/channel_cmds.c
+	* app/channel_ops_cmds.c
+	* app/color_cmds.c
+	* app/display_cmds.c
+	* app/drawable_cmds.c
+	* app/edit_cmds.c
+	* app/floating_sel_cmds.c
+	* app/image_cmds.c
+	* app/layer_cmds.c
+	* app/parasite_cmds.c
+	* app/selection_cmds.c
+	* app/text_tool_cmds.c
+	* app/tools_cmds.c
+	* libgimp/gimpdrawable_pdb.c
+	* tools/pdbgen/pdb.pl
+	* tools/pdbgen/pdb/channel_ops.pdb
+	* tools/pdbgen/pdb/color.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/selection.pdb
+	* tools/pdbgen/pdb/tools.pdb: changed accordingly.
+
 2001-01-14  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpcolor.[ch]: added GimpHSV type and functions and

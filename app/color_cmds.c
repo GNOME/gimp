@@ -86,7 +86,7 @@ brightness_contrast_invoker (Argument *args)
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -186,7 +186,7 @@ levels_invoker (Argument *args)
   int low_output[5];
   int high_output[5];
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -329,7 +329,7 @@ posterize_invoker (Argument *args)
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -403,7 +403,7 @@ desaturate_invoker (Argument *args)
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -450,7 +450,7 @@ equalize_invoker (Argument *args)
   GimpDrawable *drawable;
   gboolean mask_only;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -459,7 +459,7 @@ equalize_invoker (Argument *args)
   if (success)
     {
       if (! gimp_drawable_is_indexed (drawable))
-	equalize (drawable_gimage (drawable), drawable, mask_only);
+	equalize (gimp_drawable_gimage (drawable), drawable, mask_only);
       else
 	success = FALSE;
     }
@@ -503,7 +503,7 @@ invert_invoker (Argument *args)
   gboolean success = TRUE;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -556,7 +556,7 @@ curves_spline_invoker (Argument *args)
   int i, j;
   PixelRegion srcPR, destPR;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -677,7 +677,7 @@ curves_explicit_invoker (Argument *args)
   int i, j;
   PixelRegion srcPR, destPR;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -788,7 +788,7 @@ color_balance_invoker (Argument *args)
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -916,7 +916,7 @@ histogram_invoker (Argument *args)
   gboolean no_mask;
   Channel *mask;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -959,7 +959,7 @@ histogram_invoker (Argument *args)
 			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
     
 	  /*  Configure the mask from the gimage's selection mask */
-	  mask = gimp_image_get_mask (drawable_gimage (GIMP_DRAWABLE (drawable)));
+	  mask = gimp_image_get_mask (gimp_drawable_gimage (GIMP_DRAWABLE (drawable)));
 	  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
 			     x1 + off_x, y1 + off_y, (x2 - x1), (y2 - y1), FALSE);
     
@@ -1080,7 +1080,7 @@ hue_saturation_invoker (Argument *args)
   PixelRegion srcPR, destPR;
   int x1, y1, x2, y2;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1196,7 +1196,7 @@ threshold_invoker (Argument *args)
   int x1, y1, x2, y2;
   PixelRegion srcPR, destPR;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 

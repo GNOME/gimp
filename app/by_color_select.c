@@ -255,14 +255,14 @@ by_color_select_color (GImage       *gimage,
     }
   else
     {
-      bytes = drawable_bytes (drawable);
-      d_type = drawable_type (drawable);
-      has_alpha = drawable_has_alpha (drawable);
-      indexed = drawable_indexed (drawable);
-      width = drawable_width (drawable);
-      height = drawable_height (drawable);
+      bytes     = gimp_drawable_bytes (drawable);
+      d_type    = gimp_drawable_type (drawable);
+      has_alpha = gimp_drawable_has_alpha (drawable);
+      indexed   = gimp_drawable_is_indexed (drawable);
+      width     = gimp_drawable_width (drawable);
+      height    = gimp_drawable_height (drawable);
 
-      pixel_region_init (&imagePR, drawable_data (drawable),
+      pixel_region_init (&imagePR, gimp_drawable_data (drawable),
 			 0, 0, width, height, FALSE);
     }
 
@@ -279,7 +279,7 @@ by_color_select_color (GImage       *gimage,
 
   alpha = bytes - 1;
   mask = channel_new_mask (gimage, width, height);
-  pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
+  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 		     0, 0, width, height, TRUE);
 
   /*  iterate over the entire image  */
@@ -353,7 +353,9 @@ by_color_select (GImage       *gimage,
       off_x = 0; off_y = 0;
     }
   else
-    drawable_offsets (drawable, &off_x, &off_y);
+    {
+      gimp_drawable_offsets (drawable, &off_x, &off_y);
+    }
 
   if (feather)
     channel_feather (new_mask, gimp_image_get_mask (gimage),
@@ -910,20 +912,20 @@ by_color_select_render (ByColorDialog *bcd,
   gint scale;
 
   mask = gimp_image_get_mask (gimage);
-  if ((drawable_width (GIMP_DRAWABLE(mask)) > PREVIEW_WIDTH) ||
-      (drawable_height (GIMP_DRAWABLE(mask)) > PREVIEW_HEIGHT))
+  if ((gimp_drawable_width (GIMP_DRAWABLE(mask)) > PREVIEW_WIDTH) ||
+      (gimp_drawable_height (GIMP_DRAWABLE(mask)) > PREVIEW_HEIGHT))
     {
-      if (((float) drawable_width (GIMP_DRAWABLE (mask)) / (float) PREVIEW_WIDTH) >
-	  ((float) drawable_height (GIMP_DRAWABLE (mask)) / (float) PREVIEW_HEIGHT))
+      if (((float) gimp_drawable_width (GIMP_DRAWABLE (mask)) / (float) PREVIEW_WIDTH) >
+	  ((float) gimp_drawable_height (GIMP_DRAWABLE (mask)) / (float) PREVIEW_HEIGHT))
 	{
 	  width = PREVIEW_WIDTH;
-	  height = ((drawable_height (GIMP_DRAWABLE (mask)) * PREVIEW_WIDTH) /
-		    drawable_width (GIMP_DRAWABLE (mask)));
+	  height = ((gimp_drawable_height (GIMP_DRAWABLE (mask)) * PREVIEW_WIDTH) /
+		    gimp_drawable_width (GIMP_DRAWABLE (mask)));
 	}
       else
 	{
-	  width = ((drawable_width (GIMP_DRAWABLE (mask)) * PREVIEW_HEIGHT) /
-		   drawable_height (GIMP_DRAWABLE (mask)));
+	  width = ((gimp_drawable_width (GIMP_DRAWABLE (mask)) * PREVIEW_HEIGHT) /
+		   gimp_drawable_height (GIMP_DRAWABLE (mask)));
 	  height = PREVIEW_HEIGHT;
 	}
 
@@ -931,8 +933,8 @@ by_color_select_render (ByColorDialog *bcd,
     }
   else
     {
-      width = drawable_width (GIMP_DRAWABLE (mask));
-      height = drawable_height (GIMP_DRAWABLE (mask));
+      width  = gimp_drawable_width (GIMP_DRAWABLE (mask));
+      height = gimp_drawable_height (GIMP_DRAWABLE (mask));
 
       scale = FALSE;
     }
@@ -956,14 +958,14 @@ by_color_select_render (ByColorDialog *bcd,
     {
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
-      while ((width * (subsample + 1) * 2 < drawable_width (GIMP_DRAWABLE (mask))) &&
-	     (height * (subsample + 1) * 2 < drawable_height (GIMP_DRAWABLE (mask))))
+      while ((width * (subsample + 1) * 2 < gimp_drawable_width (GIMP_DRAWABLE (mask))) &&
+	     (height * (subsample + 1) * 2 < gimp_drawable_height (GIMP_DRAWABLE (mask))))
 	subsample = subsample + 1;
 
-      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+      pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			 0, 0, 
-			 drawable_width (GIMP_DRAWABLE (mask)), 
-			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
+			 gimp_drawable_width (GIMP_DRAWABLE (mask)), 
+			 gimp_drawable_height (GIMP_DRAWABLE (mask)), FALSE);
 
       scaled_buf = mask_buf_new (width, height);
       destPR.bytes = 1;
@@ -979,10 +981,10 @@ by_color_select_render (ByColorDialog *bcd,
     }
   else
     {
-      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+      pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			 0, 0, 
-			 drawable_width (GIMP_DRAWABLE (mask)), 
-			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
+			 gimp_drawable_width (GIMP_DRAWABLE (mask)), 
+			 gimp_drawable_height (GIMP_DRAWABLE (mask)), FALSE);
 
       scaled_buf = mask_buf_new (width, height);
       destPR.bytes = 1;
@@ -1063,7 +1065,7 @@ by_color_select_invert_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (!drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
+  if (! gimp_drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  invert the mask  */
@@ -1089,7 +1091,7 @@ by_color_select_select_all_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (!drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
+  if (! gimp_drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  fill the mask  */
@@ -1115,7 +1117,7 @@ by_color_select_select_none_callback (GtkWidget *widget,
     return;
 
   /*  check if the image associated to the mask still exists  */
-  if (!drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
+  if (! gimp_drawable_gimage (GIMP_DRAWABLE (gimp_image_get_mask (bcd->gimage))))
     return;
 
   /*  reset the mask  */
@@ -1163,7 +1165,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
   drawable = gimp_image_active_drawable (bcd->gimage);
 
   /*  check if the gimage associated to the drawable still exists  */
-  if (!drawable_gimage (drawable))
+  if (! gimp_drawable_gimage (drawable))
     return;
 
   /*  Defaults  */
@@ -1200,13 +1202,14 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
     {
       gint offx, offy;
 
-      drawable_offsets (drawable, &offx, &offy);
-      x = drawable_width (drawable) * bevent->x / bcd->preview->requisition.width - offx;
-      y = drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
+      gimp_drawable_offsets (drawable, &offx, &offy);
+      x = gimp_drawable_width (drawable) * bevent->x / bcd->preview->requisition.width - offx;
+      y = gimp_drawable_height (drawable) * bevent->y / bcd->preview->requisition.height - offy;
       if (x < 0 || y < 0 ||
-	  x >= drawable_width (drawable) || y >= drawable_height (drawable))
+	  x >= gimp_drawable_width (drawable) || y >= gimp_drawable_height (drawable))
 	return;
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y, TRUE, FALSE);
+      tile = tile_manager_get_tile (gimp_drawable_data (drawable),
+				    x, y, TRUE, FALSE);
       col = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
     }
 

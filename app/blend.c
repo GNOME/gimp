@@ -493,7 +493,7 @@ blend_button_press (Tool           *tool,
 
   blend_tool = (BlendTool *) tool->private;
 
-  switch (drawable_type (gimp_image_active_drawable (gdisp->gimage)))
+  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
       g_message (_("Blend: Invalid for indexed images."));
@@ -698,7 +698,7 @@ blend_cursor_update (Tool           *tool,
 		     GdkEventMotion *mevent,
 		     GDisplay       *gdisp)
 {
-  switch (drawable_type (gimp_image_active_drawable (gdisp->gimage)))
+  switch (gimp_drawable_type (gimp_image_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE:
     case INDEXEDA_GIMAGE:
@@ -831,10 +831,10 @@ blend (GImage           *gimage,
 
   gimp_add_busy_cursors();
 
-  has_selection = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  has_selection = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
-  has_alpha = drawable_has_alpha (drawable);
-  bytes = drawable_bytes (drawable);
+  has_alpha = gimp_drawable_has_alpha (drawable);
+  bytes = gimp_drawable_bytes (drawable);
 
   /*  Always create an alpha temp buf (for generality) */
   if (! has_alpha)
@@ -1245,12 +1245,12 @@ gradient_precalc_shapeburst (GImage       *gimage,
       gint        x1, y1, x2, y2;
       gint        offx, offy;
 
-      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-      drawable_offsets (drawable, &offx, &offy);
+      gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+      gimp_drawable_offsets (drawable, &offx, &offy);
 
       /*  the selection mask  */
       mask = gimp_image_get_mask (gimage);
-      pixel_region_init (&maskR, drawable_data (GIMP_DRAWABLE(mask)), 
+      pixel_region_init (&maskR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 			 x1 + offx, y1 + offy, (x2 - x1), (y2 - y1), FALSE);
 
       /*  copy the mask to the temp mask  */
@@ -1260,11 +1260,11 @@ gradient_precalc_shapeburst (GImage       *gimage,
   else
     {
       /*  If the intended drawable has an alpha channel, use that  */
-      if (drawable_has_alpha (drawable))
+      if (gimp_drawable_has_alpha (drawable))
 	{
 	  PixelRegion drawableR;
 
-	  pixel_region_init (&drawableR, drawable_data (drawable),
+	  pixel_region_init (&drawableR, gimp_drawable_data (drawable),
 			     PR->x, PR->y, PR->w, PR->h, FALSE);
 
 	  extract_alpha_region (&drawableR, NULL, &tempR);

@@ -1751,7 +1751,7 @@ layers_dialog_apply_layer_mask_callback (GtkWidget *widget,
     {
       gboolean flush = !layer->apply_mask || layer->show_mask;
 
-      gimp_image_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)),
+      gimp_image_remove_layer_mask (gimp_drawable_gimage (GIMP_DRAWABLE (layer)),
 				    layer, APPLY);
 
       if (flush)
@@ -1784,7 +1784,7 @@ layers_dialog_delete_layer_mask_callback (GtkWidget *widget,
     {
       gboolean flush = layer->apply_mask || layer->show_mask;
 
-      gimp_image_remove_layer_mask (drawable_gimage (GIMP_DRAWABLE (layer)),
+      gimp_image_remove_layer_mask (gimp_drawable_gimage (GIMP_DRAWABLE (layer)),
 				    layer, DISCARD);
 
       if (flush)
@@ -3928,19 +3928,20 @@ layers_dialog_scale_layer_query (GimpImage *gimage,
   /*  the new options structure  */
   options = g_new (ScaleLayerOptions, 1);
   options->layer  = layer;
-  options->resize = resize_widget_new (ScaleWidget,
-				       ResizeLayer,
-				       GTK_OBJECT (layer),
-				       "removed",
-				       drawable_width (GIMP_DRAWABLE (layer)),
-				       drawable_height (GIMP_DRAWABLE (layer)),
-				       gimage->xresolution,
-				       gimage->yresolution,
-				       gimage->unit,
-				       TRUE,
-				       scale_layer_query_ok_callback,
-				       NULL,
-				       options);
+  options->resize =
+    resize_widget_new (ScaleWidget,
+		       ResizeLayer,
+		       GTK_OBJECT (layer),
+		       "removed",
+		       gimp_drawable_width (GIMP_DRAWABLE (layer)),
+		       gimp_drawable_height (GIMP_DRAWABLE (layer)),
+		       gimage->xresolution,
+		       gimage->yresolution,
+		       gimage->unit,
+		       TRUE,
+		       scale_layer_query_ok_callback,
+		       NULL,
+		       options);
 
   gtk_signal_connect_object (GTK_OBJECT (options->resize->resize_shell),
 			     "destroy",
@@ -4014,19 +4015,20 @@ layers_dialog_resize_layer_query (GimpImage *gimage,
   /*  the new options structure  */
   options = g_new (ResizeLayerOptions, 1);
   options->layer  = layer;
-  options->resize = resize_widget_new (ResizeWidget,
-				       ResizeLayer,
-				       GTK_OBJECT (layer),
-				       "removed",
-				       drawable_width (GIMP_DRAWABLE (layer)),
-				       drawable_height (GIMP_DRAWABLE (layer)),
-				       gimage->xresolution,
-				       gimage->yresolution,
-				       gimage->unit,
-				       TRUE,
-				       resize_layer_query_ok_callback,
-				       NULL,
-				       options);
+  options->resize =
+    resize_widget_new (ResizeWidget,
+		       ResizeLayer,
+		       GTK_OBJECT (layer),
+		       "removed",
+		       gimp_drawable_width (GIMP_DRAWABLE (layer)),
+		       gimp_drawable_height (GIMP_DRAWABLE (layer)),
+		       gimage->xresolution,
+		       gimage->yresolution,
+		       gimage->unit,
+		       TRUE,
+		       resize_layer_query_ok_callback,
+		       NULL,
+		       options);
 
   gtk_signal_connect_object (GTK_OBJECT (options->resize->resize_shell),
 			     "destroy",

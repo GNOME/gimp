@@ -367,10 +367,10 @@ transform_core_button_press (Tool           *tool,
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y,
 			       FALSE, FALSE);
 
-  drawable_offsets (drawable, &off_x, &off_y);
+  gimp_drawable_offsets (drawable, &off_x, &off_y);
   if (x >= off_x && y >= off_y &&
-      x < (off_x + drawable_width (drawable)) &&
-      y < (off_y + drawable_height (drawable)))
+      x < (off_x + gimp_drawable_width (drawable)) &&
+      y < (off_y + gimp_drawable_height (drawable)))
     if (gimage_mask_is_empty (gdisp->gimage) ||
 	gimage_mask_value (gdisp->gimage, x, y))
       {
@@ -1008,10 +1008,10 @@ transform_core_bounds (Tool     *tool,
     }
   else
     {
-      drawable_offsets (drawable, &offset_x, &offset_y);
-      drawable_mask_bounds (drawable,
-			    &transform_core->x1, &transform_core->y1,
-			    &transform_core->x2, &transform_core->y2);
+      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+      gimp_drawable_mask_bounds (drawable,
+				 &transform_core->x1, &transform_core->y1,
+				 &transform_core->x2, &transform_core->y2);
       transform_core->x1 += offset_x;
       transform_core->y1 += offset_y;
       transform_core->x2 += offset_x;
@@ -1184,7 +1184,7 @@ transform_core_do (GImage           *gimage,
   /*  Get the background color  */
   gimp_image_get_background (gimage, drawable, bg_col);
 
-  switch (drawable_type (drawable))
+  switch (gimp_drawable_type (drawable))
     {
     case RGB_GIMAGE: case RGBA_GIMAGE:
       bg_col[ALPHA_PIX] = TRANSPARENT_OPACITY;

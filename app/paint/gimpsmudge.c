@@ -220,12 +220,11 @@ smudge_init (PaintCore    *paint_core,
   gint         was_clipped;
   guchar      *do_fill = NULL;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return FALSE;
 
   /*  If the image type is indexed, don't smudge  */
-  if ((drawable_type (drawable) == INDEXED_GIMAGE) ||
-      (drawable_type (drawable) == INDEXEDA_GIMAGE))
+  if (gimp_drawable_is_indexed (drawable))
     return FALSE;
 
   area = paint_core_get_paint_area (paint_core, drawable, 1.0);
@@ -266,8 +265,8 @@ smudge_init (PaintCore    *paint_core,
 	+ accumPR.rowstride * accumPR.y 
 	+ accumPR.x * accumPR.bytes;
 
-  pixel_region_init (&srcPR, drawable_data (drawable), 
-	    area->x, area->y, area->width, area->height, FALSE);
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable), 
+		     area->x, area->y, area->width, area->height, FALSE);
 
   /* copy the region under the original painthit. */
   copy_region (&srcPR, &accumPR);
@@ -354,12 +353,11 @@ smudge_motion (PaintCore            *paint_core,
   gint         opacity;
   gint         x, y, w, h;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   /*  If the image type is indexed, don't smudge  */
-  if ((drawable_type (drawable) == INDEXED_GIMAGE) ||
-      (drawable_type (drawable) == INDEXEDA_GIMAGE))
+  if (gimp_drawable_is_indexed (drawable))
     return;
 
   smudge_nonclipped_painthit_coords (paint_core, &x, &y, &w, &h);
@@ -372,7 +370,7 @@ smudge_motion (PaintCore            *paint_core,
   /* srcPR will be the pixels under the current painthit from 
      the drawable*/
 
-  pixel_region_init (&srcPR, drawable_data (drawable), 
+  pixel_region_init (&srcPR, gimp_drawable_data (drawable), 
 		     area->x, area->y, area->width, area->height, FALSE);
 
   /* Enable pressure sensitive rate */
@@ -423,7 +421,7 @@ smudge_motion (PaintCore            *paint_core,
 	+ tempPR.rowstride * tempPR.y 
 	+ tempPR.x * tempPR.bytes;
 
-  if (!drawable_has_alpha (drawable))                             
+  if (! gimp_drawable_has_alpha (drawable))                             
     add_alpha_region (&tempPR, &destPR);                          
   else                                                            
     copy_region (&tempPR, &destPR);

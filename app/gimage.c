@@ -248,10 +248,10 @@ gimage_set_layer_mask_apply (GImage    *gimage,
     return;
 
   layer->apply_mask = ! layer->apply_mask;
-  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
   gdisplays_update_area (gimage, off_x, off_y,
-			 drawable_width (GIMP_DRAWABLE (layer)), 
-			 drawable_height (GIMP_DRAWABLE (layer)));
+			 gimp_drawable_width (GIMP_DRAWABLE (layer)), 
+			 gimp_drawable_height (GIMP_DRAWABLE (layer)));
 }
 
 void
@@ -280,10 +280,10 @@ gimage_set_layer_mask_show (GImage    *gimage,
     return;
 
   layer->show_mask = ! layer->show_mask;
-  drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+  gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
   gdisplays_update_area (gimage, off_x, off_y,
-			 drawable_width (GIMP_DRAWABLE (layer)), 
-			 drawable_height (GIMP_DRAWABLE (layer)));
+			 gimp_drawable_width (GIMP_DRAWABLE (layer)), 
+			 gimp_drawable_height (GIMP_DRAWABLE (layer)));
 }
 
 void

@@ -52,7 +52,7 @@ sub drawable_prop_proc {
 
     @outargs = (
 	{ name => $name, type => $type, desc => $desc, 
-	  alias => "drawable_$func (drawable)", no_declare => 1 }
+	  alias => "gimp_drawable_$func (drawable)", no_declare => 1 }
     );
 }
 
@@ -103,7 +103,7 @@ HELP
 	  desc => 'Push merge to undo stack?' }
     );
 
-    %invoke = ( code => 'drawable_merge_shadow (drawable, undo);' );
+    %invoke = ( code => 'gimp_drawable_merge_shadow (drawable, undo);' );
 }
 
 sub drawable_fill {
@@ -192,7 +192,7 @@ HELP
 
     %invoke = (
 	code => <<'CODE'
-non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 CODE
     );
 }
@@ -211,7 +211,7 @@ sub drawable_image {
     $outargs[0]->{init} = 1;
 
     %invoke = (
-	code => 'success = (gimage = drawable_gimage (drawable)) != NULL;'
+	code => 'success = (gimage = gimp_drawable_gimage (drawable)) != NULL;'
     );
 }
 
@@ -249,15 +249,15 @@ HELP
 }
 
 sub drawable_is_rgb {
-    &drawable_type_proc('an RGB', 'RGB, RGBA', 'color');
+    &drawable_type_proc('an RGB', 'RGB, RGBA', 'is_rgb');
 }
 
 sub drawable_is_gray {
-    &drawable_type_proc('a grayscale', 'Gray, GrayA', 'gray');
+    &drawable_type_proc('a grayscale', 'Gray, GrayA', 'is_gray');
 }
 
 sub drawable_is_indexed {
-    &drawable_type_proc('an indexed', 'Indexed, IndexedA', 'indexed');
+    &drawable_type_proc('an indexed', 'Indexed, IndexedA', 'is_indexed');
 }
 
 sub drawable_bytes {
@@ -302,7 +302,7 @@ HELP
 			 desc => "$_ offset of drawable", void_ret => 1 }
     }
 
-    %invoke = ( code => 'drawable_offsets (drawable, &offset_x, &offset_y);' );
+    %invoke = ( code => 'gimp_drawable_offsets (drawable, &offset_x, &offset_y);' );
 }
 
 sub drawable_is_layer {
@@ -338,12 +338,12 @@ HELP
 	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
-  if (x < drawable_width (drawable) && y < drawable_height (drawable))
+  if (x < gimp_drawable_width (drawable) && y < gimp_drawable_height (drawable))
     {  
-      num_channels = drawable_bytes (drawable);
+      num_channels = gimp_drawable_bytes (drawable);
       pixel = g_new (guint8, num_channels);
 
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
+      tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
 				    TRUE, TRUE);
 
       x %= TILE_WIDTH;
@@ -381,10 +381,11 @@ HELP
 	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
-  if (x < drawable_width (drawable) && y < drawable_height (drawable) &&
-      num_channels == drawable_bytes (drawable))
+  if (x < gimp_drawable_width (drawable) &&
+      y < gimp_drawable_height (drawable) &&
+      num_channels == gimp_drawable_bytes (drawable))
     {
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
+      tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
 				    TRUE, TRUE);
 
       x %= TILE_WIDTH;
@@ -473,8 +474,8 @@ HELP
   if (req_width <= 128 && req_height <= 128)
     {	
       /* Adjust the width/height ratio */
-      dwidth = drawable_width (GIMP_DRAWABLE (drawable));
-      dheight = drawable_height (GIMP_DRAWABLE (drawable));
+      dwidth  = gimp_drawable_width (GIMP_DRAWABLE (drawable));
+      dheight = gimp_drawable_height (GIMP_DRAWABLE (drawable));
 
       if (dwidth > dheight)
 	req_height = (req_width * dheight) / dwidth;

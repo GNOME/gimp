@@ -110,7 +110,7 @@ display_delete_invoker (Argument *args)
   gboolean success = TRUE;
   GDisplay *gdisp;
 
-  gdisp = gdisplay_get_ID (args[0].value.pdb_int);
+  gdisp = gdisplay_get_by_ID (args[0].value.pdb_int);
   if (gdisp == NULL)
     success = FALSE;
 

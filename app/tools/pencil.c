@@ -150,14 +150,14 @@ pencil_motion (PaintCore            *paint_core,
 	       PaintPressureOptions *pressure_options,
 	       gboolean	             increment)
 {
-  GImage *gimage;
-  TempBuf *area;
-  unsigned char col[MAX_CHANNELS];
-  gint opacity;
-  gdouble scale;
-  PaintApplicationMode paint_appl_mode = increment ? INCREMENTAL : CONSTANT;
+  GImage               *gimage;
+  TempBuf              *area;
+  guchar                col[MAX_CHANNELS];
+  gint                  opacity;
+  gdouble               scale;
+  PaintApplicationMode  paint_appl_mode = increment ? INCREMENTAL : CONSTANT;
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   if (pressure_options->size)

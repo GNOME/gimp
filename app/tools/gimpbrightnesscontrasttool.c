@@ -176,7 +176,7 @@ tools_free_brightness_contrast (Tool *tool)
 void
 brightness_contrast_initialize (GDisplay *gdisp)
 {
-  if (drawable_indexed (gimp_image_active_drawable (gdisp->gimage)))
+  if (gimp_drawable_is_indexed (gimp_image_active_drawable (gdisp->gimage)))
     {
       g_message (_("Brightness-Contrast does not operate on indexed drawables."));
       return;

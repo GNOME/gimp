@@ -162,18 +162,18 @@ mask_render_preview (GImage        *gimage,
   gint scale;
 
   mask = gimp_image_get_mask (gimage);
-  if ((drawable_width (GIMP_DRAWABLE(mask)) > *pwidth) ||
-      (drawable_height (GIMP_DRAWABLE(mask)) > *pheight))
+  if ((gimp_drawable_width (GIMP_DRAWABLE(mask)) > *pwidth) ||
+      (gimp_drawable_height (GIMP_DRAWABLE(mask)) > *pheight))
     {
-      if (((gfloat) drawable_width (GIMP_DRAWABLE (mask)) / (gfloat) *pwidth) >
-	  ((gfloat) drawable_height (GIMP_DRAWABLE (mask)) / (gfloat) *pheight))
+      if (((gfloat) gimp_drawable_width (GIMP_DRAWABLE (mask)) / (gfloat) *pwidth) >
+	  ((gfloat) gimp_drawable_height (GIMP_DRAWABLE (mask)) / (gfloat) *pheight))
 	{
 	  width = *pwidth;
-	  height = (drawable_height (GIMP_DRAWABLE (mask)) * (*pwidth)) / drawable_width (GIMP_DRAWABLE (mask));
+	  height = (gimp_drawable_height (GIMP_DRAWABLE (mask)) * (*pwidth)) / gimp_drawable_width (GIMP_DRAWABLE (mask));
 	}
       else
 	{
-	  width = (drawable_width (GIMP_DRAWABLE (mask)) * (*pheight)) / drawable_height (GIMP_DRAWABLE (mask));
+	  width = (gimp_drawable_width (GIMP_DRAWABLE (mask)) * (*pheight)) / gimp_drawable_height (GIMP_DRAWABLE (mask));
 	  height = *pheight;
 	}
 
@@ -181,8 +181,8 @@ mask_render_preview (GImage        *gimage,
     }
   else
     {
-      width = drawable_width (GIMP_DRAWABLE (mask));
-      height = drawable_height (GIMP_DRAWABLE (mask));
+      width  = gimp_drawable_width (GIMP_DRAWABLE (mask));
+      height = gimp_drawable_height (GIMP_DRAWABLE (mask));
 
       scale = FALSE;
     }
@@ -195,14 +195,14 @@ mask_render_preview (GImage        *gimage,
     {
       /*  calculate 'acceptable' subsample  */
       subsample = 1;
-      while ((width * (subsample + 1) * 2 < drawable_width (GIMP_DRAWABLE (mask))) &&
-	     (height * (subsample + 1) * 2 < drawable_height (GIMP_DRAWABLE (mask))))
+      while ((width * (subsample + 1) * 2 < gimp_drawable_width (GIMP_DRAWABLE (mask))) &&
+	     (height * (subsample + 1) * 2 < gimp_drawable_height (GIMP_DRAWABLE (mask))))
 	subsample = subsample + 1;
 
-      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+      pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			 0, 0, 
-			 drawable_width (GIMP_DRAWABLE (mask)), 
-			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
+			 gimp_drawable_width (GIMP_DRAWABLE (mask)), 
+			 gimp_drawable_height (GIMP_DRAWABLE (mask)), FALSE);
 
       scaled_buf = mask_buf_new (width, height);
       destPR.bytes = 1;
@@ -218,10 +218,10 @@ mask_render_preview (GImage        *gimage,
     }
   else
     {
-      pixel_region_init (&srcPR, drawable_data (GIMP_DRAWABLE (mask)), 
+      pixel_region_init (&srcPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
 			 0, 0, 
-			 drawable_width (GIMP_DRAWABLE (mask)), 
-			 drawable_height (GIMP_DRAWABLE (mask)), FALSE);
+			 gimp_drawable_width (GIMP_DRAWABLE (mask)), 
+			 gimp_drawable_height (GIMP_DRAWABLE (mask)), FALSE);
 
       scaled_buf = mask_buf_new (width, height);
       destPR.bytes = 1;

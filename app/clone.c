@@ -355,11 +355,12 @@ clone_cursor_update (Tool           *tool,
   if ((layer = gimp_image_get_active_layer (gdisp->gimage))) 
     {
       int off_x, off_y;
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
-	  y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
+	  x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	  y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
@@ -471,14 +472,14 @@ clone_motion (PaintCore            *paint_core,
     {
       if (!src_drawable)
 	return;
-      if (! (src_gimage = drawable_gimage (src_drawable)))
+      if (! (src_gimage = gimp_drawable_gimage (src_drawable)))
 	return;
       /*  Determine whether the source image has an alpha channel  */
-      has_alpha = drawable_has_alpha (src_drawable);
+      has_alpha = gimp_drawable_has_alpha (src_drawable);
     }
 
   /*  We always need a destination image */
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   if (pressure_options->size)
@@ -504,26 +505,27 @@ clone_motion (PaintCore            *paint_core,
        */
       if (src_drawable != drawable)
 	{
-	  x1 = CLAMP (area->x + offset_x, 0, drawable_width (src_drawable));
-	  y1 = CLAMP (area->y + offset_y, 0, drawable_height (src_drawable));
+	  x1 = CLAMP (area->x + offset_x, 0, gimp_drawable_width (src_drawable));
+	  y1 = CLAMP (area->y + offset_y, 0, gimp_drawable_height (src_drawable));
 	  x2 = CLAMP (area->x + offset_x + area->width,
-		      0, drawable_width (src_drawable));
+		      0, gimp_drawable_width (src_drawable));
 	  y2 = CLAMP (area->y + offset_y + area->height,
-		      0, drawable_height (src_drawable));
+		      0, gimp_drawable_height (src_drawable));
 
 	  if (!(x2 - x1) || !(y2 - y1))
 	    return;
 
-	  pixel_region_init (&srcPR, drawable_data (src_drawable), x1, y1, (x2 - x1), (y2 - y1), FALSE);
+	  pixel_region_init (&srcPR, gimp_drawable_data (src_drawable),
+			     x1, y1, (x2 - x1), (y2 - y1), FALSE);
 	}
       else
 	{
-	  x1 = CLAMP (area->x + offset_x, 0, drawable_width (drawable));
-	  y1 = CLAMP (area->y + offset_y, 0, drawable_height (drawable));
+	  x1 = CLAMP (area->x + offset_x, 0, gimp_drawable_width (drawable));
+	  y1 = CLAMP (area->y + offset_y, 0, gimp_drawable_height (drawable));
 	  x2 = CLAMP (area->x + offset_x + area->width,
-		      0, drawable_width (drawable));
+		      0, gimp_drawable_width (drawable));
 	  y2 = CLAMP (area->y + offset_y + area->height,
-		      0, drawable_height (drawable));
+		      0, gimp_drawable_height (drawable));
 
 	  if (!(x2 - x1) || !(y2 - y1))
 	    return;
@@ -629,7 +631,7 @@ clone_line_image (GImage        *dest,
 
   while (width--)
     {
-      gimp_image_get_color (src, drawable_type (s_drawable), rgb, s);
+      gimp_image_get_color (src, gimp_drawable_type (s_drawable), rgb, s);
       gimp_image_transform_color (dest, d_drawable, rgb, d, RGB);
 
       if (has_alpha)

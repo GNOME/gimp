@@ -39,7 +39,7 @@ image_desaturate (GimpImage *gimage)
 
   drawable = gimp_image_active_drawable (gimage);
 
-  if (! drawable_color (drawable))
+  if (! gimp_drawable_is_rgb (drawable))
     {
       g_message (_("Desaturate operates only on RGB color drawables."));
       return;
@@ -111,6 +111,6 @@ desaturate (GimpDrawable *drawable)
 	}
     }
 
-  drawable_merge_shadow (drawable, TRUE);
+  gimp_drawable_merge_shadow (drawable, TRUE);
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
 }

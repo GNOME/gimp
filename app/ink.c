@@ -1059,11 +1059,11 @@ ink_cursor_update (Tool           *tool,
     {
       int off_x, off_y;
 
-      drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
+      gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       if (x >= off_x && y >= off_y &&
-	  x < (off_x + drawable_width (GIMP_DRAWABLE (layer))) &&
-	  y < (off_y + drawable_height (GIMP_DRAWABLE (layer))))
+	  x < (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer))) &&
+	  y < (off_y + gimp_drawable_height (GIMP_DRAWABLE (layer))))
 	{
 	  /*  One more test--is there a selected region?
 	   *  if so, is cursor inside?
@@ -1121,13 +1121,13 @@ ink_init (InkTool      *ink_tool,
     tile_manager_destroy (canvas_tiles);
 
   /*  Allocate the undo structure  */
-  undo_tiles = tile_manager_new (drawable_width (drawable),
-				 drawable_height (drawable),
-				 drawable_bytes (drawable));
+  undo_tiles = tile_manager_new (gimp_drawable_width (drawable),
+				 gimp_drawable_height (drawable),
+				 gimp_drawable_bytes (drawable));
 
   /*  Allocate the canvas blocks structure  */
-  canvas_tiles = tile_manager_new (drawable_width (drawable),
-				   drawable_height (drawable), 1);
+  canvas_tiles = tile_manager_new (gimp_drawable_width (drawable),
+				   gimp_drawable_height (drawable), 1);
 
   /*  Get the initial undo extents  */
   ink_tool->x1 = ink_tool->x2 = x;
@@ -1198,13 +1198,13 @@ ink_set_paint_area (InkTool      *ink_tool,
   
   blob_bounds (blob, &x, &y, &width, &height);
 
-  bytes = drawable_has_alpha (drawable) ?
-    drawable_bytes (drawable) : drawable_bytes (drawable) + 1;
+  bytes = gimp_drawable_has_alpha (drawable) ?
+    gimp_drawable_bytes (drawable) : gimp_drawable_bytes (drawable) + 1;
 
-  x1 = CLAMP (x/SUBSAMPLE - 1,            0, drawable_width (drawable));
-  y1 = CLAMP (y/SUBSAMPLE - 1,            0, drawable_height (drawable));
-  x2 = CLAMP ((x + width)/SUBSAMPLE + 2,  0, drawable_width (drawable));
-  y2 = CLAMP ((y + height)/SUBSAMPLE + 2, 0, drawable_height (drawable));
+  x1 = CLAMP (x/SUBSAMPLE - 1,            0, gimp_drawable_width (drawable));
+  y1 = CLAMP (y/SUBSAMPLE - 1,            0, gimp_drawable_height (drawable));
+  x2 = CLAMP ((x + width)/SUBSAMPLE + 2,  0, gimp_drawable_width (drawable));
+  y2 = CLAMP ((y + height)/SUBSAMPLE + 2, 0, gimp_drawable_height (drawable));
 
   /*  configure the canvas buffer  */
   if ((x2 - x1) && (y2 - y1))
@@ -1402,7 +1402,7 @@ ink_paste (InkTool      *ink_tool,
   gint         offx, offy;
   gchar        col[MAX_CHANNELS];
 
-  if (! (gimage = drawable_gimage (drawable)))
+  if (! (gimage = gimp_drawable_gimage (drawable)))
     return;
 
   /* Get the the buffer */
@@ -1458,7 +1458,7 @@ ink_paste (InkTool      *ink_tool,
    *  instead of drawable_update because we don't want the drawable
    *  preview to be constantly invalidated
    */
-  drawable_offsets (drawable, &offx, &offy);
+  gimp_drawable_offsets (drawable, &offx, &offy);
   gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
 			 canvas_buf->width, canvas_buf->height);
 }
@@ -1512,7 +1512,8 @@ ink_set_undo_tiles (GimpDrawable *drawable,
 	  dest_tile = tile_manager_get_tile (undo_tiles, j, i, FALSE, FALSE);
 	  if (tile_is_valid (dest_tile) == FALSE)
 	    {
-	      src_tile = tile_manager_get_tile (drawable_data (drawable), j, i, TRUE, FALSE);
+	      src_tile = tile_manager_get_tile (gimp_drawable_data (drawable),
+						j, i, TRUE, FALSE);
 	      tile_manager_map_tile (undo_tiles, j, i, src_tile);
 	      tile_release (src_tile, FALSE);
 	    }

@@ -91,14 +91,14 @@ drawable_merge_shadow_invoker (Argument *args)
   GimpDrawable *drawable;
   gboolean undo;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   undo = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    drawable_merge_shadow (drawable, undo);
+    gimp_drawable_merge_shadow (drawable, undo);
 
   return procedural_db_return_args (&drawable_merge_shadow_proc, success);
 }
@@ -140,7 +140,7 @@ drawable_fill_invoker (Argument *args)
   GimpDrawable *drawable;
   gint32 fill_type;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -194,7 +194,7 @@ drawable_update_invoker (Argument *args)
   gint32 width;
   gint32 height;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -269,12 +269,12 @@ drawable_mask_bounds_invoker (Argument *args)
   gint32 x2;
   gint32 y2;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   if (success)
-    non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+    non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
 
   return_args = procedural_db_return_args (&drawable_mask_bounds_proc, success);
 
@@ -352,12 +352,12 @@ drawable_image_invoker (Argument *args)
   GimpDrawable *drawable;
   GimpImage *gimage = NULL;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   if (success)
-    success = (gimage = drawable_gimage (drawable)) != NULL;
+    success = (gimage = gimp_drawable_gimage (drawable)) != NULL;
 
   return_args = procedural_db_return_args (&drawable_image_proc, success);
 
@@ -408,14 +408,14 @@ drawable_type_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_type_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_type (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_type (drawable);
 
   return return_args;
 }
@@ -461,14 +461,14 @@ drawable_has_alpha_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_has_alpha_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_has_alpha (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_has_alpha (drawable);
 
   return return_args;
 }
@@ -514,14 +514,14 @@ drawable_type_with_alpha_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_type_with_alpha_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_type_with_alpha (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_type_with_alpha (drawable);
 
   return return_args;
 }
@@ -567,14 +567,14 @@ drawable_is_rgb_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_is_rgb_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_color (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_is_rgb (drawable);
 
   return return_args;
 }
@@ -592,7 +592,7 @@ static ProcArg drawable_is_rgb_outargs[] =
 {
   {
     PDB_INT32,
-    "color",
+    "is_rgb",
     "non-zero if the drawable is an RGB type"
   }
 };
@@ -620,14 +620,14 @@ drawable_is_gray_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_is_gray_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_gray (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_is_gray (drawable);
 
   return return_args;
 }
@@ -645,7 +645,7 @@ static ProcArg drawable_is_gray_outargs[] =
 {
   {
     PDB_INT32,
-    "gray",
+    "is_gray",
     "non-zero if the drawable is a grayscale type"
   }
 };
@@ -673,14 +673,14 @@ drawable_is_indexed_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_is_indexed_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_indexed (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_is_indexed (drawable);
 
   return return_args;
 }
@@ -698,7 +698,7 @@ static ProcArg drawable_is_indexed_outargs[] =
 {
   {
     PDB_INT32,
-    "indexed",
+    "is_indexed",
     "non-zero if the drawable is an indexed type"
   }
 };
@@ -726,14 +726,14 @@ drawable_bytes_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_bytes_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_bytes (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_bytes (drawable);
 
   return return_args;
 }
@@ -779,14 +779,14 @@ drawable_width_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_width_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_width (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_width (drawable);
 
   return return_args;
 }
@@ -832,14 +832,14 @@ drawable_height_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_height_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_height (drawable);
+    return_args[1].value.pdb_int = gimp_drawable_height (drawable);
 
   return return_args;
 }
@@ -887,12 +887,12 @@ drawable_offsets_invoker (Argument *args)
   gint32 offset_x;
   gint32 offset_y;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   if (success)
-    drawable_offsets (drawable, &offset_x, &offset_y);
+    gimp_drawable_offsets (drawable, &offset_x, &offset_y);
 
   return_args = procedural_db_return_args (&drawable_offsets_proc, success);
 
@@ -951,14 +951,14 @@ drawable_is_layer_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_is_layer_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_layer (drawable) ? TRUE : FALSE;
+    return_args[1].value.pdb_int = gimp_drawable_layer (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
@@ -1004,14 +1004,14 @@ drawable_is_layer_mask_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_is_layer_mask_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_layer_mask (drawable) ? TRUE : FALSE;
+    return_args[1].value.pdb_int = gimp_drawable_layer_mask (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
@@ -1057,14 +1057,14 @@ drawable_is_channel_invoker (Argument *args)
   Argument *return_args;
   GimpDrawable *drawable;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
   return_args = procedural_db_return_args (&drawable_is_channel_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = drawable_channel (drawable) ? TRUE : FALSE;
+    return_args[1].value.pdb_int = gimp_drawable_channel (drawable) ? TRUE : FALSE;
 
   return return_args;
 }
@@ -1117,7 +1117,7 @@ drawable_get_pixel_invoker (Argument *args)
   gint b;
   Tile *tile;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1131,12 +1131,12 @@ drawable_get_pixel_invoker (Argument *args)
 
   if (success)
     {
-      if (x < drawable_width (drawable) && y < drawable_height (drawable))
+      if (x < gimp_drawable_width (drawable) && y < gimp_drawable_height (drawable))
 	{  
-	  num_channels = drawable_bytes (drawable);
+	  num_channels = gimp_drawable_bytes (drawable);
 	  pixel = g_new (guint8, num_channels);
     
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y,
+	  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
 					TRUE, TRUE);
     
 	  x %= TILE_WIDTH;
@@ -1225,7 +1225,7 @@ drawable_set_pixel_invoker (Argument *args)
   gint b;
   Tile *tile;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1243,10 +1243,11 @@ drawable_set_pixel_invoker (Argument *args)
 
   if (success)
     {
-      if (x < drawable_width (drawable) && y < drawable_height (drawable) &&
-	  num_channels == drawable_bytes (drawable))
+      if (x < gimp_drawable_width (drawable) &&
+	  y < gimp_drawable_height (drawable) &&
+	  num_channels == gimp_drawable_bytes (drawable))
 	{
-	  tile = tile_manager_get_tile (drawable_data (drawable), x, y,
+	  tile = tile_manager_get_tile (gimp_drawable_data (drawable), x, y,
 					TRUE, TRUE);
     
 	  x %= TILE_WIDTH;
@@ -1317,7 +1318,7 @@ drawable_set_image_invoker (Argument *args)
   GimpDrawable *drawable;
   GimpImage *gimage;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1375,7 +1376,7 @@ drawable_thumbnail_invoker (Argument *args)
   gint32 num_pixels = 0;
   guint8 *thumbnail_data = NULL;
 
-  drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
+  drawable = gimp_drawable_get_by_ID (args[0].value.pdb_int);
   if (drawable == NULL)
     success = FALSE;
 
@@ -1395,8 +1396,8 @@ drawable_thumbnail_invoker (Argument *args)
       if (req_width <= 128 && req_height <= 128)
 	{        
 	  /* Adjust the width/height ratio */
-	  dwidth = drawable_width (GIMP_DRAWABLE (drawable));
-	  dheight = drawable_height (GIMP_DRAWABLE (drawable));
+	  dwidth  = gimp_drawable_width (GIMP_DRAWABLE (drawable));
+	  dheight = gimp_drawable_height (GIMP_DRAWABLE (drawable));
     
 	  if (dwidth > dheight)
 	    req_height = (req_width * dheight) / dwidth;

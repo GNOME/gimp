@@ -268,7 +268,7 @@ color_picker_button_press (Tool           *tool,
 					   tools_help_func, NULL);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
-      switch (drawable_type (tool->drawable))
+      switch (gimp_drawable_type (tool->drawable))
 	{
 	case RGB_GIMAGE: case RGBA_GIMAGE:
 	  info_dialog_add_label (color_picker_info, _("Red:"), red_buf);
@@ -504,7 +504,7 @@ pick_color_do (GimpImage    *gimage,
 
   if (!sample_merged)
     {
-      drawable_offsets (drawable, &offx, &offy);
+      gimp_drawable_offsets (drawable, &offx, &offy);
       x -= offx;
       y -= offy;
 

@@ -223,7 +223,7 @@ void       gdisplay_flush_displays_only    (GDisplay *gdisp); /* no rerender! */
 
 
 GDisplay * gdisplay_active                 (void);
-GDisplay * gdisplay_get_ID                 (gint);
+GDisplay * gdisplay_get_by_ID              (gint  ID);
 
 
 /*  function declarations  */
