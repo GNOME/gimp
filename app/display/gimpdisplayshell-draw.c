@@ -64,6 +64,7 @@
 
 #include "tools/tool_manager.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayoptions.h"
 #include "gimpdisplayshell.h"
@@ -242,7 +243,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->render_buf            = g_malloc (GIMP_DISPLAY_SHELL_RENDER_BUF_WIDTH  *
                                            GIMP_DISPLAY_SHELL_RENDER_BUF_HEIGHT *
                                            3);
-  shell->render_gc             = NULL;
 
   shell->icon_size             = 32;
   shell->icon_idle_id          = 0;
@@ -387,12 +387,6 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_free (shell->render_buf);
       shell->render_buf = NULL;
-    }
-
-  if (shell->render_gc)
-    {
-      g_object_unref (shell->render_gc);
-      shell->render_gc = NULL;
     }
 
   if (shell->title_idle_id)
@@ -723,7 +717,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gimp_help_set_help_data (shell->origin, NULL, "#origin_button");
 
   /* EEK */
-  shell->canvas = gtk_drawing_area_new ();
+  shell->canvas = gimp_canvas_new ();
 
   /*  the horizontal ruler  */
   shell->hrule = gtk_hruler_new ();
@@ -754,7 +748,6 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   gimp_help_set_help_data (shell->vrule, NULL, "#ruler");
 
   /*  the canvas  */
-  gtk_widget_set_name (shell->canvas, "gimp-canvas");
   gtk_widget_set_size_request (shell->canvas, n_width, n_height);
   gtk_widget_set_events (shell->canvas, GIMP_DISPLAY_SHELL_CANVAS_EVENT_MASK);
   gtk_widget_set_extension_events (shell->canvas, GDK_EXTENSION_EVENTS_ALL);

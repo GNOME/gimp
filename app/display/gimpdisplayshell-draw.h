@@ -99,7 +99,7 @@ struct _GimpDisplayShell
   GtkAdjustment    *hsbdata;           /*  adjustments                        */
   GtkAdjustment    *vsbdata;
 
-  GtkWidget        *canvas;            /*  canvas widget                      */
+  GtkWidget        *canvas;            /*  GimpCanvas widget                  */
 
   GtkWidget        *hsb;               /*  scroll bars                        */
   GtkWidget        *vsb;
@@ -111,8 +111,6 @@ struct _GimpDisplayShell
   GtkWidget        *statusbar;         /*  statusbar                          */
 
   guchar           *render_buf;        /*  buffer for rendering the image     */
-  GdkGC            *render_gc;         /*  GC for rendering the image         */
-
   guint             title_idle_id;     /*  title update idle ID               */
 
   gint              icon_size;         /*  size of the icon pixmap            */

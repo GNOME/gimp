@@ -16,6 +16,8 @@ noinst_LIBRARIES = libappdisplay.a
 libappdisplay_a_sources = \
 	display-enums.h				\
 	display-types.h				\
+	gimpcanvas.c				\
+	gimpcanvas.h				\
 	gimpdisplay.c				\
 	gimpdisplay.h				\
 	gimpdisplayoptions.c			\

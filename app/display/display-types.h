@@ -25,6 +25,8 @@
 #include "display/display-enums.h"
 
 
+typedef struct _GimpCanvas         GimpCanvas;
+
 typedef struct _GimpDisplay        GimpDisplay;
 typedef struct _GimpDisplayShell   GimpDisplayShell;
 

@@ -35,6 +35,7 @@
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-projection.h"
 
+#include "gimpcanvas.h"
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-filter.h"
@@ -361,7 +362,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   /*  put it to the screen  */
   gdk_draw_rgb_image_dithalign (shell->canvas->window,
-                                shell->render_gc,
+                                GIMP_CANVAS (shell->canvas)->render_gc,
                                 x + shell->disp_xoffset,
                                 y + shell->disp_yoffset,
                                 w, h,
