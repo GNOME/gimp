@@ -210,124 +210,104 @@ msgid "Brushes Menu"
 msgstr "Menu pennelli"
 
 #: app/actions/brushes-actions.c:48
-#, fuzzy
 msgid "_Edit Brush..."
-msgstr "/Modifica p_ennello..."
+msgstr "Modifica p_ennello..."
 
 #: app/actions/brushes-actions.c:53
-#, fuzzy
 msgid "/New Brush"
-msgstr "/_Nuovo pennello"
+msgstr "/Nuovo pennello"
 
 #: app/actions/brushes-actions.c:58
 msgid "/D_uplicate Brush"
 msgstr "/D_uplica pennello"
 
 #: app/actions/brushes-actions.c:63
-#, fuzzy
 msgid "_Delete Brush"
-msgstr "/_Cancella pennello"
+msgstr "_Cancella pennello"
 
 #: app/actions/brushes-actions.c:68
-#, fuzzy
 msgid "_Refresh Brushes"
-msgstr "/Aggio_rna pennelli"
+msgstr "Aggio_rna pennelli"
 
 #: app/actions/buffers-actions.c:42
 msgid "Buffers Menu"
 msgstr "Menu buffer"
 
 #: app/actions/buffers-actions.c:46
-#, fuzzy
 msgid "_Paste Buffer"
-msgstr "/_Incolla buffer"
+msgstr "_Incolla buffer"
 
 #: app/actions/buffers-actions.c:51
-#, fuzzy
 msgid "Paste Buffer _Into"
-msgstr "/Incolla buffer _dentro"
+msgstr "Incolla buffer _dentro"
 
 #: app/actions/buffers-actions.c:56
-#, fuzzy
 msgid "Paste Buffer as _New"
-msgstr "/Incolla buffer come _nuovo"
+msgstr "Incolla buffer come _nuovo"
 
 #: app/actions/buffers-actions.c:61
-#, fuzzy
 msgid "_Delete Buffer"
-msgstr "/_Elimina buffer"
+msgstr "_Elimina buffer"
 
 #: app/actions/channels-actions.c:43
 msgid "Channels Menu"
 msgstr "Menu canali"
 
 #: app/actions/channels-actions.c:47
-#, fuzzy
 msgid "_Edit Channel Attributes..."
-msgstr "/_Modifica attributi canale..."
+msgstr "_Modifica attributi canale..."
 
 #: app/actions/channels-actions.c:52
-#, fuzzy
 msgid "_New Channel..."
-msgstr "/_Nuovo canale..."
+msgstr "_Nuovo canale..."
 
 #: app/actions/channels-actions.c:57
-#, fuzzy
 msgid "D_uplicate Channel"
-msgstr "/_Duplica il canale"
+msgstr "_Duplica il canale"
 
 #: app/actions/channels-actions.c:62
-#, fuzzy
 msgid "_Delete Channel"
-msgstr "/_Elimina canale"
+msgstr "_Elimina canale"
 
 #: app/actions/channels-actions.c:67
-#, fuzzy
 msgid "_Raise Channel"
-msgstr "/Al_za il canale"
+msgstr "Al_za il canale"
 
 #: app/actions/channels-actions.c:72
-#, fuzzy
 msgid "Raise Channel to _Top"
-msgstr "Alza il canale in cima"
+msgstr "Alza il canale in _cima"
 
 #: app/actions/channels-actions.c:77
-#, fuzzy
 msgid "_Lower Channel"
-msgstr "/A_bbassa il canale"
+msgstr "A_bbassa il canale"
 
 #: app/actions/channels-actions.c:82
-#, fuzzy
 msgid "Lower Channel to _Bottom"
-msgstr "Abbassa il canale in fondo"
+msgstr "Abbassa il canale in _fondo"
 
 #: app/actions/channels-actions.c:90
-#, fuzzy
 msgid "Channel to Sele_ction"
-msgstr "/_Canale alla selezione"
+msgstr "_Canale alla selezione"
 
 #: app/actions/channels-actions.c:95 app/actions/layers-actions.c:195
 #: app/actions/vectors-actions.c:135
-#, fuzzy
 msgid "_Add to Selection"
-msgstr "/_Aggiungi alla selezione"
+msgstr "_Aggiungi alla selezione"
 
 #: app/actions/channels-actions.c:100 app/actions/layers-actions.c:200
 #: app/actions/layers-actions.c:223 app/actions/vectors-actions.c:140
-#, fuzzy
 msgid "_Subtract from Selection"
-msgstr "/_Sottrai dalla selezione"
+msgstr "_Sottrai dalla selezione"
 
 #: app/actions/channels-actions.c:105 app/actions/layers-actions.c:205
 #: app/actions/layers-actions.c:228 app/actions/vectors-actions.c:145
-#, fuzzy
 msgid "_Intersect with Selection"
-msgstr "/_Interseca con la selezione"
+msgstr "_Interseca con la selezione"
 
 #: app/actions/channels-commands.c:142
-#, fuzzy, c-format
+#, c-format
 msgid "%s Channel Copy"
-msgstr "Canale colore"
+msgstr "%s copia canale"
 
 #: app/actions/channels-commands.c:208 app/core/gimpselection.c:605
 #: app/pdb/selection_cmds.c:939 app/pdb/selection_cmds.c:1059
@@ -454,324 +434,263 @@ msgid "_Undo History"
 msgstr "_Ripristino operazioni"
 
 #: app/actions/dialogs-actions.c:115
-#, fuzzy
 msgid "Colo_rs"
-msgstr "Colore"
+msgstr "Colo_ri"
 
 #: app/actions/dialogs-actions.c:120
-#, fuzzy
 msgid "Brus_hes"
-msgstr "Pennelli"
+msgstr "_Pennelli"
 
 #: app/actions/dialogs-actions.c:125
-#, fuzzy
 msgid "P_atterns"
-msgstr "Motivi"
+msgstr "_Motivi"
 
 #: app/actions/dialogs-actions.c:130
-#, fuzzy
 msgid "_Gradients"
-msgstr "_Gradiente"
+msgstr "_Gradienti"
 
 #: app/actions/dialogs-actions.c:135
-#, fuzzy
 msgid "Pal_ettes"
-msgstr "Tavolozze"
+msgstr "_Tavolozze"
 
 #: app/actions/dialogs-actions.c:140
-#, fuzzy
 msgid "_Fonts"
-msgstr "Caratteri"
+msgstr "_Caratteri"
 
 #: app/actions/dialogs-actions.c:145
-#, fuzzy
 msgid "_Buffers"
-msgstr "Buffer"
+msgstr "_Buffer"
 
 #: app/actions/dialogs-actions.c:150
-#, fuzzy
 msgid "_Images"
-msgstr "Immagini"
+msgstr "_Immagini"
 
 #: app/actions/dialogs-actions.c:155
-#, fuzzy
 msgid "Document Histor_y"
-msgstr "Cronologia documenti"
+msgstr "Cronologia _documenti"
 
 #: app/actions/dialogs-actions.c:160
-#, fuzzy
 msgid "_Templates"
-msgstr "Modelli"
+msgstr "Model_li"
 
 #: app/actions/dialogs-actions.c:165
-#, fuzzy
 msgid "T_ools"
-msgstr "Strumenti"
+msgstr "Str_umenti"
 
 #: app/actions/dialogs-actions.c:170
-#, fuzzy
 msgid "Error Co_nsole"
-msgstr "Console di errore"
+msgstr "Co_nsole di errore"
 
 #: app/actions/dialogs-actions.c:180
-#, fuzzy
 msgid "_Preferences"
-msgstr "Preferenze"
+msgstr "_Preferenze"
 
 #: app/actions/dialogs-actions.c:185
-#, fuzzy
 msgid "_Module Manager"
-msgstr "Menu manager dei moduli"
+msgstr "_Manager dei moduli"
 
 #: app/actions/dialogs-actions.c:190
-#, fuzzy
 msgid "_Tip of the Day"
-msgstr "/Aiuto/Suggerimenti del _giorno"
+msgstr "Suggerimenti del _giorno"
 
 #: app/actions/dialogs-actions.c:195
-#, fuzzy
 msgid "_About"
-msgstr "_Auto"
+msgstr "_Informazioni"
 
 #: app/actions/dockable-actions.c:48
 msgid "Dialogs Menu"
 msgstr "Menu finestre"
 
 #: app/actions/dockable-actions.c:52
-#, fuzzy
 msgid "_Add Tab"
-msgstr "/_Aggiungi scheda"
+msgstr "_Aggiungi scheda"
 
 #: app/actions/dockable-actions.c:53
-#, fuzzy
 msgid "Preview Si_ze"
-msgstr "/Dimensione anteprima"
+msgstr "Dimensione anteprima"
 
 #: app/actions/dockable-actions.c:54
-#, fuzzy
 msgid "_Tab Style"
-msgstr "/S_tile scheda"
+msgstr "S_tile scheda"
 
 #: app/actions/dockable-actions.c:57
-#, fuzzy
 msgid "_Close Tab"
-msgstr "/_Rimuovi scheda"
+msgstr "_Rimuovi scheda"
 
 #: app/actions/dockable-actions.c:62
-#, fuzzy
 msgid "_Detach Tab"
-msgstr "/_Stacca scheda"
+msgstr "_Stacca scheda"
 
 #: app/actions/dockable-actions.c:67 app/actions/view-actions.c:105
-#, fuzzy
 msgid "Move to Screen..."
-msgstr "/Sposta sullo schermo..."
+msgstr "Sposta sullo schermo..."
 
 #: app/actions/dockable-actions.c:75
-#, fuzzy
 msgid "Show Image _Menu"
-msgstr "/Mostra _menu immagine"
+msgstr "Mostra _menu immagine"
 
 #: app/actions/dockable-actions.c:81
-#, fuzzy
 msgid "Auto Follow Active _Image"
-msgstr "/Auto segui _immagine attiva"
+msgstr "Auto segui _immagine attiva"
 
 #: app/actions/dockable-actions.c:100
-#, fuzzy
 msgid "_Tiny"
-msgstr "Molto piccolo"
+msgstr "Min_uscolo"
 
 #: app/actions/dockable-actions.c:101
-#, fuzzy
 msgid "E_xtra Small"
-msgstr "Molto piccolo"
+msgstr "E_xtra piccolo"
 
 #: app/actions/dockable-actions.c:102
-#, fuzzy
 msgid "_Small"
-msgstr "Piccola"
+msgstr "_Piccolo"
 
 #: app/actions/dockable-actions.c:103
-#, fuzzy
 msgid "_Medium"
-msgstr "Media"
+msgstr "_Medio"
 
 #: app/actions/dockable-actions.c:104
-#, fuzzy
 msgid "_Large"
-msgstr "Grande"
+msgstr "_Grande"
 
 #: app/actions/dockable-actions.c:105
-#, fuzzy
 msgid "Ex_tra Large"
-msgstr "Molto grande"
+msgstr "Ex_tra grande"
 
 #: app/actions/dockable-actions.c:106
-#, fuzzy
 msgid "_Huge"
-msgstr "Grandissimo"
+msgstr "Grandis_simo"
 
 #: app/actions/dockable-actions.c:107
-#, fuzzy
 msgid "_Enormous"
-msgstr "Enorme"
+msgstr "_Enorme"
 
 #: app/actions/dockable-actions.c:108
-#, fuzzy
 msgid "_Gigantic"
-msgstr "Gigante"
+msgstr "_Gigante"
 
 #: app/actions/dockable-actions.c:113
-#, fuzzy
 msgid "_Icon"
-msgstr "_Icona:"
+msgstr "_Icona"
 
 #: app/actions/dockable-actions.c:114
-#, fuzzy
 msgid "Current _Status"
-msgstr "Stato corrente"
+msgstr "_Stato corrente"
 
 #: app/actions/dockable-actions.c:115
-#, fuzzy
 msgid "_Text"
-msgstr "Testo"
+msgstr "_Testo"
 
 #: app/actions/dockable-actions.c:116
-#, fuzzy
 msgid "I_con & Text"
-msgstr "Icone e testo"
+msgstr "I_cone e testo"
 
 #: app/actions/dockable-actions.c:117
-#, fuzzy
 msgid "St_atus & Text"
-msgstr "Stato e testo"
+msgstr "St_ato e testo"
 
 #: app/actions/dockable-actions.c:126
-#, fuzzy
 msgid "View as _List"
-msgstr "/Mostra come e_lenco"
+msgstr "Mostra come e_lenco"
 
 #: app/actions/dockable-actions.c:131
-#, fuzzy
 msgid "View as _Grid"
-msgstr "/Mostra come _griglia"
+msgstr "Mostra come _griglia"
 
 #: app/actions/documents-actions.c:42
 msgid "Documents Menu"
 msgstr "Menu documenti"
 
 #: app/actions/documents-actions.c:46
-#, fuzzy
 msgid "_Open Image"
-msgstr "/_Apri immagine"
+msgstr "_Apri immagine"
 
 #: app/actions/documents-actions.c:51
-#, fuzzy
 msgid "_Raise or Open Image"
-msgstr "/Al_za o apri immagine"
+msgstr "Al_za o apri immagine"
 
 #: app/actions/documents-actions.c:56
-#, fuzzy
 msgid "File Open _Dialog"
-msgstr "/File/Apri"
+msgstr "Finestra a_pertura file"
 
 #: app/actions/documents-actions.c:61
-#, fuzzy
 msgid "Remove _Entry"
-msgstr "/Rimuovi _voce"
+msgstr "Rimuovi _voce"
 
 #: app/actions/documents-actions.c:66
-#, fuzzy
 msgid "Recreate _Preview"
-msgstr "/Rigenera _anteprima"
+msgstr "Rigenera _anteprima"
 
 #: app/actions/documents-actions.c:71
-#, fuzzy
 msgid "Reload _all Previews"
-msgstr "/Ricarica _tutte le anteprime"
+msgstr "Ricarica _tutte le anteprime"
 
 #: app/actions/documents-actions.c:76
-#, fuzzy
 msgid "Remove Dangling E_ntries"
-msgstr "/Rimuovi voci sco_nnesse"
+msgstr "Rimuovi voci sco_nnesse"
 
 #: app/actions/drawable-actions.c:46
-#, fuzzy
 msgid "_Desaturate"
-msgstr "Desaturazione"
+msgstr "_Desatura"
 
 #: app/actions/drawable-actions.c:51
-#, fuzzy
 msgid "In_vert"
-msgstr "Invertita"
+msgstr "In_verti"
 
 #: app/actions/drawable-actions.c:56
-#, fuzzy
 msgid "_Equalize"
-msgstr "Equalizzazione"
+msgstr "_Equalizza"
 
 #: app/actions/drawable-actions.c:61
-#, fuzzy
 msgid "_Offset..."
-msgstr "Spostamento"
+msgstr "Sp_ostamento..."
 
 #: app/actions/drawable-actions.c:69 app/actions/image-actions.c:114
-#, fuzzy
 msgid "Flip _Horizontally"
-msgstr "_Orizzontale:"
+msgstr "Riflessione _orizzontale"
 
 #: app/actions/drawable-actions.c:74 app/actions/image-actions.c:119
-#, fuzzy
 msgid "Flip _Vertically"
-msgstr "_Verticale:"
+msgstr "Riflessione _verticale"
 
 #. please use the degree symbol in the translation
 #: app/actions/drawable-actions.c:82 app/actions/image-actions.c:128
-#, fuzzy
 msgid "Rotate 90 degrees _CW"
-msgstr "/Livelli/Trasforma/Ruota di 90 gradi _orario"
+msgstr "Ruota di 90 gradi in senso _orario"
 
 #: app/actions/drawable-actions.c:87 app/actions/image-actions.c:133
-#, fuzzy
 msgid "Rotate _180 degrees"
-msgstr "/Immagine/Trasforma/Ruota di _180 gradi"
+msgstr "Ruota di _180 gradi"
 
 #: app/actions/drawable-actions.c:92 app/actions/image-actions.c:138
-#, fuzzy
 msgid "Rotate 90 degrees CC_W"
-msgstr "/Immagine/Trasforma/Ruota di 90° in senso _antiorario"
+msgstr "Ruota di 90 gradi in senso _antiorario"
 
 #: app/actions/drawable-commands.c:56
-#, fuzzy
 msgid "Desaturate operates only on RGB color layers."
-msgstr "Tonalità-saturazione operano solamente su livelli RGB."
+msgstr "Desatura opera solo su livelli di colore RGB."
 
 #: app/actions/drawable-commands.c:74
-#, fuzzy
 msgid "Invert does not operate on indexed layers."
-msgstr "Posterizzazione non possibile su livelli indicizzati."
+msgstr "Inverti non opera su livelli indicizzati."
 
 #: app/actions/drawable-commands.c:92
-#, fuzzy
 msgid "Equalize does not operate on indexed layers."
-msgstr "Posterizzazione non possibile su livelli indicizzati."
+msgstr "Equalizza non opera su livelli indicizzati."
 
 #: app/actions/drawable-commands.c:135 app/core/gimplayer.c:257
 msgid "Flip Layer"
-msgstr "Riflessione livello"
+msgstr "Rifletti livello"
 
 #: app/actions/drawable-commands.c:173 app/core/gimplayer.c:258
 msgid "Rotate Layer"
 msgstr "Ruota livello"
 
 #: app/actions/edit-actions.c:63
-#, fuzzy
 msgid "_Edit"
-msgstr "/_Modifica"
+msgstr "_Modifica"
 
 #: app/actions/edit-actions.c:64
-#, fuzzy
 msgid "Buffer"
 msgstr "Buffer"
 
@@ -784,69 +703,56 @@ msgid "_Redo"
 msgstr "_Ripeti"
 
 #: app/actions/edit-actions.c:77
-#, fuzzy
 msgid "Cu_t"
-msgstr "Taglia"
+msgstr "_Taglia"
 
 #: app/actions/edit-actions.c:82
-#, fuzzy
 msgid "_Copy"
-msgstr "Taglierina"
+msgstr "_Copia"
 
 #: app/actions/edit-actions.c:87
-#, fuzzy
 msgid "_Paste"
-msgstr "Incolla"
+msgstr "_Incolla"
 
 #: app/actions/edit-actions.c:92
-#, fuzzy
 msgid "Paste _Into"
-msgstr "Incolla dentro"
+msgstr "Incolla _dentro"
 
 #: app/actions/edit-actions.c:97
-#, fuzzy
 msgid "Paste as _New"
-msgstr "Incolla come nuovo"
+msgstr "Incolla come _nuovo"
 
 #: app/actions/edit-actions.c:102
-#, fuzzy
 msgid "Cu_t Named..."
-msgstr "/Modifica/Buffer/_Taglia per nome..."
+msgstr "_Taglia con nome..."
 
 #: app/actions/edit-actions.c:107
-#, fuzzy
 msgid "_Copy Named..."
-msgstr "/Modifica/Buffer/_Copia per nome..."
+msgstr "_Copia con nome..."
 
 #: app/actions/edit-actions.c:112
-#, fuzzy
 msgid "_Paste Named..."
-msgstr "/Modifica/Buffer/_Incolla per nome..."
+msgstr "_Incolla con nome..."
 
 #: app/actions/edit-actions.c:117
-#, fuzzy
 msgid "Cl_ear"
-msgstr "Cancella"
+msgstr "Canc_ella"
 
 #: app/actions/edit-actions.c:122
-#, fuzzy
 msgid "_Stroke Selection..."
-msgstr "Disegna selezione"
+msgstr "_Disegna selezione"
 
 #: app/actions/edit-actions.c:130
-#, fuzzy
 msgid "Fill with _FG Color"
-msgstr "Riempi con colore di primo piano"
+msgstr "Riempi con colore di _primo piano"
 
 #: app/actions/edit-actions.c:135
-#, fuzzy
 msgid "Fill with B_G Color"
-msgstr "Riempi con colore di sfondo"
+msgstr "Riempi con colore di _sfondo"
 
 #: app/actions/edit-actions.c:140
-#, fuzzy
 msgid "Fill with P_attern"
-msgstr "Riempi con il motivo"
+msgstr "Riempi con il _motivo"
 
 #: app/actions/edit-actions.c:221
 #, c-format
@@ -876,18 +782,16 @@ msgid "There is no active layer or channel to stroke to."
 msgstr "Non c'è un livello o un canale attivo su cui disegnare"
 
 #: app/actions/edit-commands.c:304
-#, fuzzy
 msgid "There is no active layer or channel to cut from."
-msgstr "Non c'è un livello o un canale attivo su cui disegnare"
+msgstr "Non c'è un livello o un canale attivo da cui tagliare."
 
 #: app/actions/edit-commands.c:316 app/actions/edit-commands.c:353
 msgid "(Unnamed Buffer)"
 msgstr "(buffer senza nome)"
 
 #: app/actions/edit-commands.c:341
-#, fuzzy
 msgid "There is no active layer or channel to copy from."
-msgstr "Non c'è un livello o un canale attivo su cui disegnare"
+msgstr "Non c'è un livello o un canale attivo da cui copiare"
 
 #: app/actions/error-console-actions.c:39
 msgid "Error Console Menu"
@@ -973,14 +877,12 @@ msgstr ""
 "%s"
 
 #: app/actions/file-commands.c:239
-#, fuzzy
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
 #: app/actions/file-commands.c:243
-#, fuzzy
 msgid "Enter a name for this template"
-msgstr "Crea una nuova immagine dal modello selezionato"
+msgstr "Inserire un nome per questo modello"
 
 #: app/actions/file-commands.c:265
 msgid "Revert failed. No file name associated with this image."
@@ -1004,9 +906,8 @@ msgid "Revert Image"
 msgstr "Ricarica immagine"
 
 #: app/actions/file-commands.c:342
-#, fuzzy
 msgid "(Unnamed Template)"
-msgstr "Modelli di immagine"
+msgstr "(modello senza nome)"
 
 #: app/actions/file-commands.c:413
 #, fuzzy, c-format
@@ -1015,119 +916,100 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Salvataggio di '%s' fallito:\n"
+"Ricarica da '%s' fallita:\n"
 "\n"
 "%s"
 
 #: app/actions/file-open-actions.c:43
-#, fuzzy
 msgid "File Open Menu"
-msgstr "Apri menu"
+msgstr "Menu di apertura file"
 
 #: app/actions/file-open-actions.c:50
-#, fuzzy
 msgid "Automatic"
-msgstr "/Automatico"
+msgstr "Automatico"
 
 #: app/actions/file-save-actions.c:43
-#, fuzzy
 msgid "File Save Menu"
-msgstr "Salva menu"
+msgstr "Menu di salvataggio file"
 
 #: app/actions/file-save-actions.c:50
-#, fuzzy
 msgid "By Extension"
-msgstr "/Per estensione"
+msgstr "Per estensione"
 
 #: app/actions/fonts-actions.c:44
 msgid "Fonts Menu"
 msgstr "Menu caratteri"
 
 #: app/actions/fonts-actions.c:48
-#, fuzzy
 msgid "_Rescan Font List"
-msgstr "/_Rileggi elenco caratteri"
+msgstr "_Rileggi elenco caratteri"
 
 #: app/actions/gradient-editor-actions.c:45
 msgid "Gradient Editor Menu"
 msgstr "Menu editor dei gradienti"
 
 #: app/actions/gradient-editor-actions.c:49
-#, fuzzy
 msgid "_Load Left Color From"
-msgstr "/Carica il co_lore sinistro da"
+msgstr "Carica il co_lore sinistro da"
 
 #: app/actions/gradient-editor-actions.c:50
-#, fuzzy
 msgid "_Save Left Color To"
-msgstr "/_Salva il colore sinistro su"
+msgstr "_Salva il colore sinistro su"
 
 #: app/actions/gradient-editor-actions.c:51
-#, fuzzy
 msgid "Load Right Color Fr_om"
-msgstr "/Carica colore destr_o da"
+msgstr "Carica colore destr_o da"
 
 #: app/actions/gradient-editor-actions.c:52
-#, fuzzy
 msgid "Sa_ve Right Color To"
-msgstr "/Sal_va il colore destro su"
+msgstr "Sal_va il colore destro su"
 
 #: app/actions/gradient-editor-actions.c:57
-#, fuzzy
 msgid "L_eft Endpoint's Color..."
-msgstr "/Color_e capo sinistro..."
+msgstr "Color_e capo sinistro..."
 
 #: app/actions/gradient-editor-actions.c:62
-#, fuzzy
 msgid "R_ight Endpoint's Color..."
-msgstr "/Colore capo destro..."
+msgstr "Colore capo destro..."
 
 #: app/actions/gradient-editor-actions.c:102
-#, fuzzy
 msgid "Ble_nd Endpoints' Colors"
-msgstr "/Sfumatura _colori agli estremi"
+msgstr "Sfumatura _colori estremi"
 
 #: app/actions/gradient-editor-actions.c:107
-#, fuzzy
 msgid "Blend Endpoints' Opacit_y"
-msgstr "/Sfumatura _opacità agli estremi"
+msgstr "Sfumatura _opacità estremi"
 
 #: app/actions/gradient-editor-actions.c:137
-#, fuzzy
 msgid "_Left Neighbor's Right Endpoint"
-msgstr "/Carica colore sinistro da/Capo destro più vicino a si_nistra"
+msgstr "Capo destro più vicino a _sinistra"
 
 #: app/actions/gradient-editor-actions.c:142
-#, fuzzy
 msgid "_Right Endpoint"
-msgstr "/Colore capo destro..."
+msgstr "Capo _destro"
 
 #: app/actions/gradient-editor-actions.c:147
 #: app/actions/gradient-editor-actions.c:195
-#, fuzzy
 msgid "_FG Color"
-msgstr "Colore primo piano/sfondo"
+msgstr "Colore _primo piano"
 
 #: app/actions/gradient-editor-actions.c:152
 #: app/actions/gradient-editor-actions.c:200
-#, fuzzy
 msgid "_BG Color"
-msgstr "Colore primo piano/sfondo"
+msgstr "Colore _sfondo"
 
 #: app/actions/gradient-editor-actions.c:185
 #, fuzzy
 msgid "_Right Neighbor's Left Endpoint"
-msgstr "/Carica colore destro da/Capo sinistro più vicino a _destra"
+msgstr "Capo sinistro più vicino a _destra"
 
 #: app/actions/gradient-editor-actions.c:190
-#, fuzzy
 msgid "_Left Endpoint"
-msgstr "/Color_e capo sinistro..."
+msgstr "Capo _sinistro..."
 
 #: app/actions/gradient-editor-actions.c:239
-#, fuzzy
 msgid "_Linear"
-msgstr "Lineare"
+msgstr "_Lineare"
 
 #: app/actions/gradient-editor-actions.c:244
 msgid "_Curved"
@@ -1329,9 +1211,8 @@ msgid "Gradients Menu"
 msgstr "Menu gradienti"
 
 #: app/actions/gradients-actions.c:50
-#, fuzzy
 msgid "_Edit Gradient..."
-msgstr "/_Modifica/Gradiente..."
+msgstr "_Modifica gradiente..."
 
 #: app/actions/gradients-actions.c:55
 msgid "_New Gradient"
@@ -1351,7 +1232,7 @@ msgstr "_Elimina gradiente..."
 
 #: app/actions/gradients-actions.c:75
 msgid "_Refresh Gradients"
-msgstr "_Rinfresca gradienti"
+msgstr "Aggio_rna gradienti"
 
 #: app/actions/gradients-commands.c:73
 #, c-format
@@ -1821,16 +1702,15 @@ msgstr "_Elimina tavolozza"
 
 #: app/actions/palettes-actions.c:79
 msgid "_Refresh Palettes"
-msgstr "_Ricarica tavolozza"
+msgstr "Aggio_rna tavolozze"
 
 #: app/actions/palettes-commands.c:79
 msgid "Merge Palette"
 msgstr "Fondi tavolozza"
 
 #: app/actions/palettes-commands.c:83
-#, fuzzy
 msgid "Enter a name for the merged palette"
-msgstr "Crea una nuova immagine dal modello selezionato"
+msgstr "Inserire un nome per la tavolozza fusa"
 
 #: app/actions/patterns-actions.c:44
 msgid "Patterns Menu"
@@ -1854,7 +1734,7 @@ msgstr "_Elimina motivo..."
 
 #: app/actions/patterns-actions.c:68
 msgid "_Refresh Patterns"
-msgstr "_Ricarica motivi"
+msgstr "Aggio_rna motivi"
 
 #: app/actions/plug-in-actions.c:60
 msgid "Filte_rs"
