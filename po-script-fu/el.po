@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
-"POT-Creation-Date: 2002-05-28 02:11+0200\n"
+"POT-Creation-Date: 2002-08-20 15:18+0200\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -122,19 +122,19 @@ msgid ""
 msgstr ""
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:487
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 #: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 #: plug-ins/script-fu/script-fu-scripts.c:1967
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:495
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "Ημ/νία:"
@@ -160,18 +160,18 @@ msgstr ""
 "Σφάλμα κατά την ανάγνωση του αρχείου %s:\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:568
 #, fuzzy
 msgid "Script-Fu Server Options"
 msgstr "Λιγότερες Επιλογές"
 
-#: plug-ins/script-fu/script-fu-server.c:578
+#: plug-ins/script-fu/script-fu-server.c:595
 #, fuzzy
 msgid "Server Port:"
 msgstr "Εξυπηρετητής:"
 
 #
-#: plug-ins/script-fu/script-fu-server.c:584
+#: plug-ins/script-fu/script-fu-server.c:601
 #, fuzzy
 msgid "Server Logfile:"
 msgstr "Αποθήκευση Αρχείου Καταγραφών"
@@ -193,75 +193,74 @@ msgstr "εμφάνιση λίστας με διαθέσιμους αγωγούς
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr ""
 
+#
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
 #, fuzzy
-msgid "DB Browser (init...)"
-msgstr " Εξερεύνηση..."
+msgid "DB Browser"
+msgstr "Εξερεύνηση"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
 #, fuzzy
-msgid "Search by Name"
+msgid "Search by _Name"
 msgstr "Βάση αναζήτησης:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
 #, fuzzy
-msgid "Search by Blurb"
+msgid "Search by _Blurb"
 msgstr "Εύρεση στη Μνήμη.."
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:215
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
 #, fuzzy
-msgid "Search:"
+msgid "_Search:"
 msgstr "Αναζήτηση: "
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:346
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
 msgid "Name:"
 msgstr "Όνομα:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:355
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
 #, fuzzy
 msgid "Blurb:"
 msgstr "Μπλέ:"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
 #, fuzzy
 msgid "In:"
 msgstr "Μέσα"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:415
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
 #, fuzzy
 msgid "Out:"
 msgstr "Έξω"
 
 #
-#: plug-ins/dbbrowser/dbbrowser_utils.c:469
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
 #, fuzzy
 msgid "Help:"
 msgstr "Βοήθεια"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:572
-msgid "DB Browser (by name - please wait)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:596
-msgid "DB Browser (by blurb - please wait)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
-msgid "DB Browser (please wait)"
-msgstr ""
-
-#
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
-#, fuzzy
-msgid "DB Browser"
-msgstr "Εξερεύνηση"
+msgid "Searching - please wait"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+msgid "No matches"
+msgstr ""
 
 #
 #: plug-ins/gap/sel-to-anim-img.scm.h:1
@@ -2584,6 +2583,10 @@ msgstr ""
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
+
+#, fuzzy
+#~ msgid "DB Browser (init...)"
+#~ msgstr " Εξερεύνηση..."
 
 #, fuzzy
 #~ msgid "Reset to Defaults"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu VERSION\n"
-"POT-Creation-Date: 2002-05-28 02:11+0200\n"
+"POT-Creation-Date: 2002-08-20 15:18+0200\n"
 "PO-Revision-Date: 2000-12-18 23:30-0800\n"
 "Last-Translator: Unknown :-(\n"
 "Language-Team: Korean\n"
@@ -108,19 +108,19 @@ msgstr ""
 "적어도 당신이 선택한 한 글꼴이 잘못되었다\n"
 "설정을 검사해보세요\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:487
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 #: plug-ins/script-fu/script-fu-scripts.c:1961
 #, fuzzy
 msgid "Author:"
 msgstr "저자 :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 #: plug-ins/script-fu/script-fu-scripts.c:1967
 #, fuzzy
 msgid "Copyright:"
 msgstr "저작권 :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:495
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 #, fuzzy
 msgid "Date:"
@@ -143,16 +143,16 @@ msgid ""
 "%s"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:568
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu 서버 옵션"
 
-#: plug-ins/script-fu/script-fu-server.c:578
+#: plug-ins/script-fu/script-fu-server.c:595
 #, fuzzy
 msgid "Server Port:"
 msgstr "서버 포트:"
 
-#: plug-ins/script-fu/script-fu-server.c:584
+#: plug-ins/script-fu/script-fu-server.c:601
 #, fuzzy
 msgid "Server Logfile:"
 msgstr "서버 로그파일:"
@@ -177,60 +177,59 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
 #, fuzzy
-msgid "DB Browser (init...)"
+msgid "DB Browser"
 msgstr "찾아보기..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
-msgid "Search by Name"
+msgid "Search by _Name"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
-msgid "Search by Blurb"
+msgid "Search by _Blurb"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:215
-msgid "Search:"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+msgid "_Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:346
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
 #, fuzzy
 msgid "Name:"
 msgstr "날짜 :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:355
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
 msgid "Blurb:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:415
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:469
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:572
-msgid "DB Browser (by name - please wait)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:596
-msgid "DB Browser (by blurb - please wait)"
-msgstr ""
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
-msgid "DB Browser (please wait)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+msgid "Searching by blurb - please wait"
 msgstr ""
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
-#, fuzzy
-msgid "DB Browser"
-msgstr "찾아보기..."
+msgid "Searching - please wait"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+msgid "No matches"
+msgstr ""
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:1
 #, fuzzy
@@ -2472,6 +2471,10 @@ msgstr ""
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
+
+#, fuzzy
+#~ msgid "DB Browser (init...)"
+#~ msgstr "찾아보기..."
 
 #, fuzzy
 #~ msgid "Reset to Defaults"

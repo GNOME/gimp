@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-07-10 01:52+0800\n"
+"POT-Creation-Date: 2002-08-20 15:04+0200\n"
 "PO-Revision-Date: 2002-07-10 01:52+0800\n"
 "Last-Translator: Xie Yuheng <elephant@linux.net.cn>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -183,212 +183,212 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(这个控制台窗口将在十秒内关闭)\n"
 
-#: app/undo.c:3497
+#: app/undo.c:3531
 #, c-format
 msgid "Can't undo %s"
 msgstr "无法撤销 %s"
 
-#: app/undo.c:3523
+#: app/undo.c:3557
 msgid "<<invalid>>"
 msgstr "<<无效>>"
 
-#: app/gui/resize-dialog.c:185 app/undo.c:3524
+#: app/gui/resize-dialog.c:185 app/undo.c:3558
 msgid "Scale Image"
 msgstr "缩放图像"
 
-#: app/undo.c:3525
+#: app/undo.c:3559
 msgid "Resize Image"
 msgstr "图像重置大小"
 
-#: app/undo.c:3526
+#: app/undo.c:3560
 msgid "Convert Image"
 msgstr "转换图像"
 
-#: app/undo.c:3527
+#: app/undo.c:3561
 msgid "Crop Image"
 msgstr "剪割图像"
 
-#: app/undo.c:3528
+#: app/undo.c:3562
 msgid "Merge Layers"
 msgstr "合并图层"
 
-#: app/undo.c:3529 app/undo.c:3554
+#: app/undo.c:3563 app/undo.c:3587
 msgid "QuickMask"
 msgstr "快速蒙板"
 
-#: app/undo.c:3530 app/undo.c:3555
+#: app/undo.c:3564 app/undo.c:3588
 msgid "Guide"
 msgstr "参考线"
 
-#: app/undo.c:3531
+#: app/undo.c:3565
 msgid "Layer Properties"
 msgstr "图层属性"
 
-#: app/gui/resize-dialog.c:179 app/undo.c:3532
+#: app/gui/resize-dialog.c:179 app/undo.c:3566
 msgid "Scale Layer"
 msgstr "缩放图层"
 
-#: app/undo.c:3533
+#: app/undo.c:3567
 msgid "Resize Layer"
 msgstr "图层重置大小"
 
-#: app/undo.c:3534
+#: app/undo.c:3568
 msgid "Move Layer"
 msgstr "移动图层"
 
-#: app/undo.c:3535
+#: app/undo.c:3569
 msgid "Apply Layer Mask"
 msgstr "应用图层蒙板"
 
-#: app/undo.c:3536
+#: app/undo.c:3570
 #, fuzzy
 msgid "Linked Layer"
 msgstr "连接图层"
 
-#: app/undo.c:3537
+#: app/undo.c:3571
 msgid "Float Selection"
 msgstr "浮动选区"
 
-#: app/undo.c:3538
+#: app/undo.c:3572
 msgid "Anchor Floating Selection"
 msgstr "固定浮动选区"
 
-#: app/undo.c:3539 app/widgets/gimpbufferview.c:147
+#: app/undo.c:3573 app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/undo.c:3540
+#: app/undo.c:3574
 msgid "Cut"
 msgstr "剪切"
 
-#: app/undo.c:3541
+#: app/undo.c:3575
 msgid "Text"
 msgstr "文字"
 
-#: app/undo.c:3542 app/undo.c:3575
+#: app/undo.c:3576 app/undo.c:3609
 msgid "Transform"
 msgstr "变换"
 
-#: app/undo.c:3543 app/undo.c:3576
+#: app/undo.c:3577 app/undo.c:3610
 msgid "Paint"
 msgstr "涂画"
 
-#: app/undo.c:3544 app/undo.c:3577
+#: app/undo.c:3578 app/undo.c:3611
 msgid "Attach Parasite"
 msgstr ""
 
-#: app/undo.c:3545 app/undo.c:3578
+#: app/undo.c:3579 app/undo.c:3612
 msgid "Remove Parasite"
 msgstr ""
 
-#: app/undo.c:3546
+#: app/undo.c:3580
 msgid "Plug-In"
 msgstr "插件"
 
 #: app/gui/palette-import-dialog.c:441 app/pdb/internal_procs.c:124
-#: app/undo.c:3548
+#: app/undo.c:3582
 msgid "Image"
 msgstr "图像"
 
-#: app/undo.c:3549
+#: app/undo.c:3583
 #, fuzzy
 msgid "Image Mod"
 msgstr "图像修改"
 
-#: app/gui/file-new-dialog.c:364 app/undo.c:3550
+#: app/gui/file-new-dialog.c:364 app/undo.c:3584
 msgid "Image Type"
 msgstr "图像类型"
 
 #. Image size frame
-#: app/gui/file-new-dialog.c:140 app/undo.c:3551
+#: app/gui/file-new-dialog.c:140 app/undo.c:3585
 msgid "Image Size"
 msgstr "图像大小"
 
-#: app/undo.c:3552
+#: app/undo.c:3586
 msgid "Resolution Change"
 msgstr "改变分辨率"
 
-#: app/core/gimpchannel.c:458 app/undo.c:3553
+#: app/core/gimpchannel.c:503 app/undo.c:3589
 msgid "Selection Mask"
 msgstr "选区蒙板"
 
-#: app/undo.c:3556
+#: app/undo.c:3590
 #, fuzzy
 msgid "Rename Item"
 msgstr "重命名图层"
 
-#: app/gui/layers-commands.c:621 app/undo.c:3557
+#: app/gui/layers-commands.c:621 app/undo.c:3591
 msgid "New Layer"
 msgstr "新建图层"
 
-#: app/undo.c:3558
+#: app/undo.c:3592
 msgid "Delete Layer"
 msgstr "删除图层"
 
-#: app/undo.c:3559
+#: app/undo.c:3593
 #, fuzzy
 msgid "Layer Mod"
 msgstr "图层修改"
 
-#: app/undo.c:3560
+#: app/undo.c:3594
 msgid "Add Layer Mask"
 msgstr "添加图层蒙板"
 
-#: app/undo.c:3561
+#: app/undo.c:3595
 msgid "Delete Layer Mask"
 msgstr "删除图层蒙板"
 
-#: app/undo.c:3562
+#: app/undo.c:3596
 msgid "Layer Reposition"
 msgstr "图层重定位"
 
-#: app/undo.c:3563
+#: app/undo.c:3597
 msgid "Layer Move"
 msgstr "图层移动"
 
-#: app/gui/channels-commands.c:334 app/undo.c:3564
+#: app/gui/channels-commands.c:334 app/undo.c:3598
 msgid "New Channel"
 msgstr "新建通道"
 
-#: app/undo.c:3565
+#: app/undo.c:3599
 msgid "Delete Channel"
 msgstr "删除通道"
 
-#: app/undo.c:3566
+#: app/undo.c:3600
 #, fuzzy
 msgid "Channel Mod"
 msgstr "通道修改"
 
-#: app/undo.c:3567
+#: app/undo.c:3601
 msgid "Channel Reposition"
 msgstr "通道重定位"
 
-#: app/undo.c:3568
+#: app/undo.c:3602
 msgid "New Vectors"
 msgstr "新建向量"
 
-#: app/undo.c:3569
+#: app/undo.c:3603
 msgid "Delete Vectors"
 msgstr "删除向量"
 
-#: app/undo.c:3570
+#: app/undo.c:3604
 #, fuzzy
 msgid "Vectors Mod"
 msgstr "向量修改"
 
-#: app/undo.c:3571
+#: app/undo.c:3605
 msgid "Vectors Reposition"
 msgstr "向量重定位"
 
-#: app/undo.c:3572
+#: app/undo.c:3606
 msgid "FS to Layer"
 msgstr "浮动选区到图层"
 
-#: app/undo.c:3573
+#: app/undo.c:3607
 msgid "FS Rigor"
 msgstr "浮动选区激活"
 
-#: app/undo.c:3574
+#: app/undo.c:3608
 msgid "FS Relax"
 msgstr "浮动选区释放"
 
@@ -900,7 +900,7 @@ msgstr ""
 "无法保存“%s”：\n"
 "%s"
 
-#: app/core/gimpimage-mask.c:237
+#: app/core/gimpimage-mask.c:223
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
@@ -908,15 +908,15 @@ msgstr ""
 "无法剪切或复制，因为选择\n"
 "区域为空。"
 
-#: app/core/gimpimage-mask.c:384
+#: app/core/gimpimage-mask.c:370
 msgid "Cannot float selection: No selection made."
 msgstr "无法浮动选区：还没有作出选择。"
 
-#: app/core/gimpimage-mask.c:398 app/gui/layers-commands.c:810
+#: app/core/gimpimage-mask.c:384 app/gui/layers-commands.c:810
 msgid "Floating Selection"
 msgstr "浮动选区"
 
-#: app/core/gimpimage-mask.c:526
+#: app/core/gimpimage-mask.c:591
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -924,7 +924,7 @@ msgstr ""
 "活动图层没有 alpha 通道\n"
 "以转换到选区。"
 
-#: app/core/gimpimage-mask.c:545
+#: app/core/gimpimage-mask.c:615
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -932,11 +932,11 @@ msgstr ""
 "活动图层没有蒙板\n"
 "以转换到选区。"
 
-#: app/core/gimpimage-mask.c:606
+#: app/core/gimpimage-mask.c:668
 msgid "No selection to stroke."
 msgstr "没有选区供勾画。"
 
-#: app/core/gimpimage-mask.c:660
+#: app/core/gimpimage-mask.c:722
 msgid "Paint operation failed."
 msgstr "涂画操作失败。"
 
@@ -988,27 +988,27 @@ msgstr "%.1f MB"
 msgid "Untitled"
 msgstr "未命名"
 
-#: app/core/gimpimage.c:2799
+#: app/core/gimpimage.c:2797
 msgid "Layer cannot be raised higher."
 msgstr "图层无法再升高。"
 
-#: app/core/gimpimage.c:2823
+#: app/core/gimpimage.c:2821
 msgid "Layer cannot be lowered more."
 msgstr "图层无法再降低。"
 
-#: app/core/gimpimage.c:2844
+#: app/core/gimpimage.c:2842
 msgid "Layer is already on top."
 msgstr "图层已经位于顶部。"
 
-#: app/core/gimpimage.c:2850
+#: app/core/gimpimage.c:2848
 msgid "Cannot raise a layer without alpha."
 msgstr "无法升高没有 alpha 的图层。"
 
-#: app/core/gimpimage.c:2874
+#: app/core/gimpimage.c:2872
 msgid "Layer is already on the bottom."
 msgstr "图层已经位于底部。"
 
-#: app/core/gimpimage.c:2921
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1017,19 +1017,19 @@ msgstr ""
 "图层“%s”没有 alpha 。\n"
 "图层将放在它上面。"
 
-#: app/core/gimpimage.c:3064
+#: app/core/gimpimage.c:3062
 msgid "Channel cannot be raised higher."
 msgstr "通道无法再升高。"
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3082
 msgid "Channel cannot be lowered more."
 msgstr "通道无法再降低。"
 
-#: app/core/gimpimage.c:3245
+#: app/core/gimpimage.c:3243
 msgid "Path cannot be raised higher."
 msgstr "路径无法再升高。"
 
-#: app/core/gimpimage.c:3265
+#: app/core/gimpimage.c:3263
 msgid "Path cannot be lowered more."
 msgstr "路径无法再降低。"
 
@@ -6055,15 +6055,15 @@ msgstr "选择手画的区域"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/工具/选择工具/自由选择"
 
-#: app/tools/gimpfuzzyselecttool.c:96
+#: app/tools/gimpfuzzyselecttool.c:97
 msgid "Fuzzy Select"
 msgstr "模糊选择"
 
-#: app/tools/gimpfuzzyselecttool.c:97
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
 msgstr "选择邻近的区域"
 
-#: app/tools/gimpfuzzyselecttool.c:98
+#: app/tools/gimpfuzzyselecttool.c:99
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/工具/选择工具/模糊选择"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -241,19 +241,19 @@ msgstr "Iniþializeazã"
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:163
 msgid "Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:163
+#: libgimpwidgets/gimpstock.c:166
 msgid "Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:164
+#: libgimpwidgets/gimpstock.c:167
 msgid "Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:165
+#: libgimpwidgets/gimpstock.c:168
 msgid "Shear"
 msgstr "Decupare"
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.3.0\n"
-"POT-Creation-Date: 2002-05-28 02:11+0200\n"
+"POT-Creation-Date: 2002-08-20 15:18+0200\n"
 "PO-Revision-Date: 2001-11-08 12:55+0200\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional Chinese <zh-l10n@linux.org.tw>\n"
@@ -108,17 +108,17 @@ msgstr ""
 "你選的字型中最少有一款是無效的。\n"
 "請檢查你的設定。\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:487
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 #: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "作者："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 #: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Copyright:"
 msgstr "版權："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:495
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 #: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "日期："
@@ -142,15 +142,15 @@ msgstr ""
 "Script-Fu 發生錯誤\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:568
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu 伺服程式選項"
 
-#: plug-ins/script-fu/script-fu-server.c:578
+#: plug-ins/script-fu/script-fu-server.c:595
 msgid "Server Port:"
 msgstr "伺服程式連接埠："
 
-#: plug-ins/script-fu/script-fu-server.c:584
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Logfile:"
 msgstr "伺服程式紀錄檔："
 
@@ -172,58 +172,63 @@ msgstr "<Toolbox>/擴展/Script-Fu/重新整理"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
-msgid "DB Browser (init...)"
-msgstr "資料庫瀏覽器（初始化...）"
+msgid "DB Browser"
+msgstr "資料庫瀏覽器"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
-msgid "Search by Name"
+#, fuzzy
+msgid "Search by _Name"
 msgstr "依名稱搜尋"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
-msgid "Search by Blurb"
+#, fuzzy
+msgid "Search by _Blurb"
 msgstr "依簡介搜尋"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:215
-msgid "Search:"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+#, fuzzy
+msgid "_Search:"
 msgstr "搜尋："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:346
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
 msgid "Name:"
 msgstr "名稱："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:355
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
 msgid "Blurb:"
 msgstr "簡介："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
 msgid "In:"
 msgstr "輸入參數："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:415
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
 msgid "Out:"
 msgstr "輸出參數："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:469
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "說明："
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:572
-msgid "DB Browser (by name - please wait)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#, fuzzy
+msgid "Searching by name - please wait"
 msgstr "資料庫瀏覽器（依名稱搜尋 - 請稍等）"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:596
-msgid "DB Browser (by blurb - please wait)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#, fuzzy
+msgid "Searching by blurb - please wait"
 msgstr "資料庫瀏覽器（依簡介搜尋 - 請稍等）"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
-msgid "DB Browser (please wait)"
-msgstr "資料庫瀏覽器（請稍等）"
-
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
-msgid "DB Browser"
-msgstr "資料庫瀏覽器"
+msgid "Searching - please wait"
+msgstr ""
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+msgid "No matches"
+msgstr ""
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:1
 #, fuzzy
@@ -2402,6 +2407,12 @@ msgstr "<Toolbox>/擴展/網頁瀏覽器/增效模組註冊紀錄"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/擴展/網頁瀏覽器/使用者常問集"
+
+#~ msgid "DB Browser (init...)"
+#~ msgstr "資料庫瀏覽器（初始化...）"
+
+#~ msgid "DB Browser (please wait)"
+#~ msgstr "資料庫瀏覽器（請稍等）"
 
 #~ msgid "Reset to Defaults"
 #~ msgstr "重設為預設值"

@@ -30,7 +30,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2002-08-13 22:15+0200\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2002-08-13 22:21+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -1230,8 +1230,8 @@ msgstr "Vis/skjul en gitterramme i eksemplet"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
-#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
+#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
@@ -1302,7 +1302,7 @@ msgstr "Kan ikke åbne %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:507
-#: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:958
+#: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:947
 #: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:245
 #: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1214
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
@@ -3721,7 +3721,7 @@ msgstr "Gem som ikon"
 msgid "Icon Name:"
 msgstr "Ikonnavn:"
 
-#: plug-ins/common/gif.c:690
+#: plug-ins/common/gif.c:679
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
@@ -3729,7 +3729,7 @@ msgstr ""
 "GIF: Kunne ikke reducere antallet af farver\n"
 "yderligere. Gemmer som ugennemsigtig.\n"
 
-#: plug-ins/common/gif.c:950
+#: plug-ins/common/gif.c:939
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
@@ -3737,16 +3737,16 @@ msgstr ""
 "GIF: Desværre, kan ikke gemme RGB-billeder\n"
 "som GIF - konvertér til INDEXED eller GRAY først.\n"
 
-#: plug-ins/common/gif.c:968
+#: plug-ins/common/gif.c:957
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF: kan ikke åbne %s\n"
 
-#: plug-ins/common/gif.c:1157
+#: plug-ins/common/gif.c:1146
 msgid "GIF Warning"
 msgstr "GIF-advarsel"
 
-#: plug-ins/common/gif.c:1183
+#: plug-ins/common/gif.c:1172
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3763,61 +3763,61 @@ msgstr ""
 "Du kan vælge mellem at beskære alle lagene til\n"
 "billedkanterne eller fortryde denne gemning."
 
-#: plug-ins/common/gif.c:1229
+#: plug-ins/common/gif.c:1218
 msgid "Save as GIF"
 msgstr "Gem som GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1251
+#: plug-ins/common/gif.c:1240
 msgid "GIF Options"
 msgstr "GIF-indstillinger"
 
-#: plug-ins/common/gif.c:1259
+#: plug-ins/common/gif.c:1248
 msgid "Interlace"
 msgstr "Understøt gradvis indlæsning"
 
-#: plug-ins/common/gif.c:1275
+#: plug-ins/common/gif.c:1264
 msgid "GIF Comment:"
 msgstr "GIF-kommentar:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1336
+#: plug-ins/common/gif.c:1325
 msgid "Animated GIF Options"
 msgstr "Indstillinger for animeret GIF"
 
-#: plug-ins/common/gif.c:1344
+#: plug-ins/common/gif.c:1333
 msgid "Loop forever"
 msgstr "Evig løkke"
 
-#: plug-ins/common/gif.c:1357
+#: plug-ins/common/gif.c:1346
 msgid "Delay between Frames where Unspecified:"
 msgstr "Pause mellem billeder hvis ikke angivet:"
 
-#: plug-ins/common/gif.c:1370
+#: plug-ins/common/gif.c:1359
 msgid "Milliseconds"
 msgstr "Millisekunder"
 
-#: plug-ins/common/gif.c:1380
+#: plug-ins/common/gif.c:1369
 msgid "Frame Disposal where Unspecified: "
 msgstr "Overgang mellem billeder hvis ikke angivet:"
 
-#: plug-ins/common/gif.c:1389
+#: plug-ins/common/gif.c:1378
 msgid "I don't Care"
 msgstr "Jeg er ligeglad"
 
-#: plug-ins/common/gif.c:1391
+#: plug-ins/common/gif.c:1380
 msgid "Cumulative Layers (Combine)"
 msgstr "Kumulative lag (sæt sammen)"
 
-#: plug-ins/common/gif.c:1393
+#: plug-ins/common/gif.c:1382
 msgid "One Frame per Layer (Replace)"
 msgstr "Et billede per lag (erstat)"
 
-#: plug-ins/common/gif.c:2377
+#: plug-ins/common/gif.c:2366
 msgid "GIF: error writing output file\n"
 msgstr "GIF: fejl under skrivning af ud-fil\n"
 
-#: plug-ins/common/gif.c:2467
+#: plug-ins/common/gif.c:2456
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren er begrænset til %d tegn."

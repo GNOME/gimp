@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.3.7\n"
-"POT-Creation-Date: 2002-06-30 13:35+0200\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2002-06-30 11:08+0200\n"
 "Last-Translator: Christophe Merlet (RedFox) <christophe@merlet.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -36,7 +36,7 @@ msgstr "À propos"
 #: plug-ins/common/nlfilt.c:559 plug-ins/common/noisify.c:508
 #: plug-ins/common/plasma.c:343 plug-ins/common/polar.c:943
 #: plug-ins/common/ps.c:2955 plug-ins/common/sharpen.c:558
-#: plug-ins/common/sinus.c:2113 plug-ins/common/tileit.c:412
+#: plug-ins/common/sinus.c:2113 plug-ins/common/tileit.c:415
 #: plug-ins/common/waves.c:557 plug-ins/common/whirlpinch.c:827
 #: plug-ins/common/wind.c:1028 plug-ins/flame/flame.c:950
 #: plug-ins/gfig/gfig.c:3961 plug-ins/gflare/gflare.c:2557
@@ -303,7 +303,7 @@ msgstr "Fonction couleur"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:725 plug-ins/common/AlienMap.c:1460
-#: plug-ins/common/decompose.c:116
+#: plug-ins/common/decompose.c:117
 msgid "Red"
 msgstr "Rouge"
 
@@ -369,13 +369,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:766 plug-ins/common/AlienMap.c:1483
-#: plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:118
 msgid "Green"
 msgstr "Vert"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:807 plug-ins/common/AlienMap.c:1506
-#: plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:123
 msgid "Blue"
 msgstr "Bleu"
 
@@ -554,7 +554,7 @@ msgstr "Sélectionne un répertoire et actualise la collection."
 #: plug-ins/FractalExplorer/FractalExplorer.c:1397
 #: plug-ins/gimpressionist/presets.c:679
 #: plug-ins/imagemap/imap_cmd_delete.c:58
-#: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:151
+#: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
 msgstr "Supprimer"
 
@@ -1220,15 +1220,15 @@ msgstr "(Dés)activer l'aperçu en fil de fer"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
-#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
+#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1732
 #: plug-ins/common/sunras.c:439 plug-ins/common/tga.c:429
 #: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:734
-#: plug-ins/common/xpm.c:330 plug-ins/common/xwd.c:436
+#: plug-ins/common/xpm.c:332 plug-ins/common/xwd.c:436
 #: plug-ins/faxg3/faxg3.c:195 plug-ins/gfli/gfli.c:455 plug-ins/sgi/sgi.c:325
 #: plug-ins/sgi/sgi.c:327 plug-ins/xjt/xjt.c:3247
 #, c-format
@@ -1264,7 +1264,7 @@ msgstr "%s : mauvaise palette de couleurs"
 #: plug-ins/bmp/bmpread.c:319 plug-ins/bmp/bmpread.c:326
 #: plug-ins/bmp/bmpread.c:333 plug-ins/common/CEL.c:301
 #: plug-ins/common/blinds.c:384 plug-ins/common/compose.c:544
-#: plug-ins/common/decompose.c:475 plug-ins/common/film.c:995
+#: plug-ins/common/decompose.c:481 plug-ins/common/film.c:995
 #: plug-ins/common/gifload.c:845 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:903 plug-ins/common/lic.c:713
 #: plug-ins/common/pat.c:338 plug-ins/common/pcx.c:329
@@ -1293,7 +1293,7 @@ msgstr "Impossible d'ouvrir %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:507
-#: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:958
+#: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:947
 #: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:245
 #: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1214
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
@@ -1301,7 +1301,7 @@ msgstr "Impossible d'ouvrir %s"
 #: plug-ins/common/png.c:775 plug-ins/common/pnm.c:780
 #: plug-ins/common/ps.c:995 plug-ins/common/sunras.c:522
 #: plug-ins/common/tga.c:1014 plug-ins/common/tiff.c:1336
-#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:596
+#: plug-ins/common/xbm.c:982 plug-ins/common/xpm.c:598
 #: plug-ins/common/xwd.c:540 plug-ins/fits/fits.c:469 plug-ins/gfli/gfli.c:677
 #: plug-ins/sgi/sgi.c:543 plug-ins/sgi/sgi.c:545 plug-ins/xjt/xjt.c:1629
 #, c-format
@@ -1770,21 +1770,21 @@ msgid "Randoms from seed (shared)"
 msgstr "Aléatoires d'après graine (partagé)"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:1291
-#: plug-ins/common/decompose.c:122 plug-ins/fp/fp_gtk.c:292
+#: plug-ins/common/decompose.c:127 plug-ins/fp/fp_gtk.c:292
 #: plug-ins/fp/fp_gtk.c:426 plug-ins/gimpressionist/orientation.c:196
 #: plug-ins/gimpressionist/size.c:190
 msgid "Hue"
 msgstr "Teinte"
 
 #: plug-ins/common/CML_explorer.c:305 plug-ins/common/CML_explorer.c:1296
-#: plug-ins/common/decompose.c:123 plug-ins/fp/fp_gtk.c:296
+#: plug-ins/common/decompose.c:128 plug-ins/fp/fp_gtk.c:296
 #: plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
 #: plug-ins/rcm/rcm_dialog.c:545
 msgid "Saturation"
 msgstr "Saturation"
 
 #: plug-ins/common/CML_explorer.c:306 plug-ins/common/CML_explorer.c:1301
-#: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:300
+#: plug-ins/common/decompose.c:129 plug-ins/fp/fp_gtk.c:300
 #: plug-ins/fp/fp_gtk.c:434 plug-ins/gimpressionist/orientation.c:139
 #: plug-ins/gimpressionist/size.c:134
 msgid "Value"
@@ -2102,7 +2102,7 @@ msgstr "Aligner les calques visibles"
 #: plug-ins/common/unsharp.c:798 plug-ins/common/video.c:2170
 #: plug-ins/common/vpropagate.c:1056 plug-ins/common/waves.c:390
 #: plug-ins/common/whirlpinch.c:849 plug-ins/common/wind.c:1045
-#: plug-ins/common/xpm.c:751 plug-ins/maze/maze_face.c:206
+#: plug-ins/common/xpm.c:752 plug-ins/maze/maze_face.c:206
 #: plug-ins/mosaic/mosaic.c:682 plug-ins/xjt/xjt.c:802
 msgid "Parameter Settings"
 msgstr "Réglage des paramètres"
@@ -2319,13 +2319,13 @@ msgid "Blinds"
 msgstr "Fenêtre avec store"
 
 #: plug-ins/common/blinds.c:377 plug-ins/common/ripple.c:639
-#: plug-ins/common/tileit.c:455
+#: plug-ins/common/tileit.c:458
 #, fuzzy
 msgid "_Horizontal"
 msgstr "Horizontal"
 
 #: plug-ins/common/blinds.c:378 plug-ins/common/ripple.c:642
-#: plug-ins/common/tileit.c:465
+#: plug-ins/common/tileit.c:468
 #, fuzzy
 msgid "_Vertical"
 msgstr "Vertical"
@@ -2553,9 +2553,9 @@ msgid "Colorify"
 msgstr "Coloriser"
 
 #: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:415
-#: plug-ins/common/ps.c:2711 plug-ins/common/xpm.c:429
+#: plug-ins/common/ps.c:2711 plug-ins/common/xpm.c:431
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
-#: plug-ins/imagemap/imap_menu.c:338 plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/imagemap/imap_menu.c:303 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "Couleur"
 
@@ -2592,7 +2592,7 @@ msgstr "Couleur vers alpha : sélection de la couleur"
 msgid "to Alpha"
 msgstr "vers alpha"
 
-#: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:113
+#: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:114
 msgid "RGB"
 msgstr "RVB"
 
@@ -2600,7 +2600,7 @@ msgstr "RVB"
 msgid "rgb-compose"
 msgstr "Composer RVB"
 
-#: plug-ins/common/compose.c:124
+#: plug-ins/common/compose.c:124 plug-ins/common/decompose.c:119
 msgid "RGBA"
 msgstr "RVBA"
 
@@ -2612,7 +2612,7 @@ msgstr "Alpha :"
 msgid "rgba-compose"
 msgstr "Composer-RVBA"
 
-#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:119
+#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:124
 msgid "HSV"
 msgstr "TSV"
 
@@ -2635,7 +2635,7 @@ msgstr "Valeur :"
 msgid "hsv-compose"
 msgstr "Composer-HSV"
 
-#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:125
+#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:130
 msgid "CMY"
 msgstr "Trichromie"
 
@@ -2658,7 +2658,7 @@ msgstr "Jaune :"
 msgid "cmy-compose"
 msgstr "Composer-Trichromie"
 
-#: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:131
+#: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:136
 msgid "CMYK"
 msgstr "Quadrichromie"
 
@@ -2976,104 +2976,107 @@ msgstr "Enregistrer les points de la courbe dans un fichier"
 msgid "Curve Bend..."
 msgstr "Courber selon une courbe..."
 
-#: plug-ins/common/decompose.c:113 plug-ins/common/decompose.c:116
+#: plug-ins/common/decompose.c:114 plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:119
 msgid "red"
 msgstr "rouge"
 
-#: plug-ins/common/decompose.c:114 plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:115 plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:120
 msgid "green"
 msgstr "vert"
 
-#: plug-ins/common/decompose.c:115 plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:116 plug-ins/common/decompose.c:121
+#: plug-ins/common/decompose.c:123
 msgid "blue"
 msgstr "bleu"
 
-#: plug-ins/common/decompose.c:119 plug-ins/common/decompose.c:122
-msgid "hue"
-msgstr "teinte"
-
-#: plug-ins/common/decompose.c:120 plug-ins/common/decompose.c:123
-msgid "saturation"
-msgstr "saturation"
-
-#: plug-ins/common/decompose.c:121 plug-ins/common/decompose.c:124
-msgid "value"
-msgstr "valeur"
-
-#: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
-msgid "cyan"
-msgstr "cyan"
-
-#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
-msgid "magenta"
-msgstr "magenta"
-
-#: plug-ins/common/decompose.c:127 plug-ins/common/decompose.c:130
-msgid "yellow"
-msgstr "jaune"
-
-#: plug-ins/common/decompose.c:128
-msgid "Cyan"
-msgstr "Cyan"
-
-#: plug-ins/common/decompose.c:129
-msgid "Magenta"
-msgstr "Magenta"
-
-#: plug-ins/common/decompose.c:130
-msgid "Yellow"
-msgstr "Jaune"
-
-#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:135
-msgid "cyan_k"
-msgstr "cyan_k"
-
-#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:136
-msgid "magenta_k"
-msgstr "magenta_k"
-
-#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
-msgid "yellow_k"
-msgstr "jaune_k"
-
-#: plug-ins/common/decompose.c:134
-msgid "black"
-msgstr "noir"
-
-#: plug-ins/common/decompose.c:135
-msgid "Cyan_K"
-msgstr "Cyan_K"
-
-#: plug-ins/common/decompose.c:136
-msgid "Magenta_K"
-msgstr "Magenta_K"
-
-#: plug-ins/common/decompose.c:137
-msgid "Yellow_K"
-msgstr "Jaune_K"
-
-#: plug-ins/common/decompose.c:138
-msgid "Alpha"
-msgstr "Alpha"
-
-#: plug-ins/common/decompose.c:138
+#: plug-ins/common/decompose.c:122 plug-ins/common/decompose.c:143
 msgid "alpha"
 msgstr "alpha"
 
-#: plug-ins/common/decompose.c:204
+#: plug-ins/common/decompose.c:124 plug-ins/common/decompose.c:127
+msgid "hue"
+msgstr "teinte"
+
+#: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
+msgid "saturation"
+msgstr "saturation"
+
+#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
+msgid "value"
+msgstr "valeur"
+
+#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:133
+msgid "cyan"
+msgstr "cyan"
+
+#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:134
+msgid "magenta"
+msgstr "magenta"
+
+#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:135
+msgid "yellow"
+msgstr "jaune"
+
+#: plug-ins/common/decompose.c:133
+msgid "Cyan"
+msgstr "Cyan"
+
+#: plug-ins/common/decompose.c:134
+msgid "Magenta"
+msgstr "Magenta"
+
+#: plug-ins/common/decompose.c:135
+msgid "Yellow"
+msgstr "Jaune"
+
+#: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:140
+msgid "cyan_k"
+msgstr "cyan_k"
+
+#: plug-ins/common/decompose.c:137 plug-ins/common/decompose.c:141
+msgid "magenta_k"
+msgstr "magenta_k"
+
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:142
+msgid "yellow_k"
+msgstr "jaune_k"
+
+#: plug-ins/common/decompose.c:139
+msgid "black"
+msgstr "noir"
+
+#: plug-ins/common/decompose.c:140
+msgid "Cyan_K"
+msgstr "Cyan_K"
+
+#: plug-ins/common/decompose.c:141
+msgid "Magenta_K"
+msgstr "Magenta_K"
+
+#: plug-ins/common/decompose.c:142
+msgid "Yellow_K"
+msgstr "Jaune_K"
+
+#: plug-ins/common/decompose.c:143
+msgid "Alpha"
+msgstr "Alpha"
+
+#: plug-ins/common/decompose.c:209
 msgid "<Image>/Image/Mode/Decompose..."
 msgstr "<Image>/Image/Mode/Décomposer..."
 
-#: plug-ins/common/decompose.c:285
+#: plug-ins/common/decompose.c:290
 msgid "Decomposing..."
 msgstr "Décomposition..."
 
-#: plug-ins/common/decompose.c:879
+#: plug-ins/common/decompose.c:907
 msgid "Decompose"
 msgstr "Décomposer"
 
 #. parameter settings
-#: plug-ins/common/decompose.c:896
+#: plug-ins/common/decompose.c:924
 msgid "Extract Channels:"
 msgstr "Extraire les canaux :"
 
@@ -3772,7 +3775,7 @@ msgstr "Enregistrer au format GIcon"
 msgid "Icon Name:"
 msgstr "Nom de l'icône :"
 
-#: plug-ins/common/gif.c:690
+#: plug-ins/common/gif.c:679
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
 "Saving as opaque.\n"
@@ -3780,7 +3783,7 @@ msgstr ""
 "GIF : Impossible de réduire les couleurs de manière plus poussée.\n"
 "J'enregistre en tant qu'image opaque.\n"
 
-#: plug-ins/common/gif.c:950
+#: plug-ins/common/gif.c:939
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
@@ -3788,16 +3791,16 @@ msgstr ""
 "GIF : Désolé, il est impossible d'enregistrer des images RVB au format GIF.\n"
 "Veuillez d'abord convertir en couleurs indexées ou tons de gris.\n"
 
-#: plug-ins/common/gif.c:968
+#: plug-ins/common/gif.c:957
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF : impossible d'ouvrir %s\n"
 
-#: plug-ins/common/gif.c:1157
+#: plug-ins/common/gif.c:1146
 msgid "GIF Warning"
 msgstr "Avertissement GIF"
 
-#: plug-ins/common/gif.c:1183
+#: plug-ins/common/gif.c:1172
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3816,61 +3819,61 @@ msgstr ""
 "calques aux dimensions de l'image, soit d'annuler\n"
 "cet enregistrement."
 
-#: plug-ins/common/gif.c:1229
+#: plug-ins/common/gif.c:1218
 msgid "Save as GIF"
 msgstr "Enregistrer en GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1251
+#: plug-ins/common/gif.c:1240
 msgid "GIF Options"
 msgstr "Options GIF"
 
-#: plug-ins/common/gif.c:1259
+#: plug-ins/common/gif.c:1248
 msgid "Interlace"
 msgstr "Entrelacement"
 
-#: plug-ins/common/gif.c:1275
+#: plug-ins/common/gif.c:1264
 msgid "GIF Comment:"
 msgstr "Commentaire GIF :"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1336
+#: plug-ins/common/gif.c:1325
 msgid "Animated GIF Options"
 msgstr "Options d'animation GIF"
 
-#: plug-ins/common/gif.c:1344
+#: plug-ins/common/gif.c:1333
 msgid "Loop forever"
 msgstr "Boucle infinie"
 
-#: plug-ins/common/gif.c:1357
+#: plug-ins/common/gif.c:1346
 msgid "Delay between Frames where Unspecified:"
 msgstr "Délai entre les images lorsque non spécifié :"
 
-#: plug-ins/common/gif.c:1370
+#: plug-ins/common/gif.c:1359
 msgid "Milliseconds"
 msgstr "Millisecondes"
 
-#: plug-ins/common/gif.c:1380
+#: plug-ins/common/gif.c:1369
 msgid "Frame Disposal where Unspecified: "
 msgstr "Disposition des images lorsque non spécifié :"
 
-#: plug-ins/common/gif.c:1389
+#: plug-ins/common/gif.c:1378
 msgid "I don't Care"
 msgstr "Peu importe"
 
-#: plug-ins/common/gif.c:1391
+#: plug-ins/common/gif.c:1380
 msgid "Cumulative Layers (Combine)"
 msgstr "Calques cumulatifs (Combiner)"
 
-#: plug-ins/common/gif.c:1393
+#: plug-ins/common/gif.c:1382
 msgid "One Frame per Layer (Replace)"
 msgstr "Une image par calque (Remplacer)"
 
-#: plug-ins/common/gif.c:2377
+#: plug-ins/common/gif.c:2366
 msgid "GIF: error writing output file\n"
 msgstr "GIF: erreur lors de l'écriture du fichier de sortie\n"
 
-#: plug-ins/common/gif.c:2467
+#: plug-ins/common/gif.c:2456
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr ""
@@ -4027,7 +4030,7 @@ msgid "Drawing Grid..."
 msgstr "Tracé de la grille..."
 
 #: plug-ins/common/grid.c:660 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:411 plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/imagemap/imap_menu.c:380 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
 msgstr "Grille"
@@ -6086,7 +6089,7 @@ msgstr "Première couleur : "
 msgid "S_econd Color:"
 msgstr "Deuxième couleur :"
 
-#: plug-ins/common/sinus.c:1962 plug-ins/imagemap/imap_preferences.c:553
+#: plug-ins/common/sinus.c:1962 plug-ins/imagemap/imap_preferences.c:511
 #, fuzzy
 msgid "Co_lors"
 msgstr "Couleurs"
@@ -6570,7 +6573,7 @@ msgstr "JPEG"
 msgid "<Image>/Filters/Map/Tile..."
 msgstr "<Image>/Filtres/Carte/Morceler..."
 
-#: plug-ins/common/tile.c:206 plug-ins/common/tileit.c:338
+#: plug-ins/common/tile.c:206 plug-ins/common/tileit.c:341
 msgid "Tiling..."
 msgstr "Morcellement en cours..."
 
@@ -6592,58 +6595,58 @@ msgstr "Créer nouvelle image"
 msgid "<Image>/Filters/Map/Small Tiles..."
 msgstr "<Image>/Filtres/Carte/Petit Morceaux..."
 
-#. Get the preview image and store it also set has_alpha
+#. Get the preview image
 #. Start buildng the dialog up
-#: plug-ins/common/tileit.c:386
+#: plug-ins/common/tileit.c:389
 msgid "TileIt"
 msgstr "Mise en morceaux"
 
 #. Area for buttons etc
-#: plug-ins/common/tileit.c:441
+#: plug-ins/common/tileit.c:444
 msgid "Flipping"
 msgstr "Inversement"
 
-#: plug-ins/common/tileit.c:483
+#: plug-ins/common/tileit.c:486
 msgid "Applied to Tile"
 msgstr "Appliqué au Morceau"
 
-#: plug-ins/common/tileit.c:497
+#: plug-ins/common/tileit.c:500
 #, fuzzy
 msgid "A_ll Tiles"
 msgstr "Tous les morceaux"
 
-#: plug-ins/common/tileit.c:511
+#: plug-ins/common/tileit.c:514
 #, fuzzy
 msgid "Al_ternate Tiles"
 msgstr "Morceaux Alternés"
 
-#: plug-ins/common/tileit.c:525
+#: plug-ins/common/tileit.c:528
 #, fuzzy
 msgid "_Explicit Tile"
 msgstr "Morceau Explicite"
 
-#: plug-ins/common/tileit.c:531
+#: plug-ins/common/tileit.c:534
 #, fuzzy
 msgid "Ro_w:"
 msgstr "Ligne :"
 
-#: plug-ins/common/tileit.c:556
+#: plug-ins/common/tileit.c:559
 #, fuzzy
 msgid "Col_umn:"
 msgstr "Colonne :"
 
-#: plug-ins/common/tileit.c:588
+#: plug-ins/common/tileit.c:591
 #, fuzzy
 msgid "_Apply"
 msgstr "Appliquer"
 
-#: plug-ins/common/tileit.c:613
+#: plug-ins/common/tileit.c:616
 #, fuzzy
 msgid "O_pacity:"
 msgstr "Opacité :"
 
 #. Lower frame saying howmany segments
-#: plug-ins/common/tileit.c:624
+#: plug-ins/common/tileit.c:627
 msgid "Segment Setting"
 msgstr "Paramètres de la segmentation"
 
@@ -6826,7 +6829,7 @@ msgid "Unsharp Mask"
 msgstr "Enlever le relief"
 
 #: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1155
-#: plug-ins/gflare/gflare.c:3093
+#: plug-ins/gflare/gflare.c:3093 plug-ins/imagemap/imap_preferences.c:533
 #, fuzzy
 msgid "_Threshold:"
 msgstr "Seuil:"
@@ -7463,11 +7466,11 @@ msgstr "Écrire le fichier optionnel de masque"
 msgid "Mask File Extension:"
 msgstr "Extension du fichier de masque :"
 
-#: plug-ins/common/xpm.c:734
+#: plug-ins/common/xpm.c:735
 msgid "Save as XPM"
 msgstr "Enregistrer en XPM"
 
-#: plug-ins/common/xpm.c:764
+#: plug-ins/common/xpm.c:765
 #, fuzzy
 msgid "_Alpha Threshold:"
 msgstr "Seuil alpha :"
@@ -7982,7 +7985,7 @@ msgstr "Aperçu"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1908 plug-ins/gfig/gfig.c:5298
-#: plug-ins/imagemap/imap_selection.c:179 plug-ins/imagemap/imap_tools.c:146
+#: plug-ins/imagemap/imap_selection.c:179 plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
 msgstr "Éditer"
 
@@ -8315,8 +8318,8 @@ msgstr "Afficher l'image"
 msgid "Reload Image"
 msgstr "Recharger image"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:395
-#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:133
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:364
+#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr "Rectangle"
 
@@ -8437,7 +8440,7 @@ msgid "Done"
 msgstr "Terminé"
 
 #: plug-ins/gfig/gfig.c:4010 plug-ins/imagemap/imap_cmd_select.c:54
-#: plug-ins/imagemap/imap_tools.c:129
+#: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Sélectionner"
 
@@ -8679,7 +8682,7 @@ msgstr "Aperçu en temps réel"
 msgid "_New"
 msgstr "Nouveau"
 
-#: plug-ins/gflare/gflare.c:3169 plug-ins/imagemap/imap_menu.c:292
+#: plug-ins/gflare/gflare.c:3169 plug-ins/imagemap/imap_menu.c:257
 #, fuzzy
 msgid "_Edit"
 msgstr "Éditer"
@@ -8843,13 +8846,13 @@ msgstr "Dégradé probabilité :"
 msgid "Shape of Second Flares"
 msgstr "Ombre des Deuxièmes Éblouissement"
 
-#: plug-ins/gflare/gflare.c:4125 plug-ins/imagemap/imap_menu.c:398
-#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:137
+#: plug-ins/gflare/gflare.c:4125 plug-ins/imagemap/imap_menu.c:367
+#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "Cercle"
 
-#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:400
-#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:141
+#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "Polygone"
 
@@ -9605,7 +9608,7 @@ msgstr ""
 "écrite ou que votre installation est mal faite. Veuillez vérifier "
 "correctement avant de rapporter ceci comme un bug. </small></body></html>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:517
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:608
 msgid "<Untitled>"
 msgstr "<SansTitre>"
 
@@ -10056,7 +10059,7 @@ msgstr "Paramètres de la zone"
 msgid "Area #%d Settings"
 msgstr "Paramètres de la zone #%d"
 
-#: plug-ins/imagemap/imap_file.c:53 plug-ins/imagemap/imap_menu.c:75
+#: plug-ins/imagemap/imap_file.c:53 plug-ins/imagemap/imap_menu.c:70
 msgid "Error opening file"
 msgstr "Erreur lors de l'ouverture du fichier"
 
@@ -10145,15 +10148,15 @@ msgstr "pixels en haut"
 msgid "_Preview"
 msgstr "Aperçu"
 
-#: plug-ins/imagemap/imap_main.c:151
+#: plug-ins/imagemap/imap_main.c:152
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filtres/Web/Image cliquable Web..."
 
-#: plug-ins/imagemap/imap_main.c:668
+#: plug-ins/imagemap/imap_main.c:759
 msgid "Data changed"
 msgstr "Données modifiées"
 
-#: plug-ins/imagemap/imap_main.c:672
+#: plug-ins/imagemap/imap_main.c:763
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to discard your changes?"
@@ -10161,20 +10164,20 @@ msgstr ""
 "Quelques données ont été modifiées.\n"
 "Voulez-vous vraiment ignorer vos changements ?"
 
-#: plug-ins/imagemap/imap_main.c:881
+#: plug-ins/imagemap/imap_main.c:972
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Fichier « %s » enregistré."
 
-#: plug-ins/imagemap/imap_main.c:885
+#: plug-ins/imagemap/imap_main.c:976
 msgid "Couldn't save file:"
 msgstr "N'a pu enregistrer le fichier :"
 
-#: plug-ins/imagemap/imap_main.c:910
+#: plug-ins/imagemap/imap_main.c:1001
 msgid "Image size changed"
 msgstr "La taille de l'image a changé."
 
-#: plug-ins/imagemap/imap_main.c:914
+#: plug-ins/imagemap/imap_main.c:1005
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -10182,88 +10185,93 @@ msgstr ""
 "La taille de l'image a changé.\n"
 "Redimensionner les zones ?"
 
-#: plug-ins/imagemap/imap_main.c:945
+#: plug-ins/imagemap/imap_main.c:1036
 msgid "Couldn't read file:"
 msgstr "N'a pu lire le fichier :"
 
-#: plug-ins/imagemap/imap_main.c:991
+#: plug-ins/imagemap/imap_main.c:1082
 #, c-format
 msgid "URL: %s"
 msgstr "URL : %s"
 
-#: plug-ins/imagemap/imap_menu.c:220
+#: plug-ins/imagemap/imap_menu.c:185
 #, fuzzy
 msgid "_File"
 msgstr "Fichier"
 
-#: plug-ins/imagemap/imap_menu.c:248
+#: plug-ins/imagemap/imap_menu.c:213
 #, fuzzy, c-format
 msgid "_Undo %s"
 msgstr "Défaire %s"
 
-#: plug-ins/imagemap/imap_menu.c:264
+#: plug-ins/imagemap/imap_menu.c:229
 #, fuzzy, c-format
 msgid "_Redo %s"
 msgstr "Refaire %s"
 
-#: plug-ins/imagemap/imap_menu.c:307
+#: plug-ins/imagemap/imap_menu.c:272
 #, fuzzy
 msgid "Select _All"
 msgstr "Tout sélectionner"
 
-#: plug-ins/imagemap/imap_menu.c:314
+#: plug-ins/imagemap/imap_menu.c:279
 msgid "Edit Area Info..."
 msgstr "Éditer les infos de la zone..."
 
-#: plug-ins/imagemap/imap_menu.c:326
+#: plug-ins/imagemap/imap_menu.c:291
 #, fuzzy
 msgid "_View"
 msgstr "Voir"
 
-#: plug-ins/imagemap/imap_menu.c:330
+#: plug-ins/imagemap/imap_menu.c:295
 msgid "Area List"
 msgstr "Liste de zone"
 
-#: plug-ins/imagemap/imap_menu.c:334
+#: plug-ins/imagemap/imap_menu.c:299
 msgid "Source..."
 msgstr "Source..."
 
-#: plug-ins/imagemap/imap_menu.c:342 plug-ins/print/gimp_main_window.c:1423
+#: plug-ins/imagemap/imap_menu.c:307 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
 msgstr "Échelle de gris"
 
-#: plug-ins/imagemap/imap_menu.c:360
+#: plug-ins/imagemap/imap_menu.c:325
 msgid "Zoom To"
 msgstr "Zoomer à"
 
-#: plug-ins/imagemap/imap_menu.c:390
+#: plug-ins/imagemap/imap_menu.c:355
 #, fuzzy
 msgid "_Mapping"
 msgstr "Tracé"
 
-#: plug-ins/imagemap/imap_menu.c:393 plug-ins/imagemap/imap_popup.c:134
+#: plug-ins/imagemap/imap_menu.c:358 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
 msgstr "Pointer"
 
-#: plug-ins/imagemap/imap_menu.c:410
+#: plug-ins/imagemap/imap_menu.c:361
+#, fuzzy
+msgid "Select Contiguous Region"
+msgstr "Sélectionner une région"
+
+#: plug-ins/imagemap/imap_menu.c:379
 #, fuzzy
 msgid "_Goodies"
 msgstr "Bricoles"
 
-#: plug-ins/imagemap/imap_menu.c:412 plug-ins/imagemap/imap_popup.c:154
+#: plug-ins/imagemap/imap_menu.c:381 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
 msgstr "Paramètres de la grille..."
 
-#: plug-ins/imagemap/imap_menu.c:414
+#: plug-ins/imagemap/imap_menu.c:383
 msgid "Create Guides..."
 msgstr "Créer des guides..."
 
-#: plug-ins/imagemap/imap_menu.c:421
+#: plug-ins/imagemap/imap_menu.c:390
 #, fuzzy
 msgid "_Help"
 msgstr "Aide"
 
-#: plug-ins/imagemap/imap_menu.c:424
+#: plug-ins/imagemap/imap_menu.c:393
 msgid "About ImageMap..."
 msgstr "À propos d'ImageMap..."
 
@@ -10312,13 +10320,18 @@ msgstr "Zoom"
 msgid "Guides..."
 msgstr "Guides..."
 
-#: plug-ins/imagemap/imap_preferences.c:213
+#: plug-ins/imagemap/imap_preferences.c:208
 msgid "Couldn't save resource file:"
 msgstr "Je n'ai pu enregistrer le fichier de ressources :"
 
-#: plug-ins/imagemap/imap_preferences.c:365
+#: plug-ins/imagemap/imap_preferences.c:353
 msgid "Select Color"
 msgstr "Régler la couleur"
+
+#: plug-ins/imagemap/imap_preferences.c:438
+#, fuzzy
+msgid "_General"
+msgstr "Général"
 
 #: plug-ins/imagemap/imap_preferences.c:442
 msgid "Default Map Type"
@@ -10354,35 +10367,40 @@ msgstr "Afficher des bulles d'aides pour les URL"
 msgid "_Use double-sized grab handles"
 msgstr "Poignées de taille double"
 
-#: plug-ins/imagemap/imap_preferences.c:475
-#, fuzzy
-msgid "_General"
-msgstr "Général"
-
-#: plug-ins/imagemap/imap_preferences.c:497
-#, fuzzy
-msgid "Number of Undo _levels (1 - 99):"
-msgstr "Nombre de niveaux d'annulation (1-99) :"
-
-#: plug-ins/imagemap/imap_preferences.c:502
-#, fuzzy
-msgid "Number of MRU _entries (1 - 16):"
-msgstr "Nombre d'entrées de documents récents (1-16) :"
-
-#: plug-ins/imagemap/imap_preferences.c:505
+#: plug-ins/imagemap/imap_preferences.c:479
 #, fuzzy
 msgid "_Menu"
 msgstr "Menu"
 
-#: plug-ins/imagemap/imap_preferences.c:541
+#: plug-ins/imagemap/imap_preferences.c:483
+#, fuzzy
+msgid "Number of _Undo levels (1 - 99):"
+msgstr "Nombre de niveaux d'annulation (1-99) :"
+
+#: plug-ins/imagemap/imap_preferences.c:488
+#, fuzzy
+msgid "Number of M_RU entries (1 - 16):"
+msgstr "Nombre d'entrées de documents récents (1-16) :"
+
+#: plug-ins/imagemap/imap_preferences.c:513
 msgid "Normal:"
 msgstr "Normal :"
 
-#: plug-ins/imagemap/imap_preferences.c:547
+#: plug-ins/imagemap/imap_preferences.c:519
 msgid "Selected:"
 msgstr "Sélectionné :"
 
-#: plug-ins/imagemap/imap_preferences.c:575
+#: plug-ins/imagemap/imap_preferences.c:529
+#, fuzzy
+msgid "Co_ntiguous Region"
+msgstr "Dégradé continu"
+
+#: plug-ins/imagemap/imap_preferences.c:535
+#, fuzzy
+msgid "_Automatically convert"
+msgstr "Découpe une image automatiquement."
+
+#: plug-ins/imagemap/imap_preferences.c:556
 msgid "General Preferences"
 msgstr "Préférences générale"
 
@@ -10473,27 +10491,37 @@ msgstr "Zoom -"
 msgid "Edit Map Info"
 msgstr "Éditer les paramètres de l'image cliquable"
 
-#: plug-ins/imagemap/imap_tools.c:130
+#: plug-ins/imagemap/imap_tools.c:145
 msgid "Select existing area"
 msgstr "Sélectionner une zone existante"
 
-#: plug-ins/imagemap/imap_tools.c:134
+#: plug-ins/imagemap/imap_tools.c:149
+#, fuzzy
+msgid "Fuzzy Select"
+msgstr "Sélectionner"
+
+#: plug-ins/imagemap/imap_tools.c:150
+#, fuzzy
+msgid "Select contiguous regions"
+msgstr "Sélectionner une région"
+
+#: plug-ins/imagemap/imap_tools.c:155
 msgid "Define Rectangle area"
 msgstr "Définir une zone Rectangle"
 
-#: plug-ins/imagemap/imap_tools.c:138
+#: plug-ins/imagemap/imap_tools.c:159
 msgid "Define Circle/Oval area"
 msgstr "Définir une zone Circulaire/Ovale"
 
-#: plug-ins/imagemap/imap_tools.c:142
+#: plug-ins/imagemap/imap_tools.c:163
 msgid "Define Polygon area"
 msgstr "Définir une zone Polygonale"
 
-#: plug-ins/imagemap/imap_tools.c:147
+#: plug-ins/imagemap/imap_tools.c:168
 msgid "Edit selected area info"
 msgstr "Éditer les infos de la zone sélectionnée"
 
-#: plug-ins/imagemap/imap_tools.c:152
+#: plug-ins/imagemap/imap_tools.c:173
 msgid "Delete selected area"
 msgstr "Effacer la zone sélectionnée"
 
@@ -11296,7 +11324,7 @@ msgid "<Image>/File/Print..."
 msgstr "<Image>/Ficher/Imprimer..."
 
 #: plug-ins/print/print.c:733 plug-ins/print/print.c:734
-#: plug-ins/print/print.c:832 plug-ins/print/print.c:1183
+#: plug-ins/print/print.c:832 plug-ins/print/print.c:1181
 msgid "File"
 msgstr "Fichier"
 
@@ -14651,9 +14679,6 @@ msgstr "Erreur : le fichier de propriétés XJT %s est vide"
 #~ msgstr ""
 #~ "Ce greffon simule une lentille ellipsoïdale sur l'image, par la loi de "
 #~ "Snell-Descartes"
-
-#~ msgid "Automagically crops a picture."
-#~ msgstr "Découpe une image automatiquement."
 
 #~ msgid ""
 #~ "Automatically stretch the contrast of the specified drawable to cover all "

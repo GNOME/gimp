@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
-"POT-Creation-Date: 2002-06-18 00:21+0200\n"
+"POT-Creation-Date: 2002-08-20 15:18+0200\n"
 "PO-Revision-Date: 2002-06-18 00:20+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -118,18 +118,18 @@ msgstr ""
 "En eller flere af de skrifttyper du har valgt\n"
 "er ugyldige. Tjek venligst indstillingerne.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1961
 #: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "Udvikler:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1967
 #: plug-ins/dbbrowser/dbbrowser_utils.c:497
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Copyright:"
 msgstr "Ophavsret:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1973
 #: plug-ins/dbbrowser/dbbrowser_utils.c:489
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "Dato:"
 
@@ -231,7 +231,7 @@ msgstr "Søger efter beskrivelse - vent venligst"
 msgid "Searching - please wait"
 msgstr "Søger - vent venligst"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
 msgid "No matches"
 msgstr "Ingen fundet"
 

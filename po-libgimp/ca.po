@@ -1,25 +1,16 @@
 # gimp-libgimp translation to Catalan
 # Softcatala <tradgnome@softcatala.org>, 2000-2002
 # Jordi Jover, jordijn@softcatala.org	
-
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.2.3\n"
-"POT-Creation-Date: 2001-11-12 22:34-0800\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2002-10-28 01:03+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: libgimp/gimpcolorbutton.c:121
-msgid "/Use Foreground Color"
-msgstr "/Utilitza el color de primer pla"
-
-#: libgimp/gimpcolorbutton.c:122
-msgid "/Use Background Color"
-msgstr "/Utilitza el color de fons"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
 msgid "can't handle layers"
@@ -31,7 +22,8 @@ msgstr "Combina les capes visibles"
 
 #: libgimp/gimpexport.c:179
 msgid "can't handle layer offsets, size or opacity"
-msgstr "no es poden manejar les compensacions, les mides o l'opacitat de les capes"
+msgstr ""
+"no es poden manejar les compensacions, les mides o l'opacitat de les capes"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 msgid "can only handle layers as animation frames"
@@ -110,10 +102,7 @@ msgstr "Comfirmeu que voleu desar"
 msgid "Confirm"
 msgstr "Confirmeu"
 
-#: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
-#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:505
+#: libgimp/gimpexport.c:362
 msgid "Cancel"
 msgstr "Cancel·la"
 
@@ -150,92 +139,121 @@ msgid ""
 msgstr "Heu d'exportar la imatge abans de poder-la desar pels motius següents:"
 
 #. the footline
-#: libgimp/gimpexport.c:501
+#: libgimp/gimpexport.c:503
 msgid "The export conversion won't modify your original image."
 msgstr "La conversió de l'exportació no modificarà la imatge original."
 
-#: libgimp/gimpexport.c:569
+#: libgimp/gimpexport.c:571
 msgid "a layer mask"
 msgstr "una màscara de capa"
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:573
 msgid "a channel (saved selection)"
 msgstr "un canal (selecció desada)"
 
-#: libgimp/gimpfileselection.c:388
-msgid "Select File"
-msgstr "Seleccioneu un fitxer"
-
-#: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
-#: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
-#: libgimp/gimpunitmenu.c:503
-msgid "OK"
-msgstr "D'acord"
-
-#: libgimp/gimpunitmenu.c:241
-msgid "More..."
-msgstr "Més..."
-
-#: libgimp/gimpunitmenu.c:498
-msgid "Unit Selection"
-msgstr "Selecció de la unitat"
-
-#: libgimp/gimpunitmenu.c:535
-msgid "Unit"
-msgstr "Unitat"
-
-#: libgimp/gimpunitmenu.c:536
-msgid "Factor"
-msgstr "Factor"
-
-#. pseudo unit
-#: libgimp/gimpunit.c:49
-msgid "pixel"
-msgstr "píxel"
-
-#: libgimp/gimpunit.c:49
-msgid "pixels"
-msgstr "píxels"
-
-#. standard units
-#: libgimp/gimpunit.c:52
-msgid "inch"
-msgstr "polzada"
-
-#: libgimp/gimpunit.c:52
-msgid "inches"
-msgstr "polzades"
-
-#: libgimp/gimpunit.c:53
-msgid "millimeter"
-msgstr "mil·límetre"
-
-#: libgimp/gimpunit.c:53
-msgid "millimeters"
-msgstr "mil·límetres"
-
-#. professional units
-#: libgimp/gimpunit.c:56
-msgid "point"
-msgstr "punt"
+#: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
+#: libgimp/gimpmenu.c:580
+msgid "None"
+msgstr ""
 
 #: libgimp/gimpunit.c:56
-msgid "points"
-msgstr "punts"
-
-#: libgimp/gimpunit.c:57
-msgid "pica"
-msgstr "pica"
-
-#: libgimp/gimpunit.c:57
-msgid "picas"
-msgstr "piques"
-
-#: libgimp/gimpunit.c:64
 msgid "percent"
 msgstr "percentatge"
 
-#: libgimp/gimpwidgets.c:717
+#: libgimpwidgets/gimpcolorbutton.c:85
+#, fuzzy
+msgid "/Foreground Color"
+msgstr "/Utilitza el color de primer pla"
+
+#: libgimpwidgets/gimpcolorbutton.c:87
+#, fuzzy
+msgid "/Background Color"
+msgstr "/Utilitza el color de fons"
+
+#: libgimpwidgets/gimpcolorbutton.c:90
+msgid "/Black"
+msgstr ""
+
+#: libgimpwidgets/gimpcolorbutton.c:92
+msgid "/White"
+msgstr ""
+
+#: libgimpwidgets/gimpfileselection.c:352
+#, fuzzy
+msgid "Select Folder"
+msgstr "Seleccioneu un fitxer"
+
+#: libgimpwidgets/gimpfileselection.c:366
+msgid "Select File"
+msgstr "Seleccioneu un fitxer"
+
+#: libgimpwidgets/gimpstock.c:88
+#, fuzzy
+msgid "Anchor"
+msgstr "polzada"
+
+#: libgimpwidgets/gimpstock.c:89
+#, fuzzy
+msgid "Duplicate"
+msgstr "pica"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "Visible"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:163
+msgid "Transform"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:166
+msgid "Rotate"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:167
+msgid "Scale"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:168
+msgid "Shear"
+msgstr ""
+
+#: libgimpwidgets/gimpunitmenu.c:265
+msgid "More..."
+msgstr "Més..."
+
+#: libgimpwidgets/gimpunitmenu.c:526
+msgid "Unit Selection"
+msgstr "Selecció de la unitat"
+
+#: libgimpwidgets/gimpunitmenu.c:571
+msgid "Unit"
+msgstr "Unitat"
+
+#: libgimpwidgets/gimpunitmenu.c:575
+msgid "Factor"
+msgstr "Factor"
+
+#: libgimpwidgets/gimpwidgets.c:845
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -244,11 +262,12 @@ msgstr ""
 "partida del generador de números aleatoris; això us permetrà repetir una "
 "operació \"aleatòria\" determinada"
 
-#: libgimp/gimpwidgets.c:722
-msgid "Time"
+#: libgimpwidgets/gimpwidgets.c:850
+#, fuzzy
+msgid "_Time"
 msgstr "Hora"
 
-#: libgimp/gimpwidgets.c:731
+#: libgimpwidgets/gimpwidgets.c:859
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -256,15 +275,46 @@ msgstr ""
 "Fixa el punt de partida del generador de números aleatoris a partir de "
 "l'hora actual; això garanteix una aleatorietat raonable"
 
-#: libgimp/gimpwidgets.c:1044
+#: libgimpwidgets/gimpwidgets.c:1175
 msgid "Bytes"
 msgstr "Octets"
 
-#: libgimp/gimpwidgets.c:1045
+#: libgimpwidgets/gimpwidgets.c:1176
 msgid "KiloBytes"
 msgstr "Quilooctets"
 
-#: libgimp/gimpwidgets.c:1046
+#: libgimpwidgets/gimpwidgets.c:1177
 msgid "MegaBytes"
 msgstr "Megaoctets"
 
+#: libgimpwidgets/gimpwidgets.c:1178
+#, fuzzy
+msgid "GigaBytes"
+msgstr "Megaoctets"
+
+#~ msgid "OK"
+#~ msgstr "D'acord"
+
+#~ msgid "pixel"
+#~ msgstr "píxel"
+
+#~ msgid "pixels"
+#~ msgstr "píxels"
+
+#~ msgid "inches"
+#~ msgstr "polzades"
+
+#~ msgid "millimeter"
+#~ msgstr "mil·límetre"
+
+#~ msgid "millimeters"
+#~ msgstr "mil·límetres"
+
+#~ msgid "point"
+#~ msgstr "punt"
+
+#~ msgid "points"
+#~ msgstr "punts"
+
+#~ msgid "picas"
+#~ msgstr "piques"

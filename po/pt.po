@@ -10,7 +10,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-08-17 18:20+0100\n"
+"POT-Creation-Date: 2002-08-20 15:04+0200\n"
 "PO-Revision-Date: 2002-08-17 18:30+0100\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -202,206 +202,206 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Esta janela será fechada em dez segundos)\n"
 
-#: app/undo.c:3497
+#: app/undo.c:3531
 #, c-format
 msgid "Can't undo %s"
 msgstr "Não é possível desfazer %s"
 
-#: app/undo.c:3523
+#: app/undo.c:3557
 msgid "<<invalid>>"
 msgstr "<<inválido>>"
 
-#: app/undo.c:3524 app/gui/resize-dialog.c:185
+#: app/gui/resize-dialog.c:185 app/undo.c:3558
 msgid "Scale Image"
 msgstr "Dimensionar imagem"
 
-#: app/undo.c:3525
+#: app/undo.c:3559
 msgid "Resize Image"
 msgstr "Redimensionar Imagem"
 
-#: app/undo.c:3526
+#: app/undo.c:3560
 msgid "Convert Image"
 msgstr "Converter Imagem"
 
-#: app/undo.c:3527
+#: app/undo.c:3561
 msgid "Crop Image"
 msgstr "Cortar imagem"
 
-#: app/undo.c:3528
+#: app/undo.c:3562
 msgid "Merge Layers"
 msgstr "Juntar Camadas"
 
-#: app/undo.c:3529 app/undo.c:3554
+#: app/undo.c:3563 app/undo.c:3587
 msgid "QuickMask"
 msgstr "Máscara Rápida"
 
-#: app/undo.c:3530 app/undo.c:3555
+#: app/undo.c:3564 app/undo.c:3588
 msgid "Guide"
 msgstr "Guia"
 
-#: app/undo.c:3531
+#: app/undo.c:3565
 msgid "Layer Properties"
 msgstr "Propriedades Camada"
 
-#: app/undo.c:3532 app/gui/resize-dialog.c:179
+#: app/gui/resize-dialog.c:179 app/undo.c:3566
 msgid "Scale Layer"
 msgstr "Camada de escala"
 
-#: app/undo.c:3533
+#: app/undo.c:3567
 msgid "Resize Layer"
 msgstr "Redimensionar Camada"
 
-#: app/undo.c:3534
+#: app/undo.c:3568
 msgid "Move Layer"
 msgstr "Mover Camada"
 
-#: app/undo.c:3535
+#: app/undo.c:3569
 msgid "Apply Layer Mask"
 msgstr "Aplicar Máscara de Camada"
 
-#: app/undo.c:3536
+#: app/undo.c:3570
 msgid "Linked Layer"
 msgstr "Camada Ligada"
 
-#: app/undo.c:3537
+#: app/undo.c:3571
 msgid "Float Selection"
 msgstr "Selecção Flutuante"
 
-#: app/undo.c:3538
+#: app/undo.c:3572
 msgid "Anchor Floating Selection"
 msgstr "Ancorar Selecção Flutuante"
 
-#: app/undo.c:3539 app/widgets/gimpbufferview.c:147
+#: app/undo.c:3573 app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "Colar"
 
-#: app/undo.c:3540
+#: app/undo.c:3574
 msgid "Cut"
 msgstr "Cortar"
 
-#: app/undo.c:3541
+#: app/undo.c:3575
 msgid "Text"
 msgstr "Texto"
 
-#: app/undo.c:3542 app/undo.c:3575
+#: app/undo.c:3576 app/undo.c:3609
 msgid "Transform"
 msgstr "Transformar"
 
-#: app/undo.c:3543 app/undo.c:3576
+#: app/undo.c:3577 app/undo.c:3610
 msgid "Paint"
 msgstr "Pintar"
 
-#: app/undo.c:3544 app/undo.c:3577
+#: app/undo.c:3578 app/undo.c:3611
 msgid "Attach Parasite"
 msgstr "Anexar Informações Anexas"
 
-#: app/undo.c:3545 app/undo.c:3578
+#: app/undo.c:3579 app/undo.c:3612
 msgid "Remove Parasite"
 msgstr "Remover Informações Anexas"
 
-#: app/undo.c:3546
+#: app/undo.c:3580
 msgid "Plug-In"
 msgstr "Plug-In"
 
-#: app/undo.c:3548 app/gui/palette-import-dialog.c:441
-#: app/pdb/internal_procs.c:124
+#: app/gui/palette-import-dialog.c:441 app/pdb/internal_procs.c:124
+#: app/undo.c:3582
 msgid "Image"
 msgstr "Imagem"
 
-#: app/undo.c:3549
+#: app/undo.c:3583
 msgid "Image Mod"
 msgstr "Mod da Imagem"
 
-#: app/undo.c:3550 app/gui/file-new-dialog.c:364
+#: app/gui/file-new-dialog.c:364 app/undo.c:3584
 msgid "Image Type"
 msgstr "Tipo de Imagem"
 
 #. Image size frame
-#: app/undo.c:3551 app/gui/file-new-dialog.c:140
+#: app/gui/file-new-dialog.c:140 app/undo.c:3585
 msgid "Image Size"
 msgstr "Tamanho da Imagem"
 
-#: app/undo.c:3552
+#: app/undo.c:3586
 msgid "Resolution Change"
 msgstr "Alteração de Resolução"
 
-#: app/undo.c:3553 app/core/gimpchannel.c:458
+#: app/core/gimpchannel.c:503 app/undo.c:3589
 msgid "Selection Mask"
 msgstr "Máscara de Selecção"
 
-#: app/undo.c:3556
+#: app/undo.c:3590
 msgid "Rename Item"
 msgstr "Renomear Item"
 
-#: app/undo.c:3557 app/gui/layers-commands.c:621
+#: app/gui/layers-commands.c:621 app/undo.c:3591
 msgid "New Layer"
 msgstr "Nova Camada"
 
-#: app/undo.c:3558
+#: app/undo.c:3592
 msgid "Delete Layer"
 msgstr "Remover Camada"
 
-#: app/undo.c:3559
+#: app/undo.c:3593
 msgid "Layer Mod"
 msgstr "Mod da Camada"
 
-#: app/undo.c:3560
+#: app/undo.c:3594
 msgid "Add Layer Mask"
 msgstr "Adicionar Máscara de Camada"
 
-#: app/undo.c:3561
+#: app/undo.c:3595
 msgid "Delete Layer Mask"
 msgstr "Remover Máscara de Camada"
 
-#: app/undo.c:3562
+#: app/undo.c:3596
 msgid "Layer Reposition"
 msgstr "Reposição de Camada"
 
-#: app/undo.c:3563
+#: app/undo.c:3597
 msgid "Layer Move"
 msgstr "Mover Camada"
 
-#: app/undo.c:3564 app/gui/channels-commands.c:334
+#: app/gui/channels-commands.c:334 app/undo.c:3598
 msgid "New Channel"
 msgstr "Novo Canal"
 
-#: app/undo.c:3565
+#: app/undo.c:3599
 msgid "Delete Channel"
 msgstr "Remover Canal"
 
-#: app/undo.c:3566
+#: app/undo.c:3600
 msgid "Channel Mod"
 msgstr "Mod do Canal"
 
-#: app/undo.c:3567
+#: app/undo.c:3601
 msgid "Channel Reposition"
 msgstr "Reposição de Canal"
 
-#: app/undo.c:3568
+#: app/undo.c:3602
 msgid "New Vectors"
 msgstr "Novos Vectores"
 
-#: app/undo.c:3569
+#: app/undo.c:3603
 msgid "Delete Vectors"
 msgstr "Remover Vectores"
 
-#: app/undo.c:3570
+#: app/undo.c:3604
 msgid "Vectors Mod"
 msgstr "Mod de Vectores"
 
-#: app/undo.c:3571
+#: app/undo.c:3605
 msgid "Vectors Reposition"
 msgstr "Reposição de Vectores"
 
-#: app/undo.c:3572
+#: app/undo.c:3606
 msgid "FS to Layer"
 msgstr "FS para Camada"
 
-#: app/undo.c:3573
+#: app/undo.c:3607
 msgid "FS Rigor"
 msgstr "FS Rigor"
 
-#: app/undo.c:3574
+#: app/undo.c:3608
 msgid "FS Relax"
 msgstr "FS Relax"
 
@@ -916,7 +916,7 @@ msgstr ""
 "Impossível gravar '%s':\n"
 "%s"
 
-#: app/core/gimpimage-mask.c:237
+#: app/core/gimpimage-mask.c:223
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
@@ -924,15 +924,15 @@ msgstr ""
 "Incapaz de cortar ou copiar pois a\n"
 "região seleccionada está vazia."
 
-#: app/core/gimpimage-mask.c:384
+#: app/core/gimpimage-mask.c:370
 msgid "Cannot float selection: No selection made."
 msgstr "Incapaz de flutuar selecção: Nenhuma selecção feita."
 
-#: app/core/gimpimage-mask.c:398 app/gui/layers-commands.c:810
+#: app/core/gimpimage-mask.c:384 app/gui/layers-commands.c:810
 msgid "Floating Selection"
 msgstr "Selecção Flutuante"
 
-#: app/core/gimpimage-mask.c:526
+#: app/core/gimpimage-mask.c:591
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -940,7 +940,7 @@ msgstr ""
 "A camada activa não possui canal alfa\n"
 "para converter para uma selecção."
 
-#: app/core/gimpimage-mask.c:545
+#: app/core/gimpimage-mask.c:615
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -948,11 +948,11 @@ msgstr ""
 "A camada activa não tem máscara\n"
 "para converter para uma selecção."
 
-#: app/core/gimpimage-mask.c:606
+#: app/core/gimpimage-mask.c:668
 msgid "No selection to stroke."
 msgstr "Nenhuma selecção para ser aclarada."
 
-#: app/core/gimpimage-mask.c:660
+#: app/core/gimpimage-mask.c:722
 msgid "Paint operation failed."
 msgstr "A operação de pintura falhou."
 
@@ -1004,27 +1004,27 @@ msgstr "%.1f MB"
 msgid "Untitled"
 msgstr "Sem título"
 
-#: app/core/gimpimage.c:2799
+#: app/core/gimpimage.c:2797
 msgid "Layer cannot be raised higher."
 msgstr "A camada não pode ser mais elevada."
 
-#: app/core/gimpimage.c:2823
+#: app/core/gimpimage.c:2821
 msgid "Layer cannot be lowered more."
 msgstr "A camada não pode ser mais descida."
 
-#: app/core/gimpimage.c:2844
+#: app/core/gimpimage.c:2842
 msgid "Layer is already on top."
 msgstr "A camada já está no topo."
 
-#: app/core/gimpimage.c:2850
+#: app/core/gimpimage.c:2848
 msgid "Cannot raise a layer without alpha."
 msgstr "Não é possível elevar a camada sem alfa."
 
-#: app/core/gimpimage.c:2874
+#: app/core/gimpimage.c:2872
 msgid "Layer is already on the bottom."
 msgstr "A camada já está no fundo."
 
-#: app/core/gimpimage.c:2921
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1033,19 +1033,19 @@ msgstr ""
 "Camada \"%s\" não tem camada alfa.\n"
 "Foi colocada camada acima."
 
-#: app/core/gimpimage.c:3064
+#: app/core/gimpimage.c:3062
 msgid "Channel cannot be raised higher."
 msgstr "O canal não pode ser mais elevado. "
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3082
 msgid "Channel cannot be lowered more."
 msgstr "O canal não pode ser mais descido."
 
-#: app/core/gimpimage.c:3245
+#: app/core/gimpimage.c:3243
 msgid "Path cannot be raised higher."
 msgstr "Caminho não pode ser mais elevado."
 
-#: app/core/gimpimage.c:3265
+#: app/core/gimpimage.c:3263
 msgid "Path cannot be lowered more."
 msgstr "Caminho não pode ser mais descido"
 
@@ -2077,7 +2077,6 @@ msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:312 app/gui/resize-dialog.c:618
-#, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
@@ -5519,11 +5518,11 @@ msgstr "Inicializando extensões: "
 msgid "Extensions"
 msgstr "Extensões"
 
-#: app/tools/tools-enums.c:13 app/tools/gimpcroptool.c:983
+#: app/tools/gimpcroptool.c:983 app/tools/tools-enums.c:13
 msgid "Crop"
 msgstr "Recorta"
 
-#: app/tools/tools-enums.c:14 app/tools/gimpcroptool.c:980
+#: app/tools/gimpcroptool.c:980 app/tools/tools-enums.c:14
 msgid "Resize"
 msgstr "Redimensiona"
 
@@ -6053,15 +6052,15 @@ msgstr "Seleccionar regiões manualmente"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Ferramentas/Ferramentas de Selecção/Selecção Livre"
 
-#: app/tools/gimpfuzzyselecttool.c:96
+#: app/tools/gimpfuzzyselecttool.c:97
 msgid "Fuzzy Select"
 msgstr "Selecção Mágica"
 
-#: app/tools/gimpfuzzyselecttool.c:97
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
 msgstr "Seleccionar regiões adjuntas"
 
-#: app/tools/gimpfuzzyselecttool.c:98
+#: app/tools/gimpfuzzyselecttool.c:99
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Ferramentas/Ferramentas de Selecção/Selecção Mágica"
 

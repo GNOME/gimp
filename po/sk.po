@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-gnome-2.0-fifth-toe\n"
-"POT-Creation-Date: 2002-07-14 09:43+0200\n"
+"POT-Creation-Date: 2002-08-20 15:04+0200\n"
 "PO-Revision-Date: 2002-07-14 16:36+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -29,8 +29,10 @@ msgstr ""
 "nointerface'\n"
 
 #: app/app_procs.c:110
-msgid "To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr "Ak chcete pou¾ívateµskú in¹taláciu, spustite GIMP bez voµby '--nointerface'\n"
+msgid ""
+"To perform user installation, run the GIMP without the '--nointerface' flag\n"
+msgstr ""
+"Ak chcete pou¾ívateµskú in¹taláciu, spustite GIMP bez voµby '--nointerface'\n"
 
 #: app/gimprc.c:455
 #, c-format
@@ -119,7 +121,8 @@ msgstr ""
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr "  -d, --no-data            Nenaèíta» vzorky, prechody, palety a ¹tetce.\n"
+msgstr ""
+"  -d, --no-data            Nenaèíta» vzorky, prechody, palety a ¹tetce.\n"
 
 #: app/main.c:339
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -166,7 +169,8 @@ msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                 Nepou¾íva» MMX.\n"
 
 #: app/main.c:349
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr "  --debug-handlers         Povoli» ladenie obsluhy signálov.\n"
 
 #: app/main.c:350
@@ -175,7 +179,8 @@ msgstr "  --display <obrazovka>      Pou¾i» zvolenú X obrazovku.\n"
 
 #: app/main.c:351
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr "  --system-gimprc <gimprc> Pou¾i» alternatívny systémový gimprc súbor.\n"
+msgstr ""
+"  --system-gimprc <gimprc> Pou¾i» alternatívny systémový gimprc súbor.\n"
 
 #: app/main.c:353
 msgid ""
@@ -189,206 +194,206 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno bude o desa» sekúnd uzavreté)\n"
 
-#: app/undo.c:3497
+#: app/undo.c:3531
 #, c-format
 msgid "Can't undo %s"
 msgstr "Nie je mo¾né vráti» %s"
 
-#: app/undo.c:3523
+#: app/undo.c:3557
 msgid "<<invalid>>"
 msgstr "<<nesprávny>>"
 
-#: app/gui/resize-dialog.c:185 app/undo.c:3524
+#: app/gui/resize-dialog.c:185 app/undo.c:3558
 msgid "Scale Image"
 msgstr "Veµkos» obrázku"
 
-#: app/undo.c:3525
+#: app/undo.c:3559
 msgid "Resize Image"
 msgstr "Zmena veµkosti obrázku"
 
-#: app/undo.c:3526
+#: app/undo.c:3560
 msgid "Convert Image"
 msgstr "Konverzia obrázku"
 
-#: app/undo.c:3527
+#: app/undo.c:3561
 msgid "Crop Image"
 msgstr "Orezanie obrázku"
 
-#: app/undo.c:3528
+#: app/undo.c:3562
 msgid "Merge Layers"
 msgstr "Splynutie vrstiev"
 
-#: app/undo.c:3529 app/undo.c:3554
+#: app/undo.c:3563 app/undo.c:3587
 msgid "QuickMask"
 msgstr "Rýchla maska"
 
-#: app/undo.c:3530 app/undo.c:3555
+#: app/undo.c:3564 app/undo.c:3588
 msgid "Guide"
 msgstr "Vodítko"
 
-#: app/undo.c:3531
+#: app/undo.c:3565
 msgid "Layer Properties"
 msgstr "Vlastnosti vrstvy"
 
-#: app/gui/resize-dialog.c:179 app/undo.c:3532
+#: app/gui/resize-dialog.c:179 app/undo.c:3566
 msgid "Scale Layer"
 msgstr "Veµkos» vrstvy"
 
-#: app/undo.c:3533
+#: app/undo.c:3567
 msgid "Resize Layer"
 msgstr "Zmeni» veµkosti vrstvy"
 
-#: app/undo.c:3534
+#: app/undo.c:3568
 msgid "Move Layer"
 msgstr "Presunú» vrstvu"
 
-#: app/undo.c:3535
+#: app/undo.c:3569
 msgid "Apply Layer Mask"
 msgstr "Pou¾i» masku vrstvy"
 
-#: app/undo.c:3536
+#: app/undo.c:3570
 msgid "Linked Layer"
 msgstr "Prepojená vrstva"
 
-#: app/undo.c:3537
+#: app/undo.c:3571
 msgid "Float Selection"
 msgstr "Plávajúci výber"
 
-#: app/undo.c:3538
+#: app/undo.c:3572
 msgid "Anchor Floating Selection"
 msgstr "Ukotvi» plávajúci výber"
 
-#: app/undo.c:3539 app/widgets/gimpbufferview.c:147
+#: app/undo.c:3573 app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "Vlo¾i»"
 
-#: app/undo.c:3540
+#: app/undo.c:3574
 msgid "Cut"
 msgstr "Vystrihnú»"
 
-#: app/undo.c:3541
+#: app/undo.c:3575
 msgid "Text"
 msgstr "Text"
 
-#: app/undo.c:3542 app/undo.c:3575
+#: app/undo.c:3576 app/undo.c:3609
 msgid "Transform"
 msgstr "Transformácia"
 
-#: app/undo.c:3543 app/undo.c:3576
+#: app/undo.c:3577 app/undo.c:3610
 msgid "Paint"
 msgstr "Kresli»"
 
-#: app/undo.c:3544 app/undo.c:3577
+#: app/undo.c:3578 app/undo.c:3611
 msgid "Attach Parasite"
 msgstr "Pripoji» parazita"
 
-#: app/undo.c:3545 app/undo.c:3578
+#: app/undo.c:3579 app/undo.c:3612
 msgid "Remove Parasite"
 msgstr "Odstráni» parazita"
 
-#: app/undo.c:3546
+#: app/undo.c:3580
 msgid "Plug-In"
 msgstr "Zásuvný modul"
 
 #: app/gui/palette-import-dialog.c:441 app/pdb/internal_procs.c:124
-#: app/undo.c:3548
+#: app/undo.c:3582
 msgid "Image"
 msgstr "Obrázok"
 
-#: app/undo.c:3549
+#: app/undo.c:3583
 msgid "Image Mod"
 msgstr "Re¾im obrázku"
 
-#: app/gui/file-new-dialog.c:364 app/undo.c:3550
+#: app/gui/file-new-dialog.c:364 app/undo.c:3584
 msgid "Image Type"
 msgstr "Typ obrázku"
 
 #. Image size frame
-#: app/gui/file-new-dialog.c:140 app/undo.c:3551
+#: app/gui/file-new-dialog.c:140 app/undo.c:3585
 msgid "Image Size"
 msgstr "Veµkos» obrázku"
 
-#: app/undo.c:3552
+#: app/undo.c:3586
 msgid "Resolution Change"
 msgstr "Zmeni» rozlí¹enie"
 
-#: app/core/gimpchannel.c:458 app/undo.c:3553
+#: app/core/gimpchannel.c:503 app/undo.c:3589
 msgid "Selection Mask"
 msgstr "Maska výberu"
 
-#: app/undo.c:3556
+#: app/undo.c:3590
 msgid "Rename Item"
 msgstr "Premenova» polo¾ku"
 
-#: app/gui/layers-commands.c:621 app/undo.c:3557
+#: app/gui/layers-commands.c:621 app/undo.c:3591
 msgid "New Layer"
 msgstr "Nová vrstva"
 
-#: app/undo.c:3558
+#: app/undo.c:3592
 msgid "Delete Layer"
 msgstr "Zmaza» vrstvu"
 
-#: app/undo.c:3559
+#: app/undo.c:3593
 msgid "Layer Mod"
 msgstr "Re¾im vrstvy"
 
-#: app/undo.c:3560
+#: app/undo.c:3594
 msgid "Add Layer Mask"
 msgstr "Prida» masku vrstvy"
 
-#: app/undo.c:3561
+#: app/undo.c:3595
 msgid "Delete Layer Mask"
 msgstr "Zmaza» masku vrstvy"
 
-#: app/undo.c:3562
+#: app/undo.c:3596
 msgid "Layer Reposition"
 msgstr "Premiestni» vrstvu"
 
-#: app/undo.c:3563
+#: app/undo.c:3597
 msgid "Layer Move"
 msgstr "Posunú» vrstvu"
 
-#: app/gui/channels-commands.c:334 app/undo.c:3564
+#: app/gui/channels-commands.c:334 app/undo.c:3598
 msgid "New Channel"
 msgstr "Nový kanál"
 
-#: app/undo.c:3565
+#: app/undo.c:3599
 msgid "Delete Channel"
 msgstr "Zmaza» kanál"
 
-#: app/undo.c:3566
+#: app/undo.c:3600
 msgid "Channel Mod"
 msgstr "Re¾im kanálu"
 
-#: app/undo.c:3567
+#: app/undo.c:3601
 msgid "Channel Reposition"
 msgstr "Premiestnenie kanálu"
 
-#: app/undo.c:3568
+#: app/undo.c:3602
 msgid "New Vectors"
 msgstr "Nové vektory"
 
-#: app/undo.c:3569
+#: app/undo.c:3603
 msgid "Delete Vectors"
 msgstr "Zmaza» vektory"
 
-#: app/undo.c:3570
+#: app/undo.c:3604
 msgid "Vectors Mod"
 msgstr "Re¾im vektorov"
 
-#: app/undo.c:3571
+#: app/undo.c:3605
 msgid "Vectors Reposition"
 msgstr "Premiestni» vektory"
 
-#: app/undo.c:3572
+#: app/undo.c:3606
 msgid "FS to Layer"
 msgstr "Pláv. výber do vrstvy"
 
-#: app/undo.c:3573
+#: app/undo.c:3607
 msgid "FS Rigor"
 msgstr "Upevnenie výberu"
 
-#: app/undo.c:3574
+#: app/undo.c:3608
 msgid "FS Relax"
 msgstr "Uvoµnenie výberu"
 
@@ -485,7 +490,8 @@ msgstr "Alfa"
 #: app/config/gimpconfig-deserialize.c:391
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr "pre logický výraz %s sa oèakáva symbol 'yes' alebo 'no', prijaté je '%s'"
+msgstr ""
+"pre logický výraz %s sa oèakáva symbol 'yes' alebo 'no', prijaté je '%s'"
 
 #: app/config/gimpconfig-deserialize.c:447
 #, c-format
@@ -904,7 +910,7 @@ msgstr ""
 "Nie je mo¾né ulo¾i» '%s':\n"
 "%s"
 
-#: app/core/gimpimage-mask.c:237
+#: app/core/gimpimage-mask.c:223
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
@@ -912,15 +918,15 @@ msgstr ""
 "Nie je mo¾né vystrihnú»/kopírova», preto¾e\n"
 "zvolená oblas» je prázdna."
 
-#: app/core/gimpimage-mask.c:384
+#: app/core/gimpimage-mask.c:370
 msgid "Cannot float selection: No selection made."
 msgstr "Nie je mo¾né vytvori» plávajúci výber: Výber neexistuje."
 
-#: app/core/gimpimage-mask.c:398 app/gui/layers-commands.c:810
+#: app/core/gimpimage-mask.c:384 app/gui/layers-commands.c:810
 msgid "Floating Selection"
 msgstr "Plávajúci výber"
 
-#: app/core/gimpimage-mask.c:526
+#: app/core/gimpimage-mask.c:591
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -928,7 +934,7 @@ msgstr ""
 "Aktívna vrstva nemá alfa kanál\n"
 "pre prevod na výber."
 
-#: app/core/gimpimage-mask.c:545
+#: app/core/gimpimage-mask.c:615
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -936,11 +942,11 @@ msgstr ""
 "Aktívna vrstva nemá masku\n"
 "na premenu do výberu."
 
-#: app/core/gimpimage-mask.c:606
+#: app/core/gimpimage-mask.c:668
 msgid "No selection to stroke."
 msgstr "Pre »ah nie je niè zvolené."
 
-#: app/core/gimpimage-mask.c:660
+#: app/core/gimpimage-mask.c:722
 msgid "Paint operation failed."
 msgstr "Operácia kreslenia zlyhala."
 
@@ -992,27 +998,27 @@ msgstr "%.1f MB"
 msgid "Untitled"
 msgstr "Nepomenovaný"
 
-#: app/core/gimpimage.c:2799
+#: app/core/gimpimage.c:2797
 msgid "Layer cannot be raised higher."
 msgstr "Vrstvu nie je mo¾né posunú» vy¹¹ie."
 
-#: app/core/gimpimage.c:2823
+#: app/core/gimpimage.c:2821
 msgid "Layer cannot be lowered more."
 msgstr "Vrstvu nie je mo¾né posunú» ni¾¹ie."
 
-#: app/core/gimpimage.c:2844
+#: app/core/gimpimage.c:2842
 msgid "Layer is already on top."
 msgstr "Vrstva je u¾ celkom hore."
 
-#: app/core/gimpimage.c:2850
+#: app/core/gimpimage.c:2848
 msgid "Cannot raise a layer without alpha."
 msgstr "Nie je mo¾né vrstvu bez alfy presunú» vy¹¹ie."
 
-#: app/core/gimpimage.c:2874
+#: app/core/gimpimage.c:2872
 msgid "Layer is already on the bottom."
 msgstr "Vrstva je u¾ celkom dole."
 
-#: app/core/gimpimage.c:2921
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1021,19 +1027,19 @@ msgstr ""
 "Vrstva \"%s\" nemá alfu.\n"
 "Vrstva bola umiestnená nad òu."
 
-#: app/core/gimpimage.c:3064
+#: app/core/gimpimage.c:3062
 msgid "Channel cannot be raised higher."
 msgstr "Kanál nie je mo¾né umiestni» vy¹¹ie."
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3082
 msgid "Channel cannot be lowered more."
 msgstr "Kanál u¾ nie je mo¾né umiestni» ni¾¹ie."
 
-#: app/core/gimpimage.c:3245
+#: app/core/gimpimage.c:3243
 msgid "Path cannot be raised higher."
 msgstr "Cestu nie je mo¾né umiestni» vy¹¹ie."
 
-#: app/core/gimpimage.c:3265
+#: app/core/gimpimage.c:3263
 msgid "Path cannot be lowered more."
 msgstr "Cestu nie je mo¾né umiestni» ni¾¹ie."
 
@@ -4999,7 +5005,8 @@ msgstr ""
 
 #: app/gui/user-install-dialog.c:685
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr "Kliknite na \"Pokraèova»\" na vstup do pou¾ívateµskej in¹talácií GIMPu."
+msgstr ""
+"Kliknite na \"Pokraèova»\" na vstup do pou¾ívateµskej in¹talácií GIMPu."
 
 #: app/gui/user-install-dialog.c:689
 msgid ""
@@ -5053,7 +5060,8 @@ msgstr "Osobný GIMP prieèinok"
 
 #: app/gui/user-install-dialog.c:736
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr "Kliknite na \"Pokraèova»\" na vytvorenie vá¹ho osobného GIMP prieèinku."
+msgstr ""
+"Kliknite na \"Pokraèova»\" na vytvorenie vá¹ho osobného GIMP prieèinku."
 
 #: app/gui/user-install-dialog.c:773
 #, c-format
@@ -6027,15 +6035,15 @@ msgstr "Voµný výber oblasti"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Nástroje/Nástroje výberu/Voµný výber"
 
-#: app/tools/gimpfuzzyselecttool.c:96
+#: app/tools/gimpfuzzyselecttool.c:97
 msgid "Fuzzy Select"
 msgstr "Magická palièka"
 
-#: app/tools/gimpfuzzyselecttool.c:97
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
 msgstr "Výber spojitých oblastí"
 
-#: app/tools/gimpfuzzyselecttool.c:98
+#: app/tools/gimpfuzzyselecttool.c:99
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Nástroje/Nástroje výberu/Magická palièka"
 
@@ -7330,4 +7338,3 @@ msgstr "GIMP (nestabilný)"
 
 #~ msgid "Refresh (check files for existence)"
 #~ msgstr "Zaktualizova» (skontrolova» existenciu súborov)"
-

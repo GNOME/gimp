@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu\n"
-"POT-Creation-Date: 2002-06-16 21:11+0100\n"
+"POT-Creation-Date: 2002-08-20 15:18+0200\n"
 "PO-Revision-Date: 2002-06-16 21:49+0000\n"
 "Last-Translator: Filipe Maia <fmaia@gmx.net>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -107,18 +107,18 @@ msgstr ""
 "Pelo menos uma fonte escolhida não é válida.\n"
 "Por favor verifique as suas configurações.\n"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1961
 #: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1967
 #: plug-ins/dbbrowser/dbbrowser_utils.c:497
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1973
 #: plug-ins/dbbrowser/dbbrowser_utils.c:489
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "Data:"
 
@@ -141,15 +141,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:568
 msgid "Script-Fu Server Options"
 msgstr "Opções do servidor do Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:578
+#: plug-ins/script-fu/script-fu-server.c:595
 msgid "Server Port:"
 msgstr "Porta do servidor:"
 
-#: plug-ins/script-fu/script-fu-server.c:584
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Logfile:"
 msgstr "Ficheiro de log do servidor:"
 
@@ -220,7 +220,7 @@ msgstr "A procurar por sumário - por favor aguarde"
 msgid "Searching - please wait"
 msgstr "A procurar - por favor aguarde"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
 msgid "No matches"
 msgstr "Nenhum resultado"
 

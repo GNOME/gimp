@@ -1,5 +1,9 @@
 2002-08-20  Sven Neumann  <sven@gimp.org>
 
+	* Made 1.3.8 release.
+
+2002-08-20  Sven Neumann  <sven@gimp.org>
+
 	* data/misc/Makefile.am: don't use the automatic variable $<
 	(seems to work with GNU make only).
 

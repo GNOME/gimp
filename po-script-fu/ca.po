@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.2.3\n"
-"POT-Creation-Date: 2002-02-03 17:56-0800\n"
+"POT-Creation-Date: 2002-08-20 15:18+0200\n"
 "PO-Revision-Date: 2001-10-28 01:08+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -13,114 +13,93 @@ msgstr ""
 "Content-Type: text/plain; charset=iso-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: plug-ins/script-fu/script-fu-console.c:156
+#: plug-ins/script-fu/script-fu-console.c:143
 msgid "Script-Fu console mode allows only interactive invocation"
 msgstr "L'Script-Fu en mode de consola només permet la invocació interactiva"
 
-#: plug-ins/script-fu/script-fu-console.c:186
+#: plug-ins/script-fu/script-fu-console.c:170
 msgid "Script-Fu Console"
 msgstr "Consola de l'Script-Fu"
 
-#. Action area
-#: plug-ins/dbbrowser/dbbrowser_utils.c:159
-#: plug-ins/dbbrowser/dbbrowser_utils.c:176
-#: plug-ins/script-fu/script-fu-console.c:199
-#: plug-ins/script-fu/script-fu-scripts.c:2002
-msgid "Close"
-msgstr "Tanca"
-
-#. The info vbox
-#: plug-ins/script-fu/script-fu-console.c:207
+#: plug-ins/script-fu/script-fu-console.c:194
 msgid "SIOD Output"
 msgstr "Sortida SIOD"
 
 #. The current command
-#: plug-ins/script-fu/script-fu-console.c:286
+#: plug-ins/script-fu/script-fu-console.c:265
 msgid "Current Command"
 msgstr "Ordre actual"
 
-#: plug-ins/script-fu/script-fu-console.c:307
+#: plug-ins/script-fu/script-fu-console.c:285
 msgid "Browse..."
 msgstr "Navega..."
 
-#: plug-ins/script-fu/script-fu-console.c:579
-msgid "Unable to open SIOD output pipe"
-msgstr "No es pot obrir el conducte de sortida SIOD"
-
-#: plug-ins/script-fu/script-fu-console.c:583
+#: plug-ins/script-fu/script-fu-console.c:581
 msgid "Unable to open a stream on the SIOD output pipe"
 msgstr "No es pot obrir un corrent en el conducte de sortida SIOD"
 
-#: plug-ins/script-fu/script-fu-console.c:628
+#: plug-ins/script-fu/script-fu-console.c:587
+#, fuzzy
+msgid "Unable to open the SIOD output pipe"
+msgstr "No es pot obrir el conducte de sortida SIOD"
+
+#: plug-ins/script-fu/script-fu-console.c:632
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 "El mode d'avaluació de l'Script-Fu només permet la invocació no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1175
-#: plug-ins/script-fu/script-fu-scripts.c:1178
+#: plug-ins/script-fu/script-fu-scripts.c:1192
+#: plug-ins/script-fu/script-fu-scripts.c:1195
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1177
-#: plug-ins/script-fu/script-fu-scripts.c:1180
+#: plug-ins/script-fu/script-fu-scripts.c:1194
+#: plug-ins/script-fu/script-fu-scripts.c:1197
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
+#: plug-ins/script-fu/script-fu-scripts.c:1235
+msgid "About"
+msgstr "Quant a..."
+
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1203
+#: plug-ins/script-fu/script-fu-scripts.c:1245
 msgid "Script Arguments"
 msgstr "Arguments de la seqüència"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1226
+#: plug-ins/script-fu/script-fu-scripts.c:1268
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1273
+#: plug-ins/script-fu/script-fu-scripts.c:1315
 msgid "Script-Fu Color Selection"
 msgstr "Selecció del color de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1343
+#: plug-ins/script-fu/script-fu-scripts.c:1398
 msgid "Script-Fu File Selection"
 msgstr "Selecció del fitxer de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1375
+#: plug-ins/script-fu/script-fu-scripts.c:1403
+#, fuzzy
+msgid "Script-Fu Folder Selection"
+msgstr "Selecció del fitxer de l'Script-Fu"
+
+#: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-fu Pattern Selection"
 msgstr "Selecció del patró de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1382
+#: plug-ins/script-fu/script-fu-scripts.c:1445
 msgid "Script-Fu Gradient Selection"
 msgstr "Selecció de la gradació de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1390
+#: plug-ins/script-fu/script-fu-scripts.c:1453
 msgid "Script-Fu Brush Selection"
 msgstr "Selecció del pinzell de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1436
-msgid "Reset to Defaults"
-msgstr "Recupera els valors per defecte"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1462
-msgid "About"
-msgstr "Quant a..."
-
-#: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:549
-msgid "OK"
-msgstr "D'acord"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:551
-msgid "Cancel"
-msgstr "Cancel·la"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1651
-msgid "NOT SET"
-msgstr "NO DEFINIT"
-
-#: plug-ins/script-fu/script-fu-scripts.c:1680
+#: plug-ins/script-fu/script-fu-scripts.c:1661
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -128,31 +107,30 @@ msgstr ""
 "Com a mínim un dels tipus de lletra que heu triat no és vàlid.\n"
 "Si us plau, reviseu els paràmetres.\n"
 
-#. show the author & the copyright
-#: plug-ins/dbbrowser/dbbrowser_utils.c:518
-#: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
+#: plug-ins/script-fu/script-fu-scripts.c:1961
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:548
-#: plug-ins/script-fu/script-fu-scripts.c:1979
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
+#: plug-ins/script-fu/script-fu-scripts.c:1967
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:533
-#: plug-ins/script-fu/script-fu-scripts.c:1985
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
+#: plug-ins/script-fu/script-fu-scripts.c:1973
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1993
+#: plug-ins/script-fu/script-fu-scripts.c:1981
 msgid "Image Types:"
 msgstr "Tipus d'imatge:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2158
+#: plug-ins/script-fu/script-fu-scripts.c:2122
 msgid "Script-Fu Font Selection"
 msgstr "Selecció de tipus de lletra de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2225
+#: plug-ins/script-fu/script-fu-scripts.c:2192
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -163,1060 +141,1065 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:544
+#: plug-ins/script-fu/script-fu-server.c:568
 msgid "Script-Fu Server Options"
 msgstr "Opcions del servidor de l'Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:571
+#: plug-ins/script-fu/script-fu-server.c:595
 msgid "Server Port:"
 msgstr "Port del servidor:"
 
-#: plug-ins/script-fu/script-fu-server.c:577
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Logfile:"
 msgstr "Fitxer de registre del servidor:"
 
-#: plug-ins/script-fu/script-fu.c:165
+#: plug-ins/script-fu/script-fu.c:127
 msgid "<Toolbox>/Xtns/Script-Fu/Console..."
 msgstr "<Quadre d'eines>/Extensions/Script-Fu/Consola..."
 
-#: plug-ins/script-fu/script-fu.c:178
+#: plug-ins/script-fu/script-fu.c:152
 msgid "<Toolbox>/Xtns/Script-Fu/Server..."
 msgstr "<Quadre d'eines>/Extensions/Script-Fu/Servidor..."
 
-#: plug-ins/script-fu/script-fu.c:1105 plug-ins/script-fu/script-fu.c:1106
+#: plug-ins/script-fu/script-fu.c:276 plug-ins/script-fu/script-fu.c:277
 msgid "Re-read all available scripts"
 msgstr "Torna a llegir totes les seqüències disponibles"
 
-#: plug-ins/script-fu/script-fu.c:1110
+#: plug-ins/script-fu/script-fu.c:281
 msgid "<Toolbox>/Xtns/Script-Fu/Refresh"
 msgstr "<Quadre d'eines>/Extensions/Script-Fu/Refresca"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:148
-#: plug-ins/dbbrowser/dbbrowser_utils.c:167
-msgid "DB Browser (init...)"
-msgstr "Base de dades del Navegador DB (s'està iniciant...)"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:153
-#: plug-ins/dbbrowser/dbbrowser_utils.c:172
-msgid "Search by Name"
-msgstr "Cerca per nom"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:155
-#: plug-ins/dbbrowser/dbbrowser_utils.c:174
-msgid "Search by Blurb"
-msgstr "Cerca per anunci de portada"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:157
-msgid "Apply"
-msgstr "Aplica"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:226
-msgid "Search:"
-msgstr "Cerca:"
-
-#. show the name
-#: plug-ins/dbbrowser/dbbrowser_utils.c:344
-msgid "Name:"
-msgstr "Nom:"
-
-#. show the description
-#: plug-ins/dbbrowser/dbbrowser_utils.c:360
-msgid "Blurb:"
-msgstr "Anunci de portada:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:382
-msgid "In:"
-msgstr "Entrada:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:429
-msgid "Out:"
-msgstr "Sortida:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:479
-msgid "Help:"
-msgstr "Ajuda:"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:643
-msgid "DB Browser (by name - please wait)"
-msgstr "Navegador de la base de dades (per nom; si us plau, espereu)"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:667
-msgid "DB Browser (by blurb - please wait)"
-msgstr "Navegador de la base de dades (per anunci de portada; si us plau, espereu)"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:677
-msgid "DB Browser (please wait)"
-msgstr "Navegador de la base de dades (si us plau, espereu"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:743
+#: plug-ins/dbbrowser/dbbrowser_utils.c:125
+#: plug-ins/dbbrowser/dbbrowser_utils.c:144
 msgid "DB Browser"
 msgstr "Navegador de la base de dades"
 
-#: plug-ins/script-fu/scripts/copy-visible.scm:0
-msgid "<Image>/Edit/Copy Visible"
-msgstr "<Imatge>/Edita/Copia Visible"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:130
+#: plug-ins/dbbrowser/dbbrowser_utils.c:149
+#, fuzzy
+msgid "Search by _Name"
+msgstr "Cerca per nom"
 
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "<Image>/Filters/Blur/Tileable Blur..."
-msgstr "<Imatge>/Filtres/Difuminar/Difuminar en mosaic..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:132
+#: plug-ins/dbbrowser/dbbrowser_utils.c:151
+#, fuzzy
+msgid "Search by _Blurb"
+msgstr "Cerca per anunci de portada"
 
-#: plug-ins/script-fu/scripts/clothify.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Clothify..."
-msgstr "<Imatge>/Script-Fu/Alquimia/Clothify..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+#, fuzzy
+msgid "_Search:"
+msgstr "Cerca:"
 
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
-msgstr "<Imatge>/Script-Fu/Alquimia/Esborra les altres files..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+msgid "Name:"
+msgstr "Nom:"
 
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Predator..."
-msgstr "<Imatge>/Script-Fu/Alquimia/Predator..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+msgid "Blurb:"
+msgstr "Anunci de portada:"
 
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
-msgstr "<Imatge>/Script-Fu/Alquimia/Mpascara desafilada..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+msgid "In:"
+msgstr "Entrada:"
 
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "<Image>/Script-Fu/Alchemy/Weave..."
-msgstr "<Imatge>/Script-Fu/Alquimia/Ona..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+msgid "Out:"
+msgstr "Sortida:"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
-msgstr "<Imatge>/Script-Fu/Alfa per logotip/Subratllat 3D..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+msgid "Help:"
+msgstr "Ajuda:"
 
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
-msgstr "<Imatge>/Script-Fu/Alfa per logotip/Lluentor extranya..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#, fuzzy
+msgid "Searching by name - please wait"
+msgstr "Navegador de la base de dades (per nom; si us plau, espereu)"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
-msgstr "<Imatge>/Script-Fu/Alfa a logotip/Neó extrany..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#, fuzzy
+msgid "Searching by blurb - please wait"
+msgstr ""
+"Navegador de la base de dades (per anunci de portada; si us plau, espereu)"
 
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
-msgstr "<Imatge>/Script-Fu/Alfa a logotip/Basic I..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+msgid "Searching - please wait"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Basic II..."
+#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+msgid "No matches"
+msgstr ""
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Barrejat..."
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Bovination..."
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Guix..."
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Bocins..."
-
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Crom..."
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Llibre de còmic..."
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Metall fred..."
-
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Gebre..."
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Glossari..."
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Brillantor intensa..."
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Biselar gradient..."
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Neó..."
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Traça de partícula..."
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Llum d'estel..."
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/cua d'estel..."
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Texturitzat..."
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Blend..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Barreja..."
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Rippling..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Ondulació..."
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
+#: plug-ins/gap/sel-to-anim-img.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
 msgstr "<Imatge>/Script-Fu/Alfa a logo/Selecció a imatge animada..."
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
-msgstr "<Imatge>/Script-Fu/Alfa a logo/Globus giratori..."
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "<Image>/Script-Fu/Animators/Waves..."
-msgstr "<Imatge>/Script-Fu/Animadors/Ones..."
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-msgid "<Image>/Script-Fu/Decor/Add Bevel..."
-msgstr "<Imatge>/Script-Fu/Decor/Afegeix biselat..."
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "<Image>/Script-Fu/Decor/Add Border..."
-msgstr "<Imatge>/Script-Fu/Decor/Afegeix marge..."
-
-#: plug-ins/script-fu/scripts/coffee.scm:0
-msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
-msgstr "<Imatge>/Script-Fu/Decor/Taca de cafè..."
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
-msgstr "<Imatge>/Script-Fu/Decor/Marge fuzzy..."
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "<Image>/Script-Fu/Decor/Old Photo..."
-msgstr "<Imatge>/Script-Fu/Decor/Foto vella..."
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "<Image>/Script-Fu/Decor/Round Corners..."
-msgstr "<Imatge>/Script-Fu/Decor/Cantonades arrodonides..."
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-msgid "<Image>/Script-Fu/Decor/Slide..."
-msgstr "<Imatge>/Script-Fu/Decor/Transparència..."
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "<Image>/Script-Fu/Render/Circuit..."
-msgstr "<Imatge>/Script-Fu/Render/Circuit..."
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "<Image>/Script-Fu/Render/Lava..."
-msgstr "<Imatge>/Script-Fu/Render/Lava..."
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "<Image>/Script-Fu/Render/Line Nova..."
-msgstr "<Imatge>/Script-Fu/Render/Nova de la línia..."
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "<Image>/Script-Fu/Render/Make Grid System..."
-msgstr "<Imatge>/Script-Fu/Render/Fer un sistema de graella..."
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#
-msgid "<Image>/Script-Fu/Selection/Distress Selection..."
-msgstr "<Imatge>/Script-Fu/Selecció/Selecció de senyal de socors..."
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "<Image>/Script-Fu/Selection/Fade Outline..."
-msgstr "<Imatge>/Script-Fu/Selecció/Decolorar el contorn..."
-
-#: plug-ins/script-fu/scripts/selection-round.scm:0
-#
-msgid "<Image>/Script-Fu/Selection/Round..."
-msgstr "<Imatge>/Script-Fu/Selecció/Arrodonir..."
-
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-msgid "<Image>/Script-Fu/Selection/To Brush..."
-msgstr "<Imatge>/Script-Fu/Selecció/per pintar..."
-
-#: plug-ins/script-fu/scripts/select_to_image.scm:0
-#
-msgid "<Image>/Script-Fu/Selection/To Image"
-msgstr "<Imatge>/Script-Fu/Selecció/Per imatge"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
-msgstr "<Imatge>/Script-Fu/Ombra/Ombra de gota..."
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "<Image>/Script-Fu/Shadow/Perspective..."
-msgstr "<Imatge>/Script-Fu/Ombra/Perspectiva..."
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
-msgstr "<Imatge>/Script-Fu/Ombra/Efecte Xach..."
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
-msgstr "<Imatge>/Script-Fu/Ombra/Operacions de plantilla/Talla-ho..."
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
-msgstr "<Imatge>/Script-Fu/Ombra/Operacions de plantilla/Croma-ho..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
-msgstr "<Imatge>/Script-Fu/Ombra/Operacions de plantilla/D'ASCII a capa d'imatge..."
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
-msgstr "<Imatge>/Script-Fu/Utils/Dibuixa un gràfic HSV..."
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
-msgstr "<Imatge>/Script-Fu/Utils/Mostra l'estructura de la imatge..."
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Botons/botons arrodonits..."
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Botons/Botó biselat senzill..."
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Contorn 3D..."
-
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Lluentor extrany..."
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Neó Aliè..."
-
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bàsic I..."
-
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bàsic II..."
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Barrejat..."
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bovination..."
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Tallat..."
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Guix..."
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bocins..."
-
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Croma..."
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Llibre de còmic..."
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Metall fred..."
-
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Vidre..."
-
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Grebre..."
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Glossari..."
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Brillantor intensa..."
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotip/Biselat de gradient..."
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotip/Imigre-26..."
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Neó..."
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotip/Text d'impressió de notícies..."
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Traça de partícula..."
-
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Croma SOTA..."
-
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Text ràpid..."
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Llum d'estel..."
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Cua d'estel..."
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Cercle de text..."
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Texturitzat..."
-
-#: plug-ins/script-fu/scripts/title-header.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Capçalera de títol de web..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El·liptic, ploma..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El·líptic..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/Rectangular, ploma..."
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/Rectangular..."
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Miscel·lània/Esfera..."
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Truchet 3D..."
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Camuflatge..."
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Terra plana..."
-
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Terra..."
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Mapa del servidor..."
-
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Mosaic de remolins..."
-
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Aremolinat (en forma de mosaic)..."
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/corves de cercles girants..."
-
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Truchet..."
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/D'ASCII a imatge..."
-
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/Gradient personalitzat..."
-
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/Mapa de tipus de lletra..."
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/Fletxa..."
-
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/Bala..."
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/Botó..."
-
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/Regla de la H..."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/Fletxa..."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/Bala..."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/Botó..."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/Encapçalament..."
-
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/Regla de la H..."
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Capçalera gran..."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
-msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiquetes del conducte general..."
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Capçalera petita..."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
-msgstr "<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiqueta del botó del conducte..."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
-msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiqueta del subbotó del conducte..."
-
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
-"Label..."
-msgstr ""
-"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiqueta del subsubbotó del conducte..."
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Desenvolupador de les preguntes més freqüents"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Errors de programació del GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Manual del GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Noticies del GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Tutorials del GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Documentació"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Descàrrega"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Art del GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/GTK"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Enllaços"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Llistes de correu"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Recursos"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/El GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Gimp-Savvy.com"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/'Grokking' el GIMP"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Registre de la integració automàtica"
-
-#: plug-ins/webbrowser/web-browser.scm:0
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Quadre d'eines>/Extensions/Navegador web/Usuari de les preguntes més freqüents"
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#
-msgid "Add Background"
-msgstr "Afegeix el fons"
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-msgid "Add Drop-Shadow"
-msgstr "Afegeix decrèixer ombres"
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#
-msgid "Add Shadow"
-msgstr "Afegeix ombres"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#
-msgid "Allow Resizing"
-msgstr "Permet el redimensionament de finestres"
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "Amplitude"
-msgstr "Amplia"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Angle"
-msgstr "Angle"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
+#: plug-ins/gap/sel-to-anim-img.scm.h:2
 msgid "Anim-Filter for all Copies"
 msgstr "Filtre d'animació per a totes les còpies"
 
-#: plug-ins/script-fu/scripts/text-circle.scm:0
 #
-msgid "Antialias"
-msgstr "Antialiasing"
+#: plug-ins/gap/sel-to-anim-img.scm.h:3
+msgid "Fill with BG Color"
+msgstr "Omple amb el color de fons"
 
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
 #
-msgid "Apply Generated Layermask"
-msgstr "Aplica una màscara de capa generada"
+#: plug-ins/gap/sel-to-anim-img.scm.h:4
+msgid "Number of Copies"
+msgstr "Nombre mínim de colors:"
 
-#: plug-ins/script-fu/scripts/image-structure.scm:0
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/3D Outline..."
+msgstr "<Imatge>/Script-Fu/Alfa per logotip/Subratllat 3D..."
+
 #
-msgid "Apply Layer Mask (or discard)"
-msgstr "Aplica una màscara de capa (o descarta)"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D Outline..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Contorn 3D..."
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#
-msgid "AutoCrop"
-msgstr "Escapçar"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Azimuth"
-msgstr "Azimuth"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#
-msgid "BG Opacity"
-msgstr "Opacitat del fons"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#
-msgid "Background Color"
-msgstr "Color de fons"
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#
-msgid "Background Image"
-msgstr "Imatge de fons"
-
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#
-msgid "Bar Height"
-msgstr "Barra vertical"
-
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-msgid "Bar Length"
-msgstr "Barra horitzontal"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#
-msgid "Base Color"
-msgstr "Color base"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Base Radius (pixels)"
-msgstr "Radi base (píxels)"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-#
-msgid "Behaviour"
-msgstr "Comportament"
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-msgid "Bevel Height (Sharpness)"
-msgstr "Biselat vertical (Nítid)"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#
-msgid "Bevel Width"
-msgstr "Biselat horitzontal"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "Blend Gradient (Outline)"
-msgstr "Gradació de la barreja (Contorn)"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#
-msgid "Blend Gradient (Text)"
-msgstr "Gradació de la barreja (Text)"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#
-msgid "Blend Mode"
-msgstr "Mode barreja"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#
-msgid "Block Size"
-msgstr "Mida del bloc"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Blur Amount"
-msgstr "Quantitat de difuminat"
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#
-msgid "Blur Border"
-msgstr "Vora difuminada"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-#
-msgid "Blur Horizontally"
-msgstr "Difumina horitzontalment"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#
-msgid "Blur Radius"
-msgstr "Radi de difuminat"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-#
-msgid "Blur Type"
-msgstr "Tipus de difuminat"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-#
-msgid "Blur Vertically"
-msgstr "Difumina verticalment"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#
-msgid "Blur X"
-msgstr "Difumina en X"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#
-msgid "Blur Y"
-msgstr "Difumina en Y"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-#
-msgid "Border Color"
-msgstr "Color de la vora"
-
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Border Size (pixels)"
-msgstr "Mida de la vora (píxels)"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#
-msgid "Border Size"
-msgstr "Mida de la vora"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-#
-msgid "Border X Size"
-msgstr "Mida de la vora X"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-#
-msgid "Border Y Size"
-msgstr "Mida de la vora y"
-
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-#
-msgid "Border"
-msgstr "Vora"
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-msgid "Buffer Amount (% Height of Text)"
-msgstr "Quantitat de memòria intermitja (% d'alçada del text)"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Bumpmap (Alpha Layer) Blur Radius"
 msgstr "radi de difuminat del Bumpmap (Capa alfa)"
 
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
 #
-msgid "Burst Color"
-msgstr "Color d'impulsos"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+msgid "Default Bumpmap Settings"
+msgstr "Configuració del Bumpmap per defecte"
 
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-msgid "Carve Raised Text"
-msgstr "Text aixecat esculpit"
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-msgid "Carve White Areas"
-msgstr "Àrees blanques esculpides"
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-msgid "Cell Size (pixels)"
-msgstr "Mida de la cel·la (píxels)"
-
-#: plug-ins/script-fu/scripts/chalk.scm:0
 #
-msgid "Chalk Color"
-msgstr "Color chalk"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+#: plug-ins/script-fu/scripts/asc2img.scm.h:7
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chalk.scm.h:5
+#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/news-text.scm.h:7
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: plug-ins/script-fu/scripts/slide.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "Tipus de lletra"
 
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Chip Amount"
-msgstr "Quantitat de xips"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/asc2img.scm.h:8
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chalk.scm.h:6
+#: plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/font-map.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:8
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: plug-ins/script-fu/scripts/title-header.scm.h:3
+msgid "Font Size (pixels)"
+msgstr "Mida del tipus de lletra (píxels)"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
+msgid "Outline Blur Radius"
+msgstr "Radi de difuminat del contorn"
+
 #
-msgid "Chrome Balance"
-msgstr "Balanç de color"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Patrons"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-msgid "Chrome Factor"
-msgstr "Factor de croma"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
+msgid "Shadow Blur Radius"
+msgstr "Radi de difuminació de les ombres"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #
-msgid "Chrome Lightness"
-msgstr "Lluminositat del croma"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+msgid "Shadow X Offset"
+msgstr "Desplaçament en X de les ombres"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
 #
-msgid "Chrome Saturation"
-msgstr "Saturació del croma"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+msgid "Shadow Y Offset"
+msgstr "Desplaçament en Y de les ombres"
 
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-msgid "Chrome White Areas"
-msgstr "Àrees blanques del croma"
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#: plug-ins/script-fu/scripts/chalk.scm.h:7
+#: plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:9
+#: plug-ins/script-fu/scripts/news-text.scm.h:9
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: plug-ins/script-fu/scripts/slide.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+msgid "Text"
+msgstr "Text"
 
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "Circuit Seed"
-msgstr "Desgranar el circuit"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Clear Unselected Maskarea"
-msgstr "Netejar l'àrea de màscara no seleccionada"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
 #
-msgid "Color 1"
-msgstr "Color 1"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Truchet 3D..."
 
-#: plug-ins/script-fu/scripts/camo.scm:0
 #
-msgid "Color 2"
-msgstr "Color 2"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/asc2img.scm.h:3
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chalk.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: plug-ins/script-fu/scripts/image-structure.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:2
+#: plug-ins/script-fu/scripts/speed-text.scm.h:2
+#: plug-ins/script-fu/scripts/sphere.scm.h:2
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:3
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:2
+msgid "Background Color"
+msgstr "Color de fons"
 
-#: plug-ins/script-fu/scripts/camo.scm:0
 #
-msgid "Color 3"
-msgstr "Color 3"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Block Size"
+msgstr "Mida del bloc"
 
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Color"
-msgstr "Color"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Columns"
-msgstr "Columnes"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
 #
-msgid "Create New Image"
-msgstr "Crea una imatge nova"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "End Blend"
+msgstr "Finalitza la barreja"
 
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: plug-ins/script-fu/scripts/truchet.scm.h:5
+msgid "Number of X Tiles"
+msgstr "Númeor de mosaics en X"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: plug-ins/script-fu/scripts/truchet.scm.h:6
+msgid "Number of Y Tiles"
+msgstr "Número de mosaics en Y"
+
 #
-msgid "Create Shadow"
-msgstr "Crea ombres"
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+msgid "Start Blend"
+msgstr "Barreja inicial"
 
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
+#
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+msgid "Supersample"
+msgstr "Supermostratge"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "Thickness"
+msgstr "Gruix"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Bevel..."
+msgstr "<Imatge>/Script-Fu/Decor/Afegeix biselat..."
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+msgid "Keep Bump Layer"
+msgstr "Manté la capa Bump"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: plug-ins/script-fu/scripts/slide.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+msgid "Work on Copy"
+msgstr "Treballa a la còpia"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Add Border..."
+msgstr "<Imatge>/Script-Fu/Decor/Afegeix marge..."
+
+#
+#: plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Border Color"
+msgstr "Color de la vora"
+
+#
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border X Size"
+msgstr "Mida de la vora X"
+
+#
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+msgid "Border Y Size"
+msgstr "Mida de la vora y"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:5
+msgid "Delta Value on Color"
+msgstr "Valor delta del color"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Arrow..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/"
+"Fletxa..."
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "Avall"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: plug-ins/script-fu/scripts/camo.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten Image"
+msgstr "Aplana la imatge"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+msgid "Glow Color"
+msgstr "Color incandescent"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "Esquerra"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "Orientació"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "Dreta"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "Mida"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "Amunt"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/"
+"Regla de la H..."
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+msgid "Bar Height"
+msgstr "Barra vertical"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar Length"
+msgstr "Barra horitzontal"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Bullet..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/"
+"Bala..."
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "Radius"
+msgstr "Radi"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Lluentor extranya/"
+"Botó..."
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+msgid "Glow Radius"
+msgstr "Radi d'incandescència"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "Omplena"
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: plug-ins/script-fu/scripts/asc2img.scm.h:9
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:10
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: plug-ins/script-fu/scripts/speed-text.scm.h:8
+msgid "Text Color"
+msgstr "Color del text"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Glow..."
+msgstr "<Imatge>/Script-Fu/Alfa per logotip/Lluentor extranya..."
+
+#
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Glow..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Lluentor extrany..."
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+msgid "Glow Size (pixels * 4)"
+msgstr "Mida de la incandescència (píxels * 4)"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Alien Neon..."
+msgstr "<Imatge>/Script-Fu/Alfa a logotip/Neó extrany..."
+
+#
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien Neon..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Neó Aliè..."
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Fade Away"
+msgstr "Esvair"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+msgid "Number of Bands"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+msgid "Width of Bands"
+msgstr "Amplada de les bandes"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+msgid "Width of Gaps"
+msgstr "Amplada de les obertures"
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:1
+msgid "<Image>/Script-Fu/Utils/ASCII to Image Layer..."
+msgstr ""
+"<Imatge>/Script-Fu/Ombra/Operacions de plantilla/D'ASCII a capa d'imatge..."
+
+#
+#: plug-ins/script-fu/scripts/asc2img.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/D'ASCII a imatge..."
+
+#: plug-ins/script-fu/scripts/asc2img.scm.h:5
+#, no-c-format
+msgid "Buffer Amount (% Height of Text)"
+msgstr "Quantitat de memòria intermitja (% d'alçada del text)"
+
+#
+#: plug-ins/script-fu/scripts/asc2img.scm.h:6
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+msgid "Filename"
+msgstr "Nom del fitxer"
+
+#
+#: plug-ins/script-fu/scripts/asc2img.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+msgid "Transparent Background"
+msgstr "Fons transparent"
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic I..."
+msgstr "<Imatge>/Script-Fu/Alfa a logotip/Basic I..."
+
+#
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic I..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bàsic I..."
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Basic II..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Basic II..."
+
+#
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Basic II..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bàsic II..."
+
+#
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Botons/Botó biselat senzill..."
+
+#
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Bevel Width"
+msgstr "Biselat horitzontal"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Lower-Right color"
+msgstr "Color inferior dret"
+
+#
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "Premut"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+msgid "Upper-Left color"
+msgstr "Color superior esquerra"
+
+#
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Arrow..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/"
+"Fletxa..."
+
+#
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Bullet..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/"
+"Bala..."
+
+#
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "Diàmetre"
+
+#
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Button..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/"
+"Botó..."
+
+#
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Heading..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/"
+"Encapçalament..."
+
+#
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/Hrule..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Patró biselat/"
+"Regla de la H..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "Alçada"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Width"
+msgstr "Amplada"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Blend..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Barreja..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Intermediate Frames"
+msgstr "Marcs intermitjos"
+
+#
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Looped"
+msgstr "En cabar torna a coençar"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "Max. Blur Radius"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Blended..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Barrejat..."
+
+#
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blended..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Barrejat..."
+
+#
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blend Mode"
+msgstr "Mode barreja"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Custom Gradient"
 msgstr "Gradació personalitzada"
 
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
 #
-msgid "Dark Color"
-msgstr "Color fosc"
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "FG-BG-HSV"
+msgstr "De primer a segon pla (HSV)"
 
-#: plug-ins/script-fu/scripts/coffee.scm:0
+#
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-RGB"
+msgstr "De primer a segon pla (RGB)"
+
+#
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+msgid "FG-Transparent"
+msgstr "Transparenta el fons"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+msgid "Gradient"
+msgstr "Degradat"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+msgid "Offset (pixels)"
+msgstr "Desplaçament (píxels)"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Bovination..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Bovination..."
+
+#
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bovination..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bovination..."
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+msgid "Spots density X"
+msgstr "Densitat X del punt de llum"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+msgid "Spots density Y"
+msgstr "Densitat Y del punt de llum"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#, fuzzy
+msgid "Add Glowing"
+msgstr "Afegeix un punt"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "After Glow"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+msgid ""
+"Burn-In: Need two layers in total!\n"
+"        A foreground text layer with transparency\n"
+"        and a background layer."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#, fuzzy
+msgid "Corona Width"
+msgstr "Amplada original:"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#, fuzzy
+msgid "Fadeout"
+msgstr "Fon"
+
+#
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#, fuzzy
+msgid "Fadeout Width"
+msgstr "Amplada de l'aresta"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Prepare for GIF"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "Speed (pixels/frame)"
+msgstr ""
+
+#
+#: plug-ins/script-fu/scripts/camo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Camuflatge..."
+
+#
+#: plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 1"
+msgstr "Color 1"
+
+#
+#: plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 2"
+msgstr "Color 2"
+
+#
+#: plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Color 3"
+msgstr "Color 3"
+
+#
+#: plug-ins/script-fu/scripts/camo.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+msgid "Granularity"
+msgstr "Granularitat"
+
+#
+#: plug-ins/script-fu/scripts/camo.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Image Size"
+msgstr "Mida de la imatge"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:8
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+msgid "Smooth"
+msgstr "Suavitza"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Carve-It..."
+msgstr "<Imatge>/Script-Fu/Ombra/Operacions de plantilla/Talla-ho..."
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "Carve White Areas"
+msgstr "Àrees blanques esculpides"
+
+#
+#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Image to Carve"
+msgstr "Imatge a esculpir"
+
+#
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Tallat..."
+
+#
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+msgid "Background Image"
+msgstr "Imatge de fons"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+msgid "Carve Raised Text"
+msgstr "Text aixecat esculpit"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+msgid "Padding Around Text"
+msgstr "Omplena al voltant de text"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chalk..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Guix..."
+
+#
+#: plug-ins/script-fu/scripts/chalk.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chalk..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Guix..."
+
+#
+#: plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Chalk Color"
+msgstr "Color chalk"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chip Away..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Bocins..."
+
+#
+#: plug-ins/script-fu/scripts/chip-away.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Away..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Bocins..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Blur Amount"
+msgstr "Quantitat de difuminat"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip Amount"
+msgstr "Quantitat de xips"
+
+#
+#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Drop Shadow"
+msgstr "Perdre ombres"
+
+#
+#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+msgid "Fill BG with Pattern"
+msgstr "Omple el fons amb un patró"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:9
+msgid "Invert"
+msgstr "Inverteix"
+
+#
+#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Keep Background"
+msgstr "manté el fons"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid "<Image>/Script-Fu/Stencil Ops/Chrome-It..."
+msgstr "<Imatge>/Script-Fu/Ombra/Operacions de plantilla/Croma-ho..."
+
+#
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+msgid "Chrome Balance"
+msgstr "Balanç de color"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome Factor"
+msgstr "Factor de croma"
+
+#
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+msgid "Chrome Lightness"
+msgstr "Lluminositat del croma"
+
+#
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Chrome Saturation"
+msgstr "Saturació del croma"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+msgid "Chrome White Areas"
+msgstr "Àrees blanques del croma"
+
+#
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+msgid "Environment Map"
+msgstr "Mapa de l'entorn"
+
+#
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "Highlight Balance"
+msgstr "Resalta el balanç"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Chrome..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Crom..."
+
+#
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chrome..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Croma..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+msgid "Offsets (pixels * 2)"
+msgstr "Desplaçaments (píxels * 2)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:1
+msgid "<Image>/Script-Fu/Render/Circuit..."
+msgstr "<Imatge>/Script-Fu/Render/Circuit..."
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Circuit Seed"
+msgstr "Desgranar el circuit"
+
+#
+#: plug-ins/script-fu/scripts/circuit.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:3
+#: plug-ins/script-fu/scripts/predator.scm.h:3
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "Keep Selection"
+msgstr "Manté la selecció"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:4
+msgid "No Background (only for separate layer)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:5
+msgid "Oilify Mask Size"
+msgstr "Mida de la màscara oliosa"
+
+#
+#: plug-ins/script-fu/scripts/circuit.scm.h:6
+#: plug-ins/script-fu/scripts/lava.scm.h:6
+#: plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "Separate Layer"
+msgstr "Separació de la capa"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Clothify..."
+msgstr "<Imatge>/Script-Fu/Alquimia/Clothify..."
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:2
+#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+msgid "Azimuth"
+msgstr "Azimuth"
+
+#
+#: plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr "Difumina en X"
+
+#
+#: plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr "Difumina en Y"
+
+#
+#: plug-ins/script-fu/scripts/clothify.scm.h:5
+#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr "Profunditat"
+
+#
+#: plug-ins/script-fu/scripts/clothify.scm.h:6
+#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Elevation"
+msgstr "Elevació"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Coffee Stain..."
+msgstr "<Imatge>/Script-Fu/Decor/Taca de cafè..."
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
@@ -1224,1273 +1207,1380 @@ msgstr ""
 "Només fosc\n"
 "(Millor, però només per imatges amb molt de blanc)"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
 #
-msgid "Default Bumpmap Settings"
-msgstr "Configuració del Bumpmap per defecte"
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-msgid "Defocus"
-msgstr "Desenfocar"
-
-#: plug-ins/script-fu/scripts/addborder.scm:0
-msgid "Delta Value on Color"
-msgstr "Valor delta del color"
-
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#
-msgid "Density (%)"
-msgstr "Densitat (%)"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#
-msgid "Depth"
-msgstr "Profunditat"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-#
-msgid "Description"
-msgstr "Descripció"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "Detail Level"
-msgstr "Nivell detallat"
-
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Detail in Middle"
-msgstr "Detall en el mig"
-
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#
-msgid "Diameter"
-msgstr "Diàmetre"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Down"
-msgstr "Avall"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow Blur Radius"
-msgstr "Perdre radi difuminat de les ombres"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#
-msgid "Drop Shadow Color"
-msgstr "Perdre color a les ombres"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow Opacity"
-msgstr "Perdre opacitat de les ombres"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow X Offset"
-msgstr "Perdre desplaçament en X de les ombres"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-msgid "Drop Shadow Y Offset"
-msgstr "Perdre desplaçament en Y de les ombres"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#
-msgid "Drop Shadow"
-msgstr "Perdre ombres"
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-msgid "Edge Amount"
-msgstr "Quantitat d'arestes"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#
-msgid "Edge Only"
-msgstr "Només aresta"
-
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#
-msgid "Edge Radius"
-msgstr "Radi de l'aresta"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#
-msgid "Edge Width"
-msgstr "Amplada de l'aresta"
-
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-msgid "Effect Size (pixels * 3)"
-msgstr "Mida de l'efecte (píxels * 3)"
-
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-msgid "Effect Size (pixels * 30)"
-msgstr "Mida de l'efecte (píxels * 30)"
-
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-msgid "Effect Size (pixels * 4)"
-msgstr "Mida de l'efecte (píxels * 4)"
-
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-msgid "Effect Size (pixels * 5)"
-msgstr "Mida de l'efecte (píxels * 5)"
-
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-msgid "Effect Size (pixels)"
-msgstr "Mida de l'efecte (píxels)"
-
-#: plug-ins/script-fu/scripts/clothify.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#
-msgid "Elevation"
-msgstr "Elevació"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#
-msgid "End Blend"
-msgstr "Finalitza la barreja"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "End X"
-msgstr "Fi de X"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "End Y"
-msgstr "Fi de Y"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Ending Blend"
-msgstr "S'està finalitzant la barreja"
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#
-msgid "Environment Map"
-msgstr "Mapa de l'entorn"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Erase before Draw"
-msgstr "Esborra abans de dibuixar"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Erase"
-msgstr "Esborra"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-#
-msgid "Erase/Fill"
-msgstr "Esborra/Omplena"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Even"
-msgstr "Parell"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-#
-msgid "Even/Odd"
-msgstr "Parell/Senar"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#
-msgid "FG-BG-HSV"
-msgstr "De primer a segon pla (HSV)"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#
-msgid "FG-BG-RGB"
-msgstr "De primer a segon pla (RGB)"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#
-msgid "FG-Transparent"
-msgstr "Transparenta el fons"
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Fade Away"
-msgstr "Esvair"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-#
-msgid "Fade From %"
-msgstr "Esvair des de %"
-
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
-msgid "Fade To   %"
-msgstr "Esvair cap a  %"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#
-msgid "Feathering"
-msgstr "Ploma"
-
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-#
-msgid "Filename"
-msgstr "Nom del fitxer"
-
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#
-msgid "Fill Angle"
-msgstr "Emplena l'angle"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#
-msgid "Fill BG with Pattern"
-msgstr "Omple el fons amb un patró"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#
-msgid "Fill with BG Color"
-msgstr "Omple amb el color de fons"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-#
-msgid "Fill with BG"
-msgstr "Omple amb el color de fons"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Flatten Image"
-msgstr "Aplana la imatge"
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-#
-msgid "Font Color"
-msgstr "Color del tipus de lletra"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "Font Size (pixels)"
-msgstr "Mida del tipus de lletra (píxels)"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-#
-msgid "Font"
-msgstr "Tipus de lletra"
-
-#: plug-ins/script-fu/scripts/font-map.scm:0
-#
-msgid "Fonts"
-msgstr "Tipus de lletra"
-
-#: plug-ins/script-fu/scripts/truchet.scm:0
-#
-msgid "Foreground Color"
-msgstr "Color de primer pla"
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#
-msgid "Frame Color"
-msgstr "Color del marc"
-
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#
-msgid "Frame Size"
-msgstr "Mida del marc"
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-#
-msgid "Frames"
-msgstr "Marcs"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-msgid "From Top-Left to Bottom-Right"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bar.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#
-msgid "Glow Color"
-msgstr "Color incandescent"
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#
-msgid "Glow Radius"
-msgstr "Radi d'incandescència"
-
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-msgid "Glow Size (pixels * 4)"
-msgstr "Mida de la incandescència (píxels * 4)"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0 plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-msgid "Gradient"
-msgstr "Degradat"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Granularity (1 is Low)"
-msgstr "Granularitat (1 és baix)"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-#
-msgid "Granularity"
-msgstr "Granularitat"
-
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
-#
-msgid "Graph Scale"
-msgstr "Escala del gràfic"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "Grids X"
-msgstr "Graelles en X"
-
-#: plug-ins/script-fu/scripts/grid-system.scm:0
-msgid "Grids Y"
-msgstr "Graelles en Y"
-
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Height"
-msgstr "Alçada"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Hexagons"
-msgstr "Hexàgons"
-
-#: plug-ins/script-fu/scripts/chrome-it.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#
-msgid "Highlight Balance"
-msgstr "Resalta el balanç"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#
-msgid "Highlight Color"
-msgstr "Resalta el color"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#
-msgid "Highlight Opacity"
-msgstr "Resalta la opacitat"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#
-msgid "Highlight X Offset"
-msgstr "Resaltar el desplaçament en X"
-
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#
-msgid "Highlight Y Offset"
-msgstr "Resalta el desplaçament en Y"
-
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#
-msgid "Hit Rate"
-msgstr "Velocitat resultant"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-#
-msgid "Hue Rate"
-msgstr "Velocitat del to de color"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "IIR"
-msgstr "IIR"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "Image Height"
-msgstr "Alçada de la imatge"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/rendermap.scm:0
-#
-msgid "Image Size"
-msgstr "Mida de la imatge"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "Image Width"
-msgstr "Amplada de la imatge"
-
-#: plug-ins/script-fu/scripts/carve-it.scm:0
-#
-msgid "Image to Carve"
-msgstr "Imatge a esculpir"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid "Index Image"
-msgstr "Imatge índex"
-
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Index to n Colors (0 = Remain RGB)"
-msgstr "Índex a n colors (0 = romà en RGB)"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#
-msgid "Insert Layer Names"
-msgstr "Insereix els noms de les capes"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "Intermediate Frames"
-msgstr "Marcs intermitjos"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-#
-msgid "Interpolate"
-msgstr "Interpola"
-
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-#
-msgid "Invert direction"
-msgstr "Direcció d'inversió"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Invert"
-msgstr "Inverteix"
-
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#
-msgid "Keep Background"
-msgstr "manté el fons"
-
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-msgid "Keep Bump Layer"
-msgstr "Manté la capa Bump"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/predator.scm:0
-#: plug-ins/script-fu/scripts/xach-effect.scm:0
-#
-msgid "Keep Selection"
-msgstr "Manté la selecció"
-
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "Land Height"
-msgstr "Alçada del terra"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Left"
-msgstr "Esquerra"
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-msgid "Lighting (degrees)"
-msgstr "Il·luminació (graus)"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-#
-msgid "Looped"
-msgstr "En cabar torna a coençar"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Lower Color (Active)"
-msgstr "Color inferior (Actiu)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#
-msgid "Lower Color"
-msgstr "Color inferior"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "Lower-Right color"
-msgstr "Color inferior dret"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#
-msgid "Make New Background"
-msgstr "Fer un fons nou"
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-#
-msgid "Mask Opacity"
-msgstr "Opacitat de la màscara"
-
-#: plug-ins/script-fu/scripts/unsharp-mask.scm:0
-#
-msgid "Mask Size"
-msgstr "Mida"
-
-#: plug-ins/script-fu/scripts/blend-anim.scm:0
-msgid "Max. Blur Radius"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Mosaic Tile Type"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-#
-msgid "Mottle"
-msgstr "Gira"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "No Background (only for separate layer)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Not Pressed (Active)"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#
-msgid "Not Pressed"
-msgstr "Pressió"
-
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Number of Bands"
-msgstr ""
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid "Number of Colors"
-msgstr "Nombre mínim de colors:"
-
-#: plug-ins/gap/sel-to-anim-img.scm:0
-#
-msgid "Number of Copies"
-msgstr "Nombre mínim de colors:"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "Number of Frames"
-msgstr "Número de marcs"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "Number of Lines"
-msgstr "Número de línies"
-
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-#
-msgid "Number of Times to Whirl"
-msgstr "Número de vegades que fa remolins"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Number of X Tiles"
-msgstr "Númeor de mosaics en X"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Number of Y Tiles"
-msgstr "Número de mosaics en Y"
-
-#: plug-ins/script-fu/scripts/slide.scm:0
-#
-msgid "Number"
-msgstr "Número"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-msgid "Octagons"
-msgstr "Octàgons"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-#
-msgid "Odd"
-msgstr "Senar"
-
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-msgid "Offset (pixels)"
-msgstr "Desplaçament (píxels)"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-#
-msgid "Offset Radius"
-msgstr "Radi de desplaçament"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid "Offset X"
-msgstr "Desplaçament en X"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid "Offset Y"
-msgstr "Desplaçament en Y"
-
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-msgid "Offsets (pixels * 2)"
-msgstr "Desplaçaments (píxels * 2)"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-msgid "Oilify Mask Size"
-msgstr "Mida de la màscara oliosa"
-
-#: plug-ins/script-fu/scripts/drop-shadow.scm:0
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Opacity"
-msgstr "Opacitat"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#
-msgid "Orientation"
-msgstr "Orientació"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#
-msgid "Outer Border"
-msgstr "Contorn exterior"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-msgid "Outline Blur Radius"
-msgstr "Radi de difuminat del contorn"
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#
-msgid "Outline Color"
-msgstr "Color real"
-
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-msgid "Outline Size"
-msgstr "Mida del contorn"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#
-msgid "Pad Color"
-msgstr "Omplenar de color"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#
-msgid "Pad Opacity"
-msgstr "Omplenar d'opacitat"
-
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-msgid "Padding Around Text"
-msgstr "Omplena al voltant de text"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Padding X"
-msgstr "Omplenar en X"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Padding Y"
-msgstr "Omplenar en Y"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-msgid "Padding for Transparent Regions"
-msgstr "Omplenar les regions transparents"
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "Padding"
-msgstr "Omplena"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#
-msgid "Pattern (Outline)"
-msgstr "Patró (Contorn)"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#
-msgid "Pattern (Overlay)"
-msgstr "Patró ("
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#
-msgid "Pattern (Text)"
-msgstr "UI de trames"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#
-msgid "Pattern"
-msgstr "Patrons"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
-msgstr "Radi Llapis/Radi roda [0.0:1.0]"
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-#
-msgid "Pixel Amount"
-msgstr "Quantitat de píxels"
-
-#: plug-ins/script-fu/scripts/predator.scm:0
-#
-msgid "Pixelize"
-msgstr "Píxelitza"
-
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#
-msgid "Pressed"
-msgstr "Premut"
-
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
-msgid "Quarter Size"
-msgstr "Mida un quart"
-
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-msgid "RLE"
-msgstr "RLE"
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-msgid "Radius (pixels)"
-msgstr "Radi (píxels)"
-
-#: plug-ins/script-fu/scripts/alien-glow-bullet.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/tileblur.scm:0
-#
-msgid "Radius"
-msgstr "Radi"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-msgid "Random Seed"
-msgstr "Desgranar aleatòriament"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-#
-msgid "Randomness"
-msgstr "Caràcter aleatori"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Relative Distance of Horizon"
-msgstr "Distància relativa de l'horitzó"
-
-#: plug-ins/script-fu/scripts/perspective-shadow.scm:0
-msgid "Relative Length of Shadow"
-msgstr "Longitud relativa de l'ombra"
-
-#: plug-ins/script-fu/scripts/selection-round.scm:0
-msgid "Relative Radius"
-msgstr "Radi relatiu"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid "Remove Background"
-msgstr "Suprimeix el fons"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#
-msgid "Ribbon Spacing"
-msgstr "Espaiat de la cinta"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Ribbon Width"
-msgstr "Amplada de la cinta"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#
-msgid "Right"
-msgstr "Dreta"
-
-#: plug-ins/script-fu/scripts/ripply-anim.scm:0
-msgid "Rippling Strength"
-msgstr "Forma de rínxol"
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-#
-msgid "Roughness"
-msgstr "Rugositat"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#
-msgid "Round Ratio"
-msgstr "Ràtio d'arrodoniment"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Rows"
-msgstr "Files"
-
-#: plug-ins/script-fu/scripts/erase-rows.scm:0
-msgid "Rows/Cols"
-msgstr "Files/Columnes"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "Scale X"
-msgstr "Escala en X"
-
-#: plug-ins/script-fu/scripts/flatland.scm:0
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "Scale Y"
-msgstr "Escala en Y"
-
-#: plug-ins/script-fu/scripts/land.scm:0
-#
-msgid "Sea Depth"
-msgstr "Profunditat màxima"
-
-#: plug-ins/script-fu/scripts/lava.scm:0
-#
-msgid "Seed"
-msgstr "Desgranar"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid "Select-By-Color Threshold"
-msgstr "Llindar de la selecció del color"
-
-#: plug-ins/script-fu/scripts/circuit.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-#: plug-ins/script-fu/scripts/predator.scm:0
-#
-msgid "Separate Layer"
-msgstr "Separació de la capa"
-
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-#
-msgid "Sepia"
-msgstr "Sepia"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-msgid "Shadow Blur Radius"
-msgstr "Radi de difuminació de les ombres"
-
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#
-msgid "Shadow Color"
-msgstr "Ombres del color"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#
-msgid "Shadow Darkness"
-msgstr "Opacitat de les ombres"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#
-msgid "Shadow Depth"
-msgstr "Profunditat de les ombres"
-
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-msgid "Shadow Weight (%)"
-msgstr "Pes de les ombres (%)"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#
-msgid "Shadow X Offset"
-msgstr "Desplaçament en X de les ombres"
-
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#
-msgid "Shadow Y Offset"
-msgstr "Desplaçament en Y de les ombres"
-
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#
-msgid "Shadow"
-msgstr "Ombres"
-
-#: plug-ins/script-fu/scripts/line-nova.scm:0
-msgid "Sharpness (degrees)"
-msgstr "Nitidesa (graus)"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#
-msgid "Shear Length"
-msgstr "Retallar la longitud"
-
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-#: plug-ins/script-fu/scripts/lava.scm:0
-msgid "Size"
-msgstr "Mida"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#
-msgid "Smooth Horizontally"
-msgstr "Suavitza horitzontalment"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#
-msgid "Smooth Vertically"
-msgstr "Suavitza verticalment"
-
-#: plug-ins/script-fu/scripts/camo.scm:0
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-msgid "Smooth"
-msgstr "Suavitza"
-
-#: plug-ins/script-fu/scripts/image-structure.scm:0
-#
-msgid "Space Between Layers"
-msgstr "Capes entre espais"
-
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/select_to_brush.scm:0
-#
-msgid "Spacing"
-msgstr "Espaiat"
-
-#: plug-ins/script-fu/scripts/sphere.scm:0
-#
-msgid "Sphere Color"
-msgstr "Color esfèric"
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "Spots density X"
-msgstr "Densitat X del punt de llum"
-
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-msgid "Spots density Y"
-msgstr "Densitat Y del punt de llum"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
-#
-msgid "Spread"
-msgstr "Escampar"
-
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#
-msgid "Squares"
-msgstr "Quadrats"
-
-#: plug-ins/script-fu/scripts/coffee.scm:0
-#
+#: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
 msgstr "Taques"
 
-#: plug-ins/script-fu/scripts/text-circle.scm:0
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Comic Book..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Llibre de còmic..."
+
 #
-msgid "Start Angle"
-msgstr "Angle inicial"
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Book..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Llibre de còmic..."
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
 #
-msgid "Start Blend"
-msgstr "Barreja inicial"
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+msgid "Outline Color"
+msgstr "Color real"
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+msgid "Outline Size"
+msgstr "Mida del contorn"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Cool Metal..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Metall fred..."
+
 #
-msgid "Start X"
-msgstr "X inicial"
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool Metal..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Metall fred..."
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+msgid "Effect Size (pixels)"
+msgstr "Mida de l'efecte (píxels)"
+
+#: plug-ins/script-fu/scripts/copy-visible.scm.h:1
+msgid "<Image>/Edit/Copy Visible"
+msgstr "<Imatge>/Edita/Copia Visible"
+
 #
-msgid "Start Y"
-msgstr "Y inicial"
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Vidre..."
 
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
 #
-msgid "Starting Blend"
-msgstr "S'estan iniciant les barreges"
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Distress Selection..."
+msgstr "<Imatge>/Script-Fu/Selecció/Selecció de senyal de socors..."
 
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "Granularitat (1 és baix)"
+
 #
-msgid "Supersample"
-msgstr "Supermostratge"
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+msgid "Smooth Horizontally"
+msgstr "Suavitza horitzontalment"
 
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Text Color (Active)"
-msgstr "Color del text (Actiu)"
-
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
 #
-msgid "Text Color"
-msgstr "Color del text"
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+msgid "Smooth Vertically"
+msgstr "Suavitza verticalment"
 
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
 #
-msgid "Text Pattern"
-msgstr "Patró del text"
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+msgid "Spread"
+msgstr "Escampar"
 
-#: plug-ins/script-fu/scripts/3d-outline.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-button.scm:0
-#: plug-ins/script-fu/scripts/alien-glow-logo.scm:0
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-#: plug-ins/script-fu/scripts/basic1-logo.scm:0
-#: plug-ins/script-fu/scripts/basic2-logo.scm:0
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-button.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/blended-logo.scm:0
-#: plug-ins/script-fu/scripts/bovinated-logo.scm:0
-#: plug-ins/script-fu/scripts/carved-logo.scm:0
-#: plug-ins/script-fu/scripts/chalk.scm:0
-#: plug-ins/script-fu/scripts/chip-away.scm:0
-#: plug-ins/script-fu/scripts/chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/comic-logo.scm:0
-#: plug-ins/script-fu/scripts/coolmetal-logo.scm:0
-#: plug-ins/script-fu/scripts/crystal-logo.scm:0
-#: plug-ins/script-fu/scripts/frosty-logo.scm:0
-#: plug-ins/script-fu/scripts/gimp-headers.scm:0
-#: plug-ins/script-fu/scripts/gimp-labels.scm:0
-#: plug-ins/script-fu/scripts/glossy.scm:0
-#: plug-ins/script-fu/scripts/glowing-logo.scm:0
-#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm:0
-#: plug-ins/script-fu/scripts/i26-gunya2.scm:0
-#: plug-ins/script-fu/scripts/neon-logo.scm:0
-#: plug-ins/script-fu/scripts/news-text.scm:0
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
-#: plug-ins/script-fu/scripts/speed-text.scm:0
-#: plug-ins/script-fu/scripts/starburst-logo.scm:0
-#: plug-ins/script-fu/scripts/starscape-logo.scm:0
-#: plug-ins/script-fu/scripts/t-o-p-logo.scm:0
-#: plug-ins/script-fu/scripts/text-circle.scm:0
-#: plug-ins/script-fu/scripts/textured-logo.scm:0
-#: plug-ins/script-fu/scripts/title-header.scm:0
-msgid "Text"
-msgstr "Text"
-
-#: plug-ins/script-fu/scripts/3dTruchet.scm:0
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/truchet.scm:0
-msgid "Thickness"
-msgstr "Gruix"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#
-msgid "Thread Density"
-msgstr "Densitat de la cadena"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-#
-msgid "Thread Intensity"
-msgstr "Intensitat de la cadena"
-
-#: plug-ins/script-fu/scripts/weave.scm:0
-msgid "Thread Length"
-msgstr "Longitud de la cadena"
-
-#: plug-ins/script-fu/scripts/distress_selection.scm:0
+#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Llindar (Més gran 1<-->255 Més petit)"
 
-#: plug-ins/script-fu/scripts/rendermap.scm:0
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Drop-Shadow..."
+msgstr "<Imatge>/Script-Fu/Ombra/Ombra de gota..."
+
 #
-msgid "Tile"
-msgstr "Mosaic"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Allow Resizing"
+msgstr "Permet el redimensionament de finestres"
 
-#: plug-ins/script-fu/scripts/asc2img.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm:0
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
 #
-msgid "Transparent Background"
-msgstr "Fons transparent"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:3
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/round-corners.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Blur Radius"
+msgstr "Radi de difuminat"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Turn from Left to Right"
-msgstr "Gira d'esquerra a dreta"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+msgid "Color"
+msgstr "Color"
 
-#: plug-ins/script-fu/scripts/alien-glow-arrow.scm:0
-#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm:0
-msgid "Up"
-msgstr "Amunt"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
-msgid "Upper Color (Active)"
-msgstr "Color superior (Actiu)"
-
-#: plug-ins/script-fu/scripts/pupi-button.scm:0
 #
-msgid "Upper Color"
-msgstr "Color superior"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+msgid "Offset X"
+msgstr "Desplaçament en X"
 
-#: plug-ins/script-fu/scripts/beveled-button.scm:0
-msgid "Upper-Left color"
-msgstr "Color superior esquerra"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
 #
-msgid "Use Brush"
-msgstr "Utilitza el pinzell"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "Offset Y"
+msgstr "Desplaçament en Y"
 
-#: plug-ins/script-fu/scripts/lava.scm:0
-#
-msgid "Use Current Gradient"
-msgstr "Utilitza el degradat actual"
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Opacity"
+msgstr "Opacitat"
 
-#: plug-ins/script-fu/scripts/fade-outline.scm:0
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Erase every other Row..."
+msgstr "<Imatge>/Script-Fu/Alquimia/Esborra les altres files..."
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Columns"
+msgstr "Columnes"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase"
+msgstr "Esborra"
+
 #
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+msgid "Erase/Fill"
+msgstr "Esborra/Omplena"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "Parell"
+
+#
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+msgid "Even/Odd"
+msgstr "Parell/Senar"
+
+#
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr "Omple amb el color de fons"
+
+#
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "Senar"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "Files"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+msgid "Rows/Cols"
+msgstr "Files/Columnes"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Fade Outline..."
+msgstr "<Imatge>/Script-Fu/Selecció/Decolorar el contorn..."
+
+#
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+msgid "Apply Generated Layermask"
+msgstr "Aplica una màscara de capa generada"
+
+#
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+msgid "Border Size"
+msgstr "Mida de la vora"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:4
+msgid "Clear Unselected Maskarea"
+msgstr "Netejar l'àrea de màscara no seleccionada"
+
+#
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:6
+#, no-c-format
+msgid "Fade From %"
+msgstr "Esvair des de %"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#, no-c-format
+msgid "Fade To   %"
+msgstr "Esvair cap a  %"
+
+#
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use Growing Selection"
 msgstr "Utilitza la selecció de creixement"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
 #
+#: plug-ins/script-fu/scripts/flatland.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Flatland..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Terra plana..."
+
+#
+#: plug-ins/script-fu/scripts/flatland.scm.h:2
+#: plug-ins/script-fu/scripts/land.scm.h:2
+msgid "Detail Level"
+msgstr "Nivell detallat"
+
+#
+#: plug-ins/script-fu/scripts/flatland.scm.h:3
+#: plug-ins/script-fu/scripts/land.scm.h:4
+msgid "Image Height"
+msgstr "Alçada de la imatge"
+
+#
+#: plug-ins/script-fu/scripts/flatland.scm.h:4
+#: plug-ins/script-fu/scripts/land.scm.h:5
+msgid "Image Width"
+msgstr "Amplada de la imatge"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:5
+#: plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Random Seed"
+msgstr "Desgranar aleatòriament"
+
+#
+#: plug-ins/script-fu/scripts/flatland.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "Escala en X"
+
+#
+#: plug-ins/script-fu/scripts/flatland.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "Escala en Y"
+
+#
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/Mapa de tipus de lletra..."
+
+#
+#: plug-ins/script-fu/scripts/font-map.scm.h:2
+#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+msgid "Border"
+msgstr "Vora"
+
+#
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+msgid "Fonts"
+msgstr "Tipus de lletra"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Frosty..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Gebre..."
+
+#
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Frosty..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Grebre..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Fuzzy Border..."
+msgstr "<Imatge>/Script-Fu/Decor/Marge fuzzy..."
+
+#
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+msgid "Add Shadow"
+msgstr "Afegeix ombres"
+
+#
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+msgid "Blur Border"
+msgstr "Vora difuminada"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, no-c-format
+msgid "Shadow Weight (%)"
+msgstr "Pes de les ombres (%)"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Big Header..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Capçalera "
+"gran..."
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Small Header..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Capçalera "
+"petita..."
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "AutoCrop"
+msgstr "Escapçar"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+msgid "Dark Color"
+msgstr "Color fosc"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight Color"
+msgstr "Resalta el color"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Index Image"
+msgstr "Imatge índex"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+msgid "Number of Colors"
+msgstr "Nombre mínim de colors:"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "Remove Background"
+msgstr "Suprimeix el fons"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+msgid "Select-By-Color Threshold"
+msgstr "Llindar de la selecció del color"
+
+#
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+msgid "Shadow Color"
+msgstr "Ombres del color"
+
+#
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiquetes "
+"del conducte general..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiqueta "
+"del botó del conducte..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiqueta "
+"del subbotó del conducte..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Sub-Button "
+"Label..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Temes de pàgina web/Gimp.org/Etiqueta "
+"del subsubbotó del conducte..."
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glossy..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Glossari..."
+
+#
+#: plug-ins/script-fu/scripts/glossy.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glossy..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Glossari..."
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Blend Gradient (Outline)"
+msgstr "Gradació de la barreja (Contorn)"
+
+#
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Blend Gradient (Text)"
+msgstr "Gradació de la barreja (Text)"
+
+#
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+msgid "Pattern (Outline)"
+msgstr "Patró (Contorn)"
+
+#
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+msgid "Pattern (Overlay)"
+msgstr "Patró ("
+
+#
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+msgid "Pattern (Text)"
+msgstr "UI de trames"
+
+#
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#: plug-ins/script-fu/scripts/sphere.scm.h:5
+msgid "Shadow"
+msgstr "Ombres"
+
+#
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
 msgid "Use Pattern Overlay"
 msgstr "Utilitza la superposició del patró"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
 msgid "Use Pattern for Outline instead of Gradient"
 msgstr "Utilitza el patró pel contorn en comptes de degradar"
 
-#: plug-ins/script-fu/scripts/glossy.scm:0
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Use Pattern for Text instead of Gradient"
 msgstr "Utilitza el patró pel text en comptes de degradar"
 
-#: plug-ins/script-fu/scripts/hsv-graph.scm:0
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Glowing Hot..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Brillantor intensa..."
+
+#
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glowing Hot..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Brillantor intensa..."
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+msgid "Effect Size (pixels * 3)"
+msgstr "Mida de l'efecte (píxels * 3)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Bevel..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Biselar gradient..."
+
+#
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Bevel..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotip/Biselat de gradient..."
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+msgid "Bevel Height (Sharpness)"
+msgstr "Biselat vertical (Nítid)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+msgid "Border Size (pixels)"
+msgstr "Mida de la vora (píxels)"
+
+#
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom Gradient..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Útils/Gradient personalitzat..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:1
+msgid "<Image>/Script-Fu/Render/Make Grid System..."
+msgstr "<Imatge>/Script-Fu/Render/Fer un sistema de graella..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "Grids X"
+msgstr "Graelles en X"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+msgid "Grids Y"
+msgstr "Graelles en Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Draw HSV Graph..."
+msgstr "<Imatge>/Script-Fu/Utils/Dibuixa un gràfic HSV..."
+
+#
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+msgid "BG Opacity"
+msgstr "Opacitat del fons"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+msgid "End X"
+msgstr "Fi de X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+msgid "End Y"
+msgstr "Fi de Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+msgid "From Top-Left to Bottom-Right"
+msgstr ""
+
+#
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+msgid "Graph Scale"
+msgstr "Escala del gràfic"
+
+#
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+msgid "Start X"
+msgstr "X inicial"
+
+#
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+msgid "Start Y"
+msgstr "Y inicial"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Use Selection Bounds Instead of Belows"
 msgstr "Utilitza la selecció del límit en comptes d'avall"
 
-#: plug-ins/script-fu/scripts/waves-anim.scm:0
-msgid "Wavelength"
-msgstr "Longitud d'ona"
-
-#: plug-ins/script-fu/scripts/trochoid.scm:0
-msgid "Wheel Radius (hypo < 0 < epi)"
-msgstr "Radi del cercle (hipo < 0 < epi)"
-
-#: plug-ins/script-fu/scripts/swirltile.scm:0
 #
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotip/Imigre-26..."
+
+#
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+msgid "Frame Color"
+msgstr "Color del marc"
+
+#
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Frame Size"
+msgstr "Mida del marc"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+msgid "<Image>/Script-Fu/Utils/Show Image Structure..."
+msgstr "<Imatge>/Script-Fu/Utils/Mostra l'estructura de la imatge..."
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:2
+msgid "Apply Layer Mask (or discard)"
+msgstr "Aplica una màscara de capa (o descarta)"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:4
+msgid "Create New Image"
+msgstr "Crea una imatge nova"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:5
+msgid "Insert Layer Names"
+msgstr "Insereix els noms de les capes"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:6
+msgid "Make New Background"
+msgstr "Fer un fons nou"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:7
+msgid "Outer Border"
+msgstr "Contorn exterior"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:8
+msgid "Pad Color"
+msgstr "Omplenar de color"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:9
+msgid "Pad Opacity"
+msgstr "Omplenar d'opacitat"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:10
+msgid "Padding for Transparent Regions"
+msgstr "Omplenar les regions transparents"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:11
+msgid "Shear Length"
+msgstr "Retallar la longitud"
+
+#
+#: plug-ins/script-fu/scripts/image-structure.scm.h:12
+msgid "Space Between Layers"
+msgstr "Capes entre espais"
+
+#
+#: plug-ins/script-fu/scripts/land.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Land..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Terra..."
+
+#
+#: plug-ins/script-fu/scripts/land.scm.h:6
+msgid "Land Height"
+msgstr "Alçada del terra"
+
+#
+#: plug-ins/script-fu/scripts/land.scm.h:10
+msgid "Sea Depth"
+msgstr "Profunditat màxima"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "<Image>/Script-Fu/Render/Lava..."
+msgstr "<Imatge>/Script-Fu/Render/Lava..."
+
+#
+#: plug-ins/script-fu/scripts/lava.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr "Rugositat"
+
+#
+#: plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr "Desgranar"
+
+#
+#: plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "Use Current Gradient"
+msgstr "Utilitza el degradat actual"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "<Image>/Script-Fu/Render/Line Nova..."
+msgstr "<Imatge>/Script-Fu/Render/Nova de la línia..."
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Number of Lines"
+msgstr "Número de línies"
+
+#
+#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+msgid "Offset Radius"
+msgstr "Radi de desplaçament"
+
+#
+#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+msgid "Randomness"
+msgstr "Caràcter aleatori"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+msgid "Sharpness (degrees)"
+msgstr "Nitidesa (graus)"
+
+#
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical, Feathered..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El·liptic, ploma..."
+
+#
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elliptical..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/El·líptic..."
+
+#
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular, Feathered..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/Rectangular, ploma..."
+
+#
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Fer pinzell/Rectangular..."
+
+#
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
+msgid "Description"
+msgstr "Descripció"
+
+#
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Feathering"
+msgstr "Ploma"
+
+#
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+msgid "Spacing"
+msgstr "Espaiat"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Neon..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Neó..."
+
+#
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Neon..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Neó..."
+
+#
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create Shadow"
+msgstr "Crea ombres"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+msgid "Effect Size (pixels * 5)"
+msgstr "Mida de l'efecte (píxels * 5)"
+
+#
+#: plug-ins/script-fu/scripts/news-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Logotip/Text d'impressió de notícies..."
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Cell Size (pixels)"
+msgstr "Mida de la cel·la (píxels)"
+
+#
+#: plug-ins/script-fu/scripts/news-text.scm.h:6
+#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "Densitat (%)"
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Old Photo..."
+msgstr "<Imatge>/Script-Fu/Decor/Foto vella..."
+
+#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+msgid "Defocus"
+msgstr "Desenfocar"
+
+#
+#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+msgid "Mottle"
+msgstr "Gira"
+
+#
+#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+msgid "Sepia"
+msgstr "Sepia"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Perspective..."
+msgstr "<Imatge>/Script-Fu/Ombra/Perspectiva..."
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "Angle"
+
+#
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Interpolate"
+msgstr "Interpola"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Relative Distance of Horizon"
+msgstr "Distància relativa de l'horitzó"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "Relative Length of Shadow"
+msgstr "Longitud relativa de l'ombra"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Predator..."
+msgstr "<Imatge>/Script-Fu/Alquimia/Predator..."
+
+#: plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge Amount"
+msgstr "Quantitat d'arestes"
+
+#
+#: plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel Amount"
+msgstr "Quantitat de píxels"
+
+#
+#: plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "Píxelitza"
+
+#
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Botons/botons arrodonits..."
+
+#
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower Color"
+msgstr "Color inferior"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower Color (Active)"
+msgstr "Color inferior (Actiu)"
+
+#
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not Pressed"
+msgstr "Pressió"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not Pressed (Active)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "Omplenar en X"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "Omplenar en Y"
+
+#
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round Ratio"
+msgstr "Ràtio d'arrodoniment"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text Color (Active)"
+msgstr "Color del text (Actiu)"
+
+#
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper Color"
+msgstr "Color superior"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper Color (Active)"
+msgstr "Color superior (Actiu)"
+
+#
+#: plug-ins/script-fu/scripts/rendermap.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render Map..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Mapa del servidor..."
+
+#
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Behaviour"
+msgstr "Comportament"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "Detall en el mig"
+
+#
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Tile"
+msgstr "Mosaic"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Rippling..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Ondulació..."
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of Frames"
+msgstr "Número de marcs"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Rippling Strength"
+msgstr "Forma de rínxol"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Round Corners..."
+msgstr "<Imatge>/Script-Fu/Decor/Cantonades arrodonides..."
+
+#
+#: plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add Background"
+msgstr "Afegeix el fons"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:3
+msgid "Add Drop-Shadow"
+msgstr "Afegeix decrèixer ombres"
+
+#
+#: plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Edge Radius"
+msgstr "Radi de l'aresta"
+
+#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Brush..."
+msgstr "<Imatge>/Script-Fu/Selecció/per pintar..."
+
+#
+#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+msgid "<Image>/Script-Fu/Selection/To Image"
+msgstr "<Imatge>/Script-Fu/Selecció/Per imatge"
+
+#
+#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "<Image>/Script-Fu/Selection/Round..."
+msgstr "<Imatge>/Script-Fu/Selecció/Arrodonir..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:2
+msgid "Relative Radius"
+msgstr "Radi relatiu"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "<Image>/Script-Fu/Decor/Slide..."
+msgstr "<Imatge>/Script-Fu/Decor/Transparència..."
+
+#
+#: plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Font Color"
+msgstr "Color del tipus de lletra"
+
+#
+#: plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "Número"
+
+#
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Croma SOTA..."
+
+#
+#: plug-ins/script-fu/scripts/speed-text.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Text ràpid..."
+
+#
+#: plug-ins/script-fu/scripts/sphere.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Misc/Sphere..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Miscel·lània/Esfera..."
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:3
+msgid "Lighting (degrees)"
+msgstr "Il·luminació (graus)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:4
+msgid "Radius (pixels)"
+msgstr "Radi (píxels)"
+
+#
+#: plug-ins/script-fu/scripts/sphere.scm.h:6
+msgid "Sphere Color"
+msgstr "Color esfèric"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Globus giratori..."
+
+#
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+msgid "Frames"
+msgstr "Marcs"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+msgid "Index to n Colors (0 = Remain RGB)"
+msgstr "Índex a n colors (0 = romà en RGB)"
+
+#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+msgid "Turn from Left to Right"
+msgstr "Gira d'esquerra a dreta"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starburst..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Llum d'estel..."
+
+#
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starburst..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Llum d'estel..."
+
+#
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+msgid "Burst Color"
+msgstr "Color d'impulsos"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+msgid "Effect Size (pixels * 30)"
+msgstr "Mida de l'efecte (píxels * 30)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Starscape..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/cua d'estel..."
+
+#
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starscape..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Cua d'estel..."
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+msgid "Effect Size (pixels * 4)"
+msgstr "Mida de l'efecte (píxels * 4)"
+
+#
+#: plug-ins/script-fu/scripts/swirltile.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-Tile..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Mosaic de remolins..."
+
+#
+#: plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Whirl Amount"
 msgstr "Quantitat de rínxols"
 
-#: plug-ins/script-fu/scripts/swirly-pattern.scm:0
 #
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirly (tileable)..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Patrons/Aremolinat (en forma de "
+"mosaic)..."
+
+#
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+msgid "Number of Times to Whirl"
+msgstr "Número de vegades que fa remolins"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+msgid "Quarter Size"
+msgstr "Mida un quart"
+
+#
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl Angle"
 msgstr "Angle del remolí"
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Width of Bands"
-msgstr "Amplada de les bandes"
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Particle Trace..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Traça de partícula..."
 
-#: plug-ins/script-fu/scripts/alien-neon-logo.scm:0
-msgid "Width of Gaps"
-msgstr "Amplada de les obertures"
+#
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Particle Trace..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Traça de partícula..."
 
-#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm:0
-#: plug-ins/script-fu/scripts/gradient-example.scm:0
-#: plug-ins/script-fu/scripts/mkbrush.scm:0
-#: plug-ins/script-fu/scripts/swirltile.scm:0
-msgid "Width"
-msgstr "Amplada"
+#
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+msgid "Base Color"
+msgstr "Color base"
 
-#: plug-ins/script-fu/scripts/add-bevel.scm:0
-#: plug-ins/script-fu/scripts/fuzzyborder.scm:0
-#: plug-ins/script-fu/scripts/old_photo.scm:0
-#: plug-ins/script-fu/scripts/round-corners.scm:0
-#: plug-ins/script-fu/scripts/slide.scm:0
-#: plug-ins/script-fu/scripts/spinning_globe.scm:0
-msgid "Work on Copy"
-msgstr "Treballa a la còpia"
+#
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge Only"
+msgstr "Només aresta"
+
+#
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+msgid "Edge Width"
+msgstr "Amplada de l'aresta"
+
+#
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit Rate"
+msgstr "Velocitat resultant"
+
+#
+#: plug-ins/script-fu/scripts/text-circle.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Cercle de text..."
+
+#
+#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Antialias"
+msgstr "Antialiasing"
+
+#
+#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+msgid "Fill Angle"
+msgstr "Emplena l'angle"
+
+#
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start Angle"
+msgstr "Angle inicial"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo/Textured..."
+msgstr "<Imatge>/Script-Fu/Alfa a logo/Texturitzat..."
+
+#
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Textured..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Logotips/Texturitzat..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid "Ending Blend"
+msgstr "S'està finalitzant la barreja"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr "Hexàgons"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+msgid "Mosaic Tile Type"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr "Octàgons"
+
+#
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "Quadrats"
+
+#
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+msgid "Starting Blend"
+msgstr "S'estan iniciant les barreges"
+
+#
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+msgid "Text Pattern"
+msgstr "Patró del text"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+msgid "<Image>/Filters/Blur/Tileable Blur..."
+msgstr "<Imatge>/Filtres/Difuminar/Difuminar en mosaic..."
+
+#
+#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur Horizontally"
+msgstr "Difumina horitzontalment"
+
+#
+#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+msgid "Blur Type"
+msgstr "Tipus de difuminat"
+
+#
+#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "Blur Vertically"
+msgstr "Difumina verticalment"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "RLE"
+msgstr "RLE"
+
+#
+#: plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Logotips/Capçalera de títol de web..."
+
+#
+#: plug-ins/script-fu/scripts/trochoid.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+msgstr ""
+"<Quadre d'eines>/Extensions/Script-Fu/Patrons/corves de cercles girants..."
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:2
+msgid "Base Radius (pixels)"
+msgstr "Radi base (píxels)"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:3
+msgid "Erase before Draw"
+msgstr "Esborra abans de dibuixar"
+
+#
+#: plug-ins/script-fu/scripts/trochoid.scm.h:4
+msgid "Hue Rate"
+msgstr "Velocitat del to de color"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:5
+msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+msgstr "Radi Llapis/Radi roda [0.0:1.0]"
+
+#
+#: plug-ins/script-fu/scripts/trochoid.scm.h:6
+msgid "Use Brush"
+msgstr "Utilitza el pinzell"
+
+#: plug-ins/script-fu/scripts/trochoid.scm.h:7
+msgid "Wheel Radius (hypo < 0 < epi)"
+msgstr "Radi del cercle (hipo < 0 < epi)"
+
+#
+#: plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
+msgstr "<Quadre d'eines>/Extensions/Script-Fu/Patrons/Truchet..."
+
+#
+#: plug-ins/script-fu/scripts/truchet.scm.h:4
+msgid "Foreground Color"
+msgstr "Color de primer pla"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Unsharp Mask..."
+msgstr "<Imatge>/Script-Fu/Alquimia/Mpascara desafilada..."
+
+#
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask Opacity"
+msgstr "Opacitat de la màscara"
+
+#
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+msgid "Mask Size"
+msgstr "Mida"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators/Waves..."
+msgstr "<Imatge>/Script-Fu/Animadors/Ones..."
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Amplitude"
+msgstr "Amplia"
+
+#
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr "Direcció d'inversió"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "Wavelength"
+msgstr "Longitud d'ona"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy/Weave..."
+msgstr "<Imatge>/Script-Fu/Alquimia/Ona..."
+
+#
+#: plug-ins/script-fu/scripts/weave.scm.h:2
+msgid "Ribbon Spacing"
+msgstr "Espaiat de la cinta"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:3
+msgid "Ribbon Width"
+msgstr "Amplada de la cinta"
+
+#
+#: plug-ins/script-fu/scripts/weave.scm.h:4
+msgid "Shadow Darkness"
+msgstr "Opacitat de les ombres"
+
+#
+#: plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Shadow Depth"
+msgstr "Profunditat de les ombres"
+
+#
+#: plug-ins/script-fu/scripts/weave.scm.h:6
+msgid "Thread Density"
+msgstr "Densitat de la cadena"
+
+#
+#: plug-ins/script-fu/scripts/weave.scm.h:7
+msgid "Thread Intensity"
+msgstr "Intensitat de la cadena"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:8
+msgid "Thread Length"
+msgstr "Longitud de la cadena"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "<Image>/Script-Fu/Shadow/Xach-Effect..."
+msgstr "<Imatge>/Script-Fu/Ombra/Efecte Xach..."
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+msgid "Drop Shadow Blur Radius"
+msgstr "Perdre radi difuminat de les ombres"
+
+#
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+msgid "Drop Shadow Color"
+msgstr "Perdre color a les ombres"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+msgid "Drop Shadow Opacity"
+msgstr "Perdre opacitat de les ombres"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+msgid "Drop Shadow X Offset"
+msgstr "Perdre desplaçament en X de les ombres"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+msgid "Drop Shadow Y Offset"
+msgstr "Perdre desplaçament en Y de les ombres"
+
+#
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+msgid "Highlight Opacity"
+msgstr "Resalta la opacitat"
+
+#
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight X Offset"
+msgstr "Resaltar el desplaçament en X"
+
+#
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight Y Offset"
+msgstr "Resalta el desplaçament en Y"
+
+#: plug-ins/webbrowser/web-browser.scm.h:1
+msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+msgstr ""
+"<Quadre d'eines>/Extensions/Navegador web/Desenvolupador de les preguntes "
+"més freqüents"
+
+#: plug-ins/webbrowser/web-browser.scm.h:2
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+msgstr ""
+"<Quadre d'eines>/Extensions/Navegador web/Errors de programació del GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:3
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/Manual del GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:4
+msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/Noticies del GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:5
+msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/Tutorials del GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:6
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Documentació"
+
+#: plug-ins/webbrowser/web-browser.scm.h:7
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Descàrrega"
+
+#: plug-ins/webbrowser/web-browser.scm.h:8
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Art del GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:9
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/GTK"
+
+#: plug-ins/webbrowser/web-browser.scm.h:10
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Enllaços"
+
+#: plug-ins/webbrowser/web-browser.scm.h:11
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Llistes de correu"
+
+#: plug-ins/webbrowser/web-browser.scm.h:12
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/Recursos"
+
+#: plug-ins/webbrowser/web-browser.scm.h:13
+msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/GIMP.ORG/El GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:14
+msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/Gimp-Savvy.com"
+
+#: plug-ins/webbrowser/web-browser.scm.h:15
+msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+msgstr "<Quadre d'eines>/Extensions/Navegador web/'Grokking' el GIMP"
+
+#: plug-ins/webbrowser/web-browser.scm.h:16
+msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
+msgstr ""
+"<Quadre d'eines>/Extensions/Navegador web/Registre de la integració "
+"automàtica"
+
+#: plug-ins/webbrowser/web-browser.scm.h:17
+msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+msgstr ""
+"<Quadre d'eines>/Extensions/Navegador web/Usuari de les preguntes més "
+"freqüents"
+
+#~ msgid "Close"
+#~ msgstr "Tanca"
+
+#~ msgid "Reset to Defaults"
+#~ msgstr "Recupera els valors per defecte"
+
+#~ msgid "OK"
+#~ msgstr "D'acord"
+
+#~ msgid "Cancel"
+#~ msgstr "Cancel·la"
+
+#~ msgid "NOT SET"
+#~ msgstr "NO DEFINIT"
+
+#~ msgid "DB Browser (init...)"
+#~ msgstr "Base de dades del Navegador DB (s'està iniciant...)"
+
+#~ msgid "Apply"
+#~ msgstr "Aplica"
+
+#~ msgid "DB Browser (please wait)"
+#~ msgstr "Navegador de la base de dades (si us plau, espereu"
 
 #~ msgid "About the GIMP"
 #~ msgstr "Quant al GIMP"
@@ -2921,8 +3011,8 @@ msgstr "Treballa a la còpia"
 
 #~ msgid "Resize Error: Both width and height must be greater than zero."
 #~ msgstr ""
-#~ "S'ha produït un error en el canvi de la mida: tant l'amplada com l'alçada han de ser "
-#~ "més grans de zero."
+#~ "S'ha produït un error en el canvi de la mida: tant l'amplada com l'alçada "
+#~ "han de ser més grans de zero."
 
 #~ msgid "Indexed Color Conversion"
 #~ msgstr "Conversió indexada de color"
@@ -4241,7 +4331,8 @@ msgstr "Treballa a la còpia"
 #~ msgid ""
 #~ "  -S, --no-splash-image    Do not add an image to the startup window.\n"
 #~ msgstr ""
-#~ "  -S, --no-splash-image     No pafegeixis una imatge a la finestra inicial.\n"
+#~ "  -S, --no-splash-image     No pafegeixis una imatge a la finestra "
+#~ "inicial.\n"
 
 #~ msgid "  -v, --version            Output version information.\n"
 #~ msgstr "  -v, --version            Escriu la informació de la versió.\n"
@@ -4253,13 +4344,14 @@ msgstr "Treballa a la còpia"
 #~ "  --no-shm                 Do not use shared memory between GIMP and "
 #~ "plugins.\n"
 #~ msgstr ""
-#~ "  --no-shm                  No usis la memòria compartida entre GIMP i les "
-#~ "seves extensions.\n"
+#~ "  --no-shm                  No usis la memòria compartida entre GIMP i "
+#~ "les seves extensions.\n"
 
 #~ msgid ""
 #~ "  --no-xshm                Do not use the X Shared Memory extension.\n"
 #~ msgstr ""
-#~ "  --no-xshm                 No usis l'extensió de la memòria compartida X.\n"
+#~ "  --no-xshm                 No usis l'extensió de la memòria compartida "
+#~ "X.\n"
 
 #~ msgid ""
 #~ "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
@@ -4885,9 +4977,6 @@ msgstr "Treballa a la còpia"
 #~ msgid "Subtraction"
 #~ msgstr "Resta"
 
-#~ msgid "Fade Out"
-#~ msgstr "Fon"
-
 #~ msgid "Type:"
 #~ msgstr "Tipus:"
 
@@ -5039,9 +5128,6 @@ msgstr "Treballa a la còpia"
 
 #~ msgid "New Point"
 #~ msgstr "Punt nou"
-
-#~ msgid "Add Point"
-#~ msgstr "Afegeix un punt"
 
 #~ msgid "Delete Point"
 #~ msgstr "Suprimeix un punt"
@@ -5262,7 +5348,8 @@ msgstr "Treballa a la còpia"
 
 #~ msgid "Display Brush, Pattern and Gradient Indicators"
 #~ msgstr ""
-#~ "Mostra els indicadors del pinzell, del patró i del degradat a la barra d'eines"
+#~ "Mostra els indicadors del pinzell, del patró i del degradat a la barra "
+#~ "d'eines"
 
 #~ msgid "Navigation Window per Display"
 #~ msgstr "Navegació de la finestra per pantalla"
@@ -5543,9 +5630,6 @@ msgstr "Treballa a la còpia"
 
 #~ msgid "Set Canvas Size"
 #~ msgstr "Paràmetres de la mida de l'oli"
-
-#~ msgid "Original Width:"
-#~ msgstr "Amplada original:"
 
 #~ msgid "Ratio X:"
 #~ msgstr "Ràtio X:"
@@ -6136,7 +6220,8 @@ msgstr "Treballa a la còpia"
 #~ msgstr "Refés"
 
 #~ msgid "The GIMP is not properly installed for the current user\n"
-#~ msgstr "No s'ha instal·lat correctament el GIMP per part de l'usuari actual\n"
+#~ msgstr ""
+#~ "No s'ha instal·lat correctament el GIMP per part de l'usuari actual\n"
 
 #~ msgid ""
 #~ "User installation was skipped because the '--nointerface' flag was "
@@ -6485,7 +6570,8 @@ msgstr "Treballa a la còpia"
 
 #~ msgid "Click \"Continue\" to create your personal GIMP directory."
 #~ msgstr ""
-#~ "Feu un clic a \"Continua\" per crear el vostre directori personal del GIMP."
+#~ "Feu un clic a \"Continua\" per crear el vostre directori personal del "
+#~ "GIMP."
 
 #~ msgid ""
 #~ "For a proper GIMP installation, a subdirectory named\n"
@@ -6829,21 +6915,21 @@ msgstr "Treballa a la còpia"
 #~ msgstr "ed_do_copy_gradient_callback(): s'ha rebut un Null a call_data"
 
 #~ msgid "ed_do_rename_gradient_callback(): oops, received NULL in call_data"
-#~ msgstr ""
-#~ "ed_do_rename_gradient_callback(): s'ha rebut un Null a call_data"
+#~ msgstr "ed_do_rename_gradient_callback(): s'ha rebut un Null a call_data"
 
 #~ msgid ""
 #~ "ed_do_rename_gradient_callback(): oops, can't find gradient to rename"
 #~ msgstr ""
-#~ "ed_do_rename_gradient_callback(): no es troba el degradat què se li ha "
-#~ "de canviar el nom"
+#~ "ed_do_rename_gradient_callback(): no es troba el degradat què se li ha de "
+#~ "canviar el nom"
 
 #~ msgid "Delete gradient"
 #~ msgstr "Suprimeix el degradat"
 
 #~ msgid "ed_do_delete_gradient_callback(): Could not find gradient to delete!"
 #~ msgstr ""
-#~ "ed_do_delete_gradient_callback(): No es pot trobar el degradat per suprimir!"
+#~ "ed_do_delete_gradient_callback(): No es pot trobar el degradat per "
+#~ "suprimir!"
 
 #~ msgid "ed_do_save_pov_callback(): oops, could not open \"%s\""
 #~ msgstr "ed_do_save_pov_callback(): no es pot obrir \"%s\""
@@ -6870,8 +6956,8 @@ msgstr "Treballa a la còpia"
 
 #~ msgid "seg_get_segment_at(): No matching segment for position %0.15f"
 #~ msgstr ""
-#~ "seg_get_segment_at(): No hi ha cap segment que lligui amb la posició "
-#~ "%0.15f"
+#~ "seg_get_segment_at(): No hi ha cap segment que lligui amb la posició %"
+#~ "0.15f"
 
 #~ msgid "Histogram Options"
 #~ msgstr "Opcions de l'histograma"
@@ -7472,7 +7558,5 @@ msgstr "Treballa a la còpia"
 #~ "S'ha d'exportar la imatge abans de poder-la desar per les següents raons:"
 
 #~ msgid "The export conversion won't modify your original image."
-#~ msgstr "La conversió de l'exportació no modificarà la vostra imatge original."
-
-
-
+#~ msgstr ""
+#~ "La conversió de l'exportació no modificarà la vostra imatge original."

@@ -80,7 +80,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
-"POT-Creation-Date: 2002-08-13 21:40+0200\n"
+"POT-Creation-Date: 2002-08-20 15:04+0200\n"
 "PO-Revision-Date: 2002-08-13 21:40+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
@@ -268,210 +268,210 @@ msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsolvindue vil lukke om ti sekunder)\n"
 
 # med %s forrest bliver der ikke problemer med stort begyndelsesbogstav
-#: app/undo.c:3497
+#: app/undo.c:3531
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s kan ikke fortrydes"
 
-#: app/undo.c:3523
+#: app/undo.c:3557
 msgid "<<invalid>>"
 msgstr "<<ugyldig>>"
 
 # denne og følgende er i forbindelse med fortrydelse så det er
 # nødvendigt med navneord 
-#: app/undo.c:3524 app/gui/resize-dialog.c:185
+#: app/gui/resize-dialog.c:185 app/undo.c:3558
 msgid "Scale Image"
 msgstr "Skalering af billede"
 
-#: app/undo.c:3525
+#: app/undo.c:3559
 msgid "Resize Image"
 msgstr "Ændring af billedstørrelse"
 
-#: app/undo.c:3526
+#: app/undo.c:3560
 msgid "Convert Image"
 msgstr "Konvertering af billede"
 
-#: app/undo.c:3527
+#: app/undo.c:3561
 msgid "Crop Image"
 msgstr "Tilskæring af lag"
 
-#: app/undo.c:3528
+#: app/undo.c:3562
 msgid "Merge Layers"
 msgstr "Forenelse af lag"
 
-#: app/undo.c:3529 app/undo.c:3554
+#: app/undo.c:3563 app/undo.c:3587
 msgid "QuickMask"
 msgstr "Hurtigmaske"
 
-#: app/undo.c:3530 app/undo.c:3555
+#: app/undo.c:3564 app/undo.c:3588
 msgid "Guide"
 msgstr "Hjælpelinje"
 
-#: app/undo.c:3531
+#: app/undo.c:3565
 msgid "Layer Properties"
 msgstr "Lagegenskaber"
 
-#: app/undo.c:3532 app/gui/resize-dialog.c:179
+#: app/gui/resize-dialog.c:179 app/undo.c:3566
 msgid "Scale Layer"
 msgstr "Skalering af lag"
 
-#: app/undo.c:3533
+#: app/undo.c:3567
 msgid "Resize Layer"
 msgstr "Ændring af lagstørrelse"
 
-#: app/undo.c:3534
+#: app/undo.c:3568
 msgid "Move Layer"
 msgstr "Flytning af lag"
 
-#: app/undo.c:3535
+#: app/undo.c:3569
 msgid "Apply Layer Mask"
 msgstr "Anvendelse af lagmaske"
 
-#: app/undo.c:3536
+#: app/undo.c:3570
 msgid "Linked Layer"
 msgstr "Kædet lag"
 
-#: app/undo.c:3537
+#: app/undo.c:3571
 msgid "Float Selection"
 msgstr "Flydning af markering"
 
-#: app/undo.c:3538
+#: app/undo.c:3572
 msgid "Anchor Floating Selection"
 msgstr "Forankring af flydende markering"
 
-#: app/undo.c:3539 app/widgets/gimpbufferview.c:147
+#: app/undo.c:3573 app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "Indsættelse"
 
-#: app/undo.c:3540
+#: app/undo.c:3574
 msgid "Cut"
 msgstr "Klipning"
 
-#: app/undo.c:3541
+#: app/undo.c:3575
 msgid "Text"
 msgstr "Tekst"
 
-#: app/undo.c:3542 app/undo.c:3575
+#: app/undo.c:3576 app/undo.c:3609
 msgid "Transform"
 msgstr "Omformning"
 
-#: app/undo.c:3543 app/undo.c:3576
+#: app/undo.c:3577 app/undo.c:3610
 msgid "Paint"
 msgstr "Malning"
 
-#: app/undo.c:3544 app/undo.c:3577
+#: app/undo.c:3578 app/undo.c:3611
 msgid "Attach Parasite"
 msgstr "Parasitvedhæftning"
 
-#: app/undo.c:3545 app/undo.c:3578
+#: app/undo.c:3579 app/undo.c:3612
 msgid "Remove Parasite"
 msgstr "Parasitfjernelse"
 
-#: app/undo.c:3546
+#: app/undo.c:3580
 msgid "Plug-In"
 msgstr "Udvidelsesmodul"
 
-#: app/undo.c:3548 app/gui/palette-import-dialog.c:441
-#: app/pdb/internal_procs.c:124
+#: app/gui/palette-import-dialog.c:441 app/pdb/internal_procs.c:124
+#: app/undo.c:3582
 msgid "Image"
 msgstr "Billede"
 
-#: app/undo.c:3549
+#: app/undo.c:3583
 msgid "Image Mod"
 msgstr "Billedændring"
 
-#: app/undo.c:3550 app/gui/file-new-dialog.c:364
+#: app/gui/file-new-dialog.c:364 app/undo.c:3584
 msgid "Image Type"
 msgstr "Billedtype"
 
 #. Image size frame
-#: app/undo.c:3551 app/gui/file-new-dialog.c:140
+#: app/gui/file-new-dialog.c:140 app/undo.c:3585
 msgid "Image Size"
 msgstr "Billedstørrelse"
 
-#: app/undo.c:3552
+#: app/undo.c:3586
 msgid "Resolution Change"
 msgstr "Opløsningsændring"
 
-#: app/undo.c:3553 app/core/gimpchannel.c:458
+#: app/core/gimpchannel.c:503 app/undo.c:3589
 msgid "Selection Mask"
 msgstr "Markeringsmaske"
 
-#: app/undo.c:3556
+#: app/undo.c:3590
 msgid "Rename Item"
 msgstr "Omdøbelse af element"
 
-#: app/undo.c:3557 app/gui/layers-commands.c:621
+#: app/gui/layers-commands.c:621 app/undo.c:3591
 msgid "New Layer"
 msgstr "Nyt lag"
 
-#: app/undo.c:3558
+#: app/undo.c:3592
 msgid "Delete Layer"
 msgstr "Sletning af lag"
 
-#: app/undo.c:3559
+#: app/undo.c:3593
 msgid "Layer Mod"
 msgstr "Ændring af lag"
 
-#: app/undo.c:3560
+#: app/undo.c:3594
 msgid "Add Layer Mask"
 msgstr "Tilføjelse af lagmaske"
 
-#: app/undo.c:3561
+#: app/undo.c:3595
 msgid "Delete Layer Mask"
 msgstr "Sletning af lagmaske"
 
 # gad vide hvad forskellen mellem denne og næste er?
-#: app/undo.c:3562
+#: app/undo.c:3596
 msgid "Layer Reposition"
 msgstr "Repositionering af lag"
 
-#: app/undo.c:3563
+#: app/undo.c:3597
 msgid "Layer Move"
 msgstr "Flytning af lag"
 
-#: app/undo.c:3564 app/gui/channels-commands.c:334
+#: app/gui/channels-commands.c:334 app/undo.c:3598
 msgid "New Channel"
 msgstr "Ny kanal"
 
-#: app/undo.c:3565
+#: app/undo.c:3599
 msgid "Delete Channel"
 msgstr "Sletning af kanal"
 
-#: app/undo.c:3566
+#: app/undo.c:3600
 msgid "Channel Mod"
 msgstr "Ændring af kanal"
 
-#: app/undo.c:3567
+#: app/undo.c:3601
 msgid "Channel Reposition"
 msgstr "Flytning af lag"
 
-#: app/undo.c:3568
+#: app/undo.c:3602
 msgid "New Vectors"
 msgstr "Nye vektorer"
 
-#: app/undo.c:3569
+#: app/undo.c:3603
 msgid "Delete Vectors"
 msgstr "Sletning af vektorer"
 
-#: app/undo.c:3570
+#: app/undo.c:3604
 msgid "Vectors Mod"
 msgstr "Ændring af vektorer"
 
-#: app/undo.c:3571
+#: app/undo.c:3605
 msgid "Vectors Reposition"
 msgstr "Flytning af vektorer"
 
 # FS står for floating selection
-#: app/undo.c:3572
+#: app/undo.c:3606
 msgid "FS to Layer"
 msgstr "Flydende til lag"
 
-#: app/undo.c:3573
+#: app/undo.c:3607
 msgid "FS Rigor"
 msgstr "Stramning af flydende"
 
-#: app/undo.c:3574
+#: app/undo.c:3608
 msgid "FS Relax"
 msgstr "Løsnen af flydende"
 
@@ -993,7 +993,7 @@ msgstr ""
 "Kunne ikke gemme '%s':\n"
 "%s"
 
-#: app/core/gimpimage-mask.c:237
+#: app/core/gimpimage-mask.c:223
 msgid ""
 "Unable to cut or copy because the\n"
 "selected region is empty."
@@ -1001,15 +1001,15 @@ msgstr ""
 "Kan ikke klippe eller kopiere fordi\n"
 "det markerede område er tomt."
 
-#: app/core/gimpimage-mask.c:384
+#: app/core/gimpimage-mask.c:370
 msgid "Cannot float selection: No selection made."
 msgstr "Kan ikke flyde markering: ingen markering at flyde."
 
-#: app/core/gimpimage-mask.c:398 app/gui/layers-commands.c:810
+#: app/core/gimpimage-mask.c:384 app/gui/layers-commands.c:810
 msgid "Floating Selection"
 msgstr "Flydende markering"
 
-#: app/core/gimpimage-mask.c:526
+#: app/core/gimpimage-mask.c:591
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -1017,7 +1017,7 @@ msgstr ""
 "Det aktive lag har ingen alfakanal\n"
 "der kan laves om til en markering."
 
-#: app/core/gimpimage-mask.c:545
+#: app/core/gimpimage-mask.c:615
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -1025,11 +1025,11 @@ msgstr ""
 "Det aktive lag har ingen maske\n"
 "der kan laves om til en markering."
 
-#: app/core/gimpimage-mask.c:606
+#: app/core/gimpimage-mask.c:668
 msgid "No selection to stroke."
 msgstr "Ingen markering til strøg."
 
-#: app/core/gimpimage-mask.c:660
+#: app/core/gimpimage-mask.c:722
 msgid "Paint operation failed."
 msgstr "Maleoperation mislykkedes."
 
@@ -1081,27 +1081,27 @@ msgstr "%.1f Mb"
 msgid "Untitled"
 msgstr "Unavngiven"
 
-#: app/core/gimpimage.c:2799
+#: app/core/gimpimage.c:2797
 msgid "Layer cannot be raised higher."
 msgstr "Laget kan ikke hæves mere."
 
-#: app/core/gimpimage.c:2823
+#: app/core/gimpimage.c:2821
 msgid "Layer cannot be lowered more."
 msgstr "Laget kan ikke sænkes mere."
 
-#: app/core/gimpimage.c:2844
+#: app/core/gimpimage.c:2842
 msgid "Layer is already on top."
 msgstr "Laget er allerede øverst."
 
-#: app/core/gimpimage.c:2850
+#: app/core/gimpimage.c:2848
 msgid "Cannot raise a layer without alpha."
 msgstr "Kan ikke hæve lag uden alfa."
 
-#: app/core/gimpimage.c:2874
+#: app/core/gimpimage.c:2872
 msgid "Layer is already on the bottom."
 msgstr "Laget er allerede nederst."
 
-#: app/core/gimpimage.c:2921
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1110,19 +1110,19 @@ msgstr ""
 "Laget \"%s\" har ingen alfa.\n"
 "Laget blev placeret over det."
 
-#: app/core/gimpimage.c:3064
+#: app/core/gimpimage.c:3062
 msgid "Channel cannot be raised higher."
 msgstr "Kanalen kan ikke hæves mere."
 
-#: app/core/gimpimage.c:3084
+#: app/core/gimpimage.c:3082
 msgid "Channel cannot be lowered more."
 msgstr "Kanalen kan ikke sænkes mere."
 
-#: app/core/gimpimage.c:3245
+#: app/core/gimpimage.c:3243
 msgid "Path cannot be raised higher."
 msgstr "Banen kan ikke hæves mere."
 
-#: app/core/gimpimage.c:3265
+#: app/core/gimpimage.c:3263
 msgid "Path cannot be lowered more."
 msgstr "Banen kan ikke sænkes mere."
 
@@ -2154,7 +2154,6 @@ msgid "Y:"
 msgstr "y:"
 
 #: app/gui/file-new-dialog.c:312 app/gui/resize-dialog.c:618
-#, c-format
 msgid "pixels/%a"
 msgstr "punkter/%a"
 
@@ -5653,11 +5652,11 @@ msgstr "Starter programudvidelser: "
 msgid "Extensions"
 msgstr "Programudvidelser"
 
-#: app/tools/tools-enums.c:13 app/tools/gimpcroptool.c:983
+#: app/tools/gimpcroptool.c:983 app/tools/tools-enums.c:13
 msgid "Crop"
 msgstr "Beskær"
 
-#: app/tools/tools-enums.c:14 app/tools/gimpcroptool.c:980
+#: app/tools/gimpcroptool.c:980 app/tools/tools-enums.c:14
 msgid "Resize"
 msgstr "Ændr størrelse"
 
@@ -6193,15 +6192,15 @@ msgstr "Markér håndtegnede områder"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Værktøjer/Markering/Fri markering"
 
-#: app/tools/gimpfuzzyselecttool.c:96
+#: app/tools/gimpfuzzyselecttool.c:97
 msgid "Fuzzy Select"
 msgstr "Udflydende markering"
 
-#: app/tools/gimpfuzzyselecttool.c:97
+#: app/tools/gimpfuzzyselecttool.c:98
 msgid "Select contiguous regions"
 msgstr "Markér sammenhængende områder"
 
-#: app/tools/gimpfuzzyselecttool.c:98
+#: app/tools/gimpfuzzyselecttool.c:99
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Værktøjer/Markering/Udflydende markering"
 

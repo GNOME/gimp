@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: 1.4.1\n"
-"POT-Creation-Date: 2002-06-16 21:07+0100\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2002-06-16 21:15+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -218,19 +218,19 @@ msgstr "_Reiniciar"
 msgid "Visible"
 msgstr "Visível"
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:163
 msgid "Transform"
 msgstr "Transformar"
 
-#: libgimpwidgets/gimpstock.c:163
+#: libgimpwidgets/gimpstock.c:166
 msgid "Rotate"
 msgstr "Rodar"
 
-#: libgimpwidgets/gimpstock.c:164
+#: libgimpwidgets/gimpstock.c:167
 msgid "Scale"
 msgstr "Escalar"
 
-#: libgimpwidgets/gimpstock.c:165
+#: libgimpwidgets/gimpstock.c:168
 msgid "Shear"
 msgstr "Cortar Rente"
 

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.7\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2002-05-30 15:36+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
@@ -218,19 +218,19 @@ msgstr "_Rücksetzen"
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:163
 msgid "Transform"
 msgstr "Transformation"
 
-#: libgimpwidgets/gimpstock.c:163
+#: libgimpwidgets/gimpstock.c:166
 msgid "Rotate"
 msgstr "Rotieren"
 
-#: libgimpwidgets/gimpstock.c:164
+#: libgimpwidgets/gimpstock.c:167
 msgid "Scale"
 msgstr "Skalieren"
 
-#: libgimpwidgets/gimpstock.c:165
+#: libgimpwidgets/gimpstock.c:168
 msgid "Shear"
 msgstr "Scheren"
 

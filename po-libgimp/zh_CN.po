@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-05-29 12:29+0200\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2002-03-27 23:12+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -217,19 +217,19 @@ msgstr "重置(_R)"
 msgid "Visible"
 msgstr "可见"
 
-#: libgimpwidgets/gimpstock.c:160
+#: libgimpwidgets/gimpstock.c:163
 msgid "Transform"
 msgstr "变换"
 
-#: libgimpwidgets/gimpstock.c:163
+#: libgimpwidgets/gimpstock.c:166
 msgid "Rotate"
 msgstr "旋转"
 
-#: libgimpwidgets/gimpstock.c:164
+#: libgimpwidgets/gimpstock.c:167
 msgid "Scale"
 msgstr "缩放"
 
-#: libgimpwidgets/gimpstock.c:165
+#: libgimpwidgets/gimpstock.c:168
 msgid "Shear"
 msgstr "剪取"
 

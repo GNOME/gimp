@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-07-24 02:03+0200\n"
+"POT-Creation-Date: 2002-08-20 15:07+0200\n"
 "PO-Revision-Date: 2002-07-24 02:03+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -301,7 +301,7 @@ msgstr "Färgfunktion"
 
 #. Redmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:725 plug-ins/common/AlienMap.c:1460
-#: plug-ins/common/decompose.c:116
+#: plug-ins/common/decompose.c:117
 msgid "Red"
 msgstr "Röd"
 
@@ -367,13 +367,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:766 plug-ins/common/AlienMap.c:1483
-#: plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:118
 msgid "Green"
 msgstr "Grön"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:807 plug-ins/common/AlienMap.c:1506
-#: plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:123
 msgid "Blue"
 msgstr "Blå"
 
@@ -547,7 +547,7 @@ msgstr "Välj mapp och genomsök samlingen igen"
 #: plug-ins/FractalExplorer/FractalExplorer.c:1397
 #: plug-ins/gimpressionist/presets.c:679
 #: plug-ins/imagemap/imap_cmd_delete.c:58
-#: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:151
+#: plug-ins/imagemap/imap_selection.c:183 plug-ins/imagemap/imap_tools.c:172
 msgid "Delete"
 msgstr "Ta bort"
 
@@ -1188,8 +1188,8 @@ msgstr "Visa/göm förhandsgranskningstrådram"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
-#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
+#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
+#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
 #: plug-ins/common/jpeg.c:731 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:424 plug-ins/common/png.c:426
@@ -1232,7 +1232,7 @@ msgstr "%s: felaktig färgkarta"
 #: plug-ins/bmp/bmpread.c:319 plug-ins/bmp/bmpread.c:326
 #: plug-ins/bmp/bmpread.c:333 plug-ins/common/CEL.c:301
 #: plug-ins/common/blinds.c:384 plug-ins/common/compose.c:544
-#: plug-ins/common/decompose.c:475 plug-ins/common/film.c:995
+#: plug-ins/common/decompose.c:481 plug-ins/common/film.c:995
 #: plug-ins/common/gifload.c:845 plug-ins/common/hrz.c:373
 #: plug-ins/common/jpeg.c:903 plug-ins/common/lic.c:713
 #: plug-ins/common/pat.c:338 plug-ins/common/pcx.c:329
@@ -1260,7 +1260,7 @@ msgstr "Kan inte öppna %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:507
-#: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:958
+#: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:947
 #: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:245
 #: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1214
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
@@ -1719,21 +1719,21 @@ msgid "Randoms from seed (shared)"
 msgstr "Slumpmässiga värden från frö (delad)"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:1291
-#: plug-ins/common/decompose.c:122 plug-ins/fp/fp_gtk.c:292
+#: plug-ins/common/decompose.c:127 plug-ins/fp/fp_gtk.c:292
 #: plug-ins/fp/fp_gtk.c:426 plug-ins/gimpressionist/orientation.c:196
 #: plug-ins/gimpressionist/size.c:190
 msgid "Hue"
 msgstr "Nyans"
 
 #: plug-ins/common/CML_explorer.c:305 plug-ins/common/CML_explorer.c:1296
-#: plug-ins/common/decompose.c:123 plug-ins/fp/fp_gtk.c:296
+#: plug-ins/common/decompose.c:128 plug-ins/fp/fp_gtk.c:296
 #: plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
 #: plug-ins/rcm/rcm_dialog.c:545
 msgid "Saturation"
 msgstr "Mättnad"
 
 #: plug-ins/common/CML_explorer.c:306 plug-ins/common/CML_explorer.c:1301
-#: plug-ins/common/decompose.c:124 plug-ins/fp/fp_gtk.c:300
+#: plug-ins/common/decompose.c:129 plug-ins/fp/fp_gtk.c:300
 #: plug-ins/fp/fp_gtk.c:434 plug-ins/gimpressionist/orientation.c:139
 #: plug-ins/gimpressionist/size.c:134
 msgid "Value"
@@ -2469,7 +2469,7 @@ msgstr ""
 #: plug-ins/common/colorify.c:324 plug-ins/common/colortoalpha.c:415
 #: plug-ins/common/ps.c:2711 plug-ins/common/xpm.c:431
 #: plug-ins/gimpressionist/color.c:54 plug-ins/gimpressionist/color.c:59
-#: plug-ins/imagemap/imap_menu.c:338 plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/imagemap/imap_menu.c:303 plug-ins/print/gimp_main_window.c:1412
 msgid "Color"
 msgstr "Färg"
 
@@ -2506,7 +2506,7 @@ msgstr ""
 msgid "to Alpha"
 msgstr "till Alfa"
 
-#: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:113
+#: plug-ins/common/compose.c:120 plug-ins/common/decompose.c:114
 msgid "RGB"
 msgstr "RGB"
 
@@ -2514,7 +2514,7 @@ msgstr "RGB"
 msgid "rgb-compose"
 msgstr ""
 
-#: plug-ins/common/compose.c:124
+#: plug-ins/common/compose.c:124 plug-ins/common/decompose.c:119
 msgid "RGBA"
 msgstr "RGBA"
 
@@ -2526,7 +2526,7 @@ msgstr "Alpha:"
 msgid "rgba-compose"
 msgstr ""
 
-#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:119
+#: plug-ins/common/compose.c:128 plug-ins/common/decompose.c:124
 msgid "HSV"
 msgstr "HSV"
 
@@ -2549,7 +2549,7 @@ msgstr "Värde:"
 msgid "hsv-compose"
 msgstr ""
 
-#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:125
+#: plug-ins/common/compose.c:132 plug-ins/common/decompose.c:130
 msgid "CMY"
 msgstr "CMY"
 
@@ -2572,7 +2572,7 @@ msgstr "Gul:"
 msgid "cmy-compose"
 msgstr ""
 
-#: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:131
+#: plug-ins/common/compose.c:136 plug-ins/common/decompose.c:136
 msgid "CMYK"
 msgstr "CMYK"
 
@@ -2889,104 +2889,107 @@ msgstr ""
 msgid "Curve Bend..."
 msgstr "röd"
 
-#: plug-ins/common/decompose.c:113 plug-ins/common/decompose.c:116
+#: plug-ins/common/decompose.c:114 plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:119
 msgid "red"
 msgstr "röd"
 
-#: plug-ins/common/decompose.c:114 plug-ins/common/decompose.c:117
+#: plug-ins/common/decompose.c:115 plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:120
 msgid "green"
 msgstr "grön"
 
-#: plug-ins/common/decompose.c:115 plug-ins/common/decompose.c:118
+#: plug-ins/common/decompose.c:116 plug-ins/common/decompose.c:121
+#: plug-ins/common/decompose.c:123
 msgid "blue"
 msgstr "blå"
 
-#: plug-ins/common/decompose.c:119 plug-ins/common/decompose.c:122
-msgid "hue"
-msgstr "nyans"
-
-#: plug-ins/common/decompose.c:120 plug-ins/common/decompose.c:123
-msgid "saturation"
-msgstr "mättnad"
-
-#: plug-ins/common/decompose.c:121 plug-ins/common/decompose.c:124
-msgid "value"
-msgstr "värde"
-
-#: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
-msgid "cyan"
-msgstr "cyan"
-
-#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
-msgid "magenta"
-msgstr "magenta"
-
-#: plug-ins/common/decompose.c:127 plug-ins/common/decompose.c:130
-msgid "yellow"
-msgstr "gul"
-
-#: plug-ins/common/decompose.c:128
-msgid "Cyan"
-msgstr "Cyan"
-
-#: plug-ins/common/decompose.c:129
-msgid "Magenta"
-msgstr "Magenta"
-
-#: plug-ins/common/decompose.c:130
-msgid "Yellow"
-msgstr "Gul"
-
-#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:135
-msgid "cyan_k"
-msgstr ""
-
-#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:136
-msgid "magenta_k"
-msgstr ""
-
-#: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
-msgid "yellow_k"
-msgstr ""
-
-#: plug-ins/common/decompose.c:134
-msgid "black"
-msgstr "svart"
-
-#: plug-ins/common/decompose.c:135
-msgid "Cyan_K"
-msgstr ""
-
-#: plug-ins/common/decompose.c:136
-msgid "Magenta_K"
-msgstr ""
-
-#: plug-ins/common/decompose.c:137
-msgid "Yellow_K"
-msgstr ""
-
-#: plug-ins/common/decompose.c:138
-msgid "Alpha"
-msgstr "Alfa"
-
-#: plug-ins/common/decompose.c:138
+#: plug-ins/common/decompose.c:122 plug-ins/common/decompose.c:143
 msgid "alpha"
 msgstr "alfa"
 
-#: plug-ins/common/decompose.c:204
+#: plug-ins/common/decompose.c:124 plug-ins/common/decompose.c:127
+msgid "hue"
+msgstr "nyans"
+
+#: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
+msgid "saturation"
+msgstr "mättnad"
+
+#: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
+msgid "value"
+msgstr "värde"
+
+#: plug-ins/common/decompose.c:130 plug-ins/common/decompose.c:133
+msgid "cyan"
+msgstr "cyan"
+
+#: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:134
+msgid "magenta"
+msgstr "magenta"
+
+#: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:135
+msgid "yellow"
+msgstr "gul"
+
+#: plug-ins/common/decompose.c:133
+msgid "Cyan"
+msgstr "Cyan"
+
+#: plug-ins/common/decompose.c:134
+msgid "Magenta"
+msgstr "Magenta"
+
+#: plug-ins/common/decompose.c:135
+msgid "Yellow"
+msgstr "Gul"
+
+#: plug-ins/common/decompose.c:136 plug-ins/common/decompose.c:140
+msgid "cyan_k"
+msgstr ""
+
+#: plug-ins/common/decompose.c:137 plug-ins/common/decompose.c:141
+msgid "magenta_k"
+msgstr ""
+
+#: plug-ins/common/decompose.c:138 plug-ins/common/decompose.c:142
+msgid "yellow_k"
+msgstr ""
+
+#: plug-ins/common/decompose.c:139
+msgid "black"
+msgstr "svart"
+
+#: plug-ins/common/decompose.c:140
+msgid "Cyan_K"
+msgstr ""
+
+#: plug-ins/common/decompose.c:141
+msgid "Magenta_K"
+msgstr ""
+
+#: plug-ins/common/decompose.c:142
+msgid "Yellow_K"
+msgstr ""
+
+#: plug-ins/common/decompose.c:143
+msgid "Alpha"
+msgstr "Alfa"
+
+#: plug-ins/common/decompose.c:209
 msgid "<Image>/Image/Mode/Decompose..."
 msgstr ""
 
-#: plug-ins/common/decompose.c:285
+#: plug-ins/common/decompose.c:290
 msgid "Decomposing..."
 msgstr ""
 
-#: plug-ins/common/decompose.c:879
+#: plug-ins/common/decompose.c:907
 msgid "Decompose"
 msgstr ""
 
 #. parameter settings
-#: plug-ins/common/decompose.c:896
+#: plug-ins/common/decompose.c:924
 msgid "Extract Channels:"
 msgstr ""
 
@@ -3662,7 +3665,7 @@ msgstr "Spara som GIkon"
 msgid "Icon Name:"
 msgstr "Ikonnamn:"
 
-#: plug-ins/common/gif.c:690
+#: plug-ins/common/gif.c:679
 #, fuzzy
 msgid ""
 "GIF: Couldn't simply reduce colors further.\n"
@@ -3670,7 +3673,7 @@ msgid ""
 msgstr ""
 "GIF: Kunde ej enkelt minska antalet färger mer.  Sparar som ogenomskinlig.\n"
 
-#: plug-ins/common/gif.c:950
+#: plug-ins/common/gif.c:939
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
@@ -3678,16 +3681,16 @@ msgstr ""
 "GIF: Tyvärr, kan ej spara RGB-bilder som GIF - konvertera till INDEXERAD\n"
 "eller GRÅ först.\n"
 
-#: plug-ins/common/gif.c:968
+#: plug-ins/common/gif.c:957
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF: kan ej öppna %s\n"
 
-#: plug-ins/common/gif.c:1157
+#: plug-ins/common/gif.c:1146
 msgid "GIF Warning"
 msgstr "GIF varning"
 
-#: plug-ins/common/gif.c:1183
+#: plug-ins/common/gif.c:1172
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3704,63 +3707,63 @@ msgstr ""
 "Du kan välja att antingen beskära alla lager till\n"
 "bildkanterna eller abryta sparningen."
 
-#: plug-ins/common/gif.c:1229
+#: plug-ins/common/gif.c:1218
 msgid "Save as GIF"
 msgstr "Spara som GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1251
+#: plug-ins/common/gif.c:1240
 msgid "GIF Options"
 msgstr "GIF-inställningar"
 
-#: plug-ins/common/gif.c:1259
+#: plug-ins/common/gif.c:1248
 msgid "Interlace"
 msgstr "Interlace"
 
-#: plug-ins/common/gif.c:1275
+#: plug-ins/common/gif.c:1264
 msgid "GIF Comment:"
 msgstr "GIF-kommentar:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1336
+#: plug-ins/common/gif.c:1325
 msgid "Animated GIF Options"
 msgstr "Animerad GIF - inställningar"
 
-#: plug-ins/common/gif.c:1344
+#: plug-ins/common/gif.c:1333
 msgid "Loop forever"
 msgstr "Loopa för evigt"
 
-#: plug-ins/common/gif.c:1357
+#: plug-ins/common/gif.c:1346
 msgid "Delay between Frames where Unspecified:"
 msgstr "Tidsmellanrum mellan bildrutor när ej specifierat:"
 
-#: plug-ins/common/gif.c:1370
+#: plug-ins/common/gif.c:1359
 msgid "Milliseconds"
 msgstr "Millisekunder"
 
-#: plug-ins/common/gif.c:1380
+#: plug-ins/common/gif.c:1369
 #, fuzzy
 msgid "Frame Disposal where Unspecified: "
 msgstr "Bildrutehantering där ej specifierat: "
 
-#: plug-ins/common/gif.c:1389
+#: plug-ins/common/gif.c:1378
 #, fuzzy
 msgid "I don't Care"
 msgstr "Jag bryr mig inte"
 
-#: plug-ins/common/gif.c:1391
+#: plug-ins/common/gif.c:1380
 msgid "Cumulative Layers (Combine)"
 msgstr "Kumulativa lager (kombinera)"
 
-#: plug-ins/common/gif.c:1393
+#: plug-ins/common/gif.c:1382
 msgid "One Frame per Layer (Replace)"
 msgstr "En bildruta per lager (ersätt)"
 
-#: plug-ins/common/gif.c:2377
+#: plug-ins/common/gif.c:2366
 msgid "GIF: error writing output file\n"
 msgstr "GIF: fel när filen sparades\n"
 
-#: plug-ins/common/gif.c:2467
+#: plug-ins/common/gif.c:2456
 #, c-format
 msgid "The default comment is limited to %d characters."
 msgstr "Standardkommentaren är begränsad till %d tecken."
@@ -3914,7 +3917,7 @@ msgid "Drawing Grid..."
 msgstr "Ritar rutnät..."
 
 #: plug-ins/common/grid.c:660 plug-ins/gfig/gfig.c:3396
-#: plug-ins/imagemap/imap_menu.c:411 plug-ins/imagemap/imap_popup.c:153
+#: plug-ins/imagemap/imap_menu.c:380 plug-ins/imagemap/imap_popup.c:153
 #: plug-ins/imagemap/imap_toolbar.c:162
 msgid "Grid"
 msgstr "Rutnät"
@@ -5909,7 +5912,7 @@ msgstr "F_örsta färgen:"
 msgid "S_econd Color:"
 msgstr "A_ndra färgen:"
 
-#: plug-ins/common/sinus.c:1962 plug-ins/imagemap/imap_preferences.c:553
+#: plug-ins/common/sinus.c:1962 plug-ins/imagemap/imap_preferences.c:511
 msgid "Co_lors"
 msgstr "F_ärger"
 
@@ -6607,7 +6610,7 @@ msgid "Unsharp Mask"
 msgstr ""
 
 #: plug-ins/common/unsharp.c:830 plug-ins/common/wind.c:1155
-#: plug-ins/gflare/gflare.c:3093
+#: plug-ins/gflare/gflare.c:3093 plug-ins/imagemap/imap_preferences.c:533
 #, fuzzy
 msgid "_Threshold:"
 msgstr "Tröskelvärde:"
@@ -7717,7 +7720,7 @@ msgstr "Föreg"
 
 #. More Buttons
 #: plug-ins/gfig/gfig.c:1908 plug-ins/gfig/gfig.c:5298
-#: plug-ins/imagemap/imap_selection.c:179 plug-ins/imagemap/imap_tools.c:146
+#: plug-ins/imagemap/imap_selection.c:179 plug-ins/imagemap/imap_tools.c:167
 msgid "Edit"
 msgstr "Redigera"
 
@@ -8047,8 +8050,8 @@ msgstr "magenta"
 msgid "Reload Image"
 msgstr "Läs in bild igen"
 
-#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:395
-#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:133
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:364
+#: plug-ins/imagemap/imap_popup.c:137 plug-ins/imagemap/imap_tools.c:154
 msgid "Rectangle"
 msgstr "Rektangel"
 
@@ -8170,7 +8173,7 @@ msgid "Done"
 msgstr "Klar"
 
 #: plug-ins/gfig/gfig.c:4010 plug-ins/imagemap/imap_cmd_select.c:54
-#: plug-ins/imagemap/imap_tools.c:129
+#: plug-ins/imagemap/imap_tools.c:144
 msgid "Select"
 msgstr "Markera"
 
@@ -8399,7 +8402,7 @@ msgstr "Uppdatera förhandsgranskning"
 msgid "_New"
 msgstr "Ny"
 
-#: plug-ins/gflare/gflare.c:3169 plug-ins/imagemap/imap_menu.c:292
+#: plug-ins/gflare/gflare.c:3169 plug-ins/imagemap/imap_menu.c:257
 #, fuzzy
 msgid "_Edit"
 msgstr "Redigera"
@@ -8563,13 +8566,13 @@ msgstr ""
 msgid "Shape of Second Flares"
 msgstr ""
 
-#: plug-ins/gflare/gflare.c:4125 plug-ins/imagemap/imap_menu.c:398
-#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:137
+#: plug-ins/gflare/gflare.c:4125 plug-ins/imagemap/imap_menu.c:367
+#: plug-ins/imagemap/imap_popup.c:140 plug-ins/imagemap/imap_tools.c:158
 msgid "Circle"
 msgstr "Cirkel"
 
-#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:400
-#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:141
+#: plug-ins/gflare/gflare.c:4141 plug-ins/imagemap/imap_menu.c:369
+#: plug-ins/imagemap/imap_popup.c:143 plug-ins/imagemap/imap_tools.c:162
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -9280,7 +9283,7 @@ msgstr ""
 "installation inte är komplett. Kontrollera att din installation är komplett "
 "innan du rapporterar detta som en bugg.</small></div></body></html>"
 
-#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:517
+#: plug-ins/helpbrowser/helpbrowser.c:340 plug-ins/imagemap/imap_main.c:608
 msgid "<Untitled>"
 msgstr "<Namnlös>"
 
@@ -9704,7 +9707,7 @@ msgstr "Inställningar"
 msgid "Area #%d Settings"
 msgstr "Område #%d inställningar"
 
-#: plug-ins/imagemap/imap_file.c:53 plug-ins/imagemap/imap_menu.c:75
+#: plug-ins/imagemap/imap_file.c:53 plug-ins/imagemap/imap_menu.c:70
 msgid "Error opening file"
 msgstr "Fel vid öppnande av fil"
 
@@ -9784,15 +9787,15 @@ msgstr "Bildpunkter från _toppen"
 msgid "_Preview"
 msgstr "_Förhandsgranska"
 
-#: plug-ins/imagemap/imap_main.c:151
+#: plug-ins/imagemap/imap_main.c:152
 msgid "<Image>/Filters/Web/ImageMap..."
 msgstr "<Image>/Filter/Webb/Bildkarta..."
 
-#: plug-ins/imagemap/imap_main.c:668
+#: plug-ins/imagemap/imap_main.c:759
 msgid "Data changed"
 msgstr "Data är ändrat"
 
-#: plug-ins/imagemap/imap_main.c:672
+#: plug-ins/imagemap/imap_main.c:763
 msgid ""
 "Some data has been changed.\n"
 "Do you really want to discard your changes?"
@@ -9800,20 +9803,20 @@ msgstr ""
 "En del data är ändrat. \n"
 "Vill du verkligen överge dina ändringar?"
 
-#: plug-ins/imagemap/imap_main.c:881
+#: plug-ins/imagemap/imap_main.c:972
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "Fil \"%s\" sparad."
 
-#: plug-ins/imagemap/imap_main.c:885
+#: plug-ins/imagemap/imap_main.c:976
 msgid "Couldn't save file:"
 msgstr "Kunde inte spara filen:"
 
-#: plug-ins/imagemap/imap_main.c:910
+#: plug-ins/imagemap/imap_main.c:1001
 msgid "Image size changed"
 msgstr "Bildstorlek ändrad"
 
-#: plug-ins/imagemap/imap_main.c:914
+#: plug-ins/imagemap/imap_main.c:1005
 msgid ""
 "Image size has changed.\n"
 "Resize Area's?"
@@ -9821,85 +9824,90 @@ msgstr ""
 "Bildstorleken är ändrad.\n"
 "Ändra områdesstorlekarna?"
 
-#: plug-ins/imagemap/imap_main.c:945
+#: plug-ins/imagemap/imap_main.c:1036
 msgid "Couldn't read file:"
 msgstr "Kunde inte läsa in fil:"
 
-#: plug-ins/imagemap/imap_main.c:991
+#: plug-ins/imagemap/imap_main.c:1082
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: plug-ins/imagemap/imap_menu.c:220
+#: plug-ins/imagemap/imap_menu.c:185
 msgid "_File"
 msgstr "_Fil"
 
 # src/menus.c:302
-#: plug-ins/imagemap/imap_menu.c:248
+#: plug-ins/imagemap/imap_menu.c:213
 #, c-format
 msgid "_Undo %s"
 msgstr "_Ångra %s"
 
 # src/menus.c:306
-#: plug-ins/imagemap/imap_menu.c:264
+#: plug-ins/imagemap/imap_menu.c:229
 #, c-format
 msgid "_Redo %s"
 msgstr "_Gör om %s"
 
-#: plug-ins/imagemap/imap_menu.c:307
+#: plug-ins/imagemap/imap_menu.c:272
 msgid "Select _All"
 msgstr "Markera _allt"
 
-#: plug-ins/imagemap/imap_menu.c:314
+#: plug-ins/imagemap/imap_menu.c:279
 msgid "Edit Area Info..."
 msgstr "Redigera områdesinformation..."
 
-#: plug-ins/imagemap/imap_menu.c:326
+#: plug-ins/imagemap/imap_menu.c:291
 msgid "_View"
 msgstr "_Vy"
 
-#: plug-ins/imagemap/imap_menu.c:330
+#: plug-ins/imagemap/imap_menu.c:295
 #, fuzzy
 msgid "Area List"
 msgstr "Områdeslista"
 
-#: plug-ins/imagemap/imap_menu.c:334
+#: plug-ins/imagemap/imap_menu.c:299
 msgid "Source..."
 msgstr "Källa..."
 
-#: plug-ins/imagemap/imap_menu.c:342 plug-ins/print/gimp_main_window.c:1423
+#: plug-ins/imagemap/imap_menu.c:307 plug-ins/print/gimp_main_window.c:1423
 msgid "Grayscale"
 msgstr "Gråtoner"
 
-#: plug-ins/imagemap/imap_menu.c:360
+#: plug-ins/imagemap/imap_menu.c:325
 msgid "Zoom To"
 msgstr "Zooma till"
 
-#: plug-ins/imagemap/imap_menu.c:390
+#: plug-ins/imagemap/imap_menu.c:355
 msgid "_Mapping"
 msgstr "_Koppling"
 
-#: plug-ins/imagemap/imap_menu.c:393 plug-ins/imagemap/imap_popup.c:134
+#: plug-ins/imagemap/imap_menu.c:358 plug-ins/imagemap/imap_popup.c:134
 msgid "Arrow"
 msgstr "Pil"
 
-#: plug-ins/imagemap/imap_menu.c:410
+#: plug-ins/imagemap/imap_menu.c:361
+#, fuzzy
+msgid "Select Contiguous Region"
+msgstr "Välj region"
+
+#: plug-ins/imagemap/imap_menu.c:379
 msgid "_Goodies"
 msgstr "_Godsaker"
 
-#: plug-ins/imagemap/imap_menu.c:412 plug-ins/imagemap/imap_popup.c:154
+#: plug-ins/imagemap/imap_menu.c:381 plug-ins/imagemap/imap_popup.c:154
 msgid "Grid Settings..."
 msgstr "Rutnätsinställingar..."
 
-#: plug-ins/imagemap/imap_menu.c:414
+#: plug-ins/imagemap/imap_menu.c:383
 msgid "Create Guides..."
 msgstr "Skapa hjälplinjer..."
 
-#: plug-ins/imagemap/imap_menu.c:421
+#: plug-ins/imagemap/imap_menu.c:390
 msgid "_Help"
 msgstr "_Hjälp"
 
-#: plug-ins/imagemap/imap_menu.c:424
+#: plug-ins/imagemap/imap_menu.c:393
 msgid "About ImageMap..."
 msgstr "Om Bildkarta..."
 
@@ -9944,13 +9952,17 @@ msgstr "Zooma"
 msgid "Guides..."
 msgstr "Hjälplinjer..."
 
-#: plug-ins/imagemap/imap_preferences.c:213
+#: plug-ins/imagemap/imap_preferences.c:208
 msgid "Couldn't save resource file:"
 msgstr "Kunde inte spara resursfil:"
 
-#: plug-ins/imagemap/imap_preferences.c:365
+#: plug-ins/imagemap/imap_preferences.c:353
 msgid "Select Color"
 msgstr "Välj färg"
+
+#: plug-ins/imagemap/imap_preferences.c:438
+msgid "_General"
+msgstr "_Allmänt"
 
 #: plug-ins/imagemap/imap_preferences.c:442
 msgid "Default Map Type"
@@ -9980,32 +9992,38 @@ msgstr ""
 msgid "_Use double-sized grab handles"
 msgstr ""
 
-#: plug-ins/imagemap/imap_preferences.c:475
-msgid "_General"
-msgstr "_Allmänt"
-
-#: plug-ins/imagemap/imap_preferences.c:497
-msgid "Number of Undo _levels (1 - 99):"
-msgstr "Antal ångra_nivåer (1 - 99):"
-
-#: plug-ins/imagemap/imap_preferences.c:502
-#, fuzzy
-msgid "Number of MRU _entries (1 - 16):"
-msgstr "Antal MRU-_poster (1 - 16):"
-
-#: plug-ins/imagemap/imap_preferences.c:505
+#: plug-ins/imagemap/imap_preferences.c:479
 msgid "_Menu"
 msgstr "_Meny"
 
-#: plug-ins/imagemap/imap_preferences.c:541
+#: plug-ins/imagemap/imap_preferences.c:483
+#, fuzzy
+msgid "Number of _Undo levels (1 - 99):"
+msgstr "Antal ångra_nivåer (1 - 99):"
+
+#: plug-ins/imagemap/imap_preferences.c:488
+#, fuzzy
+msgid "Number of M_RU entries (1 - 16):"
+msgstr "Antal MRU-_poster (1 - 16):"
+
+#: plug-ins/imagemap/imap_preferences.c:513
 msgid "Normal:"
 msgstr "Normal:"
 
-#: plug-ins/imagemap/imap_preferences.c:547
+#: plug-ins/imagemap/imap_preferences.c:519
 msgid "Selected:"
 msgstr "Vald:"
 
-#: plug-ins/imagemap/imap_preferences.c:575
+#: plug-ins/imagemap/imap_preferences.c:529
+#, fuzzy
+msgid "Co_ntiguous Region"
+msgstr "Sammanhängande färgtoning"
+
+#: plug-ins/imagemap/imap_preferences.c:535
+msgid "_Automatically convert"
+msgstr ""
+
+#: plug-ins/imagemap/imap_preferences.c:556
 msgid "General Preferences"
 msgstr "Allmänna inställningar"
 
@@ -10092,27 +10110,37 @@ msgstr "Zooma ut"
 msgid "Edit Map Info"
 msgstr "Redigera kartinfo"
 
-#: plug-ins/imagemap/imap_tools.c:130
+#: plug-ins/imagemap/imap_tools.c:145
 msgid "Select existing area"
 msgstr "Välj befintligt område"
 
-#: plug-ins/imagemap/imap_tools.c:134
+#: plug-ins/imagemap/imap_tools.c:149
+#, fuzzy
+msgid "Fuzzy Select"
+msgstr "Markera"
+
+#: plug-ins/imagemap/imap_tools.c:150
+#, fuzzy
+msgid "Select contiguous regions"
+msgstr "Välj region"
+
+#: plug-ins/imagemap/imap_tools.c:155
 msgid "Define Rectangle area"
 msgstr "Definiera rektangelområde"
 
-#: plug-ins/imagemap/imap_tools.c:138
+#: plug-ins/imagemap/imap_tools.c:159
 msgid "Define Circle/Oval area"
 msgstr "Definiera cirkulärt/ovalt område"
 
-#: plug-ins/imagemap/imap_tools.c:142
+#: plug-ins/imagemap/imap_tools.c:163
 msgid "Define Polygon area"
 msgstr "Definiera polygonområde"
 
-#: plug-ins/imagemap/imap_tools.c:147
+#: plug-ins/imagemap/imap_tools.c:168
 msgid "Edit selected area info"
 msgstr "Redigera info för valt område"
 
-#: plug-ins/imagemap/imap_tools.c:152
+#: plug-ins/imagemap/imap_tools.c:173
 msgid "Delete selected area"
 msgstr "Ta bort valt område"
 
