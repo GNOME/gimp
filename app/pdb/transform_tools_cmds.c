@@ -28,9 +28,9 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "config/gimpcoreconfig.h"
 #include "core/core-types.h"
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable.h"

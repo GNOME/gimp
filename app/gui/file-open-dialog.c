@@ -39,11 +39,12 @@
 
 #include "gui-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "base/temp-buf.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 #include "core/gimpimagefile.h"

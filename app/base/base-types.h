@@ -26,6 +26,8 @@
 
 #include "base/base-enums.h"
 
+#include "config/config-types.h"
+
 
 /*  magic constants  */
 /* FIXME: Remove magic constants! */
@@ -39,6 +41,10 @@
 #define ALPHA_PIX        3
 #define INDEXED_PIX      0
 #define ALPHA_I_PIX      1
+
+
+/* global config variable (temporary) */
+GimpBaseConfig *base_config;
 
 
 /* types */

@@ -37,6 +37,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -55,7 +57,7 @@
 
 #include "paths-dialog.h"
 
-#include "gimprc.h"
+#include "app_procs.h"
 #include "ops_buttons.h"
 #include "path.h"
 #include "pathP.h"
@@ -390,7 +392,7 @@ paths_dialog_realized (GtkWidget *widget)
   gboolean     success;
 
   /* Help out small displays */
-  if (gimprc.preview_size < 64)
+  if (the_gimp->config->preview_size < 64)
     dash_list[1] = 1;
 
   paths_dialog->gc = gdk_gc_new (widget->window);
@@ -580,7 +582,7 @@ paths_add_path (Path *bzp,
 
   paths_dialog_preview_extents ();
 
-  if (gimprc.preview_size)
+  if (the_gimp->config->preview_size)
     {
       /* Need to add this to the list */
       pwidget->paths_pixmap =  gdk_pixmap_new (paths_dialog->vbox->window,
@@ -681,11 +683,13 @@ paths_dialog_preview_extents (void)
 
   /*  Get the image width and height variables, based on the gimage  */
   if (gimage->width > gimage->height)
-    paths_dialog->ratio = (double) gimprc.preview_size / (double) gimage->width;
+    paths_dialog->ratio =
+      (double) the_gimp->config->preview_size / (double) gimage->width;
   else
-    paths_dialog->ratio = (double) gimprc.preview_size / (double) gimage->height;
+    paths_dialog->ratio =
+      (double) the_gimp->config->preview_size / (double) gimage->height;
 
-  if (gimprc.preview_size)
+  if (the_gimp->config->preview_size)
     {
       paths_dialog->image_width = (int) (paths_dialog->ratio * gimage->width);
       paths_dialog->image_height = (int) (paths_dialog->ratio * gimage->height);
@@ -1680,7 +1684,7 @@ paths_update_preview (GimpBezierSelectTool *bezier_sel)
   if(paths_dialog &&
      paths_dialog->current_path_list &&
      (row = paths_dialog->current_path_list->last_selected_row) >= 0 &&
-     gimprc.preview_size)
+     the_gimp->config->preview_size)
     {
       PathWidget *pwidget;
 

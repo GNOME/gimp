@@ -33,8 +33,9 @@
 
 #include "core-types.h"
 
-#include "base/base-config.h"
 #include "base/temp-buf.h"
+
+#include "config/gimpbaseconfig.h"
 
 #include "gimpbrushgenerated.h"
 

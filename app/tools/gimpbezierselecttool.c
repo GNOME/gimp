@@ -53,7 +53,6 @@
 #include "tool_manager.h"
 
 #include "app_procs.h"
-#include "gimprc.h"
 #include "path.h"
 #include "pathP.h"
 #include "undo.h"

@@ -33,8 +33,6 @@ gui_sources = \
 bye_sources = \
 	general.c		\
 	general.h		\
-	gimprc.c		\
-	gimprc.h		\
 	ops_buttons.c		\
 	ops_buttons.h		\
 	path.c			\

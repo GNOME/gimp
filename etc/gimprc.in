@@ -14,7 +14,6 @@
 (exec_prefix "@exec_prefix@")
 (gimp_data_dir "@gimpdatadir@")
 (gimp_plugin_dir "@gimpplugindir@")
-(gimp_environ_dir "@gimpenvirondir@")
 
 # Set the temporary storage directory...files will appear here
 #  during the course of running the gimp.  Most files will disappear
@@ -161,21 +160,15 @@
 
 # Layer preview sizes (also used for the Undo History):
 #  none:    no previews in layers dialog/layer selector
-#  tiny:    24x24
+#  tiny:    16x16
 #  small:   32x32
 #  medium:  48x48
 #  large:   64x64
 #  huge:   128x128
-#  #:        #x#
 (preview-size small)
 
 # Navigation window preview sizes:
-#  small:   48x48
-#  medium:  80x80
-#  large:  112x112
-#  #:        #x#
-(nav-preview-size large)
-
+(navigation-preview-size large)
 
 # Tooltips
 #  Comment this out to disable the tooltips in the toolbox
@@ -204,14 +197,14 @@
 #  The default units can be one of:
 #  (inches millimeters points picas) plus those in your user units database
 #  The default is inches
-(default-units inches)
+(default-unit inches)
 
 # Default Resolution units
 #  This is used to specify the resolution of a new image
 #  The units for the resolution can be one of:
 #  (inches millimeters points picas) plus those in your user units database
 #  The default is inches
-(default-resolution-units inches)
+(default-resolution-unit inches)
 
 # Default Resolution
 #  This is the default resolution of a new image in dpi
@@ -237,7 +230,7 @@
 # Session managment 
 #  To let GIMP try to restore your last saved session, 
 #  just uncomment the line below...
-(always-restore-session)
+(restore-session yes)
 
 # Setting the level of interpolation
 #  Uncommenting this line will enable cubic interpolation.
@@ -263,19 +256,8 @@
 (gamma-correction 1.0)
 
 # Set the manner in which transparency is displayed in images
-#  Transparency type can be one of:
-#    0: Light Checks
-#    1: Mid-Tone Checks
-#    2: Dark Checks
-#    3: White Only
-#    4: Gray Only
-#    5: Black Only
-#  Check size can be one of:
-#    0: Small
-#    1: Medium
-#    2: Large
-(transparency-type 1)
-(transparency-size 2)
+(transparency-type gray-checks)
+(transparency-size medium-checks)
 
 # This string sets how image window titles are formatted.
 # The following percent expansions are performed:

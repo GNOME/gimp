@@ -24,6 +24,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -44,7 +46,6 @@
 #include "file-save-dialog.h"
 
 #include "app_procs.h"
-#include "gimprc.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -156,7 +157,8 @@ file_save_cmd_callback (GtkWidget *widget,
     return;
 
   /*  Only save if the gimage has been modified  */
-  if (! gimprc.trust_dirty_flag || gdisp->gimage->dirty != 0)
+  if (gdisp->gimage->dirty ||
+      ! GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->trust_dirty_flag)
     {
       const gchar *uri;
 

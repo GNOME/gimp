@@ -43,9 +43,10 @@
 
 #include "core-types.h"
 
-#include "base/base-config.h"
 #include "base/brush-scale.h"
 #include "base/temp-buf.h"
+
+#include "config/gimpbaseconfig.h"
 
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"

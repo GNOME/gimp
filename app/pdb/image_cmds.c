@@ -30,11 +30,11 @@
 #include "procedural_db.h"
 
 #include "base/temp-buf.h"
+#include "config/gimpcoreconfig.h"
 #include "core/core-enums.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-crop.h"
 #include "core/gimpimage-duplicate.h"

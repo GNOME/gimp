@@ -19,8 +19,7 @@
 #ifndef __BASE_H__
 #define __BASE_H__
 
-
-void   base_init (void);
+void   base_init (GimpBaseConfig *config);
 void   base_exit (void);
 
 

@@ -26,7 +26,8 @@
 
 #include "base-types.h"
 
-#include "base-config.h"
+#include "config/gimpbaseconfig.h"
+
 #include "tile.h"
 #include "tile-cache.h"
 #include "tile-swap.h"

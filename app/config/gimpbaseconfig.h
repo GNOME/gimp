@@ -32,7 +32,6 @@
 #define GIMP_IS_BASE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_BASE_CONFIG))
 
 
-typedef struct _GimpBaseConfig      GimpBaseConfig;
 typedef struct _GimpBaseConfigClass GimpBaseConfigClass;
 
 struct _GimpBaseConfig

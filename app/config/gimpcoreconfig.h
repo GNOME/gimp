@@ -34,7 +34,6 @@
 #define GIMP_IS_CORE_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CORE_CONFIG))
 
 
-typedef struct _GimpCoreConfig      GimpCoreConfig;
 typedef struct _GimpCoreConfigClass GimpCoreConfigClass;
 
 struct _GimpCoreConfig

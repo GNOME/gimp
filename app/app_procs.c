@@ -38,6 +38,8 @@
 
 #include "base/base.h"
 
+#include "config/gimprc.h"
+
 #include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpunits.h"
@@ -58,7 +60,6 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "gimprc.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -70,6 +71,10 @@ static void   app_init_update_status (const gchar *text1,
                                       const gchar *text2,
                                       gdouble      percentage);
 static void   app_exit_finish        (void);
+
+/* gimprc debugging code, to be removed */
+static void   gimprc_notify_callback (GObject    *object,
+				      GParamSpec *pspec);
 
 
 /*  global variables  */
@@ -117,20 +122,22 @@ app_init (gint    gimp_argc,
 	}
     }
 
-  /*  The user_install dialog may have parsed unitrc and gimprc, so
-   *  check gimprc_init()'s return value
-   */
-  if (gimprc_init (the_gimp))
-    {
-      /*  this needs to be done before gimprc loading  */
-      gimp_unitrc_load (the_gimp);
+  /*  this needs to be done before gimprc loading  */
+  gimp_unitrc_load (the_gimp);
 
-      /*  parse the local GIMP configuration file  */
-      gimprc_parse (the_gimp, alternate_system_gimprc, alternate_gimprc);
-    }
+  the_gimp->config = GIMP_CORE_CONFIG (gimp_rc_new ());
+
+  /* solely for debugging */
+  g_signal_connect (G_OBJECT (the_gimp->config), "notify",
+                    G_CALLBACK (gimprc_notify_callback),
+                    NULL);
+
+  /*  parse the local GIMP configuration file  */
+  /* FIXME: add back support for alternate_system_gimprc and alternate_gimprc */
+  gimp_rc_load (GIMP_RC (the_gimp->config));
 
   /*  initialize lowlevel stuff  */
-  base_init ();
+  base_init (GIMP_BASE_CONFIG (the_gimp->config));
 
   if (! no_interface)
     {
@@ -268,4 +275,34 @@ app_exit_finish (void)
    *  that foo_main() was never called before we reach this point. --Sven  
    */
   exit (0);
+}
+
+/* gimprc debugging code, to be removed */
+static void
+gimprc_notify_callback (GObject    *object,
+			GParamSpec *pspec)
+{
+  GString *str;
+  GValue   value = { 0, };
+
+  g_return_if_fail (G_IS_OBJECT (object));
+  g_return_if_fail (G_IS_PARAM_SPEC (pspec));
+
+  g_value_init (&value, pspec->value_type);
+  g_object_get_property (object, pspec->name, &value);
+
+  str = g_string_new (NULL);
+
+  if (gimp_config_serialize_value (&value, str, TRUE))
+    {
+      g_print ("  %s -> %s\n", pspec->name, str->str);
+    }
+  else
+    {
+      g_print ("  %s changed but we failed to serialize its value!\n", 
+               pspec->name);
+    }
+
+  g_string_free (str, TRUE);
+  g_value_unset (&value);
 }

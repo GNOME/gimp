@@ -53,9 +53,10 @@
 
 #include "base/temp-buf.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gimp.h"
 #include "gimpcontainer.h"
-#include "gimpcoreconfig.h"
 #include "gimpimage.h"
 #include "gimpimagefile.h"
 #include "gimpmarshal.h"

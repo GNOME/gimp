@@ -36,8 +36,9 @@
 
 #include "gui-types.h"
 
-#include "base/base-config.h"
+#include "config/gimprc.h"
 
+#include "core/gimp.h"
 #include "core/gimpunits.h"
 
 #include "gui.h"
@@ -45,7 +46,6 @@
 #include "user-install-dialog.h"
 
 #include "appenv.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -85,8 +85,8 @@ static void     user_install_cancel_callback   (GtkWidget *widget,
 static gboolean user_install_run               (void);
 static void     user_install_tuning            (void);
 static void     user_install_tuning_done       (void);
-static void     user_install_resolution        (void);
-static void     user_install_resolution_done   (void);
+static void     user_install_resolution        (Gimp      *gimp);
+static void     user_install_resolution_done   (Gimp      *gimp);
 
 
 /*  private stuff  */
@@ -323,9 +323,7 @@ user_install_continue_callback (GtkWidget *widget,
 {
   static gint notebook_index = 0;
 
-  Gimp *gimp;
-
-  gimp = (Gimp *) data;
+  Gimp *gimp = (Gimp *) data;
 
   switch (notebook_index)
     {
@@ -355,19 +353,20 @@ user_install_continue_callback (GtkWidget *widget,
 #ifdef G_OS_WIN32
       FreeConsole ();
 #endif
-      gimprc_init (gimp);
       gimp_unitrc_load (gimp);
-      gimprc_parse (gimp, alternate_system_gimprc, alternate_gimprc);
+      gimp->config = GIMP_CORE_CONFIG (gimp_rc_new ());
+      gimp_rc_load (GIMP_RC (gimp->config));
+      /* FIXME: add back support for alternate_system_gimprc and alternate_gimprc */
       user_install_tuning ();
       break;
 
     case 3:
       user_install_tuning_done ();
-      user_install_resolution ();
+      user_install_resolution (gimp);
       break;
 
     case 4:
-      user_install_resolution_done ();
+      user_install_resolution_done (gimp);
 
       g_object_unref (G_OBJECT (title_style));
       g_object_unref (G_OBJECT (page_style));
@@ -1202,16 +1201,17 @@ user_install_resolution_calibrate (GtkWidget *button,
 }
 
 static void
-user_install_resolution (void)
+user_install_resolution (Gimp *gimp)
 {
-  GtkWidget *hbox;
-  GtkWidget *sep;
-  GimpChainButton *chain;
-  GtkWidget *button;
-  GList     *list; 
-  gchar     *pixels_per_unit;
-  gdouble    xres, yres;
-  gchar     *str;
+  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimp->config);
+  GtkWidget         *hbox;
+  GtkWidget         *sep;
+  GimpChainButton   *chain;
+  GtkWidget         *button;
+  GList             *list; 
+  gchar             *pixels_per_unit;
+  gdouble            xres, yres;
+  gchar             *str;
 
   gui_get_screen_resolution (&xres, &yres);
 
@@ -1248,16 +1248,17 @@ user_install_resolution (void)
     gimp_coordinates_new (GIMP_UNIT_INCH, pixels_per_unit,
 			  FALSE, FALSE, 10,
 			  GIMP_SIZE_ENTRY_UPDATE_RESOLUTION,
-			  abs (gimprc.monitor_xres - gimprc.monitor_yres) < GIMP_MIN_RESOLUTION,
+			  abs (config->monitor_xres - 
+			       config->monitor_yres) < GIMP_MIN_RESOLUTION,
 			  FALSE,
 			  _("Monitor Resolution X:"),
-			  gimprc.monitor_xres,
+			  config->monitor_xres,
 			  1.0,
 			  GIMP_MIN_RESOLUTION,
 			  GIMP_MAX_RESOLUTION,
 			  0, 0,
 			  _("Y:"),
-			  gimprc.monitor_yres,
+			  config->monitor_yres,
 			  1.0,
 			  GIMP_MIN_RESOLUTION,
 			  GIMP_MAX_RESOLUTION,
@@ -1310,71 +1311,43 @@ user_install_resolution (void)
                     G_CALLBACK (gimp_toggle_button_sensitive_update),
                     NULL);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (xserver_toggle),
-				gimprc.using_xserver_resolution);
+				config->monitor_res_from_gdk);
 }
 
 static void
-user_install_resolution_done (void)
+user_install_resolution_done (Gimp *gimp)
 {
-  GList *update = NULL;
-  GList *remove = NULL;
+  gulong    tile_cache_size;
+  gchar    *swap_path;
+  gdouble   xres, yres;
+  gboolean  res_from_gdk;
 
-  gulong    new_tile_cache_size;
-  gchar    *new_swap_path;
-  gboolean  new_using_xserver_resolution;
-  gdouble   new_monitor_xres;
-  gdouble   new_monitor_yres;
+  tile_cache_size = GTK_ADJUSTMENT (tile_cache_adj)->value;
+  swap_path       = gimp_file_selection_get_filename (GIMP_FILE_SELECTION (swap_path_filesel));
+
+  g_object_set (G_OBJECT (gimp->config),
+		"tile-cache-size", tile_cache_size,
+		"swap-path",       swap_path,
+		NULL);
   
-  new_tile_cache_size = GTK_ADJUSTMENT (tile_cache_adj)->value;
-  new_swap_path =
-    gimp_file_selection_get_filename (GIMP_FILE_SELECTION (swap_path_filesel));
-  new_using_xserver_resolution =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xserver_toggle));
-  new_monitor_xres =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 0);
-  new_monitor_yres =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
+  g_free (swap_path);
 
-  if (base_config->tile_cache_size != new_tile_cache_size)
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (xserver_toggle)))
     {
-      base_config->tile_cache_size = new_tile_cache_size;
-      update = g_list_append (update, "tile-cache-size");
+      gui_get_screen_resolution (&xres, &yres);
+      res_from_gdk = TRUE;
     }
-  if (base_config->swap_path && new_swap_path && 
-      strcmp (base_config->swap_path, new_swap_path))
+  else
     {
-      g_free (base_config->swap_path);
-      base_config->swap_path = new_swap_path;
-      update = g_list_append (update, "swap-path");
-    }
-  if (gimprc.using_xserver_resolution != new_using_xserver_resolution ||
-      ABS (gimprc.monitor_xres - new_monitor_xres) > GIMP_MIN_RESOLUTION)
-    {
-      gimprc.monitor_xres = new_monitor_xres;
-      update = g_list_append (update, "monitor-xresolution");
-    }
-  if (gimprc.using_xserver_resolution != new_using_xserver_resolution ||
-      ABS (gimprc.monitor_yres - new_monitor_yres) > GIMP_MIN_RESOLUTION)
-    {
-      gimprc.monitor_yres = new_monitor_yres;
-      update = g_list_append (update, "monitor-yresolution");
+      xres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 0);
+      yres = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (resolution_entry), 1);
+      res_from_gdk = FALSE;
     }
 
-  gimprc.using_xserver_resolution = new_using_xserver_resolution;
-
-  if (gimprc.using_xserver_resolution)
-    {
-      /* special value of 0 for either x or y res in the gimprc file
-       * means use the xserver's current resolution */
-      gimprc.monitor_xres = 0.0;
-      gimprc.monitor_yres = 0.0;
-    }
-
-  gimprc_save (&update, &remove);
-
-  if (gimprc.using_xserver_resolution)
-    gui_get_screen_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
-
-  g_list_free (update);
-  g_list_free (remove);
+  g_object_set (G_OBJECT (gimp->config),
+		"monitor_xresolution",                      xres,
+		"monitor_yresolution",                      yres,
+		"monitor_resolution_from_windowing-system", res_from_gdk,
+		NULL);
 }
+

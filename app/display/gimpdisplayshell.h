@@ -35,9 +35,9 @@
 
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   (s->dot_for_dot ? \
-                           s->gdisp->gimage->xresolution : gimprc.monitor_xres)
+                           s->gdisp->gimage->xresolution : s->gdisp->monitor_xres)
 #define  SCREEN_YRES(s)   (s->dot_for_dot ? \
-                           s->gdisp->gimage->yresolution : gimprc.monitor_yres)
+                           s->gdisp->gimage->yresolution : s->gdisp->monitor_yres)
 
 /* calculate scale factors (double) */
 #define  SCALEFACTOR_X(s) ((SCALEDEST(s) * SCREEN_XRES(s)) / \

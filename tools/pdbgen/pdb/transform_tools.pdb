@@ -428,8 +428,8 @@ CODE
     );
 }
 
-@headers = qw("libgimpmath/gimpmath.h" "core/gimp.h"
-              "core/gimpcoreconfig.h" "core/gimpdrawable-transform.h"
+@headers = qw("libgimpmath/gimpmath.h" "config/gimpcoreconfig.h"
+              "core/gimp.h" "core/gimpdrawable-transform.h"
               "core/gimpdrawable-transform-utils.h" "core/gimpdrawable.h");
 
 @procs = qw(flip perspective rotate scale shear transform_2d);

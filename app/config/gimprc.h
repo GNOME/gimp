@@ -32,7 +32,6 @@
 #define GIMP_IS_RC_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RC))
 
 
-typedef struct _GimpRc      GimpRc;
 typedef struct _GimpRcClass GimpRcClass;
 
 struct _GimpRc
@@ -46,13 +45,14 @@ struct _GimpRcClass
 };
 
 
-GType     gimp_rc_get_type       (void) G_GNUC_CONST;
-GimpRc  * gimp_rc_new            (void);
-gchar   * gimp_rc_query          (GimpRc      *rc,
-                                  const gchar *key);
+GType     gimp_rc_get_type  (void) G_GNUC_CONST;
+GimpRc  * gimp_rc_new       (void);
+gchar   * gimp_rc_query     (GimpRc      *rc,
+                             const gchar *key);
 
-void      gimp_rc_save           (GimpRc      *user_rc,
-                                  GimpRc      *global_rc);
+void      gimp_rc_load      (GimpRc      *gimprc);
+void      gimp_rc_save      (GimpRc      *user_rc,
+			     GimpRc      *global_rc);
 
 
 #endif /* GIMP_RC_H__ */

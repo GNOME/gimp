@@ -25,10 +25,10 @@
 #include "core-types.h"
 
 #include "config/gimpconfig.h"
+#include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
 #include "gimp-documents.h"
-#include "gimpcoreconfig.h"
 #include "gimpdocumentlist.h"
 
 

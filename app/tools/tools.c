@@ -25,8 +25,8 @@
 #include "tools-types.h"
 
 /*FIXME: remove when proper module loading is in place */
+#include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 /*end remove */
 
 #include "libgimptool/gimptool.h"

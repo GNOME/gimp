@@ -28,9 +28,11 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
+#include "config/gimpconfig.h"
+#include "config/gimpcoreconfig.h"
+#include "config/gimpdisplayconfig.h"
+#include "config/gimprc.h"
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
-#include "gimprc.h"
 
 static ProcRecord gimprc_query_proc;
 static ProcRecord gimprc_set_proc;
@@ -61,10 +63,7 @@ gimprc_query_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = (value = g_strdup (gimprc_find_token (token))) != NULL;
-    
-      if (!success) /* custom ones failed, try the standard ones */
-	success = (value = gimprc_value_to_str (token)) != NULL;
+      success = (value = gimp_rc_query (GIMP_RC (gimp->config), token)) != NULL;
     }
 
   return_args = procedural_db_return_args (&gimprc_query_proc, success);
@@ -126,7 +125,10 @@ gimprc_set_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    save_gimprc_strings(token, value);
+    {
+      gimp_config_add_unknown_token (G_OBJECT (gimp->config), token, value);
+      success = TRUE;
+    }
 
   return procedural_db_return_args (&gimprc_set_proc, success);
 }
@@ -149,7 +151,7 @@ static ProcRecord gimprc_set_proc =
 {
   "gimp_gimprc_set",
   "Sets a gimprc token to a value and saves it in the gimprc.",
-  "This procedure is used to add or change additional information in the gimprc file that is considered extraneous to the operation of the GIMP. Plug-ins that need configuration information can use this function to store it, and gimp_gimprc_query to retrieve it. This will accept _only_ parameters in the format of (<token> <value>), where <token> and <value> must be strings. Entries not corresponding to this format will be eaten and no action will be performed. If the gimprc can not be written for whatever reason, gimp will complain loudly and the old gimprc will be saved in gimprc.old.",
+  "This procedure is used to add or change additional information in the gimprc file that is considered extraneous to the operation of the GIMP. Plug-ins that need configuration information can use this function to store it, and gimp_gimprc_query to retrieve it. This will accept _only_ parameters in the format of (<token> <value>), where <token> and <value> must be strings. Entries not corresponding to this format will be eaten and no action will be performed.",
   "Seth Burgess",
   "Seth Burgess",
   "1999",
@@ -214,8 +216,8 @@ get_monitor_resolution_invoker (Gimp     *gimp,
   gdouble xres;
   gdouble yres;
 
-  xres = gimprc.monitor_xres;
-  yres = gimprc.monitor_yres;
+  xres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_xres;
+  yres = GIMP_DISPLAY_CONFIG (gimp->config)->monitor_yres;
   success = TRUE;
 
   return_args = procedural_db_return_args (&get_monitor_resolution_proc, success);
@@ -247,7 +249,7 @@ static ProcRecord get_monitor_resolution_proc =
 {
   "gimp_get_monitor_resolution",
   "Get the monitor resolution as specified in the Preferences.",
-  "Returns the resolution of the monitor in pixels/inch. This value is taken from the Preferences (or the X-Server if this is set in the Preferences) and there's no guarantee for the value to be reasonable.",
+  "Returns the resolution of the monitor in pixels/inch. This value is taken from the Preferences (or the windowing system if this is set in the Preferences) and there's no guarantee for the value to be reasonable.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

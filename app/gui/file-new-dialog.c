@@ -26,8 +26,9 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-new.h"
 
@@ -35,8 +36,6 @@
 #include "widgets/gimpviewabledialog.h"
 
 #include "file-new-dialog.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -320,7 +319,7 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
   info->resolution_se =
-    gimp_size_entry_new (1, gimp->config->default_resolution_units,
+    gimp_size_entry_new (1, gimp->config->default_resolution_unit,
 			 _("pixels/%a"),
 		         FALSE, FALSE, FALSE, SB_WIDTH,
 		         GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
@@ -433,7 +432,7 @@ file_new_ok_callback (GtkWidget *widget,
   values->res_unit =
     gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (info->resolution_se));
 
-  if (info->size > gimprc.max_new_image_size)
+  if (info->size > GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size)
     {
       file_new_confirm_dialog (info);
     }
@@ -471,7 +470,7 @@ file_new_reset_callback (GtkWidget *widget,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->resolution_se), 1,
 			      config->default_yresolution);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->resolution_se),
-			    config->default_resolution_units);
+			    config->default_resolution_unit);
 
   g_signal_handlers_unblock_by_func (G_OBJECT (info->resolution_se),
                                      file_new_resolution_callback,
@@ -482,14 +481,14 @@ file_new_reset_callback (GtkWidget *widget,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
 				  config->default_yresolution, TRUE);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 0,
-			      config->default_width);
+			      config->default_image_width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (info->size_se), 1,
-			      config->default_height);
+			      config->default_image_height);
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (info->size_se),
-			    config->default_units);
+			    config->default_unit);
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->type_w),
-                               GINT_TO_POINTER (config->default_type));
+                               GINT_TO_POINTER (config->default_image_type));
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (info->fill_type_w),
                                GINT_TO_POINTER (GIMP_BACKGROUND_FILL));
@@ -543,7 +542,7 @@ file_new_confirm_dialog (NewImageInfo *info)
   gtk_widget_set_sensitive (info->dialog, FALSE);
 
   size     = gimp_image_new_get_memsize_string (info->size);
-  max_size = gimp_image_new_get_memsize_string (gimprc.max_new_image_size);
+  max_size = gimp_image_new_get_memsize_string (GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size);
 
   /* xgettext:no-c-format */
 	    

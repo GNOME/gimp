@@ -25,6 +25,8 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "config-types.h"
+
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
@@ -49,7 +51,6 @@ enum
   PROP_LAST_OPENED_SIZE,
   PROP_TRANSPARENCY_SIZE,
   PROP_TRANSPARENCY_TYPE,
-  PROP_PERFECT_MOUSE,
   PROP_DEFAULT_THRESHOLD,
   PROP_NAV_PREVIEW_SIZE,
   PROP_INFO_WINDOW_PER_DISPLAY,
@@ -120,9 +121,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TRANSPARENCY_TYPE,
                                  "transparency-type",
                                  GIMP_TYPE_CHECK_TYPE, GIMP_GRAY_CHECKS);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
-                                    "perfect-mouse",
-                                    FALSE);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_DEFAULT_THRESHOLD,
                                 "default-threshold",
                                 0, 255, 15);
@@ -205,9 +203,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_TRANSPARENCY_TYPE:
       gui_config->transparency_type = g_value_get_enum (value);
       break;
-    case PROP_PERFECT_MOUSE:
-      gui_config->perfect_mouse = g_value_get_boolean (value);
-      break;
     case PROP_DEFAULT_THRESHOLD:
       gui_config->default_threshold = g_value_get_int (value);
       break;
@@ -282,9 +277,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_TRANSPARENCY_TYPE:
       g_value_set_enum (value, gui_config->transparency_type);
-      break;
-    case PROP_PERFECT_MOUSE:
-      g_value_set_boolean (value, gui_config->perfect_mouse);
       break;
     case PROP_DEFAULT_THRESHOLD:
       g_value_set_int (value, gui_config->default_threshold);

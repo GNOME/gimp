@@ -29,6 +29,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimplist.h"
@@ -66,8 +68,6 @@
 #include "tools-commands.h"
 #include "vectors-commands.h"
 #include "view-commands.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -2080,6 +2080,11 @@ menus_init (Gimp *gimp)
   menus_last_opened_add (toolbox_factory, gimp);
   ADD_FACTORY (toolbox_factory);
 
+  /* preferences dialog is temporarily disabled */
+  gimp_item_factory_set_sensitive (GTK_ITEM_FACTORY (toolbox_factory),
+                                   "/File/Preferences...",
+                                   FALSE);
+
   image_factory = gimp_item_factory_new (gimp,
                                          GTK_TYPE_MENU,
                                          "<Image>", "image",
@@ -2568,11 +2573,11 @@ menus_last_opened_add (GimpItemFactory *item_factory,
 {
   GimpItemFactoryEntry *last_opened_entries;
   gint                  i;
+  gint                  n = GIMP_GUI_CONFIG (gimp->config)->last_opened_size;
 
-  last_opened_entries = g_new (GimpItemFactoryEntry,
-                               gimprc.last_opened_size);
+  last_opened_entries = g_new (GimpItemFactoryEntry, n);
 
-  for (i = 0; i < gimprc.last_opened_size; i++)
+  for (i = 0; i < n; i++)
     {
       last_opened_entries[i].entry.path = 
         g_strdup_printf ("/File/Open Recent/%02d", i + 1);
@@ -2593,10 +2598,10 @@ menus_last_opened_add (GimpItemFactory *item_factory,
     }
 
   gimp_item_factory_create_items (item_factory,
-                                  gimprc.last_opened_size, last_opened_entries,
+                                  n, last_opened_entries,
                                   gimp, 2, TRUE, FALSE);
 
-  for (i = 0; i < gimprc.last_opened_size; i++)
+  for (i = 0; i < n; i++)
     {
       gimp_item_factory_set_visible (GTK_ITEM_FACTORY (item_factory),
                                      last_opened_entries[i].entry.path,
@@ -2607,7 +2612,7 @@ menus_last_opened_add (GimpItemFactory *item_factory,
                                    "/File/Open Recent/(None)",
                                    FALSE);
 
-  for (i = 0; i < gimprc.last_opened_size; i++)
+  for (i = 0; i < n; i++)
     {
       g_free (last_opened_entries[i].entry.path);
 
@@ -2638,6 +2643,7 @@ menus_last_opened_update (GimpContainer   *container,
   GtkWidget *widget;
   gint       num_documents;
   gint       i;
+  gint       n = GIMP_GUI_CONFIG (item_factory->gimp->config)->last_opened_size;
 
   num_documents = gimp_container_num_children (container);
 
@@ -2645,7 +2651,7 @@ menus_last_opened_update (GimpContainer   *container,
                                  "/File/Open Recent/(None)",
                                  num_documents == 0);
 
-  for (i = 0; i < gimprc.last_opened_size; i++)
+  for (i = 0; i < n; i++)
     {
       gchar *path_str;
 
@@ -2675,13 +2681,15 @@ menus_last_opened_update (GimpContainer   *container,
               filename = file_utils_uri_to_utf8_filename (uri);
               basename = file_utils_uri_to_utf8_basename (uri);
 
-              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child), basename);
+              gtk_label_set_text (GTK_LABEL (GTK_BIN (widget)->child),
+				  basename);
               gimp_help_set_help_data (widget, filename, NULL);
 
               g_free (filename);
               g_free (basename);
 
-              g_object_set_data (G_OBJECT (widget), "gimp-imagefile", imagefile);
+              g_object_set_data (G_OBJECT (widget),
+				 "gimp-imagefile", imagefile);
               gtk_widget_show (widget);
             }
         }

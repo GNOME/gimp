@@ -24,6 +24,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -40,8 +42,6 @@
 #include "info-dialog.h"
 #include "info-window.h"
 #include "view-commands.h"
-
-#include "gimprc.h"
 
 
 #define return_if_no_display(gdisp, data) \
@@ -112,7 +112,7 @@ view_info_window_cmd_callback (GtkWidget *widget,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  if (! gimprc.info_window_follows_mouse)
+  if (GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->info_window_per_display)
     {
       if (! shell->info_dialog)
 	shell->info_dialog = info_window_create (gdisp);

@@ -24,7 +24,6 @@
 
 #include "core-types.h"
 
-#include "base/base-config.h"
 #include "base/pixel-region.h"
 #include "base/pixel-surround.h"
 #include "base/tile-manager.h"

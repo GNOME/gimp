@@ -31,7 +31,8 @@
 
 #include "base-types.h"
 
-#include "base-config.h"
+#include "config/gimpbaseconfig.h"
+
 #include "pixel-processor.h"
 #include "pixel-region.h"
 

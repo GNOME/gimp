@@ -26,6 +26,8 @@
 
 #include "core-types.h"
 
+#include "config/gimprc.h"
+
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"
 
@@ -42,7 +44,6 @@
 #include "gimpbrushpipe.h"
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
-#include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
 #include "gimpdocumentlist.h"
 #include "gimpenvirontable.h"
@@ -121,7 +122,7 @@ gimp_class_init (GimpClass *klass)
 static void
 gimp_init (Gimp *gimp)
 {
-  gimp_core_config_init (gimp);
+  gimp->config                  = NULL;
 
   gimp->be_verbose              = FALSE;
   gimp->no_data                 = FALSE;
@@ -496,13 +497,13 @@ gimp_initialize (Gimp               *gimp,
 
   /* Set the last values used to default values. */
 
-  gimp->image_new_last_values.width       = gimp->config->default_width;
-  gimp->image_new_last_values.height      = gimp->config->default_height;
-  gimp->image_new_last_values.unit        = gimp->config->default_units;
+  gimp->image_new_last_values.width       = gimp->config->default_image_width;
+  gimp->image_new_last_values.height      = gimp->config->default_image_height;
+  gimp->image_new_last_values.unit        = gimp->config->default_unit;
   gimp->image_new_last_values.xresolution = gimp->config->default_xresolution;
   gimp->image_new_last_values.yresolution = gimp->config->default_yresolution;
-  gimp->image_new_last_values.res_unit    = gimp->config->default_resolution_units;
-  gimp->image_new_last_values.type        = gimp->config->default_type;
+  gimp->image_new_last_values.res_unit    = gimp->config->default_resolution_unit;
+  gimp->image_new_last_values.type        = gimp->config->default_image_type;
   gimp->image_new_last_values.fill_type   = GIMP_BACKGROUND_FILL;
 
   gimp->have_current_cut_buffer = FALSE;

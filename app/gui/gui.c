@@ -28,6 +28,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
@@ -52,8 +54,6 @@
 #include "gui.h"
 #include "menus.h"
 #include "session.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -121,19 +121,22 @@ gui_libs_init (gint    *argc,
 void
 gui_themes_init (Gimp *gimp)
 {
-  const gchar *theme_dir;
-  gchar       *gtkrc;
+  GimpGuiConfig *config;
+  const gchar   *theme_dir;
+  gchar         *gtkrc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  config = GIMP_GUI_CONFIG (gimp->config);
 
   themes_hash = g_hash_table_new_full (g_str_hash,
 				       g_str_equal,
 				       g_free,
 				       g_free);
 
-  if (gimprc.theme_path)
+  if (config->theme_path)
     {
-      gimp_datafiles_read_directories (gimprc.theme_path,
+      gimp_datafiles_read_directories (config->theme_path,
 				       G_FILE_TEST_IS_DIR,
 				       gui_themes_dir_foreach_func,
 				       gimp);
@@ -173,13 +176,11 @@ gui_themes_init (Gimp *gimp)
   /*  tooltips  */
   gimp_help_init ();
 
-  if (! gimprc.show_tool_tips)
+  if (! config->show_tool_tips)
     gimp_help_disable_tooltips ();
 
-  gimprc.min_colors = CLAMP (gimprc.min_colors, 27, 256);
-
-  gdk_rgb_set_min_colors (gimprc.min_colors);
-  gdk_rgb_set_install (gimprc.install_cmap);
+  gdk_rgb_set_min_colors (CLAMP (gimp->config->min_colors, 27, 256));
+  gdk_rgb_set_install (gimp->config->install_cmap);
 
   gtk_widget_set_default_colormap (gdk_rgb_get_colormap ());
 }
@@ -187,8 +188,10 @@ gui_themes_init (Gimp *gimp)
 const gchar *
 gui_themes_get_theme_dir (Gimp *gimp)
 {
-  if (gimprc.theme)
-    return g_hash_table_lookup (themes_hash, gimprc.theme);
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+
+  if (config->theme)
+    return g_hash_table_lookup (themes_hash, config->theme);
 
   return g_hash_table_lookup (themes_hash, "Default");
 }
@@ -196,7 +199,13 @@ gui_themes_get_theme_dir (Gimp *gimp)
 void
 gui_init (Gimp *gimp)
 {
+  GimpDisplayConfig *display_config;
+  GimpGuiConfig     *gui_config;
+
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  display_config = GIMP_DISPLAY_CONFIG (gimp->config);
+  gui_config     = GIMP_GUI_CONFIG (gimp->config);
 
   gimp->gui_main_loop_func      = gui_main;
   gimp->gui_main_loop_quit_func = gui_main_quit;
@@ -215,16 +224,24 @@ gui_init (Gimp *gimp)
 		    gimp);
 
   /* make sure the monitor resolution is valid */
-  if (gimprc.monitor_xres < GIMP_MIN_RESOLUTION ||
-      gimprc.monitor_yres < GIMP_MIN_RESOLUTION)
+  if (display_config->monitor_res_from_gdk               ||
+      display_config->monitor_xres < GIMP_MIN_RESOLUTION ||
+      display_config->monitor_yres < GIMP_MIN_RESOLUTION)
     {
-      gui_get_screen_resolution (&gimprc.monitor_xres, &gimprc.monitor_yres);
-      gimprc.using_xserver_resolution = TRUE;
+      gdouble xres, yres;
+      
+      gui_get_screen_resolution (&xres, &yres);
+
+      g_object_set (G_OBJECT (gimp->config),
+			      "monitor-xresolution",                      xres,
+			      "monitor-yresolution",                      yres,
+			      "monitor-resolution-from-windowing-system", TRUE,
+			      NULL);
     }
 
   menus_init (gimp);
 
-  render_setup (gimprc.transparency_type, gimprc.transparency_size);
+  render_setup (gui_config->transparency_type, gui_config->transparency_size);
 
   dialogs_init (gimp);
 
@@ -247,7 +264,7 @@ gui_restore (Gimp     *gimp,
 
   gimp_devices_restore (gimp);
 
-  if (gimprc.always_restore_session || restore_session)
+  if (GIMP_GUI_CONFIG (gimp->config)->restore_session || restore_session)
     session_restore (gimp);
 
   dialogs_show_toolbox ();
@@ -258,7 +275,7 @@ gui_post_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimprc.show_tips)
+  if (GIMP_GUI_CONFIG (gimp->config)->show_tips)
     {
       gimp_dialog_factory_dialog_new (global_dialog_factory,
                                       "gimp-tips-dialog", -1);
@@ -274,7 +291,7 @@ gui_shutdown (Gimp *gimp)
 
   session_save (gimp);
 
-  if (gimprc.save_device_status)
+  if (GIMP_GUI_CONFIG (gimp->config)->save_device_status)
     gimp_devices_save (gimp);
 
   gimp_displays_delete (gimp);

@@ -25,6 +25,8 @@
 
 #include "libgimpbase/gimpbase.h"
 
+#include "config-types.h"
+
 #include "gimpconfig-params.h"
 #include "gimpconfig-types.h"
 #include "gimpconfig-utils.h"
@@ -55,6 +57,7 @@ enum
   PROP_RESIZE_WINDOWS_ON_ZOOM,
   PROP_RESIZE_WINDOWS_ON_RESIZE,
   PROP_DEFAULT_DOT_FOR_DOT,
+  PROP_PERFECT_MOUSE,
   PROP_CURSOR_MODE,
   PROP_CURSOR_UPDATING,
   PROP_IMAGE_TITLE_FORMAT,
@@ -126,6 +129,9 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_DEFAULT_DOT_FOR_DOT,
                                     "default-dot-for-dot",
                                     TRUE);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_PERFECT_MOUSE,
+                                    "perfect-mouse",
+                                    FALSE);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_MODE,
                                  "cursor-mode",
                                  GIMP_TYPE_CURSOR_MODE, GIMP_CURSOR_MODE_TOOL_ICON);
@@ -173,9 +179,9 @@ gimp_display_config_finalize (GObject *object)
 
 static void
 gimp_display_config_set_property (GObject      *object,
-                              guint         property_id,
-                              const GValue *value,
-                              GParamSpec   *pspec)
+				  guint         property_id,
+				  const GValue *value,
+				  GParamSpec   *pspec)
 {
   GimpDisplayConfig *display_config;
 
@@ -197,6 +203,9 @@ gimp_display_config_set_property (GObject      *object,
       break;
     case PROP_DEFAULT_DOT_FOR_DOT:
       display_config->default_dot_for_dot = g_value_get_boolean (value);
+      break;
+    case PROP_PERFECT_MOUSE:
+      display_config->perfect_mouse = g_value_get_boolean (value);
       break;
     case PROP_CURSOR_MODE:
       display_config->cursor_mode = g_value_get_enum (value);
@@ -239,9 +248,9 @@ gimp_display_config_set_property (GObject      *object,
 
 static void
 gimp_display_config_get_property (GObject    *object,
-                              guint       property_id,
-                              GValue     *value,
-                              GParamSpec *pspec)
+				  guint       property_id,
+				  GValue     *value,
+				  GParamSpec *pspec)
 {
   GimpDisplayConfig *display_config;
 
@@ -263,6 +272,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_DOT_FOR_DOT:
       g_value_set_boolean (value, display_config->default_dot_for_dot);
+      break;
+    case PROP_PERFECT_MOUSE:
+      g_value_set_boolean (value, display_config->perfect_mouse);
       break;
     case PROP_CURSOR_MODE:
       g_value_set_enum (value, display_config->cursor_mode);

@@ -3,6 +3,7 @@
 noinst_LIBRARIES = libappconfig.a
 
 libappconfig_a_SOURCES = \
+	config-types.h			\
 	gimpconfig.c			\
 	gimpconfig.h			\
 	gimpconfig-deserialize.c	\

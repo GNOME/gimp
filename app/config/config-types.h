@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * GimpConfig typedefs
+ * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,31 +19,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
+#ifndef __CONFIG_TYPES_H__
+#define __CONFIG_TYPES_H__
 
-#include <glib-object.h>
+typedef struct _GimpBaseConfig      GimpBaseConfig;
+typedef struct _GimpCoreConfig      GimpCoreConfig;
 
-#include "base-types.h"
+typedef struct _GimpDisplayConfig      GimpDisplayConfig;
+typedef struct _GimpGuiConfig      GimpGuiConfig;
+typedef struct _GimpRc      GimpRc;
 
-#include "base-config.h"
-
-#ifdef  __GNUC__
-#define INIT_MEMBER(m,v) .m = v
-#else
-/* declaration order required ! */
-#define INIT_MEMBER(m,v) v
-#endif
-
-static GimpBaseConfig  static_base_config =
-{
-  INIT_MEMBER(temp_path        , NULL),
-  INIT_MEMBER(swap_path        , NULL),
-
-  INIT_MEMBER(tile_cache_size  , 1 << 25),
-  INIT_MEMBER(stingy_memory_use, FALSE),
-  INIT_MEMBER(num_processors   , 1)
-};
-
-#undef INIT_MEMBER
-
-GimpBaseConfig *base_config = &static_base_config;
+#endif /* __CONFIG_TYPES_H__ */

@@ -320,7 +320,7 @@ HELP
     &new_dim_args;
 
     %invoke = (
-	headers => [ qw("core/gimpimage-scale.h") ],
+	headers => [ qw("config/gimpcoreconfig.h" "core/gimpimage-scale.h") ],
 	code => <<'CODE'
 {
   gimp_image_scale (gimage, new_width, new_height,
@@ -1550,8 +1550,9 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontainer.h"
-              "core/gimpcoreconfig.h" "core/gimplist.h" "core/gimpunit.h"
+@headers = qw(<string.h>
+              "core/gimp.h" "core/gimpcontainer.h"
+              "core/gimplist.h" "core/gimpunit.h"
               "base/temp-buf.h" "libgimpmath/gimpmath.h"
               "libgimpbase/gimpbase.h"
               "libgimp/gimpintl.h");

@@ -49,9 +49,6 @@
 #include "file-dialog-utils.h"
 #include "file-save-dialog.h"
 
-#include "gimprc.h"
-#include "undo.h"
-
 #include "libgimp/gimpintl.h"
 
 

@@ -76,9 +76,7 @@ gimp_gimprc_query (gchar *token)
  * function to store it, and gimp_gimprc_query to retrieve it. This
  * will accept _only_ parameters in the format of (<token> <value>),
  * where <token> and <value> must be strings. Entries not corresponding
- * to this format will be eaten and no action will be performed. If the
- * gimprc can not be written for whatever reason, gimp will complain
- * loudly and the old gimprc will be saved in gimprc.old.
+ * to this format will be eaten and no action will be performed.
  *
  * Returns: TRUE on success.
  */
@@ -139,8 +137,8 @@ gimp_get_default_comment (void)
  * Get the monitor resolution as specified in the Preferences.
  *
  * Returns the resolution of the monitor in pixels/inch. This value is
- * taken from the Preferences (or the X-Server if this is set in the
- * Preferences) and there's no guarantee for the value to be
+ * taken from the Preferences (or the windowing system if this is set
+ * in the Preferences) and there's no guarantee for the value to be
  * reasonable.
  *
  * Returns: TRUE on success.

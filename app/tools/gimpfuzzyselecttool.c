@@ -47,8 +47,6 @@
 #include "gimpfuzzyselecttool.h"
 #include "selection_options.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 

@@ -33,13 +33,14 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 
 #include "gimpitemfactory.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimphelp.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -246,18 +247,21 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
                                gboolean               static_entry)
 {
   GtkWidget *menu_item;
+  gboolean   tearoffs;
 
   g_return_if_fail (GIMP_IS_ITEM_FACTORY (item_factory));
   g_return_if_fail (entry != NULL);
 
+  tearoffs = GIMP_GUI_CONFIG (item_factory->gimp->config)->tearoff_menus;
+
   if (! (strstr (entry->entry.path, "tearoff1")))
     {
-      if (! gimprc.disable_tearoff_menus && create_tearoff)
+      if (tearoffs && create_tearoff)
 	{
 	  gimp_item_factory_create_branches (item_factory, entry, textdomain);
 	}
     }
-  else if (gimprc.disable_tearoff_menus || ! create_tearoff)
+  else if (! tearoffs || ! create_tearoff)
     {
       return;
     }

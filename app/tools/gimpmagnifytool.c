@@ -27,6 +27,9 @@
 
 #include "tools-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
@@ -39,8 +42,6 @@
 #include "gimpmagnifytool.h"
 #include "tool_options.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -50,16 +51,16 @@ struct _MagnifyOptions
 {
   GimpToolOptions   tool_options;
 
-  gint          allow_resize;  /* default from gimprc.resize_windows_on_zoom */
-  GtkWidget    *allow_resize_w;
+  gboolean          allow_resize;
+  GtkWidget        *allow_resize_w;
 
-  GimpZoomType  type;
-  GimpZoomType  type_d;
-  GtkWidget    *type_w;
+  GimpZoomType      type;
+  GimpZoomType      type_d;
+  GtkWidget        *type_w;
 
-  gdouble       threshold;
-  gdouble       threshold_d;
-  GtkObject    *threshold_w;
+  gdouble           threshold;
+  gdouble           threshold_d;
+  GtkObject        *threshold_w;
 };
 
 
@@ -439,9 +440,10 @@ magnify_options_new (GimpToolInfo *tool_info)
 
   ((GimpToolOptions *) options)->reset_func = magnify_options_reset;
 
-  options->allow_resize = gimprc.resize_windows_on_zoom;
-  options->type_d       = options->type         = GIMP_ZOOM_IN;
-  options->threshold_d  = options->threshold    = 5;
+  options->allow_resize =
+    GIMP_DISPLAY_CONFIG (tool_info->gimp->config)->resize_windows_on_zoom;
+  options->type_d       = options->type      = GIMP_ZOOM_IN;
+  options->threshold_d  = options->threshold = 5;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
@@ -500,7 +502,7 @@ magnify_options_reset (GimpToolOptions *tool_options)
   options = (MagnifyOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
-				gimprc.resize_windows_on_zoom);
+				GIMP_DISPLAY_CONFIG (tool_options->tool_info->gimp->config)->resize_windows_on_zoom);
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->type_w),
                                GINT_TO_POINTER (options->type_d));

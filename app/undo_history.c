@@ -55,11 +55,14 @@
 
 #include "display/display-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -68,7 +71,6 @@
 
 #include "widgets/gimpviewabledialog.h"
 
-#include "gimprc.h"
 #include "undo.h"
 #include "undo_types.h"
 
@@ -782,7 +784,7 @@ undo_history_new (GimpImage *gimage)
 
   st = g_new0 (undo_history_st, 1);
   st->gimage = gimage;
-  st->preview_size = gimprc.preview_size;
+  st->preview_size = gimage->gimp->config->preview_size;
 
   /*  gimage signals  */
   g_signal_connect (G_OBJECT (gimage), "undo_event",

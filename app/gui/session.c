@@ -30,6 +30,8 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 
 #include "config/gimpscanner.h"
@@ -38,8 +40,6 @@
 
 #include "color-history.h"
 #include "session.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -143,9 +143,11 @@ session_init (Gimp *gimp)
             }
           else if (scanner->value.v_symbol == GINT_TO_POINTER (LAST_TIP_SHOWN))
             {
+	      GimpGuiConfig *config = GIMP_GUI_CONFIG (gimp->config);
+
               token = G_TOKEN_INT;
 
-              if (! gimp_scanner_parse_int (scanner, &gimprc.last_tip))
+              if (! gimp_scanner_parse_int (scanner, &config->last_tip))
                 break;
             }
           token = G_TOKEN_RIGHT_PAREN;
@@ -212,7 +214,8 @@ session_save (Gimp *gimp)
   gimp_dialog_factories_session_save (fp);
 
   /* save last tip shown */
-  fprintf (fp, "(last-tip-shown %d)\n\n", gimprc.last_tip + 1);
+  fprintf (fp, "(last-tip-shown %d)\n\n",
+	   GIMP_GUI_CONFIG (gimp->config)->last_tip + 1);
 
   color_history_write (fp);
 

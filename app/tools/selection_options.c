@@ -25,9 +25,10 @@
 
 #include "tools-types.h"
 
-#include "core/gimptoolinfo.h"
+#include "config/gimpguiconfig.h"
 
-#include "gimprc.h"
+#include "core/gimp.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpellipseselecttool.h"
 #include "gimpfuzzyselecttool.h"
@@ -66,7 +67,8 @@ selection_options_init (SelectionOptions *options,
 
   options->select_transparent = options->select_transparent_d = TRUE;
   options->sample_merged      = options->sample_merged_d      = FALSE;
-  options->threshold          = gimprc.default_threshold;
+  options->threshold          =
+    GIMP_GUI_CONFIG (tool_info->gimp->config)->default_threshold;
   options->auto_shrink        = options->auto_shrink_d        = FALSE;
   options->shrink_merged      = options->shrink_merged_d      = FALSE;
   options->fixed_size         = options->fixed_size_d         = FALSE;
@@ -311,7 +313,7 @@ selection_options_init (SelectionOptions *options,
       options->threshold_w = 
 	gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 			      _("Threshold:"), -1, -1,
-			      gimprc.default_threshold,
+			      options->threshold,
 			      0.0, 255.0, 1.0, 16.0, 1,
 			      TRUE, 0.0, 0.0,
 			      _("Maximum color difference"), NULL);
@@ -487,7 +489,7 @@ selection_options_reset (GimpToolOptions *tool_options)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				    options->sample_merged_d);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-				gimprc.default_threshold);
+				GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold);
     }
 
   if (options->auto_shrink_w)

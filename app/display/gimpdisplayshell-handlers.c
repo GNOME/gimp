@@ -24,6 +24,9 @@
 
 #include "display-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "gimpdisplay.h"
@@ -32,8 +35,6 @@
 #include "gimpdisplayshell-handlers.h"
 #include "gimpdisplayshell-scale.h"
 #include "gimpstatusbar.h"
-
-#include "gimprc.h"
 
 
 /*  local function prototypes  */
@@ -204,7 +205,9 @@ gimp_display_shell_size_changed_handler (GimpImage        *gimage,
 {
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 
-  gimp_display_shell_scale_resize (shell, gimprc.resize_windows_on_resize, TRUE);
+  gimp_display_shell_scale_resize (shell,
+				   GIMP_DISPLAY_CONFIG (gimage->gimp->config)->resize_windows_on_resize,
+				   TRUE);
 }
 
 static void

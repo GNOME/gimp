@@ -28,9 +28,10 @@
 
 #include "plug-in-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
@@ -97,13 +98,13 @@ plug_ins_init (Gimp               *gimp,
 				   plug_ins_init_file, NULL);
 
   /* read the pluginrc file for cached data */
-  if (gimp->config->pluginrc_path)
+  if (gimp->config->plug_in_rc_path)
     {
-      if (g_path_is_absolute (gimp->config->pluginrc_path))
-        filename = g_strdup (gimp->config->pluginrc_path);
+      if (g_path_is_absolute (gimp->config->plug_in_rc_path))
+        filename = g_strdup (gimp->config->plug_in_rc_path);
       else
         filename = g_build_filename (gimp_directory (),
-                                     gimp->config->pluginrc_path,
+                                     gimp->config->plug_in_rc_path,
                                      NULL);
     }
   else

@@ -61,7 +61,7 @@ libappdisplay_a_SOURCES = \
 	$(libappdisplay_a_sources)
 
 ## This is a truly ugly hack
-libappdisplay_a_LIBADD = ../gui/plug-in-menus.o
+libappdisplay_a_LIBADD = ../gui/plug-in-menus.o ../config/gimpdisplayconfig.o
 
 #
 # rules to generate built sources

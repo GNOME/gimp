@@ -27,6 +27,8 @@
 
 #include "tools/tools-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
 #include "base/tile.h"
@@ -38,7 +40,6 @@
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-mask.h"

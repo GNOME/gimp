@@ -40,8 +40,9 @@
 
 #include "core/core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpdocumentlist.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"

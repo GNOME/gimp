@@ -58,6 +58,9 @@ struct _GimpDisplay
   gint        instance;         /*  the instance # of this gdisplay as      */
                                 /*  taken from the gimage at creation       */
 
+  gdouble     monitor_xres;
+  gdouble     monitor_yres;
+
   GtkWidget  *shell;            /*  shell widget for this gdisplay          */
 
   gboolean    draw_guides;      /*  should the guides be drawn?             */

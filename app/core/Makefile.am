@@ -44,8 +44,6 @@ libappcore_a_sources = \
 	gimpcontainer.h			\
 	gimpcontext.c			\
 	gimpcontext.h			\
-	gimpcoreconfig.c		\
-	gimpcoreconfig.h		\
 	gimpdata.c			\
 	gimpdata.h			\
 	gimpdatafactory.c		\

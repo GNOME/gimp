@@ -26,6 +26,9 @@
 
 #include "display-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "tools/tools-types.h"
@@ -37,8 +40,6 @@
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 #include "gimpstatusbar.h"
-
-#include "gimprc.h"
 
 
 /*  local function prototypes  */
@@ -180,7 +181,8 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
       gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
 
       gimp_display_shell_scale_resize (shell,
-                                       gimprc.resize_windows_on_zoom, TRUE);
+				       GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config)->resize_windows_on_zoom,
+				       TRUE);
 
       /* re-enable the active tool */
       tool_manager_control_active (shell->gdisp->gimage->gimp, RESUME,
@@ -252,13 +254,16 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
                                           (scaledest << 8) + scalesrc,
                                           (offset_x - (shell->disp_width  / 2)),
                                           (offset_y - (shell->disp_height / 2)),
-                                          gimprc.resize_windows_on_zoom);
+                                          GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config)->resize_windows_on_zoom);
     }
 }
 
 void
 gimp_display_shell_scale_fit (GimpDisplayShell *shell)
 {
+  GimpDisplayConfig *config;
+  GimpImage         *gimage;
+
   gint    image_width;
   gint    image_height;
   gdouble zoom_x;
@@ -273,17 +278,19 @@ gimp_display_shell_scale_fit (GimpDisplayShell *shell)
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  image_width  = shell->gdisp->gimage->width;
-  image_height = shell->gdisp->gimage->height;
+  gimage = shell->gdisp->gimage;
+
+  image_width  = gimage->width;
+  image_height = gimage->height;
+
+  config = GIMP_DISPLAY_CONFIG (gimage->gimp->config);
 
   if (! shell->dot_for_dot)
     {
       image_width  = ROUND (image_width *
-                            gimprc.monitor_xres /
-                            shell->gdisp->gimage->xresolution);
+                            config->monitor_xres / gimage->xresolution);
       image_height = ROUND (image_height *
-                            gimprc.monitor_yres /
-                            shell->gdisp->gimage->yresolution);
+                            config->monitor_yres / gimage->yresolution);
     }
 
   zoom_x = (gdouble) shell->disp_width  / (gdouble) image_width;

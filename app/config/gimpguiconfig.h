@@ -34,7 +34,6 @@
 #define GIMP_IS_GUI_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_GUI_CONFIG))
 
 
-typedef struct _GimpGuiConfig      GimpGuiConfig;
 typedef struct _GimpGuiConfigClass GimpGuiConfigClass;
 
 struct _GimpGuiConfig
@@ -44,7 +43,6 @@ struct _GimpGuiConfig
   gint                 last_opened_size;
   GimpCheckSize        transparency_size;
   GimpCheckType        transparency_type;
-  gboolean             perfect_mouse;
   gint                 default_threshold;
   GimpPreviewSize      nav_preview_size;
   gboolean             info_window_per_display;
@@ -60,6 +58,8 @@ struct _GimpGuiConfig
   gchar               *theme;
   gboolean             use_help;
   GimpHelpBrowserType  help_browser;
+
+  gint                 last_tip;  /* saved in sessionrc */
 };
 
 struct _GimpGuiConfigClass

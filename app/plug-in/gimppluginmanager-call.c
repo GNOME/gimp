@@ -82,9 +82,10 @@
 #include "base/tile.h"
 #include "base/tile-manager.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpenvirontable.h"
 #include "core/gimpimage.h"
@@ -105,7 +106,6 @@
 
 #include "appenv.h"
 #include "app_procs.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -822,10 +822,10 @@ plug_in_run (Gimp       *gimp,
 	  config.tile_width   = TILE_WIDTH;
 	  config.tile_height  = TILE_HEIGHT;
 	  config.shm_ID       = shm_ID;
-	  config.gamma        = gimprc.gamma_val;
-	  config.install_cmap = gimprc.install_cmap;
+	  config.gamma        = gimp->config->gamma_val;
+	  config.install_cmap = gimp->config->install_cmap;
           config.unused       = 0;
-          config.min_colors   = CLAMP (gimprc.min_colors, 27, 256);
+          config.min_colors   = CLAMP (gimp->config->min_colors, 27, 256);
 	  config.gdisp_ID     = gdisp_ID;
 
 	  proc_run.name    = proc_rec->name;

@@ -30,10 +30,12 @@
 
 #include "gui-types.h"
 
+#include "config/gimpguiconfig.h"
+
+#include "core/gimp.h"
+
 #include "tips-dialog.h"
 #include "tips-parser.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -49,26 +51,27 @@ static void  tips_toggle_update  (GtkWidget   *widget,
                                   gpointer     data);
 
 
-
 static GtkWidget *tips_dialog   = NULL;
 static GtkWidget *welcome_label = NULL;
 static GtkWidget *thetip_label  = NULL;
 static GList     *tips          = NULL;
 static GList     *current_tip   = NULL;
 static gint       tips_count    = 0;
-static gint       old_show_tips = 0;
 
 
 GtkWidget *
-tips_dialog_create (void)
+tips_dialog_create (Gimp *gimp)
 {
-  GtkWidget  *vbox;
-  GtkWidget  *vbox2;
-  GtkWidget  *hbox;
-  GtkWidget  *bbox;
-  GtkWidget  *button;
-  GdkPixbuf  *wilber;
-  gchar      *filename;
+  GimpGuiConfig *config;
+  GtkWidget     *vbox;
+  GtkWidget     *vbox2;
+  GtkWidget     *hbox;
+  GtkWidget     *bbox;
+  GtkWidget     *button;
+  GdkPixbuf     *wilber;
+  gchar         *filename;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   if (!tips)
     {
@@ -91,10 +94,12 @@ tips_dialog_create (void)
 
   tips_count = g_list_length (tips);
 
-  if (gimprc.last_tip >= tips_count || gimprc.last_tip < 0)
-    gimprc.last_tip = 0;
+  config = GIMP_GUI_CONFIG (gimp->config);
 
-  current_tip = g_list_nth (tips, gimprc.last_tip);
+  if (config->last_tip >= tips_count || config->last_tip < 0)
+    config->last_tip = 0;
+
+  current_tip = g_list_nth (tips, config->last_tip);
 
   if (tips_dialog)
     return tips_dialog;
@@ -113,7 +118,7 @@ tips_dialog_create (void)
 
   g_signal_connect (G_OBJECT (tips_dialog), "destroy",
 		    G_CALLBACK (tips_dialog_destroy),
-		    NULL);
+		    config);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);      
@@ -168,15 +173,13 @@ tips_dialog_create (void)
 
   button = 
     gtk_check_button_new_with_mnemonic (_("Show tip next time GIMP starts"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), gimprc.show_tips);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), config->show_tips);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (G_OBJECT (button), "toggled",
 		    G_CALLBACK (tips_toggle_update),
-		    &gimprc.show_tips);
-
-  old_show_tips = gimprc.show_tips;
+		    config);
 
   bbox = gtk_hbutton_box_new ();
   gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
@@ -232,27 +235,16 @@ static void
 tips_dialog_destroy (GtkWidget *widget,
 		     gpointer   data)
 {
-  GList *update = NULL; /* options that should be updated in .gimprc */
-  GList *remove = NULL; /* options that should be commented out */
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (data);
+
+  /* the last-shown-tip is saved in sessionrc */
+  config->last_tip = g_list_position (tips, current_tip);
 
   tips_dialog = NULL;
-
   current_tip = NULL;
+
   gimp_tips_free (tips);
   tips = NULL;
-
-  /* the last-shown-tip is now saved in sessionrc */
-  gimprc.last_tip = g_list_position (tips, current_tip);
-
-  if (gimprc.show_tips != old_show_tips)
-    {
-      update = g_list_append (update, "show-tips");
-      remove = g_list_append (remove, "dont-show-tips");
-      old_show_tips = gimprc.show_tips;
-      gimprc_save (&update, &remove);
-    }
-  g_list_free (update);
-  g_list_free (remove);
 }
 
 static void
@@ -291,12 +283,7 @@ static void
 tips_toggle_update (GtkWidget *widget,
 		    gpointer   data)
 {
-  gint *toggle_val;
-
-  toggle_val = (gint *) data;
-
-  if (GTK_TOGGLE_BUTTON (widget)->active)
-    *toggle_val = TRUE;
-  else
-    *toggle_val = FALSE;
+  g_object_set (G_OBJECT (data),
+		"show-tips", gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)),
+		NULL);
 }

@@ -22,8 +22,11 @@
 
 #include "display-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "base/boundary.h"
 
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 
@@ -31,8 +34,6 @@
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-marching-ants.h"
 #include "gimpdisplayshell-selection.h"
-
-#include "gimprc.h"
 
 
 #undef VERBOSE
@@ -92,7 +93,7 @@ gimp_display_shell_selection_create (GdkWindow        *win,
   new = g_new (Selection, 1);
   base_type = gimp_image_base_type (shell->gdisp->gimage);
 
-  if (gimprc.cycled_marching_ants)
+  if (GIMP_DISPLAY_CONFIG (shell->gdisp->gimage->gimp->config)->colormap_cycling)
     {
       new->cycle = TRUE;
 

@@ -29,9 +29,9 @@
 #include "procedural_db.h"
 
 #include "base/base-enums.h"
+#include "config/gimpcoreconfig.h"
 #include "core/core-enums.h"
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"

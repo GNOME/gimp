@@ -39,7 +39,6 @@ struct _GimpTextTool
   gint           click_y;
 
   GimpDisplay   *gdisp;
-  PangoContext  *pango_context;
 
   GtkTextBuffer *buffer;
   GtkWidget     *editor;

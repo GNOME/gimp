@@ -42,7 +42,8 @@
 
 #include "core-types.h"
 
-#include "base/base-config.h"
+#include "config/gimpbaseconfig.h"
+
 #include "base/temp-buf.h"
 
 #include "gimpimage.h"

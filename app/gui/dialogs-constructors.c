@@ -85,12 +85,11 @@
 #include "palettes-commands.h"
 #include "paths-dialog.h"
 #include "patterns-commands.h"
-#include "preferences-dialog.h"
+/* #include "preferences-dialog.h" */
 #include "tips-dialog.h"
 #include "tool-options-dialog.h"
 #include "vectors-commands.h"
 
-#include "gimprc.h"
 #include "undo_history.h"
 
 #include "libgimp/gimpintl.h"
@@ -181,7 +180,8 @@ dialogs_preferences_get (GimpDialogFactory *factory,
 			 GimpContext       *context,
                          gint               preview_size)
 {
-  return preferences_dialog_create (context->gimp);
+  return NULL;
+  /* return preferences_dialog_create (context->gimp); */
 }
 
 GtkWidget *
@@ -246,7 +246,7 @@ dialogs_tips_get (GimpDialogFactory *factory,
 		  GimpContext       *context,
                   gint               preview_size)
 {
-  return tips_dialog_create ();
+  return tips_dialog_create (context->gimp);
 }
 
 GtkWidget *

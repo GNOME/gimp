@@ -568,8 +568,9 @@ HELP
     $date = '1998';
 CODE
 
-@headers = qw("core/gimplist.h" "core/gimp.h" "core/gimpcoreconfig.h"
-              "pdb_glue.h");
+@headers = qw( "config/gimpcoreconfig.h"
+               "core/gimplist.h" "core/gimp.h"
+               "pdb_glue.h");
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha

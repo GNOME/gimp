@@ -46,9 +46,6 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "app_procs.h"
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 

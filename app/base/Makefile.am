@@ -14,8 +14,6 @@ libappbase_a_SOURCES = \
 	base-enums.c		\
 	base-enums.h		\
 	base-types.h		\
-	base-config.c		\
-	base-config.h		\
 	boundary.c		\
 	boundary.h		\
 	brush-scale.c		\

@@ -38,8 +38,6 @@
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
 
-#include "gimprc.h"
-
 
 typedef struct _RenderInfo  RenderInfo;
 

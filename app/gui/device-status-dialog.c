@@ -44,8 +44,6 @@
 
 #include "device-status-dialog.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 

@@ -36,12 +36,11 @@
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gimp.h"
-#include "gimpcoreconfig.h"
 #include "gimplist.h"
 #include "gimpmodules.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -70,16 +69,16 @@ gimp_modules_exit (Gimp *gimp)
 void
 gimp_modules_load (Gimp *gimp)
 {
-  gchar *filename;
-
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  filename = gimp_personal_rc_file ("modulerc");
+#if 0
+  gchar *filename = gimp_personal_rc_file ("modulerc");
   gimprc_parse_file (filename);
   g_free (filename);
+#endif
 
   gimp_module_db_set_load_inhibit (gimp->module_db,
-                                   gimp->config->module_db_load_inhibit);
+                                   gimp->config->module_load_inhibit);
 
   gimp_module_db_load (gimp->module_db,
                        gimp->config->module_path);
@@ -140,7 +139,7 @@ gimp_modules_refresh (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   gimp_module_db_set_load_inhibit (gimp->module_db,
-                                   gimp->config->module_db_load_inhibit);
+                                   gimp->config->module_load_inhibit);
 
   gimp_module_db_refresh (gimp->module_db,
                           gimp->config->module_path);

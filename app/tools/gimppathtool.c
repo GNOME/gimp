@@ -34,7 +34,6 @@
 #include "gimppathtool.h"
 #include "path_tool.h"
 
-#include "gimprc.h"
 #include "path_curves.h"
 
 #include "libgimp/gimpintl.h"

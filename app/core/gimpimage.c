@@ -34,10 +34,11 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpcontext.h"
-#include "gimpcoreconfig.h"
 #include "gimpimage.h"
 #include "gimpimage-colorhash.h"
 #include "gimpimage-mask.h"
@@ -934,7 +935,7 @@ gimp_image_new (Gimp              *gimp,
 
   gimage->xresolution = gimp->config->default_xresolution;
   gimage->yresolution = gimp->config->default_yresolution;
-  gimage->unit        = gimp->config->default_units;
+  gimage->unit        = gimp->config->default_unit;
 
   switch (base_type)
     {

@@ -25,6 +25,8 @@
 
 #include "tools-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -42,7 +44,6 @@
 #include "gimpbucketfilltool.h"
 #include "paint_options.h"
 
-#include "gimprc.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -63,7 +64,6 @@ struct _BucketOptions
   GtkWidget          *sample_merged_w;
 
   gdouble             threshold;
-  /* gdouble          threshold_d; (from gimprc) */
   GtkObject          *threshold_w;
 
   GimpBucketFillMode  fill_mode;
@@ -176,7 +176,8 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
   tool = GIMP_TOOL (bucket_fill_tool);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_BUCKET_FILL_TOOL_CURSOR);
+  gimp_tool_control_set_tool_cursor (tool->control,
+				     GIMP_BUCKET_FILL_TOOL_CURSOR);
 }
 
 static void
@@ -346,7 +347,8 @@ bucket_options_new (GimpToolInfo *tool_info)
 
   options->fill_transparent = options->fill_transparent_d = TRUE;
   options->sample_merged    = options->sample_merged_d    = FALSE;
-  options->threshold        = gimprc.default_threshold;
+  options->threshold        =
+    GIMP_GUI_CONFIG (tool_info->gimp->config)->default_threshold;
   options->fill_mode        = options->fill_mode_d = GIMP_FG_BUCKET_FILL;
 
   /*  the main vbox  */
@@ -413,7 +415,7 @@ bucket_options_new (GimpToolInfo *tool_info)
 
   options->threshold_w = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 					       _("Threshold:"), -1, -1,
-					       gimprc.default_threshold,
+					       options->threshold,
 					       0.0, 255.0, 1.0, 16.0, 1,
 					       TRUE, 0.0, 0.0,
 					       _("Maximum color difference"),
@@ -444,7 +446,7 @@ bucket_options_reset (GimpToolOptions *tool_options)
 				options->sample_merged_d);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
-			    gimprc.default_threshold);
+			    GIMP_GUI_CONFIG (tool_options->tool_info->gimp->config)->default_threshold);
 
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (options->fill_mode_w),
                                GINT_TO_POINTER (options->fill_mode_d));

@@ -29,15 +29,15 @@
 
 #include "core-types.h"
 
-#include "base/base-config.h"
 #include "base/temp-buf.h"
+
+#include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
 #include "gimpbrush.h"
 #include "gimpbuffer.h"
 #include "gimpcontainer.h"
 #include "gimpcontext.h"
-#include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
 #include "gimpimagefile.h"
 #include "gimpgradient.h"

@@ -49,8 +49,6 @@
 #include "gimpdnd.h"
 #include "gimppreview.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 
@@ -128,8 +126,10 @@ gimp_selection_editor_class_init (GimpSelectionEditorClass* klass)
 static void
 gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
 {
-  GtkWidget *frame;
-  GtkWidget *abox;
+  GtkWidget       *frame;
+  GtkWidget       *abox;
+  /* FIXME: take value from GimpGuiConfig */ 
+  GimpPreviewSize  nav_preview_size = GIMP_PREVIEW_SIZE_HUGE;
 
   selection_editor->gimage = NULL;
 
@@ -142,16 +142,14 @@ gimp_selection_editor_init (GimpSelectionEditor *selection_editor)
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
-  gtk_widget_set_size_request (abox,
-                               gimprc.nav_preview_size,
-                               gimprc.nav_preview_size);
+  gtk_widget_set_size_request (abox, nav_preview_size, nav_preview_size);
 
   g_signal_connect (G_OBJECT (abox), "size_allocate",
                     G_CALLBACK (gimp_selection_editor_abox_resized),
                     selection_editor);
 
   selection_editor->preview = gimp_preview_new_by_type (GIMP_TYPE_DRAWABLE,
-                                                        gimprc.nav_preview_size,
+                                                        nav_preview_size,
                                                         0,
                                                         FALSE);
   gtk_container_add (GTK_CONTAINER (abox), selection_editor->preview);

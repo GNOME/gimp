@@ -173,8 +173,6 @@ typedef struct _GimpUndoStack       GimpUndoStack;
 
 typedef struct _GimpCoords          GimpCoords; /*< proxy-include >*/
 
-typedef struct _GimpCoreConfig      GimpCoreConfig;
-
 typedef struct _GimpGuide           GimpGuide;
 
 typedef struct _GimpImageNewValues  GimpImageNewValues;

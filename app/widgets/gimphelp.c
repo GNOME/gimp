@@ -34,6 +34,8 @@
 
 #include "widgets-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 
 #include "pdb/procedural_db.h"
@@ -42,8 +44,6 @@
 #include "plug-in/plug-in.h"
 
 #include "gimphelp.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -84,7 +84,7 @@ gimp_help (Gimp        *gimp,
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimprc.use_help)
+  if (GIMP_GUI_CONFIG (gimp->config)->use_help)
     {
       GimpIdleHelp *idle_help;
 
@@ -108,13 +108,15 @@ gimp_help (Gimp        *gimp,
 static gboolean
 gimp_idle_help (gpointer data)
 {
-  GimpIdleHelp *idle_help;
-  static gchar *current_locale = "C";
+  GimpIdleHelp        *idle_help;
+  GimpHelpBrowserType  browser;
+  static gchar        *current_locale = "C";
 
   idle_help = (GimpIdleHelp *) data;
 
-  if (idle_help->help_data == NULL &&
-      gimprc.help_browser != GIMP_HELP_BROWSER_GIMP)
+  browser = GIMP_GUI_CONFIG (idle_help->gimp->config)->help_browser;
+
+  if (idle_help->help_data == NULL && browser != GIMP_HELP_BROWSER_GIMP)
     idle_help->help_data = g_strdup ("introduction.html");
 
 #ifdef DEBUG_HELP
@@ -131,7 +133,7 @@ gimp_idle_help (gpointer data)
   g_print ("\n");
 #endif  /*  DEBUG_HELP  */
 
-  switch (gimprc.help_browser)
+  switch (browser)
     {
     case GIMP_HELP_BROWSER_GIMP:
       if (gimp_help_internal (idle_help->gimp,
@@ -165,16 +167,12 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
 				       gboolean   use_netscape,
 				       gpointer   data)
 {
-  GList *update = NULL;
-  GList *remove = NULL;
+  Gimp *gimp = GIMP (data);
 
   if (use_netscape)
-    {
-      gimprc.help_browser = GIMP_HELP_BROWSER_NETSCAPE;
-
-      update = g_list_append (update, "help-browser");
-      gimprc_save (&update, &remove);
-    }
+    g_object_set (G_OBJECT (gimp->config),
+		  "help-browser", GIMP_HELP_BROWSER_NETSCAPE,
+		  NULL);
   
   gtk_main_quit ();
 }
@@ -208,11 +206,12 @@ gimp_help_internal (Gimp        *gimp,
 				    GTK_STOCK_CANCEL,
 				    NULL, NULL,
 				    gimp_help_internal_not_found_callback,
-				    NULL);
+				    gimp);
 	  gtk_widget_show (not_found);
 	  gtk_main ();
-	  
-	  return (gimprc.help_browser != GIMP_HELP_BROWSER_NETSCAPE);
+
+	  return (GIMP_GUI_CONFIG (gimp->config)->help_browser
+		  != GIMP_HELP_BROWSER_NETSCAPE);
 	}
 
       args = g_new (Argument, 4);

@@ -26,8 +26,9 @@
 
 #include "gui-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 
@@ -634,7 +635,7 @@ resize_widget_new (GimpViewable *viewable,
       gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
       private->resolution_se =
-	gimp_size_entry_new (1, resize->gimage->gimp->config->default_resolution_units, 
+	gimp_size_entry_new (1, resize->gimage->gimp->config->default_resolution_unit, 
 			     _("pixels/%a"),
 			     FALSE, FALSE, FALSE, SB_WIDTH,
 			     GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);

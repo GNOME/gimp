@@ -33,6 +33,8 @@
 #endif
 #include "gui/gui-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpcontext.h"
@@ -72,7 +74,7 @@
 #include "gimpdisplayshell-selection.h"
 #include "gimpstatusbar.h"
 
-#include "gimprc.h"
+#include "app_procs.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -211,7 +213,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->item_factory          = NULL;
 
   shell->scale                 = 0;
-  shell->dot_for_dot           = gimprc.default_dot_for_dot;
+  shell->dot_for_dot           = TRUE;
 
   shell->offset_x              = 0;
   shell->offset_y              = 0;
@@ -398,20 +400,21 @@ GtkWidget *
 gimp_display_shell_new (GimpDisplay *gdisp,
                         guint        scale)
 {
-  GimpDisplayShell *shell;
-  GtkWidget        *main_vbox;
-  GtkWidget        *disp_vbox;
-  GtkWidget        *upper_hbox;
-  GtkWidget        *right_vbox;
-  GtkWidget        *lower_hbox;
-  GtkWidget        *inner_table;
-  GtkWidget        *arrow;
-  GtkWidget        *image;
-  GtkWidget        *nav_ebox;
-  gint              image_width, image_height;
-  gint              n_width, n_height;
-  gint              s_width, s_height;
-  gint              scalesrc, scaledest;
+  GimpDisplayShell  *shell;
+  GimpDisplayConfig *config;
+  GtkWidget         *main_vbox;
+  GtkWidget         *disp_vbox;
+  GtkWidget         *upper_hbox;
+  GtkWidget         *right_vbox;
+  GtkWidget         *lower_hbox;
+  GtkWidget         *inner_table;
+  GtkWidget         *arrow;
+  GtkWidget         *image;
+  GtkWidget         *nav_ebox;
+  gint               image_width, image_height;
+  gint               n_width, n_height;
+  gint               s_width, s_height;
+  gint               scalesrc, scaledest;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), NULL);
 
@@ -423,6 +426,10 @@ gimp_display_shell_new (GimpDisplay *gdisp,
 
   image_width  = gdisp->gimage->width;
   image_height = gdisp->gimage->height;
+
+  config = GIMP_DISPLAY_CONFIG (gdisp->gimage->gimp->config);
+
+  shell->dot_for_dot = config->default_dot_for_dot;
 
   /* adjust the initial scale -- so that window fits on screen the 75%
    * value is the same as in gimp_display_shell_shrink_wrap. It
@@ -719,7 +726,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
 
   /*  show everything  *******************************************************/
 
-  if (gimprc.show_rulers)
+  if (config->show_rulers)
     {
       gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
@@ -735,7 +742,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_show (shell->qmask);
   gtk_widget_show (nav_ebox);
 
-  if (gimprc.show_statusbar)
+  if (config->show_statusbar)
     {
       gtk_widget_show (shell->statusbar);
     }
@@ -751,6 +758,9 @@ void
 gimp_display_shell_close (GimpDisplayShell *shell,
                           gboolean          kill_it)
 {
+  /* FIXME!! */
+  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
+
   GimpImage *gimage;
 
   gimage = shell->gdisp->gimage;
@@ -768,7 +778,7 @@ gimp_display_shell_close (GimpDisplayShell *shell,
   if (! kill_it               &&
       gimage->disp_count == 1 &&
       gimage->dirty           &&
-      gimprc.confirm_on_close)
+      config->confirm_on_close)
     {
       gchar *basename;
 
@@ -1682,20 +1692,23 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 void
 gimp_display_shell_update_title (GimpDisplayShell *shell)
 {
+  /* FIXME!! */
+  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
+  
   gchar title[MAX_TITLE_BUF];
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   /* format the title */
   gimp_display_shell_format_title (shell, title, sizeof (title),
-                                   gimprc.image_title_format);
+                                   config->image_title_format);
   gdk_window_set_title (GTK_WIDGET (shell)->window, title);
 
   /* format the statusbar */
-  if (strcmp (gimprc.image_title_format, gimprc.image_status_format))
+  if (strcmp (config->image_title_format, config->image_status_format))
     {
       gimp_display_shell_format_title (shell, title, sizeof (title),
-                                       gimprc.image_status_format);
+                                       config->image_status_format);
     }
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "title");
@@ -2171,11 +2184,14 @@ gimp_display_shell_real_set_cursor (GimpDisplayShell   *shell,
                                     GimpCursorModifier  modifier,
                                     gboolean            always_install)
 {
+  /* FIXME!! */
+  GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (the_gimp->config);
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   if (cursor_type != GIMP_BAD_CURSOR)
     {
-      switch (gimprc.cursor_mode)
+      switch (config->cursor_mode)
 	{
 	case GIMP_CURSOR_MODE_TOOL_ICON:
 	  break;

@@ -30,6 +30,8 @@
 
 #include "display-types.h"
 
+#include "config/gimpguiconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
@@ -42,7 +44,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpnavigationview.h"
 
-#include "gimprc.h"
+#include "app_procs.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -146,6 +148,9 @@ gimp_navigation_view_class_init (GimpNavigationViewClass *klass)
 static void
 gimp_navigation_view_init (GimpNavigationView *view)
 {
+  /* FIXME!! */
+  GimpGuiConfig *config = GIMP_GUI_CONFIG (the_gimp->config);
+
   GtkWidget *abox;
   GtkWidget *frame;
 
@@ -163,14 +168,14 @@ gimp_navigation_view_init (GimpNavigationView *view)
   gtk_widget_show (abox);
 
   gtk_widget_set_size_request (abox,
-                               gimprc.nav_preview_size,
-                               gimprc.nav_preview_size);
+                               config->nav_preview_size,
+                               config->nav_preview_size);
 
   g_signal_connect (G_OBJECT (abox), "size_allocate",
                     G_CALLBACK (gimp_navigation_view_abox_resized),
                     view);
 
-  view->preview = gimp_navigation_preview_new (NULL, gimprc.nav_preview_size);
+  view->preview = gimp_navigation_preview_new (NULL, config->nav_preview_size);
   gtk_container_add (GTK_CONTAINER (abox), view->preview);
   gtk_widget_show (view->preview);
 

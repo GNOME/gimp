@@ -22,6 +22,9 @@
 
 #include "display-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "gimpdisplay.h"
@@ -56,6 +59,9 @@ gimp_display_connect (GimpDisplay *gdisp,
   g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (gdisp->gimage == NULL);
+
+  gdisp->monitor_xres = GIMP_DISPLAY_CONFIG (gimage->gimp->config)->monitor_xres;
+  gdisp->monitor_yres = GIMP_DISPLAY_CONFIG (gimage->gimp->config)->monitor_yres;
 
   gdisp->gimage   = gimage;
   gdisp->instance = gimage->instance_count;

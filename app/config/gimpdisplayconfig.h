@@ -34,7 +34,6 @@
 #define GIMP_IS_DISPLAY_CONFIG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DISPLAY_CONFIG))
 
 
-typedef struct _GimpDisplayConfig      GimpDisplayConfig;
 typedef struct _GimpDisplayConfigClass GimpDisplayConfigClass;
 
 struct _GimpDisplayConfig
@@ -46,6 +45,7 @@ struct _GimpDisplayConfig
   gboolean             resize_windows_on_zoom;
   gboolean             resize_windows_on_resize;
   gboolean             default_dot_for_dot;
+  gboolean             perfect_mouse;
   GimpCursorMode       cursor_mode;
   gboolean             cursor_updating;
   gchar               *image_title_format;

@@ -26,9 +26,10 @@
 
 #include "paint-funcs/paint-funcs.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gimp.h"
 #include "gimpbuffer.h"
-#include "gimpcoreconfig.h"
 #include "gimpdrawable.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"

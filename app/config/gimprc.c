@@ -36,6 +36,8 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpbase.h"
 
+#include "config-types.h"
+
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-params.h"
@@ -246,6 +248,41 @@ gimp_rc_query (GimpRc      *rc,
   g_free (property_specs);
 
   return retval;
+}
+
+void
+gimp_rc_load (GimpRc *gimprc)
+{
+  gchar  *filename;
+  GError *error = NULL;
+
+  g_return_if_fail (GIMP_IS_RC (gimprc));
+
+  filename = g_build_filename (gimp_sysconf_directory (), "gimprc", NULL);
+
+  g_printerr ("parsing '%s' ... \n", filename);
+  if (!gimp_config_deserialize (G_OBJECT (gimprc), filename, NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+	g_message (error->message);
+      
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
+
+  filename = gimp_personal_rc_file ("gimprc");
+
+  g_printerr ("parsing '%s' ... \n", filename);
+  if (!gimp_config_deserialize (G_OBJECT (gimprc), filename, NULL, &error))
+    {
+      if (error->code != GIMP_CONFIG_ERROR_OPEN_ENOENT)
+	g_message (error->message);
+      
+      g_clear_error (&error);
+    }
+
+  g_free (filename);
 }
 
 /**

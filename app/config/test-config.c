@@ -29,8 +29,7 @@
 #include "libgimpbase/gimplimits.h"
 #include "libgimpbase/gimpbasetypes.h"
 
-#include "base/base-enums.h"
-#include "core/core-enums.h"
+#include "config-types.h"
 
 #include "gimpconfig.h"
 #include "gimpconfig-serialize.h"

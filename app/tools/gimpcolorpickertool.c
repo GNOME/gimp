@@ -50,8 +50,6 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
-#include "gimprc.h"
-
 #include "libgimp/gimpintl.h"
 
 

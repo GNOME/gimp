@@ -20,7 +20,7 @@
 #define __TIPS_DIALOG_H__
 
 
-GtkWidget * tips_dialog_create (void);
+GtkWidget * tips_dialog_create (Gimp *gimp);
 
 
 #endif /* __TIPS_DIALOG_H__ */

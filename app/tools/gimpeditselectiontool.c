@@ -47,7 +47,6 @@
 #include "gimpdrawtool.h"
 #include "tool_manager.h"
 
-#include "gimprc.h"
 #include "path_transform.h"
 #include "undo.h"
 

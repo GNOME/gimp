@@ -35,15 +35,19 @@
  
 #include "base-types.h"
 
+#include "config/gimpbaseconfig.h"
+
 #include "paint-funcs/paint-funcs.h"
 
 #include "base.h"
-#include "base-config.h"
 #include "detect-mmx.h"
 #include "temp-buf.h"
 #include "tile-swap.h"
 
 #include "appenv.h"
+
+
+GimpBaseConfig *base_config = NULL;
 
 
 static void   toast_old_temp_files (void);
@@ -52,10 +56,15 @@ static void   toast_old_temp_files (void);
 /*  public functions  */
 
 void
-base_init (void)
+base_init (GimpBaseConfig *config)
 {
   gchar *swapfile;
   gchar *path;
+
+  g_return_if_fail (GIMP_IS_BASE_CONFIG (config));
+  g_return_if_fail (base_config == NULL);
+
+  base_config = config;
 
 #ifdef ENABLE_MMX
 #ifdef HAVE_ASM_MMX
@@ -66,9 +75,9 @@ base_init (void)
 
   toast_old_temp_files ();
 
-  /* Add the swap file  */
-  if (base_config->swap_path == NULL)
-    base_config->swap_path = g_strdup (g_get_tmp_dir ());
+  /* Add the swap file */
+  if (!base_config->swap_path)
+    g_object_set (G_OBJECT (base_config), "swap_path", g_get_tmp_dir ());
 
   swapfile = g_strdup_printf ("gimpswap.%lu", (unsigned long) getpid ());
 
@@ -89,6 +98,8 @@ base_exit (void)
   swapping_free ();
   paint_funcs_free ();
   tile_swap_exit ();
+
+  base_config = NULL;
 }
 
 

@@ -30,6 +30,9 @@
 
 #include "tools-types.h"
 
+#include "config/gimpdisplayconfig.h"
+
+#include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
 #include "core/gimpimage-text.h"
@@ -47,7 +50,6 @@
 #include "gimptexttool.h"
 #include "tool_options.h"
 
-#include "gimprc.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -208,9 +210,6 @@ gimp_text_tool_init (GimpTextTool *text_tool)
 {
   GimpTool *tool = GIMP_TOOL (text_tool);
  
-  text_tool->pango_context = pango_ft2_get_context (gimprc.monitor_xres,
-                                                    gimprc.monitor_yres);
-
   text_tool->buffer = gtk_text_buffer_new (NULL);
   gtk_text_buffer_set_text (text_tool->buffer, "Eeek, it's The GIMP", -1);
 
@@ -223,11 +222,6 @@ gimp_text_tool_finalize (GObject *object)
 {
   GimpTextTool *text_tool = GIMP_TEXT_TOOL (object);
 
-  if (text_tool->pango_context)
-    {
-      g_object_unref (text_tool->pango_context);
-      text_tool->pango_context = NULL;
-    }
   if (text_tool->buffer)
     {
       g_object_unref (text_tool->buffer);
@@ -398,13 +392,14 @@ text_tool_render (GimpTextTool *text_tool)
 static GimpToolOptions *
 text_tool_options_new (GimpToolInfo *tool_info)
 {
-  TextOptions  *options;
-  PangoContext *pango_context;
-  GtkWidget    *vbox;
-  GtkWidget    *table;
-  GtkWidget    *size_spinbutton;
-  GtkWidget    *border_spinbutton;
-  GtkWidget    *spin_button;
+  GimpDisplayConfig *config;
+  TextOptions       *options;
+  PangoContext      *pango_context;
+  GtkWidget         *vbox;
+  GtkWidget         *table;
+  GtkWidget         *size_spinbutton;
+  GtkWidget         *border_spinbutton;
+  GtkWidget         *spin_button;
 
   options = g_new0 (TextOptions, 1);
 
@@ -429,8 +424,9 @@ text_tool_options_new (GimpToolInfo *tool_info)
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (table), FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  pango_context = pango_ft2_get_context (gimprc.monitor_xres,
-                                         gimprc.monitor_yres);
+  config = GIMP_DISPLAY_CONFIG (tool_info->gimp->config);
+
+  pango_context = pango_ft2_get_context (config->monitor_xres, config->monitor_yres);
 
   options->font_selection = gimp_font_selection_new (pango_context);
 

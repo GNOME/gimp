@@ -25,8 +25,9 @@
 
 #include "tools-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "core/gimp.h"
-#include "core/gimpcoreconfig.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpenummenu.h"
@@ -36,8 +37,6 @@
 #include "gimptransformtool.h"
 #include "transform_options.h"
 #include "tool_manager.h"
-
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 

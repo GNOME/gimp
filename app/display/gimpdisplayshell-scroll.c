@@ -36,8 +36,6 @@
 #include "gimpdisplayshell-scale.h"
 #include "gimpdisplayshell-scroll.h"
 
-#include "gimprc.h"
-
 
 gboolean
 gimp_display_shell_scroll (GimpDisplayShell *shell,
