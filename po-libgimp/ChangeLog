@@ -1,3 +1,7 @@
+2005-02-08  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added new files for GimpColorConfig.
+
 2005-02-06  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.

@@ -14,6 +14,8 @@ libgimpbase/gimpbaseenums.c
 libgimpbase/gimpmemsize.c
 libgimpbase/gimputils.c
 
+libgimpconfig/gimpcolorconfig.c
+libgimpconfig/gimpcolorconfig-enums.c
 libgimpconfig/gimpconfig-deserialize.c
 libgimpconfig/gimpconfig-iface.c
 libgimpconfig/gimpconfig-path.c
