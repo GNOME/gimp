@@ -199,7 +199,7 @@ array_prin1 (LISP ptr, struct gen_printio *f)
               i = 0;
             }
         }
-      if (i % TKBUFFERN)
+      if (i)
         gput_st (f, tkbuffer);
       gput_st (f, "\"");
       break;
