@@ -1,12 +1,11 @@
-# Translation of gimp-libgimp to Croatian
-# Copyright (C) Croatian team
-# Translators: Automatski Prijevod <>,
+# Translation of gimp-libgimp to Croatiann
+# Copyright (C) Croatiann team
+# Translators: Automatski Prijevod <>,Denis Lackovic <delacko@fly.srk.fer.hr>,Diana Ćorluka <dina@iskrameco.hr>,Nikola Planinac <>,pr pr <delacko@192.168.0.1>,Robert Sedak <robert.sedak@sk.tel.hr>,
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 0\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-04 02:49+0100\n"
-"PO-Revision-Date: 2003-11-10 16:50+CET\n"
+"POT-Creation-Date: 2004-02-01 16:57+0100\n"
+"PO-Revision-Date: 2004-02-05 23:46+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
 "MIME-Version: 1.0\n"
@@ -20,7 +19,7 @@ msgstr "Odabir Kista"
 
 #: libgimp/gimpbrushmenu.c:161 libgimp/gimppatternmenu.c:144
 msgid "_Browse..."
-msgstr ""
+msgstr "_Pretraži..."
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:251
 #, fuzzy, c-format
@@ -61,7 +60,7 @@ msgstr "ne mogu obrađivati slojeve"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr ""
+msgstr "Primijeni maske slojeva"
 
 #: libgimp/gimpexport.c:278
 #, fuzzy, c-format
@@ -84,7 +83,7 @@ msgstr "Konverzija u Skalu Sive"
 #: libgimp/gimpexport.c:296
 #, fuzzy, c-format
 msgid "%s can only handle indexed images"
-msgstr "mogu obrađivati samo indeksiranie slike"
+msgstr "%s može obrađivati samo indeksirane slike"
 
 #: libgimp/gimpexport.c:297 libgimp/gimpexport.c:326 libgimp/gimpexport.c:336
 msgid ""
@@ -100,13 +99,12 @@ msgid "%s can only handle bitmap (two color) indexed images"
 msgstr "mogu raditi samo s RGB i indeksiranim slikama"
 
 #: libgimp/gimpexport.c:307
-#, fuzzy
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"Konvertiraj u Indeksirano koristeći standardne\n"
-"postavke.(Najbolje je ručno podešavanje)"
+"Pretvorite u indeksirane koristeći uobičajene postavke\n"
+"(Napravite to ručno da namještavanje rezultata)"
 
 #: libgimp/gimpexport.c:316
 #, fuzzy, c-format
@@ -145,14 +143,12 @@ msgid "Export File"
 msgstr "Izvezi Datoteku"
 
 #: libgimp/gimpexport.c:461
-#, fuzzy
 msgid "_Ignore"
-msgstr "Zanemari"
+msgstr "_Zanemari"
 
 #: libgimp/gimpexport.c:463
-#, fuzzy
 msgid "_Export"
-msgstr "Izvoz"
+msgstr "_Izvoz"
 
 #. the headline
 #: libgimp/gimpexport.c:485
@@ -167,22 +163,24 @@ msgid "The export conversion won't modify your original image."
 msgstr "Izvozna konverzija neće modificirati originalnu sliku."
 
 #: libgimp/gimpexport.c:665
-#, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Vi ste pred spremanjem sloja maske kao %s.\n"
+"Ovo neće sačuvati vidljive slojeve"
 
 #: libgimp/gimpexport.c:671
-#, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
+"Vi ste pred spremanjem kanala kao (označeno spremljeno) kao %s.\n"
+"Ovo neće sačuvati vidljive slojeve."
 
 #: libgimp/gimpfontmenu.c:89
 msgid "Font Selection"
-msgstr "Izbor pisma"
+msgstr "Odabir pisma"
 
 #: libgimp/gimpgradientmenu.c:103
 msgid "Gradient Selection"
@@ -202,7 +200,7 @@ msgstr "posto"
 
 #: libgimpbase/gimputils.c:161 libgimpbase/gimputils.c:166
 msgid "(invalid UTF-8 string)"
-msgstr ""
+msgstr "(neispravan UTF-8 string)"
 
 #: libgimpbase/gimputils.c:244
 #, fuzzy, c-format
@@ -255,9 +253,8 @@ msgid "%d GB"
 msgstr "%d KB"
 
 #: libgimpmodule/gimpmodule.c:177
-#, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "Učitavam modul: „%s“\n"
 
 #: libgimpmodule/gimpmodule.c:194 libgimpmodule/gimpmodule.c:213
 #: libgimpmodule/gimpmodule.c:328 libgimpmodule/gimpmodule.c:356
@@ -267,13 +264,12 @@ msgid "Module '%s' load error: %s"
 msgstr "pogreška kod učit. modula: %s: %s"
 
 #: libgimpmodule/gimpmodule.c:283
-#, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "Preskačem modul: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:424
 msgid "Module error"
-msgstr ""
+msgstr "Greška modula"
 
 #: libgimpmodule/gimpmodule.c:425
 msgid "Loaded"
@@ -285,31 +281,28 @@ msgstr "Pogreška kod učitavanja"
 
 #: libgimpmodule/gimpmodule.c:427
 msgid "Not loaded"
-msgstr ""
+msgstr "Nije učitano"
 
 #: libgimpthumb/gimpthumb-utils.c:195
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr ""
+msgstr "Ne mogu stvoriti mapu sličica '%s'."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
-#, fuzzy
 msgid "/_Foreground Color"
-msgstr "/Uzmi Boju Prednjeg Plana"
+msgstr "_/Uzmi Boju Prednjeg Plana"
 
 #: libgimpwidgets/gimpcolorbutton.c:95
-#, fuzzy
 msgid "/_Background Color"
-msgstr "/Uzmi Boju Pozadine"
+msgstr "_/Boja Pozadine"
 
 #: libgimpwidgets/gimpcolorbutton.c:98
-#, fuzzy
 msgid "/Blac_k"
 msgstr "Crna"
 
 #: libgimpwidgets/gimpcolorbutton.c:100
 msgid "/_White"
-msgstr ""
+msgstr "/B_ijela"
 
 #: libgimpwidgets/gimpcolorscales.c:142
 msgid "Scales"
@@ -374,7 +367,7 @@ msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:254
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "Heksadecimalno naznačivanje boje koje se koristi u HTML-u"
 
 #: libgimpwidgets/gimpcolorscales.c:268
 msgid "He_x Triplet:"
@@ -382,11 +375,11 @@ msgstr "Hex Trio:"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
-msgstr ""
+msgstr "Trenutno:"
 
 #: libgimpwidgets/gimpcolorselection.c:225
 msgid "Old:"
-msgstr ""
+msgstr "Miješalica:"
 
 #: libgimpwidgets/gimpfileentry.c:361
 msgid "Select Folder"
@@ -405,9 +398,8 @@ msgid "MegaBytes"
 msgstr "Megabajta"
 
 #: libgimpwidgets/gimpmemsizeentry.c:236
-#, fuzzy
 msgid "GigaBytes"
-msgstr "Megabajta"
+msgstr "gigabajta"
 
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
@@ -451,11 +443,11 @@ msgstr "Vidljivo"
 
 #: libgimpwidgets/gimpstock.c:168
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Razmak između slova"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Razmak između redaka"
 
 #: libgimpwidgets/gimpstock.c:184
 msgid "_Resize"
@@ -498,53 +490,49 @@ msgid "Factor"
 msgstr "Faktor"
 
 #: libgimpwidgets/gimpwidgets.c:1271
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Ako dugme\"Vrijeme\" nije stisnuto koristi ovu vrijednost za slučajnibroj."
-"Stvoreni generator dozvoljava ponavljanje ove \"slučajne\" operacije"
+"Upotrebite ovu vrijednost za sjeme slučajno generiranog broja -- ovo će vam "
+"omogućiti ponavljanje date  slučajne operacije"
+""
 
 #: libgimpwidgets/gimpwidgets.c:1275
 msgid "_New Seed"
 msgstr ""
 
 #: libgimpwidgets/gimpwidgets.c:1288
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Napravi generator slučajnih brojeva iz trenutnog vremena(sat) - ovo jamči "
-"sigurnu slučajnost"
+msgstr "Sjeme slučajno generiranog broja sa slučajno generiranim brojem"
 
 #: libgimpwidgets/gimpwidgets.c:1292
-#, fuzzy
 msgid "Randomize"
-msgstr "Nasumično"
+msgstr ""
 
 #: modules/cdisplay_colorblind.c:124
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Filter oponašanja oskudnosti boja (Brettel-Vienot-Mollon algoritam)"
 
 #: modules/cdisplay_colorblind.c:190
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Pogled oskudnih boja"
 
 #: modules/cdisplay_colorblind.c:464
 msgid "Color _Deficiency Type:"
-msgstr ""
+msgstr "Vrsta _oskudnosti boje:"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Protanopia (neosjetljivost na crveno)"
 
 #: modules/cdisplay_colorblind.c:476
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopia (neosjetljivost na zeleno)"
 
 #: modules/cdisplay_colorblind.c:479
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Tiranopia (neosjetljivost na plavo)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
@@ -555,9 +543,8 @@ msgid "Gamma"
 msgstr "Gama"
 
 #: modules/cdisplay_gamma.c:311
-#, fuzzy
 msgid "_Gamma:"
-msgstr "Gama:"
+msgstr "_Gama:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
@@ -568,49 +555,48 @@ msgid "Contrast"
 msgstr "Kontrast"
 
 #: modules/cdisplay_highcontrast.c:308
-#, fuzzy
 msgid "Contrast C_ycles:"
-msgstr "Kontrastni Ciklusi:"
+msgstr "_Kontrastni Ciklusi:"
 
 #: modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr ""
+msgstr "Filter probe u boji koji koristi ICC profil boja"
 
 #: modules/cdisplay_proof.c:166
 msgid "Color Proof"
-msgstr ""
+msgstr "Proba boja"
 
 #: modules/cdisplay_proof.c:319
 msgid "Perceptual"
-msgstr ""
+msgstr "Osjetilno"
 
 #: modules/cdisplay_proof.c:321
 msgid "Relative Colorimetric"
-msgstr ""
+msgstr "Relativno kolorimetrijski"
 
 #: modules/cdisplay_proof.c:325
 msgid "Absolute Colorimetric"
-msgstr ""
+msgstr "Apsolutno kolorimetrijski"
 
 #: modules/cdisplay_proof.c:331
 msgid "_Intent:"
-msgstr ""
+msgstr "_Namjera:"
 
 #: modules/cdisplay_proof.c:334
 msgid "Choose an ICC Color Profile"
-msgstr ""
+msgstr "Odaberite ICC profil boja"
 
 #: modules/cdisplay_proof.c:337
 msgid "_Profile:"
-msgstr ""
+msgstr "_Profil:"
 
 #: modules/cdisplay_proof.c:345
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "Zamijena za _crnu točku"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr ""
+msgstr "Odabir CMYK boje"
 
 #: modules/colorsel_cmyk.c:132
 msgid "CMYK"
@@ -650,11 +636,11 @@ msgstr "Crna"
 
 #: modules/colorsel_cmyk.c:193
 msgid "Black Pullout (%):"
-msgstr ""
+msgstr "Izvlačenje crne (%):"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Odabir boje u stilu slikarskog trokuta"
 
 #: modules/colorsel_triangle.c:182
 msgid "Triangle"
@@ -662,7 +648,7 @@ msgstr "Trokut"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Odabir boje u stilu vodene boje"
 
 #: modules/colorsel_water.c:176
 msgid "Watercolor"
@@ -672,8 +658,3 @@ msgstr "Vodena boja"
 msgid "Pressure"
 msgstr "Pritisak"
 
-#~ msgid "Preview"
-#~ msgstr "Pregled"
-
-#~ msgid "Parameter Settings"
-#~ msgstr "Odredi Osobitosti"
