@@ -273,16 +273,12 @@ static void
 gimp_data_editor_save_clicked (GtkWidget      *widget,
                                GimpDataEditor *editor)
 {
-  /* TODO */
-
-  g_print ("Save clicked\n");
+  g_print ("TODO: implement save\n");
 }
 
 static void
 gimp_data_editor_revert_clicked (GtkWidget      *widget,
                                  GimpDataEditor *editor)
 {
-  /* TODO */
-
-  g_print ("Revert clicked\n");
+  g_print ("TODO: implement revert\n");
 }

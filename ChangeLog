@@ -1,5 +1,11 @@
 2002-11-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpimageview.c: changed some debugging output to
+	say "TODO: ...".
+
+2002-11-01  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolorscale.[ch]: improved preformance by
 	rendering the buffer only when needed for an expose instead of
 	after each color/channel change.
