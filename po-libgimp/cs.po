@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-27 11:11+0200\n"
+"POT-Creation-Date: 2004-10-31 23:17+0100\n"
 "PO-Revision-Date: 2004-10-27 13:42+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
@@ -197,6 +197,11 @@ msgstr "Výběr přechodu"
 #: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
 msgid "(Empty)"
 msgstr "(Prázdné)"
+
+#: libgimp/gimppalettemenu.c:91
+#, fuzzy
+msgid "Palette Selection"
+msgstr "Výběr vzorku"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -473,15 +478,18 @@ msgid "Select File"
 msgstr "Výběr souboru"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-msgid "KiloBytes"
+#, fuzzy
+msgid "Kilobytes"
 msgstr "kilobajtů"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-msgid "MegaBytes"
+#, fuzzy
+msgid "Megabytes"
 msgstr "megabajtů"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-msgid "GigaBytes"
+#, fuzzy
+msgid "Gigabytes"
 msgstr "gigabajtů"
 
 #: libgimpwidgets/gimppatheditor.c:243

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-24 22:03+0200\n"
+"POT-Creation-Date: 2004-10-31 23:20+0100\n"
 "PO-Revision-Date: 2004-10-24 22:34+0200\n"
 "Last-Translator: Francisco Javier F. Serrador <serrador@cvs.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -44,7 +44,8 @@ msgstr "_Examinar..."
 
 #: plug-ins/script-fu/script-fu-console.c:548
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
+msgstr ""
+"El modo de evaluación de Script-Fu sólo permite invocación no interactiva"
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
 #: plug-ins/script-fu/script-fu-interface.c:191
@@ -69,63 +70,63 @@ msgstr "Argumentos del guión"
 msgid "%s:"
 msgstr "%s: "
 
-#: plug-ins/script-fu/script-fu-interface.c:320
+#: plug-ins/script-fu/script-fu-interface.c:318
 msgid "Script-Fu Color Selection"
 msgstr "Selección de color de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:424
 msgid "Script-Fu File Selection"
 msgstr "Selección de archivos de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:430
+#: plug-ins/script-fu/script-fu-interface.c:428
 msgid "Script-Fu Folder Selection"
 msgstr "Selección de carpetas de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:442
+#: plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Font Selection"
 msgstr "Selección de tipografía de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:449
+#: plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Palette Selection"
 msgstr "Selección de paleta de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:457
+#: plug-ins/script-fu/script-fu-interface.c:455
 msgid "Script-fu Pattern Selection"
 msgstr "Selección de patrón de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:464
+#: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Gradient Selection"
 msgstr "Selección de degradado de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:472
+#: plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Brush Selection"
 msgstr "Selección de brocha de Script-Fu"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:531
+#: plug-ins/script-fu/script-fu-interface.c:529
 msgid "Script Progress"
 msgstr "Progreso del script"
 
-#: plug-ins/script-fu/script-fu-interface.c:539
+#: plug-ins/script-fu/script-fu-interface.c:537
 msgid "(none)"
 msgstr "(ninguno)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/script-fu/script-fu-interface.c:1057
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/script-fu/script-fu-interface.c:1064
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/script-fu/script-fu-interface.c:1071
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Fecha:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1082
+#: plug-ins/script-fu/script-fu-interface.c:1080
 msgid "Image Types:"
 msgstr "Tipos de imagen:"
 
@@ -152,19 +153,19 @@ msgstr "Puerto del servidor:"
 msgid "Server Logfile:"
 msgstr "Archivo de registro del servidor: "
 
-#: plug-ins/script-fu/script-fu.c:123
+#: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
 msgstr "_Consola Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Exts/Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr "_Iniciar servidor..."
 
-#: plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:282
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Exts/Script-Fu/_Refrescar los scripts"
 
@@ -199,12 +200,17 @@ msgstr "Buscando por propaganda - aguarde"
 msgid "Searching - please wait"
 msgstr "Buscar  aguarde"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#: plug-ins/dbbrowser/gimpprocbrowser.c:425
+#, fuzzy
+msgid "1 Procedure"
+msgstr "%d procedimientos"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
 msgid "%d Procedures"
 msgstr "%d procedimientos"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:467
+#: plug-ins/dbbrowser/gimpprocbrowser.c:471
 msgid "No matches"
 msgstr "No hay coincidencias"
 
@@ -525,7 +531,9 @@ msgstr "Valor delta en el color"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/"
+"_Flecha..."
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -581,7 +589,9 @@ msgstr "Arriba"
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/Barra _Hor..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/Barra "
+"_Hor..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
 msgid "Bar height"
@@ -593,7 +603,9 @@ msgstr "Longitud de la barra"
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/"
+"_Bolita..."
 
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -603,7 +615,8 @@ msgstr "Radio"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Resplandor alienígena/B_otón..."
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 msgid "Glow radius"
@@ -744,11 +757,13 @@ msgstr "Color superior-izquierdo"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Arrow..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Flecha..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/_Bolita..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -756,15 +771,18 @@ msgstr "Diámetro"
 
 #: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/B_otón..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/E_ncabezado..."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de Páginas Web/Patrón biselado/Barra _Hor...."
 
 #: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -1427,12 +1445,18 @@ msgid "Shadow weight (%)"
 msgstr "Peso de la sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera _grande..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera "
+"_grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera _pequeña..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+msgstr ""
+"<Toolbox>/Exts/Script-Fu/Temas de páginas Web/Classic.Gimp.Org/Cabecera "
+"_pequeña..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Autocrop"
@@ -2613,4 +2637,3 @@ msgstr "Opacidad del brillo"
 
 #~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 #~ msgstr "<Toolbox>/Exts/Script-Fu/Iniciar el _servidor..."
-

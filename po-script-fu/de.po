@@ -11,13 +11,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-25 16:22+0200\n"
+"POT-Creation-Date: 2004-10-31 23:20+0100\n"
 "PO-Revision-Date: 2004-10-25 16:25+0200\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -67,63 +67,63 @@ msgstr "Skript-Argumente"
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:320
+#: plug-ins/script-fu/script-fu-interface.c:318
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:424
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu Dateiauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:430
+#: plug-ins/script-fu/script-fu-interface.c:428
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu Verzeichnisauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:442
+#: plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:449
+#: plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-Fu Palettenauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:457
+#: plug-ins/script-fu/script-fu-interface.c:455
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:464
+#: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu Farbverlaufsauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:472
+#: plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:531
+#: plug-ins/script-fu/script-fu-interface.c:529
 msgid "Script Progress"
 msgstr "Skript-Fortschritt"
 
-#: plug-ins/script-fu/script-fu-interface.c:539
+#: plug-ins/script-fu/script-fu-interface.c:537
 msgid "(none)"
 msgstr "(kein)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/script-fu/script-fu-interface.c:1057
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/script-fu/script-fu-interface.c:1064
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/script-fu/script-fu-interface.c:1071
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1082
+#: plug-ins/script-fu/script-fu-interface.c:1080
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
@@ -150,19 +150,19 @@ msgstr "Server Port:"
 msgid "Server Logfile:"
 msgstr "Server Logdatei:"
 
-#: plug-ins/script-fu/script-fu.c:123
+#: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
 msgstr "Skript-Fu _Konsole"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Skript-Fu"
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr "_Server starten..."
 
-#: plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:282
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Skript-Fu/_Auffrischen"
 
@@ -197,12 +197,17 @@ msgstr "Suche nach Beschreibung läuft - bitte warten"
 msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#: plug-ins/dbbrowser/gimpprocbrowser.c:425
+#, fuzzy
+msgid "1 Procedure"
+msgstr "%d Prozeduren"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Prozeduren"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:467
+#: plug-ins/dbbrowser/gimpprocbrowser.c:471
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -1596,7 +1601,9 @@ msgstr "<Image>/Bild/Hilfslinien/Neue Hilfslinien aus _Auswahl"
 
 #: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "Creates four Guides around the bounding box of the current selection."
-msgstr "Erzeugt vier Hilfslinien um das einschließende Rechteck der aktuellen Auswahl."
+msgstr ""
+"Erzeugt vier Hilfslinien um das einschließende Rechteck der aktuellen "
+"Auswahl."
 
 #: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "<Image>/Image/Guides/New Guide (by _Percent)..."
@@ -2465,4 +2472,3 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
-

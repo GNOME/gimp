@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-scriptfu for Gnome 2.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:05+0200\n"
+"POT-Creation-Date: 2004-10-31 23:20+0100\n"
 "PO-Revision-Date: 2002-07-20 15:36+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
@@ -63,65 +63,65 @@ msgstr "Đối số của Script"
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:320
+#: plug-ins/script-fu/script-fu-interface.c:318
 msgid "Script-Fu Color Selection"
 msgstr "Chọn Màu của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:424
 msgid "Script-Fu File Selection"
 msgstr "Chọn Tập Tin của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:430
+#: plug-ins/script-fu/script-fu-interface.c:428
 msgid "Script-Fu Folder Selection"
 msgstr "Chọn Thư Mục của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:442
+#: plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Font Selection"
 msgstr "Chọn Phông của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:449
+#: plug-ins/script-fu/script-fu-interface.c:447
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Chọn Mẫu của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:457
+#: plug-ins/script-fu/script-fu-interface.c:455
 msgid "Script-fu Pattern Selection"
 msgstr "Chọn Mẫu của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:464
+#: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Gradient Selection"
 msgstr "Chọn Độ Dốc của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-interface.c:472
+#: plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Brush Selection"
 msgstr "Chọn Bút Vẽ của Script-Fu"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:531
+#: plug-ins/script-fu/script-fu-interface.c:529
 #, fuzzy
 msgid "Script Progress"
 msgstr "Đối số của Script"
 
-#: plug-ins/script-fu/script-fu-interface.c:539
+#: plug-ins/script-fu/script-fu-interface.c:537
 msgid "(none)"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/script-fu/script-fu-interface.c:1057
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Tác giả:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/script-fu/script-fu-interface.c:1064
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Bản quyền:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/script-fu/script-fu-interface.c:1071
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Ngày:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1082
+#: plug-ins/script-fu/script-fu-interface.c:1080
 msgid "Image Types:"
 msgstr "Kiểu Ảnh:"
 
@@ -148,25 +148,21 @@ msgstr "Cổng Máy Chủ:"
 msgid "Server Logfile:"
 msgstr "Logfile của Máy Chủ:"
 
-#: plug-ins/script-fu/script-fu.c:123
+#: plug-ins/script-fu/script-fu.c:122
 #, fuzzy
 msgid "Script-Fu _Console"
 msgstr "Script-Fu Console"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/Xtns/Script-Fu/Logos/Neon Lạ..."
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
-msgid "Re-read all available scripts"
-msgstr "Đọc lại toàn bộ các script đang có"
-
-#: plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:282
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Script-Fu/Làm tươi lại"
@@ -202,12 +198,16 @@ msgstr "Đang tìm theo Lời giới thiệu - hãy đợi"
 msgid "Searching - please wait"
 msgstr "Đang tìm kiếm - hãy đợi"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#: plug-ins/dbbrowser/gimpprocbrowser.c:425
+msgid "1 Procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
 msgid "%d Procedures"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:467
+#: plug-ins/dbbrowser/gimpprocbrowser.c:471
 msgid "No matches"
 msgstr "Không có kết quả"
 
@@ -2749,6 +2749,9 @@ msgstr "Màu Nổi Bật"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Màu Nổi Bật"
+
+#~ msgid "Re-read all available scripts"
+#~ msgstr "Đọc lại toàn bộ các script đang có"
 
 #, fuzzy
 #~ msgid "Relative radius"

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:04+0200\n"
+"POT-Creation-Date: 2004-10-31 23:17+0100\n"
 "PO-Revision-Date: 2003-02-28 03:15-0300\n"
 "Last-Translator: Luis Henrique Sestari Rocha <subdirect@bol.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -198,6 +198,11 @@ msgstr "Seleção de Degradê"
 msgid "(Empty)"
 msgstr ""
 
+#: libgimp/gimppalettemenu.c:91
+#, fuzzy
+msgid "Palette Selection"
+msgstr "Seleção de Textura"
+
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Seleção de Textura"
@@ -206,73 +211,73 @@ msgstr "Seleção de Textura"
 msgid "percent"
 msgstr "porcento"
 
-#: libgimpbase/gimpbaseenums.c:15
+#: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:16
+#: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:62
 #, fuzzy
 msgid "Black Only"
 msgstr "Preto"
 
-#: libgimpbase/gimpbaseenums.c:62
+#: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
+#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
 #, fuzzy
 msgid "Grayscale"
 msgstr "Converter para Escala de Cinzas"
 
-#: libgimpbase/gimpbaseenums.c:64
+#: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:84
+#: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:85
+#: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:87
+#: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:88
+#: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
 msgstr ""
 
-#: libgimpbase/gimpbaseenums.c:89
+#: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
 msgstr ""
 
@@ -366,6 +371,11 @@ msgstr "Não carregado"
 #: libgimpthumb/gimpthumb-utils.c:227 libgimpthumb/gimpthumb-utils.c:295
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
+msgstr "Falha ao criar diretório de miniaturas '%s'."
+
+#: libgimpthumb/gimpthumbnail.c:917
+#, fuzzy, c-format
+msgid "Could not create thumbnail for %s: %s"
 msgstr "Falha ao criar diretório de miniaturas '%s'."
 
 #: libgimpwidgets/gimpcolorbutton.c:93
@@ -471,15 +481,18 @@ msgid "Select File"
 msgstr "Selecionar Arquivo"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-msgid "KiloBytes"
+#, fuzzy
+msgid "Kilobytes"
 msgstr "KiloBytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-msgid "MegaBytes"
+#, fuzzy
+msgid "Megabytes"
 msgstr "MegaBytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-msgid "GigaBytes"
+#, fuzzy
+msgid "Gigabytes"
 msgstr "GigaBytes"
 
 #: libgimpwidgets/gimppatheditor.c:243
@@ -542,6 +555,10 @@ msgstr "_Restaurar"
 #: libgimpwidgets/gimpstock.c:120
 msgid "Visible"
 msgstr "Visível"
+
+#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+msgid "_Stroke"
+msgstr ""
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"

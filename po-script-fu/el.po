@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:05+0200\n"
+"POT-Creation-Date: 2004-10-31 23:20+0100\n"
 "PO-Revision-Date: 2001-12-27 17:09+0000\n"
 "Last-Translator: Simos Xenitellis <simos@hellug.gr>\n"
 "Language-Team: Greek <nls@tux.hellug.gr>\n"
@@ -70,76 +70,76 @@ msgid "%s:"
 msgstr "%s:"
 
 #
-#: plug-ins/script-fu/script-fu-interface.c:320
+#: plug-ins/script-fu/script-fu-interface.c:318
 #, fuzzy
 msgid "Script-Fu Color Selection"
 msgstr "Επιλογή χρώματος"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:424
 #, fuzzy
 msgid "Script-Fu File Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
-#: plug-ins/script-fu/script-fu-interface.c:430
+#: plug-ins/script-fu/script-fu-interface.c:428
 #, fuzzy
 msgid "Script-Fu Folder Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #
-#: plug-ins/script-fu/script-fu-interface.c:442
+#: plug-ins/script-fu/script-fu-interface.c:440
 #, fuzzy
 msgid "Script-Fu Font Selection"
 msgstr "Επιλογή Γραμματοσειράς"
 
-#: plug-ins/script-fu/script-fu-interface.c:449
+#: plug-ins/script-fu/script-fu-interface.c:447
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-interface.c:457
+#: plug-ins/script-fu/script-fu-interface.c:455
 #, fuzzy
 msgid "Script-fu Pattern Selection"
 msgstr "Επιλογή Προφύλαξης Οθόνης"
 
-#: plug-ins/script-fu/script-fu-interface.c:464
+#: plug-ins/script-fu/script-fu-interface.c:462
 #, fuzzy
 msgid "Script-Fu Gradient Selection"
 msgstr "Κλάδεμα της τρέχουσας επιλογής"
 
-#: plug-ins/script-fu/script-fu-interface.c:472
+#: plug-ins/script-fu/script-fu-interface.c:470
 #, fuzzy
 msgid "Script-Fu Brush Selection"
 msgstr "Κλάδεμα Επιλεγμένου"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:531
+#: plug-ins/script-fu/script-fu-interface.c:529
 #, fuzzy
 msgid "Script Progress"
 msgstr "Ορίσματα"
 
-#: plug-ins/script-fu/script-fu-interface.c:539
+#: plug-ins/script-fu/script-fu-interface.c:537
 msgid "(none)"
 msgstr ""
 
 #
-#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/script-fu/script-fu-interface.c:1057
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Συγγραφέας:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/script-fu/script-fu-interface.c:1064
 #: plug-ins/dbbrowser/gimpprocview.c:220
 #, fuzzy
 msgid "Copyright:"
 msgstr "Πνευματικά Δικαιώματα"
 
 #
-#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/script-fu/script-fu-interface.c:1071
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Ημ/νία:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1082
+#: plug-ins/script-fu/script-fu-interface.c:1080
 #, fuzzy
 msgid "Image Types:"
 msgstr "Τύπος Στοιχείου:"
@@ -170,26 +170,21 @@ msgstr "Εξυπηρετητής:"
 msgid "Server Logfile:"
 msgstr "Αποθήκευση Αρχείου Καταγραφών"
 
-#: plug-ins/script-fu/script-fu.c:123
+#: plug-ins/script-fu/script-fu.c:122
 #, fuzzy
 msgid "Script-Fu _Console"
 msgstr "Κονσόλα Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "Κονσόλα Script-Fu"
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
-#, fuzzy
-msgid "Re-read all available scripts"
-msgstr "εμφάνιση λίστας με διαθέσιμους αγωγούς"
-
-#: plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:282
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "Κονσόλα Script-Fu"
@@ -228,12 +223,16 @@ msgstr ""
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#: plug-ins/dbbrowser/gimpprocbrowser.c:425
+msgid "1 Procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
 msgid "%d Procedures"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:467
+#: plug-ins/dbbrowser/gimpprocbrowser.c:471
 msgid "No matches"
 msgstr ""
 
@@ -2907,6 +2906,10 @@ msgstr "Επιλεγμένο"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "Τονισμένη ημέρα:"
+
+#, fuzzy
+#~ msgid "Re-read all available scripts"
+#~ msgstr "εμφάνιση λίστας με διαθέσιμους αγωγούς"
 
 #, fuzzy
 #~ msgid "Relative radius"

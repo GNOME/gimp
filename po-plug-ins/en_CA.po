@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 15:10-0500\n"
+"POT-Creation-Date: 2004-11-01 00:49+0100\n"
 "PO-Revision-Date: 2004-10-31 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -4887,6 +4887,8 @@ msgstr "_Angle:"
 msgid "Blur Center"
 msgstr "Blur Centre"
 
+#. Inform the user that we couldn't losslessly save the
+#. * transparency & just use the full palette
 #: plug-ins/common/mng.c:494 plug-ins/common/png.c:1562
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
@@ -7938,6 +7940,7 @@ msgstr ""
 "'%s':\n"
 "No image data type specified"
 
+#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:960
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9603,6 +9606,7 @@ msgstr ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
 
+#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/utils.c:135
 #, c-format
 msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-23 13:58+0200\n"
+"POT-Creation-Date: 2004-10-31 21:51+0100\n"
 "PO-Revision-Date: 2004-05-17 01:22+0100\n"
 "Last-Translator: Xavier Beà <xbea@pie.xtec.es>\n"
 "Language-Team: Softcatala <tradgnome@softcatala.org>\n"
@@ -61,11 +61,12 @@ msgstr ""
 "mostrar-les totes."
 
 #: tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the \"New Layer\" "
-"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
-"the same."
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
 msgstr ""
 "Una selecció flotant ha de ser ancorada en una nova capa o a l'última capa "
 "activa abans de fer altres operacions en la imatge. Cliqueu als botons "
@@ -73,11 +74,13 @@ msgstr ""
 "per fer el mateix."
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
 msgid ""
-"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
-"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP."
 msgstr ""
 "Després d'activar \"Dreceres de teclat dinàmiques\" en el diàleg "
 "preferències podeu reassignar tecles de dreceres. Fareu això si , dins dels "
@@ -96,11 +99,12 @@ msgstr ""
 "guies arrossegant-les fora de la imatge amb l'eina mou."
 
 #: tips/gimp-tips.xml.in.h:10
+#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
-"&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
+"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "Si algunes de les fotos escanejades no tenen prou color, podeu millorar "
 "fàcilment el seu to amb el botó \"Automàtic\" en l'eina nivells (Capes-&gt;"
@@ -186,28 +190,19 @@ msgstr ""
 "per veure una composició del seu contingut."
 
 #: tips/gimp-tips.xml.in.h:19
+#, fuzzy
 msgid ""
-"The file selection dialog box has command-line completion with <tt>Tab</tt>, "
-"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
-"it's completed."
-msgstr ""
-"La caixa de diàleg selecció de fitxer pot completar les ordres en línia amb "
-"<tt>Tab</tt>, tal com l'intèrpret d'ordres. Teclegeu part d'un nom de "
-"fitxer, premeu <tt>Tab</tt> i es completarà."
-
-#: tips/gimp-tips.xml.in.h:20
-msgid ""
-"The layer named \"Background\" is special because it lacks transparency. "
-"This prevents you from adding a layer mask or moving the layer up in the "
-"stack. You may add transparency to it by right-clicking in the Layers dialog "
-"and selecting \"Add Alpha Channel\"."
+"The layer named &quot;Background&quot; is special because it lacks "
+"transparency. This prevents you from moving the layer up in the stack. You "
+"may add transparency to it by right-clicking in the Layers dialog and "
+"selecting &quot;Add Alpha Channel&quot;."
 msgstr ""
 "La capa anomenada \"Fons\" és especial perquè no té transparència. Això us "
 "prevé d'afegir una màscara de capa o de moure la capa en la pila. Podeu "
 "afegir-li transparència clicant amb el botó dret sobre el diàleg capes i "
 "seleccionat \"Afegeix canal alfa\"."
 
-#: tips/gimp-tips.xml.in.h:21
+#: tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -222,7 +217,7 @@ msgstr ""
 "volgueu seleccionar, situar el cursor a la intersecció de les guies, i la "
 "selecció resultant tot just tocarà les guies."
 
-#: tips/gimp-tips.xml.in.h:22
+#: tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -234,7 +229,7 @@ msgstr ""
 "dibuixat fins la posició actual del cursor. Si, a més, premeu <tt>Ctrl</tt>, "
 "forçareu la línia en angles de 15 graus."
 
-#: tips/gimp-tips.xml.in.h:23
+#: tips/gimp-tips.xml.in.h:22
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -246,7 +241,7 @@ msgstr ""
 "<tt>.xcf</tt>). Això preserva les capes i cada aspecte del vostre treball en "
 "progrés. Un cop acabat el projecte, ho podeu desar com a JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 #, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
@@ -257,7 +252,7 @@ msgstr ""
 "això fa que es mogui la finestra, el vostre gestor de finestres ja utilitza "
 "la tecla <tt>Alt</tt>. Proveu de prémer <tt>majúscules</tt> al mateix temps."
 
-#: tips/gimp-tips.xml.in.h:25
+#: tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -265,7 +260,7 @@ msgstr ""
 "Podeu ajustar el rang de selecció per a selecció difosa  clicant i "
 "arrossegant a dreta i esquerra."
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -275,7 +270,7 @@ msgstr ""
 "de camins us permet treballar en múltiples camins i convertir-los a "
 "seleccions."
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -283,7 +278,7 @@ msgstr ""
 "Podeu arrossegar una capa des del diàleg de capes i deixar-la dins la caixa "
 "d'eines. Això crearà una nova imatge amb només aquesta capa."
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -294,7 +289,7 @@ msgstr ""
 "deixeu-lo dins una imatge: omplireu la imatge o selecció actual amb aquest "
 "color."
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -304,7 +299,7 @@ msgstr ""
 "selecció. Traçareu el perfil de la selecció actual. Es poden dibuixar més "
 "formes complexes utilitzant l'eina camí o amb  Filtres-&gt;Render-&gt;Gfig."
 
-#: tips/gimp-tips.xml.in.h:30
+#: tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -313,7 +308,7 @@ msgstr ""
 "GIMP en prémer la tecla F1 en qualsevol moment. Això també funciona dins els "
 "menús."
 
-#: tips/gimp-tips.xml.in.h:31
+#: tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -321,7 +316,7 @@ msgstr ""
 "Podeu realitzar moltes operacions de capa si cliqueu amb el botó dret en "
 "l'etiqueta de text d'una capa en el diàleg capes."
 
-#: tips/gimp-tips.xml.in.h:32
+#: tips/gimp-tips.xml.in.h:31
 #, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
@@ -332,7 +327,7 @@ msgstr ""
 "feu una selecció per forçar un quadrat o cercle exacte, o tenir-la centrada "
 "en el seu punt mig."
 
-#: tips/gimp-tips.xml.in.h:33
+#: tips/gimp-tips.xml.in.h:32
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -344,7 +339,7 @@ msgstr ""
 "en el diàleg de canals: podreu commutar la visibilitat d'aquest nou canal o "
 "convertir-lo a selecció."
 
-#: tips/gimp-tips.xml.in.h:34
+#: tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -352,7 +347,7 @@ msgstr ""
 "Podeu utilitzar <tt>Alt</tt>-<tt>Tab</tt> per encerclar totes les capes en "
 "una imatge (si el vostre gestor de finestres no bloqueja aquestes tecles...)."
 
-#: tips/gimp-tips.xml.in.h:35
+#: tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -360,13 +355,23 @@ msgstr ""
 "Podeu utilitzar el botó central del ratolí per enquadrar la imatge, si "
 "aquesta és més gran que la finesta on es veu."
 
-#: tips/gimp-tips.xml.in.h:36
+#: tips/gimp-tips.xml.in.h:35
+#, fuzzy
 msgid ""
-"You can use the paint tools to change the selection. Click on the \"Quick "
-"Mask\" button at the bottom left of an image window. Change your selection "
-"by painting in the image and click on the button again to convert it back to "
-"a normal selection."
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
 msgstr "Podeu utilitzar les eines de pintura per canviar la selecció."
+
+#~ msgid ""
+#~ "The file selection dialog box has command-line completion with <tt>Tab</"
+#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
+#~ "voila, it's completed."
+#~ msgstr ""
+#~ "La caixa de diàleg selecció de fitxer pot completar les ordres en línia "
+#~ "amb <tt>Tab</tt>, tal com l'intèrpret d'ordres. Teclegeu part d'un nom de "
+#~ "fitxer, premeu <tt>Tab</tt> i es completarà."
 
 #~ msgid ""
 #~ "Nearly all image operations are performed by right-clicking on the image. "

@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp20-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-23 13:58+0200\n"
+"POT-Creation-Date: 2004-10-31 21:51+0100\n"
 "PO-Revision-Date: 2004-03-22 11:06+0100\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -80,9 +80,9 @@ msgstr ""
 #, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the \"New Layer\" "
-"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
-"the same."
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
 msgstr ""
 "Przed wykonaniem jakichkolwiek operacji na oderwanym zaznaczeniu należy je "
 "przytwierdzić do nowej lub istniejącej warstwy. Aby to uzyskać, wystarczy w "
@@ -90,11 +90,13 @@ msgstr ""
 "warstwę. Ten sam efekt można uzyskać korzystając z menu kontekstowego."
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
 msgid ""
-"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
-"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP."
 msgstr ""
 "Jeśli w preferencjach GIMP-a aktywna jest opcja \"Dynamiczne skróty "
 "klawiszowe\", wówczas program pozwala na zmienianie skrótów klawiszowych w "
@@ -118,11 +120,12 @@ msgstr ""
 "prowadnicę na linijkę."
 
 #: tips/gimp-tips.xml.in.h:10
+#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
-"&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
+"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "Jeśli zeskanowane zdjęcia wydają się niezbyt kolorowe, można poprawić ich "
 "rozpiętość tonalną korzystając z narzędzia \"Poziomy\" (\"Warstwa/Kolory/"
@@ -216,23 +219,12 @@ msgstr ""
 "złożeniem zawartości składników stosu."
 
 #: tips/gimp-tips.xml.in.h:19
+#, fuzzy
 msgid ""
-"The file selection dialog box has command-line completion with <tt>Tab</tt>, "
-"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
-"it's completed."
-msgstr ""
-"W oknie, które służy do wybierania plików przy ich otwieraniu lub "
-"zapisywaniu, możliwe jest automatycznie uzupełnianie nazw plików. Operacja "
-"ta wygląda podobnie, jak w powłoce uniksowej: wystarczy wpisać początek "
-"nazwy pliku i przycisnąć klawisz <tt>Tab</tt>, a jej pozostała część "
-"zostanie dopisana przez program."
-
-#: tips/gimp-tips.xml.in.h:20
-msgid ""
-"The layer named \"Background\" is special because it lacks transparency. "
-"This prevents you from adding a layer mask or moving the layer up in the "
-"stack. You may add transparency to it by right-clicking in the Layers dialog "
-"and selecting \"Add Alpha Channel\"."
+"The layer named &quot;Background&quot; is special because it lacks "
+"transparency. This prevents you from moving the layer up in the stack. You "
+"may add transparency to it by right-clicking in the Layers dialog and "
+"selecting &quot;Add Alpha Channel&quot;."
 msgstr ""
 "Warstwa o nazwie \"Tło\" jest wyjątkowa ze względu na brak przezroczystości. "
 "Uniemożliwia to dodanie maski kanału oraz podniesienie warstwy ponad inne na "
@@ -240,7 +232,7 @@ msgstr ""
 "kliknięcie jej podglądu (w oknie z warstwami) prawym przyciskiem i wybór "
 "polecenia \"Dodaj kanał alfa\"."
 
-#: tips/gimp-tips.xml.in.h:21
+#: tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -257,7 +249,7 @@ msgstr ""
 "powinien stykać się okrąg, a następnie kliknąć punkt ich przecięcia i "
 "ustalić promień okręgu przeciągając wskaźnik myszy."
 
-#: tips/gimp-tips.xml.in.h:22
+#: tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -272,7 +264,7 @@ msgstr ""
 "nachylenie odcinka zostanie ustalone jako wielokrotność 15 stopni."
 
 # TODO (cyba) - korekta stąd do końca
-#: tips/gimp-tips.xml.in.h:23
+#: tips/gimp-tips.xml.in.h:22
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -285,7 +277,7 @@ msgstr ""
 "możesz zapisać swoją pracę w innym (bardziej strawnym ;-) formacie np. JPEG, "
 "PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 #, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
@@ -296,7 +288,7 @@ msgstr ""
 "klawisz <tt>Alt</tt>. Jeśli to powoduje ruch okna to sprubuj użyć <tt>Shift"
 "+Alt</tt>."
 
-#: tips/gimp-tips.xml.in.h:25
+#: tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -305,7 +297,7 @@ msgstr ""
 "lewo lub prawo."
 
 # hmm synch z reszta
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -315,7 +307,7 @@ msgstr ""
 "skomplikowane zaznaczenia. Zakładka \"Ścieżki\" w oknie \"Warstwy\" pozwala "
 "pracować nad wieloma ścieżkami i konwertować je do zaznaczenia."
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -323,7 +315,7 @@ msgstr ""
 "Możesz przeciągnąć warstwę z okna \"Warstwy\" na narzędziówkę. W ten sposób "
 "stworzysz nowy obraz z zawartością tej warstwy."
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -334,7 +326,7 @@ msgstr ""
 "upuszczenie go na obrazie spowoduje wypełnienie aktywnej warstwy (lub "
 "zaznaczenia) wybranym kolorem."
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -345,7 +337,7 @@ msgstr ""
 "figury uzyskasz, wybierając z menu opcję \"Filtry -&gt; Renderowanie -&gt; "
 "Gfig\"."
 
-#: tips/gimp-tips.xml.in.h:30
+#: tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -353,7 +345,7 @@ msgstr ""
 "Na temat wielu narzędzi i efektów programu GIMP dostępna jest pomoc. "
 "Uzyskasz ją, naciskając klawisz F1. Działa to również w menu. "
 
-#: tips/gimp-tips.xml.in.h:31
+#: tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -361,7 +353,7 @@ msgstr ""
 "Wiele operacji na warstwach (np. dopasowanie, przesuwanie) możesz wykonać "
 "klikając drugim przyciskiem myszy nazwę warstwy w oknie \"Warstwy\"."
 
-#: tips/gimp-tips.xml.in.h:32
+#: tips/gimp-tips.xml.in.h:31
 #, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
@@ -372,7 +364,7 @@ msgstr ""
 "idealnego kwadratu lub koła. Klawisz <tt>Ctrl</tt> wymusi wycentrowanie "
 "zaznaczenia do początkowego punktu zaznaczenia."
 
-#: tips/gimp-tips.xml.in.h:33
+#: tips/gimp-tips.xml.in.h:32
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -383,7 +375,7 @@ msgstr ""
 "modyfikować je dowolnym narzędziem malarskim. Przyciskami w oknie \"Kanały\" "
 "możesz ustawić widoczność kanału lub przekonwertować go na zaznaczenie."
 
-#: tips/gimp-tips.xml.in.h:34
+#: tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -392,7 +384,7 @@ msgstr ""
 "klawiszy <tt>Alt</tt>-<tt>Tab</tt> (o ile nie przechwyci jej twój menedżer "
 "okien)."
 
-#: tips/gimp-tips.xml.in.h:35
+#: tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -401,18 +393,30 @@ msgstr ""
 "środkowego przycisku myszy."
 
 # TODO
-#: tips/gimp-tips.xml.in.h:36
+#: tips/gimp-tips.xml.in.h:35
+#, fuzzy
 msgid ""
-"You can use the paint tools to change the selection. Click on the \"Quick "
-"Mask\" button at the bottom left of an image window. Change your selection "
-"by painting in the image and click on the button again to convert it back to "
-"a normal selection."
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
 msgstr ""
 "Do zmiany zaznaczenia możesz używać narzędzi malowania. Kliknij przycisk "
 "\"Szybka maska\" w lewym dolnym rogu okna obrazu (małe mrowki). Od tej "
 "chwili możesz modyfikować zaznaczenie jako kolor, używając bieżącego "
 "narzędzia. Po zakończeniu modyfikacji przywróć zwykły widok, klikając jeszce "
 "raz na przycisk z \"mrówkami\"."
+
+#~ msgid ""
+#~ "The file selection dialog box has command-line completion with <tt>Tab</"
+#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
+#~ "voila, it's completed."
+#~ msgstr ""
+#~ "W oknie, które służy do wybierania plików przy ich otwieraniu lub "
+#~ "zapisywaniu, możliwe jest automatycznie uzupełnianie nazw plików. "
+#~ "Operacja ta wygląda podobnie, jak w powłoce uniksowej: wystarczy wpisać "
+#~ "początek nazwy pliku i przycisnąć klawisz <tt>Tab</tt>, a jej pozostała "
+#~ "część zostanie dopisana przez program."
 
 #~ msgid ""
 #~ "Nearly all image operations are performed by right-clicking on the image. "

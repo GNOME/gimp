@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 15:08-0500\n"
+"POT-Creation-Date: 2004-10-31 23:14+0100\n"
 "PO-Revision-Date: 2004-10-31 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -5304,6 +5304,7 @@ msgstr ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 
+#. maybe we should just abort?
 #: app/core/gimppalette.c:484
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -7016,6 +7017,8 @@ msgstr "GIMP User Installation"
 msgid "Continue"
 msgstr "Continue"
 
+#. GPL_PAGE
+#. version number
 #: app/dialogs/user-install-dialog.c:764
 #, c-format
 msgid ""

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-15 01:05+0200\n"
+"POT-Creation-Date: 2004-10-31 23:20+0100\n"
 "PO-Revision-Date: 2003-09-12 18:36+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -66,65 +66,65 @@ msgstr "スクリプト引数"
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:320
+#: plug-ins/script-fu/script-fu-interface.c:318
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 色選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:426
+#: plug-ins/script-fu/script-fu-interface.c:424
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu ファイル選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:430
+#: plug-ins/script-fu/script-fu-interface.c:428
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu フォルダ選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:442
+#: plug-ins/script-fu/script-fu-interface.c:440
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu フォント選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:449
+#: plug-ins/script-fu/script-fu-interface.c:447
 #, fuzzy
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:457
+#: plug-ins/script-fu/script-fu-interface.c:455
 msgid "Script-fu Pattern Selection"
 msgstr "Script-Fu パターン選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:464
+#: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu グラデーション選択"
 
-#: plug-ins/script-fu/script-fu-interface.c:472
+#: plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ブラシ選択"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:531
+#: plug-ins/script-fu/script-fu-interface.c:529
 #, fuzzy
 msgid "Script Progress"
 msgstr "スクリプト引数"
 
-#: plug-ins/script-fu/script-fu-interface.c:539
+#: plug-ins/script-fu/script-fu-interface.c:537
 msgid "(none)"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-interface.c:1059
+#: plug-ins/script-fu/script-fu-interface.c:1057
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "作者:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1066
+#: plug-ins/script-fu/script-fu-interface.c:1064
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "著作権表示:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1073
+#: plug-ins/script-fu/script-fu-interface.c:1071
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "日付:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1082
+#: plug-ins/script-fu/script-fu-interface.c:1080
 msgid "Image Types:"
 msgstr "画像種:"
 
@@ -151,25 +151,21 @@ msgstr "サーバポート:"
 msgid "Server Logfile:"
 msgstr "サーバログファイル:"
 
-#: plug-ins/script-fu/script-fu.c:123
+#: plug-ins/script-fu/script-fu.c:122
 #, fuzzy
 msgid "Script-Fu _Console"
 msgstr "Script-Fu コンソール"
 
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:159
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu"
 msgstr "<Toolbox>/拡張/Script-Fu/ロゴ/ネオン(_E)..."
 
-#: plug-ins/script-fu/script-fu.c:152
+#: plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:278 plug-ins/script-fu/script-fu.c:279
-msgid "Re-read all available scripts"
-msgstr "全てのスクリプトを再読み込み"
-
-#: plug-ins/script-fu/script-fu.c:283
+#: plug-ins/script-fu/script-fu.c:282
 #, fuzzy
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/拡張/Script-Fu/再読み込み(_R)"
@@ -205,12 +201,16 @@ msgstr "説明で検索中 - お待ち下さい"
 msgid "Searching - please wait"
 msgstr "検索中 - お待ちください"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:424
+#: plug-ins/dbbrowser/gimpprocbrowser.c:425
+msgid "1 Procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:427
 #, c-format
 msgid "%d Procedures"
 msgstr ""
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:467
+#: plug-ins/dbbrowser/gimpprocbrowser.c:471
 msgid "No matches"
 msgstr "該当なし"
 
@@ -2700,6 +2700,9 @@ msgstr "ハイライト Y オフセット"
 #, fuzzy
 msgid "Highlight opacity"
 msgstr "ハイライト不透明度"
+
+#~ msgid "Re-read all available scripts"
+#~ msgstr "全てのスクリプトを再読み込み"
 
 #~ msgid ""
 #~ "\n"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 19:05+0100\n"
+"POT-Creation-Date: 2004-10-31 23:14+0100\n"
 "PO-Revision-Date: 2004-11-01 01:13+0100\n"
 "Last-Translator: Vincent van Adrighem <adrighem@gnome.org>\n"
 "Language-Team: Dutch <nl@li.org>\n"
@@ -3667,7 +3667,7 @@ msgstr "waarde voor token %s is geen geldige UTF-8-tekenreeks"
 msgid "Cannot expand ${%s}"
 msgstr "Kan niet uitbreiden ${%s}"
 
-#: app/config/gimpconfig-utils.c:544 app/config/gimpscanner.c:92
+#: app/config/gimpconfig-utils.c:552 app/config/gimpscanner.c:92
 #: app/core/gimpbrush.c:393 app/core/gimpbrushgenerated.c:601
 #: app/core/gimpbrushpipe.c:344 app/core/gimpgradient-load.c:63
 #: app/core/gimppalette.c:360 app/core/gimppattern.c:328
@@ -3677,7 +3677,7 @@ msgstr "Kan niet uitbreiden ${%s}"
 msgid "Could not open '%s' for reading: %s"
 msgstr "Kon '%s' niet openen voor lezen: %s"
 
-#: app/config/gimpconfig-utils.c:553 app/config/gimpconfigwriter.c:120
+#: app/config/gimpconfig-utils.c:561 app/config/gimpconfigwriter.c:120
 #: app/core/gimpbrushgenerated.c:255 app/core/gimpgradient-save.c:51
 #: app/core/gimpgradient-save.c:142 app/core/gimppalette.c:567
 #: app/gui/themes.c:238 app/tools/gimpimagemaptool.c:601
@@ -3686,18 +3686,18 @@ msgstr "Kon '%s' niet openen voor lezen: %s"
 msgid "Could not open '%s' for writing: %s"
 msgstr "Kon '%s' niet openen voor schrijven: %s"
 
-#: app/config/gimpconfig-utils.c:564 app/config/gimpconfig-utils.c:587
+#: app/config/gimpconfig-utils.c:572 app/config/gimpconfig-utils.c:595
 #: app/vectors/gimpvectors-export.c:96
 #, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Fout tijdens schrijven van '%s': %s"
 
-#: app/config/gimpconfig-utils.c:575
+#: app/config/gimpconfig-utils.c:583
 #, c-format
 msgid "Error while reading '%s': %s"
 msgstr "Fout tijdens lezen '%s': %s"
 
-#: app/config/gimpconfig-utils.c:612
+#: app/config/gimpconfig-utils.c:625
 #, c-format
 msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
@@ -7278,7 +7278,7 @@ msgid "Select Temp Folder"
 msgstr "Themamappen selecteren"
 
 #: app/dialogs/preferences-dialog.c:2221
-#: app/dialogs/user-install-dialog.c:1271
+#: app/dialogs/user-install-dialog.c:1398
 #, fuzzy
 msgid "Swap folder:"
 msgstr "Wisselmap:"
@@ -7853,24 +7853,22 @@ msgstr ""
 "<b>Voor optimale GIMP-prestaties moet u mogelijk enkele instellingen "
 "aanpassen.</b>"
 
-#: app/dialogs/user-install-dialog.c:1078
-#: app/dialogs/user-install-dialog.c:1185
-#, c-format
-msgid "Creating folder '%s'..."
-msgstr "Map '%s' wordt aangemaakt..."
-
-#: app/dialogs/user-install-dialog.c:1091
-#: app/dialogs/user-install-dialog.c:1198
-#, c-format
-msgid "Cannot create folder '%s': %s"
-msgstr "Kan map '%s' niet aanmaken: %s"
-
-#: app/dialogs/user-install-dialog.c:1104
+#: app/dialogs/user-install-dialog.c:1064
 #, c-format
 msgid "Copying file '%s' from '%s'..."
 msgstr "Bestand '%s' wordt gekopieerd uit '%s'..."
 
-#: app/dialogs/user-install-dialog.c:1230
+#: app/dialogs/user-install-dialog.c:1083
+#, c-format
+msgid "Creating folder '%s'..."
+msgstr "Map '%s' wordt aangemaakt..."
+
+#: app/dialogs/user-install-dialog.c:1097
+#, c-format
+msgid "Cannot create folder '%s': %s"
+msgstr "Kan map '%s' niet aanmaken: %s"
+
+#: app/dialogs/user-install-dialog.c:1357
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called "
 "\"Tile Cache\".  You should adjust its size to fit into memory.  Consider "
@@ -7880,12 +7878,12 @@ msgstr ""
 "zogeheten \"Tegelcache\". U moet de grootte aanpassen aan uw geheugen. Hou "
 "rekening met geheugen dat door andere processen wordt gebruikt."
 
-#: app/dialogs/user-install-dialog.c:1243
+#: app/dialogs/user-install-dialog.c:1370
 #, fuzzy
 msgid "Tile cache size:"
 msgstr "Groote van de tegelcache"
 
-#: app/dialogs/user-install-dialog.c:1255
+#: app/dialogs/user-install-dialog.c:1382
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be "
 "written to a swap file.  This file should be located on a local filesystem "
@@ -7898,7 +7896,7 @@ msgstr ""
 "honderden megabytes). Op een UNIX-systeem zou u de temp-map van het systeem "
 "kunnen gebruiken (\"/tmp\" of \"/var/tmp\")."
 
-#: app/dialogs/user-install-dialog.c:1266
+#: app/dialogs/user-install-dialog.c:1393
 #, fuzzy
 msgid "Select swap dir"
 msgstr "Wisselmap selecteren"

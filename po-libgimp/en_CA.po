@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 15:09-0500\n"
+"POT-Creation-Date: 2004-10-31 23:17+0100\n"
 "PO-Revision-Date: 2004-10-31 20:02-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
@@ -153,6 +153,7 @@ msgstr "_Ignore"
 msgid "_Export"
 msgstr "_Export"
 
+#. the headline
 #: libgimp/gimpexport.c:485
 #, c-format
 msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-24 19:07+0200\n"
+"POT-Creation-Date: 2004-10-31 23:17+0100\n"
 "PO-Revision-Date: 2004-10-24 23:32+0200\n"
 "Last-Translator: Tino Meinen <a.t.meinen@chello.nl>\n"
 "Language-Team: Dutch <vertaling@vrijschrift.org>\n"
@@ -202,6 +202,11 @@ msgstr "Verloopselectie"
 msgid "(Empty)"
 msgstr "(Leeg)"
 
+#: libgimp/gimppalettemenu.c:91
+#, fuzzy
+msgid "Palette Selection"
+msgstr "Patroonselectie"
+
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
 msgstr "Patroonselectie"
@@ -210,71 +215,71 @@ msgstr "Patroonselectie"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpbase/gimpbaseenums.c:15
+#: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
 msgstr "Klein"
 
-#: libgimpbase/gimpbaseenums.c:16
+#: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
 msgstr "Middel"
 
-#: libgimpbase/gimpbaseenums.c:17
+#: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
 msgstr "Groot"
 
-#: libgimpbase/gimpbaseenums.c:37
+#: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
 msgstr "Lichte vakjes"
 
-#: libgimpbase/gimpbaseenums.c:38
+#: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
 msgstr "Midtoonvakjes"
 
-#: libgimpbase/gimpbaseenums.c:39
+#: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
 msgstr "Donkere vakjes"
 
-#: libgimpbase/gimpbaseenums.c:40
+#: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
 msgstr "Volledig wit"
 
-#: libgimpbase/gimpbaseenums.c:41
+#: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
 msgstr "Volledig grijs"
 
-#: libgimpbase/gimpbaseenums.c:42
+#: libgimpbase/gimpbaseenums.c:62
 msgid "Black Only"
 msgstr "Volledig zwart"
 
-#: libgimpbase/gimpbaseenums.c:62
+#: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
 msgstr "RGB kleur"
 
-#: libgimpbase/gimpbaseenums.c:63 libgimpbase/gimpbaseenums.c:86
+#: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
 msgid "Grayscale"
 msgstr "Grijswaarden"
 
-#: libgimpbase/gimpbaseenums.c:64
+#: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
 msgstr "Kleur met index"
 
-#: libgimpbase/gimpbaseenums.c:84
+#: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
 msgstr "RGB"
 
-#: libgimpbase/gimpbaseenums.c:85
+#: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
 msgstr "RGB-alpha"
 
-#: libgimpbase/gimpbaseenums.c:87
+#: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
 msgstr "Grijswaarden-alpha"
 
-#: libgimpbase/gimpbaseenums.c:88
+#: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
 msgstr "Met index"
 
-#: libgimpbase/gimpbaseenums.c:89
+#: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
 msgstr "Met index en alpha"
 
@@ -490,15 +495,18 @@ msgid "Select File"
 msgstr "Selecteer bestand"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-msgid "KiloBytes"
+#, fuzzy
+msgid "Kilobytes"
 msgstr "Kilobytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-msgid "MegaBytes"
+#, fuzzy
+msgid "Megabytes"
 msgstr "Megabytes"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-msgid "GigaBytes"
+#, fuzzy
+msgid "Gigabytes"
 msgstr "Gigabytes"
 
 #: libgimpwidgets/gimppatheditor.c:243

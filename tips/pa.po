@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-23 13:58+0200\n"
+"POT-Creation-Date: 2004-10-31 21:51+0100\n"
 "PO-Revision-Date: 2004-10-11 18:33+0200\n"
 "Last-Translator: Amanpreet Singh Alam <aalam@redhat.com>\n"
 "Language-Team: Punjabi <fedora-trans-pa@redhat.com>\n"
@@ -68,20 +68,22 @@ msgstr ""
 #, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the \"New Layer\" "
-"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
-"the same."
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
 msgstr ""
 "ਪ੍ਰਤੀਬਿੰਬ ਤੇ ਕੋਈ ਹੋਰ ਕਿਰਿਆ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ, ਨਵੀਂ ਪਰਤ ਤੇ ਜਾਂ ਪਿਛਲੀ ਕਿਰਿਆਸ਼ੀਲ ਪਰਤ ਤੇ ਚਾਲੂ ਚੋਣ "
 "anchored ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ। ਪਰਤ ਡਾਇਲਾਗ ਵਿਚ \"New Layer\" ਜਾਂ  \"Anchor Layer "
 "buttons\" ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਅਜਿਹਾ ਸੂਚੀ ਵਰਤ ਕੇ ਕਰ ਸਕਦੇ ਹੋ।"
 
 #: tips/gimp-tips.xml.in.h:8
+#, fuzzy
 msgid ""
-"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
-"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
-"menu item, and pressing the desired key combination. If \"Save Keyboard "
-"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP."
 msgstr ""
 "ਅਧਿਕਾਰ ਡਾਇਲਾਗ ਵਿਚ \"Dynamic Keyboard Shortcuts\" ਯੋਗ ਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਸੀਂ ਸਵਿੱਚ "
 "shortcut ਦੁਬਾਰਾ ਸੌਂਪ ਸਕਦੇ ਹੋ। ਅਜਿਹਾ ਕਰਨ ਲਈ ਇਕ ਸੂਚੀ ਲਓ,ਆਈਟਮ ਚੁਣੋ ਅਤੇ ਸਹਿਯੋਗੀ ਸਵਿੱਚਾਂ "
@@ -99,11 +101,12 @@ msgstr ""
 "ਵਿੱਚ ਸ਼ਾਮਿਲ ਹੋ ਜਾਣਗੀਆਂ।ਤੁਸੀਂ Move ਸੰਦ ਨਾਲ ਪ੍ਰਤੀਬਿੰਬ ਵਿਚੋਂ ਬਾਹਰ ਖਿੱਚ ਕੇ ਸਹਾਇਕ ਨੂੰ ਹਟਾ ਸਕਦੇ ਹੋ।"
 
 #: tips/gimp-tips.xml.in.h:10
+#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
-"&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
+"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "ਜੇ ਤੁਹਾਡੀਆਂ ਸਕੈਨ ਕੀਤੀਆਂ ਤਸਵੀਰਾਂ ਠੀਕ ਤਰਾਂ ਰੰਗਦਾਰ ਨਹੀਂ ਦਿਸਦੀਆਂ,ਤੁਸੀਂ ਲੈਵਲ ਸੰਦ (Layer-&gt;"
 "Colors-&gt;Levels) ਵਿੱਚ  \"Auto\" ਸਵਿਚ ਨਾਲ ਓਹਨਾਂ ਦੇ ਰੰਗ ਦੀ ਗਹਿਰਾਈ ਨੂੰ ਸੁਧਾਰ ਸਕਦੇ ਹੋ। "
@@ -187,26 +190,18 @@ msgstr ""
 "ਸੋਚਣਾ ,ਇਸ ਤਰਾਂ ਕਿ ਦੇਖਣ ਉਪਰੰਤ ਉਹ ਆਪਣੇ ਅੰਸ਼ਾਂ ਦਾ ਸਮੂਹ ਲਗਦੇ ਹਨ।"
 
 #: tips/gimp-tips.xml.in.h:19
+#, fuzzy
 msgid ""
-"The file selection dialog box has command-line completion with <tt>Tab</tt>, "
-"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
-"it's completed."
-msgstr ""
-"ਫਾਈਲ ਚੋਣ ਡਾਇਲਾਗ ਬਾਕਸ ਵਿਚ ਸ਼ੈਲ ਵਾਂਗ  <tt>Tab</tt> ਨਾਲ ਕਮਾਂਡ ਲਾਈਨ ਪੂਰਤੀ ਹੈ। ਫਾਈਲ ਦੇ "
-"ਨਾਉ ਦਾ ਹਿੱਸਾ ਟਾਈਪ ਕਰੋ,<tt>Tab</tt> ਦਬਾਓ ਅਤੇ voila,ਇਹ ਸੰਪੂਰਣ ਹੋ ਜਾਵੇਗਾ।"
-
-#: tips/gimp-tips.xml.in.h:20
-msgid ""
-"The layer named \"Background\" is special because it lacks transparency. "
-"This prevents you from adding a layer mask or moving the layer up in the "
-"stack. You may add transparency to it by right-clicking in the Layers dialog "
-"and selecting \"Add Alpha Channel\"."
+"The layer named &quot;Background&quot; is special because it lacks "
+"transparency. This prevents you from moving the layer up in the stack. You "
+"may add transparency to it by right-clicking in the Layers dialog and "
+"selecting &quot;Add Alpha Channel&quot;."
 msgstr ""
 "\"Background\" ਨਾਂ ਵਾਲੀ ਪਰਤ ਖਾਸ ਹੈ ਕਿਉਂਕਿ ਇਹ ਪਾਰਦਰਸ਼ਤਾ ਰਹਿਤ ਹੁੰਦੀ ਹੈ।ਇਹ ਤੁਹਾਨੂੰ ਪਰਤ "
 "ਪਰਦਾ ਜਮਾਂ ਅਤੇ ਢੇਰ ਵਿਚ ਪਰਤ ਪਰਦਾ ਉਪਰ ਹਿਲਾਉਣ ਤੋਂ ਰੋਕਦਾ ਹੈ।ਤੁਸੀ ਪਰਤ ਡਾਇਲਾਗ ਵਿਚ ਸੱਜਾ ਕਲਿਕ "
 "ਕਰਕੇ ਅਤੇ  \"Add Alpha Channel\" ਚੁਣ ਕੇ ਪਾਰਦਰਸ਼ਤਾ ਜਮਾਂ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: tips/gimp-tips.xml.in.h:21
+#: tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -219,7 +214,7 @@ msgstr ""
 "ਤਰਾਂ ਸਥਾਪਿਤ ਕਰਨ ਲਈ ਇਸ ਉਪਰ ਕਿਸੇ ਇਕ ਬਿੰਦੂ ਨੂੰ ਛੂਹਣ ਵਾਲੀਆਂ ਸਮਤਲ ਅਤੇ ਖਡ਼ਵੀਆਂ ਲਾਈਨਾਂ ਖਿਚੋ। "
 "ਲਾਈਨਾਂ ਦੇ ਕੱਟ ਬਿੰਦੂ ਉਪਰ ਆਪਣਾ ਕਰਸਰ ਰਖੋ ਅਤੋ ਅੰਤਲੀ ਚੋਣ ਸਿਰਫ ਲਾਈਨਾਂ ਨੂੰ ਛੂਹੇਗੀ।"
 
-#: tips/gimp-tips.xml.in.h:22
+#: tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -230,7 +225,7 @@ msgstr ""
 "ਪਿਛਲੇ ਉਲੀਕ ਬਿੰਦੂ ਤੋਂ ਮੌਜੂਦ ਕਰਸਰ ਬਿੰਦੂ ਤਕ ਸਿੱਧੀ ਲਾਈਨ ਉਲੀਕੇਗੀ। ਜੇ ਤੁਸੀਂ <tt>Ctrl</tt> ਵੀ "
 "ਦਬਾਓਂਗੇ ਤਾਂ ਲਾਈਨ 15 ਡਿਗਰੀ ਕੋਣ ਤੇ ਝੁਕੇਗੀ।"
 
-#: tips/gimp-tips.xml.in.h:23
+#: tips/gimp-tips.xml.in.h:22
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -242,7 +237,7 @@ msgstr ""
 "ਬਰਕਰਾਰ ਰਖਦੀ ਹੈ। ਜਦ ਇਕ ਵਾਰ ਪ੍ਰੋਜੈਕਟ ਪੂਰਾ ਹੋ ਜਾਵੇ, ਤੁਸੀਂ ਇਸ ਨੂੰ JPEG, PNG, GIF, .ਦੀ ਤਰਾਂ "
 "ਸੰਭਾਲ ਸਕਦੇ ਹੋ।"
 
-#: tips/gimp-tips.xml.in.h:24
+#: tips/gimp-tips.xml.in.h:23
 #, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
@@ -253,13 +248,13 @@ msgstr ""
 "ਤੁਹਾਡਾ ਝਰੋਖਾ ਪ੍ਰਬੰਧਕ ਪਹਿਲਾਂ ਹੀ <tt>Alt</tt> ਸਵਿੱਚ ਵਰਤਦਾ ਹੈ। ਉਸੇ ਸਮੇਂ <tt>Shift</tt> "
 "ਦਬਾਉਂਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
-#: tips/gimp-tips.xml.in.h:25
+#: tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
 msgstr "ਕਲਿੱਕ ਕਰਕੇ ਅਤੇ, ਖੱਬੇ ਤੇ ਸੱਜੇ ਖਿੱਚ ਕੇ ਤੁਸੀਂ ਅਸਪਸ਼ੱਟ ਚੋਣ ਵਾਸਤੇ ਚੋਣ ਸੀਮਾ ਨੂੰ ਤਰਤੀਬ ਦੇ ਸਕਦੇ ਹੋ।"
 
-#: tips/gimp-tips.xml.in.h:26
+#: tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -268,7 +263,7 @@ msgstr ""
 "ਤੁਸੀਂ ਰਸਤਾ ਸੰਦ ਵਰਤ ਕੇ ਔਖੀਆਂ ਚੁਣੌਤੀਆਂ ਬਣਾ ਅਤੇ ਬਦਲ ਸਕਦੇ ਹੋ। ਰਸਤਾ ਤਖਤੀ ਤੁਹਾਨੂੰ ਬਹੁਤੇ ਰਸਤਿਆਂ ਉਪਰ "
 "ਕੰਮ ਕਰਨ ਅਤੇ ਇਹਨਾਂ ਨੂੰ ਚਣੌਤੀਆਂ ਵਿੱਚ ਬਦਲਣ ਦੀ ਇਜ਼ਾਜਤ ਦਿੰਦੀ ਹੈ।"
 
-#: tips/gimp-tips.xml.in.h:27
+#: tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -276,7 +271,7 @@ msgstr ""
 "ਤੁਸੀਂ ਪਰਤ ਤਖਤੀ ਵਿਚੋਂ ਇਕ ਪਰਤ ਖਿੱਚ ਕੇ ਸੰਦ ਡਬੇ ਵਿਚ ਛੱਡ ਸਕਦੇ ਹੋ। ਇਸ ਨਾਲ ਸਿਰਫ ਉਸ ਪਰਤ ਵਾਲਾ ਇਕ "
 "ਨਵਾਂ ਪ੍ਰਤੀਬਿੰਬ ਬਣੇਗਾ।"
 
-#: tips/gimp-tips.xml.in.h:28
+#: tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -286,7 +281,7 @@ msgstr ""
 "ਵਿਚੋ ਰੰਗ ਖਿੱਚਣਾ ਅਤੇ ਪ੍ਰਤੀਬਿੰਬ ਉੱਪਰ ਛੱਡਣ ਨਾਲ ਮੌਜੂਦ ਪ੍ਰਤੀਬਿੰਬ ਰੰਗੀਨ ਹੋ ਜਾਵੇਗਾ ਜਾਂ ਉਸ ਰੰਗ ਦੀ ਚੋਣ "
 "ਨਾਲ।"
 
-#: tips/gimp-tips.xml.in.h:29
+#: tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -296,7 +291,7 @@ msgstr ""
 "ਕਿਨਾਰੇ ਨੂੰ ਠੋਕਰ ਦੀ ਹੈ। ਰਸਤਾ ਸੰਦ ਜਾਂ Filters-&gt;Render-&gt;Gfig ਵਰਤ ਕੇ ਜਿਆਦਾ ਔਖੀਆਂ "
 "ਸ਼ਕਲਾਂ ਵੀ ਉਲੀਕੀਆਂ ਜਾ ਸਕਦੀਂਆਂ ਹਨ।"
 
-#: tips/gimp-tips.xml.in.h:30
+#: tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -304,7 +299,7 @@ msgstr ""
 "ਕਦੀ ਵੀ ਸਵਿੱਚ F1 ਦਬਾ ਕੇ ਤੁਸੀਂ GIMP ਦੀਆਂ ਜਿਆਦਾਤਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵਾਸਤੇ ਮਦਦ ਸੰਖੇਪ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ "
 "ਹੋ। ਇਹ ਸੂਚੀ ਵਿਚ ਵੀ ਕੰਮ ਕਰਦਾ ਹੈ।"
 
-#: tips/gimp-tips.xml.in.h:31
+#: tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -312,7 +307,7 @@ msgstr ""
 "ਪਰਤ ਡਾਇਲਾਗ ਵਿਚ ਪਰਤ ਦੇ ਲੇਬਲ ਮੂਲ ਉੱਪਰ ਰਾਈਟ ਕਲਿੱਕ ਕਰਕੇ ਤੁਸੀਂ ਜਿਆਦਾ ਪਰਤ ਕਿਰਿਆਂਵਾਂ ਲਾਗੂ ਕਰ "
 "ਸਕਦੇ ਹੋ।"
 
-#: tips/gimp-tips.xml.in.h:32
+#: tips/gimp-tips.xml.in.h:31
 #, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
@@ -322,7 +317,7 @@ msgstr ""
 "ਜਦੋਂ ਤੁਸੀਂ ਇਸ ਨੂੰ ਸੰਪੂਰਣ ਆਇਤ ਜਾਂ ਵਰਗ ਹੋਣ ਲਈ ਚੋਣ ਕਰਦੇ ਹੋ, ਜਾਂ ਇਸ ਦੀ ਸ਼ੁਰੂਆਤ ਉੱਪਰ ਕੇਦਰਿਂਤ ਕਰੋਗੇ ,ਤਾਂ "
 "ਤੁਸੀ ਸਵਿੱਚ <tt>Shift</tt> ਅਤੇ <tt>Ctrl</tt> ਦਬਾ ਜਾਂ ਛੱਡ ਸਕਦੇ ਹੋ।"
 
-#: tips/gimp-tips.xml.in.h:33
+#: tips/gimp-tips.xml.in.h:32
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -333,7 +328,7 @@ msgstr ""
 "ਚੈਨਲ ਬਦਲੋ। ਚੈਨਲ ਤਖਤੀ ਦੇ ਬਟਨ ਵਰਤ ਕੇ ਤੁਸੀਂ ਨਵੇਂ ਚੈਨਲ ਦੀ ਦਿੱਖ ਬਦਲ ਸਕਦੇ ਹੋ ਜਾਂ ਇਸ ਨੂੰ ਚੋਣ ਵਿਚ ਬਦਲ "
 "ਸਕਦੇ ਹੋ।"
 
-#: tips/gimp-tips.xml.in.h:34
+#: tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -341,7 +336,7 @@ msgstr ""
 "ਪ੍ਰਤੀਬਿੰਬ ਦੀਆਂ ਪਰਤਾਂ ਦਾ ਚੱਕਰ ਲਾਉਣ ਵਾਸਤੇ ਤੁਸੀਂ  <tt>Alt</tt>-<tt>Tab</tt> ਵਰਤ ਸਕਦੇ ਹੋ। "
 "(ਜੇ ਤੁਹਾਡਾ ਝਰੋਖਾ ਪ੍ਰਬੰਧਕ ਇਹਨਾਂ ਸਵਿੱਚਾਂ ਨੂੰ ਧੋਖਾ ਨਾ ਸਮਝੇ)"
 
-#: tips/gimp-tips.xml.in.h:35
+#: tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -349,16 +344,25 @@ msgstr ""
 "ਜੇਕਰ ਪ੍ਰਤੀਬਿੰਬ , ਦਿਖਾਉਣ ਵਾਲੀ ਝਰੋਖਾ ਨਾਲੋਂ ਵੱਡਾ ਹੈ ਤਾਂ ਤੁਸੀਂ ਸਾਰੇ ਪ੍ਰਤੀਬਿੰਬ ਦੁਆਲੇ ਘੁੰਮਾਓਣ ਵਾਸਤੇ "
 "ਮਾਊਸ ਦਾ ਵਿਚਕਾਰਲਾ ਬਟਨ ਵਰਤ ਸਕਦੇ ਹੋ।"
 
-#: tips/gimp-tips.xml.in.h:36
+#: tips/gimp-tips.xml.in.h:35
+#, fuzzy
 msgid ""
-"You can use the paint tools to change the selection. Click on the \"Quick "
-"Mask\" button at the bottom left of an image window. Change your selection "
-"by painting in the image and click on the button again to convert it back to "
-"a normal selection."
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
 msgstr ""
 "ਚੋਣ ਨੂੰ ਬਦਲਣ ਲਈ ਤੁਸੀਂ ਰੰਗਤ ਸੰਦ ਵਰਤ ਸਕਦੇ ਹੋ। ਪ੍ਰਤੀਬਿੰਬ ਤਖਤੀ ਦੇ ਹੇਠਾਂ ਖੱਬੇ \"Quick Mask\" ਬਟਨ "
 "ਕਲਿੱਕ ਕਰੋ। ਪ੍ਰਤੀਬਿੰਬ ਨੰ ਰੰਗ ਕਰਕੇ ਆਪਣੀ ਚੋਣ ਬਦਲੋ ਅਤੇ ਇਸ ਨੂੰ ਸਧਾਰਣ ਚੋਣ ਵਿਚ ਬਦਲਣ ਵਾਸਤੇ ਦੁਬਾਰਾ "
 "ਬਟਨ ਕਲਿੱਕ ਕਰੋ।"
+
+#~ msgid ""
+#~ "The file selection dialog box has command-line completion with <tt>Tab</"
+#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
+#~ "voila, it's completed."
+#~ msgstr ""
+#~ "ਫਾਈਲ ਚੋਣ ਡਾਇਲਾਗ ਬਾਕਸ ਵਿਚ ਸ਼ੈਲ ਵਾਂਗ  <tt>Tab</tt> ਨਾਲ ਕਮਾਂਡ ਲਾਈਨ ਪੂਰਤੀ ਹੈ। ਫਾਈਲ ਦੇ "
+#~ "ਨਾਉ ਦਾ ਹਿੱਸਾ ਟਾਈਪ ਕਰੋ,<tt>Tab</tt> ਦਬਾਓ ਅਤੇ voila,ਇਹ ਸੰਪੂਰਣ ਹੋ ਜਾਵੇਗਾ।"
 
 #~ msgid ""
 #~ "Nearly all image operations are performed by right-clicking on the image. "

@@ -1,4 +1,8 @@
-2004-11-01  Simon Budig  <simon@gimp.org>
+2004-10-31  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.2-pre1 release.
+
+2004-10-31  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/plasma.c: Fixed handling of 1x1 selection and
 	selection out of drawable.

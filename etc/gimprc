@@ -170,8 +170,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 377)
-#     (height 233)
+#     (width 420)
+#     (height 300)
 #     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)
@@ -460,6 +460,12 @@
 # 
 # (default-threshold 15)
 
+# If enabled, the move tool changes the active layer or path when a layer or
+# path is being picked. This used to be the default behaviour in older
+# versions.  Possible values are yes and no.
+# 
+# (move-tool-changes-active no)
+
 # When enabled, the GIMP will use a different info window per image view. 
 # Possible values are yes and no.
 # 
@@ -545,7 +551,7 @@
 # The toolbox-image-area property has no description.  Possible values are
 # yes and no.
 # 
-# (toolbox-image-area yes)
+# (toolbox-image-area no)
 
 # Sets the theme search path.  This is a colon-separated list of folders to
 # search.
