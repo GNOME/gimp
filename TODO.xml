@@ -263,6 +263,23 @@
     </entry>
 
     <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Cleanup GIMP's color selectors</title>
+      <description>
+	<p>
+	  The pluggable color selectors need to be overhauled. Move
+	  the numerical input fields, the sliders, the "old" and "new"
+	  color buttons and a color history out of the notebook so
+	  they are always visible. Optionally allow an alpha value to
+	  be specified. Maybe reduce the size of the color area in the
+	  "GIMP" color selector.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
       <title>Better keyboard navigation</title>
       <description>
 	<p>

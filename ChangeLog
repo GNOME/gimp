@@ -1,5 +1,9 @@
 2001-01-07  Michael Natterer  <mitch@gimp.org>
 
+	* TODO.xml: add "Cleanup GIMP's color selectors".
+
+2001-01-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/bezier_select.c
 	* app/bezier_selectP.h: removed the obscure unused "extend" variable
 	from the Bezier Tool structure.
