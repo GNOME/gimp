@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.8\n"
 "POT-Creation-Date: 1999-09-10 18:10+0200\n"
-"PO-Revision-Date: 1999-07-31 03:05+02:00\n"
+"PO-Revision-Date: 1999-09-15 13:05+02:00\n"
 "Last-Translator: Kenneth Christiansen <kenneth@ripe.dk>\n"
 "Language-Team: Danish <skriv adressen her>\n"
 "MIME-Version: 1.0\n"
@@ -959,11 +959,11 @@ msgstr "Brug sort/hvid (1-bit) palette"
 
 #: app/convert.c:479
 msgid "Dither Options"
-msgstr ""
+msgstr "Dither indstillinger"
 
 #: app/convert.c:493
 msgid "Enable Floyd-Steinberg dithering"
-msgstr ""
+msgstr "Anvend Floyd-Steinberg dithering"
 
 #: app/convert.c:517
 msgid " [ Warning ] "
@@ -1244,32 +1244,32 @@ msgstr ""
 #: app/file_new_dialog.c:411
 #, c-format
 msgid "%d Bytes"
-msgstr ""
+msgstr "%d bytes"
 
 #: app/file_new_dialog.c:413
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f Kb"
 
 #: app/file_new_dialog.c:415
 #, c-format
 msgid "%.1f KB"
-msgstr "%.1f KB"
+msgstr "%.1f Kb"
 
 #: app/file_new_dialog.c:417
 #, c-format
 msgid "%d KB"
-msgstr "%d KB"
+msgstr "%d Kb"
 
 #: app/file_new_dialog.c:419
 #, c-format
 msgid "%.2f MB"
-msgstr "%.2f MB"
+msgstr "%.2f Mb"
 
 #: app/file_new_dialog.c:421
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f Mb"
 
 #. bytes per pixel
 #. alpha channel
@@ -1353,7 +1353,7 @@ msgstr "Fejl under åbning: "
 #: app/fileops.c:1520
 #, c-format
 msgid "%s is an irregular file (%s)"
-msgstr ""
+msgstr "%s er en irregulær fil (%s)"
 
 #: app/fileops.c:1534 app/fileops.c:1641
 msgid "Save failed: "
@@ -1774,7 +1774,7 @@ msgstr ""
 #. layer_arg is already the top_layer
 #: app/gimpimage.c:2215
 msgid "Layer is already on top"
-msgstr ""
+msgstr "Lag er allerede øverst"
 
 #: app/gimpimage.c:2220
 msgid "Can't raise Layer without alpha"
@@ -1860,7 +1860,7 @@ msgstr ""
 
 #: app/gimpprogress.c:115
 msgid "Progress"
-msgstr ""
+msgstr "Fremgang"
 
 #: app/gimprc.c:358 app/plug_in.c:305
 msgid "Resource configuration"
@@ -1893,22 +1893,22 @@ msgstr ""
 #: app/gimprc.c:2522
 #, c-format
 msgid "Can't open %s; %s"
-msgstr ""
+msgstr "Kan ikke åbne %s; %s"
 
 #: app/gimprc.c:2541
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
-msgstr ""
+msgstr "Kan ikke omdøbe %s til %s.old; %s"
 
 #: app/gimprc.c:2547
 #, c-format
 msgid "Couldn't reopen %s\n"
-msgstr ""
+msgstr "Kunne ikke genåbne %s\n"
 
 #: app/gimprc.c:2559
 #, c-format
 msgid "Can't write to %s; %s"
-msgstr ""
+msgstr "Kan ikke skrive til %s; %s"
 
 #. Make a new floating layer
 #: app/global_edit.c:288 app/global_edit.c:343 app/global_edit.c:353
@@ -1938,7 +1938,7 @@ msgstr "Indsæt navngivet buffer"
 
 #: app/global_edit.c:732
 msgid "Select a buffer to paste:"
-msgstr "Velg en buffer som skal limes inn:"
+msgstr "Vælg en buffer som skal limes inn:"
 
 #: app/global_edit.c:820
 msgid "Cut Named"
@@ -2254,7 +2254,7 @@ msgstr ""
 
 #: app/gradient.c:3541
 msgid "Delete selection"
-msgstr ""
+msgstr "Slet det valgte"
 
 #: app/gradient.c:3543
 msgid "Re-center midpoints in selection"
@@ -2274,16 +2274,16 @@ msgstr ""
 
 #: app/gradient.c:3825
 msgid "FG color"
-msgstr ""
+msgstr "FG farve"
 
 #: app/gradient.c:3870
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4387 app/gradient.c:4459
 msgid "(Varies)"
-msgstr ""
+msgstr "(Varierer)"
 
 #: app/gradient.c:4602
 msgid "Split"
@@ -2578,7 +2578,7 @@ msgstr "Form"
 
 #: app/install.c:84
 msgid "The GIMP is not properly installed for the current user\n"
-msgstr ""
+msgstr "GIMP er ikke installeret korrekt for nuværende bruger\n"
 
 #: app/install.c:85
 msgid ""
@@ -2869,18 +2869,24 @@ msgid ""
 " has invalid permissions.\n"
 "Cannot install."
 msgstr ""
+" har ugyldige tilladelser.\n"
+"Kan ikke installere."
 
 #: app/install.c:527
 msgid ""
 "\n"
 "Installation successful!\n"
 msgstr ""
+"\n"
+"Installation var en success!\n"
 
 #: app/install.c:536
 msgid ""
 "\n"
 "Installation failed.  Contact system administrator.\n"
 msgstr ""
+"\n"
+"Installation mislykkedes.  Kontakt din system administrator.\n"
 
 #: app/interface.c:322
 msgid ""
@@ -3397,7 +3403,7 @@ msgstr "Alternativer for forstørrelse"
 
 #: app/magnify.c:104
 msgid "Allow Window Resizing"
-msgstr "Tillat ændring af størrelse for vinduer"
+msgstr "Tillad ændring af størrelse for vinduer"
 
 #: app/main.c:287
 msgid "GIMP version"
@@ -3936,12 +3942,12 @@ msgstr "Modul DB"
 #: app/module_db.c:555
 #, c-format
 msgid "load module: \"%s\"\n"
-msgstr ""
+msgstr "indlæs modul: \"%s\"\n"
 
 #: app/module_db.c:562
 #, c-format
 msgid "skipping module: \"%s\"\n"
-msgstr "hopper over modul: \"%s\"\n"
+msgstr "springer over modul: \"%s\"\n"
 
 #: app/module_db.c:586
 #, c-format
@@ -3975,7 +3981,7 @@ msgstr "ingensteder (klik 'genlæs')"
 
 #: app/module_db.c:812
 msgid "Load"
-msgstr ""
+msgstr "Indlæs"
 
 #: app/module_db.c:821
 msgid "Unload"
@@ -4367,7 +4373,7 @@ msgstr "Niveauer for posterisering"
 
 #: app/preferences_dialog.c:205
 msgid "Error: Levels of undo must be zero or greater."
-msgstr "Fejl: Angrenivåer må være nul eller større."
+msgstr "Fejl: Antal fortrydelser skal være nul eller større."
 
 #: app/preferences_dialog.c:211
 msgid "Error: Number of processors must be between 1 and 30."
@@ -4379,11 +4385,11 @@ msgstr "Fejl: Marshfart må være 50 eller større."
 
 #: app/preferences_dialog.c:223
 msgid "Error: Default width must be one or greater."
-msgstr "Feil: Standard bredde må være en eller større."
+msgstr "Feil: Standard bredde må være et eller større."
 
 #: app/preferences_dialog.c:229
 msgid "Error: Default height must be one or greater."
-msgstr "Feil: Standard højde må være en eller større."
+msgstr "Feil: Standard højde må være et eller større."
 
 #: app/preferences_dialog.c:236
 msgid "Error: Default unit must be within unit range."
@@ -4644,7 +4650,7 @@ msgstr "Resursebrug"
 
 #: app/preferences_dialog.c:2006
 msgid "Conservative Memory Usage"
-msgstr "Konservativt hukommelsebruk"
+msgstr "Konservativt hukommelsebrug"
 
 #: app/preferences_dialog.c:2057 app/preferences_dialog.c:2098
 msgid "Bytes"
@@ -4757,59 +4763,59 @@ msgstr "Manuelt"
 
 #: app/preferences_dialog.c:2347
 msgid "Directories Settings"
-msgstr "Katalogindstillinger"
+msgstr "Mappeindstillinger"
 
 #: app/preferences_dialog.c:2349
 msgid "Directories"
-msgstr "Kataloger"
+msgstr "Mapper"
 
 #: app/preferences_dialog.c:2362
 msgid "Temp Dir:"
-msgstr "Temp-katalog:"
+msgstr "Temp-mappe:"
 
 #: app/preferences_dialog.c:2362
 msgid "Select Temp Dir"
-msgstr "Vælg temp-katalog"
+msgstr "Vælg temp-mappe"
 
 #: app/preferences_dialog.c:2363
 msgid "Swap Dir:"
-msgstr "Swap-katalog:"
+msgstr "Swap-mappe:"
 
 #: app/preferences_dialog.c:2363
 msgid "Select Swap Dir"
-msgstr "Velg swap-katalog"
+msgstr "Vælg swap-mappe"
 
 #: app/preferences_dialog.c:2395
 msgid "Brushes Directories"
-msgstr "Katalog for børster"
+msgstr "Pensel mapper"
 
 #: app/preferences_dialog.c:2395
 msgid "Select Brushes Dir"
-msgstr "Velg katalog for børster"
+msgstr "Vælg mappe til pensler"
 
 #: app/preferences_dialog.c:2397
 msgid "Patterns Directories"
-msgstr "Katalog for mønstre"
+msgstr "Mønster mapper"
 
 #: app/preferences_dialog.c:2397
 msgid "Select Patterns Dir"
-msgstr "Velg katalog for mønstre"
+msgstr "Vælg mappe til mønstre"
 
 #: app/preferences_dialog.c:2399
 msgid "Palettes Directories"
-msgstr "Kataloger for paletter"
+msgstr "Palette mapper"
 
 #: app/preferences_dialog.c:2399
 msgid "Select Palettes Dir"
-msgstr "Velg katalog for mønstre"
+msgstr "Vælg mappe til paletter"
 
 #: app/preferences_dialog.c:2401
 msgid "Gradients Directories"
-msgstr "Katalog for gradienter"
+msgstr "Gradient mapper"
 
 #: app/preferences_dialog.c:2401
 msgid "Select Gradients Dir"
-msgstr "Vælg katalog for gradienter"
+msgstr "Vælg mappe til gradienter"
 
 #: app/preferences_dialog.c:2403
 msgid "Plug-Ins"
@@ -4817,11 +4823,11 @@ msgstr "Tillæg"
 
 #: app/preferences_dialog.c:2403
 msgid "Plug-Ins Directories"
-msgstr "Kataloger for tillæg"
+msgstr "Tillægsmapper"
 
 #: app/preferences_dialog.c:2403
 msgid "Select Plug-Ins Dir"
-msgstr "Velg katalog for tillæg"
+msgstr "Vælg mappe til tillæg"
 
 #: app/preferences_dialog.c:2405
 msgid "Modules"
@@ -4829,20 +4835,20 @@ msgstr "Moduler"
 
 #: app/preferences_dialog.c:2405
 msgid "Modules Directories"
-msgstr "Kataloger for moduler"
+msgstr "Modul mapper"
 
 #: app/preferences_dialog.c:2405
 msgid "Select Modules Dir"
-msgstr "Velg katalog for moduler"
+msgstr "Vælg mappe til moduler"
 
 #: app/procedural_db.c:44
 msgid "Procedural Database"
-msgstr "Procedyredatabase"
+msgstr "Proceduredatabase"
 
 #: app/procedural_db.c:142
 #, c-format
 msgid "PDB calling error %s"
-msgstr "Fejl ved PDB-kall %s"
+msgstr "Fejl ved PDB-kald %s"
 
 #: app/procedural_db.c:218
 #, c-format
@@ -5023,19 +5029,19 @@ msgstr "text_render: kunne ikke allokere billede"
 
 #: app/threshold.c:189
 msgid "Threshold Options"
-msgstr "Alternativer for terskel"
+msgstr "Alternativer for tærskel"
 
 #: app/threshold.c:232
 msgid "Threshold does not operate on indexed drawables."
-msgstr "Terskel opererer ikke på indekserede tegnede objekter."
+msgstr "Tærskel opererer ikke på indekserede tegnede objekter."
 
 #: app/threshold.c:291 app/tools.c:562
 msgid "Threshold"
-msgstr "Terskel"
+msgstr "Tærskel"
 
 #: app/threshold.c:306
 msgid "Threshold Range: "
-msgstr "Terskelområde: "
+msgstr "Tærskelområde: "
 
 #: app/tile_cache.c:266
 msgid "starting tile preswapper\n"
@@ -5053,12 +5059,12 @@ msgstr "kunne ikke søge efter lokation af fliser på disk: %d"
 #: app/tile_swap.c:520
 #, c-format
 msgid "unable to read tile data from disk: %d/%d ( %d ) bytes read"
-msgstr "kunne ikke læse flisdata fra disk: %d%/%d ( %d ) bytes læst"
+msgstr "kunne ikke læse flisedata fra disk: %d%/%d ( %d ) bytes læst"
 
 #: app/tile_swap.c:575
 #, c-format
 msgid "unable to write tile data to disk: %d ( %d ) bytes written"
-msgstr "kunne ikke skrive flisdata til disk: %d ( %d ) bytes skrevet"
+msgstr "kunne ikke skrive flisedata til disk: %d ( %d ) bytes skrevet"
 
 #: app/tips_dialog.c:57
 msgid "gimp_tips.txt"
@@ -5181,7 +5187,7 @@ msgstr ""
 
 #: app/tools.c:191
 msgid "Zoom in & out"
-msgstr ""
+msgstr "Zoom ind & ud"
 
 #: app/tools.c:201
 msgid "Crop & Resize"
@@ -5231,11 +5237,11 @@ msgstr "/Værktøj/Tekst"
 
 #: app/tools.c:296
 msgid "Add text to the image"
-msgstr ""
+msgstr "Tilføj tekst til billedet"
 
 #: app/tools.c:308
 msgid "/Tools/Color Picker"
-msgstr ""
+msgstr "/Værktøj/Farvesnapper"
 
 #: app/tools.c:311
 msgid "Pick colors from the image"
@@ -5243,23 +5249,23 @@ msgstr ""
 
 #: app/tools.c:321
 msgid "Bucket Fill"
-msgstr ""
+msgstr "Udfyldning"
 
 #: app/tools.c:323
 msgid "/Tools/Bucket Fill"
-msgstr ""
+msgstr "/Værktøj/Udfyldning"
 
 #: app/tools.c:326
 msgid "Fill with a color or pattern"
-msgstr ""
+msgstr "Udfyld med en farve eller et mønster"
 
 #: app/tools.c:336
 msgid "Blend"
-msgstr ""
+msgstr "Bland"
 
 #: app/tools.c:338
 msgid "/Tools/Blend"
-msgstr ""
+msgstr "/Værktøj/Bland"
 
 #: app/tools.c:341
 msgid "Fill with a color gradient"
@@ -5267,11 +5273,11 @@ msgstr ""
 
 #: app/tools.c:351
 msgid "Pencil"
-msgstr ""
+msgstr "Blyant"
 
 #: app/tools.c:353
 msgid "/Tools/Pencil"
-msgstr ""
+msgstr "/Værktøj/Blyant"
 
 #: app/tools.c:356
 msgid "Draw sharp pencil strokes"
@@ -5279,11 +5285,11 @@ msgstr ""
 
 #: app/tools.c:366
 msgid "Paintbrush"
-msgstr ""
+msgstr "Malerpensel"
 
 #: app/tools.c:368
 msgid "/Tools/Paintbrush"
-msgstr ""
+msgstr "/Værktøj/Malerpensel"
 
 #: app/tools.c:371
 msgid "Paint fuzzy brush strokes"
@@ -5291,11 +5297,11 @@ msgstr ""
 
 #: app/tools.c:381
 msgid "Eraser"
-msgstr "Viskelædder"
+msgstr "Viskelæder"
 
 #: app/tools.c:383
 msgid "/Tools/Eraser"
-msgstr "/Værktøj/Viskelædder"
+msgstr "/Værktøj/Viskelæder"
 
 #: app/tools.c:386
 msgid "Erase to background or transparency"
@@ -5367,11 +5373,11 @@ msgstr ""
 
 #: app/tools.c:487
 msgid "By Color Select"
-msgstr ""
+msgstr "Vælg efter farve"
 
 #: app/tools.c:489
 msgid "/Select/By Color..."
-msgstr ""
+msgstr "/Vælg/Efter farve..."
 
 #: app/tool_options.c:206 app/tool_options.c:688
 msgid "This tool has no options."
@@ -5411,7 +5417,7 @@ msgstr ""
 
 #: app/tool_options.c:273
 msgid "Feather"
-msgstr ""
+msgstr "Fjer"
 
 #: app/tool_options.c:381
 msgid "Fixed size / aspect ratio"
@@ -5672,7 +5678,7 @@ msgstr "Vælg fil"
 
 #: libgimp/gimpenv.c:82
 msgid "warning: no home directory."
-msgstr "advarsel: ingen hjemmekatalog"
+msgstr "advarsel: ingen hjemmemappe"
 
 #: libgimp/gimpunitmenu.c:207
 msgid "More..."
@@ -5750,7 +5756,7 @@ msgstr "Ikke fundet \\{"
 #. REG_EBRACE
 #: app/regex.c:986
 msgid "Invalid content of \\{\\}"
-msgstr "Ugyldig indhold i \\{\\"
+msgstr "Ugyldig indhold i \\{\\}"
 
 #. REG_BADBR
 #: app/regex.c:987
