@@ -356,6 +356,10 @@ tag_valid (
   }
  return valid;
 }
+
+/*
+** NOTE!! These values are duplicated in gimage.h
+*/
 		
 /* The drawable types */
 /* These are the 8bit types */
