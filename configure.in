@@ -91,7 +91,7 @@ fi
 
 
 dnl i18n stuff
-ALL_LINGUAS="cs da de fi fr hu it ja ko nl no pl ru sv"
+ALL_LINGUAS="cs da de fi fr hu it ja ko nl no pl ru sk sv"
 
 AM_GNU_GETTEXT
 
@@ -531,6 +531,8 @@ if test "x$enable_perl" != xno || test "x$with_pdbgen" = xyes ; then
 fi
 
 AM_CONDITIONAL(WITH_PDBGEN, test x$with_pdbgen = xyes)
+
+rm -f plug-ins/perl/config.status
 
 if test "x$enable_perl" != xno; then
    AC_MSG_CHECKING(for perl version >= 5.004_04)
