@@ -9,15 +9,15 @@
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.1\n"
+"Project-Id-Version: GIMP 2.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-02 15:33+0100\n"
-"PO-Revision-Date: 2004-11-02 15:33+0100\n"
+"POT-Creation-Date: 2004-11-17 15:58+0100\n"
+"PO-Revision-Date: 2004-11-17 16:00+0100\n"
 "Last-Translator: Hendrik Brandt <eru@gmx.li>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: plug-ins/script-fu/script-fu-console.c:129
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -40,90 +40,99 @@ msgstr "Aktueller Befehl"
 msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
-#: plug-ins/script-fu/script-fu-console.c:548
+#: plug-ins/script-fu/script-fu-console.c:547
 msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr "Der Skript-Fu Auswerte-Modus ermöglicht nur nicht-interaktive Aufrufe"
 
+#: plug-ins/script-fu/script-fu-interface.c:177
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr "Script-Fu kann nicht zwei Skripte gleichzeitig abarbeiten."
+
+#: plug-ins/script-fu/script-fu-interface.c:179
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr "Sie haben das Skript »%s« bereits gestartet."
+
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-interface.c:191
-#: plug-ins/script-fu/script-fu-interface.c:193
+#: plug-ins/script-fu/script-fu-interface.c:202
+#: plug-ins/script-fu/script-fu-interface.c:204
 msgid "/Script-Fu/"
 msgstr "/Skript-Fu/"
 
-#: plug-ins/script-fu/script-fu-interface.c:207
+#: plug-ins/script-fu/script-fu-interface.c:217
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-interface.c:244
+#: plug-ins/script-fu/script-fu-interface.c:254
 msgid "Script Arguments"
 msgstr "Skript-Argumente"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-interface.c:275
+#: plug-ins/script-fu/script-fu-interface.c:285
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-interface.c:318
+#: plug-ins/script-fu/script-fu-interface.c:328
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu Farbauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:424
+#: plug-ins/script-fu/script-fu-interface.c:431
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu Dateiauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:428
+#: plug-ins/script-fu/script-fu-interface.c:435
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu Verzeichnisauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:440
+#: plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu Schriftartauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:447
+#: plug-ins/script-fu/script-fu-interface.c:454
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-Fu Palettenauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:455
+#: plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-fu Pattern Selection"
 msgstr "Skript-Fu Musterauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:462
+#: plug-ins/script-fu/script-fu-interface.c:469
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu Farbverlaufsauswahl"
 
-#: plug-ins/script-fu/script-fu-interface.c:470
+#: plug-ins/script-fu/script-fu-interface.c:477
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu Pinselauswahl"
 
 #. the script progress frame
-#: plug-ins/script-fu/script-fu-interface.c:529
+#: plug-ins/script-fu/script-fu-interface.c:533
 msgid "Script Progress"
 msgstr "Skript-Fortschritt"
 
-#: plug-ins/script-fu/script-fu-interface.c:537
+#: plug-ins/script-fu/script-fu-interface.c:541
 msgid "(none)"
 msgstr "(kein)"
 
-#: plug-ins/script-fu/script-fu-interface.c:1057
+#: plug-ins/script-fu/script-fu-interface.c:1060
 #: plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1064
+#: plug-ins/script-fu/script-fu-interface.c:1067
 #: plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1071
+#: plug-ins/script-fu/script-fu-interface.c:1074
 #: plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Datum:"
 
-#: plug-ins/script-fu/script-fu-interface.c:1080
+#: plug-ins/script-fu/script-fu-interface.c:1083
 msgid "Image Types:"
 msgstr "Bildtypen:"
 
@@ -166,47 +175,47 @@ msgstr "_Server starten..."
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr "<Toolbox>/Xtns/Skript-Fu/_Auffrischen"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:123
-#: plug-ins/dbbrowser/gimpprocbrowser.c:137
+#: plug-ins/dbbrowser/gimpprocbrowser.c:125
+#: plug-ins/dbbrowser/gimpprocbrowser.c:139
 msgid "Procedure Browser"
 msgstr "Prozeduren-Browser"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:127
-#: plug-ins/dbbrowser/gimpprocbrowser.c:141
+#: plug-ins/dbbrowser/gimpprocbrowser.c:129
+#: plug-ins/dbbrowser/gimpprocbrowser.c:143
 msgid "Search by _Name"
 msgstr "Nach _Name suchen"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:128
-#: plug-ins/dbbrowser/gimpprocbrowser.c:142
+#: plug-ins/dbbrowser/gimpprocbrowser.c:130
+#: plug-ins/dbbrowser/gimpprocbrowser.c:144
 msgid "Search by _Blurb"
 msgstr "Nach _Beschreibung suchen"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:219
+#: plug-ins/dbbrowser/gimpprocbrowser.c:221
 msgid "_Search:"
 msgstr "_Suche:"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:383
+#: plug-ins/dbbrowser/gimpprocbrowser.c:382
 msgid "Searching by name - please wait"
 msgstr "Suche nach Name läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:407
+#: plug-ins/dbbrowser/gimpprocbrowser.c:406
 msgid "Searching by blurb - please wait"
 msgstr "Suche nach Beschreibung läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:418
+#: plug-ins/dbbrowser/gimpprocbrowser.c:417
 msgid "Searching - please wait"
 msgstr "Suche läuft - bitte warten"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:425
+#: plug-ins/dbbrowser/gimpprocbrowser.c:424
 msgid "1 Procedure"
 msgstr "Eine Prozedur"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:427
+#: plug-ins/dbbrowser/gimpprocbrowser.c:426
 #, c-format
 msgid "%d Procedures"
 msgstr "%d Prozeduren"
 
-#: plug-ins/dbbrowser/gimpprocbrowser.c:471
+#: plug-ins/dbbrowser/gimpprocbrowser.c:470
 msgid "No matches"
 msgstr "Keine Treffer"
 
@@ -1540,10 +1549,6 @@ msgstr "Muster anstatt Farbverlauf für Text verwenden"
 msgid "Use pattern overlay"
 msgstr "Muster überlagern"
 
-#: plug-ins/script-fu/scripts/glossy.scm.h:23
-msgid "Use tattern for outline instead of gradient"
-msgstr "Muster anstelle Farbverlauf für Umriß verwenden"
-
 #: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
 msgstr "<Image>/Skript-Fu/Alpha als Logo/Gl_ühend Heiß..."
@@ -2483,3 +2488,4 @@ msgstr "Glanzlicht Y-Versatz"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "Glanzlicht Deckkraft"
+
