@@ -1,5 +1,11 @@
 2001-01-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/levels.c: reverted the behaviour of the "Reset" button back
+	to resetting the current channel only. Resetting all channels was
+	broken and IMHO cannot work the way it was implemented.
+
+2001-01-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug_in_cmds.c
 	* app/procedural_db_cmds.c
 	* tools/pdbgen/pdb/plug_in.pdb
