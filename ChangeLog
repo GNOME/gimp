@@ -1,3 +1,16 @@
+2000-05-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/webbrowser/web-browser.scm: added links to 
+	Carey Bunks's "Gimp-Savvy" and "Grokking the GIMP" resources.
+
+        * libgimp/gimpwidgets.[ch]: use unsigned integers for the
+	memsize_entry. Added gimp_uint_adjustment_update().
+
+	* gimprc.[ch]
+	* preferences_dialog.c: use unsigned integers for memsizes 
+	(tile_cache_size and max_new_image_size). Allows to set those
+	values up to 4GB. Fixes bug #11053.
+
 2000-05-20  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/bmp/bmpwrite.c: Gimp writes valid RGB BMPs again now

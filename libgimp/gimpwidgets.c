@@ -948,7 +948,7 @@ typedef struct
 {
   GtkAdjustment *adjustment;
   GtkAdjustment *divided_adj;
-  gint           mem_size_unit;
+  guint          mem_size_unit;
 } GimpMemSizeEntryData;
 
 static void
@@ -956,7 +956,7 @@ gimp_mem_size_entry_callback (GtkAdjustment *adj,
 			      gpointer       data)
 {
   GimpMemSizeEntryData *gmsed;
-  gint new_value;
+  guint new_value;
 
   gmsed = (GimpMemSizeEntryData *)data;
   new_value = adj->value * gmsed->mem_size_unit;
@@ -969,12 +969,12 @@ gimp_mem_size_unit_callback (GtkWidget *widget,
 			     gpointer   data)
 {
   GimpMemSizeEntryData *gmsed;
-  gint divided_mem_size;
-  gint new_unit;
+  guint divided_mem_size;
+  guint new_unit;
 
   gmsed = (GimpMemSizeEntryData *)data;
 
-  new_unit = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
+  new_unit = (guint) gtk_object_get_user_data (GTK_OBJECT (widget));
 
   if (new_unit && new_unit != gmsed->mem_size_unit)
     {
@@ -1000,8 +1000,8 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
   GtkWidget *optionmenu;
 
   GimpMemSizeEntryData *gmsed;
-  gint mem_size_unit = 1;
-  gint divided_mem_size;  
+  guint mem_size_unit = 1;
+  guint divided_mem_size;  
   gint i;
 
   gmsed = g_new (GimpMemSizeEntryData, 1);
@@ -1017,7 +1017,7 @@ gimp_mem_size_entry_new (GtkAdjustment *adjustment)
   hbox = gtk_hbox_new (FALSE, 2);
   spinbutton =
     gimp_spin_button_new (&divided_adj, divided_mem_size,
-			  0.0, (4069.0 * 1024 * 1024), 1.0, 16.0, 0.0,
+			  0.0, (4069.0 * 1024 * 1024 - 1), 1.0, 16.0, 0.0,
 			  1.0, 0.0);
   gtk_signal_connect (GTK_OBJECT (divided_adj), "value_changed",
 		      GTK_SIGNAL_FUNC (gimp_mem_size_entry_callback),
@@ -1238,6 +1238,26 @@ gimp_int_adjustment_update (GtkAdjustment *adjustment,
 
   val = (gint *) data;
   *val = (gint) (adjustment->value + 0.5);
+}
+
+/**
+ * gimp_uint_adjustment_update:
+ * @adjustment: A #GtkAdjustment.
+ * @data: A pointer to a #guint variable which will store the adjustment's
+ *        value.
+ *
+ * Note that the #GtkAdjustment's value (which is a #gfloat) will be rounded
+ * with (#guint) (value + 0.5).
+ *
+ */
+void
+gimp_uint_adjustment_update (GtkAdjustment *adjustment,
+			     gpointer       data)
+{
+  guint *val;
+
+  val = (guint *) data;
+  *val = (guint) (adjustment->value + 0.5);
 }
 
 /**

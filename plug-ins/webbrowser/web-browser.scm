@@ -136,3 +136,19 @@
 (bookmark-register  "script-fu-bookmark-16"
 		    _"<Toolbox>/Xtns/Web Browser/GIMP Bugs"
 		    "Link to http://www.xach.com/gimp/news/bugreport.html")
+
+(define (script-fu-bookmark-17)
+    (script-fu-bookmark "http://gimp-savvy.com/"))
+
+(bookmark-register  "script-fu-bookmark-17"
+		    _"<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+		    "Link to http://gimp-savvy.com/")
+
+(define (script-fu-bookmark-18)
+    (script-fu-bookmark "http://gimp-savvy.com/BOOK/"))
+
+(bookmark-register  "script-fu-bookmark-18"
+		    _"<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+		    "Link to http://gimp-savvy.com/BOOK/")
+
+

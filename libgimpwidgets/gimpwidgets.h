@@ -218,6 +218,9 @@ void gimp_menu_item_update               (GtkWidget       *widget,
 void gimp_int_adjustment_update          (GtkAdjustment   *adjustment,
 					  gpointer         data);
 
+void gimp_uint_adjustment_update         (GtkAdjustment   *adjustment,
+					  gpointer         data);
+
 void gimp_float_adjustment_update        (GtkAdjustment   *adjustment,
 					  gpointer         data);
 

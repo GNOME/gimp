@@ -99,7 +99,7 @@ static gint               old_default_type;
 static gchar *            old_default_comment;
 static gint               old_default_dot_for_dot;
 static gint               old_stingy_memory_use;
-static gint               old_tile_cache_size;
+static guint              old_tile_cache_size;
 static gint               old_min_colors;
 static gint               old_install_cmap;
 static gint               old_cycled_marching_ants;
@@ -119,7 +119,7 @@ static gint               old_using_xserver_resolution;
 static gint               old_num_processors;
 static gchar *            old_image_title_format;
 static gint               old_global_paint_options;
-static gint               old_max_new_image_size;
+static guint              old_max_new_image_size;
 static gint               old_thumbnail_mode;
 static gint 	          old_show_indicators;
 static gint	          old_trust_dirty_flag;
@@ -150,7 +150,7 @@ static gchar *            edit_plug_in_path   = NULL;
 static gchar *            edit_module_path    = NULL;
 
 /*  variables which will be changed _after_ closing the dialog  */
-static gint               edit_tile_cache_size;
+static guint              edit_tile_cache_size;
 
 static GtkWidget *        prefs_dlg = NULL;
 
@@ -1630,10 +1630,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /*  The maximum size of a new image  */  
   adjustment = gtk_adjustment_new (max_new_image_size, 
-				   0, (4069.0 * 1024 * 1024), 1.0, 1.0, 0.0);
+				   0, (4069.0 * 1024 * 1024 - 1), 
+				   1.0, 1.0, 0.0);
   hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_uint_adjustment_update),
 		      &max_new_image_size);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Maximum Image Size:"), 1.0, 0.5,
@@ -2155,10 +2156,11 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   /*  The tile cache size  */
   adjustment = gtk_adjustment_new (edit_tile_cache_size, 
-				   0, (4069.0 * 1024 * 1024), 1.0, 1.0, 0.0);
+				   0, (4069.0 * 1024 * 1024 - 1), 
+				   1.0, 1.0, 0.0);
   hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
   gtk_signal_connect (GTK_OBJECT (adjustment), "value_changed",
-		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      GTK_SIGNAL_FUNC (gimp_uint_adjustment_update),
 		      &edit_tile_cache_size);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Tile Cache Size:"), 1.0, 0.5,

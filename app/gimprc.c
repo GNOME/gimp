@@ -118,7 +118,7 @@ gchar             *gradient_path = NULL;
 gchar             *default_gradient = NULL;
 gchar             *pluginrc_path = NULL;
 gchar             *module_path = NULL;
-gint               tile_cache_size = 33554432;  /* 32 MB */
+guint              tile_cache_size = 33554432;  /* 32 MB */
 gint               marching_speed = 300;   /* 300 ms */
 gdouble            gamma_val = 1.0;
 gint               transparency_type = 1;  /* Mid-Tone Checks */
@@ -162,7 +162,7 @@ gint               num_processors = 1;
 gchar             *image_title_format = NULL;
 gboolean           global_paint_options = FALSE;
 gboolean           show_indicators = TRUE;
-gint               max_new_image_size = 33554432;  /* 32 MB */
+guint              max_new_image_size = 33554432;  /* 32 MB */
 gint               thumbnail_mode = 1;
 gboolean           trust_dirty_flag = FALSE;
 gboolean           use_help = TRUE;
@@ -234,13 +234,13 @@ static gchar *open_backup_file (gchar  *filename,
 				FILE  **fp_new,
 				FILE  **fp_old);
 
-static ParseInfo parse_info = { NULL };
+static ParseInfo  parse_info = { NULL };
 
-static GList *unknown_tokens = NULL;
+static GList     *unknown_tokens = NULL;
 
-static int cur_token;
-static int next_token;
-static int done;
+static gint       cur_token;
+static gint       next_token;
+static gboolean   done;
 
 static ParseFunc funcs[] =
 {
@@ -348,18 +348,19 @@ static SessionInfo *session_infos[] =
   &error_console_session_info,
   &document_index_session_info
 };
-static int nsession_infos = sizeof (session_infos) / sizeof (session_infos[0]);
+static gint nsession_infos = sizeof (session_infos) / sizeof (session_infos[0]);
 
-extern char* alternate_gimprc;
-extern char* alternate_system_gimprc;
+extern gchar *alternate_gimprc;
+extern gchar *alternate_system_gimprc;
 
 #define DEFAULT_IMAGE_TITLE_FORMAT "%f-%p.%i (%t)"
 #define DEFAULT_COMMENT            "Created with The GIMP"
 
-static char *
+static gchar *
 gimp_system_rc_file (void)
 {
-  static char *value = NULL;
+  static gchar *value = NULL;
+
   if (value != NULL)
     return value;
 
@@ -384,9 +385,10 @@ parse_buffers_init (void)
   return FALSE;
 }
 
-static GList *parse_add_directory_tokens (void)
+static GList *
+parse_add_directory_tokens (void)
 {
-  char *gimp_dir;
+  gchar *gimp_dir;
 
   gimp_dir = gimp_directory ();
   add_gimp_directory_token (gimp_dir);
@@ -432,7 +434,7 @@ parse_gimprc (void)
 gboolean
 parse_absolute_gimprc_file (char *filename)
 {
-  int status;
+  gint status;
 
   parse_info.fp = fopen (filename, "rt");
   if (!parse_info.fp)
@@ -492,7 +494,7 @@ parse_gimprc_file (gchar *filename)
 
 static GList *
 g_list_findstr (GList *list,
-		char  *str)
+		gchar *str)
 {
   for (; list; list = g_list_next (list))
     {
@@ -653,20 +655,20 @@ void
 save_gimprc (GList **updated_options,
 	     GList **conflicting_options)
 {
-  char timestamp[40];
-  char *name;
-  char tokname[51];
-  FILE *fp_new;
-  FILE *fp_old;
+  gchar  timestamp[40];
+  gchar *name;
+  gchar  tokname[51];
+  FILE  *fp_new;
+  FILE  *fp_old;
   GList *option;
-  char *cur_line;
-  char *prev_line;
-  char *str;
+  gchar *cur_line;
+  gchar *prev_line;
+  gchar *str;
   gchar *error_msg;
   gchar *personal_gimprc;
 
-  g_assert(updated_options != NULL);
-  g_assert(conflicting_options != NULL);
+  g_assert (updated_options != NULL);
+  g_assert (conflicting_options != NULL);
 
   personal_gimprc = gimp_personal_rc_file ("gimprc");
   error_msg = open_backup_file (personal_gimprc,
@@ -783,7 +785,7 @@ save_gimprc (GList **updated_options,
   fclose (fp_new);
 }
 
-static int
+static gint
 get_next_token (void)
 {
   if (next_token != -1)
@@ -799,7 +801,7 @@ get_next_token (void)
   return cur_token;
 }
 
-static int
+static gint
 peek_next_token (void)
 {
   if (next_token == -1)
@@ -808,11 +810,11 @@ peek_next_token (void)
   return next_token;
 }
 
-static int
+static gint
 parse_statement (void)
 {
-  int token;
-  int i;
+  gint token;
+  gint i;
 
   token = peek_next_token ();
   if (!token)
@@ -879,12 +881,12 @@ parse_statement (void)
   return parse_unknown (token_sym);
 }
 
-static int
+static gint
 parse_path (gpointer val1p,
 	    gpointer val2p)
 {
-  int token;
-  char **pathp;
+  gint    token;
+  gchar **pathp;
 
   g_assert (val1p != NULL);
   pathp = (char **)val1p;
@@ -912,15 +914,15 @@ parse_path (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_string (gpointer val1p,
 	      gpointer val2p)
 {
-  int token;
-  char **strp;
+  gint    token;
+  gchar **strp;
 
   g_assert (val1p != NULL);
-  strp = (char **)val1p;
+  strp = (gchar **)val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -943,15 +945,15 @@ parse_string (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_double (gpointer val1p,
 	      gpointer val2p)
 {
-  int token;
-  double *nump;
+  gint     token;
+  gdouble *nump;
 
   g_assert (val1p != NULL);
-  nump = (double *)val1p;
+  nump = (gdouble *)val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -968,15 +970,15 @@ parse_double (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_float (gpointer val1p,
 	     gpointer val2p)
 {
-  int token;
-  float *nump;
+  gint    token;
+  gfloat *nump;
 
   g_assert (val1p != NULL);
-  nump = (float *)val1p;
+  nump = (gfloat *)val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -997,11 +999,11 @@ static int
 parse_int (gpointer val1p,
 	   gpointer val2p)
 {
-  int token;
-  int *nump;
+  gint token;
+  gint *nump;
 
   g_assert (val1p != NULL);
-  nump = (int *)val1p;
+  nump = (gint *)val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_NUMBER))
@@ -1022,8 +1024,8 @@ static int
 parse_boolean (gpointer val1p,
 	       gpointer val2p)
 {
-  int token;
-  int *boolp;
+  gint  token;
+  gint *boolp;
 
   /* The variable to be set should be passed in the first or second
    * pointer.  If the pointer is in val2p, then the opposite value is
@@ -1080,13 +1082,13 @@ parse_boolean (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_position (gpointer val1p,
 		gpointer val2p)
 {
-  int token;
-  int *xp;
-  int *yp;
+  gint  token;
+  gint *xp;
+  gint *yp;
 
   g_assert (val1p != NULL && val2p != NULL);
   xp = (int *)val1p;
@@ -1114,17 +1116,17 @@ parse_position (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_mem_size (gpointer val1p,
 		gpointer val2p)
 {
-  int mult;
-  int suffix;
-  int token;
-  int *sizep;
+  gint   suffix;
+  gint   token;
+  guint  mult;
+  guint *sizep;
 
   g_assert (val1p != NULL);
-  sizep = (int *)val1p;
+  sizep = (guint *)val1p;
 
   token = peek_next_token ();
   if (!token || ((token != TOKEN_NUMBER) &&
@@ -1161,12 +1163,12 @@ parse_mem_size (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_image_type (gpointer val1p,
 		  gpointer val2p)
 {
-  int token;
-  int *typep;
+  gint token;
+  gint *typep;
   
   g_assert (val1p != NULL);
   typep = (int *)val1p;
@@ -1191,11 +1193,11 @@ parse_image_type (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_interpolation_type (gpointer val1p,
 			  gpointer val2p)
 {
-  int token;
+  gint token;
   InterpolationType *typep;
   
   g_assert (val1p != NULL);
@@ -1223,11 +1225,11 @@ parse_interpolation_type (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_preview_size (gpointer val1p,
 		    gpointer val2p)
 {
-  int token;
+  gint token;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_SYMBOL && token != TOKEN_NUMBER))
@@ -1262,11 +1264,11 @@ parse_preview_size (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_nav_preview_size (gpointer val1p,
 			gpointer val2p)
 {
-  int token;
+  gint token;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_SYMBOL && token != TOKEN_NUMBER))
@@ -1298,12 +1300,12 @@ parse_nav_preview_size (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_units (gpointer val1p,
 	     gpointer val2p)
 {
-  int token;
-  int i;
+  gint token;
+  gint i;
 
   g_assert (val1p != NULL);
 
@@ -1328,14 +1330,14 @@ parse_units (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_plug_in (gpointer val1p,
 	       gpointer val2p)
 {
-  char *name;
-  char *menu_path;
-  char *accelerator;
-  int token;
+  gchar *name;
+  gchar *menu_path;
+  gchar *accelerator;
+  gint token;
 
   name = NULL;
   menu_path = NULL;
@@ -1378,7 +1380,7 @@ parse_plug_in (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_plug_in_def (gpointer val1p,
 		   gpointer val2p)
 {
@@ -1431,10 +1433,10 @@ parse_plug_in_def (gpointer val1p,
   return ERROR;
 }
 
-static int
+static gint
 parse_locale_def (PlugInDef *plug_in_def)
 {
-  int token;
+  gint token;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_STRING))
@@ -1472,12 +1474,12 @@ parse_locale_def (PlugInDef *plug_in_def)
 }
 
 
-static int
+static gint
 parse_proc_def (PlugInProcDef **proc_def)
 {
   PlugInProcDef *pd;
-  int token;
-  int i;
+  gint token;
+  gint i;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_LEFT_PAREN))
@@ -1653,10 +1655,10 @@ parse_proc_def (PlugInProcDef **proc_def)
   return ERROR;
 }
 
-static int
+static gint
 parse_proc_arg (ProcArg *arg)
 {
-  int token;
+  gint token;
 
   arg->arg_type = -1;
   arg->name = NULL;
@@ -1708,13 +1710,13 @@ parse_proc_arg (ProcArg *arg)
   return ERROR;
 }
 
-static int
+static gint
 parse_menu_path (gpointer val1p,
 		 gpointer val2p)
 {
-  char *menu_path;
-  char *accelerator;
-  int token;
+  gchar *menu_path;
+  gchar *accelerator;
+  gint token;
 
   menu_path = NULL;
   accelerator = NULL;
@@ -1919,7 +1921,7 @@ static void
 parse_device_accelerator (const char   *accelerator,
 			  GdkDeviceKey *key)
 {
-  int done;
+  gboolean done;
 
   g_return_if_fail (accelerator != NULL);
   g_return_if_fail (key != NULL);
@@ -2193,12 +2195,12 @@ parse_device (gpointer val1p,
   return ERROR;
 }
 
-static int
+static gint
 parse_session_info (gpointer val1p, 
 		    gpointer val2p)
 {
-  int i;
-  int token;
+  gint i;
+  gint token;
   SessionInfo *info = NULL;
 
   token = peek_next_token ();
@@ -2274,7 +2276,7 @@ parse_session_info (gpointer val1p,
   return OK;
 }
 
-static int
+static gint
 parse_unit_info (gpointer val1p, 
 		 gpointer val2p)
 {
@@ -2391,12 +2393,12 @@ parse_unit_info (gpointer val1p,
   return ERROR;
 }
 
-static int
+static gint
 parse_parasite (gpointer val1p, 
 		gpointer val2p)
 {
-  int token;
-  int res = ERROR;
+  gint token;
+  gint res = ERROR;
   gchar *identifier = NULL;
   gulong flags = 0;
   Parasite *parasite;
@@ -2432,11 +2434,11 @@ error:
   return res;
 }
 
-static int
+static gint
 parse_help_browser (gpointer val1p,
 		    gpointer val2p)
 {
-  int token;
+  gint token;
 
   token = peek_next_token ();
   if (!token || token != TOKEN_SYMBOL)
@@ -2456,10 +2458,10 @@ parse_help_browser (gpointer val1p,
   return OK;
 }
 
-static int
-parse_unknown (char *token_sym)
+static gint
+parse_unknown (gchar *token_sym)
 {
-  int token;
+  gint token;
   UnknownToken *ut, *tmp;
   GList *list;
 
@@ -2510,16 +2512,17 @@ parse_unknown (char *token_sym)
 }
 
 
-char* 
-gimprc_value_to_str (char *name)
+gchar* 
+gimprc_value_to_str (gchar *name)
 {
   return value_to_str (name); /* had a namespace collision */
 }
 
-static char *
-value_to_str (char *name)
+static gchar *
+value_to_str (gchar *name)
 {
-  int i;
+  gint i;
+
   for (i = 0; i < nfuncs; i++)
     if (! strcmp (funcs[i].name, name))
       switch (funcs[i].type)
@@ -2566,7 +2569,7 @@ value_to_str (char *name)
   return NULL;
 }
 
-static inline char *
+static inline gchar *
 string_to_str (gpointer val1p,
 	       gpointer val2p)
 {
@@ -2579,35 +2582,35 @@ string_to_str (gpointer val1p,
   return retval;
 }
 
-static inline char *
+static inline gchar *
 path_to_str (gpointer val1p,
 	     gpointer val2p)
 {
   return string_to_str (val1p, val2p);
 }
 
-static inline char *
+static inline gchar *
 double_to_str (gpointer val1p,
 	       gpointer val2p)
 {
-  return g_strdup_printf ("%f", *((double *)val1p));
+  return g_strdup_printf ("%f", *((gdouble *)val1p));
 }
 
-static inline char *
+static inline gchar *
 float_to_str (gpointer val1p,
 	      gpointer val2p)
 {
-  return g_strdup_printf ("%f", (double)(*((float *)val1p)));
+  return g_strdup_printf ("%f", (gdouble)(*((float *)val1p)));
 }
 
-static inline char *
+static inline gchar *
 int_to_str (gpointer val1p,
 	    gpointer val2p)
 {
-  return g_strdup_printf ("%d", *((int *)val1p));
+  return g_strdup_printf ("%d", *((gint *)val1p));
 }
 
-static inline char *
+static inline gchar *
 boolean_to_str (gpointer val1p,
 		gpointer val2p)
 {
@@ -2623,20 +2626,20 @@ boolean_to_str (gpointer val1p,
     return g_strdup ("no");
 }
 
-static inline char *
+static inline gchar *
 position_to_str (gpointer val1p,
 		 gpointer val2p)
 {
   return g_strdup_printf ("%d %d", *((int *)val1p), *((int *)val2p));
 }
 
-static inline char *
+static inline gchar *
 mem_size_to_str (gpointer val1p,
 		 gpointer val2p)
 {
-  int size;
+  guint size;
 
-  size = *((int *)val1p);
+  size = *((guint *)val1p);
   if (size % 1048576 == 0)
     return g_strdup_printf ("%dM", size / 1048576);
   else if (size % 1024 == 0)
@@ -2645,20 +2648,20 @@ mem_size_to_str (gpointer val1p,
     return g_strdup_printf ("%dB", size);
 }
 
-static inline char *
+static inline gchar *
 image_type_to_str (gpointer val1p,
 		   gpointer val2p)
 {
-  int type;
+  gint type;
 
-  type = *((int *)val1p);
+  type = *((gint *)val1p);
   if (type == GRAY)
     return g_strdup ("gray");
   else
     return g_strdup ("rgb");
 }
 
-static inline char *
+static inline gchar *
 interpolation_type_to_str (gpointer val1p,
 			   gpointer val2p)
 {
@@ -2678,7 +2681,7 @@ interpolation_type_to_str (gpointer val1p,
   }
 }
 
-static inline char *
+static inline gchar *
 preview_size_to_str (gpointer val1p,
 		     gpointer val2p)
 {
@@ -2696,7 +2699,7 @@ preview_size_to_str (gpointer val1p,
     return g_strdup ("none");
 }
 
-static inline char *
+static inline gchar *
 nav_preview_size_to_str (gpointer val1p,
 			 gpointer val2p)
 {
@@ -2711,14 +2714,14 @@ nav_preview_size_to_str (gpointer val1p,
 }
 
 
-static inline char *
+static inline gchar *
 units_to_str (gpointer val1p,
 	      gpointer val2p)
 {
   return g_strdup (gimp_unit_get_identifier (*((GimpUnit*)val1p)));
 }
 
-static inline char *
+static inline gchar *
 help_browser_to_str (gpointer val1p,
 		     gpointer val2p)
 {
@@ -2728,7 +2731,7 @@ help_browser_to_str (gpointer val1p,
     return g_strdup ("gimp");
 }
 
-static inline char *
+static inline gchar *
 comment_to_str (gpointer val1p,
 		gpointer val2p)
 {
@@ -2747,7 +2750,7 @@ comment_to_str (gpointer val1p,
 }
 
 static void
-add_gimp_directory_token (char *gimp_dir)
+add_gimp_directory_token (gchar *gimp_dir)
 {
   UnknownToken *ut;
 
@@ -2776,7 +2779,7 @@ add_gimp_directory_token (char *gimp_dir)
 
 #ifdef __EMX__
 static void
-add_x11root_token (char *x11root)
+add_x11root_token (gchar *x11root)
 {
   UnknownToken *ut;
 
@@ -2812,14 +2815,14 @@ add_x11root_token (char *x11root)
    explaining the problem.
 
    */
-static char *
-open_backup_file (char *filename,
-		  char *secondary_filename,
-		  char **name_used,
-                  FILE **fp_new,
-                  FILE **fp_old)
+static gchar *
+open_backup_file (gchar  *filename,
+		  gchar  *secondary_filename,
+		  gchar **name_used,
+                  FILE  **fp_new,
+                  FILE  **fp_old)
 {
-  char *oldfilename = NULL;
+  gchar *oldfilename = NULL;
 
   /* Rename the file to *.old, open it for reading and create the new file. */
   if ((*fp_old = fopen (filename, "rt")) == NULL)
@@ -2872,8 +2875,8 @@ open_backup_file (char *filename,
   return NULL;
 }
 
-char*
-gimprc_find_token (char *token)
+gchar*
+gimprc_find_token (gchar *token)
 {
   GList *list;
   UnknownToken *ut;
@@ -2890,8 +2893,8 @@ gimprc_find_token (char *token)
 }
 
 static void
-gimprc_set_token (char *token,
-		  char *value)
+gimprc_set_token (gchar *token,
+		  gchar *value)
 {
   GList *list;
   UnknownToken *ut;
