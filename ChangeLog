@@ -1,3 +1,7 @@
+2003-07-26  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/libgck/gck/Makefile.am: Use -no-undefined on Windows.
+
 2003-07-26  Hans Breuer  <hans@breuer.org>
 
 	* libgimp/gimpcompat.h : renamed GimpOrientationType

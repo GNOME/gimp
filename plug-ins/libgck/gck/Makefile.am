@@ -1,5 +1,9 @@
 ## Process this file with automake to produce Makefile.in
 
+if OS_WIN32
+no_undefined = -no-undefined
+endif
+
 gckincludedir = $(includedir)/gimp-$(LT_RELEASE)/gck
 
 lib_LTLIBRARIES = libgck-1.3.la
@@ -11,7 +15,7 @@ gckinclude_HEADERS = \
 	gck.h
 
 libgck_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)
+	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) $(no_undefined)
 
 INCLUDES = \
 	-I..			\
