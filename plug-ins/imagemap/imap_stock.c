@@ -41,42 +41,56 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static GtkStockItem imap_stock_items[] = {
-   {IMAP_STOCK_MAP_INFO, N_("Edit Map Info..."), 0, 0, "imap"},
+static GtkStockItem imap_stock_items[] =
+{
+  { IMAP_STOCK_MAP_INFO,
+    N_("Edit Map Info..."), 0, 0, GETTEXT_PACKAGE "-std-plug-ins" },
 };
 
 static void
-add_stock_icon(GtkIconFactory *factory, const gchar *stock_id, 
-	       const char **xpm_data)
+add_stock_icon (GtkIconFactory  *factory,
+                const gchar     *stock_id,
+                const gchar    **xpm_data)
 {
    GtkIconSet *icon_set;
    GdkPixbuf  *pixbuf;
 
-   pixbuf = gdk_pixbuf_new_from_xpm_data(xpm_data);
-   icon_set = gtk_icon_set_new_from_pixbuf(pixbuf);
-   gtk_icon_factory_add(factory, stock_id, icon_set);
-   g_object_unref(pixbuf);
-   gtk_icon_set_unref(icon_set);
+   pixbuf = gdk_pixbuf_new_from_xpm_data (xpm_data);
+   icon_set = gtk_icon_set_new_from_pixbuf (pixbuf);
+   gtk_icon_factory_add (factory, stock_id, icon_set);
+   g_object_unref (pixbuf);
+   gtk_icon_set_unref (icon_set);
 }
 
 void
-init_stock_icons(void)
+init_stock_icons (void)
 {
-   GtkIconFactory *factory = gtk_icon_factory_new();
+   GtkIconFactory *factory = gtk_icon_factory_new ();
 
-   add_stock_icon(factory, IMAP_STOCK_ARROW, (const char**) arrow_xpm);
-   add_stock_icon(factory, IMAP_STOCK_CIRCLE, (const char**) circle_xpm);
-   add_stock_icon(factory, IMAP_STOCK_COORD, (const char**) coord_xpm);
-   add_stock_icon(factory, IMAP_STOCK_DIMENSION, (const char**) dimension_xpm);
-   add_stock_icon(factory, IMAP_STOCK_JAVA, (const char**) java_xpm);
-   add_stock_icon(factory, IMAP_STOCK_LINK, (const char**) link_xpm);
-   add_stock_icon(factory, IMAP_STOCK_MAP_INFO, (const char**) map_info_xpm);
-   add_stock_icon(factory, IMAP_STOCK_POLYGON, (const char**) polygon_xpm);  
-   add_stock_icon(factory, IMAP_STOCK_RECTANGLE, (const char**) rectangle_xpm);
-   add_stock_icon(factory, IMAP_STOCK_TO_BACK, (const char**) to_back_xpm);
-   add_stock_icon(factory, IMAP_STOCK_TO_FRONT, (const char**) to_front_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_ARROW,     (const gchar**) arrow_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_CIRCLE,    (const gchar**) circle_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_COORD,     (const gchar**) coord_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_DIMENSION, (const gchar**) dimension_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_JAVA,      (const gchar**) java_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_LINK,      (const gchar**) link_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_MAP_INFO,  (const gchar**) map_info_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_POLYGON,   (const gchar**) polygon_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_RECTANGLE, (const gchar**) rectangle_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_TO_BACK,   (const gchar**) to_back_xpm);
+   add_stock_icon (factory,
+                   IMAP_STOCK_TO_FRONT,  (const gchar**) to_front_xpm);
 
    gtk_icon_factory_add_default(factory);
 
-   gtk_stock_add_static(imap_stock_items, G_N_ELEMENTS(imap_stock_items));
+   gtk_stock_add_static (imap_stock_items, G_N_ELEMENTS (imap_stock_items));
 }

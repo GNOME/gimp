@@ -222,6 +222,7 @@ plug-ins/imagemap/imap_file.c
 plug-ins/imagemap/imap_grid.c
 plug-ins/imagemap/imap_main.c
 plug-ins/imagemap/imap_menu.c
+plug-ins/imagemap/imap_object_popup.c
 plug-ins/imagemap/imap_polygon.c
 plug-ins/imagemap/imap_popup.c
 plug-ins/imagemap/imap_preferences.c

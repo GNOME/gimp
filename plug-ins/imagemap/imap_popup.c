@@ -124,29 +124,29 @@ create_main_popup_menu(void)
    GtkWidget *popup_menu, *sub_menu;
    GtkWidget *paste;
    GSList    *group;
-   
+
    _popup.main = popup_menu = gtk_menu_new();
 
-   make_item_with_image(popup_menu, IMAP_STOCK_MAP_INFO, menu_command, 
+   make_item_with_image(popup_menu, IMAP_STOCK_MAP_INFO, menu_command,
 			&_popup.cmd_edit_map_info);
-   
+
    sub_menu = make_sub_menu(popup_menu, _("Tools"));
-   _popup.arrow = make_radio_item(sub_menu, NULL, _("Arrow"), popup_arrow, 
+   _popup.arrow = make_radio_item(sub_menu, NULL, _("Arrow"), popup_arrow,
 				  NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_popup.arrow));
-   _popup.rectangle = make_radio_item(sub_menu, group, _("Rectangle"), 
+   _popup.rectangle = make_radio_item(sub_menu, group, _("Rectangle"),
 				      popup_rectangle, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_popup.rectangle));
-   _popup.circle = make_radio_item(sub_menu, group, _("Circle"), 
+   _popup.circle = make_radio_item(sub_menu, group, _("Circle"),
 				   popup_circle, NULL);
    group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_popup.circle));
-   _popup.polygon = make_radio_item(sub_menu, group, _("Polygon"), 
+   _popup.polygon = make_radio_item(sub_menu, group, _("Polygon"),
 				    popup_polygon, NULL);
-   
+
    sub_menu = make_sub_menu(popup_menu, _("Zoom"));
-   _popup.zoom_in = make_item_with_image(sub_menu, GTK_STOCK_ZOOM_IN, 
+   _popup.zoom_in = make_item_with_image(sub_menu, GTK_STOCK_ZOOM_IN,
 					 menu_command, &_popup.cmd_zoom_in);
-   _popup.zoom_out = make_item_with_image(sub_menu, GTK_STOCK_ZOOM_OUT, 
+   _popup.zoom_out = make_item_with_image(sub_menu, GTK_STOCK_ZOOM_OUT,
 					  menu_command, &_popup.cmd_zoom_out);
    gtk_widget_set_sensitive(_popup.zoom_out, FALSE);
 
@@ -155,7 +155,7 @@ create_main_popup_menu(void)
 			&_popup.cmd_grid_settings);
    make_item_with_label(popup_menu, _("Guides..."), menu_command,
 			&_popup.cmd_create_guides);
-   paste = make_item_with_image(popup_menu, GTK_STOCK_PASTE, menu_command, 
+   paste = make_item_with_image(popup_menu, GTK_STOCK_PASTE, menu_command,
 				&_popup.cmd_paste);
    gtk_widget_set_sensitive(paste, FALSE);
    paste_buffer_add_add_cb(paste_buffer_added, (gpointer) paste);

@@ -29,6 +29,9 @@
 #include "imap_main.h"
 #include "imap_object_popup.h"
 
+#include "libgimp/stdplugins-intl.h"
+
+
 /* Current object with popup menu */
 static Object_t *_current_obj;
 
@@ -58,7 +61,7 @@ popup_delete_area(GtkWidget *widget, gpointer data)
 static void
 popup_move_up(GtkWidget *widget, gpointer data)
 {
-   Command_t *command = object_up_command_new(_current_obj->list, 
+   Command_t *command = object_up_command_new(_current_obj->list,
 					      _current_obj);
    command_execute(command);
 }
@@ -92,23 +95,28 @@ popup_copy(GtkWidget *widget, gpointer data)
 ObjectPopup_t*
 make_object_popup(void)
 {
-   ObjectPopup_t *popup = g_new(ObjectPopup_t, 1);
-   GtkWidget *menu;
+   ObjectPopup_t *popup = g_new (ObjectPopup_t, 1);
+   GtkWidget     *menu;
 
-   popup->menu = menu = gtk_menu_new();
-   make_item_with_label(menu, "Edit Area Info...", popup_edit_area_info, NULL);
-   make_item_with_label(menu, "Delete Area", popup_delete_area, NULL);
-   popup->up = make_item_with_label(menu, "Move Up", popup_move_up, NULL);
-   popup->down = make_item_with_label(menu, "Move Down", popup_move_down, 
-				      NULL);
-   make_item_with_label(menu, "Cut", popup_cut, NULL);
-   make_item_with_label(menu, "Copy", popup_copy, NULL);
+   popup->menu = menu = gtk_menu_new ();
+   make_item_with_label (menu,
+                        _("Edit Area Info..."), popup_edit_area_info, NULL);
+   make_item_with_label (menu,
+                         _("Delete Area"), popup_delete_area, NULL);
+   popup->up = make_item_with_label (menu,
+                                     _("Move Up"), popup_move_up, NULL);
+   popup->down = make_item_with_label (menu,
+                                       _("Move Down"), popup_move_down, NULL);
+   make_item_with_label (menu,
+                         _("Cut"), popup_cut, NULL);
+   make_item_with_label (menu,
+                         _("Copy"), popup_copy, NULL);
 
    return popup;
 }
 
 GtkWidget*
-object_popup_prepend_menu(ObjectPopup_t *popup, gchar *label, 
+object_popup_prepend_menu(ObjectPopup_t *popup, gchar *label,
 			  MenuCallback activate, gpointer data)
 {
    return prepend_item_with_label(popup->menu, label, activate, data);
@@ -121,15 +129,15 @@ object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)
 
    _current_obj = popup->obj = obj;
    gtk_widget_set_sensitive(popup->up, (position > 1) ? TRUE : FALSE);
-   gtk_widget_set_sensitive(popup->down, 
-			    (position < g_list_length(obj->list->list)) 
+   gtk_widget_set_sensitive(popup->down,
+			    (position < g_list_length(obj->list->list))
 			    ? TRUE : FALSE);
 
    gtk_menu_popup(GTK_MENU(popup->menu), NULL, NULL, NULL, NULL,
 		  event->button, event->time);
 }
 
-void 
+void
 object_do_popup(Object_t *obj, GdkEventButton *event)
 {
    static ObjectPopup_t *popup;

@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-03-10 12:38+0100\n"
-"PO-Revision-Date: 2004-03-10 12:21+0100\n"
+"POT-Creation-Date: 2004-03-10 12:55+0100\n"
+"PO-Revision-Date: 2004-03-10 12:56+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -8479,6 +8479,7 @@ msgstr "Vordergrund"
 
 #: plug-ins/gfig/gfig.c:2078 plug-ins/imagemap/imap_cmd_copy.c:54
 #: plug-ins/imagemap/imap_cmd_copy_object.c:55
+#: plug-ins/imagemap/imap_object_popup.c:113
 #: plug-ins/imagemap/imap_toolbar.c:127
 msgid "Copy"
 msgstr "Kopieren"
@@ -10149,6 +10150,7 @@ msgstr "Erzeugen"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:55
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
+#: plug-ins/imagemap/imap_object_popup.c:111
 #: plug-ins/imagemap/imap_toolbar.c:124
 msgid "Cut"
 msgstr "Ausschneiden"
@@ -10272,6 +10274,7 @@ msgstr "Punkt hinzufügen"
 
 #: plug-ins/imagemap/imap_cmd_move_down.c:53
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
+#: plug-ins/imagemap/imap_object_popup.c:109
 #: plug-ins/imagemap/imap_selection.c:169
 msgid "Move Down"
 msgstr "Runter"
@@ -10292,6 +10295,7 @@ msgstr "Nach vorne bringen"
 
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
+#: plug-ins/imagemap/imap_object_popup.c:107
 #: plug-ins/imagemap/imap_selection.c:165
 msgid "Move Up"
 msgstr "Rauf"
@@ -10548,7 +10552,7 @@ msgstr "_Bearbeiten"
 msgid "Deselect _All"
 msgstr "_Alles abwählen"
 
-#: plug-ins/imagemap/imap_menu.c:278
+#: plug-ins/imagemap/imap_menu.c:278 plug-ins/imagemap/imap_object_popup.c:103
 msgid "Edit Area Info..."
 msgstr "Bereichs-Information bearbeiten..."
 
@@ -10607,6 +10611,10 @@ msgstr "_Hilfe"
 #: plug-ins/imagemap/imap_menu.c:396
 msgid "About ImageMap..."
 msgstr "Info zu ImageMap..."
+
+#: plug-ins/imagemap/imap_object_popup.c:105
+msgid "Delete Area"
+msgstr "Bereich löschen"
 
 #: plug-ins/imagemap/imap_polygon.c:71
 msgid "_Polygon"
@@ -10776,7 +10784,7 @@ msgstr "Map-Datei Format"
 msgid "View Source"
 msgstr "Zeige Quelle"
 
-#: plug-ins/imagemap/imap_stock.c:45
+#: plug-ins/imagemap/imap_stock.c:47
 msgid "Edit Map Info..."
 msgstr "Bearbeite Map-Info..."
 

@@ -1,3 +1,11 @@
+2004-03-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_object_popup.c: marked missing strings
+	for localization (bug #136713).
+
+	* plug-ins/imagemap/imap_stock.c (imap_stock_items): fixed bogus
+	translation domain for stock item (bug #136713).
+
 2004-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/edit.pdb (edit_cut, edit_copy): added boolean
