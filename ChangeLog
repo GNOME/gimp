@@ -1,3 +1,8 @@
+Mon Oct  4 17:46:50 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/unittest/parse_gimprc.c (show_gimprc_funcs_tab): Display
+	ParseFunc table.
+
 1999-10-04  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* app/tile_swap.c (tile_swap_default_out): don't update a tile's

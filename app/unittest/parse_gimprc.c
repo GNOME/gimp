@@ -20,6 +20,93 @@
 #include "globals.c"
 #include "../gimprc.c"
 
+static void show_gimprc_globals()
+{
+    printf("%-20s=%s\n","plug_in_path",plug_in_path);
+    printf("%-20s=%s\n","temp_path",temp_path);
+    printf("%-20s=%s\n","brush_path",brush_path);
+    printf("%-20s=%s\n","brush_vbr_path",brush_vbr_path);
+    printf("%-20s=%s\n","default_brush",default_brush);
+    printf("%-20s=%s\n","pattern_path",pattern_path);
+    printf("%-20s=%s\n","default_pattern",default_pattern);
+    printf("%-20s=%s\n","palette_path",palette_path);
+    printf("%-20s=%s\n","default_palette",default_palette);
+    printf("%-20s=%s\n","gradient_path",gradient_path);
+    printf("%-20s=%s\n","default_gradient",default_gradient);
+    printf("%-20s=%s\n","pluginrc_path",pluginrc_path);
+    printf("%-20s=%s\n","module_path",module_path);
+    printf("%-20s=%s\n","image_title_format",image_title_format); 
+/*    printf("%-20s=%s\n","",); */
+}
+
+static void show_gimprc_funcs_tab()
+{
+    int i;
+    int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
+	
+    for (i = 0; i < nfuncs; i++)
+    {
+	printf("%2d: t:%02d %-25s =",i,funcs[i].type, funcs[i].name);
+	switch (funcs[i].type)
+        {
+        case TT_STRING:
+	case TT_PATH:
+	{
+	    char **pathp = funcs[i].val1p;
+	    printf("%s", *pathp);
+	    break;
+	}
+	case TT_DOUBLE:
+	{
+	    double *valp;
+	    if (funcs[i].val1p == NULL)
+		break;
+	    valp =  funcs[i].val1p;
+	    printf("%6.3f",*valp);
+	    break;
+	}
+	case TT_BOOLEAN:
+	{
+	    int *valp = funcs[i].val1p;
+	    if (valp == NULL)
+		valp = funcs[i].val2p;
+	    if (valp == NULL)
+		break;
+	    printf("%d",*valp);
+	    break;
+	}
+	case TT_POSITION:
+	{
+	    int *valp;
+	    int *valp2;
+	    if (funcs[i].val1p == NULL)
+		break;
+	    if (funcs[i].val2p == NULL)
+		break;
+	    valp =  funcs[i].val1p;
+	    valp2 =  funcs[i].val2p;
+	    printf("%3d %3d",*valp, *valp2);
+	    break;
+	}
+	case TT_XUNIT:
+	case TT_IMAGETYPE:
+	case TT_MEMSIZE:	
+	case TT_INT:
+	{
+	    int *valp;
+	    if (funcs[i].val1p == NULL)
+		break;
+	    valp =  funcs[i].val1p;
+	    printf("%d",*valp);
+	    break;
+	}
+	default:;
+	};
+	
+	printf("\n");
+    }
+}
+
 static void
 parse_show_tokens (GList *list)
 {
@@ -155,5 +242,10 @@ main (int argc, char **argv)
 	parse_gimprc ();
 	parse_show_tokens (unknown_tokens);
     }
+
+#if 0
+    show_gimprc_globals();
+#endif    
+    show_gimprc_funcs_tab();
 }
 
