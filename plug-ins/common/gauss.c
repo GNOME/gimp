@@ -798,8 +798,8 @@ gauss (GimpDrawable *drawable,
           switch (method)
             {
             case BLUR_IIR:
-	      memset (val_p, 0, height * bytes * sizeof (gdouble));
-	      memset (val_m, 0, height * bytes * sizeof (gdouble));
+	      memset (val_p, 0, width * bytes * sizeof (gdouble));
+	      memset (val_m, 0, width * bytes * sizeof (gdouble));
               break;
 
             case BLUR_RLE:

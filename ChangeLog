@@ -1,5 +1,10 @@
 2004-06-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gauss.c (gauss): fixed a stupid cut'n'paste bug
+	I introduced yesterday.
+
+2004-06-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gauss.c (query): register the menu entry the new
 	way and install a mnemonic for Gaussian Blur.
 
