@@ -331,7 +331,7 @@ text_tool_render (GimpTextTool *text_tool)
 
   if (!font_desc)
     {
-      g_message (_("No font choosen or font invalid."));
+      g_message (_("No font chosen or font invalid."));
       return;
     }
   
