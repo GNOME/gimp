@@ -46,7 +46,7 @@ require      Exporter;
                );
 #@EXPORT_OK = qw();
 
-$VERSION=1.101;
+$VERSION=$Gimp::VERSION;
 
 use Gimp;
 
@@ -262,7 +262,7 @@ moves the layer to a new position in the layer stack.
 
 =cut
 sub gimp_image_layertype {
-   my $type = $_[0]->base_type;
+   my($type,$alpha) = ($_[0]->base_type,$_[1]);
    $type == RGB     ? $alpha ? RGBA_IMAGE     : RGB_IMAGE     :
    $type == GRAY    ? $alpha ? GRAYA_IMAGE    : GRAY_IMAGE    :
    $type == INDEXED ? $alpha ? INDEXEDA_IMAGE : INDEXED_IMAGE :
@@ -271,6 +271,7 @@ sub gimp_image_layertype {
 
 sub gimp_image_add_new_layer {
    my ($image,$index,$filltype,$alpha)=@_;
+   print "ALPHA $alpha\n";
    my $layer = new Layer ($image, $image->width, $image->height, $image->layertype (defined $alpha ? $alpha : 1), join(":",(caller)[1,2]), 100, NORMAL_MODE);
    $layer->fill (defined $filltype ? $filltype : BG_IMAGE_FILL);
    $image->add_layer ($layer, $index*1);
