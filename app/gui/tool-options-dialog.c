@@ -80,7 +80,6 @@ tool_options_dialog_create (void)
   GtkWidget    *frame;
   GtkWidget    *hbox;
   GtkWidget    *vbox;
-  GList        *list;
 
   if (options_shell)
     return options_shell;
@@ -173,16 +172,6 @@ tool_options_dialog_create (void)
 				GIMP_TYPE_TOOL_INFO,
 				tool_options_dialog_drag_tool, NULL);
 
-  for (list = GIMP_LIST (global_tool_info_list)->list;
-       list;
-       list = g_list_next (list))
-    {
-      tool_info = GIMP_TOOL_INFO (list->data);
-
-      if (tool_info->tool_options)
-	tool_options_dialog_add (tool_info->tool_options);
-    }
-
   gtk_signal_connect_while_alive
     (GTK_OBJECT (gimp_context_get_user ()), "tool_changed",
      GTK_SIGNAL_FUNC (tool_options_dialog_tool_changed),
@@ -208,21 +197,6 @@ tool_options_dialog_free (void)
     }
 }
 
-void
-tool_options_dialog_add (ToolOptions *tool_options)
-{
-  g_return_if_fail (tool_options != NULL);
-
-  if (options_vbox)
-    {
-      if (! GTK_WIDGET_VISIBLE (tool_options->main_vbox))
-	{
-	  gtk_box_pack_start (GTK_BOX (options_vbox), tool_options->main_vbox,
-			      FALSE, FALSE, 0);
-	}
-    }
-}
-
 
 /*  private functions  */
 
@@ -243,6 +217,11 @@ tool_options_dialog_tool_changed (GimpContext  *context,
     {
       if (tool_info->tool_options)
 	{
+	  if (! tool_info->tool_options->main_vbox->parent)
+	    gtk_box_pack_start (GTK_BOX (options_vbox),
+				tool_info->tool_options->main_vbox,
+				FALSE, FALSE, 0);
+
 	  gtk_widget_show (tool_info->tool_options->main_vbox);
 
 	  visible_tool_options = tool_info->tool_options;

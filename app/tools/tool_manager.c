@@ -30,9 +30,6 @@
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
 
-/* FIXME: let the tool options dialog update itself */
-#include "gui/tool-options-dialog.h"
-
 #include "gimptool.h"
 #include "tool_manager.h"
 #include "tool_options.h"
@@ -48,7 +45,6 @@
 
 #include "appenv.h"
 #include "context_manager.h"
-#include "dialog_handler.h"
 #include "gdisplay.h"
 
 #include "libgimp/gimpintl.h"
@@ -315,8 +311,6 @@ tool_manager_register_tool_options (GtkType      tool_type,
     }
 
   tool_info->tool_options = tool_options;
-
-  tool_options_dialog_add (tool_options);
 }
 
 GimpToolInfo *

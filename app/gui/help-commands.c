@@ -76,26 +76,30 @@
 
 
 /*  local functions  */
-static void     image_resize_callback        (GtkWidget *widget,
-					      gpointer   data);
-static void     image_scale_callback         (GtkWidget *widget,
-					      gpointer   data);
-static void     gimage_mask_feather_callback (GtkWidget *widget,
-					      gdouble    size,
-					      GimpUnit   unit,
-					      gpointer   data);
-static void     gimage_mask_border_callback  (GtkWidget *widget,
-					      gdouble    size,
-					      GimpUnit   unit,
-		  			      gpointer   data);
-static void     gimage_mask_grow_callback    (GtkWidget *widget,
-					      gdouble    size,
-					      GimpUnit   unit,
-					      gpointer   data);
-static void     gimage_mask_shrink_callback  (GtkWidget *widget,
-					      gdouble    size,
-					      GimpUnit   unit,
-					      gpointer   data);
+static void     image_resize_callback        (GtkWidget   *widget,
+					      gpointer     data);
+static void     image_scale_callback         (GtkWidget   *widget,
+					      gpointer     data);
+static void     image_scale_warn_callback    (GtkWidget   *widget,
+					      gboolean     do_scale,
+					      gpointer     data);
+static void     image_scale_implement        (ImageResize *image_scale);
+static void     gimage_mask_feather_callback (GtkWidget   *widget,
+					      gdouble      size,
+					      GimpUnit     unit,
+					      gpointer     data);
+static void     gimage_mask_border_callback  (GtkWidget   *widget,
+					      gdouble      size,
+					      GimpUnit     unit,
+		  			      gpointer     data);
+static void     gimage_mask_grow_callback    (GtkWidget   *widget,
+					      gdouble      size,
+					      GimpUnit     unit,
+					      gpointer     data);
+static void     gimage_mask_shrink_callback  (GtkWidget   *widget,
+					      gdouble      size,
+					      GimpUnit     unit,
+					      gpointer     data);
 
 
 /*  local variables  */
@@ -1097,10 +1101,131 @@ image_scale_callback (GtkWidget *widget,
 
   gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
 
-  if (resize_check_layer_scaling (image_scale))
+  if (gimp_image_check_scaling (image_scale->gimage,
+				image_scale->resize->width,
+				image_scale->resize->height))
     {
-      resize_scale_implement (image_scale);
+      image_scale_implement (image_scale);
+
       gtk_widget_destroy (image_scale->resize->resize_shell);
+    }
+  else
+    {
+      GtkWidget *dialog;
+
+      dialog =
+	gimp_query_boolean_box (_("Layer Too Small"),
+				gimp_standard_help_func,
+				"dialogs/scale_layer_warn.html",
+				FALSE,
+				_("The chosen image size will shrink\n"
+				  "some layers completely away.\n"
+				  "Is this what you want?"),
+				_("OK"), _("Cancel"),
+				GTK_OBJECT (image_scale->resize->resize_shell),
+				"destroy",
+				image_scale_warn_callback,
+				image_scale);
+      gtk_widget_show (dialog);
+    }
+}
+
+static void
+image_scale_warn_callback (GtkWidget *widget,
+			   gboolean   do_scale,
+			   gpointer   data)
+{
+  ImageResize *image_scale;
+  GimpImage   *gimage;
+
+  image_scale = (ImageResize *) data;
+  gimage      = image_scale->gimage;
+
+  if (do_scale == TRUE) /* User doesn't mind losing layers... */
+    {
+      image_scale_implement (image_scale);
+
+      gtk_widget_destroy (image_scale->resize->resize_shell);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (image_scale->resize->resize_shell, TRUE);
+    }
+}
+
+static void
+image_scale_implement (ImageResize *image_scale)
+{
+  GimpImage *gimage        = NULL;
+  gboolean   rulers_flush  = FALSE;
+  gboolean   display_flush = FALSE;  /* this is a bit ugly: 
+					we hijack the flush variable 
+					to check if an undo_group was 
+					already started */
+
+  g_assert (image_scale != NULL);
+  gimage = image_scale->gimage;
+  g_assert (gimage != NULL);
+
+  if (image_scale->resize->resolution_x != gimage->xresolution ||
+      image_scale->resize->resolution_y != gimage->yresolution)
+    {
+      undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+	  
+      gimp_image_set_resolution (gimage,
+				 image_scale->resize->resolution_x,
+				 image_scale->resize->resolution_y);
+
+      rulers_flush = TRUE;
+      display_flush = TRUE;
+    }
+
+  if (image_scale->resize->unit != gimage->unit)
+    {
+      if (!display_flush)
+	undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+
+      gimp_image_set_unit (gimage, image_scale->resize->unit);
+      gdisplays_setup_scale (gimage);
+      gdisplays_resize_cursor_label (gimage);
+
+      rulers_flush = TRUE;
+      display_flush = TRUE;
+    }
+
+  if (image_scale->resize->width != gimage->width ||
+      image_scale->resize->height != gimage->height)
+    {
+      if (image_scale->resize->width > 0 &&
+	  image_scale->resize->height > 0) 
+	{
+	  if (!display_flush)
+	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
+
+	  gimp_image_scale (gimage,
+			    image_scale->resize->width,
+			    image_scale->resize->height);
+
+	  display_flush = TRUE;
+	}
+      else
+	{
+	  g_message (_("Scale Error: Both width and height must be "
+		       "greater than zero."));
+	  return;
+	}
+    }
+
+  if (rulers_flush)
+    {
+      gdisplays_setup_scale (gimage);
+      gdisplays_resize_cursor_label (gimage);
+    }
+      
+  if (display_flush)
+    {
+      undo_push_group_end (gimage);
+      gdisplays_flush ();
     }
 }
 

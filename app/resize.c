@@ -28,12 +28,9 @@
 
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
-#include "core/gimplist.h"
 
-#include "gdisplay.h"
 #include "gimprc.h"
 #include "resize.h"
-#include "undo.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -42,6 +39,8 @@ typedef struct _ResizePrivate ResizePrivate;
 
 struct _ResizePrivate
 {
+  Resize     resize;
+
   /*  size frame  */
   GtkWidget *orig_width_label;
   GtkWidget *orig_height_label;
@@ -97,9 +96,6 @@ static void  resolution_callback         (GtkWidget *widget,
 static void  resolution_update           (Resize    *resize,
 					  gdouble    res_x,
 					  gdouble    res_y);
-static void  resize_scale_warn_callback  (GtkWidget *widget,
-					  gboolean   do_scale,
-					  gpointer   data);
 
 
 Resize *
@@ -117,31 +113,32 @@ resize_widget_new (ResizeType    type,
 		   GtkSignalFunc cancel_cb,
 		   gpointer      user_data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
-  GtkWidget *main_vbox;
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *table2;
-  GtkWidget *label;
-  GtkWidget *frame;
-  GtkWidget *spinbutton;
-  GtkWidget *abox;
-  GtkObject *adjustment;
+  GtkWidget     *main_vbox;
+  GtkWidget     *vbox;
+  GtkWidget     *table;
+  GtkWidget     *table2;
+  GtkWidget     *label;
+  GtkWidget     *frame;
+  GtkWidget     *spinbutton;
+  GtkWidget     *abox;
+  GtkObject     *adjustment;
 
   abox = NULL;
   frame = NULL;
 
   private = g_new0 (ResizePrivate, 1);
+
   private->old_width  = width;
   private->old_height = height;
   private->old_res_x  = resolution_x;
   private->old_res_y  = resolution_y;
 
-  resize = g_new (Resize, 1);
+  resize = (Resize *) private;
+
   resize->type         = type;
   resize->target       = target;
-  resize->private_part = private;
   resize->width        = width;
   resize->height       = height;
   resize->resolution_x = resolution_x;
@@ -218,9 +215,6 @@ resize_widget_new (ResizeType    type,
     gtk_signal_connect_object (GTK_OBJECT (resize->resize_shell), "destroy",
 			       GTK_SIGNAL_FUNC (g_free),
 			       (GtkObject *) private);
-    gtk_signal_connect_object (GTK_OBJECT (resize->resize_shell), "destroy",
-			       GTK_SIGNAL_FUNC (g_free),
-			       (GtkObject *) resize);
   }
 
   /*  handle the image disappearing under our feet  */
@@ -656,7 +650,7 @@ resize_bound_off_x (Resize *resize,
 {
   ResizePrivate *private;
 
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   if (private->old_width <= resize->width)
     off_x = CLAMP (off_x, 0, (resize->width - private->old_width));
@@ -672,7 +666,7 @@ resize_bound_off_y (Resize *resize,
 {
   ResizePrivate *private;
 
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   if (private->old_height <= resize->height)
     off_y = CLAMP (off_y, 0, (resize->height - private->old_height));
@@ -694,8 +688,8 @@ orig_labels_update (GtkWidget *widget,
 
   static GimpUnit label_unit = GIMP_UNIT_PIXEL;
 
-  resize = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
+  resize  = (Resize *) data;
+  private = (ResizePrivate *) resize;
 
   unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
 
@@ -739,11 +733,11 @@ static void
 offset_update (GtkWidget *widget,
 	       gpointer   data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
 
-  resize = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
+  resize  = (Resize *) data;
+  private = (ResizePrivate *) resize;
 
   resize->offset_x = resize_bound_off_x (resize, 
                                          RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0)));
@@ -755,19 +749,15 @@ offset_update (GtkWidget *widget,
                                 resize->offset_x, resize->offset_y); 
 }
 
-/*
- * Callback function for "Reset" button.
- * Data must be a pointer pointer to a Resize structure.
- */
 static void
 reset_callback (GtkWidget *widget,
-                gpointer data)
+                gpointer   data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
 
-  resize = (Resize *)data;
-  private = (ResizePrivate *)resize->private_part;
+  resize  = (Resize *) data;
+  private = (ResizePrivate *)resize;
 
   /* restore size and ratio settings */
   size_update (resize, private->old_width, private->old_height, 1.0, 1.0);
@@ -784,15 +774,15 @@ static void
 size_callback (GtkWidget *widget,
 	       gpointer   data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
-  gdouble width;
-  gdouble height;
-  gdouble ratio_x;
-  gdouble ratio_y;
+  gdouble        width;
+  gdouble        height;
+  gdouble        ratio_x;
+  gdouble        ratio_y;
 
   resize  = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
   height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
@@ -823,15 +813,15 @@ static void
 ratio_callback (GtkWidget *widget,
 		gpointer   data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
-  gdouble width;
-  gdouble height;
-  gdouble ratio_x;
-  gdouble ratio_y;
+  gdouble        width;
+  gdouble        height;
+  gdouble        ratio_x;
+  gdouble        ratio_y;
 
   resize  = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
   height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
@@ -868,7 +858,7 @@ size_update (Resize *resize,
 {
   ResizePrivate *private;
 
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   resize->width  = (gint) (width  + 0.5);
   resize->height = (gint) (height + 0.5);
@@ -876,8 +866,9 @@ size_update (Resize *resize,
   resize->ratio_x = ratio_x;
   resize->ratio_y = ratio_y;
 
-  gimp_offset_area_set_size  (GIMP_OFFSET_AREA (private->offset_area), 
-                              resize->width, resize->height);
+  if (private->offset_area)
+    gimp_offset_area_set_size (GIMP_OFFSET_AREA (private->offset_area), 
+			       resize->width, resize->height);
 
   gtk_signal_handler_block_by_data (GTK_OBJECT (private->size_se), resize);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se),
@@ -928,7 +919,7 @@ offset_area_offsets_changed (GtkWidget *offset_area,
   ResizePrivate *private;
 
   resize  = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   resize->offset_x = offset_x;
   resize->offset_y = offset_y;
@@ -944,17 +935,17 @@ static void
 printsize_update (GtkWidget *widget,
 		  gpointer   data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
-  gdouble width;
-  gdouble height;
-  gdouble print_width;
-  gdouble print_height;
-  gdouble res_x;
-  gdouble res_y;
+  gdouble        width;
+  gdouble        height;
+  gdouble        print_width;
+  gdouble        print_height;
+  gdouble        res_x;
+  gdouble        res_y;
 
   resize  = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
   height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
@@ -1025,13 +1016,13 @@ static void
 resolution_callback (GtkWidget *widget,
 		     gpointer   data)
 {
-  Resize *resize;
+  Resize        *resize;
   ResizePrivate *private;
-  gdouble res_x;
-  gdouble res_y;
+  gdouble        res_x;
+  gdouble        res_y;
   
   resize  = (Resize *) data;
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   res_x =
     gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->resolution_se), 0);
@@ -1061,7 +1052,7 @@ resolution_update (Resize  *resize,
 {
   ResizePrivate *private;
 
-  private = (ResizePrivate *) resize->private_part;
+  private = (ResizePrivate *) resize;
 
   resize->resolution_x = res_x;
   resize->resolution_y = res_y;
@@ -1088,163 +1079,4 @@ resolution_update (Resize  *resize,
 				  1, res_y, TRUE);
   gtk_signal_handler_unblock_by_data (GTK_OBJECT (private->printsize_se),
 				      resize);
-}
-
-
-void
-resize_scale_implement (ImageResize *image_scale)
-{
-  GimpImage *gimage        = NULL;
-  gboolean   rulers_flush  = FALSE;
-  gboolean   display_flush = FALSE;  /* this is a bit ugly: 
-					we hijack the flush variable 
-					to check if an undo_group was 
-					already started */
-
-  g_assert (image_scale != NULL);
-  gimage = image_scale->gimage;
-  g_assert (gimage != NULL);
-
-  if (image_scale->resize->resolution_x != gimage->xresolution ||
-      image_scale->resize->resolution_y != gimage->yresolution)
-    {
-      undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
-	  
-      gimp_image_set_resolution (gimage,
-				 image_scale->resize->resolution_x,
-				 image_scale->resize->resolution_y);
-
-      rulers_flush = TRUE;
-      display_flush = TRUE;
-    }
-
-  if (image_scale->resize->unit != gimage->unit)
-    {
-      if (!display_flush)
-	undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
-
-      gimp_image_set_unit (gimage, image_scale->resize->unit);
-      gdisplays_setup_scale (gimage);
-      gdisplays_resize_cursor_label (gimage);
-
-      rulers_flush = TRUE;
-      display_flush = TRUE;
-    }
-
-  if (image_scale->resize->width != gimage->width ||
-      image_scale->resize->height != gimage->height)
-    {
-      if (image_scale->resize->width > 0 &&
-	  image_scale->resize->height > 0) 
-	{
-	  if (!display_flush)
-	    undo_push_group_start (gimage, IMAGE_SCALE_UNDO);
-
-	  gimp_image_scale (gimage,
-			    image_scale->resize->width,
-			    image_scale->resize->height);
-
-	  display_flush = TRUE;
-	}
-      else
-	{
-	  g_message (_("Scale Error: Both width and height must be "
-		       "greater than zero."));
-	  return;
-	}
-    }
-
-  if (rulers_flush)
-    {
-      gdisplays_setup_scale (gimage);
-      gdisplays_resize_cursor_label (gimage);
-    }
-      
-  if (display_flush)
-    {
-      undo_push_group_end (gimage);
-      gdisplays_flush ();
-    }
-}
-
-static void
-resize_scale_warn_callback (GtkWidget *widget,
-			    gboolean   do_scale,
-			    gpointer   data)
-{
-  ImageResize *image_scale = NULL;
-  GimpImage   *gimage      = NULL;
-
-  g_assert (data != NULL);
-  image_scale = (ImageResize *) data;
-  gimage      = image_scale->gimage;
-  g_assert (gimage != NULL);
-
-  if (do_scale == TRUE) /* User doesn't mind losing layers... */
-    {
-      resize_scale_implement (image_scale);
-      gtk_widget_destroy (image_scale->resize->resize_shell);
-    }
-  else
-    {
-      gtk_widget_set_sensitive (image_scale->resize->resize_shell, TRUE);
-    }
-}
-
-gboolean 
-resize_check_layer_scaling (ImageResize *image_scale)
-{
-  /* Inventory the layer list in gimage and return TRUE if, after
-   * scaling, they all retain positive x and y pixel dimensions.
-   * Otherwise, put up a modal boolean dialog box and ask the user if
-   * she wishes to proceed. Return FALSE in the dialog case; the dialog box
-   * callback will complete the job if the user really wants to
-   * proceed. <02/22/2000 gosgood@idt.net>
-   */
-
-  gboolean   success = FALSE;
-  GimpImage *gimage  = NULL;
-  GList     *list    = NULL;
-  GimpLayer *layer   = NULL;
-  GtkWidget *dialog  = NULL;
-
-  g_assert (image_scale != NULL);
-
-  if (NULL != (gimage = image_scale->gimage))
-    {
-      /* Step through layers; test scaled dimensions. */
-
-      success = TRUE;
-      list    = GIMP_LIST (gimage->layers)->list;
-
-      while (list && success == TRUE)
-	{
-	  layer   = (GimpLayer *) list->data;
-	  success = gimp_layer_check_scaling (layer, 
-					      image_scale->resize->width,
-					      image_scale->resize->height);
-	  list   = g_list_next (list);
-	}
-
-      /* Warn user on failure */
-      if (success == FALSE)
-	{
-	  dialog =
-	    gimp_query_boolean_box (_("Layer Too Small"),
-				    gimp_standard_help_func,
-				    "dialogs/scale_layer_warn.html",
-				    FALSE,
-				    _("The chosen image size will shrink\n"
-				      "some layers completely away.\n"
-				      "Is this what you want?"),
-				    _("OK"), _("Cancel"),
-				    GTK_OBJECT (image_scale->resize->resize_shell),
-				    "destroy",
-				    resize_scale_warn_callback,
-				    image_scale);
-	  gtk_widget_show (dialog);
-	}
-    }
-
-  return success;
 }

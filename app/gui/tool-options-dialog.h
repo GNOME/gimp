@@ -23,7 +23,5 @@
 GtkWidget * tool_options_dialog_create (void);
 void        tool_options_dialog_free   (void);
 
-void        tool_options_dialog_add    (ToolOptions *tool_options);
-
 
 #endif  /*  __TOOL_OPTIONS_DIALOG_H__  */

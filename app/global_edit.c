@@ -223,7 +223,7 @@ edit_cut (GimpImage    *gimage,
   /*  Only crop if the gimage mask wasn't empty  */
   if (cut && empty == FALSE)
     {
-      cropped_cut = crop_buffer (cut, 0);
+      cropped_cut = crop_buffer (cut, FALSE);
 
       if (cropped_cut != cut)
 	tile_manager_destroy (cut);
@@ -274,7 +274,7 @@ edit_copy (GimpImage    *gimage,
   /*  Only crop if the gimage mask wasn't empty  */
   if (copy && empty == FALSE)
     {
-      cropped_copy = crop_buffer (copy, 0);
+      cropped_copy = crop_buffer (copy, FALSE);
 
       if (cropped_copy != copy)
 	tile_manager_destroy (copy);

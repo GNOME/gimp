@@ -1,3 +1,21 @@
+2001-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/global_edit.c: some s/0/FALSE/
+
+	* app/resize.[ch]: removed resize_scale_implement() and
+	resize_check_layer_scaling(), cleanup.
+
+	* app/core/gimpimage.[ch]: added gimp_image_check_scaling().
+
+	* app/gui/commands.c: added image_scale_implement() as static
+	function.
+
+	* app/gui/tool-options-dialog.[ch]: add the tool options widgets
+	to the dialog when they are first needed. Removed
+	tool_options_dialog_add().
+
+	* app/tools/tool_manager.c: don't call tool_options_dialog_add().
+
 2001-06-03  Dave Neary  <dneary@eircom.net>
 
 	* app/gimprc.[ch]: Made all the global options members of one

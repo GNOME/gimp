@@ -32,6 +32,7 @@ typedef enum
   ResizeLayer
 } ResizeTarget;
 
+
 typedef struct _Resize Resize;
 
 struct _Resize
@@ -53,9 +54,6 @@ struct _Resize
 
   gint         offset_x;
   gint         offset_y;
-
-  /*  Don't touch this :)  */
-  void *       private_part;
 };
 
 typedef struct
@@ -63,6 +61,7 @@ typedef struct
   Resize    *resize;
   GimpImage *gimage;
 } ImageResize;
+
 
 /*  If resolution_x is zero, then don't show resolution modification
  *  parts of the dialog.
@@ -72,24 +71,19 @@ typedef struct
  *  If cancel_callback is NULL, then the dialog will be destroyed on "Cancel".
  */
 
-Resize   * resize_widget_new          (ResizeType    type,
-				       ResizeTarget  target,
-				       GtkObject    *object,
-				       gchar        *signal,
-				       gint          width,
-				       gint          height,
-				       gdouble       resolution_x,
-				       gdouble       resolution_y,
-				       GimpUnit      unit,
-				       gboolean      dot_for_dot,
-				       GtkSignalFunc ok_cb,
-				       GtkSignalFunc cancel_cb,
-				       gpointer      user_data);
-
-/* Layer scaling sanity check and warning dialogs */
-
-gboolean   resize_check_layer_scaling (ImageResize  *image_resize);
-void       resize_scale_implement     (ImageResize  *image_resize);
+Resize * resize_widget_new (ResizeType    type,
+			    ResizeTarget  target,
+			    GtkObject    *object,
+			    gchar        *signal,
+			    gint          width,
+			    gint          height,
+			    gdouble       resolution_x,
+			    gdouble       resolution_y,
+			    GimpUnit      unit,
+			    gboolean      dot_for_dot,
+			    GtkSignalFunc ok_cb,
+			    GtkSignalFunc cancel_cb,
+			    gpointer      user_data);
 
 
 #endif  /*  __RESIZE_H__  */

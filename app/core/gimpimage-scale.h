@@ -199,6 +199,9 @@ void            gimp_image_resize            (GimpImage          *gimage,
 void            gimp_image_scale             (GimpImage          *gimage,
 					      gint                new_width,
 					      gint                new_height);
+gboolean        gimp_image_check_scaling     (const GimpImage    *gimage,
+					      gint                new_width,
+					      gint                new_height);
 TileManager   * gimp_image_shadow            (GimpImage          *gimage,
 					      gint                width,
 					      gint                height,

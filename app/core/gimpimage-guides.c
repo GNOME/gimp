@@ -908,7 +908,7 @@ gimp_image_scale (GimpImage *gimage,
         gimp_channel_resize(gimage->selection_mask, new_width, new_height, 0, 0)
       else
   */
-        
+
   gimp_channel_scale (gimage->selection_mask, new_width, new_height);
   gimage_mask_invalidate (gimage);
 
@@ -919,21 +919,20 @@ gimp_image_scale (GimpImage *gimage,
     {
       layer = (GimpLayer *) list->data;
 
-      if (gimp_layer_scale_by_factors (layer, img_scale_w, img_scale_h) == FALSE)
+      if (! gimp_layer_scale_by_factors (layer, img_scale_w, img_scale_h))
 	{
 	  /* Since 0 < img_scale_w, img_scale_h, failure due to one or more
 	   * vanishing scaled layer dimensions. Implicit delete implemented
 	   * here. Upstream warning implemented in resize_check_layer_scaling()
 	   * [resize.c line 1295], which offers the user the chance to bail out.
 	   */
-
           remove = g_slist_append (remove, layer);
         }
     }
-  /* We defer removing layers lost to scaling until now            */
-  /* so as not to mix the operations of iterating over and removal */
-  /* from gimage->layers.                                          */  
 
+  /* We defer removing layers lost to scaling until now so as not to mix
+   * the operations of iterating over and removal from gimage->layers.
+   */  
   for (slist = remove; slist; slist = g_slist_next (slist))
     {
       layer = slist->data;
@@ -973,6 +972,43 @@ gimp_image_scale (GimpImage *gimage,
   gimp_image_size_changed (gimage);
 
   gimp_unset_busy ();
+}
+
+/**
+ * gimp_image_check_scaling:
+ * @gimage:     A #GimpImage.
+ * @new_width:  The new width.
+ * @new_height: The new height.
+ * 
+ * Inventory the layer list in gimage and return #TRUE if, after
+ * scaling, they all retain positive x and y pixel dimensions.
+ * 
+ * Return value: #TRUE if scaling the image will shrink none of it's
+ *               layers completely away.
+ **/
+gboolean 
+gimp_image_check_scaling (const GimpImage *gimage,
+			  gint             new_width,
+			  gint             new_height)
+{
+  GList *list;
+
+  g_return_val_if_fail (gimage != NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+
+  for (list = GIMP_LIST (gimage->layers)->list;
+       list;
+       list = g_list_next (list))
+    {
+      GimpLayer *layer;
+
+      layer = (GimpLayer *) list->data;
+
+      if (! gimp_layer_check_scaling (layer, new_width, new_height))
+	return FALSE;
+    }
+
+  return TRUE;
 }
 
 TileManager *
