@@ -359,11 +359,6 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->scrollbar, FALSE, FALSE, 0);
   gtk_widget_show (editor->scrollbar);
 
-  /*  Horizontal box for zoom controls and instant update toggle  */
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   /*  +, - and Zoom Fit buttons  */
   gimp_editor_add_button (GIMP_EDITOR (editor),
                           GTK_STOCK_ZOOM_OUT, _("Zoom Out"),
@@ -387,6 +382,10 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   /* Instant update toggle */
   editor->instant_update = TRUE;
 
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (editor), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
   button = gtk_check_button_new_with_label (_("Instant update"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 editor->instant_update);
@@ -400,7 +399,7 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   /* Hint bar */
   editor->hint_label1 = gtk_label_new ("");
   gtk_misc_set_alignment (GTK_MISC (editor->hint_label1), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), editor->hint_label1, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), editor->hint_label1, FALSE, FALSE, 0);
   gtk_widget_show (editor->hint_label1);
 
   editor->hint_label2 = gtk_label_new ("");

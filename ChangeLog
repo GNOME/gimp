@@ -1,3 +1,8 @@
+2004-01-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpgradienteditor.[ch]: moved the first hint label
+	to a line of its own. fixes bug #127673.
+
 2004-01-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimplevelstool.[ch]: code cleanup; draw in the
