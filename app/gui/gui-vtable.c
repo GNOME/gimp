@@ -71,7 +71,7 @@ static void           gui_menus_create_entry   (Gimp          *gimp,
                                                 const gchar   *locale_domain,
                                                 const gchar   *help_domain);
 static void           gui_menus_delete_entry   (Gimp          *gimp,
-                                                const gchar   *menu_path);
+                                                PlugInProcDef *proc_def);
 static GimpProgress * gui_start_progress       (Gimp          *gimp,
                                                 gint           gdisp_ID,
                                                 const gchar   *message,
@@ -226,10 +226,10 @@ gui_menus_create_entry (Gimp          *gimp,
 }
 
 static void
-gui_menus_delete_entry (Gimp        *gimp,
-                        const gchar *menu_path)
+gui_menus_delete_entry (Gimp          *gimp,
+                        PlugInProcDef *proc_def)
 {
-  plug_in_menus_delete_entry (menu_path);
+  plug_in_menus_delete_entry (proc_def);
 }
 
 static GimpProgress *

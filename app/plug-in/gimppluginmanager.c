@@ -622,7 +622,7 @@ plug_ins_temp_proc_def_remove (Gimp          *gimp,
   if (! gimp->no_interface)
     {
       if (proc_def->menu_path)
-        gimp_menus_delete_entry (gimp, proc_def->menu_path);
+        gimp_menus_delete_entry (gimp, proc_def);
     }
 
   /*  Unregister the procedural database entry  */

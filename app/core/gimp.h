@@ -40,7 +40,7 @@ typedef void           (* GimpMenusCreateFunc)     (Gimp          *gimp,
                                                     const gchar   *locale_domain,
                                                     const gchar   *help_domain);
 typedef void           (* GimpMenusDeleteFunc)     (Gimp          *gimp,
-                                                    const gchar   *menu_path);
+                                                    PlugInProcDef *proc_def);
 typedef GimpProgress * (* GimpProgressStartFunc)   (Gimp          *gimp,
                                                     gint           gdisp_ID,
                                                     const gchar   *message,
@@ -249,7 +249,7 @@ void          gimp_menus_create_entry   (Gimp               *gimp,
                                          const gchar        *locale_domain,
                                          const gchar        *help_domain);
 void          gimp_menus_delete_entry   (Gimp               *gimp,
-                                         const gchar        *menu_path);
+                                         PlugInProcDef      *proc_def);
 GimpProgress *gimp_start_progress       (Gimp               *gimp,
                                          gint                gdisp_ID,
                                          const gchar        *message,

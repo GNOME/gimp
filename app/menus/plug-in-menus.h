@@ -30,7 +30,7 @@ void   plug_in_menus_create_entry (GimpItemFactory *item_factory,
                                    PlugInProcDef   *proc_def,
                                    const gchar     *locale_domain,
                                    const gchar     *help_domain);
-void   plug_in_menus_delete_entry (const gchar     *menu_path);
+void   plug_in_menus_delete_entry (PlugInProcDef   *proc_def);
 
 void   plug_in_menus_update       (GimpItemFactory *item_factory,
                                    GimpImageType    type);

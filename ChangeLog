@@ -1,3 +1,12 @@
+2004-04-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: changed GimpMenusDeleteFunc to take
+	a PlugInProcDef* instead of a const gchar*.
+
+	* app/plug-in/plug-ins.c
+	* app/gui/gui-vtable.c
+	* app/gui/plug-in-menus.[ch]: changed accordingly.
+
 2004-04-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/AlienMap2.c: some UI improvements based on a

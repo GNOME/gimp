@@ -227,16 +227,17 @@ plug_in_menus_create_entry (GimpItemFactory *item_factory,
 }
 
 void
-plug_in_menus_delete_entry (const gchar *menu_path)
+plug_in_menus_delete_entry (PlugInProcDef *proc_def)
 {
   GList *list;
   gchar *path;
 
-  g_return_if_fail (menu_path != NULL);
+  g_return_if_fail (proc_def != NULL);
+  g_return_if_fail (proc_def->menu_path != NULL);
 
-  path = gimp_strip_uline (menu_path);
+  path = gimp_strip_uline (proc_def->menu_path);
 
-  for (list = gimp_item_factories_from_path (menu_path);
+  for (list = gimp_item_factories_from_path (proc_def->menu_path);
        list;
        list = g_list_next (list))
     {
