@@ -1,3 +1,8 @@
+2002-03-02  Ole Laursen  <olau@hardworking.dk>
+
+	* da.po: Added Danish translation from gimp_tips.da.txt from
+	gimp-1-2 branch and converted it to UTF-8.
+
 2002-02-27  Sven Neumann  <sven@gimp.org>
 
 	* de.po: merged all existant translations from gimp_tips.de.txt.

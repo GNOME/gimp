@@ -1,0 +1,211 @@
+# Danish translation of GIMP tips.
+# Copyright (C) 2002 Free Software Foundation, Inc.
+# Ole Laursen <olau@hardworking.dk>, 2002.
+#
+# Se ../po/da.po for en liste over konventioner i Gimp'en.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP tips\n"
+"POT-Creation-Date: 2002-03-02 18:14+0100\n"
+"PO-Revision-Date: 2002-03-02 18:13+0100\n"
+"Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
+"Language-Team: Danish <dansk@klid.dk>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: tips/gimp-tips.xml.in.h:1
+msgid ""
+"A Floating Selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the New Layer or "
+"Anchor Layer buttons in the \"Layers, Channels and Paths\" dialog, or use "
+"the menus to do the same."
+msgstr ""
+"En flydende markering skal forankres til et nyt lag eller det sidste aktive "
+"lag før der kan foretages andre operationer på billedet. Klik på Nyt lag- "
+"eller Forankr lag-knapperne i \"Lag, kanaler og baner\"-vinduet eller brug "
+"menuerne til at gøre det samme."
+
+#: tips/gimp-tips.xml.in.h:2
+msgid ""
+"Click and drag on a ruler to place a Guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"Klik og træk på en lineal for at placere en hjælpelinje i billedet. Alle "
+"markeringer der bliver flyttet, vil så følge hjælpelinjerne. Du kan fjerne "
+"linjerne igen ved at trække dem af billedet med flytteværktøjet."
+
+#: tips/gimp-tips.xml.in.h:3
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the \"Auto\" button in the Levels tool (Image-"
+">Colors->Levels). If there are any color casts, you can correct them with "
+"the Curves tool (Image->Colors->Curves)."
+msgstr ""
+"Hvis nogle af din indskannede foto ikke ser farverige nok ud, kan du let "
+"forbedre deres farvetoneinterval med \"Auto\"-knappen i niveauværktøjet "
+"(Billede->Farver->Niveauer). Hvis der er farveudblødninger, kan du rette dem "
+"med kurveværktøjet (Billede->Farver->Kurver)."
+
+#: tips/gimp-tips.xml.in.h:4
+msgid ""
+"If you stroke a path (Edit->Stroke), the current drawing tool and its "
+"settings are used. You can use the Paintbrush in gradient mode, the Clone "
+"tool with a pattern or even the Eraser or the Smudge tool."
+msgstr ""
+"Hvis du bestryger en bane (Redigér->Bestryg) bliver det aktive tegneværktøj "
+"og dets indstillinger brugt. Du kan bruge malerpenslen i "
+"farveovergangstilstand, kloningsværktøjet med et mønster eller endda "
+"viskelæderet eller udtværingsværktøjet."
+
+#: tips/gimp-tips.xml.in.h:5
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Layers->Flatten Image) if you want the "
+"plug-in to work on the whole image."
+msgstr ""
+"De fleste udvidelsesmoduler arbejder på det aktive lag eller det aktive "
+"billede. I nogle tilfælde bliver du nødt til at slå alle lagene sammen (Lag-"
+">Fladgør billede) hvis du vil have modulet til at virke på hele billedet."
+
+#: tips/gimp-tips.xml.in.h:6
+msgid ""
+"Nearly all image operations are performed by right-clicking on the image. "
+"And don't worry, you can undo most mistakes..."
+msgstr ""
+"Næsten alle billedoperationer foregår ved at højreklikke på billedet. Og vær "
+"ikke nervøs, du kan fortryde de fleste fejltagelser..."
+
+#: tips/gimp-tips.xml.in.h:7
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
+">Mode->RGB), add an alpha-channel (Layers->Add Alpha Channel) or flatten it "
+"(Layers->Flatten Image)."
+msgstr ""
+"Ikke alle effekter kan bruges på alle typer billeder. Dette bliver indikeret "
+"ved et gråtonet menupunkt. Du får måske bruge for at ændre billedtilstanden "
+"til RGB (Billede->Tilstand->RGB), tilføje en alfakanal (Lag->Tilføj "
+"alfakanal) eller fladgøre det (Lag->Fladgør billede)."
+
+#: tips/gimp-tips.xml.in.h:8
+msgid ""
+"The GIMP uses layers to let you organize your image. Think of them as a "
+"stack of slides or filters, such that looking through them you see a "
+"composite of their contents."
+msgstr ""
+"Gimp'en bruger lag til at lade dig organisere dit billede. Tænk på dem som "
+"en stabel lysbilleder eller filtre sådan så at når du kigger gennem dem, ser "
+"du en bestemt sammensætning af deres indhold."
+
+#: tips/gimp-tips.xml.in.h:9
+msgid ""
+"The layer named \"Background\" it special because it lacks transparency. "
+"This prevents you from adding a layer mask or moving the layer up in the "
+"stack. You may add transparency to it by right-clicking in the \"Layers, "
+"Channels and Paths\" dialog and selecting \"Add Alpha Channel\"."
+msgstr ""
+"Laget ved navn \"Baggrund\" er specielt fordi det mangler gennemsigtighed. "
+"Dette forhindrer dig i at tilføje en lagmaske eller hæve laget. Du kan "
+"tilføje gennemsigtighed til det ved at højreklikke i \"Lag, kanaler og baner"
+"\"-vinduet og vælge \"Tilføj alfakanal\"."
+
+#: tips/gimp-tips.xml.in.h:10
+msgid ""
+"Using Edit->Stroke allows you to draw simple squares or circles by painting "
+"the edge of your current selection with the active brush. More complex "
+"shapes can be drawn with Filters->Render->Gfig."
+msgstr ""
+"Rediger->Bestryg lader dig tegne simple firkanter eller cirkler ved at male "
+"kanten af den aktuelle markering med den aktive pensel. Mere komplekse "
+"figurer kan tegnes med Filtre->Generér->Figurer."
+
+#: tips/gimp-tips.xml.in.h:11
+msgid ""
+"You can adjust the selection range for fuzzy select by clicking and dragging "
+"left and right."
+msgstr ""
+"Du kan tilpasse markeringsintervallet for udflydende markering ved at klikke "
+"og trække til højre eller venstre."
+
+#: tips/gimp-tips.xml.in.h:12
+msgid ""
+"You can create and edit complex selections using the Bezier tool. The \"Paths"
+"\" tab in the \"Layers, Channels and Paths\" dialog allows you to work on "
+"multiple paths and to convert them to selections."
+msgstr ""
+"Du kan oprette og redigere komplekse markeringer med Bezier-værktøjet. "
+"\"Baner\"-fanebladet i \"Lag, kanaler og baner\"-vinduet lader dig arbejde "
+"på flere baner og så konvertere dem til markeringer."
+
+#: tips/gimp-tips.xml.in.h:13
+msgid ""
+"You can drag and drop many things in the GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current image or selection with that color."
+msgstr ""
+"Du kan trække og slippe mange ting i Gimp'en. Hvis du f.eks. trækker en "
+"farve fra værktøjskassen eller fra en farvepalet og slipper det i et "
+"billede, vil billedet eller det markerede bliver fyldt ud med den farve."
+
+#: tips/gimp-tips.xml.in.h:14
+msgid ""
+"You can get context-sensitive help for most of the GIMP's features by "
+"pressing the F1 key at any time. This also works inside the menus."
+msgstr ""
+"Du kan få kontekstsensitiv hjælp til de fleste af Gimp'ens faciliteter ved "
+"at trykke på F1-tasten på hvilket som helst tidspunkt. Det virker også inden "
+"i menuer."
+
+#: tips/gimp-tips.xml.in.h:15
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the \"Layers, Channels and Paths\" dialog."
+msgstr ""
+"Du kan udføre mange lagoperationer ved at højreklikke på tekstetiketten til "
+"et lag i \"Lag, kanaler og baner\"-vinduet."
+
+# mon ikke 'dynamic' dækker over noget i retning af det skrevne
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"You can reassign shortcut keys on any menu by bringing up the menu, "
+"selecting a menu item, and pressing the new shortcut key combination. This "
+"is dynamic and is saved when you exit GIMP."
+msgstr ""
+"Du kan omdefinere genvejstaster i enhver menu ved at få menuen frem, vælge "
+"et menupunkt og trykke den nye genvejstastekombination ned. Genvejen virker "
+"med samme og bliver gemt når du afslutter Gimp'en."
+
+#: tips/gimp-tips.xml.in.h:17
+msgid ""
+"You can save a selection to a channel (Select->Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the \"Channels"
+"\" tab of the \"Layers, Channels and Paths\" dialog, you can toggle the "
+"visibility of this new channel or convert it to a selection."
+msgstr ""
+"Du kan gemme en markering som en kanel (Markering->Gem som kanal) og så "
+"ændre denne kanal med maleværktøjerne. Ved hjælp af kanpperne i \"Kanaler\"-"
+"fanebladet i \"Lag, kanaler og baner\"-vinduet kan du slå synligheden af "
+"denne nye kanal til eller fra eller konvertere den til en markering."
+
+#: tips/gimp-tips.xml.in.h:18
+msgid ""
+"You can use the middle mouse button to pan around the image, if it's larger "
+"than its display window."
+msgstr ""
+"Du kan bruge den midterste museknap til at flytte rundt i vinduet hvis det "
+"er større end dets fremvisningsvindue."
+
+#: tips/gimp-tips.xml.in.h:19
+msgid ""
+"You can use the paint tools to change the selection. Click on the Quick Mask "
+"button at the bottom left of an image window. Change your selection by "
+"painting in the image and click on the button again to convert it back to a "
+"normal selection."
+msgstr ""
+"Du kan bruge tegneværktøjerne til at ændre det markerede. Klik på hurtig "
+"maske-knappen for neden til venstre i et billedvindue. Ændr det markerede "
+"ved at tegne i billedet og klikke på knappen igen for at konvertere det "
+"tilbage til en normal markering."
