@@ -14,7 +14,9 @@ INCLUDES = \
 EXTRA_DIST = \
 	makefile.cygwin		\
 	makefile.msc		\
-	module.def
+	module.def		\
+	modregister.c		\
+	modregister.h
 
 libexec_LTLIBRARIES = \
 	libcolorsel_gtk.la 	\

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.15\n"
-"POT-Creation-Date: 2000-01-08 03:54+0900\n"
+"POT-Creation-Date: 2000-01-13 11:27-0800\n"
 "PO-Revision-Date: 2000-01-08 04:16+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@awa.tohoku.ac.jp>\n"
 "Language-Team: Japanese <ja@li.org>\n"
@@ -38,7 +38,7 @@ msgstr "圧力:"
 msgid "GIMP Startup"
 msgstr "GIMP 起動中"
 
-#: app/app_procs.c:476 app/gimprc.c:428
+#: app/app_procs.c:476 app/gimprc.c:430
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "読み込み中 \"%s\"\n"
@@ -53,22 +53,22 @@ msgid "Parasites"
 msgstr "パラサイト"
 
 #. initialize  the global parasite table
-#: app/app_procs.c:538 app/internal_procs.c:71 app/preferences_dialog.c:2227
+#: app/app_procs.c:538 app/internal_procs.c:71 app/preferences_dialog.c:2345
 msgid "Brushes"
 msgstr "ブラシ"
 
 #. initialize the list of gimp brushes
-#: app/app_procs.c:540 app/internal_procs.c:143 app/preferences_dialog.c:2235
+#: app/app_procs.c:540 app/internal_procs.c:143 app/preferences_dialog.c:2353
 msgid "Patterns"
 msgstr "パターン"
 
 #. initialize the list of gimp patterns
-#: app/app_procs.c:542 app/preferences_dialog.c:2239
+#: app/app_procs.c:542 app/preferences_dialog.c:2357
 msgid "Palettes"
 msgstr "パレット"
 
 #. initialize the list of gimp palettes
-#: app/app_procs.c:544 app/internal_procs.c:113 app/preferences_dialog.c:2243
+#: app/app_procs.c:544 app/internal_procs.c:113 app/preferences_dialog.c:2361
 msgid "Gradients"
 msgstr "グラデーション"
 
@@ -85,13 +85,13 @@ msgstr "終了"
 #: app/color_balance.c:274 app/color_notebook.c:115 app/convert.c:500
 #: app/curves.c:564 app/file_new_dialog.c:199 app/file_new_dialog.c:383
 #: app/gdisplay_color_ui.c:128 app/gdisplay_ops.c:356 app/gimpprogress.c:114
-#: app/gimpui.c:254 app/global_edit.c:728 app/gradient.c:1789
-#: app/gradient.c:4871 app/gradient.c:5432 app/hue_saturation.c:376
-#: app/interface.c:965 app/layers_dialog.c:3351 app/layers_dialog.c:3557
+#: app/gimpui.c:79 app/global_edit.c:728 app/gradient.c:1789
+#: app/gradient.c:4876 app/gradient.c:5437 app/hue_saturation.c:376
+#: app/interface.c:967 app/layers_dialog.c:3351 app/layers_dialog.c:3557
 #: app/layers_dialog.c:3682 app/layers_dialog.c:3796 app/layers_dialog.c:4083
-#: app/levels.c:368 app/palette.c:1852 app/posterize.c:200
-#: app/preferences_dialog.c:1266 app/qmask.c:257 app/resize.c:193
-#: app/threshold.c:274 modules/cdisplay_gamma.c:349
+#: app/levels.c:354 app/palette.c:1852 app/posterize.c:200
+#: app/preferences_dialog.c:1357 app/qmask.c:257 app/resize.c:193
+#: app/threshold.c:274 modules/cdisplay_gamma.c:358
 msgid "Cancel"
 msgstr "取消"
 
@@ -137,7 +137,7 @@ msgstr "前景から透明に"
 msgid "Custom from Editor"
 msgstr "エディタから独自に"
 
-#: app/blend.c:269 app/gradient.c:528 app/preferences_dialog.c:1517
+#: app/blend.c:269 app/gradient.c:528 app/preferences_dialog.c:1606
 msgid "Linear"
 msgstr "線形"
 
@@ -181,7 +181,7 @@ msgstr "螺旋 (時計回り)"
 msgid "Spiral (anticlockwise)"
 msgstr "螺旋 (反時計回り)"
 
-#: app/blend.c:295 app/preferences_dialog.c:1563
+#: app/blend.c:295 app/preferences_dialog.c:1654
 msgid "None"
 msgstr "なし"
 
@@ -257,18 +257,18 @@ msgstr "明るさ-コントラスト"
 #: app/channels_dialog.c:2429 app/channels_dialog.c:2603
 #: app/color_balance.c:270 app/color_notebook.c:112 app/convert.c:498
 #: app/curves.c:560 app/file_new_dialog.c:197 app/file_new_dialog.c:379
-#: app/gdisplay_color_ui.c:126 app/gimpui.c:252 app/gimpui.c:632
+#: app/gdisplay_color_ui.c:126 app/gimpui.c:77 app/gimpui.c:457
 #: app/hue_saturation.c:372 app/layers_dialog.c:3349 app/layers_dialog.c:3555
-#: app/layers_dialog.c:3680 app/layers_dialog.c:4081 app/levels.c:364
-#: app/module_db.c:277 app/posterize.c:196 app/preferences_dialog.c:1262
+#: app/layers_dialog.c:3680 app/layers_dialog.c:4081 app/levels.c:350
+#: app/module_db.c:281 app/posterize.c:196 app/preferences_dialog.c:1353
 #: app/qmask.c:255 app/resize.c:191 app/threshold.c:270
-#: modules/cdisplay_gamma.c:342
+#: modules/cdisplay_gamma.c:351
 msgid "OK"
 msgstr "了解"
 
 #: app/brightness_contrast.c:215 app/by_color_select.c:589
 #: app/color_balance.c:272 app/curves.c:562 app/file_new_dialog.c:381
-#: app/hue_saturation.c:374 app/levels.c:366 app/posterize.c:198
+#: app/hue_saturation.c:374 app/levels.c:352 app/posterize.c:198
 #: app/threshold.c:272 app/tools.c:984 app/transform_core.c:413
 msgid "Reset"
 msgstr "リセット"
@@ -285,7 +285,7 @@ msgstr "コントラスト"
 
 #. The preview toggle
 #: app/brightness_contrast.c:299 app/color_balance.c:440 app/curves.c:671
-#: app/fileops.c:416 app/hue_saturation.c:564 app/levels.c:589
+#: app/fileops.c:416 app/hue_saturation.c:564 app/levels.c:575
 #: app/palette.c:3297 app/posterize.c:237 app/threshold.c:347
 msgid "Preview"
 msgstr "プレビュー"
@@ -303,12 +303,13 @@ msgstr "ブラシエディタ"
 #: app/info_window.c:308 app/lc_dialog.c:196 app/measure.c:270
 #: app/nav_window.c:1366 app/palette.c:2117 app/palette.c:2133
 #: app/palette.c:3179 app/palette_select.c:62 app/pattern_select.c:171
-#: app/tips_dialog.c:171 app/tools.c:986 app/undo_history.c:761
+#: app/preferences_dialog.c:363 app/tips_dialog.c:171 app/tools.c:986
+#: app/undo_history.c:761
 msgid "Close"
 msgstr "閉じる"
 
 #. the feather radius scale
-#: app/brush_edit.c:275 app/color_picker.c:181 app/tool_options.c:289
+#: app/brush_edit.c:275 app/color_picker.c:181 app/tool_options.c:301
 msgid "Radius:"
 msgstr "半径:"
 
@@ -329,7 +330,7 @@ msgstr "角度:"
 msgid "Brush Selection"
 msgstr "ブラシ選択"
 
-#: app/brush_select.c:277 app/gradient.c:798 app/module_db.c:316
+#: app/brush_select.c:277 app/gradient.c:798 app/module_db.c:320
 #: app/palette.c:2115 app/pattern_select.c:169
 msgid "Refresh"
 msgstr "再読み込み"
@@ -338,11 +339,11 @@ msgstr "再読み込み"
 msgid "No Brushes available"
 msgstr "利用可能なブラシがありません"
 
-#: app/brush_select.c:446 app/layers_dialog.c:393 app/tool_options.c:595
+#: app/brush_select.c:446 app/layers_dialog.c:393 app/tool_options.c:607
 msgid "Opacity:"
 msgstr "不透明度:"
 
-#: app/brush_select.c:456 app/layers_dialog.c:363 app/tool_options.c:618
+#: app/brush_select.c:456 app/layers_dialog.c:363 app/tool_options.c:630
 msgid "Mode:"
 msgstr "モード:"
 
@@ -389,7 +390,7 @@ msgstr "背景色塗り"
 msgid "Pattern Fill"
 msgstr "パターン塗り"
 
-#: app/bucket_fill.c:150 app/color_picker.c:156 app/tool_options.c:363
+#: app/bucket_fill.c:150 app/color_picker.c:156 app/tool_options.c:375
 msgid "Sample Merged"
 msgstr "レイヤー結合色"
 
@@ -428,7 +429,7 @@ msgstr "置換"
 msgid "Add"
 msgstr "追加"
 
-#: app/by_color_select.c:654 app/layers_dialog.c:230 app/tool_options.c:997
+#: app/by_color_select.c:654 app/layers_dialog.c:230 app/tool_options.c:1009
 msgid "Subtract"
 msgstr "減算"
 
@@ -445,7 +446,7 @@ msgid "copy"
 msgstr "コピー"
 
 #. formulate the new layer_mask name
-#: app/channel.c:195 app/gradient.c:1616 app/layer.c:318 app/layer.c:1542
+#: app/channel.c:195 app/gradient.c:1616 app/layer.c:318 app/layer.c:1543
 #, c-format
 msgid "%s copy"
 msgstr "%s コピー"
@@ -526,17 +527,17 @@ msgid "Empty Channel Copy"
 msgstr "空チャンネルコピー"
 
 #: app/channels_dialog.c:1386 app/color_balance.c:342 app/curves.c:414
-#: app/histogram_tool.c:272 app/levels.c:243
+#: app/histogram_tool.c:272 app/levels.c:229
 msgid "Red"
 msgstr "赤"
 
 #: app/channels_dialog.c:1390 app/color_balance.c:367 app/curves.c:415
-#: app/histogram_tool.c:273 app/levels.c:244
+#: app/histogram_tool.c:273 app/levels.c:230
 msgid "Green"
 msgstr "緑"
 
 #: app/channels_dialog.c:1394 app/color_balance.c:392 app/curves.c:416
-#: app/histogram_tool.c:274 app/levels.c:245
+#: app/histogram_tool.c:274 app/levels.c:231
 msgid "Blue"
 msgstr "青"
 
@@ -910,13 +911,13 @@ msgstr "開始点 の X:"
 
 #. the pixel size labels
 #: app/crop.c:1063 app/file_new_dialog.c:415 app/file_new_dialog.c:433
-#: app/tool_options.c:423
+#: app/tool_options.c:435
 msgid "Width:"
 msgstr "幅:"
 
 #: app/crop.c:1066 app/file_new_dialog.c:421 app/file_new_dialog.c:439
 #: app/layers_dialog.c:3388 app/resize.c:240 app/resize.c:265 app/resize.c:509
-#: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:439
+#: app/scale_tool.c:78 app/scale_tool.c:85 app/tool_options.c:451
 #: app/xinput_airbrush.c:479
 msgid "Height:"
 msgstr "高さ:"
@@ -934,11 +935,11 @@ msgid "Curves Options"
 msgstr "カーブオプション"
 
 #: app/curves.c:413 app/histogram_tool.c:271 app/layers_dialog.c:242
-#: app/levels.c:242 app/paint_funcs.c:97 app/tool_options.c:1003
+#: app/levels.c:228 app/paint_funcs.c:97 app/tool_options.c:1015
 msgid "Value"
 msgstr "明度"
 
-#: app/curves.c:417 app/levels.c:246
+#: app/curves.c:417 app/levels.c:232
 msgid "Alpha"
 msgstr "アルファ"
 
@@ -976,8 +977,8 @@ msgstr "脱色操作は RGB 描画対象にのみ有効です."
 msgid "Device Status"
 msgstr "デバイスの状態"
 
-#: app/devices.c:753 app/levels.c:627 app/palette.c:2113
-#: app/preferences_dialog.c:1264
+#: app/devices.c:753 app/levels.c:613 app/palette.c:2113
+#: app/preferences_dialog.c:361 app/preferences_dialog.c:1355
 msgid "Save"
 msgstr "保存"
 
@@ -1158,7 +1159,7 @@ msgstr "画像のサイズ: %s"
 msgid "New Image"
 msgstr "新規画像"
 
-#: app/file_new_dialog.c:479 app/preferences_dialog.c:1337
+#: app/file_new_dialog.c:479 app/preferences_dialog.c:1428
 msgid "Pixels"
 msgstr "ピクセル"
 
@@ -1275,13 +1276,13 @@ msgstr "はい"
 msgid "No"
 msgstr "いいえ"
 
-#: app/flip_tool.c:75 app/preferences_dialog.c:1386
-#: app/preferences_dialog.c:2114
+#: app/flip_tool.c:75 app/preferences_dialog.c:1477
+#: app/preferences_dialog.c:2232
 msgid "Horizontal"
 msgstr "水平"
 
-#: app/flip_tool.c:75 app/preferences_dialog.c:1388
-#: app/preferences_dialog.c:2116
+#: app/flip_tool.c:75 app/preferences_dialog.c:1479
+#: app/preferences_dialog.c:2234
 msgid "Vertical"
 msgstr "垂直"
 
@@ -1310,7 +1311,7 @@ msgstr ""
 msgid "RGB-empty"
 msgstr "RGB-未描画"
 
-#: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1431
+#: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1523
 msgid "RGB"
 msgstr "RGB"
 
@@ -1427,39 +1428,39 @@ msgstr "名前なし"
 msgid "Layer type %d not supported."
 msgstr "レイヤータイプ %d には対応していません."
 
-#: app/gimpimage.c:1128
+#: app/gimpimage.c:1134
 msgid "attach parasite to image"
 msgstr "画像にパラサイトを付加"
 
-#: app/gimpimage.c:1151
+#: app/gimpimage.c:1157
 msgid "detach parasite from image"
 msgstr "画像からパラサイトを削除"
 
-#: app/gimpimage.c:2115
+#: app/gimpimage.c:2121
 msgid "Layer cannot be raised any further"
 msgstr "これ以上レイヤーを前面に移動させられません"
 
-#: app/gimpimage.c:2141
+#: app/gimpimage.c:2147
 msgid "Layer cannot be lowered any further"
 msgstr "これ以上レイヤーを背面に移動させられません"
 
-#: app/gimpimage.c:2165
+#: app/gimpimage.c:2171
 msgid "Layer is already on top"
 msgstr "レイヤーは既に最前面にあります"
 
-#: app/gimpimage.c:2171
+#: app/gimpimage.c:2177
 msgid "Can't raise Layer without alpha"
 msgstr "アルファチャンネルの無いレイヤーを前面には出せません"
 
-#: app/gimpimage.c:2198
+#: app/gimpimage.c:2204
 msgid "Layer is already on bottom"
 msgstr "レイヤーは既に最背面にあります"
 
-#: app/gimpimage.c:2253
+#: app/gimpimage.c:2259
 msgid "BG has no alpha, layer was placed above"
 msgstr "背景にはアルファチャンネルが無く, レイヤーはその前に置かれています"
 
-#: app/gimpimage.c:2322
+#: app/gimpimage.c:2328
 msgid ""
 "There are not enough visible layers for a merge.\n"
 "There must be at least two."
@@ -1467,11 +1468,11 @@ msgstr ""
 "統合するための可視レイヤーが足りません.\n"
 "少なくとも二つは必要です."
 
-#: app/gimpimage.c:2402
+#: app/gimpimage.c:2408
 msgid "There are not enough visible layers for a merge down."
 msgstr "下のレイヤーと結合するために十分な可視レイヤーがありません."
 
-#: app/gimpimage.c:2805
+#: app/gimpimage.c:2811
 msgid ""
 "Unable to add a layer mask since\n"
 "the layer already has one."
@@ -1479,7 +1480,7 @@ msgstr ""
 "既にレイヤーマスクがあるのでこれ以上レイヤーマスクを\n"
 "付加する事はできません."
 
-#: app/gimpimage.c:2809
+#: app/gimpimage.c:2815
 msgid ""
 "Unable to add a layer mask to a\n"
 "layer in an indexed image."
@@ -1487,7 +1488,7 @@ msgstr ""
 "インデックス画像中のレイヤーにレイヤーマスクを\n"
 "付加する事はできません."
 
-#: app/gimpimage.c:2813
+#: app/gimpimage.c:2819
 msgid ""
 "Cannot add layer mask to a layer\n"
 "with no alpha channel."
@@ -1495,25 +1496,25 @@ msgstr ""
 "アルファチャンネルを持たないレイヤーに\n"
 "レイヤーマスクを付加する事はできません."
 
-#: app/gimpimage.c:2820
+#: app/gimpimage.c:2826
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "指定したレイヤーと異る大きさを持つレイヤーマスクを付加することはできません."
 
-#: app/gimpimage.c:2923
+#: app/gimpimage.c:2929
 msgid "Channel cannot be raised any further"
 msgstr "これ以上チャンネルを上昇させられません"
 
-#: app/gimpimage.c:2972
+#: app/gimpimage.c:2978
 msgid "Channel cannot be lowered any further"
 msgstr "これ以上チャンネルを下降させられません"
 
-#: app/gimpimage.c:3175 app/palette.c:379 app/palette.c:956 app/palette.c:1092
+#: app/gimpimage.c:3181 app/palette.c:379 app/palette.c:956 app/palette.c:1092
 #: app/palette.c:2063 app/palette.c:2810 app/palette.c:2942
 msgid "Untitled"
 msgstr "名称未設定"
 
-#: app/gimpparasite.c:130
+#: app/gimpparasite.c:136
 msgid ""
 "# GIMP parasiterc\n"
 "# This file will be entirely rewritten every time you quit the gimp.\n"
@@ -1527,50 +1528,50 @@ msgstr ""
 msgid "Progress"
 msgstr "進度"
 
-#: app/gimprc.c:396 app/plug_in.c:305
+#: app/gimprc.c:399 app/plug_in.c:305
 msgid "Resource configuration"
 msgstr "リソース設定"
 
-#: app/gimprc.c:447
+#: app/gimprc.c:449
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "読み込み中にエラー: \"%s\"\n"
 
-#: app/gimprc.c:448
+#: app/gimprc.c:450
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  %d 行の %d 列目\n"
 
-#: app/gimprc.c:449
+#: app/gimprc.c:451
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  不明な識別子: %s\n"
 
-#: app/gimprc.c:1445
+#: app/gimprc.c:1450
 msgid "error parsing pluginrc"
 msgstr "pluginrc 読み込み中にエラー発生"
 
-#: app/gimprc.c:2778
+#: app/gimprc.c:2783
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "%s を開けません; %s"
 
-#: app/gimprc.c:2797
+#: app/gimprc.c:2802
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "%s を %s.old に変更できません; %s"
 
-#: app/gimprc.c:2803
+#: app/gimprc.c:2808
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "%s を再オープンできません\n"
 
-#: app/gimprc.c:2815
+#: app/gimprc.c:2820
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "%s に書き込めません; %s"
 
-#: app/gimpui.c:627
+#: app/gimpui.c:452
 msgid "GIMP Message"
 msgstr "GIMP メッセージ"
 
@@ -1779,7 +1780,7 @@ msgstr ""
 "\"%s\" を一覧とディスクから削除します\n"
 "よろしいですか?"
 
-#: app/gradient.c:2044
+#: app/gradient.c:2043
 #, c-format
 msgid "Zoom factor: %d:1    Displaying [%0.6f, %0.6f]"
 msgstr "拡大倍率: %d:1    表示 [%0.6f, %0.6f]"
@@ -1803,19 +1804,19 @@ msgstr "前景色を RGB (%d, %d, %d) に設定 <-> (%0.3f, %0.3f, %0.3f)"
 msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
 msgstr "背景色を RGB (%d, %d, %d) に設定 <-> (%0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:2648
+#: app/gradient.c:2649
 msgid "Drag: move    Shift+drag: move & compress"
 msgstr "ドラッグ: 移動    Shift+ドラッグ: 移動 & 圧縮"
 
-#: app/gradient.c:2650 app/gradient.c:2653
+#: app/gradient.c:2651 app/gradient.c:2654
 msgid "Click: select    Shift+click: extend selection"
 msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大"
 
-#: app/gradient.c:2658
+#: app/gradient.c:2659
 msgid "Click: select    Shift+click: extend selection    Drag: move"
 msgstr "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動"
 
-#: app/gradient.c:2670
+#: app/gradient.c:2671
 msgid ""
 "Click: select    Shift+click: extend selection    Drag: move    Shift+drag: "
 "move & compress"
@@ -1823,176 +1824,176 @@ msgstr ""
 "クリック: 選択    Shift+クリック: 選択領域を拡大    ドラッグ: 移動    "
 "Shift+ドラッグ: 移動 & 圧縮"
 
-#: app/gradient.c:2912 app/gradient.c:2921
+#: app/gradient.c:2913 app/gradient.c:2922
 #, c-format
 msgid "Handle position: %0.6f"
 msgstr "制御点位置: %0.6f"
 
-#: app/gradient.c:2939
+#: app/gradient.c:2940
 #, c-format
 msgid "Distance: %0.6f"
 msgstr "距離: %0.6f"
 
-#: app/gradient.c:3423 app/gradient.c:4480
+#: app/gradient.c:3427 app/gradient.c:4485
 msgid "Left endpoint's color"
 msgstr "左終端色"
 
-#: app/gradient.c:3434 app/gradient.c:3476
+#: app/gradient.c:3438 app/gradient.c:3480
 msgid "Load from"
 msgstr "〜から読み込み"
 
-#: app/gradient.c:3438
+#: app/gradient.c:3442
 msgid "Left neighbor's right endpoint"
 msgstr "左隣セグメントの右終端"
 
-#: app/gradient.c:3439
+#: app/gradient.c:3443
 msgid "Right endpoint"
 msgstr "右終端"
 
-#: app/gradient.c:3449 app/gradient.c:3491
+#: app/gradient.c:3453 app/gradient.c:3495
 msgid "Save to"
 msgstr "〜へ保存"
 
-#: app/gradient.c:3465 app/gradient.c:4558
+#: app/gradient.c:3469 app/gradient.c:4563
 msgid "Right endpoint's color"
 msgstr "右終端色"
 
-#: app/gradient.c:3480
+#: app/gradient.c:3484
 msgid "Right neighbor's left endpoint"
 msgstr "右隣セグメントの左終端"
 
-#: app/gradient.c:3481
+#: app/gradient.c:3485
 msgid "Left endpoint"
 msgstr "左終端"
 
-#: app/gradient.c:3592
+#: app/gradient.c:3596
 msgid "Selection operations"
 msgstr "選択領域に対する操作"
 
-#: app/gradient.c:3764
+#: app/gradient.c:3768
 msgid "Blending function for segment"
 msgstr "セグメントに対する混色関数"
 
-#: app/gradient.c:3766
+#: app/gradient.c:3770
 msgid "Coloring type for segment"
 msgstr "セグメントに対する色モデル"
 
-#: app/gradient.c:3768
+#: app/gradient.c:3772
 msgid "Split segment at midpoint"
 msgstr "セグメントを中間点で分割"
 
-#: app/gradient.c:3770 app/gradient.c:4861
+#: app/gradient.c:3774 app/gradient.c:4866
 msgid "Split segment uniformly"
 msgstr "セグメントを均等に分割"
 
-#: app/gradient.c:3772
+#: app/gradient.c:3776
 msgid "Delete segment"
 msgstr "セグメントを削除"
 
-#: app/gradient.c:3774
+#: app/gradient.c:3778
 msgid "Re-center segment's midpoint"
 msgstr "セグメントの中間点を中央に移動"
 
-#: app/gradient.c:3776
+#: app/gradient.c:3780
 msgid "Re-distribute handles in segment"
 msgstr "セグメント中の制御点を再分配"
 
-#: app/gradient.c:3778
+#: app/gradient.c:3782
 msgid "Flip segment"
 msgstr "セグメントの左右反転"
 
-#: app/gradient.c:3780 app/gradient.c:5422
+#: app/gradient.c:3784 app/gradient.c:5427
 msgid "Replicate segment"
 msgstr "セグメントの複製"
 
-#: app/gradient.c:3785
+#: app/gradient.c:3789
 msgid "Blending function for selection"
 msgstr "選択領域に対する混色関数"
 
-#: app/gradient.c:3787
+#: app/gradient.c:3791
 msgid "Coloring type for selection"
 msgstr "選択領域に対する色モデル"
 
-#: app/gradient.c:3789
+#: app/gradient.c:3793
 msgid "Split segments at midpoints"
 msgstr "セグメント群を中間点で分割"
 
-#: app/gradient.c:3791 app/gradient.c:4862
+#: app/gradient.c:3795 app/gradient.c:4867
 msgid "Split segments uniformly"
 msgstr "セグメント群を均等に分割"
 
-#: app/gradient.c:3793
+#: app/gradient.c:3797
 msgid "Delete selection"
 msgstr "選択領域を削除"
 
-#: app/gradient.c:3795
+#: app/gradient.c:3799
 msgid "Re-center midpoints in selection"
 msgstr "選択領域の中間点を中央に移動"
 
-#: app/gradient.c:3797
+#: app/gradient.c:3801
 msgid "Re-distribute handles in selection"
 msgstr "選択領域の制御点を再分配"
 
-#: app/gradient.c:3799
+#: app/gradient.c:3803
 msgid "Flip selection"
 msgstr "選択領域を左右反転"
 
-#: app/gradient.c:3801 app/gradient.c:5423
+#: app/gradient.c:3805 app/gradient.c:5428
 msgid "Replicate selection"
 msgstr "選択領域を複製"
 
-#: app/gradient.c:4085
+#: app/gradient.c:4089
 msgid "FG color"
 msgstr "前景色"
 
-#: app/gradient.c:4134
+#: app/gradient.c:4137
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/gradient.c:4647 app/gradient.c:4717
+#: app/gradient.c:4652 app/gradient.c:4722
 msgid "(Varies)"
 msgstr "(変更)"
 
-#: app/gradient.c:4869
+#: app/gradient.c:4874
 msgid "Split"
 msgstr "分割"
 
 #. Instructions
-#: app/gradient.c:4883
+#: app/gradient.c:4888
 msgid "Please select the number of uniform parts"
 msgstr "選択中のセグメント(群)を"
 
-#: app/gradient.c:4889
+#: app/gradient.c:4894
 msgid "in which you want to split the selected segment"
 msgstr "いくつに分割するか選択して下さい"
 
-#: app/gradient.c:4890
+#: app/gradient.c:4895
 msgid "in which you want to split the segments in the selection"
 msgstr "いくつずつに分割するか選択して下さい"
 
-#: app/gradient.c:5250
+#: app/gradient.c:5255
 msgid "Blend endpoints' colors"
 msgstr "終端の色を混ぜる"
 
-#: app/gradient.c:5262
+#: app/gradient.c:5267
 msgid "Blend endpoints' opacity"
 msgstr "終端の不透明度を混ぜる"
 
-#: app/gradient.c:5430
+#: app/gradient.c:5435
 msgid "Replicate"
 msgstr "複製"
 
 #. Instructions
-#: app/gradient.c:5443
+#: app/gradient.c:5448
 msgid "Please select the number of times"
 msgstr "選択中のセグメント(群)を"
 
-#: app/gradient.c:5448
+#: app/gradient.c:5453
 msgid "you want to replicate the selected segment"
 msgstr "何回複製するか選択して下さい"
 
-#: app/gradient.c:5449
+#: app/gradient.c:5454
 msgid "you want to replicate the selection"
 msgstr "何回複製するか選択して下さい"
 
@@ -2089,7 +2090,7 @@ msgstr "色相 / 明度 / 彩度 調整"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:456 app/layers_dialog.c:236 app/paint_funcs.c:94
-#: app/tool_options.c:1000
+#: app/tool_options.c:1012
 msgid "Hue"
 msgstr "色相"
 
@@ -2100,12 +2101,12 @@ msgstr "明度"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:524 app/layers_dialog.c:238 app/paint_funcs.c:95
-#: app/tool_options.c:1001
+#: app/tool_options.c:1013
 msgid "Saturation"
 msgstr "彩度"
 
 #: app/image_new.c:59 app/info_window.c:65 app/info_window.c:603
-#: app/preferences_dialog.c:1432
+#: app/preferences_dialog.c:1524
 msgid "Grayscale"
 msgstr "グレースケール"
 
@@ -2170,8 +2171,8 @@ msgstr ""
 "現在有効になっているグラデーションです. "
 "クリックするとグラデーションダイアログを表示します."
 
-#: app/info_dialog.c:180 app/preferences_dialog.c:1538
-#: app/preferences_dialog.c:1634
+#: app/info_dialog.c:180 app/preferences_dialog.c:1628
+#: app/preferences_dialog.c:1728
 msgid "General"
 msgstr "一般"
 
@@ -2224,7 +2225,7 @@ msgstr "大きさ (幅 x 高さ):"
 msgid "Resolution:"
 msgstr "解像度:"
 
-#: app/info_window.c:331 app/tool_options.c:452
+#: app/info_window.c:331 app/tool_options.c:464
 msgid "Unit:"
 msgstr "単位:"
 
@@ -2731,7 +2732,7 @@ msgid "Channel Ops"
 msgstr "チャンネル操作"
 
 #: app/internal_procs.c:80 app/layers_dialog.c:240 app/paint_funcs.c:96
-#: app/tool_options.c:888 app/tool_options.c:1002
+#: app/tool_options.c:900 app/tool_options.c:1014
 msgid "Color"
 msgstr "色"
 
@@ -2783,7 +2784,7 @@ msgstr "グラデーション UI"
 msgid "Guide procedures"
 msgstr "ガイドプロシージャ"
 
-#: app/internal_procs.c:122 app/preferences_dialog.c:1530
+#: app/internal_procs.c:122 app/preferences_dialog.c:1620
 msgid "Interface"
 msgstr "インターフェイス"
 
@@ -2849,7 +2850,7 @@ msgstr "反転操作失敗."
 msgid "Zero width or height layers not allowed."
 msgstr "レイヤーの幅もしくは高さが零であってはいけません."
 
-#: app/layer.c:476
+#: app/layer.c:477
 #, c-format
 msgid "%s mask"
 msgstr "%s マスク"
@@ -2858,43 +2859,43 @@ msgstr "%s マスク"
 msgid "Layer Select"
 msgstr "レイヤー選択"
 
-#: app/layers_dialog.c:214 app/paint_funcs.c:83 app/tool_options.c:988
+#: app/layers_dialog.c:214 app/paint_funcs.c:83 app/tool_options.c:1000
 msgid "Normal"
 msgstr "標準"
 
-#: app/layers_dialog.c:216 app/paint_funcs.c:84 app/tool_options.c:989
+#: app/layers_dialog.c:216 app/paint_funcs.c:84 app/tool_options.c:1001
 msgid "Dissolve"
 msgstr "消散"
 
-#: app/layers_dialog.c:218 app/paint_funcs.c:86 app/tool_options.c:991
+#: app/layers_dialog.c:218 app/paint_funcs.c:86 app/tool_options.c:1003
 msgid "Multiply (Burn)"
 msgstr "乗算"
 
-#: app/layers_dialog.c:220 app/paint_funcs.c:98 app/tool_options.c:992
+#: app/layers_dialog.c:220 app/paint_funcs.c:98 app/tool_options.c:1004
 msgid "Divide (Dodge)"
 msgstr "除算"
 
-#: app/layers_dialog.c:222 app/paint_funcs.c:87 app/tool_options.c:993
+#: app/layers_dialog.c:222 app/paint_funcs.c:87 app/tool_options.c:1005
 msgid "Screen"
 msgstr "スクリーン"
 
-#: app/layers_dialog.c:224 app/paint_funcs.c:88 app/tool_options.c:994
+#: app/layers_dialog.c:224 app/paint_funcs.c:88 app/tool_options.c:1006
 msgid "Overlay"
 msgstr "オーバーレイ"
 
-#: app/layers_dialog.c:226 app/paint_funcs.c:89 app/tool_options.c:995
+#: app/layers_dialog.c:226 app/paint_funcs.c:89 app/tool_options.c:1007
 msgid "Difference"
 msgstr "差分"
 
-#: app/layers_dialog.c:228 app/paint_funcs.c:90 app/tool_options.c:996
+#: app/layers_dialog.c:228 app/paint_funcs.c:90 app/tool_options.c:1008
 msgid "Addition"
 msgstr "加算"
 
-#: app/layers_dialog.c:232 app/paint_funcs.c:92 app/tool_options.c:998
+#: app/layers_dialog.c:232 app/paint_funcs.c:92 app/tool_options.c:1010
 msgid "Darken Only"
 msgstr "比較(暗)"
 
-#: app/layers_dialog.c:234 app/paint_funcs.c:93 app/tool_options.c:999
+#: app/layers_dialog.c:234 app/paint_funcs.c:93 app/tool_options.c:1011
 msgid "Lighten Only"
 msgstr "比較(明)"
 
@@ -3044,7 +3045,7 @@ msgid "Layers & Channels"
 msgstr "レイヤー & チャンネル"
 
 #. The Auto-button
-#: app/lc_dialog.c:148 app/levels.c:607
+#: app/lc_dialog.c:148 app/levels.c:593
 msgid "Auto"
 msgstr "自動"
 
@@ -3056,48 +3057,48 @@ msgstr "レイヤー"
 msgid "Channels"
 msgstr "チャンネル"
 
-#: app/levels.c:209
+#: app/levels.c:195
 msgid "Levels Options"
 msgstr "レベルオプション"
 
-#: app/levels.c:257
+#: app/levels.c:243
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr "インデックス描画対象に対してレベルは調整できません"
 
 #. The shell and main vbox
-#: app/levels.c:359 app/tools.c:679
+#: app/levels.c:345 app/tools.c:679
 msgid "Levels"
 msgstr "レベル"
 
-#: app/levels.c:388
+#: app/levels.c:374
 msgid "Modify Levels for Channel:"
 msgstr "レベル変更対象チャンネル:"
 
-#: app/levels.c:404
+#: app/levels.c:390
 msgid "Input Levels:"
 msgstr "入力レベル:"
 
-#: app/levels.c:513
+#: app/levels.c:499
 msgid "Output Levels:"
 msgstr "出力レベル:"
 
-#: app/levels.c:617 app/module_db.c:825
+#: app/levels.c:603 app/module_db.c:829
 msgid "Load"
 msgstr "読み込み"
 
-#: app/levels.c:1138
+#: app/levels.c:1124
 msgid "Load Levels"
 msgstr "読み込みレベル"
 
-#: app/levels.c:1153
+#: app/levels.c:1139
 msgid "Save Levels"
 msgstr "保存レベル"
 
-#: app/levels.c:1470
+#: app/levels.c:1456
 msgid "Load/Save Levels"
 msgstr "読み込み/保存レベル"
 
-#: app/levels.c:1508 app/levels.c:1526 app/paths_dialog.c:2214
+#: app/levels.c:1494 app/levels.c:1512 app/paths_dialog.c:2217
 #, c-format
 msgid "Unable to open file %s"
 msgstr "ファイル %s を開けません"
@@ -4182,74 +4183,74 @@ msgstr "アンロード要求中"
 msgid "Unloaded OK"
 msgstr "アンロード完了"
 
-#: app/module_db.c:271
+#: app/module_db.c:275
 msgid "Module DB"
 msgstr "モジュール DB"
 
-#: app/module_db.c:560
+#: app/module_db.c:564
 #, c-format
 msgid "load module: \"%s\"\n"
 msgstr "モジュール読み込み: \"%s\"\n"
 
-#: app/module_db.c:567
+#: app/module_db.c:571
 #, c-format
 msgid "skipping module: \"%s\"\n"
 msgstr "モジュールをスキップ: \"%s\"\n"
 
-#: app/module_db.c:592
+#: app/module_db.c:596
 #, c-format
 msgid "module load error: %s: %s"
 msgstr "モジュール読み込みエラー: %s: %s"
 
-#: app/module_db.c:773
+#: app/module_db.c:777
 msgid "<No modules>"
 msgstr "<モジュール 無し>"
 
-#: app/module_db.c:786 app/module_db.c:795
+#: app/module_db.c:790 app/module_db.c:799
 msgid "on disk"
 msgstr "ディスク上"
 
-#: app/module_db.c:786
+#: app/module_db.c:790
 msgid "only in memory"
 msgstr "メモリー中のみ"
 
-#: app/module_db.c:795
+#: app/module_db.c:799
 msgid "nowhere (click 'refresh')"
 msgstr "非存在 ('再読み込み' をクリック)"
 
-#: app/module_db.c:834
+#: app/module_db.c:838
 msgid "Unload"
 msgstr "アンロード"
 
-#: app/module_db.c:848
+#: app/module_db.c:852
 msgid "Purpose: "
 msgstr "目的: "
 
-#: app/module_db.c:849
+#: app/module_db.c:853
 msgid "Author: "
 msgstr "作者: "
 
-#: app/module_db.c:850
+#: app/module_db.c:854
 msgid "Version: "
 msgstr "バージョン: "
 
-#: app/module_db.c:851
+#: app/module_db.c:855
 msgid "Copyright: "
 msgstr "著作権表示: "
 
-#: app/module_db.c:852
+#: app/module_db.c:856
 msgid "Date: "
 msgstr "日付: "
 
-#: app/module_db.c:853
+#: app/module_db.c:857
 msgid "Location: "
 msgstr "場所: "
 
-#: app/module_db.c:854
+#: app/module_db.c:858
 msgid "State: "
 msgstr "状態: "
 
-#: app/module_db.c:873
+#: app/module_db.c:877
 msgid "Autoload during startup"
 msgstr "起動時に自動読み込み"
 
@@ -4271,7 +4272,7 @@ msgstr "なび: 画像無し"
 msgid "No brushes available for use with this tool."
 msgstr "有効なブラシがありません."
 
-#: app/paint_funcs.c:85 app/tool_options.c:990
+#: app/paint_funcs.c:85 app/tool_options.c:1002
 msgid "Behind"
 msgstr "後ろ"
 
@@ -4519,53 +4520,53 @@ msgstr "端点削除"
 msgid "Edit Point"
 msgstr "端点を編集"
 
-#: app/paths_dialog.c:452
+#: app/paths_dialog.c:455
 #, c-format
 msgid "Path %d"
 msgstr "パス %d"
 
-#: app/paths_dialog.c:1236
+#: app/paths_dialog.c:1239
 msgid "Rename path"
 msgstr "パス名変更"
 
-#: app/paths_dialog.c:1239
+#: app/paths_dialog.c:1242
 msgid "Enter a new name for the path"
 msgstr "新しいパスの名前を入力"
 
-#: app/paths_dialog.c:2228
+#: app/paths_dialog.c:2231
 #, c-format
 msgid "Failed to read from %s"
 msgstr "%s 読み込み失敗"
 
-#: app/paths_dialog.c:2243
+#: app/paths_dialog.c:2246
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "%s からのパス読み込み失敗"
 
-#: app/paths_dialog.c:2250
+#: app/paths_dialog.c:2253
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "パスファイル %s に端点がありません"
 
-#: app/paths_dialog.c:2261
+#: app/paths_dialog.c:2264
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "%s からのパス端点読み込み失敗"
 
-#: app/paths_dialog.c:2334 app/xcf.c:418
+#: app/paths_dialog.c:2337 app/xcf.c:419
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "ファイルを開けません %s: %s\n"
 
-#: app/paths_dialog.c:2356
+#: app/paths_dialog.c:2359
 msgid "Load/Store Bezier Curves"
 msgstr "ベジエ曲線の読み込み/保存"
 
-#: app/paths_dialog.c:2396
+#: app/paths_dialog.c:2399
 msgid "Load Path"
 msgstr "パス読み込み"
 
-#: app/paths_dialog.c:2418
+#: app/paths_dialog.c:2421
 msgid "Store Path"
 msgstr "パスを保存"
 
@@ -4646,547 +4647,567 @@ msgstr "ポスター化"
 msgid "Posterize Levels:"
 msgstr "ポスター化レベル:"
 
-#: app/preferences_dialog.c:219
+#: app/preferences_dialog.c:229
 msgid "Error: Levels of undo must be zero or greater."
 msgstr "エラー: アンドゥレベルは0以上でなければなりません."
 
-#: app/preferences_dialog.c:225
+#: app/preferences_dialog.c:235
 msgid "Error: Number of processors must be between 1 and 30."
 msgstr "エラー: プロセッサの数は 1 〜 30 でなければなりません."
 
-#: app/preferences_dialog.c:231
+#: app/preferences_dialog.c:241
 msgid "Error: Marching speed must be 50 or greater."
 msgstr "エラー: 蟻の行進速度は 50 以上でなければなりません."
 
-#: app/preferences_dialog.c:237
+#: app/preferences_dialog.c:247
 msgid "Error: Default width must be one or greater."
 msgstr "エラー: デフォルト幅は1以上でなければなりません."
 
-#: app/preferences_dialog.c:243
+#: app/preferences_dialog.c:253
 msgid "Error: Default height must be one or greater."
 msgstr "エラー: デフォルト高さは1以上でなければなりません."
 
-#: app/preferences_dialog.c:250
+#: app/preferences_dialog.c:260
 msgid "Error: Default unit must be within unit range."
 msgstr "エラー: デフォルト幅は1以上でなければなりません."
 
-#: app/preferences_dialog.c:257
+#: app/preferences_dialog.c:267
 msgid "Error: Default resolution must not be zero."
 msgstr "エラー: デフォルト解像度は零であってはいけません."
 
-#: app/preferences_dialog.c:265
+#: app/preferences_dialog.c:275
 msgid "Error: Default resolution unit must be within unit range."
 msgstr "エラー: デフォルト幅は1以上でなければなりません."
 
-#: app/preferences_dialog.c:272
+#: app/preferences_dialog.c:282
 msgid "Error: Monitor resolution must not be zero."
 msgstr "エラー: モニター解像度は零であってはいけません."
 
-#: app/preferences_dialog.c:279
+#: app/preferences_dialog.c:289
 msgid "Error: Image title format must not be NULL."
 msgstr "エラー: 画像タイトル形式は NULL であってはいけません."
 
-#: app/preferences_dialog.c:592
+#: app/preferences_dialog.c:356
+#, fuzzy
+msgid "Save Preferences ?"
+msgstr "環境設定"
+
+#: app/preferences_dialog.c:372
+msgid ""
+"At least one of the changes you made will only\n"
+"take effect after you restart the GIMP.\n"
+"\n"
+"You may choose 'Save' now to make your changes\n"
+"permanent, so you can restart GIMP or hit 'Close'\n"
+"and the critical parts of your changes will not\n"
+"be applied."
+msgstr ""
+
+#: app/preferences_dialog.c:465
 msgid "You will need to restart GIMP for these changes to take effect."
 msgstr "変更内容を有効にするには GIMP を再起動する必要があります."
 
-#: app/preferences_dialog.c:1256
+#: app/preferences_dialog.c:1347
 msgid "Preferences"
 msgstr "環境設定"
 
 #. The categories tree
-#: app/preferences_dialog.c:1278
+#: app/preferences_dialog.c:1369
 msgid "Categories"
 msgstr "カテゴリ"
 
-#: app/preferences_dialog.c:1306
+#: app/preferences_dialog.c:1397
 msgid "New File Settings"
 msgstr "新規ファイルの設定"
 
-#: app/preferences_dialog.c:1308
+#: app/preferences_dialog.c:1399
 msgid "New File"
 msgstr "新規ファイル"
 
-#: app/preferences_dialog.c:1319
+#: app/preferences_dialog.c:1410
 msgid "Default Image Size and Unit"
 msgstr "デフォルトの画像サイズと単位"
 
-#: app/preferences_dialog.c:1333
+#: app/preferences_dialog.c:1424
 msgid "Width"
 msgstr "幅"
 
-#: app/preferences_dialog.c:1335
+#: app/preferences_dialog.c:1426
 msgid "Height"
 msgstr "高さ"
 
-#: app/preferences_dialog.c:1365
+#: app/preferences_dialog.c:1456
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "デフォルトの画像解像度と単位"
 
-#: app/preferences_dialog.c:1390 app/preferences_dialog.c:2118
+#: app/preferences_dialog.c:1481 app/preferences_dialog.c:2236
 msgid "dpi"
 msgstr "dpi"
 
-#: app/preferences_dialog.c:1435
+#: app/preferences_dialog.c:1528
 msgid "Default Image Type:"
 msgstr "デフォルトの画像種:"
 
-#: app/preferences_dialog.c:1440
+#: app/preferences_dialog.c:1533
 msgid "Display Settings"
 msgstr "表示に関する設定"
 
-#: app/preferences_dialog.c:1442
+#: app/preferences_dialog.c:1535
 msgid "Display"
 msgstr "表示"
 
-#: app/preferences_dialog.c:1450
+#: app/preferences_dialog.c:1543
 msgid "Transparency"
 msgstr "透明部分"
 
-#: app/preferences_dialog.c:1468
+#: app/preferences_dialog.c:1562
 msgid "Light Checks"
 msgstr "明るい格子"
 
-#: app/preferences_dialog.c:1470
+#: app/preferences_dialog.c:1563
 msgid "Mid-Tone Checks"
 msgstr "中間調の格子"
 
-#: app/preferences_dialog.c:1472
+#: app/preferences_dialog.c:1564
 msgid "Dark Checks"
 msgstr "暗い格子"
 
-#: app/preferences_dialog.c:1474
+#: app/preferences_dialog.c:1565
 msgid "White Only"
 msgstr "白色のみ"
 
-#: app/preferences_dialog.c:1476
+#: app/preferences_dialog.c:1566
 msgid "Gray Only"
 msgstr "灰色のみ"
 
-#: app/preferences_dialog.c:1478
+#: app/preferences_dialog.c:1567
 msgid "Black Only"
 msgstr "黒色のみ"
 
-#: app/preferences_dialog.c:1482
+#: app/preferences_dialog.c:1571
 msgid "Transparency Type:"
 msgstr "透明部分表示形式:"
 
-#: app/preferences_dialog.c:1488 app/preferences_dialog.c:1565
-#: app/preferences_dialog.c:1576
+#: app/preferences_dialog.c:1578 app/preferences_dialog.c:1656
+#: app/preferences_dialog.c:1669
 msgid "Small"
 msgstr "小さい"
 
-#: app/preferences_dialog.c:1490 app/preferences_dialog.c:1566
-#: app/preferences_dialog.c:1577
+#: app/preferences_dialog.c:1579 app/preferences_dialog.c:1657
+#: app/preferences_dialog.c:1670
 msgid "Medium"
 msgstr "中間"
 
-#: app/preferences_dialog.c:1492 app/preferences_dialog.c:1567
-#: app/preferences_dialog.c:1578
+#: app/preferences_dialog.c:1580 app/preferences_dialog.c:1658
+#: app/preferences_dialog.c:1671
 msgid "Large"
 msgstr "大きい"
 
-#: app/preferences_dialog.c:1496
+#: app/preferences_dialog.c:1584
 msgid "Check Size:"
 msgstr "格子サイズ:"
 
-#: app/preferences_dialog.c:1498 app/transform_tool.c:214
+#: app/preferences_dialog.c:1586 app/transform_tool.c:214
 msgid "Scaling"
 msgstr "拡大縮小"
 
-#: app/preferences_dialog.c:1515
+#: app/preferences_dialog.c:1604
 msgid "Nearest Neighbor (Fast)"
 msgstr "最近接ピクセル (速い)"
 
-#: app/preferences_dialog.c:1519
+#: app/preferences_dialog.c:1608
 msgid "Cubic (Slow)"
 msgstr "三次補間 (遅い)"
 
-#: app/preferences_dialog.c:1523
+#: app/preferences_dialog.c:1613
 msgid "Interpolation Type:"
 msgstr "補間の種類:"
 
-#: app/preferences_dialog.c:1528
+#: app/preferences_dialog.c:1618
 msgid "Interface Settings"
 msgstr "インターフェイスの設定"
 
-#: app/preferences_dialog.c:1564
+#: app/preferences_dialog.c:1655
 msgid "Tiny"
 msgstr "微小"
 
-#: app/preferences_dialog.c:1568
+#: app/preferences_dialog.c:1659
 msgid "Huge"
 msgstr "巨大"
 
-#: app/preferences_dialog.c:1571
+#: app/preferences_dialog.c:1663
 msgid "Preview Size:"
 msgstr "プレビューサイズ:"
 
-#: app/preferences_dialog.c:1581
+#: app/preferences_dialog.c:1675
 msgid "Nav Preview Size:"
 msgstr "なびプレビューサイズ:"
 
-#: app/preferences_dialog.c:1590
+#: app/preferences_dialog.c:1684
 msgid "Levels of Undo:"
 msgstr "アンドゥレベル:"
 
-#: app/preferences_dialog.c:1599
+#: app/preferences_dialog.c:1693
 msgid "Recent Documents List Size:"
 msgstr "最近使ったファイルの記録数:"
 
-#: app/preferences_dialog.c:1602
+#: app/preferences_dialog.c:1696
 msgid "Dialog Behaviour"
 msgstr "ダイアログの振舞い"
 
-#: app/preferences_dialog.c:1604
+#: app/preferences_dialog.c:1698
 msgid "Navigation Window per Display"
 msgstr "ディスプレイ毎のウィンドウなび"
 
-#: app/preferences_dialog.c:1613
+#: app/preferences_dialog.c:1707
 msgid "Info Window Follows Mouse"
 msgstr "情報ウインドウの内容をマウスカーソルに合わせる"
 
-#: app/preferences_dialog.c:1624
+#: app/preferences_dialog.c:1718
 msgid "Help System Settings"
 msgstr "ヘルプシステム設定"
 
-#: app/preferences_dialog.c:1626
+#: app/preferences_dialog.c:1720
 msgid "Help System"
 msgstr "ヘルプシステム"
 
-#: app/preferences_dialog.c:1636
+#: app/preferences_dialog.c:1730
 msgid "Show Tool Tips"
 msgstr "道具の簡易説明を表示"
 
-#: app/preferences_dialog.c:1646
+#: app/preferences_dialog.c:1740
 msgid "Context Sensitive Help with \"F1\""
 msgstr "\"F1\" キーによる状況に応じたヘルプ"
 
-#: app/preferences_dialog.c:1655
+#: app/preferences_dialog.c:1749
 msgid "Help Browser"
 msgstr "ヘルプブラウザ"
 
-#: app/preferences_dialog.c:1666
+#: app/preferences_dialog.c:1761
 msgid "Internal"
 msgstr "内蔵"
 
-#: app/preferences_dialog.c:1668
+#: app/preferences_dialog.c:1762
 msgid "Netscape"
 msgstr "Netscape"
 
-#: app/preferences_dialog.c:1672
+#: app/preferences_dialog.c:1766
 msgid "Help Browser to Use:"
 msgstr "使用するヘルプブラウザ:"
 
-#: app/preferences_dialog.c:1677
+#: app/preferences_dialog.c:1771
 msgid "Image Windows Settings"
 msgstr "画像ウィンドウの設定"
 
-#: app/preferences_dialog.c:1679
+#: app/preferences_dialog.c:1773
 msgid "Image Windows"
 msgstr "画像ウィンドウ"
 
-#: app/preferences_dialog.c:1687
+#: app/preferences_dialog.c:1781
 msgid "Appearance"
 msgstr "表示形式"
 
-#: app/preferences_dialog.c:1689
+#: app/preferences_dialog.c:1783
 msgid "Resize Window on Zoom"
 msgstr "ズーム時にウィンドウをリサイズする"
 
-#: app/preferences_dialog.c:1698
+#: app/preferences_dialog.c:1792
 msgid "Show Rulers"
 msgstr "ものさしを表示する"
 
-#: app/preferences_dialog.c:1707
+#: app/preferences_dialog.c:1801
 msgid "Show Statusbar"
 msgstr "状態表示を行う"
 
-#: app/preferences_dialog.c:1731
+#: app/preferences_dialog.c:1825
 msgid "Marching Ants Speed:"
 msgstr "蟻の行進速度:"
 
 #. Set the currently used string as "Custom"
-#: app/preferences_dialog.c:1739
+#: app/preferences_dialog.c:1833
 msgid "Custom"
 msgstr "カスタム"
 
 #. set some commonly used format strings
-#: app/preferences_dialog.c:1745
+#: app/preferences_dialog.c:1839
 msgid "Standard"
 msgstr "標準"
 
-#: app/preferences_dialog.c:1750
+#: app/preferences_dialog.c:1844
 msgid "Show zoom percentage"
 msgstr "拡大パーセンテージを表示"
 
-#: app/preferences_dialog.c:1755
+#: app/preferences_dialog.c:1849
 msgid "Show zoom ratio"
 msgstr "拡大率を表示"
 
-#: app/preferences_dialog.c:1760
+#: app/preferences_dialog.c:1854
 msgid "Show reversed zoom ratio"
 msgstr "縮小率を表示"
 
-#: app/preferences_dialog.c:1771
+#: app/preferences_dialog.c:1865
 msgid "Image Title Format:"
 msgstr "画像タイトル形式:"
 
 #. End of the title format string
-#: app/preferences_dialog.c:1774
+#: app/preferences_dialog.c:1868
 msgid "Pointer Movement Feedback"
 msgstr "ポインタ移動フィードバック"
 
-#: app/preferences_dialog.c:1777
+#: app/preferences_dialog.c:1871
 msgid "Perfect-but-slow Pointer Tracking"
 msgstr "正確だが遅いポインター位置確定法"
 
-#: app/preferences_dialog.c:1786
+#: app/preferences_dialog.c:1880
 msgid "Disable Cursor Updating"
 msgstr "カーソルの自動更新をしない"
 
-#: app/preferences_dialog.c:1797
+#: app/preferences_dialog.c:1895
+msgid "Use \"Dot for Dot\" by default"
+msgstr ""
+
+#: app/preferences_dialog.c:1906
 msgid "Tool Options Settings"
 msgstr "ツールオプション設定"
 
-#: app/preferences_dialog.c:1799 app/tools.c:978
+#: app/preferences_dialog.c:1908 app/tools.c:978
 msgid "Tool Options"
 msgstr "ツールオプション"
 
-#: app/preferences_dialog.c:1807
+#: app/preferences_dialog.c:1916
 msgid "Paint Options"
 msgstr "絵筆オプション"
 
-#: app/preferences_dialog.c:1810
+#: app/preferences_dialog.c:1919
 msgid "Use Global Paint Options"
 msgstr "グローバル絵筆オプションを使う"
 
-#: app/preferences_dialog.c:1826
+#: app/preferences_dialog.c:1935
 msgid "Display brush and pattern indicators on Toolbar"
 msgstr "ツールバー上にブラシとパターンを表示する"
 
-#: app/preferences_dialog.c:1840
+#: app/preferences_dialog.c:1949
 msgid "Environment Settings"
 msgstr "環境設定"
 
-#: app/preferences_dialog.c:1842
+#: app/preferences_dialog.c:1951
 msgid "Environment"
 msgstr "環境"
 
-#: app/preferences_dialog.c:1850
+#: app/preferences_dialog.c:1959
 msgid "Resource Consumption"
 msgstr "リソースの使い方について"
 
-#: app/preferences_dialog.c:1852
+#: app/preferences_dialog.c:1961
 msgid "Conservative Memory Usage"
 msgstr "メモリ使用をけちる"
 
-#: app/preferences_dialog.c:1903 app/preferences_dialog.c:1944
+#: app/preferences_dialog.c:2013 app/preferences_dialog.c:2056
 msgid "Bytes"
 msgstr "Bytes"
 
-#: app/preferences_dialog.c:1904 app/preferences_dialog.c:1945
+#: app/preferences_dialog.c:2014 app/preferences_dialog.c:2057
 msgid "KiloBytes"
 msgstr "KBytes"
 
-#: app/preferences_dialog.c:1905 app/preferences_dialog.c:1946
+#: app/preferences_dialog.c:2015 app/preferences_dialog.c:2058
 msgid "MegaBytes"
 msgstr "MBytes"
 
-#: app/preferences_dialog.c:1910
+#: app/preferences_dialog.c:2021
 msgid "Tile Cache Size:"
 msgstr "タイルキャッシュサイズ:"
 
-#: app/preferences_dialog.c:1951
+#: app/preferences_dialog.c:2064
 msgid "Maximum Image Size:"
 msgstr "最大画像サイズ:"
 
-#: app/preferences_dialog.c:1961
+#: app/preferences_dialog.c:2074
 msgid "Number of Processors to Use:"
 msgstr "使用するプロセッサの数:"
 
-#: app/preferences_dialog.c:1965
+#: app/preferences_dialog.c:2078
 msgid "8-Bit Displays"
 msgstr "8-Bit 表示時"
 
-#: app/preferences_dialog.c:1970
+#: app/preferences_dialog.c:2083
 msgid "Install Colormap"
 msgstr "自前のカラーマップを使用"
 
-#: app/preferences_dialog.c:1979
+#: app/preferences_dialog.c:2092
 msgid "Colormap Cycling"
 msgstr "カラーマップのサイクリング"
 
-#: app/preferences_dialog.c:1988
+#: app/preferences_dialog.c:2101
 msgid "File Saving"
 msgstr "ファイル保存"
 
-#: app/preferences_dialog.c:2004 app/preferences_dialog.c:2014
+#: app/preferences_dialog.c:2118 app/preferences_dialog.c:2131
 msgid "Always"
 msgstr "常時"
 
-#: app/preferences_dialog.c:2005
+#: app/preferences_dialog.c:2119
 msgid "Never"
 msgstr "しない"
 
-#: app/preferences_dialog.c:2008
+#: app/preferences_dialog.c:2123
 msgid "Try to Write a Thumbnail File:"
 msgstr "簡易表示ファイル書き出し:"
 
-#: app/preferences_dialog.c:2013
+#: app/preferences_dialog.c:2130
 msgid "Only when modified"
 msgstr "変更時のみ"
 
-#: app/preferences_dialog.c:2017
+#: app/preferences_dialog.c:2135
 msgid "'File > Save' saves the image:"
 msgstr "'ファイル>保存' での画像保存は:"
 
-#: app/preferences_dialog.c:2023
+#: app/preferences_dialog.c:2141
 msgid "Session Management"
 msgstr "セッション管理"
 
-#: app/preferences_dialog.c:2025
+#: app/preferences_dialog.c:2143
 msgid "Session"
 msgstr "セッション"
 
-#: app/preferences_dialog.c:2033
+#: app/preferences_dialog.c:2151
 msgid "Window Positions"
 msgstr "ウィンドウ位置"
 
-#: app/preferences_dialog.c:2035
+#: app/preferences_dialog.c:2153
 msgid "Save Window Positions on Exit"
 msgstr "終了時にウィンドウの位置を保存する"
 
-#: app/preferences_dialog.c:2049
+#: app/preferences_dialog.c:2167
 msgid "Clear Saved Window Positions Now"
 msgstr "直ちに保存されているウィンドウ位置を消去"
 
-#: app/preferences_dialog.c:2056
+#: app/preferences_dialog.c:2174
 msgid "Always Try to Restore Session"
 msgstr "セッションを再開するようにする"
 
-#: app/preferences_dialog.c:2065
+#: app/preferences_dialog.c:2183
 msgid "Devices"
 msgstr "デバイスの状態"
 
-#: app/preferences_dialog.c:2067
+#: app/preferences_dialog.c:2185
 msgid "Save Device Status on Exit"
 msgstr "終了時にデバイスの状態を保存する"
 
-#: app/preferences_dialog.c:2078
+#: app/preferences_dialog.c:2196
 msgid "Monitor Information"
 msgstr "モニター情報"
 
-#: app/preferences_dialog.c:2080
+#: app/preferences_dialog.c:2198
 msgid "Monitor"
 msgstr "モニター"
 
-#: app/preferences_dialog.c:2088
+#: app/preferences_dialog.c:2206
 msgid "Get Monitor Resolution"
 msgstr "モニター解像度を"
 
-#: app/preferences_dialog.c:2096
+#: app/preferences_dialog.c:2214
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(現在 %d x %d dpi)"
 
-#: app/preferences_dialog.c:2143
+#: app/preferences_dialog.c:2261
 msgid "From X Server"
 msgstr "X サーバから得る"
 
-#: app/preferences_dialog.c:2158
+#: app/preferences_dialog.c:2276
 msgid "Manually:"
 msgstr "自分で設定する:"
 
-#: app/preferences_dialog.c:2171
+#: app/preferences_dialog.c:2289
 msgid "Directories Settings"
 msgstr "ディレクトリの設定"
 
-#: app/preferences_dialog.c:2173
+#: app/preferences_dialog.c:2291
 msgid "Directories"
 msgstr "ディレクトリ"
 
-#: app/preferences_dialog.c:2190
+#: app/preferences_dialog.c:2308
 msgid "Temp Dir:"
 msgstr "テンポラリ:"
 
-#: app/preferences_dialog.c:2190
+#: app/preferences_dialog.c:2308
 msgid "Select Temp Dir"
 msgstr "テンポラリ Dir を選択"
 
-#: app/preferences_dialog.c:2191
+#: app/preferences_dialog.c:2309
 msgid "Swap Dir:"
 msgstr "スワップ:"
 
-#: app/preferences_dialog.c:2191
+#: app/preferences_dialog.c:2309
 msgid "Select Swap Dir"
 msgstr "スワップ Dir を選択"
 
-#: app/preferences_dialog.c:2227
+#: app/preferences_dialog.c:2345
 msgid "Brushes Directories"
 msgstr "ブラシディレクトリ"
 
-#: app/preferences_dialog.c:2229
+#: app/preferences_dialog.c:2347
 msgid "Select Brushes Dir"
 msgstr "ブラシ Dir を選択"
 
-#: app/preferences_dialog.c:2231
+#: app/preferences_dialog.c:2349
 msgid "Generated Brushes"
 msgstr "生成されたブラシ"
 
-#: app/preferences_dialog.c:2231
+#: app/preferences_dialog.c:2349
 msgid "Generated Brushes Directories"
 msgstr "生成されたブラシディレクトリ"
 
-#: app/preferences_dialog.c:2233
+#: app/preferences_dialog.c:2351
 msgid "Select Generated Brushes Dir"
 msgstr "生成されたブラシ Dir を選択"
 
-#: app/preferences_dialog.c:2235
+#: app/preferences_dialog.c:2353
 msgid "Patterns Directories"
 msgstr "パターンディレクトリ"
 
-#: app/preferences_dialog.c:2237
+#: app/preferences_dialog.c:2355
 msgid "Select Patterns Dir"
 msgstr "パターン Dir を選択"
 
-#: app/preferences_dialog.c:2239
+#: app/preferences_dialog.c:2357
 msgid "Palettes Directories"
 msgstr "パレットディレクトリ"
 
-#: app/preferences_dialog.c:2241
+#: app/preferences_dialog.c:2359
 msgid "Select Palettes Dir"
 msgstr "パレット Dir を選択"
 
-#: app/preferences_dialog.c:2243
+#: app/preferences_dialog.c:2361
 msgid "Gradients Directories"
 msgstr "グラデーションディレクトリ"
 
-#: app/preferences_dialog.c:2245
+#: app/preferences_dialog.c:2363
 msgid "Select Gradients Dir"
 msgstr "グラデーション Dir を選択"
 
-#: app/preferences_dialog.c:2247
+#: app/preferences_dialog.c:2365
 msgid "Plug-Ins"
 msgstr "プラグイン"
 
-#: app/preferences_dialog.c:2247
+#: app/preferences_dialog.c:2365
 msgid "Plug-Ins Directories"
 msgstr "プラグインディレクトリ"
 
-#: app/preferences_dialog.c:2249
+#: app/preferences_dialog.c:2367
 msgid "Select Plug-Ins Dir"
 msgstr "プラグイン Dir を選択"
 
-#: app/preferences_dialog.c:2251
+#: app/preferences_dialog.c:2369
 msgid "Modules"
 msgstr "モジュール"
 
-#: app/preferences_dialog.c:2251
+#: app/preferences_dialog.c:2369
 msgid "Modules Directories"
 msgstr "モジュールディレクトリ"
 
-#: app/preferences_dialog.c:2253
+#: app/preferences_dialog.c:2371
 msgid "Select Modules Dir"
 msgstr "モジュール Dir を選択"
 
@@ -5262,7 +5283,7 @@ msgstr "選択: "
 msgid "Scale Layer"
 msgstr "レイヤー拡大縮小"
 
-#: app/resize.c:156 app/resize.c:181 app/tool_options.c:868
+#: app/resize.c:156 app/resize.c:181 app/tool_options.c:880
 msgid "Size"
 msgstr "大きさ"
 
@@ -5346,33 +5367,33 @@ msgstr "変形率 X:"
 msgid "Shearing..."
 msgstr "剪断変形..."
 
-#: app/text_tool.c:147
+#: app/text_tool.c:146
 msgid "Text Tool Options"
 msgstr "文字ツールオプション"
 
-#: app/text_tool.c:158 app/tool_options.c:322
+#: app/text_tool.c:157 app/tool_options.c:334
 msgid "Antialiasing"
 msgstr "アンチエイリアシング"
 
-#: app/text_tool.c:172
+#: app/text_tool.c:171
 msgid "Border:"
 msgstr "縁:"
 
-#: app/text_tool.c:198
+#: app/text_tool.c:197
 msgid "Use Dynamic Text"
 msgstr "ダイナミックテキストを使う"
 
 #. Create the shell
-#: app/text_tool.c:389
+#: app/text_tool.c:388
 msgid "Text Tool"
 msgstr "文字ツール"
 
-#: app/text_tool.c:605
+#: app/text_tool.c:594
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "フォント '%s' が見付からない.%s"
 
-#: app/text_tool.c:608
+#: app/text_tool.c:597
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5382,7 +5403,7 @@ msgstr ""
 "スケラーブルフォントを持っていない場合には, "
 "ツールオプション中のアンチエイリアシングをオフにしてみてください."
 
-#: app/text_tool.c:719
+#: app/text_tool.c:708
 msgid "Text Layer"
 msgstr "文字レイヤー"
 
@@ -5433,111 +5454,111 @@ msgstr ""
 "データディレクトリにあるはずです. GIMP が正しく\n"
 "インストールされているか確認してください. "
 
-#: app/tool_options.c:211
+#: app/tool_options.c:223
 msgid "This tool has no options."
 msgstr "このツールにはオプションはありません."
 
-#: app/tool_options.c:235
+#: app/tool_options.c:247
 msgid "Rectangular Select Options"
 msgstr "矩形選択オプション"
 
-#: app/tool_options.c:237
+#: app/tool_options.c:249
 msgid "Elliptical Selection Options"
 msgstr "楕円形選択オプション"
 
-#: app/tool_options.c:239
+#: app/tool_options.c:251
 msgid "Free-hand Selection Options"
 msgstr "自由選択オプション"
 
-#: app/tool_options.c:241
+#: app/tool_options.c:253
 msgid "Fuzzy Selection Options"
 msgstr "ファジー選択オプション"
 
-#: app/tool_options.c:243
+#: app/tool_options.c:255
 msgid "Bezier Selection Options"
 msgstr "ベジエ選択オプション"
 
-#: app/tool_options.c:245
+#: app/tool_options.c:257
 msgid "Intelligent Scissors Options"
 msgstr "電脳ばさみオプション"
 
-#: app/tool_options.c:247
+#: app/tool_options.c:259
 msgid "By-Color Select Options"
 msgstr "色で選択オプション"
 
-#: app/tool_options.c:278
+#: app/tool_options.c:290
 msgid "Feather"
 msgstr "ぼかす"
 
-#: app/tool_options.c:386
+#: app/tool_options.c:398
 msgid "Fixed Size / Aspect Ratio"
 msgstr "固定サイズ / 縦横比"
 
-#: app/tool_options.c:538
+#: app/tool_options.c:550
 msgid "Bucket Fill Options"
 msgstr "塗りつぶしオプション"
 
-#: app/tool_options.c:540
+#: app/tool_options.c:552
 msgid "Blend Options"
 msgstr "ブレンドオプション"
 
-#: app/tool_options.c:542
+#: app/tool_options.c:554
 msgid "Pencil Options"
 msgstr "鉛筆オプション"
 
-#: app/tool_options.c:544
+#: app/tool_options.c:556
 msgid "Paintbrush Options"
 msgstr "絵筆オプション"
 
-#: app/tool_options.c:546
+#: app/tool_options.c:558
 msgid "Eraser Options"
 msgstr "消しゴムオプション"
 
-#: app/tool_options.c:548
+#: app/tool_options.c:560
 msgid "Airbrush Options"
 msgstr "エアブラシオプション"
 
-#: app/tool_options.c:550
+#: app/tool_options.c:562
 msgid "Clone Tool Options"
 msgstr "スタンプツールオプション"
 
-#: app/tool_options.c:552
+#: app/tool_options.c:564
 msgid "Convolver Options"
 msgstr "色混ぜオプション"
 
-#: app/tool_options.c:554
+#: app/tool_options.c:566
 msgid "Ink Options"
 msgstr "インクオプション"
 
-#: app/tool_options.c:556
+#: app/tool_options.c:568
 msgid "Dodge or Burn Options"
 msgstr "暗室オプション"
 
-#: app/tool_options.c:558
+#: app/tool_options.c:570
 msgid "Smudge Options"
 msgstr "にじみオプション"
 
-#: app/tool_options.c:560
+#: app/tool_options.c:572
 msgid "Xinput Airbrush Options"
 msgstr "Xinput エアブラシオプション"
 
-#: app/tool_options.c:672
+#: app/tool_options.c:684
 msgid "Incremental"
 msgstr "重ね塗り"
 
-#: app/tool_options.c:783
+#: app/tool_options.c:795
 msgid "Pressure Sensitivity"
 msgstr "圧力感度"
 
-#: app/tool_options.c:801
+#: app/tool_options.c:813
 msgid "Opacity"
 msgstr "不透明度"
 
-#: app/tool_options.c:824
+#: app/tool_options.c:836
 msgid "Pressure"
 msgstr "圧力"
 
-#: app/tool_options.c:844
+#: app/tool_options.c:856
 msgid "Rate"
 msgstr "割合"
 
@@ -5951,10 +5972,6 @@ msgstr ""
 "レイヤーマスクを持つレイヤーには\n"
 "変形操作ができません."
 
-#: app/transform_core.c:1306
-msgid "homogeneous coordinate = 0...\n"
-msgstr "同一方向 = 0...\n"
-
 #: app/transform_core.c:1582
 msgid "Transformation"
 msgstr "変換"
@@ -6213,12 +6230,12 @@ msgstr "画像サイズ変更"
 msgid "misc"
 msgstr "その他"
 
-#: app/xcf.c:364
+#: app/xcf.c:365
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF エラー: XCF バージョン %d はサポートされていません"
 
-#: app/xcf.c:1776
+#: app/xcf.c:1777
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -6263,10 +6280,13 @@ msgstr "最小高さ:"
 msgid "Max Height:"
 msgstr "最大高さ:"
 
-#: modules/cdisplay_gamma.c:317
+#: modules/cdisplay_gamma.c:326
 msgid "Gamma"
 msgstr "ガンマ"
 
-#: modules/cdisplay_gamma.c:327
+#: modules/cdisplay_gamma.c:336
 msgid "Gamma:"
 msgstr "ガンマ:"
+
+#~ msgid "homogeneous coordinate = 0...\n"
+#~ msgstr "同一方向 = 0...\n"

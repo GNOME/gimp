@@ -1,3 +1,10 @@
+Thu Jan 13 16:35:44 PST 2000 Manish Singh <yosh@gimp.org>
+
+	* Made 1.1.15 release
+
+	* configure.in: disabled --with-threads, as it is not actively
+	maintained and rather untested.
+
 Thu Jan 13 20:41:37 GMT 2000  Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/common/animoptimize.c: Collapse timing of completely

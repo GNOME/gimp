@@ -34,11 +34,11 @@
 
 #define IF_THREAD(statement) statement
 
-#else /* !USE_PTHREADS */
+#else /* !ENABLE_MP */
 
 #define IF_THREAD(statement)
 
-#endif /* !USE_PTHREADS */
+#endif /* ENABLE_MP */
 
 
 
