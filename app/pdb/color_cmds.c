@@ -42,6 +42,7 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable-desaturate.h"
 #include "core/gimpdrawable-equalize.h"
+#include "core/gimpdrawable-histogram.h"
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -342,7 +343,7 @@ levels_auto_invoker (Gimp     *gimp,
 	{
 	  /* Build the histogram */
 	  image = gimp_item_get_image (GIMP_ITEM (drawable));
-	  hist = gimp_histogram_new (image->gimp->config);
+	  hist = gimp_histogram_new (GIMP_BASE_CONFIG (image->gimp->config));
     
 	  gimp_drawable_calculate_histogram (drawable, hist);
     

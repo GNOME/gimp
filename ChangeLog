@@ -1,3 +1,13 @@
+2003-08-31  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer): gsize is unsigned,
+	reflect that in the g_prints.
+
+	* tools/pdbgen/pdb/color.pdb: case to GIMP_BASE_CONFIG for the call
+	to gimp_histogram_new, #include "core/gimpdrawable-histogram.h"
+
+	* app/pdb/color_cmds.c: regenerated.
+
 2003-08-31  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/layers-commands.[ch]	

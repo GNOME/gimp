@@ -184,7 +184,8 @@ HELP
     @inargs = ( &drawable_arg );
 
     %invoke = (
-        headers => [ qw("base/levels.h" "base/gimphistogram.h") ],
+        headers => [ qw("base/levels.h" "base/gimphistogram.h"
+		        "core/gimpdrawable-histogram.h") ],
 	vars => [ 'PixelRegion srcPR, destPR', 
                   'Levels levels', 
                   'gint x1, y1, x2, y2',
@@ -200,7 +201,7 @@ HELP
     {
       /* Build the histogram */
       image = gimp_item_get_image (GIMP_ITEM (drawable));
-      hist = gimp_histogram_new (image->gimp->config);
+      hist = gimp_histogram_new (GIMP_BASE_CONFIG (image->gimp->config));
 
       gimp_drawable_calculate_histogram (drawable, hist);
 
