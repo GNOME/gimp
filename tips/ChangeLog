@@ -1,3 +1,8 @@
+2002-05-20  Zbigniew Chyla  <cyba@gnome.pl>
+
+	* pl.po: Added Polish translation by
+	GNOME PL Team <translators@gnome.pl>.
+
 2002-03-16  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am: added zh_CN.po (although it should really be called
