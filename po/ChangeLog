@@ -22,11 +22,11 @@
 
         * es.po: Updated Spanish translation.
 
-2003-08-02  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-08-02  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
-2003-08-02  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-08-02  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -48,7 +48,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2003-07-25  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-07-25  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -76,7 +76,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2003-07-19  Danilo ? egan  <dsegan@gmx.net>
+2003-07-19  Danilo ≈†egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Updated Serbian translation by Serbian team 
 	(Prevod.org).
@@ -173,7 +173,7 @@
 
 	* id.po: Added Indonesian translation
 
-2003-06-24  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-06-24  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -183,7 +183,7 @@
 
 	* de.po: updated.
 
-2003-06-23  Danilo ? egan  <dsegan@gmx.net>
+2003-06-23  Danilo ≈†egan  <dsegan@gmx.net>
 
 	* sr.po, sr@Latn.po: Added Serbian translation by Serbian team 
 	(Prevod.org).
@@ -192,7 +192,7 @@
 
 	* es.po: Updated Spanish translation.
 
-2003-06-20  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-06-20  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -210,7 +210,7 @@
 
 	* zh_TW.po: Updated traditional Chinese translation.
 
-2003-06-14  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-06-14  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -218,7 +218,7 @@
 
 	* POTFILES.in: Updated.
 
-2003-06-11  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-06-11  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -230,7 +230,7 @@
 
 	* zh_TW.po: Updated traditional Chinese translation.
 
-2003-06-07  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-06-07  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -242,7 +242,7 @@
 
 	* ko.po: Converted to UTF-8. (seems unmaintained)
 
-2003-06-04  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-06-04  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -250,7 +250,7 @@
 
 	* zh_TW.po: Updated traditional Chinese translation.
 
-2003-05-31  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-31  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -262,7 +262,7 @@
 
 	* POTFILES.in: removed app/gui/palette-editor-commands.c
 
-2003-05-27  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-27  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -270,7 +270,7 @@
 
         * pt.po: Updated Portuguese translation.
 
-2003-05-24  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-24  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -292,15 +292,15 @@
 
 	* POTFILES.in: added app/tools/gimpcolorizetool.c.
 
-2003-05-20  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-20  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
-2003-05-19  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-19  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
-2003-05-15  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-15  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -308,7 +308,7 @@
 
 	* Makefile.in.in: updated.
 
-2003-05-12  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-12  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -316,7 +316,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2003-05-09  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-05-09  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -358,7 +358,7 @@
 
 	* sk.po: Updated Slovak translation by Zdenko Podobny <zdpo@mailbox.sk>.
 
-2003-04-19  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-04-19  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -422,7 +422,7 @@
 
 2003-04-01  Miloslav Trmac  <mitr@volny.cz>
 
-	* cs.po: Updated Czech translation?§.
+	* cs.po: Updated Czech translation√§.
 
 2003-03-31  Sven Neumann  <sven@gimp.org>
 
@@ -433,7 +433,7 @@
 
 	* es.po: Updated Spanish translation.
 
-2003-03-27  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-03-27  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -442,7 +442,7 @@
 	* POTFILES.in
 	* de.po: updated.
 
-2003-03-27  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-03-27  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -503,7 +503,7 @@
 	* es.po: Updated Spanish translation by 
                  Francisco Vila <fravd@wanadoo.es>
 
-2003-03-07  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-03-07  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -529,7 +529,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2003-03-04  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-03-04  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -545,7 +545,7 @@
 
 	* cs.po: Updated Czech translation.
 
-2003-02-25  Jan Mor?©n  <jan.moren@lucs.lu.se>
+2003-02-25  Jan Mor√©n  <jan.moren@lucs.lu.se>
 
 	* sv.po: Updated Swedish translation.
 
@@ -1147,7 +1147,7 @@
 
 2002-06-09  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 
 2002-06-09  Sven Neumann  <sven@gimp.org>
 
@@ -1269,7 +1269,7 @@
 
 2002-04-01  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 
 2002-03-28  Zbigniew Chyla  <cyba@gnome.pl>
 
@@ -1352,7 +1352,7 @@
 
 2002-03-06  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 
 2002-03-06  Vincent van Adrighem <V.vanAdrighem@dirck.mine.nu>
 
@@ -1416,7 +1416,7 @@
 
 2002-01-26  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2002-01-25  Simos Xenitellis  <simos@hellug.gr>
 
@@ -1440,7 +1440,7 @@
 
 2001-12-25  Fatih Demir <kabalak@gtranslator.org>
 
-	* tr.po: Committed updated Turkish translation by ?ñmer.
+	* tr.po: Committed updated Turkish translation by √ñmer.
 
 2001-12-18  Wang Jian  <lark@linux.net.cn>
 
@@ -1449,7 +1449,7 @@
 
 2001-12-16  Kjartan Maraas  <kmaraas@gnome.org>
 
-	* no.po: Updated Norwegian (bokm?•l) translation.
+	* no.po: Updated Norwegian (bokm√•l) translation.
 	
 2001-12-15  Valek Filippov  <frob@df.ru>
 
@@ -1841,7 +1841,7 @@ Mon Oct 30 20:56:00 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* es.po: Updated translation
 
-2000-10-21  Tomas ?ñgren <stric@ing.umu.se>
+2000-10-21  Tomas √ñgren <stric@ing.umu.se>
 
 	* sv.po: minor fix
 
@@ -2026,7 +2026,7 @@ Thu Jul 20 23:23:17 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
 
-2000-07-20 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-07-20 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: finnish translation update.
 	
@@ -2093,7 +2093,7 @@ Mon Jun 19 23:36:22 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* ja.po: updated japanese translation.
 
-2000-06-16 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-16 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: fixed fuzzy string
 	
@@ -2117,7 +2117,7 @@ Fri Jun  9 15:29:46 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.
 
-2000-06-08 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-08 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: Fixed fuzzies
 	
@@ -2129,7 +2129,7 @@ Fri Jun  9 15:29:46 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* fi.po: fixed fatal errors
 
-2000-06-08 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-08 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: Fixed fuzzies and minor updates (now 100% translation)
 	
@@ -2141,11 +2141,11 @@ Fri Jun  9 15:29:46 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* no.po: Updated Norwegian translation.
 	
-2000-06-07 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-07 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: more minor updates
 
-2000-06-07 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-07 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: finnish update (on the road to 100%)
 
@@ -2161,7 +2161,7 @@ Fri Jun  9 15:29:46 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* ru.po: updated russian translation.
 
-2000-06-05 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-05 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: Finnish update
 	
@@ -2173,7 +2173,7 @@ Fri Jun  9 15:29:46 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* no.po: Updated Norwegian translation.
 	
-2000-06-02 Ville Hautam?§ki <villeh@cs.joensuu.fi>
+2000-06-02 Ville Hautam√§ki <villeh@cs.joensuu.fi>
 
 	* fi.po: Minimal changes
 	
@@ -2197,7 +2197,7 @@ Wed May 31 13:38:27 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 
 	* ru.po: updated russian translation.
 
-2000-05-24  Artur Polaczy?±ski  <artie@kmfms.com>
+2000-05-24  Artur Polaczy√±ski  <artie@kmfms.com>
  
  	* pl.po: Updated translation. + fixed bad entries.
  	+ updated translation by Krzysztof Jakubowski 
@@ -2667,7 +2667,7 @@ Mon Feb 14 21:54:58 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
 2000-02-14  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
-	* de.po: s/Zur?ºcksetzen/Standard/. This way many action_areas are
+	* de.po: s/Zur√ºcksetzen/Standard/. This way many action_areas are
 	nicer.
 
 Sun Feb 13 12:59:40 CET 2000  Sven Neumann <sven@gimp.org>
@@ -2784,7 +2784,7 @@ Mon Jan 24 14:15:23 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* sk.po: updated
 
-2000-01-24 Artur Polaczy?±ski  <artie@kmfms.com>
+2000-01-24 Artur Polaczy√±ski  <artie@kmfms.com>
  
        * pl.po: Updated translation.
  
@@ -2988,7 +2988,7 @@ Mon Nov 22 23:20:27 MET 1999  Sven Neumann <sven@gimp.org>
 1999-11-16  Tor Lillqvist  <tml@iki.fi>
 
 	* fi.po: Updates (with permission of maintainer Ville
-	Hautam?§ki). Not claimed to be in any way perfect, but at least
+	Hautam√§ki). Not claimed to be in any way perfect, but at least
 	fixed all the fuzzy stuff, and added many new translations. Moved
 	the libgimp-only strings to ../po-plug-ins/fi.po.
 
@@ -3320,9 +3320,9 @@ Thu Jan  7 15:49:37 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* POTFILES.in, remove indexed_palette.c, add colormap_dialog.c
 
-Thu Jan  7 22:52:16 CET 1999 Tomasz K?≥oczko <kloczek@rudy.mif.pg.gda.pl>
+Thu Jan  7 22:52:16 CET 1999 Tomasz K¬≥oczko <kloczek@rudy.mif.pg.gda.pl>
 
-	* pl.po; from Pawe?≥ Dzieko?±ski <pdziekonski@mml.ch.pwr.wroc.pl>
+	* pl.po; from Pawe¬≥ Dzieko√±ski <pdziekonski@mml.ch.pwr.wroc.pl>
 
 Fri Dec 25 10:05:52 PST 1998 Manish Singh <yosh@gimp.org>
 

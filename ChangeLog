@@ -1,3 +1,8 @@
+2003-08-14  Danilo Å egan  <dsegan@gmx.net>
+
+	* ChangeLog, po/ChangeLog, po-libgimp/ChangeLog: Fixed UTF-8
+	encoding which was broken by dolfin's commit.
+
 2003-08-13  Manish Singh  <yosh@gimp.org>
 
 	* pygimp/Makefile.am: slight include file ordering tweak
@@ -43,7 +48,7 @@
 	* plug-ins/common/gifload.c: revert one of Sven's -pedantic
 	changes from July which caused GIF-loading bogosity.
 
-2003-08-12  Ville P?¤tsi  <drc@gimp.org>
+2003-08-12  Ville PÃ¤tsi  <drc@gimp.org>
 
 	* gimp.spec.in: Disable separate debug packages
 
@@ -110,16 +115,16 @@
 
 	* NEWS: Updated NEWS file for 1.3.18.
 
-2003-08-10  Ville P?¤tsi  <drc@gimp.org>
+2003-08-10  Ville PÃ¤tsi  <drc@gimp.org>
 
 	* gimp.spec.in: Revert package name change. Causes too much trouble.
 
-2003-08-10  Ville P?¤tsi  <drc@gimp.org>
+2003-08-10  Ville PÃ¤tsi  <drc@gimp.org>
 
 	* gimp.spec.in: Changed package name from gimp to gimp1.3, to 
 	  keep combatibility with GIMP 1.2 packages.
 
-2003-08-10  Ville P?¤tsi  <drc@gimp.org>
+2003-08-10  Ville PÃ¤tsi  <drc@gimp.org>
 
 	* configure.in: Added gimp.spec.
 	* gimp.spec.in: Brought up to date.
@@ -2660,7 +2665,7 @@
 	* configure.in: removed "sr" and "sr@Latn" from ALL_LINGUAS until
 	all required po files have been added.
 
-2003-06-23  Danilo ?…? egan  <dsegan@gmx.net>
+2003-06-23  Danilo Ã…Â egan  <dsegan@gmx.net>
 
 	* configure.in: Added "sr" and "sr@Latn" to ALL_LINGUAS.
 
@@ -4945,7 +4950,7 @@
 
 	* app/tools/tool_manager.c (tool_manager_tool_changed): make sure
 	that active_tool->tool_info is non-NULL before dereferencing it.
-	(Spotted by Ville P?ƒâ‚¬tsi).
+	(Spotted by Ville PÃƒâ‚¬tsi).
 
 2003-05-11  Sven Neumann  <sven@gimp.org>
 
@@ -6478,7 +6483,7 @@
 
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
-	Applied a patch from ?ƒ?˜yvind Kol?ƒ?¥s that adds supersampling to the
+	Applied a patch from ÃƒÂ˜yvind KolÃƒÂ¥s that adds supersampling to the
 	transform operations (bug #109817):
 
 	* app/base/tile-manager-private.h
@@ -6792,7 +6797,7 @@
 
 	* app/core/gimpdrawable-transform-utils.c
 	(gimp_drawable_transform_matrix_perspective): applied patch from
-	?ƒ?˜yvind Kol?ƒ?¥s that fixes bug #109570.
+	ÃƒÂ˜yvind KolÃƒÂ¥s that fixes bug #109570.
 
 2003-03-30  Sven Neumann  <sven@gimp.org>
 
@@ -23189,7 +23194,7 @@
 	* themes/Default/images/stock-button-selection-subtract.png: cropped.
 
 	* themes/Default/images/tools/stock-tool-button-brightness-contrast.png:
-	a nicer one from Ville P?ƒâ‚¬tsi.
+	a nicer one from Ville PÃƒâ‚¬tsi.
 
 	* app/gui/menus.c
 	* app/widgets/gimpvectorslistview.c: use the new stock items.
@@ -26286,7 +26291,7 @@
 2001-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* docs/Wilber_Construction_Kit.xcf.gz: new version with additional
-	layers by Ville P?ƒâ‚¬tsi (drc).
+	layers by Ville PÃƒâ‚¬tsi (drc).
 
 2001-12-12  Sven Neumann  <sven@gimp.org>
 
