@@ -2546,7 +2546,7 @@ dialog_box (void)
 
   /* xtiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Horizontal:"), SCALE_WIDTH, 0,
+			      _("_Horizontal:"), SCALE_WIDTH, 0,
 			      config.x, MIN_XTILES, MAX_XTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going across"), NULL);
@@ -2559,7 +2559,7 @@ dialog_box (void)
 
   /* ytiles */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Vertical:"), SCALE_WIDTH, 0,
+			      _("_Vertical:"), SCALE_WIDTH, 0,
 			      config.y, MIN_YTILES, MAX_YTILES, 1.0, 4.0, 0,
 			      TRUE, 0, 0,
 			      _("Number of pieces going down"), NULL);
@@ -2585,7 +2585,7 @@ dialog_box (void)
 
   /* number of blending lines */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Bevel Width:"), SCALE_WIDTH, 0,
+			      _("_Bevel Width:"), SCALE_WIDTH, 0,
 			      config.blend_lines,
 			      MIN_BLEND_LINES, MAX_BLEND_LINES, 1.0, 2.0, 0,
 			      TRUE, 0, 0,
@@ -2599,7 +2599,7 @@ dialog_box (void)
 
   /* blending amount */
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Highlight:"), SCALE_WIDTH, 0,
+			      _("H_ighlight:"), SCALE_WIDTH, 0,
 			      config.blend_amount,
 			      MIN_BLEND_AMOUNT, MAX_BLEND_AMOUNT, 0.05, 0.1, 2,
 			      TRUE, 0, 0,
@@ -2625,10 +2625,10 @@ dialog_box (void)
 				 &config.style,
                                  GINT_TO_POINTER (config.style),
 
-				 _("Square"),
+				 _("_Square"),
                                  GINT_TO_POINTER (BEZIER_1), &rbutton1,
 
-				 _("Curved"),
+				 _("C_urved"),
                                  GINT_TO_POINTER (BEZIER_2), &rbutton2,
 
 				 NULL);
@@ -2642,7 +2642,7 @@ dialog_box (void)
   table = gtk_table_new (1, 2, FALSE);
   gtk_box_pack_start (GTK_BOX (hbox), table, TRUE, TRUE, 0);
 
-  cbutton = gtk_check_button_new_with_label (_("Disable Tooltips"));
+  cbutton = gtk_check_button_new_with_mnemonic (_("_Disable Tooltips"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (cbutton),
 				globals.tooltips ? FALSE : TRUE);
   gtk_table_attach (GTK_TABLE (table), cbutton, 0, 1, 1, 2, 0, 0, 0, 20);

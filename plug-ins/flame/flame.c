@@ -690,7 +690,7 @@ edit_callback (GtkWidget *widget,
       gtk_widget_show(table);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-				  _("Speed:"), SCALE_WIDTH, 0,
+				  _("_Speed:"), SCALE_WIDTH, 0,
 				  pick_speed,
 				  0.05, 0.5, 0.01, 0.1, 2,
 				  TRUE, 0, 0,
@@ -707,7 +707,7 @@ edit_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
 
-      button = gtk_button_new_with_label( _("Randomize"));
+      button = gtk_button_new_with_mnemonic( _("_Randomize"));
       gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
       gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
@@ -735,8 +735,9 @@ edit_callback (GtkWidget *widget,
       gtk_box_pack_end (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
       gtk_widget_show (optionmenu);
 
-      label = gtk_label_new (_("Variation:"));
+      label = gtk_label_new_with_mnemonic (_("_Variation:"));
       gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu);
       gtk_widget_show (label);
 
       gtk_widget_show (main_vbox);
@@ -907,6 +908,8 @@ static gint
 dialog (void) 
 {
   GtkWidget *main_vbox;
+  GtkWidget *notebook;
+  GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *abox;
   GtkWidget *pframe;
@@ -976,7 +979,7 @@ dialog (void)
     gtk_box_pack_start (GTK_BOX (box), vbbox, FALSE, FALSE, 0);
     gtk_widget_show (vbbox);
   
-    button = gtk_button_new_with_label (_("Edit Flame"));
+    button = gtk_button_new_with_mnemonic (_("_Edit Flame"));
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -984,7 +987,7 @@ dialog (void)
                       G_CALLBACK (edit_callback),
                       NULL);
 
-    load_button = button = gtk_button_new_with_label (_("Load Flame"));
+    load_button = button = gtk_button_new_with_mnemonic (_("_Load Flame"));
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -992,7 +995,7 @@ dialog (void)
                       G_CALLBACK (load_callback),
                       NULL);
 
-    save_button = button = gtk_button_new_with_label (_("Save Flame"));
+    save_button = button = gtk_button_new_with_mnemonic (_("_Save Flame"));
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
 
@@ -1001,13 +1004,14 @@ dialog (void)
                       NULL);
   }
 
-  frame = gtk_frame_new (_("Rendering"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  notebook = gtk_notebook_new ();
+  gtk_box_pack_start (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
+  gtk_widget_show (notebook);
 
   box = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (box), 4);
-  gtk_container_add (GTK_CONTAINER (frame), box);
+  label = gtk_label_new_with_mnemonic(_("_Rendering"));
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), box, label);
   gtk_widget_show (box);
 
   table = gtk_table_new (6, 3, FALSE);
@@ -1018,7 +1022,7 @@ dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Brightness:"), SCALE_WIDTH, 0,
+			      _("_Brightness:"), SCALE_WIDTH, 0,
 			      config.cp.brightness,
 			      0, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
@@ -1032,7 +1036,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Contrast:"), SCALE_WIDTH, 0,
+			      _("Co_ntrast:"), SCALE_WIDTH, 0,
 			      config.cp.contrast,
 			      0, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
@@ -1046,7 +1050,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Gamma:"), SCALE_WIDTH, 0,
+			      _("_Gamma:"), SCALE_WIDTH, 0,
 			      config.cp.gamma,
 			      1, 5, 0.1, 1, 2,
 			      TRUE, 0, 0,
@@ -1060,7 +1064,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 3,
-			      _("Sample Density:"), SCALE_WIDTH, 0,
+			      _("Sample _Density:"), SCALE_WIDTH, 0,
 			      config.cp.sample_density,
 			      0.1, 20, 1, 5, 2,
 			      TRUE, 0, 0,
@@ -1071,7 +1075,7 @@ dialog (void)
                     &config.cp.sample_density);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
-			      _("Spatial Oversample:"), SCALE_WIDTH, 0,
+			      _("Spa_tial Oversample:"), SCALE_WIDTH, 0,
 			      config.cp.spatial_oversample,
 			      0, 1, 0.01, 0.1, 0,
 			      TRUE, 0, 0,
@@ -1082,7 +1086,7 @@ dialog (void)
                     &config.cp.spatial_oversample);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 5,
-			      _("Spatial Filter Radius:"), SCALE_WIDTH, 0,
+			      _("Spatial _Filter Radius:"), SCALE_WIDTH, 0,
 			      config.cp.spatial_filter_radius,
 			      0, 4, 0.2, 1, 2,
 			      TRUE, 0, 0,
@@ -1109,12 +1113,13 @@ dialog (void)
     gtk_box_pack_start (GTK_BOX (box), hbox, FALSE, FALSE, 0);
     gtk_widget_show (hbox);
 
-    label = gtk_label_new (_("Colormap:"));
+    label = gtk_label_new_with_mnemonic (_("Color_map:"));
     gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
     gtk_widget_show (label);
 
     option_menu = gtk_option_menu_new ();
     gtk_box_pack_start (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
+    gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
     menu = gimp_drawable_menu_new (cmap_constrain, cmap_callback,
 				   0, config.cmap_drawable);
 
@@ -1177,19 +1182,16 @@ dialog (void)
     set_cmap_preview ();
   }
 
-  frame = gtk_frame_new (_("Camera"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   table = gtk_table_new (3, 3, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
+  label = gtk_label_new_with_mnemonic(_("C_amera"));
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Zoom:"), SCALE_WIDTH, 0,
+			      _("_Zoom:"), SCALE_WIDTH, 0,
 			      config.cp.zoom,
 			      -4, 4, 0.5, 1, 2,
 			      TRUE, 0, 0,
@@ -1203,7 +1205,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("X:"), SCALE_WIDTH, 0,
+			      _("_X:"), SCALE_WIDTH, 0,
 			      config.cp.center[0],
 			      -2, 2, 0.5, 1, 2,
 			      TRUE, 0, 0,
@@ -1217,7 +1219,7 @@ dialog (void)
                     NULL);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Y:"), SCALE_WIDTH, 0,
+			      _("_Y:"), SCALE_WIDTH, 0,
 			      config.cp.center[1],
 			      -2, 2, 0.5, 1, 2,
 			      TRUE, 0, 0,

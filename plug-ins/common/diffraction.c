@@ -576,7 +576,7 @@ diffraction_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), dint.progress, TRUE, FALSE, 0);
   gtk_widget_show (dint.progress);
 
-  button = gtk_button_new_with_label (_("Preview!"));
+  button = gtk_button_new_with_mnemonic (_("_Preview!"));
   gtk_table_attach (GTK_TABLE (top_table), button, 0, 1, 1, 2,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (button);
@@ -602,7 +602,7 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Red:"), SCALE_WIDTH, 0,
+			      _("_Red:"), SCALE_WIDTH, 0,
 			      dvals.lam_r, 0.0, 20.0, 0.2, 1.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -611,7 +611,7 @@ diffraction_dialog (void)
                     &dvals.lam_r);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Green:"), SCALE_WIDTH, 0,
+			      _("_Green:"), SCALE_WIDTH, 0,
 			      dvals.lam_g, 0.0, 20.0, 0.2, 1.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -620,7 +620,7 @@ diffraction_dialog (void)
                     &dvals.lam_g);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Blue:"), SCALE_WIDTH, 0,
+			      _("_Blue:"), SCALE_WIDTH, 0,
 			      dvals.lam_b, 0.0, 20.0, 0.2, 1.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -628,8 +628,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.lam_b);
 
-  label = gtk_label_new (_("Frequencies"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  label = gtk_label_new_with_mnemonic (_("_Frequencies"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Contours tab */
@@ -641,7 +640,7 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Red:"), SCALE_WIDTH, 0,
+			      _("_Red:"), SCALE_WIDTH, 0,
 			      dvals.contour_r, 0.0, 10.0, 0.1, 1.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -650,7 +649,7 @@ diffraction_dialog (void)
                     &dvals.contour_r);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Green:"), SCALE_WIDTH, 0,
+			      _("_Green:"), SCALE_WIDTH, 0,
 			      dvals.contour_g, 0.0, 10.0, 0.1, 1.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -659,7 +658,7 @@ diffraction_dialog (void)
                     &dvals.contour_g);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Blue:"), SCALE_WIDTH, 0,
+			      _("_Blue:"), SCALE_WIDTH, 0,
 			      dvals.contour_b, 0.0, 10.0, 0.1, 1.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -667,8 +666,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.contour_b);
 
-  label = gtk_label_new (_("Contours"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  label = gtk_label_new_with_mnemonic (_("Co_ntours"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Sharp edges tab */
@@ -680,7 +678,7 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Red:"), SCALE_WIDTH, 0,
+			      _("_Red:"), SCALE_WIDTH, 0,
 			      dvals.edges_r, 0.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -689,7 +687,7 @@ diffraction_dialog (void)
                     &dvals.edges_r);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Green:"), SCALE_WIDTH, 0,
+			      _("_Green:"), SCALE_WIDTH, 0,
 			      dvals.edges_g, 0.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -698,7 +696,7 @@ diffraction_dialog (void)
                     &dvals.edges_g);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Blue:"), SCALE_WIDTH, 0,
+			      _("_Blue:"), SCALE_WIDTH, 0,
 			      dvals.edges_b, 0.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -706,8 +704,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.edges_b);
 
-  label = gtk_label_new (_("Sharp edges"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  label = gtk_label_new_with_mnemonic (_("_Sharp edges"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Other options tab */
@@ -719,7 +716,7 @@ diffraction_dialog (void)
   gtk_widget_show (table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Brightness:"), SCALE_WIDTH, 0,
+			      _("_Brightness:"), SCALE_WIDTH, 0,
 			      dvals.brightness, 0.0, 1.0, 0.01, 0.1, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -728,7 +725,7 @@ diffraction_dialog (void)
                     &dvals.brightness);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Scattering:"), SCALE_WIDTH, 0,
+			      _("Sc_attering:"), SCALE_WIDTH, 0,
 			      dvals.scattering, 0.0, 100.0, 1.0, 10.0, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -737,7 +734,7 @@ diffraction_dialog (void)
                     &dvals.scattering);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Polatization:"), SCALE_WIDTH, 0,
+			      _("Po_latization:"), SCALE_WIDTH, 0,
 			      dvals.polarization, -1.0, 1.0, 0.02, 0.2, 3,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -745,8 +742,7 @@ diffraction_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &dvals.polarization);
 
-  label = gtk_label_new (_("Other options"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  label = gtk_label_new_with_mnemonic (_("O_ther options"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), table, label);
 
   /* Done */

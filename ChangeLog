@@ -14,6 +14,16 @@
 
 2002-06-02  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* plug-ins/common/tile.c (tile_dialog)
+	* plug-ins/common/jigsaw.c (dialog_box)
+	* plug-ins/common/diffraction.c (diffraction_dialog): enable mnemonics
+
+	* plug-ins/flame/flame.c (dialog): add mnemonics and slight 
+	reorganization of dialog (now uses a notebook with 2 pages instead of
+	one clunky dialog).
+
+2002-06-02  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
 	* plug-ins/imagemap/imap_about.c: bumped version number to 2.0
 
 	* plug-ins/imagemap/imap_browse.[ch]: use GTK_STOCK_OPEN stock icon

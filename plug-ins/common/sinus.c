@@ -1065,28 +1065,28 @@ typedef struct
 } params;
 
 
-static gint              drawable_is_grayscale = FALSE;
-static struct mwPreview *thePreview;
-static GimpDrawable     *drawable;
-
-/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
-
-struct mwPreview
+typedef struct
 {
   gint     width;
   gint     height;
   gint     bpp;
   gdouble  scale;
   guchar  *bits;
-};
+} mwPreview;
+
+static gint              drawable_is_grayscale = FALSE;
+static mwPreview 	*thePreview;
+static GimpDrawable     *drawable;
+
+/*  preview stuff -- to be removed as soon as we have a real libgimp preview  */
 
 #define PREVIEW_SIZE 100
 
 static gint do_preview = TRUE;
 
 static GtkWidget        * mw_preview_new          (GtkWidget        *parent,
-						   struct mwPreview *mwp);
-static struct mwPreview * mw_preview_build_virgin (GimpDrawable     *drw);
+						   mwPreview *mwp);
+static mwPreview * mw_preview_build_virgin (GimpDrawable     *drw);
 
 /* Declare functions */
 
@@ -1758,7 +1758,7 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER(frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("X Scale:"), 140, 0,
+			      _("_X Scale:"), 140, 0,
 			      svals.scalex, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1767,7 +1767,7 @@ sinus_dialog (void)
                     &svals.scalex);
   
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Y Scale:"), 140, 0,
+			      _("_Y Scale:"), 140, 0,
 			      svals.scaley, 0.0001, 100.0, 0.0001, 5, 4,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1776,7 +1776,7 @@ sinus_dialog (void)
                     &svals.scaley);
   
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
-			      _("Complexity:"), 140, 0,
+			      _("Co_mplexity:"), 140, 0,
 			      svals.cmplx, 0.0, 15.0, 0.01, 5, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1800,7 +1800,7 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Random Seed:"));
+  label = gtk_label_new_with_mnemonic (_("_Random Seed:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -1810,12 +1810,13 @@ sinus_dialog (void)
   gtk_widget_set_size_request (spinbutton, 100, -1);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (sinus_int_adjustment_update),
                     &svals.seed);
 
-  toggle = gtk_check_button_new_with_label (_("Force Tiling?"));
+  toggle = gtk_check_button_new_with_mnemonic (_("_Force Tiling?"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), svals.tiling);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
@@ -1829,10 +1830,10 @@ sinus_dialog (void)
                                  &svals.perturbation,
                                  GINT_TO_POINTER (svals.perturbation),
 
-                                 _("Ideal"),
+                                 _("_Ideal"),
                                  GINT_TO_POINTER (IDEAL), NULL,
 
-                                 _("Distorted"),
+                                 _("_Distorted"),
                                  GINT_TO_POINTER (PERTURBED), NULL,
 
                                  NULL);
@@ -1841,8 +1842,7 @@ sinus_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
   gtk_widget_show (vbox2);
 
-  label = gtk_label_new (_("Settings"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  label = gtk_label_new_with_mnemonic (_("_Settings"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
   gtk_widget_show (page);
 
@@ -1875,11 +1875,11 @@ sinus_dialog (void)
 				     G_CALLBACK (sinus_radio_button_update),
 				     &svals.colors, (gpointer) svals.colors,
 
-				     _("Black & White"),
+				     _("Bl_ack & White"),
 				     (gpointer) B_W, NULL,
-				     _("Foreground & Background"),
+				     _("_Foreground & Background"),
 				     (gpointer) USE_FG_BG, NULL,
-				     _("Choose here:"),
+				     _("C_hoose here:"),
 				     (gpointer) USE_COLORS, NULL,
 
 				     NULL);
@@ -1928,7 +1928,7 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("First Color:"), 0, 0,
+			      _("F_irst Color:"), 0, 0,
 			      svals.col1.a, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1943,7 +1943,7 @@ sinus_dialog (void)
                       adj);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-			      _("Second Color:"), 0, 0,
+			      _("S_econd Color:"), 0, 0,
 			      svals.col2.a, 0.0, 1.0, 0.01, 0.1, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -1959,8 +1959,7 @@ sinus_dialog (void)
 
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Colors"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  label = gtk_label_new_with_mnemonic (_("Co_lors"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
   gtk_widget_show (page);
 
@@ -1984,9 +1983,9 @@ sinus_dialog (void)
                            G_CALLBACK (sinus_radio_button_update),
 			   &svals.colorization, (gpointer) svals.colorization,
 
-			   _("Linear"),     (gpointer) LINEAR, NULL,
-			   _("Bilinear"),   (gpointer) BILINEAR, NULL,
-			   _("Sinusoidal"), (gpointer) SINUS, NULL,
+			   _("L_inear"),     (gpointer) LINEAR, NULL,
+			   _("Bili_near"),   (gpointer) BILINEAR, NULL,
+			   _("Sin_usoidal"), (gpointer) SINUS, NULL,
 
 			   NULL);
 
@@ -1998,7 +1997,7 @@ sinus_dialog (void)
   gtk_container_add (GTK_CONTAINER (vbox), table);
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-			      _("Exponent:"), 0, 0,
+			      _("_Exponent:"), 0, 0,
 			      svals.blend_power, -7.5, 7.5, 0.01, 5.0, 2,
 			      TRUE, 0, 0,
 			      NULL, NULL);
@@ -2008,8 +2007,7 @@ sinus_dialog (void)
 
   gtk_widget_show (table);
 
-  label = gtk_label_new (_("Blend"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+  label = gtk_label_new_with_mnemonic (_("_Blend"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), page, label);
   gtk_widget_show (page);
 
@@ -2039,38 +2037,31 @@ sinus_do_preview (GtkWidget *widget)
     }
 
   rowsize = thePreview->width * thePreview->bpp;
-  savbuf = buf = g_new (guchar, thePreview->width*thePreview->height*thePreview->bpp);
-  if (buf != NULL)
+  savbuf = buf = g_new (guchar, 
+			thePreview->width*thePreview->height*thePreview->bpp);
+
+  p.height = thePreview->height;
+  p.width = thePreview->width;
+  prepare_coef (&p);
+
+  if (thePreview->bpp == 3)
+    compute_block_3 (buf, rowsize, 0, 0,
+		     thePreview->width, thePreview->height, &p);
+  else if (thePreview->bpp == 1)
     {
-      p.height = thePreview->height;
-      p.width = thePreview->width;
-      prepare_coef (&p);
-
-      if (thePreview->bpp == 3)
-	compute_block_3 (buf, rowsize, 0, 0,
-			 thePreview->width, thePreview->height, &p);
-      else if (thePreview->bpp == 1)
-	{
-	  compute_block_1 (buf, rowsize, 0, 0,
-			   thePreview->width, thePreview->height, &p);
-	}
-      else
-	fprintf (stderr, "Uh Oh....  Little sinus preview-only problem...\n");
-
-      for (y = 0; y < thePreview->height; y++)
-	{
-	  gtk_preview_draw_row (GTK_PREVIEW (theWidget),
-				buf, 0, y, thePreview->width);
-	  buf += rowsize;
-	}
-      g_free (savbuf);
-
-      gtk_widget_queue_draw (theWidget);
+      compute_block_1 (buf, rowsize, 0, 0,
+		       thePreview->width, thePreview->height, &p);
     }
-  else
+
+  for (y = 0; y < thePreview->height; y++)
     {
-      fprintf (stderr,"Not enough mem for sinus Preview...\n");
+      gtk_preview_draw_row (GTK_PREVIEW (theWidget),
+			    buf, 0, y, thePreview->width);
+      buf += rowsize;
     }
+  g_free (savbuf);
+
+  gtk_widget_queue_draw (theWidget);
 }
 
 static void
@@ -2083,12 +2074,12 @@ mw_preview_toggle_callback (GtkWidget *widget,
     sinus_do_preview (NULL);
 }
 
-static struct mwPreview *
+static mwPreview *
 mw_preview_build_virgin (GimpDrawable *drw)
 {
-  struct mwPreview *mwp;
+  mwPreview *mwp;
 
-  mwp = g_new (struct mwPreview, 1);
+  mwp = g_new (mwPreview, 1);
 
   if (drw->width > drw->height)
     {
@@ -2110,8 +2101,8 @@ mw_preview_build_virgin (GimpDrawable *drw)
 }
 
 static GtkWidget *
-mw_preview_new (GtkWidget        *parent,
-                struct mwPreview *mwp)
+mw_preview_new (GtkWidget *parent,
+                mwPreview *mwp)
 {
   GtkWidget *preview;
   GtkWidget *frame;
@@ -2139,7 +2130,7 @@ mw_preview_new (GtkWidget        *parent,
   gtk_container_add (GTK_CONTAINER (pframe), preview);
   gtk_widget_show (preview);
 
-  button = gtk_check_button_new_with_label (_("Do Preview"));
+  button = gtk_check_button_new_with_mnemonic (_("Do _Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), do_preview);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
