@@ -208,7 +208,7 @@ HELP
     {
       length = patternp->mask->height * patternp->mask->width *
 	       patternp->mask->bytes;
-      mask_data = g_new (gint8, length);
+      mask_data = g_new (guint8, length);
       g_memmove (mask_data, temp_buf_data (patternp->mask), length);
     }
 }

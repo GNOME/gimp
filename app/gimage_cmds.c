@@ -1773,7 +1773,7 @@ image_get_cmap_invoker (Argument *args)
   Argument *return_args;
   GimpImage *gimage;
   gint32 num_bytes = 0;
-  gint8 *cmap = NULL;
+  guint8 *cmap = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -1782,7 +1782,7 @@ image_get_cmap_invoker (Argument *args)
   if (success)
     {
       num_bytes = gimage->num_cols * 3;
-      cmap = g_new (gint8, num_bytes);
+      cmap = g_new (guint8, num_bytes);
       memcpy (cmap, gimage_cmap (gimage), num_bytes);
     }
 
@@ -1842,7 +1842,7 @@ image_set_cmap_invoker (Argument *args)
   gboolean success = TRUE;
   GimpImage *gimage;
   gint32 num_bytes;
-  gint8 *cmap;
+  guint8 *cmap;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -1852,7 +1852,7 @@ image_set_cmap_invoker (Argument *args)
   if (num_bytes < 0 || num_bytes > 768)
     success = FALSE;
 
-  cmap = (gint8 *) args[2].value.pdb_pointer;
+  cmap = (guint8 *) args[2].value.pdb_pointer;
 
   if (success)
     {
@@ -2309,7 +2309,7 @@ image_thumbnail_invoker (Argument *args)
   gint32 height = 0;
   gint32 bpp = 0;
   gint32 num_pixels = 0;
-  gint8 *thumbnail_data = NULL;
+  guint8 *thumbnail_data = NULL;
 
   gimage = pdb_id_to_image (args[0].value.pdb_int);
   if (gimage == NULL)
@@ -2343,7 +2343,7 @@ image_thumbnail_invoker (Argument *args)
 							req_width,
 							req_height);
 	  num_pixels = buf->height * buf->width * buf->bytes;
-	  thumbnail_data = g_new (gint8, num_pixels);
+	  thumbnail_data = g_new (guint8, num_pixels);
 	  g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
 	  width = buf->width;        
 	  height = buf->height;

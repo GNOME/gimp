@@ -1032,8 +1032,8 @@ drawable_get_pixel_invoker (Argument *args)
   gint32 x;
   gint32 y;
   gint32 num_channels = 0;
-  gint8 *pixel = NULL;
-  gint8 *p;
+  guint8 *pixel = NULL;
+  guint8 *p;
   gint b;
   Tile *tile;
 
@@ -1054,7 +1054,7 @@ drawable_get_pixel_invoker (Argument *args)
       if (x < drawable_width (drawable) && y < drawable_height (drawable))
 	{  
 	  num_channels = drawable_bytes (drawable);
-	  pixel = g_new (gint8, num_channels);
+	  pixel = g_new (guint8, num_channels);
     
 	  tile = tile_manager_get_tile (drawable_data (drawable), x, y,
 					TRUE, TRUE);
@@ -1140,8 +1140,8 @@ drawable_set_pixel_invoker (Argument *args)
   gint32 x;
   gint32 y;
   gint32 num_channels;
-  gint8 *pixel;
-  gint8 *p;
+  guint8 *pixel;
+  guint8 *p;
   gint b;
   Tile *tile;
 
@@ -1159,7 +1159,7 @@ drawable_set_pixel_invoker (Argument *args)
 
   num_channels = args[3].value.pdb_int;
 
-  pixel = (gint8 *) args[4].value.pdb_pointer;
+  pixel = (guint8 *) args[4].value.pdb_pointer;
 
   if (success)
     {
@@ -1293,7 +1293,7 @@ drawable_thumbnail_invoker (Argument *args)
   gint32 height = 0;
   gint32 bpp = 0;
   gint32 num_pixels = 0;
-  gint8 *thumbnail_data = NULL;
+  guint8 *thumbnail_data = NULL;
 
   drawable = gimp_drawable_get_ID (args[0].value.pdb_int);
   if (drawable == NULL)
@@ -1329,7 +1329,7 @@ drawable_thumbnail_invoker (Argument *args)
 	    buf = channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
     
 	  num_pixels = buf->height * buf->width * buf->bytes;
-	  thumbnail_data = g_new (gint8, num_pixels);
+	  thumbnail_data = g_new (guint8, num_pixels);
 	  g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
 	  width = buf->width;        
 	  height = buf->height;

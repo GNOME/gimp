@@ -732,7 +732,7 @@ procedural_db_get_data_invoker (Argument *args)
   gboolean success = TRUE;
   Argument *return_args;
   gchar *identifier;
-  gint8 *data_copy = NULL;
+  guint8 *data_copy = NULL;
   PDBData *data = NULL;
   GList *list;
 
@@ -752,7 +752,7 @@ procedural_db_get_data_invoker (Argument *args)
     
 	  if (!strcmp (data->identifier, identifier))
 	    {
-	      data_copy = g_new (char, data->bytes);
+	      data_copy = g_new (guint8, data->bytes);
 	      memcpy (data_copy, data->data, data->bytes);
     
 	      success = TRUE;
@@ -890,7 +890,7 @@ procedural_db_set_data_invoker (Argument *args)
   gboolean success = TRUE;
   gchar *identifier;
   gint32 bytes;
-  gint8 *data_src;
+  guint8 *data_src;
   PDBData *data = NULL;
   GList *list;
 
@@ -902,7 +902,7 @@ procedural_db_set_data_invoker (Argument *args)
   if (bytes <= 0)
     success = FALSE;
 
-  data_src = (gint8 *) args[2].value.pdb_pointer;
+  data_src = (guint8 *) args[2].value.pdb_pointer;
 
   if (success)
     {

@@ -20,14 +20,14 @@ package Gimp::CodeGen::pdb;
 %arg_types = (
     int32 => { name => 'INT32', type => 'gint32 ' },
     int16 => { name => 'INT16', type => 'gint16 ' },
-    int8  => { name => 'INT8' , type => 'gint8 '  },
+    int8  => { name => 'INT8' , type => 'guint8 ' },
 
     float  => { name => 'FLOAT' , type => 'gdouble ' },
     string => { name => 'STRING', type => 'gchar *'  },
 
     int32array  => { name  => 'INT32ARRAY' , type  => 'gint32 *' , array => 1 },
     int16array  => { name  => 'INT16ARRAY' , type  => 'gint16 *' , array => 1 },
-    int8array   => { name  => 'INT8ARRAY'  , type  => 'gint8 *'  , array => 1 },
+    int8array   => { name  => 'INT8ARRAY'  , type  => 'guint8 *' , array => 1 },
     floatarray  => { name  => 'FLOATARRAY' , type  => 'gdouble *', array => 1 },
     stringarray => { name  => 'STRINGARRAY', type  => 'gchar **' , array => 1 },
 

@@ -768,7 +768,7 @@ HELP
 	code => <<'CODE'
 {
   num_bytes = gimage->num_cols * 3;
-  cmap = g_new (gint8, num_bytes);
+  cmap = g_new (guint8, num_bytes);
   memcpy (cmap, gimage_cmap (gimage), num_bytes);
 }
 CODE
@@ -1288,7 +1288,7 @@ HELP
 						    req_width,
 						    req_height);
       num_pixels = buf->height * buf->width * buf->bytes;
-      thumbnail_data = g_new (gint8, num_pixels);
+      thumbnail_data = g_new (guint8, num_pixels);
       g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
       width = buf->width;	
       height = buf->height;

@@ -346,7 +346,7 @@ HELP
   if (success)
     {
       length = brushp->mask->height * brushp->mask->width;
-      mask_data = g_new (gint8, length);
+      mask_data = g_new (guint8, length);
       g_memmove (mask_data, temp_buf_data (brushp->mask), length);
     }
 }

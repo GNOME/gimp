@@ -539,7 +539,7 @@ curves_spline_invoker (Argument *args)
   GimpDrawable *drawable;
   gint32 channel;
   gint32 num_points;
-  gint8 *control_pts;
+  guint8 *control_pts;
   CurvesDialog cd;
   int x1, y1, x2, y2;
   int i, j;
@@ -557,7 +557,7 @@ curves_spline_invoker (Argument *args)
   if (num_points <= 3 || num_points > 32)
     success = FALSE;
 
-  control_pts = (gint8 *) args[3].value.pdb_pointer;
+  control_pts = (guint8 *) args[3].value.pdb_pointer;
 
   if (success)
     {
@@ -658,7 +658,7 @@ curves_explicit_invoker (Argument *args)
   GimpDrawable *drawable;
   gint32 channel;
   gint32 num_bytes;
-  gint8 *curve;
+  guint8 *curve;
   CurvesDialog cd;
   int x1, y1, x2, y2;
   int i, j;
@@ -676,7 +676,7 @@ curves_explicit_invoker (Argument *args)
   if (num_bytes <= 0)
     success = FALSE;
 
-  curve = (gint8 *) args[3].value.pdb_pointer;
+  curve = (guint8 *) args[3].value.pdb_pointer;
 
   if (success)
     {

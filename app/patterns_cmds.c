@@ -222,7 +222,7 @@ patterns_get_pattern_data_invoker (Argument *args)
   Argument *return_args;
   gchar *name;
   gint32 length = 0;
-  gint8 *mask_data = NULL;
+  guint8 *mask_data = NULL;
   GPatternP patternp = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -257,7 +257,7 @@ patterns_get_pattern_data_invoker (Argument *args)
 	{
 	  length = patternp->mask->height * patternp->mask->width *
 		   patternp->mask->bytes;
-	  mask_data = g_new (gint8, length);
+	  mask_data = g_new (guint8, length);
 	  g_memmove (mask_data, temp_buf_data (patternp->mask), length);
 	}
     }

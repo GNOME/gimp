@@ -496,7 +496,7 @@ brushes_get_brush_data_invoker (Argument *args)
   Argument *return_args;
   gchar *name;
   gint32 length = 0;
-  gint8 *mask_data = NULL;
+  guint8 *mask_data = NULL;
   GimpBrushP brushp = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -530,7 +530,7 @@ brushes_get_brush_data_invoker (Argument *args)
       if (success)
 	{
 	  length = brushp->mask->height * brushp->mask->width;
-	  mask_data = g_new (gint8, length);
+	  mask_data = g_new (guint8, length);
 	  g_memmove (mask_data, temp_buf_data (brushp->mask), length);
 	}
     }

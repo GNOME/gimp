@@ -342,13 +342,13 @@ HELP
     $outargs[0]->{init} = $outargs[0]->{array}->{init} = 1;
 
     %invoke = (
-	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
+	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
   if (x < drawable_width (drawable) && y < drawable_height (drawable))
     {  
       num_channels = drawable_bytes (drawable);
-      pixel = g_new (gint8, num_channels);
+      pixel = g_new (guint8, num_channels);
 
       tile = tile_manager_get_tile (drawable_data (drawable), x, y,
 				    TRUE, TRUE);
@@ -385,7 +385,7 @@ HELP
     push @inargs, &pixel_arg();
 
     %invoke = (
-	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
+	vars => [ 'guint8 *p', 'gint b', 'Tile *tile' ],
 	code => <<'CODE'
 {
   if (x < drawable_width (drawable) && y < drawable_height (drawable) &&
@@ -495,7 +495,7 @@ HELP
 	buf = channel_preview (GIMP_CHANNEL (drawable), req_width, req_height);
 
       num_pixels = buf->height * buf->width * buf->bytes;
-      thumbnail_data = g_new (gint8, num_pixels);
+      thumbnail_data = g_new (guint8, num_pixels);
       g_memmove (thumbnail_data, temp_buf_data (buf), num_pixels);
       width = buf->width;	
       height = buf->height;

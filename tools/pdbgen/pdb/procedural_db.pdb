@@ -290,7 +290,7 @@ HELP
 
       if (!strcmp (data->identifier, identifier))
 	{
-	  data_copy = g_new (char, data->bytes);
+	  data_copy = g_new (guint8, data->bytes);
 	  memcpy (data_copy, data->data, data->bytes);
 
 	  success = TRUE;
