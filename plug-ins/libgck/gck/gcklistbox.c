@@ -844,7 +844,7 @@ GckListBox *gck_listbox_new(GtkWidget *container,gint expand,gint fill,gint padd
 
   listbox->list=gtk_list_new();
   gtk_list_set_selection_mode(GTK_LIST(listbox->list),selection_mode);
-  gtk_container_add(GTK_CONTAINER(listbox->widget),listbox->list);
+  gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(listbox->widget),listbox->list);
   gtk_object_set_data(GTK_OBJECT(listbox->list),"_GckListBox",(gpointer)listbox);
   gtk_widget_show(listbox->list);
 

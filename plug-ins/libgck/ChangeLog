@@ -1,3 +1,6 @@
+Mon Mar 15 13:08:43 1999  Owen Taylor  <otaylor@redhat.com>
+
+* gtk_scrolled_window_add_with_viewport() change	
 
 GCK changes (post 0.02)
 =======================

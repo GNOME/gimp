@@ -1,3 +1,14 @@
+Mon Mar 15 13:13:36 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* plug-ins/xd/xd.c plug-ins/film/film.c:
+	gtk_scrolled_window_add_with_viewport() changes.
+
+Mon Mar 15 12:50:46 1999  Owen Taylor  <otaylor@redhat.com>
+
+	* app/image_render.c (render_image_indexed): Put in
+	missing code to increment the source pointer
+	for indexed images.
+
 Mon Mar 15 12:07:59 1999  Owen Taylor  <otaylor@redhat.com>
 
 	* app/menus.[ch] app/gimprc.c app/gradient.c (menus_quit): 
