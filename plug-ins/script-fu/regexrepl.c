@@ -1207,7 +1207,7 @@ typedef struct
 
 #define PUSH_FAILURE_POINT(pattern_place, string_place, failure_code)	\
   do {									\
-    char *destination;							\
+    /* char *destination; */						\
     /* Must be int, so when we don't save any registers, the arithmetic	\
        of 0 + -1 isn't done as unsigned.  */				\
     /* Can't be int, since there is not a shred of a guarantee that int	\

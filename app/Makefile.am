@@ -287,7 +287,8 @@ EXTRA_DIST = \
 CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DDATADIR=\""$(gimpdatadir)"\"	\
-	-DGIMPDIR=\""$(gimpdir)"\"
+	-DGIMPDIR=\""$(gimpdir)"\"	\
+	-DREGEX_MALLOC
 
 INCLUDES = \
 	$(X_CFLAGS)			\

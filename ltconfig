@@ -898,6 +898,12 @@ else
     hardcode_shlibpath_var=no
     ;;
 
+  sysv4.2uw2*)
+    no_undefined_flag=' -z text'
+    archive_cmds='$CC -G${allow_undefined_flag} -h $soname -o $lib$libobjs'
+    runpath_var=LD_RUN_PATH
+    ;;
+
   uts4*)
     archive_cmds='$LD -G -h $soname -o $lib$libobjs'
     hardcode_libdir_flag_spec='-L$libdir'
@@ -1148,6 +1154,14 @@ amigaos*)
   library_names_spec='$libname.ixlibrary $libname.a'
   # Create ${libname}_ixlibrary.a entries in /sys/libs.
   finish_eval='for lib in `ls $libdir/*.ixlibrary 2>/dev/null`; do libname=`$echo "X$lib" | $Xsed -e '\''s%^.*/\([^/]*\)\.ixlibrary$%\1%'\''`; test $rm /sys/libs/${libname}_ixlibrary.a; $show "(cd /sys/libs && $LN_S $lib ${libname}_ixlibrary.a)"; (cd /sys/libs && $LN_S $lib ${libname}_ixlibrary.a) || exit 1; done'
+  ;;
+
+bsdi4*)
+  version_type=linux
+  library_names_spec='${libname}.so.$major ${libname}.so'
+  soname_spec='${libname}.so'
+  finish_cmds='PATH="$PATH:/sbin" ldconfig $libdir'
+  shlibpath_var=LD_LIBRARY_PATH
   ;;
 
 freebsd2* | freebsd3*)

@@ -46,6 +46,9 @@ DEPS = \
 
 script_fu_DEPENDENCIES = $(DEPS)
 
+CPPFLAGS = \
+	-DREGEX_MALLOC
+
 .PHONY: files
 
 files:

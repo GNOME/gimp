@@ -37,6 +37,19 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.7.2.3  1999/01/02 23:11:53  yosh
+ *   * ltconfig: cases for Unixware 2.1.2 (from Geoff Clare)
+ *   and BSD/OS 4.0 (from Chris P. Ross)
+ *
+ *   * app/Makefile.am
+ *   * plug-ins/script-fu/scripts/Makefile.am: use -DREGEX_MALLOC,
+ *   seems to be more portable
+ *
+ *   * plug-ins/png/png.c: use a default gamma of 2.2 when gamma
+ *   correction isn't enabled
+ *
+ *   -Yosh
+ *
  *   Revision 1.7.2.2  1998/11/09 02:26:44  yosh
  *   * Makefile.am
  *   * configure.in: check for GTK+ 1.0.3 or higher, we use stuff
@@ -146,6 +159,7 @@
 #define PLUG_IN_VERSION		"1.1.6 - 17 May 1998"
 #define SCALE_WIDTH		125
 
+#define DEFAULT_GAMMA		2.20
 
 /*
  * Structures...
@@ -626,7 +640,7 @@ save_image(char   *filename,	/* I - File to save to */
   guchar	**pixels,	/* Pixel rows */
 		*pixel;		/* Pixel data */
   char		progress[255];	/* Title for progress display... */
-
+  gdouble	gamma;
 
  /*
   * Setup the PNG data structures...
@@ -684,10 +698,12 @@ save_image(char   *filename,	/* I - File to save to */
 
   png_set_compression_level(pp, pngvals.compression_level);
 
+  gamma = gimp_gamma();
+
   info->width          = drawable->width;
   info->height         = drawable->height;
   info->bit_depth      = 8;
-  info->gamma          = gimp_gamma();
+  info->gamma          = gamma != 1.00 ? gamma : DEFAULT_GAMMA;
   info->sig_bit.red    = 8;
   info->sig_bit.green  = 8;
   info->sig_bit.blue   = 8;
