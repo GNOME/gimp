@@ -71,6 +71,9 @@
 #include "gimp-intl.h"
 
 
+/* #define DEBUG_MOVE_PUSH 1 */
+
+
 /*  local function prototypes  */
 
 static void     gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
@@ -758,7 +761,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             if (shell->space_release_pending)
               {
-                g_print ("%s: popping move tool\n", G_GNUC_FUNCTION);
+#ifdef DEBUG_MOVE_PUSH
+                g_printerr ("%s: popping move tool\n", G_GNUC_FUNCTION);
+#endif
 
                 gimp_context_set_tool (gimp_get_user_context (gimp),
                                        space_shaded_tool);
@@ -1066,7 +1071,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
                   if (GIMP_IS_TOOL_INFO (move_tool_info))
                     {
-                      g_print ("%s: pushing move tool\n", G_GNUC_FUNCTION);
+#ifdef DEBUG_MOVE_PUSH
+                      g_printerr ("%s: pushing move tool\n", G_GNUC_FUNCTION);
+#endif
 
                       space_shaded_tool = active_tool->tool_info;
 
@@ -1151,7 +1158,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case GDK_space:
             if (shell->space_pressed)
               {
-                g_print ("%s: popping move tool\n", G_GNUC_FUNCTION);
+#ifdef DEBUG_MOVE_PUSH
+                g_printerr ("%s: popping move tool\n", G_GNUC_FUNCTION);
+#endif
 
                 gimp_context_set_tool (gimp_get_user_context (gimp),
                                        space_shaded_tool);
