@@ -1207,18 +1207,19 @@ save_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tsvals.rle);
   gtk_widget_show (toggle);
 
-  /*  origin  */
-  origin = gtk_check_button_new_with_label (_("Origin at bottom left"));
-  gtk_box_pack_start (GTK_BOX (vbox), origin, FALSE, FALSE, 0);
-  gtk_signal_connect (GTK_OBJECT (origin), "toggled",
-		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
-		      &tsvals.origin);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (origin), tsvals.origin);
-  gtk_widget_show (origin);
-
   g_signal_connect (G_OBJECT (toggle), "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals.rle);
+
+  /*  origin  */
+  origin = gtk_check_button_new_with_label (_("Origin at bottom left"));
+  gtk_box_pack_start (GTK_BOX (vbox), origin, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (origin), tsvals.origin);
+  gtk_widget_show (origin);
+
+  g_signal_connect (G_OBJECT (origin), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals.origin);
 
   gtk_widget_show (vbox);
   gtk_widget_show (frame);

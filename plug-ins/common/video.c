@@ -2127,8 +2127,7 @@ video_render_preview (gint raw)
     }
 
   /* redraw preview widget */
-  gtk_widget_draw (preview, NULL);
-  gdk_flush ();
+  gtk_widget_queue_draw (preview);
 }
 
 static gint
