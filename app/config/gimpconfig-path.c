@@ -39,6 +39,29 @@ static gchar        * gimp_config_path_expand_only (const gchar  *path,
                                                     GError      **error);
 static inline gchar * extract_token                (const gchar **str);
 
+static inline gchar *
+extract_token (const gchar **str)
+{
+  const gchar *p;
+  gchar       *token;
+
+  if (strncmp (*str, "${", 2))
+    return NULL;
+
+  p = *str + 2;
+
+  while (*p && (*p != '}'))
+    p = g_utf8_next_char (p);
+
+  if (!p)
+    return NULL;
+
+  token = g_strndup (*str + 2, g_utf8_pointer_to_offset (*str + 2, p));
+
+  *str = p + 1; /* after the closing bracket */
+
+  return token;
+}
 
 /**
  * gimp_config_path_expand:
@@ -229,28 +252,4 @@ gimp_config_path_expand_only (const gchar  *path,
   g_free (filename);
 
   return expanded;
-}
-
-static inline gchar *
-extract_token (const gchar **str)
-{
-  const gchar *p;
-  gchar       *token;
-
-  if (strncmp (*str, "${", 2))
-    return NULL;
-
-  p = *str + 2;
-
-  while (*p && (*p != '}'))
-    p = g_utf8_next_char (p);
-
-  if (!p)
-    return NULL;
-
-  token = g_strndup (*str + 2, g_utf8_pointer_to_offset (*str + 2, p));
-
-  *str = p + 1; /* after the closing bracket */
-
-  return token;
 }

@@ -18,7 +18,7 @@ static GtkWidget *placement_center = NULL;
 static GtkObject *brush_density_adjust = NULL;
 
 void
-place_restore ()
+place_restore (void)
 {
   gtk_toggle_button_set_active
     (GTK_TOGGLE_BUTTON (placement_radio[pcvals.place_type]), TRUE);
@@ -35,7 +35,7 @@ place_type_input (int in)
 }
 
 void
-place_store ()
+place_store (void)
 {
   pcvals.placement_center = GTK_TOGGLE_BUTTON (placement_center)->active;
 }

@@ -81,7 +81,7 @@ type_toggled_cb(GtkWidget *widget, gpointer data)
 }
 
 static SettingsDialog_t*
-create_settings_dialog()
+create_settings_dialog(void)
 {
    SettingsDialog_t *data = g_new(SettingsDialog_t, 1);
    GtkWidget *table, *view, *frame, *hbox, *label, *swin;

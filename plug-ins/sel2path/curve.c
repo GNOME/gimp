@@ -27,7 +27,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 /* Return an entirely empty curve.  */
 
 curve_type
-new_curve ()
+new_curve (void)
 {
   curve_type curve = g_new (struct curve, 1);
 
@@ -103,7 +103,7 @@ append_point (curve_type curve, real_coordinate_type coord)
 /* Return an initialized but empty curve list.  */
 
 curve_list_type
-new_curve_list ()
+new_curve_list (void)
 {
   curve_list_type curve_list;
 
@@ -144,7 +144,7 @@ append_curve (curve_list_type *curve_list, curve_type curve)
 /* Return an initialized but empty curve list array.  */
 
 curve_list_array_type
-new_curve_list_array ()
+new_curve_list_array (void)
 {
   curve_list_array_type curve_list_array;
 

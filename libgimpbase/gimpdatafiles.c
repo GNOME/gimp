@@ -113,7 +113,7 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 				 GimpDatafileLoaderFunc  loader_func,
 				 gpointer                user_data)
 {
-  GimpDatafileData  file_data = { 0 };
+  GimpDatafileData  file_data;
   struct stat       filestat;
   gchar            *local_path;
   GList            *path;

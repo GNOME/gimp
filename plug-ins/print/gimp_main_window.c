@@ -262,7 +262,7 @@ Combo_get_name(GtkWidget   *combo,
   return NULL;
 }
 
-static stp_param_t *printer_list = 0;
+static stp_param_t *printer_list = NULL;
 static int printer_count = 0;
 
 static void

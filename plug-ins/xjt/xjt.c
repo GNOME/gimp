@@ -1912,7 +1912,7 @@ cleanup:
  *   allocate new layer_properties element and init with default values
  * ============================================================================
  */
-t_layer_props * p_new_layer_prop()
+t_layer_props * p_new_layer_prop(void)
 {
   t_layer_props  *l_new_prop;
 
@@ -1945,7 +1945,7 @@ t_layer_props * p_new_layer_prop()
  *   allocate new channel_properties element and init with default values
  * ============================================================================
  */
-t_channel_props * p_new_channel_prop()
+t_channel_props * p_new_channel_prop(void)
 {
   t_channel_props  *l_new_prop;
 
@@ -1975,7 +1975,7 @@ t_channel_props * p_new_channel_prop()
  *   allocate new guide_properties element and init with default values
  * ============================================================================
  */
-t_guide_props * p_new_guide_prop()
+t_guide_props * p_new_guide_prop(void)
 {
   t_guide_props  *l_new_prop;
 
@@ -1991,7 +1991,7 @@ t_guide_props * p_new_guide_prop()
  *   allocate new parasite_properties element and init with default values
  * ============================================================================
  */
-t_parasite_props * p_new_parasite_prop()
+t_parasite_props * p_new_parasite_prop(void)
 {
   t_parasite_props  *l_new_prop;
 
@@ -2010,7 +2010,7 @@ t_parasite_props * p_new_parasite_prop()
  *   allocate new parasite_properties element and init with default values
  * ============================================================================
  */
-t_path_props * p_new_path_prop()
+t_path_props * p_new_path_prop(void)
 {
   t_path_props  *l_new_prop;
 
@@ -2032,7 +2032,7 @@ t_path_props * p_new_path_prop()
  *   allocate new layer_properties element and init with default values
  * ============================================================================
  */
-t_image_props * p_new_image_prop()
+t_image_props * p_new_image_prop(void)
 {
   t_image_props  *l_new_prop;
 

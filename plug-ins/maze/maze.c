@@ -134,7 +134,7 @@ MAIN ()
 
 
 static void
-query ()
+query (void)
 {
   static GimpParamDef args[] =
   {

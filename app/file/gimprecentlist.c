@@ -161,7 +161,7 @@ gimp_recent_list_update_item (GList          *items,
 static void
 parse_info_init (ParseInfo *info)
 {
-  info->states = g_slist_prepend (NULL, STATE_START);
+  info->states = g_slist_prepend (NULL, GINT_TO_POINTER (STATE_START));
   info->items = NULL;
 }
 

@@ -209,7 +209,7 @@ run (const gchar      *name,
           gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
 
-          glasstile (drawable, FALSE);
+          glasstile (drawable, NULL);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();

@@ -79,6 +79,67 @@ static inline gdouble  gimp_gradient_calc_sphere_decreasing_factor (gdouble  mid
 
 static GimpDataClass *parent_class = NULL;
 
+static inline gdouble
+gimp_gradient_calc_linear_factor (gdouble middle,
+				  gdouble pos)
+{
+  if (pos <= middle)
+    {
+      if (middle < EPSILON)
+	return 0.0;
+      else
+	return 0.5 * pos / middle;
+    }
+  else
+    {
+      pos -= middle;
+      middle = 1.0 - middle;
+
+      if (middle < EPSILON)
+	return 1.0;
+      else
+	return 0.5 + 0.5 * pos / middle;
+    }
+}
+
+static inline gdouble
+gimp_gradient_calc_curved_factor (gdouble middle,
+				  gdouble pos)
+{
+  if (middle < EPSILON)
+    middle = EPSILON;
+
+  return pow (pos, log (0.5) / log (middle));
+}
+
+static inline gdouble
+gimp_gradient_calc_sine_factor (gdouble middle,
+				gdouble pos)
+{
+  pos = gimp_gradient_calc_linear_factor (middle, pos);
+
+  return (sin ((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
+}
+
+static inline gdouble
+gimp_gradient_calc_sphere_increasing_factor (gdouble middle,
+					     gdouble pos)
+{
+  pos = gimp_gradient_calc_linear_factor (middle, pos) - 1.0;
+
+  return sqrt (1.0 - pos * pos); /* Works for convex increasing and concave decreasing */
+}
+
+static inline gdouble
+gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
+					     gdouble pos)
+{
+  pos = gimp_gradient_calc_linear_factor (middle, pos);
+
+  return 1.0 - sqrt(1.0 - pos * pos); /* Works for convex decreasing and concave increasing */
+}
+
+
 
 GType
 gimp_gradient_get_type (void)
@@ -509,67 +570,6 @@ gimp_gradient_get_segment_at (GimpGradient *gradient,
 
   return NULL;
 }
-
-static inline gdouble
-gimp_gradient_calc_linear_factor (gdouble middle,
-				  gdouble pos)
-{
-  if (pos <= middle)
-    {
-      if (middle < EPSILON)
-	return 0.0;
-      else
-	return 0.5 * pos / middle;
-    }
-  else
-    {
-      pos -= middle;
-      middle = 1.0 - middle;
-
-      if (middle < EPSILON)
-	return 1.0;
-      else
-	return 0.5 + 0.5 * pos / middle;
-    }
-}
-
-static inline gdouble
-gimp_gradient_calc_curved_factor (gdouble middle,
-				  gdouble pos)
-{
-  if (middle < EPSILON)
-    middle = EPSILON;
-
-  return pow (pos, log (0.5) / log (middle));
-}
-
-static inline gdouble
-gimp_gradient_calc_sine_factor (gdouble middle,
-				gdouble pos)
-{
-  pos = gimp_gradient_calc_linear_factor (middle, pos);
-
-  return (sin ((-G_PI / 2.0) + G_PI * pos) + 1.0) / 2.0;
-}
-
-static inline gdouble
-gimp_gradient_calc_sphere_increasing_factor (gdouble middle,
-					     gdouble pos)
-{
-  pos = gimp_gradient_calc_linear_factor (middle, pos) - 1.0;
-
-  return sqrt (1.0 - pos * pos); /* Works for convex increasing and concave decreasing */
-}
-
-static inline gdouble
-gimp_gradient_calc_sphere_decreasing_factor (gdouble middle,
-					     gdouble pos)
-{
-  pos = gimp_gradient_calc_linear_factor (middle, pos);
-
-  return 1.0 - sqrt(1.0 - pos * pos); /* Works for convex decreasing and concave increasing */
-}
-
 
 /*  gradient segment functions  */
 

@@ -108,7 +108,7 @@ PangoColor grad1ent[] =
 PangoColor foregr0und = { 37522, 51914, 57568 };
 PangoColor backgr0und = { 0, 0, 0 };
 
-static GimpAboutInfo about_info = { 0 };
+static GimpAboutInfo about_info = { 0, };
 static gboolean pp = FALSE;
 
 static gboolean  about_dialog_load_logo   (GtkWidget         *window);

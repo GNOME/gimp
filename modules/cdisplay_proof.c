@@ -230,7 +230,7 @@ cdisplay_proof_class_init (CdisplayProofClass *klass)
 
   g_object_class_install_property (object_class, PROP_PROFILE,
                                    g_param_spec_string ("profile", NULL, NULL,
-                                                        FALSE,
+                                                        NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT |
                                                         GIMP_MODULE_PARAM_SERIALIZE));

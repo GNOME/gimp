@@ -501,7 +501,7 @@ plug_in_extra_deserialize (GScanner      *scanner,
 
   while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
     {
-      token = token = g_scanner_get_next_token (scanner);
+      token = g_scanner_get_next_token (scanner);
 
       if (token != G_TOKEN_LEFT_PAREN)
         return token;

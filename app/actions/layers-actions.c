@@ -385,7 +385,7 @@ layers_actions_update (GimpActionGroup *group,
 {
   GimpImage     *gimage     = action_data_get_image (data);
   GimpLayer     *layer      = NULL;
-  GimpLayerMask *mask       = FALSE;    /*  layer mask             */
+  GimpLayerMask *mask       = NULL;     /*  layer mask             */
   gboolean       fs         = FALSE;    /*  floating sel           */
   gboolean       ac         = FALSE;    /*  active channel         */
   gboolean       sel        = FALSE;

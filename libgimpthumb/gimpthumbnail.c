@@ -240,7 +240,7 @@ gimp_thumbnail_init (GimpThumbnail *thumbnail)
   thumbnail->image_width      = 0;
   thumbnail->image_height     = 0;
   thumbnail->image_mimetype   = NULL;
-  thumbnail->image_type       = 0;
+  thumbnail->image_type       = NULL;
   thumbnail->image_num_layers = 0;
 
   thumbnail->thumb_state      = GIMP_THUMB_STATE_UNKNOWN;

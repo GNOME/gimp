@@ -551,7 +551,7 @@ switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num,
 }
 
 static PreferencesDialog_t*
-create_preferences_dialog()
+create_preferences_dialog(void)
 {
    PreferencesDialog_t *data = g_new(PreferencesDialog_t, 1);
    DefaultDialog_t *dialog;

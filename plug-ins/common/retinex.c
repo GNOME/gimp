@@ -640,7 +640,7 @@ MSRCR (guchar *src, gint width, gint height, gint bytes, gboolean preview_mode)
   gfloat        alpha;
   gfloat        gain;
   gfloat        offset;
-  gdouble       max_preview;
+  gdouble       max_preview = 0.0;
 
   if (!preview_mode)
     {

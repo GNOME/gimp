@@ -295,7 +295,7 @@ d_copy_bezier (Dobject *obj)
 }
 
 void
-d_bezier_object_class_init ()
+d_bezier_object_class_init (void)
 {
   DobjClass *class = &dobj_class[BEZIER];
 

@@ -70,7 +70,7 @@ local_free_bitmap (bitmap_type *b)
    find these outlines and put them in a list to return.  */
 
 pixel_outline_list_type
-find_outline_pixels ()
+find_outline_pixels (void)
 {
   pixel_outline_list_type outline_list;
   unsigned row, col;
@@ -193,7 +193,7 @@ free_pixel_outline_list (pixel_outline_list_type *outline_list)
    
 
 pixel_outline_type
-new_pixel_outline ()
+new_pixel_outline (void)
 {
   pixel_outline_type pixel_outline;
 

@@ -538,7 +538,7 @@ d_copy_arc (Dobject *obj)
 }
 
 void
-d_arc_object_class_init ()
+d_arc_object_class_init (void)
 {
   DobjClass *class = &dobj_class[ARC];
 

@@ -1457,7 +1457,7 @@ gimp_image_is_empty (const GimpImage *gimage)
 GimpLayer *
 gimp_image_floating_sel (const GimpImage *gimage)
 {
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   return gimage->floating_sel;
 }

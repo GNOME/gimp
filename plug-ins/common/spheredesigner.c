@@ -2997,7 +2997,7 @@ sphere_main (GimpDrawable *drawable)
   makewindow ();
 
   if (!s.com.numtexture)
-    sphere_response (NULL, RESPONSE_RESET, 0);
+    sphere_response (NULL, RESPONSE_RESET, NULL);
 
   rebuildlist ();
 

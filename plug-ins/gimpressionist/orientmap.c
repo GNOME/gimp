@@ -256,7 +256,7 @@ update_vector_prev (void)
 }
 
 void
-orientation_map_free_resources ()
+orientation_map_free_resources (void)
 {
   ppm_kill (&update_om_preview_nbuffer);
   ppm_kill (&update_vector_preview_backup);

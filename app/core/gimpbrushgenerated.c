@@ -428,7 +428,7 @@ gimp_brush_generated_dirty (GimpData *data)
 
   gbrush->mask = temp_buf_new (width  * 2 + 1,
                                height * 2 + 1,
-                               1, width, height, 0);
+                               1, width, height, NULL);
 
   centerp = temp_buf_data (gbrush->mask) + height * gbrush->mask->width + width;
 

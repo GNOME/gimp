@@ -291,7 +291,7 @@ best_cmap_match (const guchar  *cmap,
   return cmap_index;
 }
 
-G_INLINE_FUNC void
+static inline void
 pix_composite (guchar   *p1,
                guchar    p2[4],
                gint      bytes,

@@ -329,10 +329,10 @@ plug_in_args_to_params (Argument *args,
 	      tmp = gimp_parasite_copy (args[i].value.pdb_pointer);
 	      if (tmp == NULL)
 		{
-		  params[i].data.d_parasite.name  = 0;
+		  params[i].data.d_parasite.name  = NULL;
 		  params[i].data.d_parasite.flags = 0;
 		  params[i].data.d_parasite.size  = 0;
-		  params[i].data.d_parasite.data  = 0;
+		  params[i].data.d_parasite.data  = NULL;
 		}
 	      else
 		{
@@ -345,10 +345,10 @@ plug_in_args_to_params (Argument *args,
 	    {
 	      if (args[i].value.pdb_pointer == NULL)
 		{
-		  params[i].data.d_parasite.name  = 0;
+		  params[i].data.d_parasite.name  = NULL;
 		  params[i].data.d_parasite.flags = 0;
 		  params[i].data.d_parasite.size  = 0;
-		  params[i].data.d_parasite.data  = 0;
+		  params[i].data.d_parasite.data  = NULL;
 		}
 	      else
 		memcpy (&params[i].data.d_parasite,
@@ -425,8 +425,8 @@ plug_in_params_destroy (GPParam  *params,
                 {
                   g_free (params[i].data.d_parasite.name);
                   g_free (params[i].data.d_parasite.data);
-                  params[i].data.d_parasite.name = 0;
-                  params[i].data.d_parasite.data = 0;
+                  params[i].data.d_parasite.name = NULL;
+                  params[i].data.d_parasite.data = NULL;
                 }
 	  break;
             case GIMP_PDB_STATUS:

@@ -232,7 +232,7 @@ create_dialog (void)
   create_colorpage (GTK_NOTEBOOK (notebook));
   create_generalpage (GTK_NOTEBOOK (notebook));
 
-  updatepreview (NULL, 0);
+  updatepreview (NULL, NULL);
 
   /*
    * This is to make sure the values from the pcvals will be reflected

@@ -434,12 +434,12 @@ temp_buf_copy_area (TempBuf *src,
 		    gint     dest_y)
 {
   TempBuf     *new;
-  PixelRegion  srcPR  = { 0 };
-  PixelRegion  destPR = { 0 };
+  PixelRegion  srcPR  = { 0, };
+  PixelRegion  destPR = { 0, };
   guchar       empty[MAX_CHANNELS] = { 0, 0, 0, 0 };
   gint         x1, y1, x2, y2;
 
-  g_return_val_if_fail (src  != NULL, dest);
+  g_return_val_if_fail (src != NULL, dest);
   g_return_val_if_fail (!dest || dest->bytes == src->bytes, dest);
 
   g_return_val_if_fail (width  + dest_x > 0, dest);

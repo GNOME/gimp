@@ -955,7 +955,7 @@ pnmscanner_create (gint fd)
 
   s = g_new (PNMScanner, 1);
   s->fd = fd;
-  s->inbuf = 0;
+  s->inbuf = NULL;
   s->eof = !read(s->fd, &(s->cur), 1);
   return(s);
 }

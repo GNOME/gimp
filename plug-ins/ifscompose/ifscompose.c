@@ -1897,7 +1897,7 @@ undo_exchange (gint el)
     if (!elements[i])
       {
         elements[i] = undo_ring[el].elements[i];
-        undo_ring[el].elements[i] = 0;
+        undo_ring[el].elements[i] = NULL;
       }
     else
       aff_element_compute_trans (elements[i],width, height,

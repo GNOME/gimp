@@ -222,7 +222,7 @@ run (const gchar      *name,
           config.alg = param[6].data.d_int32;
           config.edge = param[7].data.d_int32;
 
-          if (render_effect (drawable, 0) == -1)
+          if (render_effect (drawable, NULL) == -1)
             status = GIMP_PDB_EXECUTION_ERROR;
         }
       break;
@@ -245,7 +245,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_wind", &config);
-      if (render_effect (drawable, FALSE) == -1)
+      if (render_effect (drawable, NULL) == -1)
         {
           status = GIMP_PDB_EXECUTION_ERROR;
           gimp_message ("An execution error occured.");

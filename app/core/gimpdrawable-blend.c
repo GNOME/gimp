@@ -157,10 +157,13 @@ static PixelRegion distR =
 {
   NULL,  /* data */
   NULL,  /* tiles */
+  NULL,  /* curtile */
+  0, 0,  /* offx, offy */
   0,     /* rowstride */
-  0, 0,  /* w, h */
   0, 0,  /* x, y */
+  0, 0,  /* w, h */
   4,     /* bytes */
+  FALSE, /* dirty */
   0      /* process count */
 };
 

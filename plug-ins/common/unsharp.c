@@ -248,6 +248,123 @@ run (const gchar      *name,
 #endif
 }
 
+/* this function is written as if it is blurring a column at a time,
+   even though it can operate on rows, too.  There is no difference
+   in the processing of the lines, at least to the blur_line function.
+ */
+static inline void
+blur_line (gdouble *ctable,
+           gdouble *cmatrix,
+           gint     cmatrix_length,
+           guchar  *cur_col,
+           guchar  *dest_col,
+           gint     y,
+           glong    bytes)
+{
+  gdouble scale;
+  gdouble sum;
+  gint    i = 0;
+  gint    j = 0;
+  gint    row;
+  gint    cmatrix_middle = cmatrix_length / 2;
+
+  gdouble *cmatrix_p;
+  guchar  *cur_col_p;
+  guchar  *cur_col_p1;
+  guchar  *dest_col_p;
+  gdouble *ctable_p;
+
+  /* this first block is the same as the non-optimized version --
+   * it is only used for very small pictures, so speed isn't a
+   * big concern.
+   */
+  if (cmatrix_length > y)
+    {
+      for (row = 0; row < y ; row++)
+        {
+          scale=0;
+          /* find the scale factor */
+          for (j = 0; j < y ; j++)
+            {
+              /* if the index is in bounds, add it to the scale counter */
+              if ((j + cmatrix_length/2 - row >= 0) &&
+                  (j + cmatrix_length/2 - row < cmatrix_length))
+                scale += cmatrix[j + cmatrix_length/2 - row];
+            }
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              for (j = 0; j < y; j++)
+                {
+                  if ((j >= row - cmatrix_length/2) &&
+                      (j <= row + cmatrix_length/2))
+                    sum += cur_col[j*bytes + i] * cmatrix[j];
+                }
+              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+            }
+        }
+    }
+  else
+    {
+      /* for the edge condition, we only use available info and scale to one */
+      for (row = 0; row < cmatrix_middle; row++)
+        {
+          /* find scale factor */
+          scale=0;
+          for (j = cmatrix_middle - row; j<cmatrix_length; j++)
+            scale += cmatrix[j];
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              for (j = cmatrix_middle - row; j<cmatrix_length; j++)
+                {
+                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                }
+              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+            }
+        }
+      /* go through each pixel in each col */
+      dest_col_p = dest_col + row*bytes;
+      for (; row < y-cmatrix_middle; row++)
+        {
+          cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              cmatrix_p = cmatrix;
+              cur_col_p1 = cur_col_p;
+              ctable_p = ctable;
+              for (j = cmatrix_length; j>0; j--)
+                {
+                  sum += *(ctable_p + *cur_col_p1);
+                  cur_col_p1 += bytes;
+                  ctable_p += 256;
+                }
+              cur_col_p++;
+              *(dest_col_p++) = ROUND (sum);
+            }
+        }
+
+      /* for the edge condition , we only use available info, and scale to one */
+      for (; row < y; row++)
+        {
+          /* find scale factor */
+          scale=0;
+          for (j = 0; j< y-row + cmatrix_middle; j++)
+            scale += cmatrix[j];
+          for (i = 0; i<bytes; i++)
+            {
+              sum = 0;
+              for (j = 0; j<y-row + cmatrix_middle; j++)
+                {
+                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
+                }
+              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
+            }
+        }
+    }
+}
+
 static void
 unsharp_mask (GimpDrawable *drawable,
               gdouble       radius,
@@ -420,123 +537,6 @@ unsharp_region (GimpPixelRgn *srcPR,
   g_free (cur_col);
   g_free (dest_row);
   g_free (cur_row);
-}
-
-/* this function is written as if it is blurring a column at a time,
-   even though it can operate on rows, too.  There is no difference
-   in the processing of the lines, at least to the blur_line function.
- */
-static inline void
-blur_line (gdouble *ctable,
-           gdouble *cmatrix,
-           gint     cmatrix_length,
-           guchar  *cur_col,
-           guchar  *dest_col,
-           gint     y,
-           glong    bytes)
-{
-  gdouble scale;
-  gdouble sum;
-  gint    i = 0;
-  gint    j = 0;
-  gint    row;
-  gint    cmatrix_middle = cmatrix_length / 2;
-
-  gdouble *cmatrix_p;
-  guchar  *cur_col_p;
-  guchar  *cur_col_p1;
-  guchar  *dest_col_p;
-  gdouble *ctable_p;
-
-  /* this first block is the same as the non-optimized version --
-   * it is only used for very small pictures, so speed isn't a
-   * big concern.
-   */
-  if (cmatrix_length > y)
-    {
-      for (row = 0; row < y ; row++)
-        {
-          scale=0;
-          /* find the scale factor */
-          for (j = 0; j < y ; j++)
-            {
-              /* if the index is in bounds, add it to the scale counter */
-              if ((j + cmatrix_length/2 - row >= 0) &&
-                  (j + cmatrix_length/2 - row < cmatrix_length))
-                scale += cmatrix[j + cmatrix_length/2 - row];
-            }
-          for (i = 0; i<bytes; i++)
-            {
-              sum = 0;
-              for (j = 0; j < y; j++)
-                {
-                  if ((j >= row - cmatrix_length/2) &&
-                      (j <= row + cmatrix_length/2))
-                    sum += cur_col[j*bytes + i] * cmatrix[j];
-                }
-              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-            }
-        }
-    }
-  else
-    {
-      /* for the edge condition, we only use available info and scale to one */
-      for (row = 0; row < cmatrix_middle; row++)
-        {
-          /* find scale factor */
-          scale=0;
-          for (j = cmatrix_middle - row; j<cmatrix_length; j++)
-            scale += cmatrix[j];
-          for (i = 0; i<bytes; i++)
-            {
-              sum = 0;
-              for (j = cmatrix_middle - row; j<cmatrix_length; j++)
-                {
-                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
-                }
-              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-            }
-        }
-      /* go through each pixel in each col */
-      dest_col_p = dest_col + row*bytes;
-      for (; row < y-cmatrix_middle; row++)
-        {
-          cur_col_p = (row - cmatrix_middle) * bytes + cur_col;
-          for (i = 0; i<bytes; i++)
-            {
-              sum = 0;
-              cmatrix_p = cmatrix;
-              cur_col_p1 = cur_col_p;
-              ctable_p = ctable;
-              for (j = cmatrix_length; j>0; j--)
-                {
-                  sum += *(ctable_p + *cur_col_p1);
-                  cur_col_p1 += bytes;
-                  ctable_p += 256;
-                }
-              cur_col_p++;
-              *(dest_col_p++) = ROUND (sum);
-            }
-        }
-
-      /* for the edge condition , we only use available info, and scale to one */
-      for (; row < y; row++)
-        {
-          /* find scale factor */
-          scale=0;
-          for (j = 0; j< y-row + cmatrix_middle; j++)
-            scale += cmatrix[j];
-          for (i = 0; i<bytes; i++)
-            {
-              sum = 0;
-              for (j = 0; j<y-row + cmatrix_middle; j++)
-                {
-                  sum += cur_col[(row + j-cmatrix_middle)*bytes + i] * cmatrix[j];
-                }
-              dest_col[row*bytes + i] = (guchar) ROUND (sum / scale);
-            }
-        }
-    }
 }
 
 /* generates a 1-D convolution matrix to be used for each pass of

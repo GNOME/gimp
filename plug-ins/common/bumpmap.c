@@ -283,9 +283,9 @@ static bumpmap_interface_t bmint =
   0,         /* bm_height */
   0,         /* bm_bpp */
   FALSE,     /* bm_has_alpha */
-  { 0 },     /* src_rgn */
-  { 0 },     /* bm_rgn */
-  { 0 }      /* params */
+  { 0, },    /* src_rgn */
+  { 0, },    /* bm_rgn */
+  { 0, }     /* params */
 };
 
 static GimpDrawable *drawable = NULL;

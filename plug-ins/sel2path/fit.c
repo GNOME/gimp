@@ -1918,7 +1918,7 @@ align (spline_list_type *l)
 /* Lists of array indices (well, that is what we use it for).  */
 
 static index_list_type
-new_index_list ()
+new_index_list (void)
 {
   index_list_type index_list;
 

@@ -81,7 +81,7 @@ pixel_surround_lock (PixelSurround *ps,
   if (ps->tile)
     {
       tile_release (ps->tile, FALSE);
-      ps->tile = 0;
+      ps->tile = NULL;
     }
 
   /* copy pixels, one by one */
@@ -132,7 +132,7 @@ pixel_surround_release (PixelSurround *ps)
   if (ps->tile)
     {
       tile_release (ps->tile, FALSE);
-      ps->tile = 0;
+      ps->tile = NULL;
     }
 }
 
@@ -142,7 +142,7 @@ pixel_surround_clear (PixelSurround *ps)
   if (ps->buff)
     {
       g_free (ps->buff);
-      ps->buff = 0;
+      ps->buff = NULL;
       ps->buff_size = 0;
     }
 }

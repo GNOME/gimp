@@ -283,7 +283,7 @@ d_copy_ellipse (Dobject * obj)
 }
 
 void
-d_ellipse_object_class_init ()
+d_ellipse_object_class_init (void)
 {
   DobjClass *class = &dobj_class[ELLIPSE];
 

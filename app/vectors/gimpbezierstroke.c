@@ -270,13 +270,13 @@ gimp_bezier_stroke_open (GimpStroke *stroke,
   GList *list, *list2;
   GimpStroke *new_stroke = NULL;
 
-  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), FALSE);
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
   g_return_val_if_fail (end_anchor &&
-                        end_anchor->type == GIMP_ANCHOR_ANCHOR, FALSE);
+                        end_anchor->type == GIMP_ANCHOR_ANCHOR, NULL);
 
   list = g_list_find (stroke->anchors, end_anchor);
 
-  g_return_val_if_fail (list != NULL && list->next != NULL, FALSE);
+  g_return_val_if_fail (list != NULL && list->next != NULL, NULL);
 
   list = g_list_next (list);  /* protect the handle... */
 

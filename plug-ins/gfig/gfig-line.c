@@ -134,7 +134,7 @@ d_paint_line (Dobject *obj)
  */
 
 void
-d_line_object_class_init ()
+d_line_object_class_init (void)
 {
   DobjClass *class = &dobj_class[LINE];
 

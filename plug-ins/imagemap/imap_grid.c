@@ -188,7 +188,7 @@ top_changed_cb(GtkWidget *widget, gpointer data)
 }
 
 static GridDialog_t*
-create_grid_settings_dialog()
+create_grid_settings_dialog(void)
 {
    GridDialog_t *data = g_new(GridDialog_t, 1);
    DefaultDialog_t *dialog;

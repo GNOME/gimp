@@ -334,7 +334,7 @@ dockable_change_screen_cmd_callback (GtkAction *action,
 
   dialog = gimp_query_int_box ("Move Dock to Screen",
                                dock,
-                               NULL, 0,
+                               NULL, NULL,
                                "Enter destination screen",
                                cur_screen, 0, num_screens - 1,
                                G_OBJECT (dock), "destroy",

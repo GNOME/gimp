@@ -276,7 +276,7 @@ d_copy_spiral (Dobject *obj)
 }
 
 void
-d_spiral_object_class_init ()
+d_spiral_object_class_init (void)
 {
   DobjClass *class = &dobj_class[SPIRAL];
 

@@ -318,7 +318,7 @@ run (const gchar      *name,
       else
 	status = GIMP_PDB_CALLING_ERROR;
 
-      if (!gdk_init_check (0, NULL))
+      if (!gdk_init_check (NULL, NULL))
 	status = GIMP_PDB_CALLING_ERROR;
       break;
 

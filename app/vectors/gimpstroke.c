@@ -762,7 +762,7 @@ gimp_stroke_anchor_insert (GimpStroke *stroke,
                            GimpAnchor *predec,
                            gdouble     position)
 {
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
   return GIMP_STROKE_GET_CLASS (stroke)->anchor_insert (stroke,
                                                         predec, position);
@@ -773,7 +773,7 @@ gimp_stroke_real_anchor_insert (GimpStroke *stroke,
                                 GimpAnchor *predec,
                                 gdouble     position)
 {
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), FALSE);
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
   return NULL;
 }

@@ -29,7 +29,7 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
    garbage.  */ 
 
 spline_type
-new_spline ()
+new_spline (void)
 {
   real_coordinate_type coord = { -100.0, -100.0 };
   spline_type spline;
@@ -113,7 +113,7 @@ evaluate_spline (spline_type s, real t)
 /* Return a new, empty, spline list.  */
 
 spline_list_type *
-new_spline_list ()
+new_spline_list (void)
 {
   spline_list_type *answer = g_new (spline_list_type, 1);
 
@@ -189,7 +189,7 @@ concat_spline_lists (spline_list_type *s1, spline_list_type s2)
 /* Return a new, empty, spline list array.  */
 
 spline_list_array_type
-new_spline_list_array ()
+new_spline_list_array (void)
 {
   spline_list_array_type answer;
 

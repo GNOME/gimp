@@ -200,7 +200,7 @@ d_new_object (DobjType    type,
 }
 
 void
-gfig_init_object_classes ()
+gfig_init_object_classes (void)
 {
   d_arc_object_class_init ();
   d_line_object_class_init ();
@@ -459,7 +459,7 @@ object_operation_end (GdkPoint *pnt,
   if (move_all_pnt)
     {
       g_free (move_all_pnt);
-      move_all_pnt = 0;
+      move_all_pnt = NULL;
     }
 
   /* Special case - if copying mode MUST be copy when button up received */
@@ -1002,7 +1002,7 @@ get_line (gchar *buf,
           gint   init)
 {
   gint slen;
-  char * ret;
+  char *ret;
 
   if (init)
     line_no = 1;
@@ -1012,7 +1012,8 @@ get_line (gchar *buf,
   do
     {
       ret = fgets (buf, s, from);
-    } while (!ferror (from) && buf[0] == '#');
+    }
+  while (!ferror (from) && buf[0] == '#');
 
   slen = strlen (buf);
 
@@ -1023,14 +1024,14 @@ get_line (gchar *buf,
   if (ferror (from))
     {
       g_warning (_("Error reading file"));
-      return (0);
+      return NULL;
     }
 
 #ifdef DEBUG
   printf ("Processing line '%s'\n", buf);
 #endif /* DEBUG */
 
-  return (ret);
+  return ret;
 }
 
 void

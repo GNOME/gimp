@@ -1063,7 +1063,7 @@ save_lighting_preset (GtkWidget *widget,
       GList *list;
       gchar *dir;
 
-      list = gimp_path_parse (lighting_effects_path, 16, FALSE, 0);
+      list = gimp_path_parse (lighting_effects_path, 16, FALSE, NULL);
       dir = gimp_path_get_user_writable_dir (list);
       gimp_path_free (list);
 
@@ -1198,7 +1198,7 @@ load_lighting_preset (GtkWidget *widget,
       GList *list;
       gchar *dir;
 
-      list = gimp_path_parse (lighting_effects_path, 16, FALSE, 0);
+      list = gimp_path_parse (lighting_effects_path, 16, FALSE, NULL);
       dir = gimp_path_get_user_writable_dir (list);
       gimp_path_free (list);
 

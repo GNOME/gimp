@@ -266,8 +266,8 @@ gimp_config_diff (GimpConfig  *a,
 {
   GList *diff;
 
-  g_return_val_if_fail (GIMP_IS_CONFIG (a), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONFIG (b), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONFIG (a), NULL);
+  g_return_val_if_fail (GIMP_IS_CONFIG (b), NULL);
 
   if (G_TYPE_FROM_INSTANCE (a) == G_TYPE_FROM_INSTANCE (b))
     diff = gimp_config_diff_same (a, b, flags);

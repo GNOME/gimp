@@ -530,7 +530,7 @@ save_image (const gchar *filename,
   GimpPixelRgn pixel_rgn;
   GimpDrawable *drawable;
   GimpImageType drawable_type;
-  guchar *cmap= 0, *pixels;
+  guchar *cmap= NULL, *pixels;
   gint offset_x, offset_y, width, height;
   gchar *message;
   int colors, i;

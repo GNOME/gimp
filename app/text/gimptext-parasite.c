@@ -76,13 +76,13 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
   GimpText    *text;
   const gchar *str;
 
-  g_return_val_if_fail (parasite != NULL, FALSE);
+  g_return_val_if_fail (parasite != NULL, NULL);
   g_return_val_if_fail (strcmp (gimp_parasite_name (parasite),
-                                gimp_text_parasite_name ()) == 0, FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+                                gimp_text_parasite_name ()) == 0, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   str = gimp_parasite_data (parasite);
-  g_return_val_if_fail (str != NULL, FALSE);
+  g_return_val_if_fail (str != NULL, NULL);
 
   text = g_object_new (GIMP_TYPE_TEXT, NULL);
 

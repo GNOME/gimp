@@ -319,7 +319,7 @@ d_copy_star (Dobject *obj)
 }
 
 void
-d_star_object_class_init ()
+d_star_object_class_init (void)
 {
   DobjClass *class = &dobj_class[STAR];
 

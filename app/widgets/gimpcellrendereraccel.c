@@ -426,7 +426,7 @@ gimp_cell_renderer_accel_start_editing (GtkCellRenderer      *cell,
 
   if (gdk_pointer_grab (widget->window, FALSE,
                         GDK_BUTTON_PRESS_MASK,
-                        FALSE, NULL,
+                        NULL, NULL,
                         gdk_event_get_time (event)) != GDK_GRAB_SUCCESS)
     {
       gdk_display_keyboard_ungrab (gtk_widget_get_display (widget),

@@ -266,7 +266,7 @@ sel_gauss_dialog (GimpDrawable *drawable)
                               _("_Max. delta:"), 128, 0,
                               bvals.maxdelta, 0, 255, 1, 8, 0,
                               TRUE, 0, 0,
-                              FALSE, FALSE);
+                              NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &bvals.maxdelta);

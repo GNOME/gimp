@@ -74,6 +74,133 @@ static inline void   gimp_draw_tool_shift_to_center
 static GimpToolClass *parent_class = NULL;
 
 
+/*  private functions  */
+
+static inline void
+gimp_draw_tool_shift_to_north_west (gdouble        x,
+                                    gdouble        y,
+                                    gint           handle_width,
+                                    gint           handle_height,
+                                    GtkAnchorType  anchor,
+                                    gdouble       *shifted_x,
+                                    gdouble       *shifted_y)
+{
+  switch (anchor)
+    {
+    case GTK_ANCHOR_CENTER:
+      x -= (handle_width >> 1);
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH:
+      x -= (handle_width >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH_WEST:
+      /*  nothing, this is the default  */
+      break;
+
+    case GTK_ANCHOR_NORTH_EAST:
+      x -= handle_width;
+      break;
+
+    case GTK_ANCHOR_SOUTH:
+      x -= (handle_width >> 1);
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_SOUTH_WEST:
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_SOUTH_EAST:
+      x -= handle_width;
+      y -= handle_height;
+      break;
+
+    case GTK_ANCHOR_WEST:
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_EAST:
+      x -= handle_width;
+      y -= (handle_height >> 1);
+      break;
+
+    default:
+      break;
+    }
+
+  if (shifted_x)
+    *shifted_x = x;
+
+  if (shifted_y)
+    *shifted_y = y;
+}
+
+static inline void
+gimp_draw_tool_shift_to_center (gdouble        x,
+                                gdouble        y,
+                                gint           handle_width,
+                                gint           handle_height,
+                                GtkAnchorType  anchor,
+                                gdouble       *shifted_x,
+                                gdouble       *shifted_y)
+{
+  switch (anchor)
+    {
+    case GTK_ANCHOR_CENTER:
+      /*  nothing, this is the default  */
+      break;
+
+    case GTK_ANCHOR_NORTH:
+      y += (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH_WEST:
+      x += (handle_width >> 1);
+      y += (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_NORTH_EAST:
+      x -= (handle_width >> 1);
+      y += (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_SOUTH:
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_SOUTH_WEST:
+      x += (handle_width >> 1);
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_SOUTH_EAST:
+      x -= (handle_width >> 1);
+      y -= (handle_height >> 1);
+      break;
+
+    case GTK_ANCHOR_WEST:
+      x += (handle_width >> 1);
+      break;
+
+    case GTK_ANCHOR_EAST:
+      x -= (handle_width >> 1);
+      break;
+
+    default:
+      break;
+    }
+
+  if (shifted_x)
+    *shifted_x = x;
+
+  if (shifted_y)
+    *shifted_y = y;
+}
+
+
 GType
 gimp_draw_tool_get_type (void)
 {
@@ -1224,131 +1351,4 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
                              gdk_segs, n_gdk_segs);
 
   g_free (gdk_segs);
-}
-
-
-/*  private functions  */
-
-static inline void
-gimp_draw_tool_shift_to_north_west (gdouble        x,
-                                    gdouble        y,
-                                    gint           handle_width,
-                                    gint           handle_height,
-                                    GtkAnchorType  anchor,
-                                    gdouble       *shifted_x,
-                                    gdouble       *shifted_y)
-{
-  switch (anchor)
-    {
-    case GTK_ANCHOR_CENTER:
-      x -= (handle_width >> 1);
-      y -= (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_NORTH:
-      x -= (handle_width >> 1);
-      break;
-
-    case GTK_ANCHOR_NORTH_WEST:
-      /*  nothing, this is the default  */
-      break;
-
-    case GTK_ANCHOR_NORTH_EAST:
-      x -= handle_width;
-      break;
-
-    case GTK_ANCHOR_SOUTH:
-      x -= (handle_width >> 1);
-      y -= handle_height;
-      break;
-
-    case GTK_ANCHOR_SOUTH_WEST:
-      y -= handle_height;
-      break;
-
-    case GTK_ANCHOR_SOUTH_EAST:
-      x -= handle_width;
-      y -= handle_height;
-      break;
-
-    case GTK_ANCHOR_WEST:
-      y -= (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_EAST:
-      x -= handle_width;
-      y -= (handle_height >> 1);
-      break;
-
-    default:
-      break;
-    }
-
-  if (shifted_x)
-    *shifted_x = x;
-
-  if (shifted_y)
-    *shifted_y = y;
-}
-
-static inline void
-gimp_draw_tool_shift_to_center (gdouble        x,
-                                gdouble        y,
-                                gint           handle_width,
-                                gint           handle_height,
-                                GtkAnchorType  anchor,
-                                gdouble       *shifted_x,
-                                gdouble       *shifted_y)
-{
-  switch (anchor)
-    {
-    case GTK_ANCHOR_CENTER:
-      /*  nothing, this is the default  */
-      break;
-
-    case GTK_ANCHOR_NORTH:
-      y += (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_NORTH_WEST:
-      x += (handle_width >> 1);
-      y += (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_NORTH_EAST:
-      x -= (handle_width >> 1);
-      y += (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_SOUTH:
-      y -= (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_SOUTH_WEST:
-      x += (handle_width >> 1);
-      y -= (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_SOUTH_EAST:
-      x -= (handle_width >> 1);
-      y -= (handle_height >> 1);
-      break;
-
-    case GTK_ANCHOR_WEST:
-      x += (handle_width >> 1);
-      break;
-
-    case GTK_ANCHOR_EAST:
-      x -= (handle_width >> 1);
-      break;
-
-    default:
-      break;
-    }
-
-  if (shifted_x)
-    *shifted_x = x;
-
-  if (shifted_y)
-    *shifted_y = y;
 }

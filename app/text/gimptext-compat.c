@@ -62,13 +62,13 @@ text_render (GimpImage    *gimage,
   gchar                *font;
   gdouble               size;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
-  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (drawable == NULL ||
-                        gimp_item_is_attached (GIMP_ITEM (drawable)), FALSE);
-  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
-  g_return_val_if_fail (fontname != NULL, FALSE);
-  g_return_val_if_fail (text != NULL, FALSE);
+                        gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (fontname != NULL, NULL);
+  g_return_val_if_fail (text != NULL, NULL);
 
   if (border < 0)
     border = 0;

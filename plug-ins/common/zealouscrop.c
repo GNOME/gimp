@@ -49,6 +49,22 @@ static gint bytes;
 
 MAIN ()
 
+static inline gint
+colours_equal (const guchar *col1,
+               const guchar *col2,
+               gint          bytes)
+{
+  gint b;
+
+  for (b = 0; b < bytes; b++)
+    {
+      if (col1[b] != col2[b])
+        return FALSE;
+    }
+
+  return TRUE;
+}
+
 static void
 query (void)
 {
@@ -267,21 +283,4 @@ do_zcrop (GimpDrawable *drawable,
   gimp_image_crop (image_id, livingcols, livingrows, 0, 0);
 
   gimp_image_undo_group_end (image_id);
-}
-
-
-static inline gint
-colours_equal (const guchar *col1,
-               const guchar *col2,
-               gint          bytes)
-{
-  gint b;
-
-  for (b = 0; b < bytes; b++)
-    {
-      if (col1[b] != col2[b])
-        return FALSE;
-    }
-
-  return TRUE;
 }

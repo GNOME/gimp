@@ -78,7 +78,7 @@ gp_plist_t		*plist;			/* System printers */
 
 int		saveme = FALSE;		/* True if print should proceed */
 int		runme = FALSE;		/* True if print should proceed */
-stp_printer_t current_printer = 0;	/* Current printer index */
+stp_printer_t current_printer = NULL;	/* Current printer index */
 gint32          image_ID;	        /* image ID */
 
 gchar *image_name;
@@ -756,7 +756,7 @@ printrc_load (void)
   gp_plist_t	key;		/* Search key */
   gint		format = 0;	/* rc file format version */
   gint		system_printers; /* printer count before reading printrc */
-  gchar *	current_printer = 0; /* printer to select */
+  gchar *	current_printer = NULL; /* printer to select */
 
   check_plist(1);
 

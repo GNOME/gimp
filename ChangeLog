@@ -1,3 +1,110 @@
+2004-11-13  Manish Singh  <yosh@gimp.org>
+
+	Fix a bunch of warnings from Sparse:
+
+	* app/actions/dockable-commands.c
+	* app/actions/layers-actions.c
+	* app/actions/view-commands.c
+	* app/base/pixel-surround.c
+	* app/config/gimpconfig-utils.c
+	* app/config/gimpscanner.c
+	* app/core/gimpbrushgenerated.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpimage.c
+	* app/dialogs/palette-import-dialog.c
+	* app/file/gimprecentlist.c
+	* app/plug-in/plug-in-params.c
+	* app/text/gimptext-compat.c
+	* app/text/gimptext-parasite.c
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpstroke.c
+	* app/widgets/gimpcellrendereraccel.c
+	* app/widgets/gimpselectiondata.c
+	* app/xcf/xcf.c
+	* libgimp/gimp.c
+	* libgimpthumb/gimpthumb-utils.c
+	* libgimpthumb/gimpthumbnail.c
+	* modules/cdisplay_proof.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/common/csource.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/nova.c 
+	* plug-ins/common/pcx.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/screenshot.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/spheredesigner.c
+	* plug-ins/common/wind.c 
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gimpressionist/gimpressionist.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/print/gimp_main_window.c
+	* plug-ins/print/print.c: Cleanup integer vs. pointer confusion.
+
+	* app/base/temp-buf.c
+	* app/dialogs/about-dialog.c
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/jigsaw.c
+	* plug-ins/gfig/gfig-dobject.c: Cosmetic cleanups.
+
+	* app/config/gimpconfig-deserialize.c
+	* app/config/gimpconfig-path.c
+	* app/config/gimpconfigwriter.c
+	* app/core/gimpgradient.c
+	* app/tools/gimpdrawtool.c
+	* plug-ins/common/nlfilt.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/zealouscrop.c: Define inline functions before they
+	are used.
+
+	* app/core/gimpdrawable-blend.c: PixelRegion definition was changed
+	some time ago, but the initialization here didn't change. Fix it.
+
+	* app/plug-in/plug-in-rc.c (plug_in_extra_deserialize): No need to
+	assign token twice in a row.
+
+	* libgimpbase/gimpdatafiles.c (gimp_datafiles_read_directories): No
+	need to initialize file_data, since the code fills out all the fields.
+
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/common/vpropagate.c: Declare function pointers fully.
+
+	* plug-ins/common/grid.c (pix_composite): G_INLINE_FUNC isn't needed,
+	we assume we can use the "inline" keyword always.
+
+	* plug-ins/common/psd_save.c
+	* plug-ins/common/vinvert.c
+	* plug-ins/gfig/gfig-arc.c
+	* plug-ins/gfig/gfig-bezier.c
+	* plug-ins/gfig/gfig-circle.c
+	* plug-ins/gfig/gfig-dialog.c
+	* plug-ins/gfig/gfig-dobject.c
+	* plug-ins/gfig/gfig-ellipse.c
+	* plug-ins/gfig/gfig-line.c
+	* plug-ins/gfig/gfig-poly.c
+	* plug-ins/gfig/gfig-spiral.c
+	* plug-ins/gfig/gfig-star.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gimpressionist/orientmap.c
+	* plug-ins/gimpressionist/placement.c
+	* plug-ins/gimpressionist/sizemap.c
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/imagemap/imap_settings.c
+	* plug-ins/maze/maze.c
+	* plug-ins/sel2path/curve.c
+	* plug-ins/sel2path/fit.c
+	* plug-ins/sel2path/pxl-outline.c
+	* plug-ins/sel2path/spline.c
+	* plug-ins/xjt/xjt.c: Functions with no args should be declared
+	with (void).
+
+	* plug-ins/common/retinex.c (MSRCR): Initialize max_preview to quiet
+	the compiler.
+
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
 	* themes/Default/images/Makefile.am

@@ -89,6 +89,19 @@ static GTokenType  gimp_config_deserialize_any         (GValue     *value,
 static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
                                                    const gchar *token_name);
 
+static inline gboolean
+scanner_string_utf8_valid (GScanner    *scanner,
+                           const gchar *token_name)
+{
+  if (g_utf8_validate (scanner->value.v_string, -1, NULL))
+    return TRUE;
+
+  g_scanner_error (scanner,
+                   _("value for token %s is not a valid UTF-8 string"),
+                   token_name);
+
+  return FALSE;
+}
 
 /**
  * gimp_config_deserialize_properties:
@@ -776,18 +789,4 @@ gimp_config_deserialize_any (GValue     *value,
   g_value_unset (&src);
 
   return G_TOKEN_RIGHT_PAREN;
-}
-
-static inline gboolean
-scanner_string_utf8_valid (GScanner    *scanner,
-                           const gchar *token_name)
-{
-  if (g_utf8_validate (scanner->value.v_string, -1, NULL))
-    return TRUE;
-
-  g_scanner_error (scanner,
-                   _("value for token %s is not a valid UTF-8 string"),
-                   token_name);
-
-  return FALSE;
 }

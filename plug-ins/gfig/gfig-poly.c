@@ -478,7 +478,7 @@ d_copy_poly (Dobject *obj)
 }
 
 void
-d_poly_object_class_init ()
+d_poly_object_class_init (void)
 {
   DobjClass *class = &dobj_class[POLY];
 

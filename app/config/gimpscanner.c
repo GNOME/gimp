@@ -439,7 +439,8 @@ gimp_scanner_parse_matrix2 (GScanner    *scanner,
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
 
   if (! g_scanner_scope_lookup_symbol (scanner, scope_id, "matrix"))
-    g_scanner_scope_add_symbol (scanner, scope_id, "matrix", 0);
+    g_scanner_scope_add_symbol (scanner, scope_id,
+                                "matrix", GINT_TO_POINTER (0));
 
   token = G_TOKEN_LEFT_PAREN;
 

@@ -656,7 +656,7 @@ load_options (GFigObj *gfig,
 }
 
 GString *
-gfig_save_as_string ()
+gfig_save_as_string (void)
 {
   DAllObjs *objs;
   gint      count = 0;
@@ -698,7 +698,7 @@ gfig_save_as_string ()
 
 
 gboolean
-gfig_save_as_parasite ()
+gfig_save_as_parasite (void)
 {
   GimpParasite *parasite;
   GString       *string;
@@ -730,7 +730,7 @@ gfig_save_as_parasite ()
 }
 
 GFigObj *
-gfig_load_from_parasite ()
+gfig_load_from_parasite (void)
 {
   FILE         *fp;
   gchar        *fname;

@@ -181,9 +181,9 @@ typedef struct
 {
   gint    applicable_image_type;
   gchar  *name;
-  void  (*initializer) ();
-  void  (*updater) ();
-  void  (*finalizer) ();
+  void  (*initializer) (GimpImageBaseType, gint, guchar *, guchar *, gpointer *);
+  void  (*updater) (GimpImageBaseType, gint, guchar *, guchar *, guchar *, gpointer);
+  void  (*finalizer) (GimpImageBaseType, gint, guchar *, guchar *, guchar *, gpointer);
 } ModeParam;
 
 #define num_mode 8

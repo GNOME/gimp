@@ -492,7 +492,7 @@ gimp_container_deserialize (GimpConfig *config,
             if (! GIMP_CONFIG_GET_INTERFACE (child)->deserialize (GIMP_CONFIG (child),
                                                                   scanner,
                                                                   nest_level + 1,
-                                                                  FALSE))
+                                                                  NULL))
               {
                 if (add_child)
                   g_object_unref (child);

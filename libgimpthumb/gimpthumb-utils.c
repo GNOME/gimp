@@ -149,7 +149,7 @@ gimp_thumb_init (const gchar *creator,
 const gchar *
 gimp_thumb_get_thumb_dir (GimpThumbSize  size)
 {
-  g_return_val_if_fail (gimp_thumb_initialized, FALSE);
+  g_return_val_if_fail (gimp_thumb_initialized, NULL);
 
   size = gimp_thumb_size (size);
 
@@ -173,7 +173,7 @@ gchar *
 gimp_thumb_get_thumb_dir_local (const gchar   *dirname,
                                 GimpThumbSize  size)
 {
-  g_return_val_if_fail (gimp_thumb_initialized, FALSE);
+  g_return_val_if_fail (gimp_thumb_initialized, NULL);
   g_return_val_if_fail (dirname != NULL, NULL);
   g_return_val_if_fail (size > GIMP_THUMB_SIZE_FAIL, NULL);
 

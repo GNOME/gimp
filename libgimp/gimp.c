@@ -1676,7 +1676,7 @@ gimp_config (GPConfig *config)
 
       /* Use SysV shared memory mechanisms for transferring tile data. */
 
-      _shm_addr = (guchar *) shmat (_shm_ID, 0, 0);
+      _shm_addr = (guchar *) shmat (_shm_ID, NULL, 0);
 
       if (_shm_addr == (guchar *) -1)
 	{

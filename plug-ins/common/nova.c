@@ -263,7 +263,7 @@ run (const gchar      *name,
           gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
 
-          nova (drawable, 0);
+          nova (drawable, NULL);
 
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
             gimp_displays_flush ();

@@ -740,7 +740,7 @@ run_save_dialog	(Config *config)
 			      _("Op_acity:"), 100, 0,
 			      config->opacity, 0, 100, 1, 10, 1,
 			      TRUE, 0, 0,
-			      FALSE, FALSE);
+			      NULL, NULL);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &config->opacity);

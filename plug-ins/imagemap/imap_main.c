@@ -109,7 +109,7 @@ static int run_flag = 0;
 
 MAIN ()
 
-static void query()
+static void query(void)
 {
    static GimpParamDef args[] = {
       {GIMP_PDB_INT32, "run_mode", "Interactive"},

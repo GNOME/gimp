@@ -201,205 +201,6 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static void
-nlfilter (GimpDrawable *drawable,
-          GimpPreview  *preview)
-{
-  GimpPixelRgn  srcPr, dstPr;
-  guchar       *srcbuf, *dstbuf;
-  guchar       *lastrow, *thisrow, *nextrow, *temprow;
-  gint          x1, x2, y1, y2;
-  guint         width, height, bpp;
-  gint          filtno, y, rowsize, exrowsize, p_update;
-
-  if (preview)
-    {
-      gimp_preview_get_position (preview, &x1, &y1);
-      gimp_preview_get_size (preview, &width, &height);
-      x2 = x1 + width;
-      y2 = y1 + height;
-    }
-  else
-    {
-      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-      width = x2 - x1;
-      height = y2 - y1;
-    }
-  bpp = drawable->bpp;
-
-  rowsize = width * bpp;
-  exrowsize = (width + 2) * bpp;
-  p_update = width / 20 + 1;
-
-  gimp_tile_cache_ntiles (2 * (width / gimp_tile_width () + 1));
-
-  gimp_pixel_rgn_init (&srcPr, drawable,
-                       x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&dstPr, drawable,
-                       x1, y1, width, height,
-                       preview == NULL, TRUE);
-
-  /* source buffer gives one pixel margin all around destination buffer */
-  srcbuf = g_new0 (guchar, exrowsize * 3);
-  dstbuf = g_new0 (guchar, rowsize);
-
-  /* pointers to second pixel in each source row */
-  lastrow = srcbuf + bpp;
-  thisrow = lastrow + exrowsize;
-  nextrow = thisrow + exrowsize;
-
-  filtno = nlfiltInit (nlfvals.alpha, nlfvals.radius, nlfvals.filter);
-
-  if (!preview)
-    gimp_progress_init (_("NL Filter..."));
-
-  /* first row */
-  gimp_pixel_rgn_get_row (&srcPr, thisrow, x1, y1, width);
-  /* copy thisrow[0] to thisrow[-1], thisrow[width-1] to thisrow[width] */
-  memcpy (thisrow - bpp, thisrow, bpp);
-  memcpy (thisrow + rowsize, thisrow + rowsize - bpp, bpp);
-  /* copy whole thisrow to lastrow */
-  memcpy (lastrow - bpp, thisrow - bpp, exrowsize);
-
-  for (y = y1; y < y2 - 1; y++)
-    {
-      if (((y % p_update) == 0) && !preview)
-        gimp_progress_update ((gdouble) y / (gdouble) height);
-
-      gimp_pixel_rgn_get_row (&srcPr, nextrow, x1, y + 1, width);
-      memcpy (nextrow - bpp, nextrow, bpp);
-      memcpy (nextrow + rowsize, nextrow + rowsize - bpp, bpp);
-      nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
-      gimp_pixel_rgn_set_row (&dstPr, dstbuf, x1, y, width);
-      /* rotate row buffers */
-      temprow = lastrow; lastrow = thisrow;
-      thisrow = nextrow; nextrow = temprow;
-    }
-
-  /* last row */
-  memcpy (nextrow - bpp, thisrow - bpp, exrowsize);
-  nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
-  gimp_pixel_rgn_set_row (&dstPr, dstbuf, x1, y2 - 1, width);
-
-  g_free (srcbuf);
-  g_free (dstbuf);
-
-  if (preview)
-    {
-      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                         &dstPr);
-    }
-  else
-    {
-      gimp_drawable_flush (drawable);
-      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
-      gimp_displays_flush ();
-    }
-}
-
-static gboolean
-nlfilter_dialog (GimpDrawable *drawable)
-{
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *frame;
-  GtkWidget *alpha_trim;
-  GtkWidget *opt_est;
-  GtkWidget *edge_enhance;
-  GtkWidget *table;
-  GtkObject *adj;
-  gboolean   run;
-
-  gimp_ui_init ("nlfilt", TRUE);
-
-  dialog = gimp_dialog_new (_("NL Filter"), "nlfilt",
-                         NULL, 0,
-                         gimp_standard_help_func, "plug-in-nlfilt",
-
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                         NULL);
-
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
-  gtk_widget_show (main_vbox);
-
-  preview = gimp_drawable_preview_new (drawable, &nlfvals.preview);
-  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
-  gtk_widget_show (preview);
-  g_signal_connect_swapped (preview, "invalidated",
-                            G_CALLBACK (nlfilter),
-                            drawable);
-
-  frame = gimp_int_radio_group_new (TRUE, _("Filter"),
-                                    G_CALLBACK (gimp_radio_button_update),
-                                    &nlfvals.filter, nlfvals.filter,
-
-                                    _("_Alpha trimmed mean"),
-                                    filter_alpha_trim, &alpha_trim,
-                                    _("Op_timal estimation"),
-                                    filter_opt_est, &opt_est,
-                                    _("_Edge enhancement"),
-                                    filter_edge_enhance, &edge_enhance,
-
-                                    NULL);
-
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  g_signal_connect_swapped (alpha_trim, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  g_signal_connect_swapped (opt_est, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-  g_signal_connect_swapped (edge_enhance, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  table = gtk_table_new (2, 3, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
-                              _("A_lpha:"), 0, 0,
-                              nlfvals.alpha, 0.0, 1.0, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &nlfvals.alpha);
-  g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
-                              _("_Radius:"), 0, 0,
-                              nlfvals.radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
-                              TRUE, 0, 0,
-                              NULL, NULL);
-  g_signal_connect (adj, "value_changed",
-                    G_CALLBACK (gimp_double_adjustment_update),
-                    &nlfvals.radius);
-  g_signal_connect_swapped (adj, "value_changed",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
-
-  gtk_widget_show (dialog);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dialog);
-
-  return run;
-}
-
 /* pnmnlfilt.c - 4 in 1 (2 non-linear) filter
 **             - smooth an anyimage
 **             - do alpha trimmed mean filtering on an anyimage
@@ -1098,4 +899,203 @@ rectang_area (gdouble rx0, gdouble ry0, gdouble rx1, gdouble ry1, gdouble tx0,
    if (rx1 <= rx0 || ry1 <= ry0)
       return 0.0;
    return (rx1 - rx0) * (ry1 - ry0);
+}
+
+static void
+nlfilter (GimpDrawable *drawable,
+          GimpPreview  *preview)
+{
+  GimpPixelRgn  srcPr, dstPr;
+  guchar       *srcbuf, *dstbuf;
+  guchar       *lastrow, *thisrow, *nextrow, *temprow;
+  gint          x1, x2, y1, y2;
+  guint         width, height, bpp;
+  gint          filtno, y, rowsize, exrowsize, p_update;
+
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
+      x2 = x1 + width;
+      y2 = y1 + height;
+    }
+  else
+    {
+      gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+      width = x2 - x1;
+      height = y2 - y1;
+    }
+  bpp = drawable->bpp;
+
+  rowsize = width * bpp;
+  exrowsize = (width + 2) * bpp;
+  p_update = width / 20 + 1;
+
+  gimp_tile_cache_ntiles (2 * (width / gimp_tile_width () + 1));
+
+  gimp_pixel_rgn_init (&srcPr, drawable,
+                       x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dstPr, drawable,
+                       x1, y1, width, height,
+                       preview == NULL, TRUE);
+
+  /* source buffer gives one pixel margin all around destination buffer */
+  srcbuf = g_new0 (guchar, exrowsize * 3);
+  dstbuf = g_new0 (guchar, rowsize);
+
+  /* pointers to second pixel in each source row */
+  lastrow = srcbuf + bpp;
+  thisrow = lastrow + exrowsize;
+  nextrow = thisrow + exrowsize;
+
+  filtno = nlfiltInit (nlfvals.alpha, nlfvals.radius, nlfvals.filter);
+
+  if (!preview)
+    gimp_progress_init (_("NL Filter..."));
+
+  /* first row */
+  gimp_pixel_rgn_get_row (&srcPr, thisrow, x1, y1, width);
+  /* copy thisrow[0] to thisrow[-1], thisrow[width-1] to thisrow[width] */
+  memcpy (thisrow - bpp, thisrow, bpp);
+  memcpy (thisrow + rowsize, thisrow + rowsize - bpp, bpp);
+  /* copy whole thisrow to lastrow */
+  memcpy (lastrow - bpp, thisrow - bpp, exrowsize);
+
+  for (y = y1; y < y2 - 1; y++)
+    {
+      if (((y % p_update) == 0) && !preview)
+        gimp_progress_update ((gdouble) y / (gdouble) height);
+
+      gimp_pixel_rgn_get_row (&srcPr, nextrow, x1, y + 1, width);
+      memcpy (nextrow - bpp, nextrow, bpp);
+      memcpy (nextrow + rowsize, nextrow + rowsize - bpp, bpp);
+      nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
+      gimp_pixel_rgn_set_row (&dstPr, dstbuf, x1, y, width);
+      /* rotate row buffers */
+      temprow = lastrow; lastrow = thisrow;
+      thisrow = nextrow; nextrow = temprow;
+    }
+
+  /* last row */
+  memcpy (nextrow - bpp, thisrow - bpp, exrowsize);
+  nlfiltRow (lastrow, thisrow, nextrow, dstbuf, width, bpp, filtno);
+  gimp_pixel_rgn_set_row (&dstPr, dstbuf, x1, y2 - 1, width);
+
+  g_free (srcbuf);
+  g_free (dstbuf);
+
+  if (preview)
+    {
+      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                         &dstPr);
+    }
+  else
+    {
+      gimp_drawable_flush (drawable);
+      gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+      gimp_drawable_update (drawable->drawable_id, x1, y1, width, height);
+      gimp_displays_flush ();
+    }
+}
+
+static gboolean
+nlfilter_dialog (GimpDrawable *drawable)
+{
+  GtkWidget *dialog;
+  GtkWidget *main_vbox;
+  GtkWidget *preview;
+  GtkWidget *frame;
+  GtkWidget *alpha_trim;
+  GtkWidget *opt_est;
+  GtkWidget *edge_enhance;
+  GtkWidget *table;
+  GtkObject *adj;
+  gboolean   run;
+
+  gimp_ui_init ("nlfilt", TRUE);
+
+  dialog = gimp_dialog_new (_("NL Filter"), "nlfilt",
+                         NULL, 0,
+                         gimp_standard_help_func, "plug-in-nlfilt",
+
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                         NULL);
+
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
+
+  preview = gimp_drawable_preview_new (drawable, &nlfvals.preview);
+  gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
+  gtk_widget_show (preview);
+  g_signal_connect_swapped (preview, "invalidated",
+                            G_CALLBACK (nlfilter),
+                            drawable);
+
+  frame = gimp_int_radio_group_new (TRUE, _("Filter"),
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &nlfvals.filter, nlfvals.filter,
+
+                                    _("_Alpha trimmed mean"),
+                                    filter_alpha_trim, &alpha_trim,
+                                    _("Op_timal estimation"),
+                                    filter_opt_est, &opt_est,
+                                    _("_Edge enhancement"),
+                                    filter_edge_enhance, &edge_enhance,
+
+                                    NULL);
+
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  g_signal_connect_swapped (alpha_trim, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (opt_est, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+  g_signal_connect_swapped (edge_enhance, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  table = gtk_table_new (2, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
+                              _("A_lpha:"), 0, 0,
+                              nlfvals.alpha, 0.0, 1.0, 0.05, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &nlfvals.alpha);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
+                              _("_Radius:"), 0, 0,
+                              nlfvals.radius, 1.0 / 3.0, 1.0, 0.05, 0.1, 2,
+                              TRUE, 0, 0,
+                              NULL, NULL);
+  g_signal_connect (adj, "value_changed",
+                    G_CALLBACK (gimp_double_adjustment_update),
+                    &nlfvals.radius);
+  g_signal_connect_swapped (adj, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
+  gtk_widget_show (dialog);
+
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
+
+  return run;
 }

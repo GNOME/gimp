@@ -67,6 +67,29 @@ static inline void  gimp_config_writer_newline    (GimpConfigWriter  *writer);
 static gboolean     gimp_config_writer_close_file (GimpConfigWriter  *writer,
                                                    GError           **error);
 
+static inline void
+gimp_config_writer_flush (GimpConfigWriter *writer)
+{
+  if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
+    g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
+		 g_strerror (errno));
+
+  g_string_truncate (writer->buffer, 0);
+}
+
+static inline void
+gimp_config_writer_newline (GimpConfigWriter *writer)
+{
+  gint i;
+
+  g_string_append_c (writer->buffer, '\n');
+
+  if (writer->comment)
+    g_string_append_len (writer->buffer, "# ", 2);
+
+  for (i = 0; i < writer->depth; i++)
+    g_string_append_len (writer->buffer, "    ", 4);
+}
 
 /**
  * gimp_config_writer_new_file:
@@ -563,31 +586,6 @@ gimp_config_writer_comment (GimpConfigWriter *writer,
     gimp_config_writer_flush (writer);
 
 #undef LINE_LENGTH
-}
-
-
-static inline void
-gimp_config_writer_flush (GimpConfigWriter *writer)
-{
-  if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
-    g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-		 g_strerror (errno));
-
-  g_string_truncate (writer->buffer, 0);
-}
-
-static inline void
-gimp_config_writer_newline (GimpConfigWriter *writer)
-{
-  gint i;
-
-  g_string_append_c (writer->buffer, '\n');
-
-  if (writer->comment)
-    g_string_append_len (writer->buffer, "# ", 2);
-
-  for (i = 0; i < writer->depth; i++)
-    g_string_append_len (writer->buffer, "    ", 4);
 }
 
 static gboolean

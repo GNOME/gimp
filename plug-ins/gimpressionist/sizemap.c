@@ -152,7 +152,7 @@ updatesmvectorprev (void)
 }
 
 void
-size_map_free_resources ()
+size_map_free_resources (void)
 {
   ppm_kill (&update_vector_preview_backup);
   ppm_kill (&update_vector_preview_sbuffer);

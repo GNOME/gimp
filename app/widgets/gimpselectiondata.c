@@ -724,7 +724,7 @@ gimp_selection_data_get_font (GtkSelectionData *selection,
   if ((selection->format != 8) || (selection->length < 1))
     {
       g_warning ("Received invalid font data!");
-      return FALSE;
+      return NULL;
     }
 
   name = (gchar *) selection->data;

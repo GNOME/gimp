@@ -295,7 +295,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;        /* assume the best! */
-  gchar             *rndm_type_str = '\0';
+  gchar             *rndm_type_str = "";
   gchar              prog_label[32];
   static GimpParam   values[1];
   GRand             *gr; /* The GRand object which generates the

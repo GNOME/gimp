@@ -149,7 +149,7 @@ d_copy_circle (Dobject * obj)
 }
 
 void
-d_circle_object_class_init ()
+d_circle_object_class_init (void)
 {
   DobjClass *class = &dobj_class[CIRCLE];
 

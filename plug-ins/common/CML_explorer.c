@@ -99,12 +99,14 @@
 #define HCANNONIZE(p, x)     (254*(((p).range_h - (p).range_l)*(x) + (p).range_l))
 #define POS_IN_TORUS(i,size) ((i < 0) ? size + i : ((size <= i) ? i - size : i))
 
-typedef struct
+typedef struct _WidgetEntry WidgetEntry;
+
+struct _WidgetEntry
 {
   GtkWidget  *widget;
   gpointer    value;
-  void      (*updater) ();
-} WidgetEntry;
+  void      (*updater) (WidgetEntry *);
+};
 
 enum
 {
