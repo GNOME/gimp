@@ -245,6 +245,11 @@ void setval(char *key, char *val)
    pcvals.sizestrexp = atof(val);
   else if(!strcmp(key, "sizevoronoi"))
    pcvals.sizevoronoi = atoi(val);
+
+  else if(!strcmp(key, "colortype"))
+    pcvals.colortype = atoi(val);
+  else if(!strcmp(key, "colornoise"))
+    pcvals.colornoise = atof(val);
 }
 
 int loadpreset(char *fn)
@@ -496,6 +501,9 @@ void savepreset(GtkWidget *wg, GtkWidget *p)
   }
   fprintf(f, "sizestrexp=%f\n", pcvals.sizestrexp);
   fprintf(f, "sizevoronoi=%d\n", pcvals.sizevoronoi);
+
+  fprintf(f, "colortype=%d\n", pcvals.colortype);
+  fprintf(f, "colornoise=%f\n", pcvals.colornoise);
 
   fclose(f);
   presetsrefresh();

@@ -1,7 +1,5 @@
 #include <gtk/gtk.h>
 
-#include "libgimp/gimpmath.h"
-
 #define PLUG_IN_NAME "plug_in_gimpressionist"
 #define PLUG_IN_VERSION "v0.99.6, August 1999"
 
@@ -12,6 +10,14 @@
 #define PREVIEWSIZE 150
 #define MAXORIENTVECT 50
 #define MAXSIZEVECT 50
+
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
+#ifndef M_PI_2
+#define M_PI_2  (M_PI / 2.0)
+#endif /* M_PI_2 */
 
 /* Type declaration and definitions */
 
@@ -75,7 +81,8 @@ typedef struct {
   int generalshadowdepth;
   int generalshadowblur;
 
-  int coloracc;
+  int colortype;
+  double colornoise;
 } gimpressionist_vals_t;
 
 /* Globals */
@@ -131,7 +138,9 @@ extern GtkObject *generalshadowadjust;
 extern GtkObject *generalshadowdepth;
 extern GtkObject *generalshadowblur;
 extern GtkObject *devthreshadjust;
-extern GtkObject *coloraccadjust;
+
+extern GtkWidget *colortype;
+extern GtkObject *colornoiseadjust;
 
 extern GtkWidget *placecenter;
 
@@ -154,6 +163,7 @@ void create_sizepage(GtkNotebook *);
 void create_generalpage(GtkNotebook *);
 void create_presetpage(GtkNotebook *);
 void create_placementpage(GtkNotebook *);
+void create_colorpage(GtkNotebook *);
 
 GtkWidget* create_preview();
 void updatepreviewprev(GtkWidget *wg, void *d);
@@ -170,6 +180,7 @@ void drawcolor(GtkWidget *w);
 void orientchange(GtkWidget *wg, void *d, int num);
 void sizechange(GtkWidget *wg, void *d, int num);
 void placechange(GtkWidget *wg, void *d, int num);
+void colorchange(GtkWidget *wg, void *d, int num);
 void generalbgchange(GtkWidget *wg, void *d, int num);
 
 void reloadbrush(char *fn, struct ppm *p);

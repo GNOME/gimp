@@ -1,6 +1,20 @@
 (The events are in chronological order, latest first)
 
+September 9 1999:
+	- Added the Color page, with two color sampling schemes and
+	  color noise.
+
+August 29 1999:
+	- Big rewrite of many internals to get rid of the clumsy
+	  "struct rgbcolor"
+
+August 26 1999:
+	- GIMPressionist is included in the CVS GIMP-development tree
+	- Fixed a //-style comment in repaint.c
+	- Renamed buffer in sizemap.c (it was also declared in orientmap.c)
+
 August 23 1999:
+	- Released 0.99.5
 	- Added the missing Shadow controls
 	- Fixed the applybrush() function. (It was foobar with regards to
 	  shadow handling.) It's still shaky when using Tilable, though...

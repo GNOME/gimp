@@ -72,7 +72,9 @@ gimpressionist_vals_t defaultpcvals = {
   0,
 
   10,
-  4
+  4,
+
+  0, 0.0
 };
 
 static GDrawable *drawable;

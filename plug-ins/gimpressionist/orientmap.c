@@ -34,12 +34,12 @@ int numvect = 0;
 
 double degtorad(double d)
 {
-  return d/180.0*G_PI;
+  return d/180.0*M_PI;
 }
 
 double radtodeg(double d)
 {
-  double v = d/G_PI*180.0;
+  double v = d/M_PI*180.0;
   if(v < 0.0) v += 360;
   return v;
 }
@@ -117,18 +117,18 @@ double getdir(double x, double y, int from)
     } else if(vec[i].type == 1) {
       double a = atan2(vec[i].dy, vec[i].dx);
       a -= atan2(y-vec[i].y, x-vec[i].x);
-      tx = sin(a+G_PI_2);
-      ty = cos(a+G_PI_2);
+      tx = sin(a+M_PI_2);
+      ty = cos(a+M_PI_2);
     } else if(vec[i].type == 2) {
       double a = atan2(vec[i].dy, vec[i].dx);
       a += atan2(y-vec[i].y, x-vec[i].x);
-      tx = sin(a+G_PI_2);
-      ty = cos(a+G_PI_2);
+      tx = sin(a+M_PI_2);
+      ty = cos(a+M_PI_2);
     } else if(vec[i].type == 3) {
       double a = atan2(vec[i].dy, vec[i].dx);
       a -= atan2(y-vec[i].y, x-vec[i].x)*2;
-      tx = sin(a+G_PI_2);
-      ty = cos(a+G_PI_2);
+      tx = sin(a+M_PI_2);
+      ty = cos(a+M_PI_2);
     }
 
     dst = dist(x,y,vec[i].x,vec[i].y);

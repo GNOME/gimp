@@ -85,7 +85,7 @@ void updatepreviewprev(GtkWidget *wg, void *d)
 
     for(i = 0; i < PREVIEWSIZE; i++) {
       memset(buf,0,PREVIEWSIZE*3);
-      /* for(j = 0; j < p.width; j++) */
+      //for(j = 0; j < p.width; j++)
       gtk_preview_draw_row(GTK_PREVIEW(previewprev), (guchar *)&p.col[i*PREVIEWSIZE*3], 0, i, PREVIEWSIZE);
     }
     killppm(&p);

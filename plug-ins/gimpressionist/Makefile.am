@@ -26,7 +26,8 @@ gimpressionist_SOURCES = \
 	preview.c		\
 	repaint.c		\
 	size.c			\
-	sizemap.c
+	sizemap.c		\
+	color.c
 
 AM_CPPFLAGS = \
 	-DDEFAULTPATH=\""~/$(gimpdir)/gimpressionist:$(gimpdatadir)/gimpressionist"\"

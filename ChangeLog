@@ -1,3 +1,11 @@
+Thu Sep  9 22:23:06 CET 1999  vidar@prosalg.no  (Vidar Madsen)
+
+	* plug-ins/common/spheredesigner.c: Various fixes/enhancements
+
+	* plug-ins/gimpressionist/ChangeLog
+	* plug-ins/gimpressionist/Makefile.am
+	* plug-ins/gimpressionist/*.[ch]: Added Color options (new file color.c)
+
 1999-09-09  Tomas Ogren  <stric@ing.umu.se>
 
 	* app/Makefile.am: Add the path_tool* here, makes gimp compile

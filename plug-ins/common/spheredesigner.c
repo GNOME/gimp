@@ -5,15 +5,18 @@
  * SphereDesigner v0.4 - creates textured spheres
  * by Vidar Madsen <vidar@prosalg.no>
  *
- * Status: Aug 31 1999 - Messy source, will clean up later.
+ * Status: Last updated 1999-09-09
+ *
+ * Known issues:
+ * - Crash if you click OK or Cancel before first preview is rendered
+ * - Phong might look weird with transparent textures
  *
  * Todo:
- * - Editing of lights
  * - Saving / Loading of presets
- * - Transparency in textures (preliminary work started)
  * - Antialiasing
  * - Global controls: Gamma, ++
  * - Beautification of GUI
+ * - Clean up messy source (lots of Glade remnants)
  * - (Probably more. ;-)
  */
 
@@ -118,6 +121,7 @@ typedef struct {
   vector color1, color2;
   gradient gradient;
   vector ambient, diffuse;
+  double oscale;
   vector scale, translate, rotate;
   image image;
   vector reflection;
@@ -264,6 +268,7 @@ GtkWidget *texturelist = NULL;
 GtkObject *scalexscale,*scaleyscale,*scalezscale;
 GtkObject *rotxscale,*rotyscale,*rotzscale;
 GtkObject *posxscale,*posyscale,*poszscale;
+GtkObject *scalescale;
 GtkObject *turbulencescale;
 GtkObject *amountscale;
 GtkObject *expscale;
@@ -271,7 +276,6 @@ GtkWidget *typemenu_menu;
 GtkWidget *texturemenu_menu;
 GtkWidget *typemenu;
 GtkWidget *texturemenu;
-
 
 #define DOT(a,b) (a[0] * b[0] + a[1] * b[1] + a[2] * b[2])
 
@@ -1029,6 +1033,7 @@ void objcolor(vector *col, vector *p, common *obj)
     case TRANSPARENT:
     case SMOKE:
       /* Silently ignore non-color textures */
+      continue;
       break;
     default:
       fprintf(stderr, "Warning: unknown texture %d\n", t->type);
@@ -1228,8 +1233,8 @@ void calclight(vector *col, vector *point, common *obj)
       if(obj->texture[j].type == PHONG) continue;
       if(obj->texture[j].type == REFLECTION) continue;
       if(obj->texture[j].type == REFRACTION) continue;
-      if(obj->texture[i].type == TRANSPARENT) continue;
-      if(obj->texture[i].type == SMOKE) continue;
+      if(obj->texture[j].type == TRANSPARENT) continue;
+      if(obj->texture[j].type == SMOKE) continue;
       vcopy(&lcol, &pcol);
       vvmul(&lcol, &world.light[i].color);
       vvmul(&lcol, &obj->texture[j].diffuse);
@@ -1364,8 +1369,11 @@ int traceray(ray *r, vector *col, int level, double imp)
       
       if((world.quality >= 4) && ((bobj->texture[i].type == REFLECTION) || (bobj->texture[i].type == PHONG))) {
 
-	vector refcol, norm;
+	vector refcol, norm, ocol;
 	ray ref;
+
+	objcolor(&ocol, &p, bobj);
+
 	vcopy(&ref.v1, &p);
 	vcopy(&ref.v2, &r->v1);
 	ref.inside = r->inside;
@@ -1387,11 +1395,13 @@ int traceray(ray *r, vector *col, int level, double imp)
 	if((world.quality >= 5) && (bobj->texture[i].type == REFLECTION)) {
 	  traceray(&ref, &refcol, level - 1, imp * vmax(&bobj->texture[i].reflection));
 	  vvmul(&refcol, &bobj->texture[i].reflection);
+	  refcol.w = ocol.w;
 	  vadd(col, &refcol);
 	}
 	if(bobj->texture[i].type == PHONG) {
 	  vcset(&refcol,0,0,0,0);
 	  calcphong(bobj, &ref, &refcol);
+	  refcol.w = ocol.w;
 	  vadd(col, &refcol);
 	}
 
@@ -1543,6 +1553,7 @@ void setdefaults(texture *t)
   vset(&t->scale,1,1,1);
   vset(&t->rotate,0,0,0);
   vset(&t->translate,0,0,0);
+  t->oscale = 1.0;
   t->amount = 1.0;
   t->exp = 1.0;
 }
@@ -1608,6 +1619,8 @@ void setvals(texture *t)
 
   noupdate = 1;
   gtk_adjustment_set_value(GTK_ADJUSTMENT(amountscale), t->amount);
+
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(scalescale), t->oscale);
 
   gtk_adjustment_set_value(GTK_ADJUSTMENT(scalexscale), t->scale.x);
   gtk_adjustment_set_value(GTK_ADJUSTMENT(scaleyscale), t->scale.y);
@@ -1769,17 +1782,20 @@ void initworld(void)
     if(t->majtype == 0) { /* Normal texture */
       if(t->type == PHONG) {
 	memcpy(&t->phongcolor, &t->color1, sizeof(t->color1));
-	t->phongsize = t->scale.x / 25.0;
+	t->phongsize = t->oscale / 25.0;
       }
       memcpy(&d->texture[d->numtexture],t,sizeof(texture));
+      vmul(&d->texture[d->numtexture].scale, d->texture[d->numtexture].oscale);
       d->numtexture++;
     } else if(t->majtype == 1) { /* Bumpmap */
       memcpy(&d->normal[d->numnormal],t,sizeof(texture));
+      vmul(&d->normal[d->numnormal].scale, d->texture[d->numnormal].oscale);
       d->numnormal++;
     } else if(t->majtype == 2) { /* Lightsource */
       light l;
       vcopy(&l.a, &t->translate);
       vcopy(&l.color, &t->color1);
+      vmul(&l.color, t->amount);
       memcpy(&world.light[world.numlight], &l, sizeof(l));
       world.numlight++;
     }
@@ -1858,6 +1874,7 @@ void getscales(GtkWidget *wg, gpointer data)
   f = GTK_ADJUSTMENT(turbulencescale)->value;
   vset(&t->turbulence, f,f,f);
 
+  t->oscale = GTK_ADJUSTMENT(scalescale)->value;
   t->scale.x = GTK_ADJUSTMENT(scalexscale)->value;
   t->scale.y = GTK_ADJUSTMENT(scaleyscale)->value;
   t->scale.z = GTK_ADJUSTMENT(scalezscale)->value;
@@ -2049,7 +2066,7 @@ void sphere_ok(GtkWidget *widget, gpointer data)
 
 void sphere_cancel(GtkWidget *widget, gpointer data)
 {
-  gtk_widget_destroy (GTK_WIDGET (data));
+  gtk_widget_hide (GTK_WIDGET (data));
   gtk_main_quit();
 }
 
@@ -2099,7 +2116,7 @@ GtkWidget* makewindow (void)
   gtk_object_set_data (GTK_OBJECT (window), "window", window);
   gtk_container_border_width (GTK_CONTAINER (window), 5);
   gtk_window_set_title (GTK_WINDOW (window), "SphereDesigner");
-  gtk_window_set_policy (GTK_WINDOW (window), TRUE, TRUE, FALSE);
+  gtk_window_set_policy (GTK_WINDOW (window), FALSE, TRUE, FALSE);
 
   table1 = gtk_table_new (3, 3, FALSE);
   gtk_object_set_data (GTK_OBJECT (window), "table1", table1);
@@ -2195,7 +2212,7 @@ GtkWidget* makewindow (void)
   gtk_signal_connect (GTK_OBJECT (resetbutton), "clicked",
 		      GTK_SIGNAL_FUNC (sphere_reset), window);
 
-  frame4 = gtk_frame_new ("Properties");
+  frame4 = gtk_frame_new ("Texture Properties");
   gtk_object_set_data (GTK_OBJECT (window), "frame4", frame4);
   gtk_widget_show (frame4);
   gtk_table_attach (GTK_TABLE (table1), frame4, 2, 3, 0, 1,
@@ -2258,6 +2275,23 @@ GtkWidget* makewindow (void)
   gtk_widget_show(tmpw);
   drawcolor2(tmpw);
 
+  label5 = gtk_label_new ("Scale:");
+  gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
+  gtk_widget_show (label5);
+  gtk_table_attach (GTK_TABLE (table2), label5, 0, 1, 3, 4,
+                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_misc_set_alignment (GTK_MISC (label5), 0, 0.5);
+
+  _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalescale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_scalescale, 100, -1);
+  gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
+  gtk_widget_show (_scalescale);
+  gtk_table_attach (GTK_TABLE (table2), _scalescale, 1, 2, 3, 4,
+                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
+  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
+  gtk_signal_connect(GTK_OBJECT(scalescale), "value_changed",
+                     (GtkSignalFunc)getscales, NULL);
+
   label5 = gtk_label_new ("Turbulence:");
   gtk_object_set_data (GTK_OBJECT (window), "label5", label5);
   gtk_widget_show (label5);
@@ -2266,6 +2300,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label5), 0, 0.5);
 
   _turbulencescale = gtk_hscale_new (GTK_ADJUSTMENT (turbulencescale = gtk_adjustment_new (0.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_turbulencescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_turbulencescale", _turbulencescale);
   gtk_widget_show (_turbulencescale);
   gtk_table_attach (GTK_TABLE (table2), _turbulencescale, 1, 2, 4, 5,
@@ -2273,10 +2308,6 @@ GtkWidget* makewindow (void)
   gtk_scale_set_digits (GTK_SCALE (_turbulencescale), 2);
   gtk_signal_connect(GTK_OBJECT(turbulencescale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
-
-
-
-
 
   label6 = gtk_label_new ("Scale X:");
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
@@ -2286,6 +2317,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalexscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2302,6 +2334,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scaleyscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2318,6 +2351,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (scalezscale = gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2336,6 +2370,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotxscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_rotscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
@@ -2352,6 +2387,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotyscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_rotscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
@@ -2368,6 +2404,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _rotscale = gtk_hscale_new (GTK_ADJUSTMENT (rotzscale = gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_rotscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_rotscale", _rotscale);
   gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
   gtk_widget_show (_rotscale);
@@ -2375,8 +2412,6 @@ GtkWidget* makewindow (void)
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
   gtk_signal_connect(GTK_OBJECT(rotzscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
-
-
 
   label6 = gtk_label_new ("Pos X:");
   gtk_object_set_data (GTK_OBJECT (window), "label6", label6);
@@ -2386,6 +2421,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posxscale = gtk_adjustment_new (0.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2402,6 +2438,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (posyscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2418,6 +2455,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label6), 0, 0.5);
 
   _scalescale = gtk_hscale_new (GTK_ADJUSTMENT (poszscale = gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
+  gtk_widget_set_usize(_scalescale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_scalescale", _scalescale);
   gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
   gtk_widget_show (_scalescale);
@@ -2425,11 +2463,6 @@ GtkWidget* makewindow (void)
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND, 0, 0);
   gtk_signal_connect(GTK_OBJECT(poszscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
-
-
-
-
-
 
   typemenu = gtk_option_menu_new ();
   gtk_object_set_data (GTK_OBJECT (window), "typemenu", typemenu);
@@ -2476,6 +2509,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label7), 0, 0.5);
 
   _amountscale = gtk_hscale_new (GTK_ADJUSTMENT (amountscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
+  gtk_widget_set_usize(_amountscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_amountscale", _amountscale);
   gtk_widget_show (_amountscale);
   gtk_table_attach (GTK_TABLE (table2), _amountscale, 1, 2, 5, 6,
@@ -2492,6 +2526,7 @@ GtkWidget* makewindow (void)
   gtk_misc_set_alignment (GTK_MISC (label8), 0, 0.5);
 
   _expscale = gtk_hscale_new (GTK_ADJUSTMENT (expscale = gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
+  gtk_widget_set_usize(_expscale, 100, -1);
   gtk_object_set_data (GTK_OBJECT (window), "_expscale", _expscale);
   gtk_widget_show (_expscale);
   gtk_table_attach (GTK_TABLE (table2), _expscale, 1, 2, 6, 7,

@@ -717,30 +717,42 @@ void repaint(struct ppm *p, struct ppm *a)
     thissum = brushsum[n];
 
     /* Calculate color - avg. of in-brush pixels */
-    r = g = b = 0;
-    for(y = 0; y < brush->height; y++) {
-      guchar *row = &p->col[(ty+y)*p->width*3];
-      for(x = 0; x < brush->width; x++) {
-	int k = (tx+x) * 3;
-	double v;
-	if((h = brush->col[y*brush->width*3+x*3])) {
-	  v = h / 255.0;
-	  r += row[k+0] * v;
-	  g += row[k+1] * v;
-	  b += row[k+2] * v;
+    if(runningvals.colortype == 0) {
+      r = g = b = 0;
+      for(y = 0; y < brush->height; y++) {
+	guchar *row = &p->col[(ty+y)*p->width*3];
+	for(x = 0; x < brush->width; x++) {
+	  int k = (tx+x) * 3;
+	  double v;
+	  if((h = brush->col[y*brush->width*3+x*3])) {
+	    v = h / 255.0;
+	    r += row[k+0] * v;
+	    g += row[k+1] * v;
+	    b += row[k+2] * v;
+	  }
 	}
       }
+      r = r * 255.0 / thissum;
+      g = g * 255.0 / thissum;
+      b = b * 255.0 / thissum;
+    } else if(runningvals.colortype == 1) {
+      guchar *pixel = &p->col[(ty+brush->height/2)*p->width*3 + (tx+brush->width)*3];
+      r = pixel[0];
+      g = pixel[1];
+      b = pixel[2];
+    } else {
+      /* No such colortype! */
+      r = g = b = 0;
     }
-    r = r * 255.0 / thissum;
-    g = g * 255.0 / thissum;
-    b = b * 255.0 / thissum;
-
-    /* Color = center pixel - Looks bad... */
-    /* 
-    r = p->col[ty+brush->height/2][tx+brush->width/2].r;
-    g = p->col[ty+brush->height/2][tx+brush->width/2].g;
-    b = p->col[ty+brush->height/2][tx+brush->width/2].b;
-    */
+    if(runningvals.colornoise > 0.0) {
+      double v = runningvals.colornoise;
+      r = r + rand() / (float)RAND_MAX * v - v/2;
+      g = g + rand() / (float)RAND_MAX * v - v/2;
+      b = b + rand() / (float)RAND_MAX * v - v/2;
+      if(r < 0) r = 0; else if(r > 255) r = 255;
+      if(g < 0) g = 0; else if(g > 255) g = 255;
+      if(b < 0) b = 0; else if(b > 255) b = 255;
+    }
 
     applybrush(brush, shadow, &tmp, &atmp, tx,ty, r,g,b);
     if(runningvals.generaltileable && runningvals.generalpaintedges) {

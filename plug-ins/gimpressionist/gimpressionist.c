@@ -154,6 +154,7 @@ void storevals(void)
   pcvals.devthresh = GTK_ADJUSTMENT(devthreshadjust)->value;
   pcvals.placecenter = GTK_TOGGLE_BUTTON(placecenter)->active;
   pcvals.paperoverlay = GTK_TOGGLE_BUTTON(paperoverlay)->active;
+  pcvals.colornoise = GTK_ADJUSTMENT(colornoiseadjust)->value;
 }
 
 void restorevals(void)
@@ -196,6 +197,9 @@ void restorevals(void)
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(paperoverlay), pcvals.paperoverlay);
 
   drawcolor(NULL);
+
+  gtk_adjustment_set_value(GTK_ADJUSTMENT(colornoiseadjust), pcvals.colornoise);
+  colorchange(NULL, NULL, pcvals.colortype);
 
   update_orientmap_dialog();
 }
@@ -463,6 +467,7 @@ int create_dialog(void)
   create_orientationpage(GTK_NOTEBOOK (notebook));
   create_sizepage(GTK_NOTEBOOK (notebook));
   create_placementpage(GTK_NOTEBOOK (notebook));
+  create_colorpage(GTK_NOTEBOOK (notebook));
   create_generalpage(GTK_NOTEBOOK (notebook));
   create_presetpage(GTK_NOTEBOOK (notebook));
 
