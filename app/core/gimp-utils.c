@@ -27,6 +27,8 @@
 
 #include "core-types.h"
 
+#include "config/gimpconfig-types.h"
+
 #include "gimp-utils.h"
 
 
@@ -99,6 +101,39 @@ gimp_g_list_get_memsize (GList  *list,
   return g_list_length (list) * (data_size + sizeof (GList));
 }
 
+gint64
+gimp_g_value_get_memsize (GValue *value)
+{
+  gint64  memsize = sizeof (GValue);
+
+  if (G_VALUE_HOLDS_STRING (value))
+    {
+      memsize += strlen (g_value_get_string (value)) + 1;
+    }
+  else if (G_VALUE_HOLDS_BOXED (value))
+    {
+      if (GIMP_VALUE_HOLDS_COLOR (value))
+        {
+          memsize += sizeof (GimpRGB);
+        }
+      else if (GIMP_VALUE_HOLDS_MATRIX2 (value))
+        {
+          memsize += sizeof (GimpMatrix2);
+        }
+      else
+        {
+          g_warning ("%s: unhandled boxed value type: %s",
+                     G_STRFUNC, G_VALUE_TYPE_NAME (value));
+        }
+    }
+  else if (G_VALUE_HOLDS_OBJECT (value))
+    {
+      g_warning ("%s: unhandled object value type: %s",
+                 G_STRFUNC, G_VALUE_TYPE_NAME (value));
+    }
+
+  return memsize;
+}
 
 /*
  *  basically copied from gtk_get_default_language()

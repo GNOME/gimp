@@ -39,6 +39,7 @@ gint64       gimp_g_slist_get_memsize      (GSList       *slist,
                                             gint64        data_size);
 gint64       gimp_g_list_get_memsize       (GList        *list,
                                             gint64        data_size);
+gint64       gimp_g_value_get_memsize      (GValue       *value);
 
 gchar      * gimp_get_default_language     (const gchar  *category);
 

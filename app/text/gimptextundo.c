@@ -27,6 +27,7 @@
 
 #include "core/gimpitem.h"
 #include "core/gimpitemundo.h"
+#include "core/gimp-utils.h"
 
 #include "gimptext.h"
 #include "gimptextlayer.h"
@@ -199,15 +200,11 @@ gimp_text_undo_get_memsize (GimpObject *object,
   GimpTextUndo *undo    = GIMP_TEXT_UNDO (object);
   gint64        memsize = 0;
 
-  if (undo->pspec)
-    {
-      /*  this is incorrect, but how can it be done better?  */
-      memsize = sizeof (GValue);
-    }
-  else if (undo->text)
-    {
-      memsize = gimp_object_get_memsize (GIMP_OBJECT (undo->text), NULL);
-    }
+  if (undo->value)
+    memsize += gimp_g_value_get_memsize (undo->value);
+
+  if (undo->text)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (undo->text), NULL);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
