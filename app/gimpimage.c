@@ -2397,6 +2397,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   Layer *merge_layer;
   Layer *layer;
   Layer *bottom;
+  gint bottom_mode;
   guchar bg[4] = {0, 0, 0, 0};
   GimpImageType type;
   gint count;
@@ -2411,6 +2412,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   type  = RGBA_GIMAGE;
   x1 = y1 = x2 = y2 = 0;
   bottom = NULL;
+  bottom_mode = 0;
 
   /*  Get the layer extents  */
   count = 0;
@@ -2549,9 +2551,9 @@ gimp_image_merge_layers (GimpImage *gimage,
        *  Keep a pointer to it so that we can set the mode right after it's been
        *  merged so that undo works correctly.
        */
-      layer->mode = NORMAL_MODE;
       bottom = layer;
-
+      bottom_mode = bottom->mode;
+      bottom->mode = NORMAL_MODE;
     }
 
   while (reverse_list)
@@ -2597,7 +2599,7 @@ gimp_image_merge_layers (GimpImage *gimage,
 
   /* Save old mode in undo */
   if (bottom)
-    bottom -> mode = merge_layer -> mode;
+    bottom->mode = bottom_mode;
 
   g_slist_free (reverse_list);
 
@@ -3389,7 +3391,7 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
 	    floating_sel = layer;
 	  else
 	    {
-	      if (floating_sel && GIMP_LAYER (floating_sel)->fs.drawable == layer)
+	      if (floating_sel && floating_sel->fs.drawable == GIMP_DRAWABLE (layer))
 		reverse_list = g_slist_prepend (reverse_list, floating_sel);
 
 	      reverse_list = g_slist_prepend (reverse_list, layer);

@@ -1,3 +1,8 @@
+Tue Nov 30 01:17:12 MET 1999  Sven Neumann <sven@gimp.org>
+	
+	* app/gimpimage.c: correctly save the layer mode to the undo_stack
+	on layer_merge (fixes bug #2168)
+
 Mon Nov 29 23:51:26 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/commands.c
