@@ -13,6 +13,9 @@
 	* app/gui/view-commands.c (view_configure_grid_cmd_callback):
 	added call to gtk_window_present()
 
+	* app/core/gimpimage-undo-push.c (undo_pop_image_grid): removed
+	superflous call to gimp_image_grid_changed().
+	
 2003-06-23  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig.[ch]
