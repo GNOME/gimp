@@ -74,7 +74,9 @@ query (void)
                           "(e.g., batch-conversion). See the glob(7) manpage "
                           "for more info. Note however that this isn't a "
                           "full-featured glob implementation. It only handles "
-                          "simple patterns like \"/home/foo/bar/*.jpg\".",
+                          "simple patterns like \"/home/foo/bar/*.jpg\". "
+                          "The pattern is expected to be in UTF-8 encoding "
+                          "and all returned names are UTF-8 encoded as well.",
                           "Sven Neumann",
                           "Sven Neumann",
                           "2004",
