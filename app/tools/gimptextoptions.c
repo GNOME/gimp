@@ -33,19 +33,16 @@
 #include "core/gimpcontainer.h"
 #include "core/gimptoolinfo.h"
 
-#include "text/gimpfont.h"
 #include "text/gimptext.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpcontainerpopup.h"
-#include "widgets/gimpdock.h"
 #include "widgets/gimpfontselection.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimptexteditor.h"
+#include "widgets/gimpviewablebutton.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimptextoptions.h"
-#include "paint_options.h"
 
 #include "gimp-intl.h"
 
@@ -71,12 +68,6 @@ static void  gimp_text_options_notify_font  (GimpContext *context,
 static void  gimp_text_notify_font          (GimpText    *text,
                                              GParamSpec  *pspec,
                                              GimpContext *context);
-
-static void     gimp_text_options_font_clicked  (GtkWidget      *widget, 
-                                                 GimpContext    *context);
-static gboolean gimp_text_options_font_scrolled (GtkWidget      *widget, 
-                                                 GdkEventScroll *sevent,
-                                                 GimpContext    *context);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -218,23 +209,26 @@ gimp_text_notify_font (GimpText    *text,
 GtkWidget *
 gimp_text_options_gui (GimpToolOptions *tool_options)
 {
-  GimpTextOptions *options;
-  GObject         *config;
-  GtkWidget       *vbox;
-  GtkWidget       *table;
-  GtkWidget       *button;
-  GtkWidget       *auto_button;
-  GtkWidget       *preview;
-  GtkWidget       *menu;
-  GtkWidget       *font_selection;
-  GtkWidget       *box;
-  GtkWidget       *spinbutton;
-  gint             digits;
+  GimpTextOptions   *options;
+  GObject           *config;
+  GtkWidget         *vbox;
+  GtkWidget         *table;
+  GtkWidget         *button;
+  GimpDialogFactory *dialog_factory;
+  GtkWidget         *auto_button;
+  GtkWidget         *menu;
+  GtkWidget         *font_selection;
+  GtkWidget         *box;
+  GtkWidget         *spinbutton;
+  gint               digits;
 
   options = GIMP_TEXT_OPTIONS (tool_options);
   config = G_OBJECT (options->text);
 
   vbox = gimp_tool_options_gui (tool_options);
+
+  dialog_factory = g_object_get_data (G_OBJECT (tool_options),
+                                      "gimp-tool-options-dialog-factory");
 
   table = gtk_table_new (10, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
@@ -242,21 +236,16 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
-  button = gtk_button_new ();
-  preview = gimp_prop_preview_new (G_OBJECT (options), "font", 24);
-  gtk_container_add (GTK_CONTAINER (button), preview);
-  gtk_widget_show (preview);
+  button = gimp_viewable_button_new (GIMP_CONTEXT (options)->gimp->fonts,
+                                     GIMP_CONTEXT (options), 24,
+                                     dialog_factory,
+                                     "gimp-font-list",
+                                     GIMP_STOCK_TOOL_TEXT,
+                                     _("Open the font selection dialog"));
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Font:"), 1.0, 0.5,
                              button, 2, TRUE);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (gimp_text_options_font_clicked),
-                    options);
-  g_signal_connect (button, "scroll_event",
-                    G_CALLBACK (gimp_text_options_font_scrolled),
-                    options);
 
   font_selection = gimp_prop_font_selection_new (config, "font");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
@@ -369,32 +358,4 @@ gimp_text_options_editor_new (GimpTextOptions *options,
                            editor, 0);
 
   return editor;
-}                          
-
-static void
-gimp_text_options_font_clicked (GtkWidget   *widget, 
-                                GimpContext *context)
-{
-  GtkWidget *toplevel;
-  GtkWidget *popup;
-
-  toplevel = gtk_widget_get_toplevel (widget);
-
-  popup = gimp_container_popup_new (context->gimp->fonts, context,
-                                    GIMP_DOCK (toplevel)->dialog_factory,
-                                    "gimp-font-list",
-                                    GTK_STOCK_SELECT_FONT,
-                                    _("Open the font selection dialog"));
-  gimp_container_popup_show (GIMP_CONTAINER_POPUP (popup), widget);
-}
-
-static gboolean
-gimp_text_options_font_scrolled (GtkWidget      *widget, 
-                                 GdkEventScroll *sevent,
-                                 GimpContext    *context)
-{
-  paint_options_container_scrolled (context->gimp->fonts,
-                                    context, GIMP_TYPE_FONT, sevent);
-
-  return TRUE;
 }

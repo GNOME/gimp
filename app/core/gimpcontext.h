@@ -220,6 +220,7 @@ void          gimp_context_copy_properties   (GimpContext         *src,
 
 /*  manipulate by GType  */
 GimpContextPropType   gimp_context_type_to_property    (GType     type);
+const gchar         * gimp_context_type_to_prop_name   (GType     type);
 const gchar         * gimp_context_type_to_signal_name (GType     type);
 
 GimpObject    * gimp_context_get_by_type        (GimpContext     *context,

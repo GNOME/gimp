@@ -1564,6 +1564,20 @@ gimp_context_type_to_property (GType type)
 }
 
 const gchar *
+gimp_context_type_to_prop_name (GType type)
+{
+  GimpContextPropType prop;
+
+  for (prop = GIMP_CONTEXT_FIRST_PROP; prop <= GIMP_CONTEXT_LAST_PROP; prop++)
+    {
+      if (g_type_is_a (type, gimp_context_prop_types[prop]))
+	return gimp_context_prop_names[prop];
+    }
+
+  return NULL;
+}
+
+const gchar *
 gimp_context_type_to_signal_name (GType type)
 {
   GimpContextPropType prop;

@@ -1,3 +1,21 @@
+2003-04-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontext.[ch]: added gimp_context_type_to_prop_name().
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpviewablebutton.[ch]: new widget implementing
+	the wheel-scrollable preview button.
+
+	* app/tools/gimptextoptions.c
+	* app/tools/paint_options.[ch]: removed the code implementing the
+	same and use GimpViewableButton.
+
+	* app/tools/tool_manager.c: added the font to the context
+	properties which are remembered per tool. Added an evil hack
+	using g_object_set_data() to pass the global_dock_factory to
+	tool option GUI constructors.
+
 2003-04-09  Sven Neumann  <sven@gimp.org>
 
 	* app/text/text-enums.[ch]

@@ -96,6 +96,7 @@ typedef struct _GimpDockable            GimpDockable;
 typedef struct _GimpDockbook            GimpDockbook;
 
 typedef struct _GimpContainerPopup      GimpContainerPopup;
+typedef struct _GimpViewableButton      GimpViewableButton;
 typedef struct _GimpViewableDialog      GimpViewableDialog;
 
 typedef struct _GimpFontSelection       GimpFontSelection;

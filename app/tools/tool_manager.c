@@ -35,6 +35,11 @@
 
 #include "display/gimpdisplay.h"
 
+#ifdef __GNUC__
+#warning FIXME: #include "gui/dialogs.h"
+#endif
+#include "gui/dialogs.h"
+
 #include "gimpairbrushtool.h"
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
@@ -58,7 +63,8 @@
                            GIMP_CONTEXT_PAINT_MODE_MASK | \
                            GIMP_CONTEXT_BRUSH_MASK      | \
                            GIMP_CONTEXT_PATTERN_MASK    | \
-                           GIMP_CONTEXT_GRADIENT_MASK
+                           GIMP_CONTEXT_GRADIENT_MASK   | \
+                           GIMP_CONTEXT_FONT_MASK
 
 
 typedef struct _GimpToolManager GimpToolManager;
@@ -205,7 +211,15 @@ tool_manager_restore (Gimp *gimp)
 
       if (options_gui_func)
         {
+          g_object_set_data (G_OBJECT (tool_info->tool_options),
+                             "gimp-tool-options-dialog-factory",
+                             global_dock_factory);
+
           options_gui = options_gui_func (tool_info->tool_options);
+
+          g_object_set_data (G_OBJECT (tool_info->tool_options),
+                             "gimp-tool-options-dialog-factory",
+                             NULL);
         }
       else
         {

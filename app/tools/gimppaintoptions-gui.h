@@ -26,12 +26,4 @@
 GtkWidget * gimp_paint_options_gui (GimpToolOptions *tool_options);
 
 
-/*  utility function -- will become a widget soon  */
-
-void   paint_options_container_scrolled (GimpContainer  *container,
-                                         GimpContext    *context,
-                                         GType           type,
-                                         GdkEventScroll *sevent);
-
-
 #endif  /*  __PAINT_OPTIONS_H__  */

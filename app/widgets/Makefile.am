@@ -153,6 +153,8 @@ libappwidgets_a_sources = \
 	gimpundoeditor.h		\
 	gimpvectorstreeview.c		\
 	gimpvectorstreeview.h		\
+	gimpviewablebutton.c		\
+	gimpviewablebutton.h		\
 	gimpviewabledialog.c		\
 	gimpviewabledialog.h		\
 	gimpwidgets-constructors.c	\
