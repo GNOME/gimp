@@ -1,5 +1,4 @@
 /* bmpread.c	reads any bitmap I could get for testing */
-/*		except OS2 bitmaps (wrong colors)        */
 /* Alexander.Schulz@stud.uni-karlsruhe.de                */
 
 /* 

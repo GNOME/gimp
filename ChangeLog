@@ -1,3 +1,8 @@
+Sun May 21 20:00:55 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	On request of Martin Weber <martweb@gmx.net>:
+	* plug-ins/bmp/bmpread.c: Initial comment change.
+
 2000-05-21  Michael Natterer  <mitch@gimp.org>
 
 	These changes enable help support for 3rd party plug-ins which
@@ -164,7 +169,6 @@ Tue May 16 20:26:13 CEST 2000  Stanislav Brabec  <utx@penguin.cz>
 	* gimp/plug-ins/gap/gap_mov_dialog.c,
 	plug-ins/gdyntext/gdyntext.c,
 	plug-ins/script-fu/scripts/camo.scm: Typo fixes.
-	On request of Martin Weber <martweb@gmx.net>:
 	* plug-ins/bmp/bmpread.c: Cosmetical fixed (german->english,
 	added ';').
 
