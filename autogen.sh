@@ -211,23 +211,17 @@ test $TEST_TYPE $FILE || {
 }
 
 
+echo
+echo "I am going to run ./configure with the following arguments:"
+echo
+echo "  --enable-maintainer-mode $AUTOGEN_CONFIGURE_ARGS $@"
+echo
+
 if test -z "$*"; then
-    if test -z "$AUTOGEN_CONFIGURE_ARGS"; then
-	echo
-	echo "I am going to run ./configure with no arguments - if you wish "
-	echo "to pass any to it, please specify them on the $0 command line "
-	echo "or set the AUTOGEN_CONFIGURE_ARGS environment variable."
-	echo
-    else
-	echo
-	echo "I am going to run ./configure with the following arguments:"
-	echo
-	echo "  $AUTOGEN_CONFIGURE_ARGS"
-	echo
-	echo "If you wish to pass additional arguments, please specify them "
-	echo "on the $0 command line."
-	echo
-    fi
+    echo "If you wish to pass additional arguments, please specify them "
+    echo "on the $0 command line or set the AUTOGEN_CONFIGURE_ARGS "
+    echo "environment variable."
+    echo
 fi
 
 

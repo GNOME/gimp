@@ -1,5 +1,12 @@
 2004-10-23  Michael Natterer  <mitch@gimp.org>
 
+	* autogen.sh: don't tell nonsense by printing "I am going to run
+	./configure with no arguments", because we always pass at least
+	--enable-maintainer-mode. Instead, simply always print all
+	arguments.
+
+2004-10-23  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpstock.c: added labels ("_Stroke") to the
 	SLEECTION_STROKE and PATH_STROKE stock items so they can be used
 	in action areas.
