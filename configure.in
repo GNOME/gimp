@@ -647,8 +647,8 @@ if test "x$enable_altivec" = xyes; then
 
   can_use_altivec=no
   if test -z "$ALTIVEC_EXTRA_CFLAGS"; then
-    AC_MSG_WARN([The compiler does not support the AltiVec command set.])
     AC_MSG_RESULT(no)
+    AC_MSG_WARN([The compiler does not support the AltiVec command set.])
   else
     case "$target_or_host" in
       *-*-darwin*)
