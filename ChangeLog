@@ -1,5 +1,11 @@
 2000-10-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus.c: after getting confused again by the boolean
+	"initialize" variable, I finally decided to reverse it's
+	logic and changed it to "menus_initialized".
+
+2000-10-29  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/print/Makefile.am
 	* plug-ins/print/README
 	* plug-ins/print/RELNOTES

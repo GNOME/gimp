@@ -745,13 +745,13 @@ static guint n_paths_entries = (sizeof (paths_entries) /
 				sizeof (paths_entries[0]));
 static GtkItemFactory *paths_factory = NULL;
 
-static gboolean initialize = TRUE;
+static gboolean menus_initialized = FALSE;
 
 void
 menus_get_toolbox_menubar (GtkWidget     **menubar,
 			   GtkAccelGroup **accel_group)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
   
   if (menubar)
@@ -764,7 +764,7 @@ void
 menus_get_image_menu (GtkWidget     **menu,
 		      GtkAccelGroup **accel_group)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   if (menu)
@@ -777,7 +777,7 @@ void
 menus_get_load_menu (GtkWidget     **menu,
 		     GtkAccelGroup **accel_group)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   if (menu)
@@ -790,7 +790,7 @@ void
 menus_get_save_menu (GtkWidget     **menu,
 		     GtkAccelGroup **accel_group)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   if (menu)
@@ -803,7 +803,7 @@ void
 menus_get_layers_menu (GtkWidget     **menu,
 		       GtkAccelGroup **accel_group)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   if (menu)
@@ -816,7 +816,7 @@ void
 menus_get_channels_menu (GtkWidget     **menu,
 			 GtkAccelGroup **accel_group)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   if (menu)
@@ -829,7 +829,7 @@ void
 menus_get_paths_menu (GtkWidget     **menu,
 		      GtkAccelGroup **accel_group)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   if (menu)
@@ -846,7 +846,7 @@ menus_create_item_from_full_path (GimpItemFactoryEntry *entry,
   GtkItemFactory *item_factory;
   gchar *path;
 
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   path = entry->entry.path;
@@ -1194,7 +1194,7 @@ menus_set_sensitive (gchar    *path,
   GtkItemFactory *ifactory;
   GtkWidget *widget = NULL;
 
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   ifactory = gtk_item_factory_from_path (path);
@@ -1219,7 +1219,7 @@ menus_set_state (gchar    *path,
   GtkItemFactory *ifactory;
   GtkWidget *widget = NULL;
 
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   ifactory = gtk_item_factory_from_path (path);
@@ -1242,7 +1242,7 @@ menus_set_state (gchar    *path,
 void
 menus_destroy (gchar *path)
 {
-  if (initialize)
+  if (!menus_initialized)
     menus_init ();
 
   gtk_item_factories_path_delete (NULL, path);
@@ -1257,7 +1257,7 @@ menus_quit (void)
   gtk_item_factory_dump_rc (filename, NULL, TRUE);
   g_free (filename);
 
-  if (!initialize)
+  if (menus_initialized)
     {
       gtk_object_unref (GTK_OBJECT (toolbox_factory));
       gtk_object_unref (GTK_OBJECT (image_factory));
@@ -1613,10 +1613,10 @@ menus_init (void)
   gchar     *filename;
   gint       i;
 
-  if (! initialize)
+  if (menus_initialized)
     return;
 
-  initialize = FALSE;
+  menus_initialized = TRUE;
 
   toolbox_factory = gtk_item_factory_new (GTK_TYPE_MENU_BAR, "<Toolbox>",
 					  NULL);
