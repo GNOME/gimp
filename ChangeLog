@@ -1,5 +1,11 @@
 2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/core/gimpimage-convert.c: check for non-empty palette
+	before converting to indexed using custom palette, otherwise
+	show warning and abort;	fixes bug #170973.
+
+2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/core/gimpimage-convert.c: applied patch from Adam
 	Moss converning gray->indexed conversion,
 	fixes bug #170825.

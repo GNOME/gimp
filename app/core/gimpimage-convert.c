@@ -798,6 +798,13 @@ gimp_image_convert (GimpImage              *gimage,
   g_return_if_fail (new_type != gimp_image_base_type (gimage));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
+  if (palette_type == GIMP_CUSTOM_PALETTE)
+    if (! custom_palette || ! custom_palette->n_colors)
+    {
+      g_message (_("Cannot convert image, palette is empty"));
+      return;
+    }
+
   theCustomPalette = custom_palette;
 
   gimp_set_busy (gimage->gimp);
