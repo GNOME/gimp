@@ -593,7 +593,7 @@ mblur_zoom(void)
 static void
 mblur(void)
 {
-  gimp_progress_init("Bluring...");
+  gimp_progress_init("Blurring...");
 
   switch (mbvals.mblur_type)
     {

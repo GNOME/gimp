@@ -1,3 +1,7 @@
+1999-09-26  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
+
+	* plug-ins/common/mblur.c (mblur): fixed a stupid typo
+
 Sun Sep 26 23:12:45 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* app/brush_select.[ch]: Introduced a small margin around the
