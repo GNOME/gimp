@@ -1,5 +1,9 @@
 2002-08-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpfuzzyselecttool.c: namespace cleanup.
+
+2002-08-20  Michael Natterer  <mitch@gimp.org>
+
 	Make sure the selection (gimpimage-mask.c) functionality is really
 	built *on top* of the GimpChannel functionality:
 
