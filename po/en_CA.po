@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2004-04-15 16:31-0400\n"
-"PO-Revision-Date: 2004-04-15 20:01-0400\n"
+"POT-Creation-Date: 2004-04-17 12:16-0400\n"
+"PO-Revision-Date: 2004-04-17 20:01-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -2377,7 +2377,7 @@ msgstr "The vertical image resolution."
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
 #: app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "pixels"
@@ -4751,7 +4751,7 @@ msgstr "X:"
 
 #: app/gui/info-window.c:167 app/gui/info-window.c:190
 #: app/gui/resize-dialog.c:391 app/gui/resize-dialog.c:637
-#: app/tools/gimpcroptool.c:1020 app/tools/gimprotatetool.c:195
+#: app/tools/gimpcroptool.c:1021 app/tools/gimprotatetool.c:195
 #: app/tools/gimpscaletool.c:200 app/tools/gimpsheartool.c:175
 #: app/widgets/gimptemplateeditor.c:380
 msgid "Y:"
@@ -4860,7 +4860,7 @@ msgstr "Layer Width:"
 
 #: app/gui/layers-commands.c:790 app/gui/resize-dialog.c:299
 #: app/gui/resize-dialog.c:324 app/gui/resize-dialog.c:570
-#: app/tools/gimpcroptool.c:1037 app/tools/gimpscaletool.c:174
+#: app/tools/gimpcroptool.c:1039 app/tools/gimpscaletool.c:174
 #: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:573
 #: app/widgets/gimptemplateeditor.c:241 app/widgets/gimptemplateeditor.c:259
 msgid "Height:"
@@ -6245,7 +6245,7 @@ msgstr "/_Edit Template..."
 msgid "/_Delete Template"
 msgstr "/_Delete Template"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:228
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:254
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Writing '%s'\n"
@@ -7311,12 +7311,12 @@ msgstr "Querying new Plug-ins"
 msgid "Querying plug-in: '%s'\n"
 msgstr "Querying plug-in: '%s'\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:304
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:178
 msgid "Initializing Plug-ins"
 msgstr "Initializing Plug-ins"
 
-#: app/plug-in/plug-ins.c:320
+#: app/plug-in/plug-ins.c:194
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Initializing plug-in: '%s'\n"
@@ -7839,26 +7839,25 @@ msgstr "Crop: "
 msgid "Crop & Resize Information"
 msgstr "Crop & Resize Information"
 
-#. add the information fields
-#: app/tools/gimpcroptool.c:1017
+#: app/tools/gimpcroptool.c:1018
 msgid "Origin X:"
 msgstr "Origin X:"
 
 #. the pixel size labels
-#: app/tools/gimpcroptool.c:1034 app/tools/gimpselectionoptions.c:565
+#: app/tools/gimpcroptool.c:1035 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
 msgstr "Width:"
 
-#: app/tools/gimpcroptool.c:1056 app/widgets/gimpbrusheditor.c:156
+#: app/tools/gimpcroptool.c:1062 app/widgets/gimpbrusheditor.c:156
 msgid "Aspect Ratio:"
 msgstr "Aspect Ratio:"
 
-#: app/tools/gimpcroptool.c:1069
+#: app/tools/gimpcroptool.c:1075
 msgid "From Selection"
 msgstr "From Selection"
 
-#: app/tools/gimpcroptool.c:1077
+#: app/tools/gimpcroptool.c:1083
 msgid "Auto Shrink"
 msgstr "Auto Shrink"
 
@@ -8022,8 +8021,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Hue-Saturation operates only on RGB colour layers."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
-msgstr "_Master"
+msgid "M_aster"
+msgstr "M_aster"
 
 #: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
@@ -8078,7 +8077,7 @@ msgstr "Adjustment"
 msgid "Size:"
 msgstr "Size:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Angle:"
@@ -8232,11 +8231,11 @@ msgid "Add Guides"
 msgstr "Add Guides"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Measure Distances and Angles"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Distance:"
 
