@@ -1,6 +1,7 @@
 2003-12-27  Simon Budig  <simon@gimp.org>
 
 	Dashed stroking is here...  :-)
+	(fixes bug #129597, although further improvements are desireable)
 
 	* app/core/gimpdrawable-stroke.c: actually use the dash pattern
 	from the options
