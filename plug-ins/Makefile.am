@@ -57,6 +57,7 @@ SUBDIRS = 			\
 	gqbist			\
 	gradmap			\
 	grid			\
+	gtm			\
 	gz			\
 	header			\
 	hot			\
@@ -89,6 +90,7 @@ SUBDIRS = 			\
 	ripple			\
 	rotate			\
 	rotators		\
+	semiflatten		\	
 	scatter_hsv		\
 	sgi			\
 	shift			\

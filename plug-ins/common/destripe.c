@@ -39,6 +39,7 @@
  *   dialog_close_callback()     - Exit the filter dialog application.
  *
  *   1997/08/16 * Initial Revision.
+ *   1998/02/06 * Minor changes.
  */
 
 #include <stdio.h>
@@ -60,11 +61,11 @@
  */
 
 #define PLUG_IN_NAME		"plug_in_destripe"
-#define PLUG_IN_VERSION		"0.1"
+#define PLUG_IN_VERSION		"0.2"
 #define PREVIEW_SIZE		200
 #define SCALE_WIDTH		140
 #define ENTRY_WIDTH		40
-#define MAX_AVG			400
+#define MAX_AVG			100
 
 /*
  * Local functions...
@@ -154,8 +155,8 @@ query(void)
 
   gimp_install_procedure(PLUG_IN_NAME,
       "Destripe filter, used to remove vertical stripes caused by cheap scanners.",
-      "This plug-in selectively performs a median or adaptive box filter on an image.",
-      "Marc Lehmann", "Marc Lehmann",
+      "This plug-in tries to remove vertical stripes from an image.",
+      "Marc Lehmann <pcg@goof.com>", "Marc Lehmann <pcg@goof.com>",
       PLUG_IN_VERSION,
       "<Image>/Filters/Enhance/Destripe...",
       "RGB*, GRAY*",

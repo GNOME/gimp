@@ -1,3 +1,11 @@
+Sat Feb 21 16:40:47 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	* plugins/destripe/detripe: updated destripe
+
+	*plugins/gtm/*:
+	 plugins/semiflatten/*:  added these plugins
+	
+
 Fri Feb 20 02:38:24 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* initial plug-in stable/unstable split
