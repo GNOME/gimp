@@ -684,7 +684,7 @@ gdisplay_flush_whenever (GDisplay *gdisp, gboolean now)
   qmask_buttons_update (gdisp);
 
   /*  ensure the consistency of the tear-off menus  */
-  if (gimp_context_get_display (gimp_context_get_user ()) == gdisp)
+  if (!now && gimp_context_get_display (gimp_context_get_user ()) == gdisp)
     gdisplay_set_menu_sensitivity (gdisp);
 }
 
@@ -1603,6 +1603,8 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   GimpImageType type = -1;
   gint lind = -1;
   gint lnum = -1;
+
+  g_print ("boo\n");
 
   if (gdisp)
     {
