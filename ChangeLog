@@ -1,3 +1,15 @@
+Mon Jun  8 16:39:19 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	*app/commands.c
+	*app/file_new_dialog.[ch]
+	*app/prefereces_dialog.[ch]: split up command.c
+	into three files, commands.c, file_new_dialog.c,
+	and preferences.c
+
+	*app/Makefile.am: change to incorporate the new files
+	
+	*TODO: more feature ideas
+
 Mon Jun  8 04:30:00 EDT 1998 Chris Lahey  <clahey@umich.edu>
 
 	* app/devices.c: stdio.h

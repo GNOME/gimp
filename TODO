@@ -96,5 +96,16 @@ brush-shaped cursors...
 pixmap brushes...
 
 
+Quickmask/paintable selections
+
+let pdb stuff register under the layers_dialog menu
+
+some sort of mdi for dialogs so you could tab them together or 
+pull them apart?
+
+make color picker able to choose from any color on the screen
+
+
+
 
 

@@ -111,6 +111,8 @@ gimp_SOURCES = \
 	floating_sel.h		\
 	floating_sel_cmds.c	\
 	floating_sel_cmds.h	\
+	file_new_dialog.c	\
+	file_new_dialog.h	\
 	frac.c			\
 	frac.h			\
 	free_select.c		\
@@ -215,6 +217,8 @@ gimp_SOURCES = \
 	plug_in.h		\
 	posterize.c		\
 	posterize.h		\
+	preferences_dialog.c	\
+	preferences_dialog.h	\
 	procedural_db.c		\
 	procedural_db.h		\
 	rect_select.c		\
