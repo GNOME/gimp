@@ -53,13 +53,17 @@ struct _GimpDrawablePreviewClass
 };
 
 
-GType       gimp_drawable_preview_get_type (void) G_GNUC_CONST;
+GType          gimp_drawable_preview_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_drawable_preview_new      (GimpDrawable        *drawable,
-                                            gboolean            *toggle);
+GtkWidget    * gimp_drawable_preview_new          (GimpDrawable        *drawable,
+                                                   gboolean            *toggle);
+GimpDrawable * gimp_drawable_preview_get_drawable (GimpDrawablePreview *preview);
 
-void        gimp_drawable_preview_draw     (GimpDrawablePreview *preview,
-                                            const guchar        *buf);
+void           gimp_drawable_preview_draw_buffer  (GimpDrawablePreview *preview,
+                                                   const guchar        *buffer,
+                                                   gint                 rowstride);
+void           gimp_drawable_preview_draw_region  (GimpDrawablePreview *preview,
+                                                   const GimpPixelRgn  *region);
 
 
 G_END_DECLS

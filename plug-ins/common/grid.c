@@ -482,7 +482,8 @@ grid (gint32        image_ID,
 
   if (preview)
     {
-      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview), buffer);
+      gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
+                                         buffer, bytes * (sx2 - sx1));
       g_free (buffer);
     }
   else

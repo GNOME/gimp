@@ -296,7 +296,7 @@ noisify (GimpDrawablePreview *preview)
   for (i = 0; i < width * height; i++)
     noisify_func (src + i * bpp, dst + i * bpp, bpp, gr);
 
-  gimp_drawable_preview_draw (preview, dst);
+  gimp_drawable_preview_draw_buffer (preview, dst, width * bpp);
 
   g_free (src);
   g_free (dst);

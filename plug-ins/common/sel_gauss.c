@@ -451,6 +451,7 @@ sel_gauss (GimpDrawable *drawable,
 static void
 preview_update (GimpDrawablePreview *preview)
 {
+  GimpDrawable  *drawable = gimp_drawable_preview_get_drawable (preview);
   glong          bytes;
   gint           x1, y1;
   guchar        *render_buffer;  /* Buffer to hold rendered image */
@@ -465,7 +466,7 @@ preview_update (GimpDrawablePreview *preview)
   gdouble       radius;
 
   /* Get drawable info */
-  bytes  = preview->drawable->bpp;
+  bytes = drawable->bpp;
 
   /*
    * Setup for filter...
@@ -474,7 +475,7 @@ preview_update (GimpDrawablePreview *preview)
   gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
 
   /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR, preview->drawable,
+  gimp_pixel_rgn_init (&srcPR, drawable,
                        x1, y1, width, height,
                        FALSE, FALSE);
   render_buffer = g_new (guchar, width * height * bytes);
@@ -483,7 +484,7 @@ preview_update (GimpDrawablePreview *preview)
 
   /* render image */
   gimp_pixel_rgn_get_rect (&srcPR, src, x1, y1, width, height);
-  has_alpha = gimp_drawable_has_alpha(preview->drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   radius = fabs (bvals.radius) + 1.0;
   numrad = (gint) (radius + 1.0);
@@ -507,7 +508,7 @@ preview_update (GimpDrawablePreview *preview)
   /*
    * Draw the preview image on the screen...
    */
-  gimp_drawable_preview_draw (preview, render_buffer);
+  gimp_drawable_preview_draw_buffer (preview, render_buffer, width * bytes);
 
   g_free (render_buffer);
 }

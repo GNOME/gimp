@@ -843,7 +843,7 @@ edge_preview_update (GimpDrawablePreview *preview)
   /*
    * Draw the preview image on the screen...
    */
-  gimp_drawable_preview_draw (preview, render_buffer);
+  gimp_drawable_preview_draw_buffer (preview, render_buffer, width * bytes);
 
   g_free (render_buffer);
   g_free (src);

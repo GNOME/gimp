@@ -294,7 +294,7 @@ run (const gchar      *name,
             {
               bvals.horizontal = param[3].data.d_float;
               bvals.vertical   = param[4].data.d_float;
-              bvals.method   = param[5].data.d_int32;
+              bvals.method     = param[5].data.d_int32;
             }
           if (status == GIMP_PDB_SUCCESS &&
               (bvals.horizontal <= 0.0 && bvals.vertical <= 0.0))
@@ -1043,8 +1043,8 @@ gauss (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview),
-                                  preview_buffer2);
+      gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
+                                         preview_buffer2, width * bytes);
       g_free (preview_buffer1);
       g_free (preview_buffer2);
     }

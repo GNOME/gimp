@@ -1494,8 +1494,9 @@ strucpi (GimpDrawable        *drawable,
 
   if (preview)
     {
-       gimp_drawable_preview_draw (preview, preview_buffer);
-       g_free (preview_buffer);
+      gimp_drawable_preview_draw_buffer (preview,
+                                         preview_buffer, width * bytes);
+      g_free (preview_buffer);
     }
   else
     {

@@ -286,7 +286,7 @@ photocopy (GimpDrawable        *drawable,
   gdouble       bd_p2[5], bd_m2[5];
   gdouble      *val_p1, *val_m1, *vp1, *vm1;
   gdouble      *val_p2, *val_m2, *vp2, *vm2;
-  gint          x1, y1, x2, y2;
+  gint          x1, y1;
   gint          i, j;
   gint          row, col;
   gint          terms;
@@ -301,7 +301,6 @@ photocopy (GimpDrawable        *drawable,
   gdouble       std_dev2;
   gdouble       ramp_down;
   gdouble       ramp_up;
-  guchar       *preview_buffer = NULL;
 
   if (preview)
     {
@@ -310,11 +309,14 @@ photocopy (GimpDrawable        *drawable,
     }
   else
     {
+      gint x2, y2;
+
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
-      width     = (x2 - x1);
-      height    = (y2 - y1);
+      width  = x2 - x1;
+      height = y2 - y1;
     }
+
   bytes     = drawable->bpp;
   has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
@@ -526,34 +528,19 @@ photocopy (GimpDrawable        *drawable,
 
   /* Initialize the pixel regions. */
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
-  if (preview)
-    {
-      preview_buffer = g_new (guchar, width * height * bytes);
-      pr = gimp_pixel_rgns_register (1, &src_rgn);
-    }
-  else
-    {
-      gimp_pixel_rgn_init (&dest_rgn, drawable,
-                           x1, y1, width, height,
-                           TRUE, TRUE);
-      pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-    }
+  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, width, height,
+                       (preview == NULL), TRUE);
+
+  pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
 
   while (pr)
     {
       guchar  *src_ptr  = src_rgn.data;
-      guchar  *dest_ptr;
+      guchar  *dest_ptr = dest_rgn.data;
       guchar  *blur_ptr = dest1 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
       guchar  *avg_ptr  = dest2 + (src_rgn.y - y1) * width + (src_rgn.x - x1);
       gdouble  diff, mult;
       gdouble  lightness = 0.0;
-
-      if (preview)
-        dest_ptr =
-          preview_buffer +
-            ((src_rgn.y - y1) * width + (src_rgn.x - x1)) * bytes;
-      else
-        dest_ptr = dest_rgn.data;
 
       for (row = 0; row < src_rgn.h; row++)
         {
@@ -568,7 +555,8 @@ photocopy (GimpDrawable        *drawable,
                       if (ramp_down == 0.0)
                         mult = 0.0;
                       else
-                        mult = (ramp_down - MIN (ramp_down, (pvals.threshold - diff))) / ramp_down;
+                        mult = (ramp_down - MIN (ramp_down,
+                                                 (pvals.threshold - diff))) / ramp_down;
                       lightness = CLAMP (blur_ptr[col] * mult, 0, 255);
                     }
                   else
@@ -576,14 +564,17 @@ photocopy (GimpDrawable        *drawable,
                       if (ramp_up == 0.0)
                         mult = 1.0;
                       else
-                        mult = MIN (ramp_up, (diff - pvals.threshold)) / ramp_up;
+                        mult = MIN (ramp_up,
+                                    (diff - pvals.threshold)) / ramp_up;
 
                       lightness = 255 - (1.0 - mult) * (255 - blur_ptr[col]);
                       lightness = CLAMP (lightness, 0, 255);
                     }
                 }
               else
-                lightness = 0;
+                {
+                  lightness = 0;
+                }
 
               if (bytes < 3)
                 {
@@ -603,15 +594,16 @@ photocopy (GimpDrawable        *drawable,
             }
 
           src_ptr  += src_rgn.rowstride;
-          if (preview)
-            dest_ptr += width * bytes;
-          else
-            dest_ptr += dest_rgn.rowstride;
+          dest_ptr += dest_rgn.rowstride;
           blur_ptr += width;
           avg_ptr  += width;
         }
 
-      if (!preview)
+      if (preview)
+        {
+          gimp_drawable_preview_draw_region (preview, &dest_rgn);
+        }
+      else
         {
           progress += src_rgn.w * src_rgn.h;
           gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
@@ -620,12 +612,7 @@ photocopy (GimpDrawable        *drawable,
       pr = gimp_pixel_rgns_process (pr);
     }
 
-  if (preview)
-    {
-      gimp_drawable_preview_draw (preview, preview_buffer);
-      g_free (preview_buffer);
-    }
-  else
+  if (! preview)
     {
       /*  merge the shadow, update the drawable  */
       gimp_drawable_flush (drawable);

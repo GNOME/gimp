@@ -690,7 +690,9 @@ gimp_drawable_get_thumbnail
 <TITLE>GimpDrawablePreview</TITLE>
 GimpDrawablePreview
 gimp_drawable_preview_new
-gimp_drawable_preview_draw
+gimp_drawable_preview_get_drawable
+gimp_drawable_preview_draw_buffer
+gimp_drawable_preview_draw_region
 <SUBSECTION Standard>
 GimpDrawablePreviewClass
 GIMP_DRAWABLE_PREVIEW

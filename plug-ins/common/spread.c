@@ -317,7 +317,7 @@ spread_preview_update (GimpPreview *preview,
         dest += bpp;
       }
 
-  gimp_drawable_preview_draw (drawable_preview, buffer);
+  gimp_drawable_preview_draw_buffer (drawable_preview, buffer, width * bpp);
 
   g_free (buffer);
   g_rand_free (param.gr);

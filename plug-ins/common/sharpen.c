@@ -621,7 +621,8 @@ preview_update (GimpDrawablePreview *preview)
     (*filter)(preview_width, src_ptr, dst_ptr, neg_ptr - width,
               neg_ptr, neg_ptr + width);
 
-  gimp_drawable_preview_draw (preview, preview_dst);
+  gimp_drawable_preview_draw_buffer (preview,
+                                     preview_dst, preview_width * img_bpp);
 
   g_free (preview_src);
   g_free (preview_neg);

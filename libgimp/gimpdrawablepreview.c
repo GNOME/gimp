@@ -206,6 +206,69 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
 }
 
 static void
+gimp_drawable_preview_draw_area (GimpDrawablePreview *preview,
+                                 gint                 x,
+                                 gint                 y,
+                                 gint                 width,
+                                 gint                 height,
+                                 const guchar        *buf,
+                                 gint                 rowstride)
+{
+  GimpPreview  *gimp_preview = GIMP_PREVIEW (preview);
+  GimpDrawable *drawable     = preview->drawable;
+  gint32        image_id;
+
+  image_id = gimp_drawable_get_image (drawable->drawable_id);
+
+  if (gimp_selection_is_empty (image_id))
+    {
+      gimp_preview_area_draw (GIMP_PREVIEW_AREA (gimp_preview->area),
+                              x - gimp_preview->xoff - gimp_preview->xmin,
+                              y - gimp_preview->yoff - gimp_preview->ymin,
+                              width,
+                              height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              buf, rowstride);
+    }
+  else
+    {
+      GimpPixelRgn  selection_rgn;
+      GimpPixelRgn  drawable_rgn;
+      guchar       *sel;
+      guchar       *src;
+      gint          selection_id;
+
+      selection_id = gimp_image_get_selection (image_id);
+
+      gimp_pixel_rgn_init (&drawable_rgn, drawable,
+                           x, y, width, height,
+                           FALSE, FALSE);
+      gimp_pixel_rgn_init (&selection_rgn, gimp_drawable_get (selection_id),
+                           x, y, width, height,
+                           FALSE, FALSE);
+
+      sel = g_new (guchar, width * height);
+      src = g_new (guchar, width * height * drawable->bpp);
+
+      gimp_pixel_rgn_get_rect (&drawable_rgn,  src, x, y, width, height);
+      gimp_pixel_rgn_get_rect (&selection_rgn, sel, x, y, width, height);
+
+      gimp_preview_area_mask (GIMP_PREVIEW_AREA (gimp_preview->area),
+                              x - gimp_preview->xoff - gimp_preview->xmin,
+                              y - gimp_preview->yoff - gimp_preview->ymin,
+                              width,
+                              height,
+                              gimp_drawable_type (drawable->drawable_id),
+                              src, width * drawable->bpp,
+                              buf, rowstride,
+                              sel, width);
+
+      g_free (sel);
+      g_free (src);
+    }
+}
+
+static void
 gimp_drawable_preview_set_drawable (GimpDrawablePreview *drawable_preview,
                                     GimpDrawable        *drawable)
 {
@@ -288,78 +351,95 @@ gimp_drawable_preview_new (GimpDrawable *drawable,
 }
 
 /**
- * gimp_drawable_preview_draw:
- * @preview: a #GimpDrawablePreview widget
- * @buf:
+ * gimp_drawable_preview_get_drawable:
+ * @preview:   a #GimpDrawablePreview widget
+ *
+ * Return value: the #GimpDrawable that has been passed to
+ *               gimp_drawable_preview_new().
+ *
+ * Since: GIMP 2.2
+ **/
+GimpDrawable *
+gimp_drawable_preview_get_drawable (GimpDrawablePreview *preview)
+{
+  g_return_val_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview), NULL);
+
+  return preview->drawable;
+}
+
+/**
+ * gimp_drawable_preview_draw_buffer:
+ * @preview:   a #GimpDrawablePreview widget
+ * @buffer:
+ * @rowstride:
  *
  * Since: GIMP 2.2
  **/
 void
-gimp_drawable_preview_draw (GimpDrawablePreview *preview,
-                            const guchar        *buf)
+gimp_drawable_preview_draw_buffer (GimpDrawablePreview *preview,
+                                   const guchar        *buffer,
+                                   gint                 rowstride)
 {
-  GimpPreview  *gimp_preview;
-  GimpDrawable *drawable;
-  gint32        image_id;
-  gint          width, height;
-  gint          bytes;
+  GimpPreview *gimp_preview;
 
   g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview));
   g_return_if_fail (preview->drawable != NULL);
-  g_return_if_fail (buf != NULL);
+  g_return_if_fail (buffer != NULL);
 
   gimp_preview = GIMP_PREVIEW (preview);
-  drawable     = preview->drawable;
 
-  width  = gimp_preview->width;
-  height = gimp_preview->height;
-  bytes  = drawable->bpp;
+  gimp_drawable_preview_draw_area (preview,
+                                   gimp_preview->xmin + gimp_preview->xoff,
+                                   gimp_preview->ymin + gimp_preview->yoff,
+                                   gimp_preview->width,
+                                   gimp_preview->height,
+                                   buffer, rowstride);
+}
 
-  image_id = gimp_drawable_get_image (drawable->drawable_id);
+/**
+ * gimp_drawable_preview_draw_region:
+ * @preview: a #GimpDrawablePreview widget
+ * @region:  a #GimpPixelRgn
+ *
+ * Since: GIMP 2.2
+ **/
+void
+gimp_drawable_preview_draw_region (GimpDrawablePreview *preview,
+                                   const GimpPixelRgn  *region)
+{
+  g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview));
+  g_return_if_fail (preview->drawable != NULL);
+  g_return_if_fail (region != NULL);
 
-  if (gimp_selection_is_empty (image_id))
+  /*  If the data field is initialized, this region is currently being
+   *  processed and we can access it directly.
+   */
+  if (region->data)
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (gimp_preview->area),
-                              0, 0, width, height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              buf,
-                              width * bytes);
+      gimp_drawable_preview_draw_area (preview,
+                                       region->x,
+                                       region->y,
+                                       region->w,
+                                       region->h,
+                                       region->data,
+                                       region->rowstride);
     }
   else
     {
-      GimpPixelRgn  selection_rgn;
-      GimpPixelRgn  drawable_rgn;
-      guchar       *sel;
-      guchar       *src;
-      gint          selection_id;
-      gint          x1, y1;
+      GimpPixelRgn  src = *region;
+      gpointer      iter;
 
-      selection_id = gimp_image_get_selection (image_id);
-
-      x1 = gimp_preview->xoff + gimp_preview->xmin;
-      y1 = gimp_preview->yoff + gimp_preview->ymin;
-
-      gimp_pixel_rgn_init (&drawable_rgn, drawable,
-                           x1, y1, width, height,
-                           FALSE, FALSE);
-      gimp_pixel_rgn_init (&selection_rgn, gimp_drawable_get (selection_id),
-                           x1, y1, width, height,
-                           FALSE, FALSE);
-
-      sel = g_new (guchar, width * height);
-      src = g_new (guchar, width * height * bytes);
-
-      gimp_pixel_rgn_get_rect (&drawable_rgn, src,  x1, y1, width, height);
-      gimp_pixel_rgn_get_rect (&selection_rgn, sel, x1, y1, width, height);
-
-      gimp_preview_area_mask (GIMP_PREVIEW_AREA (gimp_preview->area),
-                              0, 0, width, height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              src, width * bytes,
-                              buf, width * bytes,
-                              sel, width);
-
-      g_free (sel);
-      g_free (src);
+      for (iter = gimp_pixel_rgns_register (1, &src);
+           iter != NULL;
+           iter = gimp_pixel_rgns_process (iter))
+        {
+          gimp_drawable_preview_draw_area (preview,
+                                           src.x,
+                                           src.y,
+                                           src.w,
+                                           src.h,
+                                           src.data,
+                                           src.rowstride);
+        }
     }
 }

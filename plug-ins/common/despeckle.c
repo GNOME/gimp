@@ -855,7 +855,8 @@ preview_update (GtkWidget *widget)
    * Update the screen...
    */
 
-  gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview), rgba);
+  gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
+                                     rgba, preview->width * img_bpp);
   g_free (rgba);
 
   g_free (preview_src);

@@ -53,13 +53,13 @@ static void   sobel  (GimpDrawable     *drawable,
                       gboolean          horizontal,
                       gboolean          vertical,
                       gboolean          keep_sign,
-                      GtkWidget        *preview);
+                      GimpPreview      *preview);
 
 /*
  * Sobel interface
  */
 static gboolean  sobel_dialog         (GimpDrawable *drawable);
-static void      sobel_preview_update (GtkWidget    *preview);
+static void      sobel_preview_update (GimpPreview  *preview);
 
 /*
  * Sobel helper functions
@@ -293,9 +293,9 @@ sobel_dialog (GimpDrawable *drawable)
 }
 
 static void
-sobel_preview_update (GtkWidget *preview)
+sobel_preview_update (GimpPreview *preview)
 {
-  sobel (GIMP_DRAWABLE_PREVIEW (preview)->drawable,
+  sobel (gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview)),
          bvals.horizontal,
          bvals.vertical,
          bvals.keep_sign,
@@ -304,10 +304,10 @@ sobel_preview_update (GtkWidget *preview)
 
 static void
 sobel_prepare_row (GimpPixelRgn *pixel_rgn,
-                   guchar    *data,
-                   gint       x,
-                   gint       y,
-                   gint       w)
+                   guchar       *data,
+                   gint          x,
+                   gint          y,
+                   gint          w)
 {
   gint b;
 
@@ -329,7 +329,7 @@ sobel (GimpDrawable *drawable,
        gboolean      do_horizontal,
        gboolean      do_vertical,
        gboolean      keep_sign,
-       GtkWidget    *preview)
+       GimpPreview  *preview)
 {
   GimpPixelRgn  srcPR, destPR;
   gint          width, height;
@@ -348,8 +348,8 @@ sobel (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
       x2 = x1 + width;
       y2 = y1 + height;
     }
@@ -453,8 +453,8 @@ sobel (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview),
-                                  preview_buffer);
+      gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
+                                         preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else

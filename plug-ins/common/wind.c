@@ -391,8 +391,8 @@ render_blast (GimpDrawable        *drawable,
   /*  update the region  */
   if (preview)
     {
-      gimp_drawable_preview_draw (preview, preview_buffer);
-
+      gimp_drawable_preview_draw_buffer (preview,
+                                         preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else
@@ -441,10 +441,12 @@ render_wind (GimpDrawable        *drawable,
       width = x2 - x1;
       height = y2 - y1;
 
-      gimp_pixel_rgn_init (&dest_region, drawable, x1, y1, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&dest_region, drawable,
+                           x1, y1, width, height, TRUE, TRUE);
     }
 
-  gimp_pixel_rgn_init (&src_region, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_region, drawable,
+                       x1, y1, width, height, FALSE, FALSE);
   row_stride = width * bytes;
   comp_stride = bytes * COMPARE_WIDTH;
   lpi = row_stride - comp_stride;
@@ -479,8 +481,8 @@ render_wind (GimpDrawable        *drawable,
   /*  update the region  */
   if (preview)
     {
-      gimp_drawable_preview_draw (preview, preview_buffer);
-
+      gimp_drawable_preview_draw_buffer (preview,
+                                         preview_buffer, width * bytes);
       g_free (preview_buffer);
     }
   else

@@ -30,12 +30,31 @@ GimpDrawablePreview
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_drawable_preview_draw ##### -->
+<!-- ##### FUNCTION gimp_drawable_preview_get_drawable ##### -->
 <para>
 
 </para>
 
 @preview: 
-@buf: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_preview_draw_buffer ##### -->
+<para>
+
+</para>
+
+@preview: 
+@buffer: 
+@rowstride: 
+
+
+<!-- ##### FUNCTION gimp_drawable_preview_draw_region ##### -->
+<para>
+
+</para>
+
+@preview: 
+@region: 
 
 

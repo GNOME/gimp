@@ -1,3 +1,33 @@
+2004-09-15  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpdrawablepreview.[ch]
+	* libgimp/gimpui.def: renamed gimp_drawable_preview_draw() to
+	gimp_drawable_preview_draw_buffer() and added a rowstride
+	parameter. Added new functions gimp_drawable_preview_get_drawable()
+	and gimp_drawable_preview_draw_region().
+
+	* plug-ins/common/mblur.c: added a preview that uses the
+	shadow tiles as the preview buffer and draws using the new
+	gimp_drawable_preview_draw_region() API.
+
+	* plug-ins/common/photocopy.c
+	* plug-ins/common/softglow.c: use gimp_drawable_preview_draw_region().
+
+	* plug-ins/common/cartoon.c
+	* plug-ins/common/despeckle.c
+	* plug-ins/common/edge.c
+	* plug-ins/common/gauss.c
+	* plug-ins/common/grid.c
+	* plug-ins/common/neon.c
+	* plug-ins/common/noisify.c
+	* plug-ins/common/sel_gauss.c
+	* plug-ins/common/sharpen.c
+	* plug-ins/common/sobel.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/struc.c
+	* plug-ins/common/unsharp.c
+	* plug-ins/common/wind.c: use gimp_drawable_preview_draw_buffer().
+
 2004-09-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimphelp-ids.h: added help IDs for the drawable- and

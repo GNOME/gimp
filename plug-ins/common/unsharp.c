@@ -94,8 +94,9 @@ static void      unsharp_mask            (GimpDrawable  *drawable,
                                           gdouble        radius,
                                           gdouble        amount);
 
-static gboolean  unsharp_mask_dialog     (GimpDrawable  *drawable);
-static void      preview_update          (GimpPreview   *preview);
+static gboolean  unsharp_mask_dialog     (GimpDrawable        *drawable);
+static void      preview_update          (GimpDrawablePreview *preview);
+
 
 /* create a few globals, set default values */
 static UnsharpMaskParams unsharp_params =
@@ -735,26 +736,26 @@ unsharp_mask_dialog (GimpDrawable *drawable)
 }
 
 static void
-preview_update (GimpPreview *preview)
+preview_update (GimpDrawablePreview *preview)
 {
   /* drawable */
   glong bytes;
   gint  x1, y1, x2, y2;
 
   /* preview */
-  GimpDrawablePreview *drawable_preview;
-  guchar    *render_buffer = NULL; /* Buffer to hold rendered image */
-  gint       preview_x1;           /* Upper-left X of preview */
-  gint       preview_y1;           /* Upper-left Y of preview */
-  gint       preview_x2;           /* Lower-right X of preview */
-  gint       preview_y2;           /* Lower-right Y of preview */
+  GimpDrawable *drawable;
+  guchar       *render_buffer = NULL; /* Buffer to hold rendered image */
+  gint          preview_x1;           /* Upper-left X of preview */
+  gint          preview_y1;           /* Upper-left Y of preview */
+  gint          preview_x2;           /* Lower-right X of preview */
+  gint          preview_y2;           /* Lower-right Y of preview */
   /* preview buffer */
-  gint       preview_buf_width;    /* Width of preview widget */
-  gint       preview_buf_height;   /* Height of preview widget */
-  gint       preview_buf_x1;       /* Upper-left X of preview */
-  gint       preview_buf_y1;       /* Upper-left Y of preview */
-  gint       preview_buf_x2;       /* Lower-right X of preview */
-  gint       preview_buf_y2;       /* Lower-right Y of preview */
+  gint          preview_buf_width;    /* Width of preview widget */
+  gint          preview_buf_height;   /* Height of preview widget */
+  gint          preview_buf_x1;       /* Upper-left X of preview */
+  gint          preview_buf_y1;       /* Upper-left Y of preview */
+  gint          preview_buf_x2;       /* Lower-right X of preview */
+  gint          preview_buf_y2;       /* Lower-right Y of preview */
 
   GimpPixelRgn srcPR, destPR;      /* Pixel regions */
   gint       x, y;                 /* Current location in image */
@@ -764,18 +765,19 @@ preview_update (GimpPreview *preview)
   if (!unsharp_params.update_preview)
     return;
 
-  drawable_preview = GIMP_DRAWABLE_PREVIEW (preview);
+  drawable = gimp_drawable_preview_get_drawable (preview);
+
   /* Get drawable info */
-  gimp_drawable_mask_bounds (drawable_preview->drawable->drawable_id,
-                             &x1, &y1, &x2, &y2);
-  bytes  = drawable_preview->drawable->bpp;
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  bytes = drawable->bpp;
 
   /*
    * Setup for filter...
    */
-  gimp_preview_get_position (preview, &preview_x1, &preview_y1);
-  preview_x2 = preview_x1 + preview->width;
-  preview_y2 = preview_y1 + preview->height;
+  gimp_preview_get_position (GIMP_PREVIEW (preview), &preview_x1, &preview_y1);
+  gimp_preview_get_size (GIMP_PREVIEW (preview), &preview_x2, &preview_y2);
+  preview_x2 += preview_x1;
+  preview_y2 += preview_y1;
 
   /* Make buffer large enough to minimize disturbence */
   preview_buf_x1     = MAX (0, preview_x1 - unsharp_params.radius);
@@ -786,14 +788,14 @@ preview_update (GimpPreview *preview)
   preview_buf_height = preview_buf_y2 - preview_buf_y1;
 
   /* initialize pixel regions */
-  gimp_pixel_rgn_init (&srcPR, drawable_preview->drawable,
-                       preview_buf_x1,preview_buf_y1,
+  gimp_pixel_rgn_init (&srcPR, drawable,
+                       preview_buf_x1, preview_buf_y1,
                        preview_buf_width, preview_buf_height, FALSE, FALSE);
   render_buffer = g_new (guchar,
                          preview_buf_width * preview_buf_height * bytes);
 
   /* render image */
-  gimp_pixel_rgn_init (&destPR, drawable_preview->drawable,
+  gimp_pixel_rgn_init (&destPR, drawable,
                        preview_buf_x1,preview_buf_y1,
                        preview_buf_width, preview_buf_height,  TRUE, TRUE);
 
@@ -811,16 +813,14 @@ preview_update (GimpPreview *preview)
   /*
    * Draw the preview image on the screen...
    */
-  y     = preview_y1 - preview_buf_y1;
-  x     = preview_x1 - preview_buf_x1;
+  y = preview_y1 - preview_buf_y1;
+  x = preview_x1 - preview_buf_x1;
 
   offset = (x * bytes) + (y * preview_buf_width * bytes);
 
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview->area),
-                          0, 0, preview->width, preview->height,
-                          gimp_drawable_type (drawable_preview->drawable->drawable_id),
-                          render_buffer + offset,
-                          preview_buf_width * bytes);
+  gimp_drawable_preview_draw_buffer (preview,
+                                     render_buffer + offset,
+                                     preview_buf_width * bytes);
 
   g_free (render_buffer);
 }

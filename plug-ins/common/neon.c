@@ -466,8 +466,8 @@ neon (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview),
-                                  preview_buffer2);
+      gimp_drawable_preview_draw_buffer (GIMP_DRAWABLE_PREVIEW (preview),
+                                         preview_buffer2, width * bytes);
       g_free (preview_buffer1);
       g_free (preview_buffer2);
     }

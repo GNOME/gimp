@@ -7,7 +7,9 @@ EXPORTS
 	gimp_drawable_combo_box_new
 	gimp_drawable_get_thumbnail
 	gimp_drawable_menu_new
-	gimp_drawable_preview_draw
+	gimp_drawable_preview_draw_buffer
+	gimp_drawable_preview_draw_region
+	gimp_drawable_preview_get_drawable
 	gimp_drawable_preview_get_type
 	gimp_drawable_preview_new
 	gimp_export_image

@@ -61,9 +61,9 @@ static void      run               (const gchar      *name,
                                     gint             *nreturn_vals,
                                     GimpParam       **return_vals);
 
-static void      softglow          (GimpDrawable *drawable,
-                                    GtkWidget    *preview);
-static gboolean  softglow_dialog   (GimpDrawable *drawable);
+static void      softglow          (GimpDrawable     *drawable,
+                                    GimpPreview      *preview);
+static gboolean  softglow_dialog   (GimpDrawable     *drawable);
 
 /*
  * Gaussian blur helper functions
@@ -229,7 +229,7 @@ run (const gchar      *name,
 
 static void
 softglow (GimpDrawable *drawable,
-          GtkWidget    *preview)
+          GimpPreview  *preview)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   GimpPixelRgn *pr;
@@ -256,8 +256,8 @@ softglow (GimpDrawable *drawable,
 
   if (preview)
     {
-      gimp_preview_get_position (GIMP_PREVIEW (preview), &x1, &y1);
-      gimp_preview_get_size (GIMP_PREVIEW (preview), &width, &height);
+      gimp_preview_get_position (preview, &x1, &y1);
+      gimp_preview_get_size (preview, &width, &height);
       x2 = x1 + width;
       y2 = y1 + height;
     }
@@ -430,84 +430,54 @@ softglow (GimpDrawable *drawable,
 
   /* Initialize the pixel regions. */
   gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+                       x1, y1, width, height, (preview == NULL), TRUE);
 
-  if (preview)
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
-      guchar *preview_buffer;
+      guchar *src_ptr  = src_rgn.data;
+      guchar *dest_ptr = dest_rgn.data;
+      guchar *blur_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
 
-      preview_buffer = g_new (guchar, width * height * bytes);
-
-      for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-           pr != NULL;
-           pr = gimp_pixel_rgns_process (pr))
+      for (row = 0; row < src_rgn.h; row++)
         {
-          guchar *src_ptr  = src_rgn.data;
-          guchar *dest_ptr = preview_buffer +
-                               bytes *
-                               ((src_rgn.y - y1) * width + (src_rgn.x - x1));
-          guchar *blur_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
-
-          for (row = 0; row < src_rgn.h; row++)
+          for (col = 0; col < src_rgn.w; col++)
             {
-              for (col = 0; col < src_rgn.w; col++)
-                {
-                  /* screen op */
-                  for (b = 0; b < (has_alpha ? (bytes - 1) : bytes); b++)
-                    dest_ptr[col * bytes + b] =
-                      255 - INT_MULT((255 - src_ptr[col * bytes + b]),
-                                     (255 - blur_ptr[col]), tmp);
-                  if (has_alpha)
-                    dest_ptr[col * bytes + b] = src_ptr[col * bytes + b];
-                }
-
-              src_ptr  += src_rgn.rowstride;
-              dest_ptr += width * bytes;
-              blur_ptr += width;
+              /* screen op */
+              for (b = 0; b < (has_alpha ? (bytes - 1) : bytes); b++)
+                dest_ptr[col * bytes + b] =
+                  255 - INT_MULT((255 - src_ptr[col * bytes + b]),
+                                 (255 - blur_ptr[col]), tmp);
+              if (has_alpha)
+                dest_ptr[col * bytes + b] = src_ptr[col * bytes + b];
             }
+
+          src_ptr  += src_rgn.rowstride;
+          dest_ptr += dest_rgn.rowstride;
+          blur_ptr += width;
         }
-      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview),
-                                  preview_buffer);
-      g_free (preview_buffer);
-    }
-  else
-    {
-      gimp_pixel_rgn_init (&dest_rgn,
-                           drawable, x1, y1, width, height, TRUE, TRUE);
 
-      for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
-           pr != NULL;
-           pr = gimp_pixel_rgns_process (pr))
+      if (preview)
         {
-          guchar *src_ptr  = src_rgn.data;
-          guchar *dest_ptr = dest_rgn.data;
-          guchar *blur_ptr = dest + (src_rgn.y - y1) * width + (src_rgn.x - x1);
-
-          for (row = 0; row < src_rgn.h; row++)
-            {
-              for (col = 0; col < src_rgn.w; col++)
-                {
-                  /* screen op */
-                  for (b = 0; b < (has_alpha ? (bytes - 1) : bytes); b++)
-                    dest_ptr[col * bytes + b] =
-                      255 - INT_MULT((255 - src_ptr[col * bytes + b]),
-                                     (255 - blur_ptr[col]), tmp);
-                  if (has_alpha)
-                    dest_ptr[col * bytes + b] = src_ptr[col * bytes + b];
-                }
-
-              src_ptr  += src_rgn.rowstride;
-              dest_ptr += dest_rgn.rowstride;
-              blur_ptr += width;
-            }
-
+          gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                             &dest_rgn);
+        }
+      else
+        {
           progress += src_rgn.w * src_rgn.h;
           gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
         }
+    }
 
+  if (! preview)
+    {
       /*  merge the shadow, update the drawable  */
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
+      gimp_drawable_update (drawable->drawable_id,
+                            x1, y1, (x2 - x1), (y2 - y1));
     }
 
   /*  free up buffers  */
