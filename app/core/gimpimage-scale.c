@@ -219,10 +219,10 @@ gimp_image_scale_check (const GimpImage *gimage,
 {
   GList  *list;
   gint64  current_size;
-  gint64  fixed_size;
+  gint64  scalable_size;
   gint64  undo_size;
   gint64  redo_size;
-  gint64  scaled_size;
+  gint64  fixed_size;
   gint64  new_size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_IMAGE_SCALE_TOO_SMALL);
@@ -230,33 +230,44 @@ gimp_image_scale_check (const GimpImage *gimage,
 
   current_size = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
 
-  scaled_size =
+  /*  the part of the image's memsize that scales linearly with the image  */
+  scalable_size =
     gimp_object_get_memsize (GIMP_OBJECT (gimage->layers), NULL)         +
     gimp_object_get_memsize (GIMP_OBJECT (gimage->channels), NULL)       +
     gimp_object_get_memsize (GIMP_OBJECT (gimage->selection_mask), NULL) +
     tile_manager_get_memsize (gimage->projection);
 
+  /*  treat the undo stacks separately  */
   undo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->undo_stack), NULL);
   redo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->redo_stack), NULL);
 
-  fixed_size = current_size - scaled_size - undo_size - redo_size;
+  /*  calculate the part of the memsize that won't change by scaling  */
+  fixed_size = (current_size  - /*  the overall size                 */
+                scalable_size - /*  minus the part that scales       */
+                undo_size     - /*  minus undo (special, see below)  */
+                redo_size);     /*  minus redo (will be blown)       */
 
-  new_size = (fixed_size  +
-              scaled_size *
+  /*  calculate the new size, which is:  */
+  new_size = (fixed_size  +    /*  the fixed part                */
+              scalable_size *  /*  plus the part that scales...  */
               ((gdouble) new_width  / gimp_image_get_width  (gimage)) *
               ((gdouble) new_height / gimp_image_get_height (gimage)));
 
-  if (undo_size + scaled_size < gimage->gimp->config->undo_size)
+  /*  ...plus the new undo size which is...  */
+  if (undo_size + scalable_size < gimage->gimp->config->undo_size)
     {
-      new_size += undo_size + scaled_size;
+      /*  ...the old undo size plus the old drawables (if within limits)  */
+      new_size += undo_size + scalable_size;
     }
-  else if (scaled_size < gimage->gimp->config->undo_size)
+  else if (scalable_size < gimage->gimp->config->undo_size)
     {
+      /*  ...the limit (if the old drawables are not larger than the limit)  */
       new_size += gimage->gimp->config->undo_size;
     }
   else
     {
-      new_size += scaled_size;
+      /*  ...the old drawables otherwise  */
+      new_size += scalable_size;
     }
 
   *new_memsize = new_size;
