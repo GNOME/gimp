@@ -1,0 +1,368 @@
+# Serbian translation of gimp-libgimp
+# Courtesy of Prevod.org team (http://www.prevod.org/) -- 2003.
+# 
+# This file is distributed under the same license as the gimp-libgimp package.
+# 
+# Maintainer: Дејан Матијевић <dejan@ns.sympatico.ca>
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libgtcpsocket\n"
+"POT-Creation-Date: 2003-04-28 20:23+0200\n"
+"PO-Revision-Date: 2003-05-19 14:20-0400\n"
+"Last-Translator: Дејан Матијевић <dejan@ns.sympatico.ca>\n"
+"Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: data/libgtcpsocket.schemas.in.h:1
+msgid "Authenticate connections to the proxy server"
+msgstr "Ауторизуј конекцију до прокси сервера"
+
+#: data/libgtcpsocket.schemas.in.h:2
+msgid "Enables the proxy settings when accessing http over the internet."
+msgstr "Одобри прокси подесавања када се приступа ХТТП преко интерета."
+
+#: data/libgtcpsocket.schemas.in.h:3
+msgid "If true, then connections to the proxy server require authentication. The username/password combo defined by /system/http_proxy/authentication_user and /system/http_proxy/authentication_password."
+msgstr "Ако је истинито, онда конекција до прокси сервера захтева ауторизацију. Комбинација корисничко име/лозинка одређена од /system/http_proxy/authentication_user и /system/http_proxy/authentication_password."
+
+#: data/libgtcpsocket.schemas.in.h:4
+msgid "Password to pass as authentication when doing http proxying"
+msgstr "Лозинка као пролаз за ауторизацију када ради ХТТП прокси"
+
+#: data/libgtcpsocket.schemas.in.h:5
+msgid "Proxy host name"
+msgstr "Име прокси домаћина"
+
+#: data/libgtcpsocket.schemas.in.h:6
+msgid "Proxy port"
+msgstr "Порт проксија"
+
+#: data/libgtcpsocket.schemas.in.h:7
+msgid "The machine defined by /system/proxy/socks_host is a SOCKS5 proxy"
+msgstr "Машина одређена од /system/proxy/socks_host је прокси СОЦК5"
+
+#: data/libgtcpsocket.schemas.in.h:8
+msgid "The machine name to proxy encrypted connections through."
+msgstr "Име машине директно до проксија шифрованом конекцијом."
+
+#: data/libgtcpsocket.schemas.in.h:9
+msgid "The machine name to proxy ftp through."
+msgstr "Име машине директно до ФТП проксија."
+
+#: data/libgtcpsocket.schemas.in.h:10
+msgid "The machine name to proxy http through."
+msgstr "Име машине директно до ХТТП проксија."
+
+#: data/libgtcpsocket.schemas.in.h:11
+msgid "The port on the machine defined by /system/http_proxy/host that you proxy through"
+msgstr "Порт од машине одређен од /system/http_proxy/host да прђе кроз прокси"
+
+#: data/libgtcpsocket.schemas.in.h:12
+msgid "The port on the machine defined by /system/proxy/ftp_host that you proxy through"
+msgstr "Порт од машине одређен од /system/http_proxy/tp_host да прђе кроз прокси"
+
+#: data/libgtcpsocket.schemas.in.h:13
+msgid "The port on the machine defined by /system/proxy/socks_host that you proxy through"
+msgstr "Порт од машине одређен од /system/proxy/socks_host да прђе кроз прокси"
+
+#: data/libgtcpsocket.schemas.in.h:14
+msgid "The port on the machine defined by /system/proxy/ssl_host that you proxy through"
+msgstr "Порт од машине одређен од /system/proxy/ssl_host да прђе кроз прокси"
+
+#: data/libgtcpsocket.schemas.in.h:15
+msgid "Use SOCKS5 proxy"
+msgstr "Користи прокси SOCKS5 "
+
+#: data/libgtcpsocket.schemas.in.h:16
+msgid "Use proxy settings when accessing http"
+msgstr "Користи прокси сетинг када се приступа ХТТП"
+
+#: data/libgtcpsocket.schemas.in.h:17
+msgid "User name to pass as authentication when doing http proxying"
+msgstr "Корисничко име као пролаз за ауторизацију када ради ХТТП прокси"
+
+#: data/libgtcpsocket.schemas.in.h:18
+msgid "http proxy password"
+msgstr "Лозинка ХТТП проксија"
+
+#: data/libgtcpsocket.schemas.in.h:19
+msgid "http proxy username"
+msgstr "Корисничко име ХТТП проксија"
+
+#: libgtcpsocket/gtcp-connection.c:1434
+msgid "Address"
+msgstr "Адреса"
+
+#: libgtcpsocket/gtcp-connection.c:1435
+msgid "The hostname or IP address to connect to."
+msgstr "Име домаћина или ИП адреса за конекцију."
+
+#: libgtcpsocket/gtcp-connection.c:1439
+msgid "Port Number"
+msgstr "Број порта"
+
+#: libgtcpsocket/gtcp-connection.c:1440
+msgid "The port number to connect to."
+msgstr "Број порта на који ће се повезати"
+
+#: libgtcpsocket/gtcp-connection.c:1445
+#: libgtcpsocket/gtcp-server.c:171
+msgid "Local Address"
+msgstr "Локална адреса"
+
+#: libgtcpsocket/gtcp-connection.c:1446
+msgid "The hostname or IP address of this computer."
+msgstr "Име домаћина или ИП адреса за овај компијутер."
+
+#: libgtcpsocket/gtcp-connection.c:1450
+msgid "Local Port Number"
+msgstr "Број локалног порта"
+
+#: libgtcpsocket/gtcp-connection.c:1451
+msgid "The local port number to connect through."
+msgstr "Број порта са којег се повезује."
+
+#: libgtcpsocket/gtcp-connection.c:1457
+msgid "Connection Style"
+msgstr "Врста конекције"
+
+#: libgtcpsocket/gtcp-connection.c:1458
+msgid "What style of connection this will be, used to determine proxy information."
+msgstr "Која врста конекције ће ово бити, користи се да одреди прокси информације."
+
+#: libgtcpsocket/gtcp-connection.c:1465
+msgid "Use SSL"
+msgstr "Kористити ССЛ"
+
+#: libgtcpsocket/gtcp-connection.c:1466
+msgid "Whether or not to use SSL in this connection."
+msgstr "Да ли користити ССЛ у овој конекцији."
+
+#: libgtcpsocket/gtcp-connection.c:1471
+#: libgtcpsocket/gtcp-server.c:218
+msgid "Buffer Size"
+msgstr "Величина бафера"
+
+#: libgtcpsocket/gtcp-connection.c:1472
+#: libgtcpsocket/gtcp-server.c:219
+msgid "The max incoming buffer size."
+msgstr "Највећа величина бафера за долажење."
+
+#: libgtcpsocket/gtcp-connection.c:1479
+msgid "IP Address"
+msgstr "ИП Адреса"
+
+#: libgtcpsocket/gtcp-connection.c:1480
+msgid "The IP address connected to."
+msgstr "ИП адреса конектовања."
+
+#: libgtcpsocket/gtcp-connection.c:1484
+msgid "Connection Status"
+msgstr "Стање везе"
+
+#: libgtcpsocket/gtcp-connection.c:1485
+msgid "The current status of the connection."
+msgstr "Тренутно стање конекције."
+
+#: libgtcpsocket/gtcp-connection.c:1491
+msgid "Connection is a Server"
+msgstr "Kонекција je сервеr"
+
+#: libgtcpsocket/gtcp-connection.c:1492
+msgid "Whether the connection was created from a server or not. For internal use by GTcpServer only."
+msgstr "Да ли је конекција направљена од сервера или не.  Само за потребе ГТцпСервера."
+
+#: libgtcpsocket/gtcp-connection.c:1499
+#: libgtcpsocket/gtcp-server.c:226
+msgid "Bytes Read"
+msgstr "Прочитано бајтова"
+
+#: libgtcpsocket/gtcp-connection.c:1500
+#: libgtcpsocket/gtcp-server.c:227
+msgid "The total bytes read."
+msgstr "Укупно прочитано бајтова"
+
+#: libgtcpsocket/gtcp-connection.c:1504
+#: libgtcpsocket/gtcp-server.c:231
+msgid "Bytes Written"
+msgstr "Написано бајтова"
+
+#: libgtcpsocket/gtcp-connection.c:1505
+#: libgtcpsocket/gtcp-server.c:232
+msgid "The total bytes written."
+msgstr "Укупно написано бајтова."
+
+#: libgtcpsocket/gtcp-connection.c:1509
+msgid "Socket File Descriptor"
+msgstr "Сокет дескриптор датотеке"
+
+#: libgtcpsocket/gtcp-connection.c:1510
+msgid "The socket file descriptor. For internal use by GTcpServer only."
+msgstr "Сокет дескриптор датотеке.  Само за потребе ГТцпСервера."
+
+#: libgtcpsocket/gtcp-errors.c:45
+#, c-format
+msgid "Search for \"%s\" in progress..."
+msgstr "Трагање за \"%s\" напредује..."
+
+#: libgtcpsocket/gtcp-errors.c:47
+#, c-format
+msgid "%s found"
+msgstr "%s нађен"
+
+#: libgtcpsocket/gtcp-errors.c:49
+#, c-format
+msgid "\"%s\" could not be found. The name might be misspelled, or it may not exist."
+msgstr "\"%s\" није могуће наћи.  Можда је име погрешно написано или не постији."
+
+#: libgtcpsocket/gtcp-errors.c:52
+#, c-format
+msgid "The DNS lookup server could not be contacted to find %s. The network may be down, or the DNS server may be broken."
+msgstr "ДНС локап сервер није могао бити контактиран %s.  Можда је мрежа спустена или је ДНС покварен."
+
+#: libgtcpsocket/gtcp-errors.c:55
+msgid "The DNS lookup server is temporarily unavailable, try connecting in a few minutes."
+msgstr "ДНС локап сервер је тренутно недоступан, пробајете се конектовати за пар минута."
+
+#: libgtcpsocket/gtcp-errors.c:58
+#, c-format
+msgid "The network is misconfigured, and \"%s\" cannot be connected to. Contact your network administrator or ISP for more information."
+msgstr "Мрежа је лоше подешена и \"%s\" неможе бити конектован.  Контактирајте свог администратора мрежа или ИСП за више информација."
+
+# Fali mi prevod za: threads implementation
+#: libgtcpsocket/gtcp-errors.c:61
+#, fuzzy
+msgid "Your computer is unable to use a real application, install a threads implementation or upgrade. :-P"
+msgstr "Ваш компијутер није у могућности да користи прави програм, инсталирајте threads implementation или унапредите. :-P"
+
+#: libgtcpsocket/gtcp-errors.c:69
+#, c-format
+msgid "%s has will not allow you to connect to the requested service. The port number may be incorrect."
+msgstr "%s вам неће дозволити да се конектујете на тражени сервис.  Можда је број порта погрешан."
+
+#: libgtcpsocket/gtcp-errors.c:72
+#, c-format
+msgid "The connection attempt took too long to complete. %s may be down, or you may have been disconnected from the network."
+msgstr "Сувише дуго покушава да се конектује. %s је можда спуштен или сте можда искључени са мреже."
+
+#: libgtcpsocket/gtcp-errors.c:75
+#, c-format
+msgid "You cannot connect to %s, because it is on a network you cannot connect to. The address may be incorrect, or you may have been disconnected."
+msgstr "Неможете се конектовати на %s, зато што није на мрежи на коју се може конектовати.  Адреса је погрешна или сте можда одконектовани."
+
+# Фали ми превод за: firewall 
+#: libgtcpsocket/gtcp-errors.c:79
+#, c-format
+msgid "You cannot connect to %s, because your computer or firewall is configured to prevent it."
+msgstr "Неможете се конектовати на %s, зато што ваш је компијутер или ватрени зид подешен да то спречи."
+
+# Фали ми превод за: threaded applications.
+#: libgtcpsocket/gtcp-errors.c:82
+#, fuzzy, c-format
+msgid "You cannot connect to %s, because your computer does not support threaded applications."
+msgstr "Неможете се конектовати на %s, зато што ваш компијутер не подржава threaded applications."
+
+#: libgtcpsocket/gtcp-errors.c:85
+#, c-format
+msgid "You cannot connect to %s, because your proxy server could not be found. Your computer may be misconfigured, or the proxy server may be down."
+msgstr "Неможете се конектовати на %s, зато што прохи сервер није могао бити нађен. Ваш компијутер није добро подешен или је прокси сервер спуштен."
+
+#: libgtcpsocket/gtcp-errors.c:94
+#, c-format
+msgid "Your computer is now accepting connections to port %u."
+msgstr "Ваш копијутер сада прихвата конекцију на порт %u."
+
+#: libgtcpsocket/gtcp-errors.c:96
+#, c-format
+msgid "Your computer is preparing to accept connections to port %u."
+msgstr "Ваш копијутер се спрема да прихвати конекцију на порт %u."
+
+#: libgtcpsocket/gtcp-errors.c:98
+#, c-format
+msgid "You cannot accept connections on port %u, because your computer does not have a local address."
+msgstr "Ви неможете прихватити конекцију на порт %u, зато што ваш компијутер нема локалну адресу."
+
+#: libgtcpsocket/gtcp-errors.c:101
+#, c-format
+msgid "You cannot accept connections on port %u, because you do not have permission to use TCP/IP connections."
+msgstr "Ви неможете прихватити конекцију на порт %u, зато што немате дозболу да користите ТЦП/ИП конекцију."
+
+#: libgtcpsocket/gtcp-errors.c:104
+#, c-format
+msgid "You cannot accept connections on port %u, because your computer is out of memory for networking purposes."
+msgstr "Ви неможете прихватити конекцију на порт %u, зато што је ваш компијутер без довоњно меморије за потребе мреже."
+
+#: libgtcpsocket/gtcp-errors.c:107
+#, c-format
+msgid "You cannot accept connections on port %u, because your computer has too many running applications."
+msgstr "Ви неможете прихватити конекцију на порт %u, зато што ваш компијутер има сувише покренутих програма."
+
+#: libgtcpsocket/gtcp-errors.c:110
+#, c-format
+msgid "You cannot accept connections on port %u, because that port is already being used."
+msgstr "Ви неможете прихватити конекцију на порт %u, зато што је тај порт већ у употреби."
+
+#: libgtcpsocket/gtcp-errors.c:113
+#, c-format
+msgid "You cannot accept connections on port %u, because you do not have permission to accept connections on ports lower than 1024."
+msgstr "Ви неможете прихватити конекцију на порт %u, зато што ви немате дозволу да приступате конекцијама на портове ниже од 1024."
+
+#: libgtcpsocket/gtcp-errors.c:116
+#, c-format
+msgid "You cannot accept connections on port %u, because an error occurred inside the networking library."
+msgstr "Ви неможете прихватити конекцију на порт %u, зато што се догодила грешка у мрежној библиотеци."
+
+#: libgtcpsocket/gtcp-errors.c:147
+#: libgtcpsocket/gtcp-errors.c:178
+#: libgtcpsocket/gtcp-errors.c:207
+#, fuzzy
+msgid "This application is doing some strange foo."
+msgstr "Овај програм ради нешто чудно."
+
+#: libgtcpsocket/gtcp-server.c:172
+msgid "The hostname or IP address of this computer -- optional."
+msgstr "Име домаћина или ИП адреса за овај компијутер -- по избору."
+
+#: libgtcpsocket/gtcp-server.c:178
+msgid "The port number to allow connections to."
+msgstr "Број порта на који ће се одобрити повезивање."
+
+#: libgtcpsocket/gtcp-server.c:184
+msgid "Whether or not to use SSL connections to this server."
+msgstr "Да ли користити ССЛ конекцију на овом серверу."
+
+#: libgtcpsocket/gtcp-server.c:191
+msgid "Maximum Simultaneous Connections"
+msgstr "Највечи дозвољен број истовремених конекција"
+
+#: libgtcpsocket/gtcp-server.c:192
+msgid "The maximum number of connections to allow."
+msgstr "Максималан број конекција које ће бити одобрене."
+
+#: libgtcpsocket/gtcp-server.c:197
+msgid "Open Connections"
+msgstr "Успостављених конекција"
+
+#: libgtcpsocket/gtcp-server.c:198
+msgid "A GList of open connections."
+msgstr "Глист отворених конекција."
+
+#: libgtcpsocket/gtcp-server.c:202
+msgid "Kill Open Connections Style"
+msgstr "Уби конекције отворене врсте"
+
+#: libgtcpsocket/gtcp-server.c:203
+msgid "Whether to kill open GTcpConnections or not and when."
+msgstr "Да ли да убије отворену ГТцпКонекцију и када."
+
+#: libgtcpsocket/gtcp-server.c:211
+msgid "Performs Reverse Lookups"
+msgstr "Изврши обрнути локапс"
+
+#: libgtcpsocket/gtcp-server.c:212
+msgid "Whether or not to perform reverse lookups on incoming connections."
+msgstr "Да ли да примени обрнути локап на прилазне конекције."
+
