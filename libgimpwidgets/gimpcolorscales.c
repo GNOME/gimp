@@ -229,8 +229,11 @@ gimp_color_scales_init (GimpColorScales *scales)
   gtk_widget_show (hbox);
 
   scales->hex_entry = gtk_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (scales->hex_entry), 8);
-  gtk_entry_set_max_length (GTK_ENTRY (scales->hex_entry), 7);
+  gimp_help_set_help_data (scales->hex_entry,
+                           _("Hexadecimal color notation as used in HTML"),
+                           NULL);
+  gtk_entry_set_width_chars (GTK_ENTRY (scales->hex_entry), 7);
+  gtk_entry_set_max_length (GTK_ENTRY (scales->hex_entry), 6);
   gtk_box_pack_end (GTK_BOX (hbox), scales->hex_entry, FALSE, FALSE, 0);
   gtk_widget_show (scales->hex_entry);
 
@@ -242,6 +245,7 @@ gimp_color_scales_init (GimpColorScales *scales)
 		    scales);
 
   label = gtk_label_new_with_mnemonic (_("He_x Triplet:"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), scales->hex_entry);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 }
@@ -374,7 +378,7 @@ gimp_color_scales_update_scales (GimpColorScales *scales,
         }
     }
 
-  g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x",
+  g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x",
               values[GIMP_COLOR_SELECTOR_RED],
               values[GIMP_COLOR_SELECTOR_GREEN],
               values[GIMP_COLOR_SELECTOR_BLUE]);
@@ -467,8 +471,8 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
                               GimpColorScales *scales)
 {
   GimpColorSelector *selector;
+  const gchar       *hex_color;
   gchar              buffer[8];
-  gchar             *hex_color;
   guint              hex_rgb;
   guchar             r, g, b;
 
@@ -482,15 +486,15 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
       /*  else fall through  */
 
     case GDK_FOCUS_CHANGE:
-      hex_color = g_strdup (gtk_entry_get_text (GTK_ENTRY (scales->hex_entry)));
+      hex_color = gtk_entry_get_text (GTK_ENTRY (scales->hex_entry));
 
       gimp_rgb_get_uchar (&selector->rgb, &r, &g, &b);
-      g_snprintf (buffer, sizeof (buffer), "#%.2x%.2x%.2x", r, g, b);
+      g_snprintf (buffer, sizeof (buffer), "%.2x%.2x%.2x", r, g, b);
 
-      if ((strlen (hex_color) == 7) &&
+      if ((strlen (hex_color) == 6) &&
           (g_ascii_strcasecmp (buffer, hex_color) != 0))
         {
-          if ((sscanf (hex_color, "#%x", &hex_rgb) == 1) &&
+          if ((sscanf (hex_color, "%x", &hex_rgb) == 1) &&
               (hex_rgb < (1 << 24)))
 	    {
 	      gimp_rgb_set_uchar (&selector->rgb, 
@@ -504,9 +508,6 @@ gimp_color_scales_hex_events (GtkWidget       *widget,
               gimp_color_selector_color_changed (selector);
 	    }
         }
-
-      g_free (hex_color);
-
       break;
 
     default:
