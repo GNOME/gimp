@@ -586,99 +586,103 @@ msgid ""
 "Unable to set sensitivity for menu which doesn't exist:\n"
 "%s"
 msgstr ""
+"Impossibile cambiare la sensibilità di un menu che non esiste:\n"
+"%s"
 
 #: app/menus.c:372
 msgid ""
 "Unable to set state for menu which doesn't exist:\n"
 "%s"
 msgstr ""
+"Impossibile cambiare lo stato di un menu che non esiste:\n"
+"%s"
 
 #: app/menus.c:414
 msgid "Error opening file: %s\n"
-msgstr ""
+msgstr "Errore aprendo il file: %s\n"
 
 #: app/menus.c:436 app/menus.c:506
 msgid "/File/MRU%02d"
-msgstr ""
+msgstr "/File/MRU%02d"
 
 #: app/regex.c:976
 msgid "Success"
-msgstr ""
+msgstr "Successo"
 
 #: app/regex.c:977
 msgid "No match"
-msgstr ""
+msgstr "Nessun riscontro"
 
 #. REG_NOMATCH
 #: app/regex.c:978
 msgid "Invalid regular expression"
-msgstr ""
+msgstr "Espressione regolare non valida"
 
 #. REG_BADPAT
 #: app/regex.c:979
 msgid "Invalid collation character"
-msgstr ""
+msgstr "Carattere di collegamento non valido"
 
 #: app/regex.c:980
 msgid "Invalid character class name"
-msgstr ""
+msgstr "Nome di classe del carattere non valido"
 
 #. REG_ECTYPE
 #: app/regex.c:981
 msgid "Trailing backslash"
-msgstr ""
+msgstr "Backslash finale"
 
 #. REG_EESCAPE
 #: app/regex.c:982
 msgid "Invalid back reference"
-msgstr ""
+msgstr "Riferimento all'indietro non valido"
 
 #: app/regex.c:983
 msgid "Unmatched [ or [^"
-msgstr ""
+msgstr "[ o [^ senza coppia"
 
 #. REG_EBRACK
 #: app/regex.c:984
 msgid "Unmatched ( or \\("
-msgstr ""
+msgstr "( o \\( senza coppia"
 
 #. REG_EPAREN
 #: app/regex.c:985
 msgid "Unmatched \\{"
-msgstr ""
+msgstr "\\{ senza coppia"
 
 #: app/regex.c:986
 msgid "Invalid content of \\{\\}"
-msgstr ""
+msgstr "Contenuto di \\{\\} non valido"
 
 #. REG_BADBR
 #: app/regex.c:987
 msgid "Invalid range end"
-msgstr ""
+msgstr "Fine dell'estensione non valida"
 
 #. REG_ERANGE
 #: app/regex.c:988
 msgid "Memory exhausted"
-msgstr ""
+msgstr "Memoria non sufficiente"
 
 #: app/regex.c:989
 msgid "Invalid preceding regular expression"
-msgstr ""
+msgstr "Espressione regolare precedente non valida"
 
 #. REG_BADRPT
 #: app/regex.c:990
 msgid "Premature end of regular expression"
-msgstr ""
+msgstr "Fine prematura di un'espressione regolare"
 
 #. REG_EEND
 #: app/regex.c:991
 msgid "Regular expression too big"
-msgstr ""
+msgstr "Espressione regolare troppo grande"
 
 #: app/regex.c:992
 msgid "Unmatched ) or \\)"
-msgstr ""
+msgstr ") o \\) senza coppia"
 
 #: app/regex.c:5442
 msgid "No previous regular expression"
-msgstr ""
+msgstr "Non esiste un'espressione regolare precedente"
