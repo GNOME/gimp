@@ -21,7 +21,6 @@ noinst_LIBRARIES = libappcomposite.a
 libappcomposite_a_sources = \
 	gimp-composite.c		\
 	gimp-composite.h		\
-	gimp-composite-dispatch.c	\
 	gimp-composite-generic.c	\
 	gimp-composite-generic.h	\
 	gimp-composite-mmx.c		\
@@ -30,13 +29,17 @@ libappcomposite_a_sources = \
 	gimp-composite-sse.h		\
 	gimp-composite-util.h
 
-libappcomposite_a_built_sources = gimp-composite-dispatch.c
+libappcomposite_a_built_sources = \
+	gimp-composite-dispatch.c	\
+	gimp-composite-dispatch.h
 
 libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
 
 
-gimp-composite-dispatch.c: gimp-composite-generic.o make-gimp-composite-dispatch.py
-	./make-gimp-composite-dispatch.py gimp-composite-generic.o > gimp-composite-dispatch.c
+gimp-composite-dispatch.c: make-gimp-composite-dispatch.py
+	$(srcdir)/make-gimp-composite-dispatch.py $(builddir)/gimp-composite-generic.o > gimp-composite-dispatch.c
+
+gimp-composite-dispatch.h: gimp-composite-dispatch.c
 
 
 EXTRA_DIST = \
