@@ -53,130 +53,19 @@ register_text_tool_procs (Gimp *gimp)
   procedural_db_register (gimp, &text_get_extents_proc);
 }
 
-static gchar *
-text_xlfd_insert_size (gchar    *fontname,
-		       gdouble   size,
-		       SizeType  metric,
-		       gdouble   xresolution,
-		       gdouble   yresolution,
-		       gboolean  antialias)
-{
-  gchar *newfont, *workfont;
-  gchar size_buffer[16];
-  gchar xres_buffer[16];
-  gchar yres_buffer[16];
-  gint pos = 0;
-
-  if (size <= 0)
-    return NULL;
-
-  if (xresolution < GIMP_MIN_RESOLUTION ||
-      yresolution < GIMP_MIN_RESOLUTION ||
-      metric == PIXELS)
-    {
-      xresolution = yresolution = 0.0;
-    }
-  else
-    {
-      xresolution = MIN (xresolution, GIMP_MAX_RESOLUTION);
-      yresolution = MIN (yresolution, GIMP_MAX_RESOLUTION);
-    }
-
-  if (antialias)
-    size *= SUPERSAMPLE;
-
-  /*  Note: if metric == POINTS we either use the passed resolution (if
-   *        statement below) or we (implicitly) use the resolution hidden
-   *        in the fontname.
-   */
-  if (metric == POINTS && xresolution != 0.0)
-    {
-      /*  the xlfd uses decipoints  */
-      size *= 10;
-
-      /*  X allows only integer resolution values, so we do some
-       *  ugly calculations (starting with yres because the size of
-       *  a font is it's height)
-       */
-      if (yresolution < 1.0)
-	{
-	  size /= (1.0 / yresolution);
-	  xresolution *= (1.0 / yresolution);
-	  yresolution = 1.0;
-	}
-
-      /*  res may be != (int) res
-       *  (important only for very small resolutions)
-       */
-      size *= yresolution / (double) (int) yresolution;
-      xresolution /= yresolution / (double) (int) yresolution;
-
-      /*  finally, if xres became invalid by the above calculations  */
-      xresolution = CLAMP (xresolution, 1.0, GIMP_MAX_RESOLUTION);
-    }
-
-  sprintf (size_buffer, "%d", (int) size);
-  sprintf (xres_buffer, "%d", (int) xresolution);
-  sprintf (yres_buffer, "%d", (int) yresolution);
-
-  newfont = workfont = g_new (char, strlen (fontname) + 32);
-
-  while (*fontname)
-    {
-      *workfont++ = *fontname;
-
-      if (*fontname++ == '-')
-	{
-	  pos++;
-	  if ((pos == 7 && metric == PIXELS) ||
-	      (pos == 8 && metric == POINTS))
-	    {
-	      int len = strlen (size_buffer);
-	      memcpy (workfont, size_buffer, len);
-	      workfont += len;
-
-	      while (*fontname != '-')
-		fontname++;
-	    }
-	  else if (pos == 9 && metric == POINTS && xresolution != 0.0)
-	    {
-	      int len = strlen (xres_buffer);
-	      memcpy (workfont, xres_buffer, len);
-	      workfont += len;
-
-	      while (*fontname != '-')
-		fontname++;
-	    }
-	  else if (pos == 10 && metric == POINTS && yresolution != 0.0)
-	    {
-	      int len = strlen (yres_buffer);
-	      memcpy (workfont, yres_buffer, len);
-	      workfont += len;
-
-	      while (*fontname != '-')
-		fontname++;
-	    }
-	}
-    }
-
-   *workfont = '\0';
-   return newfont;
-}
 
 static gchar *
-text_xlfd_create (gchar    *foundry,
-		  gchar    *family,
-		  gchar    *weight,
-		  gchar    *slant,
-		  gchar    *set_width,
-		  gchar    *spacing,
-		  gchar    *registry,
-		  gchar    *encoding)
+text_fontname_create (gchar    *foundry,
+		      gchar    *family,
+		      gchar    *weight,
+		      gchar    *slant,
+		      gchar    *set_width,
+		      gchar    *spacing,
+		      gchar    *registry,
+		      gchar    *encoding)
 {
   /* create the fontname */
-  return g_strdup_printf ("-%s-%s-%s-%s-%s-*-*-*-*-*-%s-*-%s-%s",
-			  foundry, family, weight, slant, set_width,
-			  spacing, registry, encoding);
+  return g_strdup_printf ("%s %s", family, weight);
 }
 
 static Argument *
@@ -232,13 +121,10 @@ text_fontname_invoker (Gimp     *gimp,
 
   if (success)
     {
-      /*  default to pixels by passing 0.0 as resolution  */
-      real_fontname = text_xlfd_insert_size (fontname, size, size_type,
-					     0.0, 0.0, antialias);
+      real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
     
       text_layer = text_render (gimage, drawable, x, y, real_fontname, text,
 				border, antialias);
-    
       if (text_layer == NULL)
 	success = FALSE;
     
@@ -320,11 +206,10 @@ static ProcRecord text_fontname_proc =
 {
   "gimp_text_fontname",
   "Add text at the specified location as a floating selection or a new layer.",
-  "This tool requires font information as a fontname conforming to the 'X Logical Font Description Conventions'. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers. This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (-1), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels. If the"
-  "border is specified as -1, empty spaces around the text will not be cropped.",
+  "This tool requires a fontname matching an installed PangoFT2 font. You can specify the fontsize in units of pixels or points, and the appropriate metric is specified using the size_type argument. The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box. If the specified drawable parameter is valid, the text will be created as a floating selection attached to the drawable. If the drawable parameter is not valid (-1), the text will appear as a new layer. Finally, a border can be specified around the final rendered text. The border is measured in pixels.",
   "Martin Edlman & Sven Neumann",
   "Spencer Kimball & Peter Mattis",
-  "1998",
+  "1998- 2001",
   GIMP_INTERNAL,
   10,
   text_fontname_inargs,
@@ -367,9 +252,7 @@ text_get_extents_fontname_invoker (Gimp     *gimp,
 
   if (success)
     {
-      /*  default to pixels by passing 0.0 as resolution  */
-      real_fontname = text_xlfd_insert_size (fontname, size, size_type,
-					     0.0, 0.0, FALSE);
+      real_fontname = g_strdup_printf ("%s %d", fontname, (gint) size);
     
       success = text_get_extents (real_fontname, text,
 				  &width, &height,
@@ -446,7 +329,7 @@ static ProcRecord text_get_extents_fontname_proc =
   "This tool returns the width and height of a bounding box for the specified text string with the specified font information. Ascent and descent for the specified font are returned as well.",
   "Martin Edlman & Sven Neumann",
   "Spencer Kimball & Peter Mattis",
-  "1998",
+  "1998- 2001",
   GIMP_INTERNAL,
   4,
   text_get_extents_fontname_inargs,
@@ -511,7 +394,7 @@ text_invoker (Gimp     *gimp,
 
   argv[9].arg_type = GIMP_PDB_STRING;
   argv[9].value.pdb_pointer =
-    text_xlfd_create (foundry,
+    text_fontname_create (foundry,
 		      family,
 		      weight,
 		      slant,
@@ -694,7 +577,7 @@ text_get_extents_invoker (Gimp     *gimp,
 
   argv[3].arg_type = GIMP_PDB_STRING;
   argv[3].value.pdb_pointer =
-    text_xlfd_create (foundry,
+    text_fontname_create (foundry,
 		      family,
 		      weight,
 		      slant,

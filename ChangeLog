@@ -1,3 +1,19 @@
+2001-08-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c: return the created layer.
+
+	* app/pdb/text_tool_cmds.c
+	* libgimp/gimptexttool_pdb.c
+	* tools/pdbgen/pdb/text_tool.pdb: hacked a bit so scripts using the 
+	text_*_fontname procedures work again with the new text tool. 
+	The fontname is however no longer a X Logical Font Description, but 
+	the much simpler scheme that Pango understands: 
+	"[FAMILY-LIST] [STYLE-OPTIONS]". Interactive font selection is still
+	broken. The variants of the text PDB calls that pass the XLFD fields
+	directly should also work since the PDB now translates this to a
+	Pango-conform fontname. Later this API will die, but for the moment,
+	some backward compatibility can't hurt...
+
 2001-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.c: split "destroy" up in "dispose" and "finalize".

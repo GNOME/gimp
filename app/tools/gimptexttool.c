@@ -447,6 +447,7 @@ text_render (GimpImage    *gimage,
   PangoContext         *context;
   PangoLayout          *layout;
   PangoRectangle        ink;
+  PangoRectangle        logical;
   GimpImageType         layer_type;
   GimpLayer            *layer;
 
@@ -473,7 +474,7 @@ text_render (GimpImage    *gimage,
   pango_font_description_free (font_desc);
   pango_layout_set_text (layout, text, -1);
 
-  pango_layout_get_pixel_extents (layout, &ink, NULL);
+  pango_layout_get_pixel_extents (layout, &ink, &logical);
 
   if (ink.width > 0 && ink.height > 0)
     {
@@ -495,8 +496,13 @@ text_render (GimpImage    *gimage,
 
       bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
       
+      g_print ("ink rect: %d x %d @ %d, %d\n", 
+               ink.width, ink.height, ink.x, ink.y);
+      g_print ("logical rect: %d x %d @ %d, %d\n", 
+               logical.width, logical.height, logical.x, logical.y);
+
       pango_ft2_render_layout (&bitmap, layout, 
-                               - ink.x, 
+                               - ink.x,
                                - ink.height - ink.y);
       
       width  = ink.width  + 2 * border;
@@ -573,7 +579,7 @@ text_render (GimpImage    *gimage,
   g_object_unref (layout);
   g_object_unref (context);  
 
-  return NULL;
+  return layer;
 }
 
 gboolean
