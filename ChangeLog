@@ -1,5 +1,17 @@
 2000-06-18  Sven Neumann  <sven@gimp.org>
 
+	* AUTHORS: applied gimp-cornwell-000613-0 which brings the 
+	list of authors upto date including all translators and 
+	plug-in authors. Please check that you are listed if you have
+	contributed!
+
+	* gimp.1.in
+	* app/about_dialog.c: synced the authors lists
+
+	* INSTALL: we need gtk+-1.2.8 or newer
+	
+2000-06-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/rotate.c: slight speedup for 180-degrees
 
 2000-05-20  Nick Lamb  <njl195@zepler.org.uk>

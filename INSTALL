@@ -1,7 +1,7 @@
 There are six basic steps to building and installing the
 GIMP:
 
-  1. You need to have installed GTK version 1.2.7 or better. 
+  1. You need to have installed GTK version 1.2.8 or better. 
   2. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
      perl, etc.
