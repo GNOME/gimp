@@ -20,6 +20,7 @@
  *  what appears to be a mosaic, composed of small primitives,
  *  each of constant color and of an approximate size.
  *        Copyright (C) 1996  Spencer Kimball
+ *        Speedups by Elliot Lee
  */
 
 #include <math.h>
@@ -887,23 +888,19 @@ find_gradients (GDrawable *drawable,
 
   for (i = 0; i < height; i++)
     {
-      for (j = 0; j < width; j++)
+      for (j = 0; j < width; j++, dh++, dv++, gr++)
 	{
-	  hmax = dh[j] - 128;
-	  vmax = dv[j] - 128;
-
 	  /*  Find the gradient  */
-	  gradient = sqrt (SQR (hmax) + SQR (vmax));
-
 	  if (!j || !i || (j == width - 1) || (i == height - 1))
-	    gr[j] = MAG_THRESHOLD;
-	  else
-	    gr[j] = (guchar) gradient;
-	}
+	    *gr = MAG_THRESHOLD;
+	  else {
+	    hmax = *dh - 128;
+	    vmax = *dv - 128;
+	    
+	    *gr = (guchar)sqrt (SQR (hmax) + SQR (hmax));
+	  }
 
-      dh += width;
-      dv += width;
-      gr += width;
+	}
     }
 }
 
@@ -912,7 +909,7 @@ static void
 find_max_gradient (GPixelRgn *src_rgn,
 		   GPixelRgn *dest_rgn)
 {
-  guchar *s, *d;
+  guchar *s, *d, *s_iter, *s_end;
   gpointer pr;
   gint i, j;
   gint b;
@@ -931,14 +928,25 @@ find_max_gradient (GPixelRgn *src_rgn,
 	  for (j = 0; j < src_rgn->w; j++)
 	    {
 	      max = 0;
+#ifndef SLOW_CODE
+#define ABSVAL(x) ((x) >= 0 ? (x) : -(x))
+
+	      for(s_iter = s, s_end = s + src_rgn->bpp;
+		  s_iter < s_end; s_iter++) {
+		val = *s;
+		if(ABSVAL(val) > ABSVAL(max))
+		  max = val;
+	      }
+	      *d++ = max;
+#else
 	      for (b = 0; b < src_rgn->bpp; b++)
 		{
 		  val = (gint) s[b] - 128;
 		  if (abs (val) > abs (max))
 		    max = val;
 		}
-
 	      *d++ = (max + 128);
+#endif
 	      s += src_rgn->bpp;
 	    }
 
@@ -993,7 +1001,12 @@ gaussian_deriv (GPixelRgn *src_rgn,
   src = data;
   dest = data + length;
 
+#ifdef UNOPTIMIZED_CODE
   length = 3;    /*  static for speed  */
+#else
+  /* badhack :) */
+# define length 3
+#endif
 
   /*  initialize  */
   curve = curve_array + length;
@@ -1188,6 +1201,10 @@ gaussian_deriv (GPixelRgn *src_rgn,
 
   free (buf);
   free (data);
+#ifndef UNOPTIMIZED_CODE
+  /* end bad hack */
+#undef length
+#endif
 }
 
 /*
@@ -2105,8 +2122,8 @@ fill_poly_color (Polygon   *poly,
   gint min_x, min_y;
   gint max_x, max_y;
   gint size_x, size_y;
-  gint * max_scanlines;
-  gint * min_scanlines;
+  gint * max_scanlines, *max_scanlines_iter;
+  gint * min_scanlines, *min_scanlines_iter;
   gint * vals;
   gint val;
   gint pixel;
@@ -2118,6 +2135,8 @@ fill_poly_color (Polygon   *poly,
   gint supersample;
   gint supersample2;
   gint x1, y1, x2, y2;
+  Vertex *pts_tmp;
+  const int poly_npts = poly->npts;
 
   /*  Determine antialiasing  */
   if (mvals.antialiasing)
@@ -2132,15 +2151,29 @@ fill_poly_color (Polygon   *poly,
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   bytes = drawable->bpp;
-  for (i = 0; i < poly->npts; i++)
-    {
-      xs = (gint) ((i) ? poly->pts[i-1].x : poly->pts[poly->npts-1].x);
-      ys = (gint) ((i) ? poly->pts[i-1].y : poly->pts[poly->npts-1].y);
-      xe = (gint) poly->pts[i].x;
-      ye = (gint) poly->pts[i].y;
 
-      calc_spec_vec (vecs+i, xs, ys, xe, ye);
-    }
+  /* begin loop */
+  if(poly_npts) {
+    pts_tmp = poly->pts;
+    xs = (gint) pts_tmp[poly_npts-1].x;
+    ys = (gint) pts_tmp[poly_npts-1].y;
+    xe = (gint) pts_tmp->x;
+    ye = (gint) pts_tmp->y;
+  
+    calc_spec_vec (vecs, xs, ys, xe, ye);
+  
+    for (i = 1; i < poly_npts; i++)
+      {
+	xs = (gint) (pts_tmp->x);
+	ys = (gint) (pts_tmp->y);
+	pts_tmp++;
+	xe = (gint) pts_tmp->x;
+	ye = (gint) pts_tmp->y;
+	
+	calc_spec_vec (vecs+i, xs, ys, xe, ye);
+      }
+  }
+  /* end loop */
 
   polygon_extents (poly, &dmin_x, &dmin_y, &dmax_x, &dmax_y);
   min_x = (gint) dmin_x;
@@ -2151,43 +2184,62 @@ fill_poly_color (Polygon   *poly,
   size_y = (max_y - min_y) * supersample;
   size_x = (max_x - min_x) * supersample;
 
-  min_scanlines = (gint *) malloc (sizeof (gint) * size_y);
-  max_scanlines = (gint *) malloc (sizeof (gint) * size_y);
+  min_scanlines = min_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
+  max_scanlines = max_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x * supersample;
       max_scanlines[i] = min_x * supersample;
     }
 
-  for (i = 0; i < poly->npts; i++)
-    {
-      xs = (gint) ((i) ? poly->pts[i-1].x : poly->pts[poly->npts-1].x);
-      ys = (gint) ((i) ? poly->pts[i-1].y : poly->pts[poly->npts-1].y);
-      xe = (gint) poly->pts[i].x;
-      ye = (gint) poly->pts[i].y;
+  /* begin loop */
+  if(poly_npts) {
+    pts_tmp = poly->pts;
+    xs = (gint) pts_tmp[poly_npts-1].x;
+    ys = (gint) pts_tmp[poly_npts-1].y;
+    xe = (gint) pts_tmp->x;
+    ye = (gint) pts_tmp->y;
 
-      xs *= supersample;
-      ys *= supersample;
-      xe *= supersample;
-      ye *= supersample;
+    xs *= supersample;
+    ys *= supersample;
+    xe *= supersample;
+    ye *= supersample;
 
-      convert_segment (xs, ys, xe, ye, min_y * supersample,
-		       min_scanlines, max_scanlines);
-    }
+    convert_segment (xs, ys, xe, ye, min_y * supersample,
+		     min_scanlines, max_scanlines);
+
+    for (i = 1; i < poly_npts; i++)
+      {
+	xs = (gint) pts_tmp->x;
+	ys = (gint) pts_tmp->y;
+	pts_tmp++;
+	xe = (gint) pts_tmp->x;
+	ye = (gint) pts_tmp->y;
+
+	xs *= supersample;
+	ys *= supersample;
+	xe *= supersample;
+	ye *= supersample;
+
+	convert_segment (xs, ys, xe, ye, min_y * supersample,
+			 min_scanlines, max_scanlines);
+      }
+  }
+  /* end loop */
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0,
 		       drawable->width, drawable->height,
 		       TRUE, TRUE);
 
   vals = (gint *) malloc (sizeof (gint) * size_x);
-  for (i = 0; i < size_y; i++)
+  for (i = 0; i < size_y; i++, min_scanlines_iter++, max_scanlines_iter++)
     {
       if (! (i % supersample))
 	memset (vals, 0, sizeof (gint) * size_x);
 
       yy = (gdouble) i / (gdouble) supersample + min_y;
 
-      for (j = min_scanlines[i]; j < max_scanlines[i]; j++)
+      for (j = *min_scanlines_iter; j < *max_scanlines_iter; j++)
 	{
 	  x = j - min_x * supersample;
 	  vals[x] += 255;
@@ -2212,15 +2264,13 @@ fill_poly_color (Polygon   *poly,
 
 		      if (val > 0)
 			{
+
 			  xx = (gdouble) j / (gdouble) supersample + min_x;
-			  contrib = calc_spec_contrib (vecs, poly->npts, xx, yy);
+			  contrib = calc_spec_contrib (vecs, poly_npts, xx, yy);
 
 			  for (b = 0; b < bytes; b++)
 			    {
-			      if (contrib < 0.0)
-				pixel = col[b] + (gint) ((col[b] - back[b]) * contrib);
-			      else
-				pixel = col[b] + (gint) ((fore[b] - col[b]) * contrib);
+			      pixel = col[b] + (gint) (((contrib < 0.0)?(col[b] - back[b]):(fore[b] - col[b])) * contrib);
 
 			      buf[b] = ((pixel * val) + (back[b] * (255 - val))) / 255;
 			    }

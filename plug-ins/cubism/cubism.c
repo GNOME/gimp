@@ -17,6 +17,7 @@
  *
  * You can contact me at quartic@polloux.fciencias.unam.mx
  * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * Speedups by Elliot Lee
  */
 
 
@@ -96,7 +97,7 @@ static void      randomize_indices    (gint       count,
 static gdouble   fp_rand              (gdouble    val);
 static gint      int_rand             (gint       val);
 static gdouble   calc_alpha_blend     (gdouble *  vec,
-				       gdouble    dist,
+				       gdouble    one_over_dist,
 				       gdouble    x,
 				       gdouble    y);
 static void      polygon_add_point    (Polygon *  poly,
@@ -501,6 +502,27 @@ render_cubism (GDrawable *drawable)
   free (random_indices);
 }
 
+G_INLINE_FUNC gdouble
+calc_alpha_blend (gdouble *vec,
+		  gdouble  one_over_dist,
+		  gdouble  x,
+		  gdouble  y)
+{
+  gdouble r;
+
+  if (!one_over_dist)
+    return 1.0;
+  else
+    {
+      r = (vec[0] * x + vec[1] * y) * one_over_dist;
+      if (r < 0.2)
+	r = 0.2;
+      else if (r > 1.0)
+	r = 1.0;
+    }
+  return r;
+}
+
 static void
 fill_poly_color (Polygon   *poly,
 		 GDrawable *drawable,
@@ -514,22 +536,23 @@ fill_poly_color (Polygon   *poly,
   gint min_x, min_y;
   gint max_x, max_y;
   gint size_x, size_y;
-  gint * max_scanlines;
-  gint * min_scanlines;
-  gint * vals;
+  gint * max_scanlines, *max_scanlines_iter, *max_scanlines_end;
+  gint * min_scanlines, *min_scanlines_iter, *min_scanlines_end;
   gint val;
   gint alpha;
   gint bytes;
   guchar buf[4];
-  gint b, i, j, k, x, y;
+  gint i, j, x, y;
   gdouble sx, sy;
   gdouble ex, ey;
   gdouble xx, yy;
   gdouble vec[2];
-  gdouble dist;
+  gdouble dist, one_over_dist;
   gint supersample;
   gint supersample2;
   gint x1, y1, x2, y2;
+  gint *vals, *vals_iter, *vals_end;
+  gint pixel_gen_on_next_pass = -1;
 
   sx = poly->pts[0].x;
   sy = poly->pts[0].y;
@@ -539,9 +562,11 @@ fill_poly_color (Polygon   *poly,
   dist = sqrt (SQR (ex - sx) + SQR (ey - sy));
   if (dist > 0.0)
     {
-      vec[0] = (ex - sx) / dist;
-      vec[1] = (ey - sy) / dist;
-    }
+      one_over_dist = 1/dist;
+      vec[0] = (ex - sx) * one_over_dist;
+      vec[1] = (ey - sy) * one_over_dist;
+    } else
+      one_over_dist = 0.0;
 
   supersample = SUPERSAMPLE;
   supersample2 = SQR (supersample);
@@ -558,20 +583,37 @@ fill_poly_color (Polygon   *poly,
   size_y = (max_y - min_y) * supersample;
   size_x = (max_x - min_x) * supersample;
 
-  min_scanlines = (gint *) malloc (sizeof (gint) * size_y);
-  max_scanlines = (gint *) malloc (sizeof (gint) * size_y);
+  min_scanlines = min_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
+  max_scanlines = max_scanlines_iter = (gint *) malloc (sizeof (gint) * size_y);
   for (i = 0; i < size_y; i++)
     {
       min_scanlines[i] = max_x * supersample;
       max_scanlines[i] = min_x * supersample;
     }
 
-  for (i = 0; i < poly->npts; i++)
-    {
-      xs = (gint) ((i) ? poly->pts[i-1].x : poly->pts[poly->npts-1].x);
-      ys = (gint) ((i) ? poly->pts[i-1].y : poly->pts[poly->npts-1].y);
-      xe = (gint) poly->pts[i].x;
-      ye = (gint) poly->pts[i].y;
+  if(poly->npts) {
+    gint poly_npts = poly->npts;
+    Vertex *curptr;
+
+    xs = (gint) (poly->pts[poly_npts-1].x);
+    ys = (gint) (poly->pts[poly_npts-1].y);
+    xe = (gint) poly->pts[0].x;
+    ye = (gint) poly->pts[0].y;
+
+    xs *= supersample;
+    ys *= supersample;
+    xe *= supersample;
+    ye *= supersample;
+
+    convert_segment (xs, ys, xe, ye, min_y * supersample,
+		     min_scanlines, max_scanlines);
+
+    for(i = 1, curptr = &poly->pts[0]; i < poly_npts; i++) {
+      xs = (gint) curptr->x;
+      ys = (gint) curptr->y;
+      curptr++;
+      xe = (gint) curptr->x;
+      ye = (gint) curptr->y;
 
       xs *= supersample;
       ys *= supersample;
@@ -581,20 +623,22 @@ fill_poly_color (Polygon   *poly,
       convert_segment (xs, ys, xe, ye, min_y * supersample,
 		       min_scanlines, max_scanlines);
     }
+  }
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0,
 		       drawable->width, drawable->height,
 		       TRUE, TRUE);
 
   vals = (gint *) malloc (sizeof (gint) * size_x);
-  for (i = 0; i < size_y; i++)
+  for (i = 0; i < size_y; i++, min_scanlines_iter++, max_scanlines_iter++)
     {
-      if (! (i % supersample))
+      if (! (i % supersample)) {
 	memset (vals, 0, sizeof (gint) * size_x);
+      }
 
-      yy = (gdouble) i / (gdouble) supersample + min_y;
+      yy = (gdouble)i / (gdouble)supersample + min_y;
 
-      for (j = min_scanlines[i]; j < max_scanlines[i]; j++)
+      for (j = *min_scanlines_iter; j < *max_scanlines_iter; j++)
 	{
 	  x = j - min_x * supersample;
 	  vals[x] += 255;
@@ -612,21 +656,37 @@ fill_poly_color (Polygon   *poly,
 
 		  if (x >= x1 && x < x2)
 		    {
-		      val = 0;
-		      for (k = 0; k < supersample; k++)
-			val += vals[j + k];
+		      for (val = 0, vals_iter = &vals[j],
+			     vals_end = &vals_iter[supersample];
+			   vals_iter < vals_end;
+			   vals_iter++)
+			val += *vals_iter;
+
 		      val /= supersample2;
 
 		      if (val > 0)
 			{
 			  xx = (gdouble) j / (gdouble) supersample + min_x;
-			  alpha = (gint) (val * calc_alpha_blend (vec, dist, xx - sx, yy - sy));
+			  alpha = (gint) (val * calc_alpha_blend (vec, one_over_dist, xx - sx, yy - sy));
 
 			  gimp_pixel_rgn_get_pixel (&src_rgn, buf, x, y);
 
+#ifndef USE_READABLE_BUT_SLOW_CODE
+			  {
+			    guchar *buf_iter = buf,
+			      *col_iter = col,
+			      *buf_end = buf+bytes;
+
+			    for(; buf_iter < buf_end; buf_iter++, col_iter++)
+			      *buf_iter = ((guint)(*col_iter * alpha)
+					   + (((guint)*buf_iter)
+					      * (256 - alpha))) >> 8;
+			  }
+#else /* original, pre-ECL code */
 			  for (b = 0; b < bytes; b++)
 			    buf[b] = ((col[b] * alpha) + (buf[b] * (255 - alpha))) / 255;
 
+#endif
 			  gimp_pixel_rgn_set_pixel (&src_rgn, buf, x, y);
 			}
 		    }
@@ -671,27 +731,6 @@ convert_segment (gint  x1,
 	  xstart += xinc;
 	}
     }
-}
-
-static gdouble
-calc_alpha_blend (gdouble *vec,
-		  gdouble  dist,
-		  gdouble  x,
-		  gdouble  y)
-{
-  gdouble r;
-
-  if (!dist)
-    return 1.0;
-  else
-    {
-      r = (vec[1] * y + vec[0] * x) / dist;
-      if (r < 0.2)
-	r = 0.2;
-      else if (r > 1.0)
-	r = 1.0;
-    }
-  return r;
 }
 
 static void
