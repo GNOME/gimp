@@ -119,8 +119,8 @@ gimp_parasiterc_save(void)
   if (!fp)
     return;
 
-  fprintf (fp, _("# GIMP parasiterc\n"));
-  fprintf (fp, _("# This file will be entirely rewritten every time you quit the gimp.\n\n"));
+  fprintf (fp, _("# GIMP parasiterc\n"
+		"# This file will be entirely rewritten every time you quit the gimp.\n\n"));
   
   parasite_list_foreach (parasites, (GHFunc)save_func, fp);
 

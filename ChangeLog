@@ -1,5 +1,15 @@
 1999-07-27  Tomas Ogren  <stric@ing.umu.se>
 
+	* app/actionarea.c
+	* app/dodgeburn.c
+	* app/fuzzy_select.c
+	* app/gimpparasite.c
+	* app/gimpunit.c
+	* app/procedural_db_cmds.c
+	* app/resize.c: Misc i18n fixes
+
+1999-07-27  Tomas Ogren  <stric@ing.umu.se>
+
 	* app/preferences_dialog.c: Two more _()'s
 
 Mon Jul 26 20:11:01 MEST 1999  Sven Neumann <sven@gimp.org>
