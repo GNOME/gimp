@@ -1,3 +1,24 @@
+2005-01-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/gimppath.[ch]: removed these two files again.
+
+	* libgimpconfig/gimpconfig-path.[ch]: merged the path type and
+	param spec here. Renamed to GimpConfigPath and GimpParamConfigPath.
+
+	* libgimpbase/gimpbase.h
+	* libgimpbase/gimpbasetypes.[ch]
+	* libgimpconfig/gimpconfig-deserialize.c
+	* libgimpconfig/gimpconfig-params.h
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimppluginconfig.c
+	* app/widgets/gimppropwidgets.c: changed accordingly.
+
+	* libgimpbase/gimpbase.def: updated.
+
 2005-01-25  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpconfig/gimpconfig.def: added

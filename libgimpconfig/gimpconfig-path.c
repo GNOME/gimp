@@ -33,14 +33,154 @@
 #include "libgimp/libgimp-intl.h"
 
 
-static gchar        * gimp_config_path_expand_only (const gchar  *path,
-                                                    GError      **error);
-static inline gchar * extract_token                (const gchar **str);
+/**
+ * gimp_config_path_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for a GimpConfigPath string property
+ *
+ * Since: GIMP 2.4
+ **/
+GType
+gimp_config_path_get_type (void)
+{
+  static GType path_type = 0;
+
+  if (!path_type)
+    {
+      static const GTypeInfo type_info = { 0, };
+
+      path_type = g_type_register_static (G_TYPE_STRING, "GimpConfigPath",
+                                          &type_info, 0);
+    }
+
+  return path_type;
+}
+
+
+/*
+ * GIMP_TYPE_PARAM_CONFIG_PATH
+ */
+
+#define GIMP_PARAM_SPEC_CONFIG_PATH(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_CONFIG_PATH, GimpParamSpecConfigPath))
+
+typedef struct _GimpParamSpecConfigPath GimpParamSpecConfigPath;
+
+struct _GimpParamSpecConfigPath
+{
+  GParamSpecString    parent_instance;
+
+  GimpConfigPathType  type;
+};
+
+static void  gimp_param_config_path_class_init (GParamSpecClass *class);
+
+/**
+ * gimp_param_config_path_get_type:
+ *
+ * Reveals the object type
+ *
+ * Returns: the #GType for a directory path object
+ *
+ * Since: GIMP 2.4
+ **/
+GType
+gimp_param_config_path_get_type (void)
+{
+  static GType spec_type = 0;
+
+  if (!spec_type)
+    {
+      static const GTypeInfo type_info =
+      {
+        sizeof (GParamSpecClass),
+        NULL, NULL,
+        (GClassInitFunc) gimp_param_config_path_class_init,
+        NULL, NULL,
+        sizeof (GimpParamSpecConfigPath),
+        0, NULL, NULL
+      };
+
+      spec_type = g_type_register_static (G_TYPE_PARAM_STRING,
+                                          "GimpParamConfigPath",
+                                          &type_info, 0);
+    }
+
+  return spec_type;
+}
+
+static void
+gimp_param_config_path_class_init (GParamSpecClass *class)
+{
+  class->value_type = GIMP_TYPE_CONFIG_PATH;
+}
+
+/**
+ * gimp_param_spec_config_path:
+ * @name:          Canonical name of the param
+ * @nick:          Nickname of the param
+ * @blurb:         Brief desciption of param.
+ * @type:          a #GimpParamConfigPathType value.
+ * @default_value: Value to use if none is assigned.
+ * @flags:         a combination of #GParamFlags
+ *
+ * Creates a param spec to hold a filename, dir name,
+ * or list of file or dir names.
+ * See g_param_spec_internal() for more information.
+ *
+ * Returns: a newly allocated #GParamSpec instance
+ *
+ * Since: GIMP 2.4
+ **/
+GParamSpec *
+gimp_param_spec_config_path (const gchar        *name,
+                             const gchar        *nick,
+                             const gchar        *blurb,
+                             GimpConfigPathType  type,
+                             gchar              *default_value,
+                             GParamFlags         flags)
+{
+  GParamSpecString *pspec;
+
+  pspec = g_param_spec_internal (GIMP_TYPE_PARAM_CONFIG_PATH,
+                                 name, nick, blurb, flags);
+
+  pspec->default_value = default_value;
+
+  GIMP_PARAM_SPEC_CONFIG_PATH (pspec)->type = type;
+
+  return G_PARAM_SPEC (pspec);
+}
+
+/**
+ * gimp_param_spec_config_path_type:
+ * @pspec:         A #GParamSpec for a path param
+ *
+ * Tells whether the path param encodes a filename,
+ * dir name, or list of file or dir names.
+ *
+ * Returns: a #GimpConfigPathType value
+ *
+ * Since: GIMP 2.4
+ **/
+GimpConfigPathType
+gimp_param_spec_config_path_type (GParamSpec *pspec)
+{
+  g_return_val_if_fail (GIMP_IS_PARAM_SPEC_CONFIG_PATH (pspec), 0);
+
+  return GIMP_PARAM_SPEC_CONFIG_PATH (pspec)->type;
+}
 
 
 /*
  * GimpConfig path utilities
  */
+
+static gchar        * gimp_config_path_expand_only   (const gchar  *path,
+                                                      GError      **error);
+static inline gchar * gimp_config_path_extract_token (const gchar **str);
+
 
 gchar *
 gimp_config_build_data_path (const gchar *name)
@@ -141,7 +281,7 @@ gimp_config_path_expand_only (const gchar  *path,
       else
 #endif  /* G_OS_WIN32 */
 
-      if ((token = extract_token (&p)) != NULL)
+      if ((token = gimp_config_path_extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
             if (strcmp (substs[2*i], token) == 0)
@@ -225,7 +365,7 @@ gimp_config_path_expand_only (const gchar  *path,
       else
 #endif  /* G_OS_WIN32 */
 
-      if ((token = extract_token (&p)) != NULL)
+      if ((token = gimp_config_path_extract_token (&p)) != NULL)
         {
           for (i = 0; i < n_substs; i++)
             {
@@ -262,7 +402,7 @@ gimp_config_path_expand_only (const gchar  *path,
 }
 
 static inline gchar *
-extract_token (const gchar **str)
+gimp_config_path_extract_token (const gchar **str)
 {
   const gchar *p;
   gchar       *token;

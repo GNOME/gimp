@@ -105,10 +105,10 @@
                                    min, max, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_PATH(class, id,\
-                                      name, blurb, type, default, flags)\
+                                      name, blurb, path_type, default, flags)\
   g_object_class_install_property (class, id,\
-                                   gimp_param_spec_path (name, NULL, blurb,\
-                                   type, default,\
+                                   gimp_param_spec_config_path (name, NULL, blurb,\
+                                   path_type, default,\
                                    flags | GIMP_CONFIG_PARAM_FLAGS))
 #define GIMP_CONFIG_INSTALL_PROP_STRING(class, id,\
                                         name, blurb, default, flags)\

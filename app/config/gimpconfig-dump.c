@@ -346,15 +346,15 @@ dump_describe_param (GParamSpec *param_spec)
 	"megabytes or gigabytes. If no suffix is specified the size defaults "
 	"to being specified in kilobytes.";
     }
-  else if (g_type_is_a (type, GIMP_TYPE_PATH))
+  else if (g_type_is_a (type, GIMP_TYPE_CONFIG_PATH))
     {
-      switch (gimp_param_spec_path_type (param_spec))
+      switch (gimp_param_spec_config_path_type (param_spec))
 	{
-	case GIMP_PARAM_PATH_FILE:
+	case GIMP_CONFIG_PATH_FILE:
 	  values = "This is a single filename.";
 	  break;
 
-	case GIMP_PARAM_PATH_FILE_LIST:
+	case GIMP_CONFIG_PATH_FILE_LIST:
 	  switch (G_SEARCHPATH_SEPARATOR)
 	    {
 	    case ':':
@@ -369,11 +369,11 @@ dump_describe_param (GParamSpec *param_spec)
 	    }
 	  break;
 
-	case GIMP_PARAM_PATH_DIR:
+	case GIMP_CONFIG_PATH_DIR:
 	  values = "This is a single folder.";
 	  break;
 
-	case GIMP_PARAM_PATH_DIR_LIST:
+	case GIMP_CONFIG_PATH_DIR_LIST:
 	  switch (G_SEARCHPATH_SEPARATOR)
 	    {
 	    case ':':

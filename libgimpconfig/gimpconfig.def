@@ -13,6 +13,8 @@ EXPORTS
 	gimp_config_interface_get_type
 	gimp_config_is_equal_to
 	gimp_config_path_expand
+	gimp_config_path_expand
+	gimp_config_path_get_type
 	gimp_config_reset
 	gimp_config_reset_properties
 	gimp_config_serialize_changed_properties
@@ -39,6 +41,9 @@ EXPORTS
 	gimp_config_writer_printf
 	gimp_config_writer_revert
 	gimp_config_writer_string
+	gimp_param_config_path_get_type
+	gimp_param_spec_config_path
+	gimp_param_spec_config_path_type
 	gimp_scanner_destroy
 	gimp_scanner_new_file
 	gimp_scanner_new_string

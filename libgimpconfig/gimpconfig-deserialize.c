@@ -298,7 +298,7 @@ gimp_config_deserialize_value (GValue     *value,
     {
       return gimp_config_deserialize_memsize (value, prop_spec, scanner);
     }
-  else if (prop_spec->value_type == GIMP_TYPE_PATH)
+  else if (prop_spec->value_type == GIMP_TYPE_CONFIG_PATH)
     {
       return  gimp_config_deserialize_path (value, prop_spec, scanner);
     }

@@ -102,33 +102,33 @@ gimp_plugin_config_class_init (GimpPluginConfigClass *klass)
                                  PROP_FRACTALEXPLORER_PATH,
                                  "fractalexplorer-path",
                                  FRACTALEXPLORER_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR_LIST,
+				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("fractalexplorer"),
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GFIG_PATH,
                                  "gfig-path", GFIG_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR_LIST,
+				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("gfig"),
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GFLARE_PATH,
                                  "gflare-path", GFLARE_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR_LIST,
+				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("gflare"),
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_GIMPRESSIONIST_PATH,
                                  "gimpressionist-path",
                                  GIMPRESSIONIST_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR_LIST,
+				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("gimpressionist"),
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class,
                                  PROP_SCRIPT_FU_PATH,
                                  "script-fu-path",
                                  SCRIPT_FU_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR_LIST,
+				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("scripts"),
                                  0);
 }

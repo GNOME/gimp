@@ -69,12 +69,6 @@ void                  gimp_flags_set_value_descriptions (GType                fl
 const GimpFlagsDesc * gimp_flags_get_value_descriptions (GType                flags_type);
 
 
-#define GIMP_TYPE_PATH                  (gimp_path_get_type ())
-#define GIMP_VALUE_HOLDS_PATH(value)    (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_PATH))
-
-GType                 gimp_path_get_type                (void) G_GNUC_CONST;
-
-
 G_END_DECLS
 
 #endif  /* __GIMP_BASE_TYPES_H__ */

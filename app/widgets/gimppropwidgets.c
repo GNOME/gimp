@@ -1607,7 +1607,7 @@ gimp_prop_file_entry_new (GObject     *config,
   gchar      *value;
 
   param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_PATH, G_STRFUNC);
+                                 GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1724,14 +1724,15 @@ gimp_prop_path_editor_new (GObject     *config,
   gchar      *filename;
 
   path_param_spec = check_param_spec (config, path_property_name,
-                                      GIMP_TYPE_PARAM_PATH, G_STRFUNC);
+                                      GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
   if (! path_param_spec)
     return NULL;
 
   if (writable_property_name)
     {
       writable_param_spec = check_param_spec (config, writable_property_name,
-                                              GIMP_TYPE_PARAM_PATH, G_STRFUNC);
+                                              GIMP_TYPE_PARAM_CONFIG_PATH,
+                                              G_STRFUNC);
       if (! writable_param_spec)
         return NULL;
     }

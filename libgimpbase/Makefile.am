@@ -88,8 +88,6 @@ libgimpbase_sources = \
 	gimpparasite.h		\
 	gimpparasiteio.c	\
 	gimpparasiteio.h	\
-	gimppath.h		\
-	gimppath.c		\
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpsignal.c            \
@@ -121,7 +119,6 @@ libgimpbaseinclude_HEADERS = \
 	gimpmemsize.h		\
 	gimpparasite.h		\
 	gimpparasiteio.h	\
-	gimppath.h		\
 	gimpsignal.h		\
 	gimpunit.h		\
 	gimputils.h

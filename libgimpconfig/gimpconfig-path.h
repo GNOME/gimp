@@ -24,9 +24,52 @@
 #define __GIMP_CONFIG_PATH_H__
 
 
-gchar  * gimp_config_path_expand (const gchar  *path,
-                                  gboolean      recode,
-                                  GError      **error);
+/*
+ * GIMP_TYPE_CONFIG_PATH
+ */
+
+#define GIMP_TYPE_CONFIG_PATH               (gimp_config_path_get_type ())
+#define GIMP_VALUE_HOLDS_CONFIG_PATH(value) (G_TYPE_CHECK_VALUE_TYPE ((value), GIMP_TYPE_CONFIG_PATH))
+
+GType               gimp_config_path_get_type        (void) G_GNUC_CONST;
+
+
+
+/*
+ * GIMP_TYPE_PARAM_CONFIG_PATH
+ */
+
+typedef enum
+{
+  GIMP_CONFIG_PATH_FILE,
+  GIMP_CONFIG_PATH_FILE_LIST,
+  GIMP_CONFIG_PATH_DIR,
+  GIMP_CONFIG_PATH_DIR_LIST
+} GimpConfigPathType;
+
+
+#define GIMP_TYPE_PARAM_CONFIG_PATH            (gimp_param_config_path_get_type ())
+#define GIMP_IS_PARAM_SPEC_CONFIG_PATH(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_CONFIG_PATH))
+
+GType               gimp_param_config_path_get_type  (void) G_GNUC_CONST;
+
+GParamSpec        * gimp_param_spec_config_path      (const gchar  *name,
+                                                      const gchar  *nick,
+                                                      const gchar  *blurb,
+                                                      GimpConfigPathType  type,
+                                                      gchar        *default_value,
+                                                      GParamFlags   flags);
+
+GimpConfigPathType  gimp_param_spec_config_path_type (GParamSpec   *pspec);
+
+
+/*
+ * GimpConfigPath utilities
+ */
+
+gchar             * gimp_config_path_expand          (const gchar  *path,
+                                                      gboolean      recode,
+                                                      GError      **error);
 
 
 #endif /* __GIMP_CONFIG_PATH_H__ */

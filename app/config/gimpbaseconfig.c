@@ -102,12 +102,12 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_TEMP_PATH,
                                  "temp-path", TEMP_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR,
+				 GIMP_CONFIG_PATH_DIR,
                                  "${gimp_dir}" G_DIR_SEPARATOR_S "tmp",
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_SWAP_PATH,
                                  "swap-path", SWAP_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR,
+				 GIMP_CONFIG_PATH_DIR,
                                  "${gimp_dir}",
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_STINGY_MEMORY_USE,

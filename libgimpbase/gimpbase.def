@@ -44,10 +44,7 @@ EXPORTS
 	gimp_message_handler_type_get_type
 	gimp_paint_application_mode_get_type
 	gimp_param_memsize_get_type
-	gimp_param_path_get_type
 	gimp_param_spec_memsize
-	gimp_param_spec_path
-	gimp_param_spec_path_type
 	gimp_param_spec_unit
 	gimp_param_unit_get_type
 	gimp_parasite_compare
@@ -63,9 +60,7 @@ EXPORTS
 	gimp_parasite_name
 	gimp_parasite_new
 	gimp_path_free
-	gimp_path_get_type
 	gimp_path_get_user_writable_dir
-	gimp_path_parse
 	gimp_path_to_str
 	gimp_pdb_arg_type_get_type
 	gimp_pdb_proc_type_get_type

@@ -222,7 +222,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_THEME_PATH,
                                  "theme-path", THEME_PATH_BLURB,
-				 GIMP_PARAM_PATH_DIR_LIST,
+				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("themes"),
                                  GIMP_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
@@ -248,7 +248,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  0);
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_WEB_BROWSER,
                                  "web-browser", WEB_BROWSER_BLURB,
-                                 GIMP_PARAM_PATH_FILE,
+                                 GIMP_CONFIG_PATH_FILE,
                                  DEFAULT_WEB_BROWSER,
                                  0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_TOOLBOX_WINDOW_HINT,
