@@ -1,5 +1,9 @@
 2004-04-19  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdrawabletreeview.c: removed unused includes.
+
+2004-04-19  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.[ch]
 	* app/gui/preferences-dialog.c: replaced
 	gimp_prop_boolean_option_menu_new() with

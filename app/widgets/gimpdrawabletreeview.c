@@ -23,29 +23,19 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-bucket-fill.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
-#include "core/gimplayer.h"
-#include "core/gimpmarshal.h"
 #include "core/gimppattern.h"
 #include "core/gimptoolinfo.h"
 
-#include "gimpcellrenderertoggle.h"
-#include "gimpchanneltreeview.h"
 #include "gimpdnd.h"
-#include "gimpitemfactory.h"
-#include "gimplayertreeview.h"
-#include "gimppreviewrenderer.h"
+#include "gimpdrawabletreeview.h"
 
 #include "gimp-intl.h"
 
