@@ -2,10 +2,11 @@
 gimpmisc
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Miscellaneous functions: gimp_version.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Miscellaneous functions: gimp_version.
 
 </para>
 

@@ -2,10 +2,11 @@
 gimptools
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Access to common toolbox tools.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions giving access to common toolbox tools.
 
 </para>
 

@@ -2,10 +2,11 @@
 gimptexttool
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for controlling the text tool.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions for controlling the text tool.
 
 </para>
 

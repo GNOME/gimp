@@ -2,10 +2,11 @@
 gimpundo
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Control of undo/redo.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Control of undo/redo.
 
 </para>
 

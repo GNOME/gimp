@@ -2,10 +2,11 @@
 gimpfileops
 
 <!-- ##### SECTION Short_Description ##### -->
-
+File operations (load, save, etc.)
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+File operations (load, save, etc.)
 
 </para>
 

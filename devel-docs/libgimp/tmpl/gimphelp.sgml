@@ -2,10 +2,11 @@
 gimphelp
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Loading help pages using gimp_help.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Loading help pages using gimp_help.
 
 </para>
 

@@ -2,10 +2,12 @@
 gimppixelrgn
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for operating on pixel regions.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions for operating on pixel regions.  These functions provide
+fast ways of accessing and modifying portions of a drawable.
 
 </para>
 

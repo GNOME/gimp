@@ -1,5 +1,10 @@
 2002-12-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/tmpl/*.sgml: applied a patch from Akkana that adds short
+	descriptions to all libgimp pages (#100187).
+
+2002-12-03  Sven Neumann  <sven@gimp.org>
+
 	* README.gtkdoc: updated.
 
 2002-12-01  Sven Neumann  <sven@gimp.org>

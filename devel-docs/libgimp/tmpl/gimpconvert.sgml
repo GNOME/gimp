@@ -2,10 +2,11 @@
 gimpconvert
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Conversions between RGB, indexed, and grayscale modes.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Conversions between RGB, indexed, and grayscale modes.
 
 </para>
 

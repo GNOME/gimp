@@ -2,10 +2,11 @@
 gimppalette
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for setting colors in the palette.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions for setting colors in the palette.
 
 </para>
 

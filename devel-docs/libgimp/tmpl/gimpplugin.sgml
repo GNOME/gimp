@@ -2,10 +2,11 @@
 gimpplugin
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions useful for plugins, e.g. registration and progress indicators.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions useful for plugins, e.g. registration and progress indicators.
 
 </para>
 

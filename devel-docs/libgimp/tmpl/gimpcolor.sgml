@@ -2,10 +2,11 @@
 gimpcolor
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for manipulating color.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions for manipulating color, including curves and histograms.
 
 </para>
 

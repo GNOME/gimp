@@ -2,10 +2,11 @@
 gimpdisplay
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions to create, delete and flush new displays (views) on an image.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions to create, delete and flush new displays (views) on an image.
 
 </para>
 

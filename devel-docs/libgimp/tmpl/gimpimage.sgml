@@ -2,10 +2,12 @@
 gimpimage
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Operations on complete images.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Operations on complete images: creation, resizing/rescaling,
+and operations involving multiple layers.
 
 </para>
 

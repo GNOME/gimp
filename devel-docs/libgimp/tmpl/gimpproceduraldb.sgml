@@ -2,10 +2,11 @@
 gimpproceduraldb
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions for querying and changing procedural database (PDB) entries.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions for querying and changing procedural database (PDB) entries.
 
 </para>
 

@@ -2,10 +2,11 @@
 gimpdrawable
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Functions to manipulate drawables.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
+Functions to manipulate drawables.
 
 </para>
 
