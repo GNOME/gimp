@@ -415,7 +415,19 @@ menus_foreach (gpointer key,
 	       gpointer value,
 	       gpointer user_data)
 {
-  fprintf ((FILE*) user_data, "(menu-path \"%s\" \"%s\")\n", (char*) key, (char*) value);
+  char accel[64];
+  int i, j;
+ 
+  for (i = j = 0; ((char*) value)[i] != '\0'; i++, j++)
+    {
+      if (((char *) value)[i] == '"' || ((char *) value)[i] == '\\')
+        accel[j++] = '\\';
+      accel[j] = ((char *) value)[i];
+    }
+ 
+  accel[j] = '\0';
+ 
+  fprintf ((FILE*) user_data, "(menu-path \"%s\" \"%s\")\n", (char*) key, accel);
 }
 
 static gint

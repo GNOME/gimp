@@ -865,6 +865,10 @@ undo_pop_transform (GImage *gimage,
   double d;
   int i;
 
+  /* Can't have ANY tool selected - maybe a plugin running */
+  if (active_tool == NULL)
+    return TRUE;
+
   tc = (TransformCore *) active_tool->private;
   tu = (TransformUndo *) tu_ptr;
 
@@ -951,6 +955,10 @@ undo_pop_paint (GImage *gimage,
   PaintCore * pc;
   PaintUndo * pu;
   double tmp;
+
+  /* Can't have ANY tool selected - maybe a plugin running */
+  if (active_tool == NULL)
+    return TRUE;
 
   pc = (PaintCore *) active_tool->private;
   pu = (PaintUndo *) pu_ptr;

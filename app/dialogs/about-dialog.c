@@ -6,13 +6,12 @@
 #include "interface.h"
 
 #define ANIMATION_STEPS 16
-
+#define ANIMATION_SIZE 2
 
 static int  about_dialog_load_logo (GtkWidget *window);
 static void about_dialog_destroy (void);
 static void about_dialog_unmap (void);
 static int  about_dialog_logo_expose (GtkWidget *widget, GdkEventExpose *event);
-static int  about_dialog_scroll_expose (GtkWidget *widget, GdkEventExpose *event);
 static int  about_dialog_button (GtkWidget *widget, GdkEventButton *event);
 static int  about_dialog_timer (gpointer data);
 
@@ -79,6 +78,7 @@ static char *scroll_text[] =
   "James Robinson",
   "Mike Schaeffer",
   "Tracy Scott",
+  "Manish Singh",
   "Eiichi Takamori",
   "Tristan Tarrant",
   "Owen Taylor",
@@ -98,7 +98,7 @@ about_dialog_create (int timeout)
 {
   GtkStyle *style;
   GtkWidget *vbox;
-  GtkWidget *frame;
+  GtkWidget *aboutframe;
   GtkWidget *label;
   GtkWidget *alignment;
   gint max_width;
@@ -132,18 +132,18 @@ about_dialog_create (int timeout)
       gtk_container_add (GTK_CONTAINER (about_dialog), vbox);
       gtk_widget_show (vbox);
 
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_container_border_width (GTK_CONTAINER (frame), 0);
-      gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-      gtk_widget_show (frame);
+      aboutframe = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (aboutframe), GTK_SHADOW_IN);
+      gtk_container_border_width (GTK_CONTAINER (aboutframe), 0);
+      gtk_box_pack_start (GTK_BOX (vbox), aboutframe, TRUE, TRUE, 0);
+      gtk_widget_show (aboutframe);
 
       logo_area = gtk_drawing_area_new ();
       gtk_signal_connect (GTK_OBJECT (logo_area), "expose_event",
 			  (GtkSignalFunc) about_dialog_logo_expose, NULL);
       gtk_drawing_area_size (GTK_DRAWING_AREA (logo_area), logo_width, logo_height);
       gtk_widget_set_events (logo_area, GDK_EXPOSURE_MASK);
-      gtk_container_add (GTK_CONTAINER (frame), logo_area);
+      gtk_container_add (GTK_CONTAINER (aboutframe), logo_area);
       gtk_widget_show (logo_area);
 
       gtk_widget_realize (logo_area);
@@ -170,28 +170,26 @@ about_dialog_create (int timeout)
       gtk_box_pack_start (GTK_BOX (vbox), alignment, FALSE, TRUE, 0);
       gtk_widget_show (alignment);
 
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-      gtk_container_border_width (GTK_CONTAINER (frame), 0);
-      gtk_container_add (GTK_CONTAINER (alignment), frame);
-      gtk_widget_show (frame);
+      aboutframe = gtk_frame_new (NULL);
+      gtk_frame_set_shadow_type (GTK_FRAME (aboutframe), GTK_SHADOW_IN);
+      gtk_container_border_width (GTK_CONTAINER (aboutframe), 0);
+      gtk_container_add (GTK_CONTAINER (alignment), aboutframe);
+      gtk_widget_show (aboutframe);
 
       max_width = 0;
       for (i = 0; i < nscroll_texts; i++)
 	{
-	  scroll_text_widths[i] = gdk_string_width (frame->style->font, scroll_text[i]);
+	  scroll_text_widths[i] = gdk_string_width (aboutframe->style->font, scroll_text[i]);
 	  max_width = MAX (max_width, scroll_text_widths[i]);
 	}
 
       scroll_area = gtk_drawing_area_new ();
-      gtk_signal_connect (GTK_OBJECT (scroll_area), "expose_event",
-			  (GtkSignalFunc) about_dialog_scroll_expose, NULL);
       gtk_drawing_area_size (GTK_DRAWING_AREA (scroll_area),
 			     max_width + 10,
-			     frame->style->font->ascent +
-			     frame->style->font->descent);
-      gtk_widget_set_events (scroll_area, GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
-      gtk_container_add (GTK_CONTAINER (frame), scroll_area);
+			     aboutframe->style->font->ascent +
+			     aboutframe->style->font->descent);
+      gtk_widget_set_events (scroll_area, GDK_BUTTON_PRESS_MASK);
+      gtk_container_add (GTK_CONTAINER (aboutframe), scroll_area);
       gtk_widget_show (scroll_area);
 
       gtk_widget_realize (scroll_area);
@@ -300,8 +298,8 @@ about_dialog_load_logo (GtkWidget *window)
 
   fclose (fp);
 
-  dissolve_width = logo_width / 2;
-  dissolve_height = logo_height / 2;
+  dissolve_width = (logo_width / ANIMATION_SIZE)+(logo_width % ANIMATION_SIZE ==0 ?0 : 1);
+  dissolve_height = (logo_height / ANIMATION_SIZE)+(logo_height % ANIMATION_SIZE ==0 ?0 : 1);
 
   dissolve_map = g_new (guchar, dissolve_width * dissolve_height);
 
@@ -364,21 +362,6 @@ about_dialog_logo_expose (GtkWidget      *widget,
 }
 
 static int
-about_dialog_scroll_expose (GtkWidget      *widget,
-			    GdkEventExpose *event)
-{
-  if (!scroll_pixmap)
-    scroll_pixmap = gdk_pixmap_new (widget->window,
-				    widget->allocation.width,
-				    widget->allocation.height,
-				    -1);
-
-  gdk_window_clear (scroll_area->window);
-
-  return FALSE;
-}
-
-static int
 about_dialog_button (GtkWidget      *widget,
 		     GdkEventButton *event)
 {
@@ -402,33 +385,43 @@ about_dialog_timer (gpointer data)
 
   if (do_animation)
     {
-      for (i = 0, k = 0; i < dissolve_height; i++)
-	for (j = 0; j < dissolve_width; j++, k++)
-	  if (frame == dissolve_map[k])
-	    {
-	      gdk_draw_pixmap (logo_area->window,
-			       logo_area->style->black_gc,
-			       logo_pixmap,
-			       j * 2, i * 2, j * 2, i * 2,
-			       2, 2);
-	    }
-
-      frame += 1;
-
-      if (frame == ANIMATION_STEPS)
+      if(logo_area->allocation.width != 1)
 	{
-	  do_animation = FALSE;
-	  do_scrolling = TRUE;
-	  frame = 0;
+	  for (i = 0, k = 0; i < dissolve_height; i++)
+	    for (j = 0; j < dissolve_width; j++, k++)
+	      if (frame >= dissolve_map[k])
+		{
+		  gdk_draw_pixmap (logo_area->window,
+				   logo_area->style->black_gc,
+				   logo_pixmap,
+				   j * ANIMATION_SIZE, i * ANIMATION_SIZE, j * ANIMATION_SIZE, i * ANIMATION_SIZE,
+				   ANIMATION_SIZE, ANIMATION_SIZE);
+		}
 
-	  timer = gtk_timeout_add (75, about_dialog_timer, NULL);
+	  frame += 1;
 
-	  return FALSE;
+	  if (frame == ANIMATION_STEPS)
+	    {
+	      do_animation = FALSE;
+	      do_scrolling = TRUE;
+	      frame = 0;
+
+	      timer = gtk_timeout_add (75, about_dialog_timer, NULL);
+
+	      return FALSE;
+	    }
 	}
     }
 
   if (do_scrolling)
     {
+      if (!scroll_pixmap)
+	scroll_pixmap = gdk_pixmap_new (scroll_area->window,
+					scroll_area->allocation.width,
+					scroll_area->allocation.height,
+					-1);
+  
+
       switch (scroll_state)
 	{
 	case 1:

@@ -1,3 +1,14 @@
+Mon Dec  8 02:13:36 PST 1997  Manish Singh <yosh@gimp.org>
+
+	* app/about_dialog.c: Added Nathan Summers patch to make it
+	work better
+
+	* app/menus.c: Added Michael Natterer's patch to save menu
+        accelerators with chars that need to be escaped properly
+
+	* app/undo.c: Added Andy Thomas's patch to check for a NULL
+	active_tool in the undo (so it can work with plugins)
+
 Sun Dec  7 17:05:32 PST 1997  Manish Singh <yosh@gimp.org>
 
 	* added Sven Neumann's patch to the scale and resize dialogs for		ratio input fields (app/resize.h, app/resize.c)
