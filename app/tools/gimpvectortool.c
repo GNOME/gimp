@@ -325,7 +325,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
       if (gimp_draw_tool_on_vectors (draw_tool, gdisp, coords, TARGET, TARGET,
                                      NULL, NULL, NULL, NULL, NULL, &vectors))
         {
-          gimp_vector_tool_set_vectors (vector_tool, vectors); 
+          gimp_vector_tool_set_vectors (vector_tool, vectors);
           gimp_image_set_active_vectors (gdisp->gimage, vectors);
         }
       vector_tool->function = VECTORS_FINISHED;
@@ -441,7 +441,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                           TRUE, TRUE);
               vector_tool->undo_motion = TRUE;
             }
-          
+
           gimp_draw_tool_on_vectors_handle (GIMP_DRAW_TOOL (tool), gdisp,
                                             vector_tool->vectors, coords,
                                             TARGET, TARGET,
@@ -506,7 +506,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                       vector_tool->cur_anchor, TRUE, TRUE);
           vector_tool->undo_motion = TRUE;
         }
-        
+
       if (vector_tool->cur_position > 1.0 / 6.0)
         {
           gimp_vectors_anchor_select (vector_tool->vectors,
@@ -515,7 +515,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
                                       (vector_tool->cur_position >= 5.0 / 6.0));
           vector_tool->undo_motion = TRUE;
         }
-        
+
     }
 
 
@@ -652,18 +652,19 @@ gimp_vector_tool_button_release (GimpTool        *tool,
 
   vector_tool->function = VECTORS_FINISHED;
 
-  if (!vector_tool->undo_motion ||
-      (state & GDK_BUTTON3_MASK && vector_tool->have_undo))
+  if (vector_tool->have_undo &&
+      (! vector_tool->undo_motion || (state & GDK_BUTTON3_MASK)))
     {
       GimpUndo            *undo;
       GimpUndoAccumulator  accum = { 0, };
 
       undo = gimp_undo_stack_pop_undo (gdisp->gimage->undo_stack,
                                        GIMP_UNDO_MODE_UNDO, &accum);
-      
+
       gimp_image_undo_event (gdisp->gimage, GIMP_UNDO_EVENT_UNDO_EXPIRED, undo);
 
       gimp_undo_free (undo, GIMP_UNDO_MODE_UNDO);
+      g_object_unref (undo);
     }
 
   vector_tool->have_undo = FALSE;
@@ -1666,7 +1667,7 @@ gimp_vector_tool_move_selected_anchors (GimpVectorTool *vector_tool,
   GList *anchors;
   GList *list;
   GimpCoords offset = { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0 };
-      
+
   offset.x = x;
   offset.y = y;
 

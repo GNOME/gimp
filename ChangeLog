@@ -1,3 +1,11 @@
+2004-03-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpvectortool.c (gimp_vector_tool_button_release):
+	fixed condition which triggers the path tool's undo hack.  Fixes
+	bug #138086. Also g_object_unref() the undo step.
+
+	Removed trailing whitespace.
+
 2004-03-25  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimp.c
