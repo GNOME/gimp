@@ -38,45 +38,50 @@
 #include "gimpthumbnail.h"
 
 
-#define TAG_DESCRIPTION        "tEXt::Description"
-#define TAG_SOFTWARE           "tEXt::Software"
-#define TAG_THUMB_URI          "tEXt::Thumb::URI"
-#define TAG_THUMB_MTIME        "tEXt::Thumb::MTime"
-#define TAG_THUMB_FILESIZE     "tEXt::Thumb::Size"
-#define TAG_THUMB_IMAGE_WIDTH  "tEXt::Thumb::Image::Width"
-#define TAG_THUMB_IMAGE_HEIGHT "tEXt::Thumb::Image::Height"
-#define TAG_THUMB_GIMP_TYPE    "tEXt::Thumb::X-GIMP::Type"
-#define TAG_THUMB_GIMP_LAYERS  "tEXt::Thumb::X-GIMP::Layers"
+#define TAG_DESCRIPTION         "tEXt::Description"
+#define TAG_SOFTWARE            "tEXt::Software"
+#define TAG_THUMB_URI           "tEXt::Thumb::URI"
+#define TAG_THUMB_MTIME         "tEXt::Thumb::MTime"
+#define TAG_THUMB_FILESIZE      "tEXt::Thumb::Size"
+#define TAG_THUMB_IMAGE_WIDTH   "tEXt::Thumb::Image::Width"
+#define TAG_THUMB_IMAGE_HEIGHT  "tEXt::Thumb::Image::Height"
+#define TAG_THUMB_GIMP_TYPE     "tEXt::Thumb::X-GIMP::Type"
+#define TAG_THUMB_GIMP_LAYERS   "tEXt::Thumb::X-GIMP::Layers"
 
 
 enum
 {
   PROP_0,
-  PROP_URI,
-  PROP_STATE,
-  PROP_MTIME,
-  PROP_FILESIZE,
-  PROP_WIDTH,
-  PROP_HEIGHT,
-  PROP_TYPE,
-  PROP_NUM_LAYERS
+  PROP_IMAGE_STATE,
+  PROP_IMAGE_URI,
+  PROP_IMAGE_MTIME,
+  PROP_IMAGE_FILESIZE,
+  PROP_IMAGE_WIDTH,
+  PROP_IMAGE_HEIGHT,
+  PROP_IMAGE_TYPE,
+  PROP_IMAGE_NUM_LAYERS,
+  PROP_THUMB_STATE
 };
 
 
-static void         gimp_thumbnail_class_init      (GimpThumbnailClass *klass);
-static void         gimp_thumbnail_init            (GimpThumbnail  *thumbnail);
-static void         gimp_thumbnail_finalize        (GObject        *object);
-static void         gimp_thumbnail_set_property    (GObject        *object,
+static void        gimp_thumbnail_class_init       (GimpThumbnailClass *klass);
+static void        gimp_thumbnail_init             (GimpThumbnail  *thumbnail);
+static void        gimp_thumbnail_finalize         (GObject        *object);
+static void        gimp_thumbnail_set_property     (GObject        *object,
                                                     guint           property_id,
                                                     const GValue   *value,
                                                     GParamSpec     *pspec);
-static void         gimp_thumbnail_get_property    (GObject        *object,
+static void        gimp_thumbnail_get_property     (GObject        *object,
                                                     guint           property_id,
                                                     GValue         *value,
                                                     GParamSpec     *pspec);
-static void         gimp_thumbnail_reset_info      (GimpThumbnail  *thumbnail);
+static void        gimp_thumbnail_invalidate_thumb (GimpThumbnail  *thumbnail);
+static void        gimp_thumbnail_reset_info       (GimpThumbnail  *thumbnail);
 
-static GdkPixbuf  * gimp_thumbnail_read_png_thumb  (GimpThumbnail  *thumbnail,
+static void        gimp_thumbnail_update_image     (GimpThumbnail  *thumbnail);
+static void        gimp_thumbnail_update_thumb     (GimpThumbnail  *thumbnail);
+
+static GdkPixbuf * gimp_thumbnail_read_png_thumb   (GimpThumbnail  *thumbnail,
                                                     GimpThumbSize   thumb_size,
                                                     GError        **error);
 
@@ -126,74 +131,80 @@ gimp_thumbnail_class_init (GimpThumbnailClass *klass)
   object_class->get_property = gimp_thumbnail_get_property;
 
   g_object_class_install_property (object_class,
-				   PROP_URI,
-				   g_param_spec_string ("uri", NULL,
-                                                        NULL,
-							NULL,
-							G_PARAM_READWRITE));
-  g_object_class_install_property (object_class,
-				   PROP_STATE,
-				   g_param_spec_enum ("state", NULL,
+				   PROP_IMAGE_STATE,
+				   g_param_spec_enum ("image-state", NULL,
                                                       NULL,
                                                       GIMP_TYPE_THUMB_STATE,
                                                       GIMP_THUMB_STATE_UNKNOWN,
                                                       G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_MTIME,
+				   PROP_IMAGE_URI,
+				   g_param_spec_string ("image-uri", NULL,
+                                                        NULL,
+							NULL,
+							G_PARAM_READWRITE));
+  g_object_class_install_property (object_class,
+				   PROP_IMAGE_MTIME,
 				   g_param_spec_int64 ("image-mtime", NULL,
                                                        NULL,
                                                        0, G_MAXINT64, 0,
                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_FILESIZE,
+				   PROP_IMAGE_FILESIZE,
 				   g_param_spec_int64 ("image-filesize", NULL,
                                                        NULL,
                                                        0, G_MAXINT64, 0,
                                                        G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_WIDTH,
+				   PROP_IMAGE_WIDTH,
 				   g_param_spec_int ("image-width", NULL,
                                                      NULL,
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-				   PROP_HEIGHT,
+				   PROP_IMAGE_HEIGHT,
 				   g_param_spec_int ("image-height", NULL,
                                                      NULL,
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-                                   PROP_TYPE,
+                                   PROP_IMAGE_TYPE,
                                    g_param_spec_string ("image-type", NULL,
                                                         NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE));
   g_object_class_install_property (object_class,
-                                   PROP_TYPE,
+                                   PROP_IMAGE_NUM_LAYERS,
                                    g_param_spec_int ("image-num-layers", NULL,
                                                      NULL,
                                                      0, G_MAXINT, 0,
                                                      G_PARAM_READWRITE));
+  g_object_class_install_property (object_class,
+				   PROP_THUMB_STATE,
+				   g_param_spec_enum ("thumb-state", NULL,
+                                                      NULL,
+                                                      GIMP_TYPE_THUMB_STATE,
+                                                      GIMP_THUMB_STATE_UNKNOWN,
+                                                      G_PARAM_READWRITE));
 }
 
 static void
 gimp_thumbnail_init (GimpThumbnail *thumbnail)
 {
-  thumbnail->uri              = NULL;
-  thumbnail->state            = GIMP_THUMB_STATE_UNKNOWN;
-
-  thumbnail->thumb_filename   = NULL;
-  thumbnail->thumb_mtime      = 0;
-  thumbnail->thumb_filesize   = 0;
-
+  thumbnail->image_state      = GIMP_THUMB_STATE_UNKNOWN;
+  thumbnail->image_uri        = NULL;
   thumbnail->image_filename   = NULL;
   thumbnail->image_mtime      = 0;
   thumbnail->image_filesize   = 0;
-
   thumbnail->image_width      = 0;
   thumbnail->image_height     = 0;
   thumbnail->image_type       = 0;
   thumbnail->image_num_layers = 0;
+
+  thumbnail->thumb_state      = GIMP_THUMB_STATE_UNKNOWN;
+  thumbnail->thumb_filename   = NULL;
+  thumbnail->thumb_mtime      = 0;
+  thumbnail->thumb_filesize   = 0;
 }
 
 static void
@@ -201,15 +212,10 @@ gimp_thumbnail_finalize (GObject *object)
 {
   GimpThumbnail *thumbnail = GIMP_THUMBNAIL (object);
 
-  if (thumbnail->uri)
+  if (thumbnail->image_uri)
     {
-      g_free (thumbnail->uri);
-      thumbnail->uri = NULL;
-    }
-  if (thumbnail->thumb_filename)
-    {
-      g_free (thumbnail->thumb_filename);
-      thumbnail->thumb_filename = NULL;
+      g_free (thumbnail->image_uri);
+      thumbnail->image_uri = NULL;
     }
   if (thumbnail->image_filename)
     {
@@ -220,6 +226,11 @@ gimp_thumbnail_finalize (GObject *object)
     {
       g_free (thumbnail->image_type);
       thumbnail->image_type = NULL;
+    }
+  if (thumbnail->thumb_filename)
+    {
+      g_free (thumbnail->thumb_filename);
+      thumbnail->thumb_filename = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -232,31 +243,48 @@ gimp_thumbnail_set_property (GObject      *object,
                              GParamSpec   *pspec)
 {
   GimpThumbnail *thumbnail = GIMP_THUMBNAIL (object);
+  gint64         int_value;
 
   switch (property_id)
     {
-    case PROP_URI:
+    case PROP_IMAGE_STATE:
+      thumbnail->image_state = g_value_get_enum (value);
+      break;
+    case PROP_IMAGE_URI:
       gimp_thumbnail_set_uri (GIMP_THUMBNAIL (object),
                               g_value_get_string (value));
       break;
-    case PROP_MTIME:
-      thumbnail->image_mtime = g_value_get_int64 (value);
+    case PROP_IMAGE_MTIME:
+      int_value = g_value_get_int64 (value);
+      if (thumbnail->image_mtime != int_value)
+        {
+          thumbnail->image_mtime = int_value;
+          gimp_thumbnail_invalidate_thumb (thumbnail);
+        }
       break;
-    case PROP_FILESIZE:
-      thumbnail->image_filesize = g_value_get_int64 (value);
+    case PROP_IMAGE_FILESIZE:
+      int_value = g_value_get_int64 (value);
+      if (thumbnail->image_filesize != int_value)
+        {
+          thumbnail->image_filesize = int_value;
+          gimp_thumbnail_invalidate_thumb (thumbnail);
+        }
       break;
-    case PROP_WIDTH:
+    case PROP_IMAGE_WIDTH:
       thumbnail->image_width = g_value_get_int (value);
       break;
-    case PROP_HEIGHT:
+    case PROP_IMAGE_HEIGHT:
       thumbnail->image_height = g_value_get_int (value);
       break;
-    case PROP_TYPE:
+    case PROP_IMAGE_TYPE:
       g_free (thumbnail->image_type);
       thumbnail->image_type = g_value_dup_string (value);
       break;
-    case PROP_NUM_LAYERS:
+    case PROP_IMAGE_NUM_LAYERS:
       thumbnail->image_num_layers = g_value_get_int (value);
+      break;
+    case PROP_THUMB_STATE:
+      thumbnail->thumb_state = g_value_get_enum (value);
       break;
 
     default:
@@ -275,29 +303,32 @@ gimp_thumbnail_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_URI:
-      g_value_set_string (value, thumbnail->uri);
+    case PROP_IMAGE_STATE:
+      g_value_set_enum (value, thumbnail->image_state);
       break;
-    case PROP_STATE:
-      g_value_set_enum (value, thumbnail->state);
+    case PROP_IMAGE_URI:
+      g_value_set_string (value, thumbnail->image_uri);
       break;
-    case PROP_MTIME:
+    case PROP_IMAGE_MTIME:
       g_value_set_int64 (value, thumbnail->image_mtime);
       break;
-    case PROP_FILESIZE:
+    case PROP_IMAGE_FILESIZE:
       g_value_set_int64 (value, thumbnail->image_filesize);
       break;
-    case PROP_WIDTH:
+    case PROP_IMAGE_WIDTH:
       g_value_set_int (value, thumbnail->image_width);
       break;
-    case PROP_HEIGHT:
+    case PROP_IMAGE_HEIGHT:
       g_value_set_int (value, thumbnail->image_height);
       break;
-    case PROP_TYPE:
+    case PROP_IMAGE_TYPE:
       g_value_set_string (value, thumbnail->image_type);
       break;
-    case PROP_NUM_LAYERS:
+    case PROP_IMAGE_NUM_LAYERS:
       g_value_set_int (value, thumbnail->image_height);
+      break;
+    case PROP_THUMB_STATE:
+      g_value_set_enum (value, thumbnail->thumb_state);
       break;
 
     default:
@@ -329,6 +360,33 @@ gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,
 {
   g_return_if_fail (GIMP_IS_THUMBNAIL (thumbnail));
 
+  g_object_set (thumbnail,
+                "image-state",      GIMP_THUMB_STATE_UNKNOWN,
+                "image-filesize",   0,
+                "image-mtime",      0,
+                "image-width",      0,
+                "image-height",     0,
+                "image-type",       NULL,
+                "image-num-layers", 0,
+                NULL);
+
+  gimp_thumbnail_invalidate_thumb (thumbnail);
+}
+
+void
+gimp_thumbnail_update (GimpThumbnail *thumbnail)
+{
+  g_object_freeze_notify (G_OBJECT (thumbnail));
+
+  gimp_thumbnail_update_image (thumbnail);
+  gimp_thumbnail_update_thumb (thumbnail);
+
+  g_object_thaw_notify (G_OBJECT (thumbnail));
+}
+
+static void
+gimp_thumbnail_invalidate_thumb (GimpThumbnail *thumbnail)
+{
   if (thumbnail->thumb_filename)
     {
       g_free (thumbnail->thumb_filename);
@@ -338,35 +396,31 @@ gimp_thumbnail_set_uri (GimpThumbnail *thumbnail,
   thumbnail->thumb_filesize = 0;
   thumbnail->thumb_mtime    = 0;
 
-  g_object_set (thumbnail,
-                "state",             GIMP_THUMB_STATE_UNKNOWN,
-                "image-filesize",    0,
-                "image-mtime",       0,
-                "image-width",       0,
-                "image-height",      0,
-                "image-type",        NULL,
-                "image-num-layers",  0,
-                NULL);
+  if (thumbnail->thumb_state != GIMP_THUMB_STATE_UNKNOWN)
+    {
+      g_object_set (thumbnail,
+                    "thumb-state", GIMP_THUMB_STATE_UNKNOWN,
+                    NULL);
+    }
 }
 
-void
-gimp_thumbnail_update (GimpThumbnail *thumbnail)
+static void
+gimp_thumbnail_update_image (GimpThumbnail *thumbnail)
 {
-  GimpThumbState  state          = thumbnail->state;
-  gchar          *thumbname      = NULL;
-  gint64          image_filesize = 0;
-  gint64          image_mtime    = 0;
+  GimpThumbState  state;
+  gint64          filesize = 0;
+  gint64          mtime    = 0;
 
-  if (! thumbnail->uri)
-    return;
+  g_return_if_fail (thumbnail->image_uri != NULL);
 
-  /*  do we know the image filename already ?  */
+  state = thumbnail->image_state;
+
   switch (state)
     {
     case GIMP_THUMB_STATE_UNKNOWN:
       g_return_if_fail (thumbnail->image_filename == NULL);
 
-      thumbnail->image_filename = g_filename_from_uri (thumbnail->uri,
+      thumbnail->image_filename = g_filename_from_uri (thumbnail->image_uri,
                                                        NULL, NULL);
 
       if (! thumbnail->image_filename)
@@ -382,64 +436,73 @@ gimp_thumbnail_update (GimpThumbnail *thumbnail)
       break;
     }
 
-  /*  check if the imagefile changed  */
   switch (state)
     {
     case GIMP_THUMB_STATE_REMOTE:
       break;
 
     default:
-      if (gimp_thumb_file_test (thumbnail->image_filename,
-                                &image_mtime, &image_filesize))
-        {
-          if (image_mtime != thumbnail->image_mtime ||
-              image_filesize != thumbnail->image_filesize)
-            {
-              state = GIMP_THUMB_STATE_EXISTS;
-            }
-        }
+      if (gimp_thumb_file_test (thumbnail->image_filename, &mtime, &filesize))
+        state = GIMP_THUMB_STATE_EXISTS;
       else
-        {
-          state = GIMP_THUMB_STATE_NOT_FOUND;
-        }
+        state = GIMP_THUMB_STATE_NOT_FOUND;
       break;
     }
 
-  /*  do we know the thumbnail filename ?  */
+  if (state != thumbnail->image_state)
+    {
+      g_object_set (thumbnail,
+                    "image-state",
+                    state, NULL);
+    }
+
+  if (mtime != thumbnail->image_mtime || filesize != thumbnail->image_filesize)
+    {
+      g_object_set (thumbnail,
+                    "image-mtime",    mtime,
+                    "image-filesize", filesize,
+                    NULL);
+    }
+}
+
+static void
+gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail)
+{
+  GimpThumbState  state;
+  GimpThumbSize   size;
+  gint64          filesize;
+  gint64          mtime;
+
+  g_return_if_fail (thumbnail->image_uri != NULL);
+
+  state = thumbnail->thumb_state;
+
   switch (state)
     {
-      case GIMP_THUMB_STATE_EXISTS:
-        thumbname = gimp_thumbnail_find_png_thumb (thumbnail->uri, NULL);
-        break;
-
-#if 0
-  thumbname = gimp_thumbnail_find_png_thumb (thumbnail->uri, NULL);
-
-  thumbnail->state    = GIMP_THUMB_STATE_THUMBNAIL_NOT_FOUND;
-  thumbnail->mtime    = thumb_mtime;
-  thumbnail->filesize = thumb_filesize;
-
-  thumbname = gimp_thumbnail_find_png_thumb (uri, NULL);
-
-  if (thumbname)
-    thumbnail->state = GIMP_THUMB_STATE_THUMBNAIL_EXISTS;
-
- cleanup:
-  g_free (filename);
-  g_free (thumbname);
-#endif
-
-
     case GIMP_THUMB_STATE_UNKNOWN:
-    case GIMP_THUMB_STATE_REMOTE:
-    case GIMP_THUMB_STATE_NOT_FOUND:
-    case GIMP_THUMB_STATE_THUMBNAIL_NOT_FOUND:
-    case GIMP_THUMB_STATE_THUMBNAIL_EXISTS:
-    case GIMP_THUMB_STATE_THUMBNAIL_OLD:
-    case GIMP_THUMB_STATE_THUMBNAIL_FAILED:
-    case GIMP_THUMB_STATE_THUMBNAIL_OK:
+      g_return_if_fail (thumbnail->thumb_filename == NULL);
+
+      thumbnail->thumb_filename =
+        gimp_thumb_find_png_thumb (thumbnail->image_uri, &size);
+      break;
+
+    default:
+      g_return_if_fail (thumbnail->thumb_filename != NULL);
       break;
     }
+
+   switch (state)
+     {
+     default:
+       if (gimp_thumb_file_test (thumbnail->thumb_filename, &mtime, &filesize))
+         state = GIMP_THUMB_STATE_EXISTS;
+       else
+         state = GIMP_THUMB_STATE_NOT_FOUND;
+       break;
+     }
+
+  if (state != thumbnail->thumb_state)
+    g_object_set (thumbnail, "thumb-state", state, NULL);
 }
 
 gboolean
@@ -458,16 +521,6 @@ gimp_thumbnail_set_filename (GimpThumbnail  *thumbnail,
   gimp_thumbnail_set_uri (thumbnail, uri);
 
   return (!filename || uri);
-}
-
-
-GimpThumbState
-gimp_thumbnail_get_state (GimpThumbnail *thumbnail)
-{
-  g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail),
-                        GIMP_THUMB_STATE_UNKNOWN);
-
-  return thumbnail->state;
 }
 
 static void
@@ -495,6 +548,8 @@ gimp_thumbnail_set_info_from_pixbuf (GimpThumbnail *thumbnail,
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_GIMP_LAYERS);
   if (option && sscanf (option, "%d", &n) == 1)
     thumbnail->image_num_layers = 0;
+
+  g_object_thaw_notify (G_OBJECT (thumbnail));
 }
 
 GdkPixbuf *
@@ -504,7 +559,7 @@ gimp_thumbnail_get_pixbuf (GimpThumbnail  *thumbnail,
 {
   GdkPixbuf *pixbuf;
 
-  if (! thumbnail->uri)
+  if (! thumbnail->image_uri)
     return NULL;
 
   pixbuf = gimp_thumbnail_read_png_thumb (thumbnail, size, error);
@@ -548,7 +603,7 @@ gimp_thumbnail_save_pixbuf (GimpThumbnail  *thumbnail,
   gboolean       success;
 
   g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
-  g_return_val_if_fail (thumbnail->uri != NULL, FALSE);
+  g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
   g_return_val_if_fail (software != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
@@ -558,11 +613,11 @@ gimp_thumbnail_save_pixbuf (GimpThumbnail  *thumbnail,
   if (size < 1)
     return TRUE;
 
-  name = gimp_thumb_png_thumb_name (thumbnail->uri, &size);
+  name = gimp_thumb_png_thumb_name (thumbnail->image_uri, &size);
   if (! name)
     return TRUE;
 
-  desc     = g_strdup_printf ("Thumbnail of %s",   thumbnail->uri);
+  desc     = g_strdup_printf ("Thumbnail of %s",   thumbnail->image_uri);
   time_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_mtime);
   size_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_filesize);
 
@@ -573,7 +628,7 @@ gimp_thumbnail_save_pixbuf (GimpThumbnail  *thumbnail,
   success =  gdk_pixbuf_save (pixbuf, name, "png", error,
                               TAG_DESCRIPTION,        desc,
                               TAG_SOFTWARE,           software,
-                              TAG_THUMB_URI,          thumbnail->uri,
+                              TAG_THUMB_URI,          thumbnail->image_uri,
                               TAG_THUMB_MTIME,        time_str,
                               TAG_THUMB_FILESIZE,     size_str,
                               TAG_THUMB_IMAGE_WIDTH,  width_str,
@@ -624,23 +679,23 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
   gboolean       success;
 
   g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
-  g_return_val_if_fail (thumbnail->uri != NULL, FALSE);
+  g_return_val_if_fail (thumbnail->image_uri != NULL, FALSE);
   g_return_val_if_fail (software != NULL, FALSE);
 
-  name = gimp_thumb_png_thumb_name (thumbnail->uri, &size);
+  name = gimp_thumb_png_thumb_name (thumbnail->image_uri, &size);
   if (! name)
     return TRUE;
 
   pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, 1, 1);
 
-  desc     = g_strdup_printf ("Thumbnail failure for %s", thumbnail->uri);
+  desc = g_strdup_printf ("Thumbnail failure for %s", thumbnail->image_uri);
   time_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_mtime);
   size_str = g_strdup_printf ("%" G_GINT64_FORMAT, thumbnail->image_filesize);
 
   success = gdk_pixbuf_save (pixbuf, name, "png", error,
                              TAG_DESCRIPTION,    desc,
                              TAG_SOFTWARE,       software,
-                             TAG_THUMB_URI,      thumbnail->uri,
+                             TAG_THUMB_URI,      thumbnail->image_uri,
                              TAG_THUMB_MTIME,    time_str,
                              TAG_THUMB_FILESIZE, size_str,
                              NULL);
@@ -669,41 +724,36 @@ gimp_thumbnail_read_png_thumb (GimpThumbnail  *thumbnail,
                                GimpThumbSize   thumb_size,
                                GError        **error)
 {
-  GimpThumbState  old_state;
-  GdkPixbuf      *pixbuf     = NULL;
-  gchar          *thumbname  = NULL;
+  GimpThumbState  state;
+  GdkPixbuf      *pixbuf  = NULL;
+  gchar          *name;
   const gchar    *option;
   gint64          image_mtime;
   gint64          image_size;
 
-  if (thumbnail->state < GIMP_THUMB_STATE_EXISTS)
-    return NULL;
+  g_return_val_if_fail (thumbnail->thumb_state < GIMP_THUMB_STATE_EXISTS, NULL);
 
-  old_state = thumbnail->state;
+  state = GIMP_THUMB_STATE_NOT_FOUND;
 
-  /* try to locate a thumbnail for this image */
-  thumbnail->state = GIMP_THUMB_STATE_THUMBNAIL_NOT_FOUND;
+  name = gimp_thumb_find_png_thumb (thumbnail->image_uri, &thumb_size);
 
-  thumbname = gimp_thumbnail_find_png_thumb (thumbnail->uri, &thumb_size);
-
-  if (!thumbname)
+  if (!name)
     goto cleanup;
 
-  pixbuf = gdk_pixbuf_new_from_file (thumbname, error);
+  pixbuf = gdk_pixbuf_new_from_file (name, error);
+
+  g_free (name);
 
   if (! pixbuf)
     goto cleanup;
 
-  g_free (thumbname);
-  thumbname = NULL;
-
   /* URI and mtime from the thumbnail need to match our file */
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
-  if (!option || strcmp (option, thumbnail->uri))
+  if (!option || strcmp (option, thumbnail->image_uri))
     goto cleanup;
 
-  thumbnail->state = GIMP_THUMB_STATE_THUMBNAIL_OLD;
+  state = GIMP_THUMB_STATE_OLD;
 
   option = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_MTIME);
   if (!option || sscanf (option, "%" G_GINT64_FORMAT, &image_mtime) != 1)
@@ -718,9 +768,9 @@ gimp_thumbnail_read_png_thumb (GimpThumbnail  *thumbnail,
       (option == NULL || image_size == thumbnail->image_filesize))
     {
       if (! thumb_size)
-        thumbnail->state = GIMP_THUMB_STATE_THUMBNAIL_FAILED;
+        state = GIMP_THUMB_STATE_FAILED;
       else
-        thumbnail->state = GIMP_THUMB_STATE_THUMBNAIL_OK;
+        state = GIMP_THUMB_STATE_OK;
     }
 
   if (! thumb_size)
@@ -732,12 +782,10 @@ gimp_thumbnail_read_png_thumb (GimpThumbnail  *thumbnail,
   gimp_thumbnail_set_info_from_pixbuf (thumbnail, pixbuf);
 
  cleanup:
-  if (thumbnail->state != old_state)
-    g_object_notify (G_OBJECT (thumbnail), "state");
+  if (state != thumbnail->thumb_state)
+    g_object_set (thumbnail, "state", state, NULL);
 
-  g_free (thumbname);
-
-  if (thumbnail->state != GIMP_THUMB_STATE_THUMBNAIL_OK)
+  if (pixbuf && state != GIMP_THUMB_STATE_OK)
     {
       g_object_unref (pixbuf);
       return NULL;

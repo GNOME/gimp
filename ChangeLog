@@ -1,3 +1,10 @@
+2003-11-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/Makefile.am
+	* libgimpthumb/gimpthumb-enums.h
+	* libgimpthumb/gimpthumb-utils.[ch] 
+	* libgimpthumb/gimpthumbnail.[ch]: more changes, still unfinished.
+
 2003-11-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]: eek, it should be

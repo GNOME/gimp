@@ -150,8 +150,8 @@ gimp_thumb_png_thumb_name (const gchar   *uri,
 }
 
 gchar *
-gimp_thumbnail_find_png_thumb (const gchar   *uri,
-                               GimpThumbSize *size)
+gimp_thumb_find_png_thumb (const gchar   *uri,
+                           GimpThumbSize *size)
 {
   const gchar *name;
   gchar       *thumb_name;

@@ -43,21 +43,20 @@ struct _GimpThumbnail
 {
   GObject         parent_instance;
 
-  gchar          *uri;
-  GimpThumbState  state;
-
-  gchar          *thumb_filename;
-  gint64          thumb_filesize;
-  gint64          thumb_mtime;
-
+  GimpThumbState  image_state;
+  gchar          *image_uri;
   gchar          *image_filename;
   gint64          image_filesize;
   gint64          image_mtime;
-
   gint            image_width;
   gint            image_height;
   gchar          *image_type;
   gint            image_num_layers;
+
+  GimpThumbState  thumb_state;
+  gchar          *thumb_filename;
+  gint64          thumb_filesize;
+  gint64          thumb_mtime;
 };
 
 struct _GimpThumbnailClass
@@ -76,7 +75,6 @@ gboolean         gimp_thumbnail_set_filename (GimpThumbnail  *thumbnail,
                                               const gchar    *filename,
                                               GError        **error);
 
-GimpThumbState   gimp_thumbnail_get_state    (GimpThumbnail  *thumnail);
 GdkPixbuf      * gimp_thumbnail_get_pixbuf   (GimpThumbnail  *thumbnail,
                                               GimpThumbSize   size,
                                               GError        **error);

@@ -68,6 +68,7 @@ libgimpthumbinclude_HEADERS = \
 	gimpthumb.h		\
 	gimpthumb-enums.h	\
 	gimpthumb-types.h	\
+	gimpthumb-utils.h	\
 	gimpthumbnail.h
 
 libgimpthumb_1_3_la_LDFLAGS = \

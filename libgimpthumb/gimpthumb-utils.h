@@ -28,17 +28,17 @@
 
 G_BEGIN_DECLS
 
-gboolean    gimp_thumb_init               (const gchar   *creator,
-                                           const gchar   *thumb_basedir);
+gboolean    gimp_thumb_init           (const gchar   *creator,
+                                       const gchar   *thumb_basedir);
 
-gchar     * gimp_thumb_png_thumb_name     (const gchar   *uri,
-                                           GimpThumbSize *size);
-gchar     * gimp_thumbnail_find_png_thumb (const gchar   *uri,
-                                           GimpThumbSize *size);
+gchar     * gimp_thumb_png_thumb_name (const gchar   *uri,
+                                       GimpThumbSize *size);
+gchar     * gimp_thumb_find_png_thumb (const gchar   *uri,
+                                       GimpThumbSize *size);
 
-gboolean    gimp_thumb_file_test          (const gchar   *filename,
-                                           gint64        *mtime,
-                                           gint64        *size);
+gboolean    gimp_thumb_file_test      (const gchar   *filename,
+                                       gint64        *mtime,
+                                       gint64        *size);
 
 G_END_DECLS
 
