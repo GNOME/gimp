@@ -367,12 +367,12 @@ msgstr "╤нтервал:"
 #. this should never happen
 #: app/brush_select.c:1792
 msgid "Sorry, this brush can't be edited."
-msgstr ""
+msgstr "Нажаль цей пензель не можна редагувати."
 
 #. this should never happen
 #: app/brush_select.c:1821
 msgid "Sorry, this brush can't be deleted."
-msgstr ""
+msgstr "Нажаль цей пензель не можна видаляти."
 
 #: app/bucket_fill.c:147 app/color_picker.c:156 app/tool_options.c:247
 msgid "Sample Merged"
@@ -1612,11 +1612,11 @@ msgstr "Неможливо записати в %s; %s"
 #: app/gimpui.c:449
 #, c-format
 msgid "Message repeated %d times"
-msgstr ""
+msgstr "Пов╕домлення повторено %d раз╕в"
 
 #: app/gimpui.c:462
 msgid "Message repeated once"
-msgstr ""
+msgstr "Пов╕домлення повторено один раз"
 
 #: app/gimpui.c:476
 msgid ""
@@ -1624,6 +1624,9 @@ msgid ""
 "Too many open message dialogs.\n"
 "Messages are redirected to stderr.\n"
 msgstr ""
+"УВАГА:\n"
+"В╕дкрито надто багато в╕кон пов╕домлень.\n"
+"Пов╕домлення перенаправлено у stderr.\n"
 
 #: app/gimpui.c:483
 msgid "GIMP Message"
@@ -2195,18 +2198,24 @@ msgid ""
 "The active brush.\n"
 "Click to open the Brushes Dialog."
 msgstr ""
+"Активний пензель.\n"
+"Клацн╕ть щоб в╕дкрити д╕алог пензл╕в."
 
 #: app/indicator_area.c:156
 msgid ""
 "The active pattern.\n"
 "Click to open the Patterns Dialog."
 msgstr ""
+"Активний шаблон.\n"
+"Клацн╕ть щоб в╕дкрити д╕алог шаблон╕в."
 
 #: app/indicator_area.c:175
 msgid ""
 "The active gradient.\n"
 "Click to open the Gradients Dialog."
 msgstr ""
+"Активний град╕╓нт.\n"
+"Клацн╕ть щоб в╕дкрити д╕алог град╕╓нт╕в."
 
 #: app/info_dialog.c:180 app/preferences_dialog.c:1779
 #: app/preferences_dialog.c:1885
