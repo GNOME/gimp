@@ -1,3 +1,11 @@
+2004-12-31  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD branch:
+
+	* app/actions/plug-in-actions.c: use the orininal string if
+	plug_in_actions_check_translation() fails instead of bailing out.
+	Fixes bug #162590.
+
 2004-12-31  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
