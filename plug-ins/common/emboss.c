@@ -194,6 +194,7 @@ run (gchar   *name,
     {
     case RUN_INTERACTIVE:
       INIT_I18N_UI();
+      args.img = args.drw = 0;
       gimp_get_data ("plug_in_emboss", &args);
       if (args.img == 0 && args.drw == 0)
 	{
@@ -203,7 +204,6 @@ run (gchar   *name,
 	  args.depth = 20;
 	  args.embossp = FUNCTION_EMBOSS;
 	}
-
       args.img = param[1].data.d_image;
       args.drw = param[2].data.d_drawable;
       drw = gimp_drawable_get (args.drw);
@@ -389,10 +389,10 @@ pluginCore (struct piArgs *argp)
   gimp_drawable_mask_bounds (argp->drw, &x1, &y1, &x2, &y2);
 
   /* expand the bounds a little */
-  x1 = MAX (0, x1 - 5);
-  y1 = MAX (0, y1 - 5);
-  x2 = MIN (drw->width, x2 + 5);
-  y2 = MIN (drw->height, y2 + 5);
+  x1 = MAX (0, x1 - argp->depth);
+  y1 = MAX (0, y1 - argp->depth);
+  x2 = MIN (drw->width, x2 + argp->depth);
+  y2 = MIN (drw->height, y2 + argp->depth);
 
   width = x2 - x1;
   height = y2 - y1;
@@ -432,13 +432,14 @@ pluginCore (struct piArgs *argp)
   for (y = 0; y < height - 2; y++)
     {
       if (y % p_update == 0)
-	gimp_progress_update ((gdouble) y / (gdouble) height);
+	  gimp_progress_update ((gdouble) y / (gdouble) height);
 
       gimp_pixel_rgn_get_rect (&src, srcbuf, x1, y1+y, width, 3);
       EmbossRow (srcbuf, argp->embossp ? (guchar *) 0 : srcbuf,
 		 dstbuf, width, bypp, has_alpha);
      gimp_pixel_rgn_set_row (&dst, dstbuf, x1, y1+y+1, width);
   }
+  gimp_progress_update (1.0);
 
   g_free (srcbuf);
   g_free (dstbuf);
@@ -466,13 +467,9 @@ static void
 emboss_radio_button_callback (GtkWidget *widget,
 			      gpointer   data)
 {
-  gint *toggle_val;
+  gimp_radio_button_update (widget, data);
 
-  toggle_val = (gint32 *) data;
-
-  *toggle_val = (gint32) gtk_object_get_user_data (GTK_OBJECT (widget));
-
-  if (do_preview)
+  if (do_preview && GTK_TOGGLE_BUTTON (widget)->active)
     emboss_do_preview (NULL);
 }
 

@@ -309,7 +309,7 @@ waves_radio_button_update (GtkWidget *widget,
 {
   gimp_radio_button_update (widget, data);
 
-  if (do_preview)
+  if (do_preview && GTK_TOGGLE_BUTTON (widget)->active)
     waves_do_preview (NULL);
 }
 

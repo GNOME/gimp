@@ -2688,7 +2688,8 @@ jigsaw_radio_button_update (GtkWidget *widget,
 			    gpointer data)
 {
   gimp_radio_button_update (widget, data);
-  jigsaw (TRUE);
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    jigsaw (TRUE);
 }
 
 

@@ -407,8 +407,12 @@ radio_callback (GtkWidget *widget,
   GDrawable *drawable;
 
   gimp_radio_button_update (widget, data);
-  drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
-  main_function (drawable, TRUE);
+
+  if (GTK_TOGGLE_BUTTON (widget)->active)
+    {
+      drawable = gtk_object_get_data (GTK_OBJECT (widget), "drawable");
+      main_function (drawable, TRUE);
+    }
 }
 
 static void

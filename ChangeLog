@@ -1,3 +1,34 @@
+Sun Aug 20 21:02:22 BST 2000  Austin Donnelly  <austin@gimp.org>
+
+	* emboss.c
+	* jigsaw.c
+	* max_rgb.c
+	* nlfilt.c
+	* wind.c
+	* waves.c: When a radio button in GTK is clicked, the
+	    widget that used to be selected gets a signal as well as the
+	    one that was clicked.  Mostly people cope with this by
+	    guarding their signal handers with a check to run to the code
+	    only if the widget is active.  However, the callback functions
+	    registered with gimp_radio_group_new2() in the above files
+	    don't have this guard.  In most cases, this is a bad idea
+	    since it causes previews to be updated too many times.  In the
+	    emboss case it would also get the preview contents wrong when
+	    first displaying the dialog, since the act of
+	    gtk_widget_show()ing the dialog causes an event to be sent to
+	    the widget that's just been de-selected, causing the preview
+	    to redraw while the settings are inconsistent.
+
+	* emboss.c: The emboss plugin also used uninitialised data the
+	    first time it is started, which wasn't biting currently, but
+	    might in the future or on other architectures which don't zero
+	    their stacks.  Also made active region estimation more robust.
+
+	    I still haven't been able to reproduce Bug #17660: Embross
+	    plugin crashes, but I will admit that there's what could be
+	    uninitialised memory in the preview bitmap the very first time
+	    it is shown.
+
 2000-08-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/Makefile.am
