@@ -1,5 +1,13 @@
 2004-01-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/composite/Makefile.am (AM_CPPFLAGS): G_LOG_DOMAIN should be
+	"Gimp-Composite", not "Gimp-Composition".
+
+	* app/app_procs.c (app_run): register a log handler for the
+	"Gimp-Composite" domain.
+
+2004-01-13  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/base-enums.h: removed GimpChannelLutType enum and
 	export GimpHistogramChannel to the PDB. The removed enum was just
 	there for libgimp compatibility.

@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Compositing\"	\
+	-DG_LOG_DOMAIN=\"Gimp-Composite\"	\
 	@GIMP_THREAD_FLAGS@			\
 	@GIMP_MP_FLAGS@
 

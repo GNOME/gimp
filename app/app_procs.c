@@ -124,6 +124,9 @@ app_run (const gchar         *full_prog_name,
   g_log_set_handler ("Gimp-Paint-Funcs",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func, &gimp);
+  g_log_set_handler ("Gimp-Composite",
+		     G_LOG_LEVEL_MESSAGE,
+		     gimp_message_log_func, &gimp);
   g_log_set_handler ("Gimp-Config",
 		     G_LOG_LEVEL_MESSAGE,
 		     gimp_message_log_func, &gimp);
