@@ -21,6 +21,7 @@
 
 #include <gtk/gtk.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #ifdef G_OS_WIN32
 #include <io.h>
@@ -51,10 +52,11 @@ static gint   save_image (char   *filename,
                           gint32  image_ID,
                           gint32  drawable_ID);
 
-static gint   save_dialog ();
-static void close_callback(GtkWidget * widget, gpointer data);
-static void ok_callback(GtkWidget * widget, gpointer data);
-static void entry_callback(GtkWidget * widget, gpointer data);
+static void init_gtk       (void);
+static gint save_dialog    (void);
+static void close_callback (GtkWidget * widget, gpointer data);
+static void ok_callback    (GtkWidget * widget, gpointer data);
+static void entry_callback (GtkWidget * widget, gpointer data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -132,7 +134,9 @@ run (char    *name,
   static GParam values[2];
   GRunModeType run_mode;
   gint32 image_ID;
-	GStatusType status = STATUS_SUCCESS;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
+  GStatusType status = STATUS_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
@@ -142,281 +146,334 @@ run (char    *name,
   values[1].type = PARAM_IMAGE;
   values[1].data.d_image = -1;
 
-  if (strcmp (name, "file_pat_load") == 0) {
-		image_ID = load_image (param[1].data.d_string);
-
-		if (image_ID != -1) {
-			values[0].data.d_status = STATUS_SUCCESS;
-			values[1].data.d_image = image_ID;
-		} else {
-			values[0].data.d_status = STATUS_EXECUTION_ERROR;
-		}
-		*nreturn_vals = 2;
+  if (strcmp (name, "file_pat_load") == 0) 
+    {
+      image_ID = load_image (param[1].data.d_string);
+      
+      if (image_ID != -1) 
+	{
+	  values[0].data.d_status = STATUS_SUCCESS;
+	  values[1].data.d_image = image_ID;
+	} 
+      else 
+	{
+	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
 	}
-  else if (strcmp (name, "file_pat_save") == 0) {
-		switch (run_mode) {
-			case RUN_INTERACTIVE:
-				/*  Possibly retrieve data  */
-				gimp_get_data("file_pat_save", description);
-				if (!save_dialog())
-					return;
-				break;
-			case RUN_NONINTERACTIVE:
-				if (nparams != 6)
-					status = STATUS_CALLING_ERROR;
-		      else
-					 strcpy(description, param[5].data.d_string);
-			case RUN_WITH_LAST_VALS:
-				gimp_get_data ("file_pat_save", description);
-				break;
-		}
+      *nreturn_vals = 2;
+    }
+  else if (strcmp (name, "file_pat_save") == 0) 
+    {
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
 
-		if (save_image (param[3].data.d_string, param[1].data.d_int32,
-				param[2].data.d_int32)) {
-			gimp_set_data ("file_pat_save", description, 256);
-			values[0].data.d_status = STATUS_SUCCESS;
-		} else
-			values[0].data.d_status = STATUS_EXECUTION_ERROR;
-		*nreturn_vals = 1;
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
 	}
+
+      switch (run_mode) 
+	{
+	case RUN_INTERACTIVE:
+	  /*  Possibly retrieve data  */
+	  gimp_get_data("file_pat_save", description);
+	  if (!save_dialog())
+	    return;
+	  break;
+	case RUN_NONINTERACTIVE:
+	  if (nparams != 6)
+	    status = STATUS_CALLING_ERROR;
+	  else
+	    strcpy(description, param[5].data.d_string);
+	case RUN_WITH_LAST_VALS:
+	  gimp_get_data ("file_pat_save", description);
+	  break;
+	}
+      
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+	{
+	  gimp_set_data ("file_pat_save", description, 256);
+	  values[0].data.d_status = STATUS_SUCCESS;
+	} 
+      else
+	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+ 
+      *nreturn_vals = 1;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
+    }
 }
 
-static gint32 load_image (char *filename) {
-	char *temp;
-	int fd;
-	PatternHeader ph;
-	guchar *buffer;
-	gint32 image_ID, layer_ID;
-	GDrawable *drawable;
-	gint line;
-	GPixelRgn pixel_rgn;
+static gint32 
+load_image (char *filename) 
+{
+  char *temp;
+  int fd;
+  PatternHeader ph;
+  guchar *buffer;
+  gint32 image_ID, layer_ID;
+  GDrawable *drawable;
+  gint line;
+  GPixelRgn pixel_rgn;
 
-	temp = g_malloc(strlen (filename) + 11);
-	sprintf(temp, "Loading %s:", filename);
-	gimp_progress_init(temp);
-	g_free (temp);
+  temp = g_malloc (strlen (filename) + 11);
+  sprintf (temp, "Loading %s:", filename);
+  gimp_progress_init (temp);
+  g_free (temp);
+  
+  fd = open (filename, O_RDONLY | _O_BINARY);
 
-	fd = open(filename, O_RDONLY | _O_BINARY);
+  if (fd == -1)
+    return -1;
 
-	if (fd == -1) {
-		return -1;
-	}
-
-	if (read(fd, &ph, sizeof(ph)) != sizeof(ph)) {
-		close(fd);
-		return -1;
-	}
-
+  if (read(fd, &ph, sizeof(ph)) != sizeof(ph)) 
+    {
+      close(fd);
+      return -1;
+    }
+  
   /*  rearrange the bytes in each unsigned int  */
-	ph.header_size = g_ntohl(ph.header_size);
-	ph.version = g_ntohl(ph.version);
-	ph.width = g_ntohl(ph.width);
-	ph.height = g_ntohl(ph.height);
-	ph.bytes = g_ntohl(ph.bytes);
-	ph.magic_number = g_ntohl(ph.magic_number);
+  ph.header_size  = g_ntohl (ph.header_size);
+  ph.version      = g_ntohl (ph.version);
+  ph.width        = g_ntohl (ph.width);
+  ph.height       = g_ntohl (ph.height);
+  ph.bytes        = g_ntohl (ph.bytes);
+  ph.magic_number = g_ntohl (ph.magic_number);
 
-	if (ph.magic_number != GPATTERN_MAGIC || ph.version != 1 ||
-			ph.header_size <= sizeof(ph)) {
-		close(fd);
-		return -1;
-	}
+  if (ph.magic_number != GPATTERN_MAGIC || ph.version != 1 || ph.header_size <= sizeof(ph)) 
+    {
+      close(fd);
+      return -1;
+    }
+  
+  if (lseek(fd, ph.header_size - sizeof(ph), SEEK_CUR) != ph.header_size) 
+    {
+      close(fd);
+      return -1;
+    }
 
-	if (lseek(fd, ph.header_size - sizeof(ph), SEEK_CUR) !=
-			ph.header_size) {
-		close(fd);
-		return -1;
-	}
-
-	/* Now there's just raw data left. */
-
+  /* Now there's just raw data left. */
+  
   /*
-	 * Create a new image of the proper size and associate the filename with it.
+   * Create a new image of the proper size and associate the filename with it.
    */
   image_ID = gimp_image_new(ph.width, ph.height, (ph.bytes >= 3) ? RGB : GRAY);
   gimp_image_set_filename(image_ID, filename);
-
+  
   layer_ID = gimp_layer_new(image_ID, "Background", ph.width, ph.height,
-			(ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
-	gimp_image_add_layer(image_ID, layer_ID, 0);
-
+			    (ph.bytes >= 3) ? RGB_IMAGE : GRAY_IMAGE, 100, NORMAL_MODE);
+  gimp_image_add_layer(image_ID, layer_ID, 0);
+  
   drawable = gimp_drawable_get(layer_ID);
-  gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
-			drawable->height, TRUE, FALSE);
-
-	buffer = g_malloc(ph.width * ph.bytes);
-
-	for (line = 0; line < ph.height; line++) {
-		if (read(fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes) {
-			close(fd);
-			g_free(buffer);
-			return -1;
-		}
-		gimp_pixel_rgn_set_row(&pixel_rgn, buffer, 0, line, ph.width);
-		gimp_progress_update((double) line / (double) ph.height);
-	}
-
-	gimp_drawable_flush(drawable);
-
-	return image_ID;
-}
-
-static gint save_image (char *filename, gint32 image_ID, gint32 drawable_ID) {
-	int fd;
-	PatternHeader ph;
-	unsigned char *buffer;
-	GDrawable *drawable;
-	gint line;
-	GPixelRgn pixel_rgn;
-	char *temp;
-
-	temp = g_malloc(strlen (filename) + 10);
-	sprintf(temp, "Saving %s:", filename);
-	gimp_progress_init(temp);
-	g_free(temp);
-
-	drawable = gimp_drawable_get(drawable_ID);
-	gimp_pixel_rgn_init(&pixel_rgn, drawable, 0, 0, drawable->width,
-			drawable->height, FALSE, FALSE);
-
-	fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
-
-	if (fd == -1) {
-		return 0;
-	}
-
-	ph.header_size = g_htonl(sizeof(ph) + strlen(description) + 1);
-	ph.version = g_htonl(1);
-	ph.width = g_htonl(drawable->width);
-	ph.height = g_htonl(drawable->height);
-	ph.bytes = g_htonl(drawable->bpp);
-	ph.magic_number = g_htonl(GPATTERN_MAGIC);
-
-	if (write(fd, &ph, sizeof(ph)) != sizeof(ph)) {
-		close(fd);
-		return 0;
-	}
-
-	if (write(fd, description, strlen(description) + 1) !=
-			strlen(description) + 1) {
-		close(fd);
-		return 0;
-	}
-
-	buffer = g_malloc(drawable->width * drawable->bpp);
-	if (buffer == NULL) {
-		close(fd);
-		return 0;
-	}
-	for (line = 0; line < drawable->height; line++) {
-		gimp_pixel_rgn_get_row(&pixel_rgn, buffer, 0, line, drawable->width);
-		if (write(fd, buffer, drawable->width * drawable->bpp) !=
-				drawable->width * drawable->bpp) {
-			close(fd);
-			return 0;
-		}
-		gimp_progress_update((double) line / (double) drawable->height);
-	}
-	g_free(buffer);
-
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width, drawable->height, 
+		       TRUE, FALSE);
+  
+  buffer = g_malloc(ph.width * ph.bytes);
+  
+  for (line = 0; line < ph.height; line++) 
+    {
+      if (read(fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes) {
 	close(fd);
-
-	return 1;
+	g_free(buffer);
+	return -1;
+      }
+      gimp_pixel_rgn_set_row (&pixel_rgn, buffer, 0, line, ph.width);
+      gimp_progress_update ((double) line / (double) ph.height);
+    }
+  
+  gimp_drawable_flush (drawable);
+  
+  return image_ID;
 }
 
-
-static gint save_dialog()
+static gint 
+save_image (char   *filename, 
+	    gint32  image_ID, 
+	    gint32  drawable_ID) 
 {
-	GtkWidget *dlg;
-	GtkWidget *button;
-	GtkWidget *label;
-	GtkWidget *entry;
-	GtkWidget *table;
-	gchar **argv;
-	gint argc;
+  int fd;
+  PatternHeader ph;
+  unsigned char *buffer;
+  GDrawable *drawable;
+  gint line;
+  GPixelRgn pixel_rgn;
+  char *temp;
+  
+  temp = g_malloc (strlen (filename) + 10);
+  sprintf(temp, "Saving %s:", filename);
+  gimp_progress_init (temp);
+  g_free (temp);
+  
+  drawable = gimp_drawable_get (drawable_ID);
+  gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
+		       drawable->height, FALSE, FALSE);
+  
+  fd = open(filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+  
+  if (fd == -1)
+    return 0;
 
-	argc = 1;
-	argv = g_new(gchar *, 1);
-	argv[0] = g_strdup("plasma");
+  ph.header_size  = g_htonl (sizeof (ph) + strlen (description) + 1);
+  ph.version      = g_htonl (1);
+  ph.width        = g_htonl (drawable->width);
+  ph.height       = g_htonl (drawable->height);
+  ph.bytes        = g_htonl (drawable->bpp);
+  ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
-	gtk_init(&argc, &argv);
-	gtk_rc_parse (gimp_gtkrc ());
+  if (write(fd, &ph, sizeof (ph)) != sizeof(ph)) 
+    {
+      close(fd);
+      return 0;
+    }
 
-	dlg = gtk_dialog_new();
-	gtk_window_set_title(GTK_WINDOW(dlg), "Save As Pattern");
-	gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
-	gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
-										 (GtkSignalFunc) close_callback, NULL);
+  if (write (fd, description, strlen (description) + 1) != strlen (description) + 1) 
+    {
+      close(fd);
+      return 0;
+    }
 
-	/*  Action area  */
-	button = gtk_button_new_with_label("OK");
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_signal_connect(GTK_OBJECT(button), "clicked",
-										 (GtkSignalFunc) ok_callback,
-										 dlg);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->action_area), button, TRUE, TRUE, 0);
-	gtk_widget_grab_default(button);
-	gtk_widget_show(button);
-
-	button = gtk_button_new_with_label("Cancel");
-	GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
-	gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
-														(GtkSignalFunc) gtk_widget_destroy,
-														GTK_OBJECT(dlg));
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->action_area), button, TRUE, TRUE, 0);
-	gtk_widget_show(button);
-
-	/* The main table */
-	/* Set its size (y, x) */
-	table = gtk_table_new(1, 2, FALSE);
-	gtk_container_border_width(GTK_CONTAINER(table), 10);
-	gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), table, TRUE, TRUE, 0);
-	gtk_widget_show(table);
-
-	gtk_table_set_row_spacings(GTK_TABLE(table), 10);
-	gtk_table_set_col_spacings(GTK_TABLE(table), 10);
-
-	/**********************
-	 * label
-	 **********************/
-	label = gtk_label_new("Description:");
-	gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
-	gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0,
-			0);
-	gtk_widget_show(label);
-
-	/************************
-	 * The entry
-	 ************************/
-	entry = gtk_entry_new();
-	gtk_table_attach(GTK_TABLE(table), entry, 1, 2, 0, 1, GTK_EXPAND | GTK_FILL,
-			GTK_EXPAND | GTK_FILL, 0, 0);
-	gtk_widget_set_usize(entry, 200, 0);
-	gtk_entry_set_text(GTK_ENTRY(entry), description);
-	gtk_signal_connect(GTK_OBJECT(entry), "changed",
-			(GtkSignalFunc) entry_callback, description);
-	gtk_widget_show(entry);
-
-	gtk_widget_show(dlg);
-
-	gtk_main();
-	gdk_flush();
-
-	return run_flag;
+  buffer = g_malloc (drawable->width * drawable->bpp);
+  if (buffer == NULL) 
+    {
+      close(fd);
+      return 0;
+    }
+  
+  for (line = 0; line < drawable->height; line++) 
+    {
+      gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
+      if (write (fd, buffer, drawable->width * drawable->bpp) !=
+	  drawable->width * drawable->bpp) 
+	{
+	  close(fd);
+	  return 0;
+	}
+      gimp_progress_update ((double) line / (double) drawable->height);
+    }
+ 
+  g_free (buffer);
+  close (fd);
+  
+  return 1;
 }
 
-static void close_callback(GtkWidget * widget, gpointer data)
+static void 
+init_gtk ()
 {
-	gtk_main_quit();
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("pat");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 }
 
-static void ok_callback(GtkWidget * widget, gpointer data)
+static gint 
+save_dialog ()
 {
-	run_flag = 1;
-	gtk_widget_destroy(GTK_WIDGET(data));
+  GtkWidget *dlg;
+  GtkWidget *button;
+  GtkWidget *label;
+  GtkWidget *entry;
+  GtkWidget *table;
+
+  dlg = gtk_dialog_new();
+  gtk_window_set_title(GTK_WINDOW(dlg), "Save As Pattern");
+  gtk_window_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
+  gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
+		     (GtkSignalFunc) close_callback, NULL);
+  
+  /*  Action area  */
+  button = gtk_button_new_with_label("OK");
+  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+  gtk_signal_connect(GTK_OBJECT(button), "clicked",
+		     (GtkSignalFunc) ok_callback,
+		     dlg);
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_widget_grab_default(button);
+  gtk_widget_show(button);
+  
+  button = gtk_button_new_with_label("Cancel");
+  GTK_WIDGET_SET_FLAGS(button, GTK_CAN_DEFAULT);
+  gtk_signal_connect_object(GTK_OBJECT(button), "clicked",
+			    (GtkSignalFunc) gtk_widget_destroy,
+			    GTK_OBJECT(dlg));
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_widget_show(button);
+  
+  /* The main table */
+  /* Set its size (y, x) */
+  table = gtk_table_new(1, 2, FALSE);
+  gtk_container_border_width(GTK_CONTAINER(table), 10);
+  gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show(table);
+  
+  gtk_table_set_row_spacings(GTK_TABLE(table), 10);
+  gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+  
+  /**********************
+   * label
+   **********************/
+  label = gtk_label_new("Description:");
+  gtk_misc_set_alignment(GTK_MISC(label), 0.0, 0.5);
+  gtk_table_attach(GTK_TABLE(table), label, 0, 1, 0, 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show(label);
+  
+  /************************
+   * The entry
+   ************************/
+  entry = gtk_entry_new();
+  gtk_table_attach(GTK_TABLE(table), entry, 1, 2, 0, 1, GTK_EXPAND | GTK_FILL,
+		   GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_set_usize(entry, 200, 0);
+  gtk_entry_set_text(GTK_ENTRY(entry), description);
+  gtk_signal_connect(GTK_OBJECT(entry), "changed",
+		     (GtkSignalFunc) entry_callback, description);
+  gtk_widget_show(entry);
+  
+  gtk_widget_show(dlg);
+  
+  gtk_main();
+  gdk_flush();
+  
+  return run_flag;
 }
 
-static void entry_callback(GtkWidget * widget, gpointer data)
+static void 
+close_callback (GtkWidget *widget, 
+		gpointer   data)
 {
-	if (data == description)
-		strncpy(description, gtk_entry_get_text(GTK_ENTRY(widget)), 256);
+  gtk_main_quit();
+}
+
+static void 
+ok_callback (GtkWidget *widget, 
+	     gpointer   data)
+{
+  run_flag = 1;
+  gtk_widget_destroy(GTK_WIDGET(data));
+}
+
+static void 
+entry_callback (GtkWidget *widget, 
+		gpointer   data)
+{
+  if (data == description)
+    strncpy(description, gtk_entry_get_text(GTK_ENTRY(widget)), 256);
 }

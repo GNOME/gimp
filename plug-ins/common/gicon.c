@@ -35,6 +35,7 @@
 #include <math.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 
 typedef struct
@@ -49,17 +50,18 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query       (void);
-static void   run         (char    *name,
-			   int      nparams,
-			   GParam  *param,
-			   int     *nreturn_vals,
-			   GParam **return_vals);
-static gint32 load_image  (char   *filename);
-static gint   save_image  (char   *filename,
-			   gint32  image_ID,
-			   gint32  drawable_ID);
+static void   query         (void);
+static void   run           (char    *name,
+			     int      nparams,
+			     GParam  *param,
+			     int     *nreturn_vals,
+			     GParam **return_vals);
+static gint32 load_image    (char    *filename);
+static gint   save_image    (char    *filename,
+			     gint32   image_ID,
+			     gint32   drawable_ID);
 
+static void   init_gtk       (void);
 static gint   save_dialog    (void);
 
 static void   close_callback (GtkWidget *widget,
@@ -154,7 +156,9 @@ run (char    *name,
   static GParam values[2];
   GRunModeType run_mode;
   gint32 image_ID;
-	GStatusType status = STATUS_SUCCESS;
+  gint32 drawable_ID;
+  GStatusType status = STATUS_SUCCESS;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -181,6 +185,27 @@ run (char    *name,
     }
   else if (strcmp (name, "file_gicon_save") == 0)
     {
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "GIcon", 
+				      (CAN_HANDLE_GRAY | CAN_HANDLE_ALPHA));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -209,9 +234,8 @@ run (char    *name,
 	  break;
 	}
 
-      if (save_image (param[3].data.d_string,
-		      param[1].data.d_int32,
-		      param[2].data.d_int32))
+      *nreturn_vals = 1;
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	{
 	  /*  Store persistent data  */
 	  gimp_set_data ("file_gicon_save", &givals, sizeof (GIconSaveVals));
@@ -220,7 +244,9 @@ run (char    *name,
 	}
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
-      *nreturn_vals = 1;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
 }
 
@@ -378,24 +404,28 @@ save_image (char   *filename,
   return TRUE;
 }
 
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("gicon");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
 
 static gint
-save_dialog()
+save_dialog ()
 {
   GtkWidget *dlg;
   GtkWidget *button;
   GtkWidget *label;
   GtkWidget *entry;
   GtkWidget *table;
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new(gchar *, 1);
-  argv[0] = g_strdup("gicon");
-
-  gtk_init(&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new();
   gtk_window_set_title(GTK_WINDOW(dlg), "Save As GIcon");

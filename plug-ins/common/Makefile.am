@@ -492,6 +492,7 @@ gicon_SOURCES = \
 	gicon.c
 
 gicon_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -583,8 +584,9 @@ header_SOURCES = \
 	header.c
 
 header_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(GLIB_LIBS)				\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 hot_SOURCES = \
@@ -600,6 +602,7 @@ hrz_SOURCES = \
 	hrz.c
 
 hrz_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -757,6 +760,7 @@ pat_SOURCES = \
 	pat.c
 
 pat_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
@@ -765,8 +769,9 @@ pcx_SOURCES = \
 	pcx.c
 
 pcx_LDADD = \
+	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(GLIB_LIBS)				\
+	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
 pix_SOURCES = \

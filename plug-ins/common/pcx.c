@@ -17,13 +17,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 /* Declare plug-in functions.  */
 
 static void query (void);
-static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
-                 GParam **return_vals);
+static void run   (char    *name, 
+		   int      nparams, 
+		   GParam  *param, 
+		   int     *nreturn_vals,
+		   GParam **return_vals);
 
 #if defined(_BIG_ENDIAN) || defined(sparc) || defined (__sgi)
 #define qtohl(x) \
@@ -100,26 +105,35 @@ static void query () {
 
 /* Declare internal functions. */
 
-static gint32 load_image (char *filename);
-static void load_1(FILE *fp, int width, int height, char *buffer, int bytes);
-static void load_4(FILE *fp, int width, int height, char *buffer, int bytes);
-static void load_8(FILE *fp, int width, int height, char *buffer, int bytes);
-static void load_24(FILE *fp, int width, int height, char *buffer, int bytes);
-static void readline(FILE *fp, guchar* buffer, int bytes);
+static void   init_gtk   (void);
 
-static gint save_image (char *filename, gint32 image, gint32 layer);
-static void save_8(FILE *fp, int width, int height, guchar *buffer);
-static void save_24(FILE *fp, int width, int height, guchar *buffer);
-static void writeline(FILE *fp, guchar *buffer, int bytes);
+static gint32 load_image (char *filename);
+static void   load_1     (FILE *fp, int width, int height, char *buffer, int bytes);
+static void   load_4     (FILE *fp, int width, int height, char *buffer, int bytes);
+static void   load_8     (FILE *fp, int width, int height, char *buffer, int bytes);
+static void   load_24    (FILE *fp, int width, int height, char *buffer, int bytes);
+static void   readline   (FILE *fp, guchar* buffer, int bytes);
+
+static gint   save_image (char *filename, gint32 image, gint32 layer);
+static void   save_8     (FILE *fp, int width, int height, guchar *buffer);
+static void   save_24    (FILE *fp, int width, int height, guchar *buffer);
+static void   writeline  (FILE *fp, guchar *buffer, int bytes);
 
 /* Plug-in implementation */
 
-static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
-     GParam **return_vals) {
+static void 
+run (char    *name, 
+     int      nparams, 
+     GParam  *param, 
+     int     *nreturn_vals,
+     GParam **return_vals) 
+{
   static GParam values[2];
   GStatusType status = STATUS_SUCCESS;
   GRunModeType run_mode;
   gint32 image_ID;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -142,6 +156,27 @@ static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
     }
   else if (strcmp (name, "file_pcx_save") == 0)
     {
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY | CAN_HANDLE_INDEXED));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -160,13 +195,32 @@ static void run (char *name, int nparams, GParam *param, int *nreturn_vals,
 	}
 
       *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, param[1].data.d_int32,
-                                              param[2].data.d_int32)) {
-	values[0].data.d_status = STATUS_SUCCESS;
-      } else {
-	values[0].data.d_status = STATUS_EXECUTION_ERROR;
-      }
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
+	{
+	  values[0].data.d_status = STATUS_SUCCESS;
+	} 
+      else 
+	{
+	  values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	}
+      
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
+}
+
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("pcx");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
 }
 
 guchar mono[6]= {0, 0, 0, 255, 255, 255};
@@ -188,7 +242,9 @@ static struct {
     guint8 filler[58];
 } pcx_header;
 
-static gint32 load_image (char *filename) {
+static gint32 
+load_image (char *filename) 
+{
   FILE *fd;
   GDrawable *drawable;
   GPixelRgn pixel_rgn;
@@ -270,100 +326,149 @@ static gint32 load_image (char *filename) {
   return image;
 }
 
-static void load_8(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void 
+load_8 (FILE *fp, 
+	int   width, 
+	int   height, 
+	char *buffer, 
+	int bytes) 
+{
   int row;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
 
-  for (row= 0; row < height; buffer+= width, ++row) {
-    readline(fp, line, bytes);
-    memcpy(buffer, line, width);
-    gimp_progress_update ((double) row / (double) height);
-  }
+  for (row= 0; row < height; buffer+= width, ++row) 
+    {
+      readline(fp, line, bytes);
+      memcpy(buffer, line, width);
+      gimp_progress_update ((double) row / (double) height);
+    }
 
   g_free(line);
 }
 
-static void load_24(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void 
+load_24 (FILE *fp, 
+	 int   width, 
+	 int   height, 
+	 char *buffer, 
+	 int   bytes) 
+{
   int x, y, c;
   guchar *line;
   line= (guchar *) g_malloc(bytes * 3);
 
-  for (y= 0; y < height; buffer+= width * 3, ++y) {
-    for (c= 0; c < 3; ++c) {
-      readline(fp, line, bytes);
-      for (x= 0; x < width; ++x) {
-        buffer[x * 3 + c]= line[x];
-      }
+  for (y= 0; y < height; buffer+= width * 3, ++y) 
+    {
+      for (c= 0; c < 3; ++c) 
+	{
+	  readline(fp, line, bytes);
+	  for (x= 0; x < width; ++x) 
+	    {
+	      buffer[x * 3 + c]= line[x];
+	    }
+	}
+      gimp_progress_update ((double) y / (double) height);
     }
-    gimp_progress_update ((double) y / (double) height);
-  }
-
+  
   g_free(line);
 }
 
-static void load_1(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void 
+load_1 (FILE *fp, 
+	int   width, 
+	int   height, 
+	char *buffer, 
+	int   bytes) 
+{
   int x, y;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
 
-  for (y= 0; y < height; buffer+= width, ++y) {
-    readline(fp, line, bytes);
-    for (x= 0; x < width; ++x) {
-      if (line[x / 8] & (128 >> (x % 8)))
-        buffer[x]= 1;
-      else
-        buffer[x]= 0;
+  for (y= 0; y < height; buffer+= width, ++y) 
+    {
+      readline(fp, line, bytes);
+      for (x= 0; x < width; ++x) 
+	{
+	  if (line[x / 8] & (128 >> (x % 8)))
+	    buffer[x]= 1;
+	  else
+	    buffer[x]= 0;
+	}
+      gimp_progress_update ((double) y / (double) height);
     }
-    gimp_progress_update ((double) y / (double) height);
-  }
-
+  
   g_free(line);
 }
 
-static void load_4(FILE *fp, int width, int height, char *buffer, int bytes) {
+static void 
+load_4 (FILE *fp, 
+	int   width, 
+	int   height, 
+	char *buffer, 
+	int   bytes) 
+{
   int x, y, c;
   guchar *line;
   line= (guchar *) g_malloc(bytes);
 
-  for (y= 0; y < height; buffer+= width, ++y) {
-    for (x= 0; x < width; ++x) buffer[x]= 0;
-    for (c= 0; c < 4; ++c) {
-      readline(fp, line, bytes);
-      for (x= 0; x < width; ++x) {
-        if (line[x / 8] & (128 >> (x % 8)))
-          buffer[x]+= (1 << c);
-      }
+  for (y= 0; y < height; buffer+= width, ++y) 
+    {
+      for (x= 0; x < width; ++x) buffer[x]= 0;
+      for (c= 0; c < 4; ++c) 
+	{
+	  readline(fp, line, bytes);
+	  for (x= 0; x < width; ++x) 
+	    {
+	      if (line[x / 8] & (128 >> (x % 8)))
+		buffer[x]+= (1 << c);
+	    }
+	}
+      gimp_progress_update ((double) y / (double) height);
     }
-    gimp_progress_update ((double) y / (double) height);
-  }
 
   g_free(line);
 }
 
-static void readline(FILE *fp, guchar *buffer, int bytes) {
+static void 
+readline (FILE   *fp, 
+	  guchar *buffer, 
+	  int    bytes) 
+{
   static guchar count= 0, value= 0;
 
-  if (pcx_header.compression) {
-    while (bytes--) {
-      if (count == 0) {
-        value= fgetc(fp);
-        if (value < 0xc0) {
-          count= 1;
-        } else {
-          count= value - 0xc0;
-          value= fgetc(fp);
-        }
-      }
-      count--;
-      *(buffer++)= value;
+  if (pcx_header.compression) 
+    {
+      while (bytes--) 
+	{
+	  if (count == 0) 
+	    {
+	      value= fgetc(fp);
+	      if (value < 0xc0) 
+		{
+		  count= 1;
+		} 
+	      else 
+		{
+		  count= value - 0xc0;
+		  value= fgetc(fp);
+		}
+	    }
+	  count--;
+	  *(buffer++)= value;
+	}
+    } 
+  else 
+    {
+      fread(buffer, bytes, 1, fp);
     }
-  } else {
-    fread(buffer, bytes, 1, fp);
-  }
 }
 
-gint save_image (char *filename, gint32 image, gint32 layer) {
+static gint 
+save_image (char   *filename, 
+	    gint32  image, 
+	    gint32  layer) 
+{
   FILE *fp;
   GPixelRgn pixel_rgn;
   GDrawable *drawable;
@@ -389,7 +494,8 @@ gint save_image (char *filename, gint32 image, gint32 layer) {
   pcx_header.version = 5;
   pcx_header.compression = 1;
 
-  switch(drawable_type) {
+  switch(drawable_type) 
+    {
     case INDEXED_IMAGE:
       cmap= gimp_image_get_cmap(image, &colors);
       pcx_header.bpp = 8;
@@ -418,10 +524,11 @@ gint save_image (char *filename, gint32 image, gint32 layer) {
       break;
   }
   
-  if ((fp = fopen(filename, "wb")) == NULL) {
-    g_message("PCX Can't open \n%s", filename);
-    return -1;
-  }
+  if ((fp = fopen(filename, "wb")) == NULL) 
+    {
+      g_message("PCX Can't open \n%s", filename);
+      return -1;
+    }
 
   pixels= (guchar *) g_malloc(width * height * pcx_header.planes);
   gimp_pixel_rgn_get_rect(&pixel_rgn, pixels, 0, 0, width, height);
@@ -437,14 +544,16 @@ gint save_image (char *filename, gint32 image, gint32 layer) {
 
   fwrite(&pcx_header, 128, 1, fp);
 
-  switch(drawable_type) {
+  switch(drawable_type) 
+    {
     case INDEXED_IMAGE:
       save_8(fp, width, height, pixels);
       fputc(0x0c, fp);
       fwrite(cmap, colors, 3, fp);
-      for (i= colors; i < 256; i++) {
-        fputc(0, fp); fputc(0, fp); fputc(0, fp);
-      }
+      for (i= colors; i < 256; i++) 
+	{
+	  fputc(0, fp); fputc(0, fp); fputc(0, fp);
+	}
       break;
     case RGB_IMAGE:
       save_24(fp, width, height, pixels);
@@ -452,9 +561,10 @@ gint save_image (char *filename, gint32 image, gint32 layer) {
     case GRAY_IMAGE:
       save_8(fp, width, height, pixels);
       fputc(0x0c, fp);
-      for (i= 0; i < 256; i++) {
-        fputc((guchar) i, fp); fputc((guchar) i, fp); fputc((guchar) i, fp);
-      }
+      for (i= 0; i < 256; i++) 
+	{
+	  fputc((guchar) i, fp); fputc((guchar) i, fp); fputc((guchar) i, fp);
+	}
       break;
     default:
       g_message("Can't save this image as PCX\nFlatten your image");
@@ -469,51 +579,74 @@ gint save_image (char *filename, gint32 image, gint32 layer) {
   return TRUE;
 }
 
-static void save_8(FILE *fp, int width, int height, guchar *buffer) {
+static void 
+save_8 (FILE   *fp, 
+	int     width, 
+	int     height, 
+	guchar *buffer) 
+{
   int row;
 
-  for (row= 0; row < height; ++row) {
-    writeline(fp, buffer, width);
-    buffer+= width;
-    gimp_progress_update((double) row / (double) height);
-  }
+  for (row= 0; row < height; ++row) 
+    {
+      writeline(fp, buffer, width);
+      buffer+= width;
+      gimp_progress_update((double) row / (double) height);
+    }
 }
 
-static void save_24(FILE *fp, int width, int height, guchar *buffer) {
+static void 
+save_24 (FILE   *fp, 
+	 int     width, 
+	 int     height, 
+	 guchar *buffer) 
+{
   int x, y, c;
   guchar *line;
   line= (guchar *) g_malloc(width);
 
-  for (y= 0; y < height; ++y) {
-    for (c= 0; c < 3; ++c) {
-      for (x= 0; x < width; ++x) {
-        line[x]= buffer[(3*x) + c];
-      }
-      writeline(fp, line, width);
-    }
-    buffer+= width * 3;
+  for (y= 0; y < height; ++y) 
+    {
+      for (c= 0; c < 3; ++c) 
+	{
+	  for (x= 0; x < width; ++x) 
+	    {
+	      line[x]= buffer[(3*x) + c];
+	    }
+	  writeline(fp, line, width);
+	}
+      buffer+= width * 3;
     gimp_progress_update((double) y / (double) height);
-  }
+    }
   g_free (line);
 }
 
-static void writeline(FILE *fp, guchar *buffer, int bytes) {
+static void 
+writeline (FILE   *fp, 
+	   guchar *buffer, 
+	   int     bytes) 
+{
   guchar value, count;
   guchar *finish= buffer+ bytes;
 
-  while (buffer < finish) {
-    value= *(buffer++);
-    count= 1;
+  while (buffer < finish) 
+    {
+      value= *(buffer++);
+      count= 1;
+      
+      while (buffer < finish && count < 63 && *buffer == value) 
+	{
+	  count++; buffer++;
+	}
 
-    while (buffer < finish && count < 63 && *buffer == value) {
-      count++; buffer++;
+    if (value < 0xc0 && count == 1) 
+      {
+	fputc(value, fp);
+      } 
+    else 
+      {
+	fputc(0xc0 + count, fp);
+	fputc(value, fp);
+      }
     }
-
-    if (value < 0xc0 && count == 1) {
-      fputc(value, fp);
-    } else {
-      fputc(0xc0 + count, fp);
-      fputc(value, fp);
-    }
-  }
 }

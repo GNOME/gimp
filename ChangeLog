@@ -1,3 +1,14 @@
+Sat Oct  9 21:03:08 *EST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/gicon.c
+	* plug-ins/common/header.c
+	* plug-ins/common/hrz.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pcx.c
+	* plug-ins/common/plugin-defs.pl: more file plug-ins that make use 
+	of the export functionality
+
 Sat Oct  9 15:34:12 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* gimprc.5.in

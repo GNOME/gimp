@@ -61,6 +61,7 @@
 
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/gimpui.h"
 
 
 /* Declare local data types
@@ -75,18 +76,19 @@ typedef struct
 
 /* Declare some local functions.
  */
-static void   query      (void);
-static void   run        (char    *name,
-                          int      nparams,
-                          GParam  *param,
-                          int     *nreturn_vals,
-                          GParam **return_vals);
-static gint32 load_image (char   *filename);
-static gint   save_image (char   *filename,
-			  gint32  image_ID,
-			  gint32  drawable_ID);
+static void   query       (void);
+static void   run         (char    *name,
+			   int      nparams,
+			   GParam  *param,
+			   int     *nreturn_vals,
+			   GParam **return_vals);
+static gint32 load_image  (char   *filename);
+static gint   save_image  (char   *filename,
+			   gint32  image_ID,
+			   gint32  drawable_ID);
 
-static gint   save_dialog ();
+static void   init_gtk    (void);
+static gint   save_dialog (void);
 
 static void   save_close_callback      (GtkWidget *widget, gpointer data);
 static void   save_ok_callback         (GtkWidget *widget,
@@ -166,7 +168,7 @@ query ()
                           "Albert Cahalan",
                           "1997",
                           "<Save>/HRZ",
-			  "RGB*, GRAY*, INDEXED*",
+			  "RGB, GRAY",
                           PROC_PLUG_IN,
                           nsave_args, 0,
                           save_args, NULL);
@@ -186,6 +188,8 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID;
+  gint32 drawable_ID;
+  GimpExportReturnType export = EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -212,6 +216,27 @@ run (char    *name,
     }
   else if (strcmp (name, "file_hrz_save") == 0)
     {
+      image_ID    = param[1].data.d_int32;
+      drawable_ID = param[2].data.d_int32;
+
+      /*  eventually export the image */ 
+      switch (run_mode)
+	{
+	case RUN_INTERACTIVE:
+	case RUN_WITH_LAST_VALS:
+	  init_gtk ();
+	  export = gimp_export_image (&image_ID, &drawable_ID, "HRZ", 
+				      (CAN_HANDLE_RGB | CAN_HANDLE_GRAY));
+	  if (export == EXPORT_CANCEL)
+	    {
+	      values[0].data.d_status = STATUS_EXECUTION_ERROR;
+	      return;
+	    }
+	  break;
+	default:
+	  break;
+	}
+
       switch (run_mode)
 	{
 	case RUN_INTERACTIVE:
@@ -234,12 +259,15 @@ run (char    *name,
 	}
 
       *nreturn_vals = 1;
-      if (save_image (param[3].data.d_string, param[1].data.d_int32, param[2].data.d_int32))
+      if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	{
 	  values[0].data.d_status = STATUS_SUCCESS;
 	}
       else
 	values[0].data.d_status = STATUS_EXECUTION_ERROR;
+
+      if (export == EXPORT_EXPORT)
+	gimp_image_delete (image_ID);
     }
 }
 
@@ -465,21 +493,27 @@ save_image (char   *filename,
   return TRUE;
 }
 
+
+static void 
+init_gtk ()
+{
+  gchar **argv;
+  gint argc;
+
+  argc = 1;
+  argv = g_new (gchar *, 1);
+  argv[0] = g_strdup ("hrz");
+  
+  gtk_init (&argc, &argv);
+  gtk_rc_parse (gimp_gtkrc ());
+}
+
 /*********** Save dialog ************/
 static gint
 save_dialog ()
 {
   GtkWidget *dlg;
   GtkWidget *button;
-  gchar **argv;
-  gint argc;
-
-  argc = 1;
-  argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
-
-  gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
   gtk_window_set_title (GTK_WINDOW (dlg), "Save as HRZ");
