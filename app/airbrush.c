@@ -17,7 +17,7 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -143,7 +143,7 @@ airbrush_paint_func (PaintCore *paint_core,
 		     GimpDrawable *drawable,
 		     int        state)
 {
-  GBrushP brush;
+  GimpBrushP brush;
 
   if (!drawable) 
     return NULL;
@@ -267,8 +267,8 @@ airbrush_motion (PaintCore *paint_core,
   /*  paste the newly painted area to the image  */
   paint_core_paste_canvas (paint_core, drawable,
 			   opacity,
-			   (int) (get_brush_opacity () * 255),
-			   get_brush_paint_mode (),
+			   (int) (gimp_brush_get_opacity () * 255),
+			   gimp_brush_get_paint_mode (),
 			   SOFT, CONSTANT);
 }
 

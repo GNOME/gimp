@@ -1,3 +1,27 @@
+Wed Jul  8 21:34:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
+
+        * app/brushes.c app/brushes.h:  removed files
+
+        * app/gimpbrush.c app/gimpbrush.h
+        * app/gimpbrushlist.c app/gimpbrushlist.h
+          the New files replace the functionality of brushes.[ch]
+          and objectify the brushes.  The basic structure is in
+          but signals are not used as much as they should be.
+
+        * app/gimpbrushgenerated.c app/gimpbrushgenerated.h
+          New type of brush that is can be modified on the fly
+
+        * brush_edit.c brush_edit.h
+          new files that implement a gui for the GimpBrushGenerated class.
+          very basic.
+
+	* brush_select.c devices.c ink.c gimpobject.h paint_core.c
+          brush_select.h brush_edit.h preferences_dialog.c pencil.c
+          paintbrush.c internal_procs.c gimage_mask.c eraser.c convolve.c
+          commands.c colormaps.c airbrush.c clone.c app_procs.c
+          paint_core.h
+          Minor changes to support above new functionality.
+
 Wed Jul  8 22:36:12 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/color_area.c (color_area_edit): raise the color select when 
@@ -66,6 +90,7 @@ Wed Jul  8 01:35:22 EEST 1998  Lauri Alanko <nether@gimp.org>
 	* app/app_procs.c (app_exit_finish): Unregister pdb procs _before_ 
 	destroying pdb.
 	
+>>>>>>> 1.475
 Mon Jul  6 20:38:36 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/gimage_mask.c (gimage_mask_boundary): fixed crash when you

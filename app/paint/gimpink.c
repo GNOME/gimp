@@ -16,10 +16,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include "appenv.h"
-#include "brushes.h"
 #include "drawable.h"
 #include "draw_core.h"
 #include "gimage_mask.h"
+#include "gimpbrushlist.h"
 #include "ink.h"
 #include "tools.h"
 #include "undo.h"
@@ -908,8 +908,8 @@ ink_paste (InkTool      *ink_tool,
   /*  apply the paint area to the gimage  */
   gimage_apply_image (gimage, drawable, &srcPR,
 		      FALSE, 
-		      (int) (get_brush_opacity () * 255),
-		      get_brush_paint_mode(),
+		      (int) (gimp_brush_get_opacity () * 255),
+		      gimp_brush_get_paint_mode(),
 		      undo_tiles,  /*  specify an alternative src1  */
 		      canvas_buf->x, canvas_buf->y);
 

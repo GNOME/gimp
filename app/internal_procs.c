@@ -24,7 +24,7 @@
 #include "blend.h"
 #include "bucket_fill.h"
 #include "brightness_contrast.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "by_color_select.h"
 #include "channel_cmds.h"
 #include "channel_ops.h"

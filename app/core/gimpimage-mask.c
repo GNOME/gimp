@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "appenv.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -638,8 +638,8 @@ gimage_mask_stroke_paint_func (paint_core, drawable, state)
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (get_brush_opacity () * 255),
-			   get_brush_paint_mode (), SOFT, CONSTANT);
+			   (int) (gimp_brush_get_opacity () * 255),
+			   gimp_brush_get_paint_mode (), SOFT, CONSTANT);
 
   return NULL;
 }

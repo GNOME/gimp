@@ -32,11 +32,11 @@ gimp_SOURCES = \
 	boundary.h		\
 	brightness_contrast.c	\
 	brightness_contrast.h	\
+	brush_edit.c		\
+	brush_edit.h		\
 	brush_header.h		\
 	brush_select.c		\
 	brush_select.h		\
-	brushes.c		\
-	brushes.h		\
 	bucket_fill.c		\
 	bucket_fill.h		\
 	buildmenu.c		\
@@ -142,6 +142,12 @@ gimp_SOURCES = \
 	gimage_mask.h		\
 	gimage_mask_cmds.c	\
 	gimage_mask_cmds.h	\
+	gimpbrush.c		\
+	gimpbrush.h		\
+	gimpbrushgenerated.c	\
+	gimpbrushgenerated.h	\
+	gimpbrushlist.c		\
+	gimpbrushlist.h		\
 	gimprc.c		\
 	gimprc.h		\
 	global_edit.c		\

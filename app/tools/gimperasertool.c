@@ -17,7 +17,7 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -179,11 +179,11 @@ eraser_motion (PaintCore *paint_core, GimpDrawable *drawable, gboolean hard, gbo
   /*  color the pixels  */
   color_pixels (temp_buf_data (area), col,
 		area->width * area->height, area->bytes);
-  opacity = 255 * get_brush_opacity() * (paint_core->curpressure / 0.5);
+  opacity = 255 * gimp_brush_get_opacity() * (paint_core->curpressure / 0.5);
   if(opacity > OPAQUE_OPACITY) opacity=OPAQUE_OPACITY;
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, opacity,
-			   (int) (get_brush_opacity () * 255),
+			   (int) (gimp_brush_get_opacity () * 255),
 			   ERASE_MODE, hard? HARD : SOFT, incremental ? INCREMENTAL : CONSTANT);
 }
 

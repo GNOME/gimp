@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "appenv.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "convolve.h"
@@ -329,7 +329,7 @@ convolve_motion (PaintCore *paint_core,
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_replace_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (get_brush_opacity () * 255),
+			   (int) (gimp_brush_get_opacity () * 255),
 			   SOFT, INCREMENTAL);
 }
 

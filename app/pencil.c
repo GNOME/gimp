@@ -17,7 +17,7 @@
  */
 #include <stdlib.h>
 #include "appenv.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "drawable.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -114,8 +114,8 @@ pencil_motion (paint_core, drawable)
 
   /*  paste the newly painted canvas to the gimage which is being worked on  */
   paint_core_paste_canvas (paint_core, drawable, OPAQUE_OPACITY,
-			   (int) (get_brush_opacity () * 255),
-			   get_brush_paint_mode (), HARD, CONSTANT);
+			   (int) (gimp_brush_get_opacity () * 255),
+			   gimp_brush_get_paint_mode (), HARD, CONSTANT);
 }
 
 

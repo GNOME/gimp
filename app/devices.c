@@ -20,7 +20,7 @@
 
 #include "appenv.h"
 #include "actionarea.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "devices.h"
 #include "interface.h"
 #include "gimprc.h"
@@ -44,7 +44,7 @@ struct _DeviceInfo {
   gint num_keys;
   GdkDeviceKey *keys;
 
-  GBrushP brush;
+  GimpBrushP brush;
   ToolType tool;
   unsigned char foreground[3];
 };
@@ -201,7 +201,7 @@ devices_rc_update (gchar *name, DeviceValues values,
 {
   GList *tmp_list;
   DeviceInfo *device_info;
-  GBrushP brushp;
+  GimpBrushP brushp;
 
   /* Find device if we have it */
 
@@ -299,27 +299,9 @@ devices_rc_update (gchar *name, DeviceValues values,
   if (values & (DEVICE_BRUSH | DEVICE_TOOL | DEVICE_FOREGROUND))
     device_info->is_init = TRUE;
 
-  /* FIXME: this should probably be left in brushes.c */
-
   if (values & DEVICE_BRUSH)
     {
-      GSList *list;
-
-      device_info->brush = NULL;
-      list = brush_list;
-      
-      while (list)
-	{
-	  brushp = (GBrushP) list->data;
-	  
-	  if (!strcmp (brushp->name, brush_name))
-	    {
-	      device_info->brush = brushp;
-	      break;
-	    }
-	  
-	  list = g_slist_next (list);
-	}
+      device_info->brush = gimp_brush_list_get_brush(brush_list, brush_name);
     }
 
   if (values & DEVICE_TOOL)

@@ -19,7 +19,7 @@
 #include <string.h>
 #include <math.h>
 #include "appenv.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "channels_dialog.h"
 #include "drawable.h"
 #include "errors.h"
@@ -399,7 +399,7 @@ paint_core_init (paint_core, drawable, x, y)
      GimpDrawable *drawable;
      double x, y;
 {
-  GBrushP brush;
+  GimpBrushP brush;
 
   paint_core->curx = x;
   paint_core->cury = y;
@@ -418,7 +418,7 @@ paint_core_init (paint_core, drawable, x, y)
 
   paint_core->spacing =
     (double) MAXIMUM (brush->mask->width, brush->mask->height) *
-    ((double) get_brush_spacing () / 100.0);
+    ((double) gimp_brush_get_spacing () / 100.0);
   if (paint_core->spacing < 1.0)
     paint_core->spacing = 1.0;
   paint_core->brush_mask = brush->mask;
@@ -714,6 +714,22 @@ paint_core_replace_canvas (paint_core, drawable, brush_opacity, image_opacity,
 		      brush_opacity, image_opacity, mode);
 }
 
+/* This is a hack to make sure we don't cache data for a brush that 
+ * has changed.  Do it the right way when signals get put in.
+ */
+static MaskBuf *last_brush = NULL;
+static int cache_invalid = 0;
+
+int paint_core_invalidate_cache(MaskBuf *buf)
+{
+  if (last_brush == buf)
+  {
+    cache_invalid = 1;
+    return 1;
+  }
+  return 0;
+}
+
 /************************************************************
  *             LOCAL FUNCTION DEFINITIONS                   *
  ************************************************************/
@@ -723,7 +739,7 @@ paint_core_subsample_mask (mask, x, y)
      MaskBuf * mask;
      double x, y;
 {
-  static MaskBuf *last_brush = NULL;
+/*  static MaskBuf *last_brush = NULL; */
   MaskBuf * dest;
   double left;
   unsigned char * m, * d;
@@ -744,9 +760,9 @@ paint_core_subsample_mask (mask, x, y)
 
   kernel = subsample[index2][index1];
 
-  if ((mask == last_brush) && kernel_brushes[index2][index1])
+  if ((mask == last_brush) && kernel_brushes[index2][index1] && !cache_invalid)
     return kernel_brushes[index2][index1];
-  else if (mask != last_brush)
+  else if (mask != last_brush || cache_invalid)
     for (i = 0; i < 5; i++)
       for (j = 0; j < 5; j++)
 	{
@@ -756,6 +772,7 @@ paint_core_subsample_mask (mask, x, y)
 	}
 
   last_brush = mask;
+  cache_invalid = 0;
   kernel_brushes[index2][index1] = mask_buf_new (mask->width + 2, mask->height + 2);
   dest = kernel_brushes[index2][index1];
 

@@ -111,5 +111,7 @@ TempBuf *     paint_core_get_orig_image    (PaintCore *, GimpDrawable *, int, in
 void          paint_core_paste_canvas      (PaintCore *, GimpDrawable *, int, int, int, int, int);
 void          paint_core_replace_canvas    (PaintCore *, GimpDrawable *, int, int, int, int);
 
+/*  ugly hacks  */
+int paint_core_invalidate_cache(MaskBuf *);
 
 #endif  /*  __PAINT_CORE_H__  */

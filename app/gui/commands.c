@@ -23,7 +23,7 @@
 #include "actionarea.h"
 #include "app_procs.h"
 #include "brightness_contrast.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "by_color_select.h"
 #include "channels_dialog.h"
 #include "colormaps.h"

@@ -20,7 +20,12 @@
 #include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
+#include "gimpset.h"
+#include "gimpsetP.h"  /* FIXME: get rid of this include */
+#include "gimpbrushgenerated.h"
+#include "brush_edit.h"
+#include "brush_select.h"
 #include "brush_select.h"
 #include "buildmenu.h"
 #include "colormaps.h"
@@ -48,14 +53,18 @@
 			  GDK_ENTER_NOTIFY_MASK
 
 /*  local function prototypes  */
-static void brush_popup_open             (BrushSelectP, int, int, GBrushP);
+static void brush_popup_open             (BrushSelectP, int, int, GimpBrushP);
 static void brush_popup_close            (BrushSelectP);
-static void display_brush                (BrushSelectP, GBrushP, int, int);
+static void display_brush                (BrushSelectP, GimpBrushP, int, int);
 static void display_brushes              (BrushSelectP);
 static void display_setup                (BrushSelectP);
 static void preview_calc_scrollbar       (BrushSelectP);
 static void brush_select_show_selected   (BrushSelectP, int, int);
 static void update_active_brush_field    (BrushSelectP);
+static gint edit_brush_callback		(GtkWidget *w, GdkEvent *e,
+					 gpointer data);
+static gint new_brush_callback		(GtkWidget *w, GdkEvent *e,
+					 gpointer data);
 static void brush_select_close_callback  (GtkWidget *, gpointer);
 static void brush_select_refresh_callback(GtkWidget *, gpointer);
 static void paint_mode_menu_callback     (GtkWidget *, gpointer);
@@ -99,6 +108,7 @@ static ActionAreaItem action_items[] =
 static double old_opacity;
 static int old_spacing;
 static int old_paint_mode;
+static BrushEditGeneratedWindow *brush_edit_generated_dialog;
 
 int NUM_BRUSH_COLUMNS=5;
 int NUM_BRUSH_ROWS=5;
@@ -131,7 +141,8 @@ brush_select_new ()
   GtkWidget *util_box;
   GtkWidget *option_menu;
   GtkWidget *slider;
-  GBrushP active;
+  GimpBrushP active;
+  GtkWidget *button1, *button2;
 
   bsp = g_malloc (sizeof (_BrushSelect));
   bsp->redraw = TRUE;
@@ -209,7 +220,7 @@ brush_select_new ()
   gtk_widget_show (util_box);
 
   /*  Create the paint mode option menu  */
-  old_paint_mode = get_brush_paint_mode ();
+  old_paint_mode = gimp_brush_get_paint_mode ();
 
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
@@ -225,7 +236,7 @@ brush_select_new ()
   gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu), menu);
 
   /*  Create the opacity scale widget  */
-  old_opacity = get_brush_opacity ();
+  old_opacity = gimp_brush_get_opacity ();
 
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
@@ -244,7 +255,7 @@ brush_select_new ()
   gtk_widget_show (util_box);
 
   /*  Create the brush spacing scale widget  */
-  old_spacing = get_brush_spacing ();
+  old_spacing = gimp_brush_get_spacing ();
 
   util_box = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
@@ -260,6 +271,25 @@ brush_select_new ()
 
   gtk_widget_show (label);
   gtk_widget_show (slider);
+  gtk_widget_show (util_box);
+
+  /*  Create the edit/new buttons  */
+  util_box = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 0);
+  button1 =  gtk_button_new_with_label ("Edit Brush");
+  gtk_signal_connect (GTK_OBJECT (button1), "clicked",
+		      (GtkSignalFunc) edit_brush_callback,
+		      NULL);
+  gtk_box_pack_start (GTK_BOX (util_box), button1, TRUE, TRUE, 5);
+
+  button2 =  gtk_button_new_with_label ("New Brush");
+  gtk_signal_connect (GTK_OBJECT (button2), "clicked",
+		      (GtkSignalFunc) new_brush_callback,
+		      NULL);
+  gtk_box_pack_start (GTK_BOX (util_box), button2, TRUE, TRUE, 5);
+
+  gtk_widget_show (button1);
+  gtk_widget_show (button2);
   gtk_widget_show (util_box);
 
   /*  The action area  */
@@ -322,6 +352,24 @@ brush_select_free (BrushSelectP bsp)
     }
 }
 
+void
+brush_select_brush_changed(BrushSelectP bsp, GimpBrushP brush)
+{
+/* TODO: be smarter here and only update the part of the preview
+ *       that has changed */
+  if (bsp)
+  {
+    display_brushes(bsp);
+    gtk_widget_draw (bsp->preview, NULL);
+  }
+}
+
+void
+brush_select_brush_dirty_callback(GimpBrushP brush, BrushSelectP bsp)
+{
+  brush_select_brush_changed(bsp, brush);
+}
+
 
 /*
  *  Local functions
@@ -330,7 +378,7 @@ static void
 brush_popup_open (BrushSelectP bsp,
 		  int          x,
 		  int          y,
-		  GBrushP      brush)
+		  GimpBrushP   brush)
 {
   gint x_org, y_org;
   gint scr_w, scr_h;
@@ -399,9 +447,10 @@ brush_popup_close (BrushSelectP bsp)
   if (bsp->brush_popup != NULL)
     gtk_widget_hide (bsp->brush_popup);
 }
+
 static void
 display_brush (BrushSelectP bsp,
-	       GBrushP      brush,
+	       GimpBrushP    brush,
 	       int          col,
 	       int          row)
 {
@@ -477,9 +526,10 @@ display_setup (BrushSelectP bsp)
 static void
 display_brushes (BrushSelectP bsp)
 {
-  GSList * list = brush_list;    /*  the global brush list  */
+/* FIXME: use gimp_set_foreach?? */
+  GSList * list = GIMP_SET(brush_list)->list;    /*  the global brush list  */
   int row, col;
-  GBrushP brush;
+  GimpBrushP brush;
 
   /*  If there are no brushes, insensitize widgets  */
   if (brush_list == NULL)
@@ -497,7 +547,7 @@ display_brushes (BrushSelectP bsp)
   row = col = 0;
   while (list)
     {
-      brush = (GBrushP) list->data;
+      brush = (GimpBrushP) list->data;
 
       /*  Display the brush  */
       display_brush (bsp, brush, col, row);
@@ -610,7 +660,8 @@ preview_calc_scrollbar (BrushSelectP bsp)
   /* int rowy; */
 
   offs = bsp->scroll_offset;
-  num_rows = (num_brushes + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;
+  num_rows = (brush_list->num_brushes + NUM_BRUSH_COLUMNS - 1)
+    / NUM_BRUSH_COLUMNS;
   max = num_rows * bsp->cell_width;
   if (!num_rows) num_rows = 1;
   page_size = bsp->preview->allocation.height;
@@ -640,7 +691,7 @@ brush_select_resize (GtkWidget *widget,
 		     BrushSelectP bsp)
 {
    NUM_BRUSH_COLUMNS = (gint)((widget->allocation.width - 4) / STD_CELL_WIDTH);
-   NUM_BRUSH_ROWS = (num_brushes + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;
+   NUM_BRUSH_ROWS = (brush_list->num_brushes + NUM_BRUSH_COLUMNS - 1) / NUM_BRUSH_COLUMNS;
    
    bsp->width = widget->allocation.width - 4;
    bsp->height = widget->allocation.height - 4;
@@ -663,7 +714,7 @@ brush_select_resize (GtkWidget *widget,
 static void
 update_active_brush_field (BrushSelectP bsp)
 {
-  GBrushP brush;
+  GimpBrushP brush;
   char buf[32];
 
   brush = get_active_brush ();
@@ -679,7 +730,7 @@ update_active_brush_field (BrushSelectP bsp)
   gtk_label_set (GTK_LABEL (bsp->brush_size), buf);
 
   /*  Set brush spacing  */
-  bsp->spacing_data->value = get_brush_spacing ();
+  bsp->spacing_data->value = gimp_brush_get_spacing ();
   gtk_signal_emit_by_name (GTK_OBJECT (bsp->spacing_data), "value_changed");
 }
 
@@ -690,7 +741,7 @@ brush_select_events (GtkWidget    *widget,
 		     BrushSelectP  bsp)
 {
   GdkEventButton *bevent;
-  GBrushP brush;
+  GimpBrushP brush;
   int row, col, index;
 
   switch (event->type)
@@ -718,7 +769,10 @@ brush_select_events (GtkWidget    *widget,
 
 	      /*  Make this brush the active brush  */
 	      select_brush (brush);
-
+	      if (brush_edit_generated_dialog)
+		brush_edit_generated_set_brush(brush_edit_generated_dialog,
+					       get_active_brush());
+	      
 	      /*  Show the brush popup window if the brush is too large  */
 	      if (brush->mask->width > bsp->cell_width ||
 		  brush->mask->height > bsp->cell_height)
@@ -751,6 +805,39 @@ brush_select_events (GtkWidget    *widget,
 }
 
 static gint
+edit_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
+{
+  if (GIMP_IS_BRUSH_GENERATED(get_active_brush()))
+  {
+    if (!brush_edit_generated_dialog)
+    {
+      /*  Create the dialog...  */
+      brush_edit_generated_dialog = brush_edit_generated_new();
+      brush_edit_generated_set_brush(brush_edit_generated_dialog,
+				     get_active_brush());
+    }
+    else
+    {
+      /*  Popup the dialog  */
+      if (!GTK_WIDGET_VISIBLE (brush_edit_generated_dialog->shell))
+	gtk_widget_show (brush_edit_generated_dialog->shell);
+      else
+	gdk_window_raise(brush_edit_generated_dialog->shell->window);
+    }
+  }
+  else
+    g_message("We are all out of brush editors today, please try again tomorrow\n");
+  return TRUE;
+}
+
+static gint
+new_brush_callback (GtkWidget *w, GdkEvent *e, gpointer data)
+{
+  brush_changed_notify(GIMP_BRUSH(gimp_brush_generated_new(10, .5, 0.0, 1.0)));
+  return TRUE;
+}
+
+static gint
 brush_select_delete_callback (GtkWidget *w, GdkEvent *e, gpointer data)
 {
   brush_select_close_callback (w, data);
@@ -766,9 +853,9 @@ brush_select_close_callback (GtkWidget *w,
 
   bsp = (BrushSelectP) client_data;
 
-  old_paint_mode = get_brush_paint_mode ();
-  old_opacity = get_brush_opacity ();
-  old_spacing = get_brush_spacing ();
+  old_paint_mode = gimp_brush_get_paint_mode ();
+  old_opacity = gimp_brush_get_opacity ();
+  old_spacing = gimp_brush_get_spacing ();
 
   if (GTK_WIDGET_VISIBLE (bsp->shell))
     gtk_widget_hide (bsp->shell);
@@ -780,7 +867,7 @@ brush_select_refresh_callback (GtkWidget *w,
 			       gpointer   client_data)
 {
   BrushSelectP bsp;
-  GBrushP active;
+  GimpBrushP active;
 
   bsp = (BrushSelectP) client_data;
 
@@ -811,7 +898,7 @@ preview_scroll_update (GtkAdjustment *adjustment,
 		       gpointer       data)
 {
   BrushSelectP bsp;
-  GBrushP active;
+  GimpBrushP active;
   int row, col;
 
   bsp = data;
@@ -838,7 +925,7 @@ static void
 paint_mode_menu_callback (GtkWidget *w,
 			  gpointer   client_data)
 {
-  set_brush_paint_mode ((long) client_data);
+  gimp_brush_set_paint_mode ((long) client_data);
 }
 
 
@@ -846,7 +933,7 @@ static void
 opacity_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
-  set_brush_opacity (adjustment->value / 100.0);
+  gimp_brush_set_opacity (adjustment->value / 100.0);
 }
 
 
@@ -854,5 +941,5 @@ static void
 spacing_scale_update (GtkAdjustment *adjustment,
 		      gpointer       data)
 {
-  set_brush_spacing ((int) adjustment->value);
+  gimp_brush_set_spacing ((int) adjustment->value);
 }

@@ -19,7 +19,7 @@
 #include <math.h>
 #include "appenv.h"
 #include "app_procs.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "general.h"

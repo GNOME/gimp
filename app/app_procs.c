@@ -27,7 +27,7 @@
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
-#include "brushes.h"
+#include "gimpbrushlist.h"
 #include "color_transfer.h"
 #include "curves.h"
 #include "devices.h"

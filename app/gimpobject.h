@@ -13,6 +13,14 @@
 
 guint gimp_object_get_type(void);
 
+/* hacks to fake a gimp object lib */
+#define GIMP_CHECK_CAST GTK_CHECK_CAST
+#define GIMP_CHECK_TYPE GTK_CHECK_TYPE
+#define gimp_type_new gtk_type_new
+#define gimp_object_destroy(obj) gtk_object_destroy(GTK_OBJECT(obj))
+#define gimp_object_ref(obj) gtk_object_ref(GTK_OBJECT(obj))
+#define gimp_object_unref(obj) gtk_object_unref(GTK_OBJECT(obj))
+
 #endif
 
 
