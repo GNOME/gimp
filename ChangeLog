@@ -1,5 +1,14 @@
 2002-03-05  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: mention gimp-remote in the error message if
+	Xmu was not found.
+
+	* plug-ins/webbrowser/Makefile.am
+	* tools/Makefile.am: removed X_LIBS again because configure adds
+	them to LIBXMU now.
+
+2002-03-05  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: Add X_LIBS to LDFLAGS while checking for
 	Xmu because GTK_LIBS no longer adds them.
 

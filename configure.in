@@ -409,12 +409,12 @@ if test "$gdk_target" = x11; then
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
 	  WEBBROWSER="webbrowser"; LIBXMU="$X_LIBS -lXmu -lXt -lSM -lICE",
-	  [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
+	  [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
 	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
 	      WEBBROWSER="webbrowser"; LIBXMU="$X_LIBS -lXmu -lXt",
-	      [AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)])],
-	  AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt)], -lXt -lSM -lICE)
+	      [AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU header file not found) ***)])],
+	  AC_MSG_WARN(*** webbrowser plug-in and gimp-remote will not be built (XMU library not found) ***), -lXt)], -lXt -lSM -lICE)
       LDFLAGS="$gimp_save_LDFLAGS"
     fi
   else
