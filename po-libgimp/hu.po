@@ -1,111 +1,97 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Hungarian translation of GIMP lib-gimp
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Andras TIMAR <timar@gnome.hu>, 2000.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2000-12-18 23:30-0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: GIMP libgimp /gnome-cvs\n"
+"POT-Creation-Date: 2000-12-22 12:57+0100\n"
+"PO-Revision-Date: 2000-12-22 13:29+0100\n"
+"Last-Translator: Andras TIMAR <timar@gnome.hu>\n"
+"Language-Team: Hungarian <hu@gnome.hu>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
-"Content-Transfer-Encoding: ENCODING\n"
+"Content-Type: text/plain; charset=ISO 8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpcolorbutton.c:121
 msgid "/Use Foreground Color"
-msgstr ""
+msgstr "/Elõtérszín használata"
 
 #: libgimp/gimpcolorbutton.c:122
 msgid "/Use Background Color"
-msgstr ""
+msgstr "/Háttérszín használata"
 
 #: libgimp/gimpexport.c:160 libgimp/gimpexport.c:187
-#, fuzzy
 msgid "can't handle layers"
-msgstr "Réteg skálázása"
+msgstr "rétegeket nem kezeli"
 
 #: libgimp/gimpexport.c:161 libgimp/gimpexport.c:170
-#, fuzzy
 msgid "Merge Visible Layers"
 msgstr "Látható rétegek összefésülése"
 
 #: libgimp/gimpexport.c:169 libgimp/gimpexport.c:178
-#, fuzzy
 msgid "can only handle layers as animation frames"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
+msgstr "a rétegeket csak animáció képkockájaként kezeli"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:179
-#, fuzzy
 msgid "Save as Animation"
-msgstr "Kimentés beállítások"
+msgstr "Mentés animációként"
 
 #: libgimp/gimpexport.c:179 libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-#, fuzzy
 msgid "Flatten Image"
-msgstr "Egy réteggé"
+msgstr "Kép lapítása"
 
 #: libgimp/gimpexport.c:196
-#, fuzzy
 msgid "can't handle transparency"
-msgstr "Háttérszínig vagy átlátszóságig töröl"
+msgstr "átlátszóságot nem kezeli"
 
 #: libgimp/gimpexport.c:205
-#, fuzzy
 msgid "can only handle RGB images"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
+msgstr "csak RGB képeket kezel"
 
 #: libgimp/gimpexport.c:206 libgimp/gimpexport.c:234 libgimp/gimpexport.c:243
-#, fuzzy
 msgid "Convert to RGB"
-msgstr "Kontraszt"
+msgstr "Átalakítás RGB-be"
 
 #: libgimp/gimpexport.c:214
-#, fuzzy
 msgid "can only handle grayscale images"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
+msgstr "csak szürkeárnyalatos képeket kezel"
 
 #: libgimp/gimpexport.c:215 libgimp/gimpexport.c:234 libgimp/gimpexport.c:255
-#, fuzzy
 msgid "Convert to Grayscale"
-msgstr "fekete-fehér"
+msgstr "Átalakítás fekete-fehérbe"
 
 #: libgimp/gimpexport.c:223
-#, fuzzy
 msgid "can only handle indexed images"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
+msgstr "csak indexelt képeket kezel"
 
 #: libgimp/gimpexport.c:224 libgimp/gimpexport.c:243 libgimp/gimpexport.c:253
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
+"Átalakítás indexeltté az alapbeállítások használatával\n"
+"(A finomhangoláshoz válaszd a kézi beállítást)"
 
 #: libgimp/gimpexport.c:233
-#, fuzzy
 msgid "can only handle RGB or grayscale images"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
+msgstr "csak RGB vagy szürkeárnyalatos képeket kezel"
 
 #: libgimp/gimpexport.c:242
-#, fuzzy
 msgid "can only handle RGB or indexed images"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
+msgstr "csak RGB vagy indexelt képeket kezel"
 
 #: libgimp/gimpexport.c:252
-#, fuzzy
 msgid "can only handle grayscale or indexed images"
-msgstr "Színátmenet: indexelt képeknél érvénytelen."
+msgstr "csak szürkeárnyalatos vagy indexelt képeket kezel"
 
 #: libgimp/gimpexport.c:263
-#, fuzzy
 msgid "needs an alpha channel"
-msgstr "Réteg alfa csatornája"
+msgstr "szükséges az alfa csatorna"
 
 #: libgimp/gimpexport.c:264
-#, fuzzy
 msgid "Add Alpha Channel"
-msgstr "Alfa csatorna létrehozás"
+msgstr "Alfa csatorna hozzáadása"
 
 #.
 #. *  Plug-ins have called gtk_init () before calling gimp_export ().
@@ -113,150 +99,135 @@ msgstr "Alfa csatorna létrehozás"
 #.
 #. the dialog
 #: libgimp/gimpexport.c:333
-#, fuzzy
 msgid "Export File"
-msgstr "Színpaletta"
+msgstr "Fájl exportálása"
 
 #: libgimp/gimpexport.c:338
-#, fuzzy
 msgid "Export"
-msgstr "Forrás"
+msgstr "Exportálás"
 
 #: libgimp/gimpexport.c:340
 msgid "Ignore"
-msgstr ""
+msgstr "Figyelmen kívül hagy"
 
 #: libgimp/gimpexport.c:342 libgimp/gimpquerybox.c:204
 #: libgimp/gimpquerybox.c:260 libgimp/gimpquerybox.c:318
 #: libgimp/gimpquerybox.c:383 libgimp/gimpunitmenu.c:505
 msgid "Cancel"
-msgstr "Mégsem"
+msgstr "Mégse"
 
 #: libgimp/gimpexport.c:357
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
+msgstr "A képet exportálni kellene mentés elõtt a következõ okból:"
 
 #. the footline
 #: libgimp/gimpexport.c:420
 msgid "The export conversion won't modify your original image."
-msgstr ""
+msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: libgimp/gimpfileselection.c:388
-#, fuzzy
 msgid "Select File"
-msgstr "Kijelölés"
+msgstr "Fájl kijelölése"
 
 #: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
 #: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
 #: libgimp/gimpunitmenu.c:503
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: libgimp/gimpunitmenu.c:241
 msgid "More..."
-msgstr ""
+msgstr "Egyéb..."
 
 #: libgimp/gimpunitmenu.c:498
-#, fuzzy
 msgid "Unit Selection"
-msgstr "Kijelölés"
+msgstr "Mértékegység választása"
 
 #: libgimp/gimpunitmenu.c:535
-#, fuzzy
 msgid "Unit"
-msgstr "Névtelen"
+msgstr "Mértékegység"
 
 #: libgimp/gimpunitmenu.c:536
 msgid "Factor"
-msgstr ""
+msgstr "Szorzó"
 
 #. pseudo unit
 #: libgimp/gimpunit.c:49
-#, fuzzy
 msgid "pixel"
-msgstr "Pixel"
+msgstr "képpont"
 
 #: libgimp/gimpunit.c:49
-#, fuzzy
 msgid "pixels"
-msgstr "Pixel"
+msgstr "képpont"
 
 #. standard units
 #: libgimp/gimpunit.c:52
 msgid "inch"
-msgstr "coll"
+msgstr "hüvelyk"
 
 #: libgimp/gimpunit.c:52
 msgid "inches"
-msgstr "coll"
+msgstr "hüvelyk"
 
 #: libgimp/gimpunit.c:53
 msgid "millimeter"
-msgstr ""
+msgstr "milliméter"
 
 #: libgimp/gimpunit.c:53
-#, fuzzy
 msgid "millimeters"
-msgstr "Kitöltés típusa"
+msgstr "milliméter"
 
 #. professional units
 #: libgimp/gimpunit.c:56
 msgid "point"
-msgstr ""
+msgstr "pont"
 
 #: libgimp/gimpunit.c:56
 msgid "points"
-msgstr ""
+msgstr "pont"
 
 #: libgimp/gimpunit.c:57
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: libgimp/gimpunit.c:57
 msgid "picas"
-msgstr ""
+msgstr "pica"
 
 #: libgimp/gimpunit.c:64
-#, fuzzy
 msgid "percent"
-msgstr "Perspektíva"
+msgstr "százalék"
 
 #: libgimp/gimpwidgets.c:715
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
 msgstr ""
+"Ha az \"Idõ\" gomb nincs lenyomva, ezt a számot használja a "
+"véletlenszám-generálás kiindulópontjaként. Így az adott \"véletlen\" "
+"sorozat megismételhetõ."
 
 #: libgimp/gimpwidgets.c:720
 msgid "Time"
-msgstr ""
+msgstr "Idõ"
 
 #: libgimp/gimpwidgets.c:729
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
+msgstr "A véletlenszám-generálás kiindulópontja a pontos idõ, ez garantálja a megfelelõ véletlenséget."
 
 #: libgimp/gimpwidgets.c:1041
 msgid "Bytes"
-msgstr ""
+msgstr "bájt"
 
 #: libgimp/gimpwidgets.c:1042
 msgid "KiloBytes"
-msgstr ""
+msgstr "kilobájt"
 
 #: libgimp/gimpwidgets.c:1043
 msgid "MegaBytes"
-msgstr ""
+msgstr "megabájt"
 
-#, fuzzy
-#~ msgid "Select"
-#~ msgstr "/Kijelölés/Teljes kép"
-
-#~ msgid "Close"
-#~ msgstr "Bezár"
-
-#~ msgid "warning: no home directory."
-#~ msgstr "figyelmeztetés: nincs home könyvtár."
