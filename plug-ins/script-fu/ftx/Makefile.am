@@ -1,12 +1,16 @@
 ## Process this file with automake to produce Makefile.in
 
-AM_CFLAGS = -DUSE_INTERFACE=1
-
-INCLUDES = \
-	-I$(top_srcdir)		\
-	$(GIMP_CFLAGS)		\
-	-I$(includedir)
+AM_CFLAGS =    \
+    -DUSE_INTERFACE=1 \
+    -I$(top_srcdir)   \
+    $(GIMP_CFLAGS)
 
 noinst_LIBRARIES = libftx.a
 
 libftx_a_SOURCES = ftx.c ftx.h
+
+EXTRA_DIST = \
+    LICENSE           \
+    README            \
+    ftx-functions.txt \
+    listhome.scm

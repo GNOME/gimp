@@ -1,21 +1,13 @@
 ## Process this file with automake to produce Makefile.in
 
-#if PLATFORM_WIN32
-#no_undefined = -no-undefined
-#endif
-#
-#if OS_WIN32
-#mwindows = -mwindows
-#endif
-
-SCHEME_H_DIR=../tinyscheme
-
-AM_CFLAGS = -DUSE_INTERFACE=1 -I $(SCHEME_H_DIR)
+AM_CFLAGS = \
+    -DUSE_INTERFACE=1 \
+    -I$(top_srcdir)
 
 noinst_LIBRARIES = libre.a
 
 libre_a_SOURCES = \
-    ccass.h   \
+    cclass.h   \
     cname.h    \
     debug.c    \
     re.c       \
@@ -28,3 +20,9 @@ libre_a_SOURCES = \
     regfree.c  \
     split.c    \
     utils.h
+
+EXTRA_DIST = \
+    COPYRIGHT  \
+    README     \
+    README.1st \
+    WHATSNEW
