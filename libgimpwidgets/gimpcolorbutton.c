@@ -291,8 +291,8 @@ gimp_color_button_new (const gchar       *title,
 
   gtk_widget_set_size_request (GTK_WIDGET (button->color_area), width, height);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (button->color_area), color);
   gimp_color_area_set_type (GIMP_COLOR_AREA (button->color_area), type);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (button->color_area), color);
 
   return GTK_WIDGET (button);
 }

@@ -149,12 +149,11 @@ gimp_image_set_qmask_color (GimpImage     *gimage,
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (color != NULL);
 
-  qmask = gimp_image_get_qmask (gimage);
+  gimage->qmask_color = *color;
 
+  qmask = gimp_image_get_qmask (gimage);
   if (qmask)
     gimp_channel_set_color (qmask, color, TRUE);
-  else
-    gimage->qmask_color = *color;
 }
 
 void

@@ -1,3 +1,14 @@
+2004-09-18  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/qmask-commands.c
+	* libgimpcolor/gimprgb.c (gimp_rgba_distance): just some cleanup.
+
+	* app/core/gimpimage-qmask.c (gimp_image_set_qmask_color): always
+	set gimage->qmask_color regardless of the qmask state.
+
+	* libgimpwidgets/gimpcolorbutton.c (gimp_color_button_new): set
+	the type before setting the color.
+
 2004-09-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcomponenteditor.c

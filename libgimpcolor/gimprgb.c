@@ -408,6 +408,8 @@ gimp_rgba_distance (const GimpRGB *rgba1,
   g_return_val_if_fail (rgba1 != NULL, 0.0);
   g_return_val_if_fail (rgba2 != NULL, 0.0);
 
-  return (fabs (rgba1->r - rgba2->r) + fabs (rgba1->g - rgba2->g) +
-          fabs (rgba1->b - rgba2->b) + fabs (rgba1->a - rgba2->a));
+  return (fabs (rgba1->r - rgba2->r) +
+          fabs (rgba1->g - rgba2->g) +
+          fabs (rgba1->b - rgba2->b) +
+          fabs (rgba1->a - rgba2->a));
 }

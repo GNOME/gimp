@@ -62,9 +62,9 @@ static void   qmask_query_response      (GtkWidget        *widget,
                                          gint              response_id,
                                          EditQmaskOptions *options);
 static void   qmask_query_scale_update  (GtkAdjustment    *adjustment,
-                                         gpointer          data);
+                                         GtkWidget        *panel);
 static void   qmask_query_color_changed (GimpColorButton  *button,
-                                         gpointer          data);
+                                         GtkAdjustment    *adj);
 
 
 /*  public functionss */
@@ -237,21 +237,20 @@ qmask_query_response (GtkWidget        *widget,
 
 static void
 qmask_query_scale_update (GtkAdjustment *adjustment,
-			  gpointer       data)
+			  GtkWidget     *panel)
 {
-  GimpRGB color;
+  GimpRGB  color;
 
-  gimp_color_button_get_color (GIMP_COLOR_BUTTON (data), &color);
+  gimp_color_button_get_color (GIMP_COLOR_BUTTON (panel), &color);
   gimp_rgb_set_alpha (&color, adjustment->value / 100.0);
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (data), &color);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), &color);
 }
 
 static void
 qmask_query_color_changed (GimpColorButton *button,
-                           gpointer         data)
+                           GtkAdjustment   *adj)
 {
-  GtkAdjustment *adj = GTK_ADJUSTMENT (data);
-  GimpRGB        color;
+  GimpRGB  color;
 
   gimp_color_button_get_color (button, &color);
   gtk_adjustment_set_value (adj, color.a * 100.0);
