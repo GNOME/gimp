@@ -1374,11 +1374,21 @@ script_fu_interface (SFScript *script)
 	}
 
       if (widget)
-        gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
-                                   label_text, 0.0, label_yalign,
-                                   widget, 2, leftalign);
-
-      g_free (label_text);
+        {
+          if (label_text)
+            {
+              gimp_table_attach_aligned (GTK_TABLE (table), 0, i,
+                                         label_text, 0.0, label_yalign,
+                                         widget, 2, leftalign);
+              g_free (label_text);
+            }
+          else
+            {
+              gtk_table_attach (GTK_TABLE (table), widget, 0, 3, i, i+1,
+                                GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+              gtk_widget_show (widget);
+            }
+        }
 
       sf_interface->args_widgets[i] = widget;
     }
