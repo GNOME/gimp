@@ -1,5 +1,16 @@
 2005-04-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-ins-query.[ch]: new files containing
+	plug_ins_query().
+
+	* tools/pdbgen/pdb/plug_in.pdb (plugins_query): remove all code
+	and use above function.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
+2005-04-05  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/plug_in.pdb (plugins_query): strip the menu
 	strings from underlines before matching. Fixed function to not
 	match all procedures twice.
