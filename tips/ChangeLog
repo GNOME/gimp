@@ -1,3 +1,8 @@
+2002-03-16  Wang Jian  <lark@linux.net.cn>
+
+	* gimp_tips.zh_CN.txt: Removed.
+	* zh_CN.po: Converted from gimp_tips.zh_CN.txt by Wang Jian.
+
 2002-03-13  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
