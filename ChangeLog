@@ -1,5 +1,13 @@
 2004-01-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/resize-dialog.c: when scaling an indexed image/layer,
+	add a label telling the user that indexed layers are always scaled
+	without interpolation. Can't simply make the option menu
+	insensitive because channels and layer masks are still scaled with
+	the chosen interpolation type. Fixes bug #131779.
+
+2004-01-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpinktool.c (ink_set_paint_area): use
 	gimp_drawable_bytes_with_alpha().
 

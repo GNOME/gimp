@@ -717,6 +717,19 @@ resize_widget_new (GimpViewable *viewable,
       gtk_box_pack_start (GTK_BOX (hbox), option_menu,
                           FALSE, FALSE, 0);
       gtk_widget_show (option_menu);
+
+      if (gimp_image_base_type (resize->gimage) == GIMP_INDEXED)
+        {
+          label = gtk_label_new (_("Indexed color layers are always scaled "
+                                   "without interpolation. The chosen "
+                                   "interpolation type will affect scaling "
+                                   "channels and masks only."));
+          gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+          gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+          gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+          gtk_box_pack_start (GTK_BOX (main_vbox), label, FALSE, FALSE, 0);
+          gtk_widget_show (label);
+        }
     }
 
   gtk_widget_show (main_vbox);
