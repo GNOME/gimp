@@ -452,6 +452,18 @@ img_duplicate(PyGimpImage *self)
     return pygimp_image_new(gimp_image_duplicate(self->ID));
 }
 
+static PyObject *
+img_undo_group_start(PyGimpImage *self)
+{
+    return PyInt_FromLong(gimp_image_undo_group_start(self->ID));
+}
+
+static PyObject *
+img_undo_group_end(PyGimpImage *self)
+{
+    return PyInt_FromLong(gimp_image_undo_group_end(self->ID));
+}
+
 static PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
     {"add_layer",	(PyCFunction)img_add_layer,	METH_VARARGS},
@@ -496,6 +508,8 @@ static PyMethodDef img_methods[] = {
     {"undo_freeze", (PyCFunction)img_undo_freeze, METH_NOARGS},
     {"undo_thaw", (PyCFunction)img_undo_thaw, METH_NOARGS},
     {"duplicate", (PyCFunction)img_duplicate, METH_NOARGS},
+    {"undo_group_start", (PyCFunction)img_undo_group_start, METH_NOARGS},
+    {"undo_group_end", (PyCFunction)img_undo_group_end, METH_NOARGS},
     {NULL,		NULL}		/* sentinel */
 };
 

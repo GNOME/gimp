@@ -1,3 +1,11 @@
+2003-12-24  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-image.c: add undo_group_{start,end} methods.
+
+	* plug-ins/pygimp/foggify.py
+	* plug-ins/pygimp/shadow_bevel.py: and use them here, instead of
+	deprecated PDB functions.
+
 2003-12-23  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-image.c: remove add/remove_layer_mask

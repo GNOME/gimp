@@ -4,7 +4,7 @@ from gimpfu import *
 import time
 
 def python_foggify(img, layer, name, colour, turbulence, opacity):
-    pdb.gimp_undo_push_group_start(img)
+    img.undo_group_start()
 
     fog = gimp.Layer(img, name, layer.width, layer.height, RGBA_IMAGE,
 		     opacity, NORMAL_MODE)
@@ -25,7 +25,7 @@ def python_foggify(img, layer, name, colour, turbulence, opacity):
     # apply the clouds to the layer
     fog.remove_mask(MASK_APPLY)
 
-    pdb.gimp_undo_push_group_end(img)
+    img.undo_group_end()
 
 register(
     "python_fu_foggify",

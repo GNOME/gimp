@@ -4,7 +4,7 @@ from gimpfu import *
 
 def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
     # disable undo for the image
-    pdb.gimp_undo_push_group_start(img)
+    img.undo_group_start(img)
 
     # copy the layer
     shadow = drawable.copy(TRUE)
@@ -34,7 +34,7 @@ def shadow_bevel(img, drawable, blur, bevel, do_shadow, drop_x, drop_y):
 	gimp.delete(shadow)
 
     # enable undo again
-    pdb.gimp_undo_push_group_end(img)
+    img.undo_group_end(img)
 
 register(
     "shadow_bevel",
