@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.13\n"
-"POT-Creation-Date: 2003-03-27 13:48+0100\n"
-"PO-Revision-Date: 2003-03-27 13:37+0100\n"
+"POT-Creation-Date: 2003-03-31 02:15+0200\n"
+"PO-Revision-Date: 2003-03-31 02:16+0200\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -879,7 +879,7 @@ msgstr "<<ungültig>>"
 msgid "Scale Image"
 msgstr "Bild skalieren"
 
-#: app/core/core-enums.c:432 app/core/gimpimage-resize.c:63
+#: app/core/core-enums.c:432 app/core/gimpimage-resize.c:60
 msgid "Resize Image"
 msgstr "Bildgrösse ändern"
 
@@ -887,7 +887,7 @@ msgstr "Bildgrösse ändern"
 msgid "Convert Image"
 msgstr "Bild konvertieren"
 
-#: app/core/core-enums.c:434 app/core/gimpimage-crop.c:145
+#: app/core/core-enums.c:434 app/core/gimpimage-crop.c:146
 msgid "Crop Image"
 msgstr "Bild zuschneiden"
 
@@ -900,7 +900,6 @@ msgid "QuickMask"
 msgstr "QuickMask"
 
 #: app/core/core-enums.c:437 app/core/core-enums.c:464
-#: app/tools/gimpmovetool.c:251
 msgid "Guide"
 msgstr "Hilfslinie"
 
@@ -923,7 +922,7 @@ msgstr ""
 msgid "Scale Layer"
 msgstr "Ebene skalieren"
 
-#: app/core/core-enums.c:442 app/core/gimpimage-crop.c:128
+#: app/core/core-enums.c:442 app/core/gimpimage-crop.c:129
 #: app/core/gimplayer.c:1311 app/gui/layers-commands.c:1029
 #: app/pdb/layer_cmds.c:500
 msgid "Resize Layer"
@@ -955,7 +954,7 @@ msgstr "Auswahl anheben"
 msgid "Anchor Floating Selection"
 msgstr "Schwebende Auswahl verankern"
 
-#: app/core/core-enums.c:449 app/core/gimpedit.c:199
+#: app/core/core-enums.c:449 app/core/gimpedit.c:229
 #: app/widgets/gimpbufferview.c:147
 msgid "Paste"
 msgstr "Einfügen"
@@ -994,7 +993,7 @@ msgstr "Parasit entfernen"
 msgid "Plug-In"
 msgstr "Plugin"
 
-#: app/core/core-enums.c:458 app/pdb/internal_procs.c:124
+#: app/core/core-enums.c:458 app/pdb/internal_procs.c:128
 msgid "Image"
 msgstr "Bild"
 
@@ -1149,28 +1148,28 @@ msgstr "Parasiten"
 #. initialize the list of gimp brushes
 #: app/core/gimp.c:749 app/gui/dialogs-constructors.c:336
 #: app/gui/dialogs-constructors.c:503 app/gui/preferences-dialog.c:1778
-#: app/pdb/internal_procs.c:82
+#: app/pdb/internal_procs.c:83
 msgid "Brushes"
 msgstr "Pinsel"
 
 #. initialize the list of gimp patterns
 #: app/core/gimp.c:753 app/gui/dialogs-constructors.c:357
 #: app/gui/dialogs-constructors.c:524 app/gui/preferences-dialog.c:1782
-#: app/pdb/internal_procs.c:160
+#: app/pdb/internal_procs.c:164
 msgid "Patterns"
 msgstr "Muster"
 
 #. initialize the list of gimp palettes
 #: app/core/gimp.c:757 app/gui/dialogs-constructors.c:399
 #: app/gui/dialogs-constructors.c:566 app/gui/preferences-dialog.c:1786
-#: app/pdb/internal_procs.c:148
+#: app/pdb/internal_procs.c:152
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp gradients
 #: app/core/gimp.c:761 app/gui/dialogs-constructors.c:378
 #: app/gui/dialogs-constructors.c:545 app/gui/preferences-dialog.c:1790
-#: app/pdb/internal_procs.c:115
+#: app/pdb/internal_procs.c:119
 msgid "Gradients"
 msgstr "Farbverläufe"
 
@@ -1223,7 +1222,7 @@ msgstr "Ungültiger UTF-8 Text in Pinseldatei »%s«."
 #: app/core/gimpbrush.c:586 app/core/gimpbrushpipe.c:374
 #: app/core/gimpcontext.c:1243 app/core/gimpgradient.c:385
 #: app/core/gimpitem.c:368 app/core/gimppalette.c:419
-#: app/core/gimppattern.c:390 app/tools/gimpvectortool.c:300
+#: app/core/gimppattern.c:390 app/tools/gimpvectortool.c:314
 msgid "Unnamed"
 msgstr "Namenlos"
 
@@ -1269,7 +1268,7 @@ msgstr ""
 "Schwerwiegend Fehler beim Verarbeiten:\n"
 "Pinseldatei »%s« ist fehlerhaft."
 
-#: app/core/gimpchannel.c:121 app/pdb/internal_procs.c:85
+#: app/core/gimpchannel.c:121 app/pdb/internal_procs.c:86
 msgid "Channel"
 msgstr "Kanäle"
 
@@ -1434,27 +1433,27 @@ msgstr "Ebene transformieren"
 msgid "Transform Channel"
 msgstr "Kanal transformieren"
 
-#: app/core/gimpedit.c:190 app/core/gimpedit.c:268
+#: app/core/gimpedit.c:220 app/core/gimpedit.c:284
 msgid "Pasted Layer"
 msgstr "Eingefügte Ebene"
 
-#: app/core/gimpedit.c:316
+#: app/core/gimpedit.c:332
 msgid "Clear"
 msgstr "Löschen"
 
-#: app/core/gimpedit.c:352
+#: app/core/gimpedit.c:368
 msgid "Fill with FG Color"
 msgstr "Füllen mit VG-Farbe"
 
-#: app/core/gimpedit.c:357 app/core/gimpedit.c:382
+#: app/core/gimpedit.c:373 app/core/gimpedit.c:398
 msgid "Fill with BG Color"
 msgstr "Füllen mit HG-Farbe"
 
-#: app/core/gimpedit.c:364
+#: app/core/gimpedit.c:380
 msgid "Fill with White"
 msgstr "Füllen mit weiß"
 
-#: app/core/gimpedit.c:373
+#: app/core/gimpedit.c:389
 msgid "Fill with Transparency"
 msgstr "Füllen mit Transparenz"
 
@@ -1518,6 +1517,22 @@ msgstr "Bild in Graustufen konvertieren"
 #: app/core/gimpimage-convert.c:762
 msgid "Convert Image to Indexed"
 msgstr "Bild in indizierte Farben konvertieren"
+
+#: app/core/gimpimage-guides.c:56
+msgid "Add Horizontal Guide"
+msgstr "Horizontale Hilfslinie hinzufügen"
+
+#: app/core/gimpimage-guides.c:83
+msgid "Add Vertical Guide"
+msgstr "Vertikale Hilfslinie hinzufügen"
+
+#: app/core/gimpimage-guides.c:146
+msgid "Remove Guide"
+msgstr "Hilfslinie entfernen"
+
+#: app/core/gimpimage-guides.c:170
+msgid "Move Guide"
+msgstr "Hilfslinie verschieben"
 
 #: app/core/gimpimage-mask-select.c:53 app/core/gimpimage-mask-select.c:55
 #: app/tools/gimprectselecttool.c:96
@@ -1702,78 +1717,78 @@ msgstr "QuickMask aktivieren"
 msgid "Disable QuickMask"
 msgstr "QuickMask deaktivieren"
 
-#: app/core/gimpimage-undo-push.c:3184
+#: app/core/gimpimage-undo-push.c:3186
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s konnte nicht rückgängig gemacht werden"
 
-#: app/core/gimpimage.c:884 app/core/gimppalette-import.c:204
+#: app/core/gimpimage.c:885 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:633 app/gui/palette-import-dialog.c:589
 #: app/pdb/image_cmds.c:3695 app/widgets/gimpdatafactoryview.c:287
 msgid "Untitled"
 msgstr "Namenlos"
 
-#: app/core/gimpimage.c:958
+#: app/core/gimpimage.c:959
 msgid "Change Image Resolution"
 msgstr "Bildauflösung ändern"
 
-#: app/core/gimpimage.c:997
+#: app/core/gimpimage.c:998
 msgid "Change Image Unit"
 msgstr "Bildeinheit ändern"
 
-#: app/core/gimpimage.c:1896
+#: app/core/gimpimage.c:1897
 msgid "Attach Paraite to Image"
 msgstr "Parasit zuweisen"
 
-#: app/core/gimpimage.c:1929
+#: app/core/gimpimage.c:1930
 msgid "Remove Parasite from Image"
 msgstr "Parasit entfernen"
 
-#: app/core/gimpimage.c:2465
+#: app/core/gimpimage.c:2466
 msgid "Add Layer"
 msgstr "Ebene hinzufügen"
 
-#: app/core/gimpimage.c:2547 app/core/gimpimage.c:2839
+#: app/core/gimpimage.c:2548 app/core/gimpimage.c:2840
 msgid "Remove Layer"
 msgstr "Ebene entfernen"
 
-#: app/core/gimpimage.c:2614
+#: app/core/gimpimage.c:2615
 msgid "Layer cannot be raised higher."
 msgstr "Diese Ebene kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:2619 app/widgets/gimplayertreeview.c:202
+#: app/core/gimpimage.c:2620 app/widgets/gimplayertreeview.c:202
 msgid "Raise Layer"
 msgstr "Ebene anheben"
 
-#: app/core/gimpimage.c:2639
+#: app/core/gimpimage.c:2640
 msgid "Layer cannot be lowered more."
 msgstr "Diese Ebene kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:2644 app/widgets/gimplayertreeview.c:204
+#: app/core/gimpimage.c:2645 app/widgets/gimplayertreeview.c:204
 msgid "Lower Layer"
 msgstr "Ebene absenken"
 
-#: app/core/gimpimage.c:2661
+#: app/core/gimpimage.c:2662
 msgid "Layer is already on top."
 msgstr "Diese Ebene befindet sich bereits ganz oben."
 
-#: app/core/gimpimage.c:2667
+#: app/core/gimpimage.c:2668
 msgid "Cannot raise a layer without alpha."
 msgstr "Ebenen ohne Alphakanal können nicht angehoben werden."
 
-#: app/core/gimpimage.c:2672 app/widgets/gimplayertreeview.c:203
+#: app/core/gimpimage.c:2673 app/widgets/gimplayertreeview.c:203
 msgid "Raise Layer to Top"
 msgstr "Ebene nach ganz oben"
 
-#: app/core/gimpimage.c:2692
+#: app/core/gimpimage.c:2693
 msgid "Layer is already on the bottom."
 msgstr "Diese Ebene befindet sich bereits ganz unten."
 
-#: app/core/gimpimage.c:2697 app/widgets/gimplayertreeview.c:205
+#: app/core/gimpimage.c:2698 app/widgets/gimplayertreeview.c:205
 msgid "Lower Layer to Bottom"
 msgstr "Ebene nach ganz unten"
 
-#: app/core/gimpimage.c:2741
+#: app/core/gimpimage.c:2742
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1782,105 +1797,105 @@ msgstr ""
 "Ebene »%s« hat keinen Alphakanal.\n"
 "Ebene ist darüber plaziert worden."
 
-#: app/core/gimpimage.c:2787
+#: app/core/gimpimage.c:2788
 msgid "Add Channel"
 msgstr "Kanal hinzufügen"
 
-#: app/core/gimpimage.c:2887
+#: app/core/gimpimage.c:2888
 msgid "Channel cannot be raised higher."
 msgstr "Dieser Kanal kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:2892 app/widgets/gimpchanneltreeview.c:122
+#: app/core/gimpimage.c:2893 app/widgets/gimpchanneltreeview.c:122
 msgid "Raise Channel"
 msgstr "Kanal anheben"
 
-#: app/core/gimpimage.c:2908
+#: app/core/gimpimage.c:2909
 msgid "Channel cannot be lowered more."
 msgstr "Dieser Kanal kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:2913 app/widgets/gimpchanneltreeview.c:124
+#: app/core/gimpimage.c:2914 app/widgets/gimpchanneltreeview.c:124
 msgid "Lower Channel"
 msgstr "Kanal absenken"
 
-#: app/core/gimpimage.c:2978
+#: app/core/gimpimage.c:2979
 msgid "Add Path"
 msgstr "Pfad hinzufügen"
 
-#: app/core/gimpimage.c:3025
+#: app/core/gimpimage.c:3026
 msgid "Remove Path"
 msgstr "Pfad entfernen"
 
-#: app/core/gimpimage.c:3072
+#: app/core/gimpimage.c:3073
 msgid "Path cannot be raised higher."
 msgstr "Dieser Pfad kann nicht weiter angehoben werden."
 
-#: app/core/gimpimage.c:3077 app/widgets/gimpvectorstreeview.c:118
+#: app/core/gimpimage.c:3078 app/widgets/gimpvectorstreeview.c:118
 msgid "Raise Path"
 msgstr "Pfad anheben"
 
-#: app/core/gimpimage.c:3093
+#: app/core/gimpimage.c:3094
 msgid "Path cannot be lowered more."
 msgstr "Dieser Pfad kann nicht weiter abgesenkt werden."
 
-#: app/core/gimpimage.c:3098 app/widgets/gimpvectorstreeview.c:120
+#: app/core/gimpimage.c:3099 app/widgets/gimpvectorstreeview.c:120
 msgid "Lower Path"
 msgstr "Pfad absenken"
 
-#: app/core/gimpimagefile.c:461 app/core/gimpimagefile.c:1002
+#: app/core/gimpimagefile.c:461 app/core/gimpimagefile.c:1005
 #, c-format
 msgid "Failed to write thumbnail for '%s' as '%s': %s"
 msgstr "Vorschau-Datei für »%s« konnte nicht als »%s« geschrieben werden: %s"
 
-#: app/core/gimpimagefile.c:467 app/core/gimpimagefile.c:1008
+#: app/core/gimpimagefile.c:467 app/core/gimpimagefile.c:1011
 #, c-format
 msgid "Failed to set permissions of thumbnail '%s': %s"
 msgstr ""
 "Zugriffsrechte für Vorschau-Datei »%s« konnten nicht gesetzt werden: %s"
 
-#: app/core/gimpimagefile.c:696
+#: app/core/gimpimagefile.c:699
 msgid "Remote image"
 msgstr "Entferntes Bild"
 
-#: app/core/gimpimagefile.c:701
+#: app/core/gimpimagefile.c:704
 msgid "Failed to open"
 msgstr "Datei konnte nicht geöffnet werden"
 
-#: app/core/gimpimagefile.c:726
+#: app/core/gimpimagefile.c:729
 msgid "No preview available"
 msgstr "Keine Vorschau verfügbar"
 
-#: app/core/gimpimagefile.c:730
+#: app/core/gimpimagefile.c:733
 msgid "Loading preview ..."
 msgstr "Vorschau wird geladen..."
 
-#: app/core/gimpimagefile.c:734
+#: app/core/gimpimagefile.c:737
 msgid "Preview is out of date"
 msgstr "Vorschau ist veraltet"
 
-#: app/core/gimpimagefile.c:738
+#: app/core/gimpimagefile.c:741
 msgid "Cannot create preview"
 msgstr "Vorschau konnte nicht erzeugt werden"
 
-#: app/core/gimpimagefile.c:748 app/gui/info-window.c:636
+#: app/core/gimpimagefile.c:751 app/gui/info-window.c:636
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d Pixel"
 
-#: app/core/gimpimagefile.c:766
+#: app/core/gimpimagefile.c:769
 msgid "1 Layer"
 msgstr "1 Ebene"
 
-#: app/core/gimpimagefile.c:768
+#: app/core/gimpimagefile.c:771
 #, c-format
 msgid "%d Layers"
 msgstr "%d Ebenen"
 
-#: app/core/gimpimagefile.c:847
+#: app/core/gimpimagefile.c:850
 #, c-format
 msgid "Failed to open thumbnail file '%s': %s"
 msgstr "Vorschau-Datei »%s« konnte nicht geöffnet werden: %s"
 
-#: app/core/gimpimagefile.c:1096
+#: app/core/gimpimagefile.c:1099
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Vorschau-Ordner »%s« konnte nicht angelegt werden."
@@ -1911,7 +1926,7 @@ msgstr ""
 "Auswahl erzeugt werden, da sie zu einer\n"
 "Ebenenmaske oder einem Kanal gehört."
 
-#: app/core/gimplayer.c:188 app/pdb/internal_procs.c:127
+#: app/core/gimplayer.c:188 app/pdb/internal_procs.c:131
 msgid "Layer"
 msgstr "Ebenen"
 
@@ -2075,8 +2090,8 @@ msgstr ""
 msgid "pixel"
 msgstr "Pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:579
-#: app/tools/gimpmeasuretool.c:582 app/tools/gimppainttool.c:559
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:573
+#: app/tools/gimpmeasuretool.c:576 app/tools/gimppainttool.c:559
 msgid "pixels"
 msgstr "Pixel"
 
@@ -2341,17 +2356,17 @@ msgstr "Version %s wurde Euch gebracht von"
 msgid "Visit http://www.gimp.org/ for more information"
 msgstr "Mehr Informationen unter http://www.gimp.org/"
 
-#: app/gui/brush-select.c:179 app/tools/paint_options.c:105
+#: app/gui/brush-select.c:178 app/tools/paint_options.c:105
 #: app/widgets/gimplayertreeview.c:283
 msgid "Opacity:"
 msgstr "Deckkraft:"
 
-#: app/gui/brush-select.c:196 app/tools/gimpselectionoptions.c:397
+#: app/gui/brush-select.c:195 app/tools/gimpselectionoptions.c:397
 #: app/tools/paint_options.c:110 app/widgets/gimplayertreeview.c:276
 msgid "Mode:"
 msgstr "Modus:"
 
-#: app/gui/brush-select.c:318
+#: app/gui/brush-select.c:317
 msgid ""
 "Unable to run brush callback.\n"
 "The corresponding plug-in may have crashed."
@@ -2685,7 +2700,7 @@ msgstr "Ebenen"
 msgid "Channels"
 msgstr "Kanäle"
 
-#: app/gui/dialogs-constructors.c:731 app/pdb/internal_procs.c:154
+#: app/gui/dialogs-constructors.c:731 app/pdb/internal_procs.c:158
 msgid "Paths"
 msgstr "Pfade"
 
@@ -2718,7 +2733,7 @@ msgid "Undo History"
 msgstr "Journal"
 
 #: app/gui/dialogs-constructors.c:831 app/gui/image-menu.c:1213
-#: app/pdb/internal_procs.c:181 app/widgets/gimpundoeditor.c:123
+#: app/pdb/internal_procs.c:185 app/widgets/gimpundoeditor.c:123
 msgid "Undo"
 msgstr "Rückgängig machen"
 
@@ -2726,7 +2741,7 @@ msgstr "Rückgängig machen"
 msgid "Color Editor"
 msgstr "Farbeditor"
 
-#: app/gui/dialogs-constructors.c:854 app/pdb/internal_procs.c:88
+#: app/gui/dialogs-constructors.c:854 app/pdb/internal_procs.c:89
 #: app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
@@ -2944,19 +2959,19 @@ msgstr "Das Invertieren funktioniert mit indizierten Bildern nicht."
 msgid "Equalize does not operate on indexed drawables."
 msgstr "Das Angleichen funktioniert mit indizierten Bildern nicht."
 
-#: app/gui/edit-commands.c:192
+#: app/gui/edit-commands.c:221
 msgid "Cut Named"
 msgstr "In Ablage ausschneiden"
 
-#: app/gui/edit-commands.c:195 app/gui/edit-commands.c:213
+#: app/gui/edit-commands.c:224 app/gui/edit-commands.c:242
 msgid "Enter a name for this buffer"
 msgstr "Geben Sie dieser Ablage einen Namen"
 
-#: app/gui/edit-commands.c:210
+#: app/gui/edit-commands.c:239
 msgid "Copy Named"
 msgstr "In Ablage kopieren"
 
-#: app/gui/edit-commands.c:289 app/gui/edit-commands.c:318
+#: app/gui/edit-commands.c:318 app/gui/edit-commands.c:347
 msgid "(Unnamed Buffer)"
 msgstr "(Namenlose Ablage)"
 
@@ -3173,6 +3188,14 @@ msgstr "Datei existiert!"
 #: app/gui/file-save-menu.c:45
 msgid "/By Extension"
 msgstr "/Nach Endung"
+
+#: app/gui/font-select.c:227
+msgid ""
+"Unable to run font callback.\n"
+"The corresponding plug-in may have crashed."
+msgstr ""
+"Schriftarten-Rückfrage konnte nicht ausgeführt werden.\n"
+"Möglicherweise ist das ensprechende Plugin abgestürzt."
 
 #: app/gui/gradient-editor-commands.c:83
 msgid "Left Endpoint Color"
@@ -6359,18 +6382,6 @@ msgstr "Farbton-Sättigung"
 msgid "Threshold"
 msgstr "Schwellwert"
 
-#: app/pdb/guides_cmds.c:79 app/tools/gimpmeasuretool.c:291
-msgid "Add Horizontal Guide"
-msgstr "Horizontale Hilfslinie hinzufügen"
-
-#: app/pdb/guides_cmds.c:158 app/tools/gimpmeasuretool.c:302
-msgid "Add Vertical Guide"
-msgstr "Vertikale Hilfslinie hinzufügen"
-
-#: app/pdb/guides_cmds.c:238
-msgid "Remove Guide"
-msgstr "Hilfslinie entfernen"
-
 #: app/pdb/image_cmds.c:3827
 msgid ""
 "Image resolution is out of bounds,\n"
@@ -6379,111 +6390,115 @@ msgstr ""
 "Da die Auflösung des Bildes außerhalb des gültigen\n"
 "Bereiches liegt, wird die Standardauflösung verwendet."
 
-#: app/pdb/internal_procs.c:79
+#: app/pdb/internal_procs.c:80
 msgid "Internal Procedures"
 msgstr "Interne Prozeduren"
 
-#: app/pdb/internal_procs.c:79
+#: app/pdb/internal_procs.c:80
 msgid "Brush UI"
 msgstr "Pinsel UI"
 
-#: app/pdb/internal_procs.c:91
+#: app/pdb/internal_procs.c:92
 msgid "Convert"
 msgstr "Umwandeln"
 
-#: app/pdb/internal_procs.c:94
+#: app/pdb/internal_procs.c:95
 msgid "Display procedures"
 msgstr "Anzeige-Prozeduren"
 
-#: app/pdb/internal_procs.c:97
+#: app/pdb/internal_procs.c:98
 msgid "Drawable procedures"
 msgstr "Bild-Prozeduren"
 
-#: app/pdb/internal_procs.c:100
+#: app/pdb/internal_procs.c:101
 msgid "Edit procedures"
 msgstr "Bearbeiten-Prozeduren"
 
-#: app/pdb/internal_procs.c:103
+#: app/pdb/internal_procs.c:104
 msgid "File Operations"
 msgstr "Datei-Prozeduren"
 
-#: app/pdb/internal_procs.c:106
+#: app/pdb/internal_procs.c:107
 msgid "Floating selections"
 msgstr "Schwebende Auswahlen"
 
-#: app/pdb/internal_procs.c:109
+#: app/pdb/internal_procs.c:110
+msgid "Font UI"
+msgstr "Schriftarten-UI"
+
+#: app/pdb/internal_procs.c:113
 msgid "Gimprc procedures"
 msgstr "Gimprc-Prozeduren"
 
-#: app/pdb/internal_procs.c:112
+#: app/pdb/internal_procs.c:116
 msgid "Gradient UI"
 msgstr "Farbverlauf-UI"
 
-#: app/pdb/internal_procs.c:118
+#: app/pdb/internal_procs.c:122
 msgid "Guide procedures"
 msgstr "Hilfslinien-Prozeduren"
 
-#: app/pdb/internal_procs.c:121
+#: app/pdb/internal_procs.c:125
 msgid "Help procedures"
 msgstr "Hilfe-Prozeduren"
 
-#: app/pdb/internal_procs.c:130
+#: app/pdb/internal_procs.c:134
 msgid "Message procedures"
 msgstr "Nachrichten-Prozeduren"
 
-#: app/pdb/internal_procs.c:133
+#: app/pdb/internal_procs.c:137
 msgid "Miscellaneous"
 msgstr "Verschiedenes"
 
-#: app/pdb/internal_procs.c:136
+#: app/pdb/internal_procs.c:140
 msgid "Misc Tool procedures"
 msgstr "Werkzeug Prozeduren"
 
-#: app/pdb/internal_procs.c:139
+#: app/pdb/internal_procs.c:143
 msgid "Paint Tool procedures"
 msgstr "Malwerkzeug Prozeduren"
 
-#: app/pdb/internal_procs.c:142
+#: app/pdb/internal_procs.c:146
 msgid "Palette"
 msgstr "Palette"
 
-#: app/pdb/internal_procs.c:145
+#: app/pdb/internal_procs.c:149
 msgid "Palette UI"
 msgstr "Paletten-UI"
 
-#: app/pdb/internal_procs.c:151
+#: app/pdb/internal_procs.c:155
 msgid "Parasite procedures"
 msgstr "Parasiten-Prozeduren"
 
-#: app/pdb/internal_procs.c:157
+#: app/pdb/internal_procs.c:161
 msgid "Pattern UI"
 msgstr "Muster-UI"
 
-#: app/pdb/internal_procs.c:163
+#: app/pdb/internal_procs.c:167
 msgid "Plug-in"
 msgstr "Plugin"
 
-#: app/pdb/internal_procs.c:166
+#: app/pdb/internal_procs.c:170
 msgid "Procedural database"
 msgstr "Prozedurdatenbank"
 
-#: app/pdb/internal_procs.c:169
+#: app/pdb/internal_procs.c:173
 msgid "Image mask"
 msgstr "Bildmaske"
 
-#: app/pdb/internal_procs.c:172
+#: app/pdb/internal_procs.c:176
 msgid "Selection Tool procedures"
 msgstr "Auswahlwerkzeug Prozeduren"
 
-#: app/pdb/internal_procs.c:175
+#: app/pdb/internal_procs.c:179
 msgid "Text procedures"
 msgstr "Text Prozeduren"
 
-#: app/pdb/internal_procs.c:178
+#: app/pdb/internal_procs.c:182
 msgid "Transform Tool procedures"
 msgstr "Transformwerkzeug Prozeduren"
 
-#: app/pdb/internal_procs.c:184
+#: app/pdb/internal_procs.c:188
 msgid "Units"
 msgstr "Einheiten"
 
@@ -6612,15 +6627,20 @@ msgstr ""
 "Zwei Boxkämpfer jagen\n"
 "Eva quer durch Sylt."
 
-#: app/text/gimptext.c:170
+#: app/text/gimptext.c:157
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgstr ""
+
+#: app/text/gimptext.c:191
 msgid "How many pixels the first line should be shorter"
 msgstr ""
 
-#: app/text/gimptext.c:176
+#: app/text/gimptext.c:197
 msgid "Additional line spacing (in pixels)"
 msgstr "Zusätzlicher Zeilenabstand (in Pixeln)"
 
-#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:310
+#: app/text/gimptext-compat.c:100 app/tools/gimptexttool.c:310
 msgid "Add Text Layer"
 msgstr "Textebene hinzufügen"
 
@@ -7284,7 +7304,7 @@ msgstr "Justierung"
 msgid "Size:"
 msgstr "Größe:"
 
-#: app/tools/gimpinkoptions.c:280 app/tools/gimpmeasuretool.c:394
+#: app/tools/gimpinkoptions.c:280 app/tools/gimpmeasuretool.c:388
 #: app/tools/gimprotatetool.c:178 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Winkel:"
@@ -7441,16 +7461,16 @@ msgstr "/Werkzeuge/Messen"
 msgid "Add Guides"
 msgstr "Hilfslinie hinzufügen"
 
-#: app/tools/gimpmeasuretool.c:391
+#: app/tools/gimpmeasuretool.c:385
 msgid "Measure Distances and Angles"
 msgstr "Abstände und Winkel messen"
 
-#: app/tools/gimpmeasuretool.c:393
+#: app/tools/gimpmeasuretool.c:387
 msgid "Distance:"
 msgstr "Abstand:"
 
-#: app/tools/gimpmeasuretool.c:579 app/tools/gimpmeasuretool.c:584
-#: app/tools/gimpmeasuretool.c:592 app/tools/gimpmeasuretool.c:622
+#: app/tools/gimpmeasuretool.c:573 app/tools/gimpmeasuretool.c:578
+#: app/tools/gimpmeasuretool.c:586 app/tools/gimpmeasuretool.c:616
 msgid "degrees"
 msgstr "Grad"
 
@@ -7487,10 +7507,6 @@ msgstr "Ebenen und Auswahlen verschieben"
 #: app/tools/gimpmovetool.c:106
 msgid "/Tools/Transform Tools/Move"
 msgstr "/Werkzeuge/Transformationen/Verschieben"
-
-#: app/tools/gimpmovetool.c:655
-msgid "Add Guide"
-msgstr "Hilfslinie hinzufügen"
 
 #: app/tools/gimppaintbrushtool.c:55
 msgid "Paint fuzzy brush strokes"
@@ -7644,7 +7660,7 @@ msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 
-#: app/tools/gimpselectionoptions.c:406
+#: app/tools/gimpselectionoptions.c:406 app/tools/gimptextoptions.c:285
 msgid "Antialiasing"
 msgstr "Kantenglättung"
 
@@ -7696,35 +7712,43 @@ msgstr "Bild verschmieren"
 msgid "/Tools/Paint Tools/Smudge"
 msgstr "/Werkzeuge/Malwerkzeuge/Verschmieren"
 
-#: app/tools/gimptextoptions.c:245
+#: app/tools/gimptextoptions.c:246
 msgid "Font:"
 msgstr "Schrift:"
 
-#: app/tools/gimptextoptions.c:254
+#: app/tools/gimptextoptions.c:255
 msgid "_Font:"
 msgstr "_Schrift:"
 
-#: app/tools/gimptextoptions.c:261
+#: app/tools/gimptextoptions.c:262
 msgid "_Size:"
 msgstr "_Größe:"
 
 #: app/tools/gimptextoptions.c:271
+msgid "_Hinting"
+msgstr ""
+
+#: app/tools/gimptextoptions.c:277
+msgid "Force use of auto-hinter"
+msgstr ""
+
+#: app/tools/gimptextoptions.c:291
 msgid "Text Color"
 msgstr "Text-Farbe"
 
-#: app/tools/gimptextoptions.c:276
+#: app/tools/gimptextoptions.c:296
 msgid "Color:"
 msgstr "Farbe:"
 
-#: app/tools/gimptextoptions.c:281
+#: app/tools/gimptextoptions.c:301
 msgid "Justify:"
 msgstr "Ausrichtung:"
 
-#: app/tools/gimptextoptions.c:287
+#: app/tools/gimptextoptions.c:307
 msgid "Indent:"
 msgstr "Einzug:"
 
-#: app/tools/gimptextoptions.c:293
+#: app/tools/gimptextoptions.c:313
 msgid ""
 "Line\n"
 "Spacing:"
@@ -7732,7 +7756,7 @@ msgstr ""
 "Zeilen-\n"
 "abstand:"
 
-#: app/tools/gimptextoptions.c:312
+#: app/tools/gimptextoptions.c:332
 msgid "Open the font selection dialog"
 msgstr "Den Dialog zur Schriftauswahl öffnen"
 
@@ -8575,11 +8599,4 @@ msgstr "Anzahl der Gitterlinien"
 
 #: libgimptool/gimptoolenums.c:138
 msgid "Grid Line Spacing"
-msgstr "Abstand zwischen den Gitterlinien"
-
-#~ msgid ""
-#~ "Unable to add a layer mask to a\n"
-#~ "layer in an indexed image."
-#~ msgstr ""
-#~ "Masken können nicht zu einer Ebene in\n"
-#~ "einem indizierten Bild hinzugefügt werden."
+msgstr "Abstand der Gitterlinien"

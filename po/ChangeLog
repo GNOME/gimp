@@ -1,6 +1,11 @@
+2003-03-31  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in
+	* de.po: updated.
+
 2003-03-28  Pablo Gonzalo del Campo <pablodc@bigfoot.com>
 
-        * es.po: Updated Spanish translation.
+	* es.po: Updated Spanish translation.
 
 2003-03-27  Jan Morén  <jan.moren@lucs.lu.se>
 
