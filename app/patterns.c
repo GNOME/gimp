@@ -101,6 +101,7 @@ patterns_get_standard_pattern (void)
 
       standard_pattern->filename = NULL;
       standard_pattern->name     = g_strdup ("Standard");
+      standard_pattern->index    = -1;  /*  not part of the pattern list  */
       /*  TODO: fill it with something */
       standard_pattern->mask     = temp_buf_new (8, 8, 8, 0, 0, NULL);
     }

@@ -155,6 +155,8 @@ brushes_get_standard_brush (void)
       standard_brush =
 	GIMP_BRUSH (gimp_brush_generated_new (5.0, 0.5, 0.0, 1.0));
 
+      gimp_brush_set_name (standard_brush, "Standard");
+
       /*  set ref_cout to 2 --> never swap the standard brush  */
       gtk_object_ref (GTK_OBJECT (standard_brush));
       gtk_object_ref (GTK_OBJECT (standard_brush));

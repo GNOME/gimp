@@ -33,9 +33,9 @@ sub dim_args () {
 
 sub pattern_outargs {
     foreach (@outargs) {
-        my $alias = "patternp->$_->{name}";
+        my $alias = "pattern->$_->{name}";
         $alias = "g_strdup ($alias)" if $_->{type} eq 'string';
-        $alias =~ s/patternp/patternp->mask/ if $_->{name} =~ /width|height/;
+        $alias =~ s/pattern/pattern->mask/ if $_->{name} =~ /width|height/;
         $_->{alias} = $alias;
         $_->{no_declare} = 1;
     }
@@ -63,8 +63,8 @@ HELP
     &pattern_outargs;
 
     %invoke = (
-	vars => [ 'GPatternP patternp' ],
-	code => 'success = (patternp = gimp_context_get_pattern (NULL)) != NULL;'
+	vars => [ 'GPattern *pattern' ],
+	code => 'success = (pattern = gimp_context_get_pattern (NULL)) != NULL;'
     );
 }
 
@@ -84,24 +84,21 @@ HELP
     @inargs = ( &pattern_arg );
 
     %invoke = (
-	vars => [ 'GPatternP patternp', 'GSList *list' ],
+	vars => [ 'GPattern *pattern', 'GSList *list' ],
 	code => <<'CODE'
 {
-  list = pattern_list;
   success = FALSE;
 
-  while (list)
+  for (list = pattern_list; list; list = g_slist_next (list))
     {
-      patternp = (GPatternP) list->data;
+      pattern = (GPattern *) list->data;
 
-      if (!strcmp (patternp->name, name))
+      if (!strcmp (pattern->name, name))
 	{
-	  gimp_context_set_pattern (NULL, patternp);
+	  gimp_context_set_pattern (NULL, pattern);
 	  success = TRUE;
 	  break;
 	}
-
-      list = list->next;
     }
 }
 CODE
@@ -137,7 +134,7 @@ HELP
 
   while (list)
     {
-      patterns[i++] = g_strdup (((GPatternP) list->data)->name);
+      patterns[i++] = g_strdup (((GPattern *) list->data)->name);
       list = list->next;
     }
 }
@@ -171,7 +168,7 @@ HELP
 
     push @outargs, { name => 'mask_bpp', type => 'int32', init => 1,
 		     desc => 'Pattern bytes per pixel',
-		     alias => 'patternp->mask->bytes', no_declare => 1 },
+		     alias => 'pattern->mask->bytes', no_declare => 1 },
 		   { name => 'mask_data', type => 'int8array', init => 1,
 		     desc => 'The pattern mask data',
 		     array => { name => 'length', init => 1,
@@ -179,37 +176,35 @@ HELP
     
     %invoke = (
 	headers => [ qw(<string.h>) ],
-	vars => [ 'GPatternP patternp = NULL' ],
+	vars => [ 'GPattern *pattern = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))
     {
-      GSList *list = pattern_list;
+      GSList *list;
 
       success = FALSE;
 
-      while (list)
+      for (list = pattern_list; list; list = g_slist_next (list))
 	{
-	  patternp = (GPatternP) list->data;
+	  pattern = (GPattern *) list->data;
 
-	  if (!strcmp (patternp->name, name))
+	  if (!strcmp (pattern->name, name))
 	    {
 	      success = TRUE;
 	      break;
 	    }
-
-	  list = list->next;
 	}
     }
   else
-    success = (patternp = gimp_context_get_pattern (NULL)) != NULL;
+    success = (pattern = gimp_context_get_pattern (NULL)) != NULL;
 
   if (success)
     {
-      length = patternp->mask->height * patternp->mask->width *
-	       patternp->mask->bytes;
+      length = pattern->mask->height * pattern->mask->width *
+	       pattern->mask->bytes;
       mask_data = g_new (guint8, length);
-      g_memmove (mask_data, temp_buf_data (patternp->mask), length);
+      g_memmove (mask_data, temp_buf_data (pattern->mask), length);
     }
 }
 CODE

@@ -59,7 +59,7 @@ struct _DeviceInfo
   gchar        *name;
 
   gshort        is_present;  /*  is the device currently present  */
-  
+
   /*  gdk_input options - for not present devices  */
 
   GdkInputMode  mode;
@@ -93,7 +93,6 @@ struct _DeviceInfoDialog
 };
 
 /*  local functions */
-static void     input_dialog_destroy_callback  (GtkWidget *, gpointer);
 static void     input_dialog_able_callback     (GtkWidget *w, guint32 deviceid, 
 						gpointer data);
 
@@ -263,7 +262,7 @@ input_dialog_create (void)
 			  inputd);
 
       gtk_signal_connect (GTK_OBJECT (inputd), "destroy",
-			  (GtkSignalFunc) input_dialog_destroy_callback, 
+			  GTK_SIGNAL_FUNC (gtk_widget_destroyed),
 			  &inputd);
 
       gtk_signal_connect (GTK_OBJECT (inputd), "enable_device",
@@ -290,20 +289,12 @@ input_dialog_create (void)
 }
 
 static void
-input_dialog_destroy_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  *((GtkWidget **) data) = NULL;
-}
-
-static void
 input_dialog_able_callback (GtkWidget *widget,
 			    guint32    deviceid,
 			    gpointer   data)
 {
   device_status_update (deviceid);
 }
-
 
 void 
 devices_init (void)
@@ -478,27 +469,57 @@ devices_rc_update (gchar        *name,
 
   if (values & DEVICE_BRUSH)
     {
-      gimp_context_set_brush (device_info->context,
-			      gimp_brush_list_get_brush (brush_list,
-							 brush_name));
+      GimpBrush *brush;
+
+      brush = gimp_brush_list_get_brush (brush_list, brush_name);
+
+      if (brush)
+	{
+	  gimp_context_set_brush (device_info->context, brush);
+	}
+      else if (no_data)
+	{
+	  g_free (device_info->context->brush_name);
+	  device_info->context->brush_name = g_strdup (brush_name);
+	}
     }
 
   if (values & DEVICE_PATTERN)
     {
-      gimp_context_set_pattern (device_info->context,
-				pattern_list_get_pattern (pattern_list,
-							  pattern_name));
+      GPattern *pattern;
+
+      pattern = pattern_list_get_pattern (pattern_list, pattern_name);
+
+      if (pattern)
+	{
+	  gimp_context_set_pattern (device_info->context, pattern);
+	}
+      else if (no_data)
+	{
+	  g_free (device_info->context->pattern_name);
+	  device_info->context->pattern_name = g_strdup (pattern_name);
+	}
     }
 
   if (values & DEVICE_GRADIENT)
     {
-      gimp_context_set_gradient (device_info->context,
-				 gradient_list_get_gradient (gradients_list,
-							     gradient_name));
+      gradient_t *gradient;
+
+      gradient = gradient_list_get_gradient (gradients_list, gradient_name);
+
+      if (gradient)
+	{
+	  gimp_context_set_gradient (device_info->context, gradient);
+	}
+      else if (no_data)
+	{
+	  g_free (device_info->context->gradient_name);
+	  device_info->context->gradient_name = g_strdup (gradient_name);
+	}
     }
 }
 
-void 
+void
 select_device (guint32 new_device)
 {
   DeviceInfo *device_info;
@@ -737,7 +758,6 @@ device_status_create (void)
 
 			 NULL);
 
-      /*  register this one only  */
       dialog_register (deviceD->shell);
       session_set_window_geometry (deviceD->shell, &device_status_session_info,
 				   FALSE);

@@ -1,3 +1,52 @@
+1999-11-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/airbrush.c
+	* app/apptypes.h
+	* app/brushes_cmds.c
+	* tools/pdbgen/pdb/brushes.pdb
+	* app/bucket_fill.c
+	* app/clone.c
+	* app/gimpbrushpipe.c
+	* app/paint_core.c
+	* app/patterns.h
+	* app/patterns_cmds.c
+	* tools/pdbgen/pdb/patterns.pdb: removed the GimpBrushP and
+	GPatternP types and use ordinary pointers instead.
+
+	The following stuff makes the "no_data" behaviour consistent. As a
+	side-effect it should make the gimp work when there are _really_ no
+	brushes/patterns/gradients.
+
+	* app/brush_select.c
+	* app/pattern_select.c: set the initial brush/pattern name to "No
+	Brushes/Patterns available" instead of "Active".
+
+	* app/devices.c: set the device contexts' brush/pattern/gradient
+	names if we started with no_data, so we find them on refresh.
+
+	* app/gimpbrushlist.c: set the name of the standard_brush to
+	"Standard".
+
+	* app/gimpcontext.c: don't replace the current
+	brush/pattern/gradient's name if the new one to be set is the
+	standard one. Together with the change in devices.c, this ensures
+	that we get what is set in devicerc. Minor fixes.
+
+	* app/gradient.c: changed gradients_init() to work like the other
+	data init functions. Only insert a default gradient in the
+	gradients list when the editor is opened (this means that the
+	gradients now behave like brushes/patterns when we start with
+	"no_data").
+	New function gradient_update() avoids tons of useless redraws of
+	all clist gradient previews whenever the gradient editor wants to
+	update it's large preview.
+
+	* app/gradient_select.c: don't segfault when the user tries to
+	drag from an empty gradient list.
+
+	* app/patterns.c: set the index of the standard_pattern to -1 to
+	indicate that it's not part of the pattern list.
+
 Sat Nov 13 18:07:51 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/common/rotate.c: we don't use gtk, so we don't need

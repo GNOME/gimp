@@ -93,18 +93,18 @@ brushes_get_brush_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GimpBrush *brushp;
+  GimpBrush *brush;
 
-  success = (brushp = gimp_context_get_brush (NULL)) != NULL;
+  success = (brush = gimp_context_get_brush (NULL)) != NULL;
 
   return_args = procedural_db_return_args (&brushes_get_brush_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (brushp->name);
-      return_args[2].value.pdb_int = brushp->mask->width;
-      return_args[3].value.pdb_int = brushp->mask->height;
-      return_args[4].value.pdb_int = brushp->spacing;
+      return_args[1].value.pdb_pointer = g_strdup (brush->name);
+      return_args[2].value.pdb_int = brush->mask->width;
+      return_args[3].value.pdb_int = brush->mask->height;
+      return_args[4].value.pdb_int = brush->spacing;
     }
 
   return return_args;
@@ -155,7 +155,7 @@ brushes_set_brush_invoker (Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
-  GimpBrush *brushp;
+  GimpBrush *brush;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -163,9 +163,10 @@ brushes_set_brush_invoker (Argument *args)
 
   if (success)
     {
-      brushp = gimp_brush_list_get_brush (brush_list, name);
-      if (brushp)
-	gimp_context_set_brush (NULL, brushp);
+      brush = gimp_brush_list_get_brush (brush_list, name);
+    
+      if (brush)
+	gimp_context_set_brush (NULL, brush);
       else
 	success = FALSE;
     }
@@ -497,7 +498,7 @@ brushes_get_brush_data_invoker (Argument *args)
   gchar *name;
   gint32 length = 0;
   guint8 *mask_data = NULL;
-  GimpBrushP brushp = NULL;
+  GimpBrush *brush = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -507,31 +508,29 @@ brushes_get_brush_data_invoker (Argument *args)
     {
       if (strlen (name))
 	{
-	  GSList *list = GIMP_LIST (brush_list)->list;
+	  GSList *list;
     
 	  success = FALSE;
     
-	  while (list)
+	  for (list = GIMP_LIST (brush_list)->list; list; list = g_slist_next (list))
 	    {
-	      brushp = (GimpBrushP) list->data;
+	      brush = (GimpBrush *) list->data;
     
-	      if (!strcmp (brushp->name, name))
+	      if (!strcmp (brush->name, name))
 		{
 		  success = TRUE;
 		  break;
 		}
-    
-	      list = list->next;
 	    }
 	}
       else
-	success = (brushp = gimp_context_get_brush (NULL)) != NULL;
+	success = (brush = gimp_context_get_brush (NULL)) != NULL;
     
       if (success)
 	{
-	  length = brushp->mask->height * brushp->mask->width;
+	  length = brush->mask->height * brush->mask->width;
 	  mask_data = g_new (guint8, length);
-	  g_memmove (mask_data, temp_buf_data (brushp->mask), length);
+	  g_memmove (mask_data, temp_buf_data (brush->mask), length);
 	}
     }
 
@@ -539,12 +538,12 @@ brushes_get_brush_data_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (brushp->name);
+      return_args[1].value.pdb_pointer = g_strdup (brush->name);
       return_args[2].value.pdb_float = 1.0;
-      return_args[3].value.pdb_int = brushp->spacing;
+      return_args[3].value.pdb_int = brush->spacing;
       return_args[4].value.pdb_int = 0;
-      return_args[5].value.pdb_int = brushp->mask->width;
-      return_args[6].value.pdb_int = brushp->mask->height;
+      return_args[5].value.pdb_int = brush->mask->width;
+      return_args[6].value.pdb_int = brush->mask->height;
       return_args[7].value.pdb_int = length;
       return_args[8].value.pdb_pointer = mask_data;
     }

@@ -188,7 +188,7 @@ airbrush_paint_func (PaintCore    *paint_core,
 		     GimpDrawable *drawable,
 		     int           state)
 {
-  GimpBrushP brush;
+  GimpBrush *brush;
   gdouble rate;
 
   if (!drawable) 

@@ -93,7 +93,7 @@ static void   clone_motion       (PaintCore *, GimpDrawable *, GimpDrawable *,
 static void   clone_line_image   (GImage *, GImage *, GimpDrawable *,
 				  GimpDrawable *, unsigned char *,
 				  unsigned char *, int, int, int, int);
-static void   clone_line_pattern (GImage *, GimpDrawable *, GPatternP,
+static void   clone_line_pattern (GImage *, GimpDrawable *, GPattern *,
 				  unsigned char *, int, int, int, int);
 
 
@@ -475,7 +475,7 @@ clone_motion (PaintCore            *paint_core,
   int x1, y1, x2, y2;
   int has_alpha = -1;
   PixelRegion srcPR, destPR;
-  GPatternP pattern;
+  GPattern *pattern;
   gint opacity;
   gdouble scale;
 
@@ -661,7 +661,7 @@ clone_line_image (GImage        *dest,
 static void
 clone_line_pattern (GImage        *dest,
 		    GimpDrawable  *drawable,
-		    GPatternP      pattern,
+		    GPattern      *pattern,
 		    unsigned char *d,
 		    int            x,
 		    int            y,

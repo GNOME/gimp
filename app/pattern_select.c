@@ -60,7 +60,7 @@ static void     pattern_select_pattern_changed  (GimpContext   *context,
 						 GPattern      *pattern,
 						 PatternSelect *psp);
 static void     pattern_select_select           (PatternSelect *psp,
-						 gint           index);
+						 GPattern      *pattern);
 
 static gboolean pattern_popup_timeout           (gpointer       data);
 static void     pattern_popup_open              (PatternSelect *psp,
@@ -223,7 +223,7 @@ pattern_select_new (gchar *title,
   label_box = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (psp->options_box), label_box, FALSE, FALSE, 2);
 
-  psp->pattern_name = gtk_label_new (_("Active"));
+  psp->pattern_name = gtk_label_new (_("No Patterns available"));
   gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_name, FALSE, FALSE, 4);
   psp->pattern_size = gtk_label_new ("(0 X 0)");
   gtk_box_pack_start (GTK_BOX (label_box), psp->pattern_size, FALSE, FALSE, 2);
@@ -299,7 +299,7 @@ pattern_select_new (gchar *title,
 		      psp);
 
   if (active)
-    pattern_select_select (psp, active->index);
+    pattern_select_select (psp, active);
 
   /*  Add to active pattern dialogs list  */
   pattern_active_dialogs = g_slist_append (pattern_active_dialogs, psp);
@@ -341,7 +341,7 @@ pattern_change_callbacks (PatternSelect *psp,
 {
   gchar *name;
   ProcRecord *prec = NULL;
-  GPatternP pattern;
+  GPattern *pattern;
   gint nreturn_vals;
   static gboolean busy = FALSE;
 
@@ -446,7 +446,7 @@ pattern_select_pattern_changed (GimpContext   *context,
 {
   if (pattern)
     {
-      pattern_select_select (psp, pattern->index);
+      pattern_select_select (psp, pattern);
 
       if (psp->callback_name)
 	pattern_change_callbacks (psp, FALSE);
@@ -455,10 +455,16 @@ pattern_select_pattern_changed (GimpContext   *context,
 
 static void
 pattern_select_select (PatternSelect *psp,
-		       gint           index)
+		       GPattern      *pattern)
 {
+  gint index;
   gint row, col;
   gint scroll_offset = 0;
+
+  index = pattern->index;
+
+  if (index < 0)
+    return;
 
   update_active_pattern_field (psp);
 
@@ -998,6 +1004,8 @@ pattern_select_scroll_update (GtkAdjustment *adjustment,
       if (active)
 	{
 	  index = active->index;
+	  if (index < 0)
+	    return;
 	  row = index / psp->NUM_PATTERN_COLUMNS;
 	  col = index - row * psp->NUM_PATTERN_COLUMNS;
 

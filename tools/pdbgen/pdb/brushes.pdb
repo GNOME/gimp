@@ -51,9 +51,9 @@ sub paint_mode_arg () {{
 
 sub brush_outargs {
     foreach (@outargs) {
-	my $alias = "brushp->$_->{name}";
+	my $alias = "brush->$_->{name}";
 	$alias = "g_strdup ($alias)" if $_->{type} eq 'string';
-	$alias =~ s/brushp/brushp->mask/ if $_->{name} =~ /width|height/;
+	$alias =~ s/brush/brush->mask/ if $_->{name} =~ /width|height/;
 	$_->{alias} = $alias;
 	$_->{no_declare} = 1;
     }
@@ -110,8 +110,8 @@ HELP
     &brush_outargs;
 
     %invoke = (
-	vars => [ 'GimpBrush *brushp' ],
-	code => 'success = (brushp = gimp_context_get_brush (NULL)) != NULL;'
+	vars => [ 'GimpBrush *brush' ],
+	code => 'success = (brush = gimp_context_get_brush (NULL)) != NULL;'
     );
 }
 
@@ -131,12 +131,13 @@ HELP
     @inargs = ( &brush_arg );
 
     %invoke = (
-	vars => [ 'GimpBrush *brushp' ],
+	vars => [ 'GimpBrush *brush' ],
 	code => <<'CODE'
 {
-  brushp = gimp_brush_list_get_brush (brush_list, name);
-  if (brushp)
-    gimp_context_set_brush (NULL, brushp);
+  brush = gimp_brush_list_get_brush (brush_list, name);
+
+  if (brush)
+    gimp_context_set_brush (NULL, brush);
   else
     success = FALSE;
 }
@@ -318,36 +319,34 @@ HELP
     
     %invoke = (
 	headers => [ qw(<string.h>) ],
-	vars => [ 'GimpBrushP brushp = NULL' ],
+	vars => [ 'GimpBrush *brush = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))
     {
-      GSList *list = GIMP_LIST (brush_list)->list;
+      GSList *list;
 
       success = FALSE;
 
-      while (list)
+      for (list = GIMP_LIST (brush_list)->list; list; list = g_slist_next (list))
 	{
-	  brushp = (GimpBrushP) list->data;
+	  brush = (GimpBrush *) list->data;
 
-	  if (!strcmp (brushp->name, name))
+	  if (!strcmp (brush->name, name))
 	    {
 	      success = TRUE;
 	      break;
 	    }
-
-	  list = list->next;
 	}
     }
   else
-    success = (brushp = gimp_context_get_brush (NULL)) != NULL;
+    success = (brush = gimp_context_get_brush (NULL)) != NULL;
 
   if (success)
     {
-      length = brushp->mask->height * brushp->mask->width;
+      length = brush->mask->height * brush->mask->width;
       mask_data = g_new (guint8, length);
-      g_memmove (mask_data, temp_buf_data (brushp->mask), length);
+      g_memmove (mask_data, temp_buf_data (brush->mask), length);
     }
 }
 CODE

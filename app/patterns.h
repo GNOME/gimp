@@ -23,7 +23,7 @@
 
 #include "temp_buf.h"
 
-typedef struct _GPattern GPattern, *GPatternP;
+typedef struct _GPattern GPattern;
 
 struct _GPattern
 {

@@ -44,17 +44,17 @@ patterns_get_pattern_invoker (Argument *args)
 {
   gboolean success = TRUE;
   Argument *return_args;
-  GPatternP patternp;
+  GPattern *pattern;
 
-  success = (patternp = gimp_context_get_pattern (NULL)) != NULL;
+  success = (pattern = gimp_context_get_pattern (NULL)) != NULL;
 
   return_args = procedural_db_return_args (&patterns_get_pattern_proc, success);
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (patternp->name);
-      return_args[2].value.pdb_int = patternp->mask->width;
-      return_args[3].value.pdb_int = patternp->mask->height;
+      return_args[1].value.pdb_pointer = g_strdup (pattern->name);
+      return_args[2].value.pdb_int = pattern->mask->width;
+      return_args[3].value.pdb_int = pattern->mask->height;
     }
 
   return return_args;
@@ -100,7 +100,7 @@ patterns_set_pattern_invoker (Argument *args)
 {
   gboolean success = TRUE;
   gchar *name;
-  GPatternP patternp;
+  GPattern *pattern;
   GSList *list;
 
   name = (gchar *) args[0].value.pdb_pointer;
@@ -109,21 +109,18 @@ patterns_set_pattern_invoker (Argument *args)
 
   if (success)
     {
-      list = pattern_list;
       success = FALSE;
     
-      while (list)
+      for (list = pattern_list; list; list = g_slist_next (list))
 	{
-	  patternp = (GPatternP) list->data;
+	  pattern = (GPattern *) list->data;
     
-	  if (!strcmp (patternp->name, name))
+	  if (!strcmp (pattern->name, name))
 	    {
-	      gimp_context_set_pattern (NULL, patternp);
+	      gimp_context_set_pattern (NULL, pattern);
 	      success = TRUE;
 	      break;
 	    }
-    
-	  list = list->next;
 	}
     }
 
@@ -170,7 +167,7 @@ patterns_list_invoker (Argument *args)
 
   while (list)
     {
-      patterns[i++] = g_strdup (((GPatternP) list->data)->name);
+      patterns[i++] = g_strdup (((GPattern *) list->data)->name);
       list = list->next;
     }
 
@@ -223,7 +220,7 @@ patterns_get_pattern_data_invoker (Argument *args)
   gchar *name;
   gint32 length = 0;
   guint8 *mask_data = NULL;
-  GPatternP patternp = NULL;
+  GPattern *pattern = NULL;
 
   name = (gchar *) args[0].value.pdb_pointer;
   if (name == NULL)
@@ -233,32 +230,30 @@ patterns_get_pattern_data_invoker (Argument *args)
     {
       if (strlen (name))
 	{
-	  GSList *list = pattern_list;
+	  GSList *list;
     
 	  success = FALSE;
     
-	  while (list)
+	  for (list = pattern_list; list; list = g_slist_next (list))
 	    {
-	      patternp = (GPatternP) list->data;
+	      pattern = (GPattern *) list->data;
     
-	      if (!strcmp (patternp->name, name))
+	      if (!strcmp (pattern->name, name))
 		{
 		  success = TRUE;
 		  break;
 		}
-    
-	      list = list->next;
 	    }
 	}
       else
-	success = (patternp = gimp_context_get_pattern (NULL)) != NULL;
+	success = (pattern = gimp_context_get_pattern (NULL)) != NULL;
     
       if (success)
 	{
-	  length = patternp->mask->height * patternp->mask->width *
-		   patternp->mask->bytes;
+	  length = pattern->mask->height * pattern->mask->width *
+		   pattern->mask->bytes;
 	  mask_data = g_new (guint8, length);
-	  g_memmove (mask_data, temp_buf_data (patternp->mask), length);
+	  g_memmove (mask_data, temp_buf_data (pattern->mask), length);
 	}
     }
 
@@ -266,10 +261,10 @@ patterns_get_pattern_data_invoker (Argument *args)
 
   if (success)
     {
-      return_args[1].value.pdb_pointer = g_strdup (patternp->name);
-      return_args[2].value.pdb_int = patternp->mask->width;
-      return_args[3].value.pdb_int = patternp->mask->height;
-      return_args[4].value.pdb_int = patternp->mask->bytes;
+      return_args[1].value.pdb_pointer = g_strdup (pattern->name);
+      return_args[2].value.pdb_int = pattern->mask->width;
+      return_args[3].value.pdb_int = pattern->mask->height;
+      return_args[4].value.pdb_int = pattern->mask->bytes;
       return_args[5].value.pdb_int = length;
       return_args[6].value.pdb_pointer = mask_data;
     }

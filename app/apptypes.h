@@ -151,7 +151,6 @@ typedef GimpLayerMask LayerMask;	/* convenience */
 typedef struct _paint_core	   PaintCore;
 
 typedef struct _GimpBrush	   GimpBrush;
-typedef struct _GimpBrush	  *GimpBrushP;
 typedef struct _GimpBrushClass	   GimpBrushClass;
 
 typedef struct _layer_undo LayerUndo;

@@ -48,86 +48,106 @@
 typedef void (* GimpContextCopyArgFunc) (GimpContext *src, GimpContext *dest);
 
 /*  local function prototypes  */
+
+/*  image  */
 static void gimp_context_real_set_image      (GimpContext      *context,
 					      GimpImage        *image);
+static void gimp_context_copy_image          (GimpContext      *src,
+					      GimpContext      *dest);
+static void gimp_context_image_changed       (GimpContext      *parent,
+					      GimpImage        *image,
+					      GimpContext      *child);
+
+/*  display  */
 static void gimp_context_real_set_display    (GimpContext      *context,
 					      GDisplay         *display);
+static void gimp_context_copy_display        (GimpContext      *src,
+					      GimpContext      *dest);
+static void gimp_context_display_changed     (GimpContext      *parent,
+					      GDisplay         *display,
+					      GimpContext      *child);
+
+/*  tool  */
 static void gimp_context_real_set_tool       (GimpContext      *context,
 					      ToolType          tool);
+static void gimp_context_copy_tool           (GimpContext      *src,
+					      GimpContext      *dest);
+static void gimp_context_tool_changed        (GimpContext      *parent,
+					      ToolType          tool,
+					      GimpContext      *child);
+
+/*  foreground  */
 static void gimp_context_real_set_foreground (GimpContext      *context,
 					      gint              r,
 					      gint              g,
 					      gint              b);
-static void gimp_context_real_set_background (GimpContext      *context,
-					      gint              r,
-					      gint              g,
-					      gint              b);
-static void gimp_context_real_set_opacity    (GimpContext      *context,
-					      gdouble           opacity);
-static void gimp_context_real_set_paint_mode (GimpContext      *context,
-					      LayerModeEffects  paint_mode);
-static void gimp_context_real_set_brush      (GimpContext      *context,
-					      GimpBrush        *brush);
-static void gimp_context_real_set_pattern    (GimpContext      *context,
-					      GPattern         *pattern);
-static void gimp_context_real_set_gradient   (GimpContext      *context,
-					      gradient_t       *gradient);
-
-static void gimp_context_copy_image          (GimpContext      *src,
-					      GimpContext      *dest);
-static void gimp_context_copy_display        (GimpContext      *src,
-					      GimpContext      *dest);
-static void gimp_context_copy_tool           (GimpContext      *src,
-					      GimpContext      *dest);
 static void gimp_context_copy_foreground     (GimpContext      *src,
 					      GimpContext      *dest);
-static void gimp_context_copy_background     (GimpContext      *src,
-					      GimpContext      *dest);
-static void gimp_context_copy_opacity        (GimpContext      *src,
-					      GimpContext      *dest);
-static void gimp_context_copy_paint_mode     (GimpContext      *src,
-					      GimpContext      *dest);
-static void gimp_context_copy_brush          (GimpContext      *src,
-					      GimpContext      *dest);
-static void gimp_context_copy_pattern        (GimpContext      *src,
-					      GimpContext      *dest);
-static void gimp_context_copy_gradient       (GimpContext      *src,
-					      GimpContext      *dest);
-
-static void gimp_context_image_changed       (GimpContext      *parent,
-					      GimpImage        *image,
-					      GimpContext      *child);
-static void gimp_context_display_changed     (GimpContext      *parent,
-					      GDisplay         *display,
-					      GimpContext      *child);
-static void gimp_context_tool_changed        (GimpContext      *parent,
-					      ToolType          tool,
-					      GimpContext      *child);
 static void gimp_context_foreground_changed  (GimpContext      *parent,
 					      gint              r,
 					      gint              g,
 					      gint              b,
 					      GimpContext      *child);
+
+/*  background  */
+static void gimp_context_real_set_background (GimpContext      *context,
+					      gint              r,
+					      gint              g,
+					      gint              b);
+static void gimp_context_copy_background     (GimpContext      *src,
+					      GimpContext      *dest);
 static void gimp_context_background_changed  (GimpContext      *parent,
 					      gint              r,
 					      gint              g,
 					      gint              b,
 					      GimpContext      *child);
+
+/*  opacity  */
+static void gimp_context_real_set_opacity    (GimpContext      *context,
+					      gdouble           opacity);
+static void gimp_context_copy_opacity        (GimpContext      *src,
+					      GimpContext      *dest);
 static void gimp_context_opacity_changed     (GimpContext      *parent,
 					      gdouble           opacity,
 					      GimpContext      *child);
+
+/*  paint mode  */
+static void gimp_context_real_set_paint_mode (GimpContext      *context,
+					      LayerModeEffects  paint_mode);
+static void gimp_context_copy_paint_mode     (GimpContext      *src,
+					      GimpContext      *dest);
 static void gimp_context_paint_mode_changed  (GimpContext      *parent,
 					      LayerModeEffects  paint_mode,
 					      GimpContext      *child);
+
+/*  brush  */
+static void gimp_context_real_set_brush      (GimpContext      *context,
+					      GimpBrush        *brush);
+static void gimp_context_copy_brush          (GimpContext      *src,
+					      GimpContext      *dest);
 static void gimp_context_brush_changed       (GimpContext      *parent,
 					      GimpBrush        *brush,
 					      GimpContext      *child);
+
+/*  pattern  */
+static void gimp_context_real_set_pattern    (GimpContext      *context,
+					      GPattern         *pattern);
+static void gimp_context_copy_pattern        (GimpContext      *src,
+					      GimpContext      *dest);
 static void gimp_context_pattern_changed     (GimpContext      *parent,
 					      GPattern         *pattern,
 					      GimpContext      *child);
+
+/*  gradient  */
+static void gimp_context_real_set_gradient   (GimpContext      *context,
+					      gradient_t       *gradient);
+static void gimp_context_copy_gradient       (GimpContext      *src,
+					      GimpContext      *dest);
 static void gimp_context_gradient_changed    (GimpContext      *parent,
 					      gradient_t       *gradient,
 					      GimpContext      *child);
+
+/*  arguments  */
 
 enum
 {
@@ -157,6 +177,22 @@ static gchar *gimp_context_arg_names[] =
   "GimpContext::pattern",
   "GimpContext::gradient"
 };
+
+static GimpContextCopyArgFunc gimp_context_copy_arg_funcs[] =
+{
+  gimp_context_copy_image,
+  gimp_context_copy_display,
+  gimp_context_copy_tool,
+  gimp_context_copy_foreground,
+  gimp_context_copy_background,
+  gimp_context_copy_opacity,
+  gimp_context_copy_paint_mode,
+  gimp_context_copy_brush,
+  gimp_context_copy_pattern,
+  gimp_context_copy_gradient
+};
+
+/*  signals  */
 
 enum
 {
@@ -203,36 +239,22 @@ static GtkSignalFunc gimp_context_signal_handlers[] =
   gimp_context_gradient_changed
 };
 
-static GimpContextCopyArgFunc gimp_context_copy_arg_funcs[] =
-{
-  gimp_context_copy_image,
-  gimp_context_copy_display,
-  gimp_context_copy_tool,
-  gimp_context_copy_foreground,
-  gimp_context_copy_background,
-  gimp_context_copy_opacity,
-  gimp_context_copy_paint_mode,
-  gimp_context_copy_brush,
-  gimp_context_copy_pattern,
-  gimp_context_copy_gradient
-};
-
 static GimpObjectClass * parent_class = NULL;
 
 /*  the currently active context  */
-static GimpContext * current_context  = NULL;
+static GimpContext *current_context  = NULL;
 
 /*  the context user by the interface  */
-static GimpContext * user_context     = NULL;
+static GimpContext *user_context     = NULL;
 
 /*  the default context which is initialized from gimprc  */
-static GimpContext * default_context  = NULL;
+static GimpContext *default_context  = NULL;
 
 /*  the hardcoded standard context  */
-static GimpContext * standard_context = NULL;
+static GimpContext *standard_context = NULL;
 
 /*  the list of all contexts  */
-static GSList      *context_list      = NULL;
+static GSList      *context_list     = NULL;
 
 /*****************************************************************************/
 /*  private functions  *******************************************************/
@@ -349,12 +371,8 @@ gimp_context_destroy (GtkObject *object)
 
   context = GIMP_CONTEXT (object);
 
-  if (context->parent &&
-      context->defined_args != GIMP_CONTEXT_ALL_ARGS_MASK)
-    {
-      gtk_signal_disconnect_by_data (GTK_OBJECT (context->parent), context);
-      context->parent = NULL;
-    }
+  if (context->parent)
+    gimp_context_unset_parent (context);
 
   if (context->name)
     {
@@ -403,7 +421,7 @@ static void
 gimp_context_class_init (GimpContextClass *klass)
 {
   GtkObjectClass *object_class;
-  
+
   object_class = GTK_OBJECT_CLASS (klass);
 
   gtk_object_add_arg_type (gimp_context_arg_names[IMAGE_CHANGED],
@@ -609,22 +627,7 @@ gimp_context_new (gchar       *name,
     {
       context->defined_args = template->defined_args;
 
-      context->image        = gimp_context_get_image (template);
-      context->display      = gimp_context_get_display (template);
-      context->tool         = gimp_context_get_tool (template);
-      gimp_context_get_foreground (template,
-				   &context->foreground[0],
-				   &context->foreground[1],
-				   &context->foreground[2]);
-      gimp_context_get_background (template,
-				   &context->background[0],
-				   &context->background[1],
-				   &context->background[2]);
-      context->opacity      = gimp_context_get_opacity (template);
-      context->paint_mode   = gimp_context_get_paint_mode (template);
-      context->brush        = gimp_context_get_brush (template);
-      context->pattern      = gimp_context_get_pattern (template);
-      context->gradient     = gimp_context_get_gradient (template);
+      gimp_context_copy_args (template, context, GIMP_CONTEXT_ALL_ARGS_MASK);
     }
 
   return context;
@@ -726,7 +729,8 @@ gimp_context_set_parent (GimpContext *context,
   context_return_if_fail (context);
   g_return_if_fail (!parent || GIMP_IS_CONTEXT (parent));
 
-  if (context == parent) return;
+  if (context == parent)
+    return;
 
   for (arg = 0; arg < GIMP_CONTEXT_NUM_ARGS; arg++)
     if (! ((1 << arg) & context->defined_args))
@@ -898,7 +902,8 @@ static void
 gimp_context_real_set_image (GimpContext *context,
 			     GimpImage   *image)
 {
-  if (context->image == image) return;
+  if (context->image == image)
+    return;
 
   if (image == NULL)
     gtk_signal_disconnect_by_data (GTK_OBJECT (image_context), context);
@@ -967,7 +972,8 @@ static void
 gimp_context_real_set_display (GimpContext *context,
 			       GDisplay    *display)
 {
-  if (context->display == display) return;
+  if (context->display == display)
+    return;
 
   if (context->display && GTK_IS_OBJECT (context->display->shell))
     gtk_signal_disconnect_by_data (GTK_OBJECT (context->display->shell),
@@ -1031,7 +1037,8 @@ static void
 gimp_context_real_set_tool (GimpContext *context,
 			    ToolType     tool)
 {
-  if (context->tool == tool) return;
+  if (context->tool == tool)
+    return;
 
   context->tool = tool;
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1092,7 +1099,8 @@ gimp_context_real_set_foreground (GimpContext *context,
 {
   if (context->foreground[0] == r &&
       context->foreground[1] == g &&
-      context->foreground[2] == b) return;
+      context->foreground[2] == b)
+    return;
 
   context->foreground[0] = r;
   context->foreground[1] = g;
@@ -1161,7 +1169,8 @@ gimp_context_real_set_background (GimpContext *context,
 {
   if (context->background[0] == r &&
       context->background[1] == g &&
-      context->background[2] == b) return;
+      context->background[2] == b)
+    return;
 
   context->background[0] = r;
   context->background[1] = g;
@@ -1259,7 +1268,8 @@ static void
 gimp_context_real_set_opacity (GimpContext *context,
 			       gdouble      opacity)
 {
-  if (context->opacity == opacity) return;
+  if (context->opacity == opacity)
+    return;
 
   context->opacity = opacity;
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1309,7 +1319,8 @@ static void
 gimp_context_real_set_paint_mode (GimpContext     *context,
 				  LayerModeEffects paint_mode)
 {
-  if (context->paint_mode == paint_mode) return;
+  if (context->paint_mode == paint_mode)
+    return;
 
   context->paint_mode = paint_mode;
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1334,6 +1345,8 @@ gimp_context_paint_mode_changed (GimpContext      *parent,
 
 /*****************************************************************************/
 /*  brush  *******************************************************************/
+
+static GimpBrush *standard_brush = NULL;
 
 GimpBrush *
 gimp_context_get_brush (GimpContext *context)
@@ -1388,9 +1401,13 @@ static void
 gimp_context_real_set_brush (GimpContext *context,
 			     GimpBrush   *brush)
 {
-  if (context->brush == brush) return;
+  if (! standard_brush)
+    standard_brush = brushes_get_standard_brush ();
 
-  if (context->brush_name)
+  if (context->brush == brush)
+    return;
+
+  if (context->brush_name && brush != standard_brush)
     {
       g_free (context->brush_name);
       context->brush_name = NULL;
@@ -1404,7 +1421,7 @@ gimp_context_real_set_brush (GimpContext *context,
       temp_buf_swap (brush->mask);
     }
 
-  /*  disconnect from the old brushe's signals  */
+  /*  disconnect from the old brush's signals  */
   if (context->brush)
     {
       gtk_signal_disconnect_by_data (GTK_OBJECT (context->brush), context);
@@ -1440,12 +1457,13 @@ gimp_context_real_set_brush (GimpContext *context,
       /*  Make sure the active brush is unswapped... */
       if (stingy_memory_use &&
 	  brush->mask &&
-	  GTK_OBJECT (context->brush)->ref_count < 2)
+	  GTK_OBJECT (brush)->ref_count < 2)
 	{
 	  temp_buf_unswap (brush->mask);
 	}
 
-      context->brush_name = g_strdup (brush->name);
+      if (brush != standard_brush)
+	context->brush_name = g_strdup (brush->name);
     }
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1458,6 +1476,12 @@ gimp_context_copy_brush (GimpContext *src,
 			 GimpContext *dest)
 {
   gimp_context_real_set_brush (dest, src->brush);
+
+  if ((!src->brush || src->brush == standard_brush) && src->brush_name)
+    {
+      g_free (dest->brush_name);
+      dest->brush_name = g_strdup (src->brush_name);
+    }
 }
 
 static void
@@ -1483,9 +1507,6 @@ gimp_context_refresh_brush (GimpContext *context,
       return;
     }
 
-  g_free (context->brush_name);
-  context->brush_name = NULL;
-
   if (gimp_brush_list_length (brush_list))
     gimp_context_real_set_brush 
       (context, gimp_brush_list_get_brush_by_index (brush_list, 0));
@@ -1501,6 +1522,8 @@ gimp_context_refresh_brushes (void)
 
 /*****************************************************************************/
 /*  pattern  *****************************************************************/
+
+static GPattern *standard_pattern = NULL;
 
 GPattern *
 gimp_context_get_pattern (GimpContext *context)
@@ -1526,9 +1549,13 @@ static void
 gimp_context_real_set_pattern (GimpContext *context,
 			       GPattern    *pattern)
 {
-  if (context->pattern == pattern) return;
+  if (! standard_pattern)
+    standard_pattern = patterns_get_standard_pattern ();
 
-  if (context->pattern_name)
+  if (context->pattern == pattern)
+    return;
+
+  if (context->pattern_name && pattern != standard_pattern)
     {
       g_free (context->pattern_name);
       context->pattern_name = NULL;
@@ -1536,7 +1563,7 @@ gimp_context_real_set_pattern (GimpContext *context,
 
   context->pattern = pattern;
 
-  if (pattern)
+  if (pattern && pattern != standard_pattern)
     context->pattern_name = g_strdup (pattern->name);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1549,6 +1576,12 @@ gimp_context_copy_pattern (GimpContext *src,
 			   GimpContext *dest)
 {
   gimp_context_real_set_pattern (dest, src->pattern);
+
+  if ((!src->pattern || src->pattern == standard_pattern) && src->pattern_name)
+    {
+      g_free (dest->pattern_name);
+      dest->pattern_name = g_strdup (src->pattern_name);
+    }
 }
 
 static void
@@ -1571,15 +1604,9 @@ gimp_context_refresh_pattern (GimpContext *context,
   if ((pattern = pattern_list_get_pattern (pattern_list,
 					   context->pattern_name)))
     {
-      context->pattern = pattern;
-      gtk_signal_emit (GTK_OBJECT (context),
-		       gimp_context_signals[PATTERN_CHANGED],
-		       pattern);
+      gimp_context_real_set_pattern (context, pattern);
       return;
     }
-
-  g_free (context->pattern_name);
-  context->pattern_name = NULL;
 
   if ((pattern = pattern_list_get_pattern_by_index (pattern_list, 0)))
     gimp_context_real_set_pattern (context, pattern);
@@ -1603,6 +1630,7 @@ gimp_context_update_pattern (GimpContext *context,
 	g_free (context->pattern_name);
 
       context->pattern_name = g_strdup (pattern->name);
+
       gtk_signal_emit (GTK_OBJECT (context),
 		       gimp_context_signals[PATTERN_CHANGED],
 		       pattern);
@@ -1617,6 +1645,8 @@ gimp_context_update_patterns (GPattern *pattern)
 
 /*****************************************************************************/
 /*  gradient  ****************************************************************/
+
+static gradient_t *standard_gradient = NULL;
 
 gradient_t *
 gimp_context_get_gradient (GimpContext *context)
@@ -1642,9 +1672,13 @@ static void
 gimp_context_real_set_gradient (GimpContext *context,
 				gradient_t  *gradient)
 {
-  if (context->gradient == gradient) return;
+  if (! standard_gradient)
+    standard_gradient = gradients_get_standard_gradient ();
 
-  if (context->gradient_name)
+  if (context->gradient == gradient)
+    return;
+
+  if (context->gradient_name && gradient != standard_gradient)
     {
       g_free (context->gradient_name);
       context->gradient_name = NULL;
@@ -1652,7 +1686,7 @@ gimp_context_real_set_gradient (GimpContext *context,
 
   context->gradient = gradient;
 
-  if (gradient)
+  if (gradient && gradient != standard_gradient)
     context->gradient_name = g_strdup (gradient->name);
 
   gtk_signal_emit (GTK_OBJECT (context),
@@ -1665,6 +1699,13 @@ gimp_context_copy_gradient (GimpContext *src,
 			    GimpContext *dest)
 {
   gimp_context_real_set_gradient (dest, src->gradient);
+
+  if ((!src->gradient || src->gradient == standard_gradient) &&
+      src->gradient_name)
+    {
+      g_free (dest->gradient_name);
+      dest->gradient_name = g_strdup (src->gradient_name);
+    }
 }
 
 static void
@@ -1687,15 +1728,9 @@ gimp_context_refresh_gradient (GimpContext *context,
   if ((gradient = gradient_list_get_gradient (gradients_list,
 					      context->gradient_name)))
     {
-      context->gradient = gradient;
-      gtk_signal_emit (GTK_OBJECT (context),
-		       gimp_context_signals[GRADIENT_CHANGED],
-		       gradient);
+      gimp_context_real_set_gradient (context, gradient);
       return;
     }
-
-  g_free (context->gradient_name);
-  context->gradient_name = NULL;
 
   if (gradients_list)
     gimp_context_real_set_gradient (context,
@@ -1720,6 +1755,7 @@ gimp_context_update_gradient (GimpContext *context,
 	g_free (context->gradient_name);
 
       context->gradient_name = g_strdup (gradient->name);
+
       gtk_signal_emit (GTK_OBJECT (context),
 		       gimp_context_signals[GRADIENT_CHANGED],
 		       gradient);

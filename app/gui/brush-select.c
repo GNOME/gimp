@@ -402,7 +402,7 @@ brush_select_new (gchar   *title,
   util_box = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 2);
 
-  bsp->brush_name = gtk_label_new (_("Active"));
+  bsp->brush_name = gtk_label_new (_("No Brushes available"));
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 4);
   bsp->brush_size = gtk_label_new (_("(0 X 0)"));
   gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_size, FALSE, FALSE, 2);
@@ -818,9 +818,6 @@ brush_select_select (BrushSelect *bsp,
   gint scroll_offset = 0;
 
   index = gimp_brush_list_get_brush_index (brush_list, brush); 
-
-  if (index >= gimp_brush_list_length (brush_list))
-    index = gimp_brush_list_length (brush_list) - 1;
 
   if (index < 0)
     return;

@@ -661,7 +661,7 @@ paint_core_init (PaintCore    *paint_core,
 		 double        x, 
 		 double        y)
 {
-  static GimpBrushP brush = 0;
+  static GimpBrush *brush = NULL;
   
   paint_core->curx = x;
   paint_core->cury = y;

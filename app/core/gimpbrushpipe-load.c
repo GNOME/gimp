@@ -272,7 +272,7 @@ GimpBrushPipe *
 gimp_brush_pipe_load (char *filename)
 {
   GimpBrushPipe *pipe;
-  GPatternP pattern;
+  GPattern *pattern;
   PixPipeParams params;
   FILE *fp;
   guchar buf[1024];
@@ -433,7 +433,7 @@ GimpBrushPipe *
 gimp_brush_pixmap_load (char *filename)
 {
   GimpBrushPipe *pipe;
-  GPatternP pattern;
+  GPattern *pattern;
   FILE *fp;
 
   if ((fp = fopen (filename, "rb")) == NULL)
@@ -450,7 +450,7 @@ gimp_brush_pixmap_load (char *filename)
   pipe->index = g_new (int, 1);
   pipe->index[0] = 0;
 
-  pattern = (GPatternP) g_malloc0 (sizeof (GPattern));
+  pattern = (GPattern *) g_malloc0 (sizeof (GPattern));
 
   pipe->brushes = (GimpBrushPixmap **) g_new (GimpBrushPixmap *, 1);
 

@@ -553,7 +553,7 @@ gradient_select_button_press (GtkWidget      *widget,
 
   if (bevent->button == 2)
     {
-      GSList *list;
+      GSList *list = NULL;
       gint row;
       gint column;
 
@@ -561,8 +561,13 @@ gradient_select_button_press (GtkWidget      *widget,
 				    bevent->x, bevent->y,
 				    &row, &column);
 
-      list = g_slist_nth (gradients_list, row);
-      gsp->dnd_gradient = (gradient_t *) list->data;
+      if (gradients_list)
+	list = g_slist_nth (gradients_list, row);
+
+      if (list)
+	gsp->dnd_gradient = (gradient_t *) list->data;
+      else
+	gsp->dnd_gradient = NULL;
 
       return TRUE;
     }

@@ -322,7 +322,7 @@ bucket_fill (GimpImage      *gimage,
   gint       x1, y1, x2, y2;
   guchar     col [MAX_CHANNELS];
   guchar    *d1, *d2;
-  GPatternP  pattern;
+  GPattern  *pattern;
   TempBuf   *pat_buf;
   gboolean   new_buf = FALSE;
 
