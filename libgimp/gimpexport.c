@@ -378,12 +378,12 @@ export_dialog (GSList *actions,
  * gimp_export_image:
  * @image_ID: Pointer to the image_ID.
  * @drawable_ID: Pointer to the drawable_ID.
- * @format_name: A string holding the name of the image_format.
+ * @format_name: The (short) name of the image_format (e.g. JPEG or GIF).
  * @capabilities: What can the image_format do?
  *
- * Takes an image and a drawable to be saved together with an
- * integer describing the capabilities of the image_format. If
- * the type of image doesn't match the capabilities of the format
+ * Takes an image and a drawable to be saved together with a
+ * description of the capabilities of the image_format. If the
+ * type of image doesn't match the capabilities of the format
  * a dialog is opened that informs the user that the image has
  * to be exported and offers to do the necessary conversions.
  *
@@ -391,7 +391,7 @@ export_dialog (GSList *actions,
  * This copy is then converted, the image_ID and drawable_ID
  * are changed to point to the new image and the procedure returns
  * EXPORT_EXPORT. The save_plugin has to take care of deleting the
- * created image using #gimp_image_delete when it has saved it.
+ * created image using gimp_image_delete() when it has saved it.
  *
  * If the user chooses to Ignore the export problem, the image_ID
  * and drawable_ID is not altered, EXPORT_IGNORE is returned and 
@@ -402,10 +402,10 @@ export_dialog (GSList *actions,
  * Returns: An enum of #GimpExportReturnType describing the user_action.
  */
 GimpExportReturnType
-gimp_export_image (gint32 *image_ID,
-		   gint32 *drawable_ID,
-		   gchar  *format_name,
-		   gint    capabilities)
+gimp_export_image (gint32                 *image_ID,
+		   gint32                 *drawable_ID,
+		   gchar                  *format_name,
+		   GimpExportCapabilities  capabilities)
 {
   GSList *actions = NULL;
   GSList *list;

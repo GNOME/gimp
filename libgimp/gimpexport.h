@@ -26,14 +26,16 @@
 extern "C" {
 #endif /* __cplusplus */
 
-#define CAN_HANDLE_RGB                  1 << 0
-#define CAN_HANDLE_GRAY                 1 << 1
-#define CAN_HANDLE_INDEXED              1 << 2
-#define CAN_HANDLE_ALPHA                1 << 3
-#define CAN_HANDLE_LAYERS               1 << 4
-#define CAN_HANDLE_LAYERS_AS_ANIMATION  1 << 5
-#define NEEDS_ALPHA                     1 << 6
-
+typedef enum {
+  CAN_HANDLE_RGB                 = 1 << 0,
+  CAN_HANDLE_GRAY                = 1 << 1,
+  CAN_HANDLE_INDEXED             = 1 << 2,
+  CAN_HANDLE_ALPHA               = 1 << 3,
+  CAN_HANDLE_LAYERS              = 1 << 4,
+  CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 5,
+  NEEDS_ALPHA                    = 1 << 6
+} GimpExportCapabilities;
+  
 typedef enum
 {
   EXPORT_CANCEL,
@@ -41,10 +43,10 @@ typedef enum
   EXPORT_EXPORT
 } GimpExportReturnType;
 
-GimpExportReturnType gimp_export_image (gint32 *image_ID,
-					gint32 *drawable_ID,
-					gchar  *format_name,
-					gint    capabilities);
+GimpExportReturnType gimp_export_image (gint32                 *image_ID,
+					gint32                 *drawable_ID,
+					gchar                  *format_name,
+					GimpExportCapabilities  capabilities);
 
 #ifdef __cplusplus
 }

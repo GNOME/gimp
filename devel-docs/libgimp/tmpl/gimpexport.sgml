@@ -13,9 +13,8 @@ save_plugin can handle. It then performs the necessary conversions
 (e.g. Flatten) on a copy of the image so that the image can be saved 
 without changing the original image.
 
-The capabilities of the save_plugin are specified using an integer
-that is created by combining the defines listed below with a bitwise 
-OR. 
+The capabilities of the save_plugin are specified by combining
+#GimpExportCapabilities using a bitwise OR. 
 
 Make sure you have initialized GTK+ before you call this function
 as it will most probably have to open a dialog. 
@@ -26,54 +25,18 @@ as it will most probably have to open a dialog.
 
 </para>
 
-<!-- ##### MACRO CAN_HANDLE_RGB ##### -->
+<!-- ##### ENUM GimpExportCapabilities ##### -->
 <para>
 
 </para>
 
-
-
-<!-- ##### MACRO CAN_HANDLE_GRAY ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO CAN_HANDLE_INDEXED ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO CAN_HANDLE_ALPHA ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO CAN_HANDLE_LAYERS ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO CAN_HANDLE_LAYERS_AS_ANIMATION ##### -->
-<para>
-
-</para>
-
-
-
-<!-- ##### MACRO NEEDS_ALPHA ##### -->
-<para>
-
-</para>
-
-
+@CAN_HANDLE_RGB: 
+@CAN_HANDLE_GRAY: 
+@CAN_HANDLE_INDEXED: 
+@CAN_HANDLE_ALPHA: 
+@CAN_HANDLE_LAYERS: 
+@CAN_HANDLE_LAYERS_AS_ANIMATION: 
+@NEEDS_ALPHA: 
 
 <!-- ##### ENUM GimpExportReturnType ##### -->
 <para>
