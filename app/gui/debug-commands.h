@@ -20,7 +20,9 @@
 #define __DEBUG_COMMANDS_H__
 
 
-#define ENABLE_DEBUG_MENU GIMP_UNSTABLE
+#ifdef GIMP_UNSTABLE
+#define ENABLE_DEBUG_MENU 1
+#endif
 
 
 #ifdef ENABLE_DEBUG_MENU
