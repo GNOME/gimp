@@ -60,6 +60,7 @@ static void    gimp_object_get_property      (GObject         *object,
 static gsize   gimp_object_real_get_memsize  (GimpObject      *object,
                                               gsize           *gui_size);
 static void    gimp_object_name_normalize    (GimpObject      *object);
+static void    gimp_object_name_free         (GimpObject      *object);
 
 
 static guint   object_signals[LAST_SIGNAL] = { 0 };
@@ -168,23 +169,7 @@ gimp_object_dispose (GObject *object)
 static void
 gimp_object_finalize (GObject *object)
 {
-  GimpObject *gimp_object;
-
-  gimp_object = GIMP_OBJECT (object);
-
-  if (gimp_object->normalized)
-    {
-      if (gimp_object->normalized != gimp_object->name)
-        g_free (gimp_object->normalized);
-
-      gimp_object->normalized = NULL;
-    }
-
-  if (gimp_object->name)
-    {
-      g_free (gimp_object->name);
-      gimp_object->name = NULL;
-    }
+  gimp_object_name_free (GIMP_OBJECT (object));
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -195,9 +180,7 @@ gimp_object_set_property (GObject      *object,
 			  const GValue *value,
 			  GParamSpec   *pspec)
 {
-  GimpObject *gimp_object;
-
-  gimp_object = GIMP_OBJECT (object);
+  GimpObject *gimp_object = GIMP_OBJECT (object);
 
   switch (property_id)
     {
@@ -216,9 +199,7 @@ gimp_object_get_property (GObject    *object,
 			  GValue     *value,
 			  GParamSpec *pspec)
 {
-  GimpObject *gimp_object;
-
-  gimp_object = GIMP_OBJECT (object);
+  GimpObject *gimp_object = GIMP_OBJECT (object);
 
   switch (property_id)
     {
@@ -249,7 +230,7 @@ gimp_object_set_name (GimpObject  *object,
       (object->name && name && !strcmp (object->name, name)))
     return;
 
-  g_free (object->name);
+  gimp_object_name_free (object);
 
   object->name = g_strdup (name);
 
@@ -275,7 +256,7 @@ gimp_object_set_name_safe (GimpObject  *object,
       (object->name && name && !strcmp (object->name, name)))
     return;
 
-  g_free (object->name);
+  gimp_object_name_free (object);
 
   object->name = gimp_utf8_strtrim (name, 30);
 
@@ -294,14 +275,6 @@ void
 gimp_object_name_changed (GimpObject *object)
 {
   g_return_if_fail (GIMP_IS_OBJECT (object));
-
-  if (object->normalized)
-    {
-      if (object->normalized != object->name)
-        g_free (object->normalized);
-
-      object->normalized = NULL;
-    }
 
   g_signal_emit (object, object_signals[NAME_CHANGED], 0);
 }
@@ -350,6 +323,24 @@ gimp_object_name_normalize (GimpObject *object)
           g_free (key);
           object->normalized = object->name;
         }
+    }
+}
+
+static void
+gimp_object_name_free (GimpObject *object)
+{
+  if (object->normalized)
+    {
+      if (object->normalized != object->name)
+        g_free (object->normalized);
+
+      object->normalized = NULL;
+    }
+
+  if (object->name)
+    {
+      g_free (object->name);
+      object->name = NULL;
     }
 }
 
