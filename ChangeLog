@@ -1,3 +1,10 @@
+2000-09-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/disp_callbacks.c: new function gdisplay_origin_menu_position()
+	which positions the menu right of the arrow instead of underneath
+	the mouse (where you always have the first entry selected, which
+	is annoying).
+
 2000-09-07  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/ps.c: Use fopen (xxx, "rb") on all systems. It

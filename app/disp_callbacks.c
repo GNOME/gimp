@@ -672,6 +672,24 @@ gdisplay_vruler_button_press (GtkWidget      *widget,
   return FALSE;
 }
 
+static void
+gdisplay_origin_menu_position (GtkMenu  *menu,
+			       gint     *x,
+			       gint     *y,
+			       gpointer  data)
+{
+  GtkWidget *origin;
+  gint origin_x;
+  gint origin_y;
+
+  origin = (GtkWidget *) data;
+
+  gdk_window_get_origin (origin->window, &origin_x, &origin_y);
+
+  *x = origin_x + origin->allocation.x + origin->allocation.width;
+  *y = origin_y + origin->allocation.y + origin->allocation.height / 2;
+}
+
 gint
 gdisplay_origin_button_press (GtkWidget      *widget,
 			      GdkEventButton *event,
@@ -683,7 +701,9 @@ gdisplay_origin_button_press (GtkWidget      *widget,
     {
       gdisp = data;
       gtk_menu_popup (GTK_MENU (gdisp->popup),
-		      NULL, NULL, NULL, NULL, 1, event->time);
+		      NULL, NULL,
+		      gdisplay_origin_menu_position, widget,
+		      1, event->time);
     }
 
   /*  Stop the signal emission so the button doesn't grab the
