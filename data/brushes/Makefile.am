@@ -16,7 +16,7 @@ FILES	=\
 	10x10square.gbr	\
 	10x10squareBlur.gbr	\
 	11circle.gbr	\
-	11fcircle.gbr	\		
+	11fcircle.gbr	\
 	13circle.gbr	\
 	13fcircle.gbr	\
 	15circle.gbr	\
