@@ -22,6 +22,8 @@
 
 #include "cursors/mouse.xbm"
 #include "cursors/mouse_mask.xbm"
+#include "cursors/crosshair.xbm"
+#include "cursors/crosshair_mask.xbm"
 #include "cursors/mouse_add.xbm"
 #include "cursors/mouse_add_mask.xbm"
 #include "cursors/mouse_subtract.xbm"
@@ -72,6 +74,11 @@ static BM_Cursor gimp_cursors[] =
     mouse_bits, mouse_mask_bits,
     mouse_width, mouse_height,
     mouse_x_hot, mouse_y_hot, NULL
+  },
+  {
+    crosshair_bits, crosshair_mask_bits,
+    crosshair_width, crosshair_height,
+    crosshair_x_hot, crosshair_y_hot, NULL
   },
   {
     mouse_add_bits, mouse_add_mask_bits,

@@ -1,3 +1,17 @@
+2000-06-06  Michael Natterer  <mitch@gimp.org>
+
+	* Makefile.am
+	* cursors/crosshair.xbm
+	* cursors/crosshair_mask.xbm: new files.
+
+	* app/cursorutil.[ch]
+	* app/gdisplay.[ch]
+	* app/gimprc.[ch]
+	* app/preferences_dialog.c: Started to add the new set of
+	consistent tool cursors. The crosshair one is the easy part
+	but I wanted to see a result :) The other two options in
+	the pref's cursor menu are still dummys.
+
 2000-06-05  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_core.[ch]: indentation, no real changes

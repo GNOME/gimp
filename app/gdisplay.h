@@ -179,7 +179,6 @@ void       gdisplay_transform_coords_f     (GDisplay *, gdouble, gdouble,
 void       gdisplay_untransform_coords_f   (GDisplay *, gdouble, gdouble, 
 					                gdouble *, gdouble *, gboolean);
 void       gdisplay_install_tool_cursor    (GDisplay *, GdkCursorType);
-void       gdisplay_install_gimp_tool_cursor (GDisplay *, gint);
 void       gdisplay_remove_tool_cursor     (GDisplay *);
 void       gdisplay_install_override_cursor(GDisplay *, GdkCursorType);
 void       gdisplay_remove_override_cursor (GDisplay *);

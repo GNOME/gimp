@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <string.h>
@@ -22,6 +23,7 @@
 #include "appenv.h"
 #include "colormaps.h"
 #include "context_manager.h"
+#include "cursorutil.h"
 #include "gdisplay_ops.h"
 #include "gdisplay.h"
 #include "gimprc.h"
@@ -127,6 +129,7 @@ static gint               old_use_help;
 static gint               old_nav_window_per_display;
 static gint               old_info_window_follows_mouse;
 static gint               old_help_browser;
+static gint               old_cursor_mode;
 static gint               old_default_threshold;
 
 /*  variables which can't be changed on the fly  */
@@ -673,6 +676,10 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "help-browser");
     }
+  if (cursor_mode != old_cursor_mode)
+    {
+      update = g_list_append (update, "cursor-mode");
+    }
   if (default_threshold != old_default_threshold)
     {
       update = g_list_append (update, "default-threshold");
@@ -852,6 +859,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   trust_dirty_flag         = old_trust_dirty_flag;
   use_help                 = old_use_help;
   help_browser             = old_help_browser;
+  cursor_mode              = old_cursor_mode;
   default_threshold        = old_default_threshold;
 
   /*  restore variables which need some magic  */
@@ -945,6 +953,7 @@ file_prefs_toggle_callback (GtkWidget *widget,
 	   data == &interpolation_type ||
            data == &trust_dirty_flag   ||
 	   data == &help_browser       ||
+	   data == &cursor_mode        ||
 	   data == &default_type)
     {
       *val = (gint) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1411,6 +1420,7 @@ file_pref_cmd_callback (GtkWidget *widget,
   old_trust_dirty_flag         = trust_dirty_flag;
   old_use_help                 = use_help;
   old_help_browser             = help_browser;
+  old_cursor_mode              = cursor_mode;
   old_default_threshold        = default_threshold;
 
   file_prefs_strset (&old_image_title_format, image_title_format);	
@@ -2057,6 +2067,28 @@ file_pref_cmd_callback (GtkWidget *widget,
 		      GTK_SIGNAL_FUNC (file_prefs_toggle_callback),
 		      &no_cursor_updating);
   gtk_widget_show (button);
+
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE, file_prefs_toggle_callback,
+			   &cursor_mode, (gpointer) cursor_mode,
+
+			   _("Tool Icon"),
+			   (gpointer) CURSOR_MODE_TOOL_ICON, NULL,
+			   _("Tool Icon with Crosshair"),
+			   (gpointer) CURSOR_MODE_TOOL_CROSSHAIR, NULL,
+			   _("Crosshair only"),
+			   (gpointer) CURSOR_MODE_CROSSHAIR, NULL,
+
+			   NULL);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Cursor Mode:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
 
 
   /* Interface / Tool Options */

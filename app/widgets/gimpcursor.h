@@ -28,12 +28,20 @@
 
 #include <gtk/gtk.h>
 
+enum
+{
+  CURSOR_MODE_TOOL_ICON,
+  CURSOR_MODE_TOOL_CROSSHAIR,
+  CURSOR_MODE_CROSSHAIR
+};
+
 /* FIXME: gimp_busy HACK */
 extern gboolean gimp_busy;
 
 typedef enum
 {
   GIMP_MOUSE_CURSOR = (GDK_LAST_CURSOR + 2),
+  GIMP_CROSSHAIR_CURSOR,
   GIMP_MOUSE_ADD_CURSOR,
   GIMP_MOUSE_SUBTRACT_CURSOR,
   GIMP_MOUSE_INTERSECT_CURSOR,

@@ -34,6 +34,7 @@
 
 #include "app_procs.h"
 #include "appenv.h"
+#include "cursorutil.h"
 #include "devices.h"
 #include "errors.h"
 #include "fileops.h"
@@ -82,6 +83,7 @@ typedef enum
   TT_XPARASITE,
   TT_XNAVPREVSIZE,
   TT_XHELPBROWSER,
+  TT_XCURSORMODE,
   TT_XCOMMENT
 } TokenType;
 
@@ -170,6 +172,7 @@ gboolean           use_help = TRUE;
 gboolean           nav_window_per_display = FALSE;
 gboolean           info_window_follows_mouse = TRUE;
 gint               help_browser = HELP_BROWSER_GIMP;
+gint               cursor_mode = CURSOR_MODE_TOOL_ICON;
 
 extern char * module_db_load_inhibit;
 
@@ -198,6 +201,7 @@ static gint parse_session_info       (gpointer val1p, gpointer val2p);
 static gint parse_unit_info          (gpointer val1p, gpointer val2p);
 static gint parse_parasite           (gpointer val1p, gpointer val2p);
 static gint parse_help_browser       (gpointer val1p, gpointer val2p);
+static gint parse_cursor_mode        (gpointer val1p, gpointer val2p);
 
 static gint parse_locale_def (PlugInDef      *plug_in_def);
 static gint parse_help_def   (PlugInDef      *plug_in_def);
@@ -222,6 +226,7 @@ static inline gchar * preview_size_to_str       (gpointer val1p, gpointer val2p)
 static inline gchar * nav_preview_size_to_str   (gpointer val1p, gpointer val2p);
 static inline gchar * units_to_str              (gpointer val1p, gpointer val2p);
 static inline gchar * help_browser_to_str       (gpointer val1p, gpointer val2p);
+static inline gchar * cursor_mode_to_str        (gpointer val1p, gpointer val2p);
 static inline gchar * comment_to_str            (gpointer val1p, gpointer val2p);
 
 static gchar *transform_path           (gchar *path,  gboolean destroy);
@@ -332,7 +337,8 @@ static ParseFunc funcs[] =
   { "nav-window-follows-auto",   TT_BOOLEAN,    NULL, &nav_window_per_display },
   { "info-window-follows-mouse", TT_BOOLEAN,    &info_window_follows_mouse, NULL },
   { "info-window-per-display",   TT_BOOLEAN,    NULL, &info_window_follows_mouse },
-  { "help-browser",              TT_XHELPBROWSER, &help_browser, NULL }
+  { "help-browser",              TT_XHELPBROWSER, &help_browser, NULL },
+  { "cursor-mode",               TT_XCURSORMODE, &cursor_mode, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 
@@ -876,6 +882,8 @@ parse_statement (void)
 	  return parse_parasite (funcs[i].val1p, funcs[i].val2p);
 	case TT_XHELPBROWSER:
 	  return parse_help_browser (funcs[i].val1p, funcs[i].val2p);
+	case TT_XCURSORMODE:
+	  return parse_cursor_mode (funcs[i].val1p, funcs[i].val2p);
 	case TT_XCOMMENT:
 	  return parse_string (funcs[i].val1p, funcs[i].val2p);
 	}
@@ -2496,6 +2504,32 @@ parse_help_browser (gpointer val1p,
 }
 
 static gint
+parse_cursor_mode (gpointer val1p,
+		   gpointer val2p)
+{
+  gint token;
+
+  token = peek_next_token ();
+  if (!token || token != TOKEN_SYMBOL)
+    return ERROR;
+  token = get_next_token ();
+
+  if (strcmp (token_sym, "tool-icon") == 0)
+    cursor_mode = CURSOR_MODE_TOOL_ICON;
+  else if (strcmp (token_sym, "tool-crosshair") == 0)
+    cursor_mode = CURSOR_MODE_TOOL_CROSSHAIR;
+  else if (strcmp (token_sym, "crosshair") == 0)
+    cursor_mode = CURSOR_MODE_CROSSHAIR;
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
+}
+
+static gint
 parse_unknown (gchar *token_sym)
 {
   gint token;
@@ -2592,6 +2626,8 @@ value_to_str (gchar *name)
 	  return units_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XHELPBROWSER:
 	  return help_browser_to_str (funcs[i].val1p, funcs[i].val2p);
+	case TT_XCURSORMODE:
+	  return cursor_mode_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XCOMMENT:
 	  return comment_to_str (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPLUGIN:
@@ -2766,6 +2802,18 @@ help_browser_to_str (gpointer val1p,
     return g_strdup ("netscape");
   else
     return g_strdup ("gimp");
+}
+
+static inline gchar *
+cursor_mode_to_str (gpointer val1p,
+		    gpointer val2p)
+{
+  if (cursor_mode == CURSOR_MODE_TOOL_ICON)
+    return g_strdup ("tool-icon");
+  else if (cursor_mode == CURSOR_MODE_TOOL_CROSSHAIR)
+    return g_strdup ("tool-crosshair");
+  else
+    return g_strdup ("crosshair");
 }
 
 static inline gchar *

@@ -1559,13 +1559,23 @@ void
 gdisplay_install_tool_cursor (GDisplay      *gdisp,
 			      GdkCursorType  cursor_type)
 {
+  switch (cursor_mode)
+    {
+    case CURSOR_MODE_TOOL_ICON:
+    case CURSOR_MODE_TOOL_CROSSHAIR:
+      break;
+
+    case CURSOR_MODE_CROSSHAIR:
+      cursor_type = GIMP_CROSSHAIR_CURSOR;
+      break;
+    }
+
   if (gdisp->current_cursor != (gint)cursor_type)
     {
       gdisp->current_cursor = (gint)cursor_type;
+
       if (!gdisp->using_override_cursor)
-	{
-	  change_win_cursor (gdisp->canvas->window, cursor_type);
-	}
+	change_win_cursor (gdisp->canvas->window, cursor_type);
     }
 }
 

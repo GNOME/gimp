@@ -24,6 +24,8 @@ EXTRA_SCRIPTS = gimpinstall
 EXTRA_DIST = \
 	cursors/mouse.xbm			\
 	cursors/mouse_mask.xbm			\
+	cursors/crosshair.xbm			\
+	cursors/crosshair_mask.xbm		\
 	cursors/mouse_add.xbm			\
         cursors/mouse_add_mask.xbm		\
 	cursors/mouse_subtract.xbm		\

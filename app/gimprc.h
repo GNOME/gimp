@@ -90,6 +90,7 @@ extern gboolean           use_help;
 extern gboolean           nav_window_per_display;
 extern gboolean           info_window_follows_mouse;
 extern gint               help_browser;
+extern gint               cursor_mode;
 
 /*  function prototypes  */
 gboolean    parse_buffers_init  (void); /* this has to be called before any file
