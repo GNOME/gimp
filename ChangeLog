@@ -1,5 +1,13 @@
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb (image_list): iterate gimp->images
+	directly rather than building a (leaked) temp GList using
+	gimp_container_foreach(). Removed gimlist_cb() utility function.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.h: export enum GimpRotationType to libgimp.
 
 	* tools/pdbgen/pdb/image.pdb: added gimp_image_rotate() PDB wrapper.

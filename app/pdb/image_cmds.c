@@ -192,16 +192,6 @@ register_image_procs (Gimp *gimp)
 #error "no FINITE() implementation available?!"
 #endif
 
-/* Yuup, this is somewhat unsmooth, to say the least */
-
-static void
-gimlist_cb (gpointer im,
-	    gpointer data)
-{
-  GSList **l = (GSList **) data;
-  *l = g_slist_prepend (*l, im);
-}
-
 static Argument *
 image_list_invoker (Gimp     *gimp,
                     Argument *args)
@@ -212,7 +202,7 @@ image_list_invoker (Gimp     *gimp,
   GList *list = NULL;
   gint i;
 
-  gimp_container_foreach (gimp->images, gimlist_cb, &list);
+  list = GIMP_LIST (gimp->images)->list;
   num_images = g_list_length (list);
 
   if (num_images)

@@ -227,7 +227,7 @@ HELP
     $help  .= ' in the GIMP.';
 
     for ($invoke{code}) {
-	s/list = .*$/gimp_container_foreach (gimp->images, gimlist_cb, &list);/m;
+	s/gimage->images/gimp->images/;
 	s/ITEM/IMAGE/;
 	s/gimp_item_get_ID/gimp_image_get_ID/;
     }
@@ -1448,16 +1448,6 @@ $extra{app}->{code} = <<'CODE';
 #else
 #error "no FINITE() implementation available?!"
 #endif
-
-/* Yuup, this is somewhat unsmooth, to say the least */
-
-static void
-gimlist_cb (gpointer im,
-	    gpointer data)
-{
-  GSList **l = (GSList **) data;
-  *l = g_slist_prepend (*l, im);
-}
 CODE
 
 unshift @procs, qw(image_list image_new image_duplicate image_delete
