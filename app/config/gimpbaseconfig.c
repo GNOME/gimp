@@ -112,7 +112,7 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                  1, 30, 1);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_TILE_CACHE_SIZE,
                                     "tile-cache-size",
-                                    0, G_MAXUINT, 1 << 25);
+                                    0, G_MAXULONG, 1 << 25);
 }
 
 static void
@@ -155,7 +155,7 @@ gimp_base_config_set_property (GObject      *object,
       base_config->num_processors = g_value_get_uint (value);
       break;
     case PROP_TILE_CACHE_SIZE:
-      base_config->tile_cache_size = g_value_get_uint (value);
+      base_config->tile_cache_size = g_value_get_ulong (value);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -188,7 +188,7 @@ gimp_base_config_get_property (GObject    *object,
       g_value_set_uint (value, base_config->num_processors);
       break;
     case PROP_TILE_CACHE_SIZE:
-      g_value_set_uint (value, base_config->tile_cache_size);
+      g_value_set_ulong (value, base_config->tile_cache_size);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);

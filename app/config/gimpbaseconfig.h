@@ -43,7 +43,7 @@ struct _GimpBaseConfig
   gchar    *swap_path;
   gboolean  stingy_memory_use;
   guint     num_processors;
-  guint     tile_cache_size;
+  gulong    tile_cache_size;
 };
 
 struct _GimpBaseConfigClass

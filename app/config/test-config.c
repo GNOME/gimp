@@ -33,6 +33,7 @@
 #include "core/core-enums.h"
 
 #include "gimpconfig.h"
+#include "gimpconfig-serialize.h"
 #include "gimprc.h"
 
 
@@ -173,34 +174,33 @@ main (int   argc,
   return EXIT_SUCCESS;
 }
 
-
-void
+static void
 notify_callback (GObject    *object,
                  GParamSpec *pspec)
 {
+  GString *str;
+  GValue   value = { 0, };
+
   g_return_if_fail (G_IS_OBJECT (object));
   g_return_if_fail (G_IS_PARAM_SPEC (pspec));
 
-  if (g_value_type_transformable (pspec->value_type, G_TYPE_STRING))
+  g_value_init (&value, pspec->value_type);
+  g_object_get_property (object, pspec->name, &value);
+
+  str = g_string_new (NULL);
+
+  if (gimp_config_serialize_value (&value, str, TRUE))
     {
-      GValue  src  = { 0, };
-      GValue  dest = { 0, };
-
-      g_value_init (&src,  pspec->value_type);
-      g_object_get_property (object, pspec->name, &src);
-
-      g_value_init (&dest, G_TYPE_STRING);      
-      g_value_transform (&src, &dest);
-
-      g_print ("  %s -> %s\n", pspec->name, g_value_get_string (&dest));
-
-      g_value_unset (&dest);
-      g_value_unset (&src);
+      g_print ("  %s -> %s\n", pspec->name, str->str);
     }
   else
     {
-      g_print ("  %s changed\n", pspec->name);
+      g_print ("  %s changed but we failed to serialize its value!\n", 
+               pspec->name);
     }
+
+  g_string_free (str, TRUE);
+  g_value_unset (&value);
 }
 
 static void

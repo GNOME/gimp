@@ -68,7 +68,7 @@ gimp_memsize_get_type (void)
     {
       static const GTypeInfo type_info = { 0, };
 
-      memsize_type = g_type_register_static (G_TYPE_UINT, "GimpMemsize", 
+      memsize_type = g_type_register_static (G_TYPE_ULONG, "GimpMemsize", 
                                              &type_info, 0);
 
       g_value_register_transform_func (memsize_type, G_TYPE_STRING,
@@ -135,19 +135,19 @@ static void
 memsize_to_string (const GValue *src_value,
                    GValue       *dest_value)
 {
-  guint  size;
-  gchar *str;
+  gulong  size;
+  gchar  *str;
 
-  size = g_value_get_uint (src_value);
+  size = g_value_get_ulong (src_value);
 
   if (size > (1 << 30) && size % (1 << 30) == 0)
-    str = g_strdup_printf ("%uG", size >> 30);
+    str = g_strdup_printf ("%luG", size >> 30);
   else if (size > (1 << 20) && size % (1 << 20) == 0)
-    str = g_strdup_printf ("%uM", size >> 20);
+    str = g_strdup_printf ("%luM", size >> 20);
   else if (size > (1 << 10) && size % (1 << 10) == 0)
-    str = g_strdup_printf ("%uk", size >> 10);
+    str = g_strdup_printf ("%luk", size >> 10);
   else
-    str = g_strdup_printf ("%u", size);
+    str = g_strdup_printf ("%lu", size);
 
   g_value_set_string_take_ownership (dest_value, str);
 };
@@ -158,7 +158,7 @@ string_to_memsize (const GValue *src_value,
 {
   const gchar *str;
   gchar       *end;
-  guint        size;
+  gulong       size;
 
   str = g_value_get_string (src_value);
 
@@ -194,7 +194,7 @@ string_to_memsize (const GValue *src_value,
       size <<= shift;
     }
   
-  g_value_set_uint (dest_value, size);
+  g_value_set_ulong (dest_value, size);
   
   return;
   

@@ -1,3 +1,15 @@
+2002-05-28  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-types.c: derive GIMP_TYPE_MEMSIZE from
+	G_TYPE_ULONG. Should probably be even G_TYPE_UINT64 but we use
+	strtol which can only handles unsigned long int.
+
+	* app/config/gimpbaseconfig.[ch]
+	* app/config/gimpguiconfig.[ch]: changed accordingly.
+
+	* app/config/test-config.c: use gimp_config_serialize_value() to
+	dump changed values to stdout.
+
 2002-05-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontext.c: override GObjectClass->constructor() and
