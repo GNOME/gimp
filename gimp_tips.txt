@@ -87,9 +87,10 @@ Click and drag on a ruler to place a Guide on an image.  All
 dragged selections will snap to the guides.  You can remove 
 guides by dragging them off the image with the Move tool.
 
-GIMP supports gzip compression on the fly. Just add .gz (or .bz2,
-if you habe bzip2 installed) to the filename and your image will be 
-saved compressed. Of course loading compressed images works too.
+The GIMP supports gzip compression on the fly.  Just add 
+'.gz' (or '.bz2', if you habe bzip2 installed) to the filename 
+and your image will be saved compressed.  Of course loading 
+compressed images works too.
 
 Pressing and holding the Shift key before making a selection allows
 you to add to the current selection instead of replacing it.  Using

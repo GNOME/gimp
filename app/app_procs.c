@@ -142,6 +142,7 @@ static int logo_height = 0;
 static int logo_area_width = 0;
 static int logo_area_height = 0;
 static int show_logo = SHOW_NEVER;
+static int max_label_length = MAXPATHLEN;
 
 static int
 splash_logo_load_size (GtkWidget *window)
@@ -276,6 +277,12 @@ splash_text_draw (GtkWidget *widget)
 		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
 		   (0.80 * logo_area_height),
 		   AUTHORS);
+  /*  
+   *  This is a hack: we try to compute a good guess for the maximum number
+   *  of charcters that will fit into the splash-screen using the given font 
+   */
+  max_label_length = (float)strlen (AUTHORS) * 
+        ( (float)logo_area_width / (float)gdk_string_width (font, AUTHORS) ); 
 }
 
 static void
@@ -396,6 +403,8 @@ app_init_update_status(char *label1val,
 		       char *label2val,
 		       float pct_progress)
 {
+  char *temp;
+
   if(no_interface == FALSE && no_splash == FALSE && win_initstatus)
     {
       GdkRectangle area = {0, 0, -1, -1};
@@ -407,6 +416,14 @@ app_init_update_status(char *label1val,
       if(label2val
 	 && strcmp(label2val, GTK_LABEL(label2)->label))
 	{
+	  while ( strlen (label2val) > max_label_length )
+	    {
+	      temp = strchr (label2val, '/');
+	      if (temp == NULL)  /* for sanity */
+		break;
+	      temp++;
+	      label2val = temp;
+	    }
 	  gtk_label_set(GTK_LABEL(label2), label2val);
 	}
       if(pct_progress >= 0

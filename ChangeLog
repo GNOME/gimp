@@ -1,3 +1,9 @@
+Sun Apr 19 14:16:44 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/app_procs.c: truncate labels in the splash screen if they
+	are too long to be displayed without resizing the window; this
+	should fix the problems with 100dpi fonts
+
 Sat Apr 18 22:19:10 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/gimprc.c: don't dereference NULL pointer when a gimprc
