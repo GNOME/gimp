@@ -31,6 +31,7 @@
 #include "config.h"
 
 #ifdef USE_MMX
+#if __GNUC__ >= 3
 
 #include <stdio.h>
 
@@ -2415,6 +2416,7 @@ xxxgimp_composite_valueonly_va8_va8_va8_sse(GimpCompositeContext *_op)
 }
 #endif
 
+#endif /* __GNUC__ > 3 */
 #endif  /* USE_SSE */
 
 void
@@ -2422,4 +2424,3 @@ gimp_composite_sse_init(void)
 {
 
 }
-

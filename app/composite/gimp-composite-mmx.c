@@ -31,6 +31,7 @@
 #include "config.h"
 
 #ifdef USE_MMX
+#if __GNUC__ >= 3
 
 #include <stdio.h>
 
@@ -2422,6 +2423,7 @@ xxxgimp_composite_valueonly_va8_va8_va8_mmx(GimpCompositeContext *_op)
 }
 #endif
 
+#endif /* __GNUC__ > 3 */
 #endif  /* USE_MMX */
 
 void

@@ -1,3 +1,19 @@
+2003-07-28  Helvetix Victorinox  <helvetix@gimp.org>
+
+	* app/composite/Makefile.am:
+	Made the explicit target "regenerate" to regenerate the source
+	files using the Python meta-generator.
+	
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-mmx.h
+	* app/composite/gimp-composite-sse.c
+	* app/composite/gimp-composite-sse.h:
+	Now bounded by the conditional "#if __GNUC__ >= 3".  This is a
+	coarse fix to enable app/composite to build on a wider variety of
+	platforms.  Ideally, this will be refined to encompass different
+	versions of the compiler(s) supporting inline assembly code.
+
+
 2003-07-28  Henrik Brix Andersen  <brix@gimp.org>
 
 	* app/core/core-enums.h (GimpGridType): renamed

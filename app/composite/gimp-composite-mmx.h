@@ -2,6 +2,9 @@
 #define gimp_composite_context_h
 
 extern void gimp_composite_mmx_init(void);
+
+#ifdef USE_MMX
+#if __GNUC__ >= 3
 /*
  *
  */
@@ -50,4 +53,6 @@ extern void gimp_composite_softlight_va8_va8_va8_mmx(GimpCompositeContext *);
 extern void gimp_composite_subtract_va8_va8_va8_mmx(GimpCompositeContext *);
 extern void gimp_composite_swap_va8_va8_va8_mmx(GimpCompositeContext *);
 extern void gimp_composite_valueonly_va8_va8_va8_mmx(GimpCompositeContext *);
+#endif /* __GNUC__ > 3 */
+#endif /* USE_MMX */
 #endif

@@ -35,12 +35,8 @@ libappcomposite_a_built_sources = \
 
 libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
 
-
-gimp-composite-dispatch.c: make-gimp-composite-dispatch.py
+regenerate:
 	$(srcdir)/make-gimp-composite-dispatch.py gimp-composite-generic.o
-
-gimp-composite-dispatch.h: gimp-composite-dispatch.c
-
 
 EXTRA_DIST = \
 	make-gimp-composite-dispatch.py	\
