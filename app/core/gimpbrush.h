@@ -30,7 +30,6 @@ struct _GimpBrush
   char *     filename;    /*  actual filename--brush's location on disk  */
   char *     name;        /*  brush's name--for brush selection dialog   */
   int        spacing;     /*  brush's spacing                            */
-  int        index;       /*  brush's index...                           */
   TempBuf *  mask;        /*  the actual mask...                         */
 };
 

@@ -32,7 +32,9 @@
 GimpBrushList *gimp_brush_list_new      (void);
 GtkType        gimp_brush_list_get_type (void);
 void           gimp_brush_list_add      (GimpBrushList *list,
-					  GimpBrush *brush);
+					 GimpBrush *brush);
+void           gimp_brush_list_remove   (GimpBrushList *list,
+					 GimpBrush *brush);
 GimpBrushP     gimp_brush_list_get_brush(GimpBrushList *list, char *name);
 int            gimp_brush_list_length   (GimpBrushList *list);
 
@@ -46,7 +48,8 @@ void       brushes_init             (int no_data);
 void       brushes_free             (void);
 void       brush_select_dialog_free (void);
 void       select_brush             (GimpBrushP);
-GimpBrushP get_brush_by_index       (int);
+GimpBrushP gimp_brush_list_get_brush_by_index (GimpBrushList *, int);
+int        gimp_brush_list_get_brush_index (GimpBrushList *, GimpBrush *);
 GimpBrushP get_active_brush         (void);
 
 /* TODO: {re}move this function */

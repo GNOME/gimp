@@ -1,4 +1,16 @@
-Sun Jul 19 15:26:11 PDT 1998  Jay Cox <jaycox@eartlink.net>
+Mon Jul 20 06:27:18 PDT 1998  Jay Cox <jaycox@earthlink.net>
+
+	* app/brush_select.c app/gimpbrush.c app/gimpbrush.h
+	* app/gimpbrushgenerated.c app/gimpbrushlist.c
+	* app/gimpbrushlist.h
+	Removed the index field from GimpBrush.  Tweaked the
+	brush renameing code.
+
+	* app/edit_selection.c
+	Look ahead in the event queue and process as many arrow
+	keys as we can at once.
+	
+Sun Jul 19 15:26:11 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/brush_select.c
 	recalc the scrollbar when a brush is added/removed.

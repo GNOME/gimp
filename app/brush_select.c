@@ -339,7 +339,8 @@ brush_select_new ()
     {
       int old_value = bsp->redraw;
       bsp->redraw = FALSE;
-      brush_select_select (bsp, active->index);
+      brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, 
+								active));
       bsp->redraw = old_value;
     }
 
@@ -791,7 +792,7 @@ brush_select_events (GtkWidget    *widget,
 	  index = row * NUM_BRUSH_COLUMNS + col;
 
 	  /*  Get the brush and display the popup brush preview  */
-	  if ((brush = get_brush_by_index (index)))
+	  if ((brush = gimp_brush_list_get_brush_by_index (brush_list, index)))
 	    {
 	      gdk_pointer_grab (bsp->preview->window, FALSE,
 				(GDK_POINTER_MOTION_HINT_MASK |
@@ -913,7 +914,8 @@ brush_select_refresh_callback (GtkWidget *w,
   /*  update the active selection  */
   active = get_active_brush ();
   if (active)
-    brush_select_select (bsp, active->index);
+    brush_select_select (bsp, gimp_brush_list_get_brush_index(brush_list, 
+							      active));
 
   /*  recalculate scrollbar extents  */
   preview_calc_scrollbar (bsp);
@@ -935,7 +937,7 @@ preview_scroll_update (GtkAdjustment *adjustment,
 {
   BrushSelectP bsp;
   GimpBrushP active;
-  int row, col;
+  int row, col, index;
 
   bsp = data;
 
@@ -947,8 +949,9 @@ preview_scroll_update (GtkAdjustment *adjustment,
       active = get_active_brush ();
       if (active)
 	{
-	  row = active->index / NUM_BRUSH_COLUMNS;
-	  col = active->index - row * NUM_BRUSH_COLUMNS;
+	  index = gimp_brush_list_get_brush_index(brush_list, active);
+	  row = index / NUM_BRUSH_COLUMNS;
+	  col = index - row * NUM_BRUSH_COLUMNS;
 	  brush_select_show_selected (bsp, row, col);
 	}
 

@@ -77,7 +77,6 @@ gimp_brush_init(GimpBrush *brush)
   brush->filename  = NULL;
   brush->name      = NULL;
   brush->spacing   = 20;
-  brush->index     = 0;
   brush->mask      = NULL;
 }
 
@@ -123,7 +122,9 @@ gimp_brush_get_name (GimpBrush *brush)
 void
 gimp_brush_set_name (GimpBrush *brush, char *name)
 {
-  g_return_val_if_fail(GIMP_IS_BRUSH(brush), NULL);
+  g_return_if_fail(GIMP_IS_BRUSH(brush));
+  if (strcmp(brush->name, name) == 0)
+    return;
   if (brush->name)
     g_free(brush->name);
   brush->name = g_strdup(name);

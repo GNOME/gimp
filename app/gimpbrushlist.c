@@ -63,7 +63,6 @@ static int          have_default_brush = 0;
 static void   create_default_brush   (void);
 static gint   brush_compare_func     (gconstpointer, gconstpointer);
 
-static void gimp_brush_list_recalc_indexes(GimpBrushList *brush_list);
 static void brush_load                    (char *filename);
 
 /* class functions */
@@ -145,8 +144,6 @@ brushes_init (int no_data)
     create_default_brush ();
   else
     datafiles_read_directories (brush_path,(datafile_loader_t)brush_load, 0);
-
-  gimp_brush_list_recalc_indexes(brush_list);
 }
 
 static void
@@ -236,8 +233,26 @@ create_default_brush ()
 
 
 
+int
+gimp_brush_list_get_brush_index (GimpBrushList *brush_list,
+				 GimpBrush *brush)
+{
+  int index = 0;
+  GSList *list;
+  /* fix me: make a gimp_list function that does this? */
+  list = GIMP_LIST(brush_list)->list;
+  while (list)
+  {
+    if (list->data == brush)
+      return index;
+    index++;
+    list = list->next;
+  }
+  return -1;
+}
+
 GimpBrush *
-get_brush_by_index (int index)
+gimp_brush_list_get_brush_by_index (GimpBrushList *brush_list, int index)
 {
   GSList *list;
   GimpBrush * brush = NULL;
@@ -249,24 +264,11 @@ get_brush_by_index (int index)
   return brush;
 }
 
-static void gimp_brush_do_indexes(GimpBrush *brush, int *index)
-{
-  brush->index = (*index)++;
-}
-
-static void 
-gimp_brush_list_recalc_indexes(GimpBrushList *brush_list)
-{
-  int index = 0;
-  gimp_list_foreach (GIMP_LIST(brush_list), (GFunc)gimp_brush_do_indexes,
-		     &index);
-}
-
 static void
 gimp_brush_list_uniquefy_brush_name(GimpBrushList *brush_list,
 				    GimpBrush *brush)
 {
-  GSList *list;
+  GSList *list, *listb;
   GimpBrush *brushb;
   int number = 1;
   char *newname;
@@ -300,8 +302,28 @@ gimp_brush_list_uniquefy_brush_name(GimpBrushList *brush_list,
 	ext = &newname[strlen(newname)];
       }
       sprintf(ext, "#%d", number+1);
+      listb = GIMP_LIST(brush_list)->list;
+      while (listb) /* make sure the new name is unique */
+      {
+	brushb = GIMP_BRUSH(listb->data);
+	if (brush != brushb && strcmp(newname,
+				      gimp_brush_get_name(brushb)) == 0)
+	{
+	  number++;
+	  sprintf(ext, "#%d", number+1);
+	  listb = GIMP_LIST(brush_list)->list;
+	}
+	listb = listb->next;
+      }
       gimp_brush_set_name(brush, newname);
       g_free(newname);
+      if (gimp_list_have(GIMP_LIST(brush_list), brush))
+      { /* ought to have a better way than this to resort the brush */
+	gtk_object_ref(GTK_OBJECT(brush));
+	gimp_brush_list_remove(brush_list, brush);
+	gimp_brush_list_add(brush_list, brush);
+	gtk_object_unref(GTK_OBJECT(brush));
+      }
       return;
     }
     list = list->next;
@@ -316,12 +338,11 @@ static void brush_renamed(GimpBrush *brush, GimpBrushList *brush_list)
 void
 gimp_brush_list_add (GimpBrushList *brush_list, GimpBrush * brush)
 {
+  gimp_brush_list_uniquefy_brush_name(brush_list, brush);
   gimp_list_add(GIMP_LIST(brush_list), brush);
   gtk_object_sink(GTK_OBJECT(brush));
   gtk_signal_connect(GTK_OBJECT(brush), "rename",
 		     (GtkSignalFunc)brush_renamed, brush_list);
-  gimp_brush_list_recalc_indexes(brush_list); /* ugh */
-  gimp_brush_list_uniquefy_brush_name(brush_list, brush);
 }
 
 void
@@ -329,7 +350,6 @@ gimp_brush_list_remove (GimpBrushList *brush_list, GimpBrush * brush)
 {
   gtk_signal_disconnect_by_data(GTK_OBJECT(brush), brush_list);
   gimp_list_remove(GIMP_LIST(brush_list), brush);
-  gimp_brush_list_recalc_indexes(brush_list);
 }
 
 int
@@ -379,7 +399,8 @@ select_brush (GimpBrush * brush)
 
   /*  Keep up appearances in the brush dialog  */
   if (brush_select_dialog)
-    brush_select_select (brush_select_dialog, brush->index);
+    brush_select_select (brush_select_dialog,
+			 gimp_brush_list_get_brush_index(brush_list, brush));
 
   device_status_update (current_device);
 }

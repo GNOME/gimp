@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+#include <stdarg.h>
 #include "gdk/gdkkeysyms.h"
 #include "appenv.h"
 #include "draw_core.h"
@@ -475,13 +476,87 @@ edit_selection_cursor_update (Tool           *tool,
   gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
 }
 
+static int
+process_event_queue_keys(GdkEventKey *kevent, ...)
+/* GdkKeyType, GdkModifierType, value ... 0 
+ * could move this function to a more central location so it can be used
+ * by other tools? */
+{
+#define FILTER_MAX_KEYS 50
+  va_list argp;
+  GdkEvent *event;
+  GList *list = NULL;
+  guint keys[FILTER_MAX_KEYS];
+  GdkModifierType modifiers[FILTER_MAX_KEYS];
+  int values[FILTER_MAX_KEYS];
+  int i = 0, nkeys = 0, value = 0, done = 0, discard_event;
+  GtkWidget *orig_widget;
+
+  va_start(argp, kevent);
+  while (nkeys <FILTER_MAX_KEYS && (keys[nkeys] = va_arg (argp, guint)) != 0)
+  {
+    modifiers[nkeys] = va_arg (argp, GdkModifierType);
+    values[nkeys]    = va_arg (argp, int);
+    nkeys++;
+  }
+  va_end(argp);
+
+  for (i = 0; i < nkeys; i++)
+    if (kevent->keyval == keys[i] && kevent->state == modifiers[i])
+      value += values[i];
+
+  orig_widget = gtk_get_event_widget((GdkEvent*)kevent);
+
+  while (gdk_events_pending() > 0 && !done)
+  {
+    discard_event = 0;
+    event = gdk_event_get();
+    if (orig_widget != gtk_get_event_widget(event))
+    {
+      done = 1;
+    }
+    else
+    {
+      if (event->any.type == GDK_KEY_PRESS)
+      {
+	for (i = 0; i < nkeys; i++)
+	  if (event->key.keyval == keys[i] &&
+	      event->key.state  == modifiers[i])
+	  {
+	    discard_event = 1;
+	    value += values[i];
+	  }
+	if (!discard_event)
+	  done = 1;
+      }
+	     /* should there be more types here? */
+      else if (event->any.type != GDK_KEY_RELEASE &&
+	       event->any.type != GDK_MOTION_NOTIFY &&
+	       event->any.type != GDK_EXPOSE)
+	done = 1;
+    }
+
+    if (!discard_event)
+      list = g_list_prepend(list, event);
+    else
+      gdk_event_free(event);
+  }
+  while (list) /* unget the unused events and free the list */
+  {
+    gdk_event_put((GdkEvent*)list->data);
+    gdk_event_free((GdkEvent*)list->data);
+    list = g_list_remove_link (list, list);
+  }
+  return value;
+#undef FILTER_MAX_KEYS
+}
 
 void
 edit_sel_arrow_keys_func (Tool        *tool,
 			  GdkEventKey *kevent,
 			  gpointer     gdisp_ptr)
 {
-  int inc_x, inc_y;
+  int inc_x, inc_y, mask_inc_x, mask_inc_y;
   GDisplay *gdisp;
   Layer *layer;
   Layer *floating_layer;
@@ -492,87 +567,94 @@ edit_sel_arrow_keys_func (Tool        *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
 
-  inc_x = inc_y = 0;
+  inc_x = process_event_queue_keys(kevent,
+			    GDK_Left,  0,              -1, 
+			    GDK_Left,  GDK_SHIFT_MASK, -1*ARROW_VELOCITY, 
+			    GDK_Right, 0,               1, 
+			    GDK_Right, GDK_SHIFT_MASK,  ARROW_VELOCITY, 
+			    0);
+  inc_y = process_event_queue_keys(kevent,
+			    GDK_Up,   0,              -1, 
+			    GDK_Up,   GDK_SHIFT_MASK, -1*ARROW_VELOCITY, 
+			    GDK_Down, 0,               1, 
+			    GDK_Down, GDK_SHIFT_MASK,   ARROW_VELOCITY, 
+			    0);
 
-  switch (kevent->keyval)
+  mask_inc_x = process_event_queue_keys(kevent,
+				 GDK_Left,  GDK_MOD1_MASK,              -1, 
+				 GDK_Left,  (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+				            -1*ARROW_VELOCITY, 
+				 GDK_Right, GDK_MOD1_MASK,               1, 
+				 GDK_Right, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+				            ARROW_VELOCITY, 
+				 0);
+  mask_inc_y = process_event_queue_keys(kevent,
+				 GDK_Up,   GDK_MOD1_MASK,              -1, 
+				 GDK_Up,   (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+				            -1*ARROW_VELOCITY, 
+				 GDK_Down, GDK_MOD1_MASK,               1, 
+				 GDK_Down, (GDK_MOD1_MASK | GDK_SHIFT_MASK),
+				            ARROW_VELOCITY, 
+				 0);
+  if (inc_x == 0 && inc_y == 0  &&  mask_inc_x == 0 && mask_inc_y == 0)
+    return;
+
+  undo_push_group_start (gdisp->gimage, MISC_UNDO);
+
+  if (mask_inc_x != 0 || mask_inc_y != 0)
+    gimage_mask_translate (gdisp->gimage, mask_inc_x, mask_inc_y);
+
+  if (inc_x != 0 || inc_y != 0)
+  {
+    layer = gimage_get_active_layer (gdisp->gimage);
+    if (layer_is_floating_sel (layer))
+      edit_type = FloatingSelTranslate;
+    else
+      edit_type = LayerTranslate;
+
+    switch (edit_type)
     {
-    case GDK_Up    : inc_y = -1; break;
-    case GDK_Left  : inc_x = -1; break;
-    case GDK_Right : inc_x =  1; break;
-    case GDK_Down  : inc_y =  1; break;
+     case MaskToLayerTranslate:
+       gimage_mask_float (gdisp->gimage,
+			  gimage_active_drawable (gdisp->gimage),
+			  inc_x, inc_y);
+       break;
+
+     case LayerTranslate:
+  
+       if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
+	 floating_sel_relax (floating_layer, TRUE);
+
+       /*  translate the layer--and any "linked" layers as well  */
+       layer_list = gdisp->gimage->layers;
+       while (layer_list)
+       {
+	 layer = (Layer *) layer_list->data;
+	 if (((layer) == gdisp->gimage->active_layer) || layer_linked (layer))
+	   layer_translate (layer, inc_x, inc_y);
+	 layer_list = g_slist_next (layer_list);
+       }
+
+       if (floating_layer)
+	 floating_sel_rigor (floating_layer, TRUE);
+
+       break;
+
+     case FloatingSelTranslate:
+
+       floating_sel_relax (layer, TRUE);
+
+       layer_translate (layer, inc_x, inc_y);
+
+       floating_sel_rigor (layer, TRUE);
+
+       break;
+
+     default:
+       /*  this won't occur  */
+       break;
     }
-
-  /*  If the shift key is down, move by an accelerated increment  */
-  if (kevent->state & GDK_SHIFT_MASK)
-    {
-      inc_y *= ARROW_VELOCITY;
-      inc_x *= ARROW_VELOCITY;
-    }
-
-  if (kevent->state & GDK_MOD1_MASK)
-    edit_type = MaskTranslate;
-  else
-    {
-      layer = gimage_get_active_layer (gdisp->gimage);
-      if (layer_is_floating_sel (layer))
-	edit_type = FloatingSelTranslate;
-      else
-	edit_type = LayerTranslate;
-    }
-
-  switch (edit_type)
-    {
-    case MaskTranslate:
-      /*  translate the selection  */
-      gimage_mask_translate (gdisp->gimage, inc_x, inc_y);
-      break;
-
-    case MaskToLayerTranslate:
-      gimage_mask_float (gdisp->gimage,
-			 gimage_active_drawable (gdisp->gimage),
-			 inc_x, inc_y);
-      break;
-
-    case LayerTranslate:
-      /*  Push a linked undo group  */
-      undo_push_group_start (gdisp->gimage, LINKED_LAYER_UNDO);
-
-      if ((floating_layer = gimage_floating_sel (gdisp->gimage)))
-	floating_sel_relax (floating_layer, TRUE);
-
-      /*  translate the layer--and any "linked" layers as well  */
-      layer_list = gdisp->gimage->layers;
-      while (layer_list)
-	{
-	  layer = (Layer *) layer_list->data;
-	  if (((layer) == gdisp->gimage->active_layer) || layer_linked (layer))
-	    layer_translate (layer, inc_x, inc_y);
-	  layer_list = g_slist_next (layer_list);
-	}
-
-      if (floating_layer)
-	floating_sel_rigor (floating_layer, TRUE);
-
-      /*  End the linked undo group  */
-      undo_push_group_end (gdisp->gimage);
-      break;
-
-    case FloatingSelTranslate:
-      undo_push_group_start (gdisp->gimage, LINKED_LAYER_UNDO);
-
-      floating_sel_relax (layer, TRUE);
-
-      layer_translate (layer, inc_x, inc_y);
-
-      floating_sel_rigor (layer, TRUE);
-
-      undo_push_group_end (gdisp->gimage);
-      break;
-
-    default:
-      /*  this won't occur  */
-      break;
-    }
-
+  }
+  undo_push_group_end (gdisp->gimage);
   gdisplays_flush ();
 }
