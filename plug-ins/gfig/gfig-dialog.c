@@ -397,6 +397,17 @@ gfig_dialog (void)
   gtk_box_pack_start (GTK_BOX (main_hbox), right_vbox, FALSE, FALSE, 0);
   gtk_widget_show (right_vbox);
 
+  /* Tool options notebook */
+  frame = gimp_frame_new ( _("Tool options"));
+  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  notebook = gtk_notebook_new ();
+  gtk_container_add (GTK_CONTAINER (frame), notebook);
+  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
+  gtk_widget_show (notebook);
+
   /* Style frame on right side */
   frame = gimp_frame_new ("Style");
   gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
@@ -482,17 +493,6 @@ gfig_dialog (void)
                     GINT_TO_POINTER (SELECT_TYPE_MENU_FILL));
   gtk_box_pack_start (GTK_BOX (vbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
-
-  /* Tool options notebook */
-  frame = gimp_frame_new ( _("Tool options"));
-  gtk_box_pack_start (GTK_BOX (right_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  notebook = gtk_notebook_new ();
-  gtk_container_add (GTK_CONTAINER (frame), notebook);
-  gtk_notebook_set_show_tabs (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_notebook_set_show_border (GTK_NOTEBOOK (notebook), FALSE);
-  gtk_widget_show (notebook);
 
   /* "show image" checkbutton at bottom of style frame */
   toggle = gtk_check_button_new_with_label (_("Show image"));
@@ -1671,8 +1671,8 @@ num_sides_widget (gchar *d_title,
 
   if (which_way)
     {
-      GtkWidget *combo = gimp_int_combo_box_new (_("Clockwise"),      0,
-                                                 _("Anti-Clockwise"), 1,
+      GtkWidget *combo = gimp_int_combo_box_new (_("Right"),      0,
+                                                 _("Left"), 1,
                                                  NULL);
 
       gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), *which_way);
