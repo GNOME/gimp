@@ -2104,14 +2104,12 @@ CML_save_to_file_callback (GtkWidget *widget,
       gimp_help_connect (filesel, gimp_standard_help_func,
 			 "filters/cml_explorer.html");
     }
+
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel),
 				     VALS.last_file_name);
 
-  if (GTK_WIDGET_VISIBLE (filesel))
-    gdk_window_raise (filesel->window);
-  else
-    gtk_widget_show (filesel);
+  gtk_window_present (GTK_WINDOW (filesel));
 }
 
 static void

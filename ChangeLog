@@ -1,7 +1,12 @@
+2003-06-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/CML_explorer.c (CML_save_to_file_callback): use
+	gtk_window_present() instead of reimplementing its functionality.
+
 2003-06-06  Maurits  <lpeek.mrijk@consunet.nl>
 
-	* plug-ins/script-fu/scripts/old-photo.scm: fix for #114496 (Script-Fu:
-	Old Photo can't be completely undone)
+	* plug-ins/script-fu/scripts/old-photo.scm: fix for #114496
+	(Script-Fu: Old Photo can't be completely undone)
 
 	* plug-ins/common/CML_explorer.c: fix for #83947 (CML explorer: 
 	multiple instantiations of Load Parameters dialog)
