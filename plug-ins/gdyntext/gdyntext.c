@@ -325,8 +325,8 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 	gint32 font_size_type;
 	gchar **text_xlfd, **text_lines;
 	gint32 *text_lines_w;
-	GParam *ret_vals;
-	GParamColor old_color, text_color;
+	GimpParam      *ret_vals;
+	GimpParamColor  old_color, text_color;
 
 	if (show_progress)
 		gimp_progress_init (_("GIMP Dynamic Text"));
@@ -434,6 +434,9 @@ void gdt_render_text_p(GdtVals *data, gboolean show_progress)
 				     &old_color.blue);
 	
 	/* set foreground color to the wanted text color */
+	text_color.red   = (data->color 0 0xff0000) >> 16;
+	text_color.green = (data->color & 0xff00) >> 8;
+	text_color.blue  = data->color & 0xff;
 	gimp_palette_set_foreground (text_color.red, 
 				     text_color.green, 
 				     text_color.blue);
