@@ -191,51 +191,50 @@ image_new_values_free (GimpImageNewValues *values)
 }
 
 static gint
-image_new_rotate_the_shield_harmonics (GDisplay *display)
+image_new_rotate_the_shield_harmonics (GtkWidget    *widget,
+				       GdkEvent     *eevent,
+				       gpointer      data)
 {
-  static GdkPixmap *pixmap = NULL;
-  static GdkBitmap *mask   = NULL;
-  static gint width  = 0;
-  static gint height = 0;
+  GdkPixmap *pixmap = NULL;
+  GdkBitmap *mask   = NULL;
+  gint width  = 0;
+  gint height = 0;
 
-  while (gtk_events_pending ())
-    gtk_main_iteration ();
+  gtk_signal_disconnect_by_func 
+    (GTK_OBJECT (widget), 
+     GTK_SIGNAL_FUNC (image_new_rotate_the_shield_harmonics), data);
 
-  if (pixmap == NULL)
-    {
-      GtkStyle *style;
+  pixmap =
+    gdk_pixmap_create_from_xpm_d (widget->window,
+				  &mask,
+				  NULL,
+				  wilber2_xpm);
 
-      style = gtk_widget_get_style (display->canvas);
+  gdk_window_get_size (pixmap, &width, &height);
 
-      pixmap =
-	gdk_pixmap_create_from_xpm_d (display->canvas->window,
-				      &mask,
-				      &style->bg[GTK_STATE_NORMAL],
-				      wilber2_xpm);
-
-      gdk_window_get_size (pixmap, &width, &height);
-    }
-
-  if (display->canvas->allocation.width  >= width &&
-      display->canvas->allocation.height >= height)
+  if (widget->allocation.width  >= width &&
+      widget->allocation.height >= height)
     {
       gint x, y;
 
-      x = (display->canvas->allocation.width  - width) / 2;
-      y = (display->canvas->allocation.height - height) / 2;
+      x = (widget->allocation.width  - width) / 2;
+      y = (widget->allocation.height - height) / 2;
 
-      gdk_gc_set_clip_mask (display->canvas->style->black_gc, mask);
-      gdk_gc_set_clip_origin (display->canvas->style->black_gc, x, y);
+      gdk_gc_set_clip_mask (widget->style->black_gc, mask);
+      gdk_gc_set_clip_origin (widget->style->black_gc, x, y);
 
-      gdk_draw_pixmap (display->canvas->window,
-		       display->canvas->style->black_gc,
+      gdk_draw_pixmap (widget->window,
+		       widget->style->black_gc,
 		       pixmap, 0, 0,
 		       x, y,
 		       width, height);
 
-      gdk_gc_set_clip_mask (display->canvas->style->black_gc, NULL);
-      gdk_gc_set_clip_origin (display->canvas->style->black_gc, 0, 0);
+      gdk_gc_set_clip_mask (widget->style->black_gc, NULL);
+      gdk_gc_set_clip_origin (widget->style->black_gc, 0, 0);
     }
+
+  gdk_pixmap_unref (pixmap);
+  gdk_bitmap_unref (mask);
 
   return FALSE;
 }
@@ -307,8 +306,10 @@ image_new_create_image (const GimpImageNewValues *values)
       gimp_context_set_display (gimp_context_get_user (), display);
 
       if (double_speed)
-	gtk_idle_add ((GtkFunction) image_new_rotate_the_shield_harmonics,
-		      display);
+	gtk_signal_connect_after
+	  (GTK_OBJECT (display->canvas), "expose_event",
+	   GTK_SIGNAL_FUNC (image_new_rotate_the_shield_harmonics),
+	   NULL);
     }
 }
 
