@@ -1,3 +1,11 @@
+2004-03-15  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c (gimp_text_tool_apply): look ahead in
+	the queue of pending changes and compress changes to the same
+	property. Fixed a couple of smaller issues.
+
+	* app/widgets/gimpwidgets-utils.c: corrected indentation.
+
 2004-03-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_new): set a fixed

@@ -84,8 +84,8 @@ static void      gimp_text_tool_connect        (GimpTextTool      *text_tool,
                                                 GimpText          *text);
 static void      gimp_text_tool_notify         (GimpTextTool      *text_tool,
                                                 GParamSpec        *pspec);
-static void      gimp_text_tool_apply          (GimpTextTool      *text_tool);
 static gboolean  gimp_text_tool_idle_apply     (GimpTextTool      *text_tool);
+static void      gimp_text_tool_apply          (GimpTextTool      *text_tool);
 
 static void      gimp_text_tool_create_vectors (GimpTextTool      *text_tool);
 static void      gimp_text_tool_create_layer   (GimpTextTool      *text_tool);
@@ -344,12 +344,10 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
       if (text_tool->editor)
         gtk_widget_destroy (text_tool->editor);
 
-      g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
-
       g_object_unref (text_tool->text);
       text_tool->text = NULL;
 
-      text_tool->layer = NULL;
+      g_object_set (G_OBJECT (text_tool->proxy), "text", NULL, NULL);
     }
 
   gimp_context_define_property (GIMP_CONTEXT (options),
@@ -392,10 +390,22 @@ gimp_text_tool_notify (GimpTextTool *text_tool,
     }
 }
 
+static gboolean
+gimp_text_tool_idle_apply (GimpTextTool *text_tool)
+{
+  text_tool->idle_id = 0;
+
+  gimp_text_tool_apply (text_tool);
+
+  return FALSE;
+}
+
 static void
 gimp_text_tool_apply (GimpTextTool *text_tool)
 {
-  GList *list;
+  GObject *src;
+  GObject *dest;
+  GList   *list;
 
   if (text_tool->idle_id)
     {
@@ -405,42 +415,34 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
   g_return_if_fail (text_tool->text != NULL);
 
-  g_printerr ("applying %d text change(s)\n",
-              g_list_length (text_tool->pending));
+  src  = G_OBJECT (text_tool->proxy);
+  dest = G_OBJECT (text_tool->text);
 
-  g_object_freeze_notify (G_OBJECT (text_tool->text));
+  g_object_freeze_notify (dest);
 
   for (list = text_tool->pending; list; list = list->next)
     {
       GParamSpec *pspec = list->data;
       GValue      value = { 0, };
 
+      /*  look ahead and compress changes  */
+      if (list->next && list->next->data == list->data)
+        continue;
+
       g_value_init (&value, pspec->value_type);
 
-      g_object_get_property (G_OBJECT (text_tool->proxy),
-                             pspec->name, &value);
-      g_object_set_property (G_OBJECT (text_tool->text),
-                             pspec->name, &value);
+      g_object_get_property (src,  pspec->name, &value);
+      g_object_set_property (dest, pspec->name, &value);
 
       g_value_unset (&value);
     }
 
-  g_object_thaw_notify (G_OBJECT (text_tool->text));
+  g_object_thaw_notify (dest);
 
   g_list_free (text_tool->pending);
   text_tool->pending = NULL;
 
   gimp_image_flush (gimp_item_get_image (GIMP_ITEM (text_tool->layer)));
-}
-
-static gboolean
-gimp_text_tool_idle_apply (GimpTextTool *text_tool)
-{
-  text_tool->idle_id = 0;
-
-  gimp_text_tool_apply (text_tool);
-
-  return FALSE;
 }
 
 static void
@@ -617,17 +619,17 @@ gimp_text_tool_set_layer (GimpTextTool *text_tool,
   else
     {
       gimp_text_tool_connect (text_tool, NULL);
+    }
 
-      if (text_tool->layer)
-        {
-          GimpImage *image;
 
-          image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
-          g_signal_handlers_disconnect_by_func (image,
-                                                gimp_text_tool_layer_changed,
-                                                text_tool);
+  if (! layer && text_tool->layer)
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (text_tool->layer));
 
-          text_tool->layer = NULL;
-        }
+      g_signal_handlers_disconnect_by_func (image,
+                                            gimp_text_tool_layer_changed,
+                                            text_tool);
+
+      text_tool->layer = NULL;
     }
 }

@@ -155,12 +155,12 @@ gimp_message_box (const gchar *stock_id,
   msg_box = g_new0 (MessageBox, 1);
 
   dialog = gimp_dialog_new (_("GIMP Message"), "gimp-message",
-                          NULL, 0,
-			  NULL, NULL,
+                            NULL, 0,
+                            NULL, NULL,
 
-			  GTK_STOCK_OK, GTK_RESPONSE_CLOSE,
+                            GTK_STOCK_OK, GTK_RESPONSE_CLOSE,
 
-			  NULL);
+                            NULL);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
