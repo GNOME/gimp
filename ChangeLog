@@ -1,3 +1,18 @@
+2004-10-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpeditor.c (gimp_editor_ensure_button_box): make
+	sure the button_box is always interted at the very bottom of the
+	editor.
+
+	* app/widgets/gimpviewabledialog.c: changed the "description"
+	property from CONSTRUCT_ONLY to CONSTRUCT.
+
+	* app/widgets/gimpcolormapeditor.c: show the index of the edited
+	color in the color dialog and use the correct icon. Replaced label
+	"Hex triplet" by "HTML notation" to be consistent with the color
+	dialog. Removed wrong 2 pixel border around the table below the
+	preview.
+
 2004-10-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/wmf.c: fixed non-interactive call with default

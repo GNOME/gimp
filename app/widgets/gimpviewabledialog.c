@@ -115,7 +115,7 @@ gimp_viewable_dialog_class_init (GimpViewableDialogClass *klass)
                                    g_param_spec_string ("description", NULL, NULL,
                                                         NULL,
                                                         G_PARAM_WRITABLE |
-                                                        G_PARAM_CONSTRUCT_ONLY));
+                                                        G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class, PROP_PARENT,
                                    g_param_spec_object ("parent", NULL, NULL,
                                                         GTK_TYPE_WIDGET,

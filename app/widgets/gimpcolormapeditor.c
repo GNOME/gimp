@@ -241,7 +241,6 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
 
   /*  Some helpful hints  */
   table = gtk_table_new (2, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
   gtk_box_pack_end (GTK_BOX (editor), table, FALSE, FALSE, 0);
@@ -262,7 +261,7 @@ gimp_colormap_editor_init (GimpColormapEditor *editor)
   gtk_entry_set_width_chars (GTK_ENTRY (editor->color_entry), 8);
   gtk_entry_set_max_length (GTK_ENTRY (editor->color_entry), 6);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("He_x triplet:"), 0.0, 0.5,
+                             _("HTML notation:"), 0.0, 0.5,
                              editor->color_entry, 1, TRUE);
 
   g_signal_connect (editor->color_entry, "activate",
@@ -874,13 +873,16 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
 
   if (gimage)
     {
-      GimpRGB color;
+      GimpRGB  color;
+      gchar   *desc;
 
       gimp_rgba_set_uchar (&color,
                            gimage->cmap[editor->col_index * 3],
                            gimage->cmap[editor->col_index * 3 + 1],
                            gimage->cmap[editor->col_index * 3 + 2],
                            OPAQUE_OPACITY);
+
+      desc = g_strdup_printf (_("Edit colormap entry #%d"), editor->col_index);
 
       if (! editor->color_dialog)
         {
@@ -891,8 +893,8 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
           editor->color_dialog =
             gimp_color_dialog_new (GIMP_VIEWABLE (gimage),
                                    _("Edit Colormap Entry"),
-                                   GIMP_STOCK_CONVERT_INDEXED,
-                                   _("Edit colormap entry"),
+                                   GIMP_STOCK_INDEXED_PALETTE,
+                                   desc,
                                    GTK_WIDGET (editor),
                                    toplevel_factory,
                                    "gimp-colormap-editor-color-dialog",
@@ -911,9 +913,12 @@ gimp_colormap_edit_clicked (GtkWidget          *widget,
         {
           gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
                                              GIMP_VIEWABLE (gimage));
+          g_object_set (editor->color_dialog, "description", desc, NULL);
           gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
                                        &color);
         }
+
+      g_free (desc);
 
       gtk_window_present (GTK_WINDOW (editor->color_dialog));
     }

@@ -725,6 +725,7 @@ gimp_editor_ensure_button_box (GimpEditor *editor)
     {
       editor->button_box = gtk_hbox_new (TRUE, button_spacing);
       gtk_box_pack_end (GTK_BOX (editor), editor->button_box, FALSE, FALSE, 0);
+      gtk_box_reorder_child (GTK_BOX (editor), editor->button_box, 0);
       gtk_widget_show (editor->button_box);
     }
 
