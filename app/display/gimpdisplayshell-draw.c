@@ -423,16 +423,16 @@ create_display_shell (GDisplay *gdisp,
 
   /*  Icon stuff  */
   gdisp->iconsize = 32;
-  gdisp->icon = gdk_pixmap_new (gdisp->shell->window,
-				gdisp->iconsize,
-				gdisp->iconsize,
-				-1);
-  gdisp->iconmask = gdk_pixmap_new (NULL,
-				    gdisp->iconsize,
-				    gdisp->iconsize,
-				    1);
-  gdisp->icon_needs_update = 1;
-  gdisp->icon_idle_id = gtk_idle_add (gdisplay_update_icon_invoker, gdisp);
+  gdisp->icon = NULL;
+  gdisp->iconmask = NULL;
+  gdisp->icon_needs_update = 0;
+  gdisp->icon_timeout_id = 0;
+  gdisp->icon_idle_id = 0;
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "invalidate_preview",
+                      GTK_SIGNAL_FUNC (gdisplay_update_icon_scheduler),
+		      gdisp);
+  gdisplay_update_icon_scheduler (gdisp->gimage, gdisp);
+
 
   /*  create the GtkPixmaps  */
   pixmap = gtk_pixmap_new (qmasksel_pixmap, qmasksel_mask);

@@ -125,6 +125,7 @@ struct _GDisplay
   GdkBitmap *iconmask;		  /*  Bitmap for the icon mask                */
   guint      iconsize;            /*  The size of the icon pixmap             */
   guint      icon_needs_update;   /*  Do we need to render a new icon?        */
+  gint       icon_timeout_id;     /*  The ID of the timeout-function          */
   gint       icon_idle_id;        /*  The ID of the idle-function             */
 
   GimpImage *gimage;	          /*  pointer to the associated gimage struct */
@@ -215,7 +216,9 @@ void       gdisplay_expose_full            (GDisplay *);
 void       gdisplay_flush                  (GDisplay *);
 void       gdisplay_flush_now              (GDisplay *);
 void       gdisplay_update_icon            (GDisplay *);
-gint       gdisplay_update_icon_invoker    (gpointer);
+gboolean   gdisplay_update_icon_timer      (gpointer);
+gboolean   gdisplay_update_icon_invoker    (gpointer);
+void       gdisplay_update_icon_scheduler  (GimpImage *, gpointer);
 void       gdisplay_draw_guides            (GDisplay *);
 void       gdisplay_draw_guide             (GDisplay *, Guide *, gboolean);
 Guide*     gdisplay_find_guide             (GDisplay *, gdouble, double);

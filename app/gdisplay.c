@@ -431,8 +431,11 @@ gdisplay_delete (GDisplay *gdisp)
   if (gdisp->nav_popup)
     nav_popup_free (gdisp->nav_popup);
 
-  if (gdisp->icon_idle_id > 0)
-    gtk_idle_remove (gdisp->icon_idle_id);
+  if (gdisp->icon_timeout_id)
+    g_source_remove (gdisp->icon_timeout_id);
+
+  if (gdisp->icon_idle_id)
+    g_source_remove (gdisp->icon_idle_id);
 
   gdk_pixmap_unref (gdisp->icon);
   gdk_pixmap_unref (gdisp->iconmask);
@@ -744,11 +747,6 @@ gdisplay_flush_whenever (GDisplay *gdisp,
   /* update the gdisplay's qmask buttons */
   qmask_buttons_update (gdisp);
 
-  /* Schedule the update for the window icon */
-  gdisp->icon_needs_update = 1;
-  if (gdisp->icon_idle_id == 0)
-    gdisp->icon_idle_id = gtk_idle_add (gdisplay_update_icon_invoker, gdisp);
-
   /*  ensure the consistency of the tear-off menus  */
   if (!now && gimp_context_get_display (gimp_context_get_user ()) == gdisp)
     gdisplay_set_menu_sensitivity (gdisp);
@@ -803,8 +801,22 @@ gdisplay_update_icon (GDisplay *gdisp)
 
   TempBuf *icondata;
   guchar  *data;
+  gint width, height;
+  gdouble factor;
 
-  gdk_rgb_init ();
+  if (!gdisp->icon)
+    {
+      gdk_rgb_init ();
+      gdisp->icon = gdk_pixmap_new (gdisp->shell->window,
+				    gdisp->iconsize,
+				    gdisp->iconsize,
+				    -1);
+      gdisp->iconmask = gdk_pixmap_new (NULL,
+					gdisp->iconsize,
+					gdisp->iconsize,
+					1);
+    }
+
   icongc = gdk_gc_new (gdisp->icon);
   iconmaskgc = gdk_gc_new (gdisp->iconmask);
   colormap = gdk_colormap_get_system ();   /* or gdk_rgb_get_cmap ()  */
@@ -823,9 +835,22 @@ gdisplay_update_icon (GDisplay *gdisp)
                                     &style->bg[GTK_STATE_NORMAL],
                                     wilber_xpm);
 
+  factor = ((gfloat) gimp_image_get_height (gdisp->gimage)) /
+                     gimp_image_get_width  (gdisp->gimage);
+
+  if (factor >= 1)
+    {
+      height = MAX (gdisp->iconsize, 1);
+      width  = MAX (((gfloat) gdisp->iconsize) / factor, 1);
+    }
+  else
+    {
+      height = MAX (((gfloat) gdisp->iconsize) * factor, 1);
+      width  = MAX (gdisp->iconsize, 1);
+    }
+
   icondata = gimp_viewable_get_new_preview (GIMP_VIEWABLE (gdisp->gimage),
-      					    gdisp->iconsize,
-					    gdisp->iconsize);
+      					    width, height);
   data = temp_buf_data (icondata);
 
   /* Set up an icon mask */
@@ -835,8 +860,8 @@ gdisplay_update_icon (GDisplay *gdisp)
 	  
   gdk_gc_set_foreground (iconmaskgc, &white);
   gdk_draw_rectangle (gdisp->iconmask, iconmaskgc, TRUE,
-		      (gdisp->iconsize - icondata->height) / 2,
 		      (gdisp->iconsize - icondata->width) / 2,
+		      (gdisp->iconsize - icondata->height) / 2,
 		      icondata->width, icondata->height);
 
   /* This is an ugly bad hack. There should be a clean way to get
@@ -853,8 +878,8 @@ gdisplay_update_icon (GDisplay *gdisp)
     {
       gdk_draw_gray_image (gdisp->icon,
 			   icongc,
-	  		   (gdisp->iconsize - icondata->height) / 2,
 	  		   (gdisp->iconsize - icondata->width) / 2,
+	  		   (gdisp->iconsize - icondata->height) / 2,
 			   icondata->width,
 			   icondata->height,
 			   GDK_RGB_DITHER_MAX,
@@ -867,8 +892,8 @@ gdisplay_update_icon (GDisplay *gdisp)
     {
       gdk_draw_rgb_image  (gdisp->icon,
 	  		   icongc,
-	  		   (gdisp->iconsize - icondata->height) / 2,
 	  		   (gdisp->iconsize - icondata->width) / 2,
+	  		   (gdisp->iconsize - icondata->height) / 2,
 			   icondata->width,
 			   icondata->height,
 			   GDK_RGB_DITHER_MAX,
@@ -881,8 +906,8 @@ gdisplay_update_icon (GDisplay *gdisp)
     {
       gdk_draw_rgb_32_image  (gdisp->icon,
 			      icongc,
-			      (gdisp->iconsize - icondata->height) / 2,
 			      (gdisp->iconsize - icondata->width) / 2,
+			      (gdisp->iconsize - icondata->height) / 2,
 			      icondata->width,
 			      icondata->height,
 			      GDK_RGB_DITHER_MAX,
@@ -893,7 +918,7 @@ gdisplay_update_icon (GDisplay *gdisp)
     }
   else
     {
-      g_printerr ("gdisplay: falling back to default\n");
+      g_printerr ("gdisplay_update_icon: falling back to default\n");
       gdk_window_set_icon (gdisp->shell->window,
 	  		   NULL, wilber_pixmap, wilber_mask);
     }
@@ -902,22 +927,70 @@ gdisplay_update_icon (GDisplay *gdisp)
 
   gdk_gc_unref (icongc);
   gdk_gc_unref (iconmaskgc);
-  
+
   temp_buf_free (icondata);
 }
 
-gint
+/* This function marks the icon as invalid and sets up the infrastructure
+ * to check every 8 seconds if an update is necessary.
+ */
+
+void
+gdisplay_update_icon_scheduler (GimpImage *gimage, gpointer data)
+{
+  GDisplay *gdisp;
+
+  gdisp = (GDisplay *) data;
+
+  if (gdisp == gdisplays_check_valid (gdisp, gimage))
+    {
+      gdisp->icon_needs_update = 1;
+      if (!gdisp->icon_timeout_id)
+        {
+	  gdisp->icon_timeout_id = g_timeout_add (7500,
+                                                  gdisplay_update_icon_timer,
+						  gdisp);
+	  if (!gdisp->icon_idle_id)
+	    gdisp->icon_idle_id = g_idle_add (gdisplay_update_icon_invoker,
+                                              gdisp);
+	}
+    }
+  else
+    {
+      g_printerr ("gdisplay_update_icon_scheduler called for invalid gdisplay\n");
+    }
+}
+
+/* this timer is necessary to check if the icon is invalid and if yes
+ * adds the update function to the idle loop
+ */
+gboolean
+gdisplay_update_icon_timer (gpointer data)
+{
+  GDisplay *gdisp;
+
+  /* we should check this for validity... */
+  gdisp = (GDisplay *) data;
+
+  if (gdisp->icon_needs_update == 1 && !gdisp->icon_idle_id)
+    gdisp->icon_idle_id = g_idle_add (gdisplay_update_icon_invoker, gdisp);
+
+  return TRUE;
+}
+
+/* Just a dumb invoker for gdisplay_update_icon ()  */
+gboolean
 gdisplay_update_icon_invoker (gpointer data)
 {
   GDisplay *gdisp;
 
-  /* need to test for valid gdisplay here */
+  /* we should check this for validity... */
   gdisp = (GDisplay *) data;
+
   gdisplay_update_icon (gdisp);
 
   gdisp->icon_idle_id = 0;
-  /* Our work is done, don't request further execution */
-  return 0;
+  return FALSE;
 }
 
 

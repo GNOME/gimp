@@ -1,3 +1,11 @@
+2001-02-22  Simon Budig  <simon@gimp.org>
+
+	* app/interface.c
+	* app/gdisplay.h
+	* app/gdisplay.c: Icons now update every 7.5 seconds in the
+	idle loop. Also the aspect ratio is correct now. Mitch promised
+	to hack a preferences option to disable this stuff...  :-)
+
 Thu Feb 22 18:23:10 GMT 2001  Adam D. Moss  <adam@gimp.org>
 
 	* tools/pdbgen/pdb/channel.pdb: Save a bunch of slow-witted
