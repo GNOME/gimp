@@ -692,7 +692,7 @@ void create_presetpage(GtkNotebook *notebook)
   gtk_signal_connect (GTK_OBJECT(tmpw), "clicked",
 		      GTK_SIGNAL_FUNC(presetsrefresh),
 		      NULL);
-  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Reread the directory of Presets"), NULL);
+  gtk_tooltips_set_tip(GTK_TOOLTIPS(tooltips), tmpw, _("Reread the folder of Presets"), NULL);
 
   presetdesclabel = tmpw = gtk_label_new( _("(Desc)"));
   gtk_box_pack_start(GTK_BOX(box2), tmpw, FALSE, FALSE,0);

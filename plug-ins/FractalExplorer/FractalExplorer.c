@@ -1176,7 +1176,7 @@ plug_in_parse_fractalexplorer_path (void)
     {
       GString *err =
         g_string_new (_("fractalexplorer-path misconfigured - "
-                        "the following directories were not found"));
+                        "the following folders were not found:"));
 
       for (list = fail_list; list; list = g_list_next (list))
         {
@@ -1312,7 +1312,7 @@ fractalexplorer_list_load_all (GList *plist)
 
       if (!dir)
         {
-          g_warning ("error reading fractalexplorer directory \"%s\"", path);
+          g_warning ("error reading fractalexplorer folder \"%s\"", path);
         }
       else
 	{
@@ -1403,7 +1403,7 @@ add_objects_list (void)
                     G_CALLBACK (fractalexplorer_rescan_list),
                     NULL);
   gimp_help_set_help_data (button,
-			   _("Select directory and rescan collection"), NULL); 
+			   _("Select folder and rescan collection"), NULL); 
   gtk_widget_show (button);
 
   button = gtk_button_new_with_label (_("Delete"));

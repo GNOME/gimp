@@ -293,7 +293,7 @@ script_fu_find_scripts (void)
 	  
 	  if (!dir)
             {
-              g_message ("Error reading script directory '%s'\n%s", 
+              g_message ("Error reading script folder '%s'\n%s", 
                          path, error->message);
               g_clear_error (&error);
             }
@@ -1373,7 +1373,7 @@ script_fu_interface (SFScript *script)
                                        FALSE, TRUE);
           else
             sf_interface->args_widgets[i] =
-              gimp_file_selection_new (_("Script-Fu Directory Selection"),
+              gimp_file_selection_new (_("Script-Fu Folder Selection"),
                                        script->arg_values[i].sfa_file.filename,
                                        TRUE, TRUE);
             

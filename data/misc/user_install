@@ -7,7 +7,6 @@
 #  2) Copy system gimprc file to ~/.gimp-1.2
 #  3) Create brushes, gradients, palettes, patterns, plug-ins subdirs
 #  4) Create the tmp subdirectory for disk-swapping undo buffers
-#  5) Copy the palette files in system palette directory
 #
 
 echo "mkdir $2"
@@ -30,8 +29,6 @@ echo "mkdir $2/gradients"
 mkdir $2/gradients
 echo "mkdir $2/palettes"
 mkdir $2/palettes
-echo "cp $1/palettes/* $2/palettes"
-cp $1/palettes/* $2/palettes
 echo "mkdir $2/patterns"
 mkdir $2/patterns
 echo "mkdir $2/plug-ins"

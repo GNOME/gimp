@@ -349,7 +349,7 @@ gimp_file_selection_browse_callback (GtkWidget *widget,
 	{
           gfs->file_selection = 
             gtk_file_selection_new (gfs->title ? 
-                                    gfs->title : _("Select Directory"));
+                                    gfs->title : _("Select Folder"));
 
 	  /*  hiding these widgets uses internal gtk+ knowledge, but it's
 	   *  easier than creating my own directory browser -- michael

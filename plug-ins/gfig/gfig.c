@@ -840,7 +840,7 @@ plug_in_parse_gfig_path (void)
     {
       GString *err =
 	g_string_new (_("gfig-path misconfigured - "
-			"the following directories were not found"));
+			"the following folders were not found:"));
 
       for (list = fail_list; list; list = g_list_next (list))
 	{
@@ -1026,7 +1026,7 @@ gfig_list_load_all (GList *plist)
       dir = opendir (path);
 
       if (!dir)
-	g_warning ("Error reading GFig directory \"%s\"", path);
+	g_warning ("Error reading GFig folder \"%s\"", path);
       else
 	{
 	  while ((dir_ent = readdir (dir)))
@@ -1542,7 +1542,7 @@ file_selection_ok (GtkWidget        *w,
   
   if (!err && S_ISDIR (filestat.st_mode))
     {
-      g_message ("Save: Can't save to a directory");
+      g_message ("Save: Can't save to a folder.");
       return;
     }
   
@@ -3553,7 +3553,7 @@ add_objects_list (void)
 		      GTK_SIGNAL_FUNC (rescan_button_callback),
 		      NULL);
   gimp_help_set_help_data (button,
-			_("Select directory and rescan Gfig object "
+			_("Select folder and rescan Gfig object "
 			  "collection"), NULL); 
   gtk_table_attach (GTK_TABLE (table), button, 2, 3, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);

@@ -1630,7 +1630,7 @@ file_selection_ok (GtkWidget        *w,
   if (!err && S_ISDIR (filestat.st_mode))
     {
       /* Can't save to directory */
-      g_message (_("Save: Can't save to a directory"));
+      g_message (_("Save: Can't save to a folder."));
       return;
     }
 

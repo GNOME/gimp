@@ -856,7 +856,7 @@ plugin_query (void)
     " This plug-in produces a lense flare effect using custom gradients."
     " In interactive call, the user can edit his/her own favorite lense flare"
     " (GFlare) and render it. Edited gflare is saved automatically to"
-    " the directory in gflare-path, if it is defined in gimprc."
+    " the folder in gflare-path, if it is defined in gimprc."
     " In non-interactive call, the user can only render one of GFlare"
     " which has been stored in gflare-path already.";
 
@@ -1053,7 +1053,7 @@ plug_in_parse_gflare_path (void)
     {
       GString *err =
         g_string_new (_("gflare-path misconfigured - "
-                        "the following directories were not found"));
+                        "the following folders were not found:"));
 
       for (list = fail_list; list; list = g_list_next (list))
         {
@@ -1603,8 +1603,8 @@ gflare_save (GFlare *gflare)
 	      g_message (_("GFlare `%s' is not saved.\n"
 			   "If you add a new entry in %s, like:\n"
 			   "(gflare-path \"%s\")\n"
-			   "and make a directory %s,\n"
-			   "then you can save your own GFlare's into that directory."), 
+			   "and make a folder %s,\n"
+			   "then you can save your own GFlare's into that folder."), 
 			 gflare->name, gimprc, gflare_path, dir);
 	      g_free (gimprc);
 	      g_free (gflare_path);
@@ -1830,7 +1830,7 @@ gflares_list_load_all (void)
       dir = opendir (path);
 
       if (!dir)
-	g_warning(_("error reading GFlare directory \"%s\""), path);
+	g_warning(_("error reading GFlare folder \"%s\""), path);
       else
 	{
 	  while ((dir_ent = readdir (dir)))

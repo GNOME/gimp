@@ -172,118 +172,104 @@ tree_items[] =
   },
   {
     TRUE, "brushes",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined brushes.  The default gimprc file\n"
-       "checks this subdirectory in addition to the system-\n"
+    N_("This folder is used to store user defined brushes.\n"
+       "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP brushes installation when searching for\n"
        "brushes.")
   },
   {
     TRUE, "generated_brushes",
-    N_("This is a subdirectory which is used to store brushes\n"
-       "that are created with the brush editor.  The default\n"
-       "gimprc file checks this subdirectory when searching\n"
-       "for generated brushes.")
+    N_("This folder is used to store brushes that are created\n"
+       "created with the brush editor.")
   },
   {
     TRUE, "gradients",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined gradients.  The default gimprc file\n"
-       "checks this subdirectory in addition to the system-\n"
-       "wide GIMP gradients installation when searching\n"
-       "for gradients.")
+    N_("This folder is used to store user defined gradients\n"
+       "The GIMP checks this folder in addition to the system-\n"
+       "wide GIMP gradients installation when searching for\n"
+       "gradients.")
   },
   {
     TRUE, "palettes",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined palettes.  The default gimprc file\n"
-       "checks only this subdirectory (not the system-wide\n"
-       "installation) when searching for palettes.  During\n"
-       "installation, the system palettes will be copied\n"
-       "here.  This is done to allow modifications made to\n"
-       "palettes during GIMP execution to persist across\n"
-       "sessions.")
+    N_("This folder is used to store user defined palettes.\n"
+       "The GIMP checks this folder in addition to the system-\n"
+       "wide GIMP palettes installation when searching for\n"
+       "palettes.")
   },
   {
     TRUE, "patterns",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined patterns.  The default gimprc file\n"
-       "checks this subdirectory in addition to the system-\n"
+    N_("This folder is used to store user defined patterns.\n"
+       "The GIMP checks this folder in addition to the system-\n"
        "wide GIMP patterns installation when searching for\n"
        "patterns.")
   },
   {
     TRUE, "plug-ins",
-    N_("This is a subdirectory which can be used to store\n"
-       "user created, temporary, or otherwise non-system-\n"
-       "supported plug-ins.  The default gimprc file checks\n"
-       "this subdirectory in addition to the systemwide\n"
-       "GIMP plug-in directories when searching for plug-ins.")
+    N_("This folder is used to store user created, temporary,\n"
+       "or otherwise non-system-supported plug-ins.  The GIMP\n"
+       "checks this folder in addition to the system-wide\n"
+       "GIMP plug-in folder when searching for plug-ins.")
   },
   {
     TRUE, "modules",
-    N_("This subdirectory can be used to store user created,\n"
-       "temporary, or otherwise non-system-supported DLL\n"
-       "modules.  The default gimprc file checks this subdirectory\n"
-       "in addition to the system-wide GIMP module directory\n"
-       "when searching for modules to load when initializing.")
+    N_("This folder is used to store user created, temporary,\n"
+       "or otherwise non-system-supported DLL modules.  The\n"
+       "GIMP checks this folder in addition to the system-wide\n"
+       "GIMP module folder when searching for modules to load\n"
+       "during initialization.")
   },
   {
     TRUE, "scripts",
-    N_("This subdirectory is used by the GIMP to store user\n"
-       "created and installed scripts.  The default gimprc file\n"
-       "checks this subdirectory in addition to the systemwide\n"
-       "GIMP scripts subdirectory when searching for scripts")
+    N_("This folder is used to store user created and installed\n"
+       "scripts.  The GIMP checks this folder in addition to\n"
+       "the systemwide GIMP scripts folder when searching for\n"
+       "scripts.")
   },
   {
     TRUE, "tmp",
-    N_("This subdirectory is used by the GIMP to temporarily\n"
-       "store undo buffers to reduce memory usage.  If GIMP is\n"
-       "unceremoniously killed, files may persist in this directory\n"
-       "of the form: gimp<#>.<#>.  These files are useless across\n"
-       "GIMP sessions and can be destroyed with impunity.")
+    N_("This folder is used to temporarily store undo buffers\n"
+       "to reduce memory usage.  If The GIMP is unceremoniously\n"
+       "killed, files of the form: gimp<#>.<#> may persist in\n"
+       "this folder.  These files are useless across GIMP\n"
+       "sessions and can be destroyed with impunity.")
   },
   {
     TRUE, "curves",
-    N_("This subdirectory is used to store parameter files for\n"
-       "the Curves tool.")
+    N_("This folder is used to store parameter files for the\n"
+       "Curves tool.")
   },
   {
     TRUE, "levels",
-    N_("This subdirectory is used to store parameter files for\n"
-       "the Levels tool.")
+    N_("This folder is used to store parameter files for the\n"
+       "Levels tool.")
   },
   {
     TRUE, "fractalexplorer",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined fractals to be used by the FractalExplorer\n"
-       "plug-in.  The default gimprc file checks this subdirectory\n"
-       "in addition to the systemwide GIMP FractalExplorer\n" 
-       "installation when searching for fractals.")
+    N_("This is folder used to store user defined fractals to\n"
+       "be used by the FractalExplorer plug-in.  The GIMP\n"
+       "checks this folder in addition to the systemwide\n"
+       "FractalExplorer installation when searching for fractals.")
   },  
   {
     TRUE, "gfig",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined figures to be used by the GFig plug-in.\n"
-       "The default gimprc file checks this subdirectory in\n"
-       "addition to the systemwide GIMP GFig installation\n"
+    N_("This folder is used to store user defined figures to\n"
+       "be used by the GFig plug-in.  The GIMP checks this\n"
+       "folder in addition to the systemwide GFig installation\n"
        "when searching for gfig figures.")
   },
   {
     TRUE, "gflare",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined gflares to be used by the GFlare plug-in.\n"
-       "The default gimprc file checks this subdirectory in\n"
-       "addition to the systemwide GIMP GFlares installation\n"
-       "when searching for gflares.")
+    N_("This folder is used to store user defined gflares to\n"
+       "be used by the GFlare plug-in.  The GIMP checks this\n"
+       "folder in addition to the systemwide GFlares\n"
+       "installation when searching for gflares.")
   },
   {
     TRUE, "gimpressionist",
-    N_("This is a subdirectory which can be used to store\n"
-       "user defined data to be used by the Gimpressionist\n"
-       "plug-in.  The default gimprc file checks this subdirectory\n"
-       "in addition to the systemwide GIMP Gimpressionist\n"
-       "installation when searching for data.")    
+    N_("This folder is used to store user defined data to be\n"
+       "used by the Gimpressionist plug-in.  The GIMP checks\n"
+       "this folder in addition to the systemwide Gimpressionist\n"
+       "installation when searching for data.") 
   }  
 };
 static gint num_tree_items = sizeof (tree_items) / sizeof (tree_items[0]);
@@ -347,7 +333,7 @@ user_install_continue_callback (GtkWidget *widget,
       gtk_widget_set_sensitive (cancel_button, FALSE);
       gtk_label_set_text (GTK_LABEL (footer_label),
 			  _("Please wait while your personal\n"
-			    "GIMP directory is being created..."));
+			    "GIMP folder is being created..."));
 
       while (gtk_events_pending ())
 	gtk_main_iteration ();
@@ -699,22 +685,25 @@ user_install_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (page), sep, FALSE, FALSE, 2);
   gtk_widget_show (sep);
 
-  add_label (GTK_BOX (page),
-	     _("This program is free software; you can redistribute it and/or modify\n"
-	       "it under the terms of the GNU General Public License as published by\n"
-	       "the Free Software Foundation; either version 2 of the License, or\n"
-	       "(at your option) any later version."));
-  add_label (GTK_BOX (page),
-	     _("This program is distributed in the hope that it will be useful,\n"
-	       "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-	       "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
-	       "See the GNU General Public License for more details."));
-  add_label (GTK_BOX (page),
-	     _("You should have received a copy of the GNU General Public License\n"
-	       "along with this program; if not, write to the Free Software\n"
-	       "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
-	       "MA 02111-1307, USA."));
-
+  add_label 
+    (GTK_BOX (page),
+     _("This program is free software; you can redistribute it and/or modify\n"
+       "it under the terms of the GNU General Public License as published by\n"
+       "the Free Software Foundation; either version 2 of the License, or\n"
+       "(at your option) any later version."));
+  add_label
+    (GTK_BOX (page),
+     _("This program is distributed in the hope that it will be useful,\n"
+       "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+       "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n"
+       "See the GNU General Public License for more details."));
+  add_label
+    (GTK_BOX (page),
+     _("You should have received a copy of the GNU General Public License\n"
+       "along with this program; if not, write to the Free Software\n"
+       "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
+       "MA 02111-1307, USA."));
+  
   /*  Page 2  */
   {
     GtkWidget    *hbox;
@@ -736,9 +725,9 @@ user_install_dialog_create (Gimp *gimp)
     gchar *node[1];
     
     page = user_install_notebook_append_page (GTK_NOTEBOOK (notebook),
-					      _("Personal GIMP Directory"),
+					      _("Personal GIMP Folder"),
 					      _("Click \"Continue\" to create "
-						"your personal GIMP directory."));
+						"your personal GIMP folder."));
 
     hbox = gtk_hbox_new (FALSE, 8);
     gtk_box_pack_start (GTK_BOX (page), hbox, FALSE, FALSE, 0);
@@ -756,14 +745,14 @@ user_install_dialog_create (Gimp *gimp)
     gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
     gtk_widget_show (vbox);
 
-    str = g_strdup_printf (_("For a proper GIMP installation, a subdirectory named\n"
+    str = g_strdup_printf (_("For a proper GIMP installation, a folder named\n"
 			     "%s needs to be created."), gimp_directory ());
     add_label (GTK_BOX (vbox), str);
     g_free (str);
 
     add_label (GTK_BOX (vbox),
-	       _("This subdirectory will contain a number of important files.\n"
-		 "Click on one of the files or subdirectories in the tree\n"
+	       _("This folder will contain a number of important files.\n"
+		 "Click on one of the files or folders in the tree\n"
 		 "to get more information about the selected item."));
 
     notebook2 = gtk_notebook_new ();
@@ -804,7 +793,8 @@ user_install_dialog_create (Gimp *gimp)
 
 	if (tree_items[i].directory)
 	  {
-	    sub_node = gtk_ctree_insert_node (GTK_CTREE (ctree), main_node, NULL,
+	    sub_node = gtk_ctree_insert_node (GTK_CTREE (ctree), 
+                                              main_node, NULL,
 					      node, 4,
 					      folder_pixmap, folder_mask,
 					      folder_pixmap, folder_mask,
@@ -812,7 +802,8 @@ user_install_dialog_create (Gimp *gimp)
 	  }
 	else
 	  {
-	    sub_node = gtk_ctree_insert_node (GTK_CTREE (ctree), main_node, NULL,
+	    sub_node = gtk_ctree_insert_node (GTK_CTREE (ctree), 
+                                              main_node, NULL,
 					      node, 4,
 					      file_pixmap, file_mask,
 					      file_pixmap, file_mask,
@@ -1154,7 +1145,7 @@ user_install_tuning (void)
   gtk_box_pack_end (GTK_BOX (hbox), swap_path_filesel, FALSE, FALSE, 0);
   gtk_widget_show (swap_path_filesel);
 
-  label = gtk_label_new (_("Swap Directory:"));
+  label = gtk_label_new (_("Swap Folder:"));
   PAGE_STYLE (label);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);

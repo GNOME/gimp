@@ -1,5 +1,24 @@
 2002-02-08  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/tips-dialog.c
+	* app/gui/user-install-dialog.c
+	* libgimpwidgets/gimpfileselection.c
+	* plug-ins/FractalExplorer/Dialogs.c
+	* plug-ins/FractalExplorer/FractalExplorer.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/gimpressionist/presets.c
+	* plug-ins/script-fu/script-fu-scripts.c: use the term Folder instead
+	of Directory (bug #56194).
+
+	* etc/gimprc.in
+	* etc/gimprc.win32: added global palettes folder to the palettes
+	search path.
+
+	* data/misc/user_install: don't copy palettes into users ~/.gimp-1.3.
+	
+2002-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimprc.[ch]: added gimp_rc_duplicate() and started to
 	add inline documentation.
 	
@@ -21,7 +40,6 @@
         * app/tools/tools.c: added some code to test the GimpToolModule code.
 
         * app/tools/Makefile.am: added gimptoolmodule to the build.
-
 
 2002-02-07  Nathan Summers  <rock@gimp.org>
 
