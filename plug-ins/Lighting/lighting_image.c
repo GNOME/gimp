@@ -2,7 +2,7 @@
 /* GIMP image manipulation routines. */
 /*************************************/
 
-#include <gtk/gtk.h>
+#include "config.h"
 
 #include <libgimp/gimp.h>
 
@@ -70,7 +70,9 @@ peek (gint x,
         color.a = 1.0;
     }
   else
-    color.a = 1.0;
+    {
+      color.a = 1.0;
+    }
 
   return color;
 }
@@ -189,20 +191,20 @@ void
 pos_to_int (gdouble  x,
 	    gdouble  y,
 	    gint    *scr_x,
-	    gint *scr_y)
+	    gint    *scr_y)
 {
   if (width >= height)
     {
       y -= 0.5 * (1.0 - (gdouble) height / (gdouble) width);
-      *scr_x = (gint) ((x * (gdouble) width) + 0.5);
-      *scr_y = (gint) ((y * (gdouble) width) + 0.5);
+      *scr_x = RINT ((x * (gdouble) width));
+      *scr_y = RINT ((y * (gdouble) width));
     }
   else
     {
       x -= 0.5 * (1.0 - (gdouble) width / (gdouble) height);
 
-      *scr_x = (gint) ((x * (gdouble) height) + 0.5);
-      *scr_y = (gint) ((y  *(gdouble) height) + 0.5);
+      *scr_x = RINT ((x * (gdouble) height));
+      *scr_y = RINT ((y  *(gdouble) height));
     }
 }
 
@@ -241,8 +243,8 @@ get_image_color (gdouble  u,
   gint   x1, y1, x2, y2;
   GckRGB p[4];
  
-  x1 = (gint) (u + 0.5);
-  y1 = (gint) (v + 0.5);
+  x1 = RINT (u);
+  y1 = RINT (v);
 
   if (check_bounds (x1, y1) == FALSE)
     {
@@ -277,8 +279,8 @@ get_map_value (GimpPixelRgn *region,
   gint    x1, y1, x2, y2;
   gdouble p[4];
  
-  x1 = (gint) (u + 0.5);
-  y1 = (gint) (v + 0.5);
+  x1 = RINT (u);
+  y1 = RINT (v);
 
   x2 = (x1 + 1);
   y2 = (y1 + 1);
@@ -340,13 +342,13 @@ image_setup (GimpDrawable *drawable,
   /* Get some useful info on the input drawable */
   /* ========================================== */
 
-  input_drawable = drawable;
+  input_drawable  = drawable;
   output_drawable = drawable;
 
   gimp_drawable_mask_bounds (drawable->id,
 			     &border_x1, &border_y1, &border_x2, &border_y2);
 
-  width = input_drawable->width;
+  width  = input_drawable->width;
   height = input_drawable->height;
 
   gimp_pixel_rgn_init (&source_region, input_drawable,

@@ -20,7 +20,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <gtk/gtk.h>
+#include "config.h"
 
 #include <libgimp/gimp.h>
 
@@ -33,7 +33,6 @@
 #include "lighting_shade.h"
 #include "lighting_ui.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 LightingValues mapvals;
@@ -106,9 +105,9 @@ check_drawables (void)
     {
       if (!gimp_drawable_is_gray (mapvals.bumpmap_id) || 
 	  (gimp_drawable_width (mapvals.drawable_id) !=
-	   gimp_drawable_width(mapvals.bumpmap_id)) ||
+	   gimp_drawable_width (mapvals.bumpmap_id)) ||
 	  (gimp_drawable_height (mapvals.drawable_id) !=
-	   gimp_drawable_height(mapvals.bumpmap_id)))
+	   gimp_drawable_height (mapvals.bumpmap_id)))
         {
           mapvals.bump_mapped = FALSE;
           mapvals.bumpmap_id  = -1;
@@ -158,8 +157,6 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_lighting",
 			  "Apply various lighting effects to an image",
 			  "No help yet",
@@ -174,26 +171,26 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   run_mode = param[0].data.d_int32;
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      INIT_I18N_UI();
+      INIT_I18N_UI ();
     }
   else
     {
-      INIT_I18N();
+      INIT_I18N ();
     }
 
   *nreturn_vals = 1;
@@ -214,7 +211,7 @@ run (gchar   *name,
 
   /* Get the specified drawable */
   /* ========================== */
-  
+
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   mapvals.drawable_id = drawable->id;
@@ -259,10 +256,10 @@ run (gchar   *name,
                   {
                     mapvals.bumpmap_id              = param[3].data.d_drawable;
                     mapvals.envmap_id               = param[4].data.d_drawable;
-                    mapvals.bump_mapped             = (gint)param[5].data.d_int32;
-                    mapvals.env_mapped              = (gint)param[6].data.d_int32;
-                    mapvals.bumpmaptype             = (gint)param[7].data.d_int32;
-                    mapvals.lightsource.type        = (LightType)param[8].data.d_int32;
+                    mapvals.bump_mapped             = (gint) param[5].data.d_int32;
+                    mapvals.env_mapped              = (gint) param[6].data.d_int32;
+                    mapvals.bumpmaptype             = (gint) param[7].data.d_int32;
+                    mapvals.lightsource.type        = (LightType) param[8].data.d_int32;
                     mapvals.lightsource.color.r     = param[9].data.d_color.red;
                     mapvals.lightsource.color.g     = param[9].data.d_color.green;
                     mapvals.lightsource.color.b     = param[9].data.d_color.blue;
@@ -277,9 +274,9 @@ run (gchar   *name,
                     mapvals.material.diffuse_ref    = param[18].data.d_float;
                     mapvals.material.specular_ref   = param[19].data.d_float;
                     mapvals.material.highlight      = param[20].data.d_float;
-                    mapvals.antialiasing            = (gint)param[21].data.d_int32;
-                    mapvals.create_new_image        = (gint)param[22].data.d_int32;
-                    mapvals.transparent_background  = (gint)param[23].data.d_int32;
+                    mapvals.antialiasing            = (gint) param[21].data.d_int32;
+                    mapvals.create_new_image        = (gint) param[22].data.d_int32;
+                    mapvals.transparent_background  = (gint) param[23].data.d_int32;
 
                     check_drawables ();
                     image_setup (drawable, FALSE);

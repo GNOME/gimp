@@ -2,6 +2,8 @@
 /* Dialog creation and updaters, callbacks and event-handlers */
 /**************************************************************/
 
+#include "config.h"
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -14,7 +16,6 @@
 #include "mapobject_preview.h"
 #include "mapobject_main.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "amb1.xpm"
@@ -163,7 +164,9 @@ togglegrid_update (GtkWidget *widget,
   gimp_toggle_button_update (widget, data);
 
   if (mapvals.showgrid && linetab[0].x1 == -1)
-    draw_preview_wireframe ();
+    {
+      draw_preview_wireframe ();
+    }
   else if (!mapvals.showgrid && linetab[0].x1 != -1)
     {
       gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
@@ -232,7 +235,9 @@ mapmenu_callback (GtkWidget *widget,
   draw_preview_image (TRUE);
 
   if (mapvals.showgrid && linetab[0].x1 == -1)
-    draw_preview_wireframe ();
+    {
+      draw_preview_wireframe ();
+    }
   else if (!mapvals.showgrid && linetab[0].x1 != -1)
     {
       gck_gc_set_foreground (visinfo, gc, 255, 255, 255);
@@ -438,10 +443,13 @@ preview_events (GtkWidget *area,
               draw_preview_wireframe ();
           }
         break; 
+
       case GDK_ENTER_NOTIFY:
         break;
+
       case GDK_LEAVE_NOTIFY:
         break;
+
       case GDK_BUTTON_PRESS:
         light_hit = check_light_hit (event->button.x, event->button.y);
         if (light_hit == FALSE)
@@ -455,9 +463,12 @@ preview_events (GtkWidget *area,
           }
         left_button_pressed = TRUE;
         break;
+
       case GDK_BUTTON_RELEASE:
         if (light_hit == TRUE)
-          draw_preview_image (TRUE);
+	  {
+	    draw_preview_image (TRUE);
+	  }
         else
           {
             pos.x = -(2.0 * (gdouble) event->button.x /
@@ -469,6 +480,7 @@ preview_events (GtkWidget *area,
           }
         left_button_pressed = FALSE;
         break;
+
       case GDK_MOTION_NOTIFY:
         if (left_button_pressed == TRUE)
           {
@@ -499,6 +511,7 @@ preview_events (GtkWidget *area,
               }
           }
         break;
+
       default:
         break;
     }
@@ -1500,7 +1513,7 @@ main_dialog (GimpDrawable *drawable)
     gdk_image_destroy (image);
 
   gck_visualinfo_destroy (visinfo);
-  gtk_widget_destroy(appwin);
+  gtk_widget_destroy (appwin);
 
   gimp_help_free ();
 

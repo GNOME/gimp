@@ -20,6 +20,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#include "config.h"
+
 #include <gtk/gtk.h>
 
 #include <gck/gck.h>
@@ -34,7 +36,6 @@
 #include "mapobject_preview.h"
 #include "mapobject_main.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 
@@ -194,8 +195,6 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("plug_in_map_object",
 			  "Maps a picture to a object (plane, sphere, box or cylinder)",
 			  "No help yet",
@@ -210,27 +209,27 @@ query (void)
 }
 
 static void
-run (gchar   *name,
-     gint     nparams,
+run (gchar      *name,
+     gint        nparams,
      GimpParam  *param,
-     gint    *nreturn_vals,
+     gint       *nreturn_vals,
      GimpParam **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunModeType run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-  gint i;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunModeType    run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint               i;
 
   run_mode = param[0].data.d_int32;
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      INIT_I18N_UI();
+      INIT_I18N_UI ();
     }
   else
     {
-      INIT_I18N();
+      INIT_I18N ();
     }
 
   values[0].type = GIMP_PDB_STATUS;
@@ -281,7 +280,7 @@ run (gchar   *name,
 	  }
         else
           {
-            mapvals.maptype                 = (MapType)param[3].data.d_int32;
+            mapvals.maptype                 = (MapType) param[3].data.d_int32;
             mapvals.viewpoint.x             = param[4].data.d_float;
             mapvals.viewpoint.y             = param[5].data.d_float;
             mapvals.viewpoint.z             = param[6].data.d_float;
@@ -297,7 +296,7 @@ run (gchar   *name,
             mapvals.alpha                   = param[16].data.d_float;
             mapvals.beta                    = param[17].data.d_float;
             mapvals.gamma                   = param[18].data.d_float;
-            mapvals.lightsource.type        = (LightType)param[19].data.d_int32;
+            mapvals.lightsource.type        = (LightType) param[19].data.d_int32;
             mapvals.lightsource.color.r     = param[20].data.d_color.red;
             mapvals.lightsource.color.g     = param[20].data.d_color.green;
             mapvals.lightsource.color.b     = param[20].data.d_color.blue;
@@ -312,10 +311,10 @@ run (gchar   *name,
             mapvals.material.diffuse_ref    = param[29].data.d_float;
             mapvals.material.specular_ref   = param[30].data.d_float;
             mapvals.material.highlight      = param[31].data.d_float;
-            mapvals.antialiasing            = (gint)param[32].data.d_int32;
-            mapvals.tiled                   = (gint)param[33].data.d_int32;
-            mapvals.create_new_image        = (gint)param[34].data.d_int32;
-            mapvals.transparent_background  = (gint)param[35].data.d_int32;
+            mapvals.antialiasing            = (gint) param[32].data.d_int32;
+            mapvals.tiled                   = (gint) param[33].data.d_int32;
+            mapvals.create_new_image        = (gint) param[34].data.d_int32;
+            mapvals.transparent_background  = (gint) param[35].data.d_int32;
             mapvals.radius                  = param[36].data.d_float;
             mapvals.cylinder_radius         = param[36].data.d_float;
             mapvals.scale.x                 = param[37].data.d_float;

@@ -18,20 +18,20 @@
 #ifndef __LIGHTING_PREVIEW_H__
 #define __LIGHTING_PREVIEW_H__
 
-#define PREVIEW_WIDTH 200
+#define PREVIEW_WIDTH  200
 #define PREVIEW_HEIGHT 200
 
 typedef struct
 {
-  gint x,y,w,h;
+  gint      x, y, w, h;
   GdkImage *image;
 } BackBuffer;
 
 /* Externally visible variables */
 
-extern gint       lightx,lighty;
-extern BackBuffer backbuf;
-extern gdouble    *xpostab,*ypostab;
+extern gint        lightx, lighty;
+extern BackBuffer  backbuf;
+extern gdouble    *xpostab, *ypostab;
 
 /* Externally visible functions */
 

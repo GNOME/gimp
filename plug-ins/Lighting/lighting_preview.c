@@ -2,7 +2,7 @@
 /* Compute a preview image and preview wireframe */
 /*************************************************/
 
-#include <gtk/gtk.h>
+#include "config.h"
 
 #include <libgimp/gimp.h>
 
@@ -15,6 +15,7 @@
 #include "lighting_shade.h"
 
 #include "lighting_preview.h"
+
 
 gint       lightx, lighty;
 BackBuffer backbuf= { 0, 0, 0, 0, NULL };
@@ -35,24 +36,25 @@ compute_preview (gint startx,
 		 gint w,
 		 gint h)
 {
-  gint xcnt,ycnt,f1,f2;
-  gdouble imagex,imagey;
-  gint32 index=0;
-  GckRGB color,darkcheck,lightcheck,temp;
-  GimpVector3 pos;
-  get_ray_func ray_func;
+  gint          xcnt, ycnt, f1, f2;
+  gdouble       imagex, imagey;
+  gint32        index = 0;
+  GckRGB        color, darkcheck, lightcheck, temp;
+  GimpVector3   pos;
+  get_ray_func  ray_func;
 
   if (xpostab_size != w)
     {
       if (xpostab)
 	{
-	  g_free(xpostab);
+	  g_free (xpostab);
 	  xpostab = NULL;
 	}
     }
+
   if (!xpostab)
     {
-      xpostab = (gdouble *)g_malloc(sizeof(gdouble)*w);
+      xpostab = g_new (gdouble, w);
       xpostab_size = w;
     }
 
@@ -60,46 +62,47 @@ compute_preview (gint startx,
     {
       if (ypostab)
 	{
-	  g_free(ypostab);
+	  g_free (ypostab);
 	  ypostab = NULL;
 	}
     }
   if (!ypostab)
     {
-      ypostab = (gdouble *)g_malloc(sizeof(gdouble)*h);
+      ypostab = g_new (gdouble, h);
       ypostab_size = h;
     }
 
-  for (xcnt=0;xcnt<w;xcnt++)
-    xpostab[xcnt]=(gdouble)width*((gdouble)xcnt/(gdouble)w);
-  for (ycnt=0;ycnt<h;ycnt++)
-    ypostab[ycnt]=(gdouble)height*((gdouble)ycnt/(gdouble)h);
+  for (xcnt = 0; xcnt < w; xcnt++)
+    xpostab[xcnt] = (gdouble) width * ((gdouble) xcnt / (gdouble) w);
+  for (ycnt = 0; ycnt < h; ycnt++)
+    ypostab[ycnt] = (gdouble) height * ((gdouble) ycnt / (gdouble) h);
 
-  init_compute();
-  precompute_init(width,height);
-  
-  gck_rgb_set(&lightcheck,0.75,0.75,0.75);
-  gck_rgb_set(&darkcheck, 0.50,0.50,0.50);
-  gck_rgb_set(&color,0.3,0.7,1.0);
-  
-  if (mapvals.bump_mapped==TRUE && mapvals.bumpmap_id!=-1)
+  init_compute ();
+  precompute_init (width, height);
+
+  gck_rgb_set (&lightcheck, 0.75, 0.75, 0.75);
+  gck_rgb_set (&darkcheck,  0.50, 0.50, 0.50);
+  gck_rgb_set (&color,      0.3,  0.7,  1.0);
+
+  if (mapvals.bump_mapped == TRUE && mapvals.bumpmap_id != -1)
     {
-      gimp_pixel_rgn_init (&bump_region, gimp_drawable_get(mapvals.bumpmap_id), 
+      gimp_pixel_rgn_init (&bump_region, gimp_drawable_get (mapvals.bumpmap_id), 
 			   0, 0, width, height, FALSE, FALSE);
     }
 
-  imagey=0;
+  imagey = 0;
 
   if (mapvals.previewquality)
     ray_func = get_ray_color;
   else
     ray_func = get_ray_color_no_bilinear;
-  
-  if (mapvals.env_mapped==TRUE && mapvals.envmap_id!=-1) 
+
+  if (mapvals.env_mapped == TRUE && mapvals.envmap_id != -1) 
     {
-      env_width = gimp_drawable_width(mapvals.envmap_id);
-      env_height = gimp_drawable_height(mapvals.envmap_id);
-      gimp_pixel_rgn_init (&env_region, gimp_drawable_get(mapvals.envmap_id), 
+      env_width  = gimp_drawable_width (mapvals.envmap_id);
+      env_height = gimp_drawable_height (mapvals.envmap_id);
+
+      gimp_pixel_rgn_init (&env_region, gimp_drawable_get (mapvals.envmap_id), 
 			   0, 0, env_width, env_height, FALSE, FALSE);
 
       if (mapvals.previewquality)
@@ -108,71 +111,81 @@ compute_preview (gint startx,
         ray_func = get_ray_color_no_bilinear_ref;      
     }
 
-  for (ycnt=0;ycnt<PREVIEW_HEIGHT;ycnt++)
+  for (ycnt = 0; ycnt < PREVIEW_HEIGHT; ycnt++)
     {
-      for (xcnt=0;xcnt<PREVIEW_WIDTH;xcnt++)
+      for (xcnt = 0; xcnt < PREVIEW_WIDTH; xcnt++)
         {
-          if ((ycnt>=starty && ycnt<(starty+h)) &&
-              (xcnt>=startx && xcnt<(startx+w)))
+          if ((ycnt >= starty && ycnt < (starty + h)) &&
+              (xcnt >= startx && xcnt < (startx + w)))
             {
-	      imagex=xpostab[xcnt-startx];
-	      imagey=ypostab[ycnt-starty];
-	      pos=int_to_posf(imagex,imagey);
-	      if (mapvals.bump_mapped==TRUE && mapvals.bumpmap_id!=-1 && xcnt==startx)
+	      imagex = xpostab[xcnt - startx];
+	      imagey = ypostab[ycnt - starty];
+	      pos = int_to_posf (imagex, imagey);
+
+	      if (mapvals.bump_mapped == TRUE &&
+		  mapvals.bumpmap_id != -1 &&
+		  xcnt == startx)
 		{
-		  pos_to_float(pos.x,pos.y,&imagex,&imagey);
-		  precompute_normals(0,width,(gint)(imagey+0.5));
+		  pos_to_float (pos.x, pos.y, &imagex, &imagey);
+		  precompute_normals (0, width, RINT (imagey));
 		}
 
-	      color=(*ray_func)(&pos);
-               
-	      if (color.a<1.0)
+	      color = (* ray_func) (&pos);
+
+	      if (color.a < 1.0)
 		{
-		  f1=((xcnt % 32)<16);
-		  f2=((ycnt % 32)<16);
-		  f1=f1^f2;
+		  f1 = ((xcnt % 32) < 16);
+		  f2 = ((ycnt % 32) < 16);
+		  f1 = f1 ^ f2;
     
 		  if (f1)
 		    {
-		      if (color.a==0.0)
-			color=lightcheck;
+		      if (color.a == 0.0)
+			{
+			  color=lightcheck;
+			}
 		      else
 			{
-			  gck_rgb_mul(&color,color.a);
-			  temp=lightcheck;
-			  gck_rgb_mul(&temp,1.0-color.a);
-			  gck_rgb_add(&color,&temp);
+			  gck_rgb_mul (&color, color.a);
+			  temp = lightcheck;
+			  gck_rgb_mul (&temp, 1.0 - color.a);
+			  gck_rgb_add (&color, &temp);
 			}
 		    }
 		  else
 		    {
-		      if (color.a==0.0)
-			color=darkcheck;
+		      if (color.a == 0.0)
+			{
+			  color = darkcheck;
+			}
 		      else
 			{
-			  gck_rgb_mul(&color,color.a);
-			  temp=darkcheck;
-			  gck_rgb_mul(&temp,1.0-color.a);
-			  gck_rgb_add(&color,&temp);
+			  gck_rgb_mul (&color, color.a);
+			  temp = darkcheck;
+			  gck_rgb_mul (&temp, 1.0 - color.a);
+			  gck_rgb_add (&color, &temp);
 			}
 		    }
 		}
 
-	      preview_rgb_data[index++]=(guchar)(255.0*color.r);
-	      preview_rgb_data[index++]=(guchar)(255.0*color.g);
-	      preview_rgb_data[index++]=(guchar)(255.0*color.b);
+	      preview_rgb_data[index++] = (guchar) (255.0 * color.r);
+	      preview_rgb_data[index++] = (guchar) (255.0 * color.g);
+	      preview_rgb_data[index++] = (guchar) (255.0 * color.b);
 	      imagex++;
             }
           else
             {
-              preview_rgb_data[index++]=200;
-              preview_rgb_data[index++]=200;
-              preview_rgb_data[index++]=200;
+              preview_rgb_data[index++] = 200;
+              preview_rgb_data[index++] = 200;
+              preview_rgb_data[index++] = 200;
             }
         }
     }
 
-  gck_rgb_to_gdkimage(visinfo, preview_rgb_data, image, PREVIEW_WIDTH, PREVIEW_HEIGHT);
+  gck_rgb_to_gdkimage (visinfo,
+		       preview_rgb_data,
+		       image,
+		       PREVIEW_WIDTH, PREVIEW_HEIGHT);
 }
 
 /*
@@ -409,27 +422,27 @@ compute_preview_rectangle (gint *xp,
 {
   gdouble x, y, w, h;
 
-  if (width>=height)
+  if (width >= height)
     {
-      w=(PREVIEW_WIDTH-50.0);
-      h=(gdouble)height*(w/(gdouble)width);
-      
-      x=(PREVIEW_WIDTH-w)/2.0;
-      y=(PREVIEW_HEIGHT-h)/2.0;
+      w = (PREVIEW_WIDTH - 50.0);
+      h = (gdouble) height * (w / (gdouble) width);
+
+      x = (PREVIEW_WIDTH - w) / 2.0;
+      y = (PREVIEW_HEIGHT - h) / 2.0;
     }
   else
     {
-      h=(PREVIEW_HEIGHT-50.0);
-      w=(gdouble)width*(h/(gdouble)height);
-      
-      x=(PREVIEW_WIDTH-w)/2.0;
-      y=(PREVIEW_HEIGHT-h)/2.0;
+      h = (PREVIEW_HEIGHT - 50.0);
+      w = (gdouble) width * (h / (gdouble) height);
+
+      x = (PREVIEW_WIDTH - w) / 2.0;
+      y = (PREVIEW_HEIGHT - h) / 2.0;
     }
 
-  *xp=(gint)(x+0.5);
-  *yp=(gint)(y+0.5);
-  *wid=(gint)(w+0.5);
-  *heig=(gint)(h+0.5);
+  *xp   = RINT (x);
+  *yp   = RINT (y);
+  *wid  = RINT (w);
+  *heig = RINT (h);
 }
 
 /******************************************************************/
@@ -455,14 +468,14 @@ draw_preview_image (gint recompute)
       newcursor = gdk_cursor_new (GDK_WATCH);
       gdk_window_set_cursor (previewarea->window, newcursor);
       gdk_cursor_destroy (newcursor);
-      gdk_flush();
+      gdk_flush ();
 
       compute_preview (startx, starty, pw, ph);
 
       newcursor = gdk_cursor_new (GDK_HAND2);
       gdk_window_set_cursor (previewarea->window, newcursor);
       gdk_cursor_destroy (newcursor);
-      gdk_flush();
+      gdk_flush ();
 
       clear_light_marker ();
     }

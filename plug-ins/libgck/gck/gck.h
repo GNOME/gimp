@@ -42,20 +42,13 @@ extern "C" {
 typedef enum
 {
   DITHER_NONE,
-  DITHER_FLOYD_STEINBERG,
-  DITHER_ORDERED
+  DITHER_FLOYD_STEINBERG
 } GckDitherType;
 
 typedef struct
 {
   gdouble r, g, b, a;
 } GckRGB;
-
-typedef struct
-{
-  guchar       r, g, b;
-  const gchar *name;
-} GckNamedRGB;
 
 typedef struct
 {
@@ -75,27 +68,11 @@ typedef void (* GckRenderFunction)      (gdouble, gdouble, GckRGB *);
 typedef void (* GckPutPixelFunction)    (gint, gint, GckRGB *);
 typedef void (* GckProgressFunction)    (gint, gint, gint);
 typedef void (* GckColorUpdateFunction) (GckRGB *);
-typedef gint (* GckEventFunction)       (GtkWidget *, GdkEvent *, gpointer);
-
-typedef struct
-{
-  GtkWidget     *widget;
-  GckVisualInfo *visinfo;
-} GckApplicationWindow;
-
-typedef struct
-{
-  gint      x, y, w, h;
-  GdkImage *buffer;
-} _GckBackBuffer;
-
 
 
 GckVisualInfo *gck_visualinfo_new        (void);
 void           gck_visualinfo_destroy    (GckVisualInfo *visinfo);
-GckDitherType  gck_visualinfo_get_dither (GckVisualInfo *visinfo);
-void           gck_visualinfo_set_dither (GckVisualInfo *visinfo,
-                                          GckDitherType dithermethod);
+
 
 /* RGB to Gdk routines */
 /* =================== */
@@ -103,13 +80,8 @@ void           gck_visualinfo_set_dither (GckVisualInfo *visinfo,
 void      gck_rgb_to_gdkimage       (GckVisualInfo *visinfo,
                                      guchar *RGB_data,
                                      GdkImage *image,
-                                     int width,int height);
-
-/* returns a static storage */
-GdkColor *gck_rgb_to_gdkcolor       (GckVisualInfo *visinfo,guchar r,guchar g,guchar b);
-
-/* returns a malloc'ed area */
-GdkColor *gck_rgb_to_gdkcolor_r     (GckVisualInfo *visinfo,guchar r,guchar g,guchar b);
+                                     int width,
+				     int height);
 
 void      gck_gc_set_foreground     (GckVisualInfo *visinfo,GdkGC *gc,
                                      guchar r, guchar g, guchar b); 
@@ -165,8 +137,6 @@ gulong    gck_adaptive_supersample_area (int x1,int y1,int x2,int y2,
                                          GckRenderFunction    render_func,
                                          GckPutPixelFunction  put_pixel_func,
                                          GckProgressFunction  progress_func);
-
-extern GckNamedRGB gck_named_colors[];
 
 #ifdef __cplusplus
 }

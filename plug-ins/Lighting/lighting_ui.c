@@ -17,7 +17,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include <gtk/gtk.h>
+#include "config.h"
 
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
@@ -30,7 +30,6 @@
 #include "lighting_apply.h"
 #include "lighting_preview.h"
 
-#include "config.h"
 #include "libgimp/stdplugins-intl.h"
 
 #include "amb1.xpm"
@@ -43,10 +42,12 @@
 #include "specref2.xpm"
 #include "high1.xpm"
 #include "high2.xpm"
+
 /*
 #include "pixmaps/zoom_in.xpm"
 #include "pixmaps/zoom_out.xpm"
 */
+
 extern LightingValues mapvals;
 
 GckVisualInfo *visinfo = NULL;
@@ -121,15 +122,16 @@ static GtkWidget *create_environment_page (void);
 /* Update entry fields that affect the preview parameters */
 /**********************************************************/
 
-static void xyzval_update(GtkEntry *entry)
+static void
+xyzval_update (GtkEntry *entry)
 {
   gdouble *valueptr;
-  gdouble value;
+  gdouble  value;
 
-  valueptr=(gdouble *)gtk_object_get_data(GTK_OBJECT(entry),"ValuePtr");
-  value = atof(gtk_entry_get_text(entry));
+  valueptr = (gdouble *) gtk_object_get_data (GTK_OBJECT (entry), "ValuePtr");
+  value = atof (gtk_entry_get_text (entry));
 
-  *valueptr=value;
+  *valueptr = value;
 }
 #endif
 
