@@ -25,6 +25,7 @@
 
 #include "appenv.h"
 #include "module_db.h"
+#include "gimpsignal.h"
 #include "gimprc.h"
 #include "datafiles.h"
 #include "actionarea.h"
@@ -51,8 +52,9 @@ static const char * const statename[] = {
 };
 
 
-/* one of these is kept per-module */
+/* one of these objects is kept per-module */
 typedef struct {
+  GtkObject      object;
   gchar          *fullpath;   /* path to the module */
   module_state    state;      /* what's happened to the module */
   gboolean        ondisk;     /* TRUE if file still exists */
@@ -63,6 +65,13 @@ typedef struct {
   GimpModuleInitFunc   *init;
   GimpModuleUnloadFunc *unload;
 } module_info;
+
+
+static guint module_info_get_type (void);
+#define MODULE_INFO_TYPE module_info_get_type()
+#define MODULE_INFO(obj) GTK_CHECK_CAST (obj, MODULE_INFO_TYPE, module_info)
+#define IS_MODULE_INFO(obj) GTK_CHECK_TYPE (obj, MODULE_INFO_TYPE)
+
 
 #define NUM_INFO_LINES 7
 
@@ -93,7 +102,7 @@ static void print_module_info (gpointer data, gpointer user_data);
 
 static void browser_popdown_callback (GtkWidget *w, gpointer client_data);
 static void browser_destroy_callback (GtkWidget *w, gpointer client_data);
-static void browser_info_update (GimpSet *, module_info *, browser_st *);
+static void browser_info_update (module_info *, browser_st *);
 static void browser_info_add (GimpSet *, module_info *, browser_st *);
 static void browser_info_remove (GimpSet *, module_info *, browser_st *);
 static void browser_info_init (browser_st *st, GtkWidget *table);
@@ -111,7 +120,7 @@ module_db_init (void)
 {
   /* Load and initialize gimp modules */
 
-  modules = gimp_set_new (GTK_TYPE_NONE, FALSE);
+  modules = gimp_set_new (MODULE_INFO_TYPE, FALSE);
 
   if (g_module_supported ())
     datafiles_read_directories (module_path,
@@ -192,7 +201,7 @@ module_db_browser_new (void)
 		      browser_load_unload_callback, st);
 
   browser_info_init (st, st->table);
-  browser_info_update (modules, st->last_update, st);
+  browser_info_update (st->last_update, st);
 
   gtk_object_set_user_data (GTK_OBJECT (st->list), st);
 
@@ -201,8 +210,8 @@ module_db_browser_new (void)
 
   /* hook the gimpset signals so we can refresh the display
    * appropriately. */
-  gtk_signal_connect (GTK_OBJECT (modules), "member_modified",
-		      browser_info_update, st);
+  gimp_set_add_handler (modules, "modified", browser_info_update, st);
+
   gtk_signal_connect (GTK_OBJECT (modules), "add", 
 		      browser_info_add, st);
   gtk_signal_connect (GTK_OBJECT (modules), "remove", 
@@ -218,6 +227,102 @@ module_db_browser_new (void)
 		     0);
 
   return shell;
+}
+
+
+/**************************************************************/
+/* module_info object glue */
+
+
+typedef struct {
+  GtkObjectClass parent_class;
+} module_infoClass;
+
+enum {
+  MODIFIED,
+  LAST_SIGNAL
+};
+static guint module_info_signals[LAST_SIGNAL];
+
+
+static void
+module_info_destroy (GtkObject *object)
+{
+  module_info *mod = MODULE_INFO (object);
+
+  if (mod->last_module_error)
+    g_free (mod->last_module_error);
+  g_free (mod->fullpath);
+}
+
+static void
+module_info_class_init (module_infoClass *klass)
+{
+  GtkObjectClass *object_class;
+  GtkType type;
+
+  object_class = GTK_OBJECT_CLASS(klass);
+
+  type = object_class->type;
+
+  object_class->destroy = module_info_destroy;
+
+  module_info_signals[MODIFIED] =
+      gimp_signal_new ("modified", 0, type, 0, gimp_sigtype_void);
+
+  gtk_object_class_add_signals(object_class, module_info_signals, LAST_SIGNAL);
+}
+
+static void
+module_info_init (module_info *mod)
+{
+  /* don't need to do anything */
+}
+
+static guint
+module_info_get_type (void)
+{
+  static guint module_info_type = 0;
+
+  if (!module_info_type)
+    {
+      static const GtkTypeInfo module_info_info =
+      {
+	"module_info",
+	sizeof (module_info),
+	sizeof (module_infoClass),
+	(GtkClassInitFunc) module_info_class_init,
+	(GtkObjectInitFunc) module_info_init,
+	/* reserved_1 */ NULL,
+        /* reserved_2 */ NULL,
+        (GtkClassInitFunc) NULL,
+      };
+
+      module_info_type = gtk_type_unique (gtk_object_get_type(),
+					  &module_info_info);
+    }
+
+  return module_info_type;
+}
+
+/* exported API: */
+
+static void
+module_info_modified (module_info *mod)
+{
+  gtk_signal_emit (GTK_OBJECT (mod), module_info_signals[MODIFIED]);
+}
+
+static module_info *
+module_info_new (void)
+{
+  return MODULE_INFO (gtk_type_new (module_info_get_type ()));
+}
+
+static void
+module_info_free (module_info *mod)
+{
+  gtk_object_unref (GTK_OBJECT (mod));
 }
 
 
@@ -268,7 +373,7 @@ module_initialize (char *filename)
   if (module_find_by_path (filename))
     return;
 
-  mod = g_new0 (module_info, 1);
+  mod = module_info_new ();
 
   mod->fullpath = g_strdup (filename);
   mod->ondisk = TRUE;
@@ -358,7 +463,7 @@ mod_unload_completed_callback (void *data)
 
   mod->state = ST_UNLOADED_OK;
 
-  gimp_set_member_modified (modules, mod);
+  module_info_modified (mod);
 }
 
 static void
@@ -424,7 +529,7 @@ browser_destroy_callback (GtkWidget *w, gpointer client_data)
 
 
 static void
-browser_info_update (GimpSet *set, module_info *mod, browser_st *st)
+browser_info_update (module_info *mod, browser_st *st)
 {
   int i;
   const char *text[NUM_INFO_LINES - 1];
@@ -465,9 +570,12 @@ browser_info_update (GimpSet *set, module_info *mod, browser_st *st)
 
   if (mod->state == ST_MODULE_ERROR && mod->last_module_error)
   {
-    status = g_malloc (strlen (statename[mod->state]) + 2 +
-			strlen (mod->last_module_error) + 2);
-    sprintf(status, "%s (%s)", statename[mod->state], mod->last_module_error);
+    gulong len = strlen (statename[mod->state]) + 2 +
+		 strlen (mod->last_module_error) + 2;
+
+    status = g_malloc (len);
+    g_snprintf (status, len,
+		"%s (%s)", statename[mod->state], mod->last_module_error);
   }
   else
   {
@@ -549,7 +657,7 @@ browser_select_callback (GtkWidget *widget, GtkWidget *child)
 
   st->last_update = i;
 
-  browser_info_update (modules, st->last_update, st);
+  browser_info_update (st->last_update, st);
 }
 
 
@@ -563,7 +671,7 @@ browser_load_unload_callback (GtkWidget *widget, gpointer data)
   else
     mod_load (st->last_update, FALSE);
 
-  gimp_set_member_modified (modules, st->last_update);
+  module_info_modified (st->last_update);
 }
 
 
@@ -650,7 +758,7 @@ module_db_module_ondisk (gpointer data, gpointer user_data)
   }
 
   if (mod && mod->ondisk != old_ondisk)
-    gimp_set_member_modified (modules, mod);
+    module_info_modified (mod);
 }
 
 
@@ -661,10 +769,7 @@ module_db_module_remove (gpointer data, gpointer user_data)
 
   gimp_set_remove (modules, mod);
 
-  if (mod->last_module_error)
-      g_free (mod->last_module_error);
-  g_free (mod->fullpath);
-  g_free (mod);    
+  module_info_free (mod);
 }
 
 

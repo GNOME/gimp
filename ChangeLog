@@ -1,3 +1,10 @@
+Sat Feb  6 15:11:26 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	* app/gimpset.c
+	* app/gimpset.h: remove the member_modified hacks
+	* app/module_db.c: make module_info a proper object emitting a
+	    modified signal.
+
 1999-02-05  Jay Cox  <jaycox@earthlink.net>
 
 	* app/clone.c: merged the registered clone option from the

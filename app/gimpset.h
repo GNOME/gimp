@@ -50,6 +50,4 @@ GimpSetHandlerId gimp_set_add_handler (GimpSet* set,
 void		gimp_set_remove_handler (GimpSet* set,
 					 GimpSetHandlerId id);
 
-void		gimp_set_member_modified (GimpSet* set, gpointer ob);
-
 #endif

@@ -20,7 +20,6 @@ enum
 {
   ADD,
   REMOVE,
-  MEMBER_MODIFIED,
   LAST_SIGNAL
 };
 
@@ -70,8 +69,6 @@ gimp_set_class_init (GimpSetClass* klass)
 		gimp_signal_new ("add", 0, type, 0, gimp_sigtype_pointer);
 	gimp_set_signals[REMOVE]=
 		gimp_signal_new ("remove", 0, type, 0, gimp_sigtype_pointer);
-	gimp_set_signals[MEMBER_MODIFIED]=
-		gimp_signal_new ("member_modified", 0, type, 0, gimp_sigtype_pointer);
 	gtk_object_class_add_signals (object_class,
 				      gimp_set_signals,
 				      LAST_SIGNAL);
@@ -287,10 +284,3 @@ gimp_set_remove_handler(GimpSet* set, GimpSetHandlerId id)
 }
 
 	
-void
-gimp_set_member_modified(GimpSet* set, gpointer ob)
-{
-    g_return_if_fail (gimp_set_find_node (set, ob) != NULL);
-
-    gtk_signal_emit (GTK_OBJECT(set), gimp_set_signals[MEMBER_MODIFIED], ob);
-}
