@@ -185,6 +185,8 @@ gimp_SOURCES = \
 	gimpbrush.h		\
 	gimpbrushgenerated.c	\
 	gimpbrushgenerated.h	\
+	gimpbrushpixmap.c	\
+	gimpbrushpixmap.h	\
 	gimpbrushlist.c		\
 	gimpbrushlist.h		\
 	gimpbrushlistF.h	\
@@ -320,6 +322,8 @@ gimp_SOURCES = \
 	pixel_region.c		\
 	pixel_region.h		\
 	pixel_regionP.h		\
+	pixmapbrush.c		\
+	pixmapbrush.h		\
 	pixmaps.h		\
 	pixmaps2.h		\
 	plug_in.c		\

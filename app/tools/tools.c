@@ -48,6 +48,7 @@
 #include "move.h"
 #include "paintbrush.h"
 #include "pencil.h"
+#include "pixmapbrush.h"
 #include "posterize.h"
 #include "rect_select.h"
 #include "session.h"
@@ -478,6 +479,21 @@ ToolInfo tool_info[] =
     SMUDGE,
     tools_new_smudge,
     tools_free_smudge,
+    NULL
+  },
+
+  {
+    NULL,
+    N_("Pixmap brush"),
+    16,
+    N_("/Tools/Pixmap Brush"),
+    "P",
+    (char **) paint_bits,
+    N_("Paint fuzzy brush strokes"),
+    "ContextHelp/paintbrush",
+    PIXMAPBRUSH,
+    tools_new_pixmapbrush,
+    tools_free_pixmapbrush, 
     NULL
   },
 

@@ -92,6 +92,7 @@ context_manager_init (void)
 	case INK:
 	case DODGEBURN:
 	case SMUDGE:
+	case PIXMAPBRUSH:
 	  tool_info[i].tool_context =
 	    gimp_context_new (tool_info[i].private_tip, NULL, context);
 	  break;

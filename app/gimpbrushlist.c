@@ -32,6 +32,7 @@
 #include <math.h>
 
 #include "appenv.h"
+#include "gimpbrushpixmap.h"
 #include "gimpbrushgenerated.h"
 #include "brush_header.h"
 #include "brush_select.h"
@@ -151,23 +152,32 @@ static void
 brush_load(char *filename)
 {
   if (strcmp(&filename[strlen(filename) - 4], ".gbr") == 0)
-  {
-    GimpBrush *brush;
-    brush = gimp_brush_new(filename);
-    if (brush != NULL)
-      gimp_brush_list_add(brush_list, brush);
-    else
-      g_message("Warning: failed to load brush \"%s\"", filename);
-  }
+    {
+      GimpBrush *brush;
+      brush = gimp_brush_new(filename);
+      if (brush != NULL)
+	gimp_brush_list_add(brush_list, brush);
+      else
+	g_message("Warning: failed to load brush \"%s\"", filename);
+    }
   else if (strcmp(&filename[strlen(filename) - 4], ".vbr") == 0)
-  {
-    GimpBrushGenerated *brush;
-    brush = gimp_brush_generated_load(filename);
-    if (brush != NULL)
-      gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
-    else
-      g_message("Warning: failed to load brush \"%s\"", filename);
-  }
+    {
+      GimpBrushGenerated *brush;
+      brush = gimp_brush_generated_load(filename);
+      if (brush != NULL)
+	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+      else
+	g_message("Warning: failed to load brush \"%s\"", filename);
+    }
+  else if (strcmp(&filename[strlen(filename) - 4], ".gpb") == 0)
+    {
+      GimpBrushPixmap *brush;
+      brush = gimp_brush_pixmap_load(filename);
+      if (brush != NULL)
+	gimp_brush_list_add(brush_list, GIMP_BRUSH(brush));
+      else
+	g_message("Warning: failed to load brush \"%s\"", filename);
+    }
 }
 
 static gint

@@ -1,3 +1,34 @@
+Mon Aug  9 01:20:24 1999 Adrian Likins <alikins@redhat.com>
+
+	* app/pixmapbrush.c 
+	* app/pixmapbrush.h
+	* app/gimpbrushpixmap.c
+	* app/gimpbrushpixmap.h: New files, implement the GimpBrushPixmap
+	  object, and the pixmap brush tool.
+
+	* app/context_manager.c
+	* app/tool_options.c 
+	* app/tools.c
+	* app/toolsF.h: add the pixmap brush tool in
+
+	* app/gimpbrushlist.c: allow for loading of pixmap brushes and
+	displaying them in the brush dialog. Currently it only shows the
+	grey scale mask.
+
+	*app/Makefile.am: add the pixmap tool stuff to the build process
+
+	These Changes implement a pixmap brush tool. Sort of a "image stamp".
+	Some examples can be seen at http://adrian.gimp.org/pixmap-brush/.
+
+	Some examples of pixmap brushes can be found there too (.gpb
+	extension), but these are easy enough to make (for now, make
+	a pattern and a brush the same size and `cat foo.gbr foo.pat >
+	foo.gpb` ;->
+
+	Theres still a few rough edges that need some tweaking, but
+	the framework is there. Figured I'd sneak it in before the
+	freeze.
+
 1999-08-08  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/common/winclipboard.c: New Windows-only plug-in, an

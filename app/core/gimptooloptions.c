@@ -570,7 +570,9 @@ paint_options_init (PaintOptions         *options,
 			       _("Dodge or Burn Options") :
 			       ((tool_type == SMUDGE) ?
 				_("Smudge Options") :
-				_("ERROR: Unknown Paint Type")))))))))))),
+				((tool_type == PIXMAPBRUSH) ?
+				 _("Pixmap Brush Ootions") :
+				_("ERROR: Unknown Paint Type"))))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */
@@ -618,6 +620,7 @@ paint_options_init (PaintOptions         *options,
     case AIRBRUSH:
     case CLONE:
     case INK:
+    case PIXMAPBRUSH:
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
       label = gtk_label_new (_("Mode:"));

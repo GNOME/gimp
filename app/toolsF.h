@@ -64,7 +64,8 @@ typedef enum
   INK,
   DODGEBURN,
   SMUDGE,
-  LAST_TOOLBOX_TOOL = SMUDGE,
+  PIXMAPBRUSH,
+  LAST_TOOLBOX_TOOL = PIXMAPBRUSH,
 
   /*  Non-toolbox tools  */
   BY_COLOR_SELECT,
