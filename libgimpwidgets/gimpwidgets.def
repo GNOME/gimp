@@ -70,6 +70,11 @@ EXPORTS
 	gimp_color_selector_set_toggles_sensitive
 	gimp_color_selector_set_toggles_visible
 	gimp_context_help
+	gimp_controller_event
+	gimp_controller_get_event_blurb
+	gimp_controller_get_event_name
+	gimp_controller_get_n_events
+	gimp_controller_get_type
 	gimp_coordinates_new
 	gimp_dialog_add_buttons_valist
 	gimp_dialog_get_type
