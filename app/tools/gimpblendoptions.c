@@ -33,6 +33,7 @@
 #include "widgets/gimpcontainerpopup.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpenummenu.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpblendoptions.h"
@@ -232,7 +233,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox;
   GtkWidget *table;
   GtkWidget *frame;
-  GtkWidget *optionmenu;
+  GtkWidget *menu;
   GtkWidget *button;
   GtkWidget *preview;
 
@@ -264,20 +265,22 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                              FALSE, 0.0, 0.0);
 
   /*  the gradient type menu  */
-  optionmenu = gimp_prop_enum_option_menu_new (config, "gradient-type", 0, 0);
+  menu = gimp_prop_enum_option_menu_new (config, "gradient-type", 0, 0);
+  gimp_enum_option_menu_set_stock_prefix (GTK_OPTION_MENU (menu),
+                                          "gimp-gradient");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
 			     _("Shape:"), 1.0, 0.5,
-			     optionmenu, 2, TRUE);
+			     menu, 2, TRUE);
 
   /*  the repeat option  */
-  optionmenu = gimp_prop_enum_option_menu_new (config, "repeat", 0, 0);
+  menu = gimp_prop_enum_option_menu_new (config, "repeat", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Repeat:"), 1.0, 0.5,
-			     optionmenu, 2, TRUE);
+			     menu, 2, TRUE);
 
   g_signal_connect (config, "notify::gradient-type",
                     G_CALLBACK (blend_options_gradient_type_notify),
-                    optionmenu);
+                    menu);
 
   /*  frame for supersampling options  */
   frame = gtk_frame_new (NULL);

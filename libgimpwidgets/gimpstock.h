@@ -39,6 +39,19 @@ G_BEGIN_DECLS
 #define GIMP_STOCK_RESET                "gimp-reset"
 #define GIMP_STOCK_VISIBLE              "gimp-visible"
 
+#define GIMP_STOCK_GRADIENT_LINEAR               "gimp-gradient-linear"
+#define GIMP_STOCK_GRADIENT_BILINEAR             "gimp-gradient-bilinear"
+#define GIMP_STOCK_GRADIENT_RADIAL               "gimp-gradient-radial"
+#define GIMP_STOCK_GRADIENT_SQUARE               "gimp-gradient-square"
+#define GIMP_STOCK_GRADIENT_CONICAL_SYMMETRIC    "gimp-gradient-conical-symmetric"
+#define GIMP_STOCK_GRADIENT_CONICAL_ASYMMETRIC   "gimp-gradient-conical-asymmetric"
+#define GIMP_STOCK_GRADIENT_SHAPEBURST_ANGULAR   "gimp-gradient-shapeburst-angular"
+#define GIMP_STOCK_GRADIENT_SHAPEBURST_SPHERICAL "gimp-gradient-shapeburst-spherical"
+#define GIMP_STOCK_GRADIENT_SHAPEBURST_DIMPLED   "gimp-gradient-shapeburst-dimpled"
+#define GIMP_STOCK_GRADIENT_SPIRAL_CLOCKWISE     "gimp-gradient-spiral-clockwise"
+#define GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE "gimp-gradient-spiral-anticlockwise"
+
+
 #define GIMP_STOCK_GRAVITY_EAST         "gimp-gravity-east"
 #define GIMP_STOCK_GRAVITY_NORTH        "gimp-gravity-north"
 #define GIMP_STOCK_GRAVITY_NORTH_EAST   "gimp-gravity-north-east"

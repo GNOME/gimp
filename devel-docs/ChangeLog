@@ -1,3 +1,9 @@
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/tmpl/gimpstock.sgml: Jimmac keeps drawing icons
+	like crazy.
+
 2003-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt

@@ -36,6 +36,17 @@ STOCK_MENU_IMAGES = \
 	stock-default-colors-12.png		\
 	stock-device-status-16.png		\
 	stock-eye-12.png			\
+	stock-gradient-bilinear-16.png		\
+	stock-gradient-conical-asymmetric-16.png\
+	stock-gradient-conical-symmetric-16.png	\
+	stock-gradient-linear-16.png		\
+	stock-gradient-radial-16.png		\
+	stock-gradient-shapeburst-angular-16.png\
+	stock-gradient-shapeburst-dimpled-16.png\
+	stock-gradient-shapeburst-spherical-16.png\
+	stock-gradient-spiral-anticlockwise-16.png\
+	stock-gradient-spiral-clockwise-16.png	\
+	stock-gradient-square-16.png		\
 	stock-grid-16.png			\
 	stock-image-16.png			\
 	stock-images-16.png			\

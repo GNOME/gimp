@@ -106,6 +106,18 @@ static GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_RESET,          N_("_Reset"),          0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_VISIBLE,        N_("Visible"),         0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_GRADIENT_LINEAR,               NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_BILINEAR,             NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_RADIAL,               NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_SQUARE,               NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_CONICAL_SYMMETRIC,    NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_CONICAL_ASYMMETRIC,   NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_SHAPEBURST_ANGULAR,   NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_SHAPEBURST_SPHERICAL, NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_SHAPEBURST_DIMPLED,   NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_SPIRAL_CLOCKWISE,     NULL,   0, 0, LIBGIMP_DOMAIN },
+  { GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE, NULL,   0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_GRAVITY_EAST,             NULL,        0, 0, LIBGIMP_DOMAIN }, 
   { GIMP_STOCK_GRAVITY_NORTH,            NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_GRAVITY_NORTH_EAST,       NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -405,6 +417,18 @@ gimp_stock_menu_pixbufs[] =
 
   { GIMP_STOCK_DEFAULT_COLORS,           stock_default_colors_12           },
   { GIMP_STOCK_SWAP_COLORS,              stock_swap_colors_12              },
+
+  { GIMP_STOCK_GRADIENT_LINEAR,               stock_gradient_linear_16               },
+  { GIMP_STOCK_GRADIENT_BILINEAR,             stock_gradient_bilinear_16             },
+  { GIMP_STOCK_GRADIENT_RADIAL,               stock_gradient_radial_16               },
+  { GIMP_STOCK_GRADIENT_SQUARE,               stock_gradient_square_16               },
+  { GIMP_STOCK_GRADIENT_CONICAL_SYMMETRIC,    stock_gradient_conical_symmetric_16    },
+  { GIMP_STOCK_GRADIENT_CONICAL_ASYMMETRIC,   stock_gradient_conical_asymmetric_16   },
+  { GIMP_STOCK_GRADIENT_SHAPEBURST_ANGULAR,   stock_gradient_shapeburst_angular_16   },
+  { GIMP_STOCK_GRADIENT_SHAPEBURST_SPHERICAL, stock_gradient_shapeburst_spherical_16 },
+  { GIMP_STOCK_GRADIENT_SHAPEBURST_DIMPLED,   stock_gradient_shapeburst_dimpled_16   },
+  { GIMP_STOCK_GRADIENT_SPIRAL_CLOCKWISE,     stock_gradient_spiral_clockwise_16     },
+  { GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE, stock_gradient_spiral_anticlockwise_16 },
 
   { GIMP_STOCK_TOOL_AIRBRUSH,            stock_tool_airbrush_16            },
   { GIMP_STOCK_TOOL_BEZIER_SELECT,       stock_tool_bezier_select_16       },

@@ -271,6 +271,83 @@ size).
 
 
 
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_LINEAR ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-linear-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_BILINEAR ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-bilinear-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_RADIAL ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-radial-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_SQUARE ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-square-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_CONICAL_SYMMETRIC ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-conical-symmetric-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_CONICAL_ASYMMETRIC ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-conical-asymmetric-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_SHAPEBURST_SPHERICAL ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-shapeburst-spherical-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_SHAPEBURST_ANGULAR ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-shapeburst-angular-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_SHAPEBURST_DIMPLED ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-shapeburst-dimpled-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_SPIRAL_CLOCKWISE ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-spiral-clockwise-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
+<!-- ##### MACRO GIMP_STOCK_GRADIENT_SPIRAL_ANTICLOCKWISE ##### -->
+<para>
+<inlinegraphic fileref="stock-gradient-spiral-anticlockwise-16.png" format="png"></inlinegraphic>
+</para>
+
+
+
 <!-- ##### MACRO GIMP_STOCK_GRAVITY_NORTH_WEST ##### -->
 <para>
 <inlinegraphic fileref="stock-gravity-north-west-24.png" format="png"></inlinegraphic>
