@@ -75,6 +75,8 @@ libappwidgets_a_sources = \
 	gimpcontrollerinfo.h		\
 	gimpcontrollers.c		\
 	gimpcontrollers.h		\
+	gimpcontrollerkeyboard.c	\
+	gimpcontrollerkeyboard.h	\
 	gimpcontrollerwheel.c		\
 	gimpcontrollerwheel.h		\
 	gimpcursor.c			\

@@ -53,7 +53,7 @@ void       tool_manager_motion_active         (Gimp             *gimp,
                                                guint32           time,
                                                GdkModifierType   state,
                                                GimpDisplay      *gdisp);
-void       tool_manager_key_press_active      (Gimp             *gimp,
+gboolean   tool_manager_key_press_active      (Gimp             *gimp,
                                                GdkEventKey      *kevent,
                                                GimpDisplay      *gdisp);
 

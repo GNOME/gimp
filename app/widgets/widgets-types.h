@@ -57,6 +57,7 @@ typedef struct _GimpPreviewRendererImagefile GimpPreviewRendererImagefile;
 typedef struct _GimpPreviewRendererVectors   GimpPreviewRendererVectors;
 
 typedef struct _GimpControllerInfo           GimpControllerInfo;
+typedef struct _GimpControllerKeyboard       GimpControllerKeyboard;
 typedef struct _GimpControllerWheel          GimpControllerWheel;
 
 

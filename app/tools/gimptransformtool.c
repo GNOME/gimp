@@ -100,7 +100,7 @@ static void     gimp_transform_tool_motion         (GimpTool          *tool,
                                                     guint32            time,
                                                     GdkModifierType    state,
                                                     GimpDisplay       *gdisp);
-static void     gimp_transform_tool_key_press      (GimpTool          *tool,
+static gboolean gimp_transform_tool_key_press      (GimpTool          *tool,
                                                     GdkEventKey       *kevent,
                                                     GimpDisplay       *gdisp);
 static void     gimp_transform_tool_modifier_key   (GimpTool          *tool,
@@ -184,13 +184,9 @@ gimp_transform_tool_get_type (void)
 static void
 gimp_transform_tool_class_init (GimpTransformToolClass *klass)
 {
-  GObjectClass      *object_class;
-  GimpToolClass     *tool_class;
-  GimpDrawToolClass *draw_class;
-
-  object_class = G_OBJECT_CLASS (klass);
-  tool_class   = GIMP_TOOL_CLASS (klass);
-  draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
+  GObjectClass      *object_class = G_OBJECT_CLASS (klass);
+  GimpToolClass     *tool_class   = GIMP_TOOL_CLASS (klass);
+  GimpDrawToolClass *draw_class   = GIMP_DRAW_TOOL_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -519,7 +515,7 @@ gimp_transform_tool_motion (GimpTool        *tool,
 
 #define RESPONSE_RESET 1
 
-static void
+static gboolean
 gimp_transform_tool_key_press (GimpTool    *tool,
                                GdkEventKey *kevent,
                                GimpDisplay *gdisp)
@@ -534,17 +530,16 @@ gimp_transform_tool_key_press (GimpTool    *tool,
         case GDK_KP_Enter:
         case GDK_Return:
           gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, trans_tool);
-          break;
+          return TRUE;
 
         case GDK_Delete:
         case GDK_BackSpace:
           gimp_transform_tool_response (NULL, RESPONSE_RESET, trans_tool);
-          break;
-
-        default:
-          break;
+          return TRUE;
         }
     }
+
+  return FALSE;
 }
 
 static void

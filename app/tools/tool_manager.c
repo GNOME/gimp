@@ -328,23 +328,25 @@ tool_manager_motion_active (Gimp            *gimp,
     }
 }
 
-void
+gboolean
 tool_manager_key_press_active (Gimp        *gimp,
                                GdkEventKey *kevent,
                                GimpDisplay *gdisp)
 {
   GimpToolManager *tool_manager;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
 
   tool_manager = tool_manager_get (gimp);
 
   if (tool_manager->active_tool)
     {
-      gimp_tool_key_press (tool_manager->active_tool,
-                           kevent,
-                           gdisp);
+      return gimp_tool_key_press (tool_manager->active_tool,
+                                  kevent,
+                                  gdisp);
     }
+
+  return FALSE;
 }
 
 void

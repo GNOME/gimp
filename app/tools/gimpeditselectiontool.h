@@ -33,15 +33,15 @@ typedef enum
 } EditType;
 
 
-void   init_edit_selection (GimpTool       *tool,
-                            GimpDisplay    *gdisp,
-                            GimpCoords     *coords,
-                            EditType        edit_type);
+void       init_edit_selection (GimpTool       *tool,
+                                GimpDisplay    *gdisp,
+                                GimpCoords     *coords,
+                                EditType        edit_type);
 
 
-void   gimp_edit_selection_tool_key_press (GimpTool       *tool,
-                                           GdkEventKey    *kevent,
-                                           GimpDisplay    *gdisp);
+gboolean   gimp_edit_selection_tool_key_press (GimpTool       *tool,
+                                               GdkEventKey    *kevent,
+                                               GimpDisplay    *gdisp);
 
 
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

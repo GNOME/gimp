@@ -86,9 +86,6 @@ static void   gimp_paint_tool_motion         (GimpTool            *tool,
                                               guint32              time,
                                               GdkModifierType      state,
                                               GimpDisplay         *gdisp);
-static void   gimp_paint_tool_key_press      (GimpTool            *tool,
-                                              GdkEventKey         *kevent,
-                                              GimpDisplay         *gdisp);
 static void   gimp_paint_tool_modifier_key   (GimpTool            *tool,
                                               GdkModifierType      key,
                                               gboolean             press,
@@ -169,7 +166,6 @@ gimp_paint_tool_class_init (GimpPaintToolClass *klass)
   tool_class->button_press   = gimp_paint_tool_button_press;
   tool_class->button_release = gimp_paint_tool_button_release;
   tool_class->motion         = gimp_paint_tool_motion;
-  tool_class->key_press      = gimp_paint_tool_key_press;
   tool_class->modifier_key   = gimp_paint_tool_modifier_key;
   tool_class->oper_update    = gimp_paint_tool_oper_update;
   tool_class->cursor_update  = gimp_paint_tool_cursor_update;
@@ -546,40 +542,6 @@ gimp_paint_tool_motion (GimpTool        *tool,
   paint_tool->brush_y = coords->y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-}
-
-static void
-gimp_paint_tool_key_press (GimpTool     *tool,
-                           GdkEventKey  *kevent,
-                           GimpDisplay  *gdisp)
-{
-  if (tool->gdisp)
-    {
-      GimpContext *context = GIMP_CONTEXT (tool->tool_info->tool_options);
-      gdouble      opacity;
-
-      opacity = gimp_context_get_opacity (context);
-
-      switch (kevent->keyval)
-        {
-        case GDK_Left:
-          opacity = CLAMP (opacity - 0.01, 0, 1);
-          break;
-        case GDK_Right:
-          opacity = CLAMP (opacity + 0.01, 0, 1);
-          break;
-        case GDK_Up:
-          opacity = CLAMP (opacity + 0.1, 0, 1);
-          break;
-        case GDK_Down:
-          opacity = CLAMP (opacity - 0.1, 0, 1);
-          break;
-        default:
-          break;
-        }
-
-      gimp_context_set_opacity (context, opacity);
-    }
 }
 
 static void

@@ -38,6 +38,7 @@
 
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollers.h"
+#include "gimpcontrollerkeyboard.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpenumaction.h"
 #include "gimpuimanager.h"
@@ -55,6 +56,7 @@ struct _GimpControllerManager
   GimpContainer  *controllers;
   GQuark          event_mapped_id;
   GimpController *wheel;
+  GimpController *keyboard;
   GimpUIManager  *ui_manager;
 };
 
@@ -122,6 +124,7 @@ gimp_controllers_init (Gimp *gimp)
   }
 
   g_type_class_ref (GIMP_TYPE_CONTROLLER_WHEEL);
+  g_type_class_ref (GIMP_TYPE_CONTROLLER_KEYBOARD);
 }
 
 void
@@ -133,6 +136,7 @@ gimp_controllers_exit (Gimp *gimp)
   g_object_set_data (G_OBJECT (gimp), GIMP_CONTROLLER_MANAGER_DATA_KEY, NULL);
 
   g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONTROLLER_WHEEL));
+  g_type_class_unref (g_type_class_peek (GIMP_TYPE_CONTROLLER_KEYBOARD));
 }
 
 void
@@ -247,6 +251,21 @@ gimp_controllers_get_wheel (Gimp *gimp)
   return manager->wheel;
 }
 
+GimpController *
+gimp_controllers_get_keyboard (Gimp *gimp)
+{
+  GimpControllerManager *manager;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
+  manager = gimp_controller_manager_get (gimp);
+
+  g_return_val_if_fail (manager != NULL, NULL);
+
+  return manager->keyboard;
+}
+
+
 /*  private functions  */
 
 static GimpControllerManager *
@@ -274,6 +293,8 @@ gimp_controllers_add (GimpContainer         *container,
 {
   if (GIMP_IS_CONTROLLER_WHEEL (info->controller))
     manager->wheel = info->controller;
+  else if (GIMP_IS_CONTROLLER_KEYBOARD (info->controller))
+    manager->keyboard = info->controller;
 }
 
 static void
@@ -283,6 +304,8 @@ gimp_controllers_remove (GimpContainer         *container,
 {
   if (info->controller == manager->wheel)
     manager->wheel = NULL;
+  else if (info->controller == manager->keyboard)
+    manager->keyboard = NULL;
 }
 
 static gboolean

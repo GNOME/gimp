@@ -1,3 +1,31 @@
+2004-06-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.[ch]
+	* app/tools/tool_manager.[ch]: added boolean return value to
+	GimpTool::key_press() which indicates if the event was handled.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpeditselectiontool.[ch]
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c: return TRUE if the key event was handled.
+
+	* app/tools/gimppainttool.c: removed key_press() implementation.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcontrollerkeyboard.[ch]: new controller class
+	which takes GdkEventKey and emits controller events for all
+	combinations of modifiers and cursor keys.
+
+	* app/widgets/gimpcontrollers.[ch]: added new function
+	gimp_controllers_get_keyboard().
+
+	* app/display/gimpdisplayshell-callbacks.c: if a key event was not
+	handled by the active tool, dispatch it to the keyboard controller.
+
+	* etc/controllerrc: add a keyboard controller which is configured
+	to do the same as the removed gimp_paint_tool_key_press().
+
 2004-06-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimp/gimpdrawable.c:  added some documentation for

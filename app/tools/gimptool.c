@@ -74,7 +74,7 @@ static void     gimp_tool_real_motion         (GimpTool        *tool,
                                                guint32          time,
                                                GdkModifierType  state,
                                                GimpDisplay     *gdisp);
-static void     gimp_tool_real_key_press      (GimpTool        *tool,
+static gboolean gimp_tool_real_key_press      (GimpTool        *tool,
                                                GdkEventKey     *kevent,
                                                GimpDisplay     *gdisp);
 static void     gimp_tool_real_modifier_key   (GimpTool        *tool,
@@ -276,11 +276,12 @@ gimp_tool_real_motion (GimpTool        *tool,
 {
 }
 
-static void
+static gboolean
 gimp_tool_real_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *gdisp)
 {
+  return FALSE;
 }
 
 static void
@@ -442,16 +443,16 @@ gimp_tool_set_focus_display (GimpTool    *tool,
     }
 }
 
-void
+gboolean
 gimp_tool_key_press (GimpTool    *tool,
                      GdkEventKey *kevent,
                      GimpDisplay *gdisp)
 {
-  g_return_if_fail (GIMP_IS_TOOL (tool));
-  g_return_if_fail (GIMP_IS_DISPLAY (gdisp));
-  g_return_if_fail (gdisp == tool->focus_display);
+  g_return_val_if_fail (GIMP_IS_TOOL (tool), FALSE);
+  g_return_val_if_fail (GIMP_IS_DISPLAY (gdisp), FALSE);
+  g_return_val_if_fail (gdisp == tool->focus_display, FALSE);
 
-  GIMP_TOOL_GET_CLASS (tool)->key_press (tool, kevent, gdisp);
+  return GIMP_TOOL_GET_CLASS (tool)->key_press (tool, kevent, gdisp);
 }
 
 static void

@@ -113,9 +113,6 @@ static void    gimp_edit_selection_tool_motion         (GimpTool        *tool,
                                                         guint32          time,
                                                         GdkModifierType  state,
                                                         GimpDisplay     *gdisp);
-void           gimp_edit_selection_tool_key_press      (GimpTool        *tool,
-                                                        GdkEventKey     *kevent,
-                                                        GimpDisplay     *gdisp);
 
 static void    gimp_edit_selection_tool_draw           (GimpDrawTool    *tool);
 
@@ -1051,7 +1048,7 @@ process_event_queue_keys (GdkEventKey *kevent,
 #undef FILTER_MAX_KEYS
 }
 
-void
+gboolean
 gimp_edit_selection_tool_key_press (GimpTool    *tool,
 				    GdkEventKey *kevent,
 				    GimpDisplay *gdisp)
@@ -1071,7 +1068,7 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
       kevent->keyval != GDK_Right &&
       kevent->keyval != GDK_Up &&
       kevent->keyval != GDK_Down)
-    return;
+    return FALSE;
 
   /*  check for mask translation first because the translate_layer
    *  modifiers match the translate_mask ones...
@@ -1216,7 +1213,7 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
     }
 
   if (! item)
-    return;
+    return TRUE;
 
   switch (edit_type)
     {
@@ -1297,4 +1294,6 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
     gimp_undo_refresh_preview (undo);
 
   gimp_image_flush (gdisp->gimage);
+
+  return TRUE;
 }

@@ -46,6 +46,7 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimpcontrollers.h"
+#include "widgets/gimpcontrollerkeyboard.h"
 #include "widgets/gimpcontrollerwheel.h"
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpdevices.h"
@@ -1129,11 +1130,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           case GDK_Right:
           case GDK_Up:
           case GDK_Down:
-            if (! gimp_image_is_empty (gimage))
+            if (gimp_image_is_empty (gimage) ||
+                ! tool_manager_key_press_active (gimp,
+                                                 kevent,
+                                                 gdisp))
               {
-                tool_manager_key_press_active (gimp,
-                                               kevent,
-                                               gdisp);
+                GimpController *keyboard;
+
+                keyboard = gimp_controllers_get_keyboard (gimp);
+
+                if (keyboard)
+                  gimp_controller_keyboard_key_press (GIMP_CONTROLLER_KEYBOARD (keyboard),
+                                                      kevent);
               }
 
             return_val = TRUE;

@@ -70,79 +70,79 @@ enum
 };
 
 
-static void   gimp_crop_tool_class_init     (GimpCropToolClass *klass);
-static void   gimp_crop_tool_init           (GimpCropTool      *crop_tool);
+static void     gimp_crop_tool_class_init     (GimpCropToolClass *klass);
+static void     gimp_crop_tool_init           (GimpCropTool      *crop_tool);
 
-static void   gimp_crop_tool_finalize       (GObject         *object);
+static void     gimp_crop_tool_finalize       (GObject         *object);
 
-static void   gimp_crop_tool_control        (GimpTool        *tool,
-                                             GimpToolAction   action,
-                                             GimpDisplay     *gdisp);
-static void   gimp_crop_tool_button_press   (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             guint32          time,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
-static void   gimp_crop_tool_button_release (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             guint32          time,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
-static void   gimp_crop_tool_motion         (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             guint32          time,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
-static void   gimp_crop_tool_key_press      (GimpTool        *tool,
-                                             GdkEventKey     *kevent,
-                                             GimpDisplay     *gdisp);
-static void   gimp_crop_tool_modifier_key   (GimpTool        *tool,
-                                             GdkModifierType  key,
-                                             gboolean         press,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
-static void   gimp_crop_tool_oper_update    (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
-static void   gimp_crop_tool_cursor_update  (GimpTool        *tool,
-                                             GimpCoords      *coords,
-                                             GdkModifierType  state,
-                                             GimpDisplay     *gdisp);
+static void     gimp_crop_tool_control        (GimpTool        *tool,
+                                               GimpToolAction   action,
+                                               GimpDisplay     *gdisp);
+static void     gimp_crop_tool_button_press   (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+                                               GdkModifierType  state,
+                                               GimpDisplay     *gdisp);
+static void     gimp_crop_tool_button_release (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+                                               GdkModifierType  state,
+                                               GimpDisplay     *gdisp);
+static void     gimp_crop_tool_motion         (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               guint32          time,
+                                               GdkModifierType  state,
+                                               GimpDisplay     *gdisp);
+static gboolean gimp_crop_tool_key_press      (GimpTool        *tool,
+                                               GdkEventKey     *kevent,
+                                               GimpDisplay     *gdisp);
+static void     gimp_crop_tool_modifier_key   (GimpTool        *tool,
+                                               GdkModifierType  key,
+                                               gboolean         press,
+                                               GdkModifierType  state,
+                                               GimpDisplay     *gdisp);
+static void     gimp_crop_tool_oper_update    (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               GdkModifierType  state,
+                                               GimpDisplay     *gdisp);
+static void     gimp_crop_tool_cursor_update  (GimpTool        *tool,
+                                               GimpCoords      *coords,
+                                               GdkModifierType  state,
+                                               GimpDisplay     *gdisp);
 
-static void   gimp_crop_tool_draw           (GimpDrawTool    *draw_tool);
+static void     gimp_crop_tool_draw           (GimpDrawTool    *draw_tool);
 
 /*  Crop helper functions  */
-static void   crop_tool_crop_image          (GimpImage       *gimage,
-                                             GimpContext     *context,
-                                             gint             x1,
-                                             gint             y1,
-                                             gint             x2,
-                                             gint             y2,
-                                             gboolean         layer_only,
-                                             GimpCropMode     crop_mode);
+static void     crop_tool_crop_image          (GimpImage       *gimage,
+                                               GimpContext     *context,
+                                               gint             x1,
+                                               gint             y1,
+                                               gint             x2,
+                                               gint             y2,
+                                               gboolean         layer_only,
+                                               GimpCropMode     crop_mode);
 
-static void   crop_recalc                   (GimpCropTool    *crop);
-static void   crop_start                    (GimpCropTool    *crop);
+static void     crop_recalc                   (GimpCropTool    *crop);
+static void     crop_start                    (GimpCropTool    *crop);
 
 /*  Crop dialog functions  */
-static void   crop_info_update              (GimpCropTool    *crop);
-static void   crop_info_create              (GimpCropTool    *crop);
-static void   crop_response                 (GtkWidget       *widget,
-                                             gint             response_id,
-                                             GimpCropTool    *crop);
+static void     crop_info_update              (GimpCropTool    *crop);
+static void     crop_info_create              (GimpCropTool    *crop);
+static void     crop_response                 (GtkWidget       *widget,
+                                               gint             response_id,
+                                               GimpCropTool    *crop);
 
-static void   crop_selection_callback       (GtkWidget       *widget,
-                                             GimpCropTool    *crop);
-static void   crop_automatic_callback       (GtkWidget       *widget,
-                                             GimpCropTool    *crop);
+static void     crop_selection_callback       (GtkWidget       *widget,
+                                               GimpCropTool    *crop);
+static void     crop_automatic_callback       (GtkWidget       *widget,
+                                               GimpCropTool    *crop);
 
-static void   crop_origin_changed           (GtkWidget       *widget,
-                                             GimpCropTool    *crop);
-static void   crop_size_changed             (GtkWidget       *widget,
-                                             GimpCropTool    *crop);
-static void   crop_aspect_changed           (GtkWidget       *widget,
-                                             GimpCropTool    *crop);
+static void     crop_origin_changed           (GtkWidget       *widget,
+                                               GimpCropTool    *crop);
+static void     crop_size_changed             (GtkWidget       *widget,
+                                               GimpCropTool    *crop);
+static void     crop_aspect_changed           (GtkWidget       *widget,
+                                               GimpCropTool    *crop);
 
 
 static GimpDrawToolClass *parent_class = NULL;
@@ -514,7 +514,7 @@ gimp_crop_tool_motion (GimpTool        *tool,
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
-static void
+static gboolean
 gimp_crop_tool_key_press (GimpTool    *tool,
                           GdkEventKey *kevent,
                           GimpDisplay *gdisp)
@@ -527,7 +527,7 @@ gimp_crop_tool_key_press (GimpTool    *tool,
   gint             max_x, max_y;
 
   if (gdisp != tool->gdisp)
-    return;
+    return FALSE;
 
   inc_x = inc_y = 0;
 
@@ -545,12 +545,14 @@ gimp_crop_tool_key_press (GimpTool    *tool,
     case GDK_Down:
       inc_y = 1;
       break;
+
     case GDK_KP_Enter:
     case GDK_Return:
       crop_response (NULL, options->crop_mode, crop);
-      return;
+      return TRUE;
+
     default:
-      return;
+      return FALSE;
     }
 
   /*  If the shift key is down, move by an accelerated increment  */
@@ -606,6 +608,8 @@ gimp_crop_tool_key_press (GimpTool    *tool,
   crop_recalc (crop);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
+  return TRUE;
 }
 
 static void

@@ -15,6 +15,15 @@
         (map "scroll-up-shift-control-alt"   "context-font-next")))
         (map "scroll-down-shift-control-alt" "context-font-previous")
 
+(GimpControllerInfo "Main Keyboard"
+    (enabled yes)
+    (controller "GimpControllerKeyboard")
+    (mapping
+        (map "key-up"    "context-opacity-increase-skip")
+        (map "key-down"  "context-opacity-decrease-skip")
+        (map "key-left"  "context-opacity-decrease")
+        (map "key-right" "context-opacity-increase")))
+
 # (GimpControllerInfo "LinuxInput"
 #    (enabled yes)
 #    (controller "ControllerLinuxInput"
