@@ -1,4 +1,4 @@
-/* LIBGIMP - The GIMP Library 
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpfontselection.c
@@ -10,10 +10,10 @@
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
  * version 2 of the License, or (at your option) any later version.
- * 
- * This library is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -36,6 +36,7 @@
 
 #include "core/gimpmarshal.h"
 
+#include "gimphelp-ids.h"
 #include "gimpfontselection.h"
 #include "gimpfontselection-dialog.h"
 
@@ -73,7 +74,7 @@ enum
 static guint gimp_font_selection_signals[LAST_SIGNAL] = { 0 };
 
 static GtkHBoxClass  *parent_class    = NULL;
-static PangoContext  *default_context = NULL; 
+static PangoContext  *default_context = NULL;
 
 
 GType
@@ -96,11 +97,11 @@ gimp_font_selection_get_type (void)
 	(GInstanceInitFunc) gimp_font_selection_init,
       };
 
-      fontsel_type = g_type_register_static (GTK_TYPE_HBOX, 
-                                             "GimpFontSelection", 
+      fontsel_type = g_type_register_static (GTK_TYPE_HBOX,
+                                             "GimpFontSelection",
                                              &fontsel_info, 0);
     }
-  
+
   return fontsel_type;
 }
 
@@ -115,7 +116,7 @@ gimp_font_selection_class_init (GimpFontSelectionClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  gimp_font_selection_signals[FONT_CHANGED] = 
+  gimp_font_selection_signals[FONT_CHANGED] =
     g_signal_new ("font_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -124,7 +125,7 @@ gimp_font_selection_class_init (GimpFontSelectionClass *klass)
 		  gimp_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  gimp_font_selection_signals[ACTIVATE] = 
+  gimp_font_selection_signals[ACTIVATE] =
     g_signal_new ("activate",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST | G_SIGNAL_ACTION,
@@ -169,7 +170,7 @@ gimp_font_selection_init (GimpFontSelection *fontsel)
 
   gimp_help_set_help_data (button,
 			   _("Click to open the Font Selection Dialog"),
-			   "dialogs/font_selection.html");
+			   GIMP_HELP_FONT_DIALOG);
 
   image = gtk_image_new_from_stock (GTK_STOCK_SELECT_FONT, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (button), image);
@@ -218,7 +219,7 @@ gimp_font_selection_new (PangoContext *context)
 
   fontsel->context = context;
   g_object_ref (fontsel->context);
-  
+
   return GTK_WIDGET (fontsel);
 }
 
@@ -251,9 +252,9 @@ gimp_font_selection_real_font_changed (GimpFontSelection *fontsel)
 
 /**
  * gimp_font_selection_set_fontname:
- * @fontsel: 
- * @fontname: 
- * 
+ * @fontsel:
+ * @fontname:
+ *
  * This function expects a @fontname in the format "[FAMILY-LIST]
  * [STYLE-OPTIONS]". It causes the font selector to emit the
  * "font_changed" signal.
@@ -296,10 +297,10 @@ gimp_font_selection_get_fontname (GimpFontSelection *fontsel)
 
 /**
  * gimp_font_selection_set_font_desc:
- * @fontsel: 
- * @font_desc: 
- * 
- * This function does not check if there is a font matching the 
+ * @fontsel:
+ * @font_desc:
+ *
+ * This function does not check if there is a font matching the
  * new font description. It should only be used with validated
  * font descriptions.
  **/
@@ -310,7 +311,7 @@ gimp_font_selection_set_font_desc (GimpFontSelection          *fontsel,
 
   g_return_if_fail (GIMP_IS_FONT_SELECTION (fontsel));
   g_return_if_fail (font_desc != NULL);
-  
+
   if (!fontsel->font_desc)
     {
       fontsel->font_desc = pango_font_description_copy (font_desc);

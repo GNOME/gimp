@@ -1,3 +1,10 @@
+2003-08-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/info-window.c
+	* app/widgets/gimpfontselection.c
+	* app/widgets/gimpfontselection-dialog.c: replaced the last
+	hardcoded html links by help IDs. Removed trailing whitespace.
+
 2003-08-26  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: Minor code cleanup that

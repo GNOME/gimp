@@ -38,6 +38,7 @@
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "info-dialog.h"
@@ -95,8 +96,8 @@ info_window_close_callback (GtkWidget *widget,
 }
 
 static void
-info_window_page_switch (GtkWidget       *widget, 
-			 GtkNotebookPage *page, 
+info_window_page_switch (GtkWidget       *widget,
+			 GtkNotebookPage *page,
 			 gint             page_num,
                          InfoDialog      *info_win)
 {
@@ -381,7 +382,7 @@ info_window_create (GimpDisplay *gdisp)
                                        GIMP_STOCK_INFO,
                                        _("Image Information"),
 				       gimp_standard_help_func,
-				       "dialogs/info_window.html");
+				       GIMP_HELP_INFO_DIALOG);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (info_win->shell),
 
@@ -468,7 +469,7 @@ info_window_follow_auto (Gimp *gimp)
       info_window_auto = info_window_create (gdisp);
 
       g_signal_connect (context, "display_changed",
-			G_CALLBACK (info_window_change_display), 
+			G_CALLBACK (info_window_change_display),
 			NULL);
 
       info_window_update (gdisp);
@@ -477,10 +478,10 @@ info_window_follow_auto (Gimp *gimp)
   info_dialog_popup (info_window_auto);
 }
 
- 
+
 /* Updates all extended information. */
 
-void  
+void
 info_window_update_extended (GimpDisplay *gdisp,
                              gdouble      tx,
                              gdouble      ty)
@@ -495,7 +496,7 @@ info_window_update_extended (GimpDisplay *gdisp,
   InfoDialog    *info_win;
   gboolean       force_update = FALSE;
   gint           i;
- 
+
   info_win = GIMP_DISPLAY_SHELL (gdisp->shell)->info_dialog;
 
   if (! info_win && info_window_auto != NULL)
@@ -555,7 +556,7 @@ info_window_update_extended (GimpDisplay *gdisp,
 
       g_snprintf (buf, sizeof (buf), "%d", (gint) tx);
       gtk_label_set_text (GTK_LABEL (iwd->pos_labels[0]), buf);
-      
+
       g_snprintf (buf, sizeof (buf), format_buf,
 		  tx * unit_factor / gdisp->gimage->xresolution);
       gtk_label_set_text (GTK_LABEL (iwd->pos_labels[1]), buf);
@@ -566,7 +567,7 @@ info_window_update_extended (GimpDisplay *gdisp,
       g_snprintf (buf, sizeof (buf), format_buf,
 		  ty * unit_factor / gdisp->gimage->yresolution);
       gtk_label_set_text (GTK_LABEL (iwd->pos_labels[3]), buf);
-      
+
     }
 
   /* fill in color information */
@@ -596,7 +597,7 @@ info_window_update_extended (GimpDisplay *gdisp,
           g_snprintf (buf, sizeof (buf), "%d", (gint) color[i]);
           gtk_label_set_text (GTK_LABEL (iwd->rgb_labels[i]), buf);
         }
-      
+
       if (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type))
         {
           g_snprintf (buf, sizeof (buf), "%d (%d%%)",
@@ -734,7 +735,7 @@ info_window_update (GimpDisplay *gdisp)
       g_snprintf (iwd->color_type_str, MAX_BUF, "%s", _("Grayscale"));
       break;
     case GIMP_INDEXED:
-      g_snprintf (iwd->color_type_str, MAX_BUF, "%s (%d %s)", 
+      g_snprintf (iwd->color_type_str, MAX_BUF, "%s (%d %s)",
                   _("Indexed Color"), gdisp->gimage->num_cols, _("colors"));
       break;
     }
@@ -745,7 +746,7 @@ info_window_update (GimpDisplay *gdisp)
     /*  visual class  */
     g_snprintf (iwd->visual_class_str, MAX_BUF, "%s",
                 gettext (visual_classes[visual->type]));
-  
+
     /*  visual depth  */
     g_snprintf (iwd->visual_depth_str, MAX_BUF, "%d", visual->depth);
   }
