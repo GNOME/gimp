@@ -302,7 +302,7 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
   if (gamma->hbox)
     gtk_widget_destroy (gamma->hbox);
 
-  gamma->hbox = gtk_hbox_new (FALSE, 4);
+  gamma->hbox = gtk_hbox_new (FALSE, 6);
 
   g_signal_connect (gamma->hbox, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),

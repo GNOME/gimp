@@ -299,7 +299,7 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
   if (contrast->hbox)
     gtk_widget_destroy (contrast->hbox);
 
-  contrast->hbox = gtk_hbox_new (FALSE, 4);
+  contrast->hbox = gtk_hbox_new (FALSE, 6);
 
   g_signal_connect (contrast->hbox, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),

@@ -303,13 +303,12 @@ cdisplay_proof_configure (GimpColorDisplay *display)
     gtk_widget_destroy (proof->table);
 
   proof->table = gtk_table_new (3, 2, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (proof->table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (proof->table), 6);
 
   g_signal_connect (proof->table, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &proof->table);
-
-  gtk_table_set_col_spacings (GTK_TABLE (proof->table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (proof->table), 2);
 
   proof->combo = gimp_int_combo_box_new (_("Perceptual"),
                                          INTENT_PERCEPTUAL,
@@ -328,13 +327,13 @@ cdisplay_proof_configure (GimpColorDisplay *display)
                     proof);
 
   gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 0,
-                             _("_Intent:"), 1.0, 0.5,
-                             proof->combo, 1, TRUE);
+                             _("_Intent:"), 0.0, 0.5,
+                             proof->combo, 1, FALSE);
 
   entry = gimp_file_entry_new (_("Choose an ICC Color Profile"),
                                proof->filename, FALSE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 1,
-                             _("_Profile:"), 1.0, 0.5,
+                             _("_Profile:"), 0.0, 0.5,
                              entry, 1, FALSE);
 
   g_signal_connect (entry, "filename-changed",

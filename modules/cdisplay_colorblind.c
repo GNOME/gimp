@@ -455,7 +455,7 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   if (colorblind->hbox)
     gtk_widget_destroy (colorblind->hbox);
 
-  colorblind->hbox = gtk_hbox_new (FALSE, 4);
+  colorblind->hbox = gtk_hbox_new (FALSE, 6);
 
   g_signal_connect (colorblind->hbox, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
@@ -482,7 +482,7 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
                     colorblind);
 
   gtk_box_pack_start (GTK_BOX (colorblind->hbox), colorblind->combo,
-                      FALSE, FALSE, 0);
+                      TRUE, TRUE, 0);
   gtk_widget_show (colorblind->combo);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), colorblind->combo);

@@ -150,7 +150,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   GtkTreeViewColumn *column;
   GtkCellRenderer   *rend;
 
-  gtk_box_set_spacing (GTK_BOX (editor), 6);
+  gtk_box_set_spacing (GTK_BOX (editor), 12);
+  gtk_box_set_homogeneous (GTK_BOX (editor), TRUE);
 
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (editor), hbox, TRUE, TRUE, 0);
@@ -188,12 +189,12 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                     G_CALLBACK (gimp_color_display_editor_src_changed),
                     editor);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   editor->add_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), editor->add_button, FALSE, FALSE, 16);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->add_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (editor->add_button, FALSE);
   gtk_widget_show (editor->add_button);
 
@@ -210,7 +211,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
                     editor);
 
   editor->remove_button = gtk_button_new ();
-  gtk_box_pack_start (GTK_BOX (vbox), editor->remove_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), editor->remove_button, TRUE, FALSE, 0);
   gtk_widget_set_sensitive (editor->remove_button, FALSE);
   gtk_widget_show (editor->remove_button);
 
@@ -304,7 +305,7 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   /*  the config frame  */
 
   editor->config_frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (editor), editor->config_frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (editor), editor->config_frame, TRUE, TRUE, 0);
   gtk_widget_show (editor->config_frame);
 
   editor->config_box = gtk_vbox_new (FALSE, 6);
