@@ -32,6 +32,9 @@
 #include "tile_swap.h"
 #include "tile_pvt.h"			/* ick. */
 
+#include "libgimp/gimpintl.h"
+
+
 typedef struct _SwapFile      SwapFile;
 typedef struct _DefSwapFile   DefSwapFile;
 typedef struct _Gap           Gap;
@@ -300,6 +303,28 @@ tile_swap_compress (int swap_num)
   tile_swap_command (NULL, SWAP_COMPRESS);
 }
 
+gboolean
+tile_swap_test ()
+{
+  SwapFile *swap_file;
+  int       swap_num = 1;
+
+  g_assert (initialize == FALSE);
+  swap_file = g_hash_table_lookup (swap_files, &swap_num);
+  g_assert (swap_file->fd == -1);
+  swap_file->fd = open (swap_file->filename,
+      			O_CREAT | O_RDWR | _O_BINARY | _O_TEMPORARY,
+			S_IREAD | S_IWRITE);
+  if (swap_file->fd != -1)
+    {
+      close (swap_file->fd);
+      swap_file->fd = -1;
+      unlink (swap_file->filename);
+      return TRUE;
+    }
+  return FALSE;
+}
+
 static void
 tile_swap_init ()
 {
@@ -389,7 +414,11 @@ tile_swap_open (SwapFile *swap_file)
 
   if (swap_file->fd == -1)
     {
-      g_message ("unable to open swap file...BAD THINGS WILL HAPPEN SOON");
+      g_message (_("Unable to open swap file.  The Gimp has run out of memory\n"
+                   "and cannot use the swap file.  Some parts of your images\n"
+                   "may be corrupted.  Try to save your work using different\n"
+                   "filenames, exit the Gimp and check the location of the\n"
+                   "swap directory in your Preferences."));
       return;
     }
 

@@ -1,3 +1,13 @@
+2001-11-20  Sven Neumann  <sven@gimp.org>
+
+	* app/app_procs.c
+	* app/tile_swap.[ch]: applied a patch from Raphael Quinet that makes
+	us check on startup if a swapfile can be created and to give a better 
+	error message if we run out of memory and are unable to create a swap 
+	file (bug #64835).
+	
+	* app/user_install.c (user_install_run): fixed i18n of error messages. 
+
 2001-11-20  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/gap/Makefile.am: Don't use if !OS_WIN32.

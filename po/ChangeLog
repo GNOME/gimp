@@ -1,3 +1,8 @@
+2001-11-20  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added a new file (with a new message).
+	* de.po: updated german translation.
+
 2001-11-18  Stanislav Brabec  <utx@penguin.cz>
 
 	* cs.po: Updated translation.

@@ -649,6 +649,14 @@ app_init (void)
       message_handler = MESSAGE_BOX;
     }
 
+  /* check if a swap file can be created */
+  if (tile_swap_test () == FALSE)
+    {
+      g_message (_("Unable to open a test swap file.  Please check the\n"
+                   "location and permissions of the swap directory defined\n"
+                   "in your Preferences (currently '%s')."), swap_path);
+    }
+
   color_transfer_init ();
   paint_funcs_setup ();
 

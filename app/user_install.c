@@ -1086,12 +1086,13 @@ user_install_run (void)
   /*  Generate output  */
   g_snprintf (buffer, sizeof (buffer), "%s" G_DIR_SEPARATOR_S USER_INSTALL,
 	      gimp_data_directory ());
+
   if ((err = stat (buffer, &stat_buf)) != 0)
     {
       gchar *str;
       
-      str = g_strdup_printf ("%s\n%s", buffer,
-			     _("does not exist.  Cannot install."));
+      str = g_strdup_printf (_("%s does not exist.\n"
+                               "Cannot install."), buffer);
       add_label (GTK_BOX (log_page), str);
       g_free (str);
 
@@ -1102,8 +1103,8 @@ user_install_run (void)
     {
       gchar *str;
       
-      str = g_strdup_printf ("%s\n%s", buffer,
-			     _("has invalid permissions.  Cannot install."));
+      str = g_strdup_printf (_("%s has invalid permissions.\n"
+                               "Cannot install."), buffer);
       add_label (GTK_BOX (log_page), str);
       g_free (str);
 

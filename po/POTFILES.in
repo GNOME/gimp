@@ -103,6 +103,7 @@ app/shear_tool.c
 app/smudge.c
 app/text_tool.c
 app/threshold.c
+app/tile_swap.c
 app/tips_dialog.c
 app/tool_options.c
 app/tools.c
