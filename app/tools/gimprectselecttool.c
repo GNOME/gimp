@@ -79,8 +79,6 @@ static void   gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_t
                                                       gint                w,
                                                       gint                h);
 
-static void   gimp_rect_select_tool_options_reset    (void);
-
 
 static guint rect_select_signals[LAST_SIGNAL] = { 0 };
 
@@ -227,7 +225,7 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
   if (! rect_options)
     {
       rect_options = selection_options_new (GIMP_TYPE_RECT_SELECT_TOOL,
-                                            gimp_rect_select_tool_options_reset);
+                                            selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_RECT_SELECT_TOOL,
                                           (ToolOptions *) rect_options);
@@ -644,10 +642,4 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
 
   gtk_signal_emit (GTK_OBJECT (rect_tool), rect_select_signals[RECT_SELECT],
                    x, y, w, h);
-}
-
-static void
-gimp_rect_select_tool_options_reset (void)
-{
-  selection_options_reset (rect_options);
 }

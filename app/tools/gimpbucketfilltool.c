@@ -89,7 +89,7 @@ static void   gimp_bucket_fill_tool_init       (GimpBucketFillTool      *bucket_
 static void   gimp_bucket_fill_tool_destroy    (GtkObject      *object);
 
 static BucketOptions * bucket_options_new           (void);
-static void            bucket_options_reset         (void);
+static void            bucket_options_reset         (ToolOptions    *tool_options);
 
 static void   gimp_bucket_fill_tool_button_press    (GimpTool       *tool,
 						     GdkEventButton *bevent,
@@ -193,7 +193,7 @@ gimp_bucket_fill_tool_init (GimpBucketFillTool *bucket_fill_tool)
       tool_manager_register_tool_options (GIMP_TYPE_BUCKET_FILL_TOOL,
 					  (ToolOptions *) bucket_options);
 
-      bucket_options_reset ();
+      bucket_options_reset ((ToolOptions *) bucket_options);
     }
 
   tool->tool_cursor = GIMP_BUCKET_FILL_TOOL_CURSOR;
@@ -209,11 +209,13 @@ gimp_bucket_fill_tool_destroy (GtkObject *object)
 }
 
 static void
-bucket_options_reset (void)
+bucket_options_reset (ToolOptions *tool_options)
 {
-  BucketOptions *options = bucket_options;
+  BucketOptions *options;
 
-  paint_options_reset ((PaintOptions *) options);
+  options = (BucketOptions *) tool_options;
+
+  paint_options_reset (tool_options);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				options->sample_merged_d);

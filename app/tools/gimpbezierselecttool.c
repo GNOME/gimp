@@ -154,7 +154,7 @@ static guint bezier_select_signals[LAST_SIGNAL] = { 0 };
 
 static void  gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass);
 static void  gimp_bezier_select_tool_init       (GimpBezierSelectTool      *bezier_select);
-static void  gimp_bezier_select_tool_options_reset (void);
+
 static void  gimp_bezier_select_tool_destroy    (GtkObject      *object);
 
 static void  gimp_bezier_select_tool_button_press (GimpTool             *tool,
@@ -351,10 +351,6 @@ gimp_bezier_select_tool_class_init (GimpBezierSelectToolClass *klass)
   /*  klass->bezier_select       = gimp_bezier_select_tool_real_bezier_select; */
 }
 
-static void  gimp_bezier_select_tool_options_reset (void)
-{
-}
-
 static void
 gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
 {
@@ -367,7 +363,7 @@ gimp_bezier_select_tool_init (GimpBezierSelectTool *bezier_select)
   if (! bezier_options)
     {
       bezier_options = selection_options_new (GIMP_TYPE_BEZIER_SELECT_TOOL,
-                                            gimp_bezier_select_tool_options_reset);
+					      selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_BEZIER_SELECT_TOOL,
                                           (ToolOptions *) bezier_options);

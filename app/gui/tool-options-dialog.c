@@ -323,5 +323,5 @@ tool_options_dialog_reset_callback (GtkWidget *widget,
     }
 
   if (tool_info->tool_options->reset_func)
-    tool_info->tool_options->reset_func ();
+    tool_info->tool_options->reset_func (tool_info->tool_options);
 }

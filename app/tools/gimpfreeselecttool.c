@@ -67,8 +67,6 @@ static void   gimp_free_select_tool_motion         (GimpTool       *tool,
 
 static void   gimp_free_select_tool_draw           (GimpDrawTool   *draw_tool);
 
-static void   gimp_free_select_tool_options_reset  (void);
-
 static void   gimp_free_select_tool_add_point      (GimpFreeSelectTool *free_sel,
                                                     gint                x,
                                                     gint                y);
@@ -198,7 +196,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
   if (! free_options)
     {
       free_options = selection_options_new (GIMP_TYPE_FREE_SELECT_TOOL,
-                                            gimp_free_select_tool_options_reset);
+                                            selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_FREE_SELECT_TOOL,
                                           (ToolOptions *) free_options);
@@ -376,12 +374,6 @@ gimp_free_select_tool_draw (GimpDrawTool *draw_tool)
                      free_sel->points[i].x,
                      free_sel->points[i].y);
     }
-}
-
-static void
-gimp_free_select_tool_options_reset (void)
-{
-  selection_options_reset (free_options);
 }
 
 static void

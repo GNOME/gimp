@@ -91,7 +91,7 @@ static void   zoom_out                  (gint           *src,
 					 gint            scale);
 
 static MagnifyOptions * magnify_options_new   (void);
-static void             magnify_options_reset (void);
+static void             magnify_options_reset (ToolOptions *tool_options);
 
 
 static MagnifyOptions *magnify_options = NULL;
@@ -196,9 +196,11 @@ gimp_magnify_tool_destroy (GtkObject *object)
 /*  magnify tool options functions  */
 
 static void
-magnify_options_reset (void)
+magnify_options_reset (ToolOptions *tool_options)
 {
-  MagnifyOptions *options = magnify_options;
+  MagnifyOptions *options;
+
+  options = (MagnifyOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->allow_resize_w),
 				options->allow_resize_d);

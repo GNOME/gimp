@@ -84,7 +84,7 @@ static void   gimp_eraser_tool_motion       (GimpPaintTool        *paint_tool,
                                              gboolean              anti_erase);
 
 static EraserOptions * gimp_eraser_tool_options_new   (void);
-static void            gimp_eraser_tool_options_reset (void);
+static void            gimp_eraser_tool_options_reset (ToolOptions *tool_options);
 
 
 
@@ -388,8 +388,7 @@ gimp_eraser_tool_options_new (void)
   EraserOptions *options;
   GtkWidget     *vbox;
 
-  options = g_new (EraserOptions, 1);
-
+  options = g_new0 (EraserOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      GIMP_TYPE_ERASER_TOOL,
 		      gimp_eraser_tool_options_reset);
@@ -424,11 +423,13 @@ gimp_eraser_tool_options_new (void)
 }
 
 static void
-gimp_eraser_tool_options_reset (void)
+gimp_eraser_tool_options_reset (ToolOptions *tool_options)
 {
-  EraserOptions *options = eraser_options;
+  EraserOptions *options;
 
-  paint_options_reset ((PaintOptions *) options);
+  options = (EraserOptions *) tool_options;
+
+  paint_options_reset (tool_options);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->hard_w),
 				options->hard_d);

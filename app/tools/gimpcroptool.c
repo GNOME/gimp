@@ -200,9 +200,11 @@ static void         crop_size_changed       (GtkWidget  *widget,
 /*  Functions  */
 
 static void
-crop_options_reset (void)
+crop_options_reset (ToolOptions *tool_options)
 {
-  CropOptions *options = crop_options;
+  CropOptions *options;
+
+  options = (CropOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->layer_only_w),
 				options->layer_only_d);
@@ -218,10 +220,10 @@ crop_options_new (void)
   GtkWidget   *vbox;
   GtkWidget   *frame;
 
-  /*  the new crop tool options structure  */
-  options = g_new (CropOptions, 1);
+  options = g_new0 (CropOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     crop_options_reset);
+
   options->layer_only    = options->layer_only_d    = FALSE;
   options->allow_enlarge = options->allow_enlarge_d = FALSE;
   options->type          = options->type_d          = CROP_CROP;
@@ -1634,6 +1636,7 @@ gimp_crop_tool_init (GimpCropTool *crop_tool)
   if (! crop_options)
     {
       crop_options = crop_options_new ();
+
       tool_manager_register_tool_options (GIMP_TYPE_CROP_TOOL,
                                          (ToolOptions *) crop_options);
     }

@@ -48,14 +48,6 @@
 #define PENCIL_INCREMENTAL_DEFAULT FALSE
 
 
-typedef struct _PencilOptions PencilOptions;
-
-struct _PencilOptions
-{
-  PaintOptions  paint_options;
-};
-
-
 static void   gimp_pencil_tool_class_init (GimpPencilToolClass *klass);
 static void   gimp_pencil_tool_init       (GimpPencilTool      *pancil);
 
@@ -67,14 +59,11 @@ static void   gimp_pencil_tool_motion (GimpPaintTool        *paint_tool,
                                        PaintPressureOptions *pressure_options,
                                        gboolean              incremental);
 
-static PencilOptions * gimp_pencil_tool_options_new   (void);
-static void            gimp_pencil_tool_options_reset (void);
-
 
 /*  private variables  */
 static gboolean  non_gui_incremental = PENCIL_INCREMENTAL_DEFAULT;
 
-static PencilOptions *pencil_options = NULL; 
+static PaintOptions *pencil_options = NULL; 
 
 static GimpPaintToolClass *parent_class = NULL;
 
@@ -142,7 +131,8 @@ gimp_pencil_tool_init (GimpPencilTool *pencil)
 
   if (! pencil_options)
     {
-      pencil_options = gimp_pencil_tool_options_new ();
+      pencil_options = paint_options_new (GIMP_TYPE_PENCIL_TOOL,
+					  paint_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_PENCIL_TOOL,
                                           (ToolOptions *) pencil_options);
@@ -164,8 +154,8 @@ gimp_pencil_tool_paint (GimpPaintTool *paint_tool,
 
   if (pencil_options)
     {
-      pressure_options = pencil_options->paint_options.pressure_options;
-      incremental      = pencil_options->paint_options.incremental;
+      pressure_options = pencil_options->pressure_options;
+      incremental      = pencil_options->incremental;
     }
   else
     {
@@ -307,27 +297,4 @@ pencil_non_gui (GimpDrawable *drawable,
     }
 
   return FALSE;
-}
-
-
-/*  tool options stuff  */
-
-static PencilOptions *
-gimp_pencil_tool_options_new (void)
-{
-  PencilOptions *options;
-
-  options = g_new0 (PencilOptions, 1);
-
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_PENCIL_TOOL,
-		      gimp_pencil_tool_options_reset);
-
-  return options;
-}
-
-static void
-gimp_pencil_tool_options_reset (void)
-{
-  paint_options_reset ((PaintOptions *) pencil_options);
 }

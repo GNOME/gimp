@@ -195,7 +195,7 @@ typedef         GSList              PathUndo;
 typedef void       (* TileValidateProc)         (TileManager *tm,
 						 Tile        *tile);
 
-typedef void       (* ToolOptionsResetFunc)     (void);
+typedef void       (* ToolOptionsResetFunc)     (ToolOptions *tool_options);
 
 typedef void       (* GimpProgressFunc)         (gint         min,
 						 gint         max,

@@ -155,8 +155,6 @@ static void   gimp_iscissors_tool_draw           (GimpDrawTool      *draw_tool);
 
 static IScissorsOptions * iscissors_options_new  (void);
 
-static void          iscissors_options_reset   (void);
-
 static void          iscissors_convert         (GimpIscissorsTool *iscissors,
                                                 GDisplay          *gdisp);
 static TileManager * gradient_map_new          (GimpImage         *gimage);
@@ -377,14 +375,6 @@ gimp_iscissors_tool_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-static void
-iscissors_options_reset (void)
-{
-  IScissorsOptions *options = iscissors_options;
-
-  selection_options_reset ((SelectionOptions *) options);
-}
-
 static IScissorsOptions *
 iscissors_options_new (void)
 {
@@ -395,7 +385,7 @@ iscissors_options_new (void)
 
   selection_options_init ((SelectionOptions *) options,
 			  GIMP_TYPE_ISCISSORS_TOOL,
-			  iscissors_options_reset);
+			  selection_options_reset);
 
   return options;
 }

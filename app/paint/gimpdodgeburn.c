@@ -174,11 +174,13 @@ gimp_dodgeburn_tool_get_type (void)
 }
 
 static void
-gimp_dodgeburn_tool_options_reset (void)
+gimp_dodgeburn_tool_options_reset (ToolOptions *tool_options)
 {
-  DodgeBurnOptions *options = dodgeburn_options;
+  DodgeBurnOptions *options;
 
-  paint_options_reset ((PaintOptions *) options);
+  options = (DodgeBurnOptions *) tool_options;
+
+  paint_options_reset (tool_options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->exposure_w),
 			    options->exposure_d);
@@ -199,7 +201,6 @@ gimp_dodgeburn_tool_options_new (void)
   GtkWidget *scale;
   GtkWidget *frame;
 
-  /*  the new dodgeburn tool options structure  */
   options = g_new0 (DodgeBurnOptions, 1);
   paint_options_init ((PaintOptions *) options,
 		      GIMP_TYPE_DODGEBURN_TOOL,
@@ -293,7 +294,8 @@ gimp_dodgeburn_tool_paint (GimpPaintTool    *paint_tool,
       gimp_dodgeburn_tool_motion (paint_tool, 
 			          dodgeburn_options->paint_options.pressure_options,
 			          dodgeburn_options->exposure, 
-				  dodgeburn_options->lut, drawable);
+				  dodgeburn_options->lut,
+				  drawable);
       break;
 
     case FINISH_PAINT:

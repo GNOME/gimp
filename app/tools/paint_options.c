@@ -136,7 +136,9 @@ paint_options_init (PaintOptions         *options,
   options->context          = tool_info->context;
   options->incremental_w    = NULL;
   options->incremental      = options->incremental_d = FALSE;
+  options->incremental_save = FALSE;
   options->pressure_options = NULL;
+  options->gradient_options = NULL;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -262,9 +264,12 @@ paint_options_new (GtkType               tool_type,
 }
 
 void
-paint_options_reset (PaintOptions *options)
+paint_options_reset (ToolOptions *tool_options)
 {
-  GimpContext *default_context;
+  PaintOptions *options;
+  GimpContext  *default_context;
+
+  options = (PaintOptions *) tool_options;
 
   default_context = gimp_context_get_default ();
 
@@ -841,23 +846,18 @@ static void
 paint_gradient_options_gradient_toggle_callback (GtkWidget    *widget,
                                                  PaintOptions *options)
 {
-#ifdef __GNUC__
-#warning (FIXME make incremental_save part of the struct)
-#endif
-  static gboolean incremental_save = FALSE;
-
   gimp_toggle_button_update (widget, &options->gradient_options->use_gradient);
 
   if (options->gradient_options->use_gradient)
     {
-      incremental_save = options->incremental;
-      gtk_toggle_button_set_active
-	(GTK_TOGGLE_BUTTON (options->incremental_w), TRUE);
+      options->incremental_save = options->incremental;
+
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				    TRUE);
     }
   else
     {
-      gtk_toggle_button_set_active
-	(GTK_TOGGLE_BUTTON (options->incremental_w),
-	 incremental_save);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
+				    options->incremental_save);
     }
 }

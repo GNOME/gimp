@@ -167,7 +167,7 @@ static void    gimp_transform_tool_draw        (GimpDrawTool           *draw_too
 static void    gimp_transform_tool_change_type (GtkType new_type);
 
 static TransformOptions * transform_options_new   (void);
-static void               transform_options_reset (void);
+static void               transform_options_reset (ToolOptions *tool_options);
 
 
 /*  variables  */
@@ -278,7 +278,7 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 					  (ToolOptions *) transform_options);
 
       /*  press all default buttons  */
-      transform_options_reset ();
+      transform_options_reset ((ToolOptions *) transform_options);
     }
 }
 
@@ -1821,9 +1821,11 @@ gimp_transform_tool_grid_density_callback (GtkWidget *widget,
 }
 
 static void
-transform_options_reset (void)
+transform_options_reset (ToolOptions *tool_options)
 {
-  TransformOptions *options = transform_options;
+  TransformOptions *options;
+
+  options = (TransformOptions *) tool_options;
 
   /* FIXME this is gross. */
   gtk_toggle_button_set_active (((options->type_d == GIMP_TYPE_ROTATE_TOOL) ?
@@ -1863,12 +1865,11 @@ transform_options_new (void)
   GtkWidget *fbox;
   GtkWidget *grid_density;
 
-  /*  the new transform tool options structure  */
   options = g_new0 (TransformOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     transform_options_reset);
 
-  options->type      = options->type_d      = GIMP_TYPE_SCALE_TOOL; //GIMP_TYPE_ROTATE_TOOL;
+  options->type      = options->type_d      = GIMP_TYPE_SCALE_TOOL; /* FIXME: GIMP_TYPE_ROTATE_TOOL; */
   options->smoothing = options->smoothing_d = TRUE;
   options->showpath  = options->showpath_d  = TRUE;
   options->clip      = options->clip_d      = FALSE;

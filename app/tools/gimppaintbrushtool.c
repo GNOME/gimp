@@ -49,14 +49,6 @@
 #define PAINTBRUSH_DEFAULT_INCREMENTAL FALSE
 
 
-typedef struct _PaintbrushOptions PaintbrushOptions;
-
-struct _PaintbrushOptions
-{
-  PaintOptions  paint_options;
-};
-
-
 static void   gimp_paintbrush_tool_class_init (GimpPaintbrushToolClass *klass);
 static void   gimp_paintbrush_tool_init       (GimpPaintbrushTool      *tool);
 
@@ -73,14 +65,11 @@ static void   gimp_paintbrush_tool_motion     (GimpPaintTool        *paint_tool,
 					       PaintApplicationMode  ,
 					       GradientPaintMode     );
 
-static PaintbrushOptions * gimp_paintbrush_tool_options_new   (void);
-static void                gimp_paintbrush_tool_options_reset (void);
-
 
 /*  local variables  */
 static gboolean non_gui_incremental = PAINTBRUSH_DEFAULT_INCREMENTAL;
 
-static PaintbrushOptions  *paintbrush_options = NULL;
+static PaintOptions  *paintbrush_options = NULL;
 
 static GimpPaintToolClass *parent_class = NULL;
 
@@ -148,7 +137,8 @@ gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
 
   if (! paintbrush_options)
     {
-      paintbrush_options = gimp_paintbrush_tool_options_new ();
+      paintbrush_options = paint_options_new (GIMP_TYPE_PAINTBRUSH_TOOL,
+					      paint_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_PAINTBRUSH_TOOL,
                                           (ToolOptions *) paintbrush_options);
@@ -182,9 +172,9 @@ gimp_paintbrush_tool_paint (GimpPaintTool *paint_tool,
 
   if (paintbrush_options)
     {
-      pressure_options = paintbrush_options->paint_options.pressure_options;
-      gradient_options = paintbrush_options->paint_options.gradient_options;
-      incremental      = paintbrush_options->paint_options.incremental;
+      pressure_options = paintbrush_options->pressure_options;
+      gradient_options = paintbrush_options->gradient_options;
+      incremental      = paintbrush_options->incremental;
     }
   else
     {
@@ -461,29 +451,4 @@ gimp_paintbrush_tool_non_gui (GimpDrawable *drawable,
     }
 
   return FALSE;
-}
-
-
-/*  tool options stuff  */
-
-static PaintbrushOptions *
-gimp_paintbrush_tool_options_new (void)
-{
-  PaintbrushOptions *options;
-
-  /*  the new paint tool options structure  */
-  options = g_new0 (PaintbrushOptions, 1);
-  paint_options_init ((PaintOptions *) options,
-		      GIMP_TYPE_PAINTBRUSH_TOOL,
-		      gimp_paintbrush_tool_options_reset);
-
-  return options;
-}
-
-static void
-gimp_paintbrush_tool_options_reset (void)
-{
-  PaintbrushOptions *options = paintbrush_options;
-
-  paint_options_reset ((PaintOptions *) options);
 }

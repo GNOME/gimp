@@ -302,8 +302,12 @@ selection_options_new (GtkType               tool_type,
 }
 
 void
-selection_options_reset (SelectionOptions *options)
+selection_options_reset (ToolOptions *tool_options)
 {
+  SelectionOptions *options;
+
+  options = (SelectionOptions *) tool_options;
+
   if (options->feather_w)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->feather_w),

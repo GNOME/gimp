@@ -120,7 +120,7 @@ static void   text_tool_cursor_update        (GimpTool       *tool,
 					      GDisplay       *gdisp);
 
 static TextOptions * text_tool_options_new   (void);
-static void          text_tool_options_reset (void);
+static void          text_tool_options_reset (ToolOptions    *tool_options);
 
 static void   text_dialog_create             (void);
 static void   text_dialog_ok_callback        (GtkWidget      *widget,
@@ -241,9 +241,11 @@ gimp_text_tool_destroy (GtkObject *object)
 }
 
 static void
-text_tool_options_reset (void)
+text_tool_options_reset (ToolOptions *tool_options)
 {
-  TextOptions *options = text_tool_options;
+  TextOptions *options;
+
+  options = (TextOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->antialias_w),
 				options->antialias_d);
@@ -257,15 +259,13 @@ static TextOptions *
 text_tool_options_new (void)
 {
   TextOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
-  GtkWidget *sep;
+  GtkWidget   *vbox;
+  GtkWidget   *hbox;
+  GtkWidget   *label;
+  GtkWidget   *spinbutton;
+  GtkWidget   *sep;
 
   options = g_new0 (TextOptions, 1);
-
   tool_options_init ((ToolOptions *) options,
 		     text_tool_options_reset);
 

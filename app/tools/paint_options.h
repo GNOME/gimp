@@ -111,6 +111,8 @@ struct _PaintOptions
   gboolean     incremental_d;
   GtkWidget   *incremental_w;
 
+  gboolean     incremental_save;
+
   /*  the pressure-sensitivity options  */
   PaintPressureOptions *pressure_options;
 
@@ -131,7 +133,7 @@ extern PaintGradientOptions non_gui_gradient_options;
 PaintOptions * paint_options_new    (GtkType               tool_type,
 				     ToolOptionsResetFunc  reset_func);
 
-void           paint_options_reset  (PaintOptions         *options);
+void           paint_options_reset  (ToolOptions          *tool_options);
 
 
 /*  to be used by "derived" paint options only  */

@@ -150,7 +150,7 @@ static void    gimp_blend_tool_draw              (GimpDrawTool   *draw_tool);
 
 static BlendOptions * blend_options_new          (void);
 
-static void    blend_options_reset               (void);
+static void    blend_options_reset               (ToolOptions    *tool_options);
 
 static void    gradient_type_callback            (GtkWidget      *widget,
                                                   gpointer        data);
@@ -676,10 +676,12 @@ blend_options_new (void)
 		     GDK_ACTION_COPY); 
   gimp_dnd_viewable_dest_set (vbox,
                               GIMP_TYPE_GRADIENT,
-                              blend_options_drop_gradient, NULL);
+                              blend_options_drop_gradient,
+			      options);
   gimp_dnd_viewable_dest_set (vbox,
                               GIMP_TYPE_TOOL_INFO,
-                              blend_options_drop_tool, NULL);
+                              blend_options_drop_tool,
+			      options);
 
   /*  the offset scale  */
   table = gtk_table_new (4, 2, FALSE);
@@ -821,31 +823,33 @@ blend_options_new (void)
 }
 
 static void
-blend_options_reset (void)
+blend_options_reset (ToolOptions *tool_options)
 {
-  BlendOptions *options = blend_options;
+  BlendOptions *options;
 
-  paint_options_reset ((PaintOptions *) options);
+  options = (BlendOptions *) tool_options;
+
+  paint_options_reset (tool_options);
 
   options->blend_mode    = options->blend_mode_d;
   options->gradient_type = options->gradient_type_d;
   options->repeat        = options->repeat_d;
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w),
-			       blend_options->blend_mode_d);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w),
+			       options->blend_mode_d);
   gtk_option_menu_set_history (GTK_OPTION_MENU (options->gradient_type_w),
-			       blend_options->gradient_type_d);
-  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->repeat_w),
-			       blend_options->repeat_d);
+			       options->gradient_type_d);
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->repeat_w),
+			       options->repeat_d);
 
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->offset_w),
-			    blend_options->offset_d);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (blend_options->supersample_w),
-				blend_options->supersample_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->max_depth_w),
-			    blend_options->max_depth_d);
-  gtk_adjustment_set_value (GTK_ADJUSTMENT (blend_options->threshold_w),
-			    blend_options->threshold_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->offset_w),
+			    options->offset_d);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->supersample_w),
+				options->supersample_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->max_depth_w),
+			    options->max_depth_d);
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (options->threshold_w),
+			    options->threshold_d);
 }
 
 static void
@@ -863,11 +867,15 @@ blend_options_drop_gradient (GtkWidget    *widget,
 			     GimpViewable *viewable,
 			     gpointer      data)
 {
+  BlendOptions *options;
+
+  options = (BlendOptions *) data;
+
   gimp_context_set_gradient (gimp_context_get_user (), GIMP_GRADIENT (viewable));
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (blend_options->blend_mode_w), 
+  gtk_option_menu_set_history (GTK_OPTION_MENU (options->blend_mode_w), 
 			       CUSTOM_MODE);
-  blend_options->blend_mode = CUSTOM_MODE;
+  options->blend_mode = CUSTOM_MODE;
 }
 
 static void

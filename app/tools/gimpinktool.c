@@ -119,7 +119,7 @@ static void        gimp_ink_tool_init            (GimpInkTool      *tool);
 static void        gimp_ink_tool_destroy         (GtkObject        *object);
 
 static InkOptions * ink_options_new     (void);
-static void         ink_options_reset   (void);
+static void         ink_options_reset   (ToolOptions    *tool_options);
 
 static void        ink_button_press     (GimpTool       *tool,
 					 GdkEventButton *mevent,
@@ -300,7 +300,7 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
       tool_manager_register_tool_options (GIMP_TYPE_INK_TOOL,
 					  (ToolOptions *) ink_options);
 
-      ink_options_reset ();
+      ink_options_reset ((ToolOptions *) ink_options);
     }
 }
 
@@ -333,11 +333,13 @@ ink_type_update (GtkWidget      *radio_button,
 }
 
 static void
-ink_options_reset (void)
+ink_options_reset (ToolOptions *tool_options)
 {
-  InkOptions *options = ink_options;
+  InkOptions *options;
 
-  paint_options_reset ((PaintOptions *) options);
+  options = (InkOptions *) tool_options;
+
+  paint_options_reset (tool_options);
 
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
 			    options->size_d);
@@ -364,21 +366,18 @@ static InkOptions *
 ink_options_new (void)
 {
   InkOptions *options;
+  GtkWidget  *table;
+  GtkWidget  *vbox;
+  GtkWidget  *hbox;
+  GtkWidget  *hbox2;
+  GtkWidget  *radio_button;
+  GtkWidget  *pixmap_widget;
+  GtkWidget  *slider;
+  GtkWidget  *frame;
+  GtkWidget  *darea;
+  GdkPixmap  *pixmap;
 
-  GtkWidget *table;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *hbox2;
-  GtkWidget *radio_button;
-  GtkWidget *pixmap_widget;
-  GtkWidget *slider;
-  GtkWidget *frame;
-  GtkWidget *darea;
-  GdkPixmap *pixmap;
-
-  /*  the new ink tool options structure  */
   options = g_new0 (InkOptions, 1);
-
   paint_options_init ((PaintOptions *) options,
 		      GIMP_TYPE_INK_TOOL,
 		      ink_options_reset);

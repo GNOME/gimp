@@ -87,7 +87,7 @@ static TileManager * gimp_flip_tool_transform     (GimpTransformTool *tool,
 						   TransformState     state);
 
 static FlipOptions * flip_options_new             (void);
-static void          flip_options_reset           (void);
+static void          flip_options_reset           (ToolOptions       *tool_options);
 
 
 static FlipOptions *flip_options = NULL;
@@ -380,11 +380,9 @@ static FlipOptions *
 flip_options_new (void)
 {
   FlipOptions *options;
-
-  GtkWidget *vbox;
-  GtkWidget *frame;
+  GtkWidget   *vbox;
+  GtkWidget   *frame;
  
-  /*  the new flip tool options structure  */
   options = g_new0 (FlipOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     flip_options_reset);
@@ -414,9 +412,11 @@ flip_options_new (void)
 }
 
 static void
-flip_options_reset (void)
+flip_options_reset (ToolOptions *tool_options)
 {
-  FlipOptions *options = flip_options;
+  FlipOptions *options;
+
+  options = (FlipOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->type_w[options->type_d - 1]), TRUE); 
 }

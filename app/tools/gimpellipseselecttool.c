@@ -52,8 +52,6 @@ static void   gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_too
                                                     gint                w,
                                                     gint                h);
 
-static void   gimp_ellipse_select_tool_options_reset (void);
-
 
 static GimpRectSelectToolClass *parent_class = NULL;
 
@@ -184,9 +182,8 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 
   if (! ellipse_options)
     {
-      ellipse_options =
-        selection_options_new (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
-                               gimp_ellipse_select_tool_options_reset);
+      ellipse_options = selection_options_new (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
+					       selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
                                           (ToolOptions *) ellipse_options);
@@ -252,10 +249,4 @@ gimp_ellipse_select_tool_rect_select (GimpRectSelectTool *rect_tool,
                   sel_options->antialias,
                   sel_options->feather,
                   sel_options->feather_radius);
-}
-
-static void
-gimp_ellipse_select_tool_options_reset (void)
-{
-  selection_options_reset (ellipse_options);
 }

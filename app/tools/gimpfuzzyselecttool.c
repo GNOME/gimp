@@ -66,8 +66,6 @@ static void   gimp_fuzzy_select_tool_motion         (GimpTool       *tool,
 
 static void   gimp_fuzzy_select_tool_draw           (GimpDrawTool   *draw_tool);
 
-static void   gimp_fuzzy_select_tool_options_reset  (void);
-
 static GdkSegment * fuzzy_select_calculate     (GimpFuzzySelectTool *fuzzy_sel,
                                                 GDisplay            *gdisp,
                                                 gint                *nsegs);
@@ -453,9 +451,8 @@ gimp_fuzzy_select_tool_init (GimpFuzzySelectTool *fuzzy_select)
 
   if (! fuzzy_options)
     {
-      fuzzy_options =
-        selection_options_new (GIMP_TYPE_FUZZY_SELECT_TOOL,
-                               gimp_fuzzy_select_tool_options_reset);
+      fuzzy_options = selection_options_new (GIMP_TYPE_FUZZY_SELECT_TOOL,
+					     selection_options_reset);
 
       tool_manager_register_tool_options (GIMP_TYPE_FUZZY_SELECT_TOOL,
                                           (ToolOptions *) fuzzy_options);
@@ -691,10 +688,4 @@ gimp_fuzzy_select_tool_draw (GimpDrawTool *draw_tool)
     gdk_draw_segments (draw_tool->win,
                        draw_tool->gc,
                        segs, num_segs);
-}
-
-static void
-gimp_fuzzy_select_tool_options_reset (void)
-{
-  selection_options_reset (fuzzy_options);
 }

@@ -106,7 +106,7 @@ static void       gimp_color_picker_tool_draw           (GimpDrawTool   *draw_to
 
 static GimpColorPickerToolOptions * gimp_color_picker_tool_options_new  (void);
 
-static void       gimp_color_picker_tool_options_reset   	(void);
+static void       gimp_color_picker_tool_options_reset   	(ToolOptions *tool_options);
 static void   gimp_color_picker_tool_info_window_close_callback (GtkWidget *widget,
                                                                  gpointer   data);
 static void       gimp_color_picker_tool_info_update    	(GimpTool   *tool,
@@ -253,9 +253,11 @@ gimp_color_picker_tool_destroy (GtkObject *object)
 }
 
 static void
-gimp_color_picker_tool_options_reset (void)
+gimp_color_picker_tool_options_reset (ToolOptions *tool_options)
 {
-  GimpColorPickerToolOptions *options = gimp_color_picker_tool_options;
+  GimpColorPickerToolOptions *options;
+
+  options = (GimpColorPickerToolOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->sample_merged_w),
 				options->sample_merged_d);
@@ -278,10 +280,10 @@ gimp_color_picker_tool_options_new (void)
   GtkWidget *label;
   GtkWidget *scale;
 
-  /*  the new color picker tool options structure  */
-  options = g_new (GimpColorPickerToolOptions, 1);
+  options = g_new0 (GimpColorPickerToolOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     gimp_color_picker_tool_options_reset);
+
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;
   options->average_radius = options->average_radius_d = 1.0;

@@ -95,14 +95,14 @@ static void   gimp_measure_tool_draw            (GimpDrawTool   *draw_tool);
 
 
 
-static gdouble measure_get_angle                      (gint       dx,
-                                                       gint       dy,
-                                                       gdouble    xres,
-                                                       gdouble    yres);
+static gdouble measure_get_angle                      (gint         dx,
+                                                       gint         dy,
+                                                       gdouble      xres,
+                                                       gdouble      yres);
 static MeasureOptions * measure_tool_options_new      (void);
-static void   measure_tool_options_reset              (void);
-static void   measure_tool_info_window_close_callback (GtkWidget *widget,
-						       gpointer   data);
+static void   measure_tool_options_reset              (ToolOptions *tool_options);
+static void   measure_tool_info_window_close_callback (GtkWidget   *widget,
+						       gpointer     data);
 static void   measure_tool_info_update                (void);
 
 
@@ -779,9 +779,11 @@ gimp_measure_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-measure_tool_options_reset (void)
+measure_tool_options_reset (ToolOptions *tool_options)
 {
-  MeasureOptions *options = measure_tool_options;
+  MeasureOptions *options;
+
+  options = (MeasureOptions *) tool_options;
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->use_info_window_w),
 				options->use_info_window_d);
@@ -793,10 +795,10 @@ measure_tool_options_new (void)
   MeasureOptions *options;
   GtkWidget      *vbox;
 
-  /*  the new measure tool options structure  */
-  options = g_new (MeasureOptions, 1);
+  options = g_new0 (MeasureOptions, 1);
   tool_options_init ((ToolOptions *) options,
 		     measure_tool_options_reset);
+
   options->use_info_window = options->use_info_window_d  = FALSE;
 
     /*  the main vbox  */
