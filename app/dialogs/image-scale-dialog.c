@@ -126,6 +126,7 @@ image_scale_callback (GtkWidget             *widget,
   dialog->width           = width;
   dialog->height          = height;
   dialog->unit            = unit;
+  dialog->interpolation   = interpolation;
   dialog->xresolution     = xresolution;
   dialog->yresolution     = yresolution;
   dialog->resolution_unit = resolution_unit;

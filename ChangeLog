@@ -1,3 +1,8 @@
+2004-11-02  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/image-scale-dialog.c (image_scale_callback): actually
+	use the choosen interpolation type. Fixes bug #157102.
+
 2004-11-02  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dobject.c
