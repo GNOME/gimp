@@ -1,3 +1,7 @@
+2002-11-01  Ole Laursen  <olau@hardworking.dk>
+
+	* da.po: Updated Danish translation.
+
 2002-10-30  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: moved modules to libgimp translation domain.

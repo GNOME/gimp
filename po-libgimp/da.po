@@ -10,8 +10,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp /gnome-cvs\n"
-"POT-Creation-Date: 2002-10-22 20:11+0200\n"
-"PO-Revision-Date: 2002-10-22 20:12+0200\n"
+"POT-Creation-Date: 2002-11-01 21:18+0100\n"
+"PO-Revision-Date: 2002-11-01 21:18+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -165,13 +165,13 @@ msgstr "Ingen"
 msgid "percent"
 msgstr "procent"
 
-#: libgimpmodule/gimpmodule.c:174
+#: libgimpmodule/gimpmodule.c:175
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Indlæser modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:185 libgimpmodule/gimpmodule.c:199
-#: libgimpmodule/gimpmodule.c:224 libgimpmodule/gimpmodule.c:243
+#: libgimpmodule/gimpmodule.c:192 libgimpmodule/gimpmodule.c:285
+#: libgimpmodule/gimpmodule.c:310 libgimpmodule/gimpmodule.c:378
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -180,10 +180,26 @@ msgstr ""
 "Indlæsningsfejl for modul '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:306
+#: libgimpmodule/gimpmodule.c:252
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Springer over modul: '%s'\n"
+
+#: libgimpmodule/gimpmodule.c:355
+msgid "Module error"
+msgstr "Modulfejl"
+
+#: libgimpmodule/gimpmodule.c:356
+msgid "Loaded OK"
+msgstr "Indlæsning lykkedes"
+
+#: libgimpmodule/gimpmodule.c:357
+msgid "Load failed"
+msgstr "Indlæsning mislykkedes"
+
+#: libgimpmodule/gimpmodule.c:358
+msgid "Unloaded OK"
+msgstr "Afvikling lykkedes"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -200,6 +216,77 @@ msgstr "/Sort"
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Hvid"
+
+#. Hue
+#: libgimpwidgets/gimpcolorscales.c:154
+msgid "_H"
+msgstr "_T"
+
+#. Saturation
+#: libgimpwidgets/gimpcolorscales.c:156
+msgid "_S"
+msgstr "_M"
+
+#. Value
+#: libgimpwidgets/gimpcolorscales.c:158
+msgid "_V"
+msgstr "_V"
+
+#. Red
+#: libgimpwidgets/gimpcolorscales.c:160
+msgid "_R"
+msgstr "_R"
+
+#. Green
+#: libgimpwidgets/gimpcolorscales.c:162
+msgid "_G"
+msgstr "_G"
+
+#. Blue
+#: libgimpwidgets/gimpcolorscales.c:164
+msgid "_B"
+msgstr "_B"
+
+#. Alpha
+#: libgimpwidgets/gimpcolorscales.c:166
+msgid "_A"
+msgstr "_A"
+
+#: libgimpwidgets/gimpcolorscales.c:170
+msgid "Hue"
+msgstr "Farvetone"
+
+#: libgimpwidgets/gimpcolorscales.c:171
+msgid "Saturation"
+msgstr "Mætning"
+
+#: libgimpwidgets/gimpcolorscales.c:172
+msgid "Value"
+msgstr "Værdi"
+
+#: libgimpwidgets/gimpcolorscales.c:173
+msgid "Red"
+msgstr "Rød"
+
+#: libgimpwidgets/gimpcolorscales.c:174
+msgid "Green"
+msgstr "Grøn"
+
+#: libgimpwidgets/gimpcolorscales.c:175
+msgid "Blue"
+msgstr "Blå"
+
+#: libgimpwidgets/gimpcolorscales.c:176
+msgid "Alpha"
+msgstr "Alfa"
+
+#: libgimpwidgets/gimpcolorscales.c:240
+msgid "Hexadecimal color notation as used in HTML"
+msgstr "Hexadecimal farvenotation ligesom i HTML"
+
+#: libgimpwidgets/gimpcolorscales.c:254
+msgid "He_x Triplet:"
+msgstr "He_x-triplet:"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
@@ -289,7 +376,7 @@ msgstr "Enhed"
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:879
+#: libgimpwidgets/gimpwidgets.c:976
 msgid ""
 "If the \"Time\" button is not pressed, use this value for random number "
 "generator seed - this allows you to repeat a given \"random\" operation"
@@ -298,11 +385,11 @@ msgstr ""
 "generatoren af tilfældige tal - dette tillader dig at gentage en given "
 "\"tilfældig\" operation"
 
-#: libgimpwidgets/gimpwidgets.c:884
+#: libgimpwidgets/gimpwidgets.c:981
 msgid "_Time"
 msgstr "_Tid"
 
-#: libgimpwidgets/gimpwidgets.c:893
+#: libgimpwidgets/gimpwidgets.c:990
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
@@ -310,27 +397,65 @@ msgstr ""
 "Start generatoren af tilfældige tal med den aktuelle tid - dette garanterer "
 "en god tilfældighed"
 
-#: libgimpwidgets/gimpwidgets.c:1219
+#: libgimpwidgets/gimpwidgets.c:1316
 msgid "Bytes"
 msgstr "Byte"
 
-#: libgimpwidgets/gimpwidgets.c:1220
+#: libgimpwidgets/gimpwidgets.c:1317
 msgid "KiloBytes"
 msgstr "Kilobyte"
 
-#: libgimpwidgets/gimpwidgets.c:1221
+#: libgimpwidgets/gimpwidgets.c:1318
 msgid "MegaBytes"
 msgstr "Megabyte"
 
-#: libgimpwidgets/gimpwidgets.c:1222
+#: libgimpwidgets/gimpwidgets.c:1319
 msgid "GigaBytes"
 msgstr "Gigabyte"
 
-#~ msgid "Paste"
-#~ msgstr "Indsæt"
+#: modules/cdisplay_gamma.c:89
+msgid "Gamma color display filter"
+msgstr "Filter til gammafarvevisning"
 
-#~ msgid "OK"
-#~ msgstr "O.k."
+#: modules/cdisplay_gamma.c:155
+msgid "Gamma"
+msgstr "Gamma"
+
+#: modules/cdisplay_gamma.c:316
+msgid "Gamma:"
+msgstr "Gamma:"
+
+#: modules/cdisplay_highcontrast.c:89
+msgid "High Contrast color display filter"
+msgstr "Filter til højkontrastfarvevisning"
+
+#: modules/cdisplay_highcontrast.c:155
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: modules/cdisplay_highcontrast.c:314
+msgid "Contrast Cycles:"
+msgstr "Kontrastcyklusser:"
+
+#: modules/colorsel_triangle.c:107
+msgid "Painter-style triangle color selector"
+msgstr "Trekantet farvevælger"
+
+#: modules/colorsel_triangle.c:179
+msgid "_Triangle"
+msgstr "_Trekant"
+
+#: modules/colorsel_water.c:103
+msgid "Watercolor style color selector"
+msgstr "Vandfarve-farvevælger"
+
+#: modules/colorsel_water.c:175
+msgid "_Watercolor"
+msgstr "_Vandfarve"
+
+#: modules/colorsel_water.c:249
+msgid "Pressure"
+msgstr "Tryk"
 
 #~ msgid "pixel"
 #~ msgstr "skærmpunkt"
