@@ -174,5 +174,10 @@ void       gimp_draw_tool_draw_lines               (GimpDrawTool   *draw_tool,
                                                     gint            npoints,
                                                     gint            filled);
 
+void       gimp_draw_tool_draw_strokes             (GimpDrawTool   *draw_tool, 
+                                                    GimpCoords     *points,
+                                                    gint            npoints,
+                                                    gint            filled);
+
 
 #endif  /*  __GIMP_DRAW_TOOL_H__  */

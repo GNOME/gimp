@@ -721,6 +721,47 @@ gimp_draw_tool_draw_lines (GimpDrawTool *draw_tool,
   g_free (coords);
 }
 
+void
+gimp_draw_tool_draw_strokes (GimpDrawTool *draw_tool, 
+			     GimpCoords   *points,
+			     gint          npoints,
+			     gint          filled)
+{
+  GimpDisplayShell *shell;
+  GdkPoint         *coords;
+  gint              i;
+  gdouble           sx, sy;
+
+  shell = GIMP_DISPLAY_SHELL (draw_tool->gdisp->shell);
+
+  coords = g_new (GdkPoint, npoints);
+
+  for (i = 0; i < npoints ; i++)
+    {
+      gdisplay_transform_coords_f (draw_tool->gdisp,
+                                   points[i].x, points[i].y,
+                                   &sx, &sy,
+                                   TRUE);
+      coords[i].x = ROUND (sx);
+      coords[i].y = ROUND (sy);
+    }
+
+  if (filled)
+    {
+      gdk_draw_polygon (draw_tool->win,
+                        draw_tool->gc, TRUE,
+                        coords, npoints);
+    }
+  else
+    {
+      gdk_draw_lines (draw_tool->win,
+                      draw_tool->gc,
+                      coords, npoints);
+    }
+
+  g_free (coords);
+}
+
 
 /*  private functions  */
 

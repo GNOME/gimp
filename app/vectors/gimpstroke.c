@@ -336,11 +336,11 @@ gimp_stroke_get_distance (const GimpStroke *stroke,
 }
 
 
-gint
-gimp_stroke_interpolate (const GimpStroke *stroke,
-                          const gdouble      precision,
-                          const gint         max_points,
-                          GimpCoords        *ret_coords)
+GimpCoords *
+gimp_stroke_interpolate (const GimpStroke  *stroke,
+                         const gdouble      precision,
+                         gint              *ret_numcoords,
+                         gboolean          *ret_closed)
 {
   GimpStrokeClass *stroke_class;
 
@@ -349,7 +349,8 @@ gimp_stroke_interpolate (const GimpStroke *stroke,
   stroke_class = GIMP_STROKE_GET_CLASS (stroke);
 
   if (stroke_class->interpolate)
-    return stroke_class->interpolate (stroke, precision, max_points, ret_coords);
+    return stroke_class->interpolate (stroke, precision,
+                                      ret_numcoords, ret_closed);
   else
     g_printerr ("gimp_stroke_interpolate: default implementation\n");
 

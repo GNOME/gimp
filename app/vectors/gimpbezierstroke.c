@@ -75,12 +75,17 @@ static void
 gimp_bezier_stroke_class_init (GimpBezierStrokeClass *klass)
 {
   GObjectClass      *object_class;
+  GimpStrokeClass   *stroke_class;
 
   object_class = G_OBJECT_CLASS (klass);
+  stroke_class = GIMP_STROKE_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->finalize             = gimp_bezier_stroke_finalize;
+
+  stroke_class->interpolate          = gimp_bezier_stroke_interpolate;
+
 }
 
 static void
@@ -117,10 +122,114 @@ gimp_bezier_stroke_new (const GimpCoords *start)
   g_printerr ("Adding at %f, %f\n", start->x, start->y);
   
   anchor->type = 0;    /* FIXME */
-  anchor->active = FALSE;
 
   stroke->anchors = g_list_append (stroke->anchors, anchor);
   return stroke;
+}
+
+
+GimpAnchor *
+gimp_bezier_stroke_extend (GimpBezierStroke *bezier_stroke,
+                           GimpCoords       *coords,
+                           GimpAnchor       *neighbor)
+{
+  GimpAnchor       *anchor;
+  GimpStroke       *stroke;
+  GList            *listneighbor;
+  gint              loose_end;
+
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (bezier_stroke), NULL);
+  g_return_val_if_fail ((neighbor != NULL), NULL);
+
+  stroke = GIMP_STROKE (bezier_stroke);
+
+  listneighbor = g_list_last (stroke->anchors);
+
+  loose_end = 0;
+
+  if (listneighbor->data != neighbor)
+    {
+      listneighbor = g_list_first (stroke->anchors);
+      if (listneighbor->data != neighbor)
+        {
+          listneighbor = NULL;
+          loose_end = 0;
+        }
+      else
+        {
+          loose_end = -1;
+        }
+    }
+  else
+    {
+      loose_end = 1;
+    }
+
+  if (loose_end)
+    {
+      anchor = g_new0 (GimpAnchor, 1);
+      anchor->position.x = coords->x;
+      anchor->position.y = coords->y;
+      anchor->position.pressure = 1;
+      anchor->position.xtilt = 0.5;
+      anchor->position.ytilt = 0.5;
+      anchor->position.wheel = 0.5;
+
+      anchor->type = 0;    /* FIXME */
+
+      g_printerr ("Extending at %f, %f\n", coords->x, coords->y);
+    }
+  else
+    anchor = NULL;
+
+  if (loose_end == 1)
+    stroke->anchors = g_list_append (stroke->anchors, anchor);
+
+  if (loose_end == -1)
+    stroke->anchors = g_list_prepend (stroke->anchors, anchor);
+
+  return anchor;
+}
+
+GimpCoords *
+gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
+                                gdouble            precision,
+                                gint              *ret_numcoords,
+                                gboolean          *ret_closed)
+{
+  gint              count, alloccount;
+  gint              chunksize = 100;
+  GimpCoords       *ret_coords;
+  GimpAnchor       *anchor;
+  GList            *anchorlist;
+
+  g_return_val_if_fail (GIMP_IS_BEZIER_STROKE (stroke), NULL);
+  g_return_val_if_fail (ret_numcoords != NULL, NULL);
+  g_return_val_if_fail (ret_closed != NULL, NULL);
+  
+  count = 0;
+  alloccount = 0;
+  ret_coords = NULL;
+
+  for (anchorlist = stroke->anchors; anchorlist;
+       anchorlist = g_list_next (anchorlist))
+    {
+      if (count >= alloccount)
+        {
+          ret_coords = g_renew (GimpCoords, ret_coords, alloccount + chunksize);
+          alloccount += chunksize;
+        }
+      
+      anchor = anchorlist->data;
+      ret_coords[count] = anchor->position;
+
+      count++;
+    }
+
+  *ret_numcoords = count;
+  *ret_closed    = FALSE;
+
+  return ret_coords;
 }
 
 

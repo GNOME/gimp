@@ -28,7 +28,6 @@ struct _GimpAnchor
   GimpCoords        position;
 
   gint	            type;
-  gboolean          active;
 };
 
 #endif /* __GIMP_ANCHOR_H__ */

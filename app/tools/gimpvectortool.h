@@ -25,12 +25,12 @@
 /*  possible vector functions  */
 typedef enum 
 {
-  VCREATING,
-  VADDING,
-  VMOVING,
-  VMOVING_ALL,
-  VGUIDING,
-  VFINISHED
+  VECTORS_CREATING,
+  VECTORS_ADDING,
+  VECTORS_MOVING,
+  VECTORS_MOVING_ALL,
+  VECTORS_GUIDING,
+  VECTORS_FINISHED
 } VectorFunction;
 
 
@@ -49,19 +49,14 @@ struct _GimpVectorTool
 {
   GimpDrawTool     parent_instance;
 
-  VectorFunction   function;    /*  function we're performing  */
-  gint             last_x;      /*  last x coordinate          */
-  gint             last_y;      /*  last y coordinate          */
-  gint             point;       /*  what are we manipulating?  */
-  gint             num_points;  /*  how many points?           */
-  gint             x[3];        /*  three x coordinates        */
-  gint             y[3];        /*  three y coordinates        */
-  gdouble          angle1;      /*  first angle                */
-  gdouble          angle2;      /*  second angle               */
-
-  GimpAnchor      *cur_anchor;  /*  The current Anchor         */
-  GimpStroke      *cur_stroke;  /*  The current Stroke         */
-  GimpVectors     *vectors;     /*  The current Vector data    */
+  VectorFunction   function;       /*  function we're performing     */
+  gint             last_x;         /*  last x coordinate             */
+  gint             last_y;         /*  last y coordinate             */
+                                                                   
+  GimpAnchor      *cur_anchor;     /*  The current Anchor            */
+  GimpStroke      *cur_stroke;     /*  The current Stroke            */
+  GimpVectors     *vectors;        /*  The current Vector data       */
+  GList           *active_anchors; /*  The currently active anchors  */
 };
 
 struct _GimpVectorToolClass
@@ -75,5 +70,7 @@ void    gimp_vector_tool_register (Gimp                     *gimp,
 
 GType   gimp_vector_tool_get_type (void) G_GNUC_CONST;
 
+void    gimp_vectors_tool_set_vectors (GimpVectorTool *vector_tool,
+                                       GimpVectors    *vectors);
 
 #endif  /*  __GIMP_VECTOR_TOOL_H__  */

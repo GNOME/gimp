@@ -75,10 +75,10 @@ struct _GimpStrokeClass
   gdouble       (* get_distance)         (const GimpStroke  *stroke,
                                           const GimpCoords  *coord);
                                                           
-  gint          (* interpolate)          (const GimpStroke  *stroke,
+  GimpCoords  * (* interpolate)          (const GimpStroke  *stroke,
                                           const gdouble      precision,
-                                          const gint         max_points,
-                                          GimpCoords        *ret_coords);
+                                          gint              *ret_numcoords,
+                                          gboolean          *ret_closed);
                                                           
                                                           
   GimpAnchor  * (* temp_anchor_get)      (const GimpStroke  *stroke);
@@ -122,7 +122,7 @@ void            gimp_stroke_anchor_move_absolute (GimpStroke      *stroke,
                                                    const gint        type);
 
 void            gimp_stroke_anchor_delete      (GimpStroke        *stroke,
-                                                 GimpAnchor         *anchor);
+                                                GimpAnchor         *anchor);
 
 
 /* accessing the shape of the curve */
@@ -130,13 +130,13 @@ void            gimp_stroke_anchor_delete      (GimpStroke        *stroke,
 gdouble         gimp_stroke_get_length         (const GimpStroke  *stroke);
                                                                     
 gdouble         gimp_stroke_get_distance       (const GimpStroke  *stroke,
-                                                 const GimpCoords   *coord);
+                                                const GimpCoords   *coord);
                                                                     
 /* returns the number of valid coordinates */                       
-gint            gimp_stroke_interpolate        (const GimpStroke   *stroke,
-                                                 const gdouble       precision,
-                                                 const gint          max_points,
-                                                 GimpCoords         *ret_coords);
+GimpCoords    * gimp_stroke_interpolate        (const GimpStroke   *stroke,
+                                                gdouble             precision,
+                                                gint               *ret_numcoords,
+                                                gboolean           *ret_closed);
 
 
 /* Allow a singular temorary anchor (marking the "working point")? */
@@ -144,7 +144,7 @@ gint            gimp_stroke_interpolate        (const GimpStroke   *stroke,
 GimpAnchor    * gimp_stroke_temp_anchor_get    (const GimpStroke  *stroke);
                                                                     
 GimpAnchor    * gimp_stroke_temp_anchor_set    (GimpStroke        *stroke,
-                                                 const GimpCoords   *coord);
+                                                const GimpCoords   *coord);
                                                                     
 gboolean        gimp_stroke_temp_anchor_fix    (GimpStroke        *stroke);
 

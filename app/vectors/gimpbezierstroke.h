@@ -53,10 +53,19 @@ struct _GimpBezierStrokeClass
 };
 
 
-GType              gimp_bezier_stroke_get_type          (void) G_GNUC_CONST;
+GType        gimp_bezier_stroke_get_type    (void) G_GNUC_CONST;
                 
                 
-GimpStroke       * gimp_bezier_stroke_new               (const GimpCoords   *start);
+GimpStroke * gimp_bezier_stroke_new         (const GimpCoords   *start);
 
+
+GimpAnchor * gimp_bezier_stroke_extend      (GimpBezierStroke *bezier_stroke,
+                                             GimpCoords       *coords,
+                                             GimpAnchor       *neighbor);
+
+GimpCoords * gimp_bezier_stroke_interpolate (const GimpStroke  *stroke,
+                                             const gdouble      precision,
+                                             gint              *ret_numcoords,
+                                             gboolean          *ret_closed);
 
 #endif /* __GIMP_BEZIER_STROKE_H__ */

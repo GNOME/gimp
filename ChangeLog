@@ -1,3 +1,22 @@
+2002-02-26  Simon Budig  <simon@gimp.org>
+
+	* app/tools/gimpdrawtool.c
+	* app/tools/gimpdrawtool.h: Added function gimp_draw_tool_draw_strokes
+	to be able to draw lines from a GimpCoords array.
+
+	* app/vectors/gimpanchor.h: removed "active", since this should
+	be a GUI thing.
+
+	* app/vectors/gimpstroke.c
+	* app/vectors/gimpstroke.h
+	* app/vectors/gimpbezierstroke.c
+	* app/vectors/gimpbezierstroke.h: Implemented (and fixed API) for
+	interpolation.
+
+	* app/tools/gimpvectortool.c
+	* app/tools/gimpvectortool.h: Changed accordingly, we can actually
+	draw polylines now.
+
 2002-02-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/undo.[ch]: renamed undo_push_layer_rename() to
