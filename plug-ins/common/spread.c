@@ -47,7 +47,8 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  GtkWidget *size;
+  gint       run;
 } SpreadInterface;
 
 
@@ -399,15 +400,20 @@ spread_dialog (gint32 image_ID)
   size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75, 
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-			       _("Horizontal:"), spvals.spread_amount_x,
-			       xres, 0, 200,
+			       spvals.spread_amount_x == spvals.spread_amount_y,
+			       FALSE, NULL,
 
-			       _("Vertical:"), spvals.spread_amount_y,
-			       yres, 0, 200);
+			       _("Horizontal:"), spvals.spread_amount_x, xres,
+			       0, 200,
+			       0, 0,
+
+			       _("Vertical:"), spvals.spread_amount_y, yres,
+			       0, 200,
+			       0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
-  gtk_object_set_data (GTK_OBJECT (dlg), "size",  size);
+  pint.size = size;
 
   gtk_widget_show (size);
   gtk_widget_show (frame);
@@ -418,6 +424,20 @@ spread_dialog (gint32 image_ID)
   gdk_flush ();
 
   return pint.run;
+}
+
+static void
+spread_ok_callback (GtkWidget *widget,
+		    gpointer   data)
+{
+  spvals.spread_amount_x =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.size), 0);
+  spvals.spread_amount_y =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.size), 1);
+
+  pint.run = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static GTile *
@@ -458,24 +478,4 @@ spread_pixel (GDrawable * drawable,
     pixel[b] = data[b];
 
   return tile;
-}
-
-/*  Spread interface functions  */
-
-static void
-spread_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  GtkWidget *size;
-
-  pint.run = TRUE;
-
-  size = gtk_object_get_data (GTK_OBJECT (data), "size");
-  if (size)
-    {
-      spvals.spread_amount_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
-      spvals.spread_amount_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
-    }
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

@@ -31,8 +31,8 @@
 typedef struct
 {
   gdouble radius;
-  gint horizontal;
-  gint vertical;
+  gint    horizontal;
+  gint    vertical;
 } BlurValues;
 
 typedef struct
@@ -43,7 +43,8 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  GtkWidget *size;
+  gint       run;
 } BlurInterface;
 
 
@@ -456,14 +457,19 @@ gauss_rle2_dialog (gint32     image_ID,
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
-  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75, 
+  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75,
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-			       _("Horizontal:"), b2vals.horizontal,
-			       xres, 0, MAX (drawable->width, drawable->height),
+			       b2vals.horizontal == b2vals.vertical,
+			       FALSE, NULL,
 
-			       _("Vertical:"), b2vals.vertical,
-			       yres, 0, MAX (drawable->width, drawable->height));
+			       _("Horizontal:"), b2vals.horizontal, xres,
+			       0, MAX (drawable->width, drawable->height),
+			       0, 0,
+
+			       _("Vertical:"), b2vals.vertical, yres,
+			       0, MAX (drawable->width, drawable->height),
+			       0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
@@ -471,7 +477,7 @@ gauss_rle2_dialog (gint32     image_ID,
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  gtk_object_set_data (GTK_OBJECT (dlg), "size",  size);
+  bint.size = size;
 
   gtk_main ();
   gdk_flush ();
@@ -479,6 +485,19 @@ gauss_rle2_dialog (gint32     image_ID,
   return bint.run;
 }
 
+static void
+gauss_ok_callback (GtkWidget *widget,
+		   gpointer   data)
+{
+  b2vals.horizontal =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (bint.size), 0);
+  b2vals.vertical =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (bint.size), 1);
+
+  bint.run = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
 
 /* Convert from separated to premultiplied alpha, on a single scan line. */
 static void
@@ -813,24 +832,4 @@ run_length_encode (guchar *src,
       *dest++ = (i - j);
       *dest++ = last;
     }
-}
-
-/*  Gauss interface functions  */
-
-static void
-gauss_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  GtkWidget *size;
-
-  bint.run = TRUE;
-
-  size = gtk_object_get_data (GTK_OBJECT (data), "size");
-  if (size)
-    {
-      b2vals.horizontal = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
-      b2vals.vertical   = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
-    }
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

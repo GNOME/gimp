@@ -1,3 +1,21 @@
+2000-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpwidgets.[ch] gimp_coordinates_new():
+	Pass the values which are treated as 0% and 100% to the
+	constructor and allow the chainbutton to constrain either the
+	pixel values or the aspect ratio.
+
+	* plug-ins/common/bumpmap.c
+	* plug-ins/common/sparkle.c: removed unused variables.
+
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/spread.c: updated the gimp_coordinates_new()
+	calls.
+
+	* plug-ins/common/tile.c: use gimp_coordinates instead of
+	spinbuttons.
+
 Wed Feb  2 19:01:26 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/fileops.pdb: correct g_message warning call

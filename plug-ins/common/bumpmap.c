@@ -197,17 +197,20 @@ static void bumpmap             (void);
 static void bumpmap_init_params (bumpmap_params_t *params);
 static void bumpmap_row         (guchar           *src_row,
 				 guchar           *dest_row,
-				 int               width,
-				 int               bpp,
-				 int               has_alpha,
+				 gint              width,
+				 gint              bpp,
+				 gint              has_alpha,
 				 guchar           *bm_row1,
 				 guchar           *bm_row2,
 				 guchar           *bm_row3,
-				 int               bm_width,
-				 int               bm_xofs,
+				 gint              bm_width,
+				 gint              bm_xofs,
 				 bumpmap_params_t *params);
-static void bumpmap_convert_row (guchar *row, int width, int bpp,
-				 int has_alpha, guchar *lut);
+static void bumpmap_convert_row (guchar           *row,
+				 gint              width,
+				 gint              bpp,
+				 gint              has_alpha,
+				 guchar           *lut);
 
 static gint bumpmap_dialog              (void);
 static void dialog_init_preview         (void);
@@ -217,9 +220,10 @@ static gint dialog_preview_events       (GtkWidget *widget, GdkEvent *event);
 static void dialog_scroll_src           (void);
 static void dialog_scroll_bumpmap       (void);
 static void dialog_get_rows             (GPixelRgn *pr, guchar **rows,
-					 int x, int y, int width, int height);
-static void dialog_fill_src_rows        (int start, int how_many, int yofs);
-static void dialog_fill_bumpmap_rows    (int start, int how_many, int yofs);
+					 gint x, gint y,
+					 gint width, gint height);
+static void dialog_fill_src_rows        (gint start, gint how_many, gint yofs);
+static void dialog_fill_bumpmap_rows    (gint start, gint how_many, gint yofs);
 
 static void dialog_compensate_callback  (GtkWidget *widget, gpointer data);
 static void dialog_invert_callback      (GtkWidget *widget, gpointer data);
@@ -237,10 +241,10 @@ static void dialog_ok_callback          (GtkWidget *widget, gpointer data);
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,   /* init_proc */
-  NULL,   /* quit_proc */
-  query,  /* query_proc */
-  run     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run    /* run_proc   */
 };
 
 static bumpmap_vals_t bmvals =
@@ -285,11 +289,11 @@ static bumpmap_interface_t bmint =
   FALSE      /* run */
 };
 
-GDrawable *drawable = NULL;
+static GDrawable *drawable = NULL;
 
-gint sel_x1, sel_y1, sel_x2, sel_y2;
-gint sel_width, sel_height;
-gint img_bpp, img_has_alpha;
+static gint sel_x1, sel_y1, sel_x2, sel_y2;
+static gint sel_width, sel_height;
+static gint img_bpp, img_has_alpha;
 
 
 /***** Functions *****/
@@ -316,29 +320,27 @@ query (void)
     { PARAM_INT32,    "invert",     "Invert bumpmap" },
     { PARAM_INT32,    "type",       "Type of map (LINEAR (0), SPHERICAL (1), SINUOSIDAL (2))" }
   };
-
-  static GParamDef *return_vals  = NULL;
-  static int        nargs        = sizeof(args) / sizeof(args[0]);
-  static int        nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  _("Create an embossing effect using an image as a bump map"),
-			  _("This plug-in uses the algorithm described by John Schlag, "
-			    "\"Fast Embossing Effects on Raster Image Data\" in Graphics GEMS IV "
-			    "(ISBN 0-12-336155-9). It takes a grayscale image to be applied as "
-			    "a bump map to another image and produces a nice embossing effect."),
+			  "Create an embossing effect using an image as a "
+			  "bump map",
+			  "This plug-in uses the algorithm described by John "
+			  "Schlag, \"Fast Embossing Effects on Raster Image "
+			  "Data\" in Graphics GEMS IV (ISBN 0-12-336155-9). "
+			  "It takes a grayscale image to be applied as a bump "
+			  "map to another image and produces a nice embossing "
+			  "effect.",
 			  "Federico Mena Quintero & Jens Lautenbacher",
 			  "Federico Mena Quintero & Jens Lautenbacher",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Map/Bump Map..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs,
-			  nreturn_vals,
-			  args,
-			  return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
@@ -390,9 +392,10 @@ run (gchar   *name,
     case RUN_NONINTERACTIVE:
       /* Make sure all the arguments are present */
       if (nparams != 14)
-	status = STATUS_CALLING_ERROR;
-
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  bmvals.bumpmap_id = param[3].data.d_drawable;
 	  bmvals.azimuth    = param[4].data.d_float;
@@ -407,7 +410,6 @@ run (gchar   *name,
 	  bmvals.invert     = param[12].data.d_int32;
 	  bmvals.type       = param[13].data.d_int32;
 	}
-
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -457,12 +459,12 @@ bumpmap (void)
   bumpmap_params_t  params;
   GDrawable        *bm_drawable;
   GPixelRgn         src_rgn, dest_rgn, bm_rgn;
-  int               bm_width, bm_height, bm_bpp, bm_has_alpha;
-  int               yofs1, yofs2, yofs3;
+  gint              bm_width, bm_height, bm_bpp, bm_has_alpha;
+  gint              yofs1, yofs2, yofs3;
   guchar           *bm_row1, *bm_row2, *bm_row3, *bm_tmprow;
   guchar           *src_row, *dest_row;
-  int               y;
-  int               progress;
+  gint              y;
+  gint              progress;
 
 #if 0
   g_print ("bumpmap: waiting... (pid %d)\n", getpid ());
@@ -566,11 +568,11 @@ bumpmap (void)
 static void
 bumpmap_init_params (bumpmap_params_t *params)
 {
-  double azimuth;
-  double elevation;
-  int    lz, nz;
-  int    i;
-  double n;
+  gdouble azimuth;
+  gdouble elevation;
+  gint    lz, nz;
+  gint    i;
+  gdouble n;
 
   /* Convert to radians */
   azimuth   = G_PI * bmvals.azimuth / 180.0;
@@ -621,24 +623,24 @@ bumpmap_init_params (bumpmap_params_t *params)
 static void
 bumpmap_row (guchar           *src_row,
 	     guchar           *dest_row,
-	     int               width,
-	     int               bpp,
-	     int               has_alpha,
+	     gint              width,
+	     gint              bpp,
+	     gint              has_alpha,
 	     guchar           *bm_row1,
 	     guchar           *bm_row2,
 	     guchar           *bm_row3,
-	     int               bm_width,
-	     int               bm_xofs,
+	     gint              bm_width,
+	     gint              bm_xofs,
 	     bumpmap_params_t *params)
 {
   guchar *src, *dest;
-  int     xofs1, xofs2, xofs3;
-  int     shade;
-  int     ndotl;
-  int     nx, ny;
-  int     x, k;
-  int     pbpp;
-  int     result;
+  gint    xofs1, xofs2, xofs3;
+  gint    shade;
+  gint    ndotl;
+  gint    nx, ny;
+  gint    x, k;
+  gint    pbpp;
+  gint    result;
 
   if (has_alpha)
     pbpp = bpp - 1;
@@ -714,9 +716,9 @@ bumpmap_row (guchar           *src_row,
 
 static void
 bumpmap_convert_row (guchar *row, 
-		     int     width, 
-		     int     bpp, 
-		     int     has_alpha, 
+		     gint    width, 
+		     gint    bpp, 
+		     gint    has_alpha, 
 		     guchar *lut)
 {
   guchar *p;
@@ -763,7 +765,6 @@ bumpmap_dialog (void)
   GtkWidget *pframe;
   GtkWidget *table;
   GtkWidget *right_vbox;
-  GtkWidget *label;
   GtkWidget *option_menu;
   GtkWidget *menu;
   GtkWidget *button;
@@ -783,9 +784,9 @@ bumpmap_dialog (void)
   argv[0] = g_strdup ("bumpmap");
 
   gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc());
-  gdk_set_use_xshm (gimp_use_xshm());
-	
+  gtk_rc_parse (gimp_gtkrc ());
+  gdk_set_use_xshm (gimp_use_xshm ());
+
   gtk_preview_set_gamma (gimp_gamma ());
   gtk_preview_set_install_cmap (gimp_install_cmap ());
   color_cube = gimp_color_cube ();
@@ -883,18 +884,17 @@ bumpmap_dialog (void)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button),
 				bmvals.compensate ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) dialog_compensate_callback,
+		      GTK_SIGNAL_FUNC (dialog_compensate_callback),
 		      NULL);
   gtk_widget_show (button);
 
   /* Invert bumpmap */
-
   button = gtk_check_button_new_with_label (_("Invert Bumpmap"));
   gtk_box_pack_start (GTK_BOX (right_vbox), button, FALSE, FALSE, 0);
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(button),
 				bmvals.invert ? TRUE : FALSE);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
-		      (GtkSignalFunc) dialog_invert_callback,
+		      GTK_SIGNAL_FUNC (dialog_invert_callback),
 		      NULL);
   gtk_widget_show (button);
 
@@ -1007,7 +1007,7 @@ bumpmap_dialog (void)
 static void
 dialog_init_preview (void)
 {
-  int x;
+  gint x;
 	
   /* Create checkerboard rows */
 
@@ -1140,8 +1140,8 @@ dialog_preview_events (GtkWidget *widget,
 static void
 dialog_new_bumpmap (void)
 {
-  int i;
-  int yofs;
+  gint i;
+  gint yofs;
 
   /* Get drawable */
 
@@ -1194,11 +1194,11 @@ dialog_update_preview (void)
   static guchar dest_row[PREVIEW_SIZE * 4];
   static guchar preview_row[PREVIEW_SIZE * 3];
 
-  guchar          *check_row;
-  guchar           check;
-  int              xofs;
-  int              x, y;
-  guchar          *sp, *p;
+  guchar *check_row;
+  guchar  check;
+  gint    xofs;
+  gint    x, y;
+  guchar *sp, *p;
 
   bumpmap_init_params (&bmint.params);
 
@@ -1253,8 +1253,8 @@ dialog_update_preview (void)
 static void
 dialog_scroll_src (void)
 {
-  int     yofs;
-  int     y, ofs;
+  gint    yofs;
+  gint    y, ofs;
   guchar *tmp;
 
   yofs = bmint.preview_yofs;
@@ -1301,8 +1301,8 @@ dialog_scroll_src (void)
 static void
 dialog_scroll_bumpmap (void)
 {
-  int     yofs;
-  int     y, ofs;
+  gint    yofs;
+  gint    y, ofs;
   guchar *tmp;
 
   yofs = bmvals.yofs + bmint.preview_yofs - 1; /* Minus 1 for conv. matrix */
@@ -1357,10 +1357,10 @@ dialog_scroll_bumpmap (void)
 static void
 dialog_get_rows (GPixelRgn  *pr, 
 		 guchar    **rows, 
-		 int         x, 
-		 int         y, 
-		 int         width, 
-		 int         height)
+		 gint        x, 
+		 gint        y, 
+		 gint        width, 
+		 gint        height)
 {
   /* This is shamelessly ripped off from gimp_pixel_rgn_get_rect().
    * Its function is exactly the same, but it can fetch an image
@@ -1370,14 +1370,14 @@ dialog_get_rows (GPixelRgn  *pr,
 
   GTile  *tile;
   guchar *src, *dest;
-  int     xstart, ystart;
-  int     xend, yend;
-  int     xboundary;
-  int     yboundary;
-  int     xstep, ystep;
-  int     b, bpp;
-  int     tx, ty;
-  int     tile_width, tile_height;
+  gint    xstart, ystart;
+  gint    xend, yend;
+  gint    xboundary;
+  gint    yboundary;
+  gint    xstep, ystep;
+  gint    b, bpp;
+  gint    tx, ty;
+  gint    tile_width, tile_height;
 
   tile_width  = gimp_tile_width();
   tile_height = gimp_tile_height();
@@ -1427,11 +1427,11 @@ dialog_get_rows (GPixelRgn  *pr,
 }
 
 static void
-dialog_fill_src_rows (int start, 
-		      int how_many, 
-		      int yofs)
+dialog_fill_src_rows (gint start, 
+		      gint how_many, 
+		      gint yofs)
 {
-  int x, y;
+  gint x, y;
   guchar *sp, *p;
 
   dialog_get_rows (&bmint.src_rgn,
@@ -1472,13 +1472,13 @@ dialog_fill_src_rows (int start,
 }
 
 static void
-dialog_fill_bumpmap_rows (int start, 
-			  int how_many, 
-			  int yofs)
+dialog_fill_bumpmap_rows (gint start, 
+			  gint how_many, 
+			  gint yofs)
 {
-  int buf_row_ofs;
-  int remaining;
-  int this_pass;
+  gint buf_row_ofs;
+  gint remaining;
+  gint this_pass;
 
   buf_row_ofs = start;
   remaining   = how_many;

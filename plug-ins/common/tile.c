@@ -42,10 +42,8 @@ typedef struct
 
 typedef struct
 {
-  GtkObject *width_adj;
-  GtkObject *height_adj;
-  gint       orig_width;
-  gint       orig_height;
+  GtkWidget *sizeentry;
+  GtkWidget *chainbutton;
   gint       run;
 } TileInterface;
 
@@ -62,16 +60,11 @@ static gint32    tile   (gint32     image_id,
 			 gint32     drawable_id,
 			 gint32    *layer_id);
 
-static gint      tile_dialog               (gint          width,
-					    gint          height);
+static gint      tile_dialog              (gint32         image_ID,
+					   gint32         drawable_ID);
 
 static void      tile_ok_callback         (GtkWidget     *widget,
 					   gpointer       data);
-static void      tile_chain_button_update (GtkWidget     *widget,
-					   gpointer       data);
-static void      tile_adjustment_update   (GtkAdjustment *adjustment,
-					   gpointer       data);
-
 
 GPlugInInfo PLUG_IN_INFO =
 {
@@ -91,11 +84,8 @@ static TileVals tvals =
 
 static TileInterface tint =
 {
-  NULL,  /* width_adj    */
-  NULL,  /* height_adj   */
-  0,     /* orig_width   */
-  0,     /* orig_height  */
-  FALSE  /* run          */
+  NULL,  /* sizeentry */
+  FALSE  /* run       */
 };
 
 MAIN ()
@@ -158,7 +148,7 @@ run (gchar   *name,
   values[1].type = PARAM_IMAGE;
   values[2].type = PARAM_LAYER;
 
-  width = gimp_drawable_width (param[2].data.d_drawable);
+  width  = gimp_drawable_width (param[2].data.d_drawable);
   height = gimp_drawable_height (param[2].data.d_drawable);
 
   switch (run_mode)
@@ -169,7 +159,8 @@ run (gchar   *name,
       gimp_get_data ("plug_in_tile", &tvals);
 
       /*  First acquire information with a dialog  */
-      if (! tile_dialog (width, height))
+      if (! tile_dialog (param[1].data.d_image,
+			 param[2].data.d_drawable))
 	return;
       break;
 
@@ -177,15 +168,18 @@ run (gchar   *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 6)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
 	{
-	  tvals.new_width = param[3].data.d_int32;
-	  tvals.new_height = param[4].data.d_int32;
-	  tvals.new_image = (param[5].data.d_int32) ? TRUE : FALSE;
+	  status = STATUS_CALLING_ERROR;
 	}
-      if (tvals.new_width < 0 || tvals.new_height < 0)
-	status = STATUS_CALLING_ERROR;
+      else
+	{
+	  tvals.new_width  = param[3].data.d_int32;
+	  tvals.new_height = param[4].data.d_int32;
+	  tvals.new_image  = param[5].data.d_int32 ? TRUE : FALSE;
+
+	  if (tvals.new_width < 0 || tvals.new_height < 0)
+	    status = STATUS_CALLING_ERROR;
+	}
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -201,10 +195,12 @@ run (gchar   *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (status == STATUS_SUCCESS)
     {
-      gimp_progress_init ( _("Tiling..."));
+      gimp_progress_init (_("Tiling..."));
       gimp_tile_cache_ntiles (2 * (width + 1) / gimp_tile_width ());
 
-      values[1].data.d_image = tile (param[1].data.d_image, param[2].data.d_drawable, &new_layer);
+      values[1].data.d_image = tile (param[1].data.d_image,
+				     param[2].data.d_drawable,
+				     &new_layer);
       values[2].data.d_layer = new_layer;
 
       /*  Store data  */
@@ -244,7 +240,7 @@ tile (gint32  image_id,
   image_type = RGB;
   new_image_id = 0;
 
-  old_width = gimp_drawable_width (drawable_id);
+  old_width  = gimp_drawable_width (drawable_id);
   old_height = gimp_drawable_height (drawable_id);
 
   if (tvals.new_image)
@@ -338,7 +334,7 @@ tile (gint32  image_id,
   /*  copy the colormap, if necessary  */
   if (image_type == INDEXED && tvals.new_image)
     {
-      int ncols;
+      gint ncols;
       guchar *cmap;
 
       cmap = gimp_image_get_cmap (image_id, &ncols);
@@ -363,16 +359,20 @@ tile (gint32  image_id,
 }
 
 static gint
-tile_dialog (gint width, gint height)
+tile_dialog (gint32 image_ID,
+	     gint32 drawable_ID)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *spinbutton;
-  GtkWidget *chain;
+  GtkWidget *sizeentry;
   GtkWidget *toggle;
-  gchar **argv;
-  gint    argc;
+  gint     width;
+  gint     height;
+  gdouble  xres;
+  gdouble  yres;
+  GUnit    unit;
+  gchar  **argv;
+  gint     argc;
 
   argc    = 1;
   argv    = g_new (gchar *, 1);
@@ -381,12 +381,15 @@ tile_dialog (gint width, gint height)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
-  tint.orig_width  = width;
-  tint.orig_height = height;
+  width  = gimp_drawable_width (drawable_ID);
+  height = gimp_drawable_height (drawable_ID);
+  unit   = gimp_image_get_unit (image_ID);
+  gimp_image_get_resolution (image_ID, &xres, &yres);
+
   tvals.new_width  = width;
   tvals.new_height = height;
 
-  dlg = gimp_dialog_new ( _("Tile"), "tile",
+  dlg = gimp_dialog_new (_("Tile"), "tile",
 			 gimp_plugin_help_func, "filters/tile.html",
 			 GTK_WIN_POS_MOUSE,
 			 FALSE, TRUE, FALSE,
@@ -407,42 +410,29 @@ tile_dialog (gint width, gint height)
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, 75,
+				    GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-  spinbutton = gimp_spin_button_new (&tint.width_adj, width,
-				     1, width, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Width:"), 1.0, 0.5,
-			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (tint.width_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (tile_adjustment_update),
-		      &tvals.new_width);
+				    tvals.constrain, TRUE, &tint.chainbutton,
 
-  spinbutton = gimp_spin_button_new (&tint.height_adj, height,
-				     1, height, 1, 10, 0, 1, 0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Height:"), 1.0, 0.5,
-			     spinbutton, 1, FALSE);
-  gtk_signal_connect (GTK_OBJECT (tint.height_adj), "value_changed",
-		      GTK_SIGNAL_FUNC (tile_adjustment_update),
-		      &tvals.new_height);
+				    _("Width:"), width, xres,
+				    1, GIMP_MAX_IMAGE_SIZE,
+				    0, width,
 
-  chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), tvals.constrain);
-  gtk_table_attach (GTK_TABLE (table), chain, 2, 3, 0, 2,
-		    GTK_SHRINK, GTK_FILL | GTK_EXPAND, 0, 0);
-  gtk_signal_connect (GTK_OBJECT (GIMP_CHAIN_BUTTON (chain)->button), "clicked",
-		      GTK_SIGNAL_FUNC (tile_chain_button_update),
-		      chain);
-  gtk_widget_show (chain);
+				    _("Height:"), height, yres,
+				    1, GIMP_MAX_IMAGE_SIZE,
+				    0, height);
+  gtk_container_set_border_width (GTK_CONTAINER (sizeentry), 4);
+  gtk_container_add (GTK_CONTAINER (frame), sizeentry);
+  gtk_table_set_row_spacing (GTK_TABLE (sizeentry), 1, 4);
+  gtk_widget_show (sizeentry);
 
-  toggle = gtk_check_button_new_with_label (_("New Image"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 3, 2, 3,
+  tint.sizeentry = sizeentry;
+
+  toggle = gtk_check_button_new_with_label (_("Create New Image"));
+  gtk_table_attach (GTK_TABLE (sizeentry), toggle, 0, 4, 2, 3,
 		    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
@@ -450,8 +440,6 @@ tile_dialog (gint width, gint height)
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), tvals.new_image);
   gtk_widget_show (toggle);
 
-  gtk_widget_show (table);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   gtk_main ();
@@ -460,71 +448,19 @@ tile_dialog (gint width, gint height)
   return tint.run;
 }
 
-
-/*  Tile interface functions  */
-
 static void
 tile_ok_callback (GtkWidget *widget,
 		  gpointer   data)
 {
+  tvals.new_width =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 0);
+  tvals.new_height =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 1);
+
+  tvals.constrain =
+    gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (tint.chainbutton));
+
   tint.run = TRUE;
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-tile_chain_button_update (GtkWidget *widget,
-			  gpointer   data)
-{
-  tvals.constrain = gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data));
-}
-
-static void
-tile_adjustment_update (GtkAdjustment *adjustment,
-			gpointer       data)
-{
-  gint val;
-
-  val = (gint) adjustment->value;
-
-  if (tvals.constrain)
-    {
-      if ((tint.orig_width != 0) && (tint.orig_height != 0))
-	{
-	  if ((GtkObject *) adjustment == tint.width_adj &&
-	      tvals.new_width != val)
-	    {
-	      tvals.new_width = val;
-
-	      tvals.new_height = (int) ((tvals.new_width * tint.orig_height) /
-					tint.orig_width);
-
-	      gtk_signal_handler_block_by_data (GTK_OBJECT (tint.height_adj),
-						&tvals.new_height);
-	      gtk_adjustment_set_value (GTK_ADJUSTMENT (tint.height_adj),
-					tvals.new_height);
-	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (tint.height_adj),
-						  &tvals.new_height);
-	    }
-	  else if ((GtkObject *) adjustment == tint.height_adj &&
-		   tvals.new_height != val)
-	    {
-	      tvals.new_height = val;
-
-	      tvals.new_width = (int) ((tvals.new_height * tint.orig_width) /
-				       tint.orig_height);
-
-	      gtk_signal_handler_block_by_data (GTK_OBJECT (tint.width_adj),
-						&tvals.new_width);
-	      gtk_adjustment_set_value (GTK_ADJUSTMENT (tint.width_adj),
-					tvals.new_width);
-	      gtk_signal_handler_unblock_by_data (GTK_OBJECT (tint.width_adj),
-						  &tvals.new_width);
-	    }
-	}
-    }
-  else
-    {
-      *((int *) data) = val;
-    }
 }

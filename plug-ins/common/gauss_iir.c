@@ -43,7 +43,8 @@ typedef struct
 
 typedef struct
 {
-  gint run;
+  GtkWidget *size;
+  gint       run;
 } BlurInterface;
 
 
@@ -138,9 +139,6 @@ query (void)
     { PARAM_FLOAT, "vertical",   "Vertical radius of gaussian blur (in pixels)" }
   };
   static gint nargs2 = sizeof (args2) / sizeof (args2[0]);
- 
-  static GParamDef *return_vals = NULL;
-  static gint nreturn_vals = 0;
 
   INIT_I18N();
   
@@ -153,8 +151,8 @@ query (void)
 			  NULL,
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 
   gimp_install_procedure ("plug_in_gauss_iir2",
 			  "Applies a gaussian blur to the specified drawable.",
@@ -165,8 +163,8 @@ query (void)
 			  N_("<Image>/Filters/Blur/Gaussian Blur (IIR)..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs2, nreturn_vals,
-			  args2, return_vals);
+			  nargs2, 0,
+			  args2, NULL);
 }
 
 static void
@@ -465,11 +463,16 @@ gauss_iir2_dialog (gint32     image_ID,
   size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75, 
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-			       _("Horizontal:"), b2vals.horizontal,
-			       xres, 0, MAX (drawable->width, drawable->height),
+			       b2vals.horizontal == b2vals.vertical,
+			       FALSE, NULL,
 
-			       _("Vertical:"), b2vals.horizontal,
-			       yres, 0, MAX (drawable->width, drawable->height));
+			       _("Horizontal:"), b2vals.horizontal, xres,
+			       0, MAX (drawable->width, drawable->height),
+			       0, 0,
+
+			       _("Vertical:"), b2vals.vertical, yres,
+			       0, MAX (drawable->width, drawable->height),
+			       0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
@@ -477,7 +480,7 @@ gauss_iir2_dialog (gint32     image_ID,
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  gtk_object_set_data (GTK_OBJECT (dlg), "size",  size);
+  bint.size = size;
 
   gtk_main ();
   gdk_flush ();
@@ -485,10 +488,26 @@ gauss_iir2_dialog (gint32     image_ID,
   return bint.run;
 }
 
+static void
+gauss_ok_callback (GtkWidget *widget,
+		   gpointer   data)
+{
+  b2vals.horizontal =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (bint.size), 0);
+  b2vals.vertical =
+    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (bint.size), 1);
+
+  bint.run = TRUE;
+
+  gtk_widget_destroy (GTK_WIDGET (data));
+}
+
 
 /* Convert from separated to premultiplied alpha, on a single scan line. */
 static void
-multiply_alpha (guchar *buf, gint width, gint bytes)
+multiply_alpha (guchar *buf,
+		gint    width,
+		gint    bytes)
 {
   gint i, j;
   gdouble alpha;
@@ -504,7 +523,9 @@ multiply_alpha (guchar *buf, gint width, gint bytes)
 /* Convert from premultiplied to separated alpha, on a single scan
    line. */
 static void
-separate_alpha (guchar *buf, gint width, gint bytes)
+separate_alpha (guchar *buf,
+		gint    width,
+		gint    bytes)
 {
   gint i, j;
   guchar alpha;
@@ -528,8 +549,8 @@ separate_alpha (guchar *buf, gint width, gint bytes)
 
 static void
 gauss_iir (GDrawable *drawable,
-	   gdouble     horz,
-	   gdouble     vert)
+	   gdouble    horz,
+	   gdouble    vert)
 {
   GPixelRgn src_rgn, dest_rgn;
   gint width, height;
@@ -874,24 +895,4 @@ find_constants (gdouble n_p[],
 	bd_m[i] = d_m[i] * b;
       }
   }
-}
-
-/*  Gauss interface functions  */
-
-static void
-gauss_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  GtkWidget *size;
-
-  bint.run = TRUE;
-
-  size = gtk_object_get_data (GTK_OBJECT (data), "size");
-  if (size)
-    {
-      b2vals.horizontal = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
-      b2vals.vertical   = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
-    }
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

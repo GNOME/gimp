@@ -530,12 +530,15 @@ gimp_random_seed_new (gint *seed,
 typedef struct
 {
   GimpChainButton *chainbutton;
+  gboolean         chain_constrains_ratio;
+  gdouble          orig_x;
+  gdouble          orig_y;
   gdouble          last_x;
   gdouble          last_y;
 } GimpCoordinatesData;
 
 static void
-gimp_coordinates_callback (GtkWidget *widget, 
+gimp_coordinates_callback (GtkWidget *widget,
 			   gpointer   data)
 {
   GimpCoordinatesData *gcd;
@@ -551,16 +554,39 @@ gimp_coordinates_callback (GtkWidget *widget,
     {
       gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "value_changed");
 
-      if (new_x != gcd->last_x)
-        {
-          gcd->last_y = new_y = gcd->last_x = new_x;
-          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
-        }
-      else if (new_y != gcd->last_y)
-        {
-          gcd->last_x = new_x = gcd->last_y = new_y;
-          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
-        }
+      if (gcd->chain_constrains_ratio)
+	{
+	  if ((gcd->orig_x != 0) && (gcd->orig_y != 0))
+	    {
+	      if (new_x != gcd->last_x)
+		{
+		  gcd->last_x = new_x;
+		  gcd->last_y = new_y = (new_x * gcd->orig_y) / gcd->orig_x;
+		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1,
+					      new_y);
+		}
+	      else if (new_y != gcd->last_y)
+		{
+		  gcd->last_y = new_y;
+		  gcd->last_x = new_x = (new_y * gcd->orig_x) / gcd->orig_y;
+		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0,
+					      new_x);
+		}
+	    }
+	}
+      else
+	{
+	  if (new_x != gcd->last_x)
+	    {
+	      gcd->last_y = new_y = gcd->last_x = new_x;
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
+	    }
+	  else if (new_y != gcd->last_y)
+	    {
+	      gcd->last_x = new_x = gcd->last_y = new_y;
+	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
+	    }
+	}
     }
   else
     {
@@ -579,23 +605,32 @@ gimp_coordinates_new (GUnit            unit,
 		      gint             spinbutton_usize,
 		      GimpSizeEntryUP  update_policy,
 
+		      gboolean         chainbutton_active,
+		      gboolean         chain_constrains_ratio,
+		      /* return value: */
+		      GtkWidget      **chainbutton,
+
 		      gchar           *xlabel,
 		      gdouble          x,
 		      gdouble          xres,
-		      gint             lower_boundary_x,
-		      gint             upper_boundary_x,
+		      gdouble          lower_boundary_x,
+		      gdouble          upper_boundary_x,
+		      gdouble          xsize_0,   /* % */
+		      gdouble          xsize_100, /* % */
 
 		      gchar           *ylabel,
 		      gdouble          y,
 		      gdouble          yres,
-		      gint             lower_boundary_y,
-		      gint             upper_boundary_y)
+		      gdouble          lower_boundary_y,
+		      gdouble          upper_boundary_y,
+		      gdouble          ysize_0,   /* % */
+		      gdouble          ysize_100  /* % */)
 {
   GimpCoordinatesData *gcd;
   GtkObject *adjustment;
   GtkWidget *spinbutton;
   GtkWidget *sizeentry;
-  GtkWidget *chainbutton;
+  GtkWidget *chainb;
 
   spinbutton = gimp_spin_button_new (&adjustment, 1, 0, 1, 1, 10, 1, 1, 2);
   sizeentry = gimp_size_entry_new (1, unit, unit_format,
@@ -605,6 +640,7 @@ gimp_coordinates_new (GUnit            unit,
 				   spinbutton_usize,
 				   update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 0, 4);  
+  gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 2, 4);  
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
   gtk_table_attach_defaults (GTK_TABLE (sizeentry), spinbutton, 1, 2, 0, 1);
@@ -619,23 +655,37 @@ gimp_coordinates_new (GUnit            unit,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
 					 lower_boundary_y, upper_boundary_y);
 
+  if (menu_show_percent)
+    {
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 0,
+				xsize_0, xsize_100);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
+				ysize_0, ysize_100);
+    }
+
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, x);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, y);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry), xlabel, 0, 0, 1.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry), ylabel, 1, 0, 1.0);
 
-  chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  if (x == y)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
-  gtk_table_attach (GTK_TABLE (sizeentry), chainbutton, 2, 3, 0, 2,
+  chainb = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  if (chainbutton_active)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainb), TRUE);
+  gtk_table_attach (GTK_TABLE (sizeentry), chainb, 2, 3, 0, 2,
 		    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (chainbutton);
+  gtk_widget_show (chainb);
+
+  if (chainbutton)
+    *chainbutton = chainb;
 
   gcd = g_new (GimpCoordinatesData, 1);
-  gcd->chainbutton = GIMP_CHAIN_BUTTON (chainbutton);
-  gcd->last_x      = x;
-  gcd->last_y      = y;
+  gcd->chainbutton            = GIMP_CHAIN_BUTTON (chainb);
+  gcd->chain_constrains_ratio = chain_constrains_ratio;
+  gcd->orig_x                 = x;
+  gcd->orig_y                 = y;
+  gcd->last_x                 = x;
+  gcd->last_y                 = y;
 
   gtk_signal_connect_object (GTK_OBJECT (sizeentry), "destroy",
 			     GTK_SIGNAL_FUNC (g_free),

@@ -1,3 +1,4 @@
+
 /* Sparkle --- image filter plug-in for The Gimp image manipulation program
  * Copyright (C) 1996 by John Beale;  ported to Gimp by Michael J. Hammel;
  * It has been optimized a little, bugfixed and modified by Martin Weber
@@ -73,11 +74,11 @@ typedef struct
  */
 
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
-			 GParam    *param,
-			 int       *nreturn_vals,
-			 GParam   **return_vals);
+static void      run    (gchar   *name,
+			 gint     nparams,
+			 GParam  *param,
+			 gint    *nreturn_vals,
+			 GParam **return_vals);
 
 static gint      sparkle_dialog        (void);
 static void      sparkle_ok_callback   (GtkWidget *widget,
@@ -122,27 +123,27 @@ static GTile*    rpnt                  (GDrawable * drawable,
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  NULL,    /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,  /* init_proc  */
+  NULL,  /* quit_proc  */
+  query, /* query_proc */
+  run,   /* run_proc   */
 };
 
 static SparkleVals svals =
 {
-  0.001,	/* luminosity threshold */
-  0.5,	/* flare intensity */
-  20.0,	/* spike length */
-  4.0,	/* spike points */
-  15.0,	/* spike angle */
-  1.0,	/* spike density */
-  0.0,  /* opacity */
-  0.0,	/* random hue */
-  0.0,	/* random saturation */
-  FALSE,	/* preserve_luminosity */
-  FALSE,	/* invers */
-  FALSE,	/* border */
-  NATURAL	/* colortype */
+  0.001,  /* luminosity threshold */
+  0.5,	  /* flare intensity */
+  20.0,	  /* spike length */
+  4.0,    /* spike points */
+  15.0,	  /* spike angle */
+  1.0,    /* spike density */
+  0.0,    /* opacity */
+  0.0,    /* random hue */
+  0.0,    /* random saturation */
+  FALSE,  /* preserve_luminosity */
+  FALSE,  /* invers */
+  FALSE,  /* border */
+  NATURAL /* colortype */
 };
 
 static SparkleInterface sint =
@@ -177,30 +178,28 @@ query (void)
     { PARAM_INT32, "border", "Add border (TRUE/FALSE)" },
     { PARAM_INT32, "colortype", "Color of sparkles: { NATURAL (0), FOREGROUND (1), BACKGROUND (2) }" }
   };
-  static GParamDef *return_vals = NULL;
-  static int nargs = sizeof (args) / sizeof (args[0]);
-  static int nreturn_vals = 0;
+  static gint nargs = sizeof (args) / sizeof (args[0]);
 
   INIT_I18N();
 
   gimp_install_procedure ("plug_in_sparkle",
-             "Simulates pixel bloom and diffraction effects",
+			  "Simulates pixel bloom and diffraction effects",
 			  "No help yet",
-                    "John Beale, & (ported to GIMP v0.54) Michael J. Hammel & ted to GIMP v1.0) Spencer Kimball",
+			  "John Beale, & (ported to GIMP v0.54) Michael J. Hammel & ted to GIMP v1.0) Spencer Kimball",
 			  "John Beale",
 			  "Version 1.26, December 1998",
 			  N_("<Image>/Filters/Light Effects/Sparkle..."),
 			  "RGB*, GRAY*",
 			  PROC_PLUG_IN,
-			  nargs, nreturn_vals,
-			  args, return_vals);
+			  nargs, 0,
+			  args, NULL);
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   static GParam values[1];
@@ -233,8 +232,10 @@ run (char    *name,
       INIT_I18N();
       /*  Make sure all the arguments are there!  */
       if (nparams != 16)
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS)
+	{
+	  status = STATUS_CALLING_ERROR;
+	}
+      else
 	{
 	  svals.lum_threshold = param[3].data.d_float;
 	  svals.flare_inten = param[4].data.d_float;
@@ -249,38 +250,29 @@ run (char    *name,
 	  svals.invers = (param[13].data.d_int32) ? TRUE : FALSE;
 	  svals.border = (param[14].data.d_int32) ? TRUE : FALSE;
 	  svals.colortype = param[15].data.d_int32;
-	}
-      if (status == STATUS_SUCCESS &&
-	  (svals.lum_threshold < 0.0 || svals.lum_threshold > 1.0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.flare_inten < 0.0 || svals.flare_inten > 1.0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.spike_len < 0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.spike_pts < 0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.spike_angle < -1 || svals.spike_angle > 360))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.density < 0.0 || svals.density > 1.0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.opacity < 0.0 || svals.opacity > 1.0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.random_hue < 0.0 || svals.random_hue > 1.0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.random_saturation < 0.0 || svals.random_saturation > 1.0))
-	status = STATUS_CALLING_ERROR;
-      if (status == STATUS_SUCCESS &&
-	  (svals.colortype < NATURAL || svals.colortype > BACKGROUND))
-	status = STATUS_CALLING_ERROR;
 
+	  if (svals.lum_threshold < 0.0 || svals.lum_threshold > 1.0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.flare_inten < 0.0 || svals.flare_inten > 1.0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.spike_len < 0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.spike_pts < 0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.spike_angle < -1 || svals.spike_angle > 360)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.density < 0.0 || svals.density > 1.0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.opacity < 0.0 || svals.opacity > 1.0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.random_hue < 0.0 || svals.random_hue > 1.0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.random_saturation < 0.0 ||
+		   svals.random_saturation > 1.0)
+	    status = STATUS_CALLING_ERROR;
+	  else if (svals.colortype < NATURAL || svals.colortype > BACKGROUND)
+	    status = STATUS_CALLING_ERROR;
+	}
       break;
 
     case RUN_WITH_LAST_VALS:
@@ -299,7 +291,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_is_rgb (drawable->id) || gimp_drawable_is_gray (drawable->id))
     {
-      gimp_progress_init ( _("Sparkling..."));
+      gimp_progress_init (_("Sparkling..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
       if (svals.border == FALSE)
@@ -345,7 +337,6 @@ sparkle_dialog (void)
   GtkWidget *sep;
   GtkWidget *r1, *r2, *r3;
   GtkObject *scale_data;
-  GSList    *group = NULL;
   gchar **argv;
   gint    argc;
 
@@ -609,15 +600,18 @@ compute_lum_threshold (GDrawable *drawable,
 
   /*  zero out the luminosity values array  */
 
-  memset(values,0,sizeof(gint)*256);
+  memset (values, 0, sizeof (gint) * 256);
 
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   gray = gimp_drawable_is_gray (drawable->id);
   has_alpha = gimp_drawable_has_alpha (drawable->id);
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
 
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       data = src_rgn.data;
       size = src_rgn.w * src_rgn.h;
@@ -672,10 +666,14 @@ sparkle (GDrawable *drawable,
   cur_progress = 0;
   max_progress = num_sparkles;
 
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       src = src_rgn.data;
       dest = dest_rgn.data;
@@ -704,10 +702,14 @@ sparkle (GDrawable *drawable,
     }
 
   /* add effects to new image based on intensity of old pixels */
-  gimp_pixel_rgn_init (&src_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
+  gimp_pixel_rgn_init (&src_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), FALSE, FALSE);
+  gimp_pixel_rgn_init (&dest_rgn, drawable,
+		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
 
-  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn); pr != NULL; pr = gimp_pixel_rgns_process (pr))
+  for (pr = gimp_pixel_rgns_register (2, &src_rgn, &dest_rgn);
+       pr != NULL;
+       pr = gimp_pixel_rgns_process (pr))
     {
       src = src_rgn.data;
 
@@ -727,7 +729,8 @@ sparkle (GDrawable *drawable,
 	    	lum = compute_luminosity (src, gray, has_alpha);
 	    if (lum >= threshold)
 	      {
-		nfrac = fabs ((gdouble) (lum + 1 - threshold) / (gdouble) (256 - threshold));
+		nfrac = fabs ((gdouble) (lum + 1 - threshold) /
+			      (gdouble) (256 - threshold));
 		length = (gdouble) svals.spike_len * (gdouble) pow (nfrac, 0.8);
 		inten = svals.flare_inten * nfrac /* pow (nfrac, 1.0) */;
 
@@ -755,7 +758,8 @@ sparkle (GDrawable *drawable,
 		  }
 		cur_progress ++;
 		if ((cur_progress % 5) == 0)
-		  gimp_progress_update ((double) cur_progress / (double) max_progress);
+		  gimp_progress_update ((double) cur_progress /
+					(double) max_progress);
 	      }
 	    src += src_rgn.bpp;
 	  }

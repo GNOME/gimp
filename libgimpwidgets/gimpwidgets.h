@@ -127,17 +127,26 @@ GtkWidget * gimp_coordinates_new   (GUnit               unit,
 				    gint                spinbutton_usize,
 				    GimpSizeEntryUP     update_policy,
 
+				    gboolean            chainbutton_active,
+				    gboolean            chain_constrains_ratio,
+				    /* return value: */
+				    GtkWidget         **chainbutton,
+
 				    gchar              *xlabel,
 				    gdouble             x,
 				    gdouble             xres,
-				    gint                lower_boundary_x,
-				    gint                upper_boundary_x,
+				    gdouble             lower_boundary_x,
+				    gdouble             upper_boundary_x,
+				    gdouble             xsize_0,   /* % */
+				    gdouble             xsize_100, /* % */
 
 				    gchar              *ylabel,
 				    gdouble             y,
 				    gdouble             yres,
-				    gint                lower_boundary_y,
-				    gint                upper_boundary_y);
+				    gdouble             lower_boundary_y,
+				    gdouble             upper_boundary_y,
+				    gdouble             ysize_0,   /* % */
+				    gdouble             ysize_100  /* % */);
 
 /*
  *  Standard Callbacks
