@@ -20,7 +20,7 @@ Basically this does the following for you:
         cvsroot/gimp# aclocal; automake; autoconf
 
         The above commands create the "configure" script.  Now you
-        can run the configure script in cvsroot/gtk+ to create all
+        can run the configure script in cvsroot/gimp to create all
         the Makefiles.
 
 Before running autogen.sh or configure, make sure you have libtool

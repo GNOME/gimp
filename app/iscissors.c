@@ -545,8 +545,8 @@ iscissors_button_press (Tool           *tool,
 				  drawable_height(drawable));
 				  
       iscissors->num_segs = 0;
-	x = iscissors->x;
-	y = iscissors->y;
+	x = bevent->x;
+	y = bevent->y;
 	
       add_segment (&(iscissors->num_segs), x, y);
 
@@ -633,7 +633,6 @@ iscissors_button_release (Tool           *tool,
 	  /*  Add one additional segment  */
 	  add_segment (&(iscissors->num_segs), segs[0].x1, segs[0].y1);
 
-
 	  if (iscissors->num_segs >= 3)
 	    {
 	      /*  Find the boundary  */
@@ -671,9 +670,6 @@ iscissors_motion (Tool           *tool,
 
   gdisp = (GDisplay *) gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
-
-  gdisplay_untransform_coords (gdisp, mevent->x, mevent->y,
-			       &iscissors->x, &iscissors->y, FALSE, TRUE); 
 
   
   switch (iscissors->state)
@@ -761,16 +757,6 @@ iscissors_draw_CR (GDisplay  *gdisp,
 	  geometry[i][1] = pts[indices[i]].dy * SUPERSAMPLE;
 	  break;
 	case SCREEN_COORDS:
-/*	  gdisplay_transform_coords_f (gdisp, , &x, &y, TRUE);
-      gdisplay_transform_coords (gdisp, points->x, points->y,
-				 &points->sx, &points->sy, 0);
-     
-*/
-/*
-      gdisplay_untransform_coords_f (gdisp, (int) pts[indices[i]].dx, (int) pts[indices[i]].dy,
-			   &x, &y, TRUE); 
-
-*/
 	  geometry[i][0] = x;
 	  geometry[i][1] = y;
 	  /*g_print("%f %f\n", x, y);*/
@@ -973,6 +959,7 @@ add_segment (int *num_segs,
 
   return 1;
 }
+
 
 static int
 add_point (int    *num_pts,
@@ -1247,6 +1234,7 @@ find_edge_xy (TempBuf *edge_buf,
 static void
 find_boundary (Tool *tool)
 {
+  
   /*  Find directional changes  */
   shape_of_boundary (tool);
 
@@ -1312,8 +1300,14 @@ shape_of_boundary (Tool *tool)
 
   for (i = 0,j=0; i < iscissors->num_kinks; i++)
     {
+	/* untransform coords */
+     gdisplay_untransform_coords (gdisp, segs[i].x1, segs[i].y1,
+		       &kinks[j].x, &kinks[j].y, FALSE, TRUE);
+	    
+/*	   
       kinks[j].x = segs[i].x1;
       kinks[j].y = segs[i].y1;
+*/
       
 	if(j) {
 	   if((kinks[i].x != kinks[j-1].x) || (kinks[j].y != kinks[j-1].y))
