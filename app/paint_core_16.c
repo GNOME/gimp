@@ -260,7 +260,7 @@ paint_core_16_init  (
   undo_tiles = canvas_new (drawable_tag (drawable),
                            drawable_width (drawable),
                            drawable_height (drawable),
-                           TILING_YES);
+                           TILING_NEVER);
 
 
   /*  Allocate the cumulative brush stroke mask  */
@@ -271,7 +271,7 @@ paint_core_16_init  (
                                       ALPHA_NO),
                              drawable_width (drawable),
                              drawable_height (drawable),
-                             TILING_YES);
+                             TILING_NEVER);
 
   /*  Get the initial undo extents  */
   paint_core->x1 = paint_core->x2 = paint_core->curx;
@@ -459,7 +459,8 @@ paint_core_16_button_press  (
 
   /*  pause the current selection and grab the pointer  */
   gdisplays_selection_visibility (gdisp->gimage->ID, SelectionPause);
-
+#define PAINT_CORE_16_C_1_cw
+#if 0
   /* add motion memory if you press mod1 first */
   if (bevent->state & GDK_MOD1_MASK)
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
@@ -469,7 +470,7 @@ paint_core_16_button_press  (
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
-  
+#endif 
   /*  Let the specific painting function initialize itself  */
   (* paint_core->paint_func) (paint_core, drawable, INIT_PAINT);
 
@@ -656,7 +657,6 @@ paint_core_16_area  (
   int   bw, bh;
   int   x1, y1, x2, y2;
   
-
   bw = canvas_width (paint_core->brush_mask);
   bh = canvas_height (paint_core->brush_mask);
   
@@ -683,12 +683,10 @@ paint_core_16_area  (
 
   if (canvas_buf)
     canvas_delete (canvas_buf);
-  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_YES);
+  canvas_buf = canvas_new (tag, (x2 - x1), (y2 - y1), TILING_NEVER);
   
   return canvas_buf;
 }
-
-
 
 Canvas * 
 paint_core_16_area_original  (
@@ -864,7 +862,8 @@ painthit_init  (
 
   /* initialize the undo tiles by using the drawable data as the
      pixelarea initializer and touching each tile */
-  c = canvas_from_tm (drawable_data (drawable));
+/*  c = canvas_from_tm (drawable_data (drawable));*/
+  c = drawable_data_canvas (drawable);
   pixelarea_init (&a, undo_tiles, c, x, y, w, h, TRUE);
   {
     void * pag;
@@ -875,7 +874,7 @@ painthit_init  (
         /* do nothing */
       }
   }
-  canvas_delete (c);
+  /*canvas_delete (c);*/
 }
 
 
@@ -1061,7 +1060,6 @@ brush_mask_get  (
       bm = NULL;
       break;
     }
-
   return bm;
 }
 
