@@ -1,3 +1,10 @@
+2000-02-12  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/bmp/bmp.[ch]
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/bmp/bmpwrite.c: return STATUS_CANCEL if "Cancel" was
+	pressed, code & ui cleanups.
+
 Sat Feb 12 16:02:12 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: ooops, must have been late

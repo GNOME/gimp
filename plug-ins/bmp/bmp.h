@@ -9,50 +9,78 @@
 #define Write(file,buffer,len)   fwrite(buffer, len, 1, file)
 #define WriteOK(file,buffer,len) (Write(buffer, len, file) != 0)
 
-extern gint32 ToL(guchar *);
-extern void FromL(gint32, guchar *);
-extern gint16 ToS(guchar *);
-extern void FromS(gint16, guchar *);
-extern gint32 ReadBMP (char *);
-extern gint WriteBMP (char *,gint32,gint32);
-extern gint ReadColorMap(FILE *, unsigned char[256][3], int, int, int *);
-extern Image ReadImage(FILE *, int, int, unsigned char[256][3], int, int, int, int, int);
-extern void WriteColorMap(FILE *, int *, int *, int *, int);
-extern void WriteImage(FILE *,guchar *,int,int,int,int,int,int,int);
+extern gint32       ToL           (guchar *);
+extern void         FromL         (gint32,
+				   guchar *);
+extern gint16       ToS           (guchar *);
+extern void         FromS         (gint16,
+				   guchar *);
+extern gint32       ReadBMP       (gchar *);
+extern GStatusType  WriteBMP      (gchar *,
+				   gint32,
+				   gint32);
+extern gint         ReadColorMap  (FILE *,
+				   guchar[256][3],
+				   gint,
+				   gint,
+				   gint *);
+extern Image        ReadImage     (FILE *,
+				   gint,
+				   gint,
+				   guchar[256][3],
+				   gint,
+				   gint,
+				   gint,
+				   gint,
+				   gint);
+extern void         WriteColorMap (FILE *,
+				   gint *,
+				   gint *,
+				   gint *,
+				   gint);
+extern void         WriteImage    (FILE *,
+				   guchar *,
+				   gint,
+				   gint,
+				   gint,
+				   gint,
+				   gint,
+				   gint,
+				   gint);
 
-extern int interactive_bmp;
-extern char *prog_name;
-extern char *filename;
-extern FILE *errorfile;
+extern gint   interactive_bmp;
+extern gchar *prog_name;
+extern gchar *filename;
+extern FILE  *errorfile;
 
 extern struct Bitmap_File_Head_Struct
-  {
-    unsigned long bfSize;		/* 02 */
-    unsigned long reserverd;		/* 06 */
-    unsigned long bfOffs;		/* 0A */
-    unsigned long biSize;		/* 0E */
-  }Bitmap_File_Head;
+{
+  gulong   bfSize;      /* 02 */
+  gulong   reserverd;   /* 06 */
+  gulong   bfOffs;      /* 0A */
+  gulong   biSize;      /* 0E */
+} Bitmap_File_Head;
 
 extern struct Bitmap_Head_Struct
-  {   
-    unsigned long biWidth;		/* 12 */
-    unsigned long biHeight;		/* 16 */
-    unsigned short biPlanes;            /* 1A */
-    unsigned short biBitCnt;	        /* 1C */
-    unsigned long biCompr;		/* 1E */
-    unsigned long biSizeIm;		/* 22 */
-    unsigned long biXPels;		/* 26 */
-    unsigned long biYPels;		/* 2A */
-    unsigned long biClrUsed;		/* 2E */
-    unsigned long biClrImp;		/* 32 */
-    					/* 36 */
-  }Bitmap_Head;
+{
+  gulong   biWidth;     /* 12 */
+  gulong   biHeight;    /* 16 */
+  gushort  biPlanes;    /* 1A */
+  gushort  biBitCnt;    /* 1C */
+  gulong   biCompr;     /* 1E */
+  gulong   biSizeIm;    /* 22 */
+  gulong   biXPels;     /* 26 */
+  gulong   biYPels;     /* 2A */
+  gulong   biClrUsed;   /* 2E */
+  gulong   biClrImp;    /* 32 */
+                        /* 36 */
+} Bitmap_Head;
   
 extern struct Bitmap_OS2_Head_Struct
-  {   
-    unsigned short bcWidth;             /* 12 */
-    unsigned short bcHeight;	        /* 14 */
-    unsigned short bcPlanes;            /* 16 */
-    unsigned short bcBitCnt;	        /* 18 */
-  }Bitmap_OS2_Head;                
+{   
+  gushort  bcWidth;     /* 12 */
+  gushort  bcHeight;    /* 14 */
+  gushort  bcPlanes;    /* 16 */
+  gushort  bcBitCnt;    /* 18 */
+} Bitmap_OS2_Head;                
 

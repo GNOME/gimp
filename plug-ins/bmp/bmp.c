@@ -259,10 +259,7 @@ run (gchar   *name,
 
       if (status == STATUS_SUCCESS)
 	{
-	  if (! WriteBMP (param[3].data.d_string, image_ID, drawable_ID))
-	    {
-	      status = STATUS_EXECUTION_ERROR;
-	    }
+	  status = WriteBMP (param[3].data.d_string, image_ID, drawable_ID);
 	}
 
       if (export == EXPORT_EXPORT)
@@ -292,18 +289,18 @@ void
 FromL (gint32  wert, 
        guchar *bopuffer)
 {
-  bopuffer[0]=(wert & 0x000000ff)>>0x00;
-  bopuffer[1]=(wert & 0x0000ff00)>>0x08;
-  bopuffer[2]=(wert & 0x00ff0000)>>0x10;
-  bopuffer[3]=(wert & 0xff000000)>>0x18;
+  bopuffer[0] = (wert & 0x000000ff)>>0x00;
+  bopuffer[1] = (wert & 0x0000ff00)>>0x08;
+  bopuffer[2] = (wert & 0x00ff0000)>>0x10;
+  bopuffer[3] = (wert & 0xff000000)>>0x18;
 }
 
 void  
 FromS (gint16  wert, 
        guchar *bopuffer)
 {
-  bopuffer[0]=(wert & 0x00ff)>>0x00;
-  bopuffer[1]=(wert & 0xff00)>>0x08;
+  bopuffer[0] = (wert & 0x00ff)>>0x00;
+  bopuffer[1] = (wert & 0xff00)>>0x08;
 }
 
 static void
@@ -319,5 +316,3 @@ init_gtk (void)
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 }
-
-
