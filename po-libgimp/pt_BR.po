@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-01-30 04:44+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2003-01-30 04:15-0300\n"
 "Last-Translator: Alexandre Folle de Menezes <afmenez@terra.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -198,19 +198,19 @@ msgstr ""
 msgid "Skipping module: '%s'\n"
 msgstr "Pulando módulo: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Erro do módulo"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr "Carregado"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Carregamento falhou"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr "Não carregado"
 
@@ -358,51 +358,51 @@ msgstr "_Resetar"
 msgid "Visible"
 msgstr "Visível"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr "_Redimensionar"
 
-#: libgimpwidgets/gimpstock.c:132 libgimpwidgets/gimpstock.c:184
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 msgid "_Scale"
 msgstr "E_scalar"
 
-#: libgimpwidgets/gimpstock.c:140
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr "Espaçamento das L_etras"
 
-#: libgimpwidgets/gimpstock.c:141
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr "Espaçamento das L_inhas"
 
-#: libgimpwidgets/gimpstock.c:162
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr "Aparar"
 
-#: libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: libgimpwidgets/gimpstock.c:183
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr "_Rotacionar"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr "_Inclinar"
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Mais..."
 
-#: libgimpwidgets/gimpunitmenu.c:525
+#: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
 msgstr "Seleção da Unidade"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Unidade"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Fator"
 
@@ -411,8 +411,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Usar este valor para a semente do gerador de números randômicos - isso permite "
-"que qualquer operação \"randômica\" possa ser repetida"
+"Usar este valor para a semente do gerador de números randômicos - isso "
+"permite que qualquer operação \"randômica\" possa ser repetida"
 
 #: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
@@ -424,7 +424,8 @@ msgstr "Semear o gerador de números randômicos com o número randômico gerado
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Filtro simulador de deficiência de cor (algoritmo de Brettel-Vienot-Mollon)"
+msgstr ""
+"Filtro simulador de deficiência de cor (algoritmo de Brettel-Vienot-Mollon)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
@@ -529,4 +530,3 @@ msgstr "Pressão"
 
 #~ msgid "OK"
 #~ msgstr "OK"
-

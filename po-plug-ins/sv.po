@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-02-03 22:33+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2003-02-02 22:30+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -19,7 +19,7 @@ msgstr ""
 
 #: plug-ins/FractalExplorer/Dialogs.c:289
 #: plug-ins/FractalExplorer/Dialogs.c:1389 plug-ins/gfig/gfig.c:3267
-#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:358
+#: plug-ins/imagemap/imap_about.c:38 plug-ins/print/gimp_main_window.c:360
 #: plug-ins/webbrowser/webbrowser.c:278
 msgid "About"
 msgstr "Om"
@@ -31,15 +31,15 @@ msgstr "Om"
 #: plug-ins/common/destripe.c:578 plug-ins/common/emboss.c:723
 #: plug-ins/common/fractaltrace.c:750 plug-ins/common/grid.c:664
 #: plug-ins/common/iwarp.c:1187 plug-ins/common/mapcolor.c:578
-#: plug-ins/common/nlfilt.c:559 plug-ins/common/plasma.c:333
-#: plug-ins/common/polar.c:799 plug-ins/common/sharpen.c:558
-#: plug-ins/common/sinus.c:2047 plug-ins/common/spheredesigner.c:2296
-#: plug-ins/common/tileit.c:406 plug-ins/common/waves.c:451
-#: plug-ins/common/whirlpinch.c:684 plug-ins/flame/flame.c:945
-#: plug-ins/gfig/gfig.c:3857 plug-ins/gflare/gflare.c:2327
-#: plug-ins/gflare/gflare.c:3253 plug-ins/gimpressionist/orientmap.c:498
-#: plug-ins/gimpressionist/preview.c:110 plug-ins/gimpressionist/sizemap.c:431
-#: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/gimp_main_window.c:409
+#: plug-ins/common/nlfilt.c:559 plug-ins/common/polar.c:799
+#: plug-ins/common/sharpen.c:558 plug-ins/common/sinus.c:2047
+#: plug-ins/common/spheredesigner.c:2296 plug-ins/common/tileit.c:406
+#: plug-ins/common/waves.c:451 plug-ins/common/whirlpinch.c:684
+#: plug-ins/flame/flame.c:945 plug-ins/gfig/gfig.c:3857
+#: plug-ins/gflare/gflare.c:2327 plug-ins/gflare/gflare.c:3253
+#: plug-ins/gimpressionist/orientmap.c:501
+#: plug-ins/gimpressionist/preview.c:111 plug-ins/gimpressionist/sizemap.c:434
+#: plug-ins/ifscompose/ifscompose.c:919 plug-ins/print/gimp_main_window.c:411
 #: plug-ins/rcm/rcm_dialog.c:124 plug-ins/rcm/rcm_dialog.c:671
 msgid "Preview"
 msgstr "Förhandsgranska"
@@ -631,7 +631,7 @@ msgstr "Ställ in färg på ljuskälla"
 
 #: plug-ins/Lighting/lighting_ui.c:551 plug-ins/MapObject/mapobject_ui.c:725
 #: plug-ins/MapObject/mapobject_ui.c:1034
-#: plug-ins/print/gimp_main_window.c:460
+#: plug-ins/print/gimp_main_window.c:462
 msgid "Position"
 msgstr "Position"
 
@@ -847,7 +847,7 @@ msgid "_Environment Map"
 msgstr "Miljö_karta"
 
 # src/menus.c:293
-#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/gimpressionist/preview.c:121
+#: plug-ins/Lighting/lighting_ui.c:1187 plug-ins/gimpressionist/preview.c:122
 #: plug-ins/imagemap/imap_polygon.c:516
 msgid "_Update"
 msgstr "_Uppdatera"
@@ -1009,22 +1009,22 @@ msgid "Back:"
 msgstr "Baksida:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:522
+#: plug-ins/print/gimp_main_window.c:524
 msgid "Top:"
 msgstr "Ovansida:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:563
+#: plug-ins/print/gimp_main_window.c:565
 msgid "Bottom:"
 msgstr "Undersida:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1143
-#: plug-ins/print/gimp_main_window.c:509
+#: plug-ins/print/gimp_main_window.c:511
 msgid "Left:"
 msgstr "Vänster:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1143
-#: plug-ins/print/gimp_main_window.c:535
+#: plug-ins/print/gimp_main_window.c:537
 msgid "Right:"
 msgstr "Höger:"
 
@@ -1062,7 +1062,7 @@ msgid "Images for the Cap Faces"
 msgstr "Bilder för ändarna"
 
 #: plug-ins/MapObject/mapobject_ui.c:1275
-#: plug-ins/print/gimp_main_window.c:1108
+#: plug-ins/print/gimp_main_window.c:1110
 msgid "Size"
 msgstr "Storlek"
 
@@ -1123,9 +1123,9 @@ msgstr "%s: felaktig färgkarta"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:93 plug-ins/common/CEL.c:263
-#: plug-ins/common/gbr.c:294 plug-ins/common/gih.c:630
-#: plug-ins/common/gifload.c:302 plug-ins/common/hrz.c:332
-#: plug-ins/common/jpeg.c:729 plug-ins/common/pat.c:263
+#: plug-ins/common/gbr.c:294 plug-ins/common/gifload.c:302
+#: plug-ins/common/gih.c:630 plug-ins/common/hrz.c:332
+#: plug-ins/common/jpeg.c:734 plug-ins/common/pat.c:263
 #: plug-ins/common/pcx.c:298 plug-ins/common/pix.c:328
 #: plug-ins/common/png.c:473 plug-ins/common/png.c:475
 #: plug-ins/common/pnm.c:408 plug-ins/common/psd.c:1651
@@ -1163,8 +1163,8 @@ msgstr "%s: fel vid läsning av BMP-filhuvud"
 #: plug-ins/bmp/bmpread.c:345 plug-ins/common/CEL.c:301
 #: plug-ins/common/blinds.c:383 plug-ins/common/compose.c:568
 #: plug-ins/common/decompose.c:501 plug-ins/common/film.c:995
-#: plug-ins/common/gifload.c:845 plug-ins/common/hrz.c:373
-#: plug-ins/common/jpeg.c:881 plug-ins/common/lic.c:718
+#: plug-ins/common/gifload.c:847 plug-ins/common/hrz.c:373
+#: plug-ins/common/jpeg.c:888 plug-ins/common/lic.c:718
 #: plug-ins/common/pat.c:338 plug-ins/common/pcx.c:329
 #: plug-ins/common/pcx.c:335 plug-ins/common/pix.c:372
 #: plug-ins/common/png.c:600 plug-ins/common/pnm.c:496
@@ -1192,7 +1192,7 @@ msgstr "Kan inte öppna %s"
 #: plug-ins/bmp/bmpwrite.c:210 plug-ins/common/CEL.c:507
 #: plug-ins/common/gbr.c:487 plug-ins/common/gif.c:947
 #: plug-ins/common/gih.c:1229 plug-ins/common/gtm.c:245
-#: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1190
+#: plug-ins/common/hrz.c:470 plug-ins/common/jpeg.c:1199
 #: plug-ins/common/pat.c:381 plug-ins/common/pcx.c:544
 #: plug-ins/common/pix.c:515 plug-ins/common/png.c:849
 #: plug-ins/common/png.c:851 plug-ins/common/pnm.c:780
@@ -1572,7 +1572,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0,5 < x)"
 
 #: plug-ins/common/CML_explorer.c:203 plug-ins/common/sunras.c:1608
-#: plug-ins/print/gimp_main_window.c:1637
+#: plug-ins/print/gimp_main_window.c:1639
 msgid "Standard"
 msgstr "Standard"
 
@@ -1654,8 +1654,8 @@ msgstr "Slumpmässiga värden från frö (delad)"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/decompose.c:131
 #: plug-ins/fp/fp_gtk.c:292 plug-ins/fp/fp_gtk.c:426
-#: plug-ins/gimpressionist/orientation.c:148
-#: plug-ins/gimpressionist/size.c:144
+#: plug-ins/gimpressionist/orientation.c:145
+#: plug-ins/gimpressionist/size.c:145
 msgid "Hue"
 msgstr "Nyans"
 
@@ -1667,8 +1667,8 @@ msgstr "Mättnad"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/decompose.c:133
 #: plug-ins/fp/fp_gtk.c:300 plug-ins/fp/fp_gtk.c:434
-#: plug-ins/gimpressionist/orientation.c:109
-#: plug-ins/gimpressionist/size.c:105
+#: plug-ins/gimpressionist/orientation.c:106
+#: plug-ins/gimpressionist/size.c:106
 msgid "Value"
 msgstr "Värde"
 
@@ -1956,11 +1956,11 @@ msgstr "Justera synliga lager"
 #: plug-ins/common/emboss.c:543 plug-ins/common/engrave.c:235
 #: plug-ins/common/gauss_iir.c:372 plug-ins/common/gauss_rle.c:366
 #: plug-ins/common/glasstile.c:266 plug-ins/common/grid.c:709
-#: plug-ins/common/illusion.c:421 plug-ins/common/jpeg.c:1635
+#: plug-ins/common/illusion.c:421 plug-ins/common/jpeg.c:1644
 #: plug-ins/common/lic.c:898 plug-ins/common/max_rgb.c:301
 #: plug-ins/common/nlfilt.c:399 plug-ins/common/noisify.c:338
 #: plug-ins/common/nova.c:347 plug-ins/common/oilify.c:469
-#: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:355
+#: plug-ins/common/pixelize.c:339 plug-ins/common/plasma.c:340
 #: plug-ins/common/png.c:1209 plug-ins/common/polar.c:819
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:602
 #: plug-ins/common/scatter_hsv.c:402 plug-ins/common/sel_gauss.c:255
@@ -2372,7 +2372,7 @@ msgid "_Psychobilly"
 msgstr "_Psychobilly"
 
 #: plug-ins/common/checkerboard.c:435 plug-ins/common/papertile.c:305
-#: plug-ins/gimpressionist/sizemap.c:485
+#: plug-ins/gimpressionist/sizemap.c:488
 msgid "_Size:"
 msgstr "_Storlek:"
 
@@ -2398,8 +2398,8 @@ msgstr "Kolorera"
 
 #: plug-ins/common/colorify.c:271 plug-ins/common/colortoalpha.c:333
 #: plug-ins/common/ps.c:2727 plug-ins/common/xpm.c:431
-#: plug-ins/gimpressionist/color.c:47 plug-ins/gimpressionist/general.c:106
-#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1409
+#: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:106
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1411
 msgid "Color"
 msgstr "Färg"
 
@@ -2458,7 +2458,7 @@ msgid "Hue:"
 msgstr "Nyans:"
 
 #. Gray: Circle: Spinbutton 2
-#: plug-ins/common/compose.c:133 plug-ins/print/gimp_color_window.c:328
+#: plug-ins/common/compose.c:133 plug-ins/print/gimp_color_window.c:336
 #: plug-ins/rcm/rcm_dialog.c:482
 msgid "Saturation:"
 msgstr "Mättnad:"
@@ -2472,17 +2472,17 @@ msgid "CMY"
 msgstr "CMY"
 
 #: plug-ins/common/compose.c:136 plug-ins/common/compose.c:140
-#: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:271
+#: plug-ins/fp/fp_gtk.c:28 plug-ins/print/gimp_color_window.c:279
 msgid "Cyan:"
 msgstr "Cyan:"
 
 #: plug-ins/common/compose.c:137 plug-ins/common/compose.c:141
-#: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:290
+#: plug-ins/fp/fp_gtk.c:30 plug-ins/print/gimp_color_window.c:298
 msgid "Magenta:"
 msgstr "Magenta:"
 
 #: plug-ins/common/compose.c:138 plug-ins/common/compose.c:142
-#: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:309
+#: plug-ins/fp/fp_gtk.c:29 plug-ins/print/gimp_color_window.c:317
 msgid "Yellow:"
 msgstr "Gul:"
 
@@ -3130,7 +3130,7 @@ msgstr "Damm och repor"
 #.
 #. * Filter type controls...
 #.
-#: plug-ins/common/despeckle.c:708 plug-ins/gimpressionist/orientmap.c:550
+#: plug-ins/common/despeckle.c:708 plug-ins/gimpressionist/orientmap.c:553
 msgid "Type"
 msgstr "Typ"
 
@@ -3177,7 +3177,7 @@ msgstr "Skapa _Histogram"
 #: plug-ins/common/ps.c:2683 plug-ins/common/ps.c:2859
 #: plug-ins/common/smooth_palette.c:448 plug-ins/common/tile.c:427
 #: plug-ins/imagemap/imap_cmd_guides.c:159
-#: plug-ins/imagemap/imap_rectangle.c:401
+#: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
 msgstr "_Bredd:"
 
@@ -3329,7 +3329,7 @@ msgstr "_Begränsa linjebredd"
 #: plug-ins/common/ps.c:2692 plug-ins/common/ps.c:2868
 #: plug-ins/common/smooth_palette.c:453 plug-ins/common/tile.c:431
 #: plug-ins/imagemap/imap_cmd_guides.c:169
-#: plug-ins/imagemap/imap_rectangle.c:408
+#: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Höjd:"
 
@@ -3425,8 +3425,8 @@ msgstr "Film"
 msgid "Fit Height to Images"
 msgstr "Anpassa höjden till bilderna"
 
-#: plug-ins/common/film.c:1238 plug-ins/print/gimp_main_window.c:1014
-#: plug-ins/print/gimp_main_window.c:1226
+#: plug-ins/common/film.c:1238 plug-ins/print/gimp_main_window.c:1016
+#: plug-ins/print/gimp_main_window.c:1228
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -3868,18 +3868,18 @@ msgstr "Ranger:"
 msgid "Selection:"
 msgstr "Markering:"
 
-#: plug-ins/common/gifload.c:847
+#: plug-ins/common/gifload.c:849
 #, c-format
 msgid "Background (%dms)"
 msgstr "Bakgrund (%d ms)"
 
-#: plug-ins/common/gifload.c:895 plug-ins/common/iwarp.c:745
+#: plug-ins/common/gifload.c:897 plug-ins/common/iwarp.c:745
 #: plug-ins/common/iwarp.c:770
 #, c-format
 msgid "Frame %d"
 msgstr "Bildruta %d"
 
-#: plug-ins/common/gifload.c:897
+#: plug-ins/common/gifload.c:899
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "Bildruta %d (%d ms)"
@@ -4350,86 +4350,86 @@ msgstr "Varje pusselbit har avrundade sidor"
 msgid "Export Preview"
 msgstr "Förhandsgranska export"
 
-#: plug-ins/common/jpeg.c:723
+#: plug-ins/common/jpeg.c:728
 #, c-format
 msgid "can't open \"%s\"\n"
 msgstr "kan ej öppna \"%s\"\n"
 
-#: plug-ins/common/jpeg.c:874
+#: plug-ins/common/jpeg.c:881
 msgid "JPEG preview"
 msgstr "JPEG förhandsgranska"
 
-#: plug-ins/common/jpeg.c:1108
+#: plug-ins/common/jpeg.c:1117
 #, c-format
 msgid "Size: %ld bytes (%02.01f kB)"
 msgstr "Storlek: %ld byte (%02.01f kB)"
 
-#: plug-ins/common/jpeg.c:1517 plug-ins/common/jpeg.c:1625
+#: plug-ins/common/jpeg.c:1526 plug-ins/common/jpeg.c:1634
 msgid "Size: unknown"
 msgstr "Storlek: okänd"
 
-#: plug-ins/common/jpeg.c:1580
+#: plug-ins/common/jpeg.c:1589
 msgid "Save as JPEG"
 msgstr "Spara som JPEG"
 
 #. sg - preview
-#: plug-ins/common/jpeg.c:1603 plug-ins/print/gimp_color_window.c:222
+#: plug-ins/common/jpeg.c:1612 plug-ins/print/gimp_color_window.c:230
 msgid "Image Preview"
 msgstr "Förhandsgranska bild"
 
-#: plug-ins/common/jpeg.c:1612
+#: plug-ins/common/jpeg.c:1621
 msgid "Preview (in image window)"
 msgstr "Förhandsgranska (i bildfönstret)"
 
-#: plug-ins/common/jpeg.c:1645 plug-ins/xjt/xjt.c:856
+#: plug-ins/common/jpeg.c:1654 plug-ins/xjt/xjt.c:856
 msgid "Quality:"
 msgstr "Kvalitet:"
 
-#: plug-ins/common/jpeg.c:1668 plug-ins/xjt/xjt.c:865
+#: plug-ins/common/jpeg.c:1677 plug-ins/xjt/xjt.c:865
 msgid "Smoothing:"
 msgstr "Utjämnande:"
 
-#: plug-ins/common/jpeg.c:1696
+#: plug-ins/common/jpeg.c:1705
 msgid "Restart markers"
 msgstr "Omstartsmarkörer"
 
-#: plug-ins/common/jpeg.c:1705
+#: plug-ins/common/jpeg.c:1714
 msgid "Restart frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: plug-ins/common/jpeg.c:1734 plug-ins/xjt/xjt.c:834
+#: plug-ins/common/jpeg.c:1743 plug-ins/xjt/xjt.c:834
 msgid "Optimize"
 msgstr "Optimera"
 
-#: plug-ins/common/jpeg.c:1748
+#: plug-ins/common/jpeg.c:1757
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: plug-ins/common/jpeg.c:1767
+#: plug-ins/common/jpeg.c:1776
 msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Tvinga grundläggande JPEG (läsbar av alla dekodrar)"
 
-#: plug-ins/common/jpeg.c:1793
+#: plug-ins/common/jpeg.c:1802
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
-#: plug-ins/common/jpeg.c:1802
+#: plug-ins/common/jpeg.c:1811
 msgid "Fast Integer"
 msgstr "Snabba heltal"
 
-#: plug-ins/common/jpeg.c:1803
+#: plug-ins/common/jpeg.c:1812
 msgid "Integer"
 msgstr "Heltal"
 
-#: plug-ins/common/jpeg.c:1804
+#: plug-ins/common/jpeg.c:1813
 msgid "Floating-Point"
 msgstr "Flyttal"
 
-#: plug-ins/common/jpeg.c:1808
+#: plug-ins/common/jpeg.c:1817
 msgid "DCT method (Speed/quality tradeoff):"
 msgstr "DCT-metod (kompromiss mellan hastighet och kvalitet):"
 
-#: plug-ins/common/jpeg.c:1816
+#: plug-ins/common/jpeg.c:1825
 msgid "Image comments"
 msgstr "Bildkommentarer"
 
@@ -5033,11 +5033,11 @@ msgstr "Pixel_bredd:"
 msgid "Pixel _Height:"
 msgstr "Pixel_höjd:"
 
-#: plug-ins/common/plasma.c:191
+#: plug-ins/common/plasma.c:192
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
 msgstr "<Image>/Filter/Rendera/Moln/Plasma..."
 
-#: plug-ins/common/plasma.c:271
+#: plug-ins/common/plasma.c:272
 msgid "Plasma..."
 msgstr "Plasma..."
 
@@ -5045,11 +5045,11 @@ msgstr "Plasma..."
 msgid "Plasma"
 msgstr "Plasma"
 
-#: plug-ins/common/plasma.c:368
+#: plug-ins/common/plasma.c:353
 msgid "Random _Seed:"
 msgstr "Slump_frö:"
 
-#: plug-ins/common/plasma.c:379
+#: plug-ins/common/plasma.c:364
 msgid "T_urbulence:"
 msgstr "T_urbulens:"
 
@@ -5381,7 +5381,7 @@ msgstr "Läs in PostScript"
 msgid "Rendering"
 msgstr "Rendering"
 
-#: plug-ins/common/ps.c:2674 plug-ins/print/gimp_main_window.c:1092
+#: plug-ins/common/ps.c:2674 plug-ins/print/gimp_main_window.c:1094
 msgid "Resolution:"
 msgstr "Upplösning:"
 
@@ -6278,7 +6278,7 @@ msgid "Colors:"
 msgstr "Färger:"
 
 #. Scale
-#: plug-ins/common/spheredesigner.c:2461 plug-ins/gimpressionist/paper.c:148
+#: plug-ins/common/spheredesigner.c:2461 plug-ins/gimpressionist/paper.c:149
 #: plug-ins/ifscompose/ifscompose.c:569
 msgid "Scale:"
 msgstr "Skala:"
@@ -6647,7 +6647,11 @@ msgstr "<Image>/Filter/Mappa/Gör kantlös"
 msgid "Tiler..."
 msgstr "Plattläggare..."
 
-#: plug-ins/common/uniteditor.c:74
+#: plug-ins/common/uniteditor.c:81
+msgid "Saved"
+msgstr "Sparad"
+
+#: plug-ins/common/uniteditor.c:81
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -6655,132 +6659,130 @@ msgstr ""
 "En enhetsdefinition sparas innan GIMP avslutas endast om kolumnen är "
 "markerad."
 
-#: plug-ins/common/uniteditor.c:76
+#: plug-ins/common/uniteditor.c:83
+msgid "ID"
+msgstr "ID"
+
+#: plug-ins/common/uniteditor.c:83
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Den här strängen används för att identifiera en enhet i GIMP's "
 "konfigurationsfiler."
 
-#: plug-ins/common/uniteditor.c:78
+#: plug-ins/common/uniteditor.c:85
+msgid "Factor"
+msgstr "Faktor"
+
+#: plug-ins/common/uniteditor.c:85
 msgid "How many units make up an inch."
 msgstr "Hur många enheter går det på en tum."
 
-#: plug-ins/common/uniteditor.c:79
+#: plug-ins/common/uniteditor.c:86
+msgid "Digits"
+msgstr "Decimaler"
+
+#: plug-ins/common/uniteditor.c:86
+#, fuzzy
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
-"decimal digits the input field should provide to get approximately the same "
+"decimal digits the input field should provide to get approximately  the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
 "Detta fält är information för indatafält. Den visar hur många siffrors "
 "noggrannhet fältet bör använda för att få ungefär samma noggrannhet som "
 "inmatning i tum med två siffrors noggrannhet."
 
-#: plug-ins/common/uniteditor.c:83
+#: plug-ins/common/uniteditor.c:91
+msgid "Symbol"
+msgstr "Symbol"
+
+#: plug-ins/common/uniteditor.c:91
+#, fuzzy
 msgid ""
-"The unit's symbol if it has one (e.g. \"'\" for inches). Use the unit's "
-"abbreviation if it doesn't have a symbol."
+"The unit's symbol if it has one (e.g. \"'\" for inches). The unit's "
+"abbreviation is used if doesn't have a symbol."
 msgstr ""
 "Enhetens symbol, om det har någon (t.ex. \"'\" för tum). Använd enhetens "
 "förkortning om den inte har en symbol."
 
-#: plug-ins/common/uniteditor.c:85
-msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
-msgstr "Enhetens förkortning (t.ex. \"cm\" för centimeter)."
-
-#: plug-ins/common/uniteditor.c:86
-msgid "The unit's singular form."
-msgstr "Enhetens namn i singular."
-
-#: plug-ins/common/uniteditor.c:87
-msgid "The unit's plural form."
-msgstr "Enhetens namn i plural."
-
-#: plug-ins/common/uniteditor.c:105
-msgid "<Toolbox>/Xtns/Unit Editor..."
-msgstr "<Toolbox>/Xtns/Enhetseditor..."
-
-#: plug-ins/common/uniteditor.c:169
-msgid "New Unit"
-msgstr "Ny enhet"
-
-#: plug-ins/common/uniteditor.c:200
-msgid "_ID:"
-msgstr "_ID:"
-
-#: plug-ins/common/uniteditor.c:211
-msgid "_Factor:"
-msgstr "_Faktor:"
-
-#: plug-ins/common/uniteditor.c:221
-msgid "_Digits:"
-msgstr "_Decimaler:"
-
-#: plug-ins/common/uniteditor.c:233
-msgid "_Symbol:"
-msgstr "_Symbol:"
-
-#: plug-ins/common/uniteditor.c:245
-msgid "_Abbreviation:"
-msgstr "_Förkortning:"
-
-#: plug-ins/common/uniteditor.c:257
-msgid "Si_ngular:"
-msgstr "_Singular:"
-
-#: plug-ins/common/uniteditor.c:269
-msgid "_Plural:"
-msgstr "_Plural:"
-
-#: plug-ins/common/uniteditor.c:306
-msgid "Unit factor must not be 0."
-msgstr "Enhetsfaktorn får inte vara 0."
-
-#: plug-ins/common/uniteditor.c:316
-msgid "All text fields must contain a value."
-msgstr "Alla textfält måste innehålla ett värde."
-
-#: plug-ins/common/uniteditor.c:533
-msgid "Unit Editor"
-msgstr "Enhetseditor"
-
-#: plug-ins/common/uniteditor.c:572
-msgid "Saved"
-msgstr "Sparad"
-
-#: plug-ins/common/uniteditor.c:587
-msgid "ID"
-msgstr "ID"
-
-#: plug-ins/common/uniteditor.c:596
-msgid "Factor"
-msgstr "Faktor"
-
-#: plug-ins/common/uniteditor.c:604
-msgid "Digits"
-msgstr "Decimaler"
-
-#: plug-ins/common/uniteditor.c:612
-msgid "Symbol"
-msgstr "Symbol"
-
-#: plug-ins/common/uniteditor.c:620
+#: plug-ins/common/uniteditor.c:94
 msgid "Abbreviation"
 msgstr "Förkortning"
 
-#: plug-ins/common/uniteditor.c:628
+#: plug-ins/common/uniteditor.c:94
+msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
+msgstr "Enhetens förkortning (t.ex. \"cm\" för centimeter)."
+
+#: plug-ins/common/uniteditor.c:96
 msgid "Singular"
 msgstr "Singular"
 
-#: plug-ins/common/uniteditor.c:636
+#: plug-ins/common/uniteditor.c:96
+msgid "The unit's singular form."
+msgstr "Enhetens namn i singular."
+
+#: plug-ins/common/uniteditor.c:97
 msgid "Plural"
 msgstr "Plural"
 
-#: plug-ins/common/uniteditor.c:657
+#: plug-ins/common/uniteditor.c:97
+msgid "The unit's plural form."
+msgstr "Enhetens namn i plural."
+
+#: plug-ins/common/uniteditor.c:115
+msgid "<Toolbox>/Xtns/Unit Editor..."
+msgstr "<Toolbox>/Xtns/Enhetseditor..."
+
+#: plug-ins/common/uniteditor.c:179
+msgid "New Unit"
+msgstr "Ny enhet"
+
+#: plug-ins/common/uniteditor.c:210
+msgid "_ID:"
+msgstr "_ID:"
+
+#: plug-ins/common/uniteditor.c:221
+msgid "_Factor:"
+msgstr "_Faktor:"
+
+#: plug-ins/common/uniteditor.c:231
+msgid "_Digits:"
+msgstr "_Decimaler:"
+
+#: plug-ins/common/uniteditor.c:243
+msgid "_Symbol:"
+msgstr "_Symbol:"
+
+#: plug-ins/common/uniteditor.c:255
+msgid "_Abbreviation:"
+msgstr "_Förkortning:"
+
+#: plug-ins/common/uniteditor.c:267
+msgid "Si_ngular:"
+msgstr "_Singular:"
+
+#: plug-ins/common/uniteditor.c:279
+msgid "_Plural:"
+msgstr "_Plural:"
+
+#: plug-ins/common/uniteditor.c:316
+msgid "Unit factor must not be 0."
+msgstr "Enhetsfaktorn får inte vara 0."
+
+#: plug-ins/common/uniteditor.c:326
+msgid "All text fields must contain a value."
+msgstr "Alla textfält måste innehålla ett värde."
+
+#: plug-ins/common/uniteditor.c:543
+msgid "Unit Editor"
+msgstr "Enhetseditor"
+
+#: plug-ins/common/uniteditor.c:637
 msgid "Create a new unit from scratch."
 msgstr "Skapa en ny enhet från början."
 
-#: plug-ins/common/uniteditor.c:667
+#: plug-ins/common/uniteditor.c:647
 msgid "Create a new unit with the currently seleted unit as template."
 msgstr "Skapa en ny enhet med den markerade enheten som förlaga."
 
@@ -7224,7 +7226,7 @@ msgstr "B_åde och"
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Högre värden begränsar effekten till färre delar av bilden"
 
-#: plug-ins/common/wind.c:1042 plug-ins/gimpressionist/orientmap.c:597
+#: plug-ins/common/wind.c:1042 plug-ins/gimpressionist/orientmap.c:600
 msgid "_Strength:"
 msgstr "_Styrka:"
 
@@ -7621,8 +7623,8 @@ msgstr "_Slumpa"
 msgid "Same"
 msgstr "Samma"
 
-#: plug-ins/flame/flame.c:723 plug-ins/gimpressionist/orientation.c:123
-#: plug-ins/gimpressionist/size.c:119
+#: plug-ins/flame/flame.c:723 plug-ins/gimpressionist/orientation.c:120
+#: plug-ins/gimpressionist/size.c:120
 msgid "Random"
 msgstr "Slumpvis"
 
@@ -7912,8 +7914,8 @@ msgstr "Medurs"
 msgid "Anti-Clockwise"
 msgstr "Moturs"
 
-#: plug-ins/gfig/gfig.c:1870 plug-ins/gimpressionist/orientation.c:101
-#: plug-ins/print/gimp_main_window.c:495
+#: plug-ins/gfig/gfig.c:1870 plug-ins/gimpressionist/orientation.c:98
+#: plug-ins/print/gimp_main_window.c:497
 msgid "Orientation:"
 msgstr "Orientering:"
 
@@ -8749,7 +8751,7 @@ msgstr "_Pensel"
 msgid "Brush Preview:"
 msgstr "Förhandsgranska pensel:"
 
-#: plug-ins/gimpressionist/brush.c:383 plug-ins/print/gimp_color_window.c:371
+#: plug-ins/gimpressionist/brush.c:383 plug-ins/print/gimp_color_window.c:379
 msgid "Gamma:"
 msgstr "Gamma:"
 
@@ -8773,39 +8775,39 @@ msgstr "Proportioner:"
 msgid "Specifies the aspect ratio of the brush"
 msgstr "Specifierar proportionerna för penseln"
 
-#: plug-ins/gimpressionist/brush.c:456 plug-ins/gimpressionist/paper.c:160
+#: plug-ins/gimpressionist/brush.c:456 plug-ins/gimpressionist/paper.c:161
 msgid "Relief:"
 msgstr "Relief:"
 
-#: plug-ins/gimpressionist/brush.c:460 plug-ins/gimpressionist/paper.c:164
+#: plug-ins/gimpressionist/brush.c:460 plug-ins/gimpressionist/paper.c:165
 msgid "Specifies the amount of embossing to apply to the image (in percent)"
 msgstr "Specifierar mängden ciselering att applicera på bilden (i procent)"
 
-#: plug-ins/gimpressionist/color.c:33
+#: plug-ins/gimpressionist/color.c:34
 msgid "Co_lor"
 msgstr "F_ärg"
 
-#: plug-ins/gimpressionist/color.c:51
+#: plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
 msgstr "M_edelvärde under penseln"
 
-#: plug-ins/gimpressionist/color.c:52
+#: plug-ins/gimpressionist/color.c:53
 msgid "C_enter of brush"
 msgstr "Penselns _mittpunkt"
 
-#: plug-ins/gimpressionist/color.c:56
+#: plug-ins/gimpressionist/color.c:57
 msgid "Color is computed from the average of all pixels under the brush"
 msgstr "Färgen är beräknad som medelvärdet av alla bildpunkter under penseln"
 
-#: plug-ins/gimpressionist/color.c:58
+#: plug-ins/gimpressionist/color.c:59
 msgid "Samples the color from the pixel in the center of the brush"
 msgstr "Samplar färgen på bildpunkten i penselns mittpunkt"
 
-#: plug-ins/gimpressionist/color.c:76
+#: plug-ins/gimpressionist/color.c:77
 msgid "Color _noise:"
 msgstr "Färg_brus:"
 
-#: plug-ins/gimpressionist/color.c:80
+#: plug-ins/gimpressionist/color.c:81
 msgid "Adds random noise to the color"
 msgstr "Lägger till slumpmässigt brus till färgen"
 
@@ -8903,11 +8905,11 @@ msgstr "Avvikelsegräns:"
 msgid "A bailout-value for adaptive selections"
 msgstr "Ett avbrottsvärde för adaptiva markeringar"
 
-#: plug-ins/gimpressionist/gimp.c:102
+#: plug-ins/gimpressionist/gimp.c:106
 msgid "<Image>/Filters/Artistic/GIMPressionist..."
 msgstr "<Image>/Filter/Artistiskt/GIMPressionist..."
 
-#: plug-ins/gimpressionist/gimp.c:284
+#: plug-ins/gimpressionist/gimp.c:288
 msgid "Painting..."
 msgstr "Målar..."
 
@@ -8935,106 +8937,106 @@ msgstr "Gimpressionist"
 msgid "A_bout..."
 msgstr "O_m..."
 
-#: plug-ins/gimpressionist/orientation.c:46
+#: plug-ins/gimpressionist/orientation.c:43
 msgid "Or_ientation"
 msgstr "Or_ientering"
 
-#: plug-ins/gimpressionist/orientation.c:63
+#: plug-ins/gimpressionist/orientation.c:60
 msgid "Directions:"
 msgstr "Riktningar:"
 
-#: plug-ins/gimpressionist/orientation.c:67
+#: plug-ins/gimpressionist/orientation.c:64
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Antal riktningar (dvs. penslar) att använda"
 
-#: plug-ins/gimpressionist/orientation.c:75
+#: plug-ins/gimpressionist/orientation.c:72
 msgid "Start angle:"
 msgstr "Startvinkel:"
 
-#: plug-ins/gimpressionist/orientation.c:79
-#: plug-ins/gimpressionist/orientation.c:91
+#: plug-ins/gimpressionist/orientation.c:76
+#: plug-ins/gimpressionist/orientation.c:88
 msgid "The angle of the first brush to create"
 msgstr "Vinkeln på den första skapade penseln"
 
-#: plug-ins/gimpressionist/orientation.c:87
+#: plug-ins/gimpressionist/orientation.c:84
 msgid "Angle span:"
 msgstr "Vinkelomfång:"
 
-#: plug-ins/gimpressionist/orientation.c:114
+#: plug-ins/gimpressionist/orientation.c:111
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
 msgstr "Låt värdet (ljusstyrkan) på området bestämma penseldragets riktning"
 
-#: plug-ins/gimpressionist/orientation.c:116
-#: plug-ins/gimpressionist/size.c:112
+#: plug-ins/gimpressionist/orientation.c:113
+#: plug-ins/gimpressionist/size.c:113
 msgid "Radius"
 msgstr "Radie"
 
-#: plug-ins/gimpressionist/orientation.c:121
+#: plug-ins/gimpressionist/orientation.c:118
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
 msgstr "Avståndet från bildens mitt bestämmer penseldragets riktning"
 
-#: plug-ins/gimpressionist/orientation.c:128
+#: plug-ins/gimpressionist/orientation.c:125
 msgid "Selects a random direction of each stroke"
 msgstr "Välj slumpmässig riktning för varje penseldrag"
 
-#: plug-ins/gimpressionist/orientation.c:130
-#: plug-ins/gimpressionist/size.c:126
+#: plug-ins/gimpressionist/orientation.c:127
+#: plug-ins/gimpressionist/size.c:127
 msgid "Radial"
 msgstr "Radiell"
 
-#: plug-ins/gimpressionist/orientation.c:135
+#: plug-ins/gimpressionist/orientation.c:132
 msgid "Let the direction from the center determine the direction of the stroke"
 msgstr "Låt avståndet från bildens mitt bestämma penseldragets riktning"
 
-#: plug-ins/gimpressionist/orientation.c:141
-#: plug-ins/gimpressionist/size.c:137
+#: plug-ins/gimpressionist/orientation.c:138
+#: plug-ins/gimpressionist/size.c:138
 msgid "Flowing"
 msgstr "Flytande"
 
-#: plug-ins/gimpressionist/orientation.c:146
-#: plug-ins/gimpressionist/size.c:142
+#: plug-ins/gimpressionist/orientation.c:143
+#: plug-ins/gimpressionist/size.c:143
 msgid "The strokes follow a \"flowing\" pattern"
 msgstr "Penseldragen fäljer ett \"flytande\" mönster"
 
-#: plug-ins/gimpressionist/orientation.c:153
+#: plug-ins/gimpressionist/orientation.c:150
 msgid "The hue of the region determines the direction of the stroke"
 msgstr "Områdets nyans bestämmer penseldragets riktning"
 
-#: plug-ins/gimpressionist/orientation.c:155
-#: plug-ins/gimpressionist/size.c:151
+#: plug-ins/gimpressionist/orientation.c:152
+#: plug-ins/gimpressionist/size.c:152
 msgid "Adaptive"
 msgstr "Adaptiv"
 
-#: plug-ins/gimpressionist/orientation.c:160
+#: plug-ins/gimpressionist/orientation.c:157
 msgid "The direction that matches the original image the closest is selected"
 msgstr "Den riktning som bäst passar orginalbilden blir vald"
 
-#: plug-ins/gimpressionist/orientation.c:166
-#: plug-ins/gimpressionist/size.c:162
+#: plug-ins/gimpressionist/orientation.c:163
+#: plug-ins/gimpressionist/size.c:163
 msgid "Manual"
 msgstr "Manuell"
 
-#: plug-ins/gimpressionist/orientation.c:171
+#: plug-ins/gimpressionist/orientation.c:168
 msgid "Manually specify the stroke orientation"
 msgstr "Välj penseldragets riktning manuellt"
 
-#: plug-ins/gimpressionist/orientation.c:181
+#: plug-ins/gimpressionist/orientation.c:178
 msgid "Opens up the Orientation Map Editor"
 msgstr "Öppnar riktningskarteeditorn"
 
-#: plug-ins/gimpressionist/orientmap.c:435
+#: plug-ins/gimpressionist/orientmap.c:438
 msgid "Orientation Map Editor"
 msgstr "Riktningskarteeditor"
 
-#: plug-ins/gimpressionist/orientmap.c:461
+#: plug-ins/gimpressionist/orientmap.c:464
 msgid "Vectors"
 msgstr "Vektorer"
 
-#: plug-ins/gimpressionist/orientmap.c:473
+#: plug-ins/gimpressionist/orientmap.c:476
 msgid ""
 "The vector-field. Left-click to move selected vector, Right-click to point "
 "it towards mouse, Middle-click to add a new vector."
@@ -9042,59 +9044,59 @@ msgstr ""
 "Vektorfältet. Vänsterklicka för att flytta vald vektor, högerklicka för att "
 "rikta den mot pekaren, mittenklicka för att lägga till en ny vektor."
 
-#: plug-ins/gimpressionist/orientmap.c:496
-#: plug-ins/gimpressionist/sizemap.c:429
+#: plug-ins/gimpressionist/orientmap.c:499
+#: plug-ins/gimpressionist/sizemap.c:432
 msgid "Adjust the preview's brightness"
 msgstr "Justera förhandsgranskarens ljusstyrka"
 
-#: plug-ins/gimpressionist/orientmap.c:518
+#: plug-ins/gimpressionist/orientmap.c:521
 msgid "Select previous vector"
 msgstr "Välj föregående vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:525
+#: plug-ins/gimpressionist/orientmap.c:528
 msgid "Select next vector"
 msgstr "Välj nästa vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:527
-#: plug-ins/gimpressionist/sizemap.c:462
+#: plug-ins/gimpressionist/orientmap.c:530
+#: plug-ins/gimpressionist/sizemap.c:465
 msgid "A_dd"
 msgstr "Lägg _till"
 
-#: plug-ins/gimpressionist/orientmap.c:532
+#: plug-ins/gimpressionist/orientmap.c:535
 msgid "Add new vector"
 msgstr "Lägg till ny vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:534
-#: plug-ins/gimpressionist/sizemap.c:470
+#: plug-ins/gimpressionist/orientmap.c:537
+#: plug-ins/gimpressionist/sizemap.c:473
 msgid "_Kill"
 msgstr "_Döda"
 
-#: plug-ins/gimpressionist/orientmap.c:539
+#: plug-ins/gimpressionist/orientmap.c:542
 msgid "Delete selected vector"
 msgstr "Ta bort vald vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:554
+#: plug-ins/gimpressionist/orientmap.c:557
 msgid "_Normal"
 msgstr "_Normal"
 
-#: plug-ins/gimpressionist/orientmap.c:555
+#: plug-ins/gimpressionist/orientmap.c:558
 msgid "Vorte_x"
 msgstr "Vir_vel"
 
-#: plug-ins/gimpressionist/orientmap.c:556
+#: plug-ins/gimpressionist/orientmap.c:559
 msgid "Vortex_2"
 msgstr "Virvel_2"
 
-#: plug-ins/gimpressionist/orientmap.c:557
+#: plug-ins/gimpressionist/orientmap.c:560
 msgid "Vortex_3"
 msgstr "Virvel_3"
 
-#: plug-ins/gimpressionist/orientmap.c:562
-#: plug-ins/gimpressionist/sizemap.c:516
+#: plug-ins/gimpressionist/orientmap.c:565
+#: plug-ins/gimpressionist/sizemap.c:519
 msgid "_Voronoi"
 msgstr "_Voronoi"
 
-#: plug-ins/gimpressionist/orientmap.c:567
+#: plug-ins/gimpressionist/orientmap.c:570
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
@@ -9102,104 +9104,104 @@ msgstr ""
 "Voronoi-läge medför att endast den vektor som är närmast en given punkt har "
 "någon påverkan"
 
-#: plug-ins/gimpressionist/orientmap.c:576
+#: plug-ins/gimpressionist/orientmap.c:579
 msgid "A_ngle:"
 msgstr "Vi_nkel:"
 
-#: plug-ins/gimpressionist/orientmap.c:580
+#: plug-ins/gimpressionist/orientmap.c:583
 msgid "Change the angle of the selected vector"
 msgstr "Ändra vinkeln på vald vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:586
+#: plug-ins/gimpressionist/orientmap.c:589
 msgid "Ang_le offset:"
 msgstr "Vin_keloffset:"
 
-#: plug-ins/gimpressionist/orientmap.c:590
+#: plug-ins/gimpressionist/orientmap.c:593
 msgid "Offset all vectors with a given angle"
 msgstr "Förskjut alla vektorer med en given vinkel"
 
-#: plug-ins/gimpressionist/orientmap.c:601
+#: plug-ins/gimpressionist/orientmap.c:604
 msgid "Change the strength of the selected vector"
 msgstr "Ändra styrkan på vald vektor"
 
-#: plug-ins/gimpressionist/orientmap.c:607
+#: plug-ins/gimpressionist/orientmap.c:610
 msgid "S_trength exp.:"
 msgstr "S_tyrkeexponent:"
 
-#: plug-ins/gimpressionist/orientmap.c:611
-#: plug-ins/gimpressionist/sizemap.c:511
+#: plug-ins/gimpressionist/orientmap.c:614
+#: plug-ins/gimpressionist/sizemap.c:514
 msgid "Change the exponent of the strength"
 msgstr "Ändra exponenten för styrkan"
 
-#: plug-ins/gimpressionist/paper.c:89
+#: plug-ins/gimpressionist/paper.c:90
 msgid "P_aper"
 msgstr "P_apper"
 
-#: plug-ins/gimpressionist/paper.c:108
+#: plug-ins/gimpressionist/paper.c:109
 msgid "Paper Preview:"
 msgstr "Papper förhandsgranska:"
 
-#: plug-ins/gimpressionist/paper.c:117
+#: plug-ins/gimpressionist/paper.c:118
 msgid "_Invert"
 msgstr "_Invertera"
 
-#: plug-ins/gimpressionist/paper.c:125
+#: plug-ins/gimpressionist/paper.c:126
 msgid "Inverts the Papers texture"
 msgstr "Inverterar papperstexturen"
 
-#: plug-ins/gimpressionist/paper.c:128
+#: plug-ins/gimpressionist/paper.c:129
 msgid "O_verlay"
 msgstr "Ö_verlagring"
 
-#: plug-ins/gimpressionist/paper.c:133
+#: plug-ins/gimpressionist/paper.c:134
 msgid "Applies the paper as it is (without embossing it)"
 msgstr "Applicerar papperet som det är (utan ciselering)"
 
-#: plug-ins/gimpressionist/paper.c:152
+#: plug-ins/gimpressionist/paper.c:153
 msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr "Bestämmer texturens skala (i procent av ofginalfilen)"
 
-#: plug-ins/gimpressionist/placement.c:35
+#: plug-ins/gimpressionist/placement.c:36
 msgid "Pl_acement"
 msgstr "Pl_acering"
 
-#: plug-ins/gimpressionist/placement.c:49
+#: plug-ins/gimpressionist/placement.c:50
 msgid "Placement"
 msgstr "Placering"
 
-#: plug-ins/gimpressionist/placement.c:53
+#: plug-ins/gimpressionist/placement.c:54
 msgid "Randomly"
 msgstr "Slumpmässigt"
 
-#: plug-ins/gimpressionist/placement.c:54
+#: plug-ins/gimpressionist/placement.c:55
 msgid "Evenly distributed"
 msgstr "Jämnt fördelat"
 
-#: plug-ins/gimpressionist/placement.c:58
+#: plug-ins/gimpressionist/placement.c:59
 msgid "Place strokes randomly around the image"
 msgstr "Placerar penseldragen slumpässigt runt bilden"
 
-#: plug-ins/gimpressionist/placement.c:60
+#: plug-ins/gimpressionist/placement.c:61
 msgid "The strokes are evenly distributed across the image"
 msgstr "Penseldragen är jämnt fördelade över bilden"
 
-#: plug-ins/gimpressionist/placement.c:79
+#: plug-ins/gimpressionist/placement.c:80
 msgid "Stroke _density:"
 msgstr "Penseldrags_täthet:"
 
-#: plug-ins/gimpressionist/placement.c:83
+#: plug-ins/gimpressionist/placement.c:84
 msgid "The relative density of the brush strokes"
 msgstr "Relativ täthet av penseldragen"
 
-#: plug-ins/gimpressionist/placement.c:89
+#: plug-ins/gimpressionist/placement.c:90
 msgid "Centerize"
 msgstr "Centrera"
 
-#: plug-ins/gimpressionist/placement.c:92
+#: plug-ins/gimpressionist/placement.c:93
 msgid "Focus the brush strokes around the center of the image"
 msgstr "Samla penseldragen runt bildens mittpunkt"
 
-#: plug-ins/gimpressionist/ppmtool.c:497
+#: plug-ins/gimpressionist/ppmtool.c:499
 #, c-format
 msgid ""
 "GIMPressionist:\n"
@@ -9256,89 +9258,89 @@ msgstr ""
 "skicka dom gärna till mig <vidar@prosalg.no>\n"
 "för att lägga in dom i nästa version!\n"
 
-#: plug-ins/gimpressionist/preview.c:127
+#: plug-ins/gimpressionist/preview.c:128
 msgid "Refresh the Preview window"
 msgstr "Uppdatera förhandsgranskningsfönstret"
 
-#: plug-ins/gimpressionist/preview.c:135
+#: plug-ins/gimpressionist/preview.c:136
 msgid "Revert to the original image"
 msgstr "Återgå till orginalbilden"
 
-#: plug-ins/gimpressionist/size.c:42
+#: plug-ins/gimpressionist/size.c:43
 msgid "_Size"
 msgstr "_Storlek"
 
-#: plug-ins/gimpressionist/size.c:59
+#: plug-ins/gimpressionist/size.c:60
 msgid "Sizes:"
 msgstr "Storlekar:"
 
-#: plug-ins/gimpressionist/size.c:63
+#: plug-ins/gimpressionist/size.c:64
 msgid "The number of sizes of brushes to use"
 msgstr "Antal penselstorlekar att använda"
 
-#: plug-ins/gimpressionist/size.c:71
+#: plug-ins/gimpressionist/size.c:72
 msgid "Minimum size:"
 msgstr "Minimistorlek:"
 
-#: plug-ins/gimpressionist/size.c:75
+#: plug-ins/gimpressionist/size.c:76
 msgid "The smallest brush to create"
 msgstr "Minsta penseln att skapa"
 
-#: plug-ins/gimpressionist/size.c:83
+#: plug-ins/gimpressionist/size.c:84
 msgid "Maximum size:"
 msgstr "Maximumstorlek:"
 
-#: plug-ins/gimpressionist/size.c:87
+#: plug-ins/gimpressionist/size.c:88
 msgid "The largest brush to create"
 msgstr "Största penseln att skapa"
 
-#: plug-ins/gimpressionist/size.c:97
+#: plug-ins/gimpressionist/size.c:98
 msgid "Size:"
 msgstr "Storlek:"
 
-#: plug-ins/gimpressionist/size.c:110
+#: plug-ins/gimpressionist/size.c:111
 msgid ""
 "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Låt regionens värde (ljusstyrka) avgöra storleken på penseldraget"
 
-#: plug-ins/gimpressionist/size.c:117
+#: plug-ins/gimpressionist/size.c:118
 msgid ""
 "The distance from the center of the image determines the size of the stroke"
 msgstr "Avståndet från bildens mitt avgör storleken på penseldraget"
 
-#: plug-ins/gimpressionist/size.c:124
+#: plug-ins/gimpressionist/size.c:125
 msgid "Selects a random size for each stroke"
 msgstr "Väljer en slumpmässig storleken för varje penseldrag"
 
-#: plug-ins/gimpressionist/size.c:131
+#: plug-ins/gimpressionist/size.c:132
 msgid "Let the direction from the center determine the size of the stroke"
 msgstr "Låt riktningen från centrum avgöra storleken på penseldraget"
 
-#: plug-ins/gimpressionist/size.c:149
+#: plug-ins/gimpressionist/size.c:150
 msgid "The hue of the region determines the size of the stroke"
 msgstr "Regionens nyans avgör storleken på penseldraget"
 
-#: plug-ins/gimpressionist/size.c:156
+#: plug-ins/gimpressionist/size.c:157
 msgid "The brush-size that matches the original image the closest is selected"
 msgstr "Penselstorleken som närmast passar orginalbilden är vald"
 
-#: plug-ins/gimpressionist/size.c:167
+#: plug-ins/gimpressionist/size.c:168
 msgid "Manually specify the stroke size"
 msgstr "Specifiera penseldragens storlek manuellt"
 
-#: plug-ins/gimpressionist/size.c:177
+#: plug-ins/gimpressionist/size.c:178
 msgid "Opens up the Size Map Editor"
 msgstr "Öppnar storlekskarteeditorn"
 
-#: plug-ins/gimpressionist/sizemap.c:373
+#: plug-ins/gimpressionist/sizemap.c:376
 msgid "Size Map Editor"
 msgstr "Storlekskarteeditor"
 
-#: plug-ins/gimpressionist/sizemap.c:399
+#: plug-ins/gimpressionist/sizemap.c:402
 msgid "Smvectors"
 msgstr "Sk-vektorer"
 
-#: plug-ins/gimpressionist/sizemap.c:409
+#: plug-ins/gimpressionist/sizemap.c:412
 msgid ""
 "The smvector-field. Left-click to move selected smvector, Right-click to "
 "point it towards mouse, Middle-click to add a new smvector."
@@ -9347,39 +9349,39 @@ msgstr ""
 "för att rikta den mot pekaren, mittenklicka för att lägga till en ny sk-"
 "vektor."
 
-#: plug-ins/gimpressionist/sizemap.c:452
+#: plug-ins/gimpressionist/sizemap.c:455
 msgid "Select previous smvector"
 msgstr "Välj föregående sk-vektor"
 
-#: plug-ins/gimpressionist/sizemap.c:460
+#: plug-ins/gimpressionist/sizemap.c:463
 msgid "Select next smvector"
 msgstr "Välj nästa sk-vektor"
 
-#: plug-ins/gimpressionist/sizemap.c:468
+#: plug-ins/gimpressionist/sizemap.c:471
 msgid "Add new smvector"
 msgstr "Lägg till ny sk-vektor"
 
-#: plug-ins/gimpressionist/sizemap.c:476
+#: plug-ins/gimpressionist/sizemap.c:479
 msgid "Delete selected smvector"
 msgstr "Ta bort vald sk-vektor"
 
-#: plug-ins/gimpressionist/sizemap.c:489
+#: plug-ins/gimpressionist/sizemap.c:492
 msgid "Change the angle of the selected smvector"
 msgstr "Ändra vinkeln på vald sk-vektor"
 
-#: plug-ins/gimpressionist/sizemap.c:496
+#: plug-ins/gimpressionist/sizemap.c:499
 msgid "S_trength:"
 msgstr "S_tyrka:"
 
-#: plug-ins/gimpressionist/sizemap.c:500
+#: plug-ins/gimpressionist/sizemap.c:503
 msgid "Change the strength of the selected smvector"
 msgstr "Ändra styrkan på vald sk-vektor"
 
-#: plug-ins/gimpressionist/sizemap.c:507
+#: plug-ins/gimpressionist/sizemap.c:510
 msgid "St_rength exp.:"
 msgstr "St_yrkeexponent:"
 
-#: plug-ins/gimpressionist/sizemap.c:523
+#: plug-ins/gimpressionist/sizemap.c:526
 msgid ""
 "Voronoi-mode makes only the smvector closest to the given point have any "
 "influence"
@@ -9506,7 +9508,7 @@ msgstr "Sträck ut"
 msgid "Render Options"
 msgstr "Renderingsinställningar"
 
-#: plug-ins/ifscompose/ifscompose.c:926 plug-ins/print/gimp_main_window.c:478
+#: plug-ins/ifscompose/ifscompose.c:926 plug-ins/print/gimp_main_window.c:480
 msgid "Auto"
 msgstr "Auto"
 
@@ -9615,10 +9617,10 @@ msgstr "Mittpunkt _x:"
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
 #: plug-ins/imagemap/imap_grid.c:261 plug-ins/imagemap/imap_polygon.c:506
-#: plug-ins/imagemap/imap_polygon.c:514 plug-ins/imagemap/imap_rectangle.c:392
-#: plug-ins/imagemap/imap_rectangle.c:399
-#: plug-ins/imagemap/imap_rectangle.c:406
-#: plug-ins/imagemap/imap_rectangle.c:413
+#: plug-ins/imagemap/imap_polygon.c:514 plug-ins/imagemap/imap_rectangle.c:395
+#: plug-ins/imagemap/imap_rectangle.c:402
+#: plug-ins/imagemap/imap_rectangle.c:409
+#: plug-ins/imagemap/imap_rectangle.c:416
 msgid "pixels"
 msgstr "bildpunkter"
 
@@ -10059,7 +10061,7 @@ msgstr "Områdeslista"
 msgid "Source..."
 msgstr "Källa..."
 
-#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1420
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1422
 msgid "Grayscale"
 msgstr "Gråskala"
 
@@ -10207,15 +10209,15 @@ msgstr "_Konvertera automatiskt"
 msgid "General Preferences"
 msgstr "Allmänna inställningar"
 
-#: plug-ins/imagemap/imap_rectangle.c:66
+#: plug-ins/imagemap/imap_rectangle.c:69
 msgid "_Rectangle"
 msgstr "_Rektangel"
 
-#: plug-ins/imagemap/imap_rectangle.c:387
+#: plug-ins/imagemap/imap_rectangle.c:390
 msgid "Upper left _x:"
 msgstr "Övre vänstra _x:"
 
-#: plug-ins/imagemap/imap_rectangle.c:394
+#: plug-ins/imagemap/imap_rectangle.c:397
 msgid "Upper left _y:"
 msgstr "Övre högra _y:"
 
@@ -10540,15 +10542,15 @@ msgstr "Lager för krusning"
 msgid "Page Curl..."
 msgstr "Sidkrusning..."
 
-#: plug-ins/print/gimp_color_window.c:184
+#: plug-ins/print/gimp_color_window.c:192
 msgid "Print Color Adjust"
 msgstr "Justera utskriftsfärg"
 
-#: plug-ins/print/gimp_color_window.c:232
+#: plug-ins/print/gimp_color_window.c:240
 msgid "Brightness:"
 msgstr "Ljusstyrka:"
 
-#: plug-ins/print/gimp_color_window.c:240
+#: plug-ins/print/gimp_color_window.c:248
 msgid ""
 "Set the brightness of the print.\n"
 "0 is solid black, 2 is solid white"
@@ -10556,27 +10558,27 @@ msgstr ""
 "Ställ in utskriftens ljusstyrka.\n"
 "0 är helt svart, 2 är helt vitt"
 
-#: plug-ins/print/gimp_color_window.c:252
+#: plug-ins/print/gimp_color_window.c:260
 msgid "Contrast:"
 msgstr "Kontrast:"
 
-#: plug-ins/print/gimp_color_window.c:260
+#: plug-ins/print/gimp_color_window.c:268
 msgid "Set the contrast of the print"
 msgstr "Ställ in utskriftens kontrast"
 
-#: plug-ins/print/gimp_color_window.c:279
+#: plug-ins/print/gimp_color_window.c:287
 msgid "Adjust the cyan balance of the print"
 msgstr "Justera mängden cyan för utskriften"
 
-#: plug-ins/print/gimp_color_window.c:298
+#: plug-ins/print/gimp_color_window.c:306
 msgid "Adjust the magenta balance of the print"
 msgstr "Justera mängden magenta för utskriften"
 
-#: plug-ins/print/gimp_color_window.c:317
+#: plug-ins/print/gimp_color_window.c:325
 msgid "Adjust the yellow balance of the print"
 msgstr "Justera mängden gult för utskriften"
 
-#: plug-ins/print/gimp_color_window.c:336
+#: plug-ins/print/gimp_color_window.c:344
 msgid ""
 "Adjust the saturation (color balance) of the print\n"
 "Use zero saturation to produce grayscale output using color and black inks"
@@ -10584,11 +10586,11 @@ msgstr ""
 "Justera mättnaden (färgbalansen) för utskriften\n"
 "Använd nollmättnad för att skapa gråskaleutskrift med färgat och svart bläck"
 
-#: plug-ins/print/gimp_color_window.c:349
+#: plug-ins/print/gimp_color_window.c:357
 msgid "Density:"
 msgstr "Intensitet:"
 
-#: plug-ins/print/gimp_color_window.c:357
+#: plug-ins/print/gimp_color_window.c:365
 msgid ""
 "Adjust the density (amount of ink) of the print. Reduce the density if the "
 "ink bleeds through the paper or smears; increase the density if black "
@@ -10598,7 +10600,7 @@ msgstr ""
 "om bläcket går igenom papperet eller smetar ut. Öka fyllnadsgraden om svarta "
 "områden inte är helt ifyllda."
 
-#: plug-ins/print/gimp_color_window.c:379
+#: plug-ins/print/gimp_color_window.c:387
 msgid ""
 "Adjust the gamma of the print. Larger values will produce a generally "
 "brighter print, while smaller values will produce a generally darker print. "
@@ -10608,11 +10610,11 @@ msgstr ""
 "utskrift, medan lägre värden producerar en allmänt mörkare utskrift. Svart "
 "och vitt kvarstår, till skillnad från justering av ljusstyrkan."
 
-#: plug-ins/print/gimp_color_window.c:395
+#: plug-ins/print/gimp_color_window.c:403
 msgid "Dither Algorithm:"
 msgstr "Utjämningsalgoritm:"
 
-#: plug-ins/print/gimp_color_window.c:403
+#: plug-ins/print/gimp_color_window.c:411
 msgid ""
 "Choose the dither algorithm to be used.\n"
 "Adaptive Hybrid usually produces the best all-around quality.\n"
@@ -10631,12 +10633,12 @@ msgstr ""
 #.
 #. * Create the main dialog
 #.
-#: plug-ins/print/gimp_main_window.c:349
+#: plug-ins/print/gimp_main_window.c:351
 #, c-format
 msgid "%s -- Print v%s"
 msgstr "%s -- Utskrift v%s"
 
-#: plug-ins/print/gimp_main_window.c:361
+#: plug-ins/print/gimp_main_window.c:363
 msgid ""
 "Save\n"
 "Settings"
@@ -10644,7 +10646,7 @@ msgstr ""
 "Spara\n"
 "inställningar"
 
-#: plug-ins/print/gimp_main_window.c:364
+#: plug-ins/print/gimp_main_window.c:366
 msgid ""
 "Print and\n"
 "Save Settings"
@@ -10652,7 +10654,7 @@ msgstr ""
 "Skriv ut och\n"
 "spara inställningar"
 
-#: plug-ins/print/gimp_main_window.c:433
+#: plug-ins/print/gimp_main_window.c:435
 msgid ""
 "Position the image on the page.\n"
 "Click and drag with the primary button to position the image.\n"
@@ -10676,132 +10678,132 @@ msgstr ""
 "Om du klickar på en annan knapp under flytten, återgår bilden till sin "
 "ursprungliga plats."
 
-#: plug-ins/print/gimp_main_window.c:480
+#: plug-ins/print/gimp_main_window.c:482
 msgid "Portrait"
 msgstr "Stående"
 
-#: plug-ins/print/gimp_main_window.c:482
+#: plug-ins/print/gimp_main_window.c:484
 msgid "Landscape"
 msgstr "Liggande"
 
-#: plug-ins/print/gimp_main_window.c:484
+#: plug-ins/print/gimp_main_window.c:486
 msgid "Upside down"
 msgstr "Upp och ner"
 
-#: plug-ins/print/gimp_main_window.c:486
+#: plug-ins/print/gimp_main_window.c:488
 msgid "Seascape"
 msgstr "Liggande upp och ner"
 
-#: plug-ins/print/gimp_main_window.c:490
+#: plug-ins/print/gimp_main_window.c:492
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
 msgstr ""
 "Välj orientering: stående, liggande, upp och ner eller liggande upp och ner"
 
-#: plug-ins/print/gimp_main_window.c:513
+#: plug-ins/print/gimp_main_window.c:515
 msgid "Distance from the left of the paper to the image"
 msgstr "Avstånd från vänstra papperskanten till bilden"
 
-#: plug-ins/print/gimp_main_window.c:526
+#: plug-ins/print/gimp_main_window.c:528
 msgid "Distance from the top of the paper to the image"
 msgstr "Avstånd från övre papperskanten till bilden"
 
-#: plug-ins/print/gimp_main_window.c:539
+#: plug-ins/print/gimp_main_window.c:541
 msgid "Distance from the left of the paper to the right of the image"
 msgstr "Avstånd från vänstra papperskanten till bildens högrerkant"
 
-#: plug-ins/print/gimp_main_window.c:549
+#: plug-ins/print/gimp_main_window.c:551
 msgid "Right Border:"
 msgstr "Högerkant:"
 
-#: plug-ins/print/gimp_main_window.c:553
+#: plug-ins/print/gimp_main_window.c:555
 msgid "Distance from the right of the paper to the image"
 msgstr "Avstånd från högra papperskanten till bilden"
 
-#: plug-ins/print/gimp_main_window.c:567
+#: plug-ins/print/gimp_main_window.c:569
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr "Avstånd från övre papperskanten till bildens nederkant"
 
-#: plug-ins/print/gimp_main_window.c:577
+#: plug-ins/print/gimp_main_window.c:579
 msgid "Bottom Border:"
 msgstr "Nederkant:"
 
-#: plug-ins/print/gimp_main_window.c:581
+#: plug-ins/print/gimp_main_window.c:583
 msgid "Distance from the bottom of the paper to the image"
 msgstr "Avstånd från nedre papperskanten till nederkanten på bilden"
 
-#: plug-ins/print/gimp_main_window.c:598
+#: plug-ins/print/gimp_main_window.c:600
 msgid "Center:"
 msgstr "Mittpunkt:"
 
-#: plug-ins/print/gimp_main_window.c:602
+#: plug-ins/print/gimp_main_window.c:604
 msgid "Vertically"
 msgstr "Vertikalt"
 
-#: plug-ins/print/gimp_main_window.c:607
+#: plug-ins/print/gimp_main_window.c:609
 msgid "Center the image vertically on the paper"
 msgstr "Centrera bilden vertikalt på papperet"
 
 # src/dialogs.c:502 src/dialogs.c:600
-#: plug-ins/print/gimp_main_window.c:613
+#: plug-ins/print/gimp_main_window.c:615
 msgid "Both"
 msgstr "Både och"
 
-#: plug-ins/print/gimp_main_window.c:618
+#: plug-ins/print/gimp_main_window.c:620
 msgid "Center the image on the paper"
 msgstr "Centrera bilden på papperet"
 
-#: plug-ins/print/gimp_main_window.c:625
+#: plug-ins/print/gimp_main_window.c:627
 msgid "Horizontally"
 msgstr "Vågrätt"
 
-#: plug-ins/print/gimp_main_window.c:630
+#: plug-ins/print/gimp_main_window.c:632
 msgid "Center the image horizontally on the paper"
 msgstr "Centrera bilden horisontellt på papperet"
 
-#: plug-ins/print/gimp_main_window.c:646
+#: plug-ins/print/gimp_main_window.c:648
 msgid "Setup Printer"
 msgstr "Ställ in skrivare"
 
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:675 plug-ins/print/gimp_main_window.c:931
+#: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:933
 msgid "Printer Model:"
 msgstr "Skrivarmodell:"
 
-#: plug-ins/print/gimp_main_window.c:687
+#: plug-ins/print/gimp_main_window.c:689
 msgid "Select your printer model"
 msgstr "Välj din skrivarmodell"
 
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:725
+#: plug-ins/print/gimp_main_window.c:727
 msgid "PPD File:"
 msgstr "PPD-fil:"
 
-#: plug-ins/print/gimp_main_window.c:741
+#: plug-ins/print/gimp_main_window.c:743
 msgid "Enter the correct PPD filename for your printer"
 msgstr "Ange det korrekta PPD-filnamnet för din skrivare"
 
-#: plug-ins/print/gimp_main_window.c:744
+#: plug-ins/print/gimp_main_window.c:746
 msgid "Browse"
 msgstr "Bläddra"
 
-#: plug-ins/print/gimp_main_window.c:750
+#: plug-ins/print/gimp_main_window.c:752
 msgid "Choose the correct PPD filename for your printer"
 msgstr "Välj det korrekta PPD-filnamnet för din skrivare"
 
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:760
+#: plug-ins/print/gimp_main_window.c:762
 msgid "Command:"
 msgstr "Kommando:"
 
-#: plug-ins/print/gimp_main_window.c:773
+#: plug-ins/print/gimp_main_window.c:775
 msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
@@ -10814,38 +10816,38 @@ msgstr ""
 #.
 #. * Output file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:782
+#: plug-ins/print/gimp_main_window.c:784
 msgid "Print To File?"
 msgstr "Skriv ut till fil?"
 
 #.
 #. * PPD file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:795
+#: plug-ins/print/gimp_main_window.c:797
 msgid "PPD File?"
 msgstr "PPD-fil?"
 
-#: plug-ins/print/gimp_main_window.c:813
+#: plug-ins/print/gimp_main_window.c:815
 msgid "Define New Printer"
 msgstr "Skapa ny skrivare"
 
-#: plug-ins/print/gimp_main_window.c:835 plug-ins/print/gimp_main_window.c:926
+#: plug-ins/print/gimp_main_window.c:837 plug-ins/print/gimp_main_window.c:928
 msgid "Printer Name:"
 msgstr "Skrivarnamn:"
 
-#: plug-ins/print/gimp_main_window.c:839
+#: plug-ins/print/gimp_main_window.c:841
 msgid "Enter the name you wish to give this logical printer"
 msgstr "Ange namnet du vill tilldela till den logiska skrivaren"
 
-#: plug-ins/print/gimp_main_window.c:851
+#: plug-ins/print/gimp_main_window.c:853
 msgid "About Gimp-Print "
 msgstr "Om Gimp-Print "
 
-#: plug-ins/print/gimp_main_window.c:861
+#: plug-ins/print/gimp_main_window.c:863
 msgid "Gimp-Print Version "
 msgstr "Gimp-Print version "
 
-#: plug-ins/print/gimp_main_window.c:861
+#: plug-ins/print/gimp_main_window.c:863
 msgid ""
 "\n"
 "\n"
@@ -10887,11 +10889,11 @@ msgstr ""
 "med detta program. Om inte, skriv till Free Software Foundation,\n"
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
 
-#: plug-ins/print/gimp_main_window.c:909
+#: plug-ins/print/gimp_main_window.c:911
 msgid "Printer Settings"
 msgstr "Skrivarinställningar"
 
-#: plug-ins/print/gimp_main_window.c:922
+#: plug-ins/print/gimp_main_window.c:924
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
@@ -10902,11 +10904,11 @@ msgstr ""
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:942
+#: plug-ins/print/gimp_main_window.c:944
 msgid "Setup Printer..."
 msgstr "Ställ in skrivare..."
 
-#: plug-ins/print/gimp_main_window.c:944
+#: plug-ins/print/gimp_main_window.c:946
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -10917,11 +10919,11 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:959
+#: plug-ins/print/gimp_main_window.c:961
 msgid "New Printer..."
 msgstr "Ny skrivare..."
 
-#: plug-ins/print/gimp_main_window.c:961
+#: plug-ins/print/gimp_main_window.c:963
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
@@ -10929,68 +10931,68 @@ msgstr ""
 "Skapa en ny logisk skrivare. Detta kan användas för att namge en uppsättning "
 "inställningar du vill spara för framtida användning."
 
-#: plug-ins/print/gimp_main_window.c:982
+#: plug-ins/print/gimp_main_window.c:984
 msgid "Size of paper that you wish to print to"
 msgstr "Pappersstorlek du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:985
+#: plug-ins/print/gimp_main_window.c:987
 msgid "Media Size:"
 msgstr "Mediastorlek:"
 
-#: plug-ins/print/gimp_main_window.c:994
+#: plug-ins/print/gimp_main_window.c:996
 msgid "Dimensions:"
 msgstr "Storlekar:"
 
-#: plug-ins/print/gimp_main_window.c:997
-#: plug-ins/print/gimp_main_window.c:1213
+#: plug-ins/print/gimp_main_window.c:999
+#: plug-ins/print/gimp_main_window.c:1215
 msgid "Width:"
 msgstr "Bredd:"
 
-#: plug-ins/print/gimp_main_window.c:1008
+#: plug-ins/print/gimp_main_window.c:1010
 msgid "Width of the paper that you wish to print to"
 msgstr "Bredd på papperet du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:1025
+#: plug-ins/print/gimp_main_window.c:1027
 msgid "Height of the paper that you wish to print to"
 msgstr "Längd på papperet du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:1041
+#: plug-ins/print/gimp_main_window.c:1043
 msgid "Type of media you're printing to"
 msgstr "Mediatyp du skriver till"
 
-#: plug-ins/print/gimp_main_window.c:1044
+#: plug-ins/print/gimp_main_window.c:1046
 msgid "Media Type:"
 msgstr "Mediatyp:"
 
-#: plug-ins/print/gimp_main_window.c:1057
+#: plug-ins/print/gimp_main_window.c:1059
 msgid "Source (input slot) of media you're printing to"
 msgstr "Källa (pappersfack) för media du skriver på"
 
-#: plug-ins/print/gimp_main_window.c:1060
+#: plug-ins/print/gimp_main_window.c:1062
 msgid "Media Source:"
 msgstr "Mediakälla:"
 
-#: plug-ins/print/gimp_main_window.c:1073
+#: plug-ins/print/gimp_main_window.c:1075
 msgid "Type of ink in the printer"
 msgstr "Bläcksort i skrivaren"
 
-#: plug-ins/print/gimp_main_window.c:1076
+#: plug-ins/print/gimp_main_window.c:1078
 msgid "Ink Type:"
 msgstr "Bläcksort:"
 
-#: plug-ins/print/gimp_main_window.c:1089
+#: plug-ins/print/gimp_main_window.c:1091
 msgid "Resolution and quality of the print"
 msgstr "Upplösning och kvalitet på utskriften"
 
-#: plug-ins/print/gimp_main_window.c:1128
+#: plug-ins/print/gimp_main_window.c:1130
 msgid "Scaling:"
 msgstr "Skalning:"
 
-#: plug-ins/print/gimp_main_window.c:1134
+#: plug-ins/print/gimp_main_window.c:1136
 msgid "Set the scale (size) of the image"
 msgstr "Sätt skalan (storleken) på bilden"
 
-#: plug-ins/print/gimp_main_window.c:1167
+#: plug-ins/print/gimp_main_window.c:1169
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
@@ -10998,58 +11000,58 @@ msgstr ""
 "Välj om skalan mäts i procent av pappersstorleken eller i antal punkter per "
 "tum vid utskriften"
 
-#: plug-ins/print/gimp_main_window.c:1172
+#: plug-ins/print/gimp_main_window.c:1174
 msgid "Percent"
 msgstr "Procent"
 
-#: plug-ins/print/gimp_main_window.c:1179
+#: plug-ins/print/gimp_main_window.c:1181
 msgid "Scale the print to the size of the page"
 msgstr "Skala utskriften till papperets storlek"
 
-#: plug-ins/print/gimp_main_window.c:1185
+#: plug-ins/print/gimp_main_window.c:1187
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/gimp_main_window.c:1191
+#: plug-ins/print/gimp_main_window.c:1193
 msgid "Scale the print to the number of dots per inch"
 msgstr "Skala utskriften till antal punkter per tum"
 
-#: plug-ins/print/gimp_main_window.c:1217
+#: plug-ins/print/gimp_main_window.c:1219
 msgid "Set the width of the print"
 msgstr "Sätt utskriftens bredd"
 
-#: plug-ins/print/gimp_main_window.c:1230
+#: plug-ins/print/gimp_main_window.c:1232
 msgid "Set the height of the print"
 msgstr "Sätt utskriftens höjd"
 
-#: plug-ins/print/gimp_main_window.c:1250
+#: plug-ins/print/gimp_main_window.c:1252
 msgid "Units:"
 msgstr "Enheter:"
 
-#: plug-ins/print/gimp_main_window.c:1255
+#: plug-ins/print/gimp_main_window.c:1257
 msgid "Select the base unit of measurement for printing"
 msgstr "Sätt måttenheten för utskrifter"
 
-#: plug-ins/print/gimp_main_window.c:1258
+#: plug-ins/print/gimp_main_window.c:1260
 msgid "Inch"
 msgstr "tum"
 
-#: plug-ins/print/gimp_main_window.c:1265
+#: plug-ins/print/gimp_main_window.c:1267
 msgid "Set the base unit of measurement to inches"
 msgstr "Sätt måttenheten till tum"
 
-#: plug-ins/print/gimp_main_window.c:1271
+#: plug-ins/print/gimp_main_window.c:1273
 msgid "cm"
 msgstr "cm"
 
-#: plug-ins/print/gimp_main_window.c:1277
+#: plug-ins/print/gimp_main_window.c:1279
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Sätt måttenheten till centimeter"
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1287
+#: plug-ins/print/gimp_main_window.c:1289
 msgid ""
 "Use Original\n"
 "Image Size"
@@ -11057,43 +11059,43 @@ msgstr ""
 "Använd ursprunglig\n"
 "bildstorlek"
 
-#: plug-ins/print/gimp_main_window.c:1293
+#: plug-ins/print/gimp_main_window.c:1295
 msgid "Set the print size to the size of the image"
 msgstr "Sätt utskriftsstorleken till bildens storlek"
 
-#: plug-ins/print/gimp_main_window.c:1316
+#: plug-ins/print/gimp_main_window.c:1318
 msgid "Image / Output Settings"
 msgstr "Bild / utmatningsinställningar"
 
-#: plug-ins/print/gimp_main_window.c:1329
+#: plug-ins/print/gimp_main_window.c:1331
 msgid "Image Type:"
 msgstr "Bildtyp:"
 
-#: plug-ins/print/gimp_main_window.c:1334
+#: plug-ins/print/gimp_main_window.c:1336
 msgid "Optimize the output for the type of image being printed"
 msgstr "Optimera utskriften för bildtypen"
 
-#: plug-ins/print/gimp_main_window.c:1338
+#: plug-ins/print/gimp_main_window.c:1340
 msgid "Line Art"
 msgstr "Linjegrafik"
 
-#: plug-ins/print/gimp_main_window.c:1345
+#: plug-ins/print/gimp_main_window.c:1347
 msgid "Fastest and brightest color for text and line art"
 msgstr "Snabbast, och med ljusaste färg för text och linjegrafik"
 
-#: plug-ins/print/gimp_main_window.c:1352
+#: plug-ins/print/gimp_main_window.c:1354
 msgid "Solid Colors"
 msgstr "Enstaka färger"
 
-#: plug-ins/print/gimp_main_window.c:1359
+#: plug-ins/print/gimp_main_window.c:1361
 msgid "Best for images dominated by regions of solid color"
 msgstr "Bästa val för bilder med stora områden med enstaka färger"
 
-#: plug-ins/print/gimp_main_window.c:1367
+#: plug-ins/print/gimp_main_window.c:1369
 msgid "Photograph"
 msgstr "Fotografi"
 
-#: plug-ins/print/gimp_main_window.c:1375
+#: plug-ins/print/gimp_main_window.c:1377
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
@@ -11101,38 +11103,38 @@ msgstr ""
 "Långsammast, men noggrannast och med mjukaste färg för mjukt graderade "
 "bilder och fotografier"
 
-#: plug-ins/print/gimp_main_window.c:1401
+#: plug-ins/print/gimp_main_window.c:1403
 msgid "Output Type:"
 msgstr "Utdatatyp:"
 
-#: plug-ins/print/gimp_main_window.c:1406
+#: plug-ins/print/gimp_main_window.c:1408
 msgid "Select the desired output type"
 msgstr "Välj den önskade utskriftstypen"
 
-#: plug-ins/print/gimp_main_window.c:1415
+#: plug-ins/print/gimp_main_window.c:1417
 msgid "Color output"
 msgstr "Färgutskrift"
 
-#: plug-ins/print/gimp_main_window.c:1427
+#: plug-ins/print/gimp_main_window.c:1429
 msgid "Print in shades of gray using black ink"
 msgstr "Skriv ut i gråskala med svart bläck"
 
-#: plug-ins/print/gimp_main_window.c:1434
+#: plug-ins/print/gimp_main_window.c:1436
 msgid "Black and White"
 msgstr "Svart och vitt"
 
-#: plug-ins/print/gimp_main_window.c:1441
+#: plug-ins/print/gimp_main_window.c:1443
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Skriv ut i svart och vitt (ingen färg och inga gråskalor)"
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1452
+#: plug-ins/print/gimp_main_window.c:1454
 msgid "Adjust Output..."
 msgstr "Justera utskrift..."
 
-#: plug-ins/print/gimp_main_window.c:1459
+#: plug-ins/print/gimp_main_window.c:1461
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""

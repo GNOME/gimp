@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-12-29 23:01+0100\n"
+"POT-Creation-Date: 2003-02-18 01:09+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -110,17 +110,17 @@ msgid ""
 "Please check your settings.\n"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 #: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Autor:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 #: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 #: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Data:"
@@ -143,16 +143,16 @@ msgid ""
 "%s"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:569
+#: plug-ins/script-fu/script-fu-server.c:574
 #, fuzzy
 msgid "Script-Fu Server Options"
 msgstr "Opþiuni pentru simularea de nuanþe"
 
-#: plug-ins/script-fu/script-fu-server.c:596
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Port:"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:607
 msgid "Server Logfile:"
 msgstr ""
 
@@ -193,43 +193,43 @@ msgstr ""
 msgid "_Search:"
 msgstr "Decupare"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:343
+#: plug-ins/dbbrowser/dbbrowser_utils.c:341
 msgid "Name:"
 msgstr "Nume:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:352
+#: plug-ins/dbbrowser/dbbrowser_utils.c:350
 #, fuzzy
 msgid "Blurb:"
 msgstr "Claritate"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:364
+#: plug-ins/dbbrowser/dbbrowser_utils.c:362
 #, fuzzy
 msgid "In:"
 msgstr "Index:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:412
+#: plug-ins/dbbrowser/dbbrowser_utils.c:410
 #, fuzzy
 msgid "Out:"
 msgstr "Numar:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:466
+#: plug-ins/dbbrowser/dbbrowser_utils.c:464
 #, fuzzy
 msgid "Help:"
 msgstr "/_Ajutor"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:602
+#: plug-ins/dbbrowser/dbbrowser_utils.c:600
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:623
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:633
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+#: plug-ins/dbbrowser/dbbrowser_utils.c:672
 msgid "No matches"
 msgstr ""
 
@@ -522,10 +522,10 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
-#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on Copy"
 msgstr ""
 
@@ -723,7 +723,7 @@ msgid "Buffer Amount (% Height of Text)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 #, fuzzy
 msgid "Filename"
 msgstr "/Fiºier/Salveazã"
@@ -731,7 +731,7 @@ msgstr "/Fiºier/Salveazã"
 #: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 #, fuzzy
 msgid "Transparent Background"
 msgstr "Transparent"
@@ -976,7 +976,7 @@ msgid "Image Size"
 msgstr "Dimensiunea imaginii: %s"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
 msgstr "Netezire"
 
@@ -1248,33 +1248,33 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 #, fuzzy
 msgid "Granularity (1 is Low)"
 msgstr "Numai gri"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 #, fuzzy
 msgid "Smooth Horizontally"
 msgstr "Orizontal"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
 #, fuzzy
 msgid "Smooth Vertically"
 msgstr "Vertical"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
 #, fuzzy
 msgid "Spread"
 msgstr "Vitezã:"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr ""
 
@@ -1449,7 +1449,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 #, fuzzy
 msgid "Border"
 msgstr "Margine:"
@@ -1850,7 +1850,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
 #, fuzzy
 msgid "Description"
 msgstr "Selecþie"
@@ -1861,7 +1860,7 @@ msgid "Feathering"
 msgstr "Panã"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:8
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 #, fuzzy
 msgid "Spacing"
 msgstr "Spaþiere:"
@@ -1898,21 +1897,21 @@ msgstr ""
 msgid "Density (%)"
 msgstr "Densitate:"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+#: plug-ins/script-fu/scripts/old-photo.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+#: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:4
 #, fuzzy
 msgid "Mottle"
 msgstr "Rotire"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+#: plug-ins/script-fu/scripts/old-photo.scm.h:5
 #, fuzzy
 msgid "Sepia"
 msgstr "pica"
@@ -2061,7 +2060,7 @@ msgid "Smear"
 msgstr "Decupare"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
-msgid "Warp"
+msgid "Wrap"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
@@ -2084,12 +2083,17 @@ msgstr "Umbre"
 msgid "Edge Radius"
 msgstr "Razã:"
 
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#, fuzzy
+msgid "Brush Name"
+msgstr "Interfaþã utilizator pentru Pensule"
+
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Selection/To Image"
 msgstr "Micºoreazã selecþia"
@@ -2143,21 +2147,21 @@ msgstr ""
 msgid "Sphere Color"
 msgstr "Culoare adevãratã"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 #, fuzzy
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
 msgstr "Micºoreazã selecþia"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 #, fuzzy
 msgid "Frames"
 msgstr "Elibereazã"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
 msgstr ""
 
@@ -5710,9 +5714,6 @@ msgstr ""
 
 #~ msgid "Internal Procedures"
 #~ msgstr "Proceduri interne"
-
-#~ msgid "Brush UI"
-#~ msgstr "Interfaþã utilizator pentru Pensule"
 
 #~ msgid "Channel"
 #~ msgstr "Canal"

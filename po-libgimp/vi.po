@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-libgimp 1.3.x\n"
-"POT-Creation-Date: 2003-01-30 11:23+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2003-01-30 23:28+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
@@ -193,19 +193,19 @@ msgstr ""
 msgid "Skipping module: '%s'\n"
 msgstr "Đang bỏ qua module: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Lỗi module"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr "Đã nạp"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Không nạp được"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr "Không được nạp"
 
@@ -351,51 +351,51 @@ msgstr "Đặt _lại"
 msgid "Visible"
 msgstr "Nhìn được"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr "Đặt _lại kích cỡ"
 
-#: libgimpwidgets/gimpstock.c:132 libgimpwidgets/gimpstock.c:184
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 msgid "_Scale"
 msgstr "_Cân chỉnh"
 
-#: libgimpwidgets/gimpstock.c:140
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr "Khoảng cách c_hữ"
 
-#: libgimpwidgets/gimpstock.c:141
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr "Khoảng cách _dòng"
 
-#: libgimpwidgets/gimpstock.c:162
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr "Xén"
 
-#: libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr "Chuyển _dạng"
 
-#: libgimpwidgets/gimpstock.c:183
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr "X_oay"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr "_Kéo cắt"
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Thêm..."
 
-#: libgimpwidgets/gimpunitmenu.c:525
+#: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
 msgstr "Chọn Đơn Vị"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Đơn Vị"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Tác nhân"
 
@@ -404,8 +404,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Hãy dùng giá trị này để gieo trình sinh số ngẫu nhiên - Điều này cho phép nhắc "
-"lại hoạt động \"ngẫu nhiên\" được trao"
+"Hãy dùng giá trị này để gieo trình sinh số ngẫu nhiên - Điều này cho phép "
+"nhắc lại hoạt động \"ngẫu nhiên\" được trao"
 
 #: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
@@ -498,4 +498,3 @@ msgstr "Áp lực"
 
 #~ msgid "Bytes"
 #~ msgstr "Byte"
-

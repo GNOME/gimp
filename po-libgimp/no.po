@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2003-01-26 17:20+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2003-01-26 17:30+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -195,19 +195,19 @@ msgstr ""
 msgid "Skipping module: '%s'\n"
 msgstr "Hopper over modul «%s»\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Feil med modul"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr "Lastet"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Lasting feilet"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr "Ikke lastet"
 
@@ -319,7 +319,9 @@ msgstr "GigaBytes"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen for å velge denne fargen."
+msgstr ""
+"Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen "
+"for å velge denne fargen."
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
@@ -353,51 +355,51 @@ msgstr "_Nullstill"
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:131
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr "End_re størrelse"
 
-#: libgimpwidgets/gimpstock.c:132 libgimpwidgets/gimpstock.c:184
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 msgid "_Scale"
 msgstr "_Skaler"
 
-#: libgimpwidgets/gimpstock.c:140
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr "M_ellomrom mellom bokstaver"
 
-#: libgimpwidgets/gimpstock.c:141
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr "Mellomrom mellom l_injer"
 
-#: libgimpwidgets/gimpstock.c:162
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr "Beskjær"
 
-#: libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:183
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr "_Klipp"
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Mer..."
 
-#: libgimpwidgets/gimpunitmenu.c:525
+#: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
 msgstr "Utvalg for enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Faktor"
 
@@ -405,7 +407,9 @@ msgstr "Faktor"
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "Bruk denne verdien som startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt «tilfeldig» operasjon"
+msgstr ""
+"Bruk denne verdien som startverdi for generering av tilfeldige tall - dette "
+"lar deg gjenta en gitt «tilfeldig» operasjon"
 
 #: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
@@ -413,7 +417,8 @@ msgstr "Gjø_r tilfeldig"
 
 #: libgimpwidgets/gimpwidgets.c:999
 msgid "Seed random number generator with a generated random number"
-msgstr "Gi generator for tilfeldige tall et generert tilfeldig tall som startverdi"
+msgstr ""
+"Gi generator for tilfeldige tall et generert tilfeldig tall som startverdi"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2000-02-08 15:45+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -14,7 +14,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-msgid "can't handle layers"
+#, fuzzy, c-format
+msgid "%s can't handle layers"
 msgstr "неможливо обробити шари"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
@@ -22,12 +23,13 @@ msgid "Merge Visible Layers"
 msgstr "Об'╓днати видим╕ шари"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
-msgid "can't handle layer offsets, size or opacity"
+#, fuzzy, c-format
+msgid "%s can't handle layer offsets, size or opacity"
 msgstr "неможливо обробити шари"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-msgid "can only handle layers as animation frames"
+#, fuzzy, c-format
+msgid "%s can only handle layers as animation frames"
 msgstr "можна обробити шари лише як ан╕мован╕ кадри"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
@@ -39,11 +41,13 @@ msgid "Flatten Image"
 msgstr "Звести зображення"
 
 #: libgimp/gimpexport.c:215
-msgid "can't handle transparency"
+#, fuzzy, c-format
+msgid "%s can't handle transparency"
 msgstr "неможливо обробити прозор╕сть"
 
 #: libgimp/gimpexport.c:224
-msgid "can only handle RGB images"
+#, fuzzy, c-format
+msgid "%s can only handle RGB images"
 msgstr "можна обробити лише RGB-зображення"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
@@ -51,7 +55,8 @@ msgid "Convert to RGB"
 msgstr "Перетворити у RGB"
 
 #: libgimp/gimpexport.c:233
-msgid "can only handle grayscale images"
+#, fuzzy, c-format
+msgid "%s can only handle grayscale images"
 msgstr "можни обробити лише зображення у градац╕я с╕рого"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
@@ -59,7 +64,8 @@ msgid "Convert to Grayscale"
 msgstr "Перетворити у градац╕╖ с╕рого"
 
 #: libgimp/gimpexport.c:242
-msgid "can only handle indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle indexed images"
 msgstr "можна обробити лише ╕ндексован╕ зображення"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
@@ -71,19 +77,23 @@ msgstr ""
 "(Результат можна налагодити вручну)"
 
 #: libgimp/gimpexport.c:252
-msgid "can only handle RGB or grayscale images"
+#, fuzzy, c-format
+msgid "%s can only handle RGB or grayscale images"
 msgstr "можна обробити лише зображення у градац╕я с╕рого або RGB"
 
 #: libgimp/gimpexport.c:261
-msgid "can only handle RGB or indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle RGB or indexed images"
 msgstr "можна обробити лише RGB або ╕ндексован╕ зображення"
 
 #: libgimp/gimpexport.c:271
-msgid "can only handle grayscale or indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle grayscale or indexed images"
 msgstr "можна обробити лише зображення у градац╕я с╕рого або ╕ндексован╕"
 
 #: libgimp/gimpexport.c:282
-msgid "needs an alpha channel"
+#, fuzzy, c-format
+msgid "%s needs an alpha channel"
 msgstr "необх╕дно альфа-канал"
 
 #: libgimp/gimpexport.c:283
@@ -95,24 +105,17 @@ msgstr "Додати альфа-канал"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:356
+#: libgimp/gimpexport.c:357
 msgid "Confirm Save"
 msgstr ""
 
-#: libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:361
 msgid "Confirm"
 msgstr ""
 
-#: libgimp/gimpexport.c:362
+#: libgimp/gimpexport.c:363
 msgid "Cancel"
 msgstr "В╕дмова"
-
-#: libgimp/gimpexport.c:376
-#, c-format
-msgid ""
-"You are about to save %s as %s.\n"
-"This will not save the visible layers."
-msgstr ""
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -140,16 +143,22 @@ msgstr ""
 "таких причин:"
 
 #. the footline
-#: libgimp/gimpexport.c:527
+#: libgimp/gimpexport.c:526
 msgid "The export conversion won't modify your original image."
 msgstr "Експортне перетворення не зм╕нить ваше початкове зображення."
 
 #: libgimp/gimpexport.c:595
-msgid "a layer mask"
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
 msgstr ""
 
-#: libgimp/gimpexport.c:597
-msgid "a channel (saved selection)"
+#: libgimp/gimpexport.c:600
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
 msgstr ""
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
@@ -167,32 +176,32 @@ msgid "Loading module: '%s'\n"
 msgstr ""
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
-#: libgimpmodule/gimpmodule.c:386
+#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
+#: libgimpmodule/gimpmodule.c:432
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:260
+#: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:363
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:364
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:365
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr ""
 
-#: libgimpmodule/gimpmodule.c:366
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr ""
 
@@ -291,79 +300,92 @@ msgstr "Виб╕р файлу"
 msgid "Select File"
 msgstr "Виб╕р файлу"
 
+#: libgimpwidgets/gimpmemsizeentry.c:185
+msgid "KiloBytes"
+msgstr "к╕лобайт╕в"
+
+#: libgimpwidgets/gimpmemsizeentry.c:186
+msgid "MegaBytes"
+msgstr "магабайт╕в"
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+#, fuzzy
+msgid "GigaBytes"
+msgstr "магабайт╕в"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:88
+#: libgimpwidgets/gimpstock.c:91
 #, fuzzy
 msgid "Anchor"
 msgstr "дюйм"
 
-#: libgimpwidgets/gimpstock.c:89
+#: libgimpwidgets/gimpstock.c:92
 #, fuzzy
-msgid "Duplicate"
+msgid "_Duplicate"
 msgstr "п╕ка"
 
-#: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:91
-msgid "Linked"
-msgstr ""
-
-#: libgimpwidgets/gimpstock.c:92
-msgid "Paste as New"
-msgstr ""
-
 #: libgimpwidgets/gimpstock.c:93
-msgid "Paste Into"
+msgid "_Edit"
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:94
-msgid "_Reset"
+msgid "Linked"
 msgstr ""
 
 #: libgimpwidgets/gimpstock.c:95
+msgid "Paste as New"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:96
+msgid "Paste Into"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:97
+msgid "_Reset"
+msgstr ""
+
+#: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 msgid "_Scale"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr ""
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Ще..."
 
@@ -379,7 +401,7 @@ msgstr "Одиниц╕"
 msgid "Factor"
 msgstr "Множник"
 
-#: libgimpwidgets/gimpwidgets.c:960
+#: libgimpwidgets/gimpwidgets.c:984
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -389,101 +411,91 @@ msgstr ""
 "╕н╕ц╕ал╕зац╕╖ генератора випадкових чисел, то це дозволя╓ вам повторити дану "
 "\"випадкову\" операц╕ю"
 
-#: libgimpwidgets/gimpwidgets.c:964
+#: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:975
+#: libgimpwidgets/gimpwidgets.c:999
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "╤н╕ц╕ал╕зувати генератор випадкових чисел поточним часом - це гаранту╓ "
 "над╕йну \"випадков╕сть\""
 
-#: libgimpwidgets/gimpwidgets.c:1289
-msgid "Bytes"
-msgstr "байт╕в"
-
-#: libgimpwidgets/gimpwidgets.c:1290
-msgid "KiloBytes"
-msgstr "к╕лобайт╕в"
-
-#: libgimpwidgets/gimpwidgets.c:1291
-msgid "MegaBytes"
-msgstr "магабайт╕в"
-
-#: libgimpwidgets/gimpwidgets.c:1292
-#, fuzzy
-msgid "GigaBytes"
-msgstr "магабайт╕в"
-
-#: modules/cdisplay_colorblind.c:100
-msgid "Colorblind display filter"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:166
+#: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:326
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:336
-msgid "Protonopia (insensitivity to red)"
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:340
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:344
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:89
+#: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:155
+#: modules/cdisplay_gamma.c:156
 msgid "Gamma"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:316
+#: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:89
+#: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:155
+#: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:314
+#: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
 msgstr ""
 
-#: modules/colorsel_triangle.c:107
+#: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#: modules/colorsel_triangle.c:179
+#: modules/colorsel_triangle.c:182
 msgid "_Triangle"
 msgstr ""
 
-#: modules/colorsel_water.c:103
+#: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr ""
 
-#: modules/colorsel_water.c:175
+#: modules/colorsel_water.c:176
 msgid "_Watercolor"
 msgstr ""
 
-#: modules/colorsel_water.c:250
+#: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr ""
+
+#~ msgid "Bytes"
+#~ msgstr "байт╕в"
 
 #, fuzzy
 #~ msgid "_Time"

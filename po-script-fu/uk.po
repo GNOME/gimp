@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-std-plugins-1.1.19\n"
-"POT-Creation-Date: 2002-12-29 23:01+0100\n"
+"POT-Creation-Date: 2003-02-18 01:09+0100\n"
 "PO-Revision-Date: 2000-03-10 11:26+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -104,17 +104,17 @@ msgstr ""
 "Принаймн╕ один з вибраних вами шрифт╕в нев╕рний.\n"
 "Будь ласка, перев╕рте ваш╕ настройки.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 #: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Автор:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 #: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Авторське право:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 #: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Дата:"
@@ -138,15 +138,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:569
+#: plug-ins/script-fu/script-fu-server.c:574
 msgid "Script-Fu Server Options"
 msgstr "Параметри сервера Скрипт-Фу"
 
-#: plug-ins/script-fu/script-fu-server.c:596
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Port:"
 msgstr "Порт сервера:"
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:607
 msgid "Server Logfile:"
 msgstr "Журнальний файл сервера:"
 
@@ -186,41 +186,41 @@ msgstr ""
 msgid "_Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:343
+#: plug-ins/dbbrowser/dbbrowser_utils.c:341
 #, fuzzy
 msgid "Name:"
 msgstr "Дата:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:352
+#: plug-ins/dbbrowser/dbbrowser_utils.c:350
 #, fuzzy
 msgid "Blurb:"
 msgstr "Розмивання по Y"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:364
+#: plug-ins/dbbrowser/dbbrowser_utils.c:362
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:412
+#: plug-ins/dbbrowser/dbbrowser_utils.c:410
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:466
+#: plug-ins/dbbrowser/dbbrowser_utils.c:464
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:602
+#: plug-ins/dbbrowser/dbbrowser_utils.c:600
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:623
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:633
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+#: plug-ins/dbbrowser/dbbrowser_utils.c:672
 msgid "No matches"
 msgstr ""
 
@@ -493,10 +493,10 @@ msgstr "Зберегти шар рель╓фу"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
-#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on Copy"
 msgstr "Працювати з коп╕╓ю"
 
@@ -677,14 +677,14 @@ msgid "Buffer Amount (% Height of Text)"
 msgstr "Розм╕р буферу (% висоти тексту)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Filename"
 msgstr "Назва файлу"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent Background"
 msgstr "Прозоре тло"
 
@@ -906,7 +906,7 @@ msgid "Image Size"
 msgstr "Розм╕р зображення"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
 msgstr "Згладити"
 
@@ -1145,28 +1145,28 @@ msgstr "<Image>/Редагування/Коп╕ювати видим╕"
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr "<Toolbox>/Розш./Скрипт-Фу/Емблеми/Кристал..."
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
 msgstr "<Image>/Скрипт-Фу/Вид╕лення/Спотворити вид╕лення..."
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
 msgstr "Зернистисть (1 -- низька)"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
 msgstr "Згладити горизонтально"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth Vertically"
 msgstr "Згладити вертикально"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
 msgstr "Розповсюдження"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Пор╕г (б╕льший 1<-->255 менший)"
 
@@ -1318,7 +1318,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/Розш./Скрипт-Фу/Утил╕ти/Мапа шрифту..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "Рамка"
 
@@ -1668,7 +1668,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
 msgstr "<Toolbox>/Розш./Скрипт-Фу/Зробити пензель/Примокутний..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
 msgid "Description"
 msgstr "Опис"
 
@@ -1677,7 +1676,7 @@ msgid "Feathering"
 msgstr "Розмивання"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:8
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "╤нтервал"
 
@@ -1711,19 +1710,19 @@ msgstr "Розм╕р ком╕рки (в п╕кселях)"
 msgid "Density (%)"
 msgstr "Щ╕льг╕сть (%)"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+#: plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
 msgstr "<Image>/Скрипт-Фу/Декор/Старе фото..."
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+#: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
 msgstr "Зняти фокус"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
 msgstr "Накраплення"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+#: plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
 msgstr "Сеп╕я"
 
@@ -1851,7 +1850,7 @@ msgid "Smear"
 msgstr "Сеп╕я"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
-msgid "Warp"
+msgid "Wrap"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
@@ -1870,11 +1869,15 @@ msgstr "Додати падаючу т╕нь"
 msgid "Edge Radius"
 msgstr "Рад╕ус гран╕"
 
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr "<Image>/Скрипт-Фу/Вид╕лення/В пензель..."
 
-#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Brush Name"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
 msgstr "<Image>/Скрипт-Фу/Вид╕лення/В зображення"
 
@@ -1922,19 +1925,19 @@ msgstr "Рад╕ус (в п╕кселях)"
 msgid "Sphere Color"
 msgstr "Кол╕р сфери"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
 msgstr "<Image>/Скрипт-Фу/Ан╕матори/Куля, що оберта╓ться..."
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "Кадри"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
 msgstr "╤ндексувати до N кольор╕в (0 - залишити RGB)"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
 msgstr "Обертати зл╕ва направо"
 

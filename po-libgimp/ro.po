@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2000-11-24 15:46+0100\n"
 "Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
 "Language-Team: Românã <ro@li.org>\n"
@@ -14,8 +14,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-#, fuzzy
-msgid "can't handle layers"
+#, fuzzy, c-format
+msgid "%s can't handle layers"
 msgstr "Scaleazã stratul"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
@@ -24,13 +24,14 @@ msgid "Merge Visible Layers"
 msgstr "/Combinã stratele vizibile..."
 
 #: libgimp/gimpexport.c:179
-#, fuzzy
-msgid "can't handle layer offsets, size or opacity"
+#, fuzzy, c-format
+msgid "%s can't handle layer offsets, size or opacity"
 msgstr "Scaleazã stratul"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-msgid "can only handle layers as animation frames"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "Amestec: Invalid pentru imaginii indexate"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 #, fuzzy
@@ -43,13 +44,14 @@ msgid "Flatten Image"
 msgstr "/Aplatizeazã imaginea"
 
 #: libgimp/gimpexport.c:215
-#, fuzzy
-msgid "can't handle transparency"
+#, fuzzy, c-format
+msgid "%s can't handle transparency"
 msgstr "Pãstreazã Transparenþa"
 
 #: libgimp/gimpexport.c:224
-msgid "can only handle RGB images"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s can only handle RGB images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 #, fuzzy
@@ -57,8 +59,9 @@ msgid "Convert to RGB"
 msgstr "Conversie"
 
 #: libgimp/gimpexport.c:233
-msgid "can only handle grayscale images"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s can only handle grayscale images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 #, fuzzy
@@ -66,8 +69,8 @@ msgid "Convert to Grayscale"
 msgstr "Scarã de gri-uri "
 
 #: libgimp/gimpexport.c:242
-#, fuzzy
-msgid "can only handle indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle indexed images"
 msgstr "Amestec: Invalid pentru imaginii indexate"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
@@ -77,22 +80,23 @@ msgid ""
 msgstr ""
 
 #: libgimp/gimpexport.c:252
-msgid "can only handle RGB or grayscale images"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy
-msgid "can only handle RGB or indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle RGB or indexed images"
 msgstr "Amestec: Invalid pentru imaginii indexate"
 
 #: libgimp/gimpexport.c:271
-#, fuzzy
-msgid "can only handle grayscale or indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle grayscale or indexed images"
 msgstr "Amestec: Invalid pentru imaginii indexate"
 
 #: libgimp/gimpexport.c:282
-#, fuzzy
-msgid "needs an alpha channel"
+#, fuzzy, c-format
+msgid "%s needs an alpha channel"
 msgstr "Canalul alfa al stratului"
 
 #: libgimp/gimpexport.c:283
@@ -105,25 +109,18 @@ msgstr "/Adaugã canal de transparenþa"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:356
+#: libgimp/gimpexport.c:357
 #, fuzzy
 msgid "Confirm Save"
 msgstr "Confirmã dimensiunea imaginii"
 
-#: libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:361
 msgid "Confirm"
 msgstr ""
 
-#: libgimp/gimpexport.c:362
+#: libgimp/gimpexport.c:363
 msgid "Cancel"
 msgstr "Renunþã"
-
-#: libgimp/gimpexport.c:376
-#, c-format
-msgid ""
-"You are about to save %s as %s.\n"
-"This will not save the visible layers."
-msgstr ""
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -152,19 +149,23 @@ msgid ""
 msgstr ""
 
 #. the footline
-#: libgimp/gimpexport.c:527
+#: libgimp/gimpexport.c:526
 msgid "The export conversion won't modify your original image."
 msgstr ""
 
 #: libgimp/gimpexport.c:595
-#, fuzzy
-msgid "a layer mask"
-msgstr "adauga strat mascã"
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
 
-#: libgimp/gimpexport.c:597
-#, fuzzy
-msgid "a channel (saved selection)"
-msgstr "/Canal -> Selecþie"
+#: libgimp/gimpexport.c:600
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
@@ -181,33 +182,33 @@ msgid "Loading module: '%s'\n"
 msgstr "încarc modulul: \"%s\"\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
-#: libgimpmodule/gimpmodule.c:386
+#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
+#: libgimpmodule/gimpmodule.c:432
 #, fuzzy, c-format
 msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr "eroare la încãrcare modul: %s: %s"
 
-#: libgimpmodule/gimpmodule.c:260
+#: libgimpmodule/gimpmodule.c:270
 #, fuzzy, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "ignor modulul: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:363
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Eroare în modul"
 
-#: libgimpmodule/gimpmodule.c:364
+#: libgimpmodule/gimpmodule.c:407
 #, fuzzy
 msgid "Loaded"
 msgstr "Incãrcat cu SUCCES"
 
-#: libgimpmodule/gimpmodule.c:365
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Incãrcarea a eºuat"
 
-#: libgimpmodule/gimpmodule.c:366
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr ""
 
@@ -318,88 +319,102 @@ msgstr "Selecteazã"
 msgid "Select File"
 msgstr "Selecteazã"
 
+#: libgimpwidgets/gimpmemsizeentry.c:185
+msgid "KiloBytes"
+msgstr ""
+
+#: libgimpwidgets/gimpmemsizeentry.c:186
+msgid "MegaBytes"
+msgstr ""
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+#, fuzzy
+msgid "GigaBytes"
+msgstr "%d Octeþi"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:88
+#: libgimpwidgets/gimpstock.c:91
 #, fuzzy
 msgid "Anchor"
 msgstr "Ancoreazã stratul"
 
-#: libgimpwidgets/gimpstock.c:89
+#: libgimpwidgets/gimpstock.c:92
 #, fuzzy
-msgid "Duplicate"
+msgid "_Duplicate"
 msgstr "Cloneazã traseul"
 
-#: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
+#: libgimpwidgets/gimpstock.c:93
+#, fuzzy
+msgid "_Edit"
 msgstr "Modificã"
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:94
 #, fuzzy
 msgid "Linked"
 msgstr "Linear"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:95
 msgid "Paste as New"
 msgstr "Insereazã ca nou"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:96
 msgid "Paste Into"
 msgstr "Insereazã în"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:97
 #, fuzzy
 msgid "_Reset"
 msgstr "Iniþializeazã"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:140
 #, fuzzy
 msgid "_Resize"
 msgstr "Redimensionare"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 #, fuzzy
 msgid "_Scale"
 msgstr "Scalare"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:149
 #, fuzzy
 msgid "L_etter Spacing"
 msgstr "Spaþiere:"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:150
 #, fuzzy
 msgid "L_ine Spacing"
 msgstr "Salvare de fiºiere"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:189
 #, fuzzy
 msgid "_Transform"
 msgstr "Transformare"
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:192
 #, fuzzy
 msgid "_Rotate"
 msgstr "Rotire"
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:194
 #, fuzzy
 msgid "_Shear"
 msgstr "Decupare"
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr ""
 
@@ -418,111 +433,110 @@ msgstr "Unitate de masurã:"
 msgid "Factor"
 msgstr "Panã"
 
-#: libgimpwidgets/gimpwidgets.c:960
+#: libgimpwidgets/gimpwidgets.c:984
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:964
+#: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:975
+#: libgimpwidgets/gimpwidgets.c:999
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1289
-#, fuzzy
-msgid "Bytes"
-msgstr "%d Octeþi"
-
-#: libgimpwidgets/gimpwidgets.c:1290
-msgid "KiloBytes"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:1291
-msgid "MegaBytes"
-msgstr ""
-
-#: libgimpwidgets/gimpwidgets.c:1292
-#, fuzzy
-msgid "GigaBytes"
-msgstr "%d Octeþi"
-
-#: modules/cdisplay_colorblind.c:100
-msgid "Colorblind display filter"
-msgstr ""
-
-#: modules/cdisplay_colorblind.c:166
+#: modules/cdisplay_colorblind.c:188
 #, fuzzy
 msgid "Color Deficient Vision"
 msgstr "Selecþie culoare"
 
-#: modules/cdisplay_colorblind.c:326
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:336
-msgid "Protonopia (insensitivity to red)"
+#: modules/cdisplay_colorblind.c:483
+#, fuzzy
+msgid "None (normal vision)"
+msgstr "(Nici o informaþie)"
+
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:340
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:344
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:89
+#: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:155
+#: modules/cdisplay_gamma.c:156
 msgid "Gamma"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:316
+#: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:89
+#: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:155
+#: modules/cdisplay_highcontrast.c:156
 #, fuzzy
 msgid "Contrast"
 msgstr "Contrast:"
 
-#: modules/cdisplay_highcontrast.c:314
+#: modules/cdisplay_highcontrast.c:315
 #, fuzzy
 msgid "Contrast Cycles:"
 msgstr "Contrast:"
 
-#: modules/colorsel_triangle.c:107
+#: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#: modules/colorsel_triangle.c:179
+#: modules/colorsel_triangle.c:182
 #, fuzzy
 msgid "_Triangle"
 msgstr "Triunghi"
 
-#: modules/colorsel_water.c:103
+#: modules/colorsel_water.c:104
 #, fuzzy
 msgid "Watercolor style color selector"
 msgstr "Tipul de colorare pentru selecþie"
 
-#: modules/colorsel_water.c:175
+#: modules/colorsel_water.c:176
 #, fuzzy
 msgid "_Watercolor"
 msgstr "Culoarea Apei"
 
-#: modules/colorsel_water.c:250
+#: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Presiune"
+
+#, fuzzy
+#~ msgid "a layer mask"
+#~ msgstr "adauga strat mascã"
+
+#, fuzzy
+#~ msgid "a channel (saved selection)"
+#~ msgstr "/Canal -> Selecþie"
+
+#, fuzzy
+#~ msgid "Bytes"
+#~ msgstr "%d Octeþi"
 
 #, fuzzy
 #~ msgid "_Time"
@@ -1078,9 +1092,6 @@ msgstr "Presiune"
 
 #~ msgid "(This thumbnail may be out of date)"
 #~ msgstr "(Este posibil ca aceastã imagine-medalion sã fie invalidã)"
-
-#~ msgid "(No Information)"
-#~ msgstr "(Nici o informaþie)"
 
 #~ msgid "(Thumbnail saving is disabled)"
 #~ msgstr "(Salvarea imaginii-medalion a fost dezactivatã)"

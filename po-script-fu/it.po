@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.18\n"
-"POT-Creation-Date: 2002-12-29 23:01+0100\n"
+"POT-Creation-Date: 2003-02-18 01:09+0100\n"
 "PO-Revision-Date: sab giu 10 03:02:00 EDT 2000\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -105,17 +105,17 @@ msgstr ""
 "Il carattere che avete scelto è invalido.\n"
 "Si prega di controllare le vostre configurazioni.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:484
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
 #: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Autore :"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:500
+#: plug-ins/dbbrowser/dbbrowser_utils.c:498
 #: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:492
+#: plug-ins/dbbrowser/dbbrowser_utils.c:490
 #: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Data:"
@@ -136,15 +136,15 @@ msgid ""
 "%s"
 msgstr "Script-fu Selezione File"
 
-#: plug-ins/script-fu/script-fu-server.c:569
+#: plug-ins/script-fu/script-fu-server.c:574
 msgid "Script-Fu Server Options"
 msgstr "Script-fu Opzioni Server"
 
-#: plug-ins/script-fu/script-fu-server.c:596
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Port:"
 msgstr "Porta Server:"
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:607
 msgid "Server Logfile:"
 msgstr "Log server:"
 
@@ -184,41 +184,41 @@ msgstr ""
 msgid "_Search:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:343
+#: plug-ins/dbbrowser/dbbrowser_utils.c:341
 #, fuzzy
 msgid "Name:"
 msgstr "Data:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:352
+#: plug-ins/dbbrowser/dbbrowser_utils.c:350
 #, fuzzy
 msgid "Blurb:"
 msgstr "Sfocatura Y"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:364
+#: plug-ins/dbbrowser/dbbrowser_utils.c:362
 msgid "In:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:412
+#: plug-ins/dbbrowser/dbbrowser_utils.c:410
 msgid "Out:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:466
+#: plug-ins/dbbrowser/dbbrowser_utils.c:464
 msgid "Help:"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:602
+#: plug-ins/dbbrowser/dbbrowser_utils.c:600
 msgid "Searching by name - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:625
+#: plug-ins/dbbrowser/dbbrowser_utils.c:623
 msgid "Searching by blurb - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:635
+#: plug-ins/dbbrowser/dbbrowser_utils.c:633
 msgid "Searching - please wait"
 msgstr ""
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+#: plug-ins/dbbrowser/dbbrowser_utils.c:672
 msgid "No matches"
 msgstr ""
 
@@ -491,10 +491,10 @@ msgstr "Utilizza livello Bump"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
-#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on Copy"
 msgstr "Lavora su una copia"
 
@@ -675,14 +675,14 @@ msgid "Buffer Amount (% Height of Text)"
 msgstr "Dimensione buffer (% altezza del testo)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Filename"
 msgstr "Nome file"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent Background"
 msgstr "Sfondo trasparente"
 
@@ -903,7 +903,7 @@ msgid "Image Size"
 msgstr "Dimensione immagine"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
 msgstr "Definito"
 
@@ -1142,28 +1142,28 @@ msgstr "<Image>/Modifica/Copia visibile"
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Logotipi/Crystal..."
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
 msgstr "<Image>/Script-Fu/Selection/Distress Selection..."
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
 msgstr "Granularità (1 è bassa)"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
 msgstr "Definito orizzontalmente"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth Vertically"
 msgstr "Definito verticalmente"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
 msgstr "Diffusione"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Soglia (Alta 1<-->255 Piccola)"
 
@@ -1316,7 +1316,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Utilità/Mappa caratteri..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "Bordo"
 
@@ -1669,7 +1669,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Crea pennello/Rettangolare..."
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
 msgid "Description"
 msgstr "Descrizione"
 
@@ -1678,7 +1677,7 @@ msgid "Feathering"
 msgstr "Ammorbidito"
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:8
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "Spaziatura"
 
@@ -1712,19 +1711,19 @@ msgstr "Dimensione celle (pixel)"
 msgid "Density (%)"
 msgstr "Densità (%)"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+#: plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
 msgstr "<Image>/Script-Fu/Decorazioni/Vecchia foto..."
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+#: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
 msgstr "Defocus"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
 msgstr "Chiazze"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+#: plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
 msgstr "Seppia"
 
@@ -1852,7 +1851,7 @@ msgid "Smear"
 msgstr "Seppia"
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
-msgid "Warp"
+msgid "Wrap"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
@@ -1871,11 +1870,15 @@ msgstr "Aggiungi ombra rilievo"
 msgid "Edge Radius"
 msgstr "Raggio margine"
 
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr "<Image>/Script-Fu/Selezione/A pennello..."
 
-#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Brush Name"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
 msgstr "<Image>/Script-Fu/Selezione/A immagine"
 
@@ -1923,19 +1926,19 @@ msgstr "Raggio (pixel)"
 msgid "Sphere Color"
 msgstr "Colore sfera"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
 msgstr "<Image>/Script-Fu/Animatori/globo ruotante..."
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "Frame"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
 msgstr "Scala di colore a n colori (0 = RGB)"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
 msgstr "Gira da sinistra a destra"
 

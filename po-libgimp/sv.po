@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
-"POT-Creation-Date: 2003-01-10 16:34+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2003-01-10 16:34+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -196,19 +196,19 @@ msgstr ""
 msgid "Skipping module: '%s'\n"
 msgstr "Hoppar över modul: \"%s\"\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Modulfel"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr "Inläst"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Inläsning misslyckades"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr "Inte inläst"
 
@@ -304,15 +304,15 @@ msgstr "Välj mapp"
 msgid "Select File"
 msgstr "Välj fil"
 
-#: libgimpwidgets/gimpmemsizeentry.c:186
+#: libgimpwidgets/gimpmemsizeentry.c:185
 msgid "KiloBytes"
 msgstr "kilobyte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:186
 msgid "MegaBytes"
 msgstr "megabyte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:188
+#: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "GigaBytes"
 msgstr "gigabyte"
 
@@ -324,83 +324,83 @@ msgstr ""
 "Klicka på pipetten och klicka sedan på en färg någonstans på din skärm för "
 "att välja den färgen."
 
-#: libgimpwidgets/gimpstock.c:88
+#: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
 msgstr "Ankare"
 
-#: libgimpwidgets/gimpstock.c:89
+#: libgimpwidgets/gimpstock.c:92
 msgid "_Duplicate"
 msgstr "_Duplicera"
 
-#: libgimpwidgets/gimpstock.c:90
+#: libgimpwidgets/gimpstock.c:93
 msgid "_Edit"
 msgstr "_Redigera"
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:94
 msgid "Linked"
 msgstr "Länkad"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:95
 msgid "Paste as New"
 msgstr "Klistra in som ny"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:96
 msgid "Paste Into"
 msgstr "Klistra in i"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:97
 msgid "_Reset"
 msgstr "_Återställ"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:128
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
-#: libgimpwidgets/gimpstock.c:129 libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr "_Teckenmellanrum"
 
-#: libgimpwidgets/gimpstock.c:138
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr "_Radmellanrum"
 
-#: libgimpwidgets/gimpstock.c:159
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr "Beskär"
 
-#: libgimpwidgets/gimpstock.c:177
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr "_Transformera"
 
-#: libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr "_Rotera"
 
-#: libgimpwidgets/gimpstock.c:182
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr "_Luta"
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Mer..."
 
-#: libgimpwidgets/gimpunitmenu.c:525
+#: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
 msgstr "Enhetsval"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Enhet"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Faktor"
 
@@ -420,27 +420,32 @@ msgstr "_Slumpa"
 msgid "Seed random number generator with a generated random number"
 msgstr "Skapa slumptalsfrö till slumptalsgeneratorn med ett genererat slumptal"
 
-#: modules/cdisplay_colorblind.c:101
-msgid "Colorblind display filter"
-msgstr "Färgblindhetsvisningsfilter"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr ""
 
-#: modules/cdisplay_colorblind.c:167
+#: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
 msgstr "Färgsynskada"
 
-#: modules/cdisplay_colorblind.c:327
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
 msgstr "Typ av färgbristfällighet:"
 
-#: modules/cdisplay_colorblind.c:337
-msgid "Protonopia (insensitivity to red)"
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:487
+#, fuzzy
+msgid "Protanopia (insensitivity to red)"
 msgstr "Protonopi (okänslighet för rött)"
 
-#: modules/cdisplay_colorblind.c:341
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopi (okänslighet för grönt)"
 
-#: modules/cdisplay_colorblind.c:345
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopi (okänslighet för blått)"
 
@@ -487,6 +492,9 @@ msgstr "_Vattenfärg"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Tryck"
+
+#~ msgid "Colorblind display filter"
+#~ msgstr "Färgblindhetsvisningsfilter"
 
 #~ msgid "Duplicate"
 #~ msgstr "Duplicera"

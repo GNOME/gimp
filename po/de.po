@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.12\n"
-"POT-Creation-Date: 2003-02-17 16:05+0100\n"
+"POT-Creation-Date: 2003-02-18 00:38+0100\n"
 "PO-Revision-Date: 2003-02-17 16:24+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -2990,7 +2990,6 @@ msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:323 app/gui/resize-dialog.c:639
-#, c-format
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 

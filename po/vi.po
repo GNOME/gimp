@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP for Gnome v.2.1.x\n"
-"POT-Creation-Date: 2003-01-27 03:54+0100\n"
+"POT-Creation-Date: 2003-02-18 00:38+0100\n"
 "PO-Revision-Date: 2003-01-27 22:22+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@yahoo.com>\n"
 "Language-Team: Gnome-Vi <Gnomevi-list@lists.sourceforge.net>\n"
@@ -21,7 +21,8 @@ msgid ""
 msgstr ""
 "GIMP không được cài đặt đúng cho người dùng này.\n"
 "Cài đặt người dùng bị bỏ qua vì đã dùng '--no-interface' flag.\n"
-"Để thực hiện cài đặt người dùng, hãy chạy GIMP không có '--no-interface' flag."
+"Để thực hiện cài đặt người dùng, hãy chạy GIMP không có '--no-interface' "
+"flag."
 
 #: app/main.c:170
 msgid ""
@@ -96,7 +97,8 @@ msgstr "  -h, --help               Xuất ra trợ giúp này.\n"
 
 #: app/main.c:465
 msgid "  -r, --restore-session    Try to restore saved session.\n"
-msgstr "  -r, --restore-session    Cố gắng khôi phục phiên làm việc được lưu.\n"
+msgstr ""
+"  -r, --restore-session    Cố gắng khôi phục phiên làm việc được lưu.\n"
 
 #: app/main.c:466
 msgid "  -s, --no-splash          Do not show the startup window.\n"
@@ -118,14 +120,16 @@ msgstr "  --verbose                Hiển thị thông điệp khởi chạy.\n"
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and "
 "plugins.\n"
-msgstr "  --no-shm                 Không dùng bộ nhớ chia sẻ giữa GIMP và plugins.\n"
+msgstr ""
+"  --no-shm                 Không dùng bộ nhớ chia sẻ giữa GIMP và plugins.\n"
 
 #: app/main.c:471
 msgid "  --no-mmx                 Do not use MMX routines.\n"
 msgstr "  --no-mmx                 Không dùng MMX routines.\n"
 
 #: app/main.c:472
-msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid ""
+"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr ""
 "  --debug-handlers         Chạy trình xử lý tín hiệu gỡ rối không quan "
 "trọng.\n"
@@ -152,213 +156,6 @@ msgstr ""
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Cửa sổ console này sẽ đóng sau 10 giây)\n"
 
-#: app/undo.c:3579
-#, c-format
-msgid "Can't undo %s"
-msgstr "Không thể hoàn tác %s"
-
-#: app/undo.c:3605
-msgid "<<invalid>>"
-msgstr "<<không hợp lệ>>"
-
-#: app/undo.c:3606 app/gui/resize-dialog.c:201
-msgid "Scale Image"
-msgstr "Cân đối Ảnh"
-
-#: app/undo.c:3607
-msgid "Resize Image"
-msgstr "Đặt lại kích cỡ Ảnh"
-
-#: app/undo.c:3608
-msgid "Convert Image"
-msgstr "Chuyển đổi Ảnh"
-
-#: app/undo.c:3609
-msgid "Crop Image"
-msgstr "Xén Ảnh"
-
-#: app/undo.c:3610 app/gui/image-commands.c:310
-msgid "Merge Layers"
-msgstr "Nhập các Lớp"
-
-#: app/undo.c:3611 app/undo.c:3636
-msgid "QuickMask"
-msgstr "QuickMask"
-
-#: app/undo.c:3612 app/undo.c:3637
-msgid "Guide"
-msgstr "Chỉ dẫn"
-
-#: app/undo.c:3613
-msgid "Layer Properties"
-msgstr "Thuộc Tính Lớp"
-
-#: app/undo.c:3614 app/gui/resize-dialog.c:193
-msgid "Scale Layer"
-msgstr "Cân đối Lớp"
-
-#: app/undo.c:3615
-msgid "Resize Layer"
-msgstr "Đặt lại kích cỡ Lớp"
-
-#: app/undo.c:3616
-msgid "Move Layer"
-msgstr "Di chuyển Lớp"
-
-#: app/undo.c:3617
-msgid "Apply Layer Mask"
-msgstr "Áp dụng Mặt nạ Lớp"
-
-#: app/undo.c:3618
-msgid "Linked Layer"
-msgstr "Lớp được Liên kết"
-
-#: app/undo.c:3619
-msgid "Float Selection"
-msgstr "Chọn Lựa Nổi"
-
-#: app/undo.c:3620
-msgid "Anchor Floating Selection"
-msgstr "Neo Chọn Lựa Nổi"
-
-#: app/undo.c:3621 app/widgets/gimpbufferview.c:147
-msgid "Paste"
-msgstr "Dán"
-
-#: app/undo.c:3622
-msgid "Cut"
-msgstr "Cắt"
-
-#: app/undo.c:3623
-msgid "Copy"
-msgstr "Sao chép"
-
-#: app/undo.c:3624 app/tools/gimptexttool.c:150
-msgid "Text"
-msgstr "Text"
-
-#: app/undo.c:3625 app/undo.c:3658
-msgid "Transform"
-msgstr "Biến đổi"
-
-#: app/undo.c:3626 app/undo.c:3659
-msgid "Paint"
-msgstr "Vẽ"
-
-#: app/undo.c:3627 app/undo.c:3660
-msgid "Attach Parasite"
-msgstr "Đính kèm Parasite"
-
-#: app/undo.c:3628 app/undo.c:3661
-msgid "Remove Parasite"
-msgstr "Gỡ bỏ Parasite"
-
-#: app/undo.c:3629
-msgid "Plug-In"
-msgstr "Plug-In"
-
-#: app/undo.c:3631 app/pdb/internal_procs.c:124
-msgid "Image"
-msgstr "Ảnh"
-
-#: app/undo.c:3632
-msgid "Image Mod"
-msgstr "Chế độ Ảnh"
-
-#: app/undo.c:3633 app/gui/file-new-dialog.c:373
-msgid "Image Type"
-msgstr "Loại Ảnh"
-
-#. Image size frame
-#: app/undo.c:3634 app/gui/file-new-dialog.c:143
-msgid "Image Size"
-msgstr "Cỡ Ảnh"
-
-#: app/undo.c:3635
-msgid "Resolution Change"
-msgstr "Thay đổi Độ Phân Giải"
-
-#: app/undo.c:3638 app/core/gimpchannel.c:509
-msgid "Selection Mask"
-msgstr "Chọn lựa mặt nạ"
-
-#: app/undo.c:3639
-msgid "Rename Item"
-msgstr "Đặt lại tên Mục"
-
-#: app/undo.c:3640 app/gui/layers-commands.c:608 app/gui/layers-commands.c:640
-msgid "New Layer"
-msgstr "Lớp Mới"
-
-#: app/undo.c:3641
-msgid "Delete Layer"
-msgstr "Xoá Lớp"
-
-#: app/undo.c:3642
-msgid "Layer Mod"
-msgstr "Layer Mod"
-
-#: app/undo.c:3643 app/gui/layers-commands.c:895
-msgid "Add Layer Mask"
-msgstr "Thêm Mặt Nạ Lớp"
-
-#: app/undo.c:3644
-msgid "Delete Layer Mask"
-msgstr "Xoá Mặt Nạ Lớp"
-
-#: app/undo.c:3645
-msgid "Layer Reposition"
-msgstr "Định vị lại Lớp"
-
-#: app/undo.c:3646
-msgid "Layer Move"
-msgstr "Di Chuyển Lớp"
-
-#: app/undo.c:3647 app/gui/channels-commands.c:322
-#: app/gui/channels-commands.c:359
-msgid "New Channel"
-msgstr "Kênh Mới"
-
-#: app/undo.c:3648
-msgid "Delete Channel"
-msgstr "Xoá Kênh"
-
-#: app/undo.c:3649
-msgid "Channel Mod"
-msgstr "Channel Mod"
-
-#: app/undo.c:3650
-msgid "Channel Reposition"
-msgstr "Định vị lại Kênh"
-
-#: app/undo.c:3651
-msgid "New Vectors"
-msgstr "Các Vector Mới"
-
-#: app/undo.c:3652
-msgid "Delete Vectors"
-msgstr "Xoá các Vector"
-
-#: app/undo.c:3653
-msgid "Vectors Mod"
-msgstr "Vectors Mod"
-
-#: app/undo.c:3654
-msgid "Vectors Reposition"
-msgstr "Định vị lại các Vector"
-
-#: app/undo.c:3655
-msgid "FS to Layer"
-msgstr "FS tới Lớp"
-
-#: app/undo.c:3656
-msgid "FS Rigor"
-msgstr "FS Rigor"
-
-#: app/undo.c:3657
-msgid "FS Relax"
-msgstr "FS Relax"
-
 #: app/undo_history.c:470
 #, c-format
 msgid "Undo History: %s"
@@ -368,11 +165,11 @@ msgstr "Lược sử hoàn tác: %s"
 msgid "[ base image ]"
 msgstr "[ ảnh cơ sở ]"
 
-#: app/undo_history.c:806
+#: app/undo_history.c:802
 msgid "Undo History"
 msgstr "Lược sử hoàn tác"
 
-#: app/undo_history.c:808
+#: app/undo_history.c:804
 msgid "Image Undo History"
 msgstr "Lược sử Hoàn tác Ảnh"
 
@@ -380,7 +177,7 @@ msgstr "Lược sử Hoàn tác Ảnh"
 msgid "None (Fastest)"
 msgstr "Không (Nhanh nhất)"
 
-#: app/base/base-enums.c:14 app/core/core-enums.c:120
+#: app/base/base-enums.c:14 app/core/core-enums.c:188
 #: app/widgets/widgets-enums.c:51
 msgid "Linear"
 msgstr "Tuyến"
@@ -389,15 +186,15 @@ msgstr "Tuyến"
 msgid "Cubic (Best)"
 msgstr "Khối (Tốt nhất)"
 
-#: app/base/base-enums.c:73 app/core/core-enums.c:194
+#: app/base/base-enums.c:73 app/core/core-enums.c:262
 msgid "Small"
 msgstr "Nhỏ"
 
-#: app/base/base-enums.c:74 app/core/core-enums.c:195
+#: app/base/base-enums.c:74 app/core/core-enums.c:263
 msgid "Medium"
 msgstr "Trung bình"
 
-#: app/base/base-enums.c:75 app/core/core-enums.c:196
+#: app/base/base-enums.c:75 app/core/core-enums.c:264
 msgid "Large"
 msgstr "Lớn"
 
@@ -461,35 +258,35 @@ msgstr "Midtones"
 msgid "Highlights"
 msgstr "Nổi bật"
 
-#: app/config/gimpconfig-deserialize.c:192 app/config/gimpconfig.c:349
-#: app/config/gimpconfig.c:362 app/config/gimpscanner.c:307
-#: app/config/gimpscanner.c:370 app/core/gimpunits.c:158 app/gui/session.c:169
-#: app/plug-in/plug-in-rc.c:130
+#: app/config/gimpconfig-deserialize.c:192 app/config/gimpconfig.c:357
+#: app/config/gimpconfig.c:370 app/config/gimpscanner.c:325
+#: app/config/gimpscanner.c:388 app/core/gimpunits.c:158 app/gui/session.c:169
+#: app/plug-in/plug-in-rc.c:135
 msgid "fatal parse error"
 msgstr "lỗi phân tích cú pháp trầm trọng"
 
 #. please don't translate 'yes' and 'no'
-#: app/config/gimpconfig-deserialize.c:401
+#: app/config/gimpconfig-deserialize.c:413
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "Mong đợi 'có' hay 'không' cho for dấu hiệu boolean %s, nhận '%s'"
 
-#: app/config/gimpconfig-deserialize.c:458
+#: app/config/gimpconfig-deserialize.c:472
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "giá trị không hợp lệ '%s' cho dấu hiệu %s"
 
-#: app/config/gimpconfig-deserialize.c:472
+#: app/config/gimpconfig-deserialize.c:486
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "giá trị không hợp lệ '%ld' cho dấu hiệu %s"
 
-#: app/config/gimpconfig-deserialize.c:538
+#: app/config/gimpconfig-deserialize.c:552
 #, c-format
 msgid "while parsing token %s: %s"
 msgstr "Lỗi khi phân tích cú pháp token %s: %s"
 
-#: app/config/gimpconfig-deserialize.c:646
+#: app/config/gimpconfig-deserialize.c:660
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "giá trị cho dấu hiệu %s không phải là chuỗi UTF-8 hợp lệ"
@@ -499,12 +296,12 @@ msgstr "giá trị cho dấu hiệu %s không phải là chuỗi UTF-8 hợp l�
 msgid "can not expand ${%s}"
 msgstr "không thể mở rộng ${%s}"
 
-#: app/config/gimpconfig.c:221
+#: app/config/gimpconfig.c:229
 #, c-format
 msgid "Failed to create temporary file for '%s': %s"
 msgstr "Không tạo được tập tin tạm thời cho '%s': %s"
 
-#: app/config/gimpconfig.c:249
+#: app/config/gimpconfig.c:257
 #, c-format
 msgid ""
 "Error when writing to temporary file for '%s': %s\n"
@@ -513,7 +310,7 @@ msgstr ""
 "Lỗi khi ghi vào tập tin tạm cho '%s': %s\n"
 "Không đụng tới tập tin gốc."
 
-#: app/config/gimpconfig.c:255
+#: app/config/gimpconfig.c:263
 #, c-format
 msgid ""
 "Error when writing to temporary file for '%s': %s\n"
@@ -522,7 +319,7 @@ msgstr ""
 "Lỗi khi ghi vào tập tin tạm cho '%s': %s\n"
 "Không tạo một tập tin nào."
 
-#: app/config/gimpconfig.c:275
+#: app/config/gimpconfig.c:283
 #, c-format
 msgid "Failed to create file '%s': %s"
 msgstr "Không tạo được tập tin '%s': %s"
@@ -533,7 +330,7 @@ msgstr "Không tạo được tập tin '%s': %s"
 msgid "Parsing '%s'\n"
 msgstr "Phân tích '%s'\n"
 
-#: app/config/gimprc.c:561
+#: app/config/gimprc.c:576
 #, c-format
 msgid "Saving '%s'\n"
 msgstr "Đang lưu '%s'\n"
@@ -601,7 +398,8 @@ msgid "Sets the text to appear in image window titles."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:133
-msgid "When set to yes, the GIMP will use a different info window per image view."
+msgid ""
+"When set to yes, the GIMP will use a different info window per image view."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:137
@@ -609,7 +407,8 @@ msgid "Install a private colormap; might be useful on pseudocolor visuals."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:140
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:144
@@ -676,7 +475,8 @@ msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:220
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:224
@@ -769,21 +569,25 @@ msgid "Sets the number of operations kept on the undo stack."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:303
+msgid "Sets the maximum memory used by operations kept on the undo stack."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:306
 msgid "When set to no the F1 help binding will be disabled."
 msgstr ""
 
-#: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1963
-#: app/gui/paths-dialog.c:2088 app/tools/gimpcurvestool.c:1414
+#: app/config/gimpscanner.c:74 app/gui/paths-dialog.c:1962
+#: app/gui/paths-dialog.c:2087 app/tools/gimpcurvestool.c:1414
 #: app/tools/gimplevelstool.c:1384
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Không mở được tập tin: '%s': %s"
 
-#: app/config/gimpscanner.c:146
+#: app/config/gimpscanner.c:147
 msgid "invalid UTF-8 string"
 msgstr "chuỗi UTF-8 không hợp lệ"
 
-#: app/config/gimpscanner.c:395
+#: app/config/gimpscanner.c:413
 #, c-format
 msgid ""
 "Error while parsing '%s' in line %d:\n"
@@ -792,240 +596,443 @@ msgstr ""
 "Lỗi khi phân tích '%s' trong dòng %d:\n"
 "%s"
 
-#: app/core/core-enums.c:13 app/core/gimp-gradients.c:70
+#: app/core/core-enums.c:13 app/gui/preferences-dialog.c:1016
+#: app/gui/preferences-dialog.c:1586 app/gui/user-install-dialog.c:1284
+msgid "Horizontal"
+msgstr "Ngang"
+
+#: app/core/core-enums.c:14 app/gui/preferences-dialog.c:1018
+#: app/gui/preferences-dialog.c:1588 app/gui/user-install-dialog.c:1286
+msgid "Vertical"
+msgstr "Dọc"
+
+#: app/core/core-enums.c:15
+msgid "Unknown"
+msgstr ""
+
+#: app/core/core-enums.c:33 app/core/gimp-gradients.c:70
 msgid "FG to BG (RGB)"
 msgstr "FG thành BG (RGB)"
 
-#: app/core/core-enums.c:14
+#: app/core/core-enums.c:34
 msgid "FG to BG (HSV)"
 msgstr "FG thành BG (HSV)"
 
-#: app/core/core-enums.c:15 app/core/gimp-gradients.c:85
+#: app/core/core-enums.c:35 app/core/gimp-gradients.c:85
 msgid "FG to Transparent"
 msgstr "FG thành Trong Suốt"
 
-#: app/core/core-enums.c:16
+#: app/core/core-enums.c:36
 msgid "Custom Gradient"
 msgstr "Tùy chọn Độ dốc"
 
-#: app/core/core-enums.c:34
+#: app/core/core-enums.c:54
 msgid "FG Color Fill"
 msgstr "Tô Màu FG"
 
-#: app/core/core-enums.c:35
+#: app/core/core-enums.c:55
 msgid "BG Color Fill"
 msgstr "Tô màu BG"
 
-#: app/core/core-enums.c:36
+#: app/core/core-enums.c:56
 msgid "Pattern Fill"
 msgstr "Điền Mẫu"
 
+#: app/core/core-enums.c:74
+msgid "Add to the current selection"
+msgstr "Cộng vào lựa chọn hiện thời"
+
+#: app/core/core-enums.c:75
+msgid "Subtract from the current selection"
+msgstr "Trừ đi từ lựa chọn hiện thời"
+
+#: app/core/core-enums.c:76
+msgid "Replace the current selection"
+msgstr "Thay thế lựa chọn hiện thời"
+
 #: app/core/core-enums.c:77
+msgid "Intersect with the current selection"
+msgstr "Cắt chéo với lựa chọn hiện thời"
+
+#: app/core/core-enums.c:118
 msgid "No Color Dithering"
 msgstr "Không có sự rung của màu"
 
-#: app/core/core-enums.c:78
+#: app/core/core-enums.c:119
 msgid "Floyd-Steinberg Color Dithering (Normal)"
 msgstr "Dithering Màu của Floyd-Steinberg (bình thường)"
 
-#: app/core/core-enums.c:79
+#: app/core/core-enums.c:120
 msgid "Floyd-Steinberg Color Dithering (Reduced Color Bleeding)"
 msgstr "Dithering Màu của Floyd-Steinberg (giảm trục trặc về màu)"
 
-#: app/core/core-enums.c:80
+#: app/core/core-enums.c:121
 msgid "Positioned Color Dithering"
 msgstr ""
 
-#: app/core/core-enums.c:98
+#: app/core/core-enums.c:166
 msgid "Foreground"
 msgstr "Tiền cảnh"
 
-#: app/core/core-enums.c:99 app/core/gimpimage-new.c:178
+#: app/core/core-enums.c:167 app/core/gimpimage-new.c:178
 msgid "Background"
 msgstr "Nền"
 
-#: app/core/core-enums.c:100
+#: app/core/core-enums.c:168
 msgid "White"
 msgstr "Trắng"
 
-#: app/core/core-enums.c:101
+#: app/core/core-enums.c:169
 msgid "Transparent"
 msgstr "Trong suốt"
 
-#: app/core/core-enums.c:102 app/core/core-enums.c:191
-#: app/core/core-enums.c:218
+#: app/core/core-enums.c:170 app/core/core-enums.c:259
+#: app/core/core-enums.c:286
 msgid "None"
 msgstr "Không"
 
-#: app/core/core-enums.c:121
+#: app/core/core-enums.c:189
 msgid "Bi-Linear"
 msgstr "Tuyến kép"
 
-#: app/core/core-enums.c:122
+#: app/core/core-enums.c:190
 msgid "Radial"
 msgstr ""
 
-#: app/core/core-enums.c:123
+#: app/core/core-enums.c:191
 msgid "Square"
 msgstr "Vuông"
 
-#: app/core/core-enums.c:124
+#: app/core/core-enums.c:192
 msgid "Conical (symmetric)"
 msgstr "Chóp nón (đối xứng)"
 
-#: app/core/core-enums.c:125
+#: app/core/core-enums.c:193
 msgid "Conical (asymmetric)"
 msgstr "Chóp nón (không đối xứng)"
 
-#: app/core/core-enums.c:126
+#: app/core/core-enums.c:194
 msgid "Shapeburst (angular)"
 msgstr "Vỡ hình (ở góc)"
 
-#: app/core/core-enums.c:127
+#: app/core/core-enums.c:195
 msgid "Shapeburst (spherical)"
 msgstr "Vỡ hình (hình cầu)"
 
-#: app/core/core-enums.c:128
+#: app/core/core-enums.c:196
 msgid "Shapeburst (dimpled)"
 msgstr "Vỡ hình (gợn sóng)"
 
-#: app/core/core-enums.c:129
+#: app/core/core-enums.c:197
 msgid "Spiral (clockwise)"
 msgstr "Xoắn ốc (chiều kim đồng hồ)"
 
-#: app/core/core-enums.c:130
+#: app/core/core-enums.c:198
 msgid "Spiral (anticlockwise)"
 msgstr "Xoắn ốc (ngược chiều kim đồng hồ)"
 
-#: app/core/core-enums.c:148 app/core/core-enums.c:168
+#: app/core/core-enums.c:216 app/core/core-enums.c:236
 #: app/display/gimpdisplayshell-title.c:128
 msgid "RGB"
 msgstr "RGB"
 
-#: app/core/core-enums.c:149 app/core/core-enums.c:170
+#: app/core/core-enums.c:217 app/core/core-enums.c:238
 #: app/gui/info-window.c:81 app/gui/info-window.c:666
 msgid "Grayscale"
 msgstr "Cân bằng xám"
 
-#: app/core/core-enums.c:150 app/core/core-enums.c:172
+#: app/core/core-enums.c:218 app/core/core-enums.c:240
 #: app/widgets/gimpcomponentlistitem.c:485
 msgid "Indexed"
 msgstr "Có chỉ số"
 
-#: app/core/core-enums.c:169
+#: app/core/core-enums.c:237
 msgid "RGB-Alpha"
 msgstr "RGB-Alpha"
 
-#: app/core/core-enums.c:171
+#: app/core/core-enums.c:239
 msgid "Grayscale-Alpha"
 msgstr "Cân bằng xám -Alpha"
 
-#: app/core/core-enums.c:173
+#: app/core/core-enums.c:241
 msgid "Indexed-Alpha"
 msgstr "Có chỉ số -Alpha"
 
-#: app/core/core-enums.c:192
+#: app/core/core-enums.c:260
 msgid "Tiny"
 msgstr "Nhỏ xíu"
 
-#: app/core/core-enums.c:193
+#: app/core/core-enums.c:261
 msgid "Very Small"
 msgstr "Rất nhỏ"
 
-#: app/core/core-enums.c:197
+#: app/core/core-enums.c:265
 msgid "Very Large"
 msgstr "Rất Rộng"
 
-#: app/core/core-enums.c:198
+#: app/core/core-enums.c:266
 msgid "Huge"
 msgstr "Lớn"
 
-#: app/core/core-enums.c:199
+#: app/core/core-enums.c:267
 msgid "Enormous"
 msgstr "To lớn"
 
-#: app/core/core-enums.c:200
+#: app/core/core-enums.c:268
 msgid "Gigantic"
 msgstr "Khổng lồ"
 
-#: app/core/core-enums.c:219
+#: app/core/core-enums.c:287
 msgid "Sawtooth Wave"
 msgstr "Sóng Răng Cưa"
 
-#: app/core/core-enums.c:220
+#: app/core/core-enums.c:288
 msgid "Triangular Wave"
 msgstr "Sóng Tam Giác"
 
-#: app/core/core-enums.c:260
+#: app/core/core-enums.c:328
 msgid "No Thumbnails"
 msgstr "Không có Thumbnails"
 
-#: app/core/core-enums.c:261
+#: app/core/core-enums.c:329
 msgid "Normal (128x128)"
 msgstr "Bình thường (128x128)"
 
-#: app/core/core-enums.c:262
+#: app/core/core-enums.c:330
 msgid "Large (256x256)"
 msgstr "Rộng (256x256)"
 
-#: app/core/core-enums.c:280
+#: app/core/core-enums.c:348
 msgid "Forward (Traditional)"
 msgstr "Chuyển tiếp (truyền thống)"
 
-#: app/core/core-enums.c:281
+#: app/core/core-enums.c:349
 msgid "Backward (Corrective)"
 msgstr "Lùi lại (để chỉnh sửa)"
 
-#. register all internal procedures
-#: app/core/gimp.c:711
-msgid "Procedural Database"
-msgstr "Cơ Sở Dữ Liệu Thủ Tục"
+#: app/core/core-enums.c:386
+msgid "<<invalid>>"
+msgstr "<<không hợp lệ>>"
 
-#: app/core/gimp.c:714
-msgid "Plug-In Environment"
-msgstr "Môi Trường plug-In"
+#: app/core/core-enums.c:387 app/core/gimpimage-scale.c:75
+#: app/gui/image-commands.c:478 app/gui/image-commands.c:491
+#: app/gui/image-commands.c:508 app/gui/resize-dialog.c:201
+msgid "Scale Image"
+msgstr "Cân đối Ảnh"
 
-#. initialize  the global parasite table
-#: app/core/gimp.c:730
-msgid "Looking for data files"
-msgstr "Tìm các tập tin cơ sở dữ liệu"
+#: app/core/core-enums.c:388 app/core/gimpimage-resize.c:63
+msgid "Resize Image"
+msgstr "Đặt lại kích cỡ Ảnh"
 
-#: app/core/gimp.c:730
-msgid "Parasites"
-msgstr ""
+#: app/core/core-enums.c:389
+msgid "Convert Image"
+msgstr "Chuyển đổi Ảnh"
 
-#. initialize the list of gimp brushes
-#: app/core/gimp.c:734 app/gui/dialogs-constructors.c:364
-#: app/gui/dialogs-constructors.c:512 app/gui/preferences-dialog.c:1791
-#: app/pdb/internal_procs.c:82
-msgid "Brushes"
-msgstr "Bút lông"
+#: app/core/core-enums.c:390 app/core/gimpimage-crop.c:145
+msgid "Crop Image"
+msgstr "Xén Ảnh"
 
-#. initialize the list of gimp patterns
-#: app/core/gimp.c:738 app/gui/dialogs-constructors.c:385
-#: app/gui/dialogs-constructors.c:533 app/gui/preferences-dialog.c:1795
-#: app/pdb/internal_procs.c:160
-msgid "Patterns"
-msgstr "Mẫu"
+#: app/core/core-enums.c:391 app/gui/image-commands.c:309
+msgid "Merge Layers"
+msgstr "Nhập các Lớp"
 
-#. initialize the list of gimp palettes
-#: app/core/gimp.c:742 app/gui/dialogs-constructors.c:427
-#: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:1799
-#: app/pdb/internal_procs.c:148
-msgid "Palettes"
-msgstr "Bảng màu"
+#: app/core/core-enums.c:392 app/core/core-enums.c:416
+msgid "QuickMask"
+msgstr "QuickMask"
 
-#. initialize the list of gimp gradients
-#: app/core/gimp.c:746 app/gui/dialogs-constructors.c:406
-#: app/gui/dialogs-constructors.c:554 app/gui/preferences-dialog.c:1803
-#: app/pdb/internal_procs.c:115
-msgid "Gradients"
-msgstr "Độ dốc"
+#: app/core/core-enums.c:393 app/core/core-enums.c:417
+#: app/tools/gimpmovetool.c:248
+msgid "Guide"
+msgstr "Chỉ dẫn"
 
-#. initialize the document history
-#: app/core/gimp.c:750
-msgid "Documents"
-msgstr "Tài liệu"
+#: app/core/core-enums.c:394
+msgid "Layer Properties"
+msgstr "Thuộc Tính Lớp"
+
+#: app/core/core-enums.c:395 app/core/gimplayer.c:997
+#: app/gui/layers-commands.c:994 app/gui/resize-dialog.c:193
+#: app/pdb/layer_cmds.c:406
+msgid "Scale Layer"
+msgstr "Cân đối Lớp"
+
+#: app/core/core-enums.c:396 app/core/gimpimage-crop.c:128
+#: app/core/gimplayer.c:1290 app/gui/layers-commands.c:1084
+#: app/pdb/layer_cmds.c:501
+msgid "Resize Layer"
+msgstr "Đặt lại kích cỡ Lớp"
+
+#: app/core/core-enums.c:397 app/core/gimplayer.c:863 app/pdb/layer_cmds.c:641
+#: app/pdb/layer_cmds.c:773 app/tools/gimpeditselectiontool.c:246
+#: app/tools/gimpeditselectiontool.c:890
+msgid "Move Layer"
+msgstr "Di chuyển Lớp"
+
+#: app/core/core-enums.c:398
+msgid "Linked Layer"
+msgstr "Lớp được Liên kết"
+
+#: app/core/core-enums.c:399 app/core/gimplayer.c:792
+msgid "Apply Layer Mask"
+msgstr "Áp dụng Mặt nạ Lớp"
+
+#: app/core/core-enums.c:400 app/core/gimpimage-mask.c:380
+msgid "Float Selection"
+msgstr "Chọn Lựa Nổi"
+
+#: app/core/core-enums.c:401 app/core/gimplayer-floating-sel.c:131
+msgid "Anchor Floating Selection"
+msgstr "Neo Chọn Lựa Nổi"
+
+#: app/core/core-enums.c:402 app/core/gimpedit.c:199
+#: app/widgets/gimpbufferview.c:147
+msgid "Paste"
+msgstr "Dán"
+
+#: app/core/core-enums.c:403 app/core/gimpedit.c:61
+msgid "Cut"
+msgstr "Cắt"
+
+#: app/core/core-enums.c:404 app/core/gimpedit.c:119
+msgid "Copy"
+msgstr "Sao chép"
+
+#: app/core/core-enums.c:405 app/tools/gimptexttool.c:108
+msgid "Text"
+msgstr "Text"
+
+#: app/core/core-enums.c:406 app/core/core-enums.c:438
+#: app/core/gimpdrawable-transform.c:615
+msgid "Transform"
+msgstr "Biến đổi"
+
+#: app/core/core-enums.c:407 app/core/core-enums.c:439
+#: app/paint/gimppaintcore.c:445
+msgid "Paint"
+msgstr "Vẽ"
+
+#: app/core/core-enums.c:408 app/core/core-enums.c:440 app/core/gimpitem.c:450
+msgid "Attach Parasite"
+msgstr "Đính kèm Parasite"
+
+#: app/core/core-enums.c:409 app/core/core-enums.c:441
+msgid "Remove Parasite"
+msgstr "Gỡ bỏ Parasite"
+
+#: app/core/core-enums.c:410 app/pdb/drawable_cmds.c:113
+#: app/pdb/undo_cmds.c:58
+msgid "Plug-In"
+msgstr "Plug-In"
+
+#: app/core/core-enums.c:411 app/pdb/internal_procs.c:124
+msgid "Image"
+msgstr "Ảnh"
+
+#: app/core/core-enums.c:412
+msgid "Image Mod"
+msgstr "Chế độ Ảnh"
+
+#: app/core/core-enums.c:413 app/gui/file-new-dialog.c:373
+msgid "Image Type"
+msgstr "Loại Ảnh"
+
+#. Image size frame
+#: app/core/core-enums.c:414 app/gui/file-new-dialog.c:143
+msgid "Image Size"
+msgstr "Cỡ Ảnh"
+
+#: app/core/core-enums.c:415
+msgid "Resolution Change"
+msgstr "Thay đổi Độ Phân Giải"
+
+#: app/core/core-enums.c:418 app/core/gimpchannel.c:532
+msgid "Selection Mask"
+msgstr "Chọn lựa mặt nạ"
+
+#: app/core/core-enums.c:419
+msgid "Rename Item"
+msgstr "Đặt lại tên Mục"
+
+#: app/core/core-enums.c:420 app/gui/layers-commands.c:558
+#: app/gui/layers-commands.c:590 app/gui/layers-commands.c:622
+#: app/widgets/gimpdrawablelistview.c:206 app/widgets/gimplayerlistview.c:136
+msgid "New Layer"
+msgstr "Lớp Mới"
+
+#: app/core/core-enums.c:421 app/widgets/gimplayerlistview.c:139
+msgid "Delete Layer"
+msgstr "Xoá Lớp"
+
+#: app/core/core-enums.c:422
+msgid "Layer Mod"
+msgstr "Layer Mod"
+
+#: app/core/core-enums.c:423 app/core/gimplayer.c:610
+#: app/gui/layers-commands.c:881
+msgid "Add Layer Mask"
+msgstr "Thêm Mặt Nạ Lớp"
+
+#: app/core/core-enums.c:424
+msgid "Delete Layer Mask"
+msgstr "Xoá Mặt Nạ Lớp"
+
+#: app/core/core-enums.c:425
+msgid "Layer Reposition"
+msgstr "Định vị lại Lớp"
+
+#: app/core/core-enums.c:426
+msgid "Layer Move"
+msgstr "Di Chuyển Lớp"
+
+#: app/core/core-enums.c:427 app/gui/channels-commands.c:290
+#: app/gui/channels-commands.c:324 app/gui/channels-commands.c:361
+#: app/widgets/gimpchannellistview.c:135
+msgid "New Channel"
+msgstr "Kênh Mới"
+
+#: app/core/core-enums.c:428 app/widgets/gimpchannellistview.c:138
+msgid "Delete Channel"
+msgstr "Xoá Kênh"
+
+#: app/core/core-enums.c:429
+msgid "Channel Mod"
+msgstr "Channel Mod"
+
+#: app/core/core-enums.c:430
+msgid "Channel Reposition"
+msgstr "Định vị lại Kênh"
+
+#: app/core/core-enums.c:431
+msgid "New Vectors"
+msgstr "Các Vector Mới"
+
+#: app/core/core-enums.c:432
+msgid "Delete Vectors"
+msgstr "Xoá các Vector"
+
+#: app/core/core-enums.c:433
+msgid "Vectors Mod"
+msgstr "Vectors Mod"
+
+#: app/core/core-enums.c:434
+msgid "Vectors Reposition"
+msgstr "Định vị lại các Vector"
+
+#: app/core/core-enums.c:435
+msgid "FS to Layer"
+msgstr "FS tới Lớp"
+
+#: app/core/core-enums.c:436
+msgid "FS Rigor"
+msgstr "FS Rigor"
+
+#: app/core/core-enums.c:437
+msgid "FS Relax"
+msgstr "FS Relax"
+
+#: app/core/core-enums.c:442
+#, fuzzy
+msgid "EEK: can't undo"
+msgstr "Không thể hoàn tác %s"
 
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
@@ -1034,6 +1041,57 @@ msgstr ""
 #: app/core/gimp-gradients.c:80
 msgid "FG to BG (HSV clockwise hue)"
 msgstr ""
+
+#. register all internal procedures
+#: app/core/gimp.c:714
+msgid "Procedural Database"
+msgstr "Cơ Sở Dữ Liệu Thủ Tục"
+
+#: app/core/gimp.c:717
+msgid "Plug-In Environment"
+msgstr "Môi Trường plug-In"
+
+#. initialize  the global parasite table
+#: app/core/gimp.c:733
+msgid "Looking for data files"
+msgstr "Tìm các tập tin cơ sở dữ liệu"
+
+#: app/core/gimp.c:733
+msgid "Parasites"
+msgstr ""
+
+#. initialize the list of gimp brushes
+#: app/core/gimp.c:737 app/gui/dialogs-constructors.c:364
+#: app/gui/dialogs-constructors.c:512 app/gui/preferences-dialog.c:1768
+#: app/pdb/internal_procs.c:82
+msgid "Brushes"
+msgstr "Bút lông"
+
+#. initialize the list of gimp patterns
+#: app/core/gimp.c:741 app/gui/dialogs-constructors.c:385
+#: app/gui/dialogs-constructors.c:533 app/gui/preferences-dialog.c:1772
+#: app/pdb/internal_procs.c:160
+msgid "Patterns"
+msgstr "Mẫu"
+
+#. initialize the list of gimp palettes
+#: app/core/gimp.c:745 app/gui/dialogs-constructors.c:427
+#: app/gui/dialogs-constructors.c:575 app/gui/preferences-dialog.c:1776
+#: app/pdb/internal_procs.c:148
+msgid "Palettes"
+msgstr "Bảng màu"
+
+#. initialize the list of gimp gradients
+#: app/core/gimp.c:749 app/gui/dialogs-constructors.c:406
+#: app/gui/dialogs-constructors.c:554 app/gui/preferences-dialog.c:1780
+#: app/pdb/internal_procs.c:115
+msgid "Gradients"
+msgstr "Độ dốc"
+
+#. initialize the document history
+#: app/core/gimp.c:753
+msgid "Documents"
+msgstr "Tài liệu"
 
 #: app/core/gimpbrush.c:375 app/core/gimpbrushgenerated.c:390
 #: app/core/gimpbrushpipe.c:319 app/core/gimpgradient.c:338
@@ -1071,9 +1129,9 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Chuỗi UTF-8 không hợp lệ trong tập tin vẽ '%s'"
 
 #: app/core/gimpbrush.c:573 app/core/gimpbrushpipe.c:343
-#: app/core/gimpcontext.c:1229 app/core/gimpdrawable.c:251
-#: app/core/gimpgradient.c:369 app/core/gimppalette.c:355
-#: app/core/gimppattern.c:368 app/tools/gimpvectortool.c:308
+#: app/core/gimpcontext.c:1158 app/core/gimpgradient.c:369
+#: app/core/gimpitem.c:357 app/core/gimppalette.c:355
+#: app/core/gimppattern.c:368 app/tools/gimpvectortool.c:291
 msgid "Unnamed"
 msgstr "Không có tên"
 
@@ -1114,6 +1172,76 @@ msgstr ""
 "Lỗi phân tích trầm trọng:\n"
 "Tập tin bút vẽ '%s' hỏng."
 
+#: app/core/gimpchannel.c:387
+#, fuzzy
+msgid "Scale Channel"
+msgstr "Kênh Mới"
+
+#: app/core/gimpchannel.c:495
+#, fuzzy
+msgid "Resize Channel"
+msgstr "Đặt lại Kênh"
+
+#: app/core/gimpchannel.c:1301
+#, fuzzy
+msgid "Feather Channel"
+msgstr "Xoá Kênh"
+
+#: app/core/gimpchannel.c:1323
+#, fuzzy
+msgid "Sharpen Channel"
+msgstr "Kênh Mới"
+
+#: app/core/gimpchannel.c:1348
+#, fuzzy
+msgid "Clear Channel"
+msgstr "Kênh Mới"
+
+#: app/core/gimpchannel.c:1386
+#, fuzzy
+msgid "Fill Channel"
+msgstr "Toàn bộ các Kênh"
+
+#: app/core/gimpchannel.c:1411
+#, fuzzy
+msgid "Invert Channel"
+msgstr "Kênh Mới"
+
+#: app/core/gimpchannel.c:1477
+#, fuzzy
+msgid "Border Channel"
+msgstr "/Hạ thấp Kênh"
+
+#: app/core/gimpchannel.c:1534
+#, fuzzy
+msgid "Grow Channel"
+msgstr "Kênh Mới"
+
+#: app/core/gimpchannel.c:1585
+#, fuzzy
+msgid "Shrink Channel"
+msgstr "Kênh"
+
+#: app/core/gimpchannel.c:1610
+#, fuzzy
+msgid "Translate Channel"
+msgstr "Xoá Kênh"
+
+#: app/core/gimpchannel.c:1686
+#, fuzzy
+msgid "Channel Load"
+msgstr "Channel Mod"
+
+#: app/core/gimpchannel.c:1715
+#, fuzzy
+msgid "Channel from Alpha"
+msgstr "Channel Mod"
+
+#: app/core/gimpchannel.c:1752
+#, fuzzy
+msgid "Channel from Mask"
+msgstr "Channel Mod"
+
 #: app/core/gimpdata.c:228
 #, c-format
 msgid "Could not delete '%s': %s"
@@ -1129,11 +1257,11 @@ msgstr ""
 "%s"
 
 #: app/core/gimpdatafactory.c:380 app/core/gimpdatafactory.c:383
-#: app/core/gimpdrawable.c:284 app/core/gimpdrawable.c:287
+#: app/core/gimpitem.c:303 app/core/gimpitem.c:306
 msgid "copy"
 msgstr "sao chép"
 
-#: app/core/gimpdatafactory.c:392 app/core/gimpdrawable.c:296
+#: app/core/gimpdatafactory.c:392 app/core/gimpitem.c:315
 #, c-format
 msgid "%s copy"
 msgstr "sao chép %s"
@@ -1158,17 +1286,87 @@ msgstr ""
 "Cảnh báo: không nạp được dữ liệu:\n"
 "%s"
 
-#: app/core/gimpdrawable-bucket-fill.c:114 app/paint/gimpclone.c:210
+#: app/core/gimpdrawable-blend.c:235 app/tools/gimpblendtool.c:99
+msgid "Blend"
+msgstr "Pha trộn"
+
+#: app/core/gimpdrawable-bucket-fill.c:113 app/paint/gimpclone.c:211
 msgid "No patterns available for this operation."
 msgstr "Không có sẵn các mẫu cho thao tác."
 
-#: app/core/gimpdrawable-transform.c:750
+#: app/core/gimpdrawable-bucket-fill.c:316 app/tools/gimpbucketfilltool.c:85
+msgid "Bucket Fill"
+msgstr "Đổ xô đựng màu lên"
+
+#: app/core/gimpdrawable-desaturate.c:95
+#, fuzzy
+msgid "Desaturate"
+msgstr "Bão Hoà"
+
+#: app/core/gimpdrawable-equalize.c:85
+msgid "Equalize"
+msgstr ""
+
+#: app/core/gimpdrawable-invert.c:56
+msgid "Invert"
+msgstr "Lộn ngược"
+
+#. push an undo
+#: app/core/gimpdrawable-offset.c:312
+#, fuzzy
+msgid "Offset Drawable"
+msgstr "Lớp Offset"
+
+#: app/core/gimpdrawable-transform.c:663 app/tools/gimpfliptool.c:81
+msgid "Flip"
+msgstr ""
+
+#: app/core/gimpdrawable-transform.c:752
 msgid "Transformation"
 msgstr "Sự biến đổi"
 
-#: app/core/gimpedit.c:189 app/core/gimpedit.c:266
+#: app/core/gimpdrawable-transform.c:767
+#, fuzzy
+msgid "Paste Transform"
+msgstr "Chuyển Dạng Phối Cảnh"
+
+#: app/core/gimpdrawable-transform.c:804
+#, fuzzy
+msgid "Transform Layer"
+msgstr "Biến đổi"
+
+#: app/core/gimpdrawable-transform.c:807
+#, fuzzy
+msgid "Transform Channel"
+msgstr "Sự biến đổi"
+
+#: app/core/gimpedit.c:190 app/core/gimpedit.c:268
 msgid "Pasted Layer"
 msgstr "Lớp được dán"
+
+#: app/core/gimpedit.c:316
+#, fuzzy
+msgid "Clear"
+msgstr "/Biên soạn/Làm sạch"
+
+#: app/core/gimpedit.c:352
+#, fuzzy
+msgid "Fill with FG Color"
+msgstr "/Biên soạn/Tô bằng màu FG"
+
+#: app/core/gimpedit.c:357 app/core/gimpedit.c:382
+#, fuzzy
+msgid "Fill with BG Color"
+msgstr "/Biên soạn/Tô bằng màu BG"
+
+#: app/core/gimpedit.c:364
+msgid "Fill with White"
+msgstr ""
+
+#: app/core/gimpedit.c:373
+#, fuzzy
+msgid "Fill with Transparency"
+msgstr "FG thành Trong Suốt"
 
 #: app/core/gimpenvirontable.c:283
 #, c-format
@@ -1204,6 +1402,45 @@ msgstr ""
 msgid "Corrupt segment %d in gradient file '%s'."
 msgstr "Đoạn hỏng %d trong tập tin gradient '%s'."
 
+#: app/core/gimpimage-convert.c:753
+#, fuzzy
+msgid "Convert Image to RGB"
+msgstr "Chuyển đổi Ảnh"
+
+#: app/core/gimpimage-convert.c:757
+#, fuzzy
+msgid "Convert Image to Grayscale"
+msgstr "Chuyển đổi ảnh thành màu phụ lục"
+
+#: app/core/gimpimage-convert.c:761
+#, fuzzy
+msgid "Convert Image to Indexed"
+msgstr "Chuyển đổi ảnh thành màu phụ lục"
+
+#: app/core/gimpimage-mask-select.c:53 app/core/gimpimage-mask-select.c:55
+#: app/tools/gimprectselecttool.c:93
+msgid "Rect Select"
+msgstr "Chọn chữ nhật"
+
+#: app/core/gimpimage-mask-select.c:100 app/core/gimpimage-mask-select.c:102
+#: app/tools/gimpellipseselecttool.c:69
+msgid "Ellipse Select"
+msgstr "Chọn theo hình ê-líp"
+
+#: app/core/gimpimage-mask-select.c:225
+#, fuzzy
+msgid "Selection from Path"
+msgstr "Phần chọn tới Đường dẫn"
+
+#: app/core/gimpimage-mask-select.c:310 app/tools/gimpfuzzyselecttool.c:98
+msgid "Fuzzy Select"
+msgstr "Chọ tù mù"
+
+#: app/core/gimpimage-mask-select.c:361
+#, fuzzy
+msgid "Select by Color"
+msgstr "Chọn Theo Màu"
+
 #: app/core/gimpimage-mask.c:226
 msgid ""
 "Unable to cut or copy because the\n"
@@ -1220,11 +1457,59 @@ msgstr ""
 "Không thể trôi nổi phần chọn vì\n"
 "vùng được chọn rỗng."
 
-#: app/core/gimpimage-mask.c:391 app/gui/layers-commands.c:828
+#: app/core/gimpimage-mask.c:392 app/gui/layers-commands.c:814
 msgid "Floating Selection"
 msgstr "Sự Chọn Lựa Nổi"
 
-#: app/core/gimpimage-mask.c:595
+#: app/core/gimpimage-mask.c:438 app/gui/select-commands.c:142
+msgid "Feather Selection"
+msgstr ""
+
+#: app/core/gimpimage-mask.c:453
+#, fuzzy
+msgid "Sharpen Selection"
+msgstr "Sự Chọn Độ Dốc"
+
+#: app/core/gimpimage-mask.c:467 app/widgets/gimpselectioneditor.c:185
+msgid "Select None"
+msgstr "Chọn Không"
+
+#: app/core/gimpimage-mask.c:481 app/widgets/gimpselectioneditor.c:177
+msgid "Select All"
+msgstr "Chọn Toàn bộ"
+
+#: app/core/gimpimage-mask.c:493 app/widgets/gimpselectioneditor.c:169
+msgid "Invert Selection"
+msgstr "Đảo ngược phần chọn"
+
+#: app/core/gimpimage-mask.c:507 app/gui/select-commands.c:232
+msgid "Border Selection"
+msgstr "Sự chọn viền"
+
+#: app/core/gimpimage-mask.c:524 app/gui/select-commands.c:210
+msgid "Grow Selection"
+msgstr ""
+
+#: app/core/gimpimage-mask.c:542 app/gui/select-commands.c:177
+msgid "Shrink Selection"
+msgstr ""
+
+#: app/core/gimpimage-mask.c:560
+#, fuzzy
+msgid "Selection from Channel"
+msgstr "Lưu Phần chọn vào Kênh"
+
+#: app/core/gimpimage-mask.c:575
+#, fuzzy
+msgid "Translate Selection"
+msgstr "Chọn Lựa Nổi"
+
+#: app/core/gimpimage-mask.c:592
+#, fuzzy
+msgid "Selection from Alpha"
+msgstr "Phần chọn tới Đường dẫn"
+
+#: app/core/gimpimage-mask.c:601
 msgid ""
 "The active layer has no alpha channel\n"
 "to convert to a selection."
@@ -1232,7 +1517,12 @@ msgstr ""
 "Lớp hoạt động không có kênh alpha\n"
 "để chuyển đổi thành sự lựa chọn."
 
-#: app/core/gimpimage-mask.c:619
+#: app/core/gimpimage-mask.c:616
+#, fuzzy
+msgid "Selection from Mask"
+msgstr "Chọn lựa mặt nạ"
+
+#: app/core/gimpimage-mask.c:625
 msgid ""
 "The active layer has no mask\n"
 "to convert to a selection."
@@ -1240,13 +1530,23 @@ msgstr ""
 "Lớp hoạt động không có mặt nạ\n"
 "để chuyển đổi thành sự lựa chọn."
 
-#: app/core/gimpimage-mask.c:672
+#: app/core/gimpimage-mask.c:680
 msgid "No selection to stroke."
 msgstr "Không có lựa chọn để thực hiện."
 
-#: app/core/gimpimage-mask.c:726
+#: app/core/gimpimage-mask.c:696
+#, fuzzy
+msgid "Stroke Selection"
+msgstr "Từ Phần Chọn"
+
+#: app/core/gimpimage-mask.c:735
 msgid "Paint operation failed."
 msgstr "Không làm được thao tác vẽ."
+
+#: app/core/gimpimage-merge.c:89
+#, fuzzy
+msgid "Merge Visible Layers"
+msgstr "/Ảnh/Hợp nhất các Lớp nhìn thấy..."
 
 #: app/core/gimpimage-merge.c:105
 msgid ""
@@ -1256,7 +1556,16 @@ msgstr ""
 "Không đủ số lớp nhìn thấy được để nhập lại.\n"
 "Phải có ít nhất 2 lớp."
 
-#: app/core/gimpimage-merge.c:194
+#: app/core/gimpimage-merge.c:138
+#, fuzzy
+msgid "Flatten Image"
+msgstr "/Ảnh/Làm phẳng Ảnh"
+
+#: app/core/gimpimage-merge.c:187
+msgid "Merge Down"
+msgstr ""
+
+#: app/core/gimpimage-merge.c:196
 msgid "There are not enough visible layers for a merge down."
 msgstr "Không có đủ lớp nhìn thấy được để nhập lại."
 
@@ -1290,37 +1599,98 @@ msgstr "%.2f MB"
 msgid "%.1f MB"
 msgstr "%.1f MB"
 
-#: app/core/gimpimage-text.c:167
-msgid "Text Layer"
-msgstr "Lớp văn bản"
+#: app/core/gimpimage-qmask.c:71
+#, fuzzy
+msgid "Enable QuickMask"
+msgstr "Chốt QuickMask"
 
-#: app/core/gimpimage.c:1062 app/core/gimppalette-import.c:204
+#: app/core/gimpimage-qmask.c:127
+#, fuzzy
+msgid "Disable QuickMask"
+msgstr "Chốt QuickMask"
+
+#: app/core/gimpimage-undo-push.c:2976
+#, c-format
+msgid "Can't undo %s"
+msgstr "Không thể hoàn tác %s"
+
+#: app/core/gimpimage.c:1054 app/core/gimppalette-import.c:204
 #: app/core/gimppalette.c:543 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3704 app/widgets/gimpdatafactoryview.c:266
 msgid "Untitled"
 msgstr "Không có tiêu đề"
 
-#: app/core/gimpimage.c:2833
+#: app/core/gimpimage.c:1128
+#, fuzzy
+msgid "Change Image Reolution"
+msgstr "Định vị lại Kênh"
+
+#: app/core/gimpimage.c:1167
+#, fuzzy
+msgid "Change Image Unit"
+msgstr "Chuyển đổi Ảnh"
+
+#: app/core/gimpimage.c:2140
+#, fuzzy
+msgid "Attach Paraite to Image"
+msgstr "Đính kèm Parasite"
+
+#: app/core/gimpimage.c:2173
+#, fuzzy
+msgid "Remove Parasite from Image"
+msgstr "Gỡ bỏ Parasite"
+
+#: app/core/gimpimage.c:2686
+#, fuzzy
+msgid "Add Layer to Image"
+msgstr "Thêm Mặt Nạ Lớp"
+
+#: app/core/gimpimage.c:2770 app/core/gimpimage.c:3066
+#, fuzzy
+msgid "Remove Layer from Image"
+msgstr "Chọn hình thể từ ảnh"
+
+#: app/core/gimpimage.c:2838
 msgid "Layer cannot be raised higher."
 msgstr "Không nâng được lớp lên cao hơn."
 
-#: app/core/gimpimage.c:2857
+#: app/core/gimpimage.c:2843 app/widgets/gimplayerlistview.c:140
+#, fuzzy
+msgid "Raise Layer"
+msgstr "/Nâng Lớp"
+
+#: app/core/gimpimage.c:2863
 msgid "Layer cannot be lowered more."
 msgstr "Không hạ thấp được lớp hơn nữa."
 
-#: app/core/gimpimage.c:2878
+#: app/core/gimpimage.c:2868 app/widgets/gimplayerlistview.c:142
+#, fuzzy
+msgid "Lower Layer"
+msgstr "/Hạ thấp Lớp"
+
+#: app/core/gimpimage.c:2885
 msgid "Layer is already on top."
 msgstr "Lớp đã ở trên cùng rồi."
 
-#: app/core/gimpimage.c:2884
+#: app/core/gimpimage.c:2891
 msgid "Cannot raise a layer without alpha."
 msgstr "Không thể nâng một lớp mà không có alpha."
 
-#: app/core/gimpimage.c:2908
+#: app/core/gimpimage.c:2896 app/widgets/gimplayerlistview.c:141
+#, fuzzy
+msgid "Raise Layer to Top"
+msgstr "/Lớp trên Đỉnh"
+
+#: app/core/gimpimage.c:2916
 msgid "Layer is already on the bottom."
 msgstr "Lớp đã ở đáy rồi."
 
-#: app/core/gimpimage.c:2955
+#: app/core/gimpimage.c:2921 app/widgets/gimplayerlistview.c:143
+#, fuzzy
+msgid "Lower Layer to Bottom"
+msgstr "/Lớp ở Đáy"
+
+#: app/core/gimpimage.c:2965
 #, c-format
 msgid ""
 "Layer \"%s\" has no alpha.\n"
@@ -1329,21 +1699,56 @@ msgstr ""
 "Lớp \"%s\" không có alpha.\n"
 "Đã đặt một lớp lên nó."
 
-#: app/core/gimpimage.c:3098
+#: app/core/gimpimage.c:3012
+#, fuzzy
+msgid "Add Channel to Image"
+msgstr "Thêm văn bản vào ảnh"
+
+#: app/core/gimpimage.c:3114
 msgid "Channel cannot be raised higher."
 msgstr "Kênh không thể nâng cao hơn."
 
-#: app/core/gimpimage.c:3118
+#: app/core/gimpimage.c:3119 app/widgets/gimpchannellistview.c:139
+#, fuzzy
+msgid "Raise Channel"
+msgstr "/Nâng Kênh"
+
+#: app/core/gimpimage.c:3135
 msgid "Channel cannot be lowered more."
 msgstr "Kênh không thể hạ thấp hơn."
 
-#: app/core/gimpimage.c:3278
+#: app/core/gimpimage.c:3140 app/widgets/gimpchannellistview.c:141
+#, fuzzy
+msgid "Lower Channel"
+msgstr "/Hạ thấp Kênh"
+
+#: app/core/gimpimage.c:3206
+#, fuzzy
+msgid "Add Path to Image"
+msgstr "Thêm văn bản vào ảnh"
+
+#: app/core/gimpimage.c:3255
+#, fuzzy
+msgid "Remove Path from Image"
+msgstr "Gỡ bỏ Parasite"
+
+#: app/core/gimpimage.c:3303
 msgid "Path cannot be raised higher."
 msgstr "Đường dẫn không thể nâng cao hơn."
 
-#: app/core/gimpimage.c:3298
+#: app/core/gimpimage.c:3308 app/widgets/gimpvectorslistview.c:121
+#, fuzzy
+msgid "Raise Path"
+msgstr "/Nâng Đường dẫn"
+
+#: app/core/gimpimage.c:3324
 msgid "Path cannot be lowered more."
 msgstr "Đường dẫn không thể hạ thấp hơn."
+
+#: app/core/gimpimage.c:3329 app/widgets/gimpvectorslistview.c:123
+#, fuzzy
+msgid "Lower Path"
+msgstr "/Hạ thấp Đường dẫn"
 
 #: app/core/gimpimagefile.c:458 app/core/gimpimagefile.c:967
 #, c-format
@@ -1403,58 +1808,15 @@ msgstr "Không mở được tập tin thumbnail '%s': %s"
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Không tạo được thư mục thumbnail '%s'."
 
-#: app/core/gimpitem.c:368
-msgid "parasite attached to item"
-msgstr ""
+#: app/core/gimpitem.c:460
+#, fuzzy
+msgid "Attach Parasite to Item"
+msgstr "Đính kèm Parasite"
 
-#: app/core/gimpitem.c:411
-msgid "parasite detached from item"
-msgstr ""
-
-#: app/core/gimplayer.c:555
-msgid ""
-"Cannot add layer mask to layer\n"
-"which is not part of an image."
-msgstr ""
-"Không thể thêm mask cho lớp\n"
-"do nó không phải bộ phận ảnh."
-
-#: app/core/gimplayer.c:562
-msgid ""
-"Unable to add a layer mask since\n"
-"the layer already has one."
-msgstr ""
-"Không thể thêm mask lớp vì\n"
-"lớp đã có mask rồi."
-
-#: app/core/gimplayer.c:569
-msgid ""
-"Unable to add a layer mask to a\n"
-"layer in an indexed image."
-msgstr ""
-"Không thể thêm mask lớp vào\n"
-"một lớp trong ảnh phụ lục."
-
-#: app/core/gimplayer.c:576
-msgid ""
-"Cannot add layer mask to a layer\n"
-"with no alpha channel."
-msgstr ""
-"Không thể thêm mask lớp vào một\n"
-"lớp không có kênh alpha."
-
-#: app/core/gimplayer.c:586
-msgid ""
-"Cannot add layer mask of different\n"
-"dimensions than specified layer."
-msgstr ""
-"Không thể thêm mask lớp của các\n"
-"chiều khác ngoài lớp chỉ định."
-
-#: app/core/gimplayer.c:624
-#, c-format
-msgid "%s mask"
-msgstr "%s mask"
+#: app/core/gimpitem.c:499 app/core/gimpitem.c:506
+#, fuzzy
+msgid "Remove Parasite from Item"
+msgstr "Gỡ bỏ Parasite"
 
 #: app/core/gimplayer-floating-sel.c:124
 msgid ""
@@ -1464,7 +1826,7 @@ msgstr ""
 "Không thể neo lớp này vì nó không\n"
 "phải phần chọn nổi."
 
-#: app/core/gimplayer-floating-sel.c:198
+#: app/core/gimplayer-floating-sel.c:199
 msgid ""
 "Cannot create a new layer from the floating\n"
 "selection because it belongs to a\n"
@@ -1473,6 +1835,66 @@ msgstr ""
 "Không thể tạo lớp mới từ phần\n"
 "chọn nổi vì nó thuộc về một mask\n"
 "lớp hay một kênh."
+
+#: app/core/gimplayer-floating-sel.c:218
+#, fuzzy
+msgid "Floating Selection to Layer"
+msgstr "Sự Chọn Lựa Nổi"
+
+#: app/core/gimplayer.c:563
+msgid ""
+"Cannot add layer mask to layer\n"
+"which is not part of an image."
+msgstr ""
+"Không thể thêm mask cho lớp\n"
+"do nó không phải bộ phận ảnh."
+
+#: app/core/gimplayer.c:570
+msgid ""
+"Unable to add a layer mask since\n"
+"the layer already has one."
+msgstr ""
+"Không thể thêm mask lớp vì\n"
+"lớp đã có mask rồi."
+
+#: app/core/gimplayer.c:577
+msgid ""
+"Unable to add a layer mask to a\n"
+"layer in an indexed image."
+msgstr ""
+"Không thể thêm mask lớp vào\n"
+"một lớp trong ảnh phụ lục."
+
+#: app/core/gimplayer.c:584
+msgid ""
+"Cannot add layer mask to a layer\n"
+"with no alpha channel."
+msgstr ""
+"Không thể thêm mask lớp vào một\n"
+"lớp không có kênh alpha."
+
+#: app/core/gimplayer.c:594
+msgid ""
+"Cannot add layer mask of different\n"
+"dimensions than specified layer."
+msgstr ""
+"Không thể thêm mask lớp của các\n"
+"chiều khác ngoài lớp chỉ định."
+
+#: app/core/gimplayer.c:633
+#, c-format
+msgid "%s mask"
+msgstr "%s mask"
+
+#: app/core/gimplayer.c:932
+#, fuzzy
+msgid "Add Alpha Channel"
+msgstr "/Thêm Kênh Alpha"
+
+#: app/core/gimplayer.c:1334
+#, fuzzy
+msgid "Layer to Image Size"
+msgstr "Cỡ Ảnh"
 
 #: app/core/gimppalette.c:314
 #, c-format
@@ -1595,8 +2017,8 @@ msgstr "Lỗi phân tích trầm trọng: Tập tin mẫu '%s' bị cụt."
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:585
-#: app/tools/gimpmeasuretool.c:588 app/tools/gimppainttool.c:563
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:575
+#: app/tools/gimpmeasuretool.c:578 app/tools/gimppainttool.c:559
 msgid "pixels"
 msgstr "pixels"
 
@@ -1713,6 +2135,11 @@ msgstr ""
 "Thay đổi đã được làm với %s.\n"
 "Đóng bằng bất kỳ giá nào?"
 
+#: app/display/gimpdisplayshell-dnd.c:63
+#, fuzzy
+msgid "Drop New Layer"
+msgstr "Lớp Mới"
+
 #: app/display/gimpdisplayshell-filter-dialog.c:125
 msgid "Color Display Filters"
 msgstr "Trình Lọc Hiển Thị Màu"
@@ -1814,23 +2241,23 @@ msgstr "Hãy đợi..."
 msgid "Cancel"
 msgstr "Bỏ qua"
 
-#: app/file/file-open.c:89
+#: app/file/file-open.c:87
 msgid "Unknown file type"
 msgstr "Loại tập tin không xác định"
 
-#: app/file/file-open.c:103
+#: app/file/file-open.c:101
 msgid "Not a regular file"
 msgstr "Không phải tập tin chính quy"
 
-#: app/file/file-open.c:153
+#: app/file/file-open.c:151
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr ""
 
-#: app/file/file-open.c:160
+#: app/file/file-open.c:158
 msgid "Plug-In could not open image"
 msgstr "Plug-In đã không thể mở ảnh"
 
-#: app/file/file-save.c:103
+#: app/file/file-save.c:101
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1839,7 +2266,7 @@ msgstr ""
 "Không lưu được.\n"
 "%s: loại tập tin không xác định."
 
-#: app/file/file-save.c:120
+#: app/file/file-save.c:118
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1848,7 +2275,7 @@ msgstr ""
 "Không lưu được.\n"
 "%s không phải tập tin chính quy."
 
-#: app/file/file-save.c:130
+#: app/file/file-save.c:128
 #, c-format
 msgid ""
 "Save failed.\n"
@@ -1874,13 +2301,13 @@ msgstr "Phiên bản %s được phân phối bởi"
 msgid "Visit http://www.gimp.org/ for more information"
 msgstr "Hãy tới http://www.gimp.org/ để biết thêm thông tin"
 
-#: app/gui/brush-select.c:179 app/tools/paint_options.c:124
-#: app/widgets/gimplayerlistview.c:179
+#: app/gui/brush-select.c:179 app/tools/paint_options.c:104
+#: app/widgets/gimplayerlistview.c:202
 msgid "Opacity:"
 msgstr "Độ đục:"
 
-#: app/gui/brush-select.c:196 app/tools/paint_options.c:145
-#: app/tools/selection_options.c:140 app/widgets/gimplayerlistview.c:172
+#: app/gui/brush-select.c:196 app/tools/gimpselectionoptions.c:397
+#: app/tools/paint_options.c:111 app/widgets/gimplayerlistview.c:195
 msgid "Mode:"
 msgstr "Chế độ:"
 
@@ -1926,35 +2353,45 @@ msgstr "/Dán Buffer làm Mới"
 msgid "/Delete Buffer"
 msgstr "/Xoá Buffer"
 
-#: app/gui/channels-commands.c:292
+#: app/gui/channels-commands.c:152 app/widgets/gimpchannellistview.c:341
+#, fuzzy
+msgid "Channel to Selection"
+msgstr "Đường dẫn để Chọn"
+
+#: app/gui/channels-commands.c:294
 msgid "Empty Channel Copy"
 msgstr "Bản sao kênh rỗng"
 
-#: app/gui/channels-commands.c:312
+#: app/gui/channels-commands.c:314
 msgid "New Channel Color"
 msgstr "Màu Kênh Mới"
 
-#: app/gui/channels-commands.c:324
+#: app/gui/channels-commands.c:326
 msgid "New Channel Options"
 msgstr "Tùy Chọn Kênh Mới"
 
-#: app/gui/channels-commands.c:361 app/gui/channels-commands.c:510
+#: app/gui/channels-commands.c:363 app/gui/channels-commands.c:514
 msgid "Channel Name:"
 msgstr "Tên Kênh:"
 
-#: app/gui/channels-commands.c:366 app/gui/channels-commands.c:515
+#: app/gui/channels-commands.c:368 app/gui/channels-commands.c:519
 msgid "Fill Opacity:"
 msgstr "Điền Tính Đục:"
 
-#: app/gui/channels-commands.c:461
+#: app/gui/channels-commands.c:429
+#, fuzzy
+msgid "Rename Channel"
+msgstr "Đặt lại Kênh"
+
+#: app/gui/channels-commands.c:465
 msgid "Edit Channel Color"
 msgstr "Biên soạn màu Kênh"
 
-#: app/gui/channels-commands.c:471
+#: app/gui/channels-commands.c:475
 msgid "Channel Attributes"
 msgstr "Thuộc tính Kênh"
 
-#: app/gui/channels-commands.c:473
+#: app/gui/channels-commands.c:477 app/widgets/gimpchannellistview.c:137
 msgid "Edit Channel Attributes"
 msgstr "Biên soạn thuộc tính Kênh"
 
@@ -2109,8 +2546,8 @@ msgstr "Tiền cảnh: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Nền: %d, %d, %d"
 
-#: app/gui/dialogs-constructors.c:298 app/gui/preferences-dialog.c:1214
-#: app/gui/preferences-dialog.c:1217
+#: app/gui/dialogs-constructors.c:298 app/gui/preferences-dialog.c:1188
+#: app/gui/preferences-dialog.c:1191
 msgid "Tool Options"
 msgstr "Tùy Chọn Công Cụ"
 
@@ -2190,89 +2627,89 @@ msgstr "Kẻ ô Công Cụ"
 msgid "Buffer Grid"
 msgstr "Kẻ ô Buffer"
 
-#: app/gui/dialogs-constructors.c:658
+#: app/gui/dialogs-constructors.c:645
 msgid "Layer List"
 msgstr "Danh Sách Lớp"
 
-#: app/gui/dialogs-constructors.c:658
+#: app/gui/dialogs-constructors.c:645
 msgid "Layers"
 msgstr "Lớp"
 
-#: app/gui/dialogs-constructors.c:697
+#: app/gui/dialogs-constructors.c:676
 msgid "Channel List"
 msgstr "Danh Sách Kênh"
 
-#: app/gui/dialogs-constructors.c:697
+#: app/gui/dialogs-constructors.c:676
 msgid "Channels"
 msgstr "Kênh"
 
-#: app/gui/dialogs-constructors.c:752
+#: app/gui/dialogs-constructors.c:712
 msgid "Paths List"
 msgstr "Danh Sách Đường Dẫn"
 
-#: app/gui/dialogs-constructors.c:752 app/pdb/internal_procs.c:154
+#: app/gui/dialogs-constructors.c:712 app/pdb/internal_procs.c:154
 msgid "Paths"
 msgstr "Đường Dẫn"
 
-#: app/gui/dialogs-constructors.c:778
+#: app/gui/dialogs-constructors.c:738
 msgid "Old Path List"
 msgstr "Danh Sách Đường Dẫn Cũ"
 
-#: app/gui/dialogs-constructors.c:778
+#: app/gui/dialogs-constructors.c:738
 msgid "Old Paths"
 msgstr "Đường Dẫn Cũ"
 
-#: app/gui/dialogs-constructors.c:801
+#: app/gui/dialogs-constructors.c:761
 msgid "Indexed Palette"
 msgstr "Bảng Màu Phụ Lục"
 
-#: app/gui/dialogs-constructors.c:801
+#: app/gui/dialogs-constructors.c:761
 msgid "Colormap"
 msgstr "Sơ đồ Màu"
 
-#: app/gui/dialogs-constructors.c:828
+#: app/gui/dialogs-constructors.c:788
 msgid "Selection Editor"
 msgstr "Trình biên tập Phần chọn"
 
-#: app/gui/dialogs-constructors.c:828 app/gui/layers-commands.c:924
+#: app/gui/dialogs-constructors.c:788 app/gui/layers-commands.c:910
 msgid "Selection"
 msgstr "Sự chọn lựa"
 
-#: app/gui/dialogs-constructors.c:851
+#: app/gui/dialogs-constructors.c:811
 msgid "Color Editor"
 msgstr "Trình Biên Soạn Màu"
 
-#: app/gui/dialogs-constructors.c:851 app/pdb/internal_procs.c:88
-#: app/tools/paint_options.c:392 app/widgets/gimpwidgets-constructors.c:70
+#: app/gui/dialogs-constructors.c:811 app/pdb/internal_procs.c:88
+#: app/widgets/gimpwidgets-constructors.c:70
 #: app/widgets/gimpwidgets-constructors.c:103
 msgid "Color"
 msgstr "Màu"
 
-#: app/gui/dialogs-constructors.c:873
+#: app/gui/dialogs-constructors.c:833
 msgid "Document History"
 msgstr "Lược sử Tài liệu"
 
-#: app/gui/dialogs-constructors.c:873
+#: app/gui/dialogs-constructors.c:833
 msgid "History"
 msgstr "Lược sử"
 
-#: app/gui/dialogs-constructors.c:894
+#: app/gui/dialogs-constructors.c:854
 msgid "Brush Editor"
 msgstr "Trình biên soạn Vẽ"
 
-#: app/gui/dialogs-constructors.c:922
+#: app/gui/dialogs-constructors.c:882
 msgid "Gradient Editor"
 msgstr "Trình biên soạn Độ dốc"
 
-#: app/gui/dialogs-constructors.c:950
+#: app/gui/dialogs-constructors.c:910
 msgid "Palette Editor"
 msgstr "Trình biên soạn Bảng màu"
 
-#: app/gui/dialogs-constructors.c:984
+#: app/gui/dialogs-constructors.c:944
 msgid "Display Navigation"
 msgstr "Duyệt Hiển Thị"
 
-#: app/gui/dialogs-constructors.c:984
+#: app/gui/dialogs-constructors.c:944
 msgid "Navigation"
 msgstr "Duyệt"
 
@@ -2448,19 +2885,19 @@ msgstr ""
 msgid "Equalize does not operate on indexed drawables."
 msgstr ""
 
-#: app/gui/edit-commands.c:193
+#: app/gui/edit-commands.c:192
 msgid "Cut Named"
 msgstr "Cắt với tên"
 
-#: app/gui/edit-commands.c:196 app/gui/edit-commands.c:214
+#: app/gui/edit-commands.c:195 app/gui/edit-commands.c:213
 msgid "Enter a name for this buffer"
 msgstr "Nhập tên cho buffer này"
 
-#: app/gui/edit-commands.c:211
+#: app/gui/edit-commands.c:210
 msgid "Copy Named"
 msgstr "Sao chép với tên"
 
-#: app/gui/edit-commands.c:290 app/gui/edit-commands.c:319
+#: app/gui/edit-commands.c:289 app/gui/edit-commands.c:318
 msgid "(Unnamed Buffer)"
 msgstr "(Buffer không tên)"
 
@@ -2494,12 +2931,12 @@ msgstr ""
 "%s"
 
 #. Error message should be added. --bex
-#: app/gui/file-commands.c:221 app/gui/file-save-dialog.c:383
+#: app/gui/file-commands.c:220 app/gui/file-save-dialog.c:392
 #, c-format
 msgid "Saving '%s' failed."
 msgstr "Không lưu được '%s'."
 
-#: app/gui/file-commands.c:265
+#: app/gui/file-commands.c:264
 msgid ""
 "Revert failed.\n"
 "No file name associated with this image."
@@ -2507,7 +2944,7 @@ msgstr ""
 "Không trở lại được.\n"
 "Không có tên tập tin liên quan đến ảnh này."
 
-#: app/gui/file-commands.c:279
+#: app/gui/file-commands.c:278
 #, c-format
 msgid ""
 "Revert '%s' to\n"
@@ -2522,11 +2959,11 @@ msgstr ""
 "(Bạn sẽ mất toàn bộ các thay đổi\n"
 "đã làm cũng như thông tin hoàn tác)"
 
-#: app/gui/file-commands.c:287
+#: app/gui/file-commands.c:286
 msgid "Revert Image"
 msgstr "Cho ảnh về trạng thái cũ"
 
-#: app/gui/file-commands.c:382
+#: app/gui/file-commands.c:381
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2535,12 +2972,12 @@ msgstr ""
 "Đưa trở về '%s' không được:\n"
 "%s"
 
-#: app/gui/file-dialog-utils.c:114
+#: app/gui/file-dialog-utils.c:117
 msgid "Determine File Type:"
 msgstr "Xác định Loại Tập Tin:"
 
-#: app/gui/file-new-dialog.c:116 app/gui/preferences-dialog.c:977
-#: app/gui/preferences-dialog.c:980
+#: app/gui/file-new-dialog.c:116 app/gui/preferences-dialog.c:951
+#: app/gui/preferences-dialog.c:954
 msgid "New Image"
 msgstr "Ảnh Mới"
 
@@ -2550,20 +2987,20 @@ msgstr "Tạo Ảnh Mới"
 
 #. the pixel size labels
 #: app/gui/file-new-dialog.c:162 app/gui/file-new-dialog.c:180
-#: app/tools/gimpcroptool.c:1011 app/tools/selection_options.c:408
+#: app/tools/gimpcroptool.c:984 app/tools/gimpselectionoptions.c:567
 msgid "Width:"
 msgstr "Rộng:"
 
 #: app/gui/file-new-dialog.c:168 app/gui/file-new-dialog.c:186
-#: app/gui/layers-commands.c:652 app/gui/resize-dialog.c:285
+#: app/gui/layers-commands.c:634 app/gui/resize-dialog.c:285
 #: app/gui/resize-dialog.c:310 app/gui/resize-dialog.c:559
-#: app/tools/gimpcroptool.c:1014 app/tools/gimpscaletool.c:173
-#: app/tools/gimpscaletool.c:181 app/tools/selection_options.c:421
+#: app/tools/gimpcroptool.c:987 app/tools/gimpscaletool.c:174
+#: app/tools/gimpscaletool.c:182 app/tools/gimpselectionoptions.c:575
 msgid "Height:"
 msgstr "Cao:"
 
-#: app/gui/file-new-dialog.c:225 app/gui/preferences-dialog.c:1014
-#: app/gui/preferences-dialog.c:1027 app/gui/user-install-dialog.c:1271
+#: app/gui/file-new-dialog.c:225 app/gui/preferences-dialog.c:988
+#: app/gui/preferences-dialog.c:1001 app/gui/user-install-dialog.c:1271
 msgid "Pixels"
 msgstr "Pixels"
 
@@ -2574,14 +3011,13 @@ msgstr "Độ phân giải X:"
 
 #: app/gui/file-new-dialog.c:305 app/gui/info-window.c:165
 #: app/gui/resize-dialog.c:377 app/gui/resize-dialog.c:476
-#: app/gui/resize-dialog.c:625 app/tools/gimpcroptool.c:997
-#: app/tools/gimprotatetool.c:197 app/tools/gimpscaletool.c:199
-#: app/tools/gimpsheartool.c:175
+#: app/gui/resize-dialog.c:625 app/tools/gimpcroptool.c:970
+#: app/tools/gimprotatetool.c:198 app/tools/gimpscaletool.c:200
+#: app/tools/gimpsheartool.c:176
 msgid "Y:"
 msgstr "Y:"
 
 #: app/gui/file-new-dialog.c:323 app/gui/resize-dialog.c:639
-#, c-format
 msgid "pixels/%a"
 msgstr "pixels/%a"
 
@@ -2620,11 +3056,11 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Khẳng định kích cỡ ảnh"
 
-#: app/gui/file-open-dialog.c:160 app/gui/file-open-dialog.c:185
+#: app/gui/file-open-dialog.c:158 app/gui/file-open-dialog.c:183
 msgid "Open Image"
 msgstr "Mở Ảnh"
 
-#: app/gui/file-open-dialog.c:232
+#: app/gui/file-open-dialog.c:230
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -2634,15 +3070,15 @@ msgstr ""
 "%s Nhấn để ép buộc cập nhật sự kiện nếu ảnh xem trước được cập nhật"
 
 #. The preview toggle
-#: app/gui/file-open-dialog.c:249 app/tools/gimpimagemaptool.c:229
+#: app/gui/file-open-dialog.c:247 app/tools/gimpimagemaptool.c:229
 msgid "_Preview"
 msgstr "X_em trước"
 
-#: app/gui/file-open-dialog.c:302 app/gui/file-open-dialog.c:410
+#: app/gui/file-open-dialog.c:300 app/gui/file-open-dialog.c:408
 msgid "No Selection"
 msgstr "Không có chọn lựa"
 
-#: app/gui/file-open-dialog.c:500 app/gui/file-open-dialog.c:531
+#: app/gui/file-open-dialog.c:498 app/gui/file-open-dialog.c:529
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Thumbnail %d của %d"
@@ -2651,15 +3087,15 @@ msgstr "Thumbnail %d của %d"
 msgid "/Automatic"
 msgstr "/Tự động"
 
-#: app/gui/file-save-dialog.c:119 app/gui/file-save-dialog.c:190
+#: app/gui/file-save-dialog.c:121 app/gui/file-save-dialog.c:199
 msgid "Save Image"
 msgstr "Lưu Ảnh"
 
-#: app/gui/file-save-dialog.c:168
+#: app/gui/file-save-dialog.c:173
 msgid "Save a Copy of the Image"
 msgstr "Lưu bản sao của ảnh"
 
-#: app/gui/file-save-dialog.c:316
+#: app/gui/file-save-dialog.c:325
 #, c-format
 msgid ""
 "File '%s' exists.\n"
@@ -2668,11 +3104,11 @@ msgstr ""
 "Tập tin '%s' tồn tại.\n"
 "Ghi đè lên nó?"
 
-#: app/gui/file-save-dialog.c:319
+#: app/gui/file-save-dialog.c:328
 msgid "File Exists!"
 msgstr "Tập tin tồn tại!"
 
-#: app/gui/file-save-menu.c:44
+#: app/gui/file-save-menu.c:45
 msgid "/By Extension"
 msgstr "/Bằng phần mở rộng"
 
@@ -2980,649 +3416,645 @@ msgstr ""
 "\n"
 "Thật sự muốn thoát khỏi GIMP?"
 
-#: app/gui/image-commands.c:215 app/gui/layers-commands.c:296
+#: app/gui/image-commands.c:214 app/gui/layers-commands.c:301
 msgid "Cannot crop because the current selection is empty."
 msgstr "Không thể xén vì vùng chọn hiện thời rỗng."
 
-#: app/gui/image-commands.c:312
+#: app/gui/image-commands.c:311
 msgid "Layers Merge Options"
 msgstr "Tùy Chọn Hợp Nhất Lớp"
 
-#: app/gui/image-commands.c:337
+#: app/gui/image-commands.c:336
 msgid "Final, Merged Layer should be:"
 msgstr "Cuối cùng, Lớp được hợp nhất nên là:"
 
-#: app/gui/image-commands.c:338
+#: app/gui/image-commands.c:337
 msgid "Final, Anchored Layer should be:"
 msgstr "Cuối cùng, Lớp được neo lại nên là:"
 
-#: app/gui/image-commands.c:343
+#: app/gui/image-commands.c:342
 msgid "Expanded as necessary"
 msgstr "Trải rộng khi cần"
 
-#: app/gui/image-commands.c:346
+#: app/gui/image-commands.c:345
 msgid "Clipped to image"
 msgstr ""
 
-#: app/gui/image-commands.c:349
+#: app/gui/image-commands.c:348
 msgid "Clipped to bottom layer"
 msgstr ""
 
-#: app/gui/image-commands.c:389
+#: app/gui/image-commands.c:388
 msgid "Resize Error: Both width and height must be greater than zero."
 msgstr "Lỗi đặt lại kích thước: cả chiều rộng và chiều cao phải lớn hơn 0."
 
-#: app/gui/image-commands.c:422
+#: app/gui/image-commands.c:421
 msgid "Layer Too Small"
 msgstr "Lớp Quá Nhỏ"
 
-#: app/gui/image-commands.c:426
+#: app/gui/image-commands.c:425
 msgid ""
 "The chosen image size will shrink\n"
 "some layers completely away.\n"
 "Is this what you want?"
 msgstr ""
 
-#: app/gui/image-commands.c:509 app/tools/gimpscaletool.c:161
+#: app/gui/image-commands.c:511 app/tools/gimpscaletool.c:162
 msgid "Scaling..."
 msgstr "Đang cân chỉnh..."
 
-#: app/gui/image-commands.c:524
+#: app/gui/image-commands.c:526
 msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Lỗi cân chỉnh: chiều cao và chiều rộng phải lớn hơn 0."
 
 #. <Image>/File
-#: app/gui/image-menu.c:79 app/gui/toolbox-menu.c:49
+#: app/gui/image-menu.c:78 app/gui/toolbox-menu.c:51
 msgid "/File/New..."
 msgstr "/Tệp/Mới..."
 
-#: app/gui/image-menu.c:84 app/gui/toolbox-menu.c:54
+#: app/gui/image-menu.c:83 app/gui/toolbox-menu.c:56
 msgid "/File/Open..."
 msgstr "/Tệp/Mở..."
 
 #. <Image>/File/Open Recent
-#: app/gui/image-menu.c:92 app/gui/toolbox-menu.c:62
+#: app/gui/image-menu.c:91 app/gui/toolbox-menu.c:64
 msgid "/File/Open Recent/(None)"
 msgstr "/Tệp/Mở gần đây/(Không)"
 
-#: app/gui/image-menu.c:97
+#: app/gui/image-menu.c:96
 msgid "/File/Save"
 msgstr "/Tệp/Lưu"
 
-#: app/gui/image-menu.c:102
+#: app/gui/image-menu.c:101
 msgid "/File/Save as..."
 msgstr "/Tệp/Lưu là..."
 
-#: app/gui/image-menu.c:107
+#: app/gui/image-menu.c:106
 msgid "/File/Save a Copy..."
 msgstr "/Tệp/Lưu bản sao..."
 
-#: app/gui/image-menu.c:111
+#: app/gui/image-menu.c:110
 msgid "/File/Revert..."
 msgstr "/Tệp/Trở lại..."
 
-#: app/gui/image-menu.c:119
+#: app/gui/image-menu.c:118
 msgid "/File/Close"
 msgstr "/Tệp/Đóng"
 
-#: app/gui/image-menu.c:124 app/gui/toolbox-menu.c:201
+#: app/gui/image-menu.c:123 app/gui/toolbox-menu.c:203
 msgid "/File/Quit"
 msgstr "/Tệp/Thoát"
 
 #. <Image>/Edit
-#: app/gui/image-menu.c:134
+#: app/gui/image-menu.c:133
 msgid "/Edit/Undo"
 msgstr "/Biên soạn/Hoàn tác"
 
-#: app/gui/image-menu.c:139
+#: app/gui/image-menu.c:138
 msgid "/Edit/Redo"
 msgstr "/Biên soạn/Làm lại"
 
-#: app/gui/image-menu.c:147
+#: app/gui/image-menu.c:146
 msgid "/Edit/Cut"
 msgstr "/Biên soạn/Cắt"
 
-#: app/gui/image-menu.c:152
+#: app/gui/image-menu.c:151
 msgid "/Edit/Copy"
 msgstr "/Biên soạn/Sao chép"
 
-#: app/gui/image-menu.c:157
+#: app/gui/image-menu.c:156
 msgid "/Edit/Paste"
 msgstr "/Biên soạn/Dán"
 
-#: app/gui/image-menu.c:162
+#: app/gui/image-menu.c:161
 msgid "/Edit/Paste Into"
 msgstr "/Biên soạn/Dán vào"
 
-#: app/gui/image-menu.c:167
+#: app/gui/image-menu.c:166
 msgid "/Edit/Paste as New"
 msgstr "/Biên soạn/Dán làm Mới"
 
 #. <Image>/Edit/Buffer
-#: app/gui/image-menu.c:175
+#: app/gui/image-menu.c:174
 msgid "/Edit/Buffer/Cut Named..."
 msgstr "/Biên soạn/Buffer/Cắt với tên..."
 
-#: app/gui/image-menu.c:180
+#: app/gui/image-menu.c:179
 msgid "/Edit/Buffer/Copy Named..."
 msgstr "/Biên soạn/Buffer/Sao chép với tên..."
 
-#: app/gui/image-menu.c:185
+#: app/gui/image-menu.c:184
 msgid "/Edit/Buffer/Paste Named..."
 msgstr "/Biên soạn/Buffer/Dasn với tên..."
 
-#: app/gui/image-menu.c:193
+#: app/gui/image-menu.c:192
 msgid "/Edit/Clear"
 msgstr "/Biên soạn/Làm sạch"
 
-#: app/gui/image-menu.c:198
+#: app/gui/image-menu.c:197
 msgid "/Edit/Fill with FG Color"
 msgstr "/Biên soạn/Tô bằng màu FG"
 
-#: app/gui/image-menu.c:203
+#: app/gui/image-menu.c:202
 msgid "/Edit/Fill with BG Color"
 msgstr "/Biên soạn/Tô bằng màu BG"
 
-#: app/gui/image-menu.c:208
+#: app/gui/image-menu.c:207
 msgid "/Edit/Stroke"
 msgstr ""
 
 #. <Image>/Select
-#: app/gui/image-menu.c:218
+#: app/gui/image-menu.c:217
 msgid "/Select/Invert"
 msgstr "/Chọn/Đảo ngược"
 
-#: app/gui/image-menu.c:223
+#: app/gui/image-menu.c:222
 msgid "/Select/All"
 msgstr "/Chọn/Toàn bộ"
 
-#: app/gui/image-menu.c:228
+#: app/gui/image-menu.c:227
 msgid "/Select/None"
 msgstr "/Chọn/Không"
 
-#: app/gui/image-menu.c:233
+#: app/gui/image-menu.c:232
 msgid "/Select/Float"
 msgstr "/Chọn/Nổi"
 
-#: app/gui/image-menu.c:240
+#: app/gui/image-menu.c:239
 msgid "/Select/Feather..."
 msgstr ""
 
-#: app/gui/image-menu.c:244
+#: app/gui/image-menu.c:243
 msgid "/Select/Sharpen"
 msgstr "/Chọn/Làm sắc nét"
 
-#: app/gui/image-menu.c:248
+#: app/gui/image-menu.c:247
 msgid "/Select/Shrink..."
 msgstr "/Chọn/Co lại..."
 
-#: app/gui/image-menu.c:253
+#: app/gui/image-menu.c:252
 msgid "/Select/Grow..."
 msgstr "/Chọn/Lớn lên..."
 
-#: app/gui/image-menu.c:258
+#: app/gui/image-menu.c:257
 msgid "/Select/Border..."
 msgstr "/Chọn/Viền..."
 
-#: app/gui/image-menu.c:265
+#: app/gui/image-menu.c:264
 msgid "/Select/Toggle QuickMask"
 msgstr "/Chọn/Chốt QuickMask"
 
-#: app/gui/image-menu.c:270
+#: app/gui/image-menu.c:269
 msgid "/Select/Save to Channel"
 msgstr "/Chọn/Lưu vào Kênh"
 
 #. <Image>/View
-#: app/gui/image-menu.c:278
+#: app/gui/image-menu.c:277
 msgid "/View/Zoom In"
 msgstr "/Xem/Phóng To"
 
-#: app/gui/image-menu.c:283
+#: app/gui/image-menu.c:282
 msgid "/View/Zoom Out"
 msgstr "/Xem/Thu Nhỏ"
 
-#: app/gui/image-menu.c:288
+#: app/gui/image-menu.c:287
 msgid "/View/Zoom to Fit Window"
 msgstr "/Xem/Phóng vừa Cửa Sổ"
 
-#: app/gui/image-menu.c:293
+#: app/gui/image-menu.c:292
 msgid "/View/Shrink Wrap"
 msgstr ""
 
 #. <Image>/View/Zoom
-#: app/gui/image-menu.c:300
+#: app/gui/image-menu.c:299
 msgid "/View/Zoom/16:1"
 msgstr "/Xem/Phóng/16:1"
 
-#: app/gui/image-menu.c:305
+#: app/gui/image-menu.c:304
 msgid "/View/Zoom/8:1"
 msgstr "/Xem/Phóng/8:1"
 
-#: app/gui/image-menu.c:310
+#: app/gui/image-menu.c:309
 msgid "/View/Zoom/4:1"
 msgstr "/Xem/Phóng/4:1"
 
-#: app/gui/image-menu.c:315
+#: app/gui/image-menu.c:314
 msgid "/View/Zoom/2:1"
 msgstr "/Xem/Phóng/2:1"
 
-#: app/gui/image-menu.c:320
+#: app/gui/image-menu.c:319
 msgid "/View/Zoom/1:1"
 msgstr "/Xem/Phóng/1:1"
 
-#: app/gui/image-menu.c:325
+#: app/gui/image-menu.c:324
 msgid "/View/Zoom/1:2"
 msgstr "/Xem/Phóng/1:2"
 
-#: app/gui/image-menu.c:330
+#: app/gui/image-menu.c:329
 msgid "/View/Zoom/1:4"
 msgstr "/Xem/Phóng/1:4"
 
-#: app/gui/image-menu.c:335
+#: app/gui/image-menu.c:334
 msgid "/View/Zoom/1:8"
 msgstr "/Xem/Phóng/1:8"
 
-#: app/gui/image-menu.c:340
+#: app/gui/image-menu.c:339
 msgid "/View/Zoom/1:16"
 msgstr "/Xem/Phóng/1:16"
 
-#: app/gui/image-menu.c:346
+#: app/gui/image-menu.c:345
 msgid "/View/Dot for Dot"
 msgstr "/Xem/Điểm cho Điểm"
 
-#: app/gui/image-menu.c:353
+#: app/gui/image-menu.c:352
 msgid "/View/Info Window..."
 msgstr "/Xem/Cửa sổ thông tin..."
 
-#: app/gui/image-menu.c:358
+#: app/gui/image-menu.c:357
 msgid "/View/Navigation Window..."
 msgstr "/Xem/Cửa sổ Duyệt..."
 
-#: app/gui/image-menu.c:363
+#: app/gui/image-menu.c:362
 msgid "/View/Display Filters..."
 msgstr "/Xem/Trình Lọc Hiển Thị..."
 
-#: app/gui/image-menu.c:370
+#: app/gui/image-menu.c:369
 msgid "/View/Show Selection"
 msgstr "/Xem/Hiển thị phần chọn"
 
-#: app/gui/image-menu.c:374
+#: app/gui/image-menu.c:373
 msgid "/View/Show Layer Boundary"
 msgstr "/Xem/Hiển thị ranh giới lớp"
 
-#: app/gui/image-menu.c:378
+#: app/gui/image-menu.c:377
 msgid "/View/Show Guides"
 msgstr "/Xem/Hiển thị hướng dẫn"
 
-#: app/gui/image-menu.c:382
+#: app/gui/image-menu.c:381
 msgid "/View/Snap to Guides"
 msgstr ""
 
-#: app/gui/image-menu.c:389
+#: app/gui/image-menu.c:388
 msgid "/View/Show Menubar"
 msgstr "/Xem/Hiện thanh menu"
 
-#: app/gui/image-menu.c:393
+#: app/gui/image-menu.c:392
 msgid "/View/Show Rulers"
 msgstr "/Xem/Hiện Thước đo"
 
-#: app/gui/image-menu.c:397
+#: app/gui/image-menu.c:396
 msgid "/View/Show Statusbar"
 msgstr "/Xem/Hiện thanh trạng thái"
 
-#: app/gui/image-menu.c:404
+#: app/gui/image-menu.c:403
 msgid "/View/New View"
 msgstr ""
 
 #. <Image>/Image/Mode
-#: app/gui/image-menu.c:412
+#: app/gui/image-menu.c:411
 msgid "/Image/Mode/RGB"
 msgstr "/Ảnh/Chế độ/RGB"
 
-#: app/gui/image-menu.c:417
+#: app/gui/image-menu.c:416
 msgid "/Image/Mode/Grayscale"
 msgstr "/Ảnh/Chế độ/Cân bằng xám"
 
-#: app/gui/image-menu.c:422
+#: app/gui/image-menu.c:421
 msgid "/Image/Mode/Indexed..."
 msgstr "/Ảnh/Chế độ/Chỉ thị..."
 
 #. <Image>/Image/Transform
-#: app/gui/image-menu.c:432
+#: app/gui/image-menu.c:431
 msgid "/Image/Transform"
 msgstr "/Ảnh/Chuyển dạng"
 
-#: app/gui/image-menu.c:438
+#: app/gui/image-menu.c:437
 msgid "/Image/Canvas Size..."
 msgstr "/Ảnh/Kích cỡ phông vẽ..."
 
-#: app/gui/image-menu.c:443
+#: app/gui/image-menu.c:442
 msgid "/Image/Scale Image..."
 msgstr "/Ảnh/Tỷ lệ Ảnh..."
 
-#: app/gui/image-menu.c:448
+#: app/gui/image-menu.c:447
 msgid "/Image/Crop Image"
 msgstr "/Ảnh/Xén Ảnh"
 
-#: app/gui/image-menu.c:453
+#: app/gui/image-menu.c:452
 msgid "/Image/Duplicate"
 msgstr "/Ảnh/Nhân đôi"
 
-#: app/gui/image-menu.c:461
+#: app/gui/image-menu.c:460
 msgid "/Image/Merge Visible Layers..."
 msgstr "/Ảnh/Hợp nhất các Lớp nhìn thấy..."
 
-#: app/gui/image-menu.c:465
+#: app/gui/image-menu.c:464
 msgid "/Image/Flatten Image"
 msgstr "/Ảnh/Làm phẳng Ảnh"
 
-#: app/gui/image-menu.c:472
+#: app/gui/image-menu.c:471
 msgid "/Image/Undo History..."
 msgstr "/Ảnh/Lược sử Hoàn tác..."
 
 #. <Image>/Layer
 #. <Image>/Layer/Stack
-#: app/gui/image-menu.c:481
+#: app/gui/image-menu.c:480
 msgid "/Layer/Stack/Previous Layer"
 msgstr ""
 
-#: app/gui/image-menu.c:485
+#: app/gui/image-menu.c:484
 msgid "/Layer/Stack/Next Layer"
 msgstr ""
 
-#: app/gui/image-menu.c:489
+#: app/gui/image-menu.c:488
 msgid "/Layer/Stack/Raise Layer"
 msgstr ""
 
-#: app/gui/image-menu.c:494
+#: app/gui/image-menu.c:493
 msgid "/Layer/Stack/Lower Layer"
 msgstr ""
 
-#: app/gui/image-menu.c:499
+#: app/gui/image-menu.c:498
 msgid "/Layer/Stack/Layer to Top"
 msgstr ""
 
-#: app/gui/image-menu.c:504
+#: app/gui/image-menu.c:503
 msgid "/Layer/Stack/Layer to Bottom"
 msgstr ""
 
-#: app/gui/image-menu.c:512
+#: app/gui/image-menu.c:511
 msgid "/Layer/New Layer..."
 msgstr "/Lớp/Lớp Mới..."
 
-#: app/gui/image-menu.c:517
+#: app/gui/image-menu.c:516
 msgid "/Layer/Duplicate Layer"
 msgstr "/Lớp/Nhân đôi Lớp"
 
-#: app/gui/image-menu.c:522
+#: app/gui/image-menu.c:521
 msgid "/Layer/Anchor Layer"
 msgstr "/Lớp/Neo Lớp"
 
-#: app/gui/image-menu.c:527
+#: app/gui/image-menu.c:526
 msgid "/Layer/Merge Down"
 msgstr ""
 
-#: app/gui/image-menu.c:532
+#: app/gui/image-menu.c:531
 msgid "/Layer/Delete Layer"
 msgstr "/Lớp/Xóa Lớp"
 
-#: app/gui/image-menu.c:540
+#: app/gui/image-menu.c:539
 msgid "/Layer/Layer Boundary Size..."
 msgstr ""
 
-#: app/gui/image-menu.c:545
+#: app/gui/image-menu.c:544
 msgid "/Layer/Layer to Imagesize"
 msgstr ""
 
-#: app/gui/image-menu.c:550
+#: app/gui/image-menu.c:549
 msgid "/Layer/Scale Layer..."
 msgstr "/Lớp/Tỷ lệ Lớp..."
 
-#: app/gui/image-menu.c:555
+#: app/gui/image-menu.c:554
 msgid "/Layer/Crop Layer"
 msgstr "/Lớp/Xén Lớp"
 
-#: app/gui/image-menu.c:565
+#: app/gui/image-menu.c:564
 msgid "/Layer/Transform/Offset..."
 msgstr "/Lớp/Chuyển dạng/Offset..."
 
-#: app/gui/image-menu.c:576
+#: app/gui/image-menu.c:575
 msgid "/Layer/Colors/Desaturate"
 msgstr ""
 
-#: app/gui/image-menu.c:581
+#: app/gui/image-menu.c:580
 msgid "/Layer/Colors/Invert"
 msgstr "/Lớp/Màu/Đảo ngược"
 
 #. <Image>/Layer/Colors/Auto
-#: app/gui/image-menu.c:591
+#: app/gui/image-menu.c:590
 msgid "/Layer/Colors/Auto/Equalize"
 msgstr "/Lớp/Màu/Tự động/Làm ngang bằng"
 
 #. <Image>/Layer/Mask
-#: app/gui/image-menu.c:600
+#: app/gui/image-menu.c:599
 msgid "/Layer/Mask/Add Layer Mask..."
 msgstr "/Lớp/Mask/Thêm Layer Mask..."
 
-#: app/gui/image-menu.c:604
+#: app/gui/image-menu.c:603
 msgid "/Layer/Mask/Apply Layer Mask"
 msgstr "/Lớp/Mask/Áp dụng Layer Mask"
 
-#: app/gui/image-menu.c:608
+#: app/gui/image-menu.c:607
 msgid "/Layer/Mask/Delete Layer Mask"
 msgstr "/Lớp/Mask/Xóa Layer Mask"
 
-#: app/gui/image-menu.c:613
+#: app/gui/image-menu.c:612
 msgid "/Layer/Mask/Mask to Selection"
 msgstr "/Lớp/Mask/Mask cho vào phần chọn"
 
 #. <Image>/Layer/Transparency
-#: app/gui/image-menu.c:621
+#: app/gui/image-menu.c:620
 msgid "/Layer/Transparency/Add Alpha Channel"
 msgstr "/Lớp/Độ trong suốt/Thêm Kênh Alpha"
 
-#: app/gui/image-menu.c:625
+#: app/gui/image-menu.c:624
 msgid "/Layer/Transparency/Alpha to Selection"
 msgstr "/Lớp/Độ trong suốt/Alpha cho Phần chọn"
 
 #. <Image>/Tools
-#: app/gui/image-menu.c:637
+#: app/gui/image-menu.c:636
 msgid "/Tools/Toolbox"
 msgstr "/Công cụ/Hộp Công Cụ"
 
-#: app/gui/image-menu.c:641
+#: app/gui/image-menu.c:640
 msgid "/Tools/Default Colors"
 msgstr "/Công cụ/Màu Mặc Định"
 
-#: app/gui/image-menu.c:646
+#: app/gui/image-menu.c:645
 msgid "/Tools/Swap Colors"
 msgstr "/Công cụ/Màu Hoán đổi"
 
-#: app/gui/image-menu.c:651
+#: app/gui/image-menu.c:650
 msgid "/Tools/Swap Contexts"
 msgstr "/Công cụ/Ngữ cảnh Hoán đổi"
 
-#: app/gui/image-menu.c:658
+#: app/gui/image-menu.c:657
 msgid "/Tools/Selection Tools"
 msgstr "/Công cụ/Công cụ Chọn"
 
-#: app/gui/image-menu.c:659
+#: app/gui/image-menu.c:658
 msgid "/Tools/Paint Tools"
 msgstr "/Công cụ/Công cụ Vẽ"
 
-#: app/gui/image-menu.c:660
+#: app/gui/image-menu.c:659
 msgid "/Tools/Transform Tools"
 msgstr "/Công cụ/Công cụ Chuyển dạng"
 
 #. <Image>/Dialogs
-#: app/gui/image-menu.c:664
+#: app/gui/image-menu.c:663
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Thoại/Lớp, Kênh & Đường dẫn..."
 
-#: app/gui/image-menu.c:668
+#: app/gui/image-menu.c:667
 msgid "/Dialogs/Brushes, Patterns & Stuff..."
 msgstr "/Thoại/Bút vẽ, Mẫu ..."
 
-#: app/gui/image-menu.c:672
+#: app/gui/image-menu.c:671
 msgid "/Dialogs/Tool Options..."
 msgstr "/Thoại/Tùy chọn Công cụ..."
 
-#: app/gui/image-menu.c:677
+#: app/gui/image-menu.c:676
 msgid "/Dialogs/Device Status..."
 msgstr "/Thoại/Trạng thái Thiết bị..."
 
-#: app/gui/image-menu.c:684
+#: app/gui/image-menu.c:683
 msgid "/Dialogs/Layers..."
 msgstr "/Thoại/Các Lớp..."
 
-#: app/gui/image-menu.c:688
+#: app/gui/image-menu.c:687
 msgid "/Dialogs/Channels..."
 msgstr "/Thoại/Các Kênh..."
 
-#: app/gui/image-menu.c:692
+#: app/gui/image-menu.c:691
 msgid "/Dialogs/Paths..."
 msgstr "/Thoại/Đường Dẫn..."
 
-#: app/gui/image-menu.c:696
+#: app/gui/image-menu.c:695
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Thoại/Bảng màu chỉ thị..."
 
-#: app/gui/image-menu.c:701
+#: app/gui/image-menu.c:700
 msgid "/Dialogs/Selection Editor..."
 msgstr "/Thoại/Trình biên tập phần chọn..."
 
-#: app/gui/image-menu.c:706
+#: app/gui/image-menu.c:705
 msgid "/Dialogs/Navigation..."
 msgstr "/Thoại/Duyệt..."
 
-#: app/gui/image-menu.c:714
+#: app/gui/image-menu.c:713
 msgid "/Dialogs/Colors..."
 msgstr "/Thoại/Các Màu..."
 
-#: app/gui/image-menu.c:719
+#: app/gui/image-menu.c:718
 msgid "/Dialogs/Brushes..."
 msgstr "/Thoại/Bút vẽ..."
 
-#: app/gui/image-menu.c:724
+#: app/gui/image-menu.c:723
 msgid "/Dialogs/Patterns..."
 msgstr "/Thoại/Mẫu..."
 
-#: app/gui/image-menu.c:729
+#: app/gui/image-menu.c:728
 msgid "/Dialogs/Gradients..."
 msgstr "/Thoại/Độ dốc..."
 
-#: app/gui/image-menu.c:734
+#: app/gui/image-menu.c:733
 msgid "/Dialogs/Palettes..."
 msgstr "/Thoại/Bảng màu..."
 
-#: app/gui/image-menu.c:739
+#: app/gui/image-menu.c:738
 msgid "/Dialogs/Buffers..."
 msgstr "/Thoại/Buffers..."
 
-#: app/gui/image-menu.c:747
+#: app/gui/image-menu.c:746
 msgid "/Dialogs/Images..."
 msgstr "/Thoại/Ảnh..."
 
-#: app/gui/image-menu.c:751
+#: app/gui/image-menu.c:750
 msgid "/Dialogs/Document History..."
 msgstr "/Thoại/Lược sử Tài liệu..."
 
-#: app/gui/image-menu.c:756
+#: app/gui/image-menu.c:755
 msgid "/Dialogs/Error Console..."
 msgstr "/Thoại/Console Lỗi..."
 
 #. <Image>/Filters
-#: app/gui/image-menu.c:766
+#: app/gui/image-menu.c:765
 msgid "/Filters/Repeat Last"
 msgstr "/Trình Lọc/Nhắc lại Lần cuối"
 
-#: app/gui/image-menu.c:771
+#: app/gui/image-menu.c:770
 msgid "/Filters/Re-Show Last"
 msgstr ""
 
-#: app/gui/image-menu.c:779
+#: app/gui/image-menu.c:778
 msgid "/Filters/Blur"
 msgstr "/Trình Lọc/Độ mờ"
 
-#: app/gui/image-menu.c:780
+#: app/gui/image-menu.c:779
 msgid "/Filters/Colors"
 msgstr "/Trình lọc/Màu"
 
-#: app/gui/image-menu.c:781
+#: app/gui/image-menu.c:780
 msgid "/Filters/Noise"
 msgstr "/Trình lọc/Độ ồn"
 
-#: app/gui/image-menu.c:782
+#: app/gui/image-menu.c:781
 msgid "/Filters/Edge-Detect"
 msgstr ""
 
-#: app/gui/image-menu.c:783
+#: app/gui/image-menu.c:782
 msgid "/Filters/Enhance"
 msgstr "/Trình lọc/Nâng cao"
 
-#: app/gui/image-menu.c:784
+#: app/gui/image-menu.c:783
 msgid "/Filters/Generic"
 msgstr "/Trình lọc/Chung"
 
-#: app/gui/image-menu.c:788
+#: app/gui/image-menu.c:787
 msgid "/Filters/Glass Effects"
 msgstr "/Trình lọc/Hiệu ứng Thủy tinh"
 
-#: app/gui/image-menu.c:789
+#: app/gui/image-menu.c:788
 msgid "/Filters/Light Effects"
 msgstr "/Trình lọc/Hiệu ứng Ánh sáng"
 
-#: app/gui/image-menu.c:790
+#: app/gui/image-menu.c:789
 msgid "/Filters/Distorts"
 msgstr "/Trình lọc/Chỗ méo mó"
 
-#: app/gui/image-menu.c:791
+#: app/gui/image-menu.c:790
 msgid "/Filters/Artistic"
 msgstr "/Trình lọc/Tính nghệ thuật"
 
-#: app/gui/image-menu.c:792
+#: app/gui/image-menu.c:791
 msgid "/Filters/Map"
 msgstr "/Trình lọc/Bản đồ"
 
-#: app/gui/image-menu.c:793
+#: app/gui/image-menu.c:792
 msgid "/Filters/Render"
 msgstr "/Trình lọc/Biểu hiện"
 
-#: app/gui/image-menu.c:794
-msgid "/Filters/Text"
-msgstr "/Trình lọc/Văn bản"
-
-#: app/gui/image-menu.c:795
+#: app/gui/image-menu.c:793
 msgid "/Filters/Web"
 msgstr "/Trình lọc/Web"
 
-#: app/gui/image-menu.c:799
+#: app/gui/image-menu.c:797
 msgid "/Filters/Animation"
 msgstr "/Trình lọc/Hoạt cảnh"
 
-#: app/gui/image-menu.c:800
+#: app/gui/image-menu.c:798
 msgid "/Filters/Combine"
 msgstr "/Trình lọc/Tổ hợp"
 
-#: app/gui/image-menu.c:804
+#: app/gui/image-menu.c:802
 msgid "/Filters/Toys"
 msgstr "/Trình lọc/Đồ chơi"
 
-#: app/gui/image-menu.c:1172
+#: app/gui/image-menu.c:1173
 #, c-format
 msgid "Undo %s"
 msgstr "Hoàn tác %s"
 
-#: app/gui/image-menu.c:1175
+#: app/gui/image-menu.c:1178
 #, c-format
 msgid "Redo %s"
 msgstr "Làm lại %s"
 
-#: app/gui/image-menu.c:1177 app/pdb/internal_procs.c:181
+#: app/gui/image-menu.c:1182 app/pdb/internal_procs.c:181
 msgid "Undo"
 msgstr "Hoàn tác"
 
-#: app/gui/image-menu.c:1178
+#: app/gui/image-menu.c:1183
 msgid "Redo"
 msgstr "Làm lại"
 
@@ -3639,8 +4071,8 @@ msgid "/Delete Image"
 msgstr "/Xoá Ảnh"
 
 #. General
-#: app/gui/info-dialog.c:350 app/gui/preferences-dialog.c:1121
-#: app/gui/preferences-dialog.c:1188
+#: app/gui/info-dialog.c:350 app/gui/preferences-dialog.c:1095
+#: app/gui/preferences-dialog.c:1162
 msgid "General"
 msgstr "Chung"
 
@@ -3672,12 +4104,12 @@ msgstr "X:"
 #: app/gui/info-window.c:282 app/gui/info-window.c:300
 #: app/gui/info-window.c:480 app/gui/info-window.c:527
 #: app/gui/info-window.c:528 app/gui/info-window.c:531
-#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:587
-#: app/tools/gimpcolorpickertool.c:588 app/tools/gimpcolorpickertool.c:589
-#: app/tools/gimpcolorpickertool.c:590 app/tools/gimpcolorpickertool.c:591
-#: app/tools/gimpcolorpickertool.c:592 app/tools/gimpcolorpickertool.c:593
-#: app/tools/gimpcolorpickertool.c:609 app/tools/gimpcolorpickertool.c:616
-#: app/tools/gimpcolorpickertool.c:634 app/tools/gimpcolorpickertool.c:655
+#: app/gui/info-window.c:555 app/tools/gimpcolorpickertool.c:577
+#: app/tools/gimpcolorpickertool.c:578 app/tools/gimpcolorpickertool.c:579
+#: app/tools/gimpcolorpickertool.c:580 app/tools/gimpcolorpickertool.c:581
+#: app/tools/gimpcolorpickertool.c:582 app/tools/gimpcolorpickertool.c:583
+#: app/tools/gimpcolorpickertool.c:599 app/tools/gimpcolorpickertool.c:606
+#: app/tools/gimpcolorpickertool.c:624 app/tools/gimpcolorpickertool.c:645
 msgid "N/A"
 msgstr "N/A"
 
@@ -3770,72 +4202,82 @@ msgstr "Màu Chỉ Thị"
 msgid "colors"
 msgstr "màu"
 
-#: app/gui/layers-commands.c:582
+#: app/gui/layers-commands.c:311
+#, fuzzy
+msgid "Crop Layer"
+msgstr "/Lớp/Xén Lớp"
+
+#: app/gui/layers-commands.c:564
 msgid "Empty Layer Copy"
 msgstr "Bản sao lớp rỗng"
 
-#: app/gui/layers-commands.c:610
+#: app/gui/layers-commands.c:592
 msgid "Create a New Layer"
 msgstr "Tạo Lớp Mới"
 
-#: app/gui/layers-commands.c:642
+#: app/gui/layers-commands.c:624
 msgid "Layer _Name:"
 msgstr "Tê_n Lớp:"
 
 #. The size labels
-#: app/gui/layers-commands.c:646
+#: app/gui/layers-commands.c:628
 msgid "Layer Width:"
 msgstr "Bề rộng của Lớp:"
 
-#: app/gui/layers-commands.c:711
+#: app/gui/layers-commands.c:693
 msgid "Layer Fill Type"
 msgstr ""
 
-#: app/gui/layers-commands.c:794
+#: app/gui/layers-commands.c:741 app/gui/layers-commands.c:751
+#, fuzzy
+msgid "Rename Layer"
+msgstr "Đặt lại kích cỡ Lớp"
+
+#: app/gui/layers-commands.c:780
 msgid "Layer Attributes"
 msgstr "Thuộc Tính Lớp"
 
-#: app/gui/layers-commands.c:797
+#: app/gui/layers-commands.c:783 app/widgets/gimplayerlistview.c:138
 msgid "Edit Layer Attributes"
 msgstr "Biên Soạn Thuộc Tính Lớp"
 
-#: app/gui/layers-commands.c:831
+#: app/gui/layers-commands.c:817
 msgid "Layer _Name"
 msgstr "Tê_n Lớp"
 
-#: app/gui/layers-commands.c:897
+#: app/gui/layers-commands.c:883
 msgid "Add a Mask to the Layer"
 msgstr "Thêm mask vào lớp"
 
-#: app/gui/layers-commands.c:919 app/gui/layers-commands.c:946
+#: app/gui/layers-commands.c:905 app/gui/layers-commands.c:932
 msgid "Initialize Layer Mask to:"
 msgstr "Sơ khởi Mask lớp cho:"
 
-#: app/gui/layers-commands.c:926
+#: app/gui/layers-commands.c:912
 msgid "Inverse Selection"
 msgstr "Đảo ngược phần chọn"
 
-#: app/gui/layers-commands.c:929 app/gui/layers-commands.c:951
+#: app/gui/layers-commands.c:915 app/gui/layers-commands.c:937
 msgid "Grayscale Copy of Layer"
 msgstr "Bản sao cân bằng xám của Lớp"
 
-#: app/gui/layers-commands.c:931 app/gui/layers-commands.c:953
+#: app/gui/layers-commands.c:917 app/gui/layers-commands.c:939
 msgid "Inverse Grayscale Copy of Layer"
 msgstr "Nghịc đảo bản sao cân bằng xám của lớp"
 
-#: app/gui/layers-commands.c:934 app/gui/layers-commands.c:956
+#: app/gui/layers-commands.c:920 app/gui/layers-commands.c:942
 msgid "White (Full Opacity)"
 msgstr "Trắng (Đục hết)"
 
-#: app/gui/layers-commands.c:936 app/gui/layers-commands.c:958
+#: app/gui/layers-commands.c:922 app/gui/layers-commands.c:944
 msgid "Black (Full Transparency)"
 msgstr "Đen (Trong suốt hết)"
 
-#: app/gui/layers-commands.c:938 app/gui/layers-commands.c:960
+#: app/gui/layers-commands.c:924 app/gui/layers-commands.c:946
 msgid "Layer's Alpha Channel"
 msgstr "Kênh Alpha của Lớp"
 
-#: app/gui/layers-commands.c:1030 app/gui/layers-commands.c:1119
+#: app/gui/layers-commands.c:1017 app/gui/layers-commands.c:1107
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -4154,133 +4596,135 @@ msgstr "/Nhập Bảng màu..."
 msgid "/Merge Palettes..."
 msgstr "/Hợp nhất Bảng màu..."
 
-#: app/gui/paths-dialog.c:164
+#: app/gui/paths-dialog.c:163
 msgid "/New Path"
 msgstr "/Đường dẫn Mới"
 
-#: app/gui/paths-dialog.c:169 app/gui/vectors-menu.c:58
+#: app/gui/paths-dialog.c:168 app/gui/vectors-menu.c:58
 msgid "/Duplicate Path"
 msgstr "/Nhân đôi Đường dẫn"
 
-#: app/gui/paths-dialog.c:174 app/gui/vectors-menu.c:66
+#: app/gui/paths-dialog.c:173 app/gui/vectors-menu.c:66
 msgid "/Path to Selection"
 msgstr ""
 
-#: app/gui/paths-dialog.c:179 app/gui/vectors-menu.c:87
+#: app/gui/paths-dialog.c:178 app/gui/vectors-menu.c:87
 msgid "/Selection to Path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:184 app/gui/vectors-menu.c:92
+#: app/gui/paths-dialog.c:183 app/gui/vectors-menu.c:92
 msgid "/Stroke Path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:189 app/gui/vectors-menu.c:123
+#: app/gui/paths-dialog.c:188 app/gui/vectors-menu.c:123
 msgid "/Delete Path"
 msgstr "/Xóa Đường dẫn"
 
-#: app/gui/paths-dialog.c:197 app/gui/vectors-menu.c:100
+#: app/gui/paths-dialog.c:196 app/gui/vectors-menu.c:100
 msgid "/Copy Path"
 msgstr "/Sao chép Đường dẫn"
 
-#: app/gui/paths-dialog.c:202 app/gui/vectors-menu.c:105
+#: app/gui/paths-dialog.c:201 app/gui/vectors-menu.c:105
 msgid "/Paste Path"
 msgstr "/Dán Đường dẫn"
 
-#: app/gui/paths-dialog.c:207 app/gui/vectors-menu.c:110
+#: app/gui/paths-dialog.c:206 app/gui/vectors-menu.c:110
 msgid "/Import Path..."
 msgstr "/Nhập Đường dẫn..."
 
-#: app/gui/paths-dialog.c:212 app/gui/vectors-menu.c:115
+#: app/gui/paths-dialog.c:211 app/gui/vectors-menu.c:115
 msgid "/Export Path..."
 msgstr "/Xuất Đường dẫn..."
 
-#: app/gui/paths-dialog.c:220 app/gui/vectors-menu.c:136
+#: app/gui/paths-dialog.c:219 app/gui/vectors-menu.c:136
 msgid "/Edit Path Attributes..."
 msgstr "/Biên soạn Thuộc tính Đường dẫn..."
 
-#: app/gui/paths-dialog.c:239 app/gui/vectors-commands.c:459
-#: app/gui/vectors-commands.c:505
+#: app/gui/paths-dialog.c:238 app/gui/vectors-commands.c:436
+#: app/gui/vectors-commands.c:482 app/widgets/gimpvectorslistview.c:117
 msgid "New Path"
 msgstr "Đường dẫn Mới"
 
-#: app/gui/paths-dialog.c:243
+#: app/gui/paths-dialog.c:242 app/widgets/gimpvectorslistview.c:118
 msgid "Duplicate Path"
 msgstr "Nhân đôi Đường dẫn"
 
-#: app/gui/paths-dialog.c:247
+#: app/gui/paths-dialog.c:246
 msgid "Path to Selection"
 msgstr "Đường dẫn để Chọn"
 
-#: app/gui/paths-dialog.c:251
+#: app/gui/paths-dialog.c:250
 msgid "Selection to Path"
 msgstr "Phần chọn tới Đường dẫn"
 
-#: app/gui/paths-dialog.c:255 app/widgets/gimpvectorslistview.c:143
+#: app/gui/paths-dialog.c:254 app/tools/gimpbezierselecttool.c:3436
+#: app/widgets/gimpvectorslistview.c:156
 msgid "Stroke Path"
 msgstr ""
 
-#: app/gui/paths-dialog.c:259
+#: app/gui/paths-dialog.c:258 app/widgets/gimpvectorslistview.c:120
 msgid "Delete Path"
 msgstr "Xoá Đường dẫn"
 
-#: app/gui/paths-dialog.c:268
+#: app/gui/paths-dialog.c:267
 msgid "New Point"
 msgstr "Điểm Mới"
 
-#: app/gui/paths-dialog.c:272
+#: app/gui/paths-dialog.c:271
 msgid "Add Point"
 msgstr "Thêm điểm"
 
-#: app/gui/paths-dialog.c:276
+#: app/gui/paths-dialog.c:275
 msgid "Delete Point"
 msgstr "Xoá điểm"
 
-#: app/gui/paths-dialog.c:280
+#: app/gui/paths-dialog.c:279
 msgid "Edit Point"
 msgstr "Biên soạn điểm"
 
-#: app/gui/paths-dialog.c:511
+#: app/gui/paths-dialog.c:510
 #, c-format
 msgid "Path %d"
 msgstr "Đường dẫn %d"
 
-#: app/gui/paths-dialog.c:1066 app/gui/vectors-commands.c:577
+#: app/gui/paths-dialog.c:1065 app/gui/vectors-commands.c:556
+#: app/widgets/gimpvectorslistview.c:119
 msgid "Edit Path Attributes"
 msgstr "Biên soạn thuộc tính Đường dẫn"
 
-#: app/gui/paths-dialog.c:1069
+#: app/gui/paths-dialog.c:1068
 msgid "Enter a new name for the path"
 msgstr "Nhập tên mới cho đường dẫn"
 
-#: app/gui/paths-dialog.c:1979
+#: app/gui/paths-dialog.c:1978
 #, c-format
 msgid "Failed to read from '%s'."
 msgstr "Không đọc được từ '%s'."
 
-#: app/gui/paths-dialog.c:1994
+#: app/gui/paths-dialog.c:1993
 #, c-format
 msgid "Failed to read path from '%s'."
 msgstr "Không đọc được đường dẫn từ '%s'."
 
-#: app/gui/paths-dialog.c:2001
+#: app/gui/paths-dialog.c:2000
 #, c-format
 msgid "No points specified in path file '%s'."
 msgstr "Không có đểm nào được chỉ định trong tập tin đường dẫn '%s'."
 
-#: app/gui/paths-dialog.c:2012
+#: app/gui/paths-dialog.c:2011
 #, c-format
 msgid "Failed to read path points from '%s'."
 msgstr "Không đọc được các điểm đường dẫn từ '%s'."
 
-#: app/gui/paths-dialog.c:2111
+#: app/gui/paths-dialog.c:2110
 msgid "Load and Save Bezier Curves"
 msgstr ""
 
-#: app/gui/paths-dialog.c:2149
+#: app/gui/paths-dialog.c:2148
 msgid "Load Path"
 msgstr "Nạp Đường Dẫn"
 
-#: app/gui/paths-dialog.c:2171
+#: app/gui/paths-dialog.c:2170
 msgid "Save Path"
 msgstr "Lưu Đường Dẫn"
 
@@ -4310,25 +4754,25 @@ msgstr "/Xoá Mẫu..."
 msgid "/Refresh Patterns"
 msgstr "/Làm tươi Mẫu"
 
-#: app/gui/plug-in-menus.c:343
+#: app/gui/plug-in-menus.c:348
 #, c-format
 msgid "Repeat \"%s\""
 msgstr "Nhắc lại \"%s\""
 
-#: app/gui/plug-in-menus.c:344
+#: app/gui/plug-in-menus.c:349
 #, c-format
 msgid "Re-show \"%s\""
 msgstr "Hiển thị lại \"%s\""
 
-#: app/gui/plug-in-menus.c:370
+#: app/gui/plug-in-menus.c:375
 msgid "Repeat Last"
 msgstr "Nhắc lại Lần cuối"
 
-#: app/gui/plug-in-menus.c:373
+#: app/gui/plug-in-menus.c:378
 msgid "Re-Show Last"
 msgstr "Hiển thị lại Lần cuối"
 
-#: app/gui/preferences-dialog.c:316
+#: app/gui/preferences-dialog.c:319
 msgid ""
 "You will have to restart GIMP for\n"
 "the following changes to take effect:"
@@ -4336,498 +4780,492 @@ msgstr ""
 "Cần khởi động lại GIMP để các\n"
 "thay đổi sau đây có tác dụng:"
 
-#: app/gui/preferences-dialog.c:857
+#: app/gui/preferences-dialog.c:831
 msgid "Preferences"
 msgstr "Tùy thích"
 
 #. Default Image Size and Unit
-#: app/gui/preferences-dialog.c:990
+#: app/gui/preferences-dialog.c:964
 msgid "Default Image Size and Unit"
 msgstr "Kích cỡ và Đơn vị Ảnh Mặc định"
 
-#: app/gui/preferences-dialog.c:1010
+#: app/gui/preferences-dialog.c:984
 msgid "Width"
 msgstr "Rộng"
 
-#: app/gui/preferences-dialog.c:1012
+#: app/gui/preferences-dialog.c:986
 msgid "Height"
 msgstr "Cao"
 
 #. Default Image Resolution and Resolution Unit
-#: app/gui/preferences-dialog.c:1020
+#: app/gui/preferences-dialog.c:994
 msgid "Default Image Resolution and Resolution Unit"
 msgstr "Đơn Vị Phân giải và Độ Phân Giải Ảnh Mặc định"
 
-#: app/gui/preferences-dialog.c:1042 app/gui/preferences-dialog.c:1612
-#: app/gui/user-install-dialog.c:1284 app/tools/gimpfliptool.c:297
-msgid "Horizontal"
-msgstr "Ngang"
-
-#: app/gui/preferences-dialog.c:1044 app/gui/preferences-dialog.c:1614
-#: app/gui/user-install-dialog.c:1286 app/tools/gimpfliptool.c:301
-msgid "Vertical"
-msgstr "Dọc"
-
-#: app/gui/preferences-dialog.c:1046 app/gui/preferences-dialog.c:1616
+#: app/gui/preferences-dialog.c:1020 app/gui/preferences-dialog.c:1590
 #: app/gui/user-install-dialog.c:1288
 msgid "dpi"
 msgstr "dpi"
 
-#: app/gui/preferences-dialog.c:1062
+#: app/gui/preferences-dialog.c:1036
 msgid "Default Image _Type:"
 msgstr "_Kiểu ảnh mặc định:"
 
-#: app/gui/preferences-dialog.c:1065
+#: app/gui/preferences-dialog.c:1039
 msgid "Maximum Image Size:"
 msgstr "Kích cỡ ảnh tối đa:"
 
-#: app/gui/preferences-dialog.c:1074 app/gui/preferences-dialog.c:1077
+#: app/gui/preferences-dialog.c:1048 app/gui/preferences-dialog.c:1051
 msgid "Default Comment"
 msgstr "Bình luận mặc định"
 
 #. Comment
-#: app/gui/preferences-dialog.c:1084
+#: app/gui/preferences-dialog.c:1058
 msgid "Comment Used for New Images"
 msgstr "Bình luận được dùng cho Ảnh Mới"
 
-#: app/gui/preferences-dialog.c:1111 app/gui/preferences-dialog.c:1114
+#: app/gui/preferences-dialog.c:1085 app/gui/preferences-dialog.c:1088
 msgid "Interface"
 msgstr "Giao diện"
 
-#: app/gui/preferences-dialog.c:1125
+#: app/gui/preferences-dialog.c:1099
 msgid "_Preview Size:"
 msgstr "X_em trước kích thước:"
 
-#: app/gui/preferences-dialog.c:1128
+#: app/gui/preferences-dialog.c:1102
 msgid "_Navigation Preview Size:"
 msgstr "Kích cỡ Xem trước lúc _duyệt:"
 
-#: app/gui/preferences-dialog.c:1131
+#: app/gui/preferences-dialog.c:1105
 msgid "_Recent Documents List Size:"
 msgstr ""
 
 #. Dialog Bahaviour
-#: app/gui/preferences-dialog.c:1135
+#: app/gui/preferences-dialog.c:1109
 msgid "Dialog Behavior"
 msgstr "Ứng xử Thoại"
 
-#: app/gui/preferences-dialog.c:1138
+#: app/gui/preferences-dialog.c:1112
 msgid "_Info Window Per Display"
 msgstr "Hiển Thị Cửa Sổ Th_ông Tin"
 
 #. Menus
-#: app/gui/preferences-dialog.c:1142
+#: app/gui/preferences-dialog.c:1116
 msgid "Menus"
 msgstr "Menus"
 
-#: app/gui/preferences-dialog.c:1145
+#: app/gui/preferences-dialog.c:1119
 msgid "Enable _Tearoff Menus"
 msgstr ""
 
 #. Window Positions
-#: app/gui/preferences-dialog.c:1149
+#: app/gui/preferences-dialog.c:1123
 msgid "Window Positions"
 msgstr "Vị trí Cửa sổ"
 
-#: app/gui/preferences-dialog.c:1152
+#: app/gui/preferences-dialog.c:1126
 msgid "_Save Window Positions on Exit"
 msgstr "_Lưu vị trí cửa sổ khi thoát"
 
-#: app/gui/preferences-dialog.c:1155
+#: app/gui/preferences-dialog.c:1129
 msgid "R_estore Saved Window Positions on Start-up"
 msgstr "Kh_ôi phục vị trí cửa sổ đã lưu khi khởi chạy"
 
-#: app/gui/preferences-dialog.c:1163
+#: app/gui/preferences-dialog.c:1137
 msgid "Clear Saved Window Positions Now"
 msgstr "Xoá sạch vị trí cửa sổ đã lưu bây giờ"
 
-#: app/gui/preferences-dialog.c:1178 app/gui/preferences-dialog.c:1181
+#: app/gui/preferences-dialog.c:1152 app/gui/preferences-dialog.c:1155
 msgid "Help System"
 msgstr "Hệ Thống Trợ Giúp"
 
-#: app/gui/preferences-dialog.c:1191
+#: app/gui/preferences-dialog.c:1165
 msgid "Show Tool _Tips"
 msgstr "Hiển Thị M_ẹo Công Cụ"
 
-#: app/gui/preferences-dialog.c:1194
+#: app/gui/preferences-dialog.c:1168
 msgid "Context Sensitive _Help with \"F1\""
 msgstr "Trợ _giúp theo Ngữ cảnh với \"F1\""
 
-#: app/gui/preferences-dialog.c:1197
+#: app/gui/preferences-dialog.c:1171
 msgid "Show Tips on _Startup"
 msgstr ""
 
 #. Help Browser
-#: app/gui/preferences-dialog.c:1201
+#: app/gui/preferences-dialog.c:1175
 msgid "Help Browser"
 msgstr "Trình Duyệt Trợ Giúp"
 
-#: app/gui/preferences-dialog.c:1205
+#: app/gui/preferences-dialog.c:1179
 msgid "Help _Browser to Use:"
 msgstr "Dùng Trình _Duyệt Trợ Giúp:"
 
 #. Contiguous Regions
-#: app/gui/preferences-dialog.c:1224
+#: app/gui/preferences-dialog.c:1198
 msgid "Finding Contiguous Regions"
 msgstr "Tìm các vùng tiếp giáp nhau"
 
-#: app/gui/preferences-dialog.c:1229
+#: app/gui/preferences-dialog.c:1203
 msgid "Default _Threshold:"
 msgstr "Ngư_ỡng Mặc định:"
 
 #. Scaling
-#: app/gui/preferences-dialog.c:1233
+#: app/gui/preferences-dialog.c:1207
 msgid "Scaling"
 msgstr "Cân Chỉnh"
 
-#: app/gui/preferences-dialog.c:1237
+#: app/gui/preferences-dialog.c:1211
 msgid "Default _Interpolation:"
 msgstr "N_ội suy Mặc định:"
 
-#: app/gui/preferences-dialog.c:1246 app/gui/preferences-dialog.c:1249
+#: app/gui/preferences-dialog.c:1220 app/gui/preferences-dialog.c:1223
 msgid "Input Devices"
 msgstr "Thiết Bị Nhập"
 
 #. Input Device Settings
-#: app/gui/preferences-dialog.c:1256
+#: app/gui/preferences-dialog.c:1230
 msgid "Input Device Settings"
 msgstr "Thiết Lập Thiết Bị Nhập"
 
-#: app/gui/preferences-dialog.c:1293
+#: app/gui/preferences-dialog.c:1267
 msgid "Save Input Device Settings on Exit"
 msgstr "Lưu Thiết Lập của Thiết Bị Nhập khi Thoát ra"
 
-#: app/gui/preferences-dialog.c:1301
+#: app/gui/preferences-dialog.c:1275
 msgid "Save Input Device Settings Now"
 msgstr "Lưu Thiết Lập của Thiết Bị Nhập Bây Giờ"
 
-#: app/gui/preferences-dialog.c:1316 app/gui/preferences-dialog.c:1319
+#: app/gui/preferences-dialog.c:1290 app/gui/preferences-dialog.c:1293
 msgid "Image Windows"
 msgstr "Cửa sổ Ảnh"
 
 #. Appearance
-#: app/gui/preferences-dialog.c:1326
+#: app/gui/preferences-dialog.c:1300
 msgid "Appearance"
 msgstr "Diệm mạo"
 
-#: app/gui/preferences-dialog.c:1329
+#: app/gui/preferences-dialog.c:1303
 msgid "Use \"_Dot for Dot\" by default"
 msgstr "Dùng \"Ch_ấm cho Chấm\" là mặc định"
 
-#: app/gui/preferences-dialog.c:1332
+#: app/gui/preferences-dialog.c:1306
 msgid "Show Menubar"
 msgstr "Hiện thanh menu"
 
-#: app/gui/preferences-dialog.c:1335
+#: app/gui/preferences-dialog.c:1309
 msgid "Show _Rulers"
 msgstr "Hiện Th_ước đo"
 
-#: app/gui/preferences-dialog.c:1338
+#: app/gui/preferences-dialog.c:1312
 msgid "Show S_tatusbar"
 msgstr "Hiện thanh trạng th_ái"
 
-#: app/gui/preferences-dialog.c:1344
+#: app/gui/preferences-dialog.c:1318
 msgid "Marching _Ants Speed:"
 msgstr ""
 
 #. Canvas Padding Color
-#: app/gui/preferences-dialog.c:1348
+#: app/gui/preferences-dialog.c:1322
 msgid "Canvas Padding Color"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1353
+#: app/gui/preferences-dialog.c:1327
 msgid "Padding Mode:"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1356
+#: app/gui/preferences-dialog.c:1330
 msgid "Custom Color:"
 msgstr "Tùy Chọn Màu:"
 
-#: app/gui/preferences-dialog.c:1357
+#: app/gui/preferences-dialog.c:1331
 msgid "Select Custom Canvas Padding Color"
 msgstr "Chọn Bảng Màu Canvas Tùy Chọn"
 
 #. Zoom & Resize Behaviour
-#: app/gui/preferences-dialog.c:1363
+#: app/gui/preferences-dialog.c:1337
 msgid "Zoom & Resize Behaviour"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1367
+#: app/gui/preferences-dialog.c:1341
 msgid "Resize Window on _Zoom"
 msgstr "Thay đổi kích thước cửa sổ khi Ph_óng"
 
-#: app/gui/preferences-dialog.c:1370
+#: app/gui/preferences-dialog.c:1344
 msgid "Resize Window on Image _Size Change"
 msgstr "Thay đổi kích thước cửa sổ khi đổi kích th_ước ảnh"
 
 #. Pointer Movement Feedback
-#: app/gui/preferences-dialog.c:1374
+#: app/gui/preferences-dialog.c:1348
 msgid "Pointer Movement Feedback"
 msgstr "Phản hồi Di chuyển Con Trỏ"
 
-#: app/gui/preferences-dialog.c:1378
+#: app/gui/preferences-dialog.c:1352
 msgid "Perfect-but-Slow _Pointer Tracking"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1381
+#: app/gui/preferences-dialog.c:1355
 msgid "Enable Cursor _Updating"
 msgstr "Bật chạy cập _nhật Con Trỏ"
 
-#: app/gui/preferences-dialog.c:1387
+#: app/gui/preferences-dialog.c:1361
 msgid "Cursor M_ode:"
 msgstr "Ch_ế độ Con Trỏ:"
 
-#: app/gui/preferences-dialog.c:1396
+#: app/gui/preferences-dialog.c:1370
 msgid "Image Title & Statusbar Format"
 msgstr "Định dạng Thanh Trạng Thái & Tiêu Đề Ảnh"
 
-#: app/gui/preferences-dialog.c:1399
+#: app/gui/preferences-dialog.c:1373
 msgid "Title & Status"
 msgstr "Tiêu Đề & Trạng Thái"
 
-#: app/gui/preferences-dialog.c:1418
+#: app/gui/preferences-dialog.c:1392
 msgid "Custom"
 msgstr "Tùy chọn"
 
-#: app/gui/preferences-dialog.c:1419
+#: app/gui/preferences-dialog.c:1393
 msgid "Standard"
 msgstr "Chuẩn"
 
-#: app/gui/preferences-dialog.c:1420
+#: app/gui/preferences-dialog.c:1394
 msgid "Show zoom percentage"
 msgstr "Hiển thị tỷ lệ phần trăm Phóng"
 
-#: app/gui/preferences-dialog.c:1421
+#: app/gui/preferences-dialog.c:1395
 msgid "Show zoom ratio"
 msgstr "Hiển thị tỷ lệ Phóng"
 
-#: app/gui/preferences-dialog.c:1422
+#: app/gui/preferences-dialog.c:1396
 msgid "Show reversed zoom ratio"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1423
+#: app/gui/preferences-dialog.c:1397
 msgid "Show memory usage"
 msgstr "Hiển thị sử dụng bộ nhớ"
 
-#: app/gui/preferences-dialog.c:1436
+#: app/gui/preferences-dialog.c:1410
 msgid "Image Title Format"
 msgstr "Định dạng Tiêu đề Ảnh"
 
-#: app/gui/preferences-dialog.c:1441
+#: app/gui/preferences-dialog.c:1415
 msgid "Image Statusbar Format"
 msgstr "Định dạng thanh trạng thái ảnh"
 
-#: app/gui/preferences-dialog.c:1526 app/gui/preferences-dialog.c:1529
+#: app/gui/preferences-dialog.c:1500 app/gui/preferences-dialog.c:1503
 msgid "Display"
 msgstr "Hiển thị"
 
 #. Transparency
-#: app/gui/preferences-dialog.c:1536
+#: app/gui/preferences-dialog.c:1510
 msgid "Transparency"
 msgstr "Trong suốt"
 
-#: app/gui/preferences-dialog.c:1540
+#: app/gui/preferences-dialog.c:1514
 msgid "Transparency _Type:"
 msgstr "_Kiểu Trong suốt:"
 
-#: app/gui/preferences-dialog.c:1543
+#: app/gui/preferences-dialog.c:1517
 msgid "Check _Size:"
 msgstr "Kiểm tra K_ích cỡ:"
 
 #. 8-Bit Displays
-#: app/gui/preferences-dialog.c:1547
+#: app/gui/preferences-dialog.c:1521
 msgid "8-Bit Displays"
 msgstr "Hiển thị 8-bit"
 
-#: app/gui/preferences-dialog.c:1555
+#: app/gui/preferences-dialog.c:1529
 msgid "Minimum Number of Colors:"
 msgstr "Số lượng màu tối thiểu:"
 
-#: app/gui/preferences-dialog.c:1558
+#: app/gui/preferences-dialog.c:1532
 msgid "Install Colormap"
 msgstr "Cài Đặt Bản Đồ Màu"
 
-#: app/gui/preferences-dialog.c:1561
+#: app/gui/preferences-dialog.c:1535
 msgid "Colormap Cycling"
 msgstr "Vòng bản đồ màu"
 
-#: app/gui/preferences-dialog.c:1570 app/gui/preferences-dialog.c:1573
+#: app/gui/preferences-dialog.c:1544 app/gui/preferences-dialog.c:1547
 msgid "Monitor"
 msgstr "Màn Hình"
 
-#: app/gui/preferences-dialog.c:1579
+#: app/gui/preferences-dialog.c:1553
 msgid "Get Monitor Resolution"
 msgstr "Lấy Độ Phân Giải Màn Hình"
 
-#: app/gui/preferences-dialog.c:1588
+#: app/gui/preferences-dialog.c:1562
 #, c-format
 msgid "(Currently %d x %d dpi)"
 msgstr "(Hiện thời: %d x %d dpi)"
 
-#: app/gui/preferences-dialog.c:1625
+#: app/gui/preferences-dialog.c:1599
 msgid "C_alibrate"
 msgstr "_Định Độ"
 
-#: app/gui/preferences-dialog.c:1639
+#: app/gui/preferences-dialog.c:1613
 msgid "From _Windowing System"
 msgstr "Từ Hệ thống tạo c_ửa sổ"
 
-#: app/gui/preferences-dialog.c:1664
+#: app/gui/preferences-dialog.c:1638
 msgid "_Manually"
 msgstr "Th_ủ Công"
 
-#: app/gui/preferences-dialog.c:1684 app/gui/preferences-dialog.c:1687
-#: app/gui/preferences-dialog.c:1819
+#: app/gui/preferences-dialog.c:1658 app/gui/preferences-dialog.c:1661
+#: app/gui/preferences-dialog.c:1796
 msgid "Environment"
 msgstr "Môi Trường"
 
 #. Resource Consumption
-#: app/gui/preferences-dialog.c:1694
+#: app/gui/preferences-dialog.c:1668
 msgid "Resource Consumption"
 msgstr "Tiêu thụ Tài nguyên"
 
-#: app/gui/preferences-dialog.c:1698
+#: app/gui/preferences-dialog.c:1672
 msgid "Conservative Memory Usage"
 msgstr "Cách dùng Bộ nhớ Duy trì"
 
-#: app/gui/preferences-dialog.c:1708
+#: app/gui/preferences-dialog.c:1682
 msgid "Levels of Undo:"
 msgstr "Mức Hoàn Tác:"
 
-#: app/gui/preferences-dialog.c:1711 app/gui/user-install-dialog.c:1166
+#: app/gui/preferences-dialog.c:1685
+msgid "Maximum Undo Memory:"
+msgstr ""
+
+#: app/gui/preferences-dialog.c:1688 app/gui/user-install-dialog.c:1166
 msgid "Tile Cache Size:"
 msgstr ""
 
-#: app/gui/preferences-dialog.c:1716
+#: app/gui/preferences-dialog.c:1693
 msgid "Number of Processors to Use:"
 msgstr "Lượng Bộ vi xử lý để dùng:"
 
 #. File Saving
-#: app/gui/preferences-dialog.c:1721
+#: app/gui/preferences-dialog.c:1698
 msgid "File Saving"
 msgstr "Lưu tập tin"
 
-#: app/gui/preferences-dialog.c:1725
+#: app/gui/preferences-dialog.c:1702
 msgid "Only when Modified"
 msgstr "Chỉ khi thay đổi"
 
-#: app/gui/preferences-dialog.c:1726
+#: app/gui/preferences-dialog.c:1703
 msgid "Always"
 msgstr "Luôn luôn"
 
-#: app/gui/preferences-dialog.c:1727
+#: app/gui/preferences-dialog.c:1704
 msgid "\"File -> Save\" Saves the Image:"
 msgstr "\"Tập tin -> Lưu\" Lưu ảnh:"
 
-#: app/gui/preferences-dialog.c:1730
+#: app/gui/preferences-dialog.c:1707
 msgid "Size of Thumbnails Files:"
 msgstr "Kích thước Tập tin Thumbnails:"
 
-#: app/gui/preferences-dialog.c:1739 app/gui/preferences-dialog.c:1742
+#: app/gui/preferences-dialog.c:1716 app/gui/preferences-dialog.c:1719
 msgid "Folders"
 msgstr "Thư Mục"
 
-#: app/gui/preferences-dialog.c:1757
+#: app/gui/preferences-dialog.c:1734
 msgid "Temp Dir:"
 msgstr "Thư mục tạm:"
 
-#: app/gui/preferences-dialog.c:1757
+#: app/gui/preferences-dialog.c:1734
 msgid "Select Temp Dir"
 msgstr "Chọn Thư mục Tạm"
 
-#: app/gui/preferences-dialog.c:1758
+#: app/gui/preferences-dialog.c:1735
 msgid "Swap Dir:"
 msgstr "Thư mục tráo đổi (swap):"
 
-#: app/gui/preferences-dialog.c:1758 app/gui/user-install-dialog.c:1187
+#: app/gui/preferences-dialog.c:1735 app/gui/user-install-dialog.c:1187
 msgid "Select Swap Dir"
 msgstr "Chọn thư mục tráo đổi (swap)"
 
-#: app/gui/preferences-dialog.c:1791
+#: app/gui/preferences-dialog.c:1768
 msgid "Brush Folders"
 msgstr "Thư mục Bút vẽ"
 
-#: app/gui/preferences-dialog.c:1793
+#: app/gui/preferences-dialog.c:1770
 msgid "Select Brush Folders"
 msgstr "Chọn Thư mục Bút vẽ"
 
-#: app/gui/preferences-dialog.c:1795
+#: app/gui/preferences-dialog.c:1772
 msgid "Pattern Folders"
 msgstr "Thư mục Mẫu"
 
-#: app/gui/preferences-dialog.c:1797
+#: app/gui/preferences-dialog.c:1774
 msgid "Select Pattern Folders"
 msgstr "Chọn Thư mục Mẫu"
 
-#: app/gui/preferences-dialog.c:1799
+#: app/gui/preferences-dialog.c:1776
 msgid "Palette Folders"
 msgstr "Thư mục Bảng màu"
 
-#: app/gui/preferences-dialog.c:1801
+#: app/gui/preferences-dialog.c:1778
 msgid "Select Palette Folders"
 msgstr "Chọn Thư mục Bảng màu"
 
-#: app/gui/preferences-dialog.c:1803
+#: app/gui/preferences-dialog.c:1780
 msgid "Gradient Folders"
 msgstr "Thư mục Độ dốc"
 
-#: app/gui/preferences-dialog.c:1805
+#: app/gui/preferences-dialog.c:1782
 msgid "Select Gradient Folders"
 msgstr "Chọn Thư mục Độ dốc"
 
-#: app/gui/preferences-dialog.c:1807
+#: app/gui/preferences-dialog.c:1784
 msgid "Plug-Ins"
 msgstr "Plug-Ins"
 
-#: app/gui/preferences-dialog.c:1807
+#: app/gui/preferences-dialog.c:1784
 msgid "Plug-In Folders"
 msgstr "Thư mục chứa Plug-in"
 
-#: app/gui/preferences-dialog.c:1809
+#: app/gui/preferences-dialog.c:1786
 msgid "Select Plug-In Folders"
 msgstr "Chọn Thư mục chứa Plug-in"
 
-#: app/gui/preferences-dialog.c:1811
+#: app/gui/preferences-dialog.c:1788
 msgid "Tool Plug-Ins"
 msgstr "Công Cụ Plug-in"
 
-#: app/gui/preferences-dialog.c:1811
+#: app/gui/preferences-dialog.c:1788
 msgid "Tool Plug-In Folders"
 msgstr "Thư mục Công Cụ Plug-in"
 
-#: app/gui/preferences-dialog.c:1813
+#: app/gui/preferences-dialog.c:1790
 msgid "Select Tool Plug-In Folders"
 msgstr "Chọn Thư mục Công Cụ Plug-in"
 
-#: app/gui/preferences-dialog.c:1815
+#: app/gui/preferences-dialog.c:1792
 msgid "Modules"
 msgstr "Modules"
 
-#: app/gui/preferences-dialog.c:1815
+#: app/gui/preferences-dialog.c:1792
 msgid "Module Folders"
 msgstr "Thư Mục chứa Module"
 
-#: app/gui/preferences-dialog.c:1817
+#: app/gui/preferences-dialog.c:1794
 msgid "Select Module Folders"
 msgstr "Chọn Thư Mục chứa Module"
 
-#: app/gui/preferences-dialog.c:1819
+#: app/gui/preferences-dialog.c:1796
 msgid "Environment Folders"
 msgstr "Thư Mục Môi Trường"
 
-#: app/gui/preferences-dialog.c:1821
+#: app/gui/preferences-dialog.c:1798
 msgid "Select Environment Folders"
 msgstr "Chọn Thư mục Môi Trường"
 
-#: app/gui/preferences-dialog.c:1823
+#: app/gui/preferences-dialog.c:1800
 msgid "Themes"
 msgstr "Themes"
 
-#: app/gui/preferences-dialog.c:1823
+#: app/gui/preferences-dialog.c:1800
 msgid "Theme Folders"
 msgstr "Thư mục chứa Theme"
 
-#: app/gui/preferences-dialog.c:1825
+#: app/gui/preferences-dialog.c:1802
 msgid "Select Theme Folders"
 msgstr "Chọn thư mục chứa theme"
 
@@ -4868,7 +5306,7 @@ msgid "Scale Layer Options"
 msgstr "Tùy Chọn Lớp Cân Chỉnh"
 
 #: app/gui/resize-dialog.c:196 app/gui/resize-dialog.c:228
-#: app/tools/paint_options.c:375
+#: app/tools/paint_options.c:288 app/tools/paint_options.c:299
 msgid "Size"
 msgstr "Kích cỡ"
 
@@ -4897,7 +5335,7 @@ msgid "Set Image Canvas Size"
 msgstr "Lập kích thước canvas ảnh"
 
 #. the original width & height labels
-#: app/gui/resize-dialog.c:279 app/tools/gimpscaletool.c:170
+#: app/gui/resize-dialog.c:279 app/tools/gimpscaletool.c:171
 msgid "Original Width:"
 msgstr "Bề rộng Nguyên gốc:"
 
@@ -4923,7 +5361,7 @@ msgstr "Trung tâm"
 msgid "Print Size & Display Unit"
 msgstr "Khổ in & Đơn vị Hiển thị"
 
-#: app/gui/resize-dialog.c:695 app/tools/transform_options.c:113
+#: app/gui/resize-dialog.c:695 app/tools/gimptransformoptions.c:298
 msgid "Interpolation:"
 msgstr "Nội suy:"
 
@@ -4943,16 +5381,8 @@ msgstr "_Ngang:"
 msgid "_Vertical:"
 msgstr "_Dọc:"
 
-#: app/gui/select-commands.c:142
-msgid "Feather Selection"
-msgstr ""
-
 #: app/gui/select-commands.c:145
 msgid "Feather Selection by:"
-msgstr ""
-
-#: app/gui/select-commands.c:177
-msgid "Shrink Selection"
 msgstr ""
 
 #: app/gui/select-commands.c:180
@@ -4963,17 +5393,9 @@ msgstr ""
 msgid "Shrink from image border"
 msgstr ""
 
-#: app/gui/select-commands.c:210
-msgid "Grow Selection"
-msgstr ""
-
 #: app/gui/select-commands.c:213
 msgid "Grow Selection by:"
 msgstr ""
-
-#: app/gui/select-commands.c:232
-msgid "Border Selection"
-msgstr "Sự chọn viền"
 
 #: app/gui/select-commands.c:235
 msgid "Border Selection by:"
@@ -5025,136 +5447,139 @@ msgstr ""
 msgid "tips-locale:C"
 msgstr "tips-locale:C"
 
-#: app/gui/tool-options-dialog.c:112
-msgid "Save current settings to disk"
+#: app/gui/tool-options-dialog.c:100
+#, fuzzy
+msgid "Save current settings as default values"
 msgstr "Lưu thiết lập hiện thời vào đĩa"
 
-#: app/gui/tool-options-dialog.c:121
-msgid "Restore saved settings"
+#: app/gui/tool-options-dialog.c:109
+#, fuzzy
+msgid "Restore saved default values"
 msgstr "Khôi phục thiết lập đã lưu"
 
-#: app/gui/tool-options-dialog.c:130
-msgid "Reset"
-msgstr "Lập lại"
+#: app/gui/tool-options-dialog.c:118
+#, fuzzy
+msgid "Reset to factory defaults"
+msgstr "Dùng \"Ch_ấm cho Chấm\" là mặc định"
 
 #. <Toolbox>/File
-#: app/gui/toolbox-menu.c:47
+#: app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Tệp"
 
 #. <Toolbox>/File/Acquire
-#: app/gui/toolbox-menu.c:67
+#: app/gui/toolbox-menu.c:69
 msgid "/File/Acquire"
 msgstr "/Tệp/Thu được"
 
-#: app/gui/toolbox-menu.c:71
+#: app/gui/toolbox-menu.c:73
 msgid "/File/Preferences..."
 msgstr "/Tệp/Tùy thích..."
 
 #. <Toolbox>/File/Dialogs
-#: app/gui/toolbox-menu.c:79
+#: app/gui/toolbox-menu.c:81
 msgid "/File/Dialogs/Layers, Channels & Paths..."
 msgstr "/Tệp/Thoại/Lớp, Kênh & Đường dẫn..."
 
-#: app/gui/toolbox-menu.c:83
+#: app/gui/toolbox-menu.c:85
 msgid "/File/Dialogs/Brushes, Patterns & Stuff..."
 msgstr "/Tệp/Thoại/Bút lông, Mẫu & ..."
 
-#: app/gui/toolbox-menu.c:87
+#: app/gui/toolbox-menu.c:89
 msgid "/File/Dialogs/Tool Options..."
 msgstr "/Tệp/Thoại/Tùy Chọn Công Cụ..."
 
-#: app/gui/toolbox-menu.c:92
+#: app/gui/toolbox-menu.c:94
 msgid "/File/Dialogs/Device Status..."
 msgstr "/Tệp/Thoại/Trạng thái thiết bị..."
 
-#: app/gui/toolbox-menu.c:99
+#: app/gui/toolbox-menu.c:101
 msgid "/File/Dialogs/Layers..."
 msgstr "/Tệp/Thoại/Các Lớp..."
 
-#: app/gui/toolbox-menu.c:103
+#: app/gui/toolbox-menu.c:105
 msgid "/File/Dialogs/Channels..."
 msgstr "/Tệp/Thoại/Các Kênh..."
 
-#: app/gui/toolbox-menu.c:107
+#: app/gui/toolbox-menu.c:109
 msgid "/File/Dialogs/Paths..."
 msgstr "/Tệp/Thoại/Đường Dẫn..."
 
-#: app/gui/toolbox-menu.c:111
+#: app/gui/toolbox-menu.c:113
 msgid "/File/Dialogs/Indexed Palette..."
 msgstr "/Tệp/Thoại/Bảng mục Màu..."
 
-#: app/gui/toolbox-menu.c:116
+#: app/gui/toolbox-menu.c:118
 msgid "/File/Dialogs/Selection Editor..."
 msgstr "/Tệp/Thoại/Trình biên tập phần chọn..."
 
-#: app/gui/toolbox-menu.c:121
+#: app/gui/toolbox-menu.c:123
 msgid "/File/Dialogs/Navigation..."
 msgstr "/Tệp/Thoại/Duyệt..."
 
-#: app/gui/toolbox-menu.c:129
+#: app/gui/toolbox-menu.c:131
 msgid "/File/Dialogs/Colors..."
 msgstr "/Tệp/Thoại/Các Màu..."
 
-#: app/gui/toolbox-menu.c:134
+#: app/gui/toolbox-menu.c:136
 msgid "/File/Dialogs/Brushes..."
 msgstr "/Tệp/Thoại/Bút lông..."
 
-#: app/gui/toolbox-menu.c:139
+#: app/gui/toolbox-menu.c:141
 msgid "/File/Dialogs/Patterns..."
 msgstr "/Tệp/Thoại/Mẫu..."
 
-#: app/gui/toolbox-menu.c:144
+#: app/gui/toolbox-menu.c:146
 msgid "/File/Dialogs/Gradients..."
 msgstr "/Tệp/Thoại/Độ dốc..."
 
-#: app/gui/toolbox-menu.c:149
+#: app/gui/toolbox-menu.c:151
 msgid "/File/Dialogs/Palettes..."
 msgstr "/Tệp/Thoại/Bảng màu..."
 
-#: app/gui/toolbox-menu.c:154
+#: app/gui/toolbox-menu.c:156
 msgid "/File/Dialogs/Buffers..."
 msgstr "/Tệp/Thoại/Buffers..."
 
-#: app/gui/toolbox-menu.c:162
+#: app/gui/toolbox-menu.c:164
 msgid "/File/Dialogs/Images..."
 msgstr "/Tệp/Thoại/Ảnh..."
 
-#: app/gui/toolbox-menu.c:166
+#: app/gui/toolbox-menu.c:168
 msgid "/File/Dialogs/Document History..."
 msgstr "/Tệp/Thoại/Lược sử Tài liệu..."
 
-#: app/gui/toolbox-menu.c:171
+#: app/gui/toolbox-menu.c:173
 msgid "/File/Dialogs/Error Console..."
 msgstr "/Tệp/Thoại/Console Lỗi..."
 
 #. <Toolbox>/Xtns
-#: app/gui/toolbox-menu.c:209
+#: app/gui/toolbox-menu.c:211
 msgid "/_Xtns"
 msgstr "/_Xtns"
 
-#: app/gui/toolbox-menu.c:211
+#: app/gui/toolbox-menu.c:213
 msgid "/Xtns/Module Browser..."
 msgstr "/Xtns/Trình duyệt Module..."
 
 #. <Toolbox>/Help
-#: app/gui/toolbox-menu.c:220
+#: app/gui/toolbox-menu.c:222
 msgid "/_Help"
 msgstr "/_Giúp"
 
-#: app/gui/toolbox-menu.c:222
+#: app/gui/toolbox-menu.c:224
 msgid "/Help/Help..."
 msgstr "/Giúp/Trợ giúp..."
 
-#: app/gui/toolbox-menu.c:227
+#: app/gui/toolbox-menu.c:229
 msgid "/Help/Context Help..."
 msgstr "/Giúp/Trợ giúp theo ngữ cảnh..."
 
-#: app/gui/toolbox-menu.c:232
+#: app/gui/toolbox-menu.c:234
 msgid "/Help/Tip of the Day..."
 msgstr "/Giúp/Mẹo thường dùng..."
 
-#: app/gui/toolbox-menu.c:237
+#: app/gui/toolbox-menu.c:239
 msgid "/Help/About..."
 msgstr "/Giúp/Nói về..."
 
@@ -5577,24 +6002,29 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Định Độ"
 
-#: app/gui/vectors-commands.c:305
+#: app/gui/vectors-commands.c:298
 msgid "There is no active Layer or Channel to stroke to"
 msgstr ""
 
-#: app/gui/vectors-commands.c:448
+#: app/gui/vectors-commands.c:422
 msgid "Empty Vectors Copy"
 msgstr "Bản sao các vector rỗng"
 
-#: app/gui/vectors-commands.c:461
+#: app/gui/vectors-commands.c:438
 msgid "New Path Options"
 msgstr "Tùy chọn Đường dẫn Mới"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:494 app/gui/vectors-commands.c:610
+#: app/gui/vectors-commands.c:471 app/gui/vectors-commands.c:589
 msgid "Path name:"
 msgstr "Tên đường dẫn:"
 
-#: app/gui/vectors-commands.c:575
+#: app/gui/vectors-commands.c:525
+#, fuzzy
+msgid "Rename Path"
+msgstr "Đặt lại tên Mục"
+
+#: app/gui/vectors-commands.c:554
 msgid "Path Attributes"
 msgstr "Thuộc tính Đường dẫn"
 
@@ -5613,6 +6043,42 @@ msgstr "/Hạ thấp Đường dẫn"
 #: app/gui/vectors-menu.c:131
 msgid "/Path Tool"
 msgstr "/Công cụ Đường dẫn"
+
+#: app/paint/gimpairbrush.c:82 app/tools/gimpairbrushtool.c:62
+msgid "Airbrush"
+msgstr "Bút hơi"
+
+#: app/paint/gimpclone.c:89 app/tools/gimpclonetool.c:96
+msgid "Clone"
+msgstr "Vô tính"
+
+#: app/paint/gimpconvolve.c:122 app/tools/gimpconvolvetool.c:89
+msgid "Convolve"
+msgstr "Cuộn lại"
+
+#: app/paint/gimpdodgeburn.c:86 app/tools/gimpdodgeburntool.c:69
+msgid "Dodge/Burn"
+msgstr ""
+
+#: app/paint/gimperaser.c:64 app/tools/gimperasertool.c:69
+msgid "Eraser"
+msgstr "Công cụ xóa"
+
+#: app/paint/gimppaintbrush.c:67 app/tools/gimppaintbrushtool.c:54
+msgid "Paintbrush"
+msgstr "Bút vẽ"
+
+#: app/paint/gimppaintcore.c:378
+msgid "No brushes available for use with this tool."
+msgstr "Không có sẵn bút vẽ nào để dùng với công cụ này."
+
+#: app/paint/gimppencil.c:66 app/tools/gimppenciltool.c:54
+msgid "Pencil"
+msgstr "Bút chì"
+
+#: app/paint/gimpsmudge.c:80 app/tools/gimpsmudgetool.c:60
+msgid "Smudge"
+msgstr "Mờ"
 
 #: app/paint/paint-enums.c:13
 msgid "Image Source"
@@ -5668,9 +6134,49 @@ msgstr "Làm mờ"
 msgid "Sharpen"
 msgstr "Làm sắc nét"
 
-#: app/paint/gimppaintcore.c:376
-msgid "No brushes available for use with this tool."
-msgstr "Không có sẵn bút vẽ nào để dùng với công cụ này."
+#: app/pdb/color_cmds.c:131 app/tools/gimpbrightnesscontrasttool.c:83
+msgid "Brightness-Contrast"
+msgstr "Độ Sáng-Tương Phản"
+
+#: app/pdb/color_cmds.c:256 app/tools/gimplevelstool.c:160
+msgid "Levels"
+msgstr "Mức độ"
+
+#: app/pdb/color_cmds.c:361 app/tools/gimpposterizetool.c:76
+msgid "Posterize"
+msgstr "Làm áp phích"
+
+#: app/pdb/color_cmds.c:613 app/pdb/color_cmds.c:720
+#: app/tools/gimpcurvestool.c:173
+msgid "Curves"
+msgstr "Đường Cong"
+
+#: app/pdb/color_cmds.c:837 app/tools/gimpcolorbalancetool.c:95
+msgid "Color Balance"
+msgstr "Cân Bằng Màu"
+
+#: app/pdb/color_cmds.c:1133 app/tools/gimphuesaturationtool.c:108
+msgid "Hue-Saturation"
+msgstr "Bão hòa Màu sắc"
+
+#: app/pdb/color_cmds.c:1231 app/tools/gimpthresholdtool.c:89
+msgid "Threshold"
+msgstr "Ngưỡng"
+
+#: app/pdb/guides_cmds.c:80 app/tools/gimpmeasuretool.c:291
+#, fuzzy
+msgid "Add Horizontal Guide"
+msgstr "Ngang"
+
+#: app/pdb/guides_cmds.c:159 app/tools/gimpmeasuretool.c:302
+#, fuzzy
+msgid "Add Vertical Guide"
+msgstr "Dọc"
+
+#: app/pdb/guides_cmds.c:239
+#, fuzzy
+msgid "Remove Guide"
+msgstr "Ảnh ở xa"
 
 #: app/pdb/image_cmds.c:3836
 msgid ""
@@ -5801,12 +6307,12 @@ msgstr "Đơn vị"
 msgid "PDB calling error %s not found"
 msgstr "Không tìm thấy lỗi gọi PDB %s"
 
-#: app/pdb/procedural_db.c:213
+#: app/pdb/procedural_db.c:212
 #, c-format
 msgid "PDB calling error %s"
 msgstr "Lỗi gọi PDB %s"
 
-#: app/pdb/procedural_db.c:297
+#: app/pdb/procedural_db.c:304
 #, c-format
 msgid ""
 "Incorrect arguments passed to procedural_db_run_proc:\n"
@@ -5829,7 +6335,12 @@ msgstr "Mở rộng GIMP"
 msgid "Temporary Procedure"
 msgstr "Thủ tục tạm thời"
 
-#: app/plug-in/plug-in.c:912
+#: app/pdb/selection_tools_cmds.c:327 app/tools/gimpfreeselecttool.c:92
+#: libgimptool/gimptoolenums.c:116
+msgid "Free Select"
+msgstr "Chọn Tự Do"
+
+#: app/plug-in/plug-in.c:688
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5840,157 +6351,176 @@ msgid ""
 "to be on the safe side."
 msgstr ""
 
-#: app/plug-in/plug-ins.c:140
+#: app/plug-in/plug-ins.c:135
 msgid "Resource configuration"
 msgstr "Cấu hình Tài nguyên"
 
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:146
+#: app/plug-in/plug-ins.c:141
 msgid "Querying new Plug-ins"
 msgstr "Tra vấn plug-in mới"
 
-#: app/plug-in/plug-ins.c:158
+#: app/plug-in/plug-ins.c:155
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr "tra vấn plug-in: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:213
+#: app/plug-in/plug-ins.c:210
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "đang ghi \"%s\"\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:263
+#: app/plug-in/plug-ins.c:262
 msgid "Initializing Plug-ins"
 msgstr "Sơ khởi plug-in"
 
-#: app/plug-in/plug-ins.c:272
+#: app/plug-in/plug-ins.c:273
 #, c-format
 msgid "Initializing plug-in: \"%s\"\n"
 msgstr "Đang sơ khởi plug-in: \"%s\"\n"
 
 #. run the available extensions
-#: app/plug-in/plug-ins.c:283
+#: app/plug-in/plug-ins.c:284
 msgid "Starting Extensions"
 msgstr "Bắt đầu phần mở rộng"
 
-#: app/plug-in/plug-ins.c:295
+#: app/plug-in/plug-ins.c:298
 #, c-format
 msgid "Starting extension: \"%s\""
 msgstr "Bắt đầu phần mở rộng: \"%s\""
 
-#: app/tools/gimpairbrushtool.c:63
-msgid "Airbrush"
-msgstr "Bút hơi"
+#: app/text/text-enums.c:13
+msgid "Left Justified"
+msgstr ""
 
-#: app/tools/gimpairbrushtool.c:64
+#: app/text/text-enums.c:14
+msgid "Right Justified"
+msgstr ""
+
+#: app/text/text-enums.c:15
+#, fuzzy
+msgid "Centered"
+msgstr "Trung tâm"
+
+#: app/text/text-enums.c:16
+#, fuzzy
+msgid "Filled"
+msgstr "/_Tệp"
+
+#: app/text/gimptext.c:155
+msgid "How many pixels the first line should be shorter"
+msgstr ""
+
+#: app/text/gimptext.c:161
+msgid "Additional line spacing (in pixels)"
+msgstr ""
+
+#: app/text/gimptext-compat.c:99 app/tools/gimptexttool.c:286
+#, fuzzy
+msgid "Add Text Layer"
+msgstr "Lớp văn bản"
+
+#: app/tools/gimpairbrushtool.c:63
 msgid "Airbrush with variable pressure"
 msgstr "Bút hơi với áp suất khác nhau"
 
-#: app/tools/gimpairbrushtool.c:65
+#: app/tools/gimpairbrushtool.c:64
 msgid "/Tools/Paint Tools/Airbrush"
 msgstr "/Công cụ/Công cụ vẽ/Bút hơi"
 
-#: app/tools/gimpairbrushtool.c:150 app/tools/gimpconvolvetool.c:248
-#: app/tools/gimpsmudgetool.c:144
+#: app/tools/gimpairbrushtool.c:144 app/tools/gimpconvolvetool.c:245
+#: app/tools/gimpsmudgetool.c:143
 msgid "Rate:"
 msgstr "Mức:"
 
-#: app/tools/gimpairbrushtool.c:162
+#: app/tools/gimpairbrushtool.c:150
 msgid "Pressure:"
 msgstr "Áp suất:"
 
-#: app/tools/gimpbezierselecttool.c:283
+#: app/tools/gimpbezierselecttool.c:284
 msgid "Bezier Select"
 msgstr "Chọn Bezier"
 
-#: app/tools/gimpbezierselecttool.c:284
+#: app/tools/gimpbezierselecttool.c:285
 msgid "Select regions using Bezier curves"
 msgstr "Chọn các vùng bằng đường cong Bezier"
 
-#: app/tools/gimpbezierselecttool.c:285
+#: app/tools/gimpbezierselecttool.c:286
 msgid "/Tools/Selection Tools/Bezier Select"
 msgstr "/Công cụ/Công cụ Chọn/Chọn Bezier"
 
-#: app/tools/gimpbezierselecttool.c:1211
+#: app/tools/gimpbezierselecttool.c:1212
 msgid "Bezier path already closed."
 msgstr "Đã đóng đường Bezier rồi."
 
-#: app/tools/gimpbezierselecttool.c:1233
+#: app/tools/gimpbezierselecttool.c:1234
 msgid "Corrupt curve"
 msgstr "Đường cong sửa đổi"
 
-#: app/tools/gimpbezierselecttool.c:3185
+#: app/tools/gimpbezierselecttool.c:3187
 msgid "Curve not closed!"
 msgstr "Đường cong không đóng!"
 
-#: app/tools/gimpbezierselecttool.c:3469
+#: app/tools/gimpbezierselecttool.c:3472
 msgid "Paintbrush operation failed."
 msgstr "Chức năng Bút vẽ hỏng."
 
-#: app/tools/gimpblendtool.c:148
-msgid "Blend"
-msgstr "Pha trộn"
+#: app/tools/gimpblendoptions.c:267
+msgid "Offset:"
+msgstr "Offset:"
 
-#: app/tools/gimpblendtool.c:149
+#: app/tools/gimpblendoptions.c:287
+msgid "Gradient:"
+msgstr "Độ dốc:"
+
+#: app/tools/gimpblendoptions.c:302
+msgid "Shape:"
+msgstr "Hình thể:"
+
+#: app/tools/gimpblendoptions.c:308
+msgid "Repeat:"
+msgstr "Nhắc lại:"
+
+#: app/tools/gimpblendoptions.c:331
+msgid "Adaptive Supersampling"
+msgstr ""
+
+#: app/tools/gimpblendoptions.c:341
+msgid "Max Depth:"
+msgstr "Sâu tối đa:"
+
+#: app/tools/gimpblendoptions.c:348 app/tools/gimpbucketfilloptions.c:274
+#: app/tools/gimpmagnifyoptions.c:241 app/tools/gimpselectionoptions.c:506
+msgid "Threshold:"
+msgstr "Ngưỡng:"
+
+#: app/tools/gimpblendtool.c:100
 msgid "Fill with a color gradient"
 msgstr "Tô bằng một gradient màu"
 
-#: app/tools/gimpblendtool.c:150
+#: app/tools/gimpblendtool.c:101
 msgid "/Tools/Paint Tools/Blend"
 msgstr "/Công cụ/Công cụ Vẽ/Pha trộn"
 
-#: app/tools/gimpblendtool.c:235
+#: app/tools/gimpblendtool.c:189
 msgid "Blend: Invalid for indexed images."
 msgstr "Pha trộn: không hợp lệ cho ảnh phụ lục."
 
 #. initialize the statusbar display
-#: app/tools/gimpblendtool.c:254
+#: app/tools/gimpblendtool.c:207
 msgid "Blend: 0, 0"
 msgstr "Pha trộn: 0, 0"
 
-#: app/tools/gimpblendtool.c:289
+#: app/tools/gimpblendtool.c:243
 msgid "Blending..."
 msgstr "Pha trộn..."
 
-#: app/tools/gimpblendtool.c:372
+#: app/tools/gimpblendtool.c:326
 msgid "Blend: "
 msgstr "Pha trộn:"
-
-#: app/tools/gimpblendtool.c:480
-msgid "Offset:"
-msgstr "Offset:"
-
-#: app/tools/gimpblendtool.c:506
-msgid "Gradient:"
-msgstr "Độ dốc:"
-
-#: app/tools/gimpblendtool.c:526
-msgid "Shape:"
-msgstr "Hình thể:"
-
-#: app/tools/gimpblendtool.c:537
-msgid "Repeat:"
-msgstr "Nhắc lại:"
-
-#: app/tools/gimpblendtool.c:556
-msgid "Adaptive Supersampling"
-msgstr ""
-
-#: app/tools/gimpblendtool.c:580
-msgid "Max Depth:"
-msgstr "Sâu tối đa:"
-
-#: app/tools/gimpblendtool.c:592 app/tools/gimpbucketfilltool.c:421
-#: app/tools/gimpmagnifytool.c:489 app/tools/selection_options.c:325
-msgid "Threshold:"
-msgstr "Ngưỡng:"
-
-#: app/tools/gimpbrightnesscontrasttool.c:83
-msgid "Brightness-Contrast"
-msgstr "Độ Sáng-Tương Phản"
 
 #: app/tools/gimpbrightnesscontrasttool.c:84
 msgid "Adjust brightness and contrast"
@@ -6016,83 +6546,73 @@ msgstr "Độ _sáng:"
 msgid "Con_trast:"
 msgstr "Độ tương _phản:"
 
-#: app/tools/gimpbucketfilltool.c:118
-msgid "Bucket Fill"
-msgstr "Đổ xô đựng màu lên"
+#: app/tools/gimpbucketfilloptions.c:118
+msgid "Allow completely transparent regions to be filled"
+msgstr "Hoàn toàn cho phép vùng trong suốt được tô màu"
 
-#: app/tools/gimpbucketfilltool.c:119
-msgid "Fill with a color or pattern"
-msgstr "To bằng màu hay mẫu"
+#: app/tools/gimpbucketfilloptions.c:124
+msgid "Base filled area on all visible layers"
+msgstr ""
 
-#: app/tools/gimpbucketfilltool.c:120
-msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/Công cụ/Công cụ Vẽ/Đổ xô đựng màu lên"
+#: app/tools/gimpbucketfilloptions.c:130 app/tools/gimpselectionoptions.c:163
+msgid "Maximum color difference"
+msgstr "Sự khác biệt màu tối đa"
 
-#: app/tools/gimpbucketfilltool.c:358
+#. fill type
+#: app/tools/gimpbucketfilloptions.c:236
 #, c-format
 msgid "Fill Type  %s"
 msgstr "Điền Loại %s"
 
-#: app/tools/gimpbucketfilltool.c:374 app/tools/selection_options.c:275
+#: app/tools/gimpbucketfilloptions.c:245 app/tools/gimpselectionoptions.c:477
 msgid "Finding Similar Colors"
 msgstr "Tìm Màu Tương Tự"
 
-#: app/tools/gimpbucketfilltool.c:385
+#: app/tools/gimpbucketfilloptions.c:256
 msgid "Fill Transparent Areas"
 msgstr "Tô Vùng Trong Suốt"
 
-#: app/tools/gimpbucketfilltool.c:393
-msgid "Allow completely transparent regions to be filled"
-msgstr "Hoàn toàn cho phép vùng trong suốt được tô màu"
-
-#: app/tools/gimpbucketfilltool.c:402 app/tools/gimpcolorpickertool.c:706
-#: app/tools/selection_options.c:303 app/tools/selection_options.c:371
+#: app/tools/gimpbucketfilloptions.c:262
+#: app/tools/gimpcolorpickeroptions.c:200 app/tools/gimpselectionoptions.c:494
+#: app/tools/gimpselectionoptions.c:541
 msgid "Sample Merged"
 msgstr "Mẫu được hòa trộn"
 
-#: app/tools/gimpbucketfilltool.c:408
-msgid "Base filled area on all visible layers"
-msgstr ""
+#: app/tools/gimpbucketfilltool.c:86
+msgid "Fill with a color or pattern"
+msgstr "To bằng màu hay mẫu"
 
-#: app/tools/gimpbucketfilltool.c:425 app/tools/selection_options.c:329
-msgid "Maximum color difference"
-msgstr "Sự khác biệt màu tối đa"
+#: app/tools/gimpbucketfilltool.c:87
+msgid "/Tools/Paint Tools/Bucket Fill"
+msgstr "/Công cụ/Công cụ Vẽ/Đổ xô đựng màu lên"
 
-#: app/tools/gimpbycolorselecttool.c:78
+#: app/tools/gimpbycolorselecttool.c:79
 msgid "Select By Color"
 msgstr "Chọn Theo Màu"
 
-#: app/tools/gimpbycolorselecttool.c:79
+#: app/tools/gimpbycolorselecttool.c:80
 msgid "Select regions by color"
 msgstr "Chọn vùng theo màu"
 
-#: app/tools/gimpbycolorselecttool.c:80
+#: app/tools/gimpbycolorselecttool.c:81
 msgid "/Tools/Selection Tools/By Color Select"
 msgstr "/Công cụ/Công cụ chọn/Bằng sự chọn màu"
 
-#: app/tools/gimpclonetool.c:95
-msgid "Clone"
-msgstr "Vô tính"
-
-#: app/tools/gimpclonetool.c:96
+#: app/tools/gimpclonetool.c:97
 msgid "Paint using Patterns or Image Regions"
 msgstr "Vẽ sử dụng Mẫu hay Vùng Ảnh"
 
-#: app/tools/gimpclonetool.c:97
+#: app/tools/gimpclonetool.c:98
 msgid "/Tools/Paint Tools/Clone"
 msgstr "/Công cụ/Công cụ vẽ/Vô tính"
 
-#: app/tools/gimpclonetool.c:381
+#: app/tools/gimpclonetool.c:377
 msgid "Source"
 msgstr "Nguồn"
 
-#: app/tools/gimpclonetool.c:393
+#: app/tools/gimpclonetool.c:383
 msgid "Alignment"
 msgstr "Canh Hàng"
-
-#: app/tools/gimpcolorbalancetool.c:95
-msgid "Color Balance"
-msgstr "Cân Bằng Màu"
 
 #: app/tools/gimpcolorbalancetool.c:96
 msgid "Adjust color balance"
@@ -6138,144 +6658,137 @@ msgstr "Đặt lại loạt"
 msgid "Preserve _Luminosity"
 msgstr "Duy Trì Độ Sáng"
 
-#: app/tools/gimpcolorpickertool.c:136 app/tools/gimpcolorpickertool.c:502
-msgid "Color Picker"
-msgstr "Trình hút Màu"
-
-#: app/tools/gimpcolorpickertool.c:137
-msgid "Pick colors from the image"
-msgstr "Lấy màu từ ảnh"
-
-#: app/tools/gimpcolorpickertool.c:138
-msgid "/Tools/Color Picker"
-msgstr "/Công cụ/Trình Hút Màu"
-
-#: app/tools/gimpcolorpickertool.c:504
-msgid "Color Picker Information"
-msgstr "Thông tin Trình chọn Màu"
-
-#: app/tools/gimpcolorpickertool.c:519 app/tools/gimpcolorpickertool.c:534
-msgid "Red:"
-msgstr "Đỏ:"
-
-#: app/tools/gimpcolorpickertool.c:520 app/tools/gimpcolorpickertool.c:535
-msgid "Green:"
-msgstr "Xanh lá cây:"
-
-#: app/tools/gimpcolorpickertool.c:521 app/tools/gimpcolorpickertool.c:536
-msgid "Blue:"
-msgstr "Xanh da trời:"
-
-#: app/tools/gimpcolorpickertool.c:522 app/tools/gimpcolorpickertool.c:528
-#: app/tools/gimpcolorpickertool.c:537
-msgid "Alpha:"
-msgstr "Alpha:"
-
-#: app/tools/gimpcolorpickertool.c:523 app/tools/gimpcolorpickertool.c:529
-#: app/widgets/gimpcolormapeditor.c:313
-msgid "Hex Triplet:"
-msgstr "Bộ ba Hex:"
-
-#: app/tools/gimpcolorpickertool.c:527
-msgid "Intensity:"
-msgstr "Cường độ:"
-
-#: app/tools/gimpcolorpickertool.c:533
-msgid "Index:"
-msgstr "Chỉ mục:"
-
-#: app/tools/gimpcolorpickertool.c:538
-msgid "Hex Triplet"
-msgstr "Bộ ba Hex"
-
-#: app/tools/gimpcolorpickertool.c:729
+#: app/tools/gimpcolorpickeroptions.c:217
 msgid "Sample Average"
 msgstr "Trung bình Mẫu"
 
-#: app/tools/gimpcolorpickertool.c:745 app/tools/selection_options.c:220
+#: app/tools/gimpcolorpickeroptions.c:227 app/tools/gimpselectionoptions.c:439
 #: app/widgets/gimpbrusheditor.c:150
 msgid "Radius:"
 msgstr "Bán kính:"
 
-#: app/tools/gimpcolorpickertool.c:757
+#: app/tools/gimpcolorpickeroptions.c:233
 msgid "Update Active Color"
 msgstr "Cập nhật Màu Hoạt động"
 
-#: app/tools/gimpconvolvetool.c:88
-msgid "Convolve"
-msgstr "Cuộn lại"
+#: app/tools/gimpcolorpickertool.c:131 app/tools/gimpcolorpickertool.c:492
+msgid "Color Picker"
+msgstr "Trình hút Màu"
 
-#: app/tools/gimpconvolvetool.c:89
+#: app/tools/gimpcolorpickertool.c:132
+msgid "Pick colors from the image"
+msgstr "Lấy màu từ ảnh"
+
+#: app/tools/gimpcolorpickertool.c:133
+msgid "/Tools/Color Picker"
+msgstr "/Công cụ/Trình Hút Màu"
+
+#: app/tools/gimpcolorpickertool.c:494
+msgid "Color Picker Information"
+msgstr "Thông tin Trình chọn Màu"
+
+#: app/tools/gimpcolorpickertool.c:509 app/tools/gimpcolorpickertool.c:524
+msgid "Red:"
+msgstr "Đỏ:"
+
+#: app/tools/gimpcolorpickertool.c:510 app/tools/gimpcolorpickertool.c:525
+msgid "Green:"
+msgstr "Xanh lá cây:"
+
+#: app/tools/gimpcolorpickertool.c:511 app/tools/gimpcolorpickertool.c:526
+msgid "Blue:"
+msgstr "Xanh da trời:"
+
+#: app/tools/gimpcolorpickertool.c:512 app/tools/gimpcolorpickertool.c:518
+#: app/tools/gimpcolorpickertool.c:527
+msgid "Alpha:"
+msgstr "Alpha:"
+
+#: app/tools/gimpcolorpickertool.c:513 app/tools/gimpcolorpickertool.c:519
+#: app/widgets/gimpcolormapeditor.c:313
+msgid "Hex Triplet:"
+msgstr "Bộ ba Hex:"
+
+#: app/tools/gimpcolorpickertool.c:517
+msgid "Intensity:"
+msgstr "Cường độ:"
+
+#: app/tools/gimpcolorpickertool.c:523
+msgid "Index:"
+msgstr "Chỉ mục:"
+
+#: app/tools/gimpcolorpickertool.c:528
+msgid "Hex Triplet"
+msgstr "Bộ ba Hex"
+
+#: app/tools/gimpconvolvetool.c:90
 msgid "Blur or Sharpen"
 msgstr "Làm Mờ hay Sắc nét"
 
-#: app/tools/gimpconvolvetool.c:90
+#: app/tools/gimpconvolvetool.c:91
 msgid "/Tools/Paint Tools/Convolve"
 msgstr "/Công cụ/Công cụ Vẽ/Cuộn lại"
 
-#: app/tools/gimpconvolvetool.c:225
+#. the type radio box
+#: app/tools/gimpconvolvetool.c:227
 #, c-format
 msgid "Convolve Type  %s"
 msgstr ""
 
-#: app/tools/gimpcroptool.c:175
-msgid "Crop & Resize"
-msgstr "Cắt xén & Thay đổi cỡ"
-
-#: app/tools/gimpcroptool.c:176
-msgid "Crop or Resize an image"
-msgstr "Cắt xén hay Đổi cỡ một ảnh"
-
-#: app/tools/gimpcroptool.c:177
-msgid "/Tools/Transform Tools/Crop & Resize"
-msgstr "/Công cụ/Công cụ Chuyển dạng/Cắt xén & thay đổi kích cỡ"
-
-#: app/tools/gimpcroptool.c:564
-msgid "Crop: "
-msgstr "Xén:"
-
-#. initialize the statusbar display
-#: app/tools/gimpcroptool.c:948
-msgid "Crop: 0 x 0"
-msgstr "Xén: 0 x 0"
-
-#: app/tools/gimpcroptool.c:977
-msgid "Crop & Resize Information"
-msgstr "Thông tin Cắt xén & Thay đổi cỡ"
-
-#. add the information fields
-#: app/tools/gimpcroptool.c:994
-msgid "Origin X:"
-msgstr "Gốc X:"
-
-#: app/tools/gimpcroptool.c:1037
-msgid "From Selection"
-msgstr "Từ Phần Chọn"
-
-#: app/tools/gimpcroptool.c:1045
-msgid "Auto Shrink"
-msgstr "Co rút Tự động"
-
 #. tool toggle
-#: app/tools/gimpcroptool.c:1301 app/tools/gimpfliptool.c:290
-#: app/tools/gimpmagnifytool.c:467 app/tools/gimpmovetool.c:695
+#: app/tools/gimpcropoptions.c:190 app/tools/gimpflipoptions.c:169
+#: app/tools/gimpmagnifyoptions.c:224 app/tools/gimpmoveoptions.c:179
 #, c-format
 msgid "Tool Toggle  %s"
 msgstr ""
 
-#: app/tools/gimpcroptool.c:1318
+#: app/tools/gimpcropoptions.c:201
 msgid "Current Layer only"
 msgstr "Chỉ với Lớp hiện thời"
 
 #. enlarge toggle
-#: app/tools/gimpcroptool.c:1330
+#: app/tools/gimpcropoptions.c:206
 #, c-format
 msgid "Allow Enlarging  %s"
 msgstr "Cho phép to ra %s"
 
-#: app/tools/gimpcurvestool.c:173
-msgid "Curves"
-msgstr "Đường Cong"
+#: app/tools/gimpcroptool.c:153
+msgid "Crop & Resize"
+msgstr "Cắt xén & Thay đổi cỡ"
+
+#: app/tools/gimpcroptool.c:154
+msgid "Crop or Resize an image"
+msgstr "Cắt xén hay Đổi cỡ một ảnh"
+
+#: app/tools/gimpcroptool.c:155
+msgid "/Tools/Transform Tools/Crop & Resize"
+msgstr "/Công cụ/Công cụ Chuyển dạng/Cắt xén & thay đổi kích cỡ"
+
+#: app/tools/gimpcroptool.c:540
+msgid "Crop: "
+msgstr "Xén:"
+
+#. initialize the statusbar display
+#: app/tools/gimpcroptool.c:921
+msgid "Crop: 0 x 0"
+msgstr "Xén: 0 x 0"
+
+#: app/tools/gimpcroptool.c:950
+msgid "Crop & Resize Information"
+msgstr "Thông tin Cắt xén & Thay đổi cỡ"
+
+#. add the information fields
+#: app/tools/gimpcroptool.c:967
+msgid "Origin X:"
+msgstr "Gốc X:"
+
+#: app/tools/gimpcroptool.c:1010
+msgid "From Selection"
+msgstr "Từ Phần Chọn"
+
+#: app/tools/gimpcroptool.c:1018
+msgid "Auto Shrink"
+msgstr "Co rút Tự động"
 
 #: app/tools/gimpcurvestool.c:174
 msgid "Adjust color curves"
@@ -6334,91 +6847,71 @@ msgstr "Nạp Đường Cong"
 msgid "Save Curves"
 msgstr "Lưu Đường Cong"
 
-#: app/tools/gimpdodgeburntool.c:68
-msgid "Dodge/Burn"
-msgstr ""
-
-#: app/tools/gimpdodgeburntool.c:69
+#: app/tools/gimpdodgeburntool.c:70
 msgid "Dodge or Burn strokes"
 msgstr ""
 
-#: app/tools/gimpdodgeburntool.c:70
+#: app/tools/gimpdodgeburntool.c:71
 msgid "/Tools/Paint Tools/DodgeBurn"
 msgstr ""
 
 #. the type (dodge or burn)
-#: app/tools/gimpdodgeburntool.c:204
+#: app/tools/gimpdodgeburntool.c:200
 #, c-format
 msgid "Type  %s"
 msgstr "Kiểu  %s"
 
-#: app/tools/gimpdodgeburntool.c:221
+#: app/tools/gimpdodgeburntool.c:211
 msgid "Mode"
 msgstr "Chế độ"
 
-#: app/tools/gimpdodgeburntool.c:239
+#: app/tools/gimpdodgeburntool.c:223
 msgid "Exposure:"
 msgstr "Bộc lộ:"
 
 #. initialize the statusbar display
-#: app/tools/gimpeditselectiontool.c:303
+#: app/tools/gimpeditselectiontool.c:304
 msgid "Move: 0, 0"
 msgstr "Di chuyển: 0, 0"
 
-#: app/tools/gimpeditselectiontool.c:553
+#: app/tools/gimpeditselectiontool.c:554
 msgid "Move: "
 msgstr "Di chuyển:"
 
-#: app/tools/gimpellipseselecttool.c:68
-msgid "Ellipse Select"
-msgstr "Chọn theo hình ê-líp"
-
-#: app/tools/gimpellipseselecttool.c:69
+#: app/tools/gimpellipseselecttool.c:70
 msgid "Select elliptical regions"
 msgstr "Chọn vùng theo hình ê-líp"
 
-#: app/tools/gimpellipseselecttool.c:70
+#: app/tools/gimpellipseselecttool.c:71
 msgid "/Tools/Selection Tools/Ellipse Select"
 msgstr "/Công cụ/Công cụ chọn/Chọn hình ê-líp"
 
-#: app/tools/gimperasertool.c:67
-msgid "Eraser"
-msgstr "Công cụ xóa"
-
-#: app/tools/gimperasertool.c:68
+#: app/tools/gimperasertool.c:70
 msgid "Erase to background or transparency"
 msgstr "Xóa tới nền hay tới khi trong suốt"
 
-#: app/tools/gimperasertool.c:69
+#: app/tools/gimperasertool.c:71
 msgid "/Tools/Paint Tools/Eraser"
 msgstr "/Công cụ/Công cụ vẽ/Công cụ Xoá"
 
 #. the anti_erase toggle
-#: app/tools/gimperasertool.c:189
+#: app/tools/gimperasertool.c:188
 #, c-format
 msgid "Anti Erase  %s"
 msgstr "Chống xoá  %s"
 
 #. the hard toggle
-#: app/tools/gimperasertool.c:204
+#: app/tools/gimperasertool.c:197
 msgid "Hard Edge"
 msgstr ""
 
-#: app/tools/gimpfliptool.c:95
-msgid "Flip"
-msgstr ""
-
-#: app/tools/gimpfliptool.c:96
+#: app/tools/gimpfliptool.c:82
 msgid "Flip the layer or selection"
 msgstr "Phẩy nhẹ lớp hay phần chọn"
 
-#: app/tools/gimpfliptool.c:97
+#: app/tools/gimpfliptool.c:83
 msgid "/Tools/Transform Tools/Flip"
 msgstr "/Công cụ/Công cụ Chuyển dạng/Phẩy nhẹ"
-
-#: app/tools/gimpfreeselecttool.c:92 libgimptool/gimptoolenums.c:116
-msgid "Free Select"
-msgstr "Chọn Tự Do"
 
 #: app/tools/gimpfreeselecttool.c:93
 msgid "Select hand-drawn regions"
@@ -6428,15 +6921,11 @@ msgstr "Chọn vùng vẽ thủ công"
 msgid "/Tools/Selection Tools/Free Select"
 msgstr "/Công cụ/Chông cụ chọn/Chọn Tự do"
 
-#: app/tools/gimpfuzzyselecttool.c:97
-msgid "Fuzzy Select"
-msgstr "Chọ tù mù"
-
-#: app/tools/gimpfuzzyselecttool.c:98
+#: app/tools/gimpfuzzyselecttool.c:99
 msgid "Select contiguous regions"
 msgstr "Chọn các vùng tiếp giáp"
 
-#: app/tools/gimpfuzzyselecttool.c:99
+#: app/tools/gimpfuzzyselecttool.c:100
 msgid "/Tools/Selection Tools/Fuzzy Select"
 msgstr "/Công cụ/Công cụ chọn/Chọn tù mù"
 
@@ -6495,10 +6984,6 @@ msgstr "Thông tin trên Kênh:"
 #: app/tools/gimphistogramtool.c:392
 msgid "Histogram Scale:"
 msgstr "Cân chỉnh bảng thống kê:"
-
-#: app/tools/gimphuesaturationtool.c:108
-msgid "Hue-Saturation"
-msgstr "Bão hòa Màu sắc"
 
 #: app/tools/gimphuesaturationtool.c:109
 msgid "Adjust hue and saturation"
@@ -6572,70 +7057,65 @@ msgstr "Độ bão hoà:"
 msgid "R_eset Color"
 msgstr "Đặt lại Màu"
 
-#: app/tools/gimpinktool.c:252
-msgid "Ink"
-msgstr "Mực"
-
-#: app/tools/gimpinktool.c:253
-msgid "Draw in ink"
-msgstr "Vẽ bằng mực"
-
-#: app/tools/gimpinktool.c:254
-msgid "/Tools/Paint Tools/Ink"
-msgstr "/Công cụ/Công cụ vẽ/Mực"
-
 #. adjust sliders
-#: app/tools/gimpinktool.c:1409
+#: app/tools/gimpinkoptions.c:259
 msgid "Adjustment"
 msgstr "Sự chỉnh lý"
 
-#: app/tools/gimpinktool.c:1422 app/tools/gimpinktool.c:1458
+#: app/tools/gimpinkoptions.c:273 app/tools/gimpinkoptions.c:299
 msgid "Size:"
 msgstr "Kích cỡ:"
 
-#: app/tools/gimpinktool.c:1434 app/tools/gimpmeasuretool.c:399
-#: app/tools/gimprotatetool.c:177 app/widgets/gimpbrusheditor.c:189
+#: app/tools/gimpinkoptions.c:280 app/tools/gimpmeasuretool.c:390
+#: app/tools/gimprotatetool.c:178 app/widgets/gimpbrusheditor.c:189
 msgid "Angle:"
 msgstr "Góc:"
 
 #. sens sliders
-#: app/tools/gimpinktool.c:1445
+#: app/tools/gimpinkoptions.c:285
 msgid "Sensitivity"
 msgstr "Độ Nhạy"
 
-#: app/tools/gimpinktool.c:1470
+#: app/tools/gimpinkoptions.c:306
 msgid "Tilt:"
 msgstr ""
 
-#: app/tools/gimpinktool.c:1482
+#: app/tools/gimpinkoptions.c:313
 msgid "Speed:"
 msgstr "Tốc độ:"
 
-#. Brush type radiobuttons
-#: app/tools/gimpinktool.c:1498
+#: app/tools/gimpinkoptions.c:324
 msgid "Type"
 msgstr "Kiểu"
 
 #. Brush shape widget
-#: app/tools/gimpinktool.c:1566
+#: app/tools/gimpinkoptions.c:356
 msgid "Shape"
 msgstr "Hình thể"
 
-#: app/tools/gimpiscissorstool.c:276
+#: app/tools/gimpinktool.c:165 app/tools/gimpinktool.c:717
+msgid "Ink"
+msgstr "Mực"
+
+#: app/tools/gimpinktool.c:166
+msgid "Draw in ink"
+msgstr "Vẽ bằng mực"
+
+#: app/tools/gimpinktool.c:167
+msgid "/Tools/Paint Tools/Ink"
+msgstr "/Công cụ/Công cụ vẽ/Mực"
+
+#: app/tools/gimpiscissorstool.c:277
 msgid "Scissors"
 msgstr "Kéo cắt"
 
-#: app/tools/gimpiscissorstool.c:277
+#: app/tools/gimpiscissorstool.c:278
 msgid "Select shapes from image"
 msgstr "Chọn hình thể từ ảnh"
 
-#: app/tools/gimpiscissorstool.c:278
+#: app/tools/gimpiscissorstool.c:279
 msgid "/Tools/Selection Tools/Intelligent Scissors"
 msgstr "/Công cụ/Công cụ Chọn/Kéo cắt thông minh"
-
-#: app/tools/gimplevelstool.c:160
-msgid "Levels"
-msgstr "Mức độ"
 
 #: app/tools/gimplevelstool.c:161
 msgid "Adjust color levels"
@@ -6649,7 +7129,7 @@ msgstr "/Lớp/Màu/Mức độ..."
 msgid "Adjust Color Levels"
 msgstr "Chỉnh mức độ màu"
 
-#: app/tools/gimplevelstool.c:279
+#: app/tools/gimplevelstool.c:281
 msgid "Levels for indexed drawables cannot be adjusted."
 msgstr ""
 
@@ -6707,148 +7187,134 @@ msgstr "Nạp Mức Độ"
 msgid "Save Levels"
 msgstr "Lưu Mức Độ"
 
-#: app/tools/gimpmagnifytool.c:122
-msgid "Magnify"
-msgstr "Phóng to-nhỏ"
-
-#: app/tools/gimpmagnifytool.c:123
-msgid "Zoom in & out"
-msgstr "Phóng to & nhỏ"
-
-#: app/tools/gimpmagnifytool.c:124
-msgid "/Tools/Magnify"
-msgstr "/Công cụ/Phóng to-nhỏ"
-
-#: app/tools/gimpmagnifytool.c:455
+#: app/tools/gimpmagnifyoptions.c:219
 msgid "Allow Window Resizing"
 msgstr "Cho phép thay đổi kích cỡ cửa sổ"
 
-#: app/tools/gimpmeasuretool.c:140
-msgid "Measure"
-msgstr "Đo Lường"
+#: app/tools/gimpmagnifytool.c:101
+msgid "Magnify"
+msgstr "Phóng to-nhỏ"
 
-#: app/tools/gimpmeasuretool.c:141
-msgid "Measure angles and lengths"
-msgstr "Đo góc và độ dài"
+#: app/tools/gimpmagnifytool.c:102
+msgid "Zoom in & out"
+msgstr "Phóng to & nhỏ"
 
-#: app/tools/gimpmeasuretool.c:142
-msgid "/Tools/Measure"
-msgstr "/Công cụ/Đo lường"
+#: app/tools/gimpmagnifytool.c:103
+msgid "/Tools/Magnify"
+msgstr "/Công cụ/Phóng to-nhỏ"
 
-#: app/tools/gimpmeasuretool.c:396
-msgid "Measure Distances and Angles"
-msgstr "Đo góc và độ dài"
-
-#: app/tools/gimpmeasuretool.c:398
-msgid "Distance:"
-msgstr "Khoảng cách:"
-
-#: app/tools/gimpmeasuretool.c:585 app/tools/gimpmeasuretool.c:590
-#: app/tools/gimpmeasuretool.c:598 app/tools/gimpmeasuretool.c:628
-msgid "degrees"
-msgstr "Độ"
-
-#: app/tools/gimpmeasuretool.c:882
+#: app/tools/gimpmeasureoptions.c:170
 msgid "Use Info Window"
 msgstr "Dùng Cửa Sổ Thông Tin"
 
-#: app/tools/gimpmovetool.c:122
-msgid "Move"
-msgstr "Di chuyển"
+#: app/tools/gimpmeasuretool.c:127
+msgid "Measure"
+msgstr "Đo Lường"
 
-#: app/tools/gimpmovetool.c:123
-msgid "Move layers & selections"
-msgstr "Di chuyển lớp và phần chọn"
+#: app/tools/gimpmeasuretool.c:128
+msgid "Measure angles and lengths"
+msgstr "Đo góc và độ dài"
 
-#: app/tools/gimpmovetool.c:124
-msgid "/Tools/Transform Tools/Move"
-msgstr "/Công cụ/Công cụ chuyển dạng/Di chuyển"
+#: app/tools/gimpmeasuretool.c:129
+msgid "/Tools/Measure"
+msgstr "/Công cụ/Đo lường"
 
-#: app/tools/gimpmovetool.c:702
-msgid "Pick a Layer to Move"
-msgstr "Nhặt một Lớp để Di chuyển"
+#: app/tools/gimpmeasuretool.c:285
+#, fuzzy
+msgid "Add Guides"
+msgstr "Chỉ dẫn"
 
-#: app/tools/gimpmovetool.c:706
+#: app/tools/gimpmeasuretool.c:387
+msgid "Measure Distances and Angles"
+msgstr "Đo góc và độ dài"
+
+#: app/tools/gimpmeasuretool.c:389
+msgid "Distance:"
+msgstr "Khoảng cách:"
+
+#: app/tools/gimpmeasuretool.c:575 app/tools/gimpmeasuretool.c:580
+#: app/tools/gimpmeasuretool.c:588 app/tools/gimpmeasuretool.c:618
+msgid "degrees"
+msgstr "Độ"
+
+#: app/tools/gimpmoveoptions.c:183
 msgid "Move Current Layer"
 msgstr "Di chuyển Lớp Hiện thời"
 
+#: app/tools/gimpmoveoptions.c:184
+msgid "Pick a Layer to Move"
+msgstr "Nhặt một Lớp để Di chuyển"
+
 #. move mask
-#: app/tools/gimpmovetool.c:717
+#: app/tools/gimpmoveoptions.c:191
 #, c-format
 msgid "Move Mode  %s"
 msgstr "Chế độ Di chuyển  %s"
 
-#: app/tools/gimpmovetool.c:724
-msgid "Move Pixels"
-msgstr "Di chuyển theo Pixel"
-
-#: app/tools/gimpmovetool.c:728
+#: app/tools/gimpmoveoptions.c:195
 msgid "Move Selection Outline"
 msgstr ""
 
-#: app/tools/gimppaintbrushtool.c:52
-msgid "Paintbrush"
-msgstr "Bút vẽ"
+#: app/tools/gimpmoveoptions.c:196
+msgid "Move Pixels"
+msgstr "Di chuyển theo Pixel"
 
-#: app/tools/gimppaintbrushtool.c:53
+#: app/tools/gimpmovetool.c:103
+msgid "Move"
+msgstr "Di chuyển"
+
+#: app/tools/gimpmovetool.c:104
+msgid "Move layers & selections"
+msgstr "Di chuyển lớp và phần chọn"
+
+#: app/tools/gimpmovetool.c:105
+msgid "/Tools/Transform Tools/Move"
+msgstr "/Công cụ/Công cụ chuyển dạng/Di chuyển"
+
+#: app/tools/gimpmovetool.c:645
+#, fuzzy
+msgid "Add Guide"
+msgstr "Chỉ dẫn"
+
+#: app/tools/gimppaintbrushtool.c:55
 msgid "Paint fuzzy brush strokes"
 msgstr ""
 
-#: app/tools/gimppaintbrushtool.c:54
+#: app/tools/gimppaintbrushtool.c:56
 msgid "/Tools/Paint Tools/Paintbrush"
 msgstr "/Công cụ/Công cụ vẽ/Bút vẽ"
 
-#: app/tools/gimppathtool.c:115
-msgid "Path"
-msgstr "Đường Dẫn"
-
-#: app/tools/gimppathtool.c:116
-msgid "Path tool prototype"
-msgstr "Nguyên mẫu công cụ đường dẫn"
-
-#: app/tools/gimppathtool.c:117
-msgid "/Tools/Path"
-msgstr "/Công cụ/Đường dẫn"
-
-#: app/tools/gimppenciltool.c:52
-msgid "Pencil"
-msgstr "Bút chì"
-
-#: app/tools/gimppenciltool.c:53
+#: app/tools/gimppenciltool.c:55
 msgid "Paint hard edged pixels"
 msgstr ""
 
-#: app/tools/gimppenciltool.c:54
+#: app/tools/gimppenciltool.c:56
 msgid "/Tools/Paint Tools/Pencil"
 msgstr "/Công cụ/Công cụ vẽ/Bút chì"
 
-#: app/tools/gimpperspectivetool.c:80
+#: app/tools/gimpperspectivetool.c:81
 msgid "Perspective"
 msgstr "Phối cảnh"
 
-#: app/tools/gimpperspectivetool.c:81
+#: app/tools/gimpperspectivetool.c:82
 msgid "Change perspective of the layer or selection"
 msgstr "Thay đổi phối cảnh của lớp hay phần chọn"
 
-#: app/tools/gimpperspectivetool.c:82
+#: app/tools/gimpperspectivetool.c:83
 msgid "/Tools/Transform Tools/Perspective"
 msgstr "/Công cụ/Công cụ chuyển dạng/Phối cảnh"
 
-#: app/tools/gimpperspectivetool.c:143
+#: app/tools/gimpperspectivetool.c:144
 msgid "Perspective Transform Information"
 msgstr "Thông tin Chuyển Dạng Phối Cảnh"
 
-#: app/tools/gimpperspectivetool.c:144
+#: app/tools/gimpperspectivetool.c:145
 msgid "Perspective..."
 msgstr "Phối cảnh..."
 
-#: app/tools/gimpperspectivetool.c:150
+#: app/tools/gimpperspectivetool.c:151
 msgid "Matrix:"
 msgstr "Ma trận:"
-
-#: app/tools/gimpposterizetool.c:76
-msgid "Posterize"
-msgstr "Làm áp phích"
 
 #: app/tools/gimpposterizetool.c:77
 msgid "Reduce image to a fixed number of colors"
@@ -6870,15 +7336,11 @@ msgstr ""
 msgid "Posterize _Levels:"
 msgstr "Mức độ áp phích hoá:"
 
-#: app/tools/gimprectselecttool.c:92
-msgid "Rect Select"
-msgstr "Chọn chữ nhật"
-
-#: app/tools/gimprectselecttool.c:93
+#: app/tools/gimprectselecttool.c:94
 msgid "Select rectangular regions"
 msgstr "Chọn các phần chữ nhật"
 
-#: app/tools/gimprectselecttool.c:94
+#: app/tools/gimprectselecttool.c:95
 msgid "/Tools/Selection Tools/Rect Select"
 msgstr "/Công cụ/Công cụ chọn/Chọn chữ nhật"
 
@@ -6898,151 +7360,176 @@ msgstr "Phần chọn: Cắt Chéo"
 msgid "Selection: REPLACE"
 msgstr "Phần chọn: THAY THẾ"
 
-#: app/tools/gimprectselecttool.c:461
+#: app/tools/gimprectselecttool.c:459
 msgid "Selection: "
 msgstr "Phần chọn:"
 
-#: app/tools/gimprotatetool.c:102
+#: app/tools/gimprotatetool.c:103
 msgid "Rotate"
 msgstr "Xoay"
 
-#: app/tools/gimprotatetool.c:103
+#: app/tools/gimprotatetool.c:104
 msgid "Rotate the layer or selection"
 msgstr "Xoay lớp hoặc phần chọn"
 
-#: app/tools/gimprotatetool.c:104
+#: app/tools/gimprotatetool.c:105
 msgid "/Tools/Transform Tools/Rotate"
 msgstr "/Công cụ/Công cụ chuyển dạng/Xoay"
 
-#: app/tools/gimprotatetool.c:167
+#: app/tools/gimprotatetool.c:168
 msgid "Rotation Information"
 msgstr "Thông tin xoay"
 
-#: app/tools/gimprotatetool.c:168
+#: app/tools/gimprotatetool.c:169
 msgid "Rotating..."
 msgstr "Xoay..."
 
-#: app/tools/gimprotatetool.c:193
+#: app/tools/gimprotatetool.c:194
 msgid "Center X:"
 msgstr "Trung tâm X:"
 
-#: app/tools/gimpscaletool.c:95
+#: app/tools/gimpscaletool.c:96
 msgid "Scale"
 msgstr "Cân chỉnh"
 
-#: app/tools/gimpscaletool.c:96
+#: app/tools/gimpscaletool.c:97
 msgid "Scale the layer or selection"
 msgstr "Cân chỉnh lớp hay phần chọn"
 
-#: app/tools/gimpscaletool.c:97
+#: app/tools/gimpscaletool.c:98
 msgid "/Tools/Transform Tools/Scale"
 msgstr "/Công cụ/Công cụ chuyển dạng/Cân chỉnh"
 
-#: app/tools/gimpscaletool.c:160
+#: app/tools/gimpscaletool.c:161
 msgid "Scaling Information"
 msgstr "Thông tin cân chỉnh"
 
-#: app/tools/gimpscaletool.c:177
+#: app/tools/gimpscaletool.c:178
 msgid "Current Width:"
 msgstr "Bề rộng Hiện thời:"
 
-#: app/tools/gimpscaletool.c:196
+#: app/tools/gimpscaletool.c:197
 msgid "Scale Ratio X:"
 msgstr "Cân chỉnh tỷ lệ X:"
 
-#: app/tools/gimpsheartool.c:97
-msgid "Shear"
-msgstr "Cắt xén"
+#: app/tools/gimpselectionoptions.c:138
+msgid "Smooth edges"
+msgstr "Cạnh nhẵn"
 
-#: app/tools/gimpsheartool.c:98
-msgid "Shear the layer or selection"
-msgstr "Cắt xén lớp hay phần chọn"
+#: app/tools/gimpselectionoptions.c:152
+msgid "Allow completely transparent regions to be selected"
+msgstr "Cho phép các vùng trong suốt được chọn"
 
-#: app/tools/gimpsheartool.c:99
-msgid "/Tools/Transform Tools/Shear"
-msgstr "/Công cụ/Công cụ chuyển dạng/Cắt xén"
+#: app/tools/gimpselectionoptions.c:158
+msgid "Base selection on all visible layers"
+msgstr "Lựa chọn cơ bản trên toàn bộ các lớp nhìn thấy"
 
-#: app/tools/gimpsheartool.c:160
-msgid "Shearing Information"
-msgstr "Thông tin cắt xén"
+#: app/tools/gimpselectionoptions.c:173
+msgid "Use all visible layers when shrinking the selection"
+msgstr "Dùng toàn bộ các lớp khi co ngắn phần chọn"
 
-#: app/tools/gimpsheartool.c:161
-msgid "Shearing..."
-msgstr "Cắt xén..."
+#: app/tools/gimpselectionoptions.c:406
+msgid "Antialiasing"
+msgstr "Antialiasing"
 
-#: app/tools/gimpsheartool.c:168
-msgid "Shear Magnitude X:"
-msgstr "Cắt xén Độ lớn X:"
+#: app/tools/gimpselectionoptions.c:429
+msgid "Feather Edges"
+msgstr ""
 
-#: app/tools/gimpsmudgetool.c:57
-msgid "Smudge"
-msgstr "Mờ"
+#: app/tools/gimpselectionoptions.c:464
+msgid "Show Interactive Boundary"
+msgstr "Hiển thị ranh giới tương tác"
 
-#: app/tools/gimpsmudgetool.c:58
-msgid "Smudge image"
-msgstr "Ảnh mờ"
+#: app/tools/gimpselectionoptions.c:488
+msgid "Select Transparent Areas"
+msgstr "Chọn Vùng Trong Suốt"
 
-#: app/tools/gimpsmudgetool.c:59
-msgid "/Tools/Paint Tools/Smudge"
-msgstr "/Công cụ/Công cụ vẽ/Đường mờ"
+#: app/tools/gimpselectionoptions.c:533
+msgid "Auto Shrink Selection"
+msgstr "Lựa chọn co ngắn tự động"
 
-#: app/tools/gimptexttool.c:151
-msgid "Add text to the image"
-msgstr "Thêm văn bản vào ảnh"
-
-#: app/tools/gimptexttool.c:152
-msgid "/Tools/Text"
-msgstr "/Công cụ/Văn bản"
-
-#: app/tools/gimptexttool.c:341
-msgid "No font chosen or font invalid."
-msgstr "Chưa chọn phông hay phông không hợp lệ."
-
-#: app/tools/gimptexttool.c:438
-msgid "Font:"
-msgstr "Phông:"
-
-#: app/tools/gimptexttool.c:442
-msgid "_Size:"
-msgstr "Kích cỡ:"
-
-#: app/tools/gimptexttool.c:455
-msgid "_Border:"
-msgstr "Đường Viền:"
-
-#: app/tools/gimptexttool.c:471 app/tools/selection_options.c:436
+#: app/tools/gimpselectionoptions.c:583
 msgid "Unit:"
 msgstr "Đơn vị:"
 
-#: app/tools/gimptexttool.c:558
+#: app/tools/gimpsheartool.c:98
+msgid "Shear"
+msgstr "Cắt xén"
+
+#: app/tools/gimpsheartool.c:99
+msgid "Shear the layer or selection"
+msgstr "Cắt xén lớp hay phần chọn"
+
+#: app/tools/gimpsheartool.c:100
+msgid "/Tools/Transform Tools/Shear"
+msgstr "/Công cụ/Công cụ chuyển dạng/Cắt xén"
+
+#: app/tools/gimpsheartool.c:161
+msgid "Shearing Information"
+msgstr "Thông tin cắt xén"
+
+#: app/tools/gimpsheartool.c:162
+msgid "Shearing..."
+msgstr "Cắt xén..."
+
+#: app/tools/gimpsheartool.c:169
+msgid "Shear Magnitude X:"
+msgstr "Cắt xén Độ lớn X:"
+
+#: app/tools/gimpsmudgetool.c:61
+msgid "Smudge image"
+msgstr "Ảnh mờ"
+
+#: app/tools/gimpsmudgetool.c:62
+msgid "/Tools/Paint Tools/Smudge"
+msgstr "/Công cụ/Công cụ vẽ/Đường mờ"
+
+#: app/tools/gimptextoptions.c:144
+#, fuzzy
+msgid "_Font:"
+msgstr "Phông:"
+
+#: app/tools/gimptextoptions.c:152
+msgid "_Size:"
+msgstr "Kích cỡ:"
+
+#: app/tools/gimptextoptions.c:163
+#, fuzzy
+msgid "Text Color"
+msgstr "Màu Thật"
+
+#: app/tools/gimptextoptions.c:168
+#, fuzzy
+msgid "Color:"
+msgstr "Màu"
+
+#: app/tools/gimptextoptions.c:173
+msgid "Justify:"
+msgstr ""
+
+#: app/tools/gimptextoptions.c:179
+#, fuzzy
+msgid "Indent:"
+msgstr "Chỉ mục:"
+
+#: app/tools/gimptextoptions.c:185
+#, fuzzy
+msgid ""
+"Line\n"
+"Spacing:"
+msgstr "Để cách:"
+
+#: app/tools/gimptexttool.c:109
+msgid "Add text to the image"
+msgstr "Thêm văn bản vào ảnh"
+
+#: app/tools/gimptexttool.c:110
+msgid "/Tools/Text"
+msgstr "/Công cụ/Văn bản"
+
+#: app/tools/gimptexttool.c:347
 msgid "GIMP Text Editor"
 msgstr "Trình soạn thảo văn bản GIMP"
-
-#: app/tools/gimptexttool.c:583
-msgid "Load Text from File"
-msgstr "Nạp văn bản từ tập tin"
-
-#: app/tools/gimptexttool.c:587
-msgid "Clear all Text"
-msgstr "Xóa sạch toàn bộ văn bản"
-
-#: app/tools/gimptexttool.c:628
-msgid "Open Text File (UTF-8)"
-msgstr "Mở tập tin văn bản (UTF-8)"
-
-#: app/tools/gimptexttool.c:678
-#, c-format
-msgid "Error opening file '%s': %s"
-msgstr "Lỗi khi mở tập tin '%s': %s"
-
-#: app/tools/gimptexttool.c:707
-#, c-format
-msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Dữ liệu UTF-8 không hợp lệ trong tập tin '%s'."
-
-#: app/tools/gimpthresholdtool.c:89
-msgid "Threshold"
-msgstr "Ngưỡng"
 
 #: app/tools/gimpthresholdtool.c:90
 msgid "Reduce image to two colors using a threshold"
@@ -7056,7 +7543,7 @@ msgstr "/Lớp/Màu/Ngưỡng..."
 msgid "Apply Threshold"
 msgstr "Áp dụng Ngưỡng"
 
-#: app/tools/gimpthresholdtool.c:199
+#: app/tools/gimpthresholdtool.c:201
 msgid "Threshold does not operate on indexed drawables."
 msgstr ""
 
@@ -7064,177 +7551,40 @@ msgstr ""
 msgid "Threshold Range:"
 msgstr "Loại Ngưỡng:"
 
-#: app/tools/gimptransformtool.c:226
-msgid "Transforming..."
-msgstr "Đang chuyển dạng..."
-
-#: app/tools/gimptransformtool.c:329
-msgid ""
-"Transformations do not work on\n"
-"layers that contain layer masks."
-msgstr ""
-"Sự chuyển dạng không hoạt động\n"
-"trên các lớp có chứa mask."
-
-#: app/tools/gimpvectortool.c:115
-msgid "Vectors"
-msgstr "Vector"
-
-#: app/tools/gimpvectortool.c:116
-msgid "the most promising path tool prototype... :-)"
-msgstr ""
-
-#: app/tools/gimpvectortool.c:117
-msgid "/Tools/Vectors"
-msgstr "/Công cụ/Vector"
-
-#: app/tools/paint_options.c:180
-msgid "Brush:"
-msgstr "Bút lông:"
-
-#: app/tools/paint_options.c:209
-msgid "Incremental"
-msgstr "Lớn lên"
-
-#: app/tools/paint_options.c:302
-msgid "Pressure Sensitivity"
-msgstr "Độ nhạy Nén ép"
-
-#: app/tools/paint_options.c:318
-msgid "Opacity"
-msgstr "Tính Mờ Đục"
-
-#: app/tools/paint_options.c:337
-msgid "Hardness"
-msgstr "Độ rắn"
-
-#: app/tools/paint_options.c:354
-msgid "Rate"
-msgstr "Mức độ"
-
-#: app/tools/paint_options.c:453
-msgid "Fade Out"
-msgstr "Mờ Dần"
-
-#: app/tools/paint_options.c:474 app/tools/paint_options.c:532
-msgid "Length:"
-msgstr "Chiều dài:"
-
-#: app/tools/paint_options.c:508
-msgid "Use Color from Gradient"
-msgstr "Dùng Màu từ Độ Dốc"
-
-#: app/tools/paint_options.c:562
-msgid "Type:"
-msgstr "Kiểu:"
-
-#: app/tools/path_tool.c:1413
-msgid "Path Tool"
-msgstr "Công cụ Đường dẫn"
-
-#: app/tools/selection_options.c:124
-msgid "Replace the current selection"
-msgstr "Thay thế lựa chọn hiện thời"
-
-#: app/tools/selection_options.c:125
-msgid "Add to the current selection"
-msgstr "Cộng vào lựa chọn hiện thời"
-
-#: app/tools/selection_options.c:126
-msgid "Subtract from the current selection"
-msgstr "Trừ đi từ lựa chọn hiện thời"
-
-#: app/tools/selection_options.c:127
-msgid "Intersect with the current selection"
-msgstr "Cắt chéo với lựa chọn hiện thời"
-
-#. the antialias toggle button
-#: app/tools/selection_options.c:174
-msgid "Antialiasing"
-msgstr "Antialiasing"
-
-#: app/tools/selection_options.c:180
-msgid "Smooth edges"
-msgstr "Cạnh nhẵn"
-
-#: app/tools/selection_options.c:202
-msgid "Feather Edges"
-msgstr ""
-
-#: app/tools/selection_options.c:255
-msgid "Show Interactive Boundary"
-msgstr "Hiển thị ranh giới tương tác"
-
-#: app/tools/selection_options.c:286
-msgid "Select Transparent Areas"
-msgstr "Chọn Vùng Trong Suốt"
-
-#: app/tools/selection_options.c:294
-msgid "Allow completely transparent regions to be selected"
-msgstr "Cho phép các vùng trong suốt được chọn"
-
-#: app/tools/selection_options.c:311
-msgid "Base selection on all visible layers"
-msgstr "Lựa chọn cơ bản trên toàn bộ các lớp nhìn thấy"
-
-#: app/tools/selection_options.c:356
-msgid "Auto Shrink Selection"
-msgstr "Lựa chọn co ngắn tự động"
-
-#: app/tools/selection_options.c:379
-msgid "Use all visible layers when shrinking the selection"
-msgstr "Dùng toàn bộ các lớp khi co ngắn phần chọn"
-
-#: app/tools/tool_options.c:47
-msgid "This tool has no options."
-msgstr "Công cụ này không có tùy chọn."
-
-#: app/tools/transform_options.c:97
+#: app/tools/gimptransformoptions.c:289
 msgid "Transform Direction"
 msgstr "Biến đổi Hướng"
 
 #. the clip resulting image toggle button
-#: app/tools/transform_options.c:128
+#: app/tools/gimptransformoptions.c:307
 msgid "Clip Result"
 msgstr "Kết quả cắt xén"
 
-#: app/tools/transform_options.c:148
-msgid "Don't Show Grid"
-msgstr "Không hiện đường kẻ ô"
-
-#: app/tools/transform_options.c:151
-msgid "Number of Grid Lines"
-msgstr "Số dòng kẻ ô"
-
-#: app/tools/transform_options.c:154
-msgid "Grid Line Spacing"
-msgstr ""
-
-#: app/tools/transform_options.c:169
+#: app/tools/gimptransformoptions.c:334
 msgid "Density:"
 msgstr "Mật độ:"
 
 #. the show_path toggle button
-#: app/tools/transform_options.c:181
+#: app/tools/gimptransformoptions.c:339
 msgid "Show Path"
 msgstr "Hiển thị đường dẫn"
 
 #. the constraints frame
-#: app/tools/transform_options.c:196
+#: app/tools/gimptransformoptions.c:350
 msgid "Constraints"
 msgstr "Bắt ép"
 
-#: app/tools/transform_options.c:207
+#: app/tools/gimptransformoptions.c:361
 #, c-format
 msgid "15 Degrees  %s"
 msgstr "15 Độ  %s"
 
-#: app/tools/transform_options.c:223
+#: app/tools/gimptransformoptions.c:372
 #, c-format
 msgid "Keep Height  %s"
 msgstr "Giữ Chiều Cao  %s"
 
-#: app/tools/transform_options.c:234 app/tools/transform_options.c:253
+#: app/tools/gimptransformoptions.c:382 app/tools/gimptransformoptions.c:396
 msgid ""
 "Activate both the \"Keep Height\" and\n"
 "\"Keep Width\" toggles to constrain\n"
@@ -7244,10 +7594,78 @@ msgstr ""
 "và \"Giữ chiều rộng\" để ép tỷ lệ\n"
 "hình thể"
 
-#: app/tools/transform_options.c:242
+#: app/tools/gimptransformoptions.c:386
 #, c-format
 msgid "Keep Width  %s"
 msgstr "Giữ chiều rộng  %s"
+
+#: app/tools/gimptransformtool.c:238
+msgid "Transforming..."
+msgstr "Đang chuyển dạng..."
+
+#: app/tools/gimptransformtool.c:362
+msgid ""
+"Transformations do not work on\n"
+"layers that contain layer masks."
+msgstr ""
+"Sự chuyển dạng không hoạt động\n"
+"trên các lớp có chứa mask."
+
+#: app/tools/gimpvectortool.c:102
+msgid "Vectors"
+msgstr "Vector"
+
+#: app/tools/gimpvectortool.c:103
+msgid "the most promising path tool prototype... :-)"
+msgstr ""
+
+#: app/tools/gimpvectortool.c:104
+msgid "/Tools/Vectors"
+msgstr "/Công cụ/Vector"
+
+#: app/tools/paint_options.c:142
+msgid "Brush:"
+msgstr "Bút lông:"
+
+#: app/tools/paint_options.c:172
+msgid "Incremental"
+msgstr "Lớn lên"
+
+#: app/tools/paint_options.c:232
+msgid "Pressure Sensitivity"
+msgstr "Độ nhạy Nén ép"
+
+#: app/tools/paint_options.c:248
+msgid "Opacity"
+msgstr "Tính Mờ Đục"
+
+#: app/tools/paint_options.c:262
+msgid "Hardness"
+msgstr "Độ rắn"
+
+#: app/tools/paint_options.c:273
+msgid "Rate"
+msgstr "Mức độ"
+
+#: app/tools/paint_options.c:332
+msgid "Fade Out"
+msgstr "Mờ Dần"
+
+#: app/tools/paint_options.c:345 app/tools/paint_options.c:403
+msgid "Length:"
+msgstr "Chiều dài:"
+
+#: app/tools/paint_options.c:388
+msgid "Use Color from Gradient"
+msgstr "Dùng Màu từ Độ Dốc"
+
+#: app/tools/paint_options.c:418
+msgid "Type:"
+msgstr "Kiểu:"
+
+#: app/tools/tool_manager.c:215
+msgid "This tool has no options."
+msgstr "Công cụ này không có tùy chọn."
 
 #: app/widgets/widgets-enums.c:13
 msgid "Internal"
@@ -7282,11 +7700,27 @@ msgid "Paste as New"
 msgstr "Dán làm mới"
 
 #: app/widgets/gimpbufferview.c:171 app/widgets/gimpdatafactoryview.c:225
-#: app/widgets/gimpitemlistview.c:238
 msgid "Delete"
 msgstr "Xoá"
 
-#: app/widgets/gimpchannellistview.c:161
+#: app/widgets/gimpchannellistview.c:136
+#, fuzzy
+msgid "Duplicate Channel"
+msgstr "/Nhân đôi Kênh"
+
+#: app/widgets/gimpchannellistview.c:140
+#, fuzzy
+msgid "Raise Channel to Top"
+msgstr "/Nâng Kênh"
+
+#: app/widgets/gimpchannellistview.c:142
+#, fuzzy
+msgid "Lower Channel to Bottom"
+msgstr ""
+"Hạ xuống\n"
+"%s  tới đáy"
+
+#: app/widgets/gimpchannellistview.c:177
 #, c-format
 msgid ""
 "Channel to Selection\n"
@@ -7336,15 +7770,15 @@ msgstr "Lưu"
 msgid "Revert"
 msgstr "Trở lại"
 
-#: app/widgets/gimpdatafactoryview.c:201 app/widgets/gimpitemlistview.c:191
+#: app/widgets/gimpdatafactoryview.c:201
 msgid "New"
 msgstr "Mới"
 
-#: app/widgets/gimpdatafactoryview.c:209 app/widgets/gimpitemlistview.c:224
+#: app/widgets/gimpdatafactoryview.c:209
 msgid "Duplicate"
 msgstr "Sao Lại"
 
-#: app/widgets/gimpdatafactoryview.c:217 app/widgets/gimpitemlistview.c:231
+#: app/widgets/gimpdatafactoryview.c:217
 msgid "Edit"
 msgstr "Biên Soạn"
 
@@ -7391,17 +7825,30 @@ msgstr ""
 "%s  Nạp lại toàn bộ Xem trước\n"
 "%s  Bỏ mục nhập theo sát"
 
-#: app/widgets/gimpfontselection-dialog.c:123
+#: app/widgets/gimpfontselection.c:171
+#, fuzzy
+msgid "Click to open the Font Selection Dialog"
+msgstr ""
+"Mẫu hoạt động.\n"
+"Nhấn chuột để mở thoại Mẫu"
+
+#: app/widgets/gimpfontselection-dialog.c:128
 msgid "GIMP Font Selection"
 msgstr "Chọn Phông Chữ"
 
-#: app/widgets/gimpfontselection-dialog.c:233
+#: app/widgets/gimpfontselection-dialog.c:238
 msgid "_Family:"
 msgstr "_Họ:"
 
-#: app/widgets/gimpfontselection-dialog.c:239
+#: app/widgets/gimpfontselection-dialog.c:244
 msgid "_Style:"
 msgstr "_Kiểu:"
+
+#. This is a so-called pangram; it's supposed to
+#. contain all characters found in the alphabet.
+#: app/widgets/gimpfontselection-dialog.c:274
+msgid "Pack my box with five dozen liquor jugs."
+msgstr ""
 
 #: app/widgets/gimpgradienteditor.c:385 app/widgets/gimppaletteeditor.c:269
 msgid "Zoom All"
@@ -7495,11 +7942,11 @@ msgstr "Quản lý vị trí: %0.6f"
 msgid "Distance: %0.6f"
 msgstr "Khoảng cách: %0.6f"
 
-#: app/widgets/gimphelp.c:197
+#: app/widgets/gimphelp.c:196
 msgid "Could not find GIMP Help Browser"
 msgstr "Không thể tìm Trình Duyệt Trợ Giúp của GIMP"
 
-#: app/widgets/gimphelp.c:199
+#: app/widgets/gimphelp.c:198
 msgid ""
 "Could not find the GIMP Help Browser procedure.\n"
 "It probably was not compiled because\n"
@@ -7509,7 +7956,7 @@ msgstr ""
 "GIMP. Có thể nó đã không được biên dịch vì\n"
 "không thấy GtkXmHTML được cài đặt."
 
-#: app/widgets/gimphelp.c:202
+#: app/widgets/gimphelp.c:201
 msgid "Use Netscape instead"
 msgstr "Dùng Netscape thay thế"
 
@@ -7539,35 +7986,41 @@ msgstr "Xoá ảnh này"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemlistview.c:196
-#, c-format
+#: app/widgets/gimpitemlistview.c:216
+#, fuzzy, c-format
 msgid ""
-"Raise\n"
+"%s\n"
 "%s  To Top"
 msgstr ""
 "Nâng lên\n"
 "%s  đến đỉnh"
 
-#: app/widgets/gimpitemlistview.c:209
-#, c-format
+#: app/widgets/gimpitemlistview.c:230
+#, fuzzy, c-format
 msgid ""
-"Lower\n"
+"%s\n"
 "%s  To Bottom"
 msgstr ""
 "Hạ xuống\n"
 "%s  tới đáy"
 
-#: app/widgets/gimplayerlistview.c:160
+#: app/widgets/gimplayerlistview.c:137
+#, fuzzy
+msgid "Duplicate Layer"
+msgstr "/Nhân đôi Lớp"
+
+#: app/widgets/gimplayerlistview.c:183
 msgid "Keep Trans."
 msgstr "Giữ Trong Suốt."
 
-#: app/widgets/gimplayerlistview.c:169
+#: app/widgets/gimplayerlistview.c:192
 msgid "Keep Transparency"
 msgstr "Giữ tính Trong Suốt"
 
-#: app/widgets/gimplayerlistview.c:193
-msgid "Anchor"
-msgstr "Mỏ Neo"
+#: app/widgets/gimplayerlistview.c:215
+#, fuzzy
+msgid "Anchor Floating Layer"
+msgstr "Neo Chọn Lựa Nổi"
 
 #: app/widgets/gimppaletteeditor.c:244 app/widgets/gimppaletteeditor.c:353
 msgid "Undefined"
@@ -7577,26 +8030,36 @@ msgstr "Không xác định"
 msgid "Columns:"
 msgstr "Cột:"
 
-#: app/widgets/gimppropwidgets.c:828
+#: app/widgets/gimppropwidgets.c:1106
 #, c-format
 msgid "This text input field is limited to %d characters."
 msgstr "Trường nhập văn bản này được giới hạn trong %d ký tự."
 
-#: app/widgets/gimpselectioneditor.c:169
-msgid "Invert Selection"
-msgstr "Đảo ngược phần chọn"
-
-#: app/widgets/gimpselectioneditor.c:177
-msgid "Select All"
-msgstr "Chọn Toàn bộ"
-
-#: app/widgets/gimpselectioneditor.c:185
-msgid "Select None"
-msgstr "Chọn Không"
-
 #: app/widgets/gimpselectioneditor.c:193
 msgid "Save Selection to Channel"
 msgstr "Lưu Phần chọn vào Kênh"
+
+#: app/widgets/gimptexteditor.c:104
+msgid "Load Text from File"
+msgstr "Nạp văn bản từ tập tin"
+
+#: app/widgets/gimptexteditor.c:108
+msgid "Clear all Text"
+msgstr "Xóa sạch toàn bộ văn bản"
+
+#: app/widgets/gimptexteditor.c:161
+msgid "Open Text File (UTF-8)"
+msgstr "Mở tập tin văn bản (UTF-8)"
+
+#: app/widgets/gimptexteditor.c:210
+#, c-format
+msgid "Error opening file '%s': %s"
+msgstr "Lỗi khi mở tập tin '%s': %s"
+
+#: app/widgets/gimptexteditor.c:239
+#, c-format
+msgid "Invalid UTF-8 data in file '%s'."
+msgstr "Dữ liệu UTF-8 không hợp lệ trong tập tin '%s'."
 
 #: app/widgets/gimptoolbox-color-area.c:391
 msgid "Change Foreground Color"
@@ -7639,6 +8102,20 @@ msgstr ""
 "đổi màu. Nhấp đúp chuột để mở thoại chọn màu."
 
 #: app/widgets/gimpvectorslistview.c:122
+#, fuzzy
+msgid "Raise Path to Top"
+msgstr ""
+"Nâng lên\n"
+"%s  đến đỉnh"
+
+#: app/widgets/gimpvectorslistview.c:124
+#, fuzzy
+msgid "Lower Path to Bottom"
+msgstr ""
+"Hạ xuống\n"
+"%s  tới đáy"
+
+#: app/widgets/gimpvectorslistview.c:135
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -7770,7 +8247,7 @@ msgstr "Thông điệp GIMP"
 #. The format string which is used to display modifier names
 #. *  <Shift>, <Ctrl> and <Alt>
 #.
-#: app/widgets/gimpwidgets-utils.c:287
+#: app/widgets/gimpwidgets-utils.c:291
 #, c-format
 msgid "<%s>"
 msgstr "<%s>"
@@ -7838,6 +8315,45 @@ msgstr "Cỡ cố định"
 #: libgimptool/gimptoolenums.c:118
 msgid "Fixed Aspect Ratio"
 msgstr "Tỷ lệ hình thể cố định"
+
+#: libgimptool/gimptoolenums.c:136
+msgid "Don't Show Grid"
+msgstr "Không hiện đường kẻ ô"
+
+#: libgimptool/gimptoolenums.c:137
+msgid "Number of Grid Lines"
+msgstr "Số dòng kẻ ô"
+
+#: libgimptool/gimptoolenums.c:138
+msgid "Grid Line Spacing"
+msgstr ""
+
+#~ msgid "/Filters/Text"
+#~ msgstr "/Trình lọc/Văn bản"
+
+#~ msgid "Reset"
+#~ msgstr "Lập lại"
+
+#~ msgid "Path"
+#~ msgstr "Đường Dẫn"
+
+#~ msgid "Path tool prototype"
+#~ msgstr "Nguyên mẫu công cụ đường dẫn"
+
+#~ msgid "/Tools/Path"
+#~ msgstr "/Công cụ/Đường dẫn"
+
+#~ msgid "No font chosen or font invalid."
+#~ msgstr "Chưa chọn phông hay phông không hợp lệ."
+
+#~ msgid "_Border:"
+#~ msgstr "Đường Viền:"
+
+#~ msgid "Path Tool"
+#~ msgstr "Công cụ Đường dẫn"
+
+#~ msgid "Anchor"
+#~ msgstr "Mỏ Neo"
 
 #~ msgid "Unable to locate Plug-In: \"%s\""
 #~ msgstr "Không thể định vị Plug-In: \"%s\""
@@ -7962,9 +8478,6 @@ msgstr "Tỷ lệ hình thể cố định"
 #~ msgid "%s Options"
 #~ msgstr "Tùy chọn %s"
 
-#~ msgid "Gradient Selection"
-#~ msgstr "Sự Chọn Độ Dốc"
-
 #~ msgid "Save Preferences ?"
 #~ msgstr "Lưu Tùy thích ?"
 
@@ -7991,9 +8504,6 @@ msgstr "Tỷ lệ hình thể cố định"
 
 #~ msgid "Perspective Tool"
 #~ msgstr "Công cụ Phối cảnh"
-
-#~ msgid "Perspective Transform"
-#~ msgstr "Chuyển Dạng Phối Cảnh"
 
 #~ msgid "Scale Tool"
 #~ msgstr "Công cụ Cân chỉnh"
@@ -8109,9 +8619,6 @@ msgstr "Tỷ lệ hình thể cố định"
 #~ msgid "Inactive"
 #~ msgstr "Không hoạt động"
 
-#~ msgid "Invert"
-#~ msgstr "Lộn ngược"
-
 #~ msgid "All"
 #~ msgstr "Toàn bộ"
 
@@ -8132,4 +8639,3 @@ msgstr "Tỷ lệ hình thể cố định"
 
 #~ msgid "Color Selection"
 #~ msgstr "Chọn Màu"
-

@@ -214,6 +214,15 @@ Sets the number of operations kept on the undo stack.  This is an integer
 value.
 
 .TP
+(undo-size 1024k)
+
+Sets the maximum memory used by operations kept on the undo stack.  The
+integer size can contain a suffix of 'B', 'K', 'M' or 'G' which makes GIMP
+interpret the size as being specified in bytes, kilobytes, megabytes or
+gigabytes. If no suffix is specified the size defaults to being specified in
+kilobytes.
+
+.TP
 (pluginrc-path "${gimp_dir}/pluginrc")
 
 Sets the pluginrc search path.  This is a single filename.

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-scriptfu for Gnome 2.x\n"
-"POT-Creation-Date: 2002-07-06 01:52+0200\n"
+"POT-Creation-Date: 2003-02-18 01:09+0100\n"
 "PO-Revision-Date: 2002-07-20 15:36+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
@@ -47,56 +47,55 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1192
-#: plug-ins/script-fu/script-fu-scripts.c:1195
+#: plug-ins/script-fu/script-fu-scripts.c:1186
+#: plug-ins/script-fu/script-fu-scripts.c:1188
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1194
-#: plug-ins/script-fu/script-fu-scripts.c:1197
+#: plug-ins/script-fu/script-fu-scripts.c:1196
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1235
+#: plug-ins/script-fu/script-fu-scripts.c:1230
 msgid "About"
 msgstr "Nói về"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1245
+#: plug-ins/script-fu/script-fu-scripts.c:1240
 msgid "Script Arguments"
 msgstr "Đối số của Script"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1268
+#: plug-ins/script-fu/script-fu-scripts.c:1263
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1315
+#: plug-ins/script-fu/script-fu-scripts.c:1310
 msgid "Script-Fu Color Selection"
 msgstr "Chọn Màu của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1398
+#: plug-ins/script-fu/script-fu-scripts.c:1391
 msgid "Script-Fu File Selection"
 msgstr "Chọn Tập Tin của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1403
+#: plug-ins/script-fu/script-fu-scripts.c:1396
 msgid "Script-Fu Folder Selection"
 msgstr "Chọn Thư Mục của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1438
+#: plug-ins/script-fu/script-fu-scripts.c:1431
 msgid "Script-fu Pattern Selection"
 msgstr "Chọn Mẫu của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1445
+#: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-Fu Gradient Selection"
 msgstr "Chọn Độ Dốc của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1453
+#: plug-ins/script-fu/script-fu-scripts.c:1446
 msgid "Script-Fu Brush Selection"
 msgstr "Chọn Bút Vẽ của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1661
+#: plug-ins/script-fu/script-fu-scripts.c:1654
 msgid ""
 "At least one font you've choosen is invalid.\n"
 "Please check your settings.\n"
@@ -104,30 +103,30 @@ msgstr ""
 "Có ít nhất một phông được chọn không hợp lệ.\n"
 "Hãy kiểm tra các thiết lập của bạn.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:481
-#: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/dbbrowser/dbbrowser_utils.c:482
+#: plug-ins/script-fu/script-fu-scripts.c:1960
 msgid "Author:"
 msgstr "Tác giả:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:497
-#: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/dbbrowser/dbbrowser_utils.c:498
+#: plug-ins/script-fu/script-fu-scripts.c:1966
 msgid "Copyright:"
 msgstr "Bản quyền:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:489
-#: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/dbbrowser/dbbrowser_utils.c:490
+#: plug-ins/script-fu/script-fu-scripts.c:1972
 msgid "Date:"
 msgstr "Ngày:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1981
+#: plug-ins/script-fu/script-fu-scripts.c:1980
 msgid "Image Types:"
 msgstr "Kiểu Ảnh:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2122
+#: plug-ins/script-fu/script-fu-scripts.c:2121
 msgid "Script-Fu Font Selection"
 msgstr "Chọn Phông của Script-Fu"
 
-#: plug-ins/script-fu/script-fu-scripts.c:2192
+#: plug-ins/script-fu/script-fu-scripts.c:2191
 #, c-format
 msgid ""
 "Script-Fu Error while executing\n"
@@ -138,15 +137,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:568
+#: plug-ins/script-fu/script-fu-server.c:574
 msgid "Script-Fu Server Options"
 msgstr "Tùy Chọn Máy Chủ Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:595
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Port:"
 msgstr "Cổng Máy Chủ:"
 
-#: plug-ins/script-fu/script-fu-server.c:601
+#: plug-ins/script-fu/script-fu-server.c:607
 msgid "Server Logfile:"
 msgstr "Logfile của Máy Chủ:"
 
@@ -185,39 +184,39 @@ msgstr "Tìm kiếm theo Lời _giới thiệu"
 msgid "_Search:"
 msgstr "Tìm _Kiếm:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:340
+#: plug-ins/dbbrowser/dbbrowser_utils.c:341
 msgid "Name:"
 msgstr "Tên:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:349
+#: plug-ins/dbbrowser/dbbrowser_utils.c:350
 msgid "Blurb:"
 msgstr "Lời giới thiệu:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:361
+#: plug-ins/dbbrowser/dbbrowser_utils.c:362
 msgid "In:"
 msgstr "Trong:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:409
+#: plug-ins/dbbrowser/dbbrowser_utils.c:410
 msgid "Out:"
 msgstr "Ngoài:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:463
+#: plug-ins/dbbrowser/dbbrowser_utils.c:464
 msgid "Help:"
 msgstr "Trợ giúp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+#: plug-ins/dbbrowser/dbbrowser_utils.c:600
 msgid "Searching by name - please wait"
 msgstr "Đang tìm theo Tên - Hãy đợi"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+#: plug-ins/dbbrowser/dbbrowser_utils.c:623
 msgid "Searching by blurb - please wait"
 msgstr "Đang tìm theo Lời giới thiệu - hãy đợi"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:632
+#: plug-ins/dbbrowser/dbbrowser_utils.c:633
 msgid "Searching - please wait"
 msgstr "Đang tìm kiếm - hãy đợi"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:671
+#: plug-ins/dbbrowser/dbbrowser_utils.c:672
 msgid "No matches"
 msgstr "Không có kết quả"
 
@@ -490,10 +489,10 @@ msgstr "Giữ lớp Bật lên"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
-#: plug-ins/script-fu/scripts/old_photo.scm.h:6
+#: plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: plug-ins/script-fu/scripts/round-corners.scm.h:8
 #: plug-ins/script-fu/scripts/slide.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on Copy"
 msgstr "Làm việc trên Bản Sao"
 
@@ -674,14 +673,14 @@ msgid "Buffer Amount (% Height of Text)"
 msgstr "Số lượng Buffer (% Chiều cao của Văn bản)"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:6
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:3
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
 msgid "Filename"
 msgstr "Tên Tập Tin"
 
 #: plug-ins/script-fu/scripts/asc2img.scm.h:10
 #: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
 #: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:4
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent Background"
 msgstr "Nền Trong Suốt"
 
@@ -899,7 +898,7 @@ msgid "Image Size"
 msgstr "Cỡ Ảnh"
 
 #: plug-ins/script-fu/scripts/camo.scm.h:8
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:3
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
 msgid "Smooth"
 msgstr "Mịn"
 
@@ -1136,28 +1135,28 @@ msgstr ""
 msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:1
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "<Image>/Script-Fu/Selection/Distress Selection..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:2
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:4
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth Horizontally"
 msgstr "Mịn Ngang"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:5
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth Vertically"
 msgstr "Mịn Dọc"
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:6
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/distress_selection.scm.h:7
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (Bigger 1<-->255 Smaller)"
 msgstr "Ngưỡng (Lớn hơn 1 <--> 255 Nhỏ hơn)"
 
@@ -1309,7 +1308,7 @@ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Font Map..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Tiện ích/Bản đồ Phông..."
 
 #: plug-ins/script-fu/scripts/font-map.scm.h:2
-#: plug-ins/script-fu/scripts/old_photo.scm.h:2
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
 msgid "Border"
 msgstr "Đường Viền"
 
@@ -1389,7 +1388,8 @@ msgid "Shadow Color"
 msgstr "Màu bóng"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/General Tube Labels..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
@@ -1397,7 +1397,8 @@ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Button Label..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tube Sub-Button Label..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
@@ -1655,7 +1656,6 @@ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Rectangular..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:5
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:2
 msgid "Description"
 msgstr "Mô Tả"
 
@@ -1664,7 +1664,7 @@ msgid "Feathering"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/mkbrush.scm.h:8
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:4
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr ""
 
@@ -1698,19 +1698,19 @@ msgstr ""
 msgid "Density (%)"
 msgstr "Mật Độ (%)"
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:1
+#: plug-ins/script-fu/scripts/old-photo.scm.h:1
 msgid "<Image>/Script-Fu/Decor/Old Photo..."
 msgstr "<Ảnh>/Script-Fu/Trang trí/Ảnh chụp cũ..."
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:3
+#: plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Defocus"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/old_photo.scm.h:5
+#: plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
 msgstr "Màu Nâu Đen"
 
@@ -1815,12 +1815,30 @@ msgid "<Image>/Script-Fu/Animators/Rippling..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Black"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#, fuzzy
+msgid "Edge Behaviour"
+msgstr "Ứng Xử"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
 #: plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of Frames"
 msgstr "Số lượng Khung"
 
-#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling Strength"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+#, fuzzy
+msgid "Smear"
+msgstr "Tìm _Kiếm:"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Wrap"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/round-corners.scm.h:1
@@ -1839,11 +1857,15 @@ msgstr ""
 msgid "Edge Radius"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/select_to_brush.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Brush..."
 msgstr "<Ảnh>/Script-Fu/Chọn/Bút Vẽ..."
 
-#: plug-ins/script-fu/scripts/select_to_image.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Brush Name"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "<Image>/Script-Fu/Selection/To Image"
 msgstr "<Ảnh>/Script-Fu/Chọn/Ảnh"
 
@@ -1891,19 +1913,19 @@ msgstr ""
 msgid "Sphere Color"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:1
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Spinning Globe..."
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:2
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "Khung"
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:3
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n Colors (0 = Remain RGB)"
 msgstr ""
 
-#: plug-ins/script-fu/scripts/spinning_globe.scm.h:5
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from Left to Right"
 msgstr "Quay từ Trái sang Phải"
 
@@ -2262,4 +2284,3 @@ msgstr ""
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr ""
-

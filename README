@@ -9,10 +9,11 @@ been warned!
 
 Some features that were present in GIMP 1.2 are disabled or not even 
 included in this release. This includes the Perl extension and thus 
-all the perl plug-ins. There is no working text tool and various other
-tools and functions are broken. Almost everything is under construction.
-Don't even think about using this for daily work. If you are a software
-distributor, dont' dare to ship this package to innocent users.
+all the perl plug-ins. The new text tool is only halfway done and
+various other tools and functions are broken. Almost everything is under
+construction. Don't even think about using this for daily work. If you
+are a software distributor, dont' dare to ship this package to innocent
+users.
 
 For installation instructions, see the file INSTALL.
 

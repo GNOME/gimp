@@ -11,6 +11,7 @@ dubbed GIMP 1.4.
 Overview of Changes in GIMP 1.3.12
 ==================================
 
+- Improved and cleaned up undo system [Mitch]
 - Added hooks for plug-in debugging [Yosh]
 - Redesigned the tool options code [Mitch]
 - Converted the API reference to DocBook XML [Sven]
@@ -34,7 +35,7 @@ Overview of Changes in GIMP 1.3.12
 Other contributors:
   Garry R. Osgood, Jakub Steiner, Simon Budig, Henrik Brix Andersen,
   Akkana, Carol Spears, Seth Burgess, Nathan Summers, David Necas,
-  Cameron Gregory
+  Cameron Gregory, Larry Ewing
 
 
 Overview of Changes in GIMP 1.3.11

@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp 1.3.11\n"
-"POT-Creation-Date: 2002-12-29 23:00+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2002-12-19 19:41+0100\n"
 "Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
@@ -17,7 +17,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-msgid "can't handle layers"
+#, fuzzy, c-format
+msgid "%s can't handle layers"
 msgstr "ne peut gérer les calques"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
@@ -25,11 +26,13 @@ msgid "Merge Visible Layers"
 msgstr "Fusionner les calques visibles"
 
 #: libgimp/gimpexport.c:179
-msgid "can't handle layer offsets, size or opacity"
+#, fuzzy, c-format
+msgid "%s can't handle layer offsets, size or opacity"
 msgstr "ne peut gérer les décalages de calque, la taille ou l'opacité"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-msgid "can only handle layers as animation frames"
+#, fuzzy, c-format
+msgid "%s can only handle layers as animation frames"
 msgstr "ne gère les calques qu'en tant qu'images d'une animation"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
@@ -41,11 +44,13 @@ msgid "Flatten Image"
 msgstr "Aplatir l'image"
 
 #: libgimp/gimpexport.c:215
-msgid "can't handle transparency"
+#, fuzzy, c-format
+msgid "%s can't handle transparency"
 msgstr "ne peut gérer la transparence"
 
 #: libgimp/gimpexport.c:224
-msgid "can only handle RGB images"
+#, fuzzy, c-format
+msgid "%s can only handle RGB images"
 msgstr "ne gère que les images RVB"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
@@ -53,7 +58,8 @@ msgid "Convert to RGB"
 msgstr "Convertir en RVB"
 
 #: libgimp/gimpexport.c:233
-msgid "can only handle grayscale images"
+#, fuzzy, c-format
+msgid "%s can only handle grayscale images"
 msgstr "ne peut gérer que les images en niveaux de gris"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
@@ -61,7 +67,8 @@ msgid "Convert to Grayscale"
 msgstr "Convertir en niveaux de gris"
 
 #: libgimp/gimpexport.c:242
-msgid "can only handle indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle indexed images"
 msgstr "ne peut gérer que les images indexées"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
@@ -74,19 +81,23 @@ msgstr ""
 "pour régler le résultat)"
 
 #: libgimp/gimpexport.c:252
-msgid "can only handle RGB or grayscale images"
+#, fuzzy, c-format
+msgid "%s can only handle RGB or grayscale images"
 msgstr "ne gère que les images RVB ou en niveaux de gris"
 
 #: libgimp/gimpexport.c:261
-msgid "can only handle RGB or indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle RGB or indexed images"
 msgstr "ne gère que les images RVB ou indexées"
 
 #: libgimp/gimpexport.c:271
-msgid "can only handle grayscale or indexed images"
+#, fuzzy, c-format
+msgid "%s can only handle grayscale or indexed images"
 msgstr "ne gère que les images en niveau de gris ou indexées"
 
 #: libgimp/gimpexport.c:282
-msgid "needs an alpha channel"
+#, fuzzy, c-format
+msgid "%s needs an alpha channel"
 msgstr "a besoin d'un canal alpha"
 
 #: libgimp/gimpexport.c:283
@@ -98,26 +109,17 @@ msgstr "Ajouter un canal alpha"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:356
+#: libgimp/gimpexport.c:357
 msgid "Confirm Save"
 msgstr "Confirmer l'enregistrement"
 
-#: libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:361
 msgid "Confirm"
 msgstr "Confirmer"
 
-#: libgimp/gimpexport.c:362
+#: libgimp/gimpexport.c:363
 msgid "Cancel"
 msgstr "Annuler"
-
-#: libgimp/gimpexport.c:376
-#, c-format
-msgid ""
-"You are about to save %s as %s.\n"
-"This will not save the visible layers."
-msgstr ""
-"Vous êtes sur le point d'enregistrer %s comme %s.\n"
-"Cela ne sauvegardera pas les calques visibles."
 
 #.
 #. *  Plug-ins must have called gtk_init () before calling gimp_export ().
@@ -145,17 +147,27 @@ msgstr ""
 "suivantes :"
 
 #. the footline
-#: libgimp/gimpexport.c:527
+#: libgimp/gimpexport.c:526
 msgid "The export conversion won't modify your original image."
 msgstr "La conversion exporter ne modifiera pas l'image d'origine."
 
 #: libgimp/gimpexport.c:595
-msgid "a layer mask"
-msgstr "un masque de calque"
+#, fuzzy, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Vous êtes sur le point d'enregistrer %s comme %s.\n"
+"Cela ne sauvegardera pas les calques visibles."
 
-#: libgimp/gimpexport.c:597
-msgid "a channel (saved selection)"
-msgstr "un canal (sélection enregistrée)"
+#: libgimp/gimpexport.c:600
+#, fuzzy, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Vous êtes sur le point d'enregistrer %s comme %s.\n"
+"Cela ne sauvegardera pas les calques visibles."
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
 #: libgimp/gimpmenu.c:580
@@ -172,8 +184,8 @@ msgid "Loading module: '%s'\n"
 msgstr "Chargement du module : « %s »\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
-#: libgimpmodule/gimpmodule.c:292 libgimpmodule/gimpmodule.c:316
-#: libgimpmodule/gimpmodule.c:386
+#: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
+#: libgimpmodule/gimpmodule.c:432
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -182,24 +194,24 @@ msgstr ""
 "Erreur de chargement du module « %s » :\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:260
+#: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Module ignoré : « %s »\n"
 
-#: libgimpmodule/gimpmodule.c:363
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Erreur du module"
 
-#: libgimpmodule/gimpmodule.c:364
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr "Chargé"
 
-#: libgimpmodule/gimpmodule.c:365
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Échec du chargement"
 
-#: libgimpmodule/gimpmodule.c:366
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr "Non chargé"
 
@@ -296,78 +308,92 @@ msgstr "Sélectionnez un répertoire"
 msgid "Select File"
 msgstr "Sélectionnez un fichier"
 
+#: libgimpwidgets/gimpmemsizeentry.c:185
+msgid "KiloBytes"
+msgstr "Kilo-octets"
+
+#: libgimpwidgets/gimpmemsizeentry.c:186
+msgid "MegaBytes"
+msgstr "Méga-octets"
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+msgid "GigaBytes"
+msgstr "Giga-octets"
+
 #: libgimpwidgets/gimppickbutton.c:141
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:88
+#: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
 msgstr "Ancre"
 
-#: libgimpwidgets/gimpstock.c:89
-msgid "Duplicate"
+#: libgimpwidgets/gimpstock.c:92
+#, fuzzy
+msgid "_Duplicate"
 msgstr "Dupliquer"
 
-#: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
+#: libgimpwidgets/gimpstock.c:93
+#, fuzzy
+msgid "_Edit"
 msgstr "Éditer"
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:94
 msgid "Linked"
 msgstr "Lié"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:95
 msgid "Paste as New"
 msgstr "Coller comme nouveau"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:96
 msgid "Paste Into"
 msgstr "Coller dans"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:97
 msgid "_Reset"
 msgstr "_Initialiser"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
 msgstr "Visible"
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr "_Redimenssionner"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 #, fuzzy
 msgid "_Scale"
 msgstr "Redimensionner"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr ""
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr "_Pivoter"
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr "_Cisailler"
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Suite..."
 
@@ -383,7 +409,7 @@ msgstr "Unité"
 msgid "Factor"
 msgstr "Facteur"
 
-#: libgimpwidgets/gimpwidgets.c:960
+#: libgimpwidgets/gimpwidgets.c:984
 #, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
@@ -393,100 +419,97 @@ msgstr ""
 "du générateur de nombres aléatoires. Cela vous permet d'avoir une séquence "
 "aléatoire reproductible en fournissant la même graine."
 
-#: libgimpwidgets/gimpwidgets.c:964
+#: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
 msgstr ""
 
-#: libgimpwidgets/gimpwidgets.c:975
+#: libgimpwidgets/gimpwidgets.c:999
 #, fuzzy
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "Prend l'heure actuelle comme graine du générateur de nombres aléatoires. "
 "Cela garanti un aléa raisonnable."
 
-#: libgimpwidgets/gimpwidgets.c:1289
-msgid "Bytes"
-msgstr "Octets"
-
-#: libgimpwidgets/gimpwidgets.c:1290
-msgid "KiloBytes"
-msgstr "Kilo-octets"
-
-#: libgimpwidgets/gimpwidgets.c:1291
-msgid "MegaBytes"
-msgstr "Méga-octets"
-
-#: libgimpwidgets/gimpwidgets.c:1292
-msgid "GigaBytes"
-msgstr "Giga-octets"
-
-#: modules/cdisplay_colorblind.c:100
-msgid "Colorblind display filter"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:166
+#: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:326
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:336
-msgid "Protonopia (insensitivity to red)"
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:340
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
 msgstr ""
 
-#: modules/cdisplay_colorblind.c:344
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:89
+#: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
 msgstr ""
 
-#: modules/cdisplay_gamma.c:155
+#: modules/cdisplay_gamma.c:156
 msgid "Gamma"
 msgstr "Gamma"
 
-#: modules/cdisplay_gamma.c:316
+#: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
 msgstr "Gamma :"
 
-#: modules/cdisplay_highcontrast.c:89
+#: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
 msgstr ""
 
-#: modules/cdisplay_highcontrast.c:155
+#: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
 msgstr "Contraste"
 
-#: modules/cdisplay_highcontrast.c:314
+#: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
 msgstr ""
 
-#: modules/colorsel_triangle.c:107
+#: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
 msgstr ""
 
-#: modules/colorsel_triangle.c:179
+#: modules/colorsel_triangle.c:182
 msgid "_Triangle"
 msgstr "_Triangle"
 
-#: modules/colorsel_water.c:103
+#: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
 msgstr ""
 
-#: modules/colorsel_water.c:175
+#: modules/colorsel_water.c:176
 msgid "_Watercolor"
 msgstr ""
 
-#: modules/colorsel_water.c:250
+#: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Pression"
+
+#~ msgid "a layer mask"
+#~ msgstr "un masque de calque"
+
+#~ msgid "a channel (saved selection)"
+#~ msgstr "un canal (sélection enregistrée)"
+
+#~ msgid "Bytes"
+#~ msgstr "Octets"
 
 #~ msgid "_Time"
 #~ msgstr "_Heure"

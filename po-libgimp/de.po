@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.10\n"
-"POT-Creation-Date: 2003-01-06 01:39+0100\n"
+"POT-Creation-Date: 2003-02-18 00:43+0100\n"
 "PO-Revision-Date: 2002-12-19 18:47+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -195,19 +195,19 @@ msgstr ""
 msgid "Skipping module: '%s'\n"
 msgstr "Ignoriere Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:409
+#: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
 msgstr "Modul Fehler"
 
-#: libgimpmodule/gimpmodule.c:410
+#: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
 msgstr "Geladen"
 
-#: libgimpmodule/gimpmodule.c:411
+#: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
 msgstr "Laden fehlgeschlagen"
 
-#: libgimpmodule/gimpmodule.c:412
+#: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
 msgstr "Nicht geladen"
 
@@ -303,15 +303,15 @@ msgstr "Verzeichnis auswählen"
 msgid "Select File"
 msgstr "Datei auswählen"
 
-#: libgimpwidgets/gimpmemsizeentry.c:186
+#: libgimpwidgets/gimpmemsizeentry.c:185
 msgid "KiloBytes"
 msgstr "KiloByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:186
 msgid "MegaBytes"
 msgstr "MegaByte"
 
-#: libgimpwidgets/gimpmemsizeentry.c:188
+#: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "GigaBytes"
 msgstr "GigaByte"
 
@@ -323,87 +323,89 @@ msgstr ""
 "Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
 "dessen Farbe auszuwählen."
 
-#: libgimpwidgets/gimpstock.c:88
+#: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
 msgstr "Verankern"
 
-#: libgimpwidgets/gimpstock.c:89
-msgid "Duplicate"
+#: libgimpwidgets/gimpstock.c:92
+#, fuzzy
+msgid "_Duplicate"
 msgstr "Duplizieren"
 
-#: libgimpwidgets/gimpstock.c:90
-msgid "Edit"
+#: libgimpwidgets/gimpstock.c:93
+#, fuzzy
+msgid "_Edit"
 msgstr "Bearbeiten"
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:94
 msgid "Linked"
 msgstr "Verknüpft"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:95
 msgid "Paste as New"
 msgstr "Einfügen als Neu"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:96
 msgid "Paste Into"
 msgstr "Einfügen in Auswahl"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:97
 msgid "_Reset"
 msgstr "_Rücksetzen"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
 msgstr "Sichtbar"
 
-#: libgimpwidgets/gimpstock.c:127
+#: libgimpwidgets/gimpstock.c:140
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: libgimpwidgets/gimpstock.c:128 libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: libgimpwidgets/gimpstock.c:136
+#: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
 msgstr "L_aufweite"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
 msgstr "Z_eilenabstand"
 
-#: libgimpwidgets/gimpstock.c:158
+#: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
 msgstr "Zuschneiden"
 
-#: libgimpwidgets/gimpstock.c:176
+#: libgimpwidgets/gimpstock.c:189
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: libgimpwidgets/gimpstock.c:179
+#: libgimpwidgets/gimpstock.c:192
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:194
 msgid "_Shear"
 msgstr "_Scheren"
 
-#: libgimpwidgets/gimpunitmenu.c:265
+#: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Mehr..."
 
-#: libgimpwidgets/gimpunitmenu.c:525
+#: libgimpwidgets/gimpunitmenu.c:526
 msgid "Unit Selection"
 msgstr "Einheit auswählen"
 
-#: libgimpwidgets/gimpunitmenu.c:570
+#: libgimpwidgets/gimpunitmenu.c:571
 msgid "Unit"
 msgstr "Einheit"
 
-#: libgimpwidgets/gimpunitmenu.c:574
+#: libgimpwidgets/gimpunitmenu.c:575
 msgid "Factor"
 msgstr "Faktor"
 
-#: libgimpwidgets/gimpwidgets.c:982
+#: libgimpwidgets/gimpwidgets.c:984
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
@@ -411,35 +413,40 @@ msgstr ""
 "Benutze diesen Wert für den Zufallsgenerator - dies ermgöglicht es "
 "\"zufällige\" Funktionen zu wiederholen"
 
-#: libgimpwidgets/gimpwidgets.c:986
+#: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
 msgstr "_Würfeln"
 
-#: libgimpwidgets/gimpwidgets.c:997
+#: libgimpwidgets/gimpwidgets.c:999
 msgid "Seed random number generator with a generated random number"
 msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 
-#: modules/cdisplay_colorblind.c:101
-msgid "Colorblind display filter"
-msgstr "Farbenblindheit Anzeigenfarbfilter"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr ""
 
-#: modules/cdisplay_colorblind.c:167
+#: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
-#: modules/cdisplay_colorblind.c:327
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
 msgstr "Art der Sehschwäche:"
 
-#: modules/cdisplay_colorblind.c:337
-msgid "Protonopia (insensitivity to red)"
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
+msgstr ""
+
+#: modules/cdisplay_colorblind.c:487
+#, fuzzy
+msgid "Protanopia (insensitivity to red)"
 msgstr "Protonopia (Rotschwäche)"
 
-#: modules/cdisplay_colorblind.c:341
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
 msgstr "Deuteranopia (Grünschwäche)"
 
-#: modules/cdisplay_colorblind.c:345
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
 msgstr "Tritanopia (Blauschwäche)"
 
@@ -486,3 +493,6 @@ msgstr "_Wasserfarbe"
 #: modules/colorsel_water.c:251
 msgid "Pressure"
 msgstr "Druck"
+
+#~ msgid "Colorblind display filter"
+#~ msgstr "Farbenblindheit Anzeigenfarbfilter"
