@@ -290,13 +290,21 @@ gimp_clone_tool_draw (GimpDrawTool *draw_tool)
 
           clone = GIMP_CLONE (GIMP_PAINT_TOOL (draw_tool)->core);
 
-          gimp_draw_tool_draw_handle (draw_tool,
-                                      GIMP_HANDLE_CROSS,
-                                      clone->src_x,
-                                      clone->src_y,
-                                      TARGET_WIDTH, TARGET_WIDTH,
-                                      GTK_ANCHOR_CENTER,
-                                      TRUE);
+          if (clone->src_drawable)
+            {
+              gint off_x;
+              gint off_y;
+
+              gimp_drawable_offsets (clone->src_drawable, &off_x, &off_y);
+
+              gimp_draw_tool_draw_handle (draw_tool,
+                                          GIMP_HANDLE_CROSS,
+                                          clone->src_x + off_x,
+                                          clone->src_y + off_y,
+                                          TARGET_WIDTH, TARGET_WIDTH,
+                                          GTK_ANCHOR_CENTER,
+                                          FALSE);
+            }
         }
     }
   else
