@@ -256,8 +256,6 @@ gimp_crop_tool_control (GimpTool       *tool,
       break;
 
     case HALT:
-      gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (gdisp->shell),
-                                        NULL);
       crop_response (NULL, GTK_RESPONSE_CANCEL, GIMP_CROP_TOOL (tool));
       break;
 
@@ -1139,6 +1137,10 @@ crop_response (GtkWidget    *widget,
     default:
       break;
     }
+
+  if (tool->gdisp)
+    gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (tool->gdisp->shell),
+                                      NULL);
 
   if (crop->crop_info)
     info_dialog_hide (crop->crop_info);

@@ -1,5 +1,14 @@
 2004-10-01  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcroptool.c: unset the highlight from
+	crop_response() so it gets called when cropping is cancelled.
+
+	* app/dialogs/info-dialog.c (info_dialog_show): do what the
+	function name says, show the window, but don't present it.
+	Fixes bugs #128833 and #138816.
+
+2004-10-01  Sven Neumann  <sven@gimp.org>
+
 	* themes/Default/images/stock-frame-64.png: replaced the obtrusive
 	drop-shadow by a thin white frame with a subtle shadow. Taken from
 	a mockup done by Jimmac.
