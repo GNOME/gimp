@@ -1,3 +1,8 @@
+2003-09-02  Simon Budig  <simon@gimp.org>
+
+	* app/vectors/gimpstroke.c: duplicate the closed property too.
+	fixes Bug #120961.
+
 2003-09-02  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c: coding style and indentation.

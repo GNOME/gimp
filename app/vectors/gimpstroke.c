@@ -831,6 +831,8 @@ gimp_stroke_real_duplicate (const GimpStroke *stroke)
       list->data = gimp_anchor_duplicate (GIMP_ANCHOR (list->data));
     }
 
+  new_stroke->closed = stroke->closed;
+
   return new_stroke;
 }
 
