@@ -23,6 +23,7 @@
 #include "colormaps.h"
 #include "errors.h"
 #include "gimprc.h"
+#include "session.h"
 
 #define XY_DEF_WIDTH       240
 #define XY_DEF_HEIGHT      240
@@ -183,7 +184,7 @@ color_select_new (int                  r,
   gtk_window_set_wmclass (GTK_WINDOW (csp->shell), "color_selection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (csp->shell), "Color Selection");
   gtk_window_set_policy (GTK_WINDOW (csp->shell), FALSE, FALSE, FALSE);
-  gtk_widget_set_uposition (csp->shell, color_select_x, color_select_y);
+
 
   /*  handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (csp->shell), "delete_event",

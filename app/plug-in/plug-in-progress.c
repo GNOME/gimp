@@ -3008,7 +3008,7 @@ plug_in_progress_init (PlugIn *plug_in,
       plug_in->progress = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (plug_in->progress), "plug_in_progress", "Gimp");
       gtk_window_set_title (GTK_WINDOW (plug_in->progress), prune_filename (plug_in->args[0]));
-      gtk_widget_set_uposition (plug_in->progress, progress_x, progress_y);
+
       gtk_signal_connect (GTK_OBJECT (plug_in->progress), "destroy",
 			  (GtkSignalFunc) plug_in_progress_cancel,
 			  plug_in);
