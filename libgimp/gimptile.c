@@ -32,8 +32,8 @@
 #include "gimp.h"
 
 
-/*  This is the percentage of the maximum cache size that 
- *  should be cleared from the cache when an eviction is 
+/*  This is the percentage of the maximum cache size that
+ *  should be cleared from the cache when an eviction is
  *  necessary.
  */
 #define FREE_QUANTUM 0.1
@@ -45,16 +45,14 @@ static void  gimp_tile_get          (GimpTile    *tile);
 static void  gimp_tile_put          (GimpTile    *tile);
 static void  gimp_tile_cache_insert (GimpTile    *tile);
 static void  gimp_tile_cache_flush  (GimpTile    *tile);
-static void  gimp_tile_cache_zorch  (void);
-static guint gimp_tile_hash         (GimpTile    *tile);
 
 
-static GHashTable *tile_hash_table = NULL;
-static GList      *tile_list_head  = NULL;
-static GList      *tile_list_tail  = NULL;
-static gulong      max_tile_size   = 0;
-static gulong      cur_cache_size  = 0;
-static gulong      max_cache_size  = 0;
+static GHashTable * tile_hash_table = NULL;
+static GList      * tile_list_head  = NULL;
+static GList      * tile_list_tail  = NULL;
+static gulong       max_tile_size   = 0;
+static gulong       cur_cache_size  = 0;
+static gulong       max_cache_size  = 0;
 
 
 void
@@ -62,7 +60,7 @@ gimp_tile_ref (GimpTile *tile)
 {
   if (tile)
     {
-      tile->ref_count += 1;
+      tile->ref_count++;
 
       if (tile->ref_count == 1)
 	{
@@ -77,60 +75,79 @@ gimp_tile_ref (GimpTile *tile)
 void
 gimp_tile_ref_zero (GimpTile *tile)
 {
-  if (tile)
-    {
-      tile->ref_count += 1;
+  g_return_if_fail (tile != NULL);
 
-      if (tile->ref_count == 1)
-	{
-	  tile->data = g_new (guchar, tile->ewidth * tile->eheight * tile->bpp);
-	  memset (tile->data, 0, tile->ewidth * tile->eheight * tile->bpp);
-	}
+  tile->ref_count++;
 
-      gimp_tile_cache_insert (tile);
-    }
+  if (tile->ref_count == 1)
+    tile->data = g_new0 (guchar, tile->ewidth * tile->eheight * tile->bpp);
+
+  gimp_tile_cache_insert (tile);
 }
 
 void
 gimp_tile_unref (GimpTile *tile,
 		 gboolean  dirty)
 {
-  if (tile)
-    {
-      tile->ref_count -= 1;
-      tile->dirty |= dirty;
+  g_return_if_fail (tile != NULL);
 
-      if (tile->ref_count == 0)
-	{
-	  gimp_tile_flush (tile);
-	  g_free (tile->data);
-	  tile->data = NULL;
-	}
+  tile->ref_count--;
+  tile->dirty |= dirty;
+
+  if (tile->ref_count == 0)
+    {
+      gimp_tile_flush (tile);
+      g_free (tile->data);
+      tile->data = NULL;
     }
 }
 
 void
 gimp_tile_flush (GimpTile *tile)
 {
-  if (tile && tile->data && tile->dirty)
+  g_return_if_fail (tile != NULL);
+
+  if (tile->data && tile->dirty)
     {
       gimp_tile_put (tile);
       tile->dirty = FALSE;
     }
 }
 
+/**
+ * gimp_tile_cache_size:
+ * @kilobytes: new cache size in kilobytes
+ *
+ * Sets the size of the tile cache on the plug-in side. The tile cache
+ * is used to reduce the number of tiles exchanged between the GIMP core
+ * and the plug-in. See also gimp_tile_cache_ntiles().
+ **/
 void
 gimp_tile_cache_size (gulong kilobytes)
 {
   max_cache_size = kilobytes * 1024;
 }
 
+/**
+ * gimp_tile_cache_ntiles:
+ * @ntiles: number of tiles that should fit into the cache
+ *
+ * Sets the size of the tile cache on the plug-in side. This function
+ * is similar to gimp_tile_cache_size() but allows to specify the
+ * number of tiles directly.
+ *
+ * If your plug-in access pixels tile-by-tile, it doesn't need a tile
+ * cache at all. If however the plug-in accesses drawable pixel data
+ * row-by-row, it should set the tile cache large enough to hold the
+ * number of tiles per row. Double this size if your plug-in uses
+ * shadow tiles.
+ **/
 void
 gimp_tile_cache_ntiles (gulong ntiles)
 {
-  gimp_tile_cache_size ((gulong) (ntiles *
-                                  gimp_tile_width ()  *
-                                  gimp_tile_height () * 4 + 1023) / 1024);
+  gimp_tile_cache_size ((ntiles *
+                         gimp_tile_width () *
+                         gimp_tile_height () * 4 + 1023) / 1024);
 }
 
 static void
@@ -151,22 +168,21 @@ gimp_tile_get (GimpTile *tile)
   gimp_read_expect_msg (&msg, GP_TILE_DATA);
 
   tile_data = msg.data;
-  if ((tile_data->drawable_ID != tile->drawable->drawable_id) ||
-      (tile_data->tile_num != tile->tile_num) ||
-      (tile_data->shadow != tile->shadow) ||
-      (tile_data->width != tile->ewidth) ||
-      (tile_data->height != tile->eheight) ||
-      (tile_data->bpp != tile->bpp))
+  if (tile_data->drawable_ID != tile->drawable->drawable_id ||
+      tile_data->tile_num    != tile->tile_num              ||
+      tile_data->shadow      != tile->shadow                ||
+      tile_data->width       != tile->ewidth                ||
+      tile_data->height      != tile->eheight               ||
+      tile_data->bpp         != tile->bpp)
     {
-      g_message ("received tile info did not match computed tile info\n");
+      g_message ("received tile info did not match computed tile info");
       gimp_quit ();
     }
 
   if (tile_data->use_shm)
     {
-      tile->data = g_new (guchar, tile->ewidth * tile->eheight * tile->bpp);
-      memcpy (tile->data, gimp_shm_addr (),
-              tile->ewidth * tile->eheight * tile->bpp);
+      tile->data = g_memdup (gimp_shm_addr (),
+                             tile->ewidth * tile->eheight * tile->bpp);
     }
   else
     {
@@ -210,7 +226,8 @@ gimp_tile_put (GimpTile *tile)
   tile_data.data        = NULL;
 
   if (tile_info->use_shm)
-    memcpy (gimp_shm_addr (), tile->data,
+    memcpy (gimp_shm_addr (),
+            tile->data,
             tile->ewidth * tile->eheight * tile->bpp);
   else
     tile_data.data = tile->data;
@@ -233,7 +250,7 @@ gimp_tile_cache_insert (GimpTile *tile)
 
   if (!tile_hash_table)
     {
-      tile_hash_table = g_hash_table_new ((GHashFunc) gimp_tile_hash, NULL);
+      tile_hash_table = g_hash_table_new (g_direct_hash, NULL);
       max_tile_size = gimp_tile_width () * gimp_tile_height () * 4;
     }
 
@@ -282,8 +299,12 @@ gimp_tile_cache_insert (GimpTile *tile)
        */
       if ((cur_cache_size + max_tile_size) > max_cache_size)
 	{
-	  while (tile_list_head && (cur_cache_size + max_cache_size * FREE_QUANTUM) > max_cache_size)
-	    gimp_tile_cache_zorch ();
+	  while (tile_list_head &&
+                 (cur_cache_size +
+                  max_cache_size * FREE_QUANTUM) > max_cache_size)
+            {
+              gimp_tile_cache_flush ((GimpTile *) tile_list_head->data);
+            }
 
 	  if ((cur_cache_size + max_tile_size) > max_cache_size)
 	    return;
@@ -308,7 +329,7 @@ gimp_tile_cache_insert (GimpTile *tile)
       /* Reference the tile so that it won't be returned to
        *  the main gimp application immediately.
        */
-      tile->ref_count += 1;
+      tile->ref_count++;
       if (tile->ref_count == 1)
 	{
 	  gimp_tile_get (tile);
@@ -323,10 +344,7 @@ gimp_tile_cache_flush (GimpTile *tile)
   GList *tmp;
 
   if (!tile_hash_table)
-    {
-      tile_hash_table = g_hash_table_new ((GHashFunc) gimp_tile_hash, NULL);
-      max_tile_size = gimp_tile_width () * gimp_tile_height () * 4;
-    }
+    return;
 
   /* Find where the tile is in the cache.
    */
@@ -357,17 +375,4 @@ gimp_tile_cache_flush (GimpTile *tile)
        */
       gimp_tile_unref (tile, FALSE);
     }
-}
-
-static void
-gimp_tile_cache_zorch (void)
-{
-  if (tile_list_head)
-    gimp_tile_cache_flush ((GimpTile*) tile_list_head->data);
-}
-
-static guint
-gimp_tile_hash (GimpTile *tile)
-{
-  return (gulong) tile;
 }

@@ -1,3 +1,7 @@
+2003-10-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimptile.c: code cleanup and some documentation.
+
 2003-10-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c (main): call g_set_prgname() in the --no-interface
