@@ -15,28 +15,6 @@ helper functions.
 
 </para>
 
-<!-- ##### FUNCTION gimp_int_option_menu_new ##### -->
-<para>
-
-</para>
-
-@menu_only: 
-@menu_item_callback: 
-@menu_item_callback_data: 
-@initial: 
-@Varargs: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_int_option_menu_set_history ##### -->
-<para>
-
-</para>
-
-@option_menu: 
-@item_data: 
-
-
 <!-- ##### FUNCTION gimp_option_menu_new ##### -->
 <para>
 
@@ -89,17 +67,45 @@ helper functions.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_int_radio_group_new ##### -->
+<!-- ##### FUNCTION gimp_int_option_menu_new ##### -->
 <para>
 
 </para>
 
-@in_frame: 
-@frame_title: 
-@radio_button_callback: 
-@radio_button_callback_data: 
+@menu_only: 
+@menu_item_callback: 
+@menu_item_callback_data: 
 @initial: 
 @Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_int_option_menu_set_history ##### -->
+<para>
+
+</para>
+
+@option_menu: 
+@item_data: 
+
+
+<!-- ##### FUNCTION gimp_int_option_menu_set_sensitive ##### -->
+<para>
+
+</para>
+
+@option_menu: 
+@callback: 
+@callback_data: 
+
+
+<!-- ##### USER_FUNCTION GimpIntOptionMenuSensitivityCallback ##### -->
+<para>
+
+</para>
+
+@item_data: 
+@callback_data: 
 @Returns: 
 
 
@@ -129,6 +135,29 @@ helper functions.
 
 
 <!-- ##### FUNCTION gimp_radio_group_set_active ##### -->
+<para>
+
+</para>
+
+@radio_button: 
+@item_data: 
+
+
+<!-- ##### FUNCTION gimp_int_radio_group_new ##### -->
+<para>
+
+</para>
+
+@in_frame: 
+@frame_title: 
+@radio_button_callback: 
+@radio_button_callback_data: 
+@initial: 
+@Varargs: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_int_radio_group_set_active ##### -->
 <para>
 
 </para>

@@ -61,12 +61,12 @@ GTKDOC_CFLAGS = \
 	-I$(includedir)
 
 unused_symbols = \
-	-u gimp_container_get_filtered_name_array	\
-	-u gimp_xml_parser_new				\
-	-u gimp_drawable_stroke_vectors
+	-u $(SYMPREFIX)gimp_container_filter	\
+	-u $(SYMPREFIX)gimp_xml_parser_new	\
+	-u $(SYMPREFIX)gimp_drawable_stroke_vectors
 
 GTKDOC_LIBS = \
-	$(unused_symbols)				\
+	$(unused_symbols)						\
         $(top_builddir)/app/app_procs.o					\
         $(top_builddir)/app/batch.o					\
         $(top_builddir)/app/errors.o					\

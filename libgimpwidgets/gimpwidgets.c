@@ -51,8 +51,6 @@
  * @menu_only: %TRUE if the function should return a #GtkMenu only.
  * @...:       A %NULL-terminated @va_list describing the menu items.
  *
- * DEPRECATED. Use gimp_int_option_menu_new() instead.
- *
  * Convenience function to create a #GtkOptionMenu or a #GtkMenu.
  *
  * Returns: A #GtkOptionMenu or a #GtkMenu (depending on @menu_only).
@@ -166,8 +164,6 @@ gimp_option_menu_new (gboolean            menu_only,
  *                      The data which will be passed to g_signal_connect().
  * @initial:            The @item_data of the initially selected menu item.
  * @...:                A %NULL-terminated @va_list describing the menu items.
- *
- * DEPRECATED. Use gimp_int_option_menu_new() instead.
  *
  * Convenience function to create a #GtkOptionMenu or a #GtkMenu.
  *
@@ -388,8 +384,6 @@ gimp_int_option_menu_new (gboolean         menu_only,
  *               gimp_option_menu_new2().
  * @item_data:   The @item_data of the menu item you want to select.
  *
- * DEPRECATED. Use gimp_int_option_menu_set_history() instead.
- *
  * Iterates over all entries in a #GtkOptionMenu and selects the one
  * with the matching @item_data. Probably only makes sense to use with
  * a #GtkOptionMenu that was created using gimp_option_menu_new() or
@@ -452,8 +446,6 @@ gimp_int_option_menu_set_history (GtkOptionMenu *option_menu,
  * @callback: a function called for each item in the menu to determine the
  *            the sensitivity state.
  * @callback_data: data to pass to the @callback function.
- *
- * DEPRECATED. Use gimp_int_option_menu_set_sensitive() instead.
  *
  * Calls the given @callback for each item in the menu and passes it the
  * item_data and the @callback_data. The menu item's sensitivity is set
@@ -536,8 +528,6 @@ gimp_int_option_menu_set_sensitive (GtkOptionMenu                        *option
  * @in_frame:    %TRUE if you want a #GtkFrame around the radio button group.
  * @frame_title: The title of the Frame or %NULL if you don't want a title.
  * @...:         A %NULL-terminated @va_list describing the radio buttons.
- *
- * DEPRECATED. Use gimp_int_radio_group_new() instead.
  *
  * Convenience function to create a group of radio buttons embedded into
  * a #GtkFrame or #GtkVbox.
@@ -649,8 +639,6 @@ gimp_radio_group_new (gboolean            in_frame,
  * @initial:               The @item_data of the initially pressed radio button.
  * @...:                   A %NULL-terminated @va_list describing
  *                         the radio buttons.
- *
- * DEPRECATED. Use gimp_int_radio_group_new() instead.
  *
  * Convenience function to create a group of radio buttons embedded into
  * a #GtkFrame or #GtkVbox.
@@ -861,10 +849,8 @@ gimp_int_radio_group_new (gboolean         in_frame,
  * @radio_button: Pointer to a #GtkRadioButton.
  * @item_data: The @item_data of the radio button you want to select.
  *
- * DEPRECATED. Use gimp_int_radio_group_set_active() instead.
- *
- * Calls gtk_toggle_button_set_active() with the radio button that was created
- * with a matching @item_data.
+ * Calls gtk_toggle_button_set_active() with the radio button that was
+ * created with a matching @item_data.
  **/
 void
 gimp_radio_group_set_active (GtkRadioButton *radio_button,

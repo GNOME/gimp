@@ -1,3 +1,12 @@
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
+	* configure.in
+	* app/Makefile.am: moved the definition of the symbol prefix to
+	the configure script. Set it to '_' for MacOS X and Win32.
+
+	* libgimpwidgets/gimpwidgets.[ch]: removed the deprecation guards
+	again. It doesn't make sense to deprecate these function now.
+
 2003-11-15  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/gee.c

@@ -578,6 +578,32 @@ if test "x$shmtype" = "xsysv"; then
 fi
 
 
+########################
+# Define a symbol prefix
+########################
+
+AC_MSG_CHECKING([whether symbols are prefixed])
+
+case "$target_or_host" in
+  *-*-mingw*)
+    SYMPREFIX='_'
+    ;;
+  darwin* | rhapsody* | machten*)
+    SYMPREFIX='_'
+    ;;
+  *)
+    ;;
+esac
+
+if test -n "$SYMPREFIX"; then
+  AC_MSG_RESULT([yes, with a $SYMPREFIX])
+else
+  AC_MSG_RESULT(no)
+fi
+
+AC_SUBST(SYMPREFIX)
+
+
 ##################################
 # Check for regex support in glibc
 ##################################
