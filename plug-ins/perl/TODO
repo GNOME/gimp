@@ -23,6 +23,8 @@ firetext! AND _grayscale_ for map_gradient(!)
 sota-chrome pagesize of 2 is _wrong_
 
 bugs
+  * alow gimp_selection_shrink with a zero argument.
+  * ping-funktion für JENS.
 [DONE]  * never grayed out = "undef" imagetypes!!!
 [DONE]  * gimp_layer_set_name(4, "(null)") = gimp: fatal error: sigsegv caught
 [KILL]  * ftp://metalab.unc.edu/pub/Linux/X11/gtkbuffet/libs/gtkxmhtml/ into INSTALL
