@@ -291,26 +291,26 @@ run (const gchar      *name,
  */
 
 static gint32
-load_image (const gchar *filename)	/* I - File to load */
+load_image (const gchar *filename)  /* I - File to load */
 {
-  int		i,		/* Looping var */
-		x,		/* Current X coordinate */
-		y,		/* Current Y coordinate */
-		image_type,	/* Type of image */
-		layer_type,	/* Type of drawable/layer */
-		tile_height,	/* Height of tile in GIMP */
-		count;		/* Count of rows to put in image */
-  sgi_t		*sgip;		/* File pointer */
-  gint32	image,		/* Image */
-		layer;		/* Layer */
-  GimpDrawable	*drawable;	/* Drawable for layer */
-  GimpPixelRgn	pixel_rgn;	/* Pixel region for layer */
-  guchar	**pixels,	/* Pixel rows */
-		*pixel,		/* Pixel data */
-		*pptr;		/* Current pixel */
-  gushort      **rows;	        /* SGI image data */
-  gchar		*progress;	/* Title for progress display... */
-
+  int            i,           /* Looping var */
+                 x,           /* Current X coordinate */
+                 y,           /* Current Y coordinate */
+                 image_type,  /* Type of image */
+                 layer_type,  /* Type of drawable/layer */
+                 tile_height, /* Height of tile in GIMP */
+                 count,       /* Count of rows to put in image */
+                 bytes;       /* Number of channels to use */
+  sgi_t         *sgip;        /* File pointer */
+  gint32         image,       /* Image */
+                 layer;       /* Layer */
+  GimpDrawable  *drawable;    /* Drawable for layer */
+  GimpPixelRgn   pixel_rgn;   /* Pixel region for layer */
+  guchar       **pixels,      /* Pixel rows */
+                *pixel,       /* Pixel data */
+                *pptr;        /* Current pixel */
+  gushort      **rows;        /* SGI image data */
+  gchar         *progress;    /* Title for progress display... */
 
  /*
   * Open the file for reading...
@@ -332,8 +332,9 @@ load_image (const gchar *filename)	/* I - File to load */
   /*
    * Get the image dimensions and create the image...
    */
-  image_type = 0; /* shut up warnings */
-  layer_type = 0;
+
+  bytes = sgip->zsize;
+  
   switch (sgip->zsize)
     {
     case 1 :	/* Grayscale */
@@ -354,6 +355,12 @@ load_image (const gchar *filename)	/* I - File to load */
     case 4 :	/* RGBA */
       image_type = GIMP_RGB;
       layer_type = GIMP_RGBA_IMAGE;
+      break;
+    
+    default:
+      image_type = GIMP_RGB;
+      layer_type = GIMP_RGBA_IMAGE;
+      bytes = 4;
       break;
     }
 
@@ -388,11 +395,11 @@ load_image (const gchar *filename)	/* I - File to load */
    */
 
   tile_height = gimp_tile_height ();
-  pixel       = g_new (guchar, tile_height * sgip->xsize * sgip->zsize);
+  pixel       = g_new (guchar, tile_height * sgip->xsize * bytes);
   pixels      = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i ++)
-    pixels[i] = pixel + sgip->xsize * sgip->zsize * i;
+    pixels[i] = pixel + sgip->xsize * bytes * i;
 
   rows    = g_new (unsigned short *, sgip->zsize);
   rows[0] = g_new (unsigned short, sgip->xsize * sgip->zsize);
@@ -429,7 +436,7 @@ load_image (const gchar *filename)	/* I - File to load */
 	   */
 
 	  for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
-	    for (i = 0; i < sgip->zsize; i ++, pptr ++)
+	    for (i = 0; i < bytes; i ++, pptr ++)
 	      *pptr = rows[i][x];
 	}
       else
@@ -439,7 +446,7 @@ load_image (const gchar *filename)	/* I - File to load */
 	   */
 
 	  for (x = 0, pptr = pixels[count]; x < sgip->xsize; x ++)
-	    for (i = 0; i < sgip->zsize; i ++, pptr ++)
+	    for (i = 0; i < bytes; i ++, pptr ++)
 	      *pptr = rows[i][x] >> 8;
 	}
     }
