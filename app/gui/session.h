@@ -20,10 +20,15 @@
 #define __SESSION_H__
 
 
-void   session_init    (Gimp *gimp);
-void   session_restore (Gimp *gimp);
-void   session_save    (Gimp *gimp);
-void   session_clear   (Gimp *gimp);
+void       session_init    (Gimp     *gimp);
+void       session_exit    (Gimp     *gimp);
+
+void       session_restore (Gimp     *gimp);
+void       session_save    (Gimp     *gimp,
+                            gboolean  always_save);
+
+gboolean   session_clear   (Gimp     *gimp,
+                            GError  **error);
 
 
 #endif  /*  __SESSION_H__  */

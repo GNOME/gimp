@@ -18,9 +18,18 @@
 
 #include "config.h"
 
+#include <errno.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 #include "menus-types.h"
 
@@ -37,6 +46,8 @@
 #include "tool-options-menu.h"
 #include "toolbox-menu.h"
 
+#include "gimp-intl.h"
+
 
 /*  local function prototypes  */
 
@@ -45,7 +56,12 @@ static void   menu_can_change_accels (GimpGuiConfig *config);
 
 /*  global variables  */
 
-GimpMenuFactory *global_menu_factory = NULL;
+GimpMenuFactory * global_menu_factory = NULL;
+
+
+/*  private variables  */
+
+static gboolean   menurc_deleted      = FALSE;
 
 
 /*  public functions  */
@@ -266,7 +282,6 @@ menus_exit (Gimp *gimp)
   g_return_if_fail (global_menu_factory != NULL);
   g_return_if_fail (global_menu_factory->gimp == gimp);
 
-
   g_object_unref (global_menu_factory);
   global_menu_factory = NULL;
 
@@ -288,23 +303,49 @@ menus_restore (Gimp *gimp)
 }
 
 void
-menus_save (Gimp *gimp)
+menus_save (Gimp     *gimp,
+            gboolean  always_save)
 {
   gchar *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
+  if (menurc_deleted && ! always_save)
+    return;
+
   filename = gimp_personal_rc_file ("menurc");
   gtk_accel_map_save (filename);
   g_free (filename);
+
+  menurc_deleted = FALSE;
 }
 
-void
-menus_clear (Gimp *gimp)
+gboolean
+menus_clear (Gimp    *gimp,
+             GError **error)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  gchar    *filename;
+  gboolean  success = TRUE;
 
-  g_print ("TODO: implement menus_clear()\n");
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  filename = gimp_personal_rc_file ("menurc");
+
+  if (unlink (filename) != 0 && errno != ENOENT)
+    {
+      g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      success = FALSE;
+    }
+  else
+    {
+      menurc_deleted = TRUE;
+    }
+
+  g_free (filename);
+
+  return success;
 }
 
 

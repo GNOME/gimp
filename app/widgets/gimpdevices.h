@@ -28,8 +28,11 @@ void        gimp_devices_init          (Gimp                   *gimp,
 void        gimp_devices_exit          (Gimp                   *gimp);
 
 void        gimp_devices_restore       (Gimp                   *gimp);
-void        gimp_devices_save          (Gimp                   *gimp);
-void        gimp_devices_clear         (Gimp                   *gimp);
+void        gimp_devices_save          (Gimp                   *gimp,
+                                        gboolean                always_save);
+
+gboolean    gimp_devices_clear         (Gimp                   *gimp,
+                                        GError                **error);
 
 GdkDevice * gimp_devices_get_current   (Gimp                   *gimp);
 

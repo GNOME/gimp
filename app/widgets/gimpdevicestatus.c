@@ -405,7 +405,7 @@ static void
 gimp_device_status_save_clicked (GtkWidget        *button,
                                  GimpDeviceStatus *status)
 {
-  gimp_devices_save (status->gimp);
+  gimp_devices_save (status->gimp, TRUE);
 }
 
 static void

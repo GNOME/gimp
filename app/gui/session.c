@@ -21,12 +21,20 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <string.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
 
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 #include "gui-types.h"
 
@@ -54,6 +62,11 @@ enum
 
 
 static gchar * session_filename (Gimp *gimp);
+
+
+/*  private variables  */
+
+static gboolean   sessionrc_deleted = FALSE;
 
 
 /*  public functions  */
@@ -158,6 +171,12 @@ session_init (Gimp *gimp)
 }
 
 void
+session_exit (Gimp *gimp)
+{
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+}
+
+void
 session_restore (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
@@ -166,12 +185,16 @@ session_restore (Gimp *gimp)
 }
 
 void
-session_save (Gimp *gimp)
+session_save (Gimp     *gimp,
+              gboolean  always_save)
 {
   GimpConfigWriter *writer;
   gchar            *filename;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  if (sessionrc_deleted && ! always_save)
+    return;
 
   filename = session_filename (gimp);
 
@@ -203,14 +226,36 @@ session_save (Gimp *gimp)
   gimp_config_writer_close (writer);
 
   gimp_config_writer_finish (writer, "end of sessionrc", NULL);
+
+  sessionrc_deleted = FALSE;
 }
 
-void
-session_clear (Gimp *gimp)
+gboolean
+session_clear (Gimp    *gimp,
+               GError **error)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  gchar    *filename;
+  gboolean  success = TRUE;
 
-  g_print ("TODO: implement session_clear()\n");
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  filename = session_filename (gimp);
+
+  if (unlink (filename) != 0 && errno != ENOENT)
+    {
+      g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      success = FALSE;
+    }
+  else
+    {
+      sessionrc_deleted = TRUE;
+    }
+
+  g_free (filename);
+
+  return success;
 }
 
 

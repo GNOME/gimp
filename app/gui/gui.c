@@ -435,15 +435,15 @@ gui_exit_callback (Gimp     *gimp,
   gimp->message_handler = GIMP_CONSOLE;
 
   if (gui_config->save_session_info)
-    session_save (gimp);
+    session_save (gimp, FALSE);
 
   color_history_save ();
 
   if (gui_config->save_accels)
-    menus_save (gimp);
+    menus_save (gimp, FALSE);
 
   if (gui_config->save_device_status)
-    gimp_devices_save (gimp);
+    gimp_devices_save (gimp, FALSE);
 
   if (TRUE /* gui_config->save_controllers */)
     gimp_controllers_save (gimp);
@@ -473,6 +473,7 @@ gui_exit_after_callback (Gimp     *gimp,
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
 
+  session_exit (gimp);
   menus_exit (gimp);
   actions_exit (gimp);
   render_exit (gimp);

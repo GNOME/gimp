@@ -18,10 +18,19 @@
 
 #include "config.h"
 
+#include <errno.h>
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpbase/gimpbase.h"
+
+#ifdef G_OS_WIN32
+#include "libgimpbase/gimpwin32-io.h"
+#endif
 
 #include "widgets-types.h"
 
@@ -38,6 +47,8 @@
 #include "gimpdeviceinfo.h"
 #include "gimpdevices.h"
 
+#include "gimp-intl.h"
+
 
 #define GIMP_DEVICE_MANAGER_DATA_KEY "gimp-device-manager"
 
@@ -49,6 +60,7 @@ struct _GimpDeviceManager
   GimpContainer          *device_info_list;
   GdkDevice              *current_device;
   GimpDeviceChangeNotify  change_notify;
+  gboolean                devicerc_deleted;
 };
 
 
@@ -151,7 +163,8 @@ gimp_devices_restore (Gimp *gimp)
 }
 
 void
-gimp_devices_save (Gimp *gimp)
+gimp_devices_save (Gimp     *gimp,
+                   gboolean  always_save)
 {
   GimpDeviceManager *manager;
   gchar             *filename;
@@ -162,6 +175,9 @@ gimp_devices_save (Gimp *gimp)
   manager = gimp_device_manager_get (gimp);
 
   g_return_if_fail (manager != NULL);
+
+  if (manager->devicerc_deleted && ! always_save)
+    return;
 
   filename = gimp_personal_rc_file ("devicerc");
 
@@ -177,14 +193,40 @@ gimp_devices_save (Gimp *gimp)
     }
 
   g_free (filename);
+
+  manager->devicerc_deleted = FALSE;
 }
 
-void
-gimp_devices_clear (Gimp *gimp)
+gboolean
+gimp_devices_clear (Gimp    *gimp,
+                    GError **error)
 {
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
+  GimpDeviceManager *manager;
+  gchar             *filename;
+  gboolean           success = TRUE;
 
-  g_print ("TODO: implement gimp_devices_clear()\n");
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+
+  manager = gimp_device_manager_get (gimp);
+
+  g_return_val_if_fail (manager != NULL, FALSE);
+
+  filename = gimp_personal_rc_file ("devicerc");
+
+  if (unlink (filename) != 0 && errno != ENOENT)
+    {
+      g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      success = FALSE;
+    }
+  else
+    {
+      manager->devicerc_deleted = TRUE;
+    }
+
+  g_free (filename);
+
+  return success;
 }
 
 GdkDevice *

@@ -88,6 +88,18 @@ static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
                                                    gpointer    data);
 static void   prefs_keyboard_shortcuts_dialog     (GtkWidget  *widget,
                                                    Gimp       *gimp);
+static void   prefs_menus_save_callback           (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_menus_clear_callback          (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_session_save_callback         (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_session_clear_callback        (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_devices_save_callback         (GtkWidget  *widget,
+                                                   Gimp       *gimp);
+static void   prefs_devices_clear_callback        (GtkWidget  *widget,
+                                                   Gimp       *gimp);
 
 
 /*  private variables  */
@@ -517,6 +529,108 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
   gtk_widget_show (view);
 
   gtk_widget_show (dialog);
+}
+
+static void
+prefs_menus_save_callback (GtkWidget *widget,
+                           Gimp      *gimp)
+{
+  GtkWidget *clear_button;
+
+  menus_save (gimp, TRUE);
+
+  clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
+
+  if (clear_button)
+    gtk_widget_set_sensitive (clear_button, TRUE);
+}
+
+static void
+prefs_menus_clear_callback (GtkWidget *widget,
+                            Gimp      *gimp)
+{
+  GError *error = NULL;
+
+  if (! menus_clear (gimp, &error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (widget, FALSE);
+
+      g_message (_("Your keyboard shortcuts will be reset to default values "
+                   "the next time you start GIMP."));
+    }
+}
+
+static void
+prefs_session_save_callback (GtkWidget *widget,
+                             Gimp      *gimp)
+{
+  GtkWidget *clear_button;
+
+  session_save (gimp, TRUE);
+
+  clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
+
+  if (clear_button)
+    gtk_widget_set_sensitive (clear_button, TRUE);
+}
+
+static void
+prefs_session_clear_callback (GtkWidget *widget,
+                              Gimp      *gimp)
+{
+  GError *error = NULL;
+
+  if (! session_clear (gimp, &error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (widget, FALSE);
+
+      g_message (_("Your window setup will be reset to default values. "
+                   "the next time you start GIMP."));
+    }
+}
+
+static void
+prefs_devices_save_callback (GtkWidget *widget,
+                             Gimp      *gimp)
+{
+  GtkWidget *clear_button;
+
+  gimp_devices_save (gimp, TRUE);
+
+  clear_button = g_object_get_data (G_OBJECT (widget), "clear-button");
+
+  if (clear_button)
+    gtk_widget_set_sensitive (clear_button, TRUE);
+}
+
+static void
+prefs_devices_clear_callback (GtkWidget *widget,
+                              Gimp      *gimp)
+{
+  GError *error = NULL;
+
+  if (! gimp_devices_clear (gimp, &error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (widget, FALSE);
+
+      g_message (_("Your input device settings will be reset to "
+                   "default values the next time you start GIMP."));
+    }
 }
 
 static GtkWidget *
@@ -1006,6 +1120,7 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *vbox2;
   GtkWidget         *hbox;
   GtkWidget         *button;
+  GtkWidget         *button2;
   GtkWidget         *fileselection;
   GtkWidget         *patheditor;
   GtkWidget         *table;
@@ -1246,16 +1361,18 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_button_add (GTK_STOCK_SAVE,
                              _("Save Keyboard Shortcuts Now"),
                              GTK_BOX (vbox2));
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (menus_save),
-                            gimp);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_menus_save_callback),
+                    gimp);
 
-  button = prefs_button_add (GTK_STOCK_CLEAR,
-                             _("Clear Saved Keyboard Shortcuts Now"),
-                             GTK_BOX (vbox2));
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (menus_clear),
-                            gimp);
+  button2 = prefs_button_add (GTK_STOCK_CLEAR,
+                              _("Clear Saved Keyboard Shortcuts Now"),
+                              GTK_BOX (vbox2));
+  g_signal_connect (button2, "clicked",
+                    G_CALLBACK (prefs_menus_clear_callback),
+                    gimp);
+
+  g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
 
   /***********/
@@ -1879,16 +1996,18 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_button_add (GTK_STOCK_SAVE,
                              _("Save Input Device Settings Now"),
                              GTK_BOX (vbox2));
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_devices_save),
-                            gimp);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_devices_save_callback),
+                    gimp);
 
-  button = prefs_button_add (GTK_STOCK_CLEAR,
-                             _("Clear Saved Input Device Settings Now"),
-                             GTK_BOX (vbox2));
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_devices_clear),
-                            gimp);
+  button2 = prefs_button_add (GTK_STOCK_CLEAR,
+                              _("Clear Saved Input Device Settings Now"),
+                              GTK_BOX (vbox2));
+  g_signal_connect (button2, "clicked",
+                    G_CALLBACK (prefs_devices_clear_callback),
+                    gimp);
+
+  g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
 
   /****************************/
@@ -2118,16 +2237,18 @@ prefs_dialog_new (Gimp       *gimp,
   button = prefs_button_add (GTK_STOCK_SAVE,
                              _("Save Window Positions Now"),
                              GTK_BOX (vbox2));
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (session_save),
-                            gimp);
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_session_save_callback),
+                    gimp);
 
-  button = prefs_button_add (GTK_STOCK_CLEAR,
-                             _("Clear Saved Window Positions Now"),
-                             GTK_BOX (vbox2));
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (session_clear),
-                            gimp);
+  button2 = prefs_button_add (GTK_STOCK_CLEAR,
+                              _("Clear Saved Window Positions Now"),
+                              GTK_BOX (vbox2));
+  g_signal_connect (button2, "clicked",
+                    G_CALLBACK (prefs_session_clear_callback),
+                    gimp);
+
+  g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
 
   /*****************/

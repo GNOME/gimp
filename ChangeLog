@@ -1,5 +1,25 @@
 2004-07-21  Michael Natterer  <mitch@gimp.org>
 
+	Enabled the various "Clear saved foobar now" buttons in prefs:
+
+	* app/gui/session.[ch]
+	* app/menus/menus.[ch]
+	* app/widgets/gimpdevices.[ch]: implemented the _clear()
+	functions: unlink() the rc file and set an internal flag that it
+	has been deleted. Added "gboolean always_save" parameter to the
+	_save() functions and don't save anything if it is FALSE and the
+	internal deletion flag has been set.
+
+	* app/gui/gui.c
+	* app/widgets/gimpdevicestatus.c: changed accordingly.
+
+	* app/gui/preferences-dialog.c: added callbacks for all "Save now"
+	and "Clear now" buttons and show error messages if clearing fails.
+	Inform the user that she has to restart GIMP to see the effect of
+	the clearing.
+
+2004-07-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpmarshal.list
 	* app/widgets/gimpcellrendereraccel.[ch]: added "gboolean delete"
 	parameter to the GimpCellRendererAccel::accel_edited() signal.
