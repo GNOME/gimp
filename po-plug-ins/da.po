@@ -28,8 +28,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
-"POT-Creation-Date: 2001-11-10 14:26+0100\n"
-"PO-Revision-Date: 2001-11-10 14:27+0100\n"
+"POT-Creation-Date: 2001-11-17 17:58+0100\n"
+"PO-Revision-Date: 2001-11-17 18:01+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -2732,12 +2732,12 @@ msgstr "CMY"
 #: plug-ins/common/compose.c:132 plug-ins/common/compose.c:136
 #: plug-ins/fp/fp_gtk.c:23 plug-ins/print/gimp_color_window.c:208
 msgid "Cyan:"
-msgstr "Turkis:"
+msgstr "Cyan:"
 
 #: plug-ins/common/compose.c:133 plug-ins/common/compose.c:137
 #: plug-ins/fp/fp_gtk.c:25 plug-ins/print/gimp_color_window.c:223
 msgid "Magenta:"
-msgstr "Lilla:"
+msgstr "Magenta:"
 
 #: plug-ins/common/compose.c:134 plug-ins/common/compose.c:138
 #: plug-ins/fp/fp_gtk.c:24 plug-ins/print/gimp_color_window.c:238
@@ -3092,11 +3092,11 @@ msgstr "værdi"
 
 #: plug-ins/common/decompose.c:125 plug-ins/common/decompose.c:128
 msgid "cyan"
-msgstr "turkis"
+msgstr "cyan"
 
 #: plug-ins/common/decompose.c:126 plug-ins/common/decompose.c:129
 msgid "magenta"
-msgstr "lilla"
+msgstr "magenta"
 
 #: plug-ins/common/decompose.c:127 plug-ins/common/decompose.c:130
 msgid "yellow"
@@ -3104,11 +3104,11 @@ msgstr "gul"
 
 #: plug-ins/common/decompose.c:128 plug-ins/common/newsprint.c:425
 msgid "Cyan"
-msgstr "Turkis"
+msgstr "Cyan"
 
 #: plug-ins/common/decompose.c:129 plug-ins/common/newsprint.c:433
 msgid "Magenta"
-msgstr "Lilla"
+msgstr "Magenta"
 
 #: plug-ins/common/decompose.c:130 plug-ins/common/newsprint.c:441
 msgid "Yellow"
@@ -3116,11 +3116,11 @@ msgstr "Gul"
 
 #: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:135
 msgid "cyan_k"
-msgstr "turkis_k"
+msgstr "cyan_k"
 
 #: plug-ins/common/decompose.c:132 plug-ins/common/decompose.c:136
 msgid "magenta_k"
-msgstr "lilla_k"
+msgstr "magenta_k"
 
 #: plug-ins/common/decompose.c:133 plug-ins/common/decompose.c:137
 msgid "yellow_k"
@@ -3132,11 +3132,11 @@ msgstr "sort"
 
 #: plug-ins/common/decompose.c:135
 msgid "Cyan_K"
-msgstr "Turkis_K"
+msgstr "Cyan_K"
 
 #: plug-ins/common/decompose.c:136
 msgid "Magenta_K"
-msgstr "Lilla_K"
+msgstr "Magenta_K"
 
 #: plug-ins/common/decompose.c:137
 msgid "Yellow_K"
@@ -3185,15 +3185,15 @@ msgstr "Behold lige linjer"
 
 #: plug-ins/common/depthmerge.c:198
 msgid "<Image>/Filters/Combine/Depth Merge..."
-msgstr "<Image>/Filtre/Kombinér/Dybdefletning..."
+msgstr "<Image>/Filtre/Kombinér/Dybdeforening..."
 
 #: plug-ins/common/depthmerge.c:387
 msgid "Depth-merging..."
-msgstr "Dybdefletter..."
+msgstr "Dybdeforener..."
 
 #: plug-ins/common/depthmerge.c:638
 msgid "Depth Merge"
-msgstr "Dybdefletning"
+msgstr "Dybdeforening"
 
 #: plug-ins/common/depthmerge.c:688
 msgid "Source 1:"
@@ -11399,7 +11399,7 @@ msgstr "Startvinkel:"
 msgid "Angle span:"
 msgstr "Vinkelstørrelse"
 
-#: plug-ins/gimpressionist/orientation.c:96 plug-ins/gimpressionist/size.c:95
+#: plug-ins/gimpressionist/orientation.c:96
 msgid "The number of directions (i.e. brushes) to use"
 msgstr "Antal af brugte retninger (dvs. pensler)"
 
@@ -11726,6 +11726,10 @@ msgstr "Min. størrelse:"
 #: plug-ins/gimpressionist/size.c:80
 msgid "Max size:"
 msgstr "Max. størrelse:"
+
+#: plug-ins/gimpressionist/size.c:95
+msgid "The number of sizes of brushes to use"
+msgstr "Antallet af penselstørrelser der skal bruges"
 
 #: plug-ins/gimpressionist/size.c:104
 msgid "The smallest brush to create"
