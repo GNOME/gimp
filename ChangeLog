@@ -1,3 +1,10 @@
+2004-05-29  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/layer.pdb
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.c: fixed documentation for gimp_resize_layer.
+	Patch provided by Philip Lafleur (bug #142618, merged from HEAD).
+
 2004-05-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/png.c (respin_cmap): handle an empty colormap.
