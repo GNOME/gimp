@@ -1,4 +1,8 @@
-Sun Dec 14 20:57:46 1997  Ray Lehtiniemi  <rayl@localhost>
+Sun Dec 14 20:57:46 1997  Ray Lehtiniemi  <rayl@netrover.com>
+
+	* app/tools.c (tools_options_dialog_show): fix a problem where
+	  the tools options dialog will appear empty because the
+	  active tool was destroyed by menus_activate_callback().
 
 	* app/blend.c fixed cores when using custom gradients with
 	  offset of 100

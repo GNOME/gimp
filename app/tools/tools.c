@@ -401,6 +401,13 @@ tools_options_dialog_new ()
 void
 tools_options_dialog_show ()
 {
+  /* menus_activate_callback() will destroy the active tool in many
+     cases.  if the user tries to bring up the options before
+     switching tools, the dialog will be empty.  recreate the active
+     tool here if necessary to avoid this behavior */
+  if (!active_tool)
+    active_tool_control (RECREATE, gdisplay_active());
+
   if (!GTK_WIDGET_VISIBLE(options_shell)) 
     {
       gtk_widget_show (options_shell);
@@ -499,6 +506,7 @@ active_tool_control (int   action,
 	      break;
 	    case DESTROY :
 	      active_tool_free();
+              gtk_widget_hide (options_shell);
 	      break;
 	    }
 	}
