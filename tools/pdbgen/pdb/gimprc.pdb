@@ -90,7 +90,6 @@ HELP
     );
 
     %invoke = ( 
-	headers => [ qw("config/gimpconfig.h") ],
 	code =>  <<'CODE'
 {
   if (strlen (token))

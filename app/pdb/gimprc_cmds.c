@@ -24,7 +24,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 
 #include "pdb-types.h"

@@ -349,8 +349,7 @@ HELP
 
     %invoke = (
 	headers => [ qw(<process.h>
-	                "config/gimpbaseconfig.h"
-                        "config/gimpconfig-path.h") ],
+	                "config/gimpbaseconfig.h") ],
 	vars => [ 'static gint id = 0', 'static gint pid',
 	          'gchar *filename', 'gchar *path' ],
 	code => <<'CODE'
@@ -557,7 +556,8 @@ CODE
 }
 
 @headers = qw(<sys/types.h> <unistd.h> <gdk-pixbuf/gdk-pixbuf.h>
-              "libgimpbase/gimpbase.h" "libgimpthumb/gimpthumb.h"
+              "libgimpbase/gimpbase.h" "libgimpconfig/gimpconfig.h"
+              "libgimpthumb/gimpthumb.h"
               "core/gimp.h" "core/gimpimagefile.h"
               "plug-in/plug-in.h" "plug-in/plug-ins.h"
               "plug-in/plug-in-proc-def.h"

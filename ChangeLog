@@ -1,5 +1,13 @@
 2005-01-26  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/gimprc.pdb: fixed includes after libgimpconfig
+	file moving. Reported by Volker Sturm.
+
+	* app/pdb/gimprc_cmds.c: regenerated.
+
+2005-01-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/dockable-actions.c
 	* app/actions/dockable-commands.[ch]: removed dock-related
 	actions (show-image-menu, auto-follow-active and move-to-screen).
