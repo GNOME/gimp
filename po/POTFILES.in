@@ -100,7 +100,6 @@ app/gui/drawable-commands.c
 app/gui/edit-commands.c
 app/gui/error-console-menu.c
 app/gui/file-commands.c
-app/gui/file-dialog-utils.c
 app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
 app/gui/file-open-menu.c
@@ -276,6 +275,7 @@ app/widgets/gimpdockable.c
 app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawabletreeview.c
 app/widgets/gimperrorconsole.c
+app/widgets/gimpfiledialog.c
 app/widgets/gimpfontview.c
 app/widgets/gimpgradienteditor.c
 app/widgets/gimpgrideditor.c
