@@ -1,5 +1,18 @@
 2003-03-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch]: added new functions
+	gimp_image_active_[layer|channel|vectors]_changed() which emit the
+	resp. signals.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_layer,channel,vectors):
+	fixed them to not leave the image's active layer, channel, vectors
+	pointers undefined (fixes bug #109110). Call gimp_item_removed()
+	from all of them.
+
+	* app/core/gimpimage-qmask.c: cleanup.
+
+2003-03-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/app_procs.c (app_init): cast batch_cmds to (const gchar **)
 	when passing them to batch_init().
 

@@ -51,102 +51,99 @@ void
 gimp_image_set_qmask_state (GimpImage *gimage,
                             gboolean   qmask_state)
 {
+  GimpChannel *mask;
+  GimpRGB      color;
+
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
-  if (qmask_state != gimage->qmask_state)
+  if (qmask_state == gimage->qmask_state)
+    return;
+
+  if (qmask_state)
     {
-      GimpChannel *mask;
-      GimpRGB      color;
+      /* Set the defaults */
+      color = gimage->qmask_color;
 
-      if (qmask_state)
+      mask = gimp_image_get_channel_by_name (gimage, "Qmask");
+
+      if (! mask)
         {
-          /* Set the defaults */
-          color = gimage->qmask_color;
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
+                                       _("Enable QuickMask"));
 
-          mask = gimp_image_get_channel_by_name (gimage, "Qmask");
-
-          if (! mask)
+          if (gimp_image_mask_is_empty (gimage)) /* if no selection */
             {
-              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
-                                           _("Enable QuickMask"));
+              GimpLayer *layer;
 
-              if (gimp_image_mask_is_empty (gimage))
+              if ((layer = gimp_image_floating_sel (gimage)))
                 {
-                  GimpLayer *layer;
-
-                  /* if no selection */
-
-                  if ((layer = gimp_image_floating_sel (gimage)))
-                    {
-                      floating_sel_to_layer (layer);
-                    }
-
-                  mask = gimp_channel_new (gimage, 
-                                           gimage->width, 
-                                           gimage->height,
-                                           "Qmask",
-                                           &color);
-                  gimp_image_add_channel (gimage, mask, 0);
-
-                  gimp_drawable_fill_by_type (GIMP_DRAWABLE (mask),
-                                              gimp_get_current_context (gimage->gimp),
-                                              GIMP_TRANSPARENT_FILL);
-                }
-              else /* if selection */
-                {
-                  mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
-                                                            G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
-                                                            FALSE));
-                  gimp_image_mask_clear (gimage, NULL);  /* Clear the selection */
-
-                  gimp_channel_set_color (mask, &color, FALSE);
-                  gimp_item_rename (GIMP_ITEM (mask), "Qmask");
-
-                  gimp_image_add_channel (gimage, mask, 0);
+                  floating_sel_to_layer (layer);
                 }
 
-              if (gimage->qmask_inverted)
-                gimp_channel_invert (mask, TRUE);
+              mask = gimp_channel_new (gimage, 
+                                       gimage->width, 
+                                       gimage->height,
+                                       "Qmask",
+                                       &color);
 
-              gimp_image_undo_push_image_qmask (gimage, NULL);
-
-              gimp_image_undo_group_end (gimage);
-
-              /* connect to the removed signal, so the buttons get updated */
-              g_signal_connect (mask, "removed", 
-                                G_CALLBACK (gimp_image_qmask_removed_callback),
-                                gimage);
+              gimp_drawable_fill_by_type (GIMP_DRAWABLE (mask),
+                                          gimp_get_current_context (gimage->gimp),
+                                          GIMP_TRANSPARENT_FILL);
             }
-        }
-      else
-        {
-          mask = gimp_image_get_channel_by_name (gimage, "Qmask");
+          else /* if selection */
+            {
+              mask = GIMP_CHANNEL (gimp_item_duplicate (GIMP_ITEM (gimp_image_get_mask (gimage)),
+                                                        G_TYPE_FROM_INSTANCE (gimp_image_get_mask (gimage)),
+                                                        FALSE));
+              gimp_image_mask_clear (gimage, NULL);  /* Clear the selection */
 
-          if (mask)
-            { 
-              gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
-                                           _("Disable QuickMask"));
-
-              /*  push the undo here since removing the mask will
-               *  call the qmask_removed_callback() which will set
-               *  the qmask_state to FALSE
-               */
-              gimp_image_undo_push_image_qmask (gimage, NULL);
-
-              if (gimage->qmask_inverted)
-                gimp_channel_invert (mask, TRUE);
-
-              gimp_image_mask_load (gimage, mask);
-              gimp_image_remove_channel (gimage, mask);
-
-              gimp_image_undo_group_end (gimage);
+              gimp_channel_set_color (mask, &color, FALSE);
+              gimp_item_rename (GIMP_ITEM (mask), "Qmask");
             }
+
+          gimp_image_add_channel (gimage, mask, 0);
+
+          if (gimage->qmask_inverted)
+            gimp_channel_invert (mask, TRUE);
+
+          gimp_image_undo_push_image_qmask (gimage, NULL);
+
+          gimp_image_undo_group_end (gimage);
+
+          /* connect to the removed signal, so the buttons get updated */
+          g_signal_connect (mask, "removed", 
+                            G_CALLBACK (gimp_image_qmask_removed_callback),
+                            gimage);
         }
-
-      gimage->qmask_state = qmask_state ? TRUE : FALSE;
-
-      gimp_image_qmask_changed (gimage);
     }
+  else
+    {
+      mask = gimp_image_get_channel_by_name (gimage, "Qmask");
+
+      if (mask)
+        { 
+          gimp_image_undo_group_start (gimage, GIMP_UNDO_GROUP_IMAGE_QMASK,
+                                       _("Disable QuickMask"));
+
+          /*  push the undo here since removing the mask will
+           *  call the qmask_removed_callback() which will set
+           *  the qmask_state to FALSE
+           */
+          gimp_image_undo_push_image_qmask (gimage, NULL);
+
+          if (gimage->qmask_inverted)
+            gimp_channel_invert (mask, TRUE);
+
+          gimp_image_mask_load (gimage, mask);
+          gimp_image_remove_channel (gimage, mask);
+
+          gimp_image_undo_group_end (gimage);
+        }
+    }
+
+  gimage->qmask_state = qmask_state ? TRUE : FALSE;
+
+  gimp_image_qmask_changed (gimage);
 }
 
 gboolean

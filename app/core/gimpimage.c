@@ -2248,6 +2248,30 @@ gimp_image_set_active_vectors (GimpImage   *gimage,
   return vectors;
 }
 
+void
+gimp_image_active_layer_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
+}
+
+void
+gimp_image_active_channel_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (gimage, gimp_image_signals[ACTIVE_CHANNEL_CHANGED], 0);
+}
+
+void
+gimp_image_active_vectors_changed (GimpImage *gimage)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
+  g_signal_emit (gimage, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
+}
+
 gint            
 gimp_image_get_layer_index (const GimpImage   *gimage,
 			    const GimpLayer   *layer)
@@ -2548,7 +2572,6 @@ gimp_image_remove_layer (GimpImage *gimage,
       else
 	{
 	  gimage->active_layer = NULL;
-
 	  g_signal_emit (gimage, gimp_image_signals[ACTIVE_LAYER_CHANGED], 0);
 	}
     }
@@ -3026,7 +3049,6 @@ gimp_image_remove_vectors (GimpImage   *gimage,
       else
         {
           gimage->active_vectors = NULL;
-
           g_signal_emit (gimage, gimp_image_signals[ACTIVE_VECTORS_CHANGED], 0);
         }
     }

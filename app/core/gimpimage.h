@@ -402,6 +402,10 @@ GimpChannel   * gimp_image_unset_active_channel  (GimpImage          *gimage);
 GimpVectors   * gimp_image_set_active_vectors    (GimpImage          *gimage,
                                                   GimpVectors        *vectors);
 
+void            gimp_image_active_layer_changed   (GimpImage         *gimage);
+void            gimp_image_active_channel_changed (GimpImage         *gimage);
+void            gimp_image_active_vectors_changed (GimpImage         *gimage);
+
 gint            gimp_image_get_layer_index       (const GimpImage    *gimage,
 						  const GimpLayer    *layer);
 gint            gimp_image_get_channel_index     (const GimpImage    *gimage,

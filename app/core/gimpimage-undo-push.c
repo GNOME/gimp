@@ -1254,14 +1254,25 @@ undo_pop_layer (GimpUndo            *undo,
       /*  record the current position  */
       lu->prev_position = gimp_image_get_layer_index (undo->gimage, layer);
 
-      /*  if exists, set the previous layer  */
-      if (lu->prev_layer)
-	gimp_image_set_active_layer (undo->gimage, lu->prev_layer);
+      if (layer == gimp_image_get_active_layer (undo->gimage))
+        {
+          if (lu->prev_layer)
+            {
+              gimp_image_set_active_layer (undo->gimage, lu->prev_layer);
+            }
+          else
+            {
+              undo->gimage->active_layer = NULL;
+              gimp_image_active_layer_changed (undo->gimage);
+            }
+        }
 
       /*  remove the layer  */
       gimp_container_remove (undo->gimage->layers, GIMP_OBJECT (layer));
       undo->gimage->layer_stack = g_slist_remove (undo->gimage->layer_stack,
                                                   layer);
+
+      gimp_item_removed (GIMP_ITEM (layer));
 
       /*  reset the gimage values  */
       if (gimp_layer_is_floating_sel (layer))
@@ -2033,9 +2044,15 @@ undo_pop_channel (GimpUndo            *undo,
       /*  remove the channel  */
       gimp_container_remove (undo->gimage->channels, GIMP_OBJECT (channel));
 
-      /*  if exists, set the previous channel  */
-      if (cu->prev_channel)
-        gimp_image_set_active_channel (undo->gimage, cu->prev_channel);
+      gimp_item_removed (GIMP_ITEM (channel));
+
+      if (channel == gimp_image_get_active_channel (undo->gimage))
+        {
+          if (cu->prev_channel)
+            gimp_image_set_active_channel (undo->gimage, cu->prev_channel);
+          else
+            gimp_image_unset_active_channel (undo->gimage);
+        }
 
       /*  update the area  */
       gimp_drawable_update (GIMP_DRAWABLE (channel),
@@ -2053,8 +2070,6 @@ undo_pop_channel (GimpUndo            *undo,
       /*  add the new channel  */
       gimp_container_insert (undo->gimage->channels, 
 			     GIMP_OBJECT (channel), cu->prev_position);
- 
-      /*  set the new channel  */
       gimp_image_set_active_channel (undo->gimage, channel);
 
       /*  update the area  */
@@ -2450,9 +2465,20 @@ undo_pop_vectors (GimpUndo            *undo,
       /*  remove the vectors  */
       gimp_container_remove (undo->gimage->vectors, GIMP_OBJECT (vectors));
 
-      /*  if exists, set the previous vectors  */
-      if (vu->prev_vectors)
-        gimp_image_set_active_vectors (undo->gimage, vu->prev_vectors);
+      gimp_item_removed (GIMP_ITEM (vectors));
+
+      if (vectors == gimp_image_get_active_vectors (undo->gimage))
+        {
+          if (vu->prev_vectors)
+            {
+              gimp_image_set_active_vectors (undo->gimage, vu->prev_vectors);
+            }
+          else
+            {
+              undo->gimage->active_vectors = NULL;
+              gimp_image_active_vectors_changed (undo->gimage);
+            }
+        }
     }
   else
     {
@@ -2463,9 +2489,7 @@ undo_pop_vectors (GimpUndo            *undo,
 
       /*  add the new vectors  */
       gimp_container_insert (undo->gimage->vectors, 
-			     GIMP_OBJECT (vectors),	vu->prev_position);
- 
-      /*  set the new vectors  */
+			     GIMP_OBJECT (vectors), vu->prev_position);
       gimp_image_set_active_vectors (undo->gimage, vectors);
     }
 
