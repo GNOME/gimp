@@ -999,7 +999,7 @@ file_prefs_text_callback (GtkWidget *widget,
   text = gtk_editable_get_chars (GTK_EDITABLE (widget), 0, -1);
   if (strlen (text) > MAX_COMMENT_LENGTH)
     {
-      g_message (_("The default comments is limited to %d characters."), 
+      g_message (_("The default comment is limited to %d characters."), 
 		 MAX_COMMENT_LENGTH);
       gtk_editable_delete_text (GTK_EDITABLE (widget), MAX_COMMENT_LENGTH, -1);
       g_free (text);
