@@ -178,17 +178,15 @@ gimp_file_dialog_new (Gimp            *gimp,
   gtk_widget_show (hbox);
 
   option_menu = gtk_option_menu_new ();
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
+                            GTK_ITEM_FACTORY (dialog->item_factory)->widget);
   gtk_box_pack_end (GTK_BOX (hbox), option_menu, FALSE, FALSE, 0);
   gtk_widget_show (option_menu);
 
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (option_menu),
-                            GTK_ITEM_FACTORY (dialog->item_factory)->widget);
-
   label = gtk_label_new_with_mnemonic (_("Determine File _Type:"));
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
   gtk_box_pack_end (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), option_menu);
 
   if (gimp->config->thumbnail_size > 0)
     {
@@ -206,10 +204,9 @@ gimp_file_dialog_new (Gimp            *gimp,
       for (hbox = fs->dir_list; ! GTK_IS_HBOX (hbox); hbox = hbox->parent);
 
       dialog->thumb_box = gimp_thumb_box_new (gimp);
+      gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
       gtk_box_pack_end (GTK_BOX (hbox), dialog->thumb_box, FALSE, FALSE, 0);
       gtk_widget_show (dialog->thumb_box);
-
-      gtk_widget_set_sensitive (GTK_WIDGET (dialog->thumb_box), FALSE);
     }
 
   return GTK_WIDGET (dialog);

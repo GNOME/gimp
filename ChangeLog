@@ -1,5 +1,12 @@
 2004-02-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/file-dialog-utils.c
+	* app/widgets/gimpfiledialog.c
+	* libgimpwidgets/gimpfileentry.[ch]: some irrelevant micro changes
+	to make that patch smaller.
+
+2004-02-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/file-open-dialog.c
 	* app/gui/file-save-dialog.c: merged some small fixes/changes
 	from my HEAD tree so the file chooser patch becomes smaller.

@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpfileentry.c
- * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 1999-2004 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -98,9 +98,7 @@ gimp_file_entry_get_type (void)
 static void
 gimp_file_entry_class_init (GimpFileEntryClass *klass)
 {
-  GtkObjectClass *object_class;
-
-  object_class = GTK_OBJECT_CLASS (klass);
+  GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -331,7 +329,6 @@ gimp_file_entry_filesel_response (GtkWidget     *dialog,
       const gchar *filename;
 
       filename = gtk_file_selection_get_filename (GTK_FILE_SELECTION (dialog));
-
       gimp_file_entry_set_filename (entry, filename);
     }
 

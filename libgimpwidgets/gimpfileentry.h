@@ -69,10 +69,10 @@ struct _GimpFileEntryClass
 
 GType       gimp_file_entry_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_file_entry_new          (const gchar    *title,
-                                          const gchar    *filename,
-                                          gboolean        dir_only,
-                                          gboolean        check_valid);
+GtkWidget * gimp_file_entry_new          (const gchar   *title,
+                                          const gchar   *filename,
+                                          gboolean       dir_only,
+                                          gboolean       check_valid);
 
 gchar     * gimp_file_entry_get_filename (GimpFileEntry *entry);
 void        gimp_file_entry_set_filename (GimpFileEntry *entry,

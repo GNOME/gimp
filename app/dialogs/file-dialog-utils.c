@@ -39,9 +39,7 @@ file_dialog_show (GtkWidget *dialog,
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save as...", FALSE);
   gimp_item_factories_set_sensitive ("<Image>", "/File/Save a Copy...", FALSE);
 
-  gtk_window_set_screen (GTK_WINDOW (dialog),
-                         gtk_widget_get_screen (parent));
-
+  gtk_window_set_screen (GTK_WINDOW (dialog), gtk_widget_get_screen (parent));
   gtk_widget_grab_focus (GTK_FILE_SELECTION (dialog)->selection_entry);
   gtk_window_present (GTK_WINDOW (dialog));
 }
