@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = waves
 
 waves_SOURCES = \
-	waves.c  $(top_srcdir)/plug-ins/megawidget/megawidget.h  
+	waves.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\

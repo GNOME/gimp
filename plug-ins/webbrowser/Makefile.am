@@ -28,7 +28,6 @@ DEPS = \
 
 webbrowser_DEPENDENCIES = $(DEPS)
 
-EXTRA_DATA = 
 EXTRA_DIST = $(scriptdata_DATA)
 
 .PHONY: files

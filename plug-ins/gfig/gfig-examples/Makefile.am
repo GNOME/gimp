@@ -17,7 +17,6 @@ gfigdata_DATA = \
 
 
 
-EXTRA_DATA =
 EXTRA_DIST = $(gfigdata_DATA)
 
 files:

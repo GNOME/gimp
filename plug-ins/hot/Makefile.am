@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = hot
 
 hot_SOURCES = \
-	hot.c  $(top_srcdir)/plug-ins/megawidget/megawidget.h  
+	hot.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\

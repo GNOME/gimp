@@ -225,7 +225,7 @@ run (char    *name,
       int image = param[1].data.d_int32;
 
       parasite = gimp_image_find_parasite(image, "gimp-comment");
-      if (!parasite_is_error(parasite))
+      if (parasite)
         image_comment = g_strdup(parasite->data);
       parasite_free(parasite);
 #endif /* GIMP_HAVE_PARASITES */
@@ -240,7 +240,7 @@ run (char    *name,
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
-	  if (!parasite_is_error(parasite))
+	  if (parasite)
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
@@ -280,7 +280,7 @@ run (char    *name,
 	  gimp_get_data ("file_tiff_save", &tsvals);
 #ifdef GIMP_HAVE_PARASITES
 	  parasite = gimp_image_find_parasite(image, "tiff-save-options");
-	  if (!parasite_is_error(parasite))
+	  if (parasite)
 	  {
 	    tsvals.compression = ((TiffSaveVals *)parasite->data)->compression;
 	    tsvals.fillorder   = ((TiffSaveVals *)parasite->data)->fillorder;
@@ -456,7 +456,8 @@ static gint32 load_image (char *filename) {
       len = MIN(len, 241);
       img_desc[len-1] = '\000';
 
-      parasite = parasite_new("gimp-comment", 1, len, img_desc);
+      parasite = parasite_new("gimp-comment", PARASITE_PERSISTENT,
+			      len, img_desc);
       gimp_image_attach_parasite(image, parasite);
       parasite_free(parasite);
     }
@@ -466,18 +467,11 @@ static gint32 load_image (char *filename) {
   /* any resolution info in the file? */
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
-    float xres=0, yres=0;
+    float xres=0.0, yres=0.0;
     unsigned short units;
-    float res=0.0;
 
     if (TIFFGetField (tif, TIFFTAG_XRESOLUTION, &xres)) {
       if (TIFFGetField (tif, TIFFTAG_YRESOLUTION, &yres)) {
-	if (abs(xres - yres) > 1e-5)
-	  g_message("TIFF warning: x resolution differs "
-		    "from y resolution (%g != %g)\n"
-		    "Using x resolution\n", xres, yres);
-
-	res = xres;
 
 	if (TIFFGetField (tif, TIFFTAG_RESOLUTIONUNIT, &units)) {
 	  switch(units) {
@@ -485,14 +479,16 @@ static gint32 load_image (char *filename) {
 	    /* ImageMagick writes files with this silly resunit */
 	    g_message("TIFF warning: resolution units meaningless, "
 		      "forcing 72 dpi\n");
-	    res = 72.0;
+	    xres = 72.0;
+	    yres = 72.0;
 	    break;
 
 	  case RESUNIT_INCH:
 	    break;
 
 	  case RESUNIT_CENTIMETER:
-	    res = ((float)xres) * 2.54;
+	    xres *= 2.54;
+	    yres *= 2.54;
 	    break;
 
 	  default:
@@ -506,16 +502,18 @@ static gint32 load_image (char *filename) {
 	}
       } else { /* xres but no yres */
 	g_message("TIFF warning: no y resolution info, assuming same as x\n");
+	yres = xres;
       }
 
       /* sanity check, since division by zero later could be embarrassing */
-      if (res < 1e-5) {
+      if (xres < 1e-5 || yres < 1e-5) {
 	g_message("TIFF: image resolution is zero: forcing 72 dpi\n");
-	res = 72.0;
+	xres = 72.0;
+	yres = 72.0;
       }
 
       /* now set the new image's resolution info */
-      gimp_image_set_resolution (image, res);
+      gimp_image_set_resolution (image, xres, yres);
     }
 
     /* no x res tag => we assume we have no resolution info, so we
@@ -1055,6 +1053,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
   switch (drawable_type)
     {
     case RGB_IMAGE:
+      predictor = 2;
       samplesperpixel = 3;
       bitspersample = 8;
       photometric = PHOTOMETRIC_RGB;
@@ -1069,6 +1068,7 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
       alpha = 0;
       break;
     case RGBA_IMAGE:
+      predictor = 2;
       samplesperpixel = 4;
       bitspersample = 8;
       photometric = PHOTOMETRIC_RGB;
@@ -1133,15 +1133,19 @@ static gint save_image (char *filename, gint32 image, gint32 layer) {
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   /* resolution fields */
   {
-      float resolution = gimp_image_get_resolution(image);
-      if (resolution)
+      float xresolution;
+      float yresolution;
+
+      gimp_image_get_resolution (image, &xresolution, &yresolution);
+
+      if (xresolution > 1e-5 && yresolution > 1e-5)
       {
-	  TIFFSetField (tif, TIFFTAG_XRESOLUTION, resolution);
-	  TIFFSetField (tif, TIFFTAG_YRESOLUTION, resolution);
+	  TIFFSetField (tif, TIFFTAG_XRESOLUTION, xresolution);
+	  TIFFSetField (tif, TIFFTAG_YRESOLUTION, yresolution);
 	  TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, RESUNIT_INCH);
       }
   }
-#endif GIMP_HAVE_RESOLUTION_INFO
+#endif /* GIMP_HAVE_RESOLUTION_INFO */
 
   /* do we have a comment?  If so, create a new parasite to hold it,
    * and attach it to the image. The attach function automatically

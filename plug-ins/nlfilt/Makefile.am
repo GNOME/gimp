@@ -5,7 +5,7 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = nlfilt
 
 nlfilt_SOURCES = \
-	nlfilt.c  $(top_srcdir)/plug-ins/megawidget/megawidget.h  
+	nlfilt.c
 
 INCLUDES = \
 	$(X_CFLAGS)			\
