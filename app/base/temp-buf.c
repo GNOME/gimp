@@ -316,7 +316,6 @@ temp_buf_resize (TempBuf *buf,
 {
   gint size;
 
-  g_return_val_if_fail (buf != NULL, NULL);
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
   /*  calculate the requested size  */
