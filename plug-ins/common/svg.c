@@ -20,7 +20,7 @@
  * -Dom Lachowicz <cinamod@hotmail.com>
  *
  * TODO: 
- * 1) size/zoom dialog
+ * 1) size/zoom dialog, resultion setting
  * 2) image preview
  */
 
