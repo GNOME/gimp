@@ -4,6 +4,9 @@
 	(gimp_container_tree_view_button_press): fixed handling of clicks
 	into a horizontally scrolled treeview.
 
+	(gimp_container_tree_view_find_click_cell): really fix handling of
+	RTL layouts (bug #162663).
+
 2005-01-08  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/scale-dialog.c: use a GimpMessageBox to display the
