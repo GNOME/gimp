@@ -284,8 +284,6 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
                                      GradientSelect *gradient_sel)
 {
   const gdouble *src;
-  gdouble        r, g, b, a;
-  gdouble        c0, c1;
   guchar        *p0;
   guchar        *p1;
   guchar        *even;
@@ -299,6 +297,9 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
 
   for (x = 0; x < gradient_sel->width; x++)
     {
+      gdouble  r, g, b, a;
+      gdouble  c0, c1;
+
       r = src[x * 4 + 0];
       g = src[x * 4 + 1];
       b = src[x * 4 + 2];
@@ -335,7 +336,7 @@ gimp_gradient_select_preview_expose (GtkWidget      *widget,
                                     GDK_RGB_DITHER_MAX,
                                     buf + event->area.x,
                                     gradient_sel->width * 3,
-                                    - event->area.x, - event->area.y);
+                                    - event->area.x, - y);
     }
 
   g_free (odd);
