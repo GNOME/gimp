@@ -344,7 +344,7 @@ sel2path_response (GtkWidget *widget,
       retVal = TRUE;
 
     default:
-      gtk_widget_destroy (GTK_WIDGET (data));
+      gtk_widget_destroy (widget);
       break;
     }
 }

@@ -1,5 +1,10 @@
 2003-11-26  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/sel2path/sel2path.c (sel2path_response):
+	gtk_widget_destroy() the dialog, not some NULL data pointer.
+
+2003-11-26  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in
 	* plug-ins/script-fu/siod/Makefile.am
 	* plug-ins/script-fu/siod/.cvsignore
