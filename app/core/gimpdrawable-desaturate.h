@@ -20,8 +20,6 @@
 #define __GIMP_DRAWABLE_DESATURATE_H__
 
 
-void   image_desaturate (GimpImage    *gimage);
-
 void   gimp_drawable_desaturate (GimpDrawable *drawable);
 
 
