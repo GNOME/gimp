@@ -2,6 +2,7 @@
 
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -209,6 +210,7 @@ libgimpwidgets_2_0_la_LDFLAGS = \
 libgimpwidgets_2_0_la_LIBADD = \
 	$(libgimpbase)	\
 	$(libgimpcolor) \
+	$(libgimpconfig) \
 	$(GTK_LIBS) 	\
 	$(libm)
 

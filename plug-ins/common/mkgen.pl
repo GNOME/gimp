@@ -44,6 +44,7 @@ libgimpui = \$(top_builddir)/libgimp/libgimpui-\$(GIMP_API_VERSION).la
 libgimpwidgets = \$(top_builddir)/libgimpwidgets/libgimpwidgets-\$(GIMP_API_VERSION).la
 libgimp = \$(top_builddir)/libgimp/libgimp-\$(GIMP_API_VERSION).la
 libgimpcolor = \$(top_builddir)/libgimpcolor/libgimpcolor-\$(GIMP_API_VERSION).la
+libgimpconfig = \$(top_builddir)/libgimpconfig/libgimpconfig-\$(GIMP_API_VERSION).la
 libgimpbase = \$(top_builddir)/libgimpbase/libgimpbase-\$(GIMP_API_VERSION).la
 
 if OS_WIN32
@@ -97,6 +98,7 @@ foreach (sort keys %plugins) {
 
     if (exists $plugins{$_}->{ui}) {
         $libgimp .= "\$(libgimpui)";
+        $libgimp .= "\t\t\\\n\t\$(libgimpconfig)";
         $libgimp .= "\t\t\\\n\t\$(libgimpwidgets)";
 	$libgimp .= "\t\\\n\t\$(libgimp)";
         $libgimp .= "\t\t\\\n\t\$(libgimpcolor)";

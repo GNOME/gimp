@@ -4,6 +4,7 @@ libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
 libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if OS_WIN32
@@ -200,6 +201,7 @@ AlienMap2_SOURCES = \
 
 AlienMap2_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -213,6 +215,7 @@ CEL_SOURCES = \
 
 CEL_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -226,6 +229,7 @@ CML_explorer_SOURCES = \
 
 CML_explorer_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -239,6 +243,7 @@ aa_SOURCES = \
 
 aa_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -253,6 +258,7 @@ align_layers_SOURCES = \
 
 align_layers_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -266,6 +272,7 @@ animationplay_SOURCES = \
 
 animationplay_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -290,6 +297,7 @@ apply_lens_SOURCES = \
 
 apply_lens_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -325,6 +333,7 @@ blinds_SOURCES = \
 
 blinds_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -349,6 +358,7 @@ borderaverage_SOURCES = \
 
 borderaverage_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -362,6 +372,7 @@ bumpmap_SOURCES = \
 
 bumpmap_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -386,6 +397,7 @@ cartoon_SOURCES = \
 
 cartoon_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -399,6 +411,7 @@ ccanalyze_SOURCES = \
 
 ccanalyze_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -412,6 +425,7 @@ channel_mixer_SOURCES = \
 
 channel_mixer_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -425,6 +439,7 @@ checkerboard_SOURCES = \
 
 checkerboard_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -438,6 +453,7 @@ color_enhance_SOURCES = \
 
 color_enhance_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -451,6 +467,7 @@ colorify_SOURCES = \
 
 colorify_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -464,6 +481,7 @@ colortoalpha_SOURCES = \
 
 colortoalpha_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -477,6 +495,7 @@ compose_SOURCES = \
 
 compose_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -501,6 +520,7 @@ convmatrix_SOURCES = \
 
 convmatrix_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -514,6 +534,7 @@ csource_SOURCES = \
 
 csource_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -527,6 +548,7 @@ cubism_SOURCES = \
 
 cubism_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -540,6 +562,7 @@ curve_bend_SOURCES = \
 
 curve_bend_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -553,6 +576,7 @@ decompose_SOURCES = \
 
 decompose_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -566,6 +590,7 @@ deinterlace_SOURCES = \
 
 deinterlace_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -579,6 +604,7 @@ depthmerge_SOURCES = \
 
 depthmerge_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -592,6 +618,7 @@ despeckle_SOURCES = \
 
 despeckle_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -605,6 +632,7 @@ destripe_SOURCES = \
 
 destripe_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -618,6 +646,7 @@ dicom_SOURCES = \
 
 dicom_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -631,6 +660,7 @@ diffraction_SOURCES = \
 
 diffraction_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -644,6 +674,7 @@ displace_SOURCES = \
 
 displace_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -657,6 +688,7 @@ dog_SOURCES = \
 
 dog_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -670,6 +702,7 @@ edge_SOURCES = \
 
 edge_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -683,6 +716,7 @@ emboss_SOURCES = \
 
 emboss_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -696,6 +730,7 @@ engrave_SOURCES = \
 
 engrave_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -709,6 +744,7 @@ exchange_SOURCES = \
 
 exchange_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -722,6 +758,7 @@ film_SOURCES = \
 
 film_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -735,6 +772,7 @@ flarefx_SOURCES = \
 
 flarefx_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -748,6 +786,7 @@ fp_SOURCES = \
 
 fp_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -761,6 +800,7 @@ fractaltrace_SOURCES = \
 
 fractaltrace_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -774,6 +814,7 @@ gauss_SOURCES = \
 
 gauss_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -787,6 +828,7 @@ gbr_SOURCES = \
 
 gbr_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -800,6 +842,7 @@ gee_SOURCES = \
 
 gee_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -813,6 +856,7 @@ gee_zoom_SOURCES = \
 
 gee_zoom_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -826,6 +870,7 @@ gif_SOURCES = \
 
 gif_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -850,6 +895,7 @@ gih_SOURCES = \
 
 gih_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -863,6 +909,7 @@ glasstile_SOURCES = \
 
 glasstile_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -887,6 +934,7 @@ gqbist_SOURCES = \
 
 gqbist_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -900,6 +948,7 @@ gradmap_SOURCES = \
 
 gradmap_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -913,6 +962,7 @@ grid_SOURCES = \
 
 grid_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -926,6 +976,7 @@ gtm_SOURCES = \
 
 gtm_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -950,6 +1001,7 @@ header_SOURCES = \
 
 header_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -963,6 +1015,7 @@ hot_SOURCES = \
 
 hot_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -976,6 +1029,7 @@ illusion_SOURCES = \
 
 illusion_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -989,6 +1043,7 @@ iwarp_SOURCES = \
 
 iwarp_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1002,6 +1057,7 @@ jigsaw_SOURCES = \
 
 jigsaw_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1015,6 +1071,7 @@ laplace_SOURCES = \
 
 laplace_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1028,6 +1085,7 @@ lic_SOURCES = \
 
 lic_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1041,6 +1099,7 @@ mail_SOURCES = \
 
 mail_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1055,6 +1114,7 @@ mapcolor_SOURCES = \
 
 mapcolor_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1068,6 +1128,7 @@ max_rgb_SOURCES = \
 
 max_rgb_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1081,6 +1142,7 @@ mblur_SOURCES = \
 
 mblur_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1094,6 +1156,7 @@ mng_SOURCES = \
 
 mng_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1108,6 +1171,7 @@ mosaic_SOURCES = \
 
 mosaic_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1121,6 +1185,7 @@ neon_SOURCES = \
 
 neon_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1134,6 +1199,7 @@ newsprint_SOURCES = \
 
 newsprint_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1147,6 +1213,7 @@ nlfilt_SOURCES = \
 
 nlfilt_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1160,6 +1227,7 @@ noisify_SOURCES = \
 
 noisify_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1184,6 +1252,7 @@ nova_SOURCES = \
 
 nova_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1197,6 +1266,7 @@ oilify_SOURCES = \
 
 oilify_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1210,6 +1280,7 @@ papertile_SOURCES = \
 
 papertile_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1223,6 +1294,7 @@ pat_SOURCES = \
 
 pat_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1236,6 +1308,7 @@ pcx_SOURCES = \
 
 pcx_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1249,6 +1322,7 @@ photocopy_SOURCES = \
 
 photocopy_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1262,6 +1336,7 @@ pix_SOURCES = \
 
 pix_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1275,6 +1350,7 @@ pixelize_SOURCES = \
 
 pixelize_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1288,6 +1364,7 @@ plasma_SOURCES = \
 
 plasma_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1301,6 +1378,7 @@ png_SOURCES = \
 
 png_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1315,6 +1393,7 @@ pnm_SOURCES = \
 
 pnm_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1328,6 +1407,7 @@ polar_SOURCES = \
 
 polar_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1341,6 +1421,7 @@ postscript_SOURCES = \
 
 postscript_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1365,6 +1446,7 @@ psd_save_SOURCES = \
 
 psd_save_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1378,6 +1460,7 @@ psp_SOURCES = \
 
 psp_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1392,6 +1475,7 @@ randomize_SOURCES = \
 
 randomize_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1405,6 +1489,7 @@ raw_SOURCES = \
 
 raw_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1418,6 +1503,7 @@ retinex_SOURCES = \
 
 retinex_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1431,6 +1517,7 @@ ripple_SOURCES = \
 
 ripple_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1455,6 +1542,7 @@ sample_colorize_SOURCES = \
 
 sample_colorize_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1468,6 +1556,7 @@ scatter_hsv_SOURCES = \
 
 scatter_hsv_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1481,6 +1570,7 @@ screenshot_SOURCES = \
 
 screenshot_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1495,6 +1585,7 @@ sel_gauss_SOURCES = \
 
 sel_gauss_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1519,6 +1610,7 @@ sharpen_SOURCES = \
 
 sharpen_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1532,6 +1624,7 @@ shift_SOURCES = \
 
 shift_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1545,6 +1638,7 @@ sinus_SOURCES = \
 
 sinus_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1558,6 +1652,7 @@ smooth_palette_SOURCES = \
 
 smooth_palette_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1571,6 +1666,7 @@ snoise_SOURCES = \
 
 snoise_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1584,6 +1680,7 @@ sobel_SOURCES = \
 
 sobel_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1597,6 +1694,7 @@ softglow_SOURCES = \
 
 softglow_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1610,6 +1708,7 @@ sparkle_SOURCES = \
 
 sparkle_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1623,6 +1722,7 @@ spheredesigner_SOURCES = \
 
 spheredesigner_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1636,6 +1736,7 @@ spread_SOURCES = \
 
 spread_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1649,6 +1750,7 @@ struc_SOURCES = \
 
 struc_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1662,6 +1764,7 @@ sunras_SOURCES = \
 
 sunras_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1675,6 +1778,7 @@ svg_SOURCES = \
 
 svg_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1689,6 +1793,7 @@ tga_SOURCES = \
 
 tga_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1702,6 +1807,7 @@ threshold_alpha_SOURCES = \
 
 threshold_alpha_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1715,6 +1821,7 @@ tiff_SOURCES = \
 
 tiff_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1729,6 +1836,7 @@ tile_SOURCES = \
 
 tile_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1742,6 +1850,7 @@ tileit_SOURCES = \
 
 tileit_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1766,6 +1875,7 @@ uniteditor_SOURCES = \
 
 uniteditor_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1779,6 +1889,7 @@ unsharp_SOURCES = \
 
 unsharp_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1804,6 +1915,7 @@ video_SOURCES = \
 
 video_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1828,6 +1940,7 @@ vpropagate_SOURCES = \
 
 vpropagate_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1841,6 +1954,7 @@ warp_SOURCES = \
 
 warp_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1854,6 +1968,7 @@ waves_SOURCES = \
 
 waves_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1878,6 +1993,7 @@ whirlpinch_SOURCES = \
 
 whirlpinch_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1891,6 +2007,7 @@ winclipboard_SOURCES = \
 
 winclipboard_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1905,6 +2022,7 @@ wind_SOURCES = \
 
 wind_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1918,6 +2036,7 @@ winprint_SOURCES = \
 
 winprint_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1932,6 +2051,7 @@ wmf_SOURCES = \
 
 wmf_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1946,6 +2066,7 @@ xbm_SOURCES = \
 
 xbm_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1959,6 +2080,7 @@ xpm_SOURCES = \
 
 xpm_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\
@@ -1973,6 +2095,7 @@ xwd_SOURCES = \
 
 xwd_LDADD = \
 	$(libgimpui)		\
+	$(libgimpconfig)		\
 	$(libgimpwidgets)	\
 	$(libgimp)		\
 	$(libgimpcolor)		\

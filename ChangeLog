@@ -1,5 +1,40 @@
 2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpwidgets/Makefile.am
+	* plug-ins/FractalExplorer/Makefile.am
+	* plug-ins/Lighting/Makefile.am
+	* plug-ins/MapObject/Makefile.am
+	* plug-ins/bmp/Makefile.am
+	* plug-ins/common/Makefile.am
+	* plug-ins/common/mkgen.pl
+	* plug-ins/dbbrowser/Makefile.am
+	* plug-ins/faxg3/Makefile.am
+	* plug-ins/fits/Makefile.am
+	* plug-ins/flame/Makefile.am
+	* plug-ins/gfig/Makefile.am
+	* plug-ins/gflare/Makefile.am
+	* plug-ins/gfli/Makefile.am
+	* plug-ins/gimpressionist/Makefile.am
+	* plug-ins/helpbrowser/Makefile.am
+	* plug-ins/ifscompose/Makefile.am
+	* plug-ins/imagemap/Makefile.am
+	* plug-ins/jpeg/Makefile.am
+	* plug-ins/maze/Makefile.am
+	* plug-ins/pagecurl/Makefile.am
+	* plug-ins/print/Makefile.am
+	* plug-ins/pygimp/Makefile.am
+	* plug-ins/rcm/Makefile.am
+	* plug-ins/script-fu/Makefile.am
+	* plug-ins/sel2path/Makefile.am
+	* plug-ins/sgi/Makefile.am
+	* plug-ins/twain/Makefile.am
+	* plug-ins/winicon/Makefile.am
+	* plug-ins/winsnap/Makefile.am
+	* plug-ins/xjt/Makefile.am: ouch, broke build badly, needed to
+	add libgimpconfig dependencies after moving gimppropwidgets.
+
+2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpwidgets/gimppropwidgets.[ch]: oops, use libgimp header.
 	
 2005-02-04  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
