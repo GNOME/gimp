@@ -325,6 +325,7 @@ CP1
       memcpy ($var, return_vals[$argc].data.d_$type,
 	      $numvar * sizeof ($datatype));
 CP2
+		    $out->{headers} = "#include <string.h>\n" if (!($ch || $cf));
                 }
 		else {
 		    # The return value variable
@@ -599,6 +600,7 @@ HEADER
         print CFILE $lgpl_top;
         print CFILE " * $cname\n";
         print CFILE $lgpl_bottom;
+	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
 	print CFILE qq/#include "gimpprivate.h"\n/ if $privatevars;
 	print CFILE "\n", $extra->{code} if exists $extra->{code};

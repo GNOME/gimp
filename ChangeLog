@@ -1,3 +1,21 @@
+2001-03-18  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/app.pl: guard inclusion of <process.h> by G_OS_WIN32
+	* tools/pdbgen/lib.pl: add include <string.h> if the generated code
+	used memcpy().
+	
+	* tools/pdbgen/pdb/fileops.pdb: include process.h for G_OS_WIN32.
+
+	* libgimp/gimpbrushes_pdb.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpgradients_pdb.c
+	* libgimp/gimpgradientselect_pdb.c
+	* libgimp/gimpimage_pdb.c
+	* libgimp/gimppaths_pdb.c
+	* libgimp/gimppatterns_pdb.c
+	* libgimp/gimpproceduraldb_pdb.c
+	* tools/pdbgen/pdb/fileops.pdb: regenerated
+
 2001-03-16  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/common/gqbist.c : #define PATH_MAX as _MAX_PATH

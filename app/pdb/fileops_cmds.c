@@ -20,6 +20,12 @@
 
 #include "config.h"
 
+#include <glib.h>
+
+#ifdef G_OS_WIN32
+#include <process.h>
+#endif
+
 #include <string.h>
 #include <sys/types.h>
 
@@ -29,10 +35,6 @@
 
 
 #include <gtk/gtk.h>
-
-#ifdef G_OS_WIN32
-#include <process.h>		/* For _getpid() */
-#endif
 
 #include "apptypes.h"
 #include "procedural_db.h"

@@ -691,8 +691,14 @@ GPL
 	foreach (@headers) {
 	    if ($_ eq '<unistd.h>') {
 		$headers .= "\n" if $seen;
-		$headers .= "#ifdef HAVE_UNISTD_H\n";
+		$headers .= "#ifdef HAVE_UNISTD_H\n";	
 	    }
+	    if ($_ eq '<process.h>') {
+		$headers .= "\n" if $seen;
+		$headers .= "#include <glib.h>\n\n";	
+		$headers .= "#ifdef G_OS_WIN32\n";
+	    }
+
 
 	    $seen++ if /^</;
 
@@ -729,6 +735,12 @@ GPL
 		$headers .= "#endif\n\n";
 		$seen = 0;
  	    }
+
+            if ($_ eq '<process.h>') {
+		$headers .= "#endif\n\n";
+		$seen = 0;
+	    }
+            
 
 	    $headers .= "\n" if $_ eq '"config.h"';
 	}
