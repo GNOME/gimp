@@ -1,5 +1,20 @@
 2003-12-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/tile-manager.c (tile_manager_get_memsize): return a
+	more exact result.
+
+	* app/core/gimpimage-scale.[ch] (gimp_image_scale_check): estimate
+	the new memsize by separating parts of the image that are constant
+	from parts that will scale. Also take undo logic into account.
+	Return the estimated new memsize since it's not trivial to
+	calculate.
+
+	* app/gui/image-commands.c (image_scale_callback): use the memsize
+	returned by gimp_image_scale_check() for the warning message. Free
+	allocated strings.
+
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.h: changed GimpImageScaleCheckType enum
 	values to GIMP_IMAGE_SCALE_*.
 

@@ -489,18 +489,20 @@ static void
 image_scale_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  ImageResize *image_scale = data;
-  gchar       *warning_message;
+  ImageResize             *image_scale = data;
+  GimpImageScaleCheckType  scale_check;
+  gint64                   new_memsize;
+  gchar                   *warning_message;
 
   g_assert (image_scale != NULL);
   g_assert (image_scale->gimage != NULL);
 
   gtk_widget_set_sensitive (image_scale->resize->resize_shell, FALSE);
 
-  GimpImageScaleCheckType scale_check =
-    gimp_image_scale_check (image_scale->gimage,
-                            image_scale->resize->width,
-                            image_scale->resize->height);
+  scale_check = gimp_image_scale_check (image_scale->gimage,
+                                        image_scale->resize->width,
+                                        image_scale->resize->height,
+                                        &new_memsize);
   switch (scale_check)
     {
     case GIMP_IMAGE_SCALE_TOO_BIG:
@@ -508,29 +510,27 @@ image_scale_callback (GtkWidget *widget,
         gchar *size_str;
         gchar *max_size_str;
 
-        size_str =
-          gimp_memsize_to_string (gimp_object_get_memsize
-                                  (GIMP_OBJECT (image_scale->gimage), NULL) *
-                                  image_scale->resize->ratio_x *
-                                  image_scale->resize->ratio_y);
+        size_str     = gimp_memsize_to_string (new_memsize);
         max_size_str = gimp_memsize_to_string
           (GIMP_GUI_CONFIG (image_scale->gimage->gimp->config)->max_new_image_size);
 
         warning_message = g_strdup_printf
-          (_("You are trying to create an image with "
-             "a size of %s.\n\n"
+          (_("You are trying to create an image with a size of %s.\n\n"
              "Choose OK to create this image anyway.\n"
-             "Choose Cancel if you did not intend to "
-             "create such a large image.\n\n"
-             "To prevent this dialog from appearing, "
-             "increase the \"Maximum Image Size\" "
-             "setting (currently %s) in the "
+             "Choose Cancel if you did not intend to create such a "
+             "large image.\n\n"
+             "To prevent this dialog from appearing, increase the "
+             "\"Maximum Image Size\" setting (currently %s) in the "
              "Preferences dialog."),
            size_str, max_size_str);
 
-        image_scale_warn (image_scale,
-                          _("Image exceeds maximum image size"),
+        g_free (size_str);
+        g_free (max_size_str);
+
+        image_scale_warn (image_scale, _("Image exceeds maximum image size"),
                           warning_message);
+
+        g_free (warning_message);
       }
       break;
 
@@ -539,8 +539,7 @@ image_scale_callback (GtkWidget *widget,
                           "some layers completely away. "
                           "Is this what you want?");
 
-      image_scale_warn (image_scale,
-                        _("Layer Too Small"),
+      image_scale_warn (image_scale, _("Layer Too Small"),
                         warning_message);
       break;
 

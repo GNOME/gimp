@@ -22,6 +22,8 @@
 
 #include "core-types.h"
 
+#include "base/tile-manager.h"
+
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-guides.h"
@@ -212,21 +214,54 @@ gimp_image_scale (GimpImage             *gimage,
 GimpImageScaleCheckType
 gimp_image_scale_check (const GimpImage *gimage,
                         gint             new_width,
-                        gint             new_height)
+                        gint             new_height,
+                        gint64          *new_memsize)
 {
-  GList *list;
-  glong  curr_size;
-  glong  new_size;
+  GList  *list;
+  gint64  current_size;
+  gint64  fixed_size;
+  gint64  undo_size;
+  gint64  redo_size;
+  gint64  scaled_size;
+  gint64  new_size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), GIMP_IMAGE_SCALE_TOO_SMALL);
+  g_return_val_if_fail (new_memsize != NULL, GIMP_IMAGE_SCALE_TOO_SMALL);
 
-  curr_size = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
+  current_size = gimp_object_get_memsize (GIMP_OBJECT (gimage), NULL);
 
-  new_size = (curr_size *
+  scaled_size =
+    gimp_object_get_memsize (GIMP_OBJECT (gimage->layers), NULL)         +
+    gimp_object_get_memsize (GIMP_OBJECT (gimage->channels), NULL)       +
+    gimp_object_get_memsize (GIMP_OBJECT (gimage->selection_mask), NULL) +
+    tile_manager_get_memsize (gimage->projection);
+
+  undo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->undo_stack), NULL);
+  redo_size = gimp_object_get_memsize (GIMP_OBJECT (gimage->redo_stack), NULL);
+
+  fixed_size = current_size - scaled_size - undo_size - redo_size;
+
+  new_size = (fixed_size  +
+              scaled_size *
               ((gdouble) new_width  / gimp_image_get_width  (gimage)) *
               ((gdouble) new_height / gimp_image_get_height (gimage)));
 
-  if (new_size > curr_size &&
+  if (undo_size + scaled_size < gimage->gimp->config->undo_size)
+    {
+      new_size += undo_size + scaled_size;
+    }
+  else if (scaled_size < gimage->gimp->config->undo_size)
+    {
+      new_size += gimage->gimp->config->undo_size;
+    }
+  else
+    {
+      new_size += scaled_size;
+    }
+
+  *new_memsize = new_size;
+
+  if (new_size > current_size &&
       new_size > GIMP_GUI_CONFIG (gimage->gimp->config)->max_new_image_size)
     return GIMP_IMAGE_SCALE_TOO_BIG;
 
