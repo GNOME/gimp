@@ -1,5 +1,10 @@
 2001-11-13  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am: need to spell EXTRA_DIST correctly now
+	that the "files" hack is gone.
+
+2001-11-13  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: commented out generation of some files in
 	plug-ins/ so config.status doesn't warn about non-existing
 	directories.

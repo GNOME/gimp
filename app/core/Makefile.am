@@ -142,7 +142,7 @@ libappcore_a_extra_sources = @STRIP_BEGIN@ \
 
 libappcore_a_SOURCES = $(libappcore_a_built_sources) $(libappcore_a_sources)
 
-EXTRS_DIST = \
+EXTRA_DIST = \
 	makefile.msc			\
 	$(libappcore_a_extra_sources)
 
