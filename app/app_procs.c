@@ -64,7 +64,10 @@
 
 /*  local prototypes  */
 
-static void       app_init_update_status   (const gchar *text1,
+static void       app_init_update_splash   (const gchar *text1,
+                                            const gchar *text2,
+                                            gdouble      percentage);
+static void       app_init_update_none     (const gchar *text1,
                                             const gchar *text2,
                                             gdouble      percentage);
 static gboolean   app_exit_callback        (Gimp        *gimp,
@@ -79,19 +82,9 @@ Gimp *the_gimp = NULL;
 
 /*  command-line options  */
 
-gboolean             no_interface            = FALSE;
-gboolean             no_data                 = FALSE;
-gboolean             no_splash               = FALSE;
-gboolean             no_splash_image         = FALSE;
-gboolean             be_verbose              = FALSE;
-gboolean             use_shm                 = FALSE;
 gboolean             use_debug_handler       = FALSE;
 gboolean             console_messages        = FALSE;
-gboolean             restore_session         = FALSE;
-gboolean             use_mmx                 = TRUE;
 GimpStackTraceMode   stack_trace_mode        = GIMP_STACK_TRACE_QUERY;
-gchar               *alternate_gimprc        = NULL;
-gchar               *alternate_system_gimprc = NULL;
 
 /*  other global variables  */
 gchar *prog_name = NULL;  /* our executable name */
@@ -107,11 +100,28 @@ app_gui_libs_init (gint    *argc,
 }
 
 void
-app_init (gint    gimp_argc,
-	  gchar **gimp_argv)
+app_init (gint          gimp_argc,
+	  gchar       **gimp_argv,
+          const gchar  *alternate_system_gimprc,
+          const gchar  *alternate_gimprc,
+          const gchar **batch_cmds,
+          gboolean      no_interface,
+          gboolean      no_data,
+          gboolean      no_splash,
+          gboolean      no_splash_image,
+          gboolean      be_verbose,
+          gboolean      use_shm,
+          gboolean      use_mmx,
+          gboolean      restore_session)
 {
-  const gchar *gimp_dir;
-  GimpRc      *gimprc;
+  GimpInitStatusFunc  update_status_func;
+  const gchar        *gimp_dir;
+  GimpRc             *gimprc;
+
+  if (no_interface || no_splash)
+    update_status_func = app_init_update_none;
+  else
+    update_status_func = app_init_update_splash;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system
@@ -241,7 +251,7 @@ app_init (gint    gimp_argc,
   /*  Create all members of the global Gimp instance which need an already
    *  parsed gimprc, e.g. the data factories
    */
-  gimp_initialize (the_gimp, app_init_update_status);
+  gimp_initialize (the_gimp, update_status_func);
 
   if (! no_interface)
     {
@@ -251,7 +261,7 @@ app_init (gint    gimp_argc,
 
   /*  Load all data files
    */
-  gimp_restore (the_gimp, app_init_update_status, no_data);
+  gimp_restore (the_gimp, update_status_func, no_data);
 
   if (! no_interface)
     {
@@ -261,7 +271,7 @@ app_init (gint    gimp_argc,
 
   /*  Initialize the plug-in structures
    */
-  plug_ins_init (the_gimp, app_init_update_status);
+  plug_ins_init (the_gimp, update_status_func);
 
   if (! no_interface)
     {
@@ -346,7 +356,7 @@ app_init (gint    gimp_argc,
         }
     }
 
-  batch_init (the_gimp, (const gchar **) batch_cmds);
+  batch_init (the_gimp, batch_cmds);
 
   if (! no_interface)
     {
@@ -375,14 +385,18 @@ app_init (gint    gimp_argc,
 /*  private functions  */
 
 static void
-app_init_update_status (const gchar *text1,
+app_init_update_splash (const gchar *text1,
 		        const gchar *text2,
 		        gdouble      percentage)
 {
-  if (! no_interface && ! no_splash)
-    {
-      splash_update (text1, text2, percentage);
-    }
+  splash_update (text1, text2, percentage);
+}
+
+static void
+app_init_update_none (const gchar *text1,
+                      const gchar *text2,
+                      gdouble      percentage)
+{
 }
 
 static gboolean

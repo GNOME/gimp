@@ -1,3 +1,23 @@
+2003-09-01  Michael Natterer  <mitch@gimp.org>
+
+	We really don't need that global variable overkill from appenv.h
+	just to pass these values from main() to app_init():
+
+	* app/app_procs.[ch] (app_init): added tons of parameters that
+	used to be global variables before.
+	Replaced app_init_update_status() by two functions, one which
+	actually updates the splash, and one which does nothing, so we
+	don't need global variables in the status callback.
+
+	* app/appenv.h: removed vraiable declarations here. Some are still
+	left, will get rid of this entire file soon...
+
+	* app/main.c: added them as local variables to main() and
+	pass them to app_init().
+
+	* app/batch.c: removed the global "batch_cmds", they are passed
+	the same way as the stuff above now.
+
 2003-09-01  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: added simplistic undo, needs polishing.

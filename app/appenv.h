@@ -25,20 +25,9 @@
 
 
 /*  command line options  */
-extern gboolean             no_interface;
-extern gboolean             no_splash;
-extern gboolean             no_splash_image;
-extern gboolean             no_data;
-extern gboolean             be_verbose;
-extern gboolean             use_shm;
-extern gboolean             use_mmx;
 extern gboolean             use_debug_handler;
 extern gboolean             console_messages;
-extern gboolean             restore_session;
 extern GimpStackTraceMode   stack_trace_mode;
-extern gchar               *alternate_gimprc;
-extern gchar               *alternate_system_gimprc;
-extern gchar              **batch_cmds;
 
 /*  other global variables  */
 extern gchar               *prog_name;

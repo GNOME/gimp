@@ -45,8 +45,6 @@ static void   batch_perl_server  (Gimp        *gimp,
                                   gint         extra);
 
 
-gchar **batch_cmds = NULL;
-
 static ProcRecord *eval_proc = NULL;
 
 

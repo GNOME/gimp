@@ -65,7 +65,7 @@ static void   gimp_text_console_exit (gboolean     fail);
 
 
 /*
- *  argv processing: 
+ *  argv processing:
  *      Arguments are either switches, their associated
  *      values, or image files.  As switches and their
  *      associated values are processed, those slots in
@@ -88,8 +88,19 @@ int
 main (int    argc,
       char **argv)
 {
-  gboolean  show_help    = FALSE;
-  gint      i, j;
+  gchar     *alternate_system_gimprc = NULL;
+  gchar     *alternate_gimprc        = NULL;
+  gchar    **batch_cmds              = NULL;
+  gboolean   show_help               = FALSE;
+  gboolean   no_interface            = FALSE;
+  gboolean   no_data                 = FALSE;
+  gboolean   no_splash               = FALSE;
+  gboolean   no_splash_image         = FALSE;
+  gboolean   be_verbose              = FALSE;
+  gboolean   use_shm                 = FALSE;
+  gboolean   use_mmx                 = TRUE;
+  gboolean   restore_session         = FALSE;
+  gint       i, j;
 
 #if 0
   g_mem_set_vtable (glib_mem_profiler_table);
@@ -197,24 +208,24 @@ main (int    argc,
 	  if (batch_cmds[0] == NULL)  /* We need at least one batch command */
 	    show_help = TRUE;
 	}
-      else if (strcmp (argv[i], "--system-gimprc") == 0)  
+      else if (strcmp (argv[i], "--system-gimprc") == 0)
 	{
  	  argv[i] = NULL;
-	  if (argc <= ++i) 
+	  if (argc <= ++i)
             {
 	      show_help = TRUE;
 	    }
-          else 
+          else
             {
 	      alternate_system_gimprc = argv[i];
 	      argv[i] = NULL;
             }
-	} 
-      else if ((strcmp (argv[i], "--gimprc") == 0) || 
+	}
+      else if ((strcmp (argv[i], "--gimprc") == 0) ||
                (strcmp (argv[i], "-g") == 0))
 	{
 	  argv[i] = NULL;
-	  if (argc <= ++i) 
+	  if (argc <= ++i)
             {
 	      show_help = TRUE;
 	    }
@@ -274,14 +285,14 @@ main (int    argc,
 	  restore_session = TRUE;
  	  argv[i] = NULL;
 	}
-      else if (strcmp (argv[i], "--enable-stack-trace") == 0)  
+      else if (strcmp (argv[i], "--enable-stack-trace") == 0)
 	{
  	  argv[i] = NULL;
-	  if (argc <= ++i) 
+	  if (argc <= ++i)
             {
 	      show_help = TRUE;
 	    }
-          else 
+          else
             {
 	      if (! strcmp (argv[i], "never"))
 		stack_trace_mode = GIMP_STACK_TRACE_NEVER;
@@ -314,7 +325,7 @@ main (int    argc,
     }
 
 #ifdef G_OS_WIN32
-  /* Common windoze apps don't have a console at all. So does Gimp 
+  /* Common windoze apps don't have a console at all. So does Gimp
    * - if appropiate. This allows to compile as console application
    * with all it's benefits (like inheriting the console) but hide
    * it, if the user doesn't want it.
@@ -331,7 +342,7 @@ main (int    argc,
 
 #ifndef G_OS_WIN32
 
-  /* No use catching these on Win32, the user won't get any 
+  /* No use catching these on Win32, the user won't get any
    * stack trace from glib anyhow. It's better to let Windows inform
    * about the program error, and offer debugging (if the user
    * has installed MSVC or some other compiler that knows how to
@@ -367,7 +378,18 @@ main (int    argc,
 
   /* Initialize the application */
   app_init (argc - 1,
-	    argv + 1);
+	    argv + 1,
+            alternate_system_gimprc,
+            alternate_gimprc,
+            (const gchar **) batch_cmds,
+            no_interface,
+            no_data,
+            no_splash,
+            no_splash_image,
+            be_verbose,
+            use_shm,
+            use_mmx,
+            restore_session);
 
   return 0;
 }
@@ -396,7 +418,7 @@ gimp_show_help (const gchar *progname)
   g_print (_("  -s, --no-splash          Do not show the startup window.\n"));
   g_print (_("  -S, --no-splash-image    Do not add an image to the startup window.\n"));
   g_print (_("  -v, --version            Output version information.\n"));
-  g_print (_("  --verbose                Show startup messages.\n"));	  
+  g_print (_("  --verbose                Show startup messages.\n"));
   g_print (_("  --no-shm                 Do not use shared memory between GIMP and plugins.\n"));
   g_print (_("  --no-mmx                 Do not use MMX routines.\n"));
   g_print (_("  --debug-handlers         Enable non-fatal debugging signal handlers.\n"));
