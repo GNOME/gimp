@@ -39,6 +39,7 @@
 #include <libgimpwidgets/gimpdialog.h>
 #include <libgimpwidgets/gimpfileselection.h>
 #include <libgimpwidgets/gimphelpui.h>
+#include <libgimpwidgets/gimpmemsizeentry.h>
 #include <libgimpwidgets/gimpoffsetarea.h>
 #include <libgimpwidgets/gimppatheditor.h>
 #include <libgimpwidgets/gimppickbutton.h>
@@ -228,16 +229,6 @@ GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    gdouble             ysize_0,   /* % */
 				    gdouble             ysize_100  /* % */);
 
-#define GIMP_MEMSIZE_ENTRY_SPINBUTTON(memsize) \
-        (g_object_get_data (G_OBJECT (memsize), "spinbutton"))
-#define GIMP_MEMSIZE_ENTRY_SPINBUTTON_ADJ(memsize) \
-        gtk_spin_button_get_adjustment \
-        (GTK_SPIN_BUTTON (g_object_get_data (G_OBJECT (memsize), "spinbutton")))
-#define GIMP_MEMSIZE_ENTRY_OPTIONMENU(memsize) \
-        (g_object_get_data (G_OBJECT (memsize), "optionmenu"))
-
-GtkWidget * gimp_memsize_entry_new  (GtkAdjustment      *adjustment);
-  
 
 GtkWidget * gimp_pixmap_button_new  (gchar             **xpm_data,
 				     const gchar        *text);

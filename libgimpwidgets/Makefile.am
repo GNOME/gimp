@@ -86,6 +86,8 @@ libgimpwidgets_1_3_la_sources = \
 	gimpfileselection.h	\
 	gimphelpui.c		\
 	gimphelpui.h		\
+	gimpmemsizeentry.c	\
+	gimpmemsizeentry.h	\
 	gimpoffsetarea.c	\
 	gimpoffsetarea.h	\
 	gimppatheditor.c	\

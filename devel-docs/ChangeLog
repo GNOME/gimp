@@ -1,3 +1,12 @@
+2003-01-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/tmpl/gimpmemsizeentry.sgml
+	* libgimpwidgets/tmpl/gimpwidgets.sgml: added a new file that
+	documents GimpMemsizeEntry and changed the others accordingly.
+
 2003-01-02  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmodule/libgimpmodule-sections.txt

@@ -1,0 +1,60 @@
+<!-- ##### SECTION Title ##### -->
+GimpMemsizeEntry
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT GimpMemsizeEntry ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_memsize_entry_new ##### -->
+<para>
+
+</para>
+
+@value: 
+@lower: 
+@upper: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@adjustment: 
+
+
+<!-- ##### FUNCTION gimp_memsize_entry_set_value ##### -->
+<para>
+
+</para>
+
+@entry: 
+@value: 
+
+
+<!-- ##### FUNCTION gimp_memsize_entry_get_value ##### -->
+<para>
+
+</para>
+
+@entry: 
+@Returns: 
+
+
+<!-- ##### SIGNAL GimpMemsizeEntry::value-changed ##### -->
+<para>
+
+</para>
+
+@gimpmemsizeentry: the object which received the signal.
+

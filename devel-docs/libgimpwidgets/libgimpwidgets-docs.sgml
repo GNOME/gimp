@@ -12,6 +12,7 @@
 <!entity GimpDialog SYSTEM "sgml/gimpdialog.sgml">
 <!entity GimpFileSelection SYSTEM "sgml/gimpfileselection.sgml">
 <!entity GimpHelpUI SYSTEM "sgml/gimphelpui.sgml">
+<!entity GimpMemsizeEntry SYSTEM "sgml/gimpmemsizeentry.sgml">
 <!entity GimpPathEditor SYSTEM "sgml/gimppatheditor.sgml">
 <!entity GimpPickButton SYSTEM "sgml/gimppickbutton.sgml">
 <!entity GimpPixmap SYSTEM "sgml/gimppixmap.sgml">
@@ -34,6 +35,7 @@
     &GimpColorButton;
     &GimpColorScale;
     &GimpFileSelection;
+    &GimpMemsizeEntry;
     &GimpPathEditor;
     &GimpPickButton;
     &GimpPixmap;

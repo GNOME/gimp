@@ -87,4 +87,4 @@ gboolean    gimp_chain_button_get_active (GimpChainButton   *gcb);
 
 G_END_DECLS
 
-#endif /* __CHAIN_BUTTON_H__ */
+#endif /* __GIMP_CHAIN_BUTTON_H__ */

@@ -1,5 +1,17 @@
 2003-01-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpmemsizeentry.[ch]: made GimpMemsizeEntry a
+	widget which doesn't use a GtkAdjustment to store the value.  The
+	latter caused problems on 64bit machines since a gdouble doesn't
+	provide enough precision for G_MAXULONG.
+
+	* libgimpwidgets/gimpwidgets.[ch]
+	* libgimpwidgets/gimpwidgetstypes.h
+	* app/widgets/gimppropwidgets.c: changed accordingly.
+
+2003-01-05  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-merge.c (gimp_image_merge_layers): redid the
 	fix for bug #101036. Instead of temporarily changing the layer
 	mode, just use a different mode for combine_regions().

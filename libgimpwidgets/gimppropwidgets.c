@@ -442,46 +442,6 @@ gimp_prop_spin_button_new (GObject     *config,
   return spinbutton;
 }
 
-GtkWidget *
-gimp_prop_memsize_entry_new (GObject     *config,
-                             const gchar *property_name)
-{
-  GParamSpec      *param_spec;
-  GParamSpecULong *ulong_spec;
-  GtkObject       *adjustment;
-  GtkWidget       *entry;
-  guint            value;
-
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_MEMSIZE, G_STRLOC);
-  if (! param_spec)
-    return NULL;
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  ulong_spec = G_PARAM_SPEC_ULONG (param_spec);
-
-  adjustment = gtk_adjustment_new (value,
-				   ulong_spec->minimum,
-				   ulong_spec->maximum,
-                                   1, 64, 0);
-  entry = gimp_memsize_entry_new (GTK_ADJUSTMENT (adjustment));
-
-  set_param_spec (G_OBJECT (adjustment), param_spec);
-
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		    G_CALLBACK (gimp_prop_adjustment_callback),
-		    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_adjustment_notify),
-                  adjustment);
-
-  return entry;
-}
-
 static void
 gimp_prop_adjustment_callback (GtkAdjustment *adjustment,
                                GObject       *config)
@@ -592,6 +552,99 @@ gimp_prop_adjustment_notify (GObject       *config,
 
       g_signal_handlers_unblock_by_func (G_OBJECT (adjustment),
                                          gimp_prop_adjustment_callback,
+                                         config);
+    }
+}
+
+
+/*************/
+/*  memsize  */
+/*************/
+
+static void   gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
+					  GObject          *config);
+static void   gimp_prop_memsize_notify   (GObject          *config,
+					  GParamSpec       *param_spec,
+					  GimpMemsizeEntry *entry);
+
+GtkWidget *
+gimp_prop_memsize_entry_new (GObject     *config,
+                             const gchar *property_name)
+{
+  GParamSpec      *param_spec;
+  GParamSpecULong *ulong_spec;
+  GtkWidget       *entry;
+  gulong           value;
+
+  param_spec = check_param_spec (config, property_name,
+                                 GIMP_TYPE_PARAM_MEMSIZE, G_STRLOC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  ulong_spec = G_PARAM_SPEC_ULONG (param_spec);
+
+  entry = gimp_memsize_entry_new (value,
+				  ulong_spec->minimum,
+				  ulong_spec->maximum);
+
+  set_param_spec (G_OBJECT (entry), param_spec);
+
+  g_signal_connect (G_OBJECT (entry), "value_changed",
+		    G_CALLBACK (gimp_prop_memsize_callback),
+		    config);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_memsize_notify),
+                  entry);
+
+  return entry;
+}
+
+
+static void
+gimp_prop_memsize_callback (GimpMemsizeEntry *entry,
+			    GObject          *config)
+{
+  GParamSpec *param_spec;
+
+  param_spec = get_param_spec (G_OBJECT (entry));
+  if (! param_spec)
+    return;
+
+  g_return_if_fail (G_IS_PARAM_SPEC_ULONG (param_spec));
+
+  g_object_set (config,
+		param_spec->name, gimp_memsize_entry_get_value (entry),
+		NULL);
+}
+
+static void
+gimp_prop_memsize_notify (GObject          *config,
+			  GParamSpec       *param_spec,
+			  GimpMemsizeEntry *entry)
+{
+  gulong value;
+
+  g_return_if_fail (G_IS_PARAM_SPEC_ULONG (param_spec));
+
+  g_object_get (config,
+		param_spec->name, &value,
+		NULL);
+
+  if (entry->value != value)
+    {
+      g_signal_handlers_block_by_func (G_OBJECT (entry),
+                                       gimp_prop_memsize_callback,
+                                       config);
+
+      gimp_memsize_entry_set_value (entry, value);
+
+      g_signal_handlers_unblock_by_func (G_OBJECT (entry),
+                                         gimp_prop_memsize_callback,
                                          config);
     }
 }

@@ -67,6 +67,7 @@ typedef struct _GimpColorSelector GimpColorSelector;
 typedef struct _GimpColorSelect   GimpColorSelect;
 typedef struct _GimpDialog        GimpDialog;
 typedef struct _GimpFileSelection GimpFileSelection;
+typedef struct _GimpMemsizeEntry  GimpMemsizeEntry;
 typedef struct _GimpOffsetArea    GimpOffsetArea;
 typedef struct _GimpPathEditor    GimpPathEditor;
 typedef struct _GimpPickButton    GimpPickButton;
