@@ -51,7 +51,6 @@ EXTRA_DIST = \
 	README.i18n		\
 	README.perl		\
 	README.win32		\
-	TODO			\
 	TODO.xml		\
 	config.h.win32		\
 	intltool-extract.in	\

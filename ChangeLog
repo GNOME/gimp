@@ -1,3 +1,8 @@
+2003-02-11  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am
+	* TODO: removed. Fixes bug #105835.
+
 2003-02-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.[ch]: added new virtual function duplicate()
