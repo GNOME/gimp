@@ -639,6 +639,7 @@ libgimp/gimpfeatures.h
 Makefile
 po/Makefile.in
 intl/Makefile
+tools/Makefile
 libgimp/Makefile
 plug-ins/Makefile
 plug-ins/perl/config.pl:plug-ins/perl/etc/config.pl.in

@@ -1,3 +1,10 @@
+1999-01-20  Raja R Harinath  <harinath@cs.umn.edu>
+
+	* brushes/Makefile.am (EXTRA_DATA): Remove spurious variable.
+	* gradients/Makefile.am (EXTRA_DATA): Likewise.
+	* palettes/Makefile.am (EXTRA_DATA): Likewise.
+	* patterns/Makefile.am (EXTRA_DATA): Likewise.
+	
 Mon Sep 22 17:34:53 1997  Federico Mena  <federico@bananoid.nuclecu.unam.mx>
 
 	* Made 0.99.11 release.

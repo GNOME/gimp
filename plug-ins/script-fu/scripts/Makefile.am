@@ -100,7 +100,6 @@ scriptdata_DATA = \
 	xach-effect.scm				\
 	test-sphere.scm
 
-EXTRA_DATA =
 EXTRA_DIST = $(scriptdata_DATA)
 
 files:

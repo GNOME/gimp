@@ -1,3 +1,30 @@
+1999-01-20  Raja R Harinath  <harinath@cs.umn.edu>
+
+	Satisfy a more pedantic `automake'.
+	* plug-ins/blur/Makefile.am (blur_SOURCES): Don't list files from
+	other directories.
+	* plug-ins/borderaverage/Makefile.am (borderaverage_SOURCES): 
+	Likewise.
+	* plug-ins/emboss/Makefile.am (emboss_SOURCES): Likewise.
+	* plug-ins/hot/Makefile.am (hot_SOURCES): Likewise.
+	* plug-ins/nlfilt/Makefile.am (nlfilt_SOURCES): Likewise.
+	* plug-ins/randomize/Makefile.am (randomize_SOURCES): Likewise.
+	* plug-ins/sinus/Makefile.am (sinus_SOURCES): Likewise.
+	* plug-ins/waves/Makefile.am (waves_SOURCES): Likewise.
+	* plug-ins/gfig/gfig-examples/Makefile.am (EXTRA_DATA): Remove
+	spurious variable.
+	* plug-ins/script-fu/scripts/Makefile.am (EXTRA_DATA): Likewise.
+	* plug-ins/webbrowser/Makefile.am (EXTRA_DATA): Likewise.
+
+	Clean up handling of `tools/gcg' (partly due to a more pedantic
+	automake).
+	* configure.in (AC_OUTPUT): Emit tools/Makefile.
+	* Makefile.am (SUBDIRS): Remove @GCG@, add `tools'.
+	* tools/Makefile.am: New file.
+	(SUBDIRS): Conditionally build `gcg' subdir.
+	* app/Makefile.am (GCG): Work for srcdir != builddir.
+	(GCGMAKEDEPEND): Likewise.
+	
 Wed Jan 20 19:57:34 EST 1999 Mandrake <mandrake@mandrake.net>
 	* app/gradients.c
 	  app/menus.c: 

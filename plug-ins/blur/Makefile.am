@@ -5,7 +5,6 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = blur
 
 blur_SOURCES = \
-	$(top_srcdir)/plug-ins/gpc/gpc.h 	\
 	blur.c
 
 INCLUDES = \

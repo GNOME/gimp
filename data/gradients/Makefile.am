@@ -7,7 +7,6 @@ patterndata =
 
 gradientdata_DATA = @gradientdata@
 
-EXTRA_DATA =
 EXTRA_DIST = $(gradientdata_DATA)
 
 .PHONY: files

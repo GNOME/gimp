@@ -7,7 +7,6 @@ patterndata =
 
 brushdata_DATA = @brushdata@
 
-EXTRA_DATA =
 EXTRA_DIST = $(brushdata_DATA)
 
 .PHONY: files

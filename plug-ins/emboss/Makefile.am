@@ -5,7 +5,6 @@ pluginlibdir = $(gimpplugindir)/plug-ins
 pluginlib_PROGRAMS = emboss
 
 emboss_SOURCES = \
-	$(top_srcdir)/plug-ins/megawidget/megawidget.h	\
 	emboss.c
 
 INCLUDES = \

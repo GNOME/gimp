@@ -7,7 +7,6 @@ patterndata =
 
 palettedata_DATA = @palettedata@
 
-EXTRA_DATA =
 EXTRA_DIST = $(palettedata_DATA)
 
 .PHONY: files
