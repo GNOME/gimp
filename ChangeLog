@@ -1,3 +1,28 @@
+2000-12-28  Sven Neumann  <sven@gimp.org>
+
+	* app/channel_cmds.c
+	* app/layer_cmds.c
+	* libgimp/gimpchannel_pdb.c
+	* libgimp/gimplayer_pdb.c
+	* plug-ins/common/warp.c
+	* plug-ins/gap/gap_exchange_image.c
+	* plug-ins/gap/gap_range_ops.c
+	* plug-ins/perl/examples/bricks
+	* plug-ins/perl/examples/glowing_steel
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb:
+
+	Two of the gimp-perl scripts used to call gimp_layer_delete() after
+	gimp_image_remove_layer(). This will fail since the layer is already 
+	scheduled for destruction by removing it from the associated image or
+	by deleting that image. It is thus dangerous and superfluous to export
+	this feature through the PDB. The gimp_layer_delete() is hereby
+	obsolete and does nothing any longer. I have removed the code calling
+	it from all over the place (it was commented out in almost all places).
+
+	The PDB help for gimp_channel_delete() now explicetly tells the user 
+	about the proper usage of the procedure.
+	
 2000-12-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/bezier_select.[ch]

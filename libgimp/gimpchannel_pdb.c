@@ -119,8 +119,11 @@ gimp_channel_copy (gint32 channel_ID)
  *
  * Delete a channel.
  *
- * This procedure deletes the specified channel. This does not need to
- * be done if a gimage containing this channel was already deleted.
+ * This procedure deletes the specified channel. This must not be done
+ * if the gimage containing this channel was already deleted or if the
+ * channel was already removed from the image. The only case in which
+ * this procedure is useful is if you want to get rid of a channel
+ * which has not yet been added to an image.
  *
  * Returns: TRUE on success.
  */

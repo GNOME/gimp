@@ -1583,13 +1583,6 @@ p_frames_layer_del(t_anim_info *ainfo_ptr,
         /* remove and delete requested layer */
         gimp_image_remove_layer(l_tmp_image_id, l_tmp_layer_id);
 
-        /*  gimp_layer_delete(l_tmp_layer_id); */ /* gives sigsegv ERROR */
-        /* A: gimp_image_remove_layer does automatic delete 
-         *    if layer is not attched to any image
-         * B: gimp_layer_delete has a BUG
-         */
-
-
         /* save current frame */
         l_rc = p_save_named_frame(l_tmp_image_id, ainfo_ptr->new_filename);
       }

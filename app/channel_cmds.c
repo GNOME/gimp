@@ -255,7 +255,7 @@ static ProcRecord channel_delete_proc =
 {
   "gimp_channel_delete",
   "Delete a channel.",
-  "This procedure deletes the specified channel. This does not need to be done if a gimage containing this channel was already deleted.",
+  "This procedure deletes the specified channel. This must not be done if the gimage containing this channel was already deleted or if the channel was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a channel which has not yet been added to an image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
