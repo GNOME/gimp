@@ -106,6 +106,7 @@ gimp_brush_duplicate
 gimp_brush_rename
 gimp_brush_delete
 gimp_brush_get_info
+gimp_brush_get_pixels
 gimp_brush_get_spacing
 gimp_brush_set_spacing
 </SECTION>
@@ -320,6 +321,8 @@ gimp_gradient_new
 gimp_gradient_duplicate
 gimp_gradient_rename
 gimp_gradient_delete
+gimp_gradient_get_uniform_samples
+gimp_gradient_get_custom_samples
 gimp_gradient_segment_get_left_color
 gimp_gradient_segment_set_left_color
 gimp_gradient_segment_get_right_color
@@ -549,6 +552,7 @@ gimp_path_import
 <SECTION>
 <FILE>gimppattern</FILE>
 gimp_pattern_get_info
+gimp_pattern_get_pixels
 </SECTION>
 
 <SECTION>

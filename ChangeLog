@@ -1,3 +1,7 @@
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.def: updated.
+
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/brush.pdb: return the mask's bpp and the

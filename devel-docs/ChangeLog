@@ -1,5 +1,12 @@
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpbrush.sgml
+	* libgimp/tmpl/gimpgradient.sgml
+	* libgimp/tmpl/gimppattern.sgml: updated.
+
+2004-10-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpmodule/libgimpmodule-sections.txt
 	* libgimpmodule/tmpl/gimpmodule.sgml: added missing macro
 	GIMP_MODULE_PARAM_SERIALIZE.

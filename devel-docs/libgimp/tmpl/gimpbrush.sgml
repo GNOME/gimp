@@ -59,6 +59,25 @@ gimpbrush
 @name: 
 @width: 
 @height: 
+@mask_bpp: 
+@color_bpp: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_brush_get_pixels ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@height: 
+@mask_bpp: 
+@num_mask_bytes: 
+@mask_bytes: 
+@color_bpp: 
+@num_color_bytes: 
+@color_bytes: 
 @Returns: 
 
 

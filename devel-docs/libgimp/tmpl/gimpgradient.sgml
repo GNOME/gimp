@@ -51,6 +51,33 @@ gimpgradientedit
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_gradient_get_uniform_samples ##### -->
+<para>
+
+</para>
+
+@name: 
+@num_samples: 
+@reverse: 
+@num_color_samples: 
+@color_samples: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_gradient_get_custom_samples ##### -->
+<para>
+
+</para>
+
+@name: 
+@num_samples: 
+@positions: 
+@reverse: 
+@num_color_samples: 
+@color_samples: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_gradient_segment_get_left_color ##### -->
 <para>
 

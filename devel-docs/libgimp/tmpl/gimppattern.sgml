@@ -26,3 +26,17 @@ gimppattern
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_pattern_get_pixels ##### -->
+<para>
+
+</para>
+
+@name: 
+@width: 
+@height: 
+@bpp: 
+@num_color_bytes: 
+@color_bytes: 
+@Returns: 
+
+
