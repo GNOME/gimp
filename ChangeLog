@@ -1,3 +1,10 @@
+2001-01-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/temp_buf.[ch]: temp_buf_data_clear(): the temp_buf's size is
+	(width * height * bytes). Cleanups.
+
+	* app/fileops.c: removed a debugging g_print().
+
 2001-01-02  Daniel Egger  <egger@suse.de>
 
 	* app/temp_buf.c:
