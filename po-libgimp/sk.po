@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-07 22:53+0200\n"
+"POT-Creation-Date: 2003-09-04 04:00+0200\n"
 "PO-Revision-Date: 2003-09-01 11:34+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -426,23 +426,23 @@ msgstr "Riadkovanie"
 msgid "_Resize"
 msgstr "Zmeniť _veľkosť"
 
-#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:258
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
 msgid "_Scale"
 msgstr "_Mierka"
 
-#: libgimpwidgets/gimpstock.c:236
+#: libgimpwidgets/gimpstock.c:235
 msgid "Crop"
 msgstr "Orezanie"
 
-#: libgimpwidgets/gimpstock.c:254
+#: libgimpwidgets/gimpstock.c:253
 msgid "_Transform"
 msgstr "_Transformovanie"
 
-#: libgimpwidgets/gimpstock.c:257
+#: libgimpwidgets/gimpstock.c:256
 msgid "_Rotate"
 msgstr "_Otočenie"
 
-#: libgimpwidgets/gimpstock.c:259
+#: libgimpwidgets/gimpstock.c:258
 msgid "_Shear"
 msgstr "_Skosenie"
 
