@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-plugin-1.1.21+\n"
-"POT-Creation-Date: 2000-09-22 11:39-0700\n"
-"PO-Revision-Date: 2000-08-29 18:55+04:00\n"
+"POT-Creation-Date: 2000-09-29 17:50+0400\n"
+"PO-Revision-Date: 2000-09-29 17:55+04:00\n"
 "Last-Translator: Valek Filippov <frob@df.ru>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1022,9 +1022,8 @@ msgid "Bumpmap Settings"
 msgstr "Установки рельефного преобразования"
 
 #: plug-ins/Lighting/lighting_ui.c:907
-#, fuzzy
 msgid "Enable Bump Mapping"
-msgstr "Использовать рельефное преобразование"
+msgstr "Использовать рельефное отображение"
 
 #: plug-ins/Lighting/lighting_ui.c:917
 msgid "Enable/disable bump-mapping (image depth)"
@@ -1060,39 +1059,34 @@ msgid "Maximum Height:"
 msgstr "Максимальная высота:"
 
 #: plug-ins/Lighting/lighting_ui.c:962
-#, fuzzy
 msgid "Maximum height for bumps"
-msgstr "Максимальная высота:"
+msgstr "Максимальная высота для рельефа"
 
 #: plug-ins/Lighting/lighting_ui.c:968
 msgid "Minimum Height:"
 msgstr "Минимальная высота:"
 
 #: plug-ins/Lighting/lighting_ui.c:975
-#, fuzzy
 msgid "Minimum height for bumps"
-msgstr "Минимальная высота:"
+msgstr "Минимальная высота для рельефа"
 
 #: plug-ins/Lighting/lighting_ui.c:978
 msgid "Autostretch to Fit Value Range"
 msgstr "Авторастяжение для заполнения всего диапазона"
 
 #: plug-ins/Lighting/lighting_ui.c:988
-#, fuzzy
 msgid "Fit into value range"
-msgstr "Итоговый цветовой диапазон"
+msgstr "Заполнить цветовой диапазон"
 
 #: plug-ins/Lighting/lighting_ui.c:1009
 msgid "Environment Settings"
 msgstr "Установки окружения"
 
 #: plug-ins/Lighting/lighting_ui.c:1018
-#, fuzzy
 msgid "Enable Environment Mapping"
-msgstr "Включить/отключить environment преобразование (отражение)"
+msgstr "Включить environment преобразование"
 
 #: plug-ins/Lighting/lighting_ui.c:1028
-#, fuzzy
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "Включить/отключить environment преобразование (отражение)"
 
@@ -1101,9 +1095,8 @@ msgid "Environment Image:"
 msgstr "Изображение окружения:"
 
 #: plug-ins/Lighting/lighting_ui.c:1049
-#, fuzzy
 msgid "Environment image to use"
-msgstr "Изображение окружения:"
+msgstr "Используемое изображение окружения"
 
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
@@ -1126,9 +1119,8 @@ msgid "Bump Map"
 msgstr "Рельеф"
 
 #: plug-ins/Lighting/lighting_ui.c:1088
-#, fuzzy
 msgid "Environment Map"
-msgstr "Окружение"
+msgstr "Карта окружения"
 
 #: plug-ins/Lighting/lighting_ui.c:1137
 msgid "Lighting Effects"
@@ -10478,9 +10470,8 @@ msgid "Fade out:"
 msgstr "Увод:"
 
 #: plug-ins/gfig/gfig.c:2998
-#, fuzzy
 msgid "Gradient:"
-msgstr "Градиент"
+msgstr "Градиент:"
 
 #: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
