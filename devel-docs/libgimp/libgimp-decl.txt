@@ -2549,72 +2549,72 @@ typedef double GimpMatrix[3][3];
 <FUNCTION>
 <NAME>gimp_matrix_transform_point</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix, double, double,double *, double *
+GimpMatrix  matrix,gdouble     x,gdouble     y,gdouble    *newx,gdouble    *newy
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_mult</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix, GimpMatrix
+GimpMatrix  matrix1,GimpMatrix  matrix2
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_identity</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix
+GimpMatrix  matrix
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_translate</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix, double, double
+GimpMatrix  matrix,gdouble     x,gdouble     y
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_scale</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix, double, double
+GimpMatrix  matrix,gdouble     x,gdouble     y
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_rotate</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix, double
+GimpMatrix  matrix,gdouble     theta
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_xshear</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix, double
+GimpMatrix  matrix,gdouble     amount
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_yshear</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix, double
+GimpMatrix  matrix,gdouble     amount
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_determinant</NAME>
-<RETURNS>double  </RETURNS>
-GimpMatrix
+<RETURNS>gdouble  </RETURNS>
+GimpMatrix  matrix
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_invert</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix m, GimpMatrix m_inv
+GimpMatrix  matrix,GimpMatrix  matrix_inv
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_duplicate</NAME>
 <RETURNS>void  </RETURNS>
-GimpMatrix src, GimpMatrix target
+GimpMatrix  src,GimpMatrix  target
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_is_diagonal</NAME>
-<RETURNS>int  </RETURNS>
-GimpMatrix m
+<RETURNS>gboolean  </RETURNS>
+GimpMatrix  matrix
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_is_identity</NAME>
-<RETURNS>int  </RETURNS>
-GimpMatrix m
+<RETURNS>gboolean  </RETURNS>
+GimpMatrix  matrix
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_matrix_is_simple</NAME>
-<RETURNS>int  </RETURNS>
-GimpMatrix m
+<RETURNS>gboolean  </RETURNS>
+GimpMatrix  matrix
 </FUNCTION>
 <MACRO>
 <NAME>PARASITE_PERSISTENT</NAME>

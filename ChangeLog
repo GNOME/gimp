@@ -1,3 +1,8 @@
+Sun Feb  6 23:45:09 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpmatrix.[ch]: use g* types and name the parameters 
+	in the header.
+
 Sun Feb  6 22:18:24 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpexport.[ch]: use an enum instead of defines

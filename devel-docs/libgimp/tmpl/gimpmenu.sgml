@@ -48,8 +48,6 @@ gimpmenu
 @mask_data: 
 @dialog_closing: 
 @user_data: 
-<!-- # Unused Parameters # -->
-@Param1: 
 
 
 <!-- ##### USER_FUNCTION GRunPatternCallback ##### -->
@@ -64,8 +62,6 @@ gimpmenu
 @mask_data: 
 @dialog_closing: 
 @user_data: 
-<!-- # Unused Parameters # -->
-@Param1: 
 
 
 <!-- ##### USER_FUNCTION GRunGradientCallback ##### -->
@@ -78,8 +74,6 @@ gimpmenu
 @grad_data: 
 @dialog_closing: 
 @user_data: 
-<!-- # Unused Parameters # -->
-@Param1: 
 
 
 <!-- ##### FUNCTION gimp_image_menu_new ##### -->

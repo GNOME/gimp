@@ -22,10 +22,6 @@ gimpcolorspace
 @red: 
 @green: 
 @blue: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
 
 
 <!-- ##### FUNCTION gimp_hsv_to_rgb ##### -->
@@ -36,10 +32,6 @@ gimpcolorspace
 @hue: 
 @saturation: 
 @value: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_hls ##### -->
@@ -50,10 +42,6 @@ gimpcolorspace
 @red: 
 @green: 
 @blue: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_l ##### -->
@@ -65,10 +53,6 @@ gimpcolorspace
 @green: 
 @blue: 
 @Returns: 
-<!-- # Unused Parameters # -->
-@Varargs: 
-@Varargs: 
-@Varargs: 
 
 
 <!-- ##### FUNCTION gimp_hls_to_rgb ##### -->
@@ -79,10 +63,6 @@ gimpcolorspace
 @hue: 
 @lightness: 
 @saturation: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_hsv_double ##### -->
@@ -93,10 +73,6 @@ gimpcolorspace
 @red: 
 @green: 
 @blue: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
 
 
 <!-- ##### FUNCTION gimp_hsv_to_rgb_double ##### -->
@@ -107,10 +83,6 @@ gimpcolorspace
 @hue: 
 @saturation: 
 @value: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
 
 
 <!-- ##### FUNCTION gimp_rgb_to_hsv4 ##### -->
@@ -122,11 +94,6 @@ gimpcolorspace
 @red: 
 @green: 
 @blue: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
-@Param4: 
 
 
 <!-- ##### FUNCTION gimp_hsv_to_rgb4 ##### -->
@@ -138,11 +105,6 @@ gimpcolorspace
 @hue: 
 @saturation: 
 @value: 
-<!-- # Unused Parameters # -->
-@Param1: 
-@Param2: 
-@Param3: 
-@Param4: 
 
 
 <!-- ##### MACRO INTENSITY_RED ##### -->

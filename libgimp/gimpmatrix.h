@@ -26,21 +26,35 @@ extern "C" {
 
 typedef double GimpMatrix[3][3];
 
-void          gimp_matrix_transform_point (GimpMatrix, double, double,
-					   double *, double *);
-void          gimp_matrix_mult            (GimpMatrix, GimpMatrix);
-void          gimp_matrix_identity        (GimpMatrix);
-void          gimp_matrix_translate       (GimpMatrix, double, double);
-void          gimp_matrix_scale           (GimpMatrix, double, double);
-void          gimp_matrix_rotate          (GimpMatrix, double);
-void          gimp_matrix_xshear          (GimpMatrix, double);
-void          gimp_matrix_yshear          (GimpMatrix, double);
-double        gimp_matrix_determinant     (GimpMatrix);
-void          gimp_matrix_invert          (GimpMatrix m, GimpMatrix m_inv);
-void          gimp_matrix_duplicate       (GimpMatrix src, GimpMatrix target);
-int           gimp_matrix_is_diagonal     (GimpMatrix m);
-int           gimp_matrix_is_identity     (GimpMatrix m);
-int           gimp_matrix_is_simple       (GimpMatrix m);
+void          gimp_matrix_transform_point (GimpMatrix  matrix, 
+					   gdouble     x, 
+					   gdouble     y,
+					   gdouble    *newx, 
+					   gdouble    *newy);
+void          gimp_matrix_mult            (GimpMatrix  matrix1, 
+					   GimpMatrix  matrix2);
+void          gimp_matrix_identity        (GimpMatrix  matrix);
+void          gimp_matrix_translate       (GimpMatrix  matrix, 
+					   gdouble     x, 
+					   gdouble     y);
+void          gimp_matrix_scale           (GimpMatrix  matrix, 
+					   gdouble     x, 
+					   gdouble     y);
+void          gimp_matrix_rotate          (GimpMatrix  matrix, 
+					   gdouble     theta);
+void          gimp_matrix_xshear          (GimpMatrix  matrix, 
+					   gdouble     amount);
+void          gimp_matrix_yshear          (GimpMatrix  matrix, 
+					   gdouble     amount);
+gdouble       gimp_matrix_determinant     (GimpMatrix  matrix);
+void          gimp_matrix_invert          (GimpMatrix  matrix, 
+					   GimpMatrix  matrix_inv);
+void          gimp_matrix_duplicate       (GimpMatrix  src, 
+					   GimpMatrix  target);
+
+gboolean           gimp_matrix_is_diagonal     (GimpMatrix  matrix);
+gboolean           gimp_matrix_is_identity     (GimpMatrix  matrix);
+gboolean           gimp_matrix_is_simple       (GimpMatrix  matrix);
 
 #ifdef __cplusplus
 }
