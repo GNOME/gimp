@@ -1,3 +1,21 @@
+2003-05-05  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/edit_selection.c (edit_selection_snap): Use floor instead
+	of rounding. Callers changed to remove rounding, as it deals with
+	gdoubles directly. Thanks to Mitch for the help refining this
+	one. Fixes bug #17906.
+	(edit_selection_button_release): Ported back fix for bug #110173
+	from HEAD branch (don't anchor layer when moving the floating
+	selection to the same place).
+
+	* app/edit_selection.c (edit_selection_draw)
+	* app/ellipse_select.c (ellipse_select_draw)
+	* app/rect_select.c (rect_select_draw): Applied a (modified) patch
+	by Sven Neumann that fixes bug #17904.
+
+	* app/transform_core.c (transform_core_do): Deal with the pixel
+	centers properly. Fixes bug #10466 for even-sized images.
+
 2003-05-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug_in.c (plug_in_init): applied a (modified) patch

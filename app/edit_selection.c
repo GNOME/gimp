@@ -96,7 +96,7 @@ edit_selection_snap (GDisplay *gdisp,
 
   dx = x - edit_select.origx;
   dy = y - edit_select.origy;
-  
+
   x1 = edit_select.x1 + dx;
   y1 = edit_select.y1 + dy;
 
@@ -114,9 +114,9 @@ edit_selection_snap (GDisplay *gdisp,
       
       gdisplay_untransform_coords_f (gdisp, x1, y1, &x1, &y1, TRUE);
     }
-  
-  edit_select.x = (gint) RINT (x1) - (edit_select.x1 - edit_select.origx);
-  edit_select.y = (gint) RINT (y1) - (edit_select.y1 - edit_select.origy);
+
+  edit_select.x = (gint) floor (x1) - (edit_select.x1 - edit_select.origx);
+  edit_select.y = (gint) floor (y1) - (edit_select.y1 - edit_select.origy);
 }
 
 void
@@ -267,22 +267,7 @@ edit_selection_button_release (Tool           *tool,
   /* thaw the undo again */
   gimp_image_undo_thaw (gdisp->gimage);
 
-  if (edit_select.cumlx == 0 && edit_select.cumly == 0)
-    {
-      /* The user either didn't actually move the selection,
-	 or moved it around and eventually just put it back in
-	 exactly the same spot. */
-
-     /*  If no movement occured and the type is EDIT_FLOATING_SEL_TRANSLATE,
-	  check if the layer is a floating selection.  If so, anchor. */
-      if (edit_select.edit_type == EDIT_FLOATING_SEL_TRANSLATE)
-	{
-	  layer = gimage_get_active_layer (gdisp->gimage);
-	  if (layer_is_floating_sel (layer))
-	    floating_sel_anchor (layer);
-	}
-    }
-  else
+  if (edit_select.cumlx != 0 || edit_select.cumly != 0)
     {
       path_transform_xy (gdisp->gimage, edit_select.cumlx, edit_select.cumly);
 
@@ -335,7 +320,7 @@ edit_selection_motion (Tool           *tool,
 
   /* now do the actual move. */
 
-  edit_selection_snap (gdisp, RINT (lastmotion_x), RINT (lastmotion_y));
+  edit_selection_snap (gdisp, lastmotion_x, lastmotion_y);
 
   /******************************************* adam's live move *******/
   /********************************************************************/
@@ -560,10 +545,11 @@ edit_selection_draw (Tool *tool)
       gdisplay_transform_coords (gdisp, 
 				 edit_select.x2, edit_select.y2, 
 				 &x2, &y2, TRUE);
-      gdk_draw_rectangle (edit_select.core->win,
-			  edit_select.core->gc, FALSE,
-			  x1, y1,
-			  x2 - x1 + 1, y2 - y1 + 1);
+      if (x2 > x1 && y2 > y1)
+        gdk_draw_rectangle (edit_select.core->win,
+                            edit_select.core->gc, FALSE,
+                            x1, y1,
+                            x2 - x1 - 1, y2 - y1 - 1);
       break;
 
     case EDIT_LAYER_TRANSLATE:
@@ -598,10 +584,11 @@ edit_selection_draw (Tool *tool)
 	    }
 	}
 
-      gdk_draw_rectangle (edit_select.core->win,
-			  edit_select.core->gc, FALSE,
-			  x1, y1,
-			  x2 - x1, y2 - y1);
+      if (x2 > x1 && y2 > y1)
+        gdk_draw_rectangle (edit_select.core->win,
+                            edit_select.core->gc, FALSE,
+                            x1, y1,
+                            x2 - x1 - 1, y2 - y1 - 1);
       break;
 
     case EDIT_FLOATING_SEL_TRANSLATE:

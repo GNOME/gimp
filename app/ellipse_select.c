@@ -105,11 +105,12 @@ ellipse_select_draw (Tool *tool)
   gdisplay_transform_coords (gdisp, x1, y1, &x1, &y1, FALSE);
   gdisplay_transform_coords (gdisp, x2, y2, &x2, &y2, FALSE);
 
-  gdk_draw_arc (ellipse_sel->core->win,
-		ellipse_sel->core->gc, FALSE,
-		x1, y1, 
-                x2 - x1, y2 - y1, 
-                0, 23040);
+  if (x2 > x1 && y2 > y1)
+    gdk_draw_arc (ellipse_sel->core->win,
+                  ellipse_sel->core->gc, FALSE,
+                  x1, y1, 
+                  x2 - x1 - 1, y2 - y1 - 1, 
+                  0, 23040);
 }
 
 static void

@@ -1306,27 +1306,27 @@ transform_core_do (GImage          *gimage,
 	(* progress_callback) (ty1, ty2, y, progress_data);
 
       /* set up inverse transform steps */
-      tx = xinc * tx1 + m[0][1] * y + m[0][2];
-      ty = yinc * tx1 + m[1][1] * y + m[1][2];
-      tw = winc * tx1 + m[2][1] * y + m[2][2];
+      tx = xinc * (tx1 + 0.5) + m[0][1] * (y + 0.5) + m[0][2] - 0.5;
+      ty = yinc * (tx1 + 0.5) + m[1][1] * (y + 0.5) + m[1][2] - 0.5;
+      tw = winc * (tx1 + 0.5) + m[2][1] * (y + 0.5) + m[2][2];
 
       d = dest;
       for (x = tx1; x < tx2; x++)
 	{
 	  /*  normalize homogeneous coords  */
-	  if (tw == 0.0)
+	  if (tw == 1.0)
 	    {
-	      g_warning ("homogeneous coordinate = 0...\n");
+	      ttx = tx;
+	      tty = ty;
 	    }
-	  else if (tw != 1.0)
+	  else if (tw != 0.0)
 	    {
 	      ttx = tx / tw;
 	      tty = ty / tw;
 	    }
 	  else
 	    {
-	      ttx = tx;
-	      tty = ty;
+	      g_warning ("homogeneous coordinate = 0...\n");
 	    }
 
           /*  Set the destination pixels  */
@@ -1340,8 +1340,8 @@ transform_core_do (GImage          *gimage,
 		   *  We need the four integer pixel coords around them:
 		   *  itx to itx + 3, ity to ity + 3
                    */
-                  itx = floor (ttx);
-                  ity = floor (tty);
+                  itx = RINT (ttx);
+                  ity = RINT (tty);
 
 		  /* check if any part of our region overlaps the buffer */
 
@@ -1431,8 +1431,8 @@ transform_core_do (GImage          *gimage,
 
        	      else  /*  linear  */
                 {
-                  itx = floor (ttx);
-                  ity = floor (tty);
+                  itx = RINT (ttx);
+                  ity = RINT (tty);
 
 		  /*  expand source area to cover interpolation region
 		   *  (which runs from itx to itx + 1, same in y)
@@ -1519,8 +1519,8 @@ transform_core_do (GImage          *gimage,
 	    }
           else  /*  no interpolation  */
             {
-              itx = floor (ttx);
-              ity = floor (tty);
+              itx = RINT (ttx);
+              ity = RINT (tty);
 
               if (itx >= x1 && itx < x2 &&
                   ity >= y1 && ity < y2 )
