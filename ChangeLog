@@ -1,3 +1,10 @@
+2003-05-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpnavigationview.c: don't let the navigation
+	_popup_ auto-resize itself and don't allocate a minimum size
+	bacause that makes sense for the navigation _tab_ only. Fixes
+	popup size and positioning.
+
 2003-05-28  Sven Neumann  <sven@gimp.org>
 
 	* README: updated info about mailing lists.

@@ -156,9 +156,6 @@ gimp_navigation_view_init (GimpNavigationView *view)
   view->preview = gimp_preview_new_by_types (GIMP_TYPE_NAVIGATION_PREVIEW,
                                              GIMP_TYPE_IMAGE,
                                              GIMP_PREVIEW_SIZE_MEDIUM, 0, TRUE);
-  gtk_widget_set_size_request (view->preview,
-                               GIMP_PREVIEW_SIZE_HUGE, GIMP_PREVIEW_SIZE_HUGE);
-  gimp_preview_set_expand (GIMP_PREVIEW (view->preview), TRUE);
   gtk_container_add (GTK_CONTAINER (frame), view->preview);
   gtk_widget_show (view->preview);
 
@@ -368,6 +365,11 @@ gimp_navigation_view_new_private (GimpDisplayShell  *shell,
   else
     {
       GtkWidget *hscale;
+
+      gtk_widget_set_size_request (view->preview,
+                                   GIMP_PREVIEW_SIZE_HUGE,
+                                   GIMP_PREVIEW_SIZE_HUGE);
+      gimp_preview_set_expand (GIMP_PREVIEW (view->preview), TRUE);
 
       /* the editor buttons */
 
