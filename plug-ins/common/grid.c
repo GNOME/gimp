@@ -117,7 +117,7 @@ void query (void)
     {PARAM_INT8,     "vopacity", "Vertical Opacity (0...255)"},
 
     {PARAM_INT32,    "iwidth",   "Intersection Width   (>= 0)"},
-    {PARAM_INT32,    "ispace",   "Intersection Spacing (>= 1)"},
+    {PARAM_INT32,    "ispace",   "Intersection Spacing (>= 0)"},
     {PARAM_INT32,    "ioffset",  "Intersection Offset  (>= 0)"},
     {PARAM_COLOR,    "icolor",   "Intersection Colour"},
     {PARAM_INT8,     "iopacity", "Intersection Opacity (0...255)"},
@@ -187,7 +187,7 @@ run (gchar   *name,
 	  grid_cfg.vcolor[3] = param[12].data.d_int8;
 
 	  grid_cfg.iwidth    = MAX (0, param[13].data.d_int32);
-	  grid_cfg.ispace    = MAX (1, param[14].data.d_int32);
+	  grid_cfg.ispace    = MAX (0, param[14].data.d_int32);
 	  grid_cfg.ioffset   = MAX (0, param[15].data.d_int32);
 	  grid_cfg.icolor[0] = param[16].data.d_color.red;
 	  grid_cfg.icolor[1] = param[16].data.d_color.green;
@@ -530,7 +530,8 @@ dialog (gint32     image_ID,
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 0, 0.0, (gdouble)(drawable->width));
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 1, 0.0, (gdouble)(drawable->height));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0, 
+					 (gdouble)(MAX (drawable->width, drawable->height)));
 
   gtk_table_set_col_spacing (GTK_TABLE (width), 2, 12);
   gtk_table_set_col_spacing (GTK_TABLE (width), 3, 12);
@@ -590,7 +591,8 @@ dialog (gint32     image_ID,
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 0, 1.0, (gdouble)(drawable->width));
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0, (gdouble)(drawable->height));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 1.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0, 
+					 (gdouble)(MAX (drawable->width, drawable->height)));
 
   gtk_table_set_col_spacing (GTK_TABLE (space), 2, 12);
   gtk_table_set_col_spacing (GTK_TABLE (space), 3, 12);
@@ -649,7 +651,8 @@ dialog (gint32     image_ID,
   /*  set upper and lower limits (in pixels)  */
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 0, 0.0, (gdouble)(drawable->width));
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0, (gdouble)(drawable->height));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0, (gdouble)(drawable->width));
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0, 
+					 (gdouble)(MAX (drawable->width, drawable->height)));
 
   gtk_table_set_col_spacing (GTK_TABLE (offset), 2, 12);
   gtk_table_set_col_spacing (GTK_TABLE (offset), 3, 12);
