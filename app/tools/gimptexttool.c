@@ -223,6 +223,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
   GimpText     *text  = NULL;
   gint          off_x = 0;
   gint          off_y = 0;
+  gboolean      edit;
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp;
@@ -248,10 +249,12 @@ gimp_text_tool_button_press (GimpTool        *tool,
         }
     }
 
-  if (!text || text == text_tool->text)
-    gimp_text_tool_editor (text_tool);
+  edit = (! text || text == text_tool->text);
 
-  gimp_text_tool_connect (GIMP_TEXT_TOOL (tool), text, off_x, off_y);
+  gimp_text_tool_connect (text_tool, text, off_x, off_y);
+
+  if (edit)
+    gimp_text_tool_editor (text_tool);
 }
 
 static void
@@ -409,10 +412,6 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
                                     text_tool);
           gtk_widget_set_sensitive (button, TRUE);
         }
-    }
-  else
-    {
-      tool->gdisp = NULL;
     }
 }
 
