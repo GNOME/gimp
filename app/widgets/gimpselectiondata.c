@@ -663,12 +663,15 @@ gimp_selection_data_get_name (GtkSelectionData *selection)
 {
   gchar *name = g_strndup (selection->data, selection->length);
 
-  if (g_utf8_validate (name, -1, NULL))
-    return name;
+  if (! g_utf8_validate (name, -1, NULL))
+    {
+      g_warning ("Received invalid selection data "
+                 "(doesn't validate as UTF-8)!");
+      g_free (name);
+      return NULL;
+    }
 
-  g_free (name);
-
-  return NULL;
+  return name;
 }
 
 GimpBrush *
