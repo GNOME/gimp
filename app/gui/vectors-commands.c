@@ -39,6 +39,7 @@
 
 #include "paint/gimppaintcore.h"
 #include "paint/gimppaintcore-stroke.h"
+#include "paint/gimppaintoptions.h"
 
 #include "vectors/gimpvectors.h"
 
@@ -300,39 +301,27 @@ vectors_stroke_vectors (GimpVectors *vectors)
 
   if (vectors && vectors->strokes)
     {
-      GimpTool         *active_tool;
-      GimpPaintCore    *core;
       GimpToolInfo     *tool_info;
       GimpPaintOptions *paint_options;
-      GimpDisplay      *gdisp;
+      GimpPaintCore    *core;
 
-      active_tool = tool_manager_get_active (gimage->gimp);
+      tool_info = gimp_context_get_tool (gimp_get_user_context (gimage->gimp));
 
-      if (GIMP_IS_PAINT_TOOL (active_tool))
-        {
-          tool_info = active_tool->tool_info;
-        }
-      else
+      if (! (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options)))
         {
           tool_info = (GimpToolInfo *)
             gimp_container_get_child_by_name (gimage->gimp->tool_info_list,
                                               "gimp-paintbrush-tool");
         }
 
-      paint_options = (GimpPaintOptions *) tool_info->tool_options;
+      paint_options = GIMP_PAINT_OPTIONS (tool_info->tool_options);
 
       core = g_object_new (tool_info->paint_info->paint_type, NULL);
-
-      gdisp = gimp_context_get_display (gimp_get_current_context (gimage->gimp));
-
-      tool_manager_control_active (gimage->gimp, PAUSE, gdisp);
 
       gimp_paint_core_stroke_vectors (core,
                                       active_drawable,
                                       paint_options,
                                       vectors);
-
-      tool_manager_control_active (gimage->gimp, RESUME, gdisp);
 
       g_object_unref (core);
 

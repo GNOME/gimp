@@ -26,27 +26,28 @@
 #include "gimpcontainerlistview.h"
 
 
-typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage    *gimage);
-typedef GimpViewable  * (* GimpGetItemFunc)      (const GimpImage    *gimage);
-typedef void            (* GimpSetItemFunc)      (GimpImage          *gimage,
-                                                  GimpViewable       *viewable);
-typedef void            (* GimpReorderItemFunc)  (GimpImage          *gimage,
-                                                  GimpViewable       *viewable,
-                                                  gint                new_index,
-                                                  gboolean            push_undo);
-typedef void            (* GimpAddItemFunc)      (GimpImage          *gimage,
-                                                  GimpViewable       *viewable,
-                                                  gint                index);
-typedef void            (* GimpRemoveItemFunc)   (GimpImage          *gimage,
-                                                  GimpViewable       *viewable);
-typedef GimpViewable  * (* GimpConvertItemFunc)  (GimpViewable       *viewable,
-                                                  GimpImage          *dest_gimage);
+typedef GimpContainer * (* GimpGetContainerFunc) (const GimpImage *gimage);
+typedef GimpItem      * (* GimpGetItemFunc)      (const GimpImage *gimage);
+typedef void            (* GimpSetItemFunc)      (GimpImage       *gimage,
+                                                  GimpItem        *item);
+typedef void            (* GimpReorderItemFunc)  (GimpImage       *gimage,
+                                                  GimpItem        *item,
+                                                  gint             new_index,
+                                                  gboolean         push_undo,
+                                                  const gchar     *undo_desc);
+typedef void            (* GimpAddItemFunc)      (GimpImage       *gimage,
+                                                  GimpItem        *item,
+                                                  gint             index);
+typedef void            (* GimpRemoveItemFunc)   (GimpImage       *gimage,
+                                                  GimpItem        *item);
+typedef GimpItem      * (* GimpConvertItemFunc)  (GimpItem        *item,
+                                                  GimpImage       *dest_gimage);
 
-typedef void            (* GimpNewItemFunc)      (GimpImage          *gimage,
-                                                  GimpViewable       *template,
-                                                  gboolean            interactive);
-typedef void            (* GimpEditItemFunc)     (GimpViewable       *viewable);
-typedef void            (* GimpActivateItemFunc) (GimpViewable       *viewable);
+typedef void            (* GimpNewItemFunc)      (GimpImage       *gimage,
+                                                  GimpItem        *template,
+                                                  gboolean         interactive);
+typedef void            (* GimpEditItemFunc)     (GimpItem        *item);
+typedef void            (* GimpActivateItemFunc) (GimpItem        *item);
 
 
 #define GIMP_TYPE_ITEM_LIST_VIEW            (gimp_item_list_view_get_type ())
@@ -68,14 +69,6 @@ struct _GimpItemListView
   GType                  item_type;
   gchar                 *signal_name;
 
-  GimpGetContainerFunc   get_container_func;
-  GimpGetItemFunc        get_item_func;
-  GimpSetItemFunc        set_item_func;
-  GimpReorderItemFunc    reorder_item_func;
-  GimpAddItemFunc        add_item_func;
-  GimpRemoveItemFunc     remove_item_func;
-  GimpConvertItemFunc    convert_item_func;
-
   GimpNewItemFunc        new_item_func;
   GimpEditItemFunc       edit_item_func;
   GimpActivateItemFunc   activate_item_func;
@@ -94,8 +87,28 @@ struct _GimpItemListViewClass
 {
   GimpContainerListViewClass  parent_class;
 
+  /*  virtual functions  */
   void (* set_image) (GimpItemListView *view,
-		      GimpImage        *gimage);
+                      GimpImage        *gimage);
+
+  /*  virtual functions for manipulating the image's item list  */
+  GimpGetContainerFunc  get_container;
+  GimpGetItemFunc       get_active_item;
+  GimpSetItemFunc       set_active_item;
+  GimpReorderItemFunc   reorder_item;
+  GimpAddItemFunc       add_item;
+  GimpRemoveItemFunc    remove_item;
+  GimpConvertItemFunc   convert_item;
+
+  /*  various descriptive strings for tooltips and undo steps  */
+  const gchar          *new_desc;
+  const gchar          *duplicate_desc;
+  const gchar          *edit_desc;
+  const gchar          *delete_desc;
+  const gchar          *raise_desc;
+  const gchar          *raise_to_top_desc;
+  const gchar          *lower_desc;
+  const gchar          *lower_to_bottom_desc;
 };
 
 
@@ -105,13 +118,6 @@ GtkWidget * gimp_item_list_view_new      (gint                  preview_size,
                                           GimpImage            *gimage,
                                           GType                 item_type,
                                           const gchar          *signal_name,
-                                          GimpGetContainerFunc  get_container_func,
-                                          GimpGetItemFunc       get_item_func,
-                                          GimpSetItemFunc       set_item_func,
-                                          GimpReorderItemFunc   reorder_item_func,
-                                          GimpAddItemFunc       add_item_func,
-                                          GimpRemoveItemFunc    remove_item_func,
-                                          GimpConvertItemFunc   convert_item_func,
                                           GimpNewItemFunc       new_item_func,
                                           GimpEditItemFunc      edit_item_func,
                                           GimpActivateItemFunc  activate_item_func,

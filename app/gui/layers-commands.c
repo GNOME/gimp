@@ -200,9 +200,10 @@ layers_duplicate_cmd_callback (GtkWidget *widget,
   GimpLayer *new_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  new_layer = GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (active_layer),
-                                               G_TYPE_FROM_INSTANCE (active_layer),
-                                               TRUE));
+  new_layer =
+    GIMP_LAYER (gimp_item_duplicate (GIMP_ITEM (active_layer),
+                                     G_TYPE_FROM_INSTANCE (active_layer),
+                                     TRUE));
   gimp_image_add_layer (gimage, new_layer, -1);
 
   gimp_image_flush (gimage);
@@ -216,7 +217,11 @@ layers_anchor_cmd_callback (GtkWidget *widget,
   GimpLayer *active_layer;
   return_if_no_layer (gimage, active_layer, data);
 
-  layers_anchor_layer (active_layer);
+  if (gimp_layer_is_floating_sel (active_layer))
+    {
+      floating_sel_anchor (active_layer);
+      gimp_image_flush (gimage);
+    }
 }
 
 void
@@ -422,31 +427,6 @@ layers_edit_attributes_cmd_callback (GtkWidget *widget,
   return_if_no_layer (gimage, active_layer, data);
 
   layers_edit_layer_query (active_layer);
-}
-
-void
-layers_remove_layer (GimpImage *gimage,
-                     GimpLayer *layer)
-{
-  g_return_if_fail (GIMP_IS_IMAGE (gimage));
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  if (gimp_layer_is_floating_sel (layer))
-    floating_sel_remove (layer);
-  else
-    gimp_image_remove_layer (gimage, layer);
-}
-
-void
-layers_anchor_layer (GimpLayer *layer)
-{
-  g_return_if_fail (GIMP_IS_LAYER (layer));
-
-  if (gimp_layer_is_floating_sel (layer))
-    {
-      floating_sel_anchor (layer);
-      gimp_image_flush (gimp_item_get_image (GIMP_ITEM (layer)));
-    }
 }
 
 

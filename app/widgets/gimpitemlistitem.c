@@ -133,35 +133,38 @@ gimp_item_list_item_drag_drop (GtkWidget      *widget,
           widget->parent->parent->parent->parent && /* EEEEEEEEK */
 	  GIMP_IS_ITEM_LIST_VIEW (widget->parent->parent->parent->parent))
         {
-          GimpItemListView *item_view;
+          GimpItemListView      *item_view;
+          GimpItemListViewClass *item_view_class;
 
           item_view =
 	    GIMP_ITEM_LIST_VIEW (widget->parent->parent->parent->parent);
 
+          item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (item_view);
+
           if (item_view->gimage == gimp_item_get_image (GIMP_ITEM (src_viewable)))
             {
-              item_view->reorder_item_func (item_view->gimage,
-                                            src_viewable,
-                                            dest_index,
-                                            TRUE);
+              item_view_class->reorder_item (item_view->gimage,
+                                             GIMP_ITEM (src_viewable),
+                                             dest_index,
+                                             TRUE, NULL);
             }
-          else if (item_view->convert_item_func)
+          else if (item_view_class->convert_item)
             {
-              GimpViewable *new_viewable;
+              GimpItem *new_item;
 
-              new_viewable = item_view->convert_item_func (src_viewable,
-                                                           item_view->gimage);
+              new_item = item_view_class->convert_item (GIMP_ITEM (src_viewable),
+                                                        item_view->gimage);
 
-              item_view->add_item_func (item_view->gimage,
-                                        new_viewable,
-                                        dest_index);
+              item_view_class->add_item (item_view->gimage,
+                                         new_item,
+                                         dest_index);
             }
-          
+
           gimp_image_flush (item_view->gimage);
         }
       else
         {
-          g_warning ("%s(): GimpItemListItem is not "
+          g_warning ("%s: GimpItemListItem is not "
                      "part of a GimpItemListView", G_GNUC_FUNCTION);
         }
     }

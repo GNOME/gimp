@@ -1557,7 +1557,8 @@ undo_pop_layer_reposition (GimpUndo            *undo,
 
   /* what's the layer's current index? */
   pos = gimp_image_get_layer_index (gimage, lru->layer);
-  gimp_image_position_layer (gimage, lru->layer, lru->old_position, FALSE);
+  gimp_image_position_layer (gimage, lru->layer, lru->old_position,
+                             FALSE, NULL);
 
   lru->old_position = pos;
 
@@ -2043,7 +2044,8 @@ undo_pop_channel_reposition (GimpUndo            *undo,
 
   /* what's the channel's current index? */
   pos = gimp_image_get_channel_index (gimage, cru->channel);
-  gimp_image_position_channel (gimage, cru->channel, cru->old_position, FALSE);
+  gimp_image_position_channel (gimage, cru->channel, cru->old_position,
+                               FALSE, NULL);
 
   cru->old_position = pos;
 
@@ -2371,7 +2373,8 @@ undo_pop_vectors_reposition (GimpUndo            *undo,
 
   /* what's the vectors's current index? */
   pos = gimp_image_get_vectors_index (gimage, vru->vectors);
-  gimp_image_position_vectors (gimage, vru->vectors, vru->old_position, FALSE);
+  gimp_image_position_vectors (gimage, vru->vectors, vru->old_position,
+                               FALSE, NULL);
 
   vru->old_position = pos;
 

@@ -2839,7 +2839,8 @@ gimp_image_raise_layer (GimpImage *gimage,
       return FALSE;
     }
   
-  return gimp_image_position_layer (gimage, layer, curpos - 1, TRUE);
+  return gimp_image_position_layer (gimage, layer, curpos - 1,
+                                    TRUE, _("Raise Layer"));
 }
 
 gboolean
@@ -2863,7 +2864,8 @@ gimp_image_lower_layer (GimpImage *gimage,
       return FALSE;
     }
   
-  return gimp_image_position_layer (gimage, layer, curpos + 1, TRUE);
+  return gimp_image_position_layer (gimage, layer, curpos + 1,
+                                    TRUE, _("Lower Layer"));
 }
 
 gboolean
@@ -2890,7 +2892,8 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
       return FALSE;
     }
   
-  return gimp_image_position_layer (gimage, layer, 0, TRUE);
+  return gimp_image_position_layer (gimage, layer, 0,
+                                    TRUE, _("Raise Layer to Top"));
 }
 
 gboolean
@@ -2914,14 +2917,16 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage,
       return FALSE;
     }
   
-  return gimp_image_position_layer (gimage, layer, length - 1, TRUE);
+  return gimp_image_position_layer (gimage, layer, length - 1,
+                                    TRUE, _("Lower Layer to Bottom"));
 }
 
 gboolean
-gimp_image_position_layer (GimpImage *gimage, 
-			   GimpLayer *layer,
-			   gint       new_index,
-			   gboolean   push_undo)
+gimp_image_position_layer (GimpImage   *gimage, 
+			   GimpLayer   *layer,
+			   gint         new_index,
+			   gboolean     push_undo,
+                           const gchar *undo_desc)
 {
   gint off_x, off_y;
   gint index;
@@ -2964,9 +2969,7 @@ gimp_image_position_layer (GimpImage *gimage,
     }
 
   if (push_undo)
-    gimp_image_undo_push_layer_reposition (gimage,
-                                           _("Reorder Layer"),
-                                           layer);
+    gimp_image_undo_push_layer_reposition (gimage, undo_desc, layer);
 
   gimp_container_reorder (gimage->layers, GIMP_OBJECT (layer), new_index);
 
@@ -3112,7 +3115,8 @@ gimp_image_raise_channel (GimpImage   *gimage,
       return FALSE;
     }
 
-  return gimp_image_position_channel (gimage, channel, index - 1, TRUE);
+  return gimp_image_position_channel (gimage, channel, index - 1,
+                                      TRUE, _("Raise Channel"));
 }
 
 gboolean
@@ -3132,14 +3136,16 @@ gimp_image_lower_channel (GimpImage   *gimage,
       return FALSE;
     }
 
-  return gimp_image_position_channel (gimage, channel, index + 1, TRUE);
+  return gimp_image_position_channel (gimage, channel, index + 1,
+                                      TRUE, _("Lower Channel"));
 }
 
 gboolean
 gimp_image_position_channel (GimpImage   *gimage, 
 			     GimpChannel *channel,
 			     gint         new_index,
-                             gboolean     push_undo)
+                             gboolean     push_undo,
+                             const gchar *undo_desc)
 {
   gint index;
   gint num_channels;
@@ -3160,9 +3166,7 @@ gimp_image_position_channel (GimpImage   *gimage,
     return TRUE;
 
   if (push_undo)
-    gimp_image_undo_push_channel_reposition (gimage,
-                                             _("Reorder Channel"),
-                                             channel);
+    gimp_image_undo_push_channel_reposition (gimage, undo_desc, channel);
 
   gimp_container_reorder (gimage->channels, 
 			  GIMP_OBJECT (channel), new_index);
@@ -3300,7 +3304,8 @@ gimp_image_raise_vectors (GimpImage   *gimage,
       return FALSE;
     }
 
-  return gimp_image_position_vectors (gimage, vectors, index - 1, TRUE);
+  return gimp_image_position_vectors (gimage, vectors, index - 1,
+                                      TRUE, _("Raise Path"));
 }
 
 gboolean
@@ -3320,14 +3325,16 @@ gimp_image_lower_vectors (GimpImage   *gimage,
       return FALSE;
     }
 
-  return gimp_image_position_vectors (gimage, vectors, index + 1, TRUE);
+  return gimp_image_position_vectors (gimage, vectors, index + 1,
+                                      TRUE, _("Lower Path"));
 }
 
 gboolean
 gimp_image_position_vectors (GimpImage   *gimage, 
 			     GimpVectors *vectors,
 			     gint         new_index,
-                             gboolean     push_undo)
+                             gboolean     push_undo,
+                             const gchar *undo_desc)
 {
   gint index;
   gint num_vectors;
@@ -3348,9 +3355,7 @@ gimp_image_position_vectors (GimpImage   *gimage,
     return TRUE;
 
   if (push_undo)
-    gimp_image_undo_push_vectors_reposition (gimage,
-                                             _("Reorder Path"),
-                                             vectors);
+    gimp_image_undo_push_vectors_reposition (gimage, undo_desc, vectors);
 
   gimp_container_reorder (gimage->vectors,
 			  GIMP_OBJECT (vectors), new_index);

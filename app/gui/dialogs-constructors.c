@@ -625,10 +625,9 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
 			     GimpContext       *context,
                              gint               preview_size)
 {
-  GimpImage         *gimage;
-  GimpLayerListView *layer_view;
-  GtkWidget         *view;
-  GtkWidget         *dockable;
+  GimpImage *gimage;
+  GtkWidget *view;
+  GtkWidget *dockable;
 
   gimage = gimp_context_get_image (context);
 
@@ -637,21 +636,10 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
                              gimage,
                              GIMP_TYPE_LAYER,
                              "active_layer_changed",
-                             (GimpGetContainerFunc) gimp_image_get_layers,
-                             (GimpGetItemFunc)      gimp_image_get_active_layer,
-                             (GimpSetItemFunc)      gimp_image_set_active_layer,
-                             (GimpReorderItemFunc)  gimp_image_position_layer,
-                             (GimpAddItemFunc)      gimp_image_add_layer,
-                             (GimpRemoveItemFunc)   layers_remove_layer,
-                             (GimpConvertItemFunc)  gimp_layer_new_from_drawable,
                              (GimpNewItemFunc)      layers_new_layer_query,
                              (GimpEditItemFunc)     layers_edit_layer_query,
                              (GimpActivateItemFunc) layers_edit_layer_query,
                              factory->menu_factory, "<Layers>");
-
-  layer_view = GIMP_LAYER_LIST_VIEW (view);
-
-  layer_view->anchor_item_func = layers_anchor_layer;
 
   dockable = dialogs_dockable_new (view,
 				   _("Layer List"), _("Layers"), NULL,
@@ -679,13 +667,6 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
                              gimage,
                              GIMP_TYPE_CHANNEL,
                              "active_channel_changed",
-                             (GimpGetContainerFunc) gimp_image_get_channels,
-                             (GimpGetItemFunc)      gimp_image_get_active_channel,
-                             (GimpSetItemFunc)      gimp_image_set_active_channel,
-                             (GimpReorderItemFunc)  gimp_image_position_channel,
-                             (GimpAddItemFunc)      gimp_image_add_channel,
-                             (GimpRemoveItemFunc)   gimp_image_remove_channel,
-                             (GimpConvertItemFunc)  NULL,
                              (GimpNewItemFunc)      channels_new_channel_query,
                              (GimpEditItemFunc)     channels_edit_channel_query,
                              (GimpActivateItemFunc) channels_edit_channel_query,
@@ -718,13 +699,6 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
                              gimage,
                              GIMP_TYPE_VECTORS,
                              "active_vectors_changed",
-                             (GimpGetContainerFunc) gimp_image_get_vectors,
-                             (GimpGetItemFunc)      gimp_image_get_active_vectors,
-                             (GimpSetItemFunc)      gimp_image_set_active_vectors,
-                             (GimpReorderItemFunc)  gimp_image_position_vectors,
-                             (GimpAddItemFunc)      gimp_image_add_vectors,
-                             (GimpRemoveItemFunc)   gimp_image_remove_vectors,
-                             (GimpConvertItemFunc)  NULL,
                              (GimpNewItemFunc)      vectors_new_vectors_query,
                              (GimpEditItemFunc)     vectors_edit_vectors_query,
                              (GimpActivateItemFunc) vectors_vectors_tool,

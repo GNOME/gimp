@@ -30,6 +30,7 @@
 
 #include "core/gimpcontainer.h"
 #include "core/gimplayer.h"
+#include "core/gimplayer-floating-sel.h"
 #include "core/gimpimage.h"
 
 #include "gimpdnd.h"
@@ -71,6 +72,9 @@ static void   gimp_layer_list_view_layer_signal_handler
 static void   gimp_layer_list_view_update_options (GimpLayerListView *view,
 						   GimpLayer         *layer);
 
+static void   gimp_layer_list_view_remove_layer   (GimpImage         *gimage,
+                                                   GimpItem          *layer);
+
 
 static GimpDrawableListViewClass *parent_class = NULL;
 
@@ -108,16 +112,35 @@ gimp_layer_list_view_class_init (GimpLayerListViewClass *klass)
 {
   GtkWidgetClass         *widget_class;
   GimpContainerViewClass *container_view_class;
+  GimpItemListViewClass  *item_view_class;
 
   widget_class         = GTK_WIDGET_CLASS (klass);
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
+  item_view_class      = GIMP_ITEM_LIST_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  widget_class->style_set             = gimp_layer_list_view_style_set;
+  widget_class->style_set = gimp_layer_list_view_style_set;
 
   container_view_class->set_container = gimp_layer_list_view_set_container;
   container_view_class->select_item   = gimp_layer_list_view_select_item;
+
+  item_view_class->get_container   = gimp_image_get_layers;
+  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;
+  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_layer;
+  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_layer;
+  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
+  item_view_class->remove_item     = gimp_layer_list_view_remove_layer;
+  item_view_class->convert_item    = (GimpConvertItemFunc) gimp_layer_new_from_drawable;
+
+  item_view_class->new_desc             = _("New Layer");
+  item_view_class->duplicate_desc       = _("Duplicate Layer");
+  item_view_class->edit_desc            = _("Edit Layer Attributes");
+  item_view_class->delete_desc          = _("Delete Layer");
+  item_view_class->raise_desc           = _("Raise Layer");
+  item_view_class->raise_to_top_desc    = _("Raise Layer to Top");
+  item_view_class->lower_desc           = _("Lower Layer");
+  item_view_class->lower_to_bottom_desc = _("Lower Layer to Bottom");
 }
 
 static void
@@ -189,8 +212,7 @@ gimp_layer_list_view_init (GimpLayerListView *view)
 
   view->anchor_button =
     gimp_editor_add_button (GIMP_EDITOR (view),
-                            GIMP_STOCK_ANCHOR,
-                            _("Anchor"), NULL,
+                            GIMP_STOCK_ANCHOR, _("Anchor Floating Layer"), NULL,
                             G_CALLBACK (gimp_layer_list_view_anchor_clicked),
                             NULL,
                             view);
@@ -331,16 +353,19 @@ static void
 gimp_layer_list_view_anchor_clicked (GtkWidget         *widget,
 				     GimpLayerListView *view)
 {
-  GimpItemListView *item_view;
-  GimpLayer        *layer;
+  GimpImage *gimage;
+  GimpLayer *layer;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
-  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
+  layer = (GimpLayer *)
+    GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (view->anchor_item_func)
+  if (layer && gimp_layer_is_floating_sel (layer))
     {
-      view->anchor_item_func (layer);
+      floating_sel_anchor (layer);
+
+      gimp_image_flush (gimage);
     }
 }
 
@@ -360,14 +385,15 @@ static void
 gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
 					       GimpLayerListView *view)
 {
-  GimpItemListView *item_view;
-  GimpLayer        *layer;
+  GimpImage *gimage;
+  GimpLayer *layer;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
-  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
+  layer = (GimpLayer *)
+    GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (GIMP_IS_LAYER (layer))
+  if (layer)
     {
       GimpLayerModeEffects mode;
 
@@ -381,7 +407,7 @@ gimp_layer_list_view_paint_mode_menu_callback (GtkWidget         *widget,
 	  gimp_layer_set_mode (layer, mode);
 	  UNBLOCK();
 
-	  gimp_image_flush (item_view->gimage);
+	  gimp_image_flush (gimage);
 	}
     }
 }
@@ -390,14 +416,15 @@ static void
 gimp_layer_list_view_preserve_button_toggled (GtkWidget         *widget,
 					      GimpLayerListView *view)
 {
-  GimpItemListView *item_view;
-  GimpLayer        *layer;
+  GimpImage *gimage;
+  GimpLayer *layer;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
-  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
+  layer = (GimpLayer *)
+    GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (GIMP_IS_LAYER (layer))
+  if (layer)
     {
       gboolean preserve_trans;
 
@@ -416,14 +443,15 @@ static void
 gimp_layer_list_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 					    GimpLayerListView *view)
 {
-  GimpItemListView *item_view;
-  GimpLayer        *layer;
+  GimpImage *gimage;
+  GimpLayer *layer;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
-  layer = (GimpLayer *) item_view->get_item_func (item_view->gimage);
+  layer = (GimpLayer *)
+    GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (GIMP_IS_LAYER (layer))
+  if (layer)
     {
       gdouble opacity;
 
@@ -435,7 +463,7 @@ gimp_layer_list_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 	  gimp_layer_set_opacity (layer, opacity);
 	  UNBLOCK();
 
-	  gimp_image_flush (item_view->gimage);
+	  gimp_image_flush (gimage);
 	}
     }
 }
@@ -449,10 +477,14 @@ gimp_layer_list_view_layer_signal_handler (GimpLayer         *layer,
 					   GimpLayerListView *view)
 {
   GimpItemListView *item_view;
+  GimpLayer        *active_layer;
 
   item_view = GIMP_ITEM_LIST_VIEW (view);
 
-  if (item_view->get_item_func (item_view->gimage) == (GimpViewable *) layer)
+  active_layer = (GimpLayer *)
+    GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (item_view->gimage);
+
+  if (active_layer == layer)
     {
       gimp_layer_list_view_update_options (view, layer);
     }
@@ -483,7 +515,7 @@ gimp_layer_list_view_update_options (GimpLayerListView *view,
 
       UNBLOCK (view->preserve_trans_toggle,
 	       gimp_layer_list_view_preserve_button_toggled);
-      }
+    }
 
   if (layer->opacity * 100.0 != view->opacity_adjustment->value)
     {
@@ -500,3 +532,14 @@ gimp_layer_list_view_update_options (GimpLayerListView *view,
 
 #undef BLOCK
 #undef UNBLOCK
+
+
+static void
+gimp_layer_list_view_remove_layer (GimpImage *gimage,
+                                   GimpItem  *layer)
+{
+  if (gimp_layer_is_floating_sel (GIMP_LAYER (layer)))
+    floating_sel_remove (GIMP_LAYER (layer));
+  else
+    gimp_image_remove_layer (gimage, GIMP_LAYER (layer));
+}

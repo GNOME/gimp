@@ -442,7 +442,8 @@ gboolean        gimp_image_lower_layer_to_bottom (GimpImage          *gimage,
 gboolean        gimp_image_position_layer        (GimpImage          *gimage,
 						  GimpLayer          *layer,
 						  gint                new_index,
-						  gboolean            push_undo);
+						  gboolean            push_undo,
+                                                  const gchar        *undo_desc);
 
 gboolean        gimp_image_add_channel           (GimpImage          *gimage,
 						  GimpChannel        *channel,
@@ -457,7 +458,8 @@ gboolean        gimp_image_lower_channel         (GimpImage          *gimage,
 gboolean        gimp_image_position_channel      (GimpImage          *gimage,
 						  GimpChannel        *channel,
 						  gint                new_index,
-                                                  gboolean            push_undo);
+                                                  gboolean            push_undo,
+                                                  const gchar        *undo_desc);
 
 gboolean        gimp_image_add_vectors           (GimpImage          *gimage,
 						  GimpVectors        *vectors,
@@ -472,7 +474,8 @@ gboolean        gimp_image_lower_vectors         (GimpImage          *gimage,
 gboolean        gimp_image_position_vectors      (GimpImage          *gimage,
 						  GimpVectors        *vectors,
 						  gint                new_index,
-                                                  gboolean            push_undo);
+                                                  gboolean            push_undo,
+                                                  const gchar        *undo_desc);
 
 gboolean        gimp_image_layer_boundary        (const GimpImage    *gimage,
 						  BoundSeg          **segs,

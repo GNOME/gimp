@@ -51,9 +51,6 @@ static void   gimp_vectors_list_view_init       (GimpVectorsListView      *view)
 static void   gimp_vectors_list_view_select_item    (GimpContainerView   *view,
 						     GimpViewable        *item,
 						     gpointer             insert_data);
-static void   gimp_vectors_list_view_to_selection   (GimpVectorsListView *view,
-						     GimpVectors         *vectors,
-						     GimpChannelOps       operation);
 static void   gimp_vectors_list_view_toselection_clicked
                                                     (GtkWidget           *widget,
 						     GimpVectorsListView *view);
@@ -62,8 +59,6 @@ static void   gimp_vectors_list_view_toselection_extended_clicked
 						     guint                state,
 						     GimpVectorsListView *view);
 
-static void   gimp_vectors_list_view_stroke         (GimpVectorsListView *view,
-						     GimpVectors         *vectors);
 static void   gimp_vectors_list_view_stroke_clicked (GtkWidget           *widget,
 						     GimpVectorsListView *view);
 
@@ -103,12 +98,30 @@ static void
 gimp_vectors_list_view_class_init (GimpVectorsListViewClass *klass)
 {
   GimpContainerViewClass *container_view_class;
+  GimpItemListViewClass  *item_view_class;
 
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
+  item_view_class      = GIMP_ITEM_LIST_VIEW_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
   container_view_class->select_item = gimp_vectors_list_view_select_item;
+
+  item_view_class->get_container   = gimp_image_get_vectors;
+  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
+  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
+  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_vectors;
+  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;
+  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_vectors;
+
+  item_view_class->new_desc             = _("New Path");
+  item_view_class->duplicate_desc       = _("Duplicate Path");
+  item_view_class->edit_desc            = _("Edit Path Attributes");
+  item_view_class->delete_desc          = _("Delete Path");
+  item_view_class->raise_desc           = _("Raise Path");
+  item_view_class->raise_to_top_desc    = _("Raise Path to Top");
+  item_view_class->lower_desc           = _("Lower Path");
+  item_view_class->lower_to_bottom_desc = _("Lower Path to Bottom");
 }
 
 static void
@@ -182,30 +195,6 @@ gimp_vectors_list_view_select_item (GimpContainerView *view,
   gtk_widget_set_sensitive (list_view->stroke_button,      item != NULL);
 }
 
-
-/*  "To Selection" functions  */
-
-static void
-gimp_vectors_list_view_to_selection (GimpVectorsListView *view,
-				     GimpVectors         *vectors,
-				     GimpChannelOps       operation)
-{
-  if (vectors)
-    {
-      GimpImage *gimage;
-
-      gimage = gimp_item_get_image (GIMP_ITEM (vectors));
-
-      gimp_image_mask_select_vectors (gimage,
-                                      vectors,
-                                      operation,
-                                      TRUE,
-                                      FALSE, 0, 0);
-
-      gimp_image_flush (gimage);
-    }
-}
-
 static void
 gimp_vectors_list_view_toselection_clicked (GtkWidget           *widget,
 					    GimpVectorsListView *view)
@@ -218,14 +207,14 @@ gimp_vectors_list_view_toselection_extended_clicked (GtkWidget           *widget
 						     guint                state,
 						     GimpVectorsListView *view)
 {
-  GimpItemListView *item_view;
-  GimpViewable     *viewable;
+  GimpImage *gimage;
+  GimpItem  *item;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
-  viewable = item_view->get_item_func (item_view->gimage);
+  item = GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (viewable)
+  if (item)
     {
       GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
 
@@ -241,18 +230,11 @@ gimp_vectors_list_view_toselection_extended_clicked (GtkWidget           *widget
 	  operation = GIMP_CHANNEL_OP_SUBTRACT;
 	}
 
-      gimp_vectors_list_view_to_selection (view, GIMP_VECTORS (viewable),
-					   operation);
-    }
-}
-
-static void
-gimp_vectors_list_view_stroke (GimpVectorsListView *view,
-                               GimpVectors         *vectors)
-{
-  if (view->stroke_item_func)
-    {
-      view->stroke_item_func (vectors);
+      gimp_image_mask_select_vectors (gimage,
+                                      GIMP_VECTORS (item),
+                                      operation,
+                                      TRUE,
+                                      FALSE, 0, 0);
     }
 }
 
@@ -260,13 +242,15 @@ static void
 gimp_vectors_list_view_stroke_clicked (GtkWidget           *widget,
                                        GimpVectorsListView *view)
 {
-  GimpItemListView *item_view;
-  GimpViewable     *viewable;
+  GimpImage *gimage;
+  GimpItem  *item;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
-  viewable = item_view->get_item_func (item_view->gimage);
+  item = GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (viewable)
-    gimp_vectors_list_view_stroke (view, GIMP_VECTORS (viewable));
+  if (item && view->stroke_item_func)
+    {
+      view->stroke_item_func (GIMP_VECTORS (item));
+    }
 }

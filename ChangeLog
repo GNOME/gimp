@@ -1,5 +1,25 @@
 2003-02-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch] (gimp_image_position_*): added
+	"undo_desc" parameters.
+
+	* app/core/gimpimage-undo-push.c: changed accordingly.
+
+	* app/widgets/gimpitemlistview.[ch]: moved the item stack
+	manipulation function pointers from the instance to the class
+	struct. Added lots of descriptive strings to be used by tooltips
+	and undo steps.
+
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpitemlistitem.c
+	* app/widgets/gimplayerlistview.[ch]
+	* app/widgets/gimpvectorslistview.c
+	* app/gui/dialogs-constructors.c
+	* app/gui/layers-commands.[ch]
+	* app/gui/vectors-commands.c: changed accordingly. Cleanup.
+
+2003-02-17  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolorscale.c (gimp_color_scale_size_allocate):
 	calculate the size of the handle (the small triangles) from the
 	scale's requisition, not from its allocation. Spotted by drc.

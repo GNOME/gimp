@@ -123,7 +123,23 @@ gimp_channel_list_view_class_init (GimpChannelListViewClass *klass)
   container_view_class->select_item      = gimp_channel_list_view_select_item;
   container_view_class->set_preview_size = gimp_channel_list_view_set_preview_size;
 
-  item_view_class->set_image             = gimp_channel_list_view_set_image;
+  item_view_class->set_image       = gimp_channel_list_view_set_image;
+
+  item_view_class->get_container   = gimp_image_get_channels;
+  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_channel;
+  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_channel;
+  item_view_class->reorder_item    = (GimpReorderItemFunc) gimp_image_position_channel;
+  item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_channel;
+  item_view_class->remove_item     = (GimpRemoveItemFunc) gimp_image_remove_channel;
+
+  item_view_class->new_desc             = _("New Channel");
+  item_view_class->duplicate_desc       = _("Duplicate Channel");
+  item_view_class->edit_desc            = _("Edit Channel Attributes");
+  item_view_class->delete_desc          = _("Delete Channel");
+  item_view_class->raise_desc           = _("Raise Channel");
+  item_view_class->raise_to_top_desc    = _("Raise Channel to Top");
+  item_view_class->lower_desc           = _("Lower Channel");
+  item_view_class->lower_to_bottom_desc = _("Lower Channel to Bottom");
 }
 
 static void
@@ -298,17 +314,16 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 						     guint                state,
 						     GimpChannelListView *view)
 {
-  GimpItemListView *item_view;
-  GimpViewable     *viewable;
+  GimpImage *gimage;
+  GimpItem  *item;
 
-  item_view = GIMP_ITEM_LIST_VIEW (view);
+  gimage = GIMP_ITEM_LIST_VIEW (view)->gimage;
 
-  viewable = item_view->get_item_func (item_view->gimage);
+  item = GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
-  if (viewable)
+  if (item)
     {
-      GimpChannelOps  operation = GIMP_CHANNEL_OP_REPLACE;
-      GimpImage      *gimage;
+      GimpChannelOps operation = GIMP_CHANNEL_OP_REPLACE;
 
       if (state & GDK_SHIFT_MASK)
 	{
@@ -322,11 +337,9 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 	  operation = GIMP_CHANNEL_OP_SUBTRACT;
 	}
 
-      gimage = gimp_item_get_image (GIMP_ITEM (viewable));
-
       gimp_image_mask_select_channel (gimage,
                                       _("Channel to Selection"),
-                                      GIMP_CHANNEL (viewable),
+                                      GIMP_CHANNEL (item),
                                       0, 0,
                                       operation,
                                       FALSE, 0.0, 0.0);

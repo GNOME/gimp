@@ -63,7 +63,9 @@ enum
 
 
 static void   gimp_item_list_view_class_init (GimpItemListViewClass *klass);
-static void   gimp_item_list_view_init       (GimpItemListView      *view);
+static void   gimp_item_list_view_init       (GimpItemListView      *view,
+                                              GimpItemListViewClass *view_class);
+
 static void   gimp_item_list_view_destroy    (GtkObject             *object);
 
 static void   gimp_item_list_view_real_set_image    (GimpItemListView  *view,
@@ -172,10 +174,28 @@ gimp_item_list_view_class_init (GimpItemListViewClass *klass)
   container_view_class->context_item  = gimp_item_list_view_context_item;
 
   klass->set_image                    = gimp_item_list_view_real_set_image;
+
+  klass->get_container                = NULL;
+  klass->get_active_item              = NULL;
+  klass->set_active_item              = NULL;
+  klass->reorder_item                 = NULL;
+  klass->add_item                     = NULL;
+  klass->remove_item                  = NULL;
+  klass->convert_item                 = NULL;
+
+  klass->new_desc                     = NULL;
+  klass->duplicate_desc               = NULL;
+  klass->edit_desc                    = NULL;
+  klass->delete_desc                  = NULL;
+  klass->raise_desc                   = NULL;
+  klass->raise_to_top_desc            = NULL;
+  klass->lower_desc                   = NULL;
+  klass->lower_to_bottom_desc         = NULL;
 }
 
 static void
-gimp_item_list_view_init (GimpItemListView *view)
+gimp_item_list_view_init (GimpItemListView      *view,
+                          GimpItemListViewClass *view_class)
 {
   GimpEditor *editor;
   gchar      *str;
@@ -188,13 +208,14 @@ gimp_item_list_view_init (GimpItemListView *view)
 
   view->new_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_NEW, _("New"), NULL,
+                            GTK_STOCK_NEW, view_class->new_desc, NULL,
                             G_CALLBACK (gimp_item_list_view_new_clicked),
                             NULL,
                             view);
 
-  str = g_strdup_printf (_("Raise\n"
+  str = g_strdup_printf (_("%s\n"
                            "%s  To Top"),
+                         view_class->raise_desc,
                          gimp_get_mod_name_shift ());
 
   view->raise_button =
@@ -206,8 +227,9 @@ gimp_item_list_view_init (GimpItemListView *view)
 
   g_free (str);
 
-  str = g_strdup_printf (_("Lower\n"
+  str = g_strdup_printf (_("%s\n"
                            "%s  To Bottom"),
+                         view_class->lower_desc,
                          gimp_get_mod_name_shift ());
 
   view->lower_button =
@@ -221,21 +243,22 @@ gimp_item_list_view_init (GimpItemListView *view)
 
   view->duplicate_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_DUPLICATE, _("Duplicate"), NULL,
+                            GIMP_STOCK_DUPLICATE, view_class->duplicate_desc,
+                            NULL,
                             G_CALLBACK (gimp_item_list_view_duplicate_clicked),
                             NULL,
                             view);
 
   view->edit_button =
     gimp_editor_add_button (editor,
-                            GIMP_STOCK_EDIT, _("Edit"), NULL,
+                            GIMP_STOCK_EDIT, view_class->edit_desc, NULL,
                             G_CALLBACK (gimp_item_list_view_edit_clicked),
                             NULL,
                             view);
 
   view->delete_button =
     gimp_editor_add_button (editor,
-                            GTK_STOCK_DELETE, _("Delete"), NULL,
+                            GTK_STOCK_DELETE, view_class->delete_desc, NULL,
                             G_CALLBACK (gimp_item_list_view_delete_clicked),
                             NULL,
                             view);
@@ -270,8 +293,7 @@ gimp_item_list_view_destroy (GtkObject *object)
       view->item_factory = NULL;
     }
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 GtkWidget *
@@ -279,13 +301,6 @@ gimp_item_list_view_new (gint                  preview_size,
                          GimpImage            *gimage,
                          GType                 item_type,
                          const gchar          *signal_name,
-                         GimpGetContainerFunc  get_container_func,
-                         GimpGetItemFunc       get_item_func,
-                         GimpSetItemFunc       set_item_func,
-                         GimpReorderItemFunc   reorder_item_func,
-                         GimpAddItemFunc       add_item_func,
-                         GimpRemoveItemFunc    remove_item_func,
-                         GimpConvertItemFunc   convert_item_func,
                          GimpNewItemFunc       new_item_func,
                          GimpEditItemFunc      edit_item_func,
                          GimpActivateItemFunc  activate_item_func,
@@ -299,13 +314,6 @@ gimp_item_list_view_new (gint                  preview_size,
 			preview_size <= GIMP_PREVIEW_MAX_SIZE, NULL);
   g_return_val_if_fail (! gimage || GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (signal_name != NULL, NULL);
-  g_return_val_if_fail (get_container_func != NULL, NULL);
-  g_return_val_if_fail (get_item_func != NULL, NULL);
-  g_return_val_if_fail (get_item_func != NULL, NULL);
-  g_return_val_if_fail (reorder_item_func != NULL, NULL);
-  g_return_val_if_fail (add_item_func != NULL, NULL);
-  g_return_val_if_fail (remove_item_func != NULL, NULL);
-  /*  convert_item_func may be NULL  */
   g_return_val_if_fail (new_item_func != NULL, NULL);
   g_return_val_if_fail (edit_item_func != NULL, NULL);
   g_return_val_if_fail (activate_item_func != NULL, NULL);
@@ -320,17 +328,15 @@ gimp_item_list_view_new (gint                  preview_size,
     {
       list_view = g_object_new (GIMP_TYPE_CHANNEL_LIST_VIEW, NULL);
     }
-  else if (item_type == GIMP_TYPE_DRAWABLE)
-    {
-      list_view = g_object_new (GIMP_TYPE_DRAWABLE_LIST_VIEW, NULL);
-    }
   else if (item_type == GIMP_TYPE_VECTORS)
     {
       list_view = g_object_new (GIMP_TYPE_VECTORS_LIST_VIEW, NULL);
     }
   else
     {
-      list_view = g_object_new (GIMP_TYPE_ITEM_LIST_VIEW, NULL);
+      g_warning ("gimp_item_list_view_new: unsupported item type '%s'\n",
+                 g_type_name (item_type));
+      return NULL;
     }
 
   view = GIMP_CONTAINER_VIEW (list_view);
@@ -340,13 +346,6 @@ gimp_item_list_view_new (gint                  preview_size,
 
   list_view->item_type          = item_type;
   list_view->signal_name        = g_strdup (signal_name);
-  list_view->get_container_func = get_container_func;
-  list_view->get_item_func      = get_item_func;
-  list_view->set_item_func      = set_item_func;
-  list_view->reorder_item_func  = reorder_item_func;
-  list_view->add_item_func      = add_item_func;
-  list_view->remove_item_func   = remove_item_func;
-  list_view->convert_item_func  = convert_item_func;
   list_view->new_item_func      = new_item_func;
   list_view->edit_item_func     = edit_item_func;
   list_view->activate_item_func = activate_item_func;
@@ -418,7 +417,8 @@ gimp_item_list_view_real_set_image (GimpItemListView *view,
     {
       GimpContainer *container;
 
-      container = view->get_container_func (view->gimage);
+      container =
+        GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_container (view->gimage);
 
       gimp_container_view_set_container (GIMP_CONTAINER_VIEW (view), container);
 
@@ -459,14 +459,18 @@ gimp_item_list_view_select_item (GimpContainerView *view,
 
   if (item)
     {
-      GimpViewable *active_viewable;
-      gint          index;
+      GimpItemListViewClass *item_view_class;
+      GimpItem              *active_item;
+      gint                   index;
 
-      active_viewable = list_view->get_item_func (list_view->gimage);
+      item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (list_view);
 
-      if (active_viewable != item)
+      active_item = item_view_class->get_active_item (list_view->gimage);
+
+      if (active_item != (GimpItem *) item)
 	{
-	  list_view->set_item_func (list_view->gimage, item);
+	  item_view_class->set_active_item (list_view->gimage,
+                                            GIMP_ITEM (item));
 
 	  gimp_image_flush (list_view->gimage);
 	}
@@ -509,7 +513,7 @@ gimp_item_list_view_activate_item (GimpContainerView *view,
 							     item,
 							     insert_data);
 
-  item_view->activate_item_func (item);
+  item_view->activate_item_func (GIMP_ITEM (item));
 }
 
 static void
@@ -528,10 +532,6 @@ gimp_item_list_view_context_item (GimpContainerView *view,
 
   if (item_view->item_factory)
     {
-      GimpImage *gimage;
-
-      gimage = gimp_item_get_image (GIMP_ITEM (item));
-
       gimp_item_factory_popup_with_data (item_view->item_factory,
                                          item_view,
                                          NULL);
@@ -555,12 +555,12 @@ gimp_item_list_view_new_dropped (GtkWidget    *widget,
 {
   GimpItemListView *view;
 
-  view = (GimpItemListView *) data;
+  view = GIMP_ITEM_LIST_VIEW (data);
 
   if (viewable && gimp_container_have (GIMP_CONTAINER_VIEW (view)->container,
 				       GIMP_OBJECT (viewable)))
     {
-      view->new_item_func (view->gimage, viewable, FALSE);
+      view->new_item_func (view->gimage, GIMP_ITEM (viewable), FALSE);
 
       gimp_image_flush (view->gimage);
     }
@@ -573,21 +573,27 @@ static void
 gimp_item_list_view_duplicate_clicked (GtkWidget        *widget,
                                        GimpItemListView *view)
 {
-  GimpViewable *viewable;
-  GimpViewable *new_viewable;
+  GimpItemListViewClass *item_view_class;
+  GimpItem              *item;
 
-  viewable = view->get_item_func (view->gimage);
+  item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (view);
 
-  new_viewable = (GimpViewable *)
-    gimp_item_duplicate (GIMP_ITEM (viewable),
-                         G_TYPE_FROM_INSTANCE (viewable),
-                         TRUE);
+  item = item_view_class->get_active_item (view->gimage);
 
-  if (GIMP_IS_VIEWABLE (new_viewable))
+  if (item)
     {
-      view->add_item_func (view->gimage, new_viewable, -1);
+      GimpItem *new_item;
 
-      gimp_image_flush (view->gimage);
+      new_item = gimp_item_duplicate (item,
+                                      G_TYPE_FROM_INSTANCE (item),
+                                      TRUE);
+
+      if (new_item)
+        {
+          item_view_class->add_item (view->gimage, new_item, -1);
+
+          gimp_image_flush (view->gimage);
+        }
     }
 }
 
@@ -598,20 +604,29 @@ static void
 gimp_item_list_view_raise_clicked (GtkWidget        *widget,
                                    GimpItemListView *view)
 {
-  GimpContainer *container;
-  GimpViewable  *viewable;
-  gint           index;
+  GimpItemListViewClass *item_view_class;
+  GimpItem              *item;
 
-  container = GIMP_CONTAINER_VIEW (view)->container;
-  viewable  = view->get_item_func (view->gimage);
+  item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (view);
 
-  index = gimp_container_get_child_index (container, GIMP_OBJECT (viewable));
+  item = item_view_class->get_active_item (view->gimage);
 
-  if (index > 0)
+  if (item)
     {
-      view->reorder_item_func (view->gimage, viewable, index - 1, TRUE);
+      GimpContainer *container;
+      gint           index;
 
-      gimp_image_flush (view->gimage);
+      container = GIMP_CONTAINER_VIEW (view)->container;
+
+      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
+
+      if (index > 0)
+        {
+          item_view_class->reorder_item (view->gimage, item, index - 1, TRUE,
+                                         item_view_class->raise_desc);
+
+          gimp_image_flush (view->gimage);
+        }
     }
 }
 
@@ -620,20 +635,29 @@ gimp_item_list_view_raise_extended_clicked (GtkWidget        *widget,
                                             guint             state,
                                             GimpItemListView *view)
 {
-  GimpContainer *container;
-  GimpViewable  *viewable;
-  gint           index;
+  GimpItemListViewClass *item_view_class;
+  GimpItem              *item;
 
-  container = GIMP_CONTAINER_VIEW (view)->container;
-  viewable  = view->get_item_func (view->gimage);
+  item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (view);
 
-  index = gimp_container_get_child_index (container, GIMP_OBJECT (viewable));
+  item = item_view_class->get_active_item (view->gimage);
 
-  if ((state & GDK_SHIFT_MASK) && (index > 0))
+  if (item)
     {
-      view->reorder_item_func (view->gimage, viewable, 0, TRUE);
+      GimpContainer *container;
+      gint           index;
 
-      gimp_image_flush (view->gimage);
+      container = GIMP_CONTAINER_VIEW (view)->container;
+
+      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
+
+      if ((state & GDK_SHIFT_MASK) && (index > 0))
+        {
+          item_view_class->reorder_item (view->gimage, item, 0, TRUE,
+                                         item_view_class->raise_to_top_desc);
+
+          gimp_image_flush (view->gimage);
+        }
     }
 }
 
@@ -641,20 +665,29 @@ static void
 gimp_item_list_view_lower_clicked (GtkWidget        *widget,
                                    GimpItemListView *view)
 {
-  GimpContainer *container;
-  GimpViewable  *viewable;
-  gint           index;
+  GimpItemListViewClass *item_view_class;
+  GimpItem              *item;
 
-  container = GIMP_CONTAINER_VIEW (view)->container;
-  viewable  = view->get_item_func (view->gimage);
+  item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (view);
 
-  index = gimp_container_get_child_index (container, GIMP_OBJECT (viewable));
+  item = item_view_class->get_active_item (view->gimage);
 
-  if (index < container->num_children - 1)
+  if (item)
     {
-      view->reorder_item_func (view->gimage, viewable, index + 1, TRUE);
+      GimpContainer *container;
+      gint           index;
 
-      gimp_image_flush (view->gimage);
+      container = GIMP_CONTAINER_VIEW (view)->container;
+
+      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
+
+      if (index < container->num_children - 1)
+        {
+          item_view_class->reorder_item (view->gimage, item, index + 1, TRUE,
+                                         item_view_class->lower_desc);
+
+          gimp_image_flush (view->gimage);
+        }
     }
 }
 
@@ -663,21 +696,30 @@ gimp_item_list_view_lower_extended_clicked (GtkWidget        *widget,
                                             guint             state,
                                             GimpItemListView *view)
 {
-  GimpContainer *container;
-  GimpViewable  *viewable;
-  gint           index;
+  GimpItemListViewClass *item_view_class;
+  GimpItem              *item;
 
-  container = GIMP_CONTAINER_VIEW (view)->container;
-  viewable  = view->get_item_func (view->gimage);
+  item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (view);
 
-  index = gimp_container_get_child_index (container, GIMP_OBJECT (viewable));
+  item = item_view_class->get_active_item (view->gimage);
 
-  if ((state & GDK_SHIFT_MASK) && (index < container->num_children - 1))
+  if (item)
     {
-      view->reorder_item_func (view->gimage, viewable,
-                               container->num_children - 1, TRUE);
+      GimpContainer *container;
+      gint           index;
 
-      gimp_image_flush (view->gimage);
+      container = GIMP_CONTAINER_VIEW (view)->container;
+
+      index = gimp_container_get_child_index (container, GIMP_OBJECT (item));
+
+      if ((state & GDK_SHIFT_MASK) && (index < container->num_children - 1))
+        {
+          item_view_class->reorder_item (view->gimage, item,
+                                         container->num_children - 1, TRUE,
+                                         item_view_class->lower_to_bottom_desc);
+
+          gimp_image_flush (view->gimage);
+        }
     }
 }
 
@@ -688,11 +730,12 @@ static void
 gimp_item_list_view_edit_clicked (GtkWidget        *widget,
                                   GimpItemListView *view)
 {
-  GimpViewable *viewable;
+  GimpItem *item;
 
-  viewable = view->get_item_func (view->gimage);
+  item = GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (view->gimage);
 
-  view->edit_item_func (viewable);
+  if (item)
+    view->edit_item_func (item);
 }
 
 
@@ -702,13 +745,19 @@ static void
 gimp_item_list_view_delete_clicked (GtkWidget        *widget,
                                     GimpItemListView *view)
 {
-  GimpViewable *viewable;
+  GimpItemListViewClass *item_view_class;
+  GimpItem              *item;
 
-  viewable = view->get_item_func (view->gimage);
+  item_view_class = GIMP_ITEM_LIST_VIEW_GET_CLASS (view);
 
-  view->remove_item_func (view->gimage, viewable);
+  item = item_view_class->get_active_item (view->gimage);
 
-  gimp_image_flush (view->gimage);
+  if (item)
+    {
+      item_view_class->remove_item (view->gimage, item);
+
+      gimp_image_flush (view->gimage);
+    }
 }
 
 
@@ -718,11 +767,12 @@ static void
 gimp_item_list_view_item_changed (GimpImage        *gimage,
                                   GimpItemListView *view)
 {
-  GimpViewable *viewable;
+  GimpItem *item;
 
-  viewable = view->get_item_func (gimage);
+  item = GIMP_ITEM_LIST_VIEW_GET_CLASS (view)->get_active_item (view->gimage);
 
-  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view), viewable);
+  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
+                                   (GimpViewable *) item);
 }
 
 static void
