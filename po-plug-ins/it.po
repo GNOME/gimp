@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3\n"
 "POT-Creation-Date: 2003-12-18 23:29+0100\n"
-"PO-Revision-Date: 2003-11-27 17:52+0100\n"
+"PO-Revision-Date: 2003-12-19 13:09+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1452,7 +1452,7 @@ msgstr "Informazioni"
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:185
 msgid "Load KISS Palette"
-msgstr "Carica Palette KISS"
+msgstr "Carica tavolozza KISS"
 
 #: plug-ins/common/CEL.c:288
 msgid "Can't create a new image"
@@ -1809,7 +1809,7 @@ msgstr "Usa campo ciclico"
 
 #: plug-ins/common/CML_explorer.c:1708
 msgid "Mod. Rate:"
-msgstr ""
+msgstr "Mod. velocità:"
 
 #: plug-ins/common/CML_explorer.c:1717
 msgid "Env. Sensitivity:"
@@ -2379,7 +2379,7 @@ msgstr "Risultato"
 #: plug-ins/common/ccanalyze.c:589 plug-ins/imagemap/imap_cmd_guides.c:228
 #, c-format
 msgid "Image dimensions: %d x %d"
-msgstr ""
+msgstr "Dimensioni immagine: %d x %d"
 
 #: plug-ins/common/ccanalyze.c:592
 msgid "No colors"
@@ -3946,7 +3946,7 @@ msgstr "Questo non è un file GIF"
 
 #: plug-ins/common/gifload.c:350
 msgid "Non-square pixels.  Image might look squashed."
-msgstr ""
+msgstr "Punti non quadrati. L'immagine potrebbe apparire schiacciata."
 
 #: plug-ins/common/gifload.c:858
 #, c-format
@@ -6257,7 +6257,7 @@ msgstr "Derivamento smussamento tavolozza..."
 
 #: plug-ins/common/smooth_palette.c:408
 msgid "Smooth Palette"
-msgstr "Palette Smooth"
+msgstr "Sfuma tavolozza"
 
 #: plug-ins/common/smooth_palette.c:445
 msgid "_Search Depth:"
@@ -7715,11 +7715,11 @@ msgstr "Prefisso _identificativo: "
 #. hotspot toggle
 #: plug-ins/common/xbm.c:1204
 msgid "_Write Hot Spot Values"
-msgstr ""
+msgstr "_Scrivi valori punti caldi"
 
 #: plug-ins/common/xbm.c:1226
 msgid "Hot Spot _X:"
-msgstr ""
+msgstr "Punto caldo _X:"
 
 #. mask file
 #: plug-ins/common/xbm.c:1243
@@ -7728,7 +7728,7 @@ msgstr "Maschera dei file"
 
 #: plug-ins/common/xbm.c:1254
 msgid "W_rite Extra Mask File"
-msgstr ""
+msgstr "Sc_rivi file maschera extra"
 
 #: plug-ins/common/xbm.c:1267
 msgid "_Mask File Extension:"
@@ -7856,11 +7856,11 @@ msgstr "Ricerca per blurb - attendere"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:613
 msgid "Searching - please wait"
-msgstr ""
+msgstr "Ricerca in corso..."
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:650
 msgid "No matches"
-msgstr ""
+msgstr "Nessuna occorrenza"
 
 #: plug-ins/fits/fits.c:346
 msgid "Error during open of FITS file"
@@ -7868,7 +7868,7 @@ msgstr "Errore di apertura file FITS"
 
 #: plug-ins/fits/fits.c:351
 msgid "FITS file keeps no displayable images"
-msgstr ""
+msgstr "Il file FITS non contiene nessuna immagine visualizzabile"
 
 #: plug-ins/fits/fits.c:430
 msgid "FITS save cannot handle images with alpha channels"
@@ -7889,11 +7889,11 @@ msgstr "Bianco"
 
 #: plug-ins/fits/fits.c:995
 msgid "Pixel Value Scaling"
-msgstr ""
+msgstr "Scalatura valore pixel"
 
 #: plug-ins/fits/fits.c:1000
 msgid "By DATAMIN/DATAMAX"
-msgstr ""
+msgstr "Per DATAMIN/DATAMAX"
 
 #: plug-ins/fits/fits.c:1007
 msgid "Image Composing"
@@ -7951,7 +7951,7 @@ msgstr "Vortice"
 
 #: plug-ins/flame/flame.c:708
 msgid "Horseshoe"
-msgstr ""
+msgstr "Ferro di cavallo"
 
 #: plug-ins/flame/flame.c:709 plug-ins/gfig/gfig.c:2558
 msgid "Polar"
@@ -7959,7 +7959,7 @@ msgstr "Polare"
 
 #: plug-ins/flame/flame.c:710
 msgid "Bent"
-msgstr ""
+msgstr "Piegato"
 
 #: plug-ins/flame/flame.c:716
 msgid "_Variation:"
@@ -8132,15 +8132,15 @@ msgstr "Selezione in con_testo"
 
 #: plug-ins/fp/fp_gtk.c:477
 msgid "Display"
-msgstr ""
+msgstr "Mostra"
 
 #: plug-ins/fp/fp_gtk.c:486
 msgid "CirclePalette"
-msgstr ""
+msgstr "Ruota tavolozza"
 
 #: plug-ins/fp/fp_gtk.c:489
 msgid "Lighter And Darker"
-msgstr ""
+msgstr "Schiarisci e inscurisci"
 
 #. ******************************************************************
 #. ************************ All the Standard Stuff ******************
@@ -9311,9 +9311,8 @@ msgid "Opens up the Orientation Map Editor"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:446
-#, fuzzy
 msgid "Orientation Map Editor"
-msgstr "Orientazione:"
+msgstr "Orientazione editor mappa"
 
 #: plug-ins/gimpressionist/orientmap.c:468
 msgid "Vectors"
@@ -9331,39 +9330,34 @@ msgid "Adjust the preview's brightness"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:523
-#, fuzzy
 msgid "Select previous vector"
-msgstr "Vettore direzione"
+msgstr "Selezioni vettore precedente"
 
 #: plug-ins/gimpressionist/orientmap.c:529
-#, fuzzy
 msgid "Select next vector"
-msgstr "Vettore direzione"
+msgstr "Seleziona vettore successivo"
 
 #: plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:487
-#, fuzzy
 msgid "A_dd"
-msgstr "Aggiungi"
+msgstr "A_ggiungi"
 
 #: plug-ins/gimpressionist/orientmap.c:535
 msgid "Add new vector"
-msgstr ""
+msgstr "Aggiungi nuovo vettore"
 
 #: plug-ins/gimpressionist/orientmap.c:537
 #: plug-ins/gimpressionist/sizemap.c:494
-#, fuzzy
 msgid "_Kill"
-msgstr "Piastrella"
+msgstr "_Uccidi"
 
 #: plug-ins/gimpressionist/orientmap.c:541
 msgid "Delete selected vector"
-msgstr ""
+msgstr "Cancella vettore selezionato"
 
 #: plug-ins/gimpressionist/orientmap.c:556
-#, fuzzy
 msgid "_Normal"
-msgstr "Normale"
+msgstr "_Normale"
 
 #: plug-ins/gimpressionist/orientmap.c:557
 msgid "Vorte_x"
@@ -9389,18 +9383,16 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:579
-#, fuzzy
 msgid "A_ngle:"
-msgstr "Angolo:"
+msgstr "A_ngolo:"
 
 #: plug-ins/gimpressionist/orientmap.c:583
 msgid "Change the angle of the selected vector"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:589
-#, fuzzy
 msgid "Ang_le offset:"
-msgstr "X offset"
+msgstr "Spostamento ango_lo:"
 
 #: plug-ins/gimpressionist/orientmap.c:593
 msgid "Offset all vectors with a given angle"
@@ -9411,9 +9403,8 @@ msgid "Change the strength of the selected vector"
 msgstr ""
 
 #: plug-ins/gimpressionist/orientmap.c:610
-#, fuzzy
 msgid "S_trength exp.:"
-msgstr "Lunghezza:"
+msgstr "Esponente forza:"
 
 #: plug-ins/gimpressionist/orientmap.c:614
 #: plug-ins/gimpressionist/sizemap.c:534
@@ -9421,28 +9412,24 @@ msgid "Change the exponent of the strength"
 msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:90
-#, fuzzy
 msgid "P_aper"
-msgstr "Effetto carta"
+msgstr "C_arta"
 
 #: plug-ins/gimpressionist/paper.c:109
-#, fuzzy
 msgid "Paper Preview:"
-msgstr "Anteprima Immagine"
+msgstr "Anteprima carta:"
 
 #: plug-ins/gimpressionist/paper.c:118
-#, fuzzy
 msgid "_Invert"
-msgstr "Interi"
+msgstr "_Inverti"
 
 #: plug-ins/gimpressionist/paper.c:124
 msgid "Inverts the Papers texture"
 msgstr ""
 
 #: plug-ins/gimpressionist/paper.c:127
-#, fuzzy
 msgid "O_verlay"
-msgstr "Sovrapposta"
+msgstr "So_vrapponi"
 
 #: plug-ins/gimpressionist/paper.c:132
 msgid "Applies the paper as it is (without embossing it)"
@@ -9453,23 +9440,20 @@ msgid "Specifies the scale of the texture (in percent of original file)"
 msgstr ""
 
 #: plug-ins/gimpressionist/placement.c:36
-#, fuzzy
 msgid "Pl_acement"
-msgstr "Percentuale"
+msgstr "Pia_zzamento"
 
 #: plug-ins/gimpressionist/placement.c:50
-#, fuzzy
 msgid "Placement"
-msgstr "Percentuale"
+msgstr "Piazzamento"
 
 #: plug-ins/gimpressionist/placement.c:54
-#, fuzzy
 msgid "Randomly"
-msgstr "Seme casuale"
+msgstr "Casualmente"
 
 #: plug-ins/gimpressionist/placement.c:55
 msgid "Evenly distributed"
-msgstr ""
+msgstr "Distribuito equamente"
 
 #: plug-ins/gimpressionist/placement.c:60
 msgid "Place strokes randomly around the image"
@@ -9480,9 +9464,8 @@ msgid "The strokes are evenly distributed across the image"
 msgstr ""
 
 #: plug-ins/gimpressionist/placement.c:81
-#, fuzzy
 msgid "Stroke _density:"
-msgstr "Densità campionamento:"
+msgstr "_Densità tratti:"
 
 #: plug-ins/gimpressionist/placement.c:85
 msgid "The relative density of the brush strokes"
@@ -9497,24 +9480,21 @@ msgid "Focus the brush strokes around the center of the image"
 msgstr ""
 
 #: plug-ins/gimpressionist/ppmtool.c:499
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to save PPM file '%s': %s"
-msgstr "file GFlare non corretto: %s\n"
+msgstr "Fallito il salvataggio del file PPM '%s': %s"
 
 #: plug-ins/gimpressionist/presets.c:366
-#, fuzzy
 msgid "Save Current"
-msgstr "Salva Punti"
+msgstr "Salva corrente"
 
 #: plug-ins/gimpressionist/presets.c:592
-#, fuzzy
 msgid "_Presets"
-msgstr "Chiudi"
+msgstr "_Preimpostazioni"
 
 #: plug-ins/gimpressionist/presets.c:607
-#, fuzzy
 msgid "Save current..."
-msgstr "Salva Punti"
+msgstr "Salva corrente..."
 
 #: plug-ins/gimpressionist/presets.c:612
 msgid "Save the current settings to the specified file"
@@ -9550,35 +9530,30 @@ msgid "Refresh the Preview window"
 msgstr ""
 
 #: plug-ins/gimpressionist/preview.c:136
-#, fuzzy
 msgid "Revert to the original image"
-msgstr "Ruotate l'intera immagine"
+msgstr "Ricarica immagine originale"
 
 #: plug-ins/gimpressionist/size.c:43
-#, fuzzy
 msgid "_Size"
-msgstr "Dimensione:"
+msgstr "Dimen_sione"
 
 #: plug-ins/gimpressionist/size.c:60
 msgid "Sizes:"
 msgstr "Dimensioni:"
 
 #: plug-ins/gimpressionist/size.c:64
-#, fuzzy
 msgid "The number of sizes of brushes to use"
-msgstr "Il numero delle direzioni (es. pennelli) da utilizzare"
+msgstr "Il numero delle dimensioni dei pennelli da usare"
 
 #: plug-ins/gimpressionist/size.c:72
-#, fuzzy
 msgid "Minimum size:"
 msgstr "Dimensione Minima:"
 
 #: plug-ins/gimpressionist/size.c:76
 msgid "The smallest brush to create"
-msgstr ""
+msgstr "Il pennello più piccolo da creare"
 
 #: plug-ins/gimpressionist/size.c:84
-#, fuzzy
 msgid "Maximum size:"
 msgstr "Dimensione Massima:"
 
@@ -9626,7 +9601,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:426
 msgid "Smvectors"
-msgstr ""
+msgstr "Vettori sm"
 
 #: plug-ins/gimpressionist/sizemap.c:436
 msgid ""
@@ -9635,40 +9610,36 @@ msgid ""
 msgstr ""
 
 #: plug-ins/gimpressionist/sizemap.c:478
-#, fuzzy
 msgid "Select previous smvector"
-msgstr "Vettore direzione"
+msgstr "Selezione vettore sm precedente "
 
 #: plug-ins/gimpressionist/sizemap.c:485
-#, fuzzy
 msgid "Select next smvector"
-msgstr "Vettore direzione"
+msgstr "Seleziona vettore sm successivo"
 
 #: plug-ins/gimpressionist/sizemap.c:492
 msgid "Add new smvector"
-msgstr ""
+msgstr "Aggiungi nuovo vettore sm"
 
 #: plug-ins/gimpressionist/sizemap.c:499
 msgid "Delete selected smvector"
-msgstr ""
+msgstr "Cancella vettore sm selezionato"
 
 #: plug-ins/gimpressionist/sizemap.c:512
 msgid "Change the angle of the selected smvector"
-msgstr ""
+msgstr "Cambia l'angolo dei vettori sm selezionati"
 
 #: plug-ins/gimpressionist/sizemap.c:519
-#, fuzzy
 msgid "S_trength:"
-msgstr "Lunghezza:"
+msgstr "For_za:"
 
 #: plug-ins/gimpressionist/sizemap.c:523
 msgid "Change the strength of the selected smvector"
-msgstr ""
+msgstr "Cambia la forza del vettore sm selezionato"
 
 #: plug-ins/gimpressionist/sizemap.c:530
-#, fuzzy
 msgid "St_rength exp.:"
-msgstr "Lunghezza:"
+msgstr "Esponente fo_rza:"
 
 #: plug-ins/gimpressionist/sizemap.c:546
 msgid ""
@@ -9678,20 +9649,20 @@ msgstr ""
 
 #: plug-ins/helpbrowser/dialog.c:149
 msgid "GIMP Help Browser"
-msgstr ""
+msgstr "Navigatore dell'aiuto di Gimp"
 
 #: plug-ins/helpbrowser/dialog.c:461 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
-msgstr ""
+msgstr "<senzatitolo>"
 
 #: plug-ins/helpbrowser/dialog.c:529
 msgid "Document Not Found"
-msgstr ""
+msgstr "Documento non trovato"
 
 #: plug-ins/helpbrowser/dialog.c:531
 msgid "Could not locate help document"
-msgstr ""
+msgstr "Impossibile trovare il documento di aiuto"
 
 #: plug-ins/helpbrowser/dialog.c:533
 msgid ""
@@ -9704,18 +9675,17 @@ msgstr ""
 #: plug-ins/ifscompose/ifscompose.c:371
 #, fuzzy
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
-msgstr "<Image>/Filters/Render/Scacchiera"
+msgstr "<Image>/Filtri/Render/Natura/Ifs_Compose..."
 
 #. Asym
 #: plug-ins/ifscompose/ifscompose.c:611
 msgid "Asymmetry:"
-msgstr ""
+msgstr "Asimmetria:"
 
 #. Shear
 #: plug-ins/ifscompose/ifscompose.c:625
-#, fuzzy
 msgid "Shear:"
-msgstr "Cerca :"
+msgstr ""
 
 #. Flip
 #: plug-ins/ifscompose/ifscompose.c:639
@@ -9724,23 +9694,20 @@ msgstr ""
 
 #. Simple color control section
 #: plug-ins/ifscompose/ifscompose.c:670
-#, fuzzy
 msgid "Simple"
-msgstr "Dimensione"
+msgstr "Semplice"
 
 #: plug-ins/ifscompose/ifscompose.c:679
 msgid "IfsCompose: Target"
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:685
-#, fuzzy
 msgid "Scale Hue by:"
-msgstr "Scala 1"
+msgstr "Scala tonalità di:"
 
 #: plug-ins/ifscompose/ifscompose.c:700
-#, fuzzy
 msgid "Scale Value by:"
-msgstr "Scala 1"
+msgstr "Scala valore di:"
 
 #. Full color control section
 #: plug-ins/ifscompose/ifscompose.c:717
@@ -9750,25 +9717,27 @@ msgstr ""
 #: plug-ins/ifscompose/ifscompose.c:724
 #, fuzzy
 msgid "IfsCompose: Red"
-msgstr "Composizione"
+msgstr "IfsCompose: rosso"
 
 #: plug-ins/ifscompose/ifscompose.c:731
+#, fuzzy
 msgid "IfsCompose: Green"
-msgstr ""
+msgstr "IfsCompose: verde"
 
 #: plug-ins/ifscompose/ifscompose.c:738
 #, fuzzy
 msgid "IfsCompose: Blue"
-msgstr "Composizione"
+msgstr "IfsCompose: blu"
 
 #: plug-ins/ifscompose/ifscompose.c:745
+#, fuzzy
 msgid "IfsCompose: Black"
-msgstr ""
+msgstr "IfsCompose: nero"
 
 #: plug-ins/ifscompose/ifscompose.c:807
 #, fuzzy
 msgid "IfsCompose"
-msgstr "Composizione"
+msgstr "IfsCompose"
 
 #: plug-ins/ifscompose/ifscompose.c:881 plug-ins/imagemap/imap_cmd_move.c:86
 #: plug-ins/imagemap/imap_cmd_object_move.c:57
@@ -9776,56 +9745,49 @@ msgid "Move"
 msgstr "Muovi"
 
 #: plug-ins/ifscompose/ifscompose.c:890
-#, fuzzy
 msgid "Rotate/Scale"
-msgstr "Rotazione"
+msgstr "Rotazione/scala"
 
 #: plug-ins/ifscompose/ifscompose.c:899
-#, fuzzy
 msgid "Stretch"
-msgstr "Configura"
+msgstr "Stiramento"
 
 #: plug-ins/ifscompose/ifscompose.c:919
-#, fuzzy
 msgid "Render Options"
-msgstr "Opzioni Salvataggio"
+msgstr "Opzioni di render"
 
 #: plug-ins/ifscompose/ifscompose.c:933 plug-ins/print/gimp_main_window.c:482
 msgid "Auto"
 msgstr "Auto"
 
 #: plug-ins/ifscompose/ifscompose.c:984 plug-ins/imagemap/imap_menu.c:270
-#, fuzzy
 msgid "Select _All"
-msgstr "Seleziona"
+msgstr "Seleziona _tutto"
 
 #: plug-ins/ifscompose/ifscompose.c:991
-#, fuzzy
 msgid "Recompute _Center"
-msgstr "Ricalcola Anteprima Immagine"
+msgstr "Ricalcola _centro"
 
 #: plug-ins/ifscompose/ifscompose.c:1019
-#, fuzzy
 msgid "Spatial Transformation"
-msgstr "Trasformazione Cubistica"
+msgstr "Trasformazione spaziale"
 
 #: plug-ins/ifscompose/ifscompose.c:1025
-#, fuzzy
 msgid "Color Transformation"
-msgstr "Trasformazione Cubistica"
+msgstr "Trasformazione colore"
 
 #: plug-ins/ifscompose/ifscompose.c:1035
 msgid "Relative Probability:"
-msgstr ""
+msgstr "Probabilità relativa:"
 
 #: plug-ins/ifscompose/ifscompose.c:1254
 #, fuzzy
 msgid "IfsCompose Options"
-msgstr "Composizione"
+msgstr "Opzioni IfsCompose"
 
 #: plug-ins/ifscompose/ifscompose.c:1276
 msgid "Max. Memory:"
-msgstr ""
+msgstr "Memoria massima:"
 
 #: plug-ins/ifscompose/ifscompose.c:1303
 msgid "Subdivide:"
@@ -9836,25 +9798,24 @@ msgid "Spot Radius:"
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:1389
-#, fuzzy, c-format
+#, c-format
 msgid "Rendering IFS (%d/%d)..."
-msgstr "Rendering Tile..."
+msgstr "Rendering IFS (%d/%d)..."
 
 #. transfer the image to the drawable
 #: plug-ins/ifscompose/ifscompose.c:1408
-#, fuzzy, c-format
+#, c-format
 msgid "Copying IFS to image (%d/%d)..."
-msgstr "Composizione..."
+msgstr "Copia IFS sull'immagine (%d/%d)..."
 
 #: plug-ins/ifscompose/ifscompose.c:1547
-#, fuzzy, c-format
+#, c-format
 msgid "Transformation %s"
-msgstr "Trasformazione Cubistica"
+msgstr "Trasformazione %s"
 
 #: plug-ins/ifscompose/ifscompose.c:2673 plug-ins/ifscompose/ifscompose.c:2685
-#, fuzzy
 msgid "Open failed"
-msgstr "Apri file"
+msgstr "Apertura fallita"
 
 #: plug-ins/ifscompose/ifscompose.c:2680
 #, c-format
@@ -9862,14 +9823,12 @@ msgid "File '%s' doesn't seem to be an IFS Compose file."
 msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:2716
-#, fuzzy
 msgid "Save as IFS file"
-msgstr "Salva come GIF"
+msgstr "Salva come file IFS"
 
 #: plug-ins/ifscompose/ifscompose.c:2742
-#, fuzzy
 msgid "Open IFS file"
-msgstr "Apri file"
+msgstr "Apri file IFS"
 
 #: plug-ins/imagemap/imap_about.c:42
 msgid "Imagemap plug-in 2.0"
@@ -9888,14 +9847,12 @@ msgid "  Released under the GNU General Public License  "
 msgstr ""
 
 #: plug-ins/imagemap/imap_circle.c:64
-#, fuzzy
 msgid "C_ircle"
-msgstr "Cerchio"
+msgstr "Cerch_io"
 
 #: plug-ins/imagemap/imap_circle.c:265
-#, fuzzy
 msgid "Center _x:"
-msgstr "Centra"
+msgstr "Centra _x:"
 
 #: plug-ins/imagemap/imap_circle.c:270 plug-ins/imagemap/imap_circle.c:277
 #: plug-ins/imagemap/imap_circle.c:283 plug-ins/imagemap/imap_grid.c:255
@@ -9908,26 +9865,23 @@ msgid "pixels"
 msgstr ""
 
 #: plug-ins/imagemap/imap_circle.c:272
-#, fuzzy
 msgid "Center _y:"
-msgstr "Centra"
+msgstr "Centra _y:"
 
 #: plug-ins/imagemap/imap_cmd_clear.c:51
-#, fuzzy
 msgid "Clear"
-msgstr "Chiudi"
+msgstr "Pulisci"
 
 #: plug-ins/imagemap/imap_cmd_create.c:58
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:150
-#, fuzzy
 msgid "Create"
-msgstr "Centra"
+msgstr "Crea"
 
 #: plug-ins/imagemap/imap_cmd_cut.c:55
 #: plug-ins/imagemap/imap_cmd_cut_object.c:51
 #: plug-ins/imagemap/imap_toolbar.c:124
 msgid "Cut"
-msgstr ""
+msgstr "Taglia"
 
 #: plug-ins/imagemap/imap_cmd_delete.c:57
 #: plug-ins/imagemap/imap_selection.c:178 plug-ins/imagemap/imap_tools.c:172
@@ -9936,65 +9890,56 @@ msgstr "Elimina"
 
 #: plug-ins/imagemap/imap_cmd_delete_point.c:61
 #: plug-ins/imagemap/imap_polygon.c:725
-#, fuzzy
 msgid "Delete Point"
-msgstr "Elimina punti"
+msgstr "Elimina punto"
 
 #: plug-ins/imagemap/imap_cmd_edit_object.c:54
 msgid "Edit Object"
-msgstr ""
+msgstr "Modifica oggetto"
 
 #. Create the areas
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:116
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:146
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:250
-#, fuzzy
 msgid "Use Gimp Guides"
-msgstr "Ghigliottina..."
+msgstr "Usa le guide di Gimp"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:159
-#, fuzzy
 msgid "Al_ternate"
-msgstr "Alterna piastrelle"
+msgstr "Al_terna"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:164
-#, fuzzy
 msgid "A_ll"
-msgstr "Piastrella"
+msgstr "_Tutte"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:168
 msgid "Add Additional Guides"
-msgstr ""
+msgstr "Usa guide addizionali"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:177
-#, fuzzy
 msgid "L_eft Border"
-msgstr "Aggiungi Bordo"
+msgstr "Bordo _sinistro"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:181
-#, fuzzy
 msgid "_Right Border"
-msgstr "Bordo:"
+msgstr "Bordo _destro"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:185
-#, fuzzy
 msgid "_Upper Border"
-msgstr "Aggiungi Bordo"
+msgstr "Bordo _superiore"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:189
-#, fuzzy
 msgid "Lo_wer Border"
-msgstr "Aggiungi Bordo"
+msgstr "Bordo _inferiore"
 
 #: plug-ins/imagemap/imap_cmd_gimp_guides.c:198
 msgid "_Base URL:"
-msgstr ""
+msgstr "URL _base:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:72
 #: plug-ins/imagemap/imap_cmd_guides.c:138
-#, fuzzy
 msgid "Create Guides"
-msgstr "Crea nuova immagine"
+msgstr "Crea guide"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:111
 #, c-format
@@ -10014,23 +9959,21 @@ msgid "_Left Start at:"
 msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:180
-#, fuzzy
 msgid "_Top Start at:"
-msgstr "Frame iniziale:"
+msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:185
 #, fuzzy
 msgid "_Horz. Spacing:"
-msgstr "Spaziatura Tile"
+msgstr "Spaziatura _oriz.:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "_No. Across:"
 msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:197
-#, fuzzy
 msgid "_Vert. Spacing:"
-msgstr "Spaziatura Tile"
+msgstr "Spaziatura _vert.:"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:203
 msgid "No. _Down:"
@@ -10046,7 +9989,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:268
 msgid "Guides"
-msgstr ""
+msgstr "Guide"
 
 #: plug-ins/imagemap/imap_cmd_insert_point.c:62
 #: plug-ins/imagemap/imap_polygon.c:739
@@ -10057,7 +10000,7 @@ msgstr "Inserisci punti"
 #: plug-ins/imagemap/imap_cmd_object_down.c:55
 #: plug-ins/imagemap/imap_selection.c:169
 msgid "Move Down"
-msgstr ""
+msgstr "Sposta in basso"
 
 #: plug-ins/imagemap/imap_cmd_move_sash.c:68
 #, fuzzy
@@ -10066,7 +10009,7 @@ msgstr "Muovi Tracciato"
 
 #: plug-ins/imagemap/imap_cmd_move_selected.c:56
 msgid "Move Selected Objects"
-msgstr ""
+msgstr "Sposta gli oggetti selezionati"
 
 #: plug-ins/imagemap/imap_cmd_move_to_front.c:51
 #: plug-ins/imagemap/imap_toolbar.c:152
@@ -10076,9 +10019,8 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_move_up.c:53
 #: plug-ins/imagemap/imap_cmd_object_up.c:55
 #: plug-ins/imagemap/imap_selection.c:165
-#, fuzzy
 msgid "Move Up"
-msgstr "Muovi Tracciato"
+msgstr "Sposta in alto"
 
 #: plug-ins/imagemap/imap_cmd_paste.c:51 plug-ins/imagemap/imap_toolbar.c:130
 #, fuzzy
@@ -10112,69 +10054,60 @@ msgid "Send To Back"
 msgstr "Invia per e-mail"
 
 #: plug-ins/imagemap/imap_cmd_unselect.c:53
-#, fuzzy
 msgid "Unselect"
-msgstr "Seleziona"
+msgstr "Deseleziona"
 
 #: plug-ins/imagemap/imap_cmd_unselect_all.c:53
 msgid "Unselect All"
-msgstr ""
+msgstr "Deseleziona tutto"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:195
-#, fuzzy
 msgid "Link Type"
-msgstr "Tipo Media:"
+msgstr "Tipo collegamento"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:204
 msgid "_Web Site"
-msgstr ""
+msgstr "Sito _web"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:210
-#, fuzzy
 msgid "_Ftp Site"
-msgstr "Dimensione area"
+msgstr "Sito _ftp"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:216
-#, fuzzy
 msgid "_Gopher"
-msgstr "Sfera"
+msgstr "_Gopher"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:222
-#, fuzzy
 msgid "Ot_her"
-msgstr "Altri"
+msgstr "_Altri"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:228
-#, fuzzy
 msgid "F_ile"
-msgstr "File"
+msgstr "F_ile"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:234
 msgid "WAI_S"
-msgstr ""
+msgstr "WAI_S"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:240
-#, fuzzy
 msgid "Tel_net"
-msgstr "Seleziona"
+msgstr "Tel_net"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:246
 msgid "e-_mail"
-msgstr ""
+msgstr "e-_mail"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:252
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:254
-#, fuzzy
 msgid "Select HTML file"
-msgstr "Seleziona Campo dei Frame"
+msgstr "Seleziona file HTML"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:263
-#, fuzzy
 msgid "Relati_ve link"
-msgstr "Crea nuova immagine"
+msgstr "Collegamento relati_vo"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:269
 msgid "_Target frame name/ID: (optional - used for FRAMES only)"
@@ -10182,27 +10115,23 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_edit_area_info.c:272
 msgid "ALT te_xt: (optional)"
-msgstr ""
+msgstr "Testo ALT (opzionale):"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:275
-#, fuzzy
 msgid "_Link"
-msgstr "Lineare"
+msgstr "Col_legamento"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:309
-#, fuzzy
 msgid "Dimensions"
-msgstr "Vettore direzione"
+msgstr "Dimensioni"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:313
-#, fuzzy
 msgid "Pre_view"
-msgstr "Anteprima"
+msgstr "_Anteprima"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:351
-#, fuzzy
 msgid "_JavaScript"
-msgstr "Salva come PostScript"
+msgstr "_Javascript"
 
 #: plug-ins/imagemap/imap_edit_area_info.c:450
 #, fuzzy
@@ -10215,18 +10144,16 @@ msgid "Area #%d Settings"
 msgstr "Configurazioni Avanzate"
 
 #: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:64
-#, fuzzy
 msgid "Error opening file"
-msgstr "Errore di apertura file \"%s\" in lettura!\n"
+msgstr "Errore di apertura file"
 
 #: plug-ins/imagemap/imap_file.c:67
 msgid "Load Imagemap"
-msgstr ""
+msgstr "Carica imagemap"
 
 #: plug-ins/imagemap/imap_file.c:93
-#, fuzzy
 msgid "File exists!"
-msgstr "Altezza Tile"
+msgstr "Il file esiste!"
 
 #: plug-ins/imagemap/imap_file.c:98
 msgid ""
