@@ -43,7 +43,7 @@
 	
 2000-12-16  Seth Burgess <sjburges@gimp.org>
 	
-	* plug-ins/common/colortoalpha.c: Change to accecpt RGB input 
+	* plug-ins/common/colortoalpha.c: Change to accept RGB input 
 	(automatically add an alpha channel if needed).
 
 2000-12-16  Sven Neumann  <sven@gimp.org>
