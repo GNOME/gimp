@@ -284,6 +284,15 @@ Enums and definitions.
 @GIMP_REPEAT_SAWTOOTH: 
 @GIMP_REPEAT_TRIANGULAR: 
 
+<!-- ##### ENUM GimpRotationType ##### -->
+<para>
+
+</para>
+
+@GIMP_ROTATE_90: 
+@GIMP_ROTATE_180: 
+@GIMP_ROTATE_270: 
+
 <!-- ##### ENUM GimpRunMode ##### -->
 <para>
 

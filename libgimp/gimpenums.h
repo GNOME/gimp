@@ -245,6 +245,13 @@ typedef enum
 
 typedef enum
 {
+  GIMP_ROTATE_90,
+  GIMP_ROTATE_180,
+  GIMP_ROTATE_270
+} GimpRotationType;
+
+typedef enum
+{
   GIMP_RUN_INTERACTIVE,
   GIMP_RUN_NONINTERACTIVE,
   GIMP_RUN_WITH_LAST_VALS

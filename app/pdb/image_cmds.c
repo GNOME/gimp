@@ -41,6 +41,7 @@
 #include "core/gimpimage-flip.h"
 #include "core/gimpimage-merge.h"
 #include "core/gimpimage-resize.h"
+#include "core/gimpimage-rotate.h"
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
@@ -65,6 +66,7 @@ static ProcRecord image_resize_proc;
 static ProcRecord image_scale_proc;
 static ProcRecord image_crop_proc;
 static ProcRecord image_flip_proc;
+static ProcRecord image_rotate_proc;
 static ProcRecord image_get_layers_proc;
 static ProcRecord image_get_channels_proc;
 static ProcRecord image_get_active_drawable_proc;
@@ -128,6 +130,7 @@ register_image_procs (Gimp *gimp)
   procedural_db_register (gimp, &image_scale_proc);
   procedural_db_register (gimp, &image_crop_proc);
   procedural_db_register (gimp, &image_flip_proc);
+  procedural_db_register (gimp, &image_rotate_proc);
   procedural_db_register (gimp, &image_get_layers_proc);
   procedural_db_register (gimp, &image_get_channels_proc);
   procedural_db_register (gimp, &image_get_active_drawable_proc);
@@ -930,7 +933,7 @@ static ProcRecord image_flip_proc =
 {
   "gimp_image_flip",
   "Flips the image horizontally or vertically.",
-  "This procedure flips (mirrors) the images.",
+  "This procedure flips (mirrors) the image.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
@@ -940,6 +943,60 @@ static ProcRecord image_flip_proc =
   0,
   NULL,
   { { image_flip_invoker } }
+};
+
+static Argument *
+image_rotate_invoker (Gimp     *gimp,
+                      Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage;
+  gint32 rotate_type;
+
+  gimage = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  rotate_type = args[1].value.pdb_int;
+  if (rotate_type < GIMP_ROTATE_90 || rotate_type > GIMP_ROTATE_270)
+    success = FALSE;
+
+  if (success)
+    {
+      gimp_image_rotate (gimage, rotate_type, NULL, NULL);
+    }
+
+  return procedural_db_return_args (&image_rotate_proc, success);
+}
+
+static ProcArg image_rotate_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "image",
+    "The image"
+  },
+  {
+    GIMP_PDB_INT32,
+    "rotate_type",
+    "Angle of rotation: GIMP_ROTATE_90 (0), GIMP_ROTATE_180 (1), GIMP_ROTATE_270 (2)"
+  }
+};
+
+static ProcRecord image_rotate_proc =
+{
+  "gimp_image_rotate",
+  "Rotates the image by the spacified degrees.",
+  "This procedure rotates the image.",
+  "Michael Natterer",
+  "Michael Natterer",
+  "2003",
+  GIMP_INTERNAL,
+  2,
+  image_rotate_inargs,
+  0,
+  NULL,
+  { { image_rotate_invoker } }
 };
 
 static Argument *

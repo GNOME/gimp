@@ -1,3 +1,17 @@
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.h: export enum GimpRotationType to libgimp.
+
+	* tools/pdbgen/pdb/image.pdb: added gimp_image_rotate() PDB wrapper.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpenums.h
+	* libgimp/gimpimage_pdb.[ch]
+	* plug-ins/pygimp/gimpenums.py
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
 2003-12-08  Manish Singh  <yosh@gimp.org>
 
 	* Makefile.am

@@ -206,6 +206,10 @@ init_generated_constants (void)
   setvar (cintern ("REPEAT-SAWTOOTH"), flocons (1), NIL);
   setvar (cintern ("REPEAT-TRIANGULAR"), flocons (2), NIL);
 
+  setvar (cintern ("ROTATE-90"), flocons (0), NIL);
+  setvar (cintern ("ROTATE-180"), flocons (1), NIL);
+  setvar (cintern ("ROTATE-270"), flocons (2), NIL);
+
   setvar (cintern ("RUN-INTERACTIVE"), flocons (0), NIL);
   setvar (cintern ("RUN-NONINTERACTIVE"), flocons (1), NIL);
   setvar (cintern ("RUN-WITH-LAST-VALS"), flocons (2), NIL);

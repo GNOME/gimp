@@ -317,6 +317,14 @@ package Gimp::CodeGen::enums;
 		       GIMP_ORIENTATION_VERTICAL => '1',
 		       GIMP_ORIENTATION_UNKNOWN => '2' }
 	},
+    GimpRotationType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_ROTATE_90 GIMP_ROTATE_180 GIMP_ROTATE_270) ],
+	  mapping => { GIMP_ROTATE_90 => '0',
+		       GIMP_ROTATE_180 => '1',
+		       GIMP_ROTATE_270 => '2' }
+	},
     GimpRepeatMode =>
 	{ contig => 1,
 	  header => 'core/core-enums.h',

@@ -100,6 +100,16 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_rotate ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@rotate_type: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_resize ##### -->
 <para>
 

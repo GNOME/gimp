@@ -1,3 +1,9 @@
+2003-12-09  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpenums.sgml
+	* libgimp/tmpl/gimpimage.sgml: added gimp_image_rotate().
+
 2003-12-08  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-sections.txt

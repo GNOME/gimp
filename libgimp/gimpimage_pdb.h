@@ -54,6 +54,8 @@ gboolean          gimp_image_crop                     (gint32                ima
 						       gint                  offy);
 gboolean          gimp_image_flip                     (gint32                image_ID,
 						       GimpOrientationType   flip_type);
+gboolean          gimp_image_rotate                   (gint32                image_ID,
+						       GimpRotationType      rotate_type);
 gint*             gimp_image_get_layers               (gint32                image_ID,
 						       gint                 *num_layers);
 gint*             gimp_image_get_channels             (gint32                image_ID,

@@ -437,7 +437,7 @@ gimp_image_crop (gint32 image_ID,
  *
  * Flips the image horizontally or vertically.
  *
- * This procedure flips (mirrors) the images.
+ * This procedure flips (mirrors) the image.
  *
  * Returns: TRUE on success.
  */
@@ -453,6 +453,38 @@ gimp_image_flip (gint32              image_ID,
 				    &nreturn_vals,
 				    GIMP_PDB_IMAGE, image_ID,
 				    GIMP_PDB_INT32, flip_type,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_rotate:
+ * @image_ID: The image.
+ * @rotate_type: Angle of rotation.
+ *
+ * Rotates the image by the spacified degrees.
+ *
+ * This procedure rotates the image.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_image_rotate (gint32           image_ID,
+		   GimpRotationType rotate_type)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_image_rotate",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, image_ID,
+				    GIMP_PDB_INT32, rotate_type,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
