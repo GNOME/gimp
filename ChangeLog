@@ -2,7 +2,7 @@
 
 	* app/text/gimptextlayout.c (gimp_text_layout_position): fixed
 	text positioning for fonts where glyphs extend the logical
-	rectangle.
+	rectangle (fixes bug #132495).
 
 2004-01-25  Sven Neumann  <sven@gimp.org>
 
