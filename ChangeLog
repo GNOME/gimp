@@ -1,3 +1,11 @@
+Sun Feb 21 22:37:56 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* libgimp/Makefile.am
+	* libgimp/gimpentry.[ch]: removed
+	* libgimp/gimpsizeentry.[ch]: new files
+	Moved the gimpentry stuff to gimpsizeentry and changed it to use
+	the new gimpunit functionality.
+
 Sun Feb 21 20:43:00 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* libgimp/Makefile.am

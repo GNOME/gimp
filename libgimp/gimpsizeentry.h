@@ -20,6 +20,7 @@
 #define __GIMP_ENTRY_H__
 
 #include <gtk/gtk.h>
+#include "gimpunit.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -31,12 +32,6 @@ extern "C" {
 #define GIMP_IS_SIZE_ENTRY(obj)       (GTK_CHECK_TYPE (obj, GIMP_TYPE_SIZE_ENTRY)
 #define GIMP_IS_ENTRY_CLASS(klass)    (GTK_CHECK_CLASS_TYPE ((klass), GTK_TYPE_ENTRY))
 
-typedef enum
-{
-  PIXELS = 0,
-  INCHES = 1,
-  CM     = 2
-} GSizeUnit;
 
 typedef struct _GimpSizeEntry       GimpSizeEntry;
 typedef struct _GimpSizeEntryClass  GimpSizeEntryClass;
@@ -46,8 +41,8 @@ struct _GimpSizeEntry
   GtkHBox hbox;
       
   GtkWidget *spinbutton;
-  GtkWidget *optionmenu;
-  GSizeUnit  unit;
+  GtkWidget *unitmenu;
+  GUnit      unit;
   gfloat     resolution;
   guint      positive_only; 
 };
@@ -59,22 +54,25 @@ struct _GimpSizeEntryClass
   void (* gimp_size_entry) (GimpSizeEntry *gse);
 };
 
-guint          gimp_size_entry_get_type        (void);
-GtkWidget*     gimp_size_entry_new             (gfloat value, 
-						GSizeUnit unit,
-						gfloat resolution,
-						guint positive_only);
-void           gimp_size_entry_set_value       (GimpSizeEntry *gse, 
-						gfloat value);
-void           gimp_size_entry_set_value_as_pixels (GimpSizeEntry *gse, 
-						gint pixels);
-gfloat         gimp_size_entry_get_value       (GimpSizeEntry *gse);
-gint           gimp_size_entry_get_value_as_pixels (GimpSizeEntry *gse);
-void           gimp_size_entry_set_unit        (GimpSizeEntry *gse, 
-						GSizeUnit unit);
-GSizeUnit      gimp_size_entry_get_unit        (GimpSizeEntry *gse);
-void           gimp_size_entry_set_resolution  (GimpSizeEntry *gse, 
-						gfloat resolution);
+guint       gimp_size_entry_get_type        (void);
+GtkWidget*  gimp_size_entry_new             (gfloat value, 
+					     GUnit unit,
+					     gfloat resolution,
+					     guint positive_only);
+void        gimp_size_entry_set_value       (GimpSizeEntry *gse, 
+					     gfloat value);
+void        gimp_size_entry_set_value_as_pixels (GimpSizeEntry *gse, 
+						 gint pixels);
+gfloat      gimp_size_entry_get_value       (GimpSizeEntry *gse);
+gint        gimp_size_entry_get_value_as_pixels (GimpSizeEntry *gse);
+void        gimp_size_entry_set_unit        (GimpSizeEntry *gse, 
+					     GUnit unit);
+GUnit       gimp_size_entry_get_unit        (GimpSizeEntry *gse);
+void        gimp_size_entry_set_resolution  (GimpSizeEntry *gse, 
+					     gfloat resolution);
+            /* This function does NOT change the value of the size_entry
+               for you! You have to take care of that yourself.           */
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

@@ -23,6 +23,8 @@ libgimpi_a_SOURCES = \
 	gimpmatrix.h	\
 	gimpprotocol.c	\
 	gimpprotocol.h	\
+	gimpsizeentry.c	\
+	gimpsizeentry.h	\
 	gimpunit.c      \
 	gimpunit.h      \
 	gimpunitmenu.c  \
@@ -67,7 +69,6 @@ libgimp_la_SOURCES = \
 	parasiteP.h
 
 libgimpui_la_SOURCES = \
-	gimpentry.c		\
 	gimpmenu.c		\
 	gimpbrushmenu.c		\
 	gimpgradientmenu.c 	\
@@ -76,12 +77,12 @@ libgimpui_la_SOURCES = \
 gimpinclude_HEADERS = \
 	color_selector.h	\
 	gimp.h			\
-	gimpentry.h		\
 	gimpenums.h		\
 	gimpfeatures.h		\
 	gimpmatrix.h		\
 	gimpmenu.h		\
 	gimpmodule.h		\
+	gimpsizeentry.h		\
 	gimpui.h		\
 	gimpunit.h              \
 	gimpunitmenu.h          \

@@ -1,14 +1,14 @@
-/* LIBGIMP - The GIMP Library                                                   
+/* LIBGIMP - The GIMP Library 
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball                
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
  * License as published by the Free Software Foundation; either
- * version 2 of the License, or (at your option) any later version.             
- *                                                                              
- * This library is distributed in the hope that it will be useful,              
- * but WITHOUT ANY WARRANTY; without even the implied warranty of               
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU            
+ * version 2 of the License, or (at your option) any later version.
+ * 
+ * This library is distributed in the hope that it will be useful, 
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Library General Public
@@ -19,28 +19,15 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "gimpentry.h"
+#include "gimpsizeentry.h"
+#include "gimpunitmenu.h"
+
 
 #define SIZE_MAX_VALUE 500000.0     /* is that enough ?? */
-#define NUM_UNITS 3
 
-static float gse_unit_factor[] = 
-{
-  1.0,
-  1.0,
-  2.54
-};
-
-static gchar* gse_unit_string[] =
-{
-  "px",
-  "in",
-  "cm"
-};
 
 static void gimp_size_entry_unit_callback (GtkWidget *widget, gpointer data);
 static void gimp_size_entry_value_callback (GtkWidget *widget, gpointer data);
-
 
 enum {
   GSE_VALUE_CHANGED_SIGNAL,
@@ -86,11 +73,8 @@ gimp_size_entry_init (GimpSizeEntry *gse)
 {
   
   GtkWidget     *spinbutton;
-  GtkWidget     *menu;
-  GtkWidget     *menuitem;
-  GtkWidget     *optionmenu;
+  GtkWidget     *unitmenu;
   GtkAdjustment *adj;
-  guint          i;
 
   adj = (GtkAdjustment *) gtk_adjustment_new (0.0, -SIZE_MAX_VALUE, SIZE_MAX_VALUE,
                                               1.0, 50.0, 0.0);
@@ -99,28 +83,17 @@ gimp_size_entry_init (GimpSizeEntry *gse)
   gtk_widget_set_usize (spinbutton, 75, 0);
   gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
 		      (GtkSignalFunc) gimp_size_entry_value_callback, gse);
-
   gtk_box_pack_start (GTK_BOX(gse), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
-  menu = gtk_menu_new();
-  for (i=0; i<NUM_UNITS; i++)
-    {
-      menuitem = gtk_menu_item_new_with_label (gse_unit_string[i]);
-      gtk_menu_append (GTK_MENU (menu), menuitem);
-      gtk_signal_connect (GTK_OBJECT (menuitem), "activate",
-			  (GtkSignalFunc) gimp_size_entry_unit_callback, gse);
-      gtk_widget_show(menuitem);
-      gtk_object_set_data (GTK_OBJECT (menuitem), "gimp_size_entry_unit", (gpointer)i);
-    } 
-  optionmenu = gtk_option_menu_new();
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), menu);
-
-  gtk_box_pack_start (GTK_BOX(gse), optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show(optionmenu);
+  unitmenu = gimp_unit_menu_new("%a", UNIT_PIXEL, TRUE, FALSE);
+  gtk_signal_connect (GTK_OBJECT (unitmenu), "unit_changed",
+		      (GtkSignalFunc) gimp_size_entry_unit_callback, gse);
+  gtk_box_pack_start (GTK_BOX(gse), unitmenu, FALSE, FALSE, 0);
+  gtk_widget_show(unitmenu);
 
   gse->spinbutton = spinbutton;
-  gse->optionmenu = optionmenu;
+  gse->unitmenu = unitmenu;
   gse->resolution = 72;
 }
 
@@ -151,10 +124,10 @@ gimp_size_entry_get_type ()
 
 
 GtkWidget*
-gimp_size_entry_new (gfloat    value, 
-		     GSizeUnit unit, 
-		     gfloat    resolution,
-		     guint     positive_only)
+gimp_size_entry_new (gfloat value, 
+		     GUnit  unit, 
+		     gfloat resolution,
+		     guint  positive_only)
 {
   GimpSizeEntry *gse;
   float          max;
@@ -168,14 +141,14 @@ gimp_size_entry_new (gfloat    value,
   gse->resolution = resolution;
   gse->positive_only = positive_only;
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (gse->optionmenu), unit);
+  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (gse->unitmenu), unit);
   
   if ((positive_only == TRUE) && (value <= 0.0))
     value = 0.0;
  
-  if (unit != PIXELS)
+  if (unit) /* unit != UNIT_PIXEL */
     {
-      max = SIZE_MAX_VALUE / gse->resolution * gse_unit_factor[unit];
+      max = SIZE_MAX_VALUE / gse->resolution * gimp_unit_get_factor(unit);
       adj = (GtkAdjustment *) gtk_adjustment_new (0.0, 
 						  ((positive_only ==TRUE) ? 0.0 : -max),
 						  max, 0.1, 5.0, 0.0);
@@ -210,10 +183,10 @@ gimp_size_entry_set_value_as_pixels (GimpSizeEntry *gse,
 {
   gfloat value;
 
-  if (gse->unit == PIXELS)
-    value = (float)pixels;
+  if (gse->unit) /* unit != UNIT_PIXEL */
+    value = (float)pixels / gse->resolution * gimp_unit_get_factor(gse->unit); 
   else
-    value = (float)pixels / gse->resolution * gse_unit_factor[gse->unit]; 
+    value = (float)pixels;
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (gse->spinbutton), value);
 }
@@ -231,8 +204,8 @@ gimp_size_entry_get_value_as_pixels (GimpSizeEntry *gse)
   gfloat value;
 
   value = gtk_spin_button_get_value_as_float (GTK_SPIN_BUTTON (gse->spinbutton));
-  if (gse->unit != PIXELS)
-    value = value * gse->resolution / gse_unit_factor[gse->unit]; 
+  if (gse->unit) /* unit != UNIT_PIXEL */
+    value = value * gse->resolution / gimp_unit_get_factor(gse->unit); 
 
   if (value - floor (value) < ceil (value) - value)
     return floor (value);
@@ -242,14 +215,12 @@ gimp_size_entry_get_value_as_pixels (GimpSizeEntry *gse)
 
 void
 gimp_size_entry_set_unit (GimpSizeEntry *gse,
-			  GSizeUnit new_unit)
+			  GUnit new_unit)
 {
   gfloat         value;
   gfloat         max;
+  gfloat         new_factor;
   GtkAdjustment *adj;
-
-  if (new_unit >= NUM_UNITS)
-    new_unit = PIXELS;
 
   if (new_unit == gse->unit) return;
   
@@ -257,34 +228,36 @@ gimp_size_entry_set_unit (GimpSizeEntry *gse,
 
   gtk_signal_handler_block_by_data (GTK_OBJECT(gse->spinbutton), gse);
   
-  if (new_unit == PIXELS)
+  if (new_unit) /* unit != UNIT_PIXEL */
+    {
+      new_factor = gimp_unit_get_factor (new_unit);
+      max = SIZE_MAX_VALUE / gse->resolution * new_factor;
+      adj = (GtkAdjustment *)gtk_adjustment_new (0.0, 
+						 ((gse->positive_only == TRUE) ? 0.0 : -max),
+						 max, 0.1, 5.0, 0.0);
+      gtk_spin_button_configure (GTK_SPIN_BUTTON (gse->spinbutton), adj, 0.01, 2);
+      value = value * new_factor / gimp_unit_get_factor(gse->unit);
+      if (gse->unit == UNIT_PIXEL)
+	value = value / gse->resolution;
+    }
+  else
     {
       max = SIZE_MAX_VALUE;
       adj = (GtkAdjustment *)gtk_adjustment_new (0.0, 
 						 ((gse->positive_only == TRUE) ? 0.0 : -max),
 						 max, 0.1, 5.0, 0.0);
       gtk_spin_button_configure (GTK_SPIN_BUTTON (gse->spinbutton), adj, 1.0, 0);
-      value = value * gse->resolution / gse_unit_factor[gse->unit];
+      value = value * gse->resolution / gimp_unit_get_factor(gse->unit);
     }
-  else
-    {
-      max = SIZE_MAX_VALUE / gse->resolution * gse_unit_factor[new_unit];
-      adj = (GtkAdjustment *)gtk_adjustment_new (0.0, 
-						 ((gse->positive_only == TRUE) ? 0.0 : -max),
-						 max, 0.1, 5.0, 0.0);
-      gtk_spin_button_configure (GTK_SPIN_BUTTON (gse->spinbutton), adj, 0.01, 2);
-      value = value * gse_unit_factor[new_unit] / gse_unit_factor[gse->unit];
-      if (gse->unit == PIXELS)
-	value = value / gse->resolution;
-    }
+
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (gse->spinbutton), value);
   gtk_signal_handler_unblock_by_data (GTK_OBJECT(gse->spinbutton), gse);
 
-  gtk_option_menu_set_history (GTK_OPTION_MENU (gse->optionmenu), new_unit);
+  gimp_unit_menu_set_unit (GIMP_UNIT_MENU (gse->unitmenu), new_unit);
   gse->unit = new_unit;
 }
 
-GSizeUnit
+GUnit
 gimp_size_entry_get_unit (GimpSizeEntry *gse)
 {
   return (gse->unit);
@@ -309,15 +282,11 @@ gimp_size_entry_unit_callback (GtkWidget *widget,
 				gpointer   data)
 {
   GimpSizeEntry *gse;
-  guint          new_unit;
 
   gse = data;
-  new_unit = (guint) gtk_object_get_data (GTK_OBJECT (widget), "gimp_size_entry_unit"); 
   
-  if (gse->unit == new_unit)
-    return;
-
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY(gse), new_unit);
+  gse->unit = gimp_unit_menu_get_unit (GIMP_UNIT_MENU(gse->unitmenu));
+  
   gtk_signal_emit (GTK_OBJECT (gse), gimp_size_entry_signals[GSE_UNIT_CHANGED_SIGNAL]);
 }
 
