@@ -44,7 +44,6 @@
 
 
 #define GIMP_DEVICE_MANAGER_DATA_KEY "gimp-device-manager"
-#define GIMP_DEVICE_MANAGER_DATA_KEY "gimp-device-manager"
 
 
 typedef struct _GimpDeviceManager GimpDeviceManager;

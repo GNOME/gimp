@@ -427,6 +427,9 @@ gimp_device_info_save (GimpDeviceInfo *device_info,
 	case GDK_AXIS_YTILT:
 	  axis_type = "ytilt";
 	  break;
+	case GDK_AXIS_WHEEL:
+	  axis_type = "wheel";
+	  break;
 	}
       fprintf (fp, " %s",axis_type);
     }
