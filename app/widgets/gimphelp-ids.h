@@ -353,8 +353,7 @@
 
 #define GIMP_HELP_PREFS_DIALOG                    "gimp-prefs-dialog"
 #define GIMP_HELP_PREFS_NEW_IMAGE                 "gimp-prefs-new-image"
-#define GIMP_HELP_PREFS_NEW_IMAGE_COMMENT         "gimp-prefs-new-image-comment"
-#define GIMP_HELP_PREFS_NEW_IMAGE_GRID            "gimp-prefs-new-image-grid"
+#define GIMP_HELP_PREFS_DEFAULT_GRID              "gimp-prefs-default-grid"
 #define GIMP_HELP_PREFS_INTERFACE                 "gimp-prefs-interface"
 #define GIMP_HELP_PREFS_HELP                      "gimp-prefs-help"
 #define GIMP_HELP_PREFS_TOOL_OPTIONS              "gimp-prefs-tool-options"
@@ -372,6 +371,7 @@
 #define GIMP_HELP_PREFS_FOLDERS_PATTERNS          "gimp-prefs-folders-patterns"
 #define GIMP_HELP_PREFS_FOLDERS_PALETTES          "gimp-prefs-folders-palettes"
 #define GIMP_HELP_PREFS_FOLDERS_GRADIENTS         "gimp-prefs-folders-gradients"
+#define GIMP_HELP_PREFS_FOLDERS_FONTS             "gimp-prefs-folders-fonts"
 #define GIMP_HELP_PREFS_FOLDERS_PLUG_INS          "gimp-prefs-folders-plug-ins"
 #define GIMP_HELP_PREFS_FOLDERS_SCRIPTS           "gimp-prefs-folders-scripts"
 #define GIMP_HELP_PREFS_FOLDERS_MODULES           "gimp-prefs-folders-modules"

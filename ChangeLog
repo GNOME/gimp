@@ -1,3 +1,11 @@
+2004-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimphelp-ids.h: updated help IDs for new/reordered
+	pages in the prefs dialog.
+
+	* app/gui/preferences-dialog.c (prefs_dialog_new): changed
+	accordingly.
+
 2004-01-28  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call): validate
