@@ -1,3 +1,12 @@
+2003-07-20  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimpcolor/gimpcolor.def 
+	* libgimpmath/gimpmath.def: Updates.
+
+	* libgimp/gimp.c (gimp_config): [Win32] Use gimp_tile_width() and
+	_height() instead of now nonexistent _gimp_tile_width and _height
+	variables.
+
 2003-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext-vectors.c: more work on the framework.
