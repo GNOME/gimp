@@ -1,4 +1,4 @@
-/* curve_bend plugin for the GIMP (tested with GIMP 1.1.9, requires gtk+ 1.2) */
+/* curve_bend plugin for the GIMP (tested with GIMP 1.1.17, requires gtk+ 1.2) */
 
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -19,6 +19,9 @@
  */
 
 /* Revision history
+ *  (2000/02/16)  v1.1.17 hof: undo bugfix (#6012)
+ *                             don't call gimp_undo_push_group_end 
+ *                             after gimp_displays_flush
  *  (1999/09/13)  v1.01  hof: PDB-calls updated for gimp 1.1.9
  *  (1999/05/10)  v1.0   hof: first public release
  *  (1999/04/23)  v0.0   hof: coding started,
@@ -40,7 +43,7 @@
 
 /* Defines */
 #define PLUG_IN_NAME        "plug_in_curve_bend"
-#define PLUG_IN_VERSION     "v1.01 (1999/09/13)"
+#define PLUG_IN_VERSION     "v1.1.17 (2000/02/16)"
 #define PLUG_IN_IMAGE_TYPES "RGB*, GRAY*"
 #define PLUG_IN_AUTHOR      "Wolfgang Hofer (hof@hotbot.com)"
 #define PLUG_IN_COPYRIGHT   "Wolfgang Hofer"
@@ -914,16 +917,20 @@ run (char    *name,           /* name of plugin */
       status = STATUS_EXECUTION_ERROR;       /* dialog ended with cancel button */
     }
 
+    gimp_undo_push_group_end (l_image_id);
+
     /* If run mode is interactive, flush displays, else (script) don't
        do it, as the screen updates would make the scripts slow */
     if (run_mode != RUN_NONINTERACTIVE)
       gimp_displays_flush ();
 
   }
+  else
+  {
+    gimp_undo_push_group_end (l_image_id);
+  }
   values[0].data.d_status = status;
   values[1].data.d_int32 = l_bent_layer_id;   /* return the id of handled layer */
-
-  gimp_undo_push_group_end (l_image_id);
 
   if (gb_debug) 
     printf ("end run curve_bend plugin\n");
@@ -3595,7 +3602,15 @@ p_main_bend (BenderDialog *cd,
    
    /* always copy original_drawable to a tmp src_layer */  
    l_tmp_layer_id = gimp_layer_copy(original_drawable->id);
-   
+   /* set layer invisible and dummyname and 
+    * add at top of the image while working
+    * (for the case of undo the gimp must know,
+    *  that the layer was part of the image)
+    */
+   gimp_image_add_layer (l_image_id, l_tmp_layer_id, 0);
+   gimp_layer_set_visible(l_tmp_layer_id, FALSE);
+   gimp_layer_set_name(l_tmp_layer_id, "curve_bend_dummylayer");
+    
    if(gb_debug) printf("p_main_bend  l_tmp_layer_id %d\n", (int)l_tmp_layer_id);   
    
    if(cd->rotation != 0.0)

@@ -1,3 +1,10 @@
+Wed Feb 16 17:36:43 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* PLUGIN_MAINTAINERS: updated file sizes
+
+	* plug-ins/common/curve_bend.c: applied patch from author
+	Wolfgang Hofer that fixes bug #6012.
+
 2000-02-16  David Monniaux  <monniaux@miaou.ens.fr>
 
 	* plug-ins/gap/gap_mov_dialog.c: fixed typos in dialog strings.

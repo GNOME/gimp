@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.17\n"
-"POT-Creation-Date: 2000-02-14 18:46+0100\n"
+"POT-Creation-Date: 2000-02-16 17:02+0100\n"
 "PO-Revision-Date: 2000-02-14 18:57+0100\n"
 "Last-Translator: Knut Neumann <knut.neumann@uni-duesseldorf.de>\n"
 "Language-Team: German <de@li.org>\n"
@@ -52,7 +52,7 @@ msgstr "Über"
 #: plug-ins/common/colorify.c:333 plug-ins/common/colortoalpha.c:418
 #: plug-ins/common/compose.c:785 plug-ins/common/convmatrix.c:810
 #: plug-ins/common/csource.c:670 plug-ins/common/cubism.c:316
-#: plug-ins/common/curve_bend.c:1380 plug-ins/common/decompose.c:862
+#: plug-ins/common/curve_bend.c:1387 plug-ins/common/decompose.c:862
 #: plug-ins/common/deinterlace.c:278 plug-ins/common/depthmerge.c:661
 #: plug-ins/common/despeckle.c:638 plug-ins/common/destripe.c:572
 #: plug-ins/common/diffraction.c:565 plug-ins/common/displace.c:306
@@ -86,8 +86,8 @@ msgstr "Über"
 #: plug-ins/common/sparkle.c:356 plug-ins/common/spheredesigner.c:2236
 #: plug-ins/common/spread.c:380 plug-ins/common/sunras.c:1593
 #: plug-ins/common/tga.c:1463 plug-ins/common/threshold_alpha.c:274
-#: plug-ins/common/tiff.c:1448 plug-ins/common/tile.c:397
-#: plug-ins/common/tileit.c:405 plug-ins/common/unsharp.c:796
+#: plug-ins/common/tiff.c:1468 plug-ins/common/tile.c:397
+#: plug-ins/common/tileit.c:405 plug-ins/common/unsharp.c:794
 #: plug-ins/common/video.c:2175 plug-ins/common/vpropagate.c:942
 #: plug-ins/common/warp.c:443 plug-ins/common/waves.c:356
 #: plug-ins/common/whirlpinch.c:829 plug-ins/common/wind.c:703
@@ -115,7 +115,7 @@ msgstr "Über"
 #: plug-ins/script-fu/script-fu-server.c:559 plug-ins/sel2path/sel2path.c:347
 #: plug-ins/sgi/sgi.c:655 plug-ins/sinus/sinus.c:753
 #: plug-ins/struc/struc.c:261 plug-ins/webbrowser/webbrowser.c:286
-#: plug-ins/xjt/xjt.c:747
+#: plug-ins/xjt/xjt.c:796
 msgid "OK"
 msgstr "OK"
 
@@ -134,7 +134,7 @@ msgstr "OK"
 #: plug-ins/common/checkerboard.c:361 plug-ins/common/colorify.c:335
 #: plug-ins/common/colortoalpha.c:420 plug-ins/common/compose.c:787
 #: plug-ins/common/convmatrix.c:814 plug-ins/common/csource.c:672
-#: plug-ins/common/cubism.c:318 plug-ins/common/curve_bend.c:1382
+#: plug-ins/common/cubism.c:318 plug-ins/common/curve_bend.c:1389
 #: plug-ins/common/decompose.c:864 plug-ins/common/deinterlace.c:280
 #: plug-ins/common/depthmerge.c:663 plug-ins/common/despeckle.c:640
 #: plug-ins/common/destripe.c:574 plug-ins/common/diffraction.c:567
@@ -169,8 +169,8 @@ msgstr "OK"
 #: plug-ins/common/sparkle.c:358 plug-ins/common/spheredesigner.c:2240
 #: plug-ins/common/spread.c:382 plug-ins/common/sunras.c:1595
 #: plug-ins/common/tga.c:1465 plug-ins/common/threshold_alpha.c:276
-#: plug-ins/common/tiff.c:1450 plug-ins/common/tile.c:399
-#: plug-ins/common/tileit.c:407 plug-ins/common/unsharp.c:798
+#: plug-ins/common/tiff.c:1470 plug-ins/common/tile.c:399
+#: plug-ins/common/tileit.c:407 plug-ins/common/unsharp.c:796
 #: plug-ins/common/video.c:2177 plug-ins/common/vpropagate.c:944
 #: plug-ins/common/warp.c:445 plug-ins/common/waves.c:358
 #: plug-ins/common/whirlpinch.c:831 plug-ins/common/wind.c:760
@@ -198,7 +198,7 @@ msgstr "OK"
 #: plug-ins/script-fu/script-fu-server.c:568 plug-ins/sel2path/sel2path.c:356
 #: plug-ins/sgi/sgi.c:657 plug-ins/sinus/sinus.c:755
 #: plug-ins/struc/struc.c:263 plug-ins/webbrowser/webbrowser.c:295
-#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:749
+#: plug-ins/winsnap/winsnap.c:906 plug-ins/xjt/xjt.c:798
 msgid "Cancel"
 msgstr "Abbrechen"
 
@@ -277,7 +277,7 @@ msgstr "Kosinus"
 #: plug-ins/FractalExplorer/Dialogs.c:819 plug-ins/common/CML_explorer.c:167
 #: plug-ins/common/align_layers.c:447 plug-ins/common/align_layers.c:480
 #: plug-ins/common/ps.c:2385 plug-ins/common/ps.c:2398
-#: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1469
+#: plug-ins/common/psp.c:460 plug-ins/common/tiff.c:1489
 #: plug-ins/fits/fits.c:1048 plug-ins/gap/gap_mov_dialog.c:286
 msgid "None"
 msgstr "Kein"
@@ -447,7 +447,7 @@ msgstr "Über AlienMap2"
 #. Preview
 #: plug-ins/FractalExplorer/Dialogs.c:324 plug-ins/common/CML_explorer.c:1214
 #: plug-ins/common/blinds.c:362 plug-ins/common/bumpmap.c:828
-#: plug-ins/common/curve_bend.c:1508 plug-ins/common/destripe.c:597
+#: plug-ins/common/curve_bend.c:1515 plug-ins/common/destripe.c:597
 #: plug-ins/common/emboss.c:762 plug-ins/common/exchange.c:319
 #: plug-ins/common/fractaltrace.c:759 plug-ins/common/nlfilt.c:586
 #: plug-ins/common/polar.c:963 plug-ins/common/ps.c:2597
@@ -601,7 +601,7 @@ msgid "Load a fractal from file"
 msgstr "Fraktal aus Datei laden"
 
 #: plug-ins/FractalExplorer/Dialogs.c:544 plug-ins/common/convmatrix.c:812
-#: plug-ins/common/curve_bend.c:1372 plug-ins/common/iwarp.c:967
+#: plug-ins/common/curve_bend.c:1379 plug-ins/common/iwarp.c:967
 #: plug-ins/common/spheredesigner.c:2238 plug-ins/common/tileit.c:486
 #: plug-ins/fp/fp_gtk.c:884 plug-ins/gimpressionist/preview.c:124
 #: plug-ins/ifscompose/ifscompose.c:804
@@ -1064,7 +1064,7 @@ msgid "Depth:"
 msgstr "Tiefe:"
 
 #: plug-ins/Lighting/lighting_ui.c:633 plug-ins/common/threshold_alpha.c:297
-#: plug-ins/common/unsharp.c:839 plug-ins/common/wind.c:857
+#: plug-ins/common/unsharp.c:837 plug-ins/common/wind.c:857
 #: plug-ins/gflare/gflare.c:3041
 msgid "Threshold:"
 msgstr "Schwellwert:"
@@ -1301,11 +1301,11 @@ msgstr "<Image>/Filter/Abbilden/Auf Object..."
 #: plug-ins/common/pix.c:329 plug-ins/common/png.c:414
 #: plug-ins/common/png.c:416 plug-ins/common/pnm.c:414
 #: plug-ins/common/psd.c:1707 plug-ins/common/sunras.c:443
-#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:423
+#: plug-ins/common/tga.c:430 plug-ins/common/tiff.c:440
 #: plug-ins/common/xbm.c:553 plug-ins/common/xpm.c:326
 #: plug-ins/common/xwd.c:457 plug-ins/faxg3/faxg3.c:191
 #: plug-ins/gfli/gfli.c:471 plug-ins/sgi/sgi.c:331 plug-ins/sgi/sgi.c:333
-#: plug-ins/xjt/xjt.c:3169
+#: plug-ins/xjt/xjt.c:3238
 #, c-format
 msgid "Loading %s:"
 msgstr "Öffne %s:"
@@ -1349,7 +1349,7 @@ msgstr "%s: fehlerhafte Palette\n"
 #: plug-ins/common/png.c:545 plug-ins/common/pnm.c:500
 #: plug-ins/common/psd.c:2088 plug-ins/common/smooth_palette.c:237
 #: plug-ins/common/sunras.c:921 plug-ins/common/tga.c:1015
-#: plug-ins/common/tiff.c:633 plug-ins/common/tile.c:264
+#: plug-ins/common/tiff.c:650 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:513 plug-ins/common/wmf.c:2359
 #: plug-ins/common/xbm.c:642 plug-ins/faxg3/faxg3.c:443
 #: plug-ins/fits/fits.c:522 plug-ins/sgi/sgi.c:379 plug-ins/twain/twain.c:723
@@ -1376,10 +1376,10 @@ msgstr "kann %s nicht öffnen\n"
 #: plug-ins/common/png.c:721 plug-ins/common/png.c:723
 #: plug-ins/common/pnm.c:781 plug-ins/common/ps.c:842
 #: plug-ins/common/sunras.c:526 plug-ins/common/tga.c:1197
-#: plug-ins/common/tiff.c:1204 plug-ins/common/xbm.c:790
+#: plug-ins/common/tiff.c:1224 plug-ins/common/xbm.c:790
 #: plug-ins/common/xpm.c:643 plug-ins/common/xwd.c:561
 #: plug-ins/fits/fits.c:473 plug-ins/gfli/gfli.c:691 plug-ins/sgi/sgi.c:549
-#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1571
+#: plug-ins/sgi/sgi.c:551 plug-ins/xjt/xjt.c:1624
 #, c-format
 msgid "Saving %s:"
 msgstr "Sichere %s:"
@@ -1992,11 +1992,11 @@ msgstr "Sichtbare Ebenen anordnen"
 #: plug-ins/common/shift.c:395 plug-ins/common/smooth_palette.c:415
 #: plug-ins/common/snoise.c:539 plug-ins/common/sobel.c:274
 #: plug-ins/common/sparkle.c:370 plug-ins/common/threshold_alpha.c:285
-#: plug-ins/common/unsharp.c:807 plug-ins/common/video.c:2187
+#: plug-ins/common/unsharp.c:805 plug-ins/common/video.c:2187
 #: plug-ins/common/vpropagate.c:984 plug-ins/common/waves.c:406
 #: plug-ins/common/whirlpinch.c:868 plug-ins/common/wind.c:772
 #: plug-ins/common/xpm.c:811 plug-ins/mosaic/mosaic.c:660
-#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:759
+#: plug-ins/struc/struc.c:273 plug-ins/xjt/xjt.c:808
 msgid "Parameter Settings"
 msgstr "Parameter-Einstellungen"
 
@@ -2609,7 +2609,7 @@ msgid "Prefixed Name:"
 msgstr "Name mit Prefix:"
 
 #: plug-ins/common/csource.c:706 plug-ins/common/mail.c:566
-#: plug-ins/common/tiff.c:1482 plug-ins/common/xbm.c:1025
+#: plug-ins/common/tiff.c:1502 plug-ins/common/xbm.c:1025
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -2673,106 +2673,106 @@ msgstr "Kachelgrösse:"
 msgid "Tile Saturation:"
 msgstr "Kachel-Sättigung:"
 
-#: plug-ins/common/curve_bend.c:347
+#: plug-ins/common/curve_bend.c:350
 msgid "Upper"
 msgstr "Obere"
 
-#: plug-ins/common/curve_bend.c:348
+#: plug-ins/common/curve_bend.c:351
 msgid "Lower"
 msgstr "Untere"
 
-#: plug-ins/common/curve_bend.c:354
+#: plug-ins/common/curve_bend.c:357
 msgid "Smooth"
 msgstr "Glatt"
 
-#: plug-ins/common/curve_bend.c:355
+#: plug-ins/common/curve_bend.c:358
 msgid "Free"
 msgstr "Frei"
 
-#: plug-ins/common/curve_bend.c:680
+#: plug-ins/common/curve_bend.c:683
 msgid "<Image>/Filters/Distorts/CurveBend..."
 msgstr "<Image>/Filter/Verzerren/Kurve..."
 
-#: plug-ins/common/curve_bend.c:815
+#: plug-ins/common/curve_bend.c:818
 msgid "CurveBend operates on layers only (but was called on channel or mask)"
 msgstr ""
 "Kurve operiert nur auf Ebenen (wurde aber auf einem Kanal oder einer Maske  "
 "verwendet"
 
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1367
+#: plug-ins/common/curve_bend.c:1374
 msgid "Curve Bend"
 msgstr "Kurve"
 
-#: plug-ins/common/curve_bend.c:1374 plug-ins/gfig/gfig.c:6535
+#: plug-ins/common/curve_bend.c:1381 plug-ins/gfig/gfig.c:6535
 #: plug-ins/gflare/gflare.c:3118 plug-ins/imagemap/imap_cmd_copy.c:49
 #: plug-ins/imagemap/imap_cmd_copy_object.c:50
 #: plug-ins/imagemap/imap_menu.c:286 plug-ins/imagemap/imap_toolbar.c:131
 msgid "Copy"
 msgstr "Kopieren"
 
-#: plug-ins/common/curve_bend.c:1376
+#: plug-ins/common/curve_bend.c:1383
 msgid "CopyInv"
 msgstr "Inv. Kopieren"
 
-#: plug-ins/common/curve_bend.c:1378
+#: plug-ins/common/curve_bend.c:1385
 msgid "Swap"
 msgstr "Austauschen"
 
 #. The Load button
-#: plug-ins/common/curve_bend.c:1397
+#: plug-ins/common/curve_bend.c:1404
 msgid "LoadCurve"
 msgstr "Kurve laden"
 
 #. The Save button
-#: plug-ins/common/curve_bend.c:1405
+#: plug-ins/common/curve_bend.c:1412
 msgid "SaveCurve"
 msgstr "Kurve speichern"
 
-#: plug-ins/common/curve_bend.c:1412
+#: plug-ins/common/curve_bend.c:1419
 msgid "Rotate: "
 msgstr "Drehen: "
 
-#: plug-ins/common/curve_bend.c:1425
+#: plug-ins/common/curve_bend.c:1432
 msgid "Curve for Border: "
 msgstr "Kurve für Rand: "
 
 #. The option menu for selecting the drawing method
-#: plug-ins/common/curve_bend.c:1438
+#: plug-ins/common/curve_bend.c:1445
 msgid "Curve Type: "
 msgstr "Kurventyp: "
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1499
+#: plug-ins/common/curve_bend.c:1506
 msgid "PreviewOnce"
 msgstr "Vorschau"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1518
+#: plug-ins/common/curve_bend.c:1525
 msgid "Smoothing"
 msgstr "Glättung"
 
 #. The antialias toggle
-#: plug-ins/common/curve_bend.c:1528
+#: plug-ins/common/curve_bend.c:1535
 msgid "Antialias"
 msgstr "Antialiasing"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1538
+#: plug-ins/common/curve_bend.c:1545
 msgid "Work on Copy"
 msgstr "Mit Kopie arbeiten"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2186
+#: plug-ins/common/curve_bend.c:2193
 msgid "Load Curve Points from file"
 msgstr "Kurven-Kontrollpunkte aus Datei laden"
 
 #. filesel is already open
-#: plug-ins/common/curve_bend.c:2216
+#: plug-ins/common/curve_bend.c:2223
 msgid "Save Curve Points to file"
 msgstr "Kurven-Kontrollpunkte in Datei speichern"
 
-#: plug-ins/common/curve_bend.c:3353
+#: plug-ins/common/curve_bend.c:3360
 msgid "Curve Bend ..."
 msgstr "Kurve..."
 
@@ -2990,7 +2990,7 @@ msgid "Recursive"
 msgstr "Rekursiv"
 
 #: plug-ins/common/despeckle.c:763 plug-ins/common/nlfilt.c:421
-#: plug-ins/common/nova.c:399 plug-ins/common/unsharp.c:821
+#: plug-ins/common/nova.c:399 plug-ins/common/unsharp.c:819
 #: plug-ins/common/whirlpinch.c:898 plug-ins/gflare/gflare.c:2928
 #: plug-ins/imagemap/imap_circle.c:272
 msgid "Radius:"
@@ -3133,7 +3133,7 @@ msgid "Edge Detection"
 msgstr "Kanten finden"
 
 #: plug-ins/common/edge.c:681 plug-ins/common/spheredesigner.c:2637
-#: plug-ins/common/unsharp.c:830
+#: plug-ins/common/unsharp.c:828
 msgid "Amount:"
 msgstr "Menge:"
 
@@ -3878,11 +3878,11 @@ msgstr "<Image>/Bild/Transformationen/Guillotine"
 msgid "Guillotine..."
 msgstr "Guillotine..."
 
-#: plug-ins/common/gz.c:327
+#: plug-ins/common/gz.c:328
 msgid "gz: no sensible extension, saving as gzip'd xcf\n"
 msgstr "gz: Erkenne Dateinamenerweiterung nicht, speichere als gzip'tes xcf\n"
 
-#: plug-ins/common/gz.c:481
+#: plug-ins/common/gz.c:482
 msgid "gz: no sensible extension, attempting to load with file magic\n"
 msgstr ""
 "gz: Erkenne Dateinamenerweiterung nicht, versuche mit \"file magic\" zu "
@@ -4123,11 +4123,11 @@ msgstr "Bild-Vorschau"
 msgid "Preview (in Image Window)"
 msgstr "Vorschau (im Bildfenster)"
 
-#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:790
+#: plug-ins/common/jpeg.c:1665 plug-ins/xjt/xjt.c:839
 msgid "Quality:"
 msgstr "Qualität:"
 
-#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:799
+#: plug-ins/common/jpeg.c:1687 plug-ins/xjt/xjt.c:848
 msgid "Smoothing:"
 msgstr "Glättung:"
 
@@ -4139,7 +4139,7 @@ msgstr "Neustart der Markierungen"
 msgid "Restart Frequency (Rows):"
 msgstr "Neustart der Frequenzen (Zeilen):"
 
-#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:770
+#: plug-ins/common/jpeg.c:1751 plug-ins/xjt/xjt.c:819
 msgid "Optimize"
 msgstr "Optimieren"
 
@@ -4476,7 +4476,7 @@ msgstr "Auflösung"
 
 #: plug-ins/common/newsprint.c:1272
 msgid "Input SPI:"
-msgstr "Eingape SPI:"
+msgstr "Eingabe SPI:"
 
 #: plug-ins/common/newsprint.c:1283
 msgid "Output LPI:"
@@ -5242,7 +5242,7 @@ msgstr "Ähnlich Einfärben"
 
 #: plug-ins/common/sample_colorize.c:1301
 msgid "Get Sample Colors"
-msgstr ""
+msgstr "Farbverlauf ermitteln"
 
 #. layer optionmenu (Dst)
 #: plug-ins/common/sample_colorize.c:1328
@@ -5302,15 +5302,15 @@ msgstr "Benutze Zwischenfarben"
 #. check button
 #: plug-ins/common/sample_colorize.c:1646
 msgid "Smooth Samplecolors"
-msgstr ""
+msgstr "Weicher Farbverlauf"
 
 #: plug-ins/common/sample_colorize.c:2672
 msgid "Sample Analyze..."
-msgstr ""
+msgstr "Analyse der Quellfarben..."
 
 #: plug-ins/common/sample_colorize.c:3037
 msgid "Remap Colorized..."
-msgstr ""
+msgstr "Einfärben..."
 
 #: plug-ins/common/scatter_hsv.c:139 plug-ins/common/scatter_hsv.c:140
 msgid "Scattering pixel values in HSV space"
@@ -5926,23 +5926,23 @@ msgstr "Alphaschwellenwert: Färbe Transparenz..."
 msgid "Threshold Alpha"
 msgstr "Alphaschwellenwert"
 
-#: plug-ins/common/tiff.c:642
+#: plug-ins/common/tiff.c:659
 msgid "TIFF Channel"
 msgstr "TIFF Kanäle"
 
-#: plug-ins/common/tiff.c:1443
+#: plug-ins/common/tiff.c:1463
 msgid "Save as TIFF"
 msgstr "Als TIFF speichern"
 
-#: plug-ins/common/tiff.c:1465
+#: plug-ins/common/tiff.c:1485
 msgid "Compression"
 msgstr "Kompression"
 
-#: plug-ins/common/tiff.c:1470
+#: plug-ins/common/tiff.c:1490
 msgid "LZW"
 msgstr ""
 
-#: plug-ins/common/tiff.c:1471
+#: plug-ins/common/tiff.c:1491
 msgid "Pack Bits"
 msgstr ""
 
@@ -6019,15 +6019,15 @@ msgstr ""
 msgid "Tiler..."
 msgstr ""
 
-#: plug-ins/common/unsharp.c:181
+#: plug-ins/common/unsharp.c:184
 msgid "<Image>/Filters/Enhance/Unsharp Mask..."
 msgstr "<Image>/Filter/Verbessern/Unscharf maskieren..."
 
-#: plug-ins/common/unsharp.c:399
+#: plug-ins/common/unsharp.c:394
 msgid "Merging..."
 msgstr "Maskiere..."
 
-#: plug-ins/common/unsharp.c:791
+#: plug-ins/common/unsharp.c:789
 msgid "Unsharp Mask"
 msgstr "Unscharf Maskieren"
 
@@ -7143,7 +7143,7 @@ msgstr "Nach"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:661 plug-ins/gap/gap_decode_xanim.c:231
 msgid "Framenumber of last frame to extract"
-msgstr "Framenummer des ersten Frames, der extrahiert werden soll"
+msgstr "Framenummer des letzten Frames, der extrahiert werden soll"
 
 #: plug-ins/gap/gap_decode_mpeg_main.c:668
 msgid "Framenames"
@@ -7178,15 +7178,15 @@ msgstr ""
 
 #: plug-ins/gap/gap_decode_xanim.c:112
 msgid "Conditions to run the xanim based video split"
-msgstr ""
+msgstr "Voraussetzungen um Xanim lesbares Video in Frames aufteilen"
 
 #: plug-ins/gap/gap_decode_xanim.c:120
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr ""
+msgstr "1.) xanim 2.80.0 exporting edition (variante von loki entertainment)"
 
 #: plug-ins/gap/gap_decode_xanim.c:124
 msgid "    must be installed somewhere in your PATH"
-msgstr ""
+msgstr "    muss auf ihrem Rechner installiert sein"
 
 #: plug-ins/gap/gap_decode_xanim.c:128
 msgid "    you can get xanim exporting edition at"
@@ -7196,14 +7196,17 @@ msgstr "    Sie können xanim mit Export-Funktionen hier kriegen:"
 msgid ""
 "2.) if your xanim exporting edition is not in your PATH or is not named xanim"
 msgstr ""
+"2.) Sie können Pfad und Namen des xanim Programms auch mit der "
+"Umgebungsvariablen"
 
 #: plug-ins/gap/gap_decode_xanim.c:148
 msgid "    you have to set Environment variable GAP_XANIM_PROG "
 msgstr ""
+"    GAP_XANIM_PROG vorgeben, falls xanim nicht in ihrem PATH aufrufbar ist."
 
 #: plug-ins/gap/gap_decode_xanim.c:152
 msgid "    to your xanim exporting program and restart gimp"
-msgstr ""
+msgstr "     (dazu ist gimp neu zu starten)"
 
 #: plug-ins/gap/gap_decode_xanim.c:160
 msgid "An ERROR occured while trying to call xanim:"
@@ -7314,7 +7317,7 @@ msgid ""
 "most of the frames (type P and B) will be skipped"
 msgstr ""
 "\n"
-"Warnung: xanim 2.80 hat nur eingeschränkte MPEG Unterstützungdie meisten "
+"Warnung: xanim 2.80 hat nur eingeschränkte MPEG Unterstützung die meisten "
 "Frames (Typ P und B) werden übersprungen"
 
 #: plug-ins/gap/gap_decode_xanim.c:283
@@ -7563,11 +7566,11 @@ msgstr "Dupliziere Frames (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2090
 msgid "Source Range starts at this framenumber"
-msgstr "Quellreichweite fängt bei dieser Framenummer an"
+msgstr "Quellbereich fängt bei dieser Framenummer an"
 
 #: plug-ins/gap/gap_lib.c:2098
 msgid "Source Range ends at this framenumber"
-msgstr "Quellreichweite hört bei dieser Framenummer auf"
+msgstr "Quellbereich hört bei dieser Framenummer auf"
 
 #: plug-ins/gap/gap_lib.c:2101
 msgid "N-Times :"
@@ -7601,11 +7604,11 @@ msgstr "Reihenfolge der Frames verschieben (%ld/%ld)"
 
 #: plug-ins/gap/gap_lib.c:2265
 msgid "Affected Range starts at this framenumber"
-msgstr "Betroffene Reichweite fängt bei dieser Frame-Nummer an"
+msgstr "Betroffener Bereich fängt bei dieser Frame-Nummer an"
 
 #: plug-ins/gap/gap_lib.c:2273
 msgid "Affected Range ends at this framenumber"
-msgstr "Betroffene Reichweite hört bei dieser Frame-Nummer auf"
+msgstr "Betroffener Bereich hört bei dieser Frame-Nummer auf"
 
 # TODO!
 #: plug-ins/gap/gap_lib.c:2276
@@ -7659,7 +7662,7 @@ msgstr "<Image>/Video/Frames austauschen..."
 
 #: plug-ins/gap/gap_main.c:439
 msgid "<Image>/Video/Move Path..."
-msgstr "<Image>/Video/Pfad verschieben..."
+msgstr "<Image>/Video/Bewegungs Pfad..."
 
 # besser ?
 #: plug-ins/gap/gap_main.c:451
@@ -7833,7 +7836,7 @@ msgid ""
 "Perform function on one or more Layer(s)\n"
 "in all frames of the selected framerange\n"
 msgstr ""
-"Führe Funktion an einem oder mehreren Ebene(n)\n"
+"Führe Funktion an einer oder mehreren Ebene(n)\n"
 "in allen angegebenen Frames aus.\n"
 
 #: plug-ins/gap/gap_mod_layer.c:155 plug-ins/gap/gap_mpege.c:259
@@ -8029,7 +8032,7 @@ msgstr "Ping-Pong"
 # TODO context ?
 #: plug-ins/gap/gap_mov_dialog.c:446
 msgid "Move Path"
-msgstr "Pfad bewegen"
+msgstr "Bewegungs Pfad"
 
 #: plug-ins/gap/gap_mov_dialog.c:478
 msgid "UpdPreview"
@@ -8037,7 +8040,7 @@ msgstr "Vorschau erneuern"
 
 #: plug-ins/gap/gap_mov_dialog.c:485
 msgid ""
-"Show PreviewFame with Selected       \n"
+"Show PreviewFrame with Selected       \n"
 "SrcLayer at current Controlpoint"
 msgstr ""
 "Vorschau-Frame mit ausgewählter Quellebene\n"
@@ -8157,7 +8160,7 @@ msgid ""
 "(Please open a 2nd Image of the same type before opening Move Path)\n"
 msgstr ""
 "Kein Quellbild ausgewählt\n"
-"(Bitte öffnen Sie ein 2. Bild vom gleichen Typ bevor Sie 'Pfad bewegen' "
+"(Bitte öffnen Sie ein 2. Bild vom gleichen Typ bevor Sie 'Bewegungs Pfad' "
 "aufrufen)\n"
 
 #. filesel is already open
@@ -8252,7 +8255,7 @@ msgstr ""
 #. to avoid side effects while initialization
 #: plug-ins/gap/gap_mov_dialog.c:1413
 msgid "Move Path Preview"
-msgstr "Pfad bewegen Vorschau"
+msgstr "Bewegungs Pfad Vorschau"
 
 #: plug-ins/gap/gap_mov_dialog.c:1463
 msgid ""
@@ -8282,7 +8285,7 @@ msgid ""
 "(Please open a 2nd Image of the same type before opening Move Path)"
 msgstr ""
 "Kein Quellbild ausgewählt\n"
-"(Bitte öffnen Sie eine 2. Bild vom gleichen Typ bevor Sie 'Pfad bewegen' "
+"(Bitte öffnen Sie eine 2. Bild vom gleichen Typ bevor Sie 'Bewegungs Pfad' "
 "aufrufen)"
 
 #: plug-ins/gap/gap_mov_exec.c:228
@@ -12068,69 +12071,79 @@ msgstr "Greife ganzen Bildschirm"
 msgid "No data captured"
 msgstr "Keine Daten"
 
-#: plug-ins/xjt/xjt.c:651
+#: plug-ins/xjt/xjt.c:660
 #, c-format
 msgid "XJT file contains unknown layermode %d"
 msgstr "XJT Datei enthält unbekannten Ebenenmodus %d"
 
-#: plug-ins/xjt/xjt.c:681
+#: plug-ins/xjt/xjt.c:690
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr "Warnung: nicht unterstützter Ebenenmodus %d in XJT gespeichert"
 
-#: plug-ins/xjt/xjt.c:697
+#: plug-ins/xjt/xjt.c:706
 #, c-format
 msgid "XJT file contains unknown pathtype %d"
 msgstr "XJT Datei enthält unbekannten Pfadtyp %d"
 
-#: plug-ins/xjt/xjt.c:713
+#: plug-ins/xjt/xjt.c:722
 #, c-format
 msgid "Warning: unsupported pathtype %d saved to XJT"
 msgstr "Warnung: nicht unterstützter Pfadtyp %d in XJT gespeichert"
 
 #: plug-ins/xjt/xjt.c:742
+#, c-format
+msgid "XJT file contains unknown unittype %d"
+msgstr "XJT Datei enthält unbekannte Einheit %d"
+
+#: plug-ins/xjt/xjt.c:763
+#, c-format
+msgid "Warning: unsupported unittype %d saved to XJT"
+msgstr "Warnung: nicht unterstützte Einheit %d in XJT gespeichert"
+
+#: plug-ins/xjt/xjt.c:791
 msgid "Save as XJT"
 msgstr "Als XJT speichern"
 
-#: plug-ins/xjt/xjt.c:779
+#: plug-ins/xjt/xjt.c:828
 msgid "Clear Transparent"
 msgstr "Mehr Transparenz"
 
-#: plug-ins/xjt/xjt.c:1174
+#: plug-ins/xjt/xjt.c:1223
 #, c-format
 msgid "Can't open (write): %s"
 msgstr "Kann %s nicht öffnen (schreibend)"
 
-#: plug-ins/xjt/xjt.c:1562
+#: plug-ins/xjt/xjt.c:1615
 msgid "xjt: cannot operate on indexed color images"
 msgstr "xjt: Kann nicht mit indizierten Bildern arbeiten"
 
-#: plug-ins/xjt/xjt.c:1566
+#: plug-ins/xjt/xjt.c:1619
 msgid "xjt: cannot operate on unknown image types"
 msgstr "xjt: Kann nicht mit unbekanntem Bildtyp arbeiten"
 
-#: plug-ins/xjt/xjt.c:1581 plug-ins/xjt/xjt.c:3179
+#: plug-ins/xjt/xjt.c:1634 plug-ins/xjt/xjt.c:3248
 #, c-format
 msgid "Can't create working dir: %s"
 msgstr "Kann Arbeitsverzeichnis %s nicht anlegen"
 
-#: plug-ins/xjt/xjt.c:1590
+#: plug-ins/xjt/xjt.c:1643
 #, c-format
 msgid "Can't open : %s"
 msgstr "Kann %s nicht öffnen"
 
 #. stat error (file does not exist)
-#: plug-ins/xjt/xjt.c:2408 plug-ins/xjt/xjt.c:2415
+#: plug-ins/xjt/xjt.c:2463 plug-ins/xjt/xjt.c:2470
 #, c-format
 msgid "Can't open (read): %s"
 msgstr "Kann %s nicht öffnen (lesend)"
 
-#: plug-ins/xjt/xjt.c:3042
+#: plug-ins/xjt/xjt.c:3111
 #, c-format
 msgid "Error: Cant read XJT propertyfile %s"
 msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 
-#: plug-ins/xjt/xjt.c:3047
+#: plug-ins/xjt/xjt.c:3116
 #, c-format
 msgid "Error,XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"

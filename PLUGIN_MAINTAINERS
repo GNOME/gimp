@@ -18,81 +18,77 @@ and are willing to maintain it. People interested in maintaining
 an abandonded plug-in should first try to contact the author.
 
 
-Note that this list was initially created automatically from
-the source files and may contain mistakes due to parse errors.
-
-
 -----------
 NAME       : AlienMap
 AUTHOR     : Daniel Cotting (cotting@mygale.org, http://www.mygale.org/~cotting)
 MAINTAINER : 
-SIZE       :  38.3 kB  in  1 file  (only C files counted)
+SIZE       :  25.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : AlienMap2
 AUTHOR     : Martin Weber (martin.weber@usa.net, http://diverse.freepage.de/martin.weber)
 MAINTAINER : 
-SIZE       :  36.5 kB  in  1 file  (only C files counted)
+SIZE       :  28.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : CEL
 AUTHOR     : Nick Lamb <njl195@zepler.org.uk>
 MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
-SIZE       :  15.0 kB  in  1 file  (only C files counted)
+SIZE       :  15.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : CML_explorer
 AUTHOR     : Shuji Narazaki (narazaki@InetQ.or.jp); http://www.inetq.or.jp/~narazaki/TheGIMP/
 MAINTAINER : 
-SIZE       :  87.0 kB  in  1 file  (only C files counted)
+SIZE       :  78.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : FractalExplorer
 AUTHOR     : Daniel Cotting (cotting@multimania.com, www.multimania.com/cotting)
 MAINTAINER : 
-SIZE       : 186.4 kB  in  6 files (only C files counted)
+SIZE       : 109.7 kB  in  4 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : Lighting
 AUTHOR     : Tom Bech & Federico Mena Quintero
 MAINTAINER : 
-SIZE       :  87.7 kB  in  6 files (only C files counted)
+SIZE       :  87.6 kB  in  6 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : MapObject
 AUTHOR     : Tom Bech & Federico Mena Quintero
 MAINTAINER : 
-SIZE       : 142.8 kB  in  7 files (only C files counted)
+SIZE       : 144.6 kB  in  7 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : aa
 AUTHOR     : Tim Newsome <nuisance@cmu.edu>
 MAINTAINER : 
-SIZE       :  11.1 kB  in  1 file  (only C files counted)
+SIZE       :   9.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : align_layers
 AUTHOR     : Shuji Narazaki <narazaki@InetQ.or.jp>
 MAINTAINER : 
-SIZE       :  28.7 kB  in  1 file  (only C files counted)
+SIZE       :  13.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : animationplay
 AUTHOR     : Adam D. Moss <adam@gimp.org>
 MAINTAINER : Adam D. Moss <adam@gimp.org>
-SIZE       :  43.8 kB  in  1 file  (only C files counted)
+SIZE       :  45.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : animoptimize
 AUTHOR     : Adam D. Moss <adam@gimp.org>
 MAINTAINER : Adam D. Moss <adam@gimp.org>
-SIZE       :  19.7 kB  in  1 file  (only C files counted)
+SIZE       :  24.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : apply_lens
 AUTHOR     : Morten Eriksen
 MAINTAINER : 
-SIZE       :  13.7 kB  in  1 file  (only C files counted)
+SIZE       :  12.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : autocrop
@@ -110,37 +106,37 @@ COMMENT    :
 NAME       : blinds
 AUTHOR     : Andy Thomas
 MAINTAINER : Andy Thomas alt@gimp.org
-SIZE       :  29.9 kB  in  1 file  (only C files counted)
+SIZE       :  24.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : blur
 AUTHOR     : Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
 MAINTAINER : 
-SIZE       :  21.5 kB  in  1 file  (only C files counted)
+SIZE       :  18.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : bmp
 AUTHOR     : Alexander Schulz
 MAINTAINER : 
-SIZE       :  37.2 kB  in  3 files (only C files counted)
+SIZE       :  36.2 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : borderaverage
 AUTHOR     : Philipp Klaus
 MAINTAINER : 
-SIZE       :   9.9 kB  in  1 file  (only C files counted)
+SIZE       :  12.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : bumpmap
 AUTHOR     : Federico Mena Quintero & Jens Lautenbacher
 MAINTAINER : 
-SIZE       :  46.8 kB  in  1 file  (only C files counted)
+SIZE       :  40.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : bz2
 AUTHOR     : Daniel Risacher
 MAINTAINER : 
-SIZE       :  11.8 kB  in  1 file  (only C files counted)
+SIZE       :  12.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : c_astretch
@@ -152,55 +148,55 @@ COMMENT    :
 NAME       : checkerboard
 AUTHOR     : Brent Burton & the Edward Blevins
 MAINTAINER : 
-SIZE       :  11.9 kB  in  1 file  (only C files counted)
+SIZE       :   9.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : color_enhance
 AUTHOR     : Martin Weber
 MAINTAINER : 
-SIZE       :  10.6 kB  in  1 file  (only C files counted)
+SIZE       :   9.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : colorify
 AUTHOR     : Francisco Bustamante
 MAINTAINER : 
-SIZE       :  12.8 kB  in  1 file  (only C files counted)
+SIZE       :  10.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : colortoalpha
 AUTHOR     : Seth Burgess
 MAINTAINER : 
-SIZE       :  13.2 kB  in  1 file  (only C files counted)
+SIZE       :  12.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : compose
 AUTHOR     : Peter Kirchgessner
 MAINTAINER : 
-SIZE       :  31.8 kB  in  1 file  (only C files counted)
+SIZE       :  27.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : convmatrix
 AUTHOR     : Lauri Alanko
 MAINTAINER : 
-SIZE       :  23.0 kB  in  1 file  (only C files counted)
+SIZE       :  23.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : csource
 AUTHOR     : Tim Janik
 MAINTAINER : 
-SIZE       :  20.3 kB  in  1 file  (only C files counted)
+SIZE       :  20.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : cubism
 AUTHOR     : Spencer Kimball & Tracy Scott
 MAINTAINER : 
-SIZE       :  22.4 kB  in  1 file  (only C files counted)
+SIZE       :  19.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : curve_bend
 AUTHOR     : Wolfgang Hofer <hof@hotbot.com>
 MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
-SIZE       : 107.1 kB  in  1 file  (only C files counted)
+SIZE       : 105.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : dbbrowser
@@ -212,67 +208,67 @@ COMMENT    :
 NAME       : decompose
 AUTHOR     : Peter Kirchgessner
 MAINTAINER : 
-SIZE       :  29.0 kB  in  1 file  (only C files counted)
+SIZE       :  23.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : deinterlace
 AUTHOR     : Andrew Kieschnick
 MAINTAINER : 
-SIZE       :   7.4 kB  in  1 file  (only C files counted)
+SIZE       :   8.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : depthmerge
 AUTHOR     : Sean Cier
 MAINTAINER : 
-SIZE       :  43.8 kB  in  1 file  (only C files counted)
+SIZE       :  38.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : despeckle
 AUTHOR     : Michael Sweet <mike@easysw.com>
 MAINTAINER : 
-SIZE       :  37.3 kB  in  1 file  (only C files counted)
+SIZE       :  28.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : destripe
 AUTHOR     : Marc Lehmann <pcg@goof.com>
 MAINTAINER : 
-SIZE       :  23.9 kB  in  1 file  (only C files counted)
+SIZE       :  18.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : diffraction
 AUTHOR     : Federico Mena Quintero
 MAINTAINER : 
-SIZE       :  21.4 kB  in  1 file  (only C files counted)
+SIZE       :  21.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : displace
 AUTHOR     : Stephen Robert Norris & (ported to 1.0 by) Spencer Kimball
 MAINTAINER : 
-SIZE       :  24.2 kB  in  1 file  (only C files counted)
+SIZE       :  21.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : edge
 AUTHOR     : Peter Mattis & (ported to 1.0 by) Eiichi Takamori
 MAINTAINER : 
-SIZE       :  24.3 kB  in  1 file  (only C files counted)
+SIZE       :  19.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : emboss
 AUTHOR     : Eric L. Hernes, John Schlag
 MAINTAINER : 
-SIZE       :  14.8 kB  in  1 file  (only C files counted)
+SIZE       :  20.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : engrave
 AUTHOR     : Spencer Kimball & Peter Mattis, Eiichi Takamori, Torsten Martinsen
 MAINTAINER : 
-SIZE       :  17.1 kB  in  1 file  (only C files counted)
+SIZE       :  13.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : exchange
 AUTHOR     : robert@experimental.net
 MAINTAINER : 
-SIZE       :  16.2 kB  in  1 file  (only C files counted)
+SIZE       :  19.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : faxg3
@@ -284,13 +280,13 @@ COMMENT    :
 NAME       : film
 AUTHOR     : Peter Kirchgessner
 MAINTAINER : 
-SIZE       :  43.6 kB  in  1 file  (only C files counted)
+SIZE       :  45.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : fits
 AUTHOR     : Peter Kirchgessner
 MAINTAINER : 
-SIZE       : 109.3 kB  in  2 files (only C files counted)
+SIZE       : 106.1 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : flame
@@ -302,43 +298,43 @@ COMMENT    :
 NAME       : flarefx
 AUTHOR     : Karl-Johan Andersson
 MAINTAINER : 
-SIZE       :  30.5 kB  in  1 file  (only C files counted)
+SIZE       :  29.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : fp
 AUTHOR     : Pavel Grinfeld (pavel@ml.com)
 MAINTAINER : 
-SIZE       :  56.7 kB  in  5 files (only C files counted)
+SIZE       :  54.0 kB  in  4 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : fractaltrace
 AUTHOR     : Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>
 MAINTAINER : 
-SIZE       :  26.0 kB  in  1 file  (only C files counted)
+SIZE       :  21.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gap
 AUTHOR     : Wolfgang Hofer <hof@hotbot.com>
 MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
-SIZE       : 649.5 kB  in 24 files (only C files counted)
+SIZE       : 739.4 kB  in 25 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gauss_iir
 AUTHOR     : Spencer Kimball & Peter Mattis
 MAINTAINER : 
-SIZE       :  20.2 kB  in  1 file  (only C files counted)
+SIZE       :  23.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gauss_rle
 AUTHOR     : Spencer Kimball & Peter Mattis
 MAINTAINER : 
-SIZE       :  17.3 kB  in  1 file  (only C files counted)
+SIZE       :  21.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gbr
 AUTHOR     : Tim Newsome
 MAINTAINER : 
-SIZE       :  14.7 kB  in  1 file  (only C files counted)
+SIZE       :  12.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gdyntext
@@ -350,73 +346,67 @@ COMMENT    :
 NAME       : gee
 AUTHOR     : Adam D. Moss <adam@gimp.org>
 MAINTAINER : Adam D. Moss <adam@gimp.org>
-SIZE       :  19.6 kB  in  1 file  (only C files counted)
+SIZE       :  19.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gfig
 AUTHOR     : Andy Thomas
 MAINTAINER : Andy Thomas alt@gimp.org
-SIZE       : 312.2 kB  in  1 file  (only C files counted)
+SIZE       : 313.4 kB  in  1 file  (only C files counted)
 COMMENT    : Could do with a code splitting & UI tidyup.
 -----------
 NAME       : gflare
 AUTHOR     : Eiichi Takamori
 MAINTAINER : Martin Weber martweb@gmx.net
-SIZE       : 175.7 kB  in  3 files (only C files counted)
+SIZE       : 167.6 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gfli
 AUTHOR     : Jens Ch. Restemeier
 MAINTAINER : 
-SIZE       :  43.9 kB  in  2 files (only C files counted)
+SIZE       :  42.8 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gicon
 AUTHOR     : Spencer Kimball
 MAINTAINER : 
-SIZE       :  13.3 kB  in  1 file  (only C files counted)
+SIZE       :  12.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gif
 AUTHOR     : Spencer Kimball, Peter Mattis, Adam Moss, David Koblas
 MAINTAINER : Adam D. Moss <adam@gimp.org>
-SIZE       :  64.8 kB  in  1 file  (only C files counted)
+SIZE       :  59.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gifload
 AUTHOR     : Spencer Kimball, Peter Mattis, Adam Moss, David Koblas
 MAINTAINER : Adam D. Moss <adam@gimp.org>
-SIZE       :  26.8 kB  in  1 file  (only C files counted)
+SIZE       :  26.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gimpressionist
 AUTHOR     : Vidar Madsen <vidar@prosalg.no>
 MAINTAINER : 
-SIZE       : 403.6 kB  in 17 files (only C files counted)
+SIZE       : 403.5 kB  in 17 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : glasstile
 AUTHOR     : Karl-Johan Andersson
 MAINTAINER : 
-SIZE       :  12.7 kB  in  1 file  (only C files counted)
+SIZE       :  10.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gpb
 AUTHOR     : Tor Lillqvist <tml@iki.fi>
 MAINTAINER : Tor Lillqvist <tml@iki.fi>
-SIZE       :  35.9 kB  in  1 file  (only C files counted)
-COMMENT    : 
------------
-NAME       : gpc
-AUTHOR     : Miles O'Neal <meo@rru.com> http://www.rru.com/~meo/
-MAINTAINER : 
-SIZE       :   6.3 kB  in  1 file  (only C files counted)
+SIZE       :  29.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gqbist
 AUTHOR     : Jörn Loviscach, Jens Ch. Restemeier
 MAINTAINER : 
-SIZE       :  19.0 kB  in  1 file  (only C files counted)
+SIZE       :  18.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gradmap
@@ -428,145 +418,139 @@ COMMENT    :
 NAME       : grid
 AUTHOR     : Tim Newsome
 MAINTAINER : 
-SIZE       :  26.1 kB  in  1 file  (only C files counted)
+SIZE       :  25.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gtm
 AUTHOR     : Daniel Dunbar
 MAINTAINER : 
-SIZE       :  20.9 kB  in  1 file  (only C files counted)
+SIZE       :  18.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : guillotine
 AUTHOR     : Adam D. Moss (adam@foxbox.org)
 MAINTAINER : 
-SIZE       :   6.8 kB  in  1 file  (only C files counted)
+SIZE       :   6.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : gz
 AUTHOR     : Daniel Risacher
 MAINTAINER : 
-SIZE       :  16.2 kB  in  1 file  (only C files counted)
+SIZE       :  16.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : header
 AUTHOR     : Spencer Kimball & Peter Mattis
 MAINTAINER : 
-SIZE       :   7.1 kB  in  1 file  (only C files counted)
+SIZE       :   8.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : helpbrowser
 AUTHOR     : Sven Neumann <sven@gimp.org>, Michael Natterer <mitch@gimp.org>
 MAINTAINER : Sven Neumann <sven@gimp.org>, Michael Natterer <mitch@gimp.org>
-SIZE       :  32.7 kB  in  2 files (only C files counted)
+SIZE       :  32.9 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : hot
 AUTHOR     : Eric L. Hernes, Alan Wm Paeth
 MAINTAINER : 
-SIZE       :  19.9 kB  in  1 file  (only C files counted)
+SIZE       :  19.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : hrz
 AUTHOR     : Albert Cahalan
 MAINTAINER : 
-SIZE       :  14.5 kB  in  1 file  (only C files counted)
+SIZE       :  13.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : ifscompose
 AUTHOR     : Owen Taylor
 MAINTAINER : 
-SIZE       : 112.3 kB  in  3 files (only C files counted)
+SIZE       : 109.9 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : illusion
 AUTHOR     : Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>
 MAINTAINER : 
-SIZE       :  10.9 kB  in  1 file  (only C files counted)
+SIZE       :   9.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : imagemap
 AUTHOR     : Maurits Rijk
 MAINTAINER : 
-SIZE       : 560.3 kB  in 64 files (only C files counted)
+SIZE       : 559.7 kB  in 64 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : iwarp
 AUTHOR     : Norbert Schmitz
 MAINTAINER : 
-SIZE       :  45.4 kB  in  1 file  (only C files counted)
+SIZE       :  44.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : jigsaw
 AUTHOR     : Nigel Wetten
 MAINTAINER : 
-SIZE       :  74.7 kB  in  1 file  (only C files counted)
+SIZE       :  64.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : jpeg
 AUTHOR     : Spencer Kimball, Peter Mattis & others
 MAINTAINER : 
-SIZE       :  58.2 kB  in  1 file  (only C files counted)
+SIZE       :  58.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : laplace
 AUTHOR     : Thorsten Schnier
 MAINTAINER : 
-SIZE       :   9.8 kB  in  1 file  (only C files counted)
+SIZE       :   9.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : libgck
 AUTHOR     : Tom Bech
 MAINTAINER : 
-SIZE       : 156.3 kB  in  5 files (only C files counted)
+SIZE       : 117.0 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : lic
 AUTHOR     : Tom Bech & Federico Mena Quintero
 MAINTAINER : 
-SIZE       :  35.4 kB  in  1 file  (only C files counted)
+SIZE       :  29.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : mail
 AUTHOR     : Adrian Likins, Reagan Blundell
 MAINTAINER : Adrian Likins <adrian@gimp.org> 
-SIZE       :  30.3 kB  in  1 file  (only C files counted)
+SIZE       :  26.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : mapcolor
 AUTHOR     : Peter Kirchgessner
 MAINTAINER : 
-SIZE       :  15.5 kB  in  1 file  (only C files counted)
+SIZE       :  13.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : max_rgb
 AUTHOR     : Shuji Narazaki (narazaki@InetQ.or.jp)
 MAINTAINER : 
-SIZE       :  12.5 kB  in  1 file  (only C files counted)
+SIZE       :   7.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : maze
 AUTHOR     : Kevin Turner <kevint@poboxes.com>
 MAINTAINER : 
-SIZE       :  71.0 kB  in  4 files (only C files counted)
+SIZE       :  69.6 kB  in  4 files (only C files counted)
 COMMENT    : sourceforge
 -----------
 NAME       : mblur
 AUTHOR     : Torsten Martinsen, Federico Mena Quintero and Daniel Skarda
 MAINTAINER : 
-SIZE       :  22.3 kB  in  1 file  (only C files counted)
-COMMENT    : 
------------
-NAME       : megawidget
-AUTHOR     : Eric L. Hernes (erich@rrnet.com)
-MAINTAINER : 
-SIZE       :  25.6 kB  in  1 file  (only C files counted)
+SIZE       :  19.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : mosaic
 AUTHOR     : Spencer Kimball
 MAINTAINER : 
-SIZE       :  67.8 kB  in  1 file  (only C files counted)
+SIZE       :  62.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : mpeg
@@ -578,19 +562,19 @@ COMMENT    :
 NAME       : newsprint
 AUTHOR     : Austin Donnelly
 MAINTAINER : Austin Donnelly <austin@gimp.org>
-SIZE       :  64.7 kB  in  1 file  (only C files counted)
+SIZE       :  55.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : nlfilt
 AUTHOR     : Graeme W. Gill, gimp 0.99 plugin by Eric L. Hernes
 MAINTAINER : 
-SIZE       :  34.1 kB  in  1 file  (only C files counted)
+SIZE       :  38.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : noisify
 AUTHOR     : Torsten Martinsen
 MAINTAINER : 
-SIZE       :  15.7 kB  in  1 file  (only C files counted)
+SIZE       :  14.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : normalize
@@ -602,43 +586,43 @@ COMMENT    :
 NAME       : nova
 AUTHOR     : Eiichi Takamori
 MAINTAINER : 
-SIZE       :  39.2 kB  in  1 file  (only C files counted)
+SIZE       :  29.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : oilify
 AUTHOR     : Torsten Martinsen
 MAINTAINER : 
-SIZE       :  17.2 kB  in  1 file  (only C files counted)
+SIZE       :  12.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : pagecurl
 AUTHOR     : Federico Mena Quintero and Simon Budig
 MAINTAINER : Simon Budig <Simon.Budig@unix-ag.org> 
-SIZE       :  33.2 kB  in  1 file  (only C files counted)
+SIZE       :  32.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : papertile
 AUTHOR     : Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>
 MAINTAINER : 
-SIZE       :  34.3 kB  in  1 file  (only C files counted)
+SIZE       :  27.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : pat
 AUTHOR     : Tim Newsome
 MAINTAINER : 
-SIZE       :  12.6 kB  in  1 file  (only C files counted)
+SIZE       :  11.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : pcx
 AUTHOR     : Francisco Bustamante & Nick Lamb
 MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
-SIZE       :  16.0 kB  in  1 file  (only C files counted)
+SIZE       :  16.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : perl
 AUTHOR     : Marc Lehmann <pcg@goof.com> et al.
 MAINTAINER : 
-SIZE       : 105.4 kB  in  5 files (only C files counted)
+SIZE       : 105.6 kB  in  5 files (only C files counted)
 COMMENT    : contact pcg@goof.com when you modify files, so your changes aren't lost
 -----------
 NAME       : pix
@@ -650,61 +634,61 @@ COMMENT    :
 NAME       : pixelize
 AUTHOR     : Spencer Kimball & Peter Mattis, Tracy Scott, (ported to 1.0 by) Eiichi Takamori
 MAINTAINER : 
-SIZE       :  21.5 kB  in  1 file  (only C files counted)
+SIZE       :  14.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : plasma
 AUTHOR     : Stephen Norris & (ported to 1.0 by) Eiichi Takamori
 MAINTAINER : 
-SIZE       :  17.9 kB  in  1 file  (only C files counted)
+SIZE       :  15.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : plugindetails
 AUTHOR     : Andy Thomas
 MAINTAINER : Andy Thomas alt@gimp.org
-SIZE       :  30.7 kB  in  1 file  (only C files counted)
+SIZE       :  30.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : png
 AUTHOR     : Michael Sweet <mike@easysw.com>, Daniel Skarda <0rfelyus@atrey.karlin.mff.cuni.cz>
 MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
-SIZE       :  28.0 kB  in  1 file  (only C files counted)
+SIZE       :  25.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : pnm
 AUTHOR     : Erik Nygren
 MAINTAINER : 
-SIZE       :  29.4 kB  in  1 file  (only C files counted)
+SIZE       :  26.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : polar
 AUTHOR     : Daniel Dunbar and Federico Mena Quintero
 MAINTAINER : 
-SIZE       :  31.3 kB  in  1 file  (only C files counted)
+SIZE       :  27.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : print
 AUTHOR     : Michael Sweet <mike@easysw.com> and Robert Krawitz <rlk@alum.mit.edu>
 MAINTAINER : 
-SIZE       : 273.8 kB  in  5 files (only C files counted)
+SIZE       : 240.4 kB  in  5 files (only C files counted)
 COMMENT    : sourceforge
 -----------
 NAME       : ps
 AUTHOR     : Peter Kirchgessner <peter@kirchgessner.net>
 MAINTAINER : 
-SIZE       :  78.0 kB  in  1 file  (only C files counted)
+SIZE       :  73.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : psd
 AUTHOR     : Adam D. Moss & Torsten Martinsen
 MAINTAINER : Adam D. Moss (adam@foxbox.org)
-SIZE       :  63.4 kB  in  1 file  (only C files counted)
+SIZE       :  65.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : psp
 AUTHOR     : Tor Lillqvist <tml@iki.fi>
 MAINTAINER : Tor Lillqvist <tml@iki.fi>
-SIZE       :  48.0 kB  in  1 file  (only C files counted)
+SIZE       :  45.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : pygimp
@@ -716,19 +700,19 @@ COMMENT    :
 NAME       : randomize
 AUTHOR     : Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
 MAINTAINER : 
-SIZE       :  23.7 kB  in  1 file  (only C files counted)
+SIZE       :  20.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : rcm
 AUTHOR     : Sven Anders (anderss@fmi.uni-passau.de) and Pavel Grinfeld (pavel@ml.com)
 MAINTAINER : 
-SIZE       :  75.3 kB  in  5 files (only C files counted)
+SIZE       :  73.3 kB  in  5 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : ripple
 AUTHOR     : Brian Degenhardt <bdegenha@ucsd.edu>
 MAINTAINER : 
-SIZE       :  32.5 kB  in  1 file  (only C files counted)
+SIZE       :  22.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : rotate
@@ -740,19 +724,19 @@ COMMENT    :
 NAME       : sample_colorize
 AUTHOR     : Wolfgang Hofer
 MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
-SIZE       :  92.3 kB  in  1 file  (only C files counted)
+SIZE       :  90.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : scatter_hsv
 AUTHOR     : Shuji Narazaki (narazaki@InetQ.or.jp)
 MAINTAINER : 
-SIZE       :  24.0 kB  in  1 file  (only C files counted)
+SIZE       :  17.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : screenshot
 AUTHOR     : Sven Neumann <sven@gimp.org>
 MAINTAINER : Sven Neumann <sven@gimp.org>
-SIZE       :  16.6 kB  in  1 file  (only C files counted)
+SIZE       :  15.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : script-fu
@@ -764,151 +748,151 @@ COMMENT    :
 NAME       : sel2path
 AUTHOR     : Andy Thomas
 MAINTAINER : Andy Thomas alt@gimp.org
-SIZE       : 153.0 kB  in  9 files (only C files counted)
+SIZE       : 150.9 kB  in  9 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sel_gauss
 AUTHOR     : Thom van Os
 MAINTAINER : 
-SIZE       :  12.8 kB  in  1 file  (only C files counted)
+SIZE       :  11.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : semiflatten
 AUTHOR     : Adam D. Moss (adam@foxbox.org)
 MAINTAINER : Adam D. Moss (adam@foxbox.org)
-SIZE       :   5.9 kB  in  1 file  (only C files counted)
+SIZE       :   6.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sgi
 AUTHOR     : Michael Sweet <mike@easysw.com>
 MAINTAINER : 
-SIZE       :  44.5 kB  in  2 files (only C files counted)
+SIZE       :  35.8 kB  in  2 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sharpen
 AUTHOR     : Michael Sweet <mike@easysw.com>
 MAINTAINER : 
-SIZE       :  34.9 kB  in  1 file  (only C files counted)
+SIZE       :  26.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : shift
 AUTHOR     : Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero
 MAINTAINER : 
-SIZE       :  16.4 kB  in  1 file  (only C files counted)
+SIZE       :  12.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sinus
 AUTHOR     : Xavier Bouchoux
 MAINTAINER : 
-SIZE       :  26.1 kB  in  1 file  (only C files counted)
+SIZE       :  32.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : smooth_palette
 AUTHOR     : Scott Draves
 MAINTAINER : 
-SIZE       :  12.5 kB  in  1 file  (only C files counted)
+SIZE       :  11.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : snoise
 AUTHOR     : Marcelo de Gomensoro Malheiros
 MAINTAINER : 
-SIZE       :  19.0 kB  in  1 file  (only C files counted)
+SIZE       :  15.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sobel
 AUTHOR     : Thorsten Schnier
 MAINTAINER : 
-SIZE       :  13.6 kB  in  1 file  (only C files counted)
+SIZE       :  12.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sparkle
 AUTHOR     : John Beale, & (ported to GIMP v0.54) Michael J. Hammel & ted to GIMP v1.0) Spencer Kimball
 MAINTAINER : Martin Weber matweb@gmx.net
-SIZE       :  35.6 kB  in  1 file  (only C files counted)
+SIZE       :  27.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : spheredesigner
 AUTHOR     : Vidar Madsen
 MAINTAINER : 
-SIZE       :  76.0 kB  in  1 file  (only C files counted)
+SIZE       :  74.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : spread
 AUTHOR     : Spencer Kimball and Peter Mattis, ported by Brian Degenhardt and Federico Mena Quintero
 MAINTAINER : 
-SIZE       :  17.0 kB  in  1 file  (only C files counted)
+SIZE       :  12.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : struc
 AUTHOR     : Karl-Johan Andersson
 MAINTAINER : 
-SIZE       :  13.5 kB  in  1 file  (only C files counted)
+SIZE       :  10.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : sunras
 AUTHOR     : Peter Kirchgessner
 MAINTAINER : 
-SIZE       :  43.6 kB  in  1 file  (only C files counted)
+SIZE       :  40.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : tga
 AUTHOR     : Raphael FRANCOIS, Gordon Matzigkeit
 MAINTAINER : 
-SIZE       :  37.1 kB  in  1 file  (only C files counted)
+SIZE       :  35.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : threshold_alpha
 AUTHOR     : Shuji Narazaki (narazaki@InetQ.or.jp)
 MAINTAINER : 
-SIZE       :  20.4 kB  in  1 file  (only C files counted)
+SIZE       :   7.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : tiff
 AUTHOR     : Spencer Kimball, Peter Mattis & Nick Lamb
 MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
-SIZE       :  45.3 kB  in  1 file  (only C files counted)
+SIZE       :  43.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : tile
 AUTHOR     : Spencer Kimball & Peter Mattis
 MAINTAINER : 
-SIZE       :  15.5 kB  in  1 file  (only C files counted)
+SIZE       :  12.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : tileit
 AUTHOR     : Andy Thomas
 MAINTAINER : Andy Thomas alt@gimp.org
-SIZE       :  34.8 kB  in  1 file  (only C files counted)
+SIZE       :  31.3 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : tiler
 AUTHOR     : Tim Rowley
 MAINTAINER : 
-SIZE       :   5.5 kB  in  1 file  (only C files counted)
+SIZE       :   5.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : twain
 AUTHOR     : Craig Setera
 MAINTAINER : 
-SIZE       :  70.9 kB  in  5 files (only C files counted)
+SIZE       :  70.6 kB  in  5 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : unsharp
 AUTHOR     : Winston Chang <wchang3@students.wisc.edu>
-MAINTAINER : 
-SIZE       :  38.6 kB  in  3 files (only C files counted)
+MAINTAINER : Winston Chang <wchang3@students.wisc.edu>
+SIZE       :  24.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : url
 AUTHOR     : Spencer Kimball & Peter Mattis
 MAINTAINER : 
-SIZE       :   5.0 kB  in  1 file  (only C files counted)
+SIZE       :   5.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : video
 AUTHOR     : Adam D. Moss (adam@foxbox.org)
 MAINTAINER : Adam D. Moss (adam@foxbox.org)
-SIZE       : 132.8 kB  in  1 file  (only C files counted)
+SIZE       : 128.5 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : vinvert
@@ -920,19 +904,19 @@ COMMENT    :
 NAME       : vpropagate
 AUTHOR     : Shuji Narazaki (narazaki@InetQ.or.jp)
 MAINTAINER : 
-SIZE       :  35.9 kB  in  1 file  (only C files counted)
+SIZE       :  30.7 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : warp
 AUTHOR     : John P. Beale
 MAINTAINER : 
-SIZE       :  62.8 kB  in  1 file  (only C files counted)
+SIZE       :  56.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : waves
 AUTHOR     : Eric L. Hernes, Stephen Norris
 MAINTAINER : 
-SIZE       :  14.7 kB  in  1 file  (only C files counted)
+SIZE       :  20.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : webbrowser
@@ -944,61 +928,61 @@ COMMENT    :
 NAME       : whirlpinch
 AUTHOR     : Federico Mena Quintero and Scott Goehring
 MAINTAINER : Kelly Martin <kelly@gimp.org>
-SIZE       :  27.4 kB  in  1 file  (only C files counted)
+SIZE       :  25.0 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : winclipboard
 AUTHOR     : Hans Breuer
 MAINTAINER : 
-SIZE       :  15.8 kB  in  1 file  (only C files counted)
+SIZE       :  15.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : wind
 AUTHOR     : Nigel Wetten
 MAINTAINER : 
-SIZE       :  32.5 kB  in  1 file  (only C files counted)
+SIZE       :  21.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : winprint
 AUTHOR     : Tor Lillqvist <tml@iki.fi>
 MAINTAINER : Tor Lillqvist <tml@iki.fi>
-SIZE       :  18.2 kB  in  1 file  (only C files counted)
+SIZE       :  18.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : winsnap
 AUTHOR     : Craig Setera
 MAINTAINER : Tor Lillqvist <tml@iki.fi>
-SIZE       :  29.9 kB  in  1 file  (only C files counted)
+SIZE       :  29.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : wmf
 AUTHOR     : Tor Lillqvist <tml@iki.fi>
 MAINTAINER : Tor Lillqvist <tml@iki.fi>
-SIZE       :  75.1 kB  in  1 file  (only C files counted)
+SIZE       :  73.9 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : xbm
 AUTHOR     : Gordon Matzigkeit
 MAINTAINER : 
-SIZE       :  27.0 kB  in  1 file  (only C files counted)
+SIZE       :  24.4 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : xjt
 AUTHOR     : Wolfgang Hofer
 MAINTAINER : Wolfgang Hofer <hof@hotbot.com>
-SIZE       : 129.1 kB  in  3 files (only C files counted)
+SIZE       : 166.5 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------
 NAME       : xpm
 AUTHOR     : Spencer Kimball & Peter Mattis & Ray Lehtiniemi
 MAINTAINER : 
-SIZE       :  22.5 kB  in  1 file  (only C files counted)
+SIZE       :  20.6 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : xwd
 AUTHOR     : Peter Kirchgessner
 MAINTAINER : 
-SIZE       :  56.4 kB  in  1 file  (only C files counted)
+SIZE       :  56.1 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
 NAME       : zealouscrop
