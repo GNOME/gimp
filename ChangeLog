@@ -1,3 +1,7 @@
+2000-02-13  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/script-fu/script-fu-console.c: minor i18n fix.
+
 Sat Feb 12 17:49:02 PST 2000 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/bmp/Makefile.am
