@@ -1,3 +1,7 @@
+2000-07-31  Valek Filippov  <frob@df.ru>
+
+	* ru.po: fixed dodge-burn switch. found by Felix S. <silence@musician.org>.
+
 2000-07-29  Sven Neumann  <sven@gimp.org>
 
 	* de.po: updated german translation

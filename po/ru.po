@@ -1101,11 +1101,11 @@ msgstr "Тип"
 
 #: app/dodgeburn.c:163
 msgid "Dodge"
-msgstr "Затемнитель"
+msgstr "Осветлитель"
 
 #: app/dodgeburn.c:165
 msgid "Burn"
-msgstr "Осветлитель"
+msgstr "Затемнитель"
 
 #: app/dodgeburn.c:175
 msgid "Mode"
@@ -5147,7 +5147,7 @@ msgstr "Чернила"
 
 #: app/tool_options.c:487 app/tools.c:848 app/tools.c:854
 msgid "Dodge or Burn"
-msgstr "Затемнение или осветление"
+msgstr "Осветление или затемнение"
 
 #: app/tool_options.c:489
 msgid "Smudge Tool"
@@ -5409,7 +5409,7 @@ msgstr "Рисование чернилами"
 
 #: app/tools.c:849
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/Инструменты/Рисование/Затемнитель-Осветлитель"
+msgstr "/Инструменты/Рисование/Осветлитель-Затемнитель"
 
 #: app/tools.c:876 app/tools.c:882
 msgid "Smudge"
