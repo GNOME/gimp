@@ -309,17 +309,16 @@ create_options_page (void)
   GtkWidget *vbox;
   GtkWidget *toggle;
 
-  page = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
   /* General options */
 
-  frame = gtk_frame_new (_("General Options"));
+  frame = gimp_frame_new (_("General Options"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -406,9 +405,8 @@ create_options_page (void)
                     &mapvals.antialiasing);
 
   table = gtk_table_new (2, 3, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -441,7 +439,7 @@ create_options_page (void)
 		    G_CALLBACK (gimp_double_adjustment_update),
 		    &mapvals.pixel_treshold);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Threshold:"), 1.0, 1.0,
+			     _("Threshold:"), 0.0, 1.0,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
@@ -469,17 +467,16 @@ create_light_page (void)
   GtkWidget *colorbutton;
   GtkObject *adj;
 
-  page = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gtk_frame_new (_("Light Settings"));
+  frame = gimp_frame_new (_("Light Settings"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   table = gtk_table_new (2, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -496,7 +493,7 @@ create_light_page (void)
                     &mapvals.lightsource.type);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("L_ight Type:"), 1.0, 0.5, combo, 1, TRUE);
+			     _("L_ight Type:"), 0.0, 0.5, combo, 1, TRUE);
 
   gimp_help_set_help_data (combo, _("Type of light source to apply"), NULL);
 
@@ -511,22 +508,21 @@ create_light_page (void)
 		    G_CALLBACK (interactive_preview_callback),
 		    NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Lig_ht Color:"), 1.0, 0.5,
+			     _("Lig_ht Color:"), 0.0, 0.5,
 			     colorbutton, 1, TRUE);
 
   gimp_help_set_help_data (colorbutton,
 			   _("Set light source color"), NULL);
 
-  pointlightwid = gtk_frame_new (_("Position"));
+  pointlightwid = gimp_frame_new (_("Position"));
   gtk_box_pack_start (GTK_BOX (page), pointlightwid, FALSE, FALSE, 0);
 
   if (mapvals.lightsource.type == POINT_LIGHT)
     gtk_widget_show (pointlightwid);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (pointlightwid), table);
   gtk_widget_show (table);
 
@@ -535,7 +531,7 @@ create_light_page (void)
 				     0.1, 1.0, 1.0, 0.0, 2);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_X:"), 1.0, 0.5,
+			     _("_X:"), 0.0, 0.5,
 			     spin_pos_x, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -552,7 +548,7 @@ create_light_page (void)
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Y:"), 1.0, 0.5,
+			     _("_Y:"), 0.0, 0.5,
 			      spin_pos_y, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -569,7 +565,7 @@ create_light_page (void)
 				     -G_MAXFLOAT, G_MAXFLOAT,
 				     0.1, 1.0, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Z:"), 1.0, 0.5,
+			     _("_Z:"), 0.0, 0.5,
 			      spin_pos_z, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -578,27 +574,26 @@ create_light_page (void)
 		    G_CALLBACK (interactive_preview_callback),
 		    NULL);
 
-  gimp_help_set_help_data (  spin_pos_z,
+  gimp_help_set_help_data (spin_pos_z,
 			   _("Light source Z position in XYZ space"), NULL);
 
 
-  dirlightwid = gtk_frame_new (_("Direction Vector"));
+  dirlightwid = gimp_frame_new (_("Direction Vector"));
   gtk_box_pack_start (GTK_BOX (page), dirlightwid, FALSE, FALSE, 0);
 
   if (mapvals.lightsource.type == DIRECTIONAL_LIGHT)
     gtk_widget_show (dirlightwid);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (dirlightwid), table);
   gtk_widget_show (table);
 
   spin_dir_x = gimp_spin_button_new (&adj, mapvals.lightsource.direction.x,
 				     -1.0, 1.0, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("X:"), 1.0, 0.5,
+			     _("X:"), 0.0, 0.5,
 			     spin_dir_x, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -614,7 +609,7 @@ create_light_page (void)
   spin_dir_y = gimp_spin_button_new (&adj, mapvals.lightsource.direction.y,
 				     -1.0, 1.0, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Y:"), 1.0, 0.5,
+			     _("Y:"), 0.0, 0.5,
 			     spin_dir_y, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -629,7 +624,7 @@ create_light_page (void)
   spin_dir_z = gimp_spin_button_new (&adj, mapvals.lightsource.direction.z,
 				     -1.0, 1.0, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Z:"), 1.0, 0.5,
+			     _("Z:"), 0.0, 0.5,
 			     spin_dir_z, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -653,29 +648,29 @@ create_light_page (void)
 static GtkWidget *
 create_material_page (void)
 {
-  GtkWidget *page;
-  GtkWidget *frame;
-  GtkWidget *table;
-  GtkWidget *label;
-  GtkWidget *hbox;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
-  GtkWidget *pixmap;
+  GtkSizeGroup *group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  GtkWidget    *page;
+  GtkWidget    *frame;
+  GtkWidget    *table;
+  GtkWidget    *label;
+  GtkWidget    *hbox;
+  GtkWidget    *spinbutton;
+  GtkObject    *adj;
+  GtkWidget    *pixmap;
 
-  page = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gtk_frame_new (_("Intensity Levels"));
+  frame = gimp_frame_new (_("Intensity Levels"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
   table = gtk_table_new (2, 4, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -683,9 +678,9 @@ create_material_page (void)
 
   pixmap = gimp_pixmap_new (amb1_xpm);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("_Ambient:"), 1.0, 0.5,
+				     _("_Ambient:"), 0.0, 0.5,
 				     pixmap, 1, FALSE);
-
+  gtk_size_group_add_widget (group, label);
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.ambient_int,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
   gtk_table_attach (GTK_TABLE (table), spinbutton, 2, 3, 0, 1,
@@ -713,8 +708,9 @@ create_material_page (void)
 
   pixmap = gimp_pixmap_new (diffint1_xpm);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				     _("_Diffuse:"), 1.0, 0.5,
+				     _("_Diffuse:"), 0.0, 0.5,
 				     pixmap, 1, FALSE);
+  gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_int,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -739,12 +735,11 @@ create_material_page (void)
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (pixmap);
 
-  frame = gtk_frame_new (_("Reflectivity"));
+  frame = gimp_frame_new (_("Reflectivity"));
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
@@ -757,8 +752,9 @@ create_material_page (void)
 
   pixmap = gimp_pixmap_new (diffref1_xpm);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-				     _("D_iffuse:"), 1.0, 0.5,
+				     _("D_iffuse:"), 0.0, 0.5,
 				     pixmap, 1, FALSE);
+  gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.diffuse_ref,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -770,7 +766,6 @@ create_material_page (void)
   g_signal_connect (adj, "value_changed",
 		    G_CALLBACK (interactive_preview_callback),
 		    NULL);
-
 
   gtk_widget_show (spinbutton);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
@@ -788,8 +783,9 @@ create_material_page (void)
 
   pixmap = gimp_pixmap_new (specref1_xpm);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-				     _("_Specular:"), 1.0, 0.5,
+				     _("_Specular:"), 0.0, 0.5,
 				     pixmap, 1, FALSE);
+  gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.specular_ref,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -819,8 +815,9 @@ create_material_page (void)
 
   pixmap = gimp_pixmap_new (high1_xpm);
   label = gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-				     _("_Highlight:"), 1.0, 0.5,
+				     _("_Highlight:"), 0.0, 0.5,
 				     pixmap, 1, FALSE);
+  gtk_size_group_add_widget (group, label);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.material.highlight,
 				     0, G_MAXFLOAT, 0.1, 1.0, 1.0, 0.0, 2);
@@ -863,10 +860,10 @@ create_bump_page (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
 
-  page = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -888,9 +885,8 @@ create_bump_page (void)
 			   NULL);
 
   table = gtk_table_new (6, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -903,7 +899,7 @@ create_bump_page (void)
                               &mapvals.bumpmap_id);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Bumpm_ap Image:"), 1.0, 0.5,
+			     _("Bumpm_ap Image:"), 0.0, 0.5,
 			     combo, 1, TRUE);
 
   combo = gimp_int_combo_box_new (_("Linear"),      LINEAR_MAP,
@@ -919,12 +915,12 @@ create_bump_page (void)
                     &mapvals.bumpmaptype);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Cu_rve:"), 1.0, 0.5, combo, 1, TRUE);
+			     _("Cu_rve:"), 0.0, 0.5, combo, 1, TRUE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmax,
 				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Ma_ximum Height:"), 1.0, 0.5,
+			     _("Ma_ximum Height:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
@@ -951,10 +947,10 @@ create_environment_page (void)
   GtkWidget *frame;
   GtkWidget *combo;
 
-  page = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (page), 4);
+  page = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (page), 12);
 
-  frame = gtk_frame_new (NULL);
+  frame = gimp_frame_new (NULL);
   gtk_box_pack_start (GTK_BOX (page), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -976,9 +972,8 @@ create_environment_page (void)
 			   NULL);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
@@ -991,7 +986,7 @@ create_environment_page (void)
                               NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("En_vironment Image:"), 1.0, 0.5,
+			     _("En_vironment Image:"), 0.0, 0.5,
 			     combo, 1, TRUE);
   gimp_help_set_help_data (combo, _("Environment image to use"), NULL);
 
@@ -1083,8 +1078,8 @@ main_dialog (GimpDrawable *drawable)
 
 			    NULL);
 
-  main_hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (appwin)->vbox), main_hbox,
 		      FALSE, FALSE, 0);
   gtk_widget_show (main_hbox);
@@ -1092,13 +1087,8 @@ main_dialog (GimpDrawable *drawable)
   /* Create the Preview */
   /* ================== */
 
-  frame = gtk_frame_new (_("Preview"));
-  gtk_box_pack_start (GTK_BOX (main_hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   /* Add preview widget and various buttons to the first part */
@@ -1124,9 +1114,9 @@ main_dialog (GimpDrawable *drawable)
   gtk_widget_show (previewarea);
 
   /* create preview options, frame and vbox */
-  hbox = gtk_hbox_new (FALSE, 2);
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-
 
   button = gtk_button_new_with_mnemonic (_("_Update"));
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1140,7 +1130,7 @@ main_dialog (GimpDrawable *drawable)
   toggle = gtk_check_button_new_with_mnemonic (_("I_nteractive"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mapvals.interactive_preview);
-  gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &mapvals.interactive_preview);
@@ -1155,17 +1145,10 @@ main_dialog (GimpDrawable *drawable)
 			   _("Enable/disable real time preview of changes"),
 			   NULL);
 
-  frame = gtk_frame_new (_("Preview Options"));
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (frame);
-
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   create_main_notebook (main_hbox);
 
   gtk_widget_show (appwin);
+
   {
     GdkCursor *cursor;
 
