@@ -372,6 +372,7 @@ install_run (InstallCallback callback)
   GdkFont   *font;
   FILE *pfp;
   char buffer[2048];
+  char *gimp_data_dir;
   struct stat stat_buf;
   int err;
   int executable = TRUE;
@@ -415,7 +416,11 @@ install_run (InstallCallback callback)
   gtk_text_insert (GTK_TEXT (text), font_strong, NULL, NULL, "User Installation Log\n\n", -1);
 
   /*  Generate output  */
-  sprintf (buffer, "%s/user_install", DATADIR);
+  if ((gimp_data_dir = getenv ("GIMP_DATADIR")) != NULL)
+    sprintf (buffer, "%s/user_install", gimp_data_dir);
+  else
+    sprintf (buffer, "%s/user_install", DATADIR);
+
   if ((err = stat (buffer, &stat_buf)) != 0)
     {
       gtk_text_insert (GTK_TEXT (text), font, NULL, NULL, buffer, -1);
@@ -433,8 +438,13 @@ install_run (InstallCallback callback)
 
   if (executable == TRUE)
     {
-      sprintf (buffer, "%s/user_install %s %s", DATADIR, DATADIR,
-	       gimp_directory ());
+      if (gimp_data_dir)
+	sprintf (buffer, "%s/user_install %s %s", gimp_data_dir, gimp_data_dir,
+		 gimp_directory ());
+      else
+	sprintf (buffer, "%s/user_install %s %s", DATADIR, DATADIR,
+		 gimp_directory ());
+
       if ((pfp = popen (buffer, "r")) != NULL)
 	{
 	  while (fgets (buffer, 2048, pfp))

@@ -474,11 +474,21 @@ temp_buf_swap (buf)
   /*  Open file for overwrite  */
   if ((fp = fopen (filename, "w")))
     {
-      fwrite (swap->data, swap->width * swap->height * swap->bytes, 1, fp);
-      fclose (fp);
+      size_t blocks_written;
+      blocks_written = fwrite (swap->data, swap->width * swap->height * swap->bytes, 1, fp);
+      /* Check whether all bytes were written and fclose() was able to flush its buffers */
+      if ((0 != fclose (fp)) || (1 != blocks_written))
+        {
+          (void) unlink (filename);
+          perror ("Write error on temp buf");
+          g_message ("Cannot write \"%s\"", filename);
+          g_free (filename);
+          return;
+        }
     }
   else
     {
+      (void) unlink (filename);
       perror ("Error in temp buf caching");
       g_message ("Cannot write \"%s\"", filename);
       g_free (filename);
@@ -522,11 +532,11 @@ temp_buf_unswap (buf)
     {
       if ((fp = fopen (buf->filename, "r")))
 	{
-	  size_t blocksRead;
-	  blocksRead = fread (buf->data, buf->width * buf->height * buf->bytes, 1, fp);
-	  fclose (fp);
-	  if (blocksRead != 1)
-	    perror ("Read error on temp buf");
+	  size_t blocks_read;
+	  blocks_read = fread (buf->data, buf->width * buf->height * buf->bytes, 1, fp);
+	  (void) fclose (fp);
+	  if (blocks_read != 1)
+            perror ("Read error on temp buf");
 	  else
 	    succ = TRUE;
 	}

@@ -1,3 +1,13 @@
+Fri Oct  9 15:36:52 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/temp_buf.c: applied gimp-entity-980929-1, adds
+	write error handling
+
+	* app/gimprc.c
+	* app/install.c
+	* app/tips_dialog.c: allow use of GIMP_DATADIR to override
+	compiled in default
+
 Tue Oct  6 23:40:22 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/interface.c: applied gimp-quinn-981004-0, make the
