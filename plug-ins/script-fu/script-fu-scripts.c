@@ -24,11 +24,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/types.h>
-#if HAVE_DIRENT_H
-#include <dirent.h>
-#endif
-#include <sys/stat.h>
-#include <ctype.h>		/* For toupper() */
 
 #include <gtk/gtk.h>
 
@@ -40,23 +35,6 @@
 
 #include "script-fu-intl.h"
 
-#ifdef G_OS_WIN32
-#define STRICT
-#include <windows.h>
-
-#include <io.h>
-
-#ifndef W_OK
-#define W_OK 2
-#endif
-#ifndef S_ISDIR
-#define S_ISDIR(m) ((m) & _S_IFDIR)
-#endif
-#ifndef S_ISREG
-#define S_ISREG(m) ((m) & _S_IFREG)
-#endif
-
-#endif /* G_OS_WIN32 */
 
 #define TEXT_WIDTH           100
 #define TEXT_HEIGHT           25
@@ -237,7 +215,6 @@ static void       script_fu_brush_preview           (gchar     *name,
  *  Local variables
  */
 
-static struct stat  filestat;
 static GTree       *script_list = NULL;
 static SFInterface *sf_interface = NULL;  /*  there can only be at most one
 					      interactive interface  */
@@ -251,32 +228,30 @@ extern gchar        siod_err_msg[];
 void
 script_fu_find_scripts (void)
 {
-  const gchar   *home;
-  gchar         *path_str;
-  gchar         *local_path;
-  gchar         *path;
-  gchar         *filename;
-  gchar         *token;
-  gchar         *next_token;
-  gchar         *command;
-  gint           my_err;
-  DIR           *dir;
-  struct dirent *dir_ent;
+  const gchar *home;
+  const gchar *entry;
+  gchar       *path_str;
+  gchar       *local_path;
+  gchar       *path;
+  gchar       *filename;
+  gchar       *token;
+  gchar       *next_token;
+  gchar       *command;
+  GDir        *dir;
 
   /*  Make sure to clear any existing scripts  */
   if (script_list != NULL)
     {
-      g_tree_traverse (script_list, 
-		       (GTraverseFunc)script_fu_remove_script, 
-		       G_IN_ORDER, 
-		       NULL);
+      g_tree_foreach (script_list, 
+                      (GTraverseFunc) script_fu_remove_script, 
+                      NULL);
       g_tree_destroy (script_list);
     }
 
 #ifdef ENABLE_NLS
-  script_list = g_tree_new ((GCompareFunc)strcoll);
+  script_list = g_tree_new ((GCompareFunc) strcoll);
 #else
-  script_list = g_tree_new ((GCompareFunc)strcmp);
+  script_list = g_tree_new ((GCompareFunc) strcmp);
 #endif
 
   path_str = gimp_gimprc_query ("script-fu-path");
@@ -310,30 +285,28 @@ script_fu_find_scripts (void)
 	}
 	      
       /* Check if directory exists and if it has any items in it */
-      my_err = stat (path, &filestat);
-      
-      if (!my_err && S_ISDIR (filestat.st_mode))
-	{
-	  if (path[strlen (path) - 1] != G_DIR_SEPARATOR)
-	    strcat (path, G_DIR_SEPARATOR_S);
+      if (g_file_test (path, G_FILE_TEST_IS_DIR))
+        {
+          GError *error;
 
-	  /* Open directory */
-	  dir = opendir (path);
+	  dir = g_dir_open (path, 0, &error);
 	  
 	  if (!dir)
-	    g_message ("error reading script directory \"%s\"", path);
+            {
+              g_message ("Error reading script directory '%s'\n%s", 
+                         path, error->message);
+              g_clear_error (&error);
+            }
 	  else
 	    {
-	      while ((dir_ent = readdir (dir)))
+	      while ((entry = g_dir_read_name (dir)))
 		{
-		  filename = g_strdup_printf ("%s%s", path, dir_ent->d_name);
+		  filename = g_build_filename (path, entry, NULL);
 		  
 		  if (g_ascii_strcasecmp (filename + strlen (filename) - 4, ".scm") == 0)
 		    {
 		      /* Check the file and see that it is not a sub-directory */
-		      my_err = stat (filename, &filestat);
-		      
-		      if (!my_err && S_ISREG (filestat.st_mode))
+		      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
 			{
 			  gchar *qf = g_strescape (filename, NULL);
 #ifdef __EMX__
@@ -357,7 +330,7 @@ script_fu_find_scripts (void)
 		  g_free (filename);
 		} /* while */
 	      
-	      closedir (dir);
+	      g_dir_close (dir);
 	    } /* else */
 	} /* if */
 
@@ -370,8 +343,9 @@ script_fu_find_scripts (void)
   g_free (path_str);
 
   /*  now that all scripts are read in and sorted, tell gimp about them  */
-  g_tree_traverse (script_list, 
-		   (GTraverseFunc)script_fu_install_script, G_IN_ORDER, NULL);
+  g_tree_foreach (script_list, 
+                  (GTraverseFunc) script_fu_install_script, 
+                  NULL);
 }
 
 LISP
@@ -1073,10 +1047,9 @@ script_fu_find_script (gchar *pdb_name)
   gchar *script;
   
   script = pdb_name;
-  g_tree_traverse (script_list, 
-		   (GTraverseFunc) script_fu_lookup_script, 
-		   G_IN_ORDER, 
-		   &script);
+  g_tree_foreach (script_list, 
+                  (GTraverseFunc) script_fu_lookup_script, 
+                  &script);
 
   if (script == pdb_name)
     return NULL;
@@ -1690,40 +1663,14 @@ static void
 script_fu_font_preview (GtkWidget *preview,
 			gchar     *data)
 {
-  GdkFont *font;
-  gchar   *fontname;
-  gchar   *family;
-
-  if (data == NULL) 
-    return;
-
-  fontname = g_strdup (data);
-
-  /* Check if the fontname is valid and the font is present */
-  font = gdk_font_load (fontname);
-
-  if (font != NULL)
-    {
-      gdk_font_unref (font);
-
-      strtok (fontname, "-");
-      family = strtok (NULL, "-");
-
-      gtk_label_set_text (GTK_LABEL (preview), family);
-    }
-  else
-    {
-      gtk_label_set_text (GTK_LABEL (preview), _("NOT SET"));
-    }
-  
-  g_free (fontname);
+  /* FIXME: here should be a check if the fontname is valid and the font is present */
+  gtk_label_set_text (GTK_LABEL (preview), data);
 }
 
 static void
 script_fu_ok_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  GdkFont   *font;
   GtkWidget *menu_item;
   gchar     *escaped;
   gchar     *text = NULL;
@@ -1736,6 +1683,9 @@ script_fu_ok_callback (GtkWidget *widget,
 
   SFScript  *script = (SFScript *) data;
   
+#if 0
+  GdkFont   *font;
+
   /* Check if choosen fonts are there */
   for (i = 0; i < script->num_args; i++)
     if (script->arg_types[i] == SF_FONT)
@@ -1750,6 +1700,7 @@ script_fu_ok_callback (GtkWidget *widget,
 	else
 	  gdk_font_unref (font);
       }
+#endif
   
   length = strlen (script->script_name) + 3;
 

@@ -134,7 +134,7 @@ preferences_load(PreferencesData_t *data)
    char buf[256];
    gchar *filename;
 
-   filename = g_strconcat(gimp_directory(), "/imagemaprc", NULL);
+   filename = g_build_filename (gimp_directory (), "imagemaprc", NULL);
 
    in = fopen(filename, "r");
    g_free(filename);
@@ -157,7 +157,7 @@ preferences_save(PreferencesData_t *data)
    gchar *filename;
    ColorSelData_t *colors = &data->colors;
 
-   filename = g_strconcat(gimp_directory(), "/imagemaprc", NULL);
+   filename = g_build_filename (gimp_directory (), "imagemaprc", NULL);
 
    out = fopen(filename, "w");
    if (out) {

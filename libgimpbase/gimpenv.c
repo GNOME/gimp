@@ -153,10 +153,7 @@ gimp_directory (void)
 gchar *
 gimp_personal_rc_file (const gchar *basename)
 {
-  return g_strconcat (gimp_directory (),
-		      G_DIR_SEPARATOR_S,
-		      basename,
-		      NULL);
+  return g_build_filename (gimp_directory (), basename, NULL);
 }
 
 /**

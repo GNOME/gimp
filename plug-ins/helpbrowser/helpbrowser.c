@@ -464,7 +464,7 @@ load_page (HelpPage *source_page,
       if (g_path_is_absolute (ref))
 	new_ref = g_strdup (ref);
       else
-	new_ref = g_strconcat (old_dir, G_DIR_SEPARATOR_S, ref, NULL);
+	new_ref = g_build_filename (old_dir, ref, NULL);
 
       g_string_printf (file_contents, gettext (dir_not_found_format_string),
                        eek_png_tag, new_dir, new_ref);
@@ -479,7 +479,7 @@ load_page (HelpPage *source_page,
   g_free (new_dir);
   new_dir = g_get_current_dir ();
 
-  new_ref = g_strconcat (new_dir, G_DIR_SEPARATOR_S, new_base, NULL);
+  new_ref = g_build_filename (new_dir, new_base, NULL);
 
   if (strcmp (dest_page->current_ref, new_ref) == 0)
     {
@@ -508,8 +508,8 @@ load_page (HelpPage *source_page,
     {
       gchar *undocumented_filter;
 
-      undocumented_filter = g_strconcat (new_dir, G_DIR_SEPARATOR_S,
-					 "undocumented_filter.html", NULL);
+      undocumented_filter = 
+        g_build_filename (new_dir, "undocumented_filter.html", NULL);
 
 
       afile = fopen (undocumented_filter, "rt");
@@ -779,9 +779,8 @@ open_browser_dialog (gchar *help_path,
       return FALSE;
     }
 
-  eek_png_path = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
-			      "images", G_DIR_SEPARATOR_S,
-			      "eek.png", NULL);
+  eek_png_path = g_build_filename (root_dir, "images", "eek.png", NULL);
+
   if (access (eek_png_path, R_OK) == 0)
     eek_png_tag = g_strdup_printf ("<img src=\"%s\">", eek_png_path);
 
@@ -877,19 +876,18 @@ open_browser_dialog (gchar *help_path,
 	{
 	case CONTENTS:
 	case INDEX:
-	  pages[i].current_ref = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
-					      locale, G_DIR_SEPARATOR_S,
-					      ".", NULL);
+	  pages[i].current_ref = 
+            g_build_filename (root_dir, locale, ".", NULL);
 
 	  title = drag_source = gtk_event_box_new ();
 	  label = gtk_label_new (gettext (pages[i].label));
 	  gtk_container_add (GTK_CONTAINER (title), label);
 	  gtk_widget_show (label);
 	  break;
+
 	case HELP:
-	  pages[i].current_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-					      locale, G_DIR_SEPARATOR_S,
-					      ".", NULL);
+	  pages[i].current_ref = 
+            g_build_filename (initial_dir, locale, ".", NULL);
 
 	  title = combo = gtk_combo_new ();
 	  drag_source = GTK_COMBO (combo)->entry;
@@ -936,15 +934,13 @@ open_browser_dialog (gchar *help_path,
 
       if (i == HELP && help_file)
 	{
-	  initial_ref = g_strconcat (initial_dir, G_DIR_SEPARATOR_S,
-				     locale, G_DIR_SEPARATOR_S,
-				     help_file, NULL);
+	  initial_ref = 
+            g_build_filename (initial_dir, locale, help_file, NULL);
 	}
       else
 	{
-	  initial_ref = g_strconcat (root_dir, G_DIR_SEPARATOR_S,
-				     locale, G_DIR_SEPARATOR_S,
-				     pages[i].home, NULL);
+	  initial_ref = 
+            g_build_filename (root_dir, locale, pages[i].home, NULL);
 	}
 
       success = load_page (&pages[i], &pages[i], initial_ref, 0, TRUE, FALSE);
@@ -1061,9 +1057,7 @@ run_temp_proc (gchar      *name,
 	}
     }
 
-  path = g_strconcat (help_path, G_DIR_SEPARATOR_S, 
-		      locale, G_DIR_SEPARATOR_S,
-		      help_file, NULL);
+  path = g_build_filename (help_path, locale, help_file, NULL);
 
   g_free (help_path);
   g_free (locale);
@@ -1221,9 +1215,8 @@ run (gchar      *name,
 	    }
 	  else
 	    {
-	      gimp_help_root = g_strconcat (gimp_data_directory(),
-					    G_DIR_SEPARATOR_S, 
-					    GIMP_HELP_PREFIX, NULL);
+	      gimp_help_root = g_build_filename (gimp_data_directory(),
+                                                 GIMP_HELP_PREFIX, NULL);
 	    }
 
 	  help_path = g_strdup (gimp_help_root);

@@ -1,5 +1,16 @@
 2001-11-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpenv.c
+	* plug-ins/helpbrowser/helpbrowser.c
+	* plug-ins/imagemap/imap_preferences.c: use g_build_filename().
+
+	* plug-ins/script-fu/script-fu-scripts.c: use new GDir functions,
+	g_build_filename() and g_file_test() to make code more portable.
+	Don't use deprecated gdk_font functions. We don't use X fonts any 
+	longer.
+
+2001-11-29  Sven Neumann  <sven@gimp.org>
+
 	* app/gimprc.c (save_gimprc_strings): reverted list handling for 
 	unknown_tokens to the code used in 1.2 which has the advantage that
 	it doesn't crash.
