@@ -1,0 +1,167 @@
+# 이 파일은 GIMP를 위한 팁들의 리스트 입니다. 매번 GIMP가 시작되어질때
+# 하나의 팁이 이 파일로부터 선택되어 질 것이고 "오늘의 GIMP 팁" 대화
+# 상자에 보여지게 될 것입니다.
+#
+# Language : Korean[ko]
+# Last-translator: Young-Boo Park <DIRBOO@hitel.net>
+# Date : <1999-09-20 23:40:10 Young-Boo Park>
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the lay out of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
+# lists.
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+
+# FIXME: re-write this welcome message:
+
+                GIMP에 오신것을 환영합니다!
+      
+거의 모든 이미지 명령은 이미지에서 오른쪽 버튼을 클릭에 의해 
+수행 됩니다. 그리고 걱정하지 마세요, 대부분의 실수들은 다시 
+복구됩니다.
+
+# Tips for beginners start here
+#
+
+GIMP는 당신의 이미지를 정리 할 수 있도록 계층들(layers)을 제
+공합니다. 계층들을 슬라이드나 필터들의 스택처럼 생각하고, 그
+것들의 혼합된 순서는 계층들을 통해 알게 됩니다.
+
+당신은 계층(Layers)의 대화상자(대화상자->계층과 채널)안에서 
+계층의 라벨을 오른쪽 버튼을 클릭하여 많은 계층의 명령들을 수
+행할 수 있습니다.
+
+GIF, XPM, 기타 인덱스된 컬러 포멧을 저장하려면 당신은 이미지 
+메뉴를 사용하여 이미지 변화가 필요합니다.
+
+도구상자에서 아무 버튼으로 더블 클릭으로 열면 도구옵션을 설
+정할 수 있습니다.
+
+당신은 계층(Layers) 대화상자에서 그것의 이름을 더블클릭하면 
+계층의 이름을 바꿀 수 있습니다.
+
+"배경"으로 명명된 계층(Layer)은 특별합니다. 당신은 그것에 투
+명하게 하거나 계층 마스크를 추가 할 수 없습니다. 투명하게 하
+기 위해서는 당신은 먼저 계층 대화상자에서 오른쪽 버튼을 클릭
+하여 계층에 "알파 추가"를 해야만 하고 "알파 채널 추가"를 선
+택해야만 합니다.
+
+그리기 도구(칠하기, 뿌리기, 연필)를 사용할때, Shift-클릭은 
+당신이 마지막 그린 점에서 당신의 현재 커서 지점까지 직선을 
+그려 줄 것입니다. 
+
+대부분의 플러그인은 이미지의 현재 계층(layer)를 사용합니다. 
+다른 경우엔, 만약 당신이 전체 이미지에서 플러그인 사용을 원
+한다면 모든 계층들(layers)을 합쳐야(계층->플래튼 이미지)만 
+합니다.
+
+대부분의 파일 포멧은 계층들(layers)을 조정할 수 없고 그것은 
+활성화된 계층(layer)이 저장 되어지는 것 때문입니다. 저장할
+때, XCF(계층, 채널, 가이드들을 유지하기 위한 GIMP파일 포멧)
+를 사용하세요.
+
+모든 효과는 모든 이미지 종류에 적용되어 질 수 없습니다. 이것
+은 밖의 메뉴 엔트리에 나타납니다. 당신은 RGB나 알파-채널,
+플래튼한 이미지를 해야 할 것입니다.
+
+# Tips for intermediate users start here
+#
+
+이 파일 선택 대화상자는 단시 쉘처럼 TAB을 가지고 명령을 줄 
+수 있습니다. 파일이름의 형식 부분에 TAB치세요! 어때요? 완벽
+하죠.
+
+당신은 몇몇 메뉴에서 메뉴를 열거나 메뉴의 아이템을 선택하거
+나 혹 새로운 단축키 조합을 누르는 것들은 단축키가 대신 할 수 
+있다. 이것은 동적이며 당신이 GIMP를 종료할때, 저장 되어진다.
+
+모든 오래된 채널들의 명령은 더 좋고 쉬운 계층(Layer) 그리고 
+계층 모드 명령들은 바뀌어 집니다. 그것들을 사용할 줄 알아야 
+하지만 사용하기 더 간단하고 좋은 방법입니다.
+
+만약 이미지가 보여주는 창보다 크다면 당신은 돌려 볼 수 있도
+록 중간 마우스 버튼 사용할 수 있습니다.
+
+이미지위에 가이드에 위치한 룰러에 클릭과 드래그하세요. 모든 
+드래그된 셀렉션은 가이드들을 닫을 수 있을 것이다. 당신은
+'이동' 도구를 가지고 드래그 하여 그것들을 없앨 수 있습니다.
+
+GIMP는 진행할때 gzip압축을 지원합니다. 단지 '.gz'(또는 만약 
+bzip2가 설치되어 있다면 '.bz2')가 파일이름에 추가되고 당신의 
+이미지는 압축 되어 저장되어 질 것이다. 
+물론, 압축된 이미지도 읽습니다.
+
+선택하기 전에 Shift키가 누리면 당신에게 그것을 대체 대신에 
+현재 셀렉션에 추가 해준다. 선택을 하기 전에 Ctrl키를 사용하면 
+현재 셀렉션은 빠집니다.
+
+당신이 셀렉션에 시작 포인트의 중심이된 셀렉션을 갖거나 완벽한 정
+사각형 또는 원을 억지로 만들기 위해 셀렉션을 만드는 동안에 당
+신은 Shift키나 Ctrl키를 누를 수 있습니다.
+
+# Tips for advanced users start here
+#
+
+당신은 오른쪽 왼쪽 버튼을 클릭과 드래그로 대충 선택하기 위해 
+셀렉션 범위를 조절할 수 있습니다.
+
+모든 계층(layers)들을 숨기기 위해 계층 대화상자에서 아이콘을 
+Shift-클릭 할 수 있습니다. 모든 계층들을 보기 위해 Shift-클
+릭을 다시 누르세요.
+
+계층(layers) 대화상자 안에 계층 마스크 미리보기에서 Ctrl-클
+릭은 계층 마스크의 효과를 변환해 줍니다.
+
+계층(layers) 대화상자 안에 계층 마스크 미리보기에서 Alt-클릭
+은 직접 마스크를 보여주는 걸로 변환됩니다.
+
+당신은 이미지에서 모든 계층들(layers)통해 순환하기 위해 Alt-
+TAB을 사용합니다. (만약 당신의 윈도우 메니저가 저 키들을 가
+로채지 않는다면..)
+
+전경 색상 대신에 배경 색상을 사용하는 그것을 하기 위해 버킷 
+채우기 도구를 가지고 Shift-클릭을 합니다.
+
+회전모드에서 변환 도구를 사용한 조정 드래그는 15도를 강제로 
+회전 시킬 것입니다.
+
+당신은 Alt-드래그를 사용하여 셀렉션을 조절하고 대체할 수 있습
+니다. 
+
+만약 당신의 글꼴들이 뭉쳐 삐지면 그것은 스케일이 가능하지 않
+은 글꼴들이다. 대부분의 X 서버들은 스케일 가능한 Type 1 Post
+script 글꼴들을 제공합니다. 그것들을 다운 받아서 설치하세요.
+
+# FIXME: The next tip should disappear once we have solved the
+#        problems of stale pluginrc files and plug-in directories.
+#        All other files in ~/.gimp can be kept after an upgrade.
+#        In particular, we should try to preserve gimprc.  --Raphael
+
+새로운 버젼을 설치할때, 먼저 당신의 ~/.gimp 디랙토리를 지워
+야 확실 설치됩니다. 
+
+편집->한번긋기 사용은 당신에 활성 붓을 가지고 당신의 현재 셀
+렉션의 가장자리에 가리켜 간단한 사각형들이나 원들을 그리게 해
+줍니다. 더 복잡한 모양은 필터->Render->Gfig를 가지고 그릴수 
+있습니다.
+
+완벽한 원을 생성하기 위해서는 타원을 선택 하는 동안 Shift를 
+누르세요. 정밀하게 위치하기 위해, 당신이 선택하기 원하는 원
+에 접하는 수평,수직 가이드들에 드래그해서, 당신의 커서를 가
+이드들의 교차점에 위치하고 셀렉션은 가이드에 닿을 것이다.
+
+# (end of tips)
+
