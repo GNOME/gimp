@@ -58,7 +58,7 @@ struct _GimpUnitMenuClass
 {
   GtkOptionMenuClass  parent_class;
 
-  void (* unit_changed) (GimpUnitMenu *gum);
+  void (* unit_changed) (GimpUnitMenu *menu);
 };
 
 
@@ -70,10 +70,10 @@ GtkWidget * gimp_unit_menu_new      (const gchar *format,
 				     gboolean     show_percent,
 				     gboolean     show_custom);
 
-void        gimp_unit_menu_set_unit (GimpUnitMenu *gum, 
+void        gimp_unit_menu_set_unit (GimpUnitMenu *menu, 
 				     GimpUnit      unit);
 
-GimpUnit    gimp_unit_menu_get_unit (GimpUnitMenu *gum);
+GimpUnit    gimp_unit_menu_get_unit (GimpUnitMenu *menu);
 
 
 G_END_DECLS

@@ -513,7 +513,22 @@ gimp_rc_query (GimpRc      *rc,
 
   g_free (property_specs);
 
-  /* for backward compatibility, expand the value */
+  if (!retval)
+    {
+      const gchar *path_tokens[] =
+      {
+        "gimp_dir",
+        "gimp_data_dir",
+        "gimp_plug_in_dir",
+        "gimp_plugin_dir",
+        "gimp_sysconf_dir"
+      };
+
+      for (i = 0; !retval && i < G_N_ELEMENTS (path_tokens); i++)
+        if (strcmp (key, path_tokens[i]) == 0)
+          retval = g_strdup_printf ("${%s}", path_tokens[i]);
+    }
+
   if (retval)
     {
       gchar *tmp = gimp_config_path_expand (retval, FALSE, NULL);

@@ -1,3 +1,10 @@
+2003-02-10  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimprc.c (gimp_rc_query): allow to query for gimp
+	paths (like "gimp_dir") as it used to work in 1.2.
+
+	* libgimpwidgets/gimpunitmenu.[ch]: minor code cleanup.
+
 2003-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tool_options.[ch]: added a "const gchar *extension"
