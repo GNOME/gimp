@@ -1,6 +1,11 @@
+2002-06-17  Sven Neumann  <sven@gimp.org>
+
+	* az.po
+	* fr.po: fixed fatal errors.
+
 2002-06-16  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-06-14  Zbigniew Chyla  <chyla@buy.pl>
 
@@ -132,7 +137,7 @@
 
 2002-04-01  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-04-01  Kjartan Maraas  <kmaraas@gnome.org>
 
@@ -150,7 +155,7 @@
 
 2002-03-25  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Updated Portuguese translation.
+	* pt.po: Updated Portuguese translation.
 
 2002-03-25  Zbigniew Chyla  <cyba@gnome.pl>
 
@@ -163,7 +168,7 @@
 
 2002-03-22  Duarte Loreto <happyguy_pt@hotmail.com>
 
-        * pt.po: Added Portuguese translation (unfinished convert from Gimp-1-2)
+	* pt.po: Added Portuguese translation (unfinished convert from Gimp-1-2)
 
 2002-03-20  Stanislav Visnovsky  <visnovsky@nenya.ms.mff.cuni.cz>
 
@@ -340,11 +345,11 @@
 
 2001-11-23  Simon Budig  <simon@gimp.org>
 
-        * de.po: reverted one message.
+	* de.po: reverted one message.
 	
 2001-11-22  Simon Budig  <simon@gimp.org>
 
-        * de.po: updated german translation.
+	* de.po: updated german translation.
 	
 2001-11-18  Valek Filippov  <frob@df.ru>
 

@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.3.5\n"
 "POT-Creation-Date: 2002-05-30 16:51+0200\n"
-"PO-Revision-Date: 2002-04-15 13:19+0200\n"
+"PO-Revision-Date: 2002-06-17 11:30+0200\n"
 "Last-Translator: raymond ostertag <r.ostertag@laposte.net>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -3597,7 +3597,7 @@ msgstr "/Vue comme grille"
 
 #: app/gui/menus.c:1447
 msgid "/Show Image Menu"
-msgstr "Afficher le menu d'image"
+msgstr "/Afficher le menu d'image"
 
 #: app/gui/menus.c:1450
 msgid "/Auto Follow Active Image"
@@ -4826,10 +4826,7 @@ msgstr "conseil suivant (_N)"
 msgid ""
 "Your GIMP tips file appears to be missing! There should be a file called '%"
 "s'. Please check your installation."
-msgstr ""
-"Votre fichier de conseils GIMP manque ! Il devrait y avoir un fichier nommé "
-"«%\n"
-"s». Vérifiez votre installation."
+msgstr "Votre fichier de conseils GIMP manque ! Il devrait y avoir un fichier nommé «%s». Vérifiez votre installation."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
