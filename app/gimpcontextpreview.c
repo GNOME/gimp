@@ -480,8 +480,11 @@ gimp_context_preview_draw_brush (GimpContextPreview *gcp)
   g_return_if_fail (gcp != NULL && GIMP_IS_BRUSH (gcp->data));
  
   brush = GIMP_BRUSH (gcp->data);
-  brush_width = brush->mask->width;
-  brush_height = brush->mask->height;
+  mask_buf = brush->mask;
+  if (GIMP_IS_BRUSH_PIXMAP (brush))
+    pixmap_buf = GIMP_BRUSH_PIXMAP(brush)->pixmap_mask;
+  brush_width = mask_buf->width;
+  brush_height = mask_buf->height;
 
   if (brush_width > gcp->width || brush_height > gcp->height)
     {
@@ -491,21 +494,14 @@ gimp_context_preview_draw_brush (GimpContextPreview *gcp)
       brush_width =  (gdouble)brush_width / MAX (ratio_x, ratio_y); 
       brush_height = (gdouble)brush_height / MAX (ratio_x, ratio_y);
       
-      mask_buf = brush_scale_mask (brush->mask, brush_width, brush_height);
+      mask_buf = brush_scale_mask (mask_buf, brush_width, brush_height);
       if (GIMP_IS_BRUSH_PIXMAP (brush))
 	{
 	  /*  TODO: the scale function should scale the pixmap 
 	      and the mask in one run                            */
-	  pixmap_buf = brush_scale_pixmap (GIMP_BRUSH_PIXMAP(brush)->pixmap_mask, 
-					   brush_width, brush_height);
+	  pixmap_buf = brush_scale_pixmap (pixmap_buf, brush_width, brush_height);
 	}
       scale = TRUE;
-    }
-  else
-    {
-       mask_buf = brush->mask;
-       if (GIMP_IS_BRUSH_PIXMAP (brush))
-	 pixmap_buf = GIMP_BRUSH_PIXMAP(brush)->pixmap_mask;
     }
 
   offset_x = (gcp->width - brush_width) >> 1;

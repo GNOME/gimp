@@ -1,3 +1,8 @@
+Thu Sep  2 22:58:13 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/brush_select.c: fixed a stupid bug I introduced today.
+	* app/gimpcontextpreview.c: for consistency, do it the same way here.
+
 1999-09-02  Tor Lillqvist  <tml@iki.fi>
 
 	* plug-ins/script-fu/interp_sliba.c (lreadstring): Accept what

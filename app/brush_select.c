@@ -887,6 +887,8 @@ display_brush (BrushSelectP bsp,
   gint i, j;
 
   mask_buf = brush->mask;
+  if (GIMP_IS_BRUSH_PIXMAP (brush))
+    pixmap_buf = GIMP_BRUSH_PIXMAP(brush)->pixmap_mask;
 
   if (mask_buf->width > bsp->cell_width || mask_buf->height > bsp->cell_height)
     {
@@ -900,8 +902,7 @@ display_brush (BrushSelectP bsp,
 	{
 	  /*  TODO: the scale function should scale the pixmap 
 	            and the mask in one run                     */
- 	  pixmap_buf = brush_scale_pixmap (GIMP_BRUSH_PIXMAP(brush)->pixmap_mask,
-					   mask_buf->width, mask_buf->height);
+ 	  pixmap_buf = brush_scale_pixmap (pixmap_buf, mask_buf->width, mask_buf->height);
 	}
       scale = TRUE;
     }
