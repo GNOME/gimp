@@ -1,3 +1,8 @@
+2001-05-29  Simon Budig  <simon@gimp.org>
+
+	* po/POTFILES.in: Added app/tools/gimpposterizetool.c
+        which replaces posterize.c. Is it complete now?  :-)
+	
 2001-05-28  Dave Neary   <dneary@eircom.net>
 
 	* po/POTFILES.in: Changed one filename to (finally) fix

@@ -114,6 +114,7 @@ app/tools/gimppainttool.c
 app/tools/gimppathtool.c
 app/tools/gimppenciltool.c
 app/tools/gimpperspectivetool.c
+app/tools/gimpposterizetool.c
 app/tools/gimprectselecttool.c
 app/tools/gimprotatetool.c
 app/tools/gimpscaletool.c
