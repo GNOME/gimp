@@ -24,9 +24,10 @@
 #include "imap_cmd_create.h"
 #include "imap_cmd_delete.h"
 #include "imap_cmd_send_to_back.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static gboolean send_to_back_command_execute(Command_t *parent);
+static CmdExecuteValue_t send_to_back_command_execute(Command_t *parent);
 static void send_to_back_command_undo(Command_t *parent);
 static void send_to_back_command_redo(Command_t *parent);
 
@@ -47,7 +48,7 @@ send_to_back_command_new(ObjectList_t *list)
 {
    SendToBackCommand_t *command = g_new(SendToBackCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, "Send To Back", 
+   return command_init(&command->parent, _("Send To Back"), 
 		       &send_to_back_command_class);
 }
 
@@ -67,7 +68,7 @@ add_one_object(Object_t *obj, gpointer data)
 			  create_command_new(command->list, obj));
 }
 
-static gboolean
+static CmdExecuteValue_t
 send_to_back_command_execute(Command_t *parent)
 {
    SendToBackCommand_t *command = (SendToBackCommand_t*) parent;
@@ -80,7 +81,7 @@ send_to_back_command_execute(Command_t *parent)
    redraw_preview();		/* Fix me! */
    object_list_remove_remove_cb(command->list, id1);
    object_list_remove_add_cb(command->list, id2);
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

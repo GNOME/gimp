@@ -26,6 +26,7 @@
 
 #include "imap_default_dialog.h"
 #include "imap_file.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_table.h"
 
@@ -42,7 +43,7 @@ open_cb(GtkWidget *widget, gpointer data)
       gtk_widget_hide((GtkWidget*) data);
       load(filename);
    } else {
-      do_file_error_dialog("Error opening file", filename);
+      do_file_error_dialog(_("Error opening file"), filename);
    }
 }
 
@@ -51,7 +52,7 @@ do_file_open_dialog(void)
 {
    static GtkWidget *dialog;
    if (!dialog) {
-      dialog = gtk_file_selection_new("Load Imagemap");
+      dialog = gtk_file_selection_new(_("Load Imagemap"));
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));
@@ -74,13 +75,13 @@ do_file_exists_dialog(gpointer data)
    static DefaultDialog_t *dialog;
 
    if (!dialog) {
-      dialog = make_default_dialog("File exists!");
+      dialog = make_default_dialog(_("File exists!"));
       default_dialog_hide_apply_button(dialog);
       default_dialog_set_ok_cb(dialog, really_overwrite, data);
       default_dialog_set_label(
 	 dialog,
-	 "File already exists.\n"
-	 "  Do you really want to overwrite?  ");
+	 _("File already exists.\n"
+	 "  Do you really want to overwrite?  "));
    }
    default_dialog_show(dialog);
 }
@@ -111,7 +112,7 @@ do_file_save_as_dialog(void)
 {
    static GtkWidget *dialog;
    if (!dialog) {
-      dialog = gtk_file_selection_new("Save Imagemap");
+      dialog = gtk_file_selection_new(_("Save Imagemap"));
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));
@@ -134,7 +135,7 @@ create_file_error_dialog()
    DefaultDialog_t *dialog;
    GtkWidget *table;
 
-   file_dialog->dialog = dialog = make_default_dialog("Error");
+   file_dialog->dialog = dialog = make_default_dialog(_("Error"));
    default_dialog_hide_apply_button(dialog);
    default_dialog_hide_cancel_button(dialog);
 

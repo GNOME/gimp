@@ -157,16 +157,16 @@ tag		: shape_tag
 
 shape_tag	: SHAPE '=' STRING
 		{
-		   if (!strcasecmp($3, "RECT")) {
+		   if (!g_strcasecmp($3, "RECT")) {
 		      current_object = create_rectangle(0, 0, 0, 0);
 		      current_type = RECTANGLE;
-		   } else if (!strcasecmp($3, "CIRCLE")) {
+		   } else if (!g_strcasecmp($3, "CIRCLE")) {
 		      current_object = create_circle(0, 0, 0);
 		      current_type = CIRCLE;
-		   } else if (!strcasecmp($3, "POLY")) {
+		   } else if (!g_strcasecmp($3, "POLY")) {
 		      current_object = create_polygon(NULL);
 		      current_type = POLYGON;
-		   } else if (!strcasecmp($3, "DEFAULT")) {
+		   } else if (!g_strcasecmp($3, "DEFAULT")) {
 		      current_type = UNDEFINED;
 		   }
 		}

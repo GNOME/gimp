@@ -21,15 +21,12 @@
  *
  */
 
-#include "imap_string.h"
+#ifndef _IMAP_CMD_OBJECT_MOVE_H
+#define _IMAP_CMD_OBJECT_MOVE_H
 
-gchar*
-g_strreplace(gchar **old_str, const gchar *new_str)
-{
-   if (*old_str != new_str) {
-      g_free(*old_str);
-      *old_str = g_strdup(new_str);
-   }
-   return *old_str;
-}
+#include "imap_command.h"
+#include "imap_object.h"
 
+Command_t *object_move_command_new(Object_t *obj, gint x, gint y);
+
+#endif /* _IMAP_CMD_OBJECT_MOVE_H */

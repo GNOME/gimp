@@ -25,6 +25,7 @@
 #include <stdio.h>
 
 #include "imap_default_dialog.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_source.h"
 
@@ -50,7 +51,7 @@ do_source_dialog(void)
    if (!dialog) {
       GtkWidget *window;
 
-      dialog = make_default_dialog("View Source");
+      dialog = make_default_dialog(_("View Source"));
       default_dialog_hide_cancel_button(dialog);
       default_dialog_hide_apply_button(dialog);
 

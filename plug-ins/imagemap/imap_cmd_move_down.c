@@ -23,9 +23,10 @@
 
 #include "imap_cmd_copy.h"
 #include "imap_cmd_object_down.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static gboolean move_down_command_execute(Command_t *parent);
+static CmdExecuteValue_t move_down_command_execute(Command_t *parent);
 static void move_down_command_undo(Command_t *parent);
 static void move_down_command_redo(Command_t *parent);
 
@@ -48,7 +49,7 @@ move_down_command_new(ObjectList_t *list)
    MoveDownCommand_t *command = g_new(MoveDownCommand_t, 1);
    command->list = list;
    command->add = FALSE;
-   return command_init(&command->parent, "Move Down", 
+   return command_init(&command->parent, _("Move Down"), 
 		       &move_down_command_class);
 }
 
@@ -67,7 +68,7 @@ move_down_one_object(Object_t *obj, gpointer data)
    }
 }
 
-static gboolean
+static CmdExecuteValue_t
 move_down_command_execute(Command_t *parent)
 {
    MoveDownCommand_t *command = (MoveDownCommand_t*) parent;
@@ -78,7 +79,7 @@ move_down_command_execute(Command_t *parent)
    object_list_remove_move_cb(command->list, id);
 
    redraw_preview();		/* fix me! */
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

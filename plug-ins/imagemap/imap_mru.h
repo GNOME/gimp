@@ -28,6 +28,8 @@
 
 #include "gtk/gtk.h"
 
+#define DEFAULT_MRU_SIZE 4
+
 typedef struct {
    GList       *list;
    gint       	max_size;

@@ -25,9 +25,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "libgimp/gimpenv.h"
+
+#include "imap_command.h"
 #include "imap_file.h"
 #include "imap_main.h"
+#include "imap_menu.h"
 #include "imap_misc.h"
+#include "imap_mru.h"
 #include "imap_preferences.h"
 #include "imap_table.h"
 
@@ -100,6 +105,10 @@ parse_line(PreferencesData_t *data, char *line)
       data->show_url_tip = parse_yes_no();
    } else if (!strcmp(token, "use-doublesized")) {
       data->use_doublesized = parse_yes_no();
+   } else if (!strcmp(token, "mru-size")) {
+      data->mru_size = parse_int();
+   } else if (!strcmp(token, "undo-levels")) {
+      data->undo_levels = parse_int();
    } else if (!strcmp(token, "normal-fg-color")) {
       parse_color(&colors->normal_fg);
    } else if (!strcmp(token, "normal-bg-color")) {
@@ -110,8 +119,6 @@ parse_line(PreferencesData_t *data, char *line)
       parse_color(&colors->selected_bg);
    } else if (!strcmp(token, "mru-entry")) {
       parse_mru_entry();
-   } else if (!strcmp(token, "mru-size")) {
-      data->mru_size = parse_int();
    } else {
       /* Unrecognized, just ignore rest of line */
    }
@@ -124,7 +131,7 @@ preferences_load(PreferencesData_t *data)
    char buf[256];
    gchar *filename;
 
-   filename = g_strconcat(getenv("HOME"), "/.gimp/imagemaprc", NULL);
+   filename = g_strconcat(gimp_directory(), "/imagemaprc", NULL);
 
    in = fopen(filename, "r");
    g_free(filename);
@@ -147,7 +154,7 @@ preferences_save(PreferencesData_t *data)
    gchar *filename;
    ColorSelData_t *colors = &data->colors;
 
-   filename = g_strconcat(getenv("HOME"), "/.gimp/imagemaprc", NULL);
+   filename = g_strconcat(gimp_directory(), "/imagemaprc", NULL);
 
    out = fopen(filename, "w");
    if (out) {
@@ -171,6 +178,10 @@ preferences_save(PreferencesData_t *data)
 	      (data->show_url_tip) ? "yes" : "no");
       fprintf(out, "(use-doublesized %s)\n",
 	      (data->use_doublesized) ? "yes" : "no");
+
+      fprintf(out, "(undo-levels %d)\n", data->undo_levels);
+      fprintf(out, "(mru-size %d)\n", data->mru_size);
+
       fprintf(out, "(normal-fg-color %d %d %d)\n",
 	      colors->normal_fg.red, colors->normal_fg.green, 
 	      colors->normal_fg.blue);
@@ -199,6 +210,7 @@ preferences_ok_cb(gpointer data)
    PreferencesDialog_t *param = (PreferencesDialog_t*) data;
    PreferencesData_t *old_data = param->old_data;
    ColorSelData_t *colors = &old_data->colors;
+   MRU_t *mru = get_mru();
 
    if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->cern)))
       old_data->default_map_type = CERN;
@@ -219,6 +231,14 @@ preferences_ok_cb(gpointer data)
       GTK_TOGGLE_BUTTON(param->show_url_tip));
    old_data->use_doublesized = gtk_toggle_button_get_active(
       GTK_TOGGLE_BUTTON(param->use_doublesized));
+
+   old_data->mru_size = 
+      gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->mru_size));
+   old_data->undo_levels = 
+      gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->undo_levels));
+   mru_set_size(mru, old_data->mru_size);
+   menu_build_mru_items(mru);
+   command_list_set_undo_level(old_data->undo_levels);
 
    *colors = param->new_colors;
 
@@ -446,6 +466,33 @@ create_general_tab(PreferencesDialog_t *data, GtkWidget *notebook)
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), table, label);
 }
 
+static void
+create_menu_tab(PreferencesDialog_t *data, GtkWidget *notebook)
+{
+   GtkWidget *table;
+   GtkWidget *label;
+   GtkWidget *vbox;
+
+   vbox = gtk_vbox_new(FALSE, 1);
+   gtk_widget_show(vbox);
+
+   table = gtk_table_new(2, 2, FALSE);
+   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
+   gtk_container_set_border_width(GTK_CONTAINER(table), 10);
+   gtk_table_set_row_spacings(GTK_TABLE(table), 10);
+   gtk_table_set_col_spacings(GTK_TABLE(table), 10);
+   gtk_widget_show(table);
+
+   create_label_in_table(table, 0, 0, "Number of Undo levels (1 - 99):");
+   data->undo_levels = create_spin_button_in_table(table, 0, 1, 1, 1, 99);
+
+   create_label_in_table(table, 1, 0, "Number of MRU entries (1 - 16):");
+   data->mru_size = create_spin_button_in_table(table, 1, 1, 1, 1, 16);
+
+   label = gtk_label_new("Menu");
+   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+}
+
 static GtkWidget*
 create_color_field(PreferencesDialog_t *data, GtkWidget *table, gint row, 
 		   gint col, GtkSignalFunc func)
@@ -498,7 +545,7 @@ static void
 switch_page(GtkWidget *widget, GtkNotebookPage *page, gint page_num, 
 	    gpointer data)
 {
-   if (page_num == 1) {
+   if (page_num == 2) {
       PreferencesDialog_t *param = (PreferencesDialog_t*) data;
       set_button_colors(param, &param->old_colors);
    }
@@ -523,6 +570,7 @@ create_preferences_dialog()
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), 
 		      notebook, TRUE, TRUE, 10);
    create_general_tab(data, notebook);
+   create_menu_tab(data, notebook);
    create_colors_tab(data, notebook);
 
    gtk_widget_show(notebook);
@@ -566,5 +614,10 @@ do_preferences_dialog(void)
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->use_doublesized),
 				old_data->use_doublesized);
    
+   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->undo_levels), 
+			     old_data->undo_levels);
+   gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->mru_size), 
+			     old_data->mru_size);
+
    default_dialog_show(dialog->dialog);
 }

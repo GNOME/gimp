@@ -23,9 +23,10 @@
 
 #include "imap_cmd_clear.h"
 #include "imap_cmd_delete.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static gboolean clear_command_execute(Command_t *parent);
+static CmdExecuteValue_t clear_command_execute(Command_t *parent);
 static void clear_command_undo(Command_t *parent);
 static void clear_command_redo(Command_t *parent);
 
@@ -46,7 +47,7 @@ clear_command_new(ObjectList_t *list)
 {
    ClearCommand_t *command = g_new(ClearCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, "Clear", &clear_command_class);
+   return command_init(&command->parent, _("Clear"), &clear_command_class);
 }
 
 static void
@@ -57,7 +58,7 @@ remove_one_object(Object_t *obj, gpointer data)
 			  delete_command_new(command->list, obj));
 }
 
-static gboolean
+static CmdExecuteValue_t
 clear_command_execute(Command_t *parent)
 {
    ClearCommand_t *command = (ClearCommand_t*) parent;
@@ -68,7 +69,7 @@ clear_command_execute(Command_t *parent)
    object_list_remove_remove_cb(command->list, id);
 
    redraw_preview();		/* Fix me! */
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

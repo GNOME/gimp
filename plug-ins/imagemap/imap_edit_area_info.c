@@ -29,6 +29,7 @@
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_table.h"
 
 static gint callback_lock;
@@ -163,7 +164,7 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
    
-   frame = gtk_frame_new("Link Type");
+   frame = gtk_frame_new(_("Link Type"));
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 0, 2, 0, 1);
    gtk_widget_show(frame);
 
@@ -172,53 +173,55 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    gtk_widget_show(subtable);
 
    dialog->web_site = create_radio_button_in_table(subtable, NULL, 0, 0, 
-						   "Web Site");
+						   _("Web Site"));
    gtk_signal_connect(GTK_OBJECT(dialog->web_site), "toggled", 
 		      (GtkSignalFunc) select_web_cb, (gpointer) dialog);
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->web_site));
 
    dialog->ftp_site = create_radio_button_in_table(subtable, group, 0, 1, 
-						   "Ftp Site");
+						   _("Ftp Site"));
    gtk_signal_connect(GTK_OBJECT(dialog->ftp_site), "toggled", 
 		      (GtkSignalFunc) select_ftp_cb, (gpointer) dialog);
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->ftp_site));
 
    dialog->gopher = create_radio_button_in_table(subtable, group, 0, 2, 
-						 "Gopher");
+						 _("Gopher"));
    gtk_signal_connect(GTK_OBJECT(dialog->gopher), "toggled", 
 		      (GtkSignalFunc) select_gopher_cb, (gpointer) dialog);
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->gopher));
 
    dialog->other = create_radio_button_in_table(subtable, group, 0, 3, 
-						"Other");
+						_("Other"));
    gtk_signal_connect(GTK_OBJECT(dialog->other), "toggled", 
 		      (GtkSignalFunc) select_other_cb, (gpointer) dialog);
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->other));
 
-   dialog->file = create_radio_button_in_table(subtable, group, 1, 0, "File");
+   dialog->file = create_radio_button_in_table(subtable, group, 1, 0, 
+					       _("File"));
    gtk_signal_connect(GTK_OBJECT(dialog->file), "toggled", 
 		      (GtkSignalFunc) select_file_cb, (gpointer) dialog);
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->file));
 
-   dialog->wais = create_radio_button_in_table(subtable, group, 1, 1, "WAIS");
+   dialog->wais = create_radio_button_in_table(subtable, group, 1, 1, 
+					       _("WAIS"));
    gtk_signal_connect(GTK_OBJECT(dialog->wais), "toggled", 
 		      (GtkSignalFunc) select_wais_cb, (gpointer) dialog);
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->wais));
 
    dialog->telnet = create_radio_button_in_table(subtable, group, 1, 2, 
-						 "Telnet");
+						 _("Telnet"));
    gtk_signal_connect(GTK_OBJECT(dialog->telnet), "toggled", 
 		      (GtkSignalFunc) select_telnet_cb, (gpointer) dialog);
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(dialog->telnet));
 
    dialog->email = create_radio_button_in_table(subtable, group, 1, 3, 
-						"e-mail");
+						_("e-mail"));
    gtk_signal_connect(GTK_OBJECT(dialog->email), "toggled", 
 		      (GtkSignalFunc) select_email_cb, (gpointer) dialog);
 
    create_label_in_table(
       table, 2, 0,
-      "URL to activate when this area is clicked: (required)");
+      _("URL to activate when this area is clicked: (required)"));
 
    browse = browse_widget_new("Select HTML file");
    browse_widget_set_filter(browse, relative_filter, (gpointer) dialog);
@@ -228,21 +231,68 @@ create_link_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
 		      GTK_SIGNAL_FUNC(url_changed), dialog);
 
    dialog->relative_link = create_check_button_in_table(table, 4, 0, 
-							"Relative link");
+							_("Relative link"));
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->relative_link), 
 				TRUE);
 
    create_label_in_table(
       table, 6, 0,
-      "Target frame name/ID: (optional - used for FRAMES only)");
+      _("Target frame name/ID: (optional - used for FRAMES only)"));
    dialog->target = create_entry_in_table(table, 7, 0);
 
    create_label_in_table(table, 9, 0,
-			 "Comment about this area: (optional)");
+			 _("Comment about this area: (optional)"));
    dialog->comment = create_entry_in_table(table, 10, 0);
 
-   label = gtk_label_new("Link");
+   label = gtk_label_new(_("Link"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), table, label);
+}
+
+static void
+geometry_changed(Object_t *obj, gpointer data)
+{
+   AreaInfoDialog_t *dialog = (AreaInfoDialog_t*) data;
+   if (dialog->geometry_lock) {
+      dialog->geometry_lock = FALSE;
+   } else {
+      if (dialog->obj == obj) {
+	 object_update_info_widget(obj, dialog->infotab);
+	 obj->class->assign(obj, dialog->clone);
+      }
+   }
+}
+
+static void
+toggle_preview_cb(GtkWidget *widget, AreaInfoDialog_t *param)
+{
+   param->preview = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+   edit_area_info_dialog_emit_geometry_signal(param);
+}
+
+static void
+create_info_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
+{
+   GtkWidget *vbox, *frame, *preview, *label;
+   Object_t *obj = dialog->obj;
+   
+   vbox = gtk_vbox_new(FALSE, 1);
+   gtk_container_set_border_width(GTK_CONTAINER(vbox), 10);
+   gtk_widget_show(vbox);
+
+   frame = gtk_frame_new(_("Dimensions"));
+   gtk_box_pack_start(GTK_BOX(vbox), frame, FALSE, FALSE, 0);
+   gtk_widget_show(frame);
+
+   preview = gtk_check_button_new_with_label(_("Preview"));
+   gtk_signal_connect(GTK_OBJECT(preview), "toggled", 
+		      (GtkSignalFunc) toggle_preview_cb, (gpointer) dialog);
+   gtk_box_pack_start(GTK_BOX(vbox), preview, FALSE, FALSE, 0);
+   gtk_widget_show(preview);
+
+   dialog->infotab = obj->class->create_info_widget(frame);
+
+   label = gtk_label_new(obj->class->name);
+   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
 }
 
 static void
@@ -271,8 +321,23 @@ create_java_script_tab(AreaInfoDialog_t *dialog, GtkWidget *notebook)
    create_label_in_table(table, 9, 0, "onBlur (HTML 4.0):");
    dialog->blur = create_entry_in_table(table, 10, 0);
 
-   label = gtk_label_new("JavaScript");
+   label = gtk_label_new(_("JavaScript"));
    gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+}
+
+static gboolean
+object_was_changed(AreaInfoDialog_t *dialog)
+{
+   Object_t *clone = dialog->clone;
+   Object_t *obj = dialog->obj;
+   gint old_x, old_y, old_width, old_height;
+   gint new_x, new_y, new_width, new_height;
+
+   object_get_dimensions(clone, &old_x, &old_y, &old_width, &old_height);
+   object_get_dimensions(obj, &new_x, &new_y, &new_width, &new_height);
+
+   return new_x != old_x || new_y != old_y || new_width != old_width ||
+      new_height != old_height || clone->selected != obj->selected;
 }
 
 static void
@@ -280,14 +345,12 @@ edit_area_ok_cb(gpointer data)
 {
    AreaInfoDialog_t *param = (AreaInfoDialog_t*) data;
    Object_t *obj = param->obj;
-   gint old_x, old_y, old_width, old_height;
-   gint new_x, new_y, new_width, new_height;
+
+   object_list_remove_geometry_cb(obj->list, param->geometry_cb_id);
 
    /* Fix me: nasty hack */
    if (param->add)
       command_list_add(edit_object_command_new(obj));
-
-   object_get_dimensions(obj, &old_x, &old_y, &old_width, &old_height);
 
    object_set_url(obj, gtk_entry_get_text(GTK_ENTRY(param->url)));
    object_set_target(obj, gtk_entry_get_text(GTK_ENTRY(param->target)));
@@ -301,17 +364,27 @@ edit_area_ok_cb(gpointer data)
    update_shape(obj);
    object_unlock(obj);
 
-   object_get_dimensions(obj, &new_x, &new_y, &new_width, &new_height);
-   if (new_x != old_x || new_y != old_y || new_width != old_width ||
-       new_height != old_height)
+   if (object_was_changed(param))
       redraw_preview();
+   object_unref(param->clone);
 }
 
 static void
 edit_area_cancel_cb(gpointer data)
 {
-   Object_t *obj = ((AreaInfoDialog_t*) data)->obj;
+   AreaInfoDialog_t *dialog = (AreaInfoDialog_t*) data;
+   Object_t *obj = dialog->obj;
+   gboolean changed = object_was_changed(dialog);
+   gboolean selected = obj->selected;
+
+   object_list_remove_geometry_cb(obj->list, dialog->geometry_cb_id);
    object_unlock(obj);
+   object_assign(dialog->clone, obj);
+   obj->selected = selected;
+   object_unref(dialog->clone);
+
+   if (changed)
+      redraw_preview();
 }
 
 static void
@@ -335,9 +408,11 @@ create_edit_area_info_dialog(Object_t *obj)
    AreaInfoDialog_t *data = g_new(AreaInfoDialog_t, 1);
    GtkWidget *notebook;
 
+   data->geometry_lock = FALSE;
+   data->preview = FALSE;
    data->obj = obj;
    data->browse = NULL;
-   data->dialog = make_default_dialog("Area Settings");
+   data->dialog = make_default_dialog(_("Area Settings"));
    default_dialog_set_ok_cb(data->dialog, edit_area_ok_cb, data);
    default_dialog_set_cancel_cb(data->dialog, edit_area_cancel_cb, data);
 
@@ -349,7 +424,7 @@ create_edit_area_info_dialog(Object_t *obj)
    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(data->dialog->dialog)->vbox), 
 		      notebook, TRUE, TRUE, 10);
    create_link_tab(data, notebook);
-   data->infotab = obj->class->create_info_tab(notebook);
+   create_info_tab(data, notebook);
    create_java_script_tab(data, notebook);
    gtk_widget_show(notebook);
 
@@ -365,8 +440,9 @@ edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj,
    object_unlock(dialog->obj);
    object_lock(obj);
    dialog->obj = obj;
+   dialog->clone = object_clone(obj);
    dialog->add = add;
-   obj->class->fill_info_tab(obj, dialog->infotab);
+   object_fill_info_tab(obj, dialog->infotab);
    gtk_entry_set_text(GTK_ENTRY(dialog->url), obj->url);
    gtk_entry_set_text(GTK_ENTRY(dialog->target), obj->target);
    gtk_entry_set_text(GTK_ENTRY(dialog->comment), obj->comment);
@@ -376,9 +452,20 @@ edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj,
    gtk_entry_set_text(GTK_ENTRY(dialog->blur), obj->blur);
    gtk_widget_grab_focus(dialog->url);
 
-   sprintf(title, "Area #%d Settings", object_get_position_in_list(obj) + 1);
+   dialog->geometry_cb_id = 
+      object_list_add_geometry_cb(obj->list, geometry_changed, dialog);
+
+   sprintf(title, _("Area #%d Settings"), 
+	   object_get_position_in_list(obj) + 1);
    default_dialog_set_title(dialog->dialog, title);
    default_dialog_show(dialog->dialog);
 }
 
-
+void
+edit_area_info_dialog_emit_geometry_signal(AreaInfoDialog_t *dialog)
+{
+   if (dialog->preview) {
+      dialog->geometry_lock = TRUE;
+      object_emit_geometry_signal(dialog->obj);
+   }
+}

@@ -24,6 +24,7 @@
 #include <math.h>
 
 #include "imap_circle.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
@@ -33,7 +34,7 @@
 
 static gboolean circle_is_valid(Object_t *obj);
 static Object_t *circle_clone(Object_t *obj);
-static Object_t *circle_assign(Object_t *obj, Object_t *des);
+static void circle_assign(Object_t *obj, Object_t *des);
 static void circle_draw(Object_t* obj, GdkWindow *window, GdkGC* gc);
 static void circle_draw_sashes(Object_t* obj, GdkWindow *window, GdkGC* gc);
 static MoveSashFunc_t circle_near_sash(Object_t *obj, gint x, gint y);
@@ -42,7 +43,7 @@ static void circle_get_dimensions(Object_t *obj, gint *x, gint *y,
 				  gint *width, gint *height);
 static void circle_resize(Object_t *obj, gint percentage_x, gint percentage_y);
 static void circle_move(Object_t *obj, gint dx, gint dy);
-static gpointer circle_create_info_tab(GtkWidget *notebook);
+static gpointer circle_create_info_widget(GtkWidget *frame);
 static void circle_fill_info_tab(Object_t *obj, gpointer data);
 static void circle_set_initial_focus(Object_t *obj, gpointer data);
 static void circle_update(Object_t* obj, gpointer data);
@@ -55,6 +56,7 @@ static void circle_write_ncsa(Object_t* obj, gpointer param,
 static char** circle_get_icon_data(void);
 
 static ObjectClass_t circle_class = {
+   "Circle",
    NULL,			/* info_dialog */
    NULL,			/* icon */
    NULL,			/* mask */
@@ -71,7 +73,8 @@ static ObjectClass_t circle_class = {
    circle_get_dimensions,
    circle_resize,
    circle_move,
-   circle_create_info_tab,
+   circle_create_info_widget,
+   circle_fill_info_tab,	/* circle_update_info_widget */
    circle_fill_info_tab,
    circle_set_initial_focus,
    circle_update,
@@ -110,7 +113,7 @@ circle_clone(Object_t *obj)
    return &clone->obj;
 }
 
-static Object_t*
+static void
 circle_assign(Object_t *obj, Object_t *des)
 {
    Circle_t *src_circle = ObjectToCircle(obj);
@@ -118,7 +121,6 @@ circle_assign(Object_t *obj, Object_t *des)
    des_circle->x = src_circle->x;
    des_circle->y = src_circle->y;
    des_circle->r = src_circle->r;
-   return object_copy(obj, des);
 }
 
 static void
@@ -206,45 +208,73 @@ circle_move(Object_t *obj, gint dx, gint dy)
 }
 
 typedef struct {
+   Object_t  *obj;
    GtkWidget *x;
    GtkWidget *y;
    GtkWidget *r;
 } CircleProperties_t;
 
+static void
+x_changed_cb(GtkWidget *widget, gpointer data)
+{
+   Object_t *obj = ((CircleProperties_t*) data)->obj;
+   gint x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+   ObjectToCircle(obj)->x = x;
+   edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
+}
+
+static void
+y_changed_cb(GtkWidget *widget, gpointer data)
+{
+   Object_t *obj = ((CircleProperties_t*) data)->obj;
+   gint y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+   ObjectToCircle(obj)->y = y;
+   edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
+}
+
+static void
+r_changed_cb(GtkWidget *widget, gpointer data)
+{
+   Object_t *obj = ((CircleProperties_t*) data)->obj;
+   gint r = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+   ObjectToCircle(obj)->r = r;
+   edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
+}
+
 static gpointer
-circle_create_info_tab(GtkWidget *notebook)
+circle_create_info_widget(GtkWidget *frame)
 {
    CircleProperties_t *props = g_new(CircleProperties_t, 1);
-   GtkWidget *vbox, *table, *label;
+   GtkWidget *table;
    gint max_width = get_image_width();
    gint max_height = get_image_height();
 
-   vbox = gtk_vbox_new(FALSE, 1);
-   gtk_widget_show(vbox);
-
    table = gtk_table_new(3, 3, FALSE);
-   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
+   gtk_container_add(GTK_CONTAINER(frame), table);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
 
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
    
-   create_label_in_table(table, 0, 0, "Center x:");
+   create_label_in_table(table, 0, 0, _("Center x:"));
    props->x = create_spin_button_in_table(table, 0, 1, 1, 0, max_width - 1);
-   create_label_in_table(table, 0, 2, "pixels");
+   gtk_signal_connect(GTK_OBJECT(props->x), "changed", 
+		      (GtkSignalFunc) x_changed_cb, (gpointer) props);
+   create_label_in_table(table, 0, 2, _("pixels"));
 
-   create_label_in_table(table, 1, 0, "Center y:");
+   create_label_in_table(table, 1, 0, _("Center y:"));
    props->y = create_spin_button_in_table(table, 1, 1, 1, 0, max_height - 1);
-   create_label_in_table(table, 1, 2, "pixels");
+   gtk_signal_connect(GTK_OBJECT(props->y), "changed", 
+		      (GtkSignalFunc) y_changed_cb, (gpointer) props);
+   create_label_in_table(table, 1, 2, _("pixels"));
 
-   create_label_in_table(table, 2, 0, "Radius:");
+   create_label_in_table(table, 2, 0, _("Radius:"));
    props->r = create_spin_button_in_table(table, 2, 1, 1, 1, G_MAXINT);
-   create_label_in_table(table, 2, 2, "pixels");
+   gtk_signal_connect(GTK_OBJECT(props->r), "changed", 
+		      (GtkSignalFunc) r_changed_cb, (gpointer) props);
+   create_label_in_table(table, 2, 2, _("pixels"));
 
-   label = gtk_label_new("Circle");
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
-   
    return props;
 }
 
@@ -254,6 +284,7 @@ circle_fill_info_tab(Object_t *obj, gpointer data)
    Circle_t *circle = ObjectToCircle(obj);
    CircleProperties_t *props = (CircleProperties_t*) data;
 
+   props->obj = obj;
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->x), circle->x);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->y), circle->y);
    gtk_spin_button_set_value(GTK_SPIN_BUTTON(props->r), circle->r);

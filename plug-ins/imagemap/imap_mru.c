@@ -25,8 +25,6 @@
 
 #include "imap_mru.h"
 
-#define DEFAULT_MRU_SIZE 4
-
 MRU_t* 
 mru_create(void)
 {
@@ -85,9 +83,10 @@ mru_set_first(MRU_t *mru, const gchar *filename)
 void 
 mru_set_size(MRU_t *mru, gint size)
 {
-   if (size < mru->max_size) {
-      /* fix me */
-   }
+   gint diff;
+
+   for (diff = g_list_length(mru->list) - size; diff > 0; diff--)
+      mru_remove_link(mru, g_list_last(mru->list));
    mru->max_size = size;
 }
 

@@ -21,58 +21,64 @@
  *
  */
 
-#include "imap_cmd_copy.h"
+#include "imap_cmd_object_move.h"
 #include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static void object_up_command_destruct(Command_t *parent);
-static CmdExecuteValue_t object_up_command_execute(Command_t *parent);
-static void object_up_command_undo(Command_t *parent);
+static void object_move_command_destruct(Command_t *parent);
+static CmdExecuteValue_t object_move_command_execute(Command_t *parent);
+static void object_move_command_undo(Command_t *parent);
 
-CommandClass_t object_up_command_class = {
-   object_up_command_destruct,
-   object_up_command_execute,
-   object_up_command_undo,
-   NULL				/* object_up_command_redo */
+CommandClass_t object_move_command_class = {
+   object_move_command_destruct,
+   object_move_command_execute,
+   object_move_command_undo,
+   NULL				/* object_move_command_redo */
 };
 
 typedef struct {
    Command_t parent;
-   ObjectList_t *list;
    Object_t *obj;
-} ObjectUpCommand_t;
+   gint dx;
+   gint dy;
+} ObjectMoveCommand_t;
 
 Command_t* 
-object_up_command_new(ObjectList_t *list, Object_t *obj)
+object_move_command_new(Object_t *obj, gint dx, gint dy)
 {
-   ObjectUpCommand_t *command = g_new(ObjectUpCommand_t, 1);
-   command->list = list;
+   ObjectMoveCommand_t *command = g_new(ObjectMoveCommand_t, 1);
    command->obj = object_ref(obj);
-   return command_init(&command->parent, _("Move Up"), 
-		       &object_up_command_class);
+   command->dx = dx;
+   command->dy = dy;
+   return command_init(&command->parent, _("Move"), 
+		       &object_move_command_class);
 }
 
 static void
-object_up_command_destruct(Command_t *parent)
+object_move_command_destruct(Command_t *parent)
 {
-   ObjectUpCommand_t *command = (ObjectUpCommand_t*) parent;
+   ObjectMoveCommand_t *command = (ObjectMoveCommand_t*) parent;
    object_unref(command->obj);
 }
 
 static CmdExecuteValue_t
-object_up_command_execute(Command_t *parent)
+object_move_command_execute(Command_t *parent)
 {
-   ObjectUpCommand_t *command = (ObjectUpCommand_t*) parent;
-   object_list_move_up(command->list, command->obj);
+   ObjectMoveCommand_t *command = (ObjectMoveCommand_t*) parent;
+   object_move(command->obj, command->dx, command->dy);
+#ifdef _OLD_
    redraw_preview();		/* fix me! */
+#endif
    return CMD_APPEND;
 }
 
 static void
-object_up_command_undo(Command_t *parent)
+object_move_command_undo(Command_t *parent)
 {
-   ObjectUpCommand_t *command = (ObjectUpCommand_t*) parent;
-   object_list_move_down(command->list, command->obj);
+   ObjectMoveCommand_t *command = (ObjectMoveCommand_t*) parent;
+   object_move(command->obj, -command->dx, -command->dy);
+#ifdef _OLD_
    redraw_preview();		/* fix me! */
+#endif
 }
 

@@ -22,10 +22,11 @@
  */
 
 #include "imap_cmd_delete_point.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_polygon.h"
 
-static gboolean delete_point_command_execute(Command_t *parent);
+static CmdExecuteValue_t delete_point_command_execute(Command_t *parent);
 static void delete_point_command_undo(Command_t *parent);
 
 static CommandClass_t delete_point_command_class = {
@@ -53,11 +54,11 @@ delete_point_command_new(Object_t *obj, GdkPoint *point)
    command->copy = *point;
    command->position = g_list_index(command->polygon->points,
 				    (gpointer) point);
-   return command_init(&command->parent, "Delete Point", 
+   return command_init(&command->parent, _("Delete Point"), 
 		       &delete_point_command_class);
 }
 
-static gboolean
+static CmdExecuteValue_t
 delete_point_command_execute(Command_t *parent)
 {
    DeletePointCommand_t *command = (DeletePointCommand_t*) parent;
@@ -67,7 +68,7 @@ delete_point_command_execute(Command_t *parent)
    g_free(p->data);
    polygon->points = g_list_remove_link(polygon->points, p);
    redraw_preview();		/* Fix me! */
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

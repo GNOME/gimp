@@ -21,6 +21,7 @@
  *
  */
 
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"
@@ -31,7 +32,7 @@
 
 static gboolean rectangle_is_valid(Object_t *obj);
 static Object_t *rectangle_clone(Object_t *obj);
-static Object_t *rectangle_assign(Object_t *obj, Object_t *des);
+static void rectangle_assign(Object_t *obj, Object_t *des);
 static void rectangle_normalize(Object_t *obj);
 static void rectangle_draw(Object_t *obj, GdkWindow *window, GdkGC* gc);
 static void rectangle_draw_sashes(Object_t *obj, GdkWindow *window, GdkGC* gc);
@@ -42,7 +43,7 @@ static void rectangle_get_dimensions(Object_t *obj, gint *x, gint *y,
 static void rectangle_resize(Object_t *obj, gint percentage_x, 
 			     gint percentage_y);
 static void rectangle_move(Object_t *obj, gint dx, gint dy);
-static gpointer rectangle_create_info_tab(GtkWidget *notebook);
+static gpointer rectangle_create_info_widget(GtkWidget *frame);
 static void rectangle_fill_info_tab(Object_t *obj, gpointer data);
 static void rectangle_set_initial_focus(Object_t *obj, gpointer data);
 static void rectangle_update(Object_t *obj, gpointer data);
@@ -55,6 +56,7 @@ static void rectangle_write_ncsa(Object_t *obj, gpointer param,
 static char** rectangle_get_icon_data(void);
 
 static ObjectClass_t rectangle_class = {
+   N_("Rectangle"),
    NULL,			/* info_dialog */
    NULL,			/* icon */
    NULL,			/* mask */
@@ -71,7 +73,8 @@ static ObjectClass_t rectangle_class = {
    rectangle_get_dimensions,
    rectangle_resize,
    rectangle_move,
-   rectangle_create_info_tab,
+   rectangle_create_info_widget,
+   rectangle_fill_info_tab,	/* rectangle_update_info_widget */
    rectangle_fill_info_tab,
    rectangle_set_initial_focus,
    rectangle_update,
@@ -128,7 +131,7 @@ rectangle_clone(Object_t *obj)
    return &clone->obj;
 }
 
-static Object_t*
+static void
 rectangle_assign(Object_t *obj, Object_t *des)
 {
    Rectangle_t *src_rectangle = ObjectToRectangle(obj);
@@ -137,7 +140,6 @@ rectangle_assign(Object_t *obj, Object_t *des)
    des_rectangle->y = src_rectangle->y;
    des_rectangle->width = src_rectangle->width;
    des_rectangle->height = src_rectangle->height;
-   return object_copy(obj, des);
 }
 
 static void
@@ -317,58 +319,81 @@ typedef struct {
    GtkWidget *height;
 } RectangleProperties_t;
 
-#ifdef _NOT_READY_YET_
 static void
 x_changed_cb(GtkWidget *widget, gpointer data)
 {
    Object_t *obj = ((RectangleProperties_t*) data)->obj;
    gint x = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
    ObjectToRectangle(obj)->x = x;
-   object_emit_changed_signal(obj);
+   edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
 }
-#endif
+
+static void
+y_changed_cb(GtkWidget *widget, gpointer data)
+{
+   Object_t *obj = ((RectangleProperties_t*) data)->obj;
+   gint y = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+   ObjectToRectangle(obj)->y = y;
+   edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
+}
+
+static void
+width_changed_cb(GtkWidget *widget, gpointer data)
+{
+   Object_t *obj = ((RectangleProperties_t*) data)->obj;
+   gint width = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+   ObjectToRectangle(obj)->width = width;
+   edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
+}
+
+static void
+height_changed_cb(GtkWidget *widget, gpointer data)
+{
+   Object_t *obj = ((RectangleProperties_t*) data)->obj;
+   gint height = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+   ObjectToRectangle(obj)->height = height;
+   edit_area_info_dialog_emit_geometry_signal(obj->class->info_dialog);
+}
 
 static gpointer
-rectangle_create_info_tab(GtkWidget *notebook)
+rectangle_create_info_widget(GtkWidget *frame)
 {
    RectangleProperties_t *props = g_new(RectangleProperties_t, 1);
-   GtkWidget *vbox, *table, *label;
+   GtkWidget *table;
    gint max_width = get_image_width();
    gint max_height = get_image_height();
 
-   vbox = gtk_vbox_new(FALSE, 1);
-   gtk_widget_show(vbox);
-
-   table = gtk_table_new(5, 3, FALSE);
-   gtk_box_pack_start(GTK_BOX(vbox), table, FALSE, FALSE, 0);
+   table = gtk_table_new(4, 3, FALSE);
+   gtk_container_add(GTK_CONTAINER(frame), table);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
 
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_widget_show(table);
    
-   create_label_in_table(table, 0, 0, "Upper left x:");
+   create_label_in_table(table, 0, 0, _("Upper left x:"));
    props->x = create_spin_button_in_table(table, 0, 1, 1, 0, max_width - 1);
-/*   gtk_signal_connect(GTK_OBJECT(props->x), "changed", 
-		      (GtkSignalFunc) x_changed_cb, (gpointer) props); */
-   create_label_in_table(table, 0, 2, "pixels");
+   gtk_signal_connect(GTK_OBJECT(props->x), "changed", 
+		      (GtkSignalFunc) x_changed_cb, (gpointer) props);
+   create_label_in_table(table, 0, 2, _("pixels"));
 
-   create_label_in_table(table, 1, 0, "Upper left y:");
+   create_label_in_table(table, 1, 0, _("Upper left y:"));
    props->y = create_spin_button_in_table(table, 1, 1, 1, 0, max_height - 1);
-   create_label_in_table(table, 1, 2, "pixels");
+   gtk_signal_connect(GTK_OBJECT(props->y), "changed", 
+		      (GtkSignalFunc) y_changed_cb, (gpointer) props);
+   create_label_in_table(table, 1, 2, _("pixels"));
 
-   create_label_in_table(table, 2, 0, "Width:");
+   create_label_in_table(table, 2, 0, _("Width:"));
    props->width = create_spin_button_in_table(table, 2, 1, 1, 1, max_width);
-   create_label_in_table(table, 2, 2, "pixels");
+   gtk_signal_connect(GTK_OBJECT(props->width), "changed", 
+		      (GtkSignalFunc) width_changed_cb, (gpointer) props);
+   create_label_in_table(table, 2, 2, _("pixels"));
 
-   create_label_in_table(table, 3, 0, "Height:");
+   create_label_in_table(table, 3, 0, _("Height:"));
    props->height = create_spin_button_in_table(table, 3, 1, 1, 1, max_height);
-   create_label_in_table(table, 3, 2, "pixels");
-
-/*    create_check_button_in_table(table, 4, 0, "Preview");*/
-
-   label = gtk_label_new("Rectangle");
-   gtk_notebook_append_page(GTK_NOTEBOOK(notebook), vbox, label);
+   gtk_signal_connect(GTK_OBJECT(props->height), "changed", 
+		      (GtkSignalFunc) height_changed_cb, (gpointer) props);
+   create_label_in_table(table, 3, 2, _("pixels"));
 
    return props;
 }

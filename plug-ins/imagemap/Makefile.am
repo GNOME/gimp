@@ -73,12 +73,16 @@ imagemap_SOURCES = \
 	imap_cmd_move_down.h		\
 	imap_cmd_move_sash.c		\
 	imap_cmd_move_sash.h		\
+	imap_cmd_move_selected.c	\
+	imap_cmd_move_selected.h	\
 	imap_cmd_move_to_front.c	\
 	imap_cmd_move_to_front.h	\
 	imap_cmd_move_up.c		\
 	imap_cmd_move_up.h		\
 	imap_cmd_object_down.c		\
 	imap_cmd_object_down.h		\
+	imap_cmd_object_move.c		\
+	imap_cmd_object_move.h		\
 	imap_cmd_object_up.c		\
 	imap_cmd_object_up.h		\
 	imap_cmd_paste.c		\
@@ -87,6 +91,10 @@ imagemap_SOURCES = \
 	imap_cmd_select.h		\
 	imap_cmd_select_all.c		\
 	imap_cmd_select_all.h		\
+	imap_cmd_select_next.c		\
+	imap_cmd_select_next.h		\
+	imap_cmd_select_prev.c		\
+	imap_cmd_select_prev.h		\
 	imap_cmd_select_region.c	\
 	imap_cmd_select_region.h	\
 	imap_cmd_send_to_back.c		\
@@ -147,6 +155,8 @@ imagemap_SOURCES = \
 	imap_string.h			\
 	imap_table.c			\
 	imap_table.h			\
+	imap_taglist.c			\
+	imap_taglist.h			\
 	imap_toolbar.c			\
 	imap_toolbar.h			\
 	imap_tools.c			\

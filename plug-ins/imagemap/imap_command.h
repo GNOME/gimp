@@ -26,19 +26,23 @@
 
 #include "imap_object.h"
 
+#define DEFAULT_UNDO_LEVELS 10
+
 typedef struct CommandClass_t CommandClass_t;
 typedef struct Command_t Command_t;
 typedef struct CommandList_t CommandList_t;
 
+typedef enum {CMD_APPEND, CMD_DESTRUCT, CMD_IGNORE} CmdExecuteValue_t;
+
 #define COMMAND_PROTO(class) \
 static void class##_destruct(Command_t *command); \
-static gboolean class##_execute(Command_t *command); \
+static CmdExecuteValue_t class##_execute(Command_t *command); \
 static void class##_undo(Command_t *command); \
 static void class##_redo(Command_t *command)
 
 struct CommandClass_t {
    void (*destruct)(Command_t*);
-   gboolean (*execute)(Command_t*);
+   CmdExecuteValue_t (*execute)(Command_t*);
    void (*undo)(Command_t*);
    void (*redo)(Command_t*);
 };

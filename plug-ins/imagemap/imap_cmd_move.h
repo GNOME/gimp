@@ -26,7 +26,8 @@
 
 #include "imap_command.h"
 #include "imap_object.h"
+#include "imap_preview.h"
 
-Command_t *move_command_new(Object_t *obj, gint x, gint y);
+Command_t *move_command_new(Preview_t *preview, Object_t *obj, gint x, gint y);
 
 #endif /* _IMAP_CMD_MOVE_H */

@@ -22,11 +22,11 @@
  */
 
 #include "imap_cmd_unselect.h"
-
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 static void unselect_command_destruct(Command_t *parent);
-static gboolean unselect_command_execute(Command_t *parent);
+static CmdExecuteValue_t unselect_command_execute(Command_t *parent);
 static void unselect_command_undo(Command_t *parent);
 
 static CommandClass_t unselect_command_class = {
@@ -46,7 +46,7 @@ unselect_command_new(Object_t *obj)
 {
    UnselectCommand_t *command = g_new(UnselectCommand_t, 1);
    command->obj = object_ref(obj);
-   return command_init(&command->parent, "Unselect", 
+   return command_init(&command->parent, _("Unselect"), 
 		       &unselect_command_class);
 }
 
@@ -57,12 +57,12 @@ unselect_command_destruct(Command_t *command)
    object_unref(unselect_command->obj);
 }
 
-static gboolean
+static CmdExecuteValue_t
 unselect_command_execute(Command_t *command)
 {
    UnselectCommand_t *unselect_command = (UnselectCommand_t*) command;
    object_unselect(unselect_command->obj);
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

@@ -23,6 +23,7 @@
 
 #include "imap_cmd_unselect.h"
 #include "imap_cmd_unselect_all.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 COMMAND_PROTO(unselect_all_command);
@@ -46,7 +47,7 @@ unselect_all_command_new(ObjectList_t *list, Object_t *exception)
    UnselectAllCommand_t *command = g_new(UnselectAllCommand_t, 1);
    command->list = list;
    command->exception = (exception) ? object_ref(exception) : exception;
-   return command_init(&command->parent, "Unselect All", 
+   return command_init(&command->parent, _("Unselect All"), 
 		       &unselect_all_command_class);
 }
 
@@ -65,20 +66,20 @@ select_one_object(Object_t *obj, gpointer data)
    command_add_subcommand(&command->parent, unselect_command_new(obj));
 }
 
-static gboolean
+static CmdExecuteValue_t
 unselect_all_command_execute(Command_t *parent)
 {
    UnselectAllCommand_t *command = (UnselectAllCommand_t*) parent;
    gpointer id;
-   gboolean rvalue;
+   CmdExecuteValue_t rvalue;
 
    id = object_list_add_select_cb(command->list, select_one_object,
 				  command);
    if (object_list_deselect_all(command->list, command->exception)) {
       redraw_preview();		/* Fix me! */
-      rvalue = TRUE;
+      rvalue = CMD_APPEND;
    } else {
-      rvalue = FALSE;
+      rvalue = CMD_DESTRUCT;
    }
    object_list_remove_select_cb(command->list, id);
    return rvalue;

@@ -22,7 +22,6 @@
  */
 
 #include "imap_browse.h"
-#include "imap_main.h"
 
 #include "open.xpm"
 
@@ -88,7 +87,6 @@ browse_widget_new(const gchar *name)
    GdkPixmap *icon;
    GdkBitmap *mask;
    GtkStyle  *style;
-   GtkWidget *top = get_top_widget();
 
    browse->file_selection = NULL;
    browse->name = name;
@@ -107,10 +105,11 @@ browse_widget_new(const gchar *name)
    gtk_widget_show(browse->file);
 
    browse->button = button = gtk_button_new();
-   style = gtk_widget_get_style(top);
-   icon = gdk_pixmap_create_from_xpm_d(top->window, &mask,
-				       &style->bg[GTK_STATE_NORMAL], 
-				       open_xpm);
+   style = gtk_widget_get_style(button);
+   icon = gdk_pixmap_colormap_create_from_xpm_d(
+      button->window, gtk_widget_get_colormap(button), &mask, 
+      &style->bg[GTK_STATE_NORMAL], open_xpm);
+
    iconw = gtk_pixmap_new(icon, mask);
    gtk_widget_show(iconw);
    gtk_container_add(GTK_CONTAINER(button), iconw);

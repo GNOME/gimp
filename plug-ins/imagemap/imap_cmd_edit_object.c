@@ -22,7 +22,7 @@
  */
 
 #include "imap_cmd_edit_object.h"
-
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 static void edit_object_command_destruct(Command_t *parent);
@@ -47,7 +47,7 @@ edit_object_command_new(Object_t *obj)
    EditObjectCommand_t *command = g_new(EditObjectCommand_t, 1);
    command->obj = object_ref(obj);
    command->copy = object_clone(obj);
-   return command_init(&command->parent, "Edit Object", 
+   return command_init(&command->parent, _("Edit Object"), 
 		       &edit_object_command_class);
 }
 

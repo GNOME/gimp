@@ -23,21 +23,22 @@
 
 #include "imap_about.h"
 #include "imap_default_dialog.h"
+#include "libgimp/stdplugins-intl.h"
 
 void
 do_about_dialog(void)
 {
    static DefaultDialog_t *dialog;
    if (!dialog) {
-      dialog = make_default_dialog("About");
+      dialog = make_default_dialog(_("About"));
       default_dialog_hide_cancel_button(dialog);
       default_dialog_hide_apply_button(dialog);
       default_dialog_set_label(
 	 dialog,
-	 "Imagemap plug-in 1.2\n\n"
-	 "Copyright(c) 1999 by Maurits Rijk\n"
-	 "lpeek.mrijk@consunet.nl \n\n"
-	 "  Released under the GNU General Public License  ");
+	 _("Imagemap plug-in 1.3\n\n"
+	   "Copyright(c) 1999 by Maurits Rijk\n"
+	   "lpeek.mrijk@consunet.nl \n\n"
+	   "  Released under the GNU General Public License  "));
    }
    default_dialog_show(dialog);
 }

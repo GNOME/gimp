@@ -23,9 +23,10 @@
 
 #include "imap_cmd_select.h"
 #include "imap_cmd_select_all.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static gboolean select_all_command_execute(Command_t *parent);
+static CmdExecuteValue_t select_all_command_execute(Command_t *parent);
 static void select_all_command_undo(Command_t *parent);
 static void select_all_command_redo(Command_t *parent);
 
@@ -46,7 +47,7 @@ select_all_command_new(ObjectList_t *list)
 {
    SelectAllCommand_t *command = g_new(SelectAllCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, "Select All", 
+   return command_init(&command->parent, _("Select All"), 
 		       &select_all_command_class);
 }
 
@@ -57,20 +58,20 @@ select_one_object(Object_t *obj, gpointer data)
    command_add_subcommand(&command->parent, select_command_new(obj));
 }
 
-static gboolean
+static CmdExecuteValue_t
 select_all_command_execute(Command_t *parent)
 {
    SelectAllCommand_t *command = (SelectAllCommand_t*) parent;
    gpointer id;
-   gboolean rvalue;
+   CmdExecuteValue_t rvalue;
 
    id = object_list_add_select_cb(command->list, select_one_object, command);
 
    if (object_list_select_all(command->list)) {
       redraw_preview();		/* Fix me! */
-      rvalue = TRUE;
+      rvalue = CMD_APPEND;
    } else {
-      rvalue = FALSE;
+      rvalue = CMD_DESTRUCT;
    }
    object_list_remove_select_cb(command->list, id);
    return rvalue;

@@ -23,10 +23,11 @@
 
 #include "imap_cmd_delete.h"
 #include "imap_cmd_cut.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 static void cut_command_destruct(Command_t *parent);
-static gboolean cut_command_execute(Command_t *parent);
+static CmdExecuteValue_t cut_command_execute(Command_t *parent);
 static void cut_command_undo(Command_t *parent);
 static void cut_command_redo(Command_t *parent);
 
@@ -49,7 +50,7 @@ cut_command_new(ObjectList_t *list)
    CutCommand_t *command = g_new(CutCommand_t, 1);
    command->list = list;
    command->paste_buffer = NULL;
-   return command_init(&command->parent, "Cut", &cut_command_class);
+   return command_init(&command->parent, _("Cut"), &cut_command_class);
 }
 
 static void
@@ -67,7 +68,7 @@ remove_one_object(Object_t *obj, gpointer data)
 			  delete_command_new(command->list, obj));
 }
 
-static gboolean
+static CmdExecuteValue_t
 cut_command_execute(Command_t *parent)
 {
    CutCommand_t *command = (CutCommand_t*) parent;
@@ -80,7 +81,7 @@ cut_command_execute(Command_t *parent)
    object_list_remove_remove_cb(command->list, id);
 
    redraw_preview();		/* Fix me! */
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

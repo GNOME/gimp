@@ -22,6 +22,7 @@
  */
 
 #include "imap_browse.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_settings.h"
 #include "imap_string.h"
@@ -63,7 +64,7 @@ make_settings_dialog()
    DefaultDialog_t *dialog;
    GSList    *group;
 
-   dialog = data->dialog = make_default_dialog("Settings for this Mapfile");
+   dialog = data->dialog = make_default_dialog(_("Settings for this Mapfile"));
    default_dialog_set_ok_cb(dialog, settings_ok_cb, (gpointer) data);
 
    table = gtk_table_new(9, 3, FALSE);
@@ -74,21 +75,21 @@ make_settings_dialog()
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_widget_show(table);
 
-   create_label_in_table(table, 0, 0, "Filename:");
+   create_label_in_table(table, 0, 0, _("Filename:"));
    data->filename = create_label_in_table(table, 0, 1, "");
 
-   create_label_in_table(table, 1, 0, "Image name:");
-   data->imagename = browse_widget_new("Select Image File");
+   create_label_in_table(table, 1, 0, _("Image name:"));
+   data->imagename = browse_widget_new(_("Select Image File"));
    gtk_table_attach_defaults(GTK_TABLE(table), data->imagename->hbox, 1, 2, 
 			     1, 2);
 
-   create_label_in_table(table, 2, 0, "Title:");
+   create_label_in_table(table, 2, 0, _("Title:"));
    data->title = create_entry_in_table(table, 2, 1);
-   create_label_in_table(table, 3, 0, "Author:");
+   create_label_in_table(table, 3, 0, _("Author:"));
    data->author = create_entry_in_table(table, 3, 1);
-   create_label_in_table(table, 4, 0, "Default URL:");
+   create_label_in_table(table, 4, 0, _("Default URL:"));
    data->default_url = create_entry_in_table(table, 4, 1);
-   create_label_in_table(table, 5, 0, "Description:");
+   create_label_in_table(table, 5, 0, _("Description:"));
 
    data->description = gtk_text_new(NULL, NULL);
    gtk_text_set_editable(GTK_TEXT(data->description), TRUE);
@@ -103,7 +104,7 @@ make_settings_dialog()
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
    gtk_widget_show(vscrollbar);
 
-   frame = gtk_frame_new("Map file format");
+   frame = gtk_frame_new(_("Map file format"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(table), frame, 1, 2, 9, 10);
    hbox = gtk_hbox_new(FALSE, 1);
@@ -144,7 +145,7 @@ do_settings_dialog(void)
       dialog = make_settings_dialog();
 
    gtk_label_set_text(GTK_LABEL(dialog->filename), 
-		      (filename) ? filename : "<Untitled>");
+		      (filename) ? filename : _("<Untitled>"));
    browse_widget_set_filename(dialog->imagename, info->image_name);
    gtk_entry_set_text(GTK_ENTRY(dialog->title), info->title);
    gtk_entry_set_text(GTK_ENTRY(dialog->author), info->author);
@@ -164,3 +165,4 @@ do_settings_dialog(void)
    gtk_text_insert(GTK_TEXT(dialog->description), NULL, NULL, NULL,
 		   info->description, -1);
 }
+

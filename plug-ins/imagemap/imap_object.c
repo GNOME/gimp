@@ -152,6 +152,12 @@ object_list_remove_move_cb(ObjectList_t *list, gpointer id)
    object_list_callback_remove(&list->move_cb, id);
 }
 
+void 
+object_list_remove_geometry_cb(ObjectList_t *list, gpointer id)
+{
+   object_list_callback_remove(&list->geometry_cb, id);
+}
+
 Object_t*
 object_init(Object_t *obj, ObjectClass_t *class)
 {
@@ -216,7 +222,7 @@ object_clone(Object_t *obj)
    return clone;
 }
 
-Object_t*
+static Object_t*
 object_copy(Object_t *src, Object_t *des)
 {
    des->class = src->class;
@@ -235,7 +241,8 @@ object_copy(Object_t *src, Object_t *des)
 Object_t*
 object_assign(Object_t *obj, Object_t *des)
 {
-   return obj->class->assign(obj, des);
+   obj->class->assign(obj, des);
+   return object_copy(obj, des);
 }
 
 void 
@@ -269,6 +276,13 @@ object_unselect(Object_t *obj)
 {
    obj->selected = FALSE;
    object_list_callback_call(&obj->list->select_cb, obj);
+}
+
+void
+object_move(Object_t *obj, gint dx, gint dy)
+{
+   obj->class->move(obj, dx, dy);
+   object_list_callback_call(&obj->list->geometry_cb, obj);
 }
 
 void
@@ -341,6 +355,18 @@ void
 object_emit_changed_signal(Object_t *obj)
 {
    object_list_callback_call(&obj->list->changed_cb, obj);
+}
+
+void 
+object_emit_geometry_signal(Object_t *obj)
+{
+   object_list_callback_call(&obj->list->geometry_cb, obj);
+}
+
+void 
+object_emit_update_signal(Object_t *obj)
+{
+   object_list_callback_call(&obj->list->update_cb, obj);
 }
 
 GdkPixmap* 
@@ -556,6 +582,17 @@ object_list_draw(ObjectList_t *list, GdkWindow *window)
       object_draw((Object_t*) p->data, window);
 }
 
+void
+object_list_draw_selected(ObjectList_t *list, GdkWindow *window)
+{
+   GList *p;
+   for (p = list->list; p; p = p->next) {
+      Object_t *obj = (Object_t*) p->data;
+      if (obj->selected)
+	 object_draw(obj, window);
+   }
+}
+
 Object_t*
 object_list_find(ObjectList_t *list, gint x, gint y)
 {
@@ -706,6 +743,44 @@ object_list_select_all(ObjectList_t *list)
    return count;
 }
 
+void 
+object_list_select_next(ObjectList_t *list)
+{
+   GList *p;
+   for (p = list->list; p; p = p->next) {
+      Object_t *obj = (Object_t*) p->data;
+      if (obj->selected) {
+	 object_unselect(obj);
+	 p = (p->next) ? p->next : list->list;
+	 object_select((Object_t*) p->data);
+	 for (p = p->next; p; p = p->next) {
+	    obj = (Object_t*) p->data;
+	    if (obj->selected)
+	       object_unselect(obj);
+	 }
+	 break;
+      }
+   }
+}
+
+void object_list_select_prev(ObjectList_t *list)
+{
+   GList *p;
+   for (p = list->list; p; p = p->next) {
+      Object_t *obj = (Object_t*) p->data;
+      if (obj->selected) {
+	 GList *q = (p->prev) ? p->prev : g_list_last(list->list);
+	 for (; p; p = p->next) {
+	    obj = (Object_t*) p->data;
+	    if (obj->selected)
+	       object_unselect(obj);
+	 }
+	 object_select((Object_t*) q->data);
+	 break;
+      }
+   }
+}
+
 gint 
 object_list_select_region(ObjectList_t *list, gint x, gint y, gint width,
 			  gint height)
@@ -782,6 +857,17 @@ object_list_swap_next(ObjectList_t *list, GList *p)
    p->next->data = swap;
    object_list_callback_call(&list->move_cb, (Object_t*) p->data);
    object_list_callback_call(&list->move_cb, (Object_t*) p->next->data);
+}
+
+void 
+object_list_move_selected(ObjectList_t *list, gint dx, gint dy)
+{
+   GList *p;
+   for (p = list->list; p; p = p->next) {
+      Object_t *obj = (Object_t*) p->data;
+      if (obj->selected)
+	 object_move(obj, dx, dy);
+   }
 }
 
 void 

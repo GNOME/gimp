@@ -1,3 +1,7 @@
+Sun Oct 24 22:53:17 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/imagemap/* updated imagemap to version 1.3
+
 Sun Oct 24 16:49:13 CEST 1999  Marc Lehmann <pcg@goof.com>
 
         * tools/pdbgen/pdb/drawable.pdb, all calls: fixed some improperly

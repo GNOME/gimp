@@ -24,12 +24,9 @@
 #ifndef _IMAP_MAIN_H
 #define _IMAP_MAIN_H
 
-#include "gtk/gtk.h"
-
 #include "imap_mru.h"
 #include "imap_object.h"
 #include "imap_preferences.h"
-#include "imap_preview.h"
 
 typedef enum {NCSA, CERN, CSIM} MapFormat_t;
 
@@ -55,7 +52,7 @@ GdkColor *get_yellow(void);
 MRU_t *get_mru(void);
 MapInfo_t *get_map_info(void);
 PreferencesData_t *get_preferences(void);
-GtkWidget *get_top_widget(void);
+
 gint get_image_width(void);
 gint get_image_height(void);
 
@@ -91,7 +88,10 @@ void edit_shape(gint x, gint y);
 
 void do_popup_menu(GdkEventButton *event);
 void draw_shapes(GtkWidget *preview);
+
 void redraw_preview(void);
+void preview_freeze(void);
+void preview_thaw(void);
 
 void show_url(void);
 void hide_url(void);

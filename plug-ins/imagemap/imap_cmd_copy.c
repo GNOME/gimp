@@ -21,10 +21,10 @@
  *
  */
 
-#include <stdio.h>
 #include "imap_cmd_copy.h"
+#include "libgimp/stdplugins-intl.h"
 
-static gboolean copy_command_execute(Command_t *parent);
+static CmdExecuteValue_t copy_command_execute(Command_t *parent);
 static void copy_command_undo(Command_t *parent);
 
 static CommandClass_t copy_command_class = {
@@ -46,17 +46,17 @@ copy_command_new(ObjectList_t *list)
    CopyCommand_t *command = g_new(CopyCommand_t, 1);
    command->list = list;
    command->paste_buffer = NULL;
-   return command_init(&command->parent, "Copy", &copy_command_class);
+   return command_init(&command->parent, _("Copy"), &copy_command_class);
 }
 
-static gboolean
+static CmdExecuteValue_t
 copy_command_execute(Command_t *parent)
 {
    CopyCommand_t *command = (CopyCommand_t*) parent;
    command->paste_buffer = object_list_copy(command->paste_buffer, 
 					    get_paste_buffer());
    object_list_copy_to_paste_buffer(command->list);
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

@@ -21,15 +21,25 @@
  *
  */
 
-#include "imap_string.h"
+#ifndef _IMAP_TAGLIST_H
+#define _IMAP_TAGLIST_H
 
-gchar*
-g_strreplace(gchar **old_str, const gchar *new_str)
-{
-   if (*old_str != new_str) {
-      g_free(*old_str);
-      *old_str = g_strdup(new_str);
-   }
-   return *old_str;
-}
+#include <glib.h>
 
+typedef struct {
+   gchar *name;
+   gchar *value;
+} Tag_t;
+
+typedef struct {
+   GList *list;
+} TagList_t;
+
+TagList_t *taglist_create(void);
+TagList_t *taglist_clone(TagList_t *src);
+TagList_t *taglist_copy(TagList_t *src, TagList_t *des);
+void taglist_destruct(TagList_t *tlist);
+void taglist_set(TagList_t *tlist, const gchar *id, const gchar *value);
+void taglist_write(TagList_t *tlist);
+
+#endif /* _IMAP_TAGLIST_H */

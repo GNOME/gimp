@@ -23,6 +23,7 @@
 
 #include "imap_cmd_copy.h"
 #include "imap_cmd_edit_object.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 COMMAND_PROTO(move_sash_command);
@@ -60,7 +61,7 @@ move_sash_command_new(GtkWidget *widget, Object_t *obj,
    command->image_height = get_image_height();
    command->sash_func = sash_func;
 
-   parent = command_init(&command->parent, "Move Sash",
+   parent = command_init(&command->parent, _("Move Sash"),
 			 &move_sash_command_class);
    command_add_subcommand(parent, edit_object_command_new(obj));
 
@@ -105,6 +106,7 @@ sash_move(GtkWidget *widget, GdkEventMotion *event, gpointer data)
 
    object_draw(obj, widget->window);
    command->sash_func(obj, dx, dy);
+   object_emit_geometry_signal(obj);
    object_draw(obj, widget->window);
 }
 
@@ -121,23 +123,25 @@ sash_end(GtkWidget *widget, GdkEventButton *event, gpointer data)
    if (obj->class->normalize)
       object_normalize(obj);
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_COPY);
-   redraw_preview();
+/*   redraw_preview(); */
+   preview_thaw();
    show_url();
 }
 
-static gboolean
+static CmdExecuteValue_t
 move_sash_command_execute(Command_t *parent)
 {
    MoveSashCommand_t *command = (MoveSashCommand_t*) parent;
 
    hide_url();
+   preview_freeze();
    gtk_signal_connect(GTK_OBJECT(command->widget), "button_release_event",
 		      (GtkSignalFunc) sash_end, command);   
    gtk_signal_connect(GTK_OBJECT(command->widget), "motion_notify_event", 
 		      (GtkSignalFunc) sash_move, command);   
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_EQUIV);
 
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

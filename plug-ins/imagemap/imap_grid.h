@@ -39,11 +39,17 @@ typedef struct {
    GtkWidget *hidden;
    GtkWidget *lines;
    GtkWidget *crosses;
+   GtkWidget *preview;
+
+   gboolean   enable_preview;
 } GridDialog_t;
 
 void do_grid_settings_dialog();
 void draw_grid(GtkWidget *preview);
 gboolean toggle_grid();
 void round_to_grid(gint *x, gint *y);
+
+gboolean grid_near_x(gint x);
+gboolean grid_near_y(gint y);
 
 #endif /* _IMAP_GRID_H */

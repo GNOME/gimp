@@ -1,20 +1,55 @@
-Sat Aug 28 16:32:03 1999  Maurits Rijk  <maurits@frop.edu>
+Thu Oct 21 19:58:39 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* release version 1.3
+
+Sat Oct  9 11:39:14 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* imap_main.c (dialog): removed some obsolete funcs.
+
+Sun Oct  3 20:25:32 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* imap_grid.c: prepare for i8n
+
+	* imap_polygon.c (polygon_free_list): added
+	(polygon_assign): free list before adding new points
+
+Sun Sep 26 13:44:15 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* imap_cmd_select_prev.c: created
+
+	* imap_cmd_select_prev.h: created
+
+	* imap_cmd_select_next.c: created
+
+	* imap_cmd_select_next.h: created
+
+	* imap_cmd_object_move.c: created
+
+	* imap_cmd_object_move.h: created
+
+Wed Sep  8 19:07:19 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
+	* imap_taglist.h: created
+
+	* imap_taglist.c: created
+
+Sat Aug 28 16:32:03 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* release version 1.2
 
-Sun Aug 15 16:54:43 1999  Maurits Rijk  <maurits@frop.edu>
+Sun Aug 15 16:54:43 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_cmd_select_region.h: created
 
 	* imap_cmd_move_sash.c: created
 
-Mon Aug  9 22:33:12 1999  Maurits Rijk  <maurits@frop.edu>
+Mon Aug  9 22:33:12 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_cmd_cut_object.c: created
 
 	* imap_cmd_cut_object.h: created
 
-Sun Aug  8 12:54:44 1999  Maurits Rijk  <maurits@frop.edu>
+Sun Aug  8 12:54:44 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_cmd_cut.c: created
 
@@ -26,26 +61,26 @@ Sun Aug  8 12:54:44 1999  Maurits Rijk  <maurits@frop.edu>
 
 	* imap_object_popup.h: created
 
-Sat Jul 31 12:34:00 1999  Maurits Rijk  <maurits@frop.edu>
+Sat Jul 31 12:34:00 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_toolbar.c: Added redo and undo button to toolbar.
 
-Wed Jul 28 22:17:09 1999  Maurits Rijk  <maurits@frop.edu>
+Wed Jul 28 22:17:09 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_object.c (object_on_button_press): fixed 'round to grid' bug
 	for polygons.
 
-Tue Jul 27 23:19:00 1999  Maurits Rijk  <maurits@frop.edu>
+Tue Jul 27 23:19:00 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_edit_area_info.c: use BrowseWidget_t for URL.
 
-Mon Jul 26 22:00:58 1999  Maurits Rijk  <maurits@frop.edu>
+Mon Jul 26 22:00:58 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_browse.c: created
 
 	* imap_object.c (object_list_move_selected_up): fixed move up/down bug.
 
-Mon Jun 28 18:05:24 1999  Maurits Rijk  <maurits@frop.edu>
+Mon Jun 28 18:05:24 1999  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* imap_main.c (dialog): fixed annoying bug
 

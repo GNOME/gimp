@@ -34,7 +34,10 @@ typedef struct AreaInfoDialog_t AreaInfoDialog_t;
 struct AreaInfoDialog_t {
    DefaultDialog_t *dialog;
    Object_t 	   *obj;
+   Object_t	   *clone;
    gboolean	    add;
+   gboolean	    geometry_lock;
+   gboolean	    preview;
 
    GtkWidget	   *notebook;
    GtkWidget	   *web_site;
@@ -55,10 +58,12 @@ struct AreaInfoDialog_t {
    GtkWidget	   *blur;
    GtkWidget 	   *browse;
    gpointer	    infotab;
+   gpointer	    geometry_cb_id;
 };
 
 AreaInfoDialog_t *create_edit_area_info_dialog(Object_t *obj);
 void edit_area_info_dialog_show(AreaInfoDialog_t *dialog, Object_t *obj,
 				gboolean add);
+void edit_area_info_dialog_emit_geometry_signal(AreaInfoDialog_t *dialog);
 
 #endif /* _IMAP_EDIT_AREA_INFO_H */

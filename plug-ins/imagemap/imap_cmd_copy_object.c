@@ -22,9 +22,10 @@
  */
 
 #include "imap_cmd_copy_object.h"
+#include "libgimp/stdplugins-intl.h"
 
 static void copy_object_command_destruct(Command_t *parent);
-static gboolean copy_object_command_execute(Command_t *parent);
+static CmdExecuteValue_t copy_object_command_execute(Command_t *parent);
 static void copy_object_command_undo(Command_t *parent);
 
 static CommandClass_t copy_object_command_class = {
@@ -46,7 +47,8 @@ copy_object_command_new(Object_t *obj)
    CopyObjectCommand_t *command = g_new(CopyObjectCommand_t, 1);
    command->obj = object_ref(obj);
    command->paste_buffer = NULL;
-   return command_init(&command->parent, "Copy", &copy_object_command_class);
+   return command_init(&command->parent, _("Copy"), 
+		       &copy_object_command_class);
 }
 
 static void
@@ -56,7 +58,7 @@ copy_object_command_destruct(Command_t *parent)
    object_unref(command->obj);
 }
 
-static gboolean
+static CmdExecuteValue_t
 copy_object_command_execute(Command_t *parent)
 {
    CopyObjectCommand_t *command = (CopyObjectCommand_t*) parent;
@@ -67,7 +69,7 @@ copy_object_command_execute(Command_t *parent)
    clear_paste_buffer();
    object_list_append(paste_buffer, object_clone(command->obj));
 
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

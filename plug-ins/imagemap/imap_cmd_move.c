@@ -21,35 +21,63 @@
  *
  */
 
-#include "imap_cmd_copy.h"
+#include "imap_cmd_move.h"
+#include "imap_cmd_object_move.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 static void move_command_destruct(Command_t *parent);
-static gboolean move_command_execute(Command_t *parent);
-static void move_command_undo(Command_t *parent);
+static CmdExecuteValue_t move_command_execute(Command_t *parent);
 
 CommandClass_t move_command_class = {
    move_command_destruct,
    move_command_execute,
-   move_command_undo,
+   NULL,			/* move_command_undo */
    NULL				/* move_command_redo */
 };
 
 typedef struct {
    Command_t parent;
+   PreferencesData_t *preferences;
+   Preview_t *preview;
    Object_t *obj;
-   gint dx;
-   gint dy;
+   gint start_x;
+   gint start_y;
+   gint obj_start_x;
+   gint obj_start_y;
+   gint obj_x;
+   gint obj_y;
+   gint obj_width;
+   gint obj_height;
+
+   gint image_width;
+   gint image_height;
+
+   GdkCursorType cursor;	/* Remember previous cursor */
+   gboolean moved_first_time;
 } MoveCommand_t;
 
 Command_t* 
-move_command_new(Object_t *obj, gint dx, gint dy)
+move_command_new(Preview_t *preview, Object_t *obj, gint x, gint y)
 {
    MoveCommand_t *command = g_new(MoveCommand_t, 1);
+
+   command->preferences = get_preferences();
+   command->preview = preview;
    command->obj = object_ref(obj);
-   command->dx = dx;
-   command->dy = dy;
-   return command_init(&command->parent, "Move", &move_command_class);
+   command->start_x = x;
+   command->start_y = y;
+   object_get_dimensions(obj, &command->obj_x, &command->obj_y, 
+			 &command->obj_width, &command->obj_height);
+   command->obj_start_x = command->obj_x;
+   command->obj_start_y = command->obj_y;
+
+   command->image_width = get_image_width();
+   command->image_height = get_image_height();
+
+   command->moved_first_time = TRUE;
+
+   return command_init(&command->parent, _("Move"), &move_command_class);
 }
 
 static void
@@ -59,20 +87,79 @@ move_command_destruct(Command_t *parent)
    object_unref(command->obj);
 }
 
-static gboolean
-move_command_execute(Command_t *parent)
+static void
+button_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
 {
-   MoveCommand_t *command = (MoveCommand_t*) parent;
-   object_move(command->obj, command->dx, command->dy);
-   redraw_preview();		/* fix me! */
-   return TRUE;
+   MoveCommand_t *command = (MoveCommand_t*) data;
+   Object_t *obj = command->obj;
+   gint dx = get_real_coord((gint) event->x) - command->start_x;
+   gint dy = get_real_coord((gint) event->y) - command->start_y;
+
+   if (command->moved_first_time) {
+      command->moved_first_time = FALSE;
+      command->cursor = preview_set_cursor(command->preview, GDK_FLEUR);
+      gdk_gc_set_function(command->preferences->normal_gc, GDK_EQUIV);
+      gdk_gc_set_function(command->preferences->selected_gc, GDK_EQUIV);
+      hide_url();
+   }
+
+   if (command->obj_x + dx < 0)
+      dx = -command->obj_x;
+   if (command->obj_x + command->obj_width + dx > command->image_width)
+      dx = command->image_width - command->obj_width - command->obj_x;
+   if (command->obj_y + dy < 0)
+      dy = -command->obj_y;
+   if (command->obj_y + command->obj_height + dy > command->image_height)
+      dy = command->image_height - command->obj_height - command->obj_y;
+
+   if (dx || dy) {
+      command->start_x = get_real_coord((gint) event->x);
+      command->start_y = get_real_coord((gint) event->y);
+      command->obj_x += dx;
+      command->obj_y += dy;
+
+      object_draw(obj, widget->window);
+      object_move(obj, dx, dy);
+      object_draw(obj, widget->window);
+   }
 }
 
 static void
-move_command_undo(Command_t *parent)
+button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+   MoveCommand_t *command = (MoveCommand_t*) data;
+
+   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
+				 (GtkSignalFunc) button_motion, data);
+   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
+				 (GtkSignalFunc) button_release, data);
+
+   if (!command->moved_first_time) {
+      preview_set_cursor(command->preview, command->cursor);
+      gdk_gc_set_function(command->preferences->normal_gc, GDK_COPY);
+      gdk_gc_set_function(command->preferences->selected_gc, GDK_COPY);
+      show_url();
+   }
+   command->obj_x -= command->obj_start_x;
+   command->obj_y -= command->obj_start_y;
+   if (command->obj_x || command->obj_y)
+      command_list_add(object_move_command_new(command->obj, command->obj_x, 
+					       command->obj_y));
+
+   preview_thaw();
+}
+
+static CmdExecuteValue_t
+move_command_execute(Command_t *parent)
 {
    MoveCommand_t *command = (MoveCommand_t*) parent;
-   object_move(command->obj, -command->dx, -command->dy);
-   redraw_preview();		/* fix me! */
+   GtkWidget *widget = command->preview->preview;
+
+   preview_freeze();
+   gtk_signal_connect(GTK_OBJECT(widget), "button_release_event", 
+		      (GtkSignalFunc) button_release, command);   
+   gtk_signal_connect(GTK_OBJECT(widget), "motion_notify_event", 
+		      (GtkSignalFunc) button_motion, command);   
+   return CMD_DESTRUCT;
 }
 

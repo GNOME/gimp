@@ -38,6 +38,8 @@ typedef struct {
    gint		height;
    gint		exp_id;
    GPixelRgn 	src_rgn;
+
+   GdkCursorType cursor;
 } Preview_t;
 
 Preview_t *make_preview(GDrawable *drawable);
@@ -52,6 +54,7 @@ gint preview_get_width(GtkWidget *preview);
 gint preview_get_height(GtkWidget *preview);
 
 void preview_zoom(Preview_t *preview, gint zoom_factor);
-void preview_set_cursor(Preview_t *preview, GdkCursorType cursor_type);
+GdkCursorType preview_set_cursor(Preview_t *preview, 
+				 GdkCursorType cursor_type);
 
 #endif /* _IMAP_PREVIEW_H */

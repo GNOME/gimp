@@ -23,9 +23,10 @@
 
 #include "imap_cmd_create.h"
 #include "imap_cmd_paste.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static gboolean paste_command_execute(Command_t *parent);
+static CmdExecuteValue_t paste_command_execute(Command_t *parent);
 
 static CommandClass_t paste_command_class = {
    NULL,			/* paste_command_destruct, */
@@ -44,7 +45,7 @@ paste_command_new(ObjectList_t *list)
 {
    PasteCommand_t *command = g_new(PasteCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, "Paste", &paste_command_class);
+   return command_init(&command->parent, _("Paste"), &paste_command_class);
 }
 
 static void
@@ -55,7 +56,7 @@ paste_one_object(Object_t *obj, gpointer data)
 			  create_command_new(command->list, obj));
 }
 
-static gboolean
+static CmdExecuteValue_t
 paste_command_execute(Command_t *parent)
 {
    PasteCommand_t *command = (PasteCommand_t*) parent;
@@ -65,7 +66,7 @@ paste_command_execute(Command_t *parent)
    object_list_paste(command->list);
    redraw_preview();		/* Fix me! */
    object_list_remove_add_cb(command->list, id);
-   return TRUE;
+   return CMD_APPEND;
 }
 
 

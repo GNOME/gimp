@@ -1,7 +1,11 @@
+Sun Oct 24 22:52:01 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* POTFILES.in: added imagemap plug-in
+
 Sun Oct 24 18:58:16 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* de.po: Checked in first german version 
-	(done by Felix Natter <f.natter@ndh.net> 
+	    (done by Felix Natter <f.natter@ndh.net> 
 	     and Daniel Eggert <Daniel.Egger@rz.fh-muenchen.de>)
 
 1999-10-21  Kjartan Maraas  <kmaraas@online.no>

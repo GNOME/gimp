@@ -23,10 +23,12 @@
 
 #include <stdio.h>
 
+#include "imap_cmd_edit_object.h"
 #include "imap_cmd_select.h"
 #include "imap_cmd_unselect.h"
 #include "imap_cmd_unselect_all.h"
 #include "imap_edit_area_info.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_selection.h"
@@ -62,14 +64,16 @@ select_row_cb(GtkWidget *widget, gint row, gint column, GdkEventButton *event,
 {
    data->selected_child = widget;
    data->selected_row = row;
-      
+
    set_buttons(data);
    if (data->select_lock) {
       data->select_lock = FALSE;
    } else {
       Object_t *obj = gtk_clist_get_row_data(GTK_CLIST(data->list), row);
       Command_t *command;
-      if (event->state & GDK_SHIFT_MASK) {
+      /* Note: event can be NULL if select_row_cb is called as a result of
+	 a key press! */
+      if (event && event->state & GDK_SHIFT_MASK) {
 	 command = select_command_new(obj);
       } else {
 	 Command_t *sub_command;
@@ -102,6 +106,39 @@ unselect_row_cb(GtkWidget *widget, gint row, gint column,
    }
    data->selected_child = NULL;
    set_buttons(data);
+}
+
+static void
+row_move_cb(GtkWidget *widget, gint src, gint des)
+{
+   printf("move: %d %d\n", src, des);
+}
+
+static gboolean doubleclick;
+
+static void
+button_press_cb(GtkWidget *widget, GdkEventButton *event, Selection_t *data)
+{
+   if (event->button == 1) {
+      if (doubleclick) {
+	 gint row, column;
+	 doubleclick = FALSE;
+	 if (gtk_clist_get_selection_info(GTK_CLIST(widget), (gint) event->x, 
+					  (gint) event->y, &row, &column)) {
+	    Object_t *obj = gtk_clist_get_row_data(GTK_CLIST(data->list), row);
+	    object_edit(obj, TRUE);
+	 }
+      } else {
+	 doubleclick = TRUE;
+      }
+   }
+}
+
+static void
+button_release_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+   if (event->button == 1)
+      doubleclick = FALSE;
 }
 
 static void
@@ -264,6 +301,32 @@ toggle_order(GtkWidget *widget, gint column, gpointer data)
    /* Fix me! */
 }
 
+static GtkTargetEntry target_table[] = {
+   {"STRING", 0, 1 },
+   {"text/plain", 0, 2 }
+};
+
+static void 
+handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y, 
+	    GtkSelectionData *data, guint info, guint time)
+{
+   gboolean success = FALSE;
+   if (data->length >= 0 && data->format == 8) {
+      gint row, column;
+      if (gtk_clist_get_selection_info(GTK_CLIST(widget), x, y, &row, 
+				       &column)) {
+	 Object_t *obj = gtk_clist_get_row_data(GTK_CLIST(widget), row + 1);
+	 if (!obj->locked) {
+	    command_list_add(edit_object_command_new(obj));
+	    object_set_url(obj, data->data);
+	    object_emit_update_signal(obj);
+	    success = TRUE;
+	 }
+      }
+   }
+   gtk_drag_finish(context, success, FALSE, time);
+}
+
 Selection_t*
 make_selection(GtkWidget *window, ObjectList_t *object_list)
 {
@@ -271,7 +334,7 @@ make_selection(GtkWidget *window, ObjectList_t *object_list)
    GtkWidget *swin, *frame, *hbox;
    GtkWidget *toolbar;
    GtkWidget *list;
-   gchar     *titles[] = {"#", "URL", "Target", "Comment"};
+   gchar     *titles[] = {"#", N_("URL"), N_("Target"), N_("Comment")};
 
    data->object_list = object_list;
    data->selected_child = NULL;
@@ -292,21 +355,20 @@ make_selection(GtkWidget *window, ObjectList_t *object_list)
    gtk_container_add(GTK_CONTAINER(hbox), toolbar);
 
    /* Create selection */
-   frame = gtk_frame_new("Selection");
+   frame = gtk_frame_new(_("Selection"));
    gtk_container_set_border_width(GTK_CONTAINER(frame), 10);
    gtk_container_add(GTK_CONTAINER(hbox), frame);
    gtk_widget_show(frame);
 
    data->list = list = gtk_clist_new_with_titles(4, titles);
+   GTK_WIDGET_UNSET_FLAGS(data->list, GTK_CAN_FOCUS);
    gtk_clist_column_titles_passive(GTK_CLIST(list));
    gtk_clist_column_title_active(GTK_CLIST(list), 0);
    gtk_clist_set_column_width(GTK_CLIST(list), 0, 16);
    gtk_clist_set_column_width(GTK_CLIST(list), 1, 80);
    gtk_clist_set_column_width(GTK_CLIST(list), 2, 64);
    gtk_clist_set_column_width(GTK_CLIST(list), 3, 64);
-
-   gtk_signal_connect(GTK_OBJECT(list), "click_column",
-		      GTK_SIGNAL_FUNC(toggle_order), (gpointer) data);
+   gtk_clist_set_reorderable(GTK_CLIST(list), TRUE);
 
    /* Create scrollable window */
    swin = gtk_scrolled_window_new(NULL, NULL);
@@ -315,19 +377,35 @@ make_selection(GtkWidget *window, ObjectList_t *object_list)
    gtk_widget_show(swin);
 
    gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(swin), list);
-
-   gtk_object_set_user_data(GTK_OBJECT(list), data);
    gtk_widget_show(list);
 
+   /* Drop support */
+   gtk_drag_dest_set(list, GTK_DEST_DEFAULT_ALL, target_table,
+		     2, GDK_ACTION_COPY);
+   gtk_signal_connect(GTK_OBJECT(list), "drag_data_received",
+		      GTK_SIGNAL_FUNC(handle_drop), NULL);
+
+   /* Callbacks we are interested in */
+   gtk_signal_connect(GTK_OBJECT(list), "click_column",
+		      GTK_SIGNAL_FUNC(toggle_order), data);
    gtk_signal_connect(GTK_OBJECT(list), "select_row",
 		      GTK_SIGNAL_FUNC(select_row_cb), data);
    gtk_signal_connect(GTK_OBJECT(list), "unselect_row",
 		      GTK_SIGNAL_FUNC(unselect_row_cb), data);
+   gtk_signal_connect(GTK_OBJECT(list), "row_move",
+		      GTK_SIGNAL_FUNC(row_move_cb), data);
+
+   /* For handling doubleclick */
+   gtk_signal_connect(GTK_OBJECT(list), "button_press_event",
+		      GTK_SIGNAL_FUNC(button_press_cb), data);
+   gtk_signal_connect(GTK_OBJECT(list), "button_release_event",
+		      GTK_SIGNAL_FUNC(button_release_cb), data);
+
    gtk_clist_set_selection_mode(GTK_CLIST(list), GTK_SELECTION_MULTIPLE);
 
    set_buttons(data);
 
-   /* Set callbacks we're interested in */
+   /* Set object list callbacks we're interested in */
    object_list_add_add_cb(object_list, object_added_cb, data);
    object_list_add_update_cb(object_list, object_updated_cb, data);
    object_list_add_remove_cb(object_list, object_removed_cb, data);

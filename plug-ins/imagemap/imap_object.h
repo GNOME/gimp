@@ -54,6 +54,7 @@ typedef void (*OutputFunc_t)(gpointer, const char*, ...);
 struct AreaInfoDialog_t;
 
 struct ObjectClass_t {
+   gchar		*name;
    AreaInfoDialog_t 	*info_dialog;
    GdkPixmap 		*icon;
    GdkBitmap 		*mask;
@@ -61,7 +62,7 @@ struct ObjectClass_t {
    gboolean (*is_valid)(Object_t *obj);
    void (*destruct)(Object_t *obj);
    Object_t* (*clone)(Object_t *obj);
-   Object_t* (*assign)(Object_t *obj, Object_t *des);
+   void (*assign)(Object_t *obj, Object_t *des);
    void (*normalize)(Object_t *obj);
    void (*draw)(Object_t *obj, GdkWindow *window, GdkGC* gc);
    void (*draw_sashes)(Object_t *obj, GdkWindow *window, GdkGC* gc);
@@ -71,7 +72,8 @@ struct ObjectClass_t {
 			  gint *height);
    void (*resize)(Object_t *obj, gint percentage_x, gint percentage_y);
    void (*move)(Object_t *obj, gint dx, gint dy);
-   gpointer (*create_info_tab)(GtkWidget *notebook);
+   gpointer (*create_info_widget)(GtkWidget *frame);
+   void (*update_info_widget)(Object_t *obj, gpointer data);
    void (*fill_info_tab)(Object_t *obj, gpointer data);
    void (*set_initial_focus)(Object_t *obj, gpointer data);
    void (*update)(Object_t *obj, gpointer data);
@@ -86,13 +88,13 @@ struct ObjectClass_t {
 Object_t *object_ref(Object_t *obj);
 void object_unref(Object_t *obj);
 Object_t* object_init(Object_t *obj, ObjectClass_t *class);
-Object_t* object_copy(Object_t *src, Object_t *des);
 Object_t* object_clone(Object_t *obj);
 Object_t* object_assign(Object_t *src, Object_t *des);
 void object_draw(Object_t *obj, GdkWindow *window);
 void object_edit(Object_t *obj, gboolean add);
 void object_select(Object_t *obj);
 void object_unselect(Object_t *obj);
+void object_move(Object_t *obj, gint dx, gint dy);
 void object_remove(Object_t *obj);
 void object_lock(Object_t *obj);
 void object_unlock(Object_t *obj);
@@ -105,7 +107,10 @@ void object_set_focus(Object_t *obj, const gchar *focus);
 void object_set_blur(Object_t *obj, const gchar *blur);
 gint object_get_position_in_list(Object_t *obj);
 GdkPixmap* object_get_icon(Object_t *obj, GtkWidget *widget, GdkBitmap **mask);
+
 void object_emit_changed_signal(Object_t *obj);
+void object_emit_geometry_signal(Object_t *obj);
+void object_emit_update_signal(Object_t *obj);
 
 #define object_is_valid(obj) \
 	((obj)->class->is_valid(obj))
@@ -116,14 +121,17 @@ void object_emit_changed_signal(Object_t *obj);
 #define object_normalize(obj) \
   	((obj)->class->normalize(obj))
 
-#define object_move(obj, dx, dy) \
-	((obj)->class->move((obj), (dx), (dy)))
-
 #define object_resize(obj, per_x, per_y) \
 	((obj)->class->resize((obj), (per_x), (per_y)))
 
 #define object_update(obj, data) \
 	((obj)->class->update((obj), (data)))
+
+#define object_update_info_widget(obj, data) \
+	((obj)->class->update_info_widget((obj), (data)))
+
+#define object_fill_info_tab(obj, data) \
+	((obj)->class->fill_info_tab((obj), (data)))
 
 typedef struct {
    Object_t *obj;
@@ -164,6 +172,7 @@ void object_list_remove(ObjectList_t *list, Object_t *object);
 void object_list_remove_link(ObjectList_t *list, GList *link);
 void object_list_update(ObjectList_t *list, Object_t *object);
 void object_list_draw(ObjectList_t *list, GdkWindow *window);
+void object_list_draw_selected(ObjectList_t *list, GdkWindow *window);
 Object_t *object_list_find(ObjectList_t *list, gint x, gint y);
 Object_t *object_list_near_sash(ObjectList_t *list, gint x, gint y,
 				MoveSashFunc_t *sash_func);
@@ -176,12 +185,15 @@ void object_list_remove_all(ObjectList_t *list);
 void object_list_delete_selected(ObjectList_t *list);
 void object_list_edit_selected(ObjectList_t *list);
 gint object_list_select_all(ObjectList_t *list);
+void object_list_select_next(ObjectList_t *list);
+void object_list_select_prev(ObjectList_t *list);
 gint object_list_select_region(ObjectList_t *list, gint x, gint y, gint width,
 			       gint height);
 gint object_list_deselect_all(ObjectList_t *list, Object_t *exception);
 gint object_list_nr_selected(ObjectList_t *list);
 void object_list_resize(ObjectList_t *list, gint percentage_x, 
 			gint percentage_y);
+void object_list_move_selected(ObjectList_t *list, gint dx, gint dy);
 void object_list_move_up(ObjectList_t *list, Object_t *obj);
 void object_list_move_down(ObjectList_t *list, Object_t *obj);
 void object_list_move_selected_up(ObjectList_t *list);
@@ -222,6 +234,7 @@ void object_list_remove_add_cb(ObjectList_t *list, gpointer id);
 void object_list_remove_select_cb(ObjectList_t *list, gpointer id);
 void object_list_remove_remove_cb(ObjectList_t *list, gpointer id);
 void object_list_remove_move_cb(ObjectList_t *list, gpointer id);
+void object_list_remove_geometry_cb(ObjectList_t *list, gpointer id);
 
 #define object_list_clear_changed(list) ((list)->changed = FALSE)
 #define object_list_set_changed(list, ischanged) \

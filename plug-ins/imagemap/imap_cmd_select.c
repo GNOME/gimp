@@ -22,11 +22,11 @@
  */
 
 #include "imap_cmd_select.h"
-
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 static void select_command_destruct(Command_t *parent);
-static gboolean select_command_execute(Command_t *parent);
+static CmdExecuteValue_t select_command_execute(Command_t *parent);
 static void select_command_undo(Command_t *parent);
 
 static CommandClass_t select_command_class = {
@@ -46,7 +46,7 @@ select_command_new(Object_t *obj)
 {
    SelectCommand_t *command = g_new(SelectCommand_t, 1);
    command->obj = object_ref(obj);
-   return command_init(&command->parent, "Select", &select_command_class);
+   return command_init(&command->parent, _("Select"), &select_command_class);
 }
 
 static void
@@ -56,12 +56,12 @@ select_command_destruct(Command_t *parent)
    object_unref(command->obj);
 }
 
-static gboolean
+static CmdExecuteValue_t
 select_command_execute(Command_t *parent)
 {
    SelectCommand_t *command = (SelectCommand_t*) parent;
    object_select(command->obj);
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

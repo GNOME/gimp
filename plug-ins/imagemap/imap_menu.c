@@ -449,13 +449,13 @@ menu_build_mru_items(MRU_t *mru)
    }
 
    i = 0;
-   for (p = mru->list; p; p = p->next, i++)
+   for (p = mru->list; p; p = p->next, i++) {
       insert_item_with_label(_menu.file_menu, position++, (gchar*) p->data, 
 			     menu_mru, p->data);
+   }
    insert_separator(_menu.file_menu, position);
    _menu.nr_off_mru_items = i + 1;
 }
-
 
 void
 menu_select_arrow(void)

@@ -25,9 +25,10 @@
 #include "imap_cmd_select.h"
 #include "imap_cmd_select_region.h"
 #include "imap_cmd_unselect_all.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static gboolean select_region_command_execute(Command_t *parent);
+static CmdExecuteValue_t select_region_command_execute(Command_t *parent);
 static void select_region_command_undo(Command_t *parent);
 static void select_region_command_redo(Command_t *parent);
 
@@ -45,6 +46,7 @@ typedef struct {
    gint		 x;
    gint		 y;
    Object_t	*obj;
+   Command_t	*unselect_command;
 } SelectRegionCommand_t;
 
 Command_t* 
@@ -58,11 +60,12 @@ select_region_command_new(GtkWidget *widget, ObjectList_t *list, gint x,
    command->list = list;
    command->x = x;
    command->y = y;
-   (void) command_init(&command->parent, "Select Region", 
+   (void) command_init(&command->parent, _("Select Region"), 
 		       &select_region_command_class);
 
    sub_command = unselect_all_command_new(list, NULL);
    command_add_subcommand(&command->parent, sub_command);
+   command->unselect_command = sub_command;
 
    return &command->parent;
 }
@@ -96,6 +99,7 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    Object_t *obj = command->obj;
    Rectangle_t *rectangle = ObjectToRectangle(obj);
    gpointer id;
+   gint count;
 
    gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
 				 (GtkSignalFunc) select_motion, data);
@@ -107,19 +111,24 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    gdk_gc_set_function(get_preferences()->normal_gc, GDK_COPY);
 
    id = object_list_add_select_cb(command->list, select_one_object, command);
-   if (object_list_select_region(command->list, rectangle->x, rectangle->y,
-				 rectangle->width, rectangle->height))
-      redraw_preview();
+   count = object_list_select_region(command->list, rectangle->x, rectangle->y,
+				     rectangle->width, rectangle->height);
    object_list_remove_select_cb(command->list, id);
 
+   if (count) {
+      redraw_preview();		/* Fix me! */
+      command_list_add(&command->parent);
+   } else {			/* Nothing selected */
+      if (command->unselect_command->sub_commands)
+	 command_list_add(&command->parent);
+   }
    object_unref(obj);
 }
 
-static gboolean
+static CmdExecuteValue_t
 select_region_command_execute(Command_t *parent)
 {
    SelectRegionCommand_t *command = (SelectRegionCommand_t*) parent;
-/*   Command_t *sub_command; */
 
    command->obj = create_rectangle(command->x, command->y, 0, 0);
    gtk_signal_connect(GTK_OBJECT(command->widget), "button_release_event", 
@@ -127,14 +136,9 @@ select_region_command_execute(Command_t *parent)
    gtk_signal_connect(GTK_OBJECT(command->widget), "motion_notify_event", 
 		      (GtkSignalFunc) select_motion, command);   
 
-#ifdef _OLD_
-   sub_command = unselect_all_command_new(command->list, NULL);
-   command_add_subcommand(parent, sub_command);
-   command_execute(sub_command);
-#endif
    gdk_gc_set_function(get_preferences()->normal_gc, GDK_EQUIV);
 
-   return TRUE;
+   return CMD_IGNORE;
 }
 
 static void

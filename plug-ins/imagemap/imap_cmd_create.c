@@ -22,9 +22,10 @@
  */
 
 #include "imap_cmd_create.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
-static gboolean create_command_execute(Command_t *parent);
+static CmdExecuteValue_t create_command_execute(Command_t *parent);
 static void create_command_destruct(Command_t *parent);
 static void create_command_undo(Command_t *parent);
 
@@ -48,7 +49,7 @@ create_command_new(ObjectList_t *list, Object_t *obj)
    CreateCommand_t *command = g_new(CreateCommand_t, 1);
    command->list = list;
    command->obj = object_ref(obj);
-   return command_init(&command->parent, "Create", &create_command_class);
+   return command_init(&command->parent, _("Create"), &create_command_class);
 }
 
 static void
@@ -58,14 +59,14 @@ create_command_destruct(Command_t *parent)
    object_unref(command->obj);
 }
 
-static gboolean
+static CmdExecuteValue_t
 create_command_execute(Command_t *parent)
 {
    CreateCommand_t *command = (CreateCommand_t*) parent;
    command->changed = object_list_get_changed(command->list);
    object_list_append(command->list, object_ref(command->obj));
    redraw_preview();		/* fix me! */
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

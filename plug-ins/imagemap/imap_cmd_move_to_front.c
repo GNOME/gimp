@@ -26,7 +26,7 @@
 #include "imap_cmd_move_to_front.h"
 #include "imap_main.h"
 
-static gboolean move_to_front_command_execute(Command_t *parent);
+static CmdExecuteValue_t move_to_front_command_execute(Command_t *parent);
 static void move_to_front_command_undo(Command_t *parent);
 static void move_to_front_command_redo(Command_t *parent);
 
@@ -67,7 +67,7 @@ add_one_object(Object_t *obj, gpointer data)
 			  create_command_new(command->list, obj));
 }
 
-static gboolean
+static CmdExecuteValue_t
 move_to_front_command_execute(Command_t *parent)
 {
    MoveToFrontCommand_t *command = (MoveToFrontCommand_t*) parent;
@@ -80,7 +80,7 @@ move_to_front_command_execute(Command_t *parent)
    redraw_preview();		/* Fix me! */
    object_list_remove_remove_cb(command->list, id1);
    object_list_remove_add_cb(command->list, id2);
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

@@ -26,6 +26,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "libgimp/gimp.h"
+#include "gdk/gdkkeysyms.h" /* for keyboard values */
 #include "gtk/gtk.h"
 
 #include "imap_about.h"
@@ -38,11 +39,15 @@
 #include "imap_cmd_move.h"
 #include "imap_cmd_move_down.h"
 #include "imap_cmd_move_sash.h"
+#include "imap_cmd_move_selected.h"
 #include "imap_cmd_move_to_front.h"
 #include "imap_cmd_move_up.h"
+#include "imap_cmd_object_move.h"
 #include "imap_cmd_paste.h"
 #include "imap_cmd_select.h"
 #include "imap_cmd_select_all.h"
+#include "imap_cmd_select_next.h"
+#include "imap_cmd_select_prev.h"
 #include "imap_cmd_select_region.h"
 #include "imap_cmd_send_to_back.h"
 #include "imap_cmd_unselect.h"
@@ -51,6 +56,7 @@
 #include "imap_edit_area_info.h"
 #include "imap_file.h"
 #include "imap_grid.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_object.h"
@@ -73,7 +79,7 @@
 /* Global variables */
 static MapInfo_t   _map_info;
 static PreferencesData_t _preferences = {CSIM, TRUE, FALSE, TRUE, TRUE, FALSE,
-FALSE, 4};
+FALSE, DEFAULT_UNDO_LEVELS, DEFAULT_MRU_SIZE};
 static MRU_t *_mru;
 
 static GdkCursorType _cursor;
@@ -124,6 +130,8 @@ static void query()
    static int nargs = sizeof (args) / sizeof (args[0]);
    static int nreturn_vals = 0;
    
+   INIT_I18N();
+
    gimp_install_procedure("plug_in_imagemap",
 			  "Creates a clickable imagemap.",
 			  "",
@@ -145,6 +153,8 @@ run(char *name, int n_params, GParam *param, int *nreturn_vals,
    GDrawable *drawable;
    GRunModeType run_mode;
    GStatusType status = STATUS_SUCCESS;
+
+   INIT_I18N_UI();
 
    *nreturn_vals = 1;
    *return_vals = values;
@@ -194,12 +204,6 @@ get_preferences(void)
    return &_preferences;
 }
 
-GtkWidget*
-get_top_widget(void)
-{
-   return _dlg;
-}
-
 static void
 init_preferences(void)
 {
@@ -242,6 +246,9 @@ init_preferences(void)
    gdk_gc_set_background(_preferences.normal_gc, &colors->normal_bg);
    gdk_gc_set_foreground(_preferences.selected_gc, &colors->selected_fg);
    gdk_gc_set_background(_preferences.selected_gc, &colors->selected_bg);
+
+   mru_set_size(_mru, _preferences.mru_size);
+   command_list_set_undo_level(_preferences.undo_levels);
 }
 
 /* Get yellow for tooltips */
@@ -377,13 +384,13 @@ draw_polygon(GdkWindow *window, GdkGC *gc, GList *list)
 
 static gboolean _preview_redraw_blocked;
 
-static void
+void
 preview_freeze(void)
 {
    _preview_redraw_blocked = TRUE;
 }
 
-static void
+void
 preview_thaw(void)
 {
    _preview_redraw_blocked = FALSE;
@@ -393,7 +400,8 @@ preview_thaw(void)
 void 
 redraw_preview(void)
 {
-   preview_redraw(_preview);
+   if (!_preview_redraw_blocked)
+      preview_redraw(_preview);
 }
 
 static void
@@ -509,8 +517,8 @@ main_set_title(const char *filename)
    char *p;
    
    g_strreplace(&_filename, filename);
-   p = (filename) ? g_basename(filename) : "<Untitled>";
-   sprintf(title, "%s - ImageMap 1.2", p);
+   p = (filename) ? g_basename(filename) : _("<Untitled>");
+   sprintf(title, "%s - ImageMap 1.3", p);
    gtk_window_set_title(GTK_WINDOW(_dlg), title);
 }
 
@@ -538,67 +546,6 @@ hide_url(void)
 {
    _show_url = FALSE;
    statusbar_clear_status(_statusbar);
-}
-
-static gint start_x, start_y;
-static gint obj_start_x, obj_start_y;
-static gint obj_x, obj_y, obj_width, obj_height;
-static gboolean _moved_first_time = TRUE;
-
-static void
-button_motion(GtkWidget *widget, GdkEventMotion *event, gpointer data)
-{
-   Object_t *obj = (Object_t*) data;
-   gint dx = GET_REAL_COORD((gint) event->x) - start_x;
-   gint dy = GET_REAL_COORD((gint) event->y) - start_y;
-
-   if (_moved_first_time) {
-      _moved_first_time = FALSE;
-      preview_set_cursor(_preview, GDK_FLEUR);
-      gdk_gc_set_function(_preferences.normal_gc, GDK_EQUIV);
-      gdk_gc_set_function(_preferences.selected_gc, GDK_EQUIV);
-      hide_url();
-   }
-
-   if (obj_x + dx < 0)
-      dx = -obj_x;
-   if (obj_x + obj_width + dx > _image_width)
-      dx = _image_width - obj_width - obj_x;
-   if (obj_y + dy < 0)
-      dy = -obj_y;
-   if (obj_y + obj_height + dy > _image_height)
-      dy = _image_height - obj_height - obj_y;
-
-   if (dx || dy) {
-      start_x = GET_REAL_COORD((gint) event->x);
-      start_y = GET_REAL_COORD((gint) event->y);
-      obj_x += dx;
-      obj_y += dy;
-
-      object_draw(obj, widget->window);
-      object_move(obj, dx, dy);
-      object_draw(obj, widget->window);
-   }
-}
-
-static void
-button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
-{
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) button_motion, data);
-   gtk_signal_disconnect_by_func(GTK_OBJECT(widget), 
-				 (GtkSignalFunc) button_release, data);
-   _moved_first_time = TRUE;
-   preview_set_cursor(_preview, _cursor);
-   gdk_gc_set_function(_preferences.normal_gc, GDK_COPY);
-   gdk_gc_set_function(_preferences.selected_gc, GDK_COPY);
-   redraw_preview();
-   show_url();
-
-   obj_x -= obj_start_x;
-   obj_y -= obj_start_y;
-   if (obj_x || obj_y)
-      command_list_add(move_command_new((Object_t*) data, obj_x, obj_y));
 }
 
 void 
@@ -640,15 +587,8 @@ select_shape(GtkWidget *widget, GdkEventButton *event)
 	 }
 	 command_execute(command);
 
-	 start_x = x;
-	 start_y = y;
-	 object_get_dimensions(obj, &obj_x, &obj_y, &obj_width, &obj_height);
-	 obj_start_x = obj_x;
-	 obj_start_y = obj_y;
-	 gtk_signal_connect(GTK_OBJECT(widget), "button_release_event", 
-			    (GtkSignalFunc) button_release, obj);   
-	 gtk_signal_connect(GTK_OBJECT(widget), "motion_notify_event", 
-			    (GtkSignalFunc) button_motion, obj);   
+	 command = move_command_new(_preview, obj, x, y);
+	 command_execute(command);
       } else { /* Start selection rectangle */
 	 command = select_region_command_new(widget, _shapes, x, y);
 	 command_execute(command);
@@ -725,12 +665,12 @@ do_data_changed_dialog(void (*continue_cb)(gpointer), gpointer param)
    static DefaultDialog_t *dialog;
 
    if (!dialog) {
-      dialog = make_default_dialog("Data changed");
+      dialog = make_default_dialog(_("Data changed"));
       default_dialog_hide_apply_button(dialog);
       default_dialog_set_label(
 	 dialog,
-	 "   Some data has been changed.   \n"
-	 "Do you really want to continue?");
+	 _("   Some data has been changed.   \n"
+	   "Do you really want to continue?"));
    }
    default_dialog_set_ok_cb(dialog, continue_cb, param);
    default_dialog_show(dialog);
@@ -833,7 +773,7 @@ save_as_cern(gpointer param, OutputFunc_t output)
    write_cern_comment(param, output);
    output(param, "-:Please do not edit lines starting with \"#$\"\n");
    write_cern_comment(param, output);
-   output(param, "VERSION:1.2\n");
+   output(param, "VERSION:1.3\n");
    write_cern_comment(param, output);
    output(param, "TITLE:%s\n", _map_info.title);
    write_cern_comment(param, output);
@@ -868,7 +808,7 @@ save_as_csim(gpointer param, OutputFunc_t output)
    output(param, "<!-- #$-:GIMP Imagemap Plugin by Maurits Rijk -->\n");
    output(param, 
 	  "<!-- #$-:Please do not edit lines starting with \"#$\" -->\n");
-   output(param, "<!-- #$VERSION:1.2 -->\n");
+   output(param, "<!-- #$VERSION:1.3 -->\n");
    output(param, "<!-- #$AUTHOR:%s -->\n", _map_info.author);
    
    description = g_strdup(_map_info.description);
@@ -892,7 +832,7 @@ save_as_ncsa(gpointer param, OutputFunc_t output)
    output(param, "#$-:Image Map file created by GIMP Imagemap Plugin\n");
    output(param, "#$-:GIMP Imagemap Plugin by Maurits Rijk\n");
    output(param, "#$-:Please do not edit lines starting with \"#$\"\n");
-   output(param, "#$VERSION:1.2\n");
+   output(param, "#$VERSION:1.3\n");
    output(param, "#$TITLE:%s\n", _map_info.title);
    output(param, "#$AUTHOR:%s\n", _map_info.author);
    output(param, "#$FORMAT:ncsa\n");
@@ -1051,6 +991,17 @@ preview_move(GtkWidget *widget, GdkEventMotion *event)
 	 statusbar_clear_status(_statusbar);
       }
    }
+#ifdef _NOT_READY_YET_
+   if (!obj) {
+      if (grid_near_x(x)) {
+	 preview_set_cursor(_preview, GDK_SB_H_DOUBLE_ARROW);
+      } else if (grid_near_y(y)) {
+	 preview_set_cursor(_preview, GDK_SB_V_DOUBLE_ARROW);
+      } else {
+	 preview_set_cursor(_preview, _cursor);
+      }
+   }
+#endif
 }
 
 static void
@@ -1072,13 +1023,103 @@ button_press(GtkWidget* widget, GdkEventButton* event, gpointer data)
    _button_press_func(widget, event, _button_press_param);
 }
 
-#ifdef _NOT_READY_YET_
+/* A few global vars for key movement */
+
+static gint _timeout;
+static guint _keyval;
+static gint _dx, _dy;
+
+static void
+move_selected_objects(gint dx, gint dy, gboolean fast)
+{
+   if (fast) {
+      dx *= 5;
+      dy *= 5;
+   }
+   _dx += dx;
+   _dy += dy;
+
+   gdk_gc_set_function(_preferences.normal_gc, GDK_EQUIV);
+   gdk_gc_set_function(_preferences.selected_gc, GDK_EQUIV);
+   object_list_draw_selected(_shapes, _preview->preview->window);
+   object_list_move_selected(_shapes, dx, dy);
+   object_list_draw_selected(_shapes, _preview->preview->window);
+   gdk_gc_set_function(_preferences.normal_gc, GDK_COPY);
+   gdk_gc_set_function(_preferences.selected_gc, GDK_COPY);
+}
+
+static gboolean
+key_timeout_cb(gpointer data)
+{
+   switch (_keyval) {
+   case GDK_Left:
+   case GDK_Right:
+   case GDK_Up:
+   case GDK_Down:
+      command_list_add(move_selected_command_new(_shapes, _dx, _dy));
+      _dx = _dy = 0;
+      break;
+   }
+   preview_thaw();
+   return FALSE;
+}
+
+static gboolean 
+key_press_cb(GtkWidget *widget, GdkEventKey *event)
+{
+   gint handled = FALSE;
+   gboolean shift = event->state & GDK_SHIFT_MASK;
+   Command_t *command;
+
+   preview_freeze();
+   if (_timeout)
+      gtk_timeout_remove(_timeout);
+
+   switch (event->keyval) {
+   case GDK_Left:
+      move_selected_objects(-1, 0, shift);
+      handled = TRUE;
+      break;
+   case GDK_Right:
+      move_selected_objects(1, 0, shift);
+      handled = TRUE;
+      break;
+   case GDK_Up:
+      move_selected_objects(0, -1, shift);
+      handled = TRUE;
+      break;
+   case GDK_Down:
+      move_selected_objects(0, 1, shift);
+      handled = TRUE;
+      break;
+   case GDK_Tab:
+      if (shift)
+	 command = select_prev_command_new(_shapes);
+      else
+	 command = select_next_command_new(_shapes);
+      command_execute(command);
+      handled = TRUE;
+      break;
+   }
+   if (handled)
+      gtk_signal_emit_stop_by_name(GTK_OBJECT(widget), "key_press_event");
+
+   return handled;
+}
+
+static gboolean 
+key_release_cb(GtkWidget *widget, GdkEventKey *event)
+{
+   _keyval = event->keyval;
+   _timeout = gtk_timeout_add(250, key_timeout_cb, NULL);
+   return FALSE;
+}
+
 static void
 geometry_changed(Object_t *obj, gpointer data)
 {
-   redraw_preview();
+   redraw_preview();		/* Fix me! */
 }
-#endif
 
 static void
 data_changed(Object_t *obj, gpointer data)
@@ -1286,7 +1327,6 @@ dialog(GDrawable *drawable)
    GtkWidget 	*hbox;
    GtkWidget 	*main_vbox;
    Tools_t	*tools;
-   guchar 	*color_cube;
    gchar 	**argv;
    gint 	argc = 1;
    Menu_t	*menu;
@@ -1300,13 +1340,9 @@ dialog(GDrawable *drawable)
 
    gdk_set_use_xshm(gimp_use_xshm());
    gtk_preview_set_gamma(gimp_gamma());
-   gtk_preview_set_install_cmap(gimp_install_cmap());
-   color_cube = gimp_color_cube();
-   gtk_preview_set_color_cube(color_cube[0], color_cube[1],
-			      color_cube[2], color_cube[3]);
    
    gtk_widget_set_default_visual(gtk_preview_get_visual());
-   gtk_widget_set_default_colormap(gtk_preview_get_cmap());
+   gtk_widget_set_default_colormap(gdk_rgb_get_cmap());
 
    _shapes = make_object_list();
 
@@ -1319,6 +1355,11 @@ dialog(GDrawable *drawable)
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
    gtk_signal_connect(GTK_OBJECT(dlg), "destroy",
 		      (GtkSignalFunc) close_callback, NULL);
+   gtk_signal_connect(GTK_OBJECT(dlg), "key_press_event", 
+		      (GtkSignalFunc) key_press_cb, NULL);
+   gtk_signal_connect(GTK_OBJECT(dlg), "key_release_event", 
+		      (GtkSignalFunc) key_release_cb, NULL);
+
    main_vbox = gtk_vbox_new(FALSE, 1);
    gtk_container_set_border_width(GTK_CONTAINER(main_vbox), 1);
    gtk_container_add(GTK_CONTAINER(dlg), main_vbox);
@@ -1394,7 +1435,7 @@ dialog(GDrawable *drawable)
    add_preview_button_press_event(_preview, (GtkSignalFunc) button_press);
    gtk_container_add(GTK_CONTAINER(hbox), _preview->window);
 
-/*   object_list_add_changed_cb(_shapes, geometry_changed, NULL); */
+   object_list_add_geometry_cb(_shapes, geometry_changed, NULL);
    object_list_add_update_cb(_shapes, data_changed, NULL);
    object_list_add_add_cb(_shapes, data_changed, NULL);
    object_list_add_remove_cb(_shapes, data_changed, NULL);

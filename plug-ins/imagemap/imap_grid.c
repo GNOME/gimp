@@ -22,6 +22,7 @@
  */
 
 #include "imap_grid.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_menu.h"
 #include "imap_popup.h"
@@ -43,8 +44,9 @@ static void
 grid_settings_ok_cb(gpointer data)
 {
    GridDialog_t *param = (GridDialog_t*) data;
+   gint new_snap;
 
-   grid_snap = GTK_TOGGLE_BUTTON(param->snap)->active;
+   new_snap = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(param->snap));
    grid_width = gtk_spin_button_get_value_as_int(
       GTK_SPIN_BUTTON(param->width));
    grid_height = gtk_spin_button_get_value_as_int(
@@ -54,10 +56,12 @@ grid_settings_ok_cb(gpointer data)
    grid_top = gtk_spin_button_get_value_as_int(
       GTK_SPIN_BUTTON(param->top));
 
-   main_toolbar_set_grid(grid_snap);
-   popup_check_grid(grid_snap);
-   menu_check_grid(grid_snap);
-
+   if (grid_snap != new_snap) {
+      grid_snap = new_snap;
+      main_toolbar_set_grid(grid_snap);
+      popup_check_grid(grid_snap);
+      menu_check_grid(grid_snap);
+   }
    redraw_preview();
 }
 
@@ -65,18 +69,63 @@ static void
 snap_toggled_cb(GtkWidget *widget, gpointer data)
 {
    GridDialog_t *param = (GridDialog_t*) data;
-   gint sensitive = GTK_TOGGLE_BUTTON(widget)->active;
+   gint sensitive = gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
 
    gtk_widget_set_sensitive(param->type_frame, sensitive);
    gtk_widget_set_sensitive(param->granularity_frame, sensitive);
    gtk_widget_set_sensitive(param->offset_frame, sensitive);
+   gtk_widget_set_sensitive(param->preview, sensitive);
 }
 
 static void
 type_toggled_cb(GtkWidget *widget, gpointer data)
 {
-   if (GTK_WIDGET_STATE(widget) & GTK_STATE_SELECTED)
+   if (GTK_WIDGET_STATE(widget) & GTK_STATE_SELECTED) {
       grid_type = (gint) data;
+      redraw_preview();
+   }
+}
+
+static void
+toggle_preview_cb(GtkWidget *widget, GridDialog_t *param)
+{
+   param->enable_preview = 
+      gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget));
+   redraw_preview();
+}
+
+static void
+grid_assign_value(GtkWidget *widget, gpointer data, gint *value)
+{
+   GridDialog_t *dialog = (GridDialog_t*) data;
+   if (dialog->enable_preview) {
+      *value = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(widget));
+      redraw_preview();		/* Fix me! */
+   }
+}
+
+static void
+width_changed_cb(GtkWidget *widget, gpointer data)
+{
+   grid_assign_value(widget, data, &grid_width);
+}
+
+static void
+height_changed_cb(GtkWidget *widget, gpointer data)
+{
+   grid_assign_value(widget, data, &grid_height);
+}
+
+static void
+left_changed_cb(GtkWidget *widget, gpointer data)
+{
+   grid_assign_value(widget, data, &grid_left);
+}
+
+static void
+top_changed_cb(GtkWidget *widget, gpointer data)
+{
+   grid_assign_value(widget, data, &grid_top);
 }
 
 static GridDialog_t*
@@ -90,10 +139,10 @@ create_grid_settings_dialog()
    GtkWidget *button;
    GSList* group;
    
-   data->dialog = dialog = make_default_dialog("Grid Settings");
+   data->dialog = dialog = make_default_dialog(_("Grid Settings"));
    default_dialog_set_ok_cb(dialog, grid_settings_ok_cb, (gpointer) data);
    
-   main_table = gtk_table_new(3, 2, FALSE);
+   main_table = gtk_table_new(4, 2, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(main_table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(main_table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(main_table), 10);
@@ -101,27 +150,27 @@ create_grid_settings_dialog()
 		      main_table, TRUE, TRUE, 10);
    gtk_widget_show(main_table);
    
-   data->snap = gtk_check_button_new_with_label("Snap-To Grid Enabled");
+   data->snap = gtk_check_button_new_with_label(_("Snap-To Grid Enabled"));
    gtk_signal_connect(GTK_OBJECT(data->snap), "toggled", 
 		      (GtkSignalFunc) snap_toggled_cb, data);
    gtk_table_attach_defaults(GTK_TABLE(main_table), data->snap, 0, 1, 0, 1);
    gtk_widget_show(data->snap);
    
-   data->type_frame = frame = gtk_frame_new("Grid Visibility and Type");
+   data->type_frame = frame = gtk_frame_new(_("Grid Visibility and Type"));
    gtk_widget_show(frame);
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 2, 1, 2);
    hbox = gtk_hbox_new(FALSE, 1);
    gtk_container_add(GTK_CONTAINER(frame), hbox);
    gtk_widget_show(hbox);
 
-   data->hidden = button = gtk_radio_button_new_with_label(NULL, "Hidden");
+   data->hidden = button = gtk_radio_button_new_with_label(NULL, _("Hidden"));
    gtk_signal_connect(GTK_OBJECT(button), "toggled", 
 		      (GtkSignalFunc) type_toggled_cb, (gpointer) GRID_HIDDEN);
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
    gtk_widget_show(button);
 
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-   data->lines = button = gtk_radio_button_new_with_label(group, "Lines");
+   data->lines = button = gtk_radio_button_new_with_label(group, _("Lines"));
    gtk_signal_connect(GTK_OBJECT(button), "toggled", 
 		      (GtkSignalFunc) type_toggled_cb, (gpointer) GRID_LINES);
    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(button), TRUE);
@@ -129,40 +178,60 @@ create_grid_settings_dialog()
    gtk_widget_show(button);
 
    group = gtk_radio_button_group(GTK_RADIO_BUTTON(button));
-   data->crosses = button = gtk_radio_button_new_with_label(group, "Crosses");
+   data->crosses = button = gtk_radio_button_new_with_label(group, 
+							    _("Crosses"));
    gtk_signal_connect(GTK_OBJECT(button), "toggled", 
 		      (GtkSignalFunc) type_toggled_cb, 
 		      (gpointer) GRID_CROSSES);
    gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 10);
    gtk_widget_show(button);
    
-   data->granularity_frame = frame = gtk_frame_new("Grid Granularity");
+   data->granularity_frame = frame = gtk_frame_new(_("Grid Granularity"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 0, 1, 2, 3);
    table = gtk_table_new(2, 3, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_container_add(GTK_CONTAINER(frame), table);
-   create_label_in_table(table, 0, 0, "Width");
+
+   create_label_in_table(table, 0, 0, _("Width"));
    data->width = create_spin_button_in_table(table, 0, 1, 15, 1, 100);
-   create_label_in_table(table, 0, 2, "pixels");
-   create_label_in_table(table, 1, 0, "Height");
+   gtk_signal_connect(GTK_OBJECT(data->width), "changed", 
+		      (GtkSignalFunc) width_changed_cb, (gpointer) data);
+   create_label_in_table(table, 0, 2, _("pixels"));
+
+   create_label_in_table(table, 1, 0, _("Height"));
    data->height = create_spin_button_in_table(table, 1, 1, 15, 1, 100);
-   create_label_in_table(table, 1, 2, "pixels");
+   gtk_signal_connect(GTK_OBJECT(data->height), "changed", 
+		      (GtkSignalFunc) height_changed_cb, (gpointer) data);
+   create_label_in_table(table, 1, 2, _("pixels"));
+
    gtk_widget_show(table);
    gtk_widget_show(frame);
    
-   data->offset_frame = frame = gtk_frame_new("Grid Offset");
+   data->offset_frame = frame = gtk_frame_new(_("Grid Offset"));
    gtk_table_attach_defaults(GTK_TABLE(main_table), frame, 1, 2, 2, 3);
    table = gtk_table_new(2, 2, FALSE);
    gtk_container_set_border_width(GTK_CONTAINER(table), 10);
    gtk_table_set_row_spacings(GTK_TABLE(table), 10);
    gtk_table_set_col_spacings(GTK_TABLE(table), 10);
    gtk_container_add(GTK_CONTAINER(frame), table);
+
    data->left = create_spin_button_in_table(table, 0, 0, 0, 0, 100);
-   create_label_in_table(table, 0, 1, "pixels from left");
+   gtk_signal_connect(GTK_OBJECT(data->left), "changed", 
+		      (GtkSignalFunc) left_changed_cb, (gpointer) data);
+   create_label_in_table(table, 0, 1, _("pixels from left"));
+
    data->top = create_spin_button_in_table(table, 1, 0, 0, 0, 100);
-   create_label_in_table(table, 1, 1, "pixels from top");
+   gtk_signal_connect(GTK_OBJECT(data->top), "changed", 
+		      (GtkSignalFunc) top_changed_cb, (gpointer) data);
+   create_label_in_table(table, 1, 1, _("pixels from top"));
+
+   data->preview = create_check_button_in_table(main_table, 3, 0, 
+						_("Preview"));
+   gtk_signal_connect(GTK_OBJECT(data->preview), "toggled", 
+		      (GtkSignalFunc) toggle_preview_cb, (gpointer) data);
+   gtk_widget_show(data->preview);
 
    snap_toggled_cb(data->snap, data);
 
@@ -234,14 +303,11 @@ draw_grid(GtkWidget *preview)
 	 gdk_gc_set_line_attributes(grid_gc, 1, GDK_LINE_ON_OFF_DASH,
 				    GDK_CAP_BUTT, GDK_JOIN_BEVEL);
       }
-
-      gdk_gc_set_function(preview->style->black_gc, GDK_INVERT);
       if (grid_type == GRID_LINES)
-	 draw_lines(preview->window, preview->style->black_gc, width, height);
+	 draw_lines(preview->window, grid_gc, width, height);
       else
 	 draw_crosses(preview->window, preview->style->black_gc, width, 
 		      height);
-      gdk_gc_set_function(preview->style->black_gc, GDK_COPY);
    }
 }
 
@@ -253,14 +319,39 @@ toggle_grid(void)
    return grid_snap;
 }
 
+static gint
+grid_nearest_x(gint x)
+{
+   return grid_left + (x - grid_left + grid_width / 2) / grid_width 
+      * grid_width;
+}
+
+static gint
+grid_nearest_y(gint y)
+{
+   return grid_top + (y - grid_top + grid_height / 2) / grid_height 
+      * grid_height;
+}
+
 void 
 round_to_grid(gint *x, gint *y)
 {
    if (grid_snap) {
-      *x = grid_left + (*x - grid_left + grid_width / 2) / grid_width 
-	 * grid_width;
-      *y = grid_top + (*y - grid_top + grid_height / 2) / grid_height 
-	 * grid_height;
+      *x = grid_nearest_x(*x);
+      *y = grid_nearest_y(*y);
    }
 }
 
+gboolean
+grid_near_x(gint x)
+{
+   return grid_snap && grid_type != GRID_HIDDEN 
+      && abs(grid_nearest_x(x) - x) <= 1;
+}
+
+gboolean
+grid_near_y(gint y)
+{
+   return grid_snap && grid_type != GRID_HIDDEN 
+      && abs(grid_nearest_x(y) - y) <= 1;
+}

@@ -22,10 +22,11 @@
  */
 
 #include "imap_cmd_insert_point.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_polygon.h"
 
-static gboolean insert_point_command_execute(Command_t *parent);
+static CmdExecuteValue_t insert_point_command_execute(Command_t *parent);
 static void insert_point_command_undo(Command_t *parent);
 
 static CommandClass_t insert_point_command_class = {
@@ -53,11 +54,11 @@ insert_point_command_new(Object_t *obj, gint x, gint y, gint edge)
    command->x = x;
    command->y = y;
    command->edge = edge;
-   return command_init(&command->parent, "Insert Point", 
+   return command_init(&command->parent, _("Insert Point"), 
 		       &insert_point_command_class);
 }
 
-static gboolean
+static CmdExecuteValue_t
 insert_point_command_execute(Command_t *parent)
 {
    InsertPointCommand_t *command = (InsertPointCommand_t*) parent;
@@ -75,7 +76,7 @@ insert_point_command_execute(Command_t *parent)
    }
    redraw_preview();
 
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

@@ -22,10 +22,11 @@
  */
 
 #include "imap_cmd_copy.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 
 static void object_down_command_destruct(Command_t *parent);
-static gboolean object_down_command_execute(Command_t *parent);
+static CmdExecuteValue_t object_down_command_execute(Command_t *parent);
 static void object_down_command_undo(Command_t *parent);
 
 CommandClass_t object_down_command_class = {
@@ -47,7 +48,7 @@ object_down_command_new(ObjectList_t *list, Object_t *obj)
    ObjectDownCommand_t *command = g_new(ObjectDownCommand_t, 1);
    command->list = list;
    command->obj = object_ref(obj);
-   return command_init(&command->parent, "Move Down", 
+   return command_init(&command->parent, _("Move Down"), 
 		       &object_down_command_class);
 }
 
@@ -58,13 +59,13 @@ object_down_command_destruct(Command_t *parent)
    object_unref(command->obj);
 }
 
-static gboolean
+static CmdExecuteValue_t
 object_down_command_execute(Command_t *parent)
 {
    ObjectDownCommand_t *command = (ObjectDownCommand_t*) parent;
    object_list_move_down(command->list, command->obj);
    redraw_preview();		/* fix me! */
-   return TRUE;
+   return CMD_APPEND;
 }
 
 static void

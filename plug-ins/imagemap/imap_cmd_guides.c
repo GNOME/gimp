@@ -26,6 +26,7 @@
 #include "imap_cmd_create.h"
 #include "imap_default_dialog.h"
 #include "imap_cmd_guides.h"
+#include "libgimp/stdplugins-intl.h"
 #include "imap_main.h"
 #include "imap_rectangle.h"
 #include "imap_table.h"
@@ -66,7 +67,7 @@ guides_ok_cb(gpointer data)
    rows = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->no_down));
    cols = gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(param->no_across));
 
-   subcommand_start("Create Guides");
+   subcommand_start(_("Create Guides"));
    y = top;
    for (i = 0; i < rows; i++) {
       gint x = left;
@@ -106,7 +107,7 @@ recalc_bounds(GtkWidget *widget, gpointer data)
    bound_w = (width + hspace) * cols - hspace;
    bound_h = (height + vspace) * rows - vspace;
 
-   sprintf(bounds, "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)",
+   sprintf(bounds, _("Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"),
 	   left, top, left + bound_w, top + bound_h, rows * cols);
    if (left + bound_w > get_image_width() || 
        top + bound_h > get_image_height()) {
@@ -130,10 +131,10 @@ make_guides_dialog()
    default_dialog_set_ok_cb(dialog, guides_ok_cb, data);
    
    label = gtk_label_new(
-      "Guides are pre-defined rectangles covering the image. You define\n"
-      "them by their width, height, and spacing from each other. This\n"
-      "allows you to rapidly create the most common image map type -\n"
-      "image collection of \"thumbnails\", suitable for navigation bars.");
+      _("Guides are pre-defined rectangles covering the image. You define\n"
+	"them by their width, height, and spacing from each other. This\n"
+	"allows you to rapidly create the most common image map type -\n"
+	"image collection of \"thumbnails\", suitable for navigation bars."));
    gtk_label_set_justify(GTK_LABEL(label), GTK_JUSTIFY_LEFT);
    gtk_container_set_border_width(
       GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), 10);
@@ -158,42 +159,42 @@ make_guides_dialog()
    gtk_container_add(GTK_CONTAINER(GTK_DIALOG(dialog->dialog)->vbox), table);
    gtk_widget_show(table);
 
-   create_label_in_table(table, 0, 0, "Width");
+   create_label_in_table(table, 0, 0, _("Width"));
    data->width = create_spin_button_in_table(table, 0, 1, 32, 1, 100);
    gtk_signal_connect(GTK_OBJECT(data->width), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 0, 2, "Left Start at");
+   create_label_in_table(table, 0, 2, _("Left Start at"));
    data->left = create_spin_button_in_table(table, 0, 3, 0, 0, 100);
    gtk_signal_connect(GTK_OBJECT(data->left), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 1, 0, "Height");
+   create_label_in_table(table, 1, 0, _("Height"));
    data->height = create_spin_button_in_table(table, 1, 1, 32, 1, 100);
    gtk_signal_connect(GTK_OBJECT(data->height), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 1, 2, "Top Start at");
+   create_label_in_table(table, 1, 2, _("Top Start at"));
    data->top = create_spin_button_in_table(table, 1, 3, 0, 0, 100);
    gtk_signal_connect(GTK_OBJECT(data->top), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 2, 0, "Horz. Spacing");
+   create_label_in_table(table, 2, 0, _("Horz. Spacing"));
    data->horz_spacing = create_spin_button_in_table(table, 2, 1, 0, 0, 100);
    gtk_signal_connect(GTK_OBJECT(data->horz_spacing), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 2, 2, "No. Across");
+   create_label_in_table(table, 2, 2, _("No. Across"));
    data->no_across = create_spin_button_in_table(table, 2, 3, 0, 0, 100);
    gtk_signal_connect(GTK_OBJECT(data->no_across), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 3, 0, "Vert. Spacing");
+   create_label_in_table(table, 3, 0, _("Vert. Spacing"));
    data->vert_spacing = create_spin_button_in_table(table, 3, 1, 0, 0, 100);
    gtk_signal_connect(GTK_OBJECT(data->vert_spacing), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
 
-   create_label_in_table(table, 3, 2, "No. Down");
+   create_label_in_table(table, 3, 2, _("No. Down"));
    data->no_down = create_spin_button_in_table(table, 3, 3, 0, 0, 100);
    gtk_signal_connect(GTK_OBJECT(data->no_down), "changed",
 		      GTK_SIGNAL_FUNC(recalc_bounds), (gpointer) data);
@@ -218,11 +219,11 @@ init_guides_dialog(GuidesDialog_t *dialog, ObjectList_t *list)
    char dimension[128];
 
    dialog->list = list;
-   sprintf(dimension, "Image dimensions: %d x %d", get_image_width(),
+   sprintf(dimension, _("Image dimensions: %d x %d"), get_image_width(),
 	   get_image_height());
    gtk_label_set_text(GTK_LABEL(dialog->image_dimensions), dimension);
    gtk_label_set_text(GTK_LABEL(dialog->guide_bounds), 
-		      "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)");
+		      _("Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"));
    gtk_widget_grab_focus(dialog->width);
 }
 
@@ -238,7 +239,7 @@ do_create_guides_dialog(ObjectList_t *list)
    default_dialog_show(dialog->dialog);
 }
 
-static gboolean guides_command_execute(Command_t *parent);
+static CmdExecuteValue_t guides_command_execute(Command_t *parent);
 
 static CommandClass_t guides_command_class = {
    NULL,			/* guides_command_destruct */
@@ -257,13 +258,13 @@ guides_command_new(ObjectList_t *list)
 {
    GuidesCommand_t *command = g_new(GuidesCommand_t, 1);
    command->list = list;
-   return command_init(&command->parent, "Guides", &guides_command_class);
+   return command_init(&command->parent, _("Guides"), &guides_command_class);
 }
 
-static gboolean
+static CmdExecuteValue_t
 guides_command_execute(Command_t *parent)
 {
    GuidesCommand_t *command = (GuidesCommand_t*) parent;
    do_create_guides_dialog(command->list);
-   return FALSE;
+   return CMD_DESTRUCT;
 }

@@ -24,7 +24,6 @@
 #include <stdio.h>
 #include "imap_command.h"
 
-#define DEFAULT_UNDO_LEVELS 10
 #define INFINITE_UNDO_LEVELS -1
 
 static void command_destruct(Command_t *command);
@@ -169,10 +168,38 @@ subcommand_end(void)
    command_list_end(_current_command_list);
 }
 
+static void 
+_command_list_set_undo_level(CommandList_t *list, gint level)
+{
+   gint diff = g_list_length(list->list) - level;
+   if (diff > 0) {
+      GList *p, *q;
+      /* first remove data at the front */
+      for (p = list->list; diff && p != list->undo; p = q, diff--) {
+	 Command_t *curr = (Command_t*) p->data;
+	 q = p->next;
+	 command_destruct(curr);
+	 list->list = g_list_remove_link(list->list, p);
+      }
+
+      /* If still to long start removing redo levels at the end */
+      for (p = g_list_last(list->list); diff && p != list->undo; p = q, 
+	      diff--) {
+	 Command_t *curr = (Command_t*) p->data;
+	 q = p->prev;
+	 command_destruct(curr);
+	 list->list = g_list_remove_link(list->list, p);
+      }
+      command_list_callback_call(&list->update_cb, 
+				 (Command_t*) list->undo->data);
+   }
+   list->undo_levels = level;
+}
+
 void 
 command_list_set_undo_level(gint level)
 {
-   /* Fix me */
+   _command_list_set_undo_level(&_command_list, level);
 }
 
 Command_t*
@@ -219,9 +246,10 @@ command_execute(Command_t *command)
       if (command->sub_commands)
 	 command_list_execute(command->sub_commands);
       if (command->class->execute) {
-	 if (command->class->execute(command))
+	 CmdExecuteValue_t value = command->class->execute(command);
+	 if (value == CMD_APPEND)
 	    command_list_add(command);
-	 else
+	 else if (value == CMD_DESTRUCT)
 	    command_destruct(command);
       }
    }
@@ -324,7 +352,7 @@ command_add_subcommand(Command_t *command, Command_t *sub_command)
    subcommand_list_add(command->sub_commands, sub_command);
 }
 
-static gboolean basic_command_execute(Command_t *command);
+static CmdExecuteValue_t basic_command_execute(Command_t *command);
 
 static CommandClass_t basic_command_class = {
    NULL,			/* basic_command_destruct */
@@ -346,11 +374,11 @@ command_new(void (*func)(void))
    return command_init(&command->parent, "Unknown", &basic_command_class);
 }
 
-static gboolean
+static CmdExecuteValue_t
 basic_command_execute(Command_t *command)
 {
    ((BasicCommand_t*) command)->func();
-   return FALSE;
+   return CMD_DESTRUCT;
 }
 
 

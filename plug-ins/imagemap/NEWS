@@ -1,3 +1,17 @@
+What's new in GIMP Imagemap plug-in 1.3
+
+* 'Follow' mode to dynamically update object dimensions.
+* Added 'Most recently used' and 'Number of Undo levels' to Preferences menu.
+* Movement of objects with cursor keys (left/right/up/down). Select next/prev
+  object with TAB key.
+* Double-click in selection brings up Area dialog.
+* Drop links (e.g. from Netscape) into the selection list updates the URL.
+* Drop links (e.g. from Netscape) onto an object in the preview window updates
+  the URL.
+* A few bug fixes.
+* Lot's of internationalization preparations.
+* Grid can be dynamically updated when changing grid parameters.
+
 What's new in GIMP Imagemap plug-in 1.2
 
 * Implemented Undo/Redo

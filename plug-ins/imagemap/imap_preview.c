@@ -23,10 +23,10 @@
 
 #include "libgimp/gimp.h"
 
+#include "imap_cmd_edit_object.h"
 #include "imap_grid.h"
 #include "imap_main.h"
 #include "imap_preview.h"
-#include "imap_rectangle.h"
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
                        GDK_MOTION_NOTIFY | \
@@ -338,13 +338,43 @@ preview_zoom(Preview_t *preview, gint zoom_factor)
    preview_redraw(preview);
 }
 
-void
+GdkCursorType
 preview_set_cursor(Preview_t *preview, GdkCursorType cursor_type)
 {
+   GdkCursorType prev_cursor = preview->cursor;
    GdkCursor *cursor = gdk_cursor_new(cursor_type);
    gdk_window_set_cursor(preview->window->window, cursor);
    gdk_cursor_destroy(cursor);
    gdk_flush();
+   preview->cursor = cursor_type;
+   return prev_cursor;
+}
+
+static GtkTargetEntry target_table[] = {
+   {"STRING", 0, 1 },
+   {"text/plain", 0, 2 }
+};
+
+static void 
+handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y, 
+	    GtkSelectionData *data, guint info, guint time)
+{
+   gboolean success = FALSE;
+   if (data->length >= 0 && data->format == 8) {
+      ObjectList_t *list = get_shapes();
+      Object_t *obj;
+
+      x = get_real_coord(x);
+      y = get_real_coord(y);
+      obj = object_list_find(list, x, y);
+      if (obj && !obj->locked) {
+	 command_list_add(edit_object_command_new(obj));
+	 object_set_url(obj, data->data);
+	 object_emit_update_signal(obj);
+	 success = TRUE;
+      }
+   }
+   gtk_drag_finish(context, success, FALSE, time);
 }
 
 Preview_t*
@@ -366,6 +396,12 @@ make_preview(GDrawable *drawable)
    data->exp_id = gtk_signal_connect_after(GTK_OBJECT(preview), "expose_event",
 					   (GtkSignalFunc) preview_expose, 
 					   data);
+
+   /* Handle drop of links in preview widget */
+   gtk_drag_dest_set(preview, GTK_DEST_DEFAULT_ALL, target_table,
+		     2, GDK_ACTION_COPY);
+   gtk_signal_connect(GTK_OBJECT(preview), "drag_data_received",
+		      GTK_SIGNAL_FUNC(handle_drop), NULL);
 
    data->width  = gimp_drawable_width(drawable->id);
    data->height = gimp_drawable_height(drawable->id);
