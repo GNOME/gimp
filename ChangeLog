@@ -1,3 +1,10 @@
+2000-02-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/print/print.c: use the ui constructors from libgimp,
+	put the widgets into frames, removed callbacks wich are not used
+	any more. Makes the dialog smaller but is not perfect yet.
+	Re-applied Sven's patch which initializes the "File" printer.
+
 Thu Feb 24 18:44:58 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: Applied patch provided by Daniel Egger that 
