@@ -189,7 +189,7 @@ save_uchar_s (FILE  *fp,
 
   if (c > 74)
     {
-      fprintf (fp, "\"\n   \"");
+      fprintf (fp, "\"\n  \"");
       c = 3;
     }
   if (d < 33 || d > 126)
