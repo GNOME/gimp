@@ -195,7 +195,9 @@ dnl Test for libmpeg
       AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***))
   fi
 
-dnl Test for libxdelta
+dnl Test for libxdelta (optional)
+AC_ARG_WITH(xdelta, [  --with-xdelta           compile the xdelta plugin ])
+if test "x$with_xdelta" = "xyes"; then
   if test -z "$LIBXDELTA_LIB"; then
     AC_CHECK_LIB(xdelta, xd_checkin,
       xdelta_ok=yes ; LIBXDELTA_LIB='-lxdelta -lglib -lgdbm',
@@ -218,6 +220,7 @@ dnl Test for libxdelta
       fi
     fi
   fi
+fi
 
 dnl Test for libXpm
   if test -z "$LIBXPM_LIB"; then
@@ -322,7 +325,7 @@ if test "$have_glib_inline" = "no"; then
 fi  
 
 dnl Threads
-AC_ARG_WITH(threads, [  --with-threads=[posix] support threading ])
+AC_ARG_WITH(threads, [  --with-threads=[posix]  support threading ])
 THREAD_LIBS=
 if test "x$with_threads" = "xposix" || test "x$with_threads" = "xyes"; then
   AC_CHECK_LIB(pthread, pthread_attr_init,

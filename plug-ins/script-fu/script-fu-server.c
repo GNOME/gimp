@@ -125,8 +125,6 @@ static void   ok_callback        (GtkWidget *widget,
 static void   cancel_callback    (GtkWidget *widget,
 				  gpointer   data);
 
-extern char* g_vsprintf (gchar *fmt, va_list *args, va_list *args2);
-
 /*
  *  Global variables
  */
@@ -508,10 +506,8 @@ server_log (gchar *format, ...)
   char *buf;
 
   va_start (args, format);
-  va_start (args2, format);
-  buf = g_vsprintf (format, &args, &args2);
+  buf = g_strdup_vprintf (format, args);
   va_end (args);
-  va_end (args2);
 
   fputs (buf, server_log_file);
   if (server_log_file != stdout)

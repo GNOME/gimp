@@ -66,7 +66,7 @@ fatal_error (char *fmt, ...)
   printf ("\n");
   va_end (args);
 
-  g_debug (prog_name);
+  g_on_error_query (prog_name);
   app_exit (1);
 }
 
@@ -82,6 +82,6 @@ terminate (char *fmt, ...)
   va_end (args);
 
   if (use_debug_handler)
-    g_debug (prog_name);
+    g_on_error_query (prog_name);
   gdk_exit (1);
 }

@@ -721,7 +721,7 @@ blob_ellipse (double xc, double yc, double xp, double yp, double xq, double yq)
   if (xprod == 0)		/* colinear points */
     {
       g_print("Colinear points!\n");
-      g_debug("gsumi");
+      g_on_error_query("gimp");
     }
   
   if (xprod < 0)

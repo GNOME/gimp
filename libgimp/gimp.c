@@ -918,7 +918,7 @@ gimp_signal (int signum)
     case SIGBUS:
     case SIGSEGV:
     case SIGFPE:
-      g_debug (progname);
+      g_on_error_query (progname);
       break;
     default:
       break;
