@@ -220,10 +220,12 @@ static void gdt_run(char *name, int nparams, GParam *param, int *nreturn_vals,
 				strncpy(gdtvals.text, param[3].data.d_string, sizeof(gdtvals.text));
 				strncpy(gdtvals.font_family, param[4].data.d_string,
 					sizeof(gdtvals.font_family));
-				snprintf(gdtvals.font_style, sizeof(gdtvals.font_style), "%s-%s-%s",
-					param[5].data.d_string,
-					param[6].data.d_string,
-					param[7].data.d_string);
+				g_snprintf(gdtvals.font_style,
+					   sizeof(gdtvals.font_style),
+					   "%s-%s-%s",
+					   param[5].data.d_string,
+					   param[6].data.d_string,
+					   param[7].data.d_string);
 				gdtvals.font_size = param[8].data.d_int32;
 				gdtvals.font_metric = param[9].data.d_int32;
 				gdtvals.antialias = param[10].data.d_int32;

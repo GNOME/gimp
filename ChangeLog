@@ -1,3 +1,19 @@
+Thu May 27 01:59:35 1999  Jay Cox  (jaycox@earthlink.net)
+
+	* cursors/{mouse1_u,mouse1_umsk}: new mouse cursor for intersection
+	operations.
+
+	* app/cursorutil.[ch], app/rect_select.c: use the new cursor.
+
+	* app/gimpimage.c:  Applied layer removal bug fix from
+	David Le Corfec, <lecorfec@etudiant.univ-mlv.fr>
+
+	* plug-ins/gdyntext/{font_selection.c, gdyntext.c, gdyntext_ui.c}:
+	replaced snprintf with g_snprintf.
+
+	* plug-ins/jpeg/jpeg.c: updated to work with the double precision
+	resolutions.
+
 Wed May 26 21:14:15 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* app/bezier_select.c

@@ -855,8 +855,8 @@ save_image (char   *filename,
 
 #ifdef GIMP_HAVE_RESOLUTION_INFO
   {
-    float xresolution;
-    float yresolution;
+    double xresolution;
+    double yresolution;
 
     gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
 

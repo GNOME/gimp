@@ -138,7 +138,7 @@ static void font_selection_init(FontSelection *fs)
 			font_info = g_strsplit(xfontnames[i], "-", 20);
 			if (g_hash_table_lookup(fs->font_properties, font_info[2]) == NULL)
 				fs->font_names = g_list_insert_sorted(g_list_first(fs->font_names), g_strdup(font_info[2]), (GCompareFunc)strcmp);
-			snprintf(font_style, sizeof(font_style), "%s-%s-%s", font_info[3], font_info[4], font_info[5]);
+			g_snprintf(font_style, sizeof(font_style), "%s-%s-%s", font_info[3], font_info[4], font_info[5]);
 			l = NULL;
 			if ((plist = (GList *)g_hash_table_lookup(fs->font_properties, font_info[2]))) {
 				for (l = g_list_first(plist); l; l = g_list_next(l))
@@ -242,7 +242,7 @@ void on_font_selection_value_changed(GtkWidget *widget, gpointer data)
 		gtk_widget_set_sensitive(fs->font_style, FALSE);
 		gtk_widget_set_sensitive(fs->font_size, FALSE);
 		gtk_widget_set_sensitive(fs->font_metric, FALSE);
-		snprintf(fontname, sizeof(fontname), "%s",
+		g_snprintf(fontname, sizeof(fontname), "%s",
 			gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)));
 	} else {
 		/* is a '-*' font */
@@ -252,13 +252,13 @@ void on_font_selection_value_changed(GtkWidget *widget, gpointer data)
 		/* "-*-(fn)-(wg)-(sl)-(sp)-*-(px)-(po * 10)-*-*-*-*-*-*" */
 		if (strcmp(gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_metric)->entry)), _("pixels")) == 0) {
 			/* pixel size */
-			snprintf(fontname, sizeof(fontname), "-*-%s-%s-*-%d-*-*-*-*-*-*-*",
+			g_snprintf(fontname, sizeof(fontname), "-*-%s-%s-*-%d-*-*-*-*-*-*-*",
 				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)),
 				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry)),
 				gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(fs->font_size)));
 		} else {
 			/* point size */
-			snprintf(fontname, sizeof(fontname), "-*-%s-%s-*-*-%d-*-*-*-*-*-*",
+			g_snprintf(fontname, sizeof(fontname), "-*-%s-%s-*-*-%d-*-*-*-*-*-*",
 				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_family)->entry)),
 				gtk_entry_get_text(GTK_ENTRY(GTK_COMBO(fs->font_style)->entry)),
 				gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(fs->font_size)) * 10);

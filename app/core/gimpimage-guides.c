@@ -2682,13 +2682,13 @@ gimp_image_remove_layer (GimpImage *gimage, Layer * layer)
 		      drawable_width (GIMP_DRAWABLE(layer)),
 		      drawable_height (GIMP_DRAWABLE(layer)));
 
+      /* Send out REMOVED signal from layer */
+      layer_removed (layer, gimage);
+
       /*  Push the layer undo--It is important it goes here since layer might
        *   be immediately destroyed if the undo push fails
        */
       undo_push_layer (gimage, lu);
-
-      /* Send out REMOVED signal from layer */
-      layer_removed (layer, gimage);
 
       /*  invalidate the composite preview  */
       gimp_image_invalidate_preview (gimage);

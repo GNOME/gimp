@@ -916,7 +916,7 @@ void load_text(GtkWidget *widget, gpointer data)
 		fread(text, MAX_TEXT_SIZE - 1, 1, is);
 		fclose(is);
 		if (!stat(file, &sbuf) && sbuf.st_size > MAX_TEXT_SIZE) {
-			snprintf(msg, sizeof(msg), _("Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"), file, MAX_TEXT_SIZE);
+			g_snprintf(msg, sizeof(msg), _("Warning file \"%s\" is larger than the maximum allowed text length (%d).\n"), file, MAX_TEXT_SIZE);
 			message_window_append(MESSAGE_WINDOW(message_window), msg);
 		}
 		gtk_text_freeze(GTK_TEXT(main_window->textarea));
@@ -924,7 +924,7 @@ void load_text(GtkWidget *widget, gpointer data)
 		gtk_text_insert(GTK_TEXT(main_window->textarea), NULL, NULL, NULL, text, -1);
 		gtk_text_thaw(GTK_TEXT(main_window->textarea));
 	} else {
-		snprintf(msg, sizeof(msg), _("Error opening \"%s\"!\n"), file);
+		g_snprintf(msg, sizeof(msg), _("Error opening \"%s\"!\n"), file);
 		message_window_append(MESSAGE_WINDOW(message_window), msg);
 	}
 	if (MESSAGE_WINDOW(message_window)->contains_messages)

@@ -25,6 +25,8 @@
 #include "../cursors/mouse1_pmsk"
 #include "../cursors/mouse1_m"
 #include "../cursors/mouse1_mmsk"
+#include "../cursors/mouse1_u"
+#include "../cursors/mouse1_umsk"
 #include "../cursors/bigcirc"
 #include "../cursors/bigcircmsk"
 #include "../cursors/dropper"
@@ -59,7 +61,9 @@ static BM_Cursor gimp_cursors[] =
   { mouse1_p_bits, mouse1_pmsk_bits, mouse1_p_width, mouse1_p_height,
     mouse1_p_x_hot, mouse1_p_y_hot, NULL},
   { mouse1_m_bits, mouse1_mmsk_bits, mouse1_m_width, mouse1_m_height,
-    mouse1_m_x_hot, mouse1_m_y_hot, NULL},
+    mouse1_u_x_hot, mouse1_u_y_hot, NULL},
+  { mouse1_u_bits, mouse1_umsk_bits, mouse1_u_width, mouse1_u_height,
+    mouse1_u_x_hot, mouse1_u_y_hot, NULL},
   { bigcirc_bits, bigcircmsk_bits, bigcirc_width, bigcirc_height,
     bigcirc_x_hot, bigcirc_y_hot, NULL},
   { dropper_bits, droppermsk_bits, dropper_width, dropper_height,
