@@ -1770,6 +1770,8 @@ menu_translate (const gchar *path,
   translation = gettext (menupath);
   if (*translation == '/')
     retval = translation;
+  else
+    g_warning ("bad translation for menupath: %s", menupath);
 
   i = 0;
   while (i < n_plugin_domains && !strcmp (path, retval) && factory)
@@ -1788,6 +1790,8 @@ menu_translate (const gchar *path,
 
       if (strncmp (factory, translation, strlen (factory)) == 0)
 	retval = translation + strlen (factory);
+      else
+	g_warning ("bad translation for menupath: %s", menupath);
     }
 
   return retval;
