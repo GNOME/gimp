@@ -324,12 +324,12 @@ levels_free (void)
 
 	  levels_dialog->image_map = NULL;
 
-	  if(levels_dialog->conn_id != 0)
-	    gtk_signal_disconnect (
-				   GTK_OBJECT (gimp_drawable_gimage (levels_dialog->drawable)),
-				   levels_dialog->conn_id 
-				  );
-	  
+	  if (levels_dialog->conn_id != 0)
+	    {
+	      gtk_signal_disconnect (GTK_OBJECT (gimp_drawable_gimage (levels_dialog->drawable)),
+				     levels_dialog->conn_id);
+	      levels_dialog->conn_id = 0;
+	    }
 	}
       gtk_widget_destroy (levels_dialog->shell);
     }
