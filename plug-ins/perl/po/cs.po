@@ -13,235 +13,197 @@ msgstr ""
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "<Image>/Filters/Logulator/Starburst"
-msgstr "<Image>/Filtry/Logulátor/Pronikání hvìzd"
+msgid "<Image>/Filters/Logulator/Bovination"
+msgstr "<Image>/Filtry/Logulátor/Fleky"
 
-msgid "expected perl-server at other end of socket, got @r\n"
-msgstr "oèekáván perl-server na opaèném konci soketu, získáno @r\n"
-
-msgid "too many"
-msgstr "pøíli¹ mnoho"
-
-msgid "$s: not an integer\n"
-msgstr "$s: není celé èíslo\n"
+msgid "<Image>/Guides/Center Guide"
+msgstr "<Image>/Vodítka/Vodítko na støed"
 
 msgid "<Image>/Filters/Logulator/Blended"
 msgstr "<Image>/Filtry/Logulátor/Smíchání"
 
-msgid "Help for "
-msgstr "Nápovìda pro "
+msgid "<Image>/Filters/Logulator/Basic I"
+msgstr "<Image>/Filtry/Logulátor/Základní I"
 
-msgid "illegal parasite specification, expected three array members"
-msgstr "neplatné urèení parazita, oèekáváno tøíèlenné pole"
-
-msgid "<Toolbox>/Xtns/Render/Golden Mean"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Zlatý vzhled"
-
-msgid "Last Modified"
-msgstr "Naposled zmìnìno"
-
-msgid "<Toolbox>/Xtns/Visual Scriptor"
-msgstr "<Toolbox>/Roz¹./Vizuální skriptor"
-
-msgid "<Toolbox>/Xtns/Render/Logos/Firetext"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Loga/Ohnivý text"
-
-msgid "unable to read '$fn': $!"
-msgstr "nepodaøilo se èíst '$fn': $!"
-
-msgid "<Toolbox>/Xtns/Render/Povray/Texture"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Povray/Textura"
-
-msgid "<Image>/Filters/Logulator/Cool Metal"
-msgstr "<Image>/Filtry/Logulátor/Zchladlý kov"
-
-msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Povray/Pøedvolby"
-
-msgid "Unable to read temporary image tile $tmp: $!"
-msgstr "Nepodaøilo se èíst z pomocné obrázkové dla¾dice $tmp: $!"
-
-msgid "<Image>/Filters/Logulator/Crystal"
-msgstr "<Image>/Filtry/Logulátor/Krystal"
-
-msgid "<Image>/Filters/Logulator/Alien Glow"
-msgstr "<Image>/Filtry/Logulátor/Cizí ¾ár"
-
-msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
-msgstr ""
-"run_mode musí být INTERACTIVE, NONINTERACTIVE nebo RUN_WITH_LAST_VALS\n"
-
-msgid "Font Selection Dialog ($desc)"
-msgstr "Dialog výbìtu písma ($desc)"
-
-msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Generátor pixelù"
-
-msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
-msgstr "xlfd_unpack: neodpovídá XLFD '$fontname'\n"
-
-msgid "<Image>/Filters/Noise/Xach Vision..."
-msgstr "<Image>/Filtry/©um/Xach vidìní..."
-
-msgid ""
-"$function: function name contains unusual characters, good style is to use "
-"only 0-9, a-z and _"
-msgstr ""
-"$function: jméno funkce obsahuje neobvyklé znaky, vhodné je pou¾ívat pouze "
-"0-9, a-z a _"
-
-msgid "Help"
-msgstr "Nápovìda"
-
-msgid "unable to fork: $!"
-msgstr "nepodaøilo se vìtvit: $!"
-
-msgid "FG"
-msgstr "Popøedí"
+msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Loga/Zkosené dovnitø"
 
 msgid "FATAL: unable to create $tmp: $!\n"
 msgstr "FATÁLNÍ: nepodaøilo se vytvoøit$tmp: $!\n"
 
-msgid "/Filters/Logulator"
-msgstr "/Filtry/Logulátor"
-
-msgid "<Image>/Guides/Guide Grid"
-msgstr "<Image>/Vodítka/Vodítková møí¾"
-
-msgid "dunno how to return param type %d"
-msgstr "není známo, jak vrátit parametr typu %d"
-
-msgid "<Image>/Filters/Logulator/Chip Away"
-msgstr "<Image>/Filtry/Logulátor/Od¹típnutí"
-
-msgid "<Image>/Filters/Colors/Colour To Alpha"
-msgstr "<Image>/Filtry/Barvy/Barva do alfa"
-
-msgid "<Image>/Image/Alpha/Alpha2Color..."
-msgstr "<Image>/Obrázek/Alfa/Alfa do barvy..."
-
-msgid "<Image>/Filters/Logulator/Bovination"
-msgstr "<Image>/Filtry/Logulátor/Fleky"
-
-msgid "Image Types"
-msgstr "Typy obrázku"
-
-msgid "<Image>/Filters/Colors/Fire"
-msgstr "<Image>/Filtry/Barvy/Oheò"
-
-msgid "could not connect to the gimp server (make sure Perl-Server is running)"
+msgid ""
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
 msgstr ""
-"nepodaøilo se spojit s gimp serverem (ujistìte se, zda Perl-Server bì¾í)"
+"Oèekáváno INT32, ale obdr¾eno '%s'. Pokud je to úmysl, pøidejte '*1', aby bylo "
+"pøedáno jako øetìzec"
 
-msgid "More..."
-msgstr "Více..."
+msgid "<Image>/Filters/Web/Prepare for GIF..."
+msgstr "<Image>/Filtry/Web/Pøíprava pro GIF..."
 
-msgid "<Image>/Filters/Logulator/Particle Trace"
-msgstr "<Image>/Filtry/Logulátor/Rozmáznutí..."
+msgid "<Image>/Filters/Noise/Feedback"
+msgstr "<Image>/Filtry/©um/Zpìtná vazba"
 
-msgid "interface=... tag is no longer supported\n"
-msgstr "znaèka interface=... není nadále podporována\n"
-
-msgid "Text"
-msgstr "Text"
-
-msgid "Synopsis"
-msgstr "Osnova"
-
-msgid "Plug-In Path"
-msgstr "Cesta k zásuvným modulùm"
-
-msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
+msgid ""
+"       interface-arguments are\n"
+"           -o | --output <filespec>   write image to disk, don't display\n"
+"           -i | --interact            let the user edit the values first\n"
+"       script-arguments are\n"
 msgstr ""
-"nepodaøilo se pøevést Gimp::Drawable do Gimp::GDrawable (identifikace %d)"
+"       argumenty-rozhraní jsou\n"
+"           -o | --output <soubor>     zapí¹e obrázek na disk, nezobrazuje\n"
+"           -i | --interact            nechá u¾ivatele nejdøíve upravit hodnoty\n"
+"       argumenty-skriptu jsou\n"
 
-msgid "Restore values to the previous ones"
-msgstr "Vrátit na pøedchozí hodnoty"
+msgid "being called as '%s', but '%s' not registered in the pdb"
+msgstr "voláno jako '%s', ale '%s' není v pdb registrováno"
 
-msgid "<Image>/Select/Triangle"
-msgstr "<Image>/Výbìr/Trojúhelník"
+msgid "argument type %s expected (not %s)"
+msgstr "oèekáván argument typu %s (ne %s)"
 
-msgid "<Toolbox>/Xtns/Render/Stamps"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Razítka"
+msgid "<Image>/Filters/Logulator/Glowing Hot"
+msgstr "<Image>/Filtry/Logulátor/Sálavý ¾ár"
 
-msgid "Illegal default font description for $function: $val\n"
-msgstr "Neplatný popis implicitního písma pro $function: $val\n"
+msgid "Browse"
+msgstr "Procházet"
 
-msgid "parameter '$entry->[1]' is not optional\n"
-msgstr "parametr '$entry->[1]' není volitelný\n"
-
-msgid "<Toolbox>/Xtns/Render/Random Art #1"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Náhodné umìní è. 1"
-
-msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
-msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgid "Reset all values to their default"
+msgstr "Nastavit v¹e na implicitní hodnoty"
 
 msgid "WARNING: client tried to unlock without holding a lock"
 msgstr "VAROVÁNÍ: klient se pokusil odemknout bez vlastnictví uzamèení"
 
-msgid "register called with too many or wrong arguments\n"
-msgstr "registrace volána s pøíli¹ mnoha nebo ¹patnými argumenty\n"
+msgid "required callback 'run' not found\n"
+msgstr "poøadované zpìtné volání 'run' nebylo nalezeno\n"
 
-msgid "<Image>/Filters/Web/Webify"
-msgstr "<Image>/Filtry/Web/Webifikovat"
+msgid "$_: illegal switch, try $0 --help\n"
+msgstr "$_: neplatný pøepínaè, zkuste $0 --help\n"
 
-msgid "Spin Layer SRC (250ms)"
-msgstr "Vrstva víøení ZDROJ (250 ms)"
+msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Loga/®havé ¾elezo"
 
-msgid ""
-"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
-"PARAM_TYPE"
+msgid "Brush Selection Dialog"
+msgstr "Dialog výbìru ¹tìtce"
+
+msgid "gimp procedure '%s' not found"
+msgstr "gimp procedura '%s' nebyla nalezena"
+
+msgid "Pattern Selection Dialog"
+msgstr "Dialog výbìru vzorku"
+
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Filtry/Web/Perl-o-tina..."
+
+msgid "function '$exe' not found in this script (must be one of "
+msgstr "funkce '$exe' nebyla v tomto skriptu nalezena (musí být jedna z "
+
+msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
-"deformovaná definice parametrù, oèekáváno "
-"[TYP_PARAMETRU,\"JMÉNO\",\"POPIS\"] nebo TYP_PARAMETRU"
+"zmatek ve velikosti v pixelech, v pdl má %d kanálových pixelù, ale je po¾adováno "
+"%d kanálù"
 
-msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
-msgstr ""
-"gimp_pixel_rgns_register podporuje pouze 1, 2 nebo 3 argumenty, zvy¹te verzi "
-"na gimp-1.1 a podejte zprávu o této chybì"
+msgid "<Image>/Filters/Logulator/Basic II"
+msgstr "<Image>/Filtry/Logulátor/Základní II"
 
-msgid "last argument to gimp_pattern_select_widget must be scalar ref"
-msgstr "poslední argument gimp_pattern_select_widget musí být odkaz na skalár"
+msgid "Load"
+msgstr "Naèíst"
 
-msgid ""
-"\n"
-"\n"
-"EMBEDDED POD DOCUMENTATION:\n"
-"\n"
-msgstr ""
-"\n"
-"\n"
-"ZAKOTVENÁ POD DOKUMENTACE:\n"
-"\n"
+msgid "/Xtns/Render"
+msgstr "/Roz¹./Vyobrazení"
 
-msgid "<Image>/Filters/Render/TeX String"
-msgstr "<Image>/Filtry/Vyobrazení/Øetìzec TeX"
+msgid "illegal parasite specification, reference expected"
+msgstr "neplatné urèení parazita, oèekáván odkaz"
 
-msgid "Fileselector for $name"
-msgstr "Výbìr souboru pro $name"
+msgid "Date/Version"
+msgstr "Datum/Verze"
 
-msgid "unable to create listening unix socket: $!\n"
-msgstr "nepodaøilo se vytvoøit naslouchací unixový soket: $!\n"
+msgid "Status"
+msgstr "Stav"
 
-msgid ", %d bytes data]"
-msgstr ", bytù dat: %d]"
+msgid "<Image>/Layers/Center Layer"
+msgstr "<Image>/Vrstvy/Vycentrovat vrstvu"
 
-msgid "server requests authorization, but no authorization available\n"
-msgstr "server po¾aduje autorizaci, ale ¾ádná není k dispozici\n"
+msgid "wrong authorization, aborting connection"
+msgstr "¹patná autorizace, ru¹í se spojení"
+
+msgid "BG"
+msgstr "Pozadí"
+
+msgid "<Image>/Filters/Colors/Fire"
+msgstr "<Image>/Filtry/Barvy/Oheò"
+
+msgid "illegal type for colour specification"
+msgstr "neplatný typ pro barevnou specifikaci"
+
+msgid "<Toolbox>/Xtns/Render/Bricks"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Cihly"
+
+msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
+msgstr "xlfd_unpack: neodpovídá XLFD '$fontname'\n"
+
+msgid "<Image>/Filters/Logulator/Transparent Logo"
+msgstr "<Image>/Filtry/Logulátor/Prùhledné logo"
+
+msgid "Plug-In Path"
+msgstr "Cesta k zásuvným modulùm"
+
+msgid "You can't run this script with an INDEXED image!!"
+msgstr "Tento skript nelze spustit na INDEXOVANÝ obrázek!!"
+
+msgid "accepted unix connection"
+msgstr "pøijato unixové spojení"
+
+msgid "server going down..."
+msgstr "server zastavuje..."
+
+msgid "trying to start gimp with options \"$opt\"\n"
+msgstr "pokou¹í se spustit gimp s volbami \"$opt\"\n"
+
+msgid "<Image>/Filters/Noise/Ditherize"
+msgstr "<Image>/Filtry/©um/Rozklad"
+
+msgid "expected perl-server at other end of socket, got @r\n"
+msgstr "oèekáván perl-server na opaèném konci soketu, získáno @r\n"
 
 msgid "pdl height != region height"
 msgstr "vý¹ka pdl != vý¹ka oblasti"
 
-msgid "Close"
-msgstr "Zavøít"
+msgid "received QUIT request"
+msgstr "pøijat po¾adavek KONEC"
 
-msgid "unable to open $rgb_db_path"
-msgstr "nepodaøilo se otevøít $rgb_db_path"
+msgid "<Image>/Filters/Web/Webify"
+msgstr "<Image>/Filtry/Web/Webifikovat"
 
-msgid "You can't run this script with an INDEXED image!!"
-msgstr "Tento skript nelze spustit na INDEXOVANÝ obrázek!!"
+msgid "<Toolbox>/Xtns/PDB Explorer"
+msgstr "<Toolbox>/Xtns/PDB badatel"
+
+msgid " = [argument error]\n"
+msgstr " = [chyba argumentu]\n"
+
+msgid "%s arguments for function '%s'"
+msgstr "%s argumentù pro funkci '%s'"
+
+msgid " matching functions"
+msgstr "odpovídající funkce"
+
+msgid ""
+"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
+"       gimp-arguments are\n"
+"           -gimp <anything>           used internally only\n"
+"           -h | -help | --help | -?   print some help\n"
+"           -v | --verbose             be more verbose in what you do\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
+"                                      (for more info, see Gimp::Net(3))\n"
+msgstr ""
+"U¾ití: $0 [gimp-argumenty..] [argumenty-rozhraní..] [argumenty-skriptu..]\n"
+"       gimp-argumenty jsou\n"
+"           -gimp <cokoli>             pouze pro vnitøní pou¾ití\n"
+"           -h | -help | --help | -?   vypí¹e nejakou nápovìdu\n"
+"           -v | --verbose             vypisuje bli¾¹í informace o èinnosti\n"
+"           --host|--tcp HOST[:PORT]   spojení s HOSTem (volitelnì pou¾itý PORT)\n"
+"                                      (více informací viz Gimp::Net(3))\n"
+
+msgid "<Image>/Filters/Animation/Animate Cells"
+msgstr "<Image>/Filtry/Animace/Animovat buòky"
 
 msgid ""
 "An even number of frames is needed for spin back.\n"
@@ -250,84 +212,11 @@ msgstr ""
 "Pro víøení zpìt je nutný sudý poèet políèek.\n"
 "Nastavena políèka do $frames"
 
-msgid "<Image>/Filters/Colors/Map To Gradient"
-msgstr "<Image>/Filtry/Barvy/Mapa do pøechodu"
+msgid "<Image>/Image/Alpha/Alpha2Color..."
+msgstr "<Image>/Obrázek/Alfa/Alfa do barvy..."
 
-msgid "<Image>/Filters/Render/Add Glow"
-msgstr "<Image>/Filtry/Vyobrazení/Pøidat ¾ár"
-
-msgid "<Image>/Filters/Logulator/Basic I"
-msgstr "<Image>/Filtry/Logulátor/Základní I"
-
-msgid "function name contains dashes instead of underscores"
-msgstr "jméno funkce obsahuje pomlèky místo podtr¾ítek"
-
-msgid "required callback 'run' not found\n"
-msgstr "poøadované zpìtné volání 'run' nebylo nalezeno\n"
-
-msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
-msgstr ""
-"$function: argument se jménem '$p->[1]' obsahuje zakázené znaky, povoleny "
-"jsou pouze 0-9, a-z a _"
-
-msgid "required callback 'query' not found\n"
-msgstr "po¾adované zpìtné volání 'query' nebylo nalezeno\n"
-
-msgid ""
-"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
-"string"
-msgstr ""
-"Oèekáváno INT32, ale obdr¾eno '%s'. Pokud je to úmysl, pøidejte '*1', aby "
-"bylo pøedáno jako øetìzec"
-
-msgid ""
-"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
-msgstr "neplatný GIMP_HOST: 'spawn' není pro server platná metoda spojení"
-
-msgid "wrong authorization, aborting connection"
-msgstr "¹patná autorizace, ru¹í se spojení"
-
-msgid "<Image>/Filters/Map/Image Tile"
-msgstr "<Image>/Filtry/Mapování/Povrch obrazu"
-
-msgid "WARNING"
-msgstr "VAROVÁNÍ"
-
-msgid "Brush Selection Dialog"
-msgstr "Dialog výbìru ¹tìtce"
-
-msgid "<Image>/Filters/Logulator/Blended II"
-msgstr "<Image>/Filtry/Logulátor/Smíchání II"
-
-msgid "(none)"
-msgstr "(nic)"
-
-msgid "authorization required for tcp connections"
-msgstr "pro tcp spojení je vy¾adována autorizece"
-
-msgid ""
-"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
-"'use strict'"
-msgstr ""
-"Oèekáváno INT32, ale obdr¾eno '%s'. Mo¾ná to znamená '%s' a chybí tam 'use "
-"strict'"
-
-msgid "[undefined]"
-msgstr "[nedefinováno]"
-
-msgid "<Image>/Guides/Remove Guides"
-msgstr "<Image>/Vodítka/Smazat vodítka"
-
-msgid "unable to open Gimp::Net communications socket: $!\n"
-msgstr "nepodaøilo se otevøít komunikaèní soket Gimp::Net: $!\n"
-
-msgid "WARNING: shared locking requested but not implemented"
-msgstr "VAROVÁNÍ: po¾adováno neimplemetované sdílené uzamèení"
-
-msgid "You can't run this script without an ALPHA CHANNEL!!"
-msgstr "Tento skript nelze spustit na obrázek bez ALFA KANÁLU!!"
+msgid "<Image>/Filters/Logulator/Starburst"
+msgstr "<Image>/Filtry/Logulátor/Pronikání hvìzd"
 
 msgid "<Image>/Filters/Logulator/SOTA Chrome"
 msgstr "<Image>/Filtry/Logulátor/SOTA barvy"
@@ -335,58 +224,131 @@ msgstr "<Image>/Filtry/Logulátor/SOTA barvy"
 msgid "%s: procedural database execution failed"
 msgstr "%s: vykonání procedurální databáze selhalo"
 
-msgid "<Image>/Filters/Logulator/3D Outline"
-msgstr "<Image>/Filtry/Logulátor/3D obrys"
-
-msgid "<Image>/Video/VCR Console..."
-msgstr "<Image>/Video/Videopult..."
-
-msgid ", authorization required"
-msgstr ", po¾adována autorizace"
-
-msgid "unable to create socketpair for gimp communications: $!"
-msgstr "nepodaøilo se vytvoøit soketový pár pro gimp komunikaci: $!"
-
-msgid "trying to start gimp with options \"$opt\"\n"
-msgstr "pokou¹í se spustit gimp s volbami \"$opt\"\n"
-
-msgid ""
-"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
-msgstr ""
-"cesta k menu _musí_ zaèínat <Image>, <Toolbox>, <Load>, <Save> nebo <None>!"
+msgid "authorization required for tcp connections"
+msgstr "pro tcp spojení je vy¾adována autorizece"
 
 msgid "<Toolbox>/Xtns/Perl/Server"
 msgstr "<Toolbox>/Roz¹./Perl/Server"
 
-msgid "accepted unix connection"
-msgstr "pøijato unixové spojení"
+msgid "function name contains dashes instead of underscores"
+msgstr "jméno funkce obsahuje pomlèky místo podtr¾ítek"
+
+msgid "authorization ok, but: $r[1]\n"
+msgstr "autorizace je v poøádku, ale $r[1]\n"
+
+msgid "<Image>/Filters/Render/Highlight Edges"
+msgstr "<Image>/Filtry/Vyobrazení/Zvýraznìní hran"
+
+msgid "a color must have three components (array elements)"
+msgstr "barva musí mít tøi komponenty (prvky pole)"
+
+msgid "<Toolbox>/Xtns/Render/Pixelgenerator"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Generátor pixelù"
+
+msgid "Spin Layer SRC (250ms)"
+msgstr "Vrstva víøení ZDROJ (250 ms)"
+
+msgid "$_: unknown/illegal file-save option"
+msgstr "$_: neznámá/neplatná volba zápisu souboru"
+
+msgid "TYPE"
+msgstr "TYP"
+
+msgid "Gradient Selection Dialog"
+msgstr "Dialog výbìru pøechodu"
+
+msgid "Function Info"
+msgstr "Informace o funkci"
+
+msgid "unable to open $rgb_db_path"
+msgstr "nepodaøilo se otevøít $rgb_db_path"
 
 msgid "<Image>/Filters/Logulator/Imigre-26"
 msgstr "<Image>/Filtry/Logulátor/Imigre-26"
 
-msgid "gimp_tile_get_data is not yet implemented\n"
-msgstr "gimp_tile_get_data není doposud implementováno\n"
+msgid "Text"
+msgstr "Text"
 
-msgid "dunno how to pass arg type %d"
-msgstr "není známo, jak zpracovat argument typu %d"
+msgid "<Image>/Select/Round Rectangular Selection"
+msgstr "<Image>/Výbìr/Zaoblený obdélníkový výbìr"
 
-msgid "Browse"
-msgstr "Procházet"
+msgid "<Image>/Filters/Map/Pixelmap"
+msgstr "<Image>/Filtry/Mapování/Pixelová mapa"
 
-msgid "received QUIT request"
-msgstr "pøijat po¾adavek KONEC"
+msgid "/Xtns/Perl"
+msgstr "/Roz¹./Perl"
 
-msgid "Author"
-msgstr "Autor"
+msgid "no additional information available, use --help\n"
+msgstr "doplòkové informace nejsou k dispozici, pou¾ijte --help\n"
 
-msgid "unable to create '$fn': $!"
-msgstr "nepodaøilo se vytvoøit '$fn': $!"
+msgid "<Image>/Filters/Render/Brushed Metal"
+msgstr "<Image>/Filtry/Vyobrazení/Zbrou¹ený kov"
 
-msgid "unable to create listening tcp socket: $!\n"
-msgstr "nepodaøilo se vytvoøit naslouchací tcp soket: $!\n"
+msgid "gimp_tile_set_data is not yet implemented\n"
+msgstr "gimp_tile_set_data není dosud implementováno\n"
 
-msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
-msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-2"
+msgid "Visual Scriptor"
+msgstr "Vizuální skriptor"
+
+msgid "No horizontal or vertical guides found. Aborted."
+msgstr "Nebyly nalezeny ¾ádná vodorovná ani svislá vodítka. Zru¹eno."
+
+msgid "<Image>/Filters/Map/Image Tile"
+msgstr "<Image>/Filtry/Mapování/Povrch obrazu"
+
+msgid "<Image>/Filters/Logulator/Comic Book"
+msgstr "<Image>/Filtry/Logulátor/Komická kniha"
+
+msgid "<Image>/Guides/Remove Guides"
+msgstr "<Image>/Vodítka/Smazat vodítka"
+
+msgid "get current background colour from the gimp"
+msgstr "získat aktuální barvu pozadí z programu gimp"
+
+msgid "WARNING: shared locking requested but not implemented"
+msgstr "VAROVÁNÍ: po¾adováno neimplemetované sdílené uzamèení"
+
+msgid "parameter '$entry->[1]' is not optional\n"
+msgstr "parametr '$entry->[1]' není volitelný\n"
+
+msgid "$s: not an integer\n"
+msgstr "$s: není celé èíslo\n"
+
+msgid "unable to read '$fn': $!"
+msgstr "nepodaøilo se èíst '$fn': $!"
+
+msgid "<Toolbox>/Xtns/Perl/Control Center"
+msgstr "<Toolbox>/Roz¹./Perl/Øídící centrum"
+
+msgid "[undefined]"
+msgstr "[nedefinováno]"
+
+msgid "function/macro \"$name\" not found in $class"
+msgstr "funkce/macro \"$name\" nebylo nalezeno v $class"
+
+msgid "accepted tcp connection from "
+msgstr "pøijato tcp spojení od "
+
+msgid "illegal parasite specification, expected three array members"
+msgstr "neplatné urèení parazita, oèekáváno tøíèlenné pole"
+
+msgid "unable to read temporary file $tmp: $!"
+msgstr "nepodaøilo se èíst z pomocného souboru $tmp: $!"
+
+msgid "PDB Explorer - the olof edition (yet still an alpha version)"
+msgstr "PDB badatel - vydání olof (stále je¹tì alfa verze)"
+
+msgid "Illegal default font description for $function: $val\n"
+msgstr "Neplatný popis implicitního písma pro $function: $val\n"
+
+msgid "<Image>/Filters/Render/Stampify"
+msgstr "<Image>/Filtry/Vyobrazení/Tvorba razítka"
+
+msgid "<Image>/Filters/Logulator/Chalk"
+msgstr "<Image>/Filtry/Logulátor/Køída"
+
+msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
+msgstr "nepodaøilo se pøevést Gimp::Drawable do Gimp::GDrawable (identifikace %d)"
 
 msgid ""
 "BLURB:\n"
@@ -405,381 +367,66 @@ msgstr ""
 "\n"
 "$help"
 
-msgid "OK"
-msgstr "OK"
-
-msgid "gimp_tile_set_data is not yet implemented\n"
-msgstr "gimp_tile_set_data není dosud implementováno\n"
-
-msgid "argument incompatible with type IMAGE"
-msgstr "argument nesluèitelný s typem IMAGE"
+msgid "Fileselector for $name"
+msgstr "Výbìr souboru pro $name"
 
 msgid "accepting connections on port $port"
 msgstr "pøijímá se spojení na portu $port"
 
-msgid "<Image>/Select/Round Rectangular Selection"
-msgstr "<Image>/Výbìr/Zaoblený obdélníkový výbìr"
+msgid "<Image>/Filters/Misc/Border Average"
+msgstr "<Image>/Filtry/Rùzné/Prùmìr okraje"
 
-msgid "<Image>/Edit/Repeat & Duplicate"
-msgstr "<Image>/Úpravy/Opakování a duplikace"
-
-msgid "Description"
-msgstr "Popis"
-
-msgid "params and return_vals must be array refs (even if empty)!"
+msgid ""
+"$function: function name contains unusual characters, good style is to use only "
+"0-9, a-z and _"
 msgstr ""
-"parametry a návratové_hodnoty musí být odkazy na pole (dokonce i prázdné)!"
+"$function: jméno funkce obsahuje neobvyklé znaky, vhodné je pou¾ívat pouze 0-9, "
+"a-z a _"
 
-msgid "<Image>/Filters/Logulator/Newsprint text"
-msgstr "<Image>/Filtry/Logulátor/Novinový text"
-
-msgid "<Image>/Filters/Render/Fit Text..."
-msgstr "<Image>/Filtry/Vyobrazení/Pasovaný text..."
-
-msgid "$_: illegal switch, try $0 --help\n"
-msgstr "$_: neplatný pøepínaè, zkuste $0 --help\n"
-
-msgid "Unable to convert a reference to type '%s'"
-msgstr "Nepodaøilo se pøevést odkaz do typu '%s'"
-
-msgid "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Loga/Zkosené dovnitø"
-
-msgid "<Image>/Filters/Render/Random Blends"
-msgstr "<Image>/Filtry/Vyobrazení/Náhodné smìsi"
-
-msgid "<Image>/Filters/Map/Pixelmap"
-msgstr "<Image>/Filtry/Mapování/Pixelová mapa"
-
-msgid "<Image>/Filters/Logulator/Starscape"
-msgstr "<Image>/Filtry/Logulátor/Popraskáný povrch"
-
-msgid "<Image>/Filters/Distorts/Windify..."
-msgstr "<Image>/Filtry/Zkreslení/Rozfoukání..."
-
-msgid "<Image>/Filters/Apply Perl Expression..."
-msgstr "<Image>/Filtry/Provést perl výraz..."
-
-msgid "gimp procedure '%s' not found"
-msgstr "gimp procedura '%s' nebyla nalezena"
-
-msgid "Visual Scriptor"
-msgstr "Vizuální skriptor"
-
-msgid "server going down..."
-msgstr "server zastavuje..."
-
-msgid "unable to read temporary file $tmp: $!"
-msgstr "nepodaøilo se èíst z pomocného souboru $tmp: $!"
-
-msgid "Saving '$filename' as COLORHTML..."
-msgstr "Zapisuje se '$filename' jako BARVAHTML..."
-
-msgid "being called as '%s', but '%s' not registered in the pdb"
-msgstr "voláno jako '%s', ale '%s' není v pdb registrováno"
-
-msgid "Shortcuts"
-msgstr "Zkratky"
-
-msgid "<Image>/Filters/Logulator/Speed text"
-msgstr "<Image>/Filtry/Logulátor/Rychlý text"
+msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgstr ""
+"cesta k menu _musí_ zaèínat <Image>, <Toolbox>, <Load>, <Save> nebo <None>!"
 
 msgid "<Image>/Filters/Render/Terral Text"
 msgstr "<Image>/Filtry/Vyobrazení/Zalitý text..."
 
-msgid "<Toolbox>/Xtns/PDB Explorer"
-msgstr "<Toolbox>/Xtns/PDB badatel"
+msgid "Spin Layer DEST (250ms)"
+msgstr "Vrstva víøení CÍL (250 ms)"
 
-msgid "<Toolbox>/Xtns/Create_Images"
-msgstr "<Toolbox>/Roz¹./Tvoøit_obrázky"
+msgid "<Toolbox>/Xtns/Render/Povray/Texture"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Povray/Textura"
 
-msgid "9x15bold"
-msgstr "9×15 tuèné"
+msgid "register called with too many or wrong arguments\n"
+msgstr "registrace volána s pøíli¹ mnoha nebo ¹patnými argumenty\n"
 
-msgid "unauthorized command received, aborting connection"
-msgstr "pøijat neautorizovaný pøíkaz, ru¹í se spojení"
+msgid "params and return_vals must be array refs (even if empty)!"
+msgstr "parametry a návratové_hodnoty musí být odkazy na pole (dokonce i prázdné)!"
 
-msgid "%s: procedural database execution failed on invalid input arguments"
-msgstr ""
-"%s: vykonání procedurální databáze selhalo na neplatných vstupních "
-"argumentech"
-
-msgid "NAME"
-msgstr "JMÉNO"
-
-msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
-msgstr "VAROVÁNÍ: $function vrátila cosi, co není obrázek: \"$img\"\n"
-
-msgid "<Image>/Filters/Map/Xach Blocks"
-msgstr "<Image>/Filtry/Mapování/Xach bloky"
-
-msgid "<Image>/Filters/Logulator/Frosty"
-msgstr "<Image>/Filtry/Logulátor/Mrazivo"
-
-msgid "<Image>/Filters/Logulator/Web title header"
-msgstr "<Image>/Filtry/Logulátor/Záhlaví webového titulku"
-
-msgid "FATAL: canonicalize_colour did not return a value!"
-msgstr "FATÁLNÍ: canonicalize_colour nevrátilo hodnotu!"
-
-msgid "export failed"
-msgstr "exportování selhalo"
-
-msgid ""
-"       interface-arguments are\n"
-"           -o | --output <filespec>   write image to disk, don't display\n"
-"           -i | --interact            let the user edit the values first\n"
-"       script-arguments are\n"
-msgstr ""
-"       argumenty-rozhraní jsou\n"
-"           -o | --output <soubor>     zapí¹e obrázek na disk, nezobrazuje\n"
-"           -i | --interact            nechá u¾ivatele nejdøíve upravit "
-"hodnoty\n"
-"       argumenty-skriptu jsou\n"
-
-msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
-msgstr "<Image>/Filtry/Detekce hran/Detekce hrany 2×2"
-
-msgid "<Image>/Layers/Center Layer"
-msgstr "<Image>/Vrstvy/Vycentrovat vrstvu"
-
-msgid "closing connection %d (%d requests in %g seconds)"
-msgstr "uzavírá se spojení %d (%d po¾adavkù bìhem %g sekund)"
-
-msgid "Reset all values to their default"
-msgstr "Nastavit v¹e na implicitní hodnoty"
-
-msgid "<Image>/Filters/Logulator/Basic II"
-msgstr "<Image>/Filtry/Logulátor/Základní II"
-
-msgid "<Toolbox>/Xtns/Gimp::Fu Example"
-msgstr "<Toolbox>/Roz¹./Pøíklad Gimp::Fu"
-
-msgid ""
-"Usage: $0 [gimp-args..] [interface-args..] [script-args..]\n"
-"       gimp-arguments are\n"
-"           -gimp <anything>           used internally only\n"
-"           -h | -help | --help | -?   print some help\n"
-"           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
-"PORT)\n"
-"                                      (for more info, see Gimp::Net(3))\n"
-msgstr ""
-"U¾ití: $0 [gimp-argumenty..] [argumenty-rozhraní..] [argumenty-skriptu..]\n"
-"       gimp-argumenty jsou\n"
-"           -gimp <cokoli>             pouze pro vnitøní pou¾ití\n"
-"           -h | -help | --help | -?   vypí¹e nejakou nápovìdu\n"
-"           -v | --verbose             vypisuje bli¾¹í informace o èinnosti\n"
-"           --host|--tcp HOST[:PORT]   spojení s HOSTem (volitelnì pou¾itý "
-"PORT)\n"
-"                                      (více informací viz Gimp::Net(3))\n"
-
-msgid "too many arguments"
-msgstr "pøíli¹ mnoho argumentù"
-
-msgid ""
-"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
-msgstr ""
-"zmatek v rozmìrech, v pdl má dimenzi %d, ale je povoleno nejvý¹e %d dimenzí"
-
-msgid "Load"
-msgstr "Naèíst"
-
-msgid "unable to grok colour specification"
-msgstr "nepodaøilo se zajistit specifikátor barev"
-
-msgid "no additional information available, use --help\n"
-msgstr "doplòkové informace nejsou k dispozici, pou¾ijte --help\n"
-
-msgid ""
-"the gtk perl module is required to open a dialog\n"
-"window, running with default values"
-msgstr ""
-"modul gtk perl po¾aduje otevøení dialogového\n"
-"okna. spu¹tìní bez implicitních hodnot"
-
-msgid "Gradient Selection Dialog"
-msgstr "Dialog výbìru pøechodu"
-
-msgid " matching functions"
-msgstr "odpovídající funkce"
-
-msgid "authorization ok, but: $r[1]\n"
-msgstr "autorizace je v poøádku, ale $r[1]\n"
-
-msgid "Cannot call '$AUTOLOAD' at this time"
-msgstr "Nyní nelze volat '$AUTOLOAD'"
-
-msgid "function/macro \"$name\" not found in $class"
-msgstr "funkce/macro \"$name\" nebylo nalezeno v $class"
+msgid "$_ is not a valid import tag for package $pkg"
+msgstr "$_ není platná importní znaèka pro balík $pkg"
 
 msgid "<Toolbox>/Xtns/Render/Yin-Yang"
 msgstr "<Toolbox>/Roz¹./Vyobrazení/Jin-jang"
 
-msgid "arguments to main not yet supported!"
-msgstr "argumenty main zatím nejsou podporovány!"
-
-msgid "accepting connections in $host"
-msgstr "pøíjímá se spojení na $host"
-
-msgid " (press Tab to complete)"
-msgstr "(k dokonèení stisknìte Tab)"
-
-msgid "Save $name"
-msgstr "Zapsat $name"
-
-msgid "<Image>/Filters/Web/Prepare for GIF..."
-msgstr "<Image>/Filtry/Web/Pøíprava pro GIF..."
-
-msgid "illegal type for colour specification"
-msgstr "neplatný typ pro barevnou specifikaci"
-
-msgid "<Image> plug-in called without both image and drawable arguments!\n"
-msgstr "modul <Image> volán buï bez argumentu obrázku nebo obrazovky!\n"
-
-msgid "Seth Spin..."
-msgstr "Sethovo víøení..."
-
-msgid "get current background colour from the gimp"
-msgstr "získat aktuální barvu pozadí z programu gimp"
-
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Tabulka písma"
-
-msgid "No horizontal or vertical guides found. Aborted."
-msgstr "Nebyly nalezeny ¾ádná vodorovná ani svislá vodítka. Zru¹eno."
-
-msgid "<Image>/Filters/Logulator/Glowing Hot"
-msgstr "<Image>/Filtry/Logulátor/Sálavý ¾ár"
-
-msgid "accepting connections on port $Gimp::Net::default_tcp_port"
-msgstr "pøijímají se spojení na portu $Gimp::Net::default_tcp_port"
-
-msgid "Menu Path"
-msgstr "Cesta k nabídce"
-
-msgid "TYPE"
-msgstr "TYP"
-
-msgid "<Image>/Guides/To Selection"
-msgstr "<Image>/Vodítka/Do výbìru"
-
-msgid "<Image>/Filters/Noise/Feedback"
-msgstr "<Image>/Filtry/©um/Zpìtná vazba"
-
-msgid "<Toolbox>/Xtns/Animation/Billboard"
-msgstr "<Toolbox>/Roz¹./Animace/Plakát"
-
-msgid "<Image>/Filters/Distorts/MirrorSplit"
-msgstr "<Image>/Filtry/Zkreslení/Zrcadlení"
-
-msgid "You need at least 2 layers to perform prep4gif"
-msgstr "K provedení prep4gif jsou nutné nejménì 2 vrstvy"
-
-msgid "<Image>/Filters/Misc/Border Average"
-msgstr "<Image>/Filtry/Rùzné/Prùmìr okraje"
-
-msgid "<Image>/Filters/Blur/2x2 Blur"
-msgstr "<Image>/Filtry/Rozostøení/Rozostøení 2×2"
-
-msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
-msgstr "konverze na typ $pf_type2string{$type} není doposud implementovaná\n"
-
-msgid "interface '$interface_type' unsupported."
-msgstr "rozhraní '$interface_type' není podporováno."
-
-msgid "<Image>/Filters/Logulator/Neon"
-msgstr "<Image>/Filtry/Logulátor/Neón"
-
-msgid "<Image>/Filters/Render/Stampify"
-msgstr "<Image>/Filtry/Vyobrazení/Tvorba razítka"
-
-msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
-msgstr "<Image>/Filtry/Vylep¹ení/Vylep¹ení kontrastu 2×2"
-
-msgid "<Load> plug-in called without the 3 standard arguments!\n"
-msgstr "modul <Load> volán bez 3 standardních argumentù!\n"
-
-msgid "Unable to grok '%s' as colour specifier"
-msgstr "Nepodaøilo se zajistit '%s' jako specifikátor barev"
-
-msgid "gimp-perl-pixel functions require the PDL::Core module"
-msgstr "funkce gimp-perl-pixel vy¾adují modul PDL::Core"
-
-msgid "a color must have three components (array elements)"
-msgstr "barva musí mít tøi komponenty (prvky pole)"
-
-msgid "Defaults"
-msgstr "Implicitní hodnoty"
-
-msgid "Copyright"
-msgstr "Copyright"
-
-msgid "<Toolbox>/Xtns/Render/Bricks"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Cihly"
-
-msgid "<Image>/Filters/Render/Burst..."
-msgstr "<Image>/Filtry/Vyobrazení/Hvìzdice..."
-
-msgid "WARNING: client disconnected while holding an active lock\n"
-msgstr "VAROVÁNÍ: klient se odpojil bìhem vlastnictví uzamèení\n"
-
-msgid "/Xtns/Render/Logos"
-msgstr "/Roz¹./Vyobrazení/Loga"
-
-msgid "server version $Gimp::VERSION started"
-msgstr "spu¹tìn server verze $Gimp::VERSION"
-
-msgid "<Image>/Filters/Distorts/Scratches"
-msgstr "<Image>/Filtry/Zkreslení/©krábance"
-
-msgid "argument is not of type %s"
-msgstr "argument není typu %s"
-
-msgid "Background"
-msgstr "Pozadí"
-
-msgid "%s arguments for function '%s'"
-msgstr "%s argumentù pro funkci '%s'"
-
-msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-msgstr "<Toolbox>/Roz¹./Vyobrazení/Loga/®havé ¾elezo"
-
-msgid "only blessed scalars accepted here"
-msgstr "zde jsou akceptovány jen zpropadené skaláry"
-
-msgid "<Image>/Guides/Center Guide"
-msgstr "<Image>/Vodítka/Vodítko na støed"
-
-msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
-msgstr ""
-"oèekáván protokol verze $Gimp::_PROT_VERSION, ale server pou¾ívá $r[0]\n"
-
-msgid "illegal parasite specification, arrayref expected"
-msgstr "neplatné urèení parazita, oèekáván odkaz na pole"
+msgid "unable to accept unix connection: $!\n"
+msgstr "nepodaøilo se pøijmout unixové spojení $!\n"
 
 msgid "Save"
 msgstr "Zapsat"
 
 msgid ""
-"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+"\n"
+"\n"
+"EMBEDDED POD DOCUMENTATION:\n"
+"\n"
 msgstr ""
-"zmatek v dimenzích, pdl má dimenzi %d, ov¹em po¾adováno je nejménì %d dimenzí"
+"\n"
+"\n"
+"ZAKOTVENÁ POD DOKUMENTACE:\n"
+"\n"
 
-msgid "<Toolbox>/Xtns/Perl/Control Center"
-msgstr "<Toolbox>/Roz¹./Perl/Øídící centrum"
-
-msgid "<Image>/Filters/Logulator/Carved"
-msgstr "<Image>/Filtry/Logulátor/Krájet"
-
-msgid "<Image>/Filters/Logulator/Textured"
-msgstr "<Image>/Filtry/Logulátor/Texturovat"
-
-msgid "Function Info"
-msgstr "Informace o funkci"
-
-msgid "no font specified, using default"
-msgstr "písmo nebylo zadáno, pou¾ije se implicitní"
+msgid "/Filters/Logulator"
+msgstr "/Filtry/Logulátor"
 
 msgid ""
 "the gtk perl module is required to run\n"
@@ -788,23 +435,448 @@ msgstr ""
 "pro interaktivní spu¹tìní modulu\n"
 "je potøebný modul gtk perl\n"
 
-msgid "authorization failed: $r[1]\n"
-msgstr "autorizace selhala: $r[1]\n"
+msgid "<Toolbox>/Xtns/Render/Golden Mean"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Zlatý vzhled"
 
-msgid "Previous"
-msgstr "Pøedchozí"
+msgid "interface '$interface_type' unsupported."
+msgstr "rozhraní '$interface_type' není podporováno."
+
+msgid "unable to accept tcp connection: $!\n"
+msgstr "nepodaøilo se pøijmout tcp spojení: $!\n"
+
+msgid "<Image>/Filters/Logulator/3D Outline"
+msgstr "<Image>/Filtry/Logulátor/3D obrys"
+
+#, fuzzy
+msgid "<Image>/Image/Alpha/Clear Alpha..."
+msgstr "<Image>/Obrázek/Alfa/Alfa do barvy..."
+
+msgid ""
+"dimension mismatch, pdl has dimension %d but at least %d dimensions required"
+msgstr ""
+"zmatek v dimenzích, pdl má dimenzi %d, ov¹em po¾adováno je nejménì %d dimenzí"
+
+msgid "[unfinished]\n"
+msgstr "[nedononèeno]\n"
+
+msgid "<Toolbox>/Xtns/Gimp::Fu Example"
+msgstr "<Toolbox>/Roz¹./Pøíklad Gimp::Fu"
+
+msgid "could not connect to the gimp server (make sure Perl-Server is running)"
+msgstr "nepodaøilo se spojit s gimp serverem (ujistìte se, zda Perl-Server bì¾í)"
+
+msgid "<Image>/Filters/Logulator/Crystal"
+msgstr "<Image>/Filtry/Logulátor/Krystal"
+
+msgid "Cannot call '$AUTOLOAD' at this time"
+msgstr "Nyní nelze volat '$AUTOLOAD'"
+
+msgid "<Image>/Guides/Guide Grid"
+msgstr "<Image>/Vodítka/Vodítková møí¾"
+
+msgid "unauthorized command received, aborting connection"
+msgstr "pøijat neautorizovaný pøíkaz, ru¹í se spojení"
+
+msgid "Defaults"
+msgstr "Implicitní hodnoty"
+
+msgid "<Image>/Filters/Render/Add Dust..."
+msgstr "<Image>/Filtry/Vyobrazení/Zaprá¹it..."
+
+msgid "<Image>/Filters/Animation/BlowInOut"
+msgstr "<Image>/Filtry/Animace/Rozfoukání"
+
+msgid "text string is empty"
+msgstr "textový øetìzec je prázdný"
+
+msgid "server requests authorization, but no authorization available\n"
+msgstr "server po¾aduje autorizaci, ale ¾ádná není k dispozici\n"
+
+msgid "<Toolbox>/Xtns/Render/Logos/Firetext"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Loga/Ohnivý text"
+
+msgid "/Xtns/Render/Logos"
+msgstr "/Roz¹./Vyobrazení/Loga"
+
+msgid "Image Types"
+msgstr "Typy obrázku"
+
+msgid "<Image>/Filters/Map/Xach Blocks"
+msgstr "<Image>/Filtry/Mapování/Xach bloky"
+
+msgid "Menu Path"
+msgstr "Cesta k nabídce"
+
+msgid "Unable to grok '%s' as colour specifier"
+msgstr "Nepodaøilo se zajistit '%s' jako specifikátor barev"
+
+msgid "9x15bold"
+msgstr "9×15 tuèné"
+
+msgid "Accelerator"
+msgstr "Akcelerátor"
+
+msgid "gimp-perl-pixel functions require the PDL::Core module"
+msgstr "funkce gimp-perl-pixel vy¾adují modul PDL::Core"
+
+msgid "dunno how to return param type %d"
+msgstr "není známo, jak vrátit parametr typu %d"
+
+msgid "Cancel"
+msgstr "Zru¹it"
+
+msgid "only blessed scalars accepted here"
+msgstr "zde jsou akceptovány jen zpropadené skaláry"
+
+msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgstr ""
+"zmatek v rozmìrech, v pdl má dimenzi %d, ale je povoleno nejvý¹e %d dimenzí"
 
 msgid "<Image>/Filters/Logulator/Glossy"
 msgstr "<Image>/Filtry/Logulátor/Lesk"
 
+msgid "argument is not of type %s"
+msgstr "argument není typu %s"
+
+msgid "WARNING"
+msgstr "VAROVÁNÍ"
+
+msgid "Description"
+msgstr "Popis"
+
+msgid "<Image>/Filters/Render/Fit Text..."
+msgstr "<Image>/Filtry/Vyobrazení/Pasovaný text..."
+
+msgid "Unable to convert a reference to type '%s'"
+msgstr "Nepodaøilo se pøevést odkaz do typu '%s'"
+
+msgid "<Image>/Filters/Logulator/Particle Trace"
+msgstr "<Image>/Filtry/Logulátor/Rozmáznutí..."
+
+msgid "argument incompatible with type IMAGE"
+msgstr "argument nesluèitelný s typem IMAGE"
+
+msgid "<Image>/Filters/Blur/2x2 Blur"
+msgstr "<Image>/Filtry/Rozostøení/Rozostøení 2×2"
+
+msgid "not enough"
+msgstr "není dostatek"
+
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filtry/Vyobrazení/Hvìzdice..."
+
+msgid "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+msgstr "-*-courier-medium-r-normal--*-120-*-*-*-*-*"
+
+msgid "Synopsis"
+msgstr "Osnova"
+
+msgid "Color"
+msgstr "Barva"
+
+msgid "<Image>/Filters/Logulator/Alien Glow"
+msgstr "<Image>/Filtry/Logulátor/Cizí ¾ár"
+
+msgid "FATAL: canonicalize_colour did not return a value!"
+msgstr "FATÁLNÍ: canonicalize_colour nevrátilo hodnotu!"
+
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr "<Image>/Filtry/Provést perl výraz..."
+
+msgid "<Image>/Filters/Logulator/Blended II"
+msgstr "<Image>/Filtry/Logulátor/Smíchání II"
+
+msgid "DESCRIPTION"
+msgstr "POPIS"
+
+msgid "Unable to open '$filename' for writing: $!\n"
+msgstr "Nepodaøilo se otevøít '$filename' pro zápis: $!\n"
+
+msgid "<Image>/View/3D Surface"
+msgstr "<Image>/Zobrazení/3D povrch"
+
+msgid "accepting connections in $host"
+msgstr "pøíjímá se spojení na $host"
+
+msgid "<Save> plug-in called without the 5 standard arguments!\n"
+msgstr "<Save> modul byl volám bez 5 standardních argumentù!\n"
+
+msgid "unable to create socketpair for gimp communications: $!"
+msgstr "nepodaøilo se vytvoøit soketový pár pro gimp komunikaci: $!"
+
+msgid "unable to create '$fn': $!"
+msgstr "nepodaøilo se vytvoøit '$fn': $!"
+
+msgid "Previous"
+msgstr "Pøedchozí"
+
+msgid "WARNING: $function returned something that is not an image: \"$img\"\n"
+msgstr "VAROVÁNÍ: $function vrátila cosi, co není obrázek: \"$img\"\n"
+
 msgid "Command"
 msgstr "Pøíkaz"
 
-msgid "<Image>/Filters/Logulator/Transparent Logo"
-msgstr "<Image>/Filtry/Logulátor/Prùhledné logo"
+msgid "accepting connections on port $Gimp::Net::default_tcp_port"
+msgstr "pøijímají se spojení na portu $Gimp::Net::default_tcp_port"
 
-msgid "<Image>/Filters/Logulator/Chalk"
-msgstr "<Image>/Filtry/Logulátor/Køída"
+msgid "perl-arrayref required as datatype for a gimp-array"
+msgstr "perl-arrayref je vy¾adován jako datový typ por gimp-array"
+
+msgid "required callback 'query' not found\n"
+msgstr "po¾adované zpìtné volání 'query' nebylo nalezeno\n"
+
+msgid "<Toolbox>/Xtns/Create_Images"
+msgstr "<Toolbox>/Roz¹./Tvoøit_obrázky"
+
+msgid "Save $name"
+msgstr "Zapsat $name"
+
+msgid "run_mode must be INTERACTIVE, NONINTERACTIVE or RUN_WITH_LAST_VALS\n"
+msgstr "run_mode musí být INTERACTIVE, NONINTERACTIVE nebo RUN_WITH_LAST_VALS\n"
+
+msgid "<Image>/Video/VCR Console..."
+msgstr "<Image>/Video/Videopult..."
+
+msgid "<Image>/Filters/Edge-Detect/2x2 Edge Detect"
+msgstr "<Image>/Filtry/Detekce hran/Detekce hrany 2×2"
+
+msgid "Copyright"
+msgstr "Copyright"
+
+msgid "interface=... tag is no longer supported\n"
+msgstr "znaèka interface=... není nadále podporována\n"
+
+msgid "<Toolbox>/Xtns/Render/Stamps"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Razítka"
+
+msgid ""
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use "
+"strict'"
+msgstr ""
+"Oèekáváno INT32, ale obdr¾eno '%s'. Mo¾ná to znamená '%s' a chybí tam 'use "
+"strict'"
+
+msgid "<Image>/Filters/Misc/Magick"
+msgstr "<Image>/Filtry/Rùzné/Magick"
+
+msgid ""
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
+msgstr ""
+"deformovaná definice parametrù, oèekáváno [TYP_PARAMETRU,\"JMÉNO\",\"POPIS\"] "
+"nebo TYP_PARAMETRU"
+
+msgid "<Image>/Filters/Distorts/Scratches"
+msgstr "<Image>/Filtry/Zkreslení/©krábance"
+
+msgid "Background"
+msgstr "Pozadí"
+
+msgid "last argument to gimp_pattern_select_widget must be scalar ref"
+msgstr "poslední argument gimp_pattern_select_widget musí být odkaz na skalár"
+
+msgid "accepting connections on $unix_path"
+msgstr "pøijímá se spojení na $unix_path"
+
+msgid "Load $name"
+msgstr "Ètení $name"
+
+msgid "Saving '$filename' as DATAURL..."
+msgstr "Zapisuje se '$filename' jako DATAURL..."
+
+msgid ", %d bytes data]"
+msgstr ", bytù dat: %d]"
+
+msgid "<Toolbox>/Xtns/Render/Random Art #1"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Náhodné umìní è. 1"
+
+msgid "unable to create listening tcp socket: $!\n"
+msgstr "nepodaøilo se vytvoøit naslouchací tcp soket: $!\n"
+
+msgid ""
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
+"and report this error"
+msgstr ""
+"gimp_pixel_rgns_register podporuje pouze 1, 2 nebo 3 argumenty, zvy¹te verzi na "
+"gimp-1.1 a podejte zprávu o této chybì"
+
+msgid "Bumpmap"
+msgstr "Mapa vyvý¹ení"
+
+msgid "Saving '$filename' as COLORHTML..."
+msgstr "Zapisuje se '$filename' jako BARVAHTML..."
+
+msgid "too many"
+msgstr "pøíli¹ mnoho"
+
+msgid "required callback 'net' not found\n"
+msgstr "po¾adované zpìtné volání 'net' nebylo nalezeno\n"
+
+msgid "<Toolbox>/Xtns/Animation/Seth Spin"
+msgstr "<Toolbox>/Roz¹./Animace/Sethovo víøení"
+
+msgid "<Image>/Filters/Render/Add Glow"
+msgstr "<Image>/Filtry/Vyobrazení/Pøidat ¾ár"
+
+msgid "Author"
+msgstr "Autor"
+
+msgid "<Toolbox>/Xtns/Parasite Editor"
+msgstr "<Toolbox>/Roz¹./Editor parazitù"
+
+msgid "<Toolbox>/Xtns/Render/Povray/Preferences"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Povray/Pøedvolby"
+
+msgid "More..."
+msgstr "Více..."
+
+msgid "arguments to main not yet supported!"
+msgstr "argumenty main zatím nejsou podporovány!"
+
+msgid "<Image>/Filters/Logulator/Newsprint text"
+msgstr "<Image>/Filtry/Logulátor/Novinový text"
+
+msgid "Seth Spin..."
+msgstr "Sethovo víøení..."
+
+msgid "<Toolbox>/Xtns/Visual Scriptor"
+msgstr "<Toolbox>/Roz¹./Vizuální skriptor"
+
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Filtry/©um/Xach vidìní..."
+
+msgid "WARNING: client disconnected while holding an active lock\n"
+msgstr "VAROVÁNÍ: klient se odpojil bìhem vlastnictví uzamèení\n"
+
+msgid "NAME"
+msgstr "JMÉNO"
+
+msgid "Help"
+msgstr "Nápovìda"
+
+msgid "<Image>/Filters/Logulator/Cool Metal"
+msgstr "<Image>/Filtry/Logulátor/Zchladlý kov"
+
+msgid "<Image>/Filters/Logulator/Carved"
+msgstr "<Image>/Filtry/Logulátor/Krájet"
+
+msgid "<Image>/Filters/Logulator/Textured"
+msgstr "<Image>/Filtry/Logulátor/Texturovat"
+
+msgid "<Toolbox>/Xtns/Animation/Billboard"
+msgstr "<Toolbox>/Roz¹./Animace/Plakát"
+
+msgid "no font specified, using default"
+msgstr "písmo nebylo zadáno, pou¾ije se implicitní"
+
+msgid "<Image>/Select/Triangle"
+msgstr "<Image>/Výbìr/Trojúhelník"
+
+msgid "gimp_tile_get_data is not yet implemented\n"
+msgstr "gimp_tile_get_data není doposud implementováno\n"
+
+msgid "conversion to type $pf_type2string{$type} is not yet implemented\n"
+msgstr "konverze na typ $pf_type2string{$type} není doposud implementovaná\n"
+
+msgid "<Image>/Filters/Map/Xach Shadows..."
+msgstr "<Image>/Filtry/Mapování/Xach stíny..."
+
+msgid "<Image>/Filters/Colors/Map To Gradient"
+msgstr "<Image>/Filtry/Barvy/Mapa do pøechodu"
+
+msgid "<Image>/Filters/Logulator/Speed text"
+msgstr "<Image>/Filtry/Logulátor/Rychlý text"
+
+msgid "unable to grok colour specification"
+msgstr "nepodaøilo se zajistit specifikátor barev"
+
+msgid "You need at least 2 layers to perform prep4gif"
+msgstr "K provedení prep4gif jsou nutné nejménì 2 vrstvy"
+
+msgid "<Image>/Filters/Render/Random Blends"
+msgstr "<Image>/Filtry/Vyobrazení/Náhodné smìsi"
+
+msgid "too many arguments"
+msgstr "pøíli¹ mnoho argumentù"
+
+msgid "<Image>/Filters/Logulator/Gradient Bevel"
+msgstr "<Image>/Filtry/Logulátor/©ikmý pøechod"
+
+msgid "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-1"
+msgstr "-*-helvetica-medium-r-normal-*-34-*-*-*-p-*-iso8859-2"
+
+msgid "expected protocol version $Gimp::_PROT_VERSION, but server uses $r[0]\n"
+msgstr "oèekáván protokol verze $Gimp::_PROT_VERSION, ale server pou¾ívá $r[0]\n"
+
+msgid "Restore values to the previous ones"
+msgstr "Vrátit na pøedchozí hodnoty"
+
+msgid "<Image> plug-in called without both image and drawable arguments!\n"
+msgstr "modul <Image> volán buï bez argumentu obrázku nebo obrazovky!\n"
+
+msgid ", authorization required"
+msgstr ", po¾adována autorizace"
+
+msgid "unable to create listening unix socket: $!\n"
+msgstr "nepodaøilo se vytvoøit naslouchací unixový soket: $!\n"
+
+msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+msgstr "neplatný GIMP_HOST: 'spawn' není pro server platná metoda spojení"
+
+msgid "Last Modified"
+msgstr "Naposled zmìnìno"
+
+msgid "Shortcuts"
+msgstr "Zkratky"
+
+msgid ""
+"the gtk perl module is required to open a dialog\n"
+"window, running with default values"
+msgstr ""
+"modul gtk perl po¾aduje otevøení dialogového\n"
+"okna. spu¹tìní bez implicitních hodnot"
+
+msgid "<Image>/Filters/Logulator/Web title header"
+msgstr "<Image>/Filtry/Logulátor/Záhlaví webového titulku"
+
+msgid "<Load> plug-in called without the 3 standard arguments!\n"
+msgstr "modul <Load> volán bez 3 standardních argumentù!\n"
+
+msgid "Font Selection Dialog ($desc)"
+msgstr "Dialog výbìtu písma ($desc)"
+
+msgid "<Image>/Filters/Distorts/MirrorSplit"
+msgstr "<Image>/Filtry/Zkreslení/Zrcadlení"
+
+msgid "%s: procedural database execution failed on invalid input arguments"
+msgstr ""
+"%s: vykonání procedurální databáze selhalo na neplatných vstupních argumentech"
+
+msgid "<Image>/Filters/Colors/Colour To Alpha"
+msgstr "<Image>/Filtry/Barvy/Barva do alfa"
+
+msgid "(UNINITIALIZED)"
+msgstr "(NEINICIALIZOVÁNO)"
+
+msgid "closing connection %d (%d requests in %g seconds)"
+msgstr "uzavírá se spojení %d (%d po¾adavkù bìhem %g sekund)"
+
+msgid "<Image>/Filters/Logulator/Frosty"
+msgstr "<Image>/Filtry/Logulátor/Mrazivo"
+
+msgid "<Image>/Filters/Render/TeX String"
+msgstr "<Image>/Filtry/Vyobrazení/Øetìzec TeX"
+
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Roz¹./Vyobrazení/Tabulka písma"
+
+msgid "authorization failed: $r[1]\n"
+msgstr "autorizace selhala: $r[1]\n"
+
+msgid "server version $Gimp::VERSION started"
+msgstr "spu¹tìn server verze $Gimp::VERSION"
+
+msgid "authorization unnecessary"
+msgstr "autorizace není nutná"
 
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
@@ -813,195 +885,111 @@ msgstr ""
 "$function: volání $AUTOLOAD bez specifikace importní znaèky :auto je "
 "zavrhováno!\n"
 
-msgid "DESCRIPTION"
-msgstr "POPIS"
+msgid "unable to open Gimp::Net communications socket: $!\n"
+msgstr "nepodaøilo se otevøít komunikaèní soket Gimp::Net: $!\n"
 
-msgid "Accelerator"
-msgstr "Akcelerátor"
+msgid "Close"
+msgstr "Zavøít"
 
-msgid "Cancel"
-msgstr "Zru¹it"
+msgid "<Image>/Edit/Repeat & Duplicate"
+msgstr "<Image>/Úpravy/Opakování a duplikace"
 
-msgid "<Image>/Filters/Map/Xach Shadows..."
-msgstr "<Image>/Filtry/Mapování/Xach stíny..."
+msgid "illegal parasite specification, arrayref expected"
+msgstr "neplatné urèení parazita, oèekáván odkaz na pole"
 
-msgid "BG"
-msgstr "Pozadí"
-
-msgid "argument type %s expected (not %s)"
-msgstr "oèekáván argument typu %s (ne %s)"
-
-msgid ""
-"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
-msgstr ""
-"zmatek ve velikosti v pixelech, v pdl má %d kanálových pixelù, ale je "
-"po¾adováno %d kanálù"
-
-msgid "This module was built without support for PDL."
-msgstr "Tento modul byl sestaven bez podpory PDL."
-
-msgid "[unfinished]\n"
-msgstr "[nedononèeno]\n"
-
-msgid "Spin Layer DEST (250ms)"
-msgstr "Vrstva víøení CÍL (250 ms)"
-
-msgid "<Toolbox>/Xtns/Homepage-Logo"
-msgstr "<Toolbox>/Roz¹./Logo domovské stránky"
-
-msgid "Bumpmap"
-msgstr "Mapa vyvý¹ení"
-
-msgid "Date/Version"
-msgstr "Datum/Verze"
-
-msgid "<Image>/Filters/Animation/Animate Cells"
-msgstr "<Image>/Filtry/Animace/Animovat buòky"
-
-msgid "<Image>/View/3D Surface"
-msgstr "<Image>/Zobrazení/3D povrch"
-
-msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
-msgstr ""
-"$function: argument/návratová hodnota '$p->[1]' má neplatný typ '$p->[0]'"
-
-msgid "required callback 'net' not found\n"
-msgstr "po¾adované zpìtné volání 'net' nebylo nalezeno\n"
-
-msgid "function '$exe' not found in this script (must be one of "
-msgstr "funkce '$exe' nebyla v tomto skriptu nalezena (musí být jedna z "
-
-msgid "/Xtns/Perl"
-msgstr "/Roz¹./Perl"
-
-msgid "<Image>/Filters/Render/Highlight Edges"
-msgstr "<Image>/Filtry/Vyobrazení/Zvýraznìní hran"
-
-msgid "accepted tcp connection from "
-msgstr "pøijato tcp spojení od "
-
-msgid "Status"
-msgstr "Stav"
-
-msgid "Load $name"
-msgstr "Ètení $name"
-
-msgid "<Save> plug-in called without the 5 standard arguments!\n"
-msgstr "<Save> modul byl volám bez 5 standardních argumentù!\n"
-
-msgid "unable to accept unix connection: $!\n"
-msgstr "nepodaøilo se pøijmout unixové spojení $!\n"
-
-msgid "<Toolbox>/Xtns/Perl Example Plug-in"
-msgstr "<Toolbox>/Roz¹./Zkou¹ka perl modulu"
-
-msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-msgstr "<Toolbox>/Roz¹./Animace/Sethovo víøení"
-
-msgid "<Image>/Filters/Noise/Ditherize"
-msgstr "<Image>/Filtry/©um/Rozklad"
-
-msgid "unable to accept tcp connection: $!\n"
-msgstr "nepodaøilo se pøijmout tcp spojení: $!\n"
-
-msgid "(UNINITIALIZED)"
-msgstr "(NEINICIALIZOVÁNO)"
-
-msgid "<Toolbox>/Xtns/Parasite Editor"
-msgstr "<Toolbox>/Roz¹./Editor parazitù"
-
-msgid "perl-arrayref required as datatype for a gimp-array"
-msgstr "perl-arrayref je vy¾adován jako datový typ por gimp-array"
-
-msgid "<Image>/Filters/Logulator/Comic Book"
-msgstr "<Image>/Filtry/Logulátor/Komická kniha"
-
-msgid "Unable to open '$filename' for writing: $!\n"
-msgstr "Nepodaøilo se otevøít '$filename' pro zápis: $!\n"
+msgid "unable to fork: $!"
+msgstr "nepodaøilo se vìtvit: $!"
 
 msgid "Unsupported argumenttype $type"
 msgstr "Nepodporovaný typ argumentu $type"
 
-msgid "<Image>/Filters/Logulator/Gradient Bevel"
-msgstr "<Image>/Filtry/Logulátor/©ikmý pøechod"
+msgid "get current foreground colour from the gimp"
+msgstr "získat aktuální barvu popøedí z programu gimp"
+
+msgid "You can't run this script without an ALPHA CHANNEL!!"
+msgstr "Tento skript nelze spustit na obrázek bez ALFA KANÁLU!!"
+
+msgid "<Toolbox>/Xtns/Perl Example Plug-in"
+msgstr "<Toolbox>/Roz¹./Zkou¹ka perl modulu"
+
+msgid "<Image>/Filters/Logulator/Neon"
+msgstr "<Image>/Filtry/Logulátor/Neón"
 
 msgid "<Image>/Filters/Logulator/Chrome"
 msgstr "<Image>/Filtry/Logulátor/Barvy"
 
-msgid "<Image>/Filters/Misc/Magick"
-msgstr "<Image>/Filtry/Rùzné/Magick"
+msgid "<Image>/Select/Round..."
+msgstr "<Image>/Výbìr/Zaoblit..."
+
+msgid "Unable to read temporary image tile $tmp: $!"
+msgstr "Nepodaøilo se èíst z pomocné obrázkové dla¾dice $tmp: $!"
+
+msgid "<Image>/Guides/To Selection"
+msgstr "<Image>/Vodítka/Do výbìru"
+
+msgid "Help for "
+msgstr "Nápovìda pro "
+
+msgid "export failed"
+msgstr "exportování selhalo"
+
+msgid "<Image>/Filters/Logulator/Chip Away"
+msgstr "<Image>/Filtry/Logulátor/Od¹típnutí"
+
+msgid "dunno how to pass arg type %d"
+msgstr "není známo, jak zpracovat argument typu %d"
 
 msgid "/Xtns/Render/Povray"
 msgstr "/Roz¹./Vyobrazení/Povray"
 
-msgid "Color"
-msgstr "Barva"
+msgid "<Image>/Filters/Distorts/Windify..."
+msgstr "<Image>/Filtry/Zkreslení/Rozfoukání..."
 
-msgid "authorization unnecessary"
-msgstr "autorizace není nutná"
+msgid " (press Tab to complete)"
+msgstr "(k dokonèení stisknìte Tab)"
 
-msgid "illegal parasite specification, reference expected"
-msgstr "neplatné urèení parazita, oèekáván odkaz"
-
-msgid "<Image>/Filters/Render/Brushed Metal"
-msgstr "<Image>/Filtry/Vyobrazení/Zbrou¹ený kov"
-
-msgid "Edit"
-msgstr "Úpravy"
-
-msgid "Saving '$filename' as DATAURL..."
-msgstr "Zapisuje se '$filename' jako DATAURL..."
-
-msgid "<Image>/Filters/Animation/BlowInOut"
-msgstr "<Image>/Filtry/Animace/Rozfoukání"
-
-msgid "text string is empty"
-msgstr "textový øetìzec je prázdný"
-
-msgid "$_: unknown/illegal file-save option"
-msgstr "$_: neznámá/neplatná volba zápisu souboru"
-
-msgid "/Xtns/Render"
-msgstr "/Roz¹./Vyobrazení"
-
-msgid " = [argument error]\n"
-msgstr " = [chyba argumentu]\n"
-
-msgid "<Image>/Select/Round..."
-msgstr "<Image>/Výbìr/Zaoblit..."
+msgid "This module was built without support for PDL."
+msgstr "Tento modul byl sestaven bez podpory PDL."
 
 msgid "plug-in returned %d more values than expected"
 msgstr "modul vrátil o %d více hodnot, ne¾ bylo oèekáváno"
 
-msgid "$_ is not a valid import tag for package $pkg"
-msgstr "$_ není platná importní znaèka pro balík $pkg"
+msgid "<Toolbox>/Xtns/Homepage-Logo"
+msgstr "<Toolbox>/Roz¹./Logo domovské stránky"
+
+msgid "FG"
+msgstr "Popøedí"
 
 msgid "url size is too large ($max > 1024)\n"
 msgstr "pøíli¹ dlouhé url ($max > 1024)\n"
 
-msgid "illegal command received, aborting connection"
-msgstr "pøijat neplatný pøíkaz, ru¹í se spojení"
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr "$function: argument/návratová hodnota '$p->[1]' má neplatný typ '$p->[0]'"
 
-msgid "get current foreground colour from the gimp"
-msgstr "získat aktuální barvu popøedí z programu gimp"
+msgid "Edit"
+msgstr "Úpravy"
 
-msgid "Pattern Selection Dialog"
-msgstr "Dialog výbìru vzorku"
-
-msgid "<Image>/Filters/Render/Add Dust..."
-msgstr "<Image>/Filtry/Vyobrazení/Zaprá¹it..."
-
-msgid "not enough"
-msgstr "není dostatek"
-
-msgid "PDB Explorer - the olof edition (yet still an alpha version)"
-msgstr "PDB badatel - vydání olof (stále je¹tì alfa verze)"
-
-msgid "<Image>/Filters/Web/Perl-o-tine..."
-msgstr "<Image>/Filtry/Web/Perl-o-tina..."
+msgid "<Image>/Filters/Logulator/Starscape"
+msgstr "<Image>/Filtry/Logulátor/Popraskáný povrch"
 
 msgid "<Image>/Layers/Stack/Reorder Layers..."
 msgstr "<Image>/Vrstvy/Zásobník/Pøeøazení vrstev..."
 
-msgid "accepting connections on $unix_path"
-msgstr "pøijímá se spojení na $unix_path"
+msgid "<Image>/Filters/Enhance/2x2 Contrast Enhance"
+msgstr "<Image>/Filtry/Vylep¹ení/Vylep¹ení kontrastu 2×2"
+
+msgid ""
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
+"and _ allowed"
+msgstr ""
+"$function: argument se jménem '$p->[1]' obsahuje zakázené znaky, povoleny jsou "
+"pouze 0-9, a-z a _"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "illegal command received, aborting connection"
+msgstr "pøijat neplatný pøíkaz, ru¹í se spojení"
+
+msgid "(none)"
+msgstr "(nic)"
