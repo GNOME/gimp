@@ -1,3 +1,8 @@
+Sat Mar 11 14:44:19 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/menus.c: translate branches in the gimp domain too and a 
+	few other small fixes
+
 Fri Mar 10 18:10:56 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/pygimp/plug-ins/pdbbrowse.py

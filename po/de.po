@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.18\n"
-"POT-Creation-Date: 2000-03-10 02:47+0100\n"
-"PO-Revision-Date: 2000-03-08 21:52+0100\n"
+"POT-Creation-Date: 2000-03-11 14:40+0100\n"
+"PO-Revision-Date: 2000-03-11 14:40+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3626,445 +3626,438 @@ msgid "/View/Shrink Wrap"
 msgstr "/Ansicht/Fenster anpassen"
 
 #. <Image>/Image/Mode
-#: app/menus.c:347
+#: app/menus.c:344
 msgid "/Image/Mode/RGB"
 msgstr "/Bild/Modus/RGB"
 
-#: app/menus.c:349
+#: app/menus.c:346
 msgid "/Image/Mode/Grayscale"
 msgstr "/Bild/Modus/Graustufen"
 
-#: app/menus.c:351
+#: app/menus.c:348
 msgid "/Image/Mode/Indexed..."
 msgstr "/Bild/Modus/Indiziert..."
 
-#: app/menus.c:361
+#. <Image>/Image/Colors
+#: app/menus.c:356
 msgid "/Image/Colors/Desaturate"
 msgstr "/Bild/Farben/Sättigung entfernen"
 
-#: app/menus.c:363
+#: app/menus.c:358
 msgid "/Image/Colors/Invert"
 msgstr "/Bild/Farben/Invertieren"
 
 #. <Image>/Image/Colors/Auto
-#: app/menus.c:371
+#: app/menus.c:366
 msgid "/Image/Colors/Auto/Equalize"
 msgstr "/Bild/Farben/Auto/Angleichen"
 
 #. <Image>/Image/Alpha
-#: app/menus.c:379
+#: app/menus.c:374
 msgid "/Image/Alpha/Add Alpha Channel"
 msgstr "/Bild/Alpha/Alphakanal hinzufügen"
 
 #. <Image>/Image/Transforms
-#: app/menus.c:384
+#: app/menus.c:379
 msgid "/Image/Transforms/Offset..."
 msgstr "/Bild/Transformationen/Versatz..."
 
-#: app/menus.c:386
+#: app/menus.c:381
 msgid "/Image/Transforms/Rotate"
 msgstr "/Bild/Transformationen/Rotieren"
 
-#: app/menus.c:393
+#: app/menus.c:388
 msgid "/Image/Canvas Size..."
 msgstr "/Bild/Größe verändern..."
 
-#: app/menus.c:395
+#: app/menus.c:390
 msgid "/Image/Scale Image..."
 msgstr "/Bild/Skalieren..."
 
-#: app/menus.c:397
+#: app/menus.c:392
 msgid "/Image/Duplicate"
 msgstr "/Bild/Duplizieren"
 
 #. <Image>/Layers
-#: app/menus.c:405
+#: app/menus.c:400
 msgid "/Layers/Layers, Channels & Paths..."
 msgstr "/Ebenen/Ebenen, Kanäle und Pfade..."
 
-#: app/menus.c:409
+#: app/menus.c:404
 msgid "/Layers/Layer to Imagesize"
 msgstr "/Ebenen/Ebene auf Bildgröße"
 
 #. <Image>/Layers/Stack
-#: app/menus.c:414
+#: app/menus.c:409
 msgid "/Layers/Stack/Previous Layer"
 msgstr "/Ebenen/Stapel/Vorherige Ebene"
 
-#: app/menus.c:416
+#: app/menus.c:411
 msgid "/Layers/Stack/Next Layer"
 msgstr "/Ebenen/Stapel/Nächste Ebene"
 
-#: app/menus.c:418
+#: app/menus.c:413
 msgid "/Layers/Stack/Raise Layer"
 msgstr "/Ebenen/Stapel/Ebene erhöhen"
 
-#: app/menus.c:420
+#: app/menus.c:415
 msgid "/Layers/Stack/Lower Layer"
 msgstr "/Ebenen/Stapel/Ebene absenken"
 
-#: app/menus.c:422
+#: app/menus.c:417
 msgid "/Layers/Stack/Layer to Top"
 msgstr "/Ebenen/Stapel/Ebene nach ganz oben"
 
-#: app/menus.c:424
+#: app/menus.c:419
 msgid "/Layers/Stack/Layer to Bottom"
 msgstr "/Ebenen/Stapel/Ebene nach ganz unten"
 
 #. <Image>/Layers/Rotate
-#: app/menus.c:431
+#: app/menus.c:426
 msgid "/Layers/Rotate"
 msgstr "/Ebenen/Rotieren"
 
-#: app/menus.c:436
+#: app/menus.c:431
 msgid "/Layers/Anchor Layer"
 msgstr "/Ebenen/Ebene verankern"
 
-#: app/menus.c:438
+#: app/menus.c:433
 msgid "/Layers/Merge Visible Layers..."
 msgstr "/Ebenen/Sichtbare Ebenen vereinen..."
 
-#: app/menus.c:440
+#: app/menus.c:435
 msgid "/Layers/Flatten Image"
 msgstr "/Ebenen/Bild zusammenfügen"
 
-#: app/menus.c:445
+#: app/menus.c:440
 msgid "/Layers/Mask to Selection"
 msgstr "/Ebenen/Auswahl aus Maske"
 
-#: app/menus.c:450
+#: app/menus.c:445
 msgid "/Layers/Add Alpha Channel"
 msgstr "/Ebenen/Alphakanal erstellen"
 
-#: app/menus.c:452
+#: app/menus.c:447
 msgid "/Layers/Alpha to Selection"
 msgstr "/Ebenen/Auswahl aus Alphakanal"
 
 #. <Image>/Tools
-#: app/menus.c:460
+#: app/menus.c:455
 msgid "/Tools/Toolbox"
 msgstr "/Werkzeuge/Werkzeugkasten"
 
-#: app/menus.c:462
+#: app/menus.c:457
 msgid "/Tools/Default Colors"
 msgstr "/Werkzeuge/Standardfarben"
 
-#: app/menus.c:464
+#: app/menus.c:459
 msgid "/Tools/Swap Colors"
 msgstr "/Werkzeuge/Farben tauschen"
 
-#: app/menus.c:470
-msgid "/Tools/Select Tools"
-msgstr "/Werkzeuge/Auswahlwerkzeuge"
-
-#: app/menus.c:472
-msgid "/Tools/Transform Tools"
-msgstr "/Werkzeuge/Transformationen"
-
-#: app/menus.c:474
-msgid "/Tools/Paint Tools"
-msgstr "/Werkzeuge/Malwerkzeuge"
-
 #. <Image>/Dialogs
-#: app/menus.c:479
+#: app/menus.c:466
 msgid "/Dialogs/Layers, Channels & Paths..."
 msgstr "/Dialoge/Ebenen, Kanäle und Pfade..."
 
-#: app/menus.c:481
+#: app/menus.c:468
 msgid "/Dialogs/Tool Options..."
 msgstr "/Dialoge/Werkzeugeinstellungen..."
 
-#: app/menus.c:486
+#: app/menus.c:473
 msgid "/Dialogs/Brushes..."
 msgstr "/Dialoge/Pinsel..."
 
-#: app/menus.c:488
+#: app/menus.c:475
 msgid "/Dialogs/Patterns..."
 msgstr "/Dialoge/Muster..."
 
-#: app/menus.c:490
+#: app/menus.c:477
 msgid "/Dialogs/Gradients..."
 msgstr "/Dialoge/Farbverläufe..."
 
-#: app/menus.c:492
+#: app/menus.c:479
 msgid "/Dialogs/Palette..."
 msgstr "/Dialoge/Farbpalette...."
 
-#: app/menus.c:494
+#: app/menus.c:481
 msgid "/Dialogs/Indexed Palette..."
 msgstr "/Dialoge/Indizierte Palette..."
 
-#: app/menus.c:499
+#: app/menus.c:486
 msgid "/Dialogs/Input Devices..."
 msgstr "/Dialoge/Eingabegeräte..."
 
-#: app/menus.c:501
+#: app/menus.c:488
 msgid "/Dialogs/Device Status..."
 msgstr "/Dialoge/Gerätestatus..."
 
-#: app/menus.c:506
+#: app/menus.c:493
 msgid "/Dialogs/Document Index..."
 msgstr "/Dialoge/Dokumentenindex..."
 
-#: app/menus.c:508
+#: app/menus.c:495
 msgid "/Dialogs/Error Console..."
 msgstr "/Dialoge/Fehlerkonsole..."
 
-#: app/menus.c:510
+#: app/menus.c:497
 msgid "/Dialogs/Display Filters..."
 msgstr "/Dialoge/Darstellungsfilter..."
 
-#: app/menus.c:512
+#: app/menus.c:499
 msgid "/Dialogs/Undo History..."
 msgstr "/Dialoge/Journal..."
 
 #. <Image>/Filters
-#: app/menus.c:521
+#: app/menus.c:508
 msgid "/Filters/Repeat Last"
 msgstr "/Filter/Wiederhole letzten Vorgang"
 
-#: app/menus.c:523
+#: app/menus.c:510
 msgid "/Filters/Re-Show Last"
 msgstr "/Filter/Zeige letzten Vorgang nochmal"
 
-#: app/menus.c:528
+#: app/menus.c:515
 msgid "/Filters/Blur"
 msgstr "/Filter/Weichzeichnen"
 
-#: app/menus.c:534
+#: app/menus.c:517
+msgid "/Filters/Colors"
+msgstr "/Filter/Farben"
+
+#: app/menus.c:519
 msgid "/Filters/Noise"
 msgstr "/Filter/Rauschen"
 
-#: app/menus.c:536
+#: app/menus.c:521
 msgid "/Filters/Edge-Detect"
 msgstr "/Filter/Kanten finden"
 
-#: app/menus.c:538
+#: app/menus.c:523
 msgid "/Filters/Enhance"
 msgstr "/Filter/Verbessern"
 
-#: app/menus.c:540
+#: app/menus.c:525
 msgid "/Filters/Generic"
 msgstr "/Filter/Allgemein"
 
-#: app/menus.c:545
+#: app/menus.c:530
 msgid "/Filters/Glass Effects"
 msgstr "/Filter/Glas-Effekte"
 
-#: app/menus.c:547
+#: app/menus.c:532
 msgid "/Filters/Light Effects"
 msgstr "/Filter/Licht-Effekte"
 
-#: app/menus.c:549
+#: app/menus.c:534
 msgid "/Filters/Distorts"
 msgstr "/Filter/Verzerren"
 
-#: app/menus.c:551
+#: app/menus.c:536
 msgid "/Filters/Artistic"
 msgstr "/Filter/Künstlerisch"
 
-#: app/menus.c:553
+#: app/menus.c:538
 msgid "/Filters/Map"
 msgstr "/Filter/Abbilden"
 
-#: app/menus.c:555
+#: app/menus.c:540
 msgid "/Filters/Render"
 msgstr "/Filter/Render"
 
-#: app/menus.c:557
+#: app/menus.c:542
 msgid "/Filters/Web"
 msgstr "/Filter/Web"
 
-#: app/menus.c:562
+#: app/menus.c:547
 msgid "/Filters/Animation"
 msgstr "/Filter/Animation"
 
-#: app/menus.c:564
+#: app/menus.c:549
 msgid "/Filters/Combine"
 msgstr "/Filter/Kombinieren"
 
-#: app/menus.c:569
+#: app/menus.c:554
 msgid "/Filters/Toys"
 msgstr "/Filter/Viel Spaß"
 
-#: app/menus.c:582
+#: app/menus.c:567
 msgid "/Automatic"
 msgstr "/Automatisch"
 
-#: app/menus.c:596
+#: app/menus.c:581
 msgid "/By Extension"
 msgstr "/Nach Endung"
 
-#: app/menus.c:610
+#: app/menus.c:595
 msgid "/New Layer..."
 msgstr "/Ebene anlegen..."
 
 #. <Layers>/Stack
-#: app/menus.c:615
+#: app/menus.c:600
 msgid "/Stack/Raise Layer"
 msgstr "/Stapel/Ebene erhöhen"
 
-#: app/menus.c:617
+#: app/menus.c:602
 msgid "/Stack/Lower Layer"
 msgstr "/Stapel/Ebene absenken"
 
-#: app/menus.c:619
+#: app/menus.c:604
 msgid "/Stack/Layer to Top"
 msgstr "/Stapel/Ebene nach ganz oben"
 
-#: app/menus.c:621
+#: app/menus.c:606
 msgid "/Stack/Layer to Bottom"
 msgstr "/Stapel/Ebene nach ganz unten"
 
-#: app/menus.c:624
+#: app/menus.c:609
 msgid "/Duplicate Layer"
 msgstr "/Ebene duplizieren"
 
-#: app/menus.c:626
+#: app/menus.c:611
 msgid "/Anchor Layer"
 msgstr "/Ebene verankern"
 
-#: app/menus.c:628
+#: app/menus.c:613
 msgid "/Delete Layer"
 msgstr "/Ebene löschen"
 
-#: app/menus.c:633
+#: app/menus.c:618
 msgid "/Layer Boundary Size..."
 msgstr "/Ebenengröße verändern... "
 
-#: app/menus.c:635
+#: app/menus.c:620
 msgid "/Layer to Imagesize"
 msgstr "/Ebene auf Bildgrösse"
 
-#: app/menus.c:637
+#: app/menus.c:622
 msgid "/Scale Layer..."
 msgstr "/Ebene skalieren..."
 
-#: app/menus.c:642
+#: app/menus.c:627
 msgid "/Merge Visible Layers..."
 msgstr "/Sichtbare Ebenen vereinen..."
 
-#: app/menus.c:644
+#: app/menus.c:629
 msgid "/Merge Down"
 msgstr "/Nach unten vereinen"
 
-#: app/menus.c:646
+#: app/menus.c:631
 msgid "/Flatten Image"
 msgstr "/Bild zusammenfügen"
 
-#: app/menus.c:651
+#: app/menus.c:636
 msgid "/Add Layer Mask..."
 msgstr "/Ebenenmaske hinzufügen..."
 
-#: app/menus.c:653
+#: app/menus.c:638
 msgid "/Apply Layer Mask"
 msgstr "/Ebenenmaske anwenden..."
 
-#: app/menus.c:655
+#: app/menus.c:640
 msgid "/Delete Layer Mask"
 msgstr "/Ebenenmaske löschen"
 
-#: app/menus.c:657
+#: app/menus.c:642
 msgid "/Mask to Selection"
 msgstr "/Auswahl aus Maske"
 
-#: app/menus.c:662
+#: app/menus.c:647
 msgid "/Add Alpha Channel"
 msgstr "/Alphakanal erstellen"
 
-#: app/menus.c:664
+#: app/menus.c:649
 msgid "/Alpha to Selection"
 msgstr "/Auswahl aus Alphakanal"
 
-#: app/menus.c:669
+#: app/menus.c:654
 msgid "/Edit Layer Attributes..."
 msgstr "/Ebeneneigenschaften..."
 
-#: app/menus.c:680
+#: app/menus.c:665
 msgid "/New Channel..."
 msgstr "/Kanal anlegen..."
 
-#: app/menus.c:682
+#: app/menus.c:667
 msgid "/Raise Channel"
 msgstr "/Kanal erhöhen"
 
-#: app/menus.c:684
+#: app/menus.c:669
 msgid "/Lower Channel"
 msgstr "/Kanal absenken"
 
-#: app/menus.c:686
+#: app/menus.c:671
 msgid "/Duplicate Channel"
 msgstr "/Kanal duplizieren"
 
-#: app/menus.c:691
+#: app/menus.c:676
 msgid "/Channel to Selection"
 msgstr "/Kanal zur Auswahl"
 
-#: app/menus.c:693
+#: app/menus.c:678
 msgid "/Add to Selection"
 msgstr "/Zu Auswahl hinzufügen"
 
-#: app/menus.c:695
+#: app/menus.c:680
 msgid "/Subtract from Selection"
 msgstr "/Von Auswahl abziehen"
 
-#: app/menus.c:697
+#: app/menus.c:682
 msgid "/Intersect with Selection"
 msgstr "/Mit Auswahl schneiden"
 
-#: app/menus.c:702
+#: app/menus.c:687
 msgid "/Delete Channel"
 msgstr "/Kanal löschen"
 
-#: app/menus.c:707
+#: app/menus.c:692
 msgid "/Edit Channel Attributes..."
 msgstr "/Kanaleigenschaften..."
 
-#: app/menus.c:718
+#: app/menus.c:703
 msgid "/New Path"
 msgstr "/Pfad anlegen"
 
-#: app/menus.c:720
+#: app/menus.c:705
 msgid "/Duplicate Path"
 msgstr "/Pfad duplizieren"
 
-#: app/menus.c:722
+#: app/menus.c:707
 msgid "/Path to Selection"
 msgstr "/Pfad zur Auswahl"
 
-#: app/menus.c:724
+#: app/menus.c:709
 msgid "/Selection to Path"
 msgstr "/Pfad aus Auswahl"
 
-#: app/menus.c:726
+#: app/menus.c:711
 msgid "/Stroke Path"
 msgstr "/Pfad nachziehen"
 
-#: app/menus.c:728
+#: app/menus.c:713
 msgid "/Delete Path"
 msgstr "/Pfad löschen"
 
-#: app/menus.c:733
+#: app/menus.c:718
 msgid "/Copy Path"
 msgstr "/Pfad kopieren"
 
-#: app/menus.c:735
+#: app/menus.c:720
 msgid "/Paste Path"
 msgstr "/Pfad einfügen"
 
-#: app/menus.c:737
+#: app/menus.c:722
 msgid "/Import Path..."
 msgstr "/Pfad importieren..."
 
-#: app/menus.c:739
+#: app/menus.c:724
 msgid "/Export Path..."
 msgstr "/Pfad exportieren..."
 
-#: app/menus.c:744
+#: app/menus.c:729
 msgid "/Edit Path Attributes..."
 msgstr "/Pfadeigenschaften..."
 
-#: app/menus.c:1272
+#: app/menus.c:1260
 #, c-format
 msgid "Error opening file: %s\n"
 msgstr "Kann Datei nicht öffnen: %s\n"

@@ -339,9 +339,6 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/View/Shrink Wrap"), "<control>E", view_shrink_wrap_cmd_callback, 0 },
     "view/shrink_wrap.html", NULL },
 
-  { { "/View/---", NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
-
   /*  <Image>/Image/Mode  */
 
   { { N_("/Image/Mode/RGB"), "<alt>R", image_convert_rgb_cmd_callback, 0 },
@@ -356,8 +353,6 @@ static GimpItemFactoryEntry image_entries[] =
 
   /*  <Image>/Image/Colors  */
 
-  { { "/Image/Colors/---", NULL, NULL, 0, "<Separator>" },
-    NULL, NULL },
   { { N_("/Image/Colors/Desaturate"), NULL, image_desaturate_cmd_callback, 0 },
     "image/colors/desaturate.html", NULL },
   { { N_("/Image/Colors/Invert"), NULL, image_invert_cmd_callback, 0 },
@@ -463,15 +458,7 @@ static GimpItemFactoryEntry image_entries[] =
     "toolbox/toolbox.html#default_colors", NULL },
   { { N_("/Tools/Swap Colors"), "X", tools_swap_colors_cmd_callback, 0 },
     "toolbox/toolbox.html#swap_colors", NULL },
-
   { { "/Tools/---", NULL, NULL, 0, "<Separator>" },  
-    NULL, NULL },
-
-  { { N_("/Tools/Select Tools"), NULL, NULL, 0, "<Branch>" },
-    NULL, NULL },
-  { { N_("/Tools/Transform Tools"), NULL, NULL, 0, "<Branch>" },
-    NULL, NULL },
-  { { N_("/Tools/Paint Tools"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
 
   /*  <Image>/Dialogs  */
@@ -527,10 +514,8 @@ static GimpItemFactoryEntry image_entries[] =
     NULL, NULL },
   { { N_("/Filters/Blur"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-
-  { { "/Filters/Colors/---", NULL, NULL, 0, "<Separator>" },
+  { { N_("/Filters/Colors"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
-
   { { N_("/Filters/Noise"), NULL, NULL, 0, "<Branch>" },
     NULL, NULL },
   { { N_("/Filters/Edge-Detect"), NULL, NULL, 0, "<Branch>" },
@@ -879,10 +864,11 @@ menus_create_branches (GtkItemFactory		*item_factory,
   GString *tearoff_path;
   gint factory_length;
   gchar *p;
-  gchar *path = entry->entry.path;
+  gchar *path;
 
   tearoff_path = g_string_new ("");
 
+  path = entry->entry.path;
   p = strchr (path, '/');
   factory_length = p - path;
 
@@ -897,12 +883,6 @@ menus_create_branches (GtkItemFactory		*item_factory,
 
       if (!gtk_item_factory_get_widget (item_factory, tearoff_path->str))
 	{
-	  GimpItemFactoryEntry tearoff_entry = {
-	    {NULL, NULL, tearoff_cmd_callback, 0, "<Tearoff>"}
-	    ,
-	    NULL,
-	    NULL
-	  };
 	  GimpItemFactoryEntry branch_entry = {
 	    {NULL, NULL, NULL, 0, "<Branch>"}
 	    ,
@@ -914,8 +894,19 @@ menus_create_branches (GtkItemFactory		*item_factory,
 	  gtk_object_set_data (GTK_OBJECT (item_factory), "complete", path);
 	  menus_create_item (item_factory, &branch_entry, NULL, 2);
 	  gtk_object_remove_data (GTK_OBJECT (item_factory), "complete");
+	}
 
-	  g_string_append (tearoff_path, "/tearoff1");
+      g_string_append (tearoff_path, "/tearoff1");
+
+      if (!gtk_item_factory_get_widget (item_factory, tearoff_path->str))
+	{
+	  GimpItemFactoryEntry tearoff_entry = {
+	    {NULL, NULL, tearoff_cmd_callback, 0, "<Tearoff>"}
+	    ,
+	    NULL,
+	    NULL
+	  };
+
 	  tearoff_entry.entry.path = tearoff_path->str;
 	  menus_create_item (item_factory, &tearoff_entry, NULL, 2);
 	}
@@ -932,7 +923,6 @@ menus_filters_subdirs_to_top (GtkMenu *menu)
   GtkMenuItem *menu_item;
   GList *list;
   gboolean submenus_passed = FALSE;
-  gboolean separator_found = FALSE;
   gint pos;
   gint items;
 
@@ -956,13 +946,9 @@ menus_filters_subdirs_to_top (GtkMenu *menu)
 	{
 	  submenus_passed = TRUE;
 	}
-
-      if (! GTK_BIN (menu_item)->child &&
-	  menu_item != GTK_MENU_SHELL (menu)->children->data)
-	separator_found = TRUE;
     }
 
-  if (pos > 1 && !separator_found && items > pos)
+  if (pos > 1 && items > pos)
     {
       GtkWidget *separator;
 
@@ -987,11 +973,13 @@ menus_reorder_plugins (void)
   static gint n_image_file_entries = (sizeof (image_file_entries) /
 				      sizeof (image_file_entries[0]));
 
-  static gchar *reorder_submenus[] = { "<Image>/Video" };
+  static gchar *reorder_submenus[] = { "<Image>/Video",
+				       "<Image>/Script-Fu" };
   static gint n_reorder_submenus = (sizeof (reorder_submenus) /
 				    sizeof (reorder_submenus[0]));
 
   static gchar *reorder_subsubmenus[] = { "<Image>/Filters",
+					  "<Image>/Script-Fu",
 					  "<Toolbox>/Xtns" };
   static gint n_reorder_subsubmenus = (sizeof (reorder_subsubmenus) /
 				       sizeof (reorder_subsubmenus[0]));
@@ -1655,6 +1643,7 @@ menus_init (void)
 				      CURVES };
     static gint n_color_tools = (sizeof (color_tools) /
 				 sizeof (color_tools[0]));
+    GtkWidget *separator;
     gint i, pos;
 
     pos = 1;
@@ -1670,6 +1659,13 @@ menus_init (void)
 				    menu_item, pos);
 	    pos++;
 	  }
+      }
+
+    if (menu_item && menu_item->parent)
+      {
+	separator = gtk_menu_item_new ();
+	gtk_menu_insert (GTK_MENU (menu_item->parent), separator, pos);
+	gtk_widget_show (separator);
       }
   }
 
@@ -1709,13 +1705,15 @@ menu_translate (const gchar *path,
   if (factory)
     item_factory = gtk_item_factory_from_path (factory);
   if (item_factory)
-    domain = gtk_object_get_data (GTK_OBJECT (item_factory), "textdomain");
-
-  if (domain)   /* use the plugin textdomain */
+    {
+      domain = gtk_object_get_data (GTK_OBJECT (item_factory), "textdomain");
+      complete = gtk_object_get_data (GTK_OBJECT (item_factory), "complete");
+    }
+  
+  if (domain)   /*  use the plugin textdomain  */
     {
       g_free (menupath);
       menupath = g_strconcat (factory, path, NULL);
-      complete = gtk_object_get_data (GTK_OBJECT (item_factory), "complete");
 
       if (complete)
 	{
@@ -1766,16 +1764,51 @@ menu_translate (const gchar *path,
 	    g_free (translation);
 	}
     }
-  else
+  else   /*  use the gimp textdomain  */
     {
-      translation = gettext (menupath);
+      if (complete)
+	{
+	  /*  
+           *  This is a branch, use the complete path for translation, 
+	   *  then strip off entries from the end until it matches. 
+	   */
+	  complete = g_strdup (complete);
+	  translation = g_strdup (gettext (complete));
+	  
+	  while (*complete && *translation && strcmp (complete, menupath))
+	    {
+	      p = strrchr (complete, '/');
+	      t = strrchr (translation, '/');
+	      if (p && t)
+		{
+		  *p = '\0';
+		  *t = '\0';
+		}
+	      else
+		break;
+	    }
+	  g_free (complete);
+	}
+      else
+	translation = gettext (menupath);
 
       if (*translation == '/')
-	retval = translation;
+	{
+	  retval = translation;
+	  if (complete)
+	    {
+	      g_free (menupath);
+	      menupath = translation;
+	    }
+	}
       else
-	g_warning ("bad translation for menupath: %s", menupath);
+	{
+	  g_warning ("bad translation for menupath: %s", menupath);
+	  if (complete)
+	    g_free (translation);
+	}
     }
-
+  
   return retval;
 }
 
