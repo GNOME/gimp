@@ -571,7 +571,9 @@ paint_options_init (PaintOptions         *options,
 			       _("Dodge or Burn Options") :
 			       ((tool_type == SMUDGE) ?
 				_("Smudge Options") :
-				_("ERROR: Unknown Paint Type")))))))))))),
+				((tool_type == XINPUT_AIRBRUSH) ?
+				 _("Xinput Airbrush Options") :
+				 _("ERROR: Unknown Paint Type"))))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */
