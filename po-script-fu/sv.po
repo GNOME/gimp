@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2004-01-24 21:05+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -1394,11 +1394,15 @@ msgid "Shadow Weight (%)"
 msgstr "Skuggvikt (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/_Stor rubrik..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/_Liten rubrik..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1440,29 +1444,37 @@ msgid "Shadow Color"
 msgstr "Skuggfärg"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Etikett för "
 "_rörunderknapp..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Etikett för "
 "r_örunderunderknapp..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/_Generella "
 "röretiketter..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Gimp.org/Etikett för "
 "_rörknapp..."

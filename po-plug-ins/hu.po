@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-23 19:47+0200\n"
+"POT-Creation-Date: 2004-06-15 13:58+0200\n"
 "PO-Revision-Date: 2004-05-28 20:14+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
@@ -62,7 +62,7 @@ msgstr "Névjegy"
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
+#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
 #: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
@@ -262,7 +262,8 @@ msgstr "Loglog simítás használata"
 
 #: plug-ins/FractalExplorer/Dialogs.c:934
 msgid "Use log log smoothing to eliminate \"banding\" in the result"
-msgstr "Loglog simítás használata, ez eltünteti a végeredményből a \"csíkokat\""
+msgstr ""
+"Loglog simítás használata, ez eltünteti a végeredményből a \"csíkokat\""
 
 #. Color Density frame
 #: plug-ins/FractalExplorer/Dialogs.c:938
@@ -406,7 +407,8 @@ msgstr "Aktív színátmenet alkalmazása a végső képre"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Színtérkép létrehozása a színátmenet-szerkesztőben található színátmenetből"
+msgstr ""
+"Színtérkép létrehozása a színátmenet-szerkesztőben található színátmenetből"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1163
 msgid "FractalExplorer Gradient"
@@ -419,18 +421,18 @@ msgstr "Fr_aktálok"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
+#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
-#: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
+#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1795 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
@@ -465,18 +467,18 @@ msgstr "Fraktálparaméterek mentése"
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
+#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
-#: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
+#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:508 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -640,7 +642,8 @@ msgstr "Mélysé_g:"
 
 #: plug-ins/Lighting/lighting_ui.c:437 plug-ins/MapObject/mapobject_ui.c:639
 msgid "Antialiasing quality. Higher is better, but slower"
-msgstr "Élsimítás minősége. Minél magasabb, annál jobb, viszont annál lassabb is"
+msgstr ""
+"Élsimítás minősége. Minél magasabb, annál jobb, viszont annál lassabb is"
 
 #: plug-ins/Lighting/lighting_ui.c:444
 msgid "T_hreshold:"
@@ -795,7 +798,8 @@ msgstr "S_zórt:"
 
 #: plug-ins/Lighting/lighting_ui.c:795 plug-ins/MapObject/mapobject_ui.c:953
 msgid "Higher values makes the object reflect more light (appear lighter)"
-msgstr "Magasabb érték nagyobb fényvisszaverést eredményez (világosabb a tárgy)"
+msgstr ""
+"Magasabb érték nagyobb fényvisszaverést eredményez (világosabb a tárgy)"
 
 #: plug-ins/Lighting/lighting_ui.c:807
 msgid "_Specular:"
@@ -1140,7 +1144,7 @@ msgstr "Su_gár:"
 msgid "Cylinder radius"
 msgstr "Henger sugara"
 
-#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:782
+#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:785
 msgid "L_ength:"
 msgstr "_Hossz:"
 
@@ -1198,7 +1202,7 @@ msgstr "Helytelen színtérkép"
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1236,10 +1240,10 @@ msgstr "Hiba a BMP-fájlfejléc innen való beolvasásakor: \"%s\""
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
+#: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
 #: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
-#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
+#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:375
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
 msgstr "Háttér"
@@ -1266,10 +1270,10 @@ msgstr "Ismeretlen képtípusok nem kezelhetők."
 #: plug-ins/common/pix.c:522 plug-ins/common/png.c:1178
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1800
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
-#: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
+#: plug-ins/sgi/sgi.c:544 plug-ins/xjt/xjt.c:1691
 #, c-format
 msgid "Saving '%s'..."
 msgstr "\"%s\" mentése..."
@@ -1343,7 +1347,7 @@ msgid "Cos_ine"
 msgstr "Koszin_usz"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2103
 msgid "_None"
 msgstr "_Nincs"
 
@@ -1370,7 +1374,8 @@ msgid "Use cosine-function for green component."
 msgstr "Koszinuszfüggvény használata a zöld komponensnél."
 
 #: plug-ins/common/AlienMap.c:1256
-msgid "Green channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Zöld csatorna: lineáris leképezés használata trigonometrikus függvények "
 "helyett"
@@ -1384,7 +1389,8 @@ msgid "Use cosine-function for blue component."
 msgstr "Koszinuszfüggvény használata a kék komponensnél."
 
 #: plug-ins/common/AlienMap.c:1279
-msgid "Blue channel: use linear mapping instead of any trigonometrical function"
+msgid ""
+"Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Kék csatorna: lineáris leképezés használata trigonometrikus függvények "
 "helyett"
@@ -1774,7 +1780,8 @@ msgstr "Kezdőérték eltolása:"
 
 #: plug-ins/common/CML_explorer.c:1374
 msgid "Seed of Random (only for \"From Seed\" Modes)"
-msgstr "Véletlenszám-generálás kiindulóértéke (csak a \"kiindulóértékből\" módokhoz)"
+msgstr ""
+"Véletlenszám-generálás kiindulóértéke (csak a \"kiindulóértékből\" módokhoz)"
 
 #: plug-ins/common/CML_explorer.c:1386 plug-ins/maze/maze_face.c:292
 msgid "Seed:"
@@ -1950,7 +1957,8 @@ msgstr "Figyelmeztetés: \"%s\" egy régi formátumú fájl"
 #: plug-ins/common/CML_explorer.c:2373
 #, c-format
 msgid "Warning: '%s' is a parameter file for newer CML_explorer than me."
-msgstr "Figyelmeztetés: a(z) \"%s\" paraméterfájl egy újabb CML-böngészőhöz készült."
+msgstr ""
+"Figyelmeztetés: a(z) \"%s\" paraméterfájl egy újabb CML-böngészőhöz készült."
 
 #: plug-ins/common/CML_explorer.c:2436
 msgid "Error: failed to load parameters"
@@ -2912,132 +2920,137 @@ msgstr "<Image>/Szűrők/Torzítás/Gör_bítés egy görbe szerint..."
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Csak rétegekre működik, csatornára és maszkra nem."
 
-#: plug-ins/common/curve_bend.c:734
+#: plug-ins/common/curve_bend.c:727
+#, fuzzy
+msgid "Cannot operate on layers with masks."
+msgstr "Indexelt színű képek kezelése nem lehetséges."
+
+#: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
 msgstr "Üres kijelölés esetén nem használható."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1238
+#: plug-ins/common/curve_bend.c:1246
 msgid "Curve Bend"
 msgstr "Görbítés egy görbe szerint"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1302
+#: plug-ins/common/curve_bend.c:1310
 msgid "_Preview Once"
 msgstr "Előnézet e_gyszer"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1311
+#: plug-ins/common/curve_bend.c:1319
 msgid "Automatic Pre_view"
 msgstr "Automati_kus előnézet"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
+#: plug-ins/common/curve_bend.c:1329 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
 msgstr "Beállítások"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1336
+#: plug-ins/common/curve_bend.c:1344
 msgid "Rotat_e:"
 msgstr "Fo_rgatás:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1354
+#: plug-ins/common/curve_bend.c:1362
 msgid "Smoo_thing"
 msgstr "Simí_tás"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
+#: plug-ins/common/curve_bend.c:1372 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:534 plug-ins/common/ripple.c:451
 msgid "_Antialiasing"
 msgstr "Éls_imítás"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1374
+#: plug-ins/common/curve_bend.c:1382
 msgid "Work on Cop_y"
 msgstr "M_unka a másolaton"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1384
+#: plug-ins/common/curve_bend.c:1392
 msgid "Modify Curves"
 msgstr "Görbék módosítása"
 
-#: plug-ins/common/curve_bend.c:1413
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve for Border"
 msgstr "Ennek a szegélynek a görbéje"
 
-#: plug-ins/common/curve_bend.c:1417
+#: plug-ins/common/curve_bend.c:1425
 msgid "_Upper"
 msgstr "_Felső"
 
-#: plug-ins/common/curve_bend.c:1418
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Lower"
 msgstr "_Alsó"
 
-#: plug-ins/common/curve_bend.c:1428
+#: plug-ins/common/curve_bend.c:1436
 msgid "Curve Type"
 msgstr "Görbe típusa"
 
-#: plug-ins/common/curve_bend.c:1432
+#: plug-ins/common/curve_bend.c:1440
 msgid "Smoot_h"
 msgstr "_Sima"
 
-#: plug-ins/common/curve_bend.c:1433
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Free"
 msgstr "Sza_bad"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1456
 msgid "_Copy"
 msgstr "Máso_lás"
 
-#: plug-ins/common/curve_bend.c:1453
+#: plug-ins/common/curve_bend.c:1461
 msgid "Copy the active curve to the other border"
 msgstr "Az aktív görbe másolása a másik szegélyhez"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1460
+#: plug-ins/common/curve_bend.c:1468
 msgid "_Mirror"
 msgstr "Tükrö_zés"
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1473
 msgid "Mirror the active curve to the other border"
 msgstr "Az aktív görbe tükrözése a másik szegélyhez"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1472
+#: plug-ins/common/curve_bend.c:1480
 msgid "S_wap"
 msgstr "_Csere"
 
-#: plug-ins/common/curve_bend.c:1477
+#: plug-ins/common/curve_bend.c:1485
 msgid "Swap the two curves"
 msgstr "A két görbe felcserélése"
 
-#: plug-ins/common/curve_bend.c:1489
+#: plug-ins/common/curve_bend.c:1497
 msgid "Reset the active curve"
 msgstr "Az aktív görbe visszaállítása"
 
-#: plug-ins/common/curve_bend.c:1506
+#: plug-ins/common/curve_bend.c:1514
 msgid "Load the curves from a file"
 msgstr "Görbék betöltése fájlból"
 
-#: plug-ins/common/curve_bend.c:1518
+#: plug-ins/common/curve_bend.c:1526
 msgid "Save the curves to a file"
 msgstr "Görbék mentése fájlba"
 
-#: plug-ins/common/curve_bend.c:2055
+#: plug-ins/common/curve_bend.c:2063
 msgid "Load Curve Points from file"
 msgstr "Görbe pontjainak betöltése fájlból"
 
-#: plug-ins/common/curve_bend.c:2082
+#: plug-ins/common/curve_bend.c:2090
 msgid "Save Curve Points to file"
 msgstr "Görbe pontjainak mentése fájlba"
 
-#: plug-ins/common/curve_bend.c:2980
+#: plug-ins/common/curve_bend.c:2988
 msgid "Curve Bend..."
 msgstr "Görbítés egy görbe szerint..."
 
@@ -3781,7 +3794,7 @@ msgstr "IIR Gauss-elmosás"
 
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
 #: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:979
-#: plug-ins/sgi/sgi.c:520 plug-ins/xjt/xjt.c:1682
+#: plug-ins/sgi/sgi.c:527 plug-ins/xjt/xjt.c:1682
 msgid "Cannot operate on indexed color images."
 msgstr "Indexelt színű képek kezelése nem lehetséges."
 
@@ -3890,7 +3903,8 @@ msgstr "Nagyítás - korábbi néven \"GIMP E'er Egg\""
 msgid ""
 "An obsolete creation of Adam D. Moss / adam@gimp.org / adam@foxbox.org / "
 "1998-2000"
-msgstr "Adam D. Moss (adam@gimp.org / adam@foxbox.org) egyik elavult műve - 1998-2000"
+msgstr ""
+"Adam D. Moss (adam@gimp.org / adam@foxbox.org) egyik elavult műve - 1998-2000"
 
 #: plug-ins/common/gicon.c:426
 msgid "Save as GIcon"
@@ -3913,7 +3927,8 @@ msgstr ""
 "megjegyzés nem lett elmentve."
 
 #: plug-ins/common/gif.c:971
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "RGB-színű képek nem menthetők. Alakítsa a képet indexelt színűre vagy "
 "szürkeárnyalatosra."
@@ -3962,7 +3977,7 @@ msgstr "Mentés GIF formátumba"
 msgid "GIF Options"
 msgstr "GIF-beállítások"
 
-#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1215
 msgid "Interlace"
 msgstr "Váltottsoros"
 
@@ -4861,135 +4876,135 @@ msgstr "Ma_ximális csatorna megtartása"
 msgid "Ho_ld the Minimal Channels"
 msgstr "Mi_nimális csatorna megtartása"
 
-#: plug-ins/common/mblur.c:150
+#: plug-ins/common/mblur.c:153
 msgid "<Image>/Filters/Blur/_Motion Blur..."
 msgstr "<Image>/Szűrők/Elmosás/Elmosás el_mozdítással..."
 
-#: plug-ins/common/mblur.c:673
+#: plug-ins/common/mblur.c:676
 msgid "Motion Blurring..."
 msgstr "Elmosás elmozdítással..."
 
-#: plug-ins/common/mblur.c:743
+#: plug-ins/common/mblur.c:746
 msgid "Motion Blur"
 msgstr "Elmosás elmozdítással"
 
-#: plug-ins/common/mblur.c:757
+#: plug-ins/common/mblur.c:760
 msgid "Blur Type"
 msgstr "Elmosás típusa"
 
-#: plug-ins/common/mblur.c:761
+#: plug-ins/common/mblur.c:764
 msgid "_Linear"
 msgstr "_Lineáris"
 
-#: plug-ins/common/mblur.c:762
+#: plug-ins/common/mblur.c:765
 msgid "_Radial"
 msgstr "Sugá_rirányú"
 
-#: plug-ins/common/mblur.c:763
+#: plug-ins/common/mblur.c:766
 msgid "_Zoom"
 msgstr "_Nagyítás"
 
-#: plug-ins/common/mblur.c:770
+#: plug-ins/common/mblur.c:773
 msgid "Blur Parameters"
 msgstr "Elmosás paraméterei"
 
-#: plug-ins/common/mblur.c:791 plug-ins/common/newsprint.c:1009
+#: plug-ins/common/mblur.c:794 plug-ins/common/newsprint.c:1009
 msgid "_Angle:"
 msgstr "_Szög:"
 
-#: plug-ins/common/mng.c:1187
+#: plug-ins/common/mng.c:1195
 msgid "Save as MNG"
 msgstr "Mentés MNG formátumban"
 
-#: plug-ins/common/mng.c:1200
+#: plug-ins/common/mng.c:1208
 msgid "MNG Options"
 msgstr "MNG beállításai"
 
-#: plug-ins/common/mng.c:1219
+#: plug-ins/common/mng.c:1227
 msgid "Save Background Color"
 msgstr "Háttérszín mentése"
 
-#: plug-ins/common/mng.c:1230
+#: plug-ins/common/mng.c:1238
 msgid "Save Gamma"
 msgstr "Gamma mentése"
 
-#: plug-ins/common/mng.c:1240
+#: plug-ins/common/mng.c:1248
 msgid "Save Resolution"
 msgstr "Felbontás mentése"
 
-#: plug-ins/common/mng.c:1251
+#: plug-ins/common/mng.c:1259
 msgid "Save Creation Time"
 msgstr "Létrehozás időpontjának mentése"
 
-#: plug-ins/common/mng.c:1276
+#: plug-ins/common/mng.c:1284
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1277
+#: plug-ins/common/mng.c:1285
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1286
+#: plug-ins/common/mng.c:1294
 msgid "PNG + Delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1287
+#: plug-ins/common/mng.c:1295
 msgid "JNG + Delta PNG"
 msgstr "JNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1288
+#: plug-ins/common/mng.c:1296
 msgid "All PNG"
 msgstr "Minden PNG"
 
-#: plug-ins/common/mng.c:1289
+#: plug-ins/common/mng.c:1297
 msgid "All JNG"
 msgstr "Minden JNG"
 
-#: plug-ins/common/mng.c:1295
+#: plug-ins/common/mng.c:1303
 msgid "Default Chunks Type:"
 msgstr "A darabok alapértelmezett típusa:"
 
-#: plug-ins/common/mng.c:1303
+#: plug-ins/common/mng.c:1311
 msgid "Combine"
 msgstr "Egyesítés"
 
-#: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1312 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
 msgstr "Csere"
 
-#: plug-ins/common/mng.c:1309
+#: plug-ins/common/mng.c:1317
 msgid "Default Frame Disposal:"
 msgstr "Alapértelmezett képkocka-eldobás:"
 
-#: plug-ins/common/mng.c:1321
+#: plug-ins/common/mng.c:1329
 msgid "PNG Compression Level:"
 msgstr "PNG tömörítési mérték:"
 
-#: plug-ins/common/mng.c:1329 plug-ins/common/png.c:1673
+#: plug-ins/common/mng.c:1337 plug-ins/common/png.c:1683
 msgid "Choose a high compression level for small file size"
 msgstr "Kis fájlméret eléréséhez válasszon magas tömörítési szintet"
 
-#: plug-ins/common/mng.c:1343
+#: plug-ins/common/mng.c:1351
 msgid "JPEG Compression Quality:"
 msgstr "JPEG tömörítési minőség:"
 
-#: plug-ins/common/mng.c:1360
+#: plug-ins/common/mng.c:1368
 msgid "JPEG Smoothing Factor:"
 msgstr "JPEG simításának aránya:"
 
-#: plug-ins/common/mng.c:1370
+#: plug-ins/common/mng.c:1378
 msgid "Animated MNG Options"
 msgstr "Animált MNG beállításai"
 
-#: plug-ins/common/mng.c:1377
+#: plug-ins/common/mng.c:1385
 msgid "Loop"
 msgstr "Ismétlés"
 
-#: plug-ins/common/mng.c:1391
+#: plug-ins/common/mng.c:1399
 msgid "Default Frame Delay:"
 msgstr "Alapértelmezett késleltetés a képkockák közt:"
 
-#: plug-ins/common/mng.c:1407
+#: plug-ins/common/mng.c:1415
 msgid "milliseconds"
 msgstr "ezredmásodperc"
 
@@ -5572,7 +5587,8 @@ msgstr "Ismeretlen színmodell a(z) \"%s\" PNG-fájlban."
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
-msgstr "A PNG-fájl olyan eltolást ad meg, ami miatt a réteg a képen kívülre került."
+msgstr ""
+"A PNG-fájl olyan eltolást ad meg, ami miatt a réteg a képen kívülre került."
 
 #: plug-ins/common/png.c:1156
 #, c-format
@@ -5581,66 +5597,66 @@ msgstr "Hiba \"%s\" mentésekor. A kép mentése nem sikerült."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1530
+#: plug-ins/common/png.c:1540
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Az átlátszóság nem menthető el veszteségmentesen; helyette az "
 "átlátszatlanság lesz mentve."
 
-#: plug-ins/common/png.c:1556
+#: plug-ins/common/png.c:1566
 msgid "Save as PNG"
 msgstr "Mentés PNG formátumban"
 
-#: plug-ins/common/png.c:1560
+#: plug-ins/common/png.c:1570
 msgid "_Load Defaults"
 msgstr "Alapértelmezések _betöltése"
 
-#: plug-ins/common/png.c:1561
+#: plug-ins/common/png.c:1571
 msgid "_Save Defaults"
 msgstr "Alapértelmezések m_entése"
 
 #. parameter settings
-#: plug-ins/common/png.c:1574 plug-ins/common/sample_colorize.c:1377
+#: plug-ins/common/png.c:1584 plug-ins/common/sample_colorize.c:1377
 msgid "Settings"
 msgstr "Beállítások"
 
-#: plug-ins/common/png.c:1587
+#: plug-ins/common/png.c:1597
 msgid "_Interlacing (Adam7)"
 msgstr "_Váltottsoros (Adam7)"
 
-#: plug-ins/common/png.c:1598
+#: plug-ins/common/png.c:1608
 msgid "Save _Background Color"
 msgstr "_Háttérszín mentése"
 
-#: plug-ins/common/png.c:1606
+#: plug-ins/common/png.c:1616
 msgid "Save _Gamma"
 msgstr "_Gamma mentése"
 
-#: plug-ins/common/png.c:1615
+#: plug-ins/common/png.c:1625
 msgid "Save Layer O_ffset"
 msgstr "_Rétegeltolás mentése"
 
-#: plug-ins/common/png.c:1624
+#: plug-ins/common/png.c:1634
 msgid "Save _Resolution"
 msgstr "_Felbontás mentése"
 
-#: plug-ins/common/png.c:1633
+#: plug-ins/common/png.c:1643
 msgid "Save Creation _Time"
 msgstr "Létrehozás _időpontjának mentése"
 
-#: plug-ins/common/png.c:1641
+#: plug-ins/common/png.c:1651
 msgid "Save Comme_nt"
 msgstr "Meg_jegyzés mentése"
 
-#: plug-ins/common/png.c:1656
+#: plug-ins/common/png.c:1666
 msgid "Save Color _Values From Transparent Pixels"
 msgstr "Szí_nértékek mentése az átlátszó képpontokból"
 
-#: plug-ins/common/png.c:1669
+#: plug-ins/common/png.c:1679
 msgid "Co_mpression Level:"
 msgstr "_Tömörítés mértéke:"
 
-#: plug-ins/common/png.c:1789
+#: plug-ins/common/png.c:1799
 msgid "Could not load PNG defaults"
 msgstr "Nem sikerült betölteni a PNG-alapértelmezéseket"
 
@@ -5762,8 +5778,10 @@ msgstr "Hiba a Ghostscript futtatása közben (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
-msgid "write error occured"
-msgstr "hiba történt az íráskor"
+#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
+#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
+msgid "Write error occurred"
+msgstr "Hiba történt az íráskor"
 
 #: plug-ins/common/postscript.c:2733
 msgid "Load PostScript"
@@ -6473,8 +6491,9 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Ágak szö_ge (-1: véletlenszerű):"
 
 #: plug-ins/common/sparkle.c:411
-msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
-msgstr "Ágak szögének beállítása (-1 esetén egy véletlenszerű szög lesz kiválasztva)"
+msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
+msgstr ""
+"Ágak szögének beállítása (-1 esetén egy véletlenszerű szög lesz kiválasztva)"
 
 #: plug-ins/common/sparkle.c:419
 msgid "Spik_e Density:"
@@ -6788,11 +6807,6 @@ msgstr "Ismeretlen képtípusok nem dolgozhatók fel"
 msgid "EOF encountered on reading"
 msgstr "Fájl vége olvasás közben"
 
-#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
-#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-msgid "Write error occured"
-msgstr "Hiba történt az íráskor"
-
 #: plug-ins/common/sunras.c:1578
 msgid "Save as SUNRAS"
 msgstr "Mentés SUNRAS formátumba"
@@ -6859,7 +6873,8 @@ msgid "Import _Paths"
 msgstr "Út_vonalak importálása"
 
 #: plug-ins/common/svg.c:852
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Az SVG-dokumentumban levő útvonalak importálása a GIMP útvonaleszközével "
 "való használat céljából"
@@ -6919,16 +6934,16 @@ msgstr "Alfa-küszöb: átlátszóság színezése..."
 msgid "Threshold Alpha"
 msgstr "Alfa-küszöb"
 
-#: plug-ins/common/tiff.c:831
+#: plug-ins/common/tiff.c:833
 #, c-format
 msgid "Page %d"
 msgstr "%d. oldal"
 
-#: plug-ins/common/tiff.c:846
+#: plug-ins/common/tiff.c:848
 msgid "TIFF Channel"
 msgstr "TIFF-csatorna"
 
-#: plug-ins/common/tiff.c:855
+#: plug-ins/common/tiff.c:857
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6940,7 +6955,7 @@ msgstr ""
 "kezelni, ezért a kép át lesz alakítva erre a formátumra. Ez bizonyos mértékű "
 "információvesztést okoz."
 
-#: plug-ins/common/tiff.c:1930
+#: plug-ins/common/tiff.c:1936
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -6948,36 +6963,36 @@ msgstr ""
 "A TIFF formátum csak 7 bites ASCII kódolást engedélyez\n"
 "a megjegyzésekben. A megjegyzés nem lett elmentve."
 
-#: plug-ins/common/tiff.c:2079
+#: plug-ins/common/tiff.c:2085
 msgid "Save as TIFF"
 msgstr "Mentés TIFF formátumba"
 
 #. compression
-#: plug-ins/common/tiff.c:2093
+#: plug-ins/common/tiff.c:2099
 msgid "Compression"
 msgstr "Tömörítés"
 
-#: plug-ins/common/tiff.c:2098
+#: plug-ins/common/tiff.c:2104
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2099
+#: plug-ins/common/tiff.c:2105
 msgid "_Pack Bits"
 msgstr "_Bitek összecsomagolása"
 
-#: plug-ins/common/tiff.c:2100
+#: plug-ins/common/tiff.c:2106
 msgid "_Deflate"
 msgstr "\"_Deflate\" formátum"
 
-#: plug-ins/common/tiff.c:2101
+#: plug-ins/common/tiff.c:2107
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2110
+#: plug-ins/common/tiff.c:2116
 msgid "Save _color values from transparent pixels"
 msgstr "Az á_tlátszó képpontok színértékeinek elmentése"
 
-#: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2131 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Megjegyzés:"
 
@@ -7074,8 +7089,10 @@ msgid "ID"
 msgstr "Azonosító"
 
 #: plug-ins/common/uniteditor.c:85
-msgid "This string will be used to identify a unit in GIMP's configuration files."
-msgstr "Ez a szöveg fogja azonosítani a mértékegységet a GIMP beállítási fájljaiban."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
+msgstr ""
+"Ez a szöveg fogja azonosítani a mértékegységet a GIMP beállítási fájljaiban."
 
 #: plug-ins/common/uniteditor.c:87
 msgid "Factor"
@@ -7189,8 +7206,9 @@ msgid "Create a new unit from scratch."
 msgstr "Teljesen új mértékegység létrehozása."
 
 #: plug-ins/common/uniteditor.c:563
-msgid "Create a new unit with the currently seleted unit as template."
-msgstr "Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."
+msgid "Create a new unit with the currently selected unit as template."
+msgstr ""
+"Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."
 
 #: plug-ins/common/unsharp.c:149
 msgid "<Image>/Filters/Enhance/_Unsharp Mask..."
@@ -7655,7 +7673,8 @@ msgstr "M_indkettő"
 
 #: plug-ins/common/wind.c:992
 msgid "Higher values restrict the effect to fewer areas of the image"
-msgstr "Magasabb érték esetén az effektus a kép kevesebb területén fog megjelenni"
+msgstr ""
+"Magasabb érték esetén az effektus a kép kevesebb területén fog megjelenni"
 
 #: plug-ins/common/wind.c:1007 plug-ins/gimpressionist/orientmap.c:600
 msgid "_Strength:"
@@ -9302,8 +9321,10 @@ msgid "Shadow depth:"
 msgstr "Árnyék mélysége:"
 
 #: plug-ins/gimpressionist/general.c:196
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
-msgstr "Az árnyék mélysége, vagyis milyen messze legyen az árnyék az objektumtól"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgstr ""
+"Az árnyék mélysége, vagyis milyen messze legyen az árnyék az objektumtól"
 
 #: plug-ins/gimpressionist/general.c:201
 msgid "Shadow blur:"
@@ -9708,11 +9729,13 @@ msgid "The largest brush to create"
 msgstr "A létrehozandó legnagyobb ecset"
 
 #: plug-ins/gimpressionist/size.c:111
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Az ecsetvonás méretét a terület értéke (fényessége) szabja meg"
 
 #: plug-ins/gimpressionist/size.c:118
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "Az ecsetvonás méretét a kép középpontjától mért távolság szabja meg"
 
 #: plug-ins/gimpressionist/size.c:125
@@ -10793,7 +10816,8 @@ msgstr "Labirintus készítése a Prim-módszerrel..."
 
 #: plug-ins/maze/algorithms.c:463
 msgid "Constructing tileable maze using Prim's Algorithm..."
-msgstr "Csempézéshez használható labirintus előállítása a Prim-féle módszerrel..."
+msgstr ""
+"Csempézéshez használható labirintus előállítása a Prim-féle módszerrel..."
 
 #: plug-ins/maze/maze.c:157
 #, c-format
@@ -11473,7 +11497,8 @@ msgstr "Rajz"
 
 #: plug-ins/print/gimp_main_window.c:1353
 msgid "Fastest and brightest color for text and line art"
-msgstr "A legélénkebb színeket adó és leggyorsabb módszer - szövegekhez és rajzokhoz"
+msgstr ""
+"A legélénkebb színeket adó és leggyorsabb módszer - szövegekhez és rajzokhoz"
 
 #: plug-ins/print/gimp_main_window.c:1360
 msgid "Solid Colors"
@@ -11527,7 +11552,8 @@ msgid "Adjust Output..."
 msgstr "Kimenet beállítása..."
 
 #: plug-ins/print/gimp_main_window.c:1467
-msgid "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
+msgid ""
+"Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
 "Színegyensúly, fényesség, kontraszt, telítettség és a színszórási módszer "
 "beállítása"
@@ -11653,28 +11679,28 @@ msgstr "Nincs átalakítandó kijelölés"
 msgid "Selection To Path Advanced Settings"
 msgstr "Kijelölést útvonallá - speciális beállítások"
 
-#: plug-ins/sgi/sgi.c:532
+#: plug-ins/sgi/sgi.c:539
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "\"%s\" írásra való megnyitása sikertelen."
 
-#: plug-ins/sgi/sgi.c:614
+#: plug-ins/sgi/sgi.c:621
 msgid "Save as SGI"
 msgstr "Mentés SGI formátumba"
 
-#: plug-ins/sgi/sgi.c:623
+#: plug-ins/sgi/sgi.c:630
 msgid "Compression Type"
 msgstr "Tömörítés típusa"
 
-#: plug-ins/sgi/sgi.c:627
+#: plug-ins/sgi/sgi.c:634
 msgid "No Compression"
 msgstr "Nincs tömörítés"
 
-#: plug-ins/sgi/sgi.c:629
+#: plug-ins/sgi/sgi.c:636
 msgid "RLE Compression"
 msgstr "RLE tömörítés"
 
-#: plug-ins/sgi/sgi.c:631
+#: plug-ins/sgi/sgi.c:638
 msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
@@ -11764,11 +11790,17 @@ msgstr "Hiba: nem sikerült beolvasni a(z) \"%s\" XJT-tulajdonságfájlt."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Hiba: a(z) \"%s\" XJT-tulajdonságfájl üres."
 
-msgid "Write error occurred"
-msgstr "Hiba történt az íráskor"
+#~ msgid "write error occured"
+#~ msgstr "hiba történt az íráskor"
 
-msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
-msgstr "Ágak szögének beállítása (-1 esetén egy véletlenszerű szög lesz kiválasztva)"
+#~ msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
+#~ msgstr ""
+#~ "Ágak szögének beállítása (-1 esetén egy véletlenszerű szög lesz "
+#~ "kiválasztva)"
 
-msgid "Create a new unit with the currently selected unit as template."
-msgstr "Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."
+#~ msgid "Write error occured"
+#~ msgstr "Hiba történt az íráskor"
+
+#~ msgid "Create a new unit with the currently seleted unit as template."
+#~ msgstr ""
+#~ "Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."

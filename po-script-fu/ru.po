@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.SCRIPTFU\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2004-02-17 14:23+0300\n"
 "Last-Translator: Roxana Chernogolova <padavan@mail.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -1394,12 +1394,16 @@ msgid "Shadow Weight (%)"
 msgstr "Размер тени (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Большой заголовок..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Маленький заголовок.."
 
@@ -1442,27 +1446,35 @@ msgid "Shadow Color"
 msgstr "Цвет тени"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки доп.кнопок трубы..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Дважды вложенные "
 "кнопки..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки главной трубы..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Расш./Скрипт-Фу/Темы Web-страниц/Gimp.Org/Метки кнопок трубы..."
 

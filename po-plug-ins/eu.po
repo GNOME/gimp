@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:58+0200\n"
 "PO-Revision-Date: 2004-04-06 19:23+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -63,10 +63,10 @@ msgstr "Honi buruz"
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
+#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
-#: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
+#: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
 #: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
@@ -423,18 +423,18 @@ msgstr "_Fraktalak"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
+#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
-#: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
+#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
-#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1168
+#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1795 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
@@ -469,18 +469,18 @@ msgstr "Gorde parametro fraktalak"
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
+#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
-#: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
+#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:508 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -921,6 +921,25 @@ msgstr "Gaitu/Desgaitu aldaketen aurrebista denbora errealean"
 msgid "Preview Options"
 msgstr "Aurrebistaren aukerak"
 
+#: plug-ins/MapObject/mapobject_apply.c:273
+#, fuzzy
+msgid "Map to Plane..."
+msgstr "Laplace..."
+
+#: plug-ins/MapObject/mapobject_apply.c:276
+msgid "Map to Sphere..."
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_apply.c:279
+#, fuzzy
+msgid "Map to Box..."
+msgstr "Geh RGB..."
+
+#: plug-ins/MapObject/mapobject_apply.c:282
+#, fuzzy
+msgid "Map to Cylinder..."
+msgstr "Zilindroa"
+
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
 msgstr "<Image>/Iragazkiak/Mapa/Mapatu _objektua..."
@@ -1066,22 +1085,22 @@ msgid "Back:"
 msgstr "Atzea:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:526
+#: plug-ins/print/gimp_main_window.c:523
 msgid "Top:"
 msgstr "Goian:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:567
+#: plug-ins/print/gimp_main_window.c:564
 msgid "Bottom:"
 msgstr "Behean:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:513
+#: plug-ins/print/gimp_main_window.c:510
 msgid "Left:"
 msgstr "Ezkerrean:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:539
+#: plug-ins/print/gimp_main_window.c:536
 msgid "Right:"
 msgstr "Eskuinean:"
 
@@ -1119,7 +1138,7 @@ msgid "Images for the Cap Faces"
 msgstr "Estalkietarako irudiak"
 
 #: plug-ins/MapObject/mapobject_ui.c:1274
-#: plug-ins/print/gimp_main_window.c:1119
+#: plug-ins/print/gimp_main_window.c:1116
 msgid "Size"
 msgstr "Tamaina"
 
@@ -1131,7 +1150,7 @@ msgstr "Err_adioa:"
 msgid "Cylinder radius"
 msgstr "Zilindroaren erradioa"
 
-#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:782
+#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:785
 msgid "L_ength:"
 msgstr "L_uzera:"
 
@@ -1189,7 +1208,7 @@ msgstr "Kolore-mapa okerra"
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1227,10 +1246,10 @@ msgstr "Errorea BMP fitxategi-goiburua '%s'tik irakurtzean"
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
-#: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
+#: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
+#: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
-#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
+#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:375
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
 msgstr "Atzeko planoa"
@@ -1254,13 +1273,13 @@ msgstr "Ezin izan da irudi-mota ezezagunekin lan egin"
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
+#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1178
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1800
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
-#: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
+#: plug-ins/sgi/sgi.c:544 plug-ins/xjt/xjt.c:1691
 #, c-format
 msgid "Saving '%s'..."
 msgstr "'%s' fitxategia gordetzen..."
@@ -1334,7 +1353,7 @@ msgid "Cos_ine"
 msgstr "Kos_inua"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2103
 msgid "_None"
 msgstr "_Bat ere ez"
 
@@ -1605,7 +1624,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0,5 < x)"
 
 #: plug-ins/common/CML_explorer.c:202 plug-ins/common/sunras.c:1593
-#: plug-ins/print/gimp_main_window.c:1648
+#: plug-ins/print/gimp_main_window.c:1645
 msgid "Standard"
 msgstr "Estandarra"
 
@@ -2348,7 +2367,8 @@ msgid "_Spherical Map"
 msgstr "Mapa es_ferikoa"
 
 #: plug-ins/common/bumpmap.c:966
-msgid "S_inuosidal Map"
+#, fuzzy
+msgid "S_inusoidal Map"
 msgstr "Mapa s_inusoidala"
 
 #. Compensate darkening
@@ -2550,7 +2570,7 @@ msgstr "Koloreztatu"
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
 #: plug-ins/common/postscript.c:2823 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
-#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1420
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
 msgstr "Kolorea"
 
@@ -2902,132 +2922,137 @@ msgstr ""
 "Geruzetan bakarrik funtzionatzen du (baina kanalean edo maskaran deitzen "
 "zaio)"
 
-#: plug-ins/common/curve_bend.c:734
+#: plug-ins/common/curve_bend.c:727
+#, fuzzy
+msgid "Cannot operate on layers with masks."
+msgstr "Ezin da kolore-irudi indexatuekin erabili."
+
+#: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
 msgstr "Ezin da hautapen hutsekin lan egin"
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1238
+#: plug-ins/common/curve_bend.c:1246
 msgid "Curve Bend"
 msgstr "Tolestu kurbaren arabera"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1302
+#: plug-ins/common/curve_bend.c:1310
 msgid "_Preview Once"
 msgstr "_Aurrebista behin"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1311
+#: plug-ins/common/curve_bend.c:1319
 msgid "Automatic Pre_view"
 msgstr "Au_rrebista automatikoa"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
+#: plug-ins/common/curve_bend.c:1329 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
 msgstr "Aukerak"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1336
+#: plug-ins/common/curve_bend.c:1344
 msgid "Rotat_e:"
 msgstr "Bira_tu:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1354
+#: plug-ins/common/curve_bend.c:1362
 msgid "Smoo_thing"
 msgstr "_Leuntzea"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
+#: plug-ins/common/curve_bend.c:1372 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:534 plug-ins/common/ripple.c:451
 msgid "_Antialiasing"
 msgstr "_Antialiasing-a"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1374
+#: plug-ins/common/curve_bend.c:1382
 msgid "Work on Cop_y"
 msgstr "_Kopian lan egin"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1384
+#: plug-ins/common/curve_bend.c:1392
 msgid "Modify Curves"
 msgstr "Aldatu kurbak"
 
-#: plug-ins/common/curve_bend.c:1413
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve for Border"
 msgstr "Kurba ertzerako"
 
-#: plug-ins/common/curve_bend.c:1417
+#: plug-ins/common/curve_bend.c:1425
 msgid "_Upper"
 msgstr "_Goikoa"
 
-#: plug-ins/common/curve_bend.c:1418
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Lower"
 msgstr "_Behekoa"
 
-#: plug-ins/common/curve_bend.c:1428
+#: plug-ins/common/curve_bend.c:1436
 msgid "Curve Type"
 msgstr "Kurba-mota"
 
-#: plug-ins/common/curve_bend.c:1432
+#: plug-ins/common/curve_bend.c:1440
 msgid "Smoot_h"
 msgstr "Leu_ntzea"
 
-#: plug-ins/common/curve_bend.c:1433
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Free"
 msgstr "_Libre"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1456
 msgid "_Copy"
 msgstr "_Kopiatu"
 
-#: plug-ins/common/curve_bend.c:1453
+#: plug-ins/common/curve_bend.c:1461
 msgid "Copy the active curve to the other border"
 msgstr "Kopiatu kurba aktiboa beste ertzean"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1460
+#: plug-ins/common/curve_bend.c:1468
 msgid "_Mirror"
 msgstr "_Ispilatu"
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1473
 msgid "Mirror the active curve to the other border"
 msgstr "Ispilatu kurba aktiboa beste ertzean"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1472
+#: plug-ins/common/curve_bend.c:1480
 msgid "S_wap"
 msgstr "_Trukatu"
 
-#: plug-ins/common/curve_bend.c:1477
+#: plug-ins/common/curve_bend.c:1485
 msgid "Swap the two curves"
 msgstr "Trukatu bi kurbak"
 
-#: plug-ins/common/curve_bend.c:1489
+#: plug-ins/common/curve_bend.c:1497
 msgid "Reset the active curve"
 msgstr "Berrezarri kurba aktiboa"
 
-#: plug-ins/common/curve_bend.c:1506
+#: plug-ins/common/curve_bend.c:1514
 msgid "Load the curves from a file"
 msgstr "Kargatu kurbak fitxategi batetik"
 
-#: plug-ins/common/curve_bend.c:1518
+#: plug-ins/common/curve_bend.c:1526
 msgid "Save the curves to a file"
 msgstr "Gorde kurbak fitxategi batean"
 
-#: plug-ins/common/curve_bend.c:2055
+#: plug-ins/common/curve_bend.c:2063
 msgid "Load Curve Points from file"
 msgstr "Kargatu kurba-puntuak fitxategitik"
 
-#: plug-ins/common/curve_bend.c:2082
+#: plug-ins/common/curve_bend.c:2090
 msgid "Save Curve Points to file"
 msgstr "Gorde kurba-puntuak fitxategian"
 
-#: plug-ins/common/curve_bend.c:2980
+#: plug-ins/common/curve_bend.c:2988
 msgid "Curve Bend..."
 msgstr "Tolestu kurbaren arabera..."
 
@@ -3334,7 +3359,7 @@ msgstr "Sortu _histograma"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
 #: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
-#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:409
+#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3378,7 +3403,8 @@ msgid "Sc_attering:"
 msgstr "Di_spertsioa:"
 
 #: plug-ins/common/diffraction.c:637
-msgid "Po_latization:"
+#, fuzzy
+msgid "Po_larization:"
 msgstr "Po_larizazioa:"
 
 #: plug-ins/common/diffraction.c:645
@@ -3521,7 +3547,7 @@ msgstr "_Mugatu lerro-zabalera"
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
 #: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
 #: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
-#: plug-ins/common/tile.c:413 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Altuera:"
@@ -3656,7 +3682,8 @@ msgid "Image Selection"
 msgstr "Irudi-hautapena"
 
 #: plug-ins/common/film.c:1352
-msgid "All Values are Fractions of the Film Heigh"
+#, fuzzy
+msgid "All Values are Fractions of the Film Height"
 msgstr "Balio guztiak film-altueraren frakzioak dira"
 
 #: plug-ins/common/film.c:1355
@@ -3771,7 +3798,7 @@ msgstr "IIR Gauss-en lausotzea"
 
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
 #: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:979
-#: plug-ins/sgi/sgi.c:520 plug-ins/xjt/xjt.c:1682
+#: plug-ins/sgi/sgi.c:527 plug-ins/xjt/xjt.c:1682
 msgid "Cannot operate on indexed color images."
 msgstr "Ezin da kolore-irudi indexatuekin erabili."
 
@@ -3956,7 +3983,7 @@ msgstr "Gorde GIF gisa"
 msgid "GIF Options"
 msgstr "GIF aukerak"
 
-#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1215
 msgid "Interlace"
 msgstr "Gurutzelarkatu"
 
@@ -4019,8 +4046,8 @@ msgstr "Pixel ez-laukiak: irudia zapalduta ikusiko da."
 msgid "Background (%d%s)"
 msgstr "Atzeko planoa (%d%s)"
 
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:783
-#: plug-ins/common/iwarp.c:815
+#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "%d markoa "
@@ -4185,8 +4212,8 @@ msgstr "Ebakidura"
 
 #. Width and Height
 #: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
-#: plug-ins/print/gimp_main_window.c:1008
-#: plug-ins/print/gimp_main_window.c:1224
+#: plug-ins/print/gimp_main_window.c:1005
+#: plug-ins/print/gimp_main_window.c:1221
 msgid "Width:"
 msgstr "Zabalera:"
 
@@ -4413,97 +4440,97 @@ msgstr "_2. modua"
 msgid "<Image>/Filters/Distorts/_IWarp..."
 msgstr "<Image>/Iragazkiak/Distortsioak/_Okertze interaktiboa..."
 
-#: plug-ins/common/iwarp.c:688
+#: plug-ins/common/iwarp.c:692
 msgid "Warping..."
 msgstr "Okertzen..."
 
-#: plug-ins/common/iwarp.c:790 plug-ins/common/iwarp.c:803
+#: plug-ins/common/iwarp.c:794 plug-ins/common/iwarp.c:807
 #, c-format
 msgid "Warping Frame No. %d..."
 msgstr "%d. markoa okertzen..."
 
-#: plug-ins/common/iwarp.c:804
+#: plug-ins/common/iwarp.c:808
 msgid "Ping Pong"
 msgstr "Ping Pong"
 
-#: plug-ins/common/iwarp.c:984
+#: plug-ins/common/iwarp.c:989
 msgid "A_nimate"
 msgstr "A_nimatu"
 
-#: plug-ins/common/iwarp.c:1004
+#: plug-ins/common/iwarp.c:1009
 msgid "Number of _Frames:"
 msgstr "_Marko-kopurua:"
 
-#: plug-ins/common/iwarp.c:1013
+#: plug-ins/common/iwarp.c:1018
 msgid "R_everse"
 msgstr "A_lderantzikatu"
 
-#: plug-ins/common/iwarp.c:1022
+#: plug-ins/common/iwarp.c:1027
 msgid "_Ping Pong"
 msgstr "_Ping Pong"
 
-#: plug-ins/common/iwarp.c:1035
+#: plug-ins/common/iwarp.c:1040
 msgid "_Animate"
 msgstr "_Animatu"
 
-#: plug-ins/common/iwarp.c:1063
+#: plug-ins/common/iwarp.c:1068
 msgid "_Deform Radius:"
 msgstr "_Deformatze-erradioa:"
 
-#: plug-ins/common/iwarp.c:1073
+#: plug-ins/common/iwarp.c:1078
 msgid "D_eform Amount:"
 msgstr "D_eformatze-kopurua:"
 
-#: plug-ins/common/iwarp.c:1082
+#: plug-ins/common/iwarp.c:1087
 msgid "Deform Mode"
 msgstr "Deformatze-modua"
 
-#: plug-ins/common/iwarp.c:1096
+#: plug-ins/common/iwarp.c:1101
 msgid "_Move"
 msgstr "_Mugitu"
 
-#: plug-ins/common/iwarp.c:1097
+#: plug-ins/common/iwarp.c:1102
 msgid "_Grow"
 msgstr "_Hazi"
 
-#: plug-ins/common/iwarp.c:1098
+#: plug-ins/common/iwarp.c:1103
 msgid "S_wirl CCW"
 msgstr "Z_urrunbiloa erlojuaren kontrako noranzkoan "
 
-#: plug-ins/common/iwarp.c:1099
+#: plug-ins/common/iwarp.c:1104
 msgid "Remo_ve"
 msgstr "_Kendu"
 
-#: plug-ins/common/iwarp.c:1100
+#: plug-ins/common/iwarp.c:1105
 msgid "S_hrink"
 msgstr "T_xikitu"
 
-#: plug-ins/common/iwarp.c:1101
+#: plug-ins/common/iwarp.c:1106
 msgid "Sw_irl CW"
 msgstr "_Zurrunbiloa erlojuaren noranzkoan"
 
-#: plug-ins/common/iwarp.c:1123
+#: plug-ins/common/iwarp.c:1128
 msgid "_Bilinear"
 msgstr "_Bilineala"
 
-#: plug-ins/common/iwarp.c:1137
+#: plug-ins/common/iwarp.c:1142
 msgid "Adaptive S_upersample"
 msgstr "S_uperadibide moldakorra"
 
-#: plug-ins/common/iwarp.c:1158
+#: plug-ins/common/iwarp.c:1163
 msgid "Ma_x Depth:"
 msgstr "Ge_h sakonera:"
 
-#: plug-ins/common/iwarp.c:1168
+#: plug-ins/common/iwarp.c:1173
 msgid "Thresho_ld:"
 msgstr "_Muga:"
 
-#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:769
+#: plug-ins/common/iwarp.c:1186 plug-ins/common/sinus.c:769
 #: plug-ins/gflare/gflare.c:2795
 msgid "_Settings"
 msgstr "_Ezarpenak"
 
-#: plug-ins/common/iwarp.c:1198
+#: plug-ins/common/iwarp.c:1203
 msgid "IWarp"
 msgstr "Okertze interaktiboa"
 
@@ -4599,9 +4626,9 @@ msgid "Image Preview"
 msgstr "Irudiaren aurrebista"
 
 #: plug-ins/common/jpeg.c:1702
-msgid "Preview (in image window, will modify image's undo history!)"
-msgstr ""
-"Aurrebista (irudiaren leihoan, irudiaren desegite-historia aldatuko du!)"
+#, fuzzy
+msgid "Preview in image window"
+msgstr "Kapturatu leiho bakarra"
 
 #: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
@@ -4861,135 +4888,135 @@ msgstr "_Eutsi gehienezko kanalei"
 msgid "Ho_ld the Minimal Channels"
 msgstr "Eu_tsi gutxieneko kanalei"
 
-#: plug-ins/common/mblur.c:150
+#: plug-ins/common/mblur.c:153
 msgid "<Image>/Filters/Blur/_Motion Blur..."
 msgstr "<Image>/Iragazkiak/Lausotuak/_Mugimendu-lausotzea..."
 
-#: plug-ins/common/mblur.c:673
+#: plug-ins/common/mblur.c:676
 msgid "Motion Blurring..."
 msgstr "Mugimendu-lausotzea..."
 
-#: plug-ins/common/mblur.c:743
+#: plug-ins/common/mblur.c:746
 msgid "Motion Blur"
 msgstr "Mugimendu-lausotzea"
 
-#: plug-ins/common/mblur.c:757
+#: plug-ins/common/mblur.c:760
 msgid "Blur Type"
 msgstr "Lausotze-mota"
 
-#: plug-ins/common/mblur.c:761
+#: plug-ins/common/mblur.c:764
 msgid "_Linear"
 msgstr "_Lineala"
 
-#: plug-ins/common/mblur.c:762
+#: plug-ins/common/mblur.c:765
 msgid "_Radial"
 msgstr "Er_radiala"
 
-#: plug-ins/common/mblur.c:763
+#: plug-ins/common/mblur.c:766
 msgid "_Zoom"
 msgstr "_Zooma"
 
-#: plug-ins/common/mblur.c:770
+#: plug-ins/common/mblur.c:773
 msgid "Blur Parameters"
 msgstr "Lausotu parametroak"
 
-#: plug-ins/common/mblur.c:791 plug-ins/common/newsprint.c:1009
+#: plug-ins/common/mblur.c:794 plug-ins/common/newsprint.c:1009
 msgid "_Angle:"
 msgstr "_Angelua:"
 
-#: plug-ins/common/mng.c:1187
+#: plug-ins/common/mng.c:1195
 msgid "Save as MNG"
 msgstr "Gorde MNG gisa"
 
-#: plug-ins/common/mng.c:1200
+#: plug-ins/common/mng.c:1208
 msgid "MNG Options"
 msgstr "MNG aukerak"
 
-#: plug-ins/common/mng.c:1219
+#: plug-ins/common/mng.c:1227
 msgid "Save Background Color"
 msgstr "Gorde atzeko planoaren kolorea"
 
-#: plug-ins/common/mng.c:1230
+#: plug-ins/common/mng.c:1238
 msgid "Save Gamma"
 msgstr "Gorde Gamma"
 
-#: plug-ins/common/mng.c:1240
+#: plug-ins/common/mng.c:1248
 msgid "Save Resolution"
 msgstr "Gorde bereizmena"
 
-#: plug-ins/common/mng.c:1251
+#: plug-ins/common/mng.c:1259
 msgid "Save Creation Time"
 msgstr "Gorde sortze-denbora"
 
-#: plug-ins/common/mng.c:1276
+#: plug-ins/common/mng.c:1284
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1277
+#: plug-ins/common/mng.c:1285
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1286
+#: plug-ins/common/mng.c:1294
 msgid "PNG + Delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1287
+#: plug-ins/common/mng.c:1295
 msgid "JNG + Delta PNG"
 msgstr "JNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1288
+#: plug-ins/common/mng.c:1296
 msgid "All PNG"
 msgstr "PNG denak"
 
-#: plug-ins/common/mng.c:1289
+#: plug-ins/common/mng.c:1297
 msgid "All JNG"
 msgstr "JNG denak"
 
-#: plug-ins/common/mng.c:1295
+#: plug-ins/common/mng.c:1303
 msgid "Default Chunks Type:"
 msgstr "Zati lehenetsien mota:"
 
-#: plug-ins/common/mng.c:1303
+#: plug-ins/common/mng.c:1311
 msgid "Combine"
 msgstr "Konbinatu"
 
-#: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1312 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
 msgstr "Ordeztu"
 
-#: plug-ins/common/mng.c:1309
+#: plug-ins/common/mng.c:1317
 msgid "Default Frame Disposal:"
 msgstr "Marko-baztertze lehenetsia:"
 
-#: plug-ins/common/mng.c:1321
+#: plug-ins/common/mng.c:1329
 msgid "PNG Compression Level:"
 msgstr "PNG konpresio-maila:"
 
-#: plug-ins/common/mng.c:1329 plug-ins/common/png.c:1670
+#: plug-ins/common/mng.c:1337 plug-ins/common/png.c:1683
 msgid "Choose a high compression level for small file size"
 msgstr "Hautatu konprimatze-maila handia fitxategi-tamaina txikietarako"
 
-#: plug-ins/common/mng.c:1343
+#: plug-ins/common/mng.c:1351
 msgid "JPEG Compression Quality:"
 msgstr "JPEG konprimatze-kalitatea:"
 
-#: plug-ins/common/mng.c:1360
+#: plug-ins/common/mng.c:1368
 msgid "JPEG Smoothing Factor:"
 msgstr "JPEG leuntze-faktorea:"
 
-#: plug-ins/common/mng.c:1370
+#: plug-ins/common/mng.c:1378
 msgid "Animated MNG Options"
 msgstr "MNG animatuen aukerak"
 
-#: plug-ins/common/mng.c:1377
+#: plug-ins/common/mng.c:1385
 msgid "Loop"
 msgstr "Begiztak"
 
-#: plug-ins/common/mng.c:1391
+#: plug-ins/common/mng.c:1399
 msgid "Default Frame Delay:"
 msgstr "Marko-atzerapen lehenetsia:"
 
-#: plug-ins/common/mng.c:1407
+#: plug-ins/common/mng.c:1415
 msgid "milliseconds"
 msgstr "milisegundo"
 
@@ -5574,73 +5601,73 @@ msgstr ""
 "PNG fitxategiak desplazamendu bat zehazten du, geruza irudiaren kanpoan "
 "kokatu dezakelarik."
 
-#: plug-ins/common/png.c:1153
+#: plug-ins/common/png.c:1156
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Errorea '%s' gordetzean. Ezin izan da irudia gorde."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1527
+#: plug-ins/common/png.c:1540
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Ezin izan da gardentasuna galerarik gabe gorde, horren ordez opakutasuna "
 "gordeko da."
 
-#: plug-ins/common/png.c:1553
+#: plug-ins/common/png.c:1566
 msgid "Save as PNG"
 msgstr "Gorde PNG gisa"
 
-#: plug-ins/common/png.c:1557
+#: plug-ins/common/png.c:1570
 msgid "_Load Defaults"
 msgstr "_Kargatu lehenetsiak"
 
-#: plug-ins/common/png.c:1558
+#: plug-ins/common/png.c:1571
 msgid "_Save Defaults"
 msgstr "_Gorde lehenetsiak"
 
 #. parameter settings
-#: plug-ins/common/png.c:1571 plug-ins/common/sample_colorize.c:1377
+#: plug-ins/common/png.c:1584 plug-ins/common/sample_colorize.c:1377
 msgid "Settings"
 msgstr "Ezarpenak"
 
-#: plug-ins/common/png.c:1584
+#: plug-ins/common/png.c:1597
 msgid "_Interlacing (Adam7)"
 msgstr "_Gurutzelarkatu (Adam7)"
 
-#: plug-ins/common/png.c:1595
+#: plug-ins/common/png.c:1608
 msgid "Save _Background Color"
 msgstr "Gorde _atzeko planoaren kolorea"
 
-#: plug-ins/common/png.c:1603
+#: plug-ins/common/png.c:1616
 msgid "Save _Gamma"
 msgstr "Gorde _gamma"
 
-#: plug-ins/common/png.c:1612
+#: plug-ins/common/png.c:1625
 msgid "Save Layer O_ffset"
 msgstr "Gorde g_eruzaren desplazamendua"
 
-#: plug-ins/common/png.c:1621
+#: plug-ins/common/png.c:1634
 msgid "Save _Resolution"
 msgstr "Gorde _bereizmena"
 
-#: plug-ins/common/png.c:1630
+#: plug-ins/common/png.c:1643
 msgid "Save Creation _Time"
 msgstr "Gorde sortze-o_rdua"
 
-#: plug-ins/common/png.c:1638
+#: plug-ins/common/png.c:1651
 msgid "Save Comme_nt"
 msgstr "Gorde iruz_kina"
 
-#: plug-ins/common/png.c:1653
+#: plug-ins/common/png.c:1666
 msgid "Save Color _Values From Transparent Pixels"
 msgstr "Gorde kolorearen balioak pixel gardenetatik"
 
-#: plug-ins/common/png.c:1666
+#: plug-ins/common/png.c:1679
 msgid "Co_mpression Level:"
 msgstr "Ko_npresio-maila:"
 
-#: plug-ins/common/png.c:1786
+#: plug-ins/common/png.c:1799
 msgid "Could not load PNG defaults"
 msgstr "Ezin izan da PNG lehenetsia kargatu"
 
@@ -5761,8 +5788,11 @@ msgstr "Errorea ghostscript (%s) abiatzean."
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
-msgid "write error occured"
-msgstr "errorea gertatu da idaztean"
+#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
+#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
+#, fuzzy
+msgid "Write error occurred"
+msgstr "Errorea gertatu da idaztean"
 
 #: plug-ins/common/postscript.c:2733
 msgid "Load PostScript"
@@ -5775,7 +5805,7 @@ msgstr "Errendatzen"
 
 #. Resolution
 #: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
-#: plug-ins/print/gimp_main_window.c:1103
+#: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Bereizmena:"
 
@@ -6472,7 +6502,8 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Erpi_n-angelua (-1: Ausazkoa):"
 
 #: plug-ins/common/sparkle.c:411
-msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
+#, fuzzy
+msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
 msgstr "Doitu erpin-angelua (-1ek ausazko angelua hautatu dela esan nahi du)"
 
 #: plug-ins/common/sparkle.c:419
@@ -6787,11 +6818,6 @@ msgstr "Ezin da irudi-mota ezezagunekin lan egin"
 msgid "EOF encountered on reading"
 msgstr "EOF aurkitu da irakurtzean"
 
-#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
-#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-msgid "Write error occured"
-msgstr "Errorea gertatu da idaztean"
-
 #: plug-ins/common/sunras.c:1578
 msgid "Save as SUNRAS"
 msgstr "Gorde SUNRAS gisa"
@@ -6834,8 +6860,8 @@ msgstr "Ireki SVG"
 msgid "Render Scalable Vector Graphics"
 msgstr "Errendatu Grafiko Bektorial Eskalakorrak (SVG)"
 
-#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
-#: plug-ins/print/gimp_main_window.c:1237
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1022
+#: plug-ins/print/gimp_main_window.c:1234
 msgid "Height:"
 msgstr "Altuera:"
 
@@ -6917,16 +6943,16 @@ msgstr "Alfa muga: Gardentasuna koloreztatzen..."
 msgid "Threshold Alpha"
 msgstr "Alfa muga"
 
-#: plug-ins/common/tiff.c:831
+#: plug-ins/common/tiff.c:833
 #, c-format
 msgid "Page %d"
 msgstr "%d. orrialdea"
 
-#: plug-ins/common/tiff.c:846
+#: plug-ins/common/tiff.c:848
 msgid "TIFF Channel"
 msgstr "TIFF kanala"
 
-#: plug-ins/common/tiff.c:855
+#: plug-ins/common/tiff.c:857
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6938,7 +6964,7 @@ msgstr ""
 "kudea ditzakeenez, bihurtu egingo du. Bihurketa horren ondorioz, informazioa "
 "galduko da."
 
-#: plug-ins/common/tiff.c:1930
+#: plug-ins/common/tiff.c:1936
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -6946,36 +6972,36 @@ msgstr ""
 "TIFF formatuak 7 biteko ASCII kodetzea duten\n"
 "iruzkinak bakarrik onartzen ditu. Ez da iradokizunik gorde."
 
-#: plug-ins/common/tiff.c:2079
+#: plug-ins/common/tiff.c:2085
 msgid "Save as TIFF"
 msgstr "Gorde TIFF gisa"
 
 #. compression
-#: plug-ins/common/tiff.c:2093
+#: plug-ins/common/tiff.c:2099
 msgid "Compression"
 msgstr "Konpresioa"
 
-#: plug-ins/common/tiff.c:2098
+#: plug-ins/common/tiff.c:2104
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2099
+#: plug-ins/common/tiff.c:2105
 msgid "_Pack Bits"
 msgstr "_Paketatu bitak"
 
-#: plug-ins/common/tiff.c:2100
+#: plug-ins/common/tiff.c:2106
 msgid "_Deflate"
 msgstr "_Hustu"
 
-#: plug-ins/common/tiff.c:2101
+#: plug-ins/common/tiff.c:2107
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2110
+#: plug-ins/common/tiff.c:2116
 msgid "Save _color values from transparent pixels"
 msgstr "Gorde _kolore-balioak pixel gardenetik"
 
-#: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2131 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Iruzkina:"
 
@@ -6987,16 +7013,16 @@ msgstr "<Image>/Iragazkiak/Mapa/_Mosaikoa..."
 msgid "Tiling..."
 msgstr "Mosaikoa egiten..."
 
-#: plug-ins/common/tile.c:389
+#: plug-ins/common/tile.c:391
 msgid "Tile"
 msgstr "Mosaikoa"
 
 #. parameter settings
-#: plug-ins/common/tile.c:399
+#: plug-ins/common/tile.c:401
 msgid "Tile to New Size"
 msgstr "Egin mosaikoa tamaina berrian"
 
-#: plug-ins/common/tile.c:423
+#: plug-ins/common/tile.c:425
 msgid "C_reate New Image"
 msgstr "Sortu irudi berri_a"
 
@@ -7189,7 +7215,8 @@ msgid "Create a new unit from scratch."
 msgstr "Sortu unitate berria hutsetik."
 
 #: plug-ins/common/uniteditor.c:563
-msgid "Create a new unit with the currently seleted unit as template."
+#, fuzzy
+msgid "Create a new unit with the currently selected unit as template."
 msgstr ""
 "Sortu unitate berria unean hautatutako unitatea txantiloi gisa erabiliz."
 
@@ -7573,25 +7600,25 @@ msgstr "<Image>/Editatu/Itsatsi arbeletik"
 msgid "<Toolbox>/File/Acquire/From Clipboard"
 msgstr "<Toolbox>/Fitxategia/Eskuratu/_Arbeletik..."
 
-#: plug-ins/common/winclipboard.c:308
+#: plug-ins/common/winclipboard.c:325
 msgid "Copying..."
 msgstr "Kopiatzen..."
 
-#: plug-ins/common/winclipboard.c:471
+#: plug-ins/common/winclipboard.c:488
 msgid "Unsupported format or Clipboard empty!"
 msgstr "Formatu ezezaguna edo arbela hutsik dago!"
 
-#: plug-ins/common/winclipboard.c:482
+#: plug-ins/common/winclipboard.c:499
 msgid "Can't get Clipboard data."
 msgstr "Ezin dira arbeleko datuak eskuratu."
 
 #. ??? gimp_image_convert_rgb (image_ID);
 #.
-#: plug-ins/common/winclipboard.c:564
+#: plug-ins/common/winclipboard.c:581
 msgid "Pasted"
 msgstr "Itsatsita"
 
-#: plug-ins/common/winclipboard.c:577
+#: plug-ins/common/winclipboard.c:594
 msgid "Pasting..."
 msgstr "Itsasten..."
 
@@ -7666,40 +7693,40 @@ msgstr "_Indarra:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Balio handiek efektuaren magnitudea handitzen dute"
 
-#: plug-ins/common/winprint.c:186
+#: plug-ins/common/winprint.c:224
 msgid "<Image>/File/_Print"
 msgstr "<Image>/Fitxategia/_Inprimatu"
 
-#: plug-ins/common/winprint.c:198
+#: plug-ins/common/winprint.c:236
 msgid "<Image>/File/Page Setup"
 msgstr "<Image>/Fitxategia/Prestatu orrialdea"
 
-#: plug-ins/common/winprint.c:300
+#: plug-ins/common/winprint.c:338
 #, c-format
 msgid "PrintDlg failed: %d"
 msgstr "Inprimatzeko elkarrizketa-koadroak huts egin du: %d"
 
-#: plug-ins/common/winprint.c:336
+#: plug-ins/common/winprint.c:374
 msgid "Printer doesn't support bitmaps"
 msgstr "Inprimagailuak ez ditu bit-mapak onartzen"
 
-#: plug-ins/common/winprint.c:378
+#: plug-ins/common/winprint.c:415
 msgid "StartPage failed"
 msgstr "Orrialde-hasierak huts egin du"
 
-#: plug-ins/common/winprint.c:387 plug-ins/print/print-image-gimp.c:320
+#: plug-ins/common/winprint.c:424 plug-ins/print/print-image-gimp.c:320
 msgid "Printing..."
 msgstr "Inprimatzen..."
 
-#: plug-ins/common/winprint.c:419
+#: plug-ins/common/winprint.c:456
 msgid "CreateDIBSection failed"
 msgstr "CreateDIBSection-ek huts egin du"
 
-#: plug-ins/common/winprint.c:453
+#: plug-ins/common/winprint.c:492
 msgid "SetStretchBltMode failed (warning only)"
 msgstr "SetStretchBltMode-k huts egin du (abisua bakarrik)"
 
-#: plug-ins/common/winprint.c:516
+#: plug-ins/common/winprint.c:555
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
@@ -7708,11 +7735,11 @@ msgstr ""
 "StretchBlt-ek huts egin du (hDC, %d, %d, %d, %d, hdcMem, %d, 0,  %d, 1, "
 "SRCCOPY), errorea = %d, y = %d"
 
-#: plug-ins/common/winprint.c:545
+#: plug-ins/common/winprint.c:584
 msgid "EndPage failed"
 msgstr "Orrialde-amaierak huts egin du"
 
-#: plug-ins/common/winprint.c:592
+#: plug-ins/common/winprint.c:631
 #, c-format
 msgid "PageSetupDlg failed: %d"
 msgstr "PageSetupDlg-ek huts egin du: %d"
@@ -8328,7 +8355,7 @@ msgid "Anti-Clockwise"
 msgstr "Erlojuaren noranzkoaren aurka"
 
 #: plug-ins/gfig/gfig.c:1420 plug-ins/gimpressionist/orientation.c:100
-#: plug-ins/print/gimp_main_window.c:499
+#: plug-ins/print/gimp_main_window.c:496
 msgid "Orientation:"
 msgstr "Orientazioa:"
 
@@ -8843,7 +8870,8 @@ msgid "XY Position:"
 msgstr "XY posizioa:"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-msgid "Spiral Number of Points"
+#, fuzzy
+msgid "Spiral Number of Turns"
 msgstr "Espirala: puntu-kopurua"
 
 #: plug-ins/gfig/gfig-star.c:56
@@ -9373,13 +9401,18 @@ msgid "Start angle:"
 msgstr "Hasierako angelua:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#: plug-ins/gimpressionist/orientation.c:90
-msgid "The angle of the first brush to create"
+#, fuzzy
+msgid "The starting angle of the first brush to create"
 msgstr "Sortu beharreko lehen brotxaren angelua"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Angelu arteko bitartea:"
+
+#: plug-ins/gimpressionist/orientation.c:90
+#, fuzzy
+msgid "The angle span of the first brush to create"
+msgstr "Sortu beharreko lehen brotxaren angelua"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -9829,20 +9862,20 @@ msgstr ""
 msgid "GIMP Help Browser"
 msgstr "GIMPeko Laguntza arakatzailea"
 
-#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<Izengabea>"
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Document Not Found"
 msgstr "Ez da dokumentua aurkitu"
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid "Could not locate help document"
 msgstr "Ezin izan da aurkitu laguntzako dokumentua"
 
-#: plug-ins/helpbrowser/dialog.c:537
+#: plug-ins/helpbrowser/dialog.c:539
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -9931,7 +9964,7 @@ msgstr "Tiratu"
 msgid "Render Options"
 msgstr "Errendatze-aukerak"
 
-#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:484
 msgid "Auto"
 msgstr "Automatikoa"
 
@@ -10506,7 +10539,7 @@ msgstr "Area-zerrenda"
 msgid "Source..."
 msgstr "Iturburua..."
 
-#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1431
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1428
 msgid "Grayscale"
 msgstr "Gris-eskala"
 
@@ -10822,6 +10855,12 @@ msgstr "<Image>/Iragazkiak/Errendatuak/Eredua/_Labirintoa..."
 msgid "Drawing Maze..."
 msgstr "Labirintoa marrazten..."
 
+#. $Id$
+#: plug-ins/maze/maze.h:2
+#, fuzzy
+msgid "Maze"
+msgstr "Marmola"
+
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
 msgid "Width (Pixels):"
@@ -11070,7 +11109,7 @@ msgstr ""
 "Sagua arrastatzean beste botoi bat sakatzen baduzu, irudia bere jatorrizko "
 "kokalekura itzuliko da."
 
-#: plug-ins/print/gimp_main_window.c:484
+#: plug-ins/print/gimp_main_window.c:485
 msgid "Portrait"
 msgstr "Bertikala"
 
@@ -11078,15 +11117,15 @@ msgstr "Bertikala"
 msgid "Landscape"
 msgstr "Horizontala"
 
-#: plug-ins/print/gimp_main_window.c:488
+#: plug-ins/print/gimp_main_window.c:487
 msgid "Upside down"
 msgstr "Buruz behera"
 
-#: plug-ins/print/gimp_main_window.c:490
+#: plug-ins/print/gimp_main_window.c:488
 msgid "Seascape"
 msgstr "Etzanda"
 
-#: plug-ins/print/gimp_main_window.c:494
+#: plug-ins/print/gimp_main_window.c:491
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
@@ -11094,108 +11133,108 @@ msgstr ""
 "Hautatu orientazioa: erretratua, horizontala, buruz behera edo etzanda "
 "(buruz behera horizontalki)"
 
-#: plug-ins/print/gimp_main_window.c:517
+#: plug-ins/print/gimp_main_window.c:514
 msgid "Distance from the left of the paper to the image"
 msgstr "Paperaren ezkerretik irudira dagoen distantzia"
 
-#: plug-ins/print/gimp_main_window.c:530
+#: plug-ins/print/gimp_main_window.c:527
 msgid "Distance from the top of the paper to the image"
 msgstr "Paperaren goiko aldetik irudira dagoen distantzia"
 
-#: plug-ins/print/gimp_main_window.c:543
+#: plug-ins/print/gimp_main_window.c:540
 msgid "Distance from the left of the paper to the right of the image"
 msgstr "Paperaren ezkerretik irudiaren eskuinera dagoen distantzia"
 
-#: plug-ins/print/gimp_main_window.c:553
+#: plug-ins/print/gimp_main_window.c:550
 msgid "Right Border:"
 msgstr "Eskuineko ertza:"
 
-#: plug-ins/print/gimp_main_window.c:557
+#: plug-ins/print/gimp_main_window.c:554
 msgid "Distance from the right of the paper to the image"
 msgstr "Paperaren eskuinetik irudira dagoen distantzia"
 
-#: plug-ins/print/gimp_main_window.c:571
+#: plug-ins/print/gimp_main_window.c:568
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr "Paperaren goiko aldetik irudiaren beheko aldera dagoen distantzia"
 
-#: plug-ins/print/gimp_main_window.c:581
+#: plug-ins/print/gimp_main_window.c:578
 msgid "Bottom Border:"
 msgstr "Beheko ertza:"
 
-#: plug-ins/print/gimp_main_window.c:585
+#: plug-ins/print/gimp_main_window.c:582
 msgid "Distance from the bottom of the paper to the image"
 msgstr "Paperaren beheko aldetik irudira dagoen distantzia"
 
-#: plug-ins/print/gimp_main_window.c:602
+#: plug-ins/print/gimp_main_window.c:599
 msgid "Center:"
 msgstr "Zentratuta:"
 
-#: plug-ins/print/gimp_main_window.c:606
+#: plug-ins/print/gimp_main_window.c:603
 msgid "Vertically"
 msgstr "Bertikalki"
 
-#: plug-ins/print/gimp_main_window.c:611
+#: plug-ins/print/gimp_main_window.c:608
 msgid "Center the image vertically on the paper"
 msgstr "Zentratu irudia bertikalki paperean"
 
-#: plug-ins/print/gimp_main_window.c:617
+#: plug-ins/print/gimp_main_window.c:614
 msgid "Both"
 msgstr "Bietan"
 
-#: plug-ins/print/gimp_main_window.c:622
+#: plug-ins/print/gimp_main_window.c:619
 msgid "Center the image on the paper"
 msgstr "Zentratu irudia paperean"
 
-#: plug-ins/print/gimp_main_window.c:629
+#: plug-ins/print/gimp_main_window.c:626
 msgid "Horizontally"
 msgstr "Horizontalki"
 
-#: plug-ins/print/gimp_main_window.c:634
+#: plug-ins/print/gimp_main_window.c:631
 msgid "Center the image horizontally on the paper"
 msgstr "Zentratu irudia horizontalki paperean"
 
-#: plug-ins/print/gimp_main_window.c:650
+#: plug-ins/print/gimp_main_window.c:647
 msgid "Setup Printer"
 msgstr "Konfiguratu inprimagailua"
 
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:680 plug-ins/print/gimp_main_window.c:942
+#: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:939
 msgid "Printer Model:"
 msgstr "Inprimagailuaren modeloa:"
 
-#: plug-ins/print/gimp_main_window.c:692
+#: plug-ins/print/gimp_main_window.c:689
 msgid "Select your printer model"
 msgstr "Hautatu inprimagailuaren modeloa"
 
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:731
+#: plug-ins/print/gimp_main_window.c:728
 msgid "PPD File:"
 msgstr "PPD fitxategia:"
 
-#: plug-ins/print/gimp_main_window.c:747
+#: plug-ins/print/gimp_main_window.c:744
 msgid "Enter the correct PPD filename for your printer"
 msgstr "Idatzi PPD fitxategi-izen zuzena zure inprimagailurako"
 
-#: plug-ins/print/gimp_main_window.c:750
+#: plug-ins/print/gimp_main_window.c:747
 msgid "Browse"
 msgstr "Arakatu"
 
-#: plug-ins/print/gimp_main_window.c:756
+#: plug-ins/print/gimp_main_window.c:753
 msgid "Choose the correct PPD filename for your printer"
 msgstr "Hautatu PPD fitxategi-izen zuzena zure inprimagailurako"
 
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:766
+#: plug-ins/print/gimp_main_window.c:763
 msgid "Command:"
 msgstr "Komandoa:"
 
-#: plug-ins/print/gimp_main_window.c:779
+#: plug-ins/print/gimp_main_window.c:776
 msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
@@ -11207,38 +11246,38 @@ msgstr ""
 #.
 #. * Output file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:788
+#: plug-ins/print/gimp_main_window.c:785
 msgid "Print To File?"
 msgstr "Fitxategian inprimatu?"
 
 #.
 #. * PPD file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:801
+#: plug-ins/print/gimp_main_window.c:798
 msgid "PPD File?"
 msgstr "PPD fitxategia?"
 
-#: plug-ins/print/gimp_main_window.c:819
+#: plug-ins/print/gimp_main_window.c:816
 msgid "Define New Printer"
 msgstr "Zehaztu inprimagailu berria"
 
-#: plug-ins/print/gimp_main_window.c:842 plug-ins/print/gimp_main_window.c:937
+#: plug-ins/print/gimp_main_window.c:839 plug-ins/print/gimp_main_window.c:934
 msgid "Printer Name:"
 msgstr "Inprimagailuaren izena:"
 
-#: plug-ins/print/gimp_main_window.c:846
+#: plug-ins/print/gimp_main_window.c:843
 msgid "Enter the name you wish to give this logical printer"
 msgstr "Idatzi inprimagailu logiko honi eman nahi diozun izena"
 
-#: plug-ins/print/gimp_main_window.c:859
+#: plug-ins/print/gimp_main_window.c:856
 msgid "About Gimp-Print "
 msgstr "Gimp-Print-i buruz "
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid "Gimp-Print Version "
 msgstr "Gimp-Print-en bertsioa "
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid ""
 "\n"
 "\n"
@@ -11282,11 +11321,11 @@ msgstr ""
 "Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA\n"
 "02111-1307, USA.\n"
 
-#: plug-ins/print/gimp_main_window.c:920
+#: plug-ins/print/gimp_main_window.c:917
 msgid "Printer Settings"
 msgstr "Inprimagailuaren ezarpenak"
 
-#: plug-ins/print/gimp_main_window.c:933
+#: plug-ins/print/gimp_main_window.c:930
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
@@ -11297,11 +11336,11 @@ msgstr ""
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:953
+#: plug-ins/print/gimp_main_window.c:950
 msgid "Setup Printer..."
 msgstr "Konfiguratu inprimagailua..."
 
-#: plug-ins/print/gimp_main_window.c:955
+#: plug-ins/print/gimp_main_window.c:952
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -11312,11 +11351,11 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:970
+#: plug-ins/print/gimp_main_window.c:967
 msgid "New Printer..."
 msgstr "Inprimagailu berria..."
 
-#: plug-ins/print/gimp_main_window.c:972
+#: plug-ins/print/gimp_main_window.c:969
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
@@ -11324,63 +11363,68 @@ msgstr ""
 "Zehaztu inprimagailu logiko berria. Hori aurrerago erabiltzeko gorde nahi "
 "duzun ezarpen-bilduma bat izendatzeko erabil dezakezu."
 
-#: plug-ins/print/gimp_main_window.c:993
+#: plug-ins/print/gimp_main_window.c:990
 msgid "Size of paper that you wish to print to"
 msgstr "Zein paper-tamainan inprimatu nahi duzun"
 
-#: plug-ins/print/gimp_main_window.c:996
+#: plug-ins/print/gimp_main_window.c:993
 msgid "Media Size:"
 msgstr "Euskarriaren tamaina:"
 
-#: plug-ins/print/gimp_main_window.c:1005
+#: plug-ins/print/gimp_main_window.c:1002
 msgid "Dimensions:"
 msgstr "Neurriak:"
 
-#: plug-ins/print/gimp_main_window.c:1019
+#: plug-ins/print/gimp_main_window.c:1016
 msgid "Width of the paper that you wish to print to"
 msgstr "Inprimatu nahi duzun paperaren tamaina"
 
-#: plug-ins/print/gimp_main_window.c:1036
+#: plug-ins/print/gimp_main_window.c:1033
 msgid "Height of the paper that you wish to print to"
 msgstr "Inprimatu nahi duzun paperaren altuera"
 
-#: plug-ins/print/gimp_main_window.c:1052
+#: plug-ins/print/gimp_main_window.c:1049
 msgid "Type of media you're printing to"
 msgstr "Zein euskarri-motan inprimatuko duzun"
 
-#: plug-ins/print/gimp_main_window.c:1055
+#: plug-ins/print/gimp_main_window.c:1052
 msgid "Media Type:"
 msgstr "Euskarri-mota:"
 
-#: plug-ins/print/gimp_main_window.c:1068
+#: plug-ins/print/gimp_main_window.c:1065
 msgid "Source (input slot) of media you're printing to"
 msgstr "Zein euskarri-iturburutan (sarrera-erretena) inprimatuko duzun"
 
-#: plug-ins/print/gimp_main_window.c:1071
+#: plug-ins/print/gimp_main_window.c:1068
 msgid "Media Source:"
 msgstr "Euskarri-iturburua:"
 
-#: plug-ins/print/gimp_main_window.c:1084
+#: plug-ins/print/gimp_main_window.c:1081
 msgid "Type of ink in the printer"
 msgstr "Inprimagailuko tinta-mota"
 
-#: plug-ins/print/gimp_main_window.c:1087
+#: plug-ins/print/gimp_main_window.c:1084
 msgid "Ink Type:"
 msgstr "Tinta-mota:"
 
-#: plug-ins/print/gimp_main_window.c:1100
+#: plug-ins/print/gimp_main_window.c:1097
 msgid "Resolution and quality of the print"
 msgstr "Inprimaketaren bereizmena eta kalitatea"
 
-#: plug-ins/print/gimp_main_window.c:1139
+#: plug-ins/print/gimp_main_window.c:1136
 msgid "Scaling:"
 msgstr "Eskalatzea:"
 
-#: plug-ins/print/gimp_main_window.c:1145
+#: plug-ins/print/gimp_main_window.c:1142
 msgid "Set the scale (size) of the image"
 msgstr "Ezarri irudiaren eskala (tamaina)"
 
-#: plug-ins/print/gimp_main_window.c:1178
+#: plug-ins/print/gimp_main_window.c:1170
+#, fuzzy
+msgid "Scale by:"
+msgstr "Z eskala:"
+
+#: plug-ins/print/gimp_main_window.c:1175
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
@@ -11388,58 +11432,58 @@ msgstr ""
 "Hautatu eskalatzea erabilgarri dagoen orri-tamainaren ehuneko gisa neurtuko "
 "den edo emaitzeko puntu/hazbete kopurua hartuko den kontuan"
 
-#: plug-ins/print/gimp_main_window.c:1183
+#: plug-ins/print/gimp_main_window.c:1180
 msgid "Percent"
 msgstr "Ehunekoa"
 
-#: plug-ins/print/gimp_main_window.c:1190
+#: plug-ins/print/gimp_main_window.c:1187
 msgid "Scale the print to the size of the page"
 msgstr "Eskalatu inprimaketa orriaren tamainara"
 
-#: plug-ins/print/gimp_main_window.c:1196
+#: plug-ins/print/gimp_main_window.c:1193
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/gimp_main_window.c:1202
+#: plug-ins/print/gimp_main_window.c:1199
 msgid "Scale the print to the number of dots per inch"
 msgstr "Eskalatu inprimaketa puntu/hazbete kopurura"
 
-#: plug-ins/print/gimp_main_window.c:1228
+#: plug-ins/print/gimp_main_window.c:1225
 msgid "Set the width of the print"
 msgstr "Ezarri inprimatzeko zabalera"
 
-#: plug-ins/print/gimp_main_window.c:1241
+#: plug-ins/print/gimp_main_window.c:1238
 msgid "Set the height of the print"
 msgstr "Ezarri inprimatzeko altuera"
 
-#: plug-ins/print/gimp_main_window.c:1261
+#: plug-ins/print/gimp_main_window.c:1258
 msgid "Units:"
 msgstr "Unitateak:"
 
-#: plug-ins/print/gimp_main_window.c:1266
+#: plug-ins/print/gimp_main_window.c:1263
 msgid "Select the base unit of measurement for printing"
 msgstr "Hautatu inprimatzeko oinarrizko neurketa-unitatea"
 
-#: plug-ins/print/gimp_main_window.c:1269
+#: plug-ins/print/gimp_main_window.c:1266
 msgid "Inch"
 msgstr "Hazbete"
 
-#: plug-ins/print/gimp_main_window.c:1276
+#: plug-ins/print/gimp_main_window.c:1273
 msgid "Set the base unit of measurement to inches"
 msgstr "Ezarri oinarrizko neurketa-unitatea hazbetetan"
 
-#: plug-ins/print/gimp_main_window.c:1282
+#: plug-ins/print/gimp_main_window.c:1279
 msgid "cm"
 msgstr "cm"
 
-#: plug-ins/print/gimp_main_window.c:1288
+#: plug-ins/print/gimp_main_window.c:1285
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Ezarri oinarrizko neurketa-unitatea zentimetrotan"
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1298
+#: plug-ins/print/gimp_main_window.c:1295
 msgid ""
 "Use Original\n"
 "Image Size"
@@ -11447,43 +11491,43 @@ msgstr ""
 "Erabili irudiaren\n"
 "jatorrizko tamaina"
 
-#: plug-ins/print/gimp_main_window.c:1304
+#: plug-ins/print/gimp_main_window.c:1301
 msgid "Set the print size to the size of the image"
 msgstr "Ezarri inprimaketaren tamaina irudiaren tamaina berean"
 
-#: plug-ins/print/gimp_main_window.c:1327
+#: plug-ins/print/gimp_main_window.c:1324
 msgid "Image / Output Settings"
 msgstr "Irudiaren / Emaitzaren ezarpenak"
 
-#: plug-ins/print/gimp_main_window.c:1340
+#: plug-ins/print/gimp_main_window.c:1337
 msgid "Image Type:"
 msgstr "Irudi-mota:"
 
-#: plug-ins/print/gimp_main_window.c:1345
+#: plug-ins/print/gimp_main_window.c:1342
 msgid "Optimize the output for the type of image being printed"
 msgstr "Optimizatu emaitza inprimatuko den irudi-motarako"
 
-#: plug-ins/print/gimp_main_window.c:1349
+#: plug-ins/print/gimp_main_window.c:1346
 msgid "Line Art"
 msgstr "Trazatua"
 
-#: plug-ins/print/gimp_main_window.c:1356
+#: plug-ins/print/gimp_main_window.c:1353
 msgid "Fastest and brightest color for text and line art"
 msgstr "Testu eta trazatuetarako kolore bizkorrena eta biziena"
 
-#: plug-ins/print/gimp_main_window.c:1363
+#: plug-ins/print/gimp_main_window.c:1360
 msgid "Solid Colors"
 msgstr "Kolore lisoak"
 
-#: plug-ins/print/gimp_main_window.c:1370
+#: plug-ins/print/gimp_main_window.c:1367
 msgid "Best for images dominated by regions of solid color"
 msgstr "Kolore lisoko eskualdeak nagusi dituzten irudietarako onena"
 
-#: plug-ins/print/gimp_main_window.c:1378
+#: plug-ins/print/gimp_main_window.c:1375
 msgid "Photograph"
 msgstr "Argazkia"
 
-#: plug-ins/print/gimp_main_window.c:1386
+#: plug-ins/print/gimp_main_window.c:1383
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
@@ -11491,38 +11535,38 @@ msgstr ""
 "Mantsoena izan arren, kolore zehatzena eta leunena eskaintzen du tonu "
 "jarraituko irudietarako eta argazkietarako"
 
-#: plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/print/gimp_main_window.c:1409
 msgid "Output Type:"
 msgstr "Irteera-mota:"
 
-#: plug-ins/print/gimp_main_window.c:1417
+#: plug-ins/print/gimp_main_window.c:1414
 msgid "Select the desired output type"
 msgstr "Hautatu nahi duzun irteera-mota"
 
-#: plug-ins/print/gimp_main_window.c:1426
+#: plug-ins/print/gimp_main_window.c:1423
 msgid "Color output"
 msgstr "Kolore-irteera"
 
-#: plug-ins/print/gimp_main_window.c:1438
+#: plug-ins/print/gimp_main_window.c:1435
 msgid "Print in shades of gray using black ink"
 msgstr "Inprimatu tonu grisez, tinta beltza erabiliz"
 
-#: plug-ins/print/gimp_main_window.c:1445
+#: plug-ins/print/gimp_main_window.c:1442
 msgid "Black and White"
 msgstr "Zuri-beltzean"
 
-#: plug-ins/print/gimp_main_window.c:1452
+#: plug-ins/print/gimp_main_window.c:1449
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Inprimatu zuri-beltzean (kolorerik eta tonu grisik gabe)"
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1463
+#: plug-ins/print/gimp_main_window.c:1460
 msgid "Adjust Output..."
 msgstr "Doitu irteera..."
 
-#: plug-ins/print/gimp_main_window.c:1470
+#: plug-ins/print/gimp_main_window.c:1467
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
@@ -11650,28 +11694,28 @@ msgstr "Ez dago hautapenik bihurtzeko"
 msgid "Selection To Path Advanced Settings"
 msgstr "Hautapena bide-izenera: ezarpen aurreratuak"
 
-#: plug-ins/sgi/sgi.c:532
+#: plug-ins/sgi/sgi.c:539
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Ezin da '%s' idazteko ireki."
 
-#: plug-ins/sgi/sgi.c:614
+#: plug-ins/sgi/sgi.c:621
 msgid "Save as SGI"
 msgstr "Gorde SGI gisa"
 
-#: plug-ins/sgi/sgi.c:623
+#: plug-ins/sgi/sgi.c:630
 msgid "Compression Type"
 msgstr "Konprimatze-mota"
 
-#: plug-ins/sgi/sgi.c:627
+#: plug-ins/sgi/sgi.c:634
 msgid "No Compression"
 msgstr "Konprimatzerik ez"
 
-#: plug-ins/sgi/sgi.c:629
+#: plug-ins/sgi/sgi.c:636
 msgid "RLE Compression"
 msgstr "RLE konprimatzea"
 
-#: plug-ins/sgi/sgi.c:631
+#: plug-ins/sgi/sgi.c:638
 msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
@@ -11760,6 +11804,13 @@ msgstr "Errorea: Ezin da %s XJT propietate-fitxategia irakurri"
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Errorea: %s XJT propietate-fitxategia hutsik dago"
+
+#~ msgid "Preview (in image window, will modify image's undo history!)"
+#~ msgstr ""
+#~ "Aurrebista (irudiaren leihoan, irudiaren desegite-historia aldatuko du!)"
+
+#~ msgid "write error occured"
+#~ msgstr "errorea gertatu da idaztean"
 
 #~ msgid "Click here to load your file"
 #~ msgstr "Egin klik hemen fitxategia kargatzeko"

@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 1.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2003-03-19\n"
 "Last-Translator: Raphael Finkel <raphael@cs.uky.edu>\n"
 "Language-Team: Yiddish <raphael@cs.uky.edu>\n"
@@ -256,6 +256,14 @@ msgstr ""
 msgid "Highlights"
 msgstr ""
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -299,7 +307,7 @@ msgstr ""
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -419,7 +427,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:74
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -494,6 +502,20 @@ msgstr ""
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
@@ -1150,12 +1172,12 @@ msgid "Resize Item"
 msgstr ""
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr ""
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr ""
 
@@ -1186,7 +1208,7 @@ msgid "Cut"
 msgstr "שער"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "טעקסט"
 
@@ -1251,7 +1273,7 @@ msgstr ""
 msgid "Delete Layer"
 msgstr ""
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr ""
 
@@ -2034,37 +2056,37 @@ msgstr "טעקסט פֿאַרב"
 msgid "Rotate Layer"
 msgstr "טעקסט פֿאַרב"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr ""
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr ""
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr ""
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr ""
 
@@ -2218,7 +2240,7 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
+msgid "The horizontal image resolution."
 msgstr ""
 
 #: app/core/gimptemplate.c:155
@@ -2230,8 +2252,8 @@ msgstr ""
 msgid "pixel"
 msgstr ""
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr ""
 
@@ -3392,7 +3414,7 @@ msgid "/blendingfunction/_Curved"
 msgstr ""
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+msgid "/blendingfunction/_Sinusoidal"
 msgstr ""
 
 #: app/gui/gradient-editor-menu.c:183
@@ -5535,8 +5557,9 @@ msgid "Fit to Window"
 msgstr ""
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
-msgstr ""
+#, fuzzy
+msgid "Initial Zoom Ratio:"
+msgstr "סעלעקציע"
 
 #. Pointer Movement Feedback
 #: app/gui/preferences-dialog.c:1516
@@ -6144,7 +6167,7 @@ msgstr ""
 msgid "/_Delete Template"
 msgstr "מעק אַרױס"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr ""
@@ -7068,14 +7091,14 @@ msgstr ""
 msgid "Transform Tool procedures"
 msgstr ""
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
 "procedure '%s' not found"
 msgstr ""
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7134,12 +7157,12 @@ msgstr ""
 msgid "Querying plug-in: '%s'\n"
 msgstr ""
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr ""
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr ""
@@ -7185,7 +7208,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr ""
 
@@ -7831,8 +7854,9 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr ""
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
-msgstr ""
+#, fuzzy
+msgid "M_aster"
+msgstr "קלעפּ"
 
 #: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
@@ -7887,7 +7911,7 @@ msgstr "צופּאַסונג"
 msgid "Size:"
 msgstr "גרײס:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr ""
@@ -8041,11 +8065,11 @@ msgid "Add Guides"
 msgstr ""
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr ""
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr ""
 
@@ -8397,23 +8421,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr ""
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr ""
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr ""
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr ""
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9428,11 +9452,11 @@ msgstr ""
 msgid "Clear all Text"
 msgstr ""
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr ""
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr ""

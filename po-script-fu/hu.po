@@ -7,14 +7,14 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2004-05-29 19:10+0200\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2004-05-29 19:20+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Report-Msgid-Bugs-To: \n"
 
 #: plug-ins/script-fu/script-fu-console.c:141
 #: plug-ins/script-fu/script-fu-text-console.c:66
@@ -582,7 +582,9 @@ msgstr "Sugár"
 msgid ""
 "\n"
 "\t\t    SF-ADJUSTMENT _"
-msgstr "\n\t\t    SF-ADJUSTMENT _"
+msgstr ""
+"\n"
+"\t\t    SF-ADJUSTMENT _"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
@@ -618,7 +620,9 @@ msgstr "Szövegszín"
 msgid ""
 "\n"
 "\t\t    SF-COLOR      _"
-msgstr "\n\t\t    SF-COLOR      _"
+msgstr ""
+"\n"
+"\t\t    SF-COLOR      _"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."

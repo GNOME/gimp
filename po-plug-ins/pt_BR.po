@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-07 20:45+0200\n"
+"POT-Creation-Date: 2004-06-15 13:58+0200\n"
 "PO-Revision-Date: 2004-06-07 15:42-0300\n"
 "Last-Translator: João S. O. Bueno <gwidion@mpc.com.br>\n"
 "Language-Team: Brazilian Portuguese <gnome-l10n-br@listas.cipsga.org.br>\n"
@@ -431,7 +431,7 @@ msgstr "_Fractais"
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
-#: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
+#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
 #: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
@@ -476,7 +476,7 @@ msgstr "Salva parâmetros de fractal"
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
-#: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
+#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
@@ -3988,7 +3988,7 @@ msgstr "Salvar como GIF"
 msgid "GIF Options"
 msgstr "Opções de GIF"
 
-#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1215
 msgid "Interlace"
 msgstr "Entrelaçar"
 
@@ -4927,99 +4927,99 @@ msgstr "Parâmetros para borrar"
 msgid "_Angle:"
 msgstr "Â_ngulo:"
 
-#: plug-ins/common/mng.c:1187
+#: plug-ins/common/mng.c:1195
 msgid "Save as MNG"
 msgstr "Salvar como MNG"
 
-#: plug-ins/common/mng.c:1200
+#: plug-ins/common/mng.c:1208
 msgid "MNG Options"
 msgstr "Opções de MNG"
 
-#: plug-ins/common/mng.c:1219
+#: plug-ins/common/mng.c:1227
 msgid "Save Background Color"
 msgstr "Salvar Cor de Fundo"
 
-#: plug-ins/common/mng.c:1230
+#: plug-ins/common/mng.c:1238
 msgid "Save Gamma"
 msgstr "Salvar Gama"
 
-#: plug-ins/common/mng.c:1240
+#: plug-ins/common/mng.c:1248
 msgid "Save Resolution"
 msgstr "Resolução para Salvar"
 
-#: plug-ins/common/mng.c:1251
+#: plug-ins/common/mng.c:1259
 msgid "Save Creation Time"
 msgstr "Salvar Hora de Criação"
 
-#: plug-ins/common/mng.c:1276
+#: plug-ins/common/mng.c:1284
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1277
+#: plug-ins/common/mng.c:1285
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1286
+#: plug-ins/common/mng.c:1294
 msgid "PNG + Delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1287
+#: plug-ins/common/mng.c:1295
 msgid "JNG + Delta PNG"
 msgstr "JNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1288
+#: plug-ins/common/mng.c:1296
 msgid "All PNG"
 msgstr "Tudo PNG"
 
-#: plug-ins/common/mng.c:1289
+#: plug-ins/common/mng.c:1297
 msgid "All JNG"
 msgstr "Tudo JNG"
 
-#: plug-ins/common/mng.c:1295
+#: plug-ins/common/mng.c:1303
 msgid "Default Chunks Type:"
 msgstr "Tipo de Padrão de Blocos"
 
-#: plug-ins/common/mng.c:1303
+#: plug-ins/common/mng.c:1311
 msgid "Combine"
 msgstr "Combinar"
 
-#: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1312 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
 msgstr "Substituir"
 
-#: plug-ins/common/mng.c:1309
+#: plug-ins/common/mng.c:1317
 msgid "Default Frame Disposal:"
 msgstr "Disposição Padrão dos Quadros"
 
-#: plug-ins/common/mng.c:1321
+#: plug-ins/common/mng.c:1329
 msgid "PNG Compression Level:"
 msgstr "Nível de Compressão do PNG:"
 
-#: plug-ins/common/mng.c:1329 plug-ins/common/png.c:1683
+#: plug-ins/common/mng.c:1337 plug-ins/common/png.c:1683
 msgid "Choose a high compression level for small file size"
 msgstr "Escolha um nível de compressão alto para um tamanho menor de arquivo"
 
-#: plug-ins/common/mng.c:1343
+#: plug-ins/common/mng.c:1351
 msgid "JPEG Compression Quality:"
 msgstr "Qualidade da Compressão JPEG:"
 
-#: plug-ins/common/mng.c:1360
+#: plug-ins/common/mng.c:1368
 msgid "JPEG Smoothing Factor:"
 msgstr "Fator de Uniformização do JPEG"
 
-#: plug-ins/common/mng.c:1370
+#: plug-ins/common/mng.c:1378
 msgid "Animated MNG Options"
 msgstr "Opções de MNG Animado"
 
-#: plug-ins/common/mng.c:1377
+#: plug-ins/common/mng.c:1385
 msgid "Loop"
 msgstr "Repetir"
 
-#: plug-ins/common/mng.c:1391
+#: plug-ins/common/mng.c:1399
 msgid "Default Frame Delay:"
 msgstr "Duração Padrão dos Quadros:"
 
-#: plug-ins/common/mng.c:1407
+#: plug-ins/common/mng.c:1415
 msgid "milliseconds"
 msgstr "milissegundos"
 

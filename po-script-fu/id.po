@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2003-06-28 22:05+0700\n"
 "Last-Translator: Mohammad DAMT <mdamt@bisnisweb.com>\n"
 "Language-Team: Indonesian <sukarelawan@gnome.linux.or.id>\n"
@@ -1375,11 +1375,13 @@ msgid "Shadow Weight (%)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1422,22 +1424,26 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-23 11:55+0300\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2004-05-23 11:55+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -50,80 +50,80 @@ msgid "Script-Fu evaluate mode allows only noninteractive invocation"
 msgstr ""
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: plug-ins/script-fu/script-fu-scripts.c:1111
-#: plug-ins/script-fu/script-fu-scripts.c:1113
+#: plug-ins/script-fu/script-fu-scripts.c:1115
+#: plug-ins/script-fu/script-fu-scripts.c:1117
 msgid "/Script-Fu/"
 msgstr "/Script-Fu/"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1125
+#: plug-ins/script-fu/script-fu-scripts.c:1129
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1160
+#: plug-ins/script-fu/script-fu-scripts.c:1164
 msgid "About"
 msgstr "Apie"
 
 #. the script arguments frame
-#: plug-ins/script-fu/script-fu-scripts.c:1170
+#: plug-ins/script-fu/script-fu-scripts.c:1174
 msgid "Script Arguments"
 msgstr ""
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: plug-ins/script-fu/script-fu-scripts.c:1199
+#: plug-ins/script-fu/script-fu-scripts.c:1202
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1242
+#: plug-ins/script-fu/script-fu-scripts.c:1246
 msgid "Script-Fu Color Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1315
+#: plug-ins/script-fu/script-fu-scripts.c:1319
 msgid "Script-Fu File Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1319
+#: plug-ins/script-fu/script-fu-scripts.c:1323
 msgid "Script-Fu Folder Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1333
+#: plug-ins/script-fu/script-fu-scripts.c:1337
 msgid "Script-Fu Font Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1340
+#: plug-ins/script-fu/script-fu-scripts.c:1344
 msgid "Script-fu Pattern Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1346
+#: plug-ins/script-fu/script-fu-scripts.c:1350
 msgid "Script-Fu Gradient Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1353
+#: plug-ins/script-fu/script-fu-scripts.c:1357
 msgid "Script-Fu Brush Selection"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu-scripts.c:1931
+#: plug-ins/script-fu/script-fu-scripts.c:1942
 #: plug-ins/dbbrowser/dbbrowser_utils.c:486
 msgid "Author:"
 msgstr "Autorius:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1937
+#: plug-ins/script-fu/script-fu-scripts.c:1948
 #: plug-ins/dbbrowser/dbbrowser_utils.c:502
 msgid "Copyright:"
 msgstr "Autorinės teisės:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1943
+#: plug-ins/script-fu/script-fu-scripts.c:1954
 #: plug-ins/dbbrowser/dbbrowser_utils.c:494
 msgid "Date:"
 msgstr "Data:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1951
+#: plug-ins/script-fu/script-fu-scripts.c:1962
 msgid "Image Types:"
 msgstr "Paveikslėlių tipai:"
 
-#: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/script-fu/script-fu-scripts.c:1991
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -143,23 +143,19 @@ msgstr "Serverio prievadas:"
 msgid "Server Logfile:"
 msgstr "Serverio žurnalo byla:"
 
-#: plug-ins/script-fu/script-fu.c:123
-msgid "Script-Fu _Console"
-msgstr "Script-Fu _konsolė"
-
-#: plug-ins/script-fu/script-fu.c:130 plug-ins/script-fu/script-fu.c:160
-msgid "<Toolbox>/Xtns/Script-Fu"
+#: plug-ins/script-fu/script-fu.c:122
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:153
-msgid "_Start Server..."
+#: plug-ins/script-fu/script-fu.c:147
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:281 plug-ins/script-fu/script-fu.c:282
+#: plug-ins/script-fu/script-fu.c:271 plug-ins/script-fu/script-fu.c:272
 msgid "Re-read all available scripts"
 msgstr ""
 
-#: plug-ins/script-fu/script-fu.c:286
+#: plug-ins/script-fu/script-fu.c:276
 msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
 msgstr ""
 
@@ -1138,7 +1134,7 @@ msgid "Effect Size (pixels)"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "<Image>/Edit/Copy/Copy _Visible"
+msgid "<Image>/Edit/Copy _Visible"
 msgstr ""
 
 #: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -2413,3 +2409,6 @@ msgstr ""
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr ""
+
+#~ msgid "Script-Fu _Console"
+#~ msgstr "Script-Fu _konsolė"

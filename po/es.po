@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-06-04 14:32+0200\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2004-06-04 01:15+0200\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
@@ -279,7 +279,7 @@ msgstr "Azul"
 msgid "Alpha"
 msgstr "Alfa"
 
-#el sustantivo es 'interpolación' en femenino. FVD
+# el sustantivo es 'interpolación' en femenino. FVD
 #: app/base/base-enums.c:97
 msgid "None (Fastest)"
 msgstr "Ninguna (la más rápida)"
@@ -361,7 +361,7 @@ msgstr "No se puede expandir ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:423
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1378,12 +1378,12 @@ msgid "Resize Item"
 msgstr "Redimensionar elemento"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Añadir máscara de capa"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr "Aplicar máscara de capa"
 
@@ -1414,7 +1414,7 @@ msgid "Cut"
 msgstr "Cortar"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Texto"
 
@@ -1479,7 +1479,7 @@ msgstr "Nueva capa"
 msgid "Delete Layer"
 msgstr "Borrar la capa"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr "Borrar máscara de capa"
 
@@ -2295,40 +2295,40 @@ msgstr "Voltear la capa"
 msgid "Rotate Layer"
 msgstr "Rotar la capa"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "máscara %s"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "No se puede añadir una máscara a la capa dado que no es parte de una imagen."
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "No se puede añadir una máscara de capa dado que la capa ya posee una."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "No se puede añadir una máscara de capa a una capa sin canal alfa."
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "No se puede añadir una máscara de capa de dimensiones distintas a la capa "
 "especificada."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr "Transferir alfa a la mascara"
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr "Añadir un canal alfa"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr "Capa a tamaño de imagen"
 
@@ -7568,7 +7568,7 @@ msgstr ""
 "Fidel exporta gazpacho,\n"
 "jamón, kiwi, viñas y buques."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr "Añadir una capa de texto"
 
@@ -8796,23 +8796,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Crear una ruta desde el texto"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Añadir texto a la imagen"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr "/Herramientas/Te_xto"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr "Editor de textos de El GIMP"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr "Confirmar la edición del texto"
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9854,11 +9854,11 @@ msgstr "Cargar texto desde un archivo"
 msgid "Clear all Text"
 msgstr "Borrar todo el texto"
 
-#: app/widgets/gimptexteditor.c:367
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr "Abrir archivo de texto (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:452
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Datos UTF-8 inválidos en el archivo «%s»."

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-03 11:04+0200\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2004-05-03 11:12+0200\n"
 "Last-Translator: Runar Ingebrigtsen <ringe@skolelinux.no>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
@@ -24,7 +24,8 @@ msgid ""
 msgstr ""
 "GIMP er ikke korrekt installert for denne brukeren.\n"
 "Brukerinstallasjonen ble omgått fordi «--no-interface»-flagget ble brukt.\n"
-"For å gjennomføre brukerinstallasjonen, kjør GIMP uten «--no-interface»-flagget."
+"For å gjennomføre brukerinstallasjonen, kjør GIMP uten «--no-interface»-"
+"flagget."
 
 #: app/app_procs.c:225
 #, c-format
@@ -32,7 +33,10 @@ msgid ""
 "Unable to open a test swap file. To avoid data loss please check the "
 "location and permissions of the swap directory defined in your Preferences "
 "(currently \"%s\")."
-msgstr "Ikke i stand til å åpne en mellomlagerfilprøve. For å unngå tap av data, se etter at plassering og rettigheter er korrekt for mellomlagermappen som er angitt i dine brukervalg (for tiden «%s»)."
+msgstr ""
+"Ikke i stand til å åpne en mellomlagerfilprøve. For å unngå tap av data, se "
+"etter at plassering og rettigheter er korrekt for mellomlagermappen som er "
+"angitt i dine brukervalg (for tiden «%s»)."
 
 #: app/app_procs.c:281
 #, c-format
@@ -284,6 +288,14 @@ msgstr "Mellomtoner"
 msgid "Highlights"
 msgstr "Lyse toner"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -327,7 +339,7 @@ msgstr "Kan ikke utvide $(%s)"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -457,9 +469,10 @@ msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr "Dette er avstanden i piksler hvor guide- og gridtilpasning aktiveres."
 
 #: app/config/gimprc-blurbs.h:74
+#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -552,6 +565,20 @@ msgid ""
 msgstr ""
 "Generelt bare en sak for 8-bit-skjermer. Dette setter minimalt antall "
 "systemfarger som GIMP skal bruke."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1270,12 +1297,12 @@ msgid "Resize Item"
 msgstr "Endre objektstørrelse"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Legg til lagmaske"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr "Påfør lagmaske"
 
@@ -1305,7 +1332,7 @@ msgid "Cut"
 msgstr "Klipp ut"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Tekst"
 
@@ -1370,7 +1397,7 @@ msgstr "Nytt lag"
 msgid "Delete Layer"
 msgstr "Slett lag"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr "Slett lagmaske"
 
@@ -2161,39 +2188,39 @@ msgstr "Vend lag"
 msgid "Rotate Layer"
 msgstr "Roter lag"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s maske"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Kan ikke legge til lagmaske til lag som ikke er en del av et bilde."
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Kunne ikke legge til lagmaske siden laget allerede har en."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Kan ikke legge til lagmaske til et lag uten en gjennomsiktig kanal."
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Kan ikke legge til lagmaske med forskjellig dimensjon fra det spesifiserte "
 "laget."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr "Overfør gjennomsiktighet til maske"
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr "Legg til gjennomsiktig kanal"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr "Lag til bildestørrelse"
 
@@ -2352,7 +2379,8 @@ msgstr ""
 "Enheten som brukes på koordinater når ikke piksel-for-piksel-modus brukes."
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
+#, fuzzy
+msgid "The horizontal image resolution."
 msgstr "Endre horisontal bildeoppløsning"
 
 #: app/core/gimptemplate.c:155
@@ -2364,8 +2392,8 @@ msgstr "Endre vertikal bildeoppløsning"
 msgid "pixel"
 msgstr "piksel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:872
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "piksler"
 
@@ -3534,7 +3562,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/blandingsfunksjon/_Buet"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+#, fuzzy
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "/blandingsfunksjon/_Sinus"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -3792,6 +3821,7 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Skaleringsfeil: Både bredde og høyde må være større enn null."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_Fil"
@@ -3805,6 +3835,7 @@ msgid "/File/_Open..."
 msgstr "/Fil/Å_pne..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/Fil/Åpne _siste"
@@ -5632,7 +5663,8 @@ msgid "Fit to Window"
 msgstr "Tilpass til vinduet"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
+#, fuzzy
+msgid "Initial Zoom Ratio:"
 msgstr "Initiell zooming:"
 
 #. Pointer Movement Feedback
@@ -6085,6 +6117,7 @@ msgid "Original Width:"
 msgstr "Original bredde:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "Ny bredde:"
@@ -6912,6 +6945,7 @@ msgid "New Path Options"
 msgstr "Alternativer for ny bane"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Navn på bane:"
@@ -7224,7 +7258,7 @@ msgstr "Tekstprosedyrer"
 msgid "Transform Tool procedures"
 msgstr "Prosedyrer for omformingsverktøy"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7233,7 +7267,7 @@ msgstr ""
 "Feil ved PDB-kall:\n"
 "Prosedyre «%s» ikke funnet"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7353,7 +7387,7 @@ msgstr ""
 "bedre om calypso, watt \n"
 "og klær på vei hjem."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr "Legg til tekstlag"
 
@@ -7808,6 +7842,7 @@ msgid "Origin X:"
 msgstr "X opprinnelse:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8561,23 +8596,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Opprett bane fra tekst"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Legg tekst til bildet"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr "/Verktøy/Te_kst"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr "GIMP tekstredigering"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr "Bekreft tekstredigering"
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9610,11 +9645,11 @@ msgstr "Last tekst fra fil"
 msgid "Clear all Text"
 msgstr "Tøm all tekst"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr "Åpne tekstfil (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ugyldig UTF-8 data i fil «%s»."

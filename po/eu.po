@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2004-04-06 17:02+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@euskalgnu.org>\n"
 "Language-Team: Basque <itzulpena@euskalgnu.org>\n"
@@ -292,6 +292,14 @@ msgstr "Tarteko tonuak"
 msgid "Highlights"
 msgstr "Argi-ukituak"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -336,7 +344,7 @@ msgstr "Ezin da ${%s} zabaldu"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -464,9 +472,10 @@ msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:74
+#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -563,6 +572,20 @@ msgid ""
 msgstr ""
 "Orokorrean 8 biteko pantailentzat bakarrik da garrantzitsua; GIMPerako "
 "esleitutako sistema-koloreen gutxieneko kopurua ezartzen du."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1288,12 +1311,12 @@ msgid "Resize Item"
 msgstr "Aldatu irudia tamainaz"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Gehitu geruza-maskara"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr "Aplikatu geruza-maskara"
 
@@ -1323,7 +1346,7 @@ msgid "Cut"
 msgstr "Ebaki"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Testua"
 
@@ -1388,7 +1411,7 @@ msgstr "Geruza berria"
 msgid "Delete Layer"
 msgstr "Ezabatu geruza"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr "Ezabatu geruza-maskara"
 
@@ -2186,37 +2209,37 @@ msgstr "Irauli geruza"
 msgid "Rotate Layer"
 msgstr "Biratu geruza"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s maskara"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Ezin da geruza-maskara gehitu irudi baten zati ez den geruzari."
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Ezin da geruza-maskara gehitu, geruzak dagoeneko baduelako bat."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Ezin zaio geruza-maskara gehitu alfa kanalik ez duen geruzari."
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Ezin da aipatutako geruzaren neurriak ez dituen geruza-maskara gehitu."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr ""
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr "Gehitu alfa kanala"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr "Geruza irudi-tamainara"
 
@@ -2381,7 +2404,8 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
+#, fuzzy
+msgid "The horizontal image resolution."
 msgstr "Irudiaren bereizmen horizontala."
 
 #: app/core/gimptemplate.c:155
@@ -2393,8 +2417,8 @@ msgstr "Irudiaren bereizmen bertikala."
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "pixel"
 
@@ -3565,7 +3589,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/nahaste-funtzioa/_Kurbaduna"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+#, fuzzy
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "/nahaste-funtzioa/_Sinusoidala"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -5678,7 +5703,8 @@ msgid "Fit to Window"
 msgstr "Doitu leihora"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
+#, fuzzy
+msgid "Initial Zoom Ratio:"
 msgstr "Hasierako zoomaren erlazioa:"
 
 #. Pointer Movement Feedback
@@ -6275,7 +6301,7 @@ msgstr "/_Editatu txantiloia..."
 msgid "/_Delete Template"
 msgstr "/_Ezabatu txantiloia"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "'%s' idazten\n"
@@ -7282,7 +7308,7 @@ msgstr "Testu-prozedurak"
 msgid "Transform Tool procedures"
 msgstr "Eraldatze-tresnen prozedurak"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7291,7 +7317,7 @@ msgstr ""
 "PDB dei-errorea:\n"
 "'%s' prozedura ez da aurkitu"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7357,12 +7383,12 @@ msgstr "Plugin berriak kontsultatzen"
 msgid "Querying plug-in: '%s'\n"
 msgstr "plugin-a kontsultatzen: \"%s\"\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Plugin-ak abiarazten"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Plugin-a abiarazten: \"%s\"\n"
@@ -7410,7 +7436,7 @@ msgstr ""
 "Gure etxe berrian ez da urik sartzen\n"
 "ateri dagoenean."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr "Gehitu testu-geruza"
 
@@ -8046,7 +8072,8 @@ msgstr ""
 "Ñabardurak/Saturazioak RGB koloreko geruzetan bakarrik funtzionatzen du."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
+#, fuzzy
+msgid "M_aster"
 msgstr "_Maisua"
 
 #: app/tools/gimphuesaturationtool.c:264
@@ -8102,7 +8129,7 @@ msgstr "Doitzea"
 msgid "Size:"
 msgstr "Tamaina:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Angelua:"
@@ -8256,11 +8283,11 @@ msgid "Add Guides"
 msgstr "Gehitu gidak"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Neurtu distantziak eta angeluak"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Distantzia:"
 
@@ -8615,23 +8642,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Sortu bidea testutik"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Gehitu testua irudiari"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr "/Tresnak/Te_stua"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr "GIMP Testu-editorea"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9651,11 +9678,11 @@ msgstr "Kargatu testua fitxategitik"
 msgid "Clear all Text"
 msgstr "Garbitu testu osoa"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr "Ireki testu-fitxategia (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "UTF-8 datu baliogabeak '%s' fitxategian."

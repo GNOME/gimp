@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2004-04-12 22:20+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -294,6 +294,14 @@ msgstr "Полутона"
 msgid "Highlights"
 msgstr "Блики"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -337,7 +345,7 @@ msgstr "неверное расширение ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -470,9 +478,10 @@ msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:74
+#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -569,6 +578,20 @@ msgid ""
 msgstr ""
 "Эта настройка - для 8-битных мониторов. Она устанавливает минимальное "
 "количество системных цветов, предназначенных для GIMP."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1290,12 +1313,12 @@ msgid "Resize Item"
 msgstr "Изменить размер изображения"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Добавить маску слоя"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr "Применить маску слоя"
 
@@ -1326,7 +1349,7 @@ msgid "Cut"
 msgstr "Вырезать"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Текст"
 
@@ -1391,7 +1414,7 @@ msgstr "Новый слой"
 msgid "Delete Layer"
 msgstr "Удалить слой"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr "Удалить маску слоя"
 
@@ -2190,40 +2213,40 @@ msgstr "Отразить слой"
 msgid "Rotate Layer"
 msgstr "Вращать слой"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s маска"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Невозможно добавить маску слоя к слою, не являющемуся частью изображения."
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Не удалось добавить маску слоя, так как у слоя уже есть маска."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Невозможно добавить маску слоя к слою без альфа-канала."
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Невозможно добавить маску слоя, отличающуюся\n"
 " размерами от указанного слоя."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr "Преобразовать альфа-канал в маску"
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr "Добавить альфа-канал"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr "Слой к размеру изображения"
 
@@ -2398,7 +2421,8 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "Используется, если отключен режим \"Точка за точкой\""
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
+#, fuzzy
+msgid "The horizontal image resolution."
 msgstr "Измененить горизонтальное разрешение изображения"
 
 #: app/core/gimptemplate.c:155
@@ -2410,8 +2434,8 @@ msgstr "Измененить вертикальное разрешение из�
 msgid "pixel"
 msgstr "точка растра"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "точек растра"
 
@@ -3581,7 +3605,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/Функция смешивания/Кривая"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+#, fuzzy
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "/Функция смешивания/Синусоидальная"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -5693,7 +5718,8 @@ msgid "Fit to Window"
 msgstr "К размеру окна"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
+#, fuzzy
+msgid "Initial Zoom Ratio:"
 msgstr "Масштаб изображения:"
 
 #. Pointer Movement Feedback
@@ -6292,7 +6318,7 @@ msgstr "/Редактировать образец..."
 msgid "/_Delete Template"
 msgstr "/Удалить образец"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Запись '%s'\n"
@@ -7322,7 +7348,7 @@ msgstr "Текстовые процедуры"
 msgid "Transform Tool procedures"
 msgstr "Процедуры инструментов рисования"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7331,7 +7357,7 @@ msgstr ""
 "Ошибка вызова PDB:\n"
 "процедура '%s' не найдена"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7398,12 +7424,12 @@ msgstr "Запрос к новым дополнениям"
 msgid "Querying plug-in: '%s'\n"
 msgstr "запрос дополнения: '%s'\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Инициализация дополнений"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "инициализация дополнения: '%s'\n"
@@ -7451,7 +7477,7 @@ msgstr ""
 "В чащах юга жил-был цитрус.\n"
 "Да, но фальшивый экземпляръ!"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr "Добавить текстовый слой"
 
@@ -8091,7 +8117,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Тон-Насыщенность действует только слои в формате RGB."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
+#, fuzzy
+msgid "M_aster"
 msgstr "Мастер"
 
 #: app/tools/gimphuesaturationtool.c:264
@@ -8147,7 +8174,7 @@ msgstr "Выравнивание"
 msgid "Size:"
 msgstr "Размер:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Угол:"
@@ -8301,11 +8328,11 @@ msgid "Add Guides"
 msgstr "Добавить направляющие"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Измерение расстояний и углов"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Расстояние:"
 
@@ -8661,23 +8688,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Создать кривую из текста"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Добавить текст к изображению"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr "/Инструменты/Текст"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr "Редактор текста GIMP"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr "Подтвердитте изменение текста"
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9715,11 +9742,11 @@ msgstr "Загрузить текст из файла"
 msgid "Clear all Text"
 msgstr "Удалить текст"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr "Открыть текствый файл (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Недопустимая строка UTF-8 в файле'%s'."

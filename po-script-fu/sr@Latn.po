@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2004-01-23 12:55+0100\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@nongnu.org>\n"
@@ -1393,11 +1393,15 @@ msgid "Shadow Weight (%)"
 msgstr "Težina senke (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Gimp.org/Veliko zaglavlje..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Gimp.org/Malo zaglavlje..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1439,26 +1443,34 @@ msgid "Shadow Color"
 msgstr "Boja senke"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Gimp.org/Oznaka drugog dugmeta...."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Proširenja/Skript-Fu/Veb Teme/Gimp.Org/Oznaka trećeg dugmeta..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Gimp.org/Opšte oznake za valjke..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Proširenja/Skript-Fu/Veb teme/Gimp.org/Oznaka valjk. dugmeta..."
 

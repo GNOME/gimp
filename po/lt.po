@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-24 07:37+0300\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2004-05-24 07:44+0300\n"
 "Last-Translator: Žygimantas Beručka <uid0@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -336,7 +336,7 @@ msgstr "Negaliu išplėsti ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:423
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -622,8 +622,7 @@ msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr ""
-"Kai įjungta, visi piešimo įrankiai rodys esamo teptuko kontūro "
-"peržiūrą."
+"Kai įjungta, visi piešimo įrankiai rodys esamo teptuko kontūro peržiūrą."
 
 #: app/config/gimprc-blurbs.h:267
 msgid ""
@@ -1233,12 +1232,12 @@ msgid "Resize Item"
 msgstr "Keisti elemento dydį"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Pridėti sluoksnio kaukę"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr "Pritaikyti sluoksnio kaukę"
 
@@ -1268,7 +1267,7 @@ msgid "Cut"
 msgstr "Iškirpti"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Tekstas"
 
@@ -1333,7 +1332,7 @@ msgstr "Naujas sluoksnis"
 msgid "Delete Layer"
 msgstr "Ištrinti sluoksnį"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr "Ištrinti sluoksnio kaukę"
 
@@ -2139,44 +2138,44 @@ msgstr "Apsukti sluoksnį"
 msgid "Rotate Layer"
 msgstr "Pasukti sluoksnį"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s kaukė"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 #, fuzzy
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Neina pridėti sluoksnio kaukės prie sluoksnio,\n"
 "neturinčio alfa kanalo"
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Negalima pridėti sluoksnio kaukės, kadangi sluoksnis jau turi vieną."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "Negalima pridėti sluoksnio kaukės prie sluoksnio,\n"
 "neturinčio alfa kanalo"
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Negaliu pridėti sluoksnio kaukės, turinčios kitokius,\n"
 "nei pasirinkto sluoksnio, matmenis."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr "Transformuoti alfa į kaukę"
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr "Pridėti alfa kanalą"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr "Sluoksnio dydį prilyginti paveikslėlio dydžiui"
 
@@ -7485,7 +7484,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr "ĄąBbCcČčDdEeĘęĖėFfGgHhIiYyJjKkLlMmNnOoPpRrSsŠšTtUuŲųŪūVvZzŽž"
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr "Pridėti teksto sluoksnį"
 
@@ -8706,23 +8705,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Iš teksto sukurti kelią"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Rašyti tekstą paveikslėlyje"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr "/Įrankiai/Te_kstas"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr "GIMP teksto redaktorius"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9743,11 +9742,11 @@ msgstr "Įkrauti tekstą iš bylos"
 msgid "Clear all Text"
 msgstr "Išvalyti visą Tekstą"
 
-#: app/widgets/gimptexteditor.c:367
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr "Atidaryti UTF-8 teksto bylą"
 
-#: app/widgets/gimptexteditor.c:452
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Nekorektiški UTF-8 duomenys byloje %s."

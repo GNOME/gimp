@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2004-03-08 21:40+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
@@ -1392,11 +1392,15 @@ msgid "Shadow Weight (%)"
 msgstr "Quantidade Sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Ca_beçalho Grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr ""
 "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Cabeçalho Pe_queno..."
 
@@ -1439,29 +1443,37 @@ msgid "Shadow Color"
 msgstr "Cor da Sombra"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Etiqueta Rót_ulo Sub-"
 "Botão..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/_Etiqueta Rótulo Sub-Sub-"
 "Botão..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Etiquetas _Gerais "
 "Rótulos..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Etiqueta Ró_tulo Botão..."
 

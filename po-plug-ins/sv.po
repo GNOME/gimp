@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:58+0200\n"
 "PO-Revision-Date: 2004-03-19 20:50+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
@@ -63,10 +63,10 @@ msgstr "Om"
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
+#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
-#: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
+#: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
 #: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
@@ -426,18 +426,18 @@ msgstr "_Fraktaler"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
+#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
-#: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
+#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
-#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1168
+#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1795 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
@@ -472,18 +472,18 @@ msgstr "Spara fraktalparametrar"
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
+#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
-#: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
+#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:508 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -921,6 +921,26 @@ msgstr "Använd/använd inte realtidsförhandsgranskning"
 msgid "Preview Options"
 msgstr "Alternativ för förhandsgranskning"
 
+#: plug-ins/MapObject/mapobject_apply.c:273
+#, fuzzy
+msgid "Map to Plane..."
+msgstr "Laplace..."
+
+#: plug-ins/MapObject/mapobject_apply.c:276
+#, fuzzy
+msgid "Map to Sphere..."
+msgstr "Mer..."
+
+#: plug-ins/MapObject/mapobject_apply.c:279
+#, fuzzy
+msgid "Map to Box..."
+msgstr "Max RGB..."
+
+#: plug-ins/MapObject/mapobject_apply.c:282
+#, fuzzy
+msgid "Map to Cylinder..."
+msgstr "Cylinder"
+
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
 msgstr "<Image>/Filter/Mappa/Mappa _objekt..."
@@ -1066,22 +1086,22 @@ msgid "Back:"
 msgstr "Baksida:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:526
+#: plug-ins/print/gimp_main_window.c:523
 msgid "Top:"
 msgstr "Ovansida:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:567
+#: plug-ins/print/gimp_main_window.c:564
 msgid "Bottom:"
 msgstr "Undersida:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:513
+#: plug-ins/print/gimp_main_window.c:510
 msgid "Left:"
 msgstr "Vänster:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:539
+#: plug-ins/print/gimp_main_window.c:536
 msgid "Right:"
 msgstr "Höger:"
 
@@ -1119,7 +1139,7 @@ msgid "Images for the Cap Faces"
 msgstr "Bilder för ändarna"
 
 #: plug-ins/MapObject/mapobject_ui.c:1274
-#: plug-ins/print/gimp_main_window.c:1119
+#: plug-ins/print/gimp_main_window.c:1116
 msgid "Size"
 msgstr "Storlek"
 
@@ -1131,7 +1151,7 @@ msgstr "R_adie:"
 msgid "Cylinder radius"
 msgstr "Cylinderradie"
 
-#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:782
+#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:785
 msgid "L_ength:"
 msgstr "L_ängd:"
 
@@ -1190,7 +1210,7 @@ msgstr "Felaktig färgkarta"
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1228,10 +1248,10 @@ msgstr "Fel vid läsning av BMP-filhuvud från \"%s\""
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
-#: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
+#: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
+#: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
-#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
+#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:375
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
 msgstr "Bakgrund"
@@ -1255,13 +1275,13 @@ msgstr "Kan inte arbeta med okända bildtyper."
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
+#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1178
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1800
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
-#: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
+#: plug-ins/sgi/sgi.c:544 plug-ins/xjt/xjt.c:1691
 #, c-format
 msgid "Saving '%s'..."
 msgstr "Sparar \"%s\" ..."
@@ -1335,7 +1355,7 @@ msgid "Cos_ine"
 msgstr "Cos_inus"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2103
 msgid "_None"
 msgstr "_Ingen"
 
@@ -1609,7 +1629,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0,5 < x)"
 
 #: plug-ins/common/CML_explorer.c:202 plug-ins/common/sunras.c:1593
-#: plug-ins/print/gimp_main_window.c:1648
+#: plug-ins/print/gimp_main_window.c:1645
 msgid "Standard"
 msgstr "Standard"
 
@@ -2353,7 +2373,8 @@ msgid "_Spherical Map"
 msgstr "_Sfärisk karta"
 
 #: plug-ins/common/bumpmap.c:966
-msgid "S_inuosidal Map"
+#, fuzzy
+msgid "S_inusoidal Map"
 msgstr "S_inusformad karta"
 
 #. Compensate darkening
@@ -2555,7 +2576,7 @@ msgstr "Kolorera"
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
 #: plug-ins/common/postscript.c:2823 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
-#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1420
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
 msgstr "Färg"
 
@@ -2907,23 +2928,28 @@ msgstr "<Image>/Filter/Störningar/_Böj efter kurva..."
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Kan arbeta endast med lager (men aktiverades på en kanal eller mask)"
 
-#: plug-ins/common/curve_bend.c:734
+#: plug-ins/common/curve_bend.c:727
+#, fuzzy
+msgid "Cannot operate on layers with masks."
+msgstr "Kan inte arbeta med indexerade färgbilder."
+
+#: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
 msgstr "Kan inte arbeta med tomma urklipp."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1238
+#: plug-ins/common/curve_bend.c:1246
 msgid "Curve Bend"
 msgstr "Böj efter kurva"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1302
+#: plug-ins/common/curve_bend.c:1310
 msgid "_Preview Once"
 msgstr "_Förhandsgranska en gång"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1311
+#: plug-ins/common/curve_bend.c:1319
 msgid "Automatic Pre_view"
 msgstr "Automatisk _förhandsgranskning"
 
@@ -2931,109 +2957,109 @@ msgstr "Automatisk _förhandsgranskning"
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
+#: plug-ins/common/curve_bend.c:1329 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
 msgstr "Alternativ"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1336
+#: plug-ins/common/curve_bend.c:1344
 msgid "Rotat_e:"
 msgstr "R_otera:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1354
+#: plug-ins/common/curve_bend.c:1362
 msgid "Smoo_thing"
 msgstr "Ut_jämnande"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
+#: plug-ins/common/curve_bend.c:1372 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:534 plug-ins/common/ripple.c:451
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1374
+#: plug-ins/common/curve_bend.c:1382
 msgid "Work on Cop_y"
 msgstr "Arbeta med _kopian"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1384
+#: plug-ins/common/curve_bend.c:1392
 msgid "Modify Curves"
 msgstr "Ändra kurvor"
 
-#: plug-ins/common/curve_bend.c:1413
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve for Border"
 msgstr "Kurva för ram:"
 
-#: plug-ins/common/curve_bend.c:1417
+#: plug-ins/common/curve_bend.c:1425
 msgid "_Upper"
 msgstr "_Övre"
 
-#: plug-ins/common/curve_bend.c:1418
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Lower"
 msgstr "_Lägre"
 
-#: plug-ins/common/curve_bend.c:1428
+#: plug-ins/common/curve_bend.c:1436
 msgid "Curve Type"
 msgstr "kurvtyp:"
 
-#: plug-ins/common/curve_bend.c:1432
+#: plug-ins/common/curve_bend.c:1440
 msgid "Smoot_h"
 msgstr "_Jämn"
 
-#: plug-ins/common/curve_bend.c:1433
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Free"
 msgstr "_Ledigt"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1456
 msgid "_Copy"
 msgstr "_Kopiera"
 
-#: plug-ins/common/curve_bend.c:1453
+#: plug-ins/common/curve_bend.c:1461
 msgid "Copy the active curve to the other border"
 msgstr "Kopiera den aktiva kurvan till andra kanten"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1460
+#: plug-ins/common/curve_bend.c:1468
 msgid "_Mirror"
 msgstr "_Spegla"
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1473
 msgid "Mirror the active curve to the other border"
 msgstr "Spegla den aktiva kurvan på andra kanten"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1472
+#: plug-ins/common/curve_bend.c:1480
 msgid "S_wap"
 msgstr "Vä_xla"
 
-#: plug-ins/common/curve_bend.c:1477
+#: plug-ins/common/curve_bend.c:1485
 msgid "Swap the two curves"
 msgstr "Byt plats på kurvorna"
 
-#: plug-ins/common/curve_bend.c:1489
+#: plug-ins/common/curve_bend.c:1497
 msgid "Reset the active curve"
 msgstr "Återställ den aktiva kurvan"
 
-#: plug-ins/common/curve_bend.c:1506
+#: plug-ins/common/curve_bend.c:1514
 msgid "Load the curves from a file"
 msgstr "Läs in kurvorna från fil"
 
-#: plug-ins/common/curve_bend.c:1518
+#: plug-ins/common/curve_bend.c:1526
 msgid "Save the curves to a file"
 msgstr "Spara kurvorna till fil"
 
-#: plug-ins/common/curve_bend.c:2055
+#: plug-ins/common/curve_bend.c:2063
 msgid "Load Curve Points from file"
 msgstr "Ladda kurvlägen från fil"
 
-#: plug-ins/common/curve_bend.c:2082
+#: plug-ins/common/curve_bend.c:2090
 msgid "Save Curve Points to file"
 msgstr "Spara kurvälgen till fil"
 
-#: plug-ins/common/curve_bend.c:2980
+#: plug-ins/common/curve_bend.c:2988
 msgid "Curve Bend..."
 msgstr "Böj efter kurva..."
 
@@ -3340,7 +3366,7 @@ msgstr "Skapa _Histogram"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
 #: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
-#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:409
+#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3384,7 +3410,8 @@ msgid "Sc_attering:"
 msgstr "S_pridning:"
 
 #: plug-ins/common/diffraction.c:637
-msgid "Po_latization:"
+#, fuzzy
+msgid "Po_larization:"
 msgstr "Po_larisation:"
 
 #: plug-ins/common/diffraction.c:645
@@ -3528,7 +3555,7 @@ msgstr "_Begränsa linjebredd"
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
 #: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
 #: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
-#: plug-ins/common/tile.c:413 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Höjd:"
@@ -3663,7 +3690,8 @@ msgid "Image Selection"
 msgstr "Bildval"
 
 #: plug-ins/common/film.c:1352
-msgid "All Values are Fractions of the Film Heigh"
+#, fuzzy
+msgid "All Values are Fractions of the Film Height"
 msgstr "Alla värden är i delar av filmhöjden"
 
 #: plug-ins/common/film.c:1355
@@ -3779,7 +3807,7 @@ msgstr "IIR Gaussisk oskärpa"
 
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
 #: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:979
-#: plug-ins/sgi/sgi.c:520 plug-ins/xjt/xjt.c:1682
+#: plug-ins/sgi/sgi.c:527 plug-ins/xjt/xjt.c:1682
 msgid "Cannot operate on indexed color images."
 msgstr "Kan inte arbeta med indexerade färgbilder."
 
@@ -3962,7 +3990,7 @@ msgstr "Spara som GIF"
 msgid "GIF Options"
 msgstr "GIF-inställningar"
 
-#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1215
 msgid "Interlace"
 msgstr "Sammanflätning"
 
@@ -4025,8 +4053,8 @@ msgstr "Ickekvadratiska bildpunkter. Bilden kan se ihoptryckt ut."
 msgid "Background (%d%s)"
 msgstr "Bakgrund (%d%s)"
 
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:783
-#: plug-ins/common/iwarp.c:815
+#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "Bildruta %d"
@@ -4191,8 +4219,8 @@ msgstr "Skärningspunkt"
 
 #. Width and Height
 #: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
-#: plug-ins/print/gimp_main_window.c:1008
-#: plug-ins/print/gimp_main_window.c:1224
+#: plug-ins/print/gimp_main_window.c:1005
+#: plug-ins/print/gimp_main_window.c:1221
 msgid "Width:"
 msgstr "Bredd:"
 
@@ -4412,97 +4440,97 @@ msgstr "Läge _2"
 msgid "<Image>/Filters/Distorts/_IWarp..."
 msgstr "<Image>/Filter/Störningar/_IWarp..."
 
-#: plug-ins/common/iwarp.c:688
+#: plug-ins/common/iwarp.c:692
 msgid "Warping..."
 msgstr "Förvrider..."
 
-#: plug-ins/common/iwarp.c:790 plug-ins/common/iwarp.c:803
+#: plug-ins/common/iwarp.c:794 plug-ins/common/iwarp.c:807
 #, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Förvrider Bildruta %d..."
 
-#: plug-ins/common/iwarp.c:804
+#: plug-ins/common/iwarp.c:808
 msgid "Ping Pong"
 msgstr "Ping Pong"
 
-#: plug-ins/common/iwarp.c:984
+#: plug-ins/common/iwarp.c:989
 msgid "A_nimate"
 msgstr "A_nimera"
 
-#: plug-ins/common/iwarp.c:1004
+#: plug-ins/common/iwarp.c:1009
 msgid "Number of _Frames:"
 msgstr "Antal _bildrutor:"
 
-#: plug-ins/common/iwarp.c:1013
+#: plug-ins/common/iwarp.c:1018
 msgid "R_everse"
 msgstr "B_aklänges"
 
-#: plug-ins/common/iwarp.c:1022
+#: plug-ins/common/iwarp.c:1027
 msgid "_Ping Pong"
 msgstr "_Ping Pong"
 
-#: plug-ins/common/iwarp.c:1035
+#: plug-ins/common/iwarp.c:1040
 msgid "_Animate"
 msgstr "_Animera"
 
-#: plug-ins/common/iwarp.c:1063
+#: plug-ins/common/iwarp.c:1068
 msgid "_Deform Radius:"
 msgstr "_Deformationsradie:"
 
-#: plug-ins/common/iwarp.c:1073
+#: plug-ins/common/iwarp.c:1078
 msgid "D_eform Amount:"
 msgstr "D_eformationsmängd:"
 
-#: plug-ins/common/iwarp.c:1082
+#: plug-ins/common/iwarp.c:1087
 msgid "Deform Mode"
 msgstr "Deformationstyp"
 
-#: plug-ins/common/iwarp.c:1096
+#: plug-ins/common/iwarp.c:1101
 msgid "_Move"
 msgstr "_Flytta"
 
-#: plug-ins/common/iwarp.c:1097
+#: plug-ins/common/iwarp.c:1102
 msgid "_Grow"
 msgstr "_Väx"
 
-#: plug-ins/common/iwarp.c:1098
+#: plug-ins/common/iwarp.c:1103
 msgid "S_wirl CCW"
 msgstr "V_irvla moturs"
 
-#: plug-ins/common/iwarp.c:1099
+#: plug-ins/common/iwarp.c:1104
 msgid "Remo_ve"
 msgstr "Ta _bort"
 
-#: plug-ins/common/iwarp.c:1100
+#: plug-ins/common/iwarp.c:1105
 msgid "S_hrink"
 msgstr "K_rymp"
 
-#: plug-ins/common/iwarp.c:1101
+#: plug-ins/common/iwarp.c:1106
 msgid "Sw_irl CW"
 msgstr "Vi_rvla medurs"
 
-#: plug-ins/common/iwarp.c:1123
+#: plug-ins/common/iwarp.c:1128
 msgid "_Bilinear"
 msgstr "_Bilinjär"
 
-#: plug-ins/common/iwarp.c:1137
+#: plug-ins/common/iwarp.c:1142
 msgid "Adaptive S_upersample"
 msgstr "Adaptiv s_upersampling"
 
-#: plug-ins/common/iwarp.c:1158
+#: plug-ins/common/iwarp.c:1163
 msgid "Ma_x Depth:"
 msgstr "Ma_x djup:"
 
-#: plug-ins/common/iwarp.c:1168
+#: plug-ins/common/iwarp.c:1173
 msgid "Thresho_ld:"
 msgstr "Tröskel_värde:"
 
-#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:769
+#: plug-ins/common/iwarp.c:1186 plug-ins/common/sinus.c:769
 #: plug-ins/gflare/gflare.c:2795
 msgid "_Settings"
 msgstr "_Inställningar"
 
-#: plug-ins/common/iwarp.c:1198
+#: plug-ins/common/iwarp.c:1203
 msgid "IWarp"
 msgstr "IWarp"
 
@@ -4598,8 +4626,9 @@ msgid "Image Preview"
 msgstr "Förhandsgranska bild"
 
 #: plug-ins/common/jpeg.c:1702
-msgid "Preview (in image window, will modify image's undo history!)"
-msgstr "Förhandsgranska (i bildfönstret; ändrar bildens ångrahistorik!)"
+#, fuzzy
+msgid "Preview in image window"
+msgstr "Förhandsgranska (i bildfönstret)"
 
 #: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
@@ -4860,136 +4889,136 @@ msgstr "_Lås maximala kanalerna"
 msgid "Ho_ld the Minimal Channels"
 msgstr "L_ås minimala kanalerna"
 
-#: plug-ins/common/mblur.c:150
+#: plug-ins/common/mblur.c:153
 msgid "<Image>/Filters/Blur/_Motion Blur..."
 msgstr "<Image>/Filter/Suddigare/_Rörelseoskärpa..."
 
-#: plug-ins/common/mblur.c:673
+#: plug-ins/common/mblur.c:676
 msgid "Motion Blurring..."
 msgstr "Gör rörelseoskarp..."
 
-#: plug-ins/common/mblur.c:743
+#: plug-ins/common/mblur.c:746
 msgid "Motion Blur"
 msgstr "Rörelseoskärpa"
 
-#: plug-ins/common/mblur.c:757
+#: plug-ins/common/mblur.c:760
 msgid "Blur Type"
 msgstr "Oskärpetyp"
 
-#: plug-ins/common/mblur.c:761
+#: plug-ins/common/mblur.c:764
 msgid "_Linear"
 msgstr "_Linjär"
 
-#: plug-ins/common/mblur.c:762
+#: plug-ins/common/mblur.c:765
 msgid "_Radial"
 msgstr "_Radiell"
 
-#: plug-ins/common/mblur.c:763
+#: plug-ins/common/mblur.c:766
 msgid "_Zoom"
 msgstr "_Zooma"
 
-#: plug-ins/common/mblur.c:770
+#: plug-ins/common/mblur.c:773
 msgid "Blur Parameters"
 msgstr "Oskärpeinställningar"
 
-#: plug-ins/common/mblur.c:791 plug-ins/common/newsprint.c:1009
+#: plug-ins/common/mblur.c:794 plug-ins/common/newsprint.c:1009
 msgid "_Angle:"
 msgstr "_Vinkel:"
 
-#: plug-ins/common/mng.c:1187
+#: plug-ins/common/mng.c:1195
 msgid "Save as MNG"
 msgstr "Spara som MNG"
 
-#: plug-ins/common/mng.c:1200
+#: plug-ins/common/mng.c:1208
 msgid "MNG Options"
 msgstr "MNG-inställningar"
 
-#: plug-ins/common/mng.c:1219
+#: plug-ins/common/mng.c:1227
 msgid "Save Background Color"
 msgstr "Spara bakgrundsfärg"
 
-#: plug-ins/common/mng.c:1230
+#: plug-ins/common/mng.c:1238
 msgid "Save Gamma"
 msgstr "Spara gamma"
 
-#: plug-ins/common/mng.c:1240
+#: plug-ins/common/mng.c:1248
 msgid "Save Resolution"
 msgstr "Spara upplösning"
 
-#: plug-ins/common/mng.c:1251
+#: plug-ins/common/mng.c:1259
 msgid "Save Creation Time"
 msgstr "Spara skapad tid"
 
-#: plug-ins/common/mng.c:1276
+#: plug-ins/common/mng.c:1284
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1277
+#: plug-ins/common/mng.c:1285
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1286
+#: plug-ins/common/mng.c:1294
 msgid "PNG + Delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1287
+#: plug-ins/common/mng.c:1295
 msgid "JNG + Delta PNG"
 msgstr "JNG + Delta JNG"
 
-#: plug-ins/common/mng.c:1288
+#: plug-ins/common/mng.c:1296
 msgid "All PNG"
 msgstr "Alla PNG"
 
-#: plug-ins/common/mng.c:1289
+#: plug-ins/common/mng.c:1297
 msgid "All JNG"
 msgstr "Alla JNG"
 
-#: plug-ins/common/mng.c:1295
+#: plug-ins/common/mng.c:1303
 msgid "Default Chunks Type:"
 msgstr "Standarddeltyp:"
 
-#: plug-ins/common/mng.c:1303
+#: plug-ins/common/mng.c:1311
 msgid "Combine"
 msgstr "Kombinera"
 
 # src/dialogs.c:575 src/menus.c:362
-#: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1312 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
 msgstr "Ersätt"
 
-#: plug-ins/common/mng.c:1309
+#: plug-ins/common/mng.c:1317
 msgid "Default Frame Disposal:"
 msgstr "Standard bildruteplacering"
 
-#: plug-ins/common/mng.c:1321
+#: plug-ins/common/mng.c:1329
 msgid "PNG Compression Level:"
 msgstr "PNG kompressionsnivå:"
 
-#: plug-ins/common/mng.c:1329 plug-ins/common/png.c:1670
+#: plug-ins/common/mng.c:1337 plug-ins/common/png.c:1683
 msgid "Choose a high compression level for small file size"
 msgstr "Välj en hög komprimeringsnivå för liten filstorlek"
 
-#: plug-ins/common/mng.c:1343
+#: plug-ins/common/mng.c:1351
 msgid "JPEG Compression Quality:"
 msgstr "JPEG komprimeringskvalitet:"
 
-#: plug-ins/common/mng.c:1360
+#: plug-ins/common/mng.c:1368
 msgid "JPEG Smoothing Factor:"
 msgstr "JPEG utjämningsfaktor:"
 
-#: plug-ins/common/mng.c:1370
+#: plug-ins/common/mng.c:1378
 msgid "Animated MNG Options"
 msgstr "Inställningar för animerad MNG"
 
-#: plug-ins/common/mng.c:1377
+#: plug-ins/common/mng.c:1385
 msgid "Loop"
 msgstr "Loop"
 
-#: plug-ins/common/mng.c:1391
+#: plug-ins/common/mng.c:1399
 msgid "Default Frame Delay:"
 msgstr "Standard bildrutepaus:"
 
-#: plug-ins/common/mng.c:1407
+#: plug-ins/common/mng.c:1415
 msgid "milliseconds"
 msgstr "millisekunder"
 
@@ -5573,73 +5602,73 @@ msgid ""
 msgstr ""
 "PNG-filen anger ett offset som fick lagret att bli placerat utanför bilden."
 
-#: plug-ins/common/png.c:1153
+#: plug-ins/common/png.c:1156
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Fel vid sparande av \"%s\". Kunde inte spara bild."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1527
+#: plug-ins/common/png.c:1540
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Kunde inte spara transparens utan informationsförlust; sparar opacitet "
 "istället."
 
-#: plug-ins/common/png.c:1553
+#: plug-ins/common/png.c:1566
 msgid "Save as PNG"
 msgstr "Spara som PNG"
 
-#: plug-ins/common/png.c:1557
+#: plug-ins/common/png.c:1570
 msgid "_Load Defaults"
 msgstr "_Läs in standardvärden"
 
-#: plug-ins/common/png.c:1558
+#: plug-ins/common/png.c:1571
 msgid "_Save Defaults"
 msgstr "_Spara standardvärden"
 
 #. parameter settings
-#: plug-ins/common/png.c:1571 plug-ins/common/sample_colorize.c:1377
+#: plug-ins/common/png.c:1584 plug-ins/common/sample_colorize.c:1377
 msgid "Settings"
 msgstr "Inställningar"
 
-#: plug-ins/common/png.c:1584
+#: plug-ins/common/png.c:1597
 msgid "_Interlacing (Adam7)"
 msgstr "_Sammanflätning (Adam7)"
 
-#: plug-ins/common/png.c:1595
+#: plug-ins/common/png.c:1608
 msgid "Save _Background Color"
 msgstr "Spara _bakgrundsfärg"
 
-#: plug-ins/common/png.c:1603
+#: plug-ins/common/png.c:1616
 msgid "Save _Gamma"
 msgstr "Spara _gamma"
 
-#: plug-ins/common/png.c:1612
+#: plug-ins/common/png.c:1625
 msgid "Save Layer O_ffset"
 msgstr "Spara lager_offset"
 
-#: plug-ins/common/png.c:1621
+#: plug-ins/common/png.c:1634
 msgid "Save _Resolution"
 msgstr "Spara _upplösning"
 
-#: plug-ins/common/png.c:1630
+#: plug-ins/common/png.c:1643
 msgid "Save Creation _Time"
 msgstr "Spara skapad _tid"
 
-#: plug-ins/common/png.c:1638
+#: plug-ins/common/png.c:1651
 msgid "Save Comme_nt"
 msgstr "Spara _kommentar"
 
-#: plug-ins/common/png.c:1653
+#: plug-ins/common/png.c:1666
 msgid "Save Color _Values From Transparent Pixels"
 msgstr "Spara färg_värden från genomskinsliga bildpunkter"
 
-#: plug-ins/common/png.c:1666
+#: plug-ins/common/png.c:1679
 msgid "Co_mpression Level:"
 msgstr "Ko_mpressionsnivå"
 
-#: plug-ins/common/png.c:1786
+#: plug-ins/common/png.c:1799
 msgid "Could not load PNG defaults"
 msgstr "Kunde inte läsa in standardvärden för PNG"
 
@@ -5761,8 +5790,11 @@ msgstr "Fel vid uppstart av ghostrscript (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
-msgid "write error occured"
-msgstr "ett skrivfel har uppstått"
+#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
+#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
+#, fuzzy
+msgid "Write error occurred"
+msgstr "Skrivfel har inträffat"
 
 #: plug-ins/common/postscript.c:2733
 msgid "Load PostScript"
@@ -5775,7 +5807,7 @@ msgstr "Rendering"
 
 #. Resolution
 #: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
-#: plug-ins/print/gimp_main_window.c:1103
+#: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Upplösning:"
 
@@ -6474,7 +6506,8 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Ta_ggvinkel (-1: slumpmässig):"
 
 #: plug-ins/common/sparkle.c:411
-msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
+#, fuzzy
+msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
 msgstr "Justera taggvinkeln (-1 betyder att slumpmässig vinkel blir vald)"
 
 #: plug-ins/common/sparkle.c:419
@@ -6790,11 +6823,6 @@ msgstr "Kan inte arbeta med okända bildtyper"
 msgid "EOF encountered on reading"
 msgstr "Fick EOF under inläsning"
 
-#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
-#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-msgid "Write error occured"
-msgstr "Skrivfel har inträffat"
-
 #: plug-ins/common/sunras.c:1578
 msgid "Save as SUNRAS"
 msgstr "Spara som SUNRAS"
@@ -6839,8 +6867,8 @@ msgstr "Öppna SVG"
 msgid "Render Scalable Vector Graphics"
 msgstr "Rendera Scalable Vector Graphics"
 
-#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
-#: plug-ins/print/gimp_main_window.c:1237
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1022
+#: plug-ins/print/gimp_main_window.c:1234
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -6921,16 +6949,16 @@ msgstr "Tröskla alfa: färgar transparens..."
 msgid "Threshold Alpha"
 msgstr "Tröskla alfa"
 
-#: plug-ins/common/tiff.c:831
+#: plug-ins/common/tiff.c:833
 #, c-format
 msgid "Page %d"
 msgstr "Sida %d"
 
-#: plug-ins/common/tiff.c:846
+#: plug-ins/common/tiff.c:848
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: plug-ins/common/tiff.c:855
+#: plug-ins/common/tiff.c:857
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6942,7 +6970,7 @@ msgstr ""
 "så den blir konverterad åt dig. På grund av konverteringen kommer "
 "information att förloras."
 
-#: plug-ins/common/tiff.c:1930
+#: plug-ins/common/tiff.c:1936
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -6950,37 +6978,37 @@ msgstr ""
 "TIFF-formatet stöder endast kommentarer i\n"
 "7-bitars ASCII. Ingen kommentar sparad."
 
-#: plug-ins/common/tiff.c:2079
+#: plug-ins/common/tiff.c:2085
 msgid "Save as TIFF"
 msgstr "Spara som TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2093
+#: plug-ins/common/tiff.c:2099
 msgid "Compression"
 msgstr "Komprimering"
 
-#: plug-ins/common/tiff.c:2098
+#: plug-ins/common/tiff.c:2104
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2099
+#: plug-ins/common/tiff.c:2105
 msgid "_Pack Bits"
 msgstr "_Packa bitar"
 
-#: plug-ins/common/tiff.c:2100
+#: plug-ins/common/tiff.c:2106
 msgid "_Deflate"
 msgstr "_Packa ihop"
 
-#: plug-ins/common/tiff.c:2101
+#: plug-ins/common/tiff.c:2107
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: plug-ins/common/tiff.c:2110
+#: plug-ins/common/tiff.c:2116
 msgid "Save _color values from transparent pixels"
 msgstr "Spara färg_värden från genomskinsliga bildpunkter"
 
 # src/header_stuff.c:462
-#: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2131 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Kommentar:"
 
@@ -6993,16 +7021,16 @@ msgid "Tiling..."
 msgstr "Plattlägger..."
 
 # Osäker!
-#: plug-ins/common/tile.c:389
+#: plug-ins/common/tile.c:391
 msgid "Tile"
 msgstr "Plattlägg"
 
 #. parameter settings
-#: plug-ins/common/tile.c:399
+#: plug-ins/common/tile.c:401
 msgid "Tile to New Size"
 msgstr "Plattlägg till ny storlek"
 
-#: plug-ins/common/tile.c:423
+#: plug-ins/common/tile.c:425
 msgid "C_reate New Image"
 msgstr "S_kapa ny bild"
 
@@ -7195,7 +7223,8 @@ msgid "Create a new unit from scratch."
 msgstr "Skapa en ny enhet från början."
 
 #: plug-ins/common/uniteditor.c:563
-msgid "Create a new unit with the currently seleted unit as template."
+#, fuzzy
+msgid "Create a new unit with the currently selected unit as template."
 msgstr "Skapa en ny enhet med den markerade enheten som förlaga."
 
 #: plug-ins/common/unsharp.c:149
@@ -7579,25 +7608,25 @@ msgstr "<Image>/Redigera/Klistra in från urklipp"
 msgid "<Toolbox>/File/Acquire/From Clipboard"
 msgstr "<Toolbox>/Arkiv/Inhämta/Från urklipp"
 
-#: plug-ins/common/winclipboard.c:308
+#: plug-ins/common/winclipboard.c:325
 msgid "Copying..."
 msgstr "Kopierar..."
 
-#: plug-ins/common/winclipboard.c:471
+#: plug-ins/common/winclipboard.c:488
 msgid "Unsupported format or Clipboard empty!"
 msgstr "Format som inte stöds eller tomt urklipp!"
 
-#: plug-ins/common/winclipboard.c:482
+#: plug-ins/common/winclipboard.c:499
 msgid "Can't get Clipboard data."
 msgstr "Kan inte få urklipp"
 
 #. ??? gimp_image_convert_rgb (image_ID);
 #.
-#: plug-ins/common/winclipboard.c:564
+#: plug-ins/common/winclipboard.c:581
 msgid "Pasted"
 msgstr "Inklistrad"
 
-#: plug-ins/common/winclipboard.c:577
+#: plug-ins/common/winclipboard.c:594
 msgid "Pasting..."
 msgstr "Klistrar in..."
 
@@ -7673,40 +7702,40 @@ msgstr "_Styrka:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Högre värden ökar magnituden av effekten"
 
-#: plug-ins/common/winprint.c:186
+#: plug-ins/common/winprint.c:224
 msgid "<Image>/File/_Print"
 msgstr "<Image>/Arkiv/_Skriv ut"
 
-#: plug-ins/common/winprint.c:198
+#: plug-ins/common/winprint.c:236
 msgid "<Image>/File/Page Setup"
 msgstr "<Image>/Arkiv/Sidegenskaper"
 
-#: plug-ins/common/winprint.c:300
+#: plug-ins/common/winprint.c:338
 #, c-format
 msgid "PrintDlg failed: %d"
 msgstr "PrintDlg misslyckades: %d"
 
-#: plug-ins/common/winprint.c:336
+#: plug-ins/common/winprint.c:374
 msgid "Printer doesn't support bitmaps"
 msgstr "Skrivaren stöder inte bitmaps"
 
-#: plug-ins/common/winprint.c:378
+#: plug-ins/common/winprint.c:415
 msgid "StartPage failed"
 msgstr "StartPage misslyckades"
 
-#: plug-ins/common/winprint.c:387 plug-ins/print/print-image-gimp.c:320
+#: plug-ins/common/winprint.c:424 plug-ins/print/print-image-gimp.c:320
 msgid "Printing..."
 msgstr "Skriver ut..."
 
-#: plug-ins/common/winprint.c:419
+#: plug-ins/common/winprint.c:456
 msgid "CreateDIBSection failed"
 msgstr "CreateDIBSection misslyckades"
 
-#: plug-ins/common/winprint.c:453
+#: plug-ins/common/winprint.c:492
 msgid "SetStretchBltMode failed (warning only)"
 msgstr "SetStretchBltMode misslyckades (bara en varning)"
 
-#: plug-ins/common/winprint.c:516
+#: plug-ins/common/winprint.c:555
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
@@ -7715,11 +7744,11 @@ msgstr ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) "
 "misslyckades, fel = %d, y = %d"
 
-#: plug-ins/common/winprint.c:545
+#: plug-ins/common/winprint.c:584
 msgid "EndPage failed"
 msgstr "EndPage misslyckades"
 
-#: plug-ins/common/winprint.c:592
+#: plug-ins/common/winprint.c:631
 #, c-format
 msgid "PageSetupDlg failed: %d"
 msgstr "PageSetupDlg misslyckades: %d"
@@ -8335,7 +8364,7 @@ msgid "Anti-Clockwise"
 msgstr "Moturs"
 
 #: plug-ins/gfig/gfig.c:1420 plug-ins/gimpressionist/orientation.c:100
-#: plug-ins/print/gimp_main_window.c:499
+#: plug-ins/print/gimp_main_window.c:496
 msgid "Orientation:"
 msgstr "Orientering:"
 
@@ -8847,7 +8876,8 @@ msgid "XY Position:"
 msgstr "XY-position:"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-msgid "Spiral Number of Points"
+#, fuzzy
+msgid "Spiral Number of Turns"
 msgstr "Spiral antal punkter"
 
 #: plug-ins/gfig/gfig-star.c:56
@@ -9371,13 +9401,18 @@ msgid "Start angle:"
 msgstr "Startvinkel:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#: plug-ins/gimpressionist/orientation.c:90
-msgid "The angle of the first brush to create"
+#, fuzzy
+msgid "The starting angle of the first brush to create"
 msgstr "Vinkeln på den första skapade penseln"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Vinkelomfång:"
+
+#: plug-ins/gimpressionist/orientation.c:90
+#, fuzzy
+msgid "The angle span of the first brush to create"
+msgstr "Vinkeln på den första skapade penseln"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -9826,20 +9861,20 @@ msgstr ""
 msgid "GIMP Help Browser"
 msgstr "GIMP hjälpläsare"
 
-#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<Namnlös>"
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Document Not Found"
 msgstr "Dokumentet kunde inte hittas"
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid "Could not locate help document"
 msgstr "Kunde inte hitta hjälpdokument"
 
-#: plug-ins/helpbrowser/dialog.c:537
+#: plug-ins/helpbrowser/dialog.c:539
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -9929,7 +9964,7 @@ msgstr "Sträck ut"
 msgid "Render Options"
 msgstr "Renderingsinställningar"
 
-#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:484
 msgid "Auto"
 msgstr "Auto"
 
@@ -10505,7 +10540,7 @@ msgstr "Områdeslista"
 msgid "Source..."
 msgstr "Källa..."
 
-#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1431
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1428
 msgid "Grayscale"
 msgstr "Gråskala"
 
@@ -10824,6 +10859,12 @@ msgstr "<Image>/Filter/Rendera/Mönster/_Labyrint..."
 msgid "Drawing Maze..."
 msgstr "Ritar labyrint..."
 
+#. $Id$
+#: plug-ins/maze/maze.h:2
+#, fuzzy
+msgid "Maze"
+msgstr "Marmorering"
+
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
 msgid "Width (Pixels):"
@@ -11069,7 +11110,7 @@ msgstr ""
 "Om du klickar på en annan knapp under flytten, återgår bilden till sin "
 "ursprungliga plats."
 
-#: plug-ins/print/gimp_main_window.c:484
+#: plug-ins/print/gimp_main_window.c:485
 msgid "Portrait"
 msgstr "Stående"
 
@@ -11077,124 +11118,124 @@ msgstr "Stående"
 msgid "Landscape"
 msgstr "Liggande"
 
-#: plug-ins/print/gimp_main_window.c:488
+#: plug-ins/print/gimp_main_window.c:487
 msgid "Upside down"
 msgstr "Upp och ner"
 
-#: plug-ins/print/gimp_main_window.c:490
+#: plug-ins/print/gimp_main_window.c:488
 msgid "Seascape"
 msgstr "Liggande upp och ner"
 
-#: plug-ins/print/gimp_main_window.c:494
+#: plug-ins/print/gimp_main_window.c:491
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
 msgstr ""
 "Välj orientering: stående, liggande, upp och ner eller liggande upp och ner"
 
-#: plug-ins/print/gimp_main_window.c:517
+#: plug-ins/print/gimp_main_window.c:514
 msgid "Distance from the left of the paper to the image"
 msgstr "Avstånd från vänstra papperskanten till bilden"
 
-#: plug-ins/print/gimp_main_window.c:530
+#: plug-ins/print/gimp_main_window.c:527
 msgid "Distance from the top of the paper to the image"
 msgstr "Avstånd från övre papperskanten till bilden"
 
-#: plug-ins/print/gimp_main_window.c:543
+#: plug-ins/print/gimp_main_window.c:540
 msgid "Distance from the left of the paper to the right of the image"
 msgstr "Avstånd från vänstra papperskanten till bildens högrerkant"
 
-#: plug-ins/print/gimp_main_window.c:553
+#: plug-ins/print/gimp_main_window.c:550
 msgid "Right Border:"
 msgstr "Högerkant:"
 
-#: plug-ins/print/gimp_main_window.c:557
+#: plug-ins/print/gimp_main_window.c:554
 msgid "Distance from the right of the paper to the image"
 msgstr "Avstånd från högra papperskanten till bilden"
 
-#: plug-ins/print/gimp_main_window.c:571
+#: plug-ins/print/gimp_main_window.c:568
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr "Avstånd från övre papperskanten till bildens nederkant"
 
-#: plug-ins/print/gimp_main_window.c:581
+#: plug-ins/print/gimp_main_window.c:578
 msgid "Bottom Border:"
 msgstr "Nederkant:"
 
-#: plug-ins/print/gimp_main_window.c:585
+#: plug-ins/print/gimp_main_window.c:582
 msgid "Distance from the bottom of the paper to the image"
 msgstr "Avstånd från nedre papperskanten till nederkanten på bilden"
 
-#: plug-ins/print/gimp_main_window.c:602
+#: plug-ins/print/gimp_main_window.c:599
 msgid "Center:"
 msgstr "Mittpunkt:"
 
-#: plug-ins/print/gimp_main_window.c:606
+#: plug-ins/print/gimp_main_window.c:603
 msgid "Vertically"
 msgstr "Vertikalt"
 
-#: plug-ins/print/gimp_main_window.c:611
+#: plug-ins/print/gimp_main_window.c:608
 msgid "Center the image vertically on the paper"
 msgstr "Centrera bilden vertikalt på papperet"
 
 # src/dialogs.c:502 src/dialogs.c:600
-#: plug-ins/print/gimp_main_window.c:617
+#: plug-ins/print/gimp_main_window.c:614
 msgid "Both"
 msgstr "Både och"
 
-#: plug-ins/print/gimp_main_window.c:622
+#: plug-ins/print/gimp_main_window.c:619
 msgid "Center the image on the paper"
 msgstr "Centrera bilden på papperet"
 
-#: plug-ins/print/gimp_main_window.c:629
+#: plug-ins/print/gimp_main_window.c:626
 msgid "Horizontally"
 msgstr "Vågrätt"
 
-#: plug-ins/print/gimp_main_window.c:634
+#: plug-ins/print/gimp_main_window.c:631
 msgid "Center the image horizontally on the paper"
 msgstr "Centrera bilden horisontellt på papperet"
 
-#: plug-ins/print/gimp_main_window.c:650
+#: plug-ins/print/gimp_main_window.c:647
 msgid "Setup Printer"
 msgstr "Ställ in skrivare"
 
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:680 plug-ins/print/gimp_main_window.c:942
+#: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:939
 msgid "Printer Model:"
 msgstr "Skrivarmodell:"
 
-#: plug-ins/print/gimp_main_window.c:692
+#: plug-ins/print/gimp_main_window.c:689
 msgid "Select your printer model"
 msgstr "Välj din skrivarmodell"
 
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:731
+#: plug-ins/print/gimp_main_window.c:728
 msgid "PPD File:"
 msgstr "PPD-fil:"
 
-#: plug-ins/print/gimp_main_window.c:747
+#: plug-ins/print/gimp_main_window.c:744
 msgid "Enter the correct PPD filename for your printer"
 msgstr "Ange det korrekta PPD-filnamnet för din skrivare"
 
-#: plug-ins/print/gimp_main_window.c:750
+#: plug-ins/print/gimp_main_window.c:747
 msgid "Browse"
 msgstr "Bläddra"
 
-#: plug-ins/print/gimp_main_window.c:756
+#: plug-ins/print/gimp_main_window.c:753
 msgid "Choose the correct PPD filename for your printer"
 msgstr "Välj det korrekta PPD-filnamnet för din skrivare"
 
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:766
+#: plug-ins/print/gimp_main_window.c:763
 msgid "Command:"
 msgstr "Kommando:"
 
-#: plug-ins/print/gimp_main_window.c:779
+#: plug-ins/print/gimp_main_window.c:776
 msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
@@ -11207,38 +11248,38 @@ msgstr ""
 #.
 #. * Output file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:788
+#: plug-ins/print/gimp_main_window.c:785
 msgid "Print To File?"
 msgstr "Skriv ut till fil?"
 
 #.
 #. * PPD file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:801
+#: plug-ins/print/gimp_main_window.c:798
 msgid "PPD File?"
 msgstr "PPD-fil?"
 
-#: plug-ins/print/gimp_main_window.c:819
+#: plug-ins/print/gimp_main_window.c:816
 msgid "Define New Printer"
 msgstr "Skapa ny skrivare"
 
-#: plug-ins/print/gimp_main_window.c:842 plug-ins/print/gimp_main_window.c:937
+#: plug-ins/print/gimp_main_window.c:839 plug-ins/print/gimp_main_window.c:934
 msgid "Printer Name:"
 msgstr "Skrivarnamn:"
 
-#: plug-ins/print/gimp_main_window.c:846
+#: plug-ins/print/gimp_main_window.c:843
 msgid "Enter the name you wish to give this logical printer"
 msgstr "Ange namnet du vill tilldela till den logiska skrivaren"
 
-#: plug-ins/print/gimp_main_window.c:859
+#: plug-ins/print/gimp_main_window.c:856
 msgid "About Gimp-Print "
 msgstr "Om Gimp-Print "
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid "Gimp-Print Version "
 msgstr "Gimp-Print version "
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid ""
 "\n"
 "\n"
@@ -11280,11 +11321,11 @@ msgstr ""
 "med detta program. Om inte, skriv till Free Software Foundation,\n"
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.\n"
 
-#: plug-ins/print/gimp_main_window.c:920
+#: plug-ins/print/gimp_main_window.c:917
 msgid "Printer Settings"
 msgstr "Skrivarinställningar"
 
-#: plug-ins/print/gimp_main_window.c:933
+#: plug-ins/print/gimp_main_window.c:930
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
@@ -11295,11 +11336,11 @@ msgstr ""
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:953
+#: plug-ins/print/gimp_main_window.c:950
 msgid "Setup Printer..."
 msgstr "Ställ in skrivare..."
 
-#: plug-ins/print/gimp_main_window.c:955
+#: plug-ins/print/gimp_main_window.c:952
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -11310,11 +11351,11 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:970
+#: plug-ins/print/gimp_main_window.c:967
 msgid "New Printer..."
 msgstr "Ny skrivare..."
 
-#: plug-ins/print/gimp_main_window.c:972
+#: plug-ins/print/gimp_main_window.c:969
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
@@ -11322,63 +11363,68 @@ msgstr ""
 "Skapa en ny logisk skrivare. Detta kan användas för att namge en uppsättning "
 "inställningar du vill spara för framtida användning."
 
-#: plug-ins/print/gimp_main_window.c:993
+#: plug-ins/print/gimp_main_window.c:990
 msgid "Size of paper that you wish to print to"
 msgstr "Pappersstorlek du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:996
+#: plug-ins/print/gimp_main_window.c:993
 msgid "Media Size:"
 msgstr "Mediastorlek:"
 
-#: plug-ins/print/gimp_main_window.c:1005
+#: plug-ins/print/gimp_main_window.c:1002
 msgid "Dimensions:"
 msgstr "Storlekar:"
 
-#: plug-ins/print/gimp_main_window.c:1019
+#: plug-ins/print/gimp_main_window.c:1016
 msgid "Width of the paper that you wish to print to"
 msgstr "Bredd på papperet du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:1036
+#: plug-ins/print/gimp_main_window.c:1033
 msgid "Height of the paper that you wish to print to"
 msgstr "Längd på papperet du vill skriva ut på"
 
-#: plug-ins/print/gimp_main_window.c:1052
+#: plug-ins/print/gimp_main_window.c:1049
 msgid "Type of media you're printing to"
 msgstr "Mediatyp du skriver till"
 
-#: plug-ins/print/gimp_main_window.c:1055
+#: plug-ins/print/gimp_main_window.c:1052
 msgid "Media Type:"
 msgstr "Mediatyp:"
 
-#: plug-ins/print/gimp_main_window.c:1068
+#: plug-ins/print/gimp_main_window.c:1065
 msgid "Source (input slot) of media you're printing to"
 msgstr "Källa (pappersfack) för media du skriver på"
 
-#: plug-ins/print/gimp_main_window.c:1071
+#: plug-ins/print/gimp_main_window.c:1068
 msgid "Media Source:"
 msgstr "Mediakälla:"
 
-#: plug-ins/print/gimp_main_window.c:1084
+#: plug-ins/print/gimp_main_window.c:1081
 msgid "Type of ink in the printer"
 msgstr "Bläcksort i skrivaren"
 
-#: plug-ins/print/gimp_main_window.c:1087
+#: plug-ins/print/gimp_main_window.c:1084
 msgid "Ink Type:"
 msgstr "Bläcksort:"
 
-#: plug-ins/print/gimp_main_window.c:1100
+#: plug-ins/print/gimp_main_window.c:1097
 msgid "Resolution and quality of the print"
 msgstr "Upplösning och kvalitet på utskriften"
 
-#: plug-ins/print/gimp_main_window.c:1139
+#: plug-ins/print/gimp_main_window.c:1136
 msgid "Scaling:"
 msgstr "Skalning:"
 
-#: plug-ins/print/gimp_main_window.c:1145
+#: plug-ins/print/gimp_main_window.c:1142
 msgid "Set the scale (size) of the image"
 msgstr "Sätt skalan (storleken) på bilden"
 
-#: plug-ins/print/gimp_main_window.c:1178
+#: plug-ins/print/gimp_main_window.c:1170
+#, fuzzy
+msgid "Scale by:"
+msgstr "Skala Z:"
+
+#: plug-ins/print/gimp_main_window.c:1175
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
@@ -11386,58 +11432,58 @@ msgstr ""
 "Välj om skalan mäts i procent av pappersstorleken eller i antal punkter per "
 "tum vid utskriften"
 
-#: plug-ins/print/gimp_main_window.c:1183
+#: plug-ins/print/gimp_main_window.c:1180
 msgid "Percent"
 msgstr "Procent"
 
-#: plug-ins/print/gimp_main_window.c:1190
+#: plug-ins/print/gimp_main_window.c:1187
 msgid "Scale the print to the size of the page"
 msgstr "Skala utskriften till papperets storlek"
 
-#: plug-ins/print/gimp_main_window.c:1196
+#: plug-ins/print/gimp_main_window.c:1193
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/gimp_main_window.c:1202
+#: plug-ins/print/gimp_main_window.c:1199
 msgid "Scale the print to the number of dots per inch"
 msgstr "Skala utskriften till antal punkter per tum"
 
-#: plug-ins/print/gimp_main_window.c:1228
+#: plug-ins/print/gimp_main_window.c:1225
 msgid "Set the width of the print"
 msgstr "Sätt utskriftens bredd"
 
-#: plug-ins/print/gimp_main_window.c:1241
+#: plug-ins/print/gimp_main_window.c:1238
 msgid "Set the height of the print"
 msgstr "Sätt utskriftens höjd"
 
-#: plug-ins/print/gimp_main_window.c:1261
+#: plug-ins/print/gimp_main_window.c:1258
 msgid "Units:"
 msgstr "Enheter:"
 
-#: plug-ins/print/gimp_main_window.c:1266
+#: plug-ins/print/gimp_main_window.c:1263
 msgid "Select the base unit of measurement for printing"
 msgstr "Sätt måttenheten för utskrifter"
 
-#: plug-ins/print/gimp_main_window.c:1269
+#: plug-ins/print/gimp_main_window.c:1266
 msgid "Inch"
 msgstr "tum"
 
-#: plug-ins/print/gimp_main_window.c:1276
+#: plug-ins/print/gimp_main_window.c:1273
 msgid "Set the base unit of measurement to inches"
 msgstr "Sätt måttenheten till tum"
 
-#: plug-ins/print/gimp_main_window.c:1282
+#: plug-ins/print/gimp_main_window.c:1279
 msgid "cm"
 msgstr "cm"
 
-#: plug-ins/print/gimp_main_window.c:1288
+#: plug-ins/print/gimp_main_window.c:1285
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Sätt måttenheten till centimeter"
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1298
+#: plug-ins/print/gimp_main_window.c:1295
 msgid ""
 "Use Original\n"
 "Image Size"
@@ -11445,43 +11491,43 @@ msgstr ""
 "Använd ursprunglig\n"
 "bildstorlek"
 
-#: plug-ins/print/gimp_main_window.c:1304
+#: plug-ins/print/gimp_main_window.c:1301
 msgid "Set the print size to the size of the image"
 msgstr "Sätt utskriftsstorleken till bildens storlek"
 
-#: plug-ins/print/gimp_main_window.c:1327
+#: plug-ins/print/gimp_main_window.c:1324
 msgid "Image / Output Settings"
 msgstr "Bild / utmatningsinställningar"
 
-#: plug-ins/print/gimp_main_window.c:1340
+#: plug-ins/print/gimp_main_window.c:1337
 msgid "Image Type:"
 msgstr "Bildtyp:"
 
-#: plug-ins/print/gimp_main_window.c:1345
+#: plug-ins/print/gimp_main_window.c:1342
 msgid "Optimize the output for the type of image being printed"
 msgstr "Optimera utskriften för bildtypen"
 
-#: plug-ins/print/gimp_main_window.c:1349
+#: plug-ins/print/gimp_main_window.c:1346
 msgid "Line Art"
 msgstr "Linjegrafik"
 
-#: plug-ins/print/gimp_main_window.c:1356
+#: plug-ins/print/gimp_main_window.c:1353
 msgid "Fastest and brightest color for text and line art"
 msgstr "Snabbast, och med ljusaste färg för text och linjegrafik"
 
-#: plug-ins/print/gimp_main_window.c:1363
+#: plug-ins/print/gimp_main_window.c:1360
 msgid "Solid Colors"
 msgstr "Enstaka färger"
 
-#: plug-ins/print/gimp_main_window.c:1370
+#: plug-ins/print/gimp_main_window.c:1367
 msgid "Best for images dominated by regions of solid color"
 msgstr "Bästa val för bilder med stora områden med enstaka färger"
 
-#: plug-ins/print/gimp_main_window.c:1378
+#: plug-ins/print/gimp_main_window.c:1375
 msgid "Photograph"
 msgstr "Fotografi"
 
-#: plug-ins/print/gimp_main_window.c:1386
+#: plug-ins/print/gimp_main_window.c:1383
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
@@ -11489,38 +11535,38 @@ msgstr ""
 "Långsammast, men noggrannast och med mjukaste färg för mjukt graderade "
 "bilder och fotografier"
 
-#: plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/print/gimp_main_window.c:1409
 msgid "Output Type:"
 msgstr "Utdatatyp:"
 
-#: plug-ins/print/gimp_main_window.c:1417
+#: plug-ins/print/gimp_main_window.c:1414
 msgid "Select the desired output type"
 msgstr "Välj den önskade utskriftstypen"
 
-#: plug-ins/print/gimp_main_window.c:1426
+#: plug-ins/print/gimp_main_window.c:1423
 msgid "Color output"
 msgstr "Färgutskrift"
 
-#: plug-ins/print/gimp_main_window.c:1438
+#: plug-ins/print/gimp_main_window.c:1435
 msgid "Print in shades of gray using black ink"
 msgstr "Skriv ut i gråskala med svart bläck"
 
-#: plug-ins/print/gimp_main_window.c:1445
+#: plug-ins/print/gimp_main_window.c:1442
 msgid "Black and White"
 msgstr "Svart och vitt"
 
-#: plug-ins/print/gimp_main_window.c:1452
+#: plug-ins/print/gimp_main_window.c:1449
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Skriv ut i svart och vitt (ingen färg och inga gråskalor)"
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1463
+#: plug-ins/print/gimp_main_window.c:1460
 msgid "Adjust Output..."
 msgstr "Justera utskrift..."
 
-#: plug-ins/print/gimp_main_window.c:1470
+#: plug-ins/print/gimp_main_window.c:1467
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
@@ -11648,28 +11694,28 @@ msgstr "Inget val att konvertera"
 msgid "Selection To Path Advanced Settings"
 msgstr "Markering till slinga avancerade inställningar"
 
-#: plug-ins/sgi/sgi.c:532
+#: plug-ins/sgi/sgi.c:539
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Kan inte öppna \"%s\" för skrivning."
 
-#: plug-ins/sgi/sgi.c:614
+#: plug-ins/sgi/sgi.c:621
 msgid "Save as SGI"
 msgstr "Spara som SGI"
 
-#: plug-ins/sgi/sgi.c:623
+#: plug-ins/sgi/sgi.c:630
 msgid "Compression Type"
 msgstr "Komprimeringstyp"
 
-#: plug-ins/sgi/sgi.c:627
+#: plug-ins/sgi/sgi.c:634
 msgid "No Compression"
 msgstr "Ingen komprimering"
 
-#: plug-ins/sgi/sgi.c:629
+#: plug-ins/sgi/sgi.c:636
 msgid "RLE Compression"
 msgstr "RLE-komprimering"
 
-#: plug-ins/sgi/sgi.c:631
+#: plug-ins/sgi/sgi.c:638
 msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
@@ -11758,6 +11804,12 @@ msgstr "Fel: Kan ej läsa XJT egenskapsfil \"%s\"."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
+
+#~ msgid "Preview (in image window, will modify image's undo history!)"
+#~ msgstr "Förhandsgranska (i bildfönstret; ändrar bildens ångrahistorik!)"
+
+#~ msgid "write error occured"
+#~ msgstr "ett skrivfel har uppstått"
 
 #~ msgid "M_inimum Height:"
 #~ msgstr "M_insta höjd:"
@@ -12184,9 +12236,6 @@ msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
 
 #~ msgid "<Image>/Image/Transform/Rotate 270 degrees"
 #~ msgstr "<Image>/Bild/Transformera/Rotera 270 grader"
-
-#~ msgid "Preview (in image window)"
-#~ msgstr "Förhandsgranska (i bildfönstret)"
 
 #~ msgid "<Image>/Image/Mode/Compose..."
 #~ msgstr "<Image>/Bild/Format/Komponera..."
@@ -12719,6 +12768,3 @@ msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
 
 #~ msgid "Cancel"
 #~ msgstr "Avbryt"
-
-#~ msgid "More..."
-#~ msgstr "Mer..."

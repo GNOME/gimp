@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.5\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2002-04-28 04:07+0200\n"
 "Last-Translator: Ömer Fadıl USTA <omer_fad@hotmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
@@ -1460,12 +1460,14 @@ msgstr "Gölge Ağırlığı (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Büyük Başlık..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Küçük Başlık..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1509,15 +1511,16 @@ msgstr "Gölge Rengi"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Alt-Düğme İsmi..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Alt-Alt-Düğme "
 "İsmi..."
@@ -1525,13 +1528,16 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Genel Tüp İsimler..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Xtns/Script-Fu/Web Sayfası Temaları/Gimp.Org/Tüp Düğme İsmi..."
 

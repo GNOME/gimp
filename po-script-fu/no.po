@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2003-01-26 17:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
@@ -1448,12 +1448,14 @@ msgstr "Skyggetyngde (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Stor topptekst..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Liten topptekst..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1497,15 +1499,16 @@ msgstr "Skyggefarge"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetikett under knapp..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetiketter under-under "
 "knapp..."
@@ -1513,13 +1516,16 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Vanlige tubeetiketter..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr "<Toolbox>/Utvd/Script-Fu/Webside tema/Gimp.Org/Tubeetiketter..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1

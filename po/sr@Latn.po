@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2004-03-09 06:05+0100\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
@@ -287,6 +287,14 @@ msgstr "Srednjni tonovi"
 msgid "Highlights"
 msgstr "Naglašeno"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -331,7 +339,7 @@ msgstr "Ne mogu da povećam ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -464,9 +472,10 @@ msgstr ""
 "mrežu."
 
 #: app/config/gimprc-blurbs.h:74
+#, fuzzy
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -562,6 +571,20 @@ msgid ""
 msgstr ""
 "Uopšteno se odnosi samo na 8-bitne prikaze, ovo podešava minimalni borj "
 "sistemskih boja određenih za GIMP."
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
 msgid ""
@@ -1287,12 +1310,12 @@ msgid "Resize Item"
 msgstr "Promeni veličinu slike"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Dodaj masku za slojeve"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr "Primeni Masku za slojeve"
 
@@ -1323,7 +1346,7 @@ msgid "Cut"
 msgstr "Iseci"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Tekst"
 
@@ -1388,7 +1411,7 @@ msgstr "Novi sloj"
 msgid "Delete Layer"
 msgstr "Izbriši sloj"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr "Izbriši masku za slojeve"
 
@@ -2191,37 +2214,37 @@ msgstr "Okreni sloj"
 msgid "Rotate Layer"
 msgstr "Rotiraj sloj"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s maska"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Ne mogu da dodam masku sloju koji očigledno nije deo slike."
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Ne mogu da dodam masku jer sloj već ima jednu."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Ne mogu da dodam masku sloju koji nema alfa kanal."
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Ne mogu da dodam masku sa različitim dimenzijama od izabranog sloja."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi providnost u masku"
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr "Dodaj Alfa kanal"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr "Izjednači veličinu sloja i slike"
 
@@ -2388,7 +2411,8 @@ msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "Jedinica koordinatnog sistema kada se ne koristi režim tačka-za-tačku."
 
 #: app/core/gimptemplate.c:150
-msgid "The horizonal image resolution."
+#, fuzzy
+msgid "The horizontal image resolution."
 msgstr "Vodoravna rezolucija slike."
 
 #: app/core/gimptemplate.c:155
@@ -2400,8 +2424,8 @@ msgstr "Uspravna rezolucija slike."
 msgid "pixel"
 msgstr "tačka"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "tačaka"
 
@@ -3572,7 +3596,8 @@ msgid "/blendingfunction/_Curved"
 msgstr "/funkcija stapanja/Zakrivljena"
 
 #: app/gui/gradient-editor-menu.c:178
-msgid "/blendingfunction/_Sinusodial"
+#, fuzzy
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "/funkcija stapanja/Sinusoidna"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -5674,7 +5699,8 @@ msgid "Fit to Window"
 msgstr "Po meri prozora"
 
 #: app/gui/preferences-dialog.c:1512
-msgid "Inital Zoom Ratio:"
+#, fuzzy
+msgid "Initial Zoom Ratio:"
 msgstr "Početna razmera:"
 
 #. Pointer Movement Feedback
@@ -6273,7 +6299,7 @@ msgstr "/Izmeni mustru..."
 msgid "/_Delete Template"
 msgstr "/O_briši mustru"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Upisujem „%s“\n"
@@ -7276,7 +7302,7 @@ msgstr "Tekstualne procedure"
 msgid "Transform Tool procedures"
 msgstr "Procedure alatke za transformaciju"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7285,7 +7311,7 @@ msgstr ""
 "PDB pozvna greška:\n"
 "procedura „%s“ nije pronađena"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7351,12 +7377,12 @@ msgstr "Ispitivanje novih dodataka"
 msgid "Querying plug-in: '%s'\n"
 msgstr "Ispitujem dodatak: „%s“\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 msgid "Initializing Plug-ins"
 msgstr "Pokrećem dodatke"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Pokrećem dodatak: „%s“\n"
@@ -7404,7 +7430,7 @@ msgstr ""
 "Ptici u Hadžićima možda zafali\n"
 "pevušenje najboljeg đačkog orkestra."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr "Dodaj sloj za tekst"
 
@@ -8044,7 +8070,8 @@ msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Tip-zasićenost rade samo na slojevima u RGB bojama."
 
 #: app/tools/gimphuesaturationtool.c:263
-msgid "_Master"
+#, fuzzy
+msgid "M_aster"
 msgstr "_Glavni"
 
 #: app/tools/gimphuesaturationtool.c:264
@@ -8100,7 +8127,7 @@ msgstr "Podešavanje"
 msgid "Size:"
 msgstr "Veličina:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Ugao"
@@ -8254,11 +8281,11 @@ msgid "Add Guides"
 msgstr "Dodaj vođice"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 msgid "Measure Distances and Angles"
 msgstr "Meri rastojanje i uglove"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Rastojanje:"
 
@@ -8611,23 +8638,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "/Napravi putanju od teksta..."
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Dodaj tekst slici"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr "/Alati/Tekst"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr "GIMP urednik teksta"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9653,11 +9680,11 @@ msgstr "Učitaj tekst iz datoteke"
 msgid "Clear all Text"
 msgstr "Očisti ceo tekst"
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr "Otvori tekstualnu datoteku (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Neispravni UTF-8 podaci u datoteci „%s“"

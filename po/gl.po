@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:29+0200\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2000-10-15 19:35+0200\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -284,6 +284,14 @@ msgstr "Mediatinta"
 msgid "Highlights"
 msgstr "Brillos"
 
+#: app/base/tile-swap.c:451
+msgid ""
+"Unable to open swap file. The Gimp has run out of memory and cannot use the "
+"swap file. Some parts of your images may be corrupted. Try to save your work "
+"using different filenames, restart the Gimp and check the location of the "
+"swap directory in your Preferences."
+msgstr ""
+
 #: app/config/gimpconfig-deserialize.c:204 app/config/gimpconfig.c:424
 #: app/config/gimpconfig.c:437 app/config/gimpscanner.c:399
 #: app/config/gimpscanner.c:470 app/core/gimp-modules.c:126
@@ -327,7 +335,7 @@ msgstr "Imposible desfacer %s"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:420
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, fuzzy, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -447,7 +455,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:74
 msgid ""
 "Tools such as fuzzy-select and bucket fill find regions based on a seed-fill "
-"algorithm.  The seed fill starts at the intially selected pixel and "
+"algorithm.  The seed fill starts at the initially selected pixel and "
 "progresses in all directions until the difference of pixel intensity from "
 "the original is greater than a specified threshold. This value represents "
 "the default threshold."
@@ -522,6 +530,20 @@ msgstr ""
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for the GIMP."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:193
+msgid ""
+"Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
+msgstr ""
+
+#: app/config/gimprc-blurbs.h:198
+msgid ""
+"Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
+"forces the X server to be queried for both horizontal and vertical "
+"resolution information."
 msgstr ""
 
 #: app/config/gimprc-blurbs.h:203
@@ -1217,13 +1239,13 @@ msgid "Resize Item"
 msgstr "Gardar Imaxe"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 #, fuzzy
 msgid "Add Layer Mask"
 msgstr "/Engadir capa de máscara..."
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 #, fuzzy
 msgid "Apply Layer Mask"
 msgstr "/Aplicar capa de máscara"
@@ -1259,7 +1281,7 @@ msgid "Cut"
 msgstr "Contar:"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Texto"
 
@@ -1334,7 +1356,7 @@ msgstr "Nova Capa"
 msgid "Delete Layer"
 msgstr "Borrar Capa"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 #, fuzzy
 msgid "Delete Layer Mask"
 msgstr "/Borrar capa de máscara"
@@ -2236,50 +2258,50 @@ msgstr "Capa"
 msgid "Rotate Layer"
 msgstr "Capa flotada"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "mascara %s"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 #, fuzzy
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 "Non se pode engadir mascara de capa a unha capa\n"
 "sen canle alfa."
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 #, fuzzy
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Incapaz de engadir unha mascara de capa porque\n"
 "a capa xa ten unha."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 #, fuzzy
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr ""
 "Non se pode engadir mascara de capa a unha capa\n"
 "sen canle alfa."
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 #, fuzzy
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Non se pode engadir mascara de capa de diferentes dimensións que a capa "
 "especificada."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr ""
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 #, fuzzy
 msgid "Add Alpha Channel"
 msgstr "/Engadir canle alfa"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 #, fuzzy
 msgid "Layer to Image Size"
 msgstr "/Capa a tamaño de imaxe"
@@ -2463,7 +2485,7 @@ msgstr ""
 
 #: app/core/gimptemplate.c:150
 #, fuzzy
-msgid "The horizonal image resolution."
+msgid "The horizontal image resolution."
 msgstr "reposicionar capa"
 
 #: app/core/gimptemplate.c:155
@@ -2476,8 +2498,8 @@ msgstr "reposicionar capa"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:869
-#: app/tools/gimppainttool.c:707
+#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:780
+#: app/tools/gimpmeasuretool.c:872 app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "pixels"
 
@@ -3820,7 +3842,7 @@ msgstr "Función de mistura para segmento"
 
 #: app/gui/gradient-editor-menu.c:178
 #, fuzzy
-msgid "/blendingfunction/_Sinusodial"
+msgid "/blendingfunction/_Sinusoidal"
 msgstr "Función de mistura para selección"
 
 #: app/gui/gradient-editor-menu.c:183
@@ -6332,7 +6354,7 @@ msgstr "Usar fiestra de información"
 
 #: app/gui/preferences-dialog.c:1512
 #, fuzzy
-msgid "Inital Zoom Ratio:"
+msgid "Initial Zoom Ratio:"
 msgstr "Relación de escala:"
 
 #. Pointer Movement Feedback
@@ -7010,7 +7032,7 @@ msgstr "Borrar Paleta"
 msgid "/_Delete Template"
 msgstr "/Borrar capa"
 
-#: app/gui/themes.c:231 app/plug-in/plug-ins.c:224
+#: app/gui/themes.c:231 app/plug-in/plug-ins.c:250
 #, fuzzy, c-format
 msgid "Writing '%s'\n"
 msgstr "procesando \"%s\"\n"
@@ -8169,14 +8191,14 @@ msgstr "Procedementos de texto"
 msgid "Transform Tool procedures"
 msgstr "Procedementos de ferramentas"
 
-#: app/pdb/procedural_db.c:246
+#: app/pdb/procedural_db.c:248
 #, fuzzy, c-format
 msgid ""
 "PDB calling error:\n"
 "procedure '%s' not found"
 msgstr "BDP erro de chamados %s non atopado"
 
-#: app/pdb/procedural_db.c:284 app/pdb/procedural_db.c:387
+#: app/pdb/procedural_db.c:286 app/pdb/procedural_db.c:389
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -8242,13 +8264,13 @@ msgstr "comprobar conector: \"%s\"\n"
 msgid "Querying plug-in: '%s'\n"
 msgstr "comprobar conector: \"%s\"\n"
 
-#. initial the plug-ins
-#: app/plug-in/plug-ins.c:300
+#. initialize the plug-ins
+#: app/plug-in/plug-ins.c:174
 #, fuzzy
 msgid "Initializing Plug-ins"
 msgstr "comprobar conector: \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:316
+#: app/plug-in/plug-ins.c:190
 #, fuzzy, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "comprobar conector: \"%s\"\n"
@@ -8297,7 +8319,7 @@ msgid ""
 "five dozen liquor jugs."
 msgstr ""
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 #, fuzzy
 msgid "Add Text Layer"
 msgstr "Capa de Texto"
@@ -9012,7 +9034,7 @@ msgstr "Saturación-matiz so opera en debuxos de cor RGB."
 
 #: app/tools/gimphuesaturationtool.c:263
 #, fuzzy
-msgid "_Master"
+msgid "M_aster"
 msgstr "Mestre"
 
 #: app/tools/gimphuesaturationtool.c:264
@@ -9078,7 +9100,7 @@ msgstr "Axuste"
 msgid "Size:"
 msgstr "Tamaño:"
 
-#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:885
+#: app/tools/gimpinkoptions.c:277 app/tools/gimpmeasuretool.c:888
 #: app/tools/gimprotatetool.c:175 app/widgets/gimpbrusheditor.c:169
 msgid "Angle:"
 msgstr "Angulo:"
@@ -9246,12 +9268,12 @@ msgid "Add Guides"
 msgstr "/Guías"
 
 #. tool->gdisp->shell
-#: app/tools/gimpmeasuretool.c:838
+#: app/tools/gimpmeasuretool.c:841
 #, fuzzy
 msgid "Measure Distances and Angles"
 msgstr "Medir distancias e angulos"
 
-#: app/tools/gimpmeasuretool.c:859
+#: app/tools/gimpmeasuretool.c:862
 msgid "Distance:"
 msgstr "Distancia:"
 
@@ -9652,25 +9674,25 @@ msgstr "Separación:"
 msgid "Create Path from Text"
 msgstr "Comentario usado para novas imaxes"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Engadir texto á imaxe"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 #, fuzzy
 msgid "/Tools/Te_xt"
 msgstr "/Ferramentas/Texto"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 #, fuzzy
 msgid "GIMP Text Editor"
 msgstr "Editar Paleta de cor"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr ""
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -10800,11 +10822,11 @@ msgstr "Cargar de"
 msgid "Clear all Text"
 msgstr ""
 
-#: app/widgets/gimptexteditor.c:364
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr ""
 
-#: app/widgets/gimptexteditor.c:449
+#: app/widgets/gimptexteditor.c:454
 #, fuzzy, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Erro en ficheiro de patrón \"%s\" do GIMP"

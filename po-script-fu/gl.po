@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2001-03-19 21:35+0100\n"
 "Last-Translator: Francisco Xosé Vázquez Grandal <grandal@mundivia.es>\n"
 "Language-Team: Galician <trasno@ceu.fi.udc.es>\n"
@@ -1468,13 +1468,15 @@ msgstr "Ancho da Sombra (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr ""
 "<Toolbox>/Extns/Script-Fu/Temas de Páxina Web/Gimp.org/Cabeceira Grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr ""
 "<Toolbox>/Extns/Script-Fu/Temas de Páxina Web/Gimp.org/Cabeceira Pequena..."
 
@@ -1519,7 +1521,8 @@ msgstr "Cor da Sombra"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Extns/Script-Fu/Temas de Páxina Web/Gimp.org/Etiqueta do Sub-Botón "
 "do Tubo... "
@@ -1527,8 +1530,8 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Extns/Script-Fu/Temas de Páxina Web/Gimp.org/Etiqueta do Sub-Sub-"
 "Botón do Tubo..."
@@ -1536,14 +1539,17 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Extns/Script-Fu/Temas de Páxina Web/Gimp.org/Etiquetas Xerais do "
 "Tubo..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Extns/Script-Fu/Temas de Páxina Web/Gimp.org/Etiqueta do Botón do "
 "Tubo..."

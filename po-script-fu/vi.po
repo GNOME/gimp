@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp-scriptfu for Gnome 2.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2002-07-20 15:36+0700\n"
 "Last-Translator: Trinh Minh Thanh <tmthanh@linuxmail.org>\n"
 "Language-Team: Gnome-Vi Team <Gnomevi-list@lists.sourceforge.net>\n"
@@ -1445,12 +1445,14 @@ msgstr ""
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Hrule..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Bullet..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1494,25 +1496,29 @@ msgstr "Màu bóng"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Nút..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Nút..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Trang Web Themes/Mẫu Góc Xiên/Hrule..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr "<Hộp công cụ>/Xtns/Script-Fu/Web Page Themes/Ánh sáng Lạ/Nút..."
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins 0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:58+0200\n"
 "PO-Revision-Date: 2004-03-20 14:49+CET\n"
 "Last-Translator: auto\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -59,10 +59,10 @@ msgstr "O"
 #. Misc: Preview settings: Continuous update ?!
 #: plug-ins/FractalExplorer/Dialogs.c:578 plug-ins/Lighting/lighting_ui.c:1112
 #: plug-ins/MapObject/mapobject_ui.c:1395 plug-ins/common/CML_explorer.c:1195
-#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1268
+#: plug-ins/common/channel_mixer.c:550 plug-ins/common/curve_bend.c:1276
 #: plug-ins/common/destripe.c:573 plug-ins/common/emboss.c:705
 #: plug-ins/common/fractaltrace.c:760 plug-ins/common/grid.c:654
-#: plug-ins/common/iwarp.c:1220 plug-ins/common/mapcolor.c:551
+#: plug-ins/common/iwarp.c:1225 plug-ins/common/mapcolor.c:551
 #: plug-ins/common/nlfilt.c:450 plug-ins/common/polar.c:604
 #: plug-ins/common/sharpen.c:523 plug-ins/common/sinus.c:1040
 #: plug-ins/common/spheredesigner.c:2508 plug-ins/common/tileit.c:390
@@ -417,18 +417,18 @@ msgstr "_Fraktali"
 #: plug-ins/FractalExplorer/Dialogs.c:1827 plug-ins/bmp/bmpwrite.c:198
 #: plug-ins/common/CEL.c:577 plug-ins/common/CML_explorer.c:2137
 #: plug-ins/common/bz2.c:250 plug-ins/common/bz2.c:323
-#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:859
+#: plug-ins/common/channel_mixer.c:1235 plug-ins/common/curve_bend.c:867
 #: plug-ins/common/dicom.c:646 plug-ins/common/gbr.c:581
 #: plug-ins/common/gif.c:995 plug-ins/common/gih.c:1218
 #: plug-ins/common/gtm.c:226 plug-ins/common/gz.c:307 plug-ins/common/gz.c:416
 #: plug-ins/common/hrz.c:468 plug-ins/common/jpeg.c:1305
-#: plug-ins/common/mng.c:506 plug-ins/common/mng.c:838
+#: plug-ins/common/mng.c:514 plug-ins/common/mng.c:846
 #: plug-ins/common/pat.c:428 plug-ins/common/pcx.c:584
-#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1168
+#: plug-ins/common/pix.c:516 plug-ins/common/png.c:1171
 #: plug-ins/common/pnm.c:771 plug-ins/common/postscript.c:995
 #: plug-ins/common/psd_save.c:1555 plug-ins/common/spheredesigner.c:2082
 #: plug-ins/common/sunras.c:512 plug-ins/common/tga.c:1028
-#: plug-ins/common/tiff.c:1793 plug-ins/common/xbm.c:995
+#: plug-ins/common/tiff.c:1795 plug-ins/common/xbm.c:995
 #: plug-ins/common/xwd.c:533 plug-ins/fits/fits.c:450
 #: plug-ins/flame/flame.c:434 plug-ins/gfig/gfig.c:1025
 #: plug-ins/gfli/gfli.c:716 plug-ins/ifscompose/ifscompose.c:2601
@@ -463,18 +463,18 @@ msgstr "Spremi Osobitosti Fraktala"
 #. stat error (file does not exist)
 #: plug-ins/FractalExplorer/Dialogs.c:2128 plug-ins/bmp/bmpread.c:118
 #: plug-ins/common/CEL.c:305 plug-ins/common/CML_explorer.c:2341
-#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:911
+#: plug-ins/common/channel_mixer.c:1151 plug-ins/common/curve_bend.c:919
 #: plug-ins/common/dicom.c:289 plug-ins/common/gbr.c:322
 #: plug-ins/common/gifload.c:295 plug-ins/common/gih.c:629
 #: plug-ins/common/hrz.c:334 plug-ins/common/jpeg.c:768
-#: plug-ins/common/mng.c:1007 plug-ins/common/pat.c:295
+#: plug-ins/common/mng.c:1015 plug-ins/common/pat.c:295
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:333
 #: plug-ins/common/png.c:667 plug-ins/common/pnm.c:394
 #: plug-ins/common/postscript.c:872 plug-ins/common/psd.c:1768
 #: plug-ins/common/psp.c:1459 plug-ins/common/spheredesigner.c:1990
 #: plug-ins/common/sunras.c:381 plug-ins/common/svg.c:243
 #: plug-ins/common/svg.c:626 plug-ins/common/tga.c:413
-#: plug-ins/common/tiff.c:506 plug-ins/common/xbm.c:718
+#: plug-ins/common/tiff.c:508 plug-ins/common/xbm.c:718
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:219
 #: plug-ins/fits/fits.c:337 plug-ins/flame/flame.c:404
 #: plug-ins/gfig/gfig.c:716 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:461
@@ -910,6 +910,25 @@ msgstr "Uključi/Isključi pregled promjena u realnom vremenu"
 msgid "Preview Options"
 msgstr "Opcije pregleda"
 
+#: plug-ins/MapObject/mapobject_apply.c:273
+#, fuzzy
+msgid "Map to Plane..."
+msgstr "Laplace..."
+
+#: plug-ins/MapObject/mapobject_apply.c:276
+msgid "Map to Sphere..."
+msgstr ""
+
+#: plug-ins/MapObject/mapobject_apply.c:279
+#, fuzzy
+msgid "Map to Box..."
+msgstr "Maks. RGB..."
+
+#: plug-ins/MapObject/mapobject_apply.c:282
+#, fuzzy
+msgid "Map to Cylinder..."
+msgstr "Cilindar"
+
 #: plug-ins/MapObject/mapobject_main.c:200
 msgid "<Image>/Filters/Map/Map _Object..."
 msgstr "<Slika>/Filteri/Mapa/Mapiraj Objekt..."
@@ -1055,22 +1074,22 @@ msgid "Back:"
 msgstr "Straga:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:526
+#: plug-ins/print/gimp_main_window.c:523
 msgid "Top:"
 msgstr "Vrh:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1141
-#: plug-ins/print/gimp_main_window.c:567
+#: plug-ins/print/gimp_main_window.c:564
 msgid "Bottom:"
 msgstr "Dno:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:513
+#: plug-ins/print/gimp_main_window.c:510
 msgid "Left:"
 msgstr "Lijevo:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1142
-#: plug-ins/print/gimp_main_window.c:539
+#: plug-ins/print/gimp_main_window.c:536
 msgid "Right:"
 msgstr "Desno:"
 
@@ -1108,7 +1127,7 @@ msgid "Images for the Cap Faces"
 msgstr "Slike za lice"
 
 #: plug-ins/MapObject/mapobject_ui.c:1274
-#: plug-ins/print/gimp_main_window.c:1119
+#: plug-ins/print/gimp_main_window.c:1116
 msgid "Size"
 msgstr "Veličina"
 
@@ -1120,7 +1139,7 @@ msgstr "_Polumjer:"
 msgid "Cylinder radius"
 msgstr "Polumjer cilindra"
 
-#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:782
+#: plug-ins/MapObject/mapobject_ui.c:1299 plug-ins/common/mblur.c:785
 msgid "L_ength:"
 msgstr "_Duljina:"
 
@@ -1178,7 +1197,7 @@ msgstr "Pogrešna mapa boja"
 #: plug-ins/common/pix.c:339 plug-ins/common/png.c:674
 #: plug-ins/common/pnm.c:399 plug-ins/common/postscript.c:878
 #: plug-ins/common/psd.c:1773 plug-ins/common/sunras.c:435
-#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:511
+#: plug-ins/common/tga.c:418 plug-ins/common/tiff.c:513
 #: plug-ins/common/wmf.c:401 plug-ins/common/xbm.c:723
 #: plug-ins/common/xpm.c:329 plug-ins/common/xwd.c:434
 #: plug-ins/faxg3/faxg3.c:202 plug-ins/gfli/gfli.c:466 plug-ins/sgi/sgi.c:322
@@ -1216,10 +1235,10 @@ msgstr "Greška kod čitanja BMP zaglavlja iz '%s'"
 #: plug-ins/common/png.c:801 plug-ins/common/pnm.c:479
 #: plug-ins/common/psd.c:2182 plug-ins/common/smooth_palette.c:253
 #: plug-ins/common/sunras.c:924 plug-ins/common/tga.c:927
-#: plug-ins/common/tiff.c:829 plug-ins/common/tile.c:264
-#: plug-ins/common/winclipboard.c:556 plug-ins/common/xbm.c:866
+#: plug-ins/common/tiff.c:831 plug-ins/common/tile.c:264
+#: plug-ins/common/winclipboard.c:573 plug-ins/common/xbm.c:866
 #: plug-ins/faxg3/faxg3.c:464 plug-ins/fits/fits.c:508
-#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:368
+#: plug-ins/gfig/gfig.c:2075 plug-ins/gfig/gfig.c:2443 plug-ins/sgi/sgi.c:375
 #: plug-ins/twain/twain.c:743 plug-ins/winsnap/winsnap.c:1234
 msgid "Background"
 msgstr "Pozadina"
@@ -1243,13 +1262,13 @@ msgstr "Ne mogu raditi s nepoznatim tipovima slika."
 #: plug-ins/common/gih.c:1223 plug-ins/common/gtm.c:246
 #: plug-ins/common/hrz.c:473 plug-ins/common/jpeg.c:1260
 #: plug-ins/common/pat.c:433 plug-ins/common/pcx.c:544
-#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1175
+#: plug-ins/common/pix.c:522 plug-ins/common/png.c:1178
 #: plug-ins/common/pnm.c:776 plug-ins/common/postscript.c:1000
 #: plug-ins/common/psd_save.c:1560 plug-ins/common/sunras.c:517
-#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1798
+#: plug-ins/common/tga.c:1033 plug-ins/common/tiff.c:1800
 #: plug-ins/common/xbm.c:1000 plug-ins/common/xpm.c:619
 #: plug-ins/common/xwd.c:538 plug-ins/fits/fits.c:457 plug-ins/gfli/gfli.c:683
-#: plug-ins/sgi/sgi.c:537 plug-ins/xjt/xjt.c:1691
+#: plug-ins/sgi/sgi.c:544 plug-ins/xjt/xjt.c:1691
 #, c-format
 msgid "Saving '%s'..."
 msgstr "Spremam '%s'..."
@@ -1323,7 +1342,7 @@ msgid "Cos_ine"
 msgstr "_Kosinus"
 
 #: plug-ins/common/AlienMap.c:1224 plug-ins/common/AlienMap.c:1247
-#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2097
+#: plug-ins/common/AlienMap.c:1270 plug-ins/common/tiff.c:2103
 msgid "_None"
 msgstr "_Nijedan"
 
@@ -1595,7 +1614,7 @@ msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Minim. (x-d, -), (0.5 < x)"
 
 #: plug-ins/common/CML_explorer.c:202 plug-ins/common/sunras.c:1593
-#: plug-ins/print/gimp_main_window.c:1648
+#: plug-ins/print/gimp_main_window.c:1645
 msgid "Standard"
 msgstr "Standardno"
 
@@ -2337,7 +2356,8 @@ msgid "_Spherical Map"
 msgstr "-Sferna mapa"
 
 #: plug-ins/common/bumpmap.c:966
-msgid "S_inuosidal Map"
+#, fuzzy
+msgid "S_inusoidal Map"
 msgstr "S_inusoidalna mapa"
 
 #. Compensate darkening
@@ -2538,7 +2558,7 @@ msgstr "Obojanost"
 #: plug-ins/common/colorify.c:258 plug-ins/common/colortoalpha.c:325
 #: plug-ins/common/postscript.c:2823 plug-ins/common/xpm.c:457
 #: plug-ins/gimpressionist/color.c:48 plug-ins/gimpressionist/general.c:107
-#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1420
+#: plug-ins/imagemap/imap_menu.c:305 plug-ins/print/gimp_main_window.c:1417
 msgid "Color"
 msgstr "Boja"
 
@@ -2887,132 +2907,137 @@ msgstr "<Slika>/Filteri/Zamućenje/Savijanje krivulje..."
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr "Mogu raditi samo na slojevima (ali je pozvan kanal ili maska)."
 
-#: plug-ins/common/curve_bend.c:734
+#: plug-ins/common/curve_bend.c:727
+#, fuzzy
+msgid "Cannot operate on layers with masks."
+msgstr "Ne mogu raditi s indeksiranim slikama"
+
+#: plug-ins/common/curve_bend.c:742
 msgid "Cannot operate on empty selections."
 msgstr "Ne mogu raditi na praznim odabirima."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: plug-ins/common/curve_bend.c:1238
+#: plug-ins/common/curve_bend.c:1246
 msgid "Curve Bend"
 msgstr "Svinutost Krivulje"
 
 #. The preview button
-#: plug-ins/common/curve_bend.c:1302
+#: plug-ins/common/curve_bend.c:1310
 msgid "_Preview Once"
 msgstr "_Pregledaj jednom"
 
 #. The preview toggle
-#: plug-ins/common/curve_bend.c:1311
+#: plug-ins/common/curve_bend.c:1319
 msgid "Automatic Pre_view"
 msgstr "Automatsko osvježavanje pregleda"
 
 #. Options area, bottom of column
 #. the vertical box and its toggle buttons
 #. Options section
-#: plug-ins/common/curve_bend.c:1321 plug-ins/common/mosaic.c:527
+#: plug-ins/common/curve_bend.c:1329 plug-ins/common/mosaic.c:527
 #: plug-ins/common/ripple.c:443 plug-ins/gfig/gfig.c:2992
 msgid "Options"
 msgstr "Odrednice"
 
 #. Rotate spinbutton
-#: plug-ins/common/curve_bend.c:1336
+#: plug-ins/common/curve_bend.c:1344
 msgid "Rotat_e:"
 msgstr "_Rotiraj:"
 
 #. The smoothing toggle
-#: plug-ins/common/curve_bend.c:1354
+#: plug-ins/common/curve_bend.c:1362
 msgid "Smoo_thing"
 msgstr "_Zaglađivanje"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1364 plug-ins/common/gqbist.c:847
+#: plug-ins/common/curve_bend.c:1372 plug-ins/common/gqbist.c:847
 #: plug-ins/common/mosaic.c:534 plug-ins/common/ripple.c:451
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
 #. The wor_on_copy toggle
-#: plug-ins/common/curve_bend.c:1374
+#: plug-ins/common/curve_bend.c:1382
 msgid "Work on Cop_y"
 msgstr "_Rad na kopiji"
 
 #. The curves graph
-#: plug-ins/common/curve_bend.c:1384
+#: plug-ins/common/curve_bend.c:1392
 msgid "Modify Curves"
 msgstr "Promijeni krivulje"
 
-#: plug-ins/common/curve_bend.c:1413
+#: plug-ins/common/curve_bend.c:1421
 msgid "Curve for Border"
 msgstr "Krivulja za granicu:"
 
-#: plug-ins/common/curve_bend.c:1417
+#: plug-ins/common/curve_bend.c:1425
 msgid "_Upper"
 msgstr "_Gornje"
 
-#: plug-ins/common/curve_bend.c:1418
+#: plug-ins/common/curve_bend.c:1426
 msgid "_Lower"
 msgstr "_Niže"
 
-#: plug-ins/common/curve_bend.c:1428
+#: plug-ins/common/curve_bend.c:1436
 msgid "Curve Type"
 msgstr "Vrsta Krivulje"
 
-#: plug-ins/common/curve_bend.c:1432
+#: plug-ins/common/curve_bend.c:1440
 msgid "Smoot_h"
 msgstr "_Uglađeno"
 
-#: plug-ins/common/curve_bend.c:1433
+#: plug-ins/common/curve_bend.c:1441
 msgid "_Free"
 msgstr "_Slobodno"
 
 #. The Copy button
-#: plug-ins/common/curve_bend.c:1448
+#: plug-ins/common/curve_bend.c:1456
 msgid "_Copy"
 msgstr "_Kopiraj"
 
-#: plug-ins/common/curve_bend.c:1453
+#: plug-ins/common/curve_bend.c:1461
 msgid "Copy the active curve to the other border"
 msgstr "Kopiraj trenutnu krivulju na drugi rub"
 
 #. The CopyInv button
-#: plug-ins/common/curve_bend.c:1460
+#: plug-ins/common/curve_bend.c:1468
 msgid "_Mirror"
 msgstr "_Zrcalo"
 
-#: plug-ins/common/curve_bend.c:1465
+#: plug-ins/common/curve_bend.c:1473
 msgid "Mirror the active curve to the other border"
 msgstr "Odraz u ogledalu trenutne krivulje na druge rubove"
 
 #. The Swap button
-#: plug-ins/common/curve_bend.c:1472
+#: plug-ins/common/curve_bend.c:1480
 msgid "S_wap"
 msgstr "Zamjena"
 
-#: plug-ins/common/curve_bend.c:1477
+#: plug-ins/common/curve_bend.c:1485
 msgid "Swap the two curves"
 msgstr "Zamijeni dvije krivulje"
 
-#: plug-ins/common/curve_bend.c:1489
+#: plug-ins/common/curve_bend.c:1497
 msgid "Reset the active curve"
 msgstr "Ponovo postavi trenutnu krivulju"
 
-#: plug-ins/common/curve_bend.c:1506
+#: plug-ins/common/curve_bend.c:1514
 msgid "Load the curves from a file"
 msgstr "Učitaj točke krivulje iz datoteke"
 
-#: plug-ins/common/curve_bend.c:1518
+#: plug-ins/common/curve_bend.c:1526
 msgid "Save the curves to a file"
 msgstr "Spremi točke krivulje u datoteku"
 
-#: plug-ins/common/curve_bend.c:2055
+#: plug-ins/common/curve_bend.c:2063
 msgid "Load Curve Points from file"
 msgstr "Učitaj točke krivulje iz datoteke"
 
-#: plug-ins/common/curve_bend.c:2082
+#: plug-ins/common/curve_bend.c:2090
 msgid "Save Curve Points to file"
 msgstr "Spremi točke krivulje u datoteku"
 
-#: plug-ins/common/curve_bend.c:2980
+#: plug-ins/common/curve_bend.c:2988
 msgid "Curve Bend..."
 msgstr "Svinuta Krivulja..."
 
@@ -3319,7 +3344,7 @@ msgstr "Napravi Histogram"
 
 #: plug-ins/common/destripe.c:664 plug-ins/common/gtm.c:583
 #: plug-ins/common/postscript.c:2779 plug-ins/common/postscript.c:2938
-#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:409
+#: plug-ins/common/smooth_palette.c:431 plug-ins/common/tile.c:411
 #: plug-ins/imagemap/imap_cmd_guides.c:165
 #: plug-ins/imagemap/imap_rectangle.c:404
 msgid "_Width:"
@@ -3363,7 +3388,8 @@ msgid "Sc_attering:"
 msgstr "__Raspršivanje:"
 
 #: plug-ins/common/diffraction.c:637
-msgid "Po_latization:"
+#, fuzzy
+msgid "Po_larization:"
 msgstr "Po_larizacija:"
 
 #: plug-ins/common/diffraction.c:645
@@ -3506,7 +3532,7 @@ msgstr "Ograniči širinu crte"
 #: plug-ins/common/engrave.c:238 plug-ins/common/film.c:1229
 #: plug-ins/common/gtm.c:599 plug-ins/common/postscript.c:2788
 #: plug-ins/common/postscript.c:2947 plug-ins/common/smooth_palette.c:436
-#: plug-ins/common/tile.c:413 plug-ins/imagemap/imap_cmd_guides.c:175
+#: plug-ins/common/tile.c:415 plug-ins/imagemap/imap_cmd_guides.c:175
 #: plug-ins/imagemap/imap_rectangle.c:411
 msgid "_Height:"
 msgstr "_Visina:"
@@ -3641,7 +3667,8 @@ msgid "Image Selection"
 msgstr "Odabir Slike"
 
 #: plug-ins/common/film.c:1352
-msgid "All Values are Fractions of the Film Heigh"
+#, fuzzy
+msgid "All Values are Fractions of the Film Height"
 msgstr "Sve vrijednosti su frakcije visine filma"
 
 #: plug-ins/common/film.c:1355
@@ -3756,7 +3783,7 @@ msgstr "IIR Gaussian Zamućenje"
 
 #: plug-ins/common/gauss_iir.c:318 plug-ins/common/gauss_rle.c:312
 #: plug-ins/common/sel_gauss.c:208 plug-ins/gflare/gflare.c:979
-#: plug-ins/sgi/sgi.c:520 plug-ins/xjt/xjt.c:1682
+#: plug-ins/sgi/sgi.c:527 plug-ins/xjt/xjt.c:1682
 msgid "Cannot operate on indexed color images."
 msgstr "Ne mogu raditi s indeksiranim slikama"
 
@@ -3940,7 +3967,7 @@ msgstr "Spremi kao GIF"
 msgid "GIF Options"
 msgstr "GIF Osobnosti"
 
-#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1207
+#: plug-ins/common/gif.c:1283 plug-ins/common/mng.c:1215
 msgid "Interlace"
 msgstr "Isprepletenost"
 
@@ -4003,8 +4030,8 @@ msgstr "Ne-kvadratne točke. Slika može izgledati stiješnjeno."
 msgid "Background (%d%s)"
 msgstr "Pozadina (%d%s)"
 
-#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:783
-#: plug-ins/common/iwarp.c:815
+#: plug-ins/common/gifload.c:907 plug-ins/common/iwarp.c:787
+#: plug-ins/common/iwarp.c:819
 #, c-format
 msgid "Frame %d"
 msgstr "Okvir %d"
@@ -4169,8 +4196,8 @@ msgstr "Presjek"
 
 #. Width and Height
 #: plug-ins/common/grid.c:737 plug-ins/common/svg.c:699
-#: plug-ins/print/gimp_main_window.c:1008
-#: plug-ins/print/gimp_main_window.c:1224
+#: plug-ins/print/gimp_main_window.c:1005
+#: plug-ins/print/gimp_main_window.c:1221
 msgid "Width:"
 msgstr "Širina:"
 
@@ -4389,97 +4416,97 @@ msgstr "Način _2"
 msgid "<Image>/Filters/Distorts/_IWarp..."
 msgstr "<Slika>/Filteri/Izobličenja/_omatanjæ..."
 
-#: plug-ins/common/iwarp.c:688
+#: plug-ins/common/iwarp.c:692
 msgid "Warping..."
 msgstr "Izobličavanje..."
 
-#: plug-ins/common/iwarp.c:790 plug-ins/common/iwarp.c:803
+#: plug-ins/common/iwarp.c:794 plug-ins/common/iwarp.c:807
 #, c-format
 msgid "Warping Frame No. %d..."
 msgstr "Izobličavam okvire br. %d ..."
 
-#: plug-ins/common/iwarp.c:804
+#: plug-ins/common/iwarp.c:808
 msgid "Ping Pong"
 msgstr "PingPong"
 
-#: plug-ins/common/iwarp.c:984
+#: plug-ins/common/iwarp.c:989
 msgid "A_nimate"
 msgstr "_Animiraj"
 
-#: plug-ins/common/iwarp.c:1004
+#: plug-ins/common/iwarp.c:1009
 msgid "Number of _Frames:"
 msgstr "Broj _okvira:"
 
-#: plug-ins/common/iwarp.c:1013
+#: plug-ins/common/iwarp.c:1018
 msgid "R_everse"
 msgstr "_Obrnuti redoslijed"
 
-#: plug-ins/common/iwarp.c:1022
+#: plug-ins/common/iwarp.c:1027
 msgid "_Ping Pong"
 msgstr "_PingPong"
 
-#: plug-ins/common/iwarp.c:1035
+#: plug-ins/common/iwarp.c:1040
 msgid "_Animate"
 msgstr "_Animiraj"
 
-#: plug-ins/common/iwarp.c:1063
+#: plug-ins/common/iwarp.c:1068
 msgid "_Deform Radius:"
 msgstr "Deformiraj polumjer:"
 
-#: plug-ins/common/iwarp.c:1073
+#: plug-ins/common/iwarp.c:1078
 msgid "D_eform Amount:"
 msgstr "Vrijednost deformacije:"
 
-#: plug-ins/common/iwarp.c:1082
+#: plug-ins/common/iwarp.c:1087
 msgid "Deform Mode"
 msgstr "Odabir Deformacije"
 
-#: plug-ins/common/iwarp.c:1096
+#: plug-ins/common/iwarp.c:1101
 msgid "_Move"
 msgstr "_Pomakni"
 
-#: plug-ins/common/iwarp.c:1097
+#: plug-ins/common/iwarp.c:1102
 msgid "_Grow"
 msgstr "_Uvećaj"
 
-#: plug-ins/common/iwarp.c:1098
+#: plug-ins/common/iwarp.c:1103
 msgid "S_wirl CCW"
 msgstr "V_rtlog CCW"
 
-#: plug-ins/common/iwarp.c:1099
+#: plug-ins/common/iwarp.c:1104
 msgid "Remo_ve"
 msgstr "_Ukloni"
 
-#: plug-ins/common/iwarp.c:1100
+#: plug-ins/common/iwarp.c:1105
 msgid "S_hrink"
 msgstr "_Smanji"
 
-#: plug-ins/common/iwarp.c:1101
+#: plug-ins/common/iwarp.c:1106
 msgid "Sw_irl CW"
 msgstr "V_rtlog CW"
 
-#: plug-ins/common/iwarp.c:1123
+#: plug-ins/common/iwarp.c:1128
 msgid "_Bilinear"
 msgstr "Bilinearno"
 
-#: plug-ins/common/iwarp.c:1137
+#: plug-ins/common/iwarp.c:1142
 msgid "Adaptive S_upersample"
 msgstr "Prilagodljivo Superuzorkovanje"
 
-#: plug-ins/common/iwarp.c:1158
+#: plug-ins/common/iwarp.c:1163
 msgid "Ma_x Depth:"
 msgstr "_Maks.Dubina:"
 
-#: plug-ins/common/iwarp.c:1168
+#: plug-ins/common/iwarp.c:1173
 msgid "Thresho_ld:"
 msgstr "_Prag:"
 
-#: plug-ins/common/iwarp.c:1181 plug-ins/common/sinus.c:769
+#: plug-ins/common/iwarp.c:1186 plug-ins/common/sinus.c:769
 #: plug-ins/gflare/gflare.c:2795
 msgid "_Settings"
 msgstr "_Postavke"
 
-#: plug-ins/common/iwarp.c:1198
+#: plug-ins/common/iwarp.c:1203
 msgid "IWarp"
 msgstr "IWarp"
 
@@ -4575,9 +4602,9 @@ msgid "Image Preview"
 msgstr "Pregled Slike"
 
 #: plug-ins/common/jpeg.c:1702
-msgid "Preview (in image window, will modify image's undo history!)"
-msgstr ""
-"Pregled (u prozoru za slike, promijeniti će povijest poništavanja slike!)"
+#, fuzzy
+msgid "Preview in image window"
+msgstr "Uhvati jedan prozor"
 
 #: plug-ins/common/jpeg.c:1735 plug-ins/xjt/xjt.c:888
 msgid "Quality:"
@@ -4837,135 +4864,135 @@ msgstr "_Zadrži maksimum kanala"
 msgid "Ho_ld the Minimal Channels"
 msgstr "Zadrži _minimum kanala"
 
-#: plug-ins/common/mblur.c:150
+#: plug-ins/common/mblur.c:153
 msgid "<Image>/Filters/Blur/_Motion Blur..."
 msgstr "<Slika>/Filteri/Zamućenje/Zamućenje pokreta..."
 
-#: plug-ins/common/mblur.c:673
+#: plug-ins/common/mblur.c:676
 msgid "Motion Blurring..."
 msgstr "Zamućenje pokreta..."
 
-#: plug-ins/common/mblur.c:743
+#: plug-ins/common/mblur.c:746
 msgid "Motion Blur"
 msgstr "Pomično Zamućenje"
 
-#: plug-ins/common/mblur.c:757
+#: plug-ins/common/mblur.c:760
 msgid "Blur Type"
 msgstr "Vrsta Zamućenja"
 
-#: plug-ins/common/mblur.c:761
+#: plug-ins/common/mblur.c:764
 msgid "_Linear"
 msgstr "_Linearni"
 
-#: plug-ins/common/mblur.c:762
+#: plug-ins/common/mblur.c:765
 msgid "_Radial"
 msgstr "_Radijalno"
 
-#: plug-ins/common/mblur.c:763
+#: plug-ins/common/mblur.c:766
 msgid "_Zoom"
 msgstr "_Uvećaj/umanji"
 
-#: plug-ins/common/mblur.c:770
+#: plug-ins/common/mblur.c:773
 msgid "Blur Parameters"
 msgstr "Osobitosti Zamućenja"
 
-#: plug-ins/common/mblur.c:791 plug-ins/common/newsprint.c:1009
+#: plug-ins/common/mblur.c:794 plug-ins/common/newsprint.c:1009
 msgid "_Angle:"
 msgstr "_Kut:"
 
-#: plug-ins/common/mng.c:1187
+#: plug-ins/common/mng.c:1195
 msgid "Save as MNG"
 msgstr "Spremi kao MNG"
 
-#: plug-ins/common/mng.c:1200
+#: plug-ins/common/mng.c:1208
 msgid "MNG Options"
 msgstr "MNG Opcije"
 
-#: plug-ins/common/mng.c:1219
+#: plug-ins/common/mng.c:1227
 msgid "Save Background Color"
 msgstr "Spremi boju pozadine"
 
-#: plug-ins/common/mng.c:1230
+#: plug-ins/common/mng.c:1238
 msgid "Save Gamma"
 msgstr "Spremi gamu"
 
-#: plug-ins/common/mng.c:1240
+#: plug-ins/common/mng.c:1248
 msgid "Save Resolution"
 msgstr "Spremi razlučivost:"
 
-#: plug-ins/common/mng.c:1251
+#: plug-ins/common/mng.c:1259
 msgid "Save Creation Time"
 msgstr "Spremanje vremena nastajanja"
 
-#: plug-ins/common/mng.c:1276
+#: plug-ins/common/mng.c:1284
 msgid "PNG"
 msgstr "PNG"
 
-#: plug-ins/common/mng.c:1277
+#: plug-ins/common/mng.c:1285
 msgid "JNG"
 msgstr "JNG"
 
-#: plug-ins/common/mng.c:1286
+#: plug-ins/common/mng.c:1294
 msgid "PNG + Delta PNG"
 msgstr "PNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1287
+#: plug-ins/common/mng.c:1295
 msgid "JNG + Delta PNG"
 msgstr "JNG + Delta PNG"
 
-#: plug-ins/common/mng.c:1288
+#: plug-ins/common/mng.c:1296
 msgid "All PNG"
 msgstr "Sve PNG"
 
-#: plug-ins/common/mng.c:1289
+#: plug-ins/common/mng.c:1297
 msgid "All JNG"
 msgstr "Sve JNG"
 
-#: plug-ins/common/mng.c:1295
+#: plug-ins/common/mng.c:1303
 msgid "Default Chunks Type:"
 msgstr "Uobičajena vrsta dijeliča:"
 
-#: plug-ins/common/mng.c:1303
+#: plug-ins/common/mng.c:1311
 msgid "Combine"
 msgstr "Kombiniraj"
 
-#: plug-ins/common/mng.c:1304 plug-ins/gfig/gfig.c:2397
+#: plug-ins/common/mng.c:1312 plug-ins/gfig/gfig.c:2397
 msgid "Replace"
 msgstr "Zamijeni"
 
-#: plug-ins/common/mng.c:1309
+#: plug-ins/common/mng.c:1317
 msgid "Default Frame Disposal:"
 msgstr "Uobičajeno brisanje slika:"
 
-#: plug-ins/common/mng.c:1321
+#: plug-ins/common/mng.c:1329
 msgid "PNG Compression Level:"
 msgstr "Stupanj PNG sažimanja:"
 
-#: plug-ins/common/mng.c:1329 plug-ins/common/png.c:1670
+#: plug-ins/common/mng.c:1337 plug-ins/common/png.c:1683
 msgid "Choose a high compression level for small file size"
 msgstr "Odaberite visok stupanj sažimanja za manje datoteke"
 
-#: plug-ins/common/mng.c:1343
+#: plug-ins/common/mng.c:1351
 msgid "JPEG Compression Quality:"
 msgstr "Kvaliteta JPEG sažimanja:"
 
-#: plug-ins/common/mng.c:1360
+#: plug-ins/common/mng.c:1368
 msgid "JPEG Smoothing Factor:"
 msgstr "Faktor JPEG izglađivanja:"
 
-#: plug-ins/common/mng.c:1370
+#: plug-ins/common/mng.c:1378
 msgid "Animated MNG Options"
 msgstr "Postavke animiranog MNG-a"
 
-#: plug-ins/common/mng.c:1377
+#: plug-ins/common/mng.c:1385
 msgid "Loop"
 msgstr "Petlja"
 
-#: plug-ins/common/mng.c:1391
+#: plug-ins/common/mng.c:1399
 msgid "Default Frame Delay:"
 msgstr "Uobičajeno kašnjenje slike:"
 
-#: plug-ins/common/mng.c:1407
+#: plug-ins/common/mng.c:1415
 msgid "milliseconds"
 msgstr "milisekunde"
 
@@ -5548,71 +5575,71 @@ msgid ""
 "outside the image."
 msgstr "PNG datoteka određuje pomak koji je pomaknuo sloj izvan opsega slike."
 
-#: plug-ins/common/png.c:1153
+#: plug-ins/common/png.c:1156
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Greška pri čuvanju \"%s\". Ne mogu spremiti sliku."
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: plug-ins/common/png.c:1527
+#: plug-ins/common/png.c:1540
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Ne mogu spremiti prozirnost bez gubitaka, čuvam neprozirnost."
 
-#: plug-ins/common/png.c:1553
+#: plug-ins/common/png.c:1566
 msgid "Save as PNG"
 msgstr "Spremi kao PNG"
 
-#: plug-ins/common/png.c:1557
+#: plug-ins/common/png.c:1570
 msgid "_Load Defaults"
 msgstr "_Učitaj uobičajene vrijednosti"
 
-#: plug-ins/common/png.c:1558
+#: plug-ins/common/png.c:1571
 msgid "_Save Defaults"
 msgstr "_Spremi uobičajene vrijednosti"
 
 #. parameter settings
-#: plug-ins/common/png.c:1571 plug-ins/common/sample_colorize.c:1377
+#: plug-ins/common/png.c:1584 plug-ins/common/sample_colorize.c:1377
 msgid "Settings"
 msgstr "Postavke"
 
-#: plug-ins/common/png.c:1584
+#: plug-ins/common/png.c:1597
 msgid "_Interlacing (Adam7)"
 msgstr "_Isprepletenost (Adam7)"
 
-#: plug-ins/common/png.c:1595
+#: plug-ins/common/png.c:1608
 msgid "Save _Background Color"
 msgstr "Spremi boju pozadine"
 
-#: plug-ins/common/png.c:1603
+#: plug-ins/common/png.c:1616
 msgid "Save _Gamma"
 msgstr "Spremi gamu"
 
-#: plug-ins/common/png.c:1612
+#: plug-ins/common/png.c:1625
 msgid "Save Layer O_ffset"
 msgstr "Spremi pomak sloja"
 
-#: plug-ins/common/png.c:1621
+#: plug-ins/common/png.c:1634
 msgid "Save _Resolution"
 msgstr "Spremi _razlučivost:"
 
-#: plug-ins/common/png.c:1630
+#: plug-ins/common/png.c:1643
 msgid "Save Creation _Time"
 msgstr "Spremanje vremena _nastajanja"
 
-#: plug-ins/common/png.c:1638
+#: plug-ins/common/png.c:1651
 msgid "Save Comme_nt"
 msgstr "Spremanje komentara"
 
-#: plug-ins/common/png.c:1653
+#: plug-ins/common/png.c:1666
 msgid "Save Color _Values From Transparent Pixels"
 msgstr "Spremi _vijednosti boja iz prozirnih točaka"
 
-#: plug-ins/common/png.c:1666
+#: plug-ins/common/png.c:1679
 msgid "Co_mpression Level:"
 msgstr "Stupanj sažimanja:"
 
-#: plug-ins/common/png.c:1786
+#: plug-ins/common/png.c:1799
 msgid "Could not load PNG defaults"
 msgstr "Nisam mogao učitati uobičajene vrijednosti za PNG"
 
@@ -5733,8 +5760,11 @@ msgstr "Greška prilikom pokretanja programa ghostscript (%s)"
 
 #: plug-ins/common/postscript.c:2297 plug-ins/common/postscript.c:2429
 #: plug-ins/common/postscript.c:2579 plug-ins/common/postscript.c:2707
-msgid "write error occured"
-msgstr "pogreška pri zapisivanju"
+#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
+#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
+#, fuzzy
+msgid "Write error occurred"
+msgstr "Greška pri zapisivanju"
 
 #: plug-ins/common/postscript.c:2733
 msgid "Load PostScript"
@@ -5747,7 +5777,7 @@ msgstr "Iscrtavanje"
 
 #. Resolution
 #: plug-ins/common/postscript.c:2770 plug-ins/common/svg.c:820
-#: plug-ins/print/gimp_main_window.c:1103
+#: plug-ins/print/gimp_main_window.c:1100
 msgid "Resolution:"
 msgstr "Razlučivost:"
 
@@ -6444,7 +6474,8 @@ msgid "Spi_ke Angle (-1: Random):"
 msgstr "Kut šiljaka (-1: Nasumično):"
 
 #: plug-ins/common/sparkle.c:411
-msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
+#, fuzzy
+msgid "Adjust the Spike Angle (-1 means a Random Angle is chosen)"
 msgstr "Podesi kut Šiljaka (za -1 odabran je nasumičan kut)"
 
 #: plug-ins/common/sparkle.c:419
@@ -6759,11 +6790,6 @@ msgstr "Ne mogu raditi sa nepoznatim vrstama slika"
 msgid "EOF encountered on reading"
 msgstr "Naišao na EOF prilikom čitanja"
 
-#: plug-ins/common/sunras.c:1453 plug-ins/common/sunras.c:1561
-#: plug-ins/fits/fits.c:827 plug-ins/fits/fits.c:951
-msgid "Write error occured"
-msgstr "Greška pri zapisivanju"
-
 #: plug-ins/common/sunras.c:1578
 msgid "Save as SUNRAS"
 msgstr "Spremi kao SUNRAS"
@@ -6806,8 +6832,8 @@ msgstr "Otvori SVG"
 msgid "Render Scalable Vector Graphics"
 msgstr "Redneruj Scalable Vector Graphics (SVG)"
 
-#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1025
-#: plug-ins/print/gimp_main_window.c:1237
+#: plug-ins/common/svg.c:705 plug-ins/print/gimp_main_window.c:1022
+#: plug-ins/print/gimp_main_window.c:1234
 msgid "Height:"
 msgstr "Visina:"
 
@@ -6888,16 +6914,16 @@ msgstr "Prag alfe: Bojam prozirnost..."
 msgid "Threshold Alpha"
 msgstr "Prag Alfe"
 
-#: plug-ins/common/tiff.c:831
+#: plug-ins/common/tiff.c:833
 #, c-format
 msgid "Page %d"
 msgstr "Stranica %d"
 
-#: plug-ins/common/tiff.c:846
+#: plug-ins/common/tiff.c:848
 msgid "TIFF Channel"
 msgstr "TIFF Kanal"
 
-#: plug-ins/common/tiff.c:855
+#: plug-ins/common/tiff.c:857
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -6909,7 +6935,7 @@ msgstr ""
 "tako da će ovo biti konvertirano. Informacije će biti izgubljene zbog "
 "ovakvog prevođenja."
 
-#: plug-ins/common/tiff.c:1930
+#: plug-ins/common/tiff.c:1936
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -6917,36 +6943,36 @@ msgstr ""
 "TIFF format podržava samo komentare u\n"
 "7bit ASCII kodiranju. Komentar nije spremljen."
 
-#: plug-ins/common/tiff.c:2079
+#: plug-ins/common/tiff.c:2085
 msgid "Save as TIFF"
 msgstr "Spremi kao TIFF"
 
 #. compression
-#: plug-ins/common/tiff.c:2093
+#: plug-ins/common/tiff.c:2099
 msgid "Compression"
 msgstr "Kompresija"
 
-#: plug-ins/common/tiff.c:2098
+#: plug-ins/common/tiff.c:2104
 msgid "_LZW"
 msgstr "_LZW"
 
-#: plug-ins/common/tiff.c:2099
+#: plug-ins/common/tiff.c:2105
 msgid "_Pack Bits"
 msgstr "P_aketno"
 
-#: plug-ins/common/tiff.c:2100
+#: plug-ins/common/tiff.c:2106
 msgid "_Deflate"
 msgstr "_Umanji"
 
-#: plug-ins/common/tiff.c:2101
+#: plug-ins/common/tiff.c:2107
 msgid "_JPEG"
 msgstr "JPEG"
 
-#: plug-ins/common/tiff.c:2110
+#: plug-ins/common/tiff.c:2116
 msgid "Save _color values from transparent pixels"
 msgstr "Spremi _vijednosti boja iz prozirnih točaka"
 
-#: plug-ins/common/tiff.c:2125 plug-ins/common/xbm.c:1201
+#: plug-ins/common/tiff.c:2131 plug-ins/common/xbm.c:1201
 msgid "Comment:"
 msgstr "Komentar:"
 
@@ -6958,16 +6984,16 @@ msgstr "<Slika>/Filteri/Mapa/Djelići..."
 msgid "Tiling..."
 msgstr "Djelići..."
 
-#: plug-ins/common/tile.c:389
+#: plug-ins/common/tile.c:391
 msgid "Tile"
 msgstr "Pločica"
 
 #. parameter settings
-#: plug-ins/common/tile.c:399
+#: plug-ins/common/tile.c:401
 msgid "Tile to New Size"
 msgstr "Poploči u Novu Veličinu"
 
-#: plug-ins/common/tile.c:423
+#: plug-ins/common/tile.c:425
 msgid "C_reate New Image"
 msgstr "_Kreiraj Novu Sliku"
 
@@ -7160,7 +7186,8 @@ msgid "Create a new unit from scratch."
 msgstr "Napravi potpuno novu jedinicu"
 
 #: plug-ins/common/uniteditor.c:563
-msgid "Create a new unit with the currently seleted unit as template."
+#, fuzzy
+msgid "Create a new unit with the currently selected unit as template."
 msgstr "Napravi novu mjeru sa trenutnim primjerom (template)"
 
 #: plug-ins/common/unsharp.c:149
@@ -7543,25 +7570,25 @@ msgstr "<Image>/Uredi/Ubaci iz Clipboarda"
 msgid "<Toolbox>/File/Acquire/From Clipboard"
 msgstr "<Toolbox>/Datoteka/Izvuci/Iz Clipboarda"
 
-#: plug-ins/common/winclipboard.c:308
+#: plug-ins/common/winclipboard.c:325
 msgid "Copying..."
 msgstr "Kopiram..."
 
-#: plug-ins/common/winclipboard.c:471
+#: plug-ins/common/winclipboard.c:488
 msgid "Unsupported format or Clipboard empty!"
 msgstr "Nepodržan format ili prazno odlagalište!"
 
-#: plug-ins/common/winclipboard.c:482
+#: plug-ins/common/winclipboard.c:499
 msgid "Can't get Clipboard data."
 msgstr "Ne mogu dobiti podatke iz odlagališta."
 
 #. ??? gimp_image_convert_rgb (image_ID);
 #.
-#: plug-ins/common/winclipboard.c:564
+#: plug-ins/common/winclipboard.c:581
 msgid "Pasted"
 msgstr "Ubačeno"
 
-#: plug-ins/common/winclipboard.c:577
+#: plug-ins/common/winclipboard.c:594
 msgid "Pasting..."
 msgstr "Ubacujem..."
 
@@ -7636,40 +7663,40 @@ msgstr "_Jačina:"
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Veće vrijednosti povećavaju snagu efekta"
 
-#: plug-ins/common/winprint.c:186
+#: plug-ins/common/winprint.c:224
 msgid "<Image>/File/_Print"
 msgstr "<Image>/Datoteka/Ispis"
 
-#: plug-ins/common/winprint.c:198
+#: plug-ins/common/winprint.c:236
 msgid "<Image>/File/Page Setup"
 msgstr "<Image>/Datoteka/Namjesti Stranicu"
 
-#: plug-ins/common/winprint.c:300
+#: plug-ins/common/winprint.c:338
 #, c-format
 msgid "PrintDlg failed: %d"
 msgstr "PrintDlg pogreška: %d"
 
-#: plug-ins/common/winprint.c:336
+#: plug-ins/common/winprint.c:374
 msgid "Printer doesn't support bitmaps"
 msgstr "Printer ne podržava bitmape"
 
-#: plug-ins/common/winprint.c:378
+#: plug-ins/common/winprint.c:415
 msgid "StartPage failed"
 msgstr "Pogreška na Početnoj Stranici"
 
-#: plug-ins/common/winprint.c:387 plug-ins/print/print-image-gimp.c:320
+#: plug-ins/common/winprint.c:424 plug-ins/print/print-image-gimp.c:320
 msgid "Printing..."
 msgstr "Ispisujem..."
 
-#: plug-ins/common/winprint.c:419
+#: plug-ins/common/winprint.c:456
 msgid "CreateDIBSection failed"
 msgstr "CreateDIBSection pogreška"
 
-#: plug-ins/common/winprint.c:453
+#: plug-ins/common/winprint.c:492
 msgid "SetStretchBltMode failed (warning only)"
 msgstr "SetStretchBltMode pogreška (upozorenje)"
 
-#: plug-ins/common/winprint.c:516
+#: plug-ins/common/winprint.c:555
 #, c-format
 msgid ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) failed, "
@@ -7678,11 +7705,11 @@ msgstr ""
 "StretchBlt (hDC, %d, %d, %d, %d, hdcMem, %d, 0, %d, 1, SRCCOPY) pogreška, "
 "pogreška = %d, y = %d"
 
-#: plug-ins/common/winprint.c:545
+#: plug-ins/common/winprint.c:584
 msgid "EndPage failed"
 msgstr "EndPage pogreška"
 
-#: plug-ins/common/winprint.c:592
+#: plug-ins/common/winprint.c:631
 #, c-format
 msgid "PageSetupDlg failed: %d"
 msgstr "PageSetupDlg pogreška: %d"
@@ -8299,7 +8326,7 @@ msgid "Anti-Clockwise"
 msgstr "Obrnuti Smjer Kazaljke"
 
 #: plug-ins/gfig/gfig.c:1420 plug-ins/gimpressionist/orientation.c:100
-#: plug-ins/print/gimp_main_window.c:499
+#: plug-ins/print/gimp_main_window.c:496
 msgid "Orientation:"
 msgstr "Orijentacija:"
 
@@ -8811,7 +8838,8 @@ msgid "XY Position:"
 msgstr "XY Pozicija:"
 
 #: plug-ins/gfig/gfig-spiral.c:57
-msgid "Spiral Number of Points"
+#, fuzzy
+msgid "Spiral Number of Turns"
 msgstr "Broj Spiralnih Točaka"
 
 #: plug-ins/gfig/gfig-star.c:56
@@ -9335,13 +9363,18 @@ msgid "Start angle:"
 msgstr "Početni kut:"
 
 #: plug-ins/gimpressionist/orientation.c:78
-#: plug-ins/gimpressionist/orientation.c:90
-msgid "The angle of the first brush to create"
+#, fuzzy
+msgid "The starting angle of the first brush to create"
 msgstr "Kut prvog kreiranog kista"
 
 #: plug-ins/gimpressionist/orientation.c:86
 msgid "Angle span:"
 msgstr "Luk kuta:"
+
+#: plug-ins/gimpressionist/orientation.c:90
+#, fuzzy
+msgid "The angle span of the first brush to create"
+msgstr "Kut prvog kreiranog kista"
 
 #: plug-ins/gimpressionist/orientation.c:114
 msgid ""
@@ -9787,20 +9820,20 @@ msgstr ""
 msgid "GIMP Help Browser"
 msgstr "GIMP Pretraživač Pomoći"
 
-#: plug-ins/helpbrowser/dialog.c:465 plug-ins/imagemap/imap_main.c:586
+#: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:586
 #: plug-ins/imagemap/imap_settings.c:167
 msgid "<Untitled>"
 msgstr "<BezNaziva>"
 
-#: plug-ins/helpbrowser/dialog.c:533
+#: plug-ins/helpbrowser/dialog.c:535
 msgid "Document Not Found"
 msgstr "Dokument nije pronađen"
 
-#: plug-ins/helpbrowser/dialog.c:535
+#: plug-ins/helpbrowser/dialog.c:537
 msgid "Could not locate help document"
 msgstr "Ne mogu pronaći datoteku s pomoćnom dokumentacijom"
 
-#: plug-ins/helpbrowser/dialog.c:537
+#: plug-ins/helpbrowser/dialog.c:539
 msgid ""
 "The requested document could not be found in your GIMP help path as shown "
 "above. This means that the topic has not yet been written or your "
@@ -9890,7 +9923,7 @@ msgstr "Rastegni"
 msgid "Render Options"
 msgstr "Mogućnosti Renderiranja"
 
-#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:482
+#: plug-ins/ifscompose/ifscompose.c:934 plug-ins/print/gimp_main_window.c:484
 msgid "Auto"
 msgstr "Automatski"
 
@@ -10462,7 +10495,7 @@ msgstr "Lista Područja"
 msgid "Source..."
 msgstr "Izvor..."
 
-#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1431
+#: plug-ins/imagemap/imap_menu.c:309 plug-ins/print/gimp_main_window.c:1428
 msgid "Grayscale"
 msgstr "Sivi tonovi"
 
@@ -10776,6 +10809,12 @@ msgstr "<Slika>/Filteri/Iscrtavanje/Uzorak/Lavirint..."
 msgid "Drawing Maze..."
 msgstr "Crtam Labirint..."
 
+#. $Id$
+#: plug-ins/maze/maze.h:2
+#, fuzzy
+msgid "Maze"
+msgstr "Mramor"
+
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: plug-ins/maze/maze_face.c:217
 msgid "Width (Pixels):"
@@ -11021,7 +11060,7 @@ msgstr ""
 "Ako kliknete drugim gumbom dok vučete mišem, slika će se vratiti na početnu "
 "poziciju."
 
-#: plug-ins/print/gimp_main_window.c:484
+#: plug-ins/print/gimp_main_window.c:485
 msgid "Portrait"
 msgstr "Portret"
 
@@ -11029,15 +11068,15 @@ msgstr "Portret"
 msgid "Landscape"
 msgstr "Položeno"
 
-#: plug-ins/print/gimp_main_window.c:488
+#: plug-ins/print/gimp_main_window.c:487
 msgid "Upside down"
 msgstr "Gornji-Dolje"
 
-#: plug-ins/print/gimp_main_window.c:490
+#: plug-ins/print/gimp_main_window.c:488
 msgid "Seascape"
 msgstr "Morski krajolik"
 
-#: plug-ins/print/gimp_main_window.c:494
+#: plug-ins/print/gimp_main_window.c:491
 msgid ""
 "Select the orientation: portrait, landscape, upside down, or seascape "
 "(upside down landscape)"
@@ -11045,108 +11084,108 @@ msgstr ""
 "Odaberite orijentaciju: portret, pejzaž, naopačke ili morski pejzaž (pejsaž "
 "naopačke)"
 
-#: plug-ins/print/gimp_main_window.c:517
+#: plug-ins/print/gimp_main_window.c:514
 msgid "Distance from the left of the paper to the image"
 msgstr "Udaljenost od lijeve stranice papira do slike"
 
-#: plug-ins/print/gimp_main_window.c:530
+#: plug-ins/print/gimp_main_window.c:527
 msgid "Distance from the top of the paper to the image"
 msgstr "Udaljenost od vrha papira do slike"
 
-#: plug-ins/print/gimp_main_window.c:543
+#: plug-ins/print/gimp_main_window.c:540
 msgid "Distance from the left of the paper to the right of the image"
 msgstr "Udaljenost od lijeve stranice papira do desne stranice slike"
 
-#: plug-ins/print/gimp_main_window.c:553
+#: plug-ins/print/gimp_main_window.c:550
 msgid "Right Border:"
 msgstr "Desni Rub:"
 
-#: plug-ins/print/gimp_main_window.c:557
+#: plug-ins/print/gimp_main_window.c:554
 msgid "Distance from the right of the paper to the image"
 msgstr "Udaljenost od desne stranice papira do slike"
 
-#: plug-ins/print/gimp_main_window.c:571
+#: plug-ins/print/gimp_main_window.c:568
 msgid "Distance from the top of the paper to the bottom of the image"
 msgstr "Udaljenost od vrha papira do dna slike"
 
-#: plug-ins/print/gimp_main_window.c:581
+#: plug-ins/print/gimp_main_window.c:578
 msgid "Bottom Border:"
 msgstr "Donji Rub:"
 
-#: plug-ins/print/gimp_main_window.c:585
+#: plug-ins/print/gimp_main_window.c:582
 msgid "Distance from the bottom of the paper to the image"
 msgstr "Udaljenost od dna papira do slike"
 
-#: plug-ins/print/gimp_main_window.c:602
+#: plug-ins/print/gimp_main_window.c:599
 msgid "Center:"
 msgstr "Sredina:"
 
-#: plug-ins/print/gimp_main_window.c:606
+#: plug-ins/print/gimp_main_window.c:603
 msgid "Vertically"
 msgstr "Vertikalno"
 
-#: plug-ins/print/gimp_main_window.c:611
+#: plug-ins/print/gimp_main_window.c:608
 msgid "Center the image vertically on the paper"
 msgstr "Centriraj sliku okomito na papiru"
 
-#: plug-ins/print/gimp_main_window.c:617
+#: plug-ins/print/gimp_main_window.c:614
 msgid "Both"
 msgstr "Oboje"
 
-#: plug-ins/print/gimp_main_window.c:622
+#: plug-ins/print/gimp_main_window.c:619
 msgid "Center the image on the paper"
 msgstr "Postavi sliku na sredinu"
 
-#: plug-ins/print/gimp_main_window.c:629
+#: plug-ins/print/gimp_main_window.c:626
 msgid "Horizontally"
 msgstr "Vodoravno"
 
-#: plug-ins/print/gimp_main_window.c:634
+#: plug-ins/print/gimp_main_window.c:631
 msgid "Center the image horizontally on the paper"
 msgstr "Centriraj sliku vodoravno na papiru"
 
-#: plug-ins/print/gimp_main_window.c:650
+#: plug-ins/print/gimp_main_window.c:647
 msgid "Setup Printer"
 msgstr "Postavke pisača"
 
 #.
 #. * Printer driver option menu.
 #.
-#: plug-ins/print/gimp_main_window.c:680 plug-ins/print/gimp_main_window.c:942
+#: plug-ins/print/gimp_main_window.c:677 plug-ins/print/gimp_main_window.c:939
 msgid "Printer Model:"
 msgstr "Model Pisača:"
 
-#: plug-ins/print/gimp_main_window.c:692
+#: plug-ins/print/gimp_main_window.c:689
 msgid "Select your printer model"
 msgstr "Odaberite model vašeg pisača"
 
 #.
 #. * PPD file.
 #.
-#: plug-ins/print/gimp_main_window.c:731
+#: plug-ins/print/gimp_main_window.c:728
 msgid "PPD File:"
 msgstr "PPD dat.:"
 
-#: plug-ins/print/gimp_main_window.c:747
+#: plug-ins/print/gimp_main_window.c:744
 msgid "Enter the correct PPD filename for your printer"
 msgstr "Unesite ispravan naziv PPD datoteke za vaš pisač"
 
-#: plug-ins/print/gimp_main_window.c:750
+#: plug-ins/print/gimp_main_window.c:747
 msgid "Browse"
 msgstr "Potraži"
 
-#: plug-ins/print/gimp_main_window.c:756
+#: plug-ins/print/gimp_main_window.c:753
 msgid "Choose the correct PPD filename for your printer"
 msgstr "Odaberite ispravan naziv PPD datoteke za vaš pisač"
 
 #.
 #. * Print command.
 #.
-#: plug-ins/print/gimp_main_window.c:766
+#: plug-ins/print/gimp_main_window.c:763
 msgid "Command:"
 msgstr "Naredba:"
 
-#: plug-ins/print/gimp_main_window.c:779
+#: plug-ins/print/gimp_main_window.c:776
 msgid ""
 "Enter the correct command to print to your printer. Note: Please do not "
 "remove the `-l' or `-oraw' from the command string, or printing will "
@@ -11158,38 +11197,38 @@ msgstr ""
 #.
 #. * Output file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:788
+#: plug-ins/print/gimp_main_window.c:785
 msgid "Print To File?"
 msgstr "Ispis u Datoteku?"
 
 #.
 #. * PPD file selection dialog.
 #.
-#: plug-ins/print/gimp_main_window.c:801
+#: plug-ins/print/gimp_main_window.c:798
 msgid "PPD File?"
 msgstr "PPD Datoteka?"
 
-#: plug-ins/print/gimp_main_window.c:819
+#: plug-ins/print/gimp_main_window.c:816
 msgid "Define New Printer"
 msgstr "Definiraj novi pisač"
 
-#: plug-ins/print/gimp_main_window.c:842 plug-ins/print/gimp_main_window.c:937
+#: plug-ins/print/gimp_main_window.c:839 plug-ins/print/gimp_main_window.c:934
 msgid "Printer Name:"
 msgstr "Ime pisača:"
 
-#: plug-ins/print/gimp_main_window.c:846
+#: plug-ins/print/gimp_main_window.c:843
 msgid "Enter the name you wish to give this logical printer"
 msgstr "Unesite naziv koji želite dati ovom logičkom pisaču"
 
-#: plug-ins/print/gimp_main_window.c:859
+#: plug-ins/print/gimp_main_window.c:856
 msgid "About Gimp-Print "
 msgstr "O Gimp-Printu"
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid "Gimp-Print Version "
 msgstr "Gimp-print inačica "
 
-#: plug-ins/print/gimp_main_window.c:872
+#: plug-ins/print/gimp_main_window.c:869
 msgid ""
 "\n"
 "\n"
@@ -11233,11 +11272,11 @@ msgstr ""
 "zajedno s ovim programom; ako niste, pišite na adresu Free Software\n"
 "Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA\n"
 
-#: plug-ins/print/gimp_main_window.c:920
+#: plug-ins/print/gimp_main_window.c:917
 msgid "Printer Settings"
 msgstr "Osobnosti Pisača"
 
-#: plug-ins/print/gimp_main_window.c:933
+#: plug-ins/print/gimp_main_window.c:930
 msgid ""
 "Select the name of the printer (not the type, or model, of printer) that you "
 "wish to print to"
@@ -11247,11 +11286,11 @@ msgstr ""
 #.
 #. * Setup printer button
 #.
-#: plug-ins/print/gimp_main_window.c:953
+#: plug-ins/print/gimp_main_window.c:950
 msgid "Setup Printer..."
 msgstr "Podesi pisač..."
 
-#: plug-ins/print/gimp_main_window.c:955
+#: plug-ins/print/gimp_main_window.c:952
 msgid ""
 "Choose the printer model, PPD file, and command that is used to print to "
 "this printer"
@@ -11262,11 +11301,11 @@ msgstr ""
 #.
 #. * New printer button
 #.
-#: plug-ins/print/gimp_main_window.c:970
+#: plug-ins/print/gimp_main_window.c:967
 msgid "New Printer..."
 msgstr "Novi pisač..."
 
-#: plug-ins/print/gimp_main_window.c:972
+#: plug-ins/print/gimp_main_window.c:969
 msgid ""
 "Define a new logical printer. This can be used to name a collection of "
 "settings that you wish to remember for future use."
@@ -11274,63 +11313,68 @@ msgstr ""
 "Definirajte novi logički pisač. Ovo može biti korišteno kao ime za skup "
 "postavki koji želite spremiti za buduću uporabu."
 
-#: plug-ins/print/gimp_main_window.c:993
+#: plug-ins/print/gimp_main_window.c:990
 msgid "Size of paper that you wish to print to"
 msgstr "Veličina papira na koji se ispisuje"
 
-#: plug-ins/print/gimp_main_window.c:996
+#: plug-ins/print/gimp_main_window.c:993
 msgid "Media Size:"
 msgstr "Vel.Medija:"
 
-#: plug-ins/print/gimp_main_window.c:1005
+#: plug-ins/print/gimp_main_window.c:1002
 msgid "Dimensions:"
 msgstr "Dimenzije:"
 
-#: plug-ins/print/gimp_main_window.c:1019
+#: plug-ins/print/gimp_main_window.c:1016
 msgid "Width of the paper that you wish to print to"
 msgstr "Širina papira na kojem se ispisuje"
 
-#: plug-ins/print/gimp_main_window.c:1036
+#: plug-ins/print/gimp_main_window.c:1033
 msgid "Height of the paper that you wish to print to"
 msgstr "Visina papira na koji želite ispisati"
 
-#: plug-ins/print/gimp_main_window.c:1052
+#: plug-ins/print/gimp_main_window.c:1049
 msgid "Type of media you're printing to"
 msgstr "Vrsta medija na koji ispisujete"
 
-#: plug-ins/print/gimp_main_window.c:1055
+#: plug-ins/print/gimp_main_window.c:1052
 msgid "Media Type:"
 msgstr "Vrsta Medija:"
 
-#: plug-ins/print/gimp_main_window.c:1068
+#: plug-ins/print/gimp_main_window.c:1065
 msgid "Source (input slot) of media you're printing to"
 msgstr "Izvor (ulazno mjesto) medija na koji ispisujete"
 
-#: plug-ins/print/gimp_main_window.c:1071
+#: plug-ins/print/gimp_main_window.c:1068
 msgid "Media Source:"
 msgstr "Izvor Medija:"
 
-#: plug-ins/print/gimp_main_window.c:1084
+#: plug-ins/print/gimp_main_window.c:1081
 msgid "Type of ink in the printer"
 msgstr "Vrsta tinte u pisaču"
 
-#: plug-ins/print/gimp_main_window.c:1087
+#: plug-ins/print/gimp_main_window.c:1084
 msgid "Ink Type:"
 msgstr "Vrsta Tinte:"
 
-#: plug-ins/print/gimp_main_window.c:1100
+#: plug-ins/print/gimp_main_window.c:1097
 msgid "Resolution and quality of the print"
 msgstr "Razlučivost i kvaliteta ispisa"
 
-#: plug-ins/print/gimp_main_window.c:1139
+#: plug-ins/print/gimp_main_window.c:1136
 msgid "Scaling:"
 msgstr "Skaliranje:"
 
-#: plug-ins/print/gimp_main_window.c:1145
+#: plug-ins/print/gimp_main_window.c:1142
 msgid "Set the scale (size) of the image"
 msgstr "Odredite razmjer (veličinu) slike"
 
-#: plug-ins/print/gimp_main_window.c:1178
+#: plug-ins/print/gimp_main_window.c:1170
+#, fuzzy
+msgid "Scale by:"
+msgstr "Vrijednost Z:"
+
+#: plug-ins/print/gimp_main_window.c:1175
 msgid ""
 "Select whether scaling is measured as percent of available page size or "
 "number of output dots per inch"
@@ -11338,58 +11382,58 @@ msgstr ""
 "Određuje da li se skaliranje mjeri u postotcima dostupne veličine stranice "
 "ili broju izlaznih točaka po inču"
 
-#: plug-ins/print/gimp_main_window.c:1183
+#: plug-ins/print/gimp_main_window.c:1180
 msgid "Percent"
 msgstr "Postotak"
 
-#: plug-ins/print/gimp_main_window.c:1190
+#: plug-ins/print/gimp_main_window.c:1187
 msgid "Scale the print to the size of the page"
 msgstr "Skaliraj materijal za ispis prema veličini stranice"
 
-#: plug-ins/print/gimp_main_window.c:1196
+#: plug-ins/print/gimp_main_window.c:1193
 msgid "PPI"
 msgstr "PPI"
 
-#: plug-ins/print/gimp_main_window.c:1202
+#: plug-ins/print/gimp_main_window.c:1199
 msgid "Scale the print to the number of dots per inch"
 msgstr "Skaliraj materijal za ispis na broj točaka po inču"
 
-#: plug-ins/print/gimp_main_window.c:1228
+#: plug-ins/print/gimp_main_window.c:1225
 msgid "Set the width of the print"
 msgstr "Podesite širinu ispisa"
 
-#: plug-ins/print/gimp_main_window.c:1241
+#: plug-ins/print/gimp_main_window.c:1238
 msgid "Set the height of the print"
 msgstr "Podesite visinu ispisa"
 
-#: plug-ins/print/gimp_main_window.c:1261
+#: plug-ins/print/gimp_main_window.c:1258
 msgid "Units:"
 msgstr "Mjere:"
 
-#: plug-ins/print/gimp_main_window.c:1266
+#: plug-ins/print/gimp_main_window.c:1263
 msgid "Select the base unit of measurement for printing"
 msgstr "Određuje osnovnu jedinicu mjere za ispis"
 
-#: plug-ins/print/gimp_main_window.c:1269
+#: plug-ins/print/gimp_main_window.c:1266
 msgid "Inch"
 msgstr "Palac"
 
-#: plug-ins/print/gimp_main_window.c:1276
+#: plug-ins/print/gimp_main_window.c:1273
 msgid "Set the base unit of measurement to inches"
 msgstr "Uzima inče kao osnovnu jedinicu mere"
 
-#: plug-ins/print/gimp_main_window.c:1282
+#: plug-ins/print/gimp_main_window.c:1279
 msgid "cm"
 msgstr "cm"
 
-#: plug-ins/print/gimp_main_window.c:1288
+#: plug-ins/print/gimp_main_window.c:1285
 msgid "Set the base unit of measurement to centimetres"
 msgstr "Postavi centrimetre kao onovnu mernu jedinicu"
 
 #.
 #. * The "image size" button
 #.
-#: plug-ins/print/gimp_main_window.c:1298
+#: plug-ins/print/gimp_main_window.c:1295
 msgid ""
 "Use Original\n"
 "Image Size"
@@ -11397,43 +11441,43 @@ msgstr ""
 "Koristi izvornu\n"
 "veličinu slike"
 
-#: plug-ins/print/gimp_main_window.c:1304
+#: plug-ins/print/gimp_main_window.c:1301
 msgid "Set the print size to the size of the image"
 msgstr "Postavi veličinu ispisa na veličinu slike"
 
-#: plug-ins/print/gimp_main_window.c:1327
+#: plug-ins/print/gimp_main_window.c:1324
 msgid "Image / Output Settings"
 msgstr "Podešavanja slike / izlaza"
 
-#: plug-ins/print/gimp_main_window.c:1340
+#: plug-ins/print/gimp_main_window.c:1337
 msgid "Image Type:"
 msgstr "Vrsta slike:"
 
-#: plug-ins/print/gimp_main_window.c:1345
+#: plug-ins/print/gimp_main_window.c:1342
 msgid "Optimize the output for the type of image being printed"
 msgstr "Optimizacija izlaza za vrstu slike koja se ispisuje"
 
-#: plug-ins/print/gimp_main_window.c:1349
+#: plug-ins/print/gimp_main_window.c:1346
 msgid "Line Art"
 msgstr "Crte"
 
-#: plug-ins/print/gimp_main_window.c:1356
+#: plug-ins/print/gimp_main_window.c:1353
 msgid "Fastest and brightest color for text and line art"
 msgstr "Najbrže i najsvjetlije boje za tekst i linijsku umjetnost"
 
-#: plug-ins/print/gimp_main_window.c:1363
+#: plug-ins/print/gimp_main_window.c:1360
 msgid "Solid Colors"
 msgstr "Jarke Boje"
 
-#: plug-ins/print/gimp_main_window.c:1370
+#: plug-ins/print/gimp_main_window.c:1367
 msgid "Best for images dominated by regions of solid color"
 msgstr "Najbolje za slike na kojima je mnogo područja s jednom bojom"
 
-#: plug-ins/print/gimp_main_window.c:1378
+#: plug-ins/print/gimp_main_window.c:1375
 msgid "Photograph"
 msgstr "Fotografija"
 
-#: plug-ins/print/gimp_main_window.c:1386
+#: plug-ins/print/gimp_main_window.c:1383
 msgid ""
 "Slowest, but most accurate and smoothest color for continuous tone images "
 "and photographs"
@@ -11441,38 +11485,38 @@ msgstr ""
 "Najsporije, ali najtočnije i najizglađenije boje za nijansirane slike i "
 "fotografije"
 
-#: plug-ins/print/gimp_main_window.c:1412
+#: plug-ins/print/gimp_main_window.c:1409
 msgid "Output Type:"
 msgstr "Vrsta Izlaza:"
 
-#: plug-ins/print/gimp_main_window.c:1417
+#: plug-ins/print/gimp_main_window.c:1414
 msgid "Select the desired output type"
 msgstr "Odaberite željeni tip izlaza"
 
-#: plug-ins/print/gimp_main_window.c:1426
+#: plug-ins/print/gimp_main_window.c:1423
 msgid "Color output"
 msgstr "Izlaz boje"
 
-#: plug-ins/print/gimp_main_window.c:1438
+#: plug-ins/print/gimp_main_window.c:1435
 msgid "Print in shades of gray using black ink"
 msgstr "Ispis u nijansama sive koristeći crnu tintu"
 
-#: plug-ins/print/gimp_main_window.c:1445
+#: plug-ins/print/gimp_main_window.c:1442
 msgid "Black and White"
 msgstr "Crno-bijelo"
 
-#: plug-ins/print/gimp_main_window.c:1452
+#: plug-ins/print/gimp_main_window.c:1449
 msgid "Print in black and white (no color, and no shades of gray)"
 msgstr "Ispis crno/bijelo (nema boja, niti nijansi sive)"
 
 #.
 #. *  Color adjust button
 #.
-#: plug-ins/print/gimp_main_window.c:1463
+#: plug-ins/print/gimp_main_window.c:1460
 msgid "Adjust Output..."
 msgstr "Podesi izlaz..."
 
-#: plug-ins/print/gimp_main_window.c:1470
+#: plug-ins/print/gimp_main_window.c:1467
 msgid ""
 "Adjust color balance, brightness, contrast, saturation, and dither algorithm"
 msgstr ""
@@ -11599,28 +11643,28 @@ msgstr "Nema odabira za konverziju"
 msgid "Selection To Path Advanced Settings"
 msgstr "Napredne opcije za pretvaranje odabira u putanju"
 
-#: plug-ins/sgi/sgi.c:532
+#: plug-ins/sgi/sgi.c:539
 #, c-format
 msgid "Could not open '%s' for writing."
 msgstr "Ne mogu otvoriti '%s' za pisanje"
 
-#: plug-ins/sgi/sgi.c:614
+#: plug-ins/sgi/sgi.c:621
 msgid "Save as SGI"
 msgstr "Spremi kao SGI"
 
-#: plug-ins/sgi/sgi.c:623
+#: plug-ins/sgi/sgi.c:630
 msgid "Compression Type"
 msgstr "Vrsta Kompresije"
 
-#: plug-ins/sgi/sgi.c:627
+#: plug-ins/sgi/sgi.c:634
 msgid "No Compression"
 msgstr "Nema Kompresije"
 
-#: plug-ins/sgi/sgi.c:629
+#: plug-ins/sgi/sgi.c:636
 msgid "RLE Compression"
 msgstr "RLE Kompresija"
 
-#: plug-ins/sgi/sgi.c:631
+#: plug-ins/sgi/sgi.c:638
 msgid ""
 "Aggressive RLE\n"
 "(Not Supported by SGI)"
@@ -11709,6 +11753,13 @@ msgstr "Greška: Ne mogu pročitati XJT datoteku svojstava '%s'"
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Greška XJT datoteka %s je prazna."
+
+#~ msgid "Preview (in image window, will modify image's undo history!)"
+#~ msgstr ""
+#~ "Pregled (u prozoru za slike, promijeniti će povijest poništavanja slike!)"
+
+#~ msgid "write error occured"
+#~ msgstr "pogreška pri zapisivanju"
 
 #~ msgid "M_inimum Height:"
 #~ msgstr "Minimalna visina:"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2003-06-24 13:07+0200\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -1452,12 +1452,14 @@ msgstr "Schatten Breite (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Große Überschrift..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Kleine Überschrift..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1501,15 +1503,16 @@ msgstr "Schattenfarbe"
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Sub-Sub-Button "
 "Beschriftung..."
@@ -1517,13 +1520,16 @@ msgstr ""
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 #, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr ""
 "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Allgemeine Tube Beschriftung..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 #, fuzzy
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr "<Toolbox>/Xtns/Skript-Fu/Web-Seiten/gimp.org/Tube Button Beschriftung"
 
 #: plug-ins/script-fu/scripts/glossy.scm.h:1

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-05-25 19:58-0400\n"
+"POT-Creation-Date: 2004-06-15 13:57+0200\n"
 "PO-Revision-Date: 2004-05-25 19:59-0400\n"
 "Last-Translator: Gareth Owen <gowen72@yahoo.com>\n"
 "Language-Team: English, British\n"
@@ -337,7 +337,7 @@ msgstr "Cannot expand ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:423
+#: app/tools/gimpimagemaptool.c:547 app/widgets/gimptexteditor.c:425
 #: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
@@ -1306,12 +1306,12 @@ msgid "Resize Item"
 msgstr "Resize Item"
 
 #: app/core/core-enums.c:603 app/core/core-enums.c:633
-#: app/core/gimplayer.c:1001 app/gui/layers-commands.c:1049
+#: app/core/gimplayer.c:995 app/gui/layers-commands.c:1049
 #: app/gui/layers-commands.c:1088
 msgid "Add Layer Mask"
 msgstr "Add Layer Mask"
 
-#: app/core/core-enums.c:604 app/core/gimplayer.c:1242
+#: app/core/core-enums.c:604 app/core/gimplayer.c:1236
 msgid "Apply Layer Mask"
 msgstr "Apply Layer Mask"
 
@@ -1341,7 +1341,7 @@ msgid "Cut"
 msgstr "Cut"
 
 #: app/core/core-enums.c:611 app/core/core-enums.c:639
-#: app/tools/gimptexttool.c:141 app/widgets/widgets-enums.c:94
+#: app/tools/gimptexttool.c:142 app/widgets/widgets-enums.c:94
 msgid "Text"
 msgstr "Text"
 
@@ -1406,7 +1406,7 @@ msgstr "New Layer"
 msgid "Delete Layer"
 msgstr "Delete Layer"
 
-#: app/core/core-enums.c:634 app/core/gimplayer.c:1243
+#: app/core/core-enums.c:634 app/core/gimplayer.c:1237
 msgid "Delete Layer Mask"
 msgstr "Delete Layer Mask"
 
@@ -2194,37 +2194,37 @@ msgstr "Flip Layer"
 msgid "Rotate Layer"
 msgstr "Rotate Layer"
 
-#: app/core/gimplayer.c:335 app/core/gimplayer.c:1028
+#: app/core/gimplayer.c:335 app/core/gimplayer.c:1022
 #: app/core/gimplayermask.c:246
 #, c-format
 msgid "%s mask"
 msgstr "%s mask"
 
-#: app/core/gimplayer.c:954
+#: app/core/gimplayer.c:948
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr "Cannot add layer mask to layer which is not part of an image."
 
-#: app/core/gimplayer.c:961
+#: app/core/gimplayer.c:955
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Unable to add a layer mask since the layer already has one."
 
-#: app/core/gimplayer.c:968
+#: app/core/gimplayer.c:962
 msgid "Cannot add layer mask to a layer with no alpha channel."
 msgstr "Cannot add layer mask to a layer with no alpha channel."
 
-#: app/core/gimplayer.c:978
+#: app/core/gimplayer.c:972
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Cannot add layer mask of different dimensions than specified layer."
 
-#: app/core/gimplayer.c:1082
+#: app/core/gimplayer.c:1076
 msgid "Transfer Alpha to Mask"
 msgstr "Transfer Alpha to Mask"
 
-#: app/core/gimplayer.c:1348
+#: app/core/gimplayer.c:1342
 msgid "Add Alpha Channel"
 msgstr "Add Alpha Channel"
 
-#: app/core/gimplayer.c:1368
+#: app/core/gimplayer.c:1362
 msgid "Layer to Image Size"
 msgstr "Layer to Image Size"
 
@@ -3819,6 +3819,7 @@ msgid "Scale Error: Both width and height must be greater than zero."
 msgstr "Scale Error: Both width and height must be greater than zero."
 
 #. <Image>/File
+#. <Toolbox>/File
 #: app/gui/image-menu.c:101 app/gui/toolbox-menu.c:49
 msgid "/_File"
 msgstr "/_File"
@@ -3832,6 +3833,7 @@ msgid "/File/_Open..."
 msgstr "/File/_Open..."
 
 #. <Image>/File/Open Recent
+#. <Toolbox>/File/Open Recent
 #: app/gui/image-menu.c:116 app/gui/toolbox-menu.c:64
 msgid "/File/Open _Recent"
 msgstr "/File/Open _Recent"
@@ -6113,6 +6115,7 @@ msgid "Original Width:"
 msgstr "Original Width:"
 
 #. the new size labels
+#. the print size labels
 #: app/gui/resize-dialog.c:318 app/gui/resize-dialog.c:564
 msgid "New Width:"
 msgstr "New Width:"
@@ -6937,6 +6940,7 @@ msgid "New Path Options"
 msgstr "New Path Options"
 
 #. The name entry hbox, label and entry
+#. The name entry
 #: app/gui/vectors-commands.c:495 app/gui/vectors-commands.c:613
 msgid "Path name:"
 msgstr "Path name:"
@@ -7377,7 +7381,7 @@ msgstr ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 
-#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:693
+#: app/text/gimptext-compat.c:106 app/tools/gimptexttool.c:695
 msgid "Add Text Layer"
 msgstr "Add Text Layer"
 
@@ -7832,6 +7836,7 @@ msgid "Origin X:"
 msgstr "Origin X:"
 
 #. the pixel size labels
+#. the unit size labels
 #: app/tools/gimpcroptool.c:999 app/tools/gimpselectionoptions.c:565
 #: app/widgets/gimptemplateeditor.c:235 app/widgets/gimptemplateeditor.c:253
 msgid "Width:"
@@ -8584,23 +8589,23 @@ msgstr ""
 msgid "Create Path from Text"
 msgstr "Create Path from Text"
 
-#: app/tools/gimptexttool.c:142
+#: app/tools/gimptexttool.c:143
 msgid "Add text to the image"
 msgstr "Add text to the image"
 
-#: app/tools/gimptexttool.c:143
+#: app/tools/gimptexttool.c:144
 msgid "/Tools/Te_xt"
 msgstr "/Tools/Te_xt"
 
-#: app/tools/gimptexttool.c:724
+#: app/tools/gimptexttool.c:726
 msgid "GIMP Text Editor"
 msgstr "GIMP Text Editor"
 
-#: app/tools/gimptexttool.c:834 app/tools/gimptexttool.c:837
+#: app/tools/gimptexttool.c:836 app/tools/gimptexttool.c:839
 msgid "Confirm Text Editing"
 msgstr "Confirm Text Editing"
 
-#: app/tools/gimptexttool.c:858
+#: app/tools/gimptexttool.c:860
 msgid ""
 "The layer you selected is a text layer but it has been modified using other "
 "tools. Editing the layer with the text tool will discard these "
@@ -9635,11 +9640,11 @@ msgstr "Load Text from File"
 msgid "Clear all Text"
 msgstr "Clear all Text"
 
-#: app/widgets/gimptexteditor.c:367
+#: app/widgets/gimptexteditor.c:369
 msgid "Open Text File (UTF-8)"
 msgstr "Open Text File (UTF-8)"
 
-#: app/widgets/gimptexteditor.c:452
+#: app/widgets/gimptexteditor.c:454
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Invalid UTF-8 data in file '%s'."

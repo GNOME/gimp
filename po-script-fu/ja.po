@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-04-14 00:30+0200\n"
+"POT-Creation-Date: 2004-06-15 13:18+0200\n"
 "PO-Revision-Date: 2003-09-12 18:36+0900\n"
 "Last-Translator: Ryoichi INAGAKI <ryo1@bc.wakwak.com>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -1401,11 +1401,15 @@ msgid "Shadow Weight (%)"
 msgstr "影の幅 (%)"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Big Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Big Header..."
 msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/大見出し(_B)..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
 msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/小見出し(_S)..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
@@ -1447,25 +1451,33 @@ msgid "Shadow Color"
 msgstr "影の色"
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-Button "
+"Label..."
 msgstr ""
 "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副ボタンラベル(_U)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
-"Label..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+"Button Label..."
 msgstr ""
 "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管副々ボタンラベル(_E)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid ""
-"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+"Labels..."
 msgstr "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/汎用管ラベル(_G)..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
+#, fuzzy
+msgid ""
+"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+"Label..."
 msgstr ""
 "<Toolbox>/拡張/Script-Fu/Web ページテーマ/Gimp.Org/管ボタンラベル(_T)..."
 
