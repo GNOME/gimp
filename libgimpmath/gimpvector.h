@@ -73,7 +73,7 @@ GimpVector2 gimp_vector2_sub_val	   (GimpVector2        vector1,
 void        gimp_vector2_set		   (GimpVector2       *vector,
 					    gdouble            x,
 					    gdouble            y);
-GimpVector2 gimp_vector2_new_val	   (gdouble            x,
+GimpVector2 gimp_vector2_new	   (gdouble            x,
 					    gdouble            y);
 void        gimp_vector2_add		   (GimpVector2       *result,
 					    const GimpVector2 *vector1,
