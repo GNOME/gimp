@@ -242,6 +242,8 @@ gimp_SOURCES = \
 	scroll.h		\
 	selection.c		\
 	selection.h		\
+	session.h		\
+	session.c		\
 	shear_tool.c		\
 	shear_tool.h		\
 	temp_buf.c		\

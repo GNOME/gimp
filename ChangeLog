@@ -1,3 +1,22 @@
+Mon Jun 22 18:43:22 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/Makefile.am
+	* app/app_procs.c
+	* app/brush_select.c
+	* app/gimprc.[ch]
+	* app/gradient.c
+	* app/info_dialog.c
+	* app/interface.c
+	* app/layers_dialog.c
+	* app/palette.c
+	* app/pattern_select.c
+	* app/preferences_dialog.c
+	* app/session.[ch]  (new files)
+	* app/tools.c: Rough outline of session-managment. A new config
+	file 'sessionrc' is written and the position of some windows is
+	remembered. Still has some problems (offset by wm decorations).
+	Can be switched off in the preferences.
+
 Sun Jun 21 15:16:46 CDT 1998 Larry Ewing <lewing@gimp.org>
 
 	* app/bezier_select.c

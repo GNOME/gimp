@@ -39,6 +39,7 @@
 #include "paint_funcs.h"
 #include "palette.h"
 #include "resize.h"
+#include "session.h"
 #include "undo.h"
 
 #include "tools/eye.xbm"
@@ -301,8 +302,8 @@ lc_dialog_create (int gimage_id)
       lc_shell = gtk_dialog_new ();
       
       gtk_window_set_title (GTK_WINDOW (lc_shell), "Layers & Channels");
-      gtk_widget_set_uposition (lc_shell, lc_x, lc_y);
       gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
+      session_set_window_geometry (lc_shell, &lc_dialog_geometry, TRUE);
       gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (lc_shell)->vbox), 2);
       gtk_signal_connect (GTK_OBJECT (lc_shell),
 			  "delete_event", 
@@ -439,7 +440,7 @@ lc_dialog_free ()
   if (lc_shell == NULL)
     return;
 
-  gdk_window_get_position (lc_shell->window, &lc_x, &lc_y);
+  session_get_window_geometry (lc_shell, &lc_dialog_geometry);
 
   layers_dialog_free ();
   channels_dialog_free ();

@@ -33,6 +33,7 @@
 #include "general.h"
 #include "interface.h"
 #include "menus.h"
+#include "session.h"
 #include "tools.h"
 
 #include "pixmaps.h"
@@ -444,7 +445,7 @@ create_toolbox ()
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
   gtk_window_set_title (GTK_WINDOW (window), "The GIMP");
-  gtk_widget_set_uposition (window, toolbox_x, toolbox_y);
+  session_set_window_geometry (window, &toolbox_geometry, TRUE);
   gtk_signal_connect (GTK_OBJECT (window), "delete_event",
 		      GTK_SIGNAL_FUNC (toolbox_delete),
 		      NULL);
@@ -522,7 +523,8 @@ toolbox_free ()
 {
   int i;
 
-  gdk_window_get_position (toolbox_shell->window, &toolbox_x, &toolbox_y);  
+  session_get_window_geometry (toolbox_shell, &toolbox_geometry);
+
   gtk_widget_destroy (toolbox_shell);
   for (i = 0; i < num_tools; i++)
     {

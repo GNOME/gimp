@@ -27,6 +27,7 @@
 #include "disp_callbacks.h"
 #include "errors.h"
 #include "paint_funcs.h"
+#include "session.h"
 
 
 #define MIN_CELL_SIZE    32
@@ -93,9 +94,11 @@ pattern_select_new ()
   psp->shell = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (psp->shell), "patternselection", "Gimp");
   gtk_window_set_title (GTK_WINDOW (psp->shell), "Pattern Selection");
+  session_set_window_geometry (psp->shell, &pattern_select_geometry, TRUE);
+  gtk_window_set_policy(GTK_WINDOW(psp->shell), FALSE, TRUE, FALSE);
+
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (vbox), 1);
-  gtk_window_set_policy(GTK_WINDOW(psp->shell), FALSE, TRUE, FALSE);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (psp->shell)->vbox), vbox, TRUE, TRUE, 0);
 
   /* handle the wm close event */
@@ -201,6 +204,7 @@ pattern_select_free (PatternSelectP psp)
 {
   if (psp)
     {
+      session_get_window_geometry (psp->shell, &pattern_select_geometry);
       if (psp->pattern_popup != NULL)
 	gtk_widget_destroy (psp->pattern_popup);
       g_free (psp);

@@ -50,6 +50,7 @@
 #include "patterns.h"
 #include "plug_in.h"
 #include "procedural_db.h"
+#include "session.h"
 #include "temp_buf.h"
 #include "tile_swap.h"
 #include "tips_dialog.h"
@@ -513,6 +514,7 @@ app_init (void)
     {
       get_standard_colormaps ();
       devices_init ();
+      session_init ();
       create_toolbox ();
       gximage_init ();
       render_setup (transparency_type, transparency_size);
@@ -526,20 +528,6 @@ app_init (void)
   get_active_pattern ();
   paint_funcs_setup ();
 
-}
-
-void 
-app_save_window_positions (void)
-{
-  GList *update = NULL; /* options that should be updated in .gimprc */
-  GList *remove = NULL; /* options that should be commented out */
-
-  update = g_list_append (update, "toolbox-position");
-  update = g_list_append (update, "lc-dialog-position");
-  save_gimprc (&update, &remove);
-
-  g_list_free (update);
-  g_list_free (remove);
 }
 
 int
@@ -566,6 +554,7 @@ app_exit_finish (void)
   patterns_free ();
   palettes_free ();
   gradients_free ();
+  grad_free_gradient_editor ();
   hue_saturation_free ();
   curves_free ();
   levels_free ();
@@ -584,11 +573,9 @@ app_exit_finish (void)
       gximage_free ();
       render_free ();
       tools_options_dialog_free ();
-      if (save_window_positions_on_exit)
-	{
-	  app_save_window_positions();
-	}
+      save_sessionrc ();
     }
+
   /*  gtk_exit (0); */
   gtk_main_quit();
 }

@@ -51,6 +51,7 @@
 #include "pencil.h"
 #include "posterize.h"
 #include "rect_select.h"
+#include "session.h"
 #include "text_tool.h"
 #include "threshold.h"
 #include "tools.h"
@@ -700,7 +701,7 @@ tools_options_dialog_new ()
   gtk_window_set_wmclass (GTK_WINDOW (options_shell), "tool_options", "Gimp");
   gtk_window_set_title (GTK_WINDOW (options_shell), "Tool Options");
   gtk_window_set_policy (GTK_WINDOW (options_shell), FALSE, TRUE, TRUE);
-  gtk_widget_set_uposition (options_shell, tool_options_x, tool_options_y);
+  session_set_window_geometry (options_shell, &tool_options_geometry, FALSE );
 
   options_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_border_width (GTK_CONTAINER (options_vbox), 2);
@@ -739,6 +740,7 @@ tools_options_dialog_show ()
 void
 tools_options_dialog_free ()
 {
+  session_get_window_geometry (options_shell, &tool_options_geometry);
   gtk_widget_destroy (options_shell);
 }
 

@@ -43,6 +43,7 @@
 #include "posterize.h"
 #include "resize.h"
 #include "scale.h"
+#include "session.h"
 #include "threshold.h"
 #include "tips_dialog.h"
 #include "tools.h"
@@ -66,6 +67,7 @@ static void file_prefs_text_callback (GtkWidget *, gpointer);
 static void file_prefs_spinbutton_callback (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback (GtkWidget *, gpointer);
 static void file_prefs_mem_size_unit_callback (GtkWidget *, gpointer);
+static void file_prefs_clear_window_positions_callback (GtkWidget *, gpointer);
 
 /*  static variables  */
 static   int          last_type = RGB;
@@ -287,8 +289,8 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "cubic-interpolation");
   if (confirm_on_close != old_confirm_on_close)
     update = g_list_append (update, "confirm-on-close");
-  if (confirm_on_close != old_confirm_on_close)
-    update = g_list_append (update, "save_window_positions_on_exit");
+  if (save_window_positions_on_exit != old_save_window_positions_on_exit)
+    update = g_list_append (update, "save-window-positions-on-exit");
   if (default_width != old_default_width ||
       default_height != old_default_height)
     update = g_list_append (update, "default-image-size");
@@ -456,25 +458,27 @@ file_prefs_toggle_callback (GtkWidget *widget,
 {
   int *val;
 
-  if (data==&allow_resize_windows)
+  if (data == &allow_resize_windows)
     allow_resize_windows = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&auto_save)
+  else if (data == &auto_save)
     auto_save = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&no_cursor_updating)
+  else if (data == &no_cursor_updating)
     no_cursor_updating = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&show_tool_tips)
+  else if (data == &show_tool_tips)
     show_tool_tips = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&cubic_interpolation)
+  else if (data == &cubic_interpolation)
     cubic_interpolation = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&confirm_on_close)
+  else if (data == &confirm_on_close)
     confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&edit_stingy_memory_use)
+  else if (data == &save_window_positions_on_exit)
+    save_window_positions_on_exit = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &edit_stingy_memory_use)
     edit_stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&edit_install_cmap)
+  else if (data == &edit_install_cmap)
     edit_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&edit_cycled_marching_ants)
+  else if (data == &edit_cycled_marching_ants)
     edit_cycled_marching_ants = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&default_type)
+  else if (data == &default_type)
     {
       default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
     } 
@@ -543,6 +547,13 @@ file_prefs_string_callback (GtkWidget *widget,
 
   val = data;
   file_prefs_strset (val, gtk_entry_get_text (GTK_ENTRY (widget)));
+}
+
+static void
+file_prefs_clear_window_positions_callback (GtkWidget *widget,
+					    gpointer data)
+{
+  session_geometry_updates = NULL;
 }
 
 void
@@ -988,15 +999,6 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &show_tool_tips);
       gtk_widget_show (button);
 
-      button = gtk_check_button_new_with_label("Save window positions on exit");
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
-                                   save_window_positions_on_exit);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &save_window_positions_on_exit);
-      gtk_widget_show (button);
-
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -1104,6 +1106,43 @@ file_pref_cmd_callback (GtkWidget *widget,
       
       label = gtk_label_new ("Environment");
       gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+
+      /* Session Management */
+      out_frame = gtk_frame_new ("Session managment");
+      gtk_container_border_width (GTK_CONTAINER (out_frame), 10);
+      gtk_widget_set_usize (out_frame, 320, 200);
+      gtk_widget_show (out_frame);
+
+      vbox = gtk_vbox_new (FALSE, 2);
+      gtk_container_border_width (GTK_CONTAINER (vbox), 1);
+      gtk_container_add (GTK_CONTAINER (out_frame), vbox);
+      gtk_widget_show (vbox);
+
+      button = gtk_check_button_new_with_label ("Save window positions on exit");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   save_window_positions_on_exit);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &save_window_positions_on_exit);
+      gtk_widget_show (button);
+
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_container_border_width (GTK_CONTAINER (hbox), 4);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+      
+      button = gtk_button_new_with_label ("Clear saved window positions");
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "clicked",
+                          (GtkSignalFunc) file_prefs_clear_window_positions_callback,
+                          NULL);
+      gtk_widget_show (button);
+
+      label = gtk_label_new ("Session");
+      gtk_notebook_append_page (GTK_NOTEBOOK(notebook), out_frame, label);
+
+      gtk_widget_show (notebook);
 
       /* Directories */
       out_frame = gtk_frame_new ("Directories settings");

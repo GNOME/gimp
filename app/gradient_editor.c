@@ -163,6 +163,7 @@
 #include "gradient.h"
 #include "interface.h"
 #include "palette.h"
+#include "session.h"
 
 
 /***** Magic numbers *****/
@@ -789,8 +790,8 @@ grad_create_gradient_editor(void)
 	gtk_window_set_wmclass (GTK_WINDOW(g_editor->shell), "gradient_editor", "Gimp");
 	gtk_container_border_width(GTK_CONTAINER(g_editor->shell), 0);
 	gtk_window_set_title(GTK_WINDOW(g_editor->shell), "Gradient Editor");
-	gtk_window_position(GTK_WINDOW(g_editor->shell), GTK_WIN_POS_CENTER);
-
+	session_set_window_geometry (g_editor->shell, &gradient_editor_geometry, TRUE);
+	
 	/* handle window manager close signals */
 	gtk_signal_connect (GTK_OBJECT (g_editor->shell), "delete_event",
 			    GTK_SIGNAL_FUNC (ed_close_callback),
@@ -1064,6 +1065,9 @@ void
 grad_free_gradient_editor(void)
 {
 	/* FIXME */
+
+  if (g_editor)
+    session_get_window_geometry (g_editor->shell, &gradient_editor_geometry);
 } /* grad_free_gradient_editor */
 
 
