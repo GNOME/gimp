@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins /gnome-cvs\n"
 "POT-Creation-Date: 2000-12-23 11:40-0800\n"
-"PO-Revision-Date: 2001-01-13 19:34+01:00\n"
+"PO-Revision-Date: 2001-01-19 19:34+01:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish/Dansk <sslug-locale@sslug.dk>\n"
 "MIME-Version: 1.0\n"
@@ -55,7 +55,7 @@ msgstr "Om"
 #: plug-ins/common/gauss_rle.c:444 plug-ins/common/gbr.c:568
 #: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1149
 #: plug-ins/common/gif.c:1220 plug-ins/common/gih.c:854
-#: plug-ins/common/glasstile.c:260 plug-ins/common/gqbist.c:640
+#: plug-ins/common/glasstile.c:260 plug-ins/common/gqbist.c:800
 #: plug-ins/common/grid.c:653 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:561
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2486
@@ -137,7 +137,7 @@ msgstr "Ok"
 #: plug-ins/common/gbr.c:570 plug-ins/common/gicon.c:443
 #: plug-ins/common/gif.c:1151 plug-ins/common/gif.c:1222
 #: plug-ins/common/gih.c:856 plug-ins/common/glasstile.c:262
-#: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:655
+#: plug-ins/common/gqbist.c:802 plug-ins/common/grid.c:655
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:563 plug-ins/common/iwarp.c:1146
 #: plug-ins/common/jigsaw.c:2488 plug-ins/common/jpeg.c:1597
@@ -348,7 +348,7 @@ msgstr ""
 "Mandelbrot og Sierpinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:521 plug-ins/common/CML_explorer.c:1229
-#: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3554
+#: plug-ins/common/gqbist.c:856 plug-ins/gfig/gfig.c:3554
 msgid "Load"
 msgstr "Indlæs"
 
@@ -369,7 +369,7 @@ msgid "Reset parameters to default values"
 msgstr "Nulstil til standardværdier"
 
 #: plug-ins/FractalExplorer/Dialogs.c:538 plug-ins/common/CML_explorer.c:1222
-#: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3933
+#: plug-ins/common/gqbist.c:864 plug-ins/gfig/gfig.c:3933
 #: plug-ins/gfig/gfig.c:5262 plug-ins/imagemap/imap_menu.c:218
 #: plug-ins/imagemap/imap_toolbar.c:112
 msgid "Save"
@@ -2985,9 +2985,9 @@ msgid "Smoothing"
 msgstr "Udjævning"
 
 #. The antialiasing toggle
-#: plug-ins/common/curve_bend.c:1523 plug-ins/common/newsprint.c:1410
-#: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3154
-#: plug-ins/mosaic/mosaic.c:605
+#: plug-ins/common/curve_bend.c:1523 plug-ins/common/gqbist.c:843
+#: plug-ins/common/newsprint.c:1410 plug-ins/common/ripple.c:613
+#: plug-ins/gfig/gfig.c:3154 plug-ins/mosaic/mosaic.c:605
 msgid "Antialiasing"
 msgstr "Antialiasering"
 
@@ -3959,25 +3959,25 @@ msgstr "Flisebredde:"
 msgid "Tile Height:"
 msgstr "Flisehøjde:"
 
-#: plug-ins/common/gqbist.c:338
+#: plug-ins/common/gqbist.c:419
 msgid "<Image>/Filters/Render/Pattern/Qbist..."
 msgstr "<Image>/Filter/Render/Mønster/Qbist..."
 
-#: plug-ins/common/gqbist.c:435
-msgid "Qbist..."
-msgstr "Qbist..."
+#: plug-ins/common/gqbist.c:522
+msgid "Qbist ..."
+msgstr "Qbist ..."
 
-#: plug-ins/common/gqbist.c:580
+#: plug-ins/common/gqbist.c:729
 msgid "Load QBE file..."
 msgstr "Indlæs QBE Fil..."
 
-#: plug-ins/common/gqbist.c:604
+#: plug-ins/common/gqbist.c:754
 msgid "Save (middle transform) as QBE file..."
 msgstr "Gem (midterste transformation) som QBE fil..."
 
-#: plug-ins/common/gqbist.c:635
-msgid "G-Qbist 1.10"
-msgstr "G-Qbist 1.10"
+#: plug-ins/common/gqbist.c:795
+msgid "G-Qbist 1.12"
+msgstr "G-Qbist 1.12"
 
 #: plug-ins/common/gradmap.c:118
 msgid "<Image>/Filters/Colors/Map/Gradient Map"
