@@ -55,7 +55,6 @@
 
 #include "app_procs.h"
 #include "general.h"
-#include "gimphelp.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -215,7 +214,7 @@ GimpRc gimprc =
   /* use_help                  */  TRUE,
   /* nav_window_per_display    */  FALSE,
   /* info_window_follows_mouse */  TRUE,
-  /* help_browser              */  HELP_BROWSER_GIMP,
+  /* help_browser              */  GIMP_HELP_BROWSER_GIMP,
   /* cursor_mode               */  GIMP_CURSOR_MODE_TOOL_ICON,
   /* disable_tearoff_menus     */  FALSE,
   /* theme_path                */  NULL,
@@ -2162,9 +2161,9 @@ parse_help_browser (gpointer val1p,
   token = get_next_token ();
 
   if (strcmp (token_sym, "gimp") == 0)
-    *((gint *) val1p) = HELP_BROWSER_GIMP;
+    *((gint *) val1p) = GIMP_HELP_BROWSER_GIMP;
   else if (strcmp (token_sym, "netscape") == 0)
-    *((gint *) val1p) = HELP_BROWSER_NETSCAPE;
+    *((gint *) val1p) = GIMP_HELP_BROWSER_NETSCAPE;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_RIGHT_PAREN))
@@ -2497,7 +2496,7 @@ help_browser_to_str (gpointer val1p,
 
   browser = *((gint *) val1p);
 
-  if (browser == HELP_BROWSER_NETSCAPE)
+  if (browser == GIMP_HELP_BROWSER_NETSCAPE)
     return g_strdup ("netscape");
   else
     return g_strdup ("gimp");

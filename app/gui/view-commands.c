@@ -139,13 +139,13 @@ view_navigation_window_cmd_callback (GtkWidget *widget,
   if (gimprc.nav_window_per_display)
     {
       if (! shell->nav_dialog)
-	shell->nav_dialog = nav_dialog_create (gdisp);
+	shell->nav_dialog = nav_dialog_create (shell);
 
-      nav_dialog_popup (shell->nav_dialog);
+      nav_dialog_show (shell->nav_dialog);
     }
   else
     {
-      nav_dialog_follow_auto ();
+      nav_dialog_show_auto (gdisp->gimage->gimp);
     }
 }
 

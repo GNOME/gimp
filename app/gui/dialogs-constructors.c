@@ -784,7 +784,7 @@ dialogs_indexed_palette_new (GimpDialogFactory *factory,
 				   NULL,
 				   dialogs_set_indexed_palette_context_func);
 
-  dialogs_set_indexed_palette_context_func (GIMP_DOCKABLE (dockable), context);
+  gimp_dockable_set_context (GIMP_DOCKABLE (dockable), context);
 
   g_signal_connect (G_OBJECT (view), "selected",
 		    G_CALLBACK (dialogs_indexed_palette_selected),

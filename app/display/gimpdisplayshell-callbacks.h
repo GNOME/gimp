@@ -75,9 +75,13 @@ void       gimp_display_shell_color_button_default (gpointer           data,
                                                     GtkWidget         *widget);
 
 gboolean   gimp_display_shell_qmask_button_press   (GtkWidget         *widget,
-                                                    GdkEventButton    *event,
+                                                    GdkEventButton    *bevent,
                                                     GimpDisplayShell  *shell);
 void       gimp_display_shell_qmask_toggled        (GtkWidget         *widget,
+                                                    GimpDisplayShell  *shell);
+
+gboolean   gimp_display_shell_nav_button_press     (GtkWidget         *widget,
+                                                    GdkEventButton    *bevent,
                                                     GimpDisplayShell  *shell);
 
 

@@ -162,6 +162,17 @@ gimp_image_preview_render (GimpPreview *preview)
 						  preview_height);
     }
 
+  /*  xresolution != yresolution */
+  if (preview_width > width || preview_height > height)
+    {
+      TempBuf *temp_buf;
+
+      temp_buf = temp_buf_scale (render_buf, width, height);
+
+      temp_buf_free (render_buf);
+      render_buf = temp_buf;
+    }
+
   if (preview_width  < width)  render_buf->x = (width  - preview_width)  / 2;
   if (preview_height < height) render_buf->y = (height - preview_height) / 2;
 

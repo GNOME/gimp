@@ -32,7 +32,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "core/core-types.h"
+#include "widgets-types.h"
 
 #include "core/gimp.h"
 
@@ -42,6 +42,7 @@
 #include "plug-in/plug-in.h"
 
 #include "gimphelp.h"
+
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -112,7 +113,8 @@ gimp_idle_help (gpointer data)
 
   idle_help = (GimpIdleHelp *) data;
 
-  if (idle_help->help_data == NULL && gimprc.help_browser != HELP_BROWSER_GIMP)
+  if (idle_help->help_data == NULL &&
+      gimprc.help_browser != GIMP_HELP_BROWSER_GIMP)
     idle_help->help_data = g_strdup ("introduction.html");
 
 #ifdef DEBUG_HELP
@@ -131,14 +133,14 @@ gimp_idle_help (gpointer data)
 
   switch (gimprc.help_browser)
     {
-    case HELP_BROWSER_GIMP:
+    case GIMP_HELP_BROWSER_GIMP:
       if (gimp_help_internal (idle_help->gimp,
                               idle_help->help_path,
 			      current_locale,
 			      idle_help->help_data))
 	break;
 
-    case HELP_BROWSER_NETSCAPE:
+    case GIMP_HELP_BROWSER_NETSCAPE:
       gimp_help_netscape (idle_help->gimp,
                           idle_help->help_path,
 			  current_locale,
@@ -168,7 +170,7 @@ gimp_help_internal_not_found_callback (GtkWidget *widget,
 
   if (use_netscape)
     {
-      gimprc.help_browser = HELP_BROWSER_NETSCAPE;
+      gimprc.help_browser = GIMP_HELP_BROWSER_NETSCAPE;
 
       update = g_list_append (update, "help-browser");
       gimprc_save (&update, &remove);
@@ -210,7 +212,7 @@ gimp_help_internal (Gimp        *gimp,
 	  gtk_widget_show (not_found);
 	  gtk_main ();
 	  
-	  return (gimprc.help_browser != HELP_BROWSER_NETSCAPE);
+	  return (gimprc.help_browser != GIMP_HELP_BROWSER_NETSCAPE);
 	}
 
       args = g_new (Argument, 4);

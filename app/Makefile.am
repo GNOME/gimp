@@ -70,8 +70,6 @@ stuff_sources = \
 	batch.h			\
 	errors.c		\
 	errors.h		\
-	gimphelp.c		\
-	gimphelp.h		\
 	libgimp_glue.c		\
 	libgimp_glue.h
 

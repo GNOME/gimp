@@ -1,3 +1,75 @@
+2002-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/Makefile.am
+	* app/gimphelp.[ch]: removed...
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimphelp.[ch]: ...and added here.
+
+	* app/widgets/widgets-enums.[ch]: added GimpHelpBrowserType here
+	as registered enum. Added an evil hack with GimpCursorType so
+	app/config/gimpguiconfig.h can include this file.
+
+	* app/widgets/gimpcursor.c: added an assertion because of the
+	changed GimpCursorType.
+
+	* app/config/gimpguiconfig.[ch]: added a property for the help
+	browser type.
+
+	* app/gimprc.c
+	* app/libgimp_glue.c
+	* app/gui/preferences-dialog.c
+	* tools/pdbgen/pdb/help.pdb
+
+	* app/pdb/help_cmds.c: regenerated.
+
+	Some nav_window cleanup before chopping:
+
+	* app/nav_window.[ch]: removed the old preview code and use
+	GimpNavigationPreviews only. Namespaceified all functions. Speak
+	in terms of GimpDisplayShell, not GimpDisplay. Lots of internal
+	cleanup.
+
+	* app/gui/gui-types.h: removed NadiagtionDialog here...
+
+	* app/display/display-types.h: ...and added it here.
+
+	* app/display/gimpdisplayshell-callbacks.[ch]: added a callback
+	for the navigation button and call nav_window_show_popup() from there.
+
+	* app/display/gimpdisplayshell.c: free shell->nav_dialog
+	unconditionally, connect to the new callback.
+
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-scroll.c
+	* app/gui/view-commands.c: changed accordingly.
+
+	* app/widgets/gimppreview.c (gimp_preview_set_viewable): the
+	assertion introduced recently was too tight, breaking
+	GimpNavigationPreview. Changed it to do an "is a" check, not exact
+	preview type matching.
+
+	* app/widgets/gimpimagepreview.c: added quick-hack support for
+	xres != yres.
+
+	* app/widgets/gimpnavigationpreview.[ch]: made
+	gimp_navigation_preview_grab_pointer() public so the nav_window
+	can call it.
+
+	Unrelated:
+
+	* app/display/gimpdisplay.c: removed the gui/ dependency from this
+	file by removing info_window stuff.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_flush): update
+	the info_window here.
+
+	* app/gui/dialogs-constructors.c (dialogs_indexed_palette_new): call
+	gimp_dockable_set_context() like all other constructors.
+
+	* app/undo.c
+	* app/paint/gimppaintcore.h: some more include cleanup.
+
 2002-05-05  Sven Neumann  <sven@gimp.org>
 
 	* NEWS: updated.

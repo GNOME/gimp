@@ -24,9 +24,6 @@
 #include "display-types.h"
 #include "tools/tools-types.h"
 
-#warning FIXME #include "gui/gui-types.h"
-#include "gui/gui-types.h"
-
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable.h"
@@ -36,8 +33,6 @@
 #include "libgimptool/gimptool.h"
 
 #include "tools/tool_manager.h"
-
-#include "gui/info-window.h"
 
 #include "gimpdisplay.h"
 #include "gimpdisplay-area.h"
@@ -565,9 +560,6 @@ gimp_display_flush_whenever (GimpDisplay *gdisp,
 
   /*  Next the displays...  */
   gimp_display_shell_flush (GIMP_DISPLAY_SHELL (gdisp->shell));
-
-  /*  update the gdisplay's info dialog  */
-  info_window_update (gdisp);
 
   /*  ensure the consistency of the tear-off menus  */
   if (! now && gimp_context_get_display (gimp_get_user_context

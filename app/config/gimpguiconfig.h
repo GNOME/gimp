@@ -22,6 +22,8 @@
 #ifndef __GIMP_GUI_CONFIG_H__
 #define __GIMP_GUI_CONFIG_H__
 
+#include "widgets/widgets-enums.h"
+
 #include "config/gimpdisplayconfig.h"
 
 
@@ -58,7 +60,7 @@ struct _GimpGuiConfig
   gchar               *theme_path;
   gchar               *theme;
   gboolean             use_help;
-  gint                 help_browser;  /* FIXME: not yet a property */
+  GimpHelpBrowserType  help_browser;
 };
 
 struct _GimpGuiConfigClass

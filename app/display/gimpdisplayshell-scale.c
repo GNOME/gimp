@@ -150,10 +150,10 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   gtk_widget_queue_draw (GTK_WIDGET (hruler));
   gtk_widget_queue_draw (GTK_WIDGET (vruler));
 
-  nav_dialog_update_window_marker (shell->nav_dialog);
+  nav_dialog_update (shell->nav_dialog);
 
   if (shell->nav_popup)
-    nav_dialog_update_window_marker (shell->nav_popup);
+    nav_dialog_update (shell->nav_popup);
 
 #if 0
   g_print ("offset_x:     %d\n"

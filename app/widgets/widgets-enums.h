@@ -26,6 +26,17 @@
  * these enums that are registered with the type system
  */
 
+#define GIMP_TYPE_HELP_BROWSER_TYPE (gimp_help_browser_type_get_type ())
+
+GType gimp_help_browser_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_HELP_BROWSER_GIMP,     /*< desc="Internal" >*/
+  GIMP_HELP_BROWSER_NETSCAPE  /*< desc="Netscape" >*/
+} GimpHelpBrowserType;
+
+
 #define GIMP_TYPE_ZOOM_TYPE (gimp_zoom_type_get_type ())
 
 GType gimp_zoom_type_get_type (void) G_GNUC_CONST;
@@ -56,7 +67,7 @@ typedef enum  /*< skip >*/
 
 typedef enum  /*< skip >*/
 {
-  GIMP_MOUSE_CURSOR = (GDK_LAST_CURSOR + 2),
+  GIMP_MOUSE_CURSOR = 1024  /* (GDK_LAST_CURSOR + 2) yes, this is insane */,
   GIMP_CROSSHAIR_CURSOR,
   GIMP_CROSSHAIR_SMALL_CURSOR,
   GIMP_BAD_CURSOR,

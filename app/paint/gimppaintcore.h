@@ -22,9 +22,6 @@
 
 #include "core/gimpobject.h"
 
-#include "tools/tools-types.h"   /* temp hack */
-#include "tools/paint_options.h" /* temp hack */
-
 
 #define PAINT_CORE_SUBSAMPLE 4
 

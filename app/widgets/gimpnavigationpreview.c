@@ -274,7 +274,7 @@ gimp_navigation_preview_move_to (GimpNavigationPreview *nav_preview,
                  x, y);
 }
 
-static void
+void
 gimp_navigation_preview_grab_pointer (GimpNavigationPreview *nav_preview)
 {
   GtkWidget *widget;
@@ -532,7 +532,6 @@ gimp_navigation_preview_new (GimpImage *gimage,
 {
   GimpPreview *preview;
 
-  g_return_val_if_fail (gimage != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (size > 0 && size <= 256, NULL);
 
@@ -558,7 +557,6 @@ gimp_navigation_preview_set_marker (GimpNavigationPreview *nav_preview,
   GimpImage   *gimage;
   gdouble      ratiox, ratioy;
 
-  g_return_if_fail (nav_preview != NULL);
   g_return_if_fail (GIMP_IS_NAVIGATION_PREVIEW (nav_preview));
 
   preview = GIMP_PREVIEW (nav_preview);

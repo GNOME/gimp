@@ -127,10 +127,10 @@ gimp_display_shell_scroll (GimpDisplayShell *shell,
           gimp_display_flush (shell->gdisp);
         }
 
-      nav_dialog_update_window_marker (shell->nav_dialog); 
+      nav_dialog_update (shell->nav_dialog); 
 
       if (shell->nav_popup)
-	nav_dialog_update_window_marker (shell->nav_popup);
+	nav_dialog_update (shell->nav_popup);
 
       /* Make sure graphics expose events are processed before scrolling
        * again

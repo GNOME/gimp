@@ -25,7 +25,6 @@
 
 typedef struct _ColorNotebook    ColorNotebook;
 typedef struct _InfoDialog       InfoDialog;
-typedef struct _NavigationDialog NavigationDialog;
 
 
 #endif /* __GUI_TYPES_H__ */

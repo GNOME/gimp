@@ -21,19 +21,19 @@
 #define __NAV_WINDOW_H__
 
 
-NavigationDialog * nav_dialog_create          (GimpDisplay      *gdisp);
-void               nav_dialog_free            (GimpDisplay      *gdisp,
-					       NavigationDialog *nav_dialog);
+NavigationDialog * nav_dialog_create          (GimpDisplayShell *shell);
+void               nav_dialog_create_popup    (GimpDisplayShell *shell,
+                                               GtkWidget        *widget,
+                                               gint              button_x,
+                                               gint              button_y);
+void               nav_dialog_free            (GimpDisplayShell *del_shell,
+                                               NavigationDialog *nav_dialog);
 
-void         nav_dialog_popup                 (NavigationDialog *nav_dialog);
-void         nav_dialog_follow_auto           (void);
+void               nav_dialog_show            (NavigationDialog *nav_dialog);
+void               nav_dialog_show_auto       (Gimp             *gimp);
 
-void         nav_dialog_update_window_marker  (NavigationDialog *nav_dialog);
-void         nav_dialog_preview_resized       (NavigationDialog *nav_dialog);
-
-void         nav_popup_click_handler          (GtkWidget        *widget,
-					       GdkEventButton   *event,
-					       gpointer          data);
+void               nav_dialog_update          (NavigationDialog *nav_dialog);
+void               nav_dialog_preview_resized (NavigationDialog *nav_dialog);
 
 
 #endif /*  __NAV_WINDOW_H__  */

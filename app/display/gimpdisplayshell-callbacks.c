@@ -60,6 +60,7 @@
 #include "gimpstatusbar.h"
 
 #include "gimprc.h"
+#include "nav_window.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -1206,14 +1207,10 @@ gimp_display_shell_color_button_default (gpointer   callback_data,
 
 gboolean
 gimp_display_shell_qmask_button_press (GtkWidget        *widget,
-                                       GdkEventButton   *event,
+                                       GdkEventButton   *bevent,
                                        GimpDisplayShell *shell)
 {
-  GimpDisplay *gdisp;
-
-  gdisp = shell->gdisp;
-
-  if ((event->type == GDK_BUTTON_PRESS) && (event->button == 3))
+  if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 3))
     {
       GimpItemFactory *factory;
 
@@ -1235,6 +1232,19 @@ gimp_display_shell_qmask_toggled (GtkWidget        *widget,
                               GTK_TOGGLE_BUTTON (widget)->active);
 
   gdisplays_flush ();
+}
+
+gboolean
+gimp_display_shell_nav_button_press (GtkWidget        *widget,
+                                     GdkEventButton   *bevent,
+                                     GimpDisplayShell *shell)
+{
+  if ((bevent->type == GDK_BUTTON_PRESS) && (bevent->button == 1))
+    {
+      nav_dialog_create_popup (shell, widget, bevent->x, bevent->y);
+    }
+
+  return TRUE;
 }
 
 

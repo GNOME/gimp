@@ -472,6 +472,8 @@ gimp_cursor_new (GimpCursorType      cursor_type,
       return gdk_cursor_new (cursor_type);
     }
 
+  g_return_val_if_fail (cursor_type >= GIMP_MOUSE_CURSOR, NULL);
+
   /*  allow the small tool cursor only with the standard mouse,
    *  the small crosshair and the bad cursor
    */

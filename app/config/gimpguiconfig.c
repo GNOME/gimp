@@ -64,7 +64,8 @@ enum
   PROP_MAX_NEW_IMAGE_SIZE,
   PROP_THEME_PATH,
   PROP_THEME,
-  PROP_USE_HELP
+  PROP_USE_HELP,
+  PROP_HELP_BROWSER
 };
 
 static GObjectClass *parent_class = NULL;
@@ -168,6 +169,10 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_USE_HELP,
                                     "use-help",
                                     TRUE);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_HELP_BROWSER,
+                                 "help-browser",
+                                 GIMP_TYPE_HELP_BROWSER_TYPE,
+                                 GIMP_HELP_BROWSER_GIMP);
 }
 
 static void
@@ -254,6 +259,9 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_USE_HELP:
       gui_config->use_help = g_value_get_boolean (value);
       break;
+    case PROP_HELP_BROWSER:
+      gui_config->help_browser = g_value_get_enum (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -329,6 +337,9 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_USE_HELP:
       g_value_set_boolean (value, gui_config->use_help);
+      break;
+    case PROP_HELP_BROWSER:
+      g_value_set_enum (value, gui_config->help_browser);
       break;
 
     default:

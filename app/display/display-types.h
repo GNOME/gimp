@@ -31,6 +31,7 @@ typedef struct _GimpDisplayShell  GimpDisplayShell;
 
 typedef struct _GimpStatusbar     GimpStatusbar; /*< proxy-skip >*/
 
+typedef struct _NavigationDialog  NavigationDialog;
 typedef struct _Selection         Selection;
 
 

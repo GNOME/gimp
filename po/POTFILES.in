@@ -2,7 +2,6 @@
 # marked to allow runtime translation of messages
 
 app/app_procs.c
-app/gimphelp.c
 app/gimprc.c
 app/main.c
 app/nav_window.c
@@ -177,6 +176,7 @@ app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawablelistview.c
 app/widgets/gimpfontselection-dialog.c
 app/widgets/gimpgradienteditor.c
+app/widgets/gimphelp.c
 app/widgets/gimpimagedock.c
 app/widgets/gimpitemfactory.c
 app/widgets/gimpitemlistview.c

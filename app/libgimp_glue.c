@@ -22,14 +22,15 @@
 
 #include "libgimpcolor/gimpcolor.h"
 
-#include "core/core-types.h"
+#include "widgets/widgets-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpunit.h"
 
+#include "widgets/gimphelp.h"
+
 #include "app_procs.h"
-#include "gimphelp.h"
 
 #define __LIBGIMP_GLUE_C__
 #include "libgimp_glue.h"

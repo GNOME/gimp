@@ -336,15 +336,15 @@ gimp_display_shell_destroy (GtkObject *object)
       shell->info_dialog = NULL;
     }
 
-  if (shell->nav_dialog)
-    {
-      nav_dialog_free (shell->gdisp, shell->nav_dialog);
-      shell->nav_dialog = NULL;
-    }
+  /*  free the nav_dialog unconditionally because nav_dialog_free(shell,NULL)
+   *  acts as notification for the global nav dialog
+   */
+  nav_dialog_free (shell, shell->nav_dialog);
+  shell->nav_dialog = NULL;
 
   if (shell->nav_popup)
     {
-      nav_dialog_free (shell->gdisp, shell->nav_popup);
+      nav_dialog_free (shell, shell->nav_popup);
       shell->nav_popup = NULL;
     }
 
@@ -667,8 +667,8 @@ gimp_display_shell_new (GimpDisplay *gdisp)
   gtk_widget_show (image);
 
   g_signal_connect (G_OBJECT (nav_ebox), "button_press_event",
-		    G_CALLBACK (nav_popup_click_handler),
-		    gdisp);
+		    G_CALLBACK (gimp_display_shell_nav_button_press),
+		    shell);
 
   gimp_help_set_help_data (nav_ebox, NULL, "#nav_window_button");
 
@@ -1336,6 +1336,9 @@ gimp_display_shell_flush (GimpDisplayShell *shell)
 
       shell->title_dirty = FALSE;
     }
+
+  /*  update the gdisplay's info dialog  */
+  info_window_update (shell->gdisp);
 
   if (shell->display_areas)
     {

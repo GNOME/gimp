@@ -29,8 +29,8 @@
 #include "pdb-types.h"
 #include "procedural_db.h"
 
-#include "gimphelp.h"
 #include "plug-in/plug-ins.h"
+#include "widgets/gimphelp.h"
 
 static ProcRecord help_proc;
 

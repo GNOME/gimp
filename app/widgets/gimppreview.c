@@ -545,8 +545,9 @@ gimp_preview_set_viewable (GimpPreview  *preview,
 {
   g_return_if_fail (GIMP_IS_PREVIEW (preview));
   g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
-  g_return_if_fail (! viewable || (gimp_preview_type_from_viewable (viewable) ==
-                                   G_TYPE_FROM_INSTANCE (preview)));
+  g_return_if_fail (! viewable ||
+                    g_type_is_a (G_TYPE_FROM_INSTANCE (preview),
+                                 gimp_preview_type_from_viewable (viewable)));
 
   if (preview->viewable)
     {

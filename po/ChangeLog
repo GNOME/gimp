@@ -1,3 +1,7 @@
+2002-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: app/gimphelp.c -> app/widgets/gimphelp.c
+
 2002-04-30  Duarte Loreto <happyguy_pt@hotmail.com>
 
         * pt.po: Updated Portuguese translation and converted to UTF-8.

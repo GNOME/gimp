@@ -56,7 +56,6 @@
 #include "resolution-calibrate-dialog.h"
 #include "session.h"
 
-#include "gimphelp.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -127,8 +126,8 @@ static gint               old_marching_speed;
 static gboolean           old_resize_windows_on_zoom;
 static gboolean           old_resize_windows_on_resize;
 static gboolean           old_auto_save;
-static gint               old_preview_size;
-static gint               old_nav_preview_size;
+static GimpPreviewSize    old_preview_size;
+static GimpPreviewSize    old_nav_preview_size;
 static gboolean           old_no_cursor_updating;
 static gboolean           old_show_tool_tips;
 static gboolean           old_show_rulers;
@@ -942,6 +941,7 @@ prefs_cancel_callback (GtkWidget *widget,
   /*  restore variables which need some magic  */
   if (gimprc.preview_size != old_preview_size)
     {
+      gimprc.preview_size = old_preview_size;
 #ifdef __GNUC__
 #warning FIXME: update preview size
 #endif
@@ -1089,12 +1089,13 @@ static void
 prefs_preview_size_callback (GtkWidget *widget,
 			     gpointer   data)
 {
+  gimp_menu_item_update (widget, data);
+
 #ifdef __GNUC__
 #warning FIXME: update preview size
 #endif
 #if 0
-  lc_dialog_rebuild ((long) g_object_get_data (G_OBJECT (widget),
-                                               "gimp-item-data"));
+  lc_dialog_rebuild (gimprc.preview_size);
 #endif
 }
 
@@ -1102,8 +1103,7 @@ static void
 prefs_nav_preview_size_callback (GtkWidget *widget,
 				 gpointer   data)
 {
-  gimprc.nav_preview_size =
-    GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget), "gimp-item-data"));
+  gimp_menu_item_update (widget, data);
 
   gdisplays_nav_preview_resized ();
 }
@@ -2074,9 +2074,14 @@ preferences_dialog_create (Gimp *gimp)
 			   &gimprc.nav_preview_size,
 			   GINT_TO_POINTER (gimprc.nav_preview_size),
 
-			   _("Small"),  GINT_TO_POINTER (48),  NULL,
-			   _("Medium"), GINT_TO_POINTER (80),  NULL,
-			   _("Large"),  GINT_TO_POINTER (112), NULL,
+			   _("Small"),
+                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_MEDIUM), NULL,
+
+			   _("Medium"),
+                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_EXTRA_LARGE), NULL,
+
+			   _("Large"),
+                           GINT_TO_POINTER (GIMP_PREVIEW_SIZE_HUGE), NULL,
 
 			   NULL);
 
@@ -2156,17 +2161,11 @@ preferences_dialog_create (Gimp *gimp)
 
   table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  optionmenu = gimp_option_menu_new2
-    (FALSE,
-     G_CALLBACK (prefs_toggle_callback),
-     &gimprc.help_browser,
-     GINT_TO_POINTER (gimprc.help_browser),
-
-     _("Internal"), GINT_TO_POINTER (HELP_BROWSER_GIMP), NULL,
-     _("Netscape"), GINT_TO_POINTER (HELP_BROWSER_NETSCAPE), NULL,
-
-     NULL);
-
+  optionmenu = gimp_enum_option_menu_new (GIMP_TYPE_HELP_BROWSER_TYPE,
+                                          G_CALLBACK (prefs_toggle_callback),
+                                          &gimprc.help_browser);
+  gimp_option_menu_set_history (GTK_OPTION_MENU (optionmenu),
+                                GINT_TO_POINTER (gimprc.help_browser));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Help Browser to Use:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);

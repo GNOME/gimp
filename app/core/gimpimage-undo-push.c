@@ -25,8 +25,7 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "core/core-types.h"
-#include "libgimptool/gimptooltypes.h"
+#include "tools/tools-types.h"
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
@@ -52,8 +51,6 @@
 #include "paint/gimppaintcore.h"
 
 #include "tools/gimpbycolorselecttool.h"
-/*#include "tools/gimptool.h"*/
-#include "tools/gimpdrawtool.h"
 #include "tools/gimppainttool.h"
 #include "tools/gimptransformtool.h"
 #include "tools/tool_manager.h"
