@@ -1,5 +1,13 @@
 1999-07-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
+	* app/errorconsole.[ch]: forgot to checkin this one...
+
+	Wheelmouse support and a hack to set the message_handler to 
+	ERROR_CONSOLE and back to MESSAGE_BOX box when showing/hiding the
+	dialog (should interact with preferences).
+
+1999-07-24  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
 	* app/brush_select.c
 	* app/pattern_select.c
 	* app/gradient.c: wheelmouse support for the brush/pattern lists

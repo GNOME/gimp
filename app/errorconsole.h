@@ -21,10 +21,10 @@
 #ifndef __ERRORCONSOLE_H__
 #define __ERRORCONSOLE_H__
 
-void error_console_add                          (gchar *errormsg);
+void  error_console_add  (gchar *errormsg);
 
 /* Free error_console (only for session-managment) */
-void error_console_free (void);
+void  error_console_free (void);
 
 
 #endif /* __ERRORCONSOLE_H__ */

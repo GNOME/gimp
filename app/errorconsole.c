@@ -51,19 +51,18 @@
 
 #include <gtk/gtk.h>
 
+#include "appenv.h"
 #include "commands.h"
 #include "session.h"
 #include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
-#define ERRORS_ALL 0
+#define ERRORS_ALL       0
 #define ERRORS_SELECTION 1
 
-void error_console_add				(gchar *errormsg);
-
-static GtkWidget	*error_console = NULL;
-static GtkWidget	*text;
+static GtkWidget * error_console = NULL;
+static GtkWidget * text;
 
 
 static void
@@ -71,6 +70,9 @@ error_console_close_callback (GtkWidget	*widget,
 			      gpointer	 data)
 {
   gtk_widget_hide (error_console);
+
+  /* FIXME: interact with preferences */
+  message_handler = MESSAGE_BOX;
 }
 
 static gint
@@ -91,7 +93,8 @@ error_console_free (void)
 }
 
 gint
-error_console_write_file (gchar *path, gint textscope)
+error_console_write_file (gchar *path,
+			  gint   textscope)
 {
   gint	fd;
   gint	text_length;
@@ -151,7 +154,8 @@ error_console_write_file (gchar *path, gint textscope)
 }
 
 static void
-error_console_file_ok_callback (GtkWidget *widget, gpointer data)
+error_console_file_ok_callback (GtkWidget *widget,
+				gpointer   data)
 {
   GtkWidget	*filesel;
   gchar		*filename;
@@ -205,20 +209,46 @@ error_console_menu_callback (gint textscope)
 }
 
 static gint
-text_clicked_callback (GtkWidget	*widget,
-		       GdkEventButton	*event, 
-		       gpointer		data)
+text_clicked_callback (GtkWidget        *widget,
+		       GdkEventButton   *event, 
+		       gpointer		 data)
 {
   GtkMenu	*menu = (GtkMenu *) data;
   GtkText	*gtext;
   
   gtext = GTK_TEXT (text);
 
-  if (event->button == 3)
+  switch (event->button)
     {
-      gtk_signal_emit_stop_by_name (GTK_OBJECT (text), "button_press_event");
+    case 1:
+    case 2:
+      break;
 
-      gtk_menu_popup(menu, NULL, NULL, NULL, NULL, event->button, event->time);
+    case 3:
+      gtk_signal_emit_stop_by_name (GTK_OBJECT (text), "button_press_event");
+      gtk_menu_popup (menu, NULL, NULL, NULL, NULL, event->button, event->time);
+
+      /*  wheelmouse support  */
+    case 4:
+      {
+	GtkAdjustment *adj = gtext->vadj;
+	gfloat new_value = adj->value - adj->page_increment / 2;
+	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	gtk_adjustment_set_value (adj, new_value);
+      }
+      break;
+
+    case 5:
+      {
+	GtkAdjustment *adj = gtext->vadj;
+	gfloat new_value = adj->value + adj->page_increment / 2;
+	new_value = CLAMP (new_value, adj->lower, adj->upper - adj->page_size);
+	gtk_adjustment_set_value (adj, new_value);
+      }
+      break;
+
+    default:
+      break;
     }
 
   return TRUE; 
@@ -241,8 +271,9 @@ error_console_create_window (void)
   error_console = gtk_dialog_new ();
 
   /* register this one only */
-  dialog_register(error_console);
+  dialog_register (error_console);
 
+  gtk_window_set_wmclass (GTK_WINDOW (error_console), "error_console", "Gimp");
   gtk_window_set_title (GTK_WINDOW (error_console), _("GIMP Error console"));
   session_set_window_geometry (error_console, &error_console_session_info, TRUE); 
   /* The next line should disappear when setting the size works in SM */
@@ -304,15 +335,22 @@ error_console_create_window (void)
 void
 error_console_add (gchar *errormsg)
 {
-  
   if (!error_console)
     {
       error_console_create_window ();
+
+      /* FIMXE: interact with preferences */
+      message_handler = ERROR_CONSOLE;
     } 
   else 
     {
       if (!GTK_WIDGET_VISIBLE (error_console))
-	gtk_widget_show (error_console);
+	{
+	  gtk_widget_show (error_console);
+
+	  /* FIXME: interact with preferences */
+	  message_handler = ERROR_CONSOLE;
+	}
       else 
 	gdk_window_raise (error_console->window);
     }
@@ -323,4 +361,3 @@ error_console_add (gchar *errormsg)
       gtk_text_insert (GTK_TEXT (text), NULL, NULL, NULL, "\n", -1);
     }
 }
-
