@@ -303,11 +303,12 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
     gtk_widget_destroy (gamma->hbox);
 
   gamma->hbox = gtk_hbox_new (FALSE, 4);
+
   g_signal_connect (gamma->hbox, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &gamma->hbox);
 
-  label = gtk_label_new ( _("Gamma:"));
+  label = gtk_label_new_with_mnemonic (_("_Gamma:"));
   gtk_box_pack_start (GTK_BOX (gamma->hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -316,6 +317,8 @@ cdisplay_gamma_configure (GimpColorDisplay *display)
                                      0.1, 3);
   gtk_box_pack_start (GTK_BOX (gamma->hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_signal_connect (gamma->adjustment, "value_changed",
                     G_CALLBACK (gamma_configure_adj_callback),

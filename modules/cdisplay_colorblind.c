@@ -43,10 +43,12 @@
 
 typedef enum
 {
-  COLORBLIND_DEFICIENCY_NONE,
-  COLORBLIND_DEFICIENCY_PROTANOPIA,
+  COLORBLIND_DEFICIENCY_FIRST,
+
+  COLORBLIND_DEFICIENCY_PROTANOPIA = COLORBLIND_DEFICIENCY_FIRST,
   COLORBLIND_DEFICIENCY_DEUTERANOPIA,
   COLORBLIND_DEFICIENCY_TRITANOPIA,
+
   COLORBLIND_DEFICIENCY_LAST = COLORBLIND_DEFICIENCY_TRITANOPIA
 } ColorblindDeficiency;
 
@@ -299,9 +301,6 @@ cdisplay_colorblind_convert (GimpColorDisplay *display,
 
   colorblind = CDISPLAY_COLORBLIND (display);
 
-  if (colorblind->deficiency == COLORBLIND_DEFICIENCY_NONE)
-    return;
-
   /* to improve readability, copy the parameters into local variables */
   memcpy (rgb2lms, colorblind->rgb2lms, sizeof (rgb2lms));
   memcpy (lms2rgb, colorblind->lms2rgb, sizeof (lms2rgb));
@@ -424,7 +423,7 @@ cdisplay_colorblind_load_state (GimpColorDisplay *display,
 
       if (sscanf (str, "%d", &deficiency) == 1)
         {
-          if (deficiency >= COLORBLIND_DEFICIENCY_NONE &&
+          if (deficiency >= COLORBLIND_DEFICIENCY_FIRST &&
               deficiency <= COLORBLIND_DEFICIENCY_LAST)
             {
               colorblind->deficiency = deficiency;
@@ -456,12 +455,13 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   if (colorblind->hbox)
     gtk_widget_destroy (colorblind->hbox);
 
-  colorblind->hbox = gtk_hbox_new (FALSE, 2);
+  colorblind->hbox = gtk_hbox_new (FALSE, 4);
+
   g_signal_connect (colorblind->hbox, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &colorblind->hbox);
 
-  label = gtk_label_new ( _("Color Deficiency Type:"));
+  label = gtk_label_new_with_mnemonic (_("Color _Deficiency Type:"));
   gtk_box_pack_start (GTK_BOX (colorblind->hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -469,9 +469,6 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
     gimp_int_option_menu_new (FALSE,
                               G_CALLBACK (colorblind_deficiency_callback),
                               colorblind, colorblind->deficiency,
-
-                              _("None (normal vision)"),
-                              COLORBLIND_DEFICIENCY_NONE, NULL,
 
                               _("Protanopia (insensitivity to red)"),
                               COLORBLIND_DEFICIENCY_PROTANOPIA, NULL,
@@ -487,6 +484,8 @@ cdisplay_colorblind_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (colorblind->hbox), colorblind->optionmenu,
                       FALSE, FALSE, 0);
   gtk_widget_show (colorblind->optionmenu);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), colorblind->optionmenu);
 
   return colorblind->hbox;
 }
@@ -543,9 +542,6 @@ cdisplay_colorblind_changed (GimpColorDisplay *display)
 
   switch (colorblind->deficiency)
     {
-    case COLORBLIND_DEFICIENCY_NONE:
-      break;
-
     case COLORBLIND_DEFICIENCY_DEUTERANOPIA:
       /* find a,b,c for lam=575nm and lam=475 */
       colorblind->a1 = anchor_e[1] * anchor[8] - anchor_e[2] * anchor[7];

@@ -37,6 +37,8 @@ typedef struct _GimpColorDisplayClass GimpColorDisplayClass;
 struct _GimpColorDisplay
 {
   GObject  parent_instance;
+
+  gboolean enabled;
 };
 
 struct _GimpColorDisplayClass
@@ -67,8 +69,11 @@ struct _GimpColorDisplayClass
 
 GType              gimp_color_display_get_type    (void) G_GNUC_CONST;
 GimpColorDisplay * gimp_color_display_new         (GType             display_type);
-
 GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
+
+void           gimp_color_display_set_enabled     (GimpColorDisplay *display,
+                                                   gboolean          enabled);
+gboolean       gimp_color_display_get_enabled     (GimpColorDisplay *display);
 
 void           gimp_color_display_convert         (GimpColorDisplay *display,
                                                    guchar           *buf,

@@ -335,7 +335,7 @@ cdisplay_proof_configure (GimpColorDisplay *display)
                                proof->filename, FALSE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (proof->table), 0, 1,
                              _("_Profile:"), 1.0, 0.5,
-                             entry, 1, TRUE);
+                             entry, 1, FALSE);
 
   g_signal_connect (entry, "filename-changed",
                     G_CALLBACK (proof_file_callback),

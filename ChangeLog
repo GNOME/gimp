@@ -1,3 +1,23 @@
+2003-11-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolordisplay.[ch]: added API to
+	enable/disable a filter. A disabled filter has no effect.
+
+	* libgimpmodule/gimpmodule.h: incremented GIMP_MODULE_ABI_VERSION.
+
+	* app/widgets/gimpcolordisplayeditor.c: added a check column to
+	the "Active Filters" tree view so the effect of all filters can
+	quickly be toggled. Cleanup.
+
+	* modules/cdisplay_colorblind.c: removed "none" from the enum and
+	from the GUI because disabling a filter is implemented generically
+	now.
+
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_proof.c: added mnemonics, cleanup.
+
 2003-11-22  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpwidgetsmarshal.list

@@ -45,6 +45,7 @@ enum
 
 enum
 {
+  DEST_COLUMN_ENABLED,
   DEST_COLUMN_NAME,
   DEST_COLUMN_FILTER,
   N_DEST_COLUMNS
@@ -82,6 +83,12 @@ static void   gimp_color_display_editor_removed        (GimpColorDisplayStack  *
 static void   gimp_color_display_editor_reordered      (GimpColorDisplayStack  *stack,
                                                         GimpColorDisplay       *display,
                                                         gint                    position,
+                                                        GimpColorDisplayEditor *editor);
+
+static void   gimp_color_display_editor_changed        (GimpColorDisplay       *display,
+                                                        GimpColorDisplayEditor *editor);
+static void   gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *toggle,
+                                                        const gchar            *path,
                                                         GimpColorDisplayEditor *editor);
 
 static void   gimp_color_display_editor_update_buttons (GimpColorDisplayEditor *editor);
@@ -133,12 +140,16 @@ gimp_color_display_editor_class_init (GimpColorDisplayEditorClass *klass)
 static void
 gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
 {
-  GtkWidget *hbox;
-  GtkWidget *ed;
-  GtkWidget *scrolled_win;
-  GtkWidget *tv;
-  GtkWidget *vbox;
-  GtkWidget *image;
+  GtkWidget         *hbox;
+  GtkWidget         *ed;
+  GtkWidget         *scrolled_win;
+  GtkWidget         *tv;
+  GtkWidget         *vbox;
+  GtkWidget         *image;
+  GtkTreeViewColumn *column;
+  GtkCellRenderer   *rend;
+
+  gtk_box_set_spacing (GTK_BOX (editor), 6);
 
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (editor), hbox, TRUE, TRUE, 0);
@@ -154,7 +165,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_show (scrolled_win);
 
   editor->src = gtk_list_store_new (N_SRC_COLUMNS,
-                                    G_TYPE_STRING, G_TYPE_POINTER);
+                                    G_TYPE_STRING,
+                                    G_TYPE_POINTER);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->src));
   g_object_unref (editor->src);
 
@@ -164,7 +176,8 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
                                                0, _("Available Filters"),
                                                gtk_cell_renderer_text_new (),
-                                               "text", 0, NULL);
+                                               "text", SRC_COLUMN_NAME,
+                                               NULL);
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
   gtk_widget_show (tv);
 
@@ -247,17 +260,36 @@ gimp_color_display_editor_init (GimpColorDisplayEditor *editor)
   gtk_widget_show (scrolled_win);
 
   editor->dest = gtk_list_store_new (N_DEST_COLUMNS,
-                                     G_TYPE_STRING, GIMP_TYPE_COLOR_DISPLAY);
+                                     G_TYPE_BOOLEAN,
+                                     G_TYPE_STRING,
+                                     GIMP_TYPE_COLOR_DISPLAY);
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (editor->dest));
   g_object_unref (editor->dest);
 
   gtk_widget_set_size_request (tv, LIST_WIDTH, LIST_HEIGHT);
   gtk_tree_view_set_headers_clickable (GTK_TREE_VIEW (tv), FALSE);
 
-  gtk_tree_view_insert_column_with_attributes (GTK_TREE_VIEW (tv),
-                                               0, _("Active Filters"),
-                                               gtk_cell_renderer_text_new (),
-                                               "text", 0, NULL);
+
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_title (column, _("Active Filters"));
+  gtk_tree_view_insert_column (GTK_TREE_VIEW (tv), column, 0);
+
+  rend = gtk_cell_renderer_toggle_new ();
+  gtk_tree_view_column_pack_start (column, rend, FALSE);
+  gtk_tree_view_column_set_attributes (column, rend,
+                                       "active", DEST_COLUMN_ENABLED,
+                                       NULL);
+
+  g_signal_connect (rend, "toggled",
+                    G_CALLBACK (gimp_color_display_editor_enable_toggled),
+                    editor);
+
+  rend = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, rend, FALSE);
+  gtk_tree_view_column_set_attributes (column, rend,
+                                       "text", DEST_COLUMN_NAME,
+                                       NULL);
+
   gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
   gtk_widget_show (tv);
 
@@ -315,8 +347,8 @@ GtkWidget *
 gimp_color_display_editor_new (GimpColorDisplayStack *stack)
 {
   GimpColorDisplayEditor *editor;
-  GType                  *filter_types;
-  guint                   n_filter_types;
+  GType                  *display_types;
+  guint                   n_display_types;
   gint                    i;
   GList                  *list;
 
@@ -326,41 +358,49 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack)
 
   editor->stack = g_object_ref (stack);
 
-  filter_types = g_type_children (GIMP_TYPE_COLOR_DISPLAY, &n_filter_types);
+  display_types = g_type_children (GIMP_TYPE_COLOR_DISPLAY, &n_display_types);
 
-  for (i = 0; i < n_filter_types; i++)
+  for (i = 0; i < n_display_types; i++)
     {
-      GimpColorDisplayClass *filter_class;
+      GimpColorDisplayClass *display_class;
       GtkTreeIter            iter;
 
-      filter_class = g_type_class_ref (filter_types[i]);
+      display_class = g_type_class_ref (display_types[i]);
 
       gtk_list_store_append (editor->src, &iter);
 
       gtk_list_store_set (editor->src, &iter,
-                          SRC_COLUMN_NAME, filter_class->name,
-                          SRC_COLUMN_TYPE, filter_types[i],
+                          SRC_COLUMN_NAME, display_class->name,
+                          SRC_COLUMN_TYPE, display_types[i],
                           -1);
 
-      g_type_class_unref (filter_class);
+      g_type_class_unref (display_class);
     }
 
-  g_free (filter_types);
+  g_free (display_types);
 
   for (list = stack->filters; list; list = g_list_next (list))
     {
-      GimpColorDisplay *filter = list->data;
+      GimpColorDisplay *display = list->data;
       GtkTreeIter       iter;
+      gboolean          enabled;
       const gchar      *name;
 
-      name = GIMP_COLOR_DISPLAY_GET_CLASS (filter)->name;
+      enabled = gimp_color_display_get_enabled (display);
+
+      name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
 
       gtk_list_store_append (editor->dest, &iter);
 
       gtk_list_store_set (editor->dest, &iter,
-                          DEST_COLUMN_NAME,   name,
-                          DEST_COLUMN_FILTER, filter,
+                          DEST_COLUMN_ENABLED, enabled,
+                          DEST_COLUMN_NAME,    name,
+                          DEST_COLUMN_FILTER,  display,
                           -1);
+
+      g_signal_connect_object (display, "changed",
+                               G_CALLBACK (gimp_color_display_editor_changed),
+                               G_OBJECT (editor), 0);
     }
 
   g_signal_connect_object (stack, "added",
@@ -388,7 +428,7 @@ gimp_color_display_editor_add_clicked (GtkWidget             *widget,
       GimpColorDisplay *display;
       GValue            val = { 0, };
 
-      gtk_tree_model_get_value (model, &iter, DEST_COLUMN_FILTER, &val);
+      gtk_tree_model_get_value (model, &iter, SRC_COLUMN_TYPE, &val);
 
       display = gimp_color_display_new ((GType) g_value_get_pointer (&val));
 
@@ -462,7 +502,7 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
 {
   GtkTreeModel     *model;
   GtkTreeIter       iter;
-  GimpColorDisplay *filter = NULL;
+  GimpColorDisplay *display = NULL;
 
   if (editor->selected)
     {
@@ -477,31 +517,31 @@ gimp_color_display_editor_dest_changed (GtkTreeSelection       *sel,
 
       gtk_tree_model_get_value (model, &iter, DEST_COLUMN_FILTER, &val);
 
-      filter = g_value_get_object (&val);
+      display = g_value_get_object (&val);
 
       g_value_unset (&val);
     }
 
-  gtk_widget_set_sensitive (editor->remove_button, filter != NULL);
-  gtk_widget_set_sensitive (editor->reset_button,  filter != NULL);
+  gtk_widget_set_sensitive (editor->remove_button, display != NULL);
+  gtk_widget_set_sensitive (editor->reset_button,  display != NULL);
 
   if (editor->config_widget)
     gtk_container_remove (GTK_CONTAINER (editor->config_box),
                           editor->config_widget);
 
-  if (filter)
+  if (display)
     {
       gchar *str;
 
-      editor->selected = filter;
+      editor->selected = display;
 
-      g_object_add_weak_pointer (G_OBJECT (filter),
+      g_object_add_weak_pointer (G_OBJECT (display),
                                  (gpointer) &editor->selected);
 
-      editor->config_widget = gimp_color_display_configure (filter);
+      editor->config_widget = gimp_color_display_configure (display);
 
       str = g_strdup_printf (_("Configure Selected Filter: %s"),
-                             GIMP_COLOR_DISPLAY_GET_CLASS (filter)->name);
+                             GIMP_COLOR_DISPLAY_GET_CLASS (display)->name);
       gtk_frame_set_label (GTK_FRAME (editor->config_frame), str);
       g_free (str);
     }
@@ -534,16 +574,24 @@ gimp_color_display_editor_added (GimpColorDisplayStack  *stack,
                                  GimpColorDisplayEditor *editor)
 {
   GtkTreeIter  iter;
+  gboolean     enabled;
   const gchar *name;
+
+  enabled = gimp_color_display_get_enabled (display);
 
   name = GIMP_COLOR_DISPLAY_GET_CLASS (display)->name;
 
   gtk_list_store_insert (editor->dest, &iter, position);
 
   gtk_list_store_set (editor->dest, &iter,
-                      DEST_COLUMN_NAME,   name,
-                      DEST_COLUMN_FILTER, display,
+                      DEST_COLUMN_ENABLED, enabled,
+                      DEST_COLUMN_NAME,    name,
+                      DEST_COLUMN_FILTER,  display,
                       -1);
+
+  g_signal_connect_object (display, "changed",
+                           G_CALLBACK (gimp_color_display_editor_changed),
+                           G_OBJECT (editor), 0);
 
   gimp_color_display_editor_update_buttons (editor);
 }
@@ -572,6 +620,10 @@ gimp_color_display_editor_removed (GimpColorDisplayStack  *stack,
 
       if (display == display2)
         {
+          g_signal_handlers_disconnect_by_func (display,
+                                                gimp_color_display_editor_changed,
+                                                editor);
+
           gtk_list_store_remove (editor->dest, &iter);
 
           gimp_color_display_editor_update_buttons (editor);
@@ -645,6 +697,67 @@ gimp_color_display_editor_reordered (GimpColorDisplayStack  *stack,
           return;
         }
     }
+}
+
+static void
+gimp_color_display_editor_changed (GimpColorDisplay       *display,
+                                   GimpColorDisplayEditor *editor)
+{
+  GtkTreeIter iter;
+  gboolean    iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (editor->dest),
+                                                   &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (editor->dest),
+                                              &iter))
+    {
+      GimpColorDisplay *display2;
+      gboolean          enabled;
+
+      gtk_tree_model_get (GTK_TREE_MODEL (editor->dest), &iter,
+                          DEST_COLUMN_FILTER,  &display2,
+                          DEST_COLUMN_ENABLED, &enabled,
+                          -1);
+
+      g_object_unref (display2);
+
+      if (display == display2)
+        {
+          if (enabled != gimp_color_display_get_enabled (display))
+            gtk_list_store_set (editor->dest, &iter,
+                                DEST_COLUMN_ENABLED, ! enabled,
+                                -1);
+
+          break;
+        }
+    }
+}
+
+static void
+gimp_color_display_editor_enable_toggled (GtkCellRendererToggle  *toggle,
+                                          const gchar            *path_str,
+                                          GimpColorDisplayEditor *editor)
+{
+  GtkTreePath *path;
+  GtkTreeIter  iter;
+
+  path = gtk_tree_path_new_from_string (path_str);
+
+  if (gtk_tree_model_get_iter (GTK_TREE_MODEL (editor->dest), &iter, path))
+    {
+      GimpColorDisplay *display;
+      gboolean          enabled;
+
+      gtk_tree_model_get (GTK_TREE_MODEL (editor->dest), &iter,
+                          DEST_COLUMN_FILTER,  &display,
+                          DEST_COLUMN_ENABLED, &enabled,
+                          -1);
+
+      gimp_color_display_set_enabled (display, ! enabled);
+    }
+
+  gtk_tree_path_free (path);
 }
 
 static void

@@ -103,6 +103,7 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
 static void
 gimp_color_display_init (GimpColorDisplay *display)
 {
+  display->enabled = TRUE;
 }
 
 GimpColorDisplay *
@@ -130,6 +131,28 @@ gimp_color_display_clone (GimpColorDisplay *display)
 }
 
 void
+gimp_color_display_set_enabled (GimpColorDisplay *display,
+                                gboolean          enabled)
+{
+  g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
+
+  if (enabled != display->enabled)
+    {
+      display->enabled = enabled ? TRUE : FALSE;
+
+      gimp_color_display_changed (display);
+    }
+}
+
+gboolean
+gimp_color_display_get_enabled (GimpColorDisplay *display)
+{
+  g_return_val_if_fail (GIMP_IS_COLOR_DISPLAY (display), FALSE);
+
+  return display->enabled;
+}
+
+void
 gimp_color_display_convert (GimpColorDisplay *display,
                             guchar            *buf,
                             gint               width,
@@ -139,7 +162,7 @@ gimp_color_display_convert (GimpColorDisplay *display,
 {
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
 
-  if (GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert)
+  if (display->enabled && GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert)
     GIMP_COLOR_DISPLAY_GET_CLASS (display)->convert (display, buf,
                                                      width, height,
                                                      bpp, bpl);

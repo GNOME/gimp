@@ -299,12 +299,13 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
   if (contrast->hbox)
     gtk_widget_destroy (contrast->hbox);
 
-  contrast->hbox = gtk_hbox_new (FALSE, 2);
+  contrast->hbox = gtk_hbox_new (FALSE, 4);
+
   g_signal_connect (contrast->hbox, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &contrast->hbox);
 
-  label = gtk_label_new ( _("Contrast Cycles:"));
+  label = gtk_label_new_with_mnemonic (_("Contrast C_ycles:"));
   gtk_box_pack_start (GTK_BOX (contrast->hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -314,6 +315,8 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
                                      0.1, 3);
   gtk_box_pack_start (GTK_BOX (contrast->hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
 
   g_signal_connect (contrast->adjustment, "value_changed",
                     G_CALLBACK (contrast_configure_adj_callback),
