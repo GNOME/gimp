@@ -483,7 +483,10 @@ plug_in_open (PlugIn *plug_in)
       source = g_io_create_watch (plug_in->my_read,
                                   G_IO_IN  | G_IO_PRI | G_IO_ERR | G_IO_HUP);
 
-      g_source_set_callback (source, plug_in_recv_message, plug_in, NULL);
+      g_source_set_callback (source,
+                             (GSourceFunc) plug_in_recv_message, plug_in,
+                             NULL);
+
       g_source_set_can_recurse (source, TRUE);
 
       plug_in->input_id = g_source_attach (source, NULL);
