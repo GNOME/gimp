@@ -1,3 +1,7 @@
+Wed Jul  1 14:13:45 PDT 1998 Manish Singh <yosh@gimp.org>
+
+        * plug-ins/jpeg/jpeg.c: fix for non-interactive mode
+
 Wed Jul  1 10:23:07 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/convert.c: PDB wrapper for convert_indexed_palette should
