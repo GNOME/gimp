@@ -1,5 +1,11 @@
 2004-11-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfgbgeditor.c: get rid of the
+	gimp_fg_bg_editor_context_changed() callback and
+	g_signal_connect_swapped() gtk_widget_queue_draw() directly.
+
+2004-11-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpchanneltreeview.c: implement
 	GimpDockedInterface::set_context() and set the context of the
 	embedded GimpComponentEditor. Fixes NULL-context crashes in

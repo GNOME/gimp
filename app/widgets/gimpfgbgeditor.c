@@ -85,9 +85,6 @@ static gboolean gimp_fg_bg_editor_drag_motion     (GtkWidget      *widget,
                                                    gint            y,
                                                    guint           time);
 
-static void     gimp_fg_bg_editor_context_changed (GimpContext    *context,
-                                                   const GimpRGB  *color,
-                                                   GimpFgBgEditor *editor);
 static void     gimp_fg_bg_editor_drag_color      (GtkWidget      *widget,
                                                    GimpRGB        *color,
                                                    gpointer        data);
@@ -570,7 +567,7 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
   if (editor->context)
     {
       g_signal_handlers_disconnect_by_func (editor->context,
-                                            gimp_fg_bg_editor_context_changed,
+                                            gtk_widget_queue_draw,
                                             editor);
       g_object_unref (editor->context);
       editor->context = NULL;
@@ -582,12 +579,12 @@ gimp_fg_bg_editor_set_context (GimpFgBgEditor *editor,
     {
       g_object_ref (context);
 
-      g_signal_connect (context, "foreground_changed",
-                        G_CALLBACK (gimp_fg_bg_editor_context_changed),
-                        editor);
-      g_signal_connect (context, "background_changed",
-                        G_CALLBACK (gimp_fg_bg_editor_context_changed),
-                        editor);
+      g_signal_connect_swapped (context, "foreground_changed",
+                                G_CALLBACK (gtk_widget_queue_draw),
+                                editor);
+      g_signal_connect_swapped (context, "background_changed",
+                                G_CALLBACK (gtk_widget_queue_draw),
+                                editor);
     }
 
   g_object_notify (G_OBJECT (editor), "context");
@@ -606,14 +603,6 @@ gimp_fg_bg_editor_set_active (GimpFgBgEditor  *editor,
 
 
 /*  private functions  */
-
-static void
-gimp_fg_bg_editor_context_changed (GimpContext    *context,
-                                   const GimpRGB  *color,
-                                   GimpFgBgEditor *editor)
-{
-  gtk_widget_queue_draw (GTK_WIDGET (editor));
-}
 
 static void
 gimp_fg_bg_editor_drag_color (GtkWidget *widget,
