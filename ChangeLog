@@ -1,3 +1,8 @@
+2004-07-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/tools-actions.c: added an icon to the
+	"tools-visibility" action.
+
 2004-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite.c (gimp_composite_init): now that

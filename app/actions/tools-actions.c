@@ -61,7 +61,7 @@ static GimpActionEntry tools_actions[] =
 
 static GimpToggleActionEntry tools_toggle_actions[] =
 {
-  { "tools-visibility", NULL,
+  { "tools-visibility", GIMP_STOCK_VISIBLE,
     N_("Show in Toolbox"), NULL, NULL,
     G_CALLBACK (tools_toggle_visibility_cmd_callback),
     TRUE,
