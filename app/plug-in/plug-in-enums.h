@@ -38,11 +38,4 @@ typedef enum /*< pdb-skip >*/ /*< skip >*/
 } PlugInImageType;
 
 
-typedef struct _PlugIn          PlugIn;
-typedef struct _PlugInDef       PlugInDef;
-typedef struct _PlugInProcDef   PlugInProcDef;
-typedef struct _PlugInProcFrame PlugInProcFrame;
-typedef struct _PlugInShm       PlugInShm;
-
-
 #endif /* __PLUG_IN_ENUMS_H__ */
