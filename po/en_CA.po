@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-02-02 20:17-0500\n"
-"PO-Revision-Date: 2005-02-02 14:29-0400\n"
+"POT-Creation-Date: 2005-02-03 14:28-0500\n"
+"PO-Revision-Date: 2005-02-03 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -51,84 +51,84 @@ msgstr "Opening '%s' failed: %s"
 msgid "The batch interpreter '%s' is not available, batch mode disabled."
 msgstr "The batch interpreter '%s' is not available; batch mode disabled."
 
-#: app/main.c:148
-msgid "Show version information and exit."
-msgstr "Show version information and exit."
+#: app/main.c:126
+msgid "Show version information and exit"
+msgstr "Show version information and exit"
 
-#: app/main.c:153
-msgid "Be more verbose."
-msgstr "Be more verbose."
+#: app/main.c:131
+msgid "Be more verbose"
+msgstr "Be more verbose"
 
-#: app/main.c:158 app/main.c:267
-msgid "Run without a user interface."
-msgstr "Run without a user interface."
+#: app/main.c:136
+msgid "Run without a user interface"
+msgstr "Run without a user interface"
 
-#: app/main.c:163
-msgid "Do not load brushes, gradients, palettes, patterns."
-msgstr "Do not load brushes, gradients, palettes, or patterns."
+#: app/main.c:141
+msgid "Do not load brushes, gradients, palettes, patterns"
+msgstr "Do not load brushes, gradients, palettes, or patterns"
 
-#: app/main.c:168
-msgid "Do not load any fonts."
-msgstr "Do not load any fonts."
+#: app/main.c:146
+msgid "Do not load any fonts"
+msgstr "Do not load any fonts"
 
-#: app/main.c:173
-msgid "Do not show a startup window."
-msgstr "Do not show a startup window."
+#: app/main.c:151
+msgid "Do not show a startup window"
+msgstr "Do not show a startup window"
 
-#: app/main.c:178
-msgid "Do not use shared memory between GIMP and plugins."
-msgstr "Do not use shared memory between GIMP and plugins."
+#: app/main.c:156
+msgid "Do not use shared memory between GIMP and plugins"
+msgstr "Do not use shared memory between GIMP and plugins"
 
-#: app/main.c:183
-msgid "Do not use special CPU acceleration functions."
-msgstr "Do not use special CPU acceleration functions."
+#: app/main.c:161
+msgid "Do not use special CPU acceleration functions"
+msgstr "Do not use special CPU acceleration functions"
 
-#: app/main.c:188
-msgid "Use an alternate sessionrc file."
-msgstr "Use an alternate sessionrc file."
+#: app/main.c:166
+msgid "Use an alternate sessionrc file"
+msgstr "Use an alternate sessionrc file"
 
-#: app/main.c:193
-msgid "Use an alternate user gimprc file."
-msgstr "Use an alternate user gimprc file."
+#: app/main.c:171
+msgid "Use an alternate user gimprc file"
+msgstr "Use an alternate user gimprc file"
 
-#: app/main.c:198
-msgid "Use an alternate system gimprc file."
-msgstr "Use an alternate system gimprc file."
+#: app/main.c:176
+msgid "Use an alternate system gimprc file"
+msgstr "Use an alternate system gimprc file"
 
-#: app/main.c:203
-msgid "Batch command to run (can be used multiple times)."
-msgstr "Batch command to run (can be used multiple times)."
+#: app/main.c:181
+msgid "Batch command to run (can be used multiple times)"
+msgstr "Batch command to run (can be used multiple times)"
 
-#: app/main.c:208
-msgid "The procedure to process batch commands with."
-msgstr "The procedure to process batch commands with."
+#: app/main.c:186
+msgid "The procedure to process batch commands with"
+msgstr "The procedure to process batch commands with"
 
-#: app/main.c:213
-msgid "Send messages to console instead of using a dialog box."
-msgstr "Send messages to console instead of using a dialogue box."
+#: app/main.c:191
+msgid "Send messages to console instead of using a dialog box"
+msgstr "Send messages to console instead of using a dialogue box"
 
-#: app/main.c:218
-msgid "Procedural Database compatibility mode."
-msgstr "Procedural Database compatibility mode."
+#: app/main.c:196
+msgid "Procedural Database compatibility mode"
+msgstr "Procedural Database compatibility mode"
 
-#: app/main.c:224
-msgid "Debugging mode for fatal signals."
-msgstr "Debugging mode for fatal signals."
+#: app/main.c:202
+msgid "Debugging mode for fatal signals"
+msgstr "Debugging mode for fatal signals"
 
-#: app/main.c:229
-msgid "Enable non-fatal debugging signal handlers."
-msgstr "Enable non-fatal debugging signal handlers."
+#: app/main.c:207
+msgid "Enable non-fatal debugging signal handlers"
+msgstr "Enable non-fatal debugging signal handlers"
 
-#: app/main.c:242
-msgid "Output a gimprc file with default settings."
-msgstr "Output a gimprc file with default settings."
+#: app/main.c:220
+msgid "Output a gimprc file with default settings"
+msgstr "Output a gimprc file with default settings"
 
 #. set the application name
-#: app/main.c:301 app/widgets/gimptoolbox.c:558
+#: app/main.c:255 app/widgets/gimptoolbox.c:558
 msgid "The GIMP"
 msgstr "The GIMP"
 
-#: app/main.c:316
+#: app/main.c:286
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -136,7 +136,7 @@ msgstr ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: app/main.c:491
+#: app/main.c:497
 #, c-format
 msgid "GIMP version %s"
 msgstr "GIMP version %s"
