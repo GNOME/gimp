@@ -1,12 +1,12 @@
-#ifndef __file_dialog_new_h__
-#define __file_dialog_new_h__
+#ifndef __FILE_NEW_DIALOG_H__
+#define __FILE_NEW_DIALOG_H__
 
 #include "gtk/gtk.h"
 
-void file_new_cmd_callback (GtkWidget           *widget,
-			    gpointer             callback_data,
-			    guint                callback_action);
+void file_new_cmd_callback (GtkWidget *widget,
+			    gpointer   callback_data,
+			    guint      callback_action);
 
-void file_new_reset_current_cut_buffer();
+void file_new_reset_current_cut_buffer ();
 
-#endif /* __FILE_DIALOG_NEW_H__ */
+#endif /* __FILE_NEW_DIALOG_H_H__ */

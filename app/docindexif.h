@@ -16,26 +16,22 @@
 #ifndef __DOCINDEXIF_H__
 #define __DOCINDEXIF_H__
 
-
-#include <ctype.h>
 #include <stdio.h>
- 
-#include "libgimp/gimpintl.h"
-#include "gimage.h"
-#include "fileops.h"
-#include "file_new_dialog.h"
-#include "commands.h"
 
-void open_or_raise( gchar *file_name );
-void raise_if_match( gpointer data, gpointer user_data );
-gboolean exit_from_go();
-void open_file_in_position( gchar *filename, gint position );
-GtkMenuFactory *create_idea_menu();
-GtkWidget *create_idea_toolbar();
-void clear_white( FILE *fp );
-int getinteger( FILE *fp );
-gchar *append2( gchar *string1, gboolean del1, gchar *string2, gboolean del2);
-gint reset_usize( gpointer data );
+void             open_or_raise         (gchar *file_name);
+void             raise_if_match        (gpointer data, gpointer user_data);
+gboolean         exit_from_go          ();
+void             open_file_in_position (gchar *filename,
+					gint   position);
+GtkMenuFactory * create_idea_menu      ();
+GtkWidget      * create_idea_toolbar   ();
+void             clear_white           (FILE *fp);
+int              getinteger            (FILE *fp);
+gchar          * append2               (gchar *string1,
+					gboolean del1,
+					gchar *string2,
+					gboolean del2);
+gint             reset_usize           (gpointer data);
 
 struct bool_char_pair
 {

@@ -3,9 +3,7 @@
 
 #include "gtk/gtk.h"
 
-void file_new_cmd_callback     (GtkWidget *widget,
-				gpointer   callback_data,
-				guint      callback_action);
+void file_new_cmd_callback     (GtkWidget *, gpointer, guint);
 void file_open_cmd_callback    (GtkWidget *, gpointer);
 void file_save_cmd_callback    (GtkWidget *, gpointer);
 void file_save_as_cmd_callback (GtkWidget *, gpointer);

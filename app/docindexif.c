@@ -13,10 +13,15 @@
  * GNU General Public License for more details.
  */
 
+#include <ctype.h>
 #include <string.h>
 
 #include "docindex.h"
 #include "docindexif.h"
+#include "fileops.h"
+#include "gimage.h"
+
+#include "libgimp/gimpintl.h"
 
 void
 raise_if_match( gpointer data, gpointer user_data )

@@ -17,7 +17,7 @@
  */
 #include "appenv.h"
 #include "actionarea.h"
-#include "commands.h"
+#include "file_new_dialog.h"
 #include "gimage.h"
 #include "gimpcontext.h"
 #include "gimprc.h"

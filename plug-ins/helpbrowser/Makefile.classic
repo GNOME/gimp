@@ -1,4 +1,14 @@
-all:
-	gcc `gtk-config --cflags` -g -Wall -ansi -c helpbrowser.c
-	gcc `gtk-config --cflags` -g -Wall -ansi -c queue.c 
-	gcc -o helpbrowser helpbrowser.o queue.o `gtk-config --libs` `gimptool --libs` -lgtkxmhtml
+CFLAGS = `gtk-config --cflags` -g -Wall -ansi
+
+LDFLAGS = `gtk-config --libs` `gimptool --libs` -lgtkxmhtml
+
+OBJECTS = helpbrowser.o queue.o
+
+TARGET = helpbrowser
+
+$(TARGET): $(OBJECTS)
+	$(CC) -o $(TARGET) $(OBJECTS) $(LDFLAGS)
+
+.PHONY: clean
+clean:
+	-rm -f $(OBJECTS)

@@ -21,9 +21,9 @@
 #include "docindexif.h"
 #include "docindex.h"
 #include "gimprc.h"
-#include "menus.h"
 
 #include "libgimp/gimpenv.h"
+#include "libgimp/gimpintl.h"
 
 idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */

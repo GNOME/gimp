@@ -43,17 +43,17 @@ typedef struct idea_manager
   gint count;
 } idea_manager;
 
+void raise_idea_callback (GtkWidget *widget, gpointer data);
+
 void make_idea_window( gint x, gint y );
 void open_idea_window( void );
 void close_idea_window( void );
 void idea_add( gchar *label );
 void idea_add_in_position( gchar *label, gint position );
-void raise_idea_callback( GtkWidget *widget, gpointer data );
 void idea_hide_callback( GtkWidget *widget, gpointer data );
 void idea_up_callback( GtkWidget *widget, gpointer data );
 void idea_down_callback( GtkWidget *widget, gpointer data );
 void idea_remove_callback( GtkWidget *widget, gpointer data );
-void save_idea_manager( idea_manager * );
 gboolean idea_window_delete_event_callback( GtkWidget *widget, GdkEvent *event, gpointer data );
 void docindex_configure_drop_on_widget(GtkWidget * widget);
 
@@ -64,6 +64,7 @@ FILE  * idea_manager_parse_init (int  * window_x,
 gchar * idea_manager_parse_line (FILE * fp);
 
 void    load_idea_manager       (idea_manager *);
+void    save_idea_manager       (idea_manager *);
 
 extern idea_manager *ideas;
 

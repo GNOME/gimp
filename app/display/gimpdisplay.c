@@ -1590,7 +1590,21 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   SET_SENSITIVE ("/File/Revert", gdisp);
   SET_SENSITIVE ("/File/Close", gdisp);
 
-  SET_SENSITIVE ("/Edit", gdisp && lp);
+  SET_SENSITIVE ("/Edit", gdisp);
+  if (gdisp)
+    {
+      SET_SENSITIVE ("/Edit/Cut", lp);
+      SET_SENSITIVE ("/Edit/Copy", lp);
+      SET_SENSITIVE ("/Edit/Paste", lp);
+      SET_SENSITIVE ("/Edit/Paste Into", lp);
+      SET_SENSITIVE ("/Edit/Paste As New", lp);
+      SET_SENSITIVE ("/Edit/Clear", lp);
+      SET_SENSITIVE ("/Edit/Fill", lp);
+      SET_SENSITIVE ("/Edit/Stroke", lp);
+      SET_SENSITIVE ("/Edit/Cut Named", lp);
+      SET_SENSITIVE ("/Edit/Copy Named", lp);
+      SET_SENSITIVE ("/Edit/Paste Named", lp);
+    }
 
   SET_SENSITIVE ("/Select", gdisp && lp);
   SET_SENSITIVE ("/Select/Save To Channel", !fs);

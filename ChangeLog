@@ -1,3 +1,15 @@
+1999-07-10  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/gdisplay.c (gdisplay_set_menu_sensitivity): Undo/Redo should
+	be sensitive even if there is no layer :-)
+
+	* app/commands.h
+	* app/docindex.[ch]
+	* app/docindexif.[ch]
+	* app/file_new_dialog.[ch]: some #include cleanups.
+
+	* plug-ins/helpbrowser/Makefile.classic: less primitive version.
+
 Fri Jul  9 23:35 CST 1999 Seth Burgess <sjburges@gimp.org>
 	* app/qmask.c : fixed some small lil' bugs, made no selection not
 	automatically select all.  More features later.
