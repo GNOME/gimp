@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+        - fixed typo in examples/xachvision
         - this version will only compile with 1.1. versions of the
           Gimp. If you need to compile gimp-perl with gimp-1.0 please use
           version 1.201 from CPAN.
