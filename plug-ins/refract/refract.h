@@ -5,10 +5,8 @@
  */
 
 #ifndef REFRACT_DEBUG
-#warning "REFRACT_DEBUG flag is Off."
 #define REFRACT_TITLE "Refract 1/2/98-Beta"
 #else
-#warning "REFRACT_DEBUG flag is On."
 #define REFRACT_TITLE "Refract 1/2/98 (debug)"
 #endif
 
@@ -47,15 +45,17 @@
 #include "gtk/gtk.h"
 
 typedef struct {
-    gint32 lensmap; /* lens map id */
-    gint32 thick; /* lens thickness */
-    gint32 dist;  /* distance */
-    gdouble na;   /* index a */
-    gdouble nb;   /* index b */
-    gint edge;    /* wrap/transparent */
-    gint newl;    /* new layer? */
-    gint xofs;    /* offset x */
-    gint yofs;    /* offset y */
+     gint32 lens_id; /* lens map id */
+     gint32 refl_id; /* Reflection source ID */
+     gint32 thick; /* lens thickness */
+     gint32 refr_dist;  /* distance from lens to image. */
+     gint32 refl_dist;  /* Distance from lens/mirror to reflection source. */
+     gdouble na;   /* index a */
+     gdouble nb;   /* index b */
+     gint32 edge;    /* wrap/transparent */
+     gint32 newl;    /* new layer? */
+     gint32 xofs;    /* offset x */
+     gint32 yofs;    /* offset y */
 } RefractValues;
 
 /* for refractvals.edge */

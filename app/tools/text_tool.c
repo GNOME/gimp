@@ -283,12 +283,19 @@ text_button_press (Tool           *tool,
     {
     case RGB:
     case GRAY:
-      if (!GTK_WIDGET_VISIBLE (text_tool->antialias_toggle))
+      if (!GTK_WIDGET_VISIBLE (text_tool->antialias_toggle)) {
 	gtk_widget_show (text_tool->antialias_toggle);
+	if (GTK_TOGGLE_BUTTON (text_tool->antialias_toggle)->active)
+	  text_tool->antialias = TRUE;
+	else
+	  text_tool->antialias = FALSE;
+      }
       break;
     case INDEXED:
-      if (GTK_WIDGET_VISIBLE (text_tool->antialias_toggle))
+      if (GTK_WIDGET_VISIBLE (text_tool->antialias_toggle)) {
 	gtk_widget_hide (text_tool->antialias_toggle);
+	text_tool->antialias = FALSE;
+      }
       break;
     }
 

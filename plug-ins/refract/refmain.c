@@ -95,8 +95,10 @@ GPlugInInfo PLUG_IN_INFO =
 RefractValues refractvals = 
 {
     -1,     /* Lens map ID */
+    -1,     /* Reflection source ID */
     32,     /* lens thickness */
-    0,      /* distance */
+    0,      /* lens to image distance */
+    64,     /* lens to reflection source distance */
     1.0003, /* index a */
     1.333,  /* index b */
     WRAP,   /* wrap behaviour */
@@ -121,9 +123,11 @@ query ()
     { PARAM_IMAGE, "image", "Input image" },
     { PARAM_DRAWABLE, "drawable", "Input drawable" },
     /* If we did have parameters, these be them: */
-    { PARAM_DRAWABLE, "lensmap", "Lens map drawable" },
+    { PARAM_DRAWABLE, "lens_id", "Lens map drawable" },
+    { PARAM_DRAWABLE, "refl_id", "Reflection source drawable." },
     { PARAM_INT32, "thick", "Lens thickness" },
-    { PARAM_INT32, "dist", "Lens distance from image" },
+    { PARAM_INT32, "refr_dist", "Lens distance from image" },
+    { PARAM_INT32, "refl_dist", "Lens distance from reflection source" },
     { PARAM_FLOAT, "na", "Index of Refraction A" },
     { PARAM_FLOAT, "nb", "Index of Refraction B" },
     { PARAM_INT32, "edge", "Background (0), Outside (1), Wrap (2)" },
@@ -164,6 +168,8 @@ run    (gchar    *name,
   printf("refract: pid %d\n", getpid());
 #endif
 
+/*  values=g_new(GParam,1); */
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
@@ -188,15 +194,17 @@ run    (gchar    *name,
 
   case RUN_NONINTERACTIVE:
       if (status == STATUS_SUCCESS) {
-	  refractvals.lensmap = param[3].data.d_drawable;
-	  refractvals.thick = param[4].data.d_int32;
-	  refractvals.dist = param[5].data.d_int32;
-	  refractvals.na = param[6].data.d_float;
-	  refractvals.nb = param[7].data.d_float;
-	  refractvals.edge = param[8].data.d_int32;
-	  refractvals.newl = param[9].data.d_int32;
-	  refractvals.xofs = param[10].data.d_int32;
-	  refractvals.yofs = param[11].data.d_int32;
+	  refractvals.lens_id   = param[3].data.d_drawable;
+	  refractvals.refl_id   = param[4].data.d_int32;
+	  refractvals.thick     = param[5].data.d_int32;
+	  refractvals.refr_dist = param[6].data.d_float;
+	  refractvals.refl_dist = param[7].data.d_float;
+	  refractvals.na        = param[8].data.d_int32;
+	  refractvals.nb        = param[9].data.d_int32;
+	  refractvals.edge      = param[10].data.d_int32;
+	  refractvals.newl      = param[11].data.d_int32;
+	  refractvals.xofs      = param[12].data.d_int32;
+	  refractvals.yofs      = param[13].data.d_int32;
       } /* if */
 
       break;
@@ -309,7 +317,7 @@ refract_dialog()
     option_menu = gtk_option_menu_new();
 
     menu = gimp_drawable_menu_new(map_constrain, map_menu_callback,
-				      NULL, refractvals.lensmap);
+				      NULL, refractvals.lens_id);
     gtk_option_menu_set_menu(GTK_OPTION_MENU(option_menu),menu);
     gtk_tooltips_set_tips (tooltips, option_menu, 
 			   "The drawable to use as the lens.");
@@ -339,7 +347,7 @@ refract_dialog()
 			0, 1000, 
 			1, 10, 0/*what's this do?*/,
 			0, 2, 2, 3,
-			&refractvals.dist);
+			&refractvals.refr_dist);
 
     /* a entry/scale/drop-menu for each index */
     mw_fscale_entry_new(table, "Index A", 
@@ -523,5 +531,5 @@ refract_ok_callback (GtkWidget *widget, gpointer data)
 static void
 map_menu_callback (gint32 id, gpointer data)
 {
-    refractvals.lensmap = id;
+    refractvals.lens_id = id;
 }

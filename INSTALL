@@ -51,27 +51,11 @@ recognizes. These are:
      the gimp uses to search for its configuration files from ~/.gimp (the
      directory .gimp in the users home directory) to DIR.
 
-  5. --with-libtiff=DIR. This option specifies the location of the
-     tiff library and header files. For instance, the libtiff library
-     may reside in "/usr/local". This may be specified by
-     --with-libtiff="/usr/local". (Note: The compilation process
-     should automatically find the tiff library if it resides in
-     "/usr/local").
-
-  6. --with-libjpeg=DIR. This option specifies the location of the
-     jpeg library and header files. For instance, the libjpeg library
-     may reside in "/usr/local". This may be specified by
-     --with-libjpeg="/usr/local". (Note: The compilation process
-     should automatically find the tiff library if it resides in
-     "/usr/local").
-
 The `make' command builds several things:
- - The libraries `gtk+/glib/libglib.la', `gtk+/gdk/libgdk.la',
-   `gtk+/gtk/libgtk.la', `libgimp/libgimp.la', `libgimp/libgimpi.la' and
+ - The libraries `libgimp/libgimp.la', `libgimp/libgimpi.la' and
    `libgimp/libgimpui.la'. The `.la' suffix is used by libtool, the
     program used to ease the compilation of shared libraries on
     different platforms.
- - The test programs `gtk+/glib/testglib' and `gtk+/gtk/testgtk'.
  - The plug-in programs in the `plug-ins' subdirectory.
  - The main GIMP program in `app/gimp'.
 

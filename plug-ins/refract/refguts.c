@@ -114,7 +114,7 @@ go_refract( GDrawable * drawable, gint32 image_id)
      /***************************/
      /* Initialize lens region: */
 
-     lensmap = gimp_drawable_get (refractvals.lensmap);
+     lensmap = gimp_drawable_get (refractvals.lens_id);
      
      /* Fortunately, this isn't really run repeatedly, so it's OK if
         it's not all that compact, right? */
@@ -406,14 +406,11 @@ delta(gdouble *offset, gdouble slope, gint height)
     alpha = atan(slope);
 
     if( alpha > asin( refractvals.nb / refractvals.na )) {
-#ifdef REFRACT_DEBUG
-	puts("!");
-#endif
 	return FALSE; /* Total Internal Refraction.  Aiee! */
     }
     
     beta = asin(refractvals.na * sin(alpha)/refractvals.nb);
-    *offset = -(refractvals.dist + height) * tan(beta - alpha); 
+    *offset = -(refractvals.refr_dist + height) * tan(beta - alpha); 
 
     return TRUE;
 }

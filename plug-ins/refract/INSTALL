@@ -26,3 +26,6 @@ shipped with all sorts of debugging flags turned on and optimizations
 turned OFF.  If you don't care why refract crashes if and when it
 does, go ahead and comment out the debug flags and uncomment the
 optimizations.  Hopefully it will pick up some speed that way.
+
+There are also a few options available for dinking in refract.h, but
+none too interesting at the moment.

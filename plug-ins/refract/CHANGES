@@ -1,3 +1,12 @@
+1/10/98:
+
+Simultaniously changed the name of the menu entry to "Refract" instead
+of "Refract&Reflect" and made changes preparing to add Reflect
+functionality.  Note that this changed the PDB interface.
+
+Discovered that the GParam thing didn't need to be "fixed", so I put
+it back.
+
 1/2/98: refract-Beta
 
 Refract is back, and better than ever!  That's right...  The New Layer 
