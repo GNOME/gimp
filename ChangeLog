@@ -1,5 +1,12 @@
 2004-10-04  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpwire.c: added assertions to make sure "count" is
+	always >= 0. Turns the crash described in bug #154266 into a
+	warning plus corrupted wire state :) Real fix (in script-fu) will
+	follow. Untabified.
+
+2004-10-04  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimphelpui.c: untabified.
 
 	(gimp_help_callback): use GIMP_HELP_ID instead of "gimp-help-id".
