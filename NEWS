@@ -41,3 +41,4 @@ Bugs fixed in GIMP 2.0.1
 - fixed configure check for Xmu (#139803, Sven)
 - fixed crash when scaling up a floating selection (#138356, Mitch)
 - use LC_MESSAGE for help localization (#139917, Sven)
+- fixed imagemap file parsers (#139894)

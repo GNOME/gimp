@@ -1,5 +1,12 @@
 2004-04-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_cern_parse.c
+	* plug-ins/imagemap/imap_csim_parse.c
+	* plug-ins/imagemap/imap_ncsa_parse.c: regenerated using GNU Bison
+	version 1.875a. Fixes bug #139894.
+
+2004-04-13  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c: reverted last change and go back to the
 	solution using fork(). Hopefully fixes bug #139158 this time.
 
