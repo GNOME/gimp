@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.4\n"
 "Report-Msgid-Bugs-To: Duarte Loreto <happyguy_pt@hotmail.com>\n"
-"POT-Creation-Date: 2003-09-09 18:01+0100\n"
-"PO-Revision-Date: 2003-09-09 18:30+0000\n"
+"POT-Creation-Date: 2003-09-28 01:50+0100\n"
+"PO-Revision-Date: 2003-09-28 01:55+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -1368,7 +1368,8 @@ msgstr "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Ca_beçalho Grande..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Small Header..."
-msgstr "<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Cabeçalho Pe_queno..."
+msgstr ""
+"<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Cabeçalho Pe_queno..."
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "AutoCrop"
@@ -1412,20 +1413,23 @@ msgstr "Cor da Sombra"
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/T_ube Sub-Button Label..."
 msgstr ""
-"<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Etiqueta Rót_ulo Sub-Botão..."
+"<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Etiqueta Rót_ulo Sub-"
+"Botão..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/Tub_e Sub-Sub-Button "
 "Label..."
 msgstr ""
-"<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/_Etiqueta Rótulo Sub-Sub-Botão..."
+"<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/_Etiqueta Rótulo Sub-Sub-"
+"Botão..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid ""
 "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_General Tube Labels..."
 msgstr ""
-"<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Etiquetas _Gerais Rótulos..."
+"<Toolbox>/Exten/Script-Fu/Temas para Web/Gimp.Org/Etiquetas _Gerais "
+"Rótulos..."
 
 #: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Gimp.Org/_Tube Button Label..."
@@ -2333,6 +2337,18 @@ msgstr "Intensidade Fio"
 msgid "Thread Length"
 msgstr "Comprimento Fio"
 
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+msgstr "<Toolbox>/Ajuda/O GIMP Online/_Registo de Plug-in"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+msgstr "<Toolbox>/Ajuda/O GIMP Online/Página dos _Desenvolvimentos"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "<Toolbox>/Help/The GIMP Online/_Main Web Site"
+msgstr "<Toolbox>/Ajuda/O GIMP Online/_Página Principal"
+
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
 msgstr "<Image>/Script-Fu/Sombra/Efeito-_Xach..."
@@ -2369,73 +2385,53 @@ msgstr "Deslocamento X Destaque"
 msgid "Highlight Y Offset"
 msgstr "Deslocamento Y Sestaque"
 
-#: plug-ins/webbrowser/web-browser.scm.h:1
-msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
-msgstr "<Toolbox>/Exten/Navegador da Web/FAQ Programador"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/FAQ Programador"
 
-#: plug-ins/webbrowser/web-browser.scm.h:2
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
-msgstr "<Toolbox>/Exten/Navegador da Web/Bugs GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/Bugs GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:3
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
-msgstr "<Toolbox>/Exten/Navegador da Web/Manual GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/Manual GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:4
-msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
-msgstr "<Toolbox>/Exten/Navegador da Web/Notícias GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/Notícias GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:5
-msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
-msgstr "<Toolbox>/Exten/Navegador da Web/Tutoriais GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/Tutoriais GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:6
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Documentação"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Documentação"
 
-#: plug-ins/webbrowser/web-browser.scm.h:7
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Download"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Download"
 
-#: plug-ins/webbrowser/web-browser.scm.h:8
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Arte do GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Arte do GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:9
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/GTK"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/GTK"
 
-#: plug-ins/webbrowser/web-browser.scm.h:10
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Links"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Links"
 
-#: plug-ins/webbrowser/web-browser.scm.h:11
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Lista Distribuição"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Lista Distribuição"
 
-#: plug-ins/webbrowser/web-browser.scm.h:12
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Recursos"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/Recursos"
 
-#: plug-ins/webbrowser/web-browser.scm.h:13
-msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
-msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/O GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/GIMP.ORG/O GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:14
-msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
-msgstr "<Toolbox>/Exten/Navegador da Web/Gimp-Savvy.com"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/Gimp-Savvy.com"
 
-#: plug-ins/webbrowser/web-browser.scm.h:15
-msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
-msgstr "<Toolbox>/Exten/Navegador da Web/Compreender o GIMP"
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/Compreender o GIMP"
 
-#: plug-ins/webbrowser/web-browser.scm.h:16
-msgid "<Toolbox>/Xtns/Web Browser/Plug-In Registry"
-msgstr "<Toolbox>/Exten/Navegador da Web/Registo de Plug-In"
-
-#: plug-ins/webbrowser/web-browser.scm.h:17
-msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
-msgstr "<Toolbox>/Exten/Navegador da Web/FAQ do Utilizador"
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Exten/Navegador da Web/FAQ do Utilizador"
 
 #~ msgid "Border"
 #~ msgstr "Margem"
