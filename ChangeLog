@@ -1,5 +1,15 @@
 2000-11-26  Sven Neumann  <sven@gimp.org>
 
+	* PLUG_IN_MAINTAINERS
+	* plug-ins/common/unsharp.c: changed email address of Winston Chang 
+
+	* app/gdisplay_color_ui.c: applied a modified version of another
+	patch sent by David Odin <David.Odin@bigfoot.com> which sets the
+	sensitivity of the buttons in the dialog according to the possible
+	actions.
+	
+2000-11-26  Sven Neumann  <sven@gimp.org>
+
 	* gimp_splash.ppm: new splash, original photo taken by Garrett.
 
 2000-11-24  Garry R. Osgood <gosgood@idt.net>

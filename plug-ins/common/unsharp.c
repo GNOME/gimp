@@ -1,11 +1,12 @@
 /* $Id$
  *
  * unsharp.c 0.10 -- This is a plug-in for the GIMP 1.0
- *  http://www.steppe.com/~winston/gimp/unsharp.html
+ *  http://www.stdout.org/~winston/gimp/unsharp.html
+ *  (now out of date) 
  *
  * Copyright (C) 1999 Winston Chang
- *                    <wchang3@students.wisc.edu>
- *                    <winston@stdout.com>
+ *                    <winstonc@cs.wisc.edu>
+ *                    <winston@stdout.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -179,7 +180,7 @@ query (void)
 			  "used on photographic images, and is provides a much "
 			  "more pleasing result than the standard sharpen "
 			  "filter.",
-			  "Winston Chang <wchang3@students.wisc.edu>",
+			  "Winston Chang <winstonc@cs.wisc.edu>",
 			  "Winston Chang",
 			  "1999",
 			  N_("<Image>/Filters/Enhance/Unsharp Mask..."),

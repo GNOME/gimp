@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #include <gtk/gtk.h>
@@ -50,6 +51,17 @@ struct _ColorDisplayDialog
 
   GList *old_nodes;
   GList *conf_nodes;
+
+  GtkWidget *buttons[5];
+};
+
+enum
+{
+  BUTTON_ADD,
+  BUTTON_REMOVE,
+  BUTTON_UP,
+  BUTTON_DOWN,
+  BUTTON_CONFIGURE
 };
 
 typedef void (*ButtonCallback) (GtkWidget *, gpointer);
@@ -84,16 +96,28 @@ static void src_list_populate  (const char *name,
 static void dest_list_populate (GList      *node_list,
     				GtkWidget  *dest);
 
-static void select_src  (GtkWidget       *widget,
-			 gint             row,
-			 gint             column,
-			 GdkEventButton  *event,
-			 gpointer         data);
-static void select_dest (GtkWidget       *widget,
-			 gint             row,
-			 gint             column,
-			 GdkEventButton  *event,
-			 gpointer         data);
+static void select_src    (GtkWidget       *widget,
+                           gint             row,
+                           gint             column,
+                           GdkEventButton  *event,
+                           gpointer         data);
+static void unselect_src  (GtkWidget       *widget,
+                           gint             row,
+                           gint             column,
+                           GdkEventButton  *event,
+                           gpointer         data);
+static void select_dest   (GtkWidget       *widget,
+			   gint             row,
+			   gint             column,
+			   GdkEventButton  *event,
+			   gpointer         data);
+static void unselect_dest (GtkWidget       *widget,
+                           gint             row,
+                           gint             column,
+                           GdkEventButton  *event,
+                           gpointer         data);
+
+static void color_display_update_up_and_down(ColorDisplayDialog *cdd);
 
 #define LIST_WIDTH  180
 #define LIST_HEIGHT 180
@@ -161,6 +185,9 @@ make_dialog (ColorDisplayDialog *cdd)
   gtk_signal_connect (GTK_OBJECT (cdd->src), "select_row",
 		      GTK_SIGNAL_FUNC (select_src),
 		      cdd);
+  gtk_signal_connect (GTK_OBJECT (cdd->src), "unselect_row",
+                      GTK_SIGNAL_FUNC (unselect_src),
+                      cdd);
 
   vbbox = gtk_vbutton_box_new ();
   gtk_vbutton_box_set_layout_default (GTK_BUTTONBOX_START);
@@ -183,17 +210,20 @@ make_dialog (ColorDisplayDialog *cdd)
   gtk_signal_connect (GTK_OBJECT (cdd->dest), "select_row",
 		      GTK_SIGNAL_FUNC (select_dest),
 		      cdd);
+  gtk_signal_connect (GTK_OBJECT (cdd->dest), "unselect_row",
+                      GTK_SIGNAL_FUNC (unselect_dest),
+                      cdd);
 
   for (i = 0; i < 5; i++)
     {
-       GtkWidget *button;
+       cdd->buttons[i] = 
+	 gtk_button_new_with_label (gettext (buttons[i].label));
+       gtk_box_pack_start (GTK_BOX (vbbox), cdd->buttons[i], FALSE, FALSE, 0);
 
-       button = gtk_button_new_with_label (gettext (buttons[i].label));
-       gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
-
-       gtk_signal_connect (GTK_OBJECT (button), "clicked",
+       gtk_signal_connect (GTK_OBJECT (cdd->buttons[i]), "clicked",
 			   GTK_SIGNAL_FUNC (buttons[i].callback),
 			   cdd);
+       gtk_widget_set_sensitive (cdd->buttons[i], FALSE);
     }
 
   gtk_widget_show_all (hbox);
@@ -261,6 +291,14 @@ color_display_cancel_callback (GtkWidget *widget,
     }
 }
 
+static void 
+color_display_update_up_and_down (ColorDisplayDialog *cdd)
+{
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_UP], cdd->dest_row > 0);
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_DOWN], cdd->dest_row >= 0 &&
+			    cdd->dest_row < GTK_CLIST (cdd->dest)->rows - 1);
+}
+
 static void
 color_display_add_callback (GtkWidget *widget,
 			    gpointer   data)
@@ -285,6 +323,8 @@ color_display_add_callback (GtkWidget *widget,
 
   row = gtk_clist_append (GTK_CLIST (cdd->dest), &name);
   gtk_clist_set_row_data (GTK_CLIST (cdd->dest), row, node);
+  
+  color_display_update_up_and_down (cdd);
 
   UPDATE_DISPLAY (gdisp);
 }
@@ -311,6 +351,9 @@ color_display_remove_callback (GtkWidget *widget,
     gdisplay_color_detach_destroy (gdisp, node);
 
   cdd->dest_row = -1;
+
+  color_display_update_up_and_down (cdd);
+  
   UPDATE_DISPLAY (gdisp);
 }
 
@@ -322,7 +365,7 @@ color_display_up_callback (GtkWidget *widget,
   GDisplay           *gdisp = cdd->gdisp;
   ColorDisplayNode   *node;
 
-  if (cdd->dest_row < 0)
+  if (cdd->dest_row < 1)
     return;
 
   node = gtk_clist_get_row_data (GTK_CLIST (cdd->dest), cdd->dest_row);
@@ -330,6 +373,10 @@ color_display_up_callback (GtkWidget *widget,
 
   gdisplay_color_reorder_up (gdisp, node);
   cdd->modified = TRUE;
+
+  cdd->dest_row--;
+
+  color_display_update_up_and_down (cdd);
 
   UPDATE_DISPLAY (gdisp);
 }
@@ -345,11 +392,18 @@ color_display_down_callback (GtkWidget *widget,
   if (cdd->dest_row < 0)
     return;
 
+  if (cdd->dest_row >= GTK_CLIST (cdd->dest)->rows -1)
+    return;
+
   node = gtk_clist_get_row_data (GTK_CLIST (cdd->dest), cdd->dest_row);
   gtk_clist_row_move (GTK_CLIST (cdd->dest), cdd->dest_row, cdd->dest_row + 1);
 
   gdisplay_color_reorder_down (gdisp, node);
   cdd->modified = TRUE;
+
+  cdd->dest_row++;
+
+  color_display_update_up_and_down (cdd);
 
   UPDATE_DISPLAY (gdisp);
 }
@@ -367,10 +421,8 @@ color_display_configure_callback (GtkWidget *widget,
 
   node = gtk_clist_get_row_data (GTK_CLIST (cdd->dest), cdd->dest_row);
 
-  if (g_list_find (cdd->conf_nodes, node))
-    return;
-
-  cdd->conf_nodes = g_list_append (cdd->conf_nodes, node);
+  if (!g_list_find (cdd->conf_nodes, node))
+    cdd->conf_nodes = g_list_append (cdd->conf_nodes, node);
   
   gdisplay_color_configure (node, NULL, NULL, NULL, NULL);
 
@@ -400,9 +452,6 @@ gdisplay_color_ui_new (GDisplay *gdisp)
 
   cdd->src_row = -1;
   cdd->dest_row = -1;
-
-  /* gtk_clist_set_selectable (GTK_CLIST (cdd->src), 0, TRUE);
-  gtk_clist_set_selectable (GTK_CLIST (cdd->dest), 0, TRUE); */
 
   gdisp->cd_ui = cdd->shell;
 }
@@ -440,7 +489,20 @@ select_src (GtkWidget       *widget,
 	    gpointer         data)
 {
   ColorDisplayDialog *cdd = data;
-  cdd->src_row = row; 
+  cdd->src_row = row;
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_ADD], TRUE);
+}
+
+static void
+unselect_src (GtkWidget      *widget,
+              gint            row,
+              gint            column,
+              GdkEventButton *event,
+              gpointer        data)
+{
+  ColorDisplayDialog *cdd = data;
+  cdd->src_row = -1;
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_ADD], FALSE);
 }
 
 static void
@@ -451,5 +513,29 @@ select_dest (GtkWidget       *widget,
 	     gpointer         data)
 {
   ColorDisplayDialog *cdd = data;
-  cdd->dest_row = row; 
+
+  cdd->dest_row = row;
+
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_REMOVE],    TRUE);
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_CONFIGURE], TRUE);
+
+  color_display_update_up_and_down (cdd);
 }
+
+static void
+unselect_dest (GtkWidget      *widget,
+               gint            row,
+               gint            column,
+               GdkEventButton *event,
+               gpointer        data)
+{
+  ColorDisplayDialog *cdd = data;
+
+  cdd->dest_row = -1;
+
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_REMOVE],    FALSE);
+  gtk_widget_set_sensitive (cdd->buttons[BUTTON_CONFIGURE], FALSE);
+
+  color_display_update_up_and_down (cdd);
+}
+
