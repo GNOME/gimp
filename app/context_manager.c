@@ -50,6 +50,8 @@
 #define PAINT_OPTIONS_MASK GIMP_CONTEXT_OPACITY_MASK | \
                            GIMP_CONTEXT_PAINT_MODE_MASK
 
+/* HACK: provide prototype without tools/tools.h */ 
+extern void register_tools (void);
 
 /*
  *  the list of all images

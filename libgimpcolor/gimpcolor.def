@@ -1,4 +1,5 @@
 EXPORTS
+	gimp_adaptive_supersample_area
 	gimp_hls_to_rgb_int
 	gimp_hsv_clamp
 	gimp_hsv_to_rgb

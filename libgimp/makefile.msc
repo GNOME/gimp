@@ -90,7 +90,6 @@ gimp_OBJECTS = \
 	gimp.obj \
 	$(PDB_WRAPPERS_O) \
 	$(gimpi_OBJECTS) \
-	gimpadaptivesupersample.obj \
 	gimpbilinear.obj \
 	gimpchannel.obj \
 	gimpdrawable.obj \

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h> /* memcpy */
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"

@@ -1,3 +1,50 @@
+2001-03-16  Hans Breuer  <hans@breuer.org>
+
+	* app/makefile.msc
+	* app/tools/makefile.msc : adapted to current state of file 
+	renaming/restructuring. Probably will break again soon ...
+
+	* app/context_manager.c : needs register_tools () prototype
+
+	* app/gimplist.c
+	* app/gimppalette-import.c : #include <string.h> for memcpy, strcmp 
+	and friends
+
+	* app/pdb/fileops_cmds.c : #include <process.h>	/* for _getpid() */
+	(Yes I know that this is not the right place to change it, but hacking 
+	pdbgen.pl to get platform specific headers is out of my scope)
+
+	* app/test_commands.c : explicit casts to (GimpSetDrawableFunc) make
+	it compile even with strict checks turned on.
+
+	* app/undo.c (undo_pop_paint) : return a value even if the function 
+	does nothing at the moment (makes it compile)
+
+	* libgimp/gimp.def : updated
+
+	* libgimp/gimpcolorselector.h : include <gmodule.h> to make 
+	gimp_color_selector_(un)register prototypes conform to their
+	implementation
+
+	* libgimp/gimpfeatures.h : reflect 1.3 version
+
+	* libgimpmath/gimpmatrix.c
+	* libgimpwidgets/gimpdialog.c : more <string.h> inclusion
+
+	* libgimp/makefile.msc : moved gimpadativesupersample.c to 
+	libgimpcolor, which makes it reusable from the core, too.
+
+	* libgimp/gimp.def : updated
+
+	* libgimp/gimpproceduraledb.c : #include <string.h>
+
+	* libgimpcolor/gimpcolor.def
+	* libgimpcolor/makefile.msc : added gimpadaptivesupersample
+
+	* libgimpmath/gimpmatrix.c : #include <string.h> for memcmp
+	* libgimpwidgets/gimpdialog.c - " - for strcmp
+
+
 2001-03-15 14:51:59Z  Marc Lehmann <pcg@goof.com>
 
 	* gimptool-1.4.in: Fix --libs-noui so that plug-ins link against

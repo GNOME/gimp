@@ -45,17 +45,16 @@ gimpim_OBJECTS = \
 
 gimpim.lib : $(gimpim_OBJECTS)
 	lib /out:gimpim.lib $(gimpim_OBJECTS)
-	
+
 gimp_OBJECTS = \
 	about_dialog.obj \
 	app_procs.obj \
-	asupsample.obj \
+#lgc	asupsample.obj \
 	batch.obj \
 	boundary.obj \
 	brush_edit.obj \
 	brush_scale.obj \
 	brush_select.obj \
-	brushes.obj \
 	channel_ops.obj \
 	channels_dialog.obj \
 	color_area.obj \
@@ -75,7 +74,6 @@ gimp_OBJECTS = \
 	dialog_handler.obj \
 	disp_callbacks.obj \
 	docindex.obj \
-	draw_core.obj \
 	drawable.obj \
 	equalize.obj \
 	errorconsole.obj \
@@ -91,6 +89,7 @@ gimp_OBJECTS = \
 	gimpbrush.obj \
 	gimpbrushgenerated.obj \
 	gimpbrushpipe.obj \
+	gimpbrushpreview.obj \
 	gimpchannel.obj \
 	gimpconstrainedhwrapbox.obj \
 	gimpcontainer.obj \
@@ -98,32 +97,51 @@ gimp_OBJECTS = \
 	gimpcontainerlistview.obj \
 	gimpcontainerview.obj \
 	gimpcontext.obj \
-	gimpcontextpreview.obj \
+#	gimpcontextpreview.obj \
+	gimpdata.obj \
 	gimpdatalist.obj \
+	gimpdatafactory.obj \
+	gimpdatafactoryview.obj \
 	gimpdnd.obj \
 	gimpdrawable.obj \
+	gimpdrawablelistitem.obj \
+	gimpdrawablelistview.obj \
 	gimpdrawablepreview.obj \
+	gimpdrawable-preview.obj \
+	gimpgradientpreview.obj \
 	gimphelp.obj \
 	gimphistogram.obj \
 	gimpimage.obj \
+	gimpimagepreview.obj \
+	gimpimage-undo.obj \
 	gimplayer.obj \
+	gimplayerlistitem.obj \
+	gimplayerlistview.obj \
 	gimplayermask.obj \
 	gimplist.obj \
+	gimplistitem.obj \
 	gimplut.obj \
 	gimpmarshal.obj \
 	gimpobject.obj \
 	gimppalette.obj \
+	gimppalettepreview.obj \
+	gimppalette-import.obj \
 	gimpparasite.obj \
 	gimppattern.obj \
+	gimppatternpreview.obj \
 	gimppreview.obj \
 	gimppreviewcache.obj \
 	gimpprogress.obj \
 	gimprc.obj \
+	gimptoolinfopreview.obj \
 	gimpui.obj \
+	gimpundo.obj \
+	gimpundostack.obj \
 	gimpunit.obj \
 	gimpviewable.obj \
 	global_edit.obj \
-	gradient.obj \
+	gimpgradient.obj \
+	gradient_editor.obj \
 	gradient_select.obj \
 	gtkhwrapbox.obj \
 	gtkvwrapbox.obj \
@@ -154,9 +172,8 @@ gimp_OBJECTS = \
 	palette_select.obj \
 	parasitelist.obj \
 	path.obj \
-	paths_dialog.obj \
+#	paths_dialog.obj \
 	pattern_select.obj \
-	patterns.obj \
 	pixel_processor.obj \
 	pixel_region.obj \
 	plug_in.obj \
@@ -171,6 +188,7 @@ gimp_OBJECTS = \
 	selection.obj \
 	session.obj \
 	temp_buf.obj \
+	test_commands.obj \
 	tile.obj \
 	tile_cache.obj \
 	tile_manager.obj \
@@ -183,7 +201,6 @@ gimp_OBJECTS = \
 	xcf.obj \
 #	gdisplay_color.obj \
 #	gdisplay_color_ui.obj \
-#	gimpbrushlist.obj \
 #	path_bezier.obj \
 #	path_curves.obj \
 

@@ -1399,6 +1399,8 @@ undo_pop_paint (GimpImage *gimage,
   pu->lastytilt = tmp;
 
   return TRUE;
+#else
+  return FALSE;
 #endif
 }
 

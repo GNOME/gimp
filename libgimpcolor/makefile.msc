@@ -34,9 +34,10 @@ install : all
 	$(INSTALL) gimpcolor-$(GIMP_VER).dll $(BIN)
 
 OBJECTS = \
-        gimpcolorspace.obj \
-        gimphsv.obj \
-        gimprgb.obj
+	gimpadaptivesupersample.obj \
+	gimpcolorspace.obj \
+	gimphsv.obj \
+	gimprgb.obj
 
 gimpcolor-$(GIMP_VER).dll : $(OBJECTS) gimpcolor.def
 	$(CC) $(CFLAGS) -LD -Fegimpcolor-$(GIMP_VER).dll $(OBJECTS) $(DEPLIBS) $(LDFLAGS) user32.lib /def:gimpcolor.def
