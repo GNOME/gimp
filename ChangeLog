@@ -1,3 +1,10 @@
+2003-11-15  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpui.c (gimp_ui_init): reverted Yosh's change and
+	removed the call to gtk_preview_set_gamma() instead. The gamma
+	value isn't used anywhere else so it would only be confusing to
+	use it on plug-in previews.
+
 2003-11-15  Manish Singh  <yosh@gimp.org>
 
 	* libgimp/gimpui.c: and #undef GTK_DISABLE_DEPRECATED, for

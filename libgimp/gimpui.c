@@ -21,11 +21,6 @@
 
 #include <stdlib.h>
 
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "libgimpmodule/gimpmodule.h"
@@ -51,10 +46,8 @@ static void  gimp_ensure_modules (void);
  * @prog_name: The name of the plug-in which will be passed as argv[0] to
  *             gtk_init(). It's a convention to use the name of the
  *             executable and _not_ the PDB procedure name or something.
- * @preview: %TRUE if the plug-in has some kind of preview in it's UI.
- *           Note that passing %TRUE is recommended also if one of the
- *           used GIMP Library widgets contains a preview (like the image
- *           menu returned by gimp_image_menu_new()).
+ * @preview:   This parameter is unused and exists for historical
+ *             reasons only.
  *
  * This function initializes GTK+ with gtk_init() and initializes GDK's
  * image rendering subsystem (GdkRGB) to follow the GIMP main program's
@@ -115,12 +108,6 @@ gimp_ui_init (const gchar *prog_name,
 
   screen = gdk_screen_get_default ();
   gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap (screen));
-
-  /*  Set the gamma after installing the colormap because
-   *  gtk_preview_set_gamma() initializes GdkRGB if not already done
-   */
-  if (preview)
-    gtk_preview_set_gamma (gimp_gamma ());
 
   /*  Initialize the eeky vtable needed by libgimpwidgets  */
   vtable.unit_get_number_of_units = gimp_unit_get_number_of_units;
