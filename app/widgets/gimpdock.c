@@ -162,6 +162,7 @@ gimp_dock_class_init (GimpDockClass *klass)
 
   widget_class->style_set = gimp_dock_style_set;
 
+  klass->setup            = NULL;
   klass->book_added       = gimp_dock_real_book_added;
   klass->book_removed     = gimp_dock_real_book_removed;
 
@@ -316,6 +317,17 @@ gimp_dock_construct (GimpDock          *dock,
   dock->context        = g_object_ref (context);
 
   return TRUE;
+}
+
+void
+gimp_dock_setup (GimpDock       *dock,
+                 const GimpDock *template)
+{
+  g_return_if_fail (GIMP_IS_DOCK (dock));
+  g_return_if_fail (GIMP_IS_DOCK (template));
+
+  if (GIMP_DOCK_GET_CLASS (dock)->setup)
+    GIMP_DOCK_GET_CLASS (dock)->setup (dock, template);
 }
 
 void

@@ -292,12 +292,9 @@ dialogs_preview_size_cmd_callback (GtkWidget *widget,
 
       view = gimp_container_view_get_by_dockable (dockable);
 
-      if (view)
-        {
-          if (view->preview_size != preview_size)
-            gimp_container_view_set_preview_size (view, preview_size,
-                                                  view->preview_border_width);
-        }
+      if (view && view->preview_size != preview_size)
+        gimp_container_view_set_preview_size (view, preview_size,
+                                              view->preview_border_width);
     }
 }
 
@@ -321,20 +318,17 @@ dialogs_tab_style_cmd_callback (GtkWidget *widget,
   dockable = (GimpDockable *)
     gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
 
-  if (dockable)
+  if (dockable && dockable->tab_style != tab_style)
     {
-      if (dockable->tab_style != tab_style)
-        {
-          GtkWidget *tab_widget;
+      GtkWidget *tab_widget;
 
-          dockable->tab_style = tab_style;
+      dockable->tab_style = tab_style;
 
-          tab_widget = gimp_dockbook_get_tab_widget (dockbook, dockable);
+      tab_widget = gimp_dockbook_get_tab_widget (dockbook, dockable);
 
-          gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
-                                      GTK_WIDGET (dockable),
-                                      tab_widget);
-        }
+      gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
+                                  GTK_WIDGET (dockable),
+                                  tab_widget);
     }
 }
 
@@ -346,10 +340,8 @@ dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
-    {
-      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
-					   GTK_CHECK_MENU_ITEM (widget)->active);
-    }
+    gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dockbook->dock),
+                                         GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void
@@ -360,10 +352,8 @@ dialogs_toggle_auto_cmd_callback (GtkWidget *widget,
   GimpDockbook *dockbook = GIMP_DOCKBOOK (data);
 
   if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
-    {
-      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
-					      GTK_CHECK_MENU_ITEM (widget)->active);
-    }
+    gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dockbook->dock),
+                                            GTK_CHECK_MENU_ITEM (widget)->active);
 }
 
 void

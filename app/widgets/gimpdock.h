@@ -53,10 +53,15 @@ struct _GimpDockClass
 {
   GtkWindowClass parent_class;
 
-  void (* book_added)   (GimpDock     *dock,
-                         GimpDockbook *dockbook);
-  void (* book_removed) (GimpDock     *dock,
-                         GimpDockbook *dockbook);
+  /*  virtual functions  */
+  void (* setup)        (GimpDock       *dock,
+                         const GimpDock *template);
+
+  /*  signals  */
+  void (* book_added)   (GimpDock       *dock,
+                         GimpDockbook   *dockbook);
+  void (* book_removed) (GimpDock       *dock,
+                         GimpDockbook   *dockbook);
 };
 
 
@@ -65,6 +70,8 @@ GType       gimp_dock_get_type    (void) G_GNUC_CONST;
 gboolean    gimp_dock_construct   (GimpDock          *dock,
                                    GimpDialogFactory *dialog_factory,
                                    GimpContext       *context);
+void        gimp_dock_setup       (GimpDock          *dock,
+                                   const GimpDock    *template);
 
 void        gimp_dock_add         (GimpDock          *dock,
 				   GimpDockable      *dockable,

@@ -1,5 +1,20 @@
 2003-10-08  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdock.[ch]: added new pure virtual function
+	GimpDock::setup() which configures a dock like a passed template
+	dock.
+
+	* app/widgets/gimpimagedock.c: implement it and set
+	"show_image_menu" and "auto_follow_active" accordingly.
+
+	* app/widgets/gimpdockable.c (gimp_dockable_detach): call
+	gimp_dock_setup() to configure the new dock like the old one.
+	Removed inclusion if "gimpimagedock.h".
+
+	* app/gui/dialogs-commands.c: minor code cleanups.
+
+2003-10-08  Michael Natterer  <mitch@gimp.org>
+
 	Fixed bug #119423. There was no speed regression with the actual
 	painting, just with the display update (which effectively led to
 	faster painting, it just felt slower).

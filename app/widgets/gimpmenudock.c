@@ -46,35 +46,37 @@
 #define DEFAULT_MENU_PREVIEW_SIZE GTK_ICON_SIZE_SMALL_TOOLBAR
 
 
-static void   gimp_image_dock_class_init         (GimpImageDockClass *klass);
-static void   gimp_image_dock_init               (GimpImageDock      *dock);
+static void   gimp_image_dock_class_init          (GimpImageDockClass *klass);
+static void   gimp_image_dock_init                (GimpImageDock      *dock);
 
-static void   gimp_image_dock_destroy                 (GtkObject     *object);
+static void   gimp_image_dock_destroy                 (GtkObject      *object);
 
-static void   gimp_image_dock_style_set               (GtkWidget     *widget,
-                                                       GtkStyle      *prev_style);
+static void   gimp_image_dock_style_set               (GtkWidget      *widget,
+                                                       GtkStyle       *prev_style);
 
-static void   gimp_image_dock_book_added              (GimpDock      *dock,
-                                                       GimpDockbook  *dockbook);
-static void   gimp_image_dock_book_removed            (GimpDock      *dock,
-                                                       GimpDockbook  *dockbook);
+static void   gimp_image_dock_setup                   (GimpDock       *dock,
+                                                       const GimpDock *template);
+static void   gimp_image_dock_book_added              (GimpDock       *dock,
+                                                       GimpDockbook   *dockbook);
+static void   gimp_image_dock_book_removed            (GimpDock       *dock,
+                                                       GimpDockbook   *dockbook);
 
-static void   gimp_image_dock_dockbook_changed        (GimpDockbook  *dockbook,
-                                                       GimpDockable  *dockable,
-                                                       GimpImageDock *dock);
-static void   gimp_image_dock_update_title            (GimpImageDock *dock);
+static void   gimp_image_dock_dockbook_changed        (GimpDockbook   *dockbook,
+                                                       GimpDockable   *dockable,
+                                                       GimpImageDock  *dock);
+static void   gimp_image_dock_update_title            (GimpImageDock  *dock);
 
-static void   gimp_image_dock_factory_display_changed (GimpContext   *context,
-                                                       GimpObject    *gdisp,
-                                                       GimpDock      *dock);
-static void   gimp_image_dock_factory_image_changed   (GimpContext   *context,
-                                                       GimpImage     *gimage,
-                                                       GimpDock      *dock);
-static void   gimp_image_dock_image_changed           (GimpContext   *context,
-                                                       GimpImage     *gimage,
-                                                       GimpDock      *dock);
-static void   gimp_image_dock_auto_clicked            (GtkWidget     *widget,
-                                                       GimpDock      *dock);
+static void   gimp_image_dock_factory_display_changed (GimpContext    *context,
+                                                       GimpObject     *gdisp,
+                                                       GimpDock       *dock);
+static void   gimp_image_dock_factory_image_changed   (GimpContext    *context,
+                                                       GimpImage      *gimage,
+                                                       GimpDock       *dock);
+static void   gimp_image_dock_image_changed           (GimpContext    *context,
+                                                       GimpImage      *gimage,
+                                                       GimpDock       *dock);
+static void   gimp_image_dock_auto_clicked            (GtkWidget      *widget,
+                                                       GimpDock       *dock);
 
 
 static GimpDockClass *parent_class = NULL;
@@ -125,6 +127,7 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
 
   widget_class->style_set  = gimp_image_dock_style_set;
 
+  dock_class->setup        = gimp_image_dock_setup;
   dock_class->book_added   = gimp_image_dock_book_added;
   dock_class->book_removed = gimp_image_dock_book_removed;
 
@@ -259,6 +262,25 @@ gimp_image_dock_style_set (GtkWidget *widget,
                                     ythickness            +
                                     focus_padding         +
                                     focus_line_width));
+}
+
+static void
+gimp_image_dock_setup (GimpDock       *dock,
+                       const GimpDock *template)
+{
+  if (GIMP_IS_IMAGE_DOCK (template))
+    {
+      gboolean auto_follow_active;
+      gboolean show_image_menu;
+
+      auto_follow_active = GIMP_IMAGE_DOCK (template)->auto_follow_active;
+      show_image_menu    = GIMP_IMAGE_DOCK (template)->show_image_menu;
+
+      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dock),
+                                              auto_follow_active);
+      gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dock),
+                                           show_image_menu);
+    }
 }
 
 static void
