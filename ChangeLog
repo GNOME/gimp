@@ -1,5 +1,10 @@
 2004-08-21  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors-import.c: added support for the basic
+	SVG shapes "polyline" and "polygon".
+
+2004-08-21  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpvectors-import.c: added support for importing
 	the basic SVG shape "line". Other shapes will follow...
 

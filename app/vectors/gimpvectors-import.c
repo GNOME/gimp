@@ -135,13 +135,19 @@ static void  svg_handler_line_start  (SvgHandler   *handler,
                                       const gchar **names,
                                       const gchar **values,
                                       SvgParser    *parser);
+static void  svg_handler_poly_start  (SvgHandler   *handler,
+                                      const gchar **names,
+                                      const gchar **values,
+                                      SvgParser    *parser);
 
 static const SvgHandler svg_handlers[] =
 {
-  { "svg",  svg_handler_svg_start,   svg_handler_svg_end },
-  { "g",    svg_handler_group_start, NULL                },
-  { "path", svg_handler_path_start,  NULL                },
-  { "line", svg_handler_line_start,  NULL                }
+  { "svg",      svg_handler_svg_start,   svg_handler_svg_end },
+  { "g",        svg_handler_group_start, NULL                },
+  { "path",     svg_handler_path_start,  NULL                },
+  { "line",     svg_handler_line_start,  NULL                },
+  { "polyline", svg_handler_poly_start,  NULL                },
+  { "polygon",  svg_handler_poly_start,  NULL                }
 };
 
 
@@ -633,6 +639,84 @@ svg_handler_line_start (SvgHandler   *handler,
   handler->paths = g_list_prepend (handler->paths, path);
 }
 
+static void
+svg_handler_poly_start (SvgHandler   *handler,
+                        const gchar **names,
+                        const gchar **values,
+                        SvgParser    *parser)
+{
+  SvgPath *path   = g_new0 (SvgPath, 1);
+  GString *points = NULL;
+
+  while (*names)
+    {
+      if (strcmp (*names, "id") == 0 && !path->id)
+        {
+          path->id = g_strdup (*values);
+        }
+      else if (strcmp (*names, "points") == 0 && !points)
+        {
+          const gchar *p = *values;
+          const gchar *m = NULL;
+          const gchar *l = NULL;
+          gint         n = 0;
+
+          while (*p)
+            {
+              while (g_ascii_isspace (*p) || *p == ',')
+                p++;
+
+              switch (n)
+                {
+                case 0:
+                  m = p;
+                  break;
+                case 2:
+                  l = p;
+                  break;
+                }
+
+              while (*p && !g_ascii_isspace (*p) && *p != ',')
+                p++;
+
+              n++;
+            }
+
+          if ((n > 3) && (n % 2 == 0))
+            {
+              points = g_string_sized_new (p - *values + 6);
+
+              g_string_append_len (points, "M ", 2);
+              g_string_append_len (points, m, l - m);
+
+              g_string_append_len (points, "L ", 2);
+              g_string_append_len (points, l, p - l);
+
+              if (strcmp (handler->name, "polygon") == 0)
+                g_string_append_c (points, 'Z');
+            }
+        }
+      else if (strcmp (*names, "transform") == 0 && !handler->transform)
+        {
+          GimpMatrix3  matrix;
+
+          if (parse_svg_transform (*values, &matrix))
+            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+        }
+
+      names++;
+      values++;
+    }
+
+  if (points)
+    {
+      path->strokes = parse_path_data (points->str);
+      g_string_free (points, TRUE);
+    }
+
+  handler->paths = g_list_prepend (handler->paths, path);
+}
+
 static gboolean
 parse_svg_length (const gchar *value,
                   gdouble      reference,
@@ -946,17 +1030,18 @@ static GList *
 parse_path_data (const gchar *data)
 {
   ParsePathContext ctx;
-  gboolean in_num        = FALSE;
-  gboolean in_frac       = FALSE;
-  gboolean in_exp        = FALSE;
-  gboolean exp_wait_sign = FALSE;
-  gdouble  val      = 0.0;
-  gchar    c        = 0;
-  gint     sign     = 0;
-  gint     exp      = 0;
-  gint     exp_sign = 0;
-  gdouble  frac     = 0.0;
-  gint     i;
+
+  gboolean  in_num        = FALSE;
+  gboolean  in_frac       = FALSE;
+  gboolean  in_exp        = FALSE;
+  gboolean  exp_wait_sign = FALSE;
+  gdouble   val           = 0.0;
+  gchar     c             = 0;
+  gint      sign          = 0;
+  gint      exp           = 0;
+  gint      exp_sign      = 0;
+  gdouble   frac          = 0.0;
+  gint      i;
 
   memset (&ctx, 0, sizeof (ParsePathContext));
 
