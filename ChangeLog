@@ -1,3 +1,8 @@
+2003-01-08  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpstatusbar.c (gimp_statusbar_init): work around a
+	canvas size bug by setting an empty text to the progressbar.
+
 2003-01-07  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/Makefile.am: add gimpmemsizeentry.h to HEADERS

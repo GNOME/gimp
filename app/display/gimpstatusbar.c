@@ -134,6 +134,18 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_widget_set_sensitive (statusbar->cancelbutton, FALSE);
   gtk_box_pack_start (box, statusbar->cancelbutton, FALSE, FALSE, 0);
   gtk_widget_show (statusbar->cancelbutton);
+
+
+  /* Update the statusbar once to work around a resizing bug(?) in GTK+:
+   *
+   *  The first update of the statusbar used to queue a resize which
+   *  in term caused the canvas to be resized. That made it shrink by
+   *  one pixel in height resulting in the last row not being displayed.
+   *  Shrink-wrapping the display used to fix this reliably. With the
+   *  next call the resize doesn't seem to happen any longer.
+   */
+
+  gimp_statusbar_update (statusbar, 0, NULL);
 }
 
 static void
