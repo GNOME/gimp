@@ -52,10 +52,6 @@ bye_sources = \
 	path.h			\
 	pathP.h			\
 	path_transform.h	\
-	path_curves.h		\
-	path_curves.c		\
-	path_bezier.h		\
-	path_bezier.c		\
 	undo.c			\
 	undo.h			\
 	undo_types.h

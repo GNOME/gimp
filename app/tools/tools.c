@@ -62,7 +62,6 @@
 #include "gimpmeasuretool.h"
 #include "gimpmovetool.h"
 #include "gimppaintbrushtool.h"
-#include "gimppathtool.h"
 #include "gimppenciltool.h"
 #include "gimpperspectivetool.h"
 #include "gimpposterizetool.h"
@@ -126,7 +125,6 @@ tools_init (Gimp *gimp)
 
     /*  non-modifying tools  */
 
-    gimp_path_tool_register,
     gimp_vector_tool_register,
     gimp_measure_tool_register,
     gimp_magnify_tool_register,

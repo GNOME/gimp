@@ -1,5 +1,15 @@
 2003-02-12  Sven Neumann  <sven@gimp.org>
 
+	* app/Makefile.am
+	* app/path_bezier.[ch]
+	* app/path_curves.[ch]
+	* app/tools/Makefile.am
+	* app/tools/gimppathtool.[ch]
+	* app/tools/path_tool.[ch]: removed the abandoned path tool
+	prototype.
+
+2003-02-12  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/Makefile.am
 	* app/tools/path_toolP.h: removed this unused header file.
 

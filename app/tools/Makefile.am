@@ -88,8 +88,6 @@ libapptools_a_SOURCES = \
 	gimppaintbrushtool.h		\
 	gimppainttool.c			\
 	gimppainttool.h			\
-	gimppathtool.c			\
-	gimppathtool.h			\
 	gimppenciltool.c		\
 	gimppenciltool.h		\
 	gimpperspectivetool.c		\
@@ -134,9 +132,7 @@ libapptools_a_SOURCES = \
 	tool_options.c			\
 	tool_options.h			\
 	tool_manager.c			\
-	tool_manager.h			\
-	path_tool.h			\
-	path_tool.c
+	tool_manager.h
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Tools\"	\
