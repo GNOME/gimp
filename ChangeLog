@@ -1,3 +1,8 @@
+Thu Apr 23 21:27:23 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/gimage.c: set srcPR2.[xy] to srcPR1.[xy] in
+	gimage_construct_composite_preview (fixes hangs in preview creation)
+
 Tue Apr 21 15:11:21 EDT 1998 Matthew Wilson <msw@gimp.org>
 
 	* app/disp_callbacks.c: removed the tool reset when changing gdisplays

@@ -2867,6 +2867,7 @@ gimage_construct_composite_preview (GImage *gimage, int width, int height)
       layer_buf = layer_preview (layer, w, h);
       src2PR.bytes = layer_buf->bytes;
       src2PR.w = src1PR.w;  src2PR.h = src1PR.h;
+      src2PR.x = src1PR.x;  src2PR.y = src1PR.y;
       src2PR.rowstride = layer_buf->width * src2PR.bytes;
       src2PR.data = temp_buf_data (layer_buf) +
 	(y1 - y) * src2PR.rowstride + (x1 - x) * src2PR.bytes;
