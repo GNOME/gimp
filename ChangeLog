@@ -1,4 +1,5 @@
 2000-01-11  Garry R. Osgood <gosgood@idt.net>
+
 	* app/disp_callbacks.c
 	* app/gimage_mask.c
 	* app/global_edit.c
@@ -28,7 +29,8 @@
 	
 Tue Jan 11 21:41:23 CET 2000  Sven Neumann <sven@gimp.org>
 
-	* plug-ins/common/rotate.c: fixed the progressbar on 270 degree (bug #5108)
+	* plug-ins/common/rotate.c: fixed the progressbar on 270 degrees 
+	(bug #5108)
 
 	* plug-ins/gap/gap_navigator_dialog.c: small help-related fix
 
