@@ -119,8 +119,8 @@ to get the default host and display number.
 .B XENVIRONMENT
 to get the name of a resource file that overrides the global resources
 stored in the RESOURCE_MANAGER property.
-.SH FILES
 
+.SH FILES
 GIMP's data files are stored in @gimpdatadir@, where ${prefix} 
 is set on install, but is typically /usr/local. GIMP's system-wide
 configuration files are stored in @gimpsysconfdir@.
@@ -138,11 +138,11 @@ associated to that device.
 \fB$HOME\fP/@gimpdir@/documents - lists all images that have been 
 opened or saved using GIMP.
 
-\fB$HOME\fP/@gimpdir@/gtkrc - users set of gimp-specific GTK config
+\fB$HOME\fP/@gimpdir@/gtkrc - users set of GIMP\-specific GTK config
 settings. Options such as widget color and fonts sizes can be set
 here.
 
-@gimpsysconfdir@/gtkrc - sytem wide default set of gimp-specific GTK+
+@gimpsysconfdir@/gtkrc - sytem wide default set of GIMP\-specific GTK+
 config settings.
 
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
@@ -151,7 +151,7 @@ config settings.
 parasites. This is file is recreated everytime GIMP starts up.
 
 \fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific
-info (that is info, you want to keep between two gimp-sessions). You
+info (that is info, you want to keep between two GIMP sessions). You
 are not supposed to edit it manually, but of course you can do. This
 file will be entirely rewritten every time you quit the GIMP. If this
 file isn't found, defaults are used.
@@ -226,15 +226,34 @@ files.
 
 \fB$HOME\fP/@gimpdir@/gfig - user created and installed gfig files.
 
-@gimpdatadir@/images/gimp-splash.png - image used for the GIMP splash
-screen. If a file called gimp-splash.png is found in
-\fB$HOME\fP/@gimpdir@/, then that image is used instead.
+@gimpdatadir@/images/gimp\-splash.png - the default image used for the
+GIMP splash screen.
 
-@gimpdatadir@/images/gimp_logo.png - image used in the GIMP about
+@gimpdatadir@/images/gimp\-logo.png - image used in the GIMP about
 dialog.
 
-@gimpdatadir@/tips/gimp-tips.xml - tips as displayed in the "Tip of
+@gimpdatadir@/tips/gimp\-tips.xml - tips as displayed in the "Tip of
 the Day" dialog box.
+
+
+.SH SPLASH IMAGES
+GIMP comes with a default image for the splash screen but it allows
+system administrators and users to customize the splash screen by
+providing other images. The image to be used with the splash screen is
+choosen as follows:
+
+.IP 1.
+GIMP tries to load a random splash screen from the directory
+\fB$HOME\fP/@gimpdir@/splashes.
+.IP 2.
+It then falls back to using \fB$HOME\fP/@gimpdir@/gimp\-splash.png.
+.IP 3.
+If the user didn't install any custom splash images, a random image is
+picked from @gimpdatadir@/splashes.
+.IP 4.
+As a last resort, GIMP uses the default splash image located at
+@gimpdatadir@/images/gimp\-splash.png.
+
 
 .SH SUGGESTIONS AND BUG REPORTS
 Any bugs found should be reported to the online bug-tracking system

@@ -7,8 +7,8 @@ gimprc \- gimp configuration file
 The
 .B gimprc
 file is a configuation file read by the GIMP when it starts up.  There
-are two of these: one system-wide one stored in
-@gimpsysconfdir@/gimprc and a per-user \fB$HOME\fP/@gimpdir@/gimprc
+are two of these: one system\-wide one stored in
+@gimpsysconfdir@/gimprc and a per\-user \fB$HOME\fP/@gimpdir@/gimprc
 which may override system settings.
 
 Comments are introduced by a hash sign (#), and continue until the end
@@ -17,13 +17,13 @@ of the line.  Blank lines are ignored.
 The
 .B gimprc
 file associates values with properties.  These properties may be set
-by lisp-like assignments of the form:
+by lisp\-like assignments of the form:
 .IP
-\f3(\f2property-name\ value\f3)\f1
+\f3(\f2property\-name\ value\f3)\f1
 .TP
 where:
 .TP 10
-.I property-name
+.I property\-name
 is one of the property names described below.
 .TP
 .I value
@@ -813,7 +813,7 @@ the bash feature of being able to refer to other user's home directories
 by writing ~userid/ is not valid in this file.
 
 ${variable} is expanded to the current value of an environment variable.
-There are a few variables that are pre-defined:
+There are a few variables that are pre\-defined:
 .TP
 .I gimp_dir
 The personal gimp directory which is set to the value of the environment
@@ -821,26 +821,26 @@ variable GIMP2_DIRECTORY or to ~/@gimpdir@.
 .TP
 .I gimp_data_dir
 Nase for paths to shareable data, which is set to the value of the
-environment variable GIMP2_DATADIR or to the compiled-in default value
+environment variable GIMP2_DATADIR or to the compiled\-in default value
 @gimpdatadir@.
 .TP
 .I gimp_plug_in_dir
-Base to paths for architecture-specific plugins and modules, which is set
+Base to paths for architecture\-specific plugins and modules, which is set
 to the value of the environment variable GIMP2_PLUGINDIR or to the
-compiled-in default value @gimpplugindir@.
+compiled\-in default value @gimpplugindir@.
 .TP
 .I gimp_sysconf_dir
 Path to configuration files, which is set to the value of the environment
-variable GIMP2_SYSCONFDIR or to the compiled-in default value 
+variable GIMP2_SYSCONFDIR or to the compiled\-in default value 
 @gimpsysconfdir@.
 
 .SH FILES
 .TP
 .I @gimpsysconfdir@/gimprc
-System-wide configuration file
+System\-wide configuration file
 .TP
 .I \fB$HOME\fP/@gimpdir@/gimprc
-Per-user configuration file
+Per\-user configuration file
 
 .SH "SEE ALSO"
 .BR gimp (1),

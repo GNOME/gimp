@@ -1,3 +1,11 @@
+2004-12-16  Sven Neumann  <neumann@jpk.com>
+
+	* app/config/gimpconfig-dump.c (dump_gimprc_manpage): escape hyphens.
+
+	* docs/gimp.1.in: documented the way that splash images are choosen.
+
+	* docs/gimprc.5.in: regenerated.
+
 2004-12-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/actions.c (action_data_get_*): get gimp, display or
