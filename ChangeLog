@@ -1,3 +1,9 @@
+2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/: placed all the orientation map-related
+	public functions in orientmap.h. Now we're freeing the PPM's that it
+	is allocating by a call to orientation_map_free_resources().
+
 2004-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-types.h: removed unused typedef
@@ -17,12 +23,6 @@
 
 	* libgimpwidgets/gimpcolorscales.c: use a GimpColorHexEntry.
 
-2004-07-25  Shlomi Fish  <shlomif@iglu.org.il>
-
-	* plug-ins/gimpressionist/: placed all the orientation map-related
-	public functions in orientmap.h. Now we're freeing the PPM's that it
-	is allocating by a call to orientation_map_free_resources().
-	
 2004-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpeditselectiontool.[ch]: renamed init_edit_selection()
