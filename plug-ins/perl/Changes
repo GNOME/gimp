@@ -1,5 +1,6 @@
 Revision history for Gimp-Perl extension.
 
+1.093 Tue Jun 15 21:48:48 CEST 1999
 	- possible workaround for Gimp::Util::gimp_layer_get_position.
 	- WRAP, SMEAR and BLACK were not being exported.
 	- fixed small bug in pixelmap.
@@ -10,6 +11,8 @@ Revision history for Gimp-Perl extension.
         - allow uppercase letters in hex colour specifications.
         - gimp_text_fontname ignored the image argument in
           compatibility mode (patch by Dov Grobgeld).
+        - another solaris portability fix from Dov.
+        - fixed xachshadows.
 
 1.092 Wed Jun  2 14:52:29 CEST 1999
 	- testsuite failed when !HAVE_PDL (and the whole package broke on

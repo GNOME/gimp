@@ -52,7 +52,7 @@ register "xach_shadows",
 	$drawable->plug_in_pixelize($blocksize);
 	$shadowlayer = $drawable->layer_copy(0);
 	$img->add_layer($shadowlayer,0);
-	$checkmask = $shadowlayer->create_mask(WHITE_MASK);
+	$checkmask = $shadowlayer->create_mask(ADD_WHITE_MASK);
 	$img->add_layer_mask($shadowlayer, $checkmask);
 	plug_in_checkerboard ($img, $checkmask, 0, $blocksize);
 
