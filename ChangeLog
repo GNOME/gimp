@@ -1,5 +1,11 @@
 2004-06-22  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-regression.c: define timersub()
+	macro in case it's undefined. Patch by Tim Mooney, fixes 'make
+	check' on Tru64 (bug #144780). Merged from HEAD branch.
+
+2004-06-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorarea.c (gimp_color_area_set_color): use
 	gimp_rgb_distance() for flat color areas. Fixes bug #144786;
 	merged from HEAD.

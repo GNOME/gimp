@@ -29,6 +29,25 @@
 
 #include <sys/time.h>
 
+#ifndef timersub
+/*
+ * Linux <sys/time.h> has a handy macro for finding the difference between
+ * two timers.  This is lifted directly from <sys/time.h> on a GLIBC 2.2.x
+ * system.
+ */
+#define timersub(a, b, result) \
+  do {                                               \
+    (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;    \
+    (result)->tv_usec = (a)->tv_usec - (b)->tv_usec; \
+    if ((result)->tv_usec < 0)                       \
+      {                                              \
+        --(result)->tv_sec;                          \
+        (result)->tv_usec += 1000000;                \
+      }                                              \
+  } while (0)
+#endif
+
+
 #include <glib-object.h>
 
 #include "base/base-types.h"
@@ -40,11 +59,11 @@
 
 /**
  * gimp_composite_regression_print_vector:
- * @vector: 
- * @format: 
- * @n_pixels: 
- * 
- * 
+ * @vector:
+ * @format:
+ * @n_pixels:
+ *
+ *
  **/
 void
 gimp_composite_regression_print_vector (guchar vector[], GimpPixelFormat format, gulong n_pixels)
@@ -77,10 +96,10 @@ gimp_composite_regression_print_vector (guchar vector[], GimpPixelFormat format,
 
 /**
  * gimp_composite_regression_print_vector_v8:
- * @v: 
- * @n_pixels: 
- * 
- * 
+ * @v:
+ * @n_pixels:
+ *
+ *
  **/
 void
 gimp_composite_regression_print_vector_v8 (gimp_v8_t v[], unsigned int n_pixels)
@@ -95,10 +114,10 @@ gimp_composite_regression_print_vector_v8 (gimp_v8_t v[], unsigned int n_pixels)
 
 /**
  * gimp_composite_regression_print_vector_va8:
- * @v: 
- * @n_pixels: 
- * 
- * 
+ * @v:
+ * @n_pixels:
+ *
+ *
  **/
 void
 gimp_composite_regression_print_vector_va8 (gimp_va8_t v[], unsigned int n_pixels)
@@ -113,10 +132,10 @@ gimp_composite_regression_print_vector_va8 (gimp_va8_t v[], unsigned int n_pixel
 
 /**
  * gimp_composite_regression_print_vector_rgb8:
- * @rgb8: 
- * @n_pixels: 
- * 
- * 
+ * @rgb8:
+ * @n_pixels:
+ *
+ *
  **/
 void
 gimp_composite_regression_print_vector_rgb8 (gimp_rgb8_t v[], unsigned int n_pixels)
@@ -131,10 +150,10 @@ gimp_composite_regression_print_vector_rgb8 (gimp_rgb8_t v[], unsigned int n_pix
 
 /**
  * gimp_composite_regression_print_vector_rgba8:
- * @v: 
- * @n_pixels: 
- * 
- * 
+ * @v:
+ * @n_pixels:
+ *
+ *
  **/
 void
 gimp_composite_regression_print_vector_rgba8 (gimp_rgba8_t v[], unsigned int n_pixels)
@@ -149,9 +168,9 @@ gimp_composite_regression_print_vector_rgba8 (gimp_rgba8_t v[], unsigned int n_p
 
 /**
  * gimp_composite_regression_print_rgba8:
- * @rgba8: 
- * 
- * 
+ * @rgba8:
+ *
+ *
  **/
 void
 gimp_composite_regression_print_rgba8 (gimp_rgba8_t *rgba8)
@@ -162,9 +181,9 @@ gimp_composite_regression_print_rgba8 (gimp_rgba8_t *rgba8)
 
 /**
  * gimp_composite_regression_print_va8:
- * @va8: 
- * 
- * 
+ * @va8:
+ *
+ *
  **/
 void
 gimp_composite_regression_print_va8 (gimp_va8_t *va8)
@@ -175,13 +194,13 @@ gimp_composite_regression_print_va8 (gimp_va8_t *va8)
 
 /**
  * gimp_composite_regression_compare_contexts:
- * @operation: 
- * @ctx1: 
- * @ctx2: 
- * 
- * 
- * 
- * Return value: 
+ * @operation:
+ * @ctx1:
+ * @ctx2:
+ *
+ *
+ *
+ * Return value:
  **/
 int
 gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContext *ctx1, GimpCompositeContext *ctx2)
@@ -287,16 +306,16 @@ gimp_composite_regression_compare_contexts (char *operation, GimpCompositeContex
 
 /**
  * gimp_composite_regression_comp_rgba8:
- * @str: 
- * @rgba8A: 
- * @rgba8B: 
- * @expected: 
- * @actual: 
- * @length: 
- * 
- * 
- * 
- * Return value: 
+ * @str:
+ * @rgba8A:
+ * @rgba8B:
+ * @expected:
+ * @actual:
+ * @length:
+ *
+ *
+ *
+ * Return value:
  **/
 int
 gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba8_t *rgba8B, gimp_rgba8_t *expected, gimp_rgba8_t *actual, u_long length)
@@ -335,16 +354,16 @@ gimp_composite_regression_comp_rgba8 (char *str, gimp_rgba8_t *rgba8A, gimp_rgba
 
 /**
  * gimp_composite_regression_comp_va8:
- * @str: 
- * @va8A: 
- * @va8B: 
- * @expected: 
- * @actual: 
- * @length: 
- * 
- * 
- * 
- * Return value: 
+ * @str:
+ * @va8A:
+ * @va8B:
+ * @expected:
+ * @actual:
+ * @length:
+ *
+ *
+ *
+ * Return value:
  **/
 int
 gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8B, gimp_va8_t *expected, gimp_va8_t *actual, u_long length)
@@ -380,11 +399,11 @@ gimp_composite_regression_comp_va8 (char *str, gimp_va8_t *va8A, gimp_va8_t *va8
 
 /**
  * gimp_composite_regression_dump_rgba8:
- * @str: 
- * @rgba: 
- * @n_pixels: 
- * 
- * 
+ * @str:
+ * @rgba:
+ * @n_pixels:
+ *
+ *
  **/
 void
 gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pixels)
@@ -406,11 +425,11 @@ gimp_composite_regression_dump_rgba8 (char *str, gimp_rgba8_t *rgba, u_long n_pi
 
 /**
  * gimp_composite_regression_timer_report:
- * @name: 
- * @t1: 
- * @t2: 
- * 
- * 
+ * @name:
+ * @t1:
+ * @t2:
+ *
+ *
  **/
 void
 gimp_composite_regression_timer_report (char *name, double t1, double t2)
@@ -420,12 +439,12 @@ gimp_composite_regression_timer_report (char *name, double t1, double t2)
 
 /**
  * gimp_composite_regression_time_function:
- * @iterations: 
- * @func: 
- * 
- * 
- * 
- * Return value: 
+ * @iterations:
+ * @func:
+ *
+ *
+ *
+ * Return value:
  **/
 double
 gimp_composite_regression_time_function (u_long iterations, void (*func)(), GimpCompositeContext *ctx)
@@ -435,21 +454,21 @@ gimp_composite_regression_time_function (u_long iterations, void (*func)(), Gimp
   struct timeval tv_elapsed;
   u_long i;
 
-  gettimeofday(&t0, NULL);
+  gettimeofday (&t0, NULL);
   for (i = 0; i < iterations; i++) { (*func)(ctx); }
-  gettimeofday(&t1, NULL);
-  timersub(&t1, &t0, &tv_elapsed);
+  gettimeofday (&t1, NULL);
+  timersub (&t1, &t0, &tv_elapsed);
 
-  return (tv_to_secs(tv_elapsed));
+  return (tv_to_secs (tv_elapsed));
 }
 
 /**
  * gimp_composite_regression_random_rgba8:
- * @n_pixels: 
- * 
- * 
- * 
- * Return value: 
+ * @n_pixels:
+ *
+ *
+ *
+ * Return value:
  **/
 gimp_rgba8_t *
 gimp_composite_regression_random_rgba8 (u_long n_pixels)
@@ -471,11 +490,11 @@ gimp_composite_regression_random_rgba8 (u_long n_pixels)
 
 /**
  * gimp_composite_regression_fixed_rgba8:
- * @n_pixels: 
- * 
- * 
- * 
- * Return value: 
+ * @n_pixels:
+ *
+ *
+ *
+ * Return value:
  **/
 gimp_rgba8_t *
 gimp_composite_regression_fixed_rgba8 (u_long n_pixels)
@@ -499,21 +518,21 @@ gimp_composite_regression_fixed_rgba8 (u_long n_pixels)
 
 /**
  * gimp_composite_context_init:
- * @ctx: 
- * @op: 
- * @a_format: 
- * @b_format: 
- * @d_format: 
- * @m_format: 
- * @n_pixels: 
- * @A: 
- * @B: 
- * @M: 
- * @D: 
- * 
- * 
- * 
- * Return value: 
+ * @ctx:
+ * @op:
+ * @a_format:
+ * @b_format:
+ * @d_format:
+ * @m_format:
+ * @n_pixels:
+ * @A:
+ * @B:
+ * @M:
+ * @D:
+ *
+ *
+ *
+ * Return value:
  **/
 GimpCompositeContext *
 gimp_composite_context_init (GimpCompositeContext *ctx,
