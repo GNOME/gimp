@@ -32,8 +32,7 @@
 #include "text/gimptextlayer.h"
 
 #include "gimppreviewrendererbrush.h"
-#include "gimppreviewrendererdrawable.h"
-#include "gimppreviewrenderertextlayer.h"
+#include "gimppreviewrendererlayer.h"
 #include "gimppreviewrenderergradient.h"
 #include "gimppreviewrendererimage.h"
 
@@ -54,9 +53,9 @@ gimp_preview_renderer_type_from_viewable_type (GType viewable_type)
     {
       type = GIMP_TYPE_PREVIEW_RENDERER_IMAGE;
     }
-  else if (g_type_is_a (viewable_type, GIMP_TYPE_TEXT_LAYER))
+  else if (g_type_is_a (viewable_type, GIMP_TYPE_LAYER))
     {
-      type = GIMP_TYPE_PREVIEW_RENDERER_TEXT_LAYER;
+      type = GIMP_TYPE_PREVIEW_RENDERER_LAYER;
     }
   else if (g_type_is_a (viewable_type, GIMP_TYPE_DRAWABLE))
     {

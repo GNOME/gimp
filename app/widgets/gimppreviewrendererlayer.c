@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimppreviewrenderertextlayer.c
+ * gimppreviewrendererlayer.c
  * Copyright (C) 2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -23,27 +23,26 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
-#include "core/gimpviewable.h"
+#include "text/gimptextlayer.h"
 
-#include "gimppreviewrenderertextlayer.h"
+#include "gimppreviewrendererlayer.h"
 
 
-static void   gimp_preview_renderer_text_layer_class_init (GimpPreviewRendererTextLayerClass *klass);
-static void   gimp_preview_renderer_text_layer_init       (GimpPreviewRendererTextLayer      *renderer);
+static void   gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass);
 
-static void   gimp_preview_renderer_text_layer_render     (GimpPreviewRenderer *renderer,
-                                                           GtkWidget           *widget);
+static void   gimp_preview_renderer_layer_render (GimpPreviewRenderer *renderer,
+                                                  GtkWidget           *widget);
 
 
 static GimpPreviewRendererDrawableClass *parent_class = NULL;
 
 
 GType
-gimp_preview_renderer_text_layer_get_type (void)
+gimp_preview_renderer_layer_get_type (void)
 {
   static GType renderer_type = 0;
 
@@ -51,19 +50,19 @@ gimp_preview_renderer_text_layer_get_type (void)
     {
       static const GTypeInfo renderer_info =
       {
-        sizeof (GimpPreviewRendererTextLayerClass),
+        sizeof (GimpPreviewRendererLayerClass),
         NULL,           /* base_init */
         NULL,           /* base_finalize */
-        (GClassInitFunc) gimp_preview_renderer_text_layer_class_init,
+        (GClassInitFunc) gimp_preview_renderer_layer_class_init,
         NULL,           /* class_finalize */
         NULL,           /* class_data */
-        sizeof (GimpPreviewRendererTextLayer),
+        sizeof (GimpPreviewRendererLayer),
         0,              /* n_preallocs */
-        (GInstanceInitFunc) gimp_preview_renderer_text_layer_init,
+        NULL,           /* instance_init */
       };
 
       renderer_type = g_type_register_static (GIMP_TYPE_PREVIEW_RENDERER_DRAWABLE,
-                                              "GimpPreviewRendererTextLayer",
+                                              "GimpPreviewRendererLayer",
                                               &renderer_info, 0);
     }
 
@@ -71,7 +70,7 @@ gimp_preview_renderer_text_layer_get_type (void)
 }
 
 static void
-gimp_preview_renderer_text_layer_class_init (GimpPreviewRendererTextLayerClass *klass)
+gimp_preview_renderer_layer_class_init (GimpPreviewRendererLayerClass *klass)
 {
   GimpPreviewRendererClass *renderer_class;
 
@@ -79,21 +78,26 @@ gimp_preview_renderer_text_layer_class_init (GimpPreviewRendererTextLayerClass *
 
   parent_class = g_type_class_peek_parent (klass);
 
-  renderer_class->render = gimp_preview_renderer_text_layer_render;
+  renderer_class->render = gimp_preview_renderer_layer_render;
 }
 
 static void
-gimp_preview_renderer_text_layer_init (GimpPreviewRendererTextLayer *renderer)
+gimp_preview_renderer_layer_render (GimpPreviewRenderer *renderer,
+                                    GtkWidget           *widget)
 {
-}
+  const gchar *stock_id = NULL;
 
-static void
-gimp_preview_renderer_text_layer_render (GimpPreviewRenderer *renderer,
-                                         GtkWidget           *widget)
-{
-  const gchar *stock_id;
+  if (gimp_layer_is_floating_sel (GIMP_LAYER (renderer->viewable)))
+    {
+      stock_id = GIMP_STOCK_FLOATING_SELECTION;
+    }
+  else if (GIMP_IS_TEXT_LAYER (renderer->viewable))
+    {
+      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+    }
 
-  stock_id = gimp_viewable_get_stock_id (renderer->viewable);
-
-  gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
+  if (stock_id)
+    gimp_preview_renderer_default_render_stock (renderer, widget, stock_id);
+  else
+    GIMP_PREVIEW_RENDERER_CLASS (parent_class)->render (renderer, widget);
 }

@@ -139,8 +139,8 @@ libappwidgets_a_sources = \
 	gimppreviewrenderergradient.h	\
 	gimppreviewrendererimage.c	\
 	gimppreviewrendererimage.h	\
-	gimppreviewrenderertextlayer.c	\
-	gimppreviewrenderertextlayer.h	\
+	gimppreviewrendererlayer.c	\
+	gimppreviewrendererlayer.h	\
 	gimppropwidgets.c		\
 	gimppropwidgets.h		\
 	gimpselectioneditor.c		\

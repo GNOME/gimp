@@ -1,5 +1,17 @@
 2003-09-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimppreviewrenderertextlayer.[ch]: removed.
+
+	* app/widgets/gimppreviewrendererlayer.[ch]: new renderer which
+	renders all kinds of layers and uses GIMP_STOCK_FLOATING_SELECTION
+	for floating selections.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimppreviewrenderer-utils.c: changed accordingly.
+
+2003-09-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimplayertreeview.[ch]: display the floating
 	selection's name in italic letters. Added the bold and italic
 	PangoAttrLists to the GimpLayerTreeView struct so we can unref
