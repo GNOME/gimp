@@ -456,4 +456,6 @@ System-wide configuration file
 .I $HOME/.gimp-1.1/gimprc
 Per-user configuration file
 .SH "SEE ALSO"
-.BR gimp (1), gimptool (1)
+.BR gimp (1), 
+.BR gimptool (1), 
+.BR gimp-remote (1)

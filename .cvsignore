@@ -10,6 +10,7 @@ gimp.spec
 gimprc
 gimprc.5
 gimptool.1
+gimp-remote.1
 config.status
 libtool
 aclocal.m4

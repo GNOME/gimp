@@ -185,6 +185,7 @@ EXTRA_DIST = \
 	gimp.1					\
 	gimprc.5				\
 	gimptool.1				\
+	gimp-remote.1				\
 	gimp.m4					\
 	gimprc.win32				\
 	config.h.win32				\
@@ -201,7 +202,7 @@ gimpdata_DATA = \
 
 gimpdata_SCRIPTS = user_install
 
-man_MANS = gimp.1 gimptool.1 gimprc.5
+man_MANS = gimp.1 gimptool.1 gimp-remote.1 gimprc.5
 
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gimp.m4

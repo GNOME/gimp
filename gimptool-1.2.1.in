@@ -203,9 +203,13 @@ LIBS=-lintl .
 .B GTK_CONFIG
 path to the gtk-config shell script used by gimptool and in the build
 process of many gtk apps.
+
 .SH SEE ALSO
-.BR gimp (1),
+.BR gimp (1), 
+.BR gimprc (5), 
+.BR gimp-remote (1), 
 .BR gtk-config (1)
+
 .SH AUTHORS
 gimptool was written by Manish Singh (yosh@gimp.org) and based on
 gtk-config by Owen Taylor (owen@gtk.org).
@@ -213,7 +217,6 @@ gtk-config by Owen Taylor (owen@gtk.org).
 This man page was written by Ben Gertzfield (che@debian.org), and tweaked
 by Manish Singh (yosh@gimp.org), Adrian Likins (adrian@gimp.org) and Marc
 Lehmann (pcg@goof.com>).
-
 
 .SH COPYRIGHT
 Copyright \(co  1998 Owen Taylor and Manish Singh

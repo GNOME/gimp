@@ -751,6 +751,7 @@ gimprc_user
 gimprc.5
 gimptool
 gimptool.1
+gimp-remote.1
 gimp.spec
 libgimp/gimpfeatures.h
 libgimp/Makefile

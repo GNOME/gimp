@@ -1,5 +1,15 @@
 2000-08-08  Sven Neumann  <sven@gimp.org>
 
+	* Makefile.am
+	* configure.in
+	* gimp.1.in
+	* gimp.spec.in
+	* gimprc.5.in
+	* gimptool.1.in
+	* gimp-remote.1.in: added manpage for gimp-remote.
+	
+2000-08-08  Sven Neumann  <sven@gimp.org>
+
 	* tools/gimp-remote.c: added command-line option --new that starts
 	a new gimp if no suitable gimp-window is found.
 

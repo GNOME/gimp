@@ -273,4 +273,6 @@ and lots of people including but not limited to
 @GIMP_CONTRIBUTORS@
 
 .SH "SEE ALSO"
-.BR gimprc (5), gimptool (1), gtk-config (1)
+.BR gimprc (5), 
+.BR gimptool (1), 
+.BR gimp-remote (1)

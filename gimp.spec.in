@@ -127,9 +127,10 @@ find $RPM_BUILD_ROOT/%{prefix}/lib/gimp/%{subver} -type f -exec file {} \; | gre
 #
 if [ -f /usr/lib/rpm/find-lang.sh ] ; then
  /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT %{name}
+ /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-libgimp
  /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-std-plugins
  /usr/lib/rpm/find-lang.sh $RPM_BUILD_ROOT gimp-script-fu
- cat %{name}.lang gimp-std-plugins.lang gimp-script-fu.lang \
+ cat %{name}.lang gimp-libgimp gimp-std-plugins.lang gimp-script-fu.lang \
     | sed "s:(644, root, root, 755):(444, bin, bin, 555):" > gimp-all.lang
 fi
 
@@ -196,12 +197,14 @@ cat gimp-perl gimp-perl-plugin-files > gimp-perl-files
 %{prefix}/lib/libgck-%{subver}.so.%{microver}
 
 %{prefix}/bin/gimp
+%{prefix}/bin/gimp-remote
 %{prefix}/bin/embedxpm
 %{prefix}/bin/gimpdoc
 %{prefix}/bin/xcftopnm
 
 %defattr (0444, bin, man)
 %{prefix}/man/man1/gimp.1*
+%{prefix}/man/man1/gimp-remote.1*
 %{prefix}/man/man5/gimprc.5*
 
 %files devel
