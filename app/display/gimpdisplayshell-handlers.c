@@ -113,6 +113,7 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
 		    shell);
 
   gimp_display_shell_invalidate_preview_handler (gimage, shell);
+  gimp_display_shell_qmask_changed_handler (gimage, shell);
 }
 
 void
@@ -262,9 +263,7 @@ gimp_display_shell_invalidate_preview_handler (GimpImage        *gimage,
                                                GimpDisplayShell *shell)
 {
   if (shell->icon_idle_id)
-    {
-      g_source_remove (shell->icon_idle_id);
-    }
+    g_source_remove (shell->icon_idle_id);
 
   shell->icon_idle_id = g_idle_add_full (G_PRIORITY_LOW,
                                          gimp_display_shell_idle_update_icon,

@@ -1,5 +1,18 @@
 2002-09-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.[ch]: added new signal "reconnect"
+	which is emitted when the underlying image changes (happens on
+	"Revert"). Set the sensitivity of the new "Toggle QuickMask" menu
+	item. Don't configure the QMask button in gimp_display_shell_new().
+
+	* app/display/gimpdisplayshell-handlers.c (gimp_display_shell_connect):
+	configure the QMask button here so it's consistent after "Revert".
+
+	* app/display/gimpnavigationview.c: connect to the shell's
+	"reconnect" signal and update accordingly.
+
+2002-09-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_init): set the
 	toggle_cursor to GIMP_ZOOM_CURSOR, not the tool_cursor.
 

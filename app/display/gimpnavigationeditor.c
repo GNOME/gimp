@@ -93,6 +93,8 @@ static void   gimp_navigation_view_shell_scaled     (GimpDisplayShell   *shell,
                                                      GimpNavigationView *view);
 static void   gimp_navigation_view_shell_scrolled   (GimpDisplayShell   *shell,
                                                      GimpNavigationView *view);
+static void   gimp_navigation_view_shell_reconnect  (GimpDisplayShell   *shell,
+                                                     GimpNavigationView *view);
 static void   gimp_navigation_view_update_marker    (GimpNavigationView *view);
 
 
@@ -195,8 +197,7 @@ gimp_navigation_view_destroy (GtkObject *object)
   if (view->shell)
     gimp_navigation_view_set_shell (view, NULL);
 
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 
@@ -226,6 +227,9 @@ gimp_navigation_view_set_shell (GimpNavigationView *view,
       g_signal_handlers_disconnect_by_func (G_OBJECT (view->shell),
                                             gimp_navigation_view_shell_scrolled,
                                             view);
+      g_signal_handlers_disconnect_by_func (G_OBJECT (view->shell),
+                                            gimp_navigation_view_shell_reconnect,
+                                            view);
     }
   else if (shell)
     {
@@ -244,6 +248,9 @@ gimp_navigation_view_set_shell (GimpNavigationView *view,
                         view);
       g_signal_connect (G_OBJECT (view->shell), "scrolled",
                         G_CALLBACK (gimp_navigation_view_shell_scrolled),
+                        view);
+      g_signal_connect (G_OBJECT (view->shell), "reconnect",
+                        G_CALLBACK (gimp_navigation_view_shell_reconnect),
                         view);
 
       gimp_navigation_view_shell_scaled (view->shell, view);
@@ -706,6 +713,14 @@ gimp_navigation_view_shell_scrolled (GimpDisplayShell   *shell,
                                      GimpNavigationView *view)
 {
   gimp_navigation_view_update_marker (view);
+}
+
+static void
+gimp_navigation_view_shell_reconnect (GimpDisplayShell   *shell,
+                                      GimpNavigationView *view)
+{
+  gimp_preview_set_viewable (GIMP_PREVIEW (view->preview),
+                             GIMP_VIEWABLE (shell->gdisp->gimage));
 }
 
 static void

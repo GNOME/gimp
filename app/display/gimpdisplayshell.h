@@ -146,8 +146,9 @@ struct _GimpDisplayShellClass
 {
   GtkWindowClass  parent_class;
 
-  void (* scaled)   (GimpDisplayShell *shell);
-  void (* scrolled) (GimpDisplayShell *shell);
+  void (* scaled)    (GimpDisplayShell *shell);
+  void (* scrolled)  (GimpDisplayShell *shell);
+  void (* reconnect) (GimpDisplayShell *shell);
 };
 
 

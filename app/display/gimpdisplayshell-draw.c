@@ -84,6 +84,7 @@ enum
 {
   SCALED,
   SCROLLED,
+  RECONNECT,
   LAST_SIGNAL
 };
 
@@ -185,9 +186,22 @@ gimp_display_shell_class_init (GimpDisplayShellClass *klass)
                   gimp_marshal_VOID__VOID,
                   G_TYPE_NONE, 0);
 
+  display_shell_signals[RECONNECT] =
+    g_signal_new ("reconnect",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpDisplayShellClass, reconnect),
+                  NULL, NULL,
+                  gimp_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
   object_class->destroy      = gimp_display_shell_destroy;
 
   widget_class->delete_event = gimp_display_shell_delete_event;
+
+  klass->scaled              = NULL;
+  klass->scrolled            = NULL;
+  klass->reconnect           = NULL;
 }
 
 static void
@@ -410,9 +424,9 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   image_width  = gdisp->gimage->width;
   image_height = gdisp->gimage->height;
 
-  /*  adjust the initial scale -- so that window fits on screen
-   *  the 75% value is the same as in gdisplay_shrink_wrap. It
-   *  probably should be a user-configurable option.
+  /* adjust the initial scale -- so that window fits on screen the 75%
+   * value is the same as in gimp_display_shell_shrink_wrap. It
+   * probably should be a user-configurable option.
    */
   s_width  = gdk_screen_width () * 0.75;
   s_height = gdk_screen_height () * 0.75;
@@ -644,19 +658,7 @@ gimp_display_shell_new (GimpDisplay *gdisp,
   gtk_widget_set_size_request (GTK_WIDGET (shell->qmask), 16, 16);
   GTK_WIDGET_UNSET_FLAGS (shell->qmask, GTK_CAN_FOCUS);
 
-  if (gdisp->gimage->qmask_state)
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask), TRUE);
-      image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_ON,
-                                        GTK_ICON_SIZE_MENU);
-    }
-  else
-    {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (shell->qmask), FALSE);
-      image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_OFF,
-                                        GTK_ICON_SIZE_MENU);
-    }
-
+  image = gtk_image_new_from_stock (GIMP_STOCK_QMASK_OFF, GTK_ICON_SIZE_MENU);
   gtk_container_add (GTK_CONTAINER (shell->qmask), image);
   gtk_widget_show (image);
 
@@ -793,6 +795,8 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_statusbar_resize_cursor (GIMP_STATUSBAR (shell->statusbar));
   gimp_display_shell_shrink_wrap (shell);
+
+  g_signal_emit (G_OBJECT (shell), display_shell_signals[RECONNECT], 0);
 }
 
 void
@@ -1126,16 +1130,17 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
 
   /*  Select  */
 
-  SET_SENSITIVE ("/Select/Invert",          lp && sel);
-  SET_SENSITIVE ("/Select/All",             lp);
-  SET_SENSITIVE ("/Select/None",            lp && sel);
-  SET_SENSITIVE ("/Select/Float",           lp && sel);
-  SET_SENSITIVE ("/Select/Feather...",      lp && sel);
-  SET_SENSITIVE ("/Select/Sharpen",         lp && sel);
-  SET_SENSITIVE ("/Select/Shrink...",       lp && sel);
-  SET_SENSITIVE ("/Select/Grow...",         lp && sel);
-  SET_SENSITIVE ("/Select/Border...",       lp && sel);
-  SET_SENSITIVE ("/Select/Save to Channel", lp && sel && !fs);
+  SET_SENSITIVE ("/Select/Invert",           lp && sel);
+  SET_SENSITIVE ("/Select/All",              lp);
+  SET_SENSITIVE ("/Select/None",             lp && sel);
+  SET_SENSITIVE ("/Select/Float",            lp && sel);
+  SET_SENSITIVE ("/Select/Feather...",       lp && sel);
+  SET_SENSITIVE ("/Select/Sharpen",          lp && sel);
+  SET_SENSITIVE ("/Select/Shrink...",        lp && sel);
+  SET_SENSITIVE ("/Select/Grow...",          lp && sel);
+  SET_SENSITIVE ("/Select/Border...",        lp && sel);
+  SET_SENSITIVE ("/Select/Toggle QuickMask", gdisp);
+  SET_SENSITIVE ("/Select/Save to Channel",  lp && sel && !fs);
 
   /*  View  */
 
@@ -2531,7 +2536,5 @@ gimp_display_shell_close_warning_callback (GtkWidget *widget,
   shell->warning_dialog = NULL;
 
   if (close)
-    {
-      gimp_display_delete (shell->gdisp);
-    }
+    gimp_display_delete (shell->gdisp);
 }
