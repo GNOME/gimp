@@ -257,7 +257,7 @@ create_tool_pixmap (GtkWidget *parent, ToolType type)
 	  return create_pixmap (parent->window, NULL,
 				dialog_bits,
 				22, 22);
-	
+
   g_return_val_if_fail (FALSE, NULL);
 
   return NULL;	/* not reached */
@@ -288,9 +288,9 @@ create_tools (GtkWidget *parent)
 	  tool_info[j].tool_widget = button = gtk_radio_button_new (group);
 	  gtk_container_border_width (GTK_CONTAINER (button), 0);
 	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
-	  
+
 	  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-	  
+
 	  gtk_table_attach (GTK_TABLE (table), button,
 			    (i % 3), (i % 3) + 1,
 			    (i / 3), (i / 3) + 1,
@@ -301,26 +301,26 @@ create_tools (GtkWidget *parent)
 	  alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
 	  gtk_container_border_width (GTK_CONTAINER (alignment), 0);
 	  gtk_container_add (GTK_CONTAINER (button), alignment);
-	  
+
 	  pixmap = create_pixmap_widget (table->window, tool_info[j].icon_data, 22, 22);
 	  gtk_container_add (GTK_CONTAINER (alignment), pixmap);
-	  
+
 	  gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			      (GtkSignalFunc) tools_select_update,
 			      (gpointer) tool_info[j].tool_id);
-	  
+
 	  gtk_signal_connect (GTK_OBJECT (button), "button_press_event",
 			      (GtkSignalFunc) tools_button_press,
 			      (gpointer) tool_info[j].tool_id);
-	  
+
 	  gtk_tooltips_set_tip (tool_tips, button, tool_info[j].tool_desc, tool_info[i].private_tip);
-	  
+
 	  gtk_widget_show (pixmap);
 	  gtk_widget_show (alignment);
 	  gtk_widget_show (button);
 	  i++;
 	}
-      else 
+      else
 	{
 	  tool_info[j].tool_widget = button = gtk_radio_button_new (group);
 	  group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
@@ -329,7 +329,7 @@ create_tools (GtkWidget *parent)
 			      (GtkSignalFunc) tools_select_update,
 			      (gpointer) tool_info[j].tool_id);
 	}
-    }      
+    }
   gtk_widget_show (table);
 }
 
@@ -614,12 +614,12 @@ create_display_shell (GDisplay* gdisp,
   gtk_container_border_width(GTK_CONTAINER (vbox), 2);
 
   /*  the table widget is pretty stupid so we need 2 tables
-      or it treats rulers and canvas with equal weight when 
+      or it treats rulers and canvas with equal weight when
       allocating space, ugh. */
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 1);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 1);
-  gtk_box_pack_start(GTK_BOX (vbox), table, TRUE, TRUE, 0); 
+  gtk_box_pack_start(GTK_BOX (vbox), table, TRUE, TRUE, 0);
 
   table_inner = gtk_table_new (2, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table_inner), 0, 1);
@@ -628,7 +628,7 @@ create_display_shell (GDisplay* gdisp,
 
   /* hbox for statusbar area */
   hbox = gtk_hbox_new(0,2);
-  gtk_box_pack_start(GTK_BOX (vbox), hbox, FALSE, TRUE, 0); 
+  gtk_box_pack_start(GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
 
   /*  scrollbars, rulers, canvas, menu popup button  */
   gdisp->origin = gtk_button_new ();
@@ -637,7 +637,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->origin), "button_press_event",
 		      (GtkSignalFunc) gdisplay_origin_button_press,
 		      gdisp);
-  
+
   arrow = gtk_arrow_new (GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
   gtk_container_border_width (GTK_CONTAINER (gdisp->origin), 0);
   gtk_container_add (GTK_CONTAINER (gdisp->origin), arrow);
@@ -698,7 +698,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_table_attach (GTK_TABLE (table_inner), gdisp->canvas, 1, 2, 1, 2,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL,
 		    GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
- 
+
   if (! image_popup_menu)
     menus_get_image_menu (&image_popup_menu, &image_accel_group);
 
@@ -724,11 +724,11 @@ create_display_shell (GDisplay* gdisp,
   gtk_statusbar_push(GTK_STATUSBAR (gdisp->statusbar),
 		     contextid,
 		     title);
-  
+
   gdisp->progressbar = gtk_progress_bar_new();
   gtk_widget_set_usize(gdisp->progressbar, 80, -1);
   gtk_box_pack_start (GTK_BOX (hbox), gdisp->progressbar, FALSE, TRUE, 0);
-  
+
   gdisp->cancelbutton = gtk_button_new_with_label("Cancel");
   gtk_box_pack_start (GTK_BOX (hbox), gdisp->cancelbutton, FALSE, TRUE, 0);
   gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
@@ -1047,7 +1047,11 @@ progress_step ()
 
   if (GTK_WIDGET_VISIBLE (progress_area))
     {
+      val = gtk_progress_get_current_percentage(GTK_PROGRESS(progress_area))
+	+ 0.01;
+      /*
       val = GTK_PROGRESS_BAR (progress_area)->percentage + 0.01;
+      */
       if (val > 1.0)
 	val = 0.0;
 

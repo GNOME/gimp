@@ -1,3 +1,11 @@
+Mon Jul 20 11:07:32 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/app_procs.c
+	* app/interface.c: Changed progressbar updaters to work with
+	new API.  THIS WILL NOT WORK WITH OLDER GTK+.  SOMEONE NEEDS
+	TO MAKE AN ENTRY IN gtkfeatures.h SO WE CAN #ifdef THIS.
+	(I suppose I should... but what can I say - I'm lazy)
+
 Mon Jul 20 06:27:18 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/brush_select.c app/gimpbrush.c app/gimpbrush.h
@@ -9,7 +17,7 @@ Mon Jul 20 06:27:18 PDT 1998  Jay Cox <jaycox@earthlink.net>
 	* app/edit_selection.c
 	Look ahead in the event queue and process as many arrow
 	keys as we can at once.
-	
+
 Sun Jul 19 15:26:11 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/brush_select.c
@@ -28,19 +36,19 @@ Sun Jul 19 10:23:58 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 	* app/paint_funcs.c
 	new and improved color_pixels now 4-7 times as fast and 8-12
-	times as convoluted as original color_pixels.  
+	times as convoluted as original color_pixels.
 
 Sun Jul 19 12:48:00 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/animationplay/animationplay.c: Adapted
 	to use GDKRGB when available - results in improved
 	speed and stability.
-	
+
 	* app/session.c
 	* app/session.h: GIMP compiles again with the latest
 	GTK.  Sven will have to look at this fix, but it seems
 	to work.
-	
+
 Sat Jul 18 20:15:59 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* plug-ins/gee/gee.c: About eight times faster with
@@ -49,8 +57,8 @@ Sat Jul 18 20:15:59 BST 1998 Adam D. Moss <adam@gimp.org>
 Sat Jul 18 21:22:37 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/rect_select.c
-	* app/rect_selectP.h: Show the selection size in the 
-	statusbar. 
+	* app/rect_selectP.h: Show the selection size in the
+	statusbar.
 
 Sat Jul 18 18:23:28 BST 1998 Adam D. Moss <adam@gimp.org>
 
@@ -130,7 +138,7 @@ Wed Jul 15 04:55:30 PDT 1998 Jay Cox <jaycox@earthlink.net>
 	* app/gimpbrushgenerated.c
 	* app/gimpbrushgenerated.h
 	Added freeze/thaw methods
-	
+
 	* app/brush_edit.c
 	display a preview in the brush_edit window
 
@@ -161,7 +169,7 @@ Mon Jul 13 22:49:15 PDT 1998 Manish Singh <yosh@gimp.org>
 	* Added filter pack plugin
 
 Mon Jul 13 22:00:31 EDT 1998 Adrian Likins <adrian@gimp.org>
-	
+
 	* app/rect_select.c : argh, s/snprintf/g_snprintf
 
 Mon Jul 13 19:07:43 EDT 1998  Adrian Likins <adrian@gimp.org>
@@ -188,11 +196,11 @@ Mon Jul 13 17:48:21 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	From the README:
 
-	Adds fixed size and fixed ratio rectangular selections to the 
+	Adds fixed size and fixed ratio rectangular selections to the
 	gimp.
 
-        Fixed size is enabled by filling in the height and width boxes in 
-        the rectangular selection tool options box and checking the 
+        Fixed size is enabled by filling in the height and width boxes in
+        the rectangular selection tool options box and checking the
         "fixed size" checkbox.
 
         Fixed ratio is enabled by enabling fixed size (set the height and
@@ -262,7 +270,7 @@ Sun Jul 12 04:16:17 PDT 1998 Jay Cox <jaycox@earthlink.net>
 
 	* gimpbrushlist.c: brushes in the list are once again sorted by name.
 
-	* paint_funcs.c: minor speed tweak to a minor speed tweak in 
+	* paint_funcs.c: minor speed tweak to a minor speed tweak in
 	border_region
 
 Sat Jul 11 22:15:31 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -280,7 +288,7 @@ Sat Jul 11 23:57:09 1998  Owen Taylor  <otaylor@gtk.org>
 	  tool.
 
 	* app/blob.c: Fix off-by-one error when searhing for gaps.
-	
+
 Sat Jul 11 19:57:28 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile.c: Added some more debugging code.
@@ -347,12 +355,12 @@ Sat Jul 11 08:58:49 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 1998-07-10  Seth Burgess <sjburges@gimp.org>
 
 	* app/main.c:
-	* app/gimprc.c: 
+	* app/gimprc.c:
 	Added commandline support for an alternate gimprc.
 
 1998-07-10  Chris Lahey  <clahey@umich.edu>
 
-	* app/docindexif.c: 
+	* app/docindexif.c:
 	* app/docindexif.h: Screwed up a file name change.
 
 Fri Jul 10 23:06:09 BST 1998 Adam D. Moss <adam@gimp.org>
@@ -373,7 +381,7 @@ Fri Jul 10 23:06:09 BST 1998 Adam D. Moss <adam@gimp.org>
 
 	* app/docindexif.c: New file.
 	* app/docindexif.h: New file.
-	* app/docindex.h: 
+	* app/docindex.h:
 	* app/docindex.c: Lots of changes.  Added docindexif.c and
 	docindexif.h as an interface between the document index and the
 	application.  This way the document index can be used in two
@@ -385,8 +393,8 @@ Fri Jul 10 23:06:09 BST 1998 Adam D. Moss <adam@gimp.org>
 Fri Jul 10 01:44:29 PDT 1998 Jay Cox <jaycox@earthlink.net>
 
 	* paint_core.c paint_core.h gimpbrushlist.h gimpbrushlist.c
-	  gimpbrushgenerated.c brush_select.h brush_select.c 
-        Signalified brushes.  got rid of some warnings. 
+	  gimpbrushgenerated.c brush_select.h brush_select.c
+        Signalified brushes.  got rid of some warnings.
         Fixed a bug that showed up when run --no-data
 
         * paint_funcs.c
@@ -439,7 +447,7 @@ Wed Jul  8 21:34:31 PDT 1998  Jay Cox <jaycox@earthlink.net>
 
 Wed Jul  8 22:36:12 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
-	* app/color_area.c (color_area_edit): raise the color select when 
+	* app/color_area.c (color_area_edit): raise the color select when
 	the color area is clicked.
 
 Wed Jul  8 21:08:03 CDT 1998  Larry Ewing  <lewing@gimp.org>
@@ -478,7 +486,7 @@ Wed Jul  8 10:47:51 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 1998-07-08  Chris Lahey  <clahey@umich.edu>
 
-	* app/docindex.h: 
+	* app/docindex.h:
 	* app/docindex.c: New files containing the document index.
 
 	* app/menus.c (toolbox_entries): Added a menu item to open the
@@ -502,16 +510,16 @@ Wed Jul  8 01:38:15 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 Wed Jul  8 01:35:22 EEST 1998  Lauri Alanko <nether@gimp.org>
 
-	* app/app_procs.c (app_exit_finish): Unregister pdb procs _before_ 
+	* app/app_procs.c (app_exit_finish): Unregister pdb procs _before_
 	destroying pdb.
-	
+
 Mon Jul  6 20:38:36 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/gimage_mask.c (gimage_mask_boundary): fixed crash when you
 	delete the last layer of an image.
 
 Mon Jul  6 5:12:00 CST	1998 Seth Burgess <sjburges@gimp.org>
-	
+
 	* plug-ins/gbr/gbr.c: added gbr version 1 support
 
 Mon Jul  6 12:02:43 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -528,10 +536,10 @@ Sun Jul  5 15:49:02 EDT 1998  Adrian Likins <adrian@gimp.org>
 
 	* applied a patch from Adam D. Moss <adam@gimp.org>
 	* app/convert.c:  Sucked the warning about
-	quantizing to too many colours into a text 
+	quantizing to too many colours into a text
         widget embedded in the dialog, improved intelligence of
 	dialog to default 'custom palette' selection to 'Web'
- 	if available, and in this case not bother to present 
+ 	if available, and in this case not bother to present
 	the native WWW-palette radio button. [Adam]
 
 Sat Jul  4 22:58:23 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -571,13 +579,13 @@ Thu Jul  2 01:45:24 EEST 1998  Lauri Alanko <nether@gimp.org>
 	Started gimpset, a generic class for handling collections of
 	objects. (And to automatically manage their signals, not
 	implemented yet)
-	
+
 	* app/drawable.[ch]
 	* app/gimpdrawable.[ch]
 	* app/gimpimage.c:
 
 	Moved drawable_apply_image to drawable.c
-	
+
 	* app/app_procs.c
 	* app/appenv.h
 	* app/gimage.[ch]
@@ -590,7 +598,7 @@ Thu Jul  2 01:45:24 EEST 1998  Lauri Alanko <nether@gimp.org>
 
 	* app/gimpobject.c:
 	* app/layer.h: Nothing major.
-	
+
 	* app/move.c: Fixed an uninitialized var that made guides crash.
 	* app/tools.h: Removed an unused and conflicting X define.
 
@@ -620,7 +628,7 @@ Tue Jun 30 12:13:36 PDT 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/flame/flame.c: don't use app private includes
 
 Tue Jun 30 18:08:01 EEST 1998  Lauri Alanko  <nether@gimp.org>
-	    
+
 	* app/Makefile.am: start collecting some core stuff to libgimpim.a
 	* app/gdisplay.c (gdisplays_update_area): remove an (apparently)
 	redundant display area
@@ -632,8 +640,8 @@ Tue Jun 30 18:08:01 EEST 1998  Lauri Alanko  <nether@gimp.org>
 	* app/gimpdrawableF.h:
 	* app/gimpdrawableP.h:
 
-	Started separating crud out of drawables.	
-		
+	Started separating crud out of drawables.
+
 	* app/blend.c:
 	* app/bucket_fill.c:
 	* app/channel.h:
@@ -693,7 +701,7 @@ Tue Jun 30 04:00:38 EEST 1998  Lauri Alanko  <nether@gimp.org>
  	to detect if an image still exists, some things may, for now,
  	access freed images and break. This will be fixed once proper
  	destroy handlers are added.
-	
+
 Sun Jun 28 19:32:06 1998  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* app/tile_swap.c: Added a mutex on the swapfile to avoid a
@@ -724,7 +732,7 @@ Mon Jun 29 03:14:14 EEST 1998  Lauri Alanko  <nether@gimp.org>
 	out, blame me.
 
 	Now just the same for layers, channels and displays...
-	
+
 
 Sun Jun 28 10:08:53 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -748,18 +756,18 @@ Sun Jun 28 13:30:20 EEST 1998  Lauri Alanko  <nether@gimp.org>
 
 	Started doing a GtkObjectifying framework, and started cleaning
 	images from all sorts of ugly dependencies.
-	
+
 Sun Jun 28 08:32:20 1998  Tim Janik  <timj@gtk.org>
 
-	* app/layer.c (gimp_layer_mask_get_type): 
-	(gimp_layer_get_type): 
-	* app/drawable.c (gimp_drawable_get_type): 
+	* app/layer.c (gimp_layer_mask_get_type):
+	(gimp_layer_get_type):
+	* app/drawable.c (gimp_drawable_get_type):
 	* app/channel.c (gimp_channel_get_type):
 	return a GtkType value and initialize the GtkTypeInfo structure
  	correctly.
 
-	* app/layer.h: 
-	* app/drawable.h: 
+	* app/layer.h:
+	* app/drawable.h:
 	* app/channel.h:
 	provide GIMP_TYPE_* and GIMP_IS_*_CLASS() macros.
 
@@ -830,8 +838,8 @@ Wed Jun 24 00:45:01 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/gimprc.c
 	* app/preferences_dialog.c
 	* app/session.c
-	* app/tips_dialog.c: Moved the (last-tip-shown xx) entry to 
-	sessionrc. You might want to delete that line from your gimprc, 
+	* app/tips_dialog.c: Moved the (last-tip-shown xx) entry to
+	sessionrc. You might want to delete that line from your gimprc,
 	but it works fine without doing so.
 
 Tue Jun 23 23:21:16 MEST 1998 Sven Neumann <sven@gimp.org>
@@ -845,11 +853,11 @@ Tue Jun 23 23:21:16 MEST 1998 Sven Neumann <sven@gimp.org>
 Mon Jun 22 22:57:00 EDT 1998 Manish Vachharajani <mvachhar@vger.rutgers.edu>
 
 	* app/eraser.c:  Ack, try to get pressure sensitivity right this time.
-	
+
 Mon Jun 22 22:57:00 EDT 1998 Manish Vachharajani <mvachhar@vger.rutgers.edu>
 
 	* app/eraser.c:  Added support for pressure sensitive eraser
-	
+
 Mon Jun 22 23:35:52 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/pixmaps.h: Made a new pixmap for the ink tool that fits
@@ -885,13 +893,13 @@ Sun Jun 21 15:16:46 CDT 1998 Larry Ewing <lewing@gimp.org>
 	* app/pixmaps.h
 	* app/tools.[ch]
 	* app/undo.c: Lots of changes to the way tools are intialized and
-	accessed.  All information about a tool type is now contained in a 
+	accessed.  All information about a tool type is now contained in a
 	single ToolInfo array.  There are still some small issues to
 	adress about tool groups and we need some way of getting menu
 	ordering/grouping to work better (plug-ins need this too).  There
 	is still much to be done, but this is the next in cleaning up the
 	tools.
-	
+
 	* app/posterize.[ch]
 	* app/threshold.[ch]
 	* app/histogram_tool.[ch]
@@ -901,9 +909,9 @@ Sun Jun 21 15:16:46 CDT 1998 Larry Ewing <lewing@gimp.org>
 	* app/by_color_select.[ch]
 	* app/color_balance.[ch]
 	* app/curves.[ch]: Changed the *_initalize function prototypes from
-	gpointer to GDisplay, to allow better type chacking and provide a 
+	gpointer to GDisplay, to allow better type chacking and provide a
 	uniform interface for all the dialog tools.
-		
+
 Sun Jun 21 15:49:43 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/tools.c (tools_select): Set active_tool before
@@ -944,7 +952,7 @@ Fri Jun 19 16:37:40 PDT 1998 Manish Singh <yosh@gimp.org>
 	* plug-ins/gif/gif.c: g_printized "no comment" warning
 
 Fri Jun 19 16:12:51 EDT 1998 Adrian Likins <adrain@gimp.org>
-	
+
 	* TODO: more updates
 
 Fri Jun 19 12:34:29 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -991,7 +999,7 @@ Thu Jun 18 21:03:33 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* plug-ins/gfig/gfig.c (my_gtk_label_set): Removed unused
 	function using deprecated gtk_container_need_resize()
-	
+
 Thu Jun 18 16:31:16 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/blob.c: Try to prevent overflows when drawing ellipses)
@@ -1019,15 +1027,15 @@ Thu Jun 18 00:56:41 MEST 1998 Sven Neumann <sven@gimp.org>
 
 Wed Jun 17 17:47:30 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* app/preferences_dialog.c: fixed a bug I introduced with the 
-	new mem_size_unit for the tile_cache_size 
+	* app/preferences_dialog.c: fixed a bug I introduced with the
+	new mem_size_unit for the tile_cache_size
 
 Wed Jun 17 16:38:40 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/channel.c
 	* app/paint_funcs.c
-	* app/paint_funcs.h: applied a patch from Jay Cox. 
-	Reimplements selection_grow, selection_shrink, and selection_border 
+	* app/paint_funcs.h: applied a patch from Jay Cox.
+	Reimplements selection_grow, selection_shrink, and selection_border
 	using new algorithms.
 
 Wed Jun 17 12:07:44 MEST 1998 Sven Neumann <sven@gimp.org>
@@ -1068,9 +1076,9 @@ Mon Jun 15 12:42:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 Mon Jun 15 14:39:43 MEST 1998 Sven Neumann <sven@gimp.org>
 
-	* app/preferences_dialog.c: Added units (B,KB,MB) to the 
+	* app/preferences_dialog.c: Added units (B,KB,MB) to the
 	tile_cache_size entry. Added spinbuttons where appropriate (used
-	parts of the patch Nuke <nuke@bayside.net> sent to the list).	
+	parts of the patch Nuke <nuke@bayside.net> sent to the list).
 
 Sun Jun 15 00:41:05 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 
@@ -1084,7 +1092,7 @@ Sun Jun 14 23:41:17 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 	* app/interface.c: Fixed table allocation sickness.  Now use
 	two tables, and a vbox instead of one table so things don't
 	get expanded when they shouldn't.  This (table/table_inner)
-	should be merged back to 1.0 tree.  The other resize bug is a 
+	should be merged back to 1.0 tree.  The other resize bug is a
 	gtkstatusbar bug.
 
 Sun Jun 14 21:16:42 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
@@ -1095,8 +1103,8 @@ Sun Jun 14 21:16:42 CDT 1998 Shawn T. Amundson <amundson@gimp.org>
 	* app/plug_in.c
 	* app/plug_in.h
 	* libgimp/gimp.c: added statusbar and progressbar, which
-	the plugins now use if they have a gdisp.  Unfortunately 
-	this introduces a resize bug I wasn't able to fix 
+	the plugins now use if they have a gdisp.  Unfortunately
+	this introduces a resize bug I wasn't able to fix
 	immediately. ;-(
 
 Sun Jun 14 18:37:06 1998  Owen Taylor  <otaylor@gtk.org>
@@ -1110,7 +1118,7 @@ Sun Jun 14 18:37:06 1998  Owen Taylor  <otaylor@gtk.org>
 	pressure and tilt-sensitive brush.
 
 Sun Jun 14 16:03:29 EDT 1998 Adrian Likins <adrian@gimp.org>
-	
+
 	* TODO: cleaned up and expanded the todo
 
 Sun Jun 14 00:50:25 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -1137,7 +1145,7 @@ Sat Jun 13 16:52:34 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	*app/file_new_dialog.c: removed unsightly warnings,
 	replace a * with a / so it will work
-	
+
 Sat Jun 13 15:46:55 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	*app/file_new_dialog.c: more file new tweaks,
@@ -1167,12 +1175,12 @@ Thu Jun 11 00:02:15 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/interface.c (create_toolbox): Create the color
 	area before showing the window, so that the window gets
-	created at the right size. [ This doesn't actually fix 
+	created at the right size. [ This doesn't actually fix
 	much, but it is better to do that way ]
 
 Wed Jun 10 14:17:44 1998  Owen Taylor  <otaylor@gtk.org>
 
-	* app/disp_callbacks.c (gdisplay_origin_button_press): 
+	* app/disp_callbacks.c (gdisplay_origin_button_press):
 	Stop signal emission so that button doesn't grab the
 	pointer away from the menu.
 
@@ -1180,7 +1188,7 @@ Tue Jun  9 19:47:19 1998  Owen Taylor  <otaylor@gtk.org>
 
 	* app/brushes.c app/drawable.c app/patterns.c
 	  app/procedural_db.c plug-ins/script-fu/script_fu_server.c
-	
+
 	Fixes for warnings generated by changing GCompareFunc
 	and GHashFunc to take const arguments.
 
@@ -1193,7 +1201,7 @@ Tue Jun  9 16:08:20 EDT 1998 Adrian Likins <adrain@gimp.org>
 Tue Jun  9 12:36:57 EDT 1998  Adrian Likins <adrian@gimp.org>
 
 	*confiure.in: corrected small type concering jpeg test
-	(warning printed out "checking for jpeg.h" instead of	
+	(warning printed out "checking for jpeg.h" instead of
 	jpeglib.h)
 
 Tue Jun  9 04:36:52 PDT 1998 Manish Singh <yosh@gimp.org>
@@ -1211,7 +1219,7 @@ Tue Jun  9 11:18:03 MEST 1998 Sven Neumann <sven@gimp.org>
 	* app/interface.c: add a pop-up menu to the upper left corner of
 	the image window
 
-	* updated pagecurl plug-in 
+	* updated pagecurl plug-in
 
 Mon Jun  8 21:55:55 PDT 1998 Manish Singh <yosh@gimp.org>
 
@@ -1261,7 +1269,7 @@ Mon Jun  8 16:39:19 EDT 1998 Adrian Likins <adrian@gimp.org>
 	and preferences.c
 
 	*app/Makefile.am: change to incorporate the new files
-	
+
 	*TODO: more feature ideas
 
 Mon Jun  8 04:30:00 EDT 1998 Chris Lahey  <clahey@umich.edu>
