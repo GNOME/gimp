@@ -137,6 +137,8 @@ gui_libs_init (gint    *argc,
   display_env = g_strconcat ("DISPLAY=", gdk_get_display (), NULL);
   putenv (display_env);
 #endif
+
+  gimp_widgets_init ();
 }
 
 void
@@ -146,8 +148,6 @@ gui_themes_init (Gimp *gimp)
   gchar *gtkrc;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  gimp_stock_init ();
 
   themes_hash = g_hash_table_new_full (g_str_hash,
 				       g_str_equal,

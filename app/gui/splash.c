@@ -27,7 +27,6 @@
 #include "splash.h"
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -56,8 +55,6 @@ splash_create (gboolean show_image)
   gtk_window_set_wmclass (GTK_WINDOW (win_initstatus), "gimp_startup", "Gimp");
   gtk_window_set_position (GTK_WINDOW (win_initstatus), GTK_WIN_POS_CENTER);
   gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, FALSE, FALSE);
-
-  gimp_dialog_set_icon (GTK_WINDOW (win_initstatus));
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (win_initstatus), vbox);

@@ -60,7 +60,6 @@ do_file_open_dialog(void)
    static GtkWidget *dialog;
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Load Imagemap"));
-      gimp_dialog_set_icon (GTK_WINDOW (dialog));
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));
@@ -121,7 +120,6 @@ do_file_save_as_dialog(void)
    static GtkWidget *dialog;
    if (!dialog) {
       dialog = gtk_file_selection_new(_("Save Imagemap"));
-      gimp_dialog_set_icon (GTK_WINDOW (dialog));
       gtk_signal_connect_object(
 	 GTK_OBJECT(GTK_FILE_SELECTION(dialog)->cancel_button),
 	 "clicked", GTK_SIGNAL_FUNC(gtk_widget_hide), GTK_OBJECT(dialog));

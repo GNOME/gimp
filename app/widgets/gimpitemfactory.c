@@ -620,8 +620,6 @@ gimp_item_factory_tearoff_callback (GtkWidget *widget,
 #endif
 	      g_object_set_data (G_OBJECT (widget), "tearoff-menu-toplevel",
                                  toplevel);
-
-	      gimp_dialog_set_icon (GTK_WINDOW (toplevel));
 	    }
 	}
       else

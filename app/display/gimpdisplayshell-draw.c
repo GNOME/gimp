@@ -72,8 +72,6 @@
 
 #include "libgimp/gimpintl.h"
 
-#include "pixmaps/wilber.xpm"
-
 
 #define MAX_TITLE_BUF 256
 
@@ -2125,13 +2123,11 @@ gimp_display_shell_draw_cursor (GimpDisplayShell *shell)
 static void
 gimp_display_shell_update_icon (GimpDisplayShell *shell)
 {
-  static GdkPixmap *wilber_pixmap = NULL;
-  static GdkBitmap *wilber_mask   = NULL;
-  GtkStyle         *style;
-  GdkGC		   *icongc, *iconmaskgc;
-  GdkColormap	   *colormap;
-  GdkColor	    black, white;
-  gboolean          success;
+  GtkStyle    *style;
+  GdkGC	      *icongc, *iconmaskgc;
+  GdkColormap *colormap;
+  GdkColor     black, white;
+  gboolean     success;
 
   TempBuf *icondata;
   guchar  *data;
@@ -2170,15 +2166,6 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
     return;
 
   style = gtk_widget_get_style (GTK_WIDGET (shell));
-
-  if (! wilber_pixmap)
-    {
-      wilber_pixmap =
-        gdk_pixmap_create_from_xpm_d (GTK_WIDGET (shell)->window,
-                                      &wilber_mask,
-                                      &style->bg[GTK_STATE_NORMAL],
-                                      wilber_xpm);
-    }
 
   factor = ((gfloat) gimp_image_get_height (shell->gdisp->gimage)) /
                      gimp_image_get_width  (shell->gdisp->gimage);
@@ -2265,9 +2252,7 @@ gimp_display_shell_update_icon (GimpDisplayShell *shell)
     }
   else
     {
-      g_printerr ("gimp_display_shell_update_icon: falling back to default\n");
-      gdk_window_set_icon (GTK_WIDGET (shell)->window,
-	  		   NULL, wilber_pixmap, wilber_mask);
+      g_printerr ("%s: falling back to default", G_STRLOC);
     }
 
   shell->icon_needs_update = FALSE;

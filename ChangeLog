@@ -1,5 +1,37 @@
 2001-11-28  Michael Natterer  <mitch@gimp.org>
 
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-wilber-16x16.png
+	* themes/Default/images/stock-wilber-32x32.png
+	* themes/Default/images/stock-wilber-48x48.png
+	* themes/Default/images/stock-wilber-64x64.png: new files.
+
+	* themes/Default/Makefile.am: create gimp-wilber-pixbufs.h
+
+	* libgimpwidgets/gimpdialog.[ch]: removed gimp_dialog_set_icon().
+
+	* libgimpwidgets/gimpwidgets.[ch]: added gimp_widgets_init() which
+	calls gimp_stock_init() and calls gtk_window_set_default_icon_list()
+	with the above set of inlined pixbufs.
+
+	* libgimp/gimpui.c
+	* app/gui/gui.c: call gimp_widgets_init().
+
+	* app/display/gimpdisplayshell.c: removed the fallback icon stuff.
+
+	* app/gui/splash.c
+	* app/gui/user-install-dialog.c
+	* app/widgets/gimpdock.c
+	* app/widgets/gimpitemfactory.c
+	* libgimpwidgets/gimphelpui.c
+	* plug-ins/imagemap/imap_default_dialog.c
+	* plug-ins/imagemap/imap_file.c: don't call gimp_dialog_set_icon().
+
+	* plug-ins/common/uniteditor.c: wanted to start hacking here...
+	Nothing really changed.
+
+2001-11-28  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpbutton.c
 	* libgimpwidgets/gimpcolorarea.c
 	* libgimpwidgets/gimpcolorbutton.c

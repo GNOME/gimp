@@ -537,8 +537,6 @@ user_install_dialog_create (Gimp *gimp)
 
 		     NULL);
 
-  gimp_dialog_set_icon (GTK_WINDOW (dialog));
-
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
 
   gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);

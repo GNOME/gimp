@@ -76,7 +76,7 @@ gimp_ui_init (const gchar *prog_name,
   if (preview)
     gtk_preview_set_gamma (gimp_gamma ());
 
-  gimp_stock_init ();
+  gimp_widgets_init ();
 
   initialized = TRUE;
 }

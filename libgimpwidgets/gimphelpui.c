@@ -128,10 +128,6 @@ gimp_help_disable_tooltips (void)
  * Note that this function is automatically called by all libgimp dialog
  * constructors. You only have to call it for windows/dialogs you created
  * "manually".
- *
- * For convenience, gimp_help_connect_help_accel() calls
- * gimp_dialog_set_icon() if the passed widget is a #GtkWindow, so you
- * don't have to worry about this.
  **/
 void
 gimp_help_connect (GtkWidget    *widget,
@@ -140,12 +136,6 @@ gimp_help_connect (GtkWidget    *widget,
 {
   if (! help_func)
     return;
-
-  /*  for convenience we set the wm icon here because
-   *  this function is called for almost all gimp windows
-   */
-  if (GTK_IS_WINDOW (widget))
-    gimp_dialog_set_icon (GTK_WINDOW (widget));
 
   /*  set up the help signals and tips query widget
    */

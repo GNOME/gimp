@@ -31,8 +31,6 @@
 #include "gimpdialog.h"
 #include "gimphelpui.h"
 
-#include "pixmaps/wilber.xpm"
-
 
 typedef void (* GimpDialogCancelCallback) (GtkWidget *widget,
 					   gpointer   data);
@@ -41,8 +39,6 @@ typedef void (* GimpDialogCancelCallback) (GtkWidget *widget,
 static void       gimp_dialog_class_init   (GimpDialogClass  *klass);
 static void       gimp_dialog_init         (GimpDialog       *dialog);
 
-static void       gimp_dialog_realize      (GtkWidget        *widget);
-static void       gimp_dialog_real_realize (GtkWidget        *widget);
 static gboolean   gimp_dialog_delete_event (GtkWidget        *widget,
                                             GdkEventAny      *event);
 
@@ -81,50 +77,18 @@ gimp_dialog_get_type (void)
 static void
 gimp_dialog_class_init (GimpDialogClass *klass)
 {
-  GObjectClass   *object_class;
   GtkWidgetClass *widget_class;
 
-  object_class = G_OBJECT_CLASS (klass);
   widget_class = GTK_WIDGET_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  widget_class->realize      = gimp_dialog_realize;
   widget_class->delete_event = gimp_dialog_delete_event;
 }
 
 static void
 gimp_dialog_init (GimpDialog *dialog)
 {
-}
-
-static void
-gimp_dialog_realize (GtkWidget *widget)
-{
-  if (GTK_WIDGET_CLASS (parent_class)->realize)
-    GTK_WIDGET_CLASS (parent_class)->realize (widget);
-
-  gimp_dialog_real_realize (widget);
-}
-
-static void
-gimp_dialog_real_realize (GtkWidget *widget)
-{
-  static GdkPixmap *wilber_pixmap = NULL;
-  static GdkBitmap *wilber_mask   = NULL;
-  GtkStyle         *style;
-
-  style = gtk_widget_get_style (widget);
-
-  if (wilber_pixmap == NULL)
-    wilber_pixmap =
-      gdk_pixmap_create_from_xpm_d (widget->window,
-				    &wilber_mask,
-				    &style->bg[GTK_STATE_NORMAL],
-				    wilber_xpm);
-
-  gdk_window_set_icon (widget->window, NULL,
-		       wilber_pixmap, wilber_mask);
 }
 
 static gboolean
@@ -425,29 +389,4 @@ gimp_dialog_create_action_areav (GimpDialog *dialog,
 
       label = va_arg (args, gchar *);
     }
-}
-
-/**
- * gimp_dialog_set_icon:
- * @dialog: The #GtkWindow you want to set the pixmap icon for.
- *
- * This function sets the WM pixmap icon for the dialog which will appear
- * e.g. in GNOME's or KDE's window list.
- *
- * Note that this function is automatically called by
- * gimp_help_connect() which in turn is called by gimp_dialog_newv(),
- * so you only have to call it for #GtkWindow's which have no help
- * page (like tear-off menus).
- **/
-void
-gimp_dialog_set_icon (GtkWindow *dialog)
-{
-  g_return_if_fail (GTK_IS_WINDOW (dialog));
-
-  if (GTK_WIDGET_REALIZED (GTK_WIDGET (dialog)))
-    gimp_dialog_real_realize (GTK_WIDGET (dialog));
-  else
-    g_signal_connect (G_OBJECT (dialog), "realize",
-		      G_CALLBACK (gimp_dialog_real_realize),
-		      NULL);
 }

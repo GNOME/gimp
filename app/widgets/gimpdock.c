@@ -140,7 +140,6 @@ gimp_dock_init (GimpDock *dock)
   gtk_window_set_title (GTK_WINDOW (dock), "Gimp");
   gtk_window_set_wmclass (GTK_WINDOW (dock), "dock", "Gimp");
   gtk_window_set_policy (GTK_WINDOW (dock), FALSE, TRUE, TRUE);
-  gimp_dialog_set_icon (GTK_WINDOW (dock));
 
   gtk_widget_set_usize (GTK_WIDGET (dock), GIMP_DOCK_MINIMAL_WIDTH, -1);
  

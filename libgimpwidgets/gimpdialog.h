@@ -103,8 +103,6 @@ void        gimp_dialog_create_action_area  (GimpDialog         *dialog,
 void        gimp_dialog_create_action_areav (GimpDialog         *dialog,
 					     va_list             args);
 
-void        gimp_dialog_set_icon            (GtkWindow          *dialog);
-
 
 G_END_DECLS
 

@@ -38,7 +38,39 @@
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
 
+#include "themes/Default/gimp-wilber-pixbufs.h"
+
 #include "libgimp/libgimp-intl.h"
+
+
+void
+gimp_widgets_init (void)
+{
+  GdkPixbuf *pixbuf;
+  GList     *icon_list = NULL;
+  gint       i;
+
+  const guint8 *inline_pixbufs[] =
+  {
+    stock_wilber_64_64,
+    stock_wilber_48_48,
+    stock_wilber_32_32,
+    stock_wilber_16_16
+  };
+
+  gimp_stock_init ();
+
+  for (i = 0; i < G_N_ELEMENTS (inline_pixbufs); i++)
+    {
+      pixbuf = gdk_pixbuf_new_from_inline (-1, inline_pixbufs[i], FALSE, NULL);
+      icon_list = g_list_prepend (icon_list, pixbuf);
+    }
+
+  gtk_window_set_default_icon_list (icon_list);
+
+  g_list_foreach (icon_list, (GFunc) g_object_unref, NULL);
+  g_list_free (icon_list);
+}
 
 
 /*

@@ -46,6 +46,10 @@ G_BEGIN_DECLS
 
 /* For information look into the C source or the html documentation */
 
+
+void        gimp_widgets_init      (void);
+
+
 /*
  *  Widget Constructors
  */

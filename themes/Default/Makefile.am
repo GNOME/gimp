@@ -137,8 +137,22 @@ STOCK_TOOL_VARIABLES = @STRIP_BEGIN@ \
 	$(srcdir)/images/tools/stock-tool-button-zoom.png			\
 @STRIP_END@
 
-noinst_DATA = gimp-stock-pixbufs.h
+WILBER_VARIABLES = @STRIP_BEGIN@ \
+	stock_wilber_16_16				\
+	$(srcdir)/images/stock-wilber-16x16.png		\
+	stock_wilber_32_32				\
+	$(srcdir)/images/stock-wilber-32x32.png		\
+	stock_wilber_48_48				\
+	$(srcdir)/images/stock-wilber-48x48.png		\
+	stock_wilber_64_64				\
+	$(srcdir)/images/stock-wilber-64x64.png		\
+@STRIP_END@
+
+noinst_DATA = gimp-stock-pixbufs.h gimp-wilber-pixbufs.h
 CLEANFILES += $(noinst_DATA)
 
 gimp-stock-pixbufs.h: $(STOCK_IMAGES) $(STOCK_TOOL_IMAGES)
 	gdk-pixbuf-csource --raw --build-list $(STOCK_VARIABLES) $(STOCK_TOOL_VARIABLES) >$(srcdir)/gimp-stock-pixbufs.h
+
+gimp-wilber-pixbufs.h: $(WILBER_IMAGES)
+	gdk-pixbuf-csource --raw --build-list $(WILBER_VARIABLES) >$(srcdir)/gimp-wilber-pixbufs.h
