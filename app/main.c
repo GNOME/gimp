@@ -370,8 +370,6 @@ main (int argc, char **argv)
 
 #ifdef __GNUC__
 #define _stdcall  __attribute__((stdcall))
-#define __argc _argc
-#define __argv _argv
 #endif
 
 int _stdcall

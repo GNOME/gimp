@@ -62,7 +62,9 @@
 
 #ifdef NATIVE_WIN32
 #define STRICT
+#define WinMain WinMain_foo
 #include <windows.h>
+#undef WinMain
 #endif
 
 #include <stdlib.h>

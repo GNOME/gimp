@@ -470,23 +470,11 @@ valid_module_name (const char *filename)
 
   if (strcmp (basename + len - 3, ".so"))
     return FALSE;
-#elif defined (__GNUC__)
-  /* When compiled with gcc on Win32, require modules to be compiled with
-   * gcc, too. Use the convention that gcc-compiled GIMP modules are named
-   * *.gcc.dll. Subject to change.
-   */
-  if (len < 1 + 8)
-      return FALSE;
-
-  if (g_strcasecmp (basename + len - 8, ".gcc.dll"))
-    return FALSE;
 #else
-  /* When compiled with MSVC, the modules should be called *.msvc.dll.
-   */
-  if (len < 1 + 9)
+  if (len < 1 + 4)
       return FALSE;
 
-  if (g_strcasecmp (basename + len - 9, ".msvc.dll"))
+  if (g_strcasecmp (basename + len - 4, ".dll"))
     return FALSE;
 #endif
 
@@ -796,14 +784,8 @@ browser_info_update (module_info *mod, browser_st *st)
 
 
   if (mod->state == ST_MODULE_ERROR && mod->last_module_error)
-  {
-    gulong len = strlen (statename[mod->state]) + 2 +
-		 strlen (mod->last_module_error) + 2;
-
-    status = g_malloc (len);
-    g_snprintf (status, len,
-		"%s (%s)", statename[mod->state], mod->last_module_error);
-  }
+    status = g_strdup_printf ("%s (%s)", statename[mod->state],
+			      mod->last_module_error);
   else
   {
     status = g_strdup (statename[mod->state]);

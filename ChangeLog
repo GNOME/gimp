@@ -1,3 +1,40 @@
+1999-07-21  Tor Lillqvist  <tml@iki.fi>
+
+	* README.win32: Update gcc instructions. Remove warning about
+ 	gettext being GPL, as the GIMP is GPL, too, of course, and it
+ 	thus doesn't matter.
+
+	* user_install.bat: Rename the template user gtkrc to gtkrc_user,
+ 	to reduce user confusion.
+
+	* app/main.c: Small change for gcc on Win32 compilation.
+
+	* */makefile.cygwin
+	* app/module_db.c: With newest gcc-2.95 -fnative-struct on Win32,
+ 	no need to have differently named DLLs (including modules) for
+ 	(built by) gcc and MSVC.
+
+	* app/module_db.c: Use g_strdup_printf() instead of
+ 	strlen(), g_malloc() and g_snprintf()
+
+	* libgimp/Makefile.am: No need to distribute gimpfeatures.h.win32,
+ 	the suitable gimpfeatures.h is built when making the dist.
+
+	* libgimp/gimpfeatures.h.win32: Removed.
+
+	* libgimp/makefile.cygwin
+	* libgimp/makefile.msc: Remove gimpfeatures.h.win32.
+
+	* libgimp/gimp.h: Win32 startup code changed a bit.
+
+	* plug-ins/makefile.cygwin
+	* plug-ins/makefile.msc: Add the winsnap unofficial plug-in.
+
+	* plug-ins/common/animationplay.c
+	* plug-ins/common/gz.c: (Win32) Hack aroung WinMain getting
+	clashing declarations because these guys include gdkx.h (which
+	includes windows.h), and gimp.h also declares WinMain on its own.
+
 Wed Jul 21 00:00:35 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/sel2path/fit.c

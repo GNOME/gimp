@@ -43,16 +43,12 @@ CFLAGS = -I.. -I$(GLIB) -I$(GTK)\gdk\win32 -I$(GTK) -I$(GETTEXT)\intl -DGIMPDIR=
 
 all : \
 	..\config.h	\
-	gimpfeatures.h	\
 	gimpi.lib	\
 	gimp-$(GIMP_VER).dll	\
 	gimpui-$(GIMP_VER).dll
 
 ..\config.h : ..\config.h.win32
 	copy ..\config.h.win32 ..\config.h
-
-gimpfeatures.h : gimpfeatures.h.win32
-	copy gimpfeatures.h.win32 gimpfeatures.h
 
 install : all
 	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)

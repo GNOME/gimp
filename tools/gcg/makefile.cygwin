@@ -3,7 +3,7 @@
 
 ################################################################
 
-CC = gcc -mno-cygwin -mpentium
+CC = gcc -mno-cygwin -mpentium -fnative-struct
 
 LEX = flex
 YACC = bison -y
@@ -44,7 +44,7 @@ gcg_OBJECTS = \
 	marshall.o	\
 
 gcg.exe : $(gcg_OBJECTS)
-	$(CC) $(CFLAGS) -o gcg.exe $(gcg_OBJECTS) -L $(GLIB) -lglib-$(GLIB_VER).gcc $(LDFLAGS)
+	$(CC) $(CFLAGS) -o gcg.exe $(gcg_OBJECTS) -L $(GLIB) -lglib-$(GLIB_VER) $(LDFLAGS)
 
 clean:
 	-rm parser.[ch] lexer.c *.exe *.o

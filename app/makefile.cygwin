@@ -10,7 +10,7 @@ OPTIMIZE = -g -O
 
 # Nothing much configurable below
 
-CC = gcc -mno-cygwin -mpentium
+CC = gcc -mno-cygwin -mpentium -fnative-struct
 
 CP = cp
 LD = ld
@@ -245,11 +245,11 @@ gimpres.o : gimp.rc wilber.ico
 
 gimp.exe : ../config.h $(gimp_OBJECTS) libgimpim.a gimp.def gimpres.o
 # This is sickening.
-	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -mwindows -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc -lgmodule-$(GLIB_VER).gcc gimpres.o -lgdi32 -luser32
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base -mwindows -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L  ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32
 	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
-	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base,gimp.exp -mwindows -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc -lgmodule-$(GLIB_VER).gcc gimpres.o -lgdi32 -luser32
+	$(CC) $(CFLAGS) -Wl,--base-file,gimp.base,gimp.exp -mwindows -o gimp.exe $(gimp_OBJECTS) -L . -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32
 	$(DLLTOOL) --base-file gimp.base --input-def gimp.def --output-exp gimp.exp
-	$(CC) -v $(CFLAGS) -Wl,gimp.exp -mwindows -o gimp.exe $(gimp_OBJECTS) -L. -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc -lgmodule-$(GLIB_VER).gcc gimpres.o -lgdi32 -luser32
+	$(CC) -v $(CFLAGS) -Wl,gimp.exp -mwindows -o gimp.exe $(gimp_OBJECTS) -L. -lgimpim -L ../libgimp -lgimpi -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -lgmodule-$(GLIB_VER) gimpres.o -lgdi32 -luser32
 	$(DLLTOOL) --dllname gimp.exe gimp.def --output-lib libgimp.a $(gimp_OBJECTS)
 	
 # General rule for building $(gimp_OBJECTS)

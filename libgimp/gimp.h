@@ -183,15 +183,12 @@ struct _GParam
  * application.
  */
 #  ifdef __GNUC__
-   /* With gcc these must be handled differently */
-#    define __argc _argc
-#    define __argv _argv
 #    define _stdcall __attribute__((stdcall))
 #  endif
 
 #  define MAIN()			\
    static int				\
-   win32_gimp_main (int argc, char *argv[])	\
+   win32_gimp_main (int argc, char **argv)	\
    {					\
      extern void set_gimp_PLUG_IN_INFO_PTR(GPlugInInfo *);	\
      set_gimp_PLUG_IN_INFO_PTR(&PLUG_IN_INFO);	\
@@ -202,7 +199,7 @@ struct _GParam
    WinMain (void *hInstance,		\
 	    void *hPrevInstance,	\
 	    char *lpszCmdLine,		\
-	    int nCmdShow)		\
+	    int   nCmdShow)		\
    {					\
      return win32_gimp_main (__argc, __argv);	\
    }					\

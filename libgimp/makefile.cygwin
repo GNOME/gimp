@@ -16,7 +16,7 @@ OPTIMIZE = -g -O
 
 # Nothing much configurable below
 
-CC = gcc -mno-cygwin -mpentium
+CC = gcc -mno-cygwin -mpentium -fnative-struct
 
 CP = cp
 LD = ld
@@ -37,20 +37,16 @@ CFLAGS = $(OPTIMIZE) -I.. -I$(GLIB) -I$(GTK)/gdk/win32 -I$(GTK) -I$(GETTEXT)/int
 
 all : \
 	../config.h	\
-	gimpfeatures.h	\
 	libgimpi.a	\
-	gimp-$(GIMP_VER).gcc.dll	\
-	gimpui-$(GIMP_VER).gcc.dll
+	gimp-$(GIMP_VER).dll	\
+	gimpui-$(GIMP_VER).dll
 
 ../config.h : ../config.h.win32
 	cp ../config.h.win32 ../config.h
 
-gimpfeatures.h : gimpfeatures.h.win32
-	cp gimpfeatures.h.win32 gimpfeatures.h
-
 install : all
-	$(INSTALL) gimp-$(GIMP_VER).gcc.dll $(BIN)
-	$(INSTALL) gimpui-$(GIMP_VER).gcc.dll $(BIN)
+	$(INSTALL) gimp-$(GIMP_VER).dll $(BIN)
+	$(INSTALL) gimpui-$(GIMP_VER).dll $(BIN)
 
 gimpi_OBJECTS = \
 	gimpenv.o	\
@@ -88,8 +84,8 @@ gimp_OBJECTS = \
 	gserialize.o	\
 	parasite.o
 
-gimp-$(GIMP_VER).gcc.dll : $(gimp_OBJECTS) gimp.def
-	$(GLIB)/build-dll gimp $(GIMP_VER).gcc gimp.def -s $(gimp_OBJECTS) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc -luser32
+gimp-$(GIMP_VER).dll : $(gimp_OBJECTS) gimp.def
+	$(GLIB)/build-dll gimp $(GIMP_VER) gimp.def -s $(gimp_OBJECTS) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER) -luser32
 
 # Pass -DLIBGIMP_COMPILATION when compiling gimp_OBJECTS
 
@@ -137,11 +133,11 @@ gimpui_OBJECTS = \
 	gimpgradientmenu.o\
 	gimppatternmenu.o
 
-gimpui-$(GIMP_VER).gcc.dll : $(gimpui_OBJECTS) gimpui.def
-	$(GLIB)/build-dll gimpui $(GIMP_VER).gcc gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER).gcc -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER).gcc
+gimpui-$(GIMP_VER).dll : $(gimpui_OBJECTS) gimpui.def
+	$(GLIB)/build-dll gimpui $(GIMP_VER) gimpui.def -s $(gimpui_OBJECTS) -L . -lgimp-$(GIMP_VER) -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GETTEXT)/intl -lgnu-intl -L $(GLIB) -lglib-$(GLIB_VER)
 
 # General rule for compiling, used by the objects that don't go into
-# gimp-$(GIMP_VER).gcc.dll. 
+# gimp-$(GIMP_VER).dll. 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 clean:

@@ -19,8 +19,7 @@ EXTRA_DIST = \
 	makefile.msc		\
 	makefile.cygwin		\
 	gimp.def		\
-	gimpui.def		\
-	gimpfeatures.h.win32
+	gimpui.def
 
 lib_LTLIBRARIES = libgimp.la libgimpui.la
 noinst_LIBRARIES = libgimpi.a

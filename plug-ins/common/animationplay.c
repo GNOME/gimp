@@ -101,7 +101,9 @@
 #include <string.h>
 #include <ctype.h>
 #include "libgimp/gimp.h"
+#define WinMain WinMain_foo	/* Kludge */
 #include "gdk/gdkx.h"
+#undef WinMain
 #include "gtk/gtk.h"
 
 

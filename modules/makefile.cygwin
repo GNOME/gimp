@@ -5,11 +5,13 @@
 GIMP = /gimp
 BIN = $(GIMP)/modules
 
+OPTIMIZE = -O
+
 ################################################################
 
 # Nothing much configurable below
 
-CC = gcc -mno-cygwin -mpentium
+CC = gcc -mno-cygwin -mpentium -fnative-struct
 
 INSTALL = install
 
@@ -21,14 +23,13 @@ GLIB = ../../glib
 GMODULE = $(GLIB)/gmodule
 GTK = ../../gtk+
 
-CFLAGS = -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk/win32 -I$(GTK)
+CFLAGS = $(OPTIMIZE) -DHAVE_CONFIG_H -DMODULE_COMPILATION -I. -I.. -I$(GLIB) -I$(GMODULE) -I$(GTK)/gdk/win32 -I$(GTK)
 LDFLAGS = -s
 
 MODULES = \
-	colorsel_gtk-$(GIMP_VER).gcc.dll \
-	colorsel_triangle-$(GIMP_VER).gcc.dll \
-	colorsel_water-$(GIMP_VER).gcc.dll
-
+	colorsel_gtk-$(GIMP_VER).dll \
+	colorsel_triangle-$(GIMP_VER).dll \
+	colorsel_water-$(GIMP_VER).dll
 
 all : \
 	$(MODULES)
@@ -39,19 +40,14 @@ install : all
 ../config.h : ../config.h.win32
 	cp ../config.h.win32 $@
 
-colorsel_gtk-$(GIMP_VER).gcc.dll : colorsel_gtk.o module.def
-	$(GLIB)/build-dll colorsel_gtk $(GIMP_VER).gcc module.def colorsel_gtk.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GLIB) -lgmodule-$(GLIB_VER).gcc -lglib-$(GLIB_VER).gcc
+colorsel_gtk-$(GIMP_VER).dll : colorsel_gtk.o module.def
+	$(GLIB)/build-dll colorsel_gtk $(GIMP_VER) module.def colorsel_gtk.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
 
-colorsel_triangle-$(GIMP_VER).gcc.dll : colorsel_triangle.o module.def
-	$(GLIB)/build-dll colorsel_triangle $(GIMP_VER).gcc module.def colorsel_triangle.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GLIB) -lgmodule-$(GLIB_VER).gcc -lglib-$(GLIB_VER).gcc
+colorsel_triangle-$(GIMP_VER).dll : colorsel_triangle.o module.def
+	$(GLIB)/build-dll colorsel_triangle $(GIMP_VER) module.def colorsel_triangle.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
 
-colorsel_water-$(GIMP_VER).gcc.dll : colorsel_water.o module.def
-	$(GLIB)/build-dll colorsel_water $(GIMP_VER).gcc module.def colorsel_water.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER).gcc -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER).gcc -L $(GLIB) -lgmodule-$(GLIB_VER).gcc -lglib-$(GLIB_VER).gcc
-
-
-# General rule for building 
-.c.obj:
-	$(CC) $(CFLAGS) -c $<
+colorsel_water-$(GIMP_VER).dll : colorsel_water.o module.def
+	$(GLIB)/build-dll colorsel_water $(GIMP_VER) module.def colorsel_water.o $(LDFLAGS) -L ../app -lgimp -L $(GTK)/gtk -lgtk-$(GTK_VER) -L $(GTK)/gdk/win32 -lgdk-$(GTK_VER) -L $(GLIB) -lgmodule-$(GLIB_VER) -lglib-$(GLIB_VER)
 
 clean:
 	-rm *.dll *.a *.o *.exp *.base

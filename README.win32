@@ -7,10 +7,10 @@ http://www.iki.fi/tml/gimp/win32/ or
 http://www.gimp.org/~tml/gimp/win32/
 
 To build the GIMP on Win32, you can use either the Microsoft compiler
-or gcc (egcs) without the produced executables depending on the
-cygwin dll (gcc -mno-cygwin). For more information about the
-preparation necessary for building with gcc, read README.win32 in the
-GLib 1.3 distribution.
+or gcc without the produced executables depending on the cygwin dll
+(gcc -mno-cygwin). For more information about the preparation
+necessary for building with gcc, what version you want and where to
+get it, etc, read README.win32 in the GLib 1.3 distribution.
 
 The GIMP wants to be built with the GNU gettext library for
 internationalisation (i18n). Get the version ported to Win32 (not a
