@@ -50,20 +50,16 @@ GList * parsepath (void)
   if (lastpath)
     return lastpath;
 
-  gimpdatasubdir = g_strconcat (gimp_data_directory (),
-				G_DIR_SEPARATOR_S,
-				"gimpressionist",
-				NULL);
+  gimpdatasubdir = g_build_filename (gimp_data_directory (),
+                                     "gimpressionist", NULL);
 
-  defaultpath = g_strconcat (gimp_directory (),
-			     G_DIR_SEPARATOR_S,
-			     "gimpressionist",
-			     G_SEARCHPATH_SEPARATOR_S,
-			     gimpdatasubdir,
-			     NULL);
- 
+  defaultpath = g_build_filename (gimp_directory (),
+                                  "gimpressionist", gimpdatasubdir, NULL);
+
   if (standalone)
-    tmps = g_strdup (defaultpath);
+    {
+      tmps = g_strdup (defaultpath);
+    }
   else
     {
       tmps = gimp_gimprc_query ("gimpressionist-path");
@@ -93,21 +89,25 @@ GList * parsepath (void)
   return lastpath;
 }
 
-char *findfile(char *fn)
+gchar *findfile(char *fn)
 {
   static GList *rcpath = NULL;
-  GList *thispath;
-  static char file[200];
-  struct stat st;
+  GList        *thispath;
+  gchar        *filename;
+  struct stat   st;
 
-  if(!rcpath) rcpath = parsepath();
+  if(!rcpath) rcpath = parsepath ();
 
   thispath = rcpath;
-  while(rcpath && thispath) {
-    sprintf(file, "%s" G_DIR_SEPARATOR_S "%s", (char *)thispath->data, fn);
-    if(!stat(file, &st)) return file;
-    thispath = thispath->next;
-  }
+
+  while (rcpath && thispath)
+    {
+      filename = g_build_filename (thispath->data, fn, NULL);
+      if(!stat(filename, &st))
+        return filename;
+      g_free (filename);
+      thispath = thispath->next;
+    }
   return NULL;
 }
 
