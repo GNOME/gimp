@@ -1,3 +1,9 @@
+2002-05-08  Manish Singh  <yosh@gimp.org>
+
+        * configure.in: the correct switch is --disable-print, not 
+        --without-gimpprint. Fix not found error message, and add a pointer
+        to the gimp-print homepage.
+
 2002-05-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c (run): call bind_textdomain_codeset() so

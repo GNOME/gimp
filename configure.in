@@ -706,8 +706,9 @@ AC_ARG_ENABLE(print, [  --disable-print         build without print support (req
 
 if test x$enable_print != xno && test -z "$PRINT"; then
   AC_MSG_ERROR([
-*** Check for libgimpprint failed. You can build without it by passing 
-*** --without-gimpprint to configure but you won't be able to print then.])
+*** Check for libgimpprint failed. You can download it from 
+*** http://gimp-print.sourceforge.net/ or you can build without it by passing 
+*** --disable-print to configure (but you won't be able to print then).])
 fi
 
 
