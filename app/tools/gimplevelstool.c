@@ -113,7 +113,7 @@ static void     levels_channel_reset_callback        (GtkWidget      *widget,
 static gboolean levels_menu_visible_func             (GtkTreeModel   *model,
                                                       GtkTreeIter    *iter,
                                                       gpointer        data);
-static void     levels_auto_callback                 (GtkWidget      *widget,
+static void     levels_stretch_callback              (GtkWidget      *widget,
                                                       GimpLevelsTool *tool);
 static void     levels_low_input_adjustment_update   (GtkAdjustment  *adjustment,
                                                       GimpLevelsTool *tool);
@@ -668,7 +668,7 @@ gimp_levels_tool_dialog (GimpImageMapTool *image_map_tool)
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
-                    G_CALLBACK (levels_auto_callback),
+                    G_CALLBACK (levels_stretch_callback),
                     tool);
 
   button = gimp_levels_tool_color_picker_new (tool,
@@ -957,10 +957,10 @@ levels_menu_visible_func (GtkTreeModel *model,
 }
 
 static void
-levels_auto_callback (GtkWidget      *widget,
+levels_stretch_callback (GtkWidget      *widget,
                       GimpLevelsTool *tool)
 {
-  levels_auto (tool->levels, tool->hist, tool->color);
+  levels_stretch (tool->levels, tool->hist, tool->color);
   levels_update (tool, ALL);
 
   gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (tool));

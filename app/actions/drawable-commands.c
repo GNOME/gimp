@@ -46,26 +46,6 @@
 /*  public functions  */
 
 void
-drawable_levels_auto_cmd_callback (GtkAction *action,
-                                   gpointer   data)
-{
-  GimpImage    *gimage;
-  GimpDrawable *drawable;
-  GimpContext  *context;
-  return_if_no_drawable (gimage, drawable, data);
-  return_if_no_context (context, data);
-
-  if (! gimp_drawable_is_rgb (drawable))
-    {
-      g_message (_("White Balance operates only on RGB color layers."));
-      return;
-    }
-
-  gimp_drawable_levels_auto (drawable, context);
-  gimp_image_flush (gimage);
-}
-
-void
 drawable_desaturate_cmd_callback (GtkAction *action,
                                   gpointer   data)
 {
@@ -120,6 +100,26 @@ drawable_invert_cmd_callback (GtkAction *action,
 }
 
 void
+drawable_levels_stretch_cmd_callback (GtkAction *action,
+                                      gpointer   data)
+{
+  GimpImage    *gimage;
+  GimpDrawable *drawable;
+  GimpContext  *context;
+  return_if_no_drawable (gimage, drawable, data);
+  return_if_no_context (context, data);
+
+  if (! gimp_drawable_is_rgb (drawable))
+    {
+      g_message (_("White Balance operates only on RGB color layers."));
+      return;
+    }
+
+  gimp_drawable_levels_stretch (drawable, context);
+  gimp_image_flush (gimage);
+}
+
+void
 drawable_offset_cmd_callback (GtkAction *action,
                               gpointer   data)
 {
@@ -133,6 +133,7 @@ drawable_offset_cmd_callback (GtkAction *action,
   dialog = offset_dialog_new (drawable, widget);
   gtk_widget_show (dialog);
 }
+
 
 void
 drawable_linked_cmd_callback (GtkAction *action,
@@ -195,6 +196,7 @@ drawable_visible_cmd_callback (GtkAction *action,
       gimp_image_flush (gimage);
     }
 }
+
 
 void
 drawable_flip_cmd_callback (GtkAction *action,

@@ -124,13 +124,7 @@ gimp_levels (gint32               drawable_ID,
  * gimp_levels_auto:
  * @drawable_ID: The drawable.
  *
- * Automatically modifies intensity levels in the specified drawable.
- *
- * This procedure allows intensity levels in the specified drawable to
- * be remapped according to a set of guessed parameters. It is
- * equivalent to clicking the \"Auto\" button in the Levels tool. This
- * procedure is only valid on RGB color and grayscale images. It will
- * not operate on indexed drawables.
+ * This procedure is deprecated! Use gimp_levels_stretch() instead.
  *
  * Returns: TRUE on success.
  */

@@ -37,10 +37,10 @@ struct _Levels
 void     levels_init                (Levels               *levels);
 void     levels_channel_reset       (Levels               *levels,
                                      GimpHistogramChannel  channel);
-void     levels_auto                (Levels               *levels,
+void     levels_stretch             (Levels               *levels,
                                      GimpHistogram        *hist,
                                      gboolean              is_color);
-void     levels_channel_auto        (Levels               *levels,
+void     levels_channel_stretch     (Levels               *levels,
                                      GimpHistogram        *hist,
                                      GimpHistogramChannel  channel);
 void     levels_adjust_by_colors    (Levels               *levels,

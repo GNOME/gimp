@@ -319,7 +319,7 @@ levels_auto_invoker (Gimp         *gimp,
         success = FALSE;
 
       if (success)
-        gimp_drawable_levels_auto (drawable, context);
+        gimp_drawable_levels_stretch (drawable, context);
     }
 
   return procedural_db_return_args (&levels_auto_proc, success);
@@ -342,7 +342,7 @@ static ProcRecord levels_auto_proc =
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
-  NULL,
+  "gimp_levels_stretch",
   GIMP_INTERNAL,
   1,
   levels_auto_inargs,

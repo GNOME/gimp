@@ -344,7 +344,7 @@
         <menuitem action="drawable-invert" />
 	<menu action="layers-colors-auto-menu" name="Auto">
 	  <menuitem action="drawable-equalize" />
-	  <menuitem action="drawable-levels-auto" />
+	  <menuitem action="drawable-levels-stretch" />
 	</menu>
 	<separator />
         <placeholder name="Info">

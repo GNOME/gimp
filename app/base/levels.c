@@ -62,9 +62,9 @@ levels_channel_reset (Levels               *levels,
 }
 
 void
-levels_auto (Levels        *levels,
-             GimpHistogram *hist,
-             gboolean       is_color)
+levels_stretch (Levels        *levels,
+                GimpHistogram *hist,
+                gboolean       is_color)
 {
   GimpHistogramChannel channel;
 
@@ -79,18 +79,18 @@ levels_auto (Levels        *levels,
       for (channel = GIMP_HISTOGRAM_RED;
            channel <= GIMP_HISTOGRAM_BLUE;
            channel++)
-	levels_channel_auto (levels, hist, channel);
+	levels_channel_stretch (levels, hist, channel);
     }
   else
     {
-      levels_channel_auto (levels, hist, GIMP_HISTOGRAM_VALUE);
+      levels_channel_stretch (levels, hist, GIMP_HISTOGRAM_VALUE);
     }
 }
 
 void
-levels_channel_auto (Levels               *levels,
-                     GimpHistogram        *hist,
-                     GimpHistogramChannel  channel)
+levels_channel_stretch (Levels               *levels,
+                        GimpHistogram        *hist,
+                        GimpHistogramChannel  channel)
 {
   gint    i;
   gdouble count, new_count, percentage, next_percentage;

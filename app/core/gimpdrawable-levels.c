@@ -115,8 +115,8 @@ gimp_drawable_levels (GimpDrawable   *drawable,
 
 
 void
-gimp_drawable_levels_auto (GimpDrawable   *drawable,
-                           GimpContext    *context)
+gimp_drawable_levels_stretch (GimpDrawable   *drawable,
+                              GimpContext    *context)
 {
   gint           x, y, width, height;
   PixelRegion    srcPR, destPR;
@@ -140,8 +140,8 @@ gimp_drawable_levels_auto (GimpDrawable   *drawable,
   gimp_drawable_calculate_histogram (drawable, hist);
 
   /* Calculate the levels */
-  levels_init (&levels);
-  levels_auto (&levels, hist, ! gimp_drawable_is_gray (drawable));
+  levels_init    (&levels);
+  levels_stretch (&levels, hist, ! gimp_drawable_is_gray (drawable));
 
   /* Set up the lut */
   lut  = gimp_lut_new ();

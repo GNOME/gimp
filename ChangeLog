@@ -1,3 +1,22 @@
+2004-11-01  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/actions/drawable-actions.c
+	* app/actions/drawable-commands.c
+	* app/actions/drawable-commands.h
+	* app/base/levels.c
+	* app/base/levels.h
+	* app/core/gimpdrawable-levels.c
+	* app/core/gimpdrawable-levels.h
+	* app/pdb/color_cmds.c
+	* app/tools/gimplevelstool.c
+	* libgimp/gimpcolor_pdb.c
+	* menus/image-menu.xml
+	* menus/image-menu.xml.in
+	* tools/pdbgen/pdb/color.pdb: renamed [drawable-]levels-auto
+	to [drawable-]levels-stretch, anticipating other ways to automatically
+	determine levels settings, old PDB command maintained, but marked
+	as deprecated.
+
 2004-11-01  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
