@@ -11,6 +11,10 @@ addition to the standard GTK+ stock items. These can be used just like
 GTK+ stock items. GIMP also overrides a few of the GTK+ icons (namely
 the ones in dialog size).
 </para>
+<para>
+Stock icons may have a RTL variant which gets used for right-to-left
+locales.
+</para>
 
 <!-- ##### SECTION See_Also ##### -->
 <para>
@@ -62,6 +66,8 @@ the ones in dialog size).
 <!-- ##### MACRO GIMP_STOCK_MENU_LEFT ##### -->
 <para>
 <inlinegraphic fileref="stock-menu-left-12.png" format="png"></inlinegraphic>
+RTL variant
+<inlinegraphic fileref="stock-menu-right-12.png" format="png"></inlinegraphic>
 </para>
 
 
@@ -69,6 +75,8 @@ the ones in dialog size).
 <!-- ##### MACRO GIMP_STOCK_MENU_RIGHT ##### -->
 <para>
 <inlinegraphic fileref="stock-menu-right-12.png" format="png"></inlinegraphic>
+RTL variant
+<inlinegraphic fileref="stock-menu-left-12.png" format="png"></inlinegraphic>
 </para>
 
 

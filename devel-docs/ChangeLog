@@ -1,3 +1,8 @@
+2004-02-27  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/tmpl/gimpstock.sgml: added RTL variants of stock
+	icons.
+
 2004-02-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/libgimpthumb-sections.txt
