@@ -361,7 +361,7 @@ gimp_dock_delete_event (GtkWidget   *widget,
                                  _("This window has %d tabs open. Closing the "
                                    "window will also close all its tabs."), n);
 
-      retval = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_CANCEL);
+      retval = (gimp_dialog_run (GIMP_DIALOG (dialog)) != GTK_RESPONSE_OK);
 
       gtk_widget_destroy (dialog);
     }

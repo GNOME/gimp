@@ -1,3 +1,9 @@
+2004-12-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdock.c (gimp_dock_delete_event): invert logic so
+	everything except GTK_RESPONSE_OK keeps the dock open
+	(e.g. hitting escape).
+
 2004-12-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-preview.c (gimp_drawable_get_sub_preview):
