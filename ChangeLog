@@ -1,3 +1,8 @@
+2004-07-14  Bill Skaggs <weskaggs@primate.ucdavis.edu>
+
+	* devel-docs/objects.txt:  added file containing a map of Gimp's
+	GObject hierarchy .
+
 2004-07-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpstatusbar.[ch]: massively changed: removed

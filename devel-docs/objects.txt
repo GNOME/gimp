@@ -1,0 +1,408 @@
+The Gimp Object Hierarchy
+
+last updated: July 14, 2004
+
+Gimp makes very extensive use of the GObject system for
+object-oriented programming in the C language.  This file shows the
+hierarchy of objects created and used by the Gimp application.  For
+widgets and other objects descending from GtkObject, their parent
+objects are also shown, in the same order as they appear in the Gtk+
+API documentation.  All of these objects inherit from GObject, the
+most basic object level, which is not shown here.
+
+For each object type, the subdirectory of "app" in which its code
+appears is shown next to it in parentheses (or "libgimpwidgets" if the
+object comes from there).  There is a very systematic relationship
+between the name of an object and the C file containing its source
+code:  for example, the source code for "GimpTextEditor (widgets)" is
+in the file app/widgets/gimptexteditor.c.  A (*) next to the name of
+an object indicates that it inherits directly from GObject.
+
+Note that because files tend to move around, some aspects of this tree
+may be out of date at any given time, and some recently created
+objects may be missing.
+
+GtkObject (*)
+   +--- GtkWidget
+   |       +--- GtkMisc
+   |       |       +--- GtkImage
+   |       |       |       +--- GimpPixmap (libgimpwidgets)
+   |       |       |
+   |       |       +--- GimpColorBar (widgets)
+   |       |
+   |       +--- GtkContainer
+   |       |       +--- GtkBin
+   |       |       |       +--- GtkFrame
+   |       |       |       |       +--- GimpFrame (widgets)
+   |       |       |       |       |        +--- GimpColorFrame (widgets)
+   |       |       |       |       |
+   |       |       |       |       +--- GimpThumbBox (widgets)
+   |       |       |       | 
+   |       |       |       +--- GtkButton
+   |       |       |       |       +--- GtkOptionMenu
+   |       |       |       |       |       +--- GimpUnitMenu (libgimpwidgets)
+   |       |       |       |       |    
+   |       |       |       |       +--- GimpButton (libgimpwidgets)
+   |       |       |       |       |       +--- GimpColorButton (libgimpwidgets)
+   |       |       |       |       |       |       +--- GimpColorPanel (widgets)
+   |       |       |       |       |       | 
+   |       |       |       |       |       +--- GimpViewableButton (widgets)
+   |       |       |       |       |
+   |       |       |       |       +--- GimpPickButton (libgimpwidgets)
+   |       |       |       | 
+   |       |       |       +--- GtkWindow
+   |       |       |       |       +--- GtkDialog
+   |       |       |       |       |       +--- GtkFileChooserDialog
+   |       |       |       |       |       |       +--- GimpFileDialog (widgets)
+   |       |       |       |       |       |     
+   |       |       |       |       |       +--- GimpDialog (libgimpwidgets)
+   |       |       |       |       |               +--- GimpPdbDialog (widgets)
+   |       |       |       |       |               |       +--- GimpDataSelect (widgets)
+   |       |       |       |       |               |       |       +--- GimpBrushSelect (widgets)
+   |       |       |       |       |               |       |       +--- GimpGradientSelect (widgets)
+   |       |       |       |       |               |       |       +--- GimpPaletteSelect (widgets)
+   |       |       |       |       |               |       |       +--- GimpPatternSelect (widgets)
+   |       |       |       |       |               |       |     
+   |       |       |       |       |               |       +--- GimpFontSelect (widgets)    
+   |       |       |       |       |               |             
+   |       |       |       |       |               +--- GimpViewableDialog (widgets)
+   |       |       |       |       |               |       +--- GimpToolDialog (widgets)
+   |       |       |       |       |               | 
+   |       |       |       |       |               +--- GimpTextEditor (widgets)
+   |       |       |       |       | 
+   |       |       |       |       +--- GimpContainerPopup (widgets)
+   |       |       |       |       +--- GimpDock (widgets)
+   |       |       |       |       |       +--- GimpImageDock (widgets)
+   |       |       |       |       |       +--- GimpToolbox (widgets)
+   |       |       |       |       |
+   |       |       |       |       +--- GimpDisplayShell (display)       
+   |       |       |       | 
+   |       |       |       +--- GtkComboBox
+   |       |       |       |       +--- GimpContainerComboBox (widgets)
+   |       |       |       |       +--- GimpIntComboBox (libgimpwidgets)
+   |       |       |       |       |       +--- GimpEnumComboBox (widgets)
+   |       |       |       |       |
+   |       |       |       |       +--- GimpScaleComboBox (display)
+   |       |       |       |       +--- GimpUnitComboBox (widgets)
+   |       |       |       |      
+   |       |       |       +--- GimpDockable (widgets)            
+   |       |       |
+   |       |       +--- GtkBox
+   |       |       |       +--- GtkVbox
+   |       |       |       |       +--- GimpColorDisplayEditor (widgets)
+   |       |       |       |       +--- GimpColorSelector (libgimpwidgets)
+   |       |       |       |       |       +--- GimpColorNotebook (libgimpwidgets)
+   |       |       |       |       |       +--- GimpColorScales (libgimpwidgets)
+   |       |       |       |       |       +--- GimpColorSelect (libgimpwidgets)
+   |       |       |       |       | 
+   |       |       |       |       +--- GimpColorSelection (libgimpwidgets)
+   |       |       |       |       +--- GimpEditor (widgets)
+   |       |       |       |       |       +--- GimpColorEditor (widgets)
+   |       |       |       |       |       +--- GimpContainerView (widgets)
+   |       |       |       |       |       |       +--- GimpContainerEntry (widgets)
+   |       |       |       |       |       |       +--- GimpContainerBox (widgets)
+   |       |       |       |       |       |               +--- GimpContainerGridView (widgets)
+   |       |       |       |       |       |               +--- GimpContainerTreeView (widgets)
+   |       |       |       |       |       |                       +--- GimpItemTreeView (widgets)
+   |       |       |       |       |       |                               +--- GimpDrawableTreeView (widgets)
+   |       |       |       |       |       |                               |       +--- GimpChannelTreeView (widgets)
+   |       |       |       |       |       |                               |       +--- GimpLayerTreeView (widgets)
+   |       |       |       |       |       |                               |
+   |       |       |       |       |       |                               +--- GimpVectorsTreeView (widgets)
+   |       |       |       |       |       |
+   |       |       |       |       |       +--- GimpDataEditor (widgets)
+   |       |       |       |       |       |       +--- GimpBrushEditor (widgets)
+   |       |       |       |       |       |       +--- GimpGradientEditor (widgets)
+   |       |       |       |       |       |       +--- GimpPaletteEditor (widgets)
+   |       |       |       |       |       |
+   |       |       |       |       |       +--- GimpDeviceStatus (widgets)
+   |       |       |       |       |       +--- GimpToolOptionsEditor (widgets)
+   |       |       |       |       |       +--- GimpErrorConsole (widgets)
+   |       |       |       |       |       +--- GimpImageEditor (widgets)
+   |       |       |       |       |       |       +--- GimpColormapEditor (widgets)
+   |       |       |       |       |       |       +--- GimpComponentEditor (widgets)
+   |       |       |       |       |       |       +--- GimpHistogramEditor (widgets)
+   |       |       |       |       |       |       +--- GimpUndoEditor (widgets)
+   |       |       |       |       |       |       +--- GimpSelectionEditor (widgets)
+   |       |       |       |       |       |
+   |       |       |       |       |       +--- GimpNavigationView (display)
+   |       |       |       |       |
+   |       |       |       |       +--- GimpContainerEditor (widgets)
+   |       |       |       |       |       +--- GimpBufferView (widgets)
+   |       |       |       |       |       +--- GimpDataFactoryView (widgets)
+   |       |       |       |       |       |       +--- GimpBrushFactoryView (widgets)
+   |       |       |       |       |       |       +--- GimpPatternFactoryView (widgets)
+   |       |       |       |       |       |
+   |       |       |       |       |       +--- GimpDocumentView (widgets)
+   |       |       |       |       |       +--- GimpFontView (widgets)
+   |       |       |       |       |       +--- GimpImageView (widgets)
+   |       |       |       |       |       +--- GimpTemplateView (widgets)
+   |       |       |       |       |       +--- GimpToolView (widgets)
+   |       |       |       |       |
+   |       |       |       |       +--- GimpGridEditor (widgets)
+   |       |       |       |       +--- GimpHistogramBox (widgets)
+   |       |       |       |       +--- GimpTemplateEditor (widgets)
+   |       |       |       |       +--- GimpStrokeEditor (widgets)
+   |       |       |       |       +--- GimpPathEditor (libgimpwidgets)
+   |       |       |       |
+   |       |       |       +--- GtkHBox
+   |       |       |              +--- GimpFileEntry (libgimpwidgets)
+   |       |       |              +--- GimpMemsizeEntry (libgimpwidgets)
+   |       |       |              +--- GimpStatusbar (display)
+   |       |       |      
+   |       |       +--- GtkNotebook
+   |       |       |       +--- GimpDockbook (widgets)
+   |       |       |
+   |       |       +--- GtkTable
+   |       |       |       +--- GimpChainButton (libgimpwidgets)
+   |       |       |       +--- GimpSizeEntry (libgimpwidgets)
+   |       |       |
+   |       |       +--- GtkWrapBox (widgets)
+   |       |               +--- GtkVWrapBox (widgets)
+   |       |               +--- GtkHWrapBox (widgets)
+   |       |
+   |       +--- GtkDrawingArea
+   |       |       +--- GimpCanvas (display)
+   |       |       +--- GimpColorArea (libgimpwidgets)
+   |       |       +--- GimpDashEditor (widgets)
+   |       |       +--- GimpFgBgEditor (widgets)
+   |       |       +--- GimpHistogramView (widgets)
+   |       |       +--- GimpOffsetArea (libgimpwidgets)
+   |       |
+   |       +--- GtkRange
+   |       |       +--- GtkScale
+   |       |               +--- GimpColorScale (libgimpwidgets)
+   |       |
+   |       +--- GimpPreview (widgets)
+   |               +--- GimpNavigationPreview (widgets)
+   |
+   +--- GtkCellRenderer
+   |       +--- GtkCellRendererToggle
+   |       |       +--- GimpCellRendererToggle (widgets)
+   |       | 
+   |       +--- GimpCellRendererViewable (widgets)
+   | 
+   +--- GtkItemFactory (deprecated)
+           +--- GimpItemFactory (widgets)
+
+
+GtkAction (*)
+   +--- GimpAction (widgets)
+            +--- GimpEnumAction (widgets)
+            +--- GimpPlugInAction (widgets)
+            +--- GimpStringAction (widgets)
+
+
+GtkActionGroup (*)
+   +--- GimpActionGroup (widgets)
+
+
+GtkListStore (*)
+   +--- GimpIntStore (libgimpwidgets)
+
+
+GtkUIManager (*)
+   +--- GimpUIManager (widgets)
+
+
+GimpController (libgimpwidgets) (*)
+   +--- GimpControllerKeyboard (widgets)
+   +--- GimpControllerWheel (widgets)
+
+
+GimpColorDisplay (libgimpwidgets) (*)
+
+
+GimpColorDisplayStack (libgimpwidgets) (*)
+
+
+GimpDisplayOptions (display) (*)
+
+
+GimpObject (core) (*)
+   +--- Gimp (core)
+   +--- GimpActionFactory (widgets)
+   +--- GimpDisplay (display)
+   +--- GimpContainer (core)
+   |       +--- GimpList (core)
+   |               +--- GimpDataList (core)
+   |               +--- GimpDocumentList (core)
+   |               +--- GimpFontList (text)
+   |
+   +--- GimpContext (core)
+   |       +--- GimpDeviceInfo (widgets)
+   |       +--- GimpStrokeOptions (core)
+   |       +--- GimpToolOptions (core)
+   |               +--- GimpCropOptions (tools)
+   |               +--- GimpImageMapOptions (tools)
+   |               |       +--- GimpColorOptions (tools)
+   |               |               +--- GimpColorPickerOptions (tools)
+   |               |               +--- GimpHistogramOptions (tools)
+   |               |
+   |               +--- GimpMagnifyOptions (tools)
+   |               +--- GimpMeasureOptions (tools)
+   |               +--- GimpMoveOptions (tools)
+   |               +--- GimpSelectionOptions (tools)
+   |               +--- GimpTextOptions (tools)
+   |               +--- GimpVectorOptions (tools)
+   |               +--- GimpTransformOptions (tools)
+   |               |       +--- GimpFlipOptions (tools)
+   |               |
+   |               +--- GimpPaintOptions (paint)
+   |                       +--- GimpAirbrushOptions (paint)
+   |                       +--- GimpBlendOptions (tools)
+   |                       +--- GimpBucketFillOptions (tools)
+   |                       +--- GimpCloneOptions (paint)
+   |                       +--- GimpConvolveOptions (paint)
+   |                       +--- GimpDodgeBurnOptions (paint)
+   |                       +--- GimpEraserOptions (paint)
+   |                       +--- GimpInkOptions (tools)
+   |                       +--- GimpPencilOptions (paint)
+   |                       +--- GimpSmudgeOptions (paint)
+   |
+   +--- GimpControllerInfo(widgets)
+   +--- GimpDataFactory (core)
+   +--- GimpDialogFactory (widgets)
+   +--- GimpEnvironTable (core)
+   +--- GimpGrid (core)
+   +--- GimpImageMap (core)
+   +--- GimpMenuFactory
+   +--- GimpParasiteList (core)
+   +--- GimpPaintCore (paint)
+   |       +--- GimpClone (paint)
+   |       +--- GimpConvolve (paint)
+   |       +--- GimpDodgeBurn (paint)
+   |       +--- GimpEraser (paint)
+   |       +--- GimpSmudge (paint)
+   |       +--- GimpPaintbrush (paint)
+   |               +--- GimpAirbrush (paint)
+   |               +--- GimpPencil (paint)
+   |
+   +--- GimpProjection (core)
+   +--- GimpStroke (vectors)
+   |       +--- GimpBezierStroke (vectors)
+   |
+   +--- GimpText (text)
+   +--- GimpToolControl (tools)
+   +--- GimpTool (tools)
+   |       +--- GimpBucketFillTool (tools)
+   |       +--- GimpDrawTool (tools)
+   |       |       +--- GimpBlendTool (tools)
+   |       |       +--- GimpColorTool (tools)
+   |       |       |       +--- GimpColorPickerTool (tools)
+   |       |       |       +--- GimpImageMapTool (tools)
+   |       |       |       |       +--- GimpBrightnessContrastTool (tools)
+   |       |       |       |       +--- GimpColorBalanceTool (tools)
+   |       |       |       |       +--- GimpColorizeTool (tools)
+   |       |       |       |       +--- GimpCurvesTool (tools)
+   |       |       |       |       +--- GimpHueSaturationTool (tools)
+   |       |       |       |       +--- GimpLevelsTool (tools)      
+   |       |       |       |       +--- GimpPosterizeTool (tools)
+   |       |       |       |       +--- GimpThresholdTool (tools)
+   |       |       |       |
+   |       |       |       +--- GimpPaintTool (tools)
+   |       |       |               +--- GimpCloneTool (tools)
+   |       |       |               +--- GimpConvolveTool (tools)
+   |       |       |               +--- GimpDodgeBurnTool (tools)
+   |       |       |               +--- GimpEraserTool (tools)
+   |       |       |               +--- GimpPaintbrushTool (tools)
+   |       |       |               |       +--- GimpAirbrushTool (tools)
+   |       |       |               |       +--- GimpPencilTool (tools)
+   |       |       |               |
+   |       |       |               +--- GimpSmudgeTool (tools)
+   |       |       |
+   |       |       +--- GimpCropTool (tools)
+   |       |       +--- GimpEditSelectionTool (tools)
+   |       |       +--- GimpMagnifyTool (tools)
+   |       |       +--- GimpMeasureTool (tools)
+   |       |       +--- GimpMoveTool (tools)
+   |       |       +--- GimpSelectionTool (tools)
+   |       |       |       +--- GimpByColorSelectTool (tools)
+   |       |       |       +--- GimpFreeSelectTool (tools)
+   |       |       |       +--- GimpFuzzySelectTool (tools)
+   |       |       |       +--- GimpRectSelectTool (tools)
+   |       |       |       |       +--- GimpEllipseSelectTool (tools)
+   |       |       |       |
+   |       |       |       +--- GimpIscissorsTool (tools)
+   |       |       |
+   |       |       +--- GimpTransformTool (tools)
+   |       |       |       +--- GimpFlipTool (tools)
+   |       |       |       +--- GimpPerspectiveTool (tools)
+   |       |       |       +--- GimpRotateTool (tools)
+   |       |       |       +--- GimpScaleTool (tools)
+   |       |       |       +--- GimpShearTool (tools)
+   |       |       |
+   |       |       +--- GimpVectorTool (tools)
+   |       |
+   |       +--- GimpInkTool (tools)      
+   |       +--- GimpTextTool (tools)
+   |
+   +--- GimpViewable (core)
+           +--- GimpBuffer (core)
+           +--- GimpData (core)
+           |       +--- GimpBrush (core)
+           |       |       +--- GimpBrushGenerated (core)
+           |       |       +--- GimpBrushPipe (core)
+           |       |
+           |       +--- GimpGradient (core)
+           |       +--- GimpPalette (core)
+           |       +--- GimpPattern (core)
+           |
+           +--- GimpFont (text)
+           +--- GimpImage (core)
+           +--- GimpImagefile (core)
+           +--- GimpItem (core)
+           |       +--- GimpDrawable (core)
+           |       |       +--- GimpChannel (core)  
+           |       |       |       +--- GimpLayerMask (core)
+           |       |       |       +--- GimpSelection (core)
+           |       |       |
+           |       |       +--- GimpLayer (core)
+           |       |               +--- GimpTextLayer (text)
+           |       |
+           |       +--- GimpVectors (vectors)       
+           |
+           +--- GimpPaintInfo (core)
+           +--- GimpTemplate (core)
+           +--- GimpToolInfo (core)
+           +--- GimpUndo (core)
+                   +--- GimpItemUndo (core)
+                   |       +--- GimpTextUndo (text)
+                   |
+                   +--- GimpUndoStack (core)
+
+
+GimpTextLayout (*)
+
+
+GimpPreviewRenderer (widgets) (*)
+   +--- GimpPreviewRendererBrush (widgets)
+   +--- GimpPreviewRendererGradient (widgets)
+   +--- GimpPreviewRendererVectors (widgets)
+   +--- GimpPreviewRendererDrawable (widgets)
+   |       +--- GimpPreviewRendererLayer (widgets)
+   |
+   +--- GimpPreviewRendererImage (widgets)
+   +--- GimpPreviewRendererImagefile (widgets)
+
+
+GimpBaseConfig (config) (*)
+   +--- GimpCoreConfig (config)
+           +--- GimpDisplayconfig (config)
+                   +--- GimpGuiConfig (config)
+                           +--- GimpPluginConfig (config)
+                                   +--- GimpRC (config)
+
+GParamBoxed
+   +--- GimpParamColor (config)
+
+
+GimpUnitStore (widgets) (*)
+
+
+GInterface (*)
+   +--- GtkTreeModel
+   +--- GimpContainerViewInterface (widgets)
+   +--- GimpConfigInterface (config)
+   +--- GimpDockedInterface (widgets)
+   +--- GimpPickableInterface (core)
