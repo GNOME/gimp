@@ -126,16 +126,20 @@ curves_calculate_curve (Curves               *curves,
 	{
 	  for (i = 0; i < curves->points[channel][points[0]][0]; i++)
 	    curves->curve[channel][i] = curves->points[channel][points[0]][1];
-	  for (i = curves->points[channel][points[num_pts - 1]][0]; i < 256; i++)
-	    curves->curve[channel][i] = curves->points[channel][points[num_pts - 1]][1];
+
+	  for (i = curves->points[channel][points[num_pts - 1]][0];
+               i < 256;
+               i++)
+	    curves->curve[channel][i] =
+              curves->points[channel][points[num_pts - 1]][1];
 	}
 
       for (i = 0; i < num_pts - 1; i++)
 	{
 	  p1 = (i == 0) ? points[i] : points[(i - 1)];
 	  p2 = points[i];
-	  p3 = points[(i + 1)];
-	  p4 = (i == (num_pts - 2)) ? points[(num_pts - 1)] : points[(i + 2)];
+	  p3 = points[i + 1];
+	  p4 = (i == (num_pts - 2)) ? points[num_pts - 1] : points[i + 2];
 
 	  curves_plot_curve (curves, channel, p1, p2, p3, p4);
 	}
@@ -143,10 +147,9 @@ curves_calculate_curve (Curves               *curves,
       /* ensure that the control points are used exactly */
       for (i = 0; i < num_pts; i++)
         {
-          gint x, y;
+          gint x = curves->points[channel][points[i]][0];
+          gint y = curves->points[channel][points[i]][1];
 
-          x = curves->points[channel][points[i]][0];
-          y = curves->points[channel][points[i]][1];
           curves->curve[channel][x] = y;
         }
 
@@ -195,10 +198,10 @@ curves_lut_func (Curves *curves,
         }
       else /* interpolate the curve */
         {
-          index = floor(inten * 255.0);
-          f = inten*255.0 - index;
+          index = floor (inten * 255.0);
+          f = inten * 255.0 - index;
           inten = ((1.0 - f) * curves->curve[j][index    ] +
-                   (      f) * curves->curve[j][index + 1] ) / 255.0;
+                          f  * curves->curve[j][index + 1] ) / 255.0;
         }
     }
 
@@ -207,6 +210,9 @@ curves_lut_func (Curves *curves,
 
 
 /*  private functions  */
+
+/*  this can be adjusted to give a finer or coarser curve  */
+#define CURVES_SUBDIVIDE  1000
 
 static void
 curves_plot_curve (Curves *curves,
@@ -241,17 +247,18 @@ curves_plot_curve (Curves *curves,
       geometry[3][i] = curves->points[channel][p4][i];
     }
 
-  /* subdivide the curve 1000 times */
-  /* n can be adjusted to give a finer or coarser curve */
-  d = 1.0 / 1000;
+  /* subdivide the curve */
+  d = 1.0 / CURVES_SUBDIVIDE;
   d2 = d * d;
   d3 = d * d * d;
 
-  /* construct a temporary matrix for determining the forward differencing deltas */
-  tmp2[0][0] = 0;     tmp2[0][1] = 0;     tmp2[0][2] = 0;    tmp2[0][3] = 1;
-  tmp2[1][0] = d3;    tmp2[1][1] = d2;    tmp2[1][2] = d;    tmp2[1][3] = 0;
-  tmp2[2][0] = 6*d3;  tmp2[2][1] = 2*d2;  tmp2[2][2] = 0;    tmp2[2][3] = 0;
-  tmp2[3][0] = 6*d3;  tmp2[3][1] = 0;     tmp2[3][2] = 0;    tmp2[3][3] = 0;
+  /* construct a temporary matrix for determining the forward
+   * differencing deltas
+   */
+  tmp2[0][0] = 0;       tmp2[0][1] = 0;       tmp2[0][2] = 0;  tmp2[0][3] = 1;
+  tmp2[1][0] = d3;      tmp2[1][1] = d2;      tmp2[1][2] = d;  tmp2[1][3] = 0;
+  tmp2[2][0] = 6 * d3;  tmp2[2][1] = 2 * d2;  tmp2[2][2] = 0;  tmp2[2][3] = 0;
+  tmp2[3][0] = 6 * d3;  tmp2[3][1] = 0;       tmp2[3][2] = 0;  tmp2[3][3] = 0;
 
   /* compose the basis and geometry matrices */
   curves_CR_compose (CR_basis, geometry, tmp1);
@@ -260,14 +267,14 @@ curves_plot_curve (Curves *curves,
   curves_CR_compose (tmp2, tmp1, deltas);
 
   /* extract the x deltas */
-  x = deltas[0][0];
-  dx = deltas[1][0];
+  x   = deltas[0][0];
+  dx  = deltas[1][0];
   dx2 = deltas[2][0];
   dx3 = deltas[3][0];
 
   /* extract the y deltas */
-  y = deltas[0][1];
-  dy = deltas[1][1];
+  y   = deltas[0][1];
+  dy  = deltas[1][1];
   dy2 = deltas[2][1];
   dy3 = deltas[3][1];
 
@@ -277,7 +284,7 @@ curves_plot_curve (Curves *curves,
   curves->curve[channel][lastx] = lasty;
 
   /* loop over the curve */
-  for (i = 0; i < 1000; i++)
+  for (i = 0; i < CURVES_SUBDIVIDE; i++)
     {
       /* increment the x values */
       x += dx;
@@ -309,13 +316,9 @@ curves_CR_compose (CRMatrix a,
   gint i, j;
 
   for (i = 0; i < 4; i++)
-    {
-      for (j = 0; j < 4; j++)
-        {
-          ab[i][j] = (a[i][0] * b[0][j] +
-                      a[i][1] * b[1][j] +
-                      a[i][2] * b[2][j] +
-                      a[i][3] * b[3][j]);
-        }
-    }
+    for (j = 0; j < 4; j++)
+      ab[i][j] = (a[i][0] * b[0][j] +
+                  a[i][1] * b[1][j] +
+                  a[i][2] * b[2][j] +
+                  a[i][3] * b[3][j]);
 }
