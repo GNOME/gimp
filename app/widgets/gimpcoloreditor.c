@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gdk/gdkkeysyms.h>
 #include <gtk/gtk.h>
 
@@ -33,6 +35,7 @@
 
 #include "gimpcoloreditor.h"
 #include "gimpdocked.h"
+#include "gimpsessioninfo.h"
 
 #include "gimp-intl.h"
 
@@ -43,9 +46,14 @@ static void   gimp_color_editor_docked_iface_init (GimpDockedInterface  *docked_
 
 static void   gimp_color_editor_destroy         (GtkObject         *object);
 
+static void   gimp_color_editor_set_aux_info     (GimpDocked       *docked,
+                                                  GList            *aux_info);
+static GList *gimp_color_editor_get_aux_info     (GimpDocked       *docked);
 static void gimp_color_editor_set_docked_context (GimpDocked       *docked,
                                                   GimpContext      *context,
                                                   GimpContext      *prev_context);
+
+static void   gimp_color_editor_destroy         (GtkObject         *object);
 
 static void   gimp_color_editor_fg_changed      (GimpContext       *context,
                                                  const GimpRGB     *rgb,
@@ -198,7 +206,8 @@ gimp_color_editor_init (GimpColorEditor *editor)
 			       selector_class->name,
 			       selector_class->help_page);
 
-      g_object_set_data (G_OBJECT (button), "selector", selector);
+      g_object_set_data (G_OBJECT (button),   "selector", selector);
+      g_object_set_data (G_OBJECT (selector), "button",   button);
 
       g_signal_connect (button, "toggled",
                         G_CALLBACK (gimp_color_editor_tab_toggled),
@@ -288,7 +297,78 @@ gimp_color_editor_init (GimpColorEditor *editor)
 static void
 gimp_color_editor_docked_iface_init (GimpDockedInterface *docked_iface)
 {
-  docked_iface->set_context = gimp_color_editor_set_docked_context;
+  docked_iface->set_aux_info = gimp_color_editor_set_aux_info;
+  docked_iface->get_aux_info = gimp_color_editor_get_aux_info;
+  docked_iface->set_context  = gimp_color_editor_set_docked_context;
+}
+
+static void
+gimp_color_editor_set_aux_info (GimpDocked *docked,
+                                GList      *aux_info)
+{
+  GimpColorEditor *editor   = GIMP_COLOR_EDITOR (docked);
+  GtkWidget       *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook)->notebook;
+  GList           *list;
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+
+      if (! strcmp (aux->name, "current-page"))
+        {
+          GList *children;
+          GList *child;
+
+          children = gtk_container_get_children (GTK_CONTAINER (notebook));
+
+          for (child = children; child; child = g_list_next (child))
+            {
+              if (! strcmp (G_OBJECT_TYPE_NAME (child->data), aux->value))
+                {
+                  GtkWidget *button;
+
+                  button = g_object_get_data (G_OBJECT (child->data), "button");
+
+                  if (button)
+                    gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                                  TRUE);
+
+                  break;
+                }
+            }
+
+          g_list_free (children);
+        }
+    }
+}
+
+static GList *
+gimp_color_editor_get_aux_info (GimpDocked *docked)
+{
+  GimpColorEditor    *editor   = GIMP_COLOR_EDITOR (docked);
+  GimpColorNotebook  *notebook = GIMP_COLOR_NOTEBOOK (editor->notebook);
+  GList              *aux_info = NULL;
+
+  if (notebook->cur_page)
+    {
+      GimpSessionInfoAux *aux;
+
+      aux = g_new0 (GimpSessionInfoAux, 1);
+      aux->name  = g_strdup ("current-page");
+      aux->value = g_strdup (G_OBJECT_TYPE_NAME (notebook->cur_page));
+
+      aux_info = g_list_append (aux_info, aux);
+    }
+
+  return aux_info;
+}
+
+static void
+gimp_color_editor_set_docked_context (GimpDocked  *docked,
+                                      GimpContext *context,
+                                      GimpContext *prev_context)
+{
+  gimp_color_editor_set_context (GIMP_COLOR_EDITOR (docked), context);
 }
 
 static void
@@ -302,14 +382,6 @@ gimp_color_editor_destroy (GtkObject *object)
     gimp_color_editor_set_context (editor, NULL);
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_color_editor_set_docked_context (GimpDocked  *docked,
-                                      GimpContext *context,
-                                      GimpContext *prev_context)
-{
-  gimp_color_editor_set_context (GIMP_COLOR_EDITOR (docked), context);
 }
 
 

@@ -40,6 +40,7 @@
 #include "gimpdockable.h"
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
+#include "gimpsessioninfo.h"
 
 #include "gimp-intl.h"
 
@@ -295,23 +296,22 @@ gimp_image_dock_set_aux_info (GimpDock *dock,
                               GList    *aux_info)
 {
   GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
-  GList         *aux;
+  GList         *list;
   gboolean       menu_shown  = image_dock->show_image_menu;
   gboolean       auto_follow = image_dock->auto_follow_active;
 
-  for (aux = aux_info; aux; aux = g_list_next (aux))
+  for (list = aux_info; list; list = g_list_next (list))
     {
-      gchar *str = (gchar *) aux->data;
+      GimpSessionInfoAux *aux = list->data;
 
-      if (! strcmp (str, "menu-shown"))
-        menu_shown = TRUE;
-      else if (! strcmp (str, "menu-hidden"))
-        menu_shown = FALSE;
-
-      else if (! strcmp (str, "follow-active-image"))
-        auto_follow = TRUE;
-      else if (! strcmp (str, "dont-follow-active-image"))
-        auto_follow = FALSE;
+      if (! strcmp (aux->name, "show-image-menu"))
+        {
+          menu_shown = ! g_ascii_strcasecmp (aux->value, "true");
+        }
+      else if (! strcmp (aux->name, "follow-active-image"))
+        {
+          auto_follow = ! g_ascii_strcasecmp (aux->value, "true");
+        }
     }
 
   if (menu_shown != image_dock->show_image_menu)
@@ -324,20 +324,23 @@ gimp_image_dock_set_aux_info (GimpDock *dock,
 static GList *
 gimp_image_dock_get_aux_info (GimpDock *dock)
 {
-  GimpImageDock *image_dock = GIMP_IMAGE_DOCK (dock);
-  GList         *aux        = NULL;
+  GimpImageDock      *image_dock = GIMP_IMAGE_DOCK (dock);
+  GList              *aux_info   = NULL;
+  GimpSessionInfoAux *aux;
 
-  aux = g_list_append (aux,
-                       image_dock->show_image_menu ?
-                       g_strdup ("menu-shown") :
-                       g_strdup ("menu-hidden"));
+  aux = g_new0 (GimpSessionInfoAux, 1);
+  aux->name  = g_strdup ("show-image-menu");
+  aux->value = g_strdup (image_dock->show_image_menu ? "true" : "false");
 
-  aux = g_list_append (aux,
-                       image_dock->auto_follow_active ?
-                       g_strdup ("follow-active-image") :
-                       g_strdup ("dont-follow-active-image"));
+  aux_info = g_list_append (aux_info, aux);
 
-  return aux;
+  aux = g_new0 (GimpSessionInfoAux, 1);
+  aux->name  = g_strdup ("follow-auctive-image");
+  aux->value = g_strdup (image_dock->auto_follow_active ? "true" : "false");
+
+  aux_info = g_list_append (aux_info, aux);
+
+  return aux_info;
 }
 
 static void

@@ -26,6 +26,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 
 #include "widgets/gimpdataeditor.h"
@@ -282,7 +283,7 @@ gradient_editor_menu_update (GtkItemFactory *factory,
 
   editor = GIMP_GRADIENT_EDITOR (data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   if (editor->control_sel_l->prev)
     left_seg = editor->control_sel_l->prev;

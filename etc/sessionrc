@@ -17,7 +17,9 @@
     (position 300 48)
     (size 240 660)
     (open-on-exit)
-    (aux-info "menu-shown" "follow-active-image")
+    (aux-info
+        (show-image-menu "true")
+        (follow-active-image "true"))
     (dock
         (book
             (dockable "gimp-layer-list"

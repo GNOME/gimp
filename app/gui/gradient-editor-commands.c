@@ -26,6 +26,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"
 
 #include "widgets/gimpgradienteditor.h"
@@ -112,7 +113,7 @@ gradient_editor_load_left_cmd_callback (GtkWidget *widget,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   i = (gint) action;
 
@@ -230,7 +231,7 @@ gradient_editor_load_right_cmd_callback (GtkWidget *widget,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   i = (gint) action;
 

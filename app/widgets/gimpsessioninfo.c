@@ -55,7 +55,7 @@ enum
 
   SESSION_INFO_DOCKABLE_TAB_STYLE,
   SESSION_INFO_DOCKABLE_PREVIEW_SIZE,
-  SESSION_INFO_DOCKABLE_AUX_INFO
+  SESSION_INFO_DOCKABLE_AUX
 };
 
 
@@ -67,6 +67,8 @@ static GTokenType  session_info_book_deserialize     (GScanner        *scanner,
                                                       GimpSessionInfo *info);
 static GTokenType  session_info_dockable_deserialize (GScanner        *scanner,
                                                       GimpSessionInfoBook *book);
+static GTokenType  session_info_aux_deserialize      (GScanner        *scanner,
+                                                      GList          **aux_list);
 static void        session_info_set_aux_info         (GtkWidget       *dialog,
                                                       GList           *aux_info);
 static GList     * session_info_get_aux_info         (GtkWidget       *dialog);
@@ -127,6 +129,20 @@ gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable)
 }
 
 void
+gimp_session_info_aux_free (GimpSessionInfoAux *aux)
+{
+  g_return_if_fail (aux != NULL);
+
+  if (aux->name)
+    g_free (aux->name);
+
+  if (aux->value)
+    g_free (aux->value);
+
+  g_free (aux);
+}
+
+void
 gimp_session_info_save (GimpSessionInfo  *info,
                         const gchar      *factory_name,
                         GimpConfigWriter *writer)
@@ -175,16 +191,23 @@ gimp_session_info_save (GimpSessionInfo  *info,
 
       if (info->aux_info)
         {
-          GList *aux;
+          GList *list;
 
           gimp_config_writer_open (writer, "aux-info");
 
-          for (aux = info->aux_info; aux; aux = g_list_next (aux))
-            gimp_config_writer_string (writer, (gchar *) aux->data);
+          for (list = info->aux_info; list; list = g_list_next (list))
+            {
+              GimpSessionInfoAux *aux = list->data;
+
+              gimp_config_writer_open (writer, aux->name);
+              gimp_config_writer_string (writer, aux->value);
+              gimp_config_writer_close (writer);
+            }
 
           gimp_config_writer_close (writer);
 
-          g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
+          g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free,
+                          NULL);
           g_list_free (info->aux_info);
           info->aux_info = NULL;
         }
@@ -268,16 +291,24 @@ gimp_session_info_save (GimpSessionInfo  *info,
 
                   if (aux_info)
                     {
-                      GList *aux;
+                      GList *list;
 
                       gimp_config_writer_open (writer, "aux-info");
 
-                      for (aux = aux_info; aux; aux = g_list_next (aux))
-                        gimp_config_writer_string (writer, (gchar *) aux->data);
+                      for (list = aux_info; list; list = g_list_next (list))
+                        {
+                          GimpSessionInfoAux *aux = list->data;
+
+                          gimp_config_writer_open (writer, aux->name);
+                          gimp_config_writer_string (writer, aux->value);
+                          gimp_config_writer_close (writer);
+                        }
 
                       gimp_config_writer_close (writer);
 
-                      g_list_foreach (aux_info, (GFunc) g_free, NULL);
+                      g_list_foreach (aux_info,
+                                      (GFunc) gimp_session_info_aux_free,
+                                      NULL);
                       g_list_free (aux_info);
                     }
 
@@ -307,7 +338,6 @@ gimp_session_info_deserialize (GScanner *scanner,
   GTokenType         token;
   gchar             *factory_name;
   gchar             *entry_name;
-  gchar             *string;
 
   g_return_val_if_fail (scanner != NULL, G_TOKEN_LEFT_PAREN);
 
@@ -335,7 +365,7 @@ gimp_session_info_deserialize (GScanner *scanner,
   g_scanner_scope_add_symbol (scanner, SESSION_INFO_DOCKABLE, "preview-size",
                               GINT_TO_POINTER (SESSION_INFO_DOCKABLE_PREVIEW_SIZE));
   g_scanner_scope_add_symbol (scanner, SESSION_INFO_DOCKABLE, "aux-info",
-                              GINT_TO_POINTER (SESSION_INFO_DOCKABLE_AUX_INFO));
+                              GINT_TO_POINTER (SESSION_INFO_DOCKABLE_AUX));
 
   token = G_TOKEN_STRING;
 
@@ -403,18 +433,9 @@ gimp_session_info_deserialize (GScanner *scanner,
               break;
 
             case SESSION_INFO_AUX:
-              while ((token =
-                      g_scanner_peek_next_token (scanner)) == G_TOKEN_STRING)
-                {
-                  if (gimp_scanner_parse_string (scanner, &string))
-                    info->aux_info = g_list_append (info->aux_info, string);
-                  else
-                    break;
-                }
-
-              if (token != G_TOKEN_RIGHT_PAREN)
-                token = G_TOKEN_STRING;
-
+              token = session_info_aux_deserialize (scanner, &info->aux_info);
+              if (token != G_TOKEN_LEFT_PAREN)
+                goto error;
               break;
 
             case SESSION_INFO_DOCK:
@@ -779,7 +800,6 @@ session_info_dockable_deserialize (GScanner            *scanner,
                                    GimpSessionInfoBook *book)
 {
   GimpSessionInfoDockable *dockable;
-  gchar                   *string;
   GEnumClass              *enum_class;
   GEnumValue              *enum_value;
   GTokenType               token;
@@ -831,20 +851,11 @@ session_info_dockable_deserialize (GScanner            *scanner,
                 goto error;
               break;
 
-            case SESSION_INFO_DOCKABLE_AUX_INFO:
-              while ((token =
-                      g_scanner_peek_next_token (scanner)) == G_TOKEN_STRING)
-                {
-                  if (gimp_scanner_parse_string (scanner, &string))
-                    dockable->aux_info = g_list_append (dockable->aux_info,
-                                                        string);
-                  else
-                    goto error;
-                }
-
-              if (token != G_TOKEN_RIGHT_PAREN)
-                token = G_TOKEN_STRING;
-
+            case SESSION_INFO_DOCKABLE_AUX:
+              token = session_info_aux_deserialize (scanner,
+                                                    &dockable->aux_info);
+              if (token != G_TOKEN_LEFT_PAREN)
+                goto error;
               break;
 
             default:
@@ -870,6 +881,62 @@ session_info_dockable_deserialize (GScanner            *scanner,
  error:
   gimp_session_info_dockable_free (dockable);
   g_type_class_unref (enum_class);
+
+  return token;
+}
+
+static GTokenType
+session_info_aux_deserialize (GScanner  *scanner,
+                              GList    **aux_list)
+{
+  GimpSessionInfoAux *aux_info = NULL;
+  GTokenType          token;
+
+  token = G_TOKEN_LEFT_PAREN;
+
+  while (g_scanner_peek_next_token (scanner) == token)
+    {
+      token = g_scanner_get_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          token = G_TOKEN_IDENTIFIER;
+          break;
+
+        case G_TOKEN_IDENTIFIER:
+          {
+            aux_info = g_new0 (GimpSessionInfoAux, 1);
+
+            aux_info->name = g_strdup (scanner->value.v_identifier);
+
+            token = G_TOKEN_STRING;
+            if (g_scanner_peek_next_token (scanner) != token)
+              goto error;
+
+            if (! gimp_scanner_parse_string (scanner, &aux_info->value))
+              goto error;
+
+            *aux_list = g_list_append (*aux_list, aux_info);
+            aux_info = NULL;
+          }
+          token = G_TOKEN_RIGHT_PAREN;
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          token = G_TOKEN_LEFT_PAREN;
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  return token;
+
+ error:
+  if (aux_info)
+    gimp_session_info_aux_free (aux_info);
 
   return token;
 }

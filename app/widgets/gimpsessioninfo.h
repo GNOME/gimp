@@ -35,8 +35,8 @@ struct _GimpSessionInfo
   /*  only valid while restoring and saving the session  */
   gboolean   open;
 
-  /*  GList of gchar* of optional additional dialog specific info  */
-  GList     *aux_info;
+  /*  dialog specific list of GimpSessionInfoAux  */
+  GList     *aux_info;  /*  dialog specific list of GimpSessionInfoAux  */
 
   /*  only one of these is valid  */
   GimpDialogFactoryEntry *toplevel_entry;
@@ -58,14 +58,22 @@ struct _GimpSessionInfoDockable
   GimpTabStyle  tab_style;
   gint          preview_size;
 
-  /*  GList of gchar* of optional additional dockable specific info  */
+
+  /*  dialog specific list of GimpSessionInfoAux  */
   GList        *aux_info;
+};
+
+struct _GimpSessionInfoAux
+{
+  gchar *name;
+  gchar *value;
 };
 
 
 void       gimp_session_info_free          (GimpSessionInfo         *info);
 void       gimp_session_info_book_free     (GimpSessionInfoBook     *book);
 void       gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable);
+void       gimp_session_info_aux_free      (GimpSessionInfoAux      *aux);
 
 void       gimp_session_info_save          (GimpSessionInfo         *info,
                                             const gchar             *factory_name,

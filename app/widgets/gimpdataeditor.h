@@ -40,9 +40,7 @@ struct _GimpDataEditor
 {
   GimpEditor       parent_instance;
 
-  Gimp            *gimp;
-
-  GType            data_type;
+  GimpDataFactory *data_factory;
   GimpData        *data;
   gboolean         data_editable;
 
@@ -66,8 +64,7 @@ struct _GimpDataEditorClass
 GType       gimp_data_editor_get_type   (void) G_GNUC_CONST;
 
 gboolean    gimp_data_editor_construct  (GimpDataEditor  *editor,
-                                         Gimp            *gimp,
-                                         GType            data_type,
+                                         GimpDataFactory *data_factory,
                                          GimpMenuFactory *menu_factory,
                                          const gchar     *menu_identifier);
 

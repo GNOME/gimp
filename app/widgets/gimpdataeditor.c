@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
@@ -28,18 +30,27 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdata.h"
+#include "core/gimpdatafactory.h"
 
 #include "gimpdataeditor.h"
+#include "gimpdocked.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
+#include "gimpsessioninfo.h"
 
 #include "gimp-intl.h"
 
 
 static void       gimp_data_editor_class_init (GimpDataEditorClass *klass);
 static void       gimp_data_editor_init       (GimpDataEditor      *view);
+
+static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface);
+static void       gimp_data_editor_set_aux_info      (GimpDocked     *docked,
+                                                      GList          *aux_info);
+static GList    * gimp_data_editor_get_aux_info      (GimpDocked     *docked);
 
 static void       gimp_data_editor_dispose           (GObject        *object);
 
@@ -67,9 +78,9 @@ static GimpEditorClass *parent_class = NULL;
 GType
 gimp_data_editor_get_type (void)
 {
-  static GType view_type = 0;
+  static GType type = 0;
 
-  if (! view_type)
+  if (! type)
     {
       static const GTypeInfo view_info =
       {
@@ -83,13 +94,22 @@ gimp_data_editor_get_type (void)
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_data_editor_init,
       };
+      static const GInterfaceInfo docked_iface_info =
+      {
+        (GInterfaceInitFunc) gimp_data_editor_docked_iface_init,
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
 
-      view_type = g_type_register_static (GIMP_TYPE_EDITOR,
-                                          "GimpDataEditor",
-                                          &view_info, 0);
+      type = g_type_register_static (GIMP_TYPE_EDITOR,
+                                     "GimpDataEditor",
+                                     &view_info, 0);
+
+      g_type_add_interface_static (type, GIMP_TYPE_DOCKED,
+                                   &docked_iface_info);
     }
 
-  return view_type;
+  return type;
 }
 
 static void
@@ -109,7 +129,7 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
 static void
 gimp_data_editor_init (GimpDataEditor *editor)
 {
-  editor->data_type     = G_TYPE_NONE;
+  editor->data_factory  = NULL;
   editor->data          = NULL;
   editor->data_editable = FALSE;
 
@@ -125,7 +145,7 @@ gimp_data_editor_init (GimpDataEditor *editor)
 		    G_CALLBACK (gimp_data_editor_name_focus_out),
                     editor);
 
-  editor->save_button = 
+  editor->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GTK_STOCK_SAVE,
                             _("Save"), NULL,
@@ -133,13 +153,65 @@ gimp_data_editor_init (GimpDataEditor *editor)
                             NULL,
                             editor);
 
-  editor->revert_button = 
+  editor->revert_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
                             GTK_STOCK_REVERT_TO_SAVED,
                             _("Revert"), NULL,
                             G_CALLBACK (gimp_data_editor_revert_clicked),
                             NULL,
                             editor);
+}
+
+static void
+gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+{
+  docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
+  docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
+}
+
+static void
+gimp_data_editor_set_aux_info (GimpDocked *docked,
+                               GList      *aux_info)
+{
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (docked);
+  GList          *list;
+
+  for (list = aux_info; list; list = g_list_next (list))
+    {
+      GimpSessionInfoAux *aux = list->data;
+
+      if (! strcmp (aux->name, "current-data"))
+        {
+          GimpData *data;
+
+          data = (GimpData *)
+            gimp_container_get_child_by_name (editor->data_factory->container,
+                                              aux->value);
+
+          if (data)
+            gimp_data_editor_set_data (editor, data);
+        }
+    }
+}
+
+static GList *
+gimp_data_editor_get_aux_info (GimpDocked *docked)
+{
+  GimpDataEditor *editor   = GIMP_DATA_EDITOR (docked);
+  GList          *aux_info = NULL;
+
+  if (editor->data)
+    {
+      GimpSessionInfoAux *aux;
+
+      aux = g_new0 (GimpSessionInfoAux, 1);
+      aux->name  = g_strdup ("current-data");
+      aux->value = g_strdup (gimp_object_get_name (GIMP_OBJECT (editor->data)));
+
+      aux_info = g_list_append (aux_info, aux);
+    }
+
+  return aux_info;
 }
 
 static void
@@ -195,30 +267,28 @@ gimp_data_editor_real_set_data (GimpDataEditor *editor,
 
 gboolean
 gimp_data_editor_construct (GimpDataEditor  *editor,
-                            Gimp            *gimp,
-                            GType            data_type,
+                            GimpDataFactory *data_factory,
                             GimpMenuFactory *menu_factory,
                             const gchar     *menu_identifier)
 {
   GimpData *data;
 
   g_return_val_if_fail (GIMP_IS_DATA_EDITOR (editor), FALSE);
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
-  g_return_val_if_fail (g_type_is_a (data_type, GIMP_TYPE_DATA), FALSE);
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (data_factory), FALSE);
   g_return_val_if_fail (menu_factory == NULL ||
                         GIMP_IS_MENU_FACTORY (menu_factory), FALSE);
   g_return_val_if_fail (menu_factory == NULL ||
                         menu_identifier != NULL, FALSE);
 
-  editor->gimp         = gimp;
-  editor->data_type    = data_type;
+  editor->data_factory = data_factory;
 
   if (menu_factory && menu_identifier)
     gimp_editor_create_menu (GIMP_EDITOR (editor),
                              menu_factory, menu_identifier, editor);
 
   data = (GimpData *)
-    gimp_context_get_by_type (gimp_get_user_context (gimp), data_type);
+    gimp_context_get_by_type (gimp_get_user_context (data_factory->gimp),
+                              data_factory->container->children_type);
 
   gimp_data_editor_set_data (editor, data);
 
@@ -231,8 +301,9 @@ gimp_data_editor_set_data (GimpDataEditor *editor,
 {
   g_return_if_fail (GIMP_IS_DATA_EDITOR (editor));
   g_return_if_fail (data == NULL || GIMP_IS_DATA (data));
-  g_return_if_fail (data == NULL || g_type_is_a (G_TYPE_FROM_INSTANCE (data),
-                                                 editor->data_type));
+  g_return_if_fail (data == NULL ||
+                    g_type_is_a (G_TYPE_FROM_INSTANCE (data),
+                                 editor->data_factory->container->children_type));
 
   if (editor->data != data)
     GIMP_DATA_EDITOR_GET_CLASS (editor)->set_data (editor, data);

@@ -472,8 +472,7 @@ gimp_gradient_editor_new (Gimp            *gimp,
   editor = g_object_new (GIMP_TYPE_GRADIENT_EDITOR, NULL);
 
   if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (editor),
-                                    gimp,
-                                    GIMP_TYPE_GRADIENT,
+                                    gimp->gradient_factory,
                                     menu_factory, "<GradientEditor>"))
     {
       g_object_unref (editor);
@@ -820,7 +819,7 @@ preview_set_foreground (GimpGradientEditor *editor,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   xpos = control_calc_g_pos (editor, x);
 
@@ -854,7 +853,7 @@ preview_set_background (GimpGradientEditor *editor,
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   xpos = control_calc_g_pos (editor, x);
 

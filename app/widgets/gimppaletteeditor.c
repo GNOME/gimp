@@ -440,8 +440,7 @@ gimp_palette_editor_new (Gimp            *gimp,
   palette_editor = g_object_new (GIMP_TYPE_PALETTE_EDITOR, NULL);
 
   if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (palette_editor),
-                                    gimp,
-                                    GIMP_TYPE_PALETTE,
+                                    gimp->palette_factory,
                                     menu_factory, "<PaletteEditor>"))
     {
       g_object_unref (palette_editor);
@@ -530,7 +529,7 @@ palette_editor_color_area_button_press (GtkWidget         *widget,
 
   palette = GIMP_PALETTE (data_editor->data);
 
-  user_context = gimp_get_user_context (data_editor->gimp);
+  user_context = gimp_get_user_context (data_editor->data_factory->gimp);
 
   entry_width  = editor->col_width + SPACING;
   entry_height = (ENTRY_HEIGHT * editor->zoom_factor) +  SPACING;
@@ -1042,7 +1041,7 @@ palette_editor_new_ext_clicked (GtkWidget         *widget,
 
   palette = GIMP_PALETTE (data_editor->data);
 
-  user_context = gimp_get_user_context (data_editor->gimp);
+  user_context = gimp_get_user_context (data_editor->data_factory->gimp);
 
   if (state & GDK_CONTROL_MASK)
     gimp_context_get_background (user_context, &color);
@@ -1221,7 +1220,7 @@ palette_editor_color_notebook_callback (ColorNotebook      *color_notebook,
 
   palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->gimp);
+  user_context = gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
 
   switch (state)
     {

@@ -229,8 +229,7 @@ gimp_brush_editor_new (Gimp *gimp)
   brush_editor = g_object_new (GIMP_TYPE_BRUSH_EDITOR, NULL);
 
   if (! gimp_data_editor_construct (GIMP_DATA_EDITOR (brush_editor),
-                                    gimp,
-                                    GIMP_TYPE_BRUSH,
+                                    gimp->brush_factory,
                                     NULL, NULL))
     {
       g_object_unref (brush_editor);
