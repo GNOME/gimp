@@ -59,7 +59,7 @@ ellipse_select (gimage, x, y, w, h, op, antialias, feather, feather_radius)
    */
   if (feather)
     {
-      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height);
+      new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_ellipse (new_mask, ADD, x, y, w, h, antialias);
       channel_feather (new_mask, gimage_get_mask (gimage),
 		       feather_radius, op, 0, 0);
@@ -67,7 +67,7 @@ ellipse_select (gimage, x, y, w, h, op, antialias, feather, feather_radius)
     }
   else if (op == INTERSECT)
     {
-      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height);
+      new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_ellipse (new_mask, ADD, x, y, w, h, antialias);
       channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
       channel_delete (new_mask);

@@ -196,9 +196,7 @@ typedef struct
 typedef struct
 {
   GtkWidget *  shell;
-  void *       gimage_ptr;
-
-  int          gimage_ID;
+  GimpImage*   gimage;
   int          dither;
   int          num_cols;
   int          palette;
@@ -241,21 +239,15 @@ static void palette_entries_callback(GtkWidget *w, gpointer client_data);
 static PaletteEntriesP theCustomPalette = NULL;
 
 void
-convert_to_rgb (void *gimage_ptr)
+convert_to_rgb (GimpImage *gimage)
 {
-  GImage *gimage;
-
-  gimage = (GImage *) gimage_ptr;
   convert_image (gimage, RGB, 0, 0, 0);
   gdisplays_flush ();
 }
 
 void
-convert_to_grayscale (void *gimage_ptr)
+convert_to_grayscale (GimpImage* gimage)
 {
-  GImage *gimage;
-
-  gimage = (GImage *) gimage_ptr;
   convert_image (gimage, GRAY, 0, 0, 0);
   gdisplays_flush ();
 }
@@ -268,9 +260,8 @@ static ActionAreaItem action_items[] =
 };
 
 void
-convert_to_indexed (void *gimage_ptr)
+convert_to_indexed (GimpImage *gimage)
 {
-  GImage *gimage;
   IndexedDialog *dialog;
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -281,10 +272,8 @@ convert_to_indexed (void *gimage_ptr)
   GSList *group = NULL;
   static gboolean shown_message_already = False;
 
-  gimage = (GImage *) gimage_ptr;
-  dialog = (IndexedDialog *) g_malloc (sizeof (IndexedDialog));
-  dialog->gimage_ptr = gimage_ptr;
-  dialog->gimage_ID = gimage->ID;
+  dialog = g_new(IndexedDialog, 1);
+  dialog->gimage = gimage;
   dialog->num_cols = 256;
   dialog->dither = TRUE;
 
@@ -529,12 +518,9 @@ indexed_ok_callback (GtkWidget *widget,
         else
           palette_type = REUSE_PALETTE;
   /*  Convert the image to indexed color  */
-  if (gimage_get_ID (dialog->gimage_ID))
-    {
-      convert_image ((GImage *) dialog->gimage_ptr, INDEXED, dialog->num_cols,
-		     dialog->dither, palette_type);
-      gdisplays_flush ();
-    }
+  convert_image (dialog->gimage, INDEXED, dialog->num_cols,
+		 dialog->dither, palette_type);
+  gdisplays_flush ();
 
   gtk_widget_destroy (dialog->shell);
   g_free (dialog);
@@ -794,10 +780,10 @@ convert_image (GImage *gimage,
   undo_push_group_end (gimage);
 
   /*  shrink wrap and update all views  */
-  layer_invalidate_previews (gimage->ID);
+  layer_invalidate_previews (gimage);
   gimage_invalidate_preview (gimage);
-  gdisplays_update_title (gimage->ID);
-  gdisplays_update_full (gimage->ID);
+  gdisplays_update_title (gimage);
+  gdisplays_update_full (gimage);
 
   indexed_palette_update_image_list ();
 }

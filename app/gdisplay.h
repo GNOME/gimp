@@ -69,7 +69,7 @@ struct _GDisplay
   GtkAdjustment *hsbdata;         /*  horizontal data information             */
   GtkAdjustment *vsbdata;         /*  vertical data information               */
 
-  GImage *gimage;	          /*  pointer to the associated gimage struct */
+  GimpImage *gimage;	          /*  pointer to the associated gimage struct */
   int instance;                   /*  the instance # of this gdisplay as      */
                                   /*  taken from the gimage at creation       */
 
@@ -104,7 +104,7 @@ struct _GDisplay
 
 /* member function declarations */
 
-GDisplay * gdisplay_new                    (GImage *, unsigned int);
+GDisplay * gdisplay_new                    (GimpImage *, unsigned int);
 void       gdisplay_remove_and_delete      (GDisplay *);
 int        gdisplay_mask_value             (GDisplay *, int, int);
 int        gdisplay_mask_bounds            (GDisplay *, int *, int *, int *, int *);
@@ -133,14 +133,14 @@ void	   gdisplay_update_cursor	   (GDisplay *, int, int);
 
 GDisplay * gdisplay_active                 (void);
 GDisplay * gdisplay_get_ID                 (int);
-void       gdisplays_update_title          (int);
-void       gdisplays_update_area           (int, int, int, int, int);
-void       gdisplays_expose_guides         (int);
-void       gdisplays_expose_guide          (int, Guide *);
-void       gdisplays_update_full           (int);
-void       gdisplays_shrink_wrap           (int);
+void       gdisplays_update_title          (GimpImage*);
+void       gdisplays_update_area           (GimpImage*, int, int, int, int);
+void       gdisplays_expose_guides         (GimpImage*);
+void       gdisplays_expose_guide          (GimpImage*, Guide *);
+void       gdisplays_update_full           (GimpImage*);
+void       gdisplays_shrink_wrap           (GimpImage*);
 void       gdisplays_expose_full           (void);
-void       gdisplays_selection_visibility  (int, SelectionControl);
+void       gdisplays_selection_visibility  (GimpImage*, SelectionControl);
 int        gdisplays_dirty                 (void);
 void       gdisplays_delete                (void);
 void       gdisplays_flush                 (void);

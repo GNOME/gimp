@@ -21,6 +21,7 @@
 #include <gtk/gtkdata.h>
 #include "tile_manager.h"
 #include "temp_buf.h"
+#include "gimpimageF.h"
 
 #define GIMP_TYPE_DRAWABLE                  (gimp_drawable_get_type ())
 #define GIMP_DRAWABLE(obj)                  (GTK_CHECK_CAST ((obj), GIMP_TYPE_DRAWABLE, GimpDrawable))
@@ -66,6 +67,7 @@ char *		 drawable_name		     (GimpDrawable *);
 GimpDrawable *   drawable_get_ID             (int);
 void		 drawable_deallocate	     (GimpDrawable *);
 void		 gimp_drawable_configure     (GimpDrawable *,
-					      int, int, int, int, char *);
+					      GimpImage*,
+					      int, int, int, char *);
 
 #endif /* __DRAWABLE_H__ */

@@ -1319,7 +1319,7 @@ bezier_convert (BezierSelect *bezier_sel,
     }
 
   /* create a new mask */
-  bezier_sel->mask = channel_ref (channel_new_mask (gdisp->gimage->ID, 
+  bezier_sel->mask = channel_ref (channel_new_mask (gdisp->gimage, 
 						    gdisp->gimage->width,
 						    gdisp->gimage->height));
 

@@ -3253,7 +3253,7 @@ duplicate (GImage *gimage)
       list = g_slist_next (list);
 
       new_layer = layer_copy (layer, FALSE);
-      GIMP_DRAWABLE(new_layer)->gimage_ID = new_gimage->ID;
+      GIMP_DRAWABLE(new_layer)->gimage = new_gimage;
 
       /*  Make sure the copied layer doesn't say: "<old layer> copy"  */
       g_free (drawable_name (GIMP_DRAWABLE(new_layer)));
@@ -3289,7 +3289,7 @@ duplicate (GImage *gimage)
       list = g_slist_next (list);
 
       new_channel = channel_copy (channel);
-      GIMP_DRAWABLE(new_channel)->gimage_ID = new_gimage->ID;
+      GIMP_DRAWABLE(new_channel)->gimage = new_gimage;
 
       /*  Make sure the copied channel doesn't say: "<old channel> copy"  */
       g_free (drawable_name (GIMP_DRAWABLE(new_channel)));

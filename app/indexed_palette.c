@@ -61,14 +61,14 @@ struct _IndexedPalette {
   GtkWidget *image_option_menu;
 
   /*  state information  */
-  int gimage_id;
+	GimpImage* gimage;
   int col_index;
 };
 
 /*  indexed palette routines  */
 static void indexed_palette_draw (void);
 static void indexed_palette_clear (void);
-static void indexed_palette_update (int);
+static void indexed_palette_update (GimpImage*);
 
 /*  indexed palette menu callbacks  */
 static void indexed_palette_close_callback (GtkWidget *, gpointer);
@@ -79,7 +79,7 @@ static gint indexed_palette_area_events (GtkWidget *, GdkEvent *);
 
 /*  create image menu  */
 static void image_menu_callback (GtkWidget *, gpointer);
-static GtkWidget * create_image_menu (int *, int *, MenuItemCallback);
+static GtkWidget * create_image_menu (GimpImage**, int *, MenuItemCallback);
 
 /*  Only one indexed palette  */
 static IndexedPalette *indexedP = NULL;
@@ -107,7 +107,7 @@ static MenuItem indexed_color_ops[] =
 /**************************************/
 
 void
-indexed_palette_create (int gimage_id)
+indexed_palette_create (GimpImage* gimage)
 {
   GtkWidget *vbox;
   GtkWidget *frame;
@@ -125,7 +125,7 @@ indexed_palette_create (int gimage_id)
   if (!indexedP)
     {
       indexedP = g_malloc (sizeof (IndexedPalette));
-      indexedP->gimage_id = -1;
+      indexedP->gimage = NULL;
 
       accel_group = gtk_accel_group_new ();
 
@@ -154,7 +154,7 @@ indexed_palette_create (int gimage_id)
       indexedP->image_option_menu = gtk_option_menu_new ();
       gtk_box_pack_start (GTK_BOX (util_box), indexedP->image_option_menu, TRUE, TRUE, 2);
       gtk_widget_show (indexedP->image_option_menu);
-      indexedP->image_menu = create_image_menu (&gimage_id, &default_index, image_menu_callback);
+      indexedP->image_menu = create_image_menu (&gimage, &default_index, image_menu_callback);
       gtk_option_menu_set_menu (GTK_OPTION_MENU (indexedP->image_option_menu), indexedP->image_menu);
       if (default_index != -1)
 	gtk_option_menu_set_history (GTK_OPTION_MENU (indexedP->image_option_menu), default_index);
@@ -214,7 +214,7 @@ indexed_palette_create (int gimage_id)
       gtk_widget_show (vbox);
       gtk_widget_show (indexedP->shell);
 
-      indexed_palette_update (gimage_id);
+      indexed_palette_update (gimage);
       indexed_palette_update_image_list ();
     }
   else
@@ -222,7 +222,7 @@ indexed_palette_create (int gimage_id)
       if (!GTK_WIDGET_VISIBLE (indexedP->shell))
 	gtk_widget_show (indexedP->shell);
 
-      indexed_palette_update (gimage_id);
+      indexed_palette_update (gimage);
       indexed_palette_update_image_list ();
     }
 }
@@ -231,13 +231,13 @@ void
 indexed_palette_update_image_list ()
 {
   int default_index;
-  int default_id;
+  GimpImage* default_gimage;
 
   if (! indexedP)
     return;
 
-  default_id = indexedP->gimage_id;
-  indexedP->image_menu = create_image_menu (&default_id, &default_index, image_menu_callback);
+  default_gimage = indexedP->gimage;
+  indexedP->image_menu = create_image_menu (&default_gimage, &default_index, image_menu_callback);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (indexedP->image_option_menu), indexedP->image_menu);
 
   if (default_index != -1)
@@ -246,7 +246,7 @@ indexed_palette_update_image_list ()
 	gtk_widget_set_sensitive (indexedP->vbox, TRUE);
       gtk_option_menu_set_history (GTK_OPTION_MENU (indexedP->image_option_menu), default_index);
 
-      indexed_palette_update (default_id);
+      indexed_palette_update (default_gimage);
     }
   else
     {
@@ -268,7 +268,7 @@ indexed_palette_draw ()
 
   if (!indexedP)
     return;
-  if ((gimage = gimage_get_ID (indexedP->gimage_id)) == NULL)
+  if ((gimage = indexedP->gimage) == NULL)
     return;
 
   col = 0;
@@ -324,18 +324,14 @@ indexed_palette_clear ()
 }
 
 static void
-indexed_palette_update (int gimage_id)
+indexed_palette_update (GimpImage* gimage)
 {
-  GImage *gimage;
-
   if (!indexedP)
-    return;
-  if ((gimage = gimage_get_ID (gimage_id)) == NULL)
     return;
 
   if (gimage_base_type (gimage) == INDEXED)
     {
-      indexedP->gimage_id = gimage_id;
+      indexedP->gimage = gimage;
       indexed_palette_draw ();
     }
 }
@@ -362,7 +358,7 @@ indexed_palette_select_callback (int   r,
   if (!indexedP)
     return;
 
-  if ((gimage = gimage_get_ID (indexedP->gimage_id)) == NULL)
+  if ((gimage = indexedP->gimage) == NULL)
     return;
 
   if (color_select )
@@ -375,7 +371,7 @@ indexed_palette_select_callback (int   r,
 	gimage->cmap[indexedP->col_index * 3 + 1] = g;
 	gimage->cmap[indexedP->col_index * 3 + 2] = b;
 	
-	gdisplays_update_full (gimage->ID);
+	gdisplays_update_full (gimage);
 	indexed_palette_draw ();
 	/* Fallthrough */
       case COLOR_SELECT_CANCEL:
@@ -396,7 +392,7 @@ indexed_palette_area_events (GtkWidget *widget,
   if (!indexedP)
     return FALSE;
 
-  if ((gimage = gimage_get_ID (indexedP->gimage_id)) == NULL)
+  if ((gimage = indexedP->gimage) == NULL)
     return FALSE;
 
   switch (event->type)
@@ -450,14 +446,11 @@ image_menu_callback (GtkWidget *w,
 {
   if (!indexedP)
     return;
-  if (gimage_get_ID ((long) client_data) != NULL)
-    {
-      indexed_palette_update ((long) client_data);
-    }
+  indexed_palette_update (GIMP_IMAGE(client_data));
 }
 
 static GtkWidget *
-create_image_menu (int              *default_id,
+create_image_menu (GimpImage**       default_gimage,
 		   int              *default_index,
 		   MenuItemCallback  callback)
 {
@@ -470,9 +463,9 @@ create_image_menu (int              *default_id,
   char *image_name;
   GSList *tmp;
   int num_items = 0;
-  int id;
+  GimpImage* gid;
 
-  id = -1;
+  gid = NULL;
 
   *default_index = -1;
   menu = gtk_menu_new ();
@@ -485,18 +478,18 @@ create_image_menu (int              *default_id,
 
       if (gimage_base_type (gimage) == INDEXED)
 	{
-	  id = -1;
+	  gid = NULL;
 	  
 	  /*  make sure the default index gets set to _something_, if possible  */
 	  if (*default_index == -1)
 	    {
-	      id = gimage->ID;
+	      gid = gimage;
 	      *default_index = num_items;
 	    }
 
-	  if (gimage->ID == *default_id)
+	  if (gimage == *default_gimage)
 	    {
-	      id = *default_id;
+	      gid = *default_gimage;
 	      *default_index = num_items;
 	    }
 
@@ -506,7 +499,7 @@ create_image_menu (int              *default_id,
 	  menu_item = gtk_menu_item_new_with_label (menu_item_label);
 	  gtk_signal_connect (GTK_OBJECT (menu_item), "activate",
 			      (GtkSignalFunc) callback,
-			      (gpointer) ((long) gimage->ID));
+			      gimage);
 	  gtk_container_add (GTK_CONTAINER (menu), menu_item);
 	  gtk_widget_show (menu_item);
 
@@ -522,7 +515,7 @@ create_image_menu (int              *default_id,
       gtk_widget_show (menu_item);
     }
 
-  *default_id = id;
+  *default_gimage = gid;
 
   return menu;
 }

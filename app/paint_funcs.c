@@ -77,7 +77,7 @@ struct _ColorHash
 {
   int pixel;           /*  R << 16 | G << 8 | B  */
   int index;           /*  colormap index        */
-  int colormap_ID;     /*  colormap ID           */
+  GimpImage* gimage;     
 };
 
 static ColorHash color_hash_table [HASH_TABLE_SIZE];
@@ -318,7 +318,7 @@ paint_funcs_setup ()
 
   /*  initialize the color hash table--invalidate all entries  */
   for (i = 0; i < HASH_TABLE_SIZE; i++)
-    color_hash_table[i].colormap_ID = -1;
+    color_hash_table[i].gimage = NULL;
   color_hash_misses = 0;
   color_hash_hits = 0;
 
@@ -2236,7 +2236,7 @@ map_to_color (int            src_type,
 int
 map_rgb_to_indexed (unsigned char *cmap,
 		    int            num_cols,
-		    int            ID,
+		    GimpImage*     gimage,
 		    int            r,
 		    int            g,
 		    int            b)
@@ -2249,7 +2249,7 @@ map_rgb_to_indexed (unsigned char *cmap,
   hash_index = pixel % HASH_TABLE_SIZE;
 
   /*  Hash table lookup hit  */
-  if (color_hash_table[hash_index].colormap_ID == ID &&
+  if (color_hash_table[hash_index].gimage == gimage &&
       color_hash_table[hash_index].pixel == pixel)
     {
       cmap_index = color_hash_table[hash_index].index;
@@ -2285,7 +2285,7 @@ map_rgb_to_indexed (unsigned char *cmap,
       /*  update the hash table  */
       color_hash_table[hash_index].pixel = pixel;
       color_hash_table[hash_index].index = cmap_index;
-      color_hash_table[hash_index].colormap_ID = ID;
+      color_hash_table[hash_index].gimage = gimage;
       color_hash_misses++;
     }
 

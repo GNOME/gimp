@@ -130,7 +130,7 @@ gimage_mask_invalidate (gimage)
   Channel *mask;
 
   /*  Turn the current selection off  */
-  gdisplays_selection_visibility (gimage->ID, SelectionOff);
+  gdisplays_selection_visibility (gimage, SelectionOff);
 
   mask = gimage_get_mask (gimage);
   mask->boundary_known = FALSE;
@@ -271,7 +271,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
 	  channel_clear (gimage_get_mask (gimage));
 
 	  /*  Update the region  */
-	  gdisplays_update_area (gimage->ID, tiles->x, tiles->y,
+	  gdisplays_update_area (gimage, tiles->x, tiles->y,
 				 tiles->levels[0].width, tiles->levels[0].height);
 
 	  /*  Invalidate the preview  */

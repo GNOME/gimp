@@ -97,7 +97,7 @@ layer_new_invoker (Argument *args)
     }
 
   if (success)
-    success = ((layer = layer_new (gimage_id, width, height, type, name, opacity, mode)) != NULL);
+    success = ((layer = layer_new (gimage_get_ID(gimage_id), width, height, type, name, opacity, mode)) != NULL);
 
   return_args = procedural_db_return_args (&layer_new_proc, success);
 
@@ -370,7 +370,7 @@ layer_scale_invoker (Argument *args)
   if (success)
     local_origin = args[3].value.pdb_int;
   if (success)
-    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
+    success = ((gimage = GIMP_DRAWABLE(layer)->gimage) != NULL);
 
   if (success)
     {
@@ -469,7 +469,7 @@ layer_resize_invoker (Argument *args)
       offy = args[4].value.pdb_int;
     }
   if (success)
-    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
+    success = ((gimage = GIMP_DRAWABLE(layer)->gimage) != NULL);
 
   if (success)
     {
@@ -618,7 +618,7 @@ layer_translate_invoker (Argument *args)
       offy = args[2].value.pdb_int;
     }
   if (success)
-    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
+    success = ((gimage = GIMP_DRAWABLE(layer)->gimage) != NULL);
 
   if (success)
     {
@@ -1826,7 +1826,7 @@ layer_set_offsets_invoker (Argument *args)
       offy = args[2].value.pdb_int;
     }
   if (success)
-    success = ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) != NULL);
+    success = ((gimage = GIMP_DRAWABLE(layer)->gimage) != NULL);
 
   if (success)
     {

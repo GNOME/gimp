@@ -91,7 +91,7 @@ move_tool_button_press (Tool           *tool,
 
 	  move->guide = NULL;
 
-	  gdisplays_expose_guide (gdisp->gimage->ID, guide);
+	  gdisplays_expose_guide (gdisp->gimage, guide);
 	  gimage_remove_guide (gdisp->gimage, guide);
 	  gdisplay_flush (gdisp);
 	  gimage_add_guide (gdisp->gimage, guide);
@@ -208,7 +208,7 @@ move_tool_button_release (Tool           *tool,
 	  break;
 	}
 
-      gdisplays_expose_guide (gdisp->gimage->ID, move->guide);
+      gdisplays_expose_guide (gdisp->gimage, move->guide);
 
       if (remove_guide)
 	{

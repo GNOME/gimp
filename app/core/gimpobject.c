@@ -20,8 +20,8 @@ GtkType gimp_object_get_type (void)
 			"GimpObject",
 			sizeof(GimpObject),
 			sizeof(GimpObjectClass),
-			gimp_object_class_init,
-			gimp_object_init,
+			(GtkClassInitFunc)gimp_object_class_init,
+			(GtkObjectInitFunc)gimp_object_init,
 			NULL,
 			NULL};
 		type=gtk_type_unique(gtk_object_get_type(), &info);

@@ -1603,7 +1603,7 @@ xcf_load_layer (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer */
-  layer = layer_new (gimage->ID, width, height, type, name, 255, NORMAL_MODE);
+  layer = layer_new (gimage, width, height, type, name, 255, NORMAL_MODE);
   if (!layer)
     {
       g_free (name);
@@ -1690,7 +1690,7 @@ xcf_load_channel (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new channel */
-  channel = channel_new (gimage->ID, width, height, name, 255, color);
+  channel = channel_new (gimage, width, height, name, 255, color);
   if (!channel)
     {
       g_free (name);
@@ -1749,7 +1749,7 @@ xcf_load_layer_mask (XcfInfo *info,
   info->cp += xcf_read_string (info->fp, &name, 1);
 
   /* create a new layer mask */
-  layer_mask = layer_mask_new (gimage->ID, width, height, name, 255, color);
+  layer_mask = layer_mask_new (gimage, width, height, name, 255, color);
   if (!layer_mask)
     {
       g_free (name);

@@ -117,7 +117,7 @@ channel_validate (TileManager *tm, Tile *tile, int level)
 
 
 Channel *
-channel_new (int gimage_ID, int width, int height, char *name, int opacity,
+channel_new (GimpImage* gimage, int width, int height, char *name, int opacity,
 	     unsigned char *col)
 {
   Channel * channel;
@@ -126,7 +126,7 @@ channel_new (int gimage_ID, int width, int height, char *name, int opacity,
   channel = gtk_type_new (gimp_channel_get_type ());
 
   gimp_drawable_configure (GIMP_DRAWABLE(channel), 
-			   gimage_ID, width, height, GRAY_GIMAGE, name);
+			   gimage, width, height, GRAY_GIMAGE, name);
 
   /*  set the channel color and opacity  */
   for (i = 0; i < 3; i++)
@@ -177,7 +177,7 @@ channel_copy (Channel *channel)
   sprintf (channel_name, "%s copy", GIMP_DRAWABLE(channel)->name);
 
   /*  allocate a new channel object  */
-  new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage_ID, 
+  new_channel = channel_new (GIMP_DRAWABLE(channel)->gimage, 
 			     GIMP_DRAWABLE(channel)->width, 
 			     GIMP_DRAWABLE(channel)->height, 
 			     channel_name, channel->opacity, channel->col);
@@ -260,7 +260,7 @@ channel_scale (Channel *channel, int new_width, int new_height)
   scale_region (&srcPR, &destPR);
 
   /*  Push the channel on the undo stack  */
-  undo_push_channel_mod (gimage_get_ID (GIMP_DRAWABLE(channel)->gimage_ID), channel);
+  undo_push_channel_mod (GIMP_DRAWABLE(channel)->gimage, channel);
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE(channel)->tiles = new_tiles;
@@ -348,7 +348,7 @@ channel_resize (Channel *channel, int new_width, int new_height,
     copy_region (&srcPR, &destPR);
 
   /*  Push the channel on the undo stack  */
-  undo_push_channel_mod (gimage_get_ID (GIMP_DRAWABLE(channel)->gimage_ID), channel);
+  undo_push_channel_mod (GIMP_DRAWABLE(channel)->gimage, channel);
 
   /*  Configure the new channel  */
   GIMP_DRAWABLE(channel)->tiles = new_tiles;
@@ -430,14 +430,10 @@ channel_preview (Channel *channel, int width, int height)
 
 
 void
-channel_invalidate_previews (int gimage_id)
+channel_invalidate_previews (GimpImage* gimage)
 {
   GSList * tmp;
   Channel * channel;
-  GImage * gimage;
-
-  if (! (gimage = gimage_get_ID (gimage_id)))
-    return;
 
   tmp = gimage->channels;
 
@@ -455,13 +451,13 @@ channel_invalidate_previews (int gimage_id)
 
 
 Channel *
-channel_new_mask (int gimage_ID, int width, int height)
+channel_new_mask (GimpImage* gimage, int width, int height)
 {
   unsigned char black[3] = {0, 0, 0};
   Channel *new_channel;
 
   /*  Create the new channel  */
-  new_channel = channel_new (gimage_ID, width, height, "Selection Mask", 127, black);
+  new_channel = channel_new (gimage, width, height, "Selection Mask", 127, black);
 
   /*  Set the validate procedure  */
   tile_manager_set_validate_proc (GIMP_DRAWABLE(new_channel)->tiles, channel_validate);
@@ -1100,7 +1096,7 @@ channel_push_undo (Channel *mask)
   mask_undo->y = y1;
 
   /* push the undo buffer onto the undo stack */
-  gimage = gimage_get_ID (GIMP_DRAWABLE(mask)->gimage_ID);
+  gimage = GIMP_DRAWABLE(mask)->gimage;
   undo_push_mask (gimage, mask_undo);
   gimage_mask_invalidate (gimage);
 
@@ -1373,7 +1369,7 @@ channel_translate (Channel *mask, int off_x, int off_y)
       /*  copy the portion of the mask we will keep to a
        *  temporary buffer
        */
-      tmp_mask = channel_new_mask (GIMP_DRAWABLE(mask)->gimage_ID, width, height);
+      tmp_mask = channel_new_mask (GIMP_DRAWABLE(mask)->gimage, width, height);
 
       pixel_region_init (&srcPR, GIMP_DRAWABLE(mask)->tiles, x1 - off_x, y1 - off_y, width, height, FALSE);
       pixel_region_init (&destPR, GIMP_DRAWABLE(tmp_mask)->tiles, 0, 0, width, height, TRUE);

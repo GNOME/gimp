@@ -27,6 +27,7 @@
 #include "paint_core.h"
 #include "selection.h"
 #include "tools.h"
+#include "gimage.h"
 
 typedef enum
 {

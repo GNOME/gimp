@@ -84,7 +84,7 @@ channel_new_invoker (Argument *args)
     }
 
   if (success)
-    success = ((channel = channel_new (gimage_id, width, height, name, opacity, color)) != NULL);
+    success = ((channel = channel_new (gimage_get_ID(gimage_id), width, height, name, opacity, color)) != NULL);
 
   return_args = procedural_db_return_args (&channel_new_proc, success);
 

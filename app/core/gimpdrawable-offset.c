@@ -44,7 +44,7 @@ typedef struct
   int        wrap_around;
   int        transparent;
   int        background;
-  int        gimage_id;
+  GimpImage*        gimage;
 
 } OffsetDialog;
 
@@ -76,7 +76,7 @@ static Argument * channel_ops_offset_invoker     (Argument *args);
 
 
 void
-channel_ops_offset (void *gimage_ptr)
+channel_ops_offset (GimpImage* gimage)
 {
   OffsetDialog *off_d;
   GtkWidget *button;
@@ -89,16 +89,14 @@ channel_ops_offset (void *gimage_ptr)
   GtkWidget *table;
   GSList *group = NULL;
   GimpDrawable *drawable;
-  GImage *gimage;
 
-  gimage = (GImage *) gimage_ptr;
   drawable = gimage_active_drawable (gimage);
 
   off_d = g_new (OffsetDialog, 1);
   off_d->wrap_around = TRUE;
   off_d->transparent = drawable_has_alpha (drawable);
   off_d->background = !off_d->transparent;
-  off_d->gimage_id = gimage->ID;
+  off_d->gimage = gimage;
 
   off_d->dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (off_d->dlg), "offset", "Gimp");
@@ -458,7 +456,7 @@ offset_ok_callback (GtkWidget *widget,
   int fill_type;
 
   off_d = (OffsetDialog *) data;
-  if ((gimage = gimage_get_ID (off_d->gimage_id)) != NULL)
+  if ((gimage = off_d->gimage) != NULL)
     {
       drawable = gimage_active_drawable (gimage);
 
@@ -538,7 +536,7 @@ offset_halfheight_update (GtkWidget *widget,
   gchar buffer[16];
 
   off_d = (OffsetDialog *) data;
-  gimage = gimage_get_ID (off_d->gimage_id);
+  gimage = off_d->gimage;
 
   sprintf (buffer, "%d", gimage->width / 2);
   gtk_entry_set_text (GTK_ENTRY (off_d->off_x_entry), buffer);

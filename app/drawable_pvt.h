@@ -35,7 +35,7 @@ struct _GimpDrawable
   int bytes;				/* bytes per pixel */
   int dirty;				/* dirty bit */
   int ID;				/* provides a unique ID */
-  int gimage_ID;			/* ID of gimage owner */
+  GimpImage* gimage;			/* gimage owner */
   int type;				/* type of drawable */
   int has_alpha;			/* drawable has alpha */
 

@@ -443,7 +443,7 @@ ink_button_press (Tool           *tool,
   tool->paused_count = 0;
 
   /*  pause the current selection and grab the pointer  */
-  gdisplays_selection_visibility (gdisp->gimage->ID, SelectionPause);
+  gdisplays_selection_visibility (gdisp->gimage, SelectionPause);
 
   /* add motion memory if you press mod1 first */
   if (bevent->state & GDK_MOD1_MASK)
@@ -481,7 +481,7 @@ ink_button_release (Tool           *tool,
   ink_tool = (InkTool *) tool->private;
 
   /*  resume the current selection and ungrab the pointer  */
-  gdisplays_selection_visibility (gdisp->gimage->ID, SelectionResume);
+  gdisplays_selection_visibility (gdisp->gimage, SelectionResume);
 
   gdk_pointer_ungrab (bevent->time);
   gdk_flush ();
@@ -922,7 +922,7 @@ ink_paste (InkTool      *ink_tool,
    *  preview to be constantly invalidated
    */
   drawable_offsets (drawable, &offx, &offy);
-  gdisplays_update_area (gimage->ID, canvas_buf->x + offx, canvas_buf->y + offy,
+  gdisplays_update_area (gimage, canvas_buf->x + offx, canvas_buf->y + offy,
 			 canvas_buf->width, canvas_buf->height);
 }
 

@@ -1269,7 +1269,7 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
       if (floating_layer)
 	floating_sel_relax (floating_layer, TRUE);
 
-      gdisplays_update_area (gimage->ID,
+      gdisplays_update_area (gimage,
 			     GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
 			     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 

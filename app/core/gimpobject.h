@@ -1,6 +1,7 @@
 #ifndef __GIMP_OBJECT_H__
 #define __GIMP_OBJECT_H__
 
+#include <gtk/gtktypeutils.h>
 #include "gimpobjectF.h"
 
 #define GIMP_OBJECT(obj) \

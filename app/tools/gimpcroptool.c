@@ -234,7 +234,7 @@ while (glist  != NULL)  {
 		}
 	
 		/* edit the guide */
-	gdisplays_expose_guide (gimage->ID, guide);
+	gdisplays_expose_guide (gimage, guide);
 	gdisplays_flush();
 
 	if (remove_guide) {
@@ -646,11 +646,11 @@ crop_image (GImage *gimage,
   crop_adjust_guides (gimage, x1, y1, x2, y2); 
 
     /*  shrink wrap and update all views  */
-    channel_invalidate_previews (gimage->ID);
-    layer_invalidate_previews (gimage->ID);
+    channel_invalidate_previews (gimage);
+    layer_invalidate_previews (gimage);
     gimage_invalidate_preview (gimage);
-    gdisplays_update_full (gimage->ID);
-    gdisplays_shrink_wrap (gimage->ID);
+    gdisplays_update_full (gimage);
+    gdisplays_shrink_wrap (gimage);
   }
 }
 

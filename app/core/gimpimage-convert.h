@@ -19,11 +19,11 @@
 #define __CONVERT_H__
 
 #include "procedural_db.h"
-
+#include "gimpimageF.h"
 /*  convert functions  */
-void  convert_to_rgb        (void *);
-void  convert_to_grayscale  (void *);
-void  convert_to_indexed    (void *);
+void  convert_to_rgb        (GimpImage *);
+void  convert_to_grayscale  (GimpImage *);
+void  convert_to_indexed    (GimpImage *);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord convert_rgb_proc;

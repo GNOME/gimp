@@ -102,7 +102,7 @@ struct _ChannelsDialog {
   int gimage_width, gimage_height;
 
   /*  state information  */
-  int gimage_id;
+  GimpImage* gimage;
   Channel * active_channel;
   Layer *floating_sel;
   GSList *channel_widgets;
@@ -142,7 +142,7 @@ static void channel_widget_exclusive_visible (ChannelWidget *);
 static void channel_widget_channel_flush (GtkWidget *, gpointer);
 
 /*  assorted query dialogs  */
-static void channels_dialog_new_channel_query (int);
+static void channels_dialog_new_channel_query (GimpImage*);
 static void channels_dialog_edit_channel_query (ChannelWidget *);
 
 
@@ -200,7 +200,7 @@ channels_dialog_create ()
     {
       channelsD = g_malloc (sizeof (ChannelsDialog));
       channelsD->preview = NULL;
-      channelsD->gimage_id = -1;
+      channelsD->gimage = NULL;
       channelsD->active_channel = NULL;
       channelsD->floating_sel = NULL;
       channelsD->channel_widgets = NULL;
@@ -273,7 +273,7 @@ channels_dialog_flush ()
   if (!channelsD)
     return;
 
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
+  if (! (gimage = channelsD->gimage))
     return;
 
   /*  Check if the gimage extents have changed  */
@@ -281,8 +281,8 @@ channels_dialog_flush ()
       (gimage->height != channelsD->gimage_height) ||
       (gimage_base_type (gimage) != channelsD->base_type))
     {
-      channelsD->gimage_id = -1;
-      channels_dialog_update (gimage->ID);
+      channelsD->gimage = NULL;
+      channels_dialog_update (gimage);
     }
 
   /*  Set all current channel widgets to visited = FALSE  */
@@ -357,21 +357,20 @@ channels_dialog_flush ()
 /*************************************/
 
 void
-channels_dialog_update (int gimage_id)
+channels_dialog_update (GimpImage* gimage)
 {
   ChannelWidget *cw;
-  GImage *gimage;
   Channel *channel;
   GSList *list;
   GList *item_list;
 
   if (!channelsD)
     return;
-  if (channelsD->gimage_id == gimage_id)
+  if (channelsD->gimage == gimage)
     return;
 
-  channelsD->gimage_id = gimage_id;
-
+  channelsD->gimage=gimage;
+  
   suspend_gimage_notify++;
   /*  Free all elements in the channels listbox  */
   gtk_list_clear_items (GTK_LIST (channelsD->channel_list), 0, -1);
@@ -385,9 +384,6 @@ channels_dialog_update (int gimage_id)
       channel_widget_delete (cw);
     }
   channelsD->channel_widgets = NULL;
-
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
-    return;
 
   /*  Find the preview extents  */
   channels_dialog_preview_extents ();
@@ -506,10 +502,9 @@ channels_dialog_preview_extents ()
 {
   GImage *gimage;
 
-  if (! channelsD)
-    return;
-
-  gimage = gimage_get_ID (channelsD->gimage_id);
+  g_return_if_fail(channelsD);
+  g_return_if_fail(gimage = channelsD->gimage);
+  
   channelsD->gimage_width = gimage->width;
   channelsD->gimage_height = gimage->height;
 
@@ -713,7 +708,7 @@ channels_dialog_add_channel (Channel *channel)
 
   if (!channelsD || !channel)
     return;
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
+  if (! (gimage = channelsD->gimage))
     return;
 
   item_list = NULL;
@@ -853,10 +848,10 @@ channels_dialog_new_channel_callback (GtkWidget *w,
    */
   if (!channelsD)
     return;
-  if (channelsD->gimage_id == -1)
+  if (channelsD->gimage == NULL)
     return;
 
-  channels_dialog_new_channel_query (channelsD->gimage_id);
+  channels_dialog_new_channel_query (channelsD->gimage);
 }
 
 
@@ -868,7 +863,7 @@ channels_dialog_raise_channel_callback (GtkWidget *w,
 
   if (!channelsD)
     return;
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
+  if (! (gimage = channelsD->gimage))
     return;
 
   if (gimage->active_channel != NULL)
@@ -887,7 +882,7 @@ channels_dialog_lower_channel_callback (GtkWidget *w,
 
   if (!channelsD)
     return;
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
+  if (! (gimage = channelsD->gimage))
     return;
 
   if (gimage->active_channel != NULL)
@@ -910,7 +905,7 @@ channels_dialog_duplicate_channel_callback (GtkWidget *w,
    */
   if (!channelsD)
     return;
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
+  if (! (gimage = channelsD->gimage))
     return;
 
   if ((active_channel = gimage_get_active_channel (gimage)))
@@ -932,7 +927,7 @@ channels_dialog_delete_channel_callback (GtkWidget *w,
    */
   if (!channelsD)
     return;
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
+  if (! (gimage = channelsD->gimage))
     return;
 
   if (gimage->active_channel != NULL)
@@ -953,7 +948,7 @@ channels_dialog_channel_to_sel_callback (GtkWidget *w,
    */
   if (!channelsD)
     return;
-  if (! (gimage = gimage_get_ID (channelsD->gimage_id)))
+  if (! (gimage = channelsD->gimage))
     return;
 
   if (gimage->active_channel != NULL)
@@ -1222,12 +1217,12 @@ channel_widget_button_events (GtkWidget *widget,
 	{
 	  if (exclusive)
 	    {
-	      gdisplays_update_area (channel_widget->gimage->ID, 0, 0, width, height);
+	      gdisplays_update_area (channel_widget->gimage, 0, 0, width, height);
 	      gdisplays_flush ();
 	    }
 	  else if (old_state != visible)
 	    {
-	      gdisplays_update_area (channel_widget->gimage->ID, 0, 0, width, height);
+	      gdisplays_update_area (channel_widget->gimage, 0, 0, width, height);
 	      gdisplays_flush ();
 	    }
 	}
@@ -1701,7 +1696,7 @@ struct _NewChannelOptions {
   GtkWidget *name_entry;
   ColorPanel *color_panel;
 
-  int gimage_id;
+  GimpImage* gimage;
   double opacity;
 };
 
@@ -1722,9 +1717,9 @@ new_channel_query_ok_callback (GtkWidget *w,
     g_free (channel_name);
   channel_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
-  if ((gimage = gimage_get_ID (options->gimage_id)))
+  if ((gimage = options->gimage))
     {
-      new_channel = channel_new (gimage->ID, gimage->width, gimage->height,
+      new_channel = channel_new (gimage, gimage->width, gimage->height,
 				 channel_name, (int) (255 * options->opacity) / 100,
 				 options->color_panel->color);
       drawable_fill (GIMP_DRAWABLE(new_channel), TRANSPARENT_FILL);
@@ -1771,14 +1766,13 @@ new_channel_query_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-channels_dialog_new_channel_query (int gimage_id)
+channels_dialog_new_channel_query (GimpImage* gimage)
 {
   static ActionAreaItem action_items[2] =
   {
     { "OK", new_channel_query_ok_callback, NULL, NULL },
     { "Cancel", new_channel_query_cancel_callback, NULL, NULL }
   };
-  GImage *gimage;
   NewChannelOptions *options;
   GtkWidget *vbox;
   GtkWidget *table;
@@ -1786,11 +1780,9 @@ channels_dialog_new_channel_query (int gimage_id)
   GtkWidget *opacity_scale;
   GtkObject *opacity_scale_data;
 
-  gimage = gimage_get_ID (gimage_id);
-
   /*  the new options structure  */
   options = (NewChannelOptions *) g_malloc (sizeof (NewChannelOptions));
-  options->gimage_id = gimage_id;
+  options->gimage = gimage;
   options->opacity = 50.0;
   options->color_panel = color_panel_new (channel_color, 48, 64);
 
@@ -1872,7 +1864,7 @@ struct _EditChannelOptions {
   GtkWidget *name_entry;
 
   ChannelWidget *channel_widget;
-  int gimage_id;
+  GimpImage* gimage;
   ColorPanel *color_panel;
   double opacity;
 };
@@ -1892,7 +1884,7 @@ edit_channel_query_ok_callback (GtkWidget *w,
   opacity = (int) (255 * options->opacity) / 100;
 
 
-  if (gimage_get_ID (options->gimage_id)) {
+  if (options->gimage) {
     
     /*  Set the new channel name  */
     if (GIMP_DRAWABLE(channel)->name)
@@ -1966,7 +1958,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   /*  the new options structure  */
   options = (EditChannelOptions *) g_malloc (sizeof (EditChannelOptions));
   options->channel_widget = channel_widget;
-  options->gimage_id = channel_widget->gimage->ID;
+  options->gimage = channel_widget->gimage;
   options->opacity = (double) channel_widget->channel->opacity / 2.55;
   for (i = 0; i < 3; i++) 
     channel_color[i] =  channel_widget->channel->col[i];

@@ -25,6 +25,7 @@
 #define __PAINT_FUNCS_H__
 
 #include "pixel_region.h"
+#include "gimpimageF.h"
 
 /*  Called initially to setup accelerated rendering features  */
 void  paint_funcs_setup     (void);
@@ -290,7 +291,7 @@ map_to_color                              (int, unsigned char *,
  *  Hash table lookup speeds up the standard
  *  least squares method
  */
-int    map_rgb_to_indexed                 (unsigned char *, int, int,
+int    map_rgb_to_indexed                 (unsigned char *, int, GimpImage*,
 					   int, int, int);
 
 

@@ -2584,7 +2584,7 @@ CR_convert (Iscissors *iscissors,
     }
 
   /* create a new mask */
-  iscissors->mask = channel_new_mask (gdisp->gimage->ID, gdisp->gimage->width,
+  iscissors->mask = channel_new_mask (gdisp->gimage, gdisp->gimage->width,
 				      gdisp->gimage->height);
 
   /* allocate room for the scanlines */

@@ -299,7 +299,7 @@ static GSList *save_procs = NULL;
 static PlugInProcDef *load_file_proc = NULL;
 static PlugInProcDef *save_file_proc = NULL;
 
-static int image_ID = 0;
+static GimpImage* the_gimage;
 
 static void
 file_message_box_close_callback (GtkWidget *w,
@@ -550,7 +550,7 @@ file_save_callback (GtkWidget *w,
 	  file_save_as_callback (w, client_data);
 	}
       else
-	file_save (gdisplay->gimage->ID, gimage_filename (gdisplay->gimage),
+	file_save (gdisplay->gimage, gimage_filename (gdisplay->gimage),
 		   prune_filename (gimage_filename(gdisplay->gimage)));
     }
 }
@@ -592,7 +592,7 @@ file_save_as_callback (GtkWidget *w,
     }
 
   gdisplay = gdisplay_active ();
-  image_ID = gdisplay->gimage->ID;
+  the_gimage = gdisplay->gimage;
 
   if (!save_options)
     {
@@ -706,7 +706,7 @@ file_open (char *filename, char* raw_filename)
   Argument *args;
   Argument *return_vals;
   GImage *gimage;
-  int gimage_ID;
+  int gimage_id;
   int return_val;
   int i;
 
@@ -734,12 +734,12 @@ file_open (char *filename, char* raw_filename)
 
   return_vals = procedural_db_execute (proc->name, args);
   return_val = (return_vals[0].value.pdb_int == PDB_SUCCESS);
-  gimage_ID = return_vals[1].value.pdb_int;
+  gimage_id = return_vals[1].value.pdb_int;
 
   procedural_db_destroy_args (return_vals, proc->num_values);
   g_free (args);
 
-  if ((gimage = gimage_get_ID (gimage_ID)) != NULL)
+  if ((gimage = gimage_get_ID (gimage_id)) != NULL)
     {
       /*  enable & clear all undo steps  */
       gimage_enable_undo (gimage);
@@ -755,7 +755,7 @@ file_open (char *filename, char* raw_filename)
 }
 
 int
-file_save (int   image_ID,
+file_save (GimpImage* gimage,
 	   char *filename,
 	   char *raw_filename)
 {
@@ -764,11 +764,8 @@ file_save (int   image_ID,
   Argument *args;
   Argument *return_vals;
   int return_val;
-  GImage *gimage;
   int i;
 
-  if ((gimage = gimage_get_ID (image_ID)) == NULL)
-    return FALSE;
   if (gimage_active_drawable (gimage) == NULL)
     return FALSE;
 
@@ -788,7 +785,7 @@ file_save (int   image_ID,
     args[i].arg_type = proc->args[i].arg_type;
 
   args[0].value.pdb_int = 0;
-  args[1].value.pdb_int = image_ID;
+  args[1].value.pdb_int = the_gimage->ID;
   args[2].value.pdb_int = drawable_ID (gimage_active_drawable (gimage));
   args[3].value.pdb_pointer = filename;
   args[4].value.pdb_pointer = raw_filename;
@@ -906,7 +903,7 @@ file_save_ok_callback (GtkWidget *w,
 	}
     } else {
       gtk_widget_set_sensitive (GTK_WIDGET (fs), FALSE);
-      if (file_save (image_ID, filename, raw_filename))
+      if (file_save (the_gimage, filename, raw_filename))
 	{
 	  file_dialog_hide (client_data);
 	  gtk_widget_set_sensitive (GTK_WIDGET (fs), TRUE);
@@ -1007,10 +1004,10 @@ file_overwrite_yes_callback (GtkWidget *w,
 
   gtk_widget_destroy (overwrite_box->obox);
 
-  if (((gimage = gimage_get_ID (image_ID)) != NULL) &&
-      file_save (image_ID, overwrite_box->full_filename, overwrite_box->raw_filename))
+  if ((gimage = the_gimage) != NULL &&
+      file_save (the_gimage, overwrite_box->full_filename, overwrite_box->raw_filename))
     {
-      image_ID = 0;
+      the_gimage = NULL;
       file_dialog_hide (filesave);
     }
   else

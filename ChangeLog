@@ -1,3 +1,30 @@
+Mon Jun 29 03:14:14 EEST 1998  Lauri Alanko  <nether@gimp.org>
+
+
+	* app/airbrush.c app/bezier_select.c app/by_color_select.c:
+ 	* app/channel.c app/channel.h app/channel_cmds.c app/channel_ops.c:
+ 	* app/channel_ops.h app/channels_dialog.c app/commands.c:
+ 	* app/convert.c app/convert.h app/convolve.c app/crop.c:
+ 	* app/drawable.c app/drawable.h app/drawable_pvt.h:
+ 	* app/ellipse_select.c app/file_new_dialog.c app/fileops.c:
+ 	* app/fileops.h app/floating_sel.c app/free_select.c:
+ 	* app/fuzzy_select.c app/gdisplay.c app/gdisplay.h app/gimage.c:
+ 	* app/gimage_cmds.c app/gimage_mask.c app/gimpimage.c:
+ 	* app/gimpimage.h app/gimpimageF.h app/gimpobject.c app/gimpobject.h:
+ 	* app/indexed_palette.c app/indexed_palette.h app/ink.c:
+ 	* app/iscissors.c app/layer.c app/layer.h app/layer_cmds.c:
+ 	* app/layers_dialog.c app/layers_dialog.h app/layers_dialogP.h:
+ 	* app/move.c app/paint_core.c app/paint_funcs.c app/paint_funcs.h:
+ 	* app/preferences_dialog.c app/rect_select.c app/text_tool.c:
+ 	* app/transform_core.c app/undo.c app/xcf.c:
+
+	Removed most of the image id system. They're still used with pdb.
+	At quick glance, nothing seems to be broken, but if things weird
+	out, blame me.
+
+	Now just the same for layers, channels and displays...
+	
+
 Sun Jun 28 10:08:53 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/ps/ps.c: don't use app private includes

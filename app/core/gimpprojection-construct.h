@@ -80,8 +80,7 @@ typedef enum
 } MergeType;
 
 
-/* Ugly! Move this someplace else! */
-typedef struct _Guide  Guide;
+/* Ugly! Move this someplace else! Prolly to gdisplay.. */
 
 struct _Guide
 {

@@ -27,6 +27,7 @@
 #include "airbrush.h"
 #include "selection.h"
 #include "tools.h"
+#include "gimage.h"
 
 typedef struct _AirbrushTimeout AirbrushTimeout;
 

@@ -224,7 +224,7 @@ rect_select (GImage *gimage,
    */
   if (feather)
     {
-      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height);
+      new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_rect (new_mask, ADD, x, y, w, h);
       channel_feather (new_mask, gimage_get_mask (gimage),
 		       feather_radius, op, 0, 0);
@@ -232,7 +232,7 @@ rect_select (GImage *gimage,
     }
   else if (op == INTERSECT)
     {
-      new_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height);
+      new_mask = channel_new_mask (gimage, gimage->width, gimage->height);
       channel_combine_rect (new_mask, ADD, x, y, w, h);
       channel_combine_mask (gimage_get_mask (gimage), new_mask, op, 0, 0);
       channel_delete (new_mask);

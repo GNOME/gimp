@@ -1875,7 +1875,7 @@ text_render (GImage *gimage,
     tile_manager_destroy (mask);
 
   if (newmask && 
-      (layer = layer_new (gimage->ID, newmask->levels[0].width,
+      (layer = layer_new (gimage, newmask->levels[0].width,
 			 newmask->levels[0].height, layer_type,
 			 "Text Layer", OPAQUE_OPACITY, NORMAL_MODE)))
     {

@@ -15,9 +15,6 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include "drawable.h"
 #include "errors.h"
 #include "floating_sel.h"
@@ -262,7 +259,7 @@ gimp_image_new (int width, int height, int base_type)
     }
 
   /* create the selection mask */
-  gimage->selection_mask = channel_new_mask (gimage->ID, gimage->width, gimage->height);
+  gimage->selection_mask = channel_new_mask (gimage, gimage->width, gimage->height);
 
 
   return gimage;
@@ -770,7 +767,7 @@ gimp_image_transform_color (GimpImage *gimage, GimpDrawable *drawable,
 	  /*  Least squares method  */
 	  *dest = map_rgb_to_indexed (gimage->cmap,
 				      gimage->num_cols,
-				      gimage->ID,
+				      gimage,
 				      src[RED_PIX],
 				      src[GREEN_PIX],
 				      src[BLUE_PIX]);
@@ -794,7 +791,7 @@ gimp_image_transform_color (GimpImage *gimage, GimpDrawable *drawable,
 	  /*  Least squares method  */
 	  *dest = map_rgb_to_indexed (gimage->cmap,
 				      gimage->num_cols,
-				      gimage->ID,
+				      gimage,
 				      src[GRAY_PIX],
 				      src[GRAY_PIX],
 				      src[GRAY_PIX]);
@@ -1871,7 +1868,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
 	case GRAY: type = GRAY_GIMAGE; break;
 	case INDEXED: type = INDEXED_GIMAGE; break;
 	}
-      merge_layer = layer_new (gimage->ID, (x2 - x1), (y2 - y1),
+      merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
 			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
@@ -1899,7 +1896,7 @@ gimp_image_merge_layers (GimpImage *gimage, GSList *merge_list, MergeType merge_
        *  with a notable exception:  The resulting layer has an alpha channel
        *  whether or not the original did
        */
-      merge_layer = layer_new (gimage->ID, (x2 - x1), (y2 - y1),
+      merge_layer = layer_new (gimage, (x2 - x1), (y2 - y1),
 			       drawable_type_with_alpha (GIMP_DRAWABLE(layer)),
 			       drawable_name (GIMP_DRAWABLE(layer)),
 			       layer->opacity, layer->mode);
@@ -2019,8 +2016,8 @@ gimp_image_add_layer (GimpImage *gimage, Layer *float_layer, int position)
 {
   LayerUndo * lu;
 
-  if (GIMP_DRAWABLE(float_layer)->gimage_ID != 0 && 
-      GIMP_DRAWABLE(float_layer)->gimage_ID != gimage->ID) 
+  if (GIMP_DRAWABLE(float_layer)->gimage != NULL && 
+      GIMP_DRAWABLE(float_layer)->gimage != gimage) 
     {
       g_message ("gimp_image_add_layer: attempt to add layer to wrong image");
       return NULL;
@@ -2052,7 +2049,7 @@ gimp_image_add_layer (GimpImage *gimage, Layer *float_layer, int position)
     gimage->floating_sel = float_layer;
 
   /*  let the layer know about the gimage  */
-  GIMP_DRAWABLE(float_layer)->gimage_ID = gimage->ID;
+  GIMP_DRAWABLE(float_layer)->gimage = gimage;
 
   /*  add the layer to the list at the specified position  */
   if (position == -1)
@@ -2322,8 +2319,8 @@ gimp_image_add_channel (GimpImage *gimage, Channel *channel, int position)
 {
   ChannelUndo * cu;
 
-  if (GIMP_DRAWABLE(channel)->gimage_ID != 0 &&
-      GIMP_DRAWABLE(channel)->gimage_ID != gimage->ID)
+  if (GIMP_DRAWABLE(channel)->gimage != NULL &&
+      GIMP_DRAWABLE(channel)->gimage != gimage)
     {
       g_message ("gimp_image_add_channel: attempt to add channel to wrong image");
       return NULL;

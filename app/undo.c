@@ -340,7 +340,7 @@ pop_stack (GImage  *gimage,
 	  /*  If the shrink_wrap flag was set  */
 	  if (shrink_wrap)
 	    {
-	      gdisplays_shrink_wrap (gimage->ID);
+	      gdisplays_shrink_wrap (gimage);
 	      shrink_wrap = FALSE;
 	    }
 
@@ -1249,7 +1249,7 @@ undo_pop_layer_mod (GImage *gimage,
   tiles = (TileManager *) data[1];
 
   /*  Issue the first update  */
-  gdisplays_update_area (gimage->ID,
+  gdisplays_update_area (gimage,
 			 GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y,
 			 GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
 
@@ -1278,7 +1278,7 @@ undo_pop_layer_mod (GImage *gimage,
 
   /*  If the layer type changed, update the gdisplay titles  */
   if (GIMP_DRAWABLE(layer)->type != (long) data[2])
-    gdisplays_update_title (GIMP_DRAWABLE(layer)->gimage_ID);
+    gdisplays_update_title (GIMP_DRAWABLE(layer)->gimage);
 
   /*  Set the new tile manager  */
   data[1] = temp;
@@ -1968,11 +1968,11 @@ undo_pop_gimage_mod (GImage *gimage,
   gimage_projection_realloc (gimage);
 
   gimage_mask_invalidate (gimage);
-  channel_invalidate_previews (gimage->ID);
-  layer_invalidate_previews (gimage->ID);
+  channel_invalidate_previews (gimage);
+  layer_invalidate_previews (gimage);
   gimage_invalidate_preview (gimage);
-  gdisplays_update_full (gimage->ID);
-  gdisplays_update_title (gimage->ID);
+  gdisplays_update_full (gimage);
+  gdisplays_update_title (gimage);
 
   indexed_palette_update_image_list ();
 
@@ -2047,8 +2047,8 @@ undo_pop_guide (GImage *gimage,
 
   data = data_ptr;
 
-  gdisplays_expose_guide (gimage->ID, data->guide);
-  gdisplays_expose_guide (gimage->ID, &data->orig);
+  gdisplays_expose_guide (gimage, data->guide);
+  gdisplays_expose_guide (gimage, &data->orig);
 
   tmp_ref = data->guide->ref_count;
   tmp = *(data->guide);

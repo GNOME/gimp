@@ -311,10 +311,7 @@ void
 floating_sel_rigor (Layer *layer,
 		    int    undo)
 {
-  GImage *gimage;
-
-  if ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) == NULL)
-    return;
+  GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
 
   /*  store the affected area from the drawable in the backing store  */
   floating_sel_store (layer, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
@@ -328,10 +325,7 @@ void
 floating_sel_relax (Layer *layer,
 		    int    undo)
 {
-  GImage *gimage;
-
-  if ((gimage = gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID)) == NULL)
-    return;
+  GImage *gimage = GIMP_DRAWABLE(layer)->gimage;
 
   /*  restore the contents of drawable the floating layer is attached to  */
   if (layer->fs.initial == FALSE)

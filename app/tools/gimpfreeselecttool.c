@@ -135,7 +135,7 @@ convert_segment (GSList **scanlines, int width, int height,
 }
 
 static Channel *
-scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
+scan_convert (GimpImage* gimage, int num_pts, FreeSelectPoint *pts,
 	      int width, int height, int antialias)
 {
   PixelRegion maskPR;
@@ -154,7 +154,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
   if (num_pts < 3)
     return NULL;
 
-  mask = channel_new_mask (gimage_ID, width, height);
+  mask = channel_new_mask (gimage, width, height);
 
   if (antialias)
     {
@@ -282,7 +282,7 @@ free_select (GImage *gimage, int num_pts, FreeSelectPoint *pts, int op,
   else
     gimage_mask_undo (gimage);
 
-  mask = scan_convert (gimage->ID, num_pts, pts, gimage->width, gimage->height, antialias);
+  mask = scan_convert (gimage, num_pts, pts, gimage->width, gimage->height, antialias);
 
   if (mask)
     {

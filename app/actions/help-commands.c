@@ -983,9 +983,9 @@ dialogs_lc_cmd_callback (GtkWidget *widget,
   gdisp = gdisplay_active ();
 
   if (gdisp == NULL) 
-    lc_dialog_create (-1);
+    lc_dialog_create (NULL);
   else
-    lc_dialog_create (gdisp->gimage->ID);
+    lc_dialog_create (gdisp->gimage);
 }
 
 void
@@ -996,7 +996,7 @@ dialogs_indexed_palette_cmd_callback (GtkWidget *widget,
 
   gdisp = gdisplay_active ();
 
-  indexed_palette_create (gdisp->gimage->ID);
+  indexed_palette_create (gdisp->gimage);
 }
 
 void

@@ -19,9 +19,10 @@
 #define __CHANNEL_OPS_H__
 
 #include "procedural_db.h"
+#include "gimpimageF.h"
 
 /*  channel_ops functions  */
-void  channel_ops_offset    (void *);
+void  channel_ops_offset    (GimpImage*);
 
 /*  Procedure definition and marshalling function  */
 extern ProcRecord channel_ops_offset_proc;

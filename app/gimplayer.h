@@ -98,7 +98,7 @@ struct _fs_to_layer_undo
 
 /* function declarations */
 
-Layer *         layer_new (int, int, int, int, char *, int, int);
+Layer *         layer_new (GimpImage*, int, int, int, char *, int, int);
 Layer *         layer_copy (Layer *, int);
 Layer *		layer_ref (Layer *);
 void   		layer_unref (Layer *);
@@ -117,7 +117,7 @@ BoundSeg *      layer_boundary (Layer *, int *);
 void            layer_invalidate_boundary (Layer *);
 int             layer_pick_correlate (Layer *, int, int);
 
-LayerMask *     layer_mask_new	(int, int, int, char *, 
+LayerMask *     layer_mask_new	(GimpImage*, int, int, char *, 
 				 int, unsigned char *);
 LayerMask *	layer_mask_copy	(LayerMask *);
 void		layer_mask_delete	(LayerMask *);
@@ -135,7 +135,7 @@ int		layer_linked (Layer *);
 TempBuf *       layer_preview (Layer *, int, int);
 TempBuf *       layer_mask_preview (Layer *, int, int);
 
-void            layer_invalidate_previews  (int);
+void            layer_invalidate_previews  (GimpImage*);
 
 
 /* from drawable.c */

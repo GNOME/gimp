@@ -198,7 +198,7 @@ by_color_select_color (GImage        *gimage,
   }
 
   alpha = bytes - 1;
-  mask = channel_new_mask (gimage->ID, width, height);
+  mask = channel_new_mask (gimage, width, height);
   pixel_region_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)), 
 		     0, 0, width, height, TRUE);
 
