@@ -1,0 +1,227 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pattern_arg () {{
+    name => 'name',
+    type => 'string',
+    desc => 'The pattern name'
+}}
+
+sub dim_args () {
+    my @args;
+    foreach (qw(width height)) {
+	push @args, { name => $_, type => 'int32', desc => "The pattern $_" };
+    }
+    @args;
+}
+
+sub pattern_outargs {
+    foreach (@outargs) {
+        my $alias = "patternp->$_->{name}";
+        $alias = "g_strdup ($alias)" if $_->{type} eq 'string';
+        $alias =~ s/patternp/patternp->mask/ if $_->{name} =~ /width|height/;
+        $_->{alias} = $alias;
+        $_->{no_declare} = 1;
+    }
+}
+
+# The defs
+
+sub patterns_get_pattern {
+    $blurb = 'Retrieve information about the currently active pattern.';
+
+    $help = <<'HELP';
+This procedure retrieves information about the currently active pattern. This
+includes the pattern name, and the pattern extents (width and height). All
+clone and bucket-fill operations with patterns will use this pattern to control
+the application of paint to the image.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = (
+	&pattern_arg,
+	&dim_args,
+    );
+
+    &pattern_outargs;
+
+    %invoke = (
+	vars => [ 'GPatternP patternp' ],
+	code => 'success = (patternp = get_active_pattern ()) != NULL;'
+    );
+}
+
+sub patterns_set_pattern {
+    $blurb = 'Set the specified pattern as the active pattern.';
+
+    $help = <<'HELP';
+This procedure allows the active pattern mask to be set by specifying its name.
+The name is simply a string which corresponds to one of the names of the
+installed patterns. If there is no matching pattern found, this procedure will
+return an error. Otherwise, the specified pattern becomes active and will be
+used in all subsequent paint operations.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( &pattern_arg );
+
+    %invoke = (
+	vars => [ 'GPatternP patternp', 'GSList *list' ],
+	code => <<'CODE'
+{
+  list = pattern_list;
+  success = FALSE;
+
+  while (list)
+    {
+      patternp = (GPatternP) list->data;
+
+      if (!strcmp (patternp->name, name))
+	{
+	  select_pattern (patternp);
+	  success = TRUE;
+	  break;
+	}
+
+      list = list->next;
+    }
+}
+CODE
+    );
+}
+
+sub patterns_list {
+    $blurb = 'Retrieve a complete listing of the available patterns.';
+
+    $help = <<'HELP';
+This procedure returns a complete listing of available GIMP patterns. Each name
+returned can be used as input to the 'gimp_patterns_set_pattern'.
+HELP
+
+    &std_pdb_misc;
+
+    @outargs = (
+	{ name => 'pattern_list', type => 'stringarray',
+	  desc => 'The list of pattern names',
+	  alias => 'patterns',
+	  array => { name => 'num_patterns',
+		     desc => 'The number of patterns in the pattern list',
+		     alias => 'num_patterns', no_declare => 1 } }
+    );
+
+    %invoke = (
+	vars => [ 'GSList *list = NULL', 'int i = 0' ],
+	code => <<'CODE'
+{
+  patterns = g_new (char *, num_patterns);
+
+  success = (list = pattern_list) != NULL;
+
+  while (list)
+    {
+      patterns[i++] = g_strdup (((GPatternP) list->data)->name);
+      list = list->next;
+    }
+}
+CODE
+    );
+}
+
+sub patterns_get_pattern_data {
+    $blurb = <<'BLURB';
+Retrieve information about the currently active pattern (including data).
+BLURB
+
+    $help = <<'HELP';
+This procedure retrieves information about the currently active pattern. This
+includes the pattern name, and the pattern extents (width and height). It also
+returns the pattern data.
+HELP
+
+    $author = $copyright = 'Andy Thomas';
+    $date = '1998';
+
+    @inargs = ( &pattern_arg );
+    $inargs[0]->{desc} = 'the pattern name ("" means current active pattern)';
+
+    @outargs = (
+	&pattern_arg,
+	&dim_args,
+    );
+
+    &pattern_outargs;
+
+    push @outargs, { name => 'mask_bpp', type => 'int32', init => 1,
+		     desc => 'Pattern bytes per pixel',
+		     alias => 'patternp->mask->bytes', no_declare => 1 },
+		   { name => 'mask_data', type => 'int8array', init => 1,
+		     desc => 'The pattern mask data',
+		     array => { name => 'length', init => 1,
+				desc => 'Length of pattern mask data' } };
+    
+    %invoke = (
+	headers => [ qw(<string.h>) ],
+	vars => [ 'GPatternP patternp = NULL' ],
+	code => <<'CODE'
+{
+  if (strlen (name))
+    {
+      GSList *list = pattern_list;
+
+      success = FALSE;
+
+      while (list)
+	{
+	  patternp = (GPatternP) list->data;
+
+	  if (!strcmp (patternp->name, name))
+	    {
+	      success = TRUE;
+	      break;
+	    }
+
+	  list = list->next;
+	}
+    }
+  else
+    success = (patternp = get_active_pattern ()) != NULL;
+
+  if (success)
+    {
+      length = patternp->mask->height * patternp->mask->width *
+	       patternp->mask->bytes;
+      mask_data = g_new (gint8, length);
+      g_memmove (mask_data, temp_buf_data (patternp->mask), length);
+    }
+}
+CODE
+    );
+}
+
+@headers = qw("patterns.h");
+
+@procs = qw(patterns_get_pattern patterns_set_pattern patterns_list
+	    patterns_get_pattern_data);
+%exports = (app => [@procs]);
+
+$desc = 'Patterns';
+
+1;

@@ -172,7 +172,7 @@ CODE
 		}
 	    }
 
-	    foreach (@arraynums) { $return_marshal .= "\*$_->{name} = 0;\n  "; }
+	    foreach (@arraynums) { $return_marshal .= "\*$_->{name} = 0;\n  " }
 	    $return_marshal =~ s/\n  $/\n\n  /s if scalar(@arraynums);
 
 	    $return_marshal .= <<CODE;
@@ -252,20 +252,49 @@ CODE
 	}
 
 	if ($arglist) {
-	    # We don't need the last comma in the declaration
-	    $arglist =~ s/, $//;
+	    my @arglist = ();
+	    my $longest = 0; my $indirect = 0;
+	    foreach (split(/, /, $arglist)) {
+		my ($type, $var) = /(\w+) ((?:\w|\*)+)/;
+		my $num = scalar @{[ $var =~ /\*/g ]};
+
+		push @arglist, [ $type, $var, $num ];
+
+		$longest = length $type if $longest < length $type;
+		$indirect = $num if $indirect < $num;
+	    }
+
+	    $longest += $indirect + 1;
+
+	    my $once = 0; $arglist = "";
+	    foreach (@arglist) {
+		my ($type, $var, $num) = @$_;
+		my $space = $longest - length($type) - $num;
+		$arglist .= ",\n\t" if $once++;
+		$arglist .= $type . ' ' x $space . $var;
+	    }
+
+	    $arglist =~ s/ +/ / if !$#arglist;
 	}
 	else {
 	    $arglist = "void";
 	}
 
+	my $funcname = "gimp_$name";
+
 	# Our function prototype for the headers
-        push @{$out->{proto}}, "$rettype gimp_$name ($arglist);\n";
+	(my $hrettype = $rettype) =~ s/ //g;
+
+        push @{$out->{proto}}, "$hrettype gimp_$name ($arglist);\n";
+
+	my $clist = $arglist;
+	$clist =~ s/\t/' ' x (length("gimp_$name") + 2)/eg;
+	$clist =~ s/ {8}/\t/g;
 
 	$out->{code} .= <<CODE;
 
 $rettype
-gimp_$name ($arglist)
+gimp_$name ($clist)
 {
   GParam *return_vals;
   gint nreturn_vals;$return_args$color
@@ -312,6 +341,46 @@ LGPL
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{lib}) {
 	    $extra = $main::grp{$group}->{extra}->{lib}
+	}
+
+	my ($longest1, $longest2, $longest3) = (0, 0, 0); my @arglist = ();
+	foreach (@{$out->{proto}}) {
+	    my $len; my $arglist = [ split(' ', $_, 3) ];
+
+	    $len = length($arglist->[0]);
+	    $longest1 = $len if $longest1 < $len;
+
+	    $len = length($arglist->[1]);
+	    $longest2 = $len if $longest2 < $len;
+
+	    my @arg = split(' ', $arglist->[2]);
+	    if ($#arg) {
+		$len = index($arglist->[2], $arg[1]);
+		$len -= scalar($arg[1] =~ /\*/g);
+		$longest3 = $len if $longest3 < $len;
+	    }
+
+	    push @arglist, $arglist;
+	}
+
+	@{$out->{proto}} = ();
+	foreach (@arglist) {
+	    my ($type, $func, $arglist) = @$_;
+
+	    my @args = split(/,/, $arglist); $arglist = "";
+	    foreach (@args) {
+		my $len = $longest3 - scalar(/ /g);
+		$len -= scalar(/\*/g);
+		s/(\s*\w+)\s+/$1 . ' ' x $len/e;
+		$arglist .= $_;
+		$arglist .= "," if !/;\n$/;
+	    }
+	    my $arg = $type;
+	    $arg .= ' ' x ($longest1 - length($type) + 1) . $func;
+	    $arg .= ' ' x ($longest2 - length($func) + 1) . $arglist;
+	    $arg =~ s/\t/' ' x ($longest1 + $longest2 + 3)/eg;
+	    $arg =~ s/ {8}/\t/g;
+	    push @{$out->{proto}}, $arg;
 	}
 
 	my $body;

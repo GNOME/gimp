@@ -26,10 +26,23 @@ BEGIN {
 
 use lib $srcdir;
 
+BEGIN {
+    # Some important stuff
+    require 'pdb.pl';
+    require 'enums.pl';
+    require 'util.pl';
+
+    # What to do?
+    require 'groups.pl';
+
+    if (exists $ENV{PDBGEN_GROUPS}) {
+	@groups = split(' ', $ENV{PDBGEN_GROUPS});
+    }
+}
+
 # Stifle "used only once" warnings
 $destdir = $destdir;
 %pdb = ();
-@groups = ();
 
 # The actual parser (in a string so we can eval it in another namespace)
 $evalcode = <<'CODE';
@@ -101,20 +114,12 @@ $evalcode = <<'CODE';
 }
 CODE
 
-# What to do?
-require 'groups.pl';
-
 # Slurp in the PDB defs
 foreach $file (@groups) {
     print "Processing $srcdir/pdb/$file.pdb...\n";
     eval "package Gimp::CodeGen::Safe::$file; $evalcode;";
     die $@ if $@;
 }
-
-# Some important stuff
-require 'pdb.pl';
-require 'enums.pl';
-require 'util.pl';
 
 # Squash whitespace into just single spaces between words
 sub trimspace { for (${$_[0]}) { s/\s+/ /gs; s/^ //; s/ $//; } }

@@ -22,6 +22,7 @@ package Gimp::CodeGen::enums;
 %enums = (
     ConvertPaletteType =>
 	{ contig => 1,
+	  header => 'convert.h',
 	  symbols => [ qw(MAKE_PALETTE REUSE_PALETTE WEB_PALETTE
 			  MONO_PALETTE CUSTOM_PALETTE) ],
 	  mapping => { MAKE_PALETTE => '0',
@@ -32,18 +33,21 @@ package Gimp::CodeGen::enums;
 	},
     ChannelOffsetType =>
 	{ contig => 1,
+	  header => 'channel_ops.h',
 	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
 	  mapping => { OFFSET_BACKGROUND => '0',
 		       OFFSET_TRANSPARENT => '1' }
 	},
     SizeType =>
 	{ contig => 1,
+	  header => 'text_tool.h',
 	  symbols => [ qw(PIXELS POINTS) ],
 	  mapping => { PIXELS => '0',
 		       POINTS => '1' }
 	},
     GimpFillType =>
 	{ contig => 1,
+	  header => 'gimpdrawable.h',
 	  symbols => [ qw(FOREGROUND_FILL BACKGROUND_FILL WHITE_FILL
 			  TRANSPARENT_FILL NO_FILL) ],
 	  mapping => { FOREGROUND_FILL => '0',
@@ -54,6 +58,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpImageType =>
 	{ contig => 1,
+	  header => 'gimpimage.h',
 	  symbols => [ qw(RGB_GIMAGE RGBA_GIMAGE GRAY_GIMAGE GRAYA_GIMAGE
 			  INDEXED_GIMAGE INDEXEDA_GIMAGE) ],
 	  mapping => { RGB_GIMAGE => '0',
@@ -71,6 +76,7 @@ package Gimp::CodeGen::enums;
 	},
     GimpImageBaseType =>
 	{ contig => 1,
+	  header => 'gimpimage.h',
 	  symbols => [ qw(RGB GRAY INDEXED) ],
 	  mapping => { RGB => '0',
 		       GRAY => '1',
@@ -78,6 +84,7 @@ package Gimp::CodeGen::enums;
 	},
     ChannelType =>
 	{ contig => 1,
+	  header => 'gimpimage.h',
 	  symbols => [ qw(Red Green Blue Gray Indexed Auxillary) ],
 	  mapping => { Red => '0',
 		       Green => '1',
@@ -88,6 +95,7 @@ package Gimp::CodeGen::enums;
 	},
     MergeType =>
 	{ contig => 1,
+	  header => 'gimpimage.h',
 	  symbols => [ qw(ExpandAsNecessary ClipToImage ClipToBottomLayer
 			  FlattenImage) ],
 	  mapping => { ExpandAsNecessary => '0',
@@ -97,13 +105,13 @@ package Gimp::CodeGen::enums;
 	},
     PDBArgType =>
 	{ contig => 1,
+	  header => 'procedural_db.h',
 	  symbols => [ qw(PDB_INT32 PDB_INT16 PDB_INT8 PDB_FLOAT PDB_STRING
 			  PDB_INT32ARRAY PDB_INT16ARRAY PDB_INT8ARRAY
 			  PDB_FLOATARRAY PDB_STRINGARRAY PDB_COLOR
 			  PDB_REGION PDB_DISPLAY PDB_IMAGE PDB_LAYER
 			  PDB_CHANNEL PDB_DRAWABLE PDB_SELECTION
-			  PDB_BOUNDARY PDB_PATH PDB_PARASITE PDB_STATUS
-			  PDB_END) ],
+			  PDB_BOUNDARY PDB_PATH PDB_PARASITE PDB_STATUS) ],
 	  mapping => { PDB_INT32 => '0',
 		       PDB_INT16 => '1',
 		       PDB_INT8 => '2',
@@ -125,11 +133,11 @@ package Gimp::CodeGen::enums;
 		       PDB_BOUNDARY => '18',
 		       PDB_PATH => '19',
 		       PDB_PARASITE => '20',
-		       PDB_STATUS => '21',
-		       PDB_END => '22' }
+		       PDB_STATUS => '21' }
 	},
     PDBStatusType =>
 	{ contig => 1,
+	  header => 'procedural_db.h',
 	  symbols => [ qw(PDB_EXECUTION_ERROR PDB_CALLING_ERROR
 			  PDB_PASS_THROUGH PDB_SUCCESS) ],
 	  mapping => { PDB_EXECUTION_ERROR => '0',
@@ -139,15 +147,18 @@ package Gimp::CodeGen::enums;
 	},
     PDBProcType =>
 	{ contig => 1,
-	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION
-			  PDB_TEMPORARY) ],
+	  header => 'procedural_db.h',
+	  symbols => [ qw(PDB_INTERNAL PDB_PLUGIN PDB_EXTENSION) ],
 	  mapping => { PDB_INTERNAL => '0',
 		       PDB_PLUGIN => '1',
-		       PDB_EXTENSION => '2',
-		       PDB_TEMPORARY => '3' }
+		       PDB_EXTENSION => '2' },
+	  nicks   => { PDB_INTERNAL => 'INTERNAL',
+		       PDB_PLUGIN => 'PLUGIN',
+		       PDB_EXTENSION => 'EXTENSION' }
 	},
     LayerModeEffects =>
 	{ contig => 1,
+	  header => 'paint_funcs.h',
 	  symbols => [ qw(NORMAL_MODE DISSOLVE_MODE BEHIND_MODE
 			  MULTIPLY_MODE SCREEN_MODE OVERLAY_MODE
 			  DIFFERENCE_MODE ADDITION_MODE SUBTRACT_MODE
@@ -193,6 +204,7 @@ package Gimp::CodeGen::enums;
 	},
     GradientType =>
 	{ contig => 1,
+	  header => 'blend.h',
 	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
 			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
 			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
@@ -211,6 +223,7 @@ package Gimp::CodeGen::enums;
 	},
     BlendMode =>
 	{ contig => 1,
+	  header => 'blend.h',
 	  symbols => [ qw(FG_BG_RGB_MODE FG_BG_HSV_MODE FG_TRANS_MODE
 			  CUSTOM_MODE) ],
 	  mapping => { FG_BG_RGB_MODE => '0',
@@ -224,6 +237,7 @@ package Gimp::CodeGen::enums;
 	},
     RepeatMode =>
 	{ contig => 1,
+	  header => 'blend.h',
 	  symbols => [ qw(REPEAT_NONE REPEAT_SAWTOOTH REPEAT_TRIANGULAR) ],
 	  mapping => { REPEAT_NONE => '0',
 		       REPEAT_SAWTOOTH => '1',
@@ -231,6 +245,7 @@ package Gimp::CodeGen::enums;
 	},
     BucketFillMode =>
 	{ contig => 1,
+	  header => 'bucket_fill.h',
 	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
 	  mapping => { FG_BUCKET_FILL => '0',
 		       BG_BUCKET_FILL => '1',
@@ -238,12 +253,14 @@ package Gimp::CodeGen::enums;
 	},
     CloneType =>
 	{ contig => 1,
+	  header => 'clone.h',
 	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
 	  mapping => { IMAGE_CLONE => '0',
 		       PATTERN_CLONE => '1' }
 	},
     ConvolveType =>
 	{ contig => 1,
+	  header => 'convolve.h',
 	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
 	  mapping => { BLUR_CONVOLVE => '0',
 		       SHARPEN_CONVOLVE => '1',
@@ -254,6 +271,7 @@ package Gimp::CodeGen::enums;
 	},
     ChannelOps =>
 	{ contig => 1,
+	  header => 'channel.h',
 	  symbols => [ qw(ADD SUB REPLACE INTERSECT) ],
 	  mapping => { ADD => '0',
 		       SUB => '1',
@@ -262,6 +280,7 @@ package Gimp::CodeGen::enums;
 	},
     BrushApplicationMode =>
 	{ contig => 1,
+	  header => 'paint_core.h',
 	  symbols => [ qw(HARD SOFT PRESSURE) ],
 	  mapping => { HARD => '0',
 		       SOFT => '1',
@@ -269,6 +288,7 @@ package Gimp::CodeGen::enums;
 	},
     PaintApplicationMode =>
 	{ contig => 1,
+	  header => 'paint_core.h',
 	  symbols => [ qw(CONSTANT INCREMENTAL) ],
 	  mapping => { CONSTANT => '0',
 		       INCREMENTAL => '1' },
@@ -276,6 +296,7 @@ package Gimp::CodeGen::enums;
 	},
     GradientPaintMode =>
 	{ contig => 1,
+	  header => 'paint_core.h',
 	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
 			  LOOP_TRIANGLE ONCE_END_COLOR) ],
 	  mapping => { ONCE_FORWARD => '0',
@@ -286,6 +307,7 @@ package Gimp::CodeGen::enums;
 	},
     ChannelLutType =>
 	{ contig => 1,
+	  header => 'lut_funcs.h',
 	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT ALPHA_LUT) ],
 	  mapping => { VALUE_LUT => '0',
 		       RED_LUT => '1',
@@ -300,6 +322,7 @@ package Gimp::CodeGen::enums;
 	},
     ShearType =>
 	{ contig => 1,
+	  header => 'shear_tool.h',
 	  symbols => [ qw(HORZ_SHEAR VERT_SHEAR) ],
 	  mapping => { HORZ_SHEAR => '0',
 		       VERT_SHEAR => '1' },
@@ -308,6 +331,7 @@ package Gimp::CodeGen::enums;
 	},
     TransferMode =>
 	{ contig => 1,
+	  header => 'color_balance.h',
 	  symbols => [ qw(SHADOWS MIDTONES HIGHLIGHTS) ],
 	  mapping => { SHADOWS => '0',
 		       MIDTONES => '1',
@@ -315,6 +339,7 @@ package Gimp::CodeGen::enums;
 	},
     HueRange =>
 	{ contig => 1,
+	  header => 'hue_saturation.h',
 	  symbols => [ qw(ALL_HUES RED_HUES YELLOW_HUES GREEN_HUES CYAN_HUES
 			  BLUE_HUES MAGENTA_HUES) ],
 	  mapping => { ALL_HUES => '0',

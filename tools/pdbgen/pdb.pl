@@ -74,6 +74,7 @@ package Gimp::CodeGen::pdb;
     # Special cases
     enum    => { name => 'INT32', type => 'gint32 '   },
     boolean => { name => 'INT32', type => 'gboolean ' },
+    tattoo  => { name => 'INT32', type => 'gint32 '   },
     unit    => { name => 'INT32', type => 'GUnit '    },
 
     region => { name => 'REGION', type => 'gpointer ' } # not supported

@@ -26,7 +26,7 @@ $FILE_EXT = ".tmp.$$";
 
 sub write_file {
     my $file = shift; my $realfile = $file;
-    $realfile =~ s/$FILE_EXT//;
+    $realfile =~ s/$FILE_EXT$//;
     if (-e $realfile) {
 	if (cmp($realfile, $file)) {
 	    cp($realfile, "$realfile~") if $DEBUG_OUTPUT;

@@ -65,7 +65,7 @@ sub gradients_popup {
       newdialog->sample_size = sample_size;
 
       /* Add to active gradient dialogs list */
-      active_dialogs = g_slist_append (active_dialogs, newdialog);
+      grad_active_dialogs = g_slist_append (grad_active_dialogs, newdialog);
     }
   else
     success = FALSE;
@@ -91,9 +91,9 @@ sub gradients_close_popup {
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)) &&
-      (gsp = gradients_get_gradientselect (name))
+      (gsp = gradients_get_gradientselect (name)))
     {
-      active_dialogs = g_slist_remove (active_dialogs, gsp);
+      grad_active_dialogs = g_slist_remove (grad_active_dialogs, gsp);
 
       if (GTK_WIDGET_VISIBLE (gsp->shell))
 	gtk_widget_hide (gsp->shell);
@@ -131,8 +131,8 @@ sub gradients_set_popup {
 	vars => [ 'ProcRecord *prec', 'GradSelectP gsp' ],
 	code => <<'CODE'
 {
-  if ((prec = procedural_db_lookup (name)) &&
-      (gsp = gradients_get_gradientselect (name))
+  if ((prec = procedural_db_lookup (pdbname)) &&
+      (gsp = gradients_get_gradientselect (pdbname)))
     {
       GSList *tmp;
       gradient_t *active = NULL;
@@ -144,7 +144,7 @@ sub gradients_set_popup {
  	{
 	  active = tmp->data;
 
-	  if (!strcmp (gradient_name, active->name)
+	  if (!strcmp (gradient_name, active->name))
 	    break; /* We found the one we want */
 
 	  pos++;
@@ -189,15 +189,14 @@ HELP
 	  desc => 'The gradient name',
 	  alias => 'g_strdup (grad->name)', no_declare => 1 },
 	{ name => 'grad_data', type => 'floatarray', alias => 'values',
-	  desc => 'The gradient sample data',
+	  desc => 'The gradient sample data', init => 1,
 	  array => { name => 'width',
 		     desc => 'The gradient sample width (r,g,b,a)',
 		     alias => 'sample_size * 4', no_declare => 1 } }
     );
 
     %invoke = (
-	headers => [ qw("gradient_select.h") ],
-	vars => [ 'gradient_t *grad' ],
+	vars => [ 'gradient_t *oldgrad, *grad = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))
@@ -234,6 +233,7 @@ HELP
 
       pv = values = g_new (gdouble, i * 4);
 
+      oldgrad = curr_gradient;
       curr_gradient = grad;
 
       while (i--)
@@ -255,13 +255,13 @@ CODE
     );
 }
 
-@headers = qw("gradient_select.h");
+@headers = qw("gradient_header.h" "gradient.h");
 
 $extra{app}->{code} = <<'CODE';
 static GradSelectP
 gradients_get_gradientselect(gchar *name)
 {
-  GSList *list = active_dialogs;
+  GSList *list = grad_active_dialogs;
   GradSelectP gsp;
 
   while (list)

@@ -201,7 +201,7 @@ HELP
 	    unit_set_deletion_flag unit_get_identifier unit_get_factor
 	    unit_get_digits unit_get_symbol unit_get_abbreviation
 	    unit_get_singular unit_get_plural);
-%exports = (app => [@procs]);
+%exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Units';
 

@@ -17,24 +17,20 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub proc_name_arg {{
+sub proc_name_arg () {{
     name => 'procedure',
     type => 'string',
     desc => 'The procedure name',
     alias => 'proc_name'
 }}
 
-sub regex_arg {
-    my $type = shift;
-}
-
-sub data_ident_arg {{
+sub data_ident_arg () {{
     name => 'identifier',
     type => 'string',
     desc => 'The identifier associated with data'
 }}
 
-sub data_bytes_arg {{
+sub data_bytes_arg () {{
     name => 'bytes',
     type => '0 < int32',
     desc => 'The number of bytes in the data',
@@ -42,7 +38,7 @@ sub data_bytes_arg {{
     no_declare => 1
 }}
 
-sub data_arg {{
+sub data_arg () {{
     name => 'data',
     type => 'int8array',
     desc => 'A byte array containing data',
@@ -50,7 +46,7 @@ sub data_arg {{
 }}
 
 sub arg_info_proc {
-    my $type = shift; my $long_type = shift; my $real_type = shift;
+    my ($type, $long_type, $real_type) = @_;
 
     $blurb = <<BLURB;
 Queries the procedural database for information on the specified procedure's
@@ -73,7 +69,7 @@ HELP
 
     @outargs = (
 	{ name => "${type}_type", type => 'enum PDBArgType',
-	  desc => "The type of $long_type %%desc%%",
+	  desc => "The type of $long_type { %%desc%% }",
 	  alias => "${type}->arg_type", no_declare => 1 },
 	{ name => "${type}_name", type => 'string',
 	  desc => "The name of the $long_type",
@@ -84,7 +80,7 @@ HELP
     );
 
    %invoke = (
-	vars => [ 'ProcRecord *proc;' ],
+	vars => [ 'ProcRecord *proc', "ProcArg *$type = NULL" ],
 	code => <<CODE
 {
   proc = procedural_db_lookup (proc_name);
@@ -119,6 +115,7 @@ HELP
     );
 
     %invoke = (
+	headers => [ qw(<stdio.h>) ],
 	code => <<'CODE'
 {
   if ((procedural_db_out = fopen (filename, "w")))
@@ -126,6 +123,8 @@ HELP
       g_hash_table_foreach (procedural_ht, procedural_db_print_entry, NULL);
       fclose (procedural_db_out);
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -181,7 +180,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("regex.h") ],
+	headers => [ qw(<stdlib.h> "regex.h") ],
 	vars => [ 'PDBQuery pdb_query' ],
 	code => <<CODE
 {
@@ -207,8 +206,8 @@ This procedure returns information on the specified procedure. A short blurb,
 detailed help, author(s), copyright information, procedure type, number of
 input, and number of return values are returned. For specific information on
 each input argument and return value, use the
-'gimp-procedural-db-query-proc-arg' and
-'gimp-procedural-db-query-proc-val' procedures.
+'gimp_procedural_db_query_proc_arg' and
+'gimp_procedural_db_query_proc_val' procedures.
 HELP
 
     &std_pdb_misc;
@@ -228,7 +227,7 @@ HELP
 	{ name => 'date', type => 'string',
 	  desc => 'Copyright date' },
         { name => 'proc_type', type => 'enum PDBProcType',
-	  desc => 'The procedure type: %%desc%%' },
+	  desc => 'The procedure type: { %%desc%% }' },
         { name => 'num_args', type => 'int32',
 	  desc => 'The number of input arguments' },
         { name => 'num_values', type => 'int32',
@@ -242,6 +241,7 @@ HELP
     }
 
     %invoke = (
+	vars => [ 'ProcRecord *proc = NULL' ],
 	code => <<'CODE'
 success = (proc = procedural_db_lookup (proc_name)) != NULL;
 CODE
@@ -274,9 +274,10 @@ HELP
 
     @outargs = ( &data_arg );
     $outargs[0]->{alias} = 'data_copy';
+    $outargs[0]->{init} = 1;
 
     %invoke = (
-	vars => [ 'PDBData *data', 'char *data_copy', 'GList *list' ],
+	vars => [ 'PDBData *data = NULL', 'GList *list' ],
 	code => <<'CODE'
 {
   success = FALSE;
@@ -318,7 +319,7 @@ HELP
     @outargs = ( &data_bytes_arg );
 
     %invoke = (
-	vars => [ 'PDBData *data', 'GList *list' ],
+	vars => [ 'PDBData *data = NULL', 'GList *list' ],
 	code => <<'CODE'
 {
   success = FALSE;
@@ -379,13 +380,14 @@ HELP
     g_free (data->data);
 
   data->identifier = g_strdup (identifier);
-  data->bytes = bytes;
   data->data = g_new (char, data->bytes);
   memcpy (data->data, (char *) data_src, data->bytes);
 }
 CODE
     );
 }
+
+@headers = qw("config.h" "libgimp/gimpintl.h");
 
 $extra{app}->{decls} = <<'CODE';
 /*  Query structure  */
@@ -414,8 +416,26 @@ struct _PDBData
   gchar *data;
 };
 
+static FILE *procedural_db_out = NULL;
 static GList *data_list = NULL;
+
+static char *proc_type_str[] = 
+{
+  N_("Internal GIMP procedure"),
+  N_("GIMP Plug-In"),
+  N_("GIMP Extension"),
+  N_("Temporary Procedure")
+};
+
+static const char * const type_str[] =
+{
 CODE
+
+foreach (@{$Gimp::CodeGen::enums::enums{PDBArgType}->{symbols}}) {
+    $extra{app}->{decls} .= qq/  "$_",\n/;
+}
+
+$extra{app}->{decls} =~ s/,\n$/\n};\n/;
 
 $extra{app}->{code} = <<'CODE';
 static int
@@ -455,14 +475,13 @@ procedural_db_query_entry (gpointer key,
           pdb_query->num_procs++;
           pdb_query->list_of_procs = g_realloc (pdb_query->list_of_procs,
                                                (sizeof (gchar **) * pdb_query->num_procs));
-          pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc->n
-ame);
+          pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc->name);
         }
     }
 }
 
 static void
-output_string (gchar *string)
+output_string (const char *string)
 {
   fprintf (procedural_db_out, "\"");
   while (*string)
@@ -544,6 +563,21 @@ procedural_db_print_entry (gpointer key,
     }
 
   g_string_free (buf, TRUE);
+}
+
+/* This really doesn't belong here, but it depends on your generated type_str
+ * array.
+ */
+const char *
+pdb_type_name (gint type)
+{
+  if (type >= 0 && type <= PDB_END)
+    return type_str[type];
+  else
+    return g_strdup_printf ("(PDB type %d unknown)", type);
+   /* Yeah, we leak the memory.  But then you shouldn't try and
+    * get the name of a PDB type that doesn't exist, should you.
+    */
 }
 CODE
 

@@ -1,0 +1,173 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub pdb_misc {
+    $author = $copyright = 'Andy Thomas';
+    $date = '1998';
+}
+
+sub patterns_popup {
+    $blurb = 'Invokes the Gimp pattern selection.';
+
+    $help = 'This procedure popups the pattern selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'pattern_callback', type => 'string', alias => 'name',
+	  desc => 'The callback PDB proc to call when pattern selection is
+		   made' },
+	{ name => 'popup_title', type => 'string', alias => 'title',
+	  desc => 'Title to give the pattern popup window' },
+	{ name => 'initial_pattern', type => 'string', alias => 'pattern',
+	  desc => 'The name of the pattern to set as the first selected',
+	  no_success => 1 },
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'PatternSelectP newdialog' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)))
+    {
+      if (pattern && strlen (pattern))
+	newdialog = pattern_select_new (title, pattern);
+      else
+	newdialog = pattern_select_new (title, NULL);
+
+      /* Add to list of proc to run when pattern changes */
+      newdialog->callback_name = g_strdup (name);
+
+      /* Add to active pattern dialogs list */
+      pattern_active_dialogs = g_slist_append (pattern_active_dialogs, newdialog);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub patterns_close_popup {
+    $blurb = 'Popdown the Gimp pattern selection.';
+
+    $help = 'This procedure closes an opened pattern selection dialog.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'pattern_callback', type => 'string', alias => 'name',
+	  desc => 'The name of the callback registered for this popup' }
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'PatternSelectP psp' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)) &&
+      (psp = pattern_get_patternselect (name)))
+    {
+      pattern_active_dialogs = g_slist_remove (pattern_active_dialogs, psp);
+
+      if (GTK_WIDGET_VISIBLE (psp->shell))
+	gtk_widget_hide (psp->shell);
+
+      /* Free memory if poping down dialog which is not the main one */
+      if (psp != pattern_select_dialog)
+	{
+	  gtk_widget_destroy (psp->shell);
+	  pattern_select_free (psp);
+	}
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub patterns_set_popup {
+    $blurb = 'Sets the current pattern selection in a popup.';
+
+    $help = $blurb;
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'pattern_callback', type => 'string', alias => 'name',
+	  desc => 'The name of the callback registered for this popup' },
+	{ name => 'pattern_name', type => 'string',
+	  desc => 'The name of the pattern to set as selected' },
+    );
+
+    %invoke = (
+	vars => [ 'ProcRecord *prec', 'PatternSelectP psp' ],
+	code => <<'CODE'
+{
+  if ((prec = procedural_db_lookup (name)) &&
+      (psp = pattern_get_patternselect (name)))
+    {
+      GPatternP active = pattern_list_get_pattern (pattern_list, pattern_name);
+
+      if (active)
+	{
+	  /* Must alter the wigdets on screen as well */
+
+	  psp->pattern = active;
+	  pattern_select_select (psp, active->index);
+	}
+      else
+	success = FALSE;
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+@headers = qw("pattern_select.h");
+
+$extra{app}->{code} = <<'CODE';
+static PatternSelectP
+pattern_get_patternselect (gchar *name)
+{
+  GSList *list = pattern_active_dialogs;
+  PatternSelectP psp;
+
+  while (list)
+    {
+      psp = (PatternSelectP) list->data;
+      
+      if (!strcmp (name, psp->callback_name))
+	return psp;
+
+      list = list->next;
+    }
+
+  return NULL;
+}
+CODE
+
+@procs = qw(patterns_popup patterns_close_popup patterns_set_popup);
+%exports = (app => [@procs]);
+
+$desc = 'Pattern UI';
+
+1;

@@ -23,7 +23,7 @@ sub brush_arg () {{
     desc => 'The brush name'
 }}
 
-sub dim_args {
+sub dim_args () {
     my @args;
     foreach (qw(width height)) {
 	push @args, { name => $_, type => 'int32', desc => "The brush $_" };
@@ -80,7 +80,7 @@ HELP
    *        some future date, so we could tell if things blew up when reparsing
    *        the list (for whatever reason). 
    *                       - Seth "Yes, this is a kludge" Burgess
-   *                         <sjburges@ou.edu>
+   *                         <sjburges@gimp.org>
    */
 
   brushes_init (FALSE);
@@ -156,7 +156,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &opacity_arg );
-    $outargs[0]->{alias} = 'gimp_brush_get_opacity () * 100.0';
+    $outargs[0]->{alias} = 'paint_options_get_opacity () * 100.0';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -173,7 +173,7 @@ HELP
 
     @inargs = ( &opacity_arg );
 
-    %invoke = ( code => 'gimp_brush_set_opacity (opacity / 100.0);' );
+    %invoke = ( code => 'paint_options_set_opacity (opacity / 100.0);' );
 }
 
 sub brushes_get_spacing {
@@ -189,7 +189,7 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &spacing_arg );
-    $outargs[0]->{alias} = 'gimp_brush_get_spacing ()';
+    $outargs[0]->{alias} = 'gimp_brush_get_spacing (get_active_brush ())';
     $outargs[0]->{no_declare} = 1;
 }
 
@@ -206,7 +206,9 @@ HELP
 
     @inargs = ( &spacing_arg );
 
-    %invoke = ( code => 'gimp_brush_set_spacing (spacing);' );
+    %invoke = (
+	code => 'gimp_brush_set_spacing (get_active_brush(), spacing);'
+    );
 }
 
 sub brushes_get_paint_mode {
@@ -222,12 +224,12 @@ HELP
     &std_pdb_misc;
 
     @outargs = ( &paint_mode_arg );
-    $outargs[0]->{alias} = 'gimp_brush_get_paint_mode ()';
+    $outargs[0]->{alias} = 'paint_options_get_paint_mode ()';
     $outargs[0]->{no_declare} = 1;
 }
 
 sub brushes_set_paint_mode {
-    $blurb = 'Set the brush paint_mode.';
+    $blurb = 'Set the brush paint mode.';
 
     $help = <<'HELP';
 This procedure modifies the paint_mode setting for the current brush. This
@@ -239,7 +241,7 @@ HELP
 
     @inargs = ( &paint_mode_arg );
 
-    %invoke = ( code => 'gimp_brush_set_paint_mode (paint_mode);' );
+    %invoke = ( code => 'paint_options_set_paint_mode (paint_mode);' );
 }
 
 sub brushes_list {
@@ -262,7 +264,7 @@ HELP
     );
 
     %invoke = (
-	vars => [ 'GSList *list', 'int i = 0' ],
+	vars => [ 'GSList *list = NULL', 'int i = 0' ],
 	code => <<'CODE'
 {
   brushes = g_new (char *, brush_list->num_brushes);
@@ -309,18 +311,19 @@ HELP
     $outargs[1]->{alias} = '1.0';
     $outargs[3]->{alias} = '0';
 
-    push @outargs, { name => 'mask_data', type => 'int8array',
+    push @outargs, { name => 'mask_data', type => 'int8array', init => 1,
 		     desc => 'The brush mask data',
-		     array => { name => 'length',
+		     array => { name => 'length', init => 1,
 				desc => 'Length of brush mask data' } };
     
     %invoke = (
+	headers => [ qw(<string.h>) ],
 	vars => [ 'GimpBrushP brushp = NULL' ],
 	code => <<'CODE'
 {
   if (strlen (name))
     {
-      GSList list = GIMP_LIST (brush_list)->list;
+      GSList *list = GIMP_LIST (brush_list)->list;
 
       success = FALSE;
 
@@ -351,7 +354,7 @@ CODE
     );
 }
 
-@headers = qw("gimpbrushlist.h");
+@headers = qw("gimplist.h" "gimpbrush.h" "gimpbrushlistP.h" "paint_options.h");
 
 @procs = qw(brushes_refresh brushes_get_brush brushes_set_brush
 	    brushes_get_opacity brushes_set_opacity brushes_get_spacing
@@ -361,5 +364,4 @@ CODE
 
 $desc = 'Brushes';
 
-&brushes_get_paint_mode;
 1;

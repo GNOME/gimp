@@ -39,6 +39,6 @@ HELP
 @procs = qw(version);
 %exports = (app => [@procs]);
 
-$desc = 'Miscellaneous procedures';
+$desc = 'Miscellaneous';
 
 1;

@@ -229,9 +229,12 @@ while (<>) {
 	    $nicks = ",\n\t  nicks   => { " . $nicks . " }";
 	}
 
+	$ARGV =~ m@([^/]*)$@;
+
 	$code .= <<ENTRY;
 :    $enumname =>
 :	{ contig => $contig,
+:	  header => '$1',
 :	  symbols => [ qw($symbols) ],
 :	  mapping => { $mapping }$nicks
 :	},

@@ -1,0 +1,243 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub channel_arg () {{
+    name => 'channel',
+    type => 'channel',
+    desc => 'The channel'
+}}
+
+sub channel_get_prop_proc {
+    my ($prop, $type, $desc, $func) = @_;
+
+    $blurb = "Get the $desc of the specified channel.";
+
+    $help = "This procedure returns the specified channel's $desc.";
+
+    &std_pdb_misc;
+
+    @inargs = ( &channel_arg );
+
+    @outargs = (
+	{ name => $prop, type => $type,
+	  desc => "The channel $desc", no_declare => 1 }
+    );
+
+    my $alias = $func ? "channel_get_$prop (channel)" : "channel->$prop";
+    $alias = "g_strdup ($alias)" if $type eq 'string';
+    $outargs[0]->{alias} .= "$alias";
+
+    if ($type eq 'color') {
+	$outargs[0]->{init} = 1;
+	delete @{$outargs[0]}{qw(alias no_declare)};
+
+	$invoke{headers} = [ qw("gimpimage.h") ];
+
+	$invoke{code} = "{\n  color = g_new (guchar, 3);\n";
+	foreach (map { "${_}_PIX" } qw(RED GREEN BLUE)) {
+	    $invoke{code} .= "  $prop\[$_] = channel->col[$_];\n";
+	}
+	$invoke{code} .= "}\n";
+    }
+}
+
+sub channel_set_prop_proc {
+    my ($prop, $type, $desc, $func) = @_;
+
+    $blurb = "Set the $desc of the specified channel.";
+
+    $help = "This procedure sets the specified channel's $desc.";
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&channel_arg,
+	{ name => $prop, type => $type,
+	  desc => "The new channel $desc" }
+    );
+
+    $invoke{code} = $func ? "channel_set_$prop (channel, $prop);"
+			  : "channel->$prop = $prop;";
+
+    if ($type eq 'color') {
+	%invoke = (
+	    vars => [ 'int i' ],
+	    code => <<CODE
+for (i = 0; i < 3; i++)
+  channel->col[i] = $prop\[i];
+CODE
+	);
+    }
+}
+
+sub channel_accessors {
+    my ($prop, $type, $desc, $func, $extra) = @_;
+    my (@extra, %extra); my $once = 0;
+
+    ref($extra) ? (@extra = @$extra) : (@extra = ($extra, $extra));
+    %extra = map { $once++ ? 'set' : 'get', $_ ? $_ : "" } @extra;
+
+    foreach (keys %extra) {
+	my $proc = "channel_${_}_$prop";
+
+	push @procs, $proc;
+
+	eval <<SUB;
+sub @{[ scalar caller ]}::$proc {
+    \&channel_${_}_prop_proc('$prop', '$type', '$desc', $func);
+    $extra{$_}
+}
+SUB
+    }
+}
+
+sub channel_new {
+    $blurb = 'Create a new channel.';
+
+    $help = <<'HELP';
+This procedure creates a new channel with the specified width and height. Name,
+opacity, and color are also supplied parameters. The new channel still needs to
+be added to the image, as this is not automatic. Add the new channel with the
+'gimp_image_add_channel' command. Other attributes such as channel show masked,
+should be set with explicit procedure calls. The channel's contents are
+undefined initially.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'width', type => '0 < int32',
+	  desc => 'The channel width: (%%desc%%)' },
+	{ name => 'height', type => '0 < int32',
+	  desc => 'The channel height: (%%desc%%)' },
+	{ name => 'name', type => 'string',
+	  desc => 'The channel name' },
+	{ name => 'opacity', type => '0 <= float <= 100',
+	  desc => 'The channel opacity: (%%desc%%)', alias => 'opacity_arg' },
+	{ name => 'color', type => 'color',
+	  desc => 'The channel compositing color' }
+    );
+    $inargs[0]->{desc} .= ' to which to add the channel';
+
+    @outargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The newly created channel', init => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'int opacity' ],
+	code => <<'CODE'
+{
+  opacity = (int) ((opacity_arg * 255) / 100);
+  channel = channel_new (gimage, width, height, name, opacity, color);
+  success = channel != NULL;
+}
+CODE
+    );
+}
+
+sub channel_copy {
+    $blurb = 'Copy a channel.';
+
+    $help = <<'HELP';
+This procedure copies the specified channel and returns the copy.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel to copy' }
+    );
+
+    @outargs = (
+	{ name => 'channel_copy', type => 'channel', init => 1,
+	  desc => 'The newly copied channel', alias => 'copy' }
+    );
+
+    %invoke = ( code => 'success = (copy = channel_copy (channel)) != NULL;' );
+}
+
+sub channel_delete {
+    $blurb = 'Delete a channel.';
+
+    $help = <<'HELP';
+This procedure deletes the specified channel. This does not need to be done if
+a gimage containing this channel was already deleted.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'channel', type => 'channel',
+	  desc => 'The channel to delete' }
+    );
+
+    %invoke = ( code => 'channel_delete (channel);' );
+}
+
+&channel_accessors('name', 'string', 'name', 1,
+		   [ undef, '$inargs[1]->{no_success} = 1' ]);
+
+&channel_accessors('visible', 'boolean', 'visibility', 0,
+		   [ '$outargs[0]->{alias} =~
+			  s/(channel)/GIMP_DRAWABLE ($1)/',
+		     '$invoke{code} =~
+			  s/(channel)/GIMP_DRAWABLE ($1)/' ]);
+
+&channel_accessors('show_masked', 'boolean', 'composite method', 0,
+		   <<'CODE');
+    $help .= <<'HELP'
+ If it is non-zero, then the channel is composited with the image so that
+masked regions are shown. Otherwise, selected regions are shown.
+HELP
+CODE
+
+&channel_accessors('opacity', '0 <= float <= 100', 'opacity', 0,
+		   [ '$outargs[0]->{alias} =
+			  "(channel->opacity * 100.0) / 255.0"',
+		     '$invoke{code} =~
+			  s%(opacity);$%(int) (($1 * 255) / 100);%' ]);
+
+&channel_accessors('color', 'color', 'compositing color', 0);
+
+&channel_accessors('tattoo', 'tattoo', 'tattoo', 1,
+		   <<'CODE');
+    $blurb = 'Returns the tattoo associated with the specified channel.';
+
+    $help = <<'HELP';
+This procedure returns the tattoo associated with the specified channel. A
+tattoo is a unique and permanent identifier attached to a channel that can be
+used to uniquely identify a channel within an image even between sessions
+HELP
+
+    $author = $copyright = 'Jay Cox';
+    $date = '1998';
+CODE
+
+@headers = qw("channel.h" "channel_pvt.h");
+
+$#procs--;
+unshift @procs, qw(channel_new channel_copy channel_delete);
+%exports = (app => [@procs]);
+
+$desc = 'Channel';
+
+1;

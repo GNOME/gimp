@@ -187,8 +187,8 @@ HELP
     foreach $where ('upper left', 'lower right') {
 	foreach (qw(x y)) {
 	    push @outargs, { name => "$_$pos", type => 'int32',
-	    		     desc => '$_ coordinate of the $where corner of
-			     	      selection bounds' }
+	    		     desc => "$_ coordinate of the $where corner of
+			     	      selection bounds" }
 	}
 	$pos++;
     }
@@ -221,7 +221,7 @@ sub drawable_type {
     $help = "This procedure returns the drawable's type.";
 
     &drawable_prop_proc("the drawable's type", 'type', 'enum GimpImageType',
-			'type',"The drawable's type: %%desc%%");
+			'type', "The drawable's type: { %%desc%% }");
 
     delete $inargs[0]->{no_success};
 }
@@ -249,7 +249,7 @@ HELP
     &drawable_prop_proc("the drawable's type with alpha", 'type_with_alpha',
 			'enum GimpImageType (no RGB_GIMAGE, GRAY_GIMAGE,
 			 INDEXED_GIMAGE)', 'type_with_alpha',
-			"The drawable's type with alpha: %%desc%%");
+			"The drawable's type with alpha: { %%desc%% }");
 }
 
 sub drawable_color {
@@ -321,6 +321,51 @@ sub drawable_channel {
     &drawable_is_proc('channel');
 }
 
+sub drawable_get_pixel {
+    $blurb = 'Gets the value of the pixel at the specified coordinates.';
+
+    $help = <<'HELP';
+This procedure gets the pixel value at the specified coordinates. The
+'num_channels' argument must always be equal to the bytes-per-pixel value for
+the specified drawable.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    &drawable_coord_args();
+
+    @outargs = ( &pixel_arg );
+    $outargs[0]->{init} = $outargs[0]->{array}->{init} = 1;
+
+    %invoke = (
+	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
+	code => <<'CODE'
+{
+  if (x < drawable_width (drawable) && y < drawable_height (drawable))
+    {  
+      num_channels = drawable_bytes (drawable);
+      pixel = g_new (gint8, num_channels);
+
+      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
+				    TRUE, TRUE);
+
+      x %= TILE_WIDTH;
+      y %= TILE_WIDTH;
+
+      p = tile_data_pointer (tile, y, x);
+      for (b = 0; b < num_channels; b++)
+	pixel[b] = p[b];
+
+      tile_release (tile, FALSE);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub drawable_set_pixel {
     $blurb = 'Sets the value of the pixel at the specified coordinates.';
 
@@ -362,50 +407,6 @@ CODE
     );
 }
 
-sub drawable_get_pixel {
-    $blurb = 'Gets the value of the pixel at the specified coordinates.';
-
-    $help = <<'HELP';
-This procedure gets the pixel value at the specified coordinates. The
-'num_channels' argument must always be equal to the bytes-per-pixel value for
-the specified drawable.
-HELP
-
-    &std_pdb_misc;
-    $date = '1997';
-
-    &drawable_coord_args();
-
-    @outargs = ( &pixel_arg );
-
-    %invoke = (
-	vars => [ 'gint8 *p', 'gint b', 'Tile *tile' ],
-	code => <<'CODE'
-{
-  if (x < drawable_width (drawable) && y < drawable_height (drawable)
-    {  
-      num_channels = drawable_bytes (drawable);
-      pixel = g_new (gint8, num_channels);
-
-      tile = tile_manager_get_tile (drawable_data (drawable), x, y,
-				    TRUE, TRUE);
-
-      x %= TILE_WIDTH;
-      y %= TILE_WIDTH;
-
-      p = tile_data_pointer (tile, y, x);
-      for (b = 0; b < num_channels; b++)
-	pixel[b] = p[b];
-
-      tile_release (tile, FALSE);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub drawable_set_image {
     $blurb = 'Set image where drawable belongs to.';
 
@@ -432,8 +433,8 @@ HELP
 	    drawable_has_alpha drawable_type_with_alpha drawable_color
 	    drawable_gray drawable_indexed drawable_bytes drawable_width
 	    drawable_height drawable_offsets drawable_layer
-	    drawable_layer_mask drawable_channel drawable_set_pixel
-	    drawable_get_pixel drawable_set_image);
+	    drawable_layer_mask drawable_channel drawable_get_pixel
+	    drawable_set_pixel drawable_set_image);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Drawable procedures';

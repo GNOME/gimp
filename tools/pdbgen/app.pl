@@ -111,7 +111,12 @@ sub declare_args {
 	my @args = @{$proc->{$_}} if exists $proc->{$_};
 
 	foreach (@args) {
-	    my $arg = $arg_types{(&arg_parse($_->{type}))[0]};
+	    my ($type, $name) = &arg_parse($_->{type});
+	    my $arg = $arg_types{$type};
+
+	    if ($type eq 'enum') {
+		$out->{headers}->{qq/"$enums{$name}->{header}"/}++
+	    }
 
 	    if ($arg->{array} && !exists $_->{array}) {
 		warn "Array without number of elements param in $proc->{name}";
@@ -241,9 +246,13 @@ CODE
 		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
 					  "$var == NULL");
 	    }
+	    elsif ($pdbtype eq 'tattoo') {
+		$result .= &make_arg_test($_, sub { ${$_[0]} =~ s/==/!=/ },
+					  '$var == 0');
+	    }
 	    elsif ($pdbtype eq 'unit') {
 		$result .= &make_arg_test($_, sub { ${$_[0]} = "!(${$_[0]})" },
-					  'unit < UNIT_PIXEL || unit >= ' .
+					  "$var < UNIT_PIXEL || $var >= " .
 					  'gimp_unit_get_number_of_units ()');
 	    }
 	    elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
@@ -606,21 +615,6 @@ CODE
 
 GPL
 
-    my $internal = "$destdir/internal_procs.h$FILE_EXT";
-    open INTERNAL, "> $internal" or die "Can't open $cmdfile: $!\n";
-    print INTERNAL $gpl;
-    my $guard = "__INTERNAL_PROCS_H__";
-    print INTERNAL <<HEADER;
-#ifndef $guard
-#define $guard
-
-void internal_procs_init (void);
-
-#endif /* $guard */
-HEADER
-    close INTERNAL;
-    &write_file($internal);
-
     my $group_procs = ""; my $longest = 0;
     my $once = 0; my $pcount = 0.0;
     foreach $group (@main::groups) {
@@ -630,7 +624,9 @@ HEADER
 	delete $out->{headers}->{q/"procedural_db.h"/};
 
 	my $headers = "";
-	foreach (sort keys %{$out->{headers}}) { $headers .= "#include $_\n" }
+	foreach (sort map { s/^</!/; $_ } keys %{$out->{headers}}) {
+	    s/^\!/</; $headers .= "#include $_\n";
+	}
 
 	my $extra = {};
 	if (exists $main::grp{$group}->{extra}->{app}) {
@@ -665,20 +661,38 @@ HEADER
 	$pcount += $out->{pcount};
     }
 
-    $internal = "$destdir/internal_procs.c$FILE_EXT";
-    open INTERNAL, "> $internal" or die "Can't open $cmdfile: $!\n";
-    print INTERNAL $gpl;
-    print INTERNAL qq@#include "app_procs.h"\n\n@;
-    print INTERNAL qq@#include "libgimp/gimpintl.h"\n\n@;
-    print INTERNAL "/* Forward declarations for registering PDB procs */\n\n";
-    foreach (@group_decls) {
-	print INTERNAL "void $_" . ' ' x ($longest - length $_) . " (void);\n";
+    if (!exists $ENV{PDBGEN_GROUPS}) {
+	my $internal = "$destdir/internal_procs.h$FILE_EXT";
+	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
+	print IFILE $gpl;
+	my $guard = "__INTERNAL_PROCS_H__";
+	print IFILE <<HEADER;
+#ifndef $guard
+#define $guard
+
+void internal_procs_init (void);
+
+#endif /* $guard */
+HEADER
+	close IFILE;
+	&write_file($internal);
+
+	$internal = "$destdir/internal_procs.c$FILE_EXT";
+	open IFILE, "> $internal" or die "Can't open $cmdfile: $!\n";
+	print IFILE $gpl;
+	print IFILE qq@#include "config.h"\n\n@;
+	print IFILE qq@#include "app_procs.h"\n\n@;
+	print IFILE qq@#include "libgimp/gimpintl.h"\n\n@;
+	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
+	foreach (@group_decls) {
+	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (void);\n";
+	}
+	chop $group_procs;
+	print IFILE "\n/* $total total procedures registered total */\n\n";
+	print IFILE "void\ninternal_procs_init (void)\n{\n$group_procs}\n";
+	close IFILE;
+	&write_file($internal);
     }
-    chop $group_procs;
-    print INTERNAL "\n/* $total total procedures registered total */\n\n";
-    print INTERNAL "void\ninternal_procs_init (void)\n{\n$group_procs}\n";
-    close INTERNAL;
-    &write_file($internal);
 }
 
 1;

@@ -19,4 +19,4 @@
 @groups = qw(gdisplay edit floating_sel undo palette gradient convert
 	     channel_ops gimprc drawable parasite paths gradient_select
 	     unit procedural_db brushes text_tool brush_select color
-	     misc tools);
+	     misc tools channel patterns pattern_select);

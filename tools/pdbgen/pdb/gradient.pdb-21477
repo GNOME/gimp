@@ -27,7 +27,7 @@ sub gradients_get_list {
 
     $help = <<'HELP';
 This procedure returns a list of the gradients that are currently loaded in the 
-gradient editor. You can later use the gimp-gradients-set-active function to
+gradient editor. You can later use the gimp_gradients_set_active function to
 set the active gradient.
 HELP
 
@@ -42,7 +42,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("gradient.h") ],
 	vars => [ 'gradient_t *grad', 'GSList *list', 'int i = 0' ],
 	success => 'NONE',
 	code => <<'CODE'
@@ -77,10 +76,7 @@ HELP
 	  alias => 'g_strdup (curr_gradient->name)', no_declare => 1 }
     );
 
-    %invoke = (
-	headers => [ qw("gradient.h") ],
-	code => 'success = curr_gradient != NULL;'
-    );
+    %invoke = ( code => 'success = curr_gradient != NULL;' );
 }
 
 sub gradients_set_active {
@@ -101,10 +97,7 @@ HELP
 	  desc => 'The name of the gradient to set' }
     );
 
-    %invoke = (
-	headers => [ qw("gradient.h") ],
-	code => 'success = grad_set_grad_to_name (name);'
-    );
+    %invoke = ( code => 'success = grad_set_grad_to_name (name);' );
 }
 
 sub sample_num_arg {
@@ -114,9 +107,9 @@ sub sample_num_arg {
 
 sub sample_outargs {
     @outargs = (
-        { name => 'color_samples', type => 'floatarray',
+        { name => 'color_samples', type => 'floatarray', init => 1,
 	  desc => 'Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }',
-	  array => { name => 'array_length', no_lib => 1,
+	  array => { name => 'array_length', no_lib => 1, init => 1,
 		     desc => 'Length of the color_samples array (4 *
 			      num_samples)' } }
     );
@@ -140,7 +133,6 @@ HELP
     &sample_outargs;
 
     %invoke = (
-	headers => [ qw("gradient.h") ],
 	vars => [ 'gdouble pos, delta', 'gdouble r, g, b, a', 'gdouble *pv' ],
 	code => <<'CODE'
 {
@@ -217,7 +209,7 @@ CODE
     );
 }
 
-@headers = qw("gradient.h");
+@headers = qw("gradient_header.h" "gradient.h");
 
 @procs = qw(gradients_get_list gradients_get_active gradients_set_active
 	    gradients_sample_uniform gradients_sample_custom);

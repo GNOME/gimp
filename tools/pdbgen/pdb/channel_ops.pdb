@@ -74,14 +74,14 @@ HELP
 
     @outargs = ( 
 	{ name => 'new_image', type => 'image',
-	  desc => 'the new, duplicated image',
-	  alias => 'new_gimage' }
+	  desc => 'The new, duplicated image',
+	  alias => 'new_gimage', init => 1 }
     );
 
     %invoke = (
 	headers => [ qw("gimage.h") ],
         code => <<'CODE'
-success = ((new_gimage = duplicate ((void *) gimage)) != NULL);
+success = (new_gimage = duplicate (gimage)) != NULL;
 CODE
     );
 }

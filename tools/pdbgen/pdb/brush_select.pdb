@@ -45,7 +45,7 @@ sub brushes_popup {
 		   made' },
 	{ name => 'popup_title', type => 'string', alias => 'title',
 	  desc => 'Title to give the brush popup window' },
-	{ name => 'initial_brush', type => 'string',
+	{ name => 'initial_brush', type => 'string', alias => 'brush',
 	  desc => 'The name of the brush to set as the first selected',
 	  no_success => 1 },
 	&brush_args
@@ -57,7 +57,7 @@ sub brushes_popup {
 {
   if ((prec = procedural_db_lookup (name)))
     {
-      if (initial_brush && strlen (initial_brush))
+      if (brush && strlen (brush))
 	newdialog = brush_select_new (title, brush, opacity, spacing,
 				      paint_mode);
       else
@@ -68,7 +68,7 @@ sub brushes_popup {
       newdialog->callback_name = g_strdup (name);
 
       /* Add to active brush dialogs list */
-      active_dialogs = g_slist_append (active_dialogs, newdialog);
+      brush_active_dialogs = g_slist_append (brush_active_dialogs, newdialog);
     }
   else
     success = FALSE;
@@ -94,9 +94,9 @@ sub brushes_close_popup {
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)) &&
-      (bsp = brush_get_brushselect (name))
+      (bsp = brush_get_brushselect (name)))
     {
-      active_dialogs = g_slist_remove (active_dialogs, bsp);
+      brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
 
       if (GTK_WIDGET_VISIBLE (bsp->shell))
 	gtk_widget_hide (bsp->shell);
@@ -105,7 +105,7 @@ sub brushes_close_popup {
       if (bsp != brush_select_dialog)
 	{
 	  gtk_widget_destroy (bsp->shell);
-	  grad_select_free (bsp);
+	  brush_select_free (bsp);
 	}
     }
   else
@@ -131,11 +131,12 @@ sub brushes_set_popup {
     );
 
     %invoke = (
+	headers => [ qw("gimpbrushlist.h") ],
 	vars => [ 'ProcRecord *prec', 'BrushSelectP bsp' ],
 	code => <<'CODE'
 {
   if ((prec = procedural_db_lookup (name)) &&
-      (bsp = brush_get_brushselect (name))
+      (bsp = brush_get_brushselect (name)))
     {
       GimpBrushP active = gimp_brush_list_get_brush (brush_list, brush_name);
 
@@ -177,7 +178,7 @@ $extra{app}->{code} = <<'CODE';
 static BrushSelectP
 brush_get_brushselect (gchar *name)
 {
-  GSList *list = active_dialogs;
+  GSList *list = brush_active_dialogs;
   BrushSelectP bsp;
 
   while (list)
