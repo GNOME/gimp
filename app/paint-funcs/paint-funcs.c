@@ -34,9 +34,10 @@
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
+#include "composite/gimp-composite.h"
+
 #include "paint-funcs.h"
 #include "paint-funcs-generic.h"
-#include "gimp-composite.h"
 
 #define RANDOM_SEED        314159265
 #define EPSILON            0.0001

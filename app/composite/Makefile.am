@@ -18,16 +18,14 @@ INCLUDES = \
 
 noinst_LIBRARIES = libappcomposite.a
 
-libappcomposite_mmx_sources = \
-	gimp-composite-mmx.c		\
-	gimp-composite-mmx.h
-
 libappcomposite_a_sources = \
 	gimp-composite.c		\
-	gimp-composite-generic.c	\
-	gimp-composite-generic.h	\
 	gimp-composite.h		\
 	gimp-composite-dispatch.c	\
+	gimp-composite-generic.c	\
+	gimp-composite-generic.h	\
+	gimp-composite-mmx.c		\
+	gimp-composite-mmx.h		\
 	gimp-composite-util.h
 
 libappcomposite_a_built_sources = gimp-composite-dispatch.c

@@ -1,5 +1,19 @@
 2003-07-14  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: use AM_PROG_AS instead of defining CCAS and
+	CCASFLAGS manually. Changed the assembler checks to use inline
+	assembly as we do in app/composite/gimp-composite-mmx.c.
+
+	* app/composite/Makefile.am: build the MMX code again; we need it
+	to be tested. If you have any problems, please report them. You can
+	quick-fix your build using the --disable-mmx configure option.
+
+	* app/paint-funcs/Makefile.am: reverted Helvetix' change ...
+	* app/paint-funcs/paint-funcs.c: ... and include
+	"composite/gimp-composite.h" instead of "gimp-composite.h".
+
+2003-07-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base.c (base_init): include composite/gimp-composite.h.
 
 	* app/paint-funcs/paint-funcs.c: enforce GIMP coding style on the
@@ -7,7 +21,7 @@
 
 2003-07-13  Helvetix Victorinox  <helvetix@gimp.org>
 
-	* app/composite/gimp-composite-dispatch.[ch] are in CVS although
+	* app/composite/gimp-composite-dispatch.[ch]: are in CVS although
 	they are generated files.  This is preparation for building the
 	table at run-time, instead of compile time.
 
@@ -19,29 +33,29 @@
 
 2003-07-13  Helvetix Victorinox  <helvetix@gimp.org>
 
-	* app/composite/Makefile.am fixed typo with trailing backslash.
+	* app/composite/Makefile.am: fixed typo with trailing backslash.
 
-	* app/paint-funcs/Makefile.am include files from app/composite/
+	* app/paint-funcs/Makefile.am: include files from app/composite/
 
-	* app/paint-funcs/paint-funcs.c stubbed out code for using
+	* app/paint-funcs/paint-funcs.c: stubbed out code for using
 	gimp_composite.  To enable the use of gimp_composite, set the
 	value of gimp_composite_use_old to 0 (zero).
 
-	* app/base/base.c calls gimp_composite_init() hook to initialse
+	* app/base/base.c: calls gimp_composite_init() hook to initialse
 	all the gimp_composite "stuff."
 
-	* app/composite/make-gimp-composite-dispatch.py now generates
+	* app/composite/make-gimp-composite-dispatch.py: now generates
 	gimp-composite-dispatch.h
 
-	* app/composite/gimp-composite-dispatch.[ch] are in CVS although
+	* app/composite/gimp-composite-dispatch.[ch]: are in CVS although
 	they are generated files.  This is preparation for building the
 	table at run-time, instead of compile time.
 
-	* app/composite/gimp-composite.c doesn't #include the main
+	* app/composite/gimp-composite.c: doesn't #include the main
 	dispatch table.  This is preparation for building the table at
 	run-time, instead of compile time.  
 
-	* app/composite/Makefile.am doesn't compile gimp-composite-mmx.c
+	* app/composite/Makefile.am: doesn't compile gimp-composite-mmx.c
 	(until the various remaining gcc problems and configuration issues
 	are worked out).
 	  
