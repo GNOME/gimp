@@ -25,6 +25,7 @@
 #include <libgimp/gimpuitypes.h>
 
 #include <libgimp/gimpchainbutton.h>
+#include <libgimp/gimpcolorarea.h>
 #include <libgimp/gimpcolorbutton.h>
 #include <libgimp/gimpdialog.h>
 #include <libgimp/gimpexport.h>

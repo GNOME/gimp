@@ -58,8 +58,8 @@ gimp_rgb_add (GimpRGB       *rgb1,
 }
 
 void
-gimp_rgb_sub (GimpRGB       *rgb1,
-	      const GimpRGB *rgb2)
+gimp_rgb_subtract (GimpRGB       *rgb1,
+		   const GimpRGB *rgb2)
 {
   g_return_if_fail (rgb1 != NULL);
   g_return_if_fail (rgb2 != NULL);
@@ -70,8 +70,8 @@ gimp_rgb_sub (GimpRGB       *rgb1,
 }
 
 void
-gimp_rgb_mul (GimpRGB *rgb,
-	      gdouble  factor)
+gimp_rgb_multiply (GimpRGB *rgb,
+		   gdouble  factor)
 {
   g_return_if_fail (rgb != NULL);
 
@@ -81,8 +81,8 @@ gimp_rgb_mul (GimpRGB *rgb,
 }
 
 gdouble
-gimp_rgb_dist (const GimpRGB *rgb1,
-	       const GimpRGB *rgb2)
+gimp_rgb_distance (const GimpRGB *rgb1,
+		   const GimpRGB *rgb2)
 {
   g_return_val_if_fail (rgb1 != NULL, 0.0);
   g_return_val_if_fail (rgb2 != NULL, 0.0);
@@ -168,8 +168,8 @@ gimp_rgba_add (GimpRGB       *rgba1,
 }
 
 void
-gimp_rgba_sub (GimpRGB       *rgba1,
-	       const GimpRGB *rgba2)
+gimp_rgba_subtract (GimpRGB       *rgba1,
+		    const GimpRGB *rgba2)
 {
   g_return_if_fail (rgba1 != NULL);
   g_return_if_fail (rgba2 != NULL);
@@ -181,8 +181,8 @@ gimp_rgba_sub (GimpRGB       *rgba1,
 }
 
 void
-gimp_rgba_mul (GimpRGB *rgba,
-	       gdouble  factor)
+gimp_rgba_multiply (GimpRGB *rgba,
+		    gdouble  factor)
 {
   g_return_if_fail (rgba != NULL);
 
@@ -193,8 +193,8 @@ gimp_rgba_mul (GimpRGB *rgba,
 }
 
 gdouble
-gimp_rgba_dist (const GimpRGB *rgba1, 
-		const GimpRGB *rgba2)
+gimp_rgba_distance (const GimpRGB *rgba1, 
+		    const GimpRGB *rgba2)
 {
   g_return_val_if_fail (rgba1 != NULL, 0.0);
   g_return_val_if_fail (rgba2 != NULL, 0.0);

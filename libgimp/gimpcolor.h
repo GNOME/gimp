@@ -37,45 +37,45 @@ struct _GimpRGB
 };
 
 
-void      gimp_rgb_set    (GimpRGB       *rgb,
-			   gdouble        r,
-			   gdouble        g,
-			   gdouble        b);
+void      gimp_rgb_set       (GimpRGB       *rgb,
+			      gdouble        r,
+			      gdouble        g,
+			      gdouble        b);
 
-void      gimp_rgb_add    (GimpRGB       *rgb1,
-			   const GimpRGB *rgb2);
-void      gimp_rgb_sub    (GimpRGB       *rgb1,
-			   const GimpRGB *rgb2);
-void      gimp_rgb_mul    (GimpRGB       *rgb1,
-			   gdouble        factor);
-gdouble   gimp_rgb_dist   (const GimpRGB *rgb1,
-			   const GimpRGB *rgb2);
-gdouble   gimp_rgb_max    (const GimpRGB *rgb);
-gdouble   gimp_rgb_min    (const GimpRGB *rgb);
-void      gimp_rgb_clamp  (GimpRGB       *rgb);
-void      gimp_rgb_gamma  (GimpRGB       *rgb,
-			   gdouble        gamma);
+void      gimp_rgb_add       (GimpRGB       *rgb1,
+			      const GimpRGB *rgb2);
+void      gimp_rgb_subtract  (GimpRGB       *rgb1,
+			      const GimpRGB *rgb2);
+void      gimp_rgb_multiply  (GimpRGB       *rgb1,
+			      gdouble        factor);
+gdouble   gimp_rgb_distance  (const GimpRGB *rgb1,
+			      const GimpRGB *rgb2);
+gdouble   gimp_rgb_max       (const GimpRGB *rgb);
+gdouble   gimp_rgb_min       (const GimpRGB *rgb);
+void      gimp_rgb_clamp     (GimpRGB       *rgb);
+void      gimp_rgb_gamma     (GimpRGB       *rgb,
+			      gdouble        gamma);
 
 
-void      gimp_rgba_set   (GimpRGB       *rgba,
-			   gdouble        r,
-			   gdouble        g,
-			   gdouble        b,
-			   gdouble        a);
+void      gimp_rgba_set      (GimpRGB       *rgba,
+			      gdouble        r,
+			      gdouble        g,
+			      gdouble        b,
+			      gdouble        a);
 
-void      gimp_rgba_add   (GimpRGB       *rgba1,
-			   const GimpRGB *rgba2);
-void      gimp_rgba_sub   (GimpRGB       *rgba1,
-			   const GimpRGB *rgba2);
-void      gimp_rgba_mul   (GimpRGB       *rgba,
-			   gdouble        factor);
-gdouble   gimp_rgba_dist  (const GimpRGB *rgba1, 
-			   const GimpRGB *rgba2);
-gdouble   gimp_rgba_max   (const GimpRGB *rgba);
-gdouble   gimp_rgba_min   (const GimpRGB *rgba);
-void      gimp_rgba_clamp (GimpRGB       *rgba);
-void      gimp_rgba_gamma (GimpRGB       *rgba,
-			   gdouble        gamma);
+void      gimp_rgba_add      (GimpRGB       *rgba1,
+			      const GimpRGB *rgba2);
+void      gimp_rgba_subtract (GimpRGB       *rgba1,
+			      const GimpRGB *rgba2);
+void      gimp_rgba_multiply (GimpRGB       *rgba,
+			      gdouble        factor);
+gdouble   gimp_rgba_distance (const GimpRGB *rgba1, 
+			      const GimpRGB *rgba2);
+gdouble   gimp_rgba_max      (const GimpRGB *rgba);
+gdouble   gimp_rgba_min      (const GimpRGB *rgba);
+void      gimp_rgba_clamp    (GimpRGB       *rgba);
+void      gimp_rgba_gamma    (GimpRGB       *rgba,
+			      gdouble        gamma);
 
 
 #ifdef __cplusplus

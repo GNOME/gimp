@@ -335,12 +335,12 @@ render_sub_pixel (gint           max_depth,
     {
       /* Check whether we have tu supersample */
 
-      if ((gimp_rgba_dist (&c1, &c2) >= threshold) ||
-	  (gimp_rgba_dist (&c1, &c3) >= threshold) ||
-	  (gimp_rgba_dist (&c1, &c4) >= threshold) ||
-	  (gimp_rgba_dist (&c2, &c3) >= threshold) ||
-	  (gimp_rgba_dist (&c2, &c4) >= threshold) ||
-	  (gimp_rgba_dist (&c3, &c4) >= threshold)) {
+      if ((gimp_rgba_distance (&c1, &c2) >= threshold) ||
+	  (gimp_rgba_distance (&c1, &c3) >= threshold) ||
+	  (gimp_rgba_distance (&c1, &c4) >= threshold) ||
+	  (gimp_rgba_distance (&c2, &c3) >= threshold) ||
+	  (gimp_rgba_distance (&c2, &c4) >= threshold) ||
+	  (gimp_rgba_distance (&c3, &c4) >= threshold)) {
 	/* Calc coordinates of center subsample */
 
 	x2 = (x1 + x3) / 2;

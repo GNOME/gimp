@@ -1555,12 +1555,12 @@ gulong gck_render_sub_pixel(int max_depth, int depth, _GckSampleType ** block,
       /* Check whether we have to supersample */
       /* ==================================== */
 
-      if ((gimp_rgba_dist(&c[0], &c[1]) >= threshold) ||
-	  (gimp_rgba_dist(&c[0], &c[2]) >= threshold) ||
-	  (gimp_rgba_dist(&c[0], &c[3]) >= threshold) ||
-	  (gimp_rgba_dist(&c[1], &c[2]) >= threshold) ||
-	  (gimp_rgba_dist(&c[1], &c[3]) >= threshold) ||
-	  (gimp_rgba_dist(&c[2], &c[3]) >= threshold))
+      if ((gimp_rgba_distance (&c[0], &c[1]) >= threshold) ||
+	  (gimp_rgba_distance (&c[0], &c[2]) >= threshold) ||
+	  (gimp_rgba_distance (&c[0], &c[3]) >= threshold) ||
+	  (gimp_rgba_distance (&c[1], &c[2]) >= threshold) ||
+	  (gimp_rgba_distance (&c[1], &c[3]) >= threshold) ||
+	  (gimp_rgba_distance (&c[2], &c[3]) >= threshold))
 	{
 	  /* Calc coordinates of center subsample */
 	  /* ==================================== */

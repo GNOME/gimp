@@ -36,6 +36,7 @@ typedef enum
   GIMP_SIZE_ENTRY_UPDATE_RESOLUTION = 2
 } GimpSizeEntryUpdatePolicy;
 
+typedef struct _GimpColorArea       GimpColorArea;
 typedef struct _GimpColorButton     GimpColorButton;
 typedef struct _GimpPathEditor      GimpPathEditor;
 typedef struct _GimpSizeEntry       GimpSizeEntry;

@@ -209,8 +209,8 @@ libgimpui_la_SOURCES = \
 	gimpgradientmenu.c 	\
 	gimppatternmenu.c	\
 	gimpchainbutton.c	\
+	gimpcolorarea.c		\
 	gimpcolorbutton.c	\
-	gimpcolorbutton.h	\
 	gimpdialog.c		\
 	gimpexport.c		\
 	gimpfileselection.c	\
@@ -230,6 +230,7 @@ gimpinclude_HEADERS = \
 	gimpchainbutton.h	\
 	gimpchannel.h		\
 	gimpcolor.h		\
+	gimpcolorarea.h		\
 	gimpcolorbutton.h	\
 	gimpcolordisplay.h	\
 	gimpcolorselector.h	\

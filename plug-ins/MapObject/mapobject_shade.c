@@ -49,7 +49,7 @@ phong_shade (GimpVector3 *pos,
 
   N = *normal;
   ambientcolor = *diff_col;
-  gimp_rgb_mul (&ambientcolor, mapvals.material.ambient_int);
+  gimp_rgb_multiply (&ambientcolor, mapvals.material.ambient_int);
 
   /* Compute (N*L) term of Phong's equation */
   /* ====================================== */
@@ -83,15 +83,15 @@ phong_shade (GimpVector3 *pos,
       /* =================================================== */
 
       diffusecolor = *diff_col;
-      gimp_rgb_mul (&diffusecolor, mapvals.material.diffuse_ref);
-      gimp_rgb_mul (&diffusecolor, NL);
+      gimp_rgb_multiply (&diffusecolor, mapvals.material.diffuse_ref);
+      gimp_rgb_multiply (&diffusecolor, NL);
 
       specularcolor = *spec_col;
-      gimp_rgb_mul (&specularcolor, mapvals.material.specular_ref);
-      gimp_rgb_mul (&specularcolor, RV);
+      gimp_rgb_multiply (&specularcolor, mapvals.material.specular_ref);
+      gimp_rgb_multiply (&specularcolor, RV);
 
       gimp_rgb_add (&diffusecolor, &specularcolor);
-      gimp_rgb_mul (&diffusecolor, mapvals.material.diffuse_int);
+      gimp_rgb_multiply (&diffusecolor, mapvals.material.diffuse_int);
       gimp_rgb_clamp (&diffusecolor);
 
       gimp_rgb_add (&ambientcolor, &diffusecolor);

@@ -233,9 +233,9 @@ compute_preview (gint x,
 		    }
                   else
                     {
-                      gimp_rgb_mul (&color, color.a);
+                      gimp_rgb_multiply (&color, color.a);
                       temp = lightcheck;
-                      gimp_rgb_mul (&temp, 1.0 - color.a);
+                      gimp_rgb_multiply (&temp, 1.0 - color.a);
                       gimp_rgb_add (&color, &temp);
                     }
                 }
@@ -247,9 +247,9 @@ compute_preview (gint x,
 		    }
                   else
                     {
-                      gimp_rgb_mul (&color, color.a);
+                      gimp_rgb_multiply (&color, color.a);
                       temp = darkcheck;
-                      gimp_rgb_mul (&temp, 1.0 - color.a);
+                      gimp_rgb_multiply (&temp, 1.0 - color.a);
                       gimp_rgb_add (&color, &temp);
                     }
                 }
