@@ -366,8 +366,7 @@ mng_save_image (const gchar *filename,
 
   gchar frame_mode;
   int frame_delay;
-  int pipe_fd;
-  gchar *template;
+  gchar *temp_file_name;
   png_structp png_ptr;
   png_infop png_info_ptr;
   FILE *infile, *outfile;
@@ -420,13 +419,13 @@ mng_save_image (const gchar *filename,
   if ((userdata = g_new0 (struct mnglib_userdata_t, 1)) == NULL)
     {
       g_warning
-	("Unable to allocate a user data buffer in mng_save_image()\n");
+	("Unable to allocate a user data buffer in mng_save_image()");
       return 0;
     }
 
   if ((userdata->fp = fopen (filename, "wb")) == NULL)
     {
-      g_warning ("Unable to open output file %s in mng_save_image()\n",
+      g_warning ("Unable to open output file %s in mng_save_image()",
 		 filename);
       g_free (userdata);
       return 0;
@@ -436,7 +435,7 @@ mng_save_image (const gchar *filename,
        mng_initialize ((mng_ptr) userdata, myalloc, myfree,
 		       MNG_NULL)) == NULL)
     {
-      g_warning ("Unable to mng_initialize() in mng_save_image()\n");
+      g_warning ("Unable to mng_initialize() in mng_save_image()");
       fclose (userdata->fp);
       g_free (userdata);
       return 0;
@@ -446,7 +445,7 @@ mng_save_image (const gchar *filename,
       ((ret = mng_setcb_closestream (handle, myclosestream)) != MNG_NOERROR)
       || ((ret = mng_setcb_writedata (handle, mywritedata)) != MNG_NOERROR))
     {
-      g_warning ("Unable to setup callbacks in mng_save_image()\n");
+      g_warning ("Unable to setup callbacks in mng_save_image()");
       mng_cleanup (&handle);
       fclose (userdata->fp);
       g_free (userdata);
@@ -455,7 +454,7 @@ mng_save_image (const gchar *filename,
 
   if ((ret = mng_create (handle)) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_create() image in mng_save_image()\n");
+      g_warning ("Unable to mng_create() image in mng_save_image()");
       mng_cleanup (&handle);
       fclose (userdata->fp);
       g_free (userdata);
@@ -467,7 +466,7 @@ mng_save_image (const gchar *filename,
 			  num_layers, mng_data.default_delay,
 			  mng_simplicity_profile)) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_putchunk_mhdr() in mng_save_image()\n");
+      g_warning ("Unable to mng_putchunk_mhdr() in mng_save_image()");
       mng_cleanup (&handle);
       fclose (userdata->fp);
       g_free (userdata);
@@ -480,7 +479,7 @@ mng_save_image (const gchar *filename,
        mng_putchunk_text (handle, strlen (MNG_TEXT_TITLE), MNG_TEXT_TITLE, 22,
 			  "Created using The GIMP")) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_putchunk_text() in mng_save_image()\n");
+      g_warning ("Unable to mng_putchunk_text() in mng_save_image()");
       mng_cleanup (&handle);
       fclose (userdata->fp);
       g_free (userdata);
@@ -496,7 +495,7 @@ mng_save_image (const gchar *filename,
 			      (gimp_layer_get_name (layers[0])),
 			      0x7fffffff)) != MNG_NOERROR)
 	{
-	  g_warning ("Unable to mng_putchunk_term() in mng_save_image()\n");
+	  g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -512,7 +511,7 @@ mng_save_image (const gchar *filename,
 			      (gimp_layer_get_name (layers[0])),
 			      0x7fffffff)) != MNG_NOERROR)
 	{
-	  g_warning ("Unable to mng_putchunk_term() in mng_save_image()\n");
+	  g_warning ("Unable to mng_putchunk_term() in mng_save_image()");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -533,7 +532,7 @@ mng_save_image (const gchar *filename,
 
 		if ((ret = mng_putchunk_back(handle, red, green, blue, MNG_BACKGROUNDCOLOR_MANDATORY, 0, MNG_BACKGROUNDIMAGE_NOTILE)) != MNG_NOERROR)
 		{
-			g_warning("Unable to mng_putchunk_back() in mng_save_image()\n");
+			g_warning("Unable to mng_putchunk_back() in mng_save_image()");
 			mng_cleanup(&handle);
 			fclose(userdata->fp);
 			g_free(userdata);
@@ -542,7 +541,7 @@ mng_save_image (const gchar *filename,
 		
 		if ((ret = mng_putchunk_bkgd(handle, MNG_FALSE, 2, 0, gimp_rgb_intensity_uchar(&bgcolor), red, green, blue)) != MNG_NOERROR)
 		{
-			g_warning("Unable to mng_putchunk_bkgd() in mng_save_image()\n");
+			g_warning("Unable to mng_putchunk_bkgd() in mng_save_image()");
 			mng_cleanup(&handle);
 			fclose(userdata->fp);
 			g_free(userdata);
@@ -560,7 +559,7 @@ mng_save_image (const gchar *filename,
 			      (1.0 / ((gamma != 1.0) ? gamma : 2.2)) *
 			      100000)) != MNG_NOERROR)
 	{
-	  g_warning ("Unable to mng_putchunk_gama() in mng_save_image()\n");
+	  g_warning ("Unable to mng_putchunk_gama() in mng_save_image()");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -576,7 +575,7 @@ mng_save_image (const gchar *filename,
 		
 		if ((ret = mng_putchunk_phyg(handle, MNG_FALSE, (mng_uint32) (xres * 39.37), (mng_uint32) (yres * 39.37), 1)) != MNG_NOERROR)
 		{
-			g_warning("Unable to mng_putchunk_phyg() in mng_save_image()\n");
+			g_warning("Unable to mng_putchunk_phyg() in mng_save_image()");
 			mng_cleanup(&handle);
 			fclose(userdata->fp);
 			g_free(userdata);
@@ -585,7 +584,7 @@ mng_save_image (const gchar *filename,
 		
 		if ((ret = mng_putchunk_phys(handle, MNG_FALSE, (mng_uint32) (xres * 39.37), (mng_uint32) (yres * 39.37), 1)) != MNG_NOERROR)
 		{
-			g_warning("Unable to mng_putchunk_phys() in mng_save_image()\n");
+			g_warning("Unable to mng_putchunk_phys() in mng_save_image()");
 			mng_cleanup(&handle);
 			fclose(userdata->fp);
 			g_free(userdata);
@@ -604,7 +603,7 @@ mng_save_image (const gchar *filename,
 			      gmt->tm_mday, gmt->tm_hour, gmt->tm_min,
 			      gmt->tm_sec)) != MNG_NOERROR)
 	{
-	  g_warning ("Unable to mng_putchunk_time() in mng_save_image()\n");
+	  g_warning ("Unable to mng_putchunk_time() in mng_save_image()");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -650,7 +649,7 @@ mng_save_image (const gchar *filename,
 	  layer_mng_colortype = MNG_COLORTYPE_INDEXED | MNG_COLORTYPE_GRAYA;
 	  break;
 	default:
-	  g_warning ("Unsupported GimpImageType in mng_save_image()\n");
+	  g_warning ("Unsupported GimpImageType in mng_save_image()");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -699,7 +698,7 @@ mng_save_image (const gchar *filename,
 	  break;
 	default:
 	  g_warning
-	    ("Huh? Programmer stupidity error with 'layer_chunks_type'\n");
+	    ("Huh? Programmer stupidity error with 'layer_chunks_type'");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -723,7 +722,7 @@ mng_save_image (const gchar *filename,
 				    layer_offset_y + layer_rows, 0,
 				    0)) != MNG_NOERROR)
 	{
-	  g_warning ("Unable to mng_putchunk_fram() in mng_save_image()\n");
+	  g_warning ("Unable to mng_putchunk_fram() in mng_save_image()");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -737,30 +736,27 @@ mng_save_image (const gchar *filename,
 				layer_offset_x + layer_cols, layer_offset_y,
 				layer_offset_y + layer_rows)) != MNG_NOERROR)
 	  {
-	    g_warning ("Unable to mng_putchunk_defi() in mng_save_image()\n");
+	    g_warning ("Unable to mng_putchunk_defi() in mng_save_image()");
 	    mng_cleanup (&handle);
 	    fclose (userdata->fp);
 	    g_free (userdata);
 	    return 0;
 	  }
 
-      template =
-	g_strdup (g_strconcat
-		  (g_get_current_dir (), "/.gimp-mng-XXXXXX", NULL));
-      if ((pipe_fd = mkstemp (template)) == -1)
+      if ((temp_file_name = gimp_temp_name ("mng")) == NULL)
 	{
-	  g_warning ("Unable to mkstemp() in mng_save_image()\n");
+	  g_warning ("gimp_temp_name() failed in mng_save_image(");
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
 	  return 0;
 	}
-
-      if ((outfile = fdopen (pipe_fd, "wb")) == NULL)
+      
+      if ((outfile = fopen (temp_file_name, "wb")) == NULL)
 	{
-	  g_warning ("Unable to fdopen(out) in mng_save_image()\n");
-	  close (pipe_fd);
-	  unlink (template);
+	  g_warning ("fopen() failed for '%s' in mng_save_image()",
+                     temp_file_name);
+	  unlink (temp_file_name);
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -773,10 +769,9 @@ mng_save_image (const gchar *filename,
 					      (png_error_ptr) NULL)) == NULL)
 	{
 	  g_warning
-	    ("Unable to png_create_write_struct() in mng_save_image()\n");
+	    ("Unable to png_create_write_struct() in mng_save_image()");
 	  fclose (outfile);
-	  close (pipe_fd);
-	  unlink (template);
+	  unlink (temp_file_name);
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -786,11 +781,10 @@ mng_save_image (const gchar *filename,
       if ((png_info_ptr = png_create_info_struct (png_ptr)) == NULL)
 	{
 	  g_warning
-	    ("Unable to png_create_info_struct() in mng_save_image()\n");
+	    ("Unable to png_create_info_struct() in mng_save_image()");
 	  png_destroy_write_struct (&png_ptr, (png_infopp) NULL);
 	  fclose (outfile);
-	  close (pipe_fd);
-	  unlink (template);
+	  unlink (temp_file_name);
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -799,11 +793,10 @@ mng_save_image (const gchar *filename,
 
       if (setjmp (png_ptr->jmpbuf) != 0)
 	{
-	  g_warning ("HRM saving PNG in mng_save_image()\n");
+	  g_warning ("HRM saving PNG in mng_save_image()");
 	  png_destroy_write_struct (&png_ptr, (png_infopp) NULL);
 	  fclose (outfile);
-	  close (pipe_fd);
-	  unlink (template);
+	  unlink (temp_file_name);
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -926,12 +919,11 @@ mng_save_image (const gchar *filename,
       g_free (layer_pixel);
 
       fclose (outfile);
-      close (pipe_fd);
 
-      if ((infile = fopen (template, "rb")) == NULL)
+      if ((infile = fopen (temp_file_name, "rb")) == NULL)
 	{
-	  g_warning ("Unable to fopen(in) in mng_save_image()\n");
-	  unlink (template);
+	  g_warning ("Unable to fopen(in) in mng_save_image()");
+	  unlink (temp_file_name);
 	  mng_cleanup (&handle);
 	  fclose (userdata->fp);
 	  g_free (userdata);
@@ -982,7 +974,7 @@ mng_save_image (const gchar *filename,
 				      chunkinterlaced)) != MNG_NOERROR)
 		{
 		  g_warning
-		    ("Unable to mng_putchunk_ihdr() in mng_save_image()\n");
+		    ("Unable to mng_putchunk_ihdr() in mng_save_image()");
 		  mng_cleanup (&handle);
 		  fclose (userdata->fp);
 		  g_free (userdata);
@@ -996,7 +988,7 @@ mng_save_image (const gchar *filename,
 				      chunkbuffer)) != MNG_NOERROR)
 		{
 		  g_warning
-		    ("Unable to mng_putchunk_idat() in mng_save_image()\n");
+		    ("Unable to mng_putchunk_idat() in mng_save_image()");
 		  mng_cleanup (&handle);
 		  fclose (userdata->fp);
 		  g_free (userdata);
@@ -1008,7 +1000,7 @@ mng_save_image (const gchar *filename,
 	      if ((ret = mng_putchunk_iend (handle)) != MNG_NOERROR)
 		{
 		  g_warning
-		    ("Unable to mng_putchunk_iend() in mng_save_image()\n");
+		    ("Unable to mng_putchunk_iend() in mng_save_image()");
 		  mng_cleanup (&handle);
 		  fclose (userdata->fp);
 		  g_free (userdata);
@@ -1023,7 +1015,7 @@ mng_save_image (const gchar *filename,
 		  MNG_NOERROR)
 		{
 		  g_warning
-		    ("Unable to mng_putchunk_plte() in mng_save_image()\n");
+		    ("Unable to mng_putchunk_plte() in mng_save_image()");
 		  mng_cleanup (&handle);
 		  fclose (userdata->fp);
 		  g_free (userdata);
@@ -1040,7 +1032,7 @@ mng_save_image (const gchar *filename,
 		  MNG_NOERROR)
 		{
 		  g_warning
-		    ("Unable to mng_putchunk_trns() in mng_save_image()\n");
+		    ("Unable to mng_putchunk_trns() in mng_save_image()");
 		  mng_cleanup (&handle);
 		  fclose (userdata->fp);
 		  g_free (userdata);
@@ -1057,12 +1049,12 @@ mng_save_image (const gchar *filename,
 	}
 
       fclose (infile);
-      unlink (template);
+      unlink (temp_file_name);
     }
 
   if ((ret = mng_putchunk_mend (handle)) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_putchunk_mend() in mng_save_image()\n");
+      g_warning ("Unable to mng_putchunk_mend() in mng_save_image()");
       mng_cleanup (&handle);
       fclose (userdata->fp);
       g_free (userdata);
@@ -1071,7 +1063,7 @@ mng_save_image (const gchar *filename,
 
   if ((ret = mng_write (handle)) != MNG_NOERROR)
     {
-      g_warning ("Unable to mng_write() the image in mng_save_image()\n");
+      g_warning ("Unable to mng_write() the image in mng_save_image()");
       mng_cleanup (&handle);
       fclose (userdata->fp);
       g_free (userdata);
