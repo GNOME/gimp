@@ -1,3 +1,14 @@
+2005-03-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpwidgets/gimpsizeentry.[ch]: added function
+	gimp_size_entry_show_unit_menu() for convenience.
+
+	* app/tools/gimprectangleoptions.[ch]
+	* app/tools/gimprectangletool.[ch]:  more work on 
+	controls in Tool Options.  Can now resize rectangle 
+	by dragging any corner or edge -- move rectangle by
+	clicking inside and dragging.
+
 2005-03-09  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainerview.c

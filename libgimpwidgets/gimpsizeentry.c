@@ -1179,6 +1179,26 @@ gimp_size_entry_unit_callback (GtkWidget     *widget,
     gimp_size_entry_update_unit (gse, new_unit);
 }
 
+/**
+ * gimp_size_entry_show_unit_menu:
+ * @gse: a #GimpSizeEntry
+ * @show: Boolean
+ *
+ * Controls whether a unit menu is shown in the size entry.  If
+ * @show is #TRUE, the menu is shown; otherwise it is hidden.
+ **/
+void
+gimp_size_entry_show_unit_menu (GimpSizeEntry *gse,
+                                gboolean       show)
+{
+  g_return_if_fail (GIMP_IS_SIZE_ENTRY (gse));
+
+  if (show)
+    gtk_widget_show (gse->unitmenu);
+  else
+    gtk_widget_hide (gse->unitmenu);
+}
+
 
 /**
  * gimp_size_entry_set_pixel_digits:

@@ -433,30 +433,67 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       rectangle->change_aspect_ratio = TRUE;
       break;
 
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_LOWER_LEFT:
     case RECT_RESIZING_LEFT:
       x1 = rectangle->x1 + inc_x;
-      y1 = rectangle->y1 + inc_y;
       x2 = MAX (x1, rectangle->x2);
-      y2 = MAX (y1, rectangle->y2);
       rectangle->startx = curx;
-      rectangle->starty = cury;
       break;
 
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_LOWER_RIGHT:
     case RECT_RESIZING_RIGHT:
       x2 = rectangle->x2 + inc_x;
-      y2 = rectangle->y2 + inc_y;
       x1 = MIN (rectangle->x1, x2);
-      y1 = MIN (rectangle->y1, y2);
       rectangle->startx = curx;
-      rectangle->starty = cury;
+      break;
+
+    case RECT_RESIZING_BOTTOM:
+    case RECT_RESIZING_TOP:
+      x1 = rectangle->x1;
+      x2 = rectangle->x2;
+      rectangle->startx = curx;
       break;
 
     case RECT_MOVING:
       x1 = rectangle->x1 + inc_x;
       x2 = rectangle->x2 + inc_x;
+      rectangle->startx = curx;
+      break;
+    }
+
+  switch (rectangle->function)
+    {
+    case RECT_CREATING:
+      break;
+
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_TOP:
+      y1 = rectangle->y1 + inc_y;
+      y2 = MAX (y1, rectangle->y2);
+      rectangle->starty = cury;
+      break;
+
+    case RECT_RESIZING_LOWER_LEFT:
+    case RECT_RESIZING_LOWER_RIGHT:
+    case RECT_RESIZING_BOTTOM:
+      y2 = rectangle->y2 + inc_y;
+      y1 = MIN (rectangle->y1, y2);
+      rectangle->starty = cury;
+      break;
+
+    case RECT_RESIZING_RIGHT:
+    case RECT_RESIZING_LEFT:
+      y1 = rectangle->y1;
+      y2 = rectangle->y2;
+      rectangle->starty = cury;
+      break;
+
+    case RECT_MOVING:
       y1 = rectangle->y1 + inc_y;
       y2 = rectangle->y2 + inc_y;
-      rectangle->startx = curx;
       rectangle->starty = cury;
       break;
     }
@@ -475,18 +512,52 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
   switch (rectangle->function)
     {
-    case RECT_RESIZING_LEFT:
+    case RECT_RESIZING_UPPER_LEFT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           rectangle->x1 - coords->x,
                                           rectangle->y1 - coords->y,
                                           0, 0);
       break;
 
-    case RECT_RESIZING_RIGHT:
+    case RECT_RESIZING_UPPER_RIGHT:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          rectangle->x2 - coords->x,
+                                          rectangle->y1 - coords->y,
+                                          0, 0);
+      break;
+
+    case RECT_RESIZING_LOWER_LEFT:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          rectangle->x1 - coords->x,
+                                          rectangle->y2 - coords->y,
+                                          0, 0);
+      break;
+
+    case RECT_RESIZING_LOWER_RIGHT:
       gimp_tool_control_set_snap_offsets (tool->control,
                                           rectangle->x2 - coords->x,
                                           rectangle->y2 - coords->y,
                                           0, 0);
+      break;
+
+    case RECT_RESIZING_LEFT:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          rectangle->x1 - coords->x, 0, 0, 0);
+      break;
+
+    case RECT_RESIZING_RIGHT:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          rectangle->x2 - coords->x, 0, 0, 0);
+      break;
+
+    case RECT_RESIZING_TOP:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          0, rectangle->y1 - coords->y, 0, 0);
+      break;
+
+    case RECT_RESIZING_BOTTOM:
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          0, rectangle->y2 - coords->y, 0, 0);
       break;
 
     case RECT_MOVING:
@@ -504,8 +575,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   gimp_rectangle_tool_update_options (rectangle, gdisp);
 
   if (rectangle->function == RECT_CREATING      ||
-      rectangle->function == RECT_RESIZING_LEFT ||
-      rectangle->function == RECT_RESIZING_RIGHT)
+      rectangle->function == RECT_RESIZING_UPPER_LEFT ||
+      rectangle->function == RECT_RESIZING_LOWER_RIGHT)
     {
       gimp_tool_pop_status (tool);
 
@@ -604,9 +675,14 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
 {
   GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
   GimpDrawTool      *draw_tool = GIMP_DRAW_TOOL (tool);
+  gboolean           inside_x;
+  gboolean           inside_y;
 
   if (tool->gdisp != gdisp)
     return;
+
+  inside_x = coords->x > rectangle->x1 && coords->x < rectangle->x2;
+  inside_y = coords->y > rectangle->y1 && coords->y < rectangle->y2;
 
   /*  If the cursor is in either the upper left or lower right boxes,
    *  The new function will be to resize the current rectangle area
@@ -619,7 +695,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                 GTK_ANCHOR_NORTH_WEST,
                                 FALSE))
     {
-      rectangle->function = RECT_RESIZING_LEFT;
+      rectangle->function = RECT_RESIZING_UPPER_LEFT;
 
       gimp_tool_control_set_snap_offsets (tool->control,
                                           rectangle->x1 - coords->x,
@@ -634,7 +710,7 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                      GTK_ANCHOR_SOUTH_EAST,
                                      FALSE))
     {
-      rectangle->function = RECT_RESIZING_RIGHT;
+      rectangle->function = RECT_RESIZING_LOWER_RIGHT;
 
       gimp_tool_control_set_snap_offsets (tool->control,
                                           rectangle->x2 - coords->x,
@@ -650,34 +726,68 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
                                       rectangle->x2, rectangle->y1,
                                       rectangle->dcw, rectangle->dch,
                                       GTK_ANCHOR_NORTH_EAST,
-                                      FALSE) ||
-            gimp_draw_tool_on_handle (draw_tool, gdisp,
-                                      coords->x, coords->y,
-                                      GIMP_HANDLE_SQUARE,
-                                      rectangle->x1, rectangle->y2,
-                                      rectangle->dcw, rectangle->dch,
-                                      GTK_ANCHOR_SOUTH_WEST,
                                       FALSE))
     {
-      rectangle->function = RECT_MOVING;
+      rectangle->function = RECT_RESIZING_UPPER_RIGHT;
+
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          rectangle->x2 - coords->x,
+                                          rectangle->y1 - coords->y,
+                                          0, 0);
+    }
+  else if (gimp_draw_tool_on_handle (draw_tool, gdisp,
+                                     coords->x, coords->y,
+                                     GIMP_HANDLE_SQUARE,
+                                     rectangle->x1, rectangle->y2,
+                                     rectangle->dcw, rectangle->dch,
+                                     GTK_ANCHOR_SOUTH_WEST,
+                                     FALSE))
+    {
+      rectangle->function = RECT_RESIZING_LOWER_LEFT;
 
       gimp_tool_control_set_snap_offsets (tool->control,
                                           rectangle->x1 - coords->x,
-                                          rectangle->y1 - coords->y,
-                                          rectangle->x2 - rectangle->x1,
-                                          rectangle->y2 - rectangle->y1);
+                                          rectangle->y2 - coords->y,
+                                          0, 0);
     }
-  /*  If the pointer is in the rectangular region, execute or resize it!
-   */
-  else if (coords->x > rectangle->x1 &&
-           coords->x < rectangle->x2 &&
-           coords->y > rectangle->y1 &&
-           coords->y < rectangle->y2)
+  else if ( (fabs (coords->x - rectangle->x1) < rectangle->dcw) && inside_y)
     {
-      rectangle->function = RECT_EXECUTING;
+      rectangle->function = RECT_RESIZING_LEFT;
+
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          rectangle->x1 - coords->x, 0, 0, 0);
+
+    }
+  else if ( (fabs (coords->x - rectangle->x2) < rectangle->dcw) && inside_y)
+    {
+      rectangle->function = RECT_RESIZING_RIGHT;
+
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          rectangle->x2 - coords->x, 0, 0, 0);
+
+    }
+  else if ( (fabs (coords->y - rectangle->y1) < rectangle->dch) && inside_x)
+    {
+      rectangle->function = RECT_RESIZING_TOP;
+
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          0, rectangle->y1 - coords->y, 0, 0);
+
+    }
+  else if ( (fabs (coords->y - rectangle->y2) < rectangle->dch) && inside_x)
+    {
+      rectangle->function = RECT_RESIZING_BOTTOM;
+
+      gimp_tool_control_set_snap_offsets (tool->control,
+                                          0, rectangle->y2 - coords->y, 0, 0);
+
+    }
+  else if (inside_x && inside_y)
+    {
+      rectangle->function = RECT_MOVING;
     }
   /*  otherwise, the new function will be creating, since we want
-   *  to start a new
+   *  to start a new rectangle
    */
   else
     {
@@ -708,8 +818,14 @@ gimp_rectangle_tool_cursor_update (GimpTool        *tool,
           modifier = GIMP_CURSOR_MODIFIER_MOVE;
           break;
 
+        case RECT_RESIZING_UPPER_LEFT:
+        case RECT_RESIZING_UPPER_RIGHT:
+        case RECT_RESIZING_LOWER_LEFT:
+        case RECT_RESIZING_LOWER_RIGHT:
         case RECT_RESIZING_LEFT:
         case RECT_RESIZING_RIGHT:
+        case RECT_RESIZING_TOP:
+        case RECT_RESIZING_BOTTOM:
           modifier = GIMP_CURSOR_MODIFIER_RESIZE;
           break;
 
@@ -736,16 +852,16 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw)
 
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          rectangle->dx1, rectangle->dy1,
-                         shell->disp_width, rectangle->dy1);
+                         rectangle->dx2, rectangle->dy1);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          rectangle->dx1, rectangle->dy1,
-                         rectangle->dx1, shell->disp_height);
+                         rectangle->dx1, rectangle->dy2);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          rectangle->dx2, rectangle->dy2,
-                         0, rectangle->dy2);
+                         rectangle->dx1, rectangle->dy2);
   gimp_canvas_draw_line (canvas, GIMP_CANVAS_STYLE_XOR,
                          rectangle->dx2, rectangle->dy2,
-                         rectangle->dx2, 0);
+                         rectangle->dx2, rectangle->dy1);
 
   gimp_draw_tool_draw_handle (draw,
                               GIMP_HANDLE_FILLED_SQUARE,
@@ -1086,26 +1202,21 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
   gdouble           width;
   gdouble           height;
   gdouble           aspect;
+  gdouble           center_x, center_y;
   GimpSizeEntry    *entry = GIMP_SIZE_ENTRY (rectangle->dimensions_entry);
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  width  = fabs (rectangle->x2 - rectangle->x1);
-  height = fabs (rectangle->y2 - rectangle->y1);
-  if (! shell->unit == GIMP_UNIT_PIXEL)
-    {
-      GimpImage *image = gdisp->gimage;
-
-      width  *= _gimp_unit_get_factor (image->gimp,
-                                       shell->unit) / image->xresolution;
-      height *= _gimp_unit_get_factor (image->gimp,
-                                       shell->unit) / image->yresolution;
-    }
+  width  = rectangle->x2 - rectangle->x1;
+  height = rectangle->y2 - rectangle->y1;
 
   if (width > 0.01)
     aspect = height / width;
   else
     aspect = 0;
+
+  center_x = (rectangle->x1 + rectangle->x2) / 2;
+  center_y = (rectangle->y1 + rectangle->y2) / 2;
 
   g_signal_handlers_block_by_func (rectangle->dimensions_entry,
                                    rectangle_dimensions_changed,
@@ -1115,6 +1226,14 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
   gimp_size_entry_set_refval (entry, 1, rectangle->y2);
   gimp_size_entry_set_refval (entry, 2, rectangle->x1);
   gimp_size_entry_set_refval (entry, 3, rectangle->y1);
+
+  g_object_set (GIMP_TOOL (rectangle)->tool_info->tool_options,
+                "width",  width,
+                "height", height,
+                "aspect", aspect,
+                "center-x", center_x,
+                "center-y", center_y,
+                NULL);
 
   g_signal_handlers_unblock_by_func (rectangle->dimensions_entry,
                                      rectangle_dimensions_changed,

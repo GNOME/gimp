@@ -40,22 +40,20 @@ struct _GimpRectangleOptions
 
   gboolean                 highlight;
 
-  gdouble                  x1;
-  gdouble                  y1;
-  gdouble                  x2;
-  gdouble                  y2;
+  gboolean                 fixed_width;
+  gdouble                  width;
 
-  gdouble                  xresolution;
-  gdouble                  yresolution;
+  gboolean                 fixed_height;
+  gdouble                  height;
 
-  gint                     image_width;
-  gint                     image_height;
+  gboolean                 fixed_aspect;
+  gdouble                  aspect;
+
+  gboolean                 fixed_center;
+  gdouble                  center_x;
+  gdouble                  center_y;
 
   GimpUnit                 unit;
-
-  gdouble                  width;
-  gdouble                  height;
-  gdouble                  aspect;
 };
 
 
