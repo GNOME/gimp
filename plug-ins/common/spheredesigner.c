@@ -1987,7 +1987,8 @@ loadit (const gchar * fn)
   f = fopen (fn, "rt");
   if (!f)
     {
-      g_message ("Failed to open '%s': %s", fn, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 fn, g_strerror (errno));
       return;
     }
 
@@ -2073,7 +2074,8 @@ saveit (const gchar *fn)
   f = fopen (fn, "wt");
   if (!f)
     {
-      g_message ("Failed to open '%s': %s", fn, g_strerror (errno));
+      g_message (_("Could not open '%s' for writing: %s"),
+                 fn, g_strerror (errno));
       return;
     }
 

@@ -380,16 +380,17 @@ load_image (const gchar *filename)
   ifp = fopen (filename, "rb");
   if (!ifp)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
   read_xwd_header (ifp, &xwdhdr);
   if (xwdhdr.l_file_version != 7)
     {
-      g_message(_("Can't open file as XWD file"));
+      g_message (_("Could not read XWD header from '%s'"), filename);
       fclose (ifp);
-      return (-1);
+      return -1;
     }
 
 #ifdef XWD_COL_WAIT_DEBUG
@@ -506,7 +507,7 @@ save_image (const gchar *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      g_message (_("XWD save cannot handle images with alpha channels"));
+      g_message (_("Cannot save images with alpha channels."));
       return FALSE;
     }
 
@@ -517,7 +518,7 @@ save_image (const gchar *filename,
     case GIMP_RGB_IMAGE:
       break;
     default:
-      g_message (_("cannot operate on unknown image types"));
+      g_message (_("Cannot operate on unknown image types."));
       return (FALSE);
       break;
     }
@@ -526,7 +527,7 @@ save_image (const gchar *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

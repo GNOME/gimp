@@ -55,6 +55,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1269,7 +1270,8 @@ p_write_parasite(const gchar  *dirname,
      l_fp_pte = fopen(l_parasite_file, "wb");
      if(l_fp_pte == NULL)
      {
-       g_message (_("Can't open (write): %s"), l_parasite_file);
+       g_message (_("Could not open '%s' for writing: %s"),
+                  l_parasite_file, g_strerror (errno));
        g_free(l_parasite_file);
        return -1;
      }
@@ -1678,11 +1680,11 @@ save_xjt_image (const gchar *filename,
       case GIMP_GRAY:
 	break;
       case GIMP_INDEXED:
-	g_message (_("xjt: cannot operate on indexed color images"));
+	g_message (_("Cannot operate on indexed color images."));
 	return -1;
 	break;
       default:
-	g_message (_("xjt: cannot operate on unknown image types"));
+	g_message (_("Cannot operate on unknown image types."));
 	return -1;
 	break;
    }
@@ -1697,7 +1699,8 @@ save_xjt_image (const gchar *filename,
    l_mode_dir = 0777;
    if(mkdir(l_dirname, l_mode_dir) != 0)
    {
-     g_message (_("Can't create working dir: %s"), l_dirname);
+     g_message (_("Could not create working folder '%s': %s"),
+                l_dirname, g_strerror (errno));
      goto cleanup;
    }
 
@@ -1706,7 +1709,8 @@ save_xjt_image (const gchar *filename,
    l_fp_prp = fopen(l_prop_file, "w");
    if(l_fp_prp == NULL)
    {
-     g_message (_("Can't open: %s"), l_prop_file);
+     g_message (_("Could not open '%s' for writing: %s"),
+                l_prop_file, g_strerror (errno));
      goto cleanup;
    }
 
@@ -2527,14 +2531,16 @@ p_create_and_attach_parasite (gint32            gimp_obj_id,
   if (0 != stat(l_parasite_file, &l_stat_buf))
   {
      /* stat error (file does not exist) */
-     g_message (_("Can't open (read): %s"), l_parasite_file);
+     g_message (_("Could not open '%s' for reading: %s"),
+                l_parasite_file, g_strerror (errno));
      return(-1);
   }
 
   l_fp_pte = fopen(l_parasite_file, "rb");
   if(l_fp_pte == NULL)
   {
-     g_message (_("Can't open (read): %s"), l_parasite_file);
+     g_message (_("Could not open '%s' for reading: %s"),
+                l_parasite_file, g_strerror (errno));
      return(-1);
   }
 
@@ -3188,12 +3194,12 @@ t_image_props * p_load_prop_file(const gchar *prop_filename)
   l_file_buff = p_load_linefile(prop_filename, &l_filesize);
   if(l_file_buff == NULL)
   {
-    g_message(_("Error: Can't read XJT propertyfile %s"), prop_filename);
+    g_message(_("Error: Could not read XJT property file '%s'."), prop_filename);
     goto cleanup;
   }
   if(l_filesize == 0)
   {
-    g_message(_("Error: XJT propertyfile %s is empty"), prop_filename);
+    g_message(_("Error: XJT property file '%s' is empty."), prop_filename);
     goto cleanup;
   }
 
@@ -3319,7 +3325,8 @@ load_xjt_image (const gchar *filename)
   l_mode_dir = 0777;
   if(mkdir(l_dirname, l_mode_dir) != 0)
     {
-      g_message (_("Can't create working dir: %s"), l_dirname);
+      g_message (_("Could not create working folder '%s': %s"),
+                 l_dirname, g_strerror (errno));
       goto cleanup;
     }
 

@@ -193,7 +193,7 @@ void savebrush(GtkWidget *wg, gpointer data)
 
   sprintf(path, "%s/Brushes/", (char *)thispath->data);
 
-  window = gtk_file_selection_new( _("Save brush"));
+  window = gtk_file_selection_new (_("Save Brush"));
 
   gtk_window_set_transient_for (GTK_WINDOW (window),
                                 GTK_WINDOW (gtk_widget_get_toplevel (wg)));

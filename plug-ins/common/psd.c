@@ -1713,7 +1713,8 @@ load_image (const gchar *name)
   fd = fopen (name, "rb");
   if (! fd)
     {
-      g_message (_("Can't open '%s':\n%s"), name, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 name, g_strerror (errno));
       return -1;
     }
 

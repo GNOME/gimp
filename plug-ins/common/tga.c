@@ -410,7 +410,8 @@ load_image (const gchar *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
@@ -1011,7 +1012,7 @@ save_image (const gchar *filename,
 
   if ((fp = fopen (filename, "wb")) == NULL)
     {
-      g_message ("Can't open '%s'\nfor writing: %s",
+      g_message ("Could not open '%s' for writing: %s",
                  filename, g_strerror (errno));
       return FALSE;
     }

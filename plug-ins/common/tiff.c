@@ -429,7 +429,8 @@ load_image (const gchar *filename)
   tif = TIFFOpen (filename, "r");
   if (!tif)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       gimp_quit ();
     }
 
@@ -449,19 +450,20 @@ load_image (const gchar *filename)
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGEWIDTH, &cols))
     {
-      g_message ("Can't get image width");
+      g_message ("Could not get image width from '%s'", filename);
       gimp_quit ();
     }
 
   if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
     {
-      g_message ("Can't get image length");
+      g_message ("Could not get image length from '%s'", filename);
       gimp_quit ();
     }
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
     {
-      g_message ("Can't get photometric\nAssuming min-is-black");
+      g_message ("Could not get photometric from '%s'. Assuming min-is-black",
+                 filename);
       /* old AppleScan software misses out the photometric tag (and
        * incidentally assumes min-is-white, but xv assumes min-is-black,
        * so we follow xv's lead.  It's not much hardship to invert the
@@ -522,7 +524,7 @@ load_image (const gchar *filename)
 
   if ((image = gimp_image_new (cols, rows, image_type)) == -1)
     {
-      g_message ("Can't create a new image");
+      g_message ("Could not create a new image");
       gimp_quit ();
     }
 
@@ -646,7 +648,7 @@ load_image (const gchar *filename)
     {
       if (!TIFFGetField (tif, TIFFTAG_COLORMAP, &redmap, &greenmap, &bluemap))
 	{
-	  g_message ("Can't get colormaps");
+	  g_message ("Could not get colormaps from '%s'", filename);
 	  gimp_quit ();
 	}
 
@@ -1505,7 +1507,7 @@ save_image (const gchar *filename,
   tif = TIFFOpen (filename, "w");
   if (!tif)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

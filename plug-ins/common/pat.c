@@ -262,7 +262,8 @@ load_image (const gchar *filename)
 
   if (fd == -1)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
@@ -378,7 +379,7 @@ save_image (const gchar *filename,
 
   if (fd == -1)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

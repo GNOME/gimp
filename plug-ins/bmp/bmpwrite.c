@@ -122,7 +122,7 @@ WriteBMP (const gchar *filename,
 		       0, 0, drawable->width, drawable->height, FALSE, FALSE);
   if (gimp_drawable_has_alpha(drawable_ID))
     {
-      g_message (_("Cannot operate on unknown image types or alpha images"));
+      g_message (_("Cannot save images with alpha channel."));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -168,7 +168,7 @@ WriteBMP (const gchar *filename,
 	}
       break;
     default:
-      fprintf (stderr, "%s: This should not happen\n", prog_name);
+      g_message (_("Cannot operate on unknown image types."));
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
@@ -184,7 +184,7 @@ WriteBMP (const gchar *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return GIMP_PDB_EXECUTION_ERROR;
     }

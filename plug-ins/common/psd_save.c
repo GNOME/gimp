@@ -1523,7 +1523,7 @@ save_image (const gchar *filename,
   fd = fopen (filename, "wb");
   if (fd == NULL)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

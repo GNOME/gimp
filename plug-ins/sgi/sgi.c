@@ -314,7 +314,7 @@ load_image (const gchar *filename)	/* I - File to load */
   sgip = sgiOpen ((char *) filename, SGI_READ, 0, 0, 0, 0, 0);
   if (sgip == NULL)
     {
-      g_message ("Can't open '%s'", filename);
+      g_message ("Could not open '%s' for reading.", filename);
       return -1;
     };
 
@@ -353,7 +353,7 @@ load_image (const gchar *filename)	/* I - File to load */
   image = gimp_image_new (sgip->xsize, sgip->ysize, image_type);
   if (image == -1)
     {
-      g_message ("Can't allocate new image");
+      g_message ("Could not allocate new image");
       return -1;
     }
 
@@ -515,7 +515,7 @@ save_image (const gchar *filename,
       zsize = 4;
       break;
     default:
-      g_message ("Image must be of type RGB or GRAY");
+      g_message (_("Cannot operate on indexed color images."));
       return FALSE;
     }
 
@@ -527,7 +527,7 @@ save_image (const gchar *filename,
 		  drawable->width, drawable->height, zsize);
   if (sgip == NULL)
     {
-      g_message (_("Can't open '%s' for writing"), filename);
+      g_message (_("Could not open '%s' for writing."), filename);
       return FALSE;
     };
 

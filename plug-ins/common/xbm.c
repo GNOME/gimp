@@ -715,7 +715,8 @@ load_image (const gchar *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
@@ -798,7 +799,7 @@ load_image (const gchar *filename)
 
   if (c == EOF)
     {
-      g_message (_("'%s':\nCan't read header (ftell == %ld)"),
+      g_message (_("'%s':\nCould not read header (ftell == %ld)"),
                  filename, ftell (fp));
       return -1;
     }
@@ -987,7 +988,7 @@ save_image (const gchar *filename,
   fp = fopen (filename, "w");
   if (!fp)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

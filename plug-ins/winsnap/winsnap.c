@@ -143,7 +143,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   query,   /* query_proc */
   run,     /* run_proc */
 };
-	
+
 /* We create a DIB section to hold the grabbed area. The scanlines in
  * DIB sections are aligned ona LONG (four byte) boundary. Its pixel
  * data is in RGB (BGR actually) format, three bytes per pixel.
@@ -354,7 +354,7 @@ doCapture(HWND selectedHwnd)
 /******************************************************************
  * Win32 entry point and setup...
  ******************************************************************/
-	
+
 #define DINV 3
 
 /*
@@ -584,7 +584,7 @@ dialogProc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 	hDC = BeginPaint(hwndDlg, &ps);
 	DrawIconEx(hDC, bitmapRect.left, bitmapRect.top, selectCursor,
 		   0, 0, 0, NULL, DI_NORMAL);
-	EndPaint(hwndDlg, &ps);			
+	EndPaint(hwndDlg, &ps);
       }
     }
   break;
@@ -637,7 +637,7 @@ WinMain(HINSTANCE hInstance,
    */
   return gimp_main(&PLUG_IN_INFO, __argc, __argv);
 }
-	
+
 /*
  * InitApplication
  *
@@ -648,7 +648,7 @@ InitApplication(HINSTANCE hInstance)
 {
   WNDCLASS wc;
   BOOL retValue;
-		
+
   /* Get some resources */
 #ifdef _MSC_VER
   /* For some reason this works only with MSVC */
@@ -672,20 +672,20 @@ InitApplication(HINSTANCE hInstance)
   wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
   wc.lpszClassName = APP_NAME;
   wc.lpszMenuName = NULL;
-		
+
   /* Register the window class and stash success/failure code. */
   retValue = RegisterClass(&wc);
-		
+
   /* Log error */
   if (!retValue) {
     formatWindowsError(buffer);
     g_error("Error registering class: %s", buffer);
     return retValue;
   }
-		
+
   return retValue;
 }
-	
+
 /*
  * InitInstance
  *
@@ -698,17 +698,17 @@ InitInstance(HINSTANCE hInstance, int nCmdShow)
   mainHwnd = CreateWindow(APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
 			  CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
 			  NULL, NULL, hInstance, NULL);
-		
+
   if (!mainHwnd) {
     return (FALSE);
   }
-		
+
   ShowWindow(mainHwnd, nCmdShow);
   UpdateWindow(mainHwnd);
-		
+
   return TRUE;
 }
-	
+
 /*
  * winsnapWinMain
  *
@@ -726,11 +726,11 @@ winsnapWinMain(void)
   /* Perform instance initialization */
   if (!InitApplication(hInst))
     return (FALSE);
-		
+
   /* Perform application initialization */
   if (!InitInstance(hInst, SHOW_WINDOW))
     return (FALSE);
-		
+
   /* Main message loop */
   while (GetMessage(&msg, NULL, 0, 0)) {
     TranslateMessage(&msg);
@@ -739,7 +739,7 @@ winsnapWinMain(void)
 
   return (msg.wParam);
 }
-	
+
 /*
  * WndProc
  *
@@ -751,12 +751,12 @@ WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
   HWND selectedHwnd;
 
   switch (message) {
-			
+
   case WM_CREATE:
     /* The window is created... Send the capture message */
     PostMessage(hwnd, WM_DOCAPTURE, 0, 0);
     break;
-	
+
   case WM_DOCAPTURE:
     /* Get the selected window handle */
     selectedHwnd = (HWND) DialogBox(hInst, MAKEINTRESOURCE(IDD_SELECT),
@@ -806,7 +806,7 @@ doWindowCapture(void)
    */
   winsnapWinMain();
 }
-	
+
 /******************************************************************
  * Snapshot configuration dialog
  ******************************************************************/
@@ -834,7 +834,7 @@ snap_grab_callback(GtkWidget *widget,
 		   gpointer data)
 {
   winsnapintf.run = TRUE;
-  winsnapvals.delay = 
+  winsnapvals.delay =
     gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON (winsnapintf.delay_spinner));
   gtk_widget_destroy(GTK_WIDGET (data));
 }
@@ -1014,7 +1014,7 @@ snap_dialog(void)
   label = gtk_label_new (_("after"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
- 
+
   adj = (GtkAdjustment *) gtk_adjustment_new ((gfloat)delay, 0.0, 100.0, 1.0, 5.0, 0.0);
   winsnapintf.delay_spinner = gtk_spin_button_new (adj, 0, 0);
   gtk_box_pack_start (GTK_BOX(hbox), winsnapintf.delay_spinner, FALSE, FALSE, 0);
@@ -1041,7 +1041,7 @@ snap_dialog(void)
 /******************************************************************
  * GIMP Plug-in entry points
  ******************************************************************/
-	
+
 /*
  * Plug-in Parameter definitions
  */
@@ -1054,7 +1054,7 @@ snap_dialog(void)
 #define NUMBER_OUT_ARGS 1
 #define OUT_ARGS { GIMP_PDB_IMAGE,   "image",     "Output image" }
 
-	
+
 /*
  * query
  *
@@ -1074,7 +1074,7 @@ query(void)
 			 PLUG_IN_AUTHOR,
 			 PLUG_IN_COPYRIGHT,
 			 PLUG_IN_VERSION,
-			 N_("<Toolbox>/File/Acquire/Screen Shot..."),
+			 N_("<Toolbox>/File/Acquire/_Screen Shot..."),
 			 NULL,
 			 GIMP_PLUGIN,
 			 NUMBER_IN_ARGS,
@@ -1082,7 +1082,7 @@ query(void)
 			 args,
 			 return_vals);
 }
-	
+
 /* Return values storage */
 static GimpParam values[2];
 
@@ -1114,11 +1114,11 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
-		
+
   /* Set up the rest of the return parameters */
   values[1].type = GIMP_PDB_INT32;
   values[1].data.d_int32 = 0;
-		
+
   /* Get the data from last run */
   gimp_get_data(PLUG_IN_NAME, &winsnapvals);
 
@@ -1129,17 +1129,17 @@ run (const gchar      *name,
     if (!snap_dialog())
       return;
     break;
-			
+
   case GIMP_RUN_NONINTERACTIVE:
   case GIMP_RUN_WITH_LAST_VALS:
     if (!winsnapvals.root)
       values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
     break;
-			
+
   default:
     break;
   } /* switch */
-	
+
   /* Do the actual window capture */
   if (winsnapvals.root)
     doRootWindowCapture();
@@ -1157,7 +1157,7 @@ run (const gchar      *name,
       /* Store variable states for next run */
       gimp_set_data(PLUG_IN_NAME, &winsnapvals, sizeof(WinSnapValues));
     }
-			
+
     /* Set return values */
     *nreturn_vals = 2;
   } else {
@@ -1222,7 +1222,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 
   /* Check that we got the memory */
   if (!capBytes) {
-    g_warning(_("No data captured"));
+    g_message (_("No data captured"));
     return;
   }
 
@@ -1242,7 +1242,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
 
   /* Get our drawable */
   drawable = gimp_drawable_get(layer_id);
-		
+
   gimp_tile_cache_size(ROUND4(width) * gimp_tile_height() * 3);
 
   /* Initialize a pixel region for writing to the image */
@@ -1262,6 +1262,6 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   /* Finish up */
   gimp_drawable_detach(drawable);
   gimp_display_new (image_id);
-  
+
   return;
 }

@@ -760,7 +760,7 @@ delete_fractal_callback (GtkWidget *widget,
   sel_obj = (fractalexplorerOBJ *)
     g_object_get_data (G_OBJECT (sellist->data), "fractalexplorer");
 
-  str = g_strdup_printf (_("Are you sure you want to delete\n"
+  str = g_strdup_printf (_("Are you sure you want to delete "
 			   "\"%s\" from the list and from disk?"),
 			 sel_obj->draw_name);
 

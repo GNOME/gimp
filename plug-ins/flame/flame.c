@@ -412,7 +412,8 @@ file_ok_callback (GtkWidget *widget,
 
       if (f == NULL)
 	{
-	  g_message (_("Can't open '%s': %s"), filename, g_strerror (errno));
+	  g_message (_("Could not open '%s' for reading: %s"),
+                     filename, g_strerror (errno));
 	  return;
 	}
 
@@ -441,7 +442,7 @@ file_ok_callback (GtkWidget *widget,
 
       if (NULL == f)
 	{
-	  g_message (_("Can't open '%s' for writing:\n%s"),
+	  g_message (_("Could not open '%s' for writing: %s"),
                      filename, g_strerror (errno));
 	  return;
 	}

@@ -255,14 +255,14 @@ run (const gchar      *name,
   *return_vals = values;
 
   run_mode = param[0].data.d_int32;
-  
+
   INIT_I18N ();
 
   if (run_mode == GIMP_RUN_NONINTERACTIVE && n_params != 3)
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
-  
+
   /* Check the procedure name we were called with, to decide
      what needs to be done. */
   if (strcmp(name,"plug_in_animationoptimize")==0)
@@ -275,7 +275,7 @@ run (const gchar      *name,
     opmode = OPFOREGROUND;
   else
     g_error("GAH!!!");
-  
+
   if (status == GIMP_PDB_SUCCESS)
     {
       image_id = param[1].data.d_image;
@@ -285,7 +285,7 @@ run (const gchar      *name,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush();
     }
-  
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -377,7 +377,7 @@ compose_row(int frame_num,
   /* render... */
 
   srcptr = line_buf;
-  
+
   for (i=rawx; i<rawwidth+rawx; i++)
     {
       if (i>=0 && i<dest_width)
@@ -392,10 +392,10 @@ compose_row(int frame_num,
 	      dest[i*pixelstep + pixelstep - 1] = 255;
 	    }
 	}
-      
+
       srcptr += rawbpp;
     }
-  
+
 }
 
 
@@ -422,7 +422,7 @@ do_optimizations(GimpRunMode run_mode)
 
   gchar* oldlayer_name;
   gchar* newlayer_name;
-  
+
   gboolean can_combine;
 
   gint32 bbox_top, bbox_bottom, bbox_left, bbox_right;
@@ -452,7 +452,7 @@ do_optimizations(GimpRunMode run_mode)
   pixelstep = (imagetype == GIMP_RGB) ? 4 : 2;
 
   /*  gimp_tile_cache_ntiles(total_frames * (width / gimp_tile_width() + 1) );*/
-  
+
 
   drawabletype_alpha = (imagetype == GIMP_RGB) ? GIMP_RGBA_IMAGE :
     ((imagetype == GIMP_INDEXED) ? GIMP_INDEXEDA_IMAGE : GIMP_GRAYA_IMAGE);
@@ -462,6 +462,7 @@ do_optimizations(GimpRunMode run_mode)
   this_frame = g_malloc (frame_sizebytes);
   last_frame = g_malloc (frame_sizebytes);
   opti_frame = g_malloc (frame_sizebytes);
+
   if (opmode == OPBACKGROUND ||
       opmode == OPFOREGROUND)
     back_frame = g_malloc (frame_sizebytes);
@@ -478,9 +479,6 @@ do_optimizations(GimpRunMode run_mode)
       gimp_image_set_cmap (new_image_id, palette, ncolours);
     }
 
-  if ((this_frame == NULL) || (last_frame == NULL) || (opti_frame == NULL))
-    g_error(_("Not enough memory to allocate buffers for optimization.\n"));
-
 #if 1
   if (opmode == OPBACKGROUND ||
       opmode == OPFOREGROUND)
@@ -495,7 +493,7 @@ do_optimizations(GimpRunMode run_mode)
       guint **count;
 
       guint *num_colours;
-      
+
       these_rows = g_new (guchar *, total_frames);
       red =        g_new (guchar *, total_frames);
       green =      g_new (guchar *, total_frames);
@@ -516,7 +514,7 @@ g_warning("stat fun");
 
 	  count[this_frame_num] = g_new0(guint, width);
 	}
-      
+
       for (row = 0; row < height; row++)
 	{
 	  memset(num_colours, 0, width * sizeof(guint));
@@ -527,9 +525,9 @@ g_warning("stat fun");
 
 	      drawable =
 		gimp_drawable_get (layers[total_frames-(this_frame_num+1)]);
-	      
+
 	      dispose = get_frame_disposal (this_frame_num);
-	      
+
 	      compose_row(this_frame_num,
 			  dispose,
 			  row,
@@ -541,7 +539,7 @@ g_warning("stat fun");
 
 	      gimp_drawable_detach(drawable);
 	    }
-	  
+
 	  /*	  g_warning("eh2."); */
 
 	  for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
@@ -606,7 +604,7 @@ g_warning("stat fun");
 	    }
 
 	  /*	  g_warning("eh."); */
-	  
+
 	  for (i=0; i<width; i++)
 	    {
 	      guint best_count = 0;
@@ -641,9 +639,9 @@ g_warning("stat fun");
 		  these_rows[0],
 		  width * pixelstep);*/
 	}
-      
+
       g_warning("stat fun over");
-      
+
       for (this_frame_num=0; this_frame_num<total_frames; this_frame_num++)
 	{
 	  g_free(these_rows[this_frame_num]);
@@ -662,18 +660,18 @@ g_warning("stat fun");
 #endif
 
   if (opmode == OPBACKGROUND)
-    {      
+    {
       new_layer_id = gimp_layer_new(new_image_id,
 				    "Backgroundx",
 				    width, height,
 				    drawabletype_alpha,
 				    100.0,
 				    GIMP_NORMAL_MODE);
-      
+
       gimp_image_add_layer (new_image_id, new_layer_id, 0);
-      
+
       drawable = gimp_drawable_get (new_layer_id);
-      
+
       gimp_pixel_rgn_init (&pixel_rgn, drawable,
 			   0, 0,
 			   width, height,
@@ -704,7 +702,7 @@ g_warning("stat fun");
 
 	  this_delay = get_frame_duration (this_frame_num);
 	  dispose    = get_frame_disposal (this_frame_num);
-      
+
 	  for (row = 0; row < height; row++)
 	    {
 	      compose_row(this_frame_num,
@@ -740,7 +738,7 @@ g_warning("stat fun");
 					+ byteit])
 			    {
 			      goto enough;
-			    }		    
+			    }
 			}
 		      this_frame[yit*width*pixelstep + xit*pixelstep
 				+ pixelstep - 1] = 0;
@@ -786,7 +784,7 @@ g_warning("stat fun");
 	      rbox_top = height;
 	      rbox_right = 0;
 	      rbox_bottom = 0;
-	  
+
 	      for (yit=0; yit<height; yit++)
 		{
 		  for (xit=0; xit<width; xit++)
@@ -845,7 +843,7 @@ g_warning("stat fun");
 			    {
 			      keep_pix = TRUE;
 			      goto decided;
-			    }			    
+			    }
 			}
 		    decided:
 		      if (opaq_pix)
@@ -924,7 +922,7 @@ g_warning("stat fun");
 	   */
 	  memcpy(last_frame, this_frame, frame_sizebytes);
 
-      
+
 	  /*
 	   *
 	   * PUT THIS FRAME INTO A NEW LAYER IN THE NEW IMAGE
@@ -962,18 +960,18 @@ g_warning("stat fun");
 
 	      oldlayer_name =
 		gimp_layer_get_name(last_true_frame);
-	  
+
 	      buflen = strlen(oldlayer_name) + 40;
-	  
+
 	      newlayer_name = g_malloc(buflen);
-	  
+
 	      remove_disposal_tag(newlayer_name, oldlayer_name);
 	      g_free(oldlayer_name);
-	  
+
 	      oldlayer_name = g_malloc(buflen);
-	  
+
 	      remove_ms_tag(oldlayer_name, newlayer_name);
-	  
+
 	      g_snprintf(newlayer_name, buflen, "%s(%dms)%s",
 			 oldlayer_name, cumulated_delay,
 			 (this_frame_num ==  0) ? "" :
@@ -996,11 +994,11 @@ g_warning("stat fun");
 					      100.0,
 					      GIMP_NORMAL_MODE);
 	      g_free(newlayer_name);
-	  
+
 	      gimp_image_add_layer (new_image_id, new_layer_id, 0);
-	  
+
 	      drawable = gimp_drawable_get (new_layer_id);
-	  
+
 	      gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 				   bbox_right-bbox_left,
 				   bbox_bottom-bbox_top,
@@ -1009,7 +1007,7 @@ g_warning("stat fun");
 				       bbox_right-bbox_left,
 				       bbox_bottom-bbox_top);
 	      gimp_drawable_flush (drawable);
-	      gimp_drawable_detach (drawable);     
+	      gimp_drawable_detach (drawable);
 	      gimp_layer_translate (new_layer_id, (gint)bbox_left, (gint)bbox_top);
 	    }
 
@@ -1017,9 +1015,9 @@ g_warning("stat fun");
 				((double)total_frames));
 	}
     }
-  
+
   gimp_image_undo_enable (new_image_id);
-      
+
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
     gimp_display_new (new_image_id);
 
@@ -1050,7 +1048,7 @@ get_frame_disposal (const guint whichframe)
 {
   gchar* layer_name;
   DisposeType disposal;
-  
+
   layer_name = gimp_layer_get_name(layers[total_frames-(whichframe+1)]);
   disposal = parse_disposal_tag(layer_name);
   g_free(layer_name);
@@ -1072,7 +1070,7 @@ get_frame_duration (const guint whichframe)
       duration = parse_ms_tag(layer_name);
       g_free(layer_name);
     }
-  
+
   if (duration < 0) duration = 100;  /* FIXME for default-if-not-said  */
   if (duration == 0) duration = 100; /* FIXME - 0-wait is nasty */
 
@@ -1097,7 +1095,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
   /* eat any spaces between open-parenthesis and number */
   while ((offset<length) && (str[offset] == ' '))
     offset++;
-  
+
   if ((offset>=length) || (!isdigit(str[offset])))
     return 0;
 
@@ -1107,7 +1105,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
       sum += str[offset] - '0';
       offset++;
     }
-  while ((offset<length) && (isdigit(str[offset])));  
+  while ((offset<length) && (isdigit(str[offset])));
 
   if (length-offset <= 2)
     return 0;
@@ -1130,7 +1128,7 @@ is_ms_tag (const char *str, int *duration, int *taglength)
     return 0;
 
   offset++;
-  
+
   *duration = sum;
   *taglength = offset;
 
@@ -1153,7 +1151,7 @@ parse_ms_tag (const char *str)
       if (is_ms_tag(&str[i], &rtn, &dummy))
 	return rtn;
     }
-  
+
   return -1;
 }
 
@@ -1163,7 +1161,7 @@ is_disposal_tag (const char *str, DisposeType *disposal, int *taglength)
 {
   if (strlen(str) != 9)
     return 0;
-  
+
   if (strncmp(str, "(combine)", 9) == 0)
     {
       *taglength = 9;

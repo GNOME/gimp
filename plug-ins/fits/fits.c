@@ -334,7 +334,8 @@ load_image (const gchar *filename)
   fp = fopen (filename, "rb");
   if (!fp)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return (-1);
     }
   fclose (fp);
@@ -437,7 +438,7 @@ save_image (const gchar *filename,
     case GIMP_RGB_IMAGE:     case GIMP_RGBA_IMAGE:
       break;
     default:
-      g_message (_("Cannot operate on unknown image types"));
+      g_message (_("Cannot operate on unknown image types."));
       return (FALSE);
       break;
     }
@@ -446,14 +447,14 @@ save_image (const gchar *filename,
   ofp = fits_open (filename, "w");
   if (!ofp)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return (FALSE);
     }
 
   if (l_run_mode != GIMP_RUN_NONINTERACTIVE)
     {
-      temp = g_strdup_printf (_("Saving '%s':"), filename);
+      temp = g_strdup_printf (_("Saving '%s'..."), filename);
       gimp_progress_init (temp);
       g_free (temp);
     }

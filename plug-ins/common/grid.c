@@ -726,7 +726,7 @@ dialog (gint32        image_ID,
                                 0, 2, 0.0);
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Intersection"),
                                 0, 3, 0.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Width: "),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (width), _("Width:"),
                                 1, 0, 0.0);
 
   /*  put a chain_button under the size_entries  */
@@ -786,7 +786,7 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (space), 2, grid_cfg.ispace);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (space), _("Spacing: "),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (space), _("Spacing:"),
                                 1, 0, 0.0);
 
   /*  put a chain_button under the spacing_entries  */
@@ -850,7 +850,7 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (offset), 2, grid_cfg.ioffset);
 
   /*  attach labels  */
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset), _("Offset: "),
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (offset), _("Offset:"),
                                 1, 0, 0.0);
 
   /*  this is a weird hack: we put a table into the offset table  */

@@ -289,7 +289,7 @@ spawn_gzip (gchar *filename,
   close (tfd);
   if (*pid == -1)
     {
-      g_message ("spawn failed: %s", g_strerror (errno));
+      g_message ("spawnlp() failed: %s", g_strerror (errno));
       return -1;
     }
   return 0;
@@ -369,7 +369,7 @@ save_image (const gchar *filename,
 
       /* and gzip into it */
       execlp ("gzip", "gzip", "-cfn", tmpname, NULL);
-      g_message ("exec failed: gzip: %s", g_strerror (errno));
+      g_message ("execlp(\"gzip -cfn\") failed: %s", g_strerror (errno));
       g_free (tmpname);
       _exit(127);
     }
@@ -381,7 +381,7 @@ save_image (const gchar *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("gzip exited abnormally on file\n'%s'", tmpname);
+	  g_message ("gzip exited abnormally on file '%s'", tmpname);
 	  g_free (tmpname);
 	  return 0;
 	}
@@ -443,8 +443,8 @@ load_image (const gchar       *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("No sensible extension, "
-                   "attempting to load with file magic."));
+      g_message (_("No sensible extension, attempting to load "
+                   "with file magic."));
       ext = ".foo";
     }
 
@@ -487,7 +487,7 @@ load_image (const gchar       *filename,
 
       /* and unzip into it */
       execlp ("gzip", "gzip", "-cfd", filename, NULL);
-      g_message ("exec failed: gunzip: %s", g_strerror (errno));
+      g_message ("execlp(\"gzip -cfd\") failed: %s", g_strerror (errno));
       g_free (tmpname);
       _exit(127);
     }
@@ -499,7 +499,7 @@ load_image (const gchar       *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("gzip exited abnormally on file\n'%s'", filename);
+	  g_message ("gzip exited abnormally on file '%s'", filename);
 	  g_free (tmpname);
 	  *status = GIMP_PDB_EXECUTION_ERROR;
 	  return -1;

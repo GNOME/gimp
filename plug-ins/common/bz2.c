@@ -303,7 +303,7 @@ save_image (const gchar *filename,
 
       /* and bzip2 into it */
       execlp ("bzip2", "bzip2", "-cf", tmpname, NULL);
-      g_message ("exec failed: bzip2: %s", g_strerror (errno));
+      g_message ("execlp(\"bzip2 -cf\") failed: %s", g_strerror (errno));
       g_free (tmpname);
       _exit (127);
     }
@@ -322,7 +322,7 @@ save_image (const gchar *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("bzip2 exited abnormally on file\n'%s'", tmpname);
+	  g_message ("bzip2 exited abnormally on file '%s'", tmpname);
 	  g_free (tmpname);
 	  return GIMP_PDB_EXECUTION_ERROR;
 	}
@@ -348,8 +348,8 @@ load_image (const gchar       *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("No sensible extension, "
-                   "attempting to load with file magic."));
+      g_message (_("No sensible extension, attempting to load "
+                   "with file magic."));
       ext = ".foo";
     }
 
@@ -381,7 +381,7 @@ load_image (const gchar       *filename,
 
       /* and unzip into it */
       execlp ("bzip2", "bzip2", "-cfd", filename, NULL);
-      g_message ("exec failed: bunzip2: %s", g_strerror (errno));
+      g_message ("execlp(\"bzip2 -cfd\") failed: %s", g_strerror (errno));
       g_free (tmpname);
       _exit (127);
     }
@@ -401,7 +401,7 @@ load_image (const gchar       *filename,
 	  || !WIFEXITED (process_status)
 	  || (WEXITSTATUS (process_status) != 0))
 	{
-	  g_message ("bzip2 exited abnormally on file\n'%s'", filename);
+	  g_message ("bzip2 exited abnormally on file '%s'", filename);
 	  g_free (tmpname);
 	  *status = GIMP_PDB_EXECUTION_ERROR;
 	  return -1;

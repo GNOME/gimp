@@ -215,7 +215,8 @@ load_image (const gchar *filename)
 
   if (fd < 0)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
@@ -244,7 +245,7 @@ load_image (const gchar *filename)
 
   bitmap = g_new0 (gchar, ( max_rows = MAX_ROWS ) * MAX_COLS / 8 );
 
-  bp = &bitmap[ row * MAX_COLS/8 ]; 
+  bp = &bitmap[ row * MAX_COLS/8 ];
 
   while ( rs > 0 && cons_eol < 4 )	/* i.e., while (!EOF) */
   {
@@ -285,7 +286,7 @@ load_image (const gchar *filename)
 	}
 
 	if ( p == NULL )	/* invalid code */
-	{ 
+	{
 	    fprintf( stderr, "invalid code, row=%d, col=%d, file offset=%lx, skip to eol\n",
 		     row, col, (unsigned long) lseek( fd, 0, 1 ) - rs + rp );
 	    while ( ( data & 0x03f ) != 0 )
@@ -358,8 +359,8 @@ load_image (const gchar *filename)
 #endif
 	    }				/* end skip 0bits */
 	    hibit--; data >>=1;
-	    
-	    color=0; 
+
+	    color=0;
 
 	    if ( col == 0 )
 		cons_eol++;		/* consecutive EOLs */
@@ -385,8 +386,8 @@ load_image (const gchar *filename)
 			       ( max_rows - row ) * MAX_COLS/8 );
 		    }
 		}
-			
-		col=0; bp = &bitmap[ row * MAX_COLS/8 ]; 
+
+		col=0; bp = &bitmap[ row * MAX_COLS/8 ];
 		cons_eol = 0;
 	    }
 	}

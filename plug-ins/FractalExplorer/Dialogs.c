@@ -1799,7 +1799,7 @@ save_callback (void)
 
   if (!fp)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  savename, g_strerror (errno));
       return;
     }
@@ -1814,7 +1814,7 @@ save_callback (void)
   save_options (fp);
 
   if (ferror (fp))
-    g_message (_("Failed to write '%s':\n%s"),
+    g_message (_("Could not write '%s': %s"),
                savename, g_strerror (ferror (fp)));
 
   fclose (fp);
@@ -1838,7 +1838,7 @@ file_selection_ok (GtkWidget        *w,
   if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
     {
       /* Can't save to directory */
-      g_message (_("Save: Can't save to a folder."));
+      g_message (_("Cannot save to a folder."));
       return;
     }
 
@@ -2104,19 +2104,20 @@ explorer_load (void)
 
   if (!fp)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return;
     }
   get_line (load_buf, MAX_LOAD_LINE, fp, 1);
 
   if (strncmp (FRACTAL_HEADER, load_buf, strlen (load_buf)))
     {
-      g_message (_("'%s'\nis not a FractalExplorer file"), filename);
+      g_message (_("'%s' is not a FractalExplorer file"), filename);
       return;
     }
   if (load_options (current_obj,fp))
     {
-      g_message (_("'%s' is corrupt.\nLine %d Option section incorrect"),
+      g_message (_("'%s' is corrupt. Line %d Option section incorrect"),
 		 filename, line_no);
       return;
     }

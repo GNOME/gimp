@@ -713,7 +713,8 @@ gfig_load (const gchar *filename,
   fp = fopen (filename, "r");
   if (!fp)
     {
-      g_warning ("Error opening: %s", filename);
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return NULL;
     }
 
@@ -1021,7 +1022,7 @@ gfig_save_callbk (void)
 
   if (!fp)
     {
-      message = g_strdup_printf (_("Error opening file '%s':\n%s"),
+      message = g_strdup_printf (_("Could not open '%s' for writing: %s"),
                                    savename, g_strerror (errno));
       g_message (message);
       g_free (message);
@@ -1091,7 +1092,7 @@ file_selection_ok (GtkWidget        *w,
 
   if (g_file_test (filenamebuf, G_FILE_TEST_IS_DIR))
     {
-      g_message ("Save: Can't save to a folder.");
+      g_message (_("Cannot save to a folder."));
       return;
     }
 
@@ -2659,7 +2660,6 @@ grid_frame (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (draw_grid_clear),
                     NULL);
-  gimp_help_set_help_data (toggle, _("Show grid"), NULL);
   gtk_widget_show (toggle);
   gfig_opt_widget.drawgrid = toggle;
 
@@ -2668,7 +2668,6 @@ grid_frame (void)
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &selvals.opts.snap2grid);
-  gimp_help_set_help_data (toggle, _("Snap to grid"), NULL);
   gtk_widget_show (toggle);
   gfig_opt_widget.snap2grid = toggle;
 
@@ -3072,7 +3071,7 @@ gfig_response (GtkWidget *widget,
             gchar     *message;
 
             message =
-              g_strdup_printf (_("%d unsaved Gfig objects.\n"
+              g_strdup_printf (_("%d unsaved Gfig objects. "
                                  "Continue with exiting?"), count);
 
             dialog = gimp_query_boolean_box (_("Warning"),
@@ -3806,7 +3805,7 @@ gfig_delete_gfig_callback (GtkWidget *widget,
   if (delete_dialog)
     return;
 
-  str = g_strdup_printf (_("Are you sure you want to delete\n"
+  str = g_strdup_printf (_("Are you sure you want to delete "
 			   "\"%s\" from the list and from disk?"),
 			 sel_obj->draw_name);
 

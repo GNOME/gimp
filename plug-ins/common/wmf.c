@@ -394,11 +394,11 @@ load_image (const gchar *filename,
 
   if (!pixels)
     {
-      g_message (_("Can't open '%s'"), filename);
+      g_message (_("Could not open '%s' for reading."), filename);
       gimp_quit ();
     }
 
-  status = g_strdup_printf (_("Loading %s:"), filename);
+  status = g_strdup_printf (_("Opening '%s'..."), filename);
   gimp_progress_init (status);
   g_free (status);
 
@@ -406,7 +406,7 @@ load_image (const gchar *filename,
 
   if (image == -1)
     {
-      g_message ("Can't allocate new image for %s", filename);
+      g_message ("Could not allocate new image for '%s'", filename);
       gimp_quit ();
     }
 

@@ -394,7 +394,7 @@ run (const gchar      *name,
       drawable = gimp_drawable_get (param[2].data.d_drawable);
       if (!gimp_drawable_is_rgb (drawable->drawable_id))
 	{
-	  g_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on gray/indexed images"));
+	  g_message (_("Cannot operate on gray or indexed color images."));
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	  break;
 	}
@@ -709,7 +709,7 @@ color_mapping (GimpDrawable *drawable)
 
   if (!gimp_drawable_is_rgb (drawable->drawable_id))
     {
-      g_message (_("Color Mapping / Adjust FG/BG:\nCannot operate on gray/indexed images"));
+      g_message (_("Cannot operate on gray or indexed color images."));
       return;
     }
 

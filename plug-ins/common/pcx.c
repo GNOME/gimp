@@ -298,7 +298,8 @@ load_image (const gchar *filename)
   fd = fopen (filename, "rb");
   if (!fd)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
@@ -308,13 +309,13 @@ load_image (const gchar *filename)
 
   if (fread (&pcx_header, 128, 1, fd) == 0)
     {
-      g_message (_("Can't read header from\n'%s'"), filename);
+      g_message (_("Could not read header from '%s'"), filename);
       return -1;
     }
 
   if (pcx_header.manufacturer != 10)
     {
-      g_message (_("'%s'\nis not a PCX file"), filename);
+      g_message (_("'%s' is not a PCX file"), filename);
       return -1;
     }
 
@@ -570,13 +571,13 @@ save_image (const gchar *filename,
       break;
 
     default:
-      g_message (_("Can't save layers with alpha.\nFlatten your image"));
+      g_message (_("Cannot save images with alpha channel."));
       return FALSE;
   }
 
   if ((fp = fopen (filename, "wb")) == NULL)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

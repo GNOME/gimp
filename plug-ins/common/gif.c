@@ -687,7 +687,7 @@ find_unused_ia_colour (guchar *pixels,
       return ((*colors)-1);
     }
 
-  g_message (_("Couldn't simply reduce colors further.\nSaving as opaque."));
+  g_message (_("Couldn't simply reduce colors further. Saving as opaque."));
   return (-1);
 }
 
@@ -908,7 +908,7 @@ save_image (const gchar *filename,
         {
           if (*c < 0)
             {
-              g_message (_("The GIF format only supports comments in\n"
+              g_message (_("The GIF format only supports comments in "
                            "7bit ASCII encoding. No comment is saved."));
 
               g_free (globalcomment);
@@ -969,8 +969,8 @@ save_image (const gchar *filename,
       break;
 
     default:
-      g_message (_("Sorry, can't save RGB images as GIFs. "
-                   "Convert to Indexed or Grayscale first."));
+      g_message (_("Cannot save RGB color images. Convert to "
+                   "indexed color or grayscale first."));
       return FALSE;
     }
 
@@ -993,7 +993,7 @@ save_image (const gchar *filename,
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return FALSE;
     }

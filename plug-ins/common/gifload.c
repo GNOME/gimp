@@ -18,7 +18,7 @@
 /* Additionally...
  *  "The Graphics Interchange Format(c) is the Copyright property of
  *  CompuServe Incorporated.  GIF(sm) is a Service Mark property of
- *  CompuServe Incorporated." 
+ *  CompuServe Incorporated."
  */
 
 /*
@@ -293,7 +293,8 @@ load_image (const gchar *filename)
   fd = fopen (filename, "rb");
   if (!fd)
     {
-      g_message ("Can't open '%s':\n%s", filename, g_strerror (errno));
+      g_message ("Could not open '%s' for reading: %s",
+                 filename, g_strerror (errno));
       return -1;
     }
 
@@ -352,7 +353,7 @@ load_image (const gchar *filename)
 
 
   highest_used_index = 0;
-      
+
 
   for (;;)
     {
@@ -527,7 +528,7 @@ DoExtension (FILE *fd,
 
 	  if (comment_parasite)
             gimp_parasite_free (comment_parasite);
-	  
+
 	  comment_parasite = gimp_parasite_new ("gimp-comment",
                                                 GIMP_PARASITE_PERSISTENT,
                                                 strlen(buf) + 1, buf);
@@ -890,7 +891,7 @@ ReadImage (FILE        *fd,
 		  )
 		{ /* Everything is RGB(A) from now on... sigh. */
 		  promote_to_rgb = TRUE;
-		  
+
 		  /* Promote everything we have so far into RGB(A) */
 #ifdef GIFDEBUG
 		  g_print ("GIF: Promoting image to RGB...\n");
@@ -909,23 +910,23 @@ ReadImage (FILE        *fd,
 
       switch (previous_disposal)
 	{
-	case 0x00: 
+	case 0x00:
 	  break; /* 'don't care' */
-	case 0x01: 
+	case 0x01:
 	  framename_ptr = framename;
 	  framename = g_strconcat (framename, " (combine)", NULL);
 	  g_free (framename_ptr);
 	  break;
-	case 0x02: 
+	case 0x02:
 	  framename_ptr = framename;
-	  framename = g_strconcat (framename, " (replace)", NULL); 
+	  framename = g_strconcat (framename, " (replace)", NULL);
 	  g_free (framename_ptr);
 	  break;
 	case 0x03:  /* Rarely-used, and unhandled by many
 		       loaders/players (including GIMP: we treat as
 		       'combine' mode). */
 	  framename_ptr = framename;
-	  framename = g_strconcat (framename, " (combine) (!)", NULL); 
+	  framename = g_strconcat (framename, " (combine) (!)", NULL);
 	  g_free (framename_ptr);
 	  break;
 	case 0x04: /* I've seen a composite of this type. stvo_online_banner2.gif */
@@ -940,7 +941,7 @@ ReadImage (FILE        *fd,
 		     "GIF plugin author!\n  (adam@foxbox.org)",
                      previous_disposal);
 	  break;
-	default: 
+	default:
 	  g_message ("Something got corrupted.");
 	  break;
 	}
@@ -976,7 +977,8 @@ ReadImage (FILE        *fd,
 
   if (!alpha_frame && promote_to_rgb)
     {
-      g_message ("Ouchie!  Can't handle non-alpha RGB frames.\n     Please mail the plugin author.  (adam@gimp.org)");
+      g_message ("Ouchie! Can't handle non-alpha RGB frames. "
+                 "Please mail the plugin author.  (adam@gimp.org)");
       gimp_quit();
     }
 

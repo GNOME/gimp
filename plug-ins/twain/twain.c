@@ -1,4 +1,4 @@
-/*  
+/*
  * TWAIN Plug-in
  * Copyright (C) 1999 Craig Setera
  * Craig Setera <setera@home.com>
@@ -25,7 +25,7 @@
  * Randomize
  *
  * Any suggestions, bug-reports or patches are welcome.
- * 
+ *
  * This plug-in interfaces to the TWAIN support library in order
  * to capture images from TWAIN devices directly into GIMP images.
  * The plug-in is capable of acquiring the following type of
@@ -38,7 +38,7 @@
  * Prerequisites:
  *  This plug-in will not compile on anything other than a Win32
  *  platform.  Although the TWAIN documentation implies that there
- *  is TWAIN support available on Macintosh, I neither have a 
+ *  is TWAIN support available on Macintosh, I neither have a
  *  Macintosh nor the interest in porting this.  If anyone else
  *  has an interest, consult www.twain.org for more information on
  *  interfacing to TWAIN.
@@ -48,12 +48,12 @@
  *   configuration compiles with a maximum of single image transfers.
  */
 
-/* 
+/*
  * Revision history
  *  (02/07/99)  v0.1   First working version (internal)
  *  (02/09/99)  v0.2   First release to anyone other than myself
  *  (02/15/99)  v0.3   Added image dump and read support for debugging
- *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted 
+ *  (03/31/99)  v0.5   Added support for multi-byte samples and paletted
  *                     images.
  */
 #include "config.h"
@@ -103,7 +103,7 @@
 #define WM_TRANSFER_IMAGE (WM_USER + 100)
 
 /*
- * Definition of the run states 
+ * Definition of the run states
  */
 #define RUN_STANDARD 0
 #define RUN_DUMP 1
@@ -141,7 +141,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   query,   /* query_proc */
   run,     /* run_proc */
 };
-	
+
 extern void set_gimp_PLUG_IN_INFO_PTR(GimpPlugInInfo *);
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
@@ -162,8 +162,8 @@ typedef struct {
 } TwainValues;
 
 /* Default Twain values */
-static TwainValues twainvals = 
-{ 
+static TwainValues twainvals =
+{
   "",
   100.0, 100.0,
   0, 0,
@@ -206,11 +206,11 @@ setRunMode(char *argv[])
     twain_run_mode = RUN_READDUMP;
 }
 #endif /* _DEBUG */
-	
+
 /******************************************************************
  * Win32 entry point and setup...
  ******************************************************************/
-	
+
 /*
  * WinMain
  *
@@ -220,14 +220,14 @@ setRunMode(char *argv[])
  * and process window messages on behalf of the TWAIN
  * datasource.
  */
-int APIENTRY 
+int APIENTRY
 WinMain(HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
 	LPSTR     lpCmdLine,
 	int       nCmdShow)
 {
-		
-  /* 
+
+  /*
    * Normally, we would do all of the Windows-ish set up of
    * the window classes and stuff here in WinMain.  But,
    * the only time we really need the window and message
@@ -272,7 +272,7 @@ int main (int argc, char *argv[])
    */
   return gimp_main(&PLUG_IN_INFO, __argc, __argv);
 }
-	
+
 /*
  * initTwainAppIdentity
  *
@@ -283,7 +283,7 @@ static pTW_IDENTITY
 getAppIdentity(void)
 {
   pTW_IDENTITY appIdentity = g_new (TW_IDENTITY, 1);
-		
+
   /* Set up the application identity */
   appIdentity->Id = 0;
   appIdentity->Version.MajorNum = 0;
@@ -297,10 +297,10 @@ getAppIdentity(void)
   strcpy(appIdentity->Manufacturer, "Craig Setera");
   strcpy(appIdentity->ProductFamily, "GIMP");
   strcpy(appIdentity->ProductName, "GIMP for Win32");
-		
+
   return appIdentity;
 }
-	
+
 /*
  * initializeTwain
  *
@@ -313,13 +313,13 @@ void
 initializeTwain(void)
 {
   pTW_IDENTITY appIdentity;
-		
+
   /* Get our application's identity */
   appIdentity = getAppIdentity();
-		
+
   /* Create a new session object */
   twSession = newSession(appIdentity);
-		
+
   /* Register our image transfer callback functions */
 #ifdef _DEBUG
   if (twain_run_mode == RUN_DUMP)
@@ -328,18 +328,18 @@ initializeTwain(void)
 #endif /* _DEBUG */
     registerTransferCallbacks(twSession, &standardCbFuncs, NULL);
 }
-	
+
 /*
  * InitApplication
  *
  * Initialize window data and register the window class
  */
-BOOL 
+BOOL
 InitApplication(HINSTANCE hInstance)
 {
   WNDCLASS wc;
   BOOL retValue;
-		
+
   /*
    * Fill in window class structure with parameters to describe
    * the main window.
@@ -354,41 +354,41 @@ InitApplication(HINSTANCE hInstance)
   wc.hbrBackground = (HBRUSH) (COLOR_WINDOW + 1);
   wc.lpszClassName = APP_NAME;
   wc.lpszMenuName = NULL;
-		
+
   /* Register the window class and stash success/failure code. */
   retValue = RegisterClass(&wc);
-		
+
   /* Log error */
   if (!retValue)
     LogLastWinError();
-		
+
   return retValue;
 }
-	
+
 /*
  * InitInstance
- * 
+ *
  * Create the main window for the application.  Used to
  * interface with the TWAIN datasource.
  */
-BOOL 
+BOOL
 InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
   /* Create our window */
   hwnd = CreateWindow(APP_NAME, APP_NAME, WS_OVERLAPPEDWINDOW,
 		      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0,
 		      NULL, NULL, hInstance, NULL);
-		
+
   if (!hwnd) {
     return (FALSE);
   }
-		
+
   ShowWindow(hwnd, nCmdShow);
   UpdateWindow(hwnd);
-		
+
   return TRUE;
 }
-	
+
 /*
  * twainWinMain
  *
@@ -399,48 +399,48 @@ InitInstance(HINSTANCE hInstance, int nCmdShow)
  * operate.
  */
 int
-twainWinMain(void) 
+twainWinMain(void)
 {
-		
+
   /* Initialize the twain information */
   initializeTwain();
-		
+
   /* Perform instance initialization */
   if (!InitApplication(hInst))
     return (FALSE);
-		
+
   /* Perform application initialization */
   if (!InitInstance(hInst, SHOW_WINDOW))
     return (FALSE);
-		
-  /* 
+
+  /*
    * Call the main message processing loop...
    * This call will not return until the application
    * exits.
    */
   return twainMessageLoop(twSession);
 }
-	
+
 /*
  * WndProc
  *
  * Process window message for the main window.
  */
-LRESULT CALLBACK 
+LRESULT CALLBACK
 WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
   switch (message) {
-			
+
   case WM_CREATE:
     /* Register our window handle with the TWAIN
      * support.
      */
     registerWindowHandle(twSession, hWnd);
-			
+
     /* Schedule the image transfer by posting a message */
     PostMessage(hWnd, WM_TRANSFER_IMAGE, 0, 0);
     break;
-			
+
   case WM_TRANSFER_IMAGE:
     /* Get an image */
 #ifdef _DEBUG
@@ -450,22 +450,22 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 #endif /* _DEBUG */
       getImage(twSession);
     break;
-			
+
   case WM_DESTROY:
     LogMessage("Exiting application\n");
     PostQuitMessage(0);
     break;
-			
+
   default:
     return (DefWindowProc(hWnd, message, wParam, lParam));
   }
   return 0;
 }
-	
+
 /******************************************************************
  * GIMP Plug-in entry points
  ******************************************************************/
-	
+
 /*
  * Plug-in Parameter definitions
  */
@@ -476,14 +476,14 @@ WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	{ GIMP_PDB_INT32, "image_count", "Number of acquired images" }, \
 	{ GIMP_PDB_INT32ARRAY, "image_ids", "Array of acquired image identifiers" }
 
-	
+
 /*
  * query
  *
  * The plug-in is being queried.  Install our procedure for
  * acquiring.
  */
-static void 
+static void
 query (void)
 {
   static GimpParamDef args[] = { IN_ARGS };
@@ -530,7 +530,7 @@ query (void)
 			   PLUG_IN_AUTHOR,
 			   PLUG_IN_COPYRIGHT,
 			   PLUG_IN_VERSION,
-			   N_("<Toolbox>/File/Acquire/TWAIN..."),
+			   N_("<Toolbox>/File/Acquire/_TWAIN..."),
 			   NULL,
 			   GIMP_PLUGIN,
 			   NUMBER_IN_ARGS,
@@ -538,8 +538,8 @@ query (void)
 			   args,
 			   return_vals);
 }
-	
-	
+
+
 /* Return values storage */
 static GimpParam values[3];
 
@@ -549,7 +549,7 @@ static GimpParam values[3];
  * The plug-in is being requested to run.
  * Capture an image from a TWAIN datasource
  */
-static void 
+static void
 run (const gchar      *name,
      gint              nparams,
      const GimpParam  *param,
@@ -559,7 +559,7 @@ run (const gchar      *name,
   GimpRunMode run_mode;
 
   /* Initialize the return values
-   * Always return at least the status to the caller. 
+   * Always return at least the status to the caller.
    */
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -579,13 +579,13 @@ run (const gchar      *name,
 
   /* Get the runmode from the in-parameters */
   run_mode = param[0].data.d_int32;
-		
+
   /* Set up the rest of the return parameters */
   values[1].type = GIMP_PDB_INT32;
   values[1].data.d_int32 = 0;
   values[2].type = GIMP_PDB_INT32ARRAY;
   values[2].data.d_int32array = g_new (gint32, MAX_IMAGES);
-		
+
   /* How are we running today? */
   switch (run_mode) {
   case GIMP_RUN_INTERACTIVE:
@@ -594,29 +594,29 @@ run (const gchar      *name,
      */
     gimp_get_data(PLUG_IN_NAME, &twainvals);
     break;
-			
+
   case GIMP_RUN_NONINTERACTIVE:
     /* Currently, we don't do non-interactive calls.
      * Bail if someone tries to call us non-interactively
      */
     values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
     return;
-			
+
   case GIMP_RUN_WITH_LAST_VALS:
     /* Retrieve values from the last run...
      * Currently ignored
      */
     gimp_get_data(PLUG_IN_NAME, &twainvals);
     break;
-			
+
   default:
     break;
   } /* switch */
-		
+
   /* Have we succeeded so far? */
   if (values[0].data.d_status == GIMP_PDB_SUCCESS)
     twainWinMain();
-		
+
   /* Check to make sure we got at least one valid
    * image.
    */
@@ -629,18 +629,18 @@ run (const gchar      *name,
       /* Store variable states for next run */
       gimp_set_data(PLUG_IN_NAME, &twainvals, sizeof (TwainValues));
     }
-			
+
     /* Set return values */
     *nreturn_vals = 3;
   } else {
     values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
   }
 }
-	
+
 /***********************************************************************
  * Image transfer callback functions
  ***********************************************************************/
-	
+
 /* Data used to carry data between each of
  * the callback function calls.
  */
@@ -664,7 +664,7 @@ void
 preTransferCallback(void *clientData)
 {
   /* Initialize our progress dialog */
-  gimp_progress_init(_("Transferring TWAIN data"));
+  gimp_progress_init(_("Transferring TWAIN data..."));
 }
 
 /*
@@ -681,10 +681,10 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 
   pClientDataStruct theClientData = g_new (ClientDataStruct, 1);
 
-#ifdef _DEBUG		
+#ifdef _DEBUG
   logBegin(imageInfo, clientData);
 #endif
-		
+
   /* Decide on the image type */
   switch (imageInfo->PixelType) {
   case TWPT_BW:
@@ -693,7 +693,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
     imageType = GIMP_GRAY;
     layerType = GIMP_GRAY_IMAGE;
     break;
-			
+
   case TWPT_RGB:
     /* Set up the image and layer types */
     imageType = GIMP_RGB;
@@ -734,46 +734,46 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
      */
     return FALSE;
   }
-		
+
   /* Create the GIMP image */
-  theClientData->image_id = gimp_image_new(imageInfo->ImageWidth, 
+  theClientData->image_id = gimp_image_new(imageInfo->ImageWidth,
 					   imageInfo->ImageLength, imageType);
-			
+
   /* Create a layer */
   theClientData->layer_id = gimp_layer_new(theClientData->image_id,
 					   _("Background"),
-					   imageInfo->ImageWidth, 
+					   imageInfo->ImageWidth,
 					   imageInfo->ImageLength,
 					   layerType, 100, GIMP_NORMAL_MODE);
-		
+
   /* Add the layer to the image */
-  gimp_image_add_layer(theClientData->image_id, 
+  gimp_image_add_layer(theClientData->image_id,
 		       theClientData->layer_id, 0);
-		
+
   /* Update the progress dialog */
   theClientData->totalPixels = imageInfo->ImageWidth * imageInfo->ImageLength;
   theClientData->completedPixels = 0;
   gimp_progress_update((double) 0);
-		
+
   /* Get our drawable */
   theClientData->drawable = gimp_drawable_get(theClientData->layer_id);
-		
+
   /* Initialize a pixel region for writing to the image */
-  gimp_pixel_rgn_init(&(theClientData->pixel_rgn), theClientData->drawable, 
+  gimp_pixel_rgn_init(&(theClientData->pixel_rgn), theClientData->drawable,
 		      0, 0, imageInfo->ImageWidth, imageInfo->ImageLength,
 		      TRUE, FALSE);
-		
+
   /* Store our client data for the data transfer callbacks */
   if (clientData)
     g_free (clientData);
   setClientData(twSession, (void *) theClientData);
-		
+
   /* Make sure to return TRUE to continue the image
    * transfer
    */
   return TRUE;
 }
-	
+
 /*
  * bitTransferCallback
  *
@@ -786,7 +786,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
  * image.
  */
 static char bitMasks[] = { 128, 64, 32, 16, 8, 4, 2, 1 };
-static int 
+static int
 bitTransferCallback(pTW_IMAGEINFO imageInfo,
 		    pTW_IMAGEMEMXFER imageMemXfer,
 		    void *clientData)
@@ -796,11 +796,11 @@ bitTransferCallback(pTW_IMAGEINFO imageInfo,
   int rows = imageMemXfer->Rows;
   int cols = imageMemXfer->Columns;
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
-		
+
   /* Allocate a buffer as necessary */
   if (!destBuf)
     destBuf = g_new (char, rows * cols);
-		
+
   /* Unpack the image data from bits into bytes */
   srcBuf = (char *) imageMemXfer->Memory.TheMem;
   offset = 0;
@@ -810,21 +810,21 @@ bitTransferCallback(pTW_IMAGEINFO imageInfo,
       destBuf[offset++] = ((byte & bitMasks[col % 8]) != 0) ? 255 : 0;
     }
   }
-		
+
   /* Update the complete chunk */
-  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn), 
+  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn),
 			  (guchar *) destBuf,
 			  imageMemXfer->XOffset, imageMemXfer->YOffset,
 			  cols, rows);
-		
+
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
-  gimp_progress_update((double) theClientData->completedPixels / 
+  gimp_progress_update((double) theClientData->completedPixels /
 		       (double) theClientData->totalPixels);
-		
+
   return TRUE;
 }
-	
+
 /*
  * oneBytePerSampleTransferCallback
  *
@@ -835,7 +835,7 @@ bitTransferCallback(pTW_IMAGEINFO imageInfo,
  * from a greater number of bits per sample down to the
  * 8 bits per sample understood by The GIMP.
  */
-static int 
+static int
 oneBytePerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
 		     pTW_IMAGEMEMXFER imageMemXfer,
 		     void *clientData)
@@ -846,11 +846,11 @@ oneBytePerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
   int rows = imageMemXfer->Rows;
   int cols = imageMemXfer->Columns;
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
-		
+
   /* Allocate a buffer as necessary */
   if (!destBuf)
     destBuf = g_new (char, rows * cols * bytesPerPixel);
-		
+
   /* The bytes coming from the source may not be padded in
    * a way that The GIMP is terribly happy with.  It is
    * possible to transfer row by row, but that is particularly
@@ -866,29 +866,29 @@ oneBytePerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
 	   (srcBuf + (row * imageMemXfer->BytesPerRow)),
 	   (bytesPerPixel * cols));
   }
-		
+
   /* Update the complete chunk */
-  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn), 
+  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn),
 			  (guchar *) destBuf,
 			  imageMemXfer->XOffset, imageMemXfer->YOffset,
 			  cols, rows);
-		
+
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
-  gimp_progress_update((double) theClientData->completedPixels / 
+  gimp_progress_update((double) theClientData->completedPixels /
 		       (double) theClientData->totalPixels);
-		
+
   return TRUE;
 }
-	
+
 /*
  * twoBytesPerSampleTransferCallback
  *
  * The following function is called for each memory
  * block that is transferred from the data source if
  * the image type is Grayscale or RGB.
- */ 
-static int 
+ */
+static int
 twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
 		     pTW_IMAGEMEMXFER imageMemXfer,
 		     void *clientData)
@@ -904,11 +904,11 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
   TW_UINT16 *samplePtr;
 
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
-		
+
   /* Allocate a buffer as necessary */
   if (!destBuf)
     destBuf = g_new (char, rows * cols * imageInfo->SamplesPerPixel);
-		
+
   /* The bytes coming from the source may not be padded in
    * a way that The GIMP is terribly happy with.  It is
    * possible to transfer row by row, but that is particularly
@@ -922,7 +922,7 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
   /* Work through the rows */
   for (row = 0; row < rows; row++) {
     /* The start of this source row */
-    samplePtr = (TW_UINT16 *) 
+    samplePtr = (TW_UINT16 *)
       ((char *) imageMemXfer->Memory.TheMem + (row * imageMemXfer->BytesPerRow));
 
     /* The start of this dest row */
@@ -944,21 +944,21 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
       }
     }
   }
-		
+
   /* Send the complete chunk */
-  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn), 
+  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn),
 			  (guchar *) destBuf,
 			  imageMemXfer->XOffset, imageMemXfer->YOffset,
 			  cols, rows);
-		
+
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
-  gimp_progress_update((double) theClientData->completedPixels / 
+  gimp_progress_update((double) theClientData->completedPixels /
 		       (double) theClientData->totalPixels);
-		
+
   return TRUE;
 }
-	
+
 /*
  * palettedTransferCallback
  *
@@ -970,8 +970,8 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
  * palette.  This function will create an RGB or Gray
  * image and use the palette to set the details of
  * the pixels.
- */ 
-static int 
+ */
+static int
 palettedTransferCallback(pTW_IMAGEINFO imageInfo,
 			 pTW_IMAGEMEMXFER imageMemXfer,
 			 void *clientData)
@@ -984,9 +984,9 @@ palettedTransferCallback(pTW_IMAGEINFO imageInfo,
 
   /* Get the client data */
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
-		
+
   /* Look up the palette entry size */
-  channelsPerEntry = 
+  channelsPerEntry =
     (theClientData->paletteData->PaletteType == TWPA_RGB) ? 3 : 1;
 
   /* Allocate a buffer as necessary */
@@ -996,7 +996,7 @@ palettedTransferCallback(pTW_IMAGEINFO imageInfo,
   /* Work through the rows */
   destPtr = destBuf;
   for (row = 0; row < rows; row++) {
-    srcPtr = (char *) ((char *) imageMemXfer->Memory.TheMem + 
+    srcPtr = (char *) ((char *) imageMemXfer->Memory.TheMem +
 		       (row * imageMemXfer->BytesPerRow));
 
     /* Work through the columns */
@@ -1021,28 +1021,28 @@ palettedTransferCallback(pTW_IMAGEINFO imageInfo,
       }
     }
   }
-		
+
   /* Send the complete chunk */
-  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn), 
+  gimp_pixel_rgn_set_rect(&(theClientData->pixel_rgn),
 			  (guchar *) destBuf,
 			  imageMemXfer->XOffset, imageMemXfer->YOffset,
 			  cols, rows);
-		
+
   /* Update the user on our progress */
   theClientData->completedPixels += (cols * rows);
-  gimp_progress_update((double) theClientData->completedPixels / 
+  gimp_progress_update((double) theClientData->completedPixels /
 		       (double) theClientData->totalPixels);
-		
+
   return TRUE;
 }
-	
+
 /*
  * dataTransferCallback
  *
  * The following function is called for each memory
  * block that is transferred from the data source.
  */
-int 
+int
 dataTransferCallback(pTW_IMAGEINFO imageInfo,
 		     pTW_IMAGEMEMXFER imageMemXfer,
 		     void *clientData)
@@ -1050,7 +1050,7 @@ dataTransferCallback(pTW_IMAGEINFO imageInfo,
 #ifdef _DEBUG
   logData(imageInfo, imageMemXfer, clientData);
 #endif
-		
+
   /* Choose the appropriate transfer handler */
   switch (imageInfo->PixelType) {
   case TWPT_PALETTE:
@@ -1058,25 +1058,25 @@ dataTransferCallback(pTW_IMAGEINFO imageInfo,
 
   case TWPT_BW:
     return bitTransferCallback(imageInfo, imageMemXfer, clientData);
-			
+
   case TWPT_GRAY:
   case TWPT_RGB:
     switch (imageInfo->BitsPerPixel / imageInfo->SamplesPerPixel) {
     case 8:
       return oneBytePerSampleTransferCallback(imageInfo, imageMemXfer, clientData);
-				
+
     case 16:
       return twoBytesPerSampleTransferCallback(imageInfo, imageMemXfer, clientData);
 
     default:
       return FALSE;
     }
-			
+
   default:
     return FALSE;
   }
 }
-	
+
 /*
  * endTransferCallback
  *
@@ -1097,7 +1097,7 @@ int
 endTransferCallback(int completionState, int pendingCount, void *clientData)
 {
   pClientDataStruct theClientData = (pClientDataStruct) clientData;
-		
+
   LogMessage("endTransferCallback: CompState = %d, pending = %d\n",
 	     completionState, pendingCount);
 
@@ -1112,10 +1112,10 @@ endTransferCallback(int completionState, int pendingCount, void *clientData)
   /* Make sure to check our return code */
   if (completionState == TWRC_XFERDONE) {
     /* We have a completed image transfer */
-    values[2].type = GIMP_PDB_INT32ARRAY;	
+    values[2].type = GIMP_PDB_INT32ARRAY;
     values[2].data.d_int32array[values[1].data.d_int32++] =
       theClientData->image_id;
-				
+
     /* Display the image */
     LogMessage("Displaying image %d\n", theClientData->image_id);
     gimp_display_new (theClientData->image_id);
@@ -1124,7 +1124,7 @@ endTransferCallback(int completionState, int pendingCount, void *clientData)
     LogMessage("Deleting image\n");
     gimp_image_delete(theClientData->image_id);
   }
-		
+
   /* Shut down if we have received all of the possible images */
   return (values[1].data.d_int32 < MAX_IMAGES);
 }
@@ -1151,7 +1151,7 @@ postTransferCallback(int pendingCount, void *clientData)
   disableDS(twSession);
   closeDS(twSession);
   closeDSM(twSession);
-		
+
   /* Post a message to close up the application */
   PostQuitMessage(0);
 }

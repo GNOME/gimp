@@ -953,7 +953,7 @@ plugin_run (const gchar      *name,
 	}
       else
 	{
-	  g_message (_("GFlare: cannot operate on indexed color images"));
+	  g_message (_("Cannot operate on indexed color images."));
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
@@ -1426,11 +1426,11 @@ gflare_save (GFlare *gflare)
 	      gflare_dir =
                 g_strescape ("${gimp_dir}" G_DIR_SEPARATOR_S "gflare", NULL);
 
-	      g_message (_("GFlare `%s' is not saved.\n"
-			   "If you add a new entry in %s, like:\n"
+	      g_message (_("GFlare '%s' is not saved. If you add a new entry "
+                           "in '%s', like:\n"
 			   "(gflare-path \"%s\")\n"
-			   "and make a folder %s,\n"
-			   "then you can save your own GFlares into that folder."),
+			   "and make a folder '%s', then you can save "
+                           "your own GFlares into that folder."),
 			 gflare->name, gimprc, gflare_dir, dir);
 
 	      g_free (gimprc);
@@ -2955,8 +2955,8 @@ dlg_selector_new_callback (GtkWidget *widget,
                                      gtk_widget_get_toplevel (widget),
 				     gimp_standard_help_func,
 				     "filters/gflare.html",
-				     _("Enter a Name for the New GFlare:"),
-				     _("untitled"),
+				     _("Enter a name for the new GFlare"),
+				     _("Unnamed"),
 				     NULL, NULL,
 				     dlg_selector_new_ok_callback, dlg);
   gtk_widget_show (query_box);
@@ -3028,7 +3028,7 @@ dlg_selector_copy_callback (GtkWidget *widget,
                                      gtk_widget_get_toplevel (widget),
 				     gimp_standard_help_func,
 				     "filters/gflare.html",
-				     _("Enter a Name for the Copied GFlare:"),
+				     _("Enter a name for the copied GFlare"),
 				     name,
 				     NULL, NULL,
 				     dlg_selector_copy_ok_callback, dlg);
@@ -3081,7 +3081,7 @@ dlg_selector_delete_callback (GtkWidget *widget,
 
   gtk_widget_set_sensitive (dlg->shell, FALSE);
 
-  str = g_strdup_printf (_("Are you sure you want to delete\n"
+  str = g_strdup_printf (_("Are you sure you want to delete "
 			   "\"%s\" from the list and from disk?"),
 			 dlg->gflare->name);
 

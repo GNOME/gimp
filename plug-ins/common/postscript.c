@@ -852,7 +852,7 @@ load_image (const gchar *filename)
   ifp = fopen (filename, "r");
   if (ifp == NULL)
     {
-      g_message (_("Can't open '%s':\n%s"),
+      g_message (_("Could not open '%s' for reading: %s"),
                  filename, g_strerror (errno));
       return -1;
     }
@@ -865,7 +865,7 @@ load_image (const gchar *filename)
   ifp = ps_open (filename, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
   if (!ifp)
     {
-      g_message (_("Can't interpret file"));
+      g_message (_("Could not interpret '%s'"), filename);
       return (-1);
     }
 
@@ -963,7 +963,7 @@ save_image (const gchar *filename,
     case GIMP_RGB_IMAGE:
       break;
     default:
-      g_message (_("Cannot operate on unknown image types"));
+      g_message (_("Cannot operate on unknown image types."));
       return (FALSE);
       break;
     }
@@ -972,7 +972,7 @@ save_image (const gchar *filename,
   ofp = fopen (filename, "wb");
   if (!ofp)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return (FALSE);
     }

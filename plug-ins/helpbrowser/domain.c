@@ -241,8 +241,8 @@ domain_parse (HelpDomain  *domain,
   if (! fp)
     {
       g_set_error (error, 0, 0,
-                   "Could not open gimp-help.xml mapping file\n"
-                   "from \"%s\"", domain->help_uri);
+                   "Could not open gimp-help.xml mapping file from '%s'",
+                   domain->help_uri);
       g_free (filename);
       return FALSE;
     }

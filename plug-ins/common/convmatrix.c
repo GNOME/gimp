@@ -225,7 +225,8 @@ run (const gchar      *name,
   /*  The plug-in is not able to handle images smaller than 3 pixels  */
   if (drawable->width < 3 || drawable->height < 3)
     {
-      g_message (_("Convolution Matrix does not work\non layers smaller than 3 pixels."));
+      g_message (_("Convolution Matrix does not work on layers "
+                   "smaller than 3 pixels."));
       status = GIMP_PDB_EXECUTION_ERROR;
       values[0].type = GIMP_PDB_STATUS;
       values[0].data.d_status = status;

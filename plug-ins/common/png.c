@@ -463,7 +463,7 @@ load_image (const gchar *filename)
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("'%s':\nPNG error. File corrupted?"), filename);
+      g_message (_("Error while reading '%s'. File corrupted?"), filename);
       return image;
     }
 
@@ -479,7 +479,8 @@ load_image (const gchar *filename)
 
   if (fp == NULL)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       gimp_quit ();
     }
 
@@ -594,14 +595,14 @@ load_image (const gchar *filename)
       layer_type = GIMP_INDEXED_IMAGE;
       break;
     default:                   /* Aie! Unknown type */
-      g_message (_("'%s':\nUnknown PNG color model"), filename);
+      g_message (_("Unknown color model in PNG file '%s'."), filename);
       return -1;
     };
 
   image = gimp_image_new (info->width, info->height, image_type);
   if (image == -1)
     {
-      g_message ("'%s'\nCan't allocate new image", filename);
+      g_message ("Could not create new image for '%s'", filename);
       gimp_quit ();
     };
 
@@ -951,7 +952,7 @@ save_image (const gchar *filename,
 
   if (setjmp (pp->jmpbuf))
     {
-      g_message (_("'%s':\nPNG error. Couldn't save image"), filename);
+      g_message (_("Error while saving '%s'. Could not save image."), filename);
       return 0;
     }
 
@@ -965,7 +966,7 @@ save_image (const gchar *filename,
   fp = fopen (filename, "wb");
   if (fp == NULL)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       return 0;
     }
@@ -1037,7 +1038,7 @@ save_image (const gchar *filename,
       respin_cmap (pp, info, remap, image_ID, drawable);
       break;
     default:
-      g_message ("'%s':\nImage type can't be saved as PNG", filename);
+      g_message ("Image type can't be saved as PNG");
       return 0;
     };
 
@@ -1299,7 +1300,7 @@ respin_cmap (png_structp pp,
     {
       /* Inform the user that we couldn't losslessly save the
        * transparency & just use the full palette */
-      g_message (_("Couldn't losslessly save transparency,\n"
+      g_message (_("Couldn't losslessly save transparency, "
                    "saving opacity instead."));
       png_set_PLTE (pp, info, (png_colorp) before, colors);
     }

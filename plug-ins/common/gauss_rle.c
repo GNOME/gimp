@@ -226,7 +226,8 @@ run (const gchar      *name,
 
       if (!(bvals.horizontal || bvals.vertical))
 	{
-	  g_message ( _("You must specify either horizontal or vertical (or both)"));
+	  g_message (_("You must specify either horizontal "
+                       "or vertical (or both)"));
 	  status = GIMP_PDB_CALLING_ERROR;
 	}
 
@@ -275,7 +276,7 @@ run (const gchar      *name,
       if (gimp_drawable_is_rgb (drawable->drawable_id) ||
           gimp_drawable_is_gray (drawable->drawable_id))
         {
-          gimp_progress_init ( _("RLE Gaussian Blur"));
+          gimp_progress_init (_("RLE Gaussian Blur"));
 
           /*  set the tile cache size so that the gaussian blur works well  */
           gimp_tile_cache_ntiles (2 *
@@ -308,7 +309,7 @@ run (const gchar      *name,
         }
       else
         {
-          gimp_message ( "gauss_rle: cannot operate on indexed color images");
+          g_message (_("Cannot operate on indexed color images."));
           status = GIMP_PDB_EXECUTION_ERROR;
         }
 

@@ -290,7 +290,8 @@ load_image (const gchar *filename)
 
   if (!DICOM)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
@@ -609,7 +610,7 @@ save_image (const gchar  *filename,
   /*  Make sure we're not saving an image with an alpha channel  */
   if (gimp_drawable_has_alpha (drawable_ID))
     {
-      g_message (_("DICOM save cannot handle images with alpha channels"));
+      g_message (_("Cannot save images with alpha channel."));
       return FALSE;
     }
 
@@ -639,7 +640,7 @@ save_image (const gchar  *filename,
 
   if (!DICOM)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  filename, g_strerror (errno));
       gimp_drawable_detach (drawable);
       return FALSE;

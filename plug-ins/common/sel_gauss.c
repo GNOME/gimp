@@ -205,7 +205,7 @@ run (const gchar      *name,
     }
   else
     {
-      gimp_message (_("sel_gauss: Cannot operate on indexed color images"));
+      gimp_message (_("Cannot operate on indexed color images."));
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 

@@ -2565,7 +2565,7 @@ ifscompose_message_dialog (GtkMessageType  type,
     gtk_window_set_title (GTK_WINDOW (dlg), title);
 
   gtk_window_set_role (GTK_WINDOW (dlg), "ifscompose-message");
-  gimp_dialog_run (GIMP_DIALOG (dlg));
+  gtk_dialog_run (GTK_DIALOG (dlg));
   gtk_widget_destroy (dlg);
 }
 
@@ -2591,9 +2591,8 @@ ifsfile_save (GtkWidget *widget,
     }
   else
     {
-      gchar *message = g_strdup_printf (_("Cannot save file '%s'.\n"
-					  "Check the path and permissions."),
-                                        filename);
+      gchar *message = g_strdup_printf (_("Could not open '%s' for writing: %s"),
+                                        filename, g_strerror (errno));
       ifscompose_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (file_select),
 				 "Save failed", message);
       g_free (message);

@@ -482,7 +482,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.receipt);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Recipient:"), 1.0, 0.5,
+			     _("_Recipient:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -494,7 +494,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.from);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Sender:"), 1.0, 0.5,
+			     _("_Sender:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -506,7 +506,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.subject);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Subject:"), 1.0, 0.5,
+			     _("S_ubject:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -518,7 +518,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.comment);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Comment:"), 1.0, 0.5,
+			     _("Comm_ent:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -530,7 +530,7 @@ save_dialog (void)
   g_snprintf (buffer, sizeof (buffer), "%s", mail_info.filename);
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("Filename:"), 1.0, 0.5,
+			     _("_Filename:"), 1.0, 0.5,
 			     entry, 1, FALSE);
   g_signal_connect (entry, "changed",
                     G_CALLBACK (mail_entry_callback),
@@ -538,10 +538,11 @@ save_dialog (void)
 
   /* comment  */
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_IN);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
   gtk_table_attach (GTK_TABLE (table), scrolled_window,
                     0, 2, 5, 6,
                     GTK_EXPAND | GTK_FILL,
@@ -575,8 +576,8 @@ save_dialog (void)
 				   &mail_info.encapsulation,
 				   mail_info.encapsulation,
 
-				   _("Uuencode"), ENCAPSULATION_UUENCODE, NULL,
-				   _("MIME"),     ENCAPSULATION_MIME,     NULL,
+				   _("_Uuencode"), ENCAPSULATION_UUENCODE, NULL,
+				   _("_MIME"),     ENCAPSULATION_MIME,     NULL,
 
 				   NULL);
   gtk_table_attach (GTK_TABLE (table), vbox, 1, 2, 6, 8,

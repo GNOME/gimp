@@ -108,8 +108,8 @@ query (void)
 			  "May 1998",
 			  "<Load>/CEL",
 			  NULL,
-			  GIMP_PLUGIN, 
-			  G_N_ELEMENTS (load_args), 
+			  GIMP_PLUGIN,
+			  G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
 			  load_args, load_return_vals);
 
@@ -250,7 +250,8 @@ load_image (const gchar *file,
 
   if (fp == NULL)
     {
-      g_message (_("Can't open '%s':\n%s"), file, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 file, g_strerror (errno));
       return -1;
     }
 
@@ -316,7 +317,7 @@ load_image (const gchar *file,
 	case 16:
 	  fread (buffer, (width+1)/2, 1, fp);
 	  for (j = 0, k = 0; j < width*2; j+= 4, ++k)
-	    { 
+	    {
 	      if (buffer[k] / 16 == 0)
 		{
 		  line[j]= 16;
@@ -361,7 +362,7 @@ load_image (const gchar *file,
 	  g_message (_("Unsupported number of colors (%d)"), colours);
 	  return -1;
 	}
-    
+
       gimp_pixel_rgn_set_rect (&pixel_rgn, line, 0, i, drawable->width, 1);
       gimp_progress_update ((float) i / (float) height);
     }
@@ -494,7 +495,7 @@ save_image (const gchar *file,
 
   if (fp == NULL)
     {
-      g_message (_("Can't open '%s' for writing:\n%s"),
+      g_message (_("Could not open '%s' for writing: %s"),
                  file, g_strerror (errno));
       return FALSE;
     }
@@ -556,7 +557,7 @@ save_image (const gchar *file,
       else
 	{
 	  for (j = 0, k = 0; j < drawable->width*2; j+= 4, ++k)
-	    { 
+	    {
 	      buffer[k] = 0;
 	      if (line[j+1] > 127)
 		{

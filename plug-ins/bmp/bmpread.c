@@ -1,7 +1,7 @@
 /* bmpread.c	reads any bitmap I could get for testing */
 /* Alexander.Schulz@stud.uni-karlsruhe.de                */
 
-/* 
+/*
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -37,28 +37,28 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-static gint32 
+static gint32
 ToL (guchar *puffer)
 {
   return (puffer[0] | puffer[1]<<8 | puffer[2]<<16 | puffer[3]<<24);
 }
 
-static gint16 
+static gint16
 ToS (guchar *puffer)
 {
   return (puffer[0] | puffer[1]<<8);
 }
 
 static gboolean
-ReadColorMap (FILE   *fd, 
-	      guchar  buffer[256][3], 
-	      gint    number, 
-	      gint    size, 
+ReadColorMap (FILE   *fd,
+	      guchar  buffer[256][3],
+	      gint    number,
+	      gint    size,
 	      gint   *grey)
 {
   gint i;
   guchar rgb[4];
-  
+
   *grey=(number>2);
   for (i = 0; i < number ; i++)
     {
@@ -67,7 +67,7 @@ ReadColorMap (FILE   *fd,
 	  g_message (_("Bad colormap"));
 	  return FALSE;
 	}
-      
+
       /* Bitmap save the colors in another order! But change only once! */
 
       buffer[i][0] = rgb[2];
@@ -78,7 +78,7 @@ ReadColorMap (FILE   *fd,
   return TRUE;
 }
 
-gint32 
+gint32
 ReadBMP (const gchar *name)
 {
   FILE *fd;
@@ -94,7 +94,7 @@ ReadBMP (const gchar *name)
 
   if (!fd)
     {
-      g_message (_("Can't open '%s':\n%s"),
+      g_message (_("Could not open '%s' for reading: %s"),
                  filename, g_strerror (errno));
       return -1;
     }
@@ -113,7 +113,7 @@ ReadBMP (const gchar *name)
       g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
     }
-  
+
   while (!strncmp(magick,"BA",2))
     {
       if (!ReadOK(fd, buffer, 12))
@@ -140,22 +140,22 @@ ReadBMP (const gchar *name)
   Bitmap_File_Head.zzHotX    = ToS (&buffer[0x04]);
   Bitmap_File_Head.zzHotY    = ToS (&buffer[0x06]);
   Bitmap_File_Head.bfOffs    = ToL (&buffer[0x08]);
-  
+
   if (!ReadOK(fd, buffer, 4))
     {
       g_message (_("'%s' is not a valid BMP file"), filename);
       return -1;
     }
-  
+
   Bitmap_File_Head.biSize    = ToL (&buffer[0x00]);
-  
-  /* What kind of bitmap is it? */  
-  
+
+  /* What kind of bitmap is it? */
+
   if (Bitmap_File_Head.biSize == 12) /* OS/2 1.x ? */
     {
       if (!ReadOK (fd, buffer, 8))
         {
-          g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
+          g_message (_("Error reading BMP file header from '%s'"), filename);
           return -1;
         }
 
@@ -173,7 +173,7 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
+          g_message (_("Error reading BMP file header from '%s'"), filename);
           return -1;
         }
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);	/* 12 */
@@ -193,7 +193,7 @@ ReadBMP (const gchar *name)
     {
       if (!ReadOK (fd, buffer, Bitmap_File_Head.biSize - 4))
         {
-          g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
+          g_message (_("Error reading BMP file header from '%s'"), filename);
           return -1;
         }
       Bitmap_Head.biWidth   =ToL (&buffer[0x00]);       /* 12 */
@@ -211,15 +211,15 @@ ReadBMP (const gchar *name)
     }
   else
     {
-      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"), filename);
       return -1;
     }
 
   /* Valid bitpdepthis 1, 4, 8, 16, 24, 32 */
   /* 16 is awful, we should probably shoot whoever invented it */
-  
+
   /* There should be some colors used! */
-  
+
   ColormapSize = (Bitmap_File_Head.bfOffs - Bitmap_File_Head.biSize - 14) / Maps;
 
   if ((Bitmap_Head.biClrUsed == 0) && (Bitmap_Head.biBitCnt <= 8))
@@ -229,17 +229,17 @@ ReadBMP (const gchar *name)
   /* Sanity checks */
 
   if (Bitmap_Head.biHeight == 0 || Bitmap_Head.biWidth == 0) {
-      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"), filename);
       return -1;
   }
 
   if (Bitmap_Head.biPlanes != 1) {
-      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"), filename);
       return -1;
   }
 
   if (ColormapSize > 256 || Bitmap_Head.biClrUsed > 256) {
-      g_message (_("Error reading BMP file header\nfrom '%s'"), filename);
+      g_message (_("Error reading BMP file header from '%s'"), filename);
       return -1;
   }
 
@@ -254,12 +254,12 @@ ReadBMP (const gchar *name)
           Bitmap_File_Head.bfSize,Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,Bitmap_Head.biWidth,
           Bitmap_Head.biHeight, Bitmap_Head.biCompr, rowbytes);
 #endif
-  
+
   /* Get the Colormap */
-  
+
   if (!ReadColorMap (fd, ColorMap, ColormapSize, Maps, &Grey))
     return -1;
-  
+
 #ifdef DEBUG
   printf("Colormap read\n");
 #endif
@@ -267,16 +267,16 @@ ReadBMP (const gchar *name)
   fseek(fd, Bitmap_File_Head.bfOffs, SEEK_SET);
 
   /* Get the Image and return the ID or -1 on error*/
-  image_ID = ReadImage (fd, 
-			Bitmap_Head.biWidth, 
-			Bitmap_Head.biHeight, 
-			ColorMap, 
-			Bitmap_Head.biClrUsed, 
-			Bitmap_Head.biBitCnt, 
-			Bitmap_Head.biCompr, 
-			rowbytes, 
+  image_ID = ReadImage (fd,
+			Bitmap_Head.biWidth,
+			Bitmap_Head.biHeight,
+			ColorMap,
+			Bitmap_Head.biClrUsed,
+			Bitmap_Head.biBitCnt,
+			Bitmap_Head.biCompr,
+			rowbytes,
 			Grey);
-  
+
   if (Bitmap_Head.biXPels > 0 && Bitmap_Head.biYPels > 0)
     {
       /* Fixed up from scott@asofyet's changes last year, njl195 */
@@ -297,15 +297,15 @@ ReadBMP (const gchar *name)
   return (image_ID);
 }
 
-Image 
-ReadImage (FILE   *fd, 
-	   gint    width, 
-	   gint    height, 
-	   guchar  cmap[256][3], 
-	   gint    ncols, 
-	   gint    bpp, 
-	   gint    compression, 
-	   gint    rowbytes, 
+Image
+ReadImage (FILE   *fd,
+	   gint    width,
+	   gint    height,
+	   guchar  cmap[256][3],
+	   gint    ncols,
+	   gint    bpp,
+	   gint    compression,
+	   gint    rowbytes,
 	   gint    grey)
 {
   guchar v,wieviel;
@@ -319,9 +319,9 @@ ReadImage (FILE   *fd,
   gushort rgb;
   long rowstride, channels;
   gint i, j, cur_progress, max_progress, unused;
-  
+
   /* Make a new image in the gimp */
-  
+
   if (bpp >= 16)
     {
       image = gimp_image_new (width, height, GIMP_RGB);
@@ -346,21 +346,21 @@ ReadImage (FILE   *fd,
                               GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
       channels = 1;
     }
-  
+
   gimp_image_set_filename(image, filename);
-  
+
   gimp_image_add_layer(image,layer,0);
   drawable = gimp_drawable_get(layer);
-  
+
   dest = g_malloc(drawable->width*drawable->height*channels);
   buffer= g_malloc(rowbytes);
   rowstride = drawable->width * channels;
-  
+
   ypos = height - 1;  /* Bitmaps begin in the lower left corner */
   cur_progress = 0;
   max_progress = height;
 
-  
+
   switch (bpp) {
   case 32:
     {
@@ -459,7 +459,7 @@ ReadImage (FILE   *fd,
 	    while (ypos >= 0 && xpos <= width)
 	      {
 		unused = ReadOK (fd, buffer, 2);
-		if ((guchar) buffer[0] != 0) 
+		if ((guchar) buffer[0] != 0)
 		  /* Count + Color - record */
 		  {
 		    for (j = 0; ((guchar) j < (guchar) buffer[0]) && (xpos < width);)

@@ -1456,7 +1456,8 @@ load_image (const gchar *filename)
   f = fopen (filename, "rb");
   if (f == NULL)
     {
-      g_message (_("Can't open '%s':\n%s"), filename, g_strerror (errno));
+      g_message (_("Could not open '%s' for reading: %s"),
+                 filename, g_strerror (errno));
       return -1;
     }
 
