@@ -1,3 +1,8 @@
+2000-04-13  Matt Wilson  <msw@redhat.com>
+
+	* gimp.spec: updated for 1.1.19, reworked filespec generation
+	routines, cleaned up %files sections
+
 2000-04-13  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/png.c: Use 1-bit, 2-bit and 4-bit paletted
