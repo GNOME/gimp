@@ -561,6 +561,16 @@ app_init (void)
         }
     }
 
+#ifdef G_OS_WIN32
+  /* Do this already here on Win32 */
+  if (no_interface == FALSE)
+    {
+      /*  FIXME: This needs to go in preferences  */
+      message_handler = MESSAGE_BOX;
+    }
+#endif
+
+
   RESET_BAR();
   file_ops_pre_init ();    /*  pre-initialize the file types  */
   RESET_BAR();
@@ -644,9 +654,10 @@ app_init (void)
 	{
 	  gimp_context_set_tool (gimp_context_get_user (), RECT_SELECT);
 	}
-
+#ifndef G_OS_WIN32
       /*  FIXME: This needs to go in preferences  */
       message_handler = MESSAGE_BOX;
+#endif
     }
 
   /* check if a swap file can be created */
@@ -808,8 +819,8 @@ toast_old_temp_files (void)
          * we'll probably get it the next time around
          */
 
-	gint pid = atoi (entry->d_name + 9);
 #ifndef G_OS_WIN32
+	gint pid = atoi (entry->d_name + 9);
 	if (kill (pid, 0))
 #endif
 	  {

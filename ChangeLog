@@ -1,3 +1,10 @@
+2002-02-13  Tor Lillqvist  <tml@iki.fi>
+
+	* app/app_procs.c (app_init): Set message_handler to MESSAGE_BOX
+	earlier on Win32 (where GIMP's stderr usually isn't visible).
+	(toast_old_temp_files): Put also the pid variable that is unused
+	on Win32 inside the #ifndef.
+
 2002-02-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/global_edit.c: default to "(Unnamed Buffer)" instead of
