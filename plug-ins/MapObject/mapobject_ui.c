@@ -190,7 +190,7 @@ static void
 lightmenu_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   if (mapvals.lightsource.type == POINT_LIGHT)
     {
@@ -217,7 +217,7 @@ static void
 mapmenu_callback (GtkWidget *widget,
 		  gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   draw_preview_image (TRUE);
 
@@ -518,7 +518,7 @@ create_options_page (void)
   GtkWidget *vbox;
   GtkWidget *hbox;
   GtkWidget *label;
-  GtkWidget *optionmenu;
+  GtkWidget *combo;
   GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *spinbutton;
@@ -546,21 +546,21 @@ create_options_page (void)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE,
-                              G_CALLBACK (mapmenu_callback),
-			      &mapvals.maptype, mapvals.maptype,
+  combo = gimp_int_combo_box_new (_("Plane"),    MAP_PLANE,
+                                  _("Sphere"),   MAP_SPHERE,
+                                  _("Box"),      MAP_BOX,
+                                  _("Cylinder"), MAP_CYLINDER,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), mapvals.maptype);
 
-			      _("Plane"),    MAP_PLANE,    NULL,
-			      _("Sphere"),   MAP_SPHERE,   NULL,
-			      _("Box"),      MAP_BOX,      NULL,
-			      _("Cylinder"), MAP_CYLINDER, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (mapmenu_callback),
+                    &mapvals.maptype);
 
-			      NULL);
-  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, FALSE, FALSE, 0);
-  gtk_widget_show (optionmenu);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_widget_show (combo);
 
-  gimp_help_set_help_data (optionmenu, _("Type of object to map to"), NULL);
+  gimp_help_set_help_data (combo, _("Type of object to map to"), NULL);
 
   toggle = gtk_check_button_new_with_label (_("Transparent Background"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -671,7 +671,7 @@ create_light_page (void)
   GtkWidget *page;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *optionmenu;
+  GtkWidget *combo;
   GtkWidget *colorbutton;
   GtkWidget *spinbutton;
   GtkObject *adj;
@@ -689,22 +689,22 @@ create_light_page (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);  gtk_widget_show (table);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE,
-                              G_CALLBACK (lightmenu_callback),
-			      &mapvals.lightsource.type,
-			      mapvals.lightsource.type,
+  combo = gimp_int_combo_box_new (_("Point Light"),       POINT_LIGHT,
+                                  _("Directional Light"), DIRECTIONAL_LIGHT,
+                                  _("No Light"),          NO_LIGHT,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 mapvals.lightsource.type);
 
-			      _("Point Light"),       POINT_LIGHT,       NULL,
-			      _("Directional Light"), DIRECTIONAL_LIGHT, NULL,
-			      _("No Light"),          NO_LIGHT,          NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (lightmenu_callback),
+                    &mapvals.lightsource.type);
 
-			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Lightsource Type:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
+			     combo, 1, TRUE);
 
-  gimp_help_set_help_data (optionmenu, _("Type of light source to apply"), NULL);
+  gimp_help_set_help_data (combo, _("Type of light source to apply"), NULL);
 
   colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
 				       64, 16,

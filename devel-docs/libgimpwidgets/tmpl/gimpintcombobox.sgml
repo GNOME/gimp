@@ -9,19 +9,16 @@ GimpIntComboBox
 
 </para>
 
-
 <!-- ##### SECTION See_Also ##### -->
 <para>
 
 </para>
-
 
 <!-- ##### STRUCT GimpIntComboBox ##### -->
 <para>
 
 </para>
 
-@parent_instance: 
 
 <!-- ##### FUNCTION gimp_int_combo_box_new ##### -->
 <para>
@@ -42,6 +39,16 @@ GimpIntComboBox
 @first_label: 
 @first_value: 
 @values: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_int_combo_box_new_array ##### -->
+<para>
+
+</para>
+
+@n_values: 
+@labels: 
 @Returns: 
 
 

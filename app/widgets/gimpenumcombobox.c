@@ -176,6 +176,7 @@ gimp_enum_combo_box_get_active (GimpEnumComboBox *combo_box,
   GtkTreeIter  iter;
 
   g_return_val_if_fail (GIMP_IS_ENUM_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (value != NULL, FALSE);
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
     {
@@ -242,6 +243,7 @@ gimp_enum_combo_box_set_visible (GimpEnumComboBox              *combo_box,
   GtkTreeModelFilter *filter;
 
   g_return_if_fail (GIMP_IS_ENUM_COMBO_BOX (combo_box));
+  g_return_if_fail (func != NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
 

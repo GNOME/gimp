@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <libintl.h>
+
 #include <gtk/gtk.h>
 
 #include "gimpwidgetstypes.h"
@@ -94,11 +96,11 @@ gimp_int_combo_box_init (GimpIntComboBox *combo_box)
  *
  * Creates a GtkComboBox that has integer values associated with each
  * item. The items to fill the combo box with are specified as a %NULL
- * terminated list of label, value pairs.
+ * terminated list of label/value pairs.
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: 2.2
+ * Since: GIMP 2.2
  **/
 GtkWidget *
 gimp_int_combo_box_new (const gchar *first_label,
@@ -107,6 +109,8 @@ gimp_int_combo_box_new (const gchar *first_label,
 {
   GtkWidget *combo_box;
   va_list    args;
+
+  g_return_val_if_fail (first_label != NULL, NULL);
 
   va_start (args, first_value);
 
@@ -123,12 +127,12 @@ gimp_int_combo_box_new (const gchar *first_label,
  * @first_value: the value of the first item
  * @values: a va_list with more values
  *
- * A variant of gimp_int_combo_box_new() that takes a va_list. Useful
- * for language bindings.
+ * A variant of gimp_int_combo_box_new() that takes a va_list of
+ * label/value pairs. Probably only useful for language bindings.
  *
  * Return value: a new #GimpIntComboBox.
  *
- * Since: 2.2
+ * Since: GIMP 2.2
  **/
 GtkWidget *
 gimp_int_combo_box_new_valist (const gchar *first_label,
@@ -139,6 +143,8 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
   GtkListStore *store;
   const gchar  *label;
   gint          value;
+
+  g_return_val_if_fail (first_label != NULL, NULL);
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
 
@@ -161,6 +167,50 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
 }
 
 /**
+ * gimp_int_combo_box_new_array:
+ * @n_values: the number of values
+ * @labels:   an array of labels (array length must be @n_values)
+ *
+ * A variant of gimp_int_combo_box_new() that takes an array of labels.
+ * The array indices are used as values.
+ *
+ * Return value: a new #GimpIntComboBox.
+ *
+ * Since: GIMP 2.2
+ **/
+GtkWidget *
+gimp_int_combo_box_new_array (gint         n_values,
+                              const gchar *labels[])
+{
+  GtkWidget    *combo_box;
+  GtkListStore *store;
+  gint          i;
+
+  g_return_val_if_fail (n_values > 0, NULL);
+  g_return_val_if_fail (labels != NULL, NULL);
+
+  combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX, NULL);
+
+  store = GTK_LIST_STORE (gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box)));
+
+  for (i = 0; i < n_values; i++)
+    {
+      GtkTreeIter  iter;
+
+      if (labels[i])
+        {
+          gtk_list_store_append (store, &iter);
+          gtk_list_store_set (store, &iter,
+                              GIMP_INT_STORE_VALUE, i,
+                              GIMP_INT_STORE_LABEL, gettext (labels[i]),
+                              -1);
+        }
+    }
+
+  return combo_box;
+}
+
+/**
  * gimp_int_combo_box_set_active:
  * @combo_box: a #GimpIntComboBox
  * @value:     an integer value
@@ -171,7 +221,7 @@ gimp_int_combo_box_new_valist (const gchar *first_label,
  * Return value: %TRUE on success or %FALSE if there was no item for
  *               this value.
  *
- * Since: 2.2
+ * Since: GIMP 2.2
  **/
 gboolean
 gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
@@ -217,7 +267,7 @@ gimp_int_combo_box_set_active (GimpIntComboBox *combo_box,
  * Return value: %TRUE if @value has been set or %FALSE if no item was
  *               active.
  *
- * Since: 2.2
+ * Since: GIMP 2.2
  **/
 gboolean
 gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
@@ -226,6 +276,7 @@ gimp_int_combo_box_get_active (GimpIntComboBox *combo_box,
   GtkTreeIter  iter;
 
   g_return_val_if_fail (GIMP_IS_INT_COMBO_BOX (combo_box), FALSE);
+  g_return_val_if_fail (value != NULL, FALSE);
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo_box), &iter))
     {

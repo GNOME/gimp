@@ -166,6 +166,7 @@ GIMP_PIXMAP_GET_CLASS
 GimpIntComboBox
 gimp_int_combo_box_new
 gimp_int_combo_box_new_valist
+gimp_int_combo_box_new_array
 gimp_int_combo_box_set_active
 gimp_int_combo_box_get_active
 <SUBSECTION Standard>

@@ -197,7 +197,7 @@ static void
 lightmenu_callback (GtkWidget *widget,
 		    gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   if (mapvals.lightsource.type == POINT_LIGHT)
     {
@@ -223,7 +223,7 @@ static void
 mapmenu2_callback (GtkWidget *widget,
 		   gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   draw_preview_image (TRUE);
 }
@@ -321,9 +321,6 @@ create_options_page (void)
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *toggle;
-  GtkWidget *table;
-  /*GtkWidget *spinbutton;*/
-  GtkObject *adj;
 
   page = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (page), 4);
@@ -338,6 +335,7 @@ create_options_page (void)
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
+
   /*
   toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
@@ -480,7 +478,7 @@ create_light_page (void)
   GtkWidget *page;
   GtkWidget *frame;
   GtkWidget *table;
-  GtkWidget *optionmenu;
+  GtkWidget *combo;
   GtkWidget *colorbutton;
   GtkObject *adj;
 
@@ -498,23 +496,22 @@ create_light_page (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE,
-                              G_CALLBACK (lightmenu_callback),
-			      &mapvals.lightsource.type,
-			      mapvals.lightsource.type,
+  combo = gimp_int_combo_box_new (_("None"),        NO_LIGHT,
+                                  _("Directional"), DIRECTIONAL_LIGHT,
+                                  _("Point"),       POINT_LIGHT,
+                                  /* _("Spot"),     SPOT_LIGHT, */
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 mapvals.lightsource.type);
 
-			      _("None"),        NO_LIGHT,          NULL,
-			      _("Directional"), DIRECTIONAL_LIGHT, NULL,
-			      _("Point"),       POINT_LIGHT,       NULL,
-			      /* _("Spot"),     SPOT_LIGHT,        NULL, */
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (lightmenu_callback),
+                    &mapvals.lightsource.type);
 
-			      NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("L_ight Type:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
+			     _("L_ight Type:"), 1.0, 0.5, combo, 1, TRUE);
 
-  gimp_help_set_help_data (optionmenu, _("Type of light source to apply"), NULL);
+  gimp_help_set_help_data (combo, _("Type of light source to apply"), NULL);
 
   colorbutton = gimp_color_button_new (_("Select Lightsource Color"),
 				       64, 16,
@@ -875,6 +872,7 @@ create_bump_page (void)
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *table;
+  GtkWidget *combo;
   GtkWidget *optionmenu;
   GtkWidget *menu;
   GtkWidget *spinbutton;
@@ -922,18 +920,20 @@ create_bump_page (void)
 			     _("Bumpm_ap Image:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE,
-			      G_CALLBACK (mapmenu2_callback),
-			      &mapvals.bumpmaptype, mapvals.bumpmaptype,
-			      _("Linear"),      LINEAR_MAP,      NULL,
-			      _("Logarithmic"), LOGARITHMIC_MAP, NULL,
-			      _("Sinusoidal"),  SINUSOIDAL_MAP,  NULL,
-			      _("Spherical"),   SPHERICAL_MAP,   NULL,
-			      NULL);
+  combo = gimp_int_combo_box_new (_("Linear"),      LINEAR_MAP,
+                                  _("Logarithmic"), LOGARITHMIC_MAP,
+                                  _("Sinusoidal"),  SINUSOIDAL_MAP,
+                                  _("Spherical"),   SPHERICAL_MAP,
+                                  NULL);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 mapvals.bumpmaptype);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (mapmenu2_callback),
+                    &mapvals.bumpmaptype);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Cu_rve:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
+			     _("Cu_rve:"), 1.0, 0.5, combo, 1, TRUE);
 
   spinbutton = gimp_spin_button_new (&adj, mapvals.bumpmax,
 				     0, G_MAXFLOAT, 0.01, 0.1, 1.0, 0.0, 2);

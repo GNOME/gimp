@@ -1,5 +1,16 @@
 2004-04-20  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpenumcombobox.c: added more sanity checks.
+
+	* libgimpwidgets/gimpintcombobox.[ch]: added another GimpIntComboBox
+	constructor: gimp_int_combo_box_new_array().
+
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/MapObject/mapobject_ui.c
+	* plug-ins/common/CML_explorer.c: ported to GimpIntComboBox.
+
+2004-04-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgets.h
 	* libgimpwidgets/gimpwidgetstypes.h

@@ -125,10 +125,11 @@ enum
   CML_DELTA,
   CML_DELTA_STEP,
   CML_SIN_CURVE,
-  CML_SIN_CURVE_STEP
+  CML_SIN_CURVE_STEP,
+  CML_NUM_VALUES
 };
 
-static gchar *function_names[] =
+static const gchar *function_names[CML_NUM_VALUES] =
 {
   N_("Keep image's values"),
   N_("Keep the first value"),
@@ -161,10 +162,11 @@ enum
   COMP_MIN_LINEAR_P1L,
   COMP_MIN_LINEAR_P1U,
   COMP_MIN_LINEAR_M1L,
-  COMP_MIN_LINEAR_M1U
+  COMP_MIN_LINEAR_M1U,
+  COMP_NUM_VALUES
 };
 
-static gchar *composition_names[] =
+static const gchar *composition_names[COMP_NUM_VALUES] =
 {
   N_("None"),
   N_("Max (x, -)"),
@@ -194,10 +196,11 @@ enum
   MULTIPLY_RANDOM0,
   MULTIPLY_RANDOM1,
   MULTIPLY_GRADIENT,
-  RAND_AND_P
+  RAND_AND_P,
+  ARRANGE_NUM_VALUES
 };
 
-static gchar *arrange_names[] =
+static const gchar *arrange_names[ARRANGE_NUM_VALUES] =
 {
   N_("Standard"),
   N_("Use average value"),
@@ -216,10 +219,11 @@ enum
   CML_INITIAL_RANDOM_INDEPENDENT = 6,
   CML_INITIAL_RANDOM_SHARED,
   CML_INITIAL_RANDOM_FROM_SEED,
-  CML_INITIAL_RANDOM_FROM_SEED_SHARED
+  CML_INITIAL_RANDOM_FROM_SEED_SHARED,
+  CML_INITIAL_NUM_VALUES
 };
 
-static gchar *initial_value_names[] =
+static const gchar *initial_value_names[CML_INITIAL_NUM_VALUES] =
 {
   N_("All black"),
   N_("All gray"),
@@ -296,8 +300,16 @@ static CML_PARAM *channel_params[] =
   &VALS.val
 };
 
-static gchar *channel_names[] =
+static const gchar *channel_names[] =
 {
+  N_("Hue"),
+  N_("Saturation"),
+  N_("Value")
+};
+
+static const gchar *load_channel_names[] =
+{
+  N_("(None)"),
   N_("Hue"),
   N_("Saturation"),
   N_("Value")
@@ -1292,7 +1304,7 @@ CML_explorer_dialog (void)
 
     {
       GtkWidget *table;
-      GtkWidget *optionmenu;
+      GtkWidget *combo;
       GtkWidget *frame;
       GtkWidget *vbox;
       GtkObject *adj;
@@ -1312,47 +1324,20 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      optionmenu =
-	gimp_int_option_menu_new
-	(FALSE, G_CALLBACK (CML_initial_value_menu_update),
-	 &VALS.initial_value, VALS.initial_value,
+      combo = gimp_int_combo_box_new_array (CML_INITIAL_NUM_VALUES,
+                                            initial_value_names);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     VALS.initial_value);
 
-	 gettext (initial_value_names[0]),
-	                              0, NULL,
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (CML_initial_value_menu_update),
+                        &VALS.initial_value);
 
-	 gettext (initial_value_names[1]),
-	                              1, NULL,
-
-	 gettext (initial_value_names[2]),
-	                              2, NULL,
-
-	 gettext (initial_value_names[3]),
-	                              3, NULL,
-
-	 gettext (initial_value_names[4]),
-	                              4, NULL,
-
-	 gettext (initial_value_names[5]),
-	                              5, NULL,
-
-	 gettext (initial_value_names[CML_INITIAL_RANDOM_INDEPENDENT]),
-	                              CML_INITIAL_RANDOM_INDEPENDENT, NULL,
-
-	 gettext (initial_value_names[CML_INITIAL_RANDOM_SHARED]),
-	                              CML_INITIAL_RANDOM_SHARED, NULL,
-
-	 gettext (initial_value_names[CML_INITIAL_RANDOM_FROM_SEED]),
-	                              CML_INITIAL_RANDOM_FROM_SEED, NULL,
-
-	 gettext (initial_value_names[CML_INITIAL_RANDOM_FROM_SEED_SHARED]),
-	                              CML_INITIAL_RANDOM_FROM_SEED_SHARED, NULL,
-
-	 NULL);
       CML_explorer_menu_entry_init (&widget_pointers[3][0],
-				    optionmenu, &VALS.initial_value);
+				    combo, &VALS.initial_value);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Initial Value:"), 1.0, 0.5,
-				 optionmenu, 2, FALSE);
+				 combo, 2, FALSE);
 
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("Zoom Scale:"), SCALE_WIDTH, 3,
@@ -1417,10 +1402,11 @@ CML_explorer_dialog (void)
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 				gtk_label_new_with_mnemonic (_("O_thers")));
     }
+
     {
       GtkWidget	*table;
       GtkWidget *frame;
-      GtkWidget *optionmenu;
+      GtkWidget *combo;
       GtkWidget *vbox;
 
       vbox = gtk_vbox_new (FALSE, 4);
@@ -1438,39 +1424,30 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_int_option_menu_new (FALSE,
-                                             G_CALLBACK (gimp_menu_item_update),
-					     &copy_source,
-					     copy_source,
+      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
+                                            channel_names);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), copy_source);
 
-					     gettext (channel_names[0]),
-					                            0, NULL,
-					     gettext (channel_names[1]),
-					                            1, NULL,
-					     gettext (channel_names[2]),
-					                            2, NULL,
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &copy_source);
 
-					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Source Channel:"), 1.0, 0.5,
-				 optionmenu, 1, TRUE);
+				 combo, 1, TRUE);
 
-      optionmenu = gimp_int_option_menu_new (FALSE,
-                                             G_CALLBACK (gimp_menu_item_update),
-					     &copy_destination,
-					     copy_destination,
+      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (channel_names),
+                                            channel_names);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     copy_destination);
 
-					     gettext (channel_names[0]),
-					                            0, NULL,
-					     gettext (channel_names[1]),
-					                            1, NULL,
-					     gettext (channel_names[2]),
-					                            2, NULL,
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &copy_destination);
 
-					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Destination Channel:"), 1.0, 0.5,
-				 optionmenu, 1, TRUE);
+				 combo, 1, TRUE);
 
       button = gtk_button_new_with_label (_("Copy Parameters"));
       gtk_table_attach (GTK_TABLE (table), button, 0, 2, 2, 3,
@@ -1492,43 +1469,31 @@ CML_explorer_dialog (void)
       gtk_container_add (GTK_CONTAINER (frame), table);
       gtk_widget_show (table);
 
-      optionmenu = gimp_int_option_menu_new (FALSE,
-                                             G_CALLBACK (gimp_menu_item_update),
-					     &selective_load_source,
-					     selective_load_source,
+      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
+                                            load_channel_names);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     selective_load_source);
 
-					     _("NULL"),
-					     0, NULL,
-					     gettext (channel_names[0]),
-					     1, NULL,
-					     gettext (channel_names[1]),
-					     2, NULL,
-					     gettext (channel_names[2]),
-					     3, NULL,
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &selective_load_source);
 
-					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 _("Source Channel in File:"), 1.0, 0.5,
-				 optionmenu, 1, TRUE);
+				 combo, 1, TRUE);
 
-      optionmenu = gimp_int_option_menu_new (FALSE,
-                                             G_CALLBACK (gimp_menu_item_update),
-					     &selective_load_destination,
-					     selective_load_destination,
+      combo = gimp_int_combo_box_new_array (G_N_ELEMENTS (load_channel_names),
+                                            load_channel_names);
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                     selective_load_destination);
 
-					     _("NULL"),
-					     0, NULL,
-					     gettext (channel_names[0]),
-					     1, NULL,
-					     gettext (channel_names[1]),
-					     2, NULL,
-					     gettext (channel_names[2]),
-					     3, NULL,
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_int_combo_box_get_active),
+                        &selective_load_destination);
 
-					     NULL);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Destination Channel:"), 1.0, 0.5,
-				 optionmenu, 1, TRUE);
+				 combo, 1, TRUE);
 
       gtk_notebook_append_page (GTK_NOTEBOOK (notebook), vbox,
 				gtk_label_new_with_mnemonic (_("_Misc Ops.")));
@@ -1557,7 +1522,7 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
 			      gint       channel_id)
 {
   GtkWidget *table;
-  GtkWidget *optionmenu;
+  GtkWidget *combo;
   GtkWidget *toggle;
   GtkWidget *button;
   GtkObject *adj;
@@ -1570,154 +1535,48 @@ CML_dialog_channel_panel_new (CML_PARAM *param,
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_widget_show (table);
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (CML_explorer_menu_update),
-			      &param->function, param->function,
+  combo = gimp_int_combo_box_new_array (CML_NUM_VALUES, function_names);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), param->function);
 
-			      gettext (function_names[CML_KEEP_VALUES]),
-			                              CML_KEEP_VALUES, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (CML_explorer_menu_update),
+                    &param->function);
 
-			      gettext (function_names[CML_KEEP_FIRST]),
-			                              CML_KEEP_FIRST, NULL,
-
-			      gettext (function_names[CML_FILL]),
-			                              CML_FILL, NULL,
-
-			      gettext (function_names[CML_LOGIST]),
-			                              CML_LOGIST, NULL,
-
-			      gettext (function_names[CML_LOGIST_STEP]),
-			                              CML_LOGIST_STEP, NULL,
-
-			      gettext (function_names[CML_POWER]),
-			                              CML_POWER, NULL,
-
-			      gettext (function_names[CML_POWER_STEP]),
-			                              CML_POWER_STEP, NULL,
-
-			      gettext (function_names[CML_REV_POWER]),
-			                              CML_REV_POWER, NULL,
-
-			      gettext (function_names[CML_REV_POWER_STEP]),
-			                              CML_REV_POWER_STEP, NULL,
-
-			      gettext (function_names[CML_DELTA]),
-			                              CML_DELTA, NULL,
-
-			      gettext (function_names[CML_DELTA_STEP]),
-			                              CML_DELTA_STEP, NULL,
-
-			      gettext (function_names[CML_SIN_CURVE]),
-			                              CML_SIN_CURVE, NULL,
-
-			      gettext (function_names[CML_SIN_CURVE_STEP]),
-			                              CML_SIN_CURVE_STEP, NULL,
-
-			      NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
-				optionmenu, &param->function);
+				combo, &param->function);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
 			     _("Function Type:"), 1.0, 0.5,
-			     optionmenu, 2, FALSE);
+			     combo, 2, FALSE);
   index++;
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (CML_explorer_menu_update),
-			      &param->composition, param->composition,
+  combo = gimp_int_combo_box_new_array (COMP_NUM_VALUES, composition_names);
 
-			      gettext (composition_names[COMP_NONE]),
-			                                 COMP_NONE, NULL,
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
+                                 param->composition);
 
-			      gettext (composition_names[COMP_MAX_LINEAR]),
-			                                 COMP_MAX_LINEAR, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (CML_explorer_menu_update),
+                    &param->composition);
 
-			      gettext (composition_names[COMP_MAX_LINEAR_P1]),
-			                                 COMP_MAX_LINEAR_P1, NULL,
-
-			      gettext (composition_names[COMP_MAX_LINEAR_M1]),
-			                                 COMP_MAX_LINEAR_M1, NULL,
-
-			      gettext (composition_names[COMP_MIN_LINEAR]),
-			                                 COMP_MIN_LINEAR, NULL,
-
-			      gettext (composition_names[COMP_MIN_LINEAR_P1]),
-			                                 COMP_MIN_LINEAR_P1, NULL,
-
-			      gettext (composition_names[COMP_MIN_LINEAR_M1]),
-			                                 COMP_MIN_LINEAR_M1, NULL,
-
-			      gettext (composition_names[COMP_MAX_LINEAR_P1L]),
-			                                 COMP_MAX_LINEAR_P1L, NULL,
-
-			      gettext (composition_names[COMP_MAX_LINEAR_P1U]),
-			                                 COMP_MAX_LINEAR_P1U, NULL,
-
-			      gettext (composition_names[COMP_MAX_LINEAR_M1L]),
-			                                 COMP_MAX_LINEAR_M1L, NULL,
-
-			      gettext (composition_names[COMP_MAX_LINEAR_M1U]),
-			                                 COMP_MAX_LINEAR_M1U, NULL,
-
-			      gettext (composition_names[COMP_MIN_LINEAR_P1L]),
-			                                 COMP_MIN_LINEAR_P1L, NULL,
-
-			      gettext (composition_names[COMP_MIN_LINEAR_P1U]),
-			                                 COMP_MIN_LINEAR_P1U, NULL,
-
-			      gettext (composition_names[COMP_MIN_LINEAR_M1L]),
-			                                 COMP_MIN_LINEAR_M1L, NULL,
-
-			      gettext (composition_names[COMP_MIN_LINEAR_M1U]),
-			                                 COMP_MIN_LINEAR_M1U, NULL,
-
-			      NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
-				optionmenu, &param->composition);
+				combo, &param->composition);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
 			     _("Composition:"), 1.0, 0.5,
-			     optionmenu, 2, FALSE);
+			     combo, 2, FALSE);
   index++;
 
-  optionmenu =
-    gimp_int_option_menu_new (FALSE, G_CALLBACK (CML_explorer_menu_update),
-			      &param->arrange, param->arrange,
+  combo = gimp_int_combo_box_new_array (ARRANGE_NUM_VALUES, arrange_names);
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), param->arrange);
 
-			      gettext (arrange_names[STANDARD]),
-			                             STANDARD, NULL,
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (CML_explorer_menu_update),
+                    &param->arrange);
 
-			      gettext (arrange_names[AVERAGE]),
-			                             AVERAGE, NULL,
-
-			      gettext (arrange_names[ANTILOG]),
-			                             ANTILOG, NULL,
-
-			      gettext (arrange_names[RAND_POWER0]),
-			                             RAND_POWER0, NULL,
-
-			      gettext (arrange_names[RAND_POWER1]),
-			                             RAND_POWER1, NULL,
-
-			      gettext (arrange_names[RAND_POWER2]),
-			                             RAND_POWER2, NULL,
-
-			      gettext (arrange_names[MULTIPLY_RANDOM0]),
-			                             MULTIPLY_RANDOM0, NULL,
-
-			      gettext (arrange_names[MULTIPLY_RANDOM1]),
-			                             MULTIPLY_RANDOM1, NULL,
-
-			      gettext (arrange_names[MULTIPLY_GRADIENT]),
-			                             MULTIPLY_GRADIENT, NULL,
-
-			      gettext (arrange_names[RAND_AND_P]),
-			                             RAND_AND_P, NULL,
-
-			      NULL);
   CML_explorer_menu_entry_init (&widget_pointers[channel_id][index],
-				optionmenu, &param->arrange);
+				combo, &param->arrange);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, index,
 			     _("Misc Arrange:"), 1.0, 0.5,
-			     optionmenu, 2, FALSE);
+			     combo, 2, FALSE);
   index++;
 
   toggle = gtk_check_button_new_with_label (_("Use Cyclic Range"));
@@ -2625,7 +2484,7 @@ static void
 CML_explorer_menu_update (GtkWidget *widget,
 			  gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   preview_update ();
 }
@@ -2634,7 +2493,7 @@ static void
 CML_initial_value_menu_update (GtkWidget *widget,
 			       gpointer   data)
 {
-  gimp_menu_item_update (widget, data);
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), (gint *) data);
 
   CML_initial_value_sensitives_update ();
   preview_update ();
@@ -2643,8 +2502,8 @@ CML_initial_value_menu_update (GtkWidget *widget,
 static void
 CML_explorer_menu_entry_change_value (WidgetEntry *widget_entry)
 {
-  gtk_option_menu_set_history (GTK_OPTION_MENU (widget_entry->widget),
-			       *(gint *) (widget_entry->value));
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (widget_entry->widget),
+                                 *(gint *) (widget_entry->value));
 }
 
 static void
