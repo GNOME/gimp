@@ -1,5 +1,14 @@
 2004-07-29  Michael Natterer  <mitch@gimp.org>
 
+	* etc/controllerrc: changed default configuration of the keyboard
+	controller: scroll the display one step on cursor_key, scroll by
+	one page on <shift>+cursor_key and scroll to top/bottom/left/right
+	on <control>+cursor_key. Fixes bug #53988.
+
+	Moved the old opacity-modifying actions to <alt>+cursor_key.
+
+2004-07-29  Michael Natterer  <mitch@gimp.org>
+
 	Replaced the concept of having a boolean indicating if an undo
 	step dirties the image by a bitfield indicating which parts
 	of the image are dirtied:
