@@ -101,7 +101,7 @@ gimp_unit_menu_new (gchar    *format,
   GtkWidget     *menuitem;
   GUnit          u;
 
-  if(with_custom); /* avoid 'unused variable' compiler warning */
+  if (with_custom); /* avoid 'unused variable' compiler warning */
 
   gum = gtk_type_new (gimp_unit_menu_get_type ());
 
@@ -112,7 +112,7 @@ gimp_unit_menu_new (gchar    *format,
     unit = gum->start;
 
   menu = gtk_menu_new();
-  for (u = gum->start; u < gimp_unit_get_number_of_units(); u++)
+  for (u = gum->start; u < gimp_unit_get_number_of_built_in_units(); u++)
     {
       menuitem =
 	gtk_menu_item_new_with_label (gimp_unit_menu_build_string(format, u) );
@@ -169,7 +169,8 @@ print (char *buf, int len, int start, const char *fmt, ...)
   return printed;
 }
 
-static const gchar* gimp_unit_menu_build_string (gchar *format, GUnit unit)
+static const gchar*
+gimp_unit_menu_build_string (gchar *format, GUnit unit)
 {
 
 #define BUFFER_LEN 64

@@ -1,3 +1,12 @@
+Wed Mar  3 17:59:09 MET 1999 Sven Neumann <sven@gimp.org>
+
+	* gimprc.5.in
+	* gimprc.in
+	* libgimp/gimpunit.[ch]
+	* libgimp/gimpunitmenu.c : Seems that Michael had created some
+	more patches I didn't knew of.
+	This commit now should bring it all uptodate. 
+
 Wed Mar  3 15:39:01 MET 1999 Sven Neumann <sven@gimp.org>
 
 	* libgimp/gimpchainbutton.[ch]: that looks much better now

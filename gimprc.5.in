@@ -115,9 +115,11 @@ One of
 .BR none ", " small ", " medium ", or " large ", "
 or an INT.  small is 32x32, medium is 64x64, and large is 128x128.
 .TP
-.I RULERUNIT
+.I UNIT
 One of
-.BR pixels ", " inches ", or " centimeters "."
+.BR inches ", " millimeters ", " picas ", or " points
+or the identifier of one of the units you have defined in your user
+units database.
 .PP
 .SH PROPERTIES
 Valid properties and their types:
@@ -341,14 +343,26 @@ Set the default image size in the File/New dialog.
 .I default-image-type IMAGETYPE
 Set the default image type in the File/New dialog.
 .TP
+.I default-units UNIT
+Set the default units for new images and for the File/New dialog.
+This units will be used for coordinate display when not in dot-for-dot
+mode. The default units can be one of inches , millimeters, points or
+picas or the identifier of one of the units defined in your user units
+database. The default is inches.
+.TP
 .I default-xresolution FLOAT
-Set the default image width resolution in the File/New dialog.
+Set the default horizontal resolution for new images and for the
+File/New dialog. This value is always in dpi (dots per inch).
 .TP
 .I default-yresolution FLOAT
-Set the default image height resolution in the File/New dialog.
+Set the default vertical resolution for new images and for the
+File/New dialog. This value is always in dpi (dots per inch).
 .TP
-.I default-resolution-units RULERUNIT
-Set the units the default-resolution settings are in.
+.I default-resolution-units UNIT
+Set the units for the display of the default resolution in the
+File/New dialog. The default resolution units can be one of inches,
+millimeters, points or picas or the identifier of one of the units
+defined in your user unit database. The default is inches.
 .TP
 .I monitor-xresolution FLOAT
 Set the monitor's horizontal resolution, in dots per inch.  If set to

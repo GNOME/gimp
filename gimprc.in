@@ -155,16 +155,18 @@
 # (dont-show-rulers)
 
 # Default units
-#  Will be used for ruler & coordinate display
-#  The units can be one of:
-#  (inches centimeters points picas) plus those in your user units database
+#  This is the default unit of a new image. It will appear in the
+#  File/New dialog and will be the unit for coordinate display when
+#  dot-for-dot is off.
+#  The default units can be one of:
+#  (inches millimeters points picas) plus those in your user units database
 #  The default is inches
 (default-units inches)
 
 # Default Resolution units
 #  This is used to specify the resolution of a new image
 #  The units for the resolution can be one of:
-#  (inches centimeters points picas) plus those in your user units database
+#  (inches millimeters points picas) plus those in your user units database
 #  The default is inches
 (default-resolution-units inches)
 
