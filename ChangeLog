@@ -1,7 +1,23 @@
 2004-08-04  Michael Natterer  <mitch@gimp.org>
 
+	Allow URI drops from apps linked against GLib < 2.4.4 to GIMP
+	linked against GLib >= 2.4.5. Fixes bug #148140.
+
+	* app/core/gimp-utils.[ch]: added gimp_check_glib_version().
+
+	* app/widgets/gimpselectiondata.c: added runtime check for GLib
+	versions that encode file:// URIs correctly (>= 2.4.5). For older
+	(broken) GLibs, leave the code path as is, for newer (fixed) ones,
+	perform an additional check if the dropped URI is in the (broken)
+	escaped-UTF-8 format and convert it to local filename encoding.
+
+	* app/gui/gui.c: warn the user that non-ASCII filenames can't
+	be used when linked against GLib 2.4.4.
+
+2004-08-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp.[ch]: changed member "ProcRecord last_plug_in" to
-	PlugInProcDef last_plug_in". Added function
+	"PlugInProcDef last_plug_in". Added function
 	gimp_set_last_plug_in() and signal Gimp::last-plug-in-changed.
 
 	* app/actions/plug-in-commands.c
