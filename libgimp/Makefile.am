@@ -98,6 +98,7 @@ libgimp_la_SOURCES = \
 	gimpprotocol.c		\
 	gimpprotocol.h		\
 	gimpselection.c		\
+	gimpsignal.c		\
 	gimptile.c		\
 	gimpunit.c		\
 	gimpunit.h		\
@@ -158,6 +159,7 @@ gimpinclude_HEADERS = \
 	gimppatheditor.h	\
 	gimppixmap.h		\
 	gimpquerybox.h		\
+	gimpsignal.h		\
 	gimpsizeentry.h		\
 	gimpui.h		\
 	gimpunit.h              \

@@ -67,6 +67,6 @@ gimp_signal_private (gint signum, void (*gimp_sighandler)(int), gint sa_flags)
 
   ret = sigaction (signum, &sa, &osa);
   if (ret < 0)
-    gimp_fatal_error ("unable to set handler for signal %d\n", signum);
+    g_error ("unable to set handler for signal %d\n", signum);
   return osa.sa_handler;
 }

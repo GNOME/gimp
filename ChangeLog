@@ -1,3 +1,12 @@
+Fri Apr 21 11:25:24 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* libgimp/Makefile.am: gimpsignal.[ch] needs to go into libgimp,
+	since it is used in gimp.c
+
+	* libgimp/gimpsignal.c: use g_error instead of gimp_fatal_error
+
+	* plug-ins/common/png.c: typo fix for Nick's previous commit
+
 2000-04-21  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/png.c: Fix #9380 as K&R intended :)

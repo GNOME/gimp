@@ -361,7 +361,7 @@ load_image (gchar *filename)	/* I - File to load */
 		end,		/* Ending tile row */
 		num;		/* Number of rows to load */
   FILE		*fp;		/* File pointer */
-  volatile gint32 image,	/* Image -- preserved against setjmp() */
+  volatile gint32 image;	/* Image -- preserved against setjmp() */
   gint32	layer;		/* Layer */
   GDrawable	*drawable;	/* Drawable for layer */
   GPixelRgn	pixel_rgn;	/* Pixel region for layer */
