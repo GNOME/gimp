@@ -663,9 +663,12 @@ load_image (char *filename)
      image_ID = load_ps (filename, page_count, ifp, llx, lly, urx, ury);
      if (image_ID == -1) break;
 #ifdef GIMP_HAVE_RESOLUTION_INFO
-      gimp_image_set_resolution (image_ID, (float)plvals.resolution,
-                                 (float)plvals.resolution);
-      gimp_image_set_unit (image_ID, UNIT_INCH);
+     if (plvals.resolution > 1e-5)
+       {
+	 gimp_image_set_resolution (image_ID, (float)plvals.resolution,
+				    (float)plvals.resolution);
+	 gimp_image_set_unit (image_ID, UNIT_INCH);
+       }
 #endif
      if (n_images == max_images)
      {

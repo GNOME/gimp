@@ -1,3 +1,14 @@
+Sat Jan  8 13:22:15 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpimage.c: don't allow to set the resolution to zero
+
+	* plug-ins/bmp/bmpread.c
+	* plug-ins/common/png.c
+	* plug-ins/common/ps.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/tiff.c: Check the resolution before setting it.
+	If it is not valid, do nothing. GIMP will use the default values.
+
 Fri Jan  7 23:03:51 CET 2000  Sven Neumann <sven@gimp.org> 
 
 	* app/preferences_dialog.c: Doh, how much do I hate to hack this 

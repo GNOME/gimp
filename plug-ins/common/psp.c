@@ -348,17 +348,17 @@ query ()
   static int nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static int nload_return_vals = sizeof (load_return_vals) / sizeof (load_return_vals[0]);
 
-  static GParamDef save_args[] =
-  {
-    { PARAM_INT32, "run_mode", "Interactive, non-interactive" },
-    { PARAM_IMAGE, "image", "Input image" },
-    { PARAM_DRAWABLE, "drawable", "Drawable to save" },
-    { PARAM_STRING, "filename", "The name of the file to save the image in" },
-    { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
-    { PARAM_INT32, "compression", "Specify 0 for no compression, "
-      "1 for RLE, and 2 for LZ77" }
-  };
-  static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
+/*    static GParamDef save_args[] = */
+/*    { */
+/*      { PARAM_INT32, "run_mode", "Interactive, non-interactive" }, */
+/*      { PARAM_IMAGE, "image", "Input image" }, */
+/*      { PARAM_DRAWABLE, "drawable", "Drawable to save" }, */
+/*      { PARAM_STRING, "filename", "The name of the file to save the image in" }, */
+/*      { PARAM_STRING, "raw_filename", "The name of the file to save the image in" }, */
+/*      { PARAM_INT32, "compression", "Specify 0 for no compression, " */
+/*        "1 for RLE, and 2 for LZ77" } */
+/*    }; */
+/*    static int nsave_args = sizeof (save_args) / sizeof (save_args[0]); */
 
   INIT_I18N();
 
@@ -598,13 +598,16 @@ read_block_header (FILE *f,
     }
   if (memcmp (buf, "~BK\0", 4) != 0)
     {
-      g_message ("PSP: Invalid block header at %d", header_start);
+      IFDBG(3) 
+	g_message ("PSP: Invalid block header at %ld", header_start);
+      else
+	g_message ("PSP: Invalid block header");
+    
       fclose (f);
       return -1;
     }
 
-  IFDBG(3) g_message ("PSP: %s at %d", block_name (id),
-		      header_start);
+  IFDBG(3) g_message ("PSP: %s at %ld", block_name (id), header_start);
 
   if (major < 4)
     {
@@ -860,6 +863,8 @@ read_creator_block (FILE *f,
     }
 
   g_string_free (comment, FALSE);
+
+  return 0;
 }
 
 static void inline
@@ -1010,9 +1015,10 @@ read_channel_data (FILE *f,
 		   GDrawable *drawable,
 		   guint32 compressed_len)
 {
-  gint i, n, x, y, width = drawable->width, height = drawable->height;
+  gint i, y, width = drawable->width, height = drawable->height;
   gint npixels = width * height;
-  guchar *buf, *buf2, *p, *q, *endq;
+  guchar *buf, *p, *q, *endq;
+  guchar *buf2 = NULL;  /* please the compiler */
   guchar runcount, byte;
   z_stream zstream;
 
@@ -1131,6 +1137,8 @@ read_channel_data (FILE *f,
 	}
       break;
     }
+
+  return 0;
 }
 
 static int
@@ -1151,7 +1159,7 @@ read_layer_block (FILE *f,
   gboolean null_layer = FALSE;
   guint16 bitmap_count, channel_count;
   GDrawableType drawable_type;
-  guint32 layer_ID;
+  guint32 layer_ID = 0;
   GLayerMode layer_mode;
   guint32 channel_init_len, channel_total_len;
   guint32 compressed_len, uncompressed_len;
@@ -1540,6 +1548,8 @@ read_tube_block (FILE *f,
   gimp_image_parasite_attach (image_ID, pipe_parasite);
   parasite_free (pipe_parasite);
   g_free (parasite_text);
+
+  return 0;
 }
 
 static char *
@@ -1555,6 +1565,8 @@ compression_name (int compression)
       return "LZ77";
     }
   g_assert_not_reached ();
+
+  return NULL;
 }
 
 static gint32
@@ -1566,13 +1578,10 @@ load_image (char *filename)
   PSPimage ia;
   guint32 block_init_len, block_total_len;
   long block_start;
-  PSPBlockID id;
+  PSPBlockID id = -1;
   gint block_number;
 
-  GPixelRgn pixel_rgn;
   gint32 image_ID = -1;
-  gint32 layer_ID;
-  GDrawable *drawable;
 
   if (stat (filename, &st) == -1)
     return -1;
@@ -1630,7 +1639,7 @@ load_image (char *filename)
   /* Read all the blocks */
   block_number = 0;
 
-  IFDBG(3) g_message ("PSP: size = %d", st.st_size);
+  IFDBG(3) g_message ("PSP: size = %d", (int)st.st_size);
   while (ftell (f) != st.st_size
 	 && (id = read_block_header (f, &block_init_len,
 				     &block_total_len)) != -1)
@@ -1660,8 +1669,10 @@ load_image (char *filename)
 	    return -1;
 
 	  gimp_image_set_filename (image_ID, filename);
-	  gimp_image_set_resolution (image_ID, (int) ia.resolution,
-				     (int) ia.resolution);
+
+	  if ((int) ia.resolution > 1)
+	    gimp_image_set_resolution (image_ID, 
+				       (int) ia.resolution, (int) ia.resolution);
 	}
       else
 	{

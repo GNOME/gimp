@@ -193,7 +193,8 @@ ReadBMP (char *name)
     xresolution = LROUND((Bitmap_Head.biXPels * 2.54 / 100.0));
     yresolution = LROUND((Bitmap_Head.biYPels * 2.54 / 100.0));
     #undef LROUND
-    gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    if (xresolution > 1e-5 && yresolution > 1e-5)
+      gimp_image_set_resolution (image_ID, xresolution, yresolution);
   }
 #endif /* GIMP_HAVE_RESOLUTION_INFO */
 

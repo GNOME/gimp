@@ -358,6 +358,10 @@ gimp_image_set_resolution (GimpImage *gimage,
       (ABS (gimage->yresolution - yresolution) < 1e-5))
       return;
 
+  /* don't allow to set the resolution to zero */
+  if (xresolution < 1e-5 || yresolution < 1e-5)
+    return;
+
   undo_push_resolution (gimage);
 
   gimage->xresolution = xresolution;

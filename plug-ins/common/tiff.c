@@ -505,8 +505,7 @@ load_image (char *filename)
 	      {
 	      case RESUNIT_NONE:
 		/* ImageMagick writes files with this silly resunit */
-		g_message ("TIFF warning: resolution units meaningless, "
-			   "forcing 72 dpi\n");
+		g_message ("TIFF warning: resolution units meaningless\n");
 		break;
 		
 	      case RESUNIT_INCH:
@@ -537,18 +536,16 @@ load_image (char *filename)
 	  yres = xres;
 	}
 
-      /* sanity check, since division by zero later could be embarrassing */
-      if (xres < 1e-5 || yres < 1e-5) 
-	{
-	g_message ("TIFF: image resolution is zero: forcing 72 dpi\n");
-	xres = 72.0;
-	yres = 72.0;
-      }
-
       /* now set the new image's resolution info */
-      gimp_image_set_resolution (image, xres, yres);
-      if (unit != UNIT_PIXEL)
-	gimp_image_set_unit (image, unit);
+
+      /* If it is invalid, instead of forcing 72dpi, do not set the resolution 
+	 at all. Gimp will then use the default set by the user */
+      if (read_unit != RESUNIT_NONE && xres > 1e-5 && yres > 1e-5) 
+	{
+	  gimp_image_set_resolution (image, xres, yres);
+	  if (unit != UNIT_PIXEL)
+	    gimp_image_set_unit (image, unit);
+	}
     }
 
     /* no x res tag => we assume we have no resolution info, so we
