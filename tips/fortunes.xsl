@@ -28,7 +28,7 @@
   <xsl:template match="text()">
     <xsl:call-template name="search-and-replace">
       <xsl:with-param name="input" select="." />
-      <xsl:with-param name="search-string"  select="'    '" />
+      <xsl:with-param name="search-string"  select="'&#xa;    '" />
       <xsl:with-param name="replace-string" select="' '" />
     </xsl:call-template>
   </xsl:template>   

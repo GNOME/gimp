@@ -1,5 +1,9 @@
 2004-08-26  Sven Neumann  <sven@gimp.org>
 
+	* fortunes.xsl: fixed Wiki syntax in output.
+
+2004-08-26  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am
 	* fortunes.xsl: added simple XSL transformation to generate
 	fortunes for wiki.gimp.org from gimp-tips.xml.in.
