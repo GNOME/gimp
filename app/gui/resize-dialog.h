@@ -42,21 +42,21 @@ struct _Resize
   ResizeType   type;
   ResizeTarget target;
 
-  int          width;
-  int          height;
+  gint         width;
+  gint         height;
 
-  double       resolution_x;
-  double       resolution_y;
+  gdouble      resolution_x;
+  gdouble      resolution_y;
   GUnit        unit;
 
-  double       ratio_x;
-  double       ratio_y;
+  gdouble      ratio_x;
+  gdouble      ratio_y;
 
-  int          offset_x;
-  int          offset_y;
+  gint         offset_x;
+  gint         offset_y;
 
   /*  Don't touch this :)  */
-  void *     private_part;
+  void *       private_part;
 };
 
 /* If resolution_x is zero, then don't show resolution modification

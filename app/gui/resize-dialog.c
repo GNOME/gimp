@@ -56,22 +56,22 @@ struct _ResizePrivate
   GtkObject *object;
   guint      object_destroy_handler;
 
-  double ratio;
-  int old_width, old_height;
-  double old_res_x, old_res_y;
-  int area_width, area_height;
-  int start_x, start_y;
-  int orig_x, orig_y;
+  gdouble ratio;
+  gint    old_width, old_height;
+  gdouble old_res_x, old_res_y;
+  gint    area_width, area_height;
+  gint    start_x, start_y;
+  gint    orig_x, orig_y;
 };
 
 static void resize_draw (Resize *);
 static void unit_update (GtkWidget *w, gpointer data);
-static int  resize_bound_off_x (Resize *, int);
-static int  resize_bound_off_y (Resize *, int);
+static gint resize_bound_off_x (Resize *, gint);
+static gint resize_bound_off_y (Resize *, gint);
 static void orig_labels_update (GtkWidget *w, gpointer data);
 static void size_callback (GtkWidget *w, gpointer data);
 static void ratio_callback (GtkWidget *w, gpointer data);
-static void size_update (Resize *, double, double, double, double);
+static void size_update (Resize *, gdouble, gdouble, gdouble, gdouble);
 static void offset_update (GtkWidget *w, gpointer data);
 static gint resize_events (GtkWidget *area, GdkEvent *event);
 static void printsize_update (GtkWidget *w, gpointer data);
@@ -109,7 +109,7 @@ resize_widget_new (ResizeType    type,
   GtkWidget *alignment;
   GtkObject *adjustment;
 
-  static ActionAreaItem action_items[2] =
+  static ActionAreaItem action_items[] =
   {
     { N_("OK"), NULL, NULL, NULL },
     { N_("Cancel"), NULL, NULL, NULL }
@@ -196,13 +196,14 @@ resize_widget_new (ResizeType    type,
 
   /*  handle the image disappearing under our feet  */
   if (object)
-  {
-    const char *signame;
-    signame = (target == ResizeLayer) ? "removed" : "destroy";
-    private->object = object;
-    private->object_destroy_handler =
-      gtk_signal_connect(GTK_OBJECT (object), signame, cancel_cb, user_data);
-  }
+    {
+      const gchar *signame;
+
+      signame = (target == ResizeLayer) ? "removed" : "destroy";
+      private->object = object;
+      private->object_destroy_handler =
+	gtk_signal_connect(GTK_OBJECT (object), signame, cancel_cb, user_data);
+    }
 
   /*  the action area  */
   action_items[0].user_data = user_data;
@@ -292,6 +293,9 @@ resize_widget_new (ResizeType    type,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (private->size_se);
 
+  if (dot_for_dot)
+    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se), UNIT_PIXEL);
+
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 0,
 				  resolution_x, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->size_se), 1,
@@ -309,9 +313,6 @@ resize_widget_new (ResizeType    type,
 
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 0, width);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->size_se), 1, height);
-
-  if (dot_for_dot)
-    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->size_se), UNIT_PIXEL);
 
   gtk_signal_connect (GTK_OBJECT (private->size_se), "value_changed",
 		      (GtkSignalFunc) size_callback,
@@ -441,6 +442,10 @@ resize_widget_new (ResizeType    type,
 			GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
       gtk_widget_show (private->offset_se);
 
+      if (dot_for_dot)
+	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
+				  UNIT_PIXEL);
+
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 0,
 				      resolution_x, FALSE);
       gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (private->offset_se), 1,
@@ -454,13 +459,8 @@ resize_widget_new (ResizeType    type,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 0, 0);
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (private->offset_se), 1, 0);
 
-      if (dot_for_dot)
-	gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (private->offset_se),
-				  UNIT_PIXEL);
-
-      gtk_signal_connect (GTK_OBJECT (private->offset_se),
-			  "value_changed", (GtkSignalFunc) offset_update,
-			  resize);
+      gtk_signal_connect (GTK_OBJECT (private->offset_se), "value_changed",
+			  (GtkSignalFunc) offset_update, resize);
 
       gtk_widget_show (table);
 
@@ -746,9 +746,9 @@ resize_draw (Resize *resize)
     }
 }
 
-static int
+static gint
 resize_bound_off_x (Resize *resize,
-		    int     off_x)
+		    gint    off_x)
 {
   ResizePrivate *private;
 
@@ -762,9 +762,9 @@ resize_bound_off_x (Resize *resize,
   return off_x;
 }
 
-static int
+static gint
 resize_bound_off_y (Resize *resize,
-		    int     off_y)
+		    gint    off_y)
 {
   ResizePrivate *private;
 
@@ -800,7 +800,7 @@ orig_labels_update (GtkWidget *w,
 
   if (label_unit) /* unit != UNIT_PIXEL */
     {
-      float unit_factor = gimp_unit_get_factor (label_unit);
+      double unit_factor = gimp_unit_get_factor (label_unit);
   
       g_snprintf (format_buf, 16, "%%.%df %s",
                   gimp_unit_get_digits (label_unit) + 1,
@@ -837,18 +837,18 @@ offset_update (GtkWidget *w,
 {
   Resize *resize;
   ResizePrivate *private;
-  int offset_x;
-  int offset_y;
+  gint offset_x;
+  gint offset_y;
 
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
 
-  offset_x =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0);
+  offset_x = (gint)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 0) + 0.5);
   offset_x = resize_bound_off_x (resize, offset_x);
 
-  offset_y =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1);
+  offset_y = (gint)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->offset_se), 1) + 0.5);
   offset_y = resize_bound_off_y (resize, offset_y);
 
   if ((offset_x != resize->offset_x) ||
@@ -882,8 +882,6 @@ size_callback (GtkWidget *w,
 
   if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (private->constrain)))
     {
-      /*  compare ratios, not sizes because we need float values
-       */
       if (ratio_x != resize->ratio_x)
 	{
 	  ratio_y = ratio_x;
@@ -911,7 +909,7 @@ ratio_callback (GtkWidget *w,
   double height;
   double ratio_x;
   double ratio_y;
-  
+
   resize = (Resize *) data;
   private = (ResizePrivate *) resize->private_part;
 
@@ -952,8 +950,8 @@ size_update (Resize *resize,
 
   private = (ResizePrivate *) resize->private_part;
 
-  resize->width = width;
-  resize->height = height;
+  resize->width = (gint) (width + 0.5);
+  resize->height = (gint) (height + 0.5);
 
   resize->ratio_x = ratio_x;
   resize->ratio_y = ratio_y;

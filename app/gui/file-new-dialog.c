@@ -158,10 +158,10 @@ file_new_ok_callback (GtkWidget *widget,
   vals = data;
 
   /* get the image size in pixels */
-  vals->width =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 0);
-  vals->height =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 1);
+  vals->width = (int)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 0) + 0.5);
+  vals->height = (int)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 1) + 0.5);
 
   /* get the resolution in dpi */
   vals->xresolution =
@@ -422,23 +422,27 @@ file_new_image_size_callback (GtkWidget *widget,
 			      gpointer   data)
 {
   NewImageValues *vals;
+
   gdouble width, height, size;
   gchar *text;
   gchar *label;
 
-  vals = (NewImageValues *) data;
+  vals = data;
 
-  width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 0);
-  height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 1);
+  width = (gdouble) (gint)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 0) + 0.5);
+  height = (gdouble) (gint)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (vals->size_se), 1) + 0.5);
 
   size =
     width * height *
     ((vals->type == RGB ? 3 : 1) +	             /* bytes per pixel */
      (vals->fill_type == TRANSPARENT_FILL ? 1 : 0)); /* alpha channel */
 
-  text = file_new_print_size (size);
-  label = g_strdup_printf (_("Image Size: %s"), text);
+  label = g_strdup_printf (_("Image Size: %s"),
+			   text = file_new_print_size (size));
   gtk_frame_set_label (GTK_FRAME (vals->size_frame), label);
+
   g_free (label);
   g_free (text);
 
@@ -481,6 +485,8 @@ file_new_cmd_callback (GtkWidget *widget,
     N_("RGB"),
     N_("Grayscale")
   };
+  static gint ntypes = sizeof (type_names) / sizeof (type_names[0]);
+
   static gchar *fill_type_names[] =
   {
     N_("Foreground"),
@@ -488,6 +494,8 @@ file_new_cmd_callback (GtkWidget *widget,
     N_("White"),
     N_("Transparent")
   };
+  static gint nfill_types =
+    sizeof (fill_type_names) / sizeof (fill_type_names[0]);
 
   if(!new_dialog_run)
     {
@@ -796,19 +804,19 @@ file_new_cmd_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (top_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /* frame for Image Type */
+  /*  frame for Image Type  */
   frame = gtk_frame_new (_("Image Type"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  /* radio buttons and box */
+  /*  radio buttons and box  */
   radio_box = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (radio_box), 2);
   gtk_container_add (GTK_CONTAINER (frame), radio_box);
   gtk_widget_show (radio_box);
 
   group = NULL;
-  for (i = 0; i < 2; i++)
+  for (i = 0; i < ntypes; i++)
     {
       button = gtk_radio_button_new_with_label (group, gettext (type_names[i]));
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
@@ -837,7 +845,7 @@ file_new_cmd_callback (GtkWidget *widget,
   gtk_widget_show (radio_box);
 
   group = NULL;
-  for (i = 0; i < 4; i++)
+  for (i = 0; i < nfill_types; i++)
     {
       button =
 	gtk_radio_button_new_with_label (group, gettext (fill_type_names[i]));
@@ -857,6 +865,7 @@ file_new_cmd_callback (GtkWidget *widget,
     }
 
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (vals->size_se));
+
   gtk_widget_show (vals->dlg);
 }
 

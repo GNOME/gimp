@@ -330,7 +330,9 @@ lc_dialog_create (GimpImage* gimage)
       gtk_window_set_title (GTK_WINDOW (lc_shell), _("Layers & Channels"));
       gtk_window_set_wmclass (GTK_WINDOW (lc_shell), "layers_and_channels", "Gimp");
       session_set_window_geometry (lc_shell, &lc_dialog_session_info, TRUE);
-      gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG (lc_shell)->vbox), 2);
+      gtk_container_set_border_width
+	(GTK_CONTAINER (GTK_DIALOG (lc_shell)->vbox), 2);
+
       gtk_signal_connect (GTK_OBJECT (lc_shell),
 			  "delete_event", 
 			  GTK_SIGNAL_FUNC (lc_dialog_close_callback),
@@ -391,10 +393,13 @@ lc_dialog_create (GimpImage* gimage)
 
       gtk_widget_show (notebook);
 
-      gtk_container_border_width (GTK_CONTAINER (GTK_DIALOG(lc_shell)->action_area), 1);
+      gtk_container_set_border_width
+	(GTK_CONTAINER (GTK_DIALOG(lc_shell)->action_area), 1);
+
       /*  The close button  */
       button = gtk_button_new_with_label (_("Close"));
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG(lc_shell)->action_area), button, TRUE, TRUE, 0);
+      gtk_box_pack_start (GTK_BOX (GTK_DIALOG(lc_shell)->action_area), button,
+			  TRUE, TRUE, 0);
       gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			  (GtkSignalFunc) lc_dialog_close_callback,
 			  GTK_OBJECT (lc_shell));
@@ -695,7 +700,7 @@ layers_dialog_create ()
 
       /*  The main vbox  */
       layersD->vbox = vbox = gtk_vbox_new (FALSE, 1);
-      gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
 
       /*  The layers commands pulldown menu  */
       layersD->ops_menu = build_menu (layers_ops, layersD->accel_group);
@@ -3037,15 +3042,15 @@ struct _NewLayerOptions {
   GtkWidget *query_box;
   GtkWidget *name_entry;
   GtkWidget *size_se;
-  int fill_type;
-  int xsize;
-  int ysize;
+  gint fill_type;
+  gint xsize;
+  gint ysize;
 
   GimpImage* gimage;
 };
 
-static int fill_type = TRANSPARENT_FILL;
-static char *layer_name = NULL;
+static gint   fill_type  = TRANSPARENT_FILL;
+static gchar *layer_name = NULL;
 
 static void
 new_layer_query_ok_callback (GtkWidget *w,
@@ -3056,14 +3061,17 @@ new_layer_query_ok_callback (GtkWidget *w,
   GImage *gimage;
 
   options = (NewLayerOptions *) client_data;
+
   if (layer_name)
     g_free (layer_name);
   layer_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+
+  options->xsize = (gint)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 0) + 0.5);
+  options->ysize = (gint)
+    (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 1) + 0.5);
+
   fill_type = options->fill_type;
-  options->xsize =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 0);
-  options->ysize =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 1);
 
   if ((gimage = options->gimage))
     {
@@ -3100,14 +3108,15 @@ new_layer_query_cancel_callback (GtkWidget *w,
   NewLayerOptions *options;
 
   options = (NewLayerOptions *) client_data;
+
   gtk_widget_destroy (options->query_box);
   g_free (options);
 }
 
 static gint
 new_layer_query_delete_callback (GtkWidget *w,
-				 GdkEvent *e,
-				 gpointer client_data)
+				 GdkEvent  *e,
+				 gpointer   client_data)
 {
   new_layer_query_cancel_callback (w, client_data);
 
@@ -3122,6 +3131,7 @@ new_layer_query_fill_type_callback (GtkWidget *w,
   NewLayerOptions *options;
 
   options = (NewLayerOptions *) client_data;
+
   options->fill_type =
     (int) gtk_object_get_data (GTK_OBJECT (w), "layer_fill_type");
 }
@@ -3138,15 +3148,18 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   GtkWidget *radio_frame;
   GtkWidget *radio_box;
   GtkWidget *radio_button;
-  GSList *group = NULL;
-  int i;
-  char *button_names[] =
+  GSList *group;
+  int     i;
+
+  static gchar *button_names[] =
   {
     N_("Foreground"),
     N_("Background"),
     N_("White"),
     N_("Transparent")
   };
+  static gint nbutton_names = sizeof (button_names) / sizeof (button_names[0]);
+
   static ActionAreaItem action_items[] =
   {
     { N_("OK"), new_layer_query_ok_callback, NULL, NULL },
@@ -3165,14 +3178,14 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_window_set_title (GTK_WINDOW (options->query_box), _("New Layer Options"));
   gtk_window_position (GTK_WINDOW (options->query_box), GTK_WIN_POS_MOUSE);
 
-  /* handle the wm close signal */
+  /*  handle the wm close signal  */
   gtk_signal_connect (GTK_OBJECT (options->query_box), "delete_event",
 		      GTK_SIGNAL_FUNC (new_layer_query_delete_callback),
 		      options);
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
 		      TRUE, TRUE, 0);
 
@@ -3228,6 +3241,8 @@ layers_dialog_new_layer_query (GimpImage* gimage)
                     GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (options->size_se);
 
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se), UNIT_PIXEL);
+
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 0,
                                   gimage->xresolution, FALSE);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options->size_se), 1,
@@ -3250,8 +3265,6 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (options->size_se), 1,
 			      gimage->height);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (options->size_se), UNIT_PIXEL);
-
   gtk_widget_show (table);
 
   /*  the radio frame and box  */
@@ -3262,7 +3275,8 @@ layers_dialog_new_layer_query (GimpImage* gimage)
   gtk_container_add (GTK_CONTAINER (radio_frame), radio_box);
 
   /*  the radio buttons  */
-  for (i = 0; i < 4; i++)
+  group = NULL;
+  for (i = 0; i < nbutton_names; i++)
     {
       radio_button =
 	gtk_radio_button_new_with_label (group, gettext(button_names[i]));
@@ -3387,8 +3401,9 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
+		      TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
   hbox = gtk_hbox_new (FALSE, 1);
@@ -3545,8 +3560,9 @@ layers_dialog_add_mask_query (Layer *layer)
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
+		      TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
   label = gtk_label_new (_("Initialize Layer Mask To:"));
@@ -3674,8 +3690,9 @@ layers_dialog_apply_mask_query (Layer *layer)
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
+		      TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
   label = gtk_label_new (_("Apply layer mask?"));
@@ -4019,8 +4036,9 @@ layers_dialog_layer_merge_query (GImage *gimage,
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_border_width (GTK_CONTAINER (options->query_box), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (options->query_box), 2);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (options->query_box)->vbox), vbox,
+		      TRUE, TRUE, 0);
 
   /*  the name entry hbox, label and entry  */
   if (merge_visible)

@@ -34,7 +34,7 @@ static gint info_dialog_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void
 info_field_new (InfoDialog    *idialog,
 		InfoFieldType  field_type,
-		char          *title,
+		gchar         *title,
 		GtkWidget     *widget,
 		GtkObject     *obj,
 		void          *value_ptr,
@@ -43,7 +43,7 @@ info_field_new (InfoDialog    *idialog,
 {
   GtkWidget *label;
   InfoField *field;
-  int        row; 
+  int        row;
 
   field = (InfoField *) g_malloc (sizeof (InfoField));
 
@@ -52,12 +52,12 @@ info_field_new (InfoDialog    *idialog,
 
   label = gtk_label_new (gettext (title));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_table_attach (GTK_TABLE (idialog->info_table), label, 
+  gtk_table_attach (GTK_TABLE (idialog->info_table), label,
 		    0, 1, row - 1, row,
 		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), widget, 
+  gtk_table_attach_defaults (GTK_TABLE (idialog->info_table), widget,
 			     1, 2, row - 1, row);
   gtk_widget_show (widget);
 
@@ -105,14 +105,14 @@ update_field (InfoField *field)
     case INFO_SCALE:
     case INFO_SPINBUTTON:
       gtk_adjustment_set_value (GTK_ADJUSTMENT (field->obj),
-				*((gfloat*) field->value_ptr));
+				*((gdouble*) field->value_ptr));
       break;
 
     case INFO_SIZEENTRY:
       num = GIMP_SIZE_ENTRY (field->obj)->number_of_fields;
       for (i = 0; i < num; i++)
 	gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (field->obj), i,
-				    ((gfloat*) field->value_ptr)[i]);
+				    ((gdouble*) field->value_ptr)[i]);
       break;
 
     default:
@@ -121,7 +121,17 @@ update_field (InfoField *field)
     }
 }
 
-/*  function definitions  */
+static gint
+info_dialog_delete_callback (GtkWidget *w,
+			     GdkEvent  *e,
+			     gpointer   client_data)
+{
+  info_dialog_popdown ((InfoDialog *) client_data);
+
+  return TRUE;
+}
+
+/*  public functions  */
 
 InfoDialog *
 info_dialog_new (char *title)
@@ -189,6 +199,45 @@ info_dialog_free (InfoDialog *idialog)
   g_free (idialog);
 }
 
+
+void
+info_dialog_popup (InfoDialog *idialog)
+{
+  if (!idialog)
+    return;
+
+  if (!GTK_WIDGET_VISIBLE (idialog->shell))
+    gtk_widget_show (idialog->shell);
+
+}
+
+void
+info_dialog_popdown (InfoDialog *idialog)
+{
+  if (!idialog)
+    return;
+  
+  if (GTK_WIDGET_VISIBLE (idialog->shell))
+    gtk_widget_hide (idialog->shell);
+}
+
+void
+info_dialog_update (InfoDialog *idialog)
+{
+  GSList *list;
+
+  if (!idialog)
+    return;
+
+  list = idialog->field_list;
+
+  while (list)
+    {
+      update_field ((InfoField *) list->data);
+      list = g_slist_next (list);
+    }
+}
+
 GtkWidget *
 info_dialog_add_label (InfoDialog    *idialog,
 		       char          *title,
@@ -234,8 +283,8 @@ info_dialog_add_entry (InfoDialog    *idialog,
 
 GtkWidget *
 info_dialog_add_scale   (InfoDialog    *idialog,
-			 char          *title,
-			 float         *value_ptr,
+			 gchar         *title,
+			 gdouble       *value_ptr,
 			 gfloat         lower,
 			 gfloat         upper,
 			 gfloat         step_increment,
@@ -272,7 +321,7 @@ info_dialog_add_scale   (InfoDialog    *idialog,
 GtkWidget *
 info_dialog_add_spinbutton (InfoDialog    *idialog,
 			    gchar         *title,
-			    gfloat        *value_ptr,
+			    gdouble       *value_ptr,
 			    gfloat         lower,
 			    gfloat         upper,
 			    gfloat         step_increment,
@@ -316,7 +365,7 @@ info_dialog_add_spinbutton (InfoDialog    *idialog,
 GtkWidget *
 info_dialog_add_sizeentry (InfoDialog      *idialog,
 			   gchar           *title,
-			   gfloat          *value_ptr,
+			   gdouble         *value_ptr,
 			   gint             nfields,
 			   GUnit            unit,
 			   gchar           *unit_format,
@@ -355,52 +404,4 @@ info_dialog_add_sizeentry (InfoDialog      *idialog,
 		  (void*) value_ptr, callback, data);
 
   return sizeentry;
-}
-
-void
-info_dialog_popup (InfoDialog *idialog)
-{
-  if (!idialog)
-    return;
-
-  if (!GTK_WIDGET_VISIBLE (idialog->shell))
-    gtk_widget_show (idialog->shell);
-
-}
-
-void
-info_dialog_popdown (InfoDialog *idialog)
-{
-  if (!idialog)
-    return;
-  
-  if (GTK_WIDGET_VISIBLE (idialog->shell))
-    gtk_widget_hide (idialog->shell);
-}
-
-void
-info_dialog_update (InfoDialog *idialog)
-{
-  GSList *list;
-
-  if (!idialog)
-    return;
-
-  list = idialog->field_list;
-
-  while (list)
-    {
-      update_field ((InfoField *) list->data);
-      list = g_slist_next (list);
-    }
-}
-
-static gint
-info_dialog_delete_callback (GtkWidget *w,
-			     GdkEvent  *e,
-			     gpointer   client_data)
-{
-  info_dialog_popdown ((InfoDialog *) client_data);
-
-  return TRUE;
 }

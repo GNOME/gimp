@@ -1249,7 +1249,7 @@ gimage_mask_border_callback (GtkWidget *w,
   double radius_x;
   double radius_y;
 
-  selection_border_radius = (int) *(double*) call_data;
+  selection_border_radius = (int) (*(double*) call_data + 0.5);
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (w), "size_query_unit");
 
@@ -1283,7 +1283,7 @@ gimage_mask_grow_callback (GtkWidget *w,
   double radius_x;
   double radius_y;
 
-  selection_grow_pixels = (int) *(double*) call_data;
+  selection_grow_pixels = (int) (*(double*) call_data + 0.5);
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (w), "size_query_unit");
 
@@ -1317,7 +1317,7 @@ gimage_mask_shrink_callback (GtkWidget *w,
   int radius_x;
   int radius_y;
 
-  selection_shrink_pixels = (int) *(double*) call_data;
+  selection_shrink_pixels = (int) (*(double*) call_data + 0.5);
   g_free (call_data);
   unit = (GUnit) gtk_object_get_data (GTK_OBJECT (w), "size_query_unit");
 

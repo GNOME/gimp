@@ -42,9 +42,9 @@
 #define MIN_MOVE       5
 
 /*  variables local to this file  */
-static int         direction_unknown;
-static float       xshear_val;
-static float       yshear_val;
+static gint        direction_unknown;
+static gdouble     xshear_val;
+static gdouble     yshear_val;
 
 /*  forward function declarations  */
 static void *      shear_tool_recalc  (Tool *, void *);

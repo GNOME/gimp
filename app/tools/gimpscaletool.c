@@ -29,26 +29,27 @@
 
 #include "tile_manager_pvt.h"
 
+#include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 
 /*  storage for information dialog fields  */
-static gchar       orig_width_buf  [MAX_INFO_BUF];
-static gchar       orig_height_buf [MAX_INFO_BUF];
-static gfloat      size_vals[2];
-static gchar       x_ratio_buf     [MAX_INFO_BUF];
-static gchar       y_ratio_buf     [MAX_INFO_BUF];
+static gchar      orig_width_buf[MAX_INFO_BUF];
+static gchar      orig_height_buf[MAX_INFO_BUF];
+static gdouble    size_vals[2];
+static gchar      x_ratio_buf[MAX_INFO_BUF];
+static gchar      y_ratio_buf[MAX_INFO_BUF];
 
 /*  needed for original size unit update  */
-static GtkWidget  *sizeentry;
+static GtkWidget *sizeentry;
 
 /*  forward function declarations  */
-static void *      scale_tool_recalc  (Tool *, void *);
-static void        scale_tool_motion  (Tool *, void *);
-static void        scale_info_update  (Tool *);
+static void *     scale_tool_recalc  (Tool *, void *);
+static void       scale_tool_motion  (Tool *, void *);
+static void       scale_info_update  (Tool *);
 
 /*  callback functions for the info dialog fields  */
-static void        scale_size_changed (GtkWidget *w, gpointer data);
-static void        scale_unit_changed (GtkWidget *w, gpointer data);
+static void       scale_size_changed (GtkWidget *w, gpointer data);
+static void       scale_unit_changed (GtkWidget *w, gpointer data);
 
 void *
 scale_tool_transform (Tool     *tool,
@@ -89,22 +90,25 @@ scale_tool_transform (Tool     *tool,
 	  gtk_signal_connect (GTK_OBJECT (sizeentry), "unit_changed",
 			      scale_unit_changed, tool);
 
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-						 1, 65536);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-					  gdisp->gimage->xresolution, FALSE);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-				      size_vals[0]);
-
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
-						 1, 65536);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
-					  gdisp->gimage->yresolution, FALSE);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-				      size_vals[1]);
-
 	  if (gdisp->dot_for_dot)
 	    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+					  gdisp->gimage->xresolution, FALSE);
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+					  gdisp->gimage->yresolution, FALSE);
+
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+						 GIMP_MIN_IMAGE_SIZE,
+						 GIMP_MAX_IMAGE_SIZE);
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+						 GIMP_MIN_IMAGE_SIZE,
+						 GIMP_MAX_IMAGE_SIZE);
+
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
+				      size_vals[0]);
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
+				      size_vals[1]);
 
 	  info_dialog_add_label (transform_info, _("Scale Ratio X:"),
 				 x_ratio_buf);
@@ -269,8 +273,8 @@ scale_size_changed (GtkWidget *w,
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      width = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
-      height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
+      width = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0) + 0.5);
+      height = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1) + 0.5);
 
       if ((width != (transform_core->trans_info[X1] -
 		     transform_core->trans_info[X0])) ||

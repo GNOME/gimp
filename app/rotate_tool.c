@@ -31,8 +31,8 @@
 
 #include "tile_manager_pvt.h"
 
-#include "libgimp/gimpintl.h"
 #include "libgimp/gimpsizeentry.h"
+#include "libgimp/gimpintl.h"
 
 #ifndef M_PI
 #define M_PI    3.14159265358979323846
@@ -48,8 +48,8 @@
 #define FIFTEEN_DEG    (M_PI / 12.0)
 
 /*  variables local to this file  */
-static gfloat      angle_val;
-static gfloat      center_vals[2];
+static gdouble     angle_val;
+static gdouble     center_vals[2];
 
 /*  needed for size update  */
 static GtkWidget  *sizeentry;
@@ -59,7 +59,7 @@ static void *      rotate_tool_recalc  (Tool *, void *);
 static void        rotate_tool_motion  (Tool *, void *);
 static void        rotate_info_update  (Tool *);
 
-/*  callback functions for the info dialog entries  */
+/*  callback functions for the info dialog sizeentries  */
 static void        rotate_angle_changed  (GtkWidget *entry, gpointer data);
 static void        rotate_center_changed (GtkWidget *entry, gpointer data);
 
@@ -110,24 +110,25 @@ rotate_tool_transform (Tool     *tool,
 	  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
 				     GTK_SPIN_BUTTON (spinbutton2), NULL);
 
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
-						 -4096,
-						 4096 + gdisp->gimage->width);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
-					  gdisp->gimage->xresolution, FALSE);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-				      center_vals[0]);
-
-	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
-						 -4096,
-						 4096 + gdisp->gimage->height);
-	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
-					  gdisp->gimage->yresolution, FALSE);
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-				      center_vals[1]);
-
 	  if (gdisp->dot_for_dot)
 	    gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+					  gdisp->gimage->xresolution, FALSE);
+	  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+					  gdisp->gimage->yresolution, FALSE);
+
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+						 -65536,
+						 65536 + gdisp->gimage->width);
+	  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+						 -65536,
+						 65536 + gdisp->gimage->height);
+
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
+				      center_vals[0]);
+	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
+				      center_vals[1]);
 
 	  gtk_table_set_row_spacing (GTK_TABLE (transform_info->info_table),
 				     1, 6);
@@ -235,7 +236,7 @@ rotate_angle_changed (GtkWidget *w,
   TransformCore *transform_core;
   double         value;
 
-  tool = (Tool *)data;
+  tool = (Tool *) data;
 
   if (tool)
     {
@@ -266,15 +267,15 @@ rotate_center_changed (GtkWidget *w,
   int            cx;
   int            cy;
 
-  tool = (Tool *)data;
+  tool = (Tool *) data;
 
   if (tool)
     {
       gdisp = (GDisplay *) tool->gdisp_ptr;
       transform_core = (TransformCore *) tool->private;
 
-      cx = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0);
-      cy = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1);
+      cx = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 0) + 0.5);
+      cy = (int) (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (w), 1) + 0.5);
 
       if ((cx != transform_core->cx) ||
 	  (cy != transform_core->cy))
@@ -333,16 +334,18 @@ rotate_tool_motion (Tool *tool,
 
   /*  limit the angle to between 0 and 360 degrees  */
   if (transform_core->trans_info[REAL_ANGLE] < - M_PI)
-    transform_core->trans_info[REAL_ANGLE] = 2 * M_PI - transform_core->trans_info[REAL_ANGLE];
+    transform_core->trans_info[REAL_ANGLE] =
+      2 * M_PI - transform_core->trans_info[REAL_ANGLE];
   else if (transform_core->trans_info[REAL_ANGLE] > M_PI)
-    transform_core->trans_info[REAL_ANGLE] = transform_core->trans_info[REAL_ANGLE] - 2 * M_PI;
+    transform_core->trans_info[REAL_ANGLE] =
+      transform_core->trans_info[REAL_ANGLE] - 2 * M_PI;
 
-  /* constrain the angle to 15-degree multiples if ctrl is held down */
-  
+  /*  constrain the angle to 15-degree multiples if ctrl is held down  */
   if (transform_core->state & GDK_CONTROL_MASK)
-    transform_core->trans_info[ANGLE] = FIFTEEN_DEG * (int) ((transform_core->trans_info[REAL_ANGLE] +
-							      FIFTEEN_DEG / 2.0) /
-							     FIFTEEN_DEG);
+    transform_core->trans_info[ANGLE] =
+      FIFTEEN_DEG * (int) ((transform_core->trans_info[REAL_ANGLE] +
+			    FIFTEEN_DEG / 2.0) /
+			   FIFTEEN_DEG);
   else
     transform_core->trans_info[ANGLE] = transform_core->trans_info[REAL_ANGLE];
 }
@@ -364,7 +367,8 @@ rotate_tool_recalc (Tool *tool,
   /*  assemble the transformation matrix  */
   gimp_matrix_identity  (transform_core->transform);
   gimp_matrix_translate (transform_core->transform, -cx, -cy);
-  gimp_matrix_rotate    (transform_core->transform, transform_core->trans_info[ANGLE]);
+  gimp_matrix_rotate    (transform_core->transform,
+			 transform_core->trans_info[ANGLE]);
   gimp_matrix_translate (transform_core->transform, +cx, +cy);
 
   /*  transform the bounding box  */

@@ -97,8 +97,8 @@ static CropOptions *crop_options = NULL;
 /*  the crop tool info dialog  */
 static InfoDialog  *crop_info = NULL;
 
-static gfloat       orig_vals[2];
-static gfloat       size_vals[2];
+static gdouble      orig_vals[2];
+static gdouble      size_vals[2];
 
 static GtkWidget   *origin_sizeentry;
 static GtkWidget   *size_sizeentry;
@@ -954,30 +954,38 @@ crop_start (Tool *tool,
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
 				  gdisp->gimage->xresolution, FALSE);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
-			    0, gdisp->gimage->width);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (origin_sizeentry), 1,
 				  gdisp->gimage->yresolution, FALSE);
+
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
+			    0, gdisp->gimage->width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (origin_sizeentry), 1,
 			    0, gdisp->gimage->height);
       
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 0,
 				  gdisp->gimage->xresolution, FALSE);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_sizeentry), 0,
-			    0, gdisp->gimage->width);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 1,
 				  gdisp->gimage->yresolution, FALSE);
+
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_sizeentry), 0,
+			    0, gdisp->gimage->width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_sizeentry), 1,
 			    0, gdisp->gimage->height);
 
   if (old_gdisp != gdisp)
     {
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (origin_sizeentry),
-				(gdisp->dot_for_dot ? UNIT_PIXEL :
-				 gdisp->gimage->unit));
+				gdisp->gimage->unit) ;
       gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_sizeentry),
-				(gdisp->dot_for_dot ? UNIT_PIXEL :
-				 gdisp->gimage->unit));
+				gdisp->gimage->unit);
+
+      if (gdisp->dot_for_dot)
+	{
+	  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (origin_sizeentry),
+				    UNIT_PIXEL);
+	  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_sizeentry),
+				    UNIT_PIXEL);
+	}
     }
 
   old_gdisp = gdisp;
@@ -1028,21 +1036,23 @@ crop_info_create (Tool *tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (origin_sizeentry),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
-					 -65536, 65536);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
 				  gdisp->gimage->xresolution, FALSE);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
-			    0, gdisp->gimage->width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
-			      orig_vals[0]);
-
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (origin_sizeentry), 1,
-					 -65536, 65536);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (origin_sizeentry), 1,
 				  gdisp->gimage->yresolution, FALSE);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
+					 -65536, 65536);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (origin_sizeentry), 1,
+					 -65536, 65536);
+
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
+			    0, gdisp->gimage->width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (origin_sizeentry), 1,
 			    0, gdisp->gimage->height);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (origin_sizeentry), 0,
+			      orig_vals[0]);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (origin_sizeentry), 1,
 			      orig_vals[1]);
 
@@ -1057,20 +1067,22 @@ crop_info_create (Tool *tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size_sizeentry),
 			     GTK_SPIN_BUTTON (spinbutton), NULL);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_sizeentry), 0,
-					 -65536, 65536);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 0,
 				  gdisp->gimage->xresolution, FALSE);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_sizeentry), 0,
-			    0, gdisp->gimage->width);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_sizeentry), 0, size_vals[0]);
-
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_sizeentry), 1,
-					 -65536, 65536);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_sizeentry), 1,
 				  gdisp->gimage->yresolution, FALSE);
+
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_sizeentry), 0,
+					 -65536, 65536);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_sizeentry), 1,
+					 -65536, 65536);
+
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_sizeentry), 0,
+			    0, gdisp->gimage->width);
   gimp_size_entry_set_size (GIMP_SIZE_ENTRY (size_sizeentry), 1,
 			    0, gdisp->gimage->height);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_sizeentry), 0, size_vals[0]);
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_sizeentry), 1, size_vals[1]);
 
   gtk_table_set_row_spacing (GTK_TABLE (crop_info->info_table), 0, 0);

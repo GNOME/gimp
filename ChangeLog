@@ -1,3 +1,24 @@
+1999-05-31  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/commands.c
+	* app/crop.c
+	* app/file_new_dialog.c
+	* app/info_dialog.[ch]
+	* app/interface.c
+	* app/layers_dialog.c
+	* app/resize.[ch]
+	* app/rotate_tool.c
+	* app/scale_tool.c
+	* app/shear_tool.c: finished the float->double migration for
+	resolution values. Standardized the order of function calls which
+	initialize sizeentries. Fixed some off-by-one errors by using
+	correct double->int casting. Use the g* counterparts of int and
+	double in some places. Various code cleanups.
+
+	* app/preferences_dialog.c: same changes as above plus a cleaner
+	implementation of the mem_size_unit stuff. The whole dialog should
+	behave like before.
+
 Sat May 29 23:43:56 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* libgimp/stdplugins-intl.h: #include <locale.h>
