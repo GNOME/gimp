@@ -70,9 +70,15 @@ dnl
       AC_TRY_RUN([
 #include <stdio.h>
 #include <stdlib.h>
+
 #include <libgimp/gimp.h>
 
-GPlugInInfo PLUG_IN_INFO =
+#if GIMP_CHECK_VERSION(1,1,20)
+GimpPlugInInfo
+#else
+GPlugInInfo
+#endif
+PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */
