@@ -758,7 +758,7 @@ sub register($$$$$$$$$;@) {
                   } elsif ($run_mode != &Gimp::RUN_NONINTERACTIVE) {
                      $img->display_new unless $input_image && $$img == $$input_image;
                   }
-               } elsif (!@$retvals) {
+               } elsif (!@$results) {
                   warn __"WARNING: $function returned something that is not an image: \"$img\"\n";
                }
             }
