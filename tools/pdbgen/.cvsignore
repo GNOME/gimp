@@ -3,4 +3,5 @@ Makefile.in
 stamp-enums
 stamp-groups
 stamp-app
+stamp-lib
 stamp-enum-code
