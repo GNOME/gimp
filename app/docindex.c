@@ -22,6 +22,8 @@
 #include "docindexif.h"
 #include "docindex.h"
 
+#include "libgimp/gimpenv.h"
+
 idea_manager *ideas = NULL;
 static GList *idea_list = NULL;   /* of gchar *. */
 static gint x = 0, y = 0, width = 0, height = 0;
