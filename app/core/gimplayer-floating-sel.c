@@ -102,8 +102,7 @@ floating_sel_anchor (Layer *layer)
     return;
   if (! layer_is_floating_sel (layer))
     {
-      message_box ("Cannot anchor this layer because\nit is not a floating selection.",
-		   NULL, NULL);
+      g_message ("Cannot anchor this layer because\nit is not a floating selection.");
       return;
     }
 
@@ -168,9 +167,9 @@ floating_sel_to_layer (Layer *layer)
   if (drawable_channel (layer->fs.drawable) ||
       drawable_layer_mask (layer->fs.drawable))
     {
-      message_box ("Cannot create a new layer from the floating\n"
-		   "selection because it belongs to a\n"
-		   "layer mask or channel.", NULL, NULL);
+      g_message ("Cannot create a new layer from the floating\n"
+		 "selection because it belongs to a\n"
+		 "layer mask or channel.", NULL, NULL);
       return;
     }
 

@@ -364,7 +364,7 @@ hue_saturation_initialize (void *gdisp_ptr)
 
   if (! drawable_color (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Hue-Saturation operates only on RGB color drawables.", NULL, NULL);
+      g_message ("Hue-Saturation operates only on RGB color drawables.");
       return;
     }
 

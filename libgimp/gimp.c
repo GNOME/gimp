@@ -52,6 +52,7 @@ static void       gimp_loop          (void);
 static void       gimp_config        (GPConfig *config);
 static void       gimp_proc_run      (GPProcRun *proc_run);
 static void       gimp_temp_proc_run (GPProcRun *proc_run);
+static void       gimp_message_func  (char *str);
 
 
 int _readfd = 0;
@@ -108,6 +109,8 @@ gimp_main (int   argc,
       gimp_quit ();
       return 0;
     }
+
+  g_set_message_handler (&gimp_message_func);
 
   temp_proc_ht = g_hash_table_new (&g_str_hash, &g_str_equal);
 
@@ -198,6 +201,27 @@ gimp_progress_update (gdouble percentage)
 				    PARAM_END);
 
   gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+
+void
+gimp_message (char *message)
+{
+  GParam *return_vals;
+  int nreturn_vals;
+
+  return_vals = gimp_run_procedure ("gimp_message",
+				    &nreturn_vals,
+				    PARAM_STRING, message,
+				    PARAM_END);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+}
+
+static void
+gimp_message_func (char *str)
+{
+  gimp_message (str);
 }
 
 
@@ -984,14 +1008,14 @@ gimp_config (GPConfig *config)
 
   if (config->version < GP_VERSION)
     {
-      g_print ("%s: the gimp is using an older version of the "
-	       "plug-in protocol than this plug-in\n", progname);
+      g_message ("%s: the gimp is using an older version of the "
+		 "plug-in protocol than this plug-in\n", progname);
       gimp_quit ();
     }
   else if (config->version > GP_VERSION)
     {
-      g_print ("%s: the gimp is using a newer version of the "
-	       "plug-in protocol than this plug-in\n", progname);
+      g_message ("%s: the gimp is using a newer version of the "
+		 "plug-in protocol than this plug-in\n", progname);
       gimp_quit ();
     }
 

@@ -509,10 +509,6 @@ iscissors_button_press (Tool           *tool,
   iscissors = (Iscissors *) tool->private;
   drawable = gimage_active_drawable (gdisp->gimage);
 
-  /*message_box ("Intelligent Scissors is currently not enabled\nfor use with
-  the tile-based GIMP\non anything but yosh's computer.",   NULL, NULL);*/
-  /*  return;*/
-  
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y,
 			       &iscissors->x, &iscissors->y, FALSE, TRUE); 
 
@@ -1803,7 +1799,7 @@ bezierify_boundary (Tool *tool)
 
   if (iscissors->num_pts < 4)
     {
-      message_box ("Boundary contains < 4 points!  Cannot bezierify.", NULL, NULL);
+      g_message ("Boundary contains < 4 points!  Cannot bezierify.");
       return;
     }
 

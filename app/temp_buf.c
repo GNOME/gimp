@@ -185,7 +185,7 @@ temp_buf_copy (src, dest)
 
   if (!src)
     {
-      warning ("trying to copy a temp buf which is NULL.");
+      g_message ("trying to copy a temp buf which is NULL.");
       return dest;
     }
 
@@ -195,7 +195,7 @@ temp_buf_copy (src, dest)
     {
       new = dest;
       if (dest->width != src->width || dest->height != src->height)
-	warning ("In temp_buf_copy, the widths or heights don't match.");
+	g_message ("In temp_buf_copy, the widths or heights don't match.");
       /*  The temp buf is smart, and can translate between color and gray  */
       /*  (only necessary if not we allocated it */
       if (src->bytes != new->bytes)
@@ -205,7 +205,7 @@ temp_buf_copy (src, dest)
           else if (src->bytes == 2) /* grayscale */
 	    temp_buf_to_color (src, new);
           else
-	    warning ("Cannot convert from indexed color.");
+	    g_message ("Cannot convert from indexed color.");
 	  return new;
         }
     }
@@ -271,7 +271,7 @@ temp_buf_copy_area (src, dest, x, y, w, h, border)
 
   if (!src)
     {
-      warning ("trying to copy a temp buf which is NULL.");
+      g_message ("trying to copy a temp buf which is NULL.");
       return dest;
     }
 
@@ -295,7 +295,7 @@ temp_buf_copy_area (src, dest, x, y, w, h, border)
     {
       new = dest;
       if (dest->bytes != src->bytes)
-	warning ("In temp_buf_copy_area, the widths or heights or bytes don't match.");
+	g_message ("In temp_buf_copy_area, the widths or heights or bytes don't match.");
     }
 
   /*  Set the offsets for the dest  */
@@ -464,7 +464,7 @@ temp_buf_swap (buf)
     {
       if (stat_buf.st_mode & S_IFDIR)
 	{
-	  warning ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)",
+	  g_message ("Error in temp buf caching: \"%s\" is a directory (cannot overwrite)",
 		   filename);
 	  g_free (filename);
 	  return;
@@ -480,7 +480,7 @@ temp_buf_swap (buf)
   else
     {
       perror ("Error in temp buf caching");
-      warning ("Cannot write \"%s\"", filename);
+      g_message ("Cannot write \"%s\"", filename);
       g_free (filename);
       return;
     }
@@ -537,7 +537,7 @@ temp_buf_unswap (buf)
       unlink (buf->filename);
     }
   if (!succ)
-    warning ("Error in temp buf caching: information swapped to disk was lost!");
+    g_message ("Error in temp buf caching: information swapped to disk was lost!");
 
   g_free (buf->filename);   /*  free filename  */
   buf->filename = NULL;
@@ -570,7 +570,7 @@ temp_buf_swap_free (buf)
       unlink (buf->filename);
     }
   else
-    warning ("Error in temp buf disk swapping: information swapped to disk was lost!");
+    g_message ("Error in temp buf disk swapping: information swapped to disk was lost!");
 
   if (buf->filename)
     g_free (buf->filename);   /*  free filename  */

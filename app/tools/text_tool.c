@@ -293,8 +293,7 @@ text_button_press (Tool           *tool,
       text_get_fonts ();
       if (nfonts == 0)
        {
-         message_box ("Note: No fonts found.  Text tool not available.",
-                      NULL, NULL);
+         g_message ("Note: No fonts found.  Text tool not available.");
          nfonts = -1;
          return;
        }
@@ -1599,11 +1598,9 @@ text_load_font (TextTool *text_tool)
 
       if (gdk_error_code == -1)
 	{
-	  char *buf;
-	  buf = g_malloc (strlen (family_str) + 87);
-	  sprintf(buf, "I'm sorry, but the font %s is corrupt.\nPlease ask the system adminstrator to replace it.", family_str);
-	  message_box (buf, NULL, NULL);
-	  g_free (buf);
+	  g_message ("I'm sorry, but the font %s is corrupt.\n"
+                     "Please ask the system adminstrator to replace it.",
+                     family_str);
 	  return FALSE;
 	}
 
@@ -1923,7 +1920,7 @@ text_render (GImage *gimage,
     {
       if (newmask) 
 	{
-	  warning("text_render: could not allocate image");
+	  g_message ("text_render: could not allocate image");
           tile_manager_destroy (newmask);
 	}
       layer = NULL;

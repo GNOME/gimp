@@ -97,7 +97,7 @@ datafiles_read_directories (char *path_str,
 	  dir = opendir(path);
 
 	  if (!dir)
-	    warning("error reading datafiles directory \"%s\"", path);
+	    g_message ("error reading datafiles directory \"%s\"", path);
 	  else
 	    {
 	      while ((dir_ent = readdir(dir)))

@@ -303,8 +303,7 @@ convert_to_indexed (void *gimage_ptr)
       dialog->num_cols = 255;
       if (!shown_message_already)
 	{
-	  message_box ("Note:  You are attempting to convert an image\nwith alpha/layers.  It is recommended that you quantize\nto no more than 255 colors if you wish to make\na transparent or animated GIF from it.\n\nYou won't get this message again\nuntil the next time you run GIMP.\nHave a nice day!",
-		       NULL, NULL);
+	  g_message ("Note:  You are attempting to convert an image\nwith alpha/layers.  It is recommended that you quantize\nto no more than 255 colors if you wish to make\na transparent or animated GIF from it.\n\nYou won't get this message again\nuntil the next time you run GIMP.\nHave a nice day!");
 	  shown_message_already = True;
 	}
     }
@@ -1015,7 +1014,7 @@ generate_histogram_rgb (Histogram  histogram,
 
   has_alpha = (gboolean) layer_has_alpha(layer);
 
-  g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);
+/*  g_print ("col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0,
 		     GIMP_DRAWABLE(layer)->width,
@@ -1083,7 +1082,7 @@ generate_histogram_rgb (Histogram  histogram,
 			   *  quantizing at a later stage.
 			   */
 			  needs_quantize = TRUE;
-			  g_print ("\nmax colours exceeded - needs quantize.\n");
+/*			  g_print ("\nmax colours exceeded - needs quantize.\n");*/
 			  goto already_found;
 			}
 		      else
@@ -1102,7 +1101,7 @@ generate_histogram_rgb (Histogram  histogram,
 	}
     }
 
-  g_print ("O: col_limit = %d, nfc = %d\n", col_limit, num_found_cols);
+/*  g_print ("O: col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
 }
 
 

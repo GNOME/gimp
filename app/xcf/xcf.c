@@ -333,11 +333,7 @@ xcf_load_invoker (Argument *args)
 	    }
 	  else 
 	    {
-	      char message[256];
-	      sprintf (message, 
-		       "XCF error: unsupported XCF file version %d encountered",
-		       info.file_version);
-	      message_box (message, NULL, NULL);
+	      g_message ("XCF error: unsupported XCF file version %d encountered", info.file_version);
 	      success = FALSE;
 	    }
 	}
@@ -1353,9 +1349,9 @@ xcf_load_image_props (XcfInfo *info,
 	  if (info->file_version == 0) 
 	    {
 	      int i;
-	      message_box ("XCF warning: version 0 of XCF file format\n"
-			   "did not save indexed colormaps correctly.\n"
-			   "Substituting grayscale map.", NULL, NULL);
+	      g_message ("XCF warning: version 0 of XCF file format\n"
+			 "did not save indexed colormaps correctly.\n"
+			 "Substituting grayscale map.");
 	      info->cp += xcf_read_int32 (info->fp, (guint32*) &gimage->num_cols, 1);
 	      gimage->cmap = g_new (guchar, gimage->num_cols*3);
 	      xcf_seek_pos (info, info->cp + gimage->num_cols);

@@ -22,6 +22,8 @@
 #include <sys/param.h>
 #include <unistd.h>
 
+#include <gtk/gtk.h>
+
 #include "appenv.h"
 #include "app_procs.h"
 #include "batch.h"
@@ -53,7 +55,7 @@
 #include "tools.h"
 #include "undo.h"
 #include "xcf.h"
-#include <gtk/gtk.h>
+#include "errors.h"
 
 #include "config.h"
 
@@ -514,6 +516,7 @@ app_init (void)
       render_setup (transparency_type, transparency_size);
       tools_options_dialog_new ();
       tools_select (RECT_SELECT);
+      g_set_message_handler (&message_box_func);
     }
 
   color_transfer_init ();

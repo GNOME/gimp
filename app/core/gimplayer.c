@@ -235,7 +235,7 @@ layer_new (gimage_ID, width, height, type, name, opacity, mode)
   Layer * layer;
 
   if (width == 0 || height == 0) {
-    warning ("Zero width or height layers not allowed.");
+    g_message ("Zero width or height layers not allowed.");
     return NULL;
   }
 
@@ -326,7 +326,7 @@ layer_copy (layer, add_alpha)
   new_layer = layer_new (GIMP_DRAWABLE(layer)->gimage_ID, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
 			 new_type, layer_name, layer->opacity, layer->mode);
   if (!new_layer) {
-    warning("layer_copy: could not allocate new layer");
+    g_message ("layer_copy: could not allocate new layer");
     goto cleanup;
   }
 
@@ -399,7 +399,7 @@ layer_from_tiles (gimage_ptr, drawable, tiles, name, opacity, mode)
 			 layer_type, name, opacity, mode);
 
   if (!new_layer) {
-    warning("layer_from_tiles: could not allocate new layer");
+    g_message ("layer_from_tiles: could not allocate new layer");
     return NULL;
   }
 

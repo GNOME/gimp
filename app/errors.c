@@ -24,36 +24,24 @@
 #include <time.h>
 #include <unistd.h>
 
-#include <glib.h>
-#include <gdk/gdk.h>
+#include <gtk/gtk.h>
 #include "app_procs.h"
+#include "interface.h"
 #include "errors.h"
 
 extern char *prog_name;
 extern int use_debug_handler;
 
 void
-message (char *fmt, ...)
+message_console_func (char *str)
 {
-  va_list args;
-
-  va_start (args, fmt);
-  printf ("%s: ", prog_name);
-  vprintf (fmt, args);
-  printf ("\n");
-  va_end (args);
+  g_print ("%s: %s\n", prog_name, str);
 }
 
 void
-warning (char *fmt, ...)
+message_box_func (char *str)
 {
-  va_list args;
-
-  va_start (args, fmt);
-  printf ("%s warning: ", prog_name);
-  vprintf (fmt, args);
-  printf ("\n");
-  va_end (args);
+  message_box (str, NULL, NULL);
 }
 
 void

@@ -114,6 +114,8 @@ static void      plug_in_args_destroy   (Argument  *args,
 static Argument* progress_init_invoker   (Argument *args);
 static Argument* progress_update_invoker (Argument *args);
 
+static Argument* message_invoker         (Argument *args);
+
 
 static GSList *plug_in_defs = NULL;
 static GSList *gimprc_proc_defs = NULL;
@@ -184,6 +186,30 @@ static ProcRecord progress_update_proc =
 };
 
 
+static ProcArg message_args[] =
+{
+  { PDB_STRING,
+    "message",
+    "Message to display in the dialog." }
+};
+
+static ProcRecord message_proc =
+{
+  "gimp_message",
+  "Displays a dialog box with a message",
+  "Displays a dialog box with a message. Useful for status or error reporting.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  PDB_INTERNAL,
+  1,
+  message_args,
+  0,
+  NULL,
+  { { message_invoker } },
+};
+
+
 void
 plug_in_init ()
 {
@@ -197,6 +223,9 @@ plug_in_init ()
   /* initialize the progress init and update procedure db calls. */
   procedural_db_register (&progress_init_proc);
   procedural_db_register (&progress_update_proc);
+
+  /* initialize the message box procedural db calls */
+  procedural_db_register (&message_proc);
 
   /* initialize the gimp protocol library and set the read and
    *  write handlers.
@@ -652,7 +681,7 @@ plug_in_new (char *name)
       path = search_in_path (plug_in_path, name);
       if (!path)
 	{
-	  warning ("unable to locate plug-in: \"%s\"", name);
+	  g_message ("unable to locate plug-in: \"%s\"", name);
 	  return NULL;
 	}
     }
@@ -732,7 +761,7 @@ plug_in_open (PlugIn *plug_in)
        */
       if ((pipe (my_read) == -1) || (pipe (my_write) == -1))
 	{
-	  warning ("unable to open pipe");
+	  g_message ("unable to open pipe");
 	  return 0;
 	}
 
@@ -780,7 +809,7 @@ plug_in_open (PlugIn *plug_in)
 	}
       else if (plug_in->pid == -1)
 	{
-          warning ("unable to run plug-in: %s\n", plug_in->args[0]);
+          g_message ("unable to run plug-in: %s\n", plug_in->args[0]);
           plug_in_destroy (plug_in);
           return 0;
 	}
@@ -2972,4 +3001,11 @@ progress_update_invoker (Argument *args)
     }
 
   return procedural_db_return_args (&progress_update_proc, success);
+}
+
+static Argument*
+message_invoker (Argument *args)
+{
+  g_message (args[0].value.pdb_pointer, NULL, NULL);
+  return procedural_db_return_args (&message_proc, TRUE);
 }

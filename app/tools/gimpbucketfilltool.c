@@ -327,7 +327,7 @@ bucket_fill_button_release (tool, bevent, gdisp_ptr)
       if (return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();
       else
-	message_box ("Bucket Fill operation failed.", NULL, NULL);
+	g_message ("Bucket Fill operation failed.");
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }
@@ -424,7 +424,7 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
 
       if (!pattern)
 	{
-	  message_box ("No available patterns for this operation.", NULL, NULL);
+	  g_message ("No available patterns for this operation.");
 	  return;
 	}
 

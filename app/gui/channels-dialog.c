@@ -798,10 +798,10 @@ channel_list_events (GtkWidget *widget,
 	  switch (kevent->keyval)
 	    {
 	    case GDK_Up:
-	      printf ("up arrow\n");
+	      /* printf ("up arrow\n"); */
 	      break;
 	    case GDK_Down:
-	      printf ("down arrow\n");
+	      /* printf ("down arrow\n"); */
 	      break;
 	    default:
 	      return FALSE;

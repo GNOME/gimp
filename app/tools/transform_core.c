@@ -155,7 +155,7 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	  {
 	    if (layer->mask != NULL && GIMP_DRAWABLE(layer->mask))
 	      {
-		message_box ("Transformations do not work on\nlayers that contain layer masks.", NULL, NULL);
+		g_message ("Transformations do not work on\nlayers that contain layer masks.");
 		tool->state = INACTIVE;
 		return;
 	      }
@@ -982,7 +982,7 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 	{
 	  /*  normalize homogeneous coords  */
 	  if (tw == 0.0)
-	    warning ("homogeneous coordinate = 0...\n");
+	    g_message ("homogeneous coordinate = 0...\n");
 	  else if (tw != 1.0)
 	    {
 	      ttx = tx / tw;

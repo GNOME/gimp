@@ -1498,10 +1498,10 @@ layer_list_events (GtkWidget *widget,
 	  switch (kevent->keyval)
 	    {
 	    case GDK_Up:
-	      printf ("up arrow\n");
+	      /* printf ("up arrow\n"); */
 	      break;
 	    case GDK_Down:
-	      printf ("down arrow\n");
+	      /* printf ("down arrow\n"); */
 	      break;
 	    default:
 	      return FALSE;
@@ -2939,7 +2939,7 @@ new_layer_query_ok_callback (GtkWidget *w,
 	} 
       else 
 	{
-	  warning("new_layer_query_ok_callback: could not allocate new layer");
+	  g_message ("new_layer_query_ok_callback: could not allocate new layer");
 	}
     }
   
@@ -3584,7 +3584,7 @@ scale_layer_query_ok_callback (GtkWidget *w,
       g_free (options);
     }
   else
-    message_box ("Invalid width or height.  Both must be positive.", NULL, NULL);
+    g_message ("Invalid width or height.  Both must be positive.");
 }
 
 static void
@@ -3705,7 +3705,7 @@ resize_layer_query_ok_callback (GtkWidget *w,
       g_free (options);
     }
   else
-    message_box ("Invalid width or height.  Both must be positive.", NULL, NULL);
+    g_message ("Invalid width or height.  Both must be positive.");
 }
 
 static void

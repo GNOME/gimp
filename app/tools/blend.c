@@ -550,7 +550,7 @@ blend_button_press (Tool           *tool,
   switch (drawable_type (gimage_active_drawable (gdisp->gimage)))
     {
     case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      message_box ("Blend: Invalid for indexed images.", NULL, NULL);
+      g_message ("Blend: Invalid for indexed images.");
       return;
 
       break;
@@ -622,7 +622,7 @@ blend_button_release (Tool           *tool,
       if (return_vals[0].value.pdb_int == PDB_SUCCESS)
 	gdisplays_flush ();
       else
-	message_box ("Blend operation failed.", NULL, NULL);
+	g_message ("Blend operation failed.");
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
     }

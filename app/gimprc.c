@@ -389,8 +389,7 @@ save_gimprc (GList **updated_options,
   error_msg = open_backup_file (name, &fp_new, &fp_old);
   if (error_msg != NULL)
     {
-      /* FIXME: show the error in a nice dialog box */
-      g_warning (error_msg);
+      g_message (error_msg);
       return;
     }
 

@@ -608,7 +608,7 @@ palette_entries_save (PaletteEntriesP  palette,
   /*  Open the requested file  */
   if (! (fp = fopen (filename, "w")))
     {
-      warning ("can't save palette \"%s\"\n", filename);
+      g_message ("can't save palette \"%s\"\n", filename);
       return;
     }
 

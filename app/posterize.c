@@ -251,7 +251,7 @@ posterize_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Posterize does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Posterize does not operate on indexed drawables.");
       return;
     }
 

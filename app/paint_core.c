@@ -385,7 +385,7 @@ paint_core_init (paint_core, drawable, x, y)
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
   if (!(brush = get_active_brush ()))
     {
-      warning ("No brushes available for use with this tool.");
+      g_message ("No brushes available for use with this tool.");
       return FALSE;
     }
 

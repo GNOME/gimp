@@ -42,7 +42,7 @@ image_equalize (gimage_ptr)
 
   if (drawable_indexed (drawable))
     {
-      message_box ("Equalize does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Equalize does not operate on indexed drawables.");
       return;
     }
   equalize (gimage, drawable, mask_only);

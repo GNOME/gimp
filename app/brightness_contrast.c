@@ -286,7 +286,7 @@ brightness_contrast_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Brightness-Contrast does not operate on indexed drawables.", NULL, NULL);
+      g_message ("Brightness-Contrast does not operate on indexed drawables.");
       return;
     }
 

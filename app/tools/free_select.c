@@ -212,7 +212,7 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 	  x = (long) list->data;
 	  list = g_slist_next(list);
 	  if (!list)
-	      warning ("Cannot properly scanline convert polygon!\n");
+	      g_message ("Cannot properly scanline convert polygon!\n");
 	  else
 	    {
 	      /*  bounds checking  */

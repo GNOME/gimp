@@ -206,6 +206,12 @@ void gimp_progress_init (char *message);
 void gimp_progress_update (gdouble percentage);
 
 
+/* Pops up a dialog box with "message". Useful for status and
+ * error reports. If "message" is NULL, do nothing.
+ */
+void gimp_message (char *message);
+
+
 /* Query the gimp application's procedural database.
  *  The arguments are regular expressions which select
  *  which procedure names will be returned in 'proc_names'.

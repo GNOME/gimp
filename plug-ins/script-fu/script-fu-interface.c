@@ -223,7 +223,7 @@ script_fu_find_scripts ()
 	      dir = opendir (path);
 
 	      if (!dir)
-		g_warning("error reading script directory \"%s\"", path);
+		  g_message ("error reading script directory \"%s\"", path);
 	      else
 		{
 		  while ((dir_ent = readdir (dir)))
@@ -726,7 +726,10 @@ static void
 script_fu_disable_cc (gint err_msg)
 {
   if (err_msg)
-    g_warning ("%s", siod_err_msg);
+    g_message ("Script-Fu Error\n%s\n"
+              "If this happens while running a logo script,\n"
+              "you might not have the font it wants installed on your system",
+              siod_err_msg);
 
   current_command_enabled = FALSE;
 

@@ -199,8 +199,8 @@ load_pattern (char *filename)
   /*  Check for correct version  */
   if (header.version != FILE_VERSION)
     {
-      warning ("Unknown GIMP version #%d in \"%s\"\n", header.version,
-	       filename);
+      g_message ("Unknown GIMP version #%d in \"%s\"\n", header.version,
+		 filename);
       fclose (fp);
       free_pattern (pattern);
       return;
@@ -215,7 +215,7 @@ load_pattern (char *filename)
       pattern->name = (char *) g_malloc (sizeof (char) * bn_size);
       if ((fread (pattern->name, 1, bn_size, fp)) < bn_size)
 	{
-	  warning ("Error in GIMP pattern file...aborting.");
+	  g_message ("Error in GIMP pattern file...aborting.");
 	  fclose (fp);
 	  free_pattern (pattern);
 	  return;
@@ -229,7 +229,7 @@ load_pattern (char *filename)
   if ((fread (temp_buf_data (pattern->mask), 1,
 	      header.width * header.height * header.bytes, fp)) <
       header.width * header.height * header.bytes)
-    warning ("GIMP pattern file appears to be truncated.");
+    g_message ("GIMP pattern file appears to be truncated.");
 
   /*  Clean up  */
   fclose (fp);

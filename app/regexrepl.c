@@ -3,11 +3,11 @@
    (Implements POSIX draft P1003.2/D11.2, except for some of the
    internationalization features.)
 
-   Copyright (C) 1993, 1994, 1995, 1996, 1997 Free Software Foundation, Inc.
+   Copyright (C) 1993, 1994, 1995, 1996, 1997, 1998 Free Software Foundation, Inc.
 
    the C library, however.  The master source lives in /gd/gnu/lib.
 
-NOTE: The canonical source of this file is maintained with the 
+NOTE: The canonical source of this file is maintained with the
 GNU C Library.  Bugs can be reported to bug-glibc@prep.ai.mit.edu.
 
 This program is free software; you can redistribute it and/or modify it
@@ -21,7 +21,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software Foundation, 
+along with this program; if not, write to the Free Software Foundation,
 Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 
 /* AIX requires this to be the first thing in the file. */
@@ -46,8 +46,9 @@ Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 /* For platform which support the ISO C amendement 1 functionality we
    support user defined character classes.  */
 #if defined _LIBC || (defined HAVE_WCTYPE_H && defined HAVE_WCHAR_H)
-# include <wctype.h>
+ /* Solaris 2.5 has a bug: <wchar.h> must be included before <wctype.h>.  */
 # include <wchar.h>
+# include <wctype.h>
 #endif
 
 /* This is for other GNU distributions with internationalized messages.  */
@@ -188,6 +189,7 @@ init_syntax_once ()
    Defining isascii to 1 should let any compiler worth its salt
    eliminate the && through constant folding."  */
 
+#undef ISASCII
 #if defined (STDC_HEADERS) || (!defined (isascii) && !defined (HAVE_ISASCII))
 #define ISASCII(c) 1
 #else
@@ -205,6 +207,7 @@ init_syntax_once ()
 #define ISGRAPH(c) (ISASCII (c) && isprint (c) && !isspace (c))
 #endif
 
+#undef ISPRINT
 #define ISPRINT(c) (ISASCII (c) && isprint (c))
 #define ISDIGIT(c) (ISASCII (c) && isdigit (c))
 #define ISALNUM(c) (ISASCII (c) && isalnum (c))
@@ -1690,7 +1693,7 @@ typedef struct
 
 # define IS_CHAR_CLASS(string) wctype (string)
 #else
-# define CHAR_CLASS_MAX_LENGTH  6 /* Namely, `xdigit'.  */
+# define CHAR_CLASS_MAX_LENGTH  256 /* Namely, `xdigit'.  */
 
 # define IS_CHAR_CLASS(string)						\
    (STREQ (string, "alpha") || STREQ (string, "upper")			\
@@ -2165,7 +2168,7 @@ regex_compile (pattern, size, syntax, bufp)
                     for (;;)
                       {
                         PATFETCH (c);
-                        if (c == ':' || c == ']' || p == pend
+                        if ((c == ':' && *p == ']') || p == pend
                             || c1 == CHAR_CLASS_MAX_LENGTH)
                           break;
                         str[c1++] = c;
@@ -2378,13 +2381,13 @@ regex_compile (pattern, size, syntax, bufp)
               if (syntax & RE_NO_BK_PARENS) goto normal_backslash;
 
               if (COMPILE_STACK_EMPTY)
-		{
-		  if (syntax & RE_UNMATCHED_RIGHT_PAREN_ORD)
-		    goto normal_backslash;
-		  else
-		    FREE_STACK_RETURN (REG_ERPAREN);
-		}
-	      
+                {
+                  if (syntax & RE_UNMATCHED_RIGHT_PAREN_ORD)
+                    goto normal_backslash;
+                  else
+                    FREE_STACK_RETURN (REG_ERPAREN);
+                }
+
             handle_close:
               if (fixup_alt_jump)
                 { /* Push a dummy failure point at the end of the
@@ -2400,13 +2403,13 @@ regex_compile (pattern, size, syntax, bufp)
 
               /* See similar code for backslashed left paren above.  */
               if (COMPILE_STACK_EMPTY)
-		{
-		  if (syntax & RE_UNMATCHED_RIGHT_PAREN_ORD)
-		    goto normal_char;
-		  else
-		    FREE_STACK_RETURN (REG_ERPAREN);
-		}
-	      
+                {
+                  if (syntax & RE_UNMATCHED_RIGHT_PAREN_ORD)
+                    goto normal_char;
+                  else
+                    FREE_STACK_RETURN (REG_ERPAREN);
+                }
+
               /* Since we just checked for an empty stack above, this
                  ``can't happen''.  */
               assert (compile_stack.avail != 0);

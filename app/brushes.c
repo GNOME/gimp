@@ -269,8 +269,8 @@ load_brush(char *filename)
 	}
       else
 	{
-	  warning ("Unknown GIMP version #%d in \"%s\"\n", header.version,
-		   filename);
+	  g_message ("Unknown GIMP version #%d in \"%s\"\n", header.version,
+		     filename);
 	  fclose (fp);
 	  free_brush (brush);
 	  return;
@@ -287,7 +287,7 @@ load_brush(char *filename)
       brush->name = (char *) g_malloc (sizeof (char) * bn_size);
       if ((fread (brush->name, 1, bn_size, fp)) < bn_size)
 	{
-	  warning ("Error in GIMP brush file...aborting.");
+	  g_message ("Error in GIMP brush file...aborting.");
 	  fclose (fp);
 	  free_brush (brush);
 	  return;
@@ -300,7 +300,7 @@ load_brush(char *filename)
   /*  Read the image data  */
   if ((fread (temp_buf_data (brush->mask), 1, header.width * header.height, fp)) <
       header.width * header.height)
-    warning ("GIMP brush file appears to be truncated.");
+    g_message ("GIMP brush file appears to be truncated.");
 
   /*  Clean up  */
   fclose (fp);

@@ -41,7 +41,7 @@ image_desaturate (gimage_ptr)
 
   if (! drawable_color (drawable))
     {
-      message_box ("Desaturate operates only on RGB color drawables.", NULL, NULL);
+      g_message ("Desaturate operates only on RGB color drawables.");
       return;
     }
   desaturate (drawable);

@@ -99,7 +99,7 @@
 /* *** DEFINES *** */
 
 /* set to TRUE if you want debugging, FALSE otherwise */
-#define PSD_DEBUG TRUE
+#define PSD_DEBUG FALSE
 
 /* the max number of layers that this plugin should try to load */
 #define MAX_LAYERS 100

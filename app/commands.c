@@ -564,29 +564,25 @@ file_prefs_ok_callback (GtkWidget *widget,
 
   if (levels_of_undo < 0) 
     {
-      message_box("Error: Levels of undo must be zero or greater.", 
-		  NULL, NULL);
+      g_message ("Error: Levels of undo must be zero or greater.");
       levels_of_undo = old_levels_of_undo;
       return;
     }
   if (marching_speed < 50)
     {
-      message_box("Error: Marching speed must be 50 or greater.",
-		  NULL, NULL);
+      g_message ("Error: Marching speed must be 50 or greater.");
       marching_speed = old_marching_speed;
       return;
     }
   if (default_width < 1)
     {
-      message_box("Error: Default width must be one or greater.",
-		  NULL, NULL);
+      g_message ("Error: Default width must be one or greater.");
       default_width = old_default_width;
       return;
     }
   if (default_height < 1)
     {
-      message_box("Error: Default height must be one or greater.",
-		  NULL, NULL);
+      g_message ("Error: Default height must be one or greater.");
       default_height = old_default_height;
       return;
     }  
@@ -752,7 +748,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gradient_path = save_gradient_path;
 
   if (restart_notification)
-    message_box("You will need to restart GIMP for these changes to take effect.", NULL, NULL);
+    g_message ("You will need to restart GIMP for these changes to take effect.");
   
   g_list_free (update);
   g_list_free (remove);
@@ -2486,7 +2482,7 @@ image_resize_callback (GtkWidget *w,
 	}
       else 
 	{
-	  message_box("Resize Error: Both width and height must be greater than zero.", NULL, NULL);
+	  g_message ("Resize Error: Both width and height must be greater than zero.");
 	  return;
 	}
     }
@@ -2516,7 +2512,7 @@ image_scale_callback (GtkWidget *w,
 	}
       else 
 	{
-	  message_box("Scale Error: Both width and height must be greater than zero.", NULL, NULL);
+	  g_message ("Scale Error: Both width and height must be greater than zero.");
 	  return;
 	}
     }

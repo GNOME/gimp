@@ -231,7 +231,7 @@ drawable_fill (GimpDrawable *drawable, int fill_type)
 	  c[ALPHA_I_PIX] = a;
       break;
     default:
-      warning ("Can't fill unknown image type.");
+      g_message ("Can't fill unknown image type.");
       break;
     }
 
@@ -631,7 +631,7 @@ gimp_drawable_configure (GimpDrawable *drawable,
     case INDEXEDA_GIMAGE:
       bpp = 2; alpha = 1; break;
     default:
-      warning ("Layer type %d not supported.", type);
+      g_message ("Layer type %d not supported.", type);
       return;
     }
 

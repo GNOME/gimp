@@ -199,6 +199,9 @@ main (int argc, char **argv)
   if (show_version || show_help)
     exit (0);
 
+  /* Print to console at first */
+  g_set_message_handler (&message_console_func);
+
   /* Handle some signals */
   signal (SIGHUP, on_signal);
   signal (SIGINT, on_signal);

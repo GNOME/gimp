@@ -153,7 +153,7 @@ gimage_allocate_projection (GImage *gimage)
       gimage->proj_type = GRAYA_GIMAGE;
       break;
     default:
-      warning ("gimage type unsupported.\n");
+      g_message ("gimage type unsupported.\n");
       break;
     }
 
@@ -270,7 +270,7 @@ gimage_resize (GImage *gimage, int new_width, int new_height,
 
   if (new_width <= 0 || new_height <= 0) 
     {
-      warning("gimage_resize: width and height must be positive");
+      g_message ("gimage_resize: width and height must be positive");
       return;
     }
 
@@ -530,7 +530,7 @@ gimage_apply_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2PR,
   operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      warning ("gimage_apply_image sent illegal parameters\n");
+      g_message ("gimage_apply_image sent illegal parameters");
       return;
     }
 
@@ -624,7 +624,7 @@ gimage_replace_image (GImage *gimage, GimpDrawable *drawable, PixelRegion *src2P
   operation = valid_combinations [drawable_type (drawable)][src2PR->bytes];
   if (operation == -1)
     {
-      warning ("gimage_apply_image sent illegal parameters\n");
+      g_message ("gimage_apply_image sent illegal parameters");
       return;
     }
 
@@ -912,7 +912,7 @@ project_indexed (GImage *gimage, Layer *layer,
     initial_region (src, dest, NULL, gimage->cmap, layer->opacity,
 		    layer->mode, gimage->visible, INITIAL_INDEXED);
   else
-    warning ("Unable to project indexed image.");
+    g_message ("Unable to project indexed image.");
 }
 
 
@@ -1720,7 +1720,7 @@ gimage_raise_layer (GImage *gimage, Layer *layer_arg)
 	    }
 	  else
 	    {
-	      message_box ("Layer cannot be raised any further", NULL, NULL);
+	      g_message ("Layer cannot be raised any further");
 	      return NULL;
 	    }
 	}
@@ -1789,7 +1789,7 @@ gimage_lower_layer (GImage *gimage, Layer *layer_arg)
 	    }
 	  else
 	    {
-	      message_box ("Layer cannot be lowered any further", NULL, NULL);
+	      g_message ("Layer cannot be lowered any further");
 	      return NULL;
 	    }
 	}
@@ -1826,8 +1826,7 @@ gimage_merge_visible_layers (GImage *gimage, MergeType merge_type)
     }
   else
     {
-      message_box ("There are not enough visible layers for a merge.\nThere must be at least two.",
-		   NULL, NULL);
+      g_message ("There are not enough visible layers for a merge.\nThere must be at least two.");
       g_slist_free (merge_list);
       return NULL;
     }
@@ -1962,7 +1961,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 			       type, drawable_name (GIMP_DRAWABLE(layer)), OPAQUE_OPACITY, NORMAL_MODE);
 
       if (!merge_layer) {
-	warning("gimage_merge_layers: could not allocate merge layer");
+	g_message ("gimage_merge_layers: could not allocate merge layer");
 	return NULL;
       }
 
@@ -1992,7 +1991,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 			       layer->opacity, layer->mode);
       
       if (!merge_layer) {
-	warning("gimage_merge_layers: could not allocate merge layer");
+	g_message ("gimage_merge_layers: could not allocate merge layer");
 	return NULL;
       }
 
@@ -2031,7 +2030,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
       operation = valid_combinations [drawable_type (GIMP_DRAWABLE(merge_layer))][drawable_bytes (GIMP_DRAWABLE(layer))];
       if (operation == -1)
 	{
-	  warning ("gimage_merge_layers attempting to merge incompatible layers\n");
+	  g_message ("gimage_merge_layers attempting to merge incompatible layers\n");
 	  return NULL;
 	}
 
@@ -2112,7 +2111,7 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
   if (GIMP_DRAWABLE(float_layer)->gimage_ID != 0 && 
       GIMP_DRAWABLE(float_layer)->gimage_ID != gimage->ID) 
     {
-      warning("gimage_add_layer: attempt to add layer to wrong image");
+      g_message ("gimage_add_layer: attempt to add layer to wrong image");
       return NULL;
     }
 
@@ -2122,7 +2121,7 @@ gimage_add_layer (GImage *gimage, Layer *float_layer, int position)
       {
 	if (ll->data == float_layer) 
 	  {
-	    warning("gimage_add_layer: trying to add layer to image twice");
+	    g_message ("gimage_add_layer: trying to add layer to image twice");
 	    return NULL;
 	  }
 	ll = g_slist_next(ll);
@@ -2242,7 +2241,7 @@ gimage_add_layer_mask (GImage *gimage, Layer *layer, LayerMask *mask)
 
   if (error)
     {
-      message_box (error, NULL, NULL);
+      g_message (error);
       return NULL;
     }
 
@@ -2344,7 +2343,7 @@ gimage_raise_channel (GImage *gimage, Channel * channel_arg)
 	    }
 	  else
 	    {
-	      message_box ("Channel cannot be raised any further", NULL, NULL);
+	      g_message ("Channel cannot be raised any further");
 	      return NULL;
 	    }
 	}
@@ -2391,7 +2390,7 @@ gimage_lower_channel (GImage *gimage, Channel *channel_arg)
 	    }
 	  else
 	    {
-	      message_box ("Channel cannot be lowered any further", NULL, NULL);
+	      g_message ("Channel cannot be lowered any further");
 	      return NULL;
 	    }
 	}
@@ -2411,7 +2410,7 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
   if (GIMP_DRAWABLE(channel)->gimage_ID != 0 &&
       GIMP_DRAWABLE(channel)->gimage_ID != gimage->ID)
     {
-      warning("gimage_add_channel: attempt to add channel to wrong image");
+      g_message ("gimage_add_channel: attempt to add channel to wrong image");
       return NULL;
     }
 
@@ -2421,7 +2420,7 @@ gimage_add_channel (GImage *gimage, Channel *channel, int position)
       {
 	if (cc->data == channel) 
 	  {
-	    warning("gimage_add_channel: trying to add channel to image twice");
+	    g_message ("gimage_add_channel: trying to add channel to image twice");
 	    return NULL;
 	  }
 	cc = g_slist_next (cc);

@@ -425,7 +425,7 @@ levels_initialize (void *gdisp_ptr)
 
   if (drawable_indexed (gimage_active_drawable (gdisp->gimage)))
     {
-      message_box ("Levels for indexed drawables cannot be adjusted.", NULL, NULL);
+      g_message ("Levels for indexed drawables cannot be adjusted.");
       return;
     }
 

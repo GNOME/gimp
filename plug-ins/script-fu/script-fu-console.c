@@ -133,7 +133,7 @@ script_fu_console_run (char     *name,
     case RUN_WITH_LAST_VALS:
     case RUN_NONINTERACTIVE:
       status = STATUS_CALLING_ERROR;
-      g_warning ("Script-Fu console mode allows only interactive invocation");
+      gimp_message ("Script-Fu console mode allows only interactive invocation");
       break;
 
     default:
@@ -529,11 +529,11 @@ script_fu_open_siod_console ()
     {
       if (pipe (siod_output_pipe))
 	{
-	  g_warning ("Unable to open SIOD output pipe");
+	  gimp_message ("Unable to open SIOD output pipe");
 	}
       else if ((siod_output = fdopen (siod_output_pipe [1], "w")) == NULL)
 	{
-	  g_warning ("Unable to open a stream on the SIOD output pipe");
+	  gimp_message ("Unable to open a stream on the SIOD output pipe");
 	  siod_output = stdout;
 	}
       else

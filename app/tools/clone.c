@@ -228,7 +228,7 @@ clone_paint_func (PaintCore *paint_core,
 
       if (clone_options->type == PatternClone)
 	if (!get_active_pattern ())
-	  message_box ("No patterns available for this operation.", NULL, NULL);
+	  g_message ("No patterns available for this operation.");
       break;
 
     case FINISH_PAINT :

@@ -207,7 +207,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
   non_empty = drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
   if (non_empty && (!(x2 - x1) || !(y2 - y1)))
     {
-      message_box ("Unable to cut/copy because the selected\nregion is empty.", NULL, NULL);
+      g_message ("Unable to cut/copy because the selected\nregion is empty.");
       return NULL;
     }
 
@@ -330,7 +330,7 @@ gimage_mask_float (gimage, drawable, off_x, off_y)
   non_empty = drawable_mask_bounds ( (drawable), &x1, &y1, &x2, &y2);
   if (! non_empty || (x2 - x1) == 0 || (y2 - y1) == 0)
     {
-      message_box ("Float Selection: No selection to float.", NULL, NULL);
+      g_message ("Float Selection: No selection to float.");
       return NULL;
     }
 
@@ -484,7 +484,7 @@ gimage_mask_layer_alpha (gimage, layer)
     }
   else
     {
-      message_box ("The active layer has no alpha channel\nto convert to a selection.", NULL, NULL);
+      g_message ("The active layer has no alpha channel\nto convert to a selection.");
       return;
     }
 }
@@ -503,7 +503,7 @@ gimage_mask_layer_mask (gimage, layer)
     }
   else
     {
-      message_box ("The active layer has no mask\nto convert to a selection.", NULL, NULL);
+      g_message ("The active layer has no mask\nto convert to a selection.");
       return;
     }
 }
@@ -552,7 +552,7 @@ gimage_mask_stroke (gimage, drawable)
 
   if (! gimage_mask_boundary (gimage, &bs_in, &bs_out, &num_segs_in, &num_segs_out))
     {
-      message_box ("No selection to stroke!", NULL, NULL);
+      g_message ("No selection to stroke!");
       return FALSE;
     }
 

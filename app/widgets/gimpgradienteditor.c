@@ -1312,7 +1312,7 @@ ed_do_new_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer ca
 	gradient_name = (char *) call_data;
 
 	if (!gradient_name) {
-		warning("ed_do_new_gradient_callback(): oops, received NULL in call_data");
+		g_message ("ed_do_new_gradient_callback(): oops, received NULL in call_data");
 		return;
 	} /* if */
 
@@ -1369,7 +1369,7 @@ ed_do_copy_gradient_callback(GtkWidget *widget, gpointer client_data, gpointer c
 	gradient_name = (char *) call_data;
 
 	if (!gradient_name) {
-		warning("ed_do_copy_gradient_callback(): oops, received NULL in call_data");
+		g_message ("ed_do_copy_gradient_callback(): oops, received NULL in call_data");
 		return;
 	} /* if */
 
@@ -1622,7 +1622,7 @@ ed_do_save_pov_callback(GtkWidget *widget, gpointer client_data)
 	file = fopen(filename, "w");
 
 	if (!file)
-		warning("ed_do_save_pov_callback(): oops, could not open \"%s\"", filename);
+		g_message ("ed_do_save_pov_callback(): oops, could not open \"%s\"", filename);
 	else {
 		fprintf(file, "/* color_map file created by the GIMP */\n");
 		fprintf(file, "/* http://www.gimp.org/               */\n");
@@ -2189,7 +2189,7 @@ control_do_hint(gint x, gint y)
 				break;
 
 			default:
-				warning("control_do_hint: oops, in_handle is true "
+				g_message ("control_do_hint: oops, in_handle is true "
 					"yet we got handle type %d", (int) handle);
 				break;
 		} /* switch */
@@ -2293,7 +2293,7 @@ control_button_press(gint x, gint y, guint button, guint state)
 				return;
 
 			default:
-				warning("control_button_press(): oops, in_handle is true "
+				g_message ("control_button_press(): oops, in_handle is true "
 					"yet we got handle type %d", (int) handle);
 				return;
 		} /* switch */
@@ -2337,7 +2337,7 @@ control_point_in_handle(gint x, gint y, grad_segment_t *seg, control_drag_mode_t
 			break;
 
 		default:
-			warning("control_point_in_handle(): oops, can not handle drag mode %d",
+			g_message ("control_point_in_handle(): oops, can not handle drag mode %d",
 				(int) handle);
 			return 0;
 	} /* switch */
@@ -5290,7 +5290,7 @@ grad_load_gradient(char *filename)
 	num_segments = atoi(line);
 
 	if (num_segments < 1) {
-		warning("grad_load_gradient(): invalid number of segments in \"%s\"", filename);
+		g_message ("grad_load_gradient(): invalid number of segments in \"%s\"", filename);
 		g_free(grad);
 		return;
 	} /* if */
@@ -5313,9 +5313,9 @@ grad_load_gradient(char *filename)
 			   &(seg->r0), &(seg->g0), &(seg->b0), &(seg->a0),
 			   &(seg->r1), &(seg->g1), &(seg->b1), &(seg->a1),
 			   &type, &color) != 13) {
-			warning("grad_load_gradient(): badly formatted "
-				"gradient segment %d in \"%s\" --- bad things may "
-				"happen soon", i, filename);
+			g_message ("grad_load_gradient(): badly formatted "
+				   "gradient segment %d in \"%s\" --- bad things may "
+				   "happen soon", i, filename);
 		} else {
 			seg->type  = (grad_type_t) type;
 			seg->color = (grad_color_t) color;
@@ -5347,13 +5347,13 @@ grad_save_gradient(gradient_t *grad, char *filename)
 	g_assert(grad != NULL);
 
 	if (!filename) {
-		warning("grad_save_gradient(): can not save gradient with NULL filename");
+		g_message ("grad_save_gradient(): can not save gradient with NULL filename");
 		return;
 	} /* if */
 
 	file = fopen(filename, "w");
 	if (!file) {
-		warning("grad_save_gradient(): can't open \"%s\"", filename);
+		g_message ("grad_save_gradient(): can't open \"%s\"", filename);
 		return;
 	} /* if */
 
