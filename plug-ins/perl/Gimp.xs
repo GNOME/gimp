@@ -152,7 +152,8 @@ BOOT:
 
 MODULE = Gimp	PACKAGE = Gimp::RAW
 
-# some raw byte/bit-manipulation, use PDL instead
+# some raw byte/bit-manipulation (e.g. for avi and miff), use PDL instead
+# mostly undocumented as well...
 
 void
 reverse_v_inplace (datasv, bpl)
@@ -213,7 +214,7 @@ convert_24_15_inplace (datasv)
         U16 m31d255[256];
 
         for (dc = 256; dc--; )
-          m31d255[dc] = (dc*31+15)/255;
+          m31d255[dc] = (dc*31+127)/255;
 
         data = SvPV (datasv, dc); end = data + dc;
 
@@ -242,7 +243,7 @@ convert_15_24_inplace (datasv)
         U8 m255d31[32];
 
         for (dc = 32; dc--; )
-          m255d31[dc] = (dc*255+127)/31;
+          m255d31[dc] = (dc*255+15)/31;
 
         data = SvPV (datasv, dc); dc &= ~1;
         de = dc + (dc >> 1);

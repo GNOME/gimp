@@ -28,7 +28,7 @@ register "file_avi_save",
          "Saves images in the 24 bit uncompressed AVI format used by windows software",
          "Marc Lehmann",
          "Marc Lehmann <pcg\@goof.com>",
-         "1999-09-15",
+         "1999-09-18",
          "<Save>/AVI",
          "RGB",
          [
@@ -151,7 +151,7 @@ sub parse_iff {
       $size >= 4 or die "AVI hunk $hunk ends unexpectedly\n";
       read FILE,$len,4; $size -= 4;
       $len = unpack "V", $len;
-      $size >= $len or die "hunk $hunk too long\n";
+      $size >= $len or Gimp->message("WARNING: broken avi, hunk '$hunk' too long ($size < $len)");
       $size -= $len;
       if ($hunk eq "LIST") {
          read FILE,$hunk,4;
@@ -222,7 +222,7 @@ register "file_avi_load",
             die "strh(vids)/strf header too short\n" unless $_[0] >= 7*4;
             ($size,$width,$height,$planes,$depth,$compression,$image_size)
                = unpack "V3 v2 V3", $comment;
-            $depth == 24 or $depth == 16 or die "unsupported bit depth $depth (only 16/24 bit supported)\n";
+            $depth == 24 or $depth == 16 or die "unsupported bit depth $depth (only 15/24 bit supported)\n";
             $compression == 0 or die "compressed streams not supported\n";
             $planes == 1 or die "incompatible frameformat ($planes)\n";
             ($width * $height * $depth) >> 3 == $image_size or die "strh(vids)/strf header format error\n";
@@ -231,9 +231,11 @@ register "file_avi_load",
             $image->disable_undo;
             $image->set_filename($filename);
             $image->attach_parasite(new Parasite "gimp-interframe-delay", PARASITE_PERSISTENT, $us_frame);
+            $image->attach_parasite(new Parasite "gimp-avi-depth", PARASITE_PERSISTENT, $depth == 16 ? 15 : $depth);
+            $image->attach_parasite(new Parasite "gimp-avi-compression", PARASITE_PERSISTENT, $compression);
          }
       },
-      "00db" => sub { # 00dw is 15 bit
+      "00db" => sub {
          $_[0] == ($width * $height * $depth) >> 3 or die "frame has incorrect size\n";
          read FILE,$comment,$_[0];
          my $layer = $image->layer_new($width,$height,RGB_IMAGE,

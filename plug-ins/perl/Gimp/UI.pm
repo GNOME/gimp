@@ -581,7 +581,7 @@ sub interact($$$$@) {
      $g = new Gtk::Table scalar@types,2,0;
      $g->border_width(4);
      $w->vbox->pack_start($g,1,1,0);
-     
+
      for(@types) {
         my($label,$a);
         my($type,$name,$desc,$default,$extra)=@$_;
@@ -697,7 +697,7 @@ sub interact($$$$@) {
               $b->pack_start ($radio,1,0,5);
               $radio->signal_connect(clicked => sub { $r = $value });
               my $prev_sub_my = $prev_sub;
-              $prev_sub = sub { $radio->set_active ($_[0] == $value); &$prev_sub_my };
+              $prev_sub = sub { $radio->set_active ($_[0] eq $value); &$prev_sub_my };
               $prev = $radio;
            }
            $a = new Gtk::Frame;
