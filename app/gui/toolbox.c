@@ -57,7 +57,6 @@
 
 #include "app_procs.h"
 #include "appenv.h"
-#include "gimage.h"
 #include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
@@ -513,7 +512,10 @@ toolbox_drop_drawable (GtkWidget    *widget,
       type = RGB; break;
     }
 
-  new_gimage = gimage_new (the_gimp, width, height, type);
+  new_gimage = gimp_create_image (gimage->gimp,
+				  width, height,
+				  type,
+				  FALSE);
   gimp_image_undo_disable (new_gimage);
 
   if (type == INDEXED) /* copy the colormap */
@@ -566,10 +568,9 @@ toolbox_drop_drawable (GtkWidget    *widget,
 
   gimp_image_add_layer (new_gimage, new_layer, 0);
 
-  gimp_context_set_display (gimp_context_get_user (),
-			    gdisplay_new (new_gimage, 0x0101));
-
   gimp_image_undo_enable (new_gimage);
+
+  gimp_create_display (gimage->gimp, new_gimage);
 }
 
 static void

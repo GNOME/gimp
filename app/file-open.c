@@ -62,7 +62,6 @@
 #include "core/gimpimage.h"
 
 #include "app_procs.h"
-#include "gimage.h"
 #include "gimprc.h"
 #include "file-open.h"
 #include "file-utils.h"

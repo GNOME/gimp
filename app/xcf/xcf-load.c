@@ -32,6 +32,7 @@
 #include "base/tile-manager.h"
 #include "base/tile-manager-private.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
@@ -45,7 +46,6 @@
 #include "xcf-seek.h"
 
 #include "floating_sel.h"
-#include "gimage.h"
 #include "gimprc.h"
 #include "parasitelist.h"
 #include "path.h"
@@ -253,10 +253,10 @@ xcf_load_image (Gimp    *gimp,
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &height, 1);
   info->cp += xcf_read_int32 (info->fp, (guint32 *) &image_type, 1);
 
-  /* create a new gimage */
-  gimage = gimage_new (gimp, width, height, image_type);
-  if (!gimage)
-    return NULL;
+  gimage = gimp_create_image (gimp,
+			      width, height,
+			      image_type,
+			      FALSE);
 
   /* read the image properties */
   if (!xcf_load_image_props (info, gimage))

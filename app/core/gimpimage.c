@@ -491,6 +491,8 @@ gimp_image_destroy (GtkObject *object)
   g_list_foreach (gimage->guides, (GFunc) g_free, NULL);
   g_list_free (gimage->guides);
 
+  undo_free (gimage);
+
   gtk_object_unref (GTK_OBJECT (gimage->new_undo_stack));
   gtk_object_unref (GTK_OBJECT (gimage->new_redo_stack));
 }

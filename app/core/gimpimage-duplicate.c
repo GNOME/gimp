@@ -34,17 +34,18 @@
 /* FIXME: remove the Path <-> BezierSelect dependency */
 #include "tools/tools-types.h"
 
-#include "app_procs.h"
-#include "drawable.h"
-#include "floating_sel.h"
-#include "gdisplay.h"
-#include "gimage.h"
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
+#include "gimpimage-new.h"
 #include "gimplayer.h"
 #include "gimplist.h"
+
+#include "app_procs.h"
+#include "drawable.h"
+#include "floating_sel.h"
+#include "gdisplay.h"
 #include "parasitelist.h"
 #include "path.h"
 
@@ -75,9 +76,10 @@ gimp_image_duplicate (GimpImage *gimage)
   gimp_set_busy_until_idle ();
 
   /*  Create a new image  */
-  new_gimage = gimage_new (gimage->gimp,
-			   gimage->width, gimage->height,
-			   gimage->base_type);
+  new_gimage = gimp_create_image (gimage->gimp,
+				  gimage->width, gimage->height,
+				  gimage->base_type,
+				  FALSE);
   gimp_image_undo_disable (new_gimage);
 
   /*  Copy resolution and unit information  */

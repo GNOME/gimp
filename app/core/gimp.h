@@ -80,7 +80,8 @@ void        gimp_shutdown       (Gimp              *gimp);
 GimpImage * gimp_create_image   (Gimp              *gimp,
 				 gint               width,
 				 gint               height,
-				 GimpImageBaseType  type);
+				 GimpImageBaseType  type,
+				 gboolean           attach_comment);
 void        gimp_create_display (Gimp              *gimp,
 				 GimpImage         *gimage);
 

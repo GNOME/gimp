@@ -42,7 +42,6 @@
 #include "core/gimplist.h"
 #include "drawable.h"
 #include "gdisplay.h"
-#include "gimage.h"
 
 #include "libgimp/gimpintl.h"
 #include "libgimpbase/gimpbase.h"
@@ -266,7 +265,7 @@ image_new_invoker (Gimp     *gimp,
     success = FALSE;
 
   if (success)
-    success = (gimage = gimage_new (gimp, width, height, type)) != NULL;
+    success = (gimage = gimp_create_image (gimp, width, height, type, FALSE)) != NULL;
 
   return_args = procedural_db_return_args (&image_new_proc, success);
 

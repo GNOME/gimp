@@ -42,6 +42,7 @@
 
 #include "base/temp-buf.h"
 
+#include "core/gimp.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
@@ -53,7 +54,6 @@
 #include "dialog_handler.h"
 #include "docindex.h"
 #include "gdisplay.h"
-#include "gimage.h"
 #include "gimprc.h"
 #include "file-open.h"
 #include "file-utils.h"
@@ -242,7 +242,6 @@ file_open_with_proc_and_display (gchar         *filename,
                                  PlugInProcDef *file_proc)
 {
   GimpImage *gimage;
-  GDisplay  *gdisplay;
   gchar     *absolute;
   gint       status;
 
@@ -260,11 +259,7 @@ file_open_with_proc_and_display (gchar         *filename,
       gimp_image_clean_all (gimage);
 
       /* display the image */
-      gdisplay = gdisplay_new (gimage, 0x0101);
-
-      /* always activate the first display */
-      if (g_slist_length (display_list) == 1)
-	gimp_context_set_display (gimp_context_get_user (), gdisplay);
+      gimp_create_display (gimage->gimp, gimage);
 
       absolute = file_open_absolute_filename (filename);
 

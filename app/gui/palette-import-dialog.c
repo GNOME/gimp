@@ -43,7 +43,6 @@
 #include "palette-import-dialog.h"
 
 #include "app_procs.h"
-#include "gimage.h"
 
 #include "libgimp/gimpintl.h"
 

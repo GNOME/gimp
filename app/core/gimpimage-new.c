@@ -229,7 +229,6 @@ gimp_image_new_create_image (Gimp               *gimp,
   GimpImage     *gimage;
   GimpLayer     *layer;
   GimpImageType  type;
-  GimpParasite  *comment_parasite;
   gint           width, height;
 
   g_return_val_if_fail (values != NULL, NULL);
@@ -251,20 +250,13 @@ gimp_image_new_create_image (Gimp               *gimp,
       break;
     }
 
-  gimage = gimp_create_image (gimp, values->width, values->height, values->type);
+  gimage = gimp_create_image (gimp,
+			      values->width, values->height,
+			      values->type,
+			      TRUE);
 
   gimp_image_set_resolution (gimage, values->xresolution, values->yresolution);
   gimp_image_set_unit (gimage, values->unit);
-
-  if (gimprc.default_comment)
-    {
-      comment_parasite = gimp_parasite_new ("gimp-comment",
-					    GIMP_PARASITE_PERSISTENT,
-					    strlen (gimprc.default_comment) + 1,
-					    (gpointer) gimprc.default_comment);
-      gimp_image_parasite_attach (gimage, comment_parasite);
-      gimp_parasite_free (comment_parasite);
-    }
 
   width  = gimp_image_get_width (gimage);
   height = gimp_image_get_height (gimage);

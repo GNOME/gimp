@@ -88,8 +88,6 @@ gimage_new (Gimp             *gimp,
 		      GTK_SIGNAL_FUNC (gimage_cmap_change_handler),
 		      NULL);
 
-  gimp_container_add (gimp->images, GIMP_OBJECT (gimage));
-
   return gimage;
 }
 
@@ -114,9 +112,6 @@ gimage_dirty_handler (GimpImage *gimage)
 static void
 gimage_destroy_handler (GimpImage *gimage)
 {
-  /*  free the undo list  */
-  undo_free (gimage);
-
   /*  check if this is the last image  */
   if (gimp_container_num_children (gimage->gimp->images) == 1)
     {

@@ -20,6 +20,8 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "base/tile-manager.h"
@@ -323,7 +325,8 @@ GimpImage *
 gimp_create_image (Gimp              *gimp,
 		   gint               width,
 		   gint               height,
-		   GimpImageBaseType  type)
+		   GimpImageBaseType  type,
+		   gboolean           attach_comment)
 {
   GimpImage *gimage;
 
@@ -331,6 +334,20 @@ gimp_create_image (Gimp              *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
   gimage = gimage_new (gimp, width, height, type);
+
+  gimp_container_add (gimp->images, GIMP_OBJECT (gimage));
+
+  if (attach_comment && gimprc.default_comment)
+    {
+      GimpParasite *parasite;
+
+      parasite = gimp_parasite_new ("gimp-comment",
+				    GIMP_PARASITE_PERSISTENT,
+				    strlen (gimprc.default_comment) + 1,
+				    gimprc.default_comment);
+      gimp_image_parasite_attach (gimage, parasite);
+      gimp_parasite_free (parasite);
+    }
 
   return gimage;
 }

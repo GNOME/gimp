@@ -46,7 +46,6 @@
 #include "xcf-write.h"
 
 #include "floating_sel.h"
-#include "gimage.h"
 #include "gimprc.h"
 #include "parasitelist.h"
 #include "path.h"

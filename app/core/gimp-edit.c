@@ -22,7 +22,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "core-types.h"
@@ -47,10 +46,6 @@
 #include "app_procs.h"
 #include "drawable.h"
 #include "floating_sel.h"
-#include "gdisplay.h"
-#include "gimage.h"
-#include "gimpparasite.h"
-#include "gimprc.h"
 #include "undo.h"
 
 #include "libgimp/gimpintl.h"
@@ -249,14 +244,13 @@ gimp_edit_paste_as_new (Gimp        *gimp,
 {
   GimpImage    *gimage;
   GimpLayer    *layer;
-  GimpParasite *comment_parasite;
-  GDisplay     *gdisp;
 
   /*  create a new image  (always of type RGB)  */
-  gimage = gimage_new (gimp,
-		       tile_manager_width (paste), 
-		       tile_manager_height (paste), 
-		       RGB);
+  gimage = gimp_create_image (gimp,
+			      tile_manager_width (paste), 
+			      tile_manager_height (paste), 
+			      RGB,
+			      TRUE);
   gimp_image_undo_disable (gimage);
 
   if (invoke)
@@ -264,16 +258,6 @@ gimp_edit_paste_as_new (Gimp        *gimp,
       gimp_image_set_resolution (gimage,
 				 invoke->xresolution, invoke->yresolution);
       gimp_image_set_unit (gimage, invoke->unit);
-    }
-
-  if (gimprc.default_comment)
-    {
-      comment_parasite = gimp_parasite_new ("gimp-comment",
-                                            GIMP_PARASITE_PERSISTENT,
-                                            strlen (gimprc.default_comment)+1,
-                                            (gpointer) gimprc.default_comment);
-      gimp_image_parasite_attach (gimage, comment_parasite);
-      gimp_parasite_free (comment_parasite);
     }
 
   layer = gimp_layer_new_from_tiles (gimage,
@@ -290,8 +274,7 @@ gimp_edit_paste_as_new (Gimp        *gimp,
 
       gimp_image_undo_enable (gimage);
 
-      gdisp = gdisplay_new (gimage, 0x0101);
-      gimp_context_set_display (gimp_context_get_user (), gdisp);
+      gimp_create_display (gimp, gimage);
 
       return gimage;
     }

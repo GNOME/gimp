@@ -1,8 +1,31 @@
 2001-07-05  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimage.c: don't add the image to the image container,
+	don't call undo_free().
+
+	* app/core/gimp.[ch]: add new images to gimp->images, optionally
+	attach the comment parasite.
+
+	* app/core/gimpedit.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-new.c
+	* app/gui/file-open-dialog.c
+	* app/gui/toolbox.c
+	* tools/pdbgen/pdb/image.pdb
+	* app/pdb/image_cmds.c
+	* app/xcf/xcf-load.c: call gimp_create_image() and/or
+	gimp_create_display(), don't attach a comment parasite.
+
+	* app/core/gimpimage.c: call undo_free() in "destroy".
+
+	* app/file-open.c
+	* app/gui/palette-import-dialog.c
+	* app/xcf/xcf-save.c: don't #include "gimage.h"
+
+2001-07-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/image_new.[ch]: removed...
-
 
 	* app/core/Makefile.am
 	* app/core/core-types.h
