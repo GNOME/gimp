@@ -1,5 +1,15 @@
 2001-10-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpbrushgenerated.h
+	* app/core/gimpbrushpipe.h
+	* app/core/gimpbuffer.h
+	* app/core/gimpdatafactory.h
+	* app/core/gimpdrawable.h
+	* app/core/gimpgradient.h
+	* app/core/gimpimage.h: added some missing FOO_GET_CLASS() macros.
+
+2001-10-26  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/gradient_select.pdb: removed
 	gradients_get_gradient_data() here...
 
