@@ -1,4 +1,8 @@
-2000-09-30  Nick Lamb  <njl195@zepler.org.uk>
+2000-11-03  Nick Lamb  <njl195@zepler.org.uk>
+
+	* PLUGIN_MAINTAINERS: I'll take BMP and TGA too, any more?
+
+2000-11-03  Nick Lamb  <njl195@zepler.org.uk>
 
 	* plug-ins/common/tga.c: Shiny new version. Report bugs to me.
 

@@ -118,7 +118,7 @@ COMMENT    :
 -----------
 NAME       : bmp
 AUTHOR     : Alexander Schulz
-MAINTAINER : 
+MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
 SIZE       :  38.3 kB  in  3 files (only C files counted)
 COMMENT    : 
 -----------
@@ -838,7 +838,7 @@ COMMENT    :
 -----------
 NAME       : tga
 AUTHOR     : Raphael FRANCOIS, Gordon Matzigkeit
-MAINTAINER : 
+MAINTAINER : Nick Lamb <njl195@zepler.org.uk>
 SIZE       :  35.8 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------
