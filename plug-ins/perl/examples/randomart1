@@ -72,7 +72,7 @@ register "random_art_1",			# Funktionsname
       Palette->set_foreground([rand(256),rand(256),rand(256)]);
       Palette->set_background([rand(256),rand(256),rand(256)]);
       
-      # Un erzeuge einen Farbverlauf über das Bild
+      # Und erzeuge einen Farbverlauf über das Bild
       $layer->blend (FG_BG_HSV, DIFFERENCE_MODE, LINEAR, 100,
                      0, REPEAT_TRIANGULAR, $super, 2, 3,
                      $w/2, $h/2,
