@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <stdlib.h>
+
 #include <glib.h>
 
 #include "apptypes.h"
