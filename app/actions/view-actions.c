@@ -45,6 +45,7 @@
 #include "actions.h"
 #include "view-actions.h"
 #include "view-commands.h"
+#include "window-actions.h"
 
 #include "gimp-intl.h"
 
@@ -60,9 +61,12 @@ static void   view_actions_check_type_notify (GimpDisplayConfig *config,
 
 static GimpActionEntry view_actions[] =
 {
-  { "view-menu",               NULL, N_("_View")          },
-  { "view-zoom-menu",          NULL, N_("_Zoom")          },
-  { "view-padding-color-menu", NULL, N_("_Padding Color") },
+  { "view-menu",                NULL, N_("_View")          },
+  { "view-zoom-menu",           NULL, N_("_Zoom")          },
+  { "view-padding-color-menu",  NULL, N_("_Padding Color") },
+  { "view-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
+    N_("Move to Screen"), NULL, NULL, NULL,
+    GIMP_HELP_VIEW_CHANGE_SCREEN },
 
   { "view-new", GTK_STOCK_NEW,
     N_("_New View"), "", NULL,
@@ -105,12 +109,7 @@ static GimpActionEntry view_actions[] =
     N_("Shrink _Wrap"), "<control>E",
     N_("Shrink wrap"),
     G_CALLBACK (view_shrink_wrap_cmd_callback),
-    GIMP_HELP_VIEW_SHRINK_WRAP },
-
-  { "view-move-to-screen", GIMP_STOCK_MOVE_TO_SCREEN,
-    N_("Move to Screen..."), NULL, NULL,
-    G_CALLBACK (view_change_screen_cmd_callback),
-    GIMP_HELP_VIEW_CHANGE_SCREEN }
+    GIMP_HELP_VIEW_SHRINK_WRAP }
 };
 
 static GimpToggleActionEntry view_toggle_actions[] =
@@ -438,6 +437,10 @@ view_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (view_scroll_vertical_actions),
                                       G_CALLBACK (view_scroll_vertical_cmd_callback));
 
+  window_actions_setup (group,
+                        GIMP_HELP_VIEW_CHANGE_SCREEN,
+                        G_CALLBACK (view_move_to_screen_cmd_callback));
+
   /*  connect "activate" of view-zoom-other manually so it can be
    *  selected even if it's the active item of the radio group
    */
@@ -463,7 +466,6 @@ view_actions_update (GimpActionGroup *group,
   GimpDisplayOptions *options    = NULL;
   GimpImage          *gimage     = NULL;
   gboolean            fullscreen = FALSE;
-  gint                n_screens  = 1;
 
   if (gdisp)
     {
@@ -473,9 +475,6 @@ view_actions_update (GimpActionGroup *group,
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
       options = fullscreen ? shell->fullscreen_options : shell->options;
-
-      n_screens =
-        gdk_display_get_n_screens (gtk_widget_get_display (GTK_WIDGET (shell)));
     }
 
 #define SET_ACTIVE(action,condition) \
@@ -555,10 +554,11 @@ view_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("view-show-statusbar",  gdisp);
   SET_ACTIVE    ("view-show-statusbar",  gdisp && options->show_statusbar);
 
-  SET_SENSITIVE ("view-shrink-wrap",    gdisp);
-  SET_SENSITIVE ("view-fullscreen",     gdisp);
-  SET_ACTIVE    ("view-fullscreen",     gdisp && fullscreen);
-  SET_VISIBLE   ("view-move-to-screen", gdisp && n_screens > 1);
+  SET_SENSITIVE ("view-shrink-wrap", gdisp);
+  SET_SENSITIVE ("view-fullscreen",  gdisp);
+  SET_ACTIVE    ("view-fullscreen",  gdisp && fullscreen);
+
+  window_actions_update (group, gdisp ? gdisp->shell : NULL);
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE

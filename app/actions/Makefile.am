@@ -136,7 +136,9 @@ libappactions_a_SOURCES = \
 	view-actions.c			\
 	view-actions.h			\
 	view-commands.c			\
-	view-commands.h
+	view-commands.h			\
+	window-actions.c		\
+	window-actions.h
 
 
 EXTRA_DIST = \

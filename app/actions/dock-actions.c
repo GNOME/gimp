@@ -31,21 +31,21 @@
 #include "actions.h"
 #include "dock-actions.h"
 #include "dock-commands.h"
+#include "window-actions.h"
 
 #include "gimp-intl.h"
 
 
 static GimpActionEntry dock_actions[] =
 {
+  { "dock-move-to-screen-menu", GIMP_STOCK_MOVE_TO_SCREEN,
+    N_("M_ove to Screen"), NULL, NULL, NULL,
+    GIMP_HELP_DOCK_CHANGE_SCREEN },
+
   { "dock-close", GTK_STOCK_CLOSE,
     N_("Close Dock"), "<control>W", NULL,
     G_CALLBACK (dock_close_cmd_callback),
-    GIMP_HELP_DOCK_CLOSE },
-
-  { "dock-move-to-screen", GIMP_STOCK_MOVE_TO_SCREEN,
-    N_("M_ove to Screen..."), NULL, NULL,
-    G_CALLBACK (dock_change_screen_cmd_callback),
-    GIMP_HELP_DOCK_CHANGE_SCREEN }
+    GIMP_HELP_DOCK_CLOSE }
 };
 
 static GimpToggleActionEntry dock_toggle_actions[] =
@@ -74,6 +74,10 @@ dock_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_toggle_actions (group,
                                         dock_toggle_actions,
                                         G_N_ELEMENTS (dock_toggle_actions));
+
+  window_actions_setup (group,
+                        GIMP_HELP_DOCK_CHANGE_SCREEN,
+                        G_CALLBACK (dock_move_to_screen_cmd_callback));
 }
 
 void
@@ -81,15 +85,15 @@ dock_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
   GtkWidget *widget    = action_data_get_widget (data);
-  GtkWidget *toplevel  = gtk_widget_get_toplevel (widget);
-  gint       n_screens = 1;
+  GtkWidget *toplevel  = NULL;
+
+  if (widget)
+    toplevel = gtk_widget_get_toplevel (widget);
 
 #define SET_ACTIVE(action,active) \
         gimp_action_group_set_action_active (group, action, (active) != 0)
 #define SET_VISIBLE(action,active) \
         gimp_action_group_set_action_visible (group, action, (active) != 0)
-
-  n_screens = gdk_display_get_n_screens (gtk_widget_get_display (toplevel));
 
   if (GIMP_IS_IMAGE_DOCK (toplevel))
     {
@@ -107,7 +111,7 @@ dock_actions_update (GimpActionGroup *group,
       SET_VISIBLE ("dock-auto-follow-active", FALSE);
     }
 
-  SET_VISIBLE ("dock-move-to-screen", n_screens > 1);
+  window_actions_update (group, toplevel);
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE

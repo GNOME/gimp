@@ -16,33 +16,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#include "config.h"
-
-#include <string.h>
-
-#include <gtk/gtk.h>
-
-#include "menus-types.h"
-
-#include "file-menu.h"
-#include "image-menu.h"
-#include "plug-in-menus.h"
-#include "window-menu.h"
+#ifndef __DOCKABLE_MENU_H__
+#define __DOCKABLE_MENU_H__
 
 
-void
-image_menu_setup (GimpUIManager *manager,
-                  const gchar   *ui_path)
-{
-  gchar *path;
+void   dockable_menu_setup (GimpUIManager *manager,
+                            const gchar   *ui_path);
 
-  if (! strcmp (ui_path, "/dummy-menubar"))
-    ui_path = "/dummy-menubar/image-popup";
 
-  file_menu_setup (manager, ui_path);
-  plug_in_menus_setup (manager, ui_path);
-
-  path = g_strconcat (ui_path, "/View", NULL);
-  window_menu_setup (manager, "view", path);
-  g_free (path);
-}
+#endif /* __DOCKABLE_MENU_H__ */

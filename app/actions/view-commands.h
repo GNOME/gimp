@@ -85,9 +85,10 @@ void   view_padding_color_cmd_callback         (GtkAction *action,
 void   view_shrink_wrap_cmd_callback           (GtkAction *action,
                                                 gpointer   data);
 void   view_fullscreen_cmd_callback            (GtkAction *action,
-						gpointer   data);
-void   view_change_screen_cmd_callback         (GtkAction *action,
-						gpointer   data);
+                                                gpointer   data);
+void   view_move_to_screen_cmd_callback        (GtkAction *action,
+                                                GtkAction *current,
+                                                gpointer   data);
 
 
 #endif /* __VIEW_COMMANDS_H__ */

@@ -67,15 +67,10 @@
 
 /*  local function prototypes  */
 
-static void   view_padding_color_dialog_update    (GimpColorDialog      *dialog,
-                                                   const GimpRGB        *color,
-                                                   GimpColorDialogState  state,
-                                                   GimpDisplayShell     *shell);
-static void   view_change_screen_confirm_callback (GtkWidget            *dialog,
-                                                   gint                  value,
-                                                   gpointer              data);
-static void   view_change_screen_destroy_callback (GtkWidget            *dialog,
-                                                   GtkWidget            *shell);
+static void   view_padding_color_dialog_update (GimpColorDialog      *dialog,
+                                                const GimpRGB        *color,
+                                                GimpColorDialogState  state,
+                                                GimpDisplayShell     *shell);
 
 
 /*  public functions  */
@@ -672,49 +667,27 @@ view_fullscreen_cmd_callback (GtkAction *action,
 }
 
 void
-view_change_screen_cmd_callback (GtkAction *action,
-                                 gpointer   data)
+view_move_to_screen_cmd_callback (GtkAction *action,
+                                  GtkAction *current,
+                                  gpointer   data)
 {
   GimpDisplay *gdisp;
-  GdkScreen   *screen;
-  GdkDisplay  *display;
-  gint         cur_screen;
-  gint         num_screens;
-  GtkWidget   *dialog;
+  gint         value;
   return_if_no_display (gdisp, data);
 
-  dialog = g_object_get_data (G_OBJECT (gdisp->shell),
-                              "gimp-change-screen-dialog");
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  if (dialog)
+  if (value != gdk_screen_get_number (gtk_widget_get_screen (gdisp->shell)))
     {
-      gtk_window_present (GTK_WINDOW (dialog));
-      return;
+      GdkDisplay *display;
+      GdkScreen  *screen;
+
+      display = gtk_widget_get_display (gdisp->shell);
+      screen  = gdk_display_get_screen (display, value);
+
+      if (screen)
+        gtk_window_set_screen (GTK_WINDOW (gdisp->shell), screen);
     }
-
-  screen  = gtk_widget_get_screen (gdisp->shell);
-  display = gtk_widget_get_display (gdisp->shell);
-
-  cur_screen  = gdk_screen_get_number (screen);
-  num_screens = gdk_display_get_n_screens (display);
-
-  dialog = gimp_query_int_box ("Move Display to Screen",
-                               gdisp->shell,
-                               NULL, NULL,
-                               "Enter destination screen",
-                               cur_screen, 0, num_screens - 1,
-                               G_OBJECT (gdisp->shell), "destroy",
-                               view_change_screen_confirm_callback,
-                               gdisp->shell);
-
-  g_object_set_data (G_OBJECT (gdisp->shell), "gimp-change-screen-dialog",
-                     dialog);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (view_change_screen_destroy_callback),
-                    gdisp->shell);
-
-  gtk_widget_show (dialog);
 }
 
 
@@ -752,25 +725,4 @@ view_padding_color_dialog_update (GimpColorDialog      *dialog,
     default:
       break;
     }
-}
-
-static void
-view_change_screen_confirm_callback (GtkWidget *dialog,
-                                     gint       value,
-                                     gpointer   data)
-{
-  GdkScreen *screen;
-
-  screen = gdk_display_get_screen (gtk_widget_get_display (GTK_WIDGET (data)),
-                                   value);
-
-  if (screen)
-    gtk_window_set_screen (GTK_WINDOW (data), screen);
-}
-
-static void
-view_change_screen_destroy_callback (GtkWidget *dialog,
-                                     GtkWidget *shell)
-{
-  g_object_set_data (G_OBJECT (shell), "gimp-change-screen-dialog", NULL);
 }

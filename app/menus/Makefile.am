@@ -6,6 +6,8 @@ libappmenus_a_SOURCES = \
 	menus-types.h		\
 	menus.c			\
 	menus.h			\
+	dockable-menu.c		\
+	dockable-menu.h		\
 	file-menu.c		\
 	file-menu.h		\
 	image-menu.c		\
@@ -15,7 +17,9 @@ libappmenus_a_SOURCES = \
 	tool-options-menu.c	\
 	tool-options-menu.h	\
 	toolbox-menu.c		\
-	toolbox-menu.h
+	toolbox-menu.h		\
+	window-menu.c		\
+	window-menu.h
 
 
 EXTRA_DIST = \

@@ -1,3 +1,30 @@
+2005-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/Makefile.am
+	* app/actions/window-actions.[ch]: new files holding utility
+	functions to create actions to move windows to other screens.
+
+	* app/actions/dock-actions.c
+	* app/actions/dock-commands.[ch]
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]: use the new actions instead of
+	the change screen dialog.
+
+	* app/menus/Makefile.am
+	* app/menus/window-menu.[ch]: new files which create menu items
+	for above actions.
+
+	* app/menus/dockable-menu.[ch]: new files using above window-menu
+	utility functions.
+
+	* app/menus/image-menu.c: use them here too.
+
+	* app/menus/menus.c: set a setup_func for the "<Dockable>"
+	UI manager.
+
+	* menus/dockable-menu.xml.in
+	* menus/image-menu.xml.in: changed accordingly.
+
 2005-01-26  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimp/gimpdrawablepreview.c: set preview bounds correctly

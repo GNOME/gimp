@@ -22,7 +22,8 @@
 
 void   dock_close_cmd_callback             (GtkAction *action,
                                             gpointer   data);
-void   dock_change_screen_cmd_callback     (GtkAction *action,
+void   dock_move_to_screen_cmd_callback    (GtkAction *action,
+                                            GtkAction *current,
                                             gpointer   data);
 
 void   dock_toggle_image_menu_cmd_callback (GtkAction *action,

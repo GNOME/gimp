@@ -40,6 +40,7 @@
 #include "widgets/gimpactionfactory.h"
 #include "widgets/gimpmenufactory.h"
 
+#include "dockable-menu.h"
 #include "image-menu.h"
 #include "menus.h"
 #include "tool-options-menu.h"
@@ -155,7 +156,7 @@ menus_init (Gimp              *gimp,
                                       "dock",
                                       NULL,
                                       "/dockable-popup",
-                                      "dockable-menu.xml", NULL,
+                                      "dockable-menu.xml", dockable_menu_setup,
                                       NULL);
 
   gimp_menu_factory_manager_register (global_menu_factory, "<Brushes>",
