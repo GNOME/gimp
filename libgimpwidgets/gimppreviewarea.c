@@ -772,7 +772,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
           for (col = x; col < x + width; col++, s1 += 2, s2 += 2, d+= 3)
             {
-              guchar inter[1];
+              guchar inter[2];
 
               inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * opacity) >> 8;
 
@@ -1232,7 +1232,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
                 default:
                   {
-                    guchar inter[1];
+                    guchar inter[2];
 
                     inter[1] = ((s1[1] << 8) + (s2[1] - s1[1]) * m[0]) >> 8;
 

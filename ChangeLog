@@ -1,3 +1,7 @@
+2004-09-08  DindinX  <david@dindinx.org>
+
+	* libgimpwidgets/gimppreviewarea.c: fixed a stupid typo.
+
 2004-09-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_fill):
