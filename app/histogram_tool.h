@@ -33,6 +33,7 @@ struct _HistogramToolDialog
   GtkWidget       *channel_menu;
   HistogramWidget *histogram;
   GimpHistogram   *hist;
+  GtkWidget       *gradient;
 
   gdouble  mean;
   gdouble  std_dev;

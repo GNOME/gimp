@@ -40,8 +40,10 @@ typedef struct {
   gint cellwidth;
   gint cellheight;
   gchar *placement;
+  gboolean free_placement_string;
   gint rank[PIXPIPE_MAXDIM];
   gchar *selection[PIXPIPE_MAXDIM];
+  gboolean free_selection_string;
 } PixPipeParams;
 
 /* Initalize with dummy values */

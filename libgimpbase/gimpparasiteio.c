@@ -41,8 +41,12 @@ pixpipeparams_init (PixPipeParams *params)
   params->cols = 1;
   params->rows = 1;
   params->placement = "constant";
+  params->free_placement_string = FALSE;
   for (i = 0; i < PIXPIPE_MAXDIM; i++)
-    params->selection[i] = "random";
+    {
+      params->selection[i] = "random";
+      params->free_selection_string = FALSE;
+    }
   params->rank[0] = 1;
   for (i = 1; i < PIXPIPE_MAXDIM; i++)
     params->rank[i] = 0;
@@ -53,7 +57,7 @@ pixpipeparams_parse (gchar	   *string,
 		     PixPipeParams *params)
 {
   guchar *p, *q, *r;		/* Don't you love single-char identifiers?  */
-  gint i;
+  gint i;                       /*          No, we don't!!   <Sven>         */ 
 
   q = string;
   while ((p = strtok (q, " \r\n")) != NULL)
@@ -101,7 +105,10 @@ pixpipeparams_parse (gchar	   *string,
       else if (strcmp (p, "placement") == 0)
 	{
 	  if (r)
-	    params->placement = g_strdup (r + 1);
+	    {
+	      params->placement = g_strdup (r + 1);
+	      params->free_placement_string = TRUE;
+	    }
 	}
       else if (strncmp (p, "rank", strlen ("rank")) == 0 && r)
 	{
@@ -118,7 +125,10 @@ pixpipeparams_parse (gchar	   *string,
 	    {
 	      i = atoi (p + strlen ("sel"));
 	      if (i >= 0 && i < params->dim)
-		params->selection[i] = g_strdup (r + 1);
+		{
+		  params->selection[i] = g_strdup (r + 1);
+		  params->free_selection_string = TRUE;
+		}
 	    }
 	}
       if (r)

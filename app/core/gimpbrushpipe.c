@@ -55,6 +55,7 @@ static void paint_line_pixmap_mask(GImage	   *dest,
 				   int              width,
 				   int              mode);
 
+
 static void
 gimp_brush_pixmap_destroy (GtkObject *object)
 {
@@ -324,6 +325,9 @@ gimp_brush_pipe_load (char *filename)
       pipe->rank = g_new (int, pipe->dimension);
       pipe->select = g_new (PipeSelectModes, pipe->dimension);
       pipe->index = g_new (int, pipe->dimension);
+      /* placement is not used at all ?? */
+      if (params.free_placement_string)
+	g_free (params.placement);
       for (i = 0; i < pipe->dimension; i++)
 	{
 	  pipe->rank[i] = params.rank[i];
@@ -343,6 +347,8 @@ gimp_brush_pipe_load (char *filename)
 	    pipe->select[i] = PIPE_SELECT_TILT_Y;
 	  else
 	    pipe->select[i] = PIPE_SELECT_CONSTANT;
+	  if (params.free_selection_string)
+	    g_free (params.selection[i]);
 	  pipe->index[i] = 0;
 	}
     }

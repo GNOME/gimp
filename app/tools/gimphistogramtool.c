@@ -29,7 +29,8 @@
 
 #include "libgimp/gimpintl.h"
 
-#define TEXT_WIDTH 45
+#define TEXT_WIDTH       45
+#define GRADIENT_HEIGHT  15
 
 /*  the histogram structures  */
 
@@ -57,6 +58,7 @@ static void   histogram_tool_value_callback  (GtkWidget *, gpointer);
 static void   histogram_tool_red_callback    (GtkWidget *, gpointer);
 static void   histogram_tool_green_callback  (GtkWidget *, gpointer);
 static void   histogram_tool_blue_callback   (GtkWidget *, gpointer);
+static void   histogram_tool_gradient_draw   (GtkWidget *, gint);
 
 static void   histogram_tool_dialog_update   (HistogramToolDialog *, gint, gint);
 
@@ -332,6 +334,15 @@ histogram_tool_new_dialog ()
   gtk_container_add (GTK_CONTAINER (frame), GTK_WIDGET(htd->histogram));
   gtk_widget_show (GTK_WIDGET(htd->histogram));
   gtk_widget_show (frame);
+
+  /*  The gradient below the histogram */
+  htd->gradient = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (htd->gradient), 
+		    HISTOGRAM_WIDTH, GRADIENT_HEIGHT);
+  gtk_box_pack_start (GTK_BOX (vbox2), htd->gradient, FALSE, FALSE, 0);
+  gtk_widget_show (htd->gradient);
+  histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_VALUE);
+
   gtk_widget_show (vbox2);
 
   /*  The table containing histogram information  */
@@ -390,6 +401,7 @@ histogram_tool_value_callback (GtkWidget *widget,
     {
       htd->channel = HISTOGRAM_VALUE;
       histogram_widget_channel (htd->histogram, htd->channel);
+      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_VALUE);
     }
 }
 
@@ -405,6 +417,7 @@ histogram_tool_red_callback (GtkWidget *widget,
     {
       htd->channel = HISTOGRAM_RED;
       histogram_widget_channel (htd->histogram, htd->channel);
+      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_RED);
     }
 }
 
@@ -420,6 +433,7 @@ histogram_tool_green_callback (GtkWidget *widget,
     {
       htd->channel = HISTOGRAM_GREEN;
       histogram_widget_channel (htd->histogram, htd->channel);
+      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_GREEN);
     }
 }
 
@@ -435,5 +449,47 @@ histogram_tool_blue_callback (GtkWidget *widget,
     {
       htd->channel = HISTOGRAM_BLUE;
       histogram_widget_channel (htd->histogram, htd->channel);
+      histogram_tool_gradient_draw (htd->gradient, HISTOGRAM_BLUE);
     }
 }
+
+static void
+histogram_tool_gradient_draw (GtkWidget *gradient,
+			      gint       channel)
+{
+  guchar buf[HISTOGRAM_WIDTH * 3];
+  guchar r, g, b;
+  gint i;
+
+  r = g = b = 0;
+  switch (channel) 
+    {
+    case HISTOGRAM_VALUE:
+    case HISTOGRAM_ALPHA:  r = g = b = 1; 
+      break;
+    case HISTOGRAM_RED:    r = 1;         
+      break;
+    case HISTOGRAM_GREEN:  g = 1;         
+      break;
+    case HISTOGRAM_BLUE:   b = 1;        
+      break;
+    default:
+      g_warning ("unknown channel type, can't happen\n");
+      break;
+    }
+  
+  for (i = 0; i < HISTOGRAM_WIDTH; i++)
+    {
+      buf[3*i+0] = i*r;
+      buf[3*i+1] = i*g;
+      buf[3*i+2] = i*b;
+    }
+
+  for (i = 0; i < GRADIENT_HEIGHT; i++)
+    gtk_preview_draw_row (GTK_PREVIEW (gradient),
+			  buf, 0, i, HISTOGRAM_WIDTH);
+  
+  gtk_widget_queue_draw (gradient);
+}
+
+ 

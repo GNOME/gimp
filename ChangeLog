@@ -1,3 +1,16 @@
+Thu Nov  4 20:46:25 MET 1999  Sven Neumann <sven.gimp.org>
+	
+	* app/channel.c: get rid of compiler warnings
+
+	* app/histogram_tool.c
+	* app/histogram_tool.h: added a gradient below the histogram so 
+	it looks more like the curves and levels tool
+
+	* app/gimpbrushpipe.c
+	* libgimp/parasiteio.c
+	* libgimp/parasiteio.h: plugged another mem-leaks. At least 
+	The GIMP now starts without leaking memory...
+
 Thu Nov  4 00:59:01 MET 1999  Sven Neumann <sven.gimp.org>
 
 	* app/file_new_dialog.c

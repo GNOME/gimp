@@ -103,12 +103,6 @@ gimp_channel_init (GimpChannel *channel)
 {
 }
 
-/**********************/
-/*  Static variables  */
-/**********************/
-
-static gint channel_get_count = 0;
-
 /**************************/
 /*  Function definitions  */
 /**************************/
@@ -1064,6 +1058,9 @@ channel_combine_ellipse (Channel    *mask,
 		case SUB :
 		  channel_sub_segment (mask, x1, i, (x2 - x1), 255);
 		  break;
+		default:
+		  g_warning ("Only ADD, REPLACE and SUB are valid for channel_combine!");
+		  break;
 		}
 	    }
 	  /*  antialiasing  */
@@ -1104,6 +1101,9 @@ channel_combine_ellipse (Channel    *mask,
 			case SUB:
 			  channel_sub_segment (mask, x0, i, j - x0, last);
 			  break;
+			default:
+			  g_warning ("Only ADD, REPLACE and SUB are valid for channel_combine!");
+			  break;
 			}
 		    }
 
@@ -1124,6 +1124,8 @@ channel_combine_ellipse (Channel    *mask,
 		    channel_add_segment (mask, x0, i, j - x0, last);
 		  else if (op == SUB)
 		    channel_sub_segment (mask, x0, i, j - x0, last);
+		  else
+		    g_warning ("Only ADD, REPLACE and SUB are valid for channel_combine!");
 		}
 	    }
 
