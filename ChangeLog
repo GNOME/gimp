@@ -1,3 +1,28 @@
+2002-03-29  Tor Lillqvist  <tml@iki.fi>
+
+	* configure.in: Start of changes for autoconfiscated build on
+	Win32. Mostly similar to how it is done in the gimp-1-2 branch:
+
+	Set LT_CURRENT_MINUS_AGE to $LT_CURRENT - $LT_AGE, this is used by
+	libtool in DLL names, we need it for the *.rc.in files in case we
+	want to have version resources in DLLs (these include the original
+	filename). AC_SUBST it.
+
+	Call AC_LIBTOOL_WIN32_DLL.
+
+	Test for Win32 platform and native Win32, set automake
+	conditionals PLATFORM_WIN32 and OS_WIN32. Set PATHSEP to ';' or
+	':', AC_SUBST it.
+
+	If on Win32, test for lib.exe availability (to build MS import
+	libraries), set automake conditional MS_LIB_AVAILABLE.
+
+	Include GLIB_LIBS when checking for bind_textdomain_codeset, in
+	case using a separate -lintl.
+
+	Don't try to link with -lX11 when looking for libXpm unless the
+	GDK backend is x11. On Win32 we use the "no-X" version of libXpm.
+
 2002-03-28  Nathan Summers  <rock@gimp.org>
 
 	* libgimptool
