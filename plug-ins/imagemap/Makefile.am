@@ -34,67 +34,38 @@ imagemap_SOURCES = \
 	imap_circle.c			\
 	imap_circle.h			\
 	imap_cmd_clear.c		\
-	imap_cmd_clear.h		\
 	imap_cmd_copy.c			\
-	imap_cmd_copy.h			\
 	imap_cmd_copy_object.c		\
-	imap_cmd_copy_object.h		\
 	imap_cmd_create.c		\
-	imap_cmd_create.h		\
 	imap_cmd_cut.c			\
-	imap_cmd_cut.h			\
 	imap_cmd_cut_object.c		\
-	imap_cmd_cut_object.h		\
 	imap_cmd_delete.c		\
-	imap_cmd_delete.h		\
 	imap_cmd_delete_point.c		\
-	imap_cmd_delete_point.h		\
 	imap_cmd_edit_object.c		\
-	imap_cmd_edit_object.h		\
 	imap_cmd_gimp_guides.c		\
-	imap_cmd_gimp_guides.h		\
 	imap_cmd_guides.c		\
-	imap_cmd_guides.h		\
 	imap_cmd_insert_point.c		\
-	imap_cmd_insert_point.h		\
 	imap_cmd_move.c			\
-	imap_cmd_move.h			\
 	imap_cmd_move_down.c		\
-	imap_cmd_move_down.h		\
 	imap_cmd_move_sash.c		\
-	imap_cmd_move_sash.h		\
 	imap_cmd_move_selected.c	\
-	imap_cmd_move_selected.h	\
 	imap_cmd_move_to_front.c	\
-	imap_cmd_move_to_front.h	\
 	imap_cmd_move_up.c		\
-	imap_cmd_move_up.h		\
 	imap_cmd_object_down.c		\
-	imap_cmd_object_down.h		\
 	imap_cmd_object_move.c		\
-	imap_cmd_object_move.h		\
 	imap_cmd_object_up.c		\
-	imap_cmd_object_up.h		\
 	imap_cmd_paste.c		\
-	imap_cmd_paste.h		\
 	imap_cmd_select.c		\
-	imap_cmd_select.h		\
 	imap_cmd_select_all.c		\
-	imap_cmd_select_all.h		\
 	imap_cmd_select_next.c		\
-	imap_cmd_select_next.h		\
 	imap_cmd_select_prev.c		\
-	imap_cmd_select_prev.h		\
 	imap_cmd_select_region.c	\
-	imap_cmd_select_region.h	\
 	imap_cmd_send_to_back.c		\
-	imap_cmd_send_to_back.h		\
 	imap_cmd_unselect.c		\
-	imap_cmd_unselect.h		\
 	imap_cmd_unselect_all.c		\
-	imap_cmd_unselect_all.h		\
 	imap_command.c			\
 	imap_command.h			\
+	imap_commands.h			\
 	imap_csim_lex.c			\
 	imap_csim_parse.c		\
 	imap_csim_parse.h		\

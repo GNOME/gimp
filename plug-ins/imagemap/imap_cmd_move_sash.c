@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_copy.h"
-#include "imap_cmd_edit_object.h"
+#include "imap_commands.h"
 #include "imap_main.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -36,8 +35,8 @@ COMMAND_PROTO(move_sash_command);
 CommandClass_t move_sash_command_class = {
    move_sash_command_destruct,
    move_sash_command_execute,
-   move_sash_command_undo,
-   move_sash_command_redo
+   NULL, 			/* move_sash_command_undo */
+   NULL				/* move_sash_command_redo */
 };
 
 typedef struct {
@@ -128,7 +127,6 @@ sash_end(GtkWidget *widget, GdkEventButton *event, gpointer data)
    if (obj->class->normalize)
       object_normalize(obj);
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_COPY);
-/*   redraw_preview(); */
    preview_thaw();
    show_url();
 }
@@ -147,14 +145,4 @@ move_sash_command_execute(Command_t *parent)
    gdk_gc_set_function(get_preferences()->selected_gc, GDK_EQUIV);
 
    return CMD_APPEND;
-}
-
-static void
-move_sash_command_undo(Command_t *parent)
-{
-}
-
-static void
-move_sash_command_redo(Command_t *parent)
-{
 }

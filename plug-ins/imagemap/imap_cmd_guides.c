@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,13 +23,10 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <gtk/gtk.h>
 
-#include "imap_cmd_create.h"
+#include "imap_commands.h"
 #include "imap_default_dialog.h"
-#include "imap_cmd_guides.h"
 #include "imap_main.h"
 #include "imap_rectangle.h"
 #include "imap_table.h"
@@ -87,7 +84,6 @@ guides_ok_cb(gpointer data)
       y += height + vspace;
    }
    subcommand_end();
-   redraw_preview();
 }
 
 static void

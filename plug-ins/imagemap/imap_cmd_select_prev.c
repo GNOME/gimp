@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +25,17 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_select.h"
-#include "imap_cmd_select_prev.h"
-#include "imap_cmd_unselect.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t select_prev_command_execute(Command_t *parent);
-static void select_prev_command_undo(Command_t *command);
-static void select_prev_command_redo(Command_t *command);
 
 static CommandClass_t select_prev_command_class = {
    NULL,			/* select_prev_command_destruct */
    select_prev_command_execute,
-   select_prev_command_undo,
-   select_prev_command_redo
+   NULL,			/* select_prev_command_undo */
+   NULL				/* select_prev_command_redo */
 };
 
 typedef struct {
@@ -79,16 +74,4 @@ select_prev_command_execute(Command_t *parent)
    object_list_select_prev(list);
    object_list_remove_select_cb(list, id);
    return CMD_APPEND;
-}
-
-static void
-select_prev_command_undo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
-}
-
-static void
-select_prev_command_redo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
 }

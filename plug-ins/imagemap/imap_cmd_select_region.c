@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,23 +25,19 @@
 
 #include <gtk/gtk.h>
 
+#include "imap_commands.h"
 #include "imap_rectangle.h"
-#include "imap_cmd_select.h"
-#include "imap_cmd_select_region.h"
-#include "imap_cmd_unselect_all.h"
 #include "imap_main.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t select_region_command_execute(Command_t *parent);
-static void select_region_command_undo(Command_t *parent);
-static void select_region_command_redo(Command_t *parent);
 
 static CommandClass_t select_region_command_class = {
    NULL,			/* select_region_command_destruct, */
    select_region_command_execute,
-   select_region_command_undo,
-   select_region_command_redo
+   NULL, 			/* select_region_command_undo */
+   NULL				/* select_region_command_redo */
 };
 
 typedef struct {
@@ -121,7 +117,6 @@ select_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
    object_list_remove_select_cb(command->list, id);
 
    if (count) {
-      redraw_preview();		/* Fix me! */
       command_list_add(&command->parent);
    } else {			/* Nothing selected */
       if (command->unselect_command->sub_commands)
@@ -141,19 +136,7 @@ select_region_command_execute(Command_t *parent)
    g_signal_connect(G_OBJECT(command->widget), "motion_notify_event", 
                     G_CALLBACK (select_motion), command);   
 
-   gdk_gc_set_function(get_preferences()->normal_gc, GDK_EQUIV);
+   gdk_gc_set_function(get_preferences()->normal_gc, GDK_XOR);
 
    return CMD_IGNORE;
-}
-
-static void
-select_region_command_undo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
-}
-
-static void
-select_region_command_redo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
 }

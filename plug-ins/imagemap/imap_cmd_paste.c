@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_create.h"
-#include "imap_cmd_paste.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -69,7 +67,6 @@ paste_command_execute(Command_t *parent)
 
    id = object_list_add_add_cb(command->list, paste_one_object, command);
    object_list_paste(command->list);
-   redraw_preview();		/* Fix me! */
    object_list_remove_add_cb(command->list, id);
    return CMD_APPEND;
 }

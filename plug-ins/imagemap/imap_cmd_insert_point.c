@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_insert_point.h"
+#include "imap_commands.h"
 #include "imap_main.h"
 #include "imap_polygon.h"
 

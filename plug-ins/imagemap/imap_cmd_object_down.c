@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_copy.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -69,7 +68,6 @@ object_down_command_execute(Command_t *parent)
 {
    ObjectDownCommand_t *command = (ObjectDownCommand_t*) parent;
    object_list_move_down(command->list, command->obj);
-   redraw_preview();		/* fix me! */
    return CMD_APPEND;
 }
 
@@ -78,5 +76,4 @@ object_down_command_undo(Command_t *parent)
 {
    ObjectDownCommand_t *command = (ObjectDownCommand_t*) parent;
    object_list_move_up(command->list, command->obj);
-   redraw_preview();		/* fix me! */
 }

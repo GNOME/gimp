@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,7 @@
 
 #include "libgimp/gimp.h"
 
-#include "imap_cmd_move.h"
-#include "imap_cmd_object_move.h"
+#include "imap_commands.h"
 #include "imap_main.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -153,7 +152,7 @@ button_release(GtkWidget *widget, GdkEventButton *event, gpointer data)
       command_list_add(object_move_command_new(command->obj, command->obj_x, 
 					       command->obj_y));
 
-   preview_thaw();
+   //   preview_thaw();
 }
 
 static CmdExecuteValue_t
@@ -162,7 +161,7 @@ move_command_execute(Command_t *parent)
    MoveCommand_t *command = (MoveCommand_t*) parent;
    GtkWidget *widget = command->preview->preview;
 
-   preview_freeze();
+   //   preview_freeze();
    g_signal_connect(G_OBJECT(widget), "button_release_event", 
                     G_CALLBACK (button_release), command);   
    g_signal_connect(G_OBJECT(widget), "motion_notify_event", 

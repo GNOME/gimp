@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_select.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -66,7 +65,6 @@ select_command_execute(Command_t *parent)
 {
    SelectCommand_t *command = (SelectCommand_t*) parent;
    object_select(command->obj);
-   redraw_preview();		/* Fix me! */
    return CMD_APPEND;
 }
 
@@ -75,5 +73,4 @@ select_command_undo(Command_t *parent)
 {
    SelectCommand_t *command = (SelectCommand_t*) parent;
    object_unselect(command->obj);
-   redraw_preview();		/* Fix me! */
 }

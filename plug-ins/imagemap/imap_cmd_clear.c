@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,21 +25,17 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_clear.h"
-#include "imap_cmd_delete.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t clear_command_execute(Command_t *parent);
-static void clear_command_undo(Command_t *parent);
-static void clear_command_redo(Command_t *parent);
 
 static CommandClass_t clear_command_class = {
    NULL,			/* clear_command_destruct */
    clear_command_execute,
-   clear_command_undo,
-   clear_command_redo
+   NULL,			/* clear_command_undo */
+   NULL				/* clear_command_redo */
 };
 
 typedef struct {
@@ -73,18 +69,5 @@ clear_command_execute(Command_t *parent)
    object_list_delete_selected(command->list);
    object_list_remove_remove_cb(command->list, id);
 
-   redraw_preview();		/* Fix me! */
    return CMD_APPEND;
-}
-
-static void
-clear_command_undo(Command_t *parent)
-{
-   redraw_preview();		/* Fix me! */
-}
-
-static void
-clear_command_redo(Command_t *parent)
-{
-   redraw_preview();		/* Fix me! */
 }

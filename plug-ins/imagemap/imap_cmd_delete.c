@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_delete.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 

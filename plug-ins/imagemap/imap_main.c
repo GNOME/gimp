@@ -36,28 +36,7 @@
 
 #include "imap_about.h"
 #include "imap_circle.h"
-#include "imap_cmd_clear.h"
-#include "imap_cmd_copy.h"
-#include "imap_cmd_cut.h"
-#include "imap_cmd_create.h"
-#include "imap_cmd_gimp_guides.h"
-#include "imap_cmd_guides.h"
-#include "imap_cmd_move.h"
-#include "imap_cmd_move_down.h"
-#include "imap_cmd_move_sash.h"
-#include "imap_cmd_move_selected.h"
-#include "imap_cmd_move_to_front.h"
-#include "imap_cmd_move_up.h"
-#include "imap_cmd_object_move.h"
-#include "imap_cmd_paste.h"
-#include "imap_cmd_select.h"
-#include "imap_cmd_select_all.h"
-#include "imap_cmd_select_next.h"
-#include "imap_cmd_select_prev.h"
-#include "imap_cmd_select_region.h"
-#include "imap_cmd_send_to_back.h"
-#include "imap_cmd_unselect.h"
-#include "imap_cmd_unselect_all.h"
+#include "imap_commands.h"
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_file.h"
@@ -1200,12 +1179,13 @@ key_release_cb(GtkWidget *widget, GdkEventKey *event)
 static void
 geometry_changed(Object_t *obj, gpointer data)
 {
-   redraw_preview();		/* Fix me! */
+   redraw_preview();
 }
 
 static void
 data_changed(Object_t *obj, gpointer data)
 {
+   redraw_preview();
    set_all_sensitivities();
 }
 

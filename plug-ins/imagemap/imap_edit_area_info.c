@@ -30,7 +30,7 @@
 #include <gtk/gtk.h>
 
 #include "imap_browse.h"
-#include "imap_cmd_edit_object.h"
+#include "imap_commands.h"
 #include "imap_default_dialog.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"

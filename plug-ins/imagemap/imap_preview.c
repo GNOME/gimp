@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@
 
 #include "libgimp/gimp.h"
 
-#include "imap_cmd_edit_object.h"
+#include "imap_commands.h"
 #include "imap_grid.h"
 #include "imap_main.h"
 #include "imap_popup.h"
@@ -286,7 +286,7 @@ render_preview(GtkWidget *preview, GimpPixelRgn *srcrgn)
    }
 }
 
-static gint
+static gboolean
 arrow_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
 {
    if (event->button == 1)
@@ -295,53 +295,46 @@ arrow_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
    return FALSE;
 }
 
-static gint
+static gboolean
 preview_expose(GtkWidget *widget, GdkEventExpose *event)
 {
-   Preview_t *data = preview_user_data(widget);
-
-   g_signal_handler_block(G_OBJECT(widget), data->exp_id);
-   gtk_widget_draw(widget, (event) ? &event->area : NULL);
-   g_signal_handler_unblock(G_OBJECT(widget), data->exp_id );
-
    draw_grid(widget);
    draw_shapes(widget);
-
    return FALSE;
 }
 
 void
-add_preview_motion_event(Preview_t *preview, GtkSignalFunc func)
+add_preview_motion_event(Preview_t *preview, GCallback func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview),
-		      "motion_notify_event", func, NULL);
+   g_signal_connect(G_OBJECT(preview->preview), "motion_notify_event", 
+		    func, NULL);
 }
 
 void
-add_enter_notify_event(Preview_t *preview, GtkSignalFunc func)
+add_enter_notify_event(Preview_t *preview, GCallback func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview),
-		      "enter_notify_event", func, NULL);
+   g_signal_connect(G_OBJECT(preview->preview), "enter_notify_event", 
+		    func, NULL);
 }
 
 void
-add_leave_notify_event(Preview_t *preview, GtkSignalFunc func)
+add_leave_notify_event(Preview_t *preview, GCallback func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview),
-		      "leave_notify_event", func, NULL);
+   g_signal_connect(G_OBJECT(preview->preview), "leave_notify_event", 
+		    func, NULL);
 }
 
 void
-add_preview_button_press_event(Preview_t *preview, GtkSignalFunc func)
+add_preview_button_press_event(Preview_t *preview, GCallback func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview),
-		      "button_press_event", func, NULL);
+   g_signal_connect(G_OBJECT(preview->preview), "button_press_event", 
+		    func, NULL);
 }
 
 void
 preview_redraw(Preview_t *preview)
 {
-   preview_expose(preview->preview, NULL);
+  gtk_widget_queue_draw(preview->preview);
 }
 
 void
@@ -411,15 +404,14 @@ make_preview(GimpDrawable *drawable)
 
    gtk_object_set_user_data(GTK_OBJECT(preview), data);
    gtk_widget_set_events(GTK_WIDGET(preview), PREVIEW_MASK);
-   data->exp_id = gtk_signal_connect_after(GTK_OBJECT(preview), "expose_event",
-					   (GtkSignalFunc) preview_expose,
-					   data);
+   g_signal_connect_after(G_OBJECT(preview), "expose_event",
+			  G_CALLBACK(preview_expose), data);
 
    /* Handle drop of links in preview widget */
    gtk_drag_dest_set(preview, GTK_DEST_DEFAULT_ALL, target_table,
 		     2, GDK_ACTION_COPY);
-   gtk_signal_connect(GTK_OBJECT(preview), "drag_data_received",
-		      GTK_SIGNAL_FUNC(handle_drop), NULL);
+   g_signal_connect(G_OBJECT(preview), "drag_data_received",
+		    G_CALLBACK(handle_drop), NULL);
 
    data->width  = gimp_drawable_width(drawable->drawable_id);
    data->height = gimp_drawable_height(drawable->drawable_id);
@@ -428,7 +420,7 @@ make_preview(GimpDrawable *drawable)
    data->window = window = gtk_scrolled_window_new(NULL, NULL);
    width = (data->width > 600) ? 600 : data->width;
    height = (data->height > 400) ? 400 : data->height;
-   gtk_widget_set_usize(window, width, height);
+   gtk_widget_set_size_request(window, width, height);
    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
    gtk_widget_show(window);
@@ -449,9 +441,9 @@ make_preview(GimpDrawable *drawable)
    gtk_table_attach(GTK_TABLE(table), button, 0, 1, 0, 1, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_set_events(button,
-						 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-   gtk_signal_connect(GTK_OBJECT(button), "button_press_event",
-					  (GtkSignalFunc) arrow_cb, NULL);
+			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+   g_signal_connect(G_OBJECT(button), "button_press_event",
+		    G_CALLBACK(arrow_cb), NULL);
    gtk_widget_show(button);
 
    arrow = gtk_arrow_new(GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
@@ -461,9 +453,10 @@ make_preview(GimpDrawable *drawable)
    /* Create horizontal ruler */
    data->hruler = ruler = gtk_hruler_new();
    gtk_ruler_set_range(GTK_RULER(ruler), 0, data->width, 0, PREVIEW_SIZE);
-   gtk_signal_connect_object(GTK_OBJECT(preview), "motion_notify_event",
-			     (GtkSignalFunc) GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event,
-			     GTK_OBJECT(ruler));
+   g_signal_connect_swapped(G_OBJECT(preview), "motion_notify_event",
+			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
+			    G_OBJECT(ruler));
+
    gtk_table_attach(GTK_TABLE(table), ruler, 1, 2, 0, 1, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_show(ruler);
@@ -471,9 +464,9 @@ make_preview(GimpDrawable *drawable)
    /* Create vertical ruler */
    data->vruler = ruler = gtk_vruler_new();
    gtk_ruler_set_range(GTK_RULER(ruler), 0, data->height, 0, PREVIEW_SIZE);
-   gtk_signal_connect_object(GTK_OBJECT(preview), "motion_notify_event",
-			     (GtkSignalFunc) GTK_WIDGET_GET_CLASS (ruler)->motion_notify_event,
-			     GTK_OBJECT(ruler));
+   g_signal_connect_swapped(G_OBJECT(preview), "motion_notify_event",
+			    G_CALLBACK(GTK_WIDGET_GET_CLASS(ruler)->motion_notify_event),
+			    G_OBJECT(ruler));
    gtk_table_attach(GTK_TABLE(table), ruler, 0, 1, 1, 2, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_show(ruler);

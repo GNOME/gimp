@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,10 @@
 #ifndef _IMAP_PREVIEW_H
 #define _IMAP_PREVIEW_H
 
+#include <libgimp/gimp.h>
+
 typedef struct {
-   GimpDrawable 	*drawable;
+   GimpDrawable *drawable;
    GtkWidget	*window;
    GtkWidget 	*frame;
    GtkWidget	*preview;
@@ -33,8 +35,7 @@ typedef struct {
    GtkWidget	*vruler;
    gint		width;
    gint		height;
-   gint		exp_id;
-   GimpPixelRgn 	src_rgn;
+   GimpPixelRgn src_rgn;
 
    GdkCursorType cursor;
 } Preview_t;
@@ -42,10 +43,10 @@ typedef struct {
 Preview_t *make_preview(GimpDrawable *drawable);
 void preview_redraw(Preview_t *preview);
 
-void add_preview_motion_event(Preview_t *preview, GtkSignalFunc func);
-void add_enter_notify_event(Preview_t *preview, GtkSignalFunc func);
-void add_leave_notify_event(Preview_t *preview, GtkSignalFunc func);
-void add_preview_button_press_event(Preview_t *preview, GtkSignalFunc func);
+void add_preview_motion_event(Preview_t *preview, GCallback func);
+void add_enter_notify_event(Preview_t *preview, GCallback func);
+void add_leave_notify_event(Preview_t *preview, GCallback func);
+void add_preview_button_press_event(Preview_t *preview, GCallback func);
 
 gint preview_get_width(GtkWidget *preview);
 gint preview_get_height(GtkWidget *preview);

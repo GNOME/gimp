@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_delete_point.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 #include "imap_polygon.h"
 
 #include "libgimp/stdplugins-intl.h"
@@ -72,7 +71,6 @@ delete_point_command_execute(Command_t *parent)
 
    g_free(p->data);
    polygon->points = g_list_remove_link(polygon->points, p);
-   redraw_preview();		/* Fix me! */
    return CMD_APPEND;
 }
 

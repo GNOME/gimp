@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_edit_object.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -72,6 +71,4 @@ edit_object_command_undo(Command_t *parent)
 
    object_assign(command->copy, command->obj);
    object_assign(copy, command->copy);
-
-   redraw_preview();		/* Fix me! */
 }

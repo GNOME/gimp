@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2002 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_create.h"
-#include "imap_command.h"
+#include "imap_commands.h"
 #include "imap_default_dialog.h"
 #include "imap_grid.h"
 #include "imap_main.h"
@@ -273,6 +272,7 @@ object_select(Object_t *obj)
 {
    obj->selected = TRUE;
    object_list_callback_call(&obj->list->select_cb, obj);
+   object_emit_geometry_signal(obj);
 }
 
 void 
@@ -280,19 +280,21 @@ object_unselect(Object_t *obj)
 {
    obj->selected = FALSE;
    object_list_callback_call(&obj->list->select_cb, obj);
+   object_emit_geometry_signal(obj);
 }
 
 void
 object_move(Object_t *obj, gint dx, gint dy)
 {
    obj->class->move(obj, dx, dy);
-   object_list_callback_call(&obj->list->geometry_cb, obj);
+   object_emit_geometry_signal(obj);
 }
 
 void
 object_remove(Object_t *obj)
 {
    object_list_remove(obj->list, obj);
+   object_emit_geometry_signal(obj);
 }
 
 void 

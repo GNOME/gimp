@@ -32,10 +32,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_edit_object.h"
-#include "imap_cmd_select.h"
-#include "imap_cmd_unselect.h"
-#include "imap_cmd_unselect_all.h"
+#include "imap_commands.h"
 #include "imap_edit_area_info.h"
 #include "imap_main.h"
 #include "imap_misc.h"

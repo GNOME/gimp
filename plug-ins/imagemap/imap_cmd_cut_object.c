@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,22 +25,17 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_copy_object.h"
-#include "imap_cmd_cut_object.h"
-#include "imap_cmd_delete.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t cut_object_command_execute(Command_t *parent);
-static void cut_object_command_undo(Command_t *parent);
-static void cut_object_command_redo(Command_t *parent);
 
 static CommandClass_t cut_object_command_class = {
    NULL,			/* cut_object_command_destruct */
    cut_object_command_execute,
-   cut_object_command_undo,
-   cut_object_command_redo
+   NULL,			/* cut_object_command_undo */
+   NULL				/* cut_object_command_redo */
 };
 
 typedef struct {
@@ -64,18 +59,5 @@ cut_object_command_new(Object_t *obj)
 static CmdExecuteValue_t
 cut_object_command_execute(Command_t *parent)
 {
-   redraw_preview();		/* fix me! */
    return CMD_APPEND;
-}
-
-static void
-cut_object_command_undo(Command_t *parent)
-{
-   redraw_preview();		/* fix me! */
-}
-
-static void
-cut_object_command_redo(Command_t *parent)
-{
-   redraw_preview();		/* fix me! */
 }

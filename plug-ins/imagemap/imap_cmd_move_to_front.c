@@ -25,22 +25,17 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_create.h"
-#include "imap_cmd_delete.h"
-#include "imap_cmd_move_to_front.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
 static CmdExecuteValue_t move_to_front_command_execute(Command_t *parent);
-static void move_to_front_command_undo(Command_t *parent);
-static void move_to_front_command_redo(Command_t *parent);
 
 static CommandClass_t move_to_front_command_class = {
    NULL,			/* move_to_front_command_destruct, */
    move_to_front_command_execute,
-   move_to_front_command_undo,
-   move_to_front_command_redo
+   NULL,			/* move_to_front_command_undo */
+   NULL				/* move_to_front_command_redo */
 };
 
 typedef struct {
@@ -83,20 +78,7 @@ move_to_front_command_execute(Command_t *parent)
    id2 = object_list_add_add_cb(command->list, add_one_object, command);
    
    object_list_move_to_front(command->list);
-   redraw_preview();		/* Fix me! */
    object_list_remove_remove_cb(command->list, id1);
    object_list_remove_add_cb(command->list, id2);
    return CMD_APPEND;
-}
-
-static void
-move_to_front_command_undo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
-}
-
-static void
-move_to_front_command_redo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
 }

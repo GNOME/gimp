@@ -28,8 +28,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_delete_point.h"
-#include "imap_cmd_insert_point.h"
+#include "imap_commands.h"
 #include "imap_main.h"
 #include "imap_misc.h"
 #include "imap_object_popup.h"

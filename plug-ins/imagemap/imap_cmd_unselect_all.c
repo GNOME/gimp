@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-1999 Maurits Rijk  lpeek.mrijk@consunet.nl
+ * Copyright (C) 1998-2003 Maurits Rijk  lpeek.mrijk@consunet.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,7 @@
 
 #include <gtk/gtk.h>
 
-#include "imap_cmd_unselect.h"
-#include "imap_cmd_unselect_all.h"
-#include "imap_main.h"
+#include "imap_commands.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -36,8 +34,8 @@ COMMAND_PROTO(unselect_all_command);
 static CommandClass_t unselect_all_command_class = {
    unselect_all_command_destruct,
    unselect_all_command_execute,
-   unselect_all_command_undo,
-   unselect_all_command_redo
+   NULL,			/* unselect_all_command_undo */
+   NULL				/* unselect_all_command_redo */
 };
 
 typedef struct {
@@ -81,23 +79,10 @@ unselect_all_command_execute(Command_t *parent)
    id = object_list_add_select_cb(command->list, select_one_object,
 				  command);
    if (object_list_deselect_all(command->list, command->exception)) {
-      redraw_preview();		/* Fix me! */
       rvalue = CMD_APPEND;
    } else {
       rvalue = CMD_DESTRUCT;
    }
    object_list_remove_select_cb(command->list, id);
    return rvalue;
-}
-
-static void
-unselect_all_command_undo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
-}
-
-static void
-unselect_all_command_redo(Command_t *command)
-{
-   redraw_preview();		/* Fix me! */
 }
