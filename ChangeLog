@@ -1,3 +1,16 @@
+Sat Jun 27 23:28:26 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/interface.c: minor unused variable warning cleanup
+
+	* plug-ins/bumpmap/bumpmap.c: another warning cleanup
+
+	* plug-ins/flame/flame.c: time(NULL) instead of time(0)
+
+	* plug-ins/gpc/Makefile.am
+	* plug-ins/megawidget/Makefile.am: install in $libdir instead
+	of $gimpplugindir since they *are* libs. Some archs try to
+	exec them, and it barfs
+
 Sun Jun 28 00:23:52 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	* app/tile.c : fix from Scott Goehring for a thread deadlock

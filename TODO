@@ -410,4 +410,7 @@ gradient map layer/paint mode
 
 	map values from current gradient to value/intensity
 
+script-fu
 
+	proper font selector instead of typing the silly thing in
+	maybe a color history too...

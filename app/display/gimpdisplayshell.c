@@ -240,8 +240,6 @@ create_color_area (GtkWidget *parent)
 GdkPixmap *
 create_tool_pixmap (GtkWidget *parent, ToolType type)
 {
-  int i;
-
   /*
    * FIXME this really should be dones without using the #defined tool names
    * but it should work this way for now

@@ -171,7 +171,7 @@ static void run(char *name, int n_params, GParam * param, int *nreturn_vals,
   *nreturn_vals = 1;
   *return_vals = values;
 
-  SRAND_FUNC (time(0));
+  SRAND_FUNC (time(NULL));
 
   run_mode = param[0].data.d_int32;
   
