@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
-"POT-Creation-Date: 2000-10-04 16:01-0700\n"
-"PO-Revision-Date: 2000-10-02 22:40+0200\n"
+"POT-Creation-Date: 2000-10-15 12:40+0200\n"
+"PO-Revision-Date: 2000-10-15 12:42+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -501,7 +501,7 @@ msgstr "X-offset:"
 
 #: app/channel_ops.c:115 app/crop.c:1077 app/file_new_dialog.c:530
 #: app/resize.c:343 app/resize.c:435 app/resize.c:572 app/rotate_tool.c:106
-#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1206
+#: app/scale_tool.c:100 app/shear_tool.c:82 app/user_install.c:1208
 msgid "Y:"
 msgstr "Y:"
 
@@ -1203,7 +1203,7 @@ msgid "New Image"
 msgstr "Ny bild"
 
 #: app/file_new_dialog.c:453 app/preferences_dialog.c:1533
-#: app/preferences_dialog.c:1570 app/user_install.c:1193
+#: app/preferences_dialog.c:1570 app/user_install.c:1195
 msgid "Pixels"
 msgstr "Pixlar"
 
@@ -4624,7 +4624,7 @@ msgstr "Konservativ minnesanvändning"
 msgid "Levels of Undo:"
 msgstr "Ångrasteg:"
 
-#: app/preferences_dialog.c:2195 app/user_install.c:1106
+#: app/preferences_dialog.c:2195 app/user_install.c:1108
 msgid "Tile Cache Size:"
 msgstr "Bildblockscachestorlek:"
 
@@ -4717,7 +4717,7 @@ msgstr "Hämta bildskärmsupplösning"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Nuvarande %d × %d dpi)"
 
-#: app/preferences_dialog.c:2408 app/user_install.c:1244
+#: app/preferences_dialog.c:2408 app/user_install.c:1246
 msgid "Calibrate"
 msgstr "Kalibrera"
 
@@ -4745,7 +4745,7 @@ msgstr "Välj tempkatalog"
 msgid "Swap Dir:"
 msgstr "Swapkatalog:"
 
-#: app/preferences_dialog.c:2476 app/user_install.c:1126
+#: app/preferences_dialog.c:2476 app/user_install.c:1128
 msgid "Select Swap Dir"
 msgstr "Välj swapkatalog"
 
@@ -6252,7 +6252,7 @@ msgstr "finns inte. Kan inte installera."
 msgid "has invalid permissions.  Cannot install."
 msgstr "har ogiltiga rättigheter. Kan inte installera."
 
-#: app/user_install.c:998
+#: app/user_install.c:1000
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -6262,7 +6262,7 @@ msgstr ""
 "Om inte så lyckades installationen! Annars, avsluta\n"
 "och undersök vad som kan ha gått fel..."
 
-#: app/user_install.c:1054
+#: app/user_install.c:1056
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -6272,25 +6272,25 @@ msgstr ""
 "Om inte så lyckades installationen! Annars, avsluta\n"
 "och undersök vad som kan ha gått fel..."
 
-#: app/user_install.c:1066
+#: app/user_install.c:1068
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Tryck på \"Fortsätt\" för att slutföra GIMP-installationen."
 
-#: app/user_install.c:1071
+#: app/user_install.c:1073
 msgid "Installation failed.  Contact system administrator."
 msgstr "Installationen misslyckades, kontakta din systemadministratör."
 
-#: app/user_install.c:1092
+#: app/user_install.c:1094
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
-"\"Tile Cache\". You should adjust it's size to fit into memory. Consider\n"
+"\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
 "the amount of memory used by other running processes."
 msgstr ""
 "GIMP använder en begränsad mängd minne för att lagra bilddata, så kallad\n"
-"\"bildblockscache\". Du bör justera det så det får plats i minnet. Tänk\n"
+"\"block-cache\". Du bör justera det så det får plats i minnet. Tänk\n"
 "på mängden minne som används av andra körande program."
 
-#: app/user_install.c:1117
+#: app/user_install.c:1119
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -6302,11 +6302,11 @@ msgstr ""
 "tillräckligt mycket ledigt utrymme (flera 100 MB). På ett UNIX-system så\n"
 "kan du vilja sätta systemets tempkatalog (\"/tmp\" eller \"/var/tmp\")."
 
-#: app/user_install.c:1131
+#: app/user_install.c:1133
 msgid "Swap Directory:"
 msgstr "Swapkatalog:"
 
-#: app/user_install.c:1166
+#: app/user_install.c:1168
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -6314,20 +6314,20 @@ msgstr ""
 "GIMP kan hämta den här informationen från fönstersystemet.\n"
 "Normalt returneras dock inga vettiga värden."
 
-#: app/user_install.c:1173
+#: app/user_install.c:1175
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Hämta upplösning från fönstersystem (Nuvarande %d × %d dpi)"
 
-#: app/user_install.c:1187
+#: app/user_install.c:1189
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativt kan du sätta upplösningen manuellt"
 
-#: app/user_install.c:1200
+#: app/user_install.c:1202
 msgid "Monitor Resolution X:"
 msgstr "Bildskärmsupplösning X:"
 
-#: app/user_install.c:1237
+#: app/user_install.c:1239
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
