@@ -1835,11 +1835,10 @@ ProcRecord text_tool_proc =
 {
   "gimp_text",
   "Add text at the specified location as a floating selection or a new layer.",
-  "This tool requires font information in the form of seven parameters: {size, foundry, family, weight, slant, set_width, spacing}.  The font size can either be specified in units of pixels or points, and the appropriate metric is specified using the size
-_type argument.  The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layer
-s.  This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the
- text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixel
-s.",
+  "This tool requires font information in the form of seven parameters: {size, foundry, family, weight, slant, set_width, spacing}.  The font size can either be specified in units of pixels or points, and the appropriate metric is specified using the size_type "
+  "argument.  The x and y parameters together control the placement of the new text by specifying the upper left corner of the text bounding box.  If the antialias parameter is non-zero, the generated text will blend more smoothly with underlying layers.  "
+  "This option requires more time and memory to compute than non-antialiased text; the resulting floating selection or layer, however, will require the same amount of memory with or without antialiasing.  If the specified drawable parameter is valid, the "
+  "text will be created as a floating selection attached to the drawable.  If the drawable parameter is not valid (-1), the text will appear as a new layer.  Finally, a border can be specified around the final rendered text.  The border is measured in pixels.",
   "Spencer Kimball & Peter Mattis",
   "Spencer Kimball & Peter Mattis",
   "1995-1996",

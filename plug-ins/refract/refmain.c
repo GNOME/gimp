@@ -43,7 +43,7 @@
 /* megawidget.h could be in any of several places relative to us... */
 /* should this be an autoconf thing? */
 #ifdef HAVE_CONFIG_H /* We're part of the GIMP distribution. */
-#include "../megawidget/megawidget.h"
+#include <plug-ins/megawidget/megawidget.h>
 #else
 #include "megawidget.h"
 /* #include <megawidget.h> */

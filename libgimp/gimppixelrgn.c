@@ -113,7 +113,7 @@ gimp_pixel_rgn_get_pixel (GPixelRgn *pr,
   for (b = 0; b < tile->bpp; b++)
     *buf++ = *tile_data++;
 
-  gimp_tile_unref (tile, TRUE);
+  gimp_tile_unref (tile, FALSE);
 }
 
 void

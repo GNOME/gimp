@@ -1,3 +1,27 @@
+Fri Jan  9 01:15:51 PST 1998 Manish Singh <yosh@gimp.org>
+
+	* INSTALL: updated to properly reflect installation procedure
+
+	* app/text_tool.c: Fixed bad string in tool description
+
+	* libgimp/gimppixelrgn.c: tiles aren't marked dirty in
+	gimp_pixel_rgn_get_pixel
+
+	* plug-ins/edge/edge.c
+	* plug-ins/edge/emboss.c
+	* plug-ins/edge/laplace.c
+	* plug-ins/edge/sobel.c: DEC OSF1 cannont handle reference to
+	array element with a negative arugment with an unsigned int
+	(gimp-joke-980108-0)
+
+	* plug-ins/sinus/sinus_logo.h: got rid of really long string
+
+	* plug-ins/refract/Makefile.am
+	* plug-ins/refract/refmain.c: fixed megawidget reference
+
+	* plug-ins/xpm/xpm.c: made our own case-insenstive strcmp
+	for checking for transperancy
+
 Tue Jan  6 14:17:02 PST 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: make it *really* check for gtk >= 0.99.1 this
