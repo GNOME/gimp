@@ -92,15 +92,12 @@ gimp_airbrush_tool_get_type (void)
 static void
 gimp_airbrush_tool_init (GimpAirbrushTool *airbrush)
 {
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
-
-  tool       = GIMP_TOOL (airbrush);
-  paint_tool = GIMP_PAINT_TOOL (airbrush);
+  GimpTool *tool = GIMP_TOOL (airbrush);
 
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_AIRBRUSH_TOOL_CURSOR);
 
-  paint_tool->pick_colors = TRUE;
+  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (airbrush),
+                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
 }
 
 

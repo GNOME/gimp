@@ -110,7 +110,7 @@ gimp_color_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpColorTool", 
+					  "GimpColorTool",
                                           &tool_info, 0);
     }
 
@@ -175,7 +175,7 @@ gimp_color_tool_init (GimpColorTool *color_tool)
   color_tool->enabled   = FALSE;
   color_tool->center_x  = 0;
   color_tool->center_y  = 0;
-  color_tool->pick_mode = GIMP_COLOR_PICK_MODE_FOREGROUND;
+  color_tool->pick_mode = GIMP_COLOR_PICK_MODE_NONE;
   color_tool->options   = NULL;
 }
 
@@ -261,7 +261,8 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
 
   if (color_tool->enabled)
     {
-      GdkCursorType cursor = GIMP_BAD_CURSOR;
+      GdkCursorType      cursor   = GIMP_BAD_CURSOR;
+      GimpCursorModifier modifier = GIMP_CURSOR_MODIFIER_NONE;
 
       if (coords->x > 0 && coords->x < gdisp->gimage->width  &&
           coords->y > 0 && coords->y < gdisp->gimage->height &&
@@ -272,13 +273,22 @@ gimp_color_tool_cursor_update (GimpTool        *tool,
           cursor = GIMP_COLOR_PICKER_CURSOR;
         }
 
+      switch (color_tool->pick_mode)
+        {
+        case GIMP_COLOR_PICK_MODE_NONE:
+          modifier = GIMP_CURSOR_MODIFIER_NONE;
+          break;
+        case GIMP_COLOR_PICK_MODE_FOREGROUND:
+          modifier = GIMP_CURSOR_MODIFIER_FOREGROUND;
+          break;
+        case GIMP_COLOR_PICK_MODE_BACKGROUND:
+          modifier = GIMP_CURSOR_MODIFIER_BACKGROUND;
+          break;
+        }
+
       gimp_tool_set_cursor (tool, gdisp,
                             cursor,
-                            GIMP_COLOR_PICKER_TOOL_CURSOR,
-                            color_tool->pick_mode ==
-                            GIMP_COLOR_PICK_MODE_FOREGROUND ?
-                            GIMP_CURSOR_MODIFIER_FOREGROUND :
-                            GIMP_CURSOR_MODIFIER_BACKGROUND);
+                            GIMP_COLOR_PICKER_TOOL_CURSOR, modifier);
 
       return;  /*  don't chain up  */
     }

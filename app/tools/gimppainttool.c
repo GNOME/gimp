@@ -244,6 +244,29 @@ gimp_paint_tool_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+/**
+ * gimp_paint_tool_enable_color_picker:
+ * @tool: a #GimpPaintTool
+ * @mode: the #GimpColorPickMode to set
+ *
+ * This is a convenience function used from the init method of paint
+ * tools that want the color picking functionality. The @mode that is
+ * set here is used to decide what cursor modifier to draw and if the
+ * picked color goes to the foreground or background color.
+ **/
+
+void
+gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
+                                     GimpColorPickMode  mode)
+{
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+
+  tool->pick_colors = TRUE;
+
+  GIMP_COLOR_TOOL (tool)->pick_mode = mode;
+}
+
+
 static void
 gimp_paint_tool_control (GimpTool       *tool,
 			 GimpToolAction  action,
@@ -860,7 +883,20 @@ gimp_paint_tool_color_picked (GimpColorTool *color_tool,
       GimpContext *context;
 
       context = gimp_get_user_context (tool->gdisp->gimage->gimp);
-      gimp_context_set_foreground (context, color);
+
+      switch (color_tool->pick_mode)
+        {
+        case GIMP_COLOR_PICK_MODE_NONE:
+          break;
+
+        case GIMP_COLOR_PICK_MODE_FOREGROUND:
+          gimp_context_set_foreground (context, color);
+          break;
+
+        case GIMP_COLOR_PICK_MODE_BACKGROUND:
+          gimp_context_set_background (context, color);
+          break;
+        }
     }
 }
 

@@ -92,14 +92,11 @@ gimp_paintbrush_tool_get_type (void)
 static void
 gimp_paintbrush_tool_init (GimpPaintbrushTool *paintbrush)
 {
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
-
-  tool       = GIMP_TOOL (paintbrush);
-  paint_tool = GIMP_PAINT_TOOL (paintbrush);
+  GimpTool *tool = GIMP_TOOL (paintbrush);
 
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_PAINTBRUSH_TOOL_CURSOR);
 
-  paint_tool->pick_colors = TRUE;
+  gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (paintbrush),
+                                       GIMP_COLOR_PICK_MODE_FOREGROUND);
 }

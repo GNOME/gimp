@@ -36,10 +36,9 @@ typedef struct _GimpToolOptionsClass   GimpColorPickerOptionsClass;
 
 struct _GimpColorPickerOptions
 {
-  GimpColorOptions  parent_instance;
+  GimpColorOptions   parent_instance;
 
-  gboolean          update_toolbox;
-  GimpColorPickMode pick_mode;
+  GimpColorPickMode  pick_mode;
 };
 
 

@@ -1,5 +1,30 @@
 2003-10-25  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/tools-enums.[ch]: added GIMP_COLOR_PICK_MODE_NONE to
+	the GimpColorPickMode enum.
+
+	* app/tools/gimpcolorpickeroptions.[ch]: removed "update-toolbox"
+	property; the new enum value serves this role better.
+
+	* app/tools/gimpcolorpickertool.c: handle the new enum value.
+
+	* app/tools/gimpcolortool.c: default to GIMP_COLOR_PICK_MODE_NONE.
+	Don't set a cursor modifier for this value. Fixes tool cursor for
+	levels and curves tools.
+
+	* app/tools/gimppainttool.[ch]: added a function to conveniently
+	enable the color picker and set the pick mode at the same time.
+	
+	* app/tools/gimpairbrushtool.c
+	* app/tools/gimppaintbrushtool.c
+	* app/tools/gimppenciltool.c
+	* app/tools/gimpsmudgetool.c: use the new function.
+
+	* app/tools/gimperasertool.c: enabled color picking in the eraser
+	tool but set the mode to GIMP_COLOR_PICK_MODE_BACKGROUND.
+
+2003-10-25  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-utils.[ch] (gimp_config_connect): make it
 	a two-way connection and added a property_name parameter so it
 	can be used to connect only a certain property.

@@ -53,7 +53,10 @@ struct _GimpPaintToolClass
 };
 
 
-GType   gimp_paint_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_paint_tool_get_type            (void) G_GNUC_CONST;
+
+void    gimp_paint_tool_enable_color_picker (GimpPaintTool     *tool,
+                                             GimpColorPickMode  mode);
 
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

@@ -38,7 +38,6 @@ enum
 {
   PROP_0,
   PROP_SAMPLE_AVERAGE, /* overrides a GimpColorOptions property */
-  PROP_UPDATE_TOOLBOX,
   PROP_PICK_MODE
 };
 
@@ -103,10 +102,6 @@ gimp_color_picker_options_class_init (GimpColorPickerOptionsClass *klass)
                                     "sample-average", NULL,
                                     FALSE,
                                     0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_UPDATE_TOOLBOX,
-                                    "update-toolbox", NULL,
-                                    TRUE,
-                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_PICK_MODE,
                                  "pick-mode", NULL,
                                  GIMP_TYPE_COLOR_PICK_MODE,
@@ -126,9 +121,6 @@ gimp_color_picker_options_set_property (GObject      *object,
     {
     case PROP_SAMPLE_AVERAGE:
       GIMP_COLOR_OPTIONS (options)->sample_average = g_value_get_boolean (value);
-      break;
-    case PROP_UPDATE_TOOLBOX:
-      options->update_toolbox = g_value_get_boolean (value);
       break;
     case PROP_PICK_MODE:
       options->pick_mode = g_value_get_enum (value);
@@ -153,9 +145,6 @@ gimp_color_picker_options_get_property (GObject    *object,
       g_value_set_boolean (value,
                            GIMP_COLOR_OPTIONS (options)->sample_average);
       break;
-    case PROP_UPDATE_TOOLBOX:
-      g_value_set_boolean (value, options->update_toolbox);
-      break;
     case PROP_PICK_MODE:
       g_value_set_enum (value, options->pick_mode);
       break;
@@ -168,24 +157,17 @@ gimp_color_picker_options_get_property (GObject    *object,
 GtkWidget *
 gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 {
-  GimpColorPickerOptions *options = GIMP_COLOR_PICKER_OPTIONS (tool_options);
-  GObject                *config  = G_OBJECT (tool_options);
-  GtkWidget              *vbox;
-  GtkWidget              *button;
-  GtkWidget              *frame;
-  gchar                  *str;
+  GObject   *config  = G_OBJECT (tool_options);
+  GtkWidget *vbox;
+  GtkWidget *button;
+  GtkWidget *frame;
+  gchar     *str;
 
   vbox = gimp_color_options_gui (tool_options);
 
   /*  the sample merged toggle button  */
   button = gimp_prop_check_button_new (config, "sample-merged",
                                        _("Sample Merged"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  /*  the update toolbox color toggle button  */
-  button = gimp_prop_check_button_new (config, "update-toolbox",
-                                       _("Update Toolbox Color"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
@@ -196,9 +178,6 @@ gimp_color_picker_options_gui (GimpToolOptions *tool_options)
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
-
-  gtk_widget_set_sensitive (frame, options->update_toolbox);
-  g_object_set_data (G_OBJECT (button), "set_sensitive", frame);
 
   return vbox;
 }

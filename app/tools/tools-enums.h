@@ -20,7 +20,7 @@
 #define __TOOLS_ENUMS_H__
 
 /*
- * these enums that are registered with the type system
+ * these enums are registered with the type system
  */
 
 #define GIMP_TYPE_COLOR_PICK_MODE (gimp_color_pick_mode_get_type ())
@@ -29,8 +29,9 @@ GType gimp_color_pick_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_COLOR_PICK_MODE_FOREGROUND, /*< desc="Pick Foreground Color" >*/
-  GIMP_COLOR_PICK_MODE_BACKGROUND  /*< desc="Pick Background Color" >*/
+  GIMP_COLOR_PICK_MODE_NONE,       /*< desc="Pick Only" >*/
+  GIMP_COLOR_PICK_MODE_FOREGROUND, /*< desc="Set Foreground Color" >*/
+  GIMP_COLOR_PICK_MODE_BACKGROUND  /*< desc="Set Background Color" >*/
 } GimpColorPickMode;
 
 

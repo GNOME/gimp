@@ -11,8 +11,9 @@
 
 static const GEnumValue gimp_color_pick_mode_enum_values[] =
 {
-  { GIMP_COLOR_PICK_MODE_FOREGROUND, N_("Pick Foreground Color"), "foreground" },
-  { GIMP_COLOR_PICK_MODE_BACKGROUND, N_("Pick Background Color"), "background" },
+  { GIMP_COLOR_PICK_MODE_NONE, N_("Pick Only"), "none" },
+  { GIMP_COLOR_PICK_MODE_FOREGROUND, N_("Set Foreground Color"), "foreground" },
+  { GIMP_COLOR_PICK_MODE_BACKGROUND, N_("Set Background Color"), "background" },
   { 0, NULL, NULL }
 };
 

@@ -155,6 +155,8 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
 static void
 gimp_color_picker_tool_init (GimpColorPickerTool *tool)
 {
+  GIMP_COLOR_TOOL (tool)->pick_mode = GIMP_COLOR_PICK_MODE_FOREGROUND;
+
   gimp_tool_control_set_preserve (GIMP_TOOL (tool)->control, FALSE);
 }
 
@@ -223,6 +225,9 @@ gimp_color_picker_tool_modifier_key (GimpTool        *tool,
     {
        switch (options->pick_mode)
         {
+        case GIMP_COLOR_PICK_MODE_NONE:
+          break;
+
         case GIMP_COLOR_PICK_MODE_FOREGROUND:
           g_object_set (options, "pick-mode", GIMP_COLOR_PICK_MODE_BACKGROUND,
                         NULL);
@@ -231,9 +236,6 @@ gimp_color_picker_tool_modifier_key (GimpTool        *tool,
         case GIMP_COLOR_PICK_MODE_BACKGROUND:
           g_object_set (options, "pick-mode", GIMP_COLOR_PICK_MODE_FOREGROUND,
                         NULL);
-          break;
-
-        default:
           break;
         }
 
@@ -262,6 +264,7 @@ gimp_color_picker_tool_picked (GimpColorTool *color_tool,
   GimpTool               *tool;
   GimpColorPickerTool    *picker_tool;
   GimpColorPickerOptions *options;
+  GimpContext            *user_context;
 
   tool        = GIMP_TOOL (color_tool);
   picker_tool = GIMP_COLOR_PICKER_TOOL (color_tool);
@@ -274,26 +277,24 @@ gimp_color_picker_tool_picked (GimpColorTool *color_tool,
 
   options = GIMP_COLOR_PICKER_OPTIONS (color_tool->options);
 
-  if (options->update_toolbox)
-    {
-      GimpContext *user_context;
-
-      user_context = gimp_get_user_context (tool->gdisp->gimage->gimp);
+  user_context = gimp_get_user_context (tool->gdisp->gimage->gimp);
 
 #if 0
-      gimp_palette_editor_update_color (user_context, color, update_state);
+  gimp_palette_editor_update_color (user_context, color, update_state);
 #endif
 
-      switch (options->pick_mode)
-        {
-        case GIMP_COLOR_PICK_MODE_FOREGROUND:
-          gimp_context_set_foreground (user_context, color);
-          break;
+  switch (options->pick_mode)
+    {
+    case GIMP_COLOR_PICK_MODE_NONE:
+      break;
 
-        case GIMP_COLOR_PICK_MODE_BACKGROUND:
-          gimp_context_set_background (user_context, color);
-          break;
-        }
+    case GIMP_COLOR_PICK_MODE_FOREGROUND:
+      gimp_context_set_foreground (user_context, color);
+      break;
+
+    case GIMP_COLOR_PICK_MODE_BACKGROUND:
+      gimp_context_set_background (user_context, color);
+      break;
     }
 }
 
