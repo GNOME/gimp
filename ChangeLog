@@ -1,3 +1,8 @@
+Tue Sep 28 20:54:45 CDT 1999 James Mitchell <mitchell@gimp.org>
+
+	* plug-ins/perl/po/it.po: Added from Daniele Medri <madrid@linux.it>
+	240 translated messages, 10 untranslated messages.
+
 Tue Sep 28 16:53:43 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/gimprc.c (parse_absolute_gimprc_file): Move the good code
