@@ -1,3 +1,23 @@
+Sat Aug 21 16:53:17 BST 1999  Adam D. Moss  <adam@gimp.org>
+
+	* plug-ins/common/jpeg.c:  Preview layers need to be alpha-padded,
+	since they're not on the bottom of the stack.  That's a GIMP rule.
+
+	Plus... use new API functions gimp_image_{freeze,thaw}_undo() to avoid
+	the dilemma of either consuming a squillion superfluous tiles or
+	clobbering the whole undo stack.
+
+	* app/gimage.h
+	* app/gimage_cmds.c
+	* app/gimpimage.c
+	* libgimp/gimp.h
+	* libgimp/gimpimage.c: New API functions
+	gimp_image_{freeze,thaw}_undo()	to avoid the above twin	evils.
+	Similar to gimp_image_{disable,enable}_undo() but without
+	clobbering the undo stack (I would have simply changed the latter,
+	but too many plugins seem to rely on that behaviour).  See the PDB
+	docs for slightly more information.
+	
 Sat Aug 21 8:47:00 CST 1999  Seth Burgess <sjburges@gimp.org>
 
 	* plug-ins/common/jpeg.c : added a patch by Xach for slider

@@ -3337,11 +3337,16 @@ gimp_image_filename (GimpImage *gimage)
 }
 
 int
-gimp_image_enable_undo (GimpImage *gimage)
+gimp_image_freeze_undo (GimpImage *gimage)
 {
-  /*  Free all undo steps as they are now invalidated  */
-  undo_free (gimage);
+  gimage->undo_on = FALSE;
 
+  return TRUE;
+}
+
+int
+gimp_image_thaw_undo (GimpImage *gimage)
+{
   gimage->undo_on = TRUE;
 
   return TRUE;
@@ -3350,8 +3355,16 @@ gimp_image_enable_undo (GimpImage *gimage)
 int
 gimp_image_disable_undo (GimpImage *gimage)
 {
-  gimage->undo_on = FALSE;
-  return TRUE;
+  return gimp_image_freeze_undo (gimage);
+}
+
+int
+gimp_image_enable_undo (GimpImage *gimage)
+{
+  /*  Free all undo steps as they are now invalidated  */
+  undo_free (gimage);
+
+  return gimp_image_thaw_undo (gimage);
 }
 
 int
@@ -3559,7 +3572,8 @@ gimp_image_construct_composite_preview (GimpImage *gimage,
        *   composite preview...
        *  Indexed images are actually already converted to RGB and RGBA,
        *   so just project them as if they were type "intensity"
-       *  Send in all TRUE for visible since that info doesn't matter for previews
+       *  Send in all TRUE for visible since that info doesn't matter
+       *   for previews
        */
       switch (drawable_type (GIMP_DRAWABLE(layer)))
 	{

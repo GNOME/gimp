@@ -90,6 +90,19 @@
  * ...and thus ends my additions to the JPEG plug-in. I hope. *sigh* :-)
  */
 
+/* 
+ * 21-AUG-99 - Bunch O' Fixes.
+ * - Adam D. Moss <adam@gimp.org>
+ *
+ * We now correctly create an alpha-padded layer for our preview --
+ * having a non-background non-alpha layer is a no-no in GIMP.
+ *
+ * I've also tweaked the GIMP undo API a little and changed the JPEG
+ * plugin to use gimp_image_{freeze,thaw}_undo so that it doesn't store
+ * up a whole load of superfluous tile data every time the preview is
+ * changed.
+ */
+
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -272,11 +285,11 @@ query ()
     { PARAM_STRING, "raw_filename", "The name of the file to save the image in" },
     { PARAM_FLOAT, "quality", "Quality of saved image (0 <= quality <= 1)" },
     { PARAM_FLOAT, "smoothing", "Smoothing factor for saved image (0 <= smoothing <= 1)" },
-    { PARAM_INT32, "optimize", "Optimization of entropy encoding parameters" },
-    { PARAM_INT32, "progressive", "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG" },
+    { PARAM_INT32, "optimize", "Optimization of entropy encoding parameters (0/1)" },
+    { PARAM_INT32, "progressive", "Enable progressive jpeg image loading - ignored if not compiled with HAVE_PROGRESSIVE_JPEG (0/1)" },
     { PARAM_STRING, "comment", "Image comment" },
     { PARAM_INT32, "subsmp", "The subsampling option number" },
-    { PARAM_INT32, "baseline", "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders)" },
+    { PARAM_INT32, "baseline", "Force creation of a baseline JPEG (non-baseline JPEGs can't be read by all decoders) (0/1)" },
     { PARAM_INT32, "restart", "Frequency of restart markers (in rows, 0 = no restart markers)" },
     { PARAM_INT32, "dct", "DCT algorithm to use (speed/quality tradeoff)" }
   };
@@ -404,8 +417,11 @@ run (char    *name,
 	  }
 #endif /* GIMP_HAVE_PARASITES */
 	  
-	  /* sg - reduce the number of undo slots used for the preview */
+	  /* we start an undo_group and immediately freeze undo saving
+	     so that we can avoid sucking up tile cache with our unneeded
+	     preview steps. */
 	  gimp_undo_push_group_start (image_ID);
+	  gimp_image_freeze_undo(image_ID);
 
 	  /* prepare for the preview */
 	  image_ID_global = image_ID;
@@ -413,6 +429,9 @@ run (char    *name,
  
 	  /*  First acquire information with a dialog  */
 	  err = save_dialog ();
+
+	  /* thaw undo saving and end the undo_group. */
+	  gimp_image_thaw_undo(image_ID);
 	  gimp_undo_push_group_end (image_ID);
 
           if (!err)
@@ -613,6 +632,7 @@ load_image (char *filename, GRunModeType runmode, int preview)
   struct my_error_mgr jerr;
   FILE *infile;
   guchar *buf;
+  guchar *padded_buf = NULL;
   guchar **rowbuf;
   char *name;
   int image_type;
@@ -739,22 +759,30 @@ load_image (char *filename, GRunModeType runmode, int preview)
   /* temporary buffer */
   tile_height = gimp_tile_height ();
   buf = g_new (guchar, tile_height * cinfo.output_width * cinfo.output_components);
+  
+  if (preview)
+    padded_buf = g_new (guchar, tile_height * cinfo.output_width *
+			(cinfo.output_components + 1));
+
   rowbuf = g_new (guchar*, tile_height);
 
   for (i = 0; i < tile_height; i++)
     rowbuf[i] = buf + cinfo.output_width * cinfo.output_components * i;
 
   /* Create a new image of the proper size and associate the filename with it.
+
+     Preview layers, not being on the bottom of a layer stack, MUST HAVE
+     AN ALPHA CHANNEL!
    */
   switch (cinfo.output_components)
     {
     case 1:
       image_type = GRAY;
-      layer_type = GRAY_IMAGE;
+      layer_type = preview ? GRAYA_IMAGE : GRAY_IMAGE;
       break;
     case 3:
       image_type = RGB;
-      layer_type = RGB_IMAGE;
+      layer_type = preview ? RGBA_IMAGE : RGB_IMAGE;
       break;
     default:
       g_message (_("don't know how to load JPEGs\nwith %d color channels"),
@@ -846,7 +874,37 @@ load_image (char *filename, GRunModeType runmode, int preview)
 	gimp_pixel_rgn_set_row (&pixel_rgn, tilerow[i - start], 0, i, drawable->width);
 	*/
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn, buf, 0, start, drawable->width, scanlines);
+      if (preview) /* Add a dummy alpha channel -- convert buf to padded_buf */
+	{
+	  guchar *dest = padded_buf;
+	  guchar *src  = buf;
+	  gint num = drawable->width * scanlines;
+
+	  switch (cinfo.output_components)
+	    {
+	    case 1:
+	      for (i=0; i<num; i++)
+		{
+		  *(dest++) = *(src++);
+		  *(dest++) = 255;
+		}
+	      break;
+	    case 3:
+	      for (i=0; i<num; i++)
+		{
+		  *(dest++) = *(src++);
+		  *(dest++) = *(src++);
+		  *(dest++) = *(src++);
+		  *(dest++) = 255;
+		}
+	      break;
+	    default:
+	      g_warning ("JPEG - shouldn't have gotten here.  Report to adam@gimp.org");
+	    }
+	}
+
+      gimp_pixel_rgn_set_rect (&pixel_rgn, preview ? padded_buf : buf,
+			       0, start, drawable->width, scanlines);
 
       if (runmode != RUN_NONINTERACTIVE)
 	{
@@ -869,6 +927,8 @@ load_image (char *filename, GRunModeType runmode, int preview)
   /* free up the temporary buffers */
   g_free (rowbuf);
   g_free (buf);
+  if (preview)
+    g_free (padded_buf);
 
   /* After finish_decompress, we can close the input file.
    * Here we postpone it until after no more JPEG errors are possible,
@@ -1502,6 +1562,7 @@ save_dialog ()
   gtk_scale_set_value_pos (GTK_SCALE (restart_markers_scale), GTK_POS_TOP);
   gtk_scale_set_digits (GTK_SCALE (restart_markers_scale), 0);
   gtk_range_set_update_policy (GTK_RANGE (restart_markers_scale), GTK_UPDATE_DELAYED);
+
   gtk_signal_connect (GTK_OBJECT (scale_data), "value_changed",
                       (GtkSignalFunc) save_restart_update,
                       restart);

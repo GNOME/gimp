@@ -98,6 +98,8 @@ void       gimage_foreach               (GFunc func, gpointer user_data);
 #define gimage_filename gimp_image_filename
 #define gimage_enable_undo gimp_image_enable_undo
 #define gimage_disable_undo gimp_image_disable_undo
+#define gimage_thaw_undo gimp_image_thaw_undo
+#define gimage_freeze_undo gimp_image_freeze_undo
 #define gimage_dirty gimp_image_dirty
 #define gimage_clean gimp_image_clean
 #define gimage_clean_all gimp_image_clean_all
