@@ -1,3 +1,15 @@
+2004-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/Makefile.am
+	* cursors/*.png: added PNG version of all cursors.
+
+	* cursors/gimp-tool-cursors.xcf: reordered and renamed all layers
+	to match the new PNG filenames.
+
+	* app/widgets/gimpcursor.[ch]: create cursors with alpha and color
+	if the GdkDisplay supports it. Fall back to the old stuff
+	otherwise.
+
 2004-06-03  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppattern.c (gimp_pattern_load_pixbuf): if a Title is

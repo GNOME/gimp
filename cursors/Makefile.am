@@ -1,6 +1,60 @@
 ## Process this file with automake to produce Makefile.in
 
+CURSOR_IMAGES = \
+	cursor-bad.png			\
+	cursor-color-picker.png		\
+	cursor-crosshair.png		\
+	cursor-crosshair-small.png	\
+	cursor-mouse.png		\
+	cursor-zoom.png			\
+	\
+	modifier-anchor.png		\
+	modifier-background.png		\
+	modifier-control.png		\
+	modifier-foreground.png		\
+	modifier-intersect.png		\
+	modifier-minus.png		\
+	modifier-move.png		\
+	modifier-pattern.png		\
+	modifier-plus.png		\
+	modifier-resize.png		\
+	\
+	tool-airbrush.png		\
+	tool-blend.png			\
+	tool-blur.png			\
+	tool-bucket-fill.png		\
+	tool-burn.png			\
+	tool-clone.png			\
+	tool-color-picker.png		\
+	tool-crop.png			\
+	tool-dodge.png			\
+	tool-ellipse-select.png		\
+	tool-eraser.png			\
+	tool-flip-horizontal.png	\
+	tool-flip-vertical.png		\
+	tool-free-select.png		\
+	tool-fuzzy-select.png		\
+	tool-hand.png			\
+	tool-ink.png			\
+	tool-iscissors.png		\
+	tool-measure.png		\
+	tool-move.png			\
+	tool-paintbrush.png		\
+	tool-paths.png			\
+	tool-pencil.png			\
+	tool-perspective.png		\
+	tool-rect-select.png		\
+	tool-resize.png			\
+	tool-rotate.png			\
+	tool-shear.png			\
+	tool-smudge.png			\
+	tool-text.png			\
+	tool-zoom.png
+
 EXTRA_DIST = \
+	$(CURSOR_IMAGES)		\
+	gimp-tool-cursors.xcf		\
+	\
 	mouse.xbm			\
 	mouse_mask.xbm			\
 	crosshair.xbm			\
@@ -97,3 +151,18 @@ EXTRA_DIST = \
 	measure_small_mask.xbm		\
 	hand_small.xbm			\
 	hand_small_mask.xbm
+
+noinst_DATA = gimp-tool-cursors.h
+
+CLEANFILES = gimp-tool-cursors.h tool-cursors.list
+
+tool-cursors.list: $(CURSOR_IMAGES) Makefile.am
+	( rm -f $@; \
+	  for image in $(CURSOR_IMAGES); do \
+	    echo $$image | \
+	      sed -e 's|.*/||' -e 's|-|_|g' -e 's|\.png$$||' >> $@; \
+	    echo "  $(srcdir)/$$image" >> $@; \
+	  done )
+
+$(srcdir)/gimp-tool-cursors.h: tool-cursors.list
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat tool-cursors.list` > $(@F)

@@ -2,3 +2,5 @@ Makefile
 Makefile.in
 .xvpics
 .thumbnails
+tool-cursors.list
+gimp-tool-cursors.h
