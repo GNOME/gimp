@@ -245,6 +245,22 @@ gimp_config_serialize_value (const GValue *value,
       return TRUE;
     }
 
+  if (G_VALUE_HOLDS_DOUBLE (value) || G_VALUE_HOLDS_FLOAT (value))
+    {
+      gdouble v_double;
+      gchar   buf[G_ASCII_DTOSTR_BUF_SIZE];
+
+      if (G_VALUE_HOLDS_DOUBLE (value))
+        v_double = g_value_get_double (value);
+      else
+        v_double = (gdouble) g_value_get_float (value);
+
+      g_ascii_formatd (buf, sizeof (buf), "%f", v_double);
+      g_string_append_c (str, ' ');
+      g_string_append (str, buf);
+      return TRUE;
+    }
+
   if (g_value_type_transformable (G_VALUE_TYPE (value), G_TYPE_STRING))
     {
       GValue  tmp_value = { 0, };

@@ -1,3 +1,8 @@
+2002-04-15  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-serialize.c: serialize doubles and floats
+	using the locale independent g_ascii_formatd().
+
 2002-04-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpunits.c: serialize the unit factor with
