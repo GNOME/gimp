@@ -543,7 +543,7 @@ gimp_image_initialize_projection (GimpImage *gimage,
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
       if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)) &&
-	  ! gimp_layer_has_alpha (layer) &&
+	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
 	  (off_x + gimp_drawable_width (GIMP_DRAWABLE (layer)) >= x + w) &&
@@ -588,7 +588,7 @@ gimp_image_construct (GimpImage *gimage,
 
   if ((gimage->layers) &&                         /* There's a layer.      */
       (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */ 
-      (gimp_layer_has_alpha ((GimpLayer *) (gimage->layers->data))) &&
+      (gimp_drawable_has_alpha (GIMP_DRAWABLE (gimage->layers->data))) &&
                                                   /* It's !flat.           */
       (gimp_drawable_get_visible (GIMP_DRAWABLE (gimage->layers->data))) &&
                                                   /* It's visible.         */

@@ -1287,7 +1287,7 @@ layers_menu_update (GtkItemFactory *factory,
   fs = (gimp_image_floating_sel (gimage) != NULL);
   ac = (gimp_image_get_active_channel (gimage) != NULL);
 
-  alpha = layer && gimp_layer_has_alpha (layer);
+  alpha = layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
   lp      = ! gimp_image_is_empty (gimage);
   indexed = (gimp_image_base_type (gimage) == GIMP_INDEXED);
@@ -1305,7 +1305,7 @@ layers_menu_update (GtkItemFactory *factory,
     }
 
   if (next)
-    next_alpha = gimp_layer_has_alpha (GIMP_LAYER (next->data));
+    next_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (next->data));
   else
     next_alpha = FALSE;
 

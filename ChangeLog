@@ -1,3 +1,27 @@
+2002-01-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimplayer.[ch]: removed gimp_layer_has_alpha(), use
+	gimp_drawable_has_alpha() instead.
+
+	* app/core/gimpimage-convert.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimpimage-projection.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/layers-commands.c: changed accordingly.
+
+	* app/core/gimpimage.[ch]: added gimp_image_has_alphe(), made some
+	variable names more verbose and use enum types instead of "gint"
+	in functions calling initial_region() and combine_regions().
+
+	* app/widgets/gimpchannellistview.c: show an alpha channel preview
+	only if the image has alpha.
+
+	* app/widgets/gimppreview.c: reordered functions,
+	gimp_preview_render_and_flush(): fixed channel preview rendering,
+	calculate the component byte offsets before entering the render
+	loop instead of duplicating the render code for the gray/alpha
+	case.
+
 2002-01-31  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfontselection-dialog.c: use GtkTreeViews instead of 

@@ -60,6 +60,8 @@
 #include "gimptoolinfopreview.h"
 
 
+#define PREVIEW_BYTES       3
+
 #define PREVIEW_POPUP_DELAY 150
 
 #define PREVIEW_EVENT_MASK  (GDK_BUTTON_PRESS_MASK   | \
@@ -84,7 +86,7 @@ static void        gimp_preview_init                 (GimpPreview      *preview)
 static void        gimp_preview_destroy              (GtkObject        *object);
 static void        gimp_preview_size_allocate        (GtkWidget        *widget,
 						      GtkAllocation    *allocation);
-static gboolean    gimp_preview_expose               (GtkWidget        *widget,
+static gboolean    gimp_preview_expose_event         (GtkWidget        *widget,
                                                       GdkEventExpose   *event);
 static gboolean    gimp_preview_button_press_event   (GtkWidget        *widget,
 						      GdkEventButton   *bevent);
@@ -113,6 +115,8 @@ static void        gimp_preview_popup_show           (GimpPreview      *preview,
 						      gint              x,
 						      gint              y);
 static void        gimp_preview_popup_hide           (GimpPreview      *preview);
+static gboolean    gimp_preview_popup_timeout        (GimpPreview      *preview);
+
 static void        gimp_preview_size_changed         (GimpPreview      *preview,
 						      GimpViewable     *viewable);
 static void        gimp_preview_paint                (GimpPreview      *preview);
@@ -205,7 +209,7 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   object_class->destroy              = gimp_preview_destroy;
 
   widget_class->size_allocate        = gimp_preview_size_allocate;
-  widget_class->expose_event         = gimp_preview_expose;
+  widget_class->expose_event         = gimp_preview_expose_event;
   widget_class->button_press_event   = gimp_preview_button_press_event;
   widget_class->button_release_event = gimp_preview_button_release_event;
   widget_class->enter_notify_event   = gimp_preview_enter_notify_event;
@@ -272,54 +276,262 @@ gimp_preview_destroy (GtkObject *object)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
-static GimpPreview *
-gimp_preview_new_by_type (GimpViewable *viewable)
+static void
+gimp_preview_size_allocate (GtkWidget     *widget,
+			    GtkAllocation *allocation)
 {
   GimpPreview *preview;
 
-  if (GIMP_IS_BRUSH (viewable))
+  preview = GIMP_PREVIEW (widget);
+
+  allocation->width  = preview->width  + 2 * preview->border_width;
+  allocation->height = preview->height + 2 * preview->border_width;
+
+  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
+    GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  gimp_preview_paint (GIMP_PREVIEW (widget));
+}
+
+static gboolean
+gimp_preview_expose_event (GtkWidget      *widget,
+                           GdkEventExpose *event)
+{
+  GimpPreview  *preview;
+  guchar       *buf;
+  GdkRectangle  buf_rect = { 0, 0, 0, 0 };
+  GdkRectangle  render_rect;
+
+  preview = GIMP_PREVIEW (widget);
+
+  if (! GTK_WIDGET_DRAWABLE (widget) || ! preview->buffer)
+    return FALSE;
+
+  buf_rect.width  = preview->width  + 2 * preview->border_width;
+  buf_rect.height = preview->height + 2 * preview->border_width;
+
+  if (widget->allocation.width > buf_rect.width)
+    buf_rect.x = (widget->allocation.width - buf_rect.width) / 2;
+
+  if (widget->allocation.height >buf_rect.height)
+    buf_rect.y = (widget->allocation.height - buf_rect.height) / 2;
+
+  if (gdk_rectangle_intersect (&event->area, &buf_rect, &render_rect))
     {
-      preview = g_object_new (GIMP_TYPE_BRUSH_PREVIEW, NULL);
+      buf = (preview->buffer +
+             (render_rect.y - buf_rect.y) * preview->rowstride +
+             (render_rect.x - buf_rect.x) * PREVIEW_BYTES);
+
+      gdk_draw_rgb_image_dithalign (widget->window,
+                                    widget->style->black_gc,
+                                    render_rect.x,
+                                    render_rect.y,
+                                    render_rect.width,
+                                    render_rect.height,
+                                    GDK_RGB_DITHER_NORMAL,
+                                    buf,
+                                    preview->rowstride,
+                                    event->area.x,
+                                    event->area.y);
     }
-  else if (GIMP_IS_DRAWABLE (viewable))
+
+  return FALSE;
+}
+
+static gint
+gimp_preview_button_press_event (GtkWidget      *widget,
+				 GdkEventButton *bevent)
+{
+  GimpPreview *preview;
+
+  preview = GIMP_PREVIEW (widget);
+
+#define DEBUG_MEMSIZE 1
+
+#ifdef DEBUG_MEMSIZE
+  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 2)
     {
-      preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW, NULL);
+      gimp_object_get_memsize (GIMP_OBJECT (preview->viewable));
     }
-  else if (GIMP_IS_IMAGE (viewable))
+#endif /* DEBUG_MEMSIZE */
+
+  if (! preview->clickable &&
+      ! preview->show_popup)
+    return FALSE;
+
+  if (bevent->type == GDK_BUTTON_PRESS)
     {
-      preview = g_object_new (GIMP_TYPE_IMAGE_PREVIEW, NULL);
+      if (bevent->button == 1)
+	{
+	  gtk_grab_add (widget);
+
+	  preview->press_state = bevent->state;
+
+	  if (preview->show_popup && gimp_preview_needs_popup (preview))
+	    {
+	      gimp_preview_popup_show (preview,
+				       bevent->x,
+				       bevent->y);
+	    }
+	}
+      else
+	{
+	  preview->press_state = 0;
+
+	  if (bevent->button == 3)
+	    {
+	      g_signal_emit (G_OBJECT (widget), preview_signals[CONTEXT], 0);
+	    }
+	  else
+	    {
+	      return FALSE;
+	    }
+	}
     }
-  else if (GIMP_IS_PATTERN (viewable))
+  else if (bevent->type == GDK_2BUTTON_PRESS)
     {
-      preview = g_object_new (GIMP_TYPE_PATTERN_PREVIEW, NULL);
+      if (bevent->button == 1)
+	{
+	  g_signal_emit (G_OBJECT (widget), preview_signals[DOUBLE_CLICKED], 0);
+	}
     }
-  else if (GIMP_IS_GRADIENT (viewable))
+
+  return TRUE;
+}
+  
+static gint
+gimp_preview_button_release_event (GtkWidget      *widget,
+				   GdkEventButton *bevent)
+{
+  GimpPreview *preview;
+  gboolean     click = TRUE;
+
+  preview = GIMP_PREVIEW (widget);
+
+  if (! preview->clickable &&
+      ! preview->show_popup)
+    return FALSE;
+
+  if (bevent->button == 1)
     {
-      preview = g_object_new (GIMP_TYPE_GRADIENT_PREVIEW, NULL);
-    }
-  else if (GIMP_IS_PALETTE (viewable))
-    {
-      preview = g_object_new (GIMP_TYPE_PALETTE_PREVIEW, NULL);
-    }
-  else if (GIMP_IS_BUFFER (viewable))
-    {
-      preview = g_object_new (GIMP_TYPE_BUFFER_PREVIEW, NULL);
-    }
-  else if (GIMP_IS_TOOL_INFO (viewable))
-    {
-      preview = g_object_new (GIMP_TYPE_TOOL_INFO_PREVIEW, NULL);
-    }
-  else if (GIMP_IS_IMAGEFILE (viewable))
-    {
-      preview = g_object_new (GIMP_TYPE_IMAGEFILE_PREVIEW, NULL);
+      if (preview->show_popup && gimp_preview_needs_popup (preview))
+	{
+	  click = (preview->popup_id != 0);
+        }
+
+      gimp_preview_popup_hide (preview);
+
+      /*  remove the grab _after_ hiding the popup  */
+      gtk_grab_remove (widget);
+
+      if (preview->clickable && click && preview->in_button)
+	{
+	  if (preview->press_state &
+	      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
+	    {
+	      g_signal_emit (G_OBJECT (widget),
+                             preview_signals[EXTENDED_CLICKED], 0,
+                             preview->press_state);
+	    }
+	  else
+	    {
+	      g_signal_emit (G_OBJECT (widget), preview_signals[CLICKED], 0);
+	    }
+	}
     }
   else
     {
-      preview = g_object_new (GIMP_TYPE_PREVIEW, NULL);
+      return FALSE;
     }
 
-  return preview;
+  return TRUE;
 }
+
+static gint
+gimp_preview_enter_notify_event (GtkWidget        *widget,
+				 GdkEventCrossing *event)
+{
+  GimpPreview *preview;
+  GtkWidget   *event_widget;
+
+  preview = GIMP_PREVIEW (widget);
+  event_widget = gtk_get_event_widget ((GdkEvent *) event);
+
+  if ((event_widget == widget) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+    {
+      preview->in_button = TRUE;
+    }
+
+  return FALSE;
+}
+
+static gint
+gimp_preview_leave_notify_event (GtkWidget        *widget,
+				 GdkEventCrossing *event)
+{
+  GimpPreview *preview;
+  GtkWidget   *event_widget;
+
+  preview = GIMP_PREVIEW (widget);
+  event_widget = gtk_get_event_widget ((GdkEvent *) event);
+
+  if ((event_widget == widget) &&
+      (event->detail != GDK_NOTIFY_INFERIOR))
+    {
+      preview->in_button = FALSE;
+    }
+
+  return FALSE;
+}
+
+static GimpPreview *
+gimp_preview_new_by_type (GimpViewable *viewable)
+{
+  GType type = GIMP_TYPE_PREVIEW;
+
+  if (GIMP_IS_BRUSH (viewable))
+    {
+      type = GIMP_TYPE_BRUSH_PREVIEW;
+    }
+  else if (GIMP_IS_DRAWABLE (viewable))
+    {
+      type = GIMP_TYPE_DRAWABLE_PREVIEW;
+    }
+  else if (GIMP_IS_IMAGE (viewable))
+    {
+      type = GIMP_TYPE_IMAGE_PREVIEW;
+    }
+  else if (GIMP_IS_PATTERN (viewable))
+    {
+      type = GIMP_TYPE_PATTERN_PREVIEW;
+    }
+  else if (GIMP_IS_GRADIENT (viewable))
+    {
+      type = GIMP_TYPE_GRADIENT_PREVIEW;
+    }
+  else if (GIMP_IS_PALETTE (viewable))
+    {
+      type = GIMP_TYPE_PALETTE_PREVIEW;
+    }
+  else if (GIMP_IS_BUFFER (viewable))
+    {
+      type = GIMP_TYPE_BUFFER_PREVIEW;
+    }
+  else if (GIMP_IS_TOOL_INFO (viewable))
+    {
+      type = GIMP_TYPE_TOOL_INFO_PREVIEW;
+    }
+  else if (GIMP_IS_IMAGEFILE (viewable))
+    {
+      type = GIMP_TYPE_IMAGEFILE_PREVIEW;
+    }
+
+  return g_object_new (type, NULL);
+}
+
+
+/*  public functions  */
 
 GtkWidget *
 gimp_preview_new (GimpViewable *viewable,
@@ -485,7 +697,7 @@ gimp_preview_set_size_full (GimpPreview *preview,
       GTK_WIDGET (preview)->requisition.height = height + 2 * border_width;
 
       preview->rowstride =
-        ((preview->width + 2 * preview->border_width) * 3 + 3) & ~3;
+        ((preview->width + 2 * preview->border_width) * PREVIEW_BYTES + 3) & ~3;
 
       if (preview->buffer)
         {
@@ -541,152 +753,8 @@ gimp_preview_render (GimpPreview *preview)
   GIMP_PREVIEW_GET_CLASS (preview)->render (preview);
 }
 
-static gint
-gimp_preview_button_press_event (GtkWidget      *widget,
-				 GdkEventButton *bevent)
-{
-  GimpPreview *preview;
 
-  preview = GIMP_PREVIEW (widget);
-
-#define DEBUG_MEMSIZE 1
-
-#ifdef DEBUG_MEMSIZE
-  if (bevent->type == GDK_BUTTON_PRESS && bevent->button == 2)
-    {
-      gimp_object_get_memsize (GIMP_OBJECT (preview->viewable));
-    }
-#endif /* DEBUG_MEMSIZE */
-
-  if (! preview->clickable &&
-      ! preview->show_popup)
-    return FALSE;
-
-  if (bevent->type == GDK_BUTTON_PRESS)
-    {
-      if (bevent->button == 1)
-	{
-	  gtk_grab_add (widget);
-
-	  preview->press_state = bevent->state;
-
-	  if (preview->show_popup && gimp_preview_needs_popup (preview))
-	    {
-	      gimp_preview_popup_show (preview,
-				       bevent->x,
-				       bevent->y);
-	    }
-	}
-      else
-	{
-	  preview->press_state = 0;
-
-	  if (bevent->button == 3)
-	    {
-	      g_signal_emit (G_OBJECT (widget), preview_signals[CONTEXT], 0);
-	    }
-	  else
-	    {
-	      return FALSE;
-	    }
-	}
-    }
-  else if (bevent->type == GDK_2BUTTON_PRESS)
-    {
-      if (bevent->button == 1)
-	{
-	  g_signal_emit (G_OBJECT (widget), preview_signals[DOUBLE_CLICKED], 0);
-	}
-    }
-
-  return TRUE;
-}
-  
-static gint
-gimp_preview_button_release_event (GtkWidget      *widget,
-				   GdkEventButton *bevent)
-{
-  GimpPreview *preview;
-  gboolean     click = TRUE;
-
-  preview = GIMP_PREVIEW (widget);
-
-  if (! preview->clickable &&
-      ! preview->show_popup)
-    return FALSE;
-
-  if (bevent->button == 1)
-    {
-      if (preview->show_popup && gimp_preview_needs_popup (preview))
-	{
-	  click = (preview->popup_id != 0);
-        }
-
-      gimp_preview_popup_hide (preview);
-
-      /*  remove the grab _after_ hiding the popup  */
-      gtk_grab_remove (widget);
-
-      if (preview->clickable && click && preview->in_button)
-	{
-	  if (preview->press_state &
-	      (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
-	    {
-	      g_signal_emit (G_OBJECT (widget),
-                             preview_signals[EXTENDED_CLICKED], 0,
-                             preview->press_state);
-	    }
-	  else
-	    {
-	      g_signal_emit (G_OBJECT (widget), preview_signals[CLICKED], 0);
-	    }
-	}
-    }
-  else
-    {
-      return FALSE;
-    }
-
-  return TRUE;
-}
-
-static gint
-gimp_preview_enter_notify_event (GtkWidget        *widget,
-				 GdkEventCrossing *event)
-{
-  GimpPreview *preview;
-  GtkWidget   *event_widget;
-
-  preview = GIMP_PREVIEW (widget);
-  event_widget = gtk_get_event_widget ((GdkEvent *) event);
-
-  if ((event_widget == widget) &&
-      (event->detail != GDK_NOTIFY_INFERIOR))
-    {
-      preview->in_button = TRUE;
-    }
-
-  return FALSE;
-}
-
-static gint
-gimp_preview_leave_notify_event (GtkWidget        *widget,
-				 GdkEventCrossing *event)
-{
-  GimpPreview *preview;
-  GtkWidget   *event_widget;
-
-  preview = GIMP_PREVIEW (widget);
-  event_widget = gtk_get_event_widget ((GdkEvent *) event);
-
-  if ((event_widget == widget) &&
-      (event->detail != GDK_NOTIFY_INFERIOR))
-    {
-      preview->in_button = FALSE;
-    }
-
-  return FALSE;
-}
+/*  private functions  */
 
 static void
 gimp_preview_real_render (GimpPreview *preview)
@@ -766,6 +834,34 @@ gimp_preview_real_create_popup (GimpPreview *preview)
 				TRUE, FALSE, FALSE);
 }
 
+static void
+gimp_preview_popup_show (GimpPreview *preview,
+			 gint         x,
+			 gint         y)
+{
+  preview->popup_x = x;
+  preview->popup_y = y;
+
+  preview->popup_id = g_timeout_add (PREVIEW_POPUP_DELAY,
+				     (GSourceFunc) gimp_preview_popup_timeout,
+				     preview);
+}
+
+static void
+gimp_preview_popup_hide (GimpPreview *preview)
+{
+  if (preview->popup_id)
+    {
+      g_source_remove (preview->popup_id);
+
+      preview->popup_id = 0;
+      preview->popup_x  = 0;
+      preview->popup_y  = 0;
+    }
+
+  g_object_set_data (G_OBJECT (preview), "gimp-preview-popup", NULL);
+}
+
 static gboolean
 gimp_preview_popup_timeout (GimpPreview *preview)
 {
@@ -820,98 +916,8 @@ gimp_preview_popup_timeout (GimpPreview *preview)
   gtk_window_move (GTK_WINDOW (window), x, y);
   gtk_widget_show (window);
 
-  g_object_set_data_full (G_OBJECT (preview), "preview_popup_window", window,
+  g_object_set_data_full (G_OBJECT (preview), "gimp-preview-popup", window,
                           (GDestroyNotify) gtk_widget_destroy);
-
-  return FALSE;
-}
-
-static void
-gimp_preview_popup_show (GimpPreview *preview,
-			 gint         x,
-			 gint         y)
-{
-  preview->popup_x = x;
-  preview->popup_y = y;
-
-  preview->popup_id = g_timeout_add (PREVIEW_POPUP_DELAY,
-				     (GSourceFunc) gimp_preview_popup_timeout,
-				     preview);
-}
-
-static void
-gimp_preview_popup_hide (GimpPreview *preview)
-{
-  if (preview->popup_id)
-    {
-      g_source_remove (preview->popup_id);
-
-      preview->popup_id = 0;
-      preview->popup_x  = 0;
-      preview->popup_y  = 0;
-    }
-
-  g_object_set_data (G_OBJECT (preview), "preview_popup_window", NULL);
-}
-
-static void
-gimp_preview_size_allocate (GtkWidget     *widget,
-			    GtkAllocation *allocation)
-{
-  GimpPreview *preview;
-
-  preview = GIMP_PREVIEW (widget);
-
-  allocation->width  = preview->width  + 2 * preview->border_width;
-  allocation->height = preview->height + 2 * preview->border_width;
-
-  if (GTK_WIDGET_CLASS (parent_class)->size_allocate)
-    GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
-
-  gimp_preview_paint (GIMP_PREVIEW (widget));
-}
-
-static gboolean
-gimp_preview_expose (GtkWidget      *widget,
-                     GdkEventExpose *event)
-{
-  GimpPreview  *preview;
-  guchar       *buf;
-  GdkRectangle  buf_rect = { 0, 0, 0, 0 };
-  GdkRectangle  render_rect;
-
-  preview = GIMP_PREVIEW (widget);
-
-  if (! GTK_WIDGET_DRAWABLE (widget) || ! preview->buffer)
-    return FALSE;
-
-  buf_rect.width  = preview->width  + 2 * preview->border_width;
-  buf_rect.height = preview->height + 2 * preview->border_width;
-
-  if (widget->allocation.width > buf_rect.width)
-    buf_rect.x = (widget->allocation.width - buf_rect.width) / 2;
-
-  if (widget->allocation.height >buf_rect.height)
-    buf_rect.y = (widget->allocation.height - buf_rect.height) / 2;
-
-  if (gdk_rectangle_intersect (&event->area, &buf_rect, &render_rect))
-    {
-      buf = (preview->buffer +
-             (render_rect.y - buf_rect.y) * preview->rowstride +
-             (render_rect.x - buf_rect.x) * 3);
-
-      gdk_draw_rgb_image_dithalign (widget->window,
-                                    widget->style->black_gc,
-                                    render_rect.x,
-                                    render_rect.y,
-                                    render_rect.width,
-                                    render_rect.height,
-                                    GDK_RGB_DITHER_NORMAL,
-                                    buf,
-                                    preview->rowstride,
-                                    event->area.x,
-                                    event->area.y);
-    }
 
   return FALSE;
 }
@@ -956,6 +962,16 @@ gimp_preview_idle_paint (GimpPreview *preview)
 
   return FALSE;
 }
+
+static GimpViewable *
+gimp_preview_drag_viewable (GtkWidget *widget,
+			    gpointer   data)
+{
+  return GIMP_PREVIEW (widget)->viewable;
+}
+
+
+/*  protected functions  */
 
 void
 gimp_preview_calc_size (GimpPreview *preview,
@@ -1014,13 +1030,15 @@ gimp_preview_render_and_flush (GimpPreview *preview,
   gint      x1, y1, x2, y2;
   gint      rowstride;
   gboolean  color;
-  gint      alpha;
   gboolean  has_alpha;
   gboolean  render_composite;
-  gint      image_bytes;
+  gint      red_component;
+  gint      green_component;
+  gint      blue_component;
+  gint      alpha_component;
   gint      offset;
   gint      border;
-  guchar    border_color[3];
+  guchar    border_color[PREVIEW_BYTES];
 
   width  = preview->width;
   height = preview->height;
@@ -1038,8 +1056,6 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 		      &border_color[1],
 		      &border_color[2]);
 
-  alpha = ALPHA_PIX;
-
   /*  Here are the different cases this functions handles correctly:
    *  1)  Offset temp_buf which does not necessarily cover full image area
    *  2)  Color conversion of temp_buf if it is gray and image is color
@@ -1051,34 +1067,43 @@ gimp_preview_render_and_flush (GimpPreview *preview,
    *  2)  Color temp_bufs have bytes == {3, 4}
    *  3)  If image is gray, then temp_buf should have bytes == {1, 2}
    */
-  image_bytes = 3;
-  has_alpha   = (temp_buf->bytes == 2 || temp_buf->bytes == 4);
-  rowstride   = temp_buf->width * temp_buf->bytes;
 
-  /*  Determine if the preview buf supplied is color
-   *   Generally, if the bytes == {3, 4}, this is true.
-   *   However, if the channel argument supplied is not -1, then
-   *   the preview buf is assumed to be gray despite the number of
-   *   channels it contains
-   */
-  color = ((channel == -1) &&
-	   (temp_buf->bytes == 3 || temp_buf->bytes == 4));
+  color            = (temp_buf->bytes == 3 || temp_buf->bytes == 4);
+  has_alpha        = (temp_buf->bytes == 2 || temp_buf->bytes == 4);
+  render_composite = (channel == -1);
+  rowstride        = temp_buf->width * temp_buf->bytes;
 
   /*  render the checkerboard only if the temp_buf has alpha *and*
-   *  we render a composite preview (channel == -1)
+   *  we render a composite preview
    */
-  if (has_alpha && (channel == -1))
+  if (has_alpha && render_composite)
+    buf = render_check_buf;
+  else
+    buf = render_empty_buf;
+
+  if (render_composite)
     {
-      buf              = render_check_buf;
-      render_composite = TRUE;
-      alpha            = ((color) ? ALPHA_PIX :
-			  ((channel != -1) ? (temp_buf->bytes - 1) :
-			   ALPHA_G_PIX));
+      if (color)
+        {
+          red_component   = RED_PIX;
+          green_component = GREEN_PIX;
+          blue_component  = BLUE_PIX;
+          alpha_component = ALPHA_PIX;
+        }
+      else
+        {
+          red_component   = GRAY_PIX;
+          green_component = GRAY_PIX;
+          blue_component  = GRAY_PIX;
+          alpha_component = ALPHA_G_PIX;
+        }
     }
   else
     {
-      buf              = render_empty_buf;
-      render_composite = FALSE;
+      red_component   = channel;
+      green_component = channel;
+      blue_component  = channel;
+      alpha_component = 0;
     }
 
   x1 = CLAMP (temp_buf->x, 0, width);
@@ -1089,27 +1114,23 @@ gimp_preview_render_and_flush (GimpPreview *preview,
   src = temp_buf_data (temp_buf) + ((y1 - temp_buf->y) * rowstride +
 				    (x1 - temp_buf->x) * temp_buf->bytes);
 
-  /*  One last thing for efficiency's sake:  */
-  if (channel == -1)
-    channel = 0;
-
   /*  Set the border color once before rendering  */
   for (j = 0; j < width + border * 2; j++)
-    for (b = 0; b < image_bytes; b++)
-      render_temp_buf[j * image_bytes + b] = border_color[b];
+    for (b = 0; b < PREVIEW_BYTES; b++)
+      render_temp_buf[j * PREVIEW_BYTES + b] = border_color[b];
 
   for (i = 0; i < border; i++)
     {
       memcpy (preview->buffer + i * preview->rowstride,
               render_temp_buf,
-              (width + 2 * border) * image_bytes);
+              (width + 2 * border) * PREVIEW_BYTES);
     }
 
   for (i = border + height; i < 2 * border + height; i++)
     {
       memcpy (preview->buffer + i * preview->rowstride,
               render_temp_buf,
-              (width + 2 * border) * image_bytes);
+              (width + 2 * border) * PREVIEW_BYTES);
     }
 
   for (i = 0; i < height; i++)
@@ -1132,106 +1153,64 @@ gimp_preview_render_and_flush (GimpPreview *preview,
 	{
 	  /*  Handle the leading transparency  */
 	  for (j = 0; j < x1; j++)
-	    for (b = 0; b < image_bytes; b++)
-	      render_temp_buf[(border + j) * image_bytes + b] = cb[j * 3 + b];
+	    for (b = 0; b < PREVIEW_BYTES; b++)
+	      render_temp_buf[(border + j) * PREVIEW_BYTES + b] = cb[j * 3 + b];
 
 	  /*  The stuff in the middle  */
 	  s = src;
 	  for (j = x1; j < x2; j++)
 	    {
-	      if (color)
-		{
-		  if (has_alpha && render_composite)
-		    {
-		      a = s[alpha] << 8;
+              if (has_alpha && render_composite)
+                {
+                  a = s[alpha_component] << 8;
 
-		      if ((j + offset) & 0x4)
-			{
-			  render_temp_buf[(border + j) * 3 + 0] = 
-			    render_blend_dark_check [(a | s[RED_PIX])];
-			  render_temp_buf[(border + j) * 3 + 1] = 
-			    render_blend_dark_check [(a | s[GREEN_PIX])];
-			  render_temp_buf[(border + j) * 3 + 2] = 
-			    render_blend_dark_check [(a | s[BLUE_PIX])];
-			}
-		      else
-			{
-			  render_temp_buf[(border + j) * 3 + 0] = 
-			    render_blend_light_check [(a | s[RED_PIX])];
-			  render_temp_buf[(border + j) * 3 + 1] = 
-			    render_blend_light_check [(a | s[GREEN_PIX])];
-			  render_temp_buf[(border + j) * 3 + 2] = 
-			    render_blend_light_check [(a | s[BLUE_PIX])];
-			}
-		    }
-		  else
-		    {
-		      render_temp_buf[(border + j) * 3 + 0] = s[RED_PIX];
-		      render_temp_buf[(border + j) * 3 + 1] = s[GREEN_PIX];
-		      render_temp_buf[(border + j) * 3 + 2] = s[BLUE_PIX];
-		    }
-		}
-	      else
-		{
-		  if (has_alpha && render_composite)
-		    {
-		      a = s[alpha] << 8;
-
-		      if ((j + offset) & 0x4)
-			{
-                          render_temp_buf[(border + j) * 3 + 0] = 
-                            render_blend_dark_check [(a | s[GRAY_PIX])];
-                          render_temp_buf[(border + j) * 3 + 1] = 
-                            render_blend_dark_check [(a | s[GRAY_PIX])];
-                          render_temp_buf[(border + j) * 3 + 2] = 
-                            render_blend_dark_check [(a | s[GRAY_PIX])];
-                        }
-		      else
-			{
-                          render_temp_buf[(border + j) * 3 + 0] = 
-                            render_blend_light_check [(a | s[GRAY_PIX])];
-                          render_temp_buf[(border + j) * 3 + 1] = 
-                            render_blend_light_check [(a | s[GRAY_PIX])];
-                          render_temp_buf[(border + j) * 3 + 2] = 
-                            render_blend_light_check [(a | s[GRAY_PIX])];
-			}
-		    }
-		  else
-		    {
-                      render_temp_buf[(border + j) * 3 + 0] = s[GRAY_PIX];
-                      render_temp_buf[(border + j) * 3 + 1] = s[GRAY_PIX];
-                      render_temp_buf[(border + j) * 3 + 2] = s[GRAY_PIX];
-		    }
-		}
+                  if ((j + offset) & 0x4)
+                    {
+                      render_temp_buf[(border + j) * 3 + 0] = 
+                        render_blend_dark_check [(a | s[red_component])];
+                      render_temp_buf[(border + j) * 3 + 1] = 
+                        render_blend_dark_check [(a | s[green_component])];
+                      render_temp_buf[(border + j) * 3 + 2] = 
+                        render_blend_dark_check [(a | s[blue_component])];
+                    }
+                  else
+                    {
+                      render_temp_buf[(border + j) * 3 + 0] = 
+                        render_blend_light_check [(a | s[red_component])];
+                      render_temp_buf[(border + j) * 3 + 1] = 
+                        render_blend_light_check [(a | s[green_component])];
+                      render_temp_buf[(border + j) * 3 + 2] = 
+                        render_blend_light_check [(a | s[blue_component])];
+                    }
+                }
+              else
+                {
+                  render_temp_buf[(border + j) * 3 + 0] = s[red_component];
+                  render_temp_buf[(border + j) * 3 + 1] = s[green_component];
+                  render_temp_buf[(border + j) * 3 + 2] = s[blue_component];
+                }
 
 	      s += temp_buf->bytes;
 	    }
 
 	  /*  Handle the trailing transparency  */
 	  for (j = x2; j < width; j++)
-	    for (b = 0; b < image_bytes; b++)
-	      render_temp_buf[(border + j) * image_bytes + b] = cb[j * 3 + b];
+	    for (b = 0; b < PREVIEW_BYTES; b++)
+	      render_temp_buf[(border + j) * PREVIEW_BYTES + b] = cb[j * 3 + b];
 
 	  src += rowstride;
 	}
       else
 	{
 	  for (j = 0; j < width; j++)
-	    for (b = 0; b < image_bytes; b++)
-	      render_temp_buf[(border + j) * image_bytes + b] = cb[j * 3 + b];
+	    for (b = 0; b < PREVIEW_BYTES; b++)
+	      render_temp_buf[(border + j) * PREVIEW_BYTES + b] = cb[j * 3 + b];
 	}
 
       memcpy (preview->buffer + (i + border) * preview->rowstride,
               render_temp_buf,
-              (width + 2 * border) * image_bytes);
+              (width + 2 * border) * PREVIEW_BYTES);
     }
 
   gtk_widget_queue_draw (GTK_WIDGET (preview));
-}
-
-static GimpViewable *
-gimp_preview_drag_viewable (GtkWidget *widget,
-			    gpointer   data)
-{
-  return GIMP_PREVIEW (widget)->viewable;
 }

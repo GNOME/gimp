@@ -215,9 +215,9 @@ gimp_image_merge_layers (GimpImage *gimage,
   gint                  count;
   gint                  x1, y1, x2, y2;
   gint                  x3, y3, x4, y4;
-  gint                  operation;
+  CombinationMode       operation;
   gint                  position;
-  gint                  active[MAX_CHANNELS] = {1, 1, 1, 1};
+  gboolean              active[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
   gint                  off_x, off_y;
   gchar                *name;
 

@@ -691,7 +691,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   gint         x1, y1, x2, y2;
   gint         bytes;
   gboolean     construct_flag;
-  gint         visible[MAX_CHANNELS] = { 1, 1, 1, 1 };
+  gboolean     visible_components[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
   gint         off_x, off_y;
 
   gimage = GIMP_IMAGE (viewable);
@@ -815,23 +815,35 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 	{
 	  if (! construct_flag)
 	    initial_region (&src2PR, &src1PR, 
-			    mask, NULL, layer->opacity,
-			    layer->mode, visible, INITIAL_INTENSITY_ALPHA);
+			    mask, NULL,
+                            layer->opacity,
+			    layer->mode,
+                            visible_components,
+                            INITIAL_INTENSITY_ALPHA);
 	  else
 	    combine_regions (&src1PR, &src2PR, &src1PR, 
-			     mask, NULL, layer->opacity,
-			     layer->mode, visible, COMBINE_INTEN_A_INTEN_A);
+			     mask, NULL,
+                             layer->opacity,
+			     layer->mode,
+                             visible_components,
+                             COMBINE_INTEN_A_INTEN_A);
         }
       else
         {
 	  if (! construct_flag)
 	    initial_region (&src2PR, &src1PR, 
-			    mask, NULL, layer->opacity,
-			    layer->mode, visible, INITIAL_INTENSITY);
+			    mask, NULL,
+                            layer->opacity,
+			    layer->mode,
+                            visible_components,
+                            INITIAL_INTENSITY);
 	  else
 	    combine_regions (&src1PR, &src2PR, &src1PR, 
-			     mask, NULL, layer->opacity,
-			     layer->mode, visible, COMBINE_INTEN_A_INTEN);
+			     mask, NULL,
+                             layer->opacity,
+			     layer->mode,
+                             visible_components,
+                             COMBINE_INTEN_A_INTEN);
         }
 
       construct_flag = TRUE;
@@ -1101,6 +1113,19 @@ gimp_image_get_height (const GimpImage *gimage)
 }
 
 gboolean
+gimp_image_has_alpha (const GimpImage *gimage)
+{
+  GimpLayer *layer;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), TRUE);
+
+  layer = (GimpLayer *) gimp_container_get_child_by_index (gimage->layers, 0);
+
+  return ((gimp_container_num_children (gimage->layers) > 1) ||
+          (layer && gimp_drawable_has_alpha (GIMP_DRAWABLE (layer))));
+}
+
+gboolean
 gimp_image_is_empty (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), TRUE);
@@ -1238,8 +1263,7 @@ gimp_image_get_active_components (const GimpImage    *gimage,
                                   const GimpDrawable *drawable,
                                   gint               *active)
 {
-  GimpLayer *layer;
-  gint       i;
+  gint i;
 
   /*  first, blindly copy the gimage active channels  */
   for (i = 0; i < MAX_CHANNELS; i++)
@@ -1259,8 +1283,11 @@ gimp_image_get_active_components (const GimpImage    *gimage,
        */
       if (GIMP_IS_LAYER (drawable))
         {
+          GimpLayer *layer;
+
           layer = GIMP_LAYER (drawable);
-          if (gimp_layer_has_alpha (layer) && layer->preserve_trans)
+
+          if (gimp_drawable_has_alpha (drawable) && layer->preserve_trans)
             active[gimp_drawable_bytes (drawable) - 1] = 0;
         }
     }
@@ -1713,12 +1740,12 @@ gimp_image_apply_image (GimpImage	     *gimage,
 			gint                  x,
 			gint                  y)
 {
-  GimpChannel *mask;
-  gint         x1, y1, x2, y2;
-  gint         offset_x, offset_y;
-  PixelRegion  src1PR, destPR, maskPR;
-  gint         operation;
-  gint         active [MAX_CHANNELS];
+  GimpChannel     *mask;
+  gint             x1, y1, x2, y2;
+  gint             offset_x, offset_y;
+  PixelRegion      src1PR, destPR, maskPR;
+  CombinationMode  operation;
+  gboolean         active_components[MAX_CHANNELS];
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -1727,7 +1754,7 @@ gimp_image_apply_image (GimpImage	     *gimage,
           NULL : gimp_image_get_mask (gimage));
 
   /*  configure the active channel array  */
-  gimp_image_get_active_components (gimage, drawable, active);
+  gimp_image_get_active_components (gimage, drawable, active_components);
 
   /*  determine what sort of operation is being attempted and
    *  if it's actually legal...
@@ -1797,12 +1824,12 @@ gimp_image_apply_image (GimpImage	     *gimage,
 			 (x2 - x1), (y2 - y1), 
 			 FALSE);
       combine_regions (&src1PR, src2PR, &destPR, &maskPR, NULL,
-		       opacity, mode, active, operation);
+		       opacity, mode, active_components, operation);
     }
   else
     {
       combine_regions (&src1PR, src2PR, &destPR, NULL, NULL,
-		       opacity, mode, active, operation);
+		       opacity, mode, active_components, operation);
     }
 }
 
@@ -1822,14 +1849,14 @@ gimp_image_replace_image (GimpImage    *gimage,
 			  gint          x, 
 			  gint          y)
 {
-  GimpChannel *mask;
-  gint         x1, y1, x2, y2;
-  gint         offset_x, offset_y;
-  PixelRegion  src1PR, destPR;
-  PixelRegion  mask2PR, tempPR;
-  guchar      *temp_data;
-  gint         operation;
-  gint         active [MAX_CHANNELS];
+  GimpChannel     *mask;
+  gint             x1, y1, x2, y2;
+  gint             offset_x, offset_y;
+  PixelRegion      src1PR, destPR;
+  PixelRegion      mask2PR, tempPR;
+  guchar          *temp_data;
+  CombinationMode  operation;
+  gboolean         active_components[MAX_CHANNELS];
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -1837,7 +1864,7 @@ gimp_image_replace_image (GimpImage    *gimage,
   mask = (gimp_image_mask_is_empty (gimage)) ? NULL : gimp_image_get_mask (gimage);
 
   /*  configure the active channel array  */
-  gimp_image_get_active_components (gimage, drawable, active);
+  gimp_image_get_active_components (gimage, drawable, active_components);
 
   /*  determine what sort of operation is being attempted and
    *  if it's actually legal...
@@ -1930,14 +1957,14 @@ gimp_image_replace_image (GimpImage    *gimage,
       tempPR.data = temp_data;
 
       combine_regions_replace (&src1PR, src2PR, &destPR, &tempPR, NULL,
-		       opacity, active, operation);
+                               opacity, active_components, operation);
 
       g_free (temp_data);
     }
   else
     {
       combine_regions_replace (&src1PR, src2PR, &destPR, maskPR, NULL,
-			       opacity, active, operation);
+			       opacity, active_components, operation);
     }
 }
 
@@ -2619,7 +2646,7 @@ gimp_image_raise_layer_to_top (GimpImage *gimage,
       return FALSE;
     }
   
-  if (! gimp_layer_has_alpha (layer))
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
       g_message (_("Cannot raise a layer without alpha."));
       return FALSE;
@@ -2690,7 +2717,7 @@ gimp_image_position_layer (GimpImage *gimage,
 							     num_layers - 1);
 
       if (new_index == num_layers - 1 &&
-	  ! gimp_layer_has_alpha (tmp))
+	  ! gimp_drawable_has_alpha (GIMP_DRAWABLE (tmp)))
 	{
 	  g_message (_("Layer \"%s\" has no alpha.\nLayer was placed above it."),
 		     GIMP_OBJECT (tmp)->name);

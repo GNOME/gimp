@@ -562,7 +562,7 @@ gimp_layer_add_mask (GimpLayer     *layer,
       return NULL;
     }
 
-  if (! gimp_layer_has_alpha (layer))
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
       g_message (_("Cannot add layer mask to a layer\n"
                    "with no alpha channel."));
@@ -648,7 +648,7 @@ gimp_layer_create_mask (const GimpLayer *layer,
 
     case ADD_ALPHA_MASK:
       /*  Extract the layer's alpha channel  */
-      if (gimp_layer_has_alpha (layer))
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
 	{
 	  pixel_region_init (&layerPR, GIMP_DRAWABLE (layer)->tiles, 
 			     0, 0, 
@@ -706,7 +706,7 @@ gimp_layer_apply_mask (GimpLayer     *layer,
     return;
 
   /*  this operation can only be done to layers with an alpha channel  */
-  if (! gimp_layer_has_alpha (layer))
+  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     return;
 
   gimage = gimp_drawable_gimage (GIMP_DRAWABLE (layer));
@@ -1171,7 +1171,7 @@ gimp_layer_resize (GimpLayer *layer,
 		     TRUE);
 
   /*  fill with the fill color  */
-  if (gimp_layer_has_alpha (layer))
+  if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
     {
       /*  Set to transparent and black  */
       guchar bg[4] = {0, 0, 0, 0};
@@ -1358,7 +1358,7 @@ gimp_layer_pick_correlate (GimpLayer *layer,
       /*  If the point is inside, and the layer has no
        *  alpha channel, success!
        */
-      if (! gimp_layer_has_alpha (layer))
+      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
 	return TRUE;
 
       /*  Otherwise, determine if the alpha value at
@@ -1402,14 +1402,6 @@ gimp_layer_get_mask (const GimpLayer *layer)
   g_return_val_if_fail (GIMP_IS_LAYER (layer), NULL);
 
   return layer->mask;
-}
-
-gboolean
-gimp_layer_has_alpha (const GimpLayer *layer)
-{
-  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
-
-  return GIMP_IMAGE_TYPE_HAS_ALPHA (GIMP_DRAWABLE (layer)->type);
 }
 
 gboolean

@@ -244,6 +244,7 @@ void            gimp_image_unit_changed          (GimpImage          *gimage);
 gint		gimp_image_get_width             (const GimpImage    *gimage);
 gint		gimp_image_get_height            (const GimpImage    *gimage);
 
+gboolean        gimp_image_has_alpha             (const GimpImage    *gimage);
 gboolean        gimp_image_is_empty              (const GimpImage    *gimage);
 
 GimpLayer     * gimp_image_floating_sel          (const GimpImage    *gimage);

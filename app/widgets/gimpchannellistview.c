@@ -406,7 +406,10 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
       break;
     }
 
-  components[n_components++] = GIMP_ALPHA_CHANNEL;
+  if (gimp_image_has_alpha (gimage))
+    {
+      components[n_components++] = GIMP_ALPHA_CHANNEL;
+    }
 
   for (i = 0; i < n_components; i++)
     {
@@ -451,7 +454,8 @@ static void
 gimp_channel_list_view_alpha_changed (GimpImage           *gimage,
                                       GimpChannelListView *view)
 {
-  g_print ("gimp_channel_list_view_alpha_changed()\n");
+  gimp_channel_list_view_clear_components (view);
+  gimp_channel_list_view_create_components (view);
 }
 
 static void

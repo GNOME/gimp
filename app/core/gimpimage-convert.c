@@ -627,7 +627,7 @@ remap_indexed_layer (GimpLayer     *layer,
   unsigned char* src;
   unsigned char* dest;
 
-  has_alpha = gimp_layer_has_alpha (layer) ? 1 : 0;
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)) ? 1 : 0;
   pixel_region_init (&srcPR,
 		     GIMP_DRAWABLE(layer)->tiles, 0, 0,
 		     GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
@@ -804,7 +804,7 @@ gimp_image_convert (GimpImage          *gimage,
 
       new_layer_type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (new_type);
 
-      if (gimp_layer_has_alpha (layer))
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
         new_layer_type = GIMP_IMAGE_TYPE_WITH_ALPHA (new_layer_type);
 
       new_tiles = tile_manager_new (GIMP_DRAWABLE (layer)->width,
@@ -1130,7 +1130,7 @@ generate_histogram_gray (CFHistogram  histogram,
   void *pr;
   gboolean has_alpha;
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   for (pr = pixel_regions_register (1, &srcPR);
@@ -1164,7 +1164,7 @@ generate_histogram_rgb (CFHistogram  histogram,
   int row, col, coledge;
   int offsetx, offsety;
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
@@ -2505,7 +2505,8 @@ median_cut_pass2_no_dither_gray (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -2568,7 +2569,8 @@ median_cut_pass2_fixed_dither_gray (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -2653,7 +2655,8 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   if (gimp_drawable_is_gray (GIMP_DRAWABLE(layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -2730,7 +2733,8 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   if (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -2829,7 +2833,8 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   for (pr = pixel_regions_register (2, &srcPR, &destPR); pr != NULL; pr = pixel_regions_process (pr))
@@ -3013,7 +3018,8 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
   gimp_drawable_offsets (GIMP_DRAWABLE(layer), &offsetx, &offsety);
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;
@@ -3223,7 +3229,8 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   if (gimp_drawable_is_gray (GIMP_DRAWABLE(layer)))
     red_pix = green_pix = blue_pix = GRAY_PIX;
 
-  has_alpha = gimp_layer_has_alpha (layer);
+  has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
+
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
   src_bytes = GIMP_DRAWABLE(layer)->bytes;

@@ -146,7 +146,6 @@ gint            gimp_layer_pick_correlate      (GimpLayer            *layer,
 
 GimpLayerMask * gimp_layer_get_mask            (const GimpLayer      *layer);
 
-gboolean        gimp_layer_has_alpha           (const GimpLayer      *layer);
 gboolean        gimp_layer_is_floating_sel     (const GimpLayer      *layer);
 
 void            gimp_layer_set_opacity         (GimpLayer            *layer,

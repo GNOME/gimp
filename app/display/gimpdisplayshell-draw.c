@@ -925,7 +925,7 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell)
 	  if (layer)
 	    {
 	      lm    = gimp_layer_get_mask (layer) ? TRUE : FALSE;
-	      alpha = gimp_layer_has_alpha (layer);
+	      alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 	      lind  = gimp_image_get_layer_index (gimage, layer);
 	    }
 
