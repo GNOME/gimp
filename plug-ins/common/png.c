@@ -1254,7 +1254,7 @@ save_dialog (void)
   gtk_widget_show (toggle);
 
   scale_data = gtk_adjustment_new (pngvals.compression_level,
-                                   1.0, 9.0, 1.0, 1.0, 0.0);
+                                   0.0, 9.0, 1.0, 1.0, 0.0);
   scale      = gtk_hscale_new (GTK_ADJUSTMENT (scale_data));
   gtk_widget_set_usize (scale, SCALE_WIDTH, 0);
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);

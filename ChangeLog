@@ -1,3 +1,8 @@
+2002-11-09  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/png.c: allow setting compression level 0 from
+	the UI.
+
 2002-11-07  Dave Neary  <bolsh@gimp.org>
 	* plug-ins/common/xbm.c: Applied patch from Raphael
 	Quinet to suppress printing of comments in XBM files.
