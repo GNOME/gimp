@@ -1,13 +1,15 @@
 [Desktop Entry]
+Version=1.0
 Encoding=UTF-8
+Type=Application
 _Name=The GIMP
+_GenericName=Image Editor
 _Comment=Create and edit images or photographs
 Exec=gimp-remote-@GIMP_APP_VERSION@ %U
 TryExec=gimp-@GIMP_APP_VERSION@
 Icon=@gimpdatadir@/images/@GIMP_DESKTOP_ICON@
 Terminal=false
-Type=Application
-Categories=Application;Graphics;RasterGraphics;
+Categories=Application;Graphics;2DGraphics;RasterGraphics;
 X-GNOME-Bugzilla-Bugzilla=GNOME
 X-GNOME-Bugzilla-Product=GIMP
 StartupNotify=true
