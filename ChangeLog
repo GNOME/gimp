@@ -1,3 +1,9 @@
+2000-11-21  Austin Donnelly  <austin@gimp.org>
+
+	* plug-ins/common/exchange.c: fixed buffer overrun when previewing
+	    an image with alpha that was causing segfaults on Linux.
+	    Fixes Bug#32860.
+
 2000-11-20  Sven Neumann  <sven@gimp.org>
 
 	* app/convert.c (build_palette_button): changed the logic that sets

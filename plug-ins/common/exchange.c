@@ -670,9 +670,15 @@ real_exchange (gint     x1,
 	  dest_row[idx + 1] = (guchar) new_green;
 	  dest_row[idx + 2] = (guchar) new_blue;
 
-	  /* copy rest (most likely alpha-channel) */
-	  for (rest = 3; rest < bpp; rest++)
-	    dest_row[idx + rest] = src_row[x * bpp + rest];
+	  /* copy rest (ie the alpha-channel).  But, only if we're not
+	   * previewing, otherwise we don't have room for the alpha
+	   * and overrun the buffer, causing a segfault on the
+	   * g_free() at the bottom of this function.  Maybe we should
+	   * convert the alpha and blend in the chequerboard pattern,
+	   * but I'll leave that as an excercise for the reader... */
+	  if (!do_preview)
+	    for (rest = 3; rest < bpp; rest++)
+	      dest_row[idx + rest] = src_row[x * bpp + rest];
 	}
       /* store the dest */
       if (do_preview)
