@@ -652,7 +652,7 @@ gimp_real_restore (Gimp               *gimp,
   if (gimp->be_verbose)
     g_print ("INIT: gimp_real_restore\n");
 
-  plug_ins_init (gimp, status_callback);
+  plug_ins_init (gimp, gimp_get_user_context (gimp), status_callback);
 }
 
 static gboolean

@@ -1,3 +1,11 @@
+2004-06-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.[ch] (plug_ins_init): added a GimpContext
+	parameter and use it to start plug-ins.
+
+	* app/core/gimp.c (gimp_real_restore): pass the user context.
+	Restores script-fu's access to the global FG, FG, brush, ...
+
 2004-06-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.c

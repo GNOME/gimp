@@ -21,6 +21,7 @@
 
 
 void              plug_ins_init                 (Gimp               *gimp,
+                                                 GimpContext        *context,
                                                  GimpInitStatusFunc  status_callback);
 void              plug_ins_exit                 (Gimp          *gimp);
 

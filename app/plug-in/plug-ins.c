@@ -82,23 +82,22 @@ static PlugInProcDef * plug_ins_proc_def_insert (Gimp             *gimp,
 
 void
 plug_ins_init (Gimp               *gimp,
+               GimpContext        *context,
                GimpInitStatusFunc  status_callback)
 {
-  GimpContext *context;
-  gchar       *filename;
-  gchar       *basename;
-  gchar       *path;
-  GSList      *list;
-  GList       *extensions = NULL;
-  gdouble      n_plugins;
-  gdouble      n_extensions;
-  gdouble      nth;
-  GError      *error = NULL;
+  gchar   *filename;
+  gchar   *basename;
+  gchar   *path;
+  GSList  *list;
+  GList   *extensions = NULL;
+  gdouble  n_plugins;
+  gdouble  n_extensions;
+  gdouble  nth;
+  GError  *error = NULL;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (status_callback != NULL);
-
-  context = gimp_context_new (gimp, "temp", NULL);
 
   plug_in_init (gimp);
 
@@ -361,8 +360,6 @@ plug_ins_init (Gimp               *gimp,
 
   g_slist_free (gimp->plug_in_defs);
   gimp->plug_in_defs = NULL;
-
-  g_object_unref (context);
 }
 
 void
