@@ -31,6 +31,8 @@
 #include "core/gimpimage-projection.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpbycolorselecttool.h"
@@ -80,7 +82,7 @@ gimp_by_color_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Select By Color"),
                 _("Select regions by color"),
                 N_("/Tools/Selection Tools/_By Color Select"), NULL,
-                NULL, "tools/by_color_select.html",
+                NULL, GIMP_HELP_TOOL_BY_COLOR_SELECT,
                 GIMP_STOCK_TOOL_BY_COLOR_SELECT,
                 data);
 }

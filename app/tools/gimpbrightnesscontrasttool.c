@@ -32,6 +32,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpbrightnesscontrasttool.h"
@@ -82,7 +84,7 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
                 _("Brightness-Contrast"),
                 _("Adjust brightness and contrast"),
                 N_("/Tools/Color Tools/B_rightness-Contrast..."), NULL,
-                NULL, "tools/brightness_contrast.html",
+                NULL, GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST,
                 GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST,
                 data);
 }
@@ -108,7 +110,7 @@ gimp_brightness_contrast_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpBrightnessContrastTool", 
+					  "GimpBrightnessContrastTool",
                                           &tool_info, 0);
     }
 

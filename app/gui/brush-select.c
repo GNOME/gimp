@@ -36,8 +36,9 @@
 
 #include "pdb/procedural_db.h"
 
-#include "widgets/gimpcontainerview.h"
 #include "widgets/gimpbrushfactoryview.h"
+#include "widgets/gimpcontainerview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-constructors.h"
 
 #include "brush-select.h"
@@ -145,7 +146,7 @@ brush_select_new (Gimp                 *gimp,
   /*  The shell  */
   bsp->shell = gimp_dialog_new (title, "brush_selection",
 				gimp_standard_help_func,
-				"dialogs/brush_selection.html",
+				GIMP_HELP_BRUSH_DIALOG,
 				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
@@ -177,7 +178,7 @@ brush_select_new (Gimp                 *gimp,
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
 
   /*  Create the opacity scale widget  */
-  bsp->opacity_data = 
+  bsp->opacity_data =
     GTK_ADJUSTMENT (gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                                           _("Opacity:"), -1, 5,
                                           gimp_context_get_opacity (bsp->context) * 100.0,
@@ -221,7 +222,7 @@ brush_select_free (BrushSelect *bsp)
 {
   g_return_if_fail (bsp != NULL);
 
-  gtk_widget_destroy (bsp->shell); 
+  gtk_widget_destroy (bsp->shell);
 
   /* remove from active list */
   brush_active_dialogs = g_slist_remove (brush_active_dialogs, bsp);
@@ -298,7 +299,7 @@ brush_select_change_callbacks (BrushSelect *bsp,
 
   if (proc && brush)
     {
-      Argument *return_vals; 
+      Argument *return_vals;
       gint      nreturn_vals;
 
       return_vals =
@@ -412,5 +413,5 @@ brush_select_close_callback (GtkWidget   *widget,
 			     BrushSelect *bsp)
 {
   brush_select_change_callbacks (bsp, TRUE);
-  brush_select_free (bsp); 
+  brush_select_free (bsp);
 }

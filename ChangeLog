@@ -1,3 +1,35 @@
+2003-08-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c
+	* app/gui/brush-select.c
+	* app/gui/channels-menu.c
+	* app/gui/convert-dialog.c
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c
+	* app/gui/font-select.c
+	* app/gui/gradient-select.c
+	* app/gui/gui.c
+	* app/gui/image-commands.c
+	* app/gui/image-menu.c
+	* app/gui/layers-menu.c
+	* app/gui/menus.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/palette-select.c
+	* app/gui/palettes-commands.c
+	* app/gui/pattern-select.c
+	* app/gui/preferences-dialog.c
+	* app/gui/qmask-commands.c
+	* app/gui/qmask-menu.c
+	* app/gui/templates-commands.c
+	* app/gui/toolbox-menu.c
+	* app/gui/vectors-menu.c
+	* app/tools/[all tools].c
+	* app/widgets/gimperrorconsole.c
+	* app/widgets/gimpitemfactory.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimphelp-ids.h: added, fixed and updated lots of
+	help IDs. Still unfinished.
+
 2003-08-22  Sven Neumann  <sven@gimp.org>
 
 	* tools/gimpblendtool.c

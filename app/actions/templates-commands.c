@@ -32,6 +32,7 @@
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptemplateview.h"
 #include "widgets/gimpviewabledialog.h"
@@ -133,7 +134,7 @@ templates_new_template_dialog (Gimp         *gimp,
                               GIMP_STOCK_TEMPLATE,
                               _("Create a New Template"),
                               gimp_standard_help_func,
-                              "dialogs/new_template.html",
+                              GIMP_HELP_TEMPLATE_NEW,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, (gpointer) 1, NULL, FALSE, TRUE,
@@ -202,7 +203,7 @@ templates_edit_template_dialog (Gimp         *gimp,
                               GIMP_STOCK_EDIT,
                               _("Edit Template"),
                               gimp_standard_help_func,
-                              "dialogs/edit_template.html",
+                              GIMP_HELP_TEMPLATE_EDIT,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, (gpointer) 1, NULL, FALSE, TRUE,

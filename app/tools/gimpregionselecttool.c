@@ -39,6 +39,8 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-cursor.h"
@@ -98,7 +100,7 @@ gimp_fuzzy_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Fuzzy Select"),
                 _("Select contiguous regions"),
                 N_("/Tools/Selection Tools/Fu_zzy Select"), "Z",
-                NULL, "tools/fuzzy_select.html",
+                NULL, GIMP_HELP_TOOL_FUZZY_SELECT,
                 GIMP_STOCK_TOOL_FUZZY_SELECT,
                 data);
 }

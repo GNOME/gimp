@@ -84,7 +84,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
       dialogs_create_toplevel_cmd_callback, 0,
       "<StockItem>", GTK_STOCK_PREFERENCES },
     "gimp-preferences-dialog",
-    GIMP_HELP_PREFERENCES_DIALOG, NULL },
+    GIMP_HELP_PREFS_DIALOG, NULL },
 
   /*  <Toolbox>/File/Dialogs  */
 

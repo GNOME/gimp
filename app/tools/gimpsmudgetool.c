@@ -29,6 +29,7 @@
 #include "paint/gimpsmudge.h"
 #include "paint/gimpsmudgeoptions.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpsmudgetool.h"
@@ -61,7 +62,7 @@ gimp_smudge_tool_register (GimpToolRegisterCallback  callback,
                 _("Smudge"),
                 _("Smudge image"),
                 N_("/Tools/Paint Tools/_Smudge"), "S",
-                NULL, "tools/smudge.html",
+                NULL, GIMP_HELP_TOOL_SMUDGE,
                 GIMP_STOCK_TOOL_SMUDGE,
                 data);
 }

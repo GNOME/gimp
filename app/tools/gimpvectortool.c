@@ -41,6 +41,8 @@
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpbezierstroke.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 
@@ -125,7 +127,7 @@ gimp_vector_tool_register (GimpToolRegisterCallback  callback,
                 _("Paths"),
                 _("Create and edit paths"),
                 N_("/Tools/_Paths"), NULL,
-                NULL, "tools/paths.html",
+                NULL, GIMP_HELP_TOOL_PATH,
                 GIMP_STOCK_TOOL_PATH,
                 data);
 }
@@ -151,7 +153,7 @@ gimp_vector_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpVectorTool", 
+					  "GimpVectorTool",
                                           &tool_info, 0);
     }
 
@@ -189,7 +191,7 @@ gimp_vector_tool_init (GimpVectorTool *vector_tool)
   tool = GIMP_TOOL (vector_tool);
 
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
-  
+
   vector_tool->function       = VECTORS_CREATE_VECTOR;
   vector_tool->last_x         = 0;
   vector_tool->last_y         = 0;
@@ -253,19 +255,19 @@ gimp_vector_tool_button_press (GimpTool        *tool,
 
   /* when pressing mouse down
    *
-   * Anchor: (NONE) -> Regular Movement 
+   * Anchor: (NONE) -> Regular Movement
    *         (SHFT) -> multiple selection
    *         (CTRL) -> Drag out control point
    *         (CTRL+SHFT) -> Convert to corner
    *         (ALT)  -> close this stroke  (really should be able to connect
    *                                       two strokes)
-   *         
+   *
    * Handle: (NONE) -> Regular Movement
    *         (SHFT) -> (Handle) Move opposite handle symmetrically
    *         (CTRL+SHFT) -> move handle to its anchor
    */
 
-  /*  if we are changing displays, pop the statusbar of the old one  */ 
+  /*  if we are changing displays, pop the statusbar of the old one  */
   if (gdisp != tool->gdisp)
     {
       /* gimp_tool_pop_status (tool); */
@@ -336,7 +338,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
               vector_tool->cur_anchor = NULL;
               vector_tool->function = VECTORS_FINISHED;
             }
-          
+
           break;
 
         case VECTORS_DELETE_SEGMENT:
@@ -420,7 +422,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
         {
           gimp_vectors_anchor_select (vector_tool->vectors, stroke,
                                       anchor, TRUE);
-      
+
           /* if the selected anchor changed, the visible control
            * points might have changed too */
           if (vector_tool->function == VECTORS_MOVE_HANDLE)
@@ -433,9 +435,9 @@ gimp_vector_tool_button_press (GimpTool        *tool,
         }
       vector_tool->cur_stroke = stroke;
       vector_tool->cur_anchor = anchor;
-    
+
       break;  /* here it is...  :-)  */
-  
+
     case VECTORS_CONVERT_EDGE:
       if (gimp_vector_tool_on_handle (tool, coords,
                                       GIMP_ANCHOR_ANCHOR, gdisp,
@@ -463,7 +465,7 @@ gimp_vector_tool_button_press (GimpTool        *tool,
               vector_tool->function = VECTORS_FINISHED;
             }
         }
-      
+
       break;
 
     default:
@@ -668,7 +670,7 @@ gimp_vector_tool_on_handle (GimpTool        *tool,
     {
       if (ret_anchor)
         *ret_anchor = anchor;
-        
+
       /* *ret_stroke already set correctly. */
       return TRUE;
     }
@@ -804,7 +806,7 @@ gimp_vector_tool_oper_update (GimpTool        *tool,
                 }
             }
         }
-      else 
+      else
         {
           vector_tool->function = VECTORS_MOVE_ANCHOR;
         }
@@ -979,7 +981,7 @@ gimp_vector_tool_draw (GimpDrawTool *draw_tool)
 
       /* the lines to the control handles */
       coords = gimp_stroke_get_draw_lines (cur_stroke);
-      
+
       if (coords->len % 2 == 0)
         {
           gint i;
@@ -1089,7 +1091,7 @@ gimp_vector_tool_set_vectors (GimpVectorTool *vector_tool,
 
   g_object_ref (vectors);
 
-  g_signal_connect_object (vectors, "removed", 
+  g_signal_connect_object (vectors, "removed",
                            G_CALLBACK (gimp_vector_tool_clear_vectors),
                            vector_tool,
                            G_CONNECT_SWAPPED);

@@ -36,6 +36,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimptoolbox-color-area.h"
 #include "widgets/gimpviewabledialog.h"
@@ -102,7 +103,7 @@ gimp_color_picker_tool_register (GimpToolRegisterCallback  callback,
                 _("Color Picker"),
                 _("Pick colors from the image"),
                 N_("/Tools/C_olor Picker"), "O",
-                NULL, "tools/color_picker.html",
+                NULL, GIMP_HELP_TOOL_COLOR_PICKER,
                 GIMP_STOCK_TOOL_COLOR_PICKER,
                 data);
 }

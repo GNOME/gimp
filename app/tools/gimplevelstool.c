@@ -50,6 +50,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"
 
 #include "display/gimpdisplay.h"
@@ -162,7 +163,7 @@ gimp_levels_tool_register (GimpToolRegisterCallback  callback,
                 _("Levels"),
                 _("Adjust color levels"),
                 N_("/Tools/Color Tools/_Levels..."), NULL,
-                NULL, "tools/levels.html",
+                NULL, GIMP_HELP_TOOL_LEVELS,
                 GIMP_STOCK_TOOL_LEVELS,
                 data);
 }
@@ -188,7 +189,7 @@ gimp_levels_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpLevelsTool", 
+					  "GimpLevelsTool",
                                           &tool_info, 0);
     }
 
@@ -315,7 +316,7 @@ gimp_levels_tool_initialize (GimpTool    *tool,
   gtk_option_menu_set_history (GTK_OPTION_MENU (l_tool->channel_menu),
 			       l_tool->channel);
 
-  levels_update (l_tool, (LOW_INPUT | GAMMA | HIGH_INPUT | 
+  levels_update (l_tool, (LOW_INPUT | GAMMA | HIGH_INPUT |
                           LOW_OUTPUT | HIGH_OUTPUT |
                           DRAW | INPUT_LEVELS | OUTPUT_LEVELS));
 
@@ -767,7 +768,7 @@ levels_update (GimpLevelsTool *l_tool,
 {
   gint i;
   gint sel_channel;
-  
+
   if (l_tool->color)
     {
       sel_channel = l_tool->channel;
@@ -830,7 +831,7 @@ levels_update (GimpLevelsTool *l_tool,
 
 	case GIMP_HISTOGRAM_RED:
 	case GIMP_HISTOGRAM_GREEN:
-	case GIMP_HISTOGRAM_BLUE:	  
+	case GIMP_HISTOGRAM_BLUE:
 	  for (i = 0; i < DA_WIDTH; i++)
 	    {
 	      buf[3 * i + 0] = l_tool->levels->input[GIMP_HISTOGRAM_RED][i];
@@ -989,7 +990,7 @@ levels_set_sensitive_callback (gpointer        item_data,
                                GimpLevelsTool *l_tool)
 {
   GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
-  
+
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
@@ -1003,7 +1004,7 @@ levels_set_sensitive_callback (gpointer        item_data,
     case GIMP_HISTOGRAM_ALPHA:
       return gimp_drawable_has_alpha (GIMP_IMAGE_MAP_TOOL (l_tool)->drawable);
     }
-  
+
   return FALSE;
 }
 
@@ -1116,7 +1117,7 @@ levels_input_picker_toggled (GtkWidget      *widget,
         return;
 
       if (tool->active_picker)
-        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker), 
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (tool->active_picker),
                                       FALSE);
 
       tool->active_picker = widget;
@@ -1368,7 +1369,7 @@ gimp_levels_tool_color_picked (GimpColorTool *color_tool,
   if (value & ALL_CHANNELS && GIMP_IMAGE_TYPE_IS_RGB (sample_type))
     {
       GimpHistogramChannel  channel;
-      
+
       /*  first reset the value channel  */
       switch (value & 0xF)
 	{
@@ -1426,7 +1427,7 @@ levels_save_callback (GtkWidget      *widget,
 {
   if (! l_tool->file_dialog)
     file_dialog_create (l_tool);
-  else if (GTK_WIDGET_VISIBLE (l_tool->file_dialog)) 
+  else if (GTK_WIDGET_VISIBLE (l_tool->file_dialog))
     return;
 
   l_tool->is_save = TRUE;
@@ -1458,10 +1459,10 @@ file_dialog_create (GimpLevelsTool *l_tool)
                                 GTK_WINDOW (GIMP_IMAGE_MAP_TOOL (l_tool)->shell));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dlg), TRUE);
 
-  g_signal_connect_swapped (file_dlg->ok_button, "clicked", 
+  g_signal_connect_swapped (file_dlg->ok_button, "clicked",
                             G_CALLBACK (file_dialog_ok_callback),
                             l_tool);
-  g_signal_connect_swapped (file_dlg->cancel_button, "clicked", 
+  g_signal_connect_swapped (file_dlg->cancel_button, "clicked",
                             G_CALLBACK (gtk_widget_destroy),
                             file_dlg);
 
@@ -1517,7 +1518,7 @@ levels_read_from_file (GimpLevelsTool *l_tool,
   gdouble gamma[5];
   gint    i, fields;
   gchar   buf[50], *nptr;
-  
+
   if (! fgets (buf, 50, file))
     return FALSE;
 

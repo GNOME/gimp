@@ -37,6 +37,7 @@
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "dialogs-constructors.h"
 #include "menus.h"
@@ -46,7 +47,7 @@
 
 
 #define STD_PALETTE_COLUMNS  6
-#define STD_PALETTE_ROWS     5 
+#define STD_PALETTE_ROWS     5
 
 
 /*  local function prototypes  */
@@ -118,7 +119,7 @@ palette_select_new (Gimp        *gimp,
   /*  the shell  */
   psp->shell = gimp_dialog_new (title, "palette_selection",
 				gimp_standard_help_func,
-				"dialogs/palette_selection.html",
+				GIMP_HELP_PALETTE_DIALOG,
 				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
@@ -153,7 +154,7 @@ palette_select_free (PaletteSelect *psp)
 {
   g_return_if_fail (psp != NULL);
 
-  gtk_widget_destroy (psp->shell); 
+  gtk_widget_destroy (psp->shell);
 
   /* remove from active list */
   palette_active_dialogs = g_slist_remove (palette_active_dialogs, psp);
@@ -201,7 +202,7 @@ palette_select_dialogs_check (void)
       if (psp->callback_name)
         {
           if (!  procedural_db_lookup (psp->context->gimp, psp->callback_name))
-            palette_select_close_callback (NULL, psp); 
+            palette_select_close_callback (NULL, psp);
         }
     }
 }
@@ -230,7 +231,7 @@ palette_select_change_callbacks (PaletteSelect *psp,
 
   if (proc && palette)
     {
-      Argument *return_vals; 
+      Argument *return_vals;
       gint      nreturn_vals;
 
       return_vals =
@@ -241,7 +242,7 @@ palette_select_change_callbacks (PaletteSelect *psp,
 				GIMP_PDB_INT32,  palette->n_colors,
 				GIMP_PDB_INT32,  closing,
 				GIMP_PDB_END);
- 
+
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message (_("Unable to run palette callback.\n"
                      "The corresponding plug-in may have crashed."));
@@ -267,5 +268,5 @@ palette_select_close_callback (GtkWidget     *widget,
 			       PaletteSelect *psp)
 {
   palette_select_change_callbacks (psp, TRUE);
-  palette_select_free (psp); 
+  palette_select_free (psp);
 }

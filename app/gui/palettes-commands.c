@@ -30,6 +30,7 @@
 
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppreview.h"
 
 #include "palette-import-dialog.h"
@@ -80,7 +81,7 @@ palettes_merge_palettes_query (GimpContainerEditor *editor)
 
   qbox = gimp_query_string_box (_("Merge Palette"),
 				gimp_standard_help_func,
-				"dialogs/palette_editor/merge_palette.html",
+				GIMP_HELP_PALETTE_MERGE,
 				_("Enter a name for merged palette"),
 				NULL,
 				G_OBJECT (editor), "destroy",

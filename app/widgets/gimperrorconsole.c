@@ -56,6 +56,7 @@
 #include "core/gimp.h"
 
 #include "gimperrorconsole.h"
+#include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimpwidgets-utils.h"
@@ -368,10 +369,8 @@ gimp_error_console_save_ext_clicked (GtkWidget        *button,
 		    G_CALLBACK (gimp_error_console_save_ok_clicked),
 		    console);
 
-  /*  Connect the "F1" help key  */
-  gimp_help_connect (GTK_WIDGET (filesel),
-		     gimp_standard_help_func,
-		     "dialogs/error_console.html");
+  gimp_help_connect (GTK_WIDGET (filesel), gimp_standard_help_func,
+		     GIMP_HELP_ERROR_DIALOG);
 
   gtk_widget_show (GTK_WIDGET (filesel));
 }

@@ -37,6 +37,7 @@
 #include "core/gimpimage-scale.h"
 #include "core/gimpimage-undo.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -378,7 +379,7 @@ image_layers_merge_query (GimpImage   *gimage,
                               GIMP_STOCK_MERGE_DOWN,
                               _("Layers Merge Options"),
                               gimp_standard_help_func,
-                              "dialogs/layers/merge_visible_layers.html",
+                              GIMP_HELP_IMAGE_MERGE_LAYERS,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,
@@ -442,7 +443,7 @@ image_resize_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (image_resize->resize->resize_shell, FALSE);
 
   if (image_resize->resize->width  > 0 &&
-      image_resize->resize->height > 0) 
+      image_resize->resize->height > 0)
     {
       GimpProgress *progress;
 
@@ -461,7 +462,7 @@ image_resize_callback (GtkWidget *widget,
 
       gimp_image_flush (image_resize->gimage);
     }
-  else 
+  else
     {
       g_message (_("Resize Error: Both width and height must be "
 		   "greater than zero."));
@@ -498,7 +499,7 @@ image_scale_callback (GtkWidget *widget,
       dialog =
 	gimp_query_boolean_box (_("Layer Too Small"),
 				gimp_standard_help_func,
-				"dialogs/scale_layer_warn.html",
+				GIMP_HELP_IMAGE_SCALE_WARNING,
 				GTK_STOCK_DIALOG_QUESTION,
 				_("The chosen image size will shrink\n"
 				  "some layers completely away.\n"
@@ -562,7 +563,7 @@ image_scale_implement (ImageResize *image_scale)
       image_scale->resize->height != gimage->height)
     {
       if (image_scale->resize->width  > 0 &&
-	  image_scale->resize->height > 0) 
+	  image_scale->resize->height > 0)
 	{
           GimpProgress *progress;
 

@@ -31,6 +31,7 @@
 
 #include "plug-in/plug-in-proc.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "file-commands.h"
@@ -45,7 +46,7 @@ GimpItemFactoryEntry file_save_menu_entries[] =
   { { N_("/By Extension"), NULL,
       file_save_by_extension_cmd_callback, 0 },
     NULL,
-    "save_by_extension.html", NULL },
+    GIMP_HELP_FILE_SAVE_BY_EXTENSION, NULL },
 
   MENU_SEPARATOR ("/---")
 };

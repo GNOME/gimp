@@ -126,7 +126,7 @@ GimpItemFactoryEntry layers_menu_entries[] =
       layers_mask_selection_replace_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
     NULL,
-    GIMP_HELP_LAYER_MASK_SEL_REPLACE, NULL },
+    GIMP_HELP_LAYER_MASK_SELECTION_REPLACE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
@@ -138,7 +138,7 @@ GimpItemFactoryEntry layers_menu_entries[] =
       layers_alpha_selection_replace_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_SELECTION_REPLACE },
     NULL,
-    GIMP_HELP_LAYER_ALPHA_SEL_REPLACE, NULL },
+    GIMP_HELP_LAYER_ALPHA_SELECTION_REPLACE, NULL },
 
   MENU_SEPARATOR ("/---"),
 

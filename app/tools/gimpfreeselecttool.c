@@ -36,6 +36,8 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpeditselectiontool.h"
@@ -96,7 +98,7 @@ gimp_free_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Free Select"),
                 _("Select hand-drawn regions"),
                 N_("/Tools/Selection Tools/_Free Select"), "F",
-                NULL, "tools/free_select.html",
+                NULL, GIMP_HELP_TOOL_FREE_SELECT,
                 GIMP_STOCK_TOOL_FREE_SELECT,
                 data);
 }
@@ -122,7 +124,7 @@ gimp_free_select_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpFreeSelectTool", 
+					  "GimpFreeSelectTool",
                                           &tool_info, 0);
     }
 

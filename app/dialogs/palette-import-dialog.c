@@ -39,6 +39,7 @@
 
 #include "widgets/gimpcontainermenuimpl.h"
 #include "widgets/gimpdnd.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppreview.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -167,7 +168,7 @@ palette_import_dialog_new (Gimp *gimp)
                               GTK_STOCK_CONVERT,
                               _("Import a New Palette"),
                               gimp_standard_help_func,
-                              "dialogs/palette_editor/import_palette.html",
+                              GIMP_HELP_PALETTE_IMPORT,
 
                               GTK_STOCK_CANCEL, palette_import_close_callback,
                               import_dialog, NULL, NULL, FALSE, TRUE,

@@ -37,6 +37,8 @@
 #include "core/gimpmarshal.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
@@ -95,7 +97,7 @@ gimp_rect_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Rect Select"),
                 _("Select rectangular regions"),
                 N_("/Tools/Selection Tools/_Rect Select"), "R",
-                NULL, "tools/rect_select.html",
+                NULL, GIMP_HELP_TOOL_RECT_SELECT,
                 GIMP_STOCK_TOOL_RECT_SELECT,
                 data);
 }
@@ -121,7 +123,7 @@ gimp_rect_select_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_SELECTION_TOOL,
-					  "GimpRectSelectTool", 
+					  "GimpRectSelectTool",
                                           &tool_info, 0);
     }
 
@@ -389,7 +391,7 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
               if ((th < 0 && h > 0) || (th > 0 && h < 0))
                 h = -h;
             }
-          else 
+          else
             {
               h = th;
               w = (gint) (th / ratio);
@@ -584,7 +586,7 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
   GIMP_RECT_SELECT_TOOL_GET_CLASS (rect_tool)->rect_select (rect_tool,
                                                             x, y, w, h);
 }
- 
+
 static void
 gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
                                       GimpDisplay        *gdisp)
@@ -606,7 +608,7 @@ gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
     {
       GimpImage *gimage;
       gdouble    unit_factor;
-      
+
       gimage = gdisp->gimage;
 
       unit   = gimage->unit;

@@ -40,6 +40,7 @@
 #include "paint/gimpconvolve.h"
 #include "paint/gimpconvolveoptions.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -90,7 +91,7 @@ gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
                 _("Convolve"),
                 _("Blur or Sharpen"),
                 N_("/Tools/Paint Tools/Con_volve"), "V",
-                NULL, "tools/convolve.html",
+                NULL, GIMP_HELP_TOOL_CONVOLVE,
                 GIMP_STOCK_TOOL_BLUR,
                 data);
 }

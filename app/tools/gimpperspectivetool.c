@@ -25,18 +25,19 @@
 
 #include "tools-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
 #include "gui/info-dialog.h"
 
 #include "gimpperspectivetool.h"
@@ -70,7 +71,7 @@ static GimpTransformToolClass *parent_class = NULL;
 
 /*  public functions  */
 
-void 
+void
 gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
                                 gpointer                  data)
 {
@@ -82,7 +83,7 @@ gimp_perspective_tool_register (GimpToolRegisterCallback  callback,
                 _("Perspective"),
                 _("Change perspective of the layer or selection"),
                 N_("/Tools/Transform Tools/_Perspective"), "<shift>P",
-                NULL, "tools/perspective.html",
+                NULL, GIMP_HELP_TOOL_PERSPECTIVE,
                 GIMP_STOCK_TOOL_PERSPECTIVE,
                 data);
 }
@@ -108,7 +109,7 @@ gimp_perspective_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-					  "GimpPerspectiveTool", 
+					  "GimpPerspectiveTool",
                                           &tool_info, 0);
     }
 
@@ -243,7 +244,7 @@ static void
 perspective_info_update (GimpTransformTool *tr_tool)
 {
   gint i;
-  
+
   for (i = 0; i < 3; i++)
     {
       gchar *p = matrix_row_buf[i];

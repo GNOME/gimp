@@ -32,6 +32,7 @@
 #include "core/gimppalette.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "palette-select.h"
@@ -130,7 +131,7 @@ convert_to_indexed (GimpImage *gimage)
                               GIMP_STOCK_CONVERT_INDEXED,
                               _("Convert Image to Indexed Colors"),
                               gimp_standard_help_func,
-                              "dialogs/convert_to_indexed.html",
+                              GIMP_HELP_IMAGE_CONVERT_INDEXED,
 
                               GTK_STOCK_CANCEL, gtk_widget_destroy,
                               NULL, 1, NULL, FALSE, TRUE,

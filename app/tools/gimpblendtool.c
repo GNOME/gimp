@@ -34,6 +34,8 @@
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpprogress.h"
 
@@ -96,7 +98,7 @@ gimp_blend_tool_register (GimpToolRegisterCallback  callback,
                 _("Blend"),
                 _("Fill with a color gradient"),
                 N_("/Tools/Paint Tools/Blen_d"), "L",
-                NULL, "tools/blend.html",
+                NULL, GIMP_HELP_TOOL_BLEND,
                 GIMP_STOCK_TOOL_BLEND,
                 data);
 }

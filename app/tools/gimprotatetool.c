@@ -25,21 +25,20 @@
 
 #include "tools-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
-#include "widgets/gimpviewabledialog.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
 #include "gui/info-dialog.h"
 
 #include "gimprotatetool.h"
@@ -92,7 +91,7 @@ static GimpTransformToolClass *parent_class = NULL;
 
 /*  public functions  */
 
-void 
+void
 gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
                            gpointer                  data)
 {
@@ -104,7 +103,7 @@ gimp_rotate_tool_register (GimpToolRegisterCallback  callback,
                 _("Rotate"),
                 _("Rotate the layer or selection"),
                 N_("/Tools/Transform Tools/_Rotate"), "<shift>R",
-                NULL, "tools/rotate.html",
+                NULL, GIMP_HELP_TOOL_ROTATE,
                 GIMP_STOCK_TOOL_ROTATE,
                 data);
 }
@@ -130,7 +129,7 @@ gimp_rotate_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-					  "GimpRotateTool", 
+					  "GimpRotateTool",
                                           &tool_info, 0);
     }
 
@@ -222,7 +221,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
   center_vals[0] = tr_tool->cx;
   center_vals[1] = tr_tool->cy;
 
-  g_signal_handlers_block_by_func (sizeentry, 
+  g_signal_handlers_block_by_func (sizeentry,
                                    rotate_center_changed,
                                    tr_tool);
 
@@ -254,7 +253,7 @@ gimp_rotate_tool_prepare (GimpTransformTool *tr_tool,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
                               center_vals[1]);
 
-  g_signal_handlers_unblock_by_func (sizeentry, 
+  g_signal_handlers_unblock_by_func (sizeentry,
                                      rotate_center_changed,
                                      tr_tool);
 

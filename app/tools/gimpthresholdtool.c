@@ -36,6 +36,7 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
 
@@ -88,7 +89,7 @@ gimp_threshold_tool_register (GimpToolRegisterCallback  callback,
                 _("Threshold"),
                 _("Reduce image to two colors using a threshold"),
                 N_("/Tools/Color Tools/_Threshold..."), NULL,
-                NULL, "tools/threshold.html",
+                NULL, GIMP_HELP_TOOL_THRESHOLD,
                 GIMP_STOCK_TOOL_THRESHOLD,
                 data);
 }
@@ -114,7 +115,7 @@ gimp_threshold_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpThresholdTool", 
+					  "GimpThresholdTool",
                                           &tool_info, 0);
     }
 

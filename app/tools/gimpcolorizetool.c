@@ -32,6 +32,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpcolorizetool.h"
@@ -93,7 +95,7 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
                 _("Colorize"),
                 _("Colorize the image"),
                 N_("/Tools/Color Tools/Colori_ze..."), NULL,
-                NULL, "tools/colorize.html",
+                NULL, GIMP_HELP_TOOL_COLORIZE,
                 GIMP_STOCK_TOOL_COLORIZE,
                 data);
 }
@@ -119,7 +121,7 @@ gimp_colorize_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpColorizeTool", 
+					  "GimpColorizeTool",
                                           &tool_info, 0);
     }
 

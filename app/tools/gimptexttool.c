@@ -45,6 +45,7 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpfontselection.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -114,7 +115,7 @@ gimp_text_tool_register (GimpToolRegisterCallback  callback,
                 _("Text"),
                 _("Add text to the image"),
                 N_("/Tools/Te_xt"), "T",
-                NULL, "tools/text.html",
+                NULL, GIMP_HELP_TOOL_TEXT,
                 GIMP_STOCK_TOOL_TEXT,
                 data);
 }

@@ -71,6 +71,8 @@
 #include "core/gimpscanconvert.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpiscissorstool.h"
@@ -247,7 +249,7 @@ static gint vert_deriv[9] =
   -1, -2, -1,
 };
 
-static gint blur_32[9] = 
+static gint blur_32[9] =
 {
   1, 1, 1,
   1, 24, 1,
@@ -278,7 +280,7 @@ gimp_iscissors_tool_register (GimpToolRegisterCallback  callback,
                 _("Select shapes from image"),
                 N_("/Tools/Selection Tools/_Intelligent Scissors"),
                 "I",
-                NULL, "tools/iscissors.html",
+                NULL, GIMP_HELP_TOOL_ISCISSORS,
                 GIMP_STOCK_TOOL_ISCISSORS,
                 data);
 }
@@ -403,7 +405,7 @@ gimp_iscissors_tool_control (GimpTool       *tool,
 
   switch (action)
     {
-    case PAUSE: 
+    case PAUSE:
       break;
 
     case RESUME:
@@ -567,7 +569,7 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   iscissors->mask = gimp_scan_convert_to_channel (sc, gdisp->gimage);
   gimp_scan_convert_free (sc);
 
-  gimp_channel_invalidate_bounds (iscissors->mask);    
+  gimp_channel_invalidate_bounds (iscissors->mask);
 }
 
 static void
@@ -716,7 +718,7 @@ gimp_iscissors_tool_motion (GimpTool        *tool,
 
   iscissors->x = coords->x;
   iscissors->y = coords->y;
-  
+
   switch (iscissors->state)
     {
     case SEED_PLACEMENT:
@@ -814,7 +816,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
             {
               if (iscissors->livewire->points)
                 g_ptr_array_free (iscissors->livewire->points, TRUE);
-                
+
               g_free (iscissors->livewire);
 
               iscissors->livewire = NULL;
@@ -883,7 +885,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
       if (iscissors->curve1)
 	{
           gimp_draw_tool_draw_line (draw_tool,
-                                    iscissors->curve1->x2, 
+                                    iscissors->curve1->x2,
                                     iscissors->curve1->y2,
                                     iscissors->nx,
                                     iscissors->ny,
@@ -892,7 +894,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
       if (iscissors->curve2)
 	{
           gimp_draw_tool_draw_line (draw_tool,
-                                    iscissors->curve2->x1, 
+                                    iscissors->curve2->x1,
                                     iscissors->curve2->y1,
                                     iscissors->nx,
                                     iscissors->ny,
@@ -1221,7 +1223,7 @@ mouse_over_curve (GimpIscissorsTool *iscissors,
   gint      tx, ty;
 
   /*  traverse through the list, returning the curve segment's list element
-   *  if the current cursor position is on a curve... 
+   *  if the current cursor position is on a curve...
    */
 
   for (list = iscissors->curves; list; list = g_slist_next (list))
@@ -1366,7 +1368,7 @@ calculate_curve (GimpTool *tool,
   x2 = MAX (xs, xe) + 1;  /*  +1 because if xe = 199 & xs = 0, x2 - x1, width = 200  */
   y2 = MAX (ys, ye) + 1;
 
-  /*  expand the boundaries past the ending points by 
+  /*  expand the boundaries past the ending points by
    *  some percentage of width and height.  This serves the following purpose:
    *  It gives the algorithm more area to search so better solutions
    *  are found.  This is particularly helpful in finding "bumps" which
@@ -1404,13 +1406,13 @@ calculate_curve (GimpTool *tool,
 	  iscissors->gradient_map = gradient_map_new (gdisp->gimage);
 
       /*  allocate the dynamic programming array  */
-      iscissors->dp_buf = 
+      iscissors->dp_buf =
 	temp_buf_resize (iscissors->dp_buf, 4, x1, y1, width, height);
 
       /*  find the optimal path of pixels from (x1, y1) to (x2, y2)  */
       find_optimal_path (iscissors->gradient_map, iscissors->dp_buf,
 			 x1, y1, x2, y2, xs, ys);
-      
+
       /*  get a list of the pixels in the optimal path  */
       curve->points = plot_pixels (iscissors, iscissors->dp_buf,
 				   x1, y1, xs, ys, xe, ye);
@@ -1419,7 +1421,7 @@ calculate_curve (GimpTool *tool,
   else if ((x2 - x1) == 0)
     {
       /*  plot a vertical line  */
-      y = ys;  
+      y = ys;
       dir = (ys > ye) ? -1 : 1;
       curve->points = g_ptr_array_new ();
       while (y != ye)
@@ -1466,7 +1468,7 @@ gradient_map_value (TileManager *map,
       if (!cur_tile)
 	return FALSE;
       cur_tilex = x / TILE_WIDTH;
-      cur_tiley = y / TILE_HEIGHT;	
+      cur_tiley = y / TILE_HEIGHT;
     }
 
   p = tile_data_pointer (cur_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
@@ -1509,7 +1511,7 @@ calculate_link (TileManager *gradient_map,
     {
       grad2 = 0;
       dir2 = 255;
-    }  
+    }
   value += (direction_value[dir1][link] + direction_value[dir2][link]) *
     OMEGA_D;
 
@@ -1668,7 +1670,7 @@ find_optimal_path (TileManager *gradient_map,
 
 	      /*  possibly change the links from the other pixels to this pixel...
 	       *  these changes occur if a neighboring pixel will receive a lower
-	       *  cumulative cost by going through this pixel.  
+	       *  cumulative cost by going through this pixel.
 	       */
 	      for (k = 0; k < 8; k ++)
 		if (pixel[k] && k != link)
@@ -1685,7 +1687,7 @@ find_optimal_path (TileManager *gradient_map,
 		      d[offset] = (new_cost << 8) + ((k > 3) ? k - 4 : k + 4);
 		    }
 		  }
-	    } 
+	    }
 	  /*  Set the seed point  */
 	  else if (!i && !j)
 	    *d = SEED_POINT;
@@ -1746,7 +1748,7 @@ gradmap_tile_validate (TileManager *tm,
 				   x, y, TRUE, FALSE);
   if (!srctile)
     return;
-  
+
   sw = tile_ewidth (srctile);
   sh = tile_eheight (srctile);
 

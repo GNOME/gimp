@@ -32,6 +32,8 @@
 #include "core/gimpimage-mask-select.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpellipseselecttool.h"
@@ -60,7 +62,7 @@ static GimpRectSelectToolClass *parent_class = NULL;
 
 void
 gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
-                                   gpointer                  data) 
+                                   gpointer                  data)
 {
   (* callback) (GIMP_TYPE_ELLIPSE_SELECT_TOOL,
                 GIMP_TYPE_SELECTION_OPTIONS,
@@ -70,7 +72,7 @@ gimp_ellipse_select_tool_register (GimpToolRegisterCallback  callback,
                 _("Ellipse Select"),
                 _("Select elliptical regions"),
                 N_("/Tools/Selection Tools/_Ellipse Select"), "E",
-                NULL, "tools/ellipse_select.html",
+                NULL, GIMP_HELP_TOOL_ELLIPSE_SELECT,
                 GIMP_STOCK_TOOL_ELLIPSE_SELECT,
                 data);
 }
@@ -96,7 +98,7 @@ gimp_ellipse_select_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_RECT_SELECT_TOOL,
-					  "GimpEllipseSelectTool", 
+					  "GimpEllipseSelectTool",
                                           &tool_info, 0);
     }
 

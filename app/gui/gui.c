@@ -48,6 +48,7 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimphelp.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -500,7 +501,7 @@ gui_exit_callback (Gimp     *gimp,
 
       dialog = gimp_query_boolean_box (_("Quit The GIMP?"),
                                        gimp_standard_help_func,
-                                       "dialogs/really_quit.html",
+                                       GIMP_HELP_FILE_QUIT_CONFIRM,
                                        GIMP_STOCK_WILBER_EEK,
                                        _("Some files are unsaved.\n"
                                          "\nReally quit The GIMP?"),

@@ -29,6 +29,7 @@
 #include "paint/gimpairbrush.h"
 #include "paint/gimpairbrushoptions.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "gimpairbrushtool.h"
@@ -61,7 +62,7 @@ gimp_airbrush_tool_register (GimpToolRegisterCallback  callback,
                 _("Airbrush"),
                 _("Airbrush with variable pressure"),
                 N_("/Tools/Paint Tools/_Airbrush"), "A",
-                NULL, "tools/airbrush.html",
+                NULL, GIMP_HELP_TOOL_AIRBRUSH,
                 GIMP_STOCK_TOOL_AIRBRUSH,
                 data);
 }

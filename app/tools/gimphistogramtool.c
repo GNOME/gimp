@@ -37,6 +37,7 @@
 
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogrambox.h"
 #include "widgets/gimphistogramview.h"
 #include "widgets/gimppropwidgets.h"
@@ -90,7 +91,7 @@ static HistogramToolDialog *  histogram_tool_dialog_new (GimpToolInfo *tool_info
 
 static void   histogram_tool_close_callback   (GtkWidget            *widget,
 					       gpointer              data);
-static gboolean histogram_set_sensitive_callback 
+static gboolean histogram_set_sensitive_callback
                                               (gpointer              item_data,
                                                HistogramToolDialog  *htd);
 static void   histogram_tool_dialog_update    (HistogramToolDialog  *htd,
@@ -121,7 +122,7 @@ gimp_histogram_tool_register (GimpToolRegisterCallback  callback,
                 _("Histogram"),
                 _("View image histogram"),
                 N_("/Tools/Color Tools/_Histogram..."), NULL,
-                NULL, "tools/histogram.html",
+                NULL, GIMP_HELP_TOOL_HISTOGRAM,
                 GIMP_STOCK_TOOL_HISTOGRAM,
                 data);
 }
@@ -147,7 +148,7 @@ gimp_histogram_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-                                          "GimpHistogramTool", 
+                                          "GimpHistogramTool",
                                           &tool_info, 0);
     }
 
@@ -460,7 +461,7 @@ histogram_set_sensitive_callback (gpointer             item_data,
                                   HistogramToolDialog *htd)
 {
   GimpHistogramChannel  channel = GPOINTER_TO_INT (item_data);
-  
+
   switch (channel)
     {
     case GIMP_HISTOGRAM_VALUE:
@@ -472,6 +473,6 @@ histogram_set_sensitive_callback (gpointer             item_data,
     case GIMP_HISTOGRAM_ALPHA:
       return gimp_drawable_has_alpha (htd->drawable);
     }
-  
+
   return FALSE;
 }

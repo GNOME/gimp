@@ -35,6 +35,7 @@
 #include "pdb/procedural_db.h"
 
 #include "widgets/gimpcontainertreeview.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "dialogs-constructors.h"
 #include "menus.h"
@@ -101,7 +102,7 @@ font_select_new (Gimp        *gimp,
   /*  the shell  */
   font_select->shell = gimp_dialog_new (title, "font_selection",
                                         gimp_standard_help_func,
-                                        "dialogs/font_selection.html",
+                                        GIMP_HELP_FONT_DIALOG,
                                         GTK_WIN_POS_MOUSE,
                                         FALSE, TRUE, FALSE,
 
@@ -135,7 +136,7 @@ font_select_free (FontSelect *font_select)
 {
   g_return_if_fail (font_select != NULL);
 
-  gtk_widget_destroy (font_select->shell); 
+  gtk_widget_destroy (font_select->shell);
 
   /* remove from active list */
   font_active_dialogs = g_slist_remove (font_active_dialogs, font_select);
@@ -185,7 +186,7 @@ font_select_dialogs_check (void)
         {
           if (!  procedural_db_lookup (font_select->context->gimp,
                                        font_select->callback_name))
-            font_select_close_callback (NULL, font_select); 
+            font_select_close_callback (NULL, font_select);
         }
     }
 }
@@ -215,7 +216,7 @@ font_select_change_callbacks (FontSelect *font_select,
 
   if (proc && font)
     {
-      Argument *return_vals; 
+      Argument *return_vals;
       gint      nreturn_vals;
 
       return_vals =
@@ -225,7 +226,7 @@ font_select_change_callbacks (FontSelect *font_select,
 				GIMP_PDB_STRING, GIMP_OBJECT (font)->name,
 				GIMP_PDB_INT32,  closing,
 				GIMP_PDB_END);
- 
+
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message (_("Unable to run font callback.\n"
                      "The corresponding plug-in may have crashed."));
@@ -251,5 +252,5 @@ font_select_close_callback (GtkWidget  *widget,
                             FontSelect *font_select)
 {
   font_select_change_callbacks (font_select, TRUE);
-  font_select_free (font_select); 
+  font_select_free (font_select);
 }

@@ -39,6 +39,7 @@
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-transform.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpeditselectiontool.h"
@@ -104,7 +105,7 @@ gimp_move_tool_register (GimpToolRegisterCallback  callback,
                 _("Move"),
                 _("Move layers & selections"),
                 N_("/Tools/Transform Tools/_Move"), "M",
-                NULL, "tools/move.html",
+                NULL, GIMP_HELP_TOOL_MOVE,
                 GIMP_STOCK_TOOL_MOVE,
                 data);
 }
@@ -130,7 +131,7 @@ gimp_move_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpMoveTool", 
+					  "GimpMoveTool",
                                           &tool_info, 0);
     }
 

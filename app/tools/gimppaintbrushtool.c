@@ -27,6 +27,8 @@
 #include "paint/gimppaintbrush.h"
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "gimppaintbrushtool.h"
 #include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
@@ -56,7 +58,7 @@ gimp_paintbrush_tool_register (GimpToolRegisterCallback  callback,
                 _("Paintbrush"),
                 _("Paint fuzzy brush strokes"),
                 N_("/Tools/Paint Tools/_Paintbrush"), "P",
-                NULL, "tools/paintbrush.html",
+                NULL, GIMP_HELP_TOOL_PAINTBRUSH,
                 GIMP_STOCK_TOOL_PAINTBRUSH,
                 data);
 }

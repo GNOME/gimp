@@ -38,6 +38,7 @@
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "menus.h"
 #include "pattern-select.h"
@@ -114,7 +115,7 @@ pattern_select_new (Gimp        *gimp,
   /*  the shell  */
   psp->shell = gimp_dialog_new (title, "pattern_selection",
                                 gimp_standard_help_func,
-                                "dialogs/pattern_selection.html",
+                                GIMP_HELP_PATTERN_DIALOG,
                                 GTK_WIN_POS_MOUSE,
                                 FALSE, TRUE, FALSE,
 
@@ -149,7 +150,7 @@ pattern_select_free (PatternSelect *psp)
 {
   g_return_if_fail (psp != NULL);
 
-  gtk_widget_destroy (psp->shell); 
+  gtk_widget_destroy (psp->shell);
 
   /* remove from active list */
   pattern_active_dialogs = g_slist_remove (pattern_active_dialogs, psp);
@@ -197,7 +198,7 @@ pattern_select_dialogs_check (void)
       if (psp->callback_name)
         {
           if (! procedural_db_lookup (psp->context->gimp, psp->callback_name))
-            pattern_select_close_callback (NULL, psp); 
+            pattern_select_close_callback (NULL, psp);
         }
     }
 }
@@ -226,7 +227,7 @@ pattern_select_change_callbacks (PatternSelect *psp,
 
   if (proc && pattern)
     {
-      Argument *return_vals; 
+      Argument *return_vals;
       gint      nreturn_vals;
 
       return_vals =
@@ -243,7 +244,7 @@ pattern_select_change_callbacks (PatternSelect *psp,
 				GIMP_PDB_INT8ARRAY, temp_buf_data (pattern->mask),
 				GIMP_PDB_INT32,     closing,
 				GIMP_PDB_END);
- 
+
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message (_("Unable to run pattern callback.\n"
                      "The corresponding plug-in may have crashed."));
@@ -269,5 +270,5 @@ pattern_select_close_callback (GtkWidget     *widget,
 			       PatternSelect *psp)
 {
   pattern_select_change_callbacks (psp, TRUE);
-  pattern_select_free (psp); 
+  pattern_select_free (psp);
 }

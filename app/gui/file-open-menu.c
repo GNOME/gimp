@@ -30,6 +30,7 @@
 
 #include "plug-in/plug-in-proc.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "file-commands.h"
@@ -44,14 +45,14 @@ GimpItemFactoryEntry file_open_menu_entries[] =
   { { N_("/Automatic"), NULL,
       file_open_by_extension_cmd_callback, 0 },
     NULL,
-    "open_by_extension.html", NULL },
+    GIMP_HELP_FILE_OPEN_BY_EXTENSION, NULL },
 
   MENU_SEPARATOR ("/---")
 };
 
 gint n_file_open_menu_entries = G_N_ELEMENTS (file_open_menu_entries);
 
-  
+
 void
 file_open_menu_setup (GimpItemFactory *factory)
 {

@@ -32,6 +32,8 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimphuesaturationtool.h"
@@ -107,7 +109,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                 _("Hue-Saturation"),
                 _("Adjust hue and saturation"),
                 N_("/Tools/Color Tools/Hue-_Saturation..."), NULL,
-                NULL, "tools/hue_saturation.html",
+                NULL, GIMP_HELP_TOOL_HUE_SATURATION,
                 GIMP_STOCK_TOOL_HUE_SATURATION,
                 data);
 }
@@ -133,7 +135,7 @@ gimp_hue_saturation_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpHueSaturationTool", 
+					  "GimpHueSaturationTool",
                                           &tool_info, 0);
     }
 

@@ -29,6 +29,7 @@
 #include "paint/gimpdodgeburn.h"
 #include "paint/gimpdodgeburnoptions.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -70,7 +71,7 @@ gimp_dodgeburn_tool_register (GimpToolRegisterCallback  callback,
                 _("Dodge/Burn"),
                 _("Dodge or Burn strokes"),
                 N_("/Tools/Paint Tools/Dod_geBurn"), "<shift>D",
-                NULL, "tools/dodgeburn.html",
+                NULL, GIMP_HELP_TOOL_DODGE_BURN,
                 GIMP_STOCK_TOOL_DODGE,
                 data);
 }

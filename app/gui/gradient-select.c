@@ -37,6 +37,7 @@
 
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpdatafactoryview.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "dialogs-constructors.h"
 #include "gradient-select.h"
@@ -116,7 +117,7 @@ gradient_select_new (Gimp        *gimp,
   /*  the shell  */
   gsp->shell = gimp_dialog_new (title, "gradient_selection",
 				gimp_standard_help_func,
-				"dialogs/gradient_selection.html",
+				GIMP_HELP_GRADIENT_DIALOG,
 				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 

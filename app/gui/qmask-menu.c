@@ -26,6 +26,7 @@
 
 #include "core/gimpimage.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 
 #include "display/gimpdisplay.h"
@@ -42,22 +43,26 @@ GimpItemFactoryEntry qmask_menu_entries[] =
 {
   { { N_("/_QMask Active"), NULL,
       qmask_toggle_cmd_callback, 0, "<ToggleItem>" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_QMASK_TOGGLE, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/Mask _Selected Areas"), NULL,
       qmask_invert_cmd_callback, TRUE, "<RadioItem>" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_QMASK_INVERT, NULL },
   { { N_("/Mask _Unselected Areas"), NULL,
       qmask_invert_cmd_callback, FALSE, "/Mask Selected Areas" },
-    NULL, NULL, NULL },
+    NULL,
+    GIMP_HELP_QMASK_INVERT, NULL },
 
   MENU_SEPARATOR ("/---"),
 
   { { N_("/_Configure Color and Opacity..."), NULL,
       qmask_configure_cmd_callback, 0 },
-    NULL, NULL, NULL }
+    NULL,
+    GIMP_HELP_QMASK_EDIT, NULL }
 };
 
 gint n_qmask_menu_entries = G_N_ELEMENTS (qmask_menu_entries);

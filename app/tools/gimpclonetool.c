@@ -32,9 +32,10 @@
 #include "paint/gimpclone.h"
 #include "paint/gimpcloneoptions.h"
 
-#include "display/gimpdisplay.h"
-
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
+
+#include "display/gimpdisplay.h"
 
 #include "gimpclonetool.h"
 #include "gimppaintoptions-gui.h"
@@ -98,7 +99,7 @@ gimp_clone_tool_register (GimpToolRegisterCallback  callback,
                 _("Clone"),
                 _("Paint using Patterns or Image Regions"),
                 N_("/Tools/Paint Tools/_Clone"), "C",
-                NULL, "tools/clone.html",
+                NULL, GIMP_HELP_TOOL_CLONE,
                 GIMP_STOCK_TOOL_CLONE,
                 data);
 }

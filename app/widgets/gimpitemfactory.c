@@ -32,6 +32,7 @@
 
 #include "core/gimp.h"
 
+#include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimpwidgets-utils.h"
 
@@ -902,11 +903,10 @@ gimp_item_factory_item_key_press (GtkWidget       *widget,
    */
   if (kevent->keyval != GDK_F1)
     {
-      if (help_page                                                   &&
-          gtk_accelerator_valid (kevent->keyval, 0)                   &&
-          (item_factory == gimp_item_factory_from_path ("<Toolbox>")) &&
-	  (strcmp (help_page, "help/dialogs/help.html") == 0 ||
-	   strcmp (help_page, "help/context_help.html") == 0))
+      if (help_page                                 &&
+          gtk_accelerator_valid (kevent->keyval, 0) &&
+	  (strcmp (help_page, GIMP_HELP_HELP)         == 0 ||
+	   strcmp (help_page, GIMP_HELP_HELP_CONTEXT) == 0))
 	{
 	  return TRUE;
 	}

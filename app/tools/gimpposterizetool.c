@@ -23,13 +23,15 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
- 
+
 #include "base/gimplut.h"
 #include "base/lut-funcs.h"
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimpimagemap.h"
+
+#include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
 
@@ -75,7 +77,7 @@ gimp_posterize_tool_register (GimpToolRegisterCallback  callback,
                 _("Posterize"),
                 _("Reduce image to a fixed number of colors"),
                 N_("/Tools/Color Tools/_Posterize..."), NULL,
-                NULL, "tools/posterize.html",
+                NULL, GIMP_HELP_TOOL_POSTERIZE,
                 GIMP_STOCK_TOOL_POSTERIZE,
                 data);
 }
@@ -101,7 +103,7 @@ gimp_posterize_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_TOOL,
-					  "GimpPosterizeTool", 
+					  "GimpPosterizeTool",
                                           &tool_info, 0);
     }
 

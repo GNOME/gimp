@@ -26,19 +26,20 @@
 
 #include "tools-types.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "gui/gui-types.h"
-#endif
-#include "gui/gui-types.h"
-
 #include "core/gimpimage.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpdrawable-transform-utils.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 
+#ifdef __GNUC__
+#warning FIXME #include "gui/gui-types.h"
+#endif
+#include "gui/gui-types.h"
 #include "gui/info-dialog.h"
 
 #include "gimpscaletool.h"
@@ -97,7 +98,7 @@ gimp_scale_tool_register (GimpToolRegisterCallback  callback,
                 _("Scale"),
                 _("Scale the layer or selection"),
                 N_("/Tools/Transform Tools/_Scale"), "<shift>T",
-                NULL, "tools/transform.html",
+                NULL, GIMP_HELP_TOOL_SCALE,
                 GIMP_STOCK_TOOL_SCALE,
                 data);
 }
@@ -123,7 +124,7 @@ gimp_scale_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TRANSFORM_TOOL,
-					  "GimpScaleTool", 
+					  "GimpScaleTool",
                                           &tool_info, 0);
     }
 
@@ -195,7 +196,7 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
 
-  info_dialog_add_label (tr_tool->info_dialog, 
+  info_dialog_add_label (tr_tool->info_dialog,
                          _("Scale Ratio X:"),
                          x_ratio_buf);
   info_dialog_add_label (tr_tool->info_dialog,
@@ -215,10 +216,10 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   size_vals[0] = tr_tool->x2 - tr_tool->x1;
   size_vals[1] = tr_tool->y2 - tr_tool->y1;
 
-  g_signal_handlers_block_by_func (sizeentry, 
+  g_signal_handlers_block_by_func (sizeentry,
                                    gimp_scale_tool_size_changed,
                                    tr_tool);
-  g_signal_handlers_block_by_func (sizeentry, 
+  g_signal_handlers_block_by_func (sizeentry,
                                    gimp_scale_tool_unit_changed,
                                    tr_tool);
 
@@ -250,10 +251,10 @@ gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
                               size_vals[1]);
 
-  g_signal_handlers_unblock_by_func (sizeentry, 
+  g_signal_handlers_unblock_by_func (sizeentry,
                                      gimp_scale_tool_size_changed,
                                      tr_tool);
-  g_signal_handlers_unblock_by_func (sizeentry, 
+  g_signal_handlers_unblock_by_func (sizeentry,
                                      gimp_scale_tool_unit_changed,
                                      tr_tool);
 
@@ -366,7 +367,7 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
     }
 
   /*  if both the control key & mod1 keys are down,
-   *  keep the aspect ratio intact 
+   *  keep the aspect ratio intact
    */
   if (options->constrain_1 && options->constrain_2)
     {

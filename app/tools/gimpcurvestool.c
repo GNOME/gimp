@@ -48,6 +48,7 @@
 
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimphelp-ids.h"
 
 #include "display/gimpdisplay.h"
 
@@ -159,7 +160,7 @@ gimp_curves_tool_register (GimpToolRegisterCallback  callback,
                 _("Curves"),
                 _("Adjust color curves"),
                 N_("/Tools/Color Tools/_Curves..."), NULL,
-                NULL, "tools/curves.html",
+                NULL, GIMP_HELP_TOOL_CURVES,
                 GIMP_STOCK_TOOL_CURVES,
                 data);
 }

@@ -43,6 +43,8 @@
 
 #include "paint/gimppaintoptions.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpinkoptions.h"
@@ -105,19 +107,19 @@ static gdouble     dist_smoother_result (GimpInkTool     *ink_tool);
 static void        dist_smoother_init   (GimpInkTool     *ink_tool,
 					 gdouble          initval);
 
-static void        ink_init             (GimpInkTool     *ink_tool, 
-					 GimpDrawable    *drawable, 
-					 gdouble          x, 
+static void        ink_init             (GimpInkTool     *ink_tool,
+					 GimpDrawable    *drawable,
+					 gdouble          x,
 					 gdouble          y);
-static void        ink_finish           (GimpInkTool     *ink_tool, 
+static void        ink_finish           (GimpInkTool     *ink_tool,
 					 GimpDrawable    *drawable);
 static void        ink_cleanup          (void);
 
 /*  Rendering functions  */
-static void        ink_set_paint_area   (GimpInkTool     *ink_tool, 
-					 GimpDrawable    *drawable, 
+static void        ink_set_paint_area   (GimpInkTool     *ink_tool,
+					 GimpDrawable    *drawable,
 					 Blob            *blob);
-static void        ink_paste            (GimpInkTool     *ink_tool, 
+static void        ink_paste            (GimpInkTool     *ink_tool,
 					 GimpDrawable    *drawable,
 					 Blob            *blob);
 
@@ -126,13 +128,13 @@ static void        ink_to_canvas_tiles  (GimpInkTool     *ink_tool,
 					 guchar          *color);
 
 static void        ink_set_undo_tiles   (GimpDrawable    *drawable,
-					 gint             x, 
+					 gint             x,
 					 gint             y,
-					 gint             w, 
+					 gint             w,
 					 gint             h);
-static void        ink_set_canvas_tiles (gint             x, 
+static void        ink_set_canvas_tiles (gint             x,
 					 gint             y,
-					 gint             w, 
+					 gint             w,
 					 gint             h);
 
 
@@ -167,7 +169,7 @@ gimp_ink_tool_register (GimpToolRegisterCallback  callback,
                 _("Ink"),
                 _("Draw in ink"),
                 N_("/Tools/Paint Tools/In_k"), "K",
-                NULL, "tools/ink.html",
+                NULL, GIMP_HELP_TOOL_INK,
                 GIMP_STOCK_TOOL_INK,
                 data);
 }
@@ -193,7 +195,7 @@ gimp_ink_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_TOOL,
-					  "GimpInkTool", 
+					  "GimpInkTool",
                                           &tool_info, 0);
     }
 
@@ -309,7 +311,7 @@ gimp_ink_tool_button_press (GimpTool        *tool,
   ink_init (ink_tool, drawable, curr_coords.x, curr_coords.y);
 
   gimp_tool_control_activate (tool->control);
-  tool->gdisp = gdisp; 
+  tool->gdisp = gdisp;
 
   /*  pause the current selection  */
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
@@ -447,7 +449,7 @@ gimp_ink_tool_motion (GimpTool        *tool,
   g_free (ink_tool->last_blob);
   ink_tool->last_blob = b;
 
-  ink_paste (ink_tool, drawable, blob_union);  
+  ink_paste (ink_tool, drawable, blob_union);
   g_free (blob_union);
 
   gimp_display_flush_now (gdisp);
@@ -510,7 +512,7 @@ ink_pen_ellipse (GimpInkOptions *options,
 
 #ifdef VERBOSE
   g_print ("%f (%f) -> ", (float)size, (float)velocity);
-#endif  
+#endif
 
   size = (options->vel_sensitivity *
           ((4.5 * size) / (1.0 + options->vel_sensitivity * (2.0 * velocity)))
@@ -583,7 +585,7 @@ ink_pen_ellipse (GimpInkOptions *options,
   return (* function) (x_center * SUBSAMPLE,
                        y_center * SUBSAMPLE,
                        radmin * aspect * tcos,
-                       radmin * aspect * tsin,  
+                       radmin * aspect * tsin,
                        -radmin * tsin,
                        radmin * tcos);
 }
@@ -671,7 +673,7 @@ time_smoother_add (GimpInkTool *ink_tool,
 
 static void
 ink_init (GimpInkTool  *ink_tool,
-	  GimpDrawable *drawable, 
+	  GimpDrawable *drawable,
 	  gdouble       x,
 	  gdouble       y)
 {
@@ -744,7 +746,7 @@ ink_cleanup (void)
  *  Rendering functions          *
  *********************************/
 
-/* Some of this stuff should probably be combined with the 
+/* Some of this stuff should probably be combined with the
  * code it was copied from in paint_core.c; but I wanted
  * to learn this stuff, so I've kept it simple.
  *
@@ -754,8 +756,8 @@ ink_cleanup (void)
  */
 
 static void
-ink_set_paint_area (GimpInkTool  *ink_tool, 
-		    GimpDrawable *drawable, 
+ink_set_paint_area (GimpInkTool  *ink_tool,
+		    GimpDrawable *drawable,
 		    Blob         *blob)
 {
   GimpItem *item = GIMP_ITEM (drawable);
@@ -846,7 +848,7 @@ render_blob_line (Blob   *blob,
   gint last_x;
 
   /* Sort start and ends for all lines */
-  
+
   j = y * SUBSAMPLE - blob->y;
   for (i = 0; i < SUBSAMPLE; i++)
     {
@@ -890,7 +892,7 @@ render_blob_line (Blob   *blob,
 
   while ((n > 0) && (data[2*(n-1)] >= SUBSAMPLE*(x+width)))
     n--;
-  
+
   /* Render the row */
 
   last_x = 0;
@@ -904,7 +906,7 @@ render_blob_line (Blob   *blob,
 	fill_run (dest + last_x, (255 * current) / SUBSAMPLE, cur_x - last_x);
 
       /* Compute the value for this pixel */
-      pixel = current * SUBSAMPLE; 
+      pixel = current * SUBSAMPLE;
 
       while (i<n)
 	{
@@ -923,7 +925,7 @@ render_blob_line (Blob   *blob,
 	      current--;
 	      pixel -= ((tmp_x + 1) * SUBSAMPLE) - data[2 * i];
 	    }
-	  
+
 	  i++;
 	}
 
@@ -945,8 +947,8 @@ render_blob (PixelRegion *dest,
   guchar   *s;
   gpointer  pr;
 
-  for (pr = pixel_regions_register (1, dest); 
-       pr != NULL; 
+  for (pr = pixel_regions_register (1, dest);
+       pr != NULL;
        pr = pixel_regions_process (pr))
     {
       h = dest->h;
@@ -962,7 +964,7 @@ render_blob (PixelRegion *dest,
 }
 
 static void
-ink_paste (GimpInkTool  *ink_tool, 
+ink_paste (GimpInkTool  *ink_tool,
 	   GimpDrawable *drawable,
 	   Blob         *blob)
 {
@@ -979,7 +981,7 @@ ink_paste (GimpInkTool  *ink_tool,
 
   /* Get the the buffer */
   ink_set_paint_area (ink_tool, drawable, blob);
- 
+
   /* check to make sure there is actually a canvas to draw on */
   if (!canvas_buf)
     return;
@@ -1117,8 +1119,8 @@ ink_set_canvas_tiles (gint x,
 	  if (tile_is_valid (tile) == FALSE)
 	    {
 	      tile = tile_manager_get_tile (canvas_tiles, j, i, TRUE, TRUE);
-	      memset (tile_data_pointer (tile, 0, 0), 
-		      0, 
+	      memset (tile_data_pointer (tile, 0, 0),
+		      0,
 		      tile_size (tile));
 	      tile_release (tile, TRUE);
 	    }

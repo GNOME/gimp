@@ -38,6 +38,7 @@
 #include "display/gimpdisplayshell-scale.h"
 
 #include "widgets/gimpenummenu.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmagnifyoptions.h"
@@ -95,7 +96,7 @@ gimp_magnify_tool_register (GimpToolRegisterCallback  callback,
                 _("Magnify"),
                 _("Zoom in & out"),
                 N_("/Tools/M_agnify"), NULL,
-                NULL, "tools/magnify.html",
+                NULL, GIMP_HELP_TOOL_ZOOM,
                 GIMP_STOCK_TOOL_ZOOM,
                 data);
 }
@@ -121,7 +122,7 @@ gimp_magnify_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpMagnifyTool", 
+					  "GimpMagnifyTool",
                                           &tool_info, 0);
     }
 
@@ -248,7 +249,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
       win_height = shell->disp_height;
 
       /* we need to compute the mouse movement in screen coordinates */
-      if ((SCALEX (shell, w) < options->threshold) || 
+      if ((SCALEX (shell, w) < options->threshold) ||
           (SCALEY (shell, h) < options->threshold))
         {
           gimp_display_shell_scale_zoom_fraction (options->zoom_type,

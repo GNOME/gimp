@@ -33,15 +33,16 @@
 #include "core/gimpimage-mask.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpenummenu.h"
+#include "widgets/gimphelp-ids.h"
+#include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"
-
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimpenummenu.h"
-#include "widgets/gimpviewabledialog.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #ifdef __GNUC__
 #warning FIXME #include "gui/gui-types.h"
@@ -162,7 +163,7 @@ gimp_crop_tool_register (GimpToolRegisterCallback  callback,
                 _("Crop & Resize"),
                 _("Crop or Resize an image"),
                 N_("/Tools/Transform Tools/_Crop & Resize"), "<shift>C",
-                NULL, "tools/crop_tool.html",
+                NULL, GIMP_HELP_TOOL_CROP,
                 GIMP_STOCK_TOOL_CROP,
                 data);
 }

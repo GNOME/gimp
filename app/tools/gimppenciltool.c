@@ -27,6 +27,8 @@
 #include "paint/gimppencil.h"
 #include "paint/gimppenciloptions.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "gimppenciltool.h"
 #include "gimppaintoptions-gui.h"
 #include "gimptoolcontrol.h"
@@ -55,7 +57,7 @@ gimp_pencil_tool_register (GimpToolRegisterCallback  callback,
                 _("Pencil"),
                 _("Paint hard edged pixels"),
                 N_("/Tools/Paint Tools/Pe_ncil"), "N",
-                NULL, "tools/pencil.html",
+                NULL, GIMP_HELP_TOOL_PENCIL,
                 GIMP_STOCK_TOOL_PENCIL,
                 data);
 }

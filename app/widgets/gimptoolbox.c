@@ -34,6 +34,7 @@
 
 #include "gimpdevices.h"
 #include "gimpdialogfactory.h"
+#include "gimphelp-ids.h"
 #include "gimpitemfactory.h"
 #include "gimptoolbox.h"
 #include "gimptoolbox-color-area.h"
@@ -188,10 +189,8 @@ gimp_toolbox_init (GimpToolbox *toolbox)
   gtk_window_add_accel_group (GTK_WINDOW (toolbox),
                               GTK_ITEM_FACTORY (toolbox_factory)->accel_group);
 
-  /*  Connect the "F1" help key  */
-  gimp_help_connect (GTK_WIDGET (toolbox),
-		     gimp_standard_help_func,
-		     "toolbox/toolbox.html");
+  gimp_help_connect (GTK_WIDGET (toolbox), gimp_standard_help_func,
+                     GIMP_HELP_TOOLBOX);
 
   toolbox->wbox = gtk_hwrap_box_new (FALSE);
   gtk_wrap_box_set_justify (GTK_WRAP_BOX (toolbox->wbox), GTK_JUSTIFY_TOP);

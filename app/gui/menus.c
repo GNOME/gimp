@@ -33,6 +33,7 @@
 
 #include "file/file-utils.h"
 
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 
@@ -297,7 +298,7 @@ menus_last_opened_add (GimpItemFactory *item_factory,
 
   for (i = 0; i < n; i++)
     {
-      last_opened_entries[i].entry.path = 
+      last_opened_entries[i].entry.path =
         g_strdup_printf ("/File/Open Recent/%02d", i + 1);
 
       if (i < 9)
@@ -311,7 +312,7 @@ menus_last_opened_add (GimpItemFactory *item_factory,
       last_opened_entries[i].entry.item_type       = "<StockItem>";
       last_opened_entries[i].entry.extra_data      = GTK_STOCK_OPEN;
       last_opened_entries[i].quark_string          = NULL;
-      last_opened_entries[i].help_page             = "file/last_opened.html";
+      last_opened_entries[i].help_page             = GIMP_HELP_FILE_OPEN_RECENT;
       last_opened_entries[i].description           = NULL;
     }
 
@@ -371,7 +372,7 @@ menus_filters_subdirs_to_top (GtkMenu *menu)
     {
       menu_item = GTK_MENU_ITEM (list->data);
       items++;
-      
+
       if (menu_item->submenu)
 	{
 	  if (submenus_passed)

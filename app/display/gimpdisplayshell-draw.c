@@ -51,6 +51,7 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpdnd.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpitemfactory.h"
 #include "widgets/gimpmenufactory.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -335,9 +336,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 			      gimp_display_shell_drop_color,
                               shell);
 
-  /*  connect the "F1" help key  */
-  gimp_help_connect (GTK_WIDGET (shell),
-		     gimp_standard_help_func,
+  gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
 		     "image/image_window.html");
 
 }
@@ -1720,7 +1719,7 @@ gimp_display_shell_close_warning_dialog (GimpDisplayShell *shell,
   shell->warning_dialog =
     gimp_query_boolean_box (title,
 			    gimp_standard_help_func,
-			    "dialogs/really_close.html",
+			    GIMP_HELP_FILE_CLOSE_CONFIRM,
 			    GIMP_STOCK_QUESTION,
 			    warning,
 			    GTK_STOCK_CLOSE, GTK_STOCK_CANCEL,

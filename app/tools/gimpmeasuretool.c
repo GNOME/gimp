@@ -43,6 +43,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimphelp-ids.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -128,7 +129,7 @@ gimp_measure_tool_register (GimpToolRegisterCallback  callback,
                 _("Measure"),
                 _("Measure angles and lengths"),
                 N_("/Tools/_Measure"), NULL,
-                NULL, "tools/measure.html",
+                NULL, GIMP_HELP_TOOL_MEASURE,
                 GIMP_STOCK_TOOL_MEASURE,
                 data);
 }
@@ -154,7 +155,7 @@ gimp_measure_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpMeasureTool", 
+					  "GimpMeasureTool",
                                           &tool_info, 0);
     }
 
@@ -237,12 +238,12 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
   shell = GIMP_DISPLAY_SHELL (gdisp->shell);
 
-  /*  if we are changing displays, pop the statusbar of the old one  */ 
+  /*  if we are changing displays, pop the statusbar of the old one  */
   if (gimp_tool_control_is_active (tool->control) && gdisp != tool->gdisp)
     {
       gimp_tool_pop_status (tool);
     }
-  
+
   measure_tool->function = CREATING;
 
   if (gimp_tool_control_is_active (tool->control) && gdisp == tool->gdisp)
@@ -268,7 +269,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
                   gboolean   create_hguide;
                   gboolean   create_vguide;
 
-                  create_hguide = ((state & GDK_CONTROL_MASK) && 
+                  create_hguide = ((state & GDK_CONTROL_MASK) &&
                                    (measure_tool->y[i] ==
                                     CLAMP (measure_tool->y[i],
                                            0,
@@ -326,7 +327,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
         }
 
       /*  if the function is still CREATING, we are outside the handles  */
-      if (measure_tool->function == CREATING) 
+      if (measure_tool->function == CREATING)
 	{
 	  if (measure_tool->num_points > 1 && (state & GDK_MOD1_MASK))
 	    {
@@ -337,7 +338,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 	    }
 	}
     }
-  
+
   if (measure_tool->function == CREATING)
     {
       if (gimp_tool_control_is_active (tool->control))
@@ -378,7 +379,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
       const gchar *stock_id;
 
       stock_id = gimp_viewable_get_stock_id (GIMP_VIEWABLE (tool->tool_info));
-  
+
       measure_tool_info = info_dialog_new (NULL,
                                            tool->tool_info->blurb,
                                            GIMP_OBJECT (tool->tool_info)->name,
@@ -565,16 +566,16 @@ gimp_measure_tool_motion (GimpTool        *tool,
       if (shell->dot_for_dot)
 	{
 	  distance = sqrt (SQR (ax - bx) + SQR (ay - by));
-	
+
 	  if (measure_tool->num_points != 3)
 	    bx = ax > 0 ? 1 : -1;
-	
+
 	  measure_tool->angle1 = measure_get_angle (ax, ay, 1.0, 1.0);
 	  measure_tool->angle2 = measure_get_angle (bx, by, 1.0, 1.0);
 	  angle = fabs (measure_tool->angle1 - measure_tool->angle2);
 	  if (angle > 180.0)
 	    angle = fabs (360.0 - angle);
-	
+
 	  g_snprintf (status_str, sizeof (status_str), "%.1f %s, %.2f %s",
 		      distance, _("pixels"), angle, _("degrees"));
 
