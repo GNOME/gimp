@@ -1,3 +1,9 @@
+Sat Sep 11 17:02:06 CEST 1999  Olof S Kylander <olof@frozenriver.com>
+
+	* plug-ins/pygimp/gimpenums.py: Fix of enum error
+	  XX_IMAGE_FILL in two locations and didn't include
+	  all fill "modes".
+
 Fri Sep 10 18:36:34 EDT 1999  Austin Donnelly  <austin@gimp.org>
 
 	* plug-ins/common/png.c: cheesy fix for INDEXEDA core dump: popup
