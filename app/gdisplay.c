@@ -2326,8 +2326,6 @@ gdisplays_update_area (GimpImage *gimage,
 {
   GDisplay *gdisp;
   GSList   *list;
-  /* int x1, y1, x2, y2; */
-  /*  int count = 0; */
 
   /*  traverse the linked list of displays  */
   for (list = display_list; list; list = g_slist_next (list))
@@ -2335,35 +2333,7 @@ gdisplays_update_area (GimpImage *gimage,
       gdisp = (GDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
-	{
-	  /*  We only need to update the first instance that
-	      we find of this gimage ID.  Otherwise, we would
-	      be reconverting the same region unnecessarily.   */
-
-	  /* Um.. I don't think so. If you only do this to the first
-	     instance, you don't update other gdisplays pointing to this
-	     gimage.  I'm going to comment this out to show how it was in
-	     case we need to change it back.  msw 4/15/1998
-	  */
-	  /*
-	  if (! count)
-	    gdisplay_add_update_area (gdisp, x, y, w, h);
-	  else
-	    {
-	      gdisplay_transform_coords (gdisp, x, y, &x1, &y1, 0);
-	      gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
-	      gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
-	    }
-	  */
-
-	  gdisplay_add_update_area (gdisp, x, y, w, h);
-	  /* Seems like this isn't needed, it's done in
-	     gdisplay_flush. -la
-	  gdisplay_transform_coords (gdisp, x, y, &x1, &y1, 0);
-	  gdisplay_transform_coords (gdisp, x + w, y + h, &x2, &y2, 0);
-	  gdisplay_add_display_area (gdisp, x1, y1, (x2 - x1), (y2 - y1));
-	  */
-	}
+	gdisplay_add_update_area (gdisp, x, y, w, h);
     }
 }
 
@@ -2413,7 +2383,6 @@ gdisplays_update_full (GimpImage *gimage)
 {
   GDisplay *gdisp;
   GSList   *list;
-  gint      count = 0;
 
   /*  traverse the linked list of displays, handling each one  */
   for (list = display_list; list; list = g_slist_next (list))
@@ -2421,18 +2390,9 @@ gdisplays_update_full (GimpImage *gimage)
       gdisp = (GDisplay *) list->data;
 
       if (gdisp->gimage == gimage)
-	{
-	  if (! count)
-	    gdisplay_add_update_area (gdisp, 0, 0,
-				      gdisp->gimage->width,
-				      gdisp->gimage->height);
-	  else
-	    gdisplay_add_display_area (gdisp, 0, 0,
-				       gdisp->disp_width,
-				       gdisp->disp_height);
-
-	  count++;
-	}
+	gdisplay_add_update_area (gdisp, 0, 0,
+				  gdisp->gimage->width,
+				  gdisp->gimage->height);
     }
 }
 

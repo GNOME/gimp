@@ -330,20 +330,25 @@ gimage_mask_extract (GimpImage    *gimage,
       /*  If we're cutting, remove either the layer (or floating selection),
        *  the layer mask, or the channel
        */
-      if (cut_gimage && GIMP_IS_LAYER (drawable))
+      if (cut_gimage)
 	{
-	  if (gimp_layer_is_floating_sel (GIMP_LAYER (drawable)))
-	    floating_sel_remove (GIMP_LAYER (drawable));
-	  else
-	    gimp_image_remove_layer (gimage, GIMP_LAYER (drawable));
+	  if (GIMP_IS_LAYER (drawable))
+	    {
+	      if (gimp_layer_is_floating_sel (GIMP_LAYER (drawable)))
+		floating_sel_remove (GIMP_LAYER (drawable));
+	      else
+		gimp_image_remove_layer (gimage, GIMP_LAYER (drawable));
+	    }
+	  else if (GIMP_IS_LAYER_MASK (drawable))
+	    {
+	      gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+				     DISCARD, TRUE);
+	    }
+	  else if (GIMP_IS_CHANNEL (drawable))
+	    {
+	      gimp_image_remove_channel (gimage, GIMP_CHANNEL (drawable));
+	    }
 	}
-      else if (cut_gimage && GIMP_IS_LAYER_MASK (drawable))
-	{
-	  gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
-                                 DISCARD, TRUE);
-	}
-      else if (cut_gimage && GIMP_IS_CHANNEL (drawable))
-	gimp_image_remove_channel (gimage, GIMP_CHANNEL (drawable));
     }
 
   return tiles;

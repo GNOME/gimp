@@ -1,3 +1,12 @@
+2001-06-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/gdisplay.c: same gdisplays_update_full() fix as in the
+	stable branch. Removed lots of commented out code and comments
+	about whether the code should be commented out or not.
+
+	* app/core/gimpimage-mask.c: tried to fix it here first an ended
+	up with a little cleanup.
+
 2001-06-20  David Neary  <dneary@eircom.net>
 
 	* configure.in
