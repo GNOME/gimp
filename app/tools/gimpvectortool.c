@@ -1165,6 +1165,7 @@ gimp_vector_tool_status_set (GimpTool    *tool,
   GimpDisplay    *orig_gdisp;
 
   if (vector_tool->status_gdisp != gdisp ||
+      (! vector_tool->status_msg && message) ||
       strcmp (vector_tool->status_msg, message) != 0)
     {
       orig_gdisp = tool->gdisp;
@@ -1174,7 +1175,8 @@ gimp_vector_tool_status_set (GimpTool    *tool,
           tool->gdisp = vector_tool->status_gdisp;
           gimp_tool_pop_status (tool);
           vector_tool->status_gdisp = NULL;
-          g_free (vector_tool->status_msg);
+          if (vector_tool->status_msg)
+            g_free (vector_tool->status_msg);
           vector_tool->status_msg = NULL;
         }
 
