@@ -83,8 +83,6 @@ typedef struct
 
   CmModeType     output_channel;
 
-  gchar         *filename;
-
   GtkAdjustment *red_data;
   GtkAdjustment *green_data;
   GtkAdjustment *blue_data;
@@ -992,32 +990,12 @@ cm_preserve_luminosity_callback (GtkWidget    *widget,
 }
 
 static gchar *
-cm_settings_filename (CmParamsType *mix)
+cm_settings_filename (void)
 {
-  gchar *filename;
-
-  if (! mix->filename)
-    mix->filename = g_strdup ("settings");
-
-  if (! g_path_is_absolute (mix->filename))
-    {
-      gchar *basedir;
-
-      basedir = g_build_filename (gimp_directory (), "channel-mixer", NULL);
-
-      if (! g_file_test (basedir, G_FILE_TEST_IS_DIR))
-        mkdir (basedir, 0775);
-
-      filename = g_build_filename (basedir, mix->filename, NULL);
-
-      g_free (basedir);
-    }
-  else
-    {
-      filename = g_strdup (mix->filename);
-    }
-
-  return filename;
+  return g_build_filename (gimp_directory (),
+                           "channel-mixer",
+                           "settings",
+                           NULL);
 }
 
 /*----------------------------------------------------------------------
@@ -1028,10 +1006,11 @@ cm_load_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
 {
   static GtkWidget *filesel = NULL;
-  gchar            *fname;
 
   if (!filesel)
     {
+      gchar *fname;
+
       filesel = gtk_file_selection_new (_("Load Channel Mixer Settings"));
 
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
@@ -1045,11 +1024,11 @@ cm_load_file_callback (GtkWidget    *widget,
       g_signal_connect (filesel, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
-    }
 
-  fname = cm_settings_filename (mix);
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
-  g_free (fname);
+      fname = cm_settings_filename ();
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
+      g_free (fname);
+    }
 
   gtk_window_present (GTK_WINDOW (filesel));
 }
@@ -1066,11 +1045,12 @@ cm_load_file_response_callback (GtkFileSelection *fs,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      g_free (mix->filename);
+      const gchar *filename = gtk_file_selection_get_filename (fs);
 
-      mix->filename = g_strdup (gtk_file_selection_get_filename (fs));
+      if (! filename)
+        return;
 
-      fp = fopen (mix->filename, "r");
+      fp = fopen (filename, "r");
 
       if (fp)
         {
@@ -1149,7 +1129,7 @@ cm_load_file_response_callback (GtkFileSelection *fs,
       else
         {
           g_message (_("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (mix->filename), g_strerror (errno));
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
         }
     }
 
@@ -1164,10 +1144,11 @@ cm_save_file_callback (GtkWidget    *widget,
                        CmParamsType *mix)
 {
   static GtkWidget *filesel = NULL;
-  gchar            *fname;
 
   if (!filesel)
     {
+      gchar *fname;
+
       filesel = gtk_file_selection_new (_("Save Channel Mixer Settings"));
 
       gtk_window_set_transient_for (GTK_WINDOW (filesel),
@@ -1181,11 +1162,11 @@ cm_save_file_callback (GtkWidget    *widget,
       g_signal_connect (filesel, "delete_event",
                         G_CALLBACK (gtk_true),
                         NULL);
-    }
 
-  fname = cm_settings_filename (mix);
-  gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
-  g_free (fname);
+      fname = cm_settings_filename ();
+      gtk_file_selection_set_filename (GTK_FILE_SELECTION (filesel), fname);
+      g_free (fname);
+    }
 
   gtk_window_present (GTK_WINDOW (filesel));
 }
@@ -1237,12 +1218,9 @@ cm_save_file_response_callback (GtkFileSelection *fs,
       return;
     }
 
-  g_free (mix->filename);
-  mix->filename = g_strdup (filename);
-
   cm_save_file (mix, file);
 
-  g_message (_("Parameters were Saved to '%s'"),
+  g_message (_("Parameters were saved to '%s'"),
              gimp_filename_to_utf8 (filename));
 
   gtk_widget_hide (GTK_WIDGET (fs));
