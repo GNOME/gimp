@@ -1466,9 +1466,8 @@ gimp_image_is_dirty (gint32 image_ID)
  *
  * This function gets data from which a thumbnail of an image preview
  * can be created. Maximum x or y dimension is 1024 pixels. The pixels
- * are returned in the RGB[A] format. The bpp return value gives the
- * number of bits per pixel in the image. If the image has an alpha
- * channel, it is also returned.
+ * are returned in RGB[A] or GRAY[A] format. The bpp return value gives
+ * the number of bits per pixel in the image.
  *
  * Returns: TRUE on success.
  */

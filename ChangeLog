@@ -1,5 +1,19 @@
 2004-09-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_thumb):
+	also handle GRAY and GRAYA thumbnails.
+
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb: corrected documentation for
+	_gimp_drawable_thumbnail() and _gimp_image_thumbnail().
+
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* libgimp/gimpdrawable_pdb.c
+	* libgimp/gimpimage_pdb.c: regenerated.
+
+2004-09-10  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.c: fixed positioning of the
 	navigation marker and handling of motion events.
 

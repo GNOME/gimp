@@ -180,24 +180,26 @@ gimp_drawable_preview_draw_thumb (GimpPreview     *preview,
 
   if (buffer)
     {
+      GimpImageType  type;
+
       gtk_widget_set_size_request (GTK_WIDGET (area), width, height);
       gtk_widget_show (GTK_WIDGET (area));
       gtk_widget_realize (GTK_WIDGET (area));
 
       switch (bpp)
         {
-        case 3:
-          gimp_preview_area_draw (area,
-                                  0, 0, width, height,
-                                  GIMP_RGB_IMAGE, buffer, 3 * width);
-          break;
-
-        case 4:
-          gimp_preview_area_draw (area,
-                                  0, 0, width, height,
-                                  GIMP_RGBA_IMAGE, buffer, 4 * width);
-          break;
+        case 1:  type = GIMP_GRAY_IMAGE;   break;
+        case 2:  type = GIMP_GRAYA_IMAGE;  break;
+        case 3:  type = GIMP_RGB_IMAGE;    break;
+        case 4:  type = GIMP_RGBA_IMAGE;   break;
+        default:
+          g_free (buffer);
+          return;
         }
+
+      gimp_preview_area_draw (area,
+                              0, 0, width, height,
+                              type, buffer, bpp * width);
 
       g_free (buffer);
     }
