@@ -1,3 +1,11 @@
+2003-09-19  Seth Burgess <sjburges@gimp.org>
+
+	* tools/pdbgen/pdb/selection.pdb: corrected order of parameters for 
+	gimp_image_mask_select_channel (used by gimp-channel-combine-masks, 
+	gimp-selection-combine).  
+
+	* app/pdb/selection_cmds.c: regenerated.
+
 2003-09-19  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.[ch]: Show a little help in the

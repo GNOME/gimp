@@ -913,8 +913,9 @@ selection_load_invoker (Gimp     *gimp,
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
     
       gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
-				      channel, GIMP_CHANNEL_OP_REPLACE,
+				      channel, 
 				      off_x, off_y,
+				      GIMP_CHANNEL_OP_REPLACE,
 				      FALSE, 0.0, 0.0);
     }
 
@@ -1029,8 +1030,9 @@ selection_combine_invoker (Gimp     *gimp,
       gimp_item_offsets (GIMP_ITEM (channel), &off_x, &off_y);
     
       gimp_image_mask_select_channel (gimage, _("Channel to Selection"),
-				      channel, operation,
+				      channel, 
 				      off_x, off_y,
+				      operation,
 				      FALSE, 0.0, 0.0);
     }
 
