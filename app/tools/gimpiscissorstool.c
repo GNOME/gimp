@@ -1795,7 +1795,7 @@ bezierify_boundary (Tool *tool)
   BezierPoint * new_pt;
   BezierPoint * last_pt;
   int indices[4];
-  int i, j;
+  int i, j, off_x, off_y;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   iscissors = (Iscissors *) tool->private;
@@ -1810,6 +1810,9 @@ bezierify_boundary (Tool *tool)
   bez_pts = NULL;
   last_pt = NULL;
 
+  drawable_offsets (GIMP_DRAWABLE (gdisp->gimage->active_layer),
+		      &off_x, &off_y);
+    
   for (i = 0; i < iscissors->num_pts; i ++)
     {
       indices[0] = (i < 3) ? (iscissors->num_pts + i - 3) : (i - 3);
@@ -1819,8 +1822,8 @@ bezierify_boundary (Tool *tool)
 
       for (j = 0; j < 4; j++)
 	{
-	  geometry[j][0] = pts[indices[j]].dx;
-	  geometry[j][1] = pts[indices[j]].dy;
+	  geometry[j][0] = pts[indices[j]].dx + off_x;
+	  geometry[j][1] = pts[indices[j]].dy + off_y;
 
 	  geometry[j][2] = 0;
 	  geometry[j][3] = 0;

@@ -1,3 +1,7 @@
+Fri May 15 03:03:00 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* app/iscissors.c: fixed bezierify on offset layers
+	
 Thu May 14 21:18:27 EDT 1998  Matthew Wilson  <msw@gimp.org>
 
 	* app/iscissors.c: a very sad attempt to fix some iscissors
