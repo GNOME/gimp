@@ -734,6 +734,7 @@ plug-ins/gfig/gfig-examples/Makefile
 plug-ins/gfli/Makefile
 plug-ins/gicon/Makefile
 plug-ins/gif/Makefile
+plug-ins/gifload/Makefile
 plug-ins/glasstile/Makefile
 plug-ins/gqbist/Makefile
 plug-ins/gradmap/Makefile

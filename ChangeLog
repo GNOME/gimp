@@ -1,3 +1,10 @@
+Sat Mar 20 17:22:56 GMT 1999  Adam D. Moss  <adam@gimp.org>
+
+	* configure.in plug-ins/Makefile.am plug-ins/gif/gif.c
+	* plug-ins/gifload/gifload.c plug-ins/gifload/Makefile.am
+
+	Split gif load-only code into separate plugin.
+
 Fri Mar 19 20:24:20 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* acinclude.m4

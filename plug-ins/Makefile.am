@@ -65,6 +65,7 @@ SUBDIRS = 			\
 	gfli			\
 	gicon			\
 	gif			\
+	gifload			\
 	glasstile		\
 	gqbist			\
 	gradmap			\
