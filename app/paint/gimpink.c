@@ -35,6 +35,10 @@
 #include <stdlib.h>
 #include <string.h>
 
+#ifndef M_PI
+#define M_PI    3.14159265358979323846
+#endif /* M_PI */
+
 #define SUBSAMPLE 8
 
 /*  the Ink structures  */
@@ -59,6 +63,7 @@ struct _InkOptions
   double       angle;
   double       sensitivity;
   double       tilt_sensitivity;
+  double       tilt_angle;
 };
 
 typedef struct _BrushWidget BrushWidget;
@@ -161,6 +166,8 @@ create_ink_options ()
   options->sensitivity = 1.0;
   options->aspect = 1.0;
   options->angle = 0.0;
+  options->tilt_sensitivity = 1.0;
+  options->tilt_angle = 0.0;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -217,6 +224,22 @@ create_ink_options ()
   gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
 		      (GtkSignalFunc) ink_scale_update,
 		      &options->tilt_sensitivity);
+
+  /* angle adjust slider */
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_box_pack_start (GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+  label = gtk_label_new (_("Angle adjust:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
+  
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (0.0, -90.0, 90.0, 1, 10.0, 0.0));
+  slider = gtk_hscale_new (adj);
+  gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
+  gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
+  
+  gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
+  gtk_signal_connect (GTK_OBJECT (adj), "value_changed",
+		      (GtkSignalFunc) ink_scale_update,
+		      &options->tilt_angle);
 
   /* Brush shape widget */
 
@@ -413,15 +436,29 @@ ink_pen_ellipse (gdouble x_center, gdouble y_center,
   double aspect, radmin;
   double x,y;
   double tscale;
+  double tscale_c;
+  double tscale_s;
   
   size = ink_options->size * (1 + ink_options->sensitivity * (2*pressure - 1));
   if (size*SUBSAMPLE < 1) size = 1/SUBSAMPLE;
 
   /* Add brush angle/aspect to title vectorially */
 
+  /* I'm not happy with the way the brush widget info is combined with
+     tilt info from the brush. My personal feeling is that representing
+     both as affine transforms would make the most sense. -RLL */
+
   tscale = ink_options->tilt_sensitivity * 10.0;
-  x = ink_options->aspect*cos(ink_options->angle) + xtilt*tscale;
-  y = ink_options->aspect*sin(ink_options->angle) + ytilt*tscale;
+  tscale_c = tscale * cos (ink_options->tilt_angle * M_PI / 180);
+  tscale_s = tscale * sin (ink_options->tilt_angle * M_PI / 180);
+  x = ink_options->aspect*cos(ink_options->angle) +
+    xtilt * tscale_c - ytilt * tscale_s;
+  y = ink_options->aspect*sin(ink_options->angle) +
+    ytilt * tscale_c + xtilt * tscale_s;
+#ifdef VERBOSE
+  g_print ("angle %g aspect %g; %g %g; %g %g\n",
+	   ink_options->angle, ink_options->aspect, tscale_c, tscale_s, x, y);
+#endif
   aspect = sqrt(x*x+y*y);
 
   if (aspect != 0)

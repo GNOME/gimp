@@ -1,3 +1,8 @@
+Wed Nov 25 22:26:11 1998  Raph Levien  <raph@gimp.org>
+
+	* app/ink.c (ink_pen_ellipse): Added yet another slider, this time
+	for an angle adjustment.
+
 Wed Nov 25 21:41:52 1998  Raph Levien  <raph@gimp.org>
 
 	* app/devices.c (devices_restore): Fixed a segv - now it returns
