@@ -404,6 +404,7 @@ EXPORTS
 	gimp_palette_set_background
 	gimp_palette_set_default_colors
 	gimp_palette_set_foreground
+	gimp_palette_set_num_columns
 	gimp_palette_swap_colors
 	gimp_palettes_close_popup
 	gimp_palettes_get_list

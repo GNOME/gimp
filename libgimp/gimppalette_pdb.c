@@ -227,6 +227,42 @@ gimp_palette_get_info (const gchar *name,
 }
 
 /**
+ * gimp_palette_set_num_columns:
+ * @name: The palette name.
+ * @columns: The new number of columns.
+ *
+ * Sets the number of columns to use when displaying the palette
+ *
+ * This procedures allows to control how many colors are shown per row
+ * when the palette is being displayed. This value can only be changed
+ * if the palette is writable. The maximum allowed value is 64.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_palette_set_num_columns (const gchar *name,
+			      gint         columns)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_palette_set_num_columns",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_INT32, columns,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_palette_add_entry:
  * @name: The palette name.
  * @entry_name: The name of the entry.

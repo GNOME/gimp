@@ -31,6 +31,13 @@ sub mitch_misc {
     $since = '2.2';
 }
 
+sub neo_misc {
+    $author = 'Sven Neumann <sven@gimp.org>';
+    $copyright = 'Sven Neumann';
+    $date = '2005';
+    $since = '2.4';
+}
+
 sub palette_arg () {{
     name => 'name',
     type => 'string',
@@ -256,6 +263,38 @@ HELP
     gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
   success = (palette != NULL);
+}
+CODE
+    );
+}
+
+sub palette_set_num_columns {
+    $blurb = "Sets the number of columns to use when displaying the palette";
+    $help = <<'HELP';
+This procedures allows to control how many colors are shown per row when the
+palette is being displayed. This value can only be changed if the palette
+is writable. The maximum allowed value is 64.
+HELP
+
+    &neo_misc;
+
+    @inargs = (
+        &palette_arg,
+        { name => 'columns', type => '0 <= int32 <= 64',
+          desc => "The new number of columns" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpPalette *palette = NULL' ],
+	code => <<'CODE'
+{
+  palette = (GimpPalette *)
+    gimp_container_get_child_by_name (gimp->palette_factory->container, name);
+
+  if (palette && GIMP_DATA (palette)->writable)
+    gimp_palette_set_num_columns (palette, columns);
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -533,8 +572,8 @@ CODE
               "core/gimpdatafactory.h" "core/gimppalette.h");
 
 @procs = qw(palette_new palette_duplicate palette_rename palette_delete
-            palette_is_editable
-            palette_get_info palette_add_entry palette_delete_entry
+            palette_is_editable palette_get_info palette_set_num_columns
+            palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
             palette_entry_get_name palette_entry_set_name);
 %exports = (app => [@procs], lib => [@procs]);

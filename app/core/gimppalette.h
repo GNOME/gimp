@@ -62,25 +62,25 @@ struct _GimpPaletteClass
 };
 
 
-GType              gimp_palette_get_type       (void) G_GNUC_CONST;
+GType              gimp_palette_get_type        (void) G_GNUC_CONST;
 
-GimpData         * gimp_palette_new            (const gchar      *name,
-                                                gboolean          stingy_memory_use);
-GimpData         * gimp_palette_get_standard   (void);
-GList            * gimp_palette_load           (const gchar      *filename,
-                                                gboolean          stingy_memory_use,
-                                                GError          **error);
+GimpData         * gimp_palette_new             (const gchar      *name,
+                                                 gboolean          stingy_memory_use);
+GimpData         * gimp_palette_get_standard    (void);
+GList            * gimp_palette_load            (const gchar      *filename,
+                                                 gboolean          stingy_memory_use,
+                                                 GError          **error);
 
-GimpPaletteEntry * gimp_palette_add_entry      (GimpPalette      *palette,
-                                                gint              position,
-                                                const gchar      *name,
-                                                const GimpRGB    *color);
-void               gimp_palette_delete_entry   (GimpPalette      *palette,
-                                                GimpPaletteEntry *entry);
+GimpPaletteEntry * gimp_palette_add_entry       (GimpPalette      *palette,
+                                                 gint              position,
+                                                 const gchar      *name,
+                                                 const GimpRGB    *color);
+void               gimp_palette_delete_entry    (GimpPalette      *palette,
+                                                 GimpPaletteEntry *entry);
 
-void               gimp_palette_set_n_columns  (GimpPalette      *palette,
-                                                gint              n_columns);
-gint               gimp_palette_get_n_columns  (GimpPalette      *palette);
+void               gimp_palette_set_num_columns (GimpPalette      *palette,
+                                                 gint              columns);
+gint               gimp_palette_get_num_columns (GimpPalette      *palette);
 
 
 #endif /* __GIMP_PALETTE_H__ */

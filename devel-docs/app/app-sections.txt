@@ -1198,8 +1198,8 @@ gimp_palette_get_standard
 gimp_palette_load
 gimp_palette_add_entry
 gimp_palette_delete_entry
-gimp_palette_set_n_columns
-gimp_palette_get_n_columns
+gimp_palette_set_num_columns
+gimp_palette_get_num_columns
 <SUBSECTION Standard>
 GimpPaletteClass
 GIMP_PALETTE

@@ -692,23 +692,23 @@ gimp_palette_delete_entry (GimpPalette      *palette,
 }
 
 void
-gimp_palette_set_n_columns (GimpPalette *palette,
-                            gint         n_columns)
+gimp_palette_set_num_columns (GimpPalette *palette,
+                              gint         columns)
 {
   g_return_if_fail (GIMP_IS_PALETTE (palette));
 
-  n_columns = CLAMP (n_columns, 0, 64);
+  columns = CLAMP (columns, 0, 64);
 
-  if (palette->n_columns != n_columns)
+  if (palette->n_columns != columns)
     {
-      palette->n_columns = n_columns;
+      palette->n_columns = columns;
 
       gimp_data_dirty (GIMP_DATA (palette));
     }
 }
 
 gint
-gimp_palette_get_n_columns  (GimpPalette *palette)
+gimp_palette_get_num_columns  (GimpPalette *palette)
 {
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), 0);
 

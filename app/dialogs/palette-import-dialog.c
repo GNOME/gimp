@@ -645,8 +645,8 @@ palette_import_columns_changed (GtkAdjustment *adjustment,
                                 ImportDialog  *import_dialog)
 {
   if (import_dialog->palette)
-    gimp_palette_set_n_columns (import_dialog->palette,
-                                ROUND (adjustment->value));
+    gimp_palette_set_num_columns (import_dialog->palette,
+                                  ROUND (adjustment->value));
 }
 
 /*  functions & callbacks to keep the import dialog uptodate  ****************/

@@ -37,6 +37,8 @@ gboolean gimp_palette_delete          (const gchar    *name);
 gboolean gimp_palette_is_editable     (const gchar    *name);
 gboolean gimp_palette_get_info        (const gchar    *name,
 				       gint           *num_colors);
+gboolean gimp_palette_set_num_columns (const gchar    *name,
+				       gint            columns);
 gboolean gimp_palette_add_entry       (const gchar    *name,
 				       const gchar    *entry_name,
 				       const GimpRGB  *color,

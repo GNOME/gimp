@@ -1,5 +1,22 @@
 2005-03-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppalette.[ch]: renamed gimp_palette_[gs]et_n_columns
+	to gimp_palette_[gs]et_num_columns().
+
+	* app/dialogs/palette-import-dialog.c
+	* app/widgets/gimppaletteeditor.c: changed accordingly.
+
+	* tools/pdbgen/pdb/palette.pdb: added new PDB function to control
+	the number of columns used when displaying a palette (bug #169370).
+
+	* app/pdb/internal_procs.c
+	* app/pdb/palette_cmds.c
+	* libgimp/gimppalette_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2005-03-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcurvestool.c (gimp_curves_tool_dialog)
 	* app/tools/gimplevelstool.c (gimp_levels_tool_dialog): added
 	mnemonics for the Channels menu.
