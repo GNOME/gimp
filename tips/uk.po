@@ -1,0 +1,366 @@
+# Ukrainian tranlation to gimp tips
+# Copyright (C) 2004 Free Software Foundation 
+# This file is distributed under the same license as the gimp package.
+# Maxim Dziumanenko <mvd@mylinux.com.ua>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp tips\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-04-10 19:15+0300\n"
+"PO-Revision-Date: 2004-04-12 13:45+0200\n"
+"Last-Translator: Maxim Dziumanenko <mvd@mylinux.com.ua>\n"
+"Language-Team: Ukrainian <uk@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: tips/gimp-tips.xml.in.h:1
+msgid "<big>Welcome to The GIMP !</big>"
+msgstr "<big>Ласкаво просимо до GIMP !</big>"
+
+#: tips/gimp-tips.xml.in.h:2
+msgid ""
+"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"viewing the mask directly."
+msgstr ""
+"Щоб побачити маску шару у вікні зображення, натисніть кнопкою миші на ескізі "
+"маски у діалоговому вікні шарів, утримуючи при цьому клавішу <tt>Alt</tt>."
+
+#: tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"the effect of the layer mask."
+msgstr ""
+"Щоб перемикнути активність маски шару, натисніть кнопкою миші на ескізі, "
+"утримуючи при цьому клавішу <tt>Ctrl</tt>."
+
+#: tips/gimp-tips.xml.in.h:4
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color."
+msgstr ""
+"Інструмент \"Заповнення\" зазвичай використовує колір переднього плану. Щоб "
+"заповнити ділянку кольором тла, натискайте клавішу <tt>Ctrl</tt>."
+
+#: tips/gimp-tips.xml.in.h:5
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"Натискання <tt>Ctrl</tt> у інструменті \"Обертання\" при обертанні, призводить до повороту "
+"на кут кратний 15 градусам."
+
+#: tips/gimp-tips.xml.in.h:6
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"Якщо у діалоговому вікні \"Шари\" натиснути на значок ока з одночасним утриманням <tt>Shift</tt>, "
+"невидимими стануть всі шари, крім того на чий значок натиснули. Щоб зробити "
+"всі шари знову видимими, натисніть на той самий значок, утримуючи клавішу <tt>Shift</tt>."
+
+#: tips/gimp-tips.xml.in.h:7
+msgid ""
+"A Floating Selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or \"Anchor Layer buttons\" in the Layers dialog, or use the menus to do the "
+"same."
+msgstr ""
+"Плаваюча виділена ділянка повинна бути прикріплена до нового шару або до "
+"останнього активного шару, перед виконанням інших маніпуляцій із зображенням. "
+"Для цього натисніть \"Новий шар\" у діалоговому вікні \"Шари\" або \"Прикріпити плаваючий шар\", "
+"або виберіть цю функцію з меню."
+
+#: tips/gimp-tips.xml.in.h:8
+msgid ""
+"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
+"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP."
+msgstr ""
+"Після ввімкнення функції \"Динамічні комбінації клавіш\" у діалоговому вікні "
+"\"Настройка\" ви можете перевизначати комбінації клавіш. Для цього відкрийте меню "
+"наведіть вказівник на потрібний пункт меню, та натисніть бажану комбінацію клавіш. "
+"Якщо ввімкнено \"Зберігати комбінації клавіш при виході\", вона буде збережена "
+"під час виходу з програми GIMP."
+
+#: tips/gimp-tips.xml.in.h:9
+msgid ""
+"Click and drag on a ruler to place a Guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"Щоб помістити напрямну на зображення натисніть на лінійку та перетягніть. "
+"Всі виділені області, які переміщуватимуться, будуть причіплюватись до "
+"напрямних. Видалити напрямні можна перетягнувши їх за межі зображення за "
+"допомогою інструменту \"Переміщення\"."
+
+#: tips/gimp-tips.xml.in.h:10
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the \"Auto\" button in the Levels tool (Layer-"
+"&gt;Colors-&gt;Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+msgstr ""
+"Якщо відскановані зображення виглядають недостатньо кольоровими, їх тональний "
+"діапазон можна виправити за допомогою кнопки \"Авто\" у діалоговому вікні "
+"\"Рівні\" (Шар-&gt;Кольори-&gt;Рівні). Відтінки кольору можна скорегувати "
+"інструментом Криві (Шар-&gt;Кольори-&gt;Криві)."
+
+#: tips/gimp-tips.xml.in.h:11
+msgid ""
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
+msgstr ""
+"При обведенні контуру (Правка-&gt;Обвести за контуром), використовується "
+"поточний інструмент малювання з усіма настройками. Ви можете використовувати "
+"\"Пензель\" у режимі градієнта, або навіть інструменти \"Гумка\" чи \"Палець\"."
+
+#: tips/gimp-tips.xml.in.h:12
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
+"in an image window to hide or show the toolbox and other dialogs."
+msgstr ""
+"Якщо ваш екран занадто засмічений вікнами, можна користуватись кнопкою <tt>Tab</tt> у вікні "
+"зображення, щоб приховати чи показати панелі інструментів та інші діалогові вікна."
+
+#: tips/gimp-tips.xml.in.h:13
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
+"plug-in to work on the whole image."
+msgstr ""
+"Більшість доповнень працюють з активним шаром зображення. У деяких випадках "
+"необхідно об'єднувати всі шари (Зображення-&gt;Звести зображення), якщо бажаєте "
+"щоб доповнення діяло на все зображення."
+
+#: tips/gimp-tips.xml.in.h:14
+msgid ""
+"Nearly all image operations are performed by right-clicking on the image. "
+"And don't worry, you can undo most mistakes..."
+msgstr ""
+"Майже всі дії можна виконати з контекстного меню, що з'являється при натисканні "
+"правої кнопки миші. Та не переймайтесь, більшість дій можна скувати..."
+
+#: tips/gimp-tips.xml.in.h:15
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+msgstr ""
+"Не всі ефекти можуть бути застосовані до усіх типів зображення. Це позначується "
+"сірим кольором елемента меню. Можливо знадобиться перевести зображення у режим "
+"RGB (Зображення-&gt;Режим-&gt;RGB), додати канал прозорості (Шари-&gt;Прозорість-&gt;Додати "
+"фльфа-канал) або об'єднати шари зображення (Зображення-&gt;Звести зображення)."
+
+#: tips/gimp-tips.xml.in.h:16
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"Щоб додати ділянку до виділеної, натисніть перед початком виділення клавішу <tt>Shift</tt>. "
+"Щоб відняти ділянку від виділеної, натисніть перед початком виділення клавішу <tt>Ctrl</tt>. "
+
+#: tips/gimp-tips.xml.in.h:17
+msgid ""
+"The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
+"<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
+"will be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"GIMP підтримує стискання gzip \"на ходу\". Просто додайте <tt>.gz</tt> (чи "
+"<tt>.bz2</tt>, якщо у вас встановлено bzip2) до назви файлу, та ваше "
+"зображення буде збережено стисненим. Звичайно, стиснені зображення можна "
+"відкривати як звичайні."
+
+#: tips/gimp-tips.xml.in.h:18
+msgid ""
+"The GIMP uses layers to let you organize your image. Think of them as a "
+"stack of slides or filters, such that looking through them you see a "
+"composite of their contents."
+msgstr ""
+"Для створення структури зображення, GIMP використовує шари. Щоб отримати про них уяву, "
+"уявіть стопку прозорих плівок із зображеннями, так що при перегляді ви бачите "
+"вміст одразу всіх плівок."
+
+#: tips/gimp-tips.xml.in.h:19
+msgid ""
+"The file selection dialog box has command-line completion with <tt>Tab</tt>, "
+"just like the shell. Type part of a filename, hit <tt>Tab</tt>, and voila, "
+"it's completed."
+msgstr ""
+"Як і у командному рядку, у діалозі вибору файлу можна користуватись клавішею "
+"<tt>Tab</tt> для доповнення назв. Введіть частину назви, натисніть <tt>Tab</tt>, "
+"назва буде доповнена."
+
+#: tips/gimp-tips.xml.in.h:20
+msgid ""
+"The layer named \"Background\" is special because it lacks transparency. "
+"This prevents you from adding a layer mask or moving the layer up in the "
+"stack. You may add transparency to it by right-clicking in the Layers dialog "
+"and selecting \"Add Alpha Channel\"."
+msgstr ""
+"Шар \"Тло\" - особливий. У ньому відсутня прозорість. Це не дає змоги додати до нього "
+"маску шару або перемістити шар вгору у стеку шарів. Можна додати до нього прозорість, "
+"якщо натиснути праву кнопку миші у діалоговому вікні \"Шари\" та вбрати \"Додати альфа-канал\"."
+
+#: tips/gimp-tips.xml.in.h:21
+msgid ""
+"To create a perfect circle, hold <tt>Shift</tt> while doing an ellipse "
+"select. To place a circle precisely, drag horizontal and vertical guides "
+"tangent to the circle you want to select, place your cursor at the "
+"intersection of the guides, and the resulting selection will just touch the "
+"guides."
+msgstr ""
+"Щоб створити рівне коло, утримуйте клавішу <tt>Shift</tt> під час виділення "
+"еліптичної ділянки. Щоб досягти точного розташування кола, додайте вертикальні та горизонтальні "
+"напрямні, які будуть дотичними майбутнього кола, розташуйте вказівник у точці "
+"перетину напрямних та створіть ділянку виділення."
+
+#: tips/gimp-tips.xml.in.h:22
+msgid ""
+"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
+"click will draw a straight line from your last drawing point to your current "
+"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
+"constrained to 15 degree angles."
+msgstr ""
+"Щоб намалювати пряму інструментом малювання (пензлем, пером, олівцем), "
+"використовуйте клавішу <tt>Shift</tt>. Якщо ви одночасно натиснете <tt>Ctrl</tt>, "
+"кут нахилу ліній буде кратний 15 градусам."
+
+#: tips/gimp-tips.xml.in.h:23
+msgid ""
+"When you save an image to work on it again later, try using XCF, the GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr ""
+"Якщо ви бажаєте продовжити редагування зображення пізніше, збережіть його у форматі "
+"XCF. Це внутрішній формат GIMP (розширення файлів <tt>.xcf</tt>). У ньому зберігаються "
+"стан всіх шарів, масок та інших частин зображення.  Після закінчення роботи над проектом "
+"можете зберегти його у JPEG, PNG, GIF, ..."
+
+#: tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust and re-place a selection by using <tt>Alt</tt>-drag. If this "
+"makes the window move, your window manager uses the <tt>Alt</tt> key "
+"already. Try pressing <tt>Shift</tt> at the same time."
+msgstr ""
+"Ви можете скорегувати та перемістити виділену ділянку використовуючи перетягування з "
+"утриманням натиснутої <tt>Alt</tt>. Якщо це призводить до переміщення цілого вікна, "
+"це означає ваш менеджер вікон вже використовує клавішу <tt>Alt</tt>. Спробуйте одночасно з "
+"цим натискати <tt>Shift</tt>."
+
+#: tips/gimp-tips.xml.in.h:25
+msgid ""
+"You can adjust the selection range for fuzzy select by clicking and dragging "
+"left and right."
+msgstr ""
+"Можна скорегувати ділянку вільного виділення шляхом натискання лівої клавіші миші та "
+"переміщенням вправо та вліво."
+
+#: tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"Можна створювати та редагувати складні ділянки виділення використовуючи "
+"інструмент \"Контур\". У діалоговому вікні \"Контур\" можна працювати з "
+"кількома контурами та перетворювати їх у виділення."
+
+#: tips/gimp-tips.xml.in.h:27
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"Можна перемістити шар з діалогового вікна \"Шари\" на панель інструментів. "
+"Це призведе до створення нового зображення, яке буде містити лише цей шар."
+
+#: tips/gimp-tips.xml.in.h:28
+msgid ""
+"You can drag and drop many things in the GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current image or selection with that color."
+msgstr ""
+"У GIMP можна перетягувати (drag and drop) багато елементів. Наприклад, перетягування "
+"кольору з панелі інструментів або з палітри на зображення призводить до заповнення "
+"цим кольором зображення (або його виділеної ділянки)."
+
+#: tips/gimp-tips.xml.in.h:29
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Можна малювати прості квадрати чи кола використовуючи меню Правка-&gt;Обвести за контуром. "
+"Даний пункт меню обводить за контуром виділену ділянку. Більш складні "
+"геометричні фігури можна намалювати використовуючи інструмент \"Контур\" або "
+"Фільтри-&gt;Візуалізація-&gt;Gfig."
+
+#: tips/gimp-tips.xml.in.h:30
+msgid ""
+"You can get context-sensitive help for most of the GIMP's features by "
+"pressing the F1 key at any time. This also works inside the menus."
+msgstr ""
+"Контекстну довідку для більшості функцій та меню GIMP можна викликати "
+"клавішею F1."
+
+#: tips/gimp-tips.xml.in.h:31
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"Більшість операцій з шарами можна вибрати з контекстного меню, що відкривається "
+"при натисканні правої кнопки миші на назві шару у діалоговому вікні \"Шари\"."
+
+#: tips/gimp-tips.xml.in.h:32
+msgid ""
+"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
+"are making a selection in order to constrain it to a perfect square or "
+"circle, or to have it centered on its starting point."
+msgstr ""
+"Щоб створити виділену ділянку у вигляді квадрату або кола, а також, щоб "
+"створити виділену ділянку з вказаного центру, використовуйте клавіші <tt>Shift</tt> та <tt>Ctrl</tt>."
+
+#: tips/gimp-tips.xml.in.h:33
+msgid ""
+"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"Виділену ділянку можна зберегти як канал (Виділення-&gt;Зберегти в каналі), а "
+"потім редагувати цей канал за допомогою будь-яких інструментів. Використовуючи кнопки "
+"у діалоговому вікні \"Канали\", ви можете змінити видимість каналу або перетворити його у "
+"виділену ділянку."
+
+#: tips/gimp-tips.xml.in.h:34
+msgid ""
+"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"Для перемикання між шарами можна користуватись клавішами <tt>Alt</tt>-<tt>Tab</tt> "
+"(якщо ваш віконний менеджер не використовує цю комбінацію клавіш)."
+
+#: tips/gimp-tips.xml.in.h:35
+msgid ""
+"You can use the middle mouse button to pan around the image, if it's larger "
+"than its display window."
+msgstr ""
+"Щоб переміщуватись по зображенню, яке більше ніж вікно, використовуйте середню кнопку миші."
+
+#: tips/gimp-tips.xml.in.h:36
+msgid ""
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
+msgstr ""
+"Для редагування меж виділеної ділянки можна використовувати інструменти малювання. "
+"Для цього необхідно увімкнути \"Швидка маска\" у нижньому лівому куті вінка зображення, "
+"відредагувати виділену ділянку інструментом малювання, потім ще раз натиснути "
+"кнопку для переходу у звичайний режим."

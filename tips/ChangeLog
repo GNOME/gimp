@@ -1,3 +1,8 @@
+2004-04-16  Maxim Dziumanenko <mvd@mylinux.com.ua>
+
+	* Makefile.am (tips_POFILES): added uk.po (Ukraininan).
+	* uk.po: Added Ukrainian translation
+
 2004-04-15  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.
