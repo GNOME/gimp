@@ -794,7 +794,7 @@ text_foundry_callback (GtkWidget *w,
   the_text_tool->foundry = (long) client_data;
   text_validate_combo (the_text_tool, 0);
 
-  if (text_load_font (the_text_tool))
+  if (!text_load_font (the_text_tool))
     the_text_tool->foundry = old_value;
 }
 

@@ -1,3 +1,12 @@
+Mon Sep 21 02:05:50 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* app/text_tool.c: correct test for restoring old foundry in
+	callback (from Trent Piepho)
+
+	* plug-ins/gauss_iir/gauss_iir.c
+	* plug-ins/gauss_rle/gauss_rle.c: better test for bad values,
+	put fix in gauss_rle too
+
 Sun Sep 20 15:52:21 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* Upgraded to libtool 1.2b
