@@ -1,3 +1,10 @@
+2000-03-11  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/twain/*.c: Use GLib's memory functions instead of
+	malloc and free.
+
+	* plug-ins/winsnap/winsnap.c: Add delay functionality.
+
 Sat Mar 11 14:44:19 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/menus.c: translate branches in the gimp domain too and a 

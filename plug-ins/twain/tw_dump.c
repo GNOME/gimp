@@ -235,7 +235,7 @@ void readDumpedImage(pTW_SESSION twSession)
   while (moreData) {
     /* Read the memory information */
     fread((void *) &imageMemXfer, sizeof(TW_IMAGEMEMXFER), 1, inputFile);
-    imageMemXfer.Memory.TheMem = (TW_MEMREF) malloc (imageMemXfer.BytesWritten);
+    imageMemXfer.Memory.TheMem = (TW_MEMREF) g_malloc (imageMemXfer.BytesWritten);
     fread((void *) imageMemXfer.Memory.TheMem,
 	  1, imageMemXfer.BytesWritten, inputFile);
 
@@ -247,7 +247,7 @@ void readDumpedImage(pTW_SESSION twSession)
       return;
 
     /* Clean up the memory */
-    free((void *) imageMemXfer.Memory.TheMem);
+    g_free (imageMemXfer.Memory.TheMem);
 
     /* Check for continuation */
     fread((void *) &moreData, sizeof(int), 1, inputFile);

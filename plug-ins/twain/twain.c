@@ -260,7 +260,7 @@ WinMain(HINSTANCE hInstance,
 static pTW_IDENTITY
 getAppIdentity(void)
 {
-  pTW_IDENTITY appIdentity = (pTW_IDENTITY) malloc (sizeof(TW_IDENTITY));
+  pTW_IDENTITY appIdentity = g_new (TW_IDENTITY, 1);
 		
   /* Set up the application identity */
   appIdentity->Id = 0;
@@ -562,7 +562,7 @@ run(gchar *name,		/* name of plugin */
   values[1].type = PARAM_INT32;
   values[1].data.d_int32 = 0;
   values[2].type = PARAM_INT32ARRAY;
-  values[2].data.d_int32array = (gint32 *) malloc (sizeof(gint32) * MAX_IMAGES);
+  values[2].data.d_int32array = g_new (gint32, MAX_IMAGES);
 		
   /* How are we running today? */
   switch (run_mode) {
@@ -657,8 +657,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
   int done = 0;
   int imageType, layerType;
 
-  pClientDataStruct theClientData = 
-    (pClientDataStruct) malloc (sizeof(ClientDataStruct));
+  pClientDataStruct theClientData = g_new (ClientDataStruct, 1);
 
 #ifdef _DEBUG		
   logBegin(imageInfo, clientData);
@@ -681,7 +680,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 
   case TWPT_PALETTE:
     /* Get the palette data */
-    theClientData->paletteData = (pTW_PALETTE8) malloc (sizeof(TW_PALETTE8));
+    theClientData->paletteData = g_new (TW_PALETTE8, 1);
     twSession->twRC = callDSM(APP_IDENTITY(twSession), DS_IDENTITY(twSession),
 			      DG_IMAGE, DAT_PALETTE8, MSG_GET,
 			      (TW_MEMREF) theClientData->paletteData);
@@ -744,7 +743,7 @@ beginTransferCallback(pTW_IMAGEINFO imageInfo, void *clientData)
 		
   /* Store our client data for the data transfer callbacks */
   if (clientData)
-    free(clientData);
+    g_free (clientData);
   setClientData(twSession, (void *) theClientData);
 		
   /* Make sure to return TRUE to continue the image
@@ -778,7 +777,7 @@ bitTransferCallback(pTW_IMAGEINFO imageInfo,
 		
   /* Allocate a buffer as necessary */
   if (!destBuf)
-    destBuf = (char *) malloc (rows * cols);
+    destBuf = g_new (char, rows * cols);
 		
   /* Unpack the image data from bits into bytes */
   srcBuf = (char *) imageMemXfer->Memory.TheMem;
@@ -828,7 +827,7 @@ oneBytePerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
 		
   /* Allocate a buffer as necessary */
   if (!destBuf)
-    destBuf = (char *) malloc (rows * cols * bytesPerPixel);
+    destBuf = g_new (char, rows * cols * bytesPerPixel);
 		
   /* The bytes coming from the source may not be padded in
    * a way that The GIMP is terribly happy with.  It is
@@ -886,7 +885,7 @@ twoBytesPerSampleTransferCallback(pTW_IMAGEINFO imageInfo,
 		
   /* Allocate a buffer as necessary */
   if (!destBuf)
-    destBuf = (char *) malloc (rows * cols * imageInfo->SamplesPerPixel);
+    destBuf = g_new (char, rows * cols * imageInfo->SamplesPerPixel);
 		
   /* The bytes coming from the source may not be padded in
    * a way that The GIMP is terribly happy with.  It is
@@ -970,7 +969,7 @@ palettedTransferCallback(pTW_IMAGEINFO imageInfo,
 
   /* Allocate a buffer as necessary */
   if (!destBuf)
-    destBuf = (char *) malloc (rows * cols * channelsPerEntry);
+    destBuf = g_new (char, rows * cols * channelsPerEntry);
 
   /* Work through the rows */
   destPtr = destBuf;
@@ -1082,7 +1081,7 @@ endTransferCallback(int completionState, int pendingCount, void *clientData)
 
   /* Clean up and detach from the drawable */
   if (destBuf) {
-    free(destBuf);
+    g_free (destBuf);
     destBuf = NULL;
   }
   gimp_drawable_flush(theClientData->drawable);

@@ -69,13 +69,13 @@
 pTW_SESSION
 newSession(pTW_IDENTITY appIdentity) {
   /* Create the structure */
-  pTW_SESSION session = (pTW_SESSION) malloc (sizeof(TW_SESSION));
+  pTW_SESSION session = g_new (TW_SESSION, 1);
 
   /* Set the structure fields */
   session->hwnd = 0;
   session->twRC = TWRC_SUCCESS;
   session->appIdentity = appIdentity;
-  session->dsIdentity = (pTW_IDENTITY) malloc (sizeof(TW_IDENTITY));
+  session->dsIdentity = g_new (TW_IDENTITY, 1);
   session->dsIdentity->Id = 0;
   session->dsIdentity->ProductName[0] = '\0';
   session->transferFunctions = NULL;

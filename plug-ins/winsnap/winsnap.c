@@ -96,6 +96,7 @@ LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 /* Data structure holding data between runs */
 typedef struct {
   gint root;
+  guint delay;
   gint decor;
 } WinSnapValues;
 
@@ -103,20 +104,27 @@ typedef struct {
 static WinSnapValues winsnapvals =
 {
   FALSE,
-  TRUE
+  0,
+  TRUE,
 };
 
 /* The dialog information */
 typedef struct {
+#ifdef CAN_SET_DECOR
   GtkWidget *decor_button;
+#endif
   GtkWidget *single_button;
   GtkWidget *root_button;
+  GtkWidget *delay_spinner;
   gint run;
 } WinSnapInterface;
 
 /* The dialog data */
 static WinSnapInterface winsnapintf =
 {
+#ifdef CAN_SET_DECOR
+  NULL,
+#endif
   NULL,
   NULL,
   NULL,
@@ -268,7 +276,7 @@ doCapture(HWND selectedHwnd)
   /* Try and get everything out of the way before the
    * capture.
    */
-  Sleep(500);
+  Sleep(500 + winsnapvals.delay * 1000);
 
   /* Are we capturing a window or the whole screen */
   if (selectedHwnd) {
@@ -819,9 +827,11 @@ snap_close_callback(GtkWidget *widget,
  */
 static void
 snap_grab_callback(GtkWidget *widget,
-										gpointer data)
+		   gpointer data)
 {
   winsnapintf.run = TRUE;
+  winsnapvals.delay = 
+    gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON (winsnapintf.delay_spinner));
   gtk_widget_destroy(GTK_WIDGET (data));
 }
 
@@ -832,7 +842,7 @@ snap_grab_callback(GtkWidget *widget,
  */
 static void
 snap_toggle_update (GtkWidget *widget,
-		     gpointer   radio_button)
+		    gpointer   radio_button)
 {
   gint *toggle_val;
 
@@ -864,11 +874,14 @@ snap_dialog(void)
   GtkWidget		*button;
   GtkWidget		*hbox;
   GtkWidget		*radio_label;
+  GtkWidget             *label;
+  GtkAdjustment         *adj;
   GSList		*radio_group = NULL;
   gint			 radio_pressed[2];
   gint			 decorations;
   gint			 argc = 1;
   gchar		       **argv = g_new (gchar *, 1);
+  guint                  delay;
 
   /* Set the name */
   argv[0] = g_strdup("winsnap");
@@ -877,6 +890,7 @@ snap_dialog(void)
   radio_pressed[0] = (winsnapvals.root == FALSE);
   radio_pressed[1] = (winsnapvals.root == TRUE);
   decorations = winsnapvals.decor;
+  delay = winsnapvals.delay;
 
   /* Init GTK  */
   gtk_init(&argc, &argv);
@@ -942,8 +956,8 @@ snap_dialog(void)
   gtk_widget_show (radio_label);
   gtk_widget_show (hbox);
 
-  /* With decorations */
 #ifdef CAN_SET_DECOR
+  /* With decorations */
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_end (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   winsnapintf.decor_button =
@@ -986,6 +1000,33 @@ snap_dialog(void)
   radio_label = gtk_label_new (_("Grab the whole screen"));
   gtk_box_pack_start (GTK_BOX (hbox), radio_label, TRUE, TRUE, 0);
   gtk_widget_show (radio_label);
+
+  gtk_widget_show (hbox);
+  gtk_widget_show (frame);
+
+  /* with delay */
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
+		      frame, TRUE, TRUE, 0);
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+
+  label = gtk_label_new (_("after"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+ 
+  adj = (GtkAdjustment *) gtk_adjustment_new ((gfloat)delay, 0.0, 100.0, 1.0, 5.0, 0.0);
+  winsnapintf.delay_spinner = gtk_spin_button_new (adj, 0, 0);
+  gtk_box_pack_start (GTK_BOX(hbox), winsnapintf.delay_spinner, FALSE, FALSE, 0);
+  gtk_widget_show (winsnapintf.delay_spinner);
+
+  label = gtk_label_new (_("Seconds Delay"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   gtk_widget_show (hbox);
   gtk_widget_show (frame);
@@ -1186,7 +1227,7 @@ sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)
   /* Check that we got the memory */
   if (!capBytes) {
     g_warning(_("No data captured"));
-    return 0;
+    return;
   }
 
   /* Flip the red and blue bytes */
