@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -51,7 +52,6 @@ struct _CdisplayContrast
   guchar            lookup[256];
 
   GtkWidget        *hbox;
-  GtkObject        *adjustment;
 };
 
 struct _CdisplayContrastClass
@@ -95,8 +95,6 @@ static void    cdisplay_contrast_configure_reset   (GimpColorDisplay *display);
 
 static void    cdisplay_contrast_set_contrast      (CdisplayContrast *contrast,
                                                     gdouble           value);
-static void    cdisplay_contrast_adj_callback      (GtkAdjustment    *adj,
-                                                    CdisplayContrast *contrast);
 
 
 static const GimpModuleInfo cdisplay_contrast_info =
@@ -145,11 +143,20 @@ cdisplay_contrast_get_type (GTypeModule *module)
 	NULL            /* instance_init  */
       };
 
+      static const GInterfaceInfo display_iface_info =
+      {
+        NULL,           /* iface_init     */
+        NULL,           /* iface_finalize */
+        NULL            /* iface_data     */
+      };
+
       cdisplay_contrast_type =
         g_type_module_register_type (module,
                                      GIMP_TYPE_COLOR_DISPLAY,
                                      "CdisplayContrast",
                                      &display_info, 0);
+      g_type_add_interface_static (cdisplay_contrast_type,
+                                   GIMP_TYPE_CONFIG, &display_iface_info);
     }
 
   return cdisplay_contrast_type;
@@ -167,13 +174,10 @@ cdisplay_contrast_class_init (CdisplayContrastClass *klass)
   object_class->get_property     = cdisplay_contrast_get_property;
   object_class->set_property     = cdisplay_contrast_set_property;
 
-  g_object_class_install_property (object_class, PROP_CONTRAST,
-                                   g_param_spec_double ("contrast", NULL, NULL,
-                                                        0.01, 10.0,
-                                                        DEFAULT_CONTRAST,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT |
-                                                        GIMP_MODULE_PARAM_SERIALIZE));
+  GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_CONTRAST,
+                                   "contrast", NULL,
+                                   0.01, 10.0, DEFAULT_CONTRAST,
+                                   0);
 
   display_class->name            = _("Contrast");
   display_class->help_id         = "gimp-colordisplay-contrast";
@@ -237,16 +241,7 @@ cdisplay_contrast_set_property (GObject      *object,
 static GimpColorDisplay *
 cdisplay_contrast_clone (GimpColorDisplay *display)
 {
-  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
-  CdisplayContrast *copy;
-
-  copy = CDISPLAY_CONTRAST (gimp_color_display_new (G_TYPE_FROM_INSTANCE (contrast)));
-
-  copy->contrast = contrast->contrast;
-
-  memcpy (copy->lookup, contrast->lookup, sizeof (guchar) * 256);
-
-  return GIMP_COLOR_DISPLAY (copy);
+  return GIMP_COLOR_DISPLAY (gimp_config_duplicate (GIMP_CONFIG (display)));
 }
 
 static void
@@ -290,47 +285,26 @@ static void
 cdisplay_contrast_load_state (GimpColorDisplay *display,
                               GimpParasite     *state)
 {
-  gdouble value;
-
-#if G_BYTE_ORDER == G_BIG_ENDIAN
-  memcpy (&value, gimp_parasite_data (state), sizeof (gdouble));
-#else
-  {
-    guint32        buf[2];
-    const guint32 *data;
-
-    data = gimp_parasite_data (state);
-
-    buf[0] = g_ntohl (data[1]);
-    buf[1] = g_ntohl (data[0]);
-
-    memcpy (&value, buf, sizeof (gdouble));
-  }
-#endif
-
-  cdisplay_contrast_set_contrast (CDISPLAY_CONTRAST (display), value);
+  gimp_config_deserialize_string (GIMP_CONFIG (display),
+                                  gimp_parasite_data (state),
+                                  gimp_parasite_data_size (state),
+                                  NULL, NULL);
 }
 
 static GimpParasite *
 cdisplay_contrast_save_state (GimpColorDisplay *display)
 {
-  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
-  guint32           buf[2];
+  GimpParasite *parasite;
+  gchar        *str;
 
-  memcpy (buf, &contrast->contrast, sizeof (double));
+  str = gimp_config_serialize_to_string (GIMP_CONFIG (display), NULL);
 
-#if G_BYTE_ORDER == G_LITTLE_ENDIAN
-  {
-    guint32 tmp;
+  parasite = gimp_parasite_new ("Display/Contrast",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (str) + 1, str);
+  g_free (str);
 
-    tmp    = g_htonl (buf[0]);
-    buf[0] = g_htonl (buf[1]);
-    buf[1] = tmp;
-  }
-#endif
-
-  return gimp_parasite_new ("Display/Contrast", GIMP_PARASITE_PERSISTENT,
-			    sizeof (double), &buf);
+  return parasite;
 }
 
 static GtkWidget *
@@ -353,18 +327,12 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
   gtk_box_pack_start (GTK_BOX (contrast->hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  spinbutton = gimp_spin_button_new (&contrast->adjustment,
-                                     contrast->contrast,
-                                     0.01, 10.0, 0.01, 0.1, 0.0,
-                                     0.1, 3);
+  spinbutton = gimp_prop_spin_button_new (G_OBJECT (contrast), "contrast",
+                                          0.1, 1.0, 3);
   gtk_box_pack_start (GTK_BOX (contrast->hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinbutton);
-
-  g_signal_connect (contrast->adjustment, "value_changed",
-                    G_CALLBACK (cdisplay_contrast_adj_callback),
-                    contrast);
 
   return contrast->hbox;
 }
@@ -372,11 +340,7 @@ cdisplay_contrast_configure (GimpColorDisplay *display)
 static void
 cdisplay_contrast_configure_reset (GimpColorDisplay *display)
 {
-  CdisplayContrast *contrast = CDISPLAY_CONTRAST (display);
-
-  if (contrast->adjustment)
-    gtk_adjustment_set_value (GTK_ADJUSTMENT (contrast->adjustment),
-                              DEFAULT_CONTRAST);
+  gimp_config_reset (GIMP_CONFIG (display));
 }
 
 static void
@@ -401,11 +365,4 @@ cdisplay_contrast_set_contrast (CdisplayContrast *contrast,
       g_object_notify (G_OBJECT (contrast), "contrast");
       gimp_color_display_changed (GIMP_COLOR_DISPLAY (contrast));
     }
-}
-
-static void
-cdisplay_contrast_adj_callback (GtkAdjustment    *adj,
-                                CdisplayContrast *contrast)
-{
-  cdisplay_contrast_set_contrast (contrast, adj->value);
 }

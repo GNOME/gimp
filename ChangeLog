@@ -1,5 +1,13 @@
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_colorblind.c
+	* modules/cdisplay_gamma.c
+	* modules/cdisplay_highcontrast.c
+	* modules/cdisplay_proof.c: ported all ColorDisplay modules to
+	GimpConfig.
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
 	* modules/Makefile.am: link ColorDisplay modules with libgimpconfig.
 
 	* modules/cdisplay_colorblind.c: added the GimpConfig interface
