@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "POT-Creation-Date: 2001-03-15 16:09+0100\n"
-"PO-Revision-Date: 2001-03-15 16:23+0100\n"
+"PO-Revision-Date: 2001-03-15 23:40+0100\n"
 "Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -602,19 +602,19 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:1566 plug-ins/gfig/gfig.c:1458
 #, c-format
 msgid "Error opening: %s"
-msgstr ""
+msgstr "Açarken hata oldu: %s"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1568 plug-ins/gfig/gfig.c:1460
 msgid "Could not save."
-msgstr ""
+msgstr "Kaydedilmiyor."
 
 #: plug-ins/FractalExplorer/Dialogs.c:1584
 msgid "Failed to write file\n"
-msgstr ""
+msgstr "Dosya yazýlamadý\n"
 
 #: plug-ins/FractalExplorer/Dialogs.c:1606
 msgid "Save: No filename given"
-msgstr ""
+msgstr "Kaydetme: Dosya adý verilmemiþ"
 
 #. Can't save to directory
 #: plug-ins/FractalExplorer/Dialogs.c:1616
@@ -725,7 +725,7 @@ msgstr ""
 #. Put buttons in
 #: plug-ins/FractalExplorer/FractalExplorer.c:1390 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
-msgstr ""
+msgstr "Yeniden tara"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:1397
 msgid "Select directory and rescan collection"
@@ -751,7 +751,7 @@ msgstr ""
 #. General options
 #: plug-ins/Lighting/lighting_ui.c:395 plug-ins/MapObject/mapobject_ui.c:532
 msgid "General Options"
-msgstr ""
+msgstr "Genel seçenekler"
 
 #.
 #. toggle = gtk_check_button_new_with_label (_("Use Bump Mapping"));
@@ -782,7 +782,7 @@ msgstr ""
 #.
 #: plug-ins/Lighting/lighting_ui.c:430 plug-ins/MapObject/mapobject_ui.c:565
 msgid "Transparent Background"
-msgstr ""
+msgstr "Þeffaf Arkaplan"
 
 #: plug-ins/Lighting/lighting_ui.c:440
 msgid "Make destination image transparent where bump height is zero"
@@ -791,7 +791,7 @@ msgstr ""
 #: plug-ins/Lighting/lighting_ui.c:443 plug-ins/MapObject/mapobject_ui.c:590
 #: plug-ins/common/tile.c:443
 msgid "Create New Image"
-msgstr ""
+msgstr "Yeni Resim Yarat"
 
 #: plug-ins/Lighting/lighting_ui.c:453 plug-ins/MapObject/mapobject_ui.c:600
 msgid "Create a new image when applying filter"
@@ -849,7 +849,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:576
 msgid "Point"
-msgstr ""
+msgstr "Nokta"
 
 #: plug-ins/Lighting/lighting_ui.c:578
 msgid "Spot"
@@ -879,7 +879,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1028
 #: plug-ins/print/gimp_main_window.c:335
 msgid "Position"
-msgstr ""
+msgstr "Yer"
 
 #. X
 #. table col, row
@@ -892,7 +892,7 @@ msgstr ""
 #: plug-ins/gap/gap_mov_dialog.c:1837 plug-ins/gflare/gflare.c:2876
 #: plug-ins/ifscompose/ifscompose.c:535
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: plug-ins/Lighting/lighting_ui.c:622 plug-ins/MapObject/mapobject_ui.c:754
 msgid "Light source X position in XYZ space"
@@ -909,7 +909,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:1243 plug-ins/gap/gap_mov_dialog.c:1855
 #: plug-ins/gflare/gflare.c:2880 plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: plug-ins/Lighting/lighting_ui.c:635 plug-ins/MapObject/mapobject_ui.c:767
 msgid "Light source Y position in XYZ space"
@@ -921,7 +921,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:1102
 #: plug-ins/MapObject/mapobject_ui.c:1200
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
 #: plug-ins/Lighting/lighting_ui.c:648 plug-ins/MapObject/mapobject_ui.c:780
 msgid "Light source Z position in XYZ space"
@@ -1114,7 +1114,7 @@ msgstr ""
 #: plug-ins/MapObject/mapobject_ui.c:262 plug-ins/MapObject/mapobject_ui.c:556
 #: plug-ins/MapObject/mapobject_ui.c:1332
 msgid "Box"
-msgstr ""
+msgstr "Kutu"
 
 #: plug-ins/MapObject/mapobject_ui.c:280 plug-ins/MapObject/mapobject_ui.c:557
 #: plug-ins/MapObject/mapobject_ui.c:1338
@@ -1131,7 +1131,7 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:555
 msgid "Sphere"
-msgstr ""
+msgstr "Küre"
 
 #: plug-ins/MapObject/mapobject_ui.c:563
 msgid "Type of object to map to"
@@ -1213,7 +1213,7 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1129
 msgid "Back:"
-msgstr ""
+msgstr "Geri:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1130
 #: plug-ins/MapObject/mapobject_ui.c:1226
@@ -1280,7 +1280,7 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1284 plug-ins/common/mblur.c:804
 msgid "Length:"
-msgstr ""
+msgstr "Uzunluk:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1288
 msgid "Cylinder length"
@@ -1298,7 +1298,7 @@ msgstr ""
 
 #: plug-ins/MapObject/mapobject_ui.c:1434 plug-ins/common/diffraction.c:575
 msgid "Preview!"
-msgstr ""
+msgstr "Önizle!"
 
 #: plug-ins/MapObject/mapobject_ui.c:1451
 msgid "Zoom out (make image smaller)"
@@ -1332,17 +1332,17 @@ msgstr ""
 #: plug-ins/sgi/sgi.c:332 plug-ins/xjt/xjt.c:3246
 #, c-format
 msgid "Loading %s:"
-msgstr ""
+msgstr "%s yükleniyor:"
 
 #: plug-ins/bmp/bmpread.c:63
 #, c-format
 msgid "%s: can't open \"%s\""
-msgstr ""
+msgstr "%s: \"%s\" açilamýyor"
 
 #: plug-ins/bmp/bmpread.c:71
 #, c-format
 msgid "%s: %s is not a valid BMP file"
-msgstr ""
+msgstr "%s: %s geçerli bir BMP dosyasý deðildir"
 
 #: plug-ins/bmp/bmpread.c:89 plug-ins/bmp/bmpread.c:107
 #: plug-ins/bmp/bmpread.c:127 plug-ins/bmp/bmpread.c:145
@@ -1350,7 +1350,7 @@ msgstr ""
 #: plug-ins/bmp/bmpread.c:173
 #, c-format
 msgid "%s: error reading BMP file header"
-msgstr ""
+msgstr "%s: BMP dosya baþlýðý okunurken hata oldu"
 
 #: plug-ins/bmp/bmpread.c:246
 #, c-format
@@ -1385,7 +1385,7 @@ msgstr ""
 #: plug-ins/bmp/bmpwrite.c:167
 #, c-format
 msgid "Can't open %s"
-msgstr ""
+msgstr "%s açilamýyor"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
@@ -1402,11 +1402,11 @@ msgstr ""
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
 #, c-format
 msgid "Saving %s:"
-msgstr ""
+msgstr "%s Kaydediliyor:"
 
 #: plug-ins/bmp/bmpwrite.c:559
 msgid "Save as BMP"
-msgstr ""
+msgstr "BMP olarak kaydet"
 
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:576
@@ -1494,7 +1494,7 @@ msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1383
 msgid "AlienMap2"
-msgstr ""
+msgstr "AlienMap2"
 
 #: plug-ins/common/AlienMap2.c:1432
 msgid "R/H-Frequency:"
@@ -1585,7 +1585,7 @@ msgstr ""
 
 #: plug-ins/common/AlienMap2.c:1671
 msgid "About AlienMap2"
-msgstr ""
+msgstr "AlienMap2 hakkýnda bilgi"
 
 #. Let user choose KCF palette (cancel ignores)
 #: plug-ins/common/CEL.c:194
@@ -1869,11 +1869,11 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1294
 msgid "Advanced Settings"
-msgstr ""
+msgstr "Geliþmiþ Seçenekler"
 
 #: plug-ins/common/CML_explorer.c:1296 plug-ins/fp/fp_gtk.c:295
 msgid "Advanced"
-msgstr "Uzman"
+msgstr "Seçenekler"
 
 #: plug-ins/common/CML_explorer.c:1306
 msgid "Other Parameter Settings"
@@ -2153,7 +2153,7 @@ msgstr ""
 #: plug-ins/common/align_layers.c:460 plug-ins/common/align_layers.c:493
 #: plug-ins/gfig/gfig.c:3407
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Izgaraya uydur"
 
 #: plug-ins/common/align_layers.c:465
 msgid "Horizontal Style:"
@@ -2592,7 +2592,7 @@ msgstr ""
 #: plug-ins/common/compose.c:127 plug-ins/common/nlfilt.c:421
 #: plug-ins/common/noisify.c:574 plug-ins/common/noisify.c:657
 msgid "Alpha:"
-msgstr ""
+msgstr "Alfa:"
 
 #: plug-ins/common/compose.c:127
 msgid "rgba-compose"
@@ -2617,7 +2617,7 @@ msgstr ""
 #: plug-ins/common/compose.c:130 plug-ins/common/scatter_hsv.c:468
 #: plug-ins/gap/gap_arr_dialog.c:813
 msgid "Value:"
-msgstr ""
+msgstr "Deðer :"
 
 #: plug-ins/common/compose.c:131
 msgid "hsv-compose"
@@ -2770,7 +2770,7 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:979
 msgid "Border"
-msgstr ""
+msgstr "Çerçeve"
 
 #: plug-ins/common/convmatrix.c:1004
 msgid "Channels"
@@ -2858,7 +2858,7 @@ msgstr ""
 
 #: plug-ins/common/curve_bend.c:352
 msgid "Lower"
-msgstr ""
+msgstr "Alçalt"
 
 #: plug-ins/common/curve_bend.c:358
 msgid "Smooth"
@@ -3314,7 +3314,7 @@ msgstr ""
 
 #: plug-ins/common/emboss.c:547
 msgid "Function"
-msgstr ""
+msgstr "Fonksiyon"
 
 #: plug-ins/common/emboss.c:551
 msgid "Bumpmap"
@@ -3453,7 +3453,7 @@ msgstr ""
 #: plug-ins/common/film.c:1255 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:500 plug-ins/gimpressionist/color.c:76
 msgid "Color:"
-msgstr ""
+msgstr "Renk :"
 
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1262
@@ -3492,7 +3492,7 @@ msgstr ""
 
 #: plug-ins/common/film.c:1353
 msgid "Image Height:"
-msgstr ""
+msgstr "Resim yüksekliði :"
 
 #: plug-ins/common/film.c:1367
 msgid "Image Spacing:"
@@ -3855,7 +3855,7 @@ msgstr ""
 
 #: plug-ins/common/gih.c:1084
 msgid "Selection:"
-msgstr ""
+msgstr "Seçim"
 
 #: plug-ins/common/gifload.c:851
 #, c-format
@@ -3933,7 +3933,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_menu.c:400 plug-ins/imagemap/imap_popup.c:148
 #: plug-ins/imagemap/imap_toolbar.c:163
 msgid "Grid"
-msgstr ""
+msgstr "Izgara"
 
 #: plug-ins/common/grid.c:772
 msgid "Intersection"
@@ -4221,7 +4221,7 @@ msgstr "Azami Derinlik:"
 #: plug-ins/common/sinus.c:1847 plug-ins/gap/gap_mod_layer.c:222
 #: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3041
 msgid "Settings"
-msgstr ""
+msgstr "Ayarlar"
 
 #: plug-ins/common/iwarp.c:1137
 msgid "IWarp"
@@ -4454,11 +4454,11 @@ msgstr ""
 
 #: plug-ins/common/lic.c:1155
 msgid "Minimum Value:"
-msgstr ""
+msgstr "Asgari deðer :"
 
 #: plug-ins/common/lic.c:1164
 msgid "Maximum Value:"
-msgstr ""
+msgstr "Azami deðer :"
 
 #: plug-ins/common/lic.c:1220
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
@@ -4478,7 +4478,7 @@ msgstr ""
 
 #: plug-ins/common/mail.c:505
 msgid "Sender:"
-msgstr ""
+msgstr "Gönderen:"
 
 #: plug-ins/common/mail.c:517
 msgid "Subject:"
@@ -4634,7 +4634,7 @@ msgstr ""
 
 #: plug-ins/common/newsprint.c:176
 msgid "Line"
-msgstr ""
+msgstr "Çizgi"
 
 #: plug-ins/common/newsprint.c:185
 msgid "Diamond"
@@ -4717,7 +4717,7 @@ msgstr ""
 
 #: plug-ins/common/nlfilt.c:393
 msgid "Filter"
-msgstr ""
+msgstr "Filtre"
 
 #: plug-ins/common/nlfilt.c:397
 msgid "Alpha Trimmed Mean"
@@ -4873,7 +4873,7 @@ msgstr ""
 #: plug-ins/common/papertile.c:388 plug-ins/common/papertile.c:397
 #: plug-ins/common/sparkle.c:528
 msgid "Background Color"
-msgstr ""
+msgstr "Arkaplan Rengi"
 
 #: plug-ins/common/papertile.c:838
 msgid "September 31, 1999"
@@ -5411,7 +5411,7 @@ msgstr ""
 
 #: plug-ins/common/ripple.c:688
 msgid "Period:"
-msgstr ""
+msgstr "Periyod:"
 
 #: plug-ins/common/ripple.c:698 plug-ins/common/waves.c:411
 msgid "Amplitude:"
@@ -5472,7 +5472,7 @@ msgstr ""
 #: plug-ins/gimpressionist/presets.c:640 plug-ins/gimpressionist/sizemap.c:492
 #: plug-ins/imagemap/imap_default_dialog.c:125
 msgid "Apply"
-msgstr ""
+msgstr "Uygula"
 
 #: plug-ins/common/sample_colorize.c:1370
 msgid "Get Sample Colors"
@@ -5655,7 +5655,7 @@ msgstr ""
 
 #: plug-ins/common/shift.c:371
 msgid "Shift"
-msgstr ""
+msgstr "Üstkarakter"
 
 #: plug-ins/common/shift.c:393
 msgid "Shift Horizontally"
@@ -5689,11 +5689,11 @@ msgstr ""
 
 #: plug-ins/common/sinus.c:1769
 msgid "X Scale:"
-msgstr ""
+msgstr "X ölçeði :"
 
 #: plug-ins/common/sinus.c:1778
 msgid "Y Scale:"
-msgstr ""
+msgstr "Y ölçeði :"
 
 #: plug-ins/common/sinus.c:1787
 msgid "Complexity:"
@@ -6195,11 +6195,11 @@ msgstr ""
 
 #: plug-ins/common/tileit.c:515
 msgid "Row:"
-msgstr ""
+msgstr "Sýra:"
 
 #: plug-ins/common/tileit.c:537
 msgid "Column:"
-msgstr ""
+msgstr "Sütun:"
 
 #. Lower frame saying howmany segments
 #: plug-ins/common/tileit.c:598
@@ -6232,7 +6232,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:219
 msgid "Digits:"
-msgstr ""
+msgstr "Sayýlar :"
 
 #: plug-ins/common/uniteditor.c:232
 msgid "Symbol:"
@@ -6721,7 +6721,7 @@ msgstr ""
 #. *****************************************************
 #: plug-ins/common/wind.c:1071 plug-ins/maze/maze_face.c:302
 msgid "Style"
-msgstr ""
+msgstr "Biçem"
 
 #: plug-ins/common/wind.c:1075
 msgid "Blast"
@@ -7131,7 +7131,7 @@ msgstr ""
 #: plug-ins/flame/flame.c:720 plug-ins/gimpressionist/orientation.c:151
 #: plug-ins/gimpressionist/size.c:150
 msgid "Random"
-msgstr ""
+msgstr "Rastgele"
 
 #: plug-ins/flame/flame.c:724
 msgid "Swirl"
@@ -8208,7 +8208,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:264
 msgid "Multiply"
-msgstr ""
+msgstr "Çarp"
 
 #: plug-ins/gap/gap_mov_dialog.c:266 plug-ins/gflare/gflare.c:596
 #: plug-ins/gimpressionist/paper.c:152
@@ -8225,7 +8225,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3138
 msgid "Subtract"
-msgstr ""
+msgstr "Çýkar"
 
 #: plug-ins/gap/gap_mov_dialog.c:270
 msgid "Darken Only"
@@ -8495,7 +8495,7 @@ msgstr ""
 #. Paintmode menu
 #: plug-ins/gap/gap_mov_dialog.c:1694
 msgid "Mode:"
-msgstr ""
+msgstr "Tür :"
 
 #: plug-ins/gap/gap_mov_dialog.c:1703
 msgid "Paintmode"
@@ -9724,7 +9724,7 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:334
 msgid "Text color"
-msgstr ""
+msgstr "Metin rengi"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:344
 msgid "Toggle anti-aliased text"
@@ -9862,7 +9862,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:1922
 msgid "Merge"
-msgstr ""
+msgstr "Birleþtir"
 
 #: plug-ins/gfig/gfig.c:1927
 msgid "Merge Gfig Object collection into the current edit session"
@@ -9883,7 +9883,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:1987 plug-ins/gimpressionist/orientation.c:121
 #: plug-ins/print/gimp_main_window.c:469
 msgid "Orientation:"
-msgstr ""
+msgstr "Doðrultu :"
 
 #: plug-ins/gfig/gfig.c:2007
 msgid "Bezier Settings"
@@ -9981,7 +9981,7 @@ msgstr "Kalem"
 
 #: plug-ins/gfig/gfig.c:2357 plug-ins/gfig/gfig.c:3183
 msgid "Pattern"
-msgstr ""
+msgstr "Desen"
 
 #: plug-ins/gfig/gfig.c:2364
 msgid ""
@@ -10002,7 +10002,7 @@ msgstr "Yeni"
 
 #: plug-ins/gfig/gfig.c:2772
 msgid "Multiple"
-msgstr ""
+msgstr "Çoklu"
 
 #: plug-ins/gfig/gfig.c:2777
 msgid ""
@@ -10017,7 +10017,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:358
 #: plug-ins/rcm/rcm_dialog.c:668
 msgid "Selection"
-msgstr ""
+msgstr "Seçim"
 
 #: plug-ins/gfig/gfig.c:2793
 msgid "Selection+Fill"
@@ -10211,7 +10211,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:3506
 msgid "Object"
-msgstr ""
+msgstr "Nesne"
 
 #: plug-ins/gfig/gfig.c:3542
 msgid "Select directory and rescan Gfig object collection"
@@ -10366,7 +10366,7 @@ msgstr "Farklý kaydet..."
 
 #: plug-ins/gfig/gfig.c:6153
 msgid "Error reading file"
-msgstr ""
+msgstr "Dosya okunamadý"
 
 #: plug-ins/gfig/gfig.c:6510
 msgid "Hey where has the object gone ?"
@@ -10467,7 +10467,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3153
 msgid "Selector"
-msgstr ""
+msgstr "Seçici"
 
 #: plug-ins/gflare/gflare.c:3242
 msgid "New GFlare"
@@ -10718,7 +10718,7 @@ msgstr ""
 
 #: plug-ins/gimpressionist/general.c:99
 msgid "Color Selection Dialog"
-msgstr ""
+msgstr "Renk seçme diyaloðu"
 
 #: plug-ins/gimpressionist/general.c:156
 msgid "Edge darken:"
@@ -10928,7 +10928,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:223
 #: plug-ins/gimpressionist/size.c:220
 msgid "Edit..."
-msgstr ""
+msgstr "Düzenle..."
 
 #: plug-ins/gimpressionist/orientation.c:228
 msgid "Opens up the Orientation Map Editor"
@@ -11075,7 +11075,7 @@ msgstr ""
 #: plug-ins/gimpressionist/placement.c:52
 #: plug-ins/gimpressionist/placement.c:57
 msgid "Placement"
-msgstr ""
+msgstr "Yerleþtirme"
 
 #: plug-ins/gimpressionist/placement.c:77
 msgid "Placement:"
@@ -11153,7 +11153,7 @@ msgstr ""
 #: plug-ins/gimpressionist/preview.c:117 plug-ins/gimpressionist/repaint.c:877
 #: plug-ins/gimpressionist/repaint.c:879 plug-ins/imagemap/imap_polygon.c:446
 msgid "Update"
-msgstr ""
+msgstr "Yenile"
 
 #: plug-ins/gimpressionist/preview.c:122
 msgid "Refresh the Preview window"
@@ -11289,7 +11289,7 @@ msgstr ""
 
 #: plug-ins/helpbrowser/helpbrowser.c:146
 msgid "Index"
-msgstr ""
+msgstr "Ýçerik"
 
 #: plug-ins/helpbrowser/helpbrowser.c:419 plug-ins/imagemap/imap_main.c:511
 #: plug-ins/imagemap/imap_settings.c:149
@@ -11402,7 +11402,7 @@ msgstr ""
 
 #: plug-ins/ifscompose/ifscompose.c:925 plug-ins/print/gimp_main_window.c:452
 msgid "Auto"
-msgstr ""
+msgstr "Otomatik"
 
 #: plug-ins/ifscompose/ifscompose.c:958
 msgid "Spatial Transformation"
@@ -11549,7 +11549,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_object_down.c:51
 #: plug-ins/imagemap/imap_selection.c:166
 msgid "Move Down"
-msgstr ""
+msgstr "Aþaðý"
 
 #: plug-ins/imagemap/imap_cmd_move_sash.c:64
 msgid "Move Sash"
@@ -11683,7 +11683,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_file.c:50 plug-ins/imagemap/imap_menu.c:66
 msgid "Error opening file"
-msgstr ""
+msgstr "Dosya açýlamadý"
 
 #: plug-ins/imagemap/imap_file.c:59
 msgid "Load Imagemap"
@@ -11791,7 +11791,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:215
 msgid "Open..."
-msgstr ""
+msgstr "Aç ..."
 
 #: plug-ins/imagemap/imap_menu.c:221
 msgid "Save As..."
@@ -11821,7 +11821,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:313
 msgid "View"
-msgstr ""
+msgstr "Göster"
 
 #: plug-ins/imagemap/imap_menu.c:317
 msgid "Area List"
@@ -11849,7 +11849,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:379
 msgid "Mapping"
-msgstr ""
+msgstr "Haritalama"
 
 #: plug-ins/imagemap/imap_menu.c:382 plug-ins/imagemap/imap_popup.c:129
 msgid "Arrow"
@@ -11917,7 +11917,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_preferences.c:356
 msgid "Select Color"
-msgstr ""
+msgstr "Bir renk seç"
 
 #: plug-ins/imagemap/imap_preferences.c:434
 msgid "Default Map Type"
@@ -12005,7 +12005,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_settings.c:87
 msgid "Title:"
-msgstr ""
+msgstr "Üstyazý :"
 
 #: plug-ins/imagemap/imap_settings.c:91
 msgid "Default URL:"
@@ -12363,7 +12363,7 @@ msgstr ""
 
 #: plug-ins/print/gimp_main_window.c:604
 msgid "Percent"
-msgstr ""
+msgstr "Yüzde"
 
 #: plug-ins/print/gimp_main_window.c:614
 msgid "PPI"
@@ -12442,7 +12442,7 @@ msgstr ""
 #.
 #: plug-ins/print/gimp_main_window.c:916
 msgid "Command:"
-msgstr ""
+msgstr "Komut:"
 
 #.
 #. * Output file selection dialog...
@@ -12631,11 +12631,11 @@ msgstr ""
 
 #: plug-ins/webbrowser/webbrowser.c:306
 msgid "URL:"
-msgstr ""
+msgstr "Adres :"
 
 #: plug-ins/webbrowser/webbrowser.c:316
 msgid "Window:"
-msgstr ""
+msgstr "Pencere:"
 
 #: plug-ins/webbrowser/webbrowser.c:329
 msgid "Current"
