@@ -26,22 +26,15 @@ struct _BrushSelect
 {
   GtkWidget     *shell;
 
-  /*  Place holders which enable global<->per-tool paint options switching  */
-  GtkWidget     *left_box;
-  GtkWidget     *right_box;
-  GtkWidget     *brush_selection_box;
+  GtkWidget     *view;
   GtkWidget     *paint_options_box;
 
-  GtkWidget     *view;
-
-  GtkWidget     *options_box;
   GtkWidget     *brush_name;
   GtkWidget     *brush_size;
 
-  GtkAdjustment *opacity_data;
   GtkAdjustment *spacing_data;
-  GtkWidget     *edit_button;
-  GtkWidget     *delete_button;
+
+  GtkAdjustment *opacity_data;
   GtkWidget     *option_menu;
 
   /*  Callback function name  */

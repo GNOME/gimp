@@ -108,7 +108,6 @@ context_manager_tool_changed (GimpContext  *user_context,
     {
       GimpTool    *new_tool     = NULL;
       GimpContext *tool_context = NULL;
-      GtkType      active_tool_type;
 
       if (tool_info->tool_type != GTK_TYPE_NONE)
 	{
@@ -121,12 +120,10 @@ context_manager_tool_changed (GimpContext  *user_context,
 	  return;
 	}
 
-      active_tool_type = GTK_OBJECT (active_tool)->klass->type;
-
       if (! global_paint_options)
 	{
 	  if (active_tool &&
-	      (tool_context = tool_manager_get_info_by_type (active_tool_type)->context))
+	      (tool_context = tool_manager_get_info_by_tool (active_tool)->context))
 	    {
 	      gimp_context_unset_parent (tool_context);
 	    }

@@ -1260,6 +1260,8 @@ gimp_context_copy_display (GimpContext *src,
 /*****************************************************************************/
 /*  tool  ********************************************************************/
 
+static GimpToolInfo *standard_tool_info = NULL;
+
 GimpToolInfo *
 gimp_context_get_tool (GimpContext *context)
 {
@@ -1332,9 +1334,7 @@ gimp_context_tool_list_thaw (GimpContainer *container,
       (context,
        GIMP_TOOL_INFO (gimp_container_get_child_by_index (container, 0)));
   else
-    gimp_context_real_set_tool (context, NULL);
-
-  /* FIXME: GIMP_TOOL_INFO (gimp_tool_info_get_standard ())); */
+    gimp_context_real_set_tool (context, gimp_tool_info_get_standard ());
 }
 
 /*  the active tool disappeared  */
@@ -1361,15 +1361,13 @@ static void
 gimp_context_real_set_tool (GimpContext  *context,
 			    GimpToolInfo *tool_info)
 {
-  /* FIXME
   if (! standard_tool_info)
-    standard_tool_info = GIMP_TOOL_INFO (gimp_tool_info_get_standard ());
-  */
+    standard_tool_info = gimp_tool_info_get_standard ();
 
   if (context->tool_info == tool_info)
     return;
 
-  if (context->tool_name /* FIXME && tool_info != standard_tool_info*/)
+  if (context->tool_name && tool_info != standard_tool_info)
     {
       g_free (context->tool_name);
       context->tool_name = NULL;
@@ -1396,9 +1394,8 @@ gimp_context_real_set_tool (GimpContext  *context,
 			  GTK_SIGNAL_FUNC (gimp_context_tool_dirty),
 			  context);
 
-      /* FIXME if (tool_info != standard_tool_info) */
-
-      context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
+      if (tool_info != standard_tool_info)
+	context->tool_name = g_strdup (GIMP_OBJECT (tool_info)->name);
     }
 
   gimp_context_tool_changed (context);
@@ -1410,7 +1407,7 @@ gimp_context_copy_tool (GimpContext *src,
 {
   gimp_context_real_set_tool (dest, src->tool_info);
 
-  if ((!src->tool_info /* FIXME || src->tool_info == standard_tool_info */) &&
+  if ((!src->tool_info || src->tool_info == standard_tool_info) &&
       src->tool_name)
     {
       g_free (dest->tool_name);
@@ -1638,6 +1635,8 @@ gimp_context_copy_opacity (GimpContext *src,
 LayerModeEffects
 gimp_context_get_paint_mode (GimpContext *context)
 {
+  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NORMAL_MODE);
+
   context_check_current (context);
   context_return_val_if_fail (context, 0);
 
@@ -1648,6 +1647,8 @@ void
 gimp_context_set_paint_mode (GimpContext     *context,
 			     LayerModeEffects paint_mode)
 {
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_PAINT_MODE_MASK);
@@ -1658,6 +1659,8 @@ gimp_context_set_paint_mode (GimpContext     *context,
 void
 gimp_context_paint_mode_changed (GimpContext *context)
 {
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
   context_check_current (context);
   context_return_if_fail (context);
 
@@ -1692,6 +1695,8 @@ static GimpBrush *standard_brush = NULL;
 GimpBrush *
 gimp_context_get_brush (GimpContext *context)
 {
+  g_return_val_if_fail (! context || GIMP_IS_CONTEXT (context), NULL);
+
   context_check_current (context);
   context_return_val_if_fail (context, NULL);
 
@@ -1702,6 +1707,9 @@ void
 gimp_context_set_brush (GimpContext *context,
 			GimpBrush   *brush)
 {
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+  g_return_if_fail (! brush || GIMP_IS_BRUSH (brush));
+
   context_check_current (context);
   context_return_if_fail (context);
   context_find_defined (context, GIMP_CONTEXT_BRUSH_MASK);
@@ -1712,6 +1720,8 @@ gimp_context_set_brush (GimpContext *context,
 void
 gimp_context_brush_changed (GimpContext *context)
 {
+  g_return_if_fail (! context || GIMP_IS_CONTEXT (context));
+
   context_check_current (context);
   context_return_if_fail (context);
 

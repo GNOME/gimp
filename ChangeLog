@@ -1,5 +1,52 @@
 2001-02-23  Michael Natterer  <mitch@gimp.org>
 
+	* app/app_procs.c: removed crap from ancient times when tools
+	used to be an enum.
+
+	* app/brush_select.[ch]: cleaned up the gui and made global paint
+	mode toggling much simpler by expanding vertically instead of
+	reparenting.
+
+	* app/context_manager.c: removed hack by using a tool manager
+	accessor function.
+
+	* app/gimpcontext.c: use the new standard tool info object. Tools
+	also _behave_ like all other data types now (can e.g. be
+	refreshed).
+
+	* app/tools/tool.[ch]
+
+	* app/tools/gimptoolinfo.[ch]: added an "identifier" which is an
+	untranslated string with a meaningful prefix and name, e.g.
+	"gimp:color_picker_tool". Renamed "tool_name" and "tool_desc"
+	to "blurb" and "help", changed the constructor accordingly.
+	Added gimp_tool_info_get_standards() to make the context work
+	with tool refresh.
+
+	* app/tools/tool_manager.[ch]
+	* app/tools/tools.c: removed the global list of tool class
+	structures because the tool info list is in place.
+	Added tool_manager_register_tool_options() which calls
+	tool_options_dialog_add() and registers the options in the
+	global_tool_info_list.
+
+	* app/tools/Makefile.am
+	* app/tools/paint_options.[ch]
+	* app/tools/selection_options.[ch]
+	* app/tools/tool_options.[ch]
+	* app/tools/tool_options_dialog.[ch]: build them all again. This
+	is mostly the old tool options system with minor modifications to
+	work with the new stuff. The tool options auto-update with the user
+	context now, so there are no update functions any more.
+
+	* app/gimpdnd.c
+	* app/toolbox.c
+	* app/tools/color_picker.c
+	* app/tools/measure.c
+	* app/tools/move.c: changed accordingly.
+
+2001-02-23  Michael Natterer  <mitch@gimp.org>
+
 	* app/Makefile.am
 	* app/apptypes.h
 	* app/gimptoolinfopreview.[ch]: new widget.

@@ -1309,15 +1309,12 @@ gimp_dnd_set_tool_data (GtkWidget     *widget,
 
   name = (gchar *) vals;
 
-  /* FIXME
-  if (strcmp (name, "Standard") == 0)
-    palette = GIMP_PALETTE (gimp_palette_get_standard ());
+  if (strcmp (name, "gimp:standard_tool") == 0)
+    tool_info = gimp_tool_info_get_standard ();
   else
-  */
-
-  tool_info = (GimpToolInfo *)
-    gimp_container_get_child_by_name (global_tool_info_list,
-				      name);
+    tool_info = (GimpToolInfo *)
+      gimp_container_get_child_by_name (global_tool_info_list,
+					name);
 
   if (tool_info)
     (* (GimpDndDropViewableFunc) set_tool_func) (widget,

@@ -26,15 +26,17 @@
 
 #include "gimprc.h"
 
+#include "gimptoolinfo.h"
 #include "selection_options.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
 
 void
 selection_options_init (SelectionOptions     *options,
-			ToolType              tool_type,
+			GtkType               tool_type,
 			ToolOptionsResetFunc  reset_func)
 {
   GtkWidget *vbox;
@@ -46,21 +48,6 @@ selection_options_init (SelectionOptions     *options,
 
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
-		     ((tool_type == RECT_SELECT) ?
-		      _("Rectangular Selection") :
-		      ((tool_type == ELLIPSE_SELECT) ?
-		       _("Elliptical Selection") :
-		       ((tool_type == FREE_SELECT) ?
-			_("Free-Hand Selection") :
-			((tool_type == FUZZY_SELECT) ?
-			 _("Fuzzy Selection") :
-			 ((tool_type == BEZIER_SELECT) ?
-			  _("Bezier Selection") :
-			  ((tool_type == ISCISSORS) ?
-			   _("Intelligent Scissors") :
-			   ((tool_type == BY_COLOR_SELECT) ?
-			    _("By-Color Selection") :
-			    "ERROR: Unknown Select Tool Type"))))))),
 		     reset_func);
 
   /*  the main vbox  */
@@ -136,7 +123,7 @@ selection_options_init (SelectionOptions     *options,
   gtk_widget_show (table);
 
   /*  the antialias toggle button  */
-  if (tool_type != RECT_SELECT)
+  if (tool_type != GIMP_TYPE_RECT_SELECT_TOOL)
     {
       options->antialias_w = gtk_check_button_new_with_label (_("Antialiasing"));
       gtk_box_pack_start (GTK_BOX (vbox), options->antialias_w, FALSE, FALSE, 0);
@@ -149,27 +136,19 @@ selection_options_init (SelectionOptions     *options,
     }
 
   /*  a separator between the common and tool-specific selection options  */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_ISCISSORS_TOOL      ||
+      tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
+      tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL ||
+      tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL   ||
+      tool_type == GIMP_TYPE_BY_COLOR_SELECT_TOOL)
     {
-    case FREE_SELECT:
-    case BEZIER_SELECT:
-      break;
-
-    case ISCISSORS:
-    case RECT_SELECT:
-    case ELLIPSE_SELECT:
-    case FUZZY_SELECT:
-    case BY_COLOR_SELECT:
       separator = gtk_hseparator_new ();
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
-      break;
-    default:
-      break;
     }
 
   /* selection tool with an interactive boundary that can be toggled */
-  if (tool_type == ISCISSORS)
+  if (tool_type == GIMP_TYPE_ISCISSORS_TOOL)
     {
       options->interactive_w =
 	gtk_check_button_new_with_label (_("Show Interactive Boundary"));
@@ -185,7 +164,7 @@ selection_options_init (SelectionOptions     *options,
     }
 
   /*  selection tools which operate on contiguous regions  */
-  if (tool_type == FUZZY_SELECT)
+  if (tool_type == GIMP_TYPE_FUZZY_SELECT_TOOL)
     {
       GtkWidget *hbox;
 
@@ -224,7 +203,8 @@ selection_options_init (SelectionOptions     *options,
     }
 
   /*  widgets for fixed size select  */
-  if (tool_type == RECT_SELECT || tool_type == ELLIPSE_SELECT)
+  if (tool_type == GIMP_TYPE_RECT_SELECT_TOOL    ||
+      tool_type == GIMP_TYPE_ELLIPSE_SELECT_TOOL)
     {
       GtkWidget *alignment;
       GtkWidget *table;
@@ -306,7 +286,7 @@ selection_options_init (SelectionOptions     *options,
 }
 
 SelectionOptions *
-selection_options_new (ToolType              tool_type,
+selection_options_new (GtkType               tool_type,
 		       ToolOptionsResetFunc  reset_func)
 {
   SelectionOptions *options;

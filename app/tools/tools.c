@@ -56,14 +56,6 @@
 void
 register_tools (void)
 {
-  GimpToolClass *color_picker = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_COLOR_PICKER));
-  GimpToolClass *measure_tool = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_MEASURE_TOOL));
-  GimpToolClass *move_tool = GIMP_TOOL_CLASS(gtk_type_class(GIMP_TYPE_MOVE_TOOL));
-
-  tool_manager_register (color_picker);
-  tool_manager_register (measure_tool);
-  tool_manager_register (move_tool);
-
   gimp_color_picker_register ();
   gimp_measure_tool_register ();
   gimp_move_tool_register ();

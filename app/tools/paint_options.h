@@ -86,14 +86,14 @@ extern PaintPressureOptions non_gui_pressure_options;
 
 /*  paint tool options functions  */
 
-PaintOptions * paint_options_new    (ToolType              tool_type,
+PaintOptions * paint_options_new    (GtkType               tool_type,
 				     ToolOptionsResetFunc  reset_func);
 
 void           paint_options_reset  (PaintOptions         *options);
 
 /*  to be used by "derived" paint options only  */
 void           paint_options_init   (PaintOptions         *options,
-				     ToolType              tool_type,
+				     GtkType               tool_type,
 				     ToolOptionsResetFunc  reset_func);
 
 

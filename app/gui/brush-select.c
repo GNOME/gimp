@@ -144,11 +144,10 @@ brush_select_new (gchar   *title,
 		  gint     init_mode)
 {
   BrushSelect *bsp;
-  GtkWidget   *vbox;
+  GtkWidget   *main_vbox;
   GtkWidget   *hbox;
   GtkWidget   *sep;
   GtkWidget   *table;
-  GtkWidget   *util_box;
   GtkWidget   *slider;
 
   GimpBrush *active = NULL;
@@ -215,21 +214,22 @@ brush_select_new (gchar   *title,
     }
 
   /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), vbox);
+  main_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), main_vbox);
 
-  /*  The horizontal box containing the brush list & options box */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (vbox), hbox);
+  /*  Create the active brush label  */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 2);
 
-  /*  A place holder for paint mode switching  */
-  bsp->left_box = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), bsp->left_box, TRUE, TRUE, 0);
+  bsp->brush_name = gtk_label_new (_("No Brushes available"));
+  gtk_box_pack_start (GTK_BOX (hbox), bsp->brush_name, FALSE, FALSE, 4);
+  bsp->brush_size = gtk_label_new ("(0 x 0)");
+  gtk_box_pack_start (GTK_BOX (hbox), bsp->brush_size, FALSE, FALSE, 2);
 
-  /*  The horizontal box containing preview & scrollbar  */
-  bsp->brush_selection_box = gtk_hbox_new (FALSE, 2);
-  gtk_container_add (GTK_CONTAINER (bsp->left_box), bsp->brush_selection_box);
+  gtk_widget_show (bsp->brush_name);
+  gtk_widget_show (bsp->brush_size);
+  gtk_widget_show (hbox);
 
   /*  The Brush Grid  */
   bsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
@@ -239,44 +239,13 @@ brush_select_new (gchar   *title,
 					  MIN_CELL_SIZE,
 					  STD_BRUSH_COLUMNS,
 					  STD_BRUSH_ROWS);
-  gtk_box_pack_start (GTK_BOX (bsp->brush_selection_box), bsp->view,
-		      TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), bsp->view, TRUE, TRUE, 0);
   gtk_widget_show (bsp->view);
-
-  gtk_widget_show (bsp->brush_selection_box);
-  gtk_widget_show (bsp->left_box);
-
-  /*  Options box  */
-  bsp->options_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), bsp->options_box, FALSE, FALSE, 0);
-
-  /*  Create the active brush label  */
-  util_box = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_resize_mode (GTK_CONTAINER (util_box), GTK_RESIZE_QUEUE);
-  gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 2);
-
-  bsp->brush_name = gtk_label_new (_("No Brushes available"));
-  gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_name, FALSE, FALSE, 4);
-  bsp->brush_size = gtk_label_new ("(0 x 0)");
-  gtk_box_pack_start (GTK_BOX (util_box), bsp->brush_size, FALSE, FALSE, 2);
-
-  gtk_widget_show (bsp->brush_name);
-  gtk_widget_show (bsp->brush_size);
-  gtk_widget_show (util_box);
-
-  /*  A place holder for paint mode switching  */
-  bsp->right_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (bsp->options_box), bsp->right_box, TRUE, TRUE, 0);
 
   /*  The vbox for the paint options  */
   bsp->paint_options_box = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (bsp->right_box), bsp->paint_options_box,
+  gtk_box_pack_start (GTK_BOX (bsp->view), bsp->paint_options_box,
 		      FALSE, FALSE, 0);
-
-  /*  A separator before the paint options  */
-  sep = gtk_hseparator_new ();
-  gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), sep, FALSE, FALSE, 0);
-  gtk_widget_show (sep);
 
   /*  Create the frame and the table for the options  */
   table = gtk_table_new (2, 2, FALSE);
@@ -309,12 +278,16 @@ brush_select_new (gchar   *title,
 
   gtk_widget_show (table);
   gtk_widget_show (bsp->paint_options_box);
-  gtk_widget_show (bsp->right_box);
+
+  /*  A separator after the paint options  */
+  sep = gtk_hseparator_new ();
+  gtk_box_pack_start (GTK_BOX (bsp->paint_options_box), sep, FALSE, FALSE, 0);
+  gtk_widget_show (sep);
 
   /*  Create the spacing scale widget  */
   table = gtk_table_new (1, 2, FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table), 0, 4);
-  gtk_box_pack_end (GTK_BOX (bsp->options_box), table, FALSE, FALSE, 2);
+  gtk_box_pack_end (GTK_BOX (bsp->view), table, FALSE, FALSE, 0);
 
   bsp->spacing_data =
     GTK_ADJUSTMENT (gtk_adjustment_new (0.0, 1.0, 1000.0, 1.0, 1.0, 0.0));
@@ -336,9 +309,7 @@ brush_select_new (gchar   *title,
 
   gtk_widget_show (table);
 
-  gtk_widget_show (bsp->options_box);
-  gtk_widget_show (hbox);
-  gtk_widget_show (vbox);
+  gtk_widget_show (main_vbox);
 
   /*  add callbacks to keep the display area current  */
   bsp->name_changed_handler_id =
@@ -348,7 +319,7 @@ brush_select_new (gchar   *title,
      bsp);
 
   /*  Only for main dialog  */
-  if (!title)
+  if (! title)
     {
       /*  if we are in per-tool paint options mode, hide the paint options  */
       brush_select_show_paint_options (bsp, global_paint_options);
@@ -409,31 +380,11 @@ brush_select_show_paint_options (BrushSelect *bsp,
     {
       if (! GTK_WIDGET_VISIBLE (bsp->paint_options_box))
 	gtk_widget_show (bsp->paint_options_box);
-
-      if (bsp->brush_selection_box->parent != bsp->left_box)
-	gtk_widget_reparent (bsp->brush_selection_box, bsp->left_box);
-      gtk_box_set_child_packing (GTK_BOX (bsp->options_box->parent),
-				 bsp->options_box,
-				 FALSE, FALSE, 0, GTK_PACK_START);
-      gtk_box_set_child_packing (GTK_BOX (bsp->left_box->parent),
-				 bsp->left_box,
-				 TRUE, TRUE, 0, GTK_PACK_START);
-      gtk_box_set_spacing (GTK_BOX (bsp->left_box->parent), 2);
     }
   else
     {
       if (GTK_WIDGET_VISIBLE (bsp->paint_options_box))
 	gtk_widget_hide (bsp->paint_options_box);
-
-      if (bsp->brush_selection_box->parent != bsp->right_box)
-	gtk_widget_reparent (bsp->brush_selection_box, bsp->right_box);
-      gtk_box_set_child_packing (GTK_BOX (bsp->left_box->parent),
-				 bsp->left_box,
-				 FALSE, FALSE, 0, GTK_PACK_START);
-      gtk_box_set_child_packing (GTK_BOX (bsp->options_box->parent),
-				 bsp->options_box,
-				 TRUE, TRUE, 0, GTK_PACK_START);
-      gtk_box_set_spacing (GTK_BOX (bsp->left_box->parent), 0);
     }
 }
 

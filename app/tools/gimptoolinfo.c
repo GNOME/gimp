@@ -25,6 +25,9 @@
 #include "gimptoolinfo.h"
 #include "temp_buf.h"
 
+/* FIXME: include rect_select.h here */
+#include "color_picker.h"
+
 
 static void      gimp_tool_info_class_init      (GimpToolInfoClass *klass);
 static void      gimp_tool_info_init            (GimpToolInfo      *tool_info);
@@ -82,25 +85,22 @@ gimp_tool_info_class_init (GimpToolInfoClass *klass)
 void
 gimp_tool_info_init (GimpToolInfo *tool_info)
 {
-  tool_info->tool_type     = GTK_TYPE_NONE;
+  tool_info->tool_type    = GTK_TYPE_NONE;
 
-  tool_info->tool_name     = NULL;
+  tool_info->blurb        = NULL;
+  tool_info->help         = NULL;
 
-  tool_info->menu_path     = NULL;
-  tool_info->menu_accel    = NULL;
+  tool_info->menu_path    = NULL;
+  tool_info->menu_accel   = NULL;
 
-  tool_info->tool_desc     = NULL;
+  tool_info->help_domain  = NULL;
+  tool_info->help_data    = NULL;
 
-  tool_info->help_domain   = NULL;
-  tool_info->help_data     = NULL;
+  tool_info->icon_data    = NULL;
 
-  tool_info->icon_data     = NULL;
+  tool_info->context      = NULL;
 
-  tool_info->context       = NULL;
-
-  tool_info->tool_options  = NULL;
-
-  tool_info->tool_widget   = NULL;
+  tool_info->tool_options = NULL;
 }
 
 static void
@@ -110,12 +110,11 @@ gimp_tool_info_destroy (GtkObject *object)
 
   tool_info = (GimpToolInfo *) object;
 
-  g_free (tool_info->tool_name);
+  g_free (tool_info->blurb);
+  g_free (tool_info->help);
 
   g_free (tool_info->menu_path);
   g_free (tool_info->menu_accel);
-
-  g_free (tool_info->tool_desc);
 
   g_free (tool_info->help_domain);
   g_free (tool_info->help_data);
@@ -193,10 +192,11 @@ gimp_tool_info_get_new_preview (GimpViewable *viewable,
 
 GimpToolInfo *
 gimp_tool_info_new (GtkType       tool_type,
-		    const gchar  *tool_name,
+		    const gchar  *identifier,
+		    const gchar  *blurb,
+		    const gchar  *help,
 		    const gchar  *menu_path,
 		    const gchar  *menu_accel,
-		    const gchar  *tool_desc,
 		    const gchar  *help_domain,
 		    const gchar  *help_data,
 		    const gchar **icon_data)
@@ -205,17 +205,15 @@ gimp_tool_info_new (GtkType       tool_type,
 
   tool_info = gtk_type_new (GIMP_TYPE_TOOL_INFO);
 
-  /* FIXME */
-  gimp_object_set_name (GIMP_OBJECT (tool_info), tool_name);
+  gimp_object_set_name (GIMP_OBJECT (tool_info), identifier);
 
   tool_info->tool_type     = tool_type;
 
-  tool_info->tool_name     = g_strdup (tool_name);
+  tool_info->blurb         = g_strdup (blurb);
+  tool_info->help          = g_strdup (help);
 
   tool_info->menu_path     = g_strdup (menu_path);
   tool_info->menu_accel    = g_strdup (menu_accel);
-
-  tool_info->tool_desc     = g_strdup (tool_desc);
 
   tool_info->help_domain   = g_strdup (help_domain);
   tool_info->help_data     = g_strdup (help_data);
@@ -223,4 +221,24 @@ gimp_tool_info_new (GtkType       tool_type,
   tool_info->icon_data     = icon_data;
 
   return tool_info;
+}
+
+GimpToolInfo *
+gimp_tool_info_get_standard (void)
+{
+  static GimpToolInfo *standard_tool_info = NULL;
+
+  if (! standard_tool_info)
+    {
+      standard_tool_info =
+	gimp_tool_info_new (GIMP_TYPE_COLOR_PICKER,
+			    "gimp:standard_tool",
+			    "Standard Tool",
+			    "Well something must be broken",
+			    NULL, NULL,
+			    NULL, NULL,
+			    NULL);
+    }
+
+  return standard_tool_info;
 }

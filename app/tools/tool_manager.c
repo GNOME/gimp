@@ -35,16 +35,16 @@
 #include "gimptoolinfo.h"
 #include "gimpui.h"
 #include "tool.h"
+#include "tool_manager.h"
 #include "tool_options.h"
+#include "tool_options_dialog.h"
 #include "dialog_handler.h"
 
 #include "libgimp/gimpintl.h"
 
 
 /*  Global Data  */
-GimpTool * active_tool = NULL;
-GSList   * registered_tools = NULL;
-
+GimpTool      *active_tool           = NULL;
 GimpContainer *global_tool_info_list = NULL;
 
 
@@ -215,17 +215,6 @@ tools_register (ToolType     tool_type,
 #endif
 
 
-void tool_manager_register (GimpToolClass *tool_type)
-{
-	GtkObjectClass *objclass = GTK_OBJECT_CLASS(tool_type);
-	g_message("registering %s.", gtk_type_name(objclass->type));
-	
-	registered_tools = g_slist_append (registered_tools, tool_type);
-	active_tool = gtk_type_new(objclass->type);
-}
-
-
-
 void
 tool_manager_init (void)
 {
@@ -235,28 +224,47 @@ tool_manager_init (void)
 
 void
 tool_manager_register_tool (GtkType       tool_type,
-			    const gchar  *tool_name,
+			    const gchar  *identifier,
+			    const gchar  *blurb,
+			    const gchar  *help,
 			    const gchar  *menu_path,
 			    const gchar  *menu_accel,
-			    const gchar  *tool_desc,
 			    const gchar  *help_domain,
 			    const gchar  *help_data,
 			    const gchar **icon_data)
 {
   GimpToolInfo *tool_info;
 
-  g_print ("register %s\n", tool_name);
-
   tool_info = gimp_tool_info_new (tool_type,
-				  tool_name,
+				  identifier,
+				  blurb,
+				  help,
 				  menu_path,
 				  menu_accel,
-				  tool_desc,
 				  help_domain,
 				  help_data,
 				  icon_data);
 
   gimp_container_add (global_tool_info_list, GIMP_OBJECT (tool_info));
+}
+
+void
+tool_manager_register_tool_options (GtkType      tool_type,
+				    ToolOptions *tool_options)
+{
+  GimpToolInfo *tool_info;
+
+  tool_info = tool_manager_get_info_by_type (tool_type);
+
+  if (! tool_info)
+    {
+      g_warning ("%s(): no tool info registered for %s",
+		 G_GNUC_FUNCTION, gtk_type_name (tool_type));
+    }
+
+  tool_info->tool_options = tool_options;
+
+  tool_options_dialog_add (tool_options);
 }
 
 GimpToolInfo *

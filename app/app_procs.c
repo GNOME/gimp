@@ -649,16 +649,6 @@ app_init (void)
 
       tool_options_dialog_new ();
 
-      /*  EEK: force signal emission  */
-      if (gimp_context_get_tool (gimp_context_get_user ()) == RECT_SELECT)
-	{
-	  gimp_context_tool_changed (gimp_context_get_user ());
-	}
-      else
-	{
-	  gimp_context_set_tool (gimp_context_get_user (), RECT_SELECT);
-	}
-
       /*  FIXME: This needs to go in preferences  */
       message_handler = MESSAGE_BOX;
     }

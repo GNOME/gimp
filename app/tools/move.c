@@ -93,9 +93,10 @@ void
 gimp_move_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_MOVE_TOOL,
-			      N_("Move"),
+			      "gimp:move_tool",
+			      _("Move Tool"),
+			      _("Move layers & selections"),
 			      N_("/Tools/Transform Tools/Move"), "M",
-			      N_("Move layers & selections"),
 			      NULL, "tools/move.html",
 			      (const gchar **) move_bits);
 }
@@ -157,9 +158,10 @@ gimp_move_tool_init (GimpMoveTool *move_tool)
   /*  The tool options  */
   if (! move_options)
     {
-      move_options = tool_options_new (_("Move Tool"));
+      move_options = tool_options_new ();
 
-      /* tools_register (MOVE, (ToolOptions *) move_options); */
+      tool_manager_register_tool_options (GIMP_TYPE_MOVE_TOOL,
+					  (ToolOptions *) move_options);
     }
 
   move_tool->layer = NULL;

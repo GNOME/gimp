@@ -42,11 +42,12 @@
 #include "tool_manager.h"
 #include "tool_options.h"
 
+#include "libgimp/gimpintl.h"
+
 #include "pixmaps2.h"
 #include "cursors/measure_small.xbm"
 #include "cursors/measure_small_mask.xbm"
 
-#include "libgimp/gimpintl.h"
 
 
 /*  definitions  */
@@ -126,9 +127,10 @@ void
 gimp_measure_tool_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_MEASURE_TOOL,
-			      N_("Measure"),
+			      "gimp:measure_tool",
+			      _("Measure Tool"),
+			      _("Measure angles and legnths"),
 			      N_("/Tools/Measure"), NULL,
-			      N_("Measure angles and legnths"),
 			      NULL, "tools/measure.html",
 			      (const gchar **) measure_bits);
 }
@@ -192,8 +194,8 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
     {
       measure_tool_options = measure_tool_options_new ();
 
-      /* OBSOLETE */
-      /* tools_register (MEASURE, (ToolOptions *) measure_tool_options); */
+      tool_manager_register_tool_options (GIMP_TYPE_MEASURE_TOOL,
+					  (ToolOptions *) measure_tool_options);
     }
 
   measure_tool->core = draw_core_new (measure_tool_draw);
@@ -237,7 +239,6 @@ measure_tool_options_new (void)
   /*  the new measure tool options structure  */
   options = g_new (MeasureOptions, 1);
   tool_options_init ((ToolOptions *) options,
-		     _("Measure Tool"),
 		     measure_tool_options_reset);
   options->use_info_window = options->use_info_window_d  = FALSE;
 

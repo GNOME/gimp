@@ -29,13 +29,15 @@
 #include "gimprc.h"
 #include "gtkhwrapbox.h"
 
+#include "gimptoolinfo.h"
 #include "paint_options.h"
-#include "tools.h"
+#include "tool.h"
+#include "tool_manager.h"
 
 #include "libgimp/gimpintl.h"
 
 
-static PaintPressureOptions * paint_pressure_options_new (ToolType    tool_type);
+static PaintPressureOptions * paint_pressure_options_new (GtkType    tool_type);
 static void   paint_pressure_options_reset (PaintPressureOptions *pressure_options);
 
 static void   paint_options_opacity_adjustment_update (GtkAdjustment *adjustment,
@@ -67,52 +69,34 @@ static GSList *paint_options_list = NULL;
 
 void
 paint_options_init (PaintOptions         *options,
-		    ToolType              tool_type,
+		    GtkType               tool_type,
 		    ToolOptionsResetFunc  reset_func)
 {
-  GtkWidget *vbox;
-  GtkWidget *table;
-  GtkWidget *scale;
-  GtkWidget *separator;
+  GimpToolInfo *tool_info;
+  GtkWidget    *vbox;
+  GtkWidget    *table;
+  GtkWidget    *scale;
+  GtkWidget    *separator;
 
-  GimpContext *tool_context = tool_info[tool_type].tool_context;
+  tool_info = tool_manager_get_info_by_type (tool_type);
+
+  if (! tool_info)
+    {
+      g_warning ("%s(): no tool info registered for %s",
+                 G_GNUC_FUNCTION, gtk_type_name (tool_type));
+    }
 
   /*  initialize the tool options structure  */
   tool_options_init ((ToolOptions *) options,
-		     ((tool_type == BUCKET_FILL) ?
-		      _("Bucket Fill") :
-		      ((tool_type == BLEND) ?
-		       _("Blend Tool") :
-		       ((tool_type == PENCIL) ?
-			_("Pencil") :
-			((tool_type == PAINTBRUSH) ?
-			 _("Paintbrush") :
-			 ((tool_type == ERASER) ?
-			  _("Eraser") :
-			  ((tool_type == AIRBRUSH) ?
-			   _("Airbrush") :
-			   ((tool_type == CLONE) ?
-			    _("Clone Tool") :
-			    ((tool_type == CONVOLVE) ?
-			     _("Convolver") :
-			     ((tool_type == INK) ?
-			      _("Ink Tool") :
-			      ((tool_type == DODGEBURN) ?
-			       _("Dodge or Burn") :
-			       ((tool_type == SMUDGE) ?
-				_("Smudge Tool") :
-/*  				((tool_type == XINPUT_AIRBRUSH) ? */
-/*  				 _("Xinput Airbrush") : */
-				 "ERROR: Unknown Paint Tool Type"))))))))))),
 		     reset_func);
 
   /*  initialize the paint options structure  */
   options->global           = NULL;
   options->opacity_w        = NULL;
   options->paint_mode_w     = NULL;
-  options->context          = tool_context;
+  options->context          = tool_info->context;
   options->incremental_w    = NULL;
-  options->incremental = options->incremental_d = FALSE;
+  options->incremental      = options->incremental_d = FALSE;
   options->pressure_options = NULL;
 
   /*  the main vbox  */
@@ -128,92 +112,67 @@ paint_options_init (PaintOptions         *options,
 
   /*  the opacity scale  */
   options->opacity_w =
-    gtk_adjustment_new (gimp_context_get_opacity (tool_context) * 100,
+    gtk_adjustment_new (gimp_context_get_opacity (tool_info->context) * 100,
 			0.0, 100.0, 1.0, 1.0, 0.0);
   scale = gtk_hscale_new (GTK_ADJUSTMENT (options->opacity_w));
   gtk_scale_set_value_pos (GTK_SCALE (scale), GTK_POS_TOP);
   gtk_range_set_update_policy (GTK_RANGE (scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (options->opacity_w), "value_changed",
 		      GTK_SIGNAL_FUNC (paint_options_opacity_adjustment_update),
-		      tool_context);
+		      tool_info->context);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Opacity:"), 1.0, 1.0,
 			     scale, 1, FALSE);
 
-  gtk_signal_connect (GTK_OBJECT (tool_context), "opacity_changed",
+  gtk_signal_connect (GTK_OBJECT (tool_info->context), "opacity_changed",
 		      GTK_SIGNAL_FUNC (paint_options_opacity_changed),
 		      options->opacity_w);
 
   /*  the paint mode menu  */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
+      tool_type == GIMP_TYPE_BLEND_TOOL       ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL      ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL  ||
+      tool_type == GIMP_TYPE_AIRBRUSH_TOOL    ||
+      tool_type == GIMP_TYPE_CLONE_TOOL       ||
+      tool_type == GIMP_TYPE_INK_TOOL)
     {
-    case BUCKET_FILL:
-    case BLEND:
-    case PENCIL:
-    case PAINTBRUSH:
-    case AIRBRUSH:
-    case CLONE:
-    case INK:
-/*      case XINPUT_AIRBRUSH: */
       gtk_table_set_row_spacing (GTK_TABLE (table), 0, 2);
 
       options->paint_mode_w =
 	paint_mode_menu_new (paint_options_paint_mode_update, options,
-			     gimp_context_get_paint_mode (tool_context));
+			     gimp_context_get_paint_mode (tool_info->context));
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 				 _("Mode:"), 1.0, 0.5,
 				 options->paint_mode_w, 1, TRUE);
 
-      gtk_signal_connect (GTK_OBJECT (tool_context), "paint_mode_changed",
+      gtk_signal_connect (GTK_OBJECT (tool_info->context), "paint_mode_changed",
 			  GTK_SIGNAL_FUNC (paint_options_paint_mode_changed),
 			  options->paint_mode_w);
-      break;
-    case CONVOLVE:
-    case ERASER:
-    case DODGEBURN:
-    case SMUDGE:
-      break;
-    default:
-      break;
     }
 
   /*  show the main table  */
   gtk_widget_show (table);
 
   /*  a separator after the common paint options which can be global  */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_BUCKET_FILL_TOOL ||
+      tool_type == GIMP_TYPE_BLEND_TOOL       ||
+      tool_type == GIMP_TYPE_INK_TOOL)
     {
-    case BUCKET_FILL:
-    case BLEND:
-    case INK:
-      /* case XINPUT_AIRBRUSH: */
       separator = gtk_hseparator_new ();
       gtk_box_pack_start (GTK_BOX (vbox), separator, FALSE, FALSE, 0);
       gtk_widget_show (separator);
-      break;
-    case PENCIL:
-    case PAINTBRUSH:
-    case ERASER:
-    case AIRBRUSH:
-    case CLONE:
-    case CONVOLVE:
-    case DODGEBURN:
-    case SMUDGE:
-      break;
-    default:
-      break;
     }
 
   if (! global_paint_options)
     gtk_widget_show (vbox);
 
   /*  the "incremental" toggle  */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-    case AIRBRUSH:
-    case ERASER:
-    case PAINTBRUSH:
-    case PENCIL:
       options->incremental_w =
 	gtk_check_button_new_with_label (_("Incremental"));
       gtk_box_pack_start (GTK_BOX (options->tool_options.main_vbox),
@@ -224,16 +183,6 @@ paint_options_init (PaintOptions         *options,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    options->incremental_d);
       gtk_widget_show (options->incremental_w);
-
-    case BUCKET_FILL:
-    case BLEND:
-    case CLONE:
-    case CONVOLVE:
-    case DODGEBURN:
-    case SMUDGE:
-      break;
-    default:
-      break;
     }
 
   options->pressure_options = paint_pressure_options_new (tool_type);
@@ -250,7 +199,7 @@ paint_options_init (PaintOptions         *options,
 }
 
 PaintOptions *
-paint_options_new (ToolType              tool_type,
+paint_options_new (GtkType               tool_type,
 		   ToolOptionsResetFunc  reset_func)
 {
   PaintOptions *options;
@@ -366,11 +315,11 @@ paint_mode_menu_new (GtkSignalFunc    callback,
 /*  private functions  */
 
 static PaintPressureOptions *
-paint_pressure_options_new (ToolType tool_type)
+paint_pressure_options_new (GtkType tool_type)
 {
   PaintPressureOptions *pressure = NULL;
-  GtkWidget *frame = NULL;
-  GtkWidget *wbox = NULL;
+  GtkWidget            *frame = NULL;
+  GtkWidget            *wbox = NULL;
 
   pressure = g_new (PaintPressureOptions, 1);
 
@@ -386,34 +335,28 @@ paint_pressure_options_new (ToolType tool_type)
   pressure->size_w     = NULL;
   pressure->color_w    = NULL;
 
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL     ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-    case AIRBRUSH:
-    case CLONE:
-    case CONVOLVE:
-    case DODGEBURN:
-    case ERASER:
-    case PAINTBRUSH:
-    case PENCIL:
-    case SMUDGE:
       frame = gtk_frame_new (_("Pressure Sensitivity"));
       wbox = gtk_hwrap_box_new (FALSE);
       gtk_wrap_box_set_aspect_ratio (GTK_WRAP_BOX (wbox), 6);
       gtk_container_add (GTK_CONTAINER (frame), wbox);
       gtk_widget_show (wbox);
-      break;
-    default:
-      break;
     }
 
   /*  the opacity toggle  */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_DODGEBURN_TOOL  ||
+      tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-    case CLONE:
-    case DODGEBURN:
-    case ERASER:
-    case PAINTBRUSH:
-    case PENCIL:
       pressure->opacity_w =
 	gtk_check_button_new_with_label (_("Opacity"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->opacity_w);
@@ -423,21 +366,16 @@ paint_pressure_options_new (ToolType tool_type)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->opacity_w),
 				    pressure->opacity_d);
       gtk_widget_show (pressure->opacity_w);
-      break;
-    default:
-      break;
     }
 
- /*  the pressure toggle  */
-  switch (tool_type)
+  /*  the pressure toggle  */
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_DODGEBURN_TOOL  ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-    case AIRBRUSH:
-    case CLONE:
-    case CONVOLVE:
-    case DODGEBURN:
-    case ERASER:
-    case PAINTBRUSH:
-    case SMUDGE:
       pressure->pressure_w = gtk_check_button_new_with_label (_("Hardness"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->pressure_w);
       gtk_signal_connect (GTK_OBJECT (pressure->pressure_w), "toggled",
@@ -446,17 +384,13 @@ paint_pressure_options_new (ToolType tool_type)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->pressure_w),
 				    pressure->pressure_d);
       gtk_widget_show (pressure->pressure_w);
-      break;
-    default:
-      break;
     }
 
   /*  the rate toggle */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL ||
+      tool_type == GIMP_TYPE_SMUDGE_TOOL)
     {
-    case AIRBRUSH:
-    case CONVOLVE:
-    case SMUDGE:
       pressure->rate_w =
 	gtk_check_button_new_with_label (_("Rate"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->rate_w);
@@ -466,21 +400,17 @@ paint_pressure_options_new (ToolType tool_type)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->rate_w),
 				    pressure->rate_d);
       gtk_widget_show (pressure->rate_w);
-      break;
-    default:
-      break;
     }
 
   /*  the size toggle  */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_type == GIMP_TYPE_CLONE_TOOL      ||
+      tool_type == GIMP_TYPE_CONVOLVE_TOOL   ||
+      tool_type == GIMP_TYPE_DODGEBURN_TOOL  ||
+      tool_type == GIMP_TYPE_ERASER_TOOL     ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-    case AIRBRUSH:
-    case CLONE:
-    case CONVOLVE:
-    case DODGEBURN:
-    case ERASER:
-    case PAINTBRUSH:
-    case PENCIL:
       pressure->size_w =
 	gtk_check_button_new_with_label (_("Size"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->size_w);
@@ -490,17 +420,13 @@ paint_pressure_options_new (ToolType tool_type)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->size_w),
 				    pressure->size_d);
       gtk_widget_show (pressure->size_w);
-      break;
-    default:
-      break;
     }
 
   /*  the color toggle  */
-  switch (tool_type)
+  if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL   ||
+      tool_type == GIMP_TYPE_PAINTBRUSH_TOOL ||
+      tool_type == GIMP_TYPE_PENCIL_TOOL)
     {
-    case AIRBRUSH:
-    case PAINTBRUSH:
-    case PENCIL:
       pressure->color_w =
 	gtk_check_button_new_with_label (_("Color"));
       gtk_container_add (GTK_CONTAINER (wbox), pressure->color_w);
@@ -510,9 +436,6 @@ paint_pressure_options_new (ToolType tool_type)
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pressure->color_w),
 				    pressure->color_d);
       gtk_widget_show (pressure->color_w);
-      break;
-    default:
-      break;
     }
 
   pressure->frame = frame;

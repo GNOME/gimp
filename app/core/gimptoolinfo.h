@@ -39,12 +39,11 @@ struct _GimpToolInfo
 
   GtkType       tool_type;
 
-  gchar        *tool_name;
+  gchar        *blurb;
+  gchar        *help;
 
   gchar        *menu_path;  
   gchar        *menu_accel; 
-
-  gchar        *tool_desc;
 
   gchar        *help_domain;
   gchar        *help_data;
@@ -54,9 +53,6 @@ struct _GimpToolInfo
   GimpContext  *context;
 
   ToolOptions  *tool_options;
-
-  /* EEK */
-  GtkWidget    *tool_widget;
 };
 
 struct _GimpToolInfoClass
@@ -65,16 +61,19 @@ struct _GimpToolInfoClass
 };
 
 
-GtkType        gimp_tool_info_get_type (void);
+GtkType        gimp_tool_info_get_type     (void);
 
-GimpToolInfo * gimp_tool_info_new      (GtkType       tool_type,
-					const gchar  *tool_name,
-					const gchar  *menu_path,
-					const gchar  *menu_accel,
-					const gchar  *tool_desc,
-					const gchar  *help_domain,
-					const gchar  *help_data,
-					const gchar **icon_data);
+GimpToolInfo * gimp_tool_info_new          (GtkType       tool_type,
+					    const gchar  *identifier,
+					    const gchar  *blurb,
+					    const gchar  *help,
+					    const gchar  *menu_path,
+					    const gchar  *menu_accel,
+					    const gchar  *help_domain,
+					    const gchar  *help_data,
+					    const gchar **icon_data);
+
+GimpToolInfo * gimp_tool_info_get_standard (void);
 
 
 #endif  /*  __GIMP_TOOL_INFO_H__  */

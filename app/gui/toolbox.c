@@ -312,7 +312,7 @@ create_tools (GtkWidget   *parent,
 			  tool_info);
 
       gimp_help_set_help_data (button,
-			       gettext (tool_info->tool_desc),
+			       tool_info->help,
 			       tool_info->help_data);
 
       gtk_widget_show (preview);

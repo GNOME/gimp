@@ -69,8 +69,8 @@ libapptools_la_SOURCES = \
 ##	paint_core.c		\
 ##	paint_core.h		\
 ##	paint_core_kernels.h	\
-##	paint_options.c		\
-##	paint_options.h		\
+	paint_options.c		\
+	paint_options.h		\
 ##	pencil.c		\
 ##	pencil.h		\
 ##	perspective_tool.c	\
@@ -84,8 +84,8 @@ libapptools_la_SOURCES = \
 ##	rotate_tool.h		\
 ##	scale_tool.c		\
 ##	scale_tool.h		\
-##	selection_options.c	\
-##	selection_options.h	\
+	selection_options.c	\
+	selection_options.h	\
 ##	shear_tool.c		\
 ##	shear_tool.h		\
 ##	smudge.c		\
@@ -100,8 +100,8 @@ libapptools_la_SOURCES = \
 	tool_manager.h		\
 	tool_options.c		\
 	tool_options.h		\
-##	tool_options_dialog.c	\
-##	tool_options_dialog.h	\
+	tool_options_dialog.c	\
+	tool_options_dialog.h	\
 	tools.c			
 ##	transform_core.c	\
 ##	transform_core.h	\

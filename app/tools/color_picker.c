@@ -153,9 +153,10 @@ void
 gimp_color_picker_register (void)
 {
   tool_manager_register_tool (GIMP_TYPE_COLOR_PICKER,
-			      N_("Color Picker"),
+			      "gimp:color_picker_tool",
+			      _("Color Picker"),
+			      _("Pick colors from the image"),
 			      N_("/Tools/Color Picker"), "O",
-			      N_("Pick colors from the image"),
 			      NULL, "tools/color_picker.html",
 			      (const gchar **) colorpicker_bits);
 }
@@ -218,8 +219,8 @@ gimp_color_picker_init (GimpColorPicker *color_picker)
     {
       color_picker_options = color_picker_options_new ();
 
-      /* OBSOLETE? */
-      /* tools_register (COLOR_PICKER, (ToolOptions *) color_picker_options); */
+      tool_manager_register_tool_options (GIMP_TYPE_COLOR_PICKER,
+					  (ToolOptions *) color_picker_options);
     }
 
   color_picker->core = draw_core_new (colorpicker_draw);
@@ -282,7 +283,6 @@ color_picker_options_new (void)
   /*  the new color picker tool options structure  */
   options = g_new (ColorPickerOptions, 1);
   tool_options_init ((ToolOptions *) options,
-		     _("Color Picker"),
 		     color_picker_options_reset);
   options->sample_merged  = options->sample_merged_d  = FALSE;
   options->sample_average = options->sample_average_d = FALSE;

@@ -23,30 +23,27 @@
 #include "apptypes.h"
 
 #include "tool_options.h"
-#include "tool.h"
 
 #include "libgimp/gimpintl.h"
 
 
 void
 tool_options_init (ToolOptions          *options,
-		   const gchar          *title,
 		   ToolOptionsResetFunc  reset_func)
 {
   options->main_vbox  = gtk_vbox_new (FALSE, 2);
-  options->title      = g_strdup (title);
   options->reset_func = reset_func;
 }
 
 ToolOptions *
-tool_options_new (const gchar *title)
+tool_options_new (void)
 {
   ToolOptions *options;
 
   GtkWidget *label;
 
-  options = g_new (ToolOptions, 1);
-  tool_options_init (options, title, NULL);
+  options = g_new0 (ToolOptions, 1);
+  tool_options_init (options, NULL);
 
   label = gtk_label_new (_("This tool has no options."));
   gtk_box_pack_start (GTK_BOX (options->main_vbox), label, FALSE, FALSE, 6);

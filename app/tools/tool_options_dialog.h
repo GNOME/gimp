@@ -24,10 +24,7 @@ void   tool_options_dialog_new   (void);
 void   tool_options_dialog_show  (void);
 void   tool_options_dialog_free  (void);
 
-void   tool_options_register     (ToolType     tool_type,
-				  ToolOptions *tool_options);
-void   tool_options_show         (ToolType     tool_type);
-void   tool_options_hide         (ToolType     tool_type);
+void   tool_options_dialog_add   (ToolOptions *tool_options);
 
 
 #endif  /*  __TOOL_OPTIONS_DIALOG_H__  */
