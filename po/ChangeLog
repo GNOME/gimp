@@ -1,3 +1,7 @@
+2004-11-15  Jan Morén  <jan.moren@lucs.lu.se>
+
+	* sv.po: Updated Swedish translation.
+
 2004-11-14  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added app/dialogs/print-size-dialog.c.

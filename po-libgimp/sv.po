@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-11-02 12:32+0900\n"
-"PO-Revision-Date: 2004-11-02 12:45+0900\n"
+"POT-Creation-Date: 2004-11-15 10:30+0900\n"
+"PO-Revision-Date: 2004-11-15 10:32+0900\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -194,7 +194,7 @@ msgstr "Typsnittsval"
 msgid "Gradient Selection"
 msgstr "Gradientval"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
 msgstr "(Tom)"
 
@@ -375,21 +375,21 @@ msgstr "Kunde inte skapa miniatyrbildskatalog \"%s\"."
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Kunde inte skapa miniaturbild för %s: %s"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
-msgstr "/_Förgrundsfärg"
+#: libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "_Förgrundsfärg"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
-msgstr "/_Bakgrundsfärg"
+#: libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "_Bakgrundsfärg"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
-msgstr "/_Svart"
+#: libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "_Svart"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
-msgstr "/_Vit"
+#: libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "_Vit"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -522,66 +522,70 @@ msgid "Anchor"
 msgstr "Ankare"
 
 #: libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "C_entrera"
+
+#: libgimpwidgets/gimpstock.c:115
 msgid "_Duplicate"
 msgstr "_Duplicera"
 
-#: libgimpwidgets/gimpstock.c:115
+#: libgimpwidgets/gimpstock.c:116
 msgid "_Edit"
 msgstr "_Redigera"
 
-#: libgimpwidgets/gimpstock.c:116
+#: libgimpwidgets/gimpstock.c:117
 msgid "Linked"
 msgstr "Länkad"
 
-#: libgimpwidgets/gimpstock.c:117
+#: libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
 msgstr "Klistra in som ny"
 
-#: libgimpwidgets/gimpstock.c:118
+#: libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
 msgstr "Klistra in i"
 
-#: libgimpwidgets/gimpstock.c:119
+#: libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
 msgstr "_Återställ"
 
-#: libgimpwidgets/gimpstock.c:120
+#: libgimpwidgets/gimpstock.c:121
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
+#: libgimpwidgets/gimpstock.c:154 libgimpwidgets/gimpstock.c:158
 msgid "_Stroke"
 msgstr "_Stryk"
 
-#: libgimpwidgets/gimpstock.c:169
+#: libgimpwidgets/gimpstock.c:170
 msgid "L_etter Spacing"
 msgstr "_Teckenmellanrum"
 
-#: libgimpwidgets/gimpstock.c:170
+#: libgimpwidgets/gimpstock.c:171
 msgid "L_ine Spacing"
 msgstr "_Radmellanrum"
 
-#: libgimpwidgets/gimpstock.c:185
+#: libgimpwidgets/gimpstock.c:187
 msgid "_Resize"
 msgstr "_Ändra storlek"
 
-#: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
+#: libgimpwidgets/gimpstock.c:188 libgimpwidgets/gimpstock.c:292
 msgid "_Scale"
 msgstr "_Skala"
 
-#: libgimpwidgets/gimpstock.c:269
+#: libgimpwidgets/gimpstock.c:271
 msgid "Crop"
 msgstr "Beskär"
 
-#: libgimpwidgets/gimpstock.c:286
+#: libgimpwidgets/gimpstock.c:288
 msgid "_Transform"
 msgstr "_Transformera"
 
-#: libgimpwidgets/gimpstock.c:289
+#: libgimpwidgets/gimpstock.c:291
 msgid "_Rotate"
 msgstr "_Rotera"
 
-#: libgimpwidgets/gimpstock.c:291
+#: libgimpwidgets/gimpstock.c:293
 msgid "_Shear"
 msgstr "_Luta"
 
