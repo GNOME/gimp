@@ -2,7 +2,7 @@
 gimpui
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Common user interface functions.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
@@ -13,4 +13,13 @@ gimpui
 <para>
 
 </para>
+
+<!-- ##### FUNCTION gimp_ui_init ##### -->
+<para>
+
+</para>
+
+@prog_name: 
+@preview: 
+
 
