@@ -1,3 +1,9 @@
+Wed Mar 22 18:35:25 CST 2000  Seth Burgess <sjburges@gimp.org>
+	
+	* app/gdisplay_ops.c: Applied Thomas Koester's patch for
+	shrink-wrapping/resizing.  He tried it with several wm's
+	and it seems to work... report any problems.
+
 Wed Mar 22 15:43:02 GMT 2000  Adam D. Moss <adam@gimp.org>
 
 	* gimprc.in: enable perfect-mouse in default gimprc.

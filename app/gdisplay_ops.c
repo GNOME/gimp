@@ -17,6 +17,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
+#include <gtk/gtkmain.h>
 
 #include "appenv.h"
 #include "colormaps.h"
@@ -137,14 +138,7 @@ gdisplay_close_window (GDisplay *gdisp,
 void
 gdisplay_shrink_wrap (GDisplay *gdisp)
 {
-  /* FIXME: Still not perfect - have to hide and show the window to 
-   * get it to work.  Adding a queue_resize to the shell doesn't 
-   * seem to help. Anyone have any good ideas here? 
-   *
-   * Also: if an image width is 1 pixel shy, it will eat up all width
-   * of the screen.  This can be non-good for some window managers; should
-   * we attempt to keep that from happening?
-   *
+  /* 
    * I'm pretty sure this assumes that the current size is < display size
    * Is this a valid assumption? 
    */
@@ -189,11 +183,11 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
           width = gdisp->statusarea->requisition.width; 
         }
       
-      /* FIXME: Have to hide/reshow here */
-      gtk_widget_hide(gdisp->shell); 
+      while (gtk_events_pending())
+	gtk_main_iteration();
+
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
 	                    width, height);
-      gtk_widget_show(gdisp->shell); 
 #undef RESIZE_DEBUG
 #ifdef RESIZE_DEBUG
       printf("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
@@ -221,12 +215,12 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
         { 
           width = gdisp->statusarea->requisition.width; 
         }
-
-      /* I don't know why, but if I don't hide the window, it doesn't work */
-      gtk_widget_hide(gdisp->shell); 
+      
+      while (gtk_events_pending())
+	gtk_main_iteration();
+      
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
 	                    width, height);
-      gtk_widget_show(gdisp->shell); 
 #ifdef RESIZE_DEBUG
       printf("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
 	     width, height,
@@ -282,14 +276,13 @@ gdisplay_resize_image (GDisplay *gdisp)
       gdisp->disp_width = width;
       gdisp->disp_height = height;
 
-      if (GTK_WIDGET_VISIBLE (gdisp->canvas))
-	gtk_widget_hide (gdisp->canvas);
-
+      while (gtk_events_pending())
+	gtk_main_iteration();
+      
       gtk_widget_set_usize (gdisp->canvas,
 			    gdisp->disp_width,
 			    gdisp->disp_height);
 
-      gtk_widget_show (gdisp->canvas);
     }
 
   return 1;
