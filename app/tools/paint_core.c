@@ -25,6 +25,7 @@
 #include "errors.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
+#include "gimprc.h"
 #include "layers_dialog.h"
 #include "paint_funcs.h"
 #include "paint_core.h"
@@ -181,14 +182,15 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   /*  pause the current selection and grab the pointer  */
   gdisplays_selection_visibility (gdisp->gimage, SelectionPause);
 
-  /* add motion memory if you press mod1 first */
-  if (bevent->state & GDK_MOD1_MASK)
+  /* add motion memory if you press mod1 first ^ perfectmouse */
+  if (((bevent->state & GDK_MOD1_MASK) != 0) != (perfectmouse != 0))
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		      GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   else
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   
   /*  Let the specific painting function initialize itself  */

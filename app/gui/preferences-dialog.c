@@ -72,6 +72,7 @@ static void file_prefs_clear_session_info_callback (GtkWidget *, gpointer);
 static   int          last_type = RGB;
 
 static   GtkWidget   *prefs_dlg = NULL;
+static   int          old_perfectmouse;
 static   int          old_transparency_type;
 static   int          old_transparency_size;
 static   int          old_levels_of_undo;
@@ -316,6 +317,8 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "default-image-type");
   if (preview_size != old_preview_size)
     update = g_list_append (update, "preview-size");
+  if (perfectmouse != old_perfectmouse)
+    update = g_list_append (update, "perfect-mouse");
   if (transparency_type != old_transparency_type)
     update = g_list_append (update, "transparency-type");
   if (transparency_size != old_transparency_size)
@@ -438,6 +441,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   allow_resize_windows = old_allow_resize_windows;
   auto_save = old_auto_save;
   no_cursor_updating = old_no_cursor_updating;
+  perfectmouse = old_perfectmouse;
   show_tool_tips = old_show_tool_tips;
   cubic_interpolation = old_cubic_interpolation;
   confirm_on_close = old_confirm_on_close;
@@ -445,6 +449,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   default_width = old_default_width;
   default_height = old_default_height;
   default_type = old_default_type;
+
   if (preview_size != old_preview_size)
     {
       lc_dialog_rebuild (old_preview_size);
@@ -490,6 +495,8 @@ file_prefs_toggle_callback (GtkWidget *widget,
     auto_save = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &no_cursor_updating)
     no_cursor_updating = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data == &perfectmouse)
+    perfectmouse = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &show_tool_tips)
     show_tool_tips = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data == &cubic_interpolation)
@@ -696,6 +703,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 	  edit_cycled_marching_ants = cycled_marching_ants;
 	  edit_last_opened_size = last_opened_size;
 	}
+      old_perfectmouse = perfectmouse;
       old_transparency_type = transparency_type;
       old_transparency_size = transparency_size;
       old_levels_of_undo = levels_of_undo;
@@ -972,27 +980,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_container_border_width (GTK_CONTAINER (vbox), 1);
       gtk_container_add (GTK_CONTAINER (out_frame), vbox);
       gtk_widget_show (vbox);
-      
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-      gtk_widget_show (hbox);
 
-      label = gtk_label_new ("Levels of undo:");
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      adj = (GtkAdjustment *) gtk_adjustment_new (levels_of_undo, 0.0,
-                                                  255.0, 1.0, 5.0, 0.0);
-      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
-      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
-      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
-      gtk_widget_set_usize (spinbutton, 75, 0);
-      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
-                          (GtkSignalFunc) file_prefs_spinbutton_callback,
-                          &levels_of_undo);
-      gtk_widget_show (spinbutton);
-      
       button = gtk_check_button_new_with_label("Resize window on zoom");
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    allow_resize_windows);
@@ -1000,6 +988,15 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
                           &allow_resize_windows);
+      gtk_widget_show (button);
+      
+      button = gtk_check_button_new_with_label("Perfect-but-slow pointer tracking");
+      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+                                   perfectmouse);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (button), "toggled",
+                          (GtkSignalFunc) file_prefs_toggle_callback,
+                          &perfectmouse);
       gtk_widget_show (button);
       
       /* Don't show the Auto-save button until we really 
@@ -1033,6 +1030,26 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &show_tool_tips);
       gtk_widget_show (button);
 
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new ("Levels of undo:");
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      adj = (GtkAdjustment *) gtk_adjustment_new (levels_of_undo, 0.0,
+                                                  255.0, 1.0, 5.0, 0.0);
+      spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(spinbutton), GTK_SHADOW_NONE);
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(spinbutton), TRUE);
+      gtk_widget_set_usize (spinbutton, 75, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (spinbutton), "changed",
+                          (GtkSignalFunc) file_prefs_spinbutton_callback,
+                          &levels_of_undo);
+      gtk_widget_show (spinbutton);
+      
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);

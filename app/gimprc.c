@@ -94,8 +94,9 @@ int       tile_cache_size = 4194304;  /* 4 MB */
 int       marching_speed = 150;   /* 150 ms */
 double    gamma_val = 1.0;
 int       transparency_type = 1;  /* Mid-Tone Checks */
+int       perfectmouse = 0;       /* off (fast and sloppy) */
 int       transparency_size = 1;  /* Medium sized */
-int       levels_of_undo = 1;     /* 1 level of undo default */
+int       levels_of_undo = 2;     /* 2 levels of undo default */
 int       last_opened_size = 4;   /* 4 documents in the MRU list */
 int       color_cube_shades[4] = {6, 7, 4, 24};
 int       install_cmap = 0;
@@ -198,6 +199,7 @@ static ParseFunc funcs[] =
   { "last-opened-size",      TT_INT,        &last_opened_size, NULL },
   { "undo-levels",           TT_INT,        &levels_of_undo, NULL },
   { "transparency-type",     TT_INT,        &transparency_type, NULL },
+  { "perfect-mouse",         TT_BOOLEAN,    &perfectmouse, NULL },
   { "transparency-size",     TT_INT,        &transparency_size, NULL },
   { "install-colormap",      TT_BOOLEAN,    &install_cmap, NULL },
   { "colormap-cycling",      TT_BOOLEAN,    &cycled_marching_ants, NULL },

@@ -20,6 +20,7 @@
 #include "draw_core.h"
 #include "gimage_mask.h"
 #include "gimpbrushlist.h"
+#include "gimprc.h"
 #include "ink.h"
 #include "tools.h"
 #include "undo.h"
@@ -151,10 +152,10 @@ create_ink_options ()
   /*  the new options structure  */
   options = (InkOptions *) g_malloc (sizeof (InkOptions));
 
-  options->size = 8.;
-  options->sensitivity = 1.;
-  options->aspect = 1.;
-  options->angle = 0.;
+  options->size = 3.0;
+  options->sensitivity = 1.0;
+  options->aspect = 1.0;
+  options->angle = 0.0;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
@@ -165,7 +166,7 @@ create_ink_options ()
   label = gtk_label_new ("Size:");
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
   
-  adj = GTK_ADJUSTMENT (gtk_adjustment_new (4.0, 0.0, 25.0, 1.0, 10.0, 0.0));
+  adj = GTK_ADJUSTMENT (gtk_adjustment_new (3.0, 0.0, 20.0, 1.0, 5.0, 0.0));
   slider = gtk_hscale_new (adj);
   gtk_box_pack_start (GTK_BOX (hbox), slider, TRUE, TRUE, 0);
   gtk_scale_set_value_pos (GTK_SCALE (slider), GTK_POS_TOP);
@@ -447,14 +448,15 @@ ink_button_press (Tool           *tool,
   /*  pause the current selection and grab the pointer  */
   gdisplays_selection_visibility (gdisp->gimage, SelectionPause);
 
-  /* add motion memory if you press mod1 first */
-  if (bevent->state & GDK_MOD1_MASK)
+  /* add motion memory if you press mod1 first ^ perfectmouse */
+  if (((bevent->state & GDK_MOD1_MASK) != 0) != (perfectmouse != 0))
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		      GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   else
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK |
+		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
   
   tool->gdisp_ptr = gdisp_ptr;

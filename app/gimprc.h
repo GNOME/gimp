@@ -39,6 +39,7 @@ extern int       marching_speed;
 extern int       last_opened_size;
 extern double    gamma_val;
 extern int       transparency_type;
+extern int       perfectmouse;
 extern int       transparency_size;
 extern int       levels_of_undo;
 extern int       color_cube_shades[];
