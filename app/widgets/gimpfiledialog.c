@@ -506,7 +506,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
           gchar       *label;
           GString     *str;
           GSList      *ext;
-          gboolean     first = TRUE;
+          gint         i;
 
           domain = plug_ins_locale_domain (gimp, file_proc->prog, NULL);
 
@@ -517,7 +517,12 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
 
           filter = gtk_file_filter_new ();
 
-          for (ext = file_proc->extensions_list; ext; ext = g_slist_next (ext))
+/*  an arbitrary limit to keep the file dialog from becoming too wide  */
+#define MAX_EXTENSIONS  4
+
+          for (ext = file_proc->extensions_list, i = 0;
+               ext;
+               ext = g_slist_next (ext), i++)
             {
               const gchar *extension = ext->data;
               gchar       *pattern;
@@ -526,14 +531,29 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
               gtk_file_filter_add_pattern (filter, pattern);
               g_free (pattern);
 
-              if (first)
+              if (i == 0)
                 {
-                  g_string_append (str, " (*.");
-                  first = FALSE;
+                  g_string_append (str, " (");
+                }
+              else if (i <= MAX_EXTENSIONS)
+                {
+                  g_string_append (str, ", ");
                 }
 
-              g_string_append (str, extension);
-              g_string_append (str, ext->next ? ", *." : ")");
+              if (i < MAX_EXTENSIONS)
+                {
+                  g_string_append (str, "*.");
+                  g_string_append (str, extension);
+                }
+              else if (i == MAX_EXTENSIONS)
+                {
+                  g_string_append (str, "...");
+                }
+
+              if (! ext->next)
+                {
+                  g_string_append (str, ")");
+                }
             }
 
           gtk_file_filter_set_name (filter, str->str);

@@ -1,3 +1,9 @@
+2004-11-15  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_add_filters):
+	limit the number of file extensions that are added to the file
+	filter menu to keep the file dialog from growing too wide.
+
 2004-11-15  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/display/gimpdisplayshell-preview.c: Further optimization of
