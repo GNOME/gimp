@@ -1,3 +1,7 @@
+Thu Sep 28 16:03:09 CEST 2000  Daniel Egger  <egger@suse.de>
+
+	* app/menus.c: Simplify a few help paths.
+
 Wed Sep 27 12:54:20 PDT 2000 Manish Singh <yosh@gimp.org>
 
 	* tips/gimp_tips.it.txt: updates from Daniele Medri <madrid@linux.it>

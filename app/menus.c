@@ -96,7 +96,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/New..."), "<control>N", file_new_cmd_callback, 0 },
     "file/dialogs/file_new.html", NULL },
   { { N_("/File/Open..."), "<control>O", file_open_cmd_callback, 0 },
-    "file/open/dialogs/file_open.html", NULL },
+    "file/dialogs/file_open.html", NULL },
 
   /*  <Toolbox>/File/Acquire  */
 
@@ -202,11 +202,11 @@ static GimpItemFactoryEntry image_entries[] =
   { { N_("/File/New..."), "<control>N", file_new_cmd_callback, 1 },
     "file/dialogs/file_new.html", NULL },
   { { N_("/File/Open..."), "<control>O", file_open_cmd_callback, 0 },
-    "file/open/dialogs/file_open.html", NULL },
+    "file/dialogs/file_open.html", NULL },
   { { N_("/File/Save"), "<control>S", file_save_cmd_callback, 0 },
-    "file/save/dialogs/file_save.html", NULL },
+    "file/dialogs/file_save.html", NULL },
   { { N_("/File/Save As..."), NULL, file_save_as_cmd_callback, 0 },
-    "file/save/dialogs/file_save.html", NULL },
+    "file/dialogs/file_save.html", NULL },
   { { N_("/File/Revert"), NULL, file_revert_cmd_callback, 0 },
     "file/revert.html", NULL },
 
