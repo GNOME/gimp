@@ -200,7 +200,7 @@ gimp_dock_class_init (GimpDockClass *klass)
   gtk_widget_class_install_style_property (widget_class,
                                            g_param_spec_int ("default_height",
                                                              NULL, NULL,
-                                                             0,
+                                                             -1,
                                                              G_MAXINT,
                                                              DEFAULT_DOCK_HEIGHT,
                                                              G_PARAM_READABLE));

@@ -1,3 +1,9 @@
+2004-03-22  Simon Budig  <simon@gimp.org>
+
+	* app/widgets/gimpdock.c: set the minimum of the
+	"default_heigt" property range to -1, this enables users
+	to disable this feature via gtkrc.
+
 2004-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdock.c: added a style property "default_height"
