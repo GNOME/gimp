@@ -27,19 +27,23 @@
 #include "gui/gui-types.h"
 
 
-typedef struct _GimpDisplayShellVisibility GimpDisplayShellVisibility;
+typedef struct _GimpDisplayShellAppearance GimpDisplayShellAppearance;
 
-struct _GimpDisplayShellVisibility
+struct _GimpDisplayShellAppearance
 {
-  gboolean selection;
-  gboolean active_layer;
-  gboolean guides;
-  gboolean grid;
+  gboolean               selection;
+  gboolean               active_layer;
+  gboolean               guides;
+  gboolean               grid;
 
-  gboolean menubar;
-  gboolean rulers;
-  gboolean scrollbars;
-  gboolean statusbar;
+  gboolean               menubar;
+  gboolean               rulers;
+  gboolean               scrollbars;
+  gboolean               statusbar;
+
+  GimpDisplayPaddingMode padding_mode;
+  GimpRGB                padding_color;
+  gboolean               padding_mode_set;
 };
 
 
@@ -147,10 +151,6 @@ struct _GimpDisplayShell
   gint              cursor_y;          /* software cursor Y value             */
 
   GtkWidget        *padding_button;    /* GimpColorPanel in the NE corner     */
-  GimpDisplayPaddingMode padding_mode;
-  gboolean          padding_mode_set;
-  GimpRGB           padding_color;     /* color of the empty around the image */
-
   GtkWidget        *nav_ebox;          /* GtkEventBox on the SE corner        */
 
   GtkWidget        *warning_dialog;    /*  close warning dialog               */
@@ -168,8 +168,8 @@ struct _GimpDisplayShell
 
   GdkWindowState    window_state;      /* for fullscreen display              */
 
-  GimpDisplayShellVisibility visibility;
-  GimpDisplayShellVisibility fullscreen_visibility;  
+  GimpDisplayShellAppearance appearance;
+  GimpDisplayShellAppearance fullscreen_appearance;
 };
 
 struct _GimpDisplayShellClass

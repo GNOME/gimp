@@ -248,9 +248,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_y              = 0;
 
   shell->padding_button        = NULL;
-  shell->padding_mode          = GIMP_DISPLAY_PADDING_MODE_DEFAULT;
-  shell->padding_mode_set      = FALSE;
-  gimp_rgba_set (&shell->padding_color, 1.0, 1.0, 1.0, 1.0);
+  shell->nav_ebox              = NULL;
 
   shell->warning_dialog        = NULL;
   shell->info_dialog           = NULL;
@@ -266,23 +264,30 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->window_state          = 0;
 
-  shell->visibility.selection    = TRUE;
-  shell->visibility.active_layer = TRUE;
-  shell->visibility.guides       = TRUE;
-  shell->visibility.grid         = TRUE;
-  shell->visibility.menubar      = FALSE;
-  shell->visibility.rulers       = TRUE;
-  shell->visibility.scrollbars   = TRUE;
-  shell->visibility.statusbar    = TRUE;
+  shell->appearance.selection    = TRUE;
+  shell->appearance.active_layer = TRUE;
+  shell->appearance.guides       = TRUE;
+  shell->appearance.grid         = TRUE;
+  shell->appearance.menubar      = TRUE;
+  shell->appearance.rulers       = TRUE;
+  shell->appearance.scrollbars   = TRUE;
+  shell->appearance.statusbar    = TRUE;
+  shell->appearance.padding_mode = GIMP_DISPLAY_PADDING_MODE_DEFAULT;
+  gimp_rgba_set (&shell->appearance.padding_color, 1.0, 1.0, 1.0, 1.0);
+  shell->appearance.padding_mode_set = FALSE;
 
-  shell->fullscreen_visibility.selection    = TRUE;
-  shell->fullscreen_visibility.active_layer = TRUE;
-  shell->fullscreen_visibility.guides       = TRUE;
-  shell->fullscreen_visibility.grid         = TRUE;
-  shell->fullscreen_visibility.menubar      = FALSE;
-  shell->fullscreen_visibility.rulers       = FALSE;
-  shell->fullscreen_visibility.scrollbars   = FALSE;
-  shell->fullscreen_visibility.statusbar    = FALSE;
+  shell->fullscreen_appearance.selection    = TRUE;
+  shell->fullscreen_appearance.active_layer = TRUE;
+  shell->fullscreen_appearance.guides       = TRUE;
+  shell->fullscreen_appearance.grid         = TRUE;
+  shell->fullscreen_appearance.menubar      = FALSE;
+  shell->fullscreen_appearance.rulers       = FALSE;
+  shell->fullscreen_appearance.scrollbars   = FALSE;
+  shell->fullscreen_appearance.statusbar    = FALSE;
+  shell->fullscreen_appearance.padding_mode = GIMP_DISPLAY_PADDING_MODE_CUSTOM;
+  gimp_rgba_set (&shell->fullscreen_appearance.padding_color,
+                 0.0, 0.0, 0.0, 1.0);
+  shell->fullscreen_appearance.padding_mode_set = FALSE;
 
   gtk_window_set_wmclass (GTK_WINDOW (shell), "image_window", "Gimp");
   gtk_window_set_resizable (GTK_WINDOW (shell), TRUE);
@@ -507,10 +512,19 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   shell->dot_for_dot = config->default_dot_for_dot;
 
-  shell->visibility.menubar    = config->show_menubar;
-  shell->visibility.rulers     = config->show_rulers;
-  shell->visibility.scrollbars = config->show_scrollbars;
-  shell->visibility.statusbar  = config->show_statusbar;
+  shell->appearance.menubar       = config->show_menubar;
+  shell->appearance.rulers        = config->show_rulers;
+  shell->appearance.scrollbars    = config->show_scrollbars;
+  shell->appearance.statusbar     = config->show_statusbar;
+  shell->appearance.padding_mode  = config->canvas_padding_mode;
+  shell->appearance.padding_color = config->canvas_padding_color;
+
+  shell->fullscreen_appearance.menubar       = config->fs_show_menubar;
+  shell->fullscreen_appearance.rulers        = config->fs_show_rulers;
+  shell->fullscreen_appearance.scrollbars    = config->fs_show_scrollbars;
+  shell->fullscreen_appearance.statusbar     = config->fs_show_statusbar;
+  shell->fullscreen_appearance.padding_mode  = config->fs_canvas_padding_mode;
+  shell->fullscreen_appearance.padding_color = config->fs_canvas_padding_color;
 
   /* adjust the initial scale -- so that window fits on screen the 75%
    * value is the same as in gimp_display_shell_shrink_wrap. It
@@ -525,7 +539,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   n_width  = SCALEX (shell, image_width);
   n_height = SCALEX (shell, image_height);
 
-  if (config->initial_zoom_to_fit) 
+  if (config->initial_zoom_to_fit)
     {
       /*  Limit to the size of the screen...  */
       while (n_width > s_width || n_height > s_height)
@@ -536,7 +550,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
             if (scalesrc < 0xFF)
               scalesrc++;
 
-          n_width  = (image_width * 
+          n_width  = (image_width *
                       (scaledest * SCREEN_XRES (shell)) /
                       (scalesrc * gdisp->gimage->xresolution));
 
@@ -547,12 +561,12 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
           if (scaledest == 1 && scalesrc == 0xFF)
             break;
         }
-    } 
-  else 
+    }
+  else
     {
-      /* Set up size like above, but do not zoom to fit. 
+      /* Set up size like above, but do not zoom to fit.
 	 Useful when working on large images. */
-    
+
       if (n_width > s_width)
 	n_width = s_width;
 
@@ -602,12 +616,12 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
    *     |      |      |      +-- hruler
    *     |      |      |      +-- vruler
    *     |      |      |      +-- canvas
-   *     |      |      |     
+   *     |      |      |
    *     |      |      +-- right_vbox
    *     |      |             |
    *     |      |             +-- padding_button
    *     |      |             +-- vscrollbar
-   *     |      |    
+   *     |      |
    *     |      +-- lower_hbox
    *     |             |
    *     |             +-- qmask
@@ -628,7 +642,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
 
-  if (shell->visibility.menubar)
+  if (shell->appearance.menubar)
     gtk_widget_show (menubar);
 
   /*  active display callback  */
@@ -762,7 +776,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  create the contents of the right_vbox  *********************************/
   shell->padding_button = gimp_color_panel_new (_("Set Canvas Padding Color"),
-                                                &shell->padding_color,
+                                                &shell->appearance.padding_color,
                                                 GIMP_COLOR_AREA_FLAT,
                                                 15, 15);
   GTK_WIDGET_UNSET_FLAGS (shell->padding_button, GTK_CAN_FOCUS);
@@ -836,7 +850,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
   shell->nav_ebox = gtk_event_box_new ();
 
   image = gtk_image_new_from_stock (GIMP_STOCK_NAVIGATION, GTK_ICON_SIZE_MENU);
-  gtk_container_add (GTK_CONTAINER (shell->nav_ebox), image); 
+  gtk_container_add (GTK_CONTAINER (shell->nav_ebox), image);
   gtk_widget_show (image);
 
   g_signal_connect (shell->nav_ebox, "button_press_event",
@@ -879,7 +893,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   /*  show everything  *******************************************************/
 
-  if (shell->visibility.rulers)
+  if (shell->appearance.rulers)
     {
       gtk_widget_show (shell->origin);
       gtk_widget_show (shell->hrule);
@@ -888,7 +902,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
 
   gtk_widget_show (shell->canvas);
 
-  if (shell->visibility.scrollbars)
+  if (shell->appearance.scrollbars)
     {
       gtk_widget_show (shell->vsb);
       gtk_widget_show (shell->hsb);
@@ -897,7 +911,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
       gtk_widget_show (shell->nav_ebox);
     }
 
-  if (shell->visibility.statusbar)
+  if (shell->appearance.statusbar)
     gtk_widget_show (shell->statusbar);
 
   gtk_widget_show (main_vbox);
@@ -993,7 +1007,7 @@ gimp_display_shell_snap_coords (GimpDisplayShell *shell,
     {
       snap_to_guides = TRUE;
     }
-      
+
   if (gimp_display_shell_get_show_grid (shell)    &&
       gimp_display_shell_get_snap_to_grid (shell) &&
       shell->gdisp->gimage->grid)
@@ -1625,8 +1639,8 @@ gimp_display_shell_shrink_wrap (GimpDisplayShell *shell)
 
   if (resize)
     {
-      if (width < shell->statusbar->requisition.width) 
-        width = shell->statusbar->requisition.width; 
+      if (width < shell->statusbar->requisition.width)
+        width = shell->statusbar->requisition.width;
 
       gtk_window_resize (GTK_WINDOW (shell),
                          width  + border_x,

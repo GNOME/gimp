@@ -67,23 +67,29 @@ enum
   PROP_CURSOR_UPDATING,
   PROP_IMAGE_TITLE_FORMAT,
   PROP_IMAGE_STATUS_FORMAT,
-  PROP_SHOW_MENUBAR,
-  PROP_SHOW_RULERS,
-  PROP_SHOW_SCROLLBARS,
-  PROP_SHOW_STATUSBAR,
   PROP_CONFIRM_ON_CLOSE,
   PROP_MONITOR_XRESOLUTION,
   PROP_MONITOR_YRESOLUTION,
   PROP_MONITOR_RES_FROM_GDK,
   PROP_NAV_PREVIEW_SIZE,
+  PROP_SHOW_MENUBAR,
+  PROP_SHOW_RULERS,
+  PROP_SHOW_SCROLLBARS,
+  PROP_SHOW_STATUSBAR,
   PROP_CANVAS_PADDING_MODE,
-  PROP_CANVAS_PADDING_COLOR
+  PROP_CANVAS_PADDING_COLOR,
+  PROP_FS_SHOW_MENUBAR,
+  PROP_FS_SHOW_RULERS,
+  PROP_FS_SHOW_SCROLLBARS,
+  PROP_FS_SHOW_STATUSBAR,
+  PROP_FS_CANVAS_PADDING_MODE,
+  PROP_FS_CANVAS_PADDING_COLOR
 };
 
 static GObjectClass *parent_class = NULL;
 
 
-GType 
+GType
 gimp_display_config_get_type (void)
 {
   static GType config_type = 0;
@@ -103,8 +109,8 @@ gimp_display_config_get_type (void)
 	NULL            /* instance_init  */
       };
 
-      config_type = g_type_register_static (GIMP_TYPE_CORE_CONFIG, 
-                                            "GimpDisplayConfig", 
+      config_type = g_type_register_static (GIMP_TYPE_CORE_CONFIG,
+                                            "GimpDisplayConfig",
                                             &config_info, 0);
     }
 
@@ -116,6 +122,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class;
   GimpRGB       white;
+  GimpRGB       black;
 
   parent_class = g_type_class_peek_parent (klass);
 
@@ -126,6 +133,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   object_class->get_property = gimp_display_config_get_property;
 
   gimp_rgba_set (&white, 1.0, 1.0, 1.0, 1.0);
+  gimp_rgba_set (&black, 0.0, 0.0, 0.0, 1.0);
 
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_MARCHING_ANTS_SPEED,
                                 "marching-ants-speed",
@@ -179,22 +187,6 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    IMAGE_STATUS_FORMAT_BLURB,
                                    DEFAULT_IMAGE_STATUS_FORMAT,
                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
-                                    "show-menubar", SHOW_MENUBAR_BLURB,
-                                    TRUE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
-                                    "show-rulers", SHOW_RULERS_BLURB,
-                                    TRUE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
-                                    "show-scrollbars", SHOW_SCROLLBARS_BLURB,
-                                    TRUE,
-                                    0);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
-                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
-                                    TRUE,
-                                    0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CONFIRM_ON_CLOSE,
                                     "confirm-on-close", CONFIRM_ON_CLOSE_BLURB,
                                     TRUE,
@@ -220,6 +212,23 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  GIMP_TYPE_PREVIEW_SIZE,
                                  GIMP_PREVIEW_SIZE_MEDIUM,
                                  0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_MENUBAR,
+                                    "show-menubar", SHOW_MENUBAR_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_RULERS,
+                                    "show-rulers", SHOW_RULERS_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_SCROLLBARS,
+                                    "show-scrollbars", SHOW_SCROLLBARS_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_STATUSBAR,
+                                    "show-statusbar", SHOW_STATUSBAR_BLURB,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CANVAS_PADDING_MODE,
                                  "canvas-padding-mode",
                                  CANVAS_PADDING_MODE_BLURB,
@@ -231,6 +240,38 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                   CANVAS_PADDING_COLOR_BLURB,
                                   &white,
                                   0);
+
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_MENUBAR,
+                                    "fullscreen-show-menubar",
+                                    FS_SHOW_MENUBAR_BLURB,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_RULERS,
+                                    "fullscreen-show-rulers",
+                                    FS_SHOW_RULERS_BLURB,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_SCROLLBARS,
+                                    "fullscreen-show-scrollbars",
+                                    FS_SHOW_SCROLLBARS_BLURB,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_FS_SHOW_STATUSBAR,
+                                    "fullscreen-show-statusbar",
+                                    FS_SHOW_STATUSBAR_BLURB,
+                                    FALSE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_FS_CANVAS_PADDING_MODE,
+                                 "fullscreen-canvas-padding-mode",
+                                 FS_CANVAS_PADDING_MODE_BLURB,
+                                 GIMP_TYPE_DISPLAY_PADDING_MODE,
+                                 GIMP_DISPLAY_PADDING_MODE_CUSTOM,
+                                 0);
+  GIMP_CONFIG_INSTALL_PROP_COLOR (object_class, PROP_FS_CANVAS_PADDING_COLOR,
+                                  "fullscreen-canvas-padding-color",
+                                  FS_CANVAS_PADDING_COLOR_BLURB,
+                                  &black,
+                                  0);
 }
 
 static void
@@ -239,7 +280,7 @@ gimp_display_config_finalize (GObject *object)
   GimpDisplayConfig *display_config;
 
   display_config = GIMP_DISPLAY_CONFIG (object);
-  
+
   g_free (display_config->image_title_format);
   g_free (display_config->image_status_format);
 
@@ -293,18 +334,6 @@ gimp_display_config_set_property (GObject      *object,
       g_free (display_config->image_status_format);
       display_config->image_status_format = g_value_dup_string (value);
       break;
-    case PROP_SHOW_MENUBAR:
-      display_config->show_menubar = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_RULERS:
-      display_config->show_rulers = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_SCROLLBARS:
-      display_config->show_scrollbars = g_value_get_boolean (value);
-      break;
-    case PROP_SHOW_STATUSBAR:
-      display_config->show_statusbar = g_value_get_boolean (value);
-      break;
     case PROP_CONFIRM_ON_CLOSE:
       display_config->confirm_on_close = g_value_get_boolean (value);
       break;
@@ -320,11 +349,43 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_NAV_PREVIEW_SIZE:
       display_config->nav_preview_size = g_value_get_enum (value);
       break;
+
+    case PROP_SHOW_MENUBAR:
+      display_config->show_menubar = g_value_get_boolean (value);
+      break;
+    case PROP_SHOW_RULERS:
+      display_config->show_rulers = g_value_get_boolean (value);
+      break;
+    case PROP_SHOW_SCROLLBARS:
+      display_config->show_scrollbars = g_value_get_boolean (value);
+      break;
+    case PROP_SHOW_STATUSBAR:
+      display_config->show_statusbar = g_value_get_boolean (value);
+      break;
     case PROP_CANVAS_PADDING_MODE:
       display_config->canvas_padding_mode = g_value_get_enum (value);
       break;
     case PROP_CANVAS_PADDING_COLOR:
       display_config->canvas_padding_color = *(GimpRGB *) g_value_get_boxed (value);
+      break;
+
+    case PROP_FS_SHOW_MENUBAR:
+      display_config->fs_show_menubar = g_value_get_boolean (value);
+      break;
+    case PROP_FS_SHOW_RULERS:
+      display_config->fs_show_rulers = g_value_get_boolean (value);
+      break;
+    case PROP_FS_SHOW_SCROLLBARS:
+      display_config->fs_show_scrollbars = g_value_get_boolean (value);
+      break;
+    case PROP_FS_SHOW_STATUSBAR:
+      display_config->fs_show_statusbar = g_value_get_boolean (value);
+      break;
+    case PROP_FS_CANVAS_PADDING_MODE:
+      display_config->fs_canvas_padding_mode = g_value_get_enum (value);
+      break;
+    case PROP_FS_CANVAS_PADDING_COLOR:
+      display_config->fs_canvas_padding_color = *(GimpRGB *) g_value_get_boxed (value);
       break;
 
     default:
@@ -378,18 +439,6 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_IMAGE_STATUS_FORMAT:
       g_value_set_string (value, display_config->image_status_format);
       break;
-    case PROP_SHOW_MENUBAR:
-      g_value_set_boolean (value, display_config->show_menubar);
-      break;
-    case PROP_SHOW_RULERS:
-      g_value_set_boolean (value, display_config->show_rulers);
-      break;
-    case PROP_SHOW_SCROLLBARS:
-      g_value_set_boolean (value, display_config->show_scrollbars);
-      break;
-    case PROP_SHOW_STATUSBAR:
-      g_value_set_boolean (value, display_config->show_statusbar);
-      break;
     case PROP_CONFIRM_ON_CLOSE:
       g_value_set_boolean (value, display_config->confirm_on_close);
       break;
@@ -405,11 +454,43 @@ gimp_display_config_get_property (GObject    *object,
     case PROP_NAV_PREVIEW_SIZE:
       g_value_set_enum (value, display_config->nav_preview_size);
       break;
+
+    case PROP_SHOW_MENUBAR:
+      g_value_set_boolean (value, display_config->show_menubar);
+      break;
+    case PROP_SHOW_RULERS:
+      g_value_set_boolean (value, display_config->show_rulers);
+      break;
+    case PROP_SHOW_SCROLLBARS:
+      g_value_set_boolean (value, display_config->show_scrollbars);
+      break;
+    case PROP_SHOW_STATUSBAR:
+      g_value_set_boolean (value, display_config->show_statusbar);
+      break;
     case PROP_CANVAS_PADDING_MODE:
       g_value_set_enum (value, display_config->canvas_padding_mode);
       break;
     case PROP_CANVAS_PADDING_COLOR:
       g_value_set_boxed (value, &display_config->canvas_padding_color);
+      break;
+
+    case PROP_FS_SHOW_MENUBAR:
+      g_value_set_boolean (value, display_config->fs_show_menubar);
+      break;
+    case PROP_FS_SHOW_RULERS:
+      g_value_set_boolean (value, display_config->fs_show_rulers);
+      break;
+    case PROP_FS_SHOW_SCROLLBARS:
+      g_value_set_boolean (value, display_config->fs_show_scrollbars);
+      break;
+    case PROP_FS_SHOW_STATUSBAR:
+      g_value_set_boolean (value, display_config->fs_show_statusbar);
+      break;
+    case PROP_FS_CANVAS_PADDING_MODE:
+      g_value_set_enum (value, display_config->fs_canvas_padding_mode);
+      break;
+    case PROP_FS_CANVAS_PADDING_COLOR:
+      g_value_set_boxed (value, &display_config->fs_canvas_padding_color);
       break;
 
     default:

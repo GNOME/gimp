@@ -1,3 +1,26 @@
+2003-07-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpdisplayconfig.[ch]: added separate properties for
+	the fullscreen appearance of the display (menubar, rulers,
+	scrollbars, statusbar and padding). Default to everything
+	invisible and black padding.
+
+	* app/display/gimpdisplayshell.[ch]: renamed struct
+	GimpDisplayShellVisibility to GimpDisplayShellAppearance and added
+	the canvas padding stuff.
+
+	* app/display/gimpdisplayshell-appearance.[ch]: made
+	gimp_display_shell_set_padding() fullscreen-aware. Added
+	gimp_display_shell_get_padding().
+
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/display/gimpdisplayshell-handlers.c
+	* app/gui/image-menu.c: changed addordingly.
+
+	* app/gui/preferences-dialog.c: added the new options and moved
+	the display appearance stuff to its own page. Minor cleanups.
+
 2003-07-17  Sven Neumann  <sven@gimp.org>
 
 	* app/vectors/Makefile.am

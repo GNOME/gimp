@@ -19,6 +19,13 @@ N_("Specifies how the area around the image should be drawn.")
 N_("Sets the canvas padding color used if the padding mode is set to " \
    "custom color.")
 
+#define FS_CANVAS_PADDING_MODE_BLURB \
+N_("Specifies how the area around the image should be drawn.")
+
+#define FS_CANVAS_PADDING_COLOR_BLURB \
+N_("Sets the canvas padding color used if the padding mode is set to " \
+   "custom color.")
+
 #define COLORMAP_CYCLING_BLURB \
 N_("Specify that marching ants for selected regions will be drawn with " \
    "colormap cycling as opposed to be drawn as animated lines.  This color " \
@@ -254,6 +261,22 @@ N_("When enabled, the scrollbars are visible by default. This can also be " \
 N_("When enabled, the statusbar is visible by default. This can also be " \
    "toggled with the \"View->Show Statusbar\" command.")
 
+#define FS_SHOW_MENUBAR_BLURB \
+N_("When enabled, the menubar is visible by default. This can also be " \
+   "toggled with the \"View->Show Menubar\" command.")
+
+#define FS_SHOW_RULERS_BLURB \
+N_("When enabled, the rulers are visible by default. This can also be " \
+   "toggled with the \"View->Show Rulers\" command.")
+
+#define FS_SHOW_SCROLLBARS_BLURB \
+N_("When enabled, the scrollbars are visible by default. This can also be " \
+   "toggled with the \"View->Show Scrollbars\" command.")
+
+#define FS_SHOW_STATUSBAR_BLURB \
+N_("When enabled, the statusbar is visible by default. This can also be " \
+   "toggled with the \"View->Show Statusbar\" command.")
+
 #define SHOW_TIPS_BLURB \
 N_("Enable to display a handy GIMP tip on startup.")
 
@@ -293,7 +316,7 @@ N_("Sets the temporary storage directory. Files will appear here " \
    "best if this directory not be one that is shared by other users.")
 
 #define THEME_BLURB \
-"The name of the theme to use." 
+"The name of the theme to use."
 
 #define THEME_PATH_BLURB \
 "Sets the theme search path."

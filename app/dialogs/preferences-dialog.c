@@ -430,7 +430,7 @@ prefs_input_devices_dialog (GtkWidget *widget)
   gtk_window_set_transient_for (GTK_WINDOW (input_dialog),
                                 GTK_WINDOW (prefs_dialog));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (input_dialog), TRUE);
-  
+
   gtk_widget_hide (GTK_INPUT_DIALOG (input_dialog)->save_button);
 
   g_signal_connect_swapped (GTK_INPUT_DIALOG (input_dialog)->close_button,
@@ -1154,7 +1154,7 @@ prefs_dialog_new (Gimp    *gimp,
 				     &top_iter,
 				     page_index++);
 
-  /*  General  */
+  /*  Previews  */
   vbox2 = prefs_frame_new (_("Previews"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "layer-previews",
@@ -1365,7 +1365,7 @@ prefs_dialog_new (Gimp    *gimp,
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-      
+
   button = gtk_button_new_with_label (_("Save Input Device Settings Now"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
@@ -1390,50 +1390,18 @@ prefs_dialog_new (Gimp    *gimp,
 				     &child_iter,
 				     page_index++);
 
-  /*  Appearance  */
-  vbox2 = prefs_frame_new (_("Appearance"), GTK_CONTAINER (vbox), FALSE);
+  /*  General  */
+  vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
   prefs_check_button_add (config, "default-dot-for-dot",
                           _("Use \"_Dot for Dot\" by default"),
                           GTK_BOX (vbox2));
-  prefs_check_button_add (config, "show-menubar",
-                          _("Show Menubar"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (config, "show-rulers",
-                          _("Show _Rulers"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (config, "show-scrollbars",
-                          _("Show Scrollbars"),
-                          GTK_BOX (vbox2));
-  prefs_check_button_add (config, "show-statusbar",
-                          _("Show S_tatusbar"),
-                          GTK_BOX (vbox2));
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  prefs_boolean_option_menu_add (config, "initial-zoom-to-fit",
-                                 _("Fit to Window"),
-                                 "1:1",
-                                 _("Inital Zoom Ratio:"),
-                                 GTK_TABLE (table), 0);
   prefs_spin_button_add (config, "marching-ants-speed", 10.0, 100.0, 0,
                          _("Marching _Ants Speed:"),
-                         GTK_TABLE (table), 1);
-
-  /*  Canvas Padding Color  */
-  vbox2 = prefs_frame_new (_("Canvas Padding Color"),
-                           GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
-
-  prefs_enum_option_menu_add (config, "canvas-padding-mode", 0, 0,
-                              _("Padding Mode:"),
-                              GTK_TABLE (table), 0);
-  button = prefs_color_button_add (config, "canvas-padding-color",
-                                   _("Custom Color:"),
-                                   _("Select Custom Canvas Padding Color"),
-                                   GTK_TABLE (table), 1);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
+                         GTK_TABLE (table), 0);
 
   /*  Zoom & Resize Behavior  */
   vbox2 = prefs_frame_new (_("Zoom & Resize Behavior"),
@@ -1445,6 +1413,14 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_check_button_add (config, "resize-windows-on-resize",
                           _("Resize Window on Image _Size Change"),
                           GTK_BOX (vbox2));
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+
+  prefs_boolean_option_menu_add (config, "initial-zoom-to-fit",
+                                 _("Fit to Window"),
+                                 "1:1",
+                                 _("Inital Zoom Ratio:"),
+                                 GTK_TABLE (table), 0);
 
   /*  Pointer Movement Feedback  */
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
@@ -1462,6 +1438,79 @@ prefs_dialog_new (Gimp    *gimp,
   prefs_enum_option_menu_add (config, "cursor-mode", 0, 0,
                               _("Cursor M_ode:"),
                               GTK_TABLE (table), 0);
+
+
+  /********************************************/
+  /*  Interface / Image Windows / Appearance  */
+  /********************************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Image Window Appearance"),
+                                     "image-windows.png",
+				     GTK_TREE_STORE (tree),
+				     _("Appearance"),
+				     "dialogs/preferences/image_windows.html",
+				     &child_iter,
+				     &grandchild_iter,
+				     page_index++);
+
+  /*  Normal Mode  */
+  vbox2 = prefs_frame_new (_("Default Appearance in Normal Mode"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (config, "show-menubar",
+                          _("Show Menubar"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "show-rulers",
+                          _("Show _Rulers"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "show-scrollbars",
+                          _("Show Scrollbars"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "show-statusbar",
+                          _("Show S_tatusbar"),
+                          GTK_BOX (vbox2));
+
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+
+  prefs_enum_option_menu_add (config, "canvas-padding-mode", 0, 0,
+                              _("Canvas Padding Mode:"),
+                              GTK_TABLE (table), 0);
+  button = prefs_color_button_add (config, "canvas-padding-color",
+                                   _("Custom Padding Color:"),
+                                   _("Select Custom Canvas Padding Color"),
+                                   GTK_TABLE (table), 1);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
+
+  /*  Fullscreen Mode  */
+  vbox2 = prefs_frame_new (_("Default Appearance in Fullscreen Mode"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (config, "fullscreen-show-menubar",
+                          _("Show Menubar"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "fullscreen-show-rulers",
+                          _("Show _Rulers"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "fullscreen-show-scrollbars",
+                          _("Show Scrollbars"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (config, "fullscreen-show-statusbar",
+                          _("Show S_tatusbar"),
+                          GTK_BOX (vbox2));
+
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+
+  prefs_enum_option_menu_add (config, "fullscreen-canvas-padding-mode", 0, 0,
+                              _("Canvas Padding Mode:"),
+                              GTK_TABLE (table), 0);
+  button = prefs_color_button_add (config, "fullscreen-canvas-padding-color",
+                                   _("Custom Padding Color:"),
+                                   _("Select Custom Canvas Padding Color"),
+                                   GTK_TABLE (table), 1);
+  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                gimp_get_user_context (gimp));
 
 
   /****************************************************************/
@@ -1697,7 +1746,7 @@ prefs_dialog_new (Gimp    *gimp,
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  
+
   calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
   gtk_box_pack_start (GTK_BOX (hbox), calibrate_button, FALSE, FALSE, 0);

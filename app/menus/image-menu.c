@@ -243,7 +243,7 @@ GimpItemFactoryEntry image_menu_entries[] =
   MENU_SEPARATOR ("/Edit/---"),
 
   /*  <Image>/Select  */
-  
+
   MENU_BRANCH (N_("/_Select")),
 
   { { N_("/Select/_All"), "<control>A",
@@ -649,42 +649,42 @@ GimpItemFactoryEntry image_menu_entries[] =
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_COLOR_BALANCE },
     "gimp-color-balance-tool",
-    "tools/color_balance.html", NULL },    
+    "tools/color_balance.html", NULL },
   { { N_("/Layer/Colors/Hue-_Saturation..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_HUE_SATURATION },
     "gimp-hue-saturation-tool",
-    "tools/hue_saturation.html", NULL },    
+    "tools/hue_saturation.html", NULL },
   { { N_("/Layer/Colors/Colori_ze..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_COLORIZE },
     "gimp-colorize-tool",
-    "tools/colorize.html", NULL },    
+    "tools/colorize.html", NULL },
   { { N_("/Layer/Colors/B_rightness-Contrast..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_BRIGHTNESS_CONTRAST },
     "gimp-brightness-contrast-tool",
-    "tools/brightness-contrast.html", NULL },    
+    "tools/brightness-contrast.html", NULL },
   { { N_("/Layer/Colors/_Threshold..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_THRESHOLD },
     "gimp-threshold-tool",
-    "tools/threshold.html", NULL },    
+    "tools/threshold.html", NULL },
   { { N_("/Layer/Colors/_Levels..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_LEVELS },
     "gimp-levels-tool",
-    "tools/levels.html", NULL },    
+    "tools/levels.html", NULL },
   { { N_("/Layer/Colors/_Curves..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_CURVES },
     "gimp-curves-tool",
-    "tools/curves.html", NULL },    
+    "tools/curves.html", NULL },
   { { N_("/Layer/Colors/_Posterize..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_POSTERIZE },
     "gimp-posterize-tool",
-    "tools/posterize.html", NULL },    
+    "tools/posterize.html", NULL },
 
   MENU_SEPARATOR ("/Layer/Colors/---"),
 
@@ -714,7 +714,7 @@ GimpItemFactoryEntry image_menu_entries[] =
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_HISTOGRAM },
     "gimp-histogram-tool",
-    "tools/histogram.html", NULL },    
+    "tools/histogram.html", NULL },
 
   /*  <Image>/Layer/Mask  */
 
@@ -786,12 +786,12 @@ GimpItemFactoryEntry image_menu_entries[] =
       drawable_rotate_cmd_callback, GIMP_ROTATE_180,
       "<StockItem>", GIMP_STOCK_ROTATE_180 },
     NULL,
-    "layers/rotate_layer.html", NULL },    
+    "layers/rotate_layer.html", NULL },
   { { N_("/Layer/Transform/_Arbitrary Rotation..."), NULL,
       tools_select_cmd_callback, 0,
       "<StockItem>", GIMP_STOCK_TOOL_ROTATE },
     "gimp-rotate-tool",
-    "layers/rotate_layer.html", NULL },    
+    "layers/rotate_layer.html", NULL },
 
   MENU_SEPARATOR ("/Layer/Transform/---"),
 
@@ -1257,8 +1257,8 @@ image_menu_update (GtkItemFactory *item_factory,
   gint                        lind          = -1;
   gint                        lnum          = -1;
   gboolean                    fullscreen    = FALSE;
-  GimpDisplayShellVisibility *visibility    = NULL;
-  
+  GimpDisplayShellAppearance *appearance    = NULL;
+
   gimp = GIMP_ITEM_FACTORY (item_factory)->gimp;
 
   if (data)
@@ -1305,9 +1305,9 @@ image_menu_update (GtkItemFactory *item_factory,
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
       if (fullscreen)
-        visibility = &shell->fullscreen_visibility;
+        appearance = &shell->fullscreen_appearance;
       else
-        visibility = &shell->visibility;
+        appearance = &shell->appearance;
     }
 
   gimp_context_get_foreground (gimp_get_user_context (gimp), &fg);
@@ -1427,27 +1427,27 @@ image_menu_update (GtkItemFactory *item_factory,
   SET_SENSITIVE ("/View/Display Filters...",   gdisp);
 
   SET_SENSITIVE ("/View/Show Selection",      gdisp);
-  SET_ACTIVE    ("/View/Show Selection",      gdisp && visibility->selection);
+  SET_ACTIVE    ("/View/Show Selection",      gdisp && appearance->selection);
   SET_SENSITIVE ("/View/Show Layer Boundary", gdisp);
-  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && visibility->active_layer);
+  SET_ACTIVE    ("/View/Show Layer Boundary", gdisp && appearance->active_layer);
   SET_SENSITIVE ("/View/Show Guides",         gdisp);
-  SET_ACTIVE    ("/View/Show Guides",         gdisp && visibility->guides);
+  SET_ACTIVE    ("/View/Show Guides",         gdisp && appearance->guides);
   SET_SENSITIVE ("/View/Snap to Guides",      gdisp);
   SET_ACTIVE    ("/View/Snap to Guides",      gdisp && shell->snap_to_guides);
 
   SET_SENSITIVE ("/View/Show Grid",    gdisp);
-  SET_ACTIVE    ("/View/Show Grid",    gdisp && visibility->grid);
+  SET_ACTIVE    ("/View/Show Grid",    gdisp && appearance->grid);
   SET_SENSITIVE ("/View/Snap to Grid", gdisp);
   SET_ACTIVE    ("/View/Snap to Grid", gdisp && shell->snap_to_grid);
 
   SET_SENSITIVE ("/View/Show Menubar",    gdisp);
-  SET_ACTIVE    ("/View/Show Menubar",    gdisp && visibility->menubar);
+  SET_ACTIVE    ("/View/Show Menubar",    gdisp && appearance->menubar);
   SET_SENSITIVE ("/View/Show Rulers",     gdisp);
-  SET_ACTIVE    ("/View/Show Rulers",     gdisp && visibility->rulers);
+  SET_ACTIVE    ("/View/Show Rulers",     gdisp && appearance->rulers);
   SET_SENSITIVE ("/View/Show Scrollbars", gdisp);
-  SET_ACTIVE    ("/View/Show Scrollbars", gdisp && visibility->scrollbars);
+  SET_ACTIVE    ("/View/Show Scrollbars", gdisp && appearance->scrollbars);
   SET_SENSITIVE ("/View/Show Statusbar",  gdisp);
-  SET_ACTIVE    ("/View/Show Statusbar",  gdisp && visibility->statusbar);
+  SET_ACTIVE    ("/View/Show Statusbar",  gdisp && appearance->statusbar);
 
   SET_SENSITIVE ("/View/Shrink Wrap", gdisp);
 
@@ -1571,7 +1571,7 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
 
   scalesrc  = SCALESRC (shell);
   scaledest = SCALEDEST (shell);
- 
+
   if (scaledest == 1)
     {
       switch (scalesrc)
@@ -1600,7 +1600,7 @@ image_menu_set_zoom (GtkItemFactory   *item_factory,
 
       label = g_strdup_printf (_("Other (%d:%d) ..."), scaledest, scalesrc);
       gimp_item_factory_set_label (item_factory, menu, label);
-      g_free (label);      
+      g_free (label);
 
       shell->other_scale = shell->scale;
     }

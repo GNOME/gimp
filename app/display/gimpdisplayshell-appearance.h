@@ -20,10 +20,6 @@
 #define __GIMP_DISPLAY_SHELL_APPEARANCE_H__
 
 
-void       gimp_display_shell_set_padding         (GimpDisplayShell *shell,
-                                                   GimpDisplayPaddingMode  mode,
-                                                   GimpRGB          *color);
-
 void       gimp_display_shell_set_fullscreen      (GimpDisplayShell *shell,
                                                    gboolean          fullscreen);
 gboolean   gimp_display_shell_get_fullscreen      (GimpDisplayShell *shell);
@@ -63,6 +59,13 @@ gboolean   gimp_display_shell_get_show_scrollbars (GimpDisplayShell *shell);
 void       gimp_display_shell_set_show_statusbar  (GimpDisplayShell *shell,
                                                    gboolean          show);
 gboolean   gimp_display_shell_get_show_statusbar  (GimpDisplayShell *shell);
+
+void       gimp_display_shell_set_padding         (GimpDisplayShell *shell,
+                                                   GimpDisplayPaddingMode  mode,
+                                                   const GimpRGB    *color);
+void       gimp_display_shell_get_padding         (GimpDisplayShell *shell,
+                                                   GimpDisplayPaddingMode *mode,
+                                                   GimpRGB          *color);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_APPEARANCE_H__ */
