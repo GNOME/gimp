@@ -62,7 +62,7 @@ query (void)
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
-  gimp_install_procedure ("plug_in_unit_editor",
+  gimp_install_procedure ("extension_gimp_unit_editor",
                           "The GIMP unit editor (runs in interactive mode only)",
                           "The GIMP unit editor (runs in interactive mode only)",
                           "Michael Natterer <mitch@gimp.org>",
