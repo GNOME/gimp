@@ -1,24 +1,18 @@
 The GIMP: The GNU Image Manipulation Program
 ============================================
 
-This is a release candidate of GIMP version 2.0. Unless there are
-major problems, this will be released as GIMP 2.0 very soon. Your
-feedback can help to make the 2.0 release a success.  If you
-encounter any problems, please report them to our bug-tracker a
-bugzilla.gnome.org. There are still a number of known problems, so
-please check first if your problem has already been reported.
-
-GIMP 2.0 installs side-by-side with GIMP 1.2 so there's no need to
-uninstall GIMP 1.2 (but sooner or later you will not be using it any
-longer...).
+This is GIMP version 2.0, a stable release of the GNU Image
+Manipulation Program. GIMP 2.0 installs side-by-side with GIMP 1.2 so
+there's no need to uninstall GIMP 1.2 (but sooner or later you will
+not be using it any longer...).
 
 Some features that were present in GIMP 1.2 are not included in this
 release. The perl bindings as well as all the perl scripts are not any
 longer included in this source tree. They have been moved into its own
 module called gimp-perl. Sooner or later there will be a gimp-perl
 release for GIMP 2.0. GAP, a set of plug-ins that used to live in the
-Video submenu has also become a separate package. Expect a preview
-release of this software for GIMP 2.0 soon.
+Video submenu has also become a separate package and can be downloaded
+from ftp://ftp.gimp.org/pub/gimp/plug-ins/v2.0/gap/.
 
 For detailed installation instructions, see the file INSTALL.
 
@@ -42,7 +36,7 @@ forms-based interface.
 
 The latest version of The GIMP can be found at:
 
-	http://www.gimp.org/download/
+	http://www.gimp.org/downloads/
 
 
 2. Mailing Lists

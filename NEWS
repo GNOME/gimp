@@ -3,9 +3,21 @@
                           A Colorspace Odyssey
 
 
-GIMP 1.3 is the development branch of The GIMP. Here's where the
-development takes place on the road to the next stable release
-GIMP version 2.0.
+GIMP 1.3 used to be the development branch of The GIMP. Here's where
+the development took place on the road to GIMP version 2.0. This file
+lists the changes for each release in this development cycle.
+
+
+Bugs fixed in GIMP 2.0.0
+========================
+- 137766: compress text undo steps (Sven)
+- 137876: set a default height for dock windows (Sven, Simon)
+- 137502: check for buggy intltool versions (Raphael)
+- 137930: portability fix for Solaris (Sven)
+- 137968: workaround GIOChannel misfeature on win32 (Tor)
+- 137957: bugfix in floating selection code (Sven, Mitch)
+- 136868: fixed alien glow arrow script (Simon)
+
 
 Bugs fixed in GIMP 2.0rc1
 =========================

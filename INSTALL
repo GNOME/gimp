@@ -1,9 +1,5 @@
-THIS IS A DEVELOPMENT VERSION OF THE GIMP!
-
-If you are looking for the stable version, use GIMP 1.2.  We do
-however encourage you to try this GIMP-2.0 prerelease. Read on
-further to learn more about the installation process...
-
+Installation instructions for GIMP 2.0
+--------------------------------------
 
 There are some basic steps to building and installing the GIMP.
 
@@ -12,8 +8,8 @@ are fulfilled.  We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
 
-Please note that GIMP-1.2 and GIMP-1.3/2.0 peacefully coexist. You don't
-need to deinstall the 1.2 version.
+Please note that GIMP 1.2 and GIMP 2.0 peacefully coexist. You don't
+need to uninstall the 1.2 version.
 
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
@@ -46,8 +42,10 @@ need to deinstall the 1.2 version.
      of make, we'd appreciate if you'd send us a patch with the changes.
 
   8. Install the GIMP by running `make install'. In order to avoid clashes
-     with an installed stable version of The GIMP, we install a binary
-     called gimp-1.3.
+     with other versions of The GIMP, we install a binary called gimp-2.0.
+     By default there's also a link created so that you can type 'gimp'
+     to start gimp-2.0. If you have the 1.2 version installed, you should
+     still be able to run it using 'gimp-1.2'.
 
 Unless you are experienced with building software from source, you
 should not attempt to build all these libraries yourself. We suggest
@@ -62,8 +60,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-1.3.x.tar.gz   # unpack the sources
-  % cd gimp-1.3.x                # change to the toplevel directory
+  % tar xvfz gimp-2.0.x.tar.gz   # unpack the sources
+  % cd gimp-2.0.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP
@@ -92,8 +90,8 @@ recognizes. These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     the gimp uses to search for its configuration files from ~/.gimp-1.3 
-     (the directory .gimp-1.3 in the users home directory) to DIR.
+     the gimp uses to search for its configuration files from ~/.gimp-2.0 
+     (the directory .gimp-2.0 in the users home directory) to DIR.
 
   --without-libtiff, --without-libjpeg, --without-libpng.  configure
      will bail out if libtiff, libjpeg or libpng can not be found. You
@@ -155,15 +153,15 @@ recognizes. These are:
      created if the desktop directories don't exist or you used
      --without-desktop-dir.
 
-  --enable-default-binary. Use this option if you want to make gimp-1.3
-     the default gimp installation. A link called gimp pointing to the
-     gimp-1.3 executable will be installed then.
+  --disable-default-binary. Use this option if you don't want to make
+     gimp-2.0 the default gimp installation. Otherwise a link called
+     gimp pointing to the gimp-2.0 executable will be installed.
 
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
- - The main GIMP program 'gimp-1.3' in `app'.
+ - The main GIMP program 'gimp-2.0' in `app'.
 
 The `make install' commands installs the gimp header files associated 
 with the libgimp libraries, the plug-ins, some data files and the GIMP 
