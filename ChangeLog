@@ -1,5 +1,9 @@
 2005-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpselectiondata.c: include <stdio.h> for sscanf().
+
+2005-01-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-save.c (save_dialog): update the preview (and
 	thus the filesize) if the EXIF or thumbnail toggles are being used.
 	Fixes bug #164914.
