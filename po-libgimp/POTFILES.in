@@ -22,6 +22,7 @@ libgimpwidgets/gimpcolorselect.c
 libgimpwidgets/gimpcolorselection.c
 libgimpwidgets/gimpfileentry.c
 libgimpwidgets/gimpmemsizeentry.c
+libgimpwidgets/gimppatheditor.c
 libgimpwidgets/gimppickbutton.c
 libgimpwidgets/gimpquerybox.c
 libgimpwidgets/gimpstock.c
