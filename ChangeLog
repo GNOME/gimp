@@ -1,3 +1,14 @@
+Fri Nov 12 17:23:05 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/unittest/gimpmodule.c : Unit test program for module_db.c and
+	modules.
+
+	* app/module_db.c (module_db_write_modulerc): open file with "wt" so
+	it's works on OS/2 and WIN. 
+	module_db_write_modulerc() now return TRUE if it succeed.
+	Global variable "need_to_rewrite_modulerc" is moved out of the function.
+	Logic is still the same and it's tested with unittest/gimpmodule prog..
+
 Fri Nov 12 01:52:49 CET 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/nlfilt.c: rename ROUND => SROUND to avoid clash.

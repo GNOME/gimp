@@ -213,16 +213,14 @@ add_to_inhibit_string (gpointer data,
 }
 
 
-static void
+static gboolean
 module_db_write_modulerc (void)
 {
   GString *str;
   gchar *p;
   char *filename;
   FILE *fp;
-
-  if (!need_to_rewrite_modulerc)
-    return;
+  gboolean saved = FALSE;
 
   str = g_string_new (NULL);
   gimp_set_foreach (modules, add_to_inhibit_string, str);
@@ -232,24 +230,30 @@ module_db_write_modulerc (void)
     p = "";
 
   filename = gimp_personal_rc_file ("modulerc");
-  fp = fopen (filename, "w");
+  fp = fopen (filename, "wt");
   g_free (filename);
   if (fp)
     {
       fprintf (fp, "(module-load-inhibit \"%s\")\n", p);
       fclose (fp);
-      need_to_rewrite_modulerc = FALSE;
+      saved = TRUE;
     }
 
   g_string_free (str, TRUE);
+  return (saved);
 }
 
 
 void
 module_db_free (void)
 {
-  module_db_write_modulerc ();
-
+  if (need_to_rewrite_modulerc)
+  {
+      if (module_db_write_modulerc ())
+      {
+	  need_to_rewrite_modulerc = FALSE;
+      }
+  }
   gimp_set_foreach (modules, free_a_single_module, NULL);
 }
 
