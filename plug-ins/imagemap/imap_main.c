@@ -383,7 +383,8 @@ draw_polygon(GdkWindow *window, GdkGC *gc, GList *list)
    g_free(points);
 }
 
-static gboolean _preview_redraw_blocked;
+static gboolean _preview_redraw_blocked = FALSE;
+static gboolean _pending_redraw = FALSE;
 
 void
 preview_freeze(void)
@@ -395,13 +396,18 @@ void
 preview_thaw(void)
 {
    _preview_redraw_blocked = FALSE;
-   redraw_preview();
+   if (_pending_redraw) {
+      _pending_redraw = FALSE;
+      redraw_preview();
+   }
 }
 
 void 
 redraw_preview(void)
 {
-   if (!_preview_redraw_blocked)
+   if (_preview_redraw_blocked)
+      _pending_redraw = TRUE;
+   else
       preview_redraw(_preview);
 }
 

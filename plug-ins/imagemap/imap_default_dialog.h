@@ -31,6 +31,7 @@ typedef struct {
    GtkWidget	*ok;
    GtkWidget	*apply;
    GtkWidget	*cancel;
+   GtkWidget	*help;
    void		(*ok_cb)(gpointer);
    gpointer	ok_cb_data;
    void		(*cancel_cb)(gpointer);
@@ -46,6 +47,7 @@ void default_dialog_set_cancel_cb(DefaultDialog_t *dialog,
 void default_dialog_show(DefaultDialog_t *dialog);
 void default_dialog_hide_cancel_button(DefaultDialog_t *dialog);
 void default_dialog_hide_apply_button(DefaultDialog_t *dialog);
+void default_dialog_hide_help_button(DefaultDialog_t *dialog);
 void default_dialog_set_title(DefaultDialog_t *dialog, const gchar *title);
 void default_dialog_set_ok_sensitivity(DefaultDialog_t *dialog, 
 				       gint sensitive);

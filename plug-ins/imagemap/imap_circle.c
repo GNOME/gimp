@@ -56,7 +56,7 @@ static void circle_write_ncsa(Object_t* obj, gpointer param,
 static char** circle_get_icon_data(void);
 
 static ObjectClass_t circle_class = {
-   "Circle",
+   N_("Circle"),
    NULL,			/* info_dialog */
    NULL,			/* icon */
    NULL,			/* mask */

@@ -21,6 +21,8 @@
  *
  */
 
+#include "libgimp/stdplugins-intl.h"
+
 #include "imap_edit_area_info.h"
 #include "imap_grid.h"
 #include "imap_main.h"
@@ -119,34 +121,35 @@ create_main_popup_menu(void)
    GSList    *group;
    
    _popup.main = popup_menu = gtk_menu_new();
-   make_item_with_label(popup_menu, "Map Info...", menu_command, 
+   make_item_with_label(popup_menu, _("Map Info..."), menu_command, 
 			&_popup.cmd_edit_map_info);
    
-   sub_menu = make_sub_menu(popup_menu, "Tools");
-   _popup.arrow = make_radio_item(sub_menu, NULL, "Arrow", popup_arrow, NULL);
+   sub_menu = make_sub_menu(popup_menu, _("Tools"));
+   _popup.arrow = make_radio_item(sub_menu, NULL, _("Arrow"), popup_arrow, 
+				  NULL);
    group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_popup.arrow));
-   _popup.rectangle = make_radio_item(sub_menu, group, "Rectangle", 
+   _popup.rectangle = make_radio_item(sub_menu, group, _("Rectangle"), 
 				      popup_rectangle, NULL);
    group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_popup.rectangle));
-   _popup.circle = make_radio_item(sub_menu, group, "Circle", 
+   _popup.circle = make_radio_item(sub_menu, group, _("Circle"), 
 				   popup_circle, NULL);
    group = gtk_radio_menu_item_group(GTK_RADIO_MENU_ITEM(_popup.circle));
-   _popup.polygon = make_radio_item(sub_menu, group, "Polygon", 
+   _popup.polygon = make_radio_item(sub_menu, group, _("Polygon"), 
 				    popup_polygon, NULL);
    
-   sub_menu = make_sub_menu(popup_menu, "Zoom");
-   _popup.zoom_in = make_item_with_label(sub_menu, "In", menu_command, 
+   sub_menu = make_sub_menu(popup_menu, _("Zoom"));
+   _popup.zoom_in = make_item_with_label(sub_menu, _("In"), menu_command, 
 					 &_popup.cmd_zoom_in);
-   _popup.zoom_out = make_item_with_label(sub_menu, "Out", menu_command,
+   _popup.zoom_out = make_item_with_label(sub_menu, _("Out"), menu_command,
 					  &_popup.cmd_zoom_out);
    gtk_widget_set_sensitive(_popup.zoom_out, FALSE);
 
-   _popup.grid = make_check_item(popup_menu, "Grid", popup_grid, NULL);
-   make_item_with_label(popup_menu, "Grid Settings...", menu_command,
+   _popup.grid = make_check_item(popup_menu, _("Grid"), popup_grid, NULL);
+   make_item_with_label(popup_menu, _("Grid Settings..."), menu_command,
 			&_popup.cmd_grid_settings);
-   make_item_with_label(popup_menu, "Guides...", menu_command,
+   make_item_with_label(popup_menu, _("Guides..."), menu_command,
 			&_popup.cmd_create_guides);
-   paste = make_item_with_label(popup_menu, "Paste", menu_command, 
+   paste = make_item_with_label(popup_menu, _("Paste"), menu_command, 
 				&_popup.cmd_paste);
    gtk_widget_set_sensitive(paste, FALSE);
    paste_buffer_add_add_cb(paste_buffer_added, (gpointer) paste);

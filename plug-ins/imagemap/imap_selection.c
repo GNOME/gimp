@@ -368,7 +368,7 @@ make_selection(GtkWidget *window, ObjectList_t *object_list)
    gtk_clist_set_column_width(GTK_CLIST(list), 1, 80);
    gtk_clist_set_column_width(GTK_CLIST(list), 2, 64);
    gtk_clist_set_column_width(GTK_CLIST(list), 3, 64);
-   gtk_clist_set_reorderable(GTK_CLIST(list), TRUE);
+/*   gtk_clist_set_reorderable(GTK_CLIST(list), TRUE); */
 
    /* Create scrollable window */
    swin = gtk_scrolled_window_new(NULL, NULL);

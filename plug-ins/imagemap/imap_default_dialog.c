@@ -21,6 +21,8 @@
  *
  */
 
+#include "libgimp/stdplugins-intl.h"
+
 #include "imap_default_dialog.h"
 
 static void
@@ -76,7 +78,7 @@ DefaultDialog_t*
 make_default_dialog(const gchar *title)
 {
    DefaultDialog_t *data = (DefaultDialog_t*) g_new(DefaultDialog_t, 1);
-   GtkWidget *dialog;
+   GtkWidget *dialog, *hbbox;
 
    data->ok_cb = NULL;
    data->cancel_cb = NULL;
@@ -86,28 +88,43 @@ make_default_dialog(const gchar *title)
    gtk_signal_connect(GTK_OBJECT(dialog), "delete_event",
 		      GTK_SIGNAL_FUNC(dialog_destroy), (gpointer) data);
 
-   data->ok = gtk_button_new_with_label("OK");
+   /*  Action area  */
+   gtk_container_set_border_width(GTK_CONTAINER(
+      GTK_DIALOG(dialog)->action_area), 2);
+   gtk_box_set_homogeneous(GTK_BOX(GTK_DIALOG(dialog)->action_area), FALSE);
+   hbbox = gtk_hbutton_box_new();
+   gtk_button_box_set_spacing(GTK_BUTTON_BOX(hbbox), 4);
+   gtk_box_pack_end(GTK_BOX(GTK_DIALOG(dialog)->action_area), hbbox, FALSE, 
+		    FALSE, 0);
+   gtk_widget_show (hbbox);
+
+   data->ok = gtk_button_new_with_label(_("OK"));
    GTK_WIDGET_SET_FLAGS(data->ok, GTK_CAN_DEFAULT);
    gtk_signal_connect(GTK_OBJECT(data->ok), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_ok), (gpointer) data);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), data->ok, TRUE,
-		      TRUE, 0);
+   gtk_box_pack_start(GTK_BOX(hbbox), data->ok, FALSE, FALSE, 0);
    gtk_widget_grab_default(data->ok);
    gtk_widget_show(data->ok);
 
-   data->apply = gtk_button_new_with_label("Apply");
+   data->apply = gtk_button_new_with_label(_("Apply"));
+   GTK_WIDGET_SET_FLAGS(data->apply, GTK_CAN_DEFAULT);
    gtk_signal_connect(GTK_OBJECT(data->apply), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_apply), (gpointer) data);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), data->apply, 
-		      TRUE, TRUE, 0);
+   gtk_box_pack_start(GTK_BOX(hbbox), data->apply, FALSE, FALSE, 0);
    gtk_widget_show(data->apply);
 
-   data->cancel = gtk_button_new_with_label("Cancel");
+   data->cancel = gtk_button_new_with_label(_("Cancel"));
+   GTK_WIDGET_SET_FLAGS(data->cancel, GTK_CAN_DEFAULT);
    gtk_signal_connect(GTK_OBJECT(data->cancel), "clicked",
 		      GTK_SIGNAL_FUNC(dialog_cancel), (gpointer) data);
-   gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog)->action_area), data->cancel, 
-		      TRUE, TRUE, 0);
+   gtk_box_pack_start(GTK_BOX(hbbox), data->cancel, FALSE, FALSE, 0);
    gtk_widget_show(data->cancel);
+
+   data->help = gtk_button_new_with_label(_("Help..."));
+   GTK_WIDGET_SET_FLAGS(data->help, GTK_CAN_DEFAULT);
+   /* Fix me: no action yet */
+   gtk_box_pack_start(GTK_BOX(hbbox), data->help, FALSE, FALSE, 0);
+   gtk_widget_show(data->help);
 
    return data;
 }
@@ -128,6 +145,12 @@ void
 default_dialog_hide_apply_button(DefaultDialog_t *dialog)
 {
    gtk_widget_hide(dialog->apply);
+}
+
+void 
+default_dialog_hide_help_button(DefaultDialog_t *dialog)
+{
+   gtk_widget_hide(dialog->help);
 }
 
 void

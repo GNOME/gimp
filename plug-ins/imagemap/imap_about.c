@@ -33,6 +33,7 @@ do_about_dialog(void)
       dialog = make_default_dialog(_("About"));
       default_dialog_hide_cancel_button(dialog);
       default_dialog_hide_apply_button(dialog);
+      default_dialog_hide_help_button(dialog);
       default_dialog_set_label(
 	 dialog,
 	 _("Imagemap plug-in 1.3\n\n"

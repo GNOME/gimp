@@ -26,7 +26,7 @@
 
 static GtkAccelGroup *accelerator_group;
 
-void 
+void
 init_accel_group(GtkWidget *window)
 {
    accelerator_group = gtk_accel_group_new();
@@ -37,8 +37,8 @@ void
 add_accelerator(GtkWidget *widget, guchar accelerator_key,
 		guint8 accelerator_mods)
 {
-   gtk_widget_add_accelerator(widget, "activate", accelerator_group, 
-			      accelerator_key, accelerator_mods, 
+   gtk_widget_add_accelerator(widget, "activate", accelerator_group,
+			      accelerator_key, accelerator_mods,
 			      GTK_ACCEL_VISIBLE);
 }
 
@@ -75,7 +75,7 @@ prepend_item_with_label(GtkWidget *parent, gchar *label,
 {
    GtkWidget *item = gtk_menu_item_new_with_label(label);
    gtk_menu_prepend(GTK_MENU(parent), item);
-   gtk_signal_connect(GTK_OBJECT(item), "activate", 
+   gtk_signal_connect(GTK_OBJECT(item), "activate",
 		      GTK_SIGNAL_FUNC(activate), data);
    gtk_widget_show(item);
 
@@ -88,7 +88,7 @@ insert_item_with_label(GtkWidget *parent, gint position, gchar *label,
 {
    GtkWidget *item = gtk_menu_item_new_with_label(label);
    gtk_menu_insert(GTK_MENU(parent), item, position);
-   gtk_signal_connect(GTK_OBJECT(item), "activate", 
+   gtk_signal_connect(GTK_OBJECT(item), "activate",
 		      GTK_SIGNAL_FUNC(activate), data);
    gtk_widget_show(item);
 
@@ -104,10 +104,10 @@ make_check_item(GtkWidget *parent, gchar *label, MenuCallback activate,
 }
 
 GtkWidget*
-make_radio_item(GtkWidget *parent, GSList *group, gchar *label, 
+make_radio_item(GtkWidget *parent, GSList *group, gchar *label,
 		MenuCallback activate, gpointer data)
 {
-   return append_active_item(parent, 
+   return append_active_item(parent,
 			     gtk_radio_menu_item_new_with_label(group, label),
 			     activate, data);
 }
@@ -144,6 +144,10 @@ make_menu_bar_item(GtkWidget *menu_bar, gchar *label)
 {
    GtkWidget *menu = gtk_menu_new();
    GtkWidget *item = gtk_menu_item_new_with_label(label);
+   GtkWidget *tearoff = gtk_tearoff_menu_item_new();
+
+   gtk_menu_insert(GTK_MENU(menu), tearoff, 0);
+   gtk_widget_show(tearoff);
    gtk_widget_show(item);
 
    gtk_menu_item_set_submenu(GTK_MENU_ITEM(item), menu);

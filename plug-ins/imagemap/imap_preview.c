@@ -26,6 +26,7 @@
 #include "imap_cmd_edit_object.h"
 #include "imap_grid.h"
 #include "imap_main.h"
+#include "imap_popup.h"
 #include "imap_preview.h"
 
 #define PREVIEW_MASK   GDK_EXPOSURE_MASK | \
@@ -58,13 +59,13 @@ preview_user_data(GtkWidget *preview)
    return (Preview_t*) gtk_object_get_user_data(GTK_OBJECT(preview));
 }
 
-gint 
+gint
 preview_get_width(GtkWidget *preview)
 {
    return preview_user_data(preview)->width;
 }
 
-gint 
+gint
 preview_get_height(GtkWidget *preview)
 {
    return preview_user_data(preview)->height;
@@ -92,12 +93,12 @@ render_gray_image(GtkWidget *preview, GPixelRgn *srcrgn)
    src_row = g_new(guchar, dwidth * bpp);
    dest_row = g_new(guchar, pwidth * 3);
    src_col = g_new(gint, pwidth);
-   
+
    for (col = 0; col < pwidth; col++)
       src_col[col] = (col * dwidth / pwidth) * bpp;
-   
+
    for (row = 0; row < pheight; row++) {
-      gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight, 
+      gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight,
 			     dwidth);
 
       dest = dest_row;
@@ -141,21 +142,21 @@ render_indexed_image(GtkWidget *preview, GPixelRgn *srcrgn)
    bpp = srcrgn->bpp;
    alpha = bpp;
    has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->id);
-   if (has_alpha) 
+   if (has_alpha)
       alpha--;
 
    cmap = gimp_image_get_cmap(gimp_drawable_image_id(srcrgn->drawable->id),
 			      &ncols);
-   
+
    src_row = g_new(guchar, dwidth * bpp);
    dest_row = g_new(guchar, pwidth * 3);
    src_col = g_new(gint, pwidth);
-   
+
    for (col = 0; col < pwidth; col++)
       src_col[col] = (col * dwidth / pwidth) * bpp;
-   
+
    for (row = 0; row < pheight; row++) {
-      gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight, 
+      gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight,
 			     dwidth);
       dest = dest_row;
       for (col = 0; col < pwidth; col++) {
@@ -163,7 +164,7 @@ render_indexed_image(GtkWidget *preview, GPixelRgn *srcrgn)
 	 colour = cmap + 3 * (int)(*src);
 
 	 if (gray) {
-	    guchar avg = (299 * *colour++ + 587 * *colour++ + 
+	    guchar avg = (299 * *colour++ + 587 * *colour++ +
 			  114 * *colour++) / 1000;
 	    *dest++ = avg;
 	    *dest++ = avg;
@@ -204,18 +205,18 @@ render_rgb_image(GtkWidget *preview, GPixelRgn *srcrgn)
    bpp = srcrgn->bpp;
    alpha = bpp;
    has_alpha = gimp_drawable_has_alpha(srcrgn->drawable->id);
-   if (has_alpha) 
+   if (has_alpha)
       alpha--;
-   
+
    src_row = g_new(guchar, dwidth * bpp);
    dest_row = g_new(guchar, pwidth * bpp);
    src_col = g_new(gint, pwidth);
-   
+
    for (col = 0; col < pwidth; col++)
       src_col[col] = (col * dwidth / pwidth) * bpp;
-   
+
    for (row = 0; row < pheight; row++) {
-      gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight, 
+      gimp_pixel_rgn_get_row(srcrgn, src_row, 0, row * dheight / pheight,
 			     dwidth);
       dest = dest_row;
       for (col = 0; col < pwidth; col++) {
@@ -231,7 +232,7 @@ render_rgb_image(GtkWidget *preview, GPixelRgn *srcrgn)
 	       check = LIGHTCHECK;
 	    else
 	       check = DARKCHECK;
-	    
+
 	    if (src[alpha] == 0) {
 	       /* full transparent -- check */
 	       for (b = 0; b < alpha; b++)
@@ -239,7 +240,7 @@ render_rgb_image(GtkWidget *preview, GPixelRgn *srcrgn)
 	    } else {
 	       /* middlemost transparent -- mix check and src */
 	       for (b = 0; b < alpha; b++)
-		  dest[b] = (src[b] * src[alpha] + 
+		  dest[b] = (src[b] * src[alpha] +
 			     check * (OPAQUE - src[alpha])) / OPAQUE;
 	    }
 	 }
@@ -278,6 +279,15 @@ render_preview(GtkWidget *preview, GPixelRgn *srcrgn)
 }
 
 static gint
+arrow_cb(GtkWidget *widget, GdkEventButton *event, gpointer data)
+{
+	if (event->button == 1)
+		do_main_popup_menu(event);
+	gtk_signal_emit_stop_by_name(GTK_OBJECT(widget), "button_press_event");
+	return FALSE;
+}
+
+static gint
 preview_expose(GtkWidget *widget, GdkEventExpose *event)
 {
    Preview_t *data = preview_user_data(widget);
@@ -295,28 +305,28 @@ preview_expose(GtkWidget *widget, GdkEventExpose *event)
 void
 add_preview_motion_event(Preview_t *preview, GtkSignalFunc func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview), 
+   gtk_signal_connect(GTK_OBJECT(preview->preview),
 		      "motion_notify_event", func, NULL);
 }
 
 void
 add_enter_notify_event(Preview_t *preview, GtkSignalFunc func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview), 
+   gtk_signal_connect(GTK_OBJECT(preview->preview),
 		      "enter_notify_event", func, NULL);
 }
 
 void
 add_leave_notify_event(Preview_t *preview, GtkSignalFunc func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview), 
+   gtk_signal_connect(GTK_OBJECT(preview->preview),
 		      "leave_notify_event", func, NULL);
 }
 
 void
 add_preview_button_press_event(Preview_t *preview, GtkSignalFunc func)
 {
-   gtk_signal_connect(GTK_OBJECT(preview->preview), 
+   gtk_signal_connect(GTK_OBJECT(preview->preview),
 		      "button_press_event", func, NULL);
 }
 
@@ -355,8 +365,8 @@ static GtkTargetEntry target_table[] = {
    {"text/plain", 0, 2 }
 };
 
-static void 
-handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y, 
+static void
+handle_drop(GtkWidget *widget, GdkDragContext *context, gint x, gint y,
 	    GtkSelectionData *data, guint info, guint time)
 {
    gboolean success = FALSE;
@@ -383,6 +393,7 @@ make_preview(GDrawable *drawable)
    Preview_t *data = g_new(Preview_t, 1);
    GtkWidget *preview;
    GtkWidget *window;
+   GtkWidget *button, *arrow;
    GtkWidget *ruler;
    GtkWidget *frame;
    GtkWidget *table;
@@ -394,7 +405,7 @@ make_preview(GDrawable *drawable)
    gtk_object_set_user_data(GTK_OBJECT(preview), data);
    gtk_widget_set_events(GTK_WIDGET(preview), PREVIEW_MASK);
    data->exp_id = gtk_signal_connect_after(GTK_OBJECT(preview), "expose_event",
-					   (GtkSignalFunc) preview_expose, 
+					   (GtkSignalFunc) preview_expose,
 					   data);
 
    /* Handle drop of links in preview widget */
@@ -411,7 +422,7 @@ make_preview(GDrawable *drawable)
    width = (data->width > 600) ? 600 : data->width;
    height = (data->height > 400) ? 400 : data->height;
    gtk_widget_set_usize(window, width, height);
-   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window), 
+   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(window),
 				  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
    gtk_widget_show(window);
 
@@ -423,7 +434,22 @@ make_preview(GDrawable *drawable)
    table = gtk_table_new(3, 3, FALSE);
    gtk_table_attach(GTK_TABLE(table), preview, 1, 2, 1, 2, GTK_FILL, GTK_FILL,
 		    0, 0);
-   gtk_container_add(GTK_CONTAINER(frame), table); 
+   gtk_container_add(GTK_CONTAINER(frame), table);
+
+   /* Create button with arrow */
+   button = gtk_button_new();
+   GTK_WIDGET_UNSET_FLAGS(button, GTK_CAN_FOCUS);
+   gtk_table_attach(GTK_TABLE(table), button, 0, 1, 0, 1, GTK_FILL, GTK_FILL,
+		    0, 0);
+   gtk_widget_set_events(button,
+						 GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
+   gtk_signal_connect(GTK_OBJECT(button), "button_press_event",
+					  (GtkSignalFunc) arrow_cb, NULL);
+   gtk_widget_show(button);
+
+   arrow = gtk_arrow_new(GTK_ARROW_RIGHT, GTK_SHADOW_OUT);
+   gtk_container_add(GTK_CONTAINER(button), arrow);
+   gtk_widget_show(arrow);
 
    /* Create horizontal ruler */
    data->hruler = ruler = gtk_hruler_new();
@@ -431,7 +457,7 @@ make_preview(GDrawable *drawable)
    gtk_signal_connect_object(GTK_OBJECT(preview), "motion_notify_event",
 			     (GtkSignalFunc) GTK_WIDGET_CLASS(GTK_OBJECT(ruler)->klass)->motion_notify_event,
 			     GTK_OBJECT(ruler));
-   gtk_table_attach(GTK_TABLE(table), ruler, 1, 2, 0, 1, GTK_FILL, GTK_FILL, 
+   gtk_table_attach(GTK_TABLE(table), ruler, 1, 2, 0, 1, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_show(ruler);
 
@@ -441,11 +467,11 @@ make_preview(GDrawable *drawable)
    gtk_signal_connect_object(GTK_OBJECT(preview), "motion_notify_event",
 			     (GtkSignalFunc) GTK_WIDGET_CLASS (GTK_OBJECT (ruler)->klass)->motion_notify_event,
 			     GTK_OBJECT(ruler));
-   gtk_table_attach(GTK_TABLE(table), ruler, 0, 1, 1, 2, GTK_FILL, GTK_FILL, 
+   gtk_table_attach(GTK_TABLE(table), ruler, 0, 1, 1, 2, GTK_FILL, GTK_FILL,
 		    0, 0);
    gtk_widget_show(ruler);
 
-   gimp_pixel_rgn_init(&data->src_rgn, drawable, 0, 0, data->width, 
+   gimp_pixel_rgn_init(&data->src_rgn, drawable, 0, 0, data->width,
 		       data->height, FALSE, FALSE);
    render_preview(preview, &data->src_rgn);
 
