@@ -1,5 +1,13 @@
 2000-02-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint_options.h
+	* app/tool_options.h: put the pointer to tool's private context to
+	the PaintOptions structure instead of attaching it to the
+	paint_mode optionmenu (which does not exist for all paint tools
+	which have a private context). Fixes bug #6308.
+
+2000-02-18  Michael Natterer  <mitch@gimp.org>
+
 	* libgimp/gimpwidgets.c: added (empty) documentation headers.
 
 Fri Feb 18 19:16:26 CET 2000  Sven Neumann <sven@gimp.org>

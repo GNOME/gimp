@@ -76,17 +76,14 @@ tool_options_paint_mode_update (GtkWidget *widget,
 {
   LayerModeEffects  paint_mode;
   PaintOptions     *options;
-  GimpContext      *context;
 
   paint_mode = (LayerModeEffects) gtk_object_get_user_data (GTK_OBJECT (widget));
   options    = (PaintOptions *) data;
-  context    = gtk_object_get_data (GTK_OBJECT (options->paint_mode_w),
-				    "tool_context");
 
-  gtk_signal_handler_block_by_data (GTK_OBJECT (context),
+  gtk_signal_handler_block_by_data (GTK_OBJECT (options->context),
 				    options->paint_mode_w);
-  gimp_context_set_paint_mode (GIMP_CONTEXT (context), paint_mode);
-  gtk_signal_handler_unblock_by_data (GTK_OBJECT (context),
+  gimp_context_set_paint_mode (GIMP_CONTEXT (options->context), paint_mode);
+  gtk_signal_handler_unblock_by_data (GTK_OBJECT (options->context),
 				      options->paint_mode_w);
 }
 
@@ -478,6 +475,7 @@ paint_options_init (PaintOptions         *options,
   options->global        = NULL;
   options->opacity_w     = NULL;
   options->paint_mode_w  = NULL;
+  options->context       = tool_context;
   options->incremental_w = NULL;
   options->incremental = options->incremental_d = FALSE;
 
@@ -535,10 +533,6 @@ paint_options_init (PaintOptions         *options,
       gtk_signal_connect (GTK_OBJECT (tool_context), "paint_mode_changed",
 			  GTK_SIGNAL_FUNC (tool_options_paint_mode_changed),
 			  options->paint_mode_w);
-
-      /* eek */
-      gtk_object_set_data (GTK_OBJECT (options->paint_mode_w), "tool_context",
-			   tool_context);
       break;
     case CONVOLVE:
     case ERASER:
@@ -638,27 +632,23 @@ paint_options_new (ToolType              tool_type,
 void
 paint_options_reset (PaintOptions *options)
 {
-  GimpContext *context;
   GimpContext *default_context;
-
-  context = (GimpContext *)
-    gtk_object_get_data (GTK_OBJECT (options->paint_mode_w), "tool_context");
 
   default_context = gimp_context_get_default ();
 
   if (options->opacity_w)
     {
-      gimp_context_set_opacity (context,
+      gimp_context_set_opacity (GIMP_CONTEXT (options->context),
 				gimp_context_get_opacity (default_context));
     }
   if (options->paint_mode_w)
     {
-      gimp_context_set_paint_mode (GIMP_CONTEXT (context),
+      gimp_context_set_paint_mode (GIMP_CONTEXT (options->context),
 				   gimp_context_get_paint_mode (default_context));
     }
   if (options->incremental_w)
     {
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON(options->incremental_w),
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (options->incremental_w),
 				    options->incremental_d);
     }
 
