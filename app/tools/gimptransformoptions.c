@@ -76,6 +76,11 @@ static void   gimp_transform_options_set_defaults   (GimpToolOptions *tool_optio
 static void   gimp_transform_options_preview_notify (GimpTransformOptions *options,
                                                      GParamSpec           *pspec,
                                                      GtkWidget            *density_box);
+static void   gimp_scale_options_constrain_callback (GtkWidget            *widget,
+                                                     GObject              *config);
+static void   gimp_scale_options_constrain_notify   (GimpTransformOptions *options,
+                                                     GParamSpec           *pspec,
+                                                     GtkWidget            *vbox);
 
 
 static GimpToolOptionsClass *parent_class = NULL;
@@ -303,30 +308,6 @@ gimp_transform_options_set_defaults (GimpToolOptions *tool_options)
       tool_options->tool_info->gimp->config->interpolation_type;
 }
 
-static void
-gimp_scale_constraints_callback (GtkWidget *widget,
-                                 GObject   *config)
-{
-  gint      value;
-  gboolean  c0;
-  gboolean  c1;
-
-  value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
-                                              "gimp-item-data"));
-
-  c0 = c1 = FALSE;
-
-  if (value == 1 || value == 3)
-    c0 = TRUE;
-  if (value == 2 || value == 3)
-    c1 = TRUE;
-
-  g_object_set (config,
-                "constrain-1", c0,
-                "constrain-2", c1,
-                NULL);
-}
-
 GtkWidget *
 gimp_transform_options_gui (GimpToolOptions *tool_options)
 {
@@ -461,14 +442,14 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
         }
       else if (tool_options->tool_info->tool_type == GIMP_TYPE_SCALE_TOOL)
         {
-          gchar *str1;
-          gchar *str2;
-          gchar *str3;
+          GtkWidget *button;
+          gchar     *str1;
+          gchar     *str2;
+          gchar     *str3;
+          gint       initial;
 
-          g_object_set (config,
-                        "constrain-1", FALSE,
-                        "constrain-2", FALSE,
-                        NULL);
+          initial = ((options->constrain_1 ? 1 : 0) +
+                     (options->constrain_2 ? 2 : 0));
 
           str1 = g_strdup_printf (_("Keep height  %s"),
                                   gimp_get_mod_string (GDK_CONTROL_MASK));
@@ -479,10 +460,10 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
                                                        GDK_MOD1_MASK));
 
           vbox3 = gimp_int_radio_group_new (FALSE, NULL,
-                                            G_CALLBACK (gimp_scale_constraints_callback),
-                                            config, 0,
+                                            G_CALLBACK (gimp_scale_options_constrain_callback),
+                                            config, initial,
 
-                                            _("None"), 0, NULL,
+                                            _("None"), 0, &button,
                                             str1,      1, NULL,
                                             str2,      2, NULL,
                                             str3,      3, NULL,
@@ -491,6 +472,13 @@ gimp_transform_options_gui (GimpToolOptions *tool_options)
 
           gtk_box_pack_start (GTK_BOX (vbox2), vbox3, FALSE, FALSE, 0);
           gtk_widget_show (vbox3);
+
+          g_signal_connect_object (config, "notify::constrain-1",
+                                   G_CALLBACK (gimp_scale_options_constrain_notify),
+                                   G_OBJECT (button), 0);
+          g_signal_connect_object (config, "notify::constrain-2",
+                                   G_CALLBACK (gimp_scale_options_constrain_notify),
+                                   G_OBJECT (button), 0);
 
           g_free (str1);
           g_free (str2);
@@ -516,4 +504,44 @@ gimp_transform_options_preview_notify (GimpTransformOptions *options,
                             GIMP_TRANSFORM_PREVIEW_TYPE_GRID ||
                             options->preview_type ==
                             GIMP_TRANSFORM_PREVIEW_TYPE_IMAGE_GRID);
+}
+
+static void
+gimp_scale_options_constrain_callback (GtkWidget *widget,
+                                       GObject   *config)
+{
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
+    {
+      gint      value;
+      gboolean  c0;
+      gboolean  c1;
+
+      value = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
+                                                  "gimp-item-data"));
+
+      c0 = c1 = FALSE;
+
+      if (value == 1 || value == 3)
+        c0 = TRUE;
+      if (value == 2 || value == 3)
+        c1 = TRUE;
+
+      g_object_set (config,
+                    "constrain-1", c0,
+                    "constrain-2", c1,
+                    NULL);
+    }
+}
+
+static void
+gimp_scale_options_constrain_notify (GimpTransformOptions *options,
+                                     GParamSpec           *pspec,
+                                     GtkWidget            *button)
+{
+  gint value;
+
+  value = ((options->constrain_1 ? 1 : 0) +
+           (options->constrain_2 ? 2 : 0));
+
+  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
 }

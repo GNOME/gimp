@@ -1,3 +1,18 @@
+2004-10-06  Michael Natterer  <mitch@gimp.org>
+
+	Fixed the scale constraints radio buttons:
+
+	* app/tools/gimptransformoptions.c (gimp_transform_options_gui):
+	initialize the radio group with the correct value instead of
+	resetting the model before creating the group.
+
+	(gimp_scale_options_constrain_callback): change the model
+	only if the radio button became active.
+
+	(gimp_scale_options_constrain_notify): new callback which makes
+	the radio buttons a real view on the model again (fixes GUI
+	updates on modifier press/release).
+
 2004-10-06  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/plug-in-actions.c (plug_in_actions_update): an image
