@@ -894,7 +894,7 @@ gimp_stroke_interpolate (const GimpStroke *stroke,
                          gdouble           precision,
                          gboolean         *ret_closed)
 {
-  g_return_val_if_fail (GIMP_IS_STROKE (stroke), 0);
+  g_return_val_if_fail (GIMP_IS_STROKE (stroke), NULL);
 
   return GIMP_STROKE_GET_CLASS (stroke)->interpolate (stroke, precision,
                                                       ret_closed);

@@ -1,3 +1,17 @@
+2003-09-30  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/dialogs-commands.c (dialogs_create_dockable_cmd_callback):
+	accept a list of dialog identifiers and try to raise an existing
+	dockable from the list. If that fails, create a new one from the
+	first entry.
+
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: specify alternative dialog identifiers
+	where appropriate.
+	
+	* app/vectors/gimpstroke.c (gimp_stroke_interpolate): use NULL
+	instead of 0.
+
 2003-09-30  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c:
