@@ -77,12 +77,9 @@ update-po: $(srcdir)/$(GETTEXT_PACKAGE)-tips.pot
 	done
 
 validate: update-po gimp-tips.xml
-	( xmllint=`which xmllint`; \
-	  if test x$$xmllint != x && test -x $$xmllint; then \
-	    $$xmllint --noout --valid gimp-tips.xml || \
-	      ( echo "* gimp-tips.xml INVALID *"; exit 1; ) \
-	  else \
-	    echo "Can't find xmllint to validate gimp-tips.xml; proceed with fingers crossed..."; \
-	  fi )
+if HAVE_XMLLINT
+	@$(XMLLINT) --noout --valid gimp-tips.xml || \
+	  ( echo "* gimp-tips.xml INVALID *"; exit 1; )
+endif
 
 dist-hook: validate

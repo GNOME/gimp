@@ -690,6 +690,7 @@ fi
 AC_MSG_CHECKING(for shared memory transport type)
 AC_MSG_RESULT($shmtype)
 
+
 ########################
 # Define a symbol prefix
 ########################
@@ -1283,6 +1284,17 @@ AM_CONDITIONAL(DESKTOP_DATADIR, test "x$with_desktop_dir" != xno)
 AC_SUBST(DESKTOP_DATADIR)
 
 
+#####################
+# Check for XML tools
+#####################
+
+AC_PATH_PROG(XMLLINT, xmllint, no)
+AM_CONDITIONAL(HAVE_XMLLINT, test "x$XMLLINT" != "xno")
+
+AC_PATH_PROG(XSLTPROC, xsltproc, no)
+AM_CONDITIONAL(HAVE_XSLTPROC, test "x$XSLTPROC" != "xno")
+
+
 ######################################
 # Checks for gtk-doc and docbook-tools
 ######################################
@@ -1344,6 +1356,7 @@ AC_SUBST(GIMP_DEVEL_DOCS)
 dnl NOTE: We need to use a separate automake conditional for this
 dnl       to make this work with the tarballs.
 AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
+
 
 #########################################
 # Allow to configure the gimp environment

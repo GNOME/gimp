@@ -33,14 +33,11 @@ EXTRA_DIST = \
 
 
 validate: $(menudata_DATA)
-	@( xmllint=`which xmllint`; \
-	  if test x$$xmllint != x && test -x $$xmllint; then \
-	    for menu in $(menudata_DATA); do \
-	      $$xmllint --noout --valid $$menu || \
-	      ( echo "* $$menu INVALID *"; exit 1; ) ; \
-	    done; \
-	  else \
-	    echo "Can't find xmllint to validate the menu files; proceed with fingers crossed..."; \
-	  fi )
+if HAVE_XMLLINT
+	@for menu in $(menudata_DATA); do \
+	   $(XMLLINT) --noout --valid $$menu || \
+	   ( echo "* $$menu INVALID *"; exit 1; ) ; \
+	done
+endif
 
 dist-hook: validate
