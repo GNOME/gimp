@@ -40,32 +40,24 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-/* Test for GTK1.2-style gdkrgb code, else use old 'preview' code. */
-#ifdef __GDK_RGB_H__
-#define RAPH_IS_HOME yep
-#endif
-
-
-
 /* Declare local functions. */
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+static void       query (void);
+static void       run   (const gchar      *name,
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static void       do_fun                   (void);
 
-static void       window_response_callback (GtkWidget *widget,
-                                            gint       response_id,
-                                            gpointer   data);
-static gboolean   iteration_callback       (gpointer   data);
-static void       toggle_feedbacktype      (GtkWidget *widget,
-                                            gpointer   data);
+static void       window_response_callback (GtkWidget      *widget,
+                                            gint            response_id,
+                                            gpointer        data);
+static gboolean   do_iteration             (void);
+static gboolean   toggle_feedbacktype      (GtkWidget      *widget,
+                                            GdkEventButton *bevent);
 
 static void       render_frame             (void);
-static void       show_frame               (void);
 static void       init_preview_misc        (void);
 
 
@@ -96,11 +88,9 @@ static gint wiggleamp = LOWAMP;
 static guchar     *seed_data;
 static guchar     *preview_data1;
 static guchar     *preview_data2;
-#ifdef RAPH_IS_HOME
+
 static GtkWidget  *drawing_area;
-#else
-static GtkPreview *preview = NULL;
-#endif
+
 static gint32      image_id;
 static GimpDrawable      *drawable;
 static GimpImageBaseType  imagetype;
@@ -108,9 +98,8 @@ static guchar     *palette;
 static gint        ncolours;
 
 static guint      idle_tag;
-static GtkWidget *eventbox;
 static gboolean   feedbacktype = FALSE;
-static gboolean   wiggly = TRUE;
+static gboolean   wiggly       = TRUE;
 static gboolean   rgb_mode;
 
 
@@ -191,22 +180,16 @@ build_dialog (void)
   GtkWidget *dlg;
   GtkWidget *button;
   GtkWidget *frame;
-  GtkWidget *frame2;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *hbox2;
 
   gimp_ui_init ("gee_zoom", TRUE);
 
-  dlg = gimp_dialog_new (_("GEE-ZOOM: The Plug-In Formerly Known As "
-                           "\"The GIMP E'er Egg\""),
-                         "gee_zoom",
+  dlg = gimp_dialog_new (_("GEE-ZOOM"), "gee_zoom",
                          NULL, 0,
                          gimp_standard_help_func, "plug-in-the-old-egg",
                          NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dlg),
-                                  _("** Thank you for choosing GIMP **"),
+                                  _("Thank you for choosing GIMP"),
                                   GTK_RESPONSE_OK);
 
   g_signal_connect (dlg, "response",
@@ -221,66 +204,30 @@ build_dialog (void)
   /* The 'fun' half of the dialog */
 
   frame = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+                      frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox);
-
-  hbox2 = gtk_hbox_new (TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox2), 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
-
-  frame2 = gtk_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), frame2, FALSE, FALSE, 0);
-
-  eventbox = gtk_event_box_new();
-  gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
-
-#ifdef RAPH_IS_HOME
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (drawing_area, width, height);
-  gtk_container_add (GTK_CONTAINER (eventbox), drawing_area);
+  gtk_container_add (GTK_CONTAINER (frame), drawing_area);
   gtk_widget_show (drawing_area);
-#else
-  preview = GTK_PREVIEW (gtk_preview_new (rgb_mode ?
-					  GTK_PREVIEW_COLOR :
-					  GTK_PREVIEW_GRAYSCALE));
-  gtk_preview_size (preview, width, height);
-  gtk_container_add (GTK_CONTAINER (eventbox), GTK_WIDGET (preview));
-  gtk_widget_show (GTK_WIDGET (preview));
-#endif /* RAPH_IS_HOME */
 
-  gtk_widget_show (eventbox);
-  gtk_widget_set_events (eventbox,
-			 gtk_widget_get_events (eventbox)
-			 | GDK_BUTTON_RELEASE_MASK);
+  gtk_widget_add_events (drawing_area,
+                         GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
 
-  gtk_widget_show (frame2);
-
-  gtk_widget_show (hbox2);
-
-  gtk_widget_show (vbox);
-
-  gtk_widget_show (hbox);
-
-  gtk_widget_show (frame);
+  g_signal_connect (drawing_area, "button_release_event",
+                    G_CALLBACK (toggle_feedbacktype),
+                    NULL);
 
   gtk_widget_show (dlg);
 
   idle_tag = g_idle_add_full (G_PRIORITY_LOW,
-                              (GSourceFunc) iteration_callback,
+                              (GSourceFunc) do_iteration,
                               NULL,
                               NULL);
-
-  g_signal_connect (eventbox, "button_release_event",
-                    G_CALLBACK (toggle_feedbacktype),
-                    NULL);
 }
 
 
@@ -304,7 +251,7 @@ do_fun (void)
   imagetype = gimp_image_base_type(image_id);
 
   if (imagetype == GIMP_INDEXED)
-    palette = gimp_image_get_cmap(image_id, &ncolours);
+    palette = gimp_image_get_cmap (image_id, &ncolours);
 
   /* cache hint */
   gimp_tile_cache_ntiles (1);
@@ -315,7 +262,6 @@ do_fun (void)
   init_lut();
 
   render_frame();
-  show_frame();
 
   gtk_main ();
 }
@@ -494,12 +440,10 @@ render_frame (void)
   GdkModifierType mask;
   gint pixels;
 
-  pixels = width*height*(rgb_mode?3:1);
+  if (! GTK_WIDGET_DRAWABLE (drawing_area))
+    return;
 
-#ifdef RAPH_IS_HOME
-#else
-  gdk_flush();
-#endif
+  pixels = width*height*(rgb_mode?3:1);
 
   tmp = preview_data2;
   preview_data2 = preview_data1;
@@ -515,7 +459,7 @@ render_frame (void)
 	}
     }
 
-  gdk_window_get_pointer (eventbox->window, &rxp, &ryp, &mask);
+  gdk_window_get_pointer (drawing_area->window, &rxp, &ryp, &mask);
 
   if ((abs(rxp)>60)||(abs(ryp)>60))
     {
@@ -531,20 +475,11 @@ render_frame (void)
 	     xp+yp, (yp-xp)/2
 	     );
 
-#ifdef RAPH_IS_HOME
       gdk_draw_rgb_image (drawing_area->window,
 			  drawing_area->style->white_gc,
 			  0, 0, width, height,
 			  GDK_RGB_DITHER_NORMAL,
 			  preview_data1, width * 3);
-#else
-      for (i=0;i<height;i++)
-	{
-	  gtk_preview_draw_row (preview,
-				&preview_data1[i*width*3],
-				0, i, width);
-	}
-#endif
 
       /*      memcpy(preview_data1, seed_data, 256*256*3); */
 
@@ -596,21 +531,11 @@ render_frame (void)
 	     xp+yp, (yp-xp)/2
 	     );
 
-#ifdef RAPH_IS_HOME
       gdk_draw_gray_image (drawing_area->window,
 			   drawing_area->style->white_gc,
 			   0, 0, width, height,
 			   GDK_RGB_DITHER_NORMAL,
 			   preview_data1, width);
-#else
-      for (i=0;i<height;i++)
-	{
-	  gtk_preview_draw_row (preview,
-				&preview_data1[i*width],
-				0, i, width);
-	}
-#endif
-
       if (frame != 0)
 	{
 	  if (feedbacktype)
@@ -652,18 +577,6 @@ render_frame (void)
 
   frame++;
 }
-
-
-static void
-show_frame (void)
-{
-#ifdef RAPH_IS_HOME
-#else
-  /* Tell GTK to physically draw the preview */
-  gtk_widget_draw (GTK_WIDGET (preview), NULL);
-#endif /* RAPH_IS_HOME */
-}
-
 
 static void
 init_preview_misc (void)
@@ -816,12 +729,12 @@ init_preview_misc (void)
 
 /* Util. */
 
-static int
+static gboolean
 do_iteration (void)
 {
   render_frame ();
 
-  return 1;
+  return TRUE;
 }
 
 
@@ -839,12 +752,10 @@ window_response_callback (GtkWidget *widget,
   gtk_widget_destroy (widget);
 }
 
-static void
-toggle_feedbacktype (GtkWidget *widget,
-		     gpointer   event)
+static gboolean
+toggle_feedbacktype (GtkWidget      *widget,
+		     GdkEventButton *bevent)
 {
-  GdkEventButton *bevent = (GdkEventButton *) event;
-
   if (bevent->state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK))
     {
       wiggleamp = bevent->x/5;
@@ -852,7 +763,7 @@ toggle_feedbacktype (GtkWidget *widget,
       wiggly = TRUE;
       init_lut();
 
-      return;
+      return TRUE;
     }
 
   if (bevent->state & GDK_BUTTON1_MASK)
@@ -869,15 +780,8 @@ toggle_feedbacktype (GtkWidget *widget,
 	wiggleamp = LOWAMP;
 
       wiggly = TRUE;
-      init_lut();
+      init_lut ();
     }
-}
-
-static gboolean
-iteration_callback (gpointer data)
-{
-  do_iteration ();
-  show_frame ();
 
   return TRUE;
 }

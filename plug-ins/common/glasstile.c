@@ -60,16 +60,16 @@ typedef struct
 } GlassValues;
 
 /* --- Declare local functions --- */
-static void query        (void);
-static void run          (const gchar      *name,
-                          gint              nparams,
-                          const GimpParam  *param,
-                          gint             *nreturn_vals,
-                          GimpParam       **return_vals);
+static void      query        (void);
+static void      run          (const gchar      *name,
+                               gint              nparams,
+                               const GimpParam  *param,
+                               gint             *nreturn_vals,
+                               GimpParam       **return_vals);
 
-static gint glass_dialog (GimpDrawable     *drawable);
-static void glasstile    (GimpDrawable     *drawable,
-                          gboolean          preview_mode);
+static gboolean  glass_dialog (GimpDrawable     *drawable);
+static void      glasstile    (GimpDrawable     *drawable,
+                               gboolean          preview_mode);
 
 
 /* --- Variables --- */
@@ -218,7 +218,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static gint
+static gboolean
 glass_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;

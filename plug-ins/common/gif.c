@@ -336,8 +336,8 @@ static gint   save_image               (const gchar      *filename,
 static gboolean boundscheck            (gint32            image_ID);
 static gboolean badbounds_dialog       (void);
 
-static gint   save_dialog              (gint32            image_ID);
-static void   comment_entry_callback   (GtkTextBuffer    *buffer);
+static gboolean save_dialog            (gint32            image_ID);
+static void     comment_entry_callback (GtkTextBuffer    *buffer);
 
 
 static gboolean comment_was_edited = FALSE;
@@ -1191,7 +1191,6 @@ badbounds_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *label;
-  GtkWidget *frame;
   GtkWidget *vbox;
   gboolean   crop;
 
@@ -1205,13 +1204,11 @@ badbounds_dialog (void)
 			 NULL);
 
   /*  the warning message  */
-  frame = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
 
   label= gtk_label_new (_("The image which you are trying to save as a GIF\n"
 			  "contains layers which extend beyond the actual\n"
@@ -1221,9 +1218,6 @@ badbounds_dialog (void)
 			  "the image borders, or cancel this save."));
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
-
-  gtk_widget_show (vbox);
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 
@@ -1269,17 +1263,16 @@ save_dialog (gint32 image_ID)
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
   /*  regular gif parameter settings  */
-  frame = gtk_frame_new (_("GIF Options"));
+  frame = gimp_frame_new (_("GIF Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Interlace"));
@@ -1291,7 +1284,7 @@ save_dialog (gint32 image_ID)
                     G_CALLBACK (gimp_toggle_button_update),
                     &gsvals.interlace);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
 
   align = gtk_alignment_new (0.0, 0.0, 0, 0);
@@ -1312,7 +1305,6 @@ save_dialog (gint32 image_ID)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
   gtk_box_pack_start_defaults (GTK_BOX (hbox), scrolled_window);
   gtk_widget_show (scrolled_window);
 
@@ -1359,11 +1351,10 @@ save_dialog (gint32 image_ID)
   gtk_widget_show (frame);
 
   /*  additional animated gif parameter settings  */
-  frame = gtk_frame_new (_("Animated GIF Options"));
+  frame = gimp_frame_new (_("Animated GIF Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   toggle = gtk_check_button_new_with_label (_("Loop forever"));
@@ -1376,7 +1367,7 @@ save_dialog (gint32 image_ID)
                     &gsvals.loop);
 
   /* default_delay entry field */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Delay between Frames where Unspecified:"));
@@ -1399,7 +1390,7 @@ save_dialog (gint32 image_ID)
   gtk_widget_show (hbox);
 
   /* Disposal selector */
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   label = gtk_label_new (_("Frame Disposal where Unspecified: "));

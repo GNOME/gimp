@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -60,8 +58,8 @@ static void      gauss_rle (GimpDrawable  *drawable,
 /*
  * Gaussian blur interface
  */
-static gint      gauss_rle_dialog  (void);
-static gint      gauss_rle2_dialog (gint32        image_ID,
+static gboolean  gauss_rle_dialog  (void);
+static gboolean  gauss_rle2_dialog (gint32        image_ID,
 				    GimpDrawable *drawable);
 
 /*
@@ -322,7 +320,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gint
+static gboolean
 gauss_rle_dialog (void)
 {
   GtkWidget *dlg;
@@ -330,7 +328,6 @@ gauss_rle_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *toggle;
-  GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
   gboolean   run;
@@ -346,15 +343,9 @@ gauss_rle_dialog (void)
 
 			 NULL);
 
-  /*  parameter settings  */
-  frame = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-  gtk_widget_show (frame);
-
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
-  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   toggle = gtk_check_button_new_with_label (_("Blur Horizontally"));
@@ -375,8 +366,9 @@ gauss_rle_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &bvals.vertical);
 
-  hbox = gtk_hbox_new (FALSE, 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Blur Radius:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -392,7 +384,6 @@ gauss_rle_dialog (void)
                     G_CALLBACK (gimp_double_adjustment_update),
                     &bvals.radius);
 
-  gtk_widget_show (hbox);
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
@@ -403,7 +394,7 @@ gauss_rle_dialog (void)
 }
 
 
-static gint
+static gboolean
 gauss_rle2_dialog (gint32        image_ID,
 		   GimpDrawable *drawable)
 {
@@ -427,9 +418,10 @@ gauss_rle2_dialog (gint32        image_ID,
 			 NULL);
 
   /*  parameter settings  */
-  frame = gtk_frame_new (_("Blur Radius"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
+  frame = gimp_frame_new (_("Blur Radius"));
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);
@@ -448,13 +440,11 @@ gauss_rle2_dialog (gint32        image_ID,
 			       _("_Vertical:"), b2vals.vertical, yres,
 			       0, 8 * MAX (drawable->width, drawable->height),
 			       0, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
+  gtk_widget_show (size);
 
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);
 
-  gtk_widget_show (size);
-  gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);

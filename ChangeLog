@@ -1,5 +1,17 @@
 2004-05-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c
+	* plug-ins/common/gif.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/glasstile.c
+	* plug-ins/common/gtm.c: HIG-ified.
+
+2004-05-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/exchange.c: fixed minor dialog layout issues.
 
 	* plug-ins/common/screenshot.c: added the camera icon to the dialog.

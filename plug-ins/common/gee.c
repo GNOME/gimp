@@ -21,21 +21,19 @@
 
 
 /* Declare local functions. */
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+static void       query (void);
+static void       run   (const gchar      *name,
+                         gint              nparams,
+                         const GimpParam  *param,
+                         gint             *nreturn_vals,
+                         GimpParam       **return_vals);
 
 static void       do_fun                   (void);
 
 static void       window_response_callback (GtkWidget *widget,
                                             gint       response_id,
                                             gpointer   data);
-static gboolean   iteration_callback       (gpointer   data);
-static void       toggle_feedbacktype      (GtkWidget *widget,
-                                            gpointer   data);
+static gboolean   do_iteration             (void);
 
 static void       render_frame             (void);
 static void       init_preview_misc        (void);
@@ -51,7 +49,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 /* These aren't really redefinable, easily. */
-#define IWIDTH 256
+#define IWIDTH  256
 #define IHEIGHT 256
 
 
@@ -66,7 +64,6 @@ static guchar     *srcbump;
 static guchar     *destbump;
 
 static guint       idle_tag;
-static GtkWidget  *eventbox;
 static GtkWidget  *drawing_area;
 
 static gint32      image_id;
@@ -133,17 +130,8 @@ run (const gchar      *name,
       image_id = param[1].data.d_image;
       drawable = gimp_drawable_get (param[2].data.d_drawable);
 
-#if 0
-      fprintf(stderr, "Got these: %d, %d, %d(%p)\n",
-	      (int)param[0].data.d_int32,
-	      (int)param[1].data.d_image,
-	      (int)param[2].data.d_drawable,
-	      drawable
-	      );
-#endif
-
       if (drawable)
-	do_fun();
+	do_fun ();
       else
 	status = GIMP_PDB_CALLING_ERROR;
     }
@@ -159,10 +147,6 @@ build_dialog (void)
   GtkWidget *dlg;
   GtkWidget *button;
   GtkWidget *frame;
-  GtkWidget *frame2;
-  GtkWidget *vbox;
-  GtkWidget *hbox;
-  GtkWidget *hbox2;
 
   gimp_ui_init ("gee", TRUE);
 
@@ -172,7 +156,7 @@ build_dialog (void)
                          NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dlg),
-                                  _("** Thank you for choosing GIMP **"),
+                                  _("Thank you for choosing GIMP"),
                                   GTK_RESPONSE_OK);
 
   g_signal_connect (dlg, "response",
@@ -184,60 +168,24 @@ build_dialog (void)
                              "adam@gimp.org / adam@foxbox.org / 1998-2000"),
                            NULL);
 
-  /* The 'fun' half of the dialog */
-
   frame = gtk_frame_new (NULL);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
-
-  hbox = gtk_hbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 3);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-
-  vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 3);
-  gtk_container_add (GTK_CONTAINER (hbox), vbox);
-
-  hbox2 = gtk_hbox_new (TRUE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox2), 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
-
-  frame2 = gtk_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (hbox2), frame2, FALSE, FALSE, 0);
-
-  eventbox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (frame2), GTK_WIDGET (eventbox));
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
+                      frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   drawing_area = gtk_drawing_area_new ();
   gtk_widget_set_size_request (drawing_area, IWIDTH, IHEIGHT);
-  gtk_container_add (GTK_CONTAINER (eventbox), drawing_area);
+  gtk_container_add (GTK_CONTAINER (frame), drawing_area);
   gtk_widget_show (drawing_area);
-
-  gtk_widget_show (eventbox);
-  gtk_widget_set_events (eventbox,
-			 gtk_widget_get_events (eventbox)
-			 | GDK_BUTTON_RELEASE_MASK);
-
-  gtk_widget_show (frame2);
-
-  gtk_widget_show (hbox2);
-
-  gtk_widget_show (vbox);
-
-  gtk_widget_show (hbox);
-
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 
   idle_tag = g_idle_add_full (G_PRIORITY_LOW,
-                              (GSourceFunc) iteration_callback,
+                              (GSourceFunc) do_iteration,
                               NULL,
                               NULL);
-
-  g_signal_connect (eventbox, "button_release_event",
-                    G_CALLBACK (toggle_feedbacktype),
-                    NULL);
 }
 
 
@@ -246,8 +194,9 @@ build_dialog (void)
 #define LIGHT 0x21 */
 #define LIGHT 0x0d
 static guchar llut[256];
+
 static void
-gen_llut(void)
+gen_llut (void)
 {
   int i,k;
 
@@ -272,7 +221,7 @@ do_fun (void)
   imagetype = gimp_image_base_type(image_id);
 
   if (imagetype == GIMP_INDEXED)
-    palette = gimp_image_get_cmap(image_id, &ncolours);
+    palette = gimp_image_get_cmap (image_id, &ncolours);
   else
     if (imagetype == GIMP_GRAY)
       {
@@ -301,13 +250,14 @@ do_fun (void)
 
 
 static void
-show(void)
+show (void)
 {
-  gdk_draw_rgb_32_image (drawing_area->window,
-			 drawing_area->style->white_gc,
-			 0, 0, IWIDTH, IHEIGHT,
-			 GDK_RGB_DITHER_NORMAL,
-			 (guchar*)disp, IWIDTH * 4);
+  if (GTK_WIDGET_DRAWABLE (drawing_area))
+    gdk_draw_rgb_32_image (drawing_area->window,
+                           drawing_area->style->white_gc,
+                           0, 0, IWIDTH, IHEIGHT,
+                           GDK_RGB_DITHER_NORMAL,
+                           (guchar *) disp, IWIDTH * 4);
 }
 
 
@@ -315,7 +265,7 @@ show(void)
 
 
 static void
-bumpbob(int x, int y, int size)
+bumpbob (int x, int y, int size)
 {
   int o;
 
@@ -553,7 +503,7 @@ iterate (void)
     GdkModifierType mask;
     gint size, i;
 
-    gdk_window_get_pointer (eventbox->window, &rxp, &ryp, &mask);
+    gdk_window_get_pointer (drawing_area->window, &rxp, &ryp, &mask);
 
     for (i = 0; i < BOBS_PER_FRAME; i++)
       {
@@ -595,9 +545,8 @@ render_frame (void)
     }
 #endif
 
-  iterate();
-
-  show();
+  iterate ();
+  show ();
 
   frame++;
 }
@@ -607,10 +556,10 @@ static void
 init_preview_misc (void)
 {
   GimpPixelRgn pixel_rgn;
-  gint i;
-  gboolean has_alpha;
+  gint         i;
+  gboolean     has_alpha;
 
-  has_alpha = gimp_drawable_has_alpha(drawable->drawable_id);
+  has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
   env = g_malloc (4 * IWIDTH * IHEIGHT * 2);
   disp = g_malloc ((IWIDTH + 2 + IWIDTH * IHEIGHT) * 4);
@@ -762,22 +711,14 @@ init_preview_misc (void)
     }
 }
 
-
-
-/* Util. */
-
-static int
+static gboolean
 do_iteration (void)
 {
   render_frame ();
   show ();
 
-  return 1;
+  return TRUE;
 }
-
-
-
-/*  Callbacks  */
 
 static void
 window_response_callback (GtkWidget *widget,
@@ -788,19 +729,4 @@ window_response_callback (GtkWidget *widget,
   idle_tag = 0;
 
   gtk_widget_destroy (widget);
-}
-
-static void
-toggle_feedbacktype (GtkWidget *widget,
-		     gpointer   event)
-{
-
-}
-
-static gboolean
-iteration_callback (gpointer data)
-{
-  do_iteration ();
-
-  return TRUE;
 }

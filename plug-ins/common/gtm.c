@@ -408,8 +408,8 @@ save_dialog (gint32 image_ID)
 
 			 NULL);
 
-  main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), main_vbox,
 		      TRUE, TRUE, 0);
 
@@ -419,17 +419,16 @@ save_dialog (gint32 image_ID)
       GtkWidget *label;
       GtkWidget *hbox;
 
-      frame = gtk_frame_new (_("Warning"));
+      frame = gimp_frame_new (_("Warning"));
       gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-      hbox = gtk_hbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+      hbox = gtk_hbox_new (FALSE, 12);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
 
       eek = gtk_image_new_from_stock (GIMP_STOCK_WILBER_EEK,
                                       GTK_ICON_SIZE_DIALOG);
-      gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 4);
+      gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 0);
 
       label = gtk_label_new (_("You are about to create a huge\n"
 			       "HTML file which will most likely\n"
@@ -440,11 +439,10 @@ save_dialog (gint32 image_ID)
     }
 
   /* HTML Page Options */
-  frame = gtk_frame_new (_("HTML Page Options"));
+  frame = gimp_frame_new (_("HTML Page Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -467,13 +465,12 @@ save_dialog (gint32 image_ID)
   gtk_widget_show (frame);
 
   /* HTML Table Creation Options */
-  frame = gtk_frame_new (_("Table Creation Options"));
+  frame = gimp_frame_new (_("Table Creation Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   toggle = gtk_check_button_new_with_mnemonic (_("_Use Cellspan"));
@@ -541,7 +538,7 @@ save_dialog (gint32 image_ID)
   gtk_widget_set_size_request (entry, 200, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.cellcontent);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("C_ell Content:"), 1.0, 0.5,
+			     _("C_ell Content:"), 0.0, 0.5,
 			     entry, 1, FALSE);
   gtk_widget_show (entry);
 
@@ -555,19 +552,18 @@ save_dialog (gint32 image_ID)
   gtk_widget_show (frame);
 
   /* HTML Table Options */
-  frame = gtk_frame_new (_("Table Options"));
+  frame = gimp_frame_new (_("Table Options"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
 
   table = gtk_table_new (5, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   spinbutton = gimp_spin_button_new (&adj, gtmvals.border,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Border:"), 1.0, 0.5,
+			     _("_Border:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
@@ -582,7 +578,7 @@ save_dialog (gint32 image_ID)
   gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clwidth);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Width:"), 1.0, 0.5,
+			     _("_Width:"), 0.0, 0.5,
 			     entry, 1, TRUE);
 
   gimp_help_set_help_data (entry,
@@ -598,7 +594,7 @@ save_dialog (gint32 image_ID)
   gtk_widget_set_size_request (entry, 60, -1);
   gtk_entry_set_text (GTK_ENTRY (entry), gtmvals.clheight);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Height:"), 1.0, 0.5,
+			     _("_Height:"), 0.0, 0.5,
 			     entry, 1, TRUE);
 
   gimp_help_set_help_data (entry,
@@ -613,7 +609,7 @@ save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellpadding,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
-			     _("Cell-_Padding:"), 1.0, 0.5,
+			     _("Cell-_Padding:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
@@ -626,7 +622,7 @@ save_dialog (gint32 image_ID)
   spinbutton = gimp_spin_button_new (&adj, gtmvals.cellspacing,
 				     0, 1000, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
-			     _("Cell-_Spacing:"), 1.0, 0.5,
+			     _("Cell-_Spacing:"), 0.0, 0.5,
 			     spinbutton, 1, TRUE);
 
   gimp_help_set_help_data (spinbutton,
