@@ -110,6 +110,7 @@ struct _GDisplay
 
   InfoDialog *window_info_dialog; /*  dialog box for image information        */
   InfoDialog *window_nav_dialog;  /*  dialog box for image navigation         */
+  GtkWidget  *nav_popup;          /*  widget for the popup navigation window  */
 
   int color_type;                 /*  is this an RGB or GRAY colormap         */
 

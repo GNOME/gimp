@@ -1,3 +1,18 @@
+Wed Sep  1 23:18:21 BST 1999 Andy Thomas <alt@gimp.org>
+
+	* app/gdisplay.c
+	* app/gdisplay.h
+	* app/interface.c
+	* app/nav_window.c
+	* app/nav_window.h
+	* pixmap/navbutton.xpm (new)
+
+	New popup navigation window. press the icon that appears in  
+	the bottom right-hand corner of the image display. A navigation
+	window will appear that will allow you to scroll around the image if
+	the area shown is smaller than the overall image size. Thanks to tml
+	for the idea. 
+
 Wed Sep  1 22:28:09 BST 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/gradient.c

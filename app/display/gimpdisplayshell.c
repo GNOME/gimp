@@ -38,6 +38,7 @@
 #include "indicator_area.h"
 #include "interface.h"
 #include "menus.h"
+#include "nav_window.h"
 #include "qmask.h"
 #include "session.h"
 #include "tools.h"
@@ -45,6 +46,7 @@
 #include "pixmaps.h"
 #include "pixmaps/qmasksel.xpm"
 #include "pixmaps/qmasknosel.xpm"
+#include "pixmaps/navbutton.xpm"
 
 #include "libgimp/gimpsizeentry.h"
 #include "libgimp/gimpintl.h"
@@ -641,6 +643,8 @@ create_display_shell (GDisplay* gdisp,
   GtkWidget *frame;
   GtkWidget *arrow;
   GtkWidget *pixmap;
+  GtkWidget *evbox;
+  GtkWidget *navhbox;
 
   GSList *group = NULL;
 
@@ -731,7 +735,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_table_set_col_spacing (GTK_TABLE (table_inner), 0, 1);
   gtk_table_set_row_spacing (GTK_TABLE (table_inner), 0, 1);
 
-  table_lower = gtk_table_new (1,3,FALSE);
+  table_lower = gtk_table_new (1,4,FALSE);
   gtk_table_set_col_spacing (GTK_TABLE (table_lower), 0, 1);
  /*  gtk_table_set_row_spacing (GTK_TABLE (table_lower), 0, 1); */
 
@@ -771,6 +775,16 @@ create_display_shell (GDisplay* gdisp,
   gtk_signal_connect (GTK_OBJECT (gdisp->vrule), "button_press_event",
 		      (GtkSignalFunc) gdisplay_vruler_button_press,
 		      gdisp);
+
+  /* The nav window button */
+  evbox = gtk_event_box_new();
+  gtk_widget_show(evbox);
+  navhbox = gtk_hbox_new (FALSE,0);
+  gtk_container_add(GTK_CONTAINER(evbox),navhbox);
+  GTK_WIDGET_UNSET_FLAGS (evbox, GTK_CAN_FOCUS);
+  gtk_signal_connect (GTK_OBJECT (evbox), "button_press_event",
+                     (GtkSignalFunc) nav_popup_click_handler,
+                     gdisp);
 
   gdisp->hsb = gtk_hscrollbar_new (gdisp->hsbdata);
   GTK_WIDGET_UNSET_FLAGS (gdisp->hsb, GTK_CAN_FOCUS);
@@ -825,6 +839,14 @@ create_display_shell (GDisplay* gdisp,
     pixmap = gtk_pixmap_new (pxmp, mask);
     gtk_container_add (GTK_CONTAINER (gdisp->qmaskoff), pixmap);
     gtk_widget_show (pixmap);
+
+    /* nav button pixmap */
+    pxmp = gdk_pixmap_create_from_xpm_d (gdisp->shell->window, &mask,
+					 &style->bg[GTK_STATE_NORMAL],
+					 navbutton_xpm);   
+    pixmap = gtk_pixmap_new (pxmp, mask);
+    gtk_container_add (GTK_CONTAINER (navhbox), pixmap); 
+    gtk_widget_show (pixmap); 
   }
  
   gdisp->canvas = gtk_drawing_area_new ();
@@ -849,6 +871,9 @@ create_display_shell (GDisplay* gdisp,
 		    GTK_FILL | GTK_EXPAND | GTK_SHRINK,
 		    GTK_FILL | GTK_EXPAND | GTK_SHRINK, 0, 0);
  /* sneak in an extra table here */
+  gtk_table_attach (GTK_TABLE (table_lower), evbox, 3, 4, 0, 1, 
+ 		    GTK_SHRINK, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0); 
+
   gtk_table_attach (GTK_TABLE (table_lower), gdisp->hsb, 2, 3, 0, 1,
 		    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_table_attach (GTK_TABLE (table_lower), gdisp->qmaskoff, 0, 1, 0, 1,
@@ -857,7 +882,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_table_attach (GTK_TABLE (table_lower), gdisp->qmaskon, 1, 2, 0, 1,
 		    GTK_SHRINK, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
-  gtk_table_attach (GTK_TABLE (table), table_lower, 0, 1, 1, 2,
+  gtk_table_attach (GTK_TABLE (table), table_lower, 0, 2, 1, 2,
 		    GTK_FILL | GTK_SHRINK | GTK_FILL, GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), gdisp->vsb, 1, 2, 0, 1,
@@ -920,7 +945,7 @@ create_display_shell (GDisplay* gdisp,
   gtk_widget_show (arrow);
   gtk_widget_show (gdisp->qmaskon);
   gtk_widget_show (gdisp->qmaskoff);
-
+  gtk_widget_show (navhbox);
 
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);

@@ -103,6 +103,7 @@ gdisplay_new (GimpImage    *gimage,
   gdisp->gimage = gimage;
   gdisp->window_info_dialog = NULL;
   gdisp->window_nav_dialog = NULL;
+  gdisp->nav_popup = NULL;
   gdisp->depth = g_visual->depth;
   gdisp->select = NULL;
   gdisp->ID = display_num++;
@@ -361,6 +362,9 @@ gdisplay_delete (GDisplay *gdisp)
   /* Remove navigation dialog if we have one */
   if(gdisp->window_nav_dialog)
     nav_window_free(gdisp->window_nav_dialog);
+
+  if(gdisp->nav_popup)
+    nav_popup_free(gdisp->nav_popup);
 
   /*  set the active display to NULL if it was this display  */
   context = gimp_context_get_user ();
