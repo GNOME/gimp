@@ -92,7 +92,6 @@ main (int argc, char **argv)
   strcat (display_env, "DISPLAY=");
   strcat (display_env, display_name);
   putenv (display_env);
-  g_free (display_env);
 
   no_interface = FALSE;
   no_data = FALSE;

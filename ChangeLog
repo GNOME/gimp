@@ -1,3 +1,8 @@
+Thu Dec 18 11:15:17 1997  Scott Goehring  <scott@poverty.bloomington.in.us>
+
+	* app/main.c (main): Freeing arguments to putenv afterwards is
+	naughty.  Fixed.  Plug-ins work now.
+
 Wed Dec 17 23:51:30 CST 1997 Shawn T. Amundson <amundson@gimp.org>
 	
 	* All these changes are from Owen Taylor to make GIMP work
