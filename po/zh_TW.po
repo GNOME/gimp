@@ -1,15 +1,15 @@
 # Traditional chinese translation for gimp.
-# Copyright (C) 2001 Free Software Foundation, Inc.
-# Based on translation from 陳英傑 <r5224205@ms.cc.ntu.edu.tw>
+# Copyright (C) 2000-2002 Free Software Foundation, Inc.
+# 陳英傑 <r5224205@ms.cc.ntu.edu.tw>, 2000
 # 林佳宏 <object@mis.mgt.ncu.edu.tw>, 2001.
 # Chun-Chung Chen <cjj@u.washington.edu>, 2001.
-# Abel Cheung <maddog@linux.org.hk>, 2001.
+# Abel Cheung <maddog@linux.org.hk>, 2001-2002.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.2.3\n"
-"POT-Creation-Date: 2002-02-03 20:05-0800\n"
-"PO-Revision-Date: 2001-11-24 07:32+0800\n"
+"POT-Creation-Date: 2002-03-01 16:54+0800\n"
+"PO-Revision-Date: 2002-03-01 17:16+0800\n"
 "Last-Translator: Abel Cheung <maddog@linux.org.hk>\n"
 "Language-Team: Traditional chinese <zh-l10n@linux.org.tw>\n"
 "MIME-Version: 1.0\n"
@@ -1212,7 +1212,7 @@ msgstr "圖像尺寸：%s"
 
 #: app/file_new_dialog.c:352
 msgid "New Image"
-msgstr "新圖像"
+msgstr "新增圖像"
 
 #: app/file_new_dialog.c:458 app/preferences_dialog.c:1556
 #: app/preferences_dialog.c:1593 app/user_install.c:1430
@@ -1225,6 +1225,7 @@ msgid "Resolution X:"
 msgstr "解析度 X："
 
 #: app/file_new_dialog.c:550 app/resize.c:619
+#, c-format
 msgid "pixels/%a"
 msgstr "像素/%a"
 
@@ -1528,7 +1529,7 @@ msgstr "沒有選擇區域可以描邊！"
 #: app/gimpbrush.c:301
 #, c-format
 msgid "Unknown brush format version #%d in \"%s\"."
-msgstr "\"%2$s\" 裡有不明的筆刷格式版本 #%1$d。"
+msgstr "出現不明的筆刷格式版本 #%d (於“%s”中)。"
 
 #: app/gimpbrush.c:321
 #, c-format
@@ -4149,7 +4150,7 @@ msgstr "沒有可用的圖樣"
 #: app/patterns.c:210
 #, c-format
 msgid "Unknown pattern format version #%d in \"%s\"."
-msgstr "\"%2$s\" 裡有不明的圖樣格式版本 #%1$d。"
+msgstr "出現不明的圖樣格式版本 #%d (於“%s”中)。"
 
 #: app/patterns.c:229
 #, c-format
@@ -4823,7 +4824,7 @@ msgid ""
 "Argument %d to '%s' should be a %s, but got passed a %s"
 msgstr ""
 "傳入 procedural_db_run_proc 的引數不正確：\n"
-"'%2$s' 使用的第 %1$d 個引數應該為 %3$s，但事實上是 %4$s"
+"第 %d 個引數 (程序名稱為‘%s’) 應該為 %s，但事實上是 %s"
 
 #: app/procedural_db_cmds.c:64
 msgid "Internal GIMP procedure"
@@ -5008,17 +5009,17 @@ msgstr "邊界："
 msgid "Use Dynamic Text"
 msgstr "使用動態文字"
 
-#: app/text_tool.c:613
+#: app/text_tool.c:620
 #, c-format
 msgid "Font '%s' not found."
 msgstr "找不到字型 '%s'"
 
-#: app/text_tool.c:635
+#: app/text_tool.c:642
 #, c-format
 msgid "Font '%s' not found.%s"
 msgstr "找不到字型 '%s'。%s"
 
-#: app/text_tool.c:638
+#: app/text_tool.c:645
 msgid ""
 "\n"
 "If you don't have scalable fonts, try turning off antialiasing in the tool "
@@ -5027,7 +5028,7 @@ msgstr ""
 "\n"
 "如果沒有可縮放的字型，請在工具選項裡關閉反鋸齒功能。"
 
-#: app/text_tool.c:751
+#: app/text_tool.c:758
 msgid "Text Layer"
 msgstr "文字圖層"
 
@@ -6305,12 +6306,12 @@ msgstr "  成功\n"
 #: app/user_install.c:1270
 #, c-format
 msgid "Populating directory %s from %s\n"
-msgstr "由 %2$s 複製目錄 %1$s\n"
+msgstr "將目錄內容複製至 %s (由 %s)\n"
 
 #: app/user_install.c:1280
 #, c-format
 msgid "Copying file %s from %s\n"
-msgstr "由 %2$s 複製檔案 %1$s\n"
+msgstr "將檔案內容複製至 %s (由 %s)\n"
 
 #: app/user_install.c:1301
 #, c-format
