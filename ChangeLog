@@ -1,3 +1,36 @@
+2001-11-19  Daniel Egger  <degger@fhm.edu>
+
+	* app/paint-funcs/paint-funcs.c
+	* app/paint-funcs/paint-funcs-generic.h: Split generic (read: C) 
+	code for pixelmanipulation and most of the code that belongs to it
+	into new file.
+	(apply_layer_funcs): Gone. The correct layer function is now 
+	dispatched from the layer_mode_funcs table and the table is 
+	per default initialised with the generic functions. Arguments
+	will be passed by a struct apply_layer_mode_struct instead
+	of directly per stack to avoid parameter typying madness.
+	
+	It's now cleanly possible to check for availabilty of 
+	MMX/AltiVec/(insert your favourite brew here) in 
+	paint_funcs_setup () and change the table to use faster routines.
+	The old MMX cruft which is temporaribly in paint-funcs-generic.h
+	will soon be gone but I'm to tired now.
+
+	* app/paint-funcs/paint-funcs.c: Braind dead code for temporary 
+	buffer (which never shrunk only grew) gone and replaced by 
+	straightforward code.
+
+	* app/paint-funcs/paint-funcs-generic.h: Applied a bunch of obvious 
+	optimisations to reduce code size and avoid parameter madness.
+
+	* paint-funcs-[gray|graya|indexed|rga|rgba].[c|h]: Gone. I lost
+	several days of work on these files and came to the conclusion
+	that there has to be an easier way anyway. :)
+
+	Everything well tested on PPC and producing exactly the same results
+	as the code before so this has good odds to be the first major
+	change that won't break GIMP. :)
+
 2001-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplay-foreach.c: fixed a comment.

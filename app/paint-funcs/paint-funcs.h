@@ -16,11 +16,6 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/*
- * gaussian_blur_region no longer does combination; arguments changed
- *   -- scott@poverty.bloomington.in.us, 16Oct97
- */
-
 #ifndef __PAINT_FUNCS_H__
 #define __PAINT_FUNCS_H__
 
@@ -48,77 +43,6 @@ void  extract_alpha_pixels  (const unsigned char *src,
 			     const unsigned char *mask,
 			     unsigned char *dest,
 			     int w, int bytes);
-
-void  darken_pixels         (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  lighten_pixels        (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  hsv_only_pixels       (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int mode, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  color_only_pixels     (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int mode, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  multiply_pixels       (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  divide_pixels         (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  screen_pixels         (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  overlay_pixels        (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  add_pixels             (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  subtract_pixels       (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  difference_pixels     (const unsigned char *src1,
-			     const unsigned char *src2,
-	 		     unsigned char *dest, int length,
-			     int bytes1, int bytes2,
-			     int has_alpha1, int has_alpha2);
-
-void  dissolve_pixels       (const unsigned char *src,
-			     unsigned char *dest, int x, int y,
-			     int opacity, int length, int sb, int db,
-			     int has_alpha);
 
 void  swap_pixels           (unsigned char *src, unsigned char *dest,
 			     int length);
@@ -276,7 +200,7 @@ void  combine_inten_a_and_inten_pixels    (const unsigned char *src1,
 					   unsigned char *dest,
 					   const unsigned char *mask,
 					   int opacity, const int *affect,
-					   int mode_affect, int length,
+					   guint mode_affect, int length,
 					   int bytes);
 
 /*  combine an RGBA or GRAYA image with an RGBA or GRAYA image
@@ -288,7 +212,7 @@ void  combine_inten_a_and_inten_a_pixels   (const unsigned char *src1,
 					    const unsigned char *mask,
 					    int                 opacity,
 					    const int          *affect,
-					    int                 mode_affect,
+					    guint               mode_affect,
 					    int                 length,
 					    int                 bytes);
 
@@ -559,13 +483,13 @@ void  combine_regions_replace             (PixelRegion *, PixelRegion *,
 
 
 /*  Applying layer modes...  */
-
+/*
 int   apply_layer_mode         (unsigned char *, unsigned char *,
 				unsigned char **, int, int, int,
 				int,
 				LayerModeEffects,
 				int, int, int, int, int *);
-
+*/
 int   apply_indexed_layer_mode (unsigned char *, unsigned char *,
 				unsigned char **,
 				LayerModeEffects, int, int);
