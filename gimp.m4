@@ -149,6 +149,7 @@ GimpPlugInInfo
 #else
 GPlugInInfo
 #endif
+PLUG_IN_INFO =
 {
   NULL,  /* init_proc */
   NULL,  /* quit_proc */

@@ -1,3 +1,7 @@
+2000-10-09  Sven Neumann  <sven@gimp.org>
+
+	* gimp.m4: try to make it work again
+
 2000-10-07  Michael Natterer  <mitch@gimp.org>
 
 	* AUTHORS
