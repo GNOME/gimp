@@ -1,9 +1,11 @@
 Revision history for Gimp-Perl extension.
 
-1.096
+1.096 Thu Jul  8 21:36:36 CEST 1999
 	- fix around PDL-2.002 exporting its own ppport.h.
         - new scripts examples/frame_reshuffle and examples/frame_filter.
         - added Gimp::Fu::PF_TEXT.
+        - added gimp_directory, gimp_data_directory and gimp_personal_rc_file.
+        - added accelerator keys (escape and return) for Gimp::Fu::interact.
 
 1.095 Tue Jun 29 01:22:01 CEST 1999
 	- finally cut support for gimp-1.0.2 and gtk-1.0,
@@ -410,10 +412,10 @@ Revision history for Gimp-Perl extension.
 1.04  Thu Oct  1 22:42:57 CEST 1998
 	- don't disallow drawable arguments as layer parameters.
 	- fixed error reporting again (it should work now but still
-	  compiler with older perls ;)
+	  compile with older perls ;)
 	- implemented PF_FONT, see also Gimp::Fu::xlfd_size
 	- implemented PF_SPINNER
-	- another "Attempt to free unrecerenced scalar" warning fixed
+	- another "Attempt to free unreferenced scalar" warning fixed
 
 1.035 Wed Sep 30 23:58:02 CEST 1998
 	- Gimp::ignore_functions can be used to ignore AUTOLOADING
