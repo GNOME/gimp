@@ -58,6 +58,8 @@ libgimpthumb_1_3_la_SOURCES = \
 	gimpthumb.h		\
 	gimpthumb-enums.c	\
 	gimpthumb-enums.h	\
+	gimpthumb-error.c	\
+	gimpthumb-error.h	\
 	gimpthumb-types.h	\
 	gimpthumb-utils.c	\
 	gimpthumb-utils.h	\
@@ -67,6 +69,7 @@ libgimpthumb_1_3_la_SOURCES = \
 libgimpthumbinclude_HEADERS = \
 	gimpthumb.h		\
 	gimpthumb-enums.h	\
+	gimpthumb-error.h	\
 	gimpthumb-types.h	\
 	gimpthumb-utils.h	\
 	gimpthumbnail.h

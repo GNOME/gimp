@@ -75,11 +75,14 @@ gboolean         gimp_thumbnail_set_filename (GimpThumbnail  *thumbnail,
                                               const gchar    *filename,
                                               GError        **error);
 
-GdkPixbuf      * gimp_thumbnail_get_pixbuf   (GimpThumbnail  *thumbnail,
+GimpThumbState   gimp_thumbnail_peek_image   (GimpThumbnail  *thumbnail);
+GimpThumbState   gimp_thumbnail_peek_thumb   (GimpThumbnail  *thumbnail,
+                                              GimpThumbSize   size);
+
+GdkPixbuf      * gimp_thumbnail_load_thumb   (GimpThumbnail  *thumbnail,
                                               GimpThumbSize   size,
                                               GError        **error);
-
-gboolean         gimp_thumbnail_save_pixbuf  (GimpThumbnail  *thumbnail,
+gboolean         gimp_thumbnail_save_thumb   (GimpThumbnail  *thumbnail,
                                               GdkPixbuf      *pixbuf,
                                               const gchar    *software,
                                               GError        **error);

@@ -40,8 +40,11 @@
 
 #include "libgimpmath/gimpmath.h"
 
+#include "gimpthumb-error.h"
 #include "gimpthumb-types.h"
 #include "gimpthumb-utils.h"
+
+#include "libgimp/libgimp-intl.h"
 
 
 static const gchar * gimp_thumb_png_name (const gchar *uri);
@@ -97,13 +100,48 @@ gimp_thumb_init (const gchar *creator,
   return gimp_thumb_initialized;
 }
 
+
+gboolean
+gimp_thumb_ensure_thumb_dirs (GError **error)
+{
+  gint i;
+
+  g_return_val_if_fail (gimp_thumb_initialized, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  for (i = 0; i < thumb_num_sizes; i++)
+    {
+      if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
+        {
+          if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) ||
+              (mkdir (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
+            {
+              if (i == 0)
+                mkdir (thumb_fail_subdir, S_IRUSR | S_IWUSR | S_IXUSR);
+
+              mkdir (thumb_subdirs[i], S_IRUSR | S_IWUSR | S_IXUSR);
+            }
+
+          if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
+            {
+              g_set_error (error,
+                           GIMP_THUMB_ERROR, GIMP_THUMB_ERROR_MKDIR,
+                           _("Failed to create thumbnail folder '%s'."),
+                           thumb_subdirs[i]);
+              return FALSE;
+            }
+        }
+    }
+
+  return TRUE;
+}
+
 gchar *
-gimp_thumb_png_thumb_name (const gchar   *uri,
-                           GimpThumbSize *size)
+gimp_thumb_name_from_uri (const gchar    *uri,
+                          GimpThumbSize  *size)
 {
   const gchar  *name;
-  gchar        *thumb_name = NULL;
-  gint          i          = 0;
+  gint          i = 0;
 
   g_return_val_if_fail (gimp_thumb_initialized, NULL);
 
@@ -125,28 +163,7 @@ gimp_thumb_png_thumb_name (const gchar   *uri,
 
   *size = thumb_sizes[i];
 
-  if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
-    {
-      if (g_file_test (thumb_dir, G_FILE_TEST_IS_DIR) ||
-          (mkdir (thumb_dir, S_IRUSR | S_IWUSR | S_IXUSR) == 0))
-        {
-          if (i == 0)
-            mkdir (thumb_fail_subdir, S_IRUSR | S_IWUSR | S_IXUSR);
-
-          mkdir (thumb_subdirs[i], S_IRUSR | S_IWUSR | S_IXUSR);
-        }
-
-      if (! g_file_test (thumb_subdirs[i], G_FILE_TEST_IS_DIR))
-        {
-          g_message ("Failed to create thumbnail folder '%s'.",
-                     thumb_subdirs[i]);
-          return NULL;
-        }
-    }
-
-  thumb_name = g_build_filename (thumb_subdirs[i], name, NULL);
-
-  return thumb_name;
+  return g_build_filename (thumb_subdirs[i], name, NULL);
 }
 
 gchar *

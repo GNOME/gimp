@@ -23,27 +23,20 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_THUMB_UTILS_H__
-#define __GIMP_THUMB_UTILS_H__
+#include "config.h"
 
-G_BEGIN_DECLS
+#include <glib.h>
 
-
-gboolean    gimp_thumb_init              (const gchar   *creator,
-                                          const gchar   *thumb_basedir);
-
-gchar     * gimp_thumb_name_from_uri     (const gchar   *uri,
-                                          GimpThumbSize *size);
-gchar     * gimp_thumb_find_thumb        (const gchar   *uri,
-                                          GimpThumbSize *size);
-
-gboolean    gimp_thumb_file_test         (const gchar   *filename,
-                                          gint64        *mtime,
-                                          gint64        *size);
-
-gboolean    gimp_thumb_ensure_thumb_dirs (GError       **error);
+#include "gimpthumb-error.h"
 
 
-G_END_DECLS
+GQuark
+gimp_thumb_error_quark (void)
+{
+  static GQuark q = 0;
 
-#endif /* __GIMP_THUMB_UTILS_H__ */
+  if (q == 0)
+    q = g_quark_from_static_string ("gimp-thumb-error-quark");
+
+  return q;
+}

@@ -23,27 +23,21 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_THUMB_UTILS_H__
-#define __GIMP_THUMB_UTILS_H__
-
-G_BEGIN_DECLS
+#ifndef __GIMP_THUMB_ERROR_H__
+#define __GIMP_THUMB_ERROR_H__
 
 
-gboolean    gimp_thumb_init              (const gchar   *creator,
-                                          const gchar   *thumb_basedir);
-
-gchar     * gimp_thumb_name_from_uri     (const gchar   *uri,
-                                          GimpThumbSize *size);
-gchar     * gimp_thumb_find_thumb        (const gchar   *uri,
-                                          GimpThumbSize *size);
-
-gboolean    gimp_thumb_file_test         (const gchar   *filename,
-                                          gint64        *mtime,
-                                          gint64        *size);
-
-gboolean    gimp_thumb_ensure_thumb_dirs (GError       **error);
+typedef enum
+{
+  GIMP_THUMB_ERROR_OPEN,         /*  open failed                            */
+  GIMP_THUMB_ERROR_OPEN_ENOENT,  /*  file does not exist                    */
+  GIMP_THUMB_ERROR_MKDIR,        /*  mkdir failed                           */
+} GimpThumbError;
 
 
-G_END_DECLS
+#define GIMP_THUMB_ERROR (gimp_thumb_error_quark ())
 
-#endif /* __GIMP_THUMB_UTILS_H__ */
+GQuark  gimp_thumb_error_quark (void) G_GNUC_CONST;
+
+
+#endif  /* __GIMP_THUMB_ERROR_H__ */

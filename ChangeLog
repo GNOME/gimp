@@ -1,3 +1,13 @@
+2003-12-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/Makefile.am
+	* libgimpthumb/gimpthumb-error.[ch]: added new files that define the
+	GIMP_THUMB_ERROR domain.
+
+	* libgimpthumb/gimpthumb-utils.[ch]
+	* libgimpthumb/gimpthumb.h
+	* libgimpthumb/gimpthumbnail.[ch]: finalizing the API.
+
 2003-12-01  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-blend.c: some code cleanup I've done while

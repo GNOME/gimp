@@ -27,6 +27,7 @@
 #define __GIMP_THUMB_H__
 
 
+#include <libgimpthumb/gimpthumb-error.h>
 #include <libgimpthumb/gimpthumb-types.h>
 #include <libgimpthumb/gimpthumb-utils.h>
 #include <libgimpthumb/gimpthumbnail.h>
