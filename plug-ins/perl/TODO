@@ -18,53 +18,35 @@ API generalization
 
 firetext! AND _grayscale_ for map_gradient(!)
 
-script-fu 4.9 vs. 3.3
-
-xachvision
-billboard
-fit-text
-
-
-olof
-
-  * improve PDB explorer
-  * input image arguments
-  * find_next_guide is a lousy interface. => just do num_guides
-
 bugs
-
-  * document on_xxx functions and regiter_callback
+  * make test should not be run without DISPLAY
+  * document on_xxx functions and register_callback
   * fix Gimp::Feature::missing => on_query-dir!
-[DONE]  * put libs last, ignore gtk-config brokenness
   * update logulator
-[KILL]  * update frosty-logo.scm  t-o-p-logo.scm starscape-logo.scm starburst-logo.scm
-[DONE]  * rate-limiting for gimp_message BEFORE 1.2
   * on-query => remove gimp::fu parasite(?)
   * bricks requires disable for pattern(?)
   * better default argument-handlign via a "massage_args" callback from Gimp/UI/interact?
   * installation & Feature system (?)
   * map_to_gradient does not work on GRAYA thingies. Argh.
-[KILL]  * perl_require_pv with _59?
   * scroll behaviour, use clist instead of list?
   * document Gimp::PDL and rect2, ...2 functions!
-  * document Gimp:PDL!!!
-  * Kommandozeilenmodus(!).
-[KILL]  * don't start gimp in cmdline mode and error.
-  * KILL :auto from default(!)
+  * Kommandozeilenmodus(!). (???)
+[DONE]  * KILL :auto from default(!)
   * auto-flush of gdrawable when merge_shadow(?)
   * gimp-piddle must be written back automatically on destroy, if changed
-[KILL]  * possibly rename "Brush Selection" to "Paint Settings"
   * gimp-tile set dirty automatically(!)
-  * perl module install dependency
-  * $Config{cc} might not understand Gimps CFLAGS (-mpentium).
-  * wait for working gimp_file_load (or do it myself?)
+[KILL]  * perl module install dependency
+[KILL]  * $Config{cc} might not understand Gimps CFLAGS (-mpentium).
+[KILL]  * wait for working gimp_file_load (or do it myself?)
   * get rid of xs_exit. please please fuck me plenty.
   * create gimpstyle.pod
   
 important issues
 
+[DONE]  * improve PDB explorer
+[DONE]  * input image arguments
+  * find_next_guide is a lousy interface. => just do num_guides
   * constant names (RADIO) automatically into help strings!
-[KILL]  * gimpdoc with caching & [DONE]exampling ;--->
   * migrate BOOT: into INIT() (forgot why but important for B)
   * gimp_progress_done, gimp_progress_close
   * maybe implement --enable-perl=runtime-only?
@@ -77,17 +59,16 @@ important issues
   * change set_usize to something else..
   * Gimp::IO (?)
   * install scripts in share/
-[KILL]  * register dummy function to calm gimp down (really??)
   * gimp->object_id, drawable_object_id remove!
   * vamp up homepage
   * Gimp::ping
   * allow plug-ins to register with only a drawable argument(!)
   * gradient button
-  * implement Perl-Server RSET and shared lock(!)
+[KILL]  * implement Perl-Server RSET and shared lock(!)
   * weighted movement in drawing tools
   * --function localfunc to select one of the registered scripts
   * create working progress when Net and $verbose
-  * Gimp::Fu::command(?)
+[KILL]  * Gimp::Fu::command(?)
   * default parameters at end(!)
   * try to deduce default parameters
 

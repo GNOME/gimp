@@ -127,6 +127,7 @@ sub GTK_OBJECT_GET_ARG {
 }
 
 sub GTK_OBJECT_INIT {
+   shift unless ref $self; # care for "old" Gtk modules
    my $self = shift;
    (my $label = new Gtk::Label "")->show;
    $self->add($label);

@@ -295,13 +295,9 @@ register "extension_parasite_editor",
 package ParasiteEditor;
 
 use Gtk;
-use base Gtk::Dialog;
+use Gimp::basewidget Gtk::Dialog;
 
 my $init;
-
-init_add Gtk sub { Gtk::Dialog->register_subtype(ParasiteEditor) };
-
-sub GTK_CLASS_INIT { };
 
 sub unformat {
    my $self=shift;
@@ -328,6 +324,7 @@ sub undirty {
 }
 
 sub GTK_OBJECT_INIT {
+   shift unless ref $self; # care for "old" Gtk modules
    my $self = shift;
    @{$self}{qw(find_func attach_func detach_func current parasite)}=@$init;
    @{$self}{qw(name  flags  data)}=
@@ -397,7 +394,7 @@ sub GTK_OBJECT_INIT {
 
 sub new {
    $init=\@_;
-   new Gtk::Widget shift;
+   Gtk::Object::new shift;
 }
 
 package main;

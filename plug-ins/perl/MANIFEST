@@ -122,6 +122,9 @@ examples/bricks
 examples/dataurl
 examples/colorhtml
 pxgettext
+po/ChangeLog
 po/gimp-perl.pot
 po/de.po
 po/it.po
+po/cs.po
+po/no.po

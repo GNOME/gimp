@@ -28,9 +28,6 @@ msgstr "$s: ikke et heltall\n"
 msgid "<Image>/Filters/Logulator/Blended"
 msgstr "<Image>/Filtre/Logulator/Blandet"
 
-msgid "<Image>/Filters/Render/Fit Text"
-msgstr "<Image>/Filtre/Render/Tilpass tekst"
-
 msgid "Help for "
 msgstr "Hjelp om "
 
@@ -88,6 +85,9 @@ msgstr ""
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
 
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr ""
+
 msgid ""
 "$function: function name contains unusual characters, good style is to use only "
 "0-9, a-z and _"
@@ -141,9 +141,6 @@ msgstr ""
 msgid "Internal error: unable to convert reference in sv2net, please report!"
 msgstr ""
 
-msgid "<Image>/Guides/Perl-o-tine"
-msgstr ""
-
 msgid "Synopsis"
 msgstr ""
 
@@ -154,9 +151,6 @@ msgid "unable to convert Gimp::Drawable into Gimp::GDrawable (id %d)"
 msgstr ""
 
 msgid "Restore values to the previous ones"
-msgstr ""
-
-msgid "<Image>/Filters/Animation/Apply Perl Expression"
 msgstr ""
 
 msgid "<Image>/Select/Triangle"
@@ -238,9 +232,6 @@ msgstr ""
 msgid "unable to open $rgb_db_path"
 msgstr ""
 
-msgid "<Image>/Filters/Noise/Xach Vision"
-msgstr ""
-
 msgid "<Image>/Filters/Colors/Map To Gradient"
 msgstr ""
 
@@ -250,7 +241,13 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Basic I"
 msgstr ""
 
+msgid "required callback 'run' not found\n"
+msgstr ""
+
 msgid "function name contains dashes instead of underscores"
+msgstr ""
+
+msgid "required callback 'query' not found\n"
 msgstr ""
 
 msgid ""
@@ -388,9 +385,6 @@ msgstr ""
 msgid "accepting connections on port $port"
 msgstr ""
 
-msgid "required callback '$cb' not found\n"
-msgstr ""
-
 msgid "Internal error: Gimp::Net #100, please report!"
 msgstr ""
 
@@ -409,6 +403,10 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Render/Fit Text..."
+msgstr "<Image>/Filtre/Render/Tilpass tekst"
+
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr ""
 
@@ -425,6 +423,9 @@ msgid "<Image>/Filters/Map/Pixelmap"
 msgstr ""
 
 msgid "<Image>/Filters/Logulator/Starscape"
+msgstr ""
+
+msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr ""
 
 msgid "gimp procedure '%s' not found"
@@ -584,11 +585,11 @@ msgstr ""
 msgid "get current background colour from the gimp"
 msgstr ""
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr ""
-
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
+msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Font Table"
 msgstr ""
 
 msgid "No horizontal or vertical guides found. Aborted."
@@ -662,6 +663,10 @@ msgstr ""
 
 msgid "<Toolbox>/Xtns/Render/Bricks"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filtre/Render/Tilpass tekst"
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
@@ -744,9 +749,6 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Chalk"
 msgstr ""
 
-msgid "<Image>/Filters/Misc/Burst"
-msgstr ""
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -791,13 +793,16 @@ msgstr ""
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr ""
 
-msgid "<Image>/View/3D Surface"
-msgstr ""
-
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 
+msgid "<Image>/View/3D Surface"
+msgstr ""
+
 msgid "function '$exe' not found in this script (must be one of "
+msgstr ""
+
+msgid "required callback 'net' not found\n"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Highlight Edges"
@@ -910,6 +915,10 @@ msgstr ""
 
 msgid "not enough"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Filtre/Render/Tilpass tekst"
 
 msgid "accepting connections on $unix_path"
 msgstr ""

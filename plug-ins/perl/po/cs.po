@@ -28,9 +28,6 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Blended"
 msgstr "<Image>/Filtry/Logulátor/Rozostøeno"
 
-msgid "<Image>/Filters/Render/Fit Text"
-msgstr "<Image>/Filtry/Výpoèty/Pasovaný text"
-
 msgid "Help for "
 msgstr "Nápovìda pro "
 
@@ -88,9 +85,13 @@ msgstr "<Toolbox>/Roz¹./Výpoèty/Generátor pixelù"
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Filtry/Kombinace/Film..."
+
 msgid ""
-"$function: function name contains unusual characters, good style is to use "
-"only 0-9, a-z and _"
+"$function: function name contains unusual characters, good style is to use only "
+"0-9, a-z and _"
 msgstr ""
 
 msgid "Help"
@@ -146,10 +147,6 @@ msgstr ""
 msgid "Internal error: unable to convert reference in sv2net, please report!"
 msgstr ""
 
-#, fuzzy
-msgid "<Image>/Guides/Perl-o-tine"
-msgstr "<Image>/Soubor/Tisk..."
-
 msgid "Synopsis"
 msgstr ""
 
@@ -162,10 +159,6 @@ msgstr ""
 
 msgid "Restore values to the previous ones"
 msgstr ""
-
-#, fuzzy
-msgid "<Image>/Filters/Animation/Apply Perl Expression"
-msgstr "<Image>/Filtry/Animace/Optimalizace animace"
 
 #, fuzzy
 msgid "<Image>/Select/Triangle"
@@ -203,13 +196,12 @@ msgid "<Image>/Filters/Web/Webify"
 msgstr "<Image>/Filtry/Mapování/Rozmáznutí..."
 
 msgid ""
-"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or "
-"PARAM_TYPE"
+"malformed paramdef, expected [PARAM_TYPE,\"NAME\",\"DESCRIPTION\"] or PARAM_TYPE"
 msgstr ""
 
 msgid ""
-"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to "
-"gimp-1.1 and report this error"
+"gimp_pixel_rgns_register supports only 1, 2 or 3 arguments, upgrade to gimp-1.1 "
+"and report this error"
 msgstr ""
 
 msgid "last argument to gimp_pattern_select_widget must be scalar ref"
@@ -256,10 +248,6 @@ msgid "unable to open $rgb_db_path"
 msgstr "nepodaøilo se otevøít rouru"
 
 #, fuzzy
-msgid "<Image>/Filters/Noise/Xach Vision"
-msgstr "<Image>/Filtry/Kombinace/Film..."
-
-#, fuzzy
 msgid "<Image>/Filters/Colors/Map To Gradient"
 msgstr "<Image>/Filtry/Barvy/Mapování/Barevné mapování..."
 
@@ -270,21 +258,25 @@ msgstr "<Image>/Filtry/Výpoèty/Sinus..."
 msgid "<Image>/Filters/Logulator/Basic I"
 msgstr "<Image>/Filtry/Logulátor/Základní I"
 
+msgid "required callback 'run' not found\n"
+msgstr ""
+
 msgid "function name contains dashes instead of underscores"
 msgstr ""
 
-msgid ""
-"$function: argument name '$p->[1]' contains illegal characters, only 0-9, "
-"a-z and _ allowed"
+msgid "required callback 'query' not found\n"
 msgstr ""
 
 msgid ""
-"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a "
-"string"
+"$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
+"and _ allowed"
 msgstr ""
 
 msgid ""
-"invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
+"Expected an INT32 but got '%s'. Add '*1' if you really intend to pass in a string"
+msgstr ""
+
+msgid "invalid GIMP_HOST: 'spawn' is not a valid connection method for the server"
 msgstr ""
 
 msgid "unable to open Gimp::Net communications socket\n"
@@ -320,8 +312,8 @@ msgid "authorization required for tcp connections"
 msgstr ""
 
 msgid ""
-"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to "
-"'use strict'"
+"Expected an INT32 but got '%s'. Maybe you meant '%s' instead and forgot to 'use "
+"strict'"
 msgstr ""
 
 #, fuzzy
@@ -361,8 +353,7 @@ msgstr ""
 msgid "trying to start gimp with options \"$opt\"\n"
 msgstr ""
 
-msgid ""
-"menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
+msgid "menupath _must_ start with <Image>, <Toolbox>, <Load>, <Save> or <None>!"
 msgstr ""
 
 #, fuzzy
@@ -432,9 +423,6 @@ msgstr ""
 msgid "accepting connections on port $port"
 msgstr ""
 
-msgid "required callback '$cb' not found\n"
-msgstr ""
-
 msgid "Internal error: Gimp::Net #100, please report!"
 msgstr ""
 
@@ -455,6 +443,10 @@ msgstr ""
 
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr "<Image>/Filtry/Logulátor/Novinový text"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Fit Text..."
+msgstr "<Image>/Filtry/Výpoèty/Pasovaný text"
 
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr ""
@@ -477,6 +469,10 @@ msgstr "<Image>/Filtry/Mapování/Rozmáznutí..."
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr "<Image>/Filtry/Logulátor/Rozmáznutí..."
+
+#, fuzzy
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr "<Image>/Filtry/Animace/Optimalizace animace"
 
 #, fuzzy
 msgid "gimp procedure '%s' not found"
@@ -577,8 +573,7 @@ msgid ""
 "           -gimp <anything>           used internally only\n"
 "           -h | -help | --help | -?   print some help\n"
 "           -v | --verbose             be more verbose in what you do\n"
-"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using "
-"PORT)\n"
+"           --host|--tcp HOST[:PORT]   connect to HOST (optionally using PORT)\n"
 "                                      (for more info, see Gimp::Net(3))\n"
 msgstr ""
 "U¾ití: $0 [gimp-argumenty..] [argumenty-rozhraní..] [argumenty-skriptu..]\n"
@@ -586,15 +581,13 @@ msgstr ""
 "           -gimp <cokoli>             pouze pro vnitøní pou¾ití\n"
 "           -h | -help | --help | -?   vypí¹e nejakou nápovìdu\n"
 "           -v | --verbose             vypisuje bli¾¹í informace o èinnosti\n"
-"           --host|--tcp HOST[:PORT]   spojení s HOSTem (volitelnì pou¾ítý "
-"PORT)\n"
+"           --host|--tcp HOST[:PORT]   spojení s HOSTem (volitelnì pou¾ítý PORT)\n"
 "                                      (více informací viz Gimp::Net(3))\n"
 
 msgid "too many arguments"
 msgstr "pøíli¹ mnoho argumentù"
 
-msgid ""
-"dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
+msgid "dimension mismatch, pdl has dimension %d but at most %d dimensions allowed"
 msgstr ""
 
 msgid "Load"
@@ -655,13 +648,12 @@ msgstr ""
 msgid "get current background colour from the gimp"
 msgstr ""
 
+msgid ""
+"Internal error: asked to deobjectify an object not in the cache, please report!"
+msgstr ""
+
 msgid "<Toolbox>/Xtns/Render/Font Table"
 msgstr "<Toolbox>/Roz¹./Výpoèty/Tabulka písma"
-
-msgid ""
-"Internal error: asked to deobjectify an object not in the cache, please "
-"report!"
-msgstr ""
 
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
@@ -746,6 +738,10 @@ msgstr "Copyright :"
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks"
 msgstr "/Roz¹./Výpoèty/Loga"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filtry/Výpoèty/Burst..."
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
@@ -840,9 +836,6 @@ msgstr "Maska obrázku"
 msgid "<Image>/Filters/Logulator/Chalk"
 msgstr "<Image>/Filtry/Logulátor/"
 
-msgid "<Image>/Filters/Misc/Burst"
-msgstr "<Image>/Filtry/Rùzné/Pronikání"
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -867,8 +860,7 @@ msgstr "G"
 msgid "internal error (please report): too many main arguments"
 msgstr ""
 
-msgid ""
-"pixel size mismatch, pdl has %d channel pixels but %d channels are required"
+msgid "pixel size mismatch, pdl has %d channel pixels but %d channels are required"
 msgstr ""
 
 #, fuzzy
@@ -894,14 +886,17 @@ msgstr "Verzi "
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr "<Image>/Filtry/Animace/Optimalizace animace"
 
+msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgstr ""
+
 #, fuzzy
 msgid "<Image>/View/3D Surface"
 msgstr "<Image>/Video/Smazat políèka"
 
-msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
+msgid "function '$exe' not found in this script (must be one of "
 msgstr ""
 
-msgid "function '$exe' not found in this script (must be one of "
+msgid "required callback 'net' not found\n"
 msgstr ""
 
 #, fuzzy
@@ -1032,6 +1027,10 @@ msgstr ""
 
 msgid "not enough"
 msgstr ""
+
+#, fuzzy
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Soubor/Tisk..."
 
 msgid "accepting connections on $unix_path"
 msgstr ""

@@ -30,9 +30,6 @@ msgstr "$s: kein integer\n"
 msgid "<Image>/Filters/Logulator/Blended"
 msgstr "<Image>/Filter/"
 
-msgid "<Image>/Filters/Render/Fit Text"
-msgstr "<Image>/Filter/Render/Text Einpassen"
-
 msgid "Help for "
 msgstr "Hilfe für "
 
@@ -94,6 +91,10 @@ msgstr "<Toolbox>/Xtn/Erzeuge/Pixelgenerator"
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr ""
 
+#, fuzzy
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Filter/"
+
 msgid ""
 "$function: function name contains unusual characters, good style is to use only "
 "0-9, a-z and _"
@@ -150,9 +151,6 @@ msgstr ""
 msgid "Internal error: unable to convert reference in sv2net, please report!"
 msgstr ""
 
-msgid "<Image>/Guides/Perl-o-tine"
-msgstr ""
-
 msgid "Synopsis"
 msgstr ""
 
@@ -164,9 +162,6 @@ msgstr "Konnte Gimp::Drawable nicht in Gimp::GDrawable konvertieren (id %d)"
 
 msgid "Restore values to the previous ones"
 msgstr "Parameter auf vorherige Werte zurücksetzen"
-
-msgid "<Image>/Filters/Animation/Apply Perl Expression"
-msgstr ""
 
 msgid "<Image>/Select/Triangle"
 msgstr ""
@@ -249,10 +244,6 @@ msgstr "Schließen"
 msgid "unable to open $rgb_db_path"
 msgstr "Konnte $rgb_db_path nicht öffnen"
 
-#, fuzzy
-msgid "<Image>/Filters/Noise/Xach Vision"
-msgstr "<Image>/Filter/"
-
 msgid "<Image>/Filters/Colors/Map To Gradient"
 msgstr ""
 
@@ -263,8 +254,14 @@ msgstr "<Image>/Filter/Render/Add Glow"
 msgid "<Image>/Filters/Logulator/Basic I"
 msgstr "<Image>/Filter/"
 
+msgid "required callback 'run' not found\n"
+msgstr ""
+
 msgid "function name contains dashes instead of underscores"
 msgstr "Funktionsname enthält Minuszeichen anstatt Unterstrichen"
+
+msgid "required callback 'query' not found\n"
+msgstr ""
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
@@ -410,9 +407,6 @@ msgstr "Argument inkompatibel mit Typ IMAGE"
 msgid "accepting connections on port $port"
 msgstr "Akzeptiere Verbindungen auf port $port"
 
-msgid "required callback '$cb' not found\n"
-msgstr ""
-
 msgid "Internal error: Gimp::Net #100, please report!"
 msgstr ""
 
@@ -431,6 +425,10 @@ msgstr ""
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr "<Image>/Filter/"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Fit Text..."
+msgstr "<Image>/Filter/Render/Text Einpassen"
 
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: Unbekannter Schlater, wie wär's mit $0 --help stattdessen?\n"
@@ -452,6 +450,10 @@ msgstr "<Image>/Filter/"
 
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Starscape"
+msgstr "<Image>/Filter/"
+
+#, fuzzy
+msgid "<Image>/Filters/Apply Perl Expression..."
 msgstr "<Image>/Filter/"
 
 msgid "gimp procedure '%s' not found"
@@ -617,12 +619,12 @@ msgstr "Die Farbangabe hat einen falschen Typ"
 msgid "get current background colour from the gimp"
 msgstr "Übernehme die aktuelle Hintergrundfarbe von Gimp"
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Xtn/Erzeuge/Fonttabelle"
-
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
+
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Xtn/Erzeuge/Fonttabelle"
 
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
@@ -702,6 +704,10 @@ msgstr ""
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks"
 msgstr "<Toolbox>/Xtn/Erzeuge/Yin-Yang"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filter/"
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr ""
@@ -789,9 +795,6 @@ msgstr "Befehl"
 msgid "<Image>/Filters/Logulator/Chalk"
 msgstr "<Image>/Filter/"
 
-msgid "<Image>/Filters/Misc/Burst"
-msgstr "<Image>/Filter/Verschiedenes/Ausbruch"
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -838,13 +841,16 @@ msgstr "Datum/Version"
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr ""
 
-msgid "<Image>/View/3D Surface"
-msgstr ""
-
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 
+msgid "<Image>/View/3D Surface"
+msgstr ""
+
 msgid "function '$exe' not found in this script (must be one of "
+msgstr ""
+
+msgid "required callback 'net' not found\n"
 msgstr ""
 
 msgid "<Image>/Filters/Render/Highlight Edges"
@@ -963,8 +969,15 @@ msgstr "PDB-Buch - Edition 'Olof' (immer noch Alpha)"
 msgid "not enough"
 msgstr "nicht genügend"
 
+#, fuzzy
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Filter/"
+
 msgid "accepting connections on $unix_path"
 msgstr "Akzeptiere Verbindungen auf $unix_path"
+
+#~ msgid "<Image>/Filters/Misc/Burst"
+#~ msgstr "<Image>/Filter/Verschiedenes/Ausbruch"
 
 #~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
 #~ msgstr "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"

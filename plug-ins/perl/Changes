@@ -24,6 +24,10 @@ Revision history for Gimp-Perl extension.
         - try to get rid of -Wall, if possible.
         - shield more sections against -w dumbness.
         - updated many of seth's scripts.
+        - added cs and no translations.
+        - skip t/run when no DISPLAY set.
+        - modernize parasite-editor to use Gimp::basewidget.
+        - modified all custom widgets to work with the next Gtk release.
 
 1.17  Wed Nov 24 21:25:19 CET 1999
         - re-fitted i18n translation for most plug-ins.

@@ -28,9 +28,6 @@ msgstr "$s: non e` un intero\n"
 msgid "<Image>/Filters/Logulator/Blended"
 msgstr "<Image>/Filters/"
 
-msgid "<Image>/Filters/Render/Fit Text"
-msgstr "<Image>/Filters/Render/Riempito da Testo"
-
 msgid "Help for "
 msgstr "Aiuto per "
 
@@ -93,6 +90,10 @@ msgstr "<Toolbox>/Xtns/Render/Generatore Pixel"
 
 msgid "xlfd_unpack: unmatched XLFD '$fontname'\n"
 msgstr "xlfd_unpack: carattere XLFD '$fontname' non riscontrato\n"
+
+#, fuzzy
+msgid "<Image>/Filters/Noise/Xach Vision..."
+msgstr "<Image>/Filters/Noise/Xach Vision"
 
 # msgid "Internal error: Gimp::Net #100, please report!"
 # msgstr ""
@@ -158,9 +159,6 @@ msgstr ""
 "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
 "cortesia riportare"
 
-msgid "<Image>/Guides/Perl-o-tine"
-msgstr "<Image>/Guide/Perl-o-tine"
-
 msgid "Synopsis"
 msgstr "Sinoposi"
 
@@ -172,9 +170,6 @@ msgstr "non riesco a convertire Gimp::Drawable in Gimp::GDrawable (id %d)"
 
 msgid "Restore values to the previous ones"
 msgstr "Ripristina i valori a quelli precedenti"
-
-msgid "<Image>/Filters/Animation/Apply Perl Expression"
-msgstr "<Image>/Filters/Animation/Applica Espressione Perl"
 
 msgid "<Image>/Select/Triangle"
 msgstr "<Image>/Select/Triangolo"
@@ -271,9 +266,6 @@ msgstr "Chiudi"
 msgid "unable to open $rgb_db_path"
 msgstr "non riesco ad aprire $rgb_db_path"
 
-msgid "<Image>/Filters/Noise/Xach Vision"
-msgstr "<Image>/Filters/Noise/Xach Vision"
-
 msgid "<Image>/Filters/Colors/Map To Gradient"
 msgstr "<Image>/Filters/Colors/Mappa a Gradiente"
 
@@ -284,8 +276,16 @@ msgstr "<Image>/Filters/Render/Aggiungi Glow"
 msgid "<Image>/Filters/Logulator/Basic I"
 msgstr "<Image>/Filters/"
 
+#, fuzzy
+msgid "required callback 'run' not found\n"
+msgstr "callback '$cb' richiesto e non trovato\n"
+
 msgid "function name contains dashes instead of underscores"
 msgstr "nome di funzione contiene cancelletti ('#') anziche` '_'"
+
+#, fuzzy
+msgid "required callback 'query' not found\n"
+msgstr "callback '$cb' richiesto e non trovato\n"
 
 msgid ""
 "$function: argument name '$p->[1]' contains illegal characters, only 0-9, a-z "
@@ -446,9 +446,6 @@ msgstr "argomento incompatibile con tipo IMAGE"
 msgid "accepting connections on port $port"
 msgstr "ora accetto connessioni alla porta $port"
 
-msgid "required callback '$cb' not found\n"
-msgstr "callback '$cb' richiesto e non trovato\n"
-
 msgid "Internal error: Gimp::Net #100, please report!"
 msgstr "Errore Interno: Gimp::Net #100."
 
@@ -470,6 +467,10 @@ msgstr ""
 msgid "<Image>/Filters/Logulator/Newsprint text"
 msgstr "<Image>/Filters/"
 
+#, fuzzy
+msgid "<Image>/Filters/Render/Fit Text..."
+msgstr "<Image>/Filters/Render/Riempito da Testo"
+
 msgid "$_: illegal switch, try $0 --help\n"
 msgstr "$_: switch illegale, provare $0 --help\n"
 
@@ -488,6 +489,10 @@ msgstr "<Image>/Filters/Map/Pixelmap"
 #, fuzzy
 msgid "<Image>/Filters/Logulator/Starscape"
 msgstr "<Image>/Filters/"
+
+#, fuzzy
+msgid "<Image>/Filters/Apply Perl Expression..."
+msgstr "<Image>/Filters/Animation/Applica Espressione Perl"
 
 msgid "gimp procedure '%s' not found"
 msgstr "procedura di gimp '%s' non trovata"
@@ -669,14 +674,14 @@ msgstr "colore specificato di tipo illegale"
 msgid "get current background colour from the gimp"
 msgstr "ottiene il corrente colore di sfondo da gimp"
 
-msgid "<Toolbox>/Xtns/Render/Font Table"
-msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
-
 msgid ""
 "Internal error: asked to deobjectify an object not in the cache, please report!"
 msgstr ""
 "Errore interno: incapace di gestire argomento di tipoo '%c' in net2sv, per "
 "cortesia riportare"
+
+msgid "<Toolbox>/Xtns/Render/Font Table"
+msgstr "<Toolbox>/Xtns/Render/Tabella Caratteri"
 
 msgid "No horizontal or vertical guides found. Aborted."
 msgstr ""
@@ -756,6 +761,10 @@ msgstr "Copyright"
 #, fuzzy
 msgid "<Toolbox>/Xtns/Render/Bricks"
 msgstr "<Toolbox>/Xtns/Render/Francobolli"
+
+#, fuzzy
+msgid "<Image>/Filters/Render/Burst..."
+msgstr "<Image>/Filters/Render/Punte metallizzate"
 
 msgid "WARNING: client disconnected while holding an active lock\n"
 msgstr "ATTENZIONE: sconnessione client durante un lock attivo\n"
@@ -849,9 +858,6 @@ msgstr "Comando"
 msgid "<Image>/Filters/Logulator/Chalk"
 msgstr "<Image>/Filters/"
 
-msgid "<Image>/Filters/Misc/Burst"
-msgstr "<Image>/Filters/Misc/Burst"
-
 msgid ""
 "$function: calling $AUTOLOAD without specifying the :auto import tag is "
 "deprecated!\n"
@@ -905,16 +911,20 @@ msgstr "Data/Versione"
 msgid "<Image>/Filters/Animation/Animate Cells"
 msgstr "<Image>/Filters/Animazione/Animazione Celle"
 
-msgid "<Image>/View/3D Surface"
-msgstr ""
-
 msgid "$function: argument/return value '$p->[1]' has illegal type '$p->[0]'"
 msgstr ""
 "$function: valore di argomento o di ritorno '$p->[1]' ha un tipo illegale "
 "'$p->[0]'"
 
+msgid "<Image>/View/3D Surface"
+msgstr ""
+
 msgid "function '$exe' not found in this script (must be one of "
 msgstr "funzione '$exe' non trovata in questo script (deve essere una de "
+
+#, fuzzy
+msgid "required callback 'net' not found\n"
+msgstr "callback '$cb' richiesto e non trovato\n"
 
 msgid "<Image>/Filters/Render/Highlight Edges"
 msgstr "<Image>/Filters/Render/Evidenzia contorni"
@@ -976,8 +986,6 @@ msgstr "<Image>/Filters/"
 msgid "<Image>/Filters/Misc/Magick"
 msgstr "<Image>/Filters/Misc/Magick"
 
-# msgid "<Toolbox>/Xtns/Render/Logos/Glowing Steel"
-# msgstr ""
 msgid "Color"
 msgstr "Colore"
 
@@ -1032,112 +1040,9 @@ msgstr "PDB Explorer - edizione olof (versione alpha)"
 msgid "not enough"
 msgstr "non abbastanza"
 
+#, fuzzy
+msgid "<Image>/Filters/Web/Perl-o-tine..."
+msgstr "<Image>/Guide/Perl-o-tine"
+
 msgid "accepting connections on $unix_path"
 msgstr "ricezione connessioni su $unix_path"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Particle Trace"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glowing Hot"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Carved"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Speed text"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Glossy"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Blended"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Imigre-26"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Crystal"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chrome"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starscape"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Newsprint text"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chalk"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic I"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Neon"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Comic Book"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Basic II"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Cool Metal"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Alien Glow"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Bovination"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/SOTA Chrome"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Textured"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Gradient Bevel"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Starburst"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Chip Away"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/Frosty"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#, fuzzy
-#~ msgid "<Toolbox>/Xtns/Perl-Fu/Logos/3D Outline"
-#~ msgstr "<Toolbox>/Xtns/Render/Logos/Inner Bevel"
-
-#~ msgid "<Toolbox>/Xtns/Animation/Seth Spin"
-#~ msgstr "<Toolbox>/Xtns/Animation/Seth Spin"

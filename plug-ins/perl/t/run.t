@@ -6,9 +6,15 @@ use vars qw($EXTENSIVE_TESTS $GIMPTOOL);
 
 BEGIN {
   $|=1;
-  print "1..26\n";
-  $count=0;
-  $Gimp::host = "spawn/";
+
+  if ($ENV{DISPLAY}) {
+     print "1..26\n";
+     $count=0;
+     $Gimp::host = "spawn/";
+  } else {
+     print "1..0\n";
+     exit;
+  }
 }
 
 sub ok($;$) {
