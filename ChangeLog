@@ -1,3 +1,8 @@
+2003-04-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimputils.c (gimp_memsize_to_string): this should
+	work on 64bit system as well.
+
 2003-04-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimplimits.h: reduced GIMP_MAX_IMAGE_SIZE to 2^18.

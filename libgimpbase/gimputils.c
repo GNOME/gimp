@@ -131,10 +131,12 @@ gimp_memsize_to_string (gulong memsize)
     }
   else if (memsize < 1024 * 1024 * 10)
     {
-      return g_strdup_printf (_("%.2f MB"), (gdouble) memsize / 1024.0 / 1024.0);
+      memsize /= 1024;
+      return g_strdup_printf (_("%.2f MB"), (gdouble) memsize / 1024.0);
     }
   else
     {
-      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0 / 1024.0);
+      memsize /= 1024;
+      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0);
     }
 }
