@@ -1,3 +1,9 @@
+2004-12-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-preview.c (gimp_drawable_preview_private):
+	implement it using gimp_drawable_get_sub_preview(). Removes
+	massive code duplication introduced by yesterday's fix.
+
 2004-12-11  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/copy-visible.scm: Apply the layer mask
