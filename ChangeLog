@@ -1,3 +1,8 @@
+2002-09-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gz.c (load_image): don't call gimp_temp_name()
+	with (NULL + 1) if find_extension() failed.
+
 2002-09-03  Manish Singh  <yosh@gimp.org>
 
 	* app/clone.c: only do the below for image clone, pattern clones

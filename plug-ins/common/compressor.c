@@ -445,7 +445,9 @@ load_image (gchar             *filename,
 
   if (NULL == (ext = find_extension (filename)))
     {
-      g_message (_("gz: no sensible extension, attempting to load with file magic\n"));
+      g_message (_("gz: no sensible extension, "
+                   "attempting to load with file magic\n"));
+      ext = ".foo";
     }
 
   /* find a temp name */
