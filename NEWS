@@ -8,6 +8,16 @@ development takes place on the road to the next stable release
 GIMP version 2.0.
 
 
+Overview of Changes in GIMP 1.3.20
+==================================
+- New help system finished [Mitch]
+- Screenshot plug-in replaced [Brix]
+- Further improvements to the path tool [Simon]
+- Lots of bug fixes
+
+Other contributors: 
+  Maurits Rijk, Sven Neumann, Ville PÃ¤tsi
+
 Overview of Changes in GIMP 1.3.19
 ==================================
 - Migration towards new gimp-help system [Mitch]
@@ -29,7 +39,7 @@ Overview of Changes in GIMP 1.3.19
 Other contributors:
   Adam D. Moss, Tor Lillqvist, Jakub Steiner, Alan Horkan,
   Avi Bercovich, S. Mukund, Maurits Rijk, Guillermo S. Romero,
-  Seth Burgess, Wolfgang Hofer, Ville Pätsi, Sven Neumann
+  Seth Burgess, Wolfgang Hofer, Ville PÃ¤tsi, Sven Neumann
 
 
 Overview of Changes in GIMP 1.3.18
@@ -410,7 +420,7 @@ Overview of Changes in GIMP 1.3.2
 
 Other Contributors:
   Guillermo S. Romero, David Neary, David Odin, Roger Leigh, 
-  Ville Pätsi.
+  Ville PÃ¤tsi.
 
 
 Overview of Changes in GIMP 1.3.1

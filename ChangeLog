@@ -1,3 +1,7 @@
+2003-08-28  Dave Neary <bolsh@gimp.org>
+
+	* NEWS: Updated the NEWS file.
+
 2003-08-28  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/screenshot.c: rewrote a large part of the
@@ -107,7 +111,6 @@
 
 	* app/pdb/image_cmds.c: regenerated.
 
->>>>>>> 1.6225
 2003-08-28  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimptransformtool.c: Modified the test when to paint
