@@ -32,8 +32,9 @@
  * V 1.92, PK, 18-May-97: Ignore EOF-error on reading image data
  * V 1.93, PK, 05-Oct-97: Parse rc file
  * V 1.94, PK, 12-Oct-97: No progress bars for non-interactive mode
+ * V 1.95, nn, 20-Dec-97: Initialize some variable
  */
-static char ident[] = "@(#) GIMP SunRaster file-plugin v1.94  12-Oct-97";
+static char ident[] = "@(#) GIMP SunRaster file-plugin v1.95  20-Dec-97";
 
 #include <stdio.h>
 #include <stdlib.h>

@@ -25,8 +25,11 @@
 /* Event history:
  * V 1.00, PK, 01-Jul-97, Creation
  * V 1.01, PK, 24-Jul-97, Fix problem with previews on Irix
+ * V 1.02, PK, 24-Sep-97, Try different font sizes when inquire failed.
+ *                        Fit film height to images
+ * V 1.03, nn, 20-Dec-97, Initialize layers in film()
  */
-static char ident[] = "@(#) GIMP Film plug-in v1.01 24-Jul-97";
+static char ident[] = "@(#) GIMP Film plug-in v1.03 20-Dec-97";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -65,6 +68,7 @@ typedef struct {
   unsigned char number_color[3];   /* color of number */
   char number_fontf[256];          /* font family to use for numbering */
   int number_pos[2];               /* flags where to draw numbers (top/bottom) */
+  int keep_height;                 /* flag if to keep max. image height */
   int num_images;                  /* number of images */
   gint32 image[MAX_FILM_PICTURES]; /* list of image IDs */
 } FilmVals;
@@ -89,6 +93,7 @@ typedef struct
   int       prv_width, prv_height;
   CSEL      csel[2];
   int       number_pos[2];
+  int       keep_height;
   gint run;
 } FilmInterface;
 
@@ -143,6 +148,8 @@ static void      film_ok_callback    (GtkWidget *widget,
                                       gpointer data);
 static void      numbering_toggle_update (GtkWidget *widget,
                                       gpointer data);
+static void      keepheight_toggle_update (GtkWidget *widget,
+                                      gpointer data);
 static void      color_select_ok_callback (GtkWidget *widget,
                                       gpointer data);
 static void      color_select_cancel_callback (GtkWidget *widget,
@@ -174,6 +181,7 @@ static FilmVals filmvals =
   { 239, 159, 0 }, /* Color of number */
   "courier", /* Font family for numbering */
   { 1, 1 },  /* Numbering on top and bottom */
+  0,         /* Dont keep max. image height */
   0,         /* Number of images */
   { 0 }      /* Input image list */
 };
@@ -208,7 +216,7 @@ query ()
     { PARAM_IMAGE, "image", "Input image (only used as default image\
  in interactive mode)" },
     { PARAM_DRAWABLE, "drawable", "Input drawable (not used)" },
-    { PARAM_INT32, "film_height", "Height of film" },
+    { PARAM_INT32, "film_height", "Height of film (0: fit to images)" },
     { PARAM_COLOR, "film_color", "Color of the film" },
     { PARAM_INT32, "number_start", "Start index for numbering" },
     { PARAM_STRING, "number_fontf", "Font family for drawing numbers" },
@@ -278,7 +286,9 @@ run (char    *name,
 	status = STATUS_CALLING_ERROR;
       if (status == STATUS_SUCCESS)
 	{
-          filmvals.film_height = param[3].data.d_int32;
+          filmvals.keep_height = (param[3].data.d_int32 <= 0);
+          filmvals.film_height = filmvals.keep_height ?
+                                  128 : param[3].data.d_int32;
           filmvals.film_color[0] = param[4].data.d_color.red;
           filmvals.film_color[1] = param[4].data.d_color.green;
           filmvals.film_color[2] = param[4].data.d_color.blue;
@@ -374,9 +384,23 @@ film (void)
                                     /* Save foreground colour */
  gimp_palette_get_foreground (&f_red, &f_green, &f_blue);
 
- film_height = filmvals.film_height;
- picture_height = film_height * filmvals.picture_height;
- picture_space = film_height * filmvals.picture_space;
+ if (filmvals.keep_height) /* Search maximum picture height */
+ {
+   picture_height = 0;
+   for (j = 0; j < num_images; j++)
+   {
+     height = gimp_image_height (image_ID_src[j]);
+     if (height > picture_height) picture_height = height;
+   }
+   film_height = (int)(picture_height / filmvals.picture_height + 0.5);
+   filmvals.film_height = film_height;
+ }
+ else
+ {
+   film_height = filmvals.film_height;
+   picture_height = (int)(film_height * filmvals.picture_height + 0.5);
+ }
+ picture_space = (int)(film_height * filmvals.picture_space + 0.5);
  picture_y0 = (film_height - picture_height)/2;
 
  number_height = film_height * filmvals.number_height;
@@ -855,7 +879,7 @@ draw_number (gint32 layer_ID,
 {char buf[32];
  GDrawable *drw;
  GParam *params;
- gint nreturn_vals;
+ gint nreturn_vals, k, delta, max_delta;
  gint32 image_ID, descent;
  char *family = filmvals.number_fontf;
 
@@ -864,18 +888,32 @@ draw_number (gint32 layer_ID,
  drw = gimp_drawable_get (layer_ID);
  image_ID = gimp_drawable_image_id (layer_ID);
 
+ max_delta = height / 10;
+ if (max_delta < 1) max_delta = 1;
+
  /* Numbers dont need the descent. Inquire it and move the text down */
- params = gimp_run_procedure ("gimp_text_get_extents", &nreturn_vals,
-                     PARAM_STRING, buf,
-                     PARAM_FLOAT, (gfloat)height,
-                     PARAM_INT32, (gint32)0,  /* use pixelsize */
-                     PARAM_STRING, "*",       /* foundry */
-                     PARAM_STRING, family,    /* family */
-                     PARAM_STRING, "*",       /* weight */
-                     PARAM_STRING, "*",       /* slant */
-                     PARAM_STRING, "*",       /* set_width */
-                     PARAM_STRING, "*",       /* spacing */
-                     PARAM_END);
+ for (k = 0; k < max_delta*2 + 1; k++)
+ { /* Try different font sizes if inquire of extent failed */
+   delta = (k+1) / 2;
+   if ((k & 1) == 0) delta = -delta;
+   params = gimp_run_procedure ("gimp_text_get_extents", &nreturn_vals,
+                       PARAM_STRING, buf,
+                       PARAM_FLOAT, (gfloat)(height+delta),
+                       PARAM_INT32, (gint32)0,  /* use pixelsize */
+                       PARAM_STRING, "*",       /* foundry */
+                       PARAM_STRING, family,    /* family */
+                       PARAM_STRING, "*",       /* weight */
+                       PARAM_STRING, "*",       /* slant */
+                       PARAM_STRING, "*",       /* set_width */
+                       PARAM_STRING, "*",       /* spacing */
+                       PARAM_END);
+
+   if (params[0].data.d_status == STATUS_SUCCESS)
+   {
+     height += delta;
+     break;
+   }
+ }
 
  if (params[0].data.d_status == STATUS_SUCCESS)
    descent = params[4].data.d_int32;
@@ -1245,6 +1283,17 @@ film_dialog (gint32 image_ID)
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
+  /* Keep maximum image height */
+  toggle = gtk_check_button_new_with_label ("Fit height to images");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  filmint.keep_height = filmvals.keep_height;
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+                      (GtkSignalFunc) keepheight_toggle_update,
+                      &(filmint.keep_height));
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle),
+                               filmint.keep_height);
+  gtk_widget_show (toggle);
+
   table = gtk_table_new (2, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 5);
   gtk_table_set_col_spacings (GTK_TABLE (table), 5);
@@ -1425,6 +1474,9 @@ film_ok_callback (GtkWidget *widget,
   filmvals.number_pos[0] = filmint.number_pos[0];
   filmvals.number_pos[1] = filmint.number_pos[1];
 
+  /* Read keep max. image height */
+  filmvals.keep_height = filmint.keep_height;
+
   /* Read image list */
   num_images = 0;
   if (filmint.image_list_film != NULL)
@@ -1467,6 +1519,22 @@ numbering_toggle_update (GtkWidget *widget,
   toggle_val = (int *) data;
 
   *toggle_val = ((GTK_TOGGLE_BUTTON (widget)->active) != 0);
+}
+
+
+static void
+keepheight_toggle_update (GtkWidget *widget,
+                         gpointer   data)
+
+{
+  int *toggle_val;
+
+  toggle_val = (int *) data;
+
+  *toggle_val = ((GTK_TOGGLE_BUTTON (widget)->active) != 0);
+
+  if (filmint.left_entry[0] != NULL)
+    gtk_widget_set_sensitive (filmint.left_entry[0], *toggle_val == 0);
 }
 
 

@@ -35,9 +35,12 @@
  *                        New procedure file_ps_load_setargs to set
  *                        load-arguments non-interactively.
  *                        If GS_OPTIONS are not set, use at least "-dSAFER"
+ * V 1.03, nn, 20-Dec-97: Initialize some variables
+ * V 1.04, PK, 20-Dec-97: Add Encapsulated PostScript output and preview
  */
-#define VERSIO                                               1.02
-static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.02  12-Oct-97";
+#define VERSIO                                               1.04
+static char dversio[] =                                    "v1.04  20-Dec-97";
+static char ident[] = "@(#) GIMP PostScript/PDF file-plugin v1.04  20-Dec-97";
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -93,6 +96,9 @@ typedef struct
   gint unit_mm;               /* Unit of measure (0: inch, 1: mm) */
   gint keep_ratio;            /* Keep aspect ratio */
   gint rotate;                /* Rotation (0, 90, 180, 270) */
+  gint eps;                   /* Encapsulated PostScript flag */
+  gint preview;               /* Preview Flag */
+  gint preview_size;          /* Preview size */
 } PSSaveVals;
 
 typedef struct
@@ -107,6 +113,9 @@ static PSSaveVals psvals =
   1,              /* Unit is mm */
   1,              /* Keep edge ratio */
   90,             /* Rotate */
+  0,              /* Encapsulated PostScript flag */
+  0,              /* Preview flag */
+  256             /* Preview size */
 };
 
 static PSSaveInterface psint =
@@ -131,16 +140,13 @@ static gint   save_image (char *filename,
 
 static gint save_gray  (FILE *ofp,
                         gint32 image_ID,
-                        gint32 drawable_ID,
-                        const PSSaveVals *saveopt);
+                        gint32 drawable_ID);
 static gint save_index (FILE *ofp,
                         gint32 image_ID,
-                        gint32 drawable_ID,
-                        const PSSaveVals *saveopt);
+                        gint32 drawable_ID);
 static gint save_rgb   (FILE *ofp,
                         gint32 image_ID,
-                        gint32 drawable_ID,
-                        const PSSaveVals *saveopt);
+                        gint32 drawable_ID);
 
 static gint32 create_new_image (char *filename, guint pagenum,
                 guint width, guint height,
@@ -172,11 +178,18 @@ static gint32 load_ps (char *filename,
 
 static void save_ps_header (FILE *ofp,
                             char *filename);
-static void save_ps_transform (FILE *ofp,
-                               int width,
-                               int height,
-                               int bpp);
+static void save_ps_setup (FILE *ofp,
+                           gint32 drawable_ID,
+                           int width,
+                           int height,
+                           int bpp);
 static void save_ps_trailer (FILE *ofp);
+static void save_ps_preview (FILE *ofp,
+                             gint32 drawable_ID);
+static void dither_grey (unsigned char *grey,
+                         unsigned char *bw,
+                         int npix,
+                         int linecount);
 
 
 /* Dialog-handling */
@@ -202,9 +215,13 @@ typedef struct
 {
   GtkWidget *dialog;
   GtkWidget *entry[4];
+  GtkWidget *psize_entry;
   int keep_ratio;
   int unit[2];
   int rot[4];
+  int eps;
+  int preview;
+  int preview_size;
 } SaveDialogVals;
 
 static gint   save_dialog              (void);
@@ -279,18 +296,20 @@ query (void)
     { PARAM_FLOAT, "height", "Height of image in PostScript file" },
     { PARAM_FLOAT, "x_offset", "X-offset to image from lower left corner" },
     { PARAM_FLOAT, "y_offset", "Y-offset to image from lower left corner" },
-    { PARAM_INT32, "unit", "0: inches, 1: millimeters" },
+    { PARAM_INT32, "unit", "Unit for width/height/offset. 0: inches, 1: millimeters" },
     { PARAM_INT32, "keep_ratio", "0: use width/height, 1: keep aspect ratio" },
-    { PARAM_INT32, "rotation", "0, 90, 180, 270" }
+    { PARAM_INT32, "rotation", "0, 90, 180, 270" },
+    { PARAM_INT32, "eps_flag", "0: PostScript, 1: Encapsulated PostScript" },
+    { PARAM_INT32, "preview", "0: no preview, >0: max. size of preview" }
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
   gimp_install_procedure ("file_ps_load",
                           "load file of PostScript/PDF file format",
                           "load file of PostScript/PDF file format",
+                          "Peter Kirchgessner <pkirchg@aol.com>",
                           "Peter Kirchgessner",
-                          "Peter Kirchgessner",
-                          "1997",
+                          dversio,
                           "<Load>/PostScript",
                           NULL,
                           PROC_PLUG_IN,
@@ -300,9 +319,9 @@ query (void)
   gimp_install_procedure ("file_ps_load_setargs",
                           "set additional parameters for procedure file_ps_load",
                           "set additional parameters for procedure file_ps_load",
+                          "Peter Kirchgessner <pkirchg@aol.com>",
                           "Peter Kirchgessner",
-                          "Peter Kirchgessner",
-                          "1997",
+                          dversio,
                           NULL,
                           NULL,
                           PROC_PLUG_IN,
@@ -313,9 +332,9 @@ query (void)
                           "save file in PostScript file format",
                           "PostScript saving handles all image types except \
 those with alpha channels.",
+                          "Peter Kirchgessner <pkirchg@aol.com>",
                           "Peter Kirchgessner",
-                          "Peter Kirchgessner",
-                          "1997",
+                          dversio,
                           "<Save>/PostScript",
                           "RGB*, GRAY*, INDEXED*",
                           PROC_PLUG_IN,
@@ -323,9 +342,9 @@ those with alpha channels.",
                           save_args, NULL);
 
   /* Register file plugin by plugin name and handable extensions */
-  gimp_register_magic_load_handler ("file_ps_load", "ps", "",
-				    "0,string,%!,0,string,%PDF");
-  gimp_register_save_handler ("file_ps_save", "ps", "");
+  gimp_register_magic_load_handler ("file_ps_load", "ps,eps,pdf", "",
+                                    "0,string,%!,0,string,%PDF");
+  gimp_register_save_handler ("file_ps_save", "ps,eps", "");
 }
 
 
@@ -341,6 +360,7 @@ run (char    *name,
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
   gint32 image_ID = -1;
+  int k;
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
@@ -402,6 +422,11 @@ run (char    *name,
           /*  Possibly retrieve data  */
           gimp_get_data ("file_ps_save", &psvals);
 
+          /* About to save an EPS-file ? Switch on eps-flag in dialog */
+          k = strlen (param[3].data.d_string);
+          if ((k >= 4) && (strcmp (param[3].data.d_string+k-4, ".eps") == 0))
+            psvals.eps = 1;
+
           /*  First acquire information with a dialog  */
           if (! save_dialog ())
             return;
@@ -409,7 +434,7 @@ run (char    *name,
 
         case RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
-          if (nparams != 12)
+          if (nparams != 14)
           {
             status = STATUS_CALLING_ERROR;
           }
@@ -422,6 +447,9 @@ run (char    *name,
             psvals.unit_mm = (param[9].data.d_int32 != 0);
             psvals.keep_ratio = (param[10].data.d_int32 != 0);
             psvals.rotate = param[11].data.d_int32;
+            psvals.eps = param[12].data.d_int32;
+            psvals.preview = (param[13].data.d_int32 != 0);
+            psvals.preview_size = param[13].data.d_int32;
           }
           break;
 
@@ -642,11 +670,11 @@ save_image (char *filename,
   save_ps_header (ofp, filename);
 
   if (drawable_type == GRAY_IMAGE)
-    retval = save_gray (ofp,image_ID, drawable_ID, &psvals);
+    retval = save_gray (ofp,image_ID, drawable_ID);
   else if (drawable_type == INDEXED_IMAGE)
-    retval = save_index (ofp,image_ID, drawable_ID, &psvals);
+    retval = save_index (ofp,image_ID, drawable_ID);
   else if (drawable_type == RGB_IMAGE)
-    retval = save_rgb (ofp,image_ID, drawable_ID, &psvals);
+    retval = save_rgb (ofp,image_ID, drawable_ID);
 
   save_ps_trailer (ofp);
 
@@ -689,6 +717,7 @@ check_save_vals (void)
  i = psvals.rotate;
  if ((i != 0) && (i != 90) && (i != 180) && (i != 270))
    psvals.rotate = 90;
+ if (psvals.preview_size <= 0) psvals.preview = 0;
 }
 
 
@@ -1257,22 +1286,24 @@ static void save_ps_header (FILE *ofp,
 
 {time_t cutime = time (NULL);
 
-  fprintf (ofp, "%%!PS-Adobe-3.0\n");
+  fprintf (ofp, "%%!PS-Adobe-3.0%s\n", psvals.eps ? " EPSF-3.0" : "");
   fprintf (ofp, "%%%%Creator: GIMP PostScript file plugin V %4.2f \
 by Peter Kirchgessner\n", VERSIO);
   fprintf (ofp, "%%%%Title: %s\n", filename);
   fprintf (ofp, "%%%%CreationDate: %s", ctime (&cutime));
   fprintf (ofp, "%%%%DocumentData: Clean7Bit\n");
+  if (psvals.eps) fprintf (ofp, "%%%%LanguageLevel: 2\n");
   fprintf (ofp, "%%%%Pages: 1\n");
 }
 
 
 /* Write out transformation for image */
 static void
-save_ps_transform (FILE *ofp,
-                   int width,
-                   int height,
-                   int bpp)
+save_ps_setup (FILE *ofp,
+               gint32 drawable_ID,
+               int width,
+               int height,
+               int bpp)
 
 {double x_offset, y_offset, x_size, y_size;
  double x_scale, y_scale;
@@ -1314,6 +1345,11 @@ save_ps_transform (FILE *ofp,
            (int)((y_offset+y_size)*72.0)+1);
   fprintf (ofp, "%%%%EndComments\n");
 
+  if (psvals.preview && (psvals.preview_size > 0))
+  {
+    save_ps_preview (ofp, drawable_ID);
+  }
+
   fprintf (ofp, "%%%%BeginProlog\n");
   fprintf (ofp, "%% Use own dictionary to avoid conflicts\n");
   fprintf (ofp, "5 dict begin\n");
@@ -1353,19 +1389,227 @@ save_ps_transform (FILE *ofp,
 }
 
 
-static void save_ps_trailer (FILE *ofp)
+static void
+save_ps_trailer (FILE *ofp)
 
 {
-  fprintf (ofp, "%%Trailer\n");
-  fprintf (ofp, "end\n%%EOF\n");
+  fprintf (ofp, "%%%%Trailer\n");
+  fprintf (ofp, "end\n%%%%EOF\n");
 }
 
+/* Do a Floyd-Steinberg dithering on a greyscale scanline. */
+/* linecount must keep the counter for the actual scanline (0, 1, 2, ...). */
+/* If linecount is less than zero, all used memory is freed. */
+
+static void
+dither_grey (unsigned char *grey,
+             unsigned char *bw,
+             int npix,
+             int linecount)
+
+{register unsigned char *greyptr, *bwptr, mask;
+ register int *fse;
+ int x, greyval, fse_inline;
+ static int *fs_error = NULL;
+ static int do_init_arrays = 1;
+ static int limit_array[1278];
+ static int east_error[256],seast_error[256],south_error[256],swest_error[256];
+ int *limit = &(limit_array[512]);
+
+ if (linecount <= 0)
+ {
+   if (fs_error) g_free (fs_error-1);
+   if (linecount < 0) return;
+   fs_error = (int *)g_malloc ((npix+2)*sizeof (int));
+   if (fs_error != NULL)
+   {
+     memset ((char *)fs_error, 0, (npix+2)*sizeof (int));
+     fs_error++;
+   }
+
+   /* Initialize some arrays that speed up dithering */
+   if (do_init_arrays)
+   {
+     do_init_arrays = 0;
+     for (x = -511; x <= 766; x++)
+       limit[x] = (x < 0) ? 0 : ((x > 255) ? 255 : x);
+     for (greyval = 0; greyval < 256; greyval++)
+     {
+       east_error[greyval] = (greyval < 128) ? ((greyval * 79) >> 8)
+                                             : (((greyval-255)*79) >> 8);
+       seast_error[greyval] = (greyval < 128) ? ((greyval * 34) >> 8)
+                                             : (((greyval-255)*34) >> 8);
+       south_error[greyval] = (greyval < 128) ? ((greyval * 56) >> 8)
+                                             : (((greyval-255)*56) >> 8);
+       swest_error[greyval] = (greyval < 128) ? ((greyval * 12) >> 8)
+                                             : (((greyval-255)*12) >> 8);
+     }
+   }
+ }
+ if (fs_error == NULL) return;
+
+ memset (bw, 0, (npix+7)/8); /* Initialize with white */
+
+ greyptr = grey;
+ bwptr = bw;
+ mask = 0x80;
+ fse_inline = fs_error[0];
+ for (x = 0, fse = fs_error; x < npix; x++, fse++)
+ {
+   greyval = limit[*(greyptr++) + fse_inline];  /* 0 <= greyval <= 255 */
+   if (greyval < 128) *bwptr |= mask;  /* Set a black pixel */
+
+   /* Error distribution */
+   fse_inline = east_error[greyval] + fse[1];
+   fse[1] = seast_error[greyval];
+   fse[0] += south_error[greyval];
+   fse[-1] += swest_error[greyval];
+
+   mask >>= 1;   /* Get mask for next b/w-pixel */
+   if (!mask)
+   {
+     mask = 0x80;
+     bwptr++;
+   }
+ }
+}
+
+/* Write a device independant screen preview */
+static void
+save_ps_preview (FILE *ofp,
+                 gint32 drawable_ID)
+
+{register unsigned char *bwptr, *greyptr;
+ GDrawableType drawable_type;
+ GDrawable *drawable;
+ GPixelRgn src_rgn;
+ int width, height, x, y, nbsl, out_count;
+ int nchar_pl = 72, src_y;
+ double f1, f2;
+ unsigned char *grey, *bw, *src_row, *src_ptr;
+ unsigned char *cmap;
+ gint ncols, cind;
+
+ if (psvals.preview_size <= 0) return;
+
+ drawable = gimp_drawable_get (drawable_ID);
+ drawable_type = gimp_drawable_type (drawable_ID);
+
+ /* Calculate size of preview */
+ if (   (drawable->width <= psvals.preview_size)
+     && (drawable->height <= psvals.preview_size))
+ {
+   width = drawable->width;
+   height = drawable->height;
+ }
+ else
+ {
+   f1 = (double)psvals.preview_size / (double)drawable->width;
+   f2 = (double)psvals.preview_size / (double)drawable->height;
+   if (f1 < f2)
+   {
+     width = psvals.preview_size;
+     height = drawable->height * f1;
+     if (height <= 0) height = 1;
+   }
+   else
+   {
+     height = psvals.preview_size;
+     width = drawable->width * f1;
+     if (width <= 0) width = 1;
+   }
+ }
+
+ nbsl = (width+7)/8;  /* Number of bytes per scanline in bitmap */
+
+ grey = (unsigned char *)g_malloc (width);
+ if (grey == NULL) return;
+ bw = (unsigned char *)g_malloc (nbsl);
+ if (bw == NULL) return;
+ src_row = (unsigned char *)g_malloc (drawable->width * drawable->bpp);
+ if (src_row == NULL) return;
+
+ fprintf (ofp, "%%%%BeginPreview: %d %d 1 %d\n", width, height,
+          ((nbsl*2+nchar_pl-1)/nchar_pl)*height);
+
+ gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0, drawable->width,
+                      drawable->height, FALSE, FALSE);
+
+ cmap = NULL;     /* Check if we need a colour table */
+ if (gimp_drawable_type (drawable_ID) == INDEXED_IMAGE)
+   cmap = (unsigned char *)
+            gimp_image_get_cmap (gimp_drawable_image_id (drawable_ID), &ncols);
+
+ for (y = 0; y < height; y++)
+ {
+   /* Get a scanline from the input image and scale it to the desired width */
+   src_y = (y * drawable->height) / height;
+   gimp_pixel_rgn_get_row (&src_rgn, src_row, 0, src_y, drawable->width);
+
+   greyptr = grey;
+   if (drawable->bpp == 3)   /* RGB-image */
+   {
+     for (x = 0; x < width; x++)
+     {                       /* Convert to grey */
+       src_ptr = src_row + ((x * drawable->width) / width) * 3;
+       *(greyptr++) = (3*src_ptr[0] + 6*src_ptr[1] + src_ptr[2]) / 10;
+     }
+   }
+   else if (cmap)    /* Indexed image */
+   {
+     for (x = 0; x < width; x++)
+     {
+       src_ptr = src_row + ((x * drawable->width) / width);
+       cind = *src_ptr;   /* Get colour index and convert to grey */
+       src_ptr = (cind >= ncols) ? cmap : (cmap + 3*cind);
+       *(greyptr++) = (3*src_ptr[0] + 6*src_ptr[1] + src_ptr[2]) / 10;
+     }
+   }
+   else             /* Grey image */
+   {
+     for (x = 0; x < width; x++)
+       *(greyptr++) = *(src_row + ((x * drawable->width) / width));
+   }
+
+   /* Now we have a greyscale line for the desired width. */
+   /* Dither it to b/w */
+   dither_grey (grey, bw, width, y);
+
+   /* Write out the b/w line */
+   out_count = 0;
+   bwptr = bw;
+   for (x = 0; x < nbsl; x++)
+   {
+     if (out_count == 0) fprintf (ofp, "%% ");
+     fprintf (ofp, "%02x", *(bwptr++));
+     out_count += 2;
+     if (out_count >= nchar_pl)
+     {
+       fprintf (ofp, "\n");
+       out_count = 0;
+     }
+   }
+   if (out_count != 0)
+     fprintf (ofp, "\n");
+
+   if ((l_run_mode != RUN_NONINTERACTIVE) && ((y % 20) == 0))
+     gimp_progress_update ((double)(y) / (double)height);
+ }
+
+ fprintf (ofp, "%%%%EndPreview\n");
+
+ dither_grey (grey, bw, width, -1);
+ g_free (src_row);
+ g_free (bw);
+ g_free (grey);
+
+ gimp_drawable_detach (drawable);
+}
 
 static gint
 save_gray  (FILE *ofp,
             gint32 image_ID,
-            gint32 drawable_ID,
-            const PSSaveVals *saveopt)
+            gint32 drawable_ID)
 
 { int height, width, i, j;
   int tile_height;
@@ -1386,7 +1630,7 @@ save_gray  (FILE *ofp,
   src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
 
   /* Set up transformation in PostScript */
-  save_ps_transform (ofp, width, height, 1);
+  save_ps_setup (ofp, drawable_ID, width, height, 1);
 
   /* Write read image procedure */
   fprintf (ofp, "{ currentfile scanline readhexstring pop }\n");
@@ -1429,8 +1673,7 @@ save_gray  (FILE *ofp,
 static gint
 save_index (FILE *ofp,
             gint32 image_ID,
-            gint32 drawable_ID,
-            const PSSaveVals *saveopt)
+            gint32 drawable_ID)
 
 { int height, width, i, j;
   int ncols;
@@ -1476,7 +1719,7 @@ save_index (FILE *ofp,
   }
 
   /* Set up transformation in PostScript */
-  save_ps_transform (ofp, width, height, 3);
+  save_ps_setup (ofp, drawable_ID, width, height, 3);
 
   /* Write read image procedure */
   fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
@@ -1519,8 +1762,7 @@ save_index (FILE *ofp,
 static gint
 save_rgb (FILE *ofp,
           gint32 image_ID,
-          gint32 drawable_ID,
-          const PSSaveVals *saveopt)
+          gint32 drawable_ID)
 
 {
   int height, width, tile_height;
@@ -1542,7 +1784,7 @@ save_rgb (FILE *ofp,
   src = data = (unsigned char *)g_malloc (tile_height * width * drawable->bpp);
 
   /* Set up transformation in PostScript */
-  save_ps_transform (ofp, width, height, 3);
+  save_ps_setup (ofp, drawable_ID, width, height, 3);
 
   /* Write read image procedure */
   fprintf (ofp, "{ currentfile scanline readhexstring pop } false 3\n");
@@ -1858,7 +2100,8 @@ save_dialog (void)
   GtkWidget *button;
   GtkWidget *toggle;
   GtkWidget *frame, *uframe;
-  GtkWidget *vbox, *uvbox;
+  GtkWidget *hbox, *vbox, *uvbox;
+  GtkWidget *main_vbox[2];
   GtkWidget *label;
   GtkWidget *table;
   GSList *group;
@@ -1867,7 +2110,8 @@ save_dialog (void)
   static char *label_text[] = { "Width:", "Height:", "X-offset:", "Y-offset:" };
   static char *radio_text[] = { "0", "90", "180", "270" };
   static char *unit_text[] = { "Inch", "Millimeter" };
-  int j;
+  char tmp[80];
+  int j, idata;
   double rdata;
 
   argc = 1;
@@ -1906,12 +2150,25 @@ save_dialog (void)
                       TRUE, TRUE, 0);
   gtk_widget_show (button);
 
+  /* Main hbox */
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_border_width (GTK_CONTAINER (hbox), 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), hbox,
+                      FALSE, TRUE, 0);
+  main_vbox[0] = main_vbox[1] = NULL;
+
+  for (j = 0; j < sizeof (main_vbox) / sizeof (main_vbox[0]); j++)
+  {
+    main_vbox[j] = gtk_vbox_new (FALSE, 0);
+    gtk_container_border_width (GTK_CONTAINER (main_vbox[j]), 0);
+    gtk_box_pack_start (GTK_BOX (hbox), main_vbox[j], TRUE, TRUE, 0);
+  }
+
   /* Image Size */
   frame = gtk_frame_new ("Image Size");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), frame,
-                      FALSE, TRUE, 0);
+  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_box_pack_start (GTK_BOX (main_vbox[0]), frame, FALSE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 5);
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -1936,7 +2193,7 @@ save_dialog (void)
   for (j = 0; j < 4; j++)
   {
     vals->entry[j] = gtk_entry_new ();
-    gtk_widget_set_usize (vals->entry[j], 100, 0);
+    gtk_widget_set_usize (vals->entry[j], 50, 0);
     if      (j == 0) rdata = psvals.width;
     else if (j == 1) rdata = psvals.height;
     else if (j == 2) rdata = psvals.x_offset;
@@ -1990,9 +2247,8 @@ save_dialog (void)
   /* Rotation */
   frame = gtk_frame_new ("Rotation");
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (vals->dialog)->vbox), frame,
-                      FALSE, TRUE, 0);
+  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
   vbox = gtk_vbox_new (FALSE, 5);
   gtk_container_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -2015,6 +2271,65 @@ save_dialog (void)
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
+  /* Format */
+  frame = gtk_frame_new ("Output");
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
+  gtk_container_border_width (GTK_CONTAINER (frame), 5);
+  gtk_box_pack_start (GTK_BOX (main_vbox[1]), frame, TRUE, TRUE, 0);
+  vbox = gtk_vbox_new (FALSE, 5);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 5);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+
+  toggle = gtk_check_button_new_with_label ("Encapsulated PostScript");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  vals->eps = (psvals.eps != 0);
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+                      (GtkSignalFunc) save_toggle_update,
+                      &(vals->eps));
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vals->eps);
+  gtk_widget_show (toggle);
+
+  toggle = gtk_check_button_new_with_label ("Preview");
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, TRUE, TRUE, 0);
+  vals->preview = psvals.preview;
+  gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
+                      (GtkSignalFunc) save_toggle_update,
+                      &(vals->preview));
+  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (toggle), vals->preview);
+  gtk_widget_show (toggle);
+
+  /* Preview size label/entry */
+  table = gtk_table_new (1, 2, FALSE);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 5);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 5);
+  gtk_box_pack_start (GTK_BOX (vbox), table, TRUE, TRUE, 0);
+  gtk_widget_show (table);
+
+  j = 0;
+  label = gtk_label_new ("Preview size");
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gtk_table_attach (GTK_TABLE (table), label, 0, 1, j, j+1,
+                    GTK_FILL, GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  /* Entry */
+  j= 0;
+  vals->psize_entry = gtk_entry_new ();
+  gtk_widget_set_usize (vals->psize_entry, 50, 0);
+  idata = psvals.preview_size;
+  if (idata < 0) idata = 0;
+  sprintf (tmp, "%d", idata);
+  gtk_entry_set_text (GTK_ENTRY (vals->psize_entry), tmp);
+  gtk_table_attach (GTK_TABLE (table), vals->psize_entry, 1, 2, j, j+1,
+                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (vals->psize_entry);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (frame);
+
+  for (j = 0; j < sizeof (main_vbox) / sizeof (main_vbox[0]); j++)
+    gtk_widget_show (main_vbox[j]);
+  gtk_widget_show (hbox);
   gtk_widget_show (vals->dialog);
 
   gtk_main ();
@@ -2041,7 +2356,7 @@ save_ok_callback (GtkWidget *widget,
 
 {SaveDialogVals *vals = (SaveDialogVals *)data;
  double r;
- int k;
+ int k, ival;
 
   /* Read width */
   k = sscanf (gtk_entry_get_text (GTK_ENTRY (vals->entry[0])), "%lf", &r);
@@ -2071,6 +2386,16 @@ save_ok_callback (GtkWidget *widget,
   else if (vals->rot[2] == 1) psvals.rotate = 180;
   else if (vals->rot[3] == 1) psvals.rotate = 270;
   else psvals.rotate = 0;
+
+  /* Read EPS flag */
+  psvals.eps = (vals->eps != 0);
+
+  /* Read Preview flag */
+  psvals.preview = (vals->preview != 0);
+
+  /* Read preview size */
+  k = sscanf (gtk_entry_get_text (GTK_ENTRY (vals->psize_entry)), "%d", &ival);
+  if (k == 1) psvals.preview_size = ival;
 
   psint.run = TRUE;
   gtk_widget_destroy (GTK_WIDGET (vals->dialog));

@@ -1,5 +1,5 @@
 
-PostScript file plugin V1.02 for the GIMP Peter Kirchgessner, 12-Oct-97
+PostScript file plugin V1.04 for the GIMP Peter Kirchgessner, 23-Dec-97
 ========================================= e-mail: pkirchg@aol.com
                                           WWW   : http://members.aol.com/pkirchg
 
@@ -16,15 +16,21 @@ you will find the following files:
     ps.linux.386.elf.tgz      : gzipped tarfile with Linux executable
 
 News:
-  V 1.02 support for anti-aliasing (George White).
-         no progress bars for non-interactive mode.
-         new procedure file_ps_load_setargs to set
-         load arguments non-interactively.
-         Check for GS_OPTIONS. If not set, use at least "-dSAFER".
-  V 1.01 parse rc file (changes font in dialogue).
-  V 1.00 clip everything outside BoundingBox.
-         support for multi page documents.
-         PDF input.
+  V 1.04, 23-Dec-97:
+    add Encapsulated PostScript output and device independant preview
+    add achanges that came with gimp V 0.99.16
+  V 1.02:
+    support for anti-aliasing (George White).
+    no progress bars for non-interactive mode.
+    new procedure file_ps_load_setargs to set
+    load arguments non-interactively.
+    Check for GS_OPTIONS. If not set, use at least "-dSAFER".
+  V 1.01:
+    parse rc file (changes font in dialogue).
+  V 1.00:
+    clip everything outside BoundingBox.
+    support for multi page documents.
+    PDF input.
 
 The PostScript file plugin handles reading and writing of PostScript files.
 For interpreting PostScript, ghostscript must be installed. The gs-
@@ -64,6 +70,12 @@ file_ps_load_setargs are:
     PARAM_INT32: text antialiasing: 1: none, 2: weak, 4: strong
     PARAM_INT32: graphics antialiasing: 1: none, 2: weak, 4: strong
  
+When saving PostScript, Encapsulated PostScript can be choosen.
+Also a device independant preview can be added to the output file.
+The size of the prview can be choosen, but it can not exceed
+the size of the original image. The preview consists of a b/w-bitmap
+that shows a representation of the image. 
+
 Installation:
 To tell the GIMP about the PostScript-file-plugin, copy the ps-executable
 to /usr/local/lib/gimp/0.99.x/plug-ins .

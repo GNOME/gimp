@@ -1,5 +1,5 @@
 
-FITS file plugin V1.04 for the GIMP     Peter Kirchgessner, 12-Oct-97
+FITS file plugin V1.05 for the GIMP     Peter Kirchgessner, 23-Dec-97
 ==================================      e-mail: pkirchg@aol.com
                                         WWW   : http://members.aol.com/pkirchg
 
@@ -19,14 +19,16 @@ you will find the following files:
     fits.linux.386.elf.tgz    : gzipped tarfile with Linux exectuable
 
 News:
-V 1.01:
- - Bug with compilation on Irix fixed
-V 1.02:
- - Bug with saving GRAY-images fixed
-V 1.03:
- - Parse rc file (changes font for dialogues)
-V 1.04:
- - no progress bars for non-interactive mode
+  V 1.05, 23-Dec-97:
+    Add changes that came with gimp V 0.99.16 (initialize variables)
+  V 1.04:
+    no progress bars for non-interactive mode
+  V 1.03:
+    Parse rc file (changes font for dialogues)
+  V 1.02:
+    Bug with saving GRAY-images fixed
+  V 1.01:
+    Bug with compilation on Irix fixed
 
 FITS-reading support
 --------------------
