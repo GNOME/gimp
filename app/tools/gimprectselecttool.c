@@ -38,6 +38,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimprectselecttool.h"
@@ -75,6 +76,8 @@ static void   gimp_rect_select_tool_real_rect_select (GimpRectSelectTool *rect_t
                                                       gint                w,
                                                       gint                h);
 
+static void   gimp_rect_select_tool_update_options   (GimpRectSelectTool *rect_sel,
+                                                      GimpDisplay        *display);
 
 static GimpSelectionToolClass *parent_class = NULL;
 
@@ -453,6 +456,8 @@ gimp_rect_select_tool_motion (GimpTool        *tool,
       rect_sel->h = h;
     }
 
+  gimp_rect_select_tool_update_options (rect_sel, gdisp);
+
   gimp_tool_pop_status (tool);
 
   gimp_tool_push_status_coords (tool,
@@ -561,4 +566,41 @@ gimp_rect_select_tool_rect_select (GimpRectSelectTool *rect_tool,
 
   GIMP_RECT_SELECT_TOOL_GET_CLASS (rect_tool)->rect_select (rect_tool,
                                                             x, y, w, h);
+}
+ 
+static void
+gimp_rect_select_tool_update_options (GimpRectSelectTool *rect_sel,
+                                      GimpDisplay        *gdisp)
+{
+  GimpUnit unit;
+  gdouble  width;
+  gdouble  height;
+
+  if (rect_sel->fixed_mode != GIMP_RECT_SELECT_MODE_FREE)
+    return;
+
+  if (GIMP_DISPLAY_SHELL (gdisp->shell)->dot_for_dot)
+    {
+      width  = abs (rect_sel->w);
+      height = abs (rect_sel->h);
+      unit   = GIMP_UNIT_PIXEL;
+    }
+  else
+    {
+      GimpImage *gimage;
+      gdouble    unit_factor;
+      
+      gimage = gdisp->gimage;
+
+      unit   = gimage->unit;
+      unit_factor = gimp_unit_get_factor (unit);
+      width  = (gdouble) abs (rect_sel->w) * unit_factor / gimage->xresolution;
+      height = (gdouble) abs (rect_sel->h) * unit_factor / gimage->yresolution;
+    }
+
+  g_object_set (G_OBJECT (GIMP_TOOL (rect_sel)->tool_info->tool_options),
+                "fixed-width",  width,
+                "fixed-height", height,
+                "fixed-unit",   unit,
+                NULL);
 }

@@ -1,3 +1,11 @@
+2003-02-25  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectselecttool.c (gimp_rect_select_tool_motion):
+	if in free select mode set width and height in the tool options.
+
+	* app/tools/gimpselectionoptions.c: relaxed the limits for the
+	fixed-width and fixed-height properties.
+
 2003-02-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c
