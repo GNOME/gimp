@@ -1,3 +1,11 @@
+Wed Mar 11 19:30:54 EST 1998 Adrian Likins <adrian@gimp.org>
+
+	*docs/gimp.1: added gimp man page
+		
+	*app/gdisplay.c: disables by-color-select for indexed images
+
+	*plugins/webbrowse/web-browser.scm: updated some urls
+
 Wed Mar 11 18:03:38 CST 1998 Larry Ewing  <lewing@gimp.org>
 
 	* app/disp_callbacks.c: added checks to recreate the active tool

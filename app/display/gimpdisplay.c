@@ -1019,6 +1019,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_sensitive ("<Image>/Image/Colors/Desaturate", (base_type == RGB));
 
   menus_set_sensitive ("<Image>/Select", lp);
+  menus_set_sensitive ("<Image>/Select/By Color...", (base_type != INDEXED));
   menus_set_sensitive ("<Image>/Edit/Cut", lp);
   menus_set_sensitive ("<Image>/Edit/Copy", lp);
   menus_set_sensitive ("<Image>/Edit/Paste Into", lp);

@@ -117,7 +117,7 @@
 		    "Link to http://www.rru.com/~meo/gimp/faq-dev.html")
 
 (define (script-fu-bookmark-14)
-    (script-fu-bookmark "http://www.frozenriver.ale.se/"))
+    (script-fu-bookmark "http://www.dtek.chalmers.se/~d95olofs/manual/"))
 
 (bookmark-register  "script-fu-bookmark-14"
 		    "<Toolbox>/Xtns/Web Browser/GIMP Manual"
