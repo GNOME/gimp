@@ -280,8 +280,19 @@ app_init (gint    gimp_argc,
               GError *error = NULL;
               gchar  *uri;
 
-              uri = file_utils_filename_to_uri (the_gimp->load_procs,
-                                                gimp_argv[i], &error);
+              /*  first try if we got a file uri  */
+              uri = g_filename_from_uri (gimp_argv[i], NULL, NULL);
+
+              if (uri)
+                {
+                  g_free (uri);
+                  uri = g_strdup (gimp_argv[i]);
+                }
+              else
+                {
+                  uri = file_utils_filename_to_uri (the_gimp->load_procs,
+                                                    gimp_argv[i], &error);
+                }
 
               if (! uri)
                 {
@@ -303,7 +314,7 @@ app_init (gint    gimp_argc,
 
                       filename = file_utils_uri_to_utf8_filename (uri);
 
-                      g_message (_("Opening '%s' failed:\n\n%s"),
+                      g_message (_("Opening '%s' failed:\n%s"),
                                  filename, error->message);
                       g_clear_error (&error);
 

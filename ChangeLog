@@ -1,3 +1,8 @@
+2003-06-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/app_procs.c (app_init): enabled passing of file: URIs
+	as command line parameters.
+
 2003-06-23  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL
