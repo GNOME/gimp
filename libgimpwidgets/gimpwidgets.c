@@ -1078,20 +1078,24 @@ gimp_coordinates_callback (GtkWidget           *widget,
 	      if (new_x != gcd->last_x)
 		{
 		  gcd->last_x = new_x;
-		  gcd->last_y = new_y = (new_x * gcd->orig_y) / gcd->orig_x;
+		  new_y = (new_x * gcd->orig_y) / gcd->orig_x;
 
                   g_signal_stop_emission_by_name (widget, "value_changed");
 		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1,
-					      new_y);
+                                              new_y);
+		  gcd->last_y
+                    = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 		}
 	      else if (new_y != gcd->last_y)
 		{
 		  gcd->last_y = new_y;
-		  gcd->last_x = new_x = (new_y * gcd->orig_x) / gcd->orig_y;
+		  new_x = (new_y * gcd->orig_x) / gcd->orig_y;
 
                   g_signal_stop_emission_by_name (widget, "value_changed");
 		  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0,
-					      new_x);
+                                              new_x);
+                  gcd->last_x
+                    = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 		}
 	    }
 	}
@@ -1099,17 +1103,21 @@ gimp_coordinates_callback (GtkWidget           *widget,
 	{
 	  if (new_x != gcd->last_x)
 	    {
-	      gcd->last_y = new_y = gcd->last_x = new_x;
+	      new_y = new_x;
 
               g_signal_stop_emission_by_name (widget, "value_changed");
 	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
+              gcd->last_y = gcd->last_x
+                = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 	    }
 	  else if (new_y != gcd->last_y)
 	    {
-	      gcd->last_x = new_x = gcd->last_y = new_y;
+	      new_x = new_y;
 
               g_signal_stop_emission_by_name (widget, "value_changed");
 	      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
+              gcd->last_x = gcd->last_y
+                = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 	    }
 	}
     }
