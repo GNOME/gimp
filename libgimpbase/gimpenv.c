@@ -510,13 +510,13 @@ gimp_path_parse (const gchar  *path,
 gchar *
 gimp_path_to_str (GList *path)
 {
-  GString *str = NULL;
+  GString *str    = NULL;
   GList   *list;
   gchar   *retval = NULL;
 
   for (list = path; list; list = g_list_next (list))
     {
-      gchar *dir = (gchar *) list->data;
+      gchar *dir = list->data;
 
       if (str)
 	{
@@ -573,10 +573,10 @@ gimp_path_get_user_writable_dir (GList *path)
 
   for (list = path; list; list = g_list_next (list))
     {
-      gchar *dir = (gchar *) list->data;
+      gchar *dir = list->data;
 
       /*  check if directory exists  */
-      err = stat (dir, &filestat);
+      err = g_stat (dir, &filestat);
 
       /*  this is tricky:
        *  if a file is e.g. owned by the current user but not user-writable,
@@ -605,9 +605,7 @@ static gchar *
 gimp_env_get_dir (const gchar *gimp_env_name,
                   const gchar *env_dir)
 {
-  const gchar *env;
-
-  env = g_getenv (gimp_env_name);
+  const gchar *env = g_getenv (gimp_env_name);
 
   if (env)
     {
@@ -620,7 +618,9 @@ gimp_env_get_dir (const gchar *gimp_env_name,
   else
     {
       gchar *retval = g_strdup (env_dir);
+
       gimp_path_runtime_fix (&retval);
+
       return retval;
     }
 }

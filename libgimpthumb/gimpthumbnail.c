@@ -910,10 +910,10 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
 
 #ifdef G_OS_WIN32
       /* win32 rename can't overwrite */
-      unlink (filename);
+      g_unlink (filename);
 #endif
 
-      if (rename (tmpname, filename) == -1)
+      if (g_rename (tmpname, filename) == -1)
 	{
 	  g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                        _("Could not create thumbnail for %s: %s"),
@@ -950,7 +950,7 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
       g_object_thaw_notify (G_OBJECT (thumbnail));
     }
 
-  unlink (tmpname);
+  g_unlink (tmpname);
   g_free (tmpname);
 
   return success;
@@ -1343,7 +1343,7 @@ gimp_thumbnail_delete_failure (GimpThumbnail *thumbnail)
                                        GIMP_THUMB_SIZE_FAIL);
   if (filename)
     {
-      unlink (filename);
+      g_unlink (filename);
       g_free (filename);
     }
 }

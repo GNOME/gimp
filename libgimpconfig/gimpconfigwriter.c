@@ -651,7 +651,7 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
       close (writer->fd);
 
       if (writer->tmpname)
-	unlink (writer->tmpname);
+	g_unlink (writer->tmpname);
 
       return TRUE;
     }
@@ -677,7 +677,7 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
                            g_strerror (errno));
 	    }
 
-	  unlink (writer->tmpname);
+	  g_unlink (writer->tmpname);
 	}
       else
 	{
@@ -694,17 +694,17 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
     {
 #ifdef G_OS_WIN32
       /* win32 rename can't overwrite */
-      unlink (writer->filename);
+      g_unlink (writer->filename);
 #endif
 
-      if (rename (writer->tmpname, writer->filename) == -1)
+      if (g_rename (writer->tmpname, writer->filename) == -1)
 	{
 	  g_set_error (error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
 		       _("Could not create '%s': %s"),
 		       gimp_filename_to_utf8 (writer->filename),
                        g_strerror (errno));
 
-	  unlink (writer->tmpname);
+	  g_unlink (writer->tmpname);
 	  return FALSE;
 	}
     }

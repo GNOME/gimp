@@ -87,7 +87,7 @@ gimp_scanner_new_file (const gchar  *filename,
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  fd = open (filename, O_RDONLY);
+  fd = g_open (filename, O_RDONLY, 0);
 
   if (fd == -1)
     {
