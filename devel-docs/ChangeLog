@@ -1,3 +1,8 @@
+2003-08-11  Sven Neumann  <sven@gimp.org>
+
+	* app/app-docs.sgml
+	* app/app-sections.sgml: moved some sections around.
+
 2003-08-09  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am
