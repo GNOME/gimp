@@ -21,6 +21,13 @@
 #include "tools.h"
 #include "procedural_db.h"
 
+typedef enum
+{
+  FgColorFill,
+  BgColorFill,
+  PatternFill
+} FillMode;
+
 Tool *      tools_new_bucket_fill   (void);
 void        tools_free_bucket_fill  (Tool *);
 

@@ -22,6 +22,13 @@
 #include "procedural_db.h"
 #include "tools.h"
 
+typedef enum
+{
+  Blur,
+  Sharpen,
+  Custom
+} ConvolveType;
+
 void *        convolve_paint_func  (PaintCore *, GimpDrawable *, int);
 Tool *        tools_new_convolve   (void);
 void          tools_free_convolve  (Tool *);

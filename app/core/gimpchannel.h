@@ -27,10 +27,13 @@
 
 /* OPERATIONS */
 
-#define ADD       0
-#define SUB       1
-#define REPLACE   2
-#define INTERSECT 3
+typedef enum
+{
+  ADD,
+  SUB,
+  REPLACE,
+  INTERSECT
+} ChannelOps;
 
 /*  Half way point where a region is no longer visible in a selection  */
 #define HALF_WAY 127

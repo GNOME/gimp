@@ -56,39 +56,6 @@
 
 /*  the blend structures  */
 
-typedef enum
-{
-  Linear,
-  BiLinear,
-  Radial,
-  Square,
-  ConicalSymmetric,
-  ConicalAsymmetric,
-  ShapeburstAngular,
-  ShapeburstSpherical,
-  ShapeburstDimpled,
-  SpiralClockwise,
-  SpiralAntiClockwise,
-  GradientTypeLast
-} GradientType;
-
-typedef enum
-{
-  FG_BG_RGB_MODE,
-  FG_BG_HSV_MODE,
-  FG_TRANS_MODE,
-  CUSTOM_MODE,
-  BLEND_MODE_LAST
-} BlendMode;
-
-typedef enum
-{
-  REPEAT_NONE,
-  REPEAT_SAWTOOTH,
-  REPEAT_TRIANGULAR,
-  REPEAT_LAST
-} RepeatMode;
-
 typedef double (*RepeatFunc)(double);
 
 typedef struct _BlendTool BlendTool;

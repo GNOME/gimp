@@ -1,3 +1,32 @@
+Fri Apr  9 21:45:10 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* text_tool_cmds.c: new file (from pdbgen)
+
+	* Makefile.am: add new file, use AM_CPPFLAGS instead of CPPFLAGS
+
+	* internal_procs.c: register pdbgened text_tool procs
+
+	* text_tool.c: remove PDB stuff, export text_render and
+	text_get_extents and SizeType and SUPERSAMPLE symbols
+
+	* text_tool.c: remove PDB stuff
+
+	* blend.[ch]
+	* bucket_fill.[ch]
+	* clone.[ch]
+	* convolve.[ch]: export some enums
+
+	* channel.h
+	* paint_core.h: #define->enum
+
+	* channel.c
+	* gimpparasite.c
+	* parasitelist.c
+	* pixel_processor.c: warning cleanup
+
+	* convert_cmds.c
+	* paths_cmds.c: slight pdbgen changes
+
 1999-04-09  Jay Cox  <jaycox@earthlink.net>
 
 	* app/gimphistogramF.h: new file containing typedef for

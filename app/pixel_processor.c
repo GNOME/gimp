@@ -133,7 +133,7 @@ do_parallel_regions(PixelProcessor  *p_s)
 static void
 pixel_regions_do_parallel(PixelProcessor *p_s)
 {
-  int i;
+  IF_THREAD(int i;)
   IF_THREAD(int nthreads;)
   IF_THREAD(pthread_t threads[MAX_THREADS];)
   IF_THREAD(pthread_attr_t pthread_attr;)

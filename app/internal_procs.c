@@ -61,7 +61,6 @@
 #include "rotate_tool.h"
 #include "scale_tool.h"
 #include "shear_tool.h"
-#include "text_tool.h"
 #include "threshold.h"
 #include "parasite_cmds.h"
 #include "procedural_db.h"
@@ -74,8 +73,9 @@ void register_floating_sel_procs (void);
 void register_undo_procs         (void);
 void register_convert_procs      (void);
 void register_paths_procs        (void);
-void register_palette_procs         (void);
-void register_unit_procs            (void);
+void register_palette_procs      (void);
+void register_unit_procs         (void);
+void register_text_tool_procs    (void);
 
 void
 internal_procs_init ()
@@ -111,13 +111,10 @@ internal_procs_init ()
   procedural_db_register (&rotate_proc); pcount++;
   procedural_db_register (&scale_proc); pcount++;
   procedural_db_register (&shear_proc); pcount++;
-  procedural_db_register (&text_tool_proc); pcount++;
-  procedural_db_register (&text_tool_proc_ext); pcount++;
-  procedural_db_register (&text_tool_proc_fontname); pcount++;
-  procedural_db_register (&text_tool_get_extents_proc); pcount++;
-  procedural_db_register (&text_tool_get_extents_proc_ext); pcount++;
-  procedural_db_register (&text_tool_get_extents_proc_fontname); pcount++;
   
+  register_text_tool_procs ();
+  pcount += 6;
+
   app_init_update_status(NULL, _("GDisplay procedures"),
 			 pcount/total_pcount);
 

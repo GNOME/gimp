@@ -40,12 +40,6 @@
 
 typedef enum
 {
-  ImageClone,
-  PatternClone
-} CloneType;
-
-typedef enum
-{
   AlignNo,
   AlignYes,
   AlignRegister

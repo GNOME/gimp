@@ -331,6 +331,7 @@ gimp_SOURCES = \
 	temp_buf.h		\
 	text_tool.c		\
 	text_tool.h		\
+	text_tool_cmds.c	\
 	threshold.c		\
 	threshold.h		\
 	tile.c			\
@@ -370,7 +371,7 @@ EXTRA_DIST = \
 	wilber.ico
 
 
-CPPFLAGS = \
+AM_CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
 	-DLOCALEDIR=\""$(localedir)"\"	\
 	-DREGEX_MALLOC			\

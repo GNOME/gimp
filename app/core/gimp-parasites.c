@@ -73,7 +73,7 @@ void
 gimp_parasiterc_save()
 {
   FILE *fp;
-  guint32 num, version = 1;
+  guint32 version = 1;
   if (!(fp = fopen(gimp_personal_rc_file ("#parasiterc.tmp"), "w")))
     return;
   version = GINT32_TO_BE(version);
@@ -91,7 +91,7 @@ void
 gimp_parasiterc_load()
 {
   FILE *fp;
-  guint32 num, version;
+  guint32 version;
   if (!(fp = fopen(gimp_personal_rc_file ("parasiterc"), "r")))
     return;
   fread(&version, 4, 1, fp);

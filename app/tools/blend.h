@@ -21,6 +21,39 @@
 #include "tools.h"
 #include "procedural_db.h"
 
+typedef enum
+{
+  Linear,
+  BiLinear,
+  Radial,
+  Square,
+  ConicalSymmetric,
+  ConicalAsymmetric,
+  ShapeburstAngular,
+  ShapeburstSpherical,
+  ShapeburstDimpled,
+  SpiralClockwise,
+  SpiralAntiClockwise,
+  GradientTypeLast /*< skip >*/
+} GradientType;
+
+typedef enum
+{
+  FG_BG_RGB_MODE,
+  FG_BG_HSV_MODE,
+  FG_TRANS_MODE,
+  CUSTOM_MODE,
+  BLEND_MODE_LAST /*< skip >*/
+} BlendMode;
+
+typedef enum
+{
+  REPEAT_NONE,
+  REPEAT_SAWTOOTH,
+  REPEAT_TRIANGULAR,
+  REPEAT_LAST /*< skip >*/
+} RepeatMode;
+
 Tool *      tools_new_blend   (void);
 void        tools_free_blend  (Tool *);
 

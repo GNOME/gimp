@@ -140,7 +140,7 @@ convert_indexed_invoker (Argument *args)
 
   if (success)
     {
-      success = (gimage_base_type (gimage) != INDEXED);
+      success = gimage_base_type (gimage) != INDEXED;
     
       if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 	success = FALSE;
@@ -234,10 +234,10 @@ convert_indexed_palette_invoker (Argument *args)
 	      if (!palette_entries_list)
 	        palette_init_palettes (FALSE);
     
-	      for (list = palette_entries_list; list; list = g_slist_next (list))
+	      for (list = palette_entries_list; list; list = list->next)
 	        {
 	          entries = (PaletteEntriesP) list->data;
-	          if (strcmp (palette_name, entries->name) == 0)
+	          if (!strcmp (palette_name, entries->name))
 	            {
 	              the_palette = entries;
 	              break;
@@ -278,7 +278,7 @@ static ProcArg convert_indexed_palette_inargs[] =
   {
     PDB_INT32,
     "palette_type",
-    "The type of palette to use: MAKE_PALETTE (0), REUSE_PALETTE (1), WEB_PALETTE (2), MONO_PALETTE (3), CUSTOM_PALETTE (4)"
+    "The type of palette to use: { MAKE_PALETTE (0), REUSE_PALETTE (1), WEB_PALETTE (2), MONO_PALETTE (3), CUSTOM_PALETTE (4) }"
   },
   {
     PDB_INT32,

@@ -825,7 +825,6 @@ channel_sub_segment (Channel *mask, int x, int y, int width, int value)
 void
 channel_combine_rect (Channel *mask, int op, int x, int y, int w, int h)
 {
-  int i;
   int x2, y2;
   PixelRegion maskPR;
   unsigned char color;

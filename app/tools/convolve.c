@@ -39,13 +39,6 @@
 
 /*  the convolve structures  */
 
-typedef enum
-{
-  Blur,
-  Sharpen,
-  Custom
-} ConvolveType;
-
 typedef struct _ConvolveOptions ConvolveOptions;
 struct _ConvolveOptions
 {

@@ -31,13 +31,19 @@
 #define FINISH_PAINT    4
 
 /* brush application types  */
-#define HARD            0  /* pencil */
-#define SOFT            1  /* paintbrush */
-#define PRESSURE        2  /* paintbrush with variable pressure */
+typedef enum
+{
+  HARD,     /* pencil */
+  SOFT,     /* paintbrush */
+  PRESSURE  /* paintbrush with variable pressure */
+} BrushApplicationMode;
 
 /* paint application modes  */
-#define CONSTANT        0  /* pencil, paintbrush, airbrush, clone */
-#define INCREMENTAL     1  /* convolve, smudge */
+typedef enum
+{
+  CONSTANT,    /*< nick=CONTINUOUS >*/ /* pencil, paintbrush, airbrush, clone */
+  INCREMENTAL  /* convolve, smudge */
+} PaintApplicationMode;
 
 /* gradient paint modes */
 #define ONCE_FORWARD 0     /* paint through once, then stop */

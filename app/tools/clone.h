@@ -22,6 +22,12 @@
 #include "procedural_db.h"
 #include "tools.h"
 
+typedef enum
+{
+  ImageClone,
+  PatternClone
+} CloneType;
+
 void *        clone_paint_func  (PaintCore *, GimpDrawable *, int);
 Tool *        tools_new_clone   (void);
 void          tools_free_clone  (Tool *);

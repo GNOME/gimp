@@ -36,13 +36,6 @@
 
 /*  the bucket fill structures  */
 
-typedef enum
-{
-  FgColorFill,
-  BgColorFill,
-  PatternFill
-} FillMode;
-
 typedef struct _BucketTool BucketTool;
 struct _BucketTool
 {

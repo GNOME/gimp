@@ -19,18 +19,23 @@
 #define __TEXT_TOOL_H__
 
 #include "tools.h"
-#include "procedural_db.h"
+#include "layerF.h"
+#include "gimpimageF.h"
+#include "gimpdrawableF.h"
+
+typedef enum {
+  PIXELS,
+  POINTS
+} SizeType;
+
+#define SUPERSAMPLE  3
 
 /*  text functions  */
 Tool * tools_new_text  (void);
 void   tools_free_text (Tool *);
 
-/*  Procedure definition and marshalling function  */
-extern ProcRecord text_tool_proc;
-extern ProcRecord text_tool_proc_ext;
-extern ProcRecord text_tool_proc_fontname;
-extern ProcRecord text_tool_get_extents_proc;
-extern ProcRecord text_tool_get_extents_proc_ext;
-extern ProcRecord text_tool_get_extents_proc_fontname;
+int         text_get_extents (char *, char *, int *, int *, int *, int *);
+GimpLayer * text_render      (GimpImage *, GimpDrawable *, int, int, char *,
+			      char *, int, int);
 
 #endif /* __TEXT_TOOL_H__ */

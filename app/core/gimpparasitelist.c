@@ -239,7 +239,7 @@ void
 parasite_list_load(ParasiteList *list, FILE *fp)
 {
   Parasite *p;
-  guint32 num, version;
+  guint32 num;
   num = 0;
   fread(&num, 4, 1, fp);
   num = GINT32_FROM_BE(num);
