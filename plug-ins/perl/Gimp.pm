@@ -13,7 +13,7 @@ use subs qw(init end lock unlock canonicalize_color);
 require DynaLoader;
 
 @ISA=qw(DynaLoader);
-$VERSION = 1.081;
+$VERSION = 1.082;
 
 @_param = qw(
 	PARAM_BOUNDARY	PARAM_CHANNEL	PARAM_COLOR	PARAM_DISPLAY	PARAM_DRAWABLE
@@ -306,6 +306,19 @@ sub format_msg {
 }
 
 sub _initialized_callback {
+   # load the compatibility module on older versions
+   if ($interface_pkg eq "Gimp::Lib") {
+      # this must match @max_gimp_version in Gimp::Compat
+      my @compat_gimp_version = (1,1);
+      if ((Gimp->major_version < $compat_gimp_version[0])
+          || (Gimp->major_version == $compat_gimp_version[0]
+              && Gimp->minor_version < $compat_gimp_version[1])) {
+         require Gimp::Compat;
+         $compat_gimp_version[0] == $Gimp::Compat::max_gimp_version[0]
+            && $compat_gimp_version[1] == $Gimp::Compat::max_gimp_version[1]
+               or die "FATAL: Gimp::Compat version mismatch\n";
+      }
+   }
    if (@log) {
       unless ($in_net || $in_query || $in_quit || $in_init) {
          for(@log) {
@@ -458,6 +471,7 @@ sub AUTOLOAD {
    my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
    for(@{"$class\::PREFIXES"}) {
       my $sub = $_.$name;
+      print "checking for $sub(",join(",",@_),")\n";
       if (exists $ignore_function{$sub}) {
         *{$AUTOLOAD} = sub { () };
         goto &$AUTOLOAD;

@@ -4,6 +4,9 @@ Revision history for Gimp-Perl extension.
         - disabled paintbrush in testsuite since it has different calling
           parameters in 1.1.
         - added use File::Basename to Fu.pm.
+        - new module Gimp::Compat, which is loaded on demand.
+        - gimp_text_fontname etc.. are now available in gimp-1.0 as well,
+          re-enabled the scripts using it (and depending on 1.1 before).
 
 1.081 Thu May  6 19:33:37 CEST 1999
 	- added "oneliners".

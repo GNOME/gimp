@@ -40,6 +40,7 @@ Gimp/Util.pm
 Gimp/Feature.pm
 Gimp/Pod.pm
 Gimp/Module.pm
+Gimp/Compat.pm
 embed/Makefile.PL
 embed/perlmod.c
 nolib/Makefile.PL

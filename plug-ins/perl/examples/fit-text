@@ -32,8 +32,6 @@ register "fit_text",
            [PF_FONT, "font", "What font type to use - size will be ignored", $defaultfont],
            [PF_STRING, "string", "Text String to fill with", "Fit Text"],
             ],
-         [],
-         ['gimp-1.1'],
          sub {
     my($img,$layer,$xlfd,$string) =@_;
     ($sel,$x1,$y1,$x2,$y2) = $img->gimp_selection_bounds;

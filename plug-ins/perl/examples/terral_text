@@ -48,8 +48,6 @@ register
 	  [ PF_STRING, "text", "Enter your Text to be Terral-ified", "TerralText"],
 	  [ PF_SLIDER, "blur_amount", "Blur Amount", 10, [0,26,1]],
 	],
-        [],
-        ['gimp-1.1'],
 sub {
 	($img, $pattern, $solidnoise, $font, $text, $blur) = @_;
 	$oldbg = gimp_palette_get_background();
@@ -65,7 +63,7 @@ sub {
       # about before blindly apply a type of layer.  Oh well. Call it RGBA
       # for now.
 
-      # Hello, Seth.. look at this:
+      # FIXED: Hello, Seth.. look at this:
 
 	$textlayer = $img->layer_new($img->width, $img->height, $img->layertype(1),
 		"TextLayer", 100, 0);

@@ -56,7 +56,6 @@ register "gimp_fu_example_script",			# fill in a function name
 
    fill $l BG_IMAGE_FILL;
 
-   # the next function only works in gimp-1.1
    $text_layer=$img->text_fontname(-1,10,10,$text,5,1,xlfd_size($font),$font);
 
    gimp_palette_set_foreground("green");

@@ -1,13 +1,8 @@
 package Gimp::PDL;
 
 use Carp;
-use Gimp;
+use Gimp ();
 use PDL;
-use base qw(Exporter);
-
-require Exporter;
-
-@EXPORT = ();
 
 sub Gimp::Tile::set_data($) {
    (my $p = byte $_[1])->make_physical;
