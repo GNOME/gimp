@@ -266,7 +266,7 @@ gdisplay_close_warning_callback (GtkWidget *w,
   if (popup_shell == gdisp->shell)
     popup_shell = NULL;
   
-  gtk_widget_unref (gdisp->shell);
+  gtk_widget_destroy (gdisp->shell);
   gtk_widget_destroy (mbox);
 }
 
