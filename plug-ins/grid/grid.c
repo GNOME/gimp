@@ -84,7 +84,7 @@ MAIN ()
 			  args, return_vals);
 }
 
-static void 
+static void
 run (char *name, int n_params, GParam * param, int *nreturn_vals,
      GParam ** return_vals)
 {
@@ -166,7 +166,7 @@ run (char *name, int n_params, GParam * param, int *nreturn_vals,
   values[0].data.d_status = status;
 }
 
-static void 
+static void
 doit (GDrawable * drawable)
 {
   GPixelRgn srcPR, destPR;
@@ -191,7 +191,7 @@ doit (GDrawable * drawable)
   height = drawable->height;
   bytes = drawable->bpp;
 
-  if (gimp_drawable_has_alpha (drawable->id)) 
+  if (gimp_drawable_has_alpha (drawable->id))
     {
       color[bytes - 1] = 0xff;
     }
@@ -202,7 +202,7 @@ doit (GDrawable * drawable)
 
   /* First off, copy the old one to the new one. */
   copybuf = malloc (width * bytes);
-   
+
   for (h = sy1; h < sy2; h++)
     {
       gimp_pixel_rgn_get_row (&srcPR, copybuf, sx1, h, (sx2-sx1));
@@ -217,7 +217,7 @@ doit (GDrawable * drawable)
 	    }
 	}
       else
-	{ /* Just copy shit */
+	{
 	  for (w = sx1; w < sx2; w++)
 	    {
 	      if ((w - my_config.x_offset) % my_config.width == 0)
@@ -244,20 +244,20 @@ doit (GDrawable * drawable)
  * GUI stuff
  */
 
-static void 
+static void
 close_callback (GtkWidget * widget, gpointer data)
 {
   gtk_main_quit ();
 }
 
-static void 
+static void
 ok_callback (GtkWidget * widget, gpointer data)
 {
   run_flag = 1;
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static void 
+static void
 entry_callback (GtkWidget * widget, gpointer data)
 {
   if (data == &my_config.width)
@@ -270,7 +270,7 @@ entry_callback (GtkWidget * widget, gpointer data)
     my_config.y_offset = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
 }
 
-static gint 
+static gint
 dialog ()
 {
   GtkWidget *dlg;

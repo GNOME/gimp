@@ -1,3 +1,14 @@
+Mon Jun  1 01:05:52 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* plug-ins/grid.c: fix a comment. :)
+	* ChangeLog: fix my last entry
+
+Sun May 31 21:50:12 EDT 1998  Matthew Wilson  <msw@gimp.org>
+
+	* plug-ins/deinterlace/deinterlace.c: patch from sjburges
+	to prevent out of bounds indexing array (anyone see a pattern
+	here?)
+
 Sun May 31 15:35:33 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* gimptool.in: use test -r instead of test -e for portability
