@@ -1,5 +1,11 @@
 1999-11-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/menus.c
+	* plug-ins/gap/gap_filter_main.c: moved "Filter all Layers.." to
+	the main "Filters" menu.
+
+1999-11-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/preferences_dialog.c: new prefs. page "Help System" because
 	there will soon be more widgets there (browser selection etc.)
 	Cleaned up the "Display" and "Interface" pages a bit.

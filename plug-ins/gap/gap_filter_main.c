@@ -102,7 +102,7 @@ query ()
 			 "Wolfgang Hofer (hof@hotbot.com)",
 			 "Wolfgang Hofer",
 			 gap_filter_version,
-			 _("<Image>/Filters/Animation/Filter all Layers"),
+			 _("<Image>/Filters/Filter all Layers..."),
 			 "RGB*, INDEXED*, GRAY*",
 			 PROC_PLUG_IN,
 			 nargs_foreach, nreturn_vals,

@@ -933,6 +933,11 @@ menus_reorder_plugins (void)
 	  pos++;
 	}
     }
+
+  menu_item = gtk_item_factory_get_widget (image_factory,
+					   "/Filters/Filter all Layers...");
+  if (menu_item && menu_item->parent)
+    gtk_menu_reorder_child (GTK_MENU (menu_item->parent), menu_item, 3);
 }
 
 static void
