@@ -1,5 +1,26 @@
 2004-09-22  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/brushes.pdb: removed the opacity and paint_mode
+	functions...
+
+	* tools/pdbgen/pdb/context.pdb: ...and added them here.
+
+	* app/pdb/procedural_db.c: added them to the pdb_compat hash table.
+
+	* libgimp/Makefile.am
+	* libgimp/gimpbrushes.[ch]: new files with compat functions
+	which call the gimp_context_*() functions.
+
+	* libgimp/gimp.h: changed accordingly.
+
+	* app/pdb/brushes_cmds.c
+	* app/pdb/context_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpbrushes_pdb.[ch]
+	* libgimp/gimpcontext_pdb.[ch]: regenerated.
+
+2004-09-22  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/Makefile.am
 	* tools/pdbgen/groups.pl
 	* tools/pdbgen/pdb/palette.pdb: removed the "Palette" pdb group...

@@ -264,6 +264,8 @@ gimp_context_set_default_colors (void)
  * color and vice versa.
  *
  * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
  */
 gboolean
 gimp_context_swap_colors (void)
@@ -274,6 +276,132 @@ gimp_context_swap_colors (void)
 
   return_vals = gimp_run_procedure ("gimp_context_swap_colors",
 				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_opacity:
+ *
+ * Get the opacity.
+ *
+ * This procedure returns the opacity setting. The return value is a
+ * floating point number between 0 and 100.
+ *
+ * Returns: The opacity.
+ *
+ * Since: GIMP 2.2
+ */
+gdouble
+gimp_context_get_opacity (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gdouble opacity = 0;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_opacity",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    opacity = return_vals[1].data.d_float;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return opacity;
+}
+
+/**
+ * gimp_context_set_opacity:
+ * @opacity: The opacity.
+ *
+ * Set the opacity.
+ *
+ * This procedure modifies the opacity setting. The value should be a
+ * floating point number between 0 and 100.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_opacity (gdouble opacity)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_opacity",
+				    &nreturn_vals,
+				    GIMP_PDB_FLOAT, opacity,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_get_paint_mode:
+ *
+ * Get the paint mode.
+ *
+ * This procedure returns the paint-mode setting. The return value is
+ * an integer which corresponds to the values listed in the argument
+ * description.
+ *
+ * Returns: The paint mode.
+ *
+ * Since: GIMP 2.2
+ */
+GimpLayerModeEffects
+gimp_context_get_paint_mode (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  GimpLayerModeEffects paint_mode = 0;
+
+  return_vals = gimp_run_procedure ("gimp_context_get_paint_mode",
+				    &nreturn_vals,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    paint_mode = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return paint_mode;
+}
+
+/**
+ * gimp_context_set_paint_mode:
+ * @paint_mode: The paint mode.
+ *
+ * Set the paint mode.
+ *
+ * This procedure modifies the paint_mode setting.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.2
+ */
+gboolean
+gimp_context_set_paint_mode (GimpLayerModeEffects paint_mode)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_context_set_paint_mode",
+				    &nreturn_vals,
+				    GIMP_PDB_INT32, paint_mode,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

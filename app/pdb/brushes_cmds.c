@@ -39,12 +39,8 @@ static ProcRecord brushes_refresh_proc;
 static ProcRecord brushes_get_list_proc;
 static ProcRecord brushes_get_brush_proc;
 static ProcRecord brushes_set_brush_proc;
-static ProcRecord brushes_get_opacity_proc;
-static ProcRecord brushes_set_opacity_proc;
 static ProcRecord brushes_get_spacing_proc;
 static ProcRecord brushes_set_spacing_proc;
-static ProcRecord brushes_get_paint_mode_proc;
-static ProcRecord brushes_set_paint_mode_proc;
 static ProcRecord brushes_get_brush_data_proc;
 
 void
@@ -54,12 +50,8 @@ register_brushes_procs (Gimp *gimp)
   procedural_db_register (gimp, &brushes_get_list_proc);
   procedural_db_register (gimp, &brushes_get_brush_proc);
   procedural_db_register (gimp, &brushes_set_brush_proc);
-  procedural_db_register (gimp, &brushes_get_opacity_proc);
-  procedural_db_register (gimp, &brushes_set_opacity_proc);
   procedural_db_register (gimp, &brushes_get_spacing_proc);
   procedural_db_register (gimp, &brushes_set_spacing_proc);
-  procedural_db_register (gimp, &brushes_get_paint_mode_proc);
-  procedural_db_register (gimp, &brushes_set_paint_mode_proc);
   procedural_db_register (gimp, &brushes_get_brush_data_proc);
 }
 
@@ -278,89 +270,6 @@ static ProcRecord brushes_set_brush_proc =
 };
 
 static Argument *
-brushes_get_opacity_invoker (Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
-{
-  Argument *return_args;
-
-  return_args = procedural_db_return_args (&brushes_get_opacity_proc, TRUE);
-  return_args[1].value.pdb_float = gimp_context_get_opacity (context) * 100.0;
-
-  return return_args;
-}
-
-static ProcArg brushes_get_opacity_outargs[] =
-{
-  {
-    GIMP_PDB_FLOAT,
-    "opacity",
-    "The brush opacity: 0 <= opacity <= 100"
-  }
-};
-
-static ProcRecord brushes_get_opacity_proc =
-{
-  "gimp_brushes_get_opacity",
-  "Get the brush opacity.",
-  "This procedure returns the opacity setting for brushes. This value is set globally and will remain the same even if the brush mask is changed. The return value is a floating point number between 0 and 100.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  brushes_get_opacity_outargs,
-  { { brushes_get_opacity_invoker } }
-};
-
-static Argument *
-brushes_set_opacity_invoker (Gimp         *gimp,
-                             GimpContext  *context,
-                             GimpProgress *progress,
-                             Argument     *args)
-{
-  gboolean success = TRUE;
-  gdouble opacity;
-
-  opacity = args[0].value.pdb_float;
-  if (opacity < 0.0 || opacity > 100.0)
-    success = FALSE;
-
-  if (success)
-    gimp_context_set_opacity (context, opacity / 100.0);
-
-  return procedural_db_return_args (&brushes_set_opacity_proc, success);
-}
-
-static ProcArg brushes_set_opacity_inargs[] =
-{
-  {
-    GIMP_PDB_FLOAT,
-    "opacity",
-    "The brush opacity: 0 <= opacity <= 100"
-  }
-};
-
-static ProcRecord brushes_set_opacity_proc =
-{
-  "gimp_brushes_set_opacity",
-  "Set the brush opacity.",
-  "This procedure modifies the opacity setting for brushes. This value is set globally and will remain the same even if the brush mask is changed. The value should be a floating point number between 0 and 100.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  brushes_set_opacity_inargs,
-  0,
-  NULL,
-  { { brushes_set_opacity_invoker } }
-};
-
-static Argument *
 brushes_get_spacing_invoker (Gimp         *gimp,
                              GimpContext  *context,
                              GimpProgress *progress,
@@ -441,89 +350,6 @@ static ProcRecord brushes_set_spacing_proc =
   0,
   NULL,
   { { brushes_set_spacing_invoker } }
-};
-
-static Argument *
-brushes_get_paint_mode_invoker (Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
-{
-  Argument *return_args;
-
-  return_args = procedural_db_return_args (&brushes_get_paint_mode_proc, TRUE);
-  return_args[1].value.pdb_int = gimp_context_get_paint_mode (context);
-
-  return return_args;
-}
-
-static ProcArg brushes_get_paint_mode_outargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "paint_mode",
-    "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
-  }
-};
-
-static ProcRecord brushes_get_paint_mode_proc =
-{
-  "gimp_brushes_get_paint_mode",
-  "Get the brush paint mode.",
-  "This procedure returns the paint-mode setting for brushes. This value is set globally and will not change if a different brush is selected. The return value is an integer which corresponds to the values listed in the argument description.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  0,
-  NULL,
-  1,
-  brushes_get_paint_mode_outargs,
-  { { brushes_get_paint_mode_invoker } }
-};
-
-static Argument *
-brushes_set_paint_mode_invoker (Gimp         *gimp,
-                                GimpContext  *context,
-                                GimpProgress *progress,
-                                Argument     *args)
-{
-  gboolean success = TRUE;
-  gint32 paint_mode;
-
-  paint_mode = args[0].value.pdb_int;
-  if (paint_mode < GIMP_NORMAL_MODE || paint_mode > GIMP_COLOR_ERASE_MODE)
-    success = FALSE;
-
-  if (success)
-    gimp_context_set_paint_mode (context, paint_mode);
-
-  return procedural_db_return_args (&brushes_set_paint_mode_proc, success);
-}
-
-static ProcArg brushes_set_paint_mode_inargs[] =
-{
-  {
-    GIMP_PDB_INT32,
-    "paint_mode",
-    "The paint mode: { GIMP_NORMAL_MODE (0), GIMP_DISSOLVE_MODE (1), GIMP_BEHIND_MODE (2), GIMP_MULTIPLY_MODE (3), GIMP_SCREEN_MODE (4), GIMP_OVERLAY_MODE (5), GIMP_DIFFERENCE_MODE (6), GIMP_ADDITION_MODE (7), GIMP_SUBTRACT_MODE (8), GIMP_DARKEN_ONLY_MODE (9), GIMP_LIGHTEN_ONLY_MODE (10), GIMP_HUE_MODE (11), GIMP_SATURATION_MODE (12), GIMP_COLOR_MODE (13), GIMP_VALUE_MODE (14), GIMP_DIVIDE_MODE (15), GIMP_DODGE_MODE (16), GIMP_BURN_MODE (17), GIMP_HARDLIGHT_MODE (18), GIMP_SOFTLIGHT_MODE (19), GIMP_GRAIN_EXTRACT_MODE (20), GIMP_GRAIN_MERGE_MODE (21), GIMP_COLOR_ERASE_MODE (22) }"
-  }
-};
-
-static ProcRecord brushes_set_paint_mode_proc =
-{
-  "gimp_brushes_set_paint_mode",
-  "Set the brush paint mode.",
-  "This procedure modifies the paint_mode setting for the current brush. This value is set globally and will not change if a different brush mask is selected.",
-  "Spencer Kimball & Peter Mattis",
-  "Spencer Kimball & Peter Mattis",
-  "1995-1996",
-  GIMP_INTERNAL,
-  1,
-  brushes_set_paint_mode_inargs,
-  0,
-  NULL,
-  { { brushes_set_paint_mode_invoker } }
 };
 
 static Argument *

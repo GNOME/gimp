@@ -174,69 +174,6 @@ gimp_brushes_set_brush (const gchar *name)
 }
 
 /**
- * gimp_brushes_get_opacity:
- *
- * Get the brush opacity.
- *
- * This procedure returns the opacity setting for brushes. This value
- * is set globally and will remain the same even if the brush mask is
- * changed. The return value is a floating point number between 0 and
- * 100.
- *
- * Returns: The brush opacity.
- */
-gdouble
-gimp_brushes_get_opacity (void)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gdouble opacity = 0;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_get_opacity",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    opacity = return_vals[1].data.d_float;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return opacity;
-}
-
-/**
- * gimp_brushes_set_opacity:
- * @opacity: The brush opacity.
- *
- * Set the brush opacity.
- *
- * This procedure modifies the opacity setting for brushes. This value
- * is set globally and will remain the same even if the brush mask is
- * changed. The value should be a floating point number between 0 and
- * 100.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_brushes_set_opacity (gdouble opacity)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_set_opacity",
-				    &nreturn_vals,
-				    GIMP_PDB_FLOAT, opacity,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
  * gimp_brushes_get_spacing:
  *
  * Get the brush spacing.
@@ -290,68 +227,6 @@ gimp_brushes_set_spacing (gint spacing)
   return_vals = gimp_run_procedure ("gimp_brushes_set_spacing",
 				    &nreturn_vals,
 				    GIMP_PDB_INT32, spacing,
-				    GIMP_PDB_END);
-
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return success;
-}
-
-/**
- * gimp_brushes_get_paint_mode:
- *
- * Get the brush paint mode.
- *
- * This procedure returns the paint-mode setting for brushes. This
- * value is set globally and will not change if a different brush is
- * selected. The return value is an integer which corresponds to the
- * values listed in the argument description.
- *
- * Returns: The paint mode.
- */
-GimpLayerModeEffects
-gimp_brushes_get_paint_mode (void)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  GimpLayerModeEffects paint_mode = 0;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_get_paint_mode",
-				    &nreturn_vals,
-				    GIMP_PDB_END);
-
-  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
-    paint_mode = return_vals[1].data.d_int32;
-
-  gimp_destroy_params (return_vals, nreturn_vals);
-
-  return paint_mode;
-}
-
-/**
- * gimp_brushes_set_paint_mode:
- * @paint_mode: The paint mode.
- *
- * Set the brush paint mode.
- *
- * This procedure modifies the paint_mode setting for the current
- * brush. This value is set globally and will not change if a different
- * brush mask is selected.
- *
- * Returns: TRUE on success.
- */
-gboolean
-gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode)
-{
-  GimpParam *return_vals;
-  gint nreturn_vals;
-  gboolean success = TRUE;
-
-  return_vals = gimp_run_procedure ("gimp_brushes_set_paint_mode",
-				    &nreturn_vals,
-				    GIMP_PDB_INT32, paint_mode,
 				    GIMP_PDB_END);
 
   success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;

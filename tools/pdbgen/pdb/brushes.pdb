@@ -170,38 +170,6 @@ CODE
     );
 }
 
-sub brushes_get_opacity {
-    $blurb = 'Get the brush opacity.';
-
-    $help = <<'HELP';
-This procedure returns the opacity setting for brushes. This value is set
-globally and will remain the same even if the brush mask is changed. The return
-value is a floating point number between 0 and 100.
-HELP
-
-    &std_pdb_misc;
-
-    @outargs = ( &opacity_arg );
-    $outargs[0]->{alias} = 'gimp_context_get_opacity (context) * 100.0';
-    $outargs[0]->{no_declare} = 1;
-}
-
-sub brushes_set_opacity {
-    $blurb = 'Set the brush opacity.';
-
-    $help = <<'HELP';
-This procedure modifies the opacity setting for brushes. This value is set
-globally and will remain the same even if the brush mask is changed. The value
-should be a floating point number between 0 and 100.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = ( &opacity_arg );
-
-    %invoke = ( code => 'gimp_context_set_opacity (context, opacity / 100.0);' );
-}
-
 sub brushes_get_spacing {
     $blurb = 'Get the brush spacing.';
 
@@ -235,39 +203,6 @@ HELP
     %invoke = (
 	code => 'gimp_brush_set_spacing (gimp_context_get_brush (context), spacing);'
     );
-}
-
-sub brushes_get_paint_mode {
-    $blurb = 'Get the brush paint mode.';
-
-    $help = <<'HELP';
-This procedure returns the paint-mode setting for brushes. This value is set
-globally and will not change if a different brush is selected. The return value
-is an integer which corresponds to the values listed in the argument
-description.
-HELP
-
-    &std_pdb_misc;
-
-    @outargs = ( &paint_mode_arg );
-    $outargs[0]->{alias} = 'gimp_context_get_paint_mode (context)';
-    $outargs[0]->{no_declare} = 1;
-}
-
-sub brushes_set_paint_mode {
-    $blurb = 'Set the brush paint mode.';
-
-    $help = <<'HELP';
-This procedure modifies the paint_mode setting for the current brush. This
-value is set globally and will not change if a different brush mask is
-selected.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = ( &paint_mode_arg );
-
-    %invoke = ( code => 'gimp_context_set_paint_mode (context, paint_mode);' );
 }
 
 sub brushes_get_brush_data {
@@ -337,9 +272,7 @@ CODE
 
 @procs = qw(brushes_refresh brushes_get_list
             brushes_get_brush brushes_set_brush
-	    brushes_get_opacity brushes_set_opacity
             brushes_get_spacing brushes_set_spacing
-            brushes_get_paint_mode brushes_set_paint_mode
 	    brushes_get_brush_data);
 %exports = (app => [@procs], lib => [@procs]);
 

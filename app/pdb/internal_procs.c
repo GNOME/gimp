@@ -85,13 +85,13 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Brushes"), 0.008);
   register_brushes_procs (gimp);
 
-  (* status_callback) (NULL, _("Channel"), 0.037);
+  (* status_callback) (NULL, _("Channel"), 0.026);
   register_channel_procs (gimp);
 
-  (* status_callback) (NULL, _("Color"), 0.06);
+  (* status_callback) (NULL, _("Color"), 0.05);
   register_color_procs (gimp);
 
-  (* status_callback) (NULL, _("Context"), 0.094);
+  (* status_callback) (NULL, _("Context"), 0.084);
   register_context_procs (gimp);
 
   (* status_callback) (NULL, _("Convert"), 0.115);

@@ -103,6 +103,10 @@ procedural_db_init_procs (Gimp               *gimp,
   compat_procs[] =
   {
     { "gimp_blend",                      "gimp_edit_blend"                 },
+    { "gimp_brushes_get_opacity",        "gimp_context_get_opacity"        },
+    { "gimp_brushes_set_opacity",        "gimp_context_set_opacity"        },
+    { "gimp_brushes_get_paint_mode",     "gimp_context_get_paint_mode"     },
+    { "gimp_brushes_set_paint_mode",     "gimp_context_set_paint_mode"     },
     { "gimp_brushes_list",               "gimp_brushes_get_list"           },
     { "gimp_bucket_fill",                "gimp_edit_bucket_fill"           },
     { "gimp_channel_delete",             "gimp_drawable_delete"            },

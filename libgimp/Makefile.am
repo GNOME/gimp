@@ -163,6 +163,8 @@ libgimp_2_0_la_SOURCES = \
 	gimptypes.h		\
 	${PDB_WRAPPERS_C}	\
 	${PDB_WRAPPERS_H}	\
+	gimpbrushes.c		\
+	gimpbrushes.h		\
 	gimpbrushselect.c	\
 	gimpbrushselect.h	\
 	gimpchannel.c		\
@@ -238,6 +240,7 @@ gimpinclude_HEADERS = \
 	gimpcompat.h		\
 	gimptypes.h		\
 	${PDB_WRAPPERS_H}	\
+	gimpbrushes.h		\
 	gimpbrushselect.h	\
 	gimpchannel.h		\
 	gimpdrawable.h		\

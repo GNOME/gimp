@@ -190,9 +190,81 @@ This procedure swaps the current GIMP foreground and background colors, so that
 the new foreground color becomes the old background color and vice versa.
 HELP
 
-    &std_pdb_misc;
+    &pdb_misc;
 
     %invoke = ( code => 'gimp_context_swap_colors (context);' );
+}
+
+sub context_get_opacity {
+    $blurb = 'Get the opacity.';
+
+    $help = <<'HELP';
+This procedure returns the opacity setting. The return
+value is a floating point number between 0 and 100.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'opacity', type => '0 <= float <= 100',
+          desc => 'The opacity: %%desc%%',
+          alias => 'gimp_context_get_opacity (context) * 100.0',
+          no_declare => 1 }
+    );
+}
+
+sub context_set_opacity {
+    $blurb = 'Set the opacity.';
+
+    $help = <<'HELP';
+This procedure modifies the opacity setting. The value
+should be a floating point number between 0 and 100.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'opacity', type => '0 <= float <= 100',
+          desc => 'The opacity: %%desc%%' }
+    );
+
+    %invoke = ( code => 'gimp_context_set_opacity (context, opacity / 100.0);' );
+}
+
+sub context_get_paint_mode {
+    $blurb = 'Get the paint mode.';
+
+    $help = <<'HELP';
+This procedure returns the paint-mode setting. The return value
+is an integer which corresponds to the values listed in the argument
+description.
+HELP
+
+    &pdb_misc;
+
+    @outargs = (
+        { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+          desc => 'The paint mode: { %%desc%% }',
+          alias => 'gimp_context_get_paint_mode (context)',
+          no_declare => 1 }
+    );
+}
+
+sub context_set_paint_mode {
+    $blurb = 'Set the paint mode.';
+
+    $help = <<'HELP';
+This procedure modifies the paint_mode setting.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+        { name => 'paint_mode', type => 'enum GimpLayerModeEffects',
+          desc => 'The paint mode: { %%desc%% }' }
+    );
+
+    %invoke = ( code => 'gimp_context_set_paint_mode (context, paint_mode);' );
 }
 
 @headers = qw("core/gimp.h" "core/gimpcontext.h"
@@ -201,7 +273,9 @@ HELP
 @procs = qw(context_push context_pop
             context_get_foreground context_set_foreground
             context_get_background context_set_background
-            context_set_default_colors context_swap_colors);
+            context_set_default_colors context_swap_colors
+            context_get_opacity context_set_opacity
+            context_get_paint_mode context_set_paint_mode);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Context';
