@@ -62,7 +62,6 @@
 #include "global_edit.h"
 #include "image_render.h"
 #include "nav_window.h"
-#include "lc_dialog.h"
 #include "plug_in.h"
 #include "resize.h"
 #include "scale.h"
@@ -1076,7 +1075,6 @@ image_resize_callback (GtkWidget *widget,
 			     image_resize->resize->offset_x,
 			     image_resize->resize->offset_y);
 	  gdisplays_flush ();
-	  lc_dialog_update_image_list ();
 	}
       else 
 	{

@@ -47,7 +47,6 @@
 #include "floating_sel.h"
 #include "gimprc.h"
 #include "image_render.h"
-#include "lc_dialog.h"
 #include "path.h"
 #include "pathP.h"
 #include "path_transform.h"
@@ -133,10 +132,6 @@ static void     paths_unselect_row           (GtkWidget      *widget,
 					      gpointer        data);
 static gint     paths_list_events            (GtkWidget      *widget,
 					      GdkEvent       *event);
-static void     paths_dialog_map_callback    (GtkWidget      *widget,
-					      gpointer        data);
-static void     paths_dialog_unmap_callback  (GtkWidget      *widget,
-					      gpointer        data);
 static void     paths_update_paths           (gpointer        data,
 					      gint            row);
 static void     paths_update_preview         (GimpBezierSelectTool   *bezier_sel);
@@ -146,17 +141,13 @@ static void     paths_dialog_add_point_callback        (GtkWidget *, gpointer);
 static void     paths_dialog_delete_point_callback     (GtkWidget *, gpointer);
 static void     paths_dialog_edit_point_callback       (GtkWidget *, gpointer);
 static void     paths_dialog_advanced_to_path_callback (GtkWidget *, gpointer);
-static void     paths_dialog_null_callback             (GtkWidget *, gpointer);
 
 static void     path_close                   (Path *);
 
 /*  the ops buttons  */
 static GtkSignalFunc to_path_ext_callbacks[] = 
 { 
-  paths_dialog_advanced_to_path_callback,          /* SHIFT */
-  paths_dialog_null_callback,                      /* CTRL  */
-  paths_dialog_null_callback,                      /* MOD1  */
-  paths_dialog_null_callback,                      /* SHIFT + CTRL */
+  paths_dialog_advanced_to_path_callback, NULL, NULL, NULL
 };
 
 static OpsButton paths_ops_buttons[] =
@@ -323,7 +314,6 @@ paths_dialog_create (void)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_ALWAYS);
-  gtk_widget_set_usize (scrolled_win, LIST_WIDTH, LIST_HEIGHT);
   gtk_box_pack_start (GTK_BOX (vbox), scrolled_win, TRUE, TRUE, 2);
 
   paths_dialog->paths_list = paths_list = gtk_clist_new (2);
@@ -334,8 +324,6 @@ paths_dialog_create (void)
   gtk_clist_set_selection_mode (GTK_CLIST (paths_list), GTK_SELECTION_BROWSE);
   gtk_clist_set_reorderable (GTK_CLIST (paths_list), FALSE);
   gtk_clist_set_column_width (GTK_CLIST (paths_list), 0, locked_width);
-  gtk_clist_set_column_min_width (GTK_CLIST (paths_list), 1, 
-				  LIST_WIDTH - locked_width - 4);
   gtk_clist_set_column_auto_resize (GTK_CLIST (paths_list), 1, TRUE);
 
   gtk_container_add (GTK_CONTAINER (scrolled_win), paths_list);
@@ -375,14 +363,6 @@ paths_dialog_create (void)
 
   paths_dialog->ops_menu    = paths_factory->widget;
   paths_dialog->accel_group = paths_factory->accel_group;;
-
-  /*  Set up signals for map/unmap for the accelerators  */
-  gtk_signal_connect (GTK_OBJECT (vbox), "map",
-		      (GtkSignalFunc) paths_dialog_map_callback,
-		      NULL);
-  gtk_signal_connect (GTK_OBJECT (vbox), "unmap",
-		      (GtkSignalFunc) paths_dialog_unmap_callback,
-		      NULL);
 
   paths_dialog_set_menu_sensitivity ();
 
@@ -1336,13 +1316,6 @@ paths_dialog_advanced_to_path_callback (GtkWidget *widget,
 
 }
 
-static void 
-paths_dialog_null_callback (GtkWidget *widget, 
-			    gpointer   data)
-{
-  /* Maybe some more here later? */
-}
-
 void 
 paths_dialog_sel_to_path_callback (GtkWidget *widget, 
 				   gpointer   data)
@@ -1458,30 +1431,6 @@ paths_dialog_edit_path_attributes_callback (GtkWidget *widget,
 {
   if (paths_dialog && paths_dialog->paths_list)
     paths_dialog_edit_path_query (paths_dialog->paths_list);
-}
-
-static void
-paths_dialog_map_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  if (!paths_dialog)
-    return;
-
-  gtk_window_add_accel_group (GTK_WINDOW (lc_dialog->shell),
-			      paths_dialog->accel_group);
-
-  paths_dialog_preview_extents ();
-}
-
-static void
-paths_dialog_unmap_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  if (!paths_dialog)
-    return;
-  
-  gtk_window_remove_accel_group (GTK_WINDOW (lc_dialog->shell),
-				 paths_dialog->accel_group);
 }
 
 void

@@ -33,7 +33,6 @@
 
 #include "dialog_handler.h"
 #include "gdisplay.h"
-#include "lc_dialog.h"
 #include "gui/palette-import-dialog.h"
 
 #include "context_manager.h"
@@ -152,7 +151,6 @@ static void
 gimage_rename_handler (GimpImage *gimage)
 {
   gdisplays_update_title (gimage);
-  lc_dialog_update_image_list ();
 
   palette_import_image_renamed (gimage);
 }

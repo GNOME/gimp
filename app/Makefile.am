@@ -39,8 +39,6 @@ gimp_SOURCES = \
 	gimpprogress.h		\
 	gimpui.c		\
 	gimpui.h		\
-	lc_dialog.c		\
-	lc_dialog.h		\
 	nav_window.c		\
 	nav_window.h		\
 	ops_buttons.c		\

@@ -42,7 +42,6 @@
 #include "gimphelp.h"
 #include "gimprc.h"
 #include "image_render.h"
-#include "lc_dialog.h"
 #include "resolution_calibrate.h"
 #include "tile_cache.h"
 
@@ -883,7 +882,7 @@ prefs_cancel_callback (GtkWidget *widget,
   /*  restore variables which need some magic  */
   if (preview_size != old_preview_size)
     {
-      lc_dialog_rebuild (old_preview_size);
+      /* lc_dialog_rebuild (old_preview_size); FIXME: update preview size */
       layer_select_update_preview_size ();
     }
   if (nav_preview_size != old_nav_preview_size)
@@ -1018,7 +1017,9 @@ static void
 prefs_preview_size_callback (GtkWidget *widget,
 			     gpointer   data)
 {
-  lc_dialog_rebuild ((long) gtk_object_get_user_data (GTK_OBJECT (widget)));
+  /* FIXME: update preview size
+     lc_dialog_rebuild ((long) gtk_object_get_user_data (GTK_OBJECT (widget)));
+  */
   layer_select_update_preview_size ();
 }
 

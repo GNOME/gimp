@@ -72,7 +72,6 @@
 #include "gimprc.h"
 #include "gimpparasite.h"
 #include "global_edit.h"
-#include "lc_dialog.h"
 #include "plug_in.h"
 #include "module_db.h"
 

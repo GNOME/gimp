@@ -572,28 +572,3 @@ test_grid_dock_cmd_callback (GtkWidget *widget,
 {
   test_dock_new (GIMP_VIEW_TYPE_GRID);
 }
-
-void
-test_image_dock_cmd_callback (GtkWidget *widget,
-			      gpointer   client_data)
-{
-  GtkWidget *dock;
-  GtkWidget *dockbook;
-  GtkWidget *dockable;
-
-  dock = gimp_dialog_factory_dock_new (global_dock_factory);
-
-  dockbook = gimp_dockbook_new ();
-
-  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
-
-  dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
-					     "gimp:layer-list");
-  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-
-  dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
-					     "gimp:channel-list");
-  gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
-
-  gtk_widget_show (dock);
-}

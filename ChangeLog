@@ -1,5 +1,35 @@
 2001-05-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/Makefile.am
+	* app/lc_dialog.[ch]: taken behind the curtain and shot.
+	(famous words of Seth Burgess on #gimp)
+
+	* app/app_procs.c
+	* app/gdisplay.c
+	* app/gimage.c
+	* app/gui/commands.c
+	* app/gui/gui.c
+	* app/gui/menus.c
+	* app/gui/preferences-dialog.c: don't #include it or call it's
+	functions any more.
+
+	* app/gui/dialogs-commands.[ch]: added a constructor for a dock
+	which looks like the old L&C dialog (taken from test-commands.*)
+
+	* app/gui/test-commands.[ch]: removed here.
+
+	* app/gui/dialogs-constructors.[ch]: wrapped the old
+	paths-dialog.* stuff in a dockable which can be created only
+	once. Will go away as soon as the new path stuff is there.
+
+	* app/gui/dialogs.c: added the paths dockable, removed lc_dialog.
+
+	* app/gui/paths-dialog.c: some changes to make it work without the
+	lc_dialog around it. Will probably crash randomly and refuse to
+	update it's contents properly (scheduled for removal).
+
+2001-05-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/Makefile.am
 	* app/gui/channels-dialog.[ch]
 	* app/gui/layers-dialog.[ch]: at the end of their epoch, the

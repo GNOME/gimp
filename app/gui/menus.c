@@ -127,7 +127,7 @@ static GimpItemFactoryEntry toolbox_entries[] =
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
-  { { N_("/File/Dialogs/Layers, Channels & Paths..."), "<control>L", dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:lc-dialog") },
+  { { N_("/File/Dialogs/Layers, Channels & Paths..."), "<control>L", dialogs_create_lc_cmd_callback, 0 },
     "file/dialogs/layers_and_channels.html", NULL },
   { { N_("/File/Dialogs/Tool Options..."), "<control><shift>T", dialogs_create_toplevel_cmd_callback, GPOINTER_TO_UINT ("gimp:tool-options-dialog") },
     "file/dialogs/tool_options.html", NULL },
@@ -166,8 +166,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
   { { N_("/File/Test Dialogs/List Dock..."), NULL, test_list_dock_cmd_callback, 1 },
     NULL, NULL },
   { { N_("/File/Test Dialogs/Grid Dock..."), NULL, test_grid_dock_cmd_callback, 1 },
-    NULL, NULL },
-  { { N_("/File/Test Dialogs/Image Dock..."), NULL, test_image_dock_cmd_callback, 1 },
     NULL, NULL },
 
   { { "/File/Test Dialogs/---", NULL, NULL, 0, "<Separator>" },
@@ -861,6 +859,9 @@ static GimpItemFactoryEntry dialogs_entries[] =
     NULL, NULL },
   { { N_("/Add Tab/Channel List..."), NULL, dialogs_add_tab_cmd_callback,
       GPOINTER_TO_UINT ("gimp:channel-list") },
+    NULL, NULL },
+  { { N_("/Add Tab/Path List..."), NULL, dialogs_add_tab_cmd_callback,
+      GPOINTER_TO_UINT ("gimp:path-list") },
     NULL, NULL },
 
   { { "/Add Tab/---", NULL, NULL, 0, "<Separator>" },

@@ -25,6 +25,7 @@
 
 #include "apptypes.h"
 #include "widgets/widgets-types.h"
+#include "tools/tools-types.h" /* FIXME: remove as soon as paths-dialog.* is gone */
 
 #include "core/gimpbrushgenerated.h"
 #include "core/gimpchannel.h"
@@ -62,8 +63,8 @@
 #include "gradient-editor.h"
 #include "gradient-select.h"
 #include "layers-commands.h"
-#include "lc_dialog.h"
 #include "palette-editor.h"
+#include "paths-dialog.h"
 #include "pattern-select.h"
 #include "preferences-dialog.h"
 #include "tips-dialog.h"
@@ -107,6 +108,8 @@ static void   dialogs_set_data_context_func      (GimpDockable       *dockable,
 						  GimpContext        *context);
 static void   dialogs_set_drawable_context_func  (GimpDockable       *dockable,
 						  GimpContext        *context);
+static void   dialogs_set_path_context_func      (GimpDockable       *dockable,
+						  GimpContext        *context);
 
 static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 					 const gchar                *name,
@@ -117,6 +120,9 @@ static GtkWidget * dialogs_dockable_new (GtkWidget                  *widget,
 static void dialogs_drawable_view_image_changed (GimpContext          *context,
 						 GimpImage            *gimage,
 						 GimpDrawableListView *view);
+static void dialogs_path_view_image_changed     (GimpContext          *context,
+						 GimpImage            *gimage,
+						 GtkWidget            *view);
 
 static gchar * dialogs_tool_name_func           (GtkWidget *widget);
 
@@ -128,17 +134,6 @@ dialogs_toolbox_get (GimpDialogFactory *factory,
 		     GimpContext       *context)
 {
   return toolbox_create ();
-}
-
-GtkWidget *
-dialogs_lc_get (GimpDialogFactory *factory,
-		GimpContext       *context)
-{
-  GDisplay *gdisp;
-
-  gdisp = gimp_context_get_display (context);
-
-  return lc_dialog_create (gdisp ? gdisp->gimage : NULL);
 }
 
 GtkWidget *
@@ -605,6 +600,33 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
   return dockable;
 }
 
+GtkWidget *
+dialogs_path_list_view_new (GimpDialogFactory *factory,
+			    GimpContext       *context)
+{
+  static GtkWidget *view = NULL;
+
+  GtkWidget *dockable;
+
+  if (view)
+    return NULL;
+
+  view = paths_dialog_create ();
+
+  gtk_signal_connect (GTK_OBJECT (view), "destroy",
+		      GTK_SIGNAL_FUNC (gtk_widget_destroyed),
+		      &view);
+
+  dockable = dialogs_dockable_new (view,
+				   "Path List", "Paths",
+				   NULL,
+				   dialogs_set_path_context_func);
+
+  dialogs_set_path_context_func (GIMP_DOCKABLE (dockable), context);
+
+  return dockable;
+}
+
 
 /*  editor dialogs  */
 
@@ -871,6 +893,48 @@ dialogs_set_drawable_context_func (GimpDockable *dockable,
     }
 }
 
+static void
+dialogs_set_path_context_func (GimpDockable *dockable,
+			       GimpContext  *context)
+{
+  GtkWidget *view;
+
+  view = (GtkWidget *) gtk_object_get_data (GTK_OBJECT (dockable),
+					    "gimp-dialogs-view");
+
+  if (view)
+    {
+      GimpContext *old_context;
+
+      old_context = (GimpContext *) gtk_object_get_data (GTK_OBJECT (view),
+							 "gimp-dialogs-context");
+
+      if (old_context)
+	{
+	  gtk_signal_disconnect_by_func (GTK_OBJECT (old_context),
+					 GTK_SIGNAL_FUNC (dialogs_path_view_image_changed),
+					 view);
+	}
+
+      if (context)
+	{
+	  gtk_signal_connect (GTK_OBJECT (context), "image_changed",
+			      GTK_SIGNAL_FUNC (dialogs_path_view_image_changed),
+			      view);
+
+	  dialogs_path_view_image_changed (context,
+					   gimp_context_get_image (context),
+					   view);
+	}
+      else
+	{
+	  dialogs_path_view_image_changed (NULL, NULL, view);
+	}
+
+      gtk_object_set_data (GTK_OBJECT (view), "gimp-dialogs-context", context);
+    }
+}
+
 static GtkWidget *
 dialogs_dockable_new (GtkWidget                  *widget,
 		      const gchar                *name,
@@ -898,6 +962,14 @@ dialogs_drawable_view_image_changed (GimpContext          *context,
 				     GimpDrawableListView *view)
 {
   gimp_drawable_list_view_set_image (view, gimage);
+}
+
+static void
+dialogs_path_view_image_changed (GimpContext *context,
+				 GimpImage   *gimage,
+				 GtkWidget   *widget)
+{
+  paths_dialog_update (gimage);
 }
 
 static gchar *

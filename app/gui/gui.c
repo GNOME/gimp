@@ -44,7 +44,6 @@
 #include "gui.h"
 #include "gximage.h"
 #include "image_render.h"
-#include "lc_dialog.h"
 #include "menus.h"
 #include "palette-editor.h"
 #include "pattern-select.h"
@@ -156,7 +155,6 @@ gui_exit (void)
   dialogs_exit ();
 
   /*  handle this in the dialog factory:  */
-  lc_dialog_free ();
   document_index_free ();
   error_console_free ();
   tool_options_dialog_free ();

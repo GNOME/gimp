@@ -90,6 +90,8 @@ GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,
 					    GimpContext       *context);
 GtkWidget * dialogs_channel_list_view_new  (GimpDialogFactory *factory,
 					    GimpContext       *context);
+GtkWidget * dialogs_path_list_view_new     (GimpDialogFactory *factory,
+					    GimpContext       *context);
 
 void        dialogs_edit_brush_func        (GimpData          *data);
 void        dialogs_edit_gradient_func     (GimpData          *data);

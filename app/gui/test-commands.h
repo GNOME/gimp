@@ -38,7 +38,6 @@ void test_multi_container_grid_view_cmd_callback    (GtkWidget *, gpointer);
 
 void test_list_dock_cmd_callback                    (GtkWidget *, gpointer);
 void test_grid_dock_cmd_callback                    (GtkWidget *, gpointer);
-void test_image_dock_cmd_callback                   (GtkWidget *, gpointer);
 
 
 #endif /* __TEST_COMMANDS_H__ */

@@ -44,7 +44,6 @@
 #include "gdisplay_ops.h"
 #include "gui/info-window.h"
 #include "interface.h"
-#include "lc_dialog.h"
 #include "gui/menus.h"
 #include "nav_window.h"
 
@@ -221,8 +220,6 @@ gdisplay_new (GimpImage *gimage,
 
   gtk_object_ref (GTK_OBJECT (gimage));
   gtk_object_sink (GTK_OBJECT (gimage));
-
-  lc_dialog_preview_update (gimage);
 
   /* We're interested in clean and dirty signals so we can update the
    * title if need be. */
@@ -2552,9 +2549,6 @@ gdisplays_flush_whenever (gboolean now)
     {
       gdisplay_flush_whenever ((GDisplay *) list->data, now);
     }
-
-  /*  for convenience, we call the L&C flush here  */
-  lc_dialog_flush ();
 
   flushing = FALSE;
 }

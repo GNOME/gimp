@@ -89,3 +89,36 @@ dialogs_remove_tab_cmd_callback (GtkWidget *widget,
 	gimp_dockbook_remove (dockbook, dockable);
     }
 }
+
+void
+dialogs_create_lc_cmd_callback (GtkWidget *widget,
+				 gpointer   data,
+				 guint      action)
+{
+  GtkWidget *dock;
+  GtkWidget *dockbook;
+  GtkWidget *dockable;
+
+  dock = gimp_dialog_factory_dock_new (global_dock_factory);
+
+  dockbook = gimp_dockbook_new ();
+
+  gimp_dock_add_book (GIMP_DOCK (dock), GIMP_DOCKBOOK (dockbook), 0);
+
+  dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
+					     "gimp:layer-list");
+  if (dockable)
+    gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+
+  dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
+					     "gimp:channel-list");
+  if (dockable)
+    gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+
+  dockable = gimp_dialog_factory_dialog_new (global_dock_factory,
+					     "gimp:path-list");
+  if (dockable)
+    gimp_dock_add (GIMP_DOCK (dock), GIMP_DOCKABLE (dockable), -1, -1);
+
+  gtk_widget_show (dock);
+}

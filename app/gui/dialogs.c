@@ -39,7 +39,6 @@ GimpDialogFactory *global_dock_factory   = NULL;
 static const GimpDialogFactoryEntry toplevel_entries[] =
 {
   { "gimp:toolbox",                dialogs_toolbox_get,         TRUE,  TRUE,  TRUE  },
-  { "gimp:lc-dialog",              dialogs_lc_get,              TRUE,  TRUE,  TRUE  },
   { "gimp:tool-options-dialog",    dialogs_tool_options_get,    TRUE,  TRUE,  FALSE },
   { "gimp:device-status-dialog",   dialogs_device_status_get,   TRUE,  TRUE,  FALSE },
   { "gimp:brush-select-dialog",    dialogs_brush_select_get,    TRUE,  TRUE,  FALSE },
@@ -76,7 +75,8 @@ static const GimpDialogFactoryEntry dock_entries[] =
   { "gimp:tool-grid",     dialogs_tool_grid_view_new,     FALSE, FALSE, FALSE },
 
   { "gimp:layer-list",    dialogs_layer_list_view_new,    FALSE, FALSE, FALSE },
-  { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE, FALSE }
+  { "gimp:channel-list",  dialogs_channel_list_view_new,  FALSE, FALSE, FALSE },
+  { "gimp:path-list",     dialogs_path_list_view_new,     TRUE,  FALSE, FALSE }
 };
 static const gint n_dock_entries = (sizeof (dock_entries) /
 				    sizeof (dock_entries[0]));
