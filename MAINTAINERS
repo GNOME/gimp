@@ -48,12 +48,12 @@ current work: perl-interface, language interface design
 commit access: yes                      
 
 Name:  Jay Cox
-Email:  jaycox@earthlink.net
+Email:  jaycox@gimp.org
 url:
 ircnick: j
 expertise: Brushes, selection functions, Parasites, paint_funcs, 
-           threads, cmyk, xcf.
-current work:  Multi-processor support.
+           threads, cmyk, multiprocessor support, xcf.
+current work:  Misc.
 commit access: yes
 
 Name: Larry Ewing
