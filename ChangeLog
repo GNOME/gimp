@@ -40,6 +40,9 @@
 
 	* plug-ins/tga/tga.c: Include config.h, use HAVE_UNISTD_H.
 
+	* po/makefile.msc
+	* po-plug-ins/makefile.msc: New files.
+
 Sun Jun 13 21:05:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	
 	* app/devices

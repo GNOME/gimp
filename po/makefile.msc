@@ -1,0 +1,25 @@
+## Makefile for installing the GIMP message catalogs with Microsoft nmake
+## Use: nmake -f makefile.msc install
+## You will need the msgfmt program from GNU gettext!
+
+# Locale directory.
+LOCALEDIR = c:\gimp\locale
+
+LANGUAGES= de fi fr hu it ja ko nl pl ru sv
+
+################################################################
+
+# Nothing much configurable below
+
+all :
+	for %l in ($(LANGUAGES)) do nmake -f makefile.msc %l.gmo
+
+install : all
+	for %l in ($(LANGUAGES)) do md $(LOCALEDIR)\%l
+	for %l in ($(LANGUAGES)) do md $(LOCALEDIR)\%l\LC_MESSAGES
+	for %l in ($(LANGUAGES)) do copy %l.gmo $(LOCALEDIR)\%l\LC_MESSAGES\gimp.mo
+
+.SUFFIXES: .po .gmo
+
+.po.gmo:
+	msgfmt -o $@ $<
