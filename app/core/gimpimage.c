@@ -1647,40 +1647,53 @@ void
 gimp_image_get_color (const GimpImage *src_gimage,
 		      GimpImageType    src_type,
 		      const guchar    *src,
-		      guchar          *rgb)
+		      guchar          *rgba)
 {
+  gboolean has_alpha = FALSE;
+
   g_return_if_fail (GIMP_IS_IMAGE (src_gimage));
 
   switch (src_type)
     {
-    case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
+      has_alpha = TRUE;
+
+    case GIMP_RGB_IMAGE:
       /*  Straight copy  */
-      *rgb++ = *src++;
-      *rgb++ = *src++;
-      *rgb   = *src;
+      *rgba++ = *src++;
+      *rgba++ = *src++;
+      *rgba++ = *src++;
       break;
+
+    case GIMP_GRAYA_IMAGE:
+      has_alpha = TRUE;
 
     case GIMP_GRAY_IMAGE:
-    case GIMP_GRAYA_IMAGE:
       /*  Gray to RG&B */
-      *rgb++ = *src;
-      *rgb++ = *src;
-      *rgb   = *src;
+      *rgba++ = *src;
+      *rgba++ = *src;
+      *rgba++ = *src++;
       break;
 
-    case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:
+      has_alpha = TRUE;
+
+    case GIMP_INDEXED_IMAGE:
       /*  Indexed palette lookup  */
       {
-	gint index = *src * 3;
+	gint index = *src++ * 3;
 
-	*rgb++ = src_gimage->cmap[index++];
-	*rgb++ = src_gimage->cmap[index++];
-	*rgb   = src_gimage->cmap[index++];
+	*rgba++ = src_gimage->cmap[index++];
+	*rgba++ = src_gimage->cmap[index++];
+	*rgba++ = src_gimage->cmap[index++];
       }
       break;
     }
+
+  if (has_alpha)
+    *rgba = *src;
+  else
+    *rgba = OPAQUE_OPACITY;
 }
 
 void

@@ -470,21 +470,17 @@ gimp_clone_line_image (GimpImage    *dest,
                        gint          dest_bytes,
                        gint          width)
 {
-  guchar rgb[3];
-  gint   src_alpha, dest_alpha;
+  guchar rgba[MAX_CHANNELS];
+  gint   alpha;
 
-  src_alpha  = src_bytes - 1;
-  dest_alpha = dest_bytes - 1;
+  alpha = dest_bytes - 1;
 
   while (width--)
     {
-      gimp_image_get_color (src, gimp_drawable_type (s_drawable), s, rgb);
-      gimp_image_transform_color (dest, d_drawable, d, GIMP_RGB, rgb);
+      gimp_image_get_color (src, gimp_drawable_type (s_drawable), s, rgba);
+      gimp_image_transform_color (dest, d_drawable, d, GIMP_RGB, rgba);
 
-      if (has_alpha)
-	d[dest_alpha] = s[src_alpha];
-      else
-	d[dest_alpha] = OPAQUE_OPACITY;
+      d[alpha] = rgba[ALPHA_PIX];
 
       s += src_bytes;
       d += dest_bytes;

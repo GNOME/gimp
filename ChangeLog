@@ -1,5 +1,20 @@
 2004-01-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage.[ch] (gimp_image_get_color): also return the
+	color's alpha byte if it has alpha, not only the converted RGB
+	values.  Return OPAQUE_OPACITY for drawables without alpha.
+	Fixes bug #131706.
+
+	* app/core/gimpdrawable.c (gimp_drawable_get_color_at)
+	* app/core/gimpimage-contiguous-region.c
+	(gimp_image_contiguous_region_by_color)
+	* app/core/gimpimage-projection.c (gimp_image_projection_get_color_at)
+	* app/core/gimpimagemap.c (gimp_image_map_get_color_at)
+	* app/paint/gimpclone.c (gimp_clone_line_image): removed separate
+	handling of the alpha byte from all users of gimp_image_get_color().
+
+2004-01-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.c (gimp_paint_core_get_paint_area): use
 	gimp_drawable_bytes_with_alpha().
 

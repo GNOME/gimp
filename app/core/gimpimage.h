@@ -332,7 +332,7 @@ void            gimp_image_get_background        (const GimpImage    *gimage,
 void            gimp_image_get_color             (const GimpImage    *src_gimage,
                                                   GimpImageType       src_type,
                                                   const guchar       *src,
-                                                  guchar             *rgb);
+                                                  guchar             *rgba);
 void            gimp_image_transform_color       (const GimpImage    *dest_gimage,
                                                   const GimpDrawable *dest_drawable,
                                                   guchar             *dest,

@@ -1050,11 +1050,6 @@ gimp_drawable_get_color_at (GimpDrawable *drawable,
 
   gimp_image_get_color (gimage, gimp_drawable_type (drawable), src, dest);
 
-  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (drawable)))
-    dest[ALPHA_PIX] = src[gimp_drawable_bytes (drawable) - 1];
-  else
-    dest[ALPHA_PIX] = OPAQUE_OPACITY;
-
   if (gimp_drawable_is_indexed (drawable))
     dest[4] = src[0];
   else

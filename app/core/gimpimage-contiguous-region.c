@@ -295,10 +295,6 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
 	      /*  Get the rgb values for the color  */
 	      gimp_image_get_color (gimage, d_type, idata, rgb);
 
-	      /*  Plug the alpha channel in there  */
-	      if (has_alpha)
-		rgb[color_bytes - 1] = idata[alpha];
-
 	      /*  Find how closely the colors match  */
 	      *mdata++ = pixel_difference (col, rgb,
                                            antialias, threshold,

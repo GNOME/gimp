@@ -263,10 +263,10 @@ gimp_image_map_apply (GimpImageMap          *image_map,
     {
       /* Reset to initial drawable conditions.            */
       /* Copy from the backup undo tiles to the drawable  */
-      pixel_region_init (&image_map->srcPR, image_map->undo_tiles, 
+      pixel_region_init (&image_map->srcPR, image_map->undo_tiles,
 			 0, 0, width, height, FALSE);
       pixel_region_init (&image_map->destPR,
-			 gimp_drawable_data (image_map->drawable), 
+			 gimp_drawable_data (image_map->drawable),
 			 offset_x, offset_y, width, height, TRUE);
 
       copy_region (&image_map->srcPR, &image_map->destPR);
@@ -374,13 +374,13 @@ gimp_image_map_clear (GimpImageMap *image_map)
       height   = tile_manager_height (image_map->undo_tiles),
 
       /*  Copy from the drawable to the tiles  */
-      pixel_region_init (&srcPR, image_map->undo_tiles, 
+      pixel_region_init (&srcPR, image_map->undo_tiles,
 			 0, 0, width, height, FALSE);
       pixel_region_init (&destPR, gimp_drawable_data (image_map->drawable),
 			 offset_x, offset_y, width, height, TRUE);
 
       /* if the user has changed the image depth get out quickly */
-      if (destPR.bytes != srcPR.bytes) 
+      if (destPR.bytes != srcPR.bytes)
 	{
 	  g_message ("image depth change, unable to restore original image");
 
@@ -429,8 +429,8 @@ gimp_image_map_abort (GimpImageMap *image_map)
 }
 
 guchar *
-gimp_image_map_get_color_at (GimpImageMap *image_map, 
-                             gint          x, 
+gimp_image_map_get_color_at (GimpImageMap *image_map,
+                             gint          x,
                              gint          y)
 {
   guchar  src[5];
@@ -438,7 +438,7 @@ gimp_image_map_get_color_at (GimpImageMap *image_map,
 
   g_return_val_if_fail (GIMP_IS_IMAGE_MAP (image_map), NULL);
 
-  if (x >= 0 && x < gimp_item_width  (GIMP_ITEM (image_map->drawable)) && 
+  if (x >= 0 && x < gimp_item_width  (GIMP_ITEM (image_map->drawable)) &&
       y >= 0 && y < gimp_item_height (GIMP_ITEM (image_map->drawable)))
     {
       /* Check if done damage to original image */
@@ -446,7 +446,7 @@ gimp_image_map_get_color_at (GimpImageMap *image_map,
 	return gimp_drawable_get_color_at (image_map->drawable, x, y);
 
       if (! image_map ||
-	  (! gimp_item_get_image (GIMP_ITEM (image_map->drawable)) && 
+	  (! gimp_item_get_image (GIMP_ITEM (image_map->drawable)) &&
 	   gimp_drawable_is_indexed (image_map->drawable)) ||
 	  x < 0 || y < 0                                   ||
 	  x >= tile_manager_width (image_map->undo_tiles)  ||
@@ -456,17 +456,12 @@ gimp_image_map_get_color_at (GimpImageMap *image_map,
 	}
 
       dest = g_new (guchar, 5);
-      
+
       read_pixel_data_1 (image_map->undo_tiles, x, y, src);
 
       gimp_image_get_color (gimp_item_get_image  (GIMP_ITEM (image_map->drawable)),
 			    gimp_drawable_type (image_map->drawable),
 			    src, dest);
-
-      if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_drawable_type (image_map->drawable)))
-	dest[3] = src[gimp_drawable_bytes (image_map->drawable) - 1];
-      else
-	dest[3] = 255;
 
       if (gimp_drawable_is_indexed (image_map->drawable))
 	dest[4] = src[0];
