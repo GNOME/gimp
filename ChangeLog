@@ -1,3 +1,11 @@
+Sat Nov 20 23:31:19 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	* app/nav_window.c
+
+
+	Forgot to clear the timer_id flag after the timer
+	has fired.
+
 Sat Nov 20 22:10:15 GMT 1999 Andy Thomas <alt@gimp.org>
 
 	* app/nav_window.c

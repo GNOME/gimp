@@ -972,6 +972,7 @@ nav_preview_update_do (NavWinData *iwd)
 static gint 
 nav_preview_update_do_timer(NavWinData *iwd)
 {
+  iwd->timer_id = 0;
   gtk_idle_add((GtkFunction)nav_preview_update_do,(gpointer)iwd);
 
   return FALSE;
