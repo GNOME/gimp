@@ -1,3 +1,8 @@
+2001-11-08  Wang Jian  <lark@linux.net.cn>
+
+    * zh_CN.po: Added Simplified Chinese translation by
+    Xie Yuheng <phycommusyee@263.net>.
+
 2001-11-05  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added missing files

@@ -20,7 +20,7 @@ msgstr "无法处理图层"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
-msgstr "合并可见的层"
+msgstr "合并可见的图层"
 
 #: libgimp/gimpexport.c:179
 msgid "can't handle layer offsets, size or opacity"

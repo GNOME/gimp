@@ -1,3 +1,8 @@
+2001-11-08  Wang Jian  <lark@linux.net.cn>
+
+	* zh_CN.po: Updated Simplified Chinese translation by
+	Xie Yuheng <phycommusyee@263.net>.
+
 2001-11-02  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: gimpdisplay-callbacks.c -> gimpdisplayshell-callbacks.
