@@ -48,11 +48,9 @@ static void              run   (const gchar      *name,
                                 gint             *nreturn_vals,
                                 GimpParam       **return_vals);
 
-static GimpPDBStatusType threshold_alpha             (gint32     drawable_id);
+static GimpPDBStatusType threshold_alpha        (gint32     drawable_id);
 
-static gint              threshold_alpha_dialog      (void);
-static void              threshold_alpha_ok_callback (GtkWidget *widget,
-						      gpointer   data);
+static gint              threshold_alpha_dialog (void);
 
 
 static GimpRunMode        run_mode;
@@ -70,20 +68,11 @@ typedef struct
   gint	threshold;
 } ValueType;
 
-static ValueType VALS = 
+static ValueType VALS =
 {
   127
 };
 
-typedef struct 
-{
-  gboolean  run;
-} Interface;
-
-static Interface INTERFACE =
-{
-  FALSE
-};
 
 MAIN ()
 
@@ -121,7 +110,7 @@ run (const gchar      *name,
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               drawable_id;
-  
+
   run_mode    = param[0].data.d_int32;
   drawable_id = param[2].data.d_int32;
 
@@ -129,7 +118,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals = values;
-  
+
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -161,14 +150,14 @@ run (const gchar      *name,
       else
 	{
 	  VALS.threshold = param[3].data.d_int32;
-	} 
+	}
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
-  
+
   if (status == GIMP_PDB_SUCCESS)
     {
       status = threshold_alpha (drawable_id);
@@ -183,7 +172,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static void 
+static void
 threshold_alpha_func (const guchar *src,
 		      guchar       *dest,
 		      gint          bpp,
@@ -211,7 +200,7 @@ threshold_alpha (gint32 drawable_id)
 
   gap = (gimp_drawable_is_rgb (drawable_id)) ? 3 : 1;
 
-  gimp_rgn_iterate2 (drawable, run_mode, threshold_alpha_func, 
+  gimp_rgn_iterate2 (drawable, run_mode, threshold_alpha_func,
 		     GINT_TO_POINTER(gap));
 
   gimp_drawable_detach (drawable);
@@ -225,24 +214,18 @@ threshold_alpha_dialog (void)
   GtkWidget *dlg;
   GtkWidget *table;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("threshold_alpha", FALSE);
 
   dlg = gimp_dialog_new (_("Threshold Alpha"), "threshold_alpha",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/threshold_alpha.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, threshold_alpha_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 1, 3);
 
@@ -257,17 +240,9 @@ threshold_alpha_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return INTERFACE.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-threshold_alpha_ok_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  INTERFACE.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

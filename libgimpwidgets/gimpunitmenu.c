@@ -525,38 +525,41 @@ gimp_unit_menu_build_string (const gchar *format,
 
 /*  private callback of gimp_unit_menu_create_selection ()  */
 static void
-gimp_unit_menu_selection_ok_callback (GtkWidget *widget,
-				      gpointer   data)
+gimp_unit_menu_selection_response (GtkWidget    *widget,
+                                   gint          response_id,
+                                   GimpUnitMenu *menu)
 {
-  GimpUnitMenu     *menu;
-  GimpUnit          unit;
-  GtkTreeSelection *sel;
-  GtkTreeModel     *model;
-  GtkTreeIter       iter;
-  GValue            val = { 0, };
-
-  menu = GIMP_UNIT_MENU (data);
-
-  sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (menu->tv));
-  if (menu->selection && gtk_tree_selection_get_selected (sel, &model, &iter))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      gtk_tree_model_get_value(model, &iter, 2, &val);
-      unit = (GimpUnit) g_value_get_int (&val);
-      g_value_unset (&val);
+      GtkTreeSelection *sel;
+      GtkTreeModel     *model;
+      GtkTreeIter       iter;
 
-      gimp_unit_menu_set_unit (menu, unit);
+      sel = gtk_tree_view_get_selection (GTK_TREE_VIEW (menu->tv));
+      if (menu->selection && gtk_tree_selection_get_selected (sel, &model,
+                                                              &iter))
+        {
+          GValue   val = { 0, };
+          GimpUnit unit;
 
-      gtk_widget_destroy (menu->selection);
+          gtk_tree_model_get_value (model, &iter, 2, &val);
+          unit = (GimpUnit) g_value_get_int (&val);
+          g_value_unset (&val);
+
+          gimp_unit_menu_set_unit (menu, unit);
+        }
     }
+
+  gtk_widget_destroy (menu->selection);
 }
 
 static void
 gimp_unit_menu_selection_row_activated_callback (GtkTreeView       *tv,
 						 GtkTreePath       *path,
 						 GtkTreeViewColumn *column,
-						 gpointer           data)
+						 GimpUnitMenu      *menu)
 {
-  gimp_unit_menu_selection_ok_callback (NULL, data);
+  gtk_dialog_response (GTK_DIALOG (menu->selection), GTK_RESPONSE_OK);
 }
 
 /*  private function of gimp_unit_menu_callback ()  */
@@ -572,23 +575,23 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   GimpUnit          unit;
   gint              num_units;
 
-  menu->selection =
-    gimp_dialog_new (_("Unit Selection"), "unit_selection",
-                     gimp_standard_help_func,
-                     "dialogs/unit_selection.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+  menu->selection = gimp_dialog_new (_("Unit Selection"), "unit_selection",
+                                     GTK_WIDGET (menu),
+                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     gimp_standard_help_func,
+                                     "dialogs/unit_selection.html",
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-		     GTK_STOCK_OK, gimp_unit_menu_selection_ok_callback,
-		     menu, NULL, NULL, TRUE, FALSE,
-
-		     NULL);
+                                     NULL);
 
   g_object_add_weak_pointer (G_OBJECT (menu->selection),
                              (gpointer) &menu->selection);
+
+  g_signal_connect (menu->selection, "response",
+                    G_CALLBACK (gimp_unit_menu_selection_response),
+                    menu);
 
   g_signal_connect_object (menu, "destroy",
                            G_CALLBACK (gtk_widget_destroy),

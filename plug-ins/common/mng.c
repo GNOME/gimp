@@ -27,7 +27,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  * --
- * 
+ *
  * For now, this MNG plug-in can only save images. It cannot load images.
  * Save your working copy as .xcf and use this for "exporting" your images
  * to MNG. Supports animation the same way as animated GIFs. Supports alpha
@@ -134,7 +134,8 @@ struct mng_data_t
 /* Values of the instance of the above struct when the plug-in is
  * first invoked. */
 
-struct mng_data_t mng_data = {
+struct mng_data_t mng_data =
+{
   FALSE,			/* interlaced */
   FALSE,			/* bkgd */
   FALSE,			/* gama */
@@ -155,10 +156,10 @@ struct mng_data_t mng_data = {
 
 /* The output FILE pointer which is used by libmng;
  * passed around as user data. */
-     struct mnglib_userdata_t
-     {
-       FILE *fp;
-     };
+struct mnglib_userdata_t
+{
+  FILE *fp;
+};
 
 
 /* Callbacks for libmng. */
@@ -293,8 +294,8 @@ parse_ms_tag_from_layer_name (const gchar *str)
 }
 
 
-/* Try to find a colour in the palette which isn't actually 
- * used in the image, so that we can use it as the transparency 
+/* Try to find a colour in the palette which isn't actually
+ * used in the image, so that we can use it as the transparency
  * index. Taken from png.c */
 static gint
 find_unused_ia_colour (guchar *pixels,
@@ -312,7 +313,7 @@ find_unused_ia_colour (guchar *pixels,
 
   for (i = 0; i < numpixels; i++)
     {
-      /* If alpha is over a threshold, the colour index in the 
+      /* If alpha is over a threshold, the colour index in the
        * palette is taken. Otherwise, this pixel is transparent. */
       if (pixels[i * 2 + 1] > 127)
         ix_used[pixels[i * 2]] = TRUE;
@@ -602,12 +603,12 @@ mng_save_image (const gchar *filename,
     }
 
 /*	how do we get this to work?
-	
+
 	if (mng_data.bkgd)
 	{
 		GimpRGB bgcolor;
 		guchar red, green, blue;
-		
+
 		gimp_palette_get_background(&bgcolor);
 		gimp_rgb_get_uchar(&bgcolor, &red, &green, &blue);
 
@@ -619,7 +620,7 @@ mng_save_image (const gchar *filename,
 			g_free(userdata);
 			return 0;
 		}
-		
+
 		if ((ret = mng_putchunk_bkgd(handle, MNG_FALSE, 2, 0, gimp_rgb_intensity_uchar(&bgcolor), red, green, blue)) != MNG_NOERROR)
 		{
 			g_warning("Unable to mng_putchunk_bkgd() in mng_save_image()");
@@ -653,7 +654,7 @@ mng_save_image (const gchar *filename,
 	if (mng_data.phys)
 	{
 		gimp_image_get_resolution(original_image_id, &xres, &yres);
-		
+
 		if ((ret = mng_putchunk_phyg(handle, MNG_FALSE, (mng_uint32) (xres * 39.37), (mng_uint32) (yres * 39.37), 1)) != MNG_NOERROR)
 		{
 			g_warning("Unable to mng_putchunk_phyg() in mng_save_image()");
@@ -662,7 +663,7 @@ mng_save_image (const gchar *filename,
 			g_free(userdata);
 			return 0;
 		}
-		
+
 		if ((ret = mng_putchunk_phys(handle, MNG_FALSE, (mng_uint32) (xres * 39.37), (mng_uint32) (yres * 39.37), 1)) != MNG_NOERROR)
 		{
 			g_warning("Unable to mng_putchunk_phys() in mng_save_image()");
@@ -835,7 +836,7 @@ mng_save_image (const gchar *filename,
 	  g_free (userdata);
 	  return 0;
 	}
-      
+
       if ((outfile = fopen (temp_file_name, "wb")) == NULL)
 	{
 	  g_warning ("fopen() failed for '%s' in mng_save_image()",
@@ -1164,16 +1165,6 @@ mng_save_image (const gchar *filename,
 
 /* The interactive dialog. */
 
-static gboolean accept = FALSE;
-
-static void
-mng_save_dialog_ok_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  accept = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gint
 mng_save_dialog (gint32 image_id)
 {
@@ -1191,22 +1182,17 @@ mng_save_dialog (gint32 image_id)
   GtkWidget *spinbutton;
   GtkObject *spinbutton_adj;
   gint       num_layers;
+  gboolean   run;
 
 
-  dlg = gimp_dialog_new (_("Save as MNG"), "mng", NULL, NULL,
-			 GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
+  dlg = gimp_dialog_new (_("Save as MNG"), "mng",
+                         NULL, 0,
+                         gimp_standard_help_func, "filters/mng.html",
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, mng_save_dialog_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-		    G_CALLBACK (gtk_main_quit),
-		    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1280,7 +1266,7 @@ mng_save_dialog (gint32 image_id)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
-  
+
   gimp_image_get_layers (image_id, &num_layers);
 
   if (num_layers == 1)
@@ -1386,59 +1372,62 @@ mng_save_dialog (gint32 image_id)
 
   frame = gtk_frame_new (_("Animated MNG Options"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  
+
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
-  
+
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  
+
   toggle = gtk_check_button_new_with_label (_("Loop"));
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   g_signal_connect (toggle, "toggled",
 		    G_CALLBACK (gimp_toggle_button_update),
 		    &mng_data.loop);
-  
+
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				mng_data.loop);
-  
+
   gtk_widget_show (toggle);
-  
+
   hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  
+
   label = gtk_label_new (_("Default Frame Delay:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  
+
   spinbutton = gimp_spin_button_new (&spinbutton_adj,
 				     mng_data.default_delay,
 				     0, 65000, 10, 100, 0, 1, 0);
-  
+
   g_signal_connect (spinbutton_adj, "value_changed",
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &mng_data.default_delay);
-  
+
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-  
+
   gtk_widget_show (spinbutton);
-  
+
   label = gtk_label_new (_("milliseconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  
+
   gtk_widget_show (hbox);
-  
+
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
-  
+
   gtk_widget_set_sensitive (frame, num_layers > 1);
-  
+
   gtk_widget_show (main_vbox);
   gtk_widget_show (dlg);
-  gtk_main ();
 
-  return accept;
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 
@@ -1447,39 +1436,45 @@ mng_save_dialog (gint32 image_id)
 static void
 query (void)
 {
-  static GimpParamDef save_args[] = {
-    {GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
-    {GIMP_PDB_IMAGE, "image", "Input image"},
-    {GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"},
-    {GIMP_PDB_STRING, "filename",
-     "The name of the file to save the image in"},
-    {GIMP_PDB_STRING, "raw_filename",
-     "The name of the file to save the image in"},
+  static GimpParamDef save_args[] =
+  {
+    { GIMP_PDB_INT32,    "run_mode", "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",    "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",
+      "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw_filename",
+     "The name of the file to save the image in" },
 
-    {GIMP_PDB_INT32, "interlace", "Use interlacing"},
-    {GIMP_PDB_INT32, "compression", "PNG deflate compression level (0 - 9)"},
-    {GIMP_PDB_FLOAT, "quality", "JPEG quality factor (0.00 - 1.00)"},
-    {GIMP_PDB_FLOAT, "smoothing", "JPEG smoothing factor (0.00 - 1.00)"},
-    {GIMP_PDB_INT32, "loop", "(ANIMATED MNG) Loop infinitely"},
-    {GIMP_PDB_INT32, "default_delay",
-     "(ANIMATED MNG) Default delay between frames in milliseconds"},
-    {GIMP_PDB_INT32, "default_chunks",
-     "(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta PNG; 2 = All PNG; 3 = All JNG)"},
-    {GIMP_PDB_INT32, "default_dispose",
-     "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)"},
-    {GIMP_PDB_INT32, "bkgd", "Write bKGD (background color) chunk"},
-    {GIMP_PDB_INT32, "gama", "Write gAMA (gamma) chunk"},
-    {GIMP_PDB_INT32, "phys", "Write pHYs (image resolution) chunk"},
-    {GIMP_PDB_INT32, "time", "Write tIME (creation time) chunk"}
+    { GIMP_PDB_INT32,    "interlace", "Use interlacing" },
+    { GIMP_PDB_INT32,    "compression", "PNG deflate compression level (0 - 9)" },
+    { GIMP_PDB_FLOAT,    "quality", "JPEG quality factor (0.00 - 1.00)" },
+    { GIMP_PDB_FLOAT,    "smoothing", "JPEG smoothing factor (0.00 - 1.00)" },
+    { GIMP_PDB_INT32,    "loop", "(ANIMATED MNG) Loop infinitely" },
+    { GIMP_PDB_INT32,    "default_delay",
+     "(ANIMATED MNG) Default delay between frames in milliseconds" },
+    { GIMP_PDB_INT32,    "default_chunks",
+     "(ANIMATED MNG) Default chunks type (0 = PNG + Delta PNG; 1 = JNG + Delta PNG; 2 = All PNG; 3 = All JNG)" },
+    { GIMP_PDB_INT32,    "default_dispose",
+     "(ANIMATED MNG) Default dispose type (0 = combine; 1 = replace)" },
+    { GIMP_PDB_INT32,    "bkgd", "Write bKGD (background color) chunk" },
+    { GIMP_PDB_INT32,    "gama", "Write gAMA (gamma) chunk"},
+    { GIMP_PDB_INT32,    "phys", "Write pHYs (image resolution) chunk" },
+    { GIMP_PDB_INT32,    "time", "Write tIME (creation time) chunk" }
   };
 
   gimp_install_procedure ("file_mng_save",
 			  "Saves images in the MNG file format",
-			  "This plug-in saves images in the Multiple-image Network Graphics (MNG) format which can be used as a replacement for animated GIFs, and more.",
+			  "This plug-in saves images in the Multiple-image "
+                          "Network Graphics (MNG) format which can be used as "
+                          "a replacement for animated GIFs, and more.",
 			  "S. Mukund <muks@mukund.org>",
-			  "S. Mukund <muks@mukund.org>", "November 19, 2002",
-			  "<Save>/MNG", "RGB*,GRAY*,INDEXED*", GIMP_PLUGIN,
-			  G_N_ELEMENTS (save_args), 0, save_args, NULL);
+			  "S. Mukund <muks@mukund.org>",
+                          "November 19, 2002",
+			  "<Save>/MNG", "RGB*,GRAY*,INDEXED*",
+                          GIMP_PLUGIN,
+			  G_N_ELEMENTS (save_args), 0,
+                          save_args, NULL);
 
   gimp_register_save_handler ("file_mng_save", "mng", "");
 }
@@ -1492,19 +1487,19 @@ run (const gchar      *name,
      GimpParam       **return_vals)
 {
   static GimpParam values[1];
+
   *nreturn_vals = 1;
-  *return_vals = values;
-  values[0].type = GIMP_PDB_STATUS;
+  *return_vals  = values;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 
 
   if (strcmp (name, "file_mng_save") == 0)
     {
-      GimpRunMode run_mode;
-      gint32 image_id, original_image_id;
-      gint32 drawable_id;
-      GimpExportReturnType export = GIMP_EXPORT_IGNORE;
-
+      GimpRunMode      run_mode;
+      gint32           image_id, original_image_id;
+      gint32           drawable_id;
+      GimpExportReturn export = GIMP_EXPORT_IGNORE;
 
       run_mode = param[0].data.d_int32;
       image_id = original_image_id = param[1].data.d_int32;

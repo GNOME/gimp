@@ -41,8 +41,6 @@ static void     gimp2aa    (gint32            drawable_ID,
 static gint     type_dialog                 (gint       selected);
 static void     type_dialog_toggle_update   (GtkWidget *widget,
                                              gpointer   data);
-static void     type_dialog_cancel_callback (GtkWidget *widget,
-                                             gpointer   data);
 
 /*
  * Some global variables.
@@ -125,13 +123,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam      values[2];
-  GimpRunMode           run_mode;
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  gint                  output_type = 0;
-  gint32                image_ID;
-  gint32                drawable_ID;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint              output_type = 0;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
 
@@ -340,21 +338,13 @@ type_dialog (gint selected)
 
   /* Create the actual window. */
   dlg = gimp_dialog_new (_("Save as Text"), "aa",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/aa.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, type_dialog_cancel_callback,
-			 NULL, NULL, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, gtk_widget_destroy,
-			 NULL, 1, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  file save type  */
   frame = gtk_frame_new (_("Data Formatting"));
@@ -395,8 +385,10 @@ type_dialog (gint selected)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  if (gtk_dialog_run (GTK_DIALOG (dlg)) != GTK_RESPONSE_OK)
+    selected_type = -1;
+
+  gtk_widget_destroy (dlg);
 
   return selected_type;
 }
@@ -404,14 +396,6 @@ type_dialog (gint selected)
 /*
  * Callbacks for the dialog.
  */
-
-static void
-type_dialog_cancel_callback (GtkWidget *widget,
-			     gpointer   data)
-{
-  selected_type = -1;
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 static void
 type_dialog_toggle_update (GtkWidget *widget,

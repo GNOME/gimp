@@ -36,9 +36,9 @@
  *         based on randomize 1.7
  *
  * Please send any patches or suggestions to the author: meo@rru.com .
- * 
+ *
  * Blur applies a 3x3 blurring convolution kernel to the specified drawable.
- * 
+ *
  * For each pixel in the selection or image,
  * whether to change the pixel is decided by picking a
  * random number, weighted by the user's "randomization" percentage.
@@ -46,9 +46,9 @@
  * blurring, an average is determined from the current and adjacent
  * pixels. *(Except for the random factor, the blur code came
  * straight from the original S&P blur plug-in.)*
- * 
+ *
  * This works only with RGB and grayscale images.
- * 
+ *
  ****************************************************************************/
 
 #ifdef HAVE_CONFIG_H
@@ -105,15 +105,6 @@ static BlurVals pivals =
   0,
 };
 
-typedef struct
-{
-  gboolean run;
-} BlurInterface;
-
-static BlurInterface blur_int =
-{
-  FALSE     /*  have we run? */
-};
 
 /*********************************
  *
@@ -144,9 +135,7 @@ static inline void blur_prepare_row (GimpPixelRgn *pixel_rgn,
 				     gint          y,
 				     gint          w);
 
-static gint blur_dialog      (void);
-static void blur_ok_callback (GtkWidget *widget,
-			      gpointer   data);
+static gint blur_dialog             (void);
 
 /************************************ Guts ***********************************/
 
@@ -364,10 +353,10 @@ run (const gchar      *name,
  ********************************/
 
 static inline void
-blur_prepare_row (GimpPixelRgn *pixel_rgn, 
-		  guchar    *data, 
-		  gint       x, 
-		  gint       y, 
+blur_prepare_row (GimpPixelRgn *pixel_rgn,
+		  guchar    *data,
+		  gint       x,
+		  gint       y,
 		  gint       w)
 {
   int b;
@@ -493,14 +482,14 @@ blur (GimpDrawable *drawable)
 		       *   but this is a color channel
 		       */
 		      *d++ = ((gint)
-			      (((gdouble) (pr[col - bytes] * pr[col - ind]) 
+			      (((gdouble) (pr[col - bytes] * pr[col - ind])
 				+ (gdouble) (pr[col] * pr[col + bytes - ind])
 				+ (gdouble) (pr[col + bytes] * pr[col + 2*bytes - ind])
 				+ (gdouble) (cr[col - bytes] * cr[col - ind])
 				+ (gdouble) (cr[col] * cr[col + bytes - ind])
 				+ (gdouble) (cr[col + bytes] * cr[col + 2*bytes - ind])
 				+ (gdouble) (nr[col - bytes] * nr[col - ind])
-				+ (gdouble) (nr[col] * nr[col + bytes - ind]) 
+				+ (gdouble) (nr[col] * nr[col + bytes - ind])
 				+ (gdouble) (nr[col + bytes] * nr[col + 2*bytes - ind]))
                              / ((gdouble) pr[col - ind]
 				+ (gdouble) pr[col + bytes - ind]
@@ -583,25 +572,18 @@ blur_dialog (void)
   GtkWidget *label;
   GtkWidget *seed_hbox;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("blur", FALSE);
 
   dlg = gimp_dialog_new (_("Blur"), "blur",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/blur.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, blur_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*
    *  Parameter settings
@@ -644,17 +626,9 @@ blur_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return blur_int.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-blur_ok_callback (GtkWidget *widget, 
-		  gpointer   data) 
-{
-  blur_int.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

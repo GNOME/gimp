@@ -211,11 +211,6 @@ typedef struct
 
 typedef struct
 {
-  gboolean  run;
-} JpegSaveInterface;
-
-typedef struct
-{
   struct jpeg_compress_struct cinfo;
   gint          tile_height;
   FILE         *outfile;
@@ -252,10 +247,6 @@ static gboolean save_image                (const gchar      *filename,
 
 static gboolean save_dialog                (void);
 
-static void     save_close_callback        (GtkWidget       *widget,
-					    gpointer         data);
-static void     save_ok_callback           (GtkWidget       *widget,
-					    gpointer         data);
 static void     save_restart_toggle_update (GtkWidget       *toggle,
 					    GtkAdjustment   *adjustment);
 static void     save_restart_update        (GtkAdjustment   *adjustment,
@@ -288,11 +279,6 @@ static JpegSaveVals jsvals =
   DEFAULT_DCT,
   DEFAULT_PREVIEW,
   DEFAULT_EXIF
-};
-
-static JpegSaveInterface jsint =
-{
-  FALSE   /*  run  */
 };
 
 
@@ -379,16 +365,16 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam      values[2];
-  GimpRunMode           run_mode;
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  gint32                image_ID;
-  gint32                drawable_ID;
-  gint32                orig_image_ID;
-  gint32                display_ID = -1;
-  GimpParasite         *parasite;
-  gboolean              err;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  gint32             image_ID;
+  gint32             drawable_ID;
+  gint32             orig_image_ID;
+  gint32             display_ID = -1;
+  GimpParasite      *parasite;
+  gboolean           err;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -1679,22 +1665,16 @@ save_dialog (void)
 
   GtkWidget     *prv_frame;
   GimpImageType  dtype;
+  gboolean       run;
 
   dlg = gimp_dialog_new (_("Save as JPEG"), "jpeg",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/jpeg.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (save_close_callback),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1945,57 +1925,28 @@ save_dialog (void)
 
   g_object_unref (text_buffer);
 
-  /* pw - mild hack here.  I didn't like redoing the comment string
-   * each time a character was typed, so I associated the text area
-   * with the dialog.  That way, just before the dialog destroys
-   * itself (once the ok button is hit) it can save whatever was in
-   * the comment text area to the comment string.  See the
-   * save-ok-callback for more details.
-   * [DindinX 2001-09-04]: this comment is still true with the text_buffer...
-   */
-
-  g_object_set_data (G_OBJECT (dlg), "text_buffer", text_buffer);
-
   gtk_widget_show (com_frame);
 
   gtk_widget_show (table);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return jsint.run;
-}
+  if (run)
+    {
+      GtkTextIter start_iter;
+      GtkTextIter end_iter;
 
-/*  Save interface functions  */
+      gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
+      image_comment = gtk_text_buffer_get_text (text_buffer,
+                                                &start_iter, &end_iter, FALSE);
+    }
 
-static void
-save_close_callback (GtkWidget *widget,
-		     gpointer   data)
-{
+  gtk_widget_destroy (dlg);
   destroy_preview ();
   gimp_displays_flush ();
-  gtk_main_quit ();
-}
 
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  GtkTextBuffer *text_buffer;
-  GtkTextIter    start_iter;
-  GtkTextIter    end_iter;
-
-  jsint.run = TRUE;
-
-  /* pw - get the comment text_buffer object and grab it's data */
-  text_buffer = g_object_get_data (G_OBJECT (data), "text_buffer");
-
-  gtk_text_buffer_get_bounds (text_buffer, &start_iter, &end_iter);
-  image_comment = gtk_text_buffer_get_text (text_buffer,
-                                            &start_iter, &end_iter, FALSE);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

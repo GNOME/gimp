@@ -35,7 +35,7 @@
  * I decided to write a program to do it.
  *
  * At first I just wrote a really ugly hack to do it, which I then planned
- * on using once just to see how it worked, and then posting a URL and 
+ * on using once just to see how it worked, and then posting a URL and
  * laughing about it on #gimp.  As it turns out, tigert thought it actually
  * had potential to be a useful plugin, so I started adding features and
  * and making a nice UI.
@@ -80,17 +80,7 @@ typedef struct
   gint  cellspacing;
 } GTMValues;
 
-typedef struct
-{
-  gint run;
-} GTMInterface;
-
 /* Variables */
-
-static GTMInterface bint =
-{
-  FALSE  /* run */
-};
 
 static GTMValues gtmvals =
 {
@@ -122,8 +112,6 @@ static gboolean save_dialog         (gint32        image_ID);
 
 static gboolean color_comp             (guchar    *buffer,
                                         guchar    *buf2);
-static void   save_ok_callback         (GtkWidget *widget,
-                                        gpointer   data);
 static void   gtm_caption_callback     (GtkWidget *widget,
                                         gpointer   data);
 static void   gtm_cellcontent_callback (GtkWidget *widget,
@@ -253,7 +241,7 @@ save_image (const gchar  *filename,
 
   if (gtmvals.caption)
     fprintf (fp, "<CAPTION>%s</CAPTION>\n",
-             gtmvals.captiontxt); 
+             gtmvals.captiontxt);
 
   name = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (name);
@@ -377,7 +365,7 @@ save_image (const gchar  *filename,
     }
 
   if (gtmvals.fulldoc)
-    fprintf (fp, "</TABLE></BODY></HTML>\n");  
+    fprintf (fp, "</TABLE></BODY></HTML>\n");
   else
     fprintf (fp, "</TABLE>\n");
 
@@ -404,26 +392,18 @@ save_dialog (gint32 image_ID)
   GtkObject *adj;
   GtkWidget *entry;
   GtkWidget *toggle;
-
-  bint.run = FALSE;
+  gboolean   run;
 
   gimp_ui_init ("gtm", FALSE);
 
   dlg = gimp_dialog_new (_("GIMP Table Magic"), "gtm",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/gtm.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -443,7 +423,7 @@ save_dialog (gint32 image_ID)
       hbox = gtk_hbox_new (FALSE, 4);
       gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
       gtk_container_add (GTK_CONTAINER (frame), hbox);
-      
+
       eek = gtk_image_new_from_stock (GIMP_STOCK_WILBER_EEK,
                                       GTK_ICON_SIZE_DIALOG);
       gtk_box_pack_start (GTK_BOX (hbox), eek, FALSE, FALSE, 4);
@@ -662,10 +642,11 @@ save_dialog (gint32 image_ID)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return bint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 static gboolean
@@ -673,18 +654,9 @@ color_comp (guchar *buffer,
 	    guchar *buf2)
 {
   return buffer[0] == buf2[0] && buffer[1] == buf2[1] && buffer[2] == buf2[2];
-}  
+}
 
 /*  Save interface functions  */
-
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  bint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 static void
 gtm_caption_callback (GtkWidget *widget,

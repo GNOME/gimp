@@ -70,10 +70,6 @@ typedef struct
   gint      colortype;
 } SparkleVals;
 
-typedef struct
-{
-  gboolean  run;
-} SparkleInterface;
 
 /* Declare local functions.
  */
@@ -86,8 +82,6 @@ static void      run    (const gchar      *name,
                          GimpParam       **return_vals);
 
 static gint      sparkle_dialog        (void);
-static void      sparkle_ok_callback   (GtkWidget *widget,
-                                        gpointer   data);
 
 static gint      compute_luminosity    (const guchar *pixel,
                                         gboolean      gray,
@@ -150,11 +144,6 @@ static SparkleVals svals =
   FALSE,  /* inverse              */
   FALSE,  /* border               */
   NATURAL /* colortype            */
-};
-
-static SparkleInterface sint =
-{
-  FALSE   /* run                  */
 };
 
 static gint num_sparkles;
@@ -343,25 +332,18 @@ sparkle_dialog (void)
   GtkWidget *sep;
   GtkWidget *r1, *r2, *r3;
   GtkObject *scale_data;
+  gboolean   run;
 
   gimp_ui_init ("sparkle", FALSE);
 
   dlg = gimp_dialog_new (_("Sparkle"), "sparkle",
-             gimp_standard_help_func, "filters/sparkle.html",
-             GTK_WIN_POS_MOUSE,
-             FALSE, TRUE, FALSE,
+                         NULL, 0,
+                         gimp_standard_help_func, "filters/sparkle.html",
 
-             GTK_STOCK_CANCEL, gtk_widget_destroy,
-             NULL, 1, NULL, FALSE, TRUE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-             GTK_STOCK_OK, sparkle_ok_callback,
-             NULL, NULL, NULL, TRUE, FALSE,
-
-             NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /*  parameter settings  */
   main_vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
@@ -545,10 +527,11 @@ sparkle_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return sint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 static gint
@@ -1053,12 +1036,4 @@ fspike (GimpPixelRgn *src_rgn,
 
   if (tile)
     gimp_tile_unref (tile, TRUE);
-}
-
-static void
-sparkle_ok_callback (GtkWidget *widget,
-                     gpointer   data)
-{
-  sint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

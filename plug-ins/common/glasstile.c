@@ -22,10 +22,10 @@
 
 /*
  * This filter divide the image into square "glass"-blocks in which
- * the image is refracted. 
- * 
+ * the image is refracted.
+ *
  * The alpha-channel is left unchanged.
- * 
+ *
  * Please send any comments or suggestions to
  * Karl-Johan Andersson (t96kja@student.tdb.uu.se)
  *
@@ -33,10 +33,10 @@
  * Added preview mode.
  * Noticed there is an issue with the algorithm if odd number of rows or
  * columns is requested.  Dunno why.  I am not a graphics expert :(
- *  
- * May 2000 alt@gimp.org Made preview work and removed some boundary 
+ *
+ * May 2000 alt@gimp.org Made preview work and removed some boundary
  * conditions that caused "streaks" to appear when using some tile spaces.
- */ 
+ */
 
 #include "config.h"
 
@@ -57,25 +57,18 @@ typedef struct
   gint yblock;
 } GlassValues;
 
-typedef struct
-{
-  gboolean  run;
-} GlassInterface;
-
 /* --- Declare local functions --- */
-static void query (void);
-static void run   (const gchar      *name,
-		   gint              nparams,
-		   const GimpParam  *param,
-		   gint             *nreturn_vals,
-		   GimpParam       **return_vals);
+static void query        (void);
+static void run          (const gchar      *name,
+                          gint              nparams,
+                          const GimpParam  *param,
+                          gint             *nreturn_vals,
+                          GimpParam       **return_vals);
 
-static gint glass_dialog               (GimpDrawable  *drawable);
-static void glass_ok_callback          (GtkWidget     *widget,
-					gpointer       data);
+static gint glass_dialog (GimpDrawable     *drawable);
+static void glasstile    (GimpDrawable     *drawable,
+                          gboolean          preview_mode);
 
-static void glasstile                  (GimpDrawable  *drawable, 
-					gboolean       preview_mode);
 
 /* --- Variables --- */
 GimpPlugInInfo PLUG_IN_INFO =
@@ -85,14 +78,11 @@ GimpPlugInInfo PLUG_IN_INFO =
   query,   /* query_proc */
   run,     /* run_proc */
 };
+
 static GlassValues gtvals =
 {
     20,    /* tile width  */
     20     /* tile height */
-};
-static GlassInterface gt_int =
-{
-  FALSE    /* run */
 };
 
 static GimpFixMePreview *preview;
@@ -102,7 +92,7 @@ static GimpFixMePreview *preview;
 MAIN ()
 
 static void
-query (void) 
+query (void)
 {
   static GimpParamDef args[] =
   {
@@ -138,26 +128,26 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  
+
   run_mode = param[0].data.d_int32;
-  
+
   INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
-  
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_glasstile", &gtvals);
-      
+
       /*  First acquire information with a dialog  */
       if (! glass_dialog (drawable))
 	{
@@ -165,7 +155,7 @@ run (const gchar      *name,
 	  return;
 	}
       break;
-      
+
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       if (nparams != 5)
@@ -175,17 +165,17 @@ run (const gchar      *name,
 	  gtvals.xblock = (gint) param[3].data.d_int32;
 	  gtvals.yblock = (gint) param[4].data.d_int32;
 	}
-      if (gtvals.xblock < 10 || gtvals.xblock > 50) 
+      if (gtvals.xblock < 10 || gtvals.xblock > 50)
 	status = GIMP_PDB_CALLING_ERROR;
-      if (gtvals.yblock < 10 || gtvals.yblock > 50) 
+      if (gtvals.yblock < 10 || gtvals.yblock > 50)
 	status = GIMP_PDB_CALLING_ERROR;
       break;
-      
+
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
       gimp_get_data ("plug_in_glasstile", &gtvals);
       break;
-      
+
     default:
       break;
     }
@@ -197,17 +187,17 @@ run (const gchar      *name,
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Glass Tile..."));
-	  gimp_tile_cache_ntiles (2 * 
+	  gimp_tile_cache_ntiles (2 *
                                   (drawable->width / gimp_tile_width () + 1));
-	  
+
 	  glasstile (drawable, FALSE);
-	  
+
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush (); 
+	    gimp_displays_flush ();
 	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE) 
+	  if (run_mode == GIMP_RUN_INTERACTIVE)
 	    {
-	      gimp_set_data ("plug_in_glasstile", &gtvals, 
+	      gimp_set_data ("plug_in_glasstile", &gtvals,
 			     sizeof (GlassValues));
 	      gimp_fixme_preview_free (preview);
             }
@@ -217,9 +207,9 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-    
+
   values[0].data.d_status = status;
-  
+
   gimp_drawable_detach (drawable);
 }
 
@@ -230,28 +220,22 @@ glass_dialog (GimpDrawable *drawable)
   GtkWidget *main_vbox;
   GtkWidget *table;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("glasstile", TRUE);
 
   dlg = gimp_dialog_new (_("Glass Tile"), "glasstile",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/glasstile.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, glass_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), 
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
@@ -259,7 +243,7 @@ glass_dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   gtk_widget_show (preview->widget);
   glasstile (drawable, TRUE); /* filter routine, initial pass */
-  
+
   table = gimp_parameter_settings_new (main_vbox, 2, 3);
 
   /* Horizontal scale - Width */
@@ -294,24 +278,16 @@ glass_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return gt_int.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-glass_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  gt_int.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 /*  -  Filter function  -  I wish all filter functions had a pmode :) */
 static void
-glasstile (GimpDrawable *drawable, 
+glasstile (GimpDrawable *drawable,
 	   gboolean      preview_mode)
 {
   GimpPixelRgn srcPR, destPR;
@@ -328,14 +304,14 @@ glasstile (GimpDrawable *drawable,
    * ymitt = y middle
    * xmitt = x middle
    */
-  
+
   gint rutbredd, xpixel1, xpixel2;
   gint ruthojd , ypixel2;
   gint xhalv, xoffs, xmitt, xplus;
   gint yhalv, yoffs, ymitt, yplus;
   gint cbytes;
-      
-  if (preview_mode) 
+
+  if (preview_mode)
     {
       width  = preview->width;
       height = preview->height;
@@ -344,29 +320,29 @@ glasstile (GimpDrawable *drawable,
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
-    } 
-  else 
+    }
+  else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       width  = drawable->width;
       height = drawable->height;
       bytes  = drawable->bpp;
     }
-  
+
   cur_row = g_new (guchar, width * bytes);
   dest    = g_new (guchar, width * bytes);
 
   /* initialize the pixel regions, set grid height/width */
-  if (preview_mode) 
+  if (preview_mode)
     {
       rutbredd = gtvals.xblock * preview->scale_x;
       ruthojd  = gtvals.yblock * preview->scale_y;
 
-      /* Algorithm depends on grid height/width being at least 2 
-       * or you'll get extremely bad previews (1/2 size). 
+      /* Algorithm depends on grid height/width being at least 2
+       * or you'll get extremely bad previews (1/2 size).
        *
        * Preview isn't really terribly useful for larger images.
-       * Might be more useful as full-size window scroll-around type.  
+       * Might be more useful as full-size window scroll-around type.
        */
       rutbredd = MAX(rutbredd, 2);
       ruthojd = MAX(ruthojd, 2);
@@ -384,8 +360,8 @@ glasstile (GimpDrawable *drawable,
   yhalv = ruthojd  / 2;
   cbytes = bytes;
 
-  if (! (cbytes & 1)) 
-    cbytes--; 
+  if (! (cbytes & 1))
+    cbytes--;
 
   iwidth = width - x1;
   xplus = rutbredd % 2;
@@ -398,13 +374,13 @@ glasstile (GimpDrawable *drawable,
   for (row = y1; row < y2; row++)
     {
       d = dest;
-      
+
       ypixel2 = ymitt + yoffs * 2;
       ypixel2 = CLAMP (ypixel2, 0, y2 - 1);
 
       if (preview_mode)
 	{
-	  memcpy (cur_row, preview->cache + ypixel2 * preview->rowstride, 
+	  memcpy (cur_row, preview->cache + ypixel2 * preview->rowstride,
 		  preview->rowstride);
 	}
       else
@@ -414,12 +390,12 @@ glasstile (GimpDrawable *drawable,
       yoffs++;
 
       /* if current offset = half, do a displacement next time around */
-      if (yoffs == yhalv) 
-	{ 
+      if (yoffs == yhalv)
+	{
 	  ymitt += ruthojd;
 	  yoffs = - (yhalv + yplus);
 	}
-      
+
       xmitt = 0;
       xoffs = 0;
 
@@ -428,14 +404,14 @@ glasstile (GimpDrawable *drawable,
 	  xpixel1 = (xmitt + xoffs) * bytes;
 	  xpixel2 = (xmitt + xoffs * 2) * bytes;
 
-	  if (xpixel2 < ((x2 - x1) * bytes)) 
+	  if (xpixel2 < ((x2 - x1) * bytes))
 	    {
 	      if(xpixel2 < 0)
 		xpixel2 = 0;
-	      for (i = 0; i < bytes; i++) 
+	      for (i = 0; i < bytes; i++)
 		d[xpixel1 + i] = cur_row[xpixel2 + i];
 	    }
-	  else 
+	  else
 	    {
 	      for (i = 0; i < bytes; i++)
 		d[xpixel1 + i] = cur_row[xpixel1 + i];
@@ -443,7 +419,7 @@ glasstile (GimpDrawable *drawable,
 
 	  xoffs++;
 
-	  if (xoffs == xhalv) 
+	  if (xoffs == xhalv)
 	    {
 	      xmitt += rutbredd;
 	      xoffs = - (xhalv + xplus);
@@ -458,14 +434,14 @@ glasstile (GimpDrawable *drawable,
       else
         {
           gimp_pixel_rgn_set_row (&destPR, dest, x1, row, iwidth);
-          
+
           if ((row % 5) == 0)
             gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
         }
     }
 
   /*  Update region  */
-  if (preview_mode) 
+  if (preview_mode)
     {
       gtk_widget_queue_draw (preview->widget);
     }
@@ -473,7 +449,7 @@ glasstile (GimpDrawable *drawable,
     {
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-      gimp_drawable_update (drawable->drawable_id, 
+      gimp_drawable_update (drawable->drawable_id,
                             x1, y1, (x2 - x1), (y2 - y1));
     }
 

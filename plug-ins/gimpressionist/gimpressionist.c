@@ -19,6 +19,9 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define RESPONSE_ABOUT 1
+
+
 static GtkWidget *dlg = NULL;
 
 ppm_t infile = {0,0,NULL};
@@ -40,37 +43,30 @@ GList * parsepath (void)
   defaultpath = g_build_filename (gimp_directory (),
                                   "gimpressionist", gimpdatasubdir, NULL);
 
-  if (standalone)
+  tmps = gimp_gimprc_query ("gimpressionist-path");
+
+  if (!tmps)
     {
+      if (!g_file_test (gimpdatasubdir, G_FILE_TEST_IS_DIR))
+        {
+          /* No gimpressionist-path parameter,
+             and the default doesn't exist */
+          gchar *path = g_strconcat ("${gimp_dir}",
+                                     G_DIR_SEPARATOR_S,
+                                     "gimpressionist",
+                                     G_SEARCHPATH_SEPARATOR_S,
+                                     "${gimp_data_dir}",
+                                     G_DIR_SEPARATOR_S,
+                                     "gimpressionist",
+                                     NULL);
+
+          /* don't translate the gimprc entry */
+          g_message (_("It is highly recommended to add\n"
+                       " (gimpressionist-path \"%s\")\n"
+                       "(or similar) to your gimprc file."), path);
+          g_free (path);
+        }
       tmps = g_strdup (defaultpath);
-    }
-  else
-    {
-      tmps = gimp_gimprc_query ("gimpressionist-path");
-
-      if (!tmps)
-	{
-          if (!g_file_test (gimpdatasubdir, G_FILE_TEST_IS_DIR))
-	    {
-	      /* No gimpressionist-path parameter,
-                 and the default doesn't exist */
-              gchar *path = g_strconcat ("${gimp_dir}",
-                                         G_DIR_SEPARATOR_S,
-                                         "gimpressionist",
-                                         G_SEARCHPATH_SEPARATOR_S,
-                                         "${gimp_data_dir}",
-                                         G_DIR_SEPARATOR_S,
-                                         "gimpressionist",
-                                         NULL);
-
-              /* don't translate the gimprc entry */
-	      g_message (_("It is highly recommended to add\n"
-                           " (gimpressionist-path \"%s\")\n"
-                           "(or similar) to your gimprc file."), path);
-              g_free (path);
-            }
-	  tmps = g_strdup (defaultpath);
-	}
     }
 
   lastpath = gimp_path_parse (tmps, 16, FALSE, NULL);
@@ -167,26 +163,9 @@ void restorevals(void)
   update_orientmap_dialog();
 }
 
-static void
-dialog_close_callback(GtkWidget *widget, gpointer data)
-{
-  gtk_main_quit();
-}
-
-static void dialog_ok_callback(GtkWidget *widget, gpointer data)
-{
-  storevals();
-  pcvals.run = 1;
-  gtk_widget_destroy(dlg);
-}
-
-static void dialog_cancel_callback(GtkWidget *widget, gpointer data)
-{
-  pcvals.run = 0;
-  gtk_widget_destroy(dlg);
-}
-
-void reselect(GtkWidget *view, char *fname)
+void
+reselect (GtkWidget *view,
+          gchar     *fname)
 {
   GtkTreeModel *model;
   GtkTreeSelection *selection;
@@ -346,7 +325,8 @@ GtkWidget *createonecolumnlist(GtkWidget *parent,
   return view;
 }
 
-static void showabout(void)
+static void
+showabout (void)
 {
   static GtkWidget *window = NULL;
   GtkWidget *tmpw, *tmphbox;
@@ -362,17 +342,18 @@ static void showabout(void)
 
   window =
     gimp_dialog_new (_("The GIMPressionist"), "gimpressionist",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/gimpressionist.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CLOSE, gtk_widget_destroy,
-		     NULL, 1, NULL, TRUE, TRUE,
+		     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 		     NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (window), 6);
 
+  g_signal_connect (window, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);
@@ -413,51 +394,54 @@ static void showabout(void)
   gtk_widget_show(window);
 }
 
-static int create_dialog(void)
+static void
+dialog_response (GtkWidget *widget,
+                 gint       response_id,
+                 gpointer   data)
+{
+  switch (response_id)
+    {
+    case RESPONSE_ABOUT:
+      showabout ();
+      break;
+
+    case GTK_RESPONSE_OK:
+      storevals ();
+      pcvals.run = TRUE;
+      gtk_widget_destroy (widget);
+      break;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
+    }
+}
+
+static GtkWidget *
+create_dialog (void)
 {
   GtkWidget *notebook;
   GtkWidget *box1, *box2, *preview_box;
-  gint        argc;
-  gchar     **argv;
 
-  if (standalone)
-    {
-      GdkScreen *screen;
-
-      argc = 1;
-      argv = g_new(char *, 1);
-      argv[0] = "gimpressionist";
-
-      gtk_init(&argc, &argv);
-      gtk_rc_parse (gimp_gtkrc ());
-
-      screen = gdk_screen_get_default ();
-      gtk_widget_set_default_colormap (gdk_screen_get_rgb_colormap(screen));
-    }
-  else
-    {
-      gimp_ui_init ("gimpressionist", TRUE);
-    }
+  gimp_ui_init ("gimpressionist", TRUE);
 
   dlg = gimp_dialog_new (_("Gimpressionist"), "gimpressionist",
+                         NULL, 0,
 			 gimp_standard_help_func,
 			 "filters/gimpressionist.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 _("A_bout"), showabout,
-			 NULL, NULL, NULL, FALSE, FALSE,
-
-			 GTK_STOCK_CANCEL, dialog_cancel_callback,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, dialog_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("A_bout"),      RESPONSE_ABOUT,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (dialog_response),
+                    NULL);
   g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (dialog_close_callback), NULL);
+                    G_CALLBACK (gtk_main_quit),
+                    NULL);
 
   box1 = gtk_hbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), box1);
@@ -471,76 +455,32 @@ static int create_dialog(void)
   gtk_box_pack_start (GTK_BOX (box1), notebook, TRUE, TRUE, 5);
   gtk_widget_show(notebook);
 
-  create_presetpage(GTK_NOTEBOOK (notebook));
-  create_paperpage(GTK_NOTEBOOK (notebook));
-  create_brushpage(GTK_NOTEBOOK (notebook));
-  create_orientationpage(GTK_NOTEBOOK (notebook));
-  create_sizepage(GTK_NOTEBOOK (notebook));
-  create_placementpage(GTK_NOTEBOOK (notebook));
-  create_colorpage(GTK_NOTEBOOK (notebook));
-  create_generalpage(GTK_NOTEBOOK (notebook));
+  create_presetpage (GTK_NOTEBOOK (notebook));
+  create_paperpage (GTK_NOTEBOOK (notebook));
+  create_brushpage (GTK_NOTEBOOK (notebook));
+  create_orientationpage (GTK_NOTEBOOK (notebook));
+  create_sizepage (GTK_NOTEBOOK (notebook));
+  create_placementpage (GTK_NOTEBOOK (notebook));
+  create_colorpage (GTK_NOTEBOOK (notebook));
+  create_generalpage (GTK_NOTEBOOK (notebook));
 
-  preview_box = create_preview();
+  preview_box = create_preview ();
   gtk_box_pack_start (GTK_BOX (box2), preview_box, FALSE, FALSE, 0);
   gtk_widget_show (preview_box);
 
-  gtk_widget_show(dlg);
+  gtk_widget_show (dlg);
 
-  return 1;
+  return dlg;
 }
 
-int create_gimpressionist(void)
+gint
+create_gimpressionist (void)
 {
-  pcvals.run = 0;
+  pcvals.run = FALSE;
 
-  if(standalone) {
-    pcvals = defaultpcvals;
-    create_dialog();
-    restorevals();
-  } else {
-    create_dialog();
-  }
+  create_dialog ();
 
   gtk_main ();
-  gdk_flush ();
 
   return pcvals.run;
 }
-
-char *standalone = NULL;
-
-extern GimpPlugInInfo PLUG_IN_INFO;
-
-#ifdef G_OS_WIN32
-/* No standalone on win32. */
-MAIN()
-
-#else
-int main(int argc, char **argv)
-{
-  if (argc != 2)
-    return gimp_main (&PLUG_IN_INFO, argc, argv);
-
-  standalone = argv[1];
-
-  grabarea();
-
-  /* Testing! */
-  /*
-  copyppm(&infile, &inalpha);
-  img_has_alpha = 1;
-  */
-
-  gr = g_rand_new();
-
-  if(create_gimpressionist()) {
-    fprintf(stderr, "Painting"); fflush(stderr);
-    repaint(&infile, &inalpha);
-    saveppm(&infile, argv[1]);
-  }
-
-  g_rand_free (gr);
-
-  return 0;
-}
-#endif

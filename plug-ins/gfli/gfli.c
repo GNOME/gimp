@@ -21,16 +21,16 @@
  *
  * This is a first loader for FLI and FLC movies. It uses as the same method as
  * the gif plug-in to store the animation (i.e. 1 layer/frame).
- * 
+ *
  * Current disadvantages:
  * - Generates A LOT OF warnings.
- * - Consumes a lot of memory (See wish-list: use the original data or 
+ * - Consumes a lot of memory (See wish-list: use the original data or
  *   compression).
  * - doesn't support palette changes between two frames.
  *
  * Wish-List:
  * - I'd like to have a different format for storing animations, so I can use
- *   Layers and Alpha-Channels for effects. An older version of 
+ *   Layers and Alpha-Channels for effects. An older version of
  *   this plug-in created one image per frame, and went real soon out of
  *   memory.
  * - I'd like a method that requests unmodified frames from the original
@@ -46,7 +46,7 @@
  * 1.0 first release
  * 1.1 first support for FLI saving (BRUN and LC chunks)
  * 1.2 support for load/save ranges, fixed SGI & SUN problems (I hope...), fixed FLC
- * 1.3 made saving actually work, alpha channel is silently ignored; 
+ * 1.3 made saving actually work, alpha channel is silently ignored;
        loading was broken too, fixed it  --Sven
  */
 
@@ -169,7 +169,7 @@ query (void)
 				    "fli",
 				    "",
 				    "");
-  
+
   gimp_install_procedure ("file_fli_save",
 			  "save FLI-movies",
 			  "This is an experimantal plug-in to handle FLI movies",
@@ -214,13 +214,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpRunMode          run_mode;
-  gint32               pc;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  gint32               orig_image_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpRunMode       run_mode;
+  gint32            pc;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  gint32            orig_image_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -238,7 +238,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_NONINTERACTIVE:
 	  /*
-	   * check for valid parameters: 
+	   * check for valid parameters:
 	   * (Or can I trust GIMP ?)
 	   */
 	  if ((nparams < G_N_ELEMENTS (load_args) - 2) ||
@@ -305,7 +305,7 @@ run (const gchar      *name,
 	  status = GIMP_PDB_CALLING_ERROR;
 	  break;
 	}
-    }  
+    }
   else if (strcmp (name, "file_fli_save") == 0)
     {
       image_ID    = orig_image_ID = param[1].data.d_int32;
@@ -336,9 +336,9 @@ run (const gchar      *name,
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("gfli", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "FLI", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "FLI",
 				      GIMP_EXPORT_CAN_HANDLE_INDEXED |
-                                      GIMP_EXPORT_CAN_HANDLE_GRAY    | 
+                                      GIMP_EXPORT_CAN_HANDLE_GRAY    |
                                       GIMP_EXPORT_CAN_HANDLE_ALPHA   |
                                       GIMP_EXPORT_CAN_HANDLE_LAYERS);
 	  if (export == GIMP_EXPORT_CANCEL)
@@ -446,7 +446,7 @@ load_image (const gchar *filename,
   gchar *name_buf;
   GimpDrawable *drawable;
   gint32 image_id, layer_ID;
-  	
+
   guchar *fb, *ofb, *fb_x;
   guchar cm[768], ocm[768];
   GimpPixelRgn pixel_rgn;
@@ -509,7 +509,7 @@ load_image (const gchar *filename,
   ofb = g_malloc (fli_header.width * fli_header.height);
 
   /*
-   * Skip to the beginning of requested frames: 
+   * Skip to the beginning of requested frames:
    */
   for (cnt = 1; cnt < from_frame; cnt++)
     {
@@ -522,7 +522,7 @@ load_image (const gchar *filename,
    */
   for (cnt = from_frame; cnt <= to_frame; cnt++)
     {
-      name_buf = g_strdup_printf (_("Frame (%i)"), cnt); 
+      name_buf = g_strdup_printf (_("Frame (%i)"), cnt);
       layer_ID = gimp_layer_new (image_id, name_buf,
 				 fli_header.width, fli_header.height,
 				 GIMP_INDEXED_IMAGE, 100, GIMP_NORMAL_MODE);
@@ -551,7 +551,7 @@ load_image (const gchar *filename,
 	  memcpy (ocm, cm, 768);
 	  fb_x = fb; fb = ofb; ofb = fb_x;
 	}
-      
+
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
 
@@ -571,7 +571,7 @@ load_image (const gchar *filename,
 /*
  * get framestack and store as fli animation
  * (some code was taken from the GIF plugin.)
- */ 
+ */
 gint
 save_image (const gchar *filename,
 	    gint32       image_id,
@@ -600,7 +600,7 @@ save_image (const gchar *filename,
   gint cnt;
 
   framelist = gimp_image_get_layers (image_id, &nframes);
-	
+
   if ((from_frame == -1) && (to_frame == -1))
     {
       /* to make scripting easier: */
@@ -652,7 +652,7 @@ save_image (const gchar *filename,
 	  cm[i*3+0] = cmap[i*3+0];
 	  cm[i*3+1] = cmap[i*3+1];
 	  cm[i*3+2] = cmap[i*3+2];
-	  
+
 	  diff = red - cm[i*3+0];
 	  sum = SQR (diff);
 	  diff = green - cm[i*3+1];
@@ -671,7 +671,7 @@ save_image (const gchar *filename,
 	  cm[i*3+0] = cm[i*3+1] = cm[i*3+2] = i;
 	}
       break;
-      
+
     default:
       g_message (_("Sorry, I can save only INDEXED and GRAY images."));
       return FALSE;
@@ -743,7 +743,7 @@ save_image (const gchar *filename,
 	  if (yy >= 0 && yy < fli_header.height)
 	    {
 	      gimp_pixel_rgn_get_row (&pixel_rgn, src_row, 0, yc, cols);
-	      
+
 	      for (xc = 0, xx = offset_x; xc < cols; xc++, xx++)
 		{
 		  if (xx >= 0 && xx < fli_header.width)
@@ -768,7 +768,7 @@ save_image (const gchar *filename,
 
       if (cnt < to_frame)
 	memcpy (ofb, fb, fli_header.width * fli_header.height);
- 
+
       gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
 
@@ -788,17 +788,6 @@ save_image (const gchar *filename,
 /*
  * Dialogs for interactive usage
  */
-gint result = FALSE;
-
-static void
-cb_ok (GtkWidget *widget,
-       gpointer   data)
-{
-  result = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 gint
 load_dialog (const gchar *name)
 {
@@ -806,8 +795,9 @@ load_dialog (const gchar *name)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
+  gint32     width, height, nframes;
+  gboolean   run;
 
-  gint32 width, height, nframes;
   get_info (name, &width, &height, &nframes);
 
   from_frame = 1;
@@ -816,21 +806,13 @@ load_dialog (const gchar *name)
   gimp_ui_init ("gfli", FALSE);
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Load framestack"), "gfli",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/gfli.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, cb_ok,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
@@ -864,9 +846,11 @@ load_dialog (const gchar *name)
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return result;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
 
 gint
@@ -876,8 +860,8 @@ save_dialog (gint32 image_id)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
-
-  gint nframes;
+  gint       nframes;
+  gboolean   run;
 
   g_free (gimp_image_get_layers (image_id, &nframes));
 
@@ -885,21 +869,13 @@ save_dialog (gint32 image_id)
   to_frame   = nframes;
 
   dialog = gimp_dialog_new (_("GFLI 1.3 - Save framestack"), "gfli",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/gfli.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, cb_ok,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
@@ -933,8 +909,9 @@ save_dialog (gint32 image_id)
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return result;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }

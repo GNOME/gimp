@@ -91,8 +91,6 @@ typedef struct
   guchar    *check_row_1;
   guchar    *image;
   guchar    *dimage;
-
-  gboolean   run;
 } whirl_pinch_interface_t;
 
 /***** Prototypes *****/
@@ -113,7 +111,6 @@ static void build_preview_source_image (void);
 static gint whirl_pinch_dialog    (void);
 static void dialog_update_preview (void);
 static void dialog_scale_update   (GtkAdjustment *adjustment, gdouble *value);
-static void dialog_ok_callback    (GtkWidget *widget, gpointer data);
 
 
 /***** Variables *****/
@@ -139,8 +136,7 @@ static whirl_pinch_interface_t wpint =
   NULL,  /* check_row_0 */
   NULL,  /* check_row_1 */
   NULL,  /* image */
-  NULL,  /* dimage */
-  FALSE  /* run */
+  NULL   /* dimage */
 };
 
 static GimpDrawable *drawable;
@@ -641,26 +637,20 @@ whirl_pinch_dialog (void)
   GtkWidget *pframe;
   GtkWidget *table;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("whirlpinch", TRUE);
 
   build_preview_source_image ();
 
-  dialog = gimp_dialog_new ( _("Whirl and Pinch"), "whirlpinch",
+  dialog = gimp_dialog_new (_("Whirl and Pinch"), "whirlpinch",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/whirlpinch.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                            NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -685,7 +675,7 @@ whirl_pinch_dialog (void)
 
   /* Preview */
   wpint.preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_size (GTK_PREVIEW (wpint.preview), 
+  gtk_preview_size (GTK_PREVIEW (wpint.preview),
 		    preview_width, preview_height);
   gtk_container_add (GTK_CONTAINER (pframe), wpint.preview);
   gtk_widget_show (wpint.preview);
@@ -725,15 +715,16 @@ whirl_pinch_dialog (void)
   gtk_widget_show (dialog);
   dialog_update_preview ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
 
   g_free (wpint.check_row_0);
   g_free (wpint.check_row_1);
   g_free (wpint.image);
   g_free (wpint.dimage);
 
-  return wpint.run;
+  return run;
 }
 
 static void
@@ -883,13 +874,4 @@ dialog_scale_update (GtkAdjustment *adjustment,
   gimp_double_adjustment_update (adjustment, value);
 
   dialog_update_preview ();
-}
-
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  wpint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

@@ -692,8 +692,6 @@ dialog_preview_draw (void)
 
 /******************************************************************************/
 
-static gboolean dialog_status = FALSE;
-
 static void
 dialog_int_adjustment_update (GtkAdjustment *adjustment,
 			      gpointer       data)
@@ -710,15 +708,6 @@ dialog_double_adjustment_update (GtkAdjustment *adjustment,
   gimp_double_adjustment_update (adjustment, data);
 
   dialog_preview_draw ();
-}
-
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  dialog_status = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
@@ -744,24 +733,18 @@ dialog_show (void)
   GtkWidget *abox;
   GtkWidget *pframe;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("fractaltrace", TRUE);
 
   dialog = gimp_dialog_new (_("Fractal Trace"), "fractaltrace",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/fractaltrace.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   mainbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (mainbox), 6);
@@ -869,8 +852,9 @@ dialog_show (void)
   gtk_widget_show (dialog);
   dialog_preview_draw ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return dialog_status;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }

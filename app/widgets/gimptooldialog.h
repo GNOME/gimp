@@ -25,19 +25,7 @@
 
 GtkWidget * gimp_tool_dialog_new (GimpToolInfo     *tool_info,
                                   const gchar      *desc,
-
-                                  /* specify action area buttons
-                                   * as va_list:
-                                   *  const gchar  *label,
-                                   *  GCallback     callback,
-                                   *  gpointer      callback_data,
-                                   *  GObject      *slot_object,
-                                   *  GtkWidget   **widget_ptr,
-                                   *  gboolean      default_action,
-                                   *  gboolean      connect_delete,
-                                   */
-
-                                   ...);
+                                  ...);
 
 
 #endif /* __GIMP_TOOL_DIALOG_H__ */

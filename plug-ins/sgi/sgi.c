@@ -85,7 +85,6 @@ GimpPlugInInfo	PLUG_IN_INFO =
 };
 
 static gint  compression = SGI_COMP_RLE;
-static gint  runme       = FALSE;
 
 
 MAIN ()
@@ -158,12 +157,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;       
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32	       image_ID;	
-  gint32               drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32	    image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -194,13 +193,13 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("sgi", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "SGI", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "SGI",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB  |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_ALPHA));
@@ -601,37 +600,21 @@ save_image (const gchar *filename,
   return TRUE;
 }
 
-static void
-save_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-{
-  runme = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as SGI"), "sgi",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/sgi.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, FALSE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   frame = gimp_radio_group_new2 (TRUE, _("Compression Type"),
 				 G_CALLBACK (gimp_radio_button_update),
@@ -653,8 +636,9 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return runme;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }

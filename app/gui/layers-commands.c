@@ -528,48 +528,52 @@ static GimpFillType  fill_type  = GIMP_TRANSPARENT_FILL;
 static gchar        *layer_name = NULL;
 
 static void
-new_layer_query_ok_callback (GtkWidget *widget,
-			     gpointer   data)
+new_layer_query_response (GtkWidget       *widget,
+                          gint             response_id,
+                          NewLayerOptions *options)
 {
-  NewLayerOptions *options;
-  GimpLayer       *layer;
-  GimpImage       *gimage;
-
-  options = (NewLayerOptions *) data;
-
-  if (layer_name)
-    g_free (layer_name);
-  layer_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-
-  options->xsize =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 0));
-  options->ysize =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se), 1));
-
-  fill_type = options->fill_type;
-
-  if ((gimage = options->gimage))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      layer = gimp_layer_new (gimage,
-                              options->xsize,
-                              options->ysize,
-			      gimp_image_base_type_with_alpha (gimage),
-			      layer_name,
-                              GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
-      if (layer)
-	{
-	  gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
-				      gimp_get_user_context (gimage->gimp),
-				      fill_type);
-	  gimp_image_add_layer (gimage, layer, -1);
+      GimpLayer *layer;
+      GimpImage *gimage;
 
-          gimp_image_flush (gimage);
-	}
-      else
-	{
-	  g_message ("new_layer_query_ok_callback():\n"
-		     "could not allocate new layer");
-	}
+      if (layer_name)
+        g_free (layer_name);
+      layer_name =
+        g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+
+      options->xsize =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se),
+                                          0));
+      options->ysize =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (options->size_se),
+                                          1));
+
+      fill_type = options->fill_type;
+
+      if ((gimage = options->gimage))
+        {
+          layer = gimp_layer_new (gimage,
+                                  options->xsize,
+                                  options->ysize,
+                                  gimp_image_base_type_with_alpha (gimage),
+                                  layer_name,
+                                  GIMP_OPACITY_OPAQUE, GIMP_NORMAL_MODE);
+          if (layer)
+            {
+              gimp_drawable_fill_by_type (GIMP_DRAWABLE (layer),
+                                          gimp_get_user_context (gimage->gimp),
+                                          fill_type);
+              gimp_image_add_layer (gimage, layer, -1);
+
+              gimp_image_flush (gimage);
+            }
+          else
+            {
+              g_message ("new_layer_query_response():\n"
+                         "could not allocate new layer");
+            }
+        }
     }
 
   gtk_widget_destroy (options->query_box);
@@ -659,7 +663,6 @@ layers_new_layer_query (GimpImage *gimage,
   options->fill_type = fill_type;
   options->gimage    = gimage;
 
-  /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
                               _("New Layer"), "new_layer_options",
@@ -668,13 +671,14 @@ layers_new_layer_query (GimpImage *gimage,
                               gimp_standard_help_func,
                               GIMP_HELP_LAYER_NEW,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, new_layer_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (new_layer_query_response),
+                    options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
@@ -682,7 +686,7 @@ layers_new_layer_query (GimpImage *gimage,
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
 
@@ -795,29 +799,36 @@ struct _EditLayerOptions
 };
 
 static void
-edit_layer_query_ok_callback (GtkWidget *widget,
-			      gpointer   data)
+edit_layer_query_response (GtkWidget        *widget,
+                           gint              response_id,
+                           EditLayerOptions *options)
 {
-  EditLayerOptions *options;
-  GimpLayer        *layer;
-
-  options = (EditLayerOptions *) data;
-  layer   = options->layer;
-
-  if (options->gimage)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *new_name;
+      GimpLayer *layer = options->layer;
 
-      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
-
-      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
+      if (options->gimage)
         {
-          gimp_item_rename (GIMP_ITEM (layer), new_name);
-          gimp_image_flush (options->gimage);
+          const gchar *new_name;
+
+          new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+
+          if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (layer))))
+            {
+              gimp_item_rename (GIMP_ITEM (layer), new_name);
+              gimp_image_flush (options->gimage);
+            }
         }
     }
 
   gtk_widget_destroy (options->query_box);
+}
+
+static void
+edit_layer_query_activate (GtkWidget        *widget,
+                           EditLayerOptions *options)
+{
+  gtk_dialog_response (GTK_DIALOG (options->query_box), GTK_RESPONSE_OK);
 }
 
 void
@@ -832,7 +843,6 @@ layers_edit_layer_query (GimpLayer *layer)
   options->layer  = layer;
   options->gimage = gimp_item_get_image (GIMP_ITEM (layer));
 
-  /*  The dialog  */
   options->query_box =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (layer),
                               _("Layer Attributes"),
@@ -842,13 +852,14 @@ layers_edit_layer_query (GimpLayer *layer)
                               gimp_standard_help_func,
                               GIMP_HELP_LAYER_EDIT,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, edit_layer_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (edit_layer_query_response),
+                    options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
@@ -856,7 +867,7 @@ layers_edit_layer_query (GimpLayer *layer)
 
   /*  The main vbox  */
   vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
 
@@ -876,7 +887,7 @@ layers_edit_layer_query (GimpLayer *layer)
                              options->name_entry, 1, FALSE);
 
   g_signal_connect (options->name_entry, "activate",
-		    G_CALLBACK (edit_layer_query_ok_callback),
+		    G_CALLBACK (edit_layer_query_activate),
 		    options);
 
   gtk_widget_show (vbox);
@@ -898,27 +909,28 @@ struct _AddMaskOptions
 };
 
 static void
-add_mask_query_ok_callback (GtkWidget *widget,
-			    gpointer   data)
+add_mask_query_response (GtkWidget      *widget,
+                         gint            response_id,
+                         AddMaskOptions *options)
 {
-  AddMaskOptions *options;
-  GimpImage      *gimage;
-  GimpLayerMask  *mask;
-  GimpLayer      *layer;
-
-  options = (AddMaskOptions *) data;
-
-  if ((layer = (options->layer)) && (gimage = GIMP_ITEM (layer)->gimage))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      mask = gimp_layer_create_mask (layer, options->add_mask_type);
+      GimpImage     *gimage;
+      GimpLayerMask *mask;
+      GimpLayer     *layer;
 
-      if (options->invert)
-        gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
+      if ((layer = (options->layer)) && (gimage = GIMP_ITEM (layer)->gimage))
+        {
+          mask = gimp_layer_create_mask (layer, options->add_mask_type);
 
-      gimp_layer_add_mask (layer, mask, TRUE);
-      g_object_unref (mask);
+          if (options->invert)
+            gimp_channel_invert (GIMP_CHANNEL (mask), FALSE);
 
-      gimp_image_flush (gimage);
+          gimp_layer_add_mask (layer, mask, TRUE);
+          g_object_unref (mask);
+
+          gimp_image_flush (gimage);
+        }
     }
 
   gtk_widget_destroy (options->query_box);
@@ -950,26 +962,29 @@ layers_add_mask_query (GimpLayer *layer)
                               gimp_standard_help_func,
                               GIMP_HELP_LAYER_MASK_ADD,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, add_mask_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (add_mask_query_response),
+                    options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free, options);
 
-  frame = gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
-                                     gtk_label_new (_("Initialize Layer Mask to:")),
-                                     6,
-                                     G_CALLBACK (gimp_radio_button_update),
-                                     &options->add_mask_type,
-                                     &button);
+  frame =
+    gimp_enum_radio_frame_new (GIMP_TYPE_ADD_MASK_TYPE,
+                               gtk_label_new (_("Initialize Layer Mask to:")),
+                               6,
+                               G_CALLBACK (gimp_radio_button_update),
+                               &options->add_mask_type,
+                               &button);
   gimp_radio_group_set_active (GTK_RADIO_BUTTON (button),
                                GINT_TO_POINTER (options->add_mask_type));
 
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     frame);
   gtk_widget_show (frame);

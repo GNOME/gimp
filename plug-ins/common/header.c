@@ -90,12 +90,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -111,13 +111,13 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("header", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "Header", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "Header",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
 	  if (export == GIMP_EXPORT_CANCEL)
@@ -193,12 +193,12 @@ save_image (const gchar *filename,
 	  for (x = 0; x < drawable->width; x++)
 	    {
 	      d = data + x * drawable->bpp;
-	      
+
 	      buf[0] = ((d[0] >> 2) & 0x3F) + 33;
 	      buf[1] = ((((d[0] & 0x3) << 4) | (d[1] >> 4)) & 0x3F) + 33;
 	      buf[2] = ((((d[1] & 0xF) << 2) | (d[2] >> 6)) & 0x3F) + 33;
 	      buf[3] = (d[2] & 0x3F) + 33;
-	      
+
 	      for (b = 0; b < 4; b++)
 		if (buf[b] == '"')
 		  fwrite (quote, 1, 2, fp);
@@ -206,7 +206,7 @@ save_image (const gchar *filename,
 		  fwrite (backslash, 1, 2, fp);
 		else
 		  fwrite (buf + b, 1, 1, fp);
-	      
+
 	      c++;
 	      if (c >= 16)
 		{

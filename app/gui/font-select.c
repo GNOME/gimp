@@ -51,7 +51,8 @@ static void   font_select_change_callbacks (FontSelect  *font_select,
 static void   font_select_font_changed     (GimpContext *context,
                                             GimpFont    *font,
                                             FontSelect  *font_select);
-static void   font_select_close_callback   (GtkWidget   *widget,
+static void   font_select_response         (GtkWidget   *widget,
+                                            gint         response_id,
                                             FontSelect  *font_select);
 
 
@@ -101,15 +102,17 @@ font_select_new (Gimp        *gimp,
 
   /*  the shell  */
   font_select->shell = gimp_dialog_new (title, "font_selection",
+                                        NULL, 0,
                                         gimp_standard_help_func,
                                         GIMP_HELP_FONT_DIALOG,
-                                        GTK_WIN_POS_MOUSE,
-                                        FALSE, TRUE, FALSE,
 
-                                        GTK_STOCK_CLOSE, font_select_close_callback,
-                                        font_select, NULL, NULL, TRUE, TRUE,
+                                        GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                         NULL);
+
+  g_signal_connect (font_select->shell, "response",
+                    G_CALLBACK (font_select_response),
+                    font_select);
 
   /*  The Font List  */
   font_select->view = gimp_container_tree_view_new (gimp->fonts,
@@ -186,7 +189,7 @@ font_select_dialogs_check (void)
         {
           if (!  procedural_db_lookup (font_select->context->gimp,
                                        font_select->callback_name))
-            font_select_close_callback (NULL, font_select);
+            font_select_response (NULL, GTK_RESPONSE_CLOSE, font_select);
         }
     }
 }
@@ -248,8 +251,9 @@ font_select_font_changed (GimpContext *context,
 }
 
 static void
-font_select_close_callback (GtkWidget  *widget,
-                            FontSelect *font_select)
+font_select_response (GtkWidget  *widget,
+                      gint        response_id,
+                      FontSelect *font_select)
 {
   font_select_change_callbacks (font_select, TRUE);
   font_select_free (font_select);

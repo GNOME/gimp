@@ -377,26 +377,28 @@ static gchar *vectors_name = NULL;
 
 
 static void
-new_vectors_query_ok_callback (GtkWidget *widget,
-			       gpointer   data)
+new_vectors_query_response (GtkWidget         *widget,
+                            gint               response_id,
+                            NewVectorsOptions *options)
 {
-  NewVectorsOptions *options;
-  GimpVectors       *new_vectors;
-  GimpImage         *gimage;
-
-  options = (NewVectorsOptions *) data;
-
-  if (vectors_name)
-    g_free (vectors_name);
-  vectors_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-
-  if ((gimage = options->gimage))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      new_vectors = gimp_vectors_new (gimage, vectors_name);
+      GimpVectors *new_vectors;
+      GimpImage   *gimage;
 
-      gimp_image_add_vectors (gimage, new_vectors, -1);
+      if (vectors_name)
+        g_free (vectors_name);
+      vectors_name =
+        g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
-      gimp_image_flush (gimage);
+      if ((gimage = options->gimage))
+        {
+          new_vectors = gimp_vectors_new (gimage, vectors_name);
+
+          gimp_image_add_vectors (gimage, new_vectors, -1);
+
+          gimp_image_flush (gimage);
+        }
     }
 
   gtk_widget_destroy (options->query_box);
@@ -440,21 +442,22 @@ vectors_new_vectors_query (GimpImage   *gimage,
                               gimp_standard_help_func,
                               GIMP_HELP_PATH_NEW,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, new_vectors_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (new_vectors_query_response),
+                    options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
 		     options);
 
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
 
@@ -505,25 +508,25 @@ struct _EditVectorsOptions
 };
 
 static void
-edit_vectors_query_ok_callback (GtkWidget *widget,
-				gpointer   data)
+edit_vectors_query_response (GtkWidget          *widget,
+                             gint                response_id,
+                             EditVectorsOptions *options)
 {
-  EditVectorsOptions *options;
-  GimpVectors        *vectors;
-
-  options = (EditVectorsOptions *) data;
-  vectors = options->vectors;
-
-  if (options->gimage)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *new_name;
+      GimpVectors *vectors = options->vectors;
 
-      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
-
-      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
+      if (options->gimage)
         {
-          gimp_item_rename (GIMP_ITEM (vectors), new_name);
-          gimp_image_flush (options->gimage);
+          const gchar *new_name;
+
+          new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+
+          if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (vectors))))
+            {
+              gimp_item_rename (GIMP_ITEM (vectors), new_name);
+              gimp_image_flush (options->gimage);
+            }
         }
     }
 
@@ -555,21 +558,22 @@ vectors_edit_vectors_query (GimpVectors *vectors)
                               gimp_standard_help_func,
                               GIMP_HELP_PATH_EDIT,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, edit_vectors_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (edit_vectors_query_response),
+                    options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
 		     options);
 
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
 

@@ -96,8 +96,6 @@ static void extract_ycbcr470f(guchar *src, gint bpp, gint numpix, guchar **dst);
 static void extract_ycbcr709f(guchar *src, gint bpp, gint numpix, guchar **dst);
 
 static gint decompose_dialog      (void);
-static void decompose_ok_callback (GtkWidget *widget,
-				   gpointer   data);
 
 /* LAB colorspace constants */
 const double Xn	= 0.951;
@@ -184,8 +182,7 @@ typedef struct
 
 typedef struct
 {
-  gint      extract_flag[G_N_ELEMENTS (extract)];
-  gboolean  run;
+  gint extract_flag[G_N_ELEMENTS (extract)];
 } DecoInterface;
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -204,8 +201,7 @@ static DecoVals decovals =
 
 static DecoInterface decoint =
 {
-  { 0 },    /*  extract flags */
-  FALSE     /*  run  */
+  { 0 }  /*  extract flags */
 };
 
 static GimpRunMode run_mode;
@@ -1172,24 +1168,18 @@ decompose_dialog (void)
   GtkWidget *vbox;
   GSList    *group;
   gint       j;
+  gboolean   run;
 
   gimp_ui_init ("decompose", FALSE);
 
   dlg = gimp_dialog_new (_("Decompose"), "decompose",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/decompose.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, decompose_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Extract Channels:"));
@@ -1236,27 +1226,23 @@ decompose_dialog (void)
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return decoint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-decompose_ok_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  gint j;
-
-  decoint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-
-  for (j = 0; j < G_N_ELEMENTS (extract); j++)
+  if (run)
     {
-      if (decoint.extract_flag[j])
-	{
-	  strcpy (decovals.extract_type, extract[j].type);
-	  break;
-	}
+      gint j;
+
+      for (j = 0; j < G_N_ELEMENTS (extract); j++)
+        {
+          if (decoint.extract_flag[j])
+            {
+              strcpy (decovals.extract_type, extract[j].type);
+              break;
+            }
+        }
     }
+
+  return run;
 }

@@ -32,9 +32,9 @@
 /* Declare plug-in functions.  */
 
 static void query (void);
-static void run   (const gchar      *name, 
-		   gint              nparams, 
-		   const GimpParam  *param, 
+static void run   (const gchar      *name,
+		   gint              nparams,
+		   const GimpParam  *param,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
@@ -166,18 +166,18 @@ static void   writeline  (FILE   *fp,
 /* Plug-in implementation */
 
 static void
-run (const gchar      *name, 
-     gint              nparams, 
-     const GimpParam  *param, 
+run (const gchar      *name,
+     gint              nparams,
+     const GimpParam  *param,
      gint             *nreturn_vals,
-     GimpParam       **return_vals) 
+     GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -208,13 +208,13 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("pcx", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PCX",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
@@ -252,7 +252,7 @@ run (const gchar      *name,
 	      status = GIMP_PDB_EXECUTION_ERROR;
 	    }
 	}
-      
+
       if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
     }
@@ -285,7 +285,7 @@ static struct
 } pcx_header;
 
 static gint32
-load_image (const gchar *filename) 
+load_image (const gchar *filename)
 {
   FILE *fd;
   GimpDrawable *drawable;
@@ -383,16 +383,16 @@ load_image (const gchar *filename)
 }
 
 static void
-load_8 (FILE   *fp, 
-	gint    width, 
-	gint    height, 
-	guchar *buffer, 
-	gint    bytes) 
+load_8 (FILE   *fp,
+	gint    width,
+	gint    height,
+	guchar *buffer,
+	gint    bytes)
 {
   gint    row;
   guchar *line= g_new (guchar, bytes);
 
-  for (row = 0; row < height; buffer += width, ++row) 
+  for (row = 0; row < height; buffer += width, ++row)
     {
       readline (fp, line, bytes);
       memcpy (buffer, line, width);
@@ -403,21 +403,21 @@ load_8 (FILE   *fp,
 }
 
 static void
-load_24 (FILE   *fp, 
-	 gint    width, 
-	 gint    height, 
-	 guchar *buffer, 
-	 gint    bytes) 
+load_24 (FILE   *fp,
+	 gint    width,
+	 gint    height,
+	 guchar *buffer,
+	 gint    bytes)
 {
   gint    x, y, c;
   guchar *line= g_new (guchar, bytes);
 
-  for (y = 0; y < height; buffer += width * 3, ++y) 
+  for (y = 0; y < height; buffer += width * 3, ++y)
     {
-      for (c = 0; c < 3; ++c) 
+      for (c = 0; c < 3; ++c)
 	{
 	  readline (fp, line, bytes);
-	  for (x = 0; x < width; ++x) 
+	  for (x = 0; x < width; ++x)
 	    {
 	      buffer[x * 3 + c] = line[x];
 	    }
@@ -429,19 +429,19 @@ load_24 (FILE   *fp,
 }
 
 static void
-load_1 (FILE   *fp, 
-	gint    width, 
-	gint    height, 
-	guchar *buffer, 
-	gint    bytes) 
+load_1 (FILE   *fp,
+	gint    width,
+	gint    height,
+	guchar *buffer,
+	gint    bytes)
 {
   gint    x, y;
   guchar *line = g_new (guchar, bytes);
 
-  for (y = 0; y < height; buffer += width, ++y) 
+  for (y = 0; y < height; buffer += width, ++y)
     {
       readline (fp, line, bytes);
-      for (x = 0; x < width; ++x) 
+      for (x = 0; x < width; ++x)
 	{
 	  if (line[x / 8] & (128 >> (x % 8)))
 	    buffer[x] = 1;
@@ -455,22 +455,22 @@ load_1 (FILE   *fp,
 }
 
 static void
-load_4 (FILE   *fp, 
-	gint    width, 
-	gint    height, 
-	guchar *buffer, 
-	gint    bytes) 
+load_4 (FILE   *fp,
+	gint    width,
+	gint    height,
+	guchar *buffer,
+	gint    bytes)
 {
   gint    x, y, c;
   guchar *line= g_new (guchar, bytes);
 
-  for (y = 0; y < height; buffer += width, ++y) 
+  for (y = 0; y < height; buffer += width, ++y)
     {
       for (x = 0; x < width; ++x) buffer[x] = 0;
-      for (c = 0; c < 4; ++c) 
+      for (c = 0; c < 4; ++c)
 	{
 	  readline(fp, line, bytes);
-	  for (x = 0; x < width; ++x) 
+	  for (x = 0; x < width; ++x)
 	    {
 	      if (line[x / 8] & (128 >> (x % 8)))
 		buffer[x] += (1 << c);
@@ -483,24 +483,24 @@ load_4 (FILE   *fp,
 }
 
 static void
-readline (FILE   *fp, 
-	  guchar *buffer, 
-	  gint    bytes) 
+readline (FILE   *fp,
+	  guchar *buffer,
+	  gint    bytes)
 {
   static guchar count = 0, value = 0;
 
-  if (pcx_header.compression) 
+  if (pcx_header.compression)
     {
-      while (bytes--) 
+      while (bytes--)
 	{
-	  if (count == 0) 
+	  if (count == 0)
 	    {
 	      value = fgetc (fp);
-	      if (value < 0xc0) 
+	      if (value < 0xc0)
 		{
 		  count = 1;
-		} 
-	      else 
+		}
+	      else
 		{
 		  count = value - 0xc0;
 		  value = fgetc (fp);
@@ -509,17 +509,17 @@ readline (FILE   *fp,
 	  count--;
 	  *(buffer++) = value;
 	}
-    } 
-  else 
+    }
+  else
     {
       fread (buffer, bytes, 1, fp);
     }
 }
 
 static gint
-save_image (const gchar *filename, 
-	    gint32       image, 
-	    gint32       layer) 
+save_image (const gchar *filename,
+	    gint32       image,
+	    gint32       layer)
 {
   FILE *fp;
   GimpPixelRgn pixel_rgn;
@@ -545,7 +545,7 @@ save_image (const gchar *filename,
   pcx_header.version = 5;
   pcx_header.compression = 1;
 
-  switch (drawable_type) 
+  switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_cmap (image, &colors);
@@ -574,7 +574,7 @@ save_image (const gchar *filename,
       return FALSE;
   }
 
-  if ((fp = fopen (filename, "wb")) == NULL) 
+  if ((fp = fopen (filename, "wb")) == NULL)
     {
       g_message (_("Can't open '%s' for writing:\n%s"),
                  filename, g_strerror (errno));
@@ -595,13 +595,13 @@ save_image (const gchar *filename,
 
   fwrite (&pcx_header, 128, 1, fp);
 
-  switch (drawable_type) 
+  switch (drawable_type)
     {
     case GIMP_INDEXED_IMAGE:
       save_8 (fp, width, height, pixels);
       fputc (0x0c, fp);
       fwrite (cmap, colors, 3, fp);
-      for (i = colors; i < 256; i++) 
+      for (i = colors; i < 256; i++)
 	{
 	  fputc (0, fp); fputc (0, fp); fputc (0, fp);
 	}
@@ -614,7 +614,7 @@ save_image (const gchar *filename,
     case GIMP_GRAY_IMAGE:
       save_8 (fp, width, height, pixels);
       fputc (0x0c, fp);
-      for (i = 0; i < 256; i++) 
+      for (i = 0; i < 256; i++)
 	{
 	  fputc ((guchar) i, fp); fputc ((guchar) i, fp); fputc ((guchar) i, fp);
 	}
@@ -632,14 +632,14 @@ save_image (const gchar *filename,
 }
 
 static void
-save_8 (FILE   *fp, 
-	gint    width, 
-	gint    height, 
-	guchar *buffer) 
+save_8 (FILE   *fp,
+	gint    width,
+	gint    height,
+	guchar *buffer)
 {
   int row;
 
-  for (row = 0; row < height; ++row) 
+  for (row = 0; row < height; ++row)
     {
       writeline (fp, buffer, width);
       buffer += width;
@@ -648,20 +648,20 @@ save_8 (FILE   *fp,
 }
 
 static void
-save_24 (FILE   *fp, 
-	 gint    width, 
-	 gint    height, 
-	 guchar *buffer) 
+save_24 (FILE   *fp,
+	 gint    width,
+	 gint    height,
+	 guchar *buffer)
 {
   int x, y, c;
   guchar *line;
   line = (guchar *) g_malloc (width);
 
-  for (y = 0; y < height; ++y) 
+  for (y = 0; y < height; ++y)
     {
-      for (c = 0; c < 3; ++c) 
+      for (c = 0; c < 3; ++c)
 	{
-	  for (x = 0; x < width; ++x) 
+	  for (x = 0; x < width; ++x)
 	    {
 	      line[x] = buffer[(3*x) + c];
 	    }
@@ -674,28 +674,28 @@ save_24 (FILE   *fp,
 }
 
 static void
-writeline (FILE   *fp, 
-	   guchar *buffer, 
-	   gint    bytes) 
+writeline (FILE   *fp,
+	   guchar *buffer,
+	   gint    bytes)
 {
   guchar value, count;
   guchar *finish = buffer+ bytes;
 
-  while (buffer < finish) 
+  while (buffer < finish)
     {
       value = *(buffer++);
       count = 1;
-      
-      while (buffer < finish && count < 63 && *buffer == value) 
+
+      while (buffer < finish && count < 63 && *buffer == value)
 	{
 	  count++; buffer++;
 	}
 
-      if (value < 0xc0 && count == 1) 
+      if (value < 0xc0 && count == 1)
 	{
 	  fputc (value, fp);
-	} 
-      else 
+	}
+      else
 	{
 	  fputc (0xc0 + count, fp);
 	  fputc (value, fp);

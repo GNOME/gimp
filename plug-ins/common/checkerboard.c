@@ -38,16 +38,6 @@ typedef struct data
   gint   size;
 } CheckVals;
 
-typedef struct
-{
-  gboolean run;
-} CheckInterface;
-
-static CheckInterface cint =
-{
-  FALSE
-};
-
 static GimpRunMode run_mode;
 
 static void      query  (void);
@@ -63,8 +53,6 @@ static gint      inblock                    (gint          pos,
 
 static gboolean	 do_checkerboard_dialog     (gint32        image_ID,
                                              GimpDrawable *drawable);
-static void      check_ok_callback          (GtkWidget    *widget,
-                                             gpointer      data);
 static void      check_size_update_callback (GtkWidget    *widget,
                                              gpointer       data);
 
@@ -216,11 +204,11 @@ checkerboard_func (gint x,
        */
       xp = x / cvals.size;
       yp = y / cvals.size;
-      
+
       /* if both even or odd, color sqr */
       val = ( (xp & 1) != (yp & 1) );
     }
-  
+
   for (b = 0; b < bpp; b++)
     dest[b] = val ? param->fg[b] : param->bg[b];
 }
@@ -246,7 +234,7 @@ do_checkerboard_pattern (GimpDrawable *drawable)
 }
 
 static gint
-inblock (gint pos, 
+inblock (gint pos,
 	 gint size)
 {
   static gint *in = NULL;	/* initialized first time */
@@ -308,25 +296,18 @@ do_checkerboard_dialog (gint32        image_ID,
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
+  gboolean   run;
 
   gimp_ui_init ("checkerboard", FALSE);
 
   dlg = gimp_dialog_new (_("Checkerboard"), "checkerboard",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/checkerboard.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, check_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);
@@ -372,7 +353,7 @@ do_checkerboard_dialog (gint32        image_ID,
   /*  attach labels  */
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
                                 _("_Size:"), 1, 0, 0.0);
-   
+
   g_signal_connect (size_entry, "value_changed",
                     G_CALLBACK (check_size_update_callback),
                     &cvals.size);
@@ -382,23 +363,16 @@ do_checkerboard_dialog (gint32        image_ID,
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return cint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void 
-check_size_update_callback(GtkWidget * widget, gpointer data)
-{
-  cvals.size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  return run;
 }
 
 static void
-check_ok_callback (GtkWidget *widget,
-		   gpointer   data)
+check_size_update_callback (GtkWidget *widget,
+                            gpointer   data)
 {
-  cint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  cvals.size = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
 }

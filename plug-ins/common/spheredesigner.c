@@ -41,6 +41,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define RESPONSE_RESET 1
+
 #define PREVIEWSIZE 150
 
 /* These must be adjusted as more functionality is added */
@@ -1942,27 +1944,6 @@ rebuildlist (void)
 }
 
 static void
-sphere_reset (void)
-{
-  s.com.numtexture = 3;
-
-  setdefaults (&s.com.texture[0]);
-  setdefaults (&s.com.texture[1]);
-  setdefaults (&s.com.texture[2]);
-
-  s.com.texture[1].majtype = 2;
-  vset (&s.com.texture[1].color1, 1, 1, 1);
-  vset (&s.com.texture[1].translate, -15, -15, -15);
-
-  s.com.texture[2].majtype = 2;
-  vset (&s.com.texture[2].color1, 0, 0.4, 0.4);
-  vset (&s.com.texture[2].translate, 15, 15, -15);
-
-  gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
-  restartrender ();
-}
-
-static void
 deltexture (void)
 {
   GtkTreeSelection *sel;
@@ -2422,21 +2403,40 @@ drawcolor2 (GtkWidget *w)
 static gboolean do_run = FALSE;
 
 static void
-sphere_ok (GtkWidget *widget,
-           gpointer   data)
+sphere_response (GtkWidget *widget,
+                 gint       response_id,
+                 gpointer   data)
 {
-  running = -1;
-  do_run = TRUE;
-  gtk_widget_hide (GTK_WIDGET (data));
-  gtk_main_quit ();
-}
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      s.com.numtexture = 3;
 
-static void
-sphere_cancel (GtkWidget *widget,
-               gpointer   data)
-{
-  gtk_widget_hide (GTK_WIDGET (data));
-  gtk_main_quit ();
+      setdefaults (&s.com.texture[0]);
+      setdefaults (&s.com.texture[1]);
+      setdefaults (&s.com.texture[2]);
+
+      s.com.texture[1].majtype = 2;
+      vset (&s.com.texture[1].color1, 1, 1, 1);
+      vset (&s.com.texture[1].translate, -15, -15, -15);
+
+      s.com.texture[2].majtype = 2;
+      vset (&s.com.texture[2].color1, 0, 0.4, 0.4);
+      vset (&s.com.texture[2].translate, 15, 15, -15);
+
+      gtk_list_store_clear (GTK_LIST_STORE (gtk_tree_view_get_model (texturelist)));
+      restartrender ();
+      break;
+
+    case GTK_RESPONSE_OK:
+      running = -1;
+      do_run = TRUE;
+
+    default:
+      gtk_widget_hide (widget);
+      gtk_main_quit ();
+      break;
+    }
 }
 
 GtkWidget *
@@ -2461,20 +2461,19 @@ makewindow (void)
   GimpRGB     rgb;
 
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
+                            NULL, 0,
 			    gimp_standard_help_func,
 			    "filters/spheredesigner.html",
-                            GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-                            GIMP_STOCK_RESET,
-                            sphere_reset, NULL, NULL, NULL, FALSE, FALSE,
-
-                            GTK_STOCK_CANCEL,
-                            sphere_cancel, NULL, NULL, NULL, FALSE, TRUE,
-
-                            GTK_STOCK_OK,
-                            sphere_ok, NULL, NULL, NULL, TRUE, FALSE,
+                            GIMP_STOCK_RESET, RESPONSE_RESET,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
+
+  g_signal_connect (window, "response",
+                    G_CALLBACK (sphere_response),
+                    NULL);
 
   table = gtk_table_new (3, 3, FALSE);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), table);
@@ -3110,7 +3109,7 @@ sphere_main (GimpDrawable *drawable)
   makewindow ();
 
   if (!s.com.numtexture)
-    sphere_reset ();
+    sphere_response (NULL, RESPONSE_RESET, 0);
 
   rebuildlist ();
 

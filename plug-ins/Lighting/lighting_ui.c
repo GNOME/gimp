@@ -66,7 +66,6 @@ static GtkWidget *dirlightwid   = NULL;
 static gint bump_page_pos = -1;
 static gint env_page_pos  = -1;
 */
-static gboolean run = FALSE;
 
 static void create_main_notebook      (GtkWidget *container);
 
@@ -86,8 +85,6 @@ static void toggleenvironment_update  (GtkWidget *widget,
 
 static void lightmenu_callback        (GtkWidget *widget,
 				       gpointer   data);
-
-static void apply_callback            (GtkWidget *widget);
 
 static gint bumpmap_constrain         (gint32   image_id,
 				       gint32   drawable_id,
@@ -274,14 +271,6 @@ zoomin_callback (GtkWidget *widget)
 /* Main window "Apply" button callback.       */
 /* Render to GIMP image, close down and exit. */
 /**********************************************/
-
-static void
-apply_callback (GtkWidget *widget)
-{
-  run = TRUE;
-
-  gtk_main_quit ();
-}
 
 static gint
 bumpmap_constrain (gint32   image_id,
@@ -1115,6 +1104,7 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *frame;
   GtkWidget *button;
   GtkWidget *toggle;
+  gboolean   run = FALSE;
 
   /*
   GtkWidget *image;
@@ -1123,16 +1113,12 @@ main_dialog (GimpDrawable *drawable)
   gimp_ui_init ("Lighting", FALSE);
 
   appwin = gimp_dialog_new (_("Lighting Effects"), "Lighting",
+                            NULL, 0,
 			    gimp_standard_help_func,
 			    "filters/lighting.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_main_quit,
-			    NULL, NULL, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, apply_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
 
@@ -1232,7 +1218,8 @@ main_dialog (GimpDrawable *drawable)
 
   image_setup (drawable, TRUE);
 
-  gtk_main ();
+  if (gtk_dialog_run (GTK_DIALOG (appwin)) == GTK_RESPONSE_OK)
+    run = TRUE;
 
   if (preview_rgb_data != NULL)
     g_free (preview_rgb_data);
@@ -1242,8 +1229,6 @@ main_dialog (GimpDrawable *drawable)
 
   gck_visualinfo_destroy (visinfo);
   gtk_widget_destroy (appwin);
-
-  gdk_flush ();
 
   return run;
 }

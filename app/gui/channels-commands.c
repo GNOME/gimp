@@ -243,33 +243,35 @@ static GimpRGB  channel_color = { 0.0, 0.0, 0.0, 0.5 };
 
 
 static void
-new_channel_query_ok_callback (GtkWidget *widget,
-			       gpointer   data)
+new_channel_query_response (GtkWidget         *widget,
+                            gint               response_id,
+                            NewChannelOptions *options)
 {
-  NewChannelOptions *options;
-  GimpChannel       *new_channel;
-  GimpImage         *gimage;
-
-  options = (NewChannelOptions *) data;
-
-  if (channel_name)
-    g_free (channel_name);
-  channel_name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-
-  if ((gimage = options->gimage))
+  if (response_id == GTK_RESPONSE_OK)
     {
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
-				   &channel_color);
-      new_channel = gimp_channel_new (gimage, gimage->width, gimage->height,
-				      channel_name,
-				      &channel_color);
+      GimpChannel *new_channel;
+      GimpImage   *gimage;
 
-      gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
-				  gimp_get_user_context (gimage->gimp),
-				  GIMP_TRANSPARENT_FILL);
+      if (channel_name)
+        g_free (channel_name);
+      channel_name =
+        g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
 
-      gimp_image_add_channel (gimage, new_channel, -1);
-      gimp_image_flush (gimage);
+      if ((gimage = options->gimage))
+        {
+          gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
+                                       &channel_color);
+          new_channel = gimp_channel_new (gimage, gimage->width, gimage->height,
+                                          channel_name,
+                                          &channel_color);
+
+          gimp_drawable_fill_by_type (GIMP_DRAWABLE (new_channel),
+                                      gimp_get_user_context (gimage->gimp),
+                                      GIMP_TRANSPARENT_FILL);
+
+          gimp_image_add_channel (gimage, new_channel, -1);
+          gimp_image_flush (gimage);
+        }
     }
 
   gtk_widget_destroy (options->query_box);
@@ -346,11 +348,8 @@ channels_new_channel_query (GimpImage   *gimage,
                               gimp_standard_help_func,
                               GIMP_HELP_CHANNEL_NEW,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, new_channel_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
 
@@ -358,9 +357,13 @@ channels_new_channel_query (GimpImage   *gimage,
 		     (GWeakNotify) g_free,
 		     options);
 
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (new_channel_query_response),
+                    options);
+
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
 
@@ -426,49 +429,49 @@ struct _EditChannelOptions
 };
 
 static void
-edit_channel_query_ok_callback (GtkWidget *widget,
-				gpointer   data)
+edit_channel_query_response (GtkWidget          *widget,
+                             gint                response_id,
+                             EditChannelOptions *options)
 {
-  EditChannelOptions *options;
-  GimpChannel        *channel;
-
-  options = (EditChannelOptions *) data;
-  channel = options->channel;
-
-  if (options->gimage)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      const gchar *new_name;
-      GimpRGB      color;
-      gboolean     name_changed  = FALSE;
-      gboolean     color_changed = FALSE;
+      GimpChannel *channel = options->channel;
 
-      new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
+      if (options->gimage)
+        {
+          const gchar *new_name;
+          GimpRGB      color;
+          gboolean     name_changed  = FALSE;
+          gboolean     color_changed = FALSE;
 
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
-				   &color);
+          new_name = gtk_entry_get_text (GTK_ENTRY (options->name_entry));
 
-      if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (channel))))
-        name_changed = TRUE;
+          gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
+                                       &color);
 
-      if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
-        color_changed = TRUE;
+          if (strcmp (new_name, gimp_object_get_name (GIMP_OBJECT (channel))))
+            name_changed = TRUE;
 
-      if (name_changed && color_changed)
-        gimp_image_undo_group_start (options->gimage,
-                                     GIMP_UNDO_GROUP_ITEM_PROPERTIES,
-                                     _("Channel Attributes"));
+          if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
+            color_changed = TRUE;
 
-      if (name_changed)
-        gimp_item_rename (GIMP_ITEM (channel), new_name);
+          if (name_changed && color_changed)
+            gimp_image_undo_group_start (options->gimage,
+                                         GIMP_UNDO_GROUP_ITEM_PROPERTIES,
+                                         _("Channel Attributes"));
 
-      if (color_changed)
-        gimp_channel_set_color (channel, &color, TRUE);
+          if (name_changed)
+            gimp_item_rename (GIMP_ITEM (channel), new_name);
 
-      if (name_changed && color_changed)
-        gimp_image_undo_group_end (options->gimage);
+          if (color_changed)
+            gimp_channel_set_color (channel, &color, TRUE);
 
-      if (name_changed || color_changed)
-        gimp_image_flush (options->gimage);
+          if (name_changed && color_changed)
+            gimp_image_undo_group_end (options->gimage);
+
+          if (name_changed || color_changed)
+            gimp_image_flush (options->gimage);
+        }
     }
 
   gtk_widget_destroy (options->query_box);
@@ -506,11 +509,8 @@ channels_edit_channel_query (GimpChannel *channel)
                               gimp_standard_help_func,
                               GIMP_HELP_CHANNEL_EDIT,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, edit_channel_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
 
@@ -518,9 +518,13 @@ channels_edit_channel_query (GimpChannel *channel)
 		     (GWeakNotify) g_free,
 		     options);
 
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (edit_channel_query_response),
+                    options);
+
   /*  The main hbox  */
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     hbox);
 

@@ -53,7 +53,8 @@ static void   gradient_select_change_callbacks (GradientSelect *gsp,
 static void   gradient_select_gradient_changed (GimpContext    *context,
                                                 GimpGradient   *gradient,
                                                 GradientSelect *gsp);
-static void   gradient_select_close_callback   (GtkWidget      *widget,
+static void   gradient_select_response         (GtkWidget      *widget,
+                                                gint            response_id,
                                                 GradientSelect *gsp);
 
 
@@ -116,15 +117,17 @@ gradient_select_new (Gimp        *gimp,
 
   /*  the shell  */
   gsp->shell = gimp_dialog_new (title, "gradient_selection",
-				gimp_standard_help_func,
-				GIMP_HELP_GRADIENT_DIALOG,
-				GTK_WIN_POS_MOUSE,
-				FALSE, TRUE, FALSE,
+                                NULL, 0,
+                                gimp_standard_help_func,
+                                GIMP_HELP_GRADIENT_DIALOG,
 
-				GTK_STOCK_CLOSE, gradient_select_close_callback,
-				gsp, NULL, NULL, TRUE, TRUE,
+                                GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-				NULL);
+                                NULL);
+
+  g_signal_connect (gsp->shell, "response",
+                    G_CALLBACK (gradient_select_response),
+                    gsp);
 
   /*  the gradient list  */
   gsp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
@@ -138,7 +141,7 @@ gradient_select_new (Gimp        *gimp,
                                         6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                         6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (gsp->view), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (gsp->shell)->vbox), gsp->view);
   gtk_widget_show (gsp->view);
 
@@ -200,7 +203,7 @@ gradient_select_dialogs_check (void)
       if (gsp->callback_name)
         {
           if (! procedural_db_lookup (gsp->context->gimp, gsp->callback_name))
-            gradient_select_close_callback (NULL, gsp);
+            gradient_select_response (NULL, GTK_RESPONSE_CLOSE, gsp);
         }
     }
 }
@@ -286,8 +289,9 @@ gradient_select_gradient_changed (GimpContext    *context,
 }
 
 static void
-gradient_select_close_callback (GtkWidget      *widget,
-				GradientSelect *gsp)
+gradient_select_response (GtkWidget      *widget,
+                          gint            response_id,
+                          GradientSelect *gsp)
 {
   gradient_select_change_callbacks (gsp, TRUE);
   gradient_select_free (gsp);

@@ -75,7 +75,7 @@ gimp_tool_dialog_new (GimpToolInfo *tool_info,
   gtk_window_set_type_hint (GTK_WINDOW (dialog), GDK_WINDOW_TYPE_HINT_UTILITY);
 
   va_start (args, desc);
-  gimp_dialog_create_action_areav (GIMP_DIALOG (dialog), args);
+  gimp_dialog_add_buttons_valist (GIMP_DIALOG (dialog), args);
   va_end (args);
 
   identifier = g_strconcat (GIMP_OBJECT (tool_info)->name, "-dialog", NULL);

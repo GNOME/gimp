@@ -86,9 +86,8 @@ struct _ImportDialog
 
 
 static ImportDialog * palette_import_dialog_new   (Gimp          *gimp);
-static void   palette_import_close_callback       (GtkWidget     *widget,
-                                                   ImportDialog  *import_dialog);
-static void   palette_import_import_callback      (GtkWidget     *widget,
+static void   palette_import_response             (GtkWidget     *widget,
+                                                   gint           response_id,
                                                    ImportDialog  *import_dialog);
 static void   palette_import_gradient_changed     (GimpContext   *context,
                                                    GimpGradient  *gradient,
@@ -134,7 +133,7 @@ void
 palette_import_dialog_destroy (void)
 {
   if (the_import_dialog)
-    palette_import_close_callback (NULL, the_import_dialog);
+    palette_import_response (NULL, GTK_RESPONSE_CANCEL, the_import_dialog);
 }
 
 
@@ -170,13 +169,14 @@ palette_import_dialog_new (Gimp *gimp)
                               gimp_standard_help_func,
                               GIMP_HELP_PALETTE_IMPORT,
 
-                              GTK_STOCK_CANCEL, palette_import_close_callback,
-                              import_dialog, NULL, NULL, FALSE, TRUE,
-
-                              _("_Import"), palette_import_import_callback,
-                              import_dialog, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              _("_Import"),     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (import_dialog->dialog, "response",
+                    G_CALLBACK (palette_import_response),
+                    import_dialog);
 
   gimp_dnd_viewable_dest_add (import_dialog->dialog,
                               GIMP_TYPE_GRADIENT,
@@ -188,7 +188,7 @@ palette_import_dialog_new (Gimp *gimp)
                               import_dialog);
 
   main_hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (import_dialog->dialog)->vbox),
                      main_hbox);
   gtk_widget_show (main_hbox);
@@ -378,11 +378,12 @@ palette_import_dialog_new (Gimp *gimp)
 }
 
 
-/*  the palette import action area callbacks  ********************************/
+/*  the palette import response callback  ************************************/
 
 static void
-palette_import_close_callback (GtkWidget    *widget,
-			       ImportDialog *import_dialog)
+palette_import_response (GtkWidget    *widget,
+                         gint          response_id,
+                         ImportDialog *import_dialog)
 {
   Gimp *gimp;
 
@@ -398,6 +399,11 @@ palette_import_close_callback (GtkWidget    *widget,
                                         palette_import_image_remove,
                                         import_dialog);
 
+  if (response_id == GTK_RESPONSE_OK)
+    if (import_dialog->palette)
+      gimp_container_add (gimp->palette_factory->container,
+                          GIMP_OBJECT (import_dialog->palette));
+
   g_object_unref (import_dialog->context);
 
   if (import_dialog->palette)
@@ -407,17 +413,6 @@ palette_import_close_callback (GtkWidget    *widget,
   g_free (import_dialog);
 
   the_import_dialog = NULL;
-}
-
-static void
-palette_import_import_callback (GtkWidget    *widget,
-				ImportDialog *import_dialog)
-{
-  if (import_dialog->palette)
-    gimp_container_add (import_dialog->context->gimp->palette_factory->container,
-			GIMP_OBJECT (import_dialog->palette));
-
-  palette_import_close_callback (NULL, import_dialog);
 }
 
 

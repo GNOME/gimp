@@ -43,12 +43,6 @@ typedef struct
   gdouble vertical;
 } Blur2Values;
 
-typedef struct
-{
-  GtkWidget *size;
-  gboolean   run;
-} BlurInterface;
-
 
 /* Declare local functions.
  */
@@ -86,8 +80,6 @@ static void      transfer_pixels   (gdouble *src1,
 				    gint     bytes,
 				    gint     width);
 
-static void      gauss_ok_callback (GtkWidget *widget,
-				    gpointer   data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -108,11 +100,6 @@ static Blur2Values b2vals =
 {
   5.0,  /*  x radius  */
   5.0   /*  y radius  */
-};
-
-static BlurInterface bint =
-{
-  FALSE  /*  run  */
 };
 
 
@@ -347,25 +334,18 @@ gauss_iir_dialog (void)
   GtkWidget *toggle;
   GtkWidget *vbox;
   GtkWidget *hbox;
+  gboolean   run;
 
   gimp_ui_init ("gauss_iir", FALSE);
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/gauss_iir.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, gauss_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
@@ -407,10 +387,11 @@ gauss_iir_dialog (void)
   gtk_widget_show (hbox);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return bint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 
@@ -424,25 +405,18 @@ gauss_iir2_dialog (gint32        image_ID,
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
+  gboolean   run;
 
   gimp_ui_init ("gauss_iir2", FALSE);
 
   dlg = gimp_dialog_new (_("IIR Gaussian Blur"), "gauss_iir",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/gauss_iir.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, gauss_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Blur Radius"));
@@ -476,26 +450,17 @@ gauss_iir2_dialog (gint32        image_ID,
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  bint.size = size;
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  gtk_main ();
-  gdk_flush ();
+  if (run)
+    {
+      b2vals.horizontal = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
+      b2vals.vertical   = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
+    }
 
-  return bint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-gauss_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  b2vals.horizontal =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (bint.size), 0);
-  b2vals.vertical =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (bint.size), 1);
-
-  bint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 

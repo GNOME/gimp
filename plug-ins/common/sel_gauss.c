@@ -53,28 +53,22 @@ typedef struct
   gint    maxdelta;
 } BlurValues;
 
-typedef struct
-{
-  gboolean  run;
-} BlurInterface;
-
 
 /* Declare local functions.
  */
-static void   query  (void);
-static void   run    (const gchar      *name,
-		      gint              nparams,
-		      const GimpParam  *param,
-		      gint             *nreturn_vals,
-		      GimpParam       **return_vals);
+static void   query            (void);
+static void   run              (const gchar      *name,
+                                gint              nparams,
+                                const GimpParam  *param,
+                                gint             *nreturn_vals,
+                                GimpParam       **return_vals);
 
-static void   sel_gauss (GimpDrawable *drawable,
-			 gdouble       radius,
-			 gint          maxdelta);
+static void   sel_gauss        (GimpDrawable     *drawable,
+                                gdouble           radius,
+                                gint              maxdelta);
 
-static gint   sel_gauss_dialog      (void);
-static void   sel_gauss_ok_callback (GtkWidget *widget,
-				     gpointer   data);
+static gint   sel_gauss_dialog (void);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -90,10 +84,6 @@ static BlurValues bvals =
   50   /* maxdelta */
 };
 
-static BlurInterface bint =
-{
-  FALSE  /* run */
-};
 
 MAIN ()
 
@@ -230,25 +220,18 @@ sel_gauss_dialog (void)
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("sel_gauss", FALSE);
 
   dlg = gimp_dialog_new (_("Selective Gaussian Blur"), "sel_gauss",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/sel_gauss.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GTK_STOCK_OK, sel_gauss_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /* parameter settings */
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 2, 3);
@@ -275,19 +258,11 @@ sel_gauss_dialog (void)
   gtk_widget_show (table);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return bint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-sel_gauss_ok_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  bint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

@@ -47,11 +47,6 @@ typedef struct
   gint limit;
 } EngraveValues;
 
-typedef struct
-{
-  gboolean  run;
-} EngraveInterface;
-
 static void query (void);
 static void run   (const gchar      *name,
 		   gint              nparams,
@@ -60,8 +55,6 @@ static void run   (const gchar      *name,
 		   GimpParam       **return_vals);
 
 static gint engrave_dialog      (void);
-static void engrave_ok_callback (GtkWidget *widget,
-				 gpointer   data);
 
 static void engrave       (GimpDrawable *drawable);
 static void engrave_large (GimpDrawable *drawable,
@@ -87,11 +80,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 static EngraveValues pvals =
 {
   10
-};
-
-static EngraveInterface pint =
-{
-  FALSE  /* run */
 };
 
 
@@ -210,24 +198,18 @@ engrave_dialog (void)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("engrave", FALSE);
 
   dlg = gimp_dialog_new (_("Engrave"), "engrave",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/engrave.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, engrave_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 2, 3);
 
@@ -251,22 +233,14 @@ engrave_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return pint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 /*  Engrave interface functions  */
-
-static void
-engrave_ok_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  pint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 static void
 engrave (GimpDrawable *drawable)

@@ -48,8 +48,6 @@ static GtkWidget *cylinder_page = NULL;
 static guint left_button_pressed = FALSE;
 static guint light_hit           = FALSE;
 
-static gboolean run = FALSE;
-
 
 static void create_main_notebook       (GtkWidget     *container);
 
@@ -71,8 +69,6 @@ static void lightmenu_callback         (GtkWidget     *widget,
 					gpointer       data);
 
 static void preview_callback           (GtkWidget     *widget,
-					gpointer       data);
-static void apply_callback             (GtkWidget     *widget,
 					gpointer       data);
 
 static gint box_constrain              (gint32         image_id,
@@ -341,15 +337,6 @@ zoomin_callback (GtkWidget *widget,
 /* Main window "Apply" button callback.       */
 /* Render to GIMP image, close down and exit. */
 /**********************************************/
-
-static void
-apply_callback (GtkWidget *widget,
-		gpointer   data)
-{
-  run = TRUE;
-
-  gtk_main_quit ();
-}
 
 static gint
 box_constrain (gint32   image_id,
@@ -1372,20 +1359,17 @@ main_dialog (GimpDrawable *drawable)
   GtkWidget *button;
   GtkWidget *image;
   GtkWidget *toggle;
+  gboolean   run = FALSE;
 
   gimp_ui_init ("MapObject", FALSE);
 
   appwin = gimp_dialog_new (_("Map to Object"), "MapObject",
+                            NULL, 0,
 			    gimp_standard_help_func,
 			    "filters/mapobject.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_main_quit,
-			    NULL, NULL, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, apply_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
 
@@ -1502,13 +1486,12 @@ main_dialog (GimpDrawable *drawable)
 
   image_setup (drawable, TRUE);
 
-  gtk_main ();
+  if (gtk_dialog_run (GTK_DIALOG (appwin)) == GTK_RESPONSE_OK)
+    run = TRUE;
 
   gtk_widget_destroy (appwin);
   g_free (preview_rgb_data);
   gck_visualinfo_destroy (visinfo);
-
-  gdk_flush ();
 
   return run;
 }

@@ -6,10 +6,10 @@
  **********************************************************************
  *  Homepages under construction: http://www.chez.com/cotting
  *                                http://www.cyberbrain.com/cotting
- *  You won't be able to see anything yet, as I don't really have the 
- *  time to build up these two sites :-( 
+ *  You won't be able to see anything yet, as I don't really have the
+ *  time to build up these two sites :-(
  *  Have a look at www.mygale.org/~cotting instead!
- **********************************************************************    
+ **********************************************************************
  */
 
 /* The GIMP -- an image manipulation program
@@ -48,6 +48,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define RESPONSE_ABOUT 1
+
 static unsigned int logo_width = 200;
 static unsigned int logo_height = 72;
 
@@ -57,7 +59,7 @@ static unsigned int logo_height = 72;
   pixel[2] = palette_data[data[0]*3+0]; \
   data--;
 
-static unsigned char 
+static unsigned char
 palette_data[]  =  { 4,2,2,4,110,178,32,4,122,4,36,
 86,15,3,66,4,58,127,36,8,186,4,34,122,17,2,
 34,4,19,66,12,4,162,90,2,69,88,2,48,7,20,
@@ -875,10 +877,12 @@ static gint      alienmap_dialog        (void);
 static void      dialog_update_preview  (void);
 static void      dialog_scale_update    (GtkAdjustment *adjustment,
 					 gdouble       *value);
-static void      dialog_ok_callback     (GtkWidget *widget, gpointer data);
-static void      alienmap_toggle_update (GtkWidget *widget,
-					 gpointer   data);
-static void      alienmap_logo_dialog   (void);
+static void      dialog_response        (GtkWidget     *widget,
+                                         gint           response_id,
+                                         gpointer       data);
+static void      alienmap_toggle_update (GtkWidget     *widget,
+					 gpointer       data);
+static void      alienmap_logo_dialog   (GtkWidget     *parent);
 
 /***** Variables *****/
 
@@ -1023,7 +1027,7 @@ run (const gchar      *name,
 {
   static GimpParam values[1];
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
- 
+
   INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
@@ -1107,7 +1111,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static void 
+static void
 alienmap_func (const guchar *src,
                guchar       *dest,
                gint          bpp,
@@ -1119,7 +1123,7 @@ alienmap_func (const guchar *src,
   v2 = src[1];
   v3 = src[2];
 
-  transform(&v1, &v2, &v3, wvals.redstretch, wvals.greenstretch, 
+  transform(&v1, &v2, &v3, wvals.redstretch, wvals.greenstretch,
 	    wvals.bluestretch);
 
   dest[0] = v1;
@@ -1150,23 +1154,19 @@ alienmap_dialog (void)
 
   gimp_ui_init ("alienmap", TRUE);
 
-  dialog =
-    gimp_dialog_new (_("AlienMap"), "alienmap",
-		     gimp_standard_help_func, "filters/alienmap.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
+  dialog = gimp_dialog_new (_("AlienMap"), "alienmap",
+                            NULL, 0,
+                            gimp_standard_help_func, "filters/alienmap.html",
 
-		     _("About..."), alienmap_logo_dialog,
-		     NULL, NULL, NULL, FALSE, FALSE,
+                            _("About..."),    RESPONSE_ABOUT,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                            NULL);
 
-		     GTK_STOCK_OK, dialog_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
-
-		     NULL);
-
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (dialog_response),
+                    NULL);
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -1207,7 +1207,7 @@ alienmap_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.redstretch);
-			      
+
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 			      _("_Green:"), SCALE_WIDTH, 0,
 			      wvals.greenstretch, 0, 128, 1, 8, 2,
@@ -1216,7 +1216,7 @@ alienmap_dialog (void)
   g_signal_connect (adj, "value_changed",
                     G_CALLBACK (dialog_scale_update),
                     &wvals.greenstretch);
-			      
+
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
 			      _("_Blue:"), SCALE_WIDTH, 0,
 			      wvals.bluestretch, 0, 128, 1, 8, 2,
@@ -1320,12 +1320,23 @@ dialog_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
+dialog_response (GtkWidget *widget,
+                 gint       response_id,
+                 gpointer   data)
 {
-  wint.run = TRUE;
+  switch (response_id)
+    {
+    case RESPONSE_ABOUT:
+      alienmap_logo_dialog (widget);
+      break;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
+    case GTK_RESPONSE_OK:
+      wint.run = TRUE;
+
+    default:
+      gtk_widget_destroy (GTK_WIDGET (data));
+      break;
+    }
 }
 
 static void
@@ -1338,7 +1349,7 @@ alienmap_toggle_update (GtkWidget *widget,
 }
 
 static void
-alienmap_logo_dialog (void)
+alienmap_logo_dialog (GtkWidget *parent)
 {
   static GtkWidget *logodlg = NULL;
   GtkWidget *xlabel;
@@ -1352,88 +1363,87 @@ alienmap_logo_dialog (void)
   guchar *datapointer;
   gint    y,x;
 
-  if (!logodlg)
-    {
-      logodlg = gimp_dialog_new (_("About AlienMap"), "alienmap",
-				 gimp_standard_help_func, "filters/alienmap.html",
-				 GTK_WIN_POS_MOUSE,
-				 FALSE, TRUE, FALSE,
-
-				 GTK_STOCK_CLOSE, gtk_widget_hide,
-				 NULL, 1, NULL, TRUE, TRUE,
-
-				 NULL);
-
-      g_signal_connect (logodlg, "destroy",
-                        G_CALLBACK (gtk_widget_destroyed),
-                        &logodlg);
-      gtk_quit_add_destroy (1, GTK_OBJECT (logodlg));
-
-      xframe = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
-      gtk_container_set_border_width (GTK_CONTAINER (xframe), 6);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG(logodlg)->vbox), xframe,
-			  TRUE, TRUE, 0);
-      xvbox = gtk_vbox_new (FALSE, 4);
-      gtk_container_set_border_width (GTK_CONTAINER (xvbox), 4);
-      gtk_container_add (GTK_CONTAINER (xframe), xvbox);
-
-      /*  The logo frame & drawing area  */
-      xhbox = gtk_hbox_new (FALSE, 5);
-      gtk_box_pack_start (GTK_BOX (xvbox), xhbox, FALSE, TRUE, 0);
-      
-      xlogo_box = gtk_vbox_new (FALSE, 0);
-      gtk_box_pack_start (GTK_BOX (xhbox), xlogo_box, FALSE, FALSE, 0);
-      
-      xframe2 = gtk_frame_new (NULL);
-      gtk_frame_set_shadow_type (GTK_FRAME (xframe2), GTK_SHADOW_IN);
-      gtk_box_pack_start (GTK_BOX (xlogo_box), xframe2, FALSE, FALSE, 0);
-      
-      xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
-      gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
-      temp = g_malloc ((logo_width + 10) * 3);
-      datapointer = header_data+logo_width*logo_height-1;
-
-      for (y = 0; y < logo_height; y++)
-        {
-	  temp2=temp;
-	  for (x = 0; x< logo_width; x++)
-	    {
-	      HEADER_PIXEL (datapointer,temp2); 
-	      temp2+=3;
-	    }
-	  gtk_preview_draw_row (GTK_PREVIEW (xpreview),
-				temp,
-				0, y, logo_width); 
-	}			  
-      g_free (temp);
-      gtk_container_add (GTK_CONTAINER (xframe2), xpreview);
-      gtk_widget_show (xpreview);
-      gtk_widget_show (xframe2);
-      gtk_widget_show (xlogo_box);
-      gtk_widget_show (xhbox);
-
-      xhbox = gtk_hbox_new (FALSE, 4);
-      gtk_box_pack_start (GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
-      text = ("\nCotting Software Productions\n"
-	      "Bahnhofstrasse 31\n"
-	      "CH-3066 Stettlen (Switzerland)\n\n"
-	      "cotting@mygale.org\n"
-	      "http://www.mygale.org/~cotting\n\n"
-	      "AlienMap Plug-In for the GIMP\n"
-	      "Version 1.01\n");
-      xlabel = gtk_label_new (text);
-      gtk_box_pack_start (GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
-      gtk_widget_show (xlabel);
-      
-      gtk_widget_show (xhbox);
-      
-      gtk_widget_show (xvbox);
-      gtk_widget_show (xframe);
-      gtk_widget_show (logodlg);
-    }
-  else
+  if (logodlg)
     {
       gtk_window_present (GTK_WINDOW (logodlg));
+      return;
     }
+
+  logodlg = gimp_dialog_new (_("About AlienMap"), "alienmap",
+                             parent, GTK_DIALOG_DESTROY_WITH_PARENT,
+                             gimp_standard_help_func, "filters/alienmap.html",
+
+                             GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+
+                             NULL);
+
+  g_signal_connect (logodlg, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
+  g_signal_connect (logodlg, "destroy",
+                    G_CALLBACK (gtk_widget_destroyed),
+                    &logodlg);
+
+  xframe = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (xframe), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG(logodlg)->vbox), xframe,
+                      TRUE, TRUE, 0);
+  xvbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (xvbox), 4);
+  gtk_container_add (GTK_CONTAINER (xframe), xvbox);
+
+  /*  The logo frame & drawing area  */
+  xhbox = gtk_hbox_new (FALSE, 5);
+  gtk_box_pack_start (GTK_BOX (xvbox), xhbox, FALSE, TRUE, 0);
+
+  xlogo_box = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (xhbox), xlogo_box, FALSE, FALSE, 0);
+
+  xframe2 = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (xframe2), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (xlogo_box), xframe2, FALSE, FALSE, 0);
+
+  xpreview = gtk_preview_new (GTK_PREVIEW_COLOR);
+  gtk_preview_size (GTK_PREVIEW (xpreview), logo_width, logo_height);
+  temp = g_malloc ((logo_width + 10) * 3);
+  datapointer = header_data+logo_width*logo_height-1;
+
+  for (y = 0; y < logo_height; y++)
+    {
+      temp2=temp;
+      for (x = 0; x< logo_width; x++)
+        {
+          HEADER_PIXEL (datapointer,temp2);
+          temp2+=3;
+        }
+      gtk_preview_draw_row (GTK_PREVIEW (xpreview),
+                            temp,
+                            0, y, logo_width);
+    }
+  g_free (temp);
+  gtk_container_add (GTK_CONTAINER (xframe2), xpreview);
+  gtk_widget_show (xpreview);
+  gtk_widget_show (xframe2);
+  gtk_widget_show (xlogo_box);
+  gtk_widget_show (xhbox);
+
+  xhbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX(xvbox), xhbox, TRUE, TRUE, 0);
+  text = ("\nCotting Software Productions\n"
+          "Bahnhofstrasse 31\n"
+          "CH-3066 Stettlen (Switzerland)\n\n"
+          "cotting@mygale.org\n"
+          "http://www.mygale.org/~cotting\n\n"
+          "AlienMap Plug-In for the GIMP\n"
+          "Version 1.01\n");
+  xlabel = gtk_label_new (text);
+  gtk_box_pack_start (GTK_BOX(xhbox), xlabel, TRUE, FALSE, 0);
+  gtk_widget_show (xlabel);
+
+  gtk_widget_show (xhbox);
+
+  gtk_widget_show (xvbox);
+  gtk_widget_show (xframe);
+  gtk_widget_show (logodlg);
 }

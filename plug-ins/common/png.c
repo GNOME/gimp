@@ -30,7 +30,6 @@
  *   load_image()                - Load a PNG image into a new image window.
  *   respin_cmap()               - Re-order a Gimp colormap for PNG tRNS
  *   save_image()                - Save the specified image to a PNG file.
- *   save_ok_callback()          - Destroy the save dialog and save the image.
  *   save_compression_callback() - Update the image compression level.
  *   save_interlace_update()     - Update the interlacing option.
  *   save_dialog()               - Pop up the save dialog.
@@ -108,8 +107,6 @@ static void respin_cmap (png_structp   pp,
                          GimpDrawable *drawable);
 
 static gint save_dialog      (gint32     image_ID);
-static void save_ok_callback (GtkWidget *widget,
-                              gpointer   data);
 
 static int find_unused_ia_colour (guchar *pixels,
                                   gint    numpixels,
@@ -138,8 +135,6 @@ PngSaveVals pngvals =
   TRUE,
   TRUE
 };
-
-static gboolean runme = FALSE;
 
 /*
  * 'main()' - Main entry - just call gimp_main()...
@@ -222,13 +217,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam      values[2];
-  GimpRunMode           run_mode;
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  gint32                image_ID;
-  gint32                drawable_ID;
-  gint32                orig_image_ID;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  gint32            orig_image_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
 
@@ -1235,15 +1230,6 @@ save_image (const gchar *filename,
 }
 
 static void
-save_ok_callback (GtkWidget * widget,
-                  gpointer data)
-{
-  runme = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
 respin_cmap (png_structp pp,
              png_infop info,
              guchar * remap,
@@ -1336,18 +1322,16 @@ save_dialog (gint32 image_ID)
   GtkWidget    *toggle;
   GtkObject    *scale;
   GimpParasite *parasite;
+  gboolean      run;
 
   dlg = gimp_dialog_new (_("Save as PNG"), "png",
+                         NULL, 0,
                          gimp_standard_help_func, "filters/png.html",
-                         GTK_WIN_POS_MOUSE,
-                         FALSE, TRUE, FALSE,
-                         GTK_STOCK_CANCEL, gtk_widget_destroy,
-                         NULL, 1, NULL, FALSE, TRUE,
-                         GTK_STOCK_OK, save_ok_callback,
-                         NULL, NULL, NULL, TRUE, FALSE, NULL);
 
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit), NULL);
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
+                         NULL);
 
   frame = gtk_frame_new (_("Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
@@ -1442,8 +1426,9 @@ save_dialog (gint32 image_ID)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return runme;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }

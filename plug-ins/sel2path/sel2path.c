@@ -20,7 +20,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  */
 
 /* Change log:-
@@ -48,7 +48,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
-#define MID_POINT 127
+#define RESPONSE_RESET 1
+#define MID_POINT      127
 
 /***** Magic numbers *****/
 
@@ -62,12 +63,11 @@ static void      run    (const gchar      *name,
 			 GimpParam       **return_vals);
 
 static gint      sel2path_dialog         (SELVALS   *sels);
-static void      sel2path_ok_callback    (GtkWidget *widget, 
-					  gpointer   data);
-static void      sel2path_reset_callback (GtkWidget *widget,
+static void      sel2path_response       (GtkWidget *widget,
+                                          gint       response_id,
 					  gpointer   data);
 static void      dialog_print_selVals    (SELVALS   *sels);
-gboolean         do_sel2path             (gint32     drawable_ID, 
+gboolean         do_sel2path             (gint32     drawable_ID,
 					  gint32     image_ID);
 
 
@@ -101,7 +101,7 @@ query (void)
   {
     { GIMP_PDB_INT32,    "run_mode",                    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",                       "Input image (unused)" },
-    { GIMP_PDB_DRAWABLE, "drawable",                    "Input drawable" }, 
+    { GIMP_PDB_DRAWABLE, "drawable",                    "Input drawable" },
     { GIMP_PDB_FLOAT,    "align_threshold",             "align_threshold"},
     { GIMP_PDB_FLOAT,    "corner_always_threshold",     "corner_always_threshold"},
     { GIMP_PDB_INT8,     "corner_surround",             "corner_surround"},
@@ -189,7 +189,7 @@ run (const gchar      *name,
     }
 
   fit_set_default_params(&selVals);
-  
+
   if (!no_dialog)
     {
       switch (run_mode)
@@ -208,12 +208,12 @@ run (const gchar      *name,
 	  /* Get the current settings */
 	  fit_set_params (&selVals);
 	  break;
-	  
+
 	case GIMP_RUN_NONINTERACTIVE:
 	  if (nparams != 23)
 	    status = GIMP_PDB_CALLING_ERROR;
-	  
-	  if (status == GIMP_PDB_SUCCESS) 
+
+	  if (status == GIMP_PDB_SUCCESS)
 	    {
 	      selVals.align_threshold             =  param[3].data.d_float;
 	      selVals.corner_always_threshold     =  param[4].data.d_float;
@@ -243,7 +243,7 @@ run (const gchar      *name,
 	  if(gimp_get_data_size ("plug_in_sel2path_advanced") > 0)
 	    {
 	      gimp_get_data ("plug_in_sel2path_advanced", &selVals);
-	      
+
 	      /* Set up the last values */
 	      fit_set_params (&selVals);
 	    }
@@ -306,25 +306,22 @@ sel2path_dialog (SELVALS *sels)
   gimp_ui_init ("sel2path", FALSE);
 
   dlg = gimp_dialog_new (_("Selection To Path Advanced Settings"), "sel2path",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/sel2path.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GIMP_STOCK_RESET, sel2path_reset_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
-
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, sel2path_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GIMP_STOCK_RESET, RESPONSE_RESET,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (sel2path_response),
+                    NULL);
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
-  
+
   table = dialog_create_selection_area (sels);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dlg)->vbox), table);
@@ -338,23 +335,28 @@ sel2path_dialog (SELVALS *sels)
 }
 
 static void
-sel2path_ok_callback (GtkWidget *widget,
-		      gpointer   data)
+sel2path_response (GtkWidget *widget,
+                   gint       response_id,
+                   gpointer   data)
 {
-  gtk_widget_destroy (GTK_WIDGET (data));
-  retVal = TRUE;
-}
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      reset_adv_dialog ();
+      fit_set_params (&selVals);
+      break;
 
-static void
-sel2path_reset_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  reset_adv_dialog ();
-  fit_set_params (&selVals);
+    case GTK_RESPONSE_OK:
+      retVal = TRUE;
+
+    default:
+      gtk_widget_destroy (GTK_WIDGET (data));
+      break;
+    }
 }
 
 guchar
-sel_pixel_value (gint row, 
+sel_pixel_value (gint row,
 		 gint col)
 {
   guchar ret;
@@ -371,7 +373,7 @@ sel_pixel_value (gint row,
 }
 
 gboolean
-sel_pixel_is_white (gint row, 
+sel_pixel_is_white (gint row,
 		    gint col)
 {
   if (sel_pixel_value (row, col) < MID_POINT)
@@ -380,7 +382,7 @@ sel_pixel_is_white (gint row,
     return FALSE;
 }
 
-gint 
+gint
 sel_get_width (void)
 {
   return sel_width;
@@ -392,8 +394,8 @@ sel_get_height (void)
   return sel_height;
 }
 
-gint 
-sel_valid_pixel (gint row, 
+gint
+sel_valid_pixel (gint row,
 		 gint col)
 {
   return (0 <= (row) && (row) < sel_get_height ()
@@ -415,9 +417,9 @@ gen_anchor (gdouble  *p,
   *p++ = sel_y1 + sel_height - (gint)RINT(y) + 1;
   *p++ = (is_newcurve) ? 3.0 : 1.0;
 }
-  
 
-void  
+
+void
 gen_control (gdouble *p,
 	     gdouble  x,
 	     gdouble  y)
@@ -471,25 +473,25 @@ do_points (spline_list_array_type in_splines,
     {
       unsigned this_spline;
       spline_list_type in_list = SPLINE_LIST_ARRAY_ELT (in_splines, this_list);
-      
+
 /*       if(seg_count > 0 && point_count > 0)   */
 /* 	gen_anchor(last_x,last_y,0);   */
-      
+
       point_count = 0;
 
       /* Ignore single points that are on their own */
       if(SPLINE_LIST_LENGTH (in_list) < 2)
 	  continue;
-      
+
       for (this_spline = 0; this_spline < SPLINE_LIST_LENGTH (in_list);
 	   this_spline++)
 	{
 	  spline_type s = SPLINE_LIST_ELT (in_list, this_spline);
-	  
+
 	  if (SPLINE_DEGREE (s) == LINEAR)
 	    {
-	      gen_anchor (cur_parray, 
-			  START_POINT (s).x, START_POINT (s).y, 
+	      gen_anchor (cur_parray,
+			  START_POINT (s).x, START_POINT (s).y,
 			  seg_count && !point_count);
 	      cur_parray += 3;
 	      gen_control (cur_parray, START_POINT (s).x, START_POINT (s).y);
@@ -514,15 +516,15 @@ do_points (spline_list_array_type in_splines,
 	    }
 	  else
 	    g_warning ("print_spline: strange degree (%d)", SPLINE_DEGREE (s));
-	  
+
 	  point_count++;
 	}
       seg_count++;
     }
 
    gimp_path_set_points (image_ID,
- 			"selection_to_path", 
-                         1, 
+ 			"selection_to_path",
+                         1,
                          path_point_count,
                          parray);
 }
@@ -537,7 +539,7 @@ do_sel2path (gint32 drawable_ID,
   pixel_outline_list_type olt;
   spline_list_array_type splines;
 
-  gimp_selection_bounds (image_ID, &has_sel, 
+  gimp_selection_bounds (image_ID, &has_sel,
 			 &sel_x1, &sel_y1, &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
@@ -565,7 +567,7 @@ do_sel2path (gint32 drawable_ID,
 		       sel_x1, sel_y1, sel_width, sel_height,
 		       FALSE, FALSE);
 
-  gimp_tile_cache_ntiles (2 * (sel_drawable->width + gimp_tile_width () - 1) / 
+  gimp_tile_cache_ntiles (2 * (sel_drawable->width + gimp_tile_width () - 1) /
 			  gimp_tile_width ());
 
   olt = find_outline_pixels ();
@@ -583,7 +585,7 @@ void
 safe_free (address *item)
 {
   g_return_if_fail (item != NULL);
-  
+
   g_free (*item);
   *item = NULL;
 }

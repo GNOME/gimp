@@ -94,8 +94,6 @@ static gboolean  check_gray     (gint32    image_id,
 static void      image_menu_callback (gint32     id,
                                       gpointer   data);
 
-static void      compose_ok_callback         (GtkWidget *widget,
-                                              gpointer   data);
 static void      compose_type_toggle_update  (GtkWidget *widget,
                                               gpointer   data);
 
@@ -225,7 +223,6 @@ typedef struct
 
   gint32     select_ID[MAX_COMPOSE_IMAGES];     /* Image Ids selected by menu */
   gint       compose_flag[G_N_ELEMENTS (compose_dsc)];   /* toggle data of compose type */
-  gboolean   run;
 } ComposeInterface;
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -249,8 +246,7 @@ static ComposeInterface composeint =
   { NULL }, /* Icon Widgets */
   { NULL }, /* Menu Widgets */
   { 0 },    /* Image IDs from menues */
-  { 0 },    /* Compose type toggle flags */
-  FALSE     /* run */
+  { 0 }     /* Compose type toggle flags */
 };
 
 static GimpRunMode run_mode;
@@ -1072,6 +1068,7 @@ compose_dialog (const gchar *compose_type,
   GtkWidget *image_option_menu, *image_menu;
   GSList    *group;
   gint       j, compose_idx;
+  gboolean   run;
 
   /* Check default compose type */
   compose_idx = -1;
@@ -1089,20 +1086,13 @@ compose_dialog (const gchar *compose_type,
   gimp_ui_init ("compose", TRUE);
 
   dlg = gimp_dialog_new (_("Compose"), "compose",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/compose.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, compose_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  parameter settings  */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -1201,9 +1191,28 @@ compose_dialog (const gchar *compose_type,
   gtk_widget_show (right_frame);
   gtk_widget_show (dlg);
 
-  gtk_main ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return composeint.run;
+  gtk_widget_destroy (dlg);
+
+  if (run)
+    {
+      gint j;
+
+      for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
+        composevals.compose_ID[j] = composeint.select_ID[j];
+
+      for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
+        {
+          if (composeint.compose_flag[j])
+            {
+              strcpy (composevals.compose_type, compose_dsc[j].compose_type);
+              break;
+            }
+        }
+    }
+
+  return run;
 }
 
 /*  Compose interface functions  */
@@ -1225,29 +1234,6 @@ image_menu_callback (gint32   id,
                      gpointer data)
 {
   *(gint32 *) data = id;
-}
-
-
-static void
-compose_ok_callback (GtkWidget *widget,
-                     gpointer   data)
-{
-  gint j;
-
-  composeint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-
-  for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
-    composevals.compose_ID[j] = composeint.select_ID[j];
-
-  for (j = 0; j < G_N_ELEMENTS (compose_dsc); j++)
-    {
-      if (composeint.compose_flag[j])
-	{
-	  strcpy (composevals.compose_type, compose_dsc[j].compose_type);
-	  break;
-	}
-    }
 }
 
 

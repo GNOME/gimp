@@ -43,7 +43,11 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-#define MAX_PREVIEW_PPI        (40)
+#define RESPONSE_ABOUT     1
+#define RESPONSE_SAVE      2
+#define RESPONSE_PRINTSAVE 3
+
+#define MAX_PREVIEW_PPI    40
 
 /*
  * Constants for GUI.
@@ -183,16 +187,21 @@ static void gimp_unit_callback         (GtkWidget     *widget,
 					gpointer       data);
 static void gimp_orientation_callback  (GtkWidget     *widget,
 					gpointer       data);
-static void gimp_printandsave_callback (void);
-static void gimp_about_callback        (void);
-static void gimp_print_callback        (void);
-static void gimp_save_callback         (void);
+static void gimp_response_callback     (GtkWidget     *dialog,
+                                        gint           response_id,
+                                        gpointer       data);
 
 static void gimp_setup_update          (void);
 static void gimp_setup_open_callback   (void);
-static void gimp_setup_ok_callback     (void);
+static void gimp_setup_response        (GtkWidget     *widget,
+                                        gint           response_id,
+                                        gpointer       data);
 static void gimp_new_printer_open_callback   (void);
-static void gimp_new_printer_ok_callback     (void);
+static void gimp_new_printer_activate  (GtkWidget     *widget,
+                                        gpointer       data);
+static void gimp_new_printer_response  (GtkWidget     *widget,
+                                        gint           response_id,
+                                        gpointer       data);
 static void gimp_ppd_browse_callback   (void);
 static void gimp_ppd_ok_callback       (void);
 static void gimp_print_driver_callback (GtkWidget      *widget,
@@ -353,29 +362,22 @@ create_top_level_structure(void)
 
   print_dialog =
     gimp_dialog_new (plug_in_name, "print",
+                     NULL, 0,
                      gimp_standard_help_func, "filters/print.html",
-                     GTK_WIN_POS_MOUSE,
-                     FALSE, TRUE, FALSE,
 
-		     _("About"), gimp_about_callback,
-                     NULL, NULL, NULL, FALSE, FALSE,
-
-                     _("Save\nSettings"), gimp_save_callback,
-                     NULL, NULL, NULL, FALSE, FALSE,
-
-                     _("Print and\nSave Settings"), gimp_printandsave_callback,
-                     NULL, NULL, NULL, FALSE, FALSE,
-
-                     GTK_STOCK_CANCEL, gtk_widget_destroy,
-                     NULL, 1, NULL, FALSE, TRUE,
-
-                     GTK_STOCK_PRINT, gimp_print_callback,
-                     NULL, NULL, NULL, FALSE, FALSE,
+		     _("About"),                    RESPONSE_ABOUT,
+                     _("Save\nSettings"),           RESPONSE_SAVE,
+                     _("Print and\nSave Settings"), RESPONSE_PRINTSAVE,
+                     GTK_STOCK_CANCEL,              GTK_RESPONSE_CANCEL,
+                     GTK_STOCK_PRINT,               GTK_RESPONSE_OK,
 
                      NULL);
 
   g_free (plug_in_name);
 
+  g_signal_connect (print_dialog, "response",
+                    G_CALLBACK (gimp_response_callback),
+                    NULL);
   g_signal_connect (print_dialog, "destroy",
                     G_CALLBACK (gtk_main_quit), NULL);
 
@@ -646,16 +648,17 @@ create_printer_dialog (void)
   gint       i;
 
   setup_dialog = gimp_dialog_new (_("Setup Printer"), "print",
+                                  NULL, 0,
                                   gimp_standard_help_func, "filters/print.html",
-                                  GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-                                  GTK_STOCK_CANCEL, gtk_widget_hide,
-                                  NULL, 1, NULL, FALSE, TRUE,
-
-                                  GTK_STOCK_OK, gimp_setup_ok_callback,
-                                  NULL, NULL, NULL, TRUE, FALSE,
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                                   NULL);
+
+  g_signal_connect (setup_dialog, "response",
+                    G_CALLBACK (gimp_setup_response),
+                    NULL);
 
   /*
    * Top-level table for dialog.
@@ -814,16 +817,17 @@ create_new_printer_dialog (void)
 
   new_printer_dialog =
     gimp_dialog_new (_("Define New Printer"), "print",
+                     NULL, 0,
                      gimp_standard_help_func, "filters/print.html",
-                     GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-                     GTK_STOCK_CANCEL, gtk_widget_hide,
-                     NULL, 1, NULL, FALSE, TRUE,
+                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                     GTK_STOCK_OK, gimp_new_printer_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
+                     NULL);
 
-		     NULL);
+  g_signal_connect (new_printer_dialog, "response",
+                    G_CALLBACK (gimp_new_printer_response),
+                    NULL);
 
   table = gtk_table_new (1, 2, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);
@@ -842,7 +846,7 @@ create_new_printer_dialog (void)
                            _("Enter the name you wish to give this logical printer"),
                            NULL);
   g_signal_connect (new_printer_entry, "activate",
-                    G_CALLBACK (gimp_new_printer_ok_callback),
+                    G_CALLBACK (gimp_new_printer_activate),
                     NULL);
 }
 
@@ -850,15 +854,19 @@ static void
 create_about_dialog (void)
 {
   GtkWidget *label;
+
   about_dialog =
     gimp_dialog_new (_("About Gimp-Print " PLUG_IN_VERSION), "print",
+                     NULL, 0,
                      gimp_standard_help_func, "filters/print.html",
-                     GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-                     GTK_STOCK_CLOSE, gtk_widget_hide,
-                     NULL, 1, NULL, TRUE, TRUE,
+                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 		     NULL);
+
+  g_signal_connect (about_dialog, "response",
+                    G_CALLBACK (gtk_widget_hide),
+                    NULL);
 
   label = gtk_label_new
     (_("Gimp-Print Version " PLUG_IN_VERSION "\n"
@@ -2371,48 +2379,42 @@ gimp_dialogs_set_sensitive (gboolean sensitive)
   gtk_widget_set_sensitive (about_dialog, sensitive);
 }
 
-/*
- * 'print_callback()' - Start the print.
- */
 static void
-gimp_print_callback (void)
+gimp_response_callback (GtkWidget *dialog,
+                        gint       response_id,
+                        gpointer   data)
 {
-  if (plist_current > 0)
+  switch (response_id)
     {
-      runme = TRUE;
+    case RESPONSE_ABOUT:
+      gtk_widget_show (about_dialog);
+      break;
+
+    case RESPONSE_SAVE:
+      reset_preview ();
+      printrc_save ();
+      break;
+
+    case RESPONSE_PRINTSAVE:
+      saveme = TRUE;
+
+    case GTK_RESPONSE_OK:
+      if (plist_current > 0)
+        {
+          runme = TRUE;
+          gimp_destroy_dialogs ();
+        }
+      else
+        {
+          gimp_dialogs_set_sensitive (FALSE);
+          gtk_widget_show (file_browser);
+        }
+      break;
+
+    default:
       gimp_destroy_dialogs ();
+      break;
     }
-  else
-    {
-      gimp_dialogs_set_sensitive (FALSE);
-      gtk_widget_show (file_browser);
-    }
-}
-
-/*
- *  gimp_printandsave_callback() -
- */
-static void
-gimp_printandsave_callback (void)
-{
-  saveme = TRUE;
-  gimp_print_callback();
-}
-
-static void
-gimp_about_callback (void)
-{
-  gtk_widget_show (about_dialog);
-}
-
-/*
- *  gimp_save_callback() - save settings, don't destroy dialog
- */
-static void
-gimp_save_callback (void)
-{
-  reset_preview ();
-  printrc_save ();
 }
 
 /*
@@ -2495,17 +2497,22 @@ gimp_new_printer_open_callback (void)
  *  gimp_setup_ok_callback() -
  */
 static void
-gimp_setup_ok_callback (void)
+gimp_setup_response (GtkWidget *widget,
+                     gint       response_id,
+                     gpointer   data)
 {
-  reset_preview ();
-  gimp_invalidate_preview_thumbnail ();
-  stp_set_driver (*pv, stp_printer_get_driver (current_printer));
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      reset_preview ();
+      gimp_invalidate_preview_thumbnail ();
+      stp_set_driver (*pv, stp_printer_get_driver (current_printer));
 
-  stp_set_output_to (*pv, gtk_entry_get_text (GTK_ENTRY (output_cmd)));
+      stp_set_output_to (*pv, gtk_entry_get_text (GTK_ENTRY (output_cmd)));
 
-  stp_set_ppd_file (*pv, gtk_entry_get_text (GTK_ENTRY (ppd_file)));
+      stp_set_ppd_file (*pv, gtk_entry_get_text (GTK_ENTRY (ppd_file)));
 
-  gimp_plist_callback (NULL, GINT_TO_POINTER (plist_current));
+      gimp_plist_callback (NULL, GINT_TO_POINTER (plist_current));
+    }
 
   gtk_widget_hide (setup_dialog);
 }
@@ -2514,34 +2521,48 @@ gimp_setup_ok_callback (void)
  *  gimp_setup_ok_callback() -
  */
 static void
-gimp_new_printer_ok_callback (void)
+gimp_new_printer_activate (GtkWidget *widget,
+                           gpointer   data)
 {
-  const gchar *data = gtk_entry_get_text (GTK_ENTRY (new_printer_entry));
-  gp_plist_t   key;
+  gtk_dialog_response (GTK_DIALOG (gtk_widget_get_toplevel (widget)),
+                       GTK_RESPONSE_OK);
+}
 
-  gimp_invalidate_preview_thumbnail ();
-  reset_preview ();
-  initialize_printer (&key);
-  (void) strncpy (key.name, data, sizeof(key.name) - 1);
-
-  if (strlen (key.name))
+static void
+gimp_new_printer_response (GtkWidget *widget,
+                           gint       response_id,
+                           gpointer   data)
+{
+  if (response_id == GTK_RESPONSE_OK)
     {
-      key.active = 0;
-      key.v = stp_allocate_copy (*pv);
+      const gchar *data = gtk_entry_get_text (GTK_ENTRY (new_printer_entry));
+      gp_plist_t   key;
 
-      if (add_printer (&key, 1))
-	{
-	  plist_current = plist_count - 1;
-	  gimp_build_printer_combo ();
+      gimp_invalidate_preview_thumbnail ();
+      reset_preview ();
+      initialize_printer (&key);
+      (void) strncpy (key.name, data, sizeof(key.name) - 1);
 
-	  stp_set_driver (*pv, stp_printer_get_driver (current_printer));
+      if (strlen (key.name))
+        {
+          key.active = 0;
+          key.v = stp_allocate_copy (*pv);
 
-	  stp_set_output_to (*pv, gtk_entry_get_text (GTK_ENTRY (output_cmd)));
+          if (add_printer (&key, 1))
+            {
+              plist_current = plist_count - 1;
+              gimp_build_printer_combo ();
 
-	  stp_set_ppd_file (*pv, gtk_entry_get_text (GTK_ENTRY (ppd_file)));
+              stp_set_driver (*pv, stp_printer_get_driver (current_printer));
 
-	  gimp_plist_callback (NULL, GINT_TO_POINTER (plist_current));
-	}
+              stp_set_output_to (*pv,
+                                 gtk_entry_get_text (GTK_ENTRY (output_cmd)));
+
+              stp_set_ppd_file (*pv, gtk_entry_get_text (GTK_ENTRY (ppd_file)));
+
+              gimp_plist_callback (NULL, GINT_TO_POINTER (plist_current));
+            }
+        }
     }
 
   gtk_widget_hide (new_printer_dialog);

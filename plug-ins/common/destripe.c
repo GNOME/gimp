@@ -32,7 +32,6 @@
  *   preview_exit()              - Free all memory used by the preview window...
  *   dialog_iscale_update()      - Update the value field using the scale.
  *   dialog_histogram_callback()
- *   dialog_ok_callback()        - Start the filter...
  *
  *   1997/08/16 * Initial Revision.
  *   1998/02/06 * Minor changes.
@@ -82,8 +81,6 @@ static void     run   (const gchar      *name,
 static void     destripe                (void);
 
 static gint     destripe_dialog         (void);
-static void     dialog_ok_callback      (GtkWidget     *widget,
-                                         gpointer       data);
 
 static void     preview_init            (void);
 static void     preview_update          (void);
@@ -118,7 +115,6 @@ gint            sel_x1,                 /* Selection bounds */
                 sel_x2,
                 sel_y2;
 gint            img_bpp;                /* Bytes-per-pixel in image */
-gboolean        run_filter = FALSE;     /* True if we should run the filter */
 
 
 typedef struct
@@ -556,24 +552,18 @@ destripe_dialog (void)
   GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("destripe", TRUE);
 
   dialog = gimp_dialog_new (_("Destripe"), "destripe",
+                            NULL, 0,
                             gimp_standard_help_func, "filters/destripe.html",
-                            GTK_WIN_POS_MOUSE,
-                            FALSE, TRUE, FALSE,
 
-                            GTK_STOCK_CANCEL, gtk_widget_destroy,
-                            NULL, 1, NULL, FALSE, TRUE,
-                            GTK_STOCK_OK, dialog_ok_callback,
-                            NULL, NULL, NULL, TRUE, FALSE,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*
    * Preview window...
@@ -675,9 +665,11 @@ destripe_dialog (void)
 
   preview_update ();
 
-  gtk_main ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return run_filter;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
 
 /*  preview functions  */
@@ -713,16 +705,4 @@ static void
 preview_update (void)
 {
   destripe_rect (preview_x1, preview_y1, preview_x2, preview_y2, TRUE);
-}
-
-
-/*  dialog callbacks  */
-
-static void
-dialog_ok_callback (GtkWidget *widget,
-                    gpointer   data)
-{
-  run_filter = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

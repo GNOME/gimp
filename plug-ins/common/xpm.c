@@ -79,12 +79,6 @@ typedef struct
 
 typedef struct
 {
-  gboolean  run;
-} XpmSaveInterface;
-
-
-typedef struct
-{
   guchar r;
   guchar g;
   guchar b;
@@ -118,8 +112,6 @@ static gboolean save_image          (const gchar      *filename,
 				     gint32            drawable_ID);
 
 static gint     save_dialog         (void);
-static void     save_ok_callback    (GtkWidget        *widget,
-				     gpointer          data);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -133,11 +125,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 static XpmSaveVals xpmvals =
 {
   127  /* alpha threshold */
-};
-
-static XpmSaveInterface xpmint =
-{
-  FALSE   /*  run  */
 };
 
 
@@ -209,12 +196,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -777,22 +764,16 @@ save_dialog (void)
   GtkWidget *dlg;
   GtkWidget *table;
   GtkObject *scale_data;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as XPM"), "xpm",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/xpm.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 1, 3);
 
@@ -808,17 +789,9 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return xpmint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  xpmint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

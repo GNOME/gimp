@@ -82,9 +82,8 @@ struct _ColorDisplayDialog
 
 static void   make_dialog                      (ColorDisplayDialog *cdd);
 
-static void   color_display_ok_callback        (GtkWidget          *widget,
-                                                ColorDisplayDialog *cdd);
-static void   color_display_cancel_callback    (GtkWidget          *widget,
+static void   color_display_response           (GtkWidget          *widget,
+                                                gint                response_id,
                                                 ColorDisplayDialog *cdd);
 static void   color_display_add_callback       (GtkWidget          *widget,
                                                 ColorDisplayDialog *cdd);
@@ -123,18 +122,18 @@ make_dialog (ColorDisplayDialog *cdd)
   GtkWidget *image;
 
   cdd->dialog = gimp_dialog_new (_("Color Display Filters"), "display_filters",
+                                 NULL, 0,
                                  gimp_standard_help_func,
                                  GIMP_HELP_DISPLAY_FILTER_DIALOG,
-                                 GTK_WIN_POS_NONE,
-                                 FALSE, TRUE, FALSE,
 
-                                 GTK_STOCK_CANCEL, color_display_cancel_callback,
-                                 cdd, NULL, NULL, FALSE, TRUE,
-
-                                 GTK_STOCK_OK, color_display_ok_callback,
-                                 cdd, NULL, NULL, TRUE, FALSE,
+                                 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                                  NULL);
+
+  g_signal_connect (cdd->dialog, "response",
+                    G_CALLBACK (color_display_response),
+                    cdd);
 
   main_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -299,52 +298,45 @@ make_dialog (ColorDisplayDialog *cdd)
 }
 
 static void
-color_display_ok_callback (GtkWidget          *widget,
-			   ColorDisplayDialog *cdd)
+color_display_response (GtkWidget          *widget,
+                        gint                response_id,
+                        ColorDisplayDialog *cdd)
 {
-  GList *list;
 
   gtk_widget_destroy (GTK_WIDGET (cdd->dialog));
   cdd->shell->filters_dialog = NULL;
 
   if (cdd->modified)
     {
-      for (list = cdd->old_nodes; list; list = g_list_next (list))
-	{
-	  if (! g_list_find (cdd->shell->filters, list->data))
-	    gimp_display_shell_filter_detach_destroy (cdd->shell, list->data);
-	}
+      GList *list;
 
-      g_list_free (cdd->old_nodes);
+      if (response_id == GTK_RESPONSE_OK)
+        {
+          for (list = cdd->old_nodes; list; list = g_list_next (list))
+            {
+              if (! g_list_find (cdd->shell->filters, list->data))
+                gimp_display_shell_filter_detach_destroy (cdd->shell,
+                                                          list->data);
+            }
 
-      UPDATE_DISPLAY (cdd);
-    }
-}
+          g_list_free (cdd->old_nodes);
+        }
+      else
+        {
+          list = cdd->shell->filters;
+          cdd->shell->filters = cdd->old_nodes;
 
-static void
-color_display_cancel_callback (GtkWidget          *widget,
-			       ColorDisplayDialog *cdd)
-{
-  GList *list;
-  GList *next;
+          while (list)
+            {
+              GList *next = list->next;
 
-  gtk_widget_destroy (GTK_WIDGET (cdd->dialog));
-  cdd->shell->filters_dialog = NULL;
+              if (! g_list_find (cdd->old_nodes, list->data))
+                gimp_display_shell_filter_detach_destroy (cdd->shell,
+                                                          list->data);
 
-  if (cdd->modified)
-    {
-      list = cdd->shell->filters;
-      cdd->shell->filters = cdd->old_nodes;
-
-      while (list)
-	{
-	  next = list->next;
-
-	  if (! g_list_find (cdd->old_nodes, list->data))
-	    gimp_display_shell_filter_detach_destroy (cdd->shell, list->data);
-
-	  list = next;
-	}
+              list = next;
+            }
+        }
 
       UPDATE_DISPLAY (cdd);
     }

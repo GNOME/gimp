@@ -81,7 +81,6 @@ typedef struct
   GtkObject    *advanced_adj[7];
   GtkTreeModel *image_list_all;
   GtkTreeModel *image_list_film;
-  gboolean      run;
 } FilmInterface;
 
 
@@ -157,8 +156,6 @@ static GtkTreeModel * add_image_list      (gboolean        add_box_flag,
 					   GtkWidget      *hbox);
 
 static gboolean    film_dialog               (gint32       image_ID);
-static void        film_ok_callback          (GtkWidget   *widget,
-                                              gpointer     data);
 static void        film_reset_callback       (GtkWidget   *widget,
                                               gpointer     data);
 static void        film_font_select_callback (const gchar *name,
@@ -209,8 +206,7 @@ static FilmVals filmvals =
 static FilmInterface filmint =
 {
   { NULL },   /* advanced adjustments */
-  NULL, NULL, /* image list widgets */
-  FALSE       /* run */
+  NULL, NULL  /* image list widgets */
 };
 
 
@@ -1175,8 +1171,8 @@ add_image_list (gboolean   add_box_flag,
 }
 
 static void
-create_selection_tab (GtkWidget *notebook, 
-		      gint32 image_ID)
+create_selection_tab (GtkWidget *notebook,
+		      gint32     image_ID)
 {
   GtkWidget *hbox;
   GtkWidget *table;
@@ -1482,25 +1478,18 @@ film_dialog (gint32 image_ID)
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *notebook;
+  gboolean   run;
 
   gimp_ui_init ("film", TRUE);
 
   dlg = gimp_dialog_new (_("Film"), "film",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/film.html",
-			 GTK_WIN_POS_NONE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, film_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1517,39 +1506,36 @@ film_dialog (gint32 image_ID)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return filmint.run;
-}
-
-static void
-film_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-{
-  gint        num_images = 0;
-  gboolean    iter_valid;
-  GtkTreeIter iter;
-
-  for (iter_valid = gtk_tree_model_get_iter_first (filmint.image_list_film,
-                                                   &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (filmint.image_list_film, &iter))
+  if (run)
     {
-      gint image_ID;
+      gint        num_images = 0;
+      gboolean    iter_valid;
+      GtkTreeIter iter;
 
-      gtk_tree_model_get (filmint.image_list_film, &iter,
-                          0, &image_ID,
-                          -1);
+      for (iter_valid = gtk_tree_model_get_iter_first (filmint.image_list_film,
+                                                       &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (filmint.image_list_film,
+                                                  &iter))
+        {
+          gint image_ID;
 
-      if ((image_ID >= 0) && (num_images < MAX_FILM_PICTURES))
-        filmvals.image[num_images++] = image_ID;
+          gtk_tree_model_get (filmint.image_list_film, &iter,
+                              0, &image_ID,
+                              -1);
+
+          if ((image_ID >= 0) && (num_images < MAX_FILM_PICTURES))
+            filmvals.image[num_images++] = image_ID;
+        }
+
+      filmvals.num_images = num_images;
     }
 
-  filmvals.num_images = num_images;
+  gtk_widget_destroy (dlg);
 
-  filmint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

@@ -350,6 +350,7 @@ void create_brushpage(GtkNotebook *notebook)
   GtkWidget *dmenu;
   GtkWidget *label;
   GtkTreeSelection *selection;
+  GtkWidget *emptyitem;
 
   label = gtk_label_new_with_mnemonic (_("_Brush"));
 
@@ -406,35 +407,31 @@ void create_brushpage(GtkNotebook *notebook)
   gtk_box_pack_start(GTK_BOX(box1), box2,FALSE,FALSE,0);
   gtk_widget_show (box2);
 
-  if (!standalone) {
-    GtkWidget *emptyitem;
+  box3 = gtk_hbox_new(FALSE,0);
+  gtk_box_pack_start(GTK_BOX(box2),box3, FALSE, FALSE, 0);
+  gtk_widget_show(box3);
 
-    box3 = gtk_hbox_new(FALSE,0);
-    gtk_box_pack_start(GTK_BOX(box2),box3, FALSE, FALSE, 0);
-    gtk_widget_show(box3);
+  tmpw = gtk_label_new( _("Select:"));
+  gtk_box_pack_start(GTK_BOX(box3), tmpw,FALSE,FALSE,0);
+  gtk_widget_show (tmpw);
 
-    tmpw = gtk_label_new( _("Select:"));
-    gtk_box_pack_start(GTK_BOX(box3), tmpw,FALSE,FALSE,0);
-    gtk_widget_show (tmpw);
+  brushemptyitem = emptyitem = gtk_menu_item_new_with_label( _("(None)"));
+  g_signal_connect (emptyitem, "activate",
+                    G_CALLBACK (dummybrushdmenuselect),
+                    NULL);
+  gtk_widget_show(emptyitem);
 
-    brushemptyitem = emptyitem = gtk_menu_item_new_with_label( _("(None)"));
-    g_signal_connect (emptyitem, "activate",
-                      G_CALLBACK (dummybrushdmenuselect),
-                      NULL);
-    gtk_widget_show(emptyitem);
+  tmpw = gtk_option_menu_new();
+  gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
+  gtk_widget_show(tmpw);
 
-    tmpw = gtk_option_menu_new();
-    gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
-    gtk_widget_show(tmpw);
-
-    brushdrawablemenu = dmenu = gimp_drawable_menu_new(validdrawable, brushdmenuselect, NULL, -1);
-    gtk_menu_shell_prepend (GTK_MENU_SHELL (dmenu), emptyitem);
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(tmpw), dmenu);
-    tmpw = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
-    gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
-    g_signal_connect (tmpw, "clicked", G_CALLBACK(savebrush), NULL);
-    gtk_widget_show(tmpw);
-  }
+  brushdrawablemenu = dmenu = gimp_drawable_menu_new(validdrawable, brushdmenuselect, NULL, -1);
+  gtk_menu_shell_prepend (GTK_MENU_SHELL (dmenu), emptyitem);
+  gtk_option_menu_set_menu(GTK_OPTION_MENU(tmpw), dmenu);
+  tmpw = gtk_button_new_from_stock (GTK_STOCK_SAVE_AS);
+  gtk_box_pack_start(GTK_BOX(box3),tmpw, FALSE, FALSE, 0);
+  g_signal_connect (tmpw, "clicked", G_CALLBACK(savebrush), NULL);
+  gtk_widget_show(tmpw);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE(table), 4);

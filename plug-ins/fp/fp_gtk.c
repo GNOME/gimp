@@ -18,6 +18,9 @@
 
 #include "fp.h"
 
+
+#define RESPONSE_RESET 1
+
 /* These values are translated for the GUI but also used internally
    to figure out which button the user pushed, etc.
    Not my design, please don't blame me -- njl */
@@ -811,12 +814,25 @@ refreshPreviews (gint which)
 }
 
 void
-fp_ok_callback (GtkWidget *widget,
-		gpointer   data)
+fp_response (GtkWidget *widget,
+             gint       response_id,
+             gpointer   data)
 {
-  FPint.run = TRUE;
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      resetFilterPacks ();
+      break;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
+    case GTK_RESPONSE_OK:
+      FPint.run = TRUE;
+      gtk_widget_destroy (widget);
+      break;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
+    }
 }
 
 void
@@ -916,20 +932,18 @@ fp_dialog (void)
   /********************************************************************/
   /************************* All the Standard Stuff *******************/
   dlg = gimp_dialog_new (_("Filter Pack Simulation"), "fp",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/fp.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+			 GIMP_STOCK_RESET, RESPONSE_RESET,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GIMP_STOCK_RESET, resetFilterPacks,
-			 NULL, NULL, NULL, FALSE, FALSE,
+                         NULL);
 
-			 GTK_STOCK_OK, fp_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 NULL);
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (fp_response),
+                    dlg);
 
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),

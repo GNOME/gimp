@@ -70,7 +70,8 @@ static void     paint_mode_menu_callback        (GtkWidget            *widget,
 static void     spacing_scale_update            (GtkAdjustment        *adj,
                                                  BrushSelect          *bsp);
 
-static void     brush_select_close_callback     (GtkWidget            *widget,
+static void     brush_select_response           (GtkWidget            *widget,
+                                                 gint                  response_id,
                                                  BrushSelect          *bsp);
 
 
@@ -145,15 +146,17 @@ brush_select_new (Gimp                 *gimp,
 
   /*  The shell  */
   bsp->shell = gimp_dialog_new (title, "brush_selection",
+                                NULL, 0,
 				gimp_standard_help_func,
 				GIMP_HELP_BRUSH_DIALOG,
-				GTK_WIN_POS_MOUSE,
-				FALSE, TRUE, FALSE,
 
-				GTK_STOCK_CLOSE, brush_select_close_callback,
-				bsp, NULL, NULL, TRUE, TRUE,
+				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-				NULL);
+                                NULL);
+
+  g_signal_connect (bsp->shell, "response",
+                    G_CALLBACK (brush_select_response),
+                    bsp);
 
   /*  The Brush Grid  */
   bsp->view = gimp_brush_factory_view_new (GIMP_VIEW_TYPE_GRID,
@@ -168,7 +171,7 @@ brush_select_new (Gimp                 *gimp,
                                         5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                         5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (bsp->view), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (bsp->shell)->vbox), bsp->view);
   gtk_widget_show (bsp->view);
 
@@ -256,21 +259,18 @@ brush_select_get_by_callback (const gchar *callback_name)
 void
 brush_select_dialogs_check (void)
 {
-  BrushSelect *bsp;
-  GSList      *list;
-
-  list = brush_active_dialogs;
+  GSList *list = brush_active_dialogs;
 
   while (list)
     {
-      bsp = (BrushSelect *) list->data;
+      BrushSelect *bsp = list->data;
 
       list = g_slist_next (list);
 
       if (bsp->callback_name)
         {
           if (! procedural_db_lookup (bsp->context->gimp, bsp->callback_name))
-            brush_select_close_callback (NULL, bsp);
+            brush_select_response (NULL, GTK_RESPONSE_CLOSE, bsp);
         }
     }
 }
@@ -409,8 +409,9 @@ spacing_scale_update (GtkAdjustment *adjustment,
 }
 
 static void
-brush_select_close_callback (GtkWidget   *widget,
-			     BrushSelect *bsp)
+brush_select_response (GtkWidget   *widget,
+                       gint         response_id,
+                       BrushSelect *bsp)
 {
   brush_select_change_callbacks (bsp, TRUE);
   brush_select_free (bsp);

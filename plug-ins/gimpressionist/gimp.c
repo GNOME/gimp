@@ -87,6 +87,8 @@ gimpressionist_vals_t defaultpcvals = {
 
 static GimpDrawable *drawable;
 
+MAIN()
+
 static void
 query(void)
 {
@@ -198,11 +200,6 @@ void grabarea(void)
   gint x1, y1, x2, y2;
   gint row, col;
   int rowstride;
-
-  if(standalone) {
-    loadppm(standalone, &infile);
-    return;
-  }
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 

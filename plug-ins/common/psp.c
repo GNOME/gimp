@@ -315,22 +315,13 @@ typedef struct
   PSPCompression compression;
 } PSPSaveVals;
 
-typedef struct
-{
-  gint  run;
-} PSPSaveInterface;
-
 static PSPSaveVals psvals =
 {
   PSP_COMP_LZ77
 };
 
-static PSPSaveInterface psint =
-{
-  FALSE   /* run */
-};
-
 static guint16 major, minor;
+
 
 MAIN ()
 
@@ -403,37 +394,21 @@ query (void)
 */
 }
 
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  psint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gint
 save_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
+  gint       run;
 
   dlg = gimp_dialog_new (_("Save as PSP"), "psp",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/psp.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  file save type  */
   frame = gimp_radio_group_new2 (TRUE, _("Data Compression"),
@@ -458,10 +433,11 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return psint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 static gchar *
@@ -516,11 +492,11 @@ read_block_header (FILE    *f,
     }
   if (memcmp (buf, "~BK\0", 4) != 0)
     {
-      IFDBG(3) 
+      IFDBG(3)
 	g_message ("Invalid block header at %ld", header_start);
       else
 	g_message ("Invalid block header");
-    
+
       fclose (f);
       return -1;
     }
@@ -562,7 +538,7 @@ read_general_image_attribute_block (FILE     *f,
 
   if (major >= 4)
     fseek (f, 4, SEEK_CUR);
-  
+
   if (fread (&ia->width, 4, 1, f) < 1
       || fread (&ia->height, 4, 1, f) < 1
       || fread (&res, 8, 1, f) < 1
@@ -1023,7 +999,7 @@ read_channel_data (FILE       *f,
 	}
       inflateEnd (&zstream);
       g_free (buf);
-      
+
       if (bytespp > 1)
 	{
 	  p = buf2;
@@ -1238,7 +1214,7 @@ read_layer_block (FILE     *f,
 
       if (!visibility)
 	gimp_layer_set_visible (layer_ID, FALSE);
-      
+
       gimp_layer_set_preserve_transparency (layer_ID, transparency_protected);
 
       if (major < 4)
@@ -1288,7 +1264,7 @@ read_layer_block (FILE     *f,
 
 	  if (major == 4)
 	    fseek (f, 4, SEEK_CUR); /* Unknown field */
-	  
+
 	  if (fread (&compressed_len, 4, 1, f) < 1
 	      || fread (&uncompressed_len, 4, 1, f) < 1
 	      || fread (&bitmap_type, 2, 1, f) < 1
@@ -1340,7 +1316,7 @@ read_layer_block (FILE     *f,
 		gimp_image_delete (image_ID);
 		return -1;
 	      }
-	  
+
 	  if (!null_layer)
 	    if (read_channel_data (f, ia, pixels, bytespp,
 				   offset, drawable, compressed_len) == -1)
@@ -1667,12 +1643,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam      values[2];
-  GimpRunMode           run_mode;
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  gint32                image_ID;
-  gint32                drawable_ID;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
 
@@ -1704,13 +1680,13 @@ run (const gchar      *name,
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("psp", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PSP",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
@@ -1729,7 +1705,7 @@ run (const gchar      *name,
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
-	  
+
 	  /*  Possibly retrieve data  */
 	  gimp_get_data ("file_pnm_save", &psvals);
 

@@ -47,7 +47,7 @@
  * Feel free to correct my WRONG English, or to modify Plug-in Path,
  * and so on. ;-)
  *
- * Version 1.02 
+ * Version 1.02
  *
  * May 2000
  * tim copperfield [timecop@japan.co.jp]
@@ -80,10 +80,6 @@ typedef struct
   gdouble   turbulence;
 } PlasmaValues;
 
-typedef struct
-{
-  gboolean  run;
-} PlasmaInterface;
 
 /*
  * Function prototypes.
@@ -98,19 +94,17 @@ static void	  run	(const gchar      *name,
 
 static gboolean   plasma_dialog          (GimpDrawable  *drawable,
     					  GimpImageType  drawable_type);
-static void       plasma_ok_callback     (GtkWidget     *widget, 
-					  gpointer       data);
 static void plasma_seed_changed_callback (GimpDrawable  *drawable,
                                           gpointer       data);
 
-static void	plasma	     (GimpDrawable *drawable, 
+static void	plasma	     (GimpDrawable *drawable,
 			      gboolean      preview_mode);
-static void     random_rgb   (GRand        *gr, 
+static void     random_rgb   (GRand        *gr,
                               guchar       *pixel);
-static void     add_random   (GRand        *gr, 
+static void     add_random   (GRand        *gr,
                               guchar       *pixel,
 			      gint          amount);
-static GimpPixelFetcher *init_plasma  (GimpDrawable *drawable, 
+static GimpPixelFetcher *init_plasma  (GimpDrawable *drawable,
 				       gboolean      preview_mode,
 				       GRand        *gr);
 static void     end_plasma   (GimpDrawable     *drawable,
@@ -148,11 +142,6 @@ static PlasmaValues pvals =
 {
   0,     /* seed       */
   1.0,   /* turbulence */
-};
-
-static PlasmaInterface pint =
-{
-  FALSE     /* run */
 };
 
 /*
@@ -277,7 +266,7 @@ run (const gchar      *name,
 	    gimp_displays_flush ();
 
 	  /*  Store data  */
-	  if (run_mode == GIMP_RUN_INTERACTIVE || 
+	  if (run_mode == GIMP_RUN_INTERACTIVE ||
 	      (run_mode == GIMP_RUN_WITH_LAST_VALS))
             gimp_set_data ("plug_in_plasma", &pvals, sizeof (PlasmaValues));
 	}
@@ -302,24 +291,18 @@ plasma_dialog (GimpDrawable  *drawable,
   GtkWidget *table;
   GtkWidget *seed;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("plasma", TRUE);
-  
-  dlg = gimp_dialog_new (_("Plasma"), "plasma",
-			 gimp_standard_help_func, "filters/plasma.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, plasma_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+  dlg = gimp_dialog_new (_("Plasma"), "plasma",
+                         NULL, 0,
+			 gimp_standard_help_func, "filters/plasma.html",
+
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -333,7 +316,7 @@ plasma_dialog (GimpDrawable  *drawable,
   plasma (drawable, TRUE); /* preview image */
 
   gtk_widget_show (preview->widget);
-  
+
   table = gimp_parameter_settings_new (main_vbox, 2, 3);
 
   seed = gimp_random_seed_new (&pvals.seed);
@@ -363,19 +346,11 @@ plasma_dialog (GimpDrawable  *drawable,
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return pint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-plasma_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  pint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void
@@ -390,7 +365,7 @@ plasma_seed_changed_callback (GimpDrawable *drawable,
  */
 
 static void
-plasma (GimpDrawable *drawable, 
+plasma (GimpDrawable *drawable,
 	gboolean      preview_mode)
 {
   GimpPixelFetcher *pft;
@@ -398,7 +373,7 @@ plasma (GimpDrawable *drawable,
   GRand            *gr;
 
   gr = g_rand_new ();
-  
+
   pft = init_plasma (drawable, preview_mode, gr);
 
   /*
@@ -432,7 +407,7 @@ init_plasma (GimpDrawable *drawable,
 
   turbulence = pvals.turbulence;
 
-  if (preview_mode) 
+  if (preview_mode)
     {
       ix1 = iy1 = 0;
       ix2 = preview->width;
@@ -443,8 +418,8 @@ init_plasma (GimpDrawable *drawable,
       has_alpha = FALSE;
 
       pft = NULL;
-    } 
-  else 
+    }
+  else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id,
 				 &ix1, &iy1, &ix2, &iy2);
@@ -476,8 +451,8 @@ end_plasma (GimpDrawable     *drawable,
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id,
 			    ix1, iy1, ix2 - ix1, iy2 - iy1);
-    } 
-  else 
+    }
+  else
     {
       gtk_widget_queue_draw (preview->widget);
     }
@@ -491,11 +466,11 @@ get_pixel (GimpPixelFetcher *pft,
 	   gint              y,
 	   guchar           *pixel)
 {
-  if (pft) 
+  if (pft)
     {
       gimp_pixel_fetcher_get_pixel (pft, x, y, pixel);
     }
-  else 
+  else
     {
       gimp_fixme_preview_get_pixel (preview, x, y, pixel);
     }
@@ -519,9 +494,9 @@ put_pixel (GimpPixelFetcher *pft,
 }
 
 static void
-average_pixel (guchar *dest, 
-	       const guchar *src1, 
-	       const guchar *src2, 
+average_pixel (guchar *dest,
+	       const guchar *src1,
+	       const guchar *src2,
 	       gint bpp)
 {
   for (; bpp; bpp--)
@@ -531,7 +506,7 @@ average_pixel (guchar *dest,
 }
 
 static void
-random_rgb (GRand  *gr, 
+random_rgb (GRand  *gr,
             guchar *pixel)
 {
   gint i;
@@ -614,7 +589,7 @@ do_plasma (GimpPixelFetcher *pft,
 	{
 	  return FALSE;
 	}
-      
+
       get_pixel (pft, x1, y1, tl);
       get_pixel (pft, x1, y2, bl);
       get_pixel (pft, x2, y1, tr);

@@ -78,7 +78,7 @@ static void run   (const gchar      *name,
 		   GimpParam       **retvals);
 
 static gint pluginCore        (piArgs *argp);
-static gint pluginCoreIA      (piArgs *argp, 
+static gint pluginCoreIA      (piArgs *argp,
 			       GimpDrawable *drawable);
 
 static void nlfilt_do_preview (GtkWidget  *preview);
@@ -282,17 +282,6 @@ pluginCore (piArgs *argp)
   return 0;
 }
 
-gboolean run_flag = FALSE;
-
-static void
-nlfilt_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  run_flag = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static void
 nlfilt_radio_button_update (GtkWidget *widget,
 			    gpointer   data)
@@ -324,24 +313,18 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
   GtkWidget *table;
   GtkWidget *preview;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("nlfilt", TRUE);
 
   dlg = gimp_dialog_new (_("NL Filter"), "nlfilt",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/nlfilt.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, nlfilt_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -395,10 +378,11 @@ pluginCoreIA (piArgs *argp, GimpDrawable *drawable)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return (run_flag) ? pluginCore (argp) : retval;
+  gtk_widget_destroy (dlg);
+
+  return run ? pluginCore (argp) : retval;
 }
 
 static void
@@ -407,7 +391,7 @@ nlfilt_do_preview (GtkWidget *w)
   piArgs *ap;
   guchar *dst, *src0, *src1, *src2;
   gint y, rowsize, filtno;
-  
+
   ap = g_object_get_data (G_OBJECT (preview->widget), "piArgs");
 
   rowsize = preview->width * preview->bpp;
@@ -423,7 +407,7 @@ nlfilt_do_preview (GtkWidget *w)
     {
       nlfiltRow (src0, src1, src2, dst + preview->bpp,
                  preview->width - 2, preview->bpp, filtno);
-      /* 
+      /*
 	 We should probably fix the edges!
       */
       gimp_fixme_preview_do_row (preview, y, preview->width, dst);
@@ -451,7 +435,7 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
   GtkWidget *pframe;
   GtkWidget *vbox;
   GtkWidget *button;
-   
+
   frame = gtk_frame_new (_("Preview"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_box_pack_start (GTK_BOX (parent), frame, FALSE, FALSE, 0);
@@ -466,7 +450,7 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
   gtk_frame_set_shadow_type (GTK_FRAME(pframe), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), pframe, FALSE, FALSE, 0);
   gtk_widget_show (pframe);
-  
+
   preview = gimp_fixme_preview_new (drawable, FALSE);
   gtk_container_add (GTK_CONTAINER (pframe), preview->widget);
   gtk_widget_show (preview->widget);
@@ -528,28 +512,28 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
 ** and sell this software and its associated documentation files
 ** (the "Software") for any purpose without fee, provided
 ** that:
-** 
+**
 **     1) The above copyright notices and this permission notice
 **        accompany all source code copies of the Software and
 **        related documentation.
 ** and
-** 
+**
 **     2) If executable code based on the Software only is distributed,
 **        then the accompanying documentation must acknowledge that
 **        "this software is based in part on the work of Graeme W. Gill".
 ** and
-** 
+**
 **     3) It is accepted that Graeme W. Gill (the "Author") accepts
 **        NO LIABILITY for damages of any kind.  The Software is
 **        provided without fee by the Author "AS-IS" and without
-**        warranty of any kind, express, implied or otherwise,   
+**        warranty of any kind, express, implied or otherwise,
 **        including without limitation, any warranty of merchantability
 **        or fitness for a particular purpose.
 ** and
-** 
+**
 **     4) These conditions apply to any software derived from or based
 **        on the Software, not just to the unmodified library.
-** 
+**
 */
 
 /* ************************************************** */

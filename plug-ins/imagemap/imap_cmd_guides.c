@@ -111,11 +111,17 @@ recalc_bounds(GtkWidget *widget, gpointer data)
    bounds = g_strdup_printf (_("Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"),
 			     left, top, left + bound_w, top + bound_h, rows * cols);
    if (left + bound_w > get_image_width() || 
-       top + bound_h > get_image_height()) {
-      default_dialog_set_ok_sensitivity(param->dialog, FALSE);
-   } else {
-      default_dialog_set_ok_sensitivity(param->dialog, TRUE);
-   }
+       top + bound_h > get_image_height())
+     {
+       gtk_dialog_set_response_sensitive (GTK_DIALOG (param->dialog->dialog),
+                                          GTK_RESPONSE_OK, FALSE);
+     }
+   else
+     {
+       gtk_dialog_set_response_sensitive (GTK_DIALOG (param->dialog->dialog),
+                                          GTK_RESPONSE_OK, TRUE);
+     }
+
    gtk_label_set_text(GTK_LABEL(param->guide_bounds), bounds);
    g_free (bounds);
 }

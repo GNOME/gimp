@@ -552,18 +552,12 @@ doDialog (void)
 
   /* set up the dialog */
   dialog = gimp_dialog_new (_("Colorcube Analysis"), "ccanalyze",
+                            NULL, 0,
                             gimp_standard_help_func, "filters/ccanalyze.html",
-                            GTK_WIN_POS_MOUSE,
-                            FALSE, TRUE, FALSE,
 
-                            GTK_STOCK_OK, gtk_widget_destroy,
-                            NULL, 1, NULL, FALSE, TRUE,
+                            GTK_STOCK_OK, GTK_RESPONSE_OK,
 
                             NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* set up frame */
   frame = gtk_frame_new (_("Results"));
@@ -614,8 +608,9 @@ doDialog (void)
   /* show stuff */
   gtk_widget_show_all (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  gtk_dialog_run (GTK_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
 }
 
 /* shortcut */

@@ -20,10 +20,10 @@
  *
  */
 
-/* 
+/*
  * Please send any comments or suggestions to me,
  * Karl-Johan Andersson (t96kja@student.tdb.uu.se)
- * 
+ *
  * TODO:
  * - add "streaks" from lightsource
  * - improve the user interface
@@ -40,8 +40,8 @@
  * Therefore, changed RGB* to RGB in the capabilities.
  * Someone who actually knows something about graphics should
  * take a look to see why this doesnt render on alpha channel :)
- *  
- */ 
+ *
+ */
 
 #include "config.h"
 
@@ -73,11 +73,6 @@ typedef struct
   gint posx;
   gint posy;
 } FlareValues;
-
-typedef struct
-{
-  gboolean run;
-} FlareInterface;
 
 typedef struct RGBFLOAT
 {
@@ -117,11 +112,9 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static void FlareFX                    (GimpDrawable *drawable, 
+static void FlareFX                    (GimpDrawable *drawable,
 					gint          preview_mode);
 static gint flare_dialog               (GimpDrawable *drawable);
-static void flare_ok_callback          (GtkWidget    *widget,
-					gpointer      data);
 
 static GtkWidget * flare_center_create            (GimpDrawable  *drawable);
 static void	   flare_center_destroy           (GtkWidget     *widget,
@@ -162,14 +155,9 @@ static FlareValues fvals =
   128, 128		/* posx, posy */
 };
 
-static FlareInterface fint =
-{
-  FALSE     /* run */
-};
-
 static gfloat     scolor, sglow, sinner, souter; /* size     */
 static gfloat     shalo;
-static gint       xs, ys;     
+static gint       xs, ys;
 static gint       numref;
 static RGBfloat   color, glow, inner, outer, halo;
 static Reflect    ref1[19];
@@ -180,7 +168,7 @@ static gboolean   show_cursor = FALSE;
 MAIN ()
 
 static void
-query (void) 
+query (void)
 {
   static GimpParamDef args[] =
   {
@@ -197,7 +185,7 @@ query (void)
 			  "Karl-Johan Andersson", /* Author */
 			  "Karl-Johan Andersson", /* Copyright */
 			  "May 2000",
-			  /* don't translate '<Image>' entry, 
+			  /* don't translate '<Image>' entry,
 			   * it is keyword for the gtk toolkit */
 			  N_("<Image>/Filters/Light Effects/_FlareFX..."),
 			  "RGB*",
@@ -217,17 +205,17 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  
+
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -264,7 +252,7 @@ run (const gchar      *name,
     default:
       break;
     }
-  
+
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
@@ -276,9 +264,9 @@ run (const gchar      *name,
                                   (drawable->width / gimp_tile_width () + 1));
 
 	  FlareFX (drawable, 0);
-	  
+
 	  if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	    gimp_displays_flush (); 
+	    gimp_displays_flush ();
 
 	  /*  Store data  */
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -292,7 +280,7 @@ run (const gchar      *name,
     }
 
   values[0].data.d_status = status;
-  
+
   gimp_drawable_detach (drawable);
 }
 
@@ -300,29 +288,22 @@ run (const gchar      *name,
 static gint
 flare_dialog (GimpDrawable *drawable)
 {
-  GtkWidget *dlg;
-  GtkWidget *main_vbox;
-  GtkWidget *frame;
+  GtkWidget   *dlg;
+  GtkWidget   *main_vbox;
+  GtkWidget   *frame;
   FlareCenter *center;
+  gboolean     run;
 
   gimp_ui_init ("flarefx", TRUE);
 
   dlg = gimp_dialog_new (_("FlareFX"), "flarefx",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/flarefx.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, flare_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  parameter settings  */
   main_vbox = gtk_vbox_new (FALSE, 2);
@@ -340,25 +321,16 @@ flare_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return fint.run;
-}
+  gtk_widget_destroy (dlg);
 
-/* --- Interface functions --- */
-static void
-flare_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  fint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 /* --- Filter functions --- */
 static void
-FlareFX (GimpDrawable *drawable, 
+FlareFX (GimpDrawable *drawable,
 	 gboolean   preview_mode)
 {
   GimpPixelRgn srcPR, destPR;
@@ -371,7 +343,7 @@ FlareFX (GimpDrawable *drawable,
   gint matt;
   gfloat hyp;
 
-  if (preview_mode) 
+  if (preview_mode)
     {
       width  = preview->width;
       height = preview->height;
@@ -383,8 +355,8 @@ FlareFX (GimpDrawable *drawable,
       x1 = y1 = 0;
       x2 = width;
       y2 = height;
-    } 
-  else 
+    }
+  else
     {
       gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
       width  = drawable->width;
@@ -397,13 +369,13 @@ FlareFX (GimpDrawable *drawable,
 
   matt = width;
 
-  if (preview_mode) 
+  if (preview_mode)
     {
       cur_row = g_new (guchar, preview->rowstride);
       dest    = g_new (guchar, preview->rowstride);
     }
   else
-    {  
+    {
       /*  initialize the pixel regions  */
       gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
       gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
@@ -423,35 +395,35 @@ FlareFX (GimpDrawable *drawable,
   inner.r = 255.0/255.0; inner.g = 38.0/255.0;  inner.b = 43.0/255.0;
   outer.r = 69.0/255.0;  outer.g = 59.0/255.0;  outer.b = 64.0/255.0;
   halo.r  = 80.0/255.0;  halo.g  = 15.0/255.0;  halo.b  = 4.0/255.0;
- 
+
   initref (xs, ys, width, height, matt);
 
   /*  Loop through the rows */
   for (row = y1; row < y2; row++) /* y-coord */
     {
-      if (preview_mode) 
-	memcpy (cur_row, 
+      if (preview_mode)
+	memcpy (cur_row,
 		preview->cache + preview->rowstride * row,
 		preview->rowstride);
-      else 
+      else
 	gimp_pixel_rgn_get_row (&srcPR, cur_row, x1, row, x2-x1);
 
       d = dest;
       s = cur_row;
       for (col = x1; col < x2; col++) /* x-coord */
-	{      
+	{
 	  hyp = hypot (col-xs, row-ys);
 	  mcolor (s, hyp); /* make color */
-	  mglow (s, hyp);  /* make glow  */ 
+	  mglow (s, hyp);  /* make glow  */
 	  minner (s, hyp); /* make inner */
 	  mouter (s, hyp); /* make outer */
 	  mhalo (s, hyp);  /* make halo  */
-	  for (i = 0; i < numref; i++) 
+	  for (i = 0; i < numref; i++)
 	    {
-	      switch (ref1[i].type) 
+	      switch (ref1[i].type)
 		{
-		case 1: 
-		  mrt1 (s, i, col, row); 
+		case 1:
+		  mrt1 (s, i, col, row);
 		  break;
 		case 2:
 		  mrt2 (s, i, col, row);
@@ -466,25 +438,25 @@ FlareFX (GimpDrawable *drawable,
 	    }
 	  s+=bytes;
 	}
-      if (preview_mode) 
+      if (preview_mode)
 	{
 	  gimp_fixme_preview_do_row (preview, row, preview->width, cur_row);
-	} 
-      else 
+	}
+      else
 	{
 	  /*  store the dest  */
 	  gimp_pixel_rgn_set_row (&destPR, cur_row, x1, row, (x2 - x1));
 	}
-      
+
       if ((row % 5) == 0 && !preview_mode)
 	gimp_progress_update ((double) row / (double) (y2 - y1));
     }
 
-  if (preview_mode) 
+  if (preview_mode)
     {
       gtk_widget_queue_draw (preview->widget);
-    } 
-  else 
+    }
+  else
     {
       /*  update the textured region  */
       gimp_drawable_flush (drawable);
@@ -501,13 +473,13 @@ mcolor (guchar *s,
 	gfloat  h)
 {
   static gfloat procent;
-  
+
   procent = scolor - h;
   procent/=scolor;
   if (procent > 0.0)
     {
       procent*=procent;
-      fixpix (s, procent, color); 
+      fixpix (s, procent, color);
     }
 }
 
@@ -516,13 +488,13 @@ mglow (guchar *s,
        gfloat  h)
 {
   static gfloat procent;
-  
+
   procent = sglow - h;
   procent/=sglow;
   if (procent > 0.0)
     {
       procent*=procent;
-      fixpix (s, procent, glow); 
+      fixpix (s, procent, glow);
     }
 }
 
@@ -531,13 +503,13 @@ minner (guchar *s,
 	gfloat  h)
 {
   static gfloat procent;
-  
+
   procent = sinner - h;
   procent/=sinner;
   if (procent > 0.0)
     {
       procent*=procent;
-      fixpix (s, procent, inner); 
+      fixpix (s, procent, inner);
     }
 }
 
@@ -546,11 +518,11 @@ mouter (guchar *s,
 	gfloat  h)
 {
   static gfloat procent;
-  
+
   procent = souter - h;
   procent/=souter;
-  if (procent > 0.0) 
-    fixpix (s, procent, outer); 
+  if (procent > 0.0)
+    fixpix (s, procent, outer);
 }
 
 static void
@@ -558,12 +530,12 @@ mhalo (guchar *s,
        gfloat  h)
 {
   static gfloat procent;
-  
+
   procent = h - shalo;
   procent/=(shalo*0.07);
   procent = fabs (procent);
   if (procent < 1.0)
-    fixpix (s, 1.0 - procent, halo); 
+    fixpix (s, 1.0 - procent, halo);
 }
 
 static void
@@ -584,7 +556,7 @@ initref (gint sx,
 	 gint matt)
 {
   gint xh, yh, dx, dy;
-  
+
   xh = width / 2; yh = height / 2;
   dx = xh - sx;   dy = yh - sy;
   numref = 19;
@@ -654,14 +626,14 @@ mrt1 (guchar *s,
       gint    row)
 {
   static gfloat procent;
-  
+
   procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
   procent/=ref1[i].size;
   if (procent > 0.0)
     {
       procent*=procent;
-      fixpix (s, procent, ref1[i].ccol); 
-    }  
+      fixpix (s, procent, ref1[i].ccol);
+    }
 }
 
 static void
@@ -671,14 +643,14 @@ mrt2 (guchar *s,
       gint    row)
 {
   static gfloat procent;
-  
+
   procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
   procent/=(ref1[i].size * 0.15);
   if (procent > 0.0)
     {
       if (procent > 1.0) procent = 1.0;
-      fixpix (s, procent, ref1[i].ccol); 
-    }  
+      fixpix (s, procent, ref1[i].ccol);
+    }
 }
 
 static void
@@ -688,14 +660,14 @@ mrt3 (guchar *s,
       gint    row)
 {
   static gfloat procent;
-  
+
   procent = ref1[i].size - hypot (ref1[i].xp - col, ref1[i].yp - row);
   procent/=(ref1[i].size * 0.12);
   if (procent > 0.0)
     {
       if (procent > 1.0) procent = 1.0 - (procent * 0.12);
-      fixpix (s, procent, ref1[i].ccol); 
-    }  
+      fixpix (s, procent, ref1[i].ccol);
+    }
 }
 
 static void
@@ -705,12 +677,12 @@ mrt4 (guchar *s,
       gint    row)
 {
   static gfloat procent;
-  
+
   procent = hypot (ref1[i].xp - col, ref1[i].yp - row) - ref1[i].size;
   procent/=(ref1[i].size*0.04);
   procent = fabs (procent);
-  if (procent < 1.0) 
-    fixpix(s, 1.0 - procent, ref1[i].ccol); 
+  if (procent < 1.0)
+    fixpix(s, 1.0 - procent, ref1[i].ccol);
 }
 
 /*=================================================================
@@ -886,31 +858,31 @@ flare_center_draw (FlareCenter *center,
     {
       gdk_gc_set_function (prvw->style->black_gc, GDK_INVERT);
 
-      if (show_cursor) 
+      if (show_cursor)
 	{
 	  if (center->cursor)
 	    {
 	      gdk_draw_line (prvw->window,
 			     prvw->style->black_gc,
-			     center->oldx, 1, 
-			     center->oldx, 
+			     center->oldx, 1,
+			     center->oldx,
 			     preview->height - 1);
 	      gdk_draw_line (prvw->window,
 			     prvw->style->black_gc,
-			     1, center->oldy, 
-			     preview->width - 1, 
+			     1, center->oldy,
+			     preview->width - 1,
 			     center->oldy);
 	    }
 
 	  gdk_draw_line (prvw->window,
 			 prvw->style->black_gc,
-			 center->curx, 1, 
-			 center->curx, 
+			 center->curx, 1,
+			 center->curx,
 			 preview->height - 1);
 	  gdk_draw_line (prvw->window,
 			 prvw->style->black_gc,
-			 1, center->cury, 
-			 preview->width - 1, 
+			 1, center->cury,
+			 preview->width - 1,
 			 center->cury);
 	}
 
@@ -1002,7 +974,7 @@ flare_center_preview_events (GtkWidget *widget,
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
-      if (!mevent->state) 
+      if (!mevent->state)
 	break;
       center->curx = mevent->x;
       center->cury = mevent->y;

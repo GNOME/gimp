@@ -57,7 +57,8 @@ static void   palette_select_change_callbacks (PaletteSelect *psp,
 static void   palette_select_palette_changed  (GimpContext   *context,
                                                GimpPalette   *palette,
                                                PaletteSelect *psp);
-static void   palette_select_close_callback   (GtkWidget     *widget,
+static void   palette_select_response         (GtkWidget     *widget,
+                                               gint           response_id,
                                                PaletteSelect *psp);
 
 
@@ -118,15 +119,17 @@ palette_select_new (Gimp        *gimp,
 
   /*  the shell  */
   psp->shell = gimp_dialog_new (title, "palette_selection",
+                                NULL, 0,
 				gimp_standard_help_func,
 				GIMP_HELP_PALETTE_DIALOG,
-				GTK_WIN_POS_MOUSE,
-				FALSE, TRUE, FALSE,
 
-				GTK_STOCK_CLOSE, palette_select_close_callback,
-				psp, NULL, NULL, TRUE, TRUE,
+				GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-				NULL);
+                                NULL);
+
+  g_signal_connect (psp->shell, "response",
+                    G_CALLBACK (palette_select_response),
+                    psp);
 
   /*  The Palette List  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
@@ -140,7 +143,7 @@ palette_select_new (Gimp        *gimp,
                                         5 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                         8 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);
   gtk_widget_show (psp->view);
 
@@ -202,7 +205,7 @@ palette_select_dialogs_check (void)
       if (psp->callback_name)
         {
           if (!  procedural_db_lookup (psp->context->gimp, psp->callback_name))
-            palette_select_close_callback (NULL, psp);
+            palette_select_response (NULL, GTK_RESPONSE_CLOSE, psp);
         }
     }
 }
@@ -264,8 +267,9 @@ palette_select_palette_changed (GimpContext   *context,
 }
 
 static void
-palette_select_close_callback (GtkWidget     *widget,
-			       PaletteSelect *psp)
+palette_select_response (GtkWidget     *widget,
+                         gint           response_id,
+                         PaletteSelect *psp)
 {
   palette_select_change_callbacks (psp, TRUE);
   palette_select_free (psp);

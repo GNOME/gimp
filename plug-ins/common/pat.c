@@ -52,8 +52,6 @@ static gboolean   save_image     (const gchar      *filename,
 				  gint32            drawable_ID);
 
 static gboolean   save_dialog    (void);
-static void       ok_callback    (GtkWidget        *widget,
-				  gpointer          data);
 static void       entry_callback (GtkWidget        *widget,
 				  gpointer          data);
 
@@ -68,9 +66,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 /*  private variables  */
 
-static gchar    description[256] = "GIMP Pattern";
-static gboolean run_flag = FALSE;
-
+static gchar  description[256] = "GIMP Pattern";
 
 
 MAIN ()
@@ -142,12 +138,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -159,11 +155,11 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  if (strcmp (name, "file_pat_load") == 0) 
+  if (strcmp (name, "file_pat_load") == 0)
     {
       image_ID = load_image (param[1].data.d_string);
 
-      if (image_ID != -1) 
+      if (image_ID != -1)
 	{
 	  *nreturn_vals = 2;
 	  values[1].type         = GIMP_PDB_IMAGE;
@@ -174,18 +170,18 @@ run (const gchar      *name,
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
     }
-  else if (strcmp (name, "file_pat_save") == 0) 
+  else if (strcmp (name, "file_pat_save") == 0)
     {
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("pat", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "PAT",
 				      GIMP_EXPORT_CAN_HANDLE_GRAY |
 				      GIMP_EXPORT_CAN_HANDLE_RGB |
                                       GIMP_EXPORT_CAN_HANDLE_ALPHA);
@@ -199,7 +195,7 @@ run (const gchar      *name,
 	  break;
 	}
 
-      switch (run_mode) 
+      switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	  /*  Possibly retrieve data  */
@@ -229,7 +225,7 @@ run (const gchar      *name,
 	  if (save_image (param[3].data.d_string, image_ID, drawable_ID))
 	    {
 	      gimp_set_data ("file_pat_save", description, 256);
-	    } 
+	    }
 	  else
 	    {
 	      status = GIMP_PDB_EXECUTION_ERROR;
@@ -247,8 +243,8 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static gint32 
-load_image (const gchar *filename) 
+static gint32
+load_image (const gchar *filename)
 {
   gchar            *temp;
   gint              fd;
@@ -274,7 +270,7 @@ load_image (const gchar *filename)
   gimp_progress_init (temp);
   g_free (temp);
 
-  if (read (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader)) 
+  if (read (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader))
     {
       close (fd);
       return -1;
@@ -290,13 +286,13 @@ load_image (const gchar *filename)
 
   if (ph.magic_number != GPATTERN_MAGIC ||
       ph.version      != 1 ||
-      ph.header_size  <= sizeof (PatternHeader)) 
+      ph.header_size  <= sizeof (PatternHeader))
     {
       close (fd);
       return -1;
     }
 
-  if (lseek (fd, ph.header_size - sizeof (PatternHeader), SEEK_CUR) != ph.header_size) 
+  if (lseek (fd, ph.header_size - sizeof (PatternHeader), SEEK_CUR) != ph.header_size)
     {
       close (fd);
       return -1;
@@ -341,12 +337,12 @@ load_image (const gchar *filename)
 
   drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-		       drawable->width, drawable->height, 
+		       drawable->width, drawable->height,
 		       TRUE, FALSE);
 
   buffer = g_malloc (ph.width * ph.bytes);
 
-  for (line = 0; line < ph.height; line++) 
+  for (line = 0; line < ph.height; line++)
     {
       if (read (fd, buffer, ph.width * ph.bytes) != ph.width * ph.bytes)
 	{
@@ -366,9 +362,9 @@ load_image (const gchar *filename)
 }
 
 static gboolean
-save_image (const gchar *filename, 
-	    gint32       image_ID, 
-	    gint32       drawable_ID) 
+save_image (const gchar *filename,
+	    gint32       image_ID,
+	    gint32       drawable_ID)
 {
   gint          fd;
   PatternHeader ph;
@@ -402,31 +398,31 @@ save_image (const gchar *filename,
   ph.bytes        = g_htonl (drawable->bpp);
   ph.magic_number = g_htonl (GPATTERN_MAGIC);
 
-  if (write (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader)) 
+  if (write (fd, &ph, sizeof (PatternHeader)) != sizeof (PatternHeader))
     {
       close (fd);
       return FALSE;
     }
 
-  if (write (fd, description, strlen (description) + 1) != strlen (description) + 1) 
+  if (write (fd, description, strlen (description) + 1) != strlen (description) + 1)
     {
       close (fd);
       return FALSE;
     }
 
   buffer = g_malloc (drawable->width * drawable->bpp);
-  if (buffer == NULL) 
+  if (buffer == NULL)
     {
       close (fd);
       return FALSE;
     }
 
-  for (line = 0; line < drawable->height; line++) 
+  for (line = 0; line < drawable->height; line++)
     {
       gimp_pixel_rgn_get_row (&pixel_rgn, buffer, 0, line, drawable->width);
 
       if (write (fd, buffer, drawable->width * drawable->bpp) !=
-	  drawable->width * drawable->bpp) 
+	  drawable->width * drawable->bpp)
 	{
 	  close (fd);
 	  return FALSE;
@@ -434,7 +430,7 @@ save_image (const gchar *filename,
 
       gimp_progress_update ((gdouble) line / (gdouble) drawable->height);
     }
- 
+
   g_free (buffer);
   close (fd);
 
@@ -447,22 +443,16 @@ save_dialog (void)
   GtkWidget *dlg;
   GtkWidget *table;
   GtkWidget *entry;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as Pattern"), "pat",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/pat.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* The main table */
   table = gtk_table_new (1, 2, FALSE);
@@ -486,23 +476,15 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return run_flag;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
-static void 
-ok_callback (GtkWidget *widget, 
-	     gpointer   data)
-{
-  run_flag = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void 
-entry_callback (GtkWidget *widget, 
+static void
+entry_callback (GtkWidget *widget,
 		gpointer   data)
 {
   if (data == description)

@@ -59,11 +59,6 @@ typedef struct
   gint compose;     /* compose images with naxis==3        */
 } FITSLoadVals;
 
-typedef struct
-{
-  gboolean  run;
-} FITSLoadInterface;
-
 
 /* Declare some local functions.
  */
@@ -107,8 +102,6 @@ static gint32 load_fits (const gchar *filename,
 
 
 static gint   load_dialog              (void);
-static void   load_ok_callback         (GtkWidget *widget,
-                                        gpointer   data);
 static void   show_fits_errors         (void);
 
 
@@ -117,11 +110,6 @@ static FITSLoadVals plvals =
   0,        /* Replace with black */
   0,        /* Do autoscale on pixel-values */
   0         /* Dont compose images */
-};
-
-static FITSLoadInterface plint =
-{
-  FALSE
 };
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -210,7 +198,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   l_run_mode = run_mode = (GimpRunMode)param[0].data.d_int32;
 
@@ -972,25 +960,18 @@ load_dialog (void)
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *frame;
+  gboolean   run;
 
   gimp_ui_init ("fits", FALSE);
 
   dialog = gimp_dialog_new (_("Load FITS File"), "fits",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/fits.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, load_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -1035,20 +1016,11 @@ load_dialog (void)
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return plint.run;
-}
+  gtk_widget_destroy (dialog);
 
-static void
-load_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-
-{
-  plint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

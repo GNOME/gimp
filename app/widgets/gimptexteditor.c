@@ -172,16 +172,16 @@ gimp_text_editor_new (const gchar   *title,
                          "title", title,
                          NULL);
 
-  gtk_window_set_wmclass (GTK_WINDOW (editor), "text_editor", "Gimp");
+  gtk_window_set_role (GTK_WINDOW (editor), "text_editor");
   gimp_help_connect (GTK_WIDGET (editor), gimp_standard_help_func,
                      GIMP_HELP_TEXT_EDITOR_DIALOG, NULL);
 
-  gimp_dialog_create_action_area (GIMP_DIALOG (editor),
-                                  GTK_STOCK_CLOSE, gtk_widget_destroy,
-                                  NULL, 1, NULL, TRUE, TRUE,
-                                  NULL);
+  gtk_dialog_add_button (GTK_DIALOG (editor),
+                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
-  gtk_dialog_set_has_separator (GTK_DIALOG (editor), FALSE);
+  g_signal_connect (editor, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
 
   toolbar = GTK_TOOLBAR (gtk_toolbar_new ());
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
@@ -231,7 +231,7 @@ gimp_text_editor_new (const gchar   *title,
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
 				  GTK_POLICY_AUTOMATIC,
 				  GTK_POLICY_AUTOMATIC);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (editor)->vbox),
                       scrolled_window, TRUE, TRUE, 0);
   gtk_widget_show (scrolled_window);

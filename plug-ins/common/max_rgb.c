@@ -49,13 +49,11 @@ static void	run	(const gchar      *name,
 			 gint             *nreturn_vals,
 			 GimpParam       **return_vals);
 
-static GimpPDBStatusType main_function (GimpDrawable *drawable, 
+static GimpPDBStatusType main_function (GimpDrawable *drawable,
 			                gboolean      preview_mode);
 
 static gint	   dialog         (GimpDrawable *drawable);
-static void        ok_callback    (GtkWidget    *widget,
-				   gpointer      data);
-static void        radio_callback (GtkWidget    *widget, 
+static void        radio_callback (GtkWidget    *widget,
 				   gpointer      data);
 
 
@@ -78,19 +76,9 @@ typedef struct
   gint      max_p;
 } ValueType;
 
-typedef struct 
-{
-  gboolean  run;
-} Interface;
-
-static ValueType pvals = 
+static ValueType pvals =
 {
   MAX_CHANNELS
-};
-
-static Interface interface =
-{
-  FALSE
 };
 
 static GimpRunMode       run_mode;
@@ -135,7 +123,7 @@ run (const gchar      *name,
   GimpDrawable      *drawable;
   static GimpParam   values[1];
   GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
-  
+
   run_mode = param[0].data.d_int32;
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -143,7 +131,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -168,7 +156,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_NAME, &pvals);
       break;
     }
-  
+
   status = main_function (drawable, FALSE);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -194,7 +182,7 @@ max_rgb_func (const guchar *src,
   MaxRgbParam_t *param = (MaxRgbParam_t*) data;
   gint   ch, max_ch = 0;
   guchar max, tmp_value;
-  
+
   max = param->init_value;
   for (ch = 0; ch < 3; ch++)
     if (param->flag * max <= param->flag * (tmp_value = (*src++)))
@@ -218,31 +206,31 @@ max_rgb_func (const guchar *src,
 }
 
 static GimpPDBStatusType
-main_function (GimpDrawable *drawable, 
+main_function (GimpDrawable *drawable,
 	       gboolean      preview_mode)
 {
   MaxRgbParam_t param;
-  
+
   param.init_value = (pvals.max_p > 0) ? 0 : 255;
   param.flag = (0 < pvals.max_p) ? 1 : -1;
   param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
 
-  if (preview_mode) 
+  if (preview_mode)
     {
       gimp_fixme_preview_update (preview, max_rgb_func, &param);
-    } 
-  else 
+    }
+  else
     {
       gimp_progress_init ( _("Max RGB..."));
 
       gimp_rgn_iterate2 (drawable, run_mode, max_rgb_func, &param);
 
       gimp_drawable_detach (drawable);
-    }  
+    }
 
   return GIMP_PDB_SUCCESS;
 }
- 
+
 
 /* dialog stuff */
 static gint
@@ -253,25 +241,18 @@ dialog (GimpDrawable *drawable)
   GtkWidget *frame;
   GtkWidget *max;
   GtkWidget *min;
+  gboolean   run;
 
   gimp_ui_init ("max_rgb", TRUE);
 
   dlg = gimp_dialog_new (_("Max RGB"), "max_rgb",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/max_rgb.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -283,7 +264,7 @@ dialog (GimpDrawable *drawable)
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   main_function (drawable, TRUE);
   gtk_widget_show (preview->widget);
-  
+
   frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
 				 G_CALLBACK (radio_callback),
 				 &pvals.max_p,
@@ -305,14 +286,15 @@ dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return interface.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 static void
-radio_callback (GtkWidget *widget, 
+radio_callback (GtkWidget *widget,
 		gpointer  data)
 {
   gimp_radio_button_update (widget, data);
@@ -323,13 +305,4 @@ radio_callback (GtkWidget *widget,
       drawable = g_object_get_data (G_OBJECT (widget), "drawable");
       main_function (drawable, TRUE);
     }
-}
-
-static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
-{
-  interface.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

@@ -130,7 +130,8 @@ static void      server_log         (gchar     *format,
 static void      server_quit        (void);
 
 static gboolean  server_interface   (void);
-static void      ok_callback        (GtkWidget *widget,
+static void      response_callback  (GtkWidget *widget,
+                                     gint       response_id,
 				     gpointer   data);
 
 
@@ -163,13 +164,13 @@ static ServerInterface sint =
  *  Server interface functions
  */
 
-void 
+void
 script_fu_server_quit (void)
 {
   script_fu_done = TRUE;
 }
 
-gint 
+gint
 script_fu_server_get_mode (void)
 {
   return server_mode;
@@ -456,7 +457,7 @@ read_from_client (gint filedes)
 
       if (nbytes == 0)
         return -1;  /* EOF */
-      
+
       i += nbytes;
     }
 
@@ -483,9 +484,9 @@ read_from_client (gint filedes)
            g_free (command);
            return -1;
         }
-      
+
       i += nbytes;
-    }      
+    }
 
   command[command_len] = '\0';
   cmd = g_new (SFCommand, 1);
@@ -599,18 +600,17 @@ server_interface (void)
   gimp_ui_init ("script-fu", FALSE);
 
   dlg = gimp_dialog_new (_("Script-Fu Server Options"), "script-fu",
-			 gimp_standard_help_func, "filters/script-fu.html", 
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
+                         NULL, 0,
+			 gimp_standard_help_func, "filters/script-fu.html",
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (response_callback),
+                    NULL);
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -625,13 +625,13 @@ server_interface (void)
   /*  The server port  */
   sint.port_entry = gtk_entry_new ();
   gtk_entry_set_text (GTK_ENTRY (sint.port_entry), "10008");
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0, 
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Server Port:"), 1.0, 0.5,
 			     sint.port_entry, 1, TRUE);
 
   /*  The server logfile  */
   sint.log_entry = gtk_entry_new ();
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1, 
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
 			     _("Server Logfile:"), 1.0, 0.5,
 			     sint.log_entry, 1, TRUE);
 
@@ -644,14 +644,18 @@ server_interface (void)
 }
 
 static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
+response_callback (GtkWidget *widget,
+                   gint       response_id,
+                   gpointer   data)
 {
-  g_free (sint.logfile);
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      g_free (sint.logfile);
 
-  sint.port    = atoi (gtk_entry_get_text (GTK_ENTRY (sint.port_entry)));
-  sint.logfile = g_strdup (gtk_entry_get_text (GTK_ENTRY (sint.log_entry)));
-  sint.run     = TRUE;
+      sint.port    = atoi (gtk_entry_get_text (GTK_ENTRY (sint.port_entry)));
+      sint.logfile = g_strdup (gtk_entry_get_text (GTK_ENTRY (sint.log_entry)));
+      sint.run     = TRUE;
+    }
 
   gtk_widget_destroy (GTK_WIDGET (data));
 }

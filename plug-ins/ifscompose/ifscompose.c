@@ -54,6 +54,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define RESPONSE_RESET           1
+#define RESPONSE_OPEN            2
+#define RESPONSE_SAVE            3
+
 #define SCALE_WIDTH            150
 #define ENTRY_WIDTH             60
 #define DESIGN_AREA_MAX_SIZE   300
@@ -280,18 +284,15 @@ static gint preview_idle_render           (gpointer   data);
 
 static void ifs_compose_preview           (void);
 static void ifs_compose_set_defaults      (void);
-static void ifs_compose_defaults_callback (GtkWidget *widget,
-					   gpointer   data);
 static void ifs_compose_new_callback      (GtkWidget *widget,
 					   gpointer   data);
 static void ifs_compose_delete_callback   (GtkWidget *widget,
 					   gpointer   data);
-static void ifs_compose_load_callback     (GtkWidget *widget,
+static void ifs_compose_load              (GtkWidget *parent);
+static void ifs_compose_save              (GtkWidget *parent);
+static void ifs_compose_response          (GtkWidget *widget,
+                                           gint       repsonse_id,
 					   gpointer   data);
-static void ifs_compose_save_callback     (GtkWidget *widget,
-					   gpointer   data);
-static void ifs_compose_ok_callback       (GtkWidget *widget,
-					   GtkWidget *window);
 
 /*
  *  Some static variables
@@ -803,29 +804,22 @@ ifs_compose_dialog (GimpDrawable *drawable)
   gimp_ui_init ("ifscompose", TRUE);
 
   dlg = gimp_dialog_new (_("IfsCompose"), "ifscompose",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/ifscompose.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GIMP_STOCK_RESET, ifs_compose_defaults_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
+			 GIMP_STOCK_RESET, RESPONSE_RESET,
+			 GTK_STOCK_OPEN,   RESPONSE_OPEN,
+			 GTK_STOCK_SAVE,   RESPONSE_SAVE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GTK_STOCK_OPEN, ifs_compose_load_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
-
-			 GTK_STOCK_SAVE, ifs_compose_save_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
-
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, ifs_compose_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 NULL);
+                         NULL);
 
   g_object_add_weak_pointer (G_OBJECT (dlg), (gpointer *) &dlg);
 
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (ifs_compose_response),
+                    NULL);
   g_signal_connect (dlg, "destroy",
 		    G_CALLBACK (gtk_main_quit),
 		    NULL);
@@ -1255,18 +1249,20 @@ ifs_options_dialog (void)
 
   if (!ifsOptD)
     {
-      ifsOptD = g_new (IfsOptionsDialog, 1);
+      ifsOptD = g_new0 (IfsOptionsDialog, 1);
 
       ifsOptD->dialog =
 	gimp_dialog_new (_("IfsCompose Options"), "ifscompose",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/ifscompose.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CLOSE, gtk_widget_hide,
-			 NULL, 1, NULL, TRUE, TRUE,
+			 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 			 NULL);
+
+      g_signal_connect (ifsOptD->dialog, "response",
+                        G_CALLBACK (gtk_widget_hide),
+                        NULL);
 
       /* Table of options */
 
@@ -2553,30 +2549,6 @@ ifs_compose_set_defaults (void)
   ifsD->selected_orig = g_new (AffElement, ifsvals.num_elements);
 }
 
-static void
-ifs_compose_defaults_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  gint i;
-  gdouble width  = ifsDesign->area->allocation.width;
-  gdouble height = ifsDesign->area->allocation.height;
-
-  undo_begin ();
-  for (i = 0; i < ifsvals.num_elements; i++)
-    undo_update (i);
-
-  ifs_compose_set_defaults ();
-
-  if (ifsD->auto_preview)
-    ifs_compose_preview ();
-
-  for (i = 0; i < ifsvals.num_elements; i++)
-    aff_element_compute_trans (elements[i], width, height,
-			       ifsvals.center_x, ifsvals.center_y);
-
-  design_area_redraw ();
-}
-
 /* show a transient message dialog */
 static void
 ifscompose_message_dialog (GtkMessageType  type,
@@ -2728,8 +2700,7 @@ ifsfile_load (GtkWidget *widget,
 }
 
 static void
-ifs_compose_save_callback (GtkWidget *widget,
-			   gpointer   data)
+ifs_compose_save (GtkWidget *parent)
 {
   static GtkWidget *file_select = NULL;
 
@@ -2753,8 +2724,7 @@ ifs_compose_save_callback (GtkWidget *widget,
 }
 
 static void
-ifs_compose_load_callback (GtkWidget *widget,
-			   gpointer   data)
+ifs_compose_load (GtkWidget *parent)
 {
   static GtkWidget *file_select = NULL;
 
@@ -2938,10 +2908,48 @@ ifs_compose_preview (void)
 }
 
 static void
-ifs_compose_ok_callback (GtkWidget *widget,
-			 GtkWidget *window)
+ifs_compose_response (GtkWidget *widget,
+                      gint       response_id,
+                      gpointer   data)
 {
-  ifscint.run = TRUE;
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      {
+        gint    i;
+        gdouble width  = ifsDesign->area->allocation.width;
+        gdouble height = ifsDesign->area->allocation.height;
 
-  gtk_widget_destroy (window);
+        undo_begin ();
+        for (i = 0; i < ifsvals.num_elements; i++)
+          undo_update (i);
+
+        ifs_compose_set_defaults ();
+
+        if (ifsD->auto_preview)
+          ifs_compose_preview ();
+
+        for (i = 0; i < ifsvals.num_elements; i++)
+          aff_element_compute_trans (elements[i], width, height,
+                                     ifsvals.center_x, ifsvals.center_y);
+
+        design_area_redraw ();
+      }
+      break;
+
+    case RESPONSE_OPEN:
+      ifs_compose_load (widget);
+      break;
+
+    case RESPONSE_SAVE:
+      ifs_compose_save (widget);
+      break;
+
+    case GTK_RESPONSE_OK:
+      ifscint.run = TRUE;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
+    }
 }

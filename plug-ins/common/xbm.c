@@ -88,16 +88,6 @@ static XBMSaveVals xsvals =
   "_mask"
 };
 
-typedef struct _XBMSaveInterface
-{
-  gboolean  run;
-} XBMSaveInterface;
-
-static XBMSaveInterface xsint =
-{
-  FALSE			/* run */
-};
-
 
 /* Declare some local functions.
  */
@@ -113,11 +103,9 @@ static gint   save_image              (const gchar *filename,
 				       const gchar *prefix,
 				       const gchar *comment,
 				       gboolean     save_mask,
-				       gint32       image_ID, 
+				       gint32       image_ID,
 				       gint32       drawable_ID);
 static gint   save_dialog             (gint32       drawable_ID);
-static void   save_ok_callback        (GtkWidget   *widget,
-				       gpointer     data);
 #if 0
 /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
 static void   comment_entry_callback  (GtkWidget   *widget,
@@ -244,9 +232,9 @@ run (const gchar      *name,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint32             image_ID;
   gint32             drawable_ID;
-  GimpParasite      *parasite = NULL; 
+  GimpParasite      *parasite = NULL;
   gchar             *mask_filename = NULL;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   INIT_I18N ();
 
@@ -285,7 +273,7 @@ run (const gchar      *name,
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
@@ -449,7 +437,7 @@ run (const gchar      *name,
 			  xsvals.prefix,
 			  xsvals.comment,
 			  FALSE,
-			  image_ID, drawable_ID) 
+			  image_ID, drawable_ID)
               && (!xsvals.write_mask || save_image (mask_filename,
                                                     mask_prefix,
                                                     xsvals.comment,
@@ -482,7 +470,7 @@ run (const gchar      *name,
 
 /* Return the value of a digit. */
 static gint
-getval (gint c, 
+getval (gint c,
 	gint base)
 {
   const gchar *digits = "0123456789abcdefABCDEF";
@@ -623,7 +611,7 @@ cpp_fgetc (FILE *fp)
 
 /* Match a string with a file. */
 static gint
-match (FILE  *fp, 
+match (FILE  *fp,
        gchar *s)
 {
   gint c;
@@ -1148,22 +1136,16 @@ save_dialog (gint32 drawable_ID)
   GtkWidget *entry;
   GtkWidget *spinbutton;
   GtkObject *adj;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as XBM"), "xbm",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/xbm.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /* parameter settings */
   frame = gtk_frame_new (_("XBM Options"));
@@ -1205,7 +1187,7 @@ save_dialog (gint32 drawable_ID)
 
   /* comment string. */
 #if 0
-  /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */    
+  /* DISABLED - see http://bugzilla.gnome.org/show_bug.cgi?id=82763 */
   entry = gtk_entry_new ();
   gtk_entry_set_max_length (GTK_ENTRY (entry), MAX_COMMENT);
   gtk_widget_set_size_request (entry, 240, -1);
@@ -1297,12 +1279,12 @@ save_dialog (gint32 drawable_ID)
   gtk_widget_show (vbox);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return xsint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
-
 
 /* Update the comment string. */
 #if 0
@@ -1333,13 +1315,4 @@ mask_ext_entry_callback (GtkWidget *widget,
   memset (xsvals.prefix, 0, sizeof (xsvals.mask_ext));
   strncpy (xsvals.mask_ext,
 	   gtk_entry_get_text (GTK_ENTRY (widget)), MAX_MASK_EXT);
-}
-
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  xsint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

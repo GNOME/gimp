@@ -73,6 +73,8 @@ static char rcsid[] = "$Id$";
 #define LUMINOSITY(PIX) (INTENSITY (PIX[0], PIX[1], PIX[2]))
 #define OFFSETOF(t,f)	((int) ((char*) &((t*) 0)->f))
 
+#define RESPONSE_RESCAN     1
+
 #define GRADIENT_NAME_MAX   256
 #define GRADIENT_RESOLUTION 360
 
@@ -372,10 +374,6 @@ typedef struct
   gchar    gflare_name[GFLARE_NAME_MAX];
 } PluginValues;
 
-typedef struct
-{
-  gboolean run;
-} PluginInterface;
 
 typedef void (* QueryFunc) (GtkWidget *,
 			    gpointer,
@@ -503,11 +501,6 @@ PluginValues pvals =
   3,		/* asupsample_max_depth */
   0.2,		/* asupsample_threshold */
   "Default"	/* gflare_name */
-};
-
-PluginInterface pint =
-{
-  FALSE		/* run */
 };
 
 GFlare default_gflare =
@@ -663,8 +656,6 @@ static void calc_overlay                (guchar       *dest,
 				 	 guchar       *src1,
 					 guchar       *src2);
 
-static void dlg_ok_callback             (GtkWidget    *widget,
-					 gpointer      data);
 static void dlg_setup_gflare            (void);
 static gboolean dlg_preview_handle_event (GtkWidget    *widget,
 					  GdkEvent     *event);
@@ -720,12 +711,11 @@ static void ed_run                (GtkWindow            *parent,
                                    GFlare               *target_gflare,
 				   GFlareEditorCallback  callback,
 				   gpointer              calldata);
-static void ed_close_callback     (GtkWidget    *widget,
-				   gpointer      data);
-static void ed_ok_callback        (GtkWidget    *widget,
-				   gpointer      data);
-static void ed_rescan_callback    (GtkWidget    *widget,
-				   gpointer      data);
+static void ed_destroy_callback   (GtkWidget    *widget,
+				   GFlareEditor *ed);
+static void ed_response           (GtkWidget    *widget,
+                                   gint          response_id,
+				   GFlareEditor *ed);
 static void ed_make_page_general  (GFlareEditor *ed,
 				   GtkWidget    *notebook);
 static void ed_make_page_glow     (GFlareEditor *ed,
@@ -1440,7 +1430,7 @@ gflare_save (GFlare *gflare)
 			   "If you add a new entry in %s, like:\n"
 			   "(gflare-path \"%s\")\n"
 			   "and make a folder %s,\n"
-			   "then you can save your own GFlares into that folder."), 
+			   "then you can save your own GFlares into that folder."),
 			 gflare->name, gimprc, gflare_dir, dir);
 
 	      g_free (gimprc);
@@ -1448,7 +1438,7 @@ gflare_save (GFlare *gflare)
 	      g_free (dir);
 
 	      message_ok = TRUE;
-	    }	      
+	    }
 
 	  return;
 	}
@@ -1566,7 +1556,7 @@ static GFlare *
 gflares_list_lookup (const gchar *name)
 {
   GList *llink;
-  llink = g_list_find_custom (gflares_list, name, 
+  llink = g_list_find_custom (gflares_list, name,
 			      (GCompareFunc) gflare_compare_name);
   return (llink) ? llink->data : NULL;
 }
@@ -2257,6 +2247,7 @@ dlg_run (void)
   GtkWidget *abox;
   GtkWidget *button;
   GtkWidget *notebook;
+  gboolean   run = FALSE;
 
   gimp_ui_init ("gflare", TRUE);
 
@@ -2264,9 +2255,8 @@ dlg_run (void)
    *	Init Main Dialog
    */
 
-  pint.run = FALSE;
-  dlg = g_new (GFlareDialog, 1);
-  dlg->init = TRUE;
+  dlg = g_new0 (GFlareDialog, 1);
+  dlg->init           = TRUE;
   dlg->update_preview = TRUE;
 
   gradient_menu_init (); /* FIXME: this should go elsewhere  */
@@ -2282,28 +2272,20 @@ dlg_run (void)
 
   shell = dlg->shell =
     gimp_dialog_new (_("GFlare"), "gflare",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/gflare.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
-
-		     GTK_STOCK_OK, dlg_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 		     NULL);
-
-  g_signal_connect (shell, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*
    *    main hbox
    */
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6); 
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox,
 		      FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -2312,9 +2294,9 @@ dlg_run (void)
    *	Preview
    */
 
-  frame = gtk_frame_new (_("Preview")); 
+  frame = gtk_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame); 
+  gtk_widget_show (frame);
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
@@ -2325,8 +2307,8 @@ dlg_run (void)
   gtk_box_pack_start (GTK_BOX (vbox), abox, TRUE, TRUE, 0);
   gtk_widget_show (abox);
 
-  frame = gtk_frame_new (NULL); 
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN); 
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
@@ -2370,20 +2352,16 @@ dlg_run (void)
   dlg->init = FALSE;
   dlg_preview_update ();
 
-  gtk_main ();
-  gdk_flush ();
+  if (gtk_dialog_run (GTK_DIALOG (shell)) == GTK_RESPONSE_OK)
+    {
+      gflare_name_copy (pvals.gflare_name, dlg->gflare->name);
 
-  return pint.run;
-}
+      run = TRUE;
+    }
 
-static void
-dlg_ok_callback (GtkWidget *widget,
-		 gpointer   data)
-{
-  gflare_name_copy (pvals.gflare_name, dlg->gflare->name);
+  gtk_widget_destroy (shell);
 
-  pint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void
@@ -3186,7 +3164,7 @@ ed_run (GtkWindow            *parent,
 {
   GtkWidget *shell;
   GtkWidget *hbox;
-  GtkWidget *frame; 
+  GtkWidget *frame;
   GtkWidget *abox;
   GtkWidget *notebook;
 
@@ -3204,33 +3182,28 @@ ed_run (GtkWindow            *parent,
    */
   shell = ed->shell =
     gimp_dialog_new (_("GFlare Editor"), "gflare",
+                     GTK_WIDGET (parent), 0,
 		     gimp_standard_help_func, "filters/gflare.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     _("Rescan Gradients"), ed_rescan_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
+		     _("Rescan Gradients"), RESPONSE_RESCAN,
+		     GTK_STOCK_CANCEL,      GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,          GTK_RESPONSE_OK,
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                     NULL);
 
-		     GTK_STOCK_OK, ed_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
-
-		     NULL);
-
+  g_signal_connect (shell, "response",
+                    G_CALLBACK (ed_response),
+                    ed);
   g_signal_connect (shell, "destroy",
-                    G_CALLBACK (ed_close_callback),
-                    NULL);
-
-  gtk_window_set_transient_for (GTK_WINDOW (shell), parent);
+                    G_CALLBACK (ed_destroy_callback),
+                    ed);
 
   /*
    *    main hbox
    */
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6); 
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), hbox,
 		      FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -3239,17 +3212,17 @@ ed_run (GtkWindow            *parent,
    *	Preview
    */
 
-  frame = gtk_frame_new (_("Preview")); 
+  frame = gtk_frame_new (_("Preview"));
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame); 
+  gtk_widget_show (frame);
 
   abox = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
   gtk_container_set_border_width (GTK_CONTAINER (abox), 4);
   gtk_container_add (GTK_CONTAINER (frame), abox);
   gtk_widget_show (abox);
 
-  frame = gtk_frame_new (NULL); 
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN); 
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_container_add (GTK_CONTAINER (abox), frame);
   gtk_widget_show (frame);
 
@@ -3258,7 +3231,7 @@ ed_run (GtkWindow            *parent,
 			     ed_preview_render_func, NULL,
 			     ed_preview_deinit_func, NULL);
   gtk_widget_set_events (GTK_WIDGET (ed->preview->widget), DLG_PREVIEW_MASK);
-  gtk_container_add (GTK_CONTAINER (frame), ed->preview->widget); 
+  gtk_container_add (GTK_CONTAINER (frame), ed->preview->widget);
   g_signal_connect (ed->preview->widget, "event",
                     G_CALLBACK (dlg_preview_handle_event),
                     NULL);
@@ -3284,8 +3257,8 @@ ed_run (GtkWindow            *parent,
 }
 
 static void
-ed_close_callback (GtkWidget *widget,
-		   gpointer   data)
+ed_destroy_callback (GtkWidget    *widget,
+                     GFlareEditor *ed)
 {
   preview_free (ed->preview);
   gflare_free (ed->gflare);
@@ -3294,23 +3267,30 @@ ed_close_callback (GtkWidget *widget,
 }
 
 static void
-ed_ok_callback (GtkWidget *widget,
-		gpointer   data)
+ed_response (GtkWidget    *widget,
+             gint          response_id,
+             GFlareEditor *ed)
 {
-  ed->run = TRUE;
-  gflare_copy (ed->target_gflare, ed->gflare);
-  gtk_widget_destroy (ed->shell);
-}
+  switch (response_id)
+    {
+    case RESPONSE_RESCAN:
+      ed->init = TRUE;
+      gradient_menu_rescan ();
+      ed->init = FALSE;
+      ed_preview_update ();
+      gtk_widget_queue_draw (ed->notebook);
+      break;
 
-static void
-ed_rescan_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  ed->init = TRUE;
-  gradient_menu_rescan ();
-  ed->init = FALSE;
-  ed_preview_update ();
-  gtk_widget_queue_draw (ed->notebook);
+    case GTK_RESPONSE_OK:
+      ed->run = TRUE;
+      gflare_copy (ed->target_gflare, ed->gflare);
+      gtk_widget_destroy (ed->shell);
+      break;
+
+    default:
+      gtk_widget_destroy (ed->shell);
+      break;
+    }
 }
 
 static void
@@ -3436,7 +3416,7 @@ ed_make_page_glow (GFlareEditor *ed,
   GtkWidget    *table;
   GtkObject    *adj;
   gint          row;
-  
+
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
@@ -3793,7 +3773,7 @@ ed_make_page_sflare (GFlareEditor *ed,
 				gflare->sflare_shape == GF_CIRCLE);
   gtk_box_pack_start (GTK_BOX (shape_vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
- 
+
   polygon_hbox = gtk_hbox_new (FALSE, 4);
   gtk_box_pack_start (GTK_BOX (shape_vbox), polygon_hbox, FALSE, FALSE, 0);
   gtk_widget_show (polygon_hbox);

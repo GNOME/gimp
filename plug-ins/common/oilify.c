@@ -50,10 +50,6 @@ typedef struct
   gint    mode;
 } OilifyVals;
 
-typedef struct
-{
-  gboolean  run;
-} OilifyInterface;
 
 /* Declare local functions.
  */
@@ -69,8 +65,6 @@ static void      oilify_intensity   (GimpDrawable *drawable);
 
 static gint      oilify_dialog      (void);
 
-static void      oilify_ok_callback (GtkWidget *widget,
-				     gpointer   data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -84,11 +78,6 @@ static OilifyVals ovals =
 {
   7.0,     /* mask size */
   0        /* mode      */
-};
-
-static OilifyInterface oint =
-{
-  FALSE     /*  run  */
 };
 
 
@@ -263,7 +252,7 @@ oilify_rgb (GimpDrawable *drawable)
       for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
 	{
 	  dest = dest_row;
- 
+
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
 	      memset(Cnt, 0, sizeof(Cnt));
@@ -274,20 +263,20 @@ oilify_rgb (GimpDrawable *drawable)
 	      y3 = CLAMP ((y - n), y1, y2);
 	      x4 = CLAMP ((x + n + 1), x1, x2);
 	      y4 = CLAMP ((y + n + 1), y1, y2);
- 
+
 	      gimp_pixel_rgn_init (&src_rgn, drawable,
 				   x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
- 
+
 	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn);
 		   pr2 != NULL;
 		   pr2 = gimp_pixel_rgns_process (pr2))
 		{
 		  src_row = src_rgn.data;
-		  
+
 		  for (yy = 0; yy < src_rgn.h; yy++)
 		    {
 		      src = src_row;
-		      
+
 		      for (xx = 0; xx < src_rgn.w; xx++)
 			{
 			  for (b = 0,
@@ -303,25 +292,25 @@ oilify_rgb (GimpDrawable *drawable)
 				  *tmp2 = c;
 				}
 			    }
-			  
+
 			  src += src_rgn.bpp;
 			}
-		      
+
 		      src_row += src_rgn.rowstride;
 		    }
 		}
-	      
+
 	      for (b = 0, tmp1 = Val; b < bytes; b++)
 		*dest++ = *tmp1++;
 	    }
-	  
+
 	  dest_row += dest_rgn.rowstride;
 	}
-      
+
       progress += dest_rgn.w * dest_rgn.h;
       gimp_progress_update ((double) progress / (double) max_progress);
     }
-  
+
   /*  update the oil-painted region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -356,26 +345,26 @@ oilify_intensity (GimpDrawable *drawable)
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
   progress = 0;
   max_progress = (x2 - x1) * (y2 - y1);
-  
+
   width = drawable->width;
   height = drawable->height;
   bytes = drawable->bpp;
-  
+
   n = (int) ovals.mask_size / 2;
-  
+
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       x1, y1, (x2 - x1), (y2 - y1), TRUE, TRUE);
-  
+
   for (pr1 = gimp_pixel_rgns_register (1, &dest_rgn);
        pr1 != NULL;
        pr1 = gimp_pixel_rgns_process (pr1))
     {
       dest_row = dest_rgn.data;
-      
+
       for (y = dest_rgn.y; y < (dest_rgn.y + dest_rgn.h); y++)
 	{
 	  dest = dest_row;
-	  
+
 	  for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
 	    {
 	      Cnt = 0;
@@ -386,20 +375,20 @@ oilify_intensity (GimpDrawable *drawable)
 	      y3 = CLAMP ((y - n), y1, y2);
 	      x4 = CLAMP ((x + n + 1), x1, x2);
 	      y4 = CLAMP ((y + n + 1), y1, y2);
-	      
+
 	      gimp_pixel_rgn_init (&src_rgn, drawable,
 				   x3, y3, (x4 - x3), (y4 - y3), FALSE, FALSE);
-	      
+
 	      for (pr2 = gimp_pixel_rgns_register (1, &src_rgn);
 		   pr2 != NULL;
 		   pr2 = gimp_pixel_rgns_process (pr2))
 		{
 		  src_row = src_rgn.data;
-		  
+
 		  for (yy = 0; yy < src_rgn.h; yy++)
 		    {
 		      src = src_row;
-		      
+
 		      for (xx = 0; xx < src_rgn.w; xx++)
 			{
 			  if ((c = ++Hist[INTENSITY(src)]) > Cnt)
@@ -412,26 +401,26 @@ oilify_intensity (GimpDrawable *drawable)
 				   b++, tmp1++, guc_tmp1++)
 				*tmp1 = *guc_tmp1;
 			    }
-			  
+
 			  src += src_rgn.bpp;
 			}
-		      
+
 		      src_row += src_rgn.rowstride;
 		    }
 		}
-	      
+
 	      for (b = 0, tmp1 = Val; b < bytes; b++)
 		*dest++ = *tmp1++;
 	    }
-	  
+
 	  dest_row += dest_rgn.rowstride;
 	}
-      
+
       progress += dest_rgn.w * dest_rgn.h;
       if ((progress % 5) == 0)
 	gimp_progress_update ((double) progress / (double) max_progress);
     }
-  
+
   /*  update the oil-painted region  */
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
@@ -445,24 +434,18 @@ oilify_dialog (void)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("oilify", FALSE);
 
   dlg = gimp_dialog_new (_("Oilify"), "oilify",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/oilify.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, oilify_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 2, 3);
 
@@ -486,17 +469,9 @@ oilify_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return oint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-oilify_ok_callback (GtkWidget *widget,
-                    gpointer   data)
-{
-  oint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

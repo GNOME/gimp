@@ -21,6 +21,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define RESPONSE_APPLY 1
+
 #define MAPFILE "data.out"
 
 static GtkWidget *smwindow;
@@ -310,22 +312,30 @@ static void smstrexpsmadjmove(GtkWidget *w, gpointer data)
     }
 }
 
-static void smapplyclick(GtkWidget *w, GtkWidget *win)
+static void
+smresponse (GtkWidget *widget,
+            gint       response_id,
+            gpointer   data)
 {
-  gint i;
-  for (i = 0; i < numsmvect; i++)
+  switch (response_id)
     {
-      pcvals.sizevector[i] = smvector[i];
-    }
-  pcvals.numsizevector = numsmvect;
-  pcvals.sizestrexp = GTK_ADJUSTMENT(smstrexpadjust)->value;
-  pcvals.sizevoronoi = GTK_TOGGLE_BUTTON(sizevoronoi)->active;
-}
+    case RESPONSE_APPLY:
+    case GTK_RESPONSE_OK:
+      {
+        gint i;
 
-static void smokclick(GtkWidget *w, GtkWidget *win)
-{
-  smapplyclick(NULL, NULL);
-  gtk_widget_hide(w);
+        for (i = 0; i < numsmvect; i++)
+          pcvals.sizevector[i] = smvector[i];
+
+        pcvals.numsizevector = numsmvect;
+        pcvals.sizestrexp  = GTK_ADJUSTMENT (smstrexpadjust)->value;
+        pcvals.sizevoronoi = GTK_TOGGLE_BUTTON (sizevoronoi)->active;
+      }
+      break;
+    }
+
+  if (response_id != RESPONSE_APPLY)
+    gtk_widget_hide (widget);
 }
 
 void initsmvectors(void)
@@ -382,34 +392,31 @@ void create_sizemap_dialog(void)
 
   initsmvectors();
 
-  if(smwindow) {
-    updatesmvectorprev();
-    updatesmpreviewprev();
-    gtk_widget_show(smwindow);
-    return;
-  }
+  if (smwindow)
+    {
+      updatesmvectorprev ();
+      updatesmpreviewprev ();
+      gtk_window_present (GTK_WINDOW (smwindow));
+      return;
+    }
 
   smwindow =
     gimp_dialog_new (_("Size Map Editor"), "gimpressionist",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/gimpressionst.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_APPLY, smapplyclick,
-		     NULL, NULL, NULL, FALSE, FALSE,
+		     GTK_STOCK_APPLY,  RESPONSE_APPLY,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-		     GTK_STOCK_CANCEL, gtk_widget_hide,
-		     NULL, 1, NULL, FALSE, FALSE,
+                     NULL);
 
-		     GTK_STOCK_OK, smokclick,
-		     NULL, 1, NULL, TRUE, FALSE,
-
-		     NULL);
-
+  g_signal_connect (smwindow, "response",
+                    G_CALLBACK (smresponse),
+                    NULL);
   g_signal_connect (smwindow, "destroy",
-		    G_CALLBACK(gtk_widget_destroyed), &smwindow);
-  g_signal_connect (smwindow, "delete_event",
-		    G_CALLBACK(gtk_widget_hide_on_delete), &smwindow);
+		    G_CALLBACK (gtk_widget_destroyed),
+                    &smwindow);
 
   table1 = gtk_table_new(2, 5, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table1), 6);

@@ -46,6 +46,8 @@
 #include "gimp-intl.h"
 
 
+#define RESPONSE_RESET 1
+
 typedef struct
 {
   GtkWidget    *dialog;
@@ -53,7 +55,6 @@ typedef struct
 
   GtkWidget    *template_menu;
   GtkWidget    *editor;
-  GtkWidget    *ok_button;
 
   Gimp         *gimp;
   GimpTemplate *template;
@@ -63,11 +64,8 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void   file_new_ok_callback     (GtkWidget         *widget,
-                                        FileNewDialog     *dialog);
-static void   file_new_cancel_callback (GtkWidget         *widget,
-                                        FileNewDialog     *dialog);
-static void   file_new_reset_callback  (GtkWidget         *widget,
+static void   file_new_response        (GtkWidget         *widget,
+                                        gint               response_id,
                                         FileNewDialog     *dialog);
 static void   file_new_template_notify (GimpTemplate      *template,
                                         GParamSpec        *param_spec,
@@ -106,16 +104,15 @@ file_new_dialog_new (Gimp *gimp)
                               gimp_standard_help_func,
                               GIMP_HELP_FILE_NEW,
 
-                              GIMP_STOCK_RESET, file_new_reset_callback,
-                              dialog, NULL, NULL, FALSE, FALSE,
-
-                              GTK_STOCK_CANCEL, file_new_cancel_callback,
-                              dialog, NULL, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, file_new_ok_callback,
-                              dialog, NULL, &dialog->ok_button, TRUE, FALSE,
+                              GIMP_STOCK_RESET, RESPONSE_RESET,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (dialog->dialog, "response",
+                    G_CALLBACK (file_new_response),
+                    dialog);
 
   g_object_set_data_full (G_OBJECT (dialog->dialog),
                           "gimp-file-new-dialog", dialog,
@@ -125,7 +122,7 @@ file_new_dialog_new (Gimp *gimp)
 
   /*  vbox holding the rest of the dialog  */
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox),
 		      main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
@@ -199,29 +196,29 @@ file_new_dialog_set (GtkWidget    *widget,
 /*  private functions  */
 
 static void
-file_new_ok_callback (GtkWidget     *widget,
-		      FileNewDialog *dialog)
+file_new_response (GtkWidget     *widget,
+                   gint           response_id,
+                   FileNewDialog *dialog)
 {
-  if (dialog->memsize >
-      GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size)
-    file_new_confirm_dialog (dialog);
-  else
-    file_new_create_image (dialog);
-}
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      gimp_config_sync (GIMP_CONFIG (dialog->gimp->config->default_image),
+                        GIMP_CONFIG (dialog->template), 0);
+      break;
 
-static void
-file_new_cancel_callback (GtkWidget     *widget,
-			  FileNewDialog *dialog)
-{
-  gtk_widget_destroy (dialog->dialog);
-}
+    case GTK_RESPONSE_OK:
+      if (dialog->memsize >
+          GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size)
+        file_new_confirm_dialog (dialog);
+      else
+        file_new_create_image (dialog);
+      break;
 
-static void
-file_new_reset_callback (GtkWidget     *widget,
-			 FileNewDialog *dialog)
-{
-  gimp_config_sync (GIMP_CONFIG (dialog->gimp->config->default_image),
-                    GIMP_CONFIG (dialog->template), 0);
+    default:
+      gtk_widget_destroy (dialog->dialog);
+      break;
+    }
 }
 
 static void
@@ -233,8 +230,9 @@ file_new_template_notify (GimpTemplate  *template,
     {
       dialog->memsize = template->initial_size;
 
-      gtk_widget_set_sensitive (dialog->ok_button,
-                                ! template->initial_size_too_large);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog->dialog),
+                                         GTK_RESPONSE_OK,
+                                         ! template->initial_size_too_large);
     }
 }
 

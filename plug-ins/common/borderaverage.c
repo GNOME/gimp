@@ -85,7 +85,7 @@ query (void)
     { GIMP_PDB_INT32,    "thickness",       "Border size to take in count" },
     { GIMP_PDB_INT32,    "bucket_exponent", "Bits for bucket size (default=4: 16 Levels)" },
   };
-  static GimpParamDef return_vals[] = 
+  static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_COLOR,     "borderaverage",   "The average color of the specified border" },
   };
@@ -120,7 +120,7 @@ run (const gchar      *name,
   INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
-	
+
   /*	Get the specified drawable	*/
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -184,7 +184,7 @@ run (const gchar      *name,
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-	
+
   values[1].type = GIMP_PDB_COLOR;
   values[1].data.d_color = result_color;
 
@@ -192,8 +192,8 @@ run (const gchar      *name,
 }
 
 static void
-borderaverage (GimpDrawable *drawable, 
-	       GimpRGB      *result) 
+borderaverage (GimpDrawable *drawable,
+	       GimpRGB      *result)
 {
   gint    width;
   gint    height;
@@ -206,7 +206,7 @@ borderaverage (GimpDrawable *drawable,
   gint   *cube;
   gint    row, col;
   gint    i, j, k; /* index variables */
- 
+
   GimpPixelRgn  myPR;
 
   /* allocate and clear the cube before */
@@ -214,7 +214,7 @@ borderaverage (GimpDrawable *drawable,
   bucket_rexpo = 8 - bucket_expo;
   cube = g_new (gint, 1 << (bucket_rexpo * 3));
   bucket_num = 1 << bucket_rexpo;
-		
+
   for (i = 0; i < bucket_num; i++)
     {
       for (j = 0; j < bucket_num; j++)
@@ -253,7 +253,7 @@ borderaverage (GimpDrawable *drawable,
   for (row = y1; row < y2; row++)
     {
       gimp_pixel_rgn_get_row (&myPR, buffer, x1, row, (x2-x1));
-	
+
       if (row < y1 + borderaverage_thickness ||
 	  row >= y2 - borderaverage_thickness)
 	{
@@ -311,11 +311,11 @@ borderaverage (GimpDrawable *drawable,
   g_free (cube);
 }
 
-static void 
-add_new_color (gint    bytes, 
-	       guchar *buffer, 
-	       gint   *cube, 
-	       gint    bucket_expo) 
+static void
+add_new_color (gint    bytes,
+	       guchar *buffer,
+	       gint   *cube,
+	       gint    bucket_expo)
 {
   guchar r, g, b;
   gint	 bucket_rexpo;
@@ -341,18 +341,7 @@ add_new_color (gint    bytes,
   cube[(r << (bucket_rexpo << 1)) + (g << bucket_rexpo) + b]++;
 }
 
-static gboolean run_flag = FALSE;
-
-static void
-borderaverage_ok_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  run_flag = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static gint 
+static gint
 borderaverage_dialog (void)
 {
   GtkWidget *dlg;
@@ -363,25 +352,18 @@ borderaverage_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *menu;
+  gboolean   run;
 
   gimp_ui_init ("borderaverage", FALSE);
 
   dlg = gimp_dialog_new (_("Borderaverage"), "borderaverage",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/borderaverage.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, borderaverage_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -445,8 +427,9 @@ borderaverage_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return run_flag;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }

@@ -94,17 +94,21 @@ templates_delete_template_cmd_callback (GtkWidget *widget,
 }
 
 static void
-templates_new_template_ok_callback (GtkWidget *widget,
-                                    GtkWidget *dialog)
+templates_new_template_response (GtkWidget *widget,
+                                 gint       response_id,
+                                 GtkWidget *dialog)
 {
-  GimpTemplate *template;
-  Gimp         *gimp;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GimpTemplate *template;
+      Gimp         *gimp;
 
-  template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
-  gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
+      template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
+      gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
 
-  gimp_container_add (gimp->templates, GIMP_OBJECT (template));
-  gimp_context_set_template (gimp_get_user_context (gimp), template);
+      gimp_container_add (gimp->templates, GIMP_OBJECT (template));
+      gimp_context_set_template (gimp_get_user_context (gimp), template);
+    }
 
   gtk_widget_destroy (dialog);
 }
@@ -118,27 +122,24 @@ templates_new_template_dialog (Gimp         *gimp,
   GtkWidget    *main_vbox;
   GtkWidget    *editor;
 
-  dialog =
-    gimp_viewable_dialog_new (NULL,
-                              _("New Template"), "new_template",
-                              GIMP_STOCK_TEMPLATE,
-                              _("Create a New Template"),
-                              gimp_standard_help_func,
-                              GIMP_HELP_TEMPLATE_NEW,
+  dialog = gimp_viewable_dialog_new (NULL,
+                                     _("New Template"), "new_template",
+                                     GIMP_STOCK_TEMPLATE,
+                                     _("Create a New Template"),
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_TEMPLATE_NEW,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, (gpointer) 1, NULL, FALSE, TRUE,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                              GTK_STOCK_OK,
-                              G_CALLBACK (templates_new_template_ok_callback),
-                              NULL, NULL, NULL, TRUE, FALSE,
+                                     NULL);
 
-                              NULL);
-
-  gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (templates_new_template_response),
+                    dialog);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
@@ -160,21 +161,26 @@ templates_new_template_dialog (Gimp         *gimp,
 }
 
 static void
-templates_edit_template_ok_callback (GtkWidget *widget,
-                                     GtkWidget *dialog)
+templates_edit_template_response (GtkWidget *widget,
+                                  gint       response_id,
+                                  GtkWidget *dialog)
 {
-  GimpTemplateEditor *editor;
-  GimpTemplate       *template;
-  Gimp               *gimp;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GimpTemplateEditor *editor;
+      GimpTemplate       *template;
+      Gimp               *gimp;
 
-  editor   = g_object_get_data (G_OBJECT (dialog), "gimp-template-editor");
-  template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
-  gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
+      editor   = g_object_get_data (G_OBJECT (dialog), "gimp-template-editor");
+      template = g_object_get_data (G_OBJECT (dialog), "gimp-template");
+      gimp     = g_object_get_data (G_OBJECT (dialog), "gimp");
 
-  gimp_config_sync (GIMP_CONFIG (editor->template), GIMP_CONFIG (template), 0);
+      gimp_config_sync (GIMP_CONFIG (editor->template),
+                        GIMP_CONFIG (template), 0);
 
-  gimp_list_uniquefy_name (GIMP_LIST (gimp->templates),
-                           GIMP_OBJECT (template), TRUE);
+      gimp_list_uniquefy_name (GIMP_LIST (gimp->templates),
+                               GIMP_OBJECT (template), TRUE);
+    }
 
   gtk_widget_destroy (dialog);
 }
@@ -187,25 +193,24 @@ templates_edit_template_dialog (Gimp         *gimp,
   GtkWidget *main_vbox;
   GtkWidget *editor;
 
-  dialog =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (template),
-                              _("Edit Template"), "edit_template",
-                              GIMP_STOCK_EDIT,
-                              _("Edit Template"),
-                              gimp_standard_help_func,
-                              GIMP_HELP_TEMPLATE_EDIT,
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (template),
+                                     _("Edit Template"), "edit_template",
+                                     GIMP_STOCK_EDIT,
+                                     _("Edit Template"),
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_TEMPLATE_EDIT,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, (gpointer) 1, NULL, FALSE, TRUE,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                              GTK_STOCK_OK,
-                              G_CALLBACK (templates_edit_template_ok_callback),
-                              NULL, NULL, NULL, TRUE, FALSE,
+                                     NULL);
 
-                              NULL);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (templates_edit_template_response),
+                    dialog);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);

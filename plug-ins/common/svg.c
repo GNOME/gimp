@@ -61,16 +61,6 @@ static SvgLoadVals load_vals =
   FALSE
 };
 
-typedef struct
-{
-  gboolean  run;
-} SvgLoadInterface;
-
-static SvgLoadInterface load_interface =
-{
-  FALSE
-};
-
 
 static void  query (void);
 static void  run   (const gchar      *name,
@@ -526,19 +516,6 @@ static void  load_dialog_set_ratio (gdouble x,
 
 
 static void
-load_dialog_ok_callback (GtkWidget *widget,
-                         gpointer   data)
-
-{
-  load_vals.width  = ROUND (gimp_size_entry_get_refval (size, 0));
-  load_vals.height = ROUND (gimp_size_entry_get_refval (size, 1));
-
-  load_interface.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
 load_dialog_size_callback (GtkWidget *widget,
                            gpointer   data)
 {
@@ -635,6 +612,7 @@ load_dialog (const gchar *filename)
   GtkWidget *toggle;
   GtkWidget *toggle2;
   GtkObject *adj;
+  gboolean   run;
   GError    *error = NULL;
 
   SvgLoadVals  vals = { SVG_DEFAULT_RESOLUTION,
@@ -654,21 +632,13 @@ load_dialog (const gchar *filename)
   gimp_ui_init ("svg", FALSE);
 
   dialog = gimp_dialog_new (_("Open SVG"), "svg",
-                            NULL, NULL,
-                            GTK_WIN_POS_MOUSE,
-                            FALSE, TRUE, FALSE,
+                            NULL, 0,
+                            gimp_standard_help_func, "filters/svg.html",
 
-                            GTK_STOCK_CANCEL, gtk_widget_destroy,
-                            NULL, 1, NULL, FALSE, TRUE,
-
-                            GTK_STOCK_OK, load_dialog_ok_callback,
-                            NULL, NULL, NULL, TRUE, FALSE,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                             NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -909,7 +879,16 @@ load_dialog (const gchar *filename)
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return load_interface.run;
+  if (run)
+    {
+      load_vals.width  = ROUND (gimp_size_entry_get_refval (size, 0));
+      load_vals.height = ROUND (gimp_size_entry_get_refval (size, 1));
+    }
+
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
+

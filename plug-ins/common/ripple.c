@@ -58,11 +58,6 @@ typedef struct
   gint tile;
 } RippleValues;
 
-typedef struct
-{
-  gboolean run;
-} RippleInterface;
-
 
 /* Declare local functions.
  */
@@ -76,8 +71,6 @@ static void    run    (const gchar      *name,
 static void    ripple              (GimpDrawable *drawable);
 
 static gint    ripple_dialog       (void);
-static void    ripple_ok_callback  (GtkWidget    *widget,
-				    gpointer      data);
 
 static gdouble displace_amount     (gint      location);
 static void    average_two_pixels  (guchar   *dest,
@@ -110,11 +103,6 @@ static RippleValues rvals =
   SINE,       /* waveform    */
   TRUE,       /* antialias   */
   TRUE        /* tile        */
-};
-
-static RippleInterface rpint =
-{
-  FALSE   /*  run  */
 };
 
 static GimpRunMode run_mode;
@@ -426,24 +414,18 @@ ripple_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
+  gboolean   run;
 
   gimp_ui_init ("ripple", TRUE);
 
   dlg = gimp_dialog_new (_("Ripple"), "ripple",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/ripple.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, ripple_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  The main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 6);
@@ -560,21 +542,11 @@ ripple_dialog (void)
   gtk_widget_show (main_vbox);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return rpint.run;
-}
+  gtk_widget_destroy (dlg);
 
-/*  Ripple interface functions  */
-
-static void
-ripple_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  rpint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

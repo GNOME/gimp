@@ -90,10 +90,11 @@ static const gchar *visual_classes[] =
 
 
 static void
-info_window_close_callback (GtkWidget *widget,
-			    gpointer   data)
+info_window_response (GtkWidget  *widget,
+                      gint        response_id,
+                      InfoDialog *info_win)
 {
-  info_dialog_popdown ((InfoDialog *) data);
+  info_dialog_popdown (info_win);
 }
 
 static void
@@ -233,12 +234,12 @@ info_window_create (GimpDisplay *gdisp)
 				       gimp_standard_help_func,
 				       GIMP_HELP_INFO_DIALOG);
 
-  gimp_dialog_create_action_area (GIMP_DIALOG (info_win->shell),
+  gtk_dialog_add_button (GTK_DIALOG (info_win->shell),
+                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
 
-				  GTK_STOCK_CLOSE, info_window_close_callback,
-				  info_win, NULL, NULL, TRUE, TRUE,
-
-				  NULL);
+  g_signal_connect (info_win->shell, "response",
+                    G_CALLBACK (info_window_response),
+                    info_win);
 
   iwd = g_new0 (InfoWinData, 1);
   iwd->gdisp = gdisp;

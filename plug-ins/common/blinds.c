@@ -3,7 +3,7 @@
  *
  * This is a plug-in for the GIMP.
  *
- * Blinds plug-in. Distort an image as though it was stuck to 
+ * Blinds plug-in. Distort an image as though it was stuck to
  * window blinds and the blinds where opened/closed.
  *
  * Copyright (C) 1997 Andy Thomas  alt@picnic.demon.co.uk
@@ -21,17 +21,17 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  * A fair proprotion of this code was taken from the Whirl plug-in
  * which was copyrighted by Federico Mena Quintero (as below).
- * 
+ *
  * Whirl plug-in --- distort an image into a whirlpool
- * Copyright (C) 1997 Federico Mena Quintero           
+ * Copyright (C) 1997 Federico Mena Quintero
  *
  */
 
 /* Change log:-
- * 
+ *
  * Version 0.5 10 June 1997.
  * Changes required to work with 0.99.10.
  *
@@ -84,14 +84,12 @@ static GimpFixMePreview *preview;
 
 typedef struct
 {
-  gboolean   run;
-  gint       img_bpp;
+  gint img_bpp;
 } BlindsInterface;
 
 static BlindsInterface bint =
 {
-  FALSE,         /* run */
-  4              /* bpp of drawable */
+  4  /* bpp of drawable */
 };
 
 /* Array to hold each size of fans. And no there are not each the
@@ -111,8 +109,6 @@ static void      run    (const gchar      *name,
 
 static gint      blinds_dialog       (void);
 
-static void      blinds_ok_callback    (GtkWidget     *widget,
-					gpointer       data);
 static void      blinds_scale_update   (GtkAdjustment *adjustment,
 					gint          *size_val);
 static void      blinds_radio_update   (GtkWidget     *widget,
@@ -196,7 +192,7 @@ run (const gchar      *name,
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  blindsdrawable = drawable = 
+  blindsdrawable = drawable =
     gimp_drawable_get (param[2].data.d_drawable);
 
   switch (run_mode)
@@ -236,7 +232,7 @@ run (const gchar      *name,
       gimp_progress_init ( _("Adding Blinds..."));
 
       apply_blinds ();
-   
+
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
@@ -267,26 +263,20 @@ blinds_dialog (void)
   GtkWidget *table;
   GtkObject *size_data;
   GtkWidget *toggle;
+  gboolean   run;
 
   gimp_ui_init ("blinds", TRUE);
 
   cache_preview (); /* Get the preview image and store it also set has_alpha */
 
   dlg = gimp_dialog_new (_("Blinds"), "blinds",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/blinds.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, blinds_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -367,19 +357,11 @@ blinds_dialog (void)
 
   dialog_update_preview ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return bint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-blinds_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  bint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void
@@ -390,7 +372,7 @@ blinds_radio_update (GtkWidget *widget,
 
   if (GTK_TOGGLE_BUTTON (widget)->active)
     dialog_update_preview ();
-}                  
+}
 
 static void
 blinds_button_update (GtkWidget *widget,
@@ -399,7 +381,7 @@ blinds_button_update (GtkWidget *widget,
   gimp_toggle_button_update (widget, data);
 
   dialog_update_preview ();
-}                  
+}
 
 static void
 blinds_scale_update (GtkAdjustment *adjustment,
@@ -408,7 +390,7 @@ blinds_scale_update (GtkAdjustment *adjustment,
   gimp_int_adjustment_update (adjustment, value);
 
   dialog_update_preview ();
-} 
+}
 
 /* Cache the preview image - updates are a lot faster. */
 /* The preview_cache will contain the small image */
@@ -418,7 +400,7 @@ cache_preview (void)
 {
   gboolean has_alpha;
 
-  bint.img_bpp = gimp_drawable_bpp (blindsdrawable->drawable_id);   
+  bint.img_bpp = gimp_drawable_bpp (blindsdrawable->drawable_id);
 
   has_alpha = gimp_drawable_has_alpha (blindsdrawable->drawable_id);
 
@@ -428,7 +410,7 @@ cache_preview (void)
     }
 }
 
-static void 
+static void
 blindsapply (guchar *srow,
 	     guchar *drow,
 	     gint    width,
@@ -484,7 +466,7 @@ blindsapply (guchar *srow,
 
       src = &srow[point * bpp];
       dst = &drow[point * bpp];
-  
+
       /* Copy pixels across */
       for (j = 0 ; j < bpp; j++)
 	{
@@ -508,7 +490,7 @@ blindsapply (guchar *srow,
 	  fw = fanwidths[k] / 2;
 	  dx = (int) (ang * ((double) (fw - (double)(i % fw))));
 
-	  src = &srow[(available + i) * bpp];      
+	  src = &srow[(available + i) * bpp];
 	  dst = &drow[(available + i + dx) * bpp];
 
 	  for (j = 0; j < bpp; j++)
@@ -519,7 +501,7 @@ blindsapply (guchar *srow,
 	  /* Right side */
 	  j = i + 1;
 	  src = &srow[(available + fanwidths[k] - j
-		       - (fanwidths[k] % 2)) * bpp];      
+		       - (fanwidths[k] % 2)) * bpp];
 	  dst = &drow[(available + fanwidths[k] - j
 		       - (fanwidths[k] % 2) - dx) * bpp];
 
@@ -539,7 +521,7 @@ dialog_update_preview (void)
   gint    y;
   guchar *p, *buffer;
   guchar  bg[4];
-  
+
   p = preview->cache;
 
   gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
@@ -553,13 +535,13 @@ dialog_update_preview (void)
 	  blindsapply (p, buffer, preview->width, bint.img_bpp, bg);
 	  gimp_fixme_preview_do_row (preview, y, preview->width, buffer);
 	  p += preview->width * bint.img_bpp;
-	} 
+	}
     }
   else
     {
       /* Horizontal blinds */
       /* Apply the blinds algo to a single column -
-       * this act as a transfomation matrix for the 
+       * this act as a transfomation matrix for the
        * rows. Make row 0 invalid so we can find it again!
        */
       gint i;
@@ -574,7 +556,7 @@ dialog_update_preview (void)
 	  gint bd = bint.img_bpp;
 	  guchar *dst;
 	  dst = &buffer[i * bd];
-	  
+
 	  for (j = 0 ; j < bd; j++)
 	    {
 	      dst[j] = bg[j];
@@ -588,7 +570,7 @@ dialog_update_preview (void)
 
       /* Bit of a fiddle since blindsapply really works on an image
        * row not a set of bytes. - preview can't be > 255
-       * or must make dr sr int rows. 
+       * or must make dr sr int rows.
        */
       blindsapply (sr, dr, preview->height, 1, dummybg);
 
@@ -602,12 +584,12 @@ dialog_update_preview (void)
 	  else
 	    {
 	      /* Draw line from src */
-	      p = preview->cache + 
+	      p = preview->cache +
 		(preview->width * bint.img_bpp * (dr[y] - 1));
 	    }
 
 	  gimp_fixme_preview_do_row (preview, y, preview->width, p);
-	} 
+	}
       g_free (sr);
       g_free (dr);
     }
@@ -638,7 +620,7 @@ apply_blinds (void)
 
   gimp_get_bg_guchar (blindsdrawable, bvals.bg_trans, bg);
 
-  gimp_drawable_mask_bounds (blindsdrawable->drawable_id, &sel_x1, &sel_y1, 
+  gimp_drawable_mask_bounds (blindsdrawable->drawable_id, &sel_x1, &sel_y1,
 			     &sel_x2, &sel_y2);
 
   sel_width  = sel_x2 - sel_x1;
@@ -649,12 +631,12 @@ apply_blinds (void)
   gimp_pixel_rgn_init (&des_rgn, blindsdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
 
-  src_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP); 
-  des_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP); 
+  src_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
+  des_rows = g_new (guchar, MAX (sel_width, sel_height) * 4 * STEP);
 
   if (bvals.orientation)
     {
-      for (y = 0; y < sel_height; y += STEP) 
+      for (y = 0; y < sel_height; y += STEP)
 	{
 	  int rr;
 	  int step;
@@ -691,7 +673,7 @@ apply_blinds (void)
     {
       /* Horizontal blinds */
       /* Apply the blinds algo to a single column -
-       * this act as a transfomation matrix for the 
+       * this act as a transfomation matrix for the
        * rows. Make row 0 invalid so we can find it again!
        */
       int i;
@@ -709,7 +691,7 @@ apply_blinds (void)
 
       /* Hmmm. does this work portably? */
       /* This "swaps the intergers around that are held in in the
-       * sr & dr arrays. 
+       * sr & dr arrays.
        */
       blindsapply ((guchar *) sr, (guchar *) dr,
 		   sel_height, sizeof (gint), dummybg);
@@ -727,7 +709,7 @@ apply_blinds (void)
 	    }
 	}
 
-      for (x = 0; x < sel_width; x += STEP) 
+      for (x = 0; x < sel_width; x += STEP)
 	{
 	  int rr;
 	  int step;
@@ -783,6 +765,6 @@ apply_blinds (void)
   gimp_drawable_flush (blindsdrawable);
   gimp_drawable_merge_shadow (blindsdrawable->drawable_id, TRUE);
   gimp_drawable_update (blindsdrawable->drawable_id,
-			sel_x1, sel_y1, sel_width, sel_height);  
-  
+			sel_x1, sel_y1, sel_width, sel_height);
+
 }

@@ -81,8 +81,6 @@ static gint32          create_image   (const GdkPixbuf *pixbuf);
 
 static void      shoot                (void);
 static gboolean  shoot_dialog         (void);
-static void      shoot_ok_callback    (GtkWidget *widget,
-				       gpointer   data);
 static void      shoot_delay          (gint32     delay);
 static gboolean  shoot_delay_callback (gpointer   data);
 
@@ -98,7 +96,6 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 /* the image that will be returned */
 static gint32           image_ID   = -1;
-static gboolean         run_flag   = FALSE;
 
 /* the screen on which we are running */
 static GdkScreen       *cur_screen = NULL;
@@ -486,21 +483,6 @@ shoot (void)
 
 /*  ScreenShot dialog  */
 
-static void
-shoot_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  run_flag = TRUE;
-
-  /* get the screen on which we are running */
-  cur_screen = gtk_widget_get_screen (widget);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-
-  if (!shootvals.root && !shootvals.window_id)
-    selected_native = select_window (cur_screen);
-}
-
 static gboolean
 shoot_dialog (void)
 {
@@ -514,27 +496,18 @@ shoot_dialog (void)
   GtkWidget *spinner;
   GSList    *radio_group = NULL;
   GtkObject *adj;
-
+  gboolean   run;
 
   gimp_ui_init ("screenshot", FALSE);
 
-  /*  main dialog  */
   dialog = gimp_dialog_new (_("Screen Shot"), "screenshot",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/screenshot.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, shoot_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -606,9 +579,23 @@ shoot_dialog (void)
   gtk_widget_show (hbox);
   gtk_widget_show (dialog);
 
-  gtk_main ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return run_flag;
+  if (run)
+    {
+      /* get the screen on which we are running */
+      cur_screen = gtk_widget_get_screen (dialog);
+    }
+
+  gtk_widget_destroy (dialog);
+
+  if (run)
+    {
+      if (!shootvals.root && !shootvals.window_id)
+        selected_native = select_window (cur_screen);
+    }
+
+  return run;
 }
 
 

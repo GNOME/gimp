@@ -16,9 +16,9 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* 
+/*
  * dbbrowser_utils.h
- * 0.08  26th sept 97  by Thomas NOEL <thomas@minet.net> 
+ * 0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
  */
 
 #ifndef __DBBROWSER_UTILS_H__

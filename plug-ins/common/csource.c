@@ -70,7 +70,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-Config config = 
+Config config =
 {
   NULL,         /* file_name */
   "gimp_image", /* prefixed_name */
@@ -110,7 +110,7 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
-  
+
   gimp_register_save_handler ("file_csource_save",
 			      "c",
 			      "");
@@ -123,16 +123,16 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
-  
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+
   run_mode = param[0].data.d_int32;
-  
+
   *nreturn_vals = 1;
   *return_vals  = values;
-  
+
   INIT_I18N ();
 
   values[0].type          = GIMP_PDB_STATUS;
@@ -165,7 +165,7 @@ run (const gchar      *name,
       x = config.comment;
 
       gimp_ui_init ("csource", FALSE);
-      export = gimp_export_image (&image_ID, &drawable_ID, "C Source", 
+      export = gimp_export_image (&image_ID, &drawable_ID, "C Source",
 				  (GIMP_EXPORT_CAN_HANDLE_RGB |
 				   GIMP_EXPORT_CAN_HANDLE_ALPHA ));
       if (export == GIMP_EXPORT_CANCEL)
@@ -340,7 +340,7 @@ save_uchar (FILE   *fp,
 
       return c;
     }
-  
+
   if (d == '\\')
     {
       fputs ("\\\\", fp);
@@ -363,7 +363,7 @@ save_uchar (FILE   *fp,
       c += 1;
     }
   pad = 0;
-  
+
   return c;
 }
 
@@ -409,7 +409,7 @@ save_image (Config *config,
 	      {
 		guint8 *d = data + x * drawable->bpp;
 		gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
-		
+
 		alpha *= config->opacity / 100.0;
 		*(p++) = d[0];
 		*(p++) = d[1];
@@ -421,7 +421,7 @@ save_image (Config *config,
 	      {
 		guint8 *d = data + x * drawable->bpp;
 		gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
-		
+
 		alpha *= config->opacity / 25600.0;
 		*(p++) = 0.5 + alpha * (gdouble) d[0];
 		*(p++) = 0.5 + alpha * (gdouble) d[1];
@@ -533,7 +533,7 @@ save_image (Config *config,
   else if (config->use_comment)
     {
       gchar *p = config->comment - 1;
-      
+
       if (config->use_macros)
 	fprintf (fp, "#define %s_COMMENT \\\n", macro_name);
       fprintf (fp, "  \"");
@@ -611,30 +611,16 @@ save_image (Config *config,
     fprintf (fp, "\",\n};\n\n");
   else /* use macros */
     fprintf (fp, "\");\n\n");
-  
+
   fclose (fp);
-  
+
   gimp_drawable_detach (drawable);
-  
+
   return TRUE;
 }
 
 static GtkWidget *prefixed_name;
 static GtkWidget *centry;
-static gboolean   do_save = FALSE;
-
-static void
-save_dialog_ok_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  do_save = TRUE;
-
-  config.prefixed_name =
-    g_strdup (gtk_entry_get_text (GTK_ENTRY (prefixed_name)));
-  config.comment = g_strdup (gtk_entry_get_text (GTK_ENTRY (centry)));
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 static gboolean
 run_save_dialog	(Config *config)
@@ -644,23 +630,16 @@ run_save_dialog	(Config *config)
   GtkWidget *table;
   GtkWidget *toggle;
   GtkObject *adj;
-  
-  dialog = gimp_dialog_new (_("Save as C-Source"), "csource",
-			    gimp_standard_help_func, "filters/csource.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
+  gboolean   run;
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, save_dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+  dialog = gimp_dialog_new (_("Save as C-Source"), "csource",
+                            NULL, 0,
+			    gimp_standard_help_func, "filters/csource.html",
+
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
 
   vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -681,7 +660,7 @@ run_save_dialog	(Config *config)
 			     prefixed_name, 1, FALSE);
   gtk_entry_set_text (GTK_ENTRY (prefixed_name),
 		      config->prefixed_name ? config->prefixed_name : "");
-  
+
   /* Comment Entry
    */
   centry = gtk_entry_new ();
@@ -768,14 +747,22 @@ run_save_dialog	(Config *config)
                     &config->opacity);
 
   gtk_widget_show (dialog);
-  
-  gtk_main ();
-  gdk_flush ();
-  
+
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  if (run)
+    {
+      config->prefixed_name =
+        g_strdup (gtk_entry_get_text (GTK_ENTRY (prefixed_name)));
+      config->comment = g_strdup (gtk_entry_get_text (GTK_ENTRY (centry)));
+    }
+
+  gtk_widget_destroy (dialog);
+
   if (!config->prefixed_name || !config->prefixed_name[0])
     config->prefixed_name = "tmp";
   if (config->comment && !config->comment[0])
     config->comment = NULL;
 
-  return do_save;
+  return run;
 }

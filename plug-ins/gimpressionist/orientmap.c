@@ -367,22 +367,30 @@ static void vectypeclick(GtkWidget *w, gpointer data)
   updateompreviewprev();
 }
 
-static void omapplyclick(GtkWidget *w, gpointer data)
+static void
+omresponse (GtkWidget *widget,
+            gint       response_id,
+            gpointer   data)
 {
-  int i;
-  for(i = 0; i < numvect; i++) {
-    pcvals.orientvector[i] = vector[i];
-  }
-  pcvals.numorientvector = numvect;
-  pcvals.orientstrexp = GTK_ADJUSTMENT(strexpadjust)->value;
-  pcvals.orientangoff = GTK_ADJUSTMENT(angoffadjust)->value;
-  pcvals.orientvoronoi = GTK_TOGGLE_BUTTON(orientvoronoi)->active;
-}
+  switch (response_id)
+    {
+    case GTK_RESPONSE_APPLY:
+    case GTK_RESPONSE_OK:
+      {
+        gint i;
 
-static void omokclick(GtkWidget *w, gpointer data)
-{
-  omapplyclick(NULL, NULL);
-  gtk_widget_hide(w);
+        for(i = 0; i < numvect; i++)
+          pcvals.orientvector[i] = vector[i];
+
+        pcvals.numorientvector = numvect;
+        pcvals.orientstrexp  = GTK_ADJUSTMENT (strexpadjust)->value;
+        pcvals.orientangoff  = GTK_ADJUSTMENT (angoffadjust)->value;
+        pcvals.orientvoronoi = GTK_TOGGLE_BUTTON (orientvoronoi)->active;
+      }
+    };
+
+  if (response_id != GTK_RESPONSE_APPLY)
+    gtk_widget_hide (widget);
 }
 
 static void initvectors(void)
@@ -436,25 +444,21 @@ void create_orientmap_dialog(void)
 
   omwindow =
     gimp_dialog_new (_("Orientation Map Editor"), "gimpressionist",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/gimpressionst.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_APPLY, omapplyclick,
-		     NULL, NULL, NULL, FALSE, FALSE,
-
-		     GTK_STOCK_CANCEL, gtk_widget_hide,
-		     NULL, 1, NULL, FALSE, FALSE,
-
-		     GTK_STOCK_OK, omokclick,
-		     NULL, 1, NULL, TRUE, FALSE,
+		     GTK_STOCK_APPLY,  GTK_RESPONSE_APPLY,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 		     NULL);
 
+  g_signal_connect (omwindow, "response",
+		    G_CALLBACK (omresponse),
+                    omwindow);
   g_signal_connect (omwindow, "destroy",
-		    G_CALLBACK(gtk_widget_destroyed), &omwindow);
-  g_signal_connect (omwindow, "delete_event",
-		    G_CALLBACK(gtk_widget_hide_on_delete), &omwindow);
+		    G_CALLBACK (gtk_widget_destroyed),
+                    &omwindow);
 
   table1 = gtk_table_new(2, 5, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table1), 6);

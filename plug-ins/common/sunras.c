@@ -151,9 +151,7 @@ static int read_msb_first = 1;
 static RLEBUF rlebuf;
 
 /* Dialog-handling */
-static gint   save_dialog              (void);
-static void   save_ok_callback         (GtkWidget *widget,
-                                        gpointer   data);
+static gint   save_dialog    (void);
 
 /* Portability kludge */
 static int my_fwrite (void *ptr, int size, int nmemb, FILE *stream);
@@ -173,20 +171,10 @@ typedef struct
   gboolean  rle;  /*  rle or standard */
 } SUNRASSaveVals;
 
-typedef struct
-{
-  gboolean  run;  /*  run  */
-} SUNRASSaveInterface;
-
 
 static SUNRASSaveVals psvals =
 {
   TRUE     /* rle */
-};
-
-static SUNRASSaveInterface psint =
-{
-  FALSE     /* run */
 };
 
 
@@ -247,11 +235,11 @@ query (void)
                           save_args, NULL);
 
   /* Magic information for sunras would be "0,long,0x59a66a95" */
-  gimp_register_magic_load_handler ("file_sunras_load", 
+  gimp_register_magic_load_handler ("file_sunras_load",
 				    "im1,im8,im24,im32,rs,ras",
 				    "",
 				    "0,long,0x59a66a95");
-  gimp_register_save_handler       ("file_sunras_save", 
+  gimp_register_save_handler       ("file_sunras_save",
 				    "im1,im8,im24,im32,rs,ras",
 				    "");
 }
@@ -264,12 +252,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
@@ -300,13 +288,13 @@ run (const gchar      *name,
       image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("sunras", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "SUNRAS", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "SUNRAS",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED));
@@ -567,7 +555,7 @@ read_card32 (FILE *ifp,
 }
 
 
-static void 
+static void
 write_card32 (FILE     *ofp,
 	      L_CARD32  c)
 {
@@ -579,7 +567,7 @@ write_card32 (FILE     *ofp,
 
 
 /* Convert n bytes of 0/1 to a line of bits */
-static void 
+static void
 byte2bit (guchar *byteline,
 	  gint    width,
 	  guchar *bitline,
@@ -621,7 +609,7 @@ byte2bit (guchar *byteline,
 
 
 /* Start reading Runlength Encoded Data */
-static void 
+static void
 rle_startread (FILE *ifp)
 { /* Clear RLE-buffer */
   rlebuf.val = rlebuf.n = 0;
@@ -656,20 +644,20 @@ static gint
 rle_fgetc (FILE *ifp)
 {
   int flag, runcnt, runval;
-  
+
   if (rlebuf.n > 0)    /* Something in the buffer ? */
     {
       (rlebuf.n)--;
       return (rlebuf.val);
     }
-  
+
   /* Nothing in the buffer. We have to read something */
   if ((flag = getc (ifp)) < 0) return (-1);
   if (flag != 0x0080) return (flag);    /* Single byte run ? */
-  
+
   if ((runcnt = getc (ifp)) < 0) return (-1);
   if (runcnt == 0) return (0x0080);     /* Single 0x80 ? */
-  
+
   /* The run */
   if ((runval = getc (ifp)) < 0) return (-1);
   rlebuf.n = runcnt;
@@ -679,7 +667,7 @@ rle_fgetc (FILE *ifp)
 
 
 /* Start writing Runlength Encoded Data */
-static void 
+static void
 rle_startwrite (FILE *ofp)
 { /* Clear RLE-buffer */
   rlebuf.val = rlebuf.n = 0;
@@ -695,7 +683,7 @@ rle_fwrite (gchar *ptr,
 {
   int elem_write, cnt, val, err = 0;
   guchar *pixels = (unsigned char *)ptr;
-  
+
   for (elem_write = 0; elem_write < nelem; elem_write++)
     {
       for (cnt = 0; cnt < sz; cnt++)
@@ -715,15 +703,15 @@ rle_fputc (gint  val,
 	   FILE *ofp)
 {
   int retval;
-  
+
   if (rlebuf.n == 0)    /* Nothing in the buffer ? Save the value */
     {
       rlebuf.n = 1;
       return (rlebuf.val = val);
     }
-  
+
   /* Something in the buffer */
-  
+
   if (rlebuf.val == val)   /* Same value in the buffer ? */
     {
       (rlebuf.n)++;
@@ -735,12 +723,12 @@ rle_fputc (gint  val,
 	}
       return (val);
     }
-  
+
   /* Something different in the buffer ? Write out the run */
-  
+
   retval = rle_putrun (rlebuf.n, rlebuf.val, ofp);
   if (retval < 0) return (retval);
-  
+
   /* Save the new value */
   rlebuf.n = 1;
   return (rlebuf.val = val);
@@ -748,7 +736,7 @@ rle_fputc (gint  val,
 
 
 /* Write out a run with 0 < n < 257 */
-static gint 
+static gint
 rle_putrun (gint  n,
 	    gint  val,
 	    FILE *ofp)
@@ -774,14 +762,14 @@ rle_putrun (gint  n,
       else
 	retval = putc (val, ofp);
     }
-  
+
   return ((retval < 0) ? retval : val);
 }
 
 
 /* End writing Runlength Encoded Data */
-static void 
-rle_endwrite (FILE *ofp)    
+static void
+rle_endwrite (FILE *ofp)
 {
   if (rlebuf.n > 0)
     {
@@ -797,16 +785,16 @@ read_sun_header (FILE            *ifp,
 {
   int j, err;
   L_CARD32 *cp;
-  
+
   cp = (L_CARD32 *)sunhdr;
-  
+
   /* Read in all 32-bit values of the header and check for byte order */
   for (j = 0; j < sizeof (L_SUNFILEHEADER)/sizeof(sunhdr->l_ras_magic); j++)
     {
       *(cp++) = read_card32 (ifp, &err);
       if (err) break;
     }
-  
+
   if (err) sunhdr->l_ras_magic = 0;  /* Not a valid SUN-raster file */
 }
 
@@ -819,11 +807,11 @@ write_sun_header (FILE            *ofp,
 {
   int j, hdr_entries;
   L_CARD32 *cp;
-  
+
   hdr_entries = sizeof (L_SUNFILEHEADER)/sizeof(sunhdr->l_ras_magic);
-  
+
   cp = (L_CARD32 *)sunhdr;
-  
+
   /* Write out all 32-bit values of the header and check for byte order */
   for (j = 0; j < sizeof (L_SUNFILEHEADER)/sizeof(sunhdr->l_ras_magic); j++)
     {
@@ -840,14 +828,14 @@ read_sun_cols (FILE            *ifp,
                guchar          *colormap)
 {
   int ncols, err = 0;
-  
+
   /* Read in SUN-raster Colormap */
   ncols = sunhdr->l_ras_maplength / 3;
   if (ncols <= 0)
     err = 1;
   else
     err = (fread (colormap, 3, ncols, ifp) != ncols);
-  
+
   if (err) sunhdr->l_ras_magic = 0;  /* Not a valid SUN-raster file */
 }
 
@@ -860,7 +848,7 @@ write_sun_cols (FILE            *ofp,
                 guchar          *colormap)
 {
   int ncols;
-  
+
   ncols = sunhdr->l_ras_maplength / 3;
   fwrite (colormap, 3, ncols, ofp);
 }
@@ -914,7 +902,7 @@ create_new_image (const gchar        *filename,
     case GIMP_RGB:
       gdtype = GIMP_RGB_IMAGE;
       break;
-    case GIMP_GRAY: 
+    case GIMP_GRAY:
       gdtype = GIMP_GRAY_IMAGE;
       break;
     case GIMP_INDEXED:
@@ -1316,7 +1304,7 @@ save_index (FILE    *ofp,
             gint32  drawable_ID,
             gint    grey,
             gint    rle)
-{ 
+{
   int height, width, linepad, i, j;
   int ncols, bw, is_bw, is_wb, bpl;
   int tile_height;
@@ -1445,12 +1433,12 @@ save_index (FILE    *ofp,
 	}
     }
 
-  if (rle) 
+  if (rle)
     rle_endwrite (ofp);
 
   g_free (data);
 
-  if (bwline) 
+  if (bwline)
     g_free (bwline);
 
   gimp_drawable_detach (drawable);
@@ -1530,7 +1518,7 @@ save_rgb (FILE   *ofp,
 	    }
 	  for (j = 0; j < linepad; j++)
 	    putc (0, ofp);
-	  
+
 	  if ((i % 20) == 0)
 	    gimp_progress_update ((double) i / (double) height);
 	}
@@ -1580,23 +1568,16 @@ save_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as SUNRAS"), "sunras",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/sunras.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /*  file save type  */
   frame = gimp_radio_group_new2 (TRUE, _("Data Formatting"),
@@ -1618,25 +1599,17 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return psint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
-static void
-save_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-{
-  psint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static int 
-my_fwrite (void *ptr, 
-	   int   size, 
-	   int   nmemb, 
+static int
+my_fwrite (void *ptr,
+	   int   size,
+	   int   nmemb,
 	   FILE *stream)
 {
   return fwrite (ptr, size, nmemb, stream);

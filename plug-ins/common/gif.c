@@ -18,7 +18,7 @@
 /*
  *  "The Graphics Interchange Format(c) is the Copyright property of
  *  CompuServe Incorporated.  GIF(sm) is a Service Mark property of
- *  CompuServe Incorporated." 
+ *  CompuServe Incorporated."
  */
 /* Copyright notice for GIF code from which this plugin was long ago     */
 /* derived (David Koblas has granted permission to relicense):           */
@@ -320,12 +320,6 @@ typedef struct
   gint default_dispose;
 } GIFSaveVals;
 
-typedef struct
-{
-  gboolean run;
-} GIFSaveInterface;
-
-
 
 /* Declare some local functions.
  */
@@ -343,19 +337,12 @@ static gint   save_image               (const gchar      *filename,
 static gboolean boundscheck            (gint32            image_ID);
 static gboolean badbounds_dialog       (void);
 
-static void   cropok_callback          (GtkWidget        *widget,
-					gpointer          data);
-
 static gint   save_dialog              (gint32            image_ID);
-
-static void   save_ok_callback         (GtkWidget        *widget,
-					gpointer          data);
 static void   comment_entry_callback   (GtkTextBuffer    *buffer);
 
 
 static gboolean comment_was_edited = FALSE;
 
-static gboolean can_crop = FALSE;
 static GimpRunMode run_mode;
 #ifdef FACEHUGGERS
 GimpParasite * comment_parasite = NULL;
@@ -380,11 +367,6 @@ static GIFSaveVals gsvals =
   TRUE,    /* loop infinitely                      */
   100,     /* default_delay between frames (100ms) */
   0        /* default_dispose = "don't care"       */
-};
-
-static GIFSaveInterface gsint =
-{
-  FALSE   /*  run  */
 };
 
 
@@ -436,12 +418,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  gint32               orig_image_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  gint32            orig_image_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -459,14 +441,14 @@ run (const gchar      *name,
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF",
 				      (GIMP_EXPORT_CAN_HANDLE_INDEXED |
-				       GIMP_EXPORT_CAN_HANDLE_GRAY | 
+				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_ALPHA  |
 				       GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION));
 	  if (export == GIMP_EXPORT_CANCEL)
@@ -488,12 +470,12 @@ run (const gchar      *name,
 	    case GIMP_RUN_INTERACTIVE:
 	      /*  Possibly retrieve data  */
 	      gimp_get_data ("file_gif_save", &gsvals);
-		
+
 	      /*  First acquire information with a dialog  */
 	      if (! save_dialog (image_ID))
 		status = GIMP_PDB_CANCEL;
 	      break;
-	      
+
 	    case GIMP_RUN_NONINTERACTIVE:
 	      /*  Make sure all the arguments are there!  */
 	      if (nparams != 9)
@@ -509,12 +491,12 @@ run (const gchar      *name,
 		  gsvals.default_dispose = param[8].data.d_int32;
 		}
 	      break;
-	      
+
 	    case GIMP_RUN_WITH_LAST_VALS:
 	      /*  Possibly retrieve data  */
 	      gimp_get_data ("file_gif_save", &gsvals);
 	      break;
-	      
+
 	    default:
 	      break;
 	    }
@@ -681,7 +663,7 @@ find_unused_ia_colour (guchar *pixels,
     {
       if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean) TRUE;
     }
-  
+
   for (i=num_indices-1; i>=0; i--)
     {
       if (ix_used[i] == (gboolean)FALSE)
@@ -704,7 +686,7 @@ find_unused_ia_colour (guchar *pixels,
                   (int) (*colors)-1);
       return ((*colors)-1);
     }
-  
+
   g_message (_("Couldn't simply reduce colors further.\nSaving as opaque."));
   return (-1);
 }
@@ -720,7 +702,7 @@ special_flatten_indexed_alpha (guchar *pixels,
 
   /* Each transparent pixel in the image is mapped to a uniform value for
      encoding, if image already has <=255 colours */
-  
+
   if ((*transparent) == -1) /* tough, no indices left for the trans. index */
     {
       for (i=0; i<numpixels; i++)
@@ -761,7 +743,7 @@ find_another_bra:
 
   while ((offset<length) && (str[offset]!='('))
     offset++;
-  
+
   if (offset>=length)
     return(-1);
 
@@ -774,7 +756,7 @@ find_another_bra:
       sum += str[offset] - '0';
       offset++;
     }
-  while ((offset<length) && (isdigit(str[offset])));  
+  while ((offset<length) && (isdigit(str[offset])));
 
   if (length-offset <= 2)
     return(-3);
@@ -796,9 +778,9 @@ parse_disposal_tag (char *str)
 
   while ((offset+9)<=length)
     {
-      if (strncmp(&str[offset],"(combine)",9)==0) 
+      if (strncmp(&str[offset],"(combine)",9)==0)
 	return(0x01);
-      if (strncmp(&str[offset],"(replace)",9)==0) 
+      if (strncmp(&str[offset],"(replace)",9)==0)
 	return(0x02);
       offset++;
     }
@@ -817,7 +799,7 @@ boundscheck (gint32 image_ID)
   gint          offset_x, offset_y;
 
   /* get a list of layers for this image_ID */
-  layers = gimp_image_get_layers (image_ID, &nlayers);  
+  layers = gimp_image_get_layers (image_ID, &nlayers);
 
 
   /*** Iterate through the layers to make sure they're all ***/
@@ -844,7 +826,7 @@ boundscheck (gint32 image_ID)
 	    {
 	      gimp_image_crop (image_ID,
 			       gimp_image_width (image_ID),
-			       gimp_image_height (image_ID), 
+			       gimp_image_height (image_ID),
 			       0, 0);
 	      return TRUE;
 	    }
@@ -887,7 +869,7 @@ save_image (const gchar *filename,
   gint transparent;
   gint offset_x, offset_y;
 
-  gint32 *layers;   
+  gint32 *layers;
   gint    nlayers;
 
   gboolean is_gif89 = FALSE;
@@ -938,7 +920,7 @@ save_image (const gchar *filename,
     }
 
   /* get a list of layers for this image_ID */
-  layers = gimp_image_get_layers (image_ID, &nlayers);  
+  layers = gimp_image_get_layers (image_ID, &nlayers);
 
 
   drawable_type = gimp_drawable_type (layers[0]);
@@ -959,7 +941,7 @@ save_image (const gchar *filename,
       is_gif89 = TRUE;
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_cmap (image_ID, &colors);
-      
+
       gimp_palette_get_background (&background);
       gimp_rgb_get_uchar (&background, &bgred, &bggreen, &bgblue);
 
@@ -991,7 +973,7 @@ save_image (const gchar *filename,
                    "Convert to Indexed or Grayscale first."));
       return FALSE;
     }
-  
+
 
   /* find earliest index in palette which is closest to the background
      colour, and ATTEMPT to use that as the GIF's default background colour. */
@@ -1017,11 +999,11 @@ save_image (const gchar *filename,
     }
 
 
-  /* init the progress meter */    
+  /* init the progress meter */
   temp_buf = g_strdup_printf (_("Saving '%s'..."), filename);
   gimp_progress_init (temp_buf);
   g_free (temp_buf);
-  
+
 
   /* write the GIFheader */
 
@@ -1077,18 +1059,18 @@ save_image (const gchar *filename,
       cols = drawable->width;
       rows = drawable->height;
       rowstride = drawable->width;
-      
+
       gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
 			   drawable->width, drawable->height, FALSE, FALSE);
 
       cur_progress = 0;
       max_progress = drawable->height;
-      
+
       pixels = (guchar *) g_malloc (drawable->width *
 				    drawable->height *
 				    (((drawable_type == GIMP_INDEXEDA_IMAGE)||
 				      (drawable_type == GIMP_GRAYA_IMAGE)) ? 2:1) );
-      
+
       gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0,
 			       drawable->width, drawable->height);
 
@@ -1098,7 +1080,7 @@ save_image (const gchar *filename,
 	{
 	  /* Try to find an entry which isn't actually used in the
 	     image, for a transparency index. */
-	  
+
 	  transparent =
 	    find_unused_ia_colour(pixels,
 				  drawable->width * drawable->height,
@@ -1112,8 +1094,8 @@ save_image (const gchar *filename,
 	}
       else
 	transparent = -1;
-      
-      
+
+
       BitsPerPixel = colorstobpp (colors);
 
       if (BitsPerPixel != liberalBPP)
@@ -1122,7 +1104,7 @@ save_image (const gchar *filename,
 	     whereas the estimate in the header was pessimistic but still
 	     needs to be upheld... */
 	  static gboolean onceonly = FALSE;
-	  
+
 	  if (!onceonly)
 	    {
 #ifdef GIFDEBUG
@@ -1138,7 +1120,7 @@ save_image (const gchar *filename,
 	}
       useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
-      
+
       if (is_gif89)
 	{
 	  if (i>0)
@@ -1188,15 +1170,15 @@ save_image (const gchar *filename,
 			  GetPixel,
 			  offset_x, offset_y);
 
-      
-      
+
+
       gimp_drawable_detach (drawable);
-      
+
       g_free (pixels);
 
       i--;
     }
-  
+
   g_free(layers);
 
   GIFEncodeClose (outfile);
@@ -1211,22 +1193,16 @@ badbounds_dialog (void)
   GtkWidget *label;
   GtkWidget *frame;
   GtkWidget *vbox;
+  gboolean   crop;
 
   dlg = gimp_dialog_new (_("GIF Warning"), "gif_warning",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/gif.html#warning",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, FALSE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, cropok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  the warning message  */
   frame = gtk_frame_new (NULL);
@@ -1237,7 +1213,7 @@ badbounds_dialog (void)
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
-  
+
   label= gtk_label_new (_("The image which you are trying to save as a GIF\n"
 			  "contains layers which extend beyond the actual\n"
 			  "borders of the image.  This isn't allowed in GIFs,\n"
@@ -1252,10 +1228,11 @@ badbounds_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  crop = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return can_crop;
+  gtk_widget_destroy (dlg);
+
+  return crop;
 }
 
 
@@ -1269,7 +1246,7 @@ save_dialog (gint32 image_ID)
   GtkWidget     *spinbutton;
   GtkObject     *adj;
   GtkWidget     *text_view;
-  GtkTextBuffer *text_buffer; 
+  GtkTextBuffer *text_buffer;
   GtkWidget     *frame;
   GtkWidget     *vbox;
   GtkWidget     *hbox;
@@ -1279,26 +1256,19 @@ save_dialog (gint32 image_ID)
 #ifdef FACEHUGGERS
   GimpParasite  *GIF2_CMNT;
 #endif
-
-  gint32 nlayers;
+  gint32         nlayers;
+  gboolean       run;
 
   gimp_image_get_layers (image_ID, &nlayers);
 
   dlg = gimp_dialog_new (_("Save as GIF"), "gif",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/gif.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1467,10 +1437,11 @@ save_dialog (gint32 image_ID)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return gsint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 
@@ -1505,7 +1476,6 @@ colorstobpp (int colors)
 }
 
 
-
 static int
 bpptocolors (int bpp)
 {
@@ -1516,7 +1486,7 @@ bpptocolors (int bpp)
       g_warning ("GIF: bpptocolors - Eep! bpp==%d !\n", bpp);
       return 256;
     }
-  
+
   colors = 1 << bpp;
 
   return (colors);
@@ -1797,7 +1767,7 @@ GIFEncodeGraphicControlExt (FILE    *fp,
       fputc (0xf9, fp);
       /* Block Size - fixed. */
       fputc (4, fp);
-      
+
       /* Packed Fields - XXXdddut (d=disposal, u=userInput, t=transFlag) */
       /*                    s8421                                        */
       fputc ( ((Transparent >= 0) ? 0x01 : 0x00) /* TRANSPARENCY */
@@ -1809,7 +1779,7 @@ GIFEncodeGraphicControlExt (FILE    *fp,
 	      /* 0x00 'don't care' */
 
 	      fp);
-      
+
       fputc (Delay89 & 255, fp);
       fputc ((Delay89>>8) & 255, fp);
 
@@ -2362,7 +2332,7 @@ rlecompress (int      init_bits,
       probe:
         if ((i -= disp) < 0)
 	  i += hsize_reg;
-  
+
         if (HashTabOf (i) == fcode)
 	  {
 	    ent = CodeTabOf (i);
@@ -2713,27 +2683,7 @@ flush_char (void)
 }
 
 
-/* crop dialog functions */
-
-static void
-cropok_callback (GtkWidget *widget,
-		 gpointer   data)
-{
-  can_crop = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 /*  Save interface functions  */
-
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  gsint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 static void
 comment_entry_callback (GtkTextBuffer *buffer)
@@ -2748,14 +2698,14 @@ comment_entry_callback (GtkTextBuffer *buffer)
   if (strlen (text) > 240)
     {
       g_message (_("The default comment is limited to %d characters."), 240);
-      
+
       gtk_text_buffer_get_iter_at_offset (buffer, &start_iter, 240 - 1);
       gtk_text_buffer_get_end_iter (buffer, &end_iter);
-      
+
       /*  this calls us recursivaly, but in the else branch
        */
       gtk_text_buffer_delete (buffer, &start_iter, &end_iter);
-    } 
+    }
   else
     {
       g_free (globalcomment);

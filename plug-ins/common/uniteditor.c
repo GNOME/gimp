@@ -31,6 +31,8 @@
 #include "libgimp/stdplugins-intl.h"
 
 
+#define RESPONSE_REFRESH 1
+
 enum
 {
   SAVE,
@@ -147,15 +149,6 @@ run (const gchar      *name,
     }
 }
 
-static void
-new_unit_ok_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  *((gboolean *) data) = TRUE;
-
-  gtk_main_quit ();
-}
-
 static GimpUnit
 new_unit (GtkWidget *main_dialog,
           GimpUnit   template)
@@ -173,24 +166,16 @@ new_unit (GtkWidget *main_dialog,
   GtkWidget *singular_entry;
   GtkWidget *plural_entry;
 
-  gboolean  ok   = FALSE;
-  GimpUnit  unit = GIMP_UNIT_PIXEL;
+  GimpUnit   unit = GIMP_UNIT_PIXEL;
 
   dialog = gimp_dialog_new (_("New Unit"), "uniteditor",
+                            main_dialog, GTK_DIALOG_MODAL,
 			    gimp_standard_help_func, "filters/uniteditor.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_main_quit,
-			    NULL, 1, NULL, FALSE, TRUE,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    GTK_STOCK_OK, new_unit_ok_callback,
-			    &ok, NULL, NULL, TRUE, FALSE,
-
-			    NULL);
-
-  gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (main_dialog));
-  gtk_window_set_modal (GTK_WINDOW (dialog), TRUE);
+                            NULL);
 
   table = gtk_table_new (7, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -203,7 +188,7 @@ new_unit (GtkWidget *main_dialog,
   entry = identifier_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      gtk_entry_set_text (GTK_ENTRY (entry), 
+      gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_identifier (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
@@ -236,7 +221,7 @@ new_unit (GtkWidget *main_dialog,
   entry = symbol_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      gtk_entry_set_text (GTK_ENTRY (entry), 
+      gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_symbol (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
@@ -248,7 +233,7 @@ new_unit (GtkWidget *main_dialog,
   entry = abbreviation_entry = gtk_entry_new ();
   if (template != GIMP_UNIT_PIXEL)
     {
-      gtk_entry_set_text (GTK_ENTRY (entry), 
+      gtk_entry_set_text (GTK_ENTRY (entry),
                           gimp_unit_get_abbreviation (template));
     }
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
@@ -285,66 +270,58 @@ new_unit (GtkWidget *main_dialog,
 
   while (TRUE)
     {
-      gtk_main ();
+      gchar   *identifier;
+      gdouble  factor;
+      gint     digits;
+      gchar   *symbol;
+      gchar   *abbreviation;
+      gchar   *singular;
+      gchar   *plural;
 
-      if (ok)
-	{
-	  gchar   *identifier;
-	  gdouble  factor;
-	  gint     digits;
-	  gchar   *symbol;
-	  gchar   *abbreviation;
-	  gchar   *singular;
-	  gchar   *plural;
+      if (gtk_dialog_run (GTK_DIALOG (dialog)) != GTK_RESPONSE_OK)
+        break;
 
-	  identifier   = g_strdup (gtk_entry_get_text (GTK_ENTRY (identifier_entry)));
-	  factor       = GTK_ADJUSTMENT (factor_adj)->value;
-	  digits       = ROUND (GTK_ADJUSTMENT (digits_adj)->value);
-	  symbol       = g_strdup (gtk_entry_get_text (GTK_ENTRY (symbol_entry)));
-	  abbreviation = g_strdup (gtk_entry_get_text (GTK_ENTRY (abbreviation_entry)));
-	  singular     = g_strdup (gtk_entry_get_text (GTK_ENTRY (singular_entry)));
-	  plural       = g_strdup (gtk_entry_get_text (GTK_ENTRY (plural_entry)));
+      identifier   = g_strdup (gtk_entry_get_text (GTK_ENTRY (identifier_entry)));
+      factor       = GTK_ADJUSTMENT (factor_adj)->value;
+      digits       = ROUND (GTK_ADJUSTMENT (digits_adj)->value);
+      symbol       = g_strdup (gtk_entry_get_text (GTK_ENTRY (symbol_entry)));
+      abbreviation = g_strdup (gtk_entry_get_text (GTK_ENTRY (abbreviation_entry)));
+      singular     = g_strdup (gtk_entry_get_text (GTK_ENTRY (singular_entry)));
+      plural       = g_strdup (gtk_entry_get_text (GTK_ENTRY (plural_entry)));
 
-	  identifier   = g_strstrip (identifier);
-	  symbol       = g_strstrip (symbol);
-	  abbreviation = g_strstrip (abbreviation);
-	  singular     = g_strstrip (singular);
-	  plural       = g_strstrip (plural);
+      identifier   = g_strstrip (identifier);
+      symbol       = g_strstrip (symbol);
+      abbreviation = g_strstrip (abbreviation);
+      singular     = g_strstrip (singular);
+      plural       = g_strstrip (plural);
 
-	  if (factor < GIMP_MIN_RESOLUTION)
-	    {
-	      g_message (_("Unit factor must not be 0."));
-	      ok = FALSE;
-	    }
+      if (factor < GIMP_MIN_RESOLUTION)
+        {
+          g_message (_("Unit factor must not be 0."));
+          continue;
+        }
 
-	  if (!strlen (identifier) |
-	      !strlen (symbol) |
-	      !strlen (abbreviation) |
-	      !strlen (singular) |
-	      !strlen (plural))
-	    {
-	      g_message (_("All text fields must contain a value."));
-	      ok = FALSE;
-	    }
+      if (!strlen (identifier) |
+          !strlen (symbol) |
+          !strlen (abbreviation) |
+          !strlen (singular) |
+          !strlen (plural))
+        {
+          g_message (_("All text fields must contain a value."));
+          continue;
+        }
 
-	  if (ok)
-	    unit = gimp_unit_new (identifier, factor, digits,
-				  symbol, abbreviation,
-				  singular, plural);
+      unit = gimp_unit_new (identifier, factor, digits,
+                            symbol, abbreviation,
+                            singular, plural);
 
-	  g_free (identifier);
-	  g_free (symbol);
-	  g_free (abbreviation);
-	  g_free (singular);
-	  g_free (plural);
+      g_free (identifier);
+      g_free (symbol);
+      g_free (abbreviation);
+      g_free (singular);
+      g_free (plural);
 
-	  if (ok)
-	    break;
-	}
-      else
-	{
-	  break;
-	}
+      break;
     }
 
   gtk_widget_destroy (dialog);
@@ -506,13 +483,29 @@ saved_toggled_callback (GtkCellRendererToggle *celltoggle,
 }
 
 static void
+unit_editor_response (GtkWidget *widget,
+                      gint       response_id,
+                      gpointer   data)
+{
+  switch (response_id)
+    {
+    case RESPONSE_REFRESH:
+      list_init (GTK_TREE_VIEW (data));
+      break;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
+    }
+}
+
+static void
 unit_editor_dialog (void)
 {
   GtkWidget         *main_dialog;
   GtkWidget         *main_vbox;
   GtkWidget         *scrolled_win;
-  GtkWidget         *hbox;
-  GtkWidget         *button;
+  GtkWidget         *toolbar;
   GtkListStore      *list_store;
   GtkWidget         *tv;
   GtkTreeViewColumn *col;
@@ -537,23 +530,41 @@ unit_editor_dialog (void)
   tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
   g_object_unref (list_store);
 
-  main_dialog =
-    gimp_dialog_new (_("Unit Editor"), "uniteditor",
-                     gimp_standard_help_func, "filters/uniteditor.html",
-                     GTK_WIN_POS_MOUSE,
-                     FALSE, TRUE, TRUE,
+  main_dialog = gimp_dialog_new (_("Unit Editor"), "uniteditor",
+                                 NULL, 0,
+                                 gimp_standard_help_func,
+                                 "filters/uniteditor.html",
 
-                     GTK_STOCK_REFRESH, list_init,
-                     NULL, tv, NULL, FALSE, FALSE,
+                                 GTK_STOCK_REFRESH, RESPONSE_REFRESH,
+                                 GTK_STOCK_CLOSE,   GTK_RESPONSE_CLOSE,
 
-                     GTK_STOCK_CLOSE, gtk_widget_destroy,
-                     NULL, 1, NULL, TRUE, TRUE,
+                                 NULL);
 
-                     NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (main_dialog),
+                                   GTK_RESPONSE_CLOSE);
 
+  g_signal_connect (main_dialog, "response",
+                    G_CALLBACK (unit_editor_response),
+                    tv);
   g_signal_connect (main_dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
+
+  /*  the toolbar  */
+  toolbar = gtk_toolbar_new ();
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (main_dialog)->vbox), toolbar,
+		      FALSE, FALSE, 0);
+  gtk_widget_show (toolbar);
+
+  gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar), GTK_STOCK_NEW,
+                            _("Create a new unit from scratch."), NULL,
+                            G_CALLBACK (new_callback), tv,
+                            0);
+  gtk_toolbar_insert_stock (GTK_TOOLBAR (toolbar), GIMP_STOCK_DUPLICATE,
+                            _("Create a new unit with the currently "
+                              "seleted unit as template."), NULL,
+                            G_CALLBACK (duplicate_callback), tv,
+                            1);
 
   /*  the main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 4);
@@ -610,31 +621,6 @@ unit_editor_dialog (void)
     }
 
   list_init (GTK_TREE_VIEW (tv));
-
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_NEW);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (new_callback),
-                    tv);
-
-  gimp_help_set_help_data (button, _("Create a new unit from scratch."), NULL);
-
-  button = gtk_button_new_from_stock (GIMP_STOCK_DUPLICATE);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (duplicate_callback),
-                    tv);
-
-  gimp_help_set_help_data (button, _("Create a new unit with the currently "
-				     "seleted unit as template."), NULL);
 
   gtk_widget_show (main_dialog);
 

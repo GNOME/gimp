@@ -342,20 +342,22 @@ struct _LayerMergeOptions
 };
 
 static void
-image_layers_merge_query_ok_callback (GtkWidget *widget,
-                                      gpointer   data)
+image_layers_merge_query_response (GtkWidget         *widget,
+                                   gint               response_id,
+                                   LayerMergeOptions *options)
 {
-  LayerMergeOptions *options;
-  GimpImage         *gimage;
+  GimpImage *gimage = options->gimage;
 
-  options = (LayerMergeOptions *) data;
-  if (! (gimage = options->gimage))
+  if (! gimage)
     return;
 
-  if (options->merge_visible)
-    gimp_image_merge_visible_layers (gimage, options->merge_type);
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      if (options->merge_visible)
+        gimp_image_merge_visible_layers (gimage, options->merge_type);
 
-  gimp_image_flush (gimage);
+      gimp_image_flush (gimage);
+    }
 
   gtk_widget_destroy (options->query_box);
 }
@@ -384,21 +386,22 @@ image_layers_merge_query (GimpImage   *gimage,
                               gimp_standard_help_func,
                               GIMP_HELP_IMAGE_MERGE_LAYERS,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, image_layers_merge_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (image_layers_merge_query_response),
+                    options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free,
 		     options);
 
   /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
 		     vbox);
 

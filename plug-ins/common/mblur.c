@@ -3,7 +3,7 @@
  *
  * Motion Blur plug-in for GIMP 0.99
  * Copyright (C) 1997 Daniel Skarda (0rfelyus@atrey.karlin.mff.cuni.cz)
- * 
+ *
  * This plug-in is port of Motion Blur plug-in for GIMP 0.54 by
  * Thorsten Martinsen
  * 	Copyright (C) 1996 Torsten Martinsen <torsten@danbbs.dk>
@@ -38,7 +38,7 @@
  *     Bilinear interpolation from original mblur for 0.54
  *     Speed all things up
  *		? better caching scheme
- *		- while bluring along long trajektory do not averrage all 
+ *		- while bluring along long trajektory do not averrage all
  * 		  pixels but averrage only few samples
  *     Function for weight of samples along trajectory
  *     Preview
@@ -91,9 +91,7 @@ static void 		mblur_linear (void);
 static void 	        mblur_radial (void);
 static void 	        mblur_zoom   (void);
 
-static void             dialog_ok_callback   (GtkWidget *, gpointer);
-
-static gboolean         mblur_dialog         (void);
+static gboolean         mblur_dialog (void);
 
 /***** Variables *****/
 
@@ -111,8 +109,6 @@ static mblur_vals_t mbvals =
   5,		/* length */
   45		/* radius */
 };
-
-static gboolean mb_run = FALSE;
 
 static GimpDrawable *drawable;
 
@@ -148,7 +144,7 @@ query (void)
 			  "photographing a moving object at a slow shutter "
 			  "speed. Done by adding multiple displaced copies.",
 			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
-			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",       
+			  "Torsten Martinsen, Federico Mena Quintero and Daniel Skarda",
 			  PLUG_IN_VERSION,
 			  N_("<Image>/Filters/Blur/_Motion Blur..."),
 			  "RGB*, GRAY*",
@@ -264,7 +260,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static void 
+static void
 mblur_linear (void)
 {
   GimpPixelRgn	   dest_rgn;
@@ -282,7 +278,7 @@ mblur_linear (void)
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
-  
+
   pft = gimp_pixel_fetcher_new (drawable);
 
   gimp_pixel_fetcher_set_bg_color (pft);
@@ -393,7 +389,7 @@ mblur_linear (void)
 
 	      if (i == 0)
 		{
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d); 
+		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
 		}
 	      else
 		{
@@ -448,7 +444,7 @@ mblur_radial (void)
 
   gimp_pixel_rgn_init (&dest_rgn, drawable,
 		       sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
-  
+
   pft = gimp_pixel_fetcher_new (drawable);
 
   gimp_pixel_fetcher_set_bg_color (pft);
@@ -525,7 +521,7 @@ mblur_radial (void)
 
 	      if (count == 0)
 		{
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d); 
+		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
 		}
 	      else
 		{
@@ -573,7 +569,7 @@ mblur_zoom (void)
   gint          progress, max_progress;
   int 		x, y, i, xx, yy, n, c;
   float 	f;
-    
+
   /* initialize */
 
   xx = 0.0;
@@ -594,7 +590,7 @@ mblur_zoom (void)
 
   for (pr = gimp_pixel_rgns_register (1, &dest_rgn);
        pr != NULL;
-       pr = gimp_pixel_rgns_process (pr)) 
+       pr = gimp_pixel_rgns_process (pr))
     {
       dest = dest_rgn.data;
 
@@ -634,7 +630,7 @@ mblur_zoom (void)
 
 	      if (i == 0)
 		{
-		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d); 
+		  gimp_pixel_fetcher_get_pixel (pft, xx, yy, d);
 		}
 	      else
 		{
@@ -733,25 +729,18 @@ mblur_dialog (void)
   GtkWidget *main_vbox;
   GtkWidget *frame;
   GtkWidget *table;
+  gboolean   run;
 
   gimp_ui_init ("mblur", FALSE);
 
   dialog = gimp_dialog_new (_("Motion Blur"), "mblur",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/mblur.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -794,7 +783,7 @@ mblur_dialog (void)
 				 TRUE, 0, 0,
 				 NULL, NULL);
   g_signal_connect (length, "value_changed",
-                    G_CALLBACK (gimp_int_adjustment_update), 
+                    G_CALLBACK (gimp_int_adjustment_update),
 		    &mbvals.length);
 
   angle = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
@@ -810,17 +799,9 @@ mblur_dialog (void)
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return mb_run;
-}
+  gtk_widget_destroy (dialog);
 
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  mb_run= TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

@@ -598,11 +598,7 @@ void repaint(ppm_t *p, ppm_t *a)
   for(; i; i--) {
     if(i % progstep == 0) {
       if(runningvals.run) {
-	if(!standalone)
-	  gimp_progress_update(0.8 - 0.8*((double)i / max_progress));
-	else {
-	  fprintf(stderr, "."); fflush(stderr);
-	}
+        gimp_progress_update(0.8 - 0.8*((double)i / max_progress));
       } else {
 	char tmps[40];
 	sprintf(tmps, "%.1f %%", 100 * (1.0 - ((double)i / max_progress)));
@@ -852,11 +848,7 @@ void repaint(ppm_t *p, ppm_t *a)
   if(dirmap.col) killppm(&dirmap);
   if(sizmap.col) killppm(&sizmap);
   if(runningvals.run) {
-    if(!standalone)
-      gimp_progress_update(0.8);
-    else {
-      fprintf(stderr, ".\n"); fflush(stderr);
-    }
+    gimp_progress_update(0.8);
   } else {
     gtk_label_set_text(GTK_LABEL(GTK_BIN(previewbutton)->child), _("Update"));
   }

@@ -47,10 +47,6 @@ typedef struct
   gchar icon_name[256];
 } GIconSaveVals;
 
-typedef struct
-{
-  gboolean  run;
-} GIconSaveInterface;
 
 /* Declare some local functions.
  */
@@ -67,8 +63,6 @@ static gint   save_image     (const gchar      *filename,
 
 static gint   save_dialog    (void);
 
-static void   ok_callback    (GtkWidget  *widget,
-			      gpointer    data);
 static void   entry_callback (GtkWidget  *widget,
 			      gpointer    data);
 
@@ -85,10 +79,6 @@ static GIconSaveVals givals =
   "gicon" /*  icon_name  */
 };
 
-static GIconSaveInterface giint =
-{
-  FALSE   /*  run  */
-};
 
 MAIN ()
 
@@ -158,12 +148,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam      values[2];
-  GimpRunMode           run_mode;
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  gint32                image_ID;
-  gint32                drawable_ID;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -431,23 +421,16 @@ save_dialog (void)
   GtkWidget *dlg;
   GtkWidget *table;
   GtkWidget *entry;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as GIcon"), "gicon",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/gicon.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* The main table */
   table = gtk_table_new (1, 2, FALSE);
@@ -471,19 +454,11 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return giint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
-{
-  giint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

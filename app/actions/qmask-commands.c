@@ -57,8 +57,9 @@ struct _EditQmaskOptions
 /*  local function prototypes  */
 
 static void   qmask_channel_query       (GimpDisplayShell *shell);
-static void   qmask_query_ok_callback   (GtkWidget        *widget,
-                                         gpointer          client_data);
+static void   qmask_query_response      (GtkWidget        *widget,
+                                         gint              response_id,
+                                         EditQmaskOptions *options);
 static void   qmask_query_scale_update  (GtkAdjustment    *adjustment,
                                          gpointer          data);
 static void   qmask_query_color_changed (GimpColorButton  *button,
@@ -151,20 +152,21 @@ qmask_channel_query (GimpDisplayShell *shell)
                               gimp_standard_help_func,
                               GIMP_HELP_QMASK_EDIT,
 
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, qmask_query_ok_callback,
-                              options, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (qmask_query_response),
+                    options);
 
   g_object_weak_ref (G_OBJECT (options->query_box),
 		     (GWeakNotify) g_free, options);
 
   /*  The main hbox  */
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
                      hbox);
   gtk_widget_show (hbox);
@@ -209,32 +211,33 @@ qmask_channel_query (GimpDisplayShell *shell)
 }
 
 static void
-qmask_query_ok_callback (GtkWidget *widget,
-                         gpointer   data)
+qmask_query_response (GtkWidget        *widget,
+                      gint              response_id,
+                      EditQmaskOptions *options)
 {
-  EditQmaskOptions *options;
-  GimpChannel      *channel;
-  GimpRGB           color;
-
-  options = (EditQmaskOptions *) data;
-
-  channel = gimp_image_get_channel_by_name (options->gimage, "Qmask");
-
-  if (options->gimage && channel)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
-				   &color);
+      GimpChannel *channel;
+      GimpRGB      color;
 
-      if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
-	{
-	  gimp_channel_set_color (channel, &color, TRUE);
+      channel = gimp_image_get_channel_by_name (options->gimage, "Qmask");
 
-	  gimp_image_flush (options->gimage);
-	}
+      if (options->gimage && channel)
+        {
+          gimp_color_button_get_color (GIMP_COLOR_BUTTON (options->color_panel),
+                                       &color);
+
+          if (gimp_rgba_distance (&color, &channel->color) > 0.0001)
+            {
+              gimp_channel_set_color (channel, &color, TRUE);
+
+              gimp_image_flush (options->gimage);
+            }
+        }
+
+      /* update the qmask color no matter what */
+      options->gimage->qmask_color = color;
     }
-
-  /* update the qmask color no matter what */
-  options->gimage->qmask_color = color;
 
   gtk_widget_destroy (options->query_box);
 }

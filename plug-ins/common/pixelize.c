@@ -89,12 +89,6 @@ typedef struct
 
 typedef struct
 {
-  GtkWidget *sizeentry;
-  gboolean   run;
-} PixelizeInterface;
-
-typedef struct
-{
   gint x, y, w, h;
   gint width;
   gint height;
@@ -111,8 +105,6 @@ static void   run                  (const gchar      *name,
                                     GimpParam       **return_vals);
 
 static gint   pixelize_dialog      (GimpDrawable  *drawable);
-static void   pixelize_ok_callback (GtkWidget     *widget,
-                                    gpointer       data);
 
 static void   pixelize             (GimpDrawable  *drawable);
 static void   pixelize_large       (GimpDrawable  *drawable,
@@ -142,12 +134,6 @@ static PixelizeValues pvals =
 {
   10,
   10
-};
-
-static PixelizeInterface pint =
-{
-  NULL,
-  FALSE	    /* run */
 };
 
 static PixelArea area;
@@ -311,28 +297,22 @@ pixelize_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
+  GtkWidget *sizeentry;
   guint32    image_id;
   GimpUnit   unit;
   gdouble    xres, yres;
+  gboolean   run;
 
   gimp_ui_init ("pixelize", FALSE);
 
   dlg = gimp_dialog_new (_("Pixelize"), "pixelize",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/pixelize.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, pixelize_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  parameter settings  */
   vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
@@ -341,47 +321,41 @@ pixelize_dialog (GimpDrawable *drawable)
   unit = gimp_image_get_unit (image_id);
   gimp_image_get_resolution (image_id, &xres, &yres);
 
-  pint.sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, ENTRY_WIDTH,
-                                         GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                         TRUE, FALSE,
+  sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, ENTRY_WIDTH,
+                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                    TRUE, FALSE,
 
-                                         _("Pixel _Width:"),
-                                         pvals.pixelwidth, xres,
-                                         1, drawable->width,
-                                         1, drawable->width,
-                                         
-                                         _("Pixel _Height:"),
-                                         pvals.pixelheight, yres,
-                                         1, drawable->height,
-                                         1, drawable->height);
+                                    _("Pixel _Width:"),
+                                    pvals.pixelwidth, xres,
+                                    1, drawable->width,
+                                    1, drawable->width,
 
-  gtk_box_pack_start (GTK_BOX (vbox), pint.sizeentry, FALSE, FALSE, 0);
-  gtk_widget_show (pint.sizeentry);
+                                    _("Pixel _Height:"),
+                                    pvals.pixelheight, yres,
+                                    1, drawable->height,
+                                    1, drawable->height);
+
+  gtk_box_pack_start (GTK_BOX (vbox), sizeentry, FALSE, FALSE, 0);
+  gtk_widget_show (sizeentry);
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return pint.run;
+  if (run)
+    {
+      pvals.pixelwidth =
+        gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 0);
+
+      pvals.pixelheight =
+        gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 1);
+    }
+
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
-/*  Pixelize interface functions  */
-
-static void
-pixelize_ok_callback (GtkWidget *widget,
-		      gpointer	 data)
-{
-  pint.run = TRUE;
-
-  pvals.pixelwidth =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.sizeentry), 0);
-
-  pvals.pixelheight =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.sizeentry), 1);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 /*
   Pixelize Effect

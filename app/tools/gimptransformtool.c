@@ -129,11 +129,8 @@ static void   gimp_transform_tool_doit             (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
 static void   gimp_transform_tool_grid_recalc      (GimpTransformTool *tr_tool);
 
-static void   transform_reset_callback             (GtkWidget         *widget,
-                                                    GimpTransformTool *tr_tool);
-static void   transform_cancel_callback            (GtkWidget         *widget,
-                                                    GimpTransformTool *tr_tool);
-static void   transform_ok_callback                (GtkWidget         *widget,
+static void   transform_response                   (GtkWidget         *widget,
+                                                    gint               response_id,
                                                     GimpTransformTool *tr_tool);
 
 static void   gimp_transform_tool_notify_type   (GimpTransformOptions *options,
@@ -1257,6 +1254,8 @@ gimp_transform_tool_grid_recalc (GimpTransformTool *tr_tool)
     }
 }
 
+#define RESPONSE_RESET 1
+
 static void
 gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 {
@@ -1279,21 +1278,17 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
                                           gimp_standard_help_func,
                                           tool_info->help_id);
 
-  gimp_dialog_create_action_area (GIMP_DIALOG (tr_tool->info_dialog->shell),
+  gtk_dialog_add_buttons (GTK_DIALOG (tr_tool->info_dialog->shell),
 
-                                  GIMP_STOCK_RESET,
-                                  transform_reset_callback,
-                                  tr_tool, NULL, NULL, FALSE, FALSE,
+                          GIMP_STOCK_RESET, RESPONSE_RESET,
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                          stock_id,         GTK_RESPONSE_OK,
 
-                                  GTK_STOCK_CANCEL,
-                                  transform_cancel_callback,
-                                  tr_tool, NULL, NULL, FALSE, TRUE,
+                          NULL);
 
-                                  stock_id,
-                                  transform_ok_callback,
-                                  tr_tool, NULL, NULL, TRUE, FALSE,
-
-                                  NULL);
+  g_signal_connect (tr_tool->info_dialog->shell, "response",
+                    G_CALLBACK (transform_response),
+                    tr_tool);
 
   GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog (tr_tool);
 
@@ -1333,38 +1328,40 @@ gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
 }
 
 static void
-transform_reset_callback (GtkWidget         *widget,
-			  GimpTransformTool *tr_tool)
+transform_response (GtkWidget         *widget,
+                    gint               response_id,
+                    GimpTransformTool *tr_tool)
 {
-  GimpTool *tool;
-  gint      i;
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      {
+        GimpTool *tool;
+        gint      i;
 
-  tool = GIMP_TOOL (tr_tool);
+        tool = GIMP_TOOL (tr_tool);
 
-  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+        gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /*  Restore the previous transformation info  */
-  for (i = 0; i < TRAN_INFO_SIZE; i++)
-    tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
+        /*  Restore the previous transformation info  */
+        for (i = 0; i < TRAN_INFO_SIZE; i++)
+          tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
 
-  /*  recalculate the tool's transformation matrix  */
-  gimp_transform_tool_recalc (tr_tool, tool->gdisp);
+        /*  recalculate the tool's transformation matrix  */
+        gimp_transform_tool_recalc (tr_tool, tool->gdisp);
 
-  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-}
+        gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      }
+      break;
 
-static void
-transform_cancel_callback (GtkWidget         *widget,
-                           GimpTransformTool *tr_tool)
-{
-  gimp_transform_tool_halt (tr_tool);
-}
+    case GTK_RESPONSE_OK:
+      gimp_transform_tool_doit (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+      break;
 
-static void
-transform_ok_callback (GtkWidget         *widget,
-		       GimpTransformTool *tr_tool)
-{
-  gimp_transform_tool_doit (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+    default:
+      gimp_transform_tool_halt (tr_tool);
+      break;
+    }
 }
 
 static void

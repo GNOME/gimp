@@ -37,6 +37,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#define RESPONSE_RESET 1
+
 gint    thumbnail_w, thumbnail_h, thumbnail_bpp;
 guchar *thumbnail_data;
 gint    adjusted_thumbnail_bpp;
@@ -156,6 +158,21 @@ gimp_color_swatch_expose (void)
   return FALSE;
 }
 
+static void
+gimp_color_adjust_response (GtkWidget *widget,
+                            gint       response_id,
+                            gpointer   data)
+{
+  if (response_id == RESPONSE_RESET)
+    {
+      gimp_set_color_defaults ();
+    }
+  else
+    {
+      gtk_widget_hide (widget);
+    }
+}
+
 /*
  * gimp_create_color_adjust_window (void)
  *
@@ -192,16 +209,20 @@ gimp_create_color_adjust_window (void)
 
   gimp_color_adjust_dialog =
     gimp_dialog_new (_("Print Color Adjust"), "print",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/print.html",
-		     GTK_WIN_POS_MOUSE, FALSE, TRUE, FALSE,
 
-		     GIMP_STOCK_RESET, gimp_set_color_defaults,
-		     NULL, NULL, NULL, FALSE, FALSE,
-
-		     GTK_STOCK_CLOSE, gtk_widget_hide,
-		     NULL, 1, NULL, TRUE, TRUE,
+		     GIMP_STOCK_RESET, RESPONSE_RESET,
+		     GTK_STOCK_CLOSE,  GTK_RESPONSE_CLOSE,
 
 		     NULL);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (gimp_color_adjust_dialog),
+                                   GTK_RESPONSE_CLOSE);
+
+  g_signal_connect (gimp_color_adjust_dialog, "response",
+                    G_CALLBACK (gimp_color_adjust_response),
+                    NULL);
 
   table = gtk_table_new (10, 3, FALSE);
   gtk_container_set_border_width (GTK_CONTAINER (table), 6);

@@ -49,7 +49,7 @@
  *
  * The polar algorithms is copied from Marc Bless' polar plug-in for
  * .54, many thanks to him also.
- * 
+ *
  * If you can think of a neat addition to this plug-in, or any other
  * info about it, please email me at ddunbar@diads.com.
  *                                     - Daniel Dunbar
@@ -93,11 +93,6 @@ typedef struct
   gint polrec;
 } polarize_vals_t;
 
-typedef struct
-{
-  gboolean   run;
-} polarize_interface_t;
-
 static GimpFixMePreview *preview;
 
 /***** Prototypes *****/
@@ -117,7 +112,6 @@ static gint polarize_dialog       (void);
 static void dialog_update_preview (void);
 
 static void dialog_scale_update (GtkAdjustment *adjustment, gdouble *value);
-static void dialog_ok_callback  (GtkWidget *widget, gpointer data);
 
 static void polar_toggle_callback (GtkWidget *widget, gpointer data);
 
@@ -138,11 +132,6 @@ static polarize_vals_t pcvals =
   0, /* backwards */
   1,  /* inverse */
   1  /* polar to rectangular? */
-};
-
-static polarize_interface_t pcint =
-{
-  FALSE  /* run */
 };
 
 static GimpDrawable *drawable;
@@ -343,7 +332,7 @@ polarize_func (gint x,
       for (b = 0; b < bpp; b++)
 	{
 	  dest[b] = 255;
-	}	  
+	}
     }
 }
 
@@ -445,7 +434,7 @@ calc_undistorted_coords (gdouble  wx,
 	{
 	  m = 0;
 	}
-    
+
       if (m <= ((double)(y2 - y1) / (double)(x2 - x1)))
 	{
 	  if (wx == cen_x)
@@ -464,19 +453,19 @@ calc_undistorted_coords (gdouble  wx,
 	  ymax = cen_y - y1;
 	  xmax = ymax / m;
 	}
-    
+
       rmax = sqrt ( (double)(SQR (xmax) + SQR (ymax)) );
-    
+
       t = ((cen_y - y1) < (cen_x - x1)) ? (cen_y - y1) : (cen_x - x1);
       rmax = (rmax - t) / 100 * (100 - circle) + t;
-    
+
       phi = fmod (phi + angl, 2*G_PI);
-    
+
       if (pcvals.backwards)
 	x_calc = x2 - 1 - (x2 - x1 - 1)/(2*G_PI) * phi;
       else
 	x_calc = (x2 - x1 - 1)/(2*G_PI) * phi + x1;
-    
+
       if (pcvals.inverse)
 	y_calc = (y2 - y1)/rmax   * r   + y1;
       else
@@ -488,9 +477,9 @@ calc_undistorted_coords (gdouble  wx,
 	phi = (2 * G_PI) * (x2 - wx) / xdiff;
       else
 	phi = (2 * G_PI) * (wx - x1) / xdiff;
-    
+
       phi = fmod (phi + angl, 2 * G_PI);
-    
+
       if (phi >= 1.5 * G_PI)
 	phi2 = 2 * G_PI - phi;
       else if (phi >= G_PI)
@@ -499,13 +488,13 @@ calc_undistorted_coords (gdouble  wx,
 	phi2 = G_PI - phi;
       else
 	phi2 = phi;
-    
+
       xx = tan (phi2);
       if (xx != 0)
 	m = (double) 1.0 / xx;
       else
 	m = 0;
-    
+
       if (m <= ((double)(ydiff) / (double)(xdiff)))
 	{
 	  if (phi2 == 0)
@@ -524,21 +513,21 @@ calc_undistorted_coords (gdouble  wx,
 	  ymax = ym - y1;
 	  xmax = ymax / m;
 	}
-    
+
       rmax = sqrt ((double)(SQR (xmax) + SQR (ymax)));
-    
+
       t = ((ym - y1) < (xm - x1)) ? (ym - y1) : (xm - x1);
-    
+
       rmax = (rmax - t) / 100.0 * (100 - circle) + t;
-    
+
       if (pcvals.inverse)
 	r = rmax * (double)((wy - y1) / (double)(ydiff));
       else
 	r = rmax * (double)((y2 - wy) / (double)(ydiff));
-    
+
       xx = r * sin (phi2);
       yy = r * cos (phi2);
-    
+
       if (phi >= 1.5 * G_PI)
 	{
 	  x_calc = (double)xm - xx;
@@ -586,24 +575,18 @@ polarize_dialog (void)
   GtkWidget *toggle;
   GtkWidget *hbox;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("polar", TRUE);
 
   dialog = gimp_dialog_new (_("Polarize"), "polar",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/polar.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -671,7 +654,7 @@ polarize_dialog (void)
 			     "side, as opposed to beginning at the left."),
 			   NULL);
 
-  g_signal_connect (toggle, "toggled", 
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.backwards);
 
@@ -686,7 +669,7 @@ polarize_dialog (void)
 			     "outside.  If checked it will be the opposite."),
 			   NULL);
 
-  g_signal_connect (toggle, "toggled", 
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.inverse);
 
@@ -701,7 +684,7 @@ polarize_dialog (void)
 			     "will be mapped onto a circle."),
 			   NULL);
 
-  g_signal_connect (toggle, "toggled", 
+  g_signal_connect (toggle, "toggled",
                     G_CALLBACK (polar_toggle_callback),
                     &pcvals.polrec);
 
@@ -712,12 +695,13 @@ polarize_dialog (void)
   gtk_widget_show (dialog);
   dialog_update_preview ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gimp_fixme_preview_free (preview);      
+  gtk_widget_destroy (dialog);
 
-  return pcint.run;
+  gimp_fixme_preview_free (preview);
+
+  return run;
 }
 
 static void
@@ -802,15 +786,6 @@ dialog_scale_update (GtkAdjustment *adjustment,
   gimp_double_adjustment_update (adjustment, value);
 
   dialog_update_preview ();
-}
-
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  pcint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void

@@ -52,16 +52,16 @@ static void   gradient_editor_right_color_changed    (ColorNotebook     *cnb,
                                                       gpointer           data);
 
 static GimpGradientSegment *
-              gradient_editor_save_selection         (GimpGradientEditor    *editor);
-static void   gradient_editor_replace_selection      (GimpGradientEditor    *editor,
+              gradient_editor_save_selection         (GimpGradientEditor  *editor);
+static void   gradient_editor_replace_selection      (GimpGradientEditor  *editor,
                                                       GimpGradientSegment *replace_seg);
 
-static void   gradient_editor_dialog_cancel_callback (GtkWidget         *widget,
-                                                      GimpGradientEditor    *editor);
-static void   gradient_editor_split_uniform_callback (GtkWidget         *widget,
-                                                      GimpGradientEditor    *editor);
-static void   gradient_editor_replicate_callback     (GtkWidget         *widget,
-                                                      GimpGradientEditor    *editor);
+static void   gradient_editor_split_uniform_response (GtkWidget           *widget,
+                                                      gint                 response_id,
+                                                      GimpGradientEditor  *editor);
+static void   gradient_editor_replicate_response     (GtkWidget           *widget,
+                                                      gint                 response_id,
+                                                      GimpGradientEditor  *editor);
 
 
 /*  public functionss */
@@ -529,17 +529,16 @@ gradient_editor_replicate_cmd_callback (GtkWidget *widget,
                               gimp_standard_help_func,
                               GIMP_HELP_GRADIENT_EDITOR_REPLICATE,
 
-                              GTK_STOCK_CANCEL,
-                              gradient_editor_dialog_cancel_callback,
-                              editor, NULL, NULL, TRUE, TRUE,
-
-                              _("Replicate"),
-                              gradient_editor_replicate_callback,
-                              editor, NULL, NULL, FALSE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              _("Replicate"),   GTK_RESPONSE_OK,
 
                               NULL);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gradient_editor_replicate_response),
+                    editor);
+
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
@@ -628,7 +627,6 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
       desc  = _("Split Gradient Segments Uniformly");
     }
 
-  /*  Create dialog window  */
   dialog =
     gimp_viewable_dialog_new (GIMP_VIEWABLE (GIMP_DATA_EDITOR (editor)->data),
                               title, "gradient_segment_split_uniformly",
@@ -636,18 +634,17 @@ gradient_editor_split_uniformly_cmd_callback (GtkWidget *widget,
                               gimp_standard_help_func,
                               GIMP_HELP_GRADIENT_EDITOR_SPLIT_UNIFORM,
 
-                              GTK_STOCK_CANCEL,
-                              gradient_editor_dialog_cancel_callback,
-                              editor, NULL, NULL, FALSE, TRUE,
-
-                              _("Split"),
-                              gradient_editor_split_uniform_callback,
-                              editor, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              _("Split"),       GTK_RESPONSE_OK,
 
                               NULL);
 
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gradient_editor_split_uniform_response),
+                    editor);
+
   /*  The main vbox  */
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
@@ -1068,162 +1065,164 @@ gradient_editor_replace_selection (GimpGradientEditor      *editor,
 }
 
 static void
-gradient_editor_dialog_cancel_callback (GtkWidget          *widget,
+gradient_editor_split_uniform_response (GtkWidget          *widget,
+                                        gint                response_id,
                                         GimpGradientEditor *editor)
 {
-  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
-  gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
-}
-
-static void
-gradient_editor_split_uniform_callback (GtkWidget          *widget,
-                                        GimpGradientEditor *editor)
-{
-  GimpGradient        *gradient;
-  GimpGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
+  gtk_widget_destroy (widget);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
 
-  seg  = editor->control_sel_l;
-  lsel = NULL;
-
-  do
+  if (response_id == GTK_RESPONSE_OK)
     {
-      aseg = seg;
+      GimpGradient        *gradient;
+      GimpGradientSegment *seg, *aseg, *lseg, *rseg, *lsel;
 
-      gimp_gradient_segment_split_uniform (gradient, seg,
-                                           editor->split_parts, &lseg, &rseg);
+      gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-      if (seg == editor->control_sel_l)
-	lsel = lseg;
+      seg  = editor->control_sel_l;
+      lsel = NULL;
 
-      seg = rseg->next;
+      do
+        {
+          aseg = seg;
+
+          gimp_gradient_segment_split_uniform (gradient, seg,
+                                               editor->split_parts,
+                                               &lseg, &rseg);
+
+          if (seg == editor->control_sel_l)
+            lsel = lseg;
+
+          seg = rseg->next;
+        }
+      while (aseg != editor->control_sel_r);
+
+      editor->control_sel_l = lsel;
+      editor->control_sel_r = rseg;
+
+      gimp_data_dirty (GIMP_DATA (gradient));
+      gimp_gradient_editor_update (editor);
     }
-  while (aseg != editor->control_sel_r);
-
-  editor->control_sel_l = lsel;
-  editor->control_sel_r = rseg;
-
-  gimp_data_dirty (GIMP_DATA (gradient));
-  gimp_gradient_editor_update (editor);
 }
 
 static void
-gradient_editor_replicate_callback (GtkWidget          *widget,
+gradient_editor_replicate_response (GtkWidget          *widget,
+                                    gint                response_id,
                                     GimpGradientEditor *editor)
 {
-  GimpGradient        *gradient;
-  gdouble              sel_left, sel_right, sel_len;
-  gdouble              new_left;
-  gdouble              factor;
-  GimpGradientSegment *prev, *seg, *tmp;
-  GimpGradientSegment *oseg, *oaseg;
-  GimpGradientSegment *lseg, *rseg;
-  gint                 i;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
-
-  gtk_widget_destroy (gtk_widget_get_toplevel (widget));
+  gtk_widget_destroy (widget);
   gtk_widget_set_sensitive (GTK_WIDGET (editor), TRUE);
 
-  /* Remember original parameters */
-  sel_left  = editor->control_sel_l->left;
-  sel_right = editor->control_sel_r->right;
-  sel_len   = sel_right - sel_left;
-
-  factor = 1.0 / editor->replicate_times;
-
-  /* Build replicated segments */
-
-  prev = NULL;
-  seg  = NULL;
-  tmp  = NULL;
-
-  for (i = 0; i < editor->replicate_times; i++)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      /* Build one cycle */
+      GimpGradient        *gradient;
+      gdouble              sel_left, sel_right, sel_len;
+      gdouble              new_left;
+      gdouble              factor;
+      GimpGradientSegment *prev, *seg, *tmp;
+      GimpGradientSegment *oseg, *oaseg;
+      GimpGradientSegment *lseg, *rseg;
+      gint                 i;
 
-      new_left  = sel_left + i * factor * sel_len;
+      gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+
+      /* Remember original parameters */
+      sel_left  = editor->control_sel_l->left;
+      sel_right = editor->control_sel_r->right;
+      sel_len   = sel_right - sel_left;
+
+      factor = 1.0 / editor->replicate_times;
+
+      /* Build replicated segments */
+
+      prev = NULL;
+      seg  = NULL;
+      tmp  = NULL;
+
+      for (i = 0; i < editor->replicate_times; i++)
+        {
+          /* Build one cycle */
+
+          new_left  = sel_left + i * factor * sel_len;
+
+          oseg = editor->control_sel_l;
+
+          do
+            {
+              seg = gimp_gradient_segment_new ();
+
+              if (prev == NULL)
+                {
+                  seg->left = sel_left;
+                  tmp = seg; /* Remember first segment */
+                }
+              else
+                {
+                  seg->left = new_left + factor * (oseg->left - sel_left);
+                }
+
+              seg->middle = new_left + factor * (oseg->middle - sel_left);
+              seg->right  = new_left + factor * (oseg->right - sel_left);
+
+              seg->left_color  = oseg->right_color;
+              seg->right_color = oseg->right_color;
+
+              seg->type  = oseg->type;
+              seg->color = oseg->color;
+
+              seg->prev = prev;
+              seg->next = NULL;
+
+              if (prev)
+                prev->next = seg;
+
+              prev = seg;
+
+              oaseg = oseg;
+              oseg  = oseg->next;
+            }
+          while (oaseg != editor->control_sel_r);
+        }
+
+      seg->right = sel_right; /* Squish accumulative error */
+
+      /* Free old segments */
+
+      lseg = editor->control_sel_l->prev;
+      rseg = editor->control_sel_r->next;
 
       oseg = editor->control_sel_l;
 
       do
-	{
-	  seg = gimp_gradient_segment_new ();
+        {
+          oaseg = oseg->next;
+          gimp_gradient_segment_free (oseg);
+          oseg = oaseg;
+        }
+      while (oaseg != rseg);
 
-	  if (prev == NULL)
-	    {
-	      seg->left = sel_left;
-	      tmp = seg; /* Remember first segment */
-	    }
-	  else
-	    seg->left = new_left + factor * (oseg->left - sel_left);
+      /* Link in new segments */
 
-	  seg->middle = new_left + factor * (oseg->middle - sel_left);
-	  seg->right  = new_left + factor * (oseg->right - sel_left);
+      if (lseg)
+        lseg->next = tmp;
+      else
+        gradient->segments = tmp;
 
-	  seg->left_color = oseg->right_color;
+      tmp->prev = lseg;
 
-	  seg->right_color = oseg->right_color;
+      seg->next = rseg;
 
-	  seg->type  = oseg->type;
-	  seg->color = oseg->color;
+      if (rseg)
+        rseg->prev = seg;
 
-	  seg->prev = prev;
-	  seg->next = NULL;
+      /* Reset selection */
 
-	  if (prev)
-	    prev->next = seg;
+      editor->control_sel_l = tmp;
+      editor->control_sel_r = seg;
 
-	  prev = seg;
+      /* Done */
 
-	  oaseg = oseg;
-	  oseg  = oseg->next;
-	}
-      while (oaseg != editor->control_sel_r);
+      gimp_data_dirty (GIMP_DATA (gradient));
+      gimp_gradient_editor_update (editor);
     }
-
-  seg->right = sel_right; /* Squish accumulative error */
-
-  /* Free old segments */
-
-  lseg = editor->control_sel_l->prev;
-  rseg = editor->control_sel_r->next;
-
-  oseg = editor->control_sel_l;
-
-  do
-    {
-      oaseg = oseg->next;
-      gimp_gradient_segment_free (oseg);
-      oseg = oaseg;
-    }
-  while (oaseg != rseg);
-
-  /* Link in new segments */
-
-  if (lseg)
-    lseg->next = tmp;
-  else
-    gradient->segments = tmp;
-
-  tmp->prev = lseg;
-
-  seg->next = rseg;
-
-  if (rseg)
-    rseg->prev = seg;
-
-  /* Reset selection */
-
-  editor->control_sel_l = tmp;
-  editor->control_sel_r = seg;
-
-  /* Done */
-
-  gimp_data_dirty (GIMP_DATA (gradient));
-  gimp_gradient_editor_update (editor);
 }

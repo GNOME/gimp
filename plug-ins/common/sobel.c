@@ -26,7 +26,7 @@
    if gamma-channel: set to white if at least one colour channel is >15 */
 
 /* Update 3/10/97:
-   #ifdef Max and Min, 
+   #ifdef Max and Min,
    save old values
    correct 'cancel' behaviour */
 
@@ -49,11 +49,6 @@ typedef struct
   gint vertical;
   gint keep_sign;
 } SobelValues;
-
-typedef struct
-{
-  gint run;
-} SobelInterface;
 
 
 /* Declare local functions.
@@ -78,9 +73,6 @@ static gint      sobel_dialog (void);
 /*
  * Sobel helper functions
  */
-static void      sobel_ok_callback (GtkWidget    *widget,
-                                    gpointer      data);
-
 static void      sobel_prepare_row (GimpPixelRgn *pixel_rgn,
 				    guchar       *data,
 				    gint          x,
@@ -101,11 +93,6 @@ static SobelValues bvals =
   TRUE,  /*  horizontal sobel  */
   TRUE,  /*  vertical sobel    */
   TRUE   /*  keep sign         */
-};
-
-static SobelInterface bint =
-{
-  FALSE  /*  run  */
 };
 
 
@@ -215,10 +202,10 @@ run (const gchar      *name,
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
-      
+
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-	gimp_set_data ("plug_in_sobel", &bvals, sizeof (bvals));    
+	gimp_set_data ("plug_in_sobel", &bvals, sizeof (bvals));
     }
   else
     {
@@ -237,25 +224,18 @@ sobel_dialog (void)
   GtkWidget *dlg;
   GtkWidget *toggle;
   GtkWidget *vbox;
+  gboolean   run;
 
   gimp_ui_init ("sobel", FALSE);
 
   dlg = gimp_dialog_new (_("Sobel Edge Detection"), "sobel",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/sobel.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GTK_STOCK_OK, sobel_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
@@ -288,10 +268,11 @@ sobel_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return bint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 static void
@@ -431,15 +412,4 @@ sobel (GimpDrawable *drawable,
   g_free (cur_row);
   g_free (next_row);
   g_free (dest);
-}
-
-/*  Sobel interface functions  */
-
-static void
-sobel_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  bint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

@@ -158,7 +158,6 @@ run (const gchar      *name,
 {
   static GimpParam  values[2];
   GimpRunMode       run_mode;
-  GtkWidget        *plugin_dialog;
 
   run_mode = param[0].data.d_int32;
 
@@ -172,6 +171,8 @@ run (const gchar      *name,
 
   if (strcmp (name, "plug_in_plug_in_details") == 0)
     {
+      GtkWidget *plugin_dialog;
+
       *nreturn_vals = 1;
 
       values[0].data.d_status = GIMP_PDB_SUCCESS;
@@ -179,16 +180,7 @@ run (const gchar      *name,
       plugin_dialog = gimp_plugin_desc ();
 
       gtk_main ();
-      gdk_flush ();
     }
-}
-
-static void
-dialog_close_callback (GtkWidget *widget,
-                       PDesc     *pdesc)
-{
-  gtk_widget_destroy (pdesc->dlg);
-  gtk_main_quit ();
 }
 
 /* Bit of a fiddle but sorta has the effect I want... */
@@ -902,34 +894,6 @@ get_plugin_info (PDesc       *pdesc,
   gimp_destroy_params (return_vals, nreturn_vals);
 }
 
-static void
-dialog_search_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  PDesc       *pdesc = data;
-  const gchar *search_text = NULL;
-
-  if (widget != NULL)
-    {
-      /* The result of a button press... read entry data */
-      search_text = gtk_entry_get_text (GTK_ENTRY (plugindesc->search_entry));
-    }
-
-  gtk_clist_freeze (GTK_CLIST (pdesc->ctree));
-  gtk_clist_clear (GTK_CLIST (pdesc->ctree));
-  gtk_clist_freeze (GTK_CLIST (pdesc->clist));
-  gtk_clist_clear (GTK_CLIST (pdesc->clist));
-
-  get_plugin_info (pdesc, search_text);
-
-  gtk_clist_columns_autosize (GTK_CLIST (plugindesc->clist));
-
-  gtk_clist_sort (GTK_CLIST (pdesc->clist));
-  gtk_clist_thaw (GTK_CLIST (pdesc->clist));
-  gtk_ctree_sort_recursive (GTK_CTREE (pdesc->ctree), NULL);
-  gtk_clist_thaw (GTK_CLIST (pdesc->ctree));
-}
-
 static gint
 date_sort (GtkCList      *clist,
 	   gconstpointer  ptr1,
@@ -984,6 +948,46 @@ clist_click_column (GtkCList *clist,
   gtk_clist_sort (clist);
 }
 
+static void
+dialog_response (GtkWidget *widget,
+                 gint       response_id,
+                 PDesc     *pdesc)
+{
+  switch (response_id)
+    {
+    case GTK_RESPONSE_OK:
+      {
+        const gchar *search_text = NULL;
+
+        if (widget != NULL)
+          {
+            /* The result of a button press... read entry data */
+            search_text =
+              gtk_entry_get_text (GTK_ENTRY (plugindesc->search_entry));
+          }
+
+        gtk_clist_freeze (GTK_CLIST (pdesc->ctree));
+        gtk_clist_clear (GTK_CLIST (pdesc->ctree));
+        gtk_clist_freeze (GTK_CLIST (pdesc->clist));
+        gtk_clist_clear (GTK_CLIST (pdesc->clist));
+
+        get_plugin_info (pdesc, search_text);
+
+        gtk_clist_columns_autosize (GTK_CLIST (plugindesc->clist));
+
+        gtk_clist_sort (GTK_CLIST (pdesc->clist));
+        gtk_clist_thaw (GTK_CLIST (pdesc->clist));
+        gtk_ctree_sort_recursive (GTK_CTREE (pdesc->ctree), NULL);
+        gtk_clist_thaw (GTK_CLIST (pdesc->ctree));
+      }
+      break;
+
+    default:
+      gtk_widget_destroy (pdesc->dlg);
+      gtk_main_quit ();
+      break;
+    }
+}
 
 static GtkWidget *
 gimp_plugin_desc (void)
@@ -1000,21 +1004,18 @@ gimp_plugin_desc (void)
   /* the dialog box */
   plugindesc->dlg =
     gimp_dialog_new (_("Plugin Descriptions"), "plugindetails",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/plugindetails.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, TRUE,
 
-		     GTK_STOCK_CLOSE, dialog_close_callback,
-		     plugindesc, NULL, NULL, TRUE, TRUE,
-		     _("Search by Name"), dialog_search_callback,
-		     plugindesc, NULL, NULL, FALSE, FALSE,
+		     GTK_STOCK_CLOSE,     GTK_RESPONSE_CLOSE,
+		     _("Search by Name"), GTK_RESPONSE_OK,
 
 		     NULL);
 
   plugindesc->details_showing = FALSE;
 
-  g_signal_connect (plugindesc->dlg, "destroy",
-                    G_CALLBACK (dialog_close_callback),
+  g_signal_connect (plugindesc->dlg, "response",
+                    G_CALLBACK (dialog_response),
                     plugindesc);
 
   /* hbox : left=notebook ; right=description */
@@ -1127,7 +1128,7 @@ gimp_plugin_desc (void)
   /* the right description is build on first click of the Details button */
 
   /* now build the list */
-  dialog_search_callback (NULL, (gpointer) plugindesc);
+  dialog_response (NULL, GTK_RESPONSE_OK, plugindesc);
 
   gtk_clist_set_selection_mode (GTK_CLIST (plugindesc->ctree),
 				GTK_SELECTION_BROWSE);

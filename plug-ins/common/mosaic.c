@@ -89,10 +89,6 @@ typedef struct
   gint     grout_color;
 } MosaicVals;
 
-typedef struct
-{
-  gboolean run;
-} MosaicInterface;
 
 /* Declare local functions.
  */
@@ -105,9 +101,7 @@ static void      run    (const gchar      *name,
 static void      mosaic (GimpDrawable     *drawable);
 
 /*  user interface functions  */
-static gint      mosaic_dialog      (void);
-static void      mosaic_ok_callback (GtkWidget *widget,
-				     gpointer   data);
+static gint      mosaic_dialog     (void);
 
 /*  gradient finding machinery  */
 static void      find_gradients    (GimpDrawable *drawable,
@@ -270,11 +264,6 @@ static MosaicVals mvals =
   HEXAGONS,    /* tile_type */
   SMOOTH,      /* tile_surface */
   BW           /* grout_color */
-};
-
-static MosaicInterface mint =
-{
-  FALSE,        /* run */
 };
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -512,25 +501,18 @@ mosaic_dialog (void)
   GtkWidget *frame;
   GtkWidget *table;
   GtkObject *scale_data;
+  gboolean   run;
 
   gimp_ui_init ("mosaic", TRUE);
 
   dlg = gimp_dialog_new (_("Mosaic"), "mosaic",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/mosaic.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, mosaic_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  The main hbox -- splits the scripts and the info vbox  */
   main_hbox = gtk_hbox_new (FALSE, 6);
@@ -694,19 +676,13 @@ mosaic_dialog (void)
   gtk_widget_show (main_hbox);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return mint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
-static void
-mosaic_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  mint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 /*
  *  Gradient finding machinery

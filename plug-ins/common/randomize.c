@@ -32,14 +32,14 @@
  * randomize version 1.7 (1 May 1998, MEO)
  *
  * Please send any patches or suggestions to the author: meo@rru.com .
- * 
+ *
  * This plug-in adds a user-defined amount of randomization to an
  * image.  Variations include:
- * 
+ *
  *  - hurling (spewing random colors)
  *  - picking a nearby pixel at random
  *  - slurring (a crude form of melting)
- * 
+ *
  * In any case, for each pixel in the selection or image,
  * whether to change the pixel is decided by picking a
  * random number, weighted by the user's "randomization" percentage.
@@ -50,20 +50,20 @@
  * there is an 80% chance the pixel above be used; otherwise, one
  * of the pixels adjacent to the one above is used (even odds as
  * to which it will be).
- * 
+ *
  * Picking, hurling and slurring work with any image type.
- * 
+ *
  * This plug-in's effectiveness varies a lot with the type
  * and clarity of the image being "randomized".
- * 
+ *
  * Hurling more than 75% or so onto an existing image will
  * make the image nearly unrecognizable.  By 90% hurl, most
  * images are indistinguishable from random noise.
- * 
+ *
  * The repeat count is especially useful with slurring.
- * 
+ *
  * TODO List
- * 
+ *
  *  - add a real melt function
  ****************************************************************************/
 
@@ -140,16 +140,6 @@ static RandomizeVals pivals =
   SEED_DEFAULT
 };
 
-typedef struct
-{
-  gboolean  run;
-} RandomizeInterface;
-
-static RandomizeInterface rndm_int =
-{
-  FALSE     /*  have we run? */
-};
-
 
 /*********************************
  *
@@ -174,8 +164,7 @@ static inline void randomize_prepare_row (GimpPixelRgn *pixel_rgn,
 					  gint          w);
 
 static gint randomize_dialog             (void);
-static void randomize_ok_callback        (GtkWidget    *widget,
-					  gpointer      data);
+
 
 /************************************ Guts ***********************************/
 
@@ -287,7 +276,7 @@ run (const gchar      *name,
   gchar             *rndm_type_str = '\0';
   gchar              prog_label[32];
   static GimpParam   values[1];
-  GRand             *gr; /* The GRand object which generates the 
+  GRand             *gr; /* The GRand object which generates the
                           * random numbers */
 
   INIT_I18N ();
@@ -388,7 +377,7 @@ run (const gchar      *name,
 	   *  Initialize the g_rand() function seed
 	   */
 	  g_rand_set_seed (gr, pivals.rndm_seed);
-          
+
 	  randomize (drawable, gr);
 	  /*
 	   *  If we ran interactively (even repeating) update the display.
@@ -694,24 +683,18 @@ randomize_dialog (void)
   GtkWidget *label;
   GtkWidget *seed_hbox;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("randomize", FALSE);
 
   dlg = gimp_dialog_new (gettext (RNDM_VERSION[rndm_type - 1]), "randomize",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/randomize.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, randomize_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 3, 3);
 
@@ -749,17 +732,9 @@ randomize_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return rndm_int.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-randomize_ok_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  rndm_int.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

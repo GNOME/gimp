@@ -77,8 +77,6 @@ typedef struct
   GtkWidget *preview;
   GtkWidget *progress;
   guchar     preview_row[PREVIEW_WIDTH * 3];
-
-  gboolean   run;
 } diffraction_interface_t;
 
 
@@ -109,8 +107,6 @@ static double diff_intensity (gdouble  x,
 static gint diffraction_dialog     (void);
 static void dialog_update_preview  (void);
 static void dialog_update_callback (GtkWidget *widget,
-				    gpointer   data);
-static void dialog_ok_callback     (GtkWidget *widget,
 				    gpointer   data);
 
 /***** Variables *****/
@@ -143,8 +139,7 @@ static diffraction_interface_t dint =
 {
   NULL,  /* preview */
   NULL,  /* progress */
-  { 0 }, /* preview_row */
-  FALSE  /* run */
+  { 0 }  /* preview_row */
 };
 
 static gdouble cos_lut[ITERATIONS + 1];
@@ -438,24 +433,18 @@ diffraction_dialog (void)
   GtkWidget *label;
   GtkWidget *button;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("diffraction", TRUE);
 
   dialog = gimp_dialog_new (_("Diffraction Patterns"), "diffraction",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/diffraction.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   top_table = gtk_table_new (2, 2, FALSE);
   gtk_container_set_border_width(GTK_CONTAINER (top_table), 6);
@@ -661,10 +650,11 @@ diffraction_dialog (void)
   gtk_widget_show (dialog);
   dialog_update_preview ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return dint.run;
+  gtk_widget_show (dialog);
+
+  return run;
 }
 
 static void
@@ -722,13 +712,4 @@ dialog_update_callback (GtkWidget *widget,
 			gpointer   data)
 {
   dialog_update_preview ();
-}
-
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  dint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

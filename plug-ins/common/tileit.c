@@ -21,12 +21,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- * 
+ *
  * A fair proprotion of this code was taken from the Whirl plug-in
  * which was copyrighted by Federico Mena Quintero (as below).
- * 
+ *
  * Whirl plug-in --- distort an image into a whirlpool
- * Copyright (C) 1997 Federico Mena Quintero           
+ * Copyright (C) 1997 Federico Mena Quintero
  *
  */
 
@@ -57,7 +57,7 @@
 
 /***** Magic numbers *****/
 
-#define PREVIEW_SIZE 128 
+#define PREVIEW_SIZE 128
 #define SCALE_WIDTH   80
 
 #define MAX_SEGS       6
@@ -78,7 +78,6 @@ typedef struct
   guchar     preview_row[PREVIEW_SIZE * 4];
   gint       img_bpp;
   guchar    *pv_cache;
-  gboolean   run;
 } TileItInterface;
 
 static TileItInterface tint =
@@ -89,8 +88,7 @@ static TileItInterface tint =
     'u'
   },     /* Preview_row */
   4,     /* bpp of drawable */
-  NULL,
-  FALSE, /* run */
+  NULL
 };
 
 static GimpDrawable *tileitdrawable;
@@ -104,9 +102,6 @@ static void      run    (const gchar      *name,
 			 GimpParam       **return_vals);
 
 static gint      tileit_dialog          (void);
-
-static void      tileit_ok_callback     (GtkWidget     *widget,
-					 gpointer       data);
 
 static void      tileit_scale_update    (GtkAdjustment *adjustment,
 					 gpointer       data);
@@ -192,7 +187,7 @@ Reset_Call res_call =
   NULL,
   NULL,
 };
-  
+
 /* 2D - Array that holds the actions for each tile */
 /* Action type on cell */
 #define HORIZONTAL 0x1
@@ -221,7 +216,7 @@ query (void)
     { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE, "image", "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
-    { GIMP_PDB_INT32, "number_of_tiles", "Number of tiles to make" } 
+    { GIMP_PDB_INT32, "number_of_tiles", "Number of tiles to make" }
   };
 
   gimp_install_procedure ("plug_in_small_tiles",
@@ -270,9 +265,9 @@ run (const gchar      *name,
 
   sel_width  = sel_x2 - sel_x1;
   sel_height = sel_y2 - sel_y1;
-  
+
   /* Calculate preview size */
-  
+
   if (sel_width > sel_height)
     {
       pwidth  = MIN (sel_width, PREVIEW_SIZE);
@@ -283,9 +278,9 @@ run (const gchar      *name,
       pheight = MIN (sel_height, PREVIEW_SIZE);
       pwidth  = sel_width * pheight / sel_height;
     }
-  
+
   preview_width  = MAX (pwidth, 2);  /* Min size is 2 */
-  preview_height = MAX (pheight, 2); 
+  preview_height = MAX (pheight, 2);
 
   switch (run_mode)
     {
@@ -328,7 +323,7 @@ run (const gchar      *name,
       gimp_progress_init (_("Tiling..."));
 
       do_tiles ();
-   
+
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	gimp_displays_flush ();
 
@@ -366,28 +361,21 @@ tileit_dialog (void)
   GtkObject *size_data;
   GtkObject *op_data;
   GtkWidget *toggle;
-  GSList  *orientation_group = NULL;
+  GSList    *orientation_group = NULL;
+  gboolean   run;
 
   gimp_ui_init ("tileit", TRUE);
 
   cache_preview (); /* Get the preview image */
 
-  /* Start buildng the dialog up */
-  dlg = gimp_dialog_new ( _("TileIt"), "tileit",
+  dlg = gimp_dialog_new (_("TileIt"), "tileit",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/tileit.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, tileit_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -483,7 +471,7 @@ tileit_dialog (void)
   gtk_container_add (GTK_CONTAINER (xframe), table);
   gtk_widget_show (table);
 
-  toggle = gtk_radio_button_new_with_mnemonic (orientation_group, 
+  toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
 					       _("A_ll Tiles"));
   orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 0, 1,
@@ -513,7 +501,7 @@ tileit_dialog (void)
 
   toggle = gtk_radio_button_new_with_mnemonic (orientation_group,
 					       _("_Explicit Tile"));
-  orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));  
+  orientation_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (toggle));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 2, 4,
 		    GTK_FILL | GTK_SHRINK, GTK_FILL, 0, 0);
   gtk_widget_show (toggle);
@@ -522,7 +510,7 @@ tileit_dialog (void)
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 2, 3,
 		    GTK_FILL | GTK_SHRINK , GTK_FILL, 0, 0);
-  gtk_widget_show (label); 
+  gtk_widget_show (label);
 
   gtk_widget_set_sensitive (label, FALSE);
   g_object_set_data (G_OBJECT (toggle), "set_sensitive", label);
@@ -544,7 +532,7 @@ tileit_dialog (void)
 
   label = gtk_label_new_with_mnemonic ( _("Col_umn:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
-  gtk_widget_show (label); 
+  gtk_widget_show (label);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 3, 4,
 		    GTK_FILL , GTK_FILL, 0, 0);
 
@@ -606,7 +594,7 @@ tileit_dialog (void)
                     G_CALLBACK (tileit_scale_update),
                     &opacity);
 
-  gtk_widget_show (frame); 
+  gtk_widget_show (frame);
 
   /* Lower frame saying howmany segments */
   frame = gtk_frame_new (_("Segment Setting"));
@@ -636,19 +624,11 @@ tileit_dialog (void)
   gtk_widget_show (dlg);
   dialog_update_preview ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return tint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-tileit_ok_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  tint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void
@@ -678,7 +658,7 @@ tileit_hvtoggle_update (GtkWidget *widget,
   dialog_update_preview ();
 }
 
-static void 
+static void
 draw_explict_sel (void)
 {
   if (exp_call.type == EXPLICT)
@@ -785,7 +765,7 @@ tileit_preview_events (GtkWidget *widget,
 
     case GDK_MOTION_NOTIFY:
       mevent = (GdkEventMotion *) event;
-      if ( !mevent->state ) 
+      if ( !mevent->state )
 	break;
       if(mevent->x < 0 || mevent->y < 0)
 	break;
@@ -801,7 +781,7 @@ tileit_preview_events (GtkWidget *widget,
   return FALSE;
 }
 
-static void 
+static void
 explict_update (gboolean settile)
 {
   gint x,y;
@@ -827,7 +807,7 @@ explict_update (gboolean settile)
   exp_call.y = y;
 }
 
-static void 
+static void
 all_update (void)
 {
   gint x,y;
@@ -879,7 +859,7 @@ tileit_radio_update (GtkWidget *widget,
 
       dialog_update_preview ();
     }
-}             
+}
 
 
 static void
@@ -889,7 +869,7 @@ tileit_scale_update (GtkAdjustment *adjustment,
   gimp_int_adjustment_update (adjustment, data);
 
   dialog_update_preview ();
-} 
+}
 
 static void
 tileit_reset (GtkWidget *widget,
@@ -916,13 +896,13 @@ tileit_reset (GtkWidget *widget,
                                      tileit_hvtoggle_update,
                                      &do_vert);
 
-  do_horz = do_vert = FALSE; 
+  do_horz = do_vert = FALSE;
 
   dialog_update_preview ();
-} 
+}
 
 
-/* Could avoid almost dup. functions by using a field in the data 
+/* Could avoid almost dup. functions by using a field in the data
  * passed.  Must still pass the data since used in sig blocking func.
  */
 
@@ -957,10 +937,10 @@ cache_preview (void)
   gimp_pixel_rgn_init (&src_rgn, tileitdrawable,
 		       sel_x1, sel_y1, sel_width, sel_height, FALSE, FALSE);
 
-  src_rows = g_new (guchar, sel_width * 4); 
+  src_rows = g_new (guchar, sel_width * 4);
   p = tint.pv_cache = g_new (guchar, preview_width * preview_height * 4);
 
-  tint.img_bpp = gimp_drawable_bpp (tileitdrawable->drawable_id);   
+  tint.img_bpp = gimp_drawable_bpp (tileitdrawable->drawable_id);
 
   if (tint.img_bpp < 3)
     {
@@ -984,7 +964,7 @@ cache_preview (void)
 	  for (i = 0 ; i < 3; i++)
 	    p[x * tint.img_bpp + i] =
 	      src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
-		      ((isgrey) ? 0 : i)]; 
+		      ((isgrey) ? 0 : i)];
 	  if (has_alpha)
 	    p[x * tint.img_bpp + 3] =
 	      src_rows[((x * sel_width) / preview_width) * src_rgn.bpp +
@@ -1013,12 +993,12 @@ do_tiles(void)
   /* Initialize pixel region */
 
   pft = gimp_pixel_fetcher_new (tileitdrawable);
-  
+
   gimp_pixel_rgn_init(&dest_rgn, tileitdrawable, sel_x1, sel_y1, sel_width, sel_height, TRUE, TRUE);
-  
+
   progress     = 0;
   max_progress = sel_width * sel_height;
-  
+
   img_bpp = gimp_drawable_bpp(tileitdrawable->drawable_id);
 
   bpp = (has_alpha) ? img_bpp - 1 : img_bpp;
@@ -1026,15 +1006,15 @@ do_tiles(void)
   for (pr = gimp_pixel_rgns_register(1, &dest_rgn);
        pr != NULL; pr = gimp_pixel_rgns_process(pr)) {
     dest_row = dest_rgn.data;
-    
+
     for (row = dest_rgn.y; row < (dest_rgn.y + dest_rgn.h); row++) {
       dest = dest_row;
-      
+
       for (col = dest_rgn.x; col < (dest_rgn.x + dest_rgn.w); col++)
 	{
 	  int an_action;
-	  
-	  an_action = 
+
+	  an_action =
 	    tiles_xy(sel_width,
 		     sel_height,
 		     col-sel_x1,row-sel_y1,
@@ -1045,15 +1025,15 @@ do_tiles(void)
 
 	  for (i = 0; i < bpp; i++)
 	    *dest++ = pixel[i];
-	  
+
 	  if (has_alpha)
 	    {
 	      *dest++ = (pixel[bpp]*opacity)/100;
 	    }
 	}
       dest_row += dest_rgn.rowstride;
-    } 
-    
+    }
+
     progress += dest_rgn.w * dest_rgn.h;
     gimp_progress_update((double) progress / max_progress);
   }
@@ -1064,7 +1044,7 @@ do_tiles(void)
   gimp_drawable_merge_shadow(tileitdrawable->drawable_id, TRUE);
   gimp_drawable_update(tileitdrawable->drawable_id,
 		       sel_x1, sel_y1, sel_width, sel_height);
-} 
+}
 
 
 /* Get the xy pos and any action */
@@ -1077,16 +1057,16 @@ tiles_xy(gint width,
 	 gint *ny)
 {
   gint px,py;
-  gint rnum,cnum; 
+  gint rnum,cnum;
   gint actiontype;
   gdouble rnd = 1 - (1.0/(gdouble)itvals.numtiles) +0.01;
 
   rnum = y*itvals.numtiles/height;
 
   py = (y*itvals.numtiles)%height;
-  px = (x*itvals.numtiles)%width; 
+  px = (x*itvals.numtiles)%width;
   cnum = x*itvals.numtiles/width;
-      
+
   if((actiontype = tileactions[cnum][rnum]))
     {
       if(actiontype & HORIZONTAL)
@@ -1095,15 +1075,15 @@ tiles_xy(gint width,
 	  pyr =  height - y - 1 + rnd;
 	  py = ((int)(pyr*(gdouble)itvals.numtiles))%height;
 	}
-      
+
       if(actiontype & VERTICAL)
 	{
 	  gdouble pxr;
 	  pxr = width - x - 1 + rnd;
-	  px = ((int)(pxr*(gdouble)itvals.numtiles))%width; 
+	  px = ((int)(pxr*(gdouble)itvals.numtiles))%width;
 	}
     }
-  
+
   *nx = px;
   *ny = py;
 
@@ -1113,7 +1093,7 @@ tiles_xy(gint width,
 
 /* Given a row then srink it down a bit */
 static void
-do_tiles_preview(guchar *dest_row, 
+do_tiles_preview(guchar *dest_row,
 	    guchar *src_rows,
 	    gint width,
 	    gint dh,
@@ -1123,20 +1103,20 @@ do_tiles_preview(guchar *dest_row,
   gint x;
   gint i;
   gint px,py;
-  gint rnum,cnum; 
+  gint rnum,cnum;
   gint actiontype;
   gdouble rnd = 1 - (1.0/(gdouble)itvals.numtiles) +0.01;
 
   rnum = dh*itvals.numtiles/height;
 
-  for (x = 0; x < width; x ++) 
+  for (x = 0; x < width; x ++)
     {
-      
+
       py = (dh*itvals.numtiles)%height;
-      
-      px = (x*itvals.numtiles)%width; 
+
+      px = (x*itvals.numtiles)%width;
       cnum = x*itvals.numtiles/width;
-      
+
       if((actiontype = tileactions[cnum][rnum]))
 	{
 	  if(actiontype & HORIZONTAL)
@@ -1145,21 +1125,21 @@ do_tiles_preview(guchar *dest_row,
 	      pyr =  height - dh - 1 + rnd;
 	      py = ((int)(pyr*(gdouble)itvals.numtiles))%height;
 	    }
-	  
+
 	  if(actiontype & VERTICAL)
 	    {
 	      gdouble pxr;
 	      pxr = width - x - 1 + rnd;
-	      px = ((int)(pxr*(gdouble)itvals.numtiles))%width; 
+	      px = ((int)(pxr*(gdouble)itvals.numtiles))%width;
 	    }
 	}
 
       for (i = 0 ; i < bpp; i++ )
-	dest_row[x*tint.img_bpp+i] = 
-	  src_rows[(px + (py*width))*bpp+i]; 
+	dest_row[x*tint.img_bpp+i] =
+	  src_rows[(px + (py*width))*bpp+i];
 
       if (has_alpha)
-	dest_row[x*tint.img_bpp + (bpp - 1)] = 
+	dest_row[x*tint.img_bpp + (bpp - 1)] =
 	  (dest_row[x*tint.img_bpp + (bpp - 1)]*opacity)/100;
 
     }
@@ -1169,7 +1149,7 @@ static void
 dialog_update_preview (void)
 {
   gint y;
-  gint check, check_0, check_1;  
+  gint check, check_0, check_1;
 
   for (y = 0; y < preview_height; y++)
     {
@@ -1206,11 +1186,11 @@ dialog_update_preview (void)
 
 	      alphaval = tint.preview_row[i + 3];
 
-	      tint.preview_row[j] = 
+	      tint.preview_row[j] =
 		check + (((tint.preview_row[i] - check)*alphaval)/255);
-	      tint.preview_row[j + 1] = 
+	      tint.preview_row[j + 1] =
 		check + (((tint.preview_row[i + 1] - check)*alphaval)/255);
-	      tint.preview_row[j + 2] = 
+	      tint.preview_row[j + 2] =
 		check + (((tint.preview_row[i + 2] - check)*alphaval)/255);
 	    }
 	}

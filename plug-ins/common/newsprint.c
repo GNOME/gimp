@@ -250,11 +250,6 @@ typedef struct
   gint	  lock_channels; /* changes to one channel affect all */
 } NewsprintUIValues;
 
-typedef struct
-{
-  gboolean  run;
-} NewsprintInterface;
-
 
 /* state for the preview widgets */
 typedef struct
@@ -343,11 +338,6 @@ static const NewsprintUIValues factory_defaults_ui =
 /* Mutable copy for normal use.  Initialised in run(). */
 static NewsprintValues   pvals;
 static NewsprintUIValues pvals_ui;
-
-static NewsprintInterface pint =
-{
-  FALSE      /* run */
-};
 
 
 /* channel templates */
@@ -488,8 +478,6 @@ static void	run	(const gchar      *name,
 			 GimpParam       **return_vals);
 
 static gint	newsprint_dialog            (GimpDrawable  *drawable);
-static void	newsprint_ok_callback       (GtkWidget     *widget,
-                                             gpointer       data);
 static void	newsprint_cspace_update     (GtkWidget     *widget,
                                              gpointer       data);
 
@@ -1189,6 +1177,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gint       bpp;
   gint       i;
   gdouble    xres, yres;
+  gboolean   run;
 
   gimp_ui_init ("newsprint", TRUE);
 
@@ -1215,20 +1204,13 @@ newsprint_dialog (GimpDrawable *drawable)
     }
 
   st.dlg = gimp_dialog_new (_("Newsprint"), "newsprint",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/newsprint.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, newsprint_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (st.dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -1444,22 +1426,14 @@ newsprint_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (st.dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (st.dlg)) == GTK_RESPONSE_OK);
 
-  return pint.run;
+  gtk_widget_destroy (st.dlg);
+
+  return run;
 }
 
 /*  Newsprint interface functions  */
-
-static void
-newsprint_ok_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  pint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 static void
 newsprint_cspace_update (GtkWidget *widget,

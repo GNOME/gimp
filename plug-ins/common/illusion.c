@@ -1,6 +1,6 @@
 /*
  * illusion.c  -- This is a plug-in for the GIMP 1.0
- *  
+ *
  * Copyright (C) 1997  Hirotsuna Mizuno
  *                     s1041150@u-aizu.ac.jp
  *
@@ -77,8 +77,8 @@ static IllValues parameters =
 
 
 static GimpFixMePreview *preview;
-static gboolean dialog_status = FALSE;
-static GimpRunMode        run_mode;
+static GimpRunMode       run_mode;
+
 
 MAIN ()
 
@@ -167,7 +167,7 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (gimp_drawable_is_rgb (drawable->drawable_id) || 
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
 	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width() + 1));
@@ -210,18 +210,18 @@ illusion_func (gint x,
   gdouble   radius, cx, cy, angle;
   guchar    pixel[4];
 
-  cy = ((gdouble) y - param->center_y) / param->scale; 
+  cy = ((gdouble) y - param->center_y) / param->scale;
   cx = ((gdouble) x - param->center_x) / param->scale;
-  
+
   angle = floor (atan2 (cy, cx) * parameters.division / G_PI_2)
     * G_PI_2 / parameters.division + (G_PI / parameters.division);
   radius = sqrt ((gdouble) (cx * cx + cy * cy));
 
-  if (parameters.type1) 
+  if (parameters.type1)
     {
       xx = x - param->offset * cos (angle);
       yy = y - param->offset * sin (angle);
-    }  
+    }
   else				/* Type 2 */
     {
       xx = x - param->offset * sin (angle);
@@ -235,11 +235,11 @@ illusion_func (gint x,
       guint alpha1 = src[bpp - 1];
       guint alpha2 = pixel[bpp - 1];
       guint alpha  = (1 - radius) * alpha1 + radius * alpha2;
-	  
+
       if ((dest[bpp - 1] = (alpha >> 1)))
 	{
 	  for (b = 0; b < bpp - 1; b++)
-	    dest[b] = ((1 - radius) * src[b] * alpha1 + 
+	    dest[b] = ((1 - radius) * src[b] * alpha1 +
 		       radius * pixel[b] * alpha2) / alpha;
 	}
     }
@@ -281,7 +281,7 @@ filter_preview (void)
 {
   guchar  **pixels;
   guchar  **destpixels;
-  
+
   gint      image_width;
   gint      image_height;
   gint      image_bpp;
@@ -298,7 +298,7 @@ filter_preview (void)
   image_bpp    = preview->bpp;
   center_x     = (gdouble)image_width  / 2;
   center_y     = (gdouble)image_height / 2;
-    
+
   pixels     = g_new (guchar *, image_height);
   destpixels = g_new (guchar *, image_height);
 
@@ -306,8 +306,8 @@ filter_preview (void)
     {
       pixels[y]     = g_new (guchar, preview->rowstride);
       destpixels[y] = g_new (guchar, preview->rowstride);
-      memcpy (pixels[y], 
-	      preview->cache + preview->rowstride * y, 
+      memcpy (pixels[y],
+	      preview->cache + preview->rowstride * y,
 	      preview->rowstride);
     }
 
@@ -316,7 +316,7 @@ filter_preview (void)
 
   for (y = 0; y < image_height; y++)
     {
-      cy = ((gdouble)y - center_y) / scale; 
+      cy = ((gdouble)y - center_y) / scale;
       for (x = 0; x < image_width; x++)
 	{
 	  cx = ((gdouble)x - center_x) / scale;
@@ -324,7 +324,7 @@ filter_preview (void)
 	    * G_PI_2 / parameters.division + (G_PI / parameters.division);
 	  radius = sqrt ((gdouble) (cx * cx + cy * cy));
 
-	  if (parameters.type1) 
+	  if (parameters.type1)
 	    {
 	      xx = x - offset * cos (angle);
 	      yy = y - offset * sin (angle);
@@ -356,62 +356,46 @@ filter_preview (void)
             {
 	      for (b = 0; b < image_bpp; b++)
 	        destpixels[y][x*image_bpp+b] =
-	          (1-radius) * pixels[y][x * image_bpp + b] 
+	          (1-radius) * pixels[y][x * image_bpp + b]
 	          + radius * pixels[yy][xx * image_bpp + b];
             }
 	}
       gimp_fixme_preview_do_row (preview, y, image_width, destpixels[y]);
     }
 
-  for (y = 0; y < image_height; y++) 
+  for (y = 0; y < image_height; y++)
     g_free (pixels[y]);
   g_free (pixels);
 
-  for (y = 0; y < image_height; y++) 
+  for (y = 0; y < image_height; y++)
     g_free (destpixels[y]);
   g_free (destpixels);
 
   gtk_widget_queue_draw (preview->widget);
 }
 
-static void
-dialog_ok_handler (GtkWidget *widget,
-		   gpointer   data)
-{
-  dialog_status = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gboolean
 dialog (GimpDrawable *mangle)
 {
-  GtkWidget *dlg;  
+  GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *radio;
   GSList    *group = NULL;
+  gboolean   run;
 
   gimp_ui_init ("illusion", TRUE);
 
   dlg = gimp_dialog_new (_("Illusion"), "illusion",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/illusion.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
-			 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
 
-			 GTK_STOCK_OK, dialog_ok_handler,
-			 NULL, NULL, NULL, TRUE, FALSE,
-			 
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
+
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -423,7 +407,7 @@ dialog (GimpDrawable *mangle)
   gtk_box_pack_start (GTK_BOX (main_vbox), preview->frame, FALSE, FALSE, 0);
   filter_preview();
   gtk_widget_show (preview->widget);
-  
+
   table = gimp_parameter_settings_new (main_vbox, 3, 2);
 
   spinbutton = gimp_spin_button_new (&adj, parameters.division,
@@ -471,8 +455,9 @@ dialog (GimpDrawable *mangle)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return dialog_status;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }

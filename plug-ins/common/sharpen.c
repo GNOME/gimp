@@ -66,7 +66,6 @@ static void	sharpen        (void);
 static gint	sharpen_dialog (void);
 
 static void	dialog_iscale_update (GtkAdjustment *, gint *);
-static void	dialog_ok_callback   (GtkWidget *, gpointer);
 
 static void	preview_init            (void);
 static void	preview_exit            (void);
@@ -121,7 +120,6 @@ static gint       sel_width;		/* Selection width */
 static gint       sel_height;		/* Selection height */
 static gint       img_bpp;		/* Bytes-per-pixel in image */
 static gint       sharpen_percent = 10;	/* Percent of sharpening */
-static gint       run_filter = FALSE;	/* True if we should run the filter */
 
 static intneg     neg_lut[256];		/* Negative coefficient LUT */
 static intpos     pos_lut[256];		/* Positive coefficient LUT */
@@ -494,26 +492,20 @@ sharpen_dialog (void)
   GtkWidget *frame;
   GtkWidget *scrollbar;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("sharpen", TRUE);
 
   dialog = gimp_dialog_new (_("Sharpen"), "Sharpen",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/sharpen.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
-  /*
+   /*
    * Top-level table for dialog...
    */
 
@@ -601,12 +593,13 @@ sharpen_dialog (void)
 
   preview_update ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
 
   preview_exit ();
 
-  return run_filter;
+  return run;
 }
 
 /*  preview functions  */
@@ -832,15 +825,6 @@ dialog_iscale_update (GtkAdjustment *adjustment,
 
   compute_luts ();
   preview_update ();
-}
-
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  run_filter = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 

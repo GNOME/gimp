@@ -40,35 +40,6 @@ static gint       ruler_width     = 1;
 static gint       ruler_height    = 1;
 
 
-static void
-resolution_calibrate_ok (GtkWidget *button,
-			 gpointer   data)
-{
-  GtkWidget *resolution_entry;
-  GtkWidget *chain_button;
-  gdouble    x, y;
-
-  resolution_entry = g_object_get_data (G_OBJECT (data), "resolution-entry");
-
-  x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 0);
-  y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 1);
-
-  calibrate_xres = (gdouble) ruler_width  * calibrate_xres / x;
-  calibrate_yres = (gdouble) ruler_height * calibrate_yres / y;
-
-  chain_button = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
-
-  if (ABS (x -y) > GIMP_MIN_RESOLUTION)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), FALSE);
-
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
-                              0, calibrate_xres);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
-                              1, calibrate_yres);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 /**
  * resolution_calibrate_dialog:
  * @resolution_entry: a #GimpSizeEntry to connect the dialog to
@@ -113,28 +84,14 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   dialog = gimp_dialog_new (_("Calibrate Monitor Resolution"),
 			    "calibrate_resolution",
+                            resolution_entry,
+                            GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
 			    NULL, NULL,
-			    GTK_WIN_POS_CENTER,
-			    FALSE, FALSE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, resolution_calibrate_ok,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-  g_object_set_data (G_OBJECT (dialog), "resolution-entry", resolution_entry);
-  g_signal_connect_object (resolution_entry, "destroy",
-                           G_CALLBACK (gtk_widget_destroy),
-                           dialog, G_CONNECT_SWAPPED);
-  g_signal_connect_object (resolution_entry, "unmap",
-                           G_CALLBACK (gtk_widget_destroy),
-                           dialog, G_CONNECT_SWAPPED);
 
   SET_STYLE (dialog, dialog_style);
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
@@ -289,5 +246,33 @@ resolution_calibrate_dialog (GtkWidget  *resolution_entry,
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
+  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+    {
+    case GTK_RESPONSE_OK:
+      {
+        GtkWidget *chain_button;
+        gdouble    x, y;
+
+        x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 0);
+        y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (calibrate_entry), 1);
+
+        calibrate_xres = (gdouble) ruler_width  * calibrate_xres / x;
+        calibrate_yres = (gdouble) ruler_height * calibrate_yres / y;
+
+        chain_button = GIMP_COORDINATES_CHAINBUTTON (resolution_entry);
+
+        if (ABS (x -y) > GIMP_MIN_RESOLUTION)
+          gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain_button), FALSE);
+
+        gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
+                                    0, calibrate_xres);
+        gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (resolution_entry),
+                                    1, calibrate_yres);
+      }
+
+    default:
+      break;
+    }
+
+  gtk_widget_destroy (dialog);
 }

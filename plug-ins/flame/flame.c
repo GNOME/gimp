@@ -101,8 +101,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static gint run_flag = FALSE;
-
 #define BLACK_DRAWABLE    (-2)
 #define GRADIENT_DRAWABLE (-3)
 #define TABLE_DRAWABLE    (-4)
@@ -373,18 +371,6 @@ doit (GimpDrawable *drawable)
   gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
 }
 
-
-static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
-{
-  run_flag = TRUE;
-
-  if (edit_dlg)
-    gtk_widget_destroy (edit_dlg);
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gboolean
 file_cancel_callback (GtkWidget *widget,
 		      gpointer   data)
@@ -501,12 +487,17 @@ randomize_callback (GtkWidget *widget,
 }
 
 static void
-edit_ok_callback (GtkWidget *widget,
-		  gpointer   data)
+edit_response (GtkWidget *widget,
+               gint       response_id,
+               gpointer   data)
 {
-  gtk_widget_hide (edit_dlg);
-  config.cp = edit_cp;
-  set_flame_preview ();
+  gtk_widget_hide (widget);
+
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      config.cp = edit_cp;
+      set_flame_preview ();
+    }
 }
 
 static void
@@ -606,7 +597,7 @@ preview_clicked (GtkWidget *widget,
 
 static void
 edit_callback (GtkWidget *widget,
-	       gpointer   data)
+	       GtkWidget *parent)
 {
   edit_cp = config.cp;
 
@@ -621,22 +612,20 @@ edit_callback (GtkWidget *widget,
       GtkWidget *optionmenu;
       GtkWidget *label;
       GtkObject *adj;
-      gint i, j;
+      gint       i, j;
 
       edit_dlg = gimp_dialog_new (_("Edit Flame"), "flame",
+                                  parent, GTK_DIALOG_DESTROY_WITH_PARENT,
 				  gimp_standard_help_func, "filters/flame.html",
-				  GTK_WIN_POS_MOUSE,
-				  FALSE, FALSE, FALSE,
 
-				  GTK_STOCK_CANCEL, gtk_widget_hide,
-				  NULL, 1, NULL, FALSE, TRUE,
+				  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				  GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-				  GTK_STOCK_OK, edit_ok_callback,
-				  NULL, NULL, NULL, TRUE, FALSE,
+                                  NULL);
 
-				  NULL);
-
-      gtk_quit_add_destroy (1, GTK_OBJECT (edit_dlg));
+      g_signal_connect (edit_dlg, "response",
+                        G_CALLBACK (edit_response),
+                        edit_dlg);
 
       main_vbox = gtk_vbox_new (FALSE, 4);
       gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -913,25 +902,18 @@ dialog (void)
   GtkWidget *table;
   GtkWidget *box;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("flame", TRUE);
 
   dlg = gimp_dialog_new (_("Flame"), "flame",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/flame.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -981,7 +963,7 @@ dialog (void)
 
     g_signal_connect (button, "clicked",
                       G_CALLBACK (edit_callback),
-                      NULL);
+                      dlg);
 
     load_button = button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
     gtk_box_pack_start (GTK_BOX (vbbox), button, FALSE, FALSE, 0);
@@ -1250,8 +1232,9 @@ dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return run_flag;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }

@@ -19,13 +19,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Changes: 
+/* Changes:
 
-   1.1 
-   -Corrected small bug when calling color selection dialog 
-   -Added LUTs to speed things a little bit up 
+   1.1
+   -Corrected small bug when calling color selection dialog
+   -Added LUTs to speed things a little bit up
 
-   1.0 
+   1.0
    -First release */
 
 #include "config.h"
@@ -53,8 +53,6 @@ static void      run   (const gchar      *name,
 
 static void      colorify                  (GimpDrawable *drawable);
 static gboolean  colorify_dialog           (GimpRGB      *color);
-static void      colorify_ok_callback      (GtkWidget    *widget,
-					    gpointer      data);
 static void      predefined_color_callback (GtkWidget    *widget,
 					    gpointer      data);
 
@@ -62,16 +60,6 @@ typedef struct
 {
   GimpRGB  color;
 } ColorifyVals;
-
-typedef struct
-{
-  gboolean  run;
-} ColorifyInterface;
-
-static ColorifyInterface cint =
-{
-  FALSE
-};
 
 static ColorifyVals cvals =
 {
@@ -129,7 +117,7 @@ query (void)
 			  "Francisco Bustamante",
 			  "Francisco Bustamante",
                           PLUG_IN_VERSION,
-			  N_("<Image>/Filters/Colors/_Colorify..."), 
+			  N_("<Image>/Filters/Colors/_Colorify..."),
 			  "RGB*",
 			  GIMP_PLUGIN,
 			  G_N_ELEMENTS (args), 0,
@@ -205,7 +193,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static void 
+static void
 colorify_func (const guchar *src,
                guchar       *dest,
                gint          bpp,
@@ -220,7 +208,7 @@ colorify_func (const guchar *src,
   dest[0] = final_red_lookup[lum];
   dest[1] = final_green_lookup[lum];
   dest[2] = final_blue_lookup[lum];
-  
+
   if (bpp == 4)
     dest[3] = src[3];
 }
@@ -253,30 +241,23 @@ colorify_dialog (GimpRGB *color)
   GtkWidget *table;
   GtkWidget *color_area;
   gint       i;
+  gboolean   run;
 
   gimp_ui_init ("colorify", TRUE);
 
   dialog = gimp_dialog_new (_("Colorify"), "colorify",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/colorify.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, colorify_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   frame = gtk_frame_new (_("Color"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), 
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
                       frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
@@ -299,7 +280,7 @@ colorify_dialog (GimpRGB *color)
   g_signal_connect (custom_color_button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     color);
-  
+
   gtk_table_attach (GTK_TABLE (table), custom_color_button, 6, 7, 0, 1,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (custom_color_button);
@@ -307,8 +288,8 @@ colorify_dialog (GimpRGB *color)
   for (i = 0; i < 7; i++)
     {
       button = gtk_button_new ();
-      color_area = gimp_color_area_new (&button_color[i], 
-					GIMP_COLOR_AREA_FLAT, 
+      color_area = gimp_color_area_new (&button_color[i],
+					GIMP_COLOR_AREA_FLAT,
 					GDK_BUTTON2_MASK);
       gtk_widget_set_size_request (GTK_WIDGET (color_area),
 				   COLOR_SIZE, COLOR_SIZE);
@@ -325,25 +306,17 @@ colorify_dialog (GimpRGB *color)
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return cint.run;
-}
+  gtk_widget_destroy (dialog);
 
-static void
-colorify_ok_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  cint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void
 predefined_color_callback (GtkWidget *widget,
 			   gpointer   data)
 {
-  gimp_color_button_set_color (GIMP_COLOR_BUTTON (custom_color_button), 
-			       (GimpRGB*) data);
+  gimp_color_button_set_color (GIMP_COLOR_BUTTON (custom_color_button),
+			       (GimpRGB *) data);
 }

@@ -121,7 +121,6 @@ typedef struct
 {
   gint          Slctn;
   gint          RealTime;
-  gint          Success;
   gint          Units;
   gint          Gray_to_from;
   GimpDrawable     *drawable;

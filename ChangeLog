@@ -1,3 +1,61 @@
+2003-11-06  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpdialog.[ch]: removed our own action_area API
+	and use GtkDialog's one. Create all dialogs without separator.
+	Changed almost everything else too. Fixes bug #125143.
+
+	* libgimpwidgets/gimpquerybox.c
+	* libgimpwidgets/gimpunitmenu.c: changed accordingly.
+
+	* libgimp/gimpexport.[ch]: ditto. Renamed enum GimpExportReturnType
+	to GimpExportReturn.
+
+	* libgimp/gimpcompat.h: added a #define for the old name.
+
+	* themes/Default/gtkrc: increased action_area border to 6 pixels.
+
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpprogress.c
+	* app/gui/brush-select.c
+	* app/gui/channels-commands.c
+	* app/gui/color-notebook.c
+	* app/gui/convert-dialog.c
+	* app/gui/file-new-dialog.c
+	* app/gui/font-select.c
+	* app/gui/gradient-editor-commands.c
+	* app/gui/gradient-select.c
+	* app/gui/grid-dialog.c
+	* app/gui/image-commands.c
+	* app/gui/info-window.c
+	* app/gui/layers-commands.c
+	* app/gui/module-browser.c
+	* app/gui/offset-dialog.c
+	* app/gui/palette-import-dialog.c
+	* app/gui/palette-select.c
+	* app/gui/pattern-select.c
+	* app/gui/preferences-dialog.c
+	* app/gui/qmask-commands.c
+	* app/gui/resize-dialog.c
+	* app/gui/resolution-calibrate-dialog.c
+	* app/gui/stroke-dialog.c
+	* app/gui/templates-commands.c
+	* app/gui/user-install-dialog.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpimagemaptool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimptransformtool.c
+	* app/widgets/gimptexteditor.c
+	* app/widgets/gimptooldialog.[ch]
+	* app/widgets/gimpviewabledialog.[ch]
+	* app/widgets/gimpwidgets-utils.c: changed accordingly and increased
+	the dialogs' outer borders to 6 pixels all over the place.
+
+	* plug-ins/*/*.c: changed accordingly. The plug-ins may be
+	arbitrarily broken, I tested none of them.
+
 2003-11-06  Sven Neumann  <sven@gimp.org>
 
 	* devel-docs/gbr.txt: documented what I found out about the GIMP

@@ -57,11 +57,9 @@ struct _ScaleDialogData
 
 /*  local function prototypes  */
 
-static void    gimp_display_shell_scale_dialog_ok     (GtkWidget       *widget,
-                                                       ScaleDialogData *dialog);
-static void    gimp_display_shell_scale_dialog_cancel (GtkWidget       *widget,
-                                                       ScaleDialogData *dialog);
-
+static void gimp_display_shell_scale_dialog_response (GtkWidget        *widget,
+                                                      gint              response_id,
+                                                      ScaleDialogData  *dialog);
 static gdouble img2real                              (GimpDisplayShell *shell,
                                                       gboolean          xdir,
                                                       gdouble           a);
@@ -473,13 +471,8 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                               gimp_standard_help_func,
                               GIMP_HELP_VIEW_ZOOM_OTHER,
 
-                              GTK_STOCK_CANCEL,
-                              gimp_display_shell_scale_dialog_cancel,
-                              data, NULL, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK,
-                              gimp_display_shell_scale_dialog_ok,
-                              data, NULL, NULL, TRUE, FALSE,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
 
@@ -492,8 +485,12 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                                 GTK_WINDOW (shell));
   gtk_window_set_destroy_with_parent (GTK_WINDOW (shell->scale_dialog), TRUE);
 
+  g_signal_connect (shell->scale_dialog, "response",
+                    G_CALLBACK (gimp_display_shell_scale_dialog_response),
+                    data);
+
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell->scale_dialog)->vbox),
                      hbox);
   gtk_widget_show (hbox);
@@ -528,27 +525,26 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 /*  private functions  */
 
 static void
-gimp_display_shell_scale_dialog_ok (GtkWidget       *widget,
-                                    ScaleDialogData *dialog)
+gimp_display_shell_scale_dialog_response (GtkWidget       *widget,
+                                          gint             response_id,
+                                          ScaleDialogData *dialog)
 {
-  gint scale_src;
-  gint scale_dest;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      gint scale_src;
+      gint scale_dest;
 
-  scale_src  = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->src_adj));
-  scale_dest = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->dest_adj));
+      scale_src  = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->src_adj));
+      scale_dest = gtk_adjustment_get_value (GTK_ADJUSTMENT (dialog->dest_adj));
 
-  gimp_display_shell_scale (dialog->shell, scale_dest * 100 + scale_src);
-  dialog->shell->other_scale |= (1 << 30);
+      gimp_display_shell_scale (dialog->shell, scale_dest * 100 + scale_src);
+    }
+  else
+    {
+      /*  need to emit "scaled" to get the menu updated  */
+      gimp_display_shell_scaled (dialog->shell);
+    }
 
-  gtk_widget_destroy (dialog->shell->scale_dialog);
-}
-
-static void
-gimp_display_shell_scale_dialog_cancel (GtkWidget       *widget,
-                                        ScaleDialogData *dialog)
-{
-  /*  need to emit "scaled" to get the menu updated  */
-  gimp_display_shell_scaled (dialog->shell);
   dialog->shell->other_scale |= (1 << 30);
 
   gtk_widget_destroy (dialog->shell->scale_dialog);

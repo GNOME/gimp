@@ -48,11 +48,6 @@ typedef struct
   gint orientation;
 } ShiftValues;
 
-typedef struct
-{
-  gboolean run;
-} ShiftInterface;
-
 
 /* Declare local functions.
  */
@@ -65,10 +60,10 @@ static void    run    (const gchar      *name,
 
 static void    shift  (GimpDrawable *drawable);
 
-static gint    shift_dialog      (gint32 image_ID);
-static void    shift_ok_callback (GtkWidget *widget,
-				  gpointer   data);
-static void    shift_amount_update_callback(GtkWidget * widget, gpointer data);
+static gint    shift_dialog                 (gint32     image_ID);
+static void    shift_amount_update_callback (GtkWidget *widget,
+                                             gpointer   data);
+
 
 /***** Local vars *****/
 
@@ -86,10 +81,6 @@ static ShiftValues shvals =
   HORIZONTAL  /* orientation  */
 };
 
-static ShiftInterface shint =
-{
-  FALSE   /*  run  */
-};
 
 /***** Functions *****/
 
@@ -270,11 +261,11 @@ shift (GimpDrawable *drawable)
 	  for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
             {
 	      dest = destline;
-	      ydist = g_rand_int_range (gr, -(amount + 1) / 2.0, 
+	      ydist = g_rand_int_range (gr, -(amount + 1) / 2.0,
 					(amount + 1) / 2.0 );
 	      for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
                 {
-		  gimp_pixel_fetcher_get_pixel2 (pft, x, y + ydist, 
+		  gimp_pixel_fetcher_get_pixel2 (pft, x, y + ydist,
 						 PIXEL_WRAP, dest);
 		  dest += dest_rgn.rowstride;
                 }
@@ -286,11 +277,11 @@ shift (GimpDrawable *drawable)
 	  for (y = dest_rgn.y; y < dest_rgn.y + dest_rgn.h; y++)
             {
 	      dest = destline;
-	      xdist = g_rand_int_range (gr, -(amount + 1) / 2.0, 
+	      xdist = g_rand_int_range (gr, -(amount + 1) / 2.0,
 					(amount + 1) / 2.0);
 	      for (x = dest_rgn.x; x < dest_rgn.x + dest_rgn.w; x++)
                 {
-		  gimp_pixel_fetcher_get_pixel2 (pft, x + xdist, y, 
+		  gimp_pixel_fetcher_get_pixel2 (pft, x + xdist, y,
 						 PIXEL_WRAP, dest);
 		  dest += bytes;
                 }
@@ -321,24 +312,18 @@ shift_dialog (gint32 image_ID)
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
+  gboolean   run;
 
   gimp_ui_init ("shift", FALSE);
 
   dlg = gimp_dialog_new (_("Shift"), "shift",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/shift.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, shift_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /*  parameter settings  */
   frame = gimp_radio_group_new2 (TRUE, _("Parameter Settings"),
@@ -368,19 +353,19 @@ shift_dialog (gint32 image_ID)
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
-  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE, 
-                                    SPIN_BUTTON_WIDTH, 
+  size_entry = gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE,
+                                    SPIN_BUTTON_WIDTH,
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE);
 
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size_entry), 0, xres, TRUE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0, 
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size_entry), 0,
 					 1.0, 200.0);
   gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
   gtk_table_set_col_spacing (GTK_TABLE (size_entry), 2, 12);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0, 
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size_entry), 0,
 			      (gdouble) shvals.shift_amount);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry), 
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size_entry),
 				_("Shift _Amount:"), 1, 0, 0.0);
 
   g_signal_connect (size_entry, "value_changed",
@@ -393,24 +378,17 @@ shift_dialog (gint32 image_ID)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return shint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void 
-shift_amount_update_callback(GtkWidget * widget, gpointer data)
-{
-  shvals.shift_amount = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 
-						    0);
+  return run;
 }
 
 static void
-shift_ok_callback (GtkWidget *widget,
-		   gpointer   data)
+shift_amount_update_callback (GtkWidget *widget,
+                              gpointer   data)
 {
-  shint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  shvals.shift_amount = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget),
+						    0);
 }

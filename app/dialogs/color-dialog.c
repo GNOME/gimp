@@ -98,9 +98,8 @@ static ColorNotebook *
 static void   color_notebook_help_func         (const gchar           *help_id,
                                                 gpointer               help_data);
 
-static void   color_notebook_ok_callback       (GtkWidget             *widget,
-                                                ColorNotebook         *cnp);
-static void   color_notebook_cancel_callback   (GtkWidget             *widget,
+static void   color_notebook_response          (GtkWidget             *widget,
+                                                gint                   response_id,
                                                 ColorNotebook         *cnp);
 
 static void   color_notebook_update            (ColorNotebook         *cnp,
@@ -277,7 +276,7 @@ color_notebook_hide (ColorNotebook *cnp)
 static ColorNotebook *
 color_notebook_new_internal (GimpViewable          *viewable,
                              const gchar           *title,
-                             const gchar           *wmclass_name,
+                             const gchar           *role,
                              const gchar           *stock_id,
                              const gchar           *desc,
                              GimpDialogFactory     *dialog_factory,
@@ -320,8 +319,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
 
   if (desc)
     {
-      cnp->shell = gimp_viewable_dialog_new (viewable,
-                                             title, wmclass_name,
+      cnp->shell = gimp_viewable_dialog_new (viewable, title, role,
                                              stock_id, desc,
                                              color_notebook_help_func, NULL,
                                              NULL);
@@ -330,26 +328,24 @@ color_notebook_new_internal (GimpViewable          *viewable,
     }
   else
     {
-      cnp->shell = gimp_dialog_new (title, wmclass_name,
+      cnp->shell = gimp_dialog_new (title, role,
+                                    NULL, 0,
                                     color_notebook_help_func, NULL,
-                                    GTK_WIN_POS_NONE,
-                                    FALSE, TRUE, TRUE,
                                     NULL);
    }
 
   g_object_set_data (G_OBJECT (cnp->shell), "color-notebook", cnp);
 
-  gimp_dialog_create_action_area (GIMP_DIALOG (cnp->shell),
+  gtk_dialog_add_buttons (GTK_DIALOG (cnp->shell),
 
-                                  GTK_STOCK_CANCEL,
-                                  color_notebook_cancel_callback,
-                                  cnp, NULL, NULL, FALSE, TRUE,
+                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                          GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                                  GTK_STOCK_OK,
-                                  color_notebook_ok_callback,
-                                  cnp, NULL, NULL, TRUE, FALSE,
+                          NULL);
 
-                                  NULL);
+  g_signal_connect (cnp->shell, "response",
+                    G_CALLBACK (color_notebook_response),
+                    cnp);
 
   g_object_add_weak_pointer (G_OBJECT (cnp->shell), (gpointer *) &cnp->shell);
 
@@ -358,7 +354,7 @@ color_notebook_new_internal (GimpViewable          *viewable,
                                      cnp->shell);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (cnp->shell)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
@@ -552,27 +548,28 @@ color_notebook_help_func (const gchar *help_id,
 }
 
 static void
-color_notebook_ok_callback (GtkWidget     *widget,
-			    ColorNotebook *cnp)
+color_notebook_response (GtkWidget     *widget,
+                         gint           response_id,
+                         ColorNotebook *cnp)
 {
-  color_history_add_clicked (NULL, cnp);
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      color_history_add_clicked (NULL, cnp);
 
-  if (cnp->callback)
-    cnp->callback (cnp,
-                   &cnp->rgb,
-                   COLOR_NOTEBOOK_OK,
-                   cnp->client_data);
-}
-
-static void
-color_notebook_cancel_callback (GtkWidget     *widget,
-				ColorNotebook *cnp)
-{
-  if (cnp->callback)
-    cnp->callback (cnp,
-                   &cnp->orig_rgb,
-                   COLOR_NOTEBOOK_CANCEL,
-                   cnp->client_data);
+      if (cnp->callback)
+        cnp->callback (cnp,
+                       &cnp->rgb,
+                       COLOR_NOTEBOOK_OK,
+                       cnp->client_data);
+    }
+  else
+    {
+      if (cnp->callback)
+        cnp->callback (cnp,
+                       &cnp->orig_rgb,
+                       COLOR_NOTEBOOK_CANCEL,
+                       cnp->client_data);
+    }
 }
 
 static void

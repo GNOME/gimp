@@ -435,17 +435,6 @@ pluginCore (piArgs *argp)
   return 0;
 }
 
-gboolean run_flag = FALSE;
-
-static void
-emboss_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  run_flag = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static void
 emboss_radio_button_callback (GtkWidget *widget,
 			      gpointer   data)
@@ -494,24 +483,18 @@ pluginCoreIA (piArgs *argp)
   GtkWidget *preview;
   GtkWidget *frame;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("emboss", TRUE);
 
   dlg = gimp_dialog_new (_("Emboss"), "emboss",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/emboss.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, emboss_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -572,10 +555,11 @@ pluginCoreIA (piArgs *argp)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  if (run_flag)
+  gtk_widget_destroy (dlg);
+
+  if (run)
     return pluginCore (argp);
   else
     return -1;

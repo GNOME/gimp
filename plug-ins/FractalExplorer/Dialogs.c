@@ -20,6 +20,10 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define RESPONSE_ABOUT 1
+
+
 static gdouble 		*gradient_samples = NULL;
 static gchar   		*gradient_name    = NULL;
 static gboolean          ready_now = FALSE;
@@ -73,19 +77,32 @@ static void load_file_selection_ok     (GtkWidget          *widget,
 static void create_load_file_selection (void);
 static void create_file_selection      (void);
 
-static void explorer_logo_dialog (void);
+static void explorer_logo_dialog       (GtkWidget          *parent);
 
 /**********************************************************************
  CALLBACKS
  *********************************************************************/
 
 static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
+dialog_response (GtkWidget *widget,
+                 gint       response_id,
+                 gpointer   data)
 {
-  wint.run = TRUE;
+  switch (response_id)
+    {
+    case RESPONSE_ABOUT:
+      explorer_logo_dialog (widget);
+      break;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
+    case GTK_RESPONSE_OK:
+      wint.run = TRUE;
+      gtk_widget_destroy (widget);
+      break;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
+    }
 }
 
 static void
@@ -494,20 +511,18 @@ explorer_dialog (void)
 
   dialog = maindlg =
     gimp_dialog_new ("Fractal Explorer", "fractalexplorer",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/fractalexplorer.html",
-		     GTK_WIN_POS_NONE,
-		     FALSE, TRUE, FALSE,
 
-		     _("About"), explorer_logo_dialog,
-		     NULL, NULL, NULL, FALSE, FALSE,
+		     _("About"),       RESPONSE_ABOUT,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
+                     NULL);
 
-		     GTK_STOCK_OK, dialog_ok_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
-
-		     NULL);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (dialog_response),
+                    NULL);
 
   g_signal_connect (dialog, "destroy",
                     G_CALLBACK (gtk_main_quit),
@@ -1563,7 +1578,7 @@ make_color_map (void)
  *********************************************************************/
 
 static void
-explorer_logo_dialog (void)
+explorer_logo_dialog (GtkWidget *parent)
 {
   static GtkWidget *logodlg;
   GtkWidget *xdlg;
@@ -1590,15 +1605,18 @@ explorer_logo_dialog (void)
 
   xdlg = logodlg =
     gimp_dialog_new (_("About"), "fractalexplorer",
+                     parent, 0,
 		     gimp_standard_help_func, "filters/fractalexplorer.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CLOSE, gtk_widget_destroy,
-		     NULL, 1, NULL, TRUE, TRUE,
+		     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 		     NULL);
 
+
+
+  g_signal_connect (xdlg, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
   g_signal_connect (xdlg, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &logodlg);

@@ -47,6 +47,7 @@ static gboolean dialog (GimpDrawable     *drawable);
 static gint32   doit   (GimpDrawable     *drawable,
                         gint32           *layer_id);
 
+
 GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -55,8 +56,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static gboolean run_flag = FALSE;
-static GtkWidget *sizeentry;
 
 MAIN ()
 
@@ -156,7 +155,7 @@ run (const gchar      *name,
 	  config.show_image = param[6].data.d_int32 ? TRUE : FALSE;
 	}
 
-      if (status == GIMP_PDB_SUCCESS && 
+      if (status == GIMP_PDB_SUCCESS &&
 	  ((config.width <= 0) || (config.height <= 0) || config.ntries <= 0))
 	status = GIMP_PDB_CALLING_ERROR;
 
@@ -246,7 +245,7 @@ doit (GimpDrawable *drawable,
   gint       width, height;
   GimpPixelRgn  pr;
   GRand *gr;
-  
+
   gr = g_rand_new ();
 
   new_image_id = gimp_image_new (config.width, config.height, GIMP_RGB);
@@ -391,22 +390,6 @@ doit (GimpDrawable *drawable,
   return new_image_id;
 }
 
-
-static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
-{
-  run_flag = TRUE;
-
-  config.width =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 0);
-
-  config.height =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 1);
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gboolean
 dialog (GimpDrawable *drawable)
 {
@@ -414,28 +397,22 @@ dialog (GimpDrawable *drawable)
   GtkWidget *vbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
+  GtkWidget *sizeentry;
   guint32    image_id;
   GimpUnit   unit;
   gdouble    xres, yres;
+  gboolean   run;
 
   gimp_ui_init ("smooth_palette", FALSE);
 
   dlg = gimp_dialog_new (_("Smooth Palette"), "smooth_palette",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/smooth_palette.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
@@ -451,7 +428,7 @@ dialog (GimpDrawable *drawable)
 				    config.width, xres,
 				    2, GIMP_MAX_IMAGE_SIZE,
 				    2, GIMP_MAX_IMAGE_SIZE,
-                                         
+
 				    _("_Height:"),
 				    config.height, yres,
 				    1, GIMP_MAX_IMAGE_SIZE,
@@ -470,8 +447,18 @@ dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return run_flag;
+  if (run)
+    {
+      config.width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry),
+                                                  0);
+      config.height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry),
+                                                  1);
+    }
+
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
+

@@ -3,7 +3,7 @@
  *
  * gimpexport.h
  * Copyright (C) 1999-2000 Sven Neumann <sven@gimp.org>
- * 
+ *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -38,18 +38,18 @@ typedef enum
   GIMP_EXPORT_CAN_HANDLE_LAYERS_AS_ANIMATION = 1 << 5,
   GIMP_EXPORT_NEEDS_ALPHA                    = 1 << 6
 } GimpExportCapabilities;
-  
+
 typedef enum
 {
   GIMP_EXPORT_CANCEL,
   GIMP_EXPORT_IGNORE,
   GIMP_EXPORT_EXPORT
-} GimpExportReturnType;
+} GimpExportReturn;
 
-GimpExportReturnType gimp_export_image (gint32                 *image_ID,
-					gint32                 *drawable_ID,
-					const gchar            *format_name,
-					GimpExportCapabilities  capabilities);
+GimpExportReturn   gimp_export_image (gint32                 *image_ID,
+                                      gint32                 *drawable_ID,
+                                      const gchar            *format_name,
+                                      GimpExportCapabilities  capabilities);
 
 
 G_END_DECLS

@@ -52,7 +52,7 @@ style "gimp-default-style"
   GimpEditor::button_icon_size     = menu
   GtkDialog::content_area_border   = 0
   GtkDialog::button_spacing        = 4
-  GtkDialog::action_area_border    = 4
+  GtkDialog::action_area_border    = 6
 }
 
 class "GtkWidget" style "gimp-default-style"

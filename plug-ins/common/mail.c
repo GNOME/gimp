@@ -1,6 +1,6 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
- * Copyright (C) 1997 Daniel Risacher 
+ * Copyright (C) 1997 Daniel Risacher
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,22 +53,22 @@
  *       wise just change the UUENCODE.
  *
  *
- * TODO: 1) the aforementioned abilty to specify the 
+ * TODO: 1) the aforementioned abilty to specify the
  *           uuencode filename                         *done*
  *       2) someway to do this without tmp files
  *              * wont happen anytime soon*
  *       3) MIME? *done*
  *       4) a pointlessly snazzier dialog
- *       5) make sure it works with gz     
+ *       5) make sure it works with gz
  *               * works for .xcfgz but not .xcf.gz *
- *       6) add an option to choose if mail get 
+ *       6) add an option to choose if mail get
  *          uuencode or not (or MIME'ed for that matter)
  *       7) realtime preview
  *       8) better entry for comments    *done*
- *       9) list of frequently used addreses     
+ *       9) list of frequently used addreses
  *      10) openGL compliance
  *      11) better handling of filesave errors
- *     
+ *
  *
  *  Version history
  *       .5  - 6/30/97 - inital relese
@@ -85,7 +85,7 @@
  *                     - General cleanup of the MIME handling code.
  *       .80 - 6/23/98 - Added a text box so you can compose real messages.
  *       .85 - 3/19/99 - Added a "From:" field. Made it check gimprc for a
- *                       "gump-from" token and use it. Also made "run with last 
+ *                       "gump-from" token and use it. Also made "run with last
  *                        values" work.
  * As always: The utility of this plugin is left as an exercise for the reader
  *
@@ -141,8 +141,6 @@ static GimpPDBStatusType save_image (const gchar *filename,
 				     gint32       run_mode);
 
 static gint    save_dialog          (void);
-static void    ok_callback          (GtkWidget     *widget,
-                                     gpointer       data);
 static void    mail_entry_callback  (GtkWidget     *widget,
                                      gpointer       data);
 static void    mesg_body_callback   (GtkTextBuffer *buffer,
@@ -191,7 +189,7 @@ static m_info mail_info =
 };
 
 static gchar * mesg_body = NULL;
-static gint    run_flag  = 0;
+
 
 MAIN ()
 
@@ -280,7 +278,7 @@ run (const gchar      *name,
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_get_data ("plug_in_mail_image", &mail_info);
 	  break;
-	  
+
 	default:
 	  break;
 	}
@@ -337,14 +335,14 @@ save_image (const gchar *filename,
   mailpipe = popen (mailcmdline, "wb");
 #endif
   create_headers (mailpipe);
-  
+
   /* This is necessary to make the comments and headers work correctly. Not real sure why */
-  fflush (mailpipe);      
+  fflush (mailpipe);
 
   if (! (gimp_file_save (run_mode,
 			 image_ID,
 			 drawable_ID,
-			 tmpname, 
+			 tmpname,
 			 tmpname) && valid_file (tmpname)) )
     {
       unlink (tmpname);
@@ -445,14 +443,14 @@ save_dialog (void)
   GtkWidget     *scrolled_window;
   GtkWidget     *text_view;
   GtkTextBuffer *text_buffer;
-
-  gchar      buffer[BUFFER_SIZE];
-  gchar     *gump_from;
+  gchar          buffer[BUFFER_SIZE];
+  gchar         *gump_from;
+  gboolean       run;
 
   gimp_ui_init ("mail", FALSE);
 
   /* check gimprc for a preffered "From:" address */
-  gump_from = gimp_gimprc_query ("gump-from");         
+  gump_from = gimp_gimprc_query ("gump-from");
 
   if (gump_from)
     {
@@ -461,20 +459,13 @@ save_dialog (void)
     }
 
   dlg = gimp_dialog_new (_("Send to Mail"), "mail",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/mail.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* table */
   table = gtk_table_new (7, 2, FALSE);
@@ -596,13 +587,14 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return run_flag;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
-static gint 
+static gint
 valid_file (const gchar *filename)
 {
   int stat_res;
@@ -687,11 +679,11 @@ find_extension (const gchar *filename)
       if (!ext || ext[1] == 0 || strchr (ext, '/'))
 	{
 	  g_message (_("some sort of error with the file extension or lack thereof"));
-	  
+
 	  return NULL;
 	}
       if (0 != strcmp(ext,".gz"))
-	{ 
+	{
 	  return ext;
 	}
       else
@@ -705,22 +697,13 @@ find_extension (const gchar *filename)
 }
 
 static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
-{
-  run_flag = TRUE;
-  
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
 mail_entry_callback (GtkWidget *widget,
 		     gpointer   data)
 {
   strncpy ((gchar *) data, gtk_entry_get_text (GTK_ENTRY (widget)), BUFFER_SIZE);
 }
 
-static void 
+static void
 mesg_body_callback (GtkTextBuffer *buffer,
 		    gpointer       data)
 {
@@ -733,7 +716,7 @@ mesg_body_callback (GtkTextBuffer *buffer,
 
   gtk_text_buffer_get_bounds (buffer, &start_iter, &end_iter);
   mesg_body = gtk_text_buffer_get_text (buffer, &start_iter, &end_iter, FALSE);
-} 
+}
 
 static void
 create_headers (FILE *mailpipe)
@@ -762,7 +745,7 @@ create_headers (FILE *mailpipe)
   fprintf (mailpipe, mail_info.comment);
   fprintf (mailpipe, "\n\n");
   if (mesg_body)
-    fprintf (mailpipe, mesg_body); 
+    fprintf (mailpipe, mesg_body);
   fprintf (mailpipe, "\n\n");
   if (mail_info.encapsulation == ENCAPSULATION_MIME )
     {
@@ -781,8 +764,8 @@ create_headers (FILE *mailpipe)
 
 /*
  * The following code taken from codes.c in the mpack-1.5 distribution
- * by Carnegie Mellon University. 
- * 
+ * by Carnegie Mellon University.
+ *
  *
  * (C) Copyright 1993,1994 by Carnegie Mellon University
  * All Rights Reserved.
@@ -799,15 +782,15 @@ create_headers (FILE *mailpipe)
 /*
 Copyright (c) 1991 Bell Communications Research, Inc. (Bellcore)
 
-Permission to use, copy, modify, and distribute this material 
-for any purpose and without fee is hereby granted, provided 
-that the above copyright notice and this permission notice 
-appear in all copies, and that the name of Bellcore not be 
-used in advertising or publicity pertaining to this 
-material without the specific, prior written permission 
-of an authorized representative of Bellcore.  BELLCORE 
-MAKES NO REPRESENTATIONS ABOUT THE ACCURACY OR SUITABILITY 
-OF THIS MATERIAL FOR ANY PURPOSE.  IT IS PROVIDED "AS IS", 
+Permission to use, copy, modify, and distribute this material
+for any purpose and without fee is hereby granted, provided
+that the above copyright notice and this permission notice
+appear in all copies, and that the name of Bellcore not be
+used in advertising or publicity pertaining to this
+material without the specific, prior written permission
+of an authorized representative of Bellcore.  BELLCORE
+MAKES NO REPRESENTATIONS ABOUT THE ACCURACY OR SUITABILITY
+OF THIS MATERIAL FOR ANY PURPOSE.  IT IS PROVIDED "AS IS",
 WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.  */
 
 
@@ -816,7 +799,7 @@ static gchar basis_64[] =
 
 static gint
 to64 (FILE *infile,
-      FILE *outfile) 
+      FILE *outfile)
 {
   gint c1, c2, c3, ct = 0, written = 0;
 

@@ -69,10 +69,6 @@ typedef struct
   gint    displace_type;
 } DisplaceVals;
 
-typedef struct
-{
-  gboolean  run;
-} DisplaceInterface;
 
 /*
  * Function prototypes.
@@ -94,8 +90,6 @@ static gint      displace_map_constrain    (gint32     image_id,
 static void      displace_map_x_callback   (gint32     id,
 					    gpointer   data);
 static void      displace_map_y_callback   (gint32     id,
-					    gpointer   data);
-static void      displace_ok_callback      (GtkWidget *widget,
 					    gpointer   data);
 static gdouble   displace_map_give_value   (guchar    *ptr,
 					    gint       alpha,
@@ -122,10 +116,6 @@ static DisplaceVals dvals =
   PIXEL_WRAP     /* displace_type */
 };
 
-static DisplaceInterface dint =
-{
-  FALSE   /*  run  */
-};
 
 /***** Functions *****/
 
@@ -267,25 +257,19 @@ displace_dialog (GimpDrawable *drawable)
   GtkWidget *option_menu;
   GtkWidget *menu;
   GtkWidget *sep;
-  GSList *group = NULL;
+  GSList    *group = NULL;
+  gboolean   run;
 
   gimp_ui_init ("displace", FALSE);
 
   dlg = gimp_dialog_new (_("Displace"), "displace",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/displace.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, displace_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  The main table  */
   frame = gtk_frame_new (_("Displace Options"));
@@ -433,10 +417,11 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return dint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 /* The displacement is done here. */
@@ -689,12 +674,4 @@ displace_map_y_callback (gint32   id,
 			 gpointer data)
 {
   dvals.displace_map_y = id;
-}
-
-static void
-displace_ok_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  dint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

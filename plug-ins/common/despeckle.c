@@ -34,7 +34,6 @@
  *   dialog_iscale_update()      - Update the value field using the scale.
  *   dialog_adaptive_callback()  - Update the filter type...
  *   dialog_recursive_callback() - Update the filter type...
- *   dialog_ok_callback()        - Start the filter...
  *
  *
  * Revision History:
@@ -98,7 +97,6 @@ static gint	despeckle_dialog          (void);
 static void	dialog_iscale_update      (GtkAdjustment *, gint *);
 static void	dialog_adaptive_callback  (GtkWidget *, gpointer);
 static void	dialog_recursive_callback (GtkWidget *, gpointer);
-static void	dialog_ok_callback        (GtkWidget *, gpointer);
 
 static void	preview_init              (void);
 static void	preview_exit              (void);
@@ -139,8 +137,6 @@ gint		sel_x1,			/* Selection bounds */
 gint		sel_width,		/* Selection width */
 		sel_height;		/* Selection height */
 gint		img_bpp;		/* Bytes-per-pixel in image */
-
-gboolean        run_filter = FALSE;	/* True if we should run the filter */
 
 gint despeckle_vals[4] =
 {
@@ -612,24 +608,18 @@ despeckle_dialog (void)
   GtkWidget *scrollbar;
   GtkWidget *button;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("despeckle", TRUE);
 
   dialog = gimp_dialog_new (_("Despeckle"), "despeckle",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/despeckle.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -778,8 +768,9 @@ despeckle_dialog (void)
 
   preview_update ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
 
   /*
    * Free the preview data...
@@ -791,7 +782,7 @@ despeckle_dialog (void)
    * Return ok/cancel...
    */
 
-  return run_filter;
+  return run;
 }
 
 
@@ -1111,13 +1102,4 @@ dialog_recursive_callback (GtkWidget *widget,
     filter_type &= ~FILTER_RECURSIVE;
 
   preview_update ();
-}
-
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer  data)
-{
-  run_filter = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }

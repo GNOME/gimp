@@ -1,5 +1,5 @@
 /*============================================================================*
- 
+
   Paper Tile 1.0  -- A GIMP PLUG-IN
 
   Copyright (C) 1997-1999 Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>
@@ -83,7 +83,7 @@ static struct
   gint32        image;
   GimpDrawable *drawable;
   gboolean      drawable_has_alpha;
-  
+
   struct
   {
     gint        x0;
@@ -93,7 +93,7 @@ static struct
     gint        width;
     gint        height;
   } selection;
-  
+
   GimpRunMode  run_mode;
   gboolean         run;
 } p =
@@ -115,7 +115,7 @@ static struct
   FALSE,                        /* drawable_has_alpha    */
 
   { 0, 0, 0, 0, 0, 0 },         /* selection             */
-  
+
   GIMP_RUN_INTERACTIVE,         /* run_mode              */
   FALSE                         /* run                   */
 };
@@ -218,15 +218,6 @@ division_y_adj_changed (GtkAdjustment *adj)
 }
 
 static void
-dialog_ok_clicked (GtkWidget *widget,
-		   gpointer   data)
-{
-  p.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
 open_dialog (void)
 {
   GtkWidget *dialog;
@@ -239,24 +230,17 @@ open_dialog (void)
   GtkWidget *box;
   GtkWidget *color_button;
   GtkWidget *sep;
- 
+
   gimp_ui_init ("papertile", TRUE);
 
   dialog = gimp_dialog_new (_("Paper Tile"), "papertile",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/papertile.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok_clicked,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_hbox = gtk_hbox_new (FALSE, 5);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 6);
@@ -398,9 +382,9 @@ open_dialog (void)
   gtk_widget_show (frame);
 
   color_button = gimp_color_button_new (_("Background Color"), 100, 16,
-					&p.params.background_color, 
+					&p.params.background_color,
 					p.drawable_has_alpha ?
-					GIMP_COLOR_AREA_SMALL_CHECKS : 
+					GIMP_COLOR_AREA_SMALL_CHECKS :
 					GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child),
                       color_button, TRUE, TRUE, 0);
@@ -410,14 +394,15 @@ open_dialog (void)
 			    p.params.background_type == BACKGROUND_TYPE_COLOR);
   g_object_set_data (G_OBJECT (button), "set_sensitive", color_button);
 
-  g_signal_connect (color_button, "color_changed", 
-                    G_CALLBACK (gimp_color_button_get_color), 
+  g_signal_connect (color_button, "color_changed",
+                    G_CALLBACK (gimp_color_button_get_color),
                     &p.params.background_color);
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  p.run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
 }
 
 /*===========================================================================*/
@@ -741,7 +726,7 @@ filter (void)
       break;
 
     case BACKGROUND_TYPE_COLOR:
-      gimp_rgba_get_uchar (&p.params.background_color, 
+      gimp_rgba_get_uchar (&p.params.background_color,
 			   pixel, pixel + 1, pixel + 2, pixel + 3);
       for (y = clear_y0; y < clear_y1; y++)
 	{
@@ -882,7 +867,7 @@ plugin_run (const gchar      *name,
 	      p.params.background_type  = (BackgroundType)params[8].data.d_int32;
 	      p.params.background_color = params[9].data.d_color;
 
-	      /*  FIXME:  this used to be the alpha value 
+	      /*  FIXME:  this used to be the alpha value
 				          params[10].data.d_int32
 	       */
 	      p.run = TRUE;
@@ -913,7 +898,7 @@ plugin_run (const gchar      *name,
       if (p.run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
-  
+
   gimp_drawable_detach (p.drawable);
 
   {

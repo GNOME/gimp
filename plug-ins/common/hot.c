@@ -40,7 +40,7 @@
  * CHROMA_LIM is the limit (in IRE units) of the overall
  *	chrominance amplitude; it should be 50 or perhaps
  *	very slightly higher.
- * 
+ *
  * COMPOS_LIM is the maximum amplitude (in IRE units) allowed for
  *	the composite signal.  A value of 100 is the maximum
  *	monochrome white, and is always safe.  120 is the absolute
@@ -313,7 +313,7 @@ pluginCore (piArgs *argp)
   gdouble fy, fc, t, scale;
   gdouble pr, pg, pb;
   gdouble py;
-  
+
   drw = gimp_drawable_get (argp->drawable);
 
   width = drw->width;
@@ -495,7 +495,7 @@ pluginCore (piArgs *argp)
 			  pr = gc (pr, argp->mode);
 			  pg = gc (pg, argp->mode);
 			  pb = gc (pb, argp->mode);
-			  py = pr * mode[argp->mode].code[0][0] + pg * 
+			  py = pr * mode[argp->mode].code[0][0] + pg *
 			    mode[argp->mode].code[0][1] + pb *
 			    mode[argp->mode].code[0][2];
 			  r = pix_encode (inv_gc (py + scale * (pr - py),
@@ -522,7 +522,7 @@ pluginCore (piArgs *argp)
 		{
 		  for (i = 0; i < bpp; i++)
 		    *d++ = *s++;
-		} 
+		}
 	      else
 		{
 		  s += bpp;
@@ -549,19 +549,8 @@ pluginCore (piArgs *argp)
     }
 
   gimp_displays_flush ();
-  
+
   return retval;
-}
-
-static gboolean run_flag = FALSE;
-
-static void
-hot_ok_callback (GtkWidget *widget,
-		 gpointer   data)
-{
-  run_flag = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static gint
@@ -572,25 +561,18 @@ pluginCoreIA (piArgs *argp)
   GtkWidget *vbox;
   GtkWidget *toggle;
   GtkWidget *frame;
+  gboolean   run;
 
   gimp_ui_init ("hot", FALSE);
 
   dlg = gimp_dialog_new (_("Hot"), "hot",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/hot.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, hot_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
-
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   hbox = gtk_hbox_new (FALSE, 5);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 5);
@@ -644,10 +626,11 @@ pluginCoreIA (piArgs *argp)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  if (run_flag)
+  gtk_widget_destroy (dlg);
+
+  if (run)
     return pluginCore (argp);
   else
     return -1;
@@ -709,7 +692,7 @@ hotp (guint8 r,
 {
   int	y, i, q;
   long	y2, c2;
-  
+
   /*
    * Pixel decoding, gamma correction, and matrix multiplication
    * all done by lookup table.
@@ -749,7 +732,7 @@ hotp (guint8 r,
   c2 = (long)i * i + (long)q * q;
   y2 = (long)icompos_lim - y;
   y2 *= y2;
-  
+
   if (c2 <= ichroma_lim2 && c2 <= y2)
     {	/* no problems */
       return FALSE;

@@ -45,7 +45,7 @@ enum
   MODE_BLACKEN
 };
 
-typedef struct 
+typedef struct
 {
   gdouble amplitude;
   gdouble phase;
@@ -58,7 +58,7 @@ typedef struct
 static gint do_preview = TRUE;
 static GimpFixMePreview *preview;
 
-static GtkWidget *mw_preview_new (GtkWidget *parent, 
+static GtkWidget *mw_preview_new (GtkWidget *parent,
 				  GimpDrawable *drawable);
 
 static void query (void);
@@ -246,17 +246,6 @@ pluginCore (piArgs *argp,
   return retval;
 }
 
-static gboolean run_flag = FALSE;
-
-static void
-waves_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  run_flag = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static void
 waves_toggle_button_update (GtkWidget *widget,
 			    gpointer   data)
@@ -297,24 +286,18 @@ pluginCoreIA (piArgs *argp,
   GtkWidget *preview;
   GtkWidget *toggle;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("waves", TRUE);
 
-  dlg = gimp_dialog_new ( _("Waves"), "waves",
+  dlg = gimp_dialog_new (_("Waves"), "waves",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/waves.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, waves_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -389,10 +372,11 @@ pluginCoreIA (piArgs *argp,
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return (run_flag) ? pluginCore (argp, drawable) : -1;
+  gtk_widget_destroy (dlg);
+
+  return run ? pluginCore (argp, drawable) : -1;
 }
 
 static void
@@ -410,13 +394,13 @@ waves_do_preview (void)
 
   wave (preview->cache, dst, preview->width, preview->height, preview->bpp,
         preview->bpp == 2 || preview->bpp == 4,
-	argp->amplitude * preview->scale_x, 
+	argp->amplitude * preview->scale_x,
 	argp->wavelength * preview->scale_x,
 	argp->phase, argp->type == 0, argp->reflective, 0);
 
   for (y = 0; y < preview->height; y++)
     {
-      gimp_fixme_preview_do_row (preview, y, preview->width, 
+      gimp_fixme_preview_do_row (preview, y, preview->width,
 				 dst + y * preview->rowstride);
     }
 

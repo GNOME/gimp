@@ -70,7 +70,8 @@ typedef struct
  *  Local Functions
  */
 static void       script_fu_console_interface  (void);
-static void       script_fu_close_callback     (GtkWidget    *widget,
+static void       script_fu_response           (GtkWidget    *widget,
+                                                gint          response_id,
 						gpointer      data);
 static void       script_fu_browse_callback    (GtkWidget    *widget,
 						gpointer      data);
@@ -168,17 +169,15 @@ script_fu_console_interface (void)
   gimp_ui_init ("script-fu", FALSE);
 
   dialog = gimp_dialog_new (_("Script-Fu Console"), "script-fu-console",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/script-fu.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CLOSE, gtk_widget_destroy, NULL,
-			    1, NULL, FALSE, TRUE,
+			    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 			    NULL);
 
-  g_signal_connect (dialog, "destroy",
-		    G_CALLBACK (script_fu_close_callback),
+  g_signal_connect (dialog, "response",
+		    G_CALLBACK (script_fu_response),
 		    NULL);
   g_signal_connect (dialog, "destroy",
 		    G_CALLBACK (gtk_widget_destroyed),
@@ -317,13 +316,14 @@ script_fu_console_interface (void)
 }
 
 static void
-script_fu_close_callback (GtkWidget *widget,
-			  gpointer   data)
+script_fu_response (GtkWidget *widget,
+                    gint       response_id,
+                    gpointer   data)
 {
   gtk_main_quit ();
 }
 
-static void 
+static void
 apply_callback (const gchar        *proc_name,
 		const gchar        *scheme_proc_name,
 		const gchar        *proc_blurb,
@@ -340,12 +340,12 @@ apply_callback (const gchar        *proc_name,
   gint     i;
   GString *text;
 
-  if (proc_name == NULL) 
+  if (proc_name == NULL)
     return;
-  
+
   text = g_string_new ("(");
   text = g_string_append (text, scheme_proc_name);
-  for (i=0; i<nparams; i++) 
+  for (i=0; i<nparams; i++)
     {
       text = g_string_append_c (text, ' ');
       text = g_string_append (text, params[i].name);
@@ -551,7 +551,7 @@ script_fu_cc_key_function (GtkWidget   *widget,
       if (history_cur >= history_len)
 	history_cur = history_len - 1;
 
-      gtk_entry_set_text (GTK_ENTRY (cint.cc), 
+      gtk_entry_set_text (GTK_ENTRY (cint.cc),
 			  (gchar *) (g_list_nth (history, history_cur))->data);
 
       return TRUE;
@@ -577,12 +577,12 @@ script_fu_open_siod_console (void)
               siod_set_verbose_level (2);
               siod_print_welcome ();
             }
-          else 
+          else
             {
               g_message (_("Unable to open a stream on the SIOD output pipe"));
               siod_output = stdout;
             }
-        } 
+        }
       else
         {
           g_message (_("Unable to open the SIOD output pipe"));

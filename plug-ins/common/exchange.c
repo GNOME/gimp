@@ -22,7 +22,7 @@
  * Exchange one color with the other (settable threshold to convert from
  * one color-shade to another...might do wonders on certain images, or be
  * totally useless on others).
- * 
+ *
  * Author: robert@experimental.net
  *
  * Added ability to select "from" color by clicking on the preview image.
@@ -79,18 +79,16 @@ static void	real_exchange         (gint, gint, gint, gint, gboolean);
 
 static int	exchange_dialog       (void);
 static void	update_preview        (void);
-static void	ok_callback           (GtkWidget *, gpointer);
 static void	color_button_callback (GtkWidget *, gpointer);
 static void	scale_callback        (GtkAdjustment *, gpointer);
 
 /* some global variables */
 static GimpDrawable *drw;
 static gboolean   has_alpha;
-static myParams   xargs = { { 0.0, 0.0, 0.0, 1.0 }, 
+static myParams   xargs = { { 0.0, 0.0, 0.0, 1.0 },
 			    { 0.0, 0.0, 0.0, 1.0 },
 			    { 0.0, 0.0, 0.0, 1.0 },
 			    0, 0 };
-static gint          running = 0;
 static GimpPixelRgn  origregion;
 static GtkWidget    *preview;
 static GtkWidget    *from_colorbutton;
@@ -201,7 +199,7 @@ run (const gchar      *name,
 
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_exchange", &xargs);
-      /* 
+      /*
        * instead of recalling the last-set values,
        * run with the current foreground as 'from'
        * color, making ALT-F somewhat more useful.
@@ -231,7 +229,7 @@ run (const gchar      *name,
 	}
       break;
 
-    default:	
+    default:
       break;
     }
 
@@ -241,7 +239,7 @@ run (const gchar      *name,
 	{
 	  gimp_progress_init (_("Color Exchange..."));
 	  gimp_tile_cache_ntiles (2 * (drw->width / gimp_tile_width () + 1));
-	  exchange ();	
+	  exchange ();
 	  gimp_drawable_detach( drw);
 
 	  /* store our settings */
@@ -267,26 +265,26 @@ exchange (void)
 }
 
 static gboolean
-preview_event_handler (GtkWidget *widget, 
+preview_event_handler (GtkWidget *widget,
 		       GdkEvent  *event)
 {
   gint     pos;
   guchar  *buf;
-  GimpRGB  color;   
+  GimpRGB  color;
 
   buf = GTK_PREVIEW (widget)->buffer;
 
-  switch(event->type) 
+  switch(event->type)
     {
     case GDK_BUTTON_PRESS:
-      pos = event->button.x * GTK_PREVIEW(widget)->bpp + 
+      pos = event->button.x * GTK_PREVIEW(widget)->bpp +
 	    event->button.y * GTK_PREVIEW(widget)->rowstride;
 
       gimp_rgb_set_uchar (&color, buf[pos], buf[pos + 1], buf[pos + 2]);
       gimp_color_button_set_color (GIMP_COLOR_BUTTON (from_colorbutton), &color);
 
       break;
- 
+
    default:
       break;
     }
@@ -309,6 +307,7 @@ exchange_dialog (void)
   GtkWidget *scale;
   GtkObject *adj;
   gint       framenumber;
+  gboolean   run;
 
   gimp_ui_init ("exchange", TRUE);
 
@@ -318,20 +317,13 @@ exchange_dialog (void)
 
   /* set up the dialog */
   dialog = gimp_dialog_new (_("Color Exchange"), "exchange",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/exchange.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* do some boxes here */
   mainbox = gtk_vbox_new (FALSE, 4);
@@ -361,15 +353,15 @@ exchange_dialog (void)
 			 GDK_BUTTON_PRESS_MASK | GDK_BUTTON1_MOTION_MASK);
   gtk_widget_show (preview);
 
-  g_signal_connect (preview, "event", 
-                    G_CALLBACK (preview_event_handler), 
+  g_signal_connect (preview, "event",
+                    G_CALLBACK (preview_event_handler),
                     NULL);
 
   update_preview ();
 
   /*  a hidden color_button to handle the threshold more easily  */
-  threshold = gimp_color_button_new (NULL, 1, 1, 
-				     &xargs.threshold, 
+  threshold = gimp_color_button_new (NULL, 1, 1,
+				     &xargs.threshold,
 				     GIMP_COLOR_AREA_FLAT);
 
   g_signal_connect (threshold, "color_changed",
@@ -398,7 +390,7 @@ exchange_dialog (void)
 					   _("Color Exchange: To Color") :
 					   _("Color Exchange: From Color"),
 					   SCALE_WIDTH / 2, 16,
-					   framenumber ? &xargs.to : &xargs.from, 
+					   framenumber ? &xargs.to : &xargs.from,
 					   GIMP_COLOR_AREA_FLAT);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 				 NULL, 0.0, 0.0,
@@ -410,10 +402,10 @@ exchange_dialog (void)
       g_signal_connect (colorbutton, "color_changed",
                         G_CALLBACK (color_button_callback),
                         framenumber ? &xargs.to : &xargs.from);
-      
+
       if (!framenumber)
 	from_colorbutton = colorbutton;
-	
+
       /*  Red  */
       adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
 				  _("_Red:"), SCALE_WIDTH, 0,
@@ -487,7 +479,7 @@ exchange_dialog (void)
 				      0.0, 1.0, 0.01, 0.1, 3,
 				      TRUE, 0, 0,
 				      NULL, NULL);
-	  
+
 	  g_object_set_data (G_OBJECT (adj), "colorbutton", threshold);
 	  g_object_set_data (G_OBJECT (threshold), "green", adj);
 
@@ -553,7 +545,7 @@ exchange_dialog (void)
 	  button = gtk_check_button_new_with_mnemonic (_("Lock _Thresholds"));
 	  gtk_table_attach (GTK_TABLE (table), button, 1, 3, 7, 8,
 			    GTK_FILL, 0, 0, 0);
-	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), 
+	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 					lock_threshold);
 	  gtk_widget_show (button);
 
@@ -567,19 +559,11 @@ exchange_dialog (void)
   gtk_widget_show (mainbox);
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return running;
-}
+  gtk_widget_destroy (dialog);
 
-static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
-{
-  running = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void
@@ -622,7 +606,7 @@ scale_callback (GtkAdjustment *adj,
     {
       if (color == &xargs.threshold && lock_threshold == TRUE)
 	gimp_rgb_set (color, adj->value, adj->value, adj->value);
-	
+
       gimp_color_button_set_color (GIMP_COLOR_BUTTON (object), color);
 
       update_preview ();
@@ -682,7 +666,7 @@ real_exchange (gint     x1,
   gimp_rgb_subtract (&min, &xargs.threshold);
   gimp_rgb_clamp (&min);
   gimp_rgb_get_uchar (&min, &min_red, &min_green, &min_blue);
-  
+
   max = xargs.from;
   gimp_rgb_add (&max, &xargs.threshold);
   gimp_rgb_clamp (&max);
@@ -728,11 +712,11 @@ real_exchange (gint     x1,
 	    {
 	      guchar red_delta, green_delta, blue_delta;
 
-	      red_delta   = pixel_red > from_red ? 
+	      red_delta   = pixel_red > from_red ?
 		pixel_red - from_red : from_red - pixel_red;
-	      green_delta = pixel_green > from_green ? 
+	      green_delta = pixel_green > from_green ?
 		pixel_green - from_green : from_green - pixel_green;
-	      blue_delta  = pixel_blue > from_blue ? 
+	      blue_delta  = pixel_blue > from_blue ?
 		pixel_blue - from_blue : from_blue - pixel_blue;
 	      new_red   = CLAMP (to_red   + red_delta,   0, 255);
 	      new_green = CLAMP (to_green + green_delta, 0, 255);
@@ -755,7 +739,7 @@ real_exchange (gint     x1,
 	    dest_row[idx + 3] = src_row[x * bpp + 3];
 	}
       /* store the dest */
-      if (do_preview) 
+      if (do_preview)
 	gtk_preview_draw_row (GTK_PREVIEW (preview), dest_row, 0, y - y1, width);
       else
 	gimp_pixel_rgn_set_row (&destPR, dest_row, x1, y, width);

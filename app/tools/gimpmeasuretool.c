@@ -835,18 +835,20 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *mtool)
   dialog = gimp_tool_dialog_new (GIMP_TOOL (mtool)->tool_info,
                                  _("Measure Distances and Angles"),
 
-                                 GTK_STOCK_CLOSE,
-                                 gtk_widget_destroy, NULL,
-                                 1, NULL, TRUE, TRUE,
+                                 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                  NULL);
 
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
+
   hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
   table = gtk_table_new (2, 5, TRUE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_box_pack_start (GTK_BOX (hbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);

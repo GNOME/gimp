@@ -18,7 +18,7 @@
  * License along with this library; if not, write to the
  * Free Software Foundation, Inc., 59 Temple Place - Suite 330,
  * Boston, MA 02111-1307, USA.
- */                             
+ */
 
 #include "config.h"
 
@@ -35,7 +35,7 @@ typedef void (* ExportFunc) (gint32  imageID,
 
 
 /* the export action structure */
-typedef struct 
+typedef struct
 {
   ExportFunc  default_action;
   ExportFunc  alt_action;
@@ -90,7 +90,7 @@ export_merge (gint32  image_ID,
 	*drawable_ID = merged;
       else
 	return;  /* shouldn't happen */
-      
+
       layers = gimp_image_get_layers (image_ID, &nlayers);
 
       /*  make sure that the merged drawable matches the image size  */
@@ -107,21 +107,21 @@ export_merge (gint32  image_ID,
         }
     }
 
-  /* remove any remaining (invisible) layers */ 
+  /* remove any remaining (invisible) layers */
   for (i = 0; i < nlayers; i++)
     {
       if (layers[i] != *drawable_ID)
 	gimp_image_remove_layer (image_ID, layers[i]);
     }
-  g_free (layers);  
+  g_free (layers);
 }
 
 static void
 export_flatten (gint32  image_ID,
 		gint32 *drawable_ID)
-{  
+{
   gint32 flattened;
-  
+
   flattened = gimp_image_flatten (image_ID);
 
   if (flattened != -1)
@@ -131,35 +131,35 @@ export_flatten (gint32  image_ID,
 static void
 export_convert_rgb (gint32  image_ID,
 		    gint32 *drawable_ID)
-{  
+{
   gimp_image_convert_rgb (image_ID);
 }
 
 static void
 export_convert_grayscale (gint32  image_ID,
 			  gint32 *drawable_ID)
-{  
+{
   gimp_image_convert_grayscale (image_ID);
 }
 
 static void
 export_convert_indexed (gint32  image_ID,
 			gint32 *drawable_ID)
-{  
+{
   gint32 nlayers;
-  
+
   /* check alpha */
   g_free (gimp_image_get_layers (image_ID, &nlayers));
   if (nlayers > 1 || gimp_drawable_has_alpha (*drawable_ID))
     gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER, GIMP_MAKE_PALETTE, 255, FALSE, FALSE, "");
   else
-    gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER, GIMP_MAKE_PALETTE, 256, FALSE, FALSE, ""); 
+    gimp_image_convert_indexed (image_ID, GIMP_FS_DITHER, GIMP_MAKE_PALETTE, 256, FALSE, FALSE, "");
 }
 
 static void
 export_add_alpha (gint32  image_ID,
 		  gint32 *drawable_ID)
-{  
+{
   gint32  nlayers;
   gint32  i;
   gint32 *layers;
@@ -170,7 +170,7 @@ export_add_alpha (gint32  image_ID,
       if (!gimp_drawable_has_alpha (layers[i]))
 	gimp_layer_add_alpha (layers[i]);
     }
-  g_free (layers);  
+  g_free (layers);
 }
 
 
@@ -283,7 +283,7 @@ static ExportAction export_action_convert_indexed_or_grayscale =
   export_convert_grayscale,
   N_("%s can only handle grayscale or indexed images"),
   { N_("Convert to Indexed using default settings\n"
-       "(Do it manually to tune the result)"), 
+       "(Do it manually to tune the result)"),
     N_("Convert to Grayscale") },
   0
 };
@@ -300,93 +300,43 @@ static ExportAction export_action_add_alpha =
 
 /* dialog functions */
 
-static GtkWidget            *dialog = NULL;
-static GimpExportReturnType  dialog_return = GIMP_EXPORT_CANCEL;
-
-static void
-export_export_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  gtk_widget_destroy (dialog);
-  dialog_return = GIMP_EXPORT_EXPORT;
-}
-
-static void
-export_confirm_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  gtk_widget_destroy (dialog);
-  dialog_return = GIMP_EXPORT_EXPORT;
-}
-
-static void
-export_skip_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  gtk_widget_destroy (dialog);
-  dialog_return = GIMP_EXPORT_IGNORE;
-}
-
-static void
-export_cancel_callback (GtkWidget *widget,
-			gpointer   data)
-{
-  dialog_return = GIMP_EXPORT_CANCEL;
-  dialog = NULL;
-  gtk_main_quit ();
-}
-
 static void
 export_toggle_callback (GtkWidget *widget,
 			gpointer   data)
 {
-  gint *choice = (gint*)data;
-  
+  gint *choice = (gint *) data;
+
   if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)))
-    *choice = 0;
+    *choice = FALSE;
   else
-    *choice = 1;
+    *choice = TRUE;
 }
 
-static gint
+static GimpExportReturn
 confirm_save_dialog (const gchar *message,
 		     const gchar *format_name)
 {
-  GtkWidget    *vbox;
-  GtkWidget    *label;
-  gchar        *text;
+  GtkWidget        *dialog;
+  GtkWidget        *vbox;
+  GtkWidget        *label;
+  gchar            *text;
+  GimpExportReturn  retval;
 
-  dialog_return = GIMP_EXPORT_CANCEL;
-  g_return_val_if_fail (message != NULL, dialog_return);
-  g_return_val_if_fail (format_name != NULL, dialog_return);
-
-  /*
-   *  Plug-ins must have called gtk_init () before calling gimp_export ().
-   *  Otherwise bad things will happen now!!
-   */
-
-  /* the dialog */
+  g_return_val_if_fail (message != NULL, GIMP_EXPORT_CANCEL);
+  g_return_val_if_fail (format_name != NULL, GIMP_EXPORT_CANCEL);
 
   dialog = gimp_dialog_new (_("Confirm Save"), "confirm_save",
+                            NULL, 0,
 			    gimp_standard_help_func, "dialogs/confirm_save.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    _("Confirm"), export_confirm_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    _("Confirm"),     GTK_RESPONSE_OK,
 
 			    NULL);
 
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (export_cancel_callback),
-                    NULL);
-
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
   text = g_strdup_printf (message, format_name);
@@ -398,55 +348,52 @@ confirm_save_dialog (const gchar *message,
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
-  gtk_main ();
 
-  return dialog_return;
+  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+    {
+    case GTK_RESPONSE_OK:
+      retval = GIMP_EXPORT_EXPORT;
+      break;
+
+    default:
+      retval = GIMP_EXPORT_CANCEL;
+      break;
+    }
+
+  gtk_widget_destroy (dialog);
+
+  return retval;
 }
 
-static gint
+static GimpExportReturn
 export_dialog (GSList      *actions,
 	       const gchar *format_name)
 {
-  GtkWidget    *image;
-  GtkWidget    *frame;
-  GtkWidget    *main_vbox;
-  GtkWidget    *vbox;
-  GtkWidget    *hbox;
-  GtkWidget    *button;
-  GtkWidget    *label;
-  GSList       *list;
-  gchar        *text;
-  ExportAction *action;
+  GtkWidget        *dialog;
+  GtkWidget        *image;
+  GtkWidget        *frame;
+  GtkWidget        *main_vbox;
+  GtkWidget        *vbox;
+  GtkWidget        *hbox;
+  GtkWidget        *button;
+  GtkWidget        *label;
+  GSList           *list;
+  gchar            *text;
+  ExportAction     *action;
+  GimpExportReturn  retval;
 
-  dialog_return = GIMP_EXPORT_CANCEL;
-  g_return_val_if_fail (actions != NULL && format_name != NULL, dialog_return);
-
-  /*
-   *  Plug-ins must have called gtk_init () before calling gimp_export ().
-   *  Otherwise bad things will happen now!!
-   */
-
-  /* the dialog */
+  g_return_val_if_fail (actions != NULL, GIMP_EXPORT_CANCEL);
+  g_return_val_if_fail (format_name != NULL, GIMP_EXPORT_CANCEL);
 
   dialog = gimp_dialog_new (_("Export File"), "export_file",
-			    gimp_standard_help_func, "dialogs/export_file.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
+                            NULL, 0,
+                            gimp_standard_help_func, "dialogs/export_file.html",
 
-			    _("Ignore"), export_skip_callback,
-			    NULL, NULL, NULL, FALSE, FALSE,
-
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    _("Export"), export_export_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    _("Ignore"),      GTK_RESPONSE_NO,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    _("Export"),      GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (export_cancel_callback),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
@@ -457,10 +404,10 @@ export_dialog (GSList      *actions,
   hbox = gtk_hbox_new (FALSE, 8);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
-  
+
   image = gtk_image_new_from_stock (GTK_STOCK_DIALOG_INFO,
                                     GTK_ICON_SIZE_DIALOG);
-  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0); 
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
 
   label = gtk_label_new (NULL);
@@ -482,7 +429,7 @@ export_dialog (GSList      *actions,
       text = g_strdup_printf (gettext (action->reason), format_name);
       gtk_label_set_markup (GTK_LABEL (label), text);
       g_free (text);
-      
+
       frame = gtk_frame_new (NULL);
       gtk_frame_set_label_widget (GTK_FRAME (frame), label);
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
@@ -496,10 +443,10 @@ export_dialog (GSList      *actions,
       if (action->possibilities[0] && action->possibilities[1])
 	{
 	  GSList *radio_group = NULL;
- 
-	  button = gtk_radio_button_new_with_label (radio_group, 
+
+	  button = gtk_radio_button_new_with_label (radio_group,
 						    gettext (action->possibilities[0]));
-	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), 
+	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child),
                                  GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 	  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -509,14 +456,14 @@ export_dialog (GSList      *actions,
 	  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 	  gtk_widget_show (button);
 
-	  button = gtk_radio_button_new_with_label (radio_group, 
+	  button = gtk_radio_button_new_with_label (radio_group,
 						    gettext (action->possibilities[1]));
-	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child), 
+	  gtk_label_set_justify (GTK_LABEL (GTK_BIN (button)->child),
                                  GTK_JUSTIFY_LEFT);
 	  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
 	  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 	  gtk_widget_show (button);
-	} 
+	}
       else if (action->possibilities[0])
 	{
 	  label = gtk_label_new (gettext (action->possibilities[0]));
@@ -532,8 +479,8 @@ export_dialog (GSList      *actions,
 	  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 2);
 	  gtk_widget_show (label);
 	  action->choice = 1;
-	}     
- 
+	}
+
       gtk_widget_show (vbox);
     }
 
@@ -543,9 +490,25 @@ export_dialog (GSList      *actions,
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
-  gtk_main ();
 
-  return dialog_return;
+  switch (gtk_dialog_run (GTK_DIALOG (dialog)))
+    {
+    case GTK_RESPONSE_OK:
+      retval = GIMP_EXPORT_EXPORT;
+      break;
+
+    case GTK_RESPONSE_NO:
+      retval = GIMP_EXPORT_IGNORE;
+      break;
+
+    default:
+      retval = GIMP_EXPORT_CANCEL;
+      break;
+    }
+
+  gtk_widget_destroy (dialog);
+
+  return retval;
 }
 
 /**
@@ -568,30 +531,31 @@ export_dialog (GSList      *actions,
  * created image using gimp_image_delete() when it has saved it.
  *
  * If the user chooses to Ignore the export problem, the image_ID
- * and drawable_ID is not altered, GIMP_EXPORT_IGNORE is returned and 
- * the save_plugin should try to save the original image. If the 
- * user chooses Cancel, GIMP_EXPORT_CANCEL is returned and the 
+ * and drawable_ID is not altered, GIMP_EXPORT_IGNORE is returned and
+ * the save_plugin should try to save the original image. If the
+ * user chooses Cancel, GIMP_EXPORT_CANCEL is returned and the
  * save_plugin should quit itself with status #STATUS_CANCEL.
  *
- * Returns: An enum of #GimpExportReturnType describing the user_action.
+ * Returns: An enum of #GimpExportReturn describing the user_action.
  **/
-GimpExportReturnType
+GimpExportReturn
 gimp_export_image (gint32                 *image_ID,
 		   gint32                 *drawable_ID,
 		   const gchar            *format_name,
 		   GimpExportCapabilities  capabilities)
 {
-  GSList *actions = NULL;
-  GSList *list;
-  GimpImageBaseType type;
-  gint32  i;
-  gint32  nlayers;
-  gint32* layers;
-  gint    offset_x;
-  gint    offset_y;
-  gboolean added_flatten = FALSE;
-  gboolean background_has_alpha = TRUE;
-  ExportAction *action;
+  GSList            *actions = NULL;
+  GSList            *list;
+  GimpImageBaseType  type;
+  gint32             i;
+  gint32             nlayers;
+  gint32            *layers;
+  gint               offset_x;
+  gint               offset_y;
+  gboolean           added_flatten = FALSE;
+  gboolean           background_has_alpha = TRUE;
+  ExportAction      *action;
+  GimpExportReturn   retval = GIMP_EXPORT_CANCEL;
 
   g_return_val_if_fail (*image_ID > -1 && *drawable_ID > -1, FALSE);
 
@@ -607,13 +571,13 @@ gimp_export_image (gint32                 *image_ID,
     {
       if (gimp_drawable_is_layer_mask (*drawable_ID))
         {
-          dialog_return = confirm_save_dialog
+          retval = confirm_save_dialog
             (_("You are about to save a layer mask as %s.\n"
                "This will not save the visible layers."), format_name);
         }
       else if (gimp_drawable_is_channel (*drawable_ID))
         {
-          dialog_return = confirm_save_dialog
+          retval = confirm_save_dialog
             (_("You are about to save a channel (saved selection) as %s.\n"
                "This will not save the visible layers."), format_name);
         }
@@ -624,7 +588,7 @@ gimp_export_image (gint32                 *image_ID,
         }
 
       /* cancel - the user can then select an appropriate layer to save */
-      if (dialog_return == GIMP_EXPORT_CANCEL)
+      if (retval == GIMP_EXPORT_CANCEL)
 	return GIMP_EXPORT_CANCEL;
     }
 
@@ -642,11 +606,11 @@ gimp_export_image (gint32                 *image_ID,
 	      break;
 	    }
 	}
-      else 
+      else
 	{
           /* If this is the last layer, it's visible and has no alpha
              channel, then the image has a "flat" background */
-      	  if (i == nlayers - 1 && gimp_layer_get_visible (layers[i])) 
+      	  if (i == nlayers - 1 && gimp_layer_get_visible (layers[i]))
 	    background_has_alpha = FALSE;
 
 	  if (capabilities & GIMP_EXPORT_NEEDS_ALPHA)
@@ -704,7 +668,7 @@ gimp_export_image (gint32                 *image_ID,
 	}
     }
 
-  /* check the image type */	  
+  /* check the image type */
   type = gimp_image_base_type (*image_ID);
   switch (type)
     {
@@ -741,9 +705,9 @@ gimp_export_image (gint32                 *image_ID,
     case GIMP_INDEXED:
        if ( !(capabilities & GIMP_EXPORT_CAN_HANDLE_INDEXED) )
 	{
-	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) && 
+	  if ((capabilities & GIMP_EXPORT_CAN_HANDLE_RGB) &&
               (capabilities & GIMP_EXPORT_CAN_HANDLE_GRAY))
-	    actions = g_slist_prepend (actions, 
+	    actions = g_slist_prepend (actions,
                                        &export_action_convert_rgb_or_grayscale);
 	  else if (capabilities & GIMP_EXPORT_CAN_HANDLE_RGB)
 	    actions = g_slist_prepend (actions,
@@ -754,30 +718,36 @@ gimp_export_image (gint32                 *image_ID,
 	}
       break;
     }
-  
+
   if (actions)
     {
       actions = g_slist_reverse (actions);
-      dialog_return = export_dialog (actions, format_name);
+      retval = export_dialog (actions, format_name);
     }
   else
-    dialog_return = GIMP_EXPORT_IGNORE;
+    {
+      retval = GIMP_EXPORT_IGNORE;
+    }
 
-  if (dialog_return == GIMP_EXPORT_EXPORT)
+  if (retval == GIMP_EXPORT_EXPORT)
     {
       *image_ID = gimp_image_duplicate (*image_ID);
       *drawable_ID = gimp_image_get_active_layer (*image_ID);
+
       gimp_image_undo_disable (*image_ID);
+
       for (list = actions; list; list = list->next)
 	{
-	  action = (ExportAction*)(list->data);
-	  if (action->choice == 0 && action->default_action)  
+	  action = (ExportAction *) list->data;
+
+	  if (action->choice == 0 && action->default_action)
 	    action->default_action (*image_ID, drawable_ID);
 	  else if (action->choice == 1 && action->alt_action)
 	    action->alt_action (*image_ID, drawable_ID);
 	}
     }
+
   g_slist_free (actions);
 
-  return dialog_return;
+  return retval;
 }

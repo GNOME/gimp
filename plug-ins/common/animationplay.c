@@ -142,10 +142,8 @@ static void run   (const gchar      *name,
 
 static        void do_playback        (void);
 
-static gboolean window_delete_callback (GtkWidget *widget,
-                                        GdkEvent  *event,
-                                        gpointer   data);
-static void window_close_callback      (GtkWidget *widget,
+static void window_response            (GtkWidget *widget,
+                                        gint       response_id,
                                         gpointer   data);
 static void playstop_callback          (GtkWidget *widget,
                                         gpointer   data);
@@ -191,7 +189,8 @@ GimpPlugInInfo PLUG_IN_INFO =
 
 
 /* Global widgets'n'stuff */
-static guchar    *preview_data;
+static GtkWidget *dlg = NULL;
+static guchar    *preview_data = NULL;
 static GtkWidget *drawing_area = NULL;
 static GtkWidget *shape_drawing_area = NULL;
 static guchar    *shape_drawing_area_data = NULL;
@@ -529,7 +528,6 @@ build_dialog (GimpImageBaseType  basetype,
 {
   gchar* windowname;
   CursorOffset* icon_pos;
-  GtkWidget* dlg;
   GtkWidget* button;
   GtkWidget* frame;
   GtkWidget* frame2;
@@ -544,19 +542,17 @@ build_dialog (GimpImageBaseType  basetype,
   windowname = g_strconcat (_("Animation Playback: "), imagename, NULL);
 
   dlg = gimp_dialog_new (windowname, "animationplay",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/animationplay.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CLOSE, window_close_callback,
-			 NULL, 1, NULL, TRUE, TRUE,
+			 GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 			 NULL);
 
   g_free (windowname);
 
-  g_signal_connect (dlg, "delete_event",
-                    G_CALLBACK (window_delete_callback),
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (window_response),
                     NULL);
 
   {
@@ -797,7 +793,7 @@ render_frame (gint32 whichframe)
   /* Image has been closed/etc since we got the layer list? */
   /* FIXME - How do we tell if a gimp_drawable_get() fails? */
   if (gimp_drawable_width(drawable->drawable_id)==0)
-    window_close_callback (NULL, NULL);
+    gtk_dialog_response (GTK_DIALOG (dlg), GTK_RESPONSE_CLOSE);
 
   if (((dispose==DISPOSE_REPLACE)||(whichframe==0)) &&
       gimp_drawable_has_alpha(drawable->drawable_id))
@@ -1401,31 +1397,21 @@ do_step (void)
 
 /*  Callbacks  */
 
-static gboolean
-window_delete_callback (GtkWidget *widget,
-		        GdkEvent  *event,
-		        gpointer   data)
+static void
+window_response (GtkWidget *widget,
+                 gint       response_id,
+                 gpointer   data)
 {
+  gtk_widget_destroy (widget);
+
   if (playing)
-    playstop_callback(NULL, NULL);
+    playstop_callback (NULL, NULL);
 
   if (shape_window)
-    gtk_widget_destroy(GTK_WIDGET(shape_window));
+    gtk_widget_destroy (GTK_WIDGET (shape_window));
 
   gdk_flush();
   gtk_main_quit();
-
-  return FALSE;
-}
-
-static void
-window_close_callback (GtkWidget *widget,
-		       gpointer   data)
-{
-  if (data)
-    gtk_widget_destroy(GTK_WIDGET(data));
-
-  window_delete_callback (NULL, NULL, NULL);
 }
 
 static gint

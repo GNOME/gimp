@@ -54,11 +54,6 @@ typedef struct
   gint    bg_color;
 } CubismVals;
 
-typedef struct
-{
-  gboolean  run;
-} CubismInterface;
-
 /* Declare local functions.
  */
 static void      query  (void);
@@ -101,8 +96,6 @@ static gint      polygon_extents      (Polygon   *poly,
 static void      polygon_reset        (Polygon   *poly);
 
 static gint      cubism_dialog        (void);
-static void      cubism_ok_callback   (GtkWidget *widget,
-				       gpointer   data);
 
 /*
  *  Local variables
@@ -113,11 +106,6 @@ static CubismVals cvals =
   10.0,        /* tile_size */
   2.5,         /* tile_saturation */
   BLACK        /* bg_color */
-};
-
-static CubismInterface cint =
-{
-  FALSE         /* run */
 };
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -257,24 +245,18 @@ cubism_dialog (void)
   GtkWidget *toggle;
   GtkWidget *table;
   GtkObject *scale_data;
+  gboolean   run;
 
   gimp_ui_init ("cubism", FALSE);
 
   dlg = gimp_dialog_new (_("Cubism"), "cubism",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/cubism.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, cubism_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 2, 3);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
@@ -312,19 +294,11 @@ cubism_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return cint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-cubism_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  cint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

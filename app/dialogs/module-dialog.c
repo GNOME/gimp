@@ -40,7 +40,8 @@
 #include "gimp-intl.h"
 
 
-#define NUM_INFO_LINES 9
+#define MODULES_RESPONSE_REFRESH 1
+#define NUM_INFO_LINES           9
 
 enum
 {
@@ -68,8 +69,9 @@ struct _ModuleBrowser
 
 /*  local function prototypes  */
 
-static void   browser_popdown_callback      (GtkWidget             *widget,
-                                             gpointer               data);
+static void   browser_response              (GtkWidget             *widget,
+                                             gint                   response_id,
+                                             ModuleBrowser         *browser);
 static void   browser_destroy_callback      (GtkWidget             *widget,
                                              ModuleBrowser         *browser);
 static void   browser_select_callback       (GtkTreeSelection      *sel,
@@ -78,8 +80,6 @@ static void   browser_autoload_toggled      (GtkCellRendererToggle *celltoggle,
                                              gchar                 *path_string,
                                              ModuleBrowser         *browser);
 static void   browser_load_unload_callback  (GtkWidget             *widget,
-                                             ModuleBrowser         *browser);
-static void   browser_refresh_callback      (GtkWidget             *widget,
                                              ModuleBrowser         *browser);
 static void   make_list_item                (gpointer               data,
                                              gpointer               user_data);
@@ -125,15 +125,16 @@ module_browser_new (Gimp *gimp)
                                     gimp_standard_help_func,
                                     GIMP_HELP_MODULE_DIALOG,
 
-                                    GTK_STOCK_REFRESH, browser_refresh_callback,
-                                    browser, NULL, NULL, FALSE, FALSE,
-
-                                    GTK_STOCK_CLOSE, browser_popdown_callback,
-                                    NULL, NULL, NULL, TRUE, TRUE,
+                                    GTK_STOCK_REFRESH, MODULES_RESPONSE_REFRESH,
+                                    GTK_STOCK_CLOSE,   GTK_STOCK_CLOSE,
 
                                     NULL);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  g_signal_connect (shell, "response",
+                    G_CALLBACK (browser_response),
+                    browser);
+
+  vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
   gtk_widget_show (vbox);
@@ -180,7 +181,7 @@ module_browser_new (Gimp *gimp)
   gtk_widget_show (tv);
 
   browser->table = gtk_table_new (2, NUM_INFO_LINES, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (browser->table), 4);  
+  gtk_table_set_col_spacings (GTK_TABLE (browser->table), 4);
   gtk_box_pack_start (GTK_BOX (vbox), browser->table, FALSE, FALSE, 0);
   gtk_widget_show (browser->table);
 
@@ -215,18 +216,18 @@ module_browser_new (Gimp *gimp)
   /* hook the GimpModuleDB signals so we can refresh the display
    * appropriately.
    */
-  g_signal_connect (gimp->module_db, "add", 
-                    G_CALLBACK (browser_info_add), 
+  g_signal_connect (gimp->module_db, "add",
+                    G_CALLBACK (browser_info_add),
                     browser);
-  g_signal_connect (gimp->module_db, "remove", 
-                    G_CALLBACK (browser_info_remove), 
+  g_signal_connect (gimp->module_db, "remove",
+                    G_CALLBACK (browser_info_remove),
                     browser);
   g_signal_connect (gimp->module_db, "module_modified",
-                    G_CALLBACK (browser_info_update), 
+                    G_CALLBACK (browser_info_update),
                     browser);
 
   g_signal_connect (shell, "destroy",
-                    G_CALLBACK (browser_destroy_callback), 
+                    G_CALLBACK (browser_destroy_callback),
                     browser);
 
   return shell;
@@ -236,10 +237,14 @@ module_browser_new (Gimp *gimp)
 /*  private functions  */
 
 static void
-browser_popdown_callback (GtkWidget *widget,
-			  gpointer   data)
+browser_response (GtkWidget     *widget,
+                  gint           response_id,
+                  ModuleBrowser *browser)
 {
-  gtk_widget_destroy (GTK_WIDGET (data));
+  if (response_id == MODULES_RESPONSE_REFRESH)
+    gimp_modules_refresh (browser->gimp);
+  else
+    gtk_widget_destroy (widget);
 }
 
 static void
@@ -249,10 +254,10 @@ browser_destroy_callback (GtkWidget     *widget,
   g_signal_handlers_disconnect_by_func (browser->gimp->module_db,
                                         browser_info_add,
                                         browser);
-  g_signal_handlers_disconnect_by_func (browser->gimp->module_db, 
+  g_signal_handlers_disconnect_by_func (browser->gimp->module_db,
                                         browser_info_remove,
                                         browser);
-  g_signal_handlers_disconnect_by_func (browser->gimp->module_db, 
+  g_signal_handlers_disconnect_by_func (browser->gimp->module_db,
                                         browser_info_update,
                                         browser);
 
@@ -260,12 +265,12 @@ browser_destroy_callback (GtkWidget     *widget,
 }
 
 static void
-browser_select_callback (GtkTreeSelection *sel, 
+browser_select_callback (GtkTreeSelection *sel,
 			 ModuleBrowser    *browser)
 {
   GimpModule  *module;
   GtkTreeIter  iter;
-  
+
   gtk_tree_selection_get_selected (sel, NULL, &iter);
   gtk_tree_model_get (GTK_TREE_MODEL (browser->list), &iter,
                       MODULE_COLUMN, &module, -1);
@@ -306,7 +311,7 @@ browser_autoload_toggled (GtkCellRendererToggle *celltoggle,
       gimp_module_set_load_inhibit (module, active);
 
       browser->gimp->write_modulerc = TRUE;
-   
+
       gtk_list_store_set (GTK_LIST_STORE (browser->list), &iter,
                           AUTO_COLUMN, ! active,
                           -1);
@@ -314,7 +319,7 @@ browser_autoload_toggled (GtkCellRendererToggle *celltoggle,
 }
 
 static void
-browser_load_unload_callback (GtkWidget     *widget, 
+browser_load_unload_callback (GtkWidget     *widget,
 			      ModuleBrowser *browser)
 {
   if (browser->last_update->state != GIMP_MODULE_STATE_LOADED)
@@ -334,14 +339,7 @@ browser_load_unload_callback (GtkWidget     *widget,
 }
 
 static void
-browser_refresh_callback (GtkWidget     *widget, 
-			  ModuleBrowser *browser)
-{
-  gimp_modules_refresh (browser->gimp);
-}
-
-static void
-make_list_item (gpointer data, 
+make_list_item (gpointer data,
 		gpointer user_data)
 {
   GimpModule    *module  = data;
@@ -361,7 +359,7 @@ make_list_item (gpointer data,
 
 static void
 browser_info_add (GimpModuleDB *db,
-		  GimpModule   *module, 
+		  GimpModule   *module,
 		  ModuleBrowser*browser)
 {
   make_list_item (module, browser);
@@ -369,7 +367,7 @@ browser_info_add (GimpModuleDB *db,
 
 static void
 browser_info_remove (GimpModuleDB  *db,
-		     GimpModule    *mod, 
+		     GimpModule    *mod,
 		     ModuleBrowser *browser)
 {
   GtkTreeIter  iter;
@@ -394,13 +392,13 @@ browser_info_remove (GimpModuleDB  *db,
     }
   while (gtk_tree_model_iter_next (GTK_TREE_MODEL (browser->list), &iter));
 
-  g_warning ("%s: Tried to remove a module not in the browser's list.", 
+  g_warning ("%s: Tried to remove a module not in the browser's list.",
 	     G_STRLOC);
 }
 
 static void
 browser_info_update (GimpModuleDB  *db,
-                     GimpModule    *module, 
+                     GimpModule    *module,
 		     ModuleBrowser *browser)
 {
   GTypeModule *g_type_module;
@@ -485,12 +483,12 @@ browser_info_update (GimpModuleDB  *db,
     case GIMP_MODULE_STATE_LOADED:
       gtk_label_set_text (GTK_LABEL (browser->button_label), _("Unload"));
       gtk_widget_set_sensitive (GTK_WIDGET (browser->button), FALSE);
-      break;    
+      break;
     }
 }
 
 static void
-browser_info_init (ModuleBrowser *browser, 
+browser_info_init (ModuleBrowser *browser,
 		   GtkWidget     *table)
 {
   GtkWidget *label;

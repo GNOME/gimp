@@ -82,8 +82,6 @@ static void              align_layers_get_align_offsets (gint32  drawable_id,
                                                          gint	*y);
 
 static gint align_layers_dialog      (void);
-static void align_layers_ok_callback (GtkWidget *widget,
-				      gpointer   data);
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -115,16 +113,6 @@ static ValueType VALS =
   TRUE,
   FALSE,
   10
-};
-
-typedef struct
-{
-  gboolean run;
-} Interface;
-
-static Interface INTERFACE =
-{
-  FALSE
 };
 
 
@@ -404,25 +392,18 @@ align_layers_dialog (void)
   GtkWidget *optionmenu;
   GtkWidget *toggle;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init (SHORT_NAME, FALSE);
 
   dlg = gimp_dialog_new (_("Align Visible Layers"), SHORT_NAME,
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/align_layers.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, align_layers_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 7, 3);
 
@@ -492,8 +473,7 @@ align_layers_dialog (void)
 			     _("Ver_tical Base:"), 1.0, 0.5,
 			     optionmenu, 1, FALSE);
 
-  toggle =
-    gtk_check_button_new_with_mnemonic
+  toggle = gtk_check_button_new_with_mnemonic
     (_("_Ignore the Bottom Layer even if Visible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), VALS.ignore_bottom);
   gtk_table_attach_defaults (GTK_TABLE (table), toggle, 0, 2, 4, 5);
@@ -503,8 +483,7 @@ align_layers_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &VALS.ignore_bottom);
 
-  toggle =
-    gtk_check_button_new_with_mnemonic
+  toggle = gtk_check_button_new_with_mnemonic
     (_("_Use the (Invisible) Bottom Layer as the Base"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
 				VALS.base_is_bottom_layer);
@@ -526,17 +505,9 @@ align_layers_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return INTERFACE.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-align_layers_ok_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  INTERFACE.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

@@ -40,11 +40,6 @@ typedef struct
   GimpRGB  color;
 } C2AValues;
 
-typedef struct
-{
-  gboolean  run;
-} C2AInterface;
-
 /* Declare local functions.
  */
 static void      query  (void);
@@ -60,8 +55,6 @@ static void        toalpha                  (GimpDrawable  *drawable);
 
 /* UI stuff */
 static gboolean    colortoalpha_dialog      (GimpDrawable  *drawable);
-static void        colortoalpha_ok_callback (GtkWidget     *widget,
-                                             gpointer       data);
 
 
 static GimpRunMode run_mode;
@@ -74,14 +67,9 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-static C2AValues pvals = 
-{ 
-  { 1.0, 1.0, 1.0, 1.0 } /* white default */
-};
-
-static C2AInterface pint = 
+static C2AValues pvals =
 {
-  FALSE
+  { 1.0, 1.0, 1.0, 1.0 } /* white default */
 };
 
 MAIN ()
@@ -144,12 +132,12 @@ run (const gchar      *name,
       gimp_palette_get_foreground (&pvals.color);
       gimp_get_data ("plug_in_colortoalpha", &pvals);
       if (! colortoalpha_dialog (drawable ))
-	{ 
+	{
 	  gimp_drawable_detach (drawable);
 	  return;
 	}
       break;
- 
+
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams != 4)
 	status = GIMP_PDB_CALLING_ERROR;
@@ -164,7 +152,7 @@ run (const gchar      *name,
 
     default:
       break;
-    }  
+    }
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -174,12 +162,12 @@ run (const gchar      *name,
       drawable = gimp_drawable_get (drawable->drawable_id);
 
       /*  Make sure that the drawable is RGB color  */
-      if (gimp_drawable_is_rgb (drawable->drawable_id) && 
-	  gimp_drawable_is_layer (drawable->drawable_id))  
+      if (gimp_drawable_is_rgb (drawable->drawable_id) &&
+	  gimp_drawable_is_layer (drawable->drawable_id))
 	{
           if (run_mode != GIMP_RUN_NONINTERACTIVE)
 	    gimp_progress_init (_("Removing color..."));
-             
+
 	  toalpha (drawable);
 	}
       gimp_drawable_detach (drawable);
@@ -202,7 +190,7 @@ colortoalpha (GimpRGB       *src,
 	      const GimpRGB *color)
 {
   GimpRGB alpha;
-  
+
   alpha.a = src->a;
 
   if (color->r < 0.0001)
@@ -248,7 +236,7 @@ colortoalpha (GimpRGB       *src,
     {
       src->a = alpha.b;
     }
-      
+
   if (src->a < 0.0001)
     return;
 
@@ -260,33 +248,33 @@ colortoalpha (GimpRGB       *src,
 }
 
 /*
-  <clahey>   so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3, 
-             then a1 = b1 * alpha + c1 * (1-alpha) 
-             So, maximizing alpha without taking b1 above 1 gives 
+  <clahey>   so if a1 > c1, a2 > c2, and a3 > c2 and a1 - c1 > a2-c2, a3-c3,
+             then a1 = b1 * alpha + c1 * (1-alpha)
+             So, maximizing alpha without taking b1 above 1 gives
 	     a1 = alpha + c1(1-alpha) and therefore alpha = (a1-c1) / (1-c1).
-  <sjburges> clahey: btw, the ordering of that a2, a3 in the white->alpha didn't 
+  <sjburges> clahey: btw, the ordering of that a2, a3 in the white->alpha didn't
              matter
   <clahey>   sjburges: You mean that it could be either a1, a2, a3 or a1, a3, a2?
   <sjburges> yeah
   <sjburges> because neither one uses the other
-  <clahey>   sjburges: That's exactly as it should be.  They are both just getting 
+  <clahey>   sjburges: That's exactly as it should be.  They are both just getting
              reduced to the same amount, limited by the the darkest color.
-  <clahey>   Then a2 = b2 * alpha + c2 * ( 1- alpha).  Solving for b2 gives 
+  <clahey>   Then a2 = b2 * alpha + c2 * ( 1- alpha).  Solving for b2 gives
              b2 = (a1-c2)/alpha + c2.
   <sjburges> yeah
-  <clahey>   That gives us are formula for if the background is darker than the 
+  <clahey>   That gives us are formula for if the background is darker than the
              foreground? Yep.
-  <clahey>   Next if a1 < c1, a2 < c2, a3 < c3, and c1-a1 > c2-a2, c3-a3, and by our 
-             desired result a1 = b1 * alpha + c1 * (1-alpha), we maximize alpha 
+  <clahey>   Next if a1 < c1, a2 < c2, a3 < c3, and c1-a1 > c2-a2, c3-a3, and by our
+             desired result a1 = b1 * alpha + c1 * (1-alpha), we maximize alpha
              without taking b1 negative gives alpha = 1 - a1 / c1.
-  <clahey>   And then again, b2 = (a2-c2) / alpha + c2 by the same formula.  
-             (Actually, I think we can use that formula for all cases, though it 
+  <clahey>   And then again, b2 = (a2-c2) / alpha + c2 by the same formula.
+             (Actually, I think we can use that formula for all cases, though it
              may possibly introduce rounding error.
-  <clahey>   sjburges: I like the idea of using floats to avoid rounding error.  
+  <clahey>   sjburges: I like the idea of using floats to avoid rounding error.
              Good call.
 */
 
-static void 
+static void
 toalpha_func (const guchar *src,
               guchar       *dest,
               gint          bpp,
@@ -313,29 +301,22 @@ colortoalpha_dialog (GimpDrawable *drawable)
   GtkWidget *table;
   GtkWidget *button;
   GtkWidget *label;
+  gboolean   run;
 
   gimp_ui_init ("colortoalpha", TRUE);
 
   dlg = gimp_dialog_new (_("Color to Alpha"), "colortoalpha",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/colortoalpha.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, colortoalpha_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
   frame = gtk_frame_new (_("Color"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), 
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox),
                       frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -344,18 +325,18 @@ colortoalpha_dialog (GimpDrawable *drawable)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
   gtk_widget_show (table);
-   
+
   label = gtk_label_new (_("From:"));
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE(table), label, 0, 1, 0, 1);
   gtk_widget_show (label);
 
-  button = gimp_color_button_new (_("Color to Alpha Color Picker"), 
+  button = gimp_color_button_new (_("Color to Alpha Color Picker"),
 				  PRV_WIDTH, PRV_HEIGHT,
-				  &pvals.color, 
+				  &pvals.color,
 				  GIMP_COLOR_AREA_FLAT);
-  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1, 
-		    GTK_FILL, GTK_SHRINK, 0, 0) ; 
+  gtk_table_attach (GTK_TABLE (table), button, 1, 2, 0, 1,
+		    GTK_FILL, GTK_SHRINK, 0, 0) ;
   gtk_widget_show (button);
 
   g_signal_connect (button, "color_changed",
@@ -369,17 +350,9 @@ colortoalpha_dialog (GimpDrawable *drawable)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return pint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-colortoalpha_ok_callback (GtkWidget *widget, 
-			  gpointer   data)
-{
-  pint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

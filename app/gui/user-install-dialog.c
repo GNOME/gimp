@@ -80,14 +80,13 @@ enum
 };
 
 
-static void     user_install_continue_callback (GtkWidget *widget,
-                                                GimpRc    *gimprc);
-static void     user_install_cancel_callback   (GtkWidget *widget,
-                                                gpointer   data);
+static void     user_install_response   (GtkWidget *widget,
+                                         gint       response_id,
+                                         GimpRc    *gimprc);
 
-static gboolean user_install_run               (void);
-static void     user_install_tuning            (GimpRc    *gimprc);
-static void     user_install_resolution        (GimpRc    *gimprc);
+static gboolean user_install_run        (void);
+static void     user_install_tuning     (GimpRc    *gimprc);
+static void     user_install_resolution (GimpRc    *gimprc);
 
 
 /*  private stuff  */
@@ -104,9 +103,6 @@ static GtkWidget  *footer_label    = NULL;
 static GtkWidget  *log_page        = NULL;
 static GtkWidget  *tuning_page     = NULL;
 static GtkWidget  *resolution_page = NULL;
-
-static GtkWidget  *continue_button = NULL;
-static GtkWidget  *cancel_button   = NULL;
 
 static GtkRcStyle *title_style     = NULL;
 static GtkRcStyle *page_style      = NULL;
@@ -355,10 +351,26 @@ user_install_notebook_set_page (GtkNotebook *notebook,
 }
 
 static void
-user_install_continue_callback (GtkWidget *widget,
-				GimpRc    *gimprc)
+user_install_response (GtkWidget *widget,
+                       gint       response_id,
+                       GimpRc    *gimprc)
 {
   static gint notebook_index = GPL_PAGE;
+
+  if (response_id != GTK_RESPONSE_OK)
+    {
+      static guint timeout_id = 0;
+
+      if (timeout_id)
+        exit (EXIT_SUCCESS);
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
+                                         GTK_RESPONSE_OK, FALSE);
+      user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
+      timeout_id = g_timeout_add (2342, (GSourceFunc) exit, NULL);
+
+      return;
+    }
 
   switch (notebook_index)
     {
@@ -372,12 +384,15 @@ user_install_continue_callback (GtkWidget *widget,
       /*  Creating the directories can take some time on NFS, so inform
        *  the user and set the buttons insensitive
        */
-      gtk_widget_set_sensitive (continue_button, FALSE);
-      gtk_widget_set_sensitive (cancel_button, FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
+                                         GTK_RESPONSE_CANCEL, FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
+                                         GTK_RESPONSE_OK, TRUE);
 
       if (user_install_run ())
         {
-          gtk_widget_set_sensitive (continue_button, TRUE);
+          gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
+                                             GTK_RESPONSE_OK, TRUE);
           gtk_label_set_text (GTK_LABEL (footer_label),
                               _("Installation successful.\n"
                                 "Click \"Continue\" to proceed."));
@@ -389,7 +404,8 @@ user_install_continue_callback (GtkWidget *widget,
                                 "Contact system administrator."));
         }
 
-      gtk_widget_set_sensitive (cancel_button, TRUE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
+                                         GTK_RESPONSE_CANCEL, TRUE);
       break;
 
     case LOG_PAGE:
@@ -417,20 +433,6 @@ user_install_continue_callback (GtkWidget *widget,
     default:
       g_assert_not_reached ();
     }
-}
-
-static void
-user_install_cancel_callback (GtkWidget *widget,
-			      gpointer   data)
-{
-  static guint timeout_id = 0;
-
-  if (timeout_id)
-    exit (EXIT_SUCCESS);
-
-  gtk_widget_destroy (continue_button);
-  user_install_notebook_set_page (GTK_NOTEBOOK (notebook), EEK_PAGE);
-  timeout_id = g_timeout_add (2342, (GSourceFunc) exit, NULL);
 }
 
 static gboolean
@@ -591,24 +593,21 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 
   dialog = user_install_dialog =
     gimp_dialog_new (_("GIMP User Installation"), "user_installation",
+                     NULL, 0,
 		     NULL, NULL,
-		     GTK_WIN_POS_CENTER,
-		     FALSE, FALSE, FALSE,
 
-		     GTK_STOCK_CANCEL, user_install_cancel_callback,
-		     NULL, 1, &cancel_button, FALSE, TRUE,
-
-		     _("Continue"), user_install_continue_callback,
-		     gimprc, NULL, &continue_button, TRUE, FALSE,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     _("Continue"),    GTK_RESPONSE_OK,
 
 		     NULL);
 
-  g_object_weak_ref (G_OBJECT (dialog),
-                     (GWeakNotify) g_object_unref, gimprc);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (user_install_response),
+                    gimprc);
+
+  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_object_unref, gimprc);
 
   gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (dialog)->action_area), 8);
-
-  gtk_dialog_set_has_separator (GTK_DIALOG (dialog), FALSE);
 
   eek_box = gtk_hbox_new (FALSE, 8);
 
@@ -965,9 +964,6 @@ user_install_dialog_run (const gchar *alternate_system_gimprc,
 					    NULL, 0);
 
   user_install_notebook_set_page (GTK_NOTEBOOK (notebook), 0);
-
-  gtk_widget_grab_focus (continue_button);
-  gtk_widget_grab_default (continue_button);
 
   gtk_widget_show (dialog);
 

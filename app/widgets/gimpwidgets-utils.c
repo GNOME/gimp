@@ -36,11 +36,6 @@
 #include "gimp-intl.h"
 
 
-extern gchar *prog_name;
-
-static void  gimp_message_box_close_callback  (GtkWidget *widget,
-					       gpointer   data);
-
 /*
  *  Message Boxes...
  */
@@ -62,7 +57,16 @@ struct _MessageBox
 /*  the maximum number of concurrent dialog boxes */
 #define MESSAGE_BOX_MAXIMUM  4
 
+
+static void  gimp_message_box_response (GtkWidget  *widget,
+                                        gint        response_id,
+                                        MessageBox *msg_box);
+
+
+extern gchar *prog_name;
+
 static GList *message_boxes = NULL;
+
 
 void
 gimp_message_box (const gchar *stock_id,
@@ -149,17 +153,18 @@ gimp_message_box (const gchar *stock_id,
   msg_box = g_new0 (MessageBox, 1);
 
   mbox = gimp_dialog_new (_("GIMP Message"), "gimp-message",
+                          NULL, 0,
 			  NULL, NULL,
-			  GTK_WIN_POS_MOUSE,
-			  FALSE, FALSE, FALSE,
 
-			  GTK_STOCK_OK, gimp_message_box_close_callback,
-			  msg_box, NULL, NULL, TRUE, TRUE,
+			  GTK_STOCK_OK, GTK_RESPONSE_CLOSE,
 
 			  NULL);
 
   gtk_window_set_resizable (GTK_WINDOW (mbox), FALSE);
-  gtk_dialog_set_has_separator (GTK_DIALOG (mbox), FALSE);
+
+  g_signal_connect (mbox, "response",
+                    G_CALLBACK (gimp_message_box_response),
+                    msg_box);
 
   hbox = gtk_hbox_new (FALSE, 10);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 10);
@@ -217,13 +222,10 @@ gimp_message_box (const gchar *stock_id,
 }
 
 static void
-gimp_message_box_close_callback (GtkWidget *widget,
-				 gpointer   data)
+gimp_message_box_response (GtkWidget  *widget,
+                           gint        resonse_id,
+                           MessageBox *msg_box)
 {
-  MessageBox *msg_box;
-
-  msg_box = (MessageBox *) data;
-
   /*  If there is a valid callback, invoke it  */
   if (msg_box->callback)
     (* msg_box->callback) (widget, msg_box->data);

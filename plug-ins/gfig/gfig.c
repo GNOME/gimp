@@ -70,6 +70,11 @@
 
 /***** Magic numbers *****/
 
+#define RESPONSE_UNDO    1
+#define RESPONSE_CLEAR   2
+#define RESPONSE_SAVE    3
+#define RESPONSE_PAINT   4
+
 #define PREVIEW_SIZE     400
 #define SCALE_WIDTH      120
 
@@ -96,6 +101,7 @@
 		       GDK_KEY_PRESS_MASK      | \
 		       GDK_KEY_RELEASE_MASK)
 
+static GtkWidget *top_level_dlg;
 static GimpDrawable *gfig_select_drawable;
 GtkWidget    *gfig_preview;
 GtkWidget    *pic_preview;
@@ -115,14 +121,11 @@ static void      run    (const gchar      *name,
 			 GimpParam       **return_vals);
 
 static gint      gfig_dialog               (void);
-static void      gfig_ok_callback          (GtkWidget *widget,
+static void      gfig_response             (GtkWidget *widget,
+                                            gint       response_id,
 					    gpointer   data);
-static void      gfig_paint_callback       (GtkWidget *widget,
-					    gpointer   data);
-static void      gfig_clear_callback       (GtkWidget *widget,
-					    gpointer   data);
-static void      gfig_undo_callback        (GtkWidget *widget,
-					    gpointer   data);
+static void      gfig_paint_callback       (void);
+
 static gboolean  pic_preview_expose        (GtkWidget *widget,
 					    GdkEvent  *event);
 static void      gfig_preview_realize      (GtkWidget *widget);
@@ -154,8 +157,6 @@ static gint      list_button_press         (GtkWidget      *widget,
 static void      rescan_button_callback    (GtkWidget *widget,
 					    gpointer   data);
 static void      load_button_callback      (GtkWidget *widget,
-					    gpointer   data);
-static void      save_button_callback      (GtkWidget *widget,
 					    gpointer   data);
 static void      new_button_callback       (GtkWidget *widget,
 					    gpointer   data);
@@ -306,7 +307,6 @@ static DAllObjs *undo_table[MAX_UNDO];
 gint      need_to_scale;
 static gint32    brush_image_ID = -1;
 
-static GtkWidget *undo_widget;
 static GtkWidget *gfig_op_menu;    /* Popup menu in the list box */
 static GtkWidget *object_list;     /* Top preview frame window */
 static GtkWidget *fade_out_hbox;   /* Fade out widget in brush page */
@@ -325,7 +325,6 @@ static GtkWidget *status_label_fname;
 static GFigObj   *gfig_obj_for_menu; /* More static data -
 				      * need to know which object was selected*/
 static GtkWidget *save_menu_item;
-static GtkWidget *save_button;
 
 
 /* Don't up just like BIGGG source files? */
@@ -1511,14 +1510,16 @@ num_sides_dialog (gchar *d_title,
   GtkObject *size_data;
 
   window = gimp_dialog_new (d_title, "gfig",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/gfig.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CLOSE, gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
+			    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 			    NULL);
+
+  g_signal_connect (window, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
 
   table = gtk_table_new (which_way ? 2 : 1, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
@@ -3280,7 +3281,6 @@ gfig_dialog (void)
   GtkWidget *vbox;
   GtkWidget *notebook;
   GtkWidget *page;
-  GtkWidget *top_level_dlg;
 
   gimp_ui_init ("gfig", TRUE);
   gfig_stock_init ();
@@ -3294,30 +3294,21 @@ gfig_dialog (void)
 
   /* Start buildng the dialog up */
   top_level_dlg = gimp_dialog_new (_("Gfig"), "gfig",
+                                   NULL, 0,
 				   gimp_standard_help_func, "filters/gfig.html",
-				   GTK_WIN_POS_MOUSE,
-				   FALSE, TRUE, FALSE,
 
-				   GTK_STOCK_UNDO, gfig_undo_callback,
-				   NULL, NULL, &undo_widget, FALSE, FALSE,
-
-				   GTK_STOCK_CLEAR, gfig_clear_callback,
-				   NULL, NULL, NULL, FALSE, FALSE,
-
-				   GTK_STOCK_SAVE, save_button_callback,
-				   NULL, NULL, &save_button, FALSE, FALSE,
-
-				   GTK_STOCK_CANCEL, gtk_widget_destroy,
-				   NULL, 1, NULL, FALSE, TRUE,
-
-				   GTK_STOCK_CLOSE, gfig_ok_callback,
-				   NULL, NULL, NULL, TRUE, FALSE,
-
-				   _("Paint"), gfig_paint_callback,
-				   NULL, NULL, NULL, FALSE, FALSE,
+				   GTK_STOCK_UNDO,   RESPONSE_UNDO,
+				   GTK_STOCK_CLEAR,  RESPONSE_CLEAR,
+				   GTK_STOCK_SAVE,   RESPONSE_SAVE,
+				   GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+				   GTK_STOCK_CLOSE,  GTK_RESPONSE_OK,
+				   _("Paint"),       RESPONSE_PAINT,
 
 				   NULL);
 
+  g_signal_connect (top_level_dlg, "response",
+                    G_CALLBACK (gfig_response),
+                    top_level_dlg);
   g_signal_connect (top_level_dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -3409,47 +3400,105 @@ gfig_really_ok_callback (GtkWidget *widget,
 }
 
 static void
-gfig_ok_callback (GtkWidget *widget,
-		  gpointer   data)
+gfig_response (GtkWidget *widget,
+               gint       response_id,
+               gpointer   data)
 {
-  /* Check if outstanding saves */
-  GList   *list;
-  GFigObj *gfig;
-  gint     count = 0;
-
-  for (list = gfig_list; list; list = g_list_next (list))
+  switch (response_id)
     {
-      gfig = (GFigObj *) list->data;
-      if (gfig->obj_status & GFIG_MODIFIED)
-	count++;
-    }
+    case RESPONSE_UNDO:
+      if (undo_water_mark >= 0)
+        {
+          /* Free current objects an reinstate previous */
+          free_all_objs (current_obj->obj_list);
+          current_obj->obj_list = NULL;
+          tmp_bezier = tmp_line = obj_creating = NULL;
+          current_obj->obj_list = undo_table[undo_water_mark];
+          undo_water_mark--;
+          /* Update the screen */
+          gtk_widget_queue_draw (gfig_preview);
+          /* And preview */
+          list_button_update (current_obj);
+          gfig_obj_modified (current_obj, GFIG_MODIFIED);
+          current_obj->obj_status |= GFIG_MODIFIED;
+        }
 
-  if (count)
-    {
-      GtkWidget *dialog;
-      gchar     *message;
+      if (undo_water_mark < 0)
+        gtk_widget_set_sensitive (widget, FALSE);
+      break;
 
-      message =
-	g_strdup_printf (_("%d unsaved Gfig objects.\n"
-                           "Continue with exiting?"), count);
+    case RESPONSE_CLEAR:
+      /* Make sure we can get back - if we have some objects to get back to */
+      if (!current_obj->obj_list)
+        return;
 
-      dialog = gimp_query_boolean_box (_("Warning"),
-				       gimp_standard_help_func,
-				       "filters/gfig.html",
-				       GTK_STOCK_DIALOG_WARNING,
-				       message,
-				       GTK_STOCK_OK, GTK_STOCK_CANCEL,
-				       NULL, NULL,
-				       gfig_really_ok_callback,
-				       data);
-      g_free (message);
+      setup_undo ();
+      /* Free all objects */
+      free_all_objs (current_obj->obj_list);
+      current_obj->obj_list = NULL;
+      obj_creating = NULL;
+      tmp_line = NULL;
+      tmp_bezier = NULL;
+      gtk_widget_queue_draw (gfig_preview);
+      /* And preview */
+      list_button_update (current_obj);
+      break;
 
-      gtk_widget_show (dialog);
-    }
-  else
-    {
-      gfig_run = TRUE;
-      gtk_widget_destroy (GTK_WIDGET (data));
+    case RESPONSE_SAVE:
+      gfig_save ();  /* Save current object */
+      break;
+
+    case GTK_RESPONSE_CLOSE:
+      {
+        /* Check if outstanding saves */
+        GList   *list;
+        GFigObj *gfig;
+        gint     count = 0;
+
+        for (list = gfig_list; list; list = g_list_next (list))
+          {
+            gfig = (GFigObj *) list->data;
+            if (gfig->obj_status & GFIG_MODIFIED)
+              count++;
+          }
+
+        if (count)
+          {
+            GtkWidget *dialog;
+            gchar     *message;
+
+            message =
+              g_strdup_printf (_("%d unsaved Gfig objects.\n"
+                                 "Continue with exiting?"), count);
+
+            dialog = gimp_query_boolean_box (_("Warning"),
+                                             gimp_standard_help_func,
+                                             "filters/gfig.html",
+                                             GTK_STOCK_DIALOG_WARNING,
+                                             message,
+                                             GTK_STOCK_OK, GTK_STOCK_CANCEL,
+                                             NULL, NULL,
+                                             gfig_really_ok_callback,
+                                             data);
+            g_free (message);
+
+            gtk_widget_show (dialog);
+          }
+        else
+          {
+            gfig_run = TRUE;
+            gtk_widget_destroy (GTK_WIDGET (data));
+          }
+      }
+      break;
+
+    case RESPONSE_PAINT:
+      gfig_paint_callback ();
+      break;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
     }
 }
 
@@ -3685,54 +3734,47 @@ gfig_list_add (GFigObj *obj)
 }
 
 static void
-gfig_list_ok_callback (GtkWidget *widget,
-		       gpointer   data)
+gfig_list_response (GtkWidget       *widget,
+                    gint             response_id,
+                    GfigListOptions *options)
 {
-  GfigListOptions *options;
-  GtkWidget       *list;
-  gint             pos;
-
-  options = (GfigListOptions *) data;
-  list = options->list_entry;
-
-  /*  Set the new layer name  */
-
-  g_free (options->obj->draw_name);
-  options->obj->draw_name =
-    g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
-
-  /* Need to reorder the list */
-/* gtk_label_set_text (GTK_LABEL (options->layer_widget->label), layer->name);*/
-  pos = gtk_list_child_position (GTK_LIST (gfig_gtk_list), list);
-
-  gtk_list_clear_items (GTK_LIST (gfig_gtk_list), pos, pos + 1);
-
-  /* remove/Add again */
-  gfig_list = g_list_remove (gfig_list, options->obj);
-  gfig_list_add (options->obj);
-
-  options->obj->obj_status |= GFIG_MODIFIED;
-
-  gtk_widget_destroy (options->query_box);
-  g_free (options);
-
-  gfig_update_stat_labels ();
-}
-
-static void
-gfig_list_cancel_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  GfigListOptions *options;
-
-  options = (GfigListOptions *) data;
-  if (options->created)
+  if (response_id == GTK_RESPONSE_OK)
     {
-      /* We are creating an entry so if cancelled
-       * must del the list item as well
-       */
-      gfig_do_delete_gfig_callback (widget, TRUE, gfig_gtk_list);
+      GtkWidget *list;
+      gint       pos;
+
+      list = options->list_entry;
+
+      /*  Set the new layer name  */
+
+      g_free (options->obj->draw_name);
+      options->obj->draw_name =
+        g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+
+      /* Need to reorder the list */
+      /* gtk_label_set_text (GTK_LABEL (options->layer_widget->label), layer->name);*/
+      pos = gtk_list_child_position (GTK_LIST (gfig_gtk_list), list);
+
+      gtk_list_clear_items (GTK_LIST (gfig_gtk_list), pos, pos + 1);
+
+      /* remove/Add again */
+      gfig_list = g_list_remove (gfig_list, options->obj);
+      gfig_list_add (options->obj);
+
+      options->obj->obj_status |= GFIG_MODIFIED;
+
+      gfig_update_stat_labels ();
     }
+  else
+    {
+      if (options->created)
+        {
+          /* We are creating an entry so if cancelled
+           * must del the list item as well
+           */
+          gfig_do_delete_gfig_callback (widget, TRUE, gfig_gtk_list);
+        }
+   }
 
   gtk_widget_destroy (options->query_box);
   g_free (options);
@@ -3757,17 +3799,17 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
   /*  the dialog  */
   options->query_box =
     gimp_dialog_new (_("Enter Gfig Object Name"), "gfig",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/gfig.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, gfig_list_cancel_callback,
-		     options, NULL, NULL, FALSE, TRUE,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-		     GTK_STOCK_OK, gfig_list_ok_callback,
-		     options, NULL, NULL, TRUE, FALSE,
+                     NULL);
 
-		     NULL);
+  g_signal_connect (options->query_box, "response",
+                    G_CALLBACK (gfig_list_response),
+                    options);
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 2);
@@ -3794,25 +3836,29 @@ gfig_dialog_edit_list (GtkWidget *lwidget,
 }
 
 static void
-gfig_rescan_ok_callback (GtkWidget *widget,
-			 gpointer   data)
+gfig_rescan_response (GtkWidget *widget,
+                      gint       response_id,
+                      gpointer   data)
 {
-  GtkWidget *patheditor;
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GtkWidget *patheditor;
 
-  gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
+      gtk_widget_set_sensitive (GTK_WIDGET (data), FALSE);
 
-  patheditor = GTK_WIDGET (g_object_get_data (G_OBJECT (data),
+      patheditor = GTK_WIDGET (g_object_get_data (G_OBJECT (data),
                                               "patheditor"));
 
-  g_free (gfig_path);
-  gfig_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
+      g_free (gfig_path);
+      gfig_path = gimp_path_editor_get_path (GIMP_PATH_EDITOR (patheditor));
 
-  if (gfig_path)
-    {
-      clear_list_items (GTK_LIST (gfig_gtk_list));
-      gfig_list_load_all (gfig_path);
-      build_list_items (gfig_gtk_list);
-      list_button_update (current_obj);
+      if (gfig_path)
+        {
+          clear_list_items (GTK_LIST (gfig_gtk_list));
+          gfig_list_load_all (gfig_path);
+          build_list_items (gfig_gtk_list);
+          list_button_update (current_obj);
+        }
     }
 
   gtk_widget_destroy (GTK_WIDGET (data));
@@ -3833,17 +3879,17 @@ gfig_rescan_list (void)
 
   /*  the dialog  */
   dlg = gimp_dialog_new (_("Rescan for Gfig Objects"), "gfig",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/gfig.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GTK_STOCK_OK, gfig_rescan_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         NULL);
 
-			 NULL);
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (gfig_rescan_response),
+                    dlg);
 
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
@@ -4027,8 +4073,7 @@ paint_layer_fill (void)
 }
 
 static void
-gfig_paint_callback (GtkWidget *widget,
-		     gpointer   data)
+gfig_paint_callback (void)
 {
   DAllObjs  *objs;
   gint       layer_count = 0;
@@ -4131,14 +4176,16 @@ about_button_callback (GtkWidget *widget,
   GtkWidget *image;
 
   window = gimp_dialog_new (_("About Gfig"), "gfig",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/gfig.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
 
-			    GTK_STOCK_CLOSE, gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
+			    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 			    NULL);
+
+  g_signal_connect (window, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
 
   image = gtk_image_new_from_stock (GFIG_STOCK_LOGO, GTK_ICON_SIZE_DIALOG);
   gtk_widget_show (image);
@@ -4186,14 +4233,6 @@ about_button_callback (GtkWidget *widget,
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
   gtk_widget_show (window);
-}
-
-
-static void
-save_button_callback (GtkWidget *widget,
-		      gpointer   data)
-{
-  gfig_save ();  /* Save current object */
 }
 
 static void
@@ -4441,11 +4480,13 @@ new_obj_2edit (GFigObj *obj)
     {
       g_message (_("Editing read-only object - "
 		   "you will not be able to save it"));
-      gtk_widget_set_sensitive (save_button, FALSE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
+                                         RESPONSE_SAVE, FALSE);
     }
   else
     {
-      gtk_widget_set_sensitive (save_button, TRUE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
+                                         RESPONSE_SAVE, TRUE);
     }
 }
 
@@ -5436,51 +5477,6 @@ get_line (gchar *buf,
 }
 
 static void
-gfig_clear_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  /* Make sure we can get back - if we have some objects to get back to */
-  if (!current_obj->obj_list)
-    return;
-
-  setup_undo ();
-  /* Free all objects */
-  free_all_objs (current_obj->obj_list);
-  current_obj->obj_list = NULL;
-  obj_creating = NULL;
-  tmp_line = NULL;
-  tmp_bezier = NULL;
-  gtk_widget_queue_draw (gfig_preview);
-  /* And preview */
-  list_button_update (current_obj);
-}
-
-
-static void
-gfig_undo_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  if (undo_water_mark >= 0)
-    {
-      /* Free current objects an reinstate previous */
-      free_all_objs (current_obj->obj_list);
-      current_obj->obj_list = NULL;
-      tmp_bezier = tmp_line = obj_creating = NULL;
-      current_obj->obj_list = undo_table[undo_water_mark];
-      undo_water_mark--;
-      /* Update the screen */
-      gtk_widget_queue_draw (gfig_preview);
-      /* And preview */
-      list_button_update (current_obj);
-      gfig_obj_modified (current_obj, GFIG_MODIFIED);
-      current_obj->obj_status |= GFIG_MODIFIED;
-  }
-
-  if (undo_water_mark < 0)
-    gtk_widget_set_sensitive (widget, FALSE);
-}
-
-static void
 clear_undo (void)
 {
   int lv;
@@ -5492,7 +5488,9 @@ clear_undo (void)
     }
 
   undo_water_mark = -1;
-  gtk_widget_set_sensitive (undo_widget, FALSE);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
+                                     RESPONSE_UNDO, FALSE);
 }
 
 void
@@ -5525,7 +5523,9 @@ setup_undo (void)
       undo_water_mark++;
     }
   undo_table[undo_water_mark] = copy_all_objs (current_obj->obj_list);
-  gtk_widget_set_sensitive (undo_widget, TRUE);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (top_level_dlg),
+                                     RESPONSE_UNDO, TRUE);
 
   gfig_obj_modified (current_obj, GFIG_MODIFIED);
   current_obj->obj_status |= GFIG_MODIFIED;

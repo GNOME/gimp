@@ -74,8 +74,6 @@ typedef struct _DepthMergeInterface
   guchar    *previewSource2;
   guchar    *previewDepthMap1;
   guchar    *previewDepthMap2;
-
-  gboolean   run;
 } DepthMergeInterface;
 
 typedef struct _DepthMergeParams
@@ -109,7 +107,7 @@ typedef struct _DepthMerge
   gint                 selectionHeight;
   gint                 resultHasAlpha;
 } DepthMerge;
- 
+
 void   DepthMerge_initParams             (DepthMerge *dm);
 void   DepthMerge_construct              (DepthMerge *dm);
 void   DepthMerge_destroy                (DepthMerge *dm);
@@ -131,8 +129,6 @@ gint constraintResultSizeAndResultColorOrGray(gint32 imageId,
 gint constraintResultSizeAndGray(gint32 imageId,
 				 gint32 drawableId, gpointer data);
 
-void dialogOkCallback               (GtkWidget *widget, gpointer data);
-void dialogCancelCallback           (GtkWidget *widget, gpointer data);
 void dialogSource1ChangedCallback   (gint32 id, gpointer data);
 void dialogSource2ChangedCallback   (gint32 id, gpointer data);
 void dialogDepthMap1ChangedCallback (gint32 id, gpointer data);
@@ -388,7 +384,7 @@ DepthMerge_execute (DepthMerge *dm)
   source2HasAlpha = 0;
   depthMap1HasAlpha = 0;
   depthMap2HasAlpha = 0;
-  
+
   gimp_progress_init(_("Depth-merging..."));
 
   resultRow    = (guchar *)g_malloc(dm->selectionWidth * 4);
@@ -632,29 +628,21 @@ DepthMerge_dialog (DepthMerge *dm)
   GtkWidget *tempMenu;
   GtkWidget *numericParameterTable;
   GtkObject *adj;
+  gboolean   run;
 
-  dm->interface = g_new (DepthMergeInterface, 1);
-  dm->interface->active = FALSE;
-  dm->interface->run    = FALSE;
+  dm->interface = g_new0 (DepthMergeInterface, 1);
 
   gimp_ui_init ("depthmerge", TRUE);
 
   dm->interface->dialog =
     gimp_dialog_new (_("Depth Merge"), "depthmerge",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/depthmerge.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, dialogCancelCallback,
-		     dm, NULL, NULL, FALSE, TRUE,
-		     GTK_STOCK_OK, dialogOkCallback,
-		     dm, NULL, NULL, TRUE, FALSE,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 		     NULL);
-
-  g_signal_connect (dm->interface->dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* topTable */
   topTable = gtk_table_new (3, 3, FALSE);
@@ -811,10 +799,12 @@ DepthMerge_dialog (DepthMerge *dm)
   gtk_widget_show (dm->interface->dialog);
   DepthMerge_updatePreview (dm);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dm->interface->dialog)) == GTK_RESPONSE_OK);
 
-  return dm->interface->run;
+  gtk_widget_destroy (dm->interface->dialog);
+  dm->interface->dialog = NULL;
+
+  return run;
 }
 
 void
@@ -967,24 +957,6 @@ constraintResultSizeAndGray (gint32   imageId,
 	  (gimp_drawable_height (drawableId) ==
 	   gimp_drawable_height (dm->params.result)) &&
 	  (gimp_drawable_is_gray (drawableId))));
-}
-
-void
-dialogOkCallback (GtkWidget *widget,
-		  gpointer   data)
-{
-  DepthMerge *dm = (DepthMerge *)data;
-  dm->interface->run = TRUE;
-  gtk_widget_destroy (dm->interface->dialog);
-}
-
-void
-dialogCancelCallback (GtkWidget *widget,
-		      gpointer   data)
-{
-  DepthMerge *dm = (DepthMerge *)data;
-  dm->interface->run = FALSE;
-  gtk_widget_destroy (dm->interface->dialog);
 }
 
 void
@@ -1141,7 +1113,7 @@ util_fillReducedBuffer (guchar    *dest,
       for (x = 0; x < destWidth; x++)
 	{
 	  sourceBufferPos = sourceBufferRow + sourceRowOffsetLookup[x];
-	  for (i = 0; i < sourceBpp; i++) 
+	  for (i = 0; i < sourceBpp; i++)
 	    reducedRowBufferPos[i] = sourceBufferPos[i];
 	  reducedRowBufferPos += sourceBpp;
 	}

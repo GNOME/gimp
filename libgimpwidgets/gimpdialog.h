@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpdialog.h
- * Copyright (C) 2000 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2000-2003 Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -11,7 +11,7 @@
  *
  * This library is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU 
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
  * Library General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public
@@ -51,57 +51,26 @@ struct _GimpDialogClass
 };
 
 
-GType       gimp_dialog_get_type            (void) G_GNUC_CONST;
+GType       gimp_dialog_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_dialog_new                 (const gchar        *title,
-					     const gchar        *wmclass_name,
-					     GimpHelpFunc        help_func,
-					     const gchar        *help_id,
-					     GtkWindowPosition   position,
-					     gint                allow_shrink,
-					     gint                allow_grow,
-					     gint                auto_shrink,
+GtkWidget * gimp_dialog_new                (const gchar    *title,
+                                            const gchar    *role,
+                                            GtkWidget      *parent,
+                                            GtkDialogFlags  flags,
+                                            GimpHelpFunc    help_func,
+                                            const gchar    *help_id,
+                                            ...);
 
-					     /* specify action area buttons
-					      * as va_list:
-					      *  const gchar    *label,
-					      *  GCallback       callback,
-					      *  gpointer        callback_data,
-					      *  GObject        *slot_object,
-					      *  GtkWidget     **widget_ptr,
-					      *  gboolean        default_action,
-					      *  gboolean        connect_delete,
-					      */
+GtkWidget * gimp_dialog_new_valist         (const gchar    *title,
+                                            const gchar    *role,
+                                            GtkWidget      *parent,
+                                            GtkDialogFlags  flags,
+                                            GimpHelpFunc    help_func,
+                                            const gchar    *help_id,
+                                            va_list         args);
 
-					     ...);
-
-GtkWidget * gimp_dialog_newv                (const gchar        *title,
-					     const gchar        *wmclass_name,
-					     GimpHelpFunc        help_func,
-					     const gchar        *help_id,
-					     GtkWindowPosition   position,
-					     gint                allow_shrink,
-					     gint                allow_grow,
-					     gint                auto_shrink,
-					     va_list             args);
-
-void        gimp_dialog_create_action_area  (GimpDialog         *dialog,
-
-					     /* specify action area buttons
-					      * as va_list:
-					      *  const gchar    *label,
-					      *  GCallback       callback,
-					      *  gpointer        callback_data,
-					      *  GObject        *slot_object,
-					      *  GtkWidget     **widget_ptr,
-					      *  gboolean        default_action,
-					      *  gboolean        connect_delete,
-					      */
-
-					     ...);
-
-void        gimp_dialog_create_action_areav (GimpDialog         *dialog,
-					     va_list             args);
+void        gimp_dialog_add_buttons_valist (GimpDialog     *dialog,
+                                            va_list         args);
 
 
 G_END_DECLS

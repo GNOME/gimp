@@ -94,11 +94,6 @@ typedef struct
   gdouble ysize;
 } SolidNoiseValues;
 
-typedef struct
-{
-  gint run;
-} SolidNoiseInterface;
-
 
 /*---- Prototypes ----*/
 
@@ -109,17 +104,15 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static void    solid_noise      (GimpDrawable *drawable);
-static void    solid_noise_init (void);
-static gdouble plain_noise      (gdouble       x,
-				 gdouble       y,
-				 guint         s);
-static gdouble noise            (gdouble       x,
-				 gdouble       y);
+static void    solid_noise        (GimpDrawable *drawable);
+static void    solid_noise_init   (void);
+static gdouble plain_noise        (gdouble       x,
+                                   gdouble       y,
+                                   guint         s);
+static gdouble noise              (gdouble       x,
+                                   gdouble       y);
 
-static gint    solid_noise_dialog    (void);
-static void    dialog_ok_callback    (GtkWidget *widget,
-				      gpointer   data);
+static gint    solid_noise_dialog (void);
 
 
 /*---- Variables ----*/
@@ -140,11 +133,6 @@ static SolidNoiseValues snvals =
   1,   /* detail        */
   4.0, /* xsize         */
   4.0, /* ysize         */
-};
-
-static SolidNoiseInterface snint =
-{
-  FALSE /* run */
 };
 
 static gint        xclip, yclip;
@@ -497,25 +485,19 @@ solid_noise_dialog (void)
   GtkWidget *seed_hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("snoise", FALSE);
 
   /*  Dialog initialization  */
   dlg = gimp_dialog_new (_("Solid Noise"), "snoise",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/snoise.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, dialog_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 4, 3);
 
@@ -581,17 +563,9 @@ solid_noise_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return snint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  snint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

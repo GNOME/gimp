@@ -59,7 +59,6 @@ typedef struct
 {
   gint       channels;
   GtkObject *channel_adj[4];
-  gboolean   run;
 } NoisifyInterface;
 
 /* Declare local functions.
@@ -75,10 +74,8 @@ static void       noisify (GimpDrawable    *drawable,
                            gboolean         preview_mode);
 static gdouble    gauss   (GRand *gr);
 
-static gint       noisify_dialog                   (GimpDrawable *drawable, 
+static gint       noisify_dialog                   (GimpDrawable *drawable,
 						    gint           channels);
-static void       noisify_ok_callback              (GtkWidget     *widget,
-						    gpointer       data);
 static void       noisify_double_adjustment_update (GtkAdjustment *adjustment,
 						    gpointer       data);
 
@@ -99,8 +96,7 @@ static NoisifyVals nvals =
 static NoisifyInterface noise_int =
 {
   0,
-  { NULL, NULL, NULL, NULL },
-  FALSE     /* run */
+  { NULL, NULL, NULL, NULL }
 };
 
 static GimpRunMode       run_mode;
@@ -228,7 +224,7 @@ run (const gchar      *name,
   gimp_drawable_detach (drawable);
 }
 
-static void 
+static void
 noisify_func (const guchar *src,
 	      guchar       *dest,
 	      gint          bpp,
@@ -239,7 +235,7 @@ noisify_func (const guchar *src,
 
   if (!nvals.independent)
     noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
-  
+
   for (b = 0; b < bpp; b++)
     {
       if (nvals.noise[b] > 0.0)
@@ -260,23 +256,23 @@ noisify_func (const guchar *src,
 }
 
 static void
-noisify (GimpDrawable *drawable, 
+noisify (GimpDrawable *drawable,
 	 gboolean      preview_mode)
 {
   GRand *gr;
 
   gr = g_rand_new ();
 
-  if (preview_mode) 
+  if (preview_mode)
     gimp_fixme_preview_update (preview, noisify_func, gr);
-  else 
+  else
     gimp_rgn_iterate2 (drawable, run_mode, noisify_func, gr);
 
   g_rand_free (gr);
 }
 
 static void
-noisify_add_channel (GtkWidget *table, gint channel, gchar *name, 
+noisify_add_channel (GtkWidget *table, gint channel, gchar *name,
 		     GimpDrawable *drawable)
 {
   GtkObject *adj;
@@ -297,31 +293,25 @@ noisify_add_channel (GtkWidget *table, gint channel, gchar *name,
 }
 
 static gint
-noisify_dialog (GimpDrawable *drawable, 
+noisify_dialog (GimpDrawable *drawable,
 		gint       channels)
 {
   GtkWidget *dlg;
   GtkWidget *main_vbox;
   GtkWidget *toggle;
   GtkWidget *table;
+  gboolean   run;
 
   gimp_ui_init ("noisify", FALSE);
 
   dlg = gimp_dialog_new (_("Noisify"), "noisify",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/noisify.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, noisify_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 0);
@@ -334,9 +324,9 @@ noisify_dialog (GimpDrawable *drawable,
   gtk_widget_show (preview->widget);
   gimp_fixme_preview_fill (preview, drawable);
   noisify (drawable, TRUE); /* preview noisify */
-  
+
   /*  parameter settings  */
-  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 
+  table = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox,
 				       channels + 1, 3);
   gtk_table_set_row_spacing (GTK_TABLE (table), 0, 4);
 
@@ -351,7 +341,7 @@ noisify_dialog (GimpDrawable *drawable,
 
   noise_int.channels = channels;
 
-  if (channels == 1) 
+  if (channels == 1)
     {
       noisify_add_channel (table, 0, _("_Gray:"), drawable);
     }
@@ -359,7 +349,7 @@ noisify_dialog (GimpDrawable *drawable,
     {
       noisify_add_channel (table, 0, _("_Gray:"), drawable);
       noisify_add_channel (table, 1, _("_Alpha:"), drawable);
-    }  
+    }
   else if (channels == 3)
     {
       noisify_add_channel (table, 0, _("_Red:"), drawable);
@@ -391,10 +381,11 @@ noisify_dialog (GimpDrawable *drawable,
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return noise_int.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 /*
@@ -405,7 +396,7 @@ noisify_dialog (GimpDrawable *drawable,
  * 'The Science Of Fractal Images'. Peitgen, H.-O., and Saupe, D. eds.
  * Springer Verlag, New York, 1988.
  *
- * It would probably be better to use another algorithm, such as that 
+ * It would probably be better to use another algorithm, such as that
  * in Knuth
  */
 static gdouble
@@ -421,20 +412,11 @@ gauss (GRand *gr)
 }
 
 static void
-noisify_ok_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  noise_int.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
 noisify_double_adjustment_update (GtkAdjustment *adjustment,
 				  gpointer       data)
 {
   GimpDrawable *drawable;
-  
+
   gimp_double_adjustment_update (adjustment, data);
 
   drawable = g_object_get_data (G_OBJECT (adjustment), "drawable");

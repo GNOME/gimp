@@ -2,7 +2,7 @@
  *
  * unsharp.c 0.10 -- This is a plug-in for the GIMP 1.0
  *  http://www.stdout.org/~winston/gimp/unsharp.html
- *  (now out of date) 
+ *  (now out of date)
  *
  * Copyright (C) 1999 Winston Chang
  *                    <winstonc@cs.wisc.edu>
@@ -99,12 +99,8 @@ static void unsharp_mask         (GimpDrawable  *drawable,
 				  gdouble        radius,
 				  gdouble        amount);
 
-static void unsharp_ok_callback  (GtkWidget     *widget,
-				  gpointer       data);
 static gint unsharp_mask_dialog  (void);
 
-static gint       run_filter = FALSE;
-		
 
 /* create a few globals, set default values */
 static UnsharpMaskParams unsharp_params =
@@ -137,7 +133,7 @@ query (void)
     { GIMP_PDB_FLOAT, "amount", "Strength of effect" },
     { GIMP_PDB_FLOAT, "threshold", "Threshold" }
   };
-	
+
   /* Install a procedure in the procedure database. */
   gimp_install_procedure ("plug_in_unsharp_mask",
 			  "An unsharp mask filter",
@@ -182,7 +178,7 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  INIT_I18N (); 
+  INIT_I18N ();
 
   switch (run_mode)
     {
@@ -199,7 +195,7 @@ run (const gchar      *name,
       else
 	{
 	  unsharp_params.radius = param[3].data.d_float;
-	  unsharp_params.amount = param[4].data.d_float; 
+	  unsharp_params.amount = param[4].data.d_float;
 	  unsharp_params.threshold = param[5].data.d_int32;
 
 	  /* make sure there are legal values */
@@ -366,7 +362,7 @@ unsharp_region (GimpPixelRgn srcPR,
 
   /* find integer value of threshold */
   threshold = unsharp_params.threshold;
-	
+
   /* merge the source and destination (which currently contains
      the blurred version) images */
   for (row = 0; row < y; row++)
@@ -387,7 +383,7 @@ unsharp_region (GimpPixelRgn srcPR,
 		diff = 0;
 
 	      value = cur_row[u*bytes+v] + amount * diff;
-				
+
 	      if (value < 0) dest_row[u*bytes+v] =0;
 	      else if (value > 255) dest_row[u*bytes+v] = 255;
 	      else  dest_row[u*bytes+v] = value;
@@ -504,7 +500,7 @@ blur_line (gdouble *ctable,
 	      *(dest_col_p++) = ROUND (sum);
 	    }
 	}
-	
+
       /* for the edge condition , we only use available info, and scale to one */
       for (; row < y; row++)
 	{
@@ -525,7 +521,7 @@ blur_line (gdouble *ctable,
     }
 }
 
-/* generates a 1-D convolution matrix to be used for each pass of 
+/* generates a 1-D convolution matrix to be used for each pass of
  * a two-pass gaussian blur.  Returns the length of the matrix.
  */
 static gint
@@ -538,7 +534,7 @@ gen_convolve_matrix (gdouble   radius,
   gint i,j;
   gdouble std_dev;
   gdouble sum;
-	
+
   /* we want to generate a matrix that goes out a certain radius
    * from the center, so we have to go out ceil(rad-0.5) pixels,
    * inlcuding the center pixel.  Of course, that's only in one direction,
@@ -550,7 +546,7 @@ gen_convolve_matrix (gdouble   radius,
    * standard deviation * 2.  It's a little confusing.
    */
   radius = fabs(radius) + 1.0;
-	
+
   std_dev = radius;
   radius = std_dev * 2;
 
@@ -575,8 +571,8 @@ gen_convolve_matrix (gdouble   radius,
       sum = 0;
       for (j = 1; j <= 50; j++)
 	{
-	  if ( base_x+0.02*j <= radius ) 
-	    sum += exp (-(base_x+0.02*j)*(base_x+0.02*j) / 
+	  if ( base_x+0.02*j <= radius )
+	    sum += exp (-(base_x+0.02*j)*(base_x+0.02*j) /
 			(2*std_dev*std_dev));
 	}
       cmatrix[i] = sum/50;
@@ -586,7 +582,7 @@ gen_convolve_matrix (gdouble   radius,
   for (i=0; i<=matrix_length/2; i++) {
     cmatrix[i] = cmatrix[matrix_length-1-i];
   }
-	
+
   /* find center val -- calculate an odd number of quanta to make it symmetric,
    * even if the center point is weighted slightly higher than others. */
   sum = 0;
@@ -596,7 +592,7 @@ gen_convolve_matrix (gdouble   radius,
 		  (2*std_dev*std_dev));
     }
   cmatrix[matrix_length/2] = sum/51;
-	
+
   /* normalize the distribution by scaling the total sum to one */
   sum=0;
   for (i=0; i<matrix_length; i++) sum += cmatrix[i];
@@ -633,30 +629,23 @@ gen_lookup_table (gdouble *cmatrix,
 }
 
 static gint
-unsharp_mask_dialog (void) 
+unsharp_mask_dialog (void)
 {
   GtkWidget *window;
   GtkWidget *table;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("unsharp", TRUE);
 
   window = gimp_dialog_new (_("Unsharp Mask"), "unsharp",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/unsharp.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    GTK_STOCK_OK, unsharp_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
-
-			    NULL);
-
-  g_signal_connect (window, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                            NULL);
 
   table = gimp_parameter_settings_new (GTK_DIALOG (window)->vbox, 3, 3);
 
@@ -689,17 +678,9 @@ unsharp_mask_dialog (void)
 
   gtk_widget_show (window);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK);
 
-  return run_filter;
-}
+  gtk_widget_destroy (window);
 
-static void
-unsharp_ok_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  run_filter = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

@@ -367,17 +367,12 @@ static void    CML_set_or_randomize_seed_callback  (GtkWidget *widget,
 static void    CML_copy_parameters_callback        (GtkWidget *widget,
 						    gpointer   data);
 static void    CML_initial_value_sensitives_update (void);
-static void    CML_explorer_ok_callback            (GtkWidget *widget,
-						    gpointer   data);
-
 
 static void    CML_save_to_file_callback   (GtkWidget   *widget,
                                             gpointer     data);
 static void    CML_execute_save_to_file    (GtkWidget   *widget,
                                             gpointer     data);
 static gint    force_overwrite             (const gchar *filename);
-static void    CML_overwrite_ok_callback   (GtkWidget   *widget,
-                                            gpointer     data);
 
 static void    CML_preview_update_callback (GtkWidget   *widget,
 					    gpointer     data);
@@ -399,16 +394,6 @@ GimpPlugInInfo PLUG_IN_INFO =
   NULL,  /* quit_proc  */
   query, /* query_proc */
   run,   /* run_proc   */
-};
-
-typedef struct
-{
-  gboolean  run;
-} Interface;
-
-static Interface INTERFACE =
-{
-  FALSE
 };
 
 static GtkWidget   *preview;
@@ -438,7 +423,6 @@ static gint     copy_destination = 0;
 static gint     selective_load_source = 0;
 static gint     selective_load_destination = 0;
 static gint     CML_preview_defer = FALSE;
-static gint     overwritable = FALSE;
 
 static gdouble *mem_chank0 = NULL;
 static gint     mem_chank0_size = 0;
@@ -1158,24 +1142,18 @@ CML_explorer_dialog (void)
   GtkWidget *pframe;
   GtkWidget *hseparator;
   GtkWidget *button;
+  gboolean   run;
 
   gimp_ui_init (SHORT_NAME, TRUE);
 
   dlg = gimp_dialog_new (_("Coupled-Map-Lattice Explorer"), "cml_explorer",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/cml_explorer.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, CML_explorer_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   CML_preview_defer = TRUE;
 
@@ -1537,15 +1515,15 @@ CML_explorer_dialog (void)
    *  should be shown before making preview in it.
    */
   gtk_widget_show (dlg);
-  gdk_flush ();
 
   CML_preview_defer = FALSE;
   preview_update ();
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return INTERFACE.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 static GtkWidget *
@@ -1897,18 +1875,12 @@ function_graph_new (GtkWidget *widget,
   CML_PARAM *param = (CML_PARAM *) *((gpointer *) data + 1);
 
   dlg = gimp_dialog_new (_("Graph of the current settings"), "cml_explorer",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/cml_explorer.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_OK, gtk_widget_destroy,
-			 NULL, 1, NULL, TRUE, TRUE,
+			 GTK_STOCK_OK, GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   frame = gtk_frame_new (_("The Graph"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
@@ -1969,8 +1941,9 @@ function_graph_new (GtkWidget *widget,
   gtk_widget_show (preview);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  gtk_dialog_run (GTK_DIALOG (dlg));
+
+  gtk_widget_destroy (dlg);
 }
 
 static void
@@ -2047,15 +2020,6 @@ CML_initial_value_sensitives_update (void)
     if (random_sensitives[i].widget)
       gtk_widget_set_sensitive (random_sensitives[i].widget,
 				flag1 & (random_sensitives[i].logic == flag2));
-}
-
-static void
-CML_explorer_ok_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  INTERFACE.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void
@@ -2231,23 +2195,16 @@ force_overwrite (const gchar *filename)
   GtkWidget *label;
   GtkWidget *hbox;
   gchar     *buffer;
-  gint       tmp;
+  gboolean   overwrite;
 
   dlg = gimp_dialog_new (_("CML File Operation Warning"), "cml_explorer",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/cml_explorer.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, FALSE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, TRUE, TRUE,
-			 GTK_STOCK_OK, CML_overwrite_ok_callback,
-			 NULL, NULL, NULL, FALSE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 6);
@@ -2263,22 +2220,11 @@ force_overwrite (const gchar *filename)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  overwrite = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  tmp = overwritable;
-  overwritable = FALSE;
+  gtk_widget_destroy (dlg);
 
-  return tmp;
-}
-
-static void
-CML_overwrite_ok_callback (GtkWidget *widget,
-			   gpointer   data)
-{
-  overwritable = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return overwrite;
 }
 
 /*  parameter file loading functions  */

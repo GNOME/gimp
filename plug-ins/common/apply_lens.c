@@ -24,7 +24,7 @@
  */
 
 /* Version 0.1:
- * 
+ *
  * First release. No known serious bugs, and basically does what you want.
  * All fancy features postponed until the next release, though. :)
  *
@@ -96,15 +96,6 @@ static LensValues lvals =
   TRUE, FALSE, FALSE
 };
 
-typedef struct
-{
-  gboolean run;
-} LensInterface;
-
-static LensInterface bint =
-{
-  FALSE  /*  run  */
-};
 
 MAIN ()
 
@@ -142,10 +133,10 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam values[1];
-  GimpDrawable *drawable;
-  GimpRunMode run_mode;
-  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  static GimpParam   values[1];
+  GimpDrawable      *drawable;
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
 
@@ -153,10 +144,10 @@ run (const gchar      *name,
 
   values[0].type = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
-  
+
   *nreturn_vals = 1;
   *return_vals = values;
-  
+
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   switch(run_mode)
@@ -186,7 +177,7 @@ run (const gchar      *name,
     case GIMP_RUN_WITH_LAST_VALS:
       gimp_get_data ("plug_in_applylens", &lvals);
       break;
-    
+
     default:
       break;
     }
@@ -201,7 +192,7 @@ run (const gchar      *name,
     gimp_set_data ("plug_in_applylens", &lvals, sizeof (LensValues));
 
   values[0].data.d_status = status;
-  
+
   gimp_drawable_detach (drawable);
 }
 
@@ -258,7 +249,7 @@ drawlens (GimpDrawable *drawable)
   guchar   alphaval;
 
   gimp_palette_get_background (&background);
-  gimp_rgb_get_uchar (&background, 
+  gimp_rgb_get_uchar (&background,
 		      &bgr_red, &bgr_green, &bgr_blue);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
@@ -345,7 +336,7 @@ drawlens (GimpDrawable *drawable)
 		}
 	    }
 	}
-      
+
       if (((gint) (regionwidth-col) % 5) == 0)
 	gimp_progress_update ((gdouble) col / (gdouble) regionwidth);
     }
@@ -359,15 +350,6 @@ drawlens (GimpDrawable *drawable)
   gimp_drawable_update (drawable->drawable_id, x1, y1, (x2 - x1), (y2 - y1));
 }
 
-static void
-lens_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  bint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gint
 lens_dialog (GimpDrawable *drawable)
 {
@@ -379,25 +361,18 @@ lens_dialog (GimpDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *spinbutton;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init ("apply_lens", FALSE);
 
   dlg = gimp_dialog_new (_("Lens Effect"), "apply_lens",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/apply_lens.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, lens_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   vbox = gimp_parameter_settings_new (GTK_DIALOG (dlg)->vbox, 0, 0);
 
@@ -463,8 +438,9 @@ lens_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return bint.run;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }

@@ -28,7 +28,7 @@
 /*                       plus better OS/2 code    */
 /*                       by njl195@zepler.org.uk  */
 
-/* 
+/*
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -111,7 +111,7 @@ query (void)
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },
     { GIMP_PDB_STRING,   "raw_filename", "The name entered" },
   };
- 
+
   gimp_install_procedure ("file_bmp_load",
                           "Loads files of Windows BMP file format",
                           "Loads files of Windows BMP file format",
@@ -153,13 +153,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam      values[2];
-  GimpRunMode           run_mode;
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  gint32                image_ID;
-  gint32                drawable_ID;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
-  
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
+
   run_mode = param[0].data.d_int32;
 
   INIT_I18N ();
@@ -209,13 +209,13 @@ run (const gchar      *name,
       image_ID    = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
 	  gimp_ui_init ("bmp", FALSE);
-	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "BMP",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
 				       GIMP_EXPORT_CAN_HANDLE_INDEXED));

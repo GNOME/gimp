@@ -271,41 +271,24 @@ deinterlace (GimpDrawable *drawable)
   g_free (dest);
 }
 
-gboolean run_flag = FALSE;
-
-static void
-deinterlace_ok_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  run_flag = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gint
 deinterlace_dialog (void)
 {
   GtkWidget *dlg;
   GtkWidget *vbox;
   GtkWidget *frame;
+  gboolean   run;
 
   gimp_ui_init ("deinterlace", FALSE);
 
   dlg = gimp_dialog_new (_("Deinterlace"), "deinterlace",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/deinterlace.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, deinterlace_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -330,8 +313,9 @@ deinterlace_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return run_flag;
+  gtk_widget_destroy (dlg);
+
+  return run;
 }

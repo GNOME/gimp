@@ -45,28 +45,21 @@ typedef struct
   gdouble spread_amount_y;
 } SpreadValues;
 
-typedef struct
-{
-  GtkWidget *size;
-  gboolean   run;
-} SpreadInterface;
-
 
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (const gchar      *name,
-			 gint              nparams,
-			 const GimpParam  *param,
-			 gint             *nreturn_vals,
-			 GimpParam       **return_vals);
+static void      query         (void);
+static void      run           (const gchar      *name,
+                                gint              nparams,
+                                const GimpParam  *param,
+                                gint             *nreturn_vals,
+                                GimpParam       **return_vals);
 
-static void      spread (GimpDrawable *drawable);
+static void      spread        (GimpDrawable     *drawable);
 
-static gint      spread_dialog          (gint32        image_ID,
-					 GimpDrawable *drawable);
-static void      spread_ok_callback     (GtkWidget    *widget,
-				         gpointer      data);
+static gint      spread_dialog (gint32            image_ID,
+                                GimpDrawable     *drawable);
+
 
 /***** Local vars *****/
 
@@ -84,10 +77,6 @@ static SpreadValues spvals =
   5   /*  vertical spread amount    */
 };
 
-static SpreadInterface pint =
-{
-  FALSE   /*  run  */
-};
 
 /***** Functions *****/
 
@@ -334,30 +323,25 @@ spread_dialog (gint32        image_ID,
   GimpUnit   unit;
   gdouble    xres;
   gdouble    yres;
+  gboolean   run;
 
   gimp_ui_init ("spread", FALSE);
 
   dlg = gimp_dialog_new (_("Spread"), "spread",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/spread.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, spread_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Spread Amount"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);
@@ -379,30 +363,21 @@ spread_dialog (gint32        image_ID,
 			       0, 0);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
-
-  pint.size = size;
-
   gtk_widget_show (size);
-  gtk_widget_show (frame);
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return pint.run;
-}
+  if (run)
+    {
+      spvals.spread_amount_x =
+        gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 0);
+      spvals.spread_amount_y =
+        gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (size), 1);
+    }
 
-static void
-spread_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  spvals.spread_amount_x =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.size), 0);
-  spvals.spread_amount_y =
-    gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (pint.size), 1);
+  gtk_widget_destroy (dlg);
 
-  pint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

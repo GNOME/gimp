@@ -7,7 +7,7 @@
 
 /* Alexander.Schulz@stud.uni-karlsruhe.de			 */
 
-/* 
+/*
  * The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
@@ -36,7 +36,7 @@
 #ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
- 
+
 #include <gtk/gtk.h>
 
 #include <libgimp/gimp.h>
@@ -46,28 +46,16 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static gint    cur_progress;
-static gint    max_progress;
-
-typedef struct
-{
-  gint run;
-} BMPSaveInterface;
-
-static BMPSaveInterface gsint =
-{
-  FALSE   /*  run  */
-};
-
-static gint encoded = 0;
+static gint cur_progress = 0;
+static gint max_progress = 0;
+static gint encoded      = 0;
 
 
-static gint  save_dialog      (void);
-static void  save_ok_callback (GtkWidget *widget,
-			       gpointer   data);
+static gint  save_dialog (void);
 
-static void 
-FromL (gint32  wert, 
+
+static void
+FromL (gint32  wert,
        guchar *bopuffer)
 {
   bopuffer[0] = (wert & 0x000000ff)>>0x00;
@@ -76,19 +64,19 @@ FromL (gint32  wert,
   bopuffer[3] = (wert & 0xff000000)>>0x18;
 }
 
-static void  
-FromS (gint16  wert, 
+static void
+FromS (gint16  wert,
        guchar *bopuffer)
 {
   bopuffer[0] = (wert & 0x00ff)>>0x00;
   bopuffer[1] = (wert & 0xff00)>>0x08;
 }
 
-static void 
-WriteColorMap (FILE *f, 
-	       gint  red[MAXCOLORS], 
+static void
+WriteColorMap (FILE *f,
+	       gint  red[MAXCOLORS],
 	       gint  green[MAXCOLORS],
-	       gint  blue[MAXCOLORS], 
+	       gint  blue[MAXCOLORS],
 	       gint  size)
 {
   gchar trgb[4];
@@ -127,7 +115,7 @@ WriteBMP (const gchar *filename,
   gint i;
 
   /* first: can we save this image? */
-  
+
   drawable = gimp_drawable_get(drawable_ID);
   drawable_type = gimp_drawable_type(drawable_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable,
@@ -171,7 +159,7 @@ WriteBMP (const gchar *filename,
 	BitsPerPixel = 4;
       else
 	BitsPerPixel = 1;
-      
+
       for (i = 0; i < colors; i++)
 	{
 	  Red[i]   = *cmap++;
@@ -192,7 +180,7 @@ WriteBMP (const gchar *filename,
 	return GIMP_PDB_CANCEL;
     }
 
-  /* Let's take some file */  
+  /* Let's take some file */
   outfile = fopen (filename, "wb");
   if (!outfile)
     {
@@ -234,7 +222,7 @@ WriteBMP (const gchar *filename,
   Bitmap_File_Head.zzHotX    = 0;
   Bitmap_File_Head.zzHotY    = 0;
   Bitmap_File_Head.bfOffs    = 0x36 + MapSize;
-  Bitmap_File_Head.biSize    = 40;		
+  Bitmap_File_Head.biSize    = 40;
 
   Bitmap_Head.biWidth  = cols;
   Bitmap_Head.biHeight = rows;
@@ -274,19 +262,19 @@ WriteBMP (const gchar *filename,
       }
   }
 
-  if (BitsPerPixel < 24) 
+  if (BitsPerPixel < 24)
     Bitmap_Head.biClrUsed = colors;
-  else 
+  else
     Bitmap_Head.biClrUsed = 0;
 
   Bitmap_Head.biClrImp = Bitmap_Head.biClrUsed;
-  
+
 #ifdef DEBUG
   printf("\nSize: %u, Colors: %u, Bits: %u, Width: %u, Height: %u, Comp: %u, Zeile: %u\n",
          (int)Bitmap_File_Head.bfSize,(int)Bitmap_Head.biClrUsed,Bitmap_Head.biBitCnt,(int)Bitmap_Head.biWidth,
          (int)Bitmap_Head.biHeight, (int)Bitmap_Head.biCompr,SpZeile);
 #endif
-  
+
   /* And now write the header and the colormap (if any) to disk */
 
   Write (outfile, "BM", 2);
@@ -314,7 +302,7 @@ WriteBMP (const gchar *filename,
   WriteColorMap (outfile, Red, Green, Blue, MapSize);
 
   /* After that is done, we write the image ... */
-  
+
   WriteImage (outfile,
 	      pixels, cols, rows,
 	      encoded, channels, BitsPerPixel, SpZeile, MapSize);
@@ -328,15 +316,15 @@ WriteBMP (const gchar *filename,
   return GIMP_PDB_SUCCESS;
 }
 
-void 
-WriteImage (FILE   *f, 
-	    guchar *src, 
-	    gint    width, 
+void
+WriteImage (FILE   *f,
+	    guchar *src,
+	    gint    width,
 	    gint    height,
-	    gint    encoded, 
-	    gint    channels, 
-	    gint    bpp, 
-	    gint    spzeile, 
+	    gint    encoded,
+	    gint    channels,
+	    gint    bpp,
+	    gint    spzeile,
 	    gint    MapSize)
 {
   guchar buf[16]={0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0};
@@ -549,23 +537,16 @@ save_dialog (void)
   GtkWidget *toggle;
   GtkWidget *frame;
   GtkWidget *vbox;
-  
+  gboolean   run;
+
   dlg = gimp_dialog_new (_("Save as BMP"), "bmp",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/bmp.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Save Options"));
@@ -589,17 +570,9 @@ save_dialog (void)
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return gsint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-save_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-{
-  gsint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

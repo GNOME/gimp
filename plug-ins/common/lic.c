@@ -139,7 +139,7 @@ poke (gint      x,
       GimpRGB *color)
 {
   static guchar data[4];
-  
+
   data[0] = (guchar) (color->r * 255.0);
   data[1] = (guchar) (color->g * 255.0);
   data[2] = (guchar) (color->b * 255.0);
@@ -407,7 +407,7 @@ getpixel (GimpRGB *p,
 {
   register gint x1, y1, x2, y2;
   static GimpRGB pp[4];
- 
+
   x1 = (gint)u;
   y1 = (gint)v;
 
@@ -415,7 +415,7 @@ getpixel (GimpRGB *p,
     x1 = width - (-x1 % width);
   else
     x1 = x1 % width;
-  
+
   if (y1 < 0)
     y1 = height - (-y1 % height);
   else
@@ -423,7 +423,7 @@ getpixel (GimpRGB *p,
 
   x2 = (x1 + 1) % width;
   y2 = (y1 + 1) % height;
- 
+
   pp[0] = peek (x1, y1);
   pp[1] = peek (x2, y1);
   pp[2] = peek (x1, y2);
@@ -580,8 +580,8 @@ compute_lic (gboolean rotate)
 	  /* Rotate if needed */
 	  if (rotate)
 	    {
-	      tmp = vy; 
-	      vy = -vx; 
+	      tmp = vy;
+	      vy = -vx;
 	      vx = tmp;
 	    }
 
@@ -667,16 +667,6 @@ compute_image (void)
 /* Below is only UI stuff */
 /**************************/
 
-static void
-ok_button_clicked (GtkWidget *widget,
-		   gpointer   data)
-{
-  gtk_widget_hide (GTK_WIDGET (data));
-  gdk_flush ();
-  compute_image ();
-  gtk_main_quit ();
-}
-
 static gint
 effect_image_constrain (gint32	 image_id,
 			gint32   drawable_id,
@@ -695,7 +685,7 @@ effect_image_callback (gint32   id,
   licvals.effect_image_id = id;
 }
 
-static void
+static gboolean
 create_main_dialog (void)
 {
   GtkWidget *main_vbox;
@@ -708,16 +698,18 @@ create_main_dialog (void)
   GtkWidget *menu;
   GtkObject *scale_data;
   gint       row;
-  
+  gboolean   run;
+
+  gimp_ui_init ("lic", TRUE);
+
   dialog = gimp_dialog_new (_("Van Gogh (LIC)"), "lic",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/lic.html",
 			    GTK_WIN_POS_MOUSE,
 			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_main_quit,
-			    NULL, NULL, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, ok_button_clicked,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
 
@@ -843,13 +835,13 @@ create_main_dialog (void)
                     &licvals.maxv);
 
   gtk_widget_show (dialog);
+
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
+
+  return run;
 }
-
-/******************/
-/* Implementation */
-/******************/
-
-static void lic_interactive    (GimpDrawable *drawable);
 
 /*************************************/
 /* Set parameters to standard values */
@@ -926,7 +918,7 @@ run (const gchar      *name,
 
   /* Get the specified drawable */
   /* ========================== */
-  
+
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   if (status == GIMP_PDB_SUCCESS)
@@ -944,7 +936,11 @@ run (const gchar      *name,
           switch (run_mode)
             {
               case GIMP_RUN_INTERACTIVE:
-                lic_interactive (drawable);
+                image_setup (drawable, TRUE);
+
+                if (create_main_dialog ())
+                  compute_image ();
+
                 gimp_set_data ("plug_in_lic", &licvals, sizeof (LicValues));
               break;
               case GIMP_RUN_WITH_LAST_VALS:
@@ -970,27 +966,5 @@ GimpPlugInInfo PLUG_IN_INFO =
   query, /* query_proc */
   run,   /* run_proc   */
 };
-
-static void
-lic_interactive (GimpDrawable *drawable)
-{
-  gimp_ui_init ("lic", TRUE);
-
-  /* Create application window */
-  /* ========================= */
-
-  create_main_dialog ();
-
-  /* Prepare images */
-  /* ============== */
-
-  image_setup (drawable, TRUE);
-  
-  /* Gtk main event loop */
-  /* =================== */
-  
-  gtk_main ();
-  gdk_flush ();
-}
 
 MAIN ()

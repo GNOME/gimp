@@ -43,11 +43,13 @@
 #include "gimp-intl.h"
 
 
+#define RESPONSE_RESET 1
+
+
 /*  local functions  */
 
-static void stroke_dialog_reset_callback      (GtkWidget    *widget,
-                                               GtkWidget    *dialog);
-static void stroke_dialog_ok_callback         (GtkWidget    *widget,
+static void stroke_dialog_response            (GtkWidget    *widget,
+                                               gint          response_id,
                                                GtkWidget    *dialog);
 static void stroke_dialog_paint_info_selected (GtkWidget    *menu,
                                                GimpViewable *viewable,
@@ -99,22 +101,21 @@ stroke_dialog_new (GimpItem    *item,
                               gimp_standard_help_func,
                               help_id,
 
-                              GIMP_STOCK_RESET, stroke_dialog_reset_callback,
-                              NULL, NULL, NULL, FALSE, FALSE,
-
-                              GTK_STOCK_CANCEL, gtk_widget_destroy,
-                              NULL, 1, NULL, FALSE, TRUE,
-
-                              GTK_STOCK_OK, stroke_dialog_ok_callback,
-                              NULL, NULL, NULL, TRUE, FALSE,
+                              GIMP_STOCK_RESET, RESPONSE_RESET,
+                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                               NULL);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (stroke_dialog_response),
+                    dialog);
 
   g_object_set_data (G_OBJECT (dialog), "gimp-item", item);
   g_object_set_data (G_OBJECT (dialog), "gimp-stroke-options", options);
 
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
@@ -213,61 +214,69 @@ stroke_dialog_new (GimpItem    *item,
 /*  private functions  */
 
 static void
-stroke_dialog_reset_callback (GtkWidget  *widget,
-                              GtkWidget  *dialog)
+stroke_dialog_response (GtkWidget  *widget,
+                        gint        response_id,
+                        GtkWidget  *dialog)
 {
-  GimpItem     *item;
-  GimpImage    *image;
-  GObject      *options;
-  GtkWidget    *button;
-  GtkWidget    *menu;
-  GimpToolInfo *tool_info;
-
-  item    = g_object_get_data (G_OBJECT (dialog), "gimp-item");
-  options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
-  button  = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-button");
-  menu    = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");
-
-  image = gimp_item_get_image (item);
-
-  tool_info = gimp_context_get_tool (gimp_get_user_context (image->gimp));
-
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
-  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu),
-                                   GIMP_VIEWABLE (tool_info->paint_info));
-
-  gimp_config_reset (GIMP_CONFIG (options));
-}
-
-static void
-stroke_dialog_ok_callback (GtkWidget  *widget,
-                           GtkWidget  *dialog)
-{
-  GimpItem     *item;
-  GimpDrawable *drawable;
-  GtkWidget    *button;
-  GimpObject   *options;
+  GimpItem  *item;
+  GtkWidget *button;
+  GimpImage *image;
 
   item   = g_object_get_data (G_OBJECT (dialog), "gimp-item");
   button = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-button");
 
-  drawable = gimp_image_active_drawable (gimp_item_get_image (item));
+  image = gimp_item_get_image (item);
 
-  if (! drawable)
+  switch (response_id)
     {
-      g_message (_("There is no active layer or channel to stroke to"));
-      return;
+    case RESPONSE_RESET:
+      {
+        GObject      *options;
+        GtkWidget    *menu;
+        GimpToolInfo *tool_info;
+
+        options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
+        menu    = g_object_get_data (G_OBJECT (dialog), "gimp-tool-menu");
+
+        tool_info = gimp_context_get_tool (gimp_get_user_context (image->gimp));
+
+        gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
+        gimp_container_menu_select_item (GIMP_CONTAINER_MENU (menu),
+                                         GIMP_VIEWABLE (tool_info->paint_info));
+
+        gimp_config_reset (GIMP_CONFIG (options));
+      }
+      break;
+
+    case GTK_RESPONSE_OK:
+      {
+        GimpDrawable *drawable;
+        GimpObject   *options;
+
+        drawable = gimp_image_active_drawable (image);
+
+        if (! drawable)
+          {
+            g_message (_("There is no active layer or channel to stroke to"));
+            return;
+          }
+
+        if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+          options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
+        else
+          options = g_object_get_data (G_OBJECT (dialog), "gimp-paint-info");
+
+        gimp_item_stroke (item, drawable, options);
+        gimp_image_flush (image);
+
+        gtk_widget_destroy (dialog);
+      }
+      break;
+
+    default:
+      gtk_widget_destroy (dialog);
+      break;
     }
-
-  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
-    options = g_object_get_data (G_OBJECT (dialog), "gimp-stroke-options");
-  else
-    options = g_object_get_data (G_OBJECT (dialog), "gimp-paint-info");
-
-  gimp_item_stroke (item, drawable, options);
-  gimp_image_flush (gimp_item_get_image (item));
-
-  gtk_widget_destroy (dialog);
 }
 
 static void

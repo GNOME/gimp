@@ -53,7 +53,8 @@ static void   pattern_select_change_callbacks (PatternSelect *psp,
 static void   pattern_select_pattern_changed  (GimpContext   *context,
                                                GimpPattern   *pattern,
                                                PatternSelect *psp);
-static void   pattern_select_close_callback   (GtkWidget     *widget,
+static void   pattern_select_response         (GtkWidget     *widget,
+                                               gint           response_id,
                                                PatternSelect *psp);
 
 
@@ -114,15 +115,17 @@ pattern_select_new (Gimp        *gimp,
 
   /*  the shell  */
   psp->shell = gimp_dialog_new (title, "pattern_selection",
+                                NULL, 0,
                                 gimp_standard_help_func,
                                 GIMP_HELP_PATTERN_DIALOG,
-                                GTK_WIN_POS_MOUSE,
-                                FALSE, TRUE, FALSE,
 
-                                GTK_STOCK_CLOSE, pattern_select_close_callback,
-                                psp, NULL, NULL, TRUE, TRUE,
+                                GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
                                 NULL);
+
+  g_signal_connect (psp->shell, "response",
+                    G_CALLBACK (pattern_select_response),
+                    psp);
 
   /*  the pattern grid  */
   psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_GRID,
@@ -136,7 +139,7 @@ pattern_select_new (Gimp        *gimp,
                                         6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2),
                                         6 * (GIMP_PREVIEW_SIZE_MEDIUM + 2));
 
-  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (psp->view), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), psp->view);
   gtk_widget_show (psp->view);
 
@@ -198,7 +201,7 @@ pattern_select_dialogs_check (void)
       if (psp->callback_name)
         {
           if (! procedural_db_lookup (psp->context->gimp, psp->callback_name))
-            pattern_select_close_callback (NULL, psp);
+            pattern_select_response (NULL, GTK_RESPONSE_CLOSE, psp);
         }
     }
 }
@@ -266,8 +269,9 @@ pattern_select_pattern_changed (GimpContext   *context,
 }
 
 static void
-pattern_select_close_callback (GtkWidget     *widget,
-			       PatternSelect *psp)
+pattern_select_response (GtkWidget     *widget,
+                         gint           response_id,
+                         PatternSelect *psp)
 {
   pattern_select_change_callbacks (psp, TRUE);
   pattern_select_free (psp);

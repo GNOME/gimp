@@ -577,16 +577,6 @@ run (const gchar      *name,
 
 static GtkWidget *preview[9];
 static ExpInfo   info[9];
-static gint       result = FALSE;
-
-static void
-dialog_ok (GtkWidget *widget,
-	   gpointer   data)
-{
-  result = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
 
 static void
 dialog_new_variations (GtkWidget *widget,
@@ -805,24 +795,18 @@ dialog_create (void)
   GtkWidget *button;
   GtkWidget *table;
   gint       i;
+  gboolean   run;
 
   gimp_ui_init ("gqbist", TRUE);
 
   dialog = gimp_dialog_new (_("G-Qbist"), "gqbist",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/gqbist.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, dialog_ok,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -892,11 +876,12 @@ dialog_create (void)
   dialog_update_previews (NULL, NULL);
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  if (result)
+  if (run)
     qbist_info.info = info[0];
 
-  return result;
+  gtk_widget_destroy (dialog);
+
+  return run;
 }

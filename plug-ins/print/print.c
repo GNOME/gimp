@@ -239,7 +239,7 @@ run (const gchar      *name,
   gchar		*tmpfile;	/* temp filename */
 #endif
   gint32         drawable_ID;   /* drawable ID */
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;    /* return value of gimp_export_image() */
+  GimpExportReturn export = GIMP_EXPORT_CANCEL;    /* return value of gimp_export_image() */
   gint		ppid = getpid (); /* PID of plugin */
   gint		opid; 	        /* PID of output process */
   gint          cpid = 0;	/* PID of control/monitor process */

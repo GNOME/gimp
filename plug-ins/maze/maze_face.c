@@ -75,10 +75,10 @@ gchar buffer[BUFSIZE];
 gint        maze_dialog         (void);
 
 static void maze_msg            (gchar     *msg);
-static void maze_ok_callback    (GtkWidget *widget,
+static void maze_response       (GtkWidget *widget,
+                                 gint       response_id,
 				 gpointer   data);
-static void maze_help           (GtkWidget *widget,
-				 gpointer   foo);
+static void maze_help           (void);
 #ifdef SHOW_PRNG_PRIVATES
 static void maze_entry_callback (GtkWidget *widget,
 				 gpointer   data);
@@ -183,21 +183,18 @@ maze_dialog (void)
   gimp_ui_init ("maze", FALSE);
 
   dlg = gimp_dialog_new (_(MAZE_TITLE), "maze",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/maze.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 _("Help"), maze_help,
-			 NULL, NULL, NULL, FALSE, FALSE,
-
-			 GTK_STOCK_OK, maze_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_HELP,   GTK_RESPONSE_HELP,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (maze_response),
+                    NULL);
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -573,8 +570,7 @@ height_width_callback (gint        width,
 }
 
 static void
-maze_help (GtkWidget *widget,
-	   gpointer   foo)
+maze_help (void)
 {
   gchar           *proc_blurb;
   gchar           *proc_help;
@@ -623,12 +619,22 @@ maze_msg (gchar *msg)
 }
 
 static void
-maze_ok_callback (GtkWidget *widget,
-		  gpointer   data)
+maze_response (GtkWidget *widget,
+               gint       response_id,
+               gpointer   data)
 {
-  maze_run = TRUE;
+  switch (response_id)
+    {
+    case GTK_RESPONSE_HELP:
+      maze_help ();
+      break;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
+    case GTK_RESPONSE_OK:
+      maze_run = TRUE;
+
+    default:
+      gtk_widget_destroy (widget);
+    }
 }
 
 #ifdef SHOW_PRNG_PRIVATES

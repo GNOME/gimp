@@ -42,7 +42,8 @@
 #include "gimp-intl.h"
 
 
-#define SB_WIDTH 10
+#define RESIZE_RESPONSE_RESET 1
+#define SB_WIDTH              10
 
 
 typedef struct _ResizePrivate ResizePrivate;
@@ -50,6 +51,9 @@ typedef struct _ResizePrivate ResizePrivate;
 struct _ResizePrivate
 {
   Resize     resize;
+
+  GtkCallback  ok_callback;
+  gpointer     ok_data;
 
   /*  size frame  */
   GtkWidget *orig_width_label;
@@ -85,12 +89,13 @@ static gint  resize_bound_off_y          (Resize    *resize,
 					  gint       off_y);
 static void  orig_labels_update          (GtkWidget *widget,
 					  gpointer   data);
-static void  reset_callback              (GtkWidget *widget,
-					  gpointer   data);
+static void  response_callback           (GtkWidget *widget,
+                                          gint       response_id,
+					  Resize    *resize);
 static void  size_callback               (GtkWidget *widget,
-					  gpointer   data);
+					  Resize    *resize);
 static void  ratio_callback              (GtkWidget *widget,
-					  gpointer   data);
+					  Resize    *resize);
 static void  size_update                 (Resize    *widget,
 					  gdouble    width,
 					  gdouble    height,
@@ -140,13 +145,16 @@ resize_widget_new (GimpViewable *viewable,
 
   g_return_val_if_fail (GIMP_IS_ITEM (viewable) ||
                         GIMP_IS_IMAGE (viewable), NULL);
+  g_return_val_if_fail (ok_cb != NULL, NULL);
 
   private = g_new0 (ResizePrivate, 1);
 
-  private->old_width  = width;
-  private->old_height = height;
-  private->old_res_x  = resolution_x;
-  private->old_res_y  = resolution_y;
+  private->ok_callback = (GtkCallback) ok_cb;
+  private->ok_data     = user_data;
+  private->old_width   = width;
+  private->old_height  = height;
+  private->old_res_x   = resolution_x;
+  private->old_res_y   = resolution_y;
 
   resize = (Resize *) private;
 
@@ -237,16 +245,15 @@ resize_widget_new (GimpViewable *viewable,
                                 stock_id, window_desc,
                                 gimp_standard_help_func, help_page,
 
-                                GIMP_STOCK_RESET, reset_callback,
-                                resize, NULL, NULL, FALSE, FALSE,
-
-                                GTK_STOCK_CANCEL, gtk_widget_destroy,
-                                NULL, 1, NULL, FALSE, TRUE,
-
-                                GTK_STOCK_OK, ok_cb,
-                                user_data, NULL, NULL, TRUE, FALSE,
+                                GIMP_STOCK_RESET, RESIZE_RESPONSE_RESET,
+                                GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                                 NULL);
+
+    g_signal_connect (resize->resize_shell, "response",
+                      G_CALLBACK (response_callback),
+                      resize);
 
     g_object_weak_ref (G_OBJECT (resize->resize_shell),
 		       (GWeakNotify) g_free,
@@ -257,7 +264,7 @@ resize_widget_new (GimpViewable *viewable,
 
   /*  the main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (resize->resize_shell)->vbox),
 		     main_vbox);
 
@@ -847,46 +854,53 @@ offset_center_clicked (GtkWidget *widget,
 }
 
 static void
-reset_callback (GtkWidget *widget,
-                gpointer   data)
+response_callback (GtkWidget *widget,
+                   gint       response_id,
+                   Resize    *resize)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizePrivate *private = (ResizePrivate *) resize;
 
-  resize  = (Resize *) data;
-  private = (ResizePrivate *)resize;
-
-  /* restore size and ratio settings */
-  size_update (resize, private->old_width, private->old_height, 1.0, 1.0);
-
-  if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
+  switch (response_id)
     {
-      /* restore resolution settings */
-      resolution_update (resize, private->old_res_x, private->old_res_y);
-    }
+    case RESIZE_RESPONSE_RESET:
+      /* restore size and ratio settings */
+      size_update (resize, private->old_width, private->old_height, 1.0, 1.0);
 
-  if (resize->type == ScaleWidget)
-    {
-      resize->interpolation = resize->gimage->gimp->config->interpolation_type;
+      if ((resize->type == ScaleWidget) && (resize->target == ResizeImage))
+        {
+          /* restore resolution settings */
+          resolution_update (resize, private->old_res_x, private->old_res_y);
+        }
 
-      gimp_option_menu_set_history (GTK_OPTION_MENU (private->interpolation_menu),
-                                    GINT_TO_POINTER (resize->interpolation));
+      if (resize->type == ScaleWidget)
+        {
+          resize->interpolation =
+            resize->gimage->gimp->config->interpolation_type;
+
+          gimp_option_menu_set_history (GTK_OPTION_MENU (private->interpolation_menu),
+                                        GINT_TO_POINTER (resize->interpolation));
+        }
+      break;
+
+    case GTK_RESPONSE_OK:
+      private->ok_callback (widget, private->ok_data);
+      break;
+
+    default:
+      gtk_widget_destroy (widget);
+      break;
     }
 }
 
 static void
 size_callback (GtkWidget *widget,
-	       gpointer   data)
+               Resize    *resize)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizePrivate *private = (ResizePrivate *) resize;
   gdouble        width;
   gdouble        height;
   gdouble        ratio_x;
   gdouble        ratio_y;
-
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
 
   width  = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 0);
   height = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (private->size_se), 1);
@@ -915,17 +929,13 @@ size_callback (GtkWidget *widget,
 
 static void
 ratio_callback (GtkWidget *widget,
-		gpointer   data)
+                Resize    *resize)
 {
-  Resize        *resize;
-  ResizePrivate *private;
+  ResizePrivate *private = (ResizePrivate *) resize;
   gdouble        width;
   gdouble        height;
   gdouble        ratio_x;
   gdouble        ratio_y;
-
-  resize  = (Resize *) data;
-  private = (ResizePrivate *) resize;
 
   ratio_x = GTK_ADJUSTMENT (private->ratio_x_adj)->value;
   ratio_y = GTK_ADJUSTMENT (private->ratio_y_adj)->value;

@@ -52,6 +52,9 @@
 
 
 /* Some useful macros */
+#define RESPONSE_RESET      1
+#define RESPONSE_GET_COLORS 2
+
 #define PLUG_IN_NAME "plug_in_sample_colorize"
 #define NUMBER_IN_ARGS 13
 
@@ -130,9 +133,7 @@ typedef struct {
   GtkAdjustment *adj_lvl_in_gamma;
   GtkAdjustment *adj_lvl_out_min;
   GtkAdjustment *adj_lvl_out_max;
-  GtkWidget *apply_button;
-  GtkWidget *get_smp_colors_button;
-  GtkWidget *orig_inten_button;
+  GtkWidget     *orig_inten_button;
   gint           active_slider;
   gint           slider_pos[5];  /*  positions for the five sliders  */
 
@@ -229,7 +230,7 @@ static void      p_remap_pixel (guchar       *pixel,
 				gint          bpp2);
 static void      p_guess_missing_colors(void);
 static void      p_fill_missing_colors(void);
-static void      p_smp_get_colors_callback (GdkWindow *window, gpointer data);
+static void      p_smp_get_colors(GtkWidget *dialog);
 static void      p_gradient_callback(GtkWidget *w, gint32 id);
 static void      p_get_gradient (gint mode);
 static void      p_clear_preview(GtkWidget *preview);
@@ -420,43 +421,43 @@ run (const gchar      *name,
  */
 
 static void
-p_smp_apply_callback (GtkWidget *widget,
-                    gpointer   data)
+p_smp_response_callback (GtkWidget *widget,
+                         gint       response_id,
+                         gpointer   data)
 {
-  g_show_progress = TRUE;
-  if(p_main_colorize(MC_DST_REMAP) == 0)
-  {
-    gimp_displays_flush ();
-    g_show_progress = FALSE;
-    return;
-  }
-  gtk_widget_set_sensitive(g_di.apply_button,FALSE);
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      g_values.lvl_in_min    = 0;
+      g_values.lvl_in_max    = 255;
+      g_values.lvl_in_gamma  = 1.0;
+      g_values.lvl_out_min   = 0;
+      g_values.lvl_out_max   = 255;
 
-  /* p_smp_close_callback(NULL, data); */
-}
+      p_levels_update (ALL);
+      break;
 
-static void
-p_smp_reset_callback (GtkWidget *widget,
-                    gpointer   data)
-{
-  g_values.lvl_in_min    = 0;
-  g_values.lvl_in_max    = 255;
-  g_values.lvl_in_gamma  = 1.0;
-  g_values.lvl_out_min   = 0;
-  g_values.lvl_out_max   = 255;
+    case RESPONSE_GET_COLORS:
+      p_smp_get_colors (widget);
+      break;
 
-  p_levels_update (ALL);
-}
+    case GTK_RESPONSE_APPLY:
+      g_show_progress = TRUE;
+      if(p_main_colorize(MC_DST_REMAP) == 0)
+        {
+          gimp_displays_flush ();
+          g_show_progress = FALSE;
+          return;
+        }
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (widget),
+                                         GTK_RESPONSE_APPLY, FALSE);
+      break;
 
-static void
-p_smp_close_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  if(data != 0)
-  {
-    gtk_widget_destroy (GTK_WIDGET (data));
-  }
-  gtk_main_quit ();
+    default:
+      gtk_widget_destroy (widget);
+      gtk_main_quit ();
+      break;
+    }
 }
 
 static void
@@ -496,7 +497,7 @@ p_smp_toggle_callback (GtkWidget *widget,
   {
      if(g_values.guess_missing) { p_guess_missing_colors(); }
      else                       { p_fill_missing_colors(); }
-     p_smp_get_colors_callback(NULL, NULL);
+     p_smp_get_colors (NULL);
   }
 
 }
@@ -510,12 +511,13 @@ p_gradient_callback(GtkWidget *w, gint32 id)
    {
       g_values.sample_id = id;
       p_get_gradient(id);
-      p_smp_get_colors_callback(NULL, NULL);
+      p_smp_get_colors (NULL);
       if(g_di.sample_preview) p_clear_preview(g_di.sample_preview);
-      if(g_di.apply_button != NULL)
-        gtk_widget_set_sensitive(g_di.apply_button,TRUE);
-      if(g_di.get_smp_colors_button != NULL)
-        gtk_widget_set_sensitive(g_di.get_smp_colors_button,FALSE);
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
+                                         GTK_RESPONSE_APPLY, TRUE);
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
+                                         RESPONSE_GET_COLORS, FALSE);
    }
 } /* end p_gradient_callback */
 
@@ -530,8 +532,9 @@ p_smp_menu_callback(gint32 id, gpointer data)
    {
       *id_ptr = id;
       p_update_preview(id_ptr);
-      if(g_di.get_smp_colors_button != NULL)
-        gtk_widget_set_sensitive(g_di.get_smp_colors_button,TRUE);
+
+      gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
+                                         RESPONSE_GET_COLORS, TRUE);
    }
 } /* end p_smp_menu_callback */
 
@@ -986,19 +989,18 @@ p_levels_erase_slider (GdkWindow *window,
 }	/* end p_levels_erase_slider */
 
 static void
-p_smp_get_colors_callback (GdkWindow *window,
-		     gpointer data)
+p_smp_get_colors (GtkWidget *dialog)
 {
   gint i;
 
   p_update_preview(&g_values.sample_id);
 
-  if(window != NULL)
+  if(dialog != NULL)
   {
      if (p_main_colorize(MC_GET_SAMPLE_COLORS) >= 0)  /* do not colorize, just analyze sample colors */
      {
-       if(g_di.apply_button != NULL)
-         gtk_widget_set_sensitive(g_di.apply_button,TRUE);
+       gtk_dialog_set_response_sensitive (GTK_DIALOG (g_di.dialog),
+                                          GTK_RESPONSE_APPLY, TRUE);
      }
   }
   for (i = 0; i < GRADIENT_HEIGHT; i++)
@@ -1337,7 +1339,7 @@ p_smp_dialog (void)
   GtkWidget *spinbutton;
   GtkWidget *sep;
   GtkObject *data;
-  gint  l_ty;
+  gint       l_ty;
 
   /* set flags for check buttons from mode value bits */
   if (g_Sdebug) g_print ("p_smp_dialog START\n");
@@ -1356,26 +1358,18 @@ p_smp_dialog (void)
   /* Main Dialog */
   g_di.dialog = dialog =
     gimp_dialog_new (_("Sample Colorize"), "sample_colorize",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/sample_colorize.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GIMP_STOCK_RESET, p_smp_reset_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
-
-		     _("Get Sample Colors"), p_smp_get_colors_callback,
-		     NULL, NULL, NULL, TRUE, FALSE,
-
-		     GTK_STOCK_CLOSE, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, TRUE,
-
-		     _("Apply"), p_smp_apply_callback,
-		     NULL, NULL, NULL, FALSE, FALSE,
+		     GIMP_STOCK_RESET,       RESPONSE_RESET,
+		     _("Get Sample Colors"), RESPONSE_GET_COLORS,
+		     GTK_STOCK_CLOSE,        GTK_RESPONSE_CLOSE,
+		     _("Apply"),             GTK_RESPONSE_APPLY,
 
 		     NULL);
 
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (p_smp_close_callback),
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (p_smp_response_callback),
                     dialog);
 
   /*  parameter settings  */
@@ -1760,12 +1754,11 @@ p_smp_dialog (void)
 
   /* set old_id's different (to force updates of the previews) */
   g_di.enable_preview_update = TRUE;
-  p_smp_get_colors_callback(NULL, NULL);
+  p_smp_get_colors (NULL);
   p_update_preview(&g_values.dst_id);
   p_levels_update (INPUT_SLIDERS | INPUT_LEVELS | DRAW);
 
   gtk_main ();
-  gdk_flush ();
 
   return (0);
 }	/* end p_smp_dialog */

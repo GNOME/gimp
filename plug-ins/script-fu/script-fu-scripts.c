@@ -43,6 +43,8 @@
 #include "script-fu-intl.h"
 
 
+#define RESPONSE_RESET         1
+
 #define TEXT_WIDTH           100
 #define COLOR_SAMPLE_WIDTH   100
 #define COLOR_SAMPLE_HEIGHT   15
@@ -161,11 +163,12 @@ static void       script_fu_interface        (SFScript          *script);
 static void       script_fu_interface_quit   (SFScript          *script);
 static void       script_fu_error_msg        (const gchar       *command);
 
-static void       script_fu_ok_callback             (GtkWidget *widget,
-						     gpointer   data);
+static void       script_fu_response                (GtkWidget *widget,
+                                                     gint       response_id,
+						     SFScript  *script);
+static void       script_fu_ok                      (SFScript  *script);
+static void       script_fu_reset                   (SFScript  *script);
 static void       script_fu_about_callback          (GtkWidget *widget,
-						     gpointer   data);
-static void       script_fu_reset_callback          (GtkWidget *widget,
 						     gpointer   data);
 static void       script_fu_menu_callback           (gint32     id,
 						     gpointer   data);
@@ -1128,21 +1131,22 @@ script_fu_interface (SFScript *script)
 
   buf = g_strdup_printf (_("Script-Fu: %s"), sf_interface->title);
 
-  dlg = gimp_dialog_new (buf, "script-fu",
-                         gimp_standard_help_func, "filters/script-fu.html",
-                         GTK_WIN_POS_MOUSE,
-			 TRUE, FALSE, TRUE,
+  sf_interface->dialog = dlg =
+    gimp_dialog_new (buf, "script-fu",
+                     NULL, 0,
+                     gimp_standard_help_func, "filters/script-fu.html",
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
+                     GIMP_STOCK_RESET, RESPONSE_RESET,
+                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 GTK_STOCK_OK, script_fu_ok_callback,
-			 script, NULL, NULL, TRUE, FALSE,
+                     NULL);
 
-			 NULL);
   g_free (buf);
 
-  sf_interface->dialog = dlg;
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (script_fu_response),
+                    script);
 
   g_signal_connect_swapped (dlg, "destroy",
                             G_CALLBACK (script_fu_interface_quit),
@@ -1409,20 +1413,6 @@ script_fu_interface (SFScript *script)
 
   gtk_widget_show (table);
 
-  /*  Reset to defaults */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-		    G_CALLBACK (script_fu_reset_callback),
-		    script);
-
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 
@@ -1551,8 +1541,29 @@ script_fu_brush_preview (const gchar          *name,
 }
 
 static void
-script_fu_ok_callback (GtkWidget *widget,
-		       gpointer   data)
+script_fu_response (GtkWidget *widget,
+                    gint       response_id,
+                    SFScript  *script)
+{
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      script_fu_reset (script);
+      break;
+
+    case GTK_RESPONSE_OK:
+      script_fu_ok (script);
+      gtk_widget_destroy (sf_interface->dialog);
+      break;
+
+    default:
+      gtk_widget_destroy (sf_interface->dialog);
+      break;
+    }
+}
+
+static void
+script_fu_ok (SFScript *script)
 {
   GtkWidget *menu_item;
   gchar     *escaped;
@@ -1564,8 +1575,6 @@ script_fu_ok_callback (GtkWidget *widget,
   gint       length;
   gint       i;
 
-  SFScript  *script = (SFScript *) data;
-
   length = strlen (script->script_name) + 3;
 
   for (i = 0; i < script->num_args; i++)
@@ -1575,62 +1584,62 @@ script_fu_ok_callback (GtkWidget *widget,
       case SF_DRAWABLE:
       case SF_LAYER:
       case SF_CHANNEL:
-	length += 12;  /*  Maximum size of integer value  */
-	break;
+        length += 12;  /*  Maximum size of integer value  */
+        break;
 
       case SF_COLOR:
-	length += 16;  /*  Maximum size of color string: '(XXX XXX XXX)  */
-	break;
+        length += 16;  /*  Maximum size of color string: '(XXX XXX XXX)  */
+        break;
 
       case SF_TOGGLE:
-	length += 6;   /*  Maximum size of (TRUE, FALSE)  */
-	break;
+        length += 6;   /*  Maximum size of (TRUE, FALSE)  */
+        break;
 
       case SF_VALUE:
-	length += strlen (gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]))) + 1;
-	break;
+        length += strlen (gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]))) + 1;
+        break;
 
       case SF_STRING:
-	escaped = g_strescape (gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i])), NULL);
-	length += strlen (escaped) + 3;
-	g_free (escaped);
-	break;
+        escaped = g_strescape (gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i])), NULL);
+        length += strlen (escaped) + 3;
+        g_free (escaped);
+        break;
 
       case SF_ADJUSTMENT:
-	length += G_ASCII_DTOSTR_BUF_SIZE;
-	break;
+        length += G_ASCII_DTOSTR_BUF_SIZE;
+        break;
 
       case SF_FILENAME:
       case SF_DIRNAME:
-	escaped = g_strescape (script->arg_values[i].sfa_file.filename, NULL);
-	length += strlen (escaped) + 3;
-	g_free (escaped);
-	break;
+        escaped = g_strescape (script->arg_values[i].sfa_file.filename, NULL);
+        length += strlen (escaped) + 3;
+        g_free (escaped);
+        break;
 
       case SF_FONT:
-	length += strlen (script->arg_values[i].sfa_font) + 3;
-	break;
+        length += strlen (script->arg_values[i].sfa_font) + 3;
+        break;
 
       case SF_PATTERN:
-	length += strlen (script->arg_values[i].sfa_pattern) + 3;
-	break;
+        length += strlen (script->arg_values[i].sfa_pattern) + 3;
+        break;
 
       case SF_GRADIENT:
-	length += strlen (script->arg_values[i].sfa_gradient) + 3;
-	break;
+        length += strlen (script->arg_values[i].sfa_gradient) + 3;
+        break;
 
       case SF_BRUSH:
-	length += strlen (script->arg_values[i].sfa_brush.name) + 3;
-	length += 36;  /*  Maximum size of three ints  */
-	               /*  for opacity, spacing, mode  */
-	break;
+        length += strlen (script->arg_values[i].sfa_brush.name) + 3;
+        length += 36;  /*  Maximum size of three ints  */
+        /*  for opacity, spacing, mode  */
+        break;
 
       case SF_OPTION:
-	length += 12;  /*  Maximum size of integer value  */
-	break;
+        length += 12;  /*  Maximum size of integer value  */
+        break;
 
       default:
-	break;
+        break;
       }
 
   c = command = g_new (gchar, length);
@@ -1640,93 +1649,93 @@ script_fu_ok_callback (GtkWidget *widget,
   for (i = 0; i < script->num_args; i++)
     {
       switch (script->arg_types[i])
-	{
-	case SF_IMAGE:
-	case SF_DRAWABLE:
-	case SF_LAYER:
-	case SF_CHANNEL:
-	  g_snprintf (buffer, sizeof (buffer), "%d",
-		      script->arg_values[i].sfa_image);
-	  text = buffer;
-	  break;
+        {
+        case SF_IMAGE:
+        case SF_DRAWABLE:
+        case SF_LAYER:
+        case SF_CHANNEL:
+          g_snprintf (buffer, sizeof (buffer), "%d",
+                      script->arg_values[i].sfa_image);
+          text = buffer;
+          break;
 
- 	case SF_COLOR:
-	  gimp_rgb_get_uchar (&script->arg_values[i].sfa_color, &r, &g, &b);
-	  g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
-		      (gint) r, (gint) g, (gint) b);
-	  text = buffer;
-	  break;
+        case SF_COLOR:
+          gimp_rgb_get_uchar (&script->arg_values[i].sfa_color, &r, &g, &b);
+          g_snprintf (buffer, sizeof (buffer), "'(%d %d %d)",
+                      (gint) r, (gint) g, (gint) b);
+          text = buffer;
+          break;
 
-	case SF_TOGGLE:
-	  g_snprintf (buffer, sizeof (buffer), "%s",
-		      (script->arg_values[i].sfa_toggle) ? "TRUE" : "FALSE");
-	  text = buffer;
-	  break;
+        case SF_TOGGLE:
+          g_snprintf (buffer, sizeof (buffer), "%s",
+                      (script->arg_values[i].sfa_toggle) ? "TRUE" : "FALSE");
+          text = buffer;
+          break;
 
-	case SF_VALUE:
-	  text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
-	  g_free (script->arg_values[i].sfa_value);
-	  script->arg_values[i].sfa_value = g_strdup (text);
-	  break;
+        case SF_VALUE:
+          text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
+          g_free (script->arg_values[i].sfa_value);
+          script->arg_values[i].sfa_value = g_strdup (text);
+          break;
 
-	case SF_STRING:
-	  text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
-	  g_free (script->arg_values[i].sfa_value);
-	  script->arg_values[i].sfa_value = g_strdup (text);
-	  escaped = g_strescape (text, NULL);
-	  g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
-	  g_free (escaped);
-	  text = buffer;
-	  break;
+        case SF_STRING:
+          text = (gchar *) gtk_entry_get_text (GTK_ENTRY (sf_interface->args_widgets[i]));
+          g_free (script->arg_values[i].sfa_value);
+          script->arg_values[i].sfa_value = g_strdup (text);
+          escaped = g_strescape (text, NULL);
+          g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
+          g_free (escaped);
+          text = buffer;
+          break;
 
-	case SF_ADJUSTMENT:
+        case SF_ADJUSTMENT:
           switch (script->arg_defaults[i].sfa_adjustment.type)
             {
             case SF_SLIDER:
               script->arg_values[i].sfa_adjustment.value =
                 script->arg_values[i].sfa_adjustment.adj->value;
-	      break;
+              break;
 
-	    case SF_SPINNER:
-	      script->arg_values[i].sfa_adjustment.value =
-		gtk_spin_button_get_value (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]));
-	      break;
+            case SF_SPINNER:
+              script->arg_values[i].sfa_adjustment.value =
+                gtk_spin_button_get_value (GTK_SPIN_BUTTON (sf_interface->args_widgets[i]));
+              break;
 
-	    default:
-	      break;
-	    }
-	  text = g_ascii_dtostr (buffer, sizeof (buffer),
-				 script->arg_values[i].sfa_adjustment.value);
-	  break;
+            default:
+              break;
+            }
+          text = g_ascii_dtostr (buffer, sizeof (buffer),
+                                 script->arg_values[i].sfa_adjustment.value);
+          break;
 
-	case SF_FILENAME:
-	case SF_DIRNAME:
-	  escaped = g_strescape (script->arg_values[i].sfa_file.filename,
+        case SF_FILENAME:
+        case SF_DIRNAME:
+          escaped = g_strescape (script->arg_values[i].sfa_file.filename,
                                  NULL);
-	  g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
-	  g_free (escaped);
-	  text = buffer;
-	  break;
+          g_snprintf (buffer, sizeof (buffer), "\"%s\"", escaped);
+          g_free (escaped);
+          text = buffer;
+          break;
 
-	case SF_FONT:
-	  g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-		      script->arg_values[i].sfa_font);
-	  text = buffer;
-	  break;
+        case SF_FONT:
+          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+                      script->arg_values[i].sfa_font);
+          text = buffer;
+          break;
 
-	case SF_PATTERN:
-	  g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-		      script->arg_values[i].sfa_pattern);
-	  text = buffer;
-	  break;
+        case SF_PATTERN:
+          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+                      script->arg_values[i].sfa_pattern);
+          text = buffer;
+          break;
 
-	case SF_GRADIENT:
-	  g_snprintf (buffer, sizeof (buffer), "\"%s\"",
-		      script->arg_values[i].sfa_gradient);
-	  text = buffer;
-	  break;
+        case SF_GRADIENT:
+          g_snprintf (buffer, sizeof (buffer), "\"%s\"",
+                      script->arg_values[i].sfa_gradient);
+          text = buffer;
+          break;
 
-	case SF_BRUSH:
+        case SF_BRUSH:
           {
             gchar opacity[G_ASCII_DTOSTR_BUF_SIZE];
 
@@ -1742,25 +1751,25 @@ script_fu_ok_callback (GtkWidget *widget,
           }
           break;
 
-	case SF_OPTION:
-	  menu_item =
-	    gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (sf_interface->args_widgets[i]))));
-	  script->arg_values[i].sfa_option.history =
-	    GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (menu_item),
+        case SF_OPTION:
+          menu_item =
+            gtk_menu_get_active (GTK_MENU (gtk_option_menu_get_menu (GTK_OPTION_MENU (sf_interface->args_widgets[i]))));
+          script->arg_values[i].sfa_option.history =
+            GPOINTER_TO_UINT (g_object_get_data (G_OBJECT (menu_item),
                                                  "gimp-item-data"));
-	  g_snprintf (buffer, sizeof (buffer), "%d",
-		      script->arg_values[i].sfa_option.history);
-	  text = buffer;
-	  break;
+          g_snprintf (buffer, sizeof (buffer), "%d",
+                      script->arg_values[i].sfa_option.history);
+          text = buffer;
+          break;
 
-	default:
-	  break;
-	}
+        default:
+          break;
+        }
 
       if (i == script->num_args - 1)
-	sprintf (c, "%s)", text);
+        sprintf (c, "%s)", text);
       else
-	sprintf (c, "%s ", text);
+        sprintf (c, "%s ", text);
       c += strlen (text) + 1;
     }
 
@@ -1769,8 +1778,92 @@ script_fu_ok_callback (GtkWidget *widget,
     script_fu_error_msg (command);
 
   g_free (command);
+}
 
-  gtk_widget_destroy (sf_interface->dialog);
+static void
+script_fu_reset (SFScript *script)
+{
+  gint i;
+
+  for (i = 0; i < script->num_args; i++)
+    switch (script->arg_types[i])
+      {
+      case SF_IMAGE:
+      case SF_DRAWABLE:
+      case SF_LAYER:
+      case SF_CHANNEL:
+	break;
+
+      case SF_COLOR:
+	script->arg_values[i].sfa_color = script->arg_defaults[i].sfa_color;
+	gimp_color_button_set_color (GIMP_COLOR_BUTTON (sf_interface->args_widgets[i]),
+				     &script->arg_values[i].sfa_color);
+	break;
+
+      case SF_TOGGLE:
+	script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
+	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sf_interface->args_widgets[i]),
+				      script->arg_values[i].sfa_toggle);
+	break;
+
+      case SF_VALUE:
+      case SF_STRING:
+	g_free (script->arg_values[i].sfa_value);
+	script->arg_values[i].sfa_value =
+	  g_strdup (script->arg_defaults[i].sfa_value);
+	gtk_entry_set_text (GTK_ENTRY (sf_interface->args_widgets[i]),
+			    script->arg_values[i].sfa_value);
+	break;
+
+      case SF_ADJUSTMENT:
+	script->arg_values[i].sfa_adjustment.value =
+	  script->arg_defaults[i].sfa_adjustment.value;
+	gtk_adjustment_set_value (script->arg_values[i].sfa_adjustment.adj,
+				  script->arg_values[i].sfa_adjustment.value);
+	break;
+
+      case SF_FILENAME:
+      case SF_DIRNAME:
+	g_free (script->arg_values[i].sfa_file.filename);
+	script->arg_values[i].sfa_file.filename =
+	  g_strdup (script->arg_defaults[i].sfa_file.filename);
+	gimp_file_selection_set_filename
+	  (GIMP_FILE_SELECTION (script->arg_values[i].sfa_file.fileselection),
+	   script->arg_values[i].sfa_file.filename);
+	break;
+
+      case SF_FONT:
+  	gimp_font_select_widget_set (sf_interface->args_widgets[i],
+                                     script->arg_defaults[i].sfa_font);
+	break;
+
+      case SF_PATTERN:
+  	gimp_pattern_select_widget_set (sf_interface->args_widgets[i],
+                                        script->arg_defaults[i].sfa_pattern);
+	break;
+
+      case SF_GRADIENT:
+  	gimp_gradient_select_widget_set (sf_interface->args_widgets[i],
+                                         script->arg_defaults[i].sfa_gradient);
+	break;
+
+      case SF_BRUSH:
+  	gimp_brush_select_widget_set (sf_interface->args_widgets[i],
+                                      script->arg_defaults[i].sfa_brush.name,
+                                      script->arg_defaults[i].sfa_brush.opacity,
+                                      script->arg_defaults[i].sfa_brush.spacing,
+                                      script->arg_defaults[i].sfa_brush.paint_mode);
+	break;
+
+      case SF_OPTION:
+	script->arg_values[i].sfa_option.history =
+	  script->arg_defaults[i].sfa_option.history;
+	gtk_option_menu_set_history (GTK_OPTION_MENU (sf_interface->args_widgets[i]),
+				     script->arg_values[i].sfa_option.history);
+
+      default:
+	break;
+      }
 }
 
 static void
@@ -1790,18 +1883,19 @@ script_fu_about_callback (GtkWidget *widget,
 
   if (sf_interface->about_dialog == NULL)
     {
-      dialog = gimp_dialog_new (sf_interface->title, "script-fu-about",
-				gimp_standard_help_func,
-				"filters/script-fu.html",
-				GTK_WIN_POS_MOUSE,
-				FALSE, TRUE, FALSE,
+      sf_interface->about_dialog = dialog =
+        gimp_dialog_new (sf_interface->title, "script-fu-about",
+                         sf_interface->dialog, 0,
+                         gimp_standard_help_func,
+                         "filters/script-fu.html",
 
-				GTK_STOCK_CLOSE, gtk_widget_destroy, NULL,
-				1, NULL, TRUE, TRUE,
+                         GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-				NULL);
+                         NULL);
 
-      sf_interface->about_dialog = dialog;
+      g_signal_connect (dialog, "response",
+                        G_CALLBACK (gtk_widget_destroy),
+                        NULL);
 
       g_signal_connect (dialog, "destroy",
 			G_CALLBACK (gtk_widget_destroyed),
@@ -1889,97 +1983,8 @@ script_fu_about_callback (GtkWidget *widget,
 }
 
 static void
-script_fu_reset_callback (GtkWidget *widget,
-			  gpointer   data)
-{
-  gint i;
-
-  SFScript *script = (SFScript *) data;
-
-  for (i = 0; i < script->num_args; i++)
-    switch (script->arg_types[i])
-      {
-      case SF_IMAGE:
-      case SF_DRAWABLE:
-      case SF_LAYER:
-      case SF_CHANNEL:
-	break;
-
-      case SF_COLOR:
-	script->arg_values[i].sfa_color = script->arg_defaults[i].sfa_color;
-	gimp_color_button_set_color (GIMP_COLOR_BUTTON (sf_interface->args_widgets[i]),
-				     &script->arg_values[i].sfa_color);
-	break;
-
-      case SF_TOGGLE:
-	script->arg_values[i].sfa_toggle = script->arg_defaults[i].sfa_toggle;
-	gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (sf_interface->args_widgets[i]),
-				      script->arg_values[i].sfa_toggle);
-	break;
-
-      case SF_VALUE:
-      case SF_STRING:
-	g_free (script->arg_values[i].sfa_value);
-	script->arg_values[i].sfa_value =
-	  g_strdup (script->arg_defaults[i].sfa_value);
-	gtk_entry_set_text (GTK_ENTRY (sf_interface->args_widgets[i]),
-			    script->arg_values[i].sfa_value);
-	break;
-
-      case SF_ADJUSTMENT:
-	script->arg_values[i].sfa_adjustment.value =
-	  script->arg_defaults[i].sfa_adjustment.value;
-	gtk_adjustment_set_value (script->arg_values[i].sfa_adjustment.adj,
-				  script->arg_values[i].sfa_adjustment.value);
-	break;
-
-      case SF_FILENAME:
-      case SF_DIRNAME:
-	g_free (script->arg_values[i].sfa_file.filename);
-	script->arg_values[i].sfa_file.filename =
-	  g_strdup (script->arg_defaults[i].sfa_file.filename);
-	gimp_file_selection_set_filename
-	  (GIMP_FILE_SELECTION (script->arg_values[i].sfa_file.fileselection),
-	   script->arg_values[i].sfa_file.filename);
-	break;
-
-      case SF_FONT:
-  	gimp_font_select_widget_set (sf_interface->args_widgets[i],
-                                     script->arg_defaults[i].sfa_font);
-	break;
-
-      case SF_PATTERN:
-  	gimp_pattern_select_widget_set (sf_interface->args_widgets[i],
-                                        script->arg_defaults[i].sfa_pattern);
-	break;
-
-      case SF_GRADIENT:
-  	gimp_gradient_select_widget_set (sf_interface->args_widgets[i],
-                                         script->arg_defaults[i].sfa_gradient);
-	break;
-
-      case SF_BRUSH:
-  	gimp_brush_select_widget_set (sf_interface->args_widgets[i],
-                                      script->arg_defaults[i].sfa_brush.name,
-                                      script->arg_defaults[i].sfa_brush.opacity,
-                                      script->arg_defaults[i].sfa_brush.spacing,
-                                      script->arg_defaults[i].sfa_brush.paint_mode);
-	break;
-
-      case SF_OPTION:
-	script->arg_values[i].sfa_option.history =
-	  script->arg_defaults[i].sfa_option.history;
-	gtk_option_menu_set_history (GTK_OPTION_MENU (sf_interface->args_widgets[i]),
-				     script->arg_values[i].sfa_option.history);
-
-      default:
-	break;
-      }
-}
-
-static void
-script_fu_menu_callback  (gint32   id,
-			  gpointer data)
+script_fu_menu_callback (gint32   id,
+                         gpointer data)
 {
   *((gint32 *) data) = id;
 }

@@ -62,18 +62,6 @@ GtkWidget * gimp_viewable_dialog_new      (GimpViewable       *viewable,
                                            const gchar        *desc,
                                            GimpHelpFunc        help_func,
                                            const gchar        *help_id,
-
-                                           /* specify action area buttons
-                                            * as va_list:
-                                            *  const gchar    *label,
-                                            *  GCallback       callback,
-                                            *  gpointer        callback_data,
-                                            *  GObject        *slot_object,
-                                            *  GtkWidget     **widget_ptr,
-                                            *  gboolean        default_action,
-                                            *  gboolean        connect_delete,
-                                            */
-
                                            ...);
 
 void    gimp_viewable_dialog_set_viewable (GimpViewableDialog *dialog,

@@ -102,8 +102,6 @@ static void run                  (const gchar      *name,
 				  GimpParam       **return_vals);
 static void set_default_params   (void);
 
-static void dialog_ok_callback   (GtkWidget         *widget,
-				  gpointer           data);
 static void dialog_toggle_update (GtkWidget         *widget,
 				  gint32             value);
 static void dialog_scale_update  (GtkAdjustment     *adjustment,
@@ -155,7 +153,6 @@ static gint   sel_x1, sel_y1, sel_x2, sel_y2;
 static gint   true_sel_width, true_sel_height;
 static gint   sel_width, sel_height;
 static gint   drawable_position;
-static gint   curl_run = FALSE;
 static gint32 curl_layer_ID;
 
 /* Center and radius of circle */
@@ -193,19 +190,19 @@ query (void)
     { GIMP_PDB_INT32,    "run_mode", "Interactive (0), non-interactive (1)" },
     { GIMP_PDB_IMAGE,    "image",    "Input image"                          },
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable"                       },
-    { GIMP_PDB_INT32,    "mode", 
+    { GIMP_PDB_INT32,    "mode",
         "Pagecurl-mode: Use FG- and BG-Color (0), Use current gradient (1)" },
-    { GIMP_PDB_INT32,    "edge", 
+    { GIMP_PDB_INT32,    "edge",
         "Edge to curl (1-4, clockwise, starting in the lower right edge)"   },
     { GIMP_PDB_INT32,    "type",     "vertical (0), horizontal (1)"         },
-    { GIMP_PDB_INT32,    "shade", 
+    { GIMP_PDB_INT32,    "shade",
         "Shade the region under the curl (1) or not (0)"                    },
   };
 
   static GimpParamDef return_vals[] =
   {
     { GIMP_PDB_LAYER, "Curl Layer", "The new layer with the curl." }
-  }; 
+  };
 
   gimp_install_procedure (PLUG_IN_NAME,
 			  "Pagecurl effect",
@@ -416,15 +413,6 @@ set_default_params (void)
 /********************************************************************/
 
 static void
-dialog_ok_callback (GtkWidget *widget,
-		    gpointer   data)
-{
-  curl_run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
 dialog_scale_update (GtkAdjustment *adjustment,
 		     gdouble       *value)
 {
@@ -478,7 +466,7 @@ dialog_toggle_update (GtkWidget *widget,
 }
 
 static gint
-do_dialog (void) 
+do_dialog (void)
 {
   /* Missing options: Color-dialogs? / own curl layer ? / transparency
      to original drawable / Warp-curl (unsupported yet) */
@@ -495,25 +483,18 @@ do_dialog (void)
   GtkWidget *scale;
   GtkObject *adjustment;
   gint       pixmapindex;
+  gboolean   run;
 
   gimp_ui_init ("pagecurl", FALSE);
 
-  dialog = gimp_dialog_new ( _("Pagecurl Effect"), "pagecurl",
+  dialog = gimp_dialog_new (_("Pagecurl Effect"), "pagecurl",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/pagecurl.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-
-			    GTK_STOCK_OK, dialog_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-   g_signal_connect (dialog, "destroy",
-                     G_CALLBACK (gtk_main_quit),
-                     NULL);
 
    vbox = gtk_vbox_new (FALSE, 4);
    gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -666,10 +647,11 @@ do_dialog (void)
 
    gtk_widget_show (dialog);
 
-   gtk_main ();
-   gdk_flush ();
+   run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-   return curl_run;
+   gtk_widget_destroy (dialog);
+
+   return run;
 }
 
 static void
@@ -825,16 +807,16 @@ do_curl_effect (void)
 	      /* Map coordinates to get the curl correct... */
 	      if (curl.do_horizontal)
 		{
-		  x = ((curl.do_lower_right || curl.do_lower_left) ? 
+		  x = ((curl.do_lower_right || curl.do_lower_left) ?
                        y1 : sel_width - 1 - y1);
-		  y = ((curl.do_upper_left  || curl.do_lower_left) ? 
+		  y = ((curl.do_upper_left  || curl.do_lower_left) ?
                        x1 : sel_height - 1 - x1);
 		}
 	      else
 		{
-		  x = ((curl.do_upper_right || curl.do_lower_right) ? 
+		  x = ((curl.do_upper_right || curl.do_lower_right) ?
                        x1 : sel_width - 1 - x1);
-		  y = ((curl.do_upper_left  || curl.do_upper_right) ? 
+		  y = ((curl.do_upper_left  || curl.do_upper_right) ?
                        y1 : sel_height - 1 - y1);
 		}
 	      if (left_of_diagl (x, y))
@@ -864,7 +846,7 @@ do_curl_effect (void)
 		      factor = angle / alpha;
 		      for (k = 0; k < alpha_pos; k++)
 			pp[k] = 0;
-		      pp[alpha_pos] = (curl.do_shade_under ? 
+		      pp[alpha_pos] = (curl.do_shade_under ?
                                        (guchar) ((float) 255 * (float) factor) :
                                        0);
 		    }
@@ -874,10 +856,10 @@ do_curl_effect (void)
 		      if (curl.do_curl_gradient)
 			{
 			  /* Calculate position in Gradient */
-                          intensity = 
+                          intensity =
                             (angle/alpha) + sin (G_PI*2 * angle/alpha) * 0.075;
 			  /* Check boundaries */
-			  intensity = (intensity < 0 ? 
+			  intensity = (intensity < 0 ?
                                        0 : (intensity > 1 ? 1 : intensity ));
 			  gradsamp = &grad_samples[((guint) (intensity * NGRADSAMPLES)) * dest_rgn.bpp];
 			  if (color_image)
@@ -886,7 +868,7 @@ do_curl_effect (void)
 			      pp[1] = gradsamp[1];
 			      pp[2] = gradsamp[2];
 			    }
-			  else 
+			  else
 			    pp[0] = gradsamp[0];
 
 			  pp[alpha_pos] = (guchar) ((double) gradsamp[alpha_pos] * (1.0 - intensity * (1.0 - curl.do_curl_opacity)));
@@ -968,9 +950,9 @@ clear_curled_region (void)
 		}
 	      else
 		{
-		  x = ((curl.do_upper_right || curl.do_lower_right) ? 
+		  x = ((curl.do_upper_right || curl.do_lower_right) ?
                        x1 - sel_x1 : sel_width - 1 - (x1 - sel_x1));
-		  y = ((curl.do_upper_left || curl.do_upper_right) ? 
+		  y = ((curl.do_upper_left || curl.do_upper_right) ?
                        y1 - sel_y1 : sel_height - 1 - (y1 - sel_y1));
 		}
 	      for (i = 0; i < alpha_pos; i++)

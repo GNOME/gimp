@@ -558,16 +558,6 @@ static WMFLoadVals load_vals =
 
 typedef struct
 {
-  gboolean  run;
-} WMFLoadInterface;
-
-static WMFLoadInterface load_interface =
-{
-  FALSE
-};
-
-typedef struct
-{
   GtkWidget     *dialog;
   GtkAdjustment *scale;
 } LoadDialogVals;
@@ -693,20 +683,6 @@ static GimpRunMode l_run_mode;
 
 static int pixs_per_in;
 
-static void
-load_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-
-{
-  LoadDialogVals *vals = (LoadDialogVals *)data;
-
-  /* Read scale */
-  load_vals.scale = pow (2.0, vals->scale->value);
-
-  load_interface.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (vals->dialog));
-}
-
 static gint
 load_dialog (gchar *file_name)
 {
@@ -716,27 +692,20 @@ load_dialog (gchar *file_name)
   GtkWidget *label;
   GtkWidget *table;
   GtkWidget *slider;
+  gboolean   run;
 
   gimp_ui_init ("wmf", FALSE);
 
   vals = g_new (LoadDialogVals, 1);
 
-  vals->dialog = gimp_dialog_new ( _("Load Windows Metafile"), "wmf",
+  vals->dialog = gimp_dialog_new (_("Load Windows Metafile"), "wmf",
+                                  NULL, 0,
 				  gimp_standard_help_func, "filters/wmf.html",
-				  GTK_WIN_POS_MOUSE,
-				  FALSE, TRUE, FALSE,
 
-				  GTK_STOCK_CANCEL, gtk_widget_destroy,
-				  NULL, 1, NULL, FALSE, TRUE,
+                                  GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                  GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-				  GTK_STOCK_OK, load_ok_callback,
-				  vals, NULL, NULL, TRUE, FALSE,
-
-				  NULL);
-
-  g_signal_connect (vals->dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                                  NULL);
 
   /* Rendering */
   frame = gtk_frame_new (g_strdup_printf ( _("Rendering %s"), file_name));
@@ -776,12 +745,14 @@ load_dialog (gchar *file_name)
 
   gtk_widget_show (vals->dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (vals->dialog)) == GTK_RESPONSE_OK);
 
-  g_free (vals);
+  if (run)
+    load_vals.scale = pow (2.0, vals->scale->value);
 
-  return load_interface.run;
+  gtk_widget_destroy (vals->dialog);
+
+  return run;
 }
 
 static void

@@ -337,37 +337,47 @@ static void presetdesccallback(GtkTextBuffer *buffer, gpointer data)
   g_free (str);
 }
 
-static void oksavepreset(GtkWidget *wg, GtkWidget *p)
+static void
+savepresetresponse (GtkWidget *widget,
+                    gint       response_id,
+                    gpointer   data)
 {
-  gtk_widget_destroy(wg);
-  savepreset();
+  gtk_widget_destroy (widget);
+
+  if (response_id == GTK_RESPONSE_OK)
+    savepreset ();
 }
 
-static void create_savepreset(void)
+static void
+create_savepreset (void)
 {
   static GtkWidget *window = NULL;
   GtkWidget *box, *label;
   GtkWidget *swin, *text;
   GtkTextBuffer *buffer;
 
-  window = 
+  if (window)
+    {
+      gtk_window_present (GTK_WINDOW (window));
+      return;
+    }
+
+  window =
     gimp_dialog_new (_("Save Current"), "gimpressionist",
+                     NULL, 0,
 		     gimp_standard_help_func, "filters/gimpressionst.html",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, TRUE, FALSE,
 
-		     GTK_STOCK_CANCEL, gtk_widget_destroy,
-		     NULL, 1, NULL, FALSE, FALSE,
+		     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+		     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-		     GTK_STOCK_OK, oksavepreset,
-		     NULL, 1, NULL, TRUE, FALSE,
+                     NULL);
 
-		     NULL);
-
+  g_signal_connect (window, "response",
+                    G_CALLBACK (savepresetresponse),
+                    NULL);
   g_signal_connect (window, "destroy",
-		    G_CALLBACK(gtk_widget_destroy), NULL);
-  g_signal_connect (window, "delete_event",
-		    G_CALLBACK(gtk_widget_destroy), NULL);
+		    G_CALLBACK (gtk_widget_destroyed),
+                    &window);
 
   box = gtk_vbox_new(FALSE, 5);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), box);

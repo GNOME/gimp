@@ -18,7 +18,7 @@
  *
  * The GNU General Public License is also available from
  * http://www.fsf.org/copyleft/gpl.html
- * 
+ *
  *
  * CHANGELOG:
  * v0.13	15.12.2000
@@ -34,10 +34,10 @@
  *
  * v0.1 	2.7.1997
  *	Initial release. Works... kinda.
- * 
- * 
+ *
+ *
  * TODO:
- * 
+ *
  * - remove channels selector (that's what the channels dialog is for)
  * - remove idiotic slowdowns
  * - clean up code
@@ -45,10 +45,10 @@
  * - optimize properly
  * - save & load matrices
  * - spiffy frontend for designing matrices
- * 
+ *
  * What else?
- * 
- * 
+ *
+ *
  */
 
 #include "config.h"
@@ -69,6 +69,8 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
+#define RESPONSE_RESET 1
 
 typedef enum
 {
@@ -117,8 +119,8 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,    /* run_proc   */
 };
 
-static gint bytes;
-static gint run_flag = 0;
+static gint     bytes;
+static gboolean run_flag = FALSE;
 
 typedef struct
 {
@@ -142,7 +144,7 @@ static const config default_config =
   },                 /* matrix */
   1,                 /* divisor */
   0,                 /* offset */
-  1,                 /* Alpha-handling algorithm */     
+  1,                 /* Alpha-handling algorithm */
   CLEAR,             /* border-mode */
   { 1, 1, 1, 1, 1 }, /* Channels mask */
   0                  /* autoset */
@@ -159,7 +161,6 @@ struct
   GtkWidget *bmode[3];
   GtkWidget *channels[5];
   GtkWidget *autoset;
-  GtkWidget *ok;
 } my_widgets;
 
 
@@ -217,7 +218,7 @@ run (const gchar      *name,
   *return_vals = values;
 
   run_mode = param[0].data.d_int32;
-	
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
@@ -356,7 +357,7 @@ my_get_row (GimpPixelRgn *PR,
 	  if (y < 0)
 	    y = -y; /* y=-y-1 */
 	  if (y >= height)
-	    y = 2 * height - y - 2; /* y=2*height-y-1 */  
+	    y = 2 * height - y - 2; /* y=2*height-y-1 */
 	}
       break;
 
@@ -740,12 +741,25 @@ check_matrix (void)
 }
 
 static void
-ok_callback (GtkWidget *widget,
-	     gpointer   data)
+response_callback (GtkWidget *widget,
+                   gint       response_id,
+		   gpointer   data)
 {
-  run_flag = TRUE;
+  switch (response_id)
+    {
+    case RESPONSE_RESET:
+      my_config = default_config;
+      check_config ();
+      redraw_all ();
+      break;
 
-  gtk_widget_destroy (GTK_WIDGET (data));
+    case GTK_RESPONSE_OK:
+      run_flag = TRUE;
+
+    default:
+      gtk_widget_destroy (GTK_WIDGET (data));
+      break;
+    }
 }
 
 /* Checks that the configuration is valid for the image type */
@@ -773,15 +787,6 @@ check_config (void)
 }
 
 static void
-defaults_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  my_config = default_config;
-  check_config ();
-  redraw_all ();
-}
-
-static void
 entry_callback (GtkWidget *widget,
 		gpointer   data)
 {
@@ -793,10 +798,11 @@ entry_callback (GtkWidget *widget,
   check_matrix ();
 #else
   if (widget == my_widgets.divisor)
-    gtk_widget_set_sensitive (GTK_WIDGET (my_widgets.ok), (*value != 0.0));
+    gtk_dialog_set_response_sensitive (GTK_DIALOG (gtk_widget_get_toplevel (widget)),
+                                       GTK_RESPONSE_OK, (*value != 0.0));
   else if (widget != my_widgets.offset)
     check_matrix ();
-#endif	
+#endif
 }
 
 static void
@@ -854,21 +860,18 @@ dialog (void)
   gimp_ui_init ("convmatrix", FALSE);
 
   dlg = gimp_dialog_new (_("Convolution Matrix"), "convmatrix",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/convmatrix.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GIMP_STOCK_RESET, defaults_callback,
-			 NULL, 1, NULL, FALSE, FALSE,
-
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-
-			 GTK_STOCK_OK, ok_callback,
-			 NULL, NULL, &my_widgets.ok, TRUE, FALSE,
+			 GIMP_STOCK_RESET, RESPONSE_RESET,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
 
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (response_callback),
+                    NULL);
   g_signal_connect (dlg, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -1050,11 +1053,10 @@ dialog (void)
   gtk_widget_show (dlg);
   redraw_all ();
 
-  gtk_widget_set_sensitive (my_widgets.bmode[CLEAR], 
+  gtk_widget_set_sensitive (my_widgets.bmode[CLEAR],
 			    (my_config.alpha_alg > 0));
 
   gtk_main ();
-  gdk_flush ();
 
   return run_flag;
 }

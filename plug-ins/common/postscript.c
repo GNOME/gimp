@@ -111,11 +111,6 @@ typedef struct
   gint  graphicsalpha;     /* antialiasing: 1,2, or 4 GraphicsAlphaBits */
 } PSLoadVals;
 
-typedef struct
-{
-  gboolean run;
-} PSLoadInterface;
-
 static PSLoadVals plvals =
 {
   100,                  /* 100 dpi */
@@ -125,11 +120,6 @@ static PSLoadVals plvals =
   6,                    /* use ppm (colour) */
   1,                    /* dont use text antialiasing */
   1                     /* dont use graphics antialiasing */
-};
-
-static PSLoadInterface plint =
-{
-  FALSE     /* run */
 };
 
 
@@ -147,11 +137,6 @@ typedef struct
   gint    preview_size;       /* Preview size */
 } PSSaveVals;
 
-typedef struct
-{
-  gboolean  run;
-} PSSaveInterface;
-
 static PSSaveVals psvals =
 {
   287.0, 200.0,   /* Image size (A4) */
@@ -163,11 +148,6 @@ static PSSaveVals psvals =
   0,              /* Encapsulated PostScript flag */
   0,              /* Preview flag */
   256             /* Preview size */
-};
-
-static PSSaveInterface psint =
-{
-  FALSE     /* run */
 };
 
 
@@ -262,8 +242,6 @@ static gchar *my_shell_quote (const gchar *unquoted_string);
 /* Dialog-handling */
 
 static gint   load_dialog               (void);
-static void   load_ok_callback          (GtkWidget *widget,
-					 gpointer   data);
 static void   load_pages_entry_callback (GtkWidget *widget,
 					 gpointer   data);
 
@@ -274,8 +252,6 @@ typedef struct
 } SaveDialogVals;
 
 static gint   save_dialog              (void);
-static void   save_ok_callback         (GtkWidget *widget,
-                                        gpointer   data);
 static void   save_unit_toggle_update  (GtkWidget *widget,
                                         gpointer   data);
 
@@ -655,14 +631,14 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status        = GIMP_PDB_SUCCESS;
-  gint32               image_ID      = -1;
-  gint32               drawable_ID   = -1;
-  gint32               orig_image_ID = -1;
-  GimpExportReturnType export        = GIMP_EXPORT_CANCEL;
-  gint                 k;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status        = GIMP_PDB_SUCCESS;
+  gint32            image_ID      = -1;
+  gint32            drawable_ID   = -1;
+  gint32            orig_image_ID = -1;
+  GimpExportReturn  export        = GIMP_EXPORT_CANCEL;
+  gint              k;
 
   l_run_mode = run_mode = param[0].data.d_int32;
 
@@ -2632,24 +2608,18 @@ load_dialog (void)
   GtkObject *adj;
   GtkWidget *pages_entry;
   GtkWidget *toggle;
+  gboolean   run;
 
   gimp_ui_init ("ps", FALSE);
 
   dialog = gimp_dialog_new (_("Load PostScript"), "ps",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/ps.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, load_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   main_vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
@@ -2746,7 +2716,7 @@ load_dialog (void)
 
   frame = gimp_radio_group_new2 (TRUE, _("Text Antialiasing"),
 				 G_CALLBACK (gimp_radio_button_update),
-				 &plvals.textalpha, 
+				 &plvals.textalpha,
                                  (gpointer) plvals.textalpha,
 
 				 _("None"),   (gpointer) 1, NULL,
@@ -2772,20 +2742,11 @@ load_dialog (void)
 
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  return plint.run;
-}
+  gtk_widget_destroy (dialog);
 
-
-static void
-load_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-{
-  plint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void
@@ -2797,6 +2758,7 @@ load_pages_entry_callback (GtkWidget *widget,
   strncpy (plvals.pages, gtk_entry_get_text (GTK_ENTRY (widget)), nelem);
   plvals.pages[nelem-1] = '\0';
 }
+
 
 /*  Save interface functions  */
 
@@ -2813,25 +2775,19 @@ save_dialog (void)
   GtkWidget *spinbutton;
   GtkObject *adj;
   gint       j;
+  gboolean   run;
 
   vals = g_new (SaveDialogVals, 1);
   vals->level = (psvals.level > 1);
 
   dialog = gimp_dialog_new (_("Save as PostScript"), "ps",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/ps.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, TRUE, FALSE,
 
-			    GTK_STOCK_CANCEL, gtk_widget_destroy,
-			    NULL, 1, NULL, FALSE, TRUE,
-			    GTK_STOCK_OK, save_ok_callback,
-			    NULL, NULL, NULL, TRUE, FALSE,
+			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			    NULL);
-
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /* Main hbox */
   hbox = gtk_hbox_new (FALSE, 6);
@@ -2906,7 +2862,7 @@ save_dialog (void)
   gimp_help_set_help_data (toggle,
                            _("When toggled, the resulting image will be scaled to fit "
                              "into the given size without changing the aspect ratio."),
-			   "#keep_aspect_ratio"), 
+			   "#keep_aspect_ratio"),
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
@@ -3013,23 +2969,15 @@ save_dialog (void)
   gtk_widget_show (hbox);
   gtk_widget_show (dialog);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dialog);
 
   psvals.level = (vals->level) ? 2 : 1;
 
   g_free (vals);
 
-  return psint.run;
-}
-
-static void
-save_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-{
-  psint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

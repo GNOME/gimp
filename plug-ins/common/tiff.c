@@ -54,11 +54,6 @@ typedef struct
 
 typedef struct
 {
-  gboolean  run;
-} TiffSaveInterface;
-
-typedef struct
-{
   gint32        ID;
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
@@ -142,8 +137,6 @@ static gboolean  save_image             (const gchar *filename,
 
 static gboolean  save_dialog            (void);
 
-static void      save_ok_callback       (GtkWidget   *widget,
-                                         gpointer     data);
 static void      comment_entry_callback (GtkWidget   *widget,
                                          gpointer     data);
 
@@ -161,13 +154,9 @@ static TiffSaveVals tsvals =
   COMPRESSION_NONE,    /*  compression  */
 };
 
-static TiffSaveInterface tsint =
-{
-  FALSE               /*  run  */
-};
-
 static gchar       *image_comment = NULL;
 static GimpRunMode  run_mode      = GIMP_RUN_INTERACTIVE;
+
 
 MAIN ()
 
@@ -238,13 +227,13 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam      values[2];
-  GimpPDBStatusType     status = GIMP_PDB_SUCCESS;
-  GimpParasite         *parasite;
-  gint32                image;
-  gint32                drawable;
-  gint32                orig_image;
-  GimpExportReturnType  export = GIMP_EXPORT_CANCEL;
+  static GimpParam   values[2];
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpParasite      *parasite;
+  gint32             image;
+  gint32             drawable;
+  gint32             orig_image;
+  GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
 
@@ -1778,22 +1767,16 @@ save_dialog (void)
   GtkWidget *hbox;
   GtkWidget *label;
   GtkWidget *entry;
+  gboolean   run;
 
-  dlg = gimp_dialog_new ( _("Save as TIFF"), "tiff",
+  dlg = gimp_dialog_new (_("Save as TIFF"), "tiff",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/tiff.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   vbox = gtk_vbox_new (FALSE, 4);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -1848,17 +1831,11 @@ save_dialog (void)
   gtk_widget_show (vbox);
   gtk_widget_show (dlg);
 
-  gtk_main ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return tsint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  tsint.run = TRUE;
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

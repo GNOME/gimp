@@ -521,15 +521,16 @@ bezier_dialog (void)
     }
 
   window = gimp_dialog_new (_("Bezier Settings"), "gfig",
+                            NULL, 0,
 			    gimp_standard_help_func, "filters/gfig.html",
-			    GTK_WIN_POS_MOUSE,
-			    FALSE, FALSE, FALSE,
 
-			    GTK_STOCK_CLOSE, gtk_widget_destroy,
-			    NULL, 1, NULL, TRUE, TRUE,
+			    GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
 			    NULL);
 
+  g_signal_connect (window, "response",
+                    G_CALLBACK (gtk_widget_destroy),
+                    NULL);
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_widget_destroyed),
                     &window);

@@ -1755,11 +1755,6 @@ typedef struct
   gint rotated;
 } VideoValues;
 
-typedef struct
-{
-  gboolean  run;
-} VideoInterface;
-
 
 static GtkWidget *preview      = NULL;
 static gboolean   in_main_loop = FALSE;
@@ -1769,11 +1764,6 @@ static VideoValues vvals =
   2,
   TRUE,
   FALSE,
-};
-
-static VideoInterface vint =
-{
-  FALSE   /*  run  */
 };
 
 
@@ -1790,8 +1780,6 @@ static void      video  (GimpDrawable     *drawable);
 
 
 static gint      video_dialog          (void);
-static void      video_ok_callback     (GtkWidget *widget,
-					gpointer   data);
 static void      video_toggle_update   (GtkWidget *widget,
 					gpointer   data);
 static void      video_radio_update    (GtkWidget *widget,
@@ -2144,26 +2132,20 @@ video_dialog (void)
   GtkWidget *vbox;
   GtkWidget *box;
   GtkWidget *toggle;
-  GSList *group = NULL;
-  gint    y;
+  GSList    *group = NULL;
+  gint       y;
+  gboolean   run;
 
   gimp_ui_init ("video", TRUE);
 
-  dlg = gimp_dialog_new ( _("Video"), "video",
+  dlg = gimp_dialog_new (_("Video"), "video",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/video.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, video_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /*  main parameter frame  */
   frame = gtk_frame_new (_("Parameter Settings"));
@@ -2253,20 +2235,14 @@ video_dialog (void)
   gtk_widget_show (dlg);
 
   in_main_loop = TRUE;
-  gtk_main ();
+
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+
   in_main_loop = FALSE;
-  gdk_flush ();
 
-  return vint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-video_ok_callback (GtkWidget *widget,
-		   gpointer   data)
-{
-  vint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
 
 static void

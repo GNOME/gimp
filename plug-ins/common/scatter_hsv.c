@@ -59,8 +59,6 @@ static gint        randomize_value     (gint    now,
 					gint    rand_max);
 
 static gint	scatter_hsv_dialog         (void);
-static void	scatter_hsv_ok_callback    (GtkWidget     *widget,
-					    gpointer       data);
 static gint	preview_event_handler      (GtkWidget     *widget,
 					    GdkEvent      *event);
 static void	scatter_hsv_preview_update (void);
@@ -94,22 +92,12 @@ typedef struct
   gint	value_distance;
 } ValueType;
 
-static ValueType VALS = 
+static ValueType VALS =
 {
   2,
   3,
   10,
   10
-};
-
-typedef struct 
-{
-  gboolean  run;
-} Interface;
-
-static Interface INTERFACE =
-{
-  FALSE
 };
 
 static gint      drawable_id;
@@ -162,7 +150,7 @@ run (const gchar      *name,
 {
   static GimpParam  values[1];
   GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  
+
   INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
@@ -170,7 +158,7 @@ run (const gchar      *name,
 
   *nreturn_vals = 1;
   *return_vals  = values;
-  
+
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
@@ -198,7 +186,7 @@ run (const gchar      *name,
       gimp_get_data (PLUG_IN_NAME, &VALS);
       break;
     }
-  
+
   status = scatter_hsv (drawable_id);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -210,7 +198,7 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 }
 
-static void 
+static void
 scatter_hsv_func (const guchar *src,
 		  guchar       *dest,
 		  gint          bpp,
@@ -221,7 +209,7 @@ scatter_hsv_func (const guchar *src,
   h = src[0];
   s = src[1];
   v = src[2];
-	      
+
   scatter_hsv_scatter (&h, &s, &v);
 
   dest[0] = h;
@@ -246,7 +234,7 @@ scatter_hsv (gint32 drawable_id)
   gimp_rgn_iterate2 (drawable, run_mode, scatter_hsv_func, NULL);
 
   gimp_drawable_detach (drawable);
- 
+
   return GIMP_PDB_SUCCESS;
 }
 
@@ -259,7 +247,7 @@ randomize_value (gint now,
 {
   gint    flag, new, steps, index;
   gdouble rand_val;
-  
+
   steps = max - min + 1;
   rand_val = g_random_double ();
   for (index = 1; index < VALS.holdness; index++)
@@ -268,14 +256,14 @@ randomize_value (gint now,
       if (tmp < rand_val)
 	rand_val = tmp;
     }
-  
+
   if (g_random_double () < 0.5)
     flag = -1;
   else
     flag = 1;
 
   new = now + flag * ((int) (rand_max * rand_val) % steps);
-  
+
   if (new < min)
     {
       if (mod_p == 1)
@@ -300,9 +288,9 @@ static void scatter_hsv_scatter (guchar *r,
   gint h, s, v;
   gint h1, s1, v1;
   gint h2, s2, v2;
-  
+
   h = *r; s = *g; v = *b;
-  
+
   gimp_rgb_to_hsv_int (&h, &s, &v);
 
   if (0 < VALS.hue_distance)
@@ -313,13 +301,13 @@ static void scatter_hsv_scatter (guchar *r,
     v = randomize_value (v, 0, 255, 0, VALS.value_distance);
 
   h1 = h; s1 = s; v1 = v;
-	      
+
   gimp_hsv_to_rgb_int (&h, &s, &v); /* don't believe ! */
 
   h2 = h; s2 = s; v2 = v;
 
   gimp_rgb_to_hsv_int (&h2, &s2, &v2); /* h2 should be h1. But... */
-  
+
   if ((abs (h1 - h2) <= VALS.hue_distance)
       && (abs (s1 - s2) <= VALS.saturation_distance)
       && (abs (v1 - v2) <= VALS.value_distance))
@@ -341,24 +329,18 @@ scatter_hsv_dialog (void)
   GtkWidget *abox;
   GtkWidget *table;
   GtkObject *adj;
+  gboolean   run;
 
   gimp_ui_init (SHORT_NAME, TRUE);
 
   dlg = gimp_dialog_new (_("Scatter HSV"), SHORT_NAME,
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/scatter_hsv.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, scatter_hsv_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+			 GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+			 GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
 			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
@@ -390,9 +372,9 @@ scatter_hsv_dialog (void)
   gtk_preview_size (GTK_PREVIEW (preview), preview_width * 2, preview_height);
   scatter_hsv_preview_update ();
   gtk_container_add (GTK_CONTAINER (pframe), preview);
-  gtk_widget_set_events (preview, 
+  gtk_widget_set_events (preview,
 			 GDK_BUTTON_PRESS_MASK |
-			 GDK_BUTTON_RELEASE_MASK | 
+			 GDK_BUTTON_RELEASE_MASK |
 			 GDK_BUTTON_MOTION_MASK |
 			 GDK_POINTER_MOTION_HINT_MASK);
   gtk_widget_show (preview);
@@ -443,11 +425,12 @@ scatter_hsv_dialog (void)
 
   gtk_widget_show (vbox);
   gtk_widget_show (dlg);
-  
-  gtk_main ();
-  gdk_flush ();
 
-  return INTERFACE.run;
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dlg);
+
+  return run;
 }
 
 static gint
@@ -457,12 +440,12 @@ preview_event_handler (GtkWidget *widget,
   gint            x, y;
   gint            dx, dy;
   GdkEventButton *bevent;
-	
+
   gtk_widget_get_pointer (widget, &x, &y);
 
   bevent = (GdkEventButton *) event;
 
-  switch (event->type) 
+  switch (event->type)
     {
     case GDK_BUTTON_PRESS:
       if (x < preview_width)
@@ -506,7 +489,7 @@ preview_event_handler (GtkWidget *widget,
 	  preview_offset_y = MAX (preview_offset_y - dy, 0);
 	  scatter_hsv_preview_update ();
 	}
-      break; 
+      break;
     default:
       break;
     }
@@ -526,7 +509,7 @@ scatter_hsv_preview_update (void)
   gint	src_bpp, src_bpl;
   guchar	data[3];
   gdouble	shift_rate;
-    
+
   drawable = gimp_drawable_get (drawable_id);
   gimp_drawable_mask_bounds (drawable_id,
 			     &bound_start_x, &bound_start_y,
@@ -597,15 +580,6 @@ scatter_hsv_preview_update (void)
       }
 
   gtk_widget_queue_draw (preview);
-}
-
-static void
-scatter_hsv_ok_callback (GtkWidget *widget,
-			 gpointer   data)
-{
-  INTERFACE.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
 }
 
 static void

@@ -80,11 +80,6 @@ typedef struct
   gint     wrapmode;
 } EdgeVals;
 
-typedef struct
-{
-  gboolean  run;
-} EdgeInterface;
-
 /*
  * Function prototypes.
  */
@@ -122,11 +117,6 @@ static EdgeVals evals =
   2.0,         /* amount   */
   SOBEL,       /* Edge detection algorithm */
   PIXEL_SMEAR  /* wrapmode */
-};
-
-static EdgeInterface eint =
-{
-  FALSE  /* run */
 };
 
 /***** Functions *****/
@@ -626,15 +616,6 @@ laplace (guchar *data)
 /*                    Dialog                           */
 /*******************************************************/
 
-static void
-edge_ok_callback (GtkWidget *widget,
-                  gpointer   data)
-{
-  eint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
-}
-
 static gint
 edge_dialog (GimpDrawable *drawable)
 {
@@ -644,7 +625,8 @@ edge_dialog (GimpDrawable *drawable)
   GtkWidget *hbox;
   GtkWidget *toggle;
   GtkObject *scale_data;
-  GSList *group = NULL;
+  GSList    *group = NULL;
+  gboolean   run;
 
   gboolean use_wrap  = (evals.wrapmode == PIXEL_WRAP);
   gboolean use_smear = (evals.wrapmode == PIXEL_SMEAR);
@@ -653,20 +635,13 @@ edge_dialog (GimpDrawable *drawable)
   gimp_ui_init ("edge", FALSE);
 
   dlg = gimp_dialog_new (_("Edge Detection"), "edge",
+                         NULL, 0,
                          gimp_standard_help_func, "filters/edge.html",
-                         GTK_WIN_POS_MOUSE,
-                         FALSE, TRUE, FALSE,
 
-                         GTK_STOCK_CANCEL, gtk_widget_destroy,
-                         NULL, 1, NULL, FALSE, TRUE,
-                         GTK_STOCK_OK, edge_ok_callback,
-                         NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
                          NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
 
   /*  compression  */
   frame = gimp_radio_group_new2 (TRUE, _("Algorithm"),
@@ -751,8 +726,9 @@ edge_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
+
+  gtk_widget_destroy (dlg);
 
   if (use_wrap)
     evals.wrapmode = PIXEL_WRAP;
@@ -761,5 +737,5 @@ edge_dialog (GimpDrawable *drawable)
   else if (use_black)
     evals.wrapmode = PIXEL_BLACK;
 
-  return eint.run;
+  return run;
 }

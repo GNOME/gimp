@@ -73,7 +73,8 @@ static void      gimp_color_picker_tool_picked       (GimpColorTool   *color_too
                                                       gint             color_index);
 
 static void   gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool);
-static void   gimp_color_picker_tool_info_close  (GtkWidget           *widget,
+static void gimp_color_picker_tool_info_response (GtkWidget           *widget,
+                                                  gint                 response_id,
                                                   GimpColorPickerTool *picker_tool);
 static void   gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                                                   GimpImageType        sample_type,
@@ -184,7 +185,7 @@ gimp_color_picker_tool_finalize (GObject *object)
   GimpColorPickerTool *picker_tool = GIMP_COLOR_PICKER_TOOL (object);
 
   if (picker_tool->dialog)
-    gimp_color_picker_tool_info_close (NULL, picker_tool);
+    gimp_color_picker_tool_info_response (NULL, GTK_RESPONSE_CLOSE, picker_tool);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -200,7 +201,8 @@ gimp_color_picker_tool_control (GimpTool       *tool,
     {
     case HALT:
       if (picker_tool->dialog)
-        gimp_color_picker_tool_info_close (NULL, picker_tool);
+        gimp_color_picker_tool_info_response (NULL, GTK_RESPONSE_CLOSE,
+                                              picker_tool);
       break;
 
     default:
@@ -312,16 +314,19 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
                                               _("Color Picker Information"),
 
                                               GTK_STOCK_CLOSE,
-                                              gimp_color_picker_tool_info_close,
-                                              tool, NULL, NULL, TRUE, TRUE,
+                                              GTK_RESPONSE_CLOSE,
 
                                               NULL);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (picker_tool->dialog),
                                      GIMP_VIEWABLE (tool->drawable));
 
+  g_signal_connect (picker_tool->dialog, "response",
+                    G_CALLBACK (gimp_color_picker_tool_info_response),
+                    picker_tool);
+
   hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (picker_tool->dialog)->vbox), hbox,
                       FALSE, FALSE, 0);
   gtk_widget_show (hbox);
@@ -359,8 +364,9 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool)
 }
 
 static void
-gimp_color_picker_tool_info_close (GtkWidget           *widget,
-                                   GimpColorPickerTool *picker_tool)
+gimp_color_picker_tool_info_response (GtkWidget           *widget,
+                                      gint                 response_id,
+                                      GimpColorPickerTool *picker_tool)
 {
   gtk_widget_destroy (picker_tool->dialog);
   picker_tool->dialog       = NULL;

@@ -41,13 +41,6 @@ typedef struct
   gint new_image;
 } TileVals;
 
-typedef struct
-{
-  GtkWidget *sizeentry;
-  GtkWidget *chainbutton;
-  gboolean   run;
-} TileInterface;
-
 
 /* Declare local functions.
  */
@@ -58,14 +51,12 @@ static void    run    (const gchar      *name,
 		       gint             *nreturn_vals,
 		       GimpParam       **return_vals);
 
-static gint32  tile             (gint32     image_id,
-				 gint32     drawable_id,
-				 gint32    *layer_id);
+static gint32  tile        (gint32     image_id,
+                            gint32     drawable_id,
+                            gint32    *layer_id);
 
-static gint    tile_dialog      (gint32     image_ID,
-				 gint32     drawable_ID);
-static void    tile_ok_callback (GtkWidget *widget,
-				 gpointer   data);
+static gint    tile_dialog (gint32     image_ID,
+                            gint32     drawable_ID);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -82,12 +73,6 @@ static TileVals tvals =
   1,     /* new_height */
   TRUE,  /* constrain  */
   TRUE   /* new_image  */
-};
-
-static TileInterface tint =
-{
-  NULL,  /* sizeentry */
-  FALSE  /* run       */
 };
 
 
@@ -282,7 +267,7 @@ tile (gint32  image_id,
 
       if (*layer_id == -1)
 	return -1;
-	  
+
       gimp_image_add_layer (new_image_id, *layer_id, 0);
       new_layer = gimp_drawable_get (*layer_id);
 
@@ -293,13 +278,13 @@ tile (gint32  image_id,
     {
       gimp_undo_push_group_start (image_id);
 
-      gimp_image_resize (image_id, 
-			 tvals.new_width, tvals.new_height, 
+      gimp_image_resize (image_id,
+			 tvals.new_width, tvals.new_height,
 			 0, 0);
 
       if (gimp_drawable_is_layer (drawable_id))
-	gimp_layer_resize (drawable_id, 
-			   tvals.new_width, tvals.new_height, 
+	gimp_layer_resize (drawable_id,
+			   tvals.new_width, tvals.new_height,
 			   0, 0);
 
       /*  Get the specified drawable  */
@@ -340,7 +325,7 @@ tile (gint32  image_id,
 			src_rgn.w * src_rgn.bpp);
 
 	      progress += src_rgn.w * src_rgn.h;
-	      gimp_progress_update ((gdouble) progress / 
+	      gimp_progress_update ((gdouble) progress /
 				    (gdouble) max_progress);
 	    }
 	}
@@ -379,12 +364,14 @@ tile_dialog (gint32 image_ID,
   GtkWidget *dlg;
   GtkWidget *frame;
   GtkWidget *sizeentry;
+  GtkWidget *chainbutton;
   GtkWidget *toggle;
   gint       width;
   gint       height;
   gdouble    xres;
   gdouble    yres;
   GimpUnit   unit;
+  gboolean   run;
 
   gimp_ui_init ("tile", FALSE);
 
@@ -397,20 +384,13 @@ tile_dialog (gint32 image_ID,
   tvals.new_height = height;
 
   dlg = gimp_dialog_new (_("Tile"), "tile",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/tile.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, tile_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /*  parameter settings  */
   frame = gtk_frame_new (_("Tile to New Size"));
@@ -436,8 +416,7 @@ tile_dialog (gint32 image_ID,
   gtk_table_set_row_spacing (GTK_TABLE (sizeentry), 1, 4);
   gtk_widget_show (sizeentry);
 
-  tint.sizeentry = sizeentry;
-  tint.chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));
+  chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));
 
   toggle = gtk_check_button_new_with_mnemonic (_("C_reate New Image"));
   gtk_table_attach (GTK_TABLE (sizeentry), toggle, 0, 4, 2, 3,
@@ -451,25 +430,20 @@ tile_dialog (gint32 image_ID,
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return tint.run;
-}
+  if (run)
+    {
+      tvals.new_width =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 0));
+      tvals.new_height =
+        RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (sizeentry), 1));
 
-static void
-tile_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  tvals.new_width =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 0));
-  tvals.new_height =
-    RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (tint.sizeentry), 1));
+      tvals.constrain =
+        gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (chainbutton));
+    }
 
-  tvals.constrain =
-    gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (tint.chainbutton));
+  gtk_widget_destroy (dlg);
 
-  tint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }

@@ -104,16 +104,6 @@ static TgaSaveVals tsvals =
   1, 	/* origin = bottom left */
 };
 
-typedef struct _TgaSaveInterface
-{
-  gboolean  run;
-} TgaSaveInterface;
-
-static TgaSaveInterface tsint =
-{
-  FALSE                /*  run  */
-};
-
 
  /* TRUEVISION-XFILE magic signature string */
 static guchar magic[18] =
@@ -135,8 +125,8 @@ typedef struct tga_info_struct
 
   guint8 imageCompression;
   /* Only known compression is RLE */
-#define TGA_COMP_NONE        0 
-#define TGA_COMP_RLE         1 
+#define TGA_COMP_NONE        0
+#define TGA_COMP_RLE         1
 
   /* Color Map Specification. */
   /* We need to separately specify high and low bytes to avoid endianness
@@ -190,8 +180,6 @@ static gint   save_image           (const gchar     *filename,
 				    gint32           drawable_ID);
 
 static gint   save_dialog          (void);
-static void   save_ok_callback     (GtkWidget       *widget,
-				    gpointer         data);
 
 static gint32 ReadImage            (FILE            *fp,
 				    tga_info        *info,
@@ -262,7 +250,7 @@ query (void)
                           save_args, NULL);
 
   gimp_register_load_handler ("file_tga_load", "tga", "");
-		
+
   gimp_register_save_handler ("file_tga_save", "tga", "");
 }
 
@@ -273,12 +261,12 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam     values[2];
-  GimpRunMode          run_mode;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  gint32               image_ID;
-  gint32               drawable_ID;
-  GimpExportReturnType export = GIMP_EXPORT_CANCEL;
+  static GimpParam  values[2];
+  GimpRunMode       run_mode;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
+  gint32            image_ID;
+  gint32            drawable_ID;
+  GimpExportReturn  export = GIMP_EXPORT_CANCEL;
 
 #ifdef PROFILE
   struct tms tbuf1, tbuf2;
@@ -319,15 +307,15 @@ run (const gchar      *name,
       image_ID     = param[1].data.d_int32;
       drawable_ID  = param[2].data.d_int32;
 
-      /*  eventually export the image */ 
+      /*  eventually export the image */
       switch (run_mode)
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
-	  export = gimp_export_image (&image_ID, &drawable_ID, "TGA", 
+	  export = gimp_export_image (&image_ID, &drawable_ID, "TGA",
 				      (GIMP_EXPORT_CAN_HANDLE_RGB |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |
-				       GIMP_EXPORT_CAN_HANDLE_INDEXED | 
+				       GIMP_EXPORT_CAN_HANDLE_INDEXED |
 				       GIMP_EXPORT_CAN_HANDLE_ALPHA ));
 	  if (export == GIMP_EXPORT_CANCEL)
 	    {
@@ -503,7 +491,7 @@ load_image (const gchar *filename)
   info.yOrigin = header[10] + header[11] * 256;
   info.width   = header[12] + header[13] * 256;
   info.height  = header[14] + header[15] * 256;
-  
+
   info.bpp       = header[16];
   info.bytes     = (info.bpp + 7) / 8;
   info.alphaBits = header[17] & 0x0f; /* Just the low 4 bits */
@@ -583,7 +571,7 @@ rle_write (FILE   *fp,
   gint    direct = 0;
   guchar *from   = buffer;
   gint    x;
-  
+
   for (x = 1; x < width; ++x)
     {
       if (memcmp (buffer, buffer + bytes, bytes))
@@ -955,8 +943,8 @@ ReadImage (FILE        *fp,
 
             gimp_progress_update ((double) (i + tileheight) /
                                   (double) info->height);
-            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, 
-                                     info->height - i - tileheight,  
+            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0,
+                                     info->height - i - tileheight,
                                      info->width, tileheight);
         }
     }
@@ -974,7 +962,7 @@ ReadImage (FILE        *fp,
 
             gimp_progress_update ((double) (i + tileheight) /
                                   (double) info->height);
-            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i, 
+            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i,
                                      info->width, tileheight);
         }
     }
@@ -1042,7 +1030,7 @@ save_image (const gchar *filename,
       header[2] = (tsvals.rle) ? 9 : 1;
       header[3] = header[4]= 0; /* no offset */
       header[5] = num_colors % 256;
-      header[6] = num_colors / 256; 
+      header[6] = num_colors / 256;
       header[7] = 24; /* cmap size / bits */
     }
   else
@@ -1126,8 +1114,8 @@ save_image (const gchar *filename,
       if(tsvals.origin)
         {
           gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, height-(row+1), width, 1);
-        } 
-      else 
+        }
+      else
         {
           gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, row, width, 1);
         }
@@ -1185,22 +1173,16 @@ save_dialog (void)
   GtkWidget *origin;
   GtkWidget *frame;
   GtkWidget *vbox;
+  gboolean   run;
 
   dlg = gimp_dialog_new (_("Save as TGA"), "tga",
+                         NULL, 0,
 			 gimp_standard_help_func, "filters/tga.html",
-			 GTK_WIN_POS_MOUSE,
-			 FALSE, TRUE, FALSE,
 
-			 GTK_STOCK_CANCEL, gtk_widget_destroy,
-			 NULL, 1, NULL, FALSE, TRUE,
-			 GTK_STOCK_OK, save_ok_callback,
-			 NULL, NULL, NULL, TRUE, FALSE,
+                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			 NULL);
-
-  g_signal_connect (dlg, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
+                         NULL);
 
   /* regular tga parameter settings */
   frame = gtk_frame_new (_("Targa Options"));
@@ -1237,17 +1219,9 @@ save_dialog (void)
 
   gtk_widget_show (dlg);
 
-  gtk_main ();
-  gdk_flush ();
+  run = (gtk_dialog_run (GTK_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
-  return tsint.run;
-}
+  gtk_widget_destroy (dlg);
 
-static void
-save_ok_callback (GtkWidget *widget,
-		  gpointer   data)
-{
-  tsint.run = TRUE;
-
-  gtk_widget_destroy (GTK_WIDGET (data));
+  return run;
 }
