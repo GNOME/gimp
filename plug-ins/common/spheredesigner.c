@@ -5,14 +5,14 @@
  * SphereDesigner v0.4 - creates textured spheres
  * by Vidar Madsen <vidar@prosalg.no>
  *
- * Status: Last updated 1999-09-09
+ * Status: Last updated 1999-09-11
  *
  * Known issues:
- * - Crash if you click OK or Cancel before first preview is rendered
+ * - Might crash if you click OK or Cancel before first preview is rendered
  * - Phong might look weird with transparent textures
  *
  * Todo:
- * - Saving / Loading of presets
+ * - Saving / Loading of presets needs an overhaul
  * - Antialiasing
  * - Global controls: Gamma, ++
  * - Beautification of GUI
@@ -115,8 +115,8 @@ typedef struct {
 } gradient;
 
 typedef struct {
-  short majtype;
-  short type;
+  int majtype;
+  int type;
   unsigned long flags;
   vector color1, color2;
   gradient gradient;
@@ -260,6 +260,7 @@ void drawcolor1(GtkWidget *w);
 void drawcolor2(GtkWidget *w);
 void render(void);
 void realrender(GDrawable *drawable);
+void fileselect(int);
 
 #define COLORBUTTONWIDTH 30
 #define COLORBUTTONHEIGHT 20
@@ -764,6 +765,11 @@ void transformpoint(vector *p, texture *t)
 {
   double point[3], f;
 
+  if((t->rotate.x != 0.0) || (t->rotate.y != 0.0) || (t->rotate.z != 0.0))
+    vvrotate(p, &t->rotate);
+  vvdiv(p, &t->scale);
+
+  vsub(p, &t->translate);
 
   if((t->turbulence.x != 0.0) || (t->turbulence.y != 0.0) ||
      (t->turbulence.z != 0.0)) {
@@ -775,11 +781,7 @@ void transformpoint(vector *p, texture *t)
     p->y += t->turbulence.y * f;
     p->z += t->turbulence.z * f;
   }
-  if((t->rotate.x != 0.0) || (t->rotate.y != 0.0) || (t->rotate.z != 0.0))
-    vvrotate(p, &t->rotate);
-  vvdiv(p, &t->scale);
 
-  vsub(p, &t->translate);
 }
 
 void checker(vector *q, vector *col, texture *t)
@@ -1758,6 +1760,111 @@ void deltexture(void)
   gtk_widget_destroy(tmpw);
 }
 
+void loadit(char *fn)
+{
+  FILE *f;
+  char line[1024];
+  int i;
+  texture *t;
+
+  s.com.numtexture = 0;
+
+  f = fopen(fn, "rt");
+  while(!feof(f)) {
+    if(!fgets(line, 1023, f)) break;
+    i = s.com.numtexture;
+    t = &s.com.texture[i];
+    setdefaults(t);
+    sscanf(line, "%d %d %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf\n",
+	   &t->majtype, &t->type,
+	   &t->color1.x,&t->color1.y,&t->color1.z,&t->color1.w,
+	   &t->color2.x,&t->color2.y,&t->color2.z,&t->color2.w,
+	   &t->oscale, &t->turbulence.x, &t->amount, &t->exp,
+	   &t->scale.x,&t->scale.y,&t->scale.z,
+	   &t->rotate.x,&t->rotate.y,&t->rotate.z,
+	   &t->translate.x,&t->translate.y,&t->translate.z);
+    s.com.numtexture++;
+  }
+  fclose(f);
+}
+
+void loadpreset_ok(GtkWidget *w, GtkFileSelection *fs)
+{
+  char *fn = gtk_file_selection_get_filename(GTK_FILE_SELECTION (fs));
+  gtk_widget_hide(GTK_WIDGET(fs));
+  gtk_list_clear_items(GTK_LIST(texturelist), 0, -1);
+  loadit(fn);
+  rebuildlist();
+  restartrender();
+}
+
+void saveit(char *fn)
+{
+  int i;
+  FILE *f;
+
+  f = fopen(fn, "wt");
+  for(i = 0; i < s.com.numtexture; i++) {
+    texture *t = &s.com.texture[i];
+    if(t->majtype < 0) continue;
+    fprintf(f, "%d %d %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f %f\n",
+	    t->majtype, t->type,
+	    t->color1.x,t->color1.y,t->color1.z,t->color1.w,
+	    t->color2.x,t->color2.y,t->color2.z,t->color2.w,
+	    t->oscale, t->turbulence.x, t->amount, t->exp,
+	    t->scale.x,t->scale.y,t->scale.z,
+	    t->rotate.x,t->rotate.y,t->rotate.z,
+	    t->translate.x,t->translate.y,t->translate.z);
+  }
+  fclose(f);
+
+}
+
+void savepreset_ok(GtkWidget *w, GtkFileSelection *fs)
+{
+  char *fn = gtk_file_selection_get_filename(GTK_FILE_SELECTION (fs));
+  gtk_widget_hide(GTK_WIDGET(fs));
+  saveit(fn);
+}
+
+void loadpreset(void)
+{
+  fileselect(0);
+}
+
+void savepreset(void)
+{
+  fileselect(1);
+}
+
+void fileselect(int action)
+{
+  static GtkWidget *windows[2] = {NULL,NULL};
+
+  char *titles[] = { "Open file", "Save file" };
+  void *handlers[] = { loadpreset_ok, savepreset_ok };
+
+  if(!windows[action]) {
+    windows[action] = gtk_file_selection_new(titles[action]);
+    gtk_window_position (GTK_WINDOW (windows[action]), GTK_WIN_POS_MOUSE);
+    
+    gtk_signal_connect (GTK_OBJECT (windows[action]), "destroy",
+			GTK_SIGNAL_FUNC(gtk_widget_destroy),
+                        &windows[action]);
+    gtk_signal_connect (GTK_OBJECT (windows[action]), "delete_event",
+			GTK_SIGNAL_FUNC(gtk_widget_hide),
+                        &windows[action]);
+
+    gtk_signal_connect (GTK_OBJECT (GTK_FILE_SELECTION (windows[action])->ok_button),
+                        "clicked", GTK_SIGNAL_FUNC(handlers[action]),
+                        windows[action]);
+    gtk_signal_connect_object(GTK_OBJECT (GTK_FILE_SELECTION (windows[action])->cancel_button),
+                              "clicked", GTK_SIGNAL_FUNC(gtk_widget_destroy),
+                              GTK_OBJECT (windows[action]));
+  }
+  gtk_widget_show (windows[action]);
+}
+
 void initworld(void)
 {
   int i;
@@ -2081,6 +2188,8 @@ GtkWidget* makewindow (void)
   GtkWidget *addbutton;
   GtkWidget *dupbutton;
   GtkWidget *delbutton;
+  GtkWidget *loadbutton;
+  GtkWidget *savebutton;
   GtkWidget *hbox2;
   GtkWidget *okbutton;
   GtkWidget *cancelbutton;
@@ -2118,7 +2227,7 @@ GtkWidget* makewindow (void)
   gtk_window_set_title (GTK_WINDOW (window), "SphereDesigner");
   gtk_window_set_policy (GTK_WINDOW (window), FALSE, TRUE, FALSE);
 
-  table1 = gtk_table_new (3, 3, FALSE);
+  table1 = gtk_table_new (4, 3, FALSE);
   gtk_object_set_data (GTK_OBJECT (window), "table1", table1);
   gtk_widget_show (table1);
   gtk_container_add (GTK_CONTAINER (window), table1);
@@ -2139,10 +2248,19 @@ GtkWidget* makewindow (void)
   gtk_signal_connect (GTK_OBJECT (drawarea), "expose_event",
                       (GtkSignalFunc) expose_event, NULL);
 
+  updatebutton = gtk_button_new_with_label ("Update");
+  gtk_object_set_data (GTK_OBJECT (window), "updatebutton", updatebutton);
+  gtk_widget_show (updatebutton);
+  gtk_table_attach (GTK_TABLE (table1), updatebutton, 0, 1, 1, 2,
+                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
+
+  gtk_signal_connect (GTK_OBJECT(updatebutton), "clicked", GTK_SIGNAL_FUNC(restartrender), NULL);
+
+
   frame3 = gtk_frame_new ("Textures");
   gtk_object_set_data (GTK_OBJECT (window), "frame3", frame3);
   gtk_widget_show (frame3);
-  gtk_table_attach (GTK_TABLE (table1), frame3, 1, 2, 0, 1,
+  gtk_table_attach (GTK_TABLE (table1), frame3, 1, 2, 0, 2,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   viewport2 = gtk_viewport_new (NULL, NULL);
@@ -2161,7 +2279,7 @@ GtkWidget* makewindow (void)
   hbox1 = gtk_hbox_new (TRUE, 0);
   gtk_object_set_data (GTK_OBJECT (window), "hbox1", hbox1);
   gtk_widget_show (hbox1);
-  gtk_table_attach (GTK_TABLE (table1), hbox1, 1, 2, 1, 2,
+  gtk_table_attach (GTK_TABLE (table1), hbox1, 1, 2, 2, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   addbutton = gtk_button_new_with_label ("Add");
@@ -2185,10 +2303,31 @@ GtkWidget* makewindow (void)
   gtk_signal_connect_object (GTK_OBJECT (delbutton), "clicked",
                              GTK_SIGNAL_FUNC (deltexture), NULL);
 
+  hbox1 = gtk_hbox_new (TRUE, 0);
+  gtk_object_set_data (GTK_OBJECT (window), "hbox1", hbox1);
+  gtk_widget_show (hbox1);
+  gtk_table_attach (GTK_TABLE (table1), hbox1, 0, 1, 2, 3,
+                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
+
+  loadbutton = gtk_button_new_with_label ("Load");
+  gtk_object_set_data (GTK_OBJECT (window), "loadbutton", loadbutton);
+  gtk_widget_show (loadbutton);
+  gtk_box_pack_start (GTK_BOX (hbox1), loadbutton, TRUE, TRUE, 0);
+  gtk_signal_connect_object (GTK_OBJECT (loadbutton), "clicked",
+                             GTK_SIGNAL_FUNC (loadpreset), NULL);
+
+  savebutton = gtk_button_new_with_label ("Save");
+  gtk_object_set_data (GTK_OBJECT (window), "savebutton", savebutton);
+  gtk_widget_show (savebutton);
+  gtk_box_pack_start (GTK_BOX (hbox1), savebutton, TRUE, TRUE, 0);
+  gtk_signal_connect_object (GTK_OBJECT (savebutton), "clicked",
+                             GTK_SIGNAL_FUNC (savepreset), NULL);
+
+
   hbox2 = gtk_hbox_new (TRUE, 0);
   gtk_object_set_data (GTK_OBJECT (window), "hbox2", hbox2);
   gtk_widget_show (hbox2);
-  gtk_table_attach (GTK_TABLE (table1), hbox2, 0, 3, 2, 3,
+  gtk_table_attach (GTK_TABLE (table1), hbox2, 0, 2, 3, 4,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   okbutton = gtk_button_new_with_label ("OK");
@@ -2215,7 +2354,7 @@ GtkWidget* makewindow (void)
   frame4 = gtk_frame_new ("Texture Properties");
   gtk_object_set_data (GTK_OBJECT (window), "frame4", frame4);
   gtk_widget_show (frame4);
-  gtk_table_attach (GTK_TABLE (table1), frame4, 2, 3, 0, 1,
+  gtk_table_attach (GTK_TABLE (table1), frame4, 2, 3, 0, 3,
                     (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
 
   table2 = gtk_table_new (6, 4, FALSE);
@@ -2535,17 +2674,10 @@ GtkWidget* makewindow (void)
   gtk_signal_connect(GTK_OBJECT(expscale), "value_changed",
                      (GtkSignalFunc)getscales, NULL);
 
-  updatebutton = gtk_button_new_with_label ("Update");
-  gtk_object_set_data (GTK_OBJECT (window), "updatebutton", updatebutton);
-  gtk_widget_show (updatebutton);
-  gtk_table_attach (GTK_TABLE (table1), updatebutton, 0, 1, 1, 2,
-                    (GtkAttachOptions) GTK_EXPAND | GTK_FILL, (GtkAttachOptions) GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_signal_connect (GTK_OBJECT(updatebutton), "clicked", GTK_SIGNAL_FUNC(restartrender), NULL);
-
   label1 = gtk_label_new ("by Vidar Madsen\nSeptember 1999");
   gtk_object_set_data (GTK_OBJECT (window), "label1", label1);
   gtk_widget_show (label1);
-  gtk_table_attach (GTK_TABLE (table1), label1, 2, 3, 1, 2,
+  gtk_table_attach (GTK_TABLE (table1), label1, 2, 4, 3, 4,
                     (GtkAttachOptions) GTK_EXPAND, (GtkAttachOptions) GTK_EXPAND, 0, 0);
 
   gtk_widget_show(window);
@@ -2632,14 +2764,12 @@ void realrender(GDrawable *drawable)
   int x, y, alpha;
   ray r;
   vector rcol;
-  int hit;
   int tx, ty;
   gint x1, y1, x2, y2;
   guchar *dest;
   int bpp;
-  guchar tmpcol[4], bgcol[3];
-  GPixelRgn pr;
-  guchar *buffer;
+  GPixelRgn pr, dpr;
+  guchar *buffer, *ibuffer;
 
   if(running > 0) return; /* Fixme: abort preview-render instead! */
 
@@ -2650,14 +2780,16 @@ void realrender(GDrawable *drawable)
 
   alpha = gimp_drawable_has_alpha(drawable->id);
 
-  gimp_palette_get_background(bgcol,bgcol+1,bgcol+2);
-
   gimp_pixel_rgn_init(&pr, drawable, 0, 0,
+		      gimp_drawable_width(drawable->id),
+		      gimp_drawable_height(drawable->id), FALSE, FALSE);
+  gimp_pixel_rgn_init(&dpr, drawable, 0, 0,
 		      gimp_drawable_width(drawable->id),
 		      gimp_drawable_height(drawable->id), TRUE, TRUE);
   gimp_drawable_mask_bounds (drawable->id, &x1, &y1, &x2, &y2);
   bpp = gimp_drawable_bpp(drawable->id);
-  buffer = g_malloc((x2 - x1) * bpp);
+  buffer = g_malloc((x2 - x1) * 4);
+  ibuffer = g_malloc((x2 - x1) * 4);
 
   tx = x2 - x1;
   ty = y2 - y1;
@@ -2667,24 +2799,29 @@ void realrender(GDrawable *drawable)
   for(y = 0; y < ty; y++) {
     dest = buffer;
     for(x = 0; x < tx; x++) {
-      r.v1.x = r.v2.x = 8.5 * (x / (float)(tx-1) - 0.5);
-      r.v1.y = r.v2.y = 8.5 * (y / (float)(ty-1) - 0.5);
+      r.v1.x = r.v2.x = 8.1 * (x / (float)(tx-1) - 0.5);
+      r.v1.y = r.v2.y = 8.1 * (y / (float)(ty-1) - 0.5);
 
-      hit = traceray(&r, &rcol, 10, 1.0);
-      if(!hit && !alpha) {
-	memcpy(tmpcol, bgcol, sizeof(bgcol));
-      } else {
-	tmpcol[0] = pixelval(255 * rcol.x);
-	tmpcol[1] = pixelval(255 * rcol.y);
-	tmpcol[2] = pixelval(255 * rcol.z);
-	tmpcol[3] = pixelval(255 * rcol.w);
-      }
-      memcpy(dest, tmpcol, bpp);
-      dest += bpp;
+      traceray(&r, &rcol, 10, 1.0);
+      dest[0] = pixelval(255 * rcol.x);
+      dest[1] = pixelval(255 * rcol.y);
+      dest[2] = pixelval(255 * rcol.z);
+      dest[3] = pixelval(255 * rcol.w);
+      dest += 4;
     }
-    gimp_pixel_rgn_set_row(&pr, buffer, x1, y1 + y, x2 - x1);
+    gimp_pixel_rgn_get_row(&pr, ibuffer, x1, y1 + y, x2 - x1);
+    for(x = 0; x < (x2-x1); x++) {
+      int k, dx = x * 4, sx = x * bpp;
+      float a = buffer[dx+3] / 255.0;
+      for(k = 0; k < bpp; k++) {
+	ibuffer[sx+k] = buffer[dx+k] * a + ibuffer[sx+k] * (1.0 - a);
+      }
+    }
+    gimp_pixel_rgn_set_row(&dpr, ibuffer, x1, y1 + y, x2 - x1);
     gimp_progress_update((double)y / (double)ty);
   }
+  g_free(buffer);
+  g_free(ibuffer);
   gimp_drawable_flush (drawable);
   gimp_drawable_merge_shadow (drawable->id, TRUE);
   gimp_drawable_update (drawable->id, x1, y1, (x2 - x1), (y2 - y1));
