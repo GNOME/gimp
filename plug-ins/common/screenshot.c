@@ -137,17 +137,27 @@ static const guint8 screenshot_icon[] =
 typedef struct
 {
   gboolean         root;
+  gboolean         region;
   guint            window_id;
   guint            select_delay;
   guint            grab_delay;
+  gint             x1;
+  gint             y1;
+  gint             x2;
+  gint             y2;
 } ScreenShotValues;
 
 static ScreenShotValues shootvals =
 {
   FALSE,     /* root window  */
+  FALSE,     /* use dragged region */
   0,         /* window ID    */
   0,         /* select delay */
   0,         /* grab delay   */
+  0,         /* coords of region dragged out by pointer */
+  0,
+  0,
+  0
 };
 
 
@@ -188,7 +198,11 @@ query (void)
   {
     { GIMP_PDB_INT32, "run_mode",  "Interactive, non-interactive" },
     { GIMP_PDB_INT32, "root",      "Root window { TRUE, FALSE }" },
-    { GIMP_PDB_INT32, "window_id", "Window id" }
+    { GIMP_PDB_INT32, "window_id", "Window id" },
+    { GIMP_PDB_INT32, "x1",        "(optional) Region left x coord" },
+    { GIMP_PDB_INT32, "y1",        "(optional) Region top y coord" },
+    { GIMP_PDB_INT32, "x2",        "(optional) Region right x coord" },
+    { GIMP_PDB_INT32, "y2",        "(optional) Region bottom y coord" },
   };
 
   static GimpParamDef return_vals[] =
@@ -197,13 +211,15 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_NAME,
-			  "Creates a screenshot of a single window or the whole screen",
+			  "Creates a screenshot of a portion of the screen",
                           "After a user specified time out the user selects a window and "
                           "another time out is started. At the end of the second time out "
                           "the window is grabbed and the image is loaded into The GIMP. "
                           "Alternatively the whole screen can be grabbed. When called "
-                          "non-interactively it may grab the root window or use the "
-                          "window-id passed as a parameter.",
+                          "non-interactively it may grab the root window, or use the "
+                          "window-id passed as a parameter.  If 7 arguments are given,"
+                          "the last four will be used as corners of the region to be"
+                          "grabbed",
 			  "Sven Neumann <sven@gimp.org>, Henrik Brix Andersen <brix@gimp.org>",
 			  "1998 - 2003",
 			  "v0.9.7 (2003/11/15)",
@@ -260,12 +276,24 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       if (nparams == 3)
 	{
+          shootvals.region       = FALSE;
 	  shootvals.root         = param[1].data.d_int32;
 	  shootvals.window_id    = param[2].data.d_int32;
           shootvals.select_delay = 0;
 	  shootvals.grab_delay   = 0;
 	}
-      else
+      else if (nparams == 7)
+	{
+	  shootvals.root         = param[1].data.d_int32;
+	  shootvals.window_id    = param[2].data.d_int32;
+          shootvals.select_delay = 0;
+	  shootvals.grab_delay   = 0;
+          shootvals.x1           = param[3].data.d_int32;
+          shootvals.y1           = param[4].data.d_int32;
+          shootvals.x2           = param[5].data.d_int32;
+          shootvals.y2           = param[6].data.d_int32;
+	}
+
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
@@ -321,16 +349,18 @@ select_window (GdkScreen *screen)
 #if defined(GDK_WINDOWING_X11)
   /* X11 specific code */
 
-#define MASK (ButtonPressMask | ButtonReleaseMask)
-
   Display    *x_dpy;
   Cursor      x_cursor;
   XEvent      x_event;
   Window      x_win;
   Window      x_root;
+  XGCValues   gc_values;
+  GC          gc          = NULL;
   gint        x_scr;
   gint        status;
   gint        buttons;
+  gint        mask        = ButtonPressMask | ButtonReleaseMask;
+  gint        x, y, w, h;
 
   x_dpy = GDK_SCREEN_XDISPLAY (screen);
   x_scr = GDK_SCREEN_XNUMBER (screen);
@@ -340,8 +370,35 @@ select_window (GdkScreen *screen)
   x_cursor = XCreateFontCursor (x_dpy, GDK_CROSSHAIR);
   buttons  = 0;
 
+  if (shootvals.region)
+    {
+      mask |= PointerMotionMask;
+
+      gc_values.function   = GXxor;
+      gc_values.plane_mask = AllPlanes;
+      gc_values.foreground = WhitePixel (x_dpy, x_scr);
+      gc_values.background = BlackPixel (x_dpy, x_scr);
+      gc_values.line_width = 0;
+      gc_values.line_style = LineSolid;
+      gc_values.fill_style = FillSolid;
+      gc_values.cap_style  = CapButt;
+      gc_values.join_style = JoinMiter;
+      gc_values.graphics_exposures = FALSE;
+      gc_values.clip_x_origin = 0;
+      gc_values.clip_y_origin = 0;
+      gc_values.clip_mask  = None;
+      gc_values.subwindow_mode = IncludeInferiors;
+
+      gc = XCreateGC (x_dpy, x_root,
+                      GCFunction | GCPlaneMask | GCForeground | GCLineWidth |
+                      GCLineStyle | GCCapStyle | GCJoinStyle | GCGraphicsExposures |
+                      GCBackground | GCFillStyle | GCClipXOrigin | GCClipYOrigin |
+                      GCClipMask | GCSubwindowMode,
+                      &gc_values);
+    }
+
   status = XGrabPointer (x_dpy, x_root, False,
-                         MASK, GrabModeSync, GrabModeAsync,
+                         mask, GrabModeSync, GrabModeAsync,
                          x_root, x_cursor, CurrentTime);
 
   if (status != GrabSuccess)
@@ -353,7 +410,7 @@ select_window (GdkScreen *screen)
   while ((x_win == None) || (buttons != 0))
     {
       XAllowEvents (x_dpy, SyncPointer, CurrentTime);
-      XWindowEvent (x_dpy, x_root, MASK, &x_event);
+      XWindowEvent (x_dpy, x_root, mask, &x_event);
 
       switch (x_event.type)
         {
@@ -363,6 +420,8 @@ select_window (GdkScreen *screen)
               x_win = x_event.xbutton.subwindow;
               if (x_win == None)
                 x_win = x_root;
+              shootvals.x2 = shootvals.x1 = x_event.xbutton.x_root;
+              shootvals.y2 = shootvals.y1 = x_event.xbutton.y_root;
             }
           buttons++;
           break;
@@ -370,6 +429,40 @@ select_window (GdkScreen *screen)
         case ButtonRelease:
           if (buttons > 0)
             buttons--;
+          if (! buttons && shootvals.region)
+            {
+              x = MIN (shootvals.x1, shootvals.x2);
+              y = MIN (shootvals.y1, shootvals.y2);
+              w = ABS (shootvals.x2 - shootvals.x1);
+              h = ABS (shootvals.y2 - shootvals.y1);
+              if (w > 0 && h > 0)
+                XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
+              shootvals.x2 = x_event.xbutton.x_root;
+              shootvals.y2 = x_event.xbutton.y_root;
+            }
+          break;
+
+        case MotionNotify:
+          if (buttons > 0)
+            {
+              x = MIN (shootvals.x1, shootvals.x2);
+              y = MIN (shootvals.y1, shootvals.y2);
+              w = ABS (shootvals.x2 - shootvals.x1);
+              h = ABS (shootvals.y2 - shootvals.y1);
+              if (w > 0 && h > 0)
+                XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
+
+              shootvals.x2 = x_event.xmotion.x_root;
+              shootvals.y2 = x_event.xmotion.y_root;
+
+              x = MIN (shootvals.x1, shootvals.x2);
+              y = MIN (shootvals.y1, shootvals.y2);
+              w = ABS (shootvals.x2 - shootvals.x1);
+              h = ABS (shootvals.y2 - shootvals.y1);
+              if (w > 0 && h > 0)
+                XDrawRectangle (x_dpy, x_root, gc, x, y, w, h);
+/*               XSync (x_dpy, FALSE); */
+            }
           break;
 
         default:
@@ -513,30 +606,40 @@ shoot (GdkScreen *screen)
   screen_rect.width  = gdk_screen_get_width (screen);
   screen_rect.height = gdk_screen_get_height (screen);
 
-  if (shootvals.root)
+  if (shootvals.region)
     {
-      /* entire screen */
-      window = gdk_screen_get_root_window (screen);
+      rect.x = MIN (shootvals.x1, shootvals.x2);
+      rect.y = MIN (shootvals.y1, shootvals.y2);
+      rect.width  = ABS (shootvals.x2 - shootvals.x1);
+      rect.height = ABS (shootvals.y2 - shootvals.y1);
     }
   else
     {
-      GdkDisplay *display = gdk_screen_get_display (screen);
+      if (shootvals.root)
+        {
+          /* entire screen */
+          window = gdk_screen_get_root_window (screen);
+        }
+      else
+        {
+          GdkDisplay *display = gdk_screen_get_display (screen);
 
-      window = gdk_window_foreign_new_for_display (display,
-                                                   shootvals.window_id);
+          window = gdk_window_foreign_new_for_display (display,
+                                                       shootvals.window_id);
+        }
+
+      if (! window)
+        {
+          g_message (_("Specified window not found"));
+          return -1;
+        }
+
+      gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
+      gdk_window_get_origin (window, &x, &y);
+
+      rect.x = x;
+      rect.y = y;
     }
-
-  if (! window)
-    {
-      g_message (_("Specified window not found"));
-      return -1;
-    }
-
-  gdk_drawable_get_size (GDK_DRAWABLE (window), &rect.width, &rect.height);
-  gdk_window_get_origin (window, &x, &y);
-
-  rect.x = x;
-  rect.y = y;
 
   window = gdk_screen_get_root_window (screen);
   gdk_window_get_origin (window, &x, &y);
@@ -640,12 +743,28 @@ shoot_dialog (GdkScreen **screen)
                     G_CALLBACK (gimp_radio_button_update),
                     &shootvals.root);
 
+  /*  dragged region  */
+  button = gtk_radio_button_new_with_mnemonic (radio_group,
+					       _("Selected Region"));
+  radio_group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), shootvals.region);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+
+  g_object_set_data (G_OBJECT (button), "gimp-item-data",
+                     GINT_TO_POINTER (TRUE));
+
+  g_signal_connect (button, "toggled",
+                    G_CALLBACK (gimp_radio_button_update),
+                    &shootvals.region);
+
+  gtk_widget_show (button);
+
   /*  select window delay  */
   hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new_with_mnemonic (_("S_elect Window After"));
+  label = gtk_label_new_with_mnemonic (_("S_elect After"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
@@ -679,6 +798,7 @@ shoot_dialog (GdkScreen **screen)
                     &shootvals.root);
 
   gtk_widget_show (button);
+
   gtk_widget_show (vbox);
   gtk_widget_show (frame);
 

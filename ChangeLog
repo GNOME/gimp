@@ -1,3 +1,8 @@
+2005-03-23  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* plug-ins/common/screenshot.c: add ability to define region
+	by pointer-dragging.  UI may need tweaking.
+
 2005-03-23  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpcanvas.[ch] (gimp_canvas_draw_text): fixed
