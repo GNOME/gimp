@@ -333,8 +333,8 @@ gimp_palette_get_standard (void)
     {
       standard_palette = gimp_palette_new ("Standard", FALSE);
 
-      standard_palette->dirty    = FALSE;
-      standard_palette->internal = TRUE;
+      standard_palette->dirty = FALSE;
+      gimp_data_make_internal (standard_palette);
 
       g_object_ref (standard_palette);
     }

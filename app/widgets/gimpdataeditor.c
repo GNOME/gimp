@@ -374,7 +374,7 @@ gimp_data_editor_save_dirty (GimpDataEditor *editor)
 {
   GimpData *data = editor->data;
 
-  if (data && data->dirty)
+  if (data && data->dirty && data->writable)
     gimp_data_factory_data_save_single (editor->data_factory, data);
 }
 

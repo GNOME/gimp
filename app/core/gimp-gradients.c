@@ -114,7 +114,7 @@ gimp_gradients_add_gradient (Gimp        *gimp,
   gradient = GIMP_GRADIENT (gimp_gradient_new (name,
                                                base_config->stingy_memory_use));
 
-  GIMP_DATA (gradient)->internal = TRUE;
+  gimp_data_make_internal (GIMP_DATA (gradient));
 
   gimp_context_get_foreground (gimp->user_context,
                                &gradient->segments->left_color);

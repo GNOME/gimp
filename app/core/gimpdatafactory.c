@@ -282,7 +282,7 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
       if (! data->filename)
         gimp_data_create_filename (data, GIMP_OBJECT (data)->name, writable_dir);
 
-      if (data->dirty)
+      if (data->dirty && data->writable)
         {
           GError *error = NULL;
 
@@ -453,6 +453,7 @@ gimp_data_factory_data_save_single (GimpDataFactory *factory,
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (data->writable == TRUE, FALSE);
 
   if (! data->dirty)
     return TRUE;

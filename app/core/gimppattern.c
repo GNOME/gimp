@@ -296,8 +296,8 @@ gimp_pattern_get_standard (void)
     {
       standard_pattern = gimp_pattern_new ("Standard", FALSE);
 
-      standard_pattern->dirty    = FALSE;
-      standard_pattern->internal = TRUE;
+      standard_pattern->dirty = FALSE;
+      gimp_data_make_internal (standard_pattern);
 
       /*  set ref_count to 2 --> never swap the standard pattern  */
       g_object_ref (standard_pattern);

@@ -93,6 +93,8 @@ void          gimp_data_create_filename  (GimpData     *data,
 GimpData    * gimp_data_duplicate        (GimpData     *data,
                                           gboolean      stingy_memory_use);
 
+void          gimp_data_make_internal    (GimpData     *data);
+
 
 #define GIMP_DATA_ERROR (gimp_data_error_quark ())
 

@@ -137,10 +137,14 @@ static void
 gimp_data_init (GimpData *data)
 {
   data->filename  = NULL;
-  data->writable  = FALSE;
-  data->deletable = FALSE;
+  data->writable  = TRUE;
+  data->deletable = TRUE;
   data->dirty     = TRUE;
   data->internal  = FALSE;
+
+  /*  if we can't save, we are not writable  */
+  if (! GIMP_DATA_GET_CLASS (data)->save)
+    data->writable = FALSE;
 }
 
 static void
@@ -187,6 +191,7 @@ gimp_data_save (GimpData  *data,
   gboolean success = FALSE;
 
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (data->writable == TRUE, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (data->internal)
@@ -228,6 +233,7 @@ gimp_data_delete_from_disk (GimpData  *data,
 {
   g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
   g_return_val_if_fail (data->filename != NULL, FALSE);
+  g_return_val_if_fail (data->deletable == TRUE, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (data->internal)
@@ -268,10 +274,7 @@ gimp_data_set_filename (GimpData    *data,
     return;
 
   if (data->filename)
-    {
-      g_free (data->filename);
-      data->filename  = NULL;
-    }
+    g_free (data->filename);
 
   data->filename  = g_strdup (filename);
   data->writable  = FALSE;
@@ -353,19 +356,28 @@ GimpData *
 gimp_data_duplicate (GimpData *data,
                      gboolean  stingy_memory_use)
 {
-  GimpData *new = NULL;
-
   g_return_val_if_fail (GIMP_IS_DATA (data), NULL);
 
   if (GIMP_DATA_GET_CLASS (data)->duplicate)
-    {
-      new = GIMP_DATA_GET_CLASS (data)->duplicate (data, stingy_memory_use);
+    return GIMP_DATA_GET_CLASS (data)->duplicate (data, stingy_memory_use);
 
-      if (new)
-        new->dirty = TRUE;
+  return NULL;
+}
+
+void
+gimp_data_make_internal (GimpData *data)
+{
+  g_return_if_fail (GIMP_IS_DATA (data));
+
+  if (data->filename)
+    {
+      g_free (data->filename);
+      data->filename = NULL;
     }
 
-  return new;
+  data->internal  = TRUE;
+  data->writable  = FALSE;
+  data->deletable = FALSE;
 }
 
 GQuark

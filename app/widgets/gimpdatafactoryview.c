@@ -350,16 +350,16 @@ gimp_data_factory_view_delete_callback (GtkWidget *widget,
 					gboolean   delete,
 					gpointer   data)
 {
-  GimpDataDeleteData *delete_data;
-
-  delete_data = (GimpDataDeleteData *) data;
-
-  if (! delete)
-    return;
+  GimpDataDeleteData *delete_data = data;
 
   if (gimp_container_have (delete_data->factory->container,
 			   GIMP_OBJECT (delete_data->data)))
     {
+      g_object_ref (delete_data->data);
+
+      gimp_container_remove (delete_data->factory->container,
+			     GIMP_OBJECT (delete_data->data));
+
       if (delete_data->data->filename)
         {
           GError *error = NULL;
@@ -371,8 +371,7 @@ gimp_data_factory_view_delete_callback (GtkWidget *widget,
             }
         }
 
-      gimp_container_remove (delete_data->factory->container,
-			     GIMP_OBJECT (delete_data->data));
+      g_object_unref (delete_data->data);
     }
 }
 
@@ -386,8 +385,8 @@ gimp_data_factory_view_delete_clicked (GtkWidget           *widget,
     gimp_context_get_by_type (GIMP_CONTAINER_EDITOR (view)->view->context,
 			      view->factory->container->children_type);
 
-  if (data && ! data->internal && gimp_container_have (view->factory->container,
-                                                       GIMP_OBJECT (data)))
+  if (data && data->deletable && gimp_container_have (view->factory->container,
+                                                      GIMP_OBJECT (data)))
     {
       GimpDataDeleteData *delete_data;
       GtkWidget          *dialog;

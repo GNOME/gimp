@@ -1,3 +1,31 @@
+2004-02-13  Michael Natterer  <mitch@gimp.org>
+
+	Fixed GimpData's default "writable" and "deletable" behaviour:
+
+	* app/core/gimpdata.c (gimp_data_init): default to writable and
+	deletable == TRUE (something that has no filename was never loaded
+	from disk and can't be undeletable or read-only).
+	Fixes bug #134274.
+
+	* app/core/gimpdata.[ch]: added new function
+	gimp_data_make_internal() which frees the filename and sets the
+	data's flags accordingly.
+
+	* app/core/gimp-gradients.c (gimp_gradients_add_gradient)
+	* app/core/gimpbrush.c (gimp_brush_get_standard)
+	* app/core/gimpgradient.c (gimp_gradient_get_standard)
+	* app/core/gimppalette.c (gimp_palette_get_standard)
+	* app/core/gimppattern.c (gimp_pattern_get_standard): use the
+	new function for internal data objects.
+
+	* app/core/gimpdata.c (gimp_data_save, gimp_data_delete_from_disk)
+	* app/core/gimpdatafactory.c (gimp_data_factory_save_single):
+	bail out with g_return_if_fail() is the data is not writable
+	or deletable.
+
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdatafactoryview.c: changed accordingly.
+
 2004-02-12  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpcanvas.c (gimp_canvas_gc_new): use
