@@ -1419,7 +1419,6 @@ gimp_channel_new (GimpImage     *gimage,
   GimpChannel *channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
 
   channel = g_object_new (GIMP_TYPE_CHANNEL, NULL);
 
@@ -1428,7 +1427,9 @@ gimp_channel_new (GimpImage     *gimage,
                            0, 0, width, height,
                            GIMP_GRAY_IMAGE, name);
 
-  channel->color       = *color;
+  if (color)
+    channel->color = *color;
+
   channel->show_masked = TRUE;
 
   /*  selection mask variables  */
@@ -1452,7 +1453,6 @@ gimp_channel_new_from_alpha (GimpImage     *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_drawable_has_alpha (drawable), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
 
   width  = gimp_item_width  (GIMP_ITEM (drawable));
   height = gimp_item_height (GIMP_ITEM (drawable));
@@ -1488,7 +1488,6 @@ gimp_channel_new_from_component (GimpImage       *gimage,
   gint         pixel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
-  g_return_val_if_fail (color != NULL, NULL);
 
   pixel = gimp_image_get_component_index (gimage, type);
 
@@ -1635,13 +1634,12 @@ gimp_channel_new_mask (GimpImage *gimage,
                        gint       width,
                        gint       height)
 {
-  GimpRGB      black = { 0.0, 0.0, 0.0, 0.5 };
   GimpChannel *new_channel;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
   new_channel = gimp_channel_new (gimage, width, height,
-                                  _("Selection Mask"), &black);
+                                  _("Selection Mask"), NULL);
 
   tile_manager_set_validate_proc (GIMP_DRAWABLE (new_channel)->tiles,
                                   gimp_channel_validate);

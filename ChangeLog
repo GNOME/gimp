@@ -1,5 +1,15 @@
 2005-01-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannel.c (gimp_channel_new*): don't require a
+	non-NULL color parameter (just leave the default color untouched
+	if NULL is passed).
+
+	* app/actions/channels-commands.c
+	* app/core/gimpchannel-select.c: pass NULL as color for temporary
+	channels or channels where we used to pass black.
+
+2005-01-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpdnd.c: added gimp_dnd_get_component_icon().
 
 	* app/widgets/gimpcomponenteditor.c: allow to drag

@@ -21,7 +21,6 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
 
@@ -64,10 +63,8 @@ gimp_channel_select_rectangle (GimpChannel    *channel,
    */
   if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
     {
-      GimpItem    *item;
+      GimpItem    *item = GIMP_ITEM (channel);
       GimpChannel *add_on;
-
-      item = GIMP_ITEM (channel);
 
       add_on = gimp_channel_new_mask (gimp_item_get_image (item),
                                       gimp_item_width (item),
@@ -115,10 +112,8 @@ gimp_channel_select_ellipse (GimpChannel    *channel,
    */
   if (feather || op == GIMP_CHANNEL_OP_INTERSECT)
     {
-      GimpItem    *item;
+      GimpItem    *item = GIMP_ITEM (channel);
       GimpChannel *add_on;
-
-      item = GIMP_ITEM (channel);
 
       add_on = gimp_channel_new_mask (gimp_item_get_image (item),
                                       gimp_item_width (item),
@@ -350,12 +345,8 @@ gimp_channel_select_alpha (GimpChannel    *channel,
 
   if (gimp_drawable_has_alpha (drawable))
     {
-      GimpRGB color;
-
-      gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-
       add_on = gimp_channel_new_from_alpha (gimp_item_get_image (item),
-                                            drawable, NULL, &color);
+                                            drawable, NULL, NULL);
     }
   else
     {
@@ -388,19 +379,16 @@ gimp_channel_select_component (GimpChannel     *channel,
 {
   GimpItem    *item;
   GimpChannel *add_on;
-  GimpRGB      color;
   const gchar *desc;
   gchar       *undo_desc;
 
   g_return_if_fail (GIMP_IS_CHANNEL (channel));
   g_return_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)));
 
-  gimp_rgba_set (&color, 0.0, 0.0, 0.0, 1.0);
-
   item = GIMP_ITEM (channel);
 
   add_on = gimp_channel_new_from_component (gimp_item_get_image (item),
-                                            component, NULL, &color);
+                                            component, NULL, NULL);
 
   if (feather)
     gimp_channel_feather (add_on,

@@ -230,13 +230,10 @@ channels_duplicate_cmd_callback (GtkAction *action,
 
   if (GIMP_IS_COMPONENT_EDITOR (data))
     {
-      GimpRGB          color;
       GimpChannelType  component;
       const gchar     *desc;
       gchar           *name;
       return_if_no_image (gimage, data);
-
-      gimp_rgba_set (&color, 0, 0, 0, 0.5);
 
       component = GIMP_COMPONENT_EDITOR (data)->clicked_component;
 
@@ -246,7 +243,7 @@ channels_duplicate_cmd_callback (GtkAction *action,
       name = g_strdup_printf (_("%s Channel Copy"), desc);
 
       new_channel = gimp_channel_new_from_component (gimage, component,
-                                                     name, &color);
+                                                     name, NULL);
 
       /*  copied components are invisible by default so subsequent copies
        *  of components don't affect each other
