@@ -180,23 +180,16 @@ gimp_paint_tool_init (GimpPaintTool *paint_tool)
   paint_tool->draw_line   = FALSE;
   paint_tool->draw_brush  = TRUE;
 
-  paint_tool->brush_bound_segs   = NULL;
-  paint_tool->n_brush_bound_segs = 0;
-  paint_tool->brush_x            = 0.0;
-  paint_tool->brush_y            = 0.0;
+  paint_tool->brush_x     = 0.0;
+  paint_tool->brush_y     = 0.0;
+
+  paint_tool->core        = NULL;
 }
 
 static void
 gimp_paint_tool_finalize (GObject *object)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (object);
-
-  if (paint_tool->brush_bound_segs)
-    {
-      g_free (paint_tool->brush_bound_segs);
-      paint_tool->brush_bound_segs   = NULL;
-      paint_tool->n_brush_bound_segs = 0;
-    }
 
   if (paint_tool->core)
     {
@@ -702,7 +695,14 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           brush = gimp_context_get_brush (context);
           mask  = gimp_brush_get_mask (brush);
 
-          if (! paint_tool->brush_bound_segs)
+          if (brush != core->grr_brush && core->brush_bound_segs)
+            {
+              g_free (core->brush_bound_segs);
+              core->brush_bound_segs   = NULL;
+              core->n_brush_bound_segs = 0;
+            }
+
+          if (! core->brush_bound_segs)
             {
               PixelRegion PR = { 0, };
 
@@ -714,15 +714,15 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
               PR.bytes     = mask->bytes;
               PR.rowstride = PR.w * PR.bytes;
 
-              paint_tool->brush_bound_segs =
-                find_mask_boundary (&PR, &paint_tool->n_brush_bound_segs,
+              core->brush_bound_segs =
+                find_mask_boundary (&PR, &core->n_brush_bound_segs,
                                     WithinBounds,
                                     0, 0,
                                     PR.w, PR.h,
                                     0);
             }
 
-          if (paint_tool->brush_bound_segs)
+          if (core->brush_bound_segs)
             {
               GimpPaintOptions *paint_options;
               gdouble           brush_x, brush_y;
@@ -747,17 +747,10 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                 }
 
               gimp_draw_tool_draw_boundary (draw_tool,
-                                            paint_tool->brush_bound_segs,
-                                            paint_tool->n_brush_bound_segs,
+                                            core->brush_bound_segs,
+                                            core->n_brush_bound_segs,
                                             brush_x,
                                             brush_y);
-            }
-
-          if (paint_tool->brush_bound_segs)
-            {
-              g_free (paint_tool->brush_bound_segs);
-              paint_tool->brush_bound_segs   = NULL;
-              paint_tool->n_brush_bound_segs = 0;
             }
         }
     }

@@ -1,5 +1,15 @@
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppainttool.[ch]: removed the brush outline members
+	since we have no chance to really cache them without duplicating
+	GimpPaintCore's brush change notification code.
+
+	* app/paint/gimppaintcore.[ch]: added the outline here and really
+	cache it this time. The paint_core doesn't create or use the
+	outline but frees and NULLifies it whenever the brush changes.
+
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore-stroke.c
 	(gimp_paint_core_stroke_vectors): honor the destination drawable's
 	offsets and stroke multi-stroke vectors correctly.

@@ -245,6 +245,8 @@ gimp_paint_core_init (GimpPaintCore *core)
   core->cache_invalid            = FALSE;
 
   core->grr_brush                = NULL;
+  core->brush_bound_segs         = NULL;
+  core->n_brush_bound_segs       = 0;
 }
 
 static void
@@ -298,6 +300,13 @@ gimp_paint_core_finalize (GObject *object)
                                             core);
       g_object_unref (core->grr_brush);
       core->grr_brush = NULL;
+    }
+
+  if (core->brush_bound_segs)
+    {
+      g_free (core->brush_bound_segs);
+      core->brush_bound_segs   = NULL;
+      core->n_brush_bound_segs = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -372,27 +381,40 @@ gimp_paint_core_start (GimpPaintCore    *core,
    *  the maximum bounds of the active brush...
    */
 
-  if (core->grr_brush &&
-      core->grr_brush != gimp_context_get_brush (GIMP_CONTEXT (paint_options)))
+  if (core->grr_brush != gimp_context_get_brush (GIMP_CONTEXT (paint_options)))
     {
-      g_signal_handlers_disconnect_by_func (core->grr_brush,
-                                            gimp_paint_core_invalidate_cache,
-                                            core);
-      g_object_unref (core->grr_brush);
-    }
+      if (core->grr_brush)
+        {
+          g_signal_handlers_disconnect_by_func (core->grr_brush,
+                                                gimp_paint_core_invalidate_cache,
+                                                core);
+          g_object_unref (core->grr_brush);
+          core->grr_brush = NULL;
+        }
 
-  core->grr_brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
+      if (core->brush_bound_segs)
+        {
+          g_free (core->brush_bound_segs);
+          core->brush_bound_segs   = NULL;
+          core->n_brush_bound_segs = 0;
+        }
+    }
 
   if (! core->grr_brush)
     {
-      g_message (_("No brushes available for use with this tool."));
-      return FALSE;
-    }
+      core->grr_brush = gimp_context_get_brush (GIMP_CONTEXT (paint_options));
 
-  g_object_ref (core->grr_brush);
-  g_signal_connect (core->grr_brush, "invalidate_preview",
-                    G_CALLBACK (gimp_paint_core_invalidate_cache),
-                    core);
+      if (! core->grr_brush)
+        {
+          g_message (_("No brushes available for use with this tool."));
+          return FALSE;
+        }
+
+      g_object_ref (core->grr_brush);
+      g_signal_connect (core->grr_brush, "invalidate_preview",
+                        G_CALLBACK (gimp_paint_core_invalidate_cache),
+                        core);
+    }
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->grr_brush) / 100.0;
 
@@ -1007,6 +1029,13 @@ gimp_paint_core_invalidate_cache (GimpBrush     *brush,
 
   core->cache_invalid       = TRUE;
   core->solid_cache_invalid = TRUE;
+
+  if (core->brush_bound_segs)
+    {
+      g_free (core->brush_bound_segs);
+      core->brush_bound_segs   = NULL;
+      core->n_brush_bound_segs = 0;
+    }
 }
 
 /************************************************************

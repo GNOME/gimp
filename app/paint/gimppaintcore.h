@@ -122,8 +122,10 @@ struct _GimpPaintCore
   MaskBuf            *last_brush_mask;
   gboolean            cache_invalid;
 
-  /*  don't use this one...  */
+  /*  don't use these...  */
   GimpBrush          *grr_brush;
+  BoundSeg           *brush_bound_segs;
+  gint                n_brush_bound_segs;
 };
 
 struct _GimpPaintCoreClass

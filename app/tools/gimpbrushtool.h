@@ -41,8 +41,6 @@ struct _GimpPaintTool
   gboolean         draw_line;
   gboolean         draw_brush;
 
-  BoundSeg        *brush_bound_segs;
-  gint             n_brush_bound_segs;
   gdouble          brush_x;
   gdouble          brush_y;
 
