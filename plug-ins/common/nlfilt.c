@@ -535,12 +535,32 @@ mw_preview_new (GtkWidget *parent, GimpDrawable *drawable)
 **         Graeme W. Gill, 30th Jan 1993
 **         graeme@labtam.oz.au
 **
-** Permission to use, copy, modify, and distribute this software and its
-** documentation for any purpose and without fee is hereby granted, provided
-** that the above copyright notice appear in all copies and that both that
-** copyright notice and this permission notice appear in supporting
-** documentation.  This software is provided "as is" without express or
-** implied warranty.
+** Permission is hereby granted, to use, copy, modify, distribute,
+** and sell this software and its associated documentation files
+** (the "Software") for any purpose without fee, provided
+** that:
+** 
+**     1) The above copyright notices and this permission notice
+**        accompany all source code copies of the Software and
+**        related documentation.
+** and
+** 
+**     2) If executable code based on the Software only is distributed,
+**        then the accompanying documentation must acknowledge that
+**        "this software is based in part on the work of Graeme W. Gill".
+** and
+** 
+**     3) It is accepted that Graeme W. Gill (the "Author") accepts
+**        NO LIABILITY for damages of any kind.  The Software is
+**        provided without fee by the Author "AS-IS" and without
+**        warranty of any kind, express, implied or otherwise,   
+**        including without limitation, any warranty of merchantability
+**        or fitness for a particular purpose.
+** and
+** 
+**     4) These conditions apply to any software derived from or based
+**        on the Software, not just to the unmodified library.
+** 
 */
 
 /* ************************************************** */
