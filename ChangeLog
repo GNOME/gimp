@@ -1,5 +1,10 @@
 2003-11-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_get_file_data): when constructing
+	an URI list, don't add a newline character after the last item.
+
+2003-11-22  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/preferences-dialog.c: let the templates editor expand.
 
 2003-11-21  Michael Natterer  <mitch@gimp.org>

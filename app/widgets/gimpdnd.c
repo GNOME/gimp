@@ -920,13 +920,18 @@ gimp_dnd_get_file_data (GtkWidget *widget,
     {
       if (vals)
         {
-          gchar *tmp = g_strconcat (vals, list->data, "\n", NULL);
+          gchar *tmp = g_strconcat (vals,
+                                    list->data,
+                                    list->next ? "\n" : NULL,
+                                    NULL);
           g_free (vals);
           vals = tmp;
         }
       else
         {
-          vals = g_strconcat (list->data, "\n", NULL);
+          vals = g_strconcat (list->data,
+                              list->next ? "\n" : NULL,
+                              NULL);
         }
     }
 
