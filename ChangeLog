@@ -1,3 +1,12 @@
+Sun Feb 20 10:46:00 CST 2000  Seth Burgess <sjburges@gimp.org>
+
+	* app/gdisplay_ops.c: Fix bug that was causing images too
+	big to really mess up when shrink wrapped.  Tried to make
+	it work right for positioning image as well, but I fear 
+	this may be WM dependant.  Please let me know if things 
+	hang of the edges for you... (Fixes #6257)
+
+	
 Sun Feb 20 03:46:12 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/devices.c

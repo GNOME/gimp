@@ -140,6 +140,13 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   /* FIXME: Still not perfect - have to hide and show the window to 
    * get it to work.  Adding a queue_resize to the shell doesn't 
    * seem to help. Anyone have any good ideas here? 
+   *
+   * Also: if an image width is 1 pixel shy, it will eat up all width
+   * of the screen.  This can be non-good for some window managers; should
+   * we attempt to keep that from happening?
+   *
+   * I'm pretty sure this assumes that the current size is < display size
+   * Is this a valid assumption? 
    */
   gint x, y;
   gint disp_width, disp_height;
@@ -168,8 +175,8 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
   max_auto_width = (s_width - border_x) * 0.75;
   max_auto_height = (s_height - border_y) * 0.75;
 
-  /*  If 1) the projected width & height are smaller than screen size, &
-   *     2) the current display size isn't already the desired size, expand
+  /* If one of the display dimensions has changed and one of the
+   * dimensions fits inside the screen
    */
   if (((width + border_x) < s_width || (height + border_y) < s_height) &&
       (width != disp_width || height != disp_height))
@@ -181,41 +188,34 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
         { 
           width = gdisp->statusarea->requisition.width; 
         }
-      /* I don't know why, but if I don't hide the window, it doesn't work */
+      
+      /* FIXME: Have to hide/reshow here */
       gtk_widget_hide(gdisp->shell); 
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
 	                    width, height);
       gtk_widget_show(gdisp->shell); 
-
-      /*printf("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
+#undef RESIZE_DEBUG
+#ifdef RESIZE_DEBUG
+      printf("1w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
 	     width, height,
 	     disp_width, disp_height,
 	     shell_width, shell_height,
-	     border_x, border_y);fflush(stdout);*/
-
+	     border_x, border_y);fflush(stdout);
+#endif /* RESIZE_DEBUG */
+		     
       gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
 
-      shell_width = width + border_x;
-      shell_height = height + border_y;
-
-      x = MIN (shell_x, CLAMP (s_width - shell_width, border_x, s_width));
-      y = MIN (shell_y, CLAMP (s_height - shell_height, border_y, s_height));
-
-      if (x != shell_x || y != shell_y)
-	gdk_window_move (gdisp->shell->window, x, y);
-
-      /*  Set the new disp_width and disp_height values  */
-      gdisp->disp_width = width;
+      gdisp->disp_width = width;   /* Should this be shell width? */
       gdisp->disp_height = height;
     }
-  /*  If the projected width is greater than current, but less than
+  /*  If the projected dimension is greater than current, but less than
    *  3/4 of the screen size, expand automagically
    */
   else if ((width > disp_width || height > disp_height) &&
 	   (disp_width < max_auto_width || disp_height < max_auto_height))
     {
-      max_auto_width = MIN (max_auto_width, width);
-      max_auto_height = MIN (max_auto_height, height);
+      width = MIN (max_auto_width, width);
+      height = MIN (max_auto_height, height);
       
       if (width < gdisp->statusarea->requisition.width) 
         { 
@@ -227,27 +227,19 @@ gdisplay_shrink_wrap (GDisplay *gdisp)
       gtk_drawing_area_size(GTK_DRAWING_AREA(gdisp->canvas),
 	                    width, height);
       gtk_widget_show(gdisp->shell); 
-
-      /*printf("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
+#ifdef RESIZE_DEBUG
+      printf("2w:%d/%d d:%d/%d s:%d/%d b:%d/%d\n",
 	     width, height,
 	     disp_width, disp_height,
 	     shell_width, shell_height,
-	     border_x, border_y);fflush(stdout);*/
+	     border_x, border_y);fflush(stdout);
+#endif /* RESIZE_DEBUG */
 
       gdk_window_get_origin (gdisp->shell->window, &shell_x, &shell_y);
-
-      shell_width = width + border_x;
-      shell_height = height + border_y;
-
-      x = MIN (shell_x, CLAMP (s_width - shell_width, border_x, s_width));
-      y = MIN (shell_y, CLAMP (s_height - shell_height, border_y, s_height));
-
-      if (x != shell_x || y != shell_y)
-	gdk_window_move (gdisp->shell->window, x, y);
-
+      
       /*  Set the new disp_width and disp_height values  */
-      gdisp->disp_width = max_auto_width;
-      gdisp->disp_height = max_auto_height;
+      gdisp->disp_width = width;
+      gdisp->disp_height = height;
     }
   /*  Otherwise, reexpose by hand to reflect changes  */
   else
