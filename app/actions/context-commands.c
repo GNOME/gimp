@@ -73,6 +73,108 @@ context_colors_swap_cmd_callback (GtkAction *action,
 }
 
 void
+context_foreground_red_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  return_if_no_context (context, data);
+
+  gimp_context_get_foreground (context, &color);
+  color.r = context_select_value ((GimpContextSelectType) value,
+                                    color.r,
+                                    0.0, 1.0,
+                                    0.01, 0.1, FALSE);
+  gimp_context_set_foreground (context, &color);
+}
+
+void
+context_foreground_green_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  return_if_no_context (context, data);
+
+  gimp_context_get_foreground (context, &color);
+  color.g = context_select_value ((GimpContextSelectType) value,
+                                    color.g,
+                                    0.0, 1.0,
+                                    0.01, 0.1, FALSE);
+  gimp_context_set_foreground (context, &color);
+}
+
+void
+context_foreground_blue_cmd_callback (GtkAction *action,
+                                      gint       value,
+                                      gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  return_if_no_context (context, data);
+
+  gimp_context_get_foreground (context, &color);
+  color.b = context_select_value ((GimpContextSelectType) value,
+                                    color.b,
+                                    0.0, 1.0,
+                                    0.01, 0.1, FALSE);
+  gimp_context_set_foreground (context, &color);
+}
+
+void
+context_background_red_cmd_callback (GtkAction *action,
+                                     gint       value,
+                                     gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  return_if_no_context (context, data);
+
+  gimp_context_get_background (context, &color);
+  color.r = context_select_value ((GimpContextSelectType) value,
+                                    color.r,
+                                    0.0, 1.0,
+                                    0.01, 0.1, FALSE);
+  gimp_context_set_background (context, &color);
+}
+
+void
+context_background_green_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  return_if_no_context (context, data);
+
+  gimp_context_get_background (context, &color);
+  color.g = context_select_value ((GimpContextSelectType) value,
+                                    color.g,
+                                    0.0, 1.0,
+                                    0.01, 0.1, FALSE);
+  gimp_context_set_background (context, &color);
+}
+
+void
+context_background_blue_cmd_callback (GtkAction *action,
+                                      gint       value,
+                                      gpointer   data)
+{
+  GimpContext *context;
+  GimpRGB      color;
+  return_if_no_context (context, data);
+
+  gimp_context_get_background (context, &color);
+  color.b = context_select_value ((GimpContextSelectType) value,
+                                    color.b,
+                                    0.0, 1.0,
+                                    0.01, 0.1, FALSE);
+  gimp_context_set_background (context, &color);
+}
+
+void
 context_opacity_cmd_callback (GtkAction *action,
                               gint       value,
                               gpointer   data)
@@ -368,17 +470,25 @@ context_select_value (GimpContextSelectType  select_type,
       break;
 
     default:
-      g_return_val_if_reached (min);
+      if (value >= 0)
+        value = (gdouble) select_type * (max - min) / 1000.0 + min;
+      else
+        g_return_val_if_reached (FALSE);
       break;
     }
 
-  if (! wrap)
-    return CLAMP (value, min, max);
+  if (wrap)
+    {
+      while (value < min)
+        value = max - (min - value);
 
-  if (value < min)
-    return max - (min - value);
-  else if (value > max)
-    return min + (max - value);
+      while (value > max)
+        value = min + (max - value);
+    }
+  else
+    {
+      value = CLAMP (value, min, max);
+    }
 
   return value;
 }

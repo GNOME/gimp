@@ -22,6 +22,7 @@
 
 typedef enum
 {
+  GIMP_CONTEXT_SELECT_SET           =  0,
   GIMP_CONTEXT_SELECT_FIRST         = -1,
   GIMP_CONTEXT_SELECT_LAST          = -2,
   GIMP_CONTEXT_SELECT_PREVIOUS      = -3,
@@ -35,6 +36,26 @@ void   context_colors_default_cmd_callback  (GtkAction   *action,
                                              gpointer     data);
 void   context_colors_swap_cmd_callback     (GtkAction   *action,
                                              gpointer     data);
+
+void   context_foreground_red_cmd_callback  (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_foreground_green_cmd_callback(GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_foreground_blue_cmd_callback (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+
+void   context_background_red_cmd_callback  (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_background_green_cmd_callback(GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
+void   context_background_blue_cmd_callback (GtkAction *action,
+                                             gint       value,
+                                             gpointer   data);
 
 void   context_opacity_cmd_callback         (GtkAction *action,
                                              gint       value,

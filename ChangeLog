@@ -1,3 +1,16 @@
+2004-06-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/context-actions.c
+	* app/actions/context-commands.[ch]: added tons of new actions to
+	modify the current FG/BG color's RGB components.
+
+	Added new enum value GIMP_CONTEXT_SELECT_SET which allows to set
+	values, not only increase/decrease them.
+
+	Changed context_select_value() utility function to interpret
+	GimpEnumAction::value being >= GIMP_CONTEXT_SELECT_SET as settings
+	in a range from 0 to 1000. Yes, that's a hack...
+
 2004-06-18  Philip Lafleur  <plafleur@cvs.gnome.org>
 
 	* app/tools/gimptransformtool.c: reverted my fix to bug #144570.

@@ -63,8 +63,204 @@ static GimpActionEntry context_actions[] =
     GIMP_HELP_TOOLBOX_SWAP_COLORS }
 };
 
+static GimpEnumActionEntry context_foreground_red_actions[] =
+{
+  { "context-foreground-red-set", NULL,
+    "Set Foreground Red", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SET,
+    NULL },
+  { "context-foreground-red-minimum", GTK_STOCK_GOTO_FIRST,
+    "Foreground Red Minimum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-foreground-red-maximum", GTK_STOCK_GOTO_LAST,
+    "Foreground Red Maximum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-foreground-red-decrease", GTK_STOCK_REMOVE,
+    "Foreground Red Decrease", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-foreground-red-increase", GTK_STOCK_ADD,
+    "Foreground Red Increase", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-foreground-red-decrease-skip", GTK_STOCK_REMOVE,
+    "Foreground Red Decrease 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-foreground-red-increase-skip", GTK_STOCK_ADD,
+    "Foreground Red Increase 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_foreground_green_actions[] =
+{
+  { "context-foreground-green-set", NULL,
+    "Set Foreground Green", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SET,
+    NULL },
+  { "context-foreground-green-minimum", GTK_STOCK_GOTO_FIRST,
+    "Foreground Green Minimum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-foreground-green-maximum", GTK_STOCK_GOTO_LAST,
+    "Foreground Green Maximum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-foreground-green-decrease", GTK_STOCK_REMOVE,
+    "Foreground Green Decrease", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-foreground-green-increase", GTK_STOCK_ADD,
+    "Foreground Green Increase", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-foreground-green-decrease-skip", GTK_STOCK_REMOVE,
+    "Foreground Green Decrease 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-foreground-green-increase-skip", GTK_STOCK_ADD,
+    "Foreground Green Increase 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_foreground_blue_actions[] =
+{
+  { "context-foreground-blue-set", NULL,
+    "Set Foreground Blue", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SET,
+    NULL },
+  { "context-foreground-blue-minimum", GTK_STOCK_GOTO_FIRST,
+    "Foreground Blue Minimum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-foreground-blue-maximum", GTK_STOCK_GOTO_LAST,
+    "Foreground Blue Maximum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-foreground-blue-decrease", GTK_STOCK_REMOVE,
+    "Foreground Blue Decrease", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-foreground-blue-increase", GTK_STOCK_ADD,
+    "Foreground Blue Increase", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-foreground-blue-decrease-skip", GTK_STOCK_REMOVE,
+    "Foreground Blue Decrease 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-foreground-blue-increase-skip", GTK_STOCK_ADD,
+    "Foreground Blue Increase 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_background_red_actions[] =
+{
+  { "context-background-red-set", NULL,
+    "Set Background Red", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SET,
+    NULL },
+  { "context-background-red-minimum", GTK_STOCK_GOTO_FIRST,
+    "Background Red Minimum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-background-red-maximum", GTK_STOCK_GOTO_LAST,
+    "Background Red Maximum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-background-red-decrease", GTK_STOCK_REMOVE,
+    "Background Red Decrease", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-background-red-increase", GTK_STOCK_ADD,
+    "Background Red Increase", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-background-red-decrease-skip", GTK_STOCK_REMOVE,
+    "Background Red Decrease 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-background-red-increase-skip", GTK_STOCK_ADD,
+    "Background Red Increase 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_background_green_actions[] =
+{
+  { "context-background-green-set", NULL,
+    "Set Background Green", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SET,
+    NULL },
+  { "context-background-green-minimum", GTK_STOCK_GOTO_FIRST,
+    "Background Green Minimum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-background-green-maximum", GTK_STOCK_GOTO_LAST,
+    "Background Green Maximum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-background-green-decrease", GTK_STOCK_REMOVE,
+    "Background Green Decrease", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-background-green-increase", GTK_STOCK_ADD,
+    "Background Green Increase", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-background-green-decrease-skip", GTK_STOCK_REMOVE,
+    "Background Green Decrease 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-background-green-increase-skip", GTK_STOCK_ADD,
+    "Background Green Increase 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL }
+};
+
+static GimpEnumActionEntry context_background_blue_actions[] =
+{
+  { "context-background-blue-set", NULL,
+    "Set Background Blue", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SET,
+    NULL },
+  { "context-background-blue-minimum", GTK_STOCK_GOTO_FIRST,
+    "Background Blue Minimum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_FIRST,
+    NULL },
+  { "context-background-blue-maximum", GTK_STOCK_GOTO_LAST,
+    "Background Blue Maximum", NULL, NULL,
+    GIMP_CONTEXT_SELECT_LAST,
+    NULL },
+  { "context-background-blue-decrease", GTK_STOCK_REMOVE,
+    "Background Blue Decrease", NULL, NULL,
+    GIMP_CONTEXT_SELECT_PREVIOUS,
+    NULL },
+  { "context-background-blue-increase", GTK_STOCK_ADD,
+    "Background Blue Increase", NULL, NULL,
+    GIMP_CONTEXT_SELECT_NEXT,
+    NULL },
+  { "context-background-blue-decrease-skip", GTK_STOCK_REMOVE,
+    "Background Blue Decrease 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
+    NULL },
+  { "context-background-blue-increase-skip", GTK_STOCK_ADD,
+    "Background Blue Increase 10%", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SKIP_NEXT,
+    NULL }
+};
+
 static GimpEnumActionEntry context_opacity_actions[] =
 {
+  { "context-opacity-set", NULL,
+    "Set Transparency", NULL, NULL,
+    GIMP_CONTEXT_SELECT_SET,
+    NULL },
   { "context-opacity-transparent", GTK_STOCK_GOTO_FIRST,
     "Completely Transparent", NULL, NULL,
     GIMP_CONTEXT_SELECT_FIRST,
@@ -82,11 +278,11 @@ static GimpEnumActionEntry context_opacity_actions[] =
     GIMP_CONTEXT_SELECT_NEXT,
     NULL },
   { "context-opacity-decrease-skip", GTK_STOCK_REMOVE,
-    "Much More Transparent", NULL, NULL,
+    "10% More Transparent", NULL, NULL,
     GIMP_CONTEXT_SELECT_SKIP_PREVIOUS,
     NULL },
   { "context-opacity-increase-skip", GTK_STOCK_ADD,
-    "Much More Opaque", NULL, NULL,
+    "10% More Opaque", NULL, NULL,
     GIMP_CONTEXT_SELECT_SKIP_NEXT,
     NULL }
 };
@@ -330,6 +526,32 @@ context_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_actions (group,
                                  context_actions,
                                  G_N_ELEMENTS (context_actions));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_foreground_red_actions,
+                                      G_N_ELEMENTS (context_foreground_red_actions),
+                                      G_CALLBACK (context_foreground_red_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_foreground_green_actions,
+                                      G_N_ELEMENTS (context_foreground_green_actions),
+                                      G_CALLBACK (context_foreground_green_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_foreground_blue_actions,
+                                      G_N_ELEMENTS (context_foreground_blue_actions),
+                                      G_CALLBACK (context_foreground_blue_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      context_background_red_actions,
+                                      G_N_ELEMENTS (context_background_red_actions),
+                                      G_CALLBACK (context_background_red_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_background_green_actions,
+                                      G_N_ELEMENTS (context_background_green_actions),
+                                      G_CALLBACK (context_background_green_cmd_callback));
+  gimp_action_group_add_enum_actions (group,
+                                      context_background_blue_actions,
+                                      G_N_ELEMENTS (context_background_blue_actions),
+                                      G_CALLBACK (context_background_blue_cmd_callback));
 
   gimp_action_group_add_enum_actions (group,
                                       context_opacity_actions,
