@@ -50,6 +50,15 @@ Functions for manipulating color, including curves and histograms.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_levels_stretch ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_posterize ##### -->
 <para>
 

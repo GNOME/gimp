@@ -222,6 +222,7 @@ gimp_channel_combine_masks
 gimp_brightness_contrast
 gimp_levels
 gimp_levels_auto
+gimp_levels_stretch
 gimp_posterize
 gimp_desaturate
 gimp_equalize
@@ -327,14 +328,22 @@ gimp_drawable_attach_new_parasite
 
 <SECTION>
 <FILE>gimpdrawabletransform</FILE>
+gimp_drawable_transform_flip_simple
 gimp_drawable_transform_flip
-gimp_drawable_transform_flip_free
+gimp_drawable_transform_flip_defaults
 gimp_drawable_transform_perspective
+gimp_drawable_transform_perspective_defaults
+gimp_drawable_transform_rotate_simple
 gimp_drawable_transform_rotate
+gimp_drawable_transform_rotate_defaults
 gimp_drawable_transform_scale
+gimp_drawable_transform_scale_defaults
 gimp_drawable_transform_shear
+gimp_drawable_transform_shear_defaults
 gimp_drawable_transform_2d
+gimp_drawable_transform_2d_defaults
 gimp_drawable_transform_matrix
+gimp_drawable_transform_matrix_defaults
 </SECTION>
 
 <SECTION>
@@ -526,6 +535,8 @@ gimp_image_get_layer_by_tattoo
 gimp_image_get_channel_by_tattoo
 gimp_image_get_cmap
 gimp_image_set_cmap
+gimp_image_get_colormap
+gimp_image_set_colormap
 gimp_image_get_thumbnail_data
 gimp_image_parasite_find
 gimp_image_parasite_list

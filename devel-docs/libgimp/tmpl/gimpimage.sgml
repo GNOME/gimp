@@ -609,6 +609,29 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_get_colormap ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@num_colors: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_set_colormap ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@colormap: 
+@num_colors: 
+@Returns: 
+<!-- # Unused Parameters # -->
+@cmap: 
+
+
 <!-- ##### FUNCTION gimp_image_get_thumbnail_data ##### -->
 <para>
 

@@ -117,13 +117,13 @@ GimpPreviewArea
 @y: 
 
 
-<!-- ##### FUNCTION gimp_preview_area_set_cmap ##### -->
+<!-- ##### FUNCTION gimp_preview_area_set_colormap ##### -->
 <para>
 
 </para>
 
 @area: 
-@cmap: 
+@colormap: 
 @num_colors: 
 
 

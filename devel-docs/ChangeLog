@@ -1,3 +1,13 @@
+2004-11-02  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
+
+	* libgimp/tmpl/gimpcolor.sgml
+	* libgimp/tmpl/gimpdrawabletransform.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimpwidgets/tmpl/gimppreviewarea.sgml: regenerated.
+
 2004-10-31  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/libgimpbase-sections.txt
