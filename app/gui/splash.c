@@ -245,7 +245,7 @@ splash_update (const gchar *text1,
 /*  private functions  */
 
 
-/* This function chooses black or white for the text color, based on
+/* This function chooses a gray value for the text color, based on
  * the average intensity of the lower 60 rows of the splash image.
  */
 static gboolean
@@ -258,9 +258,9 @@ splash_average_bottom (GtkWidget *widget,
   gint          width, height;
   gint          rowstride;
   gint          channels;
-  guint         count;
+  gint          intensity;
+  gint          count;
   guint         sum[3] = { 0, 0, 0 };
-  guchar        intensity;
 
   g_return_val_if_fail (GDK_IS_PIXBUF (pixbuf), FALSE);
   g_return_val_if_fail (gdk_pixbuf_get_bits_per_sample (pixbuf) == 8, FALSE);
@@ -296,9 +296,9 @@ splash_average_bottom (GtkWidget *widget,
                                   sum[1] / count,
                                   sum[2] / count);
 
-  color->red = color->green = color->blue = (intensity & 0x80
-                                             ? 0
-                                             : (1 << 16) - 1);
+  intensity = CLAMP0255 (intensity > 127 ? intensity - 223 : intensity + 223);
+
+  color->red = color->green = color->blue = (intensity << 8 | intensity);
 
   return gdk_colormap_alloc_color (gtk_widget_get_colormap (widget),
                                    color, FALSE, TRUE);
