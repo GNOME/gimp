@@ -1,3 +1,11 @@
+2004-02-10  Sven Neumann  <sven@gimp.org>
+
+	* themes/Default/images/Makefile.am: added a rule to create a
+	header containing a warning pixbuf that we can use from the core.
+
+	* app/base/temp-buf.c (temp_buf_new): rewritten an optimisation so
+	that it works for any number of bytes per pixel.
+
 2004-02-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpviewable.[ch]: added new function

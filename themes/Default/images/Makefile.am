@@ -5,6 +5,15 @@ SUBDIRS = preferences
 themedatadir = $(gimpdatadir)/themes/Default/images
 
 
+## A warning Wilber that is used from the core
+
+CORE_IMAGES = \
+	stock-warning-64.png
+
+CORE_VARIABLES = \
+	stock_warning_64 $(srcdir)/stock-warning-64.png
+
+
 ## Wilber icons for the window managaer, compiled in
 
 WILBER_IMAGES = \
@@ -303,14 +312,20 @@ STOCK_IMAGES = \
 themedata_DATA = $(STOCK_IMAGES)
 
 EXTRA_DIST = \
-	$(themedata_DATA)		\
-	$(WILBER_IMAGES)		\
-	gimp-dialog-icons.xcf.gz	\
+	$(themedata_DATA)	\
+	$(CORE_IMAGES)		\
+	$(WILBER_IMAGES)	\
+	gimp-dialog-icons.xcf.gz\
 	makefile.msc
 
 
-noinst_DATA = gimp-stock-pixbufs.h gimp-wilber-pixbufs.h
+noinst_DATA = \
+	gimp-core-pixbufs.h	\
+	gimp-stock-pixbufs.h	\
+	gimp-wilber-pixbufs.h
+
 CLEANFILES = $(noinst_DATA) stock-icons.list
+
 
 stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	( rm -f $@; \
@@ -320,9 +335,11 @@ stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	    echo "  $(srcdir)/$$image" >> $@; \
 	  done )
 
+$(srcdir)/gimp-core-pixbufs.h: $(CORE_IMAGES) Makefile.am
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(CORE_VARIABLES) > $(@F)
+
 $(srcdir)/gimp-stock-pixbufs.h: stock-icons.list
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)
 
-
-$(srcdir)/gimp-wilber-pixbufs.h: $(WILBER_IMAGES)
+$(srcdir)/gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(WILBER_VARIABLES) > $(@F)

@@ -176,6 +176,7 @@ temp_buf_new (gint    width,
   TempBuf *temp;
 
   g_return_val_if_fail (width > 0 && height > 0, NULL);
+  g_return_val_if_fail (bytes > 0, NULL);
 
   temp = g_new (TempBuf, 1);
 
@@ -193,39 +194,31 @@ temp_buf_new (gint    width,
   if (col)
     {
       /* First check if we can save a lot of work */
-      if (bytes == 1)
+      for (i = 1; i < bytes; i++)
         {
-          memset (data, *col, width * height);
+          if (col[0] != col[i])
+            break;
         }
-      else if ((bytes == 3) && (col[1] == *col) && (*col == col[2]))
+
+      if (i == bytes)
         {
-          memset (data, *col, width * height * 3);
+          memset (data, *col, width * height * bytes);
         }
-      else if ((bytes == 4) &&
-	       (col[1] == *col) && (*col == col[2]) && (col[2] == col[3]))
+      else /* No, we cannot */
         {
-          memset (data, *col, (width * height) << 2);
-        }
-      else
-        {
-          /* No, we cannot */
-          guchar *dptr;
+          guchar *dptr = data;
 
           /* Fill the first row */
-          dptr = data;
-
           for (i = width - 1; i >= 0; --i)
             {
-              guchar *init;
-
-              j    = bytes;
-              init = col;
+              guchar *init = col;
+              gint    j    = bytes;
 
               while (j--)
                 *dptr++ = *init++;
             }
 
-          /* Now copy from it (we set bytes to bytesperrow now) */
+          /* Now copy from it (we set bytes to bytes-per-row now) */
           bytes *= width;
 
           while (--height)
