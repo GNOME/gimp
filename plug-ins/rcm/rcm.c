@@ -104,7 +104,7 @@ void query(void)
   int nargs = sizeof (args) / sizeof (args[0]);
   int nreturn_vals = 0;
 
-  gimp_install_procedure ("Colormap rotation plug-in",
+  gimp_install_procedure ("plug-in-rotate-colormap",
 			  "Colormap rotation as in xv",
 			  "Exchanges two color ranges. "\
 			  "Based on code from Pavel Grinfeld (pavel@ml.com). "\

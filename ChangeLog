@@ -1,3 +1,12 @@
+Fri Jun 18 10:55:46 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* tools/pdbgen/pdb/gimpage.pdb
+	* app/gimage_cmds.c: 
+	fixed a bug in (gimp-image-floating-sel-attached-to)
+
+	* plug-ins/rcm/rcm.c: changed the registered plug-in name so it
+	follows the naming conventions
+
 Thu Jun 17 22:30:00 CST 1999 Seth Burgess <sjburges@gimp.org>
 	
 	* app/colormap_dialog.i.c : set usize on indexed color pallete, 

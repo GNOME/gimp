@@ -2129,7 +2129,11 @@ image_floating_sel_attached_to_invoker (Argument *args)
   if (success)
     {
       floating_sel = gimage_floating_sel (gimage);
-      drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
+    
+      if (floating_sel)
+	drawable = GIMP_DRAWABLE (GIMP_LAYER (floating_sel)->fs.drawable);
+      else
+	drawable = NULL;
     }
 
   return_args = procedural_db_return_args (&image_floating_sel_attached_to_proc, success);
