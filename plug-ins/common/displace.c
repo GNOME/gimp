@@ -34,9 +34,19 @@
  * and the possibility to use RGB/RGBA pictures where the intensity
  * of the pixel is taken into account
  *
+ * Joao S. O. Bueno, Dec. 2004:
+ *
+ * Added functionality to displace using polar coordinates -
+ * For a plain, non neutral map, works like whirl and pinch
  */
 
 /* Version 1.12. */
+
+typedef enum
+{
+  CARTESIAN_MODE = 0,
+  POLAR_MODE = 1
+} DisplaceMode;
 
 #include "config.h"
 
@@ -62,14 +72,15 @@
 
 typedef struct
 {
-  gdouble  amount_x;
-  gdouble  amount_y;
-  gint     do_x;
-  gint     do_y;
-  gint     displace_map_x;
-  gint     displace_map_y;
-  gint     displace_type;
-  gboolean preview;
+  gdouble      amount_x;
+  gdouble      amount_y;
+  gint         do_x;
+  gint         do_y;
+  gint         displace_map_x;
+  gint         displace_map_y;
+  gint         displace_type;
+  DisplaceMode mode;
+  gboolean     preview;
 } DisplaceVals;
 
 
@@ -87,6 +98,12 @@ static void      run    (const gchar      *name,
 static void      displace        (GimpDrawable *drawable,
                                   GimpPreview  *preview);
 static gboolean  displace_dialog (GimpDrawable *drawable);
+
+static void      displace_radio_update   (GtkWidget     *widget,
+                                          gpointer       data);
+
+static void      displace_set_labels     (void);
+static void      displace_get_label_size (void);
 
 static gboolean  displace_map_constrain    (gint32     image_id,
                                             gint32     drawable_id,
@@ -114,7 +131,22 @@ static DisplaceVals dvals =
   -1,                           /* displace_map_x */
   -1,                           /* displace_map_y */
   GIMP_PIXEL_FETCHER_EDGE_WRAP, /* displace_type */
+  CARTESIAN_MODE,               /* mode */
   TRUE
+};
+
+
+/***** Variables *****/
+
+static GtkWidget   *preview        = NULL;
+static GtkWidget   *toggle_x       = NULL;
+static GtkWidget   *toggle_y       = NULL;
+static gint         label_maxwidth = 0;
+
+static const gchar *mtext[][2] =
+{
+  { N_("_X displacement"),   N_("_Pinch") },
+  { N_("_Y displacement"),   N_("_Whirl") }
 };
 
 
@@ -130,13 +162,21 @@ query (void)
     { GIMP_PDB_INT32,    "run_mode",       "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",          "Input image (unused)" },
     { GIMP_PDB_DRAWABLE, "drawable",       "Input drawable" },
-    { GIMP_PDB_FLOAT,    "amount_x",       "Displace multiplier for X direction" },
-    { GIMP_PDB_FLOAT,    "amount_y",       "Displace multiplier for Y direction" },
-    { GIMP_PDB_INT32,    "do_x",           "Displace in X direction?" },
-    { GIMP_PDB_INT32,    "do_y",           "Displace in Y direction?" },
-    { GIMP_PDB_DRAWABLE, "displace_map_x", "Displacement map for X direction" },
-    { GIMP_PDB_DRAWABLE, "displace_map_y", "Displacement map for Y direction" },
-    { GIMP_PDB_INT32,    "displace_type",  "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" }
+    { GIMP_PDB_FLOAT,    "amount_x",
+           "Displace multiplier for X or radial direction" },
+    { GIMP_PDB_FLOAT,    "amount_y",
+           "Displace multiplier for Y or tangent (degrees) direction" },
+    { GIMP_PDB_INT32,    "do_x",
+           "Displace in X or radial direction?" },
+    { GIMP_PDB_INT32,    "do_y",
+           "Displace in Y or tangent direction?" },
+    { GIMP_PDB_DRAWABLE, "displace_map_x",
+           "Displacement map for X or radial direction" },
+    { GIMP_PDB_DRAWABLE, "displace_map_y",
+           "Displacement map for Y or tangent direction" },
+    { GIMP_PDB_INT32,    "displace_type",  "Edge behavior: { WRAP (0), SMEAR (1), BLACK (2) }" },
+    { GIMP_PDB_INT32,    "mode",
+           "Mode of displacement: { CARTESIAN (0), POLAR (1) }"}
   };
 
   gimp_install_procedure ("plug_in_displace",
@@ -145,8 +185,8 @@ query (void)
                           "by the amounts specified by 'amount_x' and "
                           "'amount_y' multiplied by the intensity of "
                           "corresponding pixels in the 'displace_map' "
-                          "drawables.  Both 'displace_map' drawables must be "
-                          "of type GIMP_GRAY_IMAGE for this operation to succeed.",
+                          "drawables.  If mode is polar coordinates"
+                          "drawable is whirled and pinched according to map.",
                           "Stephen Robert Norris & (ported to 1.0 by) "
                           "Spencer Kimball",
                           "Stephen Robert Norris",
@@ -201,7 +241,8 @@ run (const gchar      *name,
 
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
-      if (nparams != 10)
+      /* The mode argument is optional to ensure backwards compatibility */
+      if (nparams != 9 && nparams != 10)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
@@ -214,6 +255,10 @@ run (const gchar      *name,
           dvals.displace_map_x = param[7].data.d_int32;
           dvals.displace_map_y = param[8].data.d_int32;
           dvals.displace_type  = param[9].data.d_int32;
+          if (nparams == 10)
+            dvals.mode = param[10].data.d_int32;
+          else
+            dvals.mode = CARTESIAN_MODE;
         }
       break;
 
@@ -251,12 +296,11 @@ displace_dialog (GimpDrawable *drawable)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
-  GtkWidget *preview;
-  GtkWidget *toggle;
   GtkWidget *table;
   GtkWidget *spinbutton;
   GtkObject *adj;
   GtkWidget *combo;
+  GtkWidget *hbox;
   GtkWidget *frame;
   GtkWidget *wrap;
   GtkWidget *smear;
@@ -293,22 +337,22 @@ displace_dialog (GimpDrawable *drawable)
 
   /*  The main table  */
 
-  table = gtk_table_new (3, 3, FALSE);
+  table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 12);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), table, FALSE, FALSE, 0);
 
   /*  X options  */
-  toggle = gtk_check_button_new_with_mnemonic (_("_X displacement:"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 0, 1,
+  toggle_x = gtk_check_button_new_with_mnemonic (_("_X displacement:"));
+  gtk_table_attach (GTK_TABLE (table), toggle_x, 0, 1, 0, 1,
                     GTK_FILL, GTK_FILL, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_x);
-  gtk_widget_show (toggle);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle_x), dvals.do_x);
+  gtk_widget_show (toggle_x);
 
-  g_signal_connect (toggle, "toggled",
+  g_signal_connect (toggle_x, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &dvals.do_x);
-  g_signal_connect_swapped (toggle, "toggled",
+  g_signal_connect_swapped (toggle_x, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -327,7 +371,7 @@ displace_dialog (GimpDrawable *drawable)
                             preview);
 
   gtk_widget_set_sensitive (spinbutton, dvals.do_x);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
+  g_object_set_data (G_OBJECT (toggle_x), "set_sensitive", spinbutton);
   gtk_widget_show (spinbutton);
 
   combo = gimp_drawable_combo_box_new (displace_map_constrain, drawable);
@@ -346,16 +390,16 @@ displace_dialog (GimpDrawable *drawable)
   g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", combo);
 
   /*  Y Options  */
-  toggle = gtk_check_button_new_with_mnemonic (_("_Y displacement:"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 1, 1, 2,
+  toggle_y = gtk_check_button_new_with_mnemonic (_("_Y displacement:"));
+  gtk_table_attach (GTK_TABLE (table), toggle_y, 0, 1, 1, 2,
                     GTK_FILL, GTK_FILL, 0, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), dvals.do_y);
-  gtk_widget_show (toggle);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle_y), dvals.do_y);
+  gtk_widget_show (toggle_y);
 
-  g_signal_connect (toggle, "toggled",
+  g_signal_connect (toggle_y, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &dvals.do_y);
-  g_signal_connect_swapped (toggle, "toggled",
+  g_signal_connect_swapped (toggle_y, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
@@ -374,7 +418,7 @@ displace_dialog (GimpDrawable *drawable)
                             preview);
 
   gtk_widget_set_sensitive (spinbutton, dvals.do_y);
-  g_object_set_data (G_OBJECT (toggle), "set_sensitive", spinbutton);
+  g_object_set_data (G_OBJECT (toggle_y), "set_sensitive", spinbutton);
   gtk_widget_show (spinbutton);
 
   combo = gimp_drawable_combo_box_new (displace_map_constrain, drawable);
@@ -392,7 +436,20 @@ displace_dialog (GimpDrawable *drawable)
   gtk_widget_set_sensitive (combo, dvals.do_y);
   g_object_set_data (G_OBJECT (spinbutton), "set_sensitive", combo);
 
-  frame = gimp_int_radio_group_new (TRUE, _("On Edges:"),
+  hbox = gtk_hbox_new (FALSE, 24);
+  gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  frame = gimp_int_radio_group_new (TRUE, _("Displacement Mode"),
+                                    G_CALLBACK (displace_radio_update),
+                                    &dvals.mode, dvals.mode,
+                                    _("_Cartesian"), CARTESIAN_MODE, NULL,
+                                    _("_Polar"),     POLAR_MODE,     NULL,
+                                    NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show  (frame);
+
+  frame = gimp_int_radio_group_new (TRUE, _("Edge behaviour"),
                                     G_CALLBACK (gimp_radio_button_update),
                                     &dvals.displace_type, dvals.displace_type,
 
@@ -404,9 +461,8 @@ displace_dialog (GimpDrawable *drawable)
                                     &black,
 
                                     NULL);
-  gtk_table_attach (GTK_TABLE (table), frame, 0, 3, 2, 3,
-                    GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (frame);
+  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show  (frame);
 
   g_signal_connect_swapped (wrap, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
@@ -417,6 +473,8 @@ displace_dialog (GimpDrawable *drawable)
   g_signal_connect_swapped (black, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
+  displace_get_label_size ();
+  displace_set_labels ();
 
   gtk_widget_show (table);
   gtk_widget_show (dialog);
@@ -451,10 +509,12 @@ displace (GimpDrawable *drawable,
   guchar            pixel[4][4];
   gint              x1, y1, x2, y2;
   gint              x, y;
+  gdouble           cx, cy;
   gint              progress, max_progress;
 
   gdouble           amnt;
   gdouble           needx, needy;
+  gdouble           radius, d_alpha;
   gint              xi, yi;
 
   guchar            values[4];
@@ -468,8 +528,14 @@ displace (GimpDrawable *drawable,
   gint              xm_bytes = 1;
   gint              ym_bytes = 1;
   guchar           *buffer   = NULL;
+  gdouble           pi;
 
   /* initialize */
+
+  /* get rid of uninitialized warnings */
+  cx = cy = needx = needy = radius = d_alpha = 0.0;
+
+  pi = 4 * atan (1);
 
   mxrow = NULL;
   myrow = NULL;
@@ -479,6 +545,17 @@ displace (GimpDrawable *drawable,
 
   bytes  = drawable->bpp;
 
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+                                 &x1, &y1, &x2, &y2);
+  width  = x2 - x1;
+  height = y2 - y1;
+
+  if (dvals.mode == POLAR_MODE)
+    {
+      cx = x1 + width / 2.0;
+      cy = y1 + height / 2.0;
+    }
+
   if (preview)
     {
       gimp_preview_get_position (preview, &x1, &y1);
@@ -486,13 +563,6 @@ displace (GimpDrawable *drawable,
       x2 = x1 + width;
       y2 = y1 + height;
       buffer = g_new (guchar, width * height * bytes);
-    }
-  else
-    {
-      gimp_drawable_mask_bounds (drawable->drawable_id,
-                                 &x1, &y1, &x2, &y2);
-      width  = x2 - x1;
-      height = y2 - y1;
     }
 
   progress     = 0;
@@ -560,9 +630,10 @@ displace (GimpDrawable *drawable,
           my = myrow;
 
           /*
-           * We could move the displacement image address calculation out of here,
-           * but when we can have different sized displacement and destination
-           * images we'd have to move it back anyway.
+           * We could move the displacement image address calculation
+           * out of here, but when we can have different sized
+           * displacement and destination images we'd have to move it
+           * back anyway.
            */
 
           for (x = dest_rgn.x; x < (dest_rgn.x + dest_rgn.w); x++)
@@ -571,22 +642,53 @@ displace (GimpDrawable *drawable,
                 {
                   xm_val = displace_map_give_value(mx, xm_alpha, xm_bytes);
                   amnt = dvals.amount_x * (xm_val - 127.5) / 127.5;
-                  needx = x + amnt;
+                  /* CARTESIAN_MODE == 0 - performance important here */
+                  if (! dvals.mode)
+                    {
+                      needx = x + amnt;
+                    }
+                  else
+                    {
+                      radius = sqrt (SQR (x - cx) + SQR (y - cy)) + amnt;
+                    }
                   mx += xm_bytes;
                 }
               else
-                needx = x;
+                {
+                  if (! dvals.mode)
+                    needx = x;
+                  else
+                    radius = sqrt ((x - cx) * (x - cx) + (y - cy) * (y - cy));
+                }
+
 
               if (dvals.do_y)
                 {
                   ym_val = displace_map_give_value(my, ym_alpha, ym_bytes);
                   amnt = dvals.amount_y * (ym_val - 127.5) / 127.5;
-                  needy = y + amnt;
+                  if (! dvals.mode)
+                    {
+                      needy = y + amnt;
+                    }
+                  else
+                    {
+                      d_alpha = atan2 (x - cx, y - cy) + (dvals.amount_y / 180)
+                                * pi * (ym_val - 127.5) / 127.5;
+                    }
                   my += ym_bytes;
                 }
               else
-                needy = y;
-
+                {
+                  if (! dvals.mode)
+                    needy = y;
+                  else
+                    d_alpha = atan2 (x - cx, y - cy);
+                }
+              if (dvals.mode)
+                {
+                   needx = cx + radius * sin (d_alpha);
+                   needy = cy + radius * cos (d_alpha);
+                }
               /* Calculations complete; now copy the proper pixel */
 
               if (needx >= 0.0)
@@ -687,4 +789,47 @@ displace_map_constrain (gint32   image_id,
 
   return (gimp_drawable_width (drawable_id)  == drawable->width &&
           gimp_drawable_height (drawable_id) == drawable->height);
+}
+
+static void
+displace_radio_update (GtkWidget *widget,
+                        gpointer   data)
+{
+  gimp_radio_button_update (widget, data);
+
+  displace_set_labels ();
+
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
+}
+
+static void
+displace_set_labels (void)
+{
+  gtk_button_set_label (GTK_BUTTON (toggle_x),
+                        gettext (mtext[0][dvals.mode]));
+  gtk_button_set_label (GTK_BUTTON (toggle_y),
+                        gettext (mtext[1][dvals.mode]));
+
+  gtk_widget_set_size_request (toggle_x, label_maxwidth, -1);
+  gtk_widget_set_size_request (toggle_y, label_maxwidth, -1);
+}
+
+static void
+displace_get_label_size (void)
+{
+  gint  i, j;
+
+  label_maxwidth = 0;
+
+  for (i = 0; i < 2; i++)
+    for (j = 0; j < 2; j++)
+      {
+        GtkRequisition  requisition;
+
+        gtk_button_set_label (GTK_BUTTON (toggle_x), gettext (mtext[i][j]));
+        gtk_widget_size_request (toggle_x, &requisition);
+
+        if (requisition.width > label_maxwidth)
+          label_maxwidth = requisition.width;
+      }
 }
