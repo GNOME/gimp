@@ -2120,69 +2120,69 @@ msgstr "Установки параметр╕в"
 
 #: plug-ins/common/align_layers.c:463 plug-ins/common/align_layers.c:496
 msgid "Collect"
-msgstr ""
+msgstr "З╕брати"
 
 #: plug-ins/common/align_layers.c:465
 msgid "Fill (left to right)"
-msgstr ""
+msgstr "Заповнити (зл╕ва направо)"
 
 #: plug-ins/common/align_layers.c:467
 msgid "Fill (right to left)"
-msgstr ""
+msgstr "Заповнити (справа нал╕во)"
 
 #: plug-ins/common/align_layers.c:469 plug-ins/common/align_layers.c:502
 #: plug-ins/gfig/gfig.c:3415
 msgid "Snap to Grid"
-msgstr ""
+msgstr "Вир╕вняти за с╕ткою"
 
 #: plug-ins/common/align_layers.c:474
 msgid "Horizontal Style:"
-msgstr ""
+msgstr "Горизонтальний стиль:"
 
 #: plug-ins/common/align_layers.c:481
 msgid "Left Edge"
-msgstr ""
+msgstr "Л╕вий край"
 
 #: plug-ins/common/align_layers.c:482 plug-ins/common/align_layers.c:515
 #: plug-ins/gap/gap_mov_dialog.c:263 plug-ins/gflare/gflare.c:2888
 msgid "Center"
-msgstr ""
+msgstr "Центр"
 
 #: plug-ins/common/align_layers.c:483
 msgid "Right Edge"
-msgstr ""
+msgstr "Правий край"
 
 #: plug-ins/common/align_layers.c:487 plug-ins/common/align_layers.c:520
 msgid "Horizontal Base:"
-msgstr ""
+msgstr "Горизонтальна основа:"
 
 #: plug-ins/common/align_layers.c:498
 msgid "Fill (top to bottom)"
-msgstr ""
+msgstr "Заповнити (згори донизу)"
 
 #: plug-ins/common/align_layers.c:500
 msgid "Fill (bottom to top)"
-msgstr ""
+msgstr "Заповнити (знизу догори)"
 
 #: plug-ins/common/align_layers.c:507
 msgid "Vertical Style:"
-msgstr ""
+msgstr "Вертикальний стиль:"
 
 #: plug-ins/common/align_layers.c:514
 msgid "Top Edge"
-msgstr ""
+msgstr "Гор╕шн╕й край"
 
 #: plug-ins/common/align_layers.c:516
 msgid "Bottom Edge"
-msgstr ""
+msgstr "Нижн╕й край"
 
 #: plug-ins/common/align_layers.c:525
 msgid "Ignore the Bottom Layer even if Visible"
-msgstr ""
+msgstr "╤гнорувати нижн╕й шар якщо його видно"
 
 #: plug-ins/common/align_layers.c:535
 msgid "Use the (Invisible) Bottom Layer as the Base"
-msgstr ""
+msgstr "Використовувати (невидимий) нижн╕й шар як основу"
 
 #: plug-ins/common/align_layers.c:545
 msgid "Grid Size:"
@@ -2249,7 +2249,7 @@ msgstr "Розоптим╕зац╕я ан╕мац╕╖..."
 
 #: plug-ins/common/animoptimize.c:301
 msgid "Not enough memory to allocate buffers for optimization.\n"
-msgstr ""
+msgstr "Не вистача╓ пам'ят╕ щоб вид╕лити буфери для оптим╕зац╕╖.\n"
 
 #: plug-ins/common/apply_lens.c:137
 msgid "<Image>/Filters/Glass Effects/Apply Lens..."
