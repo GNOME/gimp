@@ -1,3 +1,17 @@
+1999-06-28  Sven Neumann  <sven@gimp.org>
+	    Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/plug_in.c: return a PDB_EXECUTION_ERROR if a procedure
+	requested by a plugin doesn't exist.
+
+	* plug-ins/helpbrowser/*: The GIMP Help Browser!
+	Not yet built by default. You need GtkXmHTML to make it work.
+	There is a Makefile.classic for testing it.
+
+	* Makefile.am
+	* configure.in
+	* help/*: some sample help files. Subdirs are possible, too.
+
 1999-06-28  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/plug_in.c (plug_in_callback): removed the check for

@@ -674,6 +674,7 @@ intl/Makefile
 tools/Makefile
 tools/pdbgen/Makefile
 libgimp/Makefile
+help/Makefile
 tips/Makefile],
 [
    chmod +x gimptool
@@ -688,3 +689,5 @@ tips/Makefile],
    esac
 ]
 )
+
+

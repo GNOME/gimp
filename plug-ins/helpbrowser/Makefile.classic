@@ -1,0 +1,4 @@
+all:
+	gcc `gtk-config --cflags` -g -Wall -ansi -c helpbrowser.c
+	gcc `gtk-config --cflags` -g -Wall -ansi -c queue.c 
+	gcc -o helpbrowser helpbrowser.o queue.o `gtk-config --libs` `gimptool --libs` -lgtkxmhtml

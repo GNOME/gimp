@@ -1531,15 +1531,19 @@ plug_in_handle_proc_run (GPProcRun *proc_run)
   args = plug_in_params_to_args (proc_run->params, proc_run->nparams, FALSE);
   proc_rec = procedural_db_lookup (proc_run->name);
 
-  if (!proc_rec)
+  if (proc_rec)
     {
-      /* THIS IS PROBABLY NOT CORRECT -josh */
-      g_warning ("PDB lookup failed on %s", proc_run->name);
-      plug_in_args_destroy (args, proc_run->nparams, FALSE);
-      return;
+      return_vals = procedural_db_execute (proc_run->name, args);
     }
-
-  return_vals = procedural_db_execute (proc_run->name, args);
+  else
+    {
+      /*  if the name lookup failed, construct a 
+       *  dummy "executiuon error" return value --Michael
+       */
+      return_vals = g_new (Argument, 1);
+      return_vals[0].arg_type = PDB_INT32;
+      return_vals[0].value.pdb_int = PDB_EXECUTION_ERROR;
+    }
 
   if (return_vals)
     {
