@@ -1,6 +1,6 @@
 /* max_rgb.c -- This is a plug-in for the GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
- * Time-stamp: <2000-01-01 00:24:57 yasuhiro>
+ * Time-stamp: <2000-02-08 16:26:24 yasuhiro>
  * Version: 0.35
  *
  * Copyright (C) 1997 Shuji Narazaki <narazaki@InetQ.or.jp>
@@ -147,7 +147,7 @@ run (gchar   *name,
       /* Since a channel might be selected, we must check wheter RGB or not. */
       if (!gimp_drawable_is_rgb (drawable_id))
 	{
-	  g_message (_("MaxRGB: Can only operate on RBG drawables."));
+	  g_message (_("MaxRGB: Can only operate on RGB drawables."));
 	  return;
 	}
       if (! dialog ())

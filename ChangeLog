@@ -1,3 +1,7 @@
+2000-02-08  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/max_rgb.c: fixed typo.
+
 2000-02-08  Tor Lillqvist  <tml@iki.fi>
 
 	* gimprc.win32: Fix a few path separators, should be semicolons on
