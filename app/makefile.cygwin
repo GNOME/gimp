@@ -154,6 +154,8 @@ gimp_OBJECTS = \
 	gradient_select.o	\
 	gradient_select_cmds.o	\
 	guides_cmds.o		\
+	gtkwrapbox.o		\
+	gtkhwrapbox.o		\
 	gximage.o		\
 	histogramwidget.o 	\
 	histogram_tool.o	\

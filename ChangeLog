@@ -1,3 +1,11 @@
+1999-09-02  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/script-fu/interp_sliba.c (lreadstring): Accept what
+	g_strescape throws at us (specifically, octal sequences that start
+	with any octal digit, and are at most three octal digits long).
+
+	* app/makefile.{cygwin,msc}: Update.
+
 Thu Sep  2 22:31:11 MEST 1999  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/gap/gap_lib.[ch]

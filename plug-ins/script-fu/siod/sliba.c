@@ -654,7 +654,7 @@ string_downcase (LISP str)
 LISP
 lreadstring (struct gen_readio * f)
 {
-  int j, c, n;
+  int j, c, n, ndigits;
   char *p;
   j = 0;
   p = tkbuffer;
@@ -689,14 +689,25 @@ lreadstring (struct gen_readio * f)
 	      c = ' ';
 	      break;
 	    case '0':
-	      n = 0;
-	      while (1)
+	    case '1':
+	    case '2':
+	    case '3':
+	    case '4':
+	    case '5':
+	    case '6':
+	    case '7':
+	      n = c - '0';
+	      ndigits = 1;
+	      while (ndigits <= 3)
 		{
 		  c = GETC_FCN (f);
 		  if (c == EOF)
 		    my_err ("eof after \\0", NIL);
-		  if (isdigit (c))
-		    n = n * 8 + c - '0';
+		  if (c >= '0' && c <= '7')
+		    {
+		      n = n * 8 + c - '0';
+		      ndigits++;
+		    }
 		  else
 		    {
 		      UNGETC_FCN (c, f);
