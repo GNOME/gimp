@@ -1,3 +1,14 @@
+2003-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpmarshal.list: added VOID: ENUM, BOXED, INT.
+
+	* app/tools/gimpcolortool.[ch]: added a default implementation for
+	GimpColorTool::pick. Emit a "picked" signal when a color was
+	successfully picked.
+
+	* app/tools/gimpcolorpickertool.c: simplified a lot since
+	GimpColorTool does most of the work for us now. 
+
 2003-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c

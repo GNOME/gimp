@@ -33,7 +33,6 @@
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-pick-color.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -57,57 +56,37 @@
 
 /*  local function prototypes  */
 
-static void 	  gimp_color_picker_tool_class_init     (GimpColorPickerToolClass *klass);
-static void       gimp_color_picker_tool_init           (GimpColorPickerTool *color_picker_tool);
+static void 	  gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass);
+static void       gimp_color_picker_tool_init       (GimpColorPickerTool      *tool);
 
-static void       gimp_color_picker_tool_finalize       (GObject          *object);
+static void       gimp_color_picker_tool_finalize   (GObject        *object);
 
-static void       gimp_color_picker_tool_control        (GimpTool         *tool,
-                                                         GimpToolAction    action,
-					       		 GimpDisplay      *gdisp);
-static void       gimp_color_picker_tool_button_press   (GimpTool         *tool,
-                                                         GimpCoords       *coords,
-                                                         guint32           time,
-							 GdkModifierType   state,
-							 GimpDisplay      *gdisp);
-static void       gimp_color_picker_tool_button_release (GimpTool         *tool,
-                                                         GimpCoords       *coords,
-                                                         guint32           time,
-					        	 GdkModifierType   state,
-					        	 GimpDisplay      *gdisp);
-static void       gimp_color_picker_tool_motion         (GimpTool         *tool,
-                                                         GimpCoords       *coords,
-                                                         guint32           time,
-					       		 GdkModifierType   state,
-					       		 GimpDisplay      *gdisp);
-static gboolean   gimp_color_picker_tool_pick           (GimpColorTool    *tool,
-							 GimpColorOptions *options,
-							 GimpDisplay      *display,
-							 gint              x,
-							 gint              y);
+static void       gimp_color_picker_tool_control    (GimpTool       *tool,
+                                                     GimpToolAction  action,
+                                                     GimpDisplay    *gdisp);
+static void       gimp_color_picker_tool_picked     (GimpColorTool  *color_tool,
+                                                     GimpImageType   sample_type,
+                                                     GimpRGB        *color,
+                                                     gint            color_index);
 
-static InfoDialog * gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
-                                                        GimpDrawable *drawable);
-static void         gimp_color_picker_tool_info_close  (GtkWidget    *widget,
-                                                        gpointer      data);
-static void         gimp_color_picker_tool_info_update (GimpTool     *tool,
-                                                        gboolean      valid);
+static InfoDialog * gimp_color_picker_tool_info_create (GimpTool      *tool);
+static void         gimp_color_picker_tool_info_close  (GtkWidget     *widget,
+                                                        gpointer       data);
+static void         gimp_color_picker_tool_info_update (GimpImageType  sample_type,
+                                                        GimpRGB        *color,
+                                                        gint            color_index);
 
 
-static gint                  col_value[5] = { 0, 0, 0, 0, 0 };
-static GimpUpdateColorState  update_type;
-static GimpImageType         sample_type;
-static InfoDialog           *gimp_color_picker_tool_info = NULL;
-static GtkWidget            *color_area        = NULL;
-static gchar                 red_buf  [MAX_INFO_BUF];
-static gchar                 green_buf[MAX_INFO_BUF];
-static gchar                 blue_buf [MAX_INFO_BUF];
-static gchar                 alpha_buf[MAX_INFO_BUF];
-static gchar                 index_buf[MAX_INFO_BUF];
-static gchar                 gray_buf [MAX_INFO_BUF];
-static gchar                 hex_buf  [MAX_INFO_BUF];
+static InfoDialog         *gimp_color_picker_tool_info = NULL;
+static GtkWidget          *color_area                  = NULL;
+static gchar               red_buf  [MAX_INFO_BUF];
+static gchar               green_buf[MAX_INFO_BUF];
+static gchar               blue_buf [MAX_INFO_BUF];
+static gchar               alpha_buf[MAX_INFO_BUF];
+static gchar               index_buf[MAX_INFO_BUF];
+static gchar               hex_buf  [MAX_INFO_BUF];
 
-static GimpColorToolClass   *parent_class = NULL;
+static GimpColorToolClass *parent_class = NULL;
 
 
 void
@@ -168,22 +147,20 @@ gimp_color_picker_tool_class_init (GimpColorPickerToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize     = gimp_color_picker_tool_finalize;
+  object_class->finalize   = gimp_color_picker_tool_finalize;
 
-  tool_class->control        = gimp_color_picker_tool_control;
-  tool_class->button_press   = gimp_color_picker_tool_button_press;
-  tool_class->button_release = gimp_color_picker_tool_button_release;
-  tool_class->motion         = gimp_color_picker_tool_motion;
+  tool_class->control      = gimp_color_picker_tool_control;
 
-  color_tool_class->pick     = gimp_color_picker_tool_pick;
+  color_tool_class->picked = gimp_color_picker_tool_picked;
 }
 
 static void
-gimp_color_picker_tool_init (GimpColorPickerTool *color_picker_tool)
+gimp_color_picker_tool_init (GimpColorPickerTool *tool)
 {
-  GimpTool *tool = GIMP_TOOL (color_picker_tool);
+  gimp_tool_control_set_preserve (GIMP_TOOL (tool)->control, FALSE);
 
-  gimp_tool_control_set_preserve (tool->control, FALSE);
+  /*  always pick colors  */
+  gimp_color_tool_enable (GIMP_COLOR_TOOL (tool), TRUE);
 }
 
 static void
@@ -209,7 +186,10 @@ gimp_color_picker_tool_control (GimpTool       *tool,
     {
     case HALT:
       if (gimp_color_picker_tool_info)
-	info_dialog_popdown (gimp_color_picker_tool_info);
+        {
+          info_dialog_free (gimp_color_picker_tool_info);
+          gimp_color_picker_tool_info = NULL;
+        }
       break;
 
     default:
@@ -220,165 +200,56 @@ gimp_color_picker_tool_control (GimpTool       *tool,
 }
 
 static void
-gimp_color_picker_tool_button_press (GimpTool        *tool,
-                                     GimpCoords      *coords,
-                                     guint32          time,
-				     GdkModifierType  state,
-			   	     GimpDisplay     *gdisp)
+gimp_color_picker_tool_picked (GimpColorTool *color_tool,
+                               GimpImageType  sample_type,
+                               GimpRGB       *color,
+                               gint           color_index)
 {
-  GimpColorPickerTool *cp_tool;
-  GimpColorOptions    *options;
+  GimpTool               *tool;
+  GimpColorPickerOptions *options;
 
-  GIMP_TOOL_CLASS (parent_class)->button_press (tool,
-						coords, time, state, gdisp);
-
-  cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
-  options = GIMP_COLOR_OPTIONS (tool->tool_info->tool_options);
+  tool = GIMP_TOOL (color_tool);
 
   if (! gimp_color_picker_tool_info)
-    gimp_color_picker_tool_info =
-      gimp_color_picker_tool_info_create (tool->tool_info,
-                                          tool->drawable);
+    gimp_color_picker_tool_info = gimp_color_picker_tool_info_create (tool);
 
-  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (gimp_color_picker_tool_info->shell),
-                                     GIMP_VIEWABLE (tool->drawable));
+  gimp_color_picker_tool_info_update (sample_type, color, color_index);
 
-  gimp_color_picker_tool_info_update (tool,
-				      gimp_color_tool_pick (GIMP_COLOR_TOOL (tool),
-							    options,
-							    gdisp,
-							    coords->x,
-							    coords->y));
- 
-  /*  if the shift key is down, create a new color.
-   *  otherwise, modify the current color.
-   */
-  if (state & GDK_SHIFT_MASK)
+  options = GIMP_COLOR_PICKER_OPTIONS (tool->tool_info->tool_options);
+
+  if (options->update_active)
     {
-      update_type = GIMP_UPDATE_COLOR_STATE_UPDATE_NEW;
-    }
-  else
-    {
-      update_type = GIMP_UPDATE_COLOR_STATE_UPDATE;
-    }
-}
-
-static void
-gimp_color_picker_tool_button_release (GimpTool        *tool,
-                                       GimpCoords      *coords,
-                                       guint32          time,
-				       GdkModifierType  state,
-				       GimpDisplay     *gdisp)
-{
-  GimpColorPickerTool *cp_tool;
-  GimpColorOptions    *options;
-
-  cp_tool = GIMP_COLOR_PICKER_TOOL(tool);
-  options = GIMP_COLOR_OPTIONS (tool->tool_info->tool_options);
-
-  gimp_color_picker_tool_info_update (tool,
-				      gimp_color_tool_pick (GIMP_COLOR_TOOL (tool),
-							    options,
-							    gdisp,
-							    coords->x,
-							    coords->y));
-
-  GIMP_TOOL_CLASS (parent_class)->button_release (tool,
-						  coords, time, state, gdisp);
-}
-
-static void
-gimp_color_picker_tool_motion (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               guint32          time,
-		               GdkModifierType  state,
-		               GimpDisplay     *gdisp)
-{
-  GimpColorPickerTool *cp_tool;
-  GimpColorOptions    *options;
-
-  GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, gdisp);
-
-  cp_tool = GIMP_COLOR_PICKER_TOOL (tool);
-  options = GIMP_COLOR_OPTIONS (tool->tool_info->tool_options);
-
-  gimp_color_picker_tool_info_update (tool,
-				      gimp_color_tool_pick (GIMP_COLOR_TOOL (tool),
-							    options,
-							    gdisp,
-							    coords->x,
-							    coords->y));
-}
-
-static gboolean
-gimp_color_picker_tool_pick (GimpColorTool    *tool,
-			     GimpColorOptions *options,
-			     GimpDisplay      *gdisp,
-			     gint              x,
-			     gint              y)
-{
-  GimpRGB   color;
-  gint      color_index;
-  gboolean  success;
-
-  success = gimp_image_pick_color (gdisp->gimage,
-                                   GIMP_TOOL (tool)->drawable,
-				   options->sample_merged,
-                                   x, y,
-				   options->sample_average,
-				   options->average_radius,
-                                   &sample_type,
-                                   &color,
-                                   &color_index);
-  
-  if (success)
-    {
-      guchar r, g, b, a;
-
-      gimp_rgba_get_uchar (&color, &r, &g, &b, &a);
-
-      col_value[RED_PIX]   = r;
-      col_value[GREEN_PIX] = g;
-      col_value[BLUE_PIX]  = b;
-      col_value[ALPHA_PIX] = a;
-      col_value[4]         = color_index;
-
-      if (GIMP_COLOR_PICKER_OPTIONS (options)->update_active)
-        {
-          GimpContext *user_context;
-
-          user_context = gimp_get_user_context (gdisp->gimage->gimp);
-
+      GimpContext *user_context;
+      
+      user_context = gimp_get_user_context (tool->gdisp->gimage->gimp);
+      
 #if 0
-          gimp_palette_editor_update_color (user_context,
-					    &color, update_state);
+      gimp_palette_editor_update_color (user_context, color, update_state);
 #endif
 
-          if (active_color == FOREGROUND)
-            gimp_context_set_foreground (user_context, &color);
-          else if (active_color == BACKGROUND)
-            gimp_context_set_background (user_context, &color);
-        }
+      if (active_color == FOREGROUND)
+        gimp_context_set_foreground (user_context, color);
+      else if (active_color == BACKGROUND)
+        gimp_context_set_background (user_context, color);
     }
-
-  return success;
 }
 
 static InfoDialog *
-gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
-                                    GimpDrawable *drawable)
+gimp_color_picker_tool_info_create (GimpTool *tool)
 {
   InfoDialog *info_dialog;
   GtkWidget  *hbox;
   GtkWidget  *frame;
   GimpRGB     color;
 
+  g_return_val_if_fail (tool->drawable != NULL, NULL);
+
   info_dialog = info_dialog_new (NULL,
                                  _("Color Picker"), "color_picker",
                                  GIMP_STOCK_TOOL_COLOR_PICKER,
                                  _("Color Picker Information"),
                                  gimp_standard_help_func,
-                                 tool_info->help_data);
+                                 tool->tool_info->help_data);
 
   gimp_dialog_create_action_area (GIMP_DIALOG (info_dialog->shell),
 
@@ -389,7 +260,7 @@ gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
                                   NULL);
 
   /*  if the gdisplay is for a color image, the dialog must have RGB  */
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (tool->drawable)))
     {
     case GIMP_RGB:
       info_dialog_add_label (info_dialog, _("Red:"),         red_buf);
@@ -400,7 +271,7 @@ gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
       break;
 
     case GIMP_GRAY:
-      info_dialog_add_label (info_dialog, _("Intensity:"),   gray_buf);
+      info_dialog_add_label (info_dialog, _("Intensity:"),   red_buf);
       info_dialog_add_label (info_dialog, _("Alpha:"),       alpha_buf);
       info_dialog_add_label (info_dialog, _("Hex Triplet:"), hex_buf);
       break;
@@ -431,7 +302,7 @@ gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
 
   gimp_rgba_set (&color, 0.0, 0.0, 0.0, 0.0);
   color_area = gimp_color_area_new (&color,
-                                    gimp_drawable_has_alpha (drawable) ?
+                                    gimp_drawable_has_alpha (tool->drawable) ?
                                     GIMP_COLOR_AREA_LARGE_CHECKS :
                                     GIMP_COLOR_AREA_FLAT,
                                     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
@@ -445,6 +316,9 @@ gimp_color_picker_tool_info_create (GimpToolInfo *tool_info,
                                    "gimp-color-picker-tool-dialog",
                                    info_dialog->shell);
 
+  gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (info_dialog->shell),
+                                     GIMP_VIEWABLE (tool->drawable));
+
   return info_dialog;
 }
 
@@ -452,104 +326,43 @@ static void
 gimp_color_picker_tool_info_close (GtkWidget *widget,
                                    gpointer   client_data)
 {
-  info_dialog_popdown ((InfoDialog *) client_data);
+  info_dialog_free (gimp_color_picker_tool_info);
+  gimp_color_picker_tool_info = NULL;
 }
 
 static void
-gimp_color_picker_tool_info_update (GimpTool  *tool,
-				    gboolean   valid)
+gimp_color_picker_tool_info_update (GimpImageType  sample_type,
+                                    GimpRGB       *color,
+                                    gint           color_index)
 {
-  if (!valid)
-    {
-      if (GTK_WIDGET_IS_SENSITIVE (color_area))
-	gtk_widget_set_sensitive (color_area, FALSE);
+  guchar r, g, b, a;
 
-      g_snprintf (red_buf,   MAX_INFO_BUF, _("N/A"));
-      g_snprintf (green_buf, MAX_INFO_BUF, _("N/A"));
-      g_snprintf (blue_buf,  MAX_INFO_BUF, _("N/A"));
-      g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
-      g_snprintf (index_buf, MAX_INFO_BUF, _("N/A"));
-      g_snprintf (gray_buf,  MAX_INFO_BUF, _("N/A"));
-      g_snprintf (hex_buf,   MAX_INFO_BUF, _("N/A"));
-    }
+  gimp_rgba_get_uchar (color, &r, &g, &b, &a);
+
+  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", r);
+  g_snprintf (green_buf, MAX_INFO_BUF, "%d", g);
+  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", b);
+  
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (sample_type))
+    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", a);
   else
+    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
+  
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (sample_type))
     {
-      GimpRGB  color;
-      guchar   r = 0;
-      guchar   g = 0;
-      guchar   b = 0;
-      guchar   a = 0;
+    case GIMP_RGB:
+    case GIMP_GRAY:
+      g_snprintf (index_buf, MAX_INFO_BUF, _("N/A"));
+      break;
 
-      if (! GTK_WIDGET_IS_SENSITIVE (color_area))
-	gtk_widget_set_sensitive (color_area, TRUE);
-
-      switch (GIMP_IMAGE_TYPE_BASE_TYPE (sample_type))
-	{
-	case GIMP_RGB:
-	  g_snprintf (index_buf, MAX_INFO_BUF, _("N/A"));
-	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
-	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
-	  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
-	  if (sample_type == GIMP_RGBA_IMAGE)
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
-	  else
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
-	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
-		      col_value [RED_PIX],
-		      col_value [GREEN_PIX],
-		      col_value [BLUE_PIX]);
-
-	  r = col_value [RED_PIX];
-	  g = col_value [GREEN_PIX];
-	  b = col_value [BLUE_PIX];
-	  if (sample_type == GIMP_RGBA_IMAGE)
-	    a = col_value [ALPHA_PIX];
-	  break;
-
-	case GIMP_GRAY:
-	  g_snprintf (gray_buf, MAX_INFO_BUF, "%d", col_value [GRAY_PIX]);
-	  if (sample_type == GIMP_GRAYA_IMAGE)
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
-	  else
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
-	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
-		      col_value [GRAY_PIX],
-		      col_value [GRAY_PIX],
-		      col_value [GRAY_PIX]);
-
-	  r = col_value [GRAY_PIX];
-	  g = col_value [GRAY_PIX];
-	  b = col_value [GRAY_PIX];
-	  if (sample_type == GIMP_GRAYA_IMAGE)
-	    a = col_value [ALPHA_PIX];
-	  break;
-
-	case GIMP_INDEXED:
-	  g_snprintf (index_buf, MAX_INFO_BUF, "%d", col_value [4]);
-	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
-	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
-	  g_snprintf (blue_buf,  MAX_INFO_BUF, "%d", col_value [BLUE_PIX]);
-	  if (sample_type == GIMP_INDEXEDA_IMAGE)
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
-	  else
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
-	  g_snprintf (hex_buf,   MAX_INFO_BUF, "#%.2x%.2x%.2x",
-		      col_value [RED_PIX],
-		      col_value [GREEN_PIX],
-		      col_value [BLUE_PIX]);
-
-	  r = col_value [RED_PIX];
-	  g = col_value [GREEN_PIX];
-	  b = col_value [BLUE_PIX];
-	  if (sample_type == GIMP_INDEXEDA_IMAGE)
-	    a = col_value [ALPHA_PIX];
-	  break;
-	}
-
-      gimp_rgba_set_uchar (&color, r, g, b, a);
-
-      gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &color);
+    case GIMP_INDEXED:
+      g_snprintf (index_buf, MAX_INFO_BUF, "%d", color_index);
+      break;
     }
+
+  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x", r, g, b);
+  
+  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), color);
 
   info_dialog_update (gimp_color_picker_tool_info);
   info_dialog_popup (gimp_color_picker_tool_info);

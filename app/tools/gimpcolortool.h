@@ -37,8 +37,9 @@ struct _GimpColorTool
 {
   GimpDrawTool  parent_instance;
 
-  gint          centerx;    /*  starting x coord    */
-  gint          centery;    /*  starting y coord    */
+  gboolean      enabled;
+  gint          center_x;
+  gint          center_y;
 };
 
 struct _GimpColorToolClass
@@ -46,22 +47,24 @@ struct _GimpColorToolClass
   GimpDrawToolClass  parent_class;
 
   /*  virtual functions  */
+  gboolean (* pick)   (GimpColorTool *tool,
+                       gint           x,
+                       gint           y,
+                       GimpImageType *sample_type,
+                       GimpRGB       *color,
+                       gint          *color_index);
 
-  gboolean (* pick)  (GimpColorTool    *tool,
-		      GimpColorOptions *options,
-		      GimpDisplay      *gdisp,
-		      gint              x,
-		      gint              y);
+  /*  signals  */
+  void     (* picked) (GimpColorTool *tool,
+                       GimpImageType  sample_type,
+                       GimpRGB       *color,
+                       gint           color_index);
 };
 
 
 GType      gimp_color_tool_get_type (void) G_GNUC_CONST;
 
-gboolean   gimp_color_tool_pick     (GimpColorTool    *tool,
-				     GimpColorOptions *options,
-				     GimpDisplay      *gdisp,
-				     gint              x,
-				     gint              y);
-
+void       gimp_color_tool_enable   (GimpColorTool *color_tool,
+                                     gboolean       enable);
 
 #endif  /*  __GIMP_COLOR_TOOL_H__  */
