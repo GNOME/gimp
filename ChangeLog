@@ -1,5 +1,24 @@
 2001-12-13  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpconfig-deserialize.h
+	* app/config/gimpconfig-serialize.c: fixed typos.
+	
+	* app/core/core-enums.h
+	* app/core/core-types.h: converted ChannelType enum to GimpChannelType
+	and moved it to core-enums.h.
+	
+	* app/core/gimpimage.[ch]
+	* app/widgets/gimpchannellistview.c
+	* app/widgets/gimpcomponentlistitem.[ch]
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
+	* app/pdb/image_cmds.c
+	* libgimp/gimpenums.h
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+2001-12-13  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-deserialize.c
 	* app/config/gimpconfig-params.h
 	* app/config/gimpconfig-serialize.[ch]

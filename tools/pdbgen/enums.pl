@@ -170,18 +170,6 @@ package Gimp::CodeGen::enums;
 		       GIMP_BLUE_LUT => '3',
 		       GIMP_ALPHA_LUT => '4' }
 	},
-    ChannelType =>
-	{ contig => 1,
-	  header => 'core/core-types.h',
-	  symbols => [ qw(RED_CHANNEL GREEN_CHANNEL BLUE_CHANNEL
-			  GRAY_CHANNEL INDEXED_CHANNEL ALPHA_CHANNEL) ],
-	  mapping => { RED_CHANNEL => '0',
-		       GREEN_CHANNEL => '1',
-		       BLUE_CHANNEL => '2',
-		       GRAY_CHANNEL => '3',
-		       INDEXED_CHANNEL => '4',
-		       ALPHA_CHANNEL => '5' }
-	},
     AddMaskType =>
 	{ contig => 1,
 	  header => 'core/core-types.h',
@@ -297,6 +285,19 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_RGB => '0',
 		       GIMP_GRAY => '1',
 		       GIMP_INDEXED => '2' }
+	},
+    GimpChannelType =>
+	{ contig => 1,
+	  header => 'core/core-enums.h',
+	  symbols => [ qw(GIMP_RED_CHANNEL GIMP_GREEN_CHANNEL
+			  GIMP_BLUE_CHANNEL GIMP_GRAY_CHANNEL
+			  GIMP_INDEXED_CHANNEL GIMP_ALPHA_CHANNEL) ],
+	  mapping => { GIMP_RED_CHANNEL => '0',
+		       GIMP_GREEN_CHANNEL => '1',
+		       GIMP_BLUE_CHANNEL => '2',
+		       GIMP_GRAY_CHANNEL => '3',
+		       GIMP_INDEXED_CHANNEL => '4',
+		       GIMP_ALPHA_CHANNEL => '5' }
 	},
     GimpGradientType =>
 	{ contig => 1,

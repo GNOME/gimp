@@ -43,22 +43,24 @@
 static void    gimp_component_list_item_class_init (GimpComponentListItemClass *klass);
 static void    gimp_component_list_item_init       (GimpComponentListItem      *list_item);
 
-static void    gimp_component_list_item_set_viewable       (GimpListItem *list_item,
-							    GimpViewable *viewable);
+static void    gimp_component_list_item_set_viewable (GimpListItem    *list_item,
+                                                      GimpViewable    *viewable);
 
-static void    gimp_component_list_item_eye_toggled        (GtkWidget    *widget,
-							    gpointer      data);
+static void    gimp_component_list_item_eye_toggled  (GtkWidget       *widget,
+                                                      gpointer         data);
 
-static void    gimp_component_list_item_visibility_changed (GimpImage    *gimage,
-							    ChannelType   channel,
-							    gpointer      data);
+static void    gimp_component_list_item_visibility_changed 
+                                                     (GimpImage       *gimage,
+                                                      GimpChannelType  channel,
+                                                      gpointer         data);
 
-static void    gimp_component_list_item_active_changed     (GimpImage    *gimage,
-							    ChannelType   channel,
-							    gpointer      data);
+static void    gimp_component_list_item_active_changed
+                                                     (GimpImage       *gimage,
+                                                      GimpChannelType  channel,
+                                                      gpointer         data);
 
-static gchar * gimp_component_list_item_get_name           (GtkWidget    *widget,
-							    gchar       **tooltip);
+static gchar * gimp_component_list_item_get_name     (GtkWidget       *widget,
+                                                      gchar          **tooltip);
 
 
 static GimpListItemClass *parent_class = NULL;
@@ -137,17 +139,15 @@ gimp_component_list_item_init (GimpComponentListItem *list_item)
 }
 
 GtkWidget *
-gimp_component_list_item_new (GimpImage   *gimage,
-			      gint         preview_size,
-			      ChannelType  channel)
+gimp_component_list_item_new (GimpImage       *gimage,
+			      gint             preview_size,
+			      GimpChannelType  channel)
 {
   GimpListItem *list_item;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (preview_size > 0 && preview_size <= 256, NULL);
-  g_return_val_if_fail (channel >= RED_CHANNEL && channel <= ALPHA_CHANNEL,
-			NULL);
-
+ 
   list_item = g_object_new (GIMP_TYPE_COMPONENT_LIST_ITEM, NULL);
 
   list_item->preview_size  = preview_size;
@@ -185,15 +185,16 @@ gimp_component_list_item_set_viewable (GimpListItem *list_item,
 
   switch (component_item->channel)
     {
-    case RED_CHANNEL:     pixel = RED_PIX;     break;
-    case GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
-    case BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
-    case GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
-    case INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
-    case ALPHA_CHANNEL:   pixel = ALPHA_PIX;   break;
+    case GIMP_RED_CHANNEL:     pixel = RED_PIX;     break;
+    case GIMP_GREEN_CHANNEL:   pixel = GREEN_PIX;   break;
+    case GIMP_BLUE_CHANNEL:    pixel = BLUE_PIX;    break;
+    case GIMP_GRAY_CHANNEL:    pixel = GRAY_PIX;    break;
+    case GIMP_INDEXED_CHANNEL: pixel = INDEXED_PIX; break;
+    case GIMP_ALPHA_CHANNEL:   pixel = ALPHA_PIX;   break;
 
     default:
       pixel = 0;
+      g_assert_not_reached ();
     }
 
   GIMP_IMAGE_PREVIEW (list_item->preview)->channel = pixel;
@@ -277,9 +278,9 @@ gimp_component_list_item_eye_toggled (GtkWidget *widget,
 }
 
 static void
-gimp_component_list_item_visibility_changed (GimpImage   *gimage,
-					     ChannelType  channel,
-					     gpointer     data)
+gimp_component_list_item_visibility_changed (GimpImage       *gimage,
+					     GimpChannelType  channel,
+					     gpointer         data)
 {
   GimpComponentListItem *component_item;
   GimpListItem          *list_item;
@@ -293,7 +294,8 @@ gimp_component_list_item_visibility_changed (GimpImage   *gimage,
 
   list_item = GIMP_LIST_ITEM (data);
   toggle    = GTK_TOGGLE_BUTTON (component_item->eye_button);
-  visible   = gimp_image_get_component_visible (gimage, component_item->channel);
+  visible   = gimp_image_get_component_visible (gimage, 
+                                                component_item->channel);
 
   if (visible != toggle->active)
     {
@@ -323,9 +325,9 @@ gimp_component_list_item_visibility_changed (GimpImage   *gimage,
 }
 
 static void
-gimp_component_list_item_active_changed (GimpImage   *gimage,
-					 ChannelType  channel,
-					 gpointer     data)
+gimp_component_list_item_active_changed (GimpImage       *gimage,
+					 GimpChannelType  channel,
+					 gpointer         data)
 {
   GimpComponentListItem *component_item;
   gboolean               active;
@@ -356,12 +358,14 @@ gimp_component_list_item_get_name (GtkWidget  *widget,
 
   switch (component_item->channel)
     {
-    case RED_CHANNEL:     return g_strdup (_("Red"));     break;
-    case GREEN_CHANNEL:   return g_strdup (_("Green"));   break;
-    case BLUE_CHANNEL:    return g_strdup (_("Blue"));    break;
-    case GRAY_CHANNEL:    return g_strdup (_("Gray"));    break;
-    case INDEXED_CHANNEL: return g_strdup (_("Indexed")); break;
-    case ALPHA_CHANNEL:   return g_strdup (_("Alpha"));   break;
-    default:              return g_strdup ("EEK");        break;
+    case GIMP_RED_CHANNEL:     return g_strdup (_("Red"));     break;
+    case GIMP_GREEN_CHANNEL:   return g_strdup (_("Green"));   break;
+    case GIMP_BLUE_CHANNEL:    return g_strdup (_("Blue"));    break;
+    case GIMP_GRAY_CHANNEL:    return g_strdup (_("Gray"));    break;
+    case GIMP_INDEXED_CHANNEL: return g_strdup (_("Indexed")); break;
+    case GIMP_ALPHA_CHANNEL:   return g_strdup (_("Alpha"));   break;
+
+    default:                   
+      return g_strdup (_("EEEEK"));
     }
 }

@@ -57,16 +57,6 @@ typedef enum
 
 typedef enum
 {
-  GIMP_RED_CHANNEL,
-  GIMP_GREEN_CHANNEL,
-  GIMP_BLUE_CHANNEL,
-  GIMP_GRAY_CHANNEL,
-  GIMP_INDEXED_CHANNEL,
-  GIMP_ALPHA_CHANNEL
-} GimpChannelType;
-
-typedef enum
-{
   GIMP_IMAGE_CLONE,
   GIMP_PATTERN_CLONE
 } GimpCloneType;
@@ -118,6 +108,16 @@ typedef enum
   GIMP_BLUE_LUT,
   GIMP_ALPHA_LUT
 } GimpChannelLutType;
+
+typedef enum
+{
+  GIMP_RED_CHANNEL,
+  GIMP_GREEN_CHANNEL,
+  GIMP_BLUE_CHANNEL,
+  GIMP_GRAY_CHANNEL,
+  GIMP_INDEXED_CHANNEL,
+  GIMP_ALPHA_CHANNEL
+} GimpChannelType;
 
 typedef enum
 {

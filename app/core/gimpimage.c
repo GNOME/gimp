@@ -906,7 +906,7 @@ gimp_image_get_combination_mode (GimpImageType dest_type,
 }
 
 gint
-gimp_image_get_ID (GimpImage *gimage)
+gimp_image_get_ID (const GimpImage *gimage)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), -1);
 
@@ -1119,9 +1119,9 @@ gimp_image_mask_changed (GimpImage *gimage)
 }
 
 void
-gimp_image_set_component_active (GimpImage   *gimage, 
-				 ChannelType  type, 
-				 gboolean     active)
+gimp_image_set_component_active (GimpImage       *gimage, 
+				 GimpChannelType  type, 
+				 gboolean         active)
 {
   gint pixel = -1;
 
@@ -1129,12 +1129,12 @@ gimp_image_set_component_active (GimpImage   *gimage,
 
   switch (type)
     {
-    case RED_CHANNEL:      pixel = RED_PIX;     break;
-    case GREEN_CHANNEL:    pixel = GREEN_PIX;   break;
-    case BLUE_CHANNEL:     pixel = BLUE_PIX;    break;
-    case GRAY_CHANNEL:     pixel = GRAY_PIX;    break;
-    case INDEXED_CHANNEL:  pixel = INDEXED_PIX; break;
-    case ALPHA_CHANNEL:
+    case GIMP_RED_CHANNEL:      pixel = RED_PIX;     break;
+    case GIMP_GREEN_CHANNEL:    pixel = GREEN_PIX;   break;
+    case GIMP_BLUE_CHANNEL:     pixel = BLUE_PIX;    break;
+    case GIMP_GRAY_CHANNEL:     pixel = GRAY_PIX;    break;
+    case GIMP_INDEXED_CHANNEL:  pixel = INDEXED_PIX; break;
+    case GIMP_ALPHA_CHANNEL:
       switch (gimp_image_base_type (gimage))
 	{
 	case GIMP_RGB:     pixel = ALPHA_PIX;   break;
@@ -1164,17 +1164,17 @@ gimp_image_set_component_active (GimpImage   *gimage,
 
 gboolean
 gimp_image_get_component_active (const GimpImage *gimage, 
-				 ChannelType      type)
+				 GimpChannelType  type)
 {
   /*  No sanity checking here...  */
   switch (type)
     {
-    case RED_CHANNEL:      return gimage->active[RED_PIX];     break;
-    case GREEN_CHANNEL:    return gimage->active[GREEN_PIX];   break;
-    case BLUE_CHANNEL:     return gimage->active[BLUE_PIX];    break;
-    case GRAY_CHANNEL:     return gimage->active[GRAY_PIX];    break;
-    case INDEXED_CHANNEL:  return gimage->active[INDEXED_PIX]; break;
-    case ALPHA_CHANNEL:
+    case GIMP_RED_CHANNEL:      return gimage->active[RED_PIX];     break;
+    case GIMP_GREEN_CHANNEL:    return gimage->active[GREEN_PIX];   break;
+    case GIMP_BLUE_CHANNEL:     return gimage->active[BLUE_PIX];    break;
+    case GIMP_GRAY_CHANNEL:     return gimage->active[GRAY_PIX];    break;
+    case GIMP_INDEXED_CHANNEL:  return gimage->active[INDEXED_PIX]; break;
+    case GIMP_ALPHA_CHANNEL:
       switch (gimp_image_base_type (gimage))
 	{
 	case GIMP_RGB:     return gimage->active[ALPHA_PIX];   break;
@@ -1191,9 +1191,9 @@ gimp_image_get_component_active (const GimpImage *gimage,
 }
 
 void
-gimp_image_get_active_components (GimpImage         *gimage,
-                                  GimpDrawable      *drawable,
-                                  gint              *active)
+gimp_image_get_active_components (const GimpImage    *gimage,
+                                  const GimpDrawable *drawable,
+                                  gint               *active)
 {
   GimpLayer *layer;
   gint       i;
@@ -1224,9 +1224,9 @@ gimp_image_get_active_components (GimpImage         *gimage,
 }
 
 void
-gimp_image_set_component_visible (GimpImage   *gimage, 
-				  ChannelType  type, 
-				  gboolean     visible)
+gimp_image_set_component_visible (GimpImage       *gimage, 
+				  GimpChannelType  type, 
+				  gboolean         visible)
 {
   gint pixel = -1;
 
@@ -1234,12 +1234,12 @@ gimp_image_set_component_visible (GimpImage   *gimage,
 
   switch (type)
     {
-    case RED_CHANNEL:      pixel = RED_PIX;     break;
-    case GREEN_CHANNEL:    pixel = GREEN_PIX;   break;
-    case BLUE_CHANNEL:     pixel = BLUE_PIX;    break;
-    case GRAY_CHANNEL:     pixel = GRAY_PIX;    break;
-    case INDEXED_CHANNEL:  pixel = INDEXED_PIX; break;
-    case ALPHA_CHANNEL:
+    case GIMP_RED_CHANNEL:      pixel = RED_PIX;     break;
+    case GIMP_GREEN_CHANNEL:    pixel = GREEN_PIX;   break;
+    case GIMP_BLUE_CHANNEL:     pixel = BLUE_PIX;    break;
+    case GIMP_GRAY_CHANNEL:     pixel = GRAY_PIX;    break;
+    case GIMP_INDEXED_CHANNEL:  pixel = INDEXED_PIX; break;
+    case GIMP_ALPHA_CHANNEL:
       switch (gimp_image_base_type (gimage))
 	{
 	case GIMP_RGB:     pixel = ALPHA_PIX;   break;
@@ -1266,17 +1266,17 @@ gimp_image_set_component_visible (GimpImage   *gimage,
 
 gboolean
 gimp_image_get_component_visible (const GimpImage *gimage, 
-				  ChannelType      type)
+				  GimpChannelType  type)
 {
   /*  No sanity checking here...  */
   switch (type)
     {
-    case RED_CHANNEL:      return gimage->visible[RED_PIX];     break;
-    case GREEN_CHANNEL:    return gimage->visible[GREEN_PIX];   break;
-    case BLUE_CHANNEL:     return gimage->visible[BLUE_PIX];    break;
-    case GRAY_CHANNEL:     return gimage->visible[GRAY_PIX];    break;
-    case INDEXED_CHANNEL:  return gimage->visible[INDEXED_PIX]; break;
-    case ALPHA_CHANNEL:
+    case GIMP_RED_CHANNEL:      return gimage->visible[RED_PIX];     break;
+    case GIMP_GREEN_CHANNEL:    return gimage->visible[GREEN_PIX];   break;
+    case GIMP_BLUE_CHANNEL:     return gimage->visible[BLUE_PIX];    break;
+    case GIMP_GRAY_CHANNEL:     return gimage->visible[GRAY_PIX];    break;
+    case GIMP_INDEXED_CHANNEL:  return gimage->visible[INDEXED_PIX]; break;
+    case GIMP_ALPHA_CHANNEL:
       switch (gimp_image_base_type (gimage))
 	{
 	case GIMP_RGB:     return gimage->visible[ALPHA_PIX];   break;

@@ -158,9 +158,9 @@ struct _GimpImageClass
   void (* active_layer_changed)         (GimpImage            *gimage);
   void (* active_channel_changed)       (GimpImage            *gimage);
   void (* component_visibility_changed) (GimpImage            *gimage,
-					 ChannelType           channel);
+					 GimpChannelType       channel);
   void (* component_active_changed)     (GimpImage            *gimage,
-					 ChannelType           channel);
+					 GimpChannelType       channel);
   void (* mask_changed)                 (GimpImage            *gimage);
   void (* resolution_changed)           (GimpImage            *gimage);
   void (* unit_changed)                 (GimpImage            *gimage);
@@ -199,7 +199,7 @@ GimpImageType	   gimp_image_base_type_with_alpha (const GimpImage  *gimage);
 CombinationMode    gimp_image_get_combination_mode (GimpImageType     dest_type,
                                                     gint              src_bytes);
 
-gint            gimp_image_get_ID                (GimpImage          *gimage);
+gint            gimp_image_get_ID                (const GimpImage    *gimage);
 GimpImage     * gimp_image_get_by_ID             (Gimp               *gimp,
                                                   gint                id);
 
@@ -240,19 +240,19 @@ GimpChannel   * gimp_image_get_mask              (const GimpImage    *gimage);
 void            gimp_image_mask_changed          (GimpImage          *gimage);
 
 void            gimp_image_set_component_active  (GimpImage          *gimage,
-						  ChannelType         type,
+						  GimpChannelType     type,
 						  gboolean            active);
 gboolean        gimp_image_get_component_active  (const GimpImage    *gimage,
-						  ChannelType         type);
-void            gimp_image_get_active_components (GimpImage          *gimage,
-                                                  GimpDrawable       *drawable,
+						  GimpChannelType     type);
+void            gimp_image_get_active_components (const GimpImage    *gimage,
+                                                  const GimpDrawable *drawable,
                                                   gint               *active);
 
 void            gimp_image_set_component_visible (GimpImage          *gimage,
-						  ChannelType         type,
+						  GimpChannelType     type,
 						  gboolean            visible);
 gboolean        gimp_image_get_component_visible (const GimpImage    *gimage,
-						  ChannelType         type);
+						  GimpChannelType     type);
 
 void            gimp_image_mode_changed          (GimpImage          *gimage);
 void            gimp_image_alpha_changed         (GimpImage          *gimage);

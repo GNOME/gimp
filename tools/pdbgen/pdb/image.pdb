@@ -1152,14 +1152,14 @@ $#procs--;
 
 my $comp_arg = <<'CODE';
     splice @inargs, 1, 0, ({ name => 'component',
-			     type => 'enum ChannelType (no AUXILLARY_CHANNEL)',
+			     type => 'enum GimpChannelType (no AUXILLARY_CHANNEL)',
 			     desc => 'The image component: { %%desc%% }' });
 
     $invoke{code} = <<'SUCCESS';
 {
-  if (component == GRAY_CHANNEL)
+  if (component == GIMP_GRAY_CHANNEL)
     success = gimp_image_base_type (gimage) == GIMP_GRAY;
-  else if (component == INDEXED_CHANNEL)
+  else if (component == GIMP_INDEXED_CHANNEL)
     success = gimp_image_base_type (gimage) == GIMP_INDEXED;
   else
     success = gimp_image_base_type (gimage) == GIMP_RGB;

@@ -372,12 +372,12 @@ gimp_channel_list_view_toselection_extended_clicked (GtkWidget           *widget
 static void
 gimp_channel_list_view_create_components (GimpChannelListView *view)
 {
-  GimpImage   *gimage;
-  GtkWidget   *list_item;
-  gint         n_components = 0;
-  ChannelType  components[MAX_CHANNELS];
-  GList       *list = NULL;
-  gint         i;
+  GimpImage       *gimage;
+  GtkWidget       *list_item;
+  gint             n_components = 0;
+  GimpChannelType  components[MAX_CHANNELS];
+  GList           *list = NULL;
+  gint             i;
 
   gimage = GIMP_DRAWABLE_LIST_VIEW (view)->gimage;
 
@@ -385,23 +385,23 @@ gimp_channel_list_view_create_components (GimpChannelListView *view)
     {
     case GIMP_RGB:
       n_components  = 3;
-      components[0] = RED_CHANNEL;
-      components[1] = GREEN_CHANNEL;
-      components[2] = BLUE_CHANNEL;
+      components[0] = GIMP_RED_CHANNEL;
+      components[1] = GIMP_GREEN_CHANNEL;
+      components[2] = GIMP_BLUE_CHANNEL;
       break;
 
     case GIMP_GRAY:
       n_components  = 1;
-      components[0] = GRAY_CHANNEL;
+      components[0] = GIMP_GRAY_CHANNEL;
       break;
 
     case GIMP_INDEXED:
       n_components  = 1;
-      components[0] = INDEXED_CHANNEL;
+      components[0] = GIMP_INDEXED_CHANNEL;
       break;
     }
 
-  components[n_components++] = ALPHA_CHANNEL;
+  components[n_components++] = GIMP_ALPHA_CHANNEL;
 
   for (i = 0; i < n_components; i++)
     {

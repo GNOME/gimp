@@ -3213,14 +3213,14 @@ image_get_component_active_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
     {
-      if (component == GRAY_CHANNEL)
+      if (component == GIMP_GRAY_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_GRAY;
-      else if (component == INDEXED_CHANNEL)
+      else if (component == GIMP_INDEXED_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
 	success = gimp_image_base_type (gimage) == GIMP_RGB;
@@ -3244,7 +3244,7 @@ static ProcArg image_get_component_active_inargs[] =
   {
     GIMP_PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
+    "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }"
   }
 };
 
@@ -3287,16 +3287,16 @@ image_set_component_active_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   active = args[2].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
-      if (component == GRAY_CHANNEL)
+      if (component == GIMP_GRAY_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_GRAY;
-      else if (component == INDEXED_CHANNEL)
+      else if (component == GIMP_INDEXED_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
 	success = gimp_image_base_type (gimage) == GIMP_RGB;
@@ -3318,7 +3318,7 @@ static ProcArg image_set_component_active_inargs[] =
   {
     GIMP_PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
+    "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }"
   },
   {
     GIMP_PDB_INT32,
@@ -3357,14 +3357,14 @@ image_get_component_visible_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
     {
-      if (component == GRAY_CHANNEL)
+      if (component == GIMP_GRAY_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_GRAY;
-      else if (component == INDEXED_CHANNEL)
+      else if (component == GIMP_INDEXED_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
 	success = gimp_image_base_type (gimage) == GIMP_RGB;
@@ -3388,7 +3388,7 @@ static ProcArg image_get_component_visible_inargs[] =
   {
     GIMP_PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
+    "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }"
   }
 };
 
@@ -3431,16 +3431,16 @@ image_set_component_visible_invoker (Gimp     *gimp,
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < GREEN_CHANNEL || component > ALPHA_CHANNEL)
+  if (component < GIMP_GREEN_CHANNEL || component > GIMP_ALPHA_CHANNEL)
     success = FALSE;
 
   visible = args[2].value.pdb_int ? TRUE : FALSE;
 
   if (success)
     {
-      if (component == GRAY_CHANNEL)
+      if (component == GIMP_GRAY_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_GRAY;
-      else if (component == INDEXED_CHANNEL)
+      else if (component == GIMP_INDEXED_CHANNEL)
 	success = gimp_image_base_type (gimage) == GIMP_INDEXED;
       else
 	success = gimp_image_base_type (gimage) == GIMP_RGB;
@@ -3462,7 +3462,7 @@ static ProcArg image_set_component_visible_inargs[] =
   {
     GIMP_PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
+    "The image component: { GIMP_RED_CHANNEL (0), GIMP_GREEN_CHANNEL (1), GIMP_BLUE_CHANNEL (2), GIMP_GRAY_CHANNEL (3), GIMP_INDEXED_CHANNEL (4), GIMP_ALPHA_CHANNEL (5) }"
   },
   {
     GIMP_PDB_INT32,

@@ -73,6 +73,16 @@ typedef enum  /*< pdb-skip >*/
 
 typedef enum  /*< skip >*/
 {
+  GIMP_RED_CHANNEL,
+  GIMP_GREEN_CHANNEL,
+  GIMP_BLUE_CHANNEL,
+  GIMP_GRAY_CHANNEL,
+  GIMP_INDEXED_CHANNEL,
+  GIMP_ALPHA_CHANNEL
+} GimpChannelType;
+
+typedef enum  /*< skip >*/
+{
   GIMP_LINEAR,
   GIMP_BILINEAR,
   GIMP_RADIAL,

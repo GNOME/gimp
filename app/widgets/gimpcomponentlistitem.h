@@ -37,11 +37,10 @@ typedef struct _GimpComponentListItemClass  GimpComponentListItemClass;
 
 struct _GimpComponentListItem
 {
-  GimpListItem  parent_instance;
+  GimpListItem     parent_instance;
 
-  ChannelType   channel;
-
-  GtkWidget    *eye_button;
+  GimpChannelType  channel;
+  GtkWidget       *eye_button;
 };
 
 struct _GimpComponentListItemClass
@@ -52,9 +51,9 @@ struct _GimpComponentListItemClass
 
 GType       gimp_component_list_item_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_component_list_item_new      (GimpImage   *gimage,
-					       gint         preview_size,
-					       ChannelType  channel);
+GtkWidget * gimp_component_list_item_new      (GimpImage       *gimage,
+					       gint             preview_size,
+					       GimpChannelType  channel);
 
 
 

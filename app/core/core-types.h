@@ -34,16 +34,6 @@
 
 /*  enums  */
 
-typedef enum
-{
-  RED_CHANNEL,
-  GREEN_CHANNEL,
-  BLUE_CHANNEL,
-  GRAY_CHANNEL,
-  INDEXED_CHANNEL,
-  ALPHA_CHANNEL
-} ChannelType;
-
 typedef enum  /*< chop=ADD_ >*/
 {
   ADD_WHITE_MASK,
