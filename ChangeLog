@@ -1,5 +1,41 @@
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplay.c: added a read-only property for the
+	display's image, so it can be retreived by the core, which
+	treats displays as simple GimpObjects.
+
+	* app/core/gimpcontext.c: made context->display an object
+	property, not just gpointer. Connect to the "remove" signal of
+	gimp->displays to get notified of disappearing displays. Removed
+	the EEKWrapper and get the display's gimage with g_object_get().
+
+	* app/widgets/gimpimagedock.[ch]: added image_dock->display_container
+	and require it being passed in the constructor. Do voodoo things
+	in the "image_changed" and "display_changed" callbacks to ensure
+	that the dock doesn't end up with no display even if the active
+	image has one. Added a style property for the image menu's preview
+	size.
+
+	* app/gui/dialogs-commands.c (dialogs_menu_update): set the
+	"View as List" and "View as Grid" items insensitive if the
+	other view type doesn't exist. Hide them if the view cannot
+	be classified as "list" or "grid" at all. Also hide the
+	"Preview Size" submenu if it's pointless for the view.
+
+	* app/gui/dialogs-constructors.c: added a special tab for the
+	navigation dialog. Will propbaby add dockable->stock_id to
+	generalize this kind of tab. Pass gimp->displays to
+	gimp_image_dock_new().
+
+	* app/gui/menus.c: reordered the "<Dialogs>" factory entries,
+	added more stock icons, cleanup.
+
+	* etc/gtkrc_user
+	* themes/Default/gtkrc: document usage of GimpImageDock's
+	"menu_preview_height" property.
+
+2002-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpnavigationview.c: pack the preview's alignment
 	into the inner frame, not around it, so it looks like the other
 	dockables. Fixed popup window positioning. Tried to get rid of

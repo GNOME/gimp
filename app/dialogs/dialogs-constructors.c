@@ -117,6 +117,9 @@ static GtkWidget * dialogs_tool_tab_func          (GimpDockable       *dockable,
 static GtkWidget * dialogs_tool_options_tab_func  (GimpDockable       *dockable,
                                                    GimpDockbook       *dockbook,
                                                    gint                size);
+static GtkWidget * dialogs_navigation_tab_func    (GimpDockable       *dockable,
+                                                   GimpDockbook       *dockbook,
+                                                   gint                size);
 
 static void   dialogs_set_view_context_func       (GimpDockable       *dockable,
                                                    GimpContext        *context);
@@ -266,7 +269,9 @@ dialogs_dock_new (GimpDialogFactory *factory,
 		  GimpContext       *context,
                   gint               preview_size)
 {
-  return gimp_image_dock_new (factory, context->gimp->images);
+  return gimp_image_dock_new (factory,
+                              context->gimp->images,
+                              context->gimp->displays);
 }
 
 
@@ -929,7 +934,7 @@ dialogs_navigation_view_new (GimpDialogFactory *factory,
 
   return dialogs_dockable_new (view,
                                _("Display Navigation"), _("Navigation"),
-                               NULL,
+                               dialogs_navigation_tab_func,
                                dialogs_set_navigation_context_func);
 }
 
@@ -1142,6 +1147,62 @@ dialogs_tool_options_tab_func (GimpDockable *dockable,
 			   G_CALLBACK (dialogs_tool_options_tool_changed),
 			   G_OBJECT (label),
 			   0);
+
+  return hbox;
+}
+
+static GtkIconSize
+gimp_preview_size_to_gtk_icon_size (GimpPreviewSize preview_size)
+{
+  GtkIconSize gtk_size;
+  gint        width, height;
+  GtkIconSize best_match;
+  gint        diff;
+
+  gtk_icon_size_lookup (GTK_ICON_SIZE_MENU, &width, &height);
+
+  best_match = GTK_ICON_SIZE_MENU;
+  diff       = abs (preview_size - height);
+
+  for (gtk_size  = GTK_ICON_SIZE_MENU + 1;
+       gtk_size <= GTK_ICON_SIZE_DIALOG;
+       gtk_size++)
+    {
+      if (gtk_icon_size_lookup (gtk_size, &width, &height))
+        {
+          if (abs (preview_size - height) < diff)
+            {
+              best_match = gtk_size;
+              diff       = abs (preview_size - height);
+            }
+        }
+    }
+
+  return best_match;
+}
+
+static GtkWidget *
+dialogs_navigation_tab_func (GimpDockable *dockable,
+                             GimpDockbook *dockbook,
+                             gint          size)
+{
+  GimpContext *context;
+  GtkWidget   *hbox;
+  GtkWidget   *image;
+  GtkWidget   *label;
+
+  context = dockbook->dock->context;
+
+  hbox = gtk_hbox_new (FALSE, 2);
+
+  image = gtk_image_new_from_stock (GIMP_STOCK_TOOL_MOVE,
+                                    gimp_preview_size_to_gtk_icon_size (size));
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_widget_show (image);
+
+  label = gtk_label_new (dockable->short_name);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
 
   return hbox;
 }

@@ -47,12 +47,27 @@
 #include "libgimp/gimpintl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_IMAGE
+};
+
+
 /*  local function prototypes  */
 
 static void       gimp_display_class_init            (GimpDisplayClass *klass);
 static void       gimp_display_init                  (GimpDisplay      *gdisp);
 
 static void       gimp_display_finalize              (GObject          *object);
+static void       gimp_display_set_property          (GObject          *object,
+                                                      guint             property_id,
+                                                      const GValue     *value,
+                                                      GParamSpec       *pspec);
+static void       gimp_display_get_property          (GObject          *object,
+                                                      guint             property_id,
+                                                      GValue           *value,
+                                                      GParamSpec       *pspec);
 
 static void       gimp_display_flush_whenever        (GimpDisplay      *gdisp, 
                                                       gboolean          now);
@@ -106,7 +121,15 @@ gimp_display_class_init (GimpDisplayClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->finalize = gimp_display_finalize;
+  object_class->finalize     = gimp_display_finalize;
+  object_class->set_property = gimp_display_set_property;
+  object_class->get_property = gimp_display_get_property;
+
+  g_object_class_install_property (object_class, PROP_IMAGE,
+				   g_param_spec_object ("image",
+							NULL, NULL,
+							GIMP_TYPE_IMAGE,
+							G_PARAM_READABLE));
 }
 
 static void
@@ -135,11 +158,51 @@ gimp_display_finalize (GObject *object)
 {
   GimpDisplay *gdisp;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (object));
-
   gdisp = GIMP_DISPLAY (object);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_display_set_property (GObject      *object,
+                           guint         property_id,
+                           const GValue *value,
+                           GParamSpec   *pspec)
+{
+  GimpDisplay *gdisp;
+
+  gdisp = GIMP_DISPLAY (object);
+
+  switch (property_id)
+    {
+    case PROP_IMAGE:
+      g_assert_not_reached ();
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_display_get_property (GObject    *object,
+                           guint       property_id,
+                           GValue     *value,
+                           GParamSpec *pspec)
+{
+  GimpDisplay *gdisp;
+
+  gdisp = GIMP_DISPLAY (object);
+
+  switch (property_id)
+    {
+    case PROP_IMAGE:
+      g_value_set_object (value, gdisp->gimage);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 GimpDisplay *

@@ -21,17 +21,18 @@ style "gimp-small-style"
   GtkOptionMenu::indicator_size    = { 4, 7 }
   GtkOptionMenu::indicator_spacing = { 4, 3, 1, 1 }
 
-  GtkPaned::handle_size         = 5
-  GimpDock::separator_height    = 5
-  GimpImageDock::minimal_width  = 200
-  GimpToolbox::tool_icon_size   = menu
-  GimpDockbook::tab_border      = 0
-  GimpDockbook::tab_height      = 16
-  GimpDockable::content_border  = 1
-  GimpDockable::content_spacing = 1
-  GimpEditor::content_spacing   = 1
-  GimpEditor::button_spacing    = 1
-  GimpEditor::button_icon_size  = menu
+  GtkPaned::handle_size              = 5
+  GimpDock::separator_height         = 5
+  GimpImageDock::minimal_width       = 200
+  GimpImageDock::menu_preview_height = 18
+  GimpToolbox::tool_icon_size        = menu
+  GimpDockbook::tab_border           = 0
+  GimpDockbook::tab_height           = 16
+  GimpDockable::content_border       = 1
+  GimpDockable::content_spacing      = 1
+  GimpEditor::content_spacing        = 1
+  GimpEditor::button_spacing         = 1
+  GimpEditor::button_icon_size       = menu
 }
 
 # class "GtkWidget" style "gimp-small-style"

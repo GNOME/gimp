@@ -70,17 +70,18 @@ style "gimp-default-style"
       { "images/gimp-dialog-warning.png", *, *, "gtk-dialog" }
     }
 
-  GtkPaned::handle_size         = 6
-  GimpDock::separator_height    = 6
-  GimpImageDock::minimal_width  = 250
-  GimpToolbox::tool_icon_size   = button
-  GimpDockbook::tab_border      = 0
-  GimpDockbook::tab_height      = 24
-  GimpDockable::content_border  = 2
-  GimpDockable::content_spacing = 2
-  GimpEditor::content_spacing   = 2
-  GimpEditor::button_spacing    = 2
-  GimpEditor::button_icon_size  = button
+  GtkPaned::handle_size              = 6
+  GimpDock::separator_height         = 6
+  GimpImageDock::minimal_width       = 250
+  GimpImageDock::menu_preview_height = 24
+  GimpToolbox::tool_icon_size        = button
+  GimpDockbook::tab_border           = 0
+  GimpDockbook::tab_height           = 24
+  GimpDockable::content_border       = 2
+  GimpDockable::content_spacing      = 2
+  GimpEditor::content_spacing        = 2
+  GimpEditor::button_spacing         = 2
+  GimpEditor::button_icon_size       = button
 }
 
 class "GtkWidget" style "gimp-default-style"

@@ -41,6 +41,7 @@ struct _GimpImageDock
   GimpDock       parent_instance;
 
   GimpContainer *image_container;
+  GimpContainer *display_container;
 
   gboolean       show_image_menu;
   gboolean       auto_follow_active;
@@ -59,7 +60,8 @@ struct _GimpImageDockClass
 GType       gimp_image_dock_get_type (void) G_GNUC_CONST;
 
 GtkWidget * gimp_image_dock_new      (GimpDialogFactory *dialog_factory,
-				      GimpContainer     *image_container);
+				      GimpContainer     *image_container,
+                                      GimpContainer     *display_container);
 
 void        gimp_image_dock_set_auto_follow_active (GimpImageDock *image_dock,
 						    gboolean       show);

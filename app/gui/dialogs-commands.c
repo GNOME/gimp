@@ -169,7 +169,7 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
           if (entry)
             {
               gchar *identifier;
-              gchar *substring;
+              gchar *substring = NULL;
 
               identifier = g_strdup (entry->identifier);
 
@@ -184,7 +184,7 @@ dialogs_toggle_view_cmd_callback (GtkWidget *widget,
                   memcpy (substring, "grid", 4);
                 }
 
-              if (strcmp (entry->identifier, identifier))
+              if (substring)
                 {
                   GimpContainerView *old_view;
                   GtkWidget         *new_dockable;
@@ -417,8 +417,9 @@ dialogs_menu_update (GtkItemFactory *factory,
       gint                    page_num;
       GimpDialogFactoryEntry *entry;
       GimpContainerView      *view;
-      gboolean                is_grid      = FALSE;
-      GimpPreviewSize         preview_size = GIMP_PREVIEW_SIZE_NONE;
+      GimpViewType            view_type       = -1;
+      gboolean                other_view_type = FALSE;
+      GimpPreviewSize         preview_size    = GIMP_PREVIEW_SIZE_NONE;
 
       page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -430,66 +431,100 @@ dialogs_menu_update (GtkItemFactory *factory,
 
       if (entry)
         {
-          if (strstr (entry->identifier, "grid"))
-            is_grid = TRUE;
+          gchar *identifier;
+          gchar *substring = NULL;
+
+          identifier = g_strdup (entry->identifier);
+
+          if ((substring = strstr (identifier, "grid")))
+            view_type = GIMP_VIEW_TYPE_GRID;
+          else if ((substring = strstr (identifier, "list")))
+            view_type = GIMP_VIEW_TYPE_LIST;
+
+          if (substring)
+            {
+              if (view_type == GIMP_VIEW_TYPE_GRID)
+                memcpy (substring, "list", 4);
+              else if (view_type == GIMP_VIEW_TYPE_LIST)
+                memcpy (substring, "grid", 4);
+
+              if (gimp_dialog_factory_find_entry (dockbook->dock->dialog_factory,
+                                                  identifier))
+                other_view_type = TRUE;
+            }
+
+          g_free (identifier);
         }
 
       view = gimp_container_view_get_by_dockable (dockable);
 
       if (view)
-        {
-          preview_size = view->preview_size;
-        }
+        preview_size = view->preview_size;
 
 #define SET_ACTIVE(path,active) \
         gimp_item_factory_set_active (factory, (path), (active))
 #define SET_VISIBLE(path,active) \
         gimp_item_factory_set_visible (factory, (path), (active))
+#define SET_SENSITIVE(path,sensitive) \
+        gimp_item_factory_set_sensitive (factory, (path), (sensitive))
 
-      if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
+      SET_VISIBLE ("/view-type-separator",
+                   preview_size != GIMP_PREVIEW_SIZE_NONE || view_type != -1);
+
+      SET_VISIBLE ("/Preview Size", preview_size != GIMP_PREVIEW_SIZE_NONE);
+
+      if (preview_size != GIMP_PREVIEW_SIZE_NONE)
         {
-          SET_ACTIVE ("/Preview Size/Gigantic", TRUE);
-        }
-      else if (preview_size >= GIMP_PREVIEW_SIZE_ENORMOUS)
-        {
-          SET_ACTIVE ("/Preview Size/Enormous", TRUE);
-        }
-      else if (preview_size >= GIMP_PREVIEW_SIZE_HUGE)
-        {
-          SET_ACTIVE ("/Preview Size/Huge", TRUE);
-        }
-      else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
-        {
-          SET_ACTIVE ("/Preview Size/Extra Large", TRUE);
-        }
-      else if (preview_size >= GIMP_PREVIEW_SIZE_LARGE)
-        {
-          SET_ACTIVE ("/Preview Size/Large", TRUE);
-        }
-      else if (preview_size >= GIMP_PREVIEW_SIZE_MEDIUM)
-        {
-          SET_ACTIVE ("/Preview Size/Medium", TRUE);
-        }
-      else if (preview_size >= GIMP_PREVIEW_SIZE_SMALL)
-        {
-          SET_ACTIVE ("/Preview Size/Small", TRUE);
-        }
-      else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_SMALL)
-        {
-          SET_ACTIVE ("/Preview Size/Extra Small", TRUE);
-        }
-      else
-        {
-          SET_ACTIVE ("/Preview Size/Tiny", TRUE);
+          if (preview_size >= GIMP_PREVIEW_SIZE_GIGANTIC)
+            {
+              SET_ACTIVE ("/Preview Size/Gigantic", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_ENORMOUS)
+            {
+              SET_ACTIVE ("/Preview Size/Enormous", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_HUGE)
+            {
+              SET_ACTIVE ("/Preview Size/Huge", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_LARGE)
+            {
+              SET_ACTIVE ("/Preview Size/Extra Large", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_LARGE)
+            {
+              SET_ACTIVE ("/Preview Size/Large", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_MEDIUM)
+            {
+              SET_ACTIVE ("/Preview Size/Medium", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_SMALL)
+            {
+              SET_ACTIVE ("/Preview Size/Small", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_EXTRA_SMALL)
+            {
+              SET_ACTIVE ("/Preview Size/Extra Small", TRUE);
+            }
+          else if (preview_size >= GIMP_PREVIEW_SIZE_TINY)
+            {
+              SET_ACTIVE ("/Preview Size/Tiny", TRUE);
+            }
         }
 
-      if (is_grid)
+      SET_VISIBLE ("/View as Grid", view_type != -1);
+      SET_VISIBLE ("/View as List", view_type != -1);
+
+      if (view_type != -1)
         {
-          SET_ACTIVE ("/View as Grid", TRUE);
-        }
-      else
-        {
-          SET_ACTIVE ("/View as List", TRUE);
+          if (view_type == GIMP_VIEW_TYPE_LIST)
+            SET_ACTIVE ("/View as List", TRUE);
+          else
+            SET_ACTIVE ("/View as Grid", TRUE);
+
+          SET_SENSITIVE ("/View as Grid", other_view_type);
+          SET_SENSITIVE ("/View as List", other_view_type);
         }
 
       if (GIMP_IS_IMAGE_DOCK (dockbook->dock))
@@ -512,5 +547,6 @@ dialogs_menu_update (GtkItemFactory *factory,
 
 #undef SET_ACTIVE
 #undef SET_VISIBLE
+#undef SET_SENSITIVE
     }
 }

@@ -28,9 +28,13 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimplist.h"
+
+#warning FIXME #include "display/display-types.h"
+#include "display/display-types.h"
+#include "display/gimpdisplay.h"
 
 #include "gimpdialogfactory.h"
 #include "gimpimagedock.h"
@@ -43,7 +47,8 @@
 #include "libgimp/gimpintl.h"
 
 
-#define DEFAULT_MINIMAL_WIDTH 250
+#define DEFAULT_MINIMAL_WIDTH       250
+#define DEFAULT_MENU_PREVIEW_HEIGHT  24
 
 
 static void   gimp_image_dock_class_init       (GimpImageDockClass *klass);
@@ -120,6 +125,13 @@ gimp_image_dock_class_init (GimpImageDockClass *klass)
                                                              G_MAXINT,
                                                              DEFAULT_MINIMAL_WIDTH,
                                                              G_PARAM_READABLE));
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("menu_preview_height",
+                                                             NULL, NULL,
+                                                             0,
+                                                             G_MAXINT,
+                                                             DEFAULT_MENU_PREVIEW_HEIGHT,
+                                                             G_PARAM_READABLE));
 }
 
 static void
@@ -128,6 +140,7 @@ gimp_image_dock_init (GimpImageDock *dock)
   GtkWidget *hbox;
 
   dock->image_container    = NULL;
+  dock->display_container  = NULL;
   dock->show_image_menu    = FALSE;
   dock->auto_follow_active = TRUE;
 
@@ -184,21 +197,47 @@ static void
 gimp_image_dock_style_set (GtkWidget *widget,
                            GtkStyle  *prev_style)
 {
-  gint minimal_width;
+  GimpImageDock *image_dock;
+  gint           minimal_width;
+  gint           menu_preview_height;
+  gint           focus_line_width;
+  gint           focus_padding;
+  gint           ythickness;
+
+  image_dock = GIMP_IMAGE_DOCK (widget);
 
   if (GTK_WIDGET_CLASS (parent_class)->style_set)
     GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
 
   gtk_widget_style_get (widget,
-                        "minimal_width",  &minimal_width,
+                        "minimal_width",       &minimal_width,
+                        "menu_preview_height", &menu_preview_height,
 			NULL);
 
+  gtk_widget_style_get (image_dock->auto_button,
+                        "focus_line_width", &focus_line_width,
+                        "focus_padding",    &focus_padding,
+			NULL);
+
+  ythickness = image_dock->auto_button->style->ythickness;
+
   gtk_widget_set_size_request (widget, minimal_width, -1);
+
+  gimp_container_menu_set_preview_size (GIMP_CONTAINER_MENU (image_dock->menu),
+                                        menu_preview_height);
+
+  gtk_widget_set_size_request (image_dock->auto_button, -1,
+                               menu_preview_height +
+                               2 * (1 /* CHILD_SPACING */ +
+                                    ythickness            +
+                                    focus_padding         +
+                                    focus_line_width));
 }
 
 GtkWidget *
 gimp_image_dock_new (GimpDialogFactory *dialog_factory,
-		     GimpContainer     *image_container)
+		     GimpContainer     *image_container,
+                     GimpContainer     *display_container)
 {
   GimpImageDock *image_dock;
   GimpContext   *context;
@@ -208,6 +247,7 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 
   g_return_val_if_fail (GIMP_IS_DIALOG_FACTORY (dialog_factory), NULL);
   g_return_val_if_fail (GIMP_IS_CONTAINER (image_container), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTAINER (display_container), NULL);
 
   image_dock = g_object_new (GIMP_TYPE_IMAGE_DOCK, NULL);
 
@@ -215,7 +255,8 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
   gtk_window_set_title (GTK_WINDOW (image_dock), title);
   g_free (title);
 
-  image_dock->image_container = image_container;
+  image_dock->image_container   = image_container;
+  image_dock->display_container = display_container;
 
   context = gimp_context_new (dialog_factory->context->gimp,
                               "Dock Context", NULL);
@@ -253,7 +294,8 @@ gimp_image_dock_new (GimpDialogFactory *dialog_factory,
 			   G_OBJECT (image_dock),
 			   0);
 
-  image_dock->menu = gimp_container_menu_new (image_container, context, 24);
+  image_dock->menu = gimp_container_menu_new (image_container, context,
+                                              DEFAULT_MENU_PREVIEW_HEIGHT);
   gtk_option_menu_set_menu (GTK_OPTION_MENU (image_dock->option_menu),
 			    image_dock->menu);
   gtk_widget_show (image_dock->menu);
@@ -337,13 +379,61 @@ gimp_image_dock_image_changed (GimpContext *context,
 	  /*  this invokes this function recursively but we don't enter
 	   *  the if() branch the second time
 	   */
-	  gimp_context_set_image (dock->context, gimage);
+	  gimp_context_set_image (context, gimage);
 
 	  /*  stop the emission of the original signal (the emission of
 	   *  the recursive signal is finished)
 	   */
 	  g_signal_stop_emission_by_name (G_OBJECT (context), "image_changed");
 	}
+    }
+  else if (image_dock->display_container->num_children > 0)
+    {
+      GimpObject *gdisp;
+      gboolean    find_display = TRUE;
+
+      gdisp = gimp_context_get_display (context);
+
+      if (gdisp)
+        {
+          GimpImage *gdisp_gimage;
+
+          g_object_get (gdisp, "image", &gdisp_gimage, NULL);
+          g_object_unref (G_OBJECT (gdisp_gimage));
+
+          if (gdisp_gimage == gimage)
+            find_display = FALSE;
+        }
+
+      if (find_display)
+        {
+          GList *list;
+
+          for (list = GIMP_LIST (image_dock->display_container)->list;
+               list;
+               list = g_list_next (list))
+            {
+              GimpImage *gdisp_gimage;
+
+              gdisp = GIMP_OBJECT (list->data);
+
+              g_object_get (gdisp, "image", &gdisp_gimage, NULL);
+              g_object_unref (G_OBJECT (gdisp_gimage));
+
+              if (gdisp_gimage == gimage)
+                {
+                  /*  this invokes this function recursively but we don't enter
+                   *  the if(find_display) branch the second time
+                   */
+                  gimp_context_set_display (context, gdisp);
+
+                  /*  don't stop signal emission here because the context's
+                   *  image was not changed by the recursive call
+                   */
+                  break;
+                }
+            }
+        }
     }
 }
 
