@@ -2,7 +2,7 @@
 
 	* app/dialogs/print-size-dialog.c (print_size_dialog_size_changed):
 	Previous fix only worked if units were inches -- now seems to
-	work for all units.  (Fixes #72852?)
+	work for all units. (fixes #159273 ?)
 
 2004-12-08  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
