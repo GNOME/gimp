@@ -1,5 +1,11 @@
 2002-05-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpimage.sgml: updated.
+
+2002-05-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am: ignore gimpbase.h.
 
 	* libgimpbase/libgimpbase-docs.sgml: removed GimpBase and GimpUtils

@@ -53,7 +53,6 @@ GimpConvertDitherType
 GimpConvertPaletteType
 GimpConvolutionType
 GimpConvolveType
-GimpDodgeBurnMode
 GimpDodgeBurnType
 GimpFillType
 GimpImageBaseType
@@ -62,17 +61,14 @@ GimpOffsetType
 GimpGradientPaintMode
 GimpGradientType
 GimpHueRange
-GimpInterpolationType
 GimpLayerModeEffects
 GimpMaskApplyMode
 GimpMergeType
-GimpMessageHandlerType
 GimpOrientationType
 GimpPaintApplicationMode
 GimpRepeatMode
 GimpRunMode
 GimpSizeType
-GimpStackTraceMode
 GimpTransferMode
 </SECTION>
 
@@ -372,6 +368,7 @@ gimp_image_get_component_visible
 gimp_image_set_component_visible
 gimp_image_get_filename
 gimp_image_set_filename
+gimp_image_get_name
 gimp_image_get_resolution
 gimp_image_set_resolution
 gimp_image_get_unit
