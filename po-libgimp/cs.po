@@ -1,4 +1,4 @@
-# translation of cs.po to Czech
+# translation of gimp-libgimp to Czech
 # Czech translation of GIMP plugins 1.2.3.
 # Copyright (C) 2000,2003 Free Software Foundation, Inc.
 # Stanislav Brabec <utx@penguin.cz>, 2000
@@ -6,9 +6,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: cs\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
-"PO-Revision-Date: 2003-02-07 17:51+0100\n"
+"Project-Id-Version: gimp-libgimp VERSION\n"
+"POT-Creation-Date: 2003-04-15 11:55+0200\n"
+"PO-Revision-Date: 2003-04-15 13:58+0200\n"
 "Last-Translator: Miloslav Trmač <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -175,34 +175,34 @@ msgid "percent"
 msgstr "procenta"
 
 #: libgimpbase/gimputils.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "bajtů"
+msgstr "%d bajtů"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
@@ -553,6 +553,3 @@ msgstr "Tlak"
 
 #~ msgid "points"
 #~ msgstr "bodů"
-
-#~ msgid "picas"
-#~ msgstr "pik"
