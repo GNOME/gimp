@@ -1,3 +1,9 @@
+2000-12-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/menus.c: don't warn about a non-existant "Script-Fu" menu.
+	(the user should have the choice of just removing the script-fu
+	plug-in without any side-effects).
+
 2000-12-17  Asbjorn Pettersen  <asbjornP@dualog.no>
 
 	* plug-ins/common/gz.c (save_image): Use GIMP_PDB_EXECUTION_ERROR. 

@@ -1211,7 +1211,7 @@ menus_set_sensitive (gchar    *path,
 	gtk_widget_set_sensitive (widget, sensitive);
     }
 
-  if (!ifactory || !widget)
+  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
     g_warning ("Unable to set sensitivity for menu which doesn't exist:\n%s",
 	       path);
 }
@@ -1238,7 +1238,7 @@ menus_set_state (gchar    *path,
 	widget = NULL;
     }
 
-  if (!ifactory || !widget)
+  if ((!ifactory || !widget) && ! strstr (path, "Script-Fu"))
     g_warning ("Unable to set state for menu which doesn't exist:\n%s\n",
 	       path);
 }
