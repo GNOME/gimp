@@ -2,10 +2,9 @@
 
 	* configure.in
 	* app/Makefile.am
-
-	* tools/Makefile.am: bumped version to 2.2.0-pre1, set app
-	version to 2.2, reset most versions to 2.0, changed library
-	versioning so we install with the same soname as gimp-2.0 again.
+	* tools/Makefile.am: bumped version to 2.2.0-pre1, set app version
+	to 2.2, reset other versions to 2.0. Changed library versioning so
+	we install with the same soname as gimp-2.0 again.
 
 2004-10-25  Sven Neumann  <sven@gimp.org>
 
