@@ -1,3 +1,9 @@
+2003-04-14  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/preferences-dialog.c: don't try to reparent the children
+	of GtkInputDialog but simply pop up the dialog as provided by
+	GTK+. Looks ugly but shouldn't crash any longer. Fixes bug #104423.
+
 2003-04-14  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpstroke.[ch]

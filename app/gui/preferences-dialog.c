@@ -73,6 +73,7 @@ static void   prefs_res_source_callback           (GtkWidget  *widget,
                                                    GObject    *config);
 static void   prefs_resolution_calibrate_callback (GtkWidget  *widget,
                                                    GtkWidget  *sizeentry);
+static void   prefs_input_devices_dialog          (GtkWidget  *widget);
 static void   prefs_input_dialog_able_callback    (GtkWidget  *widget,
                                                    GdkDevice  *device,
                                                    gpointer    data);
@@ -407,6 +408,43 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
   resolution_calibrate_dialog (sizeentry,
                                gtk_image_get_pixbuf (GTK_IMAGE (image)),
                                NULL, NULL, NULL);
+}
+
+static void
+prefs_input_devices_dialog (GtkWidget *widget)
+{
+  static GtkWidget *input_dialog = NULL;
+
+  if (input_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (input_dialog));
+      return;
+    }
+
+  input_dialog = gtk_input_dialog_new ();
+
+  g_object_add_weak_pointer (G_OBJECT (input_dialog),
+                             (gpointer *) &input_dialog);
+
+  gtk_window_set_transient_for (GTK_WINDOW (input_dialog),
+                                GTK_WINDOW (prefs_dialog));
+  gtk_window_set_destroy_with_parent (GTK_WINDOW (input_dialog), TRUE);
+  
+  gtk_widget_hide (GTK_INPUT_DIALOG (input_dialog)->save_button);
+
+  g_signal_connect_swapped (GTK_INPUT_DIALOG (input_dialog)->close_button,
+                            "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            input_dialog);
+
+  g_signal_connect (input_dialog, "enable_device",
+                    G_CALLBACK (prefs_input_dialog_able_callback),
+                    NULL);
+  g_signal_connect (input_dialog, "disable_device",
+                    G_CALLBACK (prefs_input_dialog_able_callback),
+                    NULL);
+
+  gtk_widget_show (input_dialog);
 }
 
 static void
@@ -1281,41 +1319,19 @@ prefs_dialog_new (Gimp    *gimp,
 				     page_index++);
 
   /*  Input Device Settings  */
-  vbox2 = prefs_frame_new (_("Input Device Settings"),
-                           GTK_CONTAINER (vbox), FALSE);
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
-  {
-    GtkWidget *input_dialog;
-    GtkWidget *input_vbox;
-    GList     *input_children;
+  button = gtk_button_new_with_label (_("Configure Input Devices"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
-    input_dialog = gtk_input_dialog_new ();
-
-    input_children = gtk_container_get_children (GTK_CONTAINER (GTK_DIALOG (input_dialog)->vbox));
-
-    input_vbox = GTK_WIDGET (input_children->data);
-
-    g_list_free (input_children);
-
-    g_object_ref (input_vbox);
-
-    gtk_container_remove (GTK_CONTAINER (GTK_DIALOG (input_dialog)->vbox),
-                          input_vbox);
-    gtk_box_pack_start (GTK_BOX (vbox2), input_vbox, TRUE, TRUE, 0);
-
-    g_object_unref (input_vbox);
-
-    g_object_weak_ref (G_OBJECT (input_vbox),
-                       (GWeakNotify) gtk_widget_destroy,
-                       input_dialog);
-
-    g_signal_connect (input_dialog, "enable_device",
-                      G_CALLBACK (prefs_input_dialog_able_callback),
-                      NULL);
-    g_signal_connect (input_dialog, "disable_device",
-                      G_CALLBACK (prefs_input_dialog_able_callback),
-                      NULL);
-  }
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (prefs_input_devices_dialog),
+                    NULL);
 
   prefs_check_button_add (config, "save-device-status",
                           _("Save Input Device Settings on Exit"),
