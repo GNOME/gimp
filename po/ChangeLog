@@ -1,6 +1,16 @@
+2000-02-16  David Monniaux  <monniaux@miaou.ens.fr>
+
+	* ru.po: Fixed two menu paths (/Help/xxx) whose Russian
+	translation did not start with a / (this made Gimp crash when
+	started in the Russian locale!).
+
 2000-02-15  Tomas Ogren  <stric@ing.umu.se>
 
 	* sv.po: Updated
+
+2000-02-14  David Monniaux  <monniaux@arbouse.ens.fr>
+
+	* fr.po: Updated French translation (esp. GAP plugin).
 
 Mon Feb 14 21:54:58 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 
@@ -15,6 +25,7 @@ Mon Feb 14 21:54:58 CET 2000  Stanislav Brabec  <utx@penguin.cz>
 	* de.po: s/Zurücksetzen/Standard/. This way many action_areas are
 	nicer.
 
+>>>>>>> 1.158
 Sun Feb 13 12:59:40 CET 2000  Sven Neumann <sven@gimp.org>
 
         * de.po: updated german translation

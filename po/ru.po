@@ -3512,11 +3512,11 @@ msgstr "/Справка"
 
 #: app/menus.c:208
 msgid "/Help/Help..."
-msgstr "Справка/Справка..."
+msgstr "/Справка/Справка..."
 
 #: app/menus.c:210
 msgid "/Help/Context Help..."
-msgstr "Справка/Контекстная помощь..."
+msgstr "/Справка/Контекстная помощь..."
 
 #: app/menus.c:212
 msgid "/Help/Tip of the Day..."
