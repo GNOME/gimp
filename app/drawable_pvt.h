@@ -31,17 +31,15 @@ struct _GimpDrawable
   char *name;				/* name of drawable */
   struct _Canvas *tiles;		/* tiles for drawable data */
   int visible;				/* controls visibility */
-  int width, height;			/* size of drawable */
   int offset_x, offset_y;		/* offset of layer in image */
 
+  /* cached from tiles */
   Tag tag;
+  int width, height;			/* size of drawable */
   
-  int bytes;				/* bytes per pixel */
   int dirty;				/* dirty bit */
   int ID;				/* provides a unique ID */
   int gimage_ID;			/* ID of gimage owner */
-  int type;				/* type of drawable */
-  int has_alpha;			/* drawable has alpha */
 
   /*  Preview variables  */
   struct _Canvas *preview;		/* preview of the channel */

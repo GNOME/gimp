@@ -200,7 +200,7 @@ gimage_mask_extract (gimage, drawable, cut_gimage, keep_indexed)
   int non_empty;
   COLOR16_NEW (bg_color, drawable_tag(drawable));
   COLOR16_INIT (bg_color);
-  color16_background (&bg_color);
+  palette_get_background (&bg_color);
 
   if (!drawable) 
     return NULL;
@@ -618,7 +618,7 @@ gimage_mask_stroke_paint_func (paint_core, drawable, state)
     COLOR16_NEW (paint, canvas_tag (painthit));
     
     COLOR16_INIT (paint);
-    color16_foreground (&paint);
+    palette_get_foreground (&paint);
     color_area (&a, &paint);
   }
       

@@ -231,7 +231,7 @@ static void    render_image_init_info          (RenderInfo   *info,
 						int           y,
 						int           w,
 						int           h);
-static guint*  render_image_init_alpha         (int           mult);
+static guint*  render_image_init_alpha         (gfloat        opacity);
 static guchar* render_image_accelerate_scaling (int           width,
 						int           start,
 						int           bpp,
@@ -351,35 +351,29 @@ render_image (GDisplay *gdisp,
 	      int       h)
 {
   RenderInfo info;
-  int image_type;
-
+  Tag t;
+  
   render_image_init_info (&info, gdisp, x, y, w, h);
 
-  {
-    Tag t = canvas_tag (info.src_canvas);
-    t = tag_set_precision (t, PRECISION_U8);
-    image_type = tag_to_drawable_type (t);
-  }
-  
-  switch (image_type)
+  t = canvas_tag (info.src_canvas);
+
+  switch (tag_format (t))
     {
-    case 0:
-    case 1:
-    case 2:
-    case 3:
-      break;
-      
-    case 4:
-    case 5:
-      if (tag_precision (canvas_tag (info.src_canvas)) != PRECISION_U8)
-        {
-          g_warning ("indexed images not supported at this precision");
-          return;
-        }
+    case FORMAT_RGB:
+    case FORMAT_GRAY:
       break;
 
+    case FORMAT_INDEXED:
+      if (tag_precision (t) != PRECISION_U8)
+        {
+          g_warning ("indexed images only supported in 8 bit mode");
+          return;
+        }
+        break;
+
+    case FORMAT_NONE:
     default:
-      g_message ("unknown gimage projection type: %d", image_type);
+      g_warning ("unsupported gimage projection type");
       return;
     }
 
@@ -389,20 +383,24 @@ render_image (GDisplay *gdisp,
       return;
     }
   
-  switch( tag_precision (canvas_tag (info.src_canvas)))
-    {
+  {
+    int image_type = tag_to_drawable_type (tag_set_precision (t, PRECISION_U8));
+  
+    switch (tag_precision (t))
+      {
       case PRECISION_U8:
         (* render_funcs[image_type][info.dest_bpp-1]) (&info);
         break;
       case PRECISION_U16:
         (* render_funcs_u16[image_type][info.dest_bpp-1]) (&info);
   	break;
-       case PRECISION_FLOAT:
+      case PRECISION_FLOAT:
         (* render_funcs_float[image_type][info.dest_bpp-1]) (&info);
   	break;
-       case PRECISION_NONE:
+      case PRECISION_NONE:
         break;
-    }
+      }
+  }
 }
 
 
@@ -2465,32 +2463,28 @@ render_image_init_info (RenderInfo *info,
   info->scaledest = SCALEDEST (gdisp);
   info->src_x = UNSCALE (gdisp, info->x);
   info->src_y = UNSCALE (gdisp, info->y);
-  info->src_bpp = gimage_projection_bytes (gdisp->gimage);
+
+  info->src_canvas = gimage_projection (gdisp->gimage);
+  info->src_bpp = tag_bytes (canvas_tag (info->src_canvas));
+
   info->dest = gximage_get_data ();
   info->dest_bpp = gximage_get_bpp ();
   info->dest_bpl = gximage_get_bpl ();
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = gximage_get_byte_order ();
 
-  info->src_canvas = gimage_projection (gdisp->gimage);
   info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
   info->alpha = NULL;
 
-  switch (gimage_projection_type (gdisp->gimage))
-    {
-    case RGBA_GIMAGE:
-    case GRAYA_GIMAGE:
-    case INDEXEDA_GIMAGE:
-      info->alpha = render_image_init_alpha (gimage_projection_opacity (gdisp->gimage));
-      break;
-    }
+  if (tag_alpha (canvas_tag (info->src_canvas)) == ALPHA_YES)
+    info->alpha = render_image_init_alpha (gimage_projection_opacity (gdisp->gimage));
 }
 
 static guint*
-render_image_init_alpha (int mult)
+render_image_init_alpha (gfloat mult)
 {
   static guint *alpha_mult = NULL;
-  static int alpha_val = -1;
+  static gfloat alpha_val = -1.0;
   int i;
 
   if (alpha_val != mult)
@@ -2500,7 +2494,7 @@ render_image_init_alpha (int mult)
 
       alpha_val = mult;
       for (i = 0; i < 256; i++)
-	alpha_mult[i] = ((mult * i) / 255) << 8;
+	alpha_mult[i] = ((i * (guint) (mult * 255)) / 255) << 8;
     }
 
   return alpha_mult;

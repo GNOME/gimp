@@ -56,16 +56,6 @@ static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
 #define MAX_TITLE_BUF 4096
 
-static char *image_type_strs[] =
-{
-  "RGB",
-  "RGB-alpha",
-  "grayscale",
-  "grayscale-alpha",
-  "indexed",
-  "indexed-alpha"
-};
-
 
 /*  Local functions  */
 static void       gdisplay_format_title     (GImage *, char *);
@@ -126,10 +116,7 @@ gdisplay_new (GImage       *gimage,
 
   /*  create the shell for the image  */
   create_display_shell (gdisp->ID, gimage->width, gimage->height,
-			title, gimage_base_type (gimage));
-
-  /*  set the gdisplay colormap type and install the appropriate colormap  */
-  gdisp->color_type = (gimage_base_type (gimage) == GRAY) ? GRAY : RGB;
+			title, 0);
 
   /*  set the user data  */
   if (!display_ht)
@@ -149,29 +136,8 @@ static void
 gdisplay_format_title (GImage *gimage,
 		       char   *title)
 {
-  char *image_type_str;
-  int empty;
+  int empty = gimage_is_empty (gimage);
   Tag t = gimage_tag (gimage);
-  
-  empty = gimage_is_empty (gimage);
-
-  if (gimage_is_flat (gimage))
-    image_type_str = image_type_strs[drawable_type (gimage_active_drawable (gimage))];
-  else
-    switch (gimage_base_type (gimage))
-      {
-      case RGB:
-	image_type_str = (empty) ? "RGB-empty" : "RGB-layered";
-	break;
-      case GRAY:
-	image_type_str = (empty) ? "grayscale-empty" : "grayscale-layered";
-	break;
-      case INDEXED:
-	image_type_str = (empty) ? "indexed-empty" : "indexed-layered";
-	break;
-      default:
-	image_type_str = NULL;
-      }
 
   sprintf (title, "%s-%d.%d (%s - %s - %s)%s",
 	   prune_filename (gimage_filename (gimage)),
@@ -993,7 +959,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   gint lp;
   gint alpha = FALSE;
   GimpDrawable *drawable;
-  gint base_type;
+  Format format;
   gint type;
 
   fs = (gimage_floating_sel (gdisp->gimage) != NULL);
@@ -1002,7 +968,7 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
       lm = (layer->mask) ? TRUE : FALSE;
   else
     lm = FALSE;
-  base_type = gimage_base_type (gdisp->gimage);
+  format = tag_format (gimage_tag (gdisp->gimage));
   lp = (gdisp->gimage->layers != NULL);
   alpha = layer && layer_has_alpha (layer);
 
@@ -1022,22 +988,22 @@ gdisplay_set_menu_sensitivity (GDisplay *gdisp)
   menus_set_sensitive ("<Image>/Layers/Mask To Selection", !aux && lm && lp);
   menus_set_sensitive ("<Image>/Layers/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
 
-  menus_set_sensitive ("<Image>/Image/RGB", (base_type != RGB));
-  menus_set_sensitive ("<Image>/Image/Grayscale", (base_type != GRAY));
-  menus_set_sensitive ("<Image>/Image/Indexed", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/RGB", (format != FORMAT_RGB));
+  menus_set_sensitive ("<Image>/Image/Grayscale", (format != FORMAT_GRAY));
+  menus_set_sensitive ("<Image>/Image/Indexed", (format != FORMAT_INDEXED));
 
-  menus_set_sensitive ("<Image>/Image/Colors/Threshold", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Posterize", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Equalize", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Invert", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Threshold", (format != FORMAT_INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Posterize", (format != FORMAT_INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Equalize", (format != FORMAT_INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Invert", (format != FORMAT_INDEXED));
 
-  menus_set_sensitive ("<Image>/Image/Colors/Color Balance", (base_type == RGB));
-  menus_set_sensitive ("<Image>/Image/Colors/Brightness-Contrast", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Hue-Saturation", (base_type == RGB));
-  menus_set_sensitive ("<Image>/Image/Colors/Curves", (base_type != INDEXED));
-  menus_set_sensitive ("<Image>/Image/Colors/Levels", (base_type != INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Color Balance", (format == FORMAT_RGB));
+  menus_set_sensitive ("<Image>/Image/Colors/Brightness-Contrast", (format != FORMAT_INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Hue-Saturation", (format == FORMAT_RGB));
+  menus_set_sensitive ("<Image>/Image/Colors/Curves", (format != FORMAT_INDEXED));
+  menus_set_sensitive ("<Image>/Image/Colors/Levels", (format != FORMAT_INDEXED));
 
-  menus_set_sensitive ("<Image>/Image/Colors/Desaturate", (base_type == RGB));
+  menus_set_sensitive ("<Image>/Image/Colors/Desaturate", (format == FORMAT_RGB));
 
   menus_set_sensitive ("<Image>/Image/Alpha/Add Alpha Channel", !fs && !aux && lp && !lm && !alpha);
 

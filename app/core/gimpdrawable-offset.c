@@ -379,11 +379,11 @@ offset (GImage *gimage,
       COLOR16_INIT (fill);
       if (fill_type == OFFSET_BACKGROUND)
 	{
-          color16_background (&fill);
+          palette_get_background (&fill);
 	}
       else if (fill_type == OFFSET_TRANSPARENT)
 	{
-          color16_transparent (&fill);
+          palette_get_transparent (&fill);
 	}
         
       if (offset_x >= 0 && offset_y >= 0)

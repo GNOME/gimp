@@ -440,7 +440,7 @@ xcf_save_image (XcfInfo *info,
   /* write out the width, height and image type information for the image */
   info->cp += xcf_write_int32 (info->fp, (guint32*) &gimage->width, 1);
   info->cp += xcf_write_int32 (info->fp, (guint32*) &gimage->height, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &gimage->base_type, 1);
+  /* info->cp += xcf_write_int32 (info->fp, (guint32*) &gimage->base_type, 1); */
 
   /* determine the number of layers and channels in the image */
   nlayers = (guint) g_slist_length (gimage->layers);
@@ -881,10 +881,10 @@ xcf_save_layer (XcfInfo *info,
   /* write out the width, height and image type information for the layer */
   info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->width, 1);
   info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->height, 1);
-  info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1);
+  /* info->cp += xcf_write_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->type, 1); */
 
   if (info->compression == COMPRESS_FRACTAL)
-    xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
+    /* xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type); */;
 
   /* write out the layers name */
   info->cp += xcf_write_string (info->fp, &GIMP_DRAWABLE(layer)->name, 1);
@@ -1235,7 +1235,7 @@ xcf_load_image (XcfInfo *info)
   info->cp += xcf_read_int32 (info->fp, (guint32*) &image_type, 1);
 
   /* create a new gimage */
-  gimage = gimage_new (width, height, image_type);
+  gimage = gimage_new (width, height, tag_from_drawable_type (image_type));
   if (!gimage)
     return NULL;
 
@@ -1271,7 +1271,7 @@ xcf_load_image (XcfInfo *info)
 	goto error;
 
       if (info->compression == COMPRESS_FRACTAL)
-	xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
+	/* xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type); */;
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
@@ -1618,7 +1618,7 @@ xcf_load_layer (XcfInfo *info,
     goto error;
 
   if (info->compression == COMPRESS_FRACTAL)
-    xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type);
+    /* xcf_compress_frac_info (GIMP_DRAWABLE(layer)->type); */;
 
   /* read the hierarchy and layer mask offsets */
   info->cp += xcf_read_int32 (info->fp, &hierarchy_offset, 1);

@@ -395,8 +395,8 @@ layer_create_mask (layer, add_mask_type)
   COLOR16_NEW (black_color, drawable_tag(GIMP_DRAWABLE(layer)) );
   COLOR16_INIT (black_color);
   COLOR16_INIT (white_color);
-  color16_white (&white_color);
-  color16_black (&black_color);
+  palette_get_white (&white_color);
+  palette_get_black (&black_color);
   
   prec = tag_precision (drawable_tag (GIMP_DRAWABLE(layer)));
   
@@ -515,7 +515,7 @@ layer_apply_mask (layer, mode)
 		0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
 
       apply_mask_to_area (&srcPR, &maskPR, 1.0);
-      GIMP_DRAWABLE(layer)->preview_valid = FALSE;
+      drawable_invalidate_preview (GIMP_DRAWABLE(layer));
 
       layer->mask = NULL;
       layer->apply_mask = 0;
@@ -570,26 +570,32 @@ layer_add_alpha (layer)
      Layer *layer;
 {
   PixelArea srcPR, destPR;
-  Canvas *new_canvas;
-  Tag canvas_tag, new_canvas_tag;
-  int type;
+  Canvas * c;
+  Tag t;
 
-  canvas_tag = drawable_tag (GIMP_DRAWABLE(layer));
-  if(tag_alpha (canvas_tag) == ALPHA_YES)
+  t = drawable_tag (GIMP_DRAWABLE(layer));
+
+  if (tag_alpha (t) == ALPHA_YES)
     return;
 
-  /*  Configure the pixel areas  */
+  t = tag_set_alpha (t, ALPHA_YES);
+
+  /*  Allocate the new layer */
+  c = canvas_new (t, 
+                           GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height,
+                           STORAGE_TILED);
+
+  /*  Configure the pixel areas */
   pixelarea_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 
-	0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
+                  0, 0,
+                  0, 0,
+                  FALSE);
 
-  /*  Allocate the new layer, configure dest region  */
-  new_canvas_tag = tag_set_alpha (canvas_tag, ALPHA_YES);
+  pixelarea_init (&destPR, c, 
+                  0, 0,
+                  0, 0,
+                  TRUE);
   
-  new_canvas = canvas_new (new_canvas_tag, 
-	GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, STORAGE_FLAT);
-  pixelarea_init (&destPR, new_canvas, 
-	0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-
   /*  Add an alpha channel  */
   add_alpha_area (&srcPR, &destPR);
 
@@ -597,11 +603,7 @@ layer_add_alpha (layer)
   undo_push_layer_mod (gimage_get_ID (GIMP_DRAWABLE(layer)->gimage_ID), layer);
 
   /*  Configure the new layer  */
-  GIMP_DRAWABLE(layer)->tiles = new_canvas;
-  type = tag_to_drawable_type (new_canvas_tag);
-  GIMP_DRAWABLE(layer)->type = type;
-  GIMP_DRAWABLE(layer)->bytes = tag_bytes (new_canvas_tag);
-  GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (type);
+  GIMP_DRAWABLE(layer)->tiles = c;
 
   /*  update gdisplay titles to reflect the possibility of
    *  this layer being the only layer in the gimage
@@ -747,14 +749,14 @@ layer_resize (layer, new_width, new_height, offx, offy)
       /*  Set to transparent and black  */
       COLOR16_NEW (black_color, layer_tag);
       COLOR16_INIT (black_color);
-      color16_black (&black_color);
+      palette_get_black (&black_color);
       color_area (&destPR,  &black_color);
     }
   else
     {
       COLOR16_NEW (bg_color, layer_tag);
       COLOR16_INIT (bg_color);
-      color16_background (&bg_color);
+      palette_get_background (&bg_color);
       color_area(&destPR, &bg_color);
     }
   pixelarea_init (&destPR, new_canvas, x2, y2, w, h, TRUE);
@@ -944,12 +946,7 @@ int
 layer_has_alpha (layer)
      Layer * layer;
 {
-  if (GIMP_DRAWABLE(layer)->type == RGBA_GIMAGE ||
-      GIMP_DRAWABLE(layer)->type == GRAYA_GIMAGE ||
-      GIMP_DRAWABLE(layer)->type == INDEXEDA_GIMAGE)
-    return 1;
-  else
-    return 0;
+  return (drawable_has_alpha (GIMP_DRAWABLE(layer)));
 }
 
 
@@ -987,7 +984,7 @@ layer_preview (layer, w, h)
 
       p = tag_precision (drawable_tag (GIMP_DRAWABLE(layer)));
       
-      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_NO),
+      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_YES),
                                 w, h,
                                 STORAGE_FLAT);
 
@@ -1039,7 +1036,7 @@ layer_mask_preview (layer, w, h)
 
       p = tag_precision (drawable_tag (GIMP_DRAWABLE(mask)));
 
-      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_NO),
+      preview_buf = canvas_new (tag_new (p, FORMAT_RGB, ALPHA_YES),
                                 w, h,
                                 STORAGE_FLAT);
 
@@ -1108,9 +1105,12 @@ layer_mask_new (int gimage_ID, int width, int height,
                 Precision p, char *name, gfloat opacity, PixelRow *col)
 {
   LayerMask * layer_mask;
-  Tag tag = tag_new (p, FORMAT_GRAY, ALPHA_NO);
+  Tag tag;
 
   layer_mask = gtk_type_new (gimp_layer_mask_get_type ());
+
+  tag = tag_new (p, FORMAT_GRAY, ALPHA_NO);
+  pixelrow_init (&GIMP_CHANNEL(layer_mask)->col, tag, GIMP_CHANNEL(layer_mask)->_col, 1);
 
   gimp_drawable_configure (GIMP_DRAWABLE(layer_mask), 
 			   gimage_ID, width, height, tag, STORAGE_TILED, name);
@@ -1221,7 +1221,7 @@ channel_layer_mask (Channel *mask, Layer * layer)
   COLOR16_NEW (black_color, drawable_tag(GIMP_DRAWABLE(mask)));
  
   COLOR16_INIT (black_color);
-  color16_black (&black_color);
+  palette_get_black (&black_color);
 
   /*  push the current mask onto the undo stack  */
   channel_push_undo (mask);

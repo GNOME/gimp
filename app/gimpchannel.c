@@ -108,6 +108,7 @@ int channel_get_count = 0;
 /**************************/
 /*  Function definitions  */
 
+#define FIXME
 #if 0
 static void
 channel_validate (TileManager *tm, Tile *tile, int level)
@@ -124,10 +125,11 @@ channel_new (int gimage_ID, int width, int height, Precision p, char *name,
              gfloat opacity, PixelRow *col)
 {
   Channel * channel;
-  Tag tag = tag_new (p, FORMAT_GRAY, ALPHA_NO);
+  Tag tag;
 
   channel = gtk_type_new (gimp_channel_get_type ());
 
+  tag = tag_new (p, FORMAT_GRAY, ALPHA_NO);
   pixelrow_init (&channel->col, tag, channel->_col, 1);
   
   gimp_drawable_configure (GIMP_DRAWABLE(channel), 
@@ -297,9 +299,6 @@ channel_resize (Channel *channel, int new_width, int new_height,
   int clear;
   int w, h;
   int x1, y1, x2, y2;
-  COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(channel)) );
-  COLOR16_INIT (bg_color);
-  color16_black (&bg_color);
 
   if (!new_width || !new_height)
     return;
@@ -355,8 +354,15 @@ channel_resize (Channel *channel, int new_width, int new_height,
   /*  Set to black (empty--for selections)  */
   if (clear)
     {
+      COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(channel)) );
+      COLOR16_INIT (bg_color);
+      palette_get_black (&bg_color);
+
       pixelarea_init (&dest_area, new_canvas, 
-	0, 0, new_width, new_height, TRUE);
+                      0, 0,
+                      new_width, new_height,
+                      TRUE);
+
       color_area (&dest_area, &bg_color);
     }
 
@@ -471,7 +477,7 @@ channel_new_mask (int gimage_ID, int width, int height, Precision p)
   COLOR16_NEW (black, tag);
 
   COLOR16_INIT (black);
-  color16_black (&black);
+  palette_get_black (&black);
   
   /*  Create the new channel  */
   new_channel = channel_new (gimage_ID, width, height, p,
@@ -1159,7 +1165,7 @@ channel_clear (Channel *mask)
   PixelArea mask_area;
   COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(mask)) );
   COLOR16_INIT (bg_color);
-  color16_black (&bg_color);
+  palette_get_black (&bg_color);
 
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
@@ -1257,18 +1263,24 @@ void
 channel_all (Channel *mask)
 {
   PixelArea maskPR;
-  COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(mask)) );
-  COLOR16_INIT (bg_color);
-  color16_white (&bg_color);
 
   /*  push the current channel onto the undo stack  */
   channel_push_undo (mask);
 
   /*  clear the mask  */
-  pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 
-			0, 0, GIMP_DRAWABLE(mask)->width, GIMP_DRAWABLE(mask)->height, TRUE);
-  color_area (&maskPR, &bg_color);
+  {
+    COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(mask)) );
+    COLOR16_INIT (bg_color);
+    palette_get_white (&bg_color);
 
+    pixelarea_init (&maskPR, GIMP_DRAWABLE(mask)->tiles, 
+                    0, 0,
+                    0, 0,
+                    TRUE);
+
+    color_area (&maskPR, &bg_color);
+  }
+  
   /*  we know the bounds  */
   mask->bounds_known = TRUE;
   mask->empty = FALSE;
@@ -1287,7 +1299,7 @@ channel_border (Channel *mask, int radius)
   int num_segs;
   COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(mask)) );
   COLOR16_INIT (bg_color);
-  color16_black (&bg_color);
+  palette_get_black (&bg_color);
 
   if (! channel_bounds (mask, &x1, &y1, &x2, &y2))
     return;
@@ -1381,7 +1393,7 @@ channel_translate (Channel *mask, int off_x, int off_y)
   COLOR16_NEW (empty_color, tag);
 
   COLOR16_INIT (empty_color);
-  color16_black (&empty_color);
+  palette_get_black (&empty_color);
 
   tmp_mask = NULL;
 
@@ -1459,7 +1471,7 @@ channel_layer_alpha (Channel *mask, Layer *layer)
   int x1, y1, x2, y2;
   COLOR16_NEW (empty_color, drawable_tag(GIMP_DRAWABLE(mask)));
   COLOR16_INIT (empty_color);
-  color16_black (&empty_color);
+  palette_get_black (&empty_color);
 
   /*  push the current mask onto the undo stack  */
   channel_push_undo (mask);

@@ -85,7 +85,7 @@ crop_buffer (TileManager *tiles,
   void * pr;
   COLOR16_NEW (black_color, canvas_tag(tiles) );
   COLOR16_INIT (black_color);
-  color16_black (&black_color);
+  palette_get_black (&black_color);
 
   num_channels = tag_num_channels (canvas_tag (tiles));
   alpha = num_channels - 1;
@@ -333,7 +333,7 @@ edit_clear (GImage *gimage,
   Tag d_tag = drawable_tag (drawable);
   COLOR16_NEW (background_color, d_tag);
   COLOR16_INIT (background_color);
-  color16_background (&background_color);
+  palette_get_background (&background_color);
 
   if (!gimage || drawable == NULL)
     return FALSE;
@@ -373,7 +373,7 @@ edit_fill (GImage *gimage,
   Tag d_tag = drawable_tag (drawable);
   COLOR16_NEW (background_color, d_tag);
   COLOR16_INIT (background_color);
-  color16_black (&background_color);
+  palette_get_black (&background_color);
 
   if (!gimage || drawable == NULL)
     return FALSE;

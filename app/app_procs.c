@@ -512,6 +512,8 @@ app_init (void)
   if (no_interface == FALSE)
     {
       get_standard_colormaps ();
+      /* this has to be done after the colormaps are setup */
+      palette_set_default_colors ();
       create_toolbox ();
       gximage_init ();
       render_setup (transparency_type, transparency_size);

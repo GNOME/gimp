@@ -143,6 +143,7 @@ is_pixel_sufficiently_different (unsigned char *col1, unsigned char *col2,
     }
 }
 
+#define FIXME
 #if 0
 static void
 ref_tiles (Canvas *src, Canvas *mask, Tile **s_tile, Tile **m_tile,
@@ -172,6 +173,7 @@ find_contiguous_segment  (
                           int * end
                           )
 {
+#define FIXME
 #if 0
   unsigned char diff;
 
@@ -285,7 +287,7 @@ find_contiguous_region  (
   Canvas * s, * m;
   
   s = (sample_merged)
-    ? gimage_composite (gimage)
+    ? gimage_projection (gimage)
     : drawable_data (drawable);
 
   mask = channel_new_mask (gimage->ID,

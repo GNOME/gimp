@@ -54,14 +54,6 @@ static gint drawable_signals[LAST_SIGNAL] = { 0 };
 
 static GimpDrawableClass *parent_class = NULL;
 
-Tag
-drawable_tag (
-              GimpDrawable *d
-              )
-{
-  return d->tag;
-}
-
 guint
 gimp_drawable_get_type ()
 {
@@ -132,120 +124,145 @@ drawable_hash_compare (gpointer v1, gpointer v2)
 GimpDrawable*
 drawable_get_ID (int drawable_id)
 {
-  if (drawable_table == NULL)
-    return NULL;
+  g_return_val_if_fail ((drawable_table != NULL), NULL);
 
   return (GimpDrawable*) g_hash_table_lookup (drawable_table, 
 					      (gpointer) drawable_id);
 }
 
-int
-drawable_ID (GimpDrawable *drawable)
+Tag
+drawable_tag (
+              GimpDrawable *drawable
+              )
 {
-  return drawable->ID;
+  return (drawable ? drawable->tag : tag_null ());
 }
 
-void
-drawable_apply_image (GimpDrawable *drawable, 
-		      int x1, int y1, int x2, int y2, 
-                      Canvas * tiles)
+int 
+drawable_ID  (
+              GimpDrawable * drawable
+              )
 {
-  if (drawable)
-    if (! tiles)
-      undo_push_image (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2);
-    else
-      undo_push_image_mod (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2, tiles);
+  return (drawable ? drawable->ID : -1);
+}
+
+void 
+drawable_apply_image  (
+                       GimpDrawable * drawable,
+                       int x1,
+                       int y1,
+                       int x2,
+                       int y2,
+                       Canvas * tiles
+                       )
+{
+  g_return_if_fail (drawable != NULL);
+
+  if (! tiles)
+    undo_push_image (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2);
+  else
+    undo_push_image_mod (gimage_get_ID (drawable->gimage_ID), drawable, x1, y1, x2, y2, tiles);
   
 }
 
 
-void
-drawable_merge_shadow (GimpDrawable *drawable, int undo)
+void 
+drawable_merge_shadow  (
+                        GimpDrawable * drawable,
+                        int undo
+                        )
 {
-  GImage *gimage;
+  GImage * gimage;
   PixelArea shadow_area;
   int x1, y1, x2, y2;
 
-  if (! drawable)
-    return;
+  g_return_if_fail (drawable != NULL);
 
-  if (! (gimage = drawable_gimage (drawable)))
-    return;
+  gimage = drawable_gimage (drawable);
+  g_return_if_fail (gimage != NULL);
 
+  
   /*  A useful optimization here is to limit the update to the
    *  extents of the selection mask, as it cannot extend beyond
    *  them.
    */
   drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+
   pixelarea_init (&shadow_area, gimage->shadow, 
-                  x1, y1, (x2 - x1), (y2 - y1), FALSE);
-  gimage_apply_painthit (gimage, drawable, NULL, &shadow_area, undo, 1.0,
-                         REPLACE_MODE,  x1, y1);
+                  x1, y1,
+                  (x2 - x1), (y2 - y1),
+                  FALSE);
+
+  gimage_apply_painthit (gimage, drawable,
+                         NULL, &shadow_area,
+                         undo, OPAQUE_OPACITY,
+                         REPLACE_MODE, x1, y1);
 }
 
 
-void
-drawable_fill (GimpDrawable *drawable, int fill_type)
+void 
+drawable_fill  (
+                GimpDrawable * drawable,
+                int fill_type
+                )
 {
-  GImage *gimage;
-
-  if (! drawable)
-    return;
-
-  if (! (gimage = drawable_gimage (drawable)))
-    return;
+  g_return_if_fail (drawable != NULL);
 
   {
     PixelArea dest_area;
-    COLOR16_NEW (paint, drawable_tag(drawable));
+    COLOR16_NEW (paint, drawable_tag (drawable));
 
     /* init the fill color */
     COLOR16_INIT (paint);
     switch (fill_type)
       {
       case BACKGROUND_FILL:
-        color16_background (&paint);
+        palette_get_background (&paint);
         break;
       case FOREGROUND_FILL:
-        color16_foreground (&paint);
+        palette_get_foreground (&paint);
         break;
       case WHITE_FILL:
-        color16_white (&paint);
+        palette_get_white (&paint);
         break;
       case TRANSPARENT_FILL:
-        color16_transparent (&paint);
+        palette_get_transparent (&paint);
         break;
       case NO_FILL:
       default:
         return;
       }
 
-    /* init the area to be filled */
-    pixelarea_init (&dest_area, drawable_data(drawable),
-                    0, 0, 0, 0, TRUE);
+    pixelarea_init (&dest_area, drawable_data (drawable),
+                    0, 0,
+                    0, 0,
+                    TRUE);
 
-    /* do the fill */
     color_area (&dest_area, &paint);
-  }
   
-  /*  Update the filled area  */
-  drawable_update (drawable, 0, 0,
-		   drawable_width (drawable),
-		   drawable_height (drawable));
+    drawable_update (drawable,
+                     0, 0,
+                     drawable_width (drawable), drawable_height (drawable));
+  }
 }
 
 
-void
-drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
+void 
+drawable_update  (
+                  GimpDrawable * drawable,
+                  int x,
+                  int y,
+                  int w,
+                  int h
+                  )
 {
   GImage *gimage;
   int offset_x, offset_y;
 
-  if (! drawable)
-    return;
+  g_return_if_fail (drawable != NULL);
 
-  if (! (gimage = drawable_gimage (drawable)))
-    return;
+  gimage = drawable_gimage (drawable);
+  g_return_if_fail (gimage != NULL);
 
   drawable_offsets (drawable, &offset_x, &offset_y);
   x += offset_x;
@@ -257,18 +274,22 @@ drawable_update (GimpDrawable *drawable, int x, int y, int w, int h)
 }
 
 
-int
-drawable_mask_bounds (GimpDrawable *drawable, 
-		      int *x1, int *y1, int *x2, int *y2)
+int 
+drawable_mask_bounds  (
+                       GimpDrawable * drawable,
+                       int * x1,
+                       int * y1,
+                       int * x2,
+                       int * y2
+                       )
 {
   GImage *gimage;
   int off_x, off_y;
 
-  if (! drawable)
-    return FALSE;
+  g_return_val_if_fail ((drawable != NULL), FALSE);
 
-  if (! (gimage = drawable_gimage (drawable)))
-    return FALSE;
+  gimage = drawable_gimage (drawable);
+  g_return_val_if_fail ((gimage != NULL), FALSE);
 
   if (gimage_mask_bounds (gimage, x1, y1, x2, y2))
     {
@@ -288,13 +309,14 @@ drawable_mask_bounds (GimpDrawable *drawable,
 }
 
 
-void
-drawable_invalidate_preview (GimpDrawable *drawable)
+void 
+drawable_invalidate_preview  (
+                              GimpDrawable * drawable
+                              )
 {
   GImage *gimage;
 
-  if (! drawable)
-    return;
+  g_return_if_fail (drawable != NULL);
 
   drawable->preview_valid = FALSE;
 
@@ -313,126 +335,123 @@ drawable_invalidate_preview (GimpDrawable *drawable)
 int
 drawable_dirty (GimpDrawable *drawable)
 {
-  if (drawable) 
-    return drawable->dirty = (drawable->dirty < 0) ? 2 : drawable->dirty + 1;
-  else
-    return 0;
+  g_return_val_if_fail ((drawable != NULL), 0);
+
+  return drawable->dirty = (drawable->dirty < 0) ? 2 : drawable->dirty + 1;
 }
 
 
 int
 drawable_clean (GimpDrawable *drawable)
 {
-  if (drawable) 
-    return drawable->dirty = (drawable->dirty <= 0) ? 0 : drawable->dirty - 1;
-  else
-    return 0;
+  g_return_val_if_fail ((drawable != NULL), 0);
+
+  return drawable->dirty = (drawable->dirty <= 0) ? 0 : drawable->dirty - 1;
 }
 
 
 GImage *
 drawable_gimage (GimpDrawable *drawable)
 {
-  if (drawable)
-    return gimage_get_ID (drawable->gimage_ID);
-  else
-    return NULL;
+  g_return_val_if_fail ((drawable != NULL), NULL);
+
+  return gimage_get_ID (drawable->gimage_ID);
 }
 
 
 int
 drawable_type (GimpDrawable *drawable)
 {
-  if (drawable)
-    return drawable->type;
-  else
-    return -1;
+  g_return_val_if_fail ((drawable != NULL), -1);
+
+  return tag_to_drawable_type (drawable->tag);
 }
 
 int
 drawable_has_alpha (GimpDrawable *drawable)
 {
-  if (drawable)
-    return drawable->has_alpha;
-  else
-    return FALSE;
+  if (tag_alpha (drawable_tag (drawable)) == ALPHA_YES)
+    return TRUE;
+  return FALSE;
 }
 
 
 int 
 drawable_visible (GimpDrawable *drawable)
 {
+  g_return_val_if_fail ((drawable != NULL), FALSE);
+
   return drawable->visible;
 }
 
 char *
 drawable_name (GimpDrawable *drawable)
 {
+  g_return_val_if_fail ((drawable != NULL), "");
+
   return drawable->name;
 }
 
 int
-drawable_type_with_alpha (GimpDrawable *drawable)
-{
-  int type = drawable_type (drawable);
-  int has_alpha = drawable_has_alpha (drawable);
-
-  if (has_alpha)
-    return type;
-  else
-    switch (type)
-      {
-      case RGB_GIMAGE:
-	return RGBA_GIMAGE; break;
-      case GRAY_GIMAGE:
-	return GRAYA_GIMAGE; break;
-      case INDEXED_GIMAGE:
-	return INDEXEDA_GIMAGE; break;
-      }
-  return 0;
-}
-
-
-int
 drawable_color (GimpDrawable *drawable)
 {
-  if (drawable_type (drawable) == RGBA_GIMAGE ||
-      drawable_type (drawable) == RGB_GIMAGE)
-    return 1;
-  else
-    return 0;
+  g_return_val_if_fail ((drawable != NULL), FALSE);
+
+  switch (tag_format (drawable->tag))
+    {
+    case FORMAT_RGB:
+      return TRUE;
+    case FORMAT_GRAY:
+    case FORMAT_INDEXED:
+    case FORMAT_NONE:
+    }
+
+  return FALSE;
 }
 
 
 int
 drawable_gray (GimpDrawable *drawable)
 {
-  if (drawable_type (drawable) == GRAYA_GIMAGE ||
-      drawable_type (drawable) == GRAY_GIMAGE)
-    return 1;
-  else
-    return 0;
+  g_return_val_if_fail ((drawable != NULL), FALSE);
+
+  switch (tag_format (drawable->tag))
+    {
+    case FORMAT_GRAY:
+      return TRUE;
+    case FORMAT_RGB:
+    case FORMAT_INDEXED:
+    case FORMAT_NONE:
+    }
+
+  return FALSE;
 }
 
 
 int
 drawable_indexed (GimpDrawable *drawable)
 {
-  if (drawable_type (drawable) == INDEXEDA_GIMAGE ||
-      drawable_type (drawable) == INDEXED_GIMAGE)
-    return 1;
-  else
-    return 0;
+  g_return_val_if_fail ((drawable != NULL), FALSE);
+
+  switch (tag_format (drawable->tag))
+    {
+    case FORMAT_INDEXED:
+      return TRUE;
+    case FORMAT_GRAY:
+    case FORMAT_RGB:
+    case FORMAT_NONE:
+    }
+
+  return FALSE;
 }
 
 
 Canvas *
 drawable_data (GimpDrawable *drawable)
 {
-  if (drawable) 
-    return drawable->tiles;
-  else
-    return NULL;
+  g_return_val_if_fail ((drawable != NULL), NULL);
+
+  return drawable->tiles;
 }
 
 Canvas *
@@ -440,43 +459,39 @@ drawable_shadow (GimpDrawable *drawable)
 {
   GImage *gimage;
 
-  if (! (gimage = drawable_gimage (drawable)))
-    return NULL;
+  g_return_val_if_fail ((drawable != NULL), NULL);
 
-  if (drawable) 
-    return gimage_shadow (gimage, drawable->width, drawable->height, 
-			  drawable->tag);
-  else
-    return NULL;
+  gimage = drawable_gimage (drawable);
+  g_return_val_if_fail ((gimage != NULL), NULL);
+
+  return gimage_shadow (gimage, drawable->width, drawable->height, 
+                        drawable->tag);
 }
 
 int
 drawable_bytes (GimpDrawable *drawable)
 {
-  if (drawable) 
-    return drawable->bytes;
-  else
-    return -1;
+  g_return_val_if_fail ((drawable != NULL), 0);
+
+  return tag_bytes (drawable->tag);
 }
 
 
 int
 drawable_width (GimpDrawable *drawable)
 {
-  if (drawable) 
-    return drawable->width;
-  else
-    return -1;
+  g_return_val_if_fail ((drawable != NULL), -1);
+
+  return drawable->width;
 }
 
 
 int
 drawable_height (GimpDrawable *drawable)
 {
-  if (drawable) 
-    return drawable->height;
-  else
-    return -1;
+  g_return_val_if_fail ((drawable != NULL), -1);
+
+  return drawable->height;
 }
 
 
@@ -537,6 +552,8 @@ drawable_channel    (GimpDrawable *drawable)
 void
 drawable_deallocate (GimpDrawable *drawable)
 {
+  g_return_if_fail (drawable != NULL);
+
   if (drawable->tiles)
     canvas_delete (drawable->tiles);
 }
@@ -546,15 +563,11 @@ gimp_drawable_init (GimpDrawable *drawable)
 {
   drawable->name = NULL;
   drawable->tiles = NULL;
-  drawable->tiles = NULL;
   drawable->visible = FALSE;
   drawable->width = drawable->height = 0;
   drawable->offset_x = drawable->offset_y = 0;
-  drawable->bytes = 0;
   drawable->dirty = FALSE;
   drawable->gimage_ID = -1;
-  drawable->type = -1;
-  drawable->has_alpha = FALSE;
   drawable->preview = NULL;
   drawable->preview_valid = FALSE;
 
@@ -602,6 +615,8 @@ gimp_drawable_configure  (
                           char * name
                           )
 {
+  g_return_if_fail (drawable != NULL);
+
   if (!name)
     name = "unnamed";
   
@@ -612,23 +627,7 @@ gimp_drawable_configure  (
   drawable->name = g_strdup(name);
   drawable->width = width;
   drawable->height = height;
-  drawable->bytes = tag_bytes (drawable->tag);
 
-  switch (tag_format (tag))
-    {
-    case FORMAT_RGB:
-      drawable->type = (tag_alpha (tag) == ALPHA_YES) ? RGBA_GIMAGE: RGB_GIMAGE;
-      break;
-    case FORMAT_GRAY:
-      drawable->type = (tag_alpha (tag) == ALPHA_YES) ? GRAYA_GIMAGE: GRAY_GIMAGE;
-      break;
-    case FORMAT_INDEXED:
-      drawable->type = (tag_alpha (tag) == ALPHA_YES) ? INDEXEDA_GIMAGE: INDEXED_GIMAGE;
-      break;
-    default:
-      break;
-    }
-  drawable->has_alpha = (tag_alpha (drawable->tag) == ALPHA_YES) ? TRUE : FALSE;
   drawable->offset_x = 0;
   drawable->offset_y = 0;
 

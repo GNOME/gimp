@@ -123,6 +123,7 @@ typedef struct {
   RepeatFunc   repeat_func;
 } RenderBlendData;
 
+#define FIXME
 #if 0
 typedef struct {
   PixelArea     *PR;
@@ -180,6 +181,7 @@ static double gradient_repeat_triangular(double val);
 static void   gradient_precalc_shapeburst   (GImage *gimage, GimpDrawable *drawable, int x, int y, int w, int h, double dist);
 
 static void gradient_render_pixel  (double x, double y, gfloat * color, void * render_data);
+#define FIXME
 #if 0
 static void   gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data);
 #endif
@@ -1120,9 +1122,8 @@ gradient_precalc_shapeburst  (
       else
         {
           COLOR16_NEW (paint, pixelarea_tag (&tempR));
-          
           COLOR16_INIT (paint);
-          color16_white (&paint);
+          palette_get_white (&paint);
           color_area (&tempR, &paint);
         }
     }
@@ -1260,6 +1261,7 @@ gradient_render_pixel(double x, double y, gfloat *color, void *render_data)
 }
 
 
+#define FIXME
 #if 0
 static void
 gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
@@ -1320,25 +1322,27 @@ gradient_fill_region (GImage       *gimage,
                       )
 {
   RenderBlendData  rbd;
+#define FIXME
 #if 0
   PutPixelData     ppd;
 #endif
-  unsigned char    r, g, b;
+  PixelRow col;
+  gfloat d[3];
 
   /* Get foreground and background colors, normalized */
+  pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), (guchar *) d, 1);
+  palette_get_foreground (&col);
 
-  palette_get_foreground(&r, &g, &b);
-
-  rbd.fg.r = r / 255.0;
-  rbd.fg.g = g / 255.0;
-  rbd.fg.b = b / 255.0;
+  rbd.fg.r = d[0];
+  rbd.fg.g = d[1];
+  rbd.fg.b = d[2];
   rbd.fg.a = 1.0;  /* Foreground is always opaque */
 
-  palette_get_background(&r, &g, &b);
+  palette_get_background (&col);
 
-  rbd.bg.r = r / 255.0;
-  rbd.bg.g = g / 255.0;
-  rbd.bg.b = b / 255.0;
+  rbd.bg.r = d[0];
+  rbd.bg.g = d[1];
+  rbd.bg.b = d[2];
   rbd.bg.a = 1.0; /* opaque, for now */
 
   switch (blend_mode)
@@ -1444,6 +1448,7 @@ gradient_fill_region (GImage       *gimage,
 
   if (supersample)
     {
+#define FIXME
 #if 0
       /* Initialize put pixel data */
 #define FIXME

@@ -45,7 +45,7 @@ layer_new_invoker (Argument *args)
   int width, height;
   int type;
   char *name;
-  int opacity;
+  double opacity;
   int mode;
   Argument *return_args;
   Tag tag;
@@ -54,7 +54,7 @@ layer_new_invoker (Argument *args)
   layer     = NULL;
   gimage_id = -1;
   type      = 0;
-  opacity   = 255;
+  opacity   = OPAQUE_OPACITY;
   mode      = NORMAL_MODE;
   storage   = STORAGE_TILED;
   

@@ -95,7 +95,7 @@ struct _ChannelsDialog {
   GtkAcceleratorTable *accel_table;
 
   int num_components;
-  int base_type;
+  Format format;
   ChannelType components[3];
   double ratio;
   int image_width, image_height;
@@ -279,7 +279,7 @@ channels_dialog_flush ()
   /*  Check if the gimage extents have changed  */
   if ((gimage->width != channelsD->gimage_width) ||
       (gimage->height != channelsD->gimage_height) ||
-      (gimage_base_type (gimage) != channelsD->base_type))
+      (tag_format (gimage_tag (gimage)) != channelsD->format))
     {
       channelsD->gimage_id = -1;
       channels_dialog_update (gimage->ID);
@@ -397,9 +397,9 @@ channels_dialog_update (int gimage_id)
 
   /*  The image components  */
   item_list = NULL;
-  switch ((channelsD->base_type = gimage_base_type (gimage)))
+  switch ((channelsD->format = gimage_format (gimage)))
     {
-    case RGB:
+    case FORMAT_RGB:
       cw = create_channel_widget (gimage, NULL, Red);
       channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
@@ -418,7 +418,7 @@ channels_dialog_update (int gimage_id)
       channelsD->num_components = 3;
       break;
 
-    case GRAY:
+    case FORMAT_GRAY:
       cw = create_channel_widget (gimage, NULL, Gray);
       channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
@@ -427,7 +427,7 @@ channels_dialog_update (int gimage_id)
       channelsD->num_components = 1;
       break;
 
-    case INDEXED:
+    case FORMAT_INDEXED:
       cw = create_channel_widget (gimage, NULL, Indexed);
       channelsD->channel_widgets = g_slist_append (channelsD->channel_widgets, cw);
       item_list = g_list_append (item_list, cw->list_item);
@@ -435,6 +435,10 @@ channels_dialog_update (int gimage_id)
 
       channelsD->num_components = 1;
       break;
+
+    case FORMAT_NONE:
+      g_warning ("doh");
+      return;
     }
 
   /*  The auxillary image channels  */
@@ -1343,8 +1347,6 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
   int width, height;
   int channel;
 
-  return;
-  
   /*  allocate the channel widget pixmap  */
   if (! channel_widget->channel_pixmap)
     channel_widget->channel_pixmap = gdk_pixmap_new (channel_widget->channel_preview->window,
@@ -1365,6 +1367,8 @@ channel_widget_preview_redraw (ChannelWidget *channel_widget)
 				     channel_widget->height);
       break;
     default:
+#define FIXME
+      return;
       width = channel_widget->gimage->width;
       height = channel_widget->gimage->height;
       channel_widget->width = (int) (channelsD->ratio * width);
@@ -1708,7 +1712,8 @@ struct _NewChannelOptions {
 };
 
 static char *channel_name = NULL;
-static unsigned char channel_color[3] = {0, 0, 0};
+static PixelRow channel_color;
+static unsigned char channel_color_data[TAG_MAX_BYTES];
 
 static void
 new_channel_query_ok_callback (GtkWidget *w,
@@ -1717,7 +1722,6 @@ new_channel_query_ok_callback (GtkWidget *w,
   NewChannelOptions *options;
   Channel *new_channel;
   GImage *gimage;
-  int i;
 
   options = (NewChannelOptions *) client_data;
   if (channel_name)
@@ -1729,11 +1733,10 @@ new_channel_query_ok_callback (GtkWidget *w,
       new_channel = channel_new (gimage->ID, gimage->width, gimage->height,
                                  default_precision,
 				 channel_name, options->opacity / 100.0,
-				 options->color_panel->color);
+				 &options->color_panel->color);
       drawable_fill (GIMP_DRAWABLE(new_channel), TRANSPARENT_FILL);
 
-      for (i = 0; i < 3; i++)
-	channel_color[i] = options->color_panel->color[i];
+      copy_row (&options->color_panel->color, &channel_color);
 
       gimage_add_channel (gimage, new_channel, -1);
       gdisplays_flush ();
@@ -1795,7 +1798,15 @@ channels_dialog_new_channel_query (int gimage_id)
   options = (NewChannelOptions *) g_malloc (sizeof (NewChannelOptions));
   options->gimage_id = gimage_id;
   options->opacity = 50.0;
-  options->color_panel = color_panel_new (channel_color, 48, 64);
+
+  pixelrow_init (&channel_color,
+                 tag_new (tag_precision (gimage_tag (gimage)),
+                          FORMAT_RGB,
+                          ALPHA_NO),
+                 channel_color_data,
+                 1);
+  palette_get_white (&channel_color);
+  options->color_panel = color_panel_new (&channel_color, 48, 64);
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
@@ -1886,7 +1897,7 @@ edit_channel_query_ok_callback (GtkWidget *w,
 {
   EditChannelOptions *options;
   Channel *channel;
-  int opacity;
+  gfloat opacity;
   int update = FALSE;
 
   options = (EditChannelOptions *) client_data;
@@ -1908,13 +1919,8 @@ edit_channel_query_ok_callback (GtkWidget *w,
 	update = TRUE;
       }
 
-    {
-      PixelRow c;
-      pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
-                     options->color_panel->color, 1);
-      copy_row (&c, &channel->col);
-      update = TRUE;
-    }
+    copy_row (&options->color_panel->color, &channel->col);
+    update = TRUE;
     
     if (update)
       {
@@ -1971,15 +1977,12 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->channel_widget = channel_widget;
   options->gimage_id = channel_widget->gimage->ID;
   options->opacity = (double) channel_widget->channel->opacity * 100.0;
-#define FIXME /* should use channel_widget->channel->col directly */
-  {
-    PixelRow c;
-    pixelrow_init (&c, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
-                   channel_color, 1);
-    copy_row (&channel_widget->channel->col, &c);
-  }
 
-  options->color_panel = color_panel_new (channel_color, 48, 64);
+  pixelrow_init (&channel_color, drawable_tag (GIMP_DRAWABLE (channel_widget->channel)),
+                 channel_color_data, 1);
+  copy_row (&channel_widget->channel->col, &channel_color);
+
+  options->color_panel = color_panel_new (&channel_color, 48, 64);
 
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();

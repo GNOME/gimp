@@ -36,22 +36,7 @@ void  hsv_to_rgb            (int *, int *, int *);
 void  rgb_to_hls            (int *, int *, int *);
 void  hls_to_rgb            (int *, int *, int *);
 
-/*  variable source to RGB color mapping
- *  src_type == 0  (RGB)
- *  src_type == 1  (GRAY)
- *  src_type == 2  (INDEXED)
- */
-void
-map_to_color                              (int, unsigned char *,
-					   unsigned char *, unsigned char *);
 
-/*  RGB to index mapping functions...
- *
- *  Hash table lookup speeds up the standard
- *  least squares method
- */
-int    map_rgb_to_indexed                 (unsigned char *, int, int,
-					   int, int, int);
 /* end FIXME */
 
 

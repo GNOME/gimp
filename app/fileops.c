@@ -617,16 +617,18 @@ file_save_as_callback (GtkWidget *w,
 			save_options, FALSE, FALSE, 5);
     }
 
-  switch (gdisplay->gimage->base_type)
+  switch (gimage_format (gdisplay->gimage))
     {
-    case RGB:
+    case FORMAT_RGB:
       file_update_menus (save_procs, RGB_IMAGE);
       break;
-    case GRAY:
+    case FORMAT_GRAY:
       file_update_menus (save_procs, GRAY_IMAGE);
       break;
-    case INDEXED:
+    case FORMAT_INDEXED:
       file_update_menus (save_procs, INDEXED_IMAGE);
+      break;
+    case FORMAT_NONE:
       break;
     }
 

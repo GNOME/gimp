@@ -22,6 +22,9 @@
 #include "color_panel.h"
 #include "color_select.h"
 #include "colormaps.h"
+#include "paint_funcs_area.h"
+#include "pixelrow.h"
+
 
 #define EVENT_MASK  GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 
@@ -38,17 +41,16 @@ struct _ColorPanelPrivate
 
 static void color_panel_draw (ColorPanel *);
 static gint color_panel_events (GtkWidget *area, GdkEvent *event);
-static void color_panel_select_callback (int, int, int, ColorSelectState, void *);
+static void color_panel_select_callback (PixelRow *, ColorSelectState, void *);
 
 
 ColorPanel *
-color_panel_new (unsigned char *initial,
-		 int            width,
-		 int            height)
+color_panel_new (PixelRow * initial,
+		 int        width,
+		 int        height)
 {
   ColorPanel *color_panel;
   ColorPanelPrivate *private;
-  int i;
 
   color_panel = g_new (ColorPanel, 1);
   private = g_new (ColorPanelPrivate, 1);
@@ -58,8 +60,8 @@ color_panel_new (unsigned char *initial,
   color_panel->private_part = private;
 
   /*  set the initial color  */
-  for (i = 0; i < 3; i++)
-    color_panel->color[i] = (initial) ? initial[i] : 0;
+  pixelrow_init (&color_panel->color, pixelrow_tag (initial), color_panel->color_data, 1);
+  copy_row (initial, &color_panel->color);
 
   color_panel->color_panel_widget = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (color_panel->color_panel_widget), GTK_SHADOW_IN);
@@ -110,9 +112,7 @@ color_panel_draw (ColorPanel *color_panel)
 
   fg.pixel = old_color_pixel;
   store_color (&fg.pixel,
-	       color_panel->color[0],
-	       color_panel->color[1],
-	       color_panel->color[2]);
+	       &color_panel->color);
 
   gdk_gc_set_foreground (private->gc, &fg);
   gdk_draw_rectangle (widget->window, private->gc, 1, 0, 0,
@@ -146,9 +146,7 @@ color_panel_events (GtkWidget *widget,
 	{
 	  if (! private->color_select)
 	    {
-	      private->color_select = color_select_new (color_panel->color[0],
-							color_panel->color[1],
-							color_panel->color[2],
+	      private->color_select = color_select_new (&color_panel->color,
 							color_panel_select_callback,
 							color_panel,
 							FALSE);
@@ -159,9 +157,7 @@ color_panel_events (GtkWidget *widget,
 	      if (! private->color_select_active)
 		color_select_show (private->color_select);
 	      color_select_set_color (private->color_select,
-				      color_panel->color[0],
-				      color_panel->color[1],
-				      color_panel->color[2], 1);
+				      &color_panel->color, 1);
 	    }
 	}
       break;
@@ -174,9 +170,7 @@ color_panel_events (GtkWidget *widget,
 }
 
 static void
-color_panel_select_callback (int   r,
-			     int   g,
-			     int   b,
+color_panel_select_callback (PixelRow * col,
 			     ColorSelectState state,
 			     void *client_data)
 {
@@ -192,10 +186,7 @@ color_panel_select_callback (int   r,
       case COLOR_SELECT_UPDATE:
 	break;
       case COLOR_SELECT_OK:
-	color_panel->color[0] = r;
-	color_panel->color[1] = g;
-	color_panel->color[2] = b;
-	
+        copy_row (col, &color_panel->color);
 	color_panel_draw (color_panel);
 	/* Fallthrough */
       case COLOR_SELECT_CANCEL:

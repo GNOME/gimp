@@ -61,8 +61,6 @@ struct _GDisplay
 
   InfoDialog *window_info_dialog; /*  dialog box for image information        */
 
-  int color_type;                 /*  is this an RGB or GRAY colormap         */
-
   GtkAdjustment *hsbdata;         /*  horizontal data information             */
   GtkAdjustment *vsbdata;         /*  vertical data information               */
 

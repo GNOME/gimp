@@ -115,9 +115,11 @@ static int
 layer_size (Layer *layer)
 {
   int size;
-
-  size = sizeof (Layer) + GIMP_DRAWABLE(layer)->width * GIMP_DRAWABLE(layer)->height * GIMP_DRAWABLE(layer)->bytes +
-    strlen (GIMP_DRAWABLE(layer)->name);
+  GimpDrawable * d = GIMP_DRAWABLE(layer);
+  
+  size = sizeof (Layer)
+    + drawable_width (d) * drawable_height (d) * drawable_bytes (d) +
+    strlen (d->name);
 
   if (layer_mask (layer))
     size += channel_size (GIMP_CHANNEL (layer_mask (layer)));
@@ -684,10 +686,6 @@ undo_pop_mask (GImage *gimage,
 
   if (selection)
     {
-      COLOR16_NEW (empty_color, canvas_tag (sel_mask_canvas));
-      COLOR16_INIT (empty_color);
-      color16_black (&empty_color);
-
       new_tiles = canvas_new (canvas_tag (sel_mask_canvas), 
                               pixelarea_width (&srcPR), 
                               pixelarea_height (&srcPR), STORAGE_FLAT);
@@ -697,14 +695,21 @@ undo_pop_mask (GImage *gimage,
                       0, 0, 
                       pixelarea_width (&srcPR), pixelarea_height (&srcPR),
                       TRUE);
+      
       copy_area (&srcPR, &destPR);
 
-      
-      pixelarea_init (&srcPR, sel_mask_canvas, 
-                      x1, y1,
-                      (x2 - x1), (y2 - y1),
-                      TRUE);
-      color_area (&srcPR, &empty_color);
+      {
+        COLOR16_NEW (empty_color, canvas_tag (sel_mask_canvas));
+        COLOR16_INIT (empty_color);
+        palette_get_black (&empty_color);
+        
+        pixelarea_init (&srcPR, sel_mask_canvas, 
+                        x1, y1,
+                        (x2 - x1), (y2 - y1),
+                        TRUE);
+        
+        color_area (&srcPR, &empty_color);
+      }
     }
   else
     new_tiles = NULL;
@@ -1169,19 +1174,21 @@ undo_push_layer_mod (GImage *gimage,
   Layer *layer;
   Undo *new;
   TileManager *tiles;
+  GimpDrawable * d;
   void **data;
   int size;
 
   layer = (Layer *) layer_ptr;
-
+  d = GIMP_DRAWABLE(layer);
+  
   /*  increment the dirty flag for this gimage  */
   gimage_dirty (gimage);
   drawable_dirty (GIMP_DRAWABLE(layer));
 
-  tiles = GIMP_DRAWABLE(layer)->tiles;
-  canvas_fixme_setx (tiles, GIMP_DRAWABLE(layer)->offset_x); 
-  canvas_fixme_sety (tiles, GIMP_DRAWABLE(layer)->offset_y); 
-  size = GIMP_DRAWABLE(layer)->width * GIMP_DRAWABLE(layer)->height * GIMP_DRAWABLE(layer)->bytes + sizeof (void *) * 3;
+  tiles = d->tiles;
+  canvas_fixme_setx (tiles, d->offset_x); 
+  canvas_fixme_sety (tiles, d->offset_y); 
+  size = drawable_width (d) * drawable_height (d) * drawable_bytes (d) + sizeof (void *) * 3;
 
   if ((new = undo_push (gimage, size, LAYER_MOD)))
     {
@@ -1192,7 +1199,7 @@ undo_push_layer_mod (GImage *gimage,
 
       data[0] = layer_ptr;
       data[1] = (void *) tiles;
-      data[2] = (void *) ((long) GIMP_DRAWABLE(layer)->type);
+      data[2] = (void *) ((long) GIMP_DRAWABLE(layer)->tag);
 
       return TRUE;
     }
@@ -1211,7 +1218,7 @@ undo_pop_layer_mod (GImage *gimage,
 		    void   *data_ptr)
 {
   void **data;
-  int layer_type;
+  Tag layer_tag;
   TileManager *tiles;
   TileManager *temp;
   Layer *layer;
@@ -1242,8 +1249,8 @@ undo_pop_layer_mod (GImage *gimage,
   temp = GIMP_DRAWABLE(layer)->tiles;
   canvas_fixme_setx (temp, GIMP_DRAWABLE(layer)->offset_x);
   canvas_fixme_sety (temp, GIMP_DRAWABLE(layer)->offset_y);
-  layer_type = (long) data[2];
-  data[2] = (void *) ((long) GIMP_DRAWABLE(layer)->type);
+  layer_tag = (long) data[2];
+  data[2] = (void *) ((long) GIMP_DRAWABLE(layer)->tag);
 
   /*  restore the layer's data  */
   GIMP_DRAWABLE(layer)->tiles = tiles;
@@ -1251,9 +1258,7 @@ undo_pop_layer_mod (GImage *gimage,
   GIMP_DRAWABLE(layer)->offset_y = canvas_fixme_gety (tiles);
   GIMP_DRAWABLE(layer)->width = canvas_width (tiles);
   GIMP_DRAWABLE(layer)->height = canvas_height (tiles);
-  GIMP_DRAWABLE(layer)->bytes = tag_bytes (canvas_tag (tiles));
-  GIMP_DRAWABLE(layer)->type = layer_type;
-  GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA (layer_type);
+  GIMP_DRAWABLE(layer)->tag = layer_tag;
 
   if (layer->mask) 
     {
@@ -1262,7 +1267,7 @@ undo_pop_layer_mod (GImage *gimage,
     }
 
   /*  If the layer type changed, update the gdisplay titles  */
-  if (GIMP_DRAWABLE(layer)->type != (long) data[2])
+  if (GIMP_DRAWABLE(layer)->tag != (long) data[2])
     gdisplays_update_title (GIMP_DRAWABLE(layer)->gimage_ID);
 
   /*  Set the new tile manager  */
@@ -1911,7 +1916,7 @@ undo_push_gimage_mod (GImage *gimage)
 
       data[0] = gimage->width;
       data[1] = gimage->height;
-      data[2] = gimage->base_type;
+      data[2] = gimage->tag;
 
       return TRUE;
     }
@@ -1947,8 +1952,8 @@ undo_pop_gimage_mod (GImage *gimage,
   data[1] = gimage->height;
   gimage->height = tmp;
   tmp = data[2];
-  data[2] = gimage->base_type;
-  gimage->base_type = tmp;
+  data[2] = gimage->tag;
+  gimage->tag = tmp;
 
   gimage_projection_realloc (gimage);
 

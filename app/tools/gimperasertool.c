@@ -178,7 +178,7 @@ eraser_motion  (
     COLOR16_NEW (paint, canvas_tag (painthit));
     
     COLOR16_INIT (paint);
-    color16_background (&paint);
+    palette_get_background (&paint);
     color_area (&a, &paint);
   }
   

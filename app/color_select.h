@@ -18,6 +18,8 @@
 #ifndef __COLOR_SELECT_H__
 #define __COLOR_SELECT_H__
 
+struct _PixelRow;
+
 typedef enum {
   COLOR_SELECT_OK,
   COLOR_SELECT_CANCEL,
@@ -25,7 +27,7 @@ typedef enum {
 } ColorSelectState;
 
 typedef struct _ColorSelect _ColorSelect, *ColorSelectP;
-typedef void (*ColorSelectCallback) (int, int, int, ColorSelectState, void *);
+typedef void (*ColorSelectCallback) (struct _PixelRow *, ColorSelectState, void *);
 
 struct _ColorSelect {
   GtkWidget *shell;
@@ -36,21 +38,21 @@ struct _ColorSelect {
   GtkWidget *toggles[6];
   GtkWidget *entries[6];
   GtkAdjustment *slider_data[6];
-  int pos[3];
-  int values[6];
+  gfloat pos[3];
+  gfloat values[6];
   int z_color_fill;
   int xy_color_fill;
-  int orig_values[3];
+  gfloat orig_values[3];
   ColorSelectCallback callback;
   void *client_data;
   int wants_updates;
   GdkGC *gc;
 };
 
-ColorSelectP color_select_new (int, int, int, ColorSelectCallback, void *, int);
+ColorSelectP color_select_new (struct _PixelRow *, ColorSelectCallback, void *, int);
 void color_select_show (ColorSelectP);
 void color_select_hide (ColorSelectP);
 void color_select_free (ColorSelectP);
-void color_select_set_color (ColorSelectP, int, int, int, int);
+void color_select_set_color (ColorSelectP, struct _PixelRow *, int);
 
 #endif /* __COLOR_SELECT_H__ */

@@ -202,9 +202,9 @@ scan_convert (int gimage_ID, int num_pts, FreeSelectPoint *pts,
 
   pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(mask)),
                   0, 0, 
-                  drawable_width (GIMP_DRAWABLE(mask)), 
-                  drawable_height (GIMP_DRAWABLE(mask)),
+                  0, 0,
                   TRUE);
+
   for (i = 0; i < height; i++)
     {
       list = scanlines[i];

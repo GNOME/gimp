@@ -213,7 +213,7 @@ paintbrush_motion (PaintCore *paint_core,
         COLOR16_NEW (paint, canvas_tag (painthit));
 
         COLOR16_INIT (paint);
-        color16_foreground (&paint);
+        palette_get_foreground (&paint);
         color_area (&a, &paint);
       }
       

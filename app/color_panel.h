@@ -18,6 +18,9 @@
 #ifndef __COLOR_PANEL_H__
 #define __COLOR_PANEL_H__
 
+#include "tag.h"
+#include "pixelrow.h"
+
 typedef struct _ColorPanel ColorPanel;
 
 struct _ColorPanel
@@ -25,16 +28,17 @@ struct _ColorPanel
   /*  The calling procedure is respondible for showing this widget  */
   GtkWidget *   color_panel_widget;
 
-  /*  The actual color  */
-  unsigned char color [3];
+  /* the color */
+  PixelRow color;
+  guchar color_data [TAG_MAX_BYTES];
 
   /*  Don't touch this :)  */
   void *        private_part;
 };
 
-ColorPanel * color_panel_new    (unsigned char * initial,
-				 int             width,
-				 int             height);
-void         color_panel_free   (ColorPanel *    color_panel);
+ColorPanel * color_panel_new    (PixelRow * initial,
+				 int        width,
+				 int        height);
+void         color_panel_free   (ColorPanel *       color_panel);
 
 #endif  /*  __COLOR_PANEL_H__  */

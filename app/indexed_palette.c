@@ -33,7 +33,9 @@
 #include "image_render.h"
 #include "interface.h"
 #include "indexed_palette.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelrow.h"
 #include "undo.h"
 
 #define EVENT_MASK     GDK_BUTTON_PRESS_MASK | GDK_ENTER_NOTIFY_MASK
@@ -72,7 +74,7 @@ static void indexed_palette_update (int);
 
 /*  indexed palette menu callbacks  */
 static void indexed_palette_close_callback (GtkWidget *, gpointer);
-static void indexed_palette_select_callback (int, int, int, ColorSelectState, void *);
+static void indexed_palette_select_callback (PixelRow *, ColorSelectState, void *);
 
 /*  event callback  */
 static gint indexed_palette_area_events (GtkWidget *, GdkEvent *);
@@ -333,7 +335,7 @@ indexed_palette_update (int gimage_id)
   if ((gimage = gimage_get_ID (gimage_id)) == NULL)
     return;
 
-  if (gimage_base_type (gimage) == INDEXED)
+  if (gimage_format (gimage) == FORMAT_INDEXED)
     {
       indexedP->gimage_id = gimage_id;
       indexed_palette_draw ();
@@ -351,9 +353,7 @@ indexed_palette_close_callback (GtkWidget *w,
 }
 
 static void
-indexed_palette_select_callback (int   r,
-				 int   g,
-				 int   b,
+indexed_palette_select_callback (PixelRow * col,
 				 ColorSelectState state,
 				 void *client_data)
 {
@@ -371,10 +371,12 @@ indexed_palette_select_callback (int   r,
       case COLOR_SELECT_UPDATE:
 	break;
       case COLOR_SELECT_OK:
-	gimage->cmap[indexedP->col_index * 3 + 0] = r;
-	gimage->cmap[indexedP->col_index * 3 + 1] = g;
-	gimage->cmap[indexedP->col_index * 3 + 2] = b;
-	
+        {
+          PixelRow col2;
+          pixelrow_init (&col2, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
+                         &gimage->cmap[indexedP->col_index * 3], 1);
+          copy_row (col, &col2);
+        }
 	gdisplays_update_full (gimage->ID);
 	indexed_palette_draw ();
 	/* Fallthrough */
@@ -391,7 +393,6 @@ indexed_palette_area_events (GtkWidget *widget,
 {
   GImage *gimage;
   GdkEventButton *bevent;
-  guchar r, g, b;
 
   if (!indexedP)
     return FALSE;
@@ -406,33 +407,36 @@ indexed_palette_area_events (GtkWidget *widget,
 
       if (bevent->button == 1)
 	{
+          PixelRow col;
+
 	  indexedP->col_index = 16 * ((int)bevent->y / CELL_HEIGHT) + ((int)bevent->x / CELL_WIDTH);
-	  r = gimage->cmap[indexedP->col_index * 3 + 0];
-	  g = gimage->cmap[indexedP->col_index * 3 + 1];
-	  b = gimage->cmap[indexedP->col_index * 3 + 2];
+          pixelrow_init (&col, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
+                         &gimage->cmap[indexedP->col_index * 3 + 0], 1);
+          
 	  if (active_color == FOREGROUND) 
-	    palette_set_foreground (r, g, b);
+	    palette_set_foreground (&col);
 	  else if (active_color == BACKGROUND)
-	    palette_set_background (r, g, b); 
+	    palette_set_background (&col); 
 	}
  
         if (bevent->button == 3)
 	{
+          PixelRow col;
+
 	  indexedP->col_index = 16 * ((int)bevent->y / CELL_HEIGHT) + ((int)bevent->x / CELL_WIDTH);
-	  r = gimage->cmap[indexedP->col_index * 3 + 0];
-	  g = gimage->cmap[indexedP->col_index * 3 + 1];
-	  b = gimage->cmap[indexedP->col_index * 3 + 2];
+          pixelrow_init (&col, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO),
+                         &gimage->cmap[indexedP->col_index * 3 + 0], 1);
 
 	  if (! color_select)
 	    {
-	      color_select = color_select_new (r, g, b, indexed_palette_select_callback, NULL, FALSE);
+	      color_select = color_select_new (&col, indexed_palette_select_callback, NULL, FALSE);
 	      color_select_active = 1;
 	    }
 	  else
 	    {
 	      if (! color_select_active)
 		color_select_show (color_select);
-	      color_select_set_color (color_select, r, g, b, 1);
+	      color_select_set_color (color_select, &col, 1);
 	    }
 	}
       break;
@@ -483,7 +487,7 @@ create_image_menu (int              *default_id,
       gimage = tmp->data;
       tmp = g_slist_next (tmp);
 
-      if (gimage_base_type (gimage) == INDEXED)
+      if (gimage_format (gimage) == FORMAT_INDEXED)
 	{
 	  id = -1;
 	  

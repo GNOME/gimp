@@ -61,12 +61,13 @@ get_shades (GDisplay *gdisp,
 
   info = gtk_preview_get_info ();
 
-  switch (gimage_base_type (gdisp->gimage))
+  switch (gimage_format (gdisp->gimage))
     {
-    case GRAY:
+    case FORMAT_GRAY:
       sprintf (buf, "%d", info->ngray_shades);
       break;
-    case RGB:
+
+    case FORMAT_RGB:
       switch (gdisp->depth)
 	{
 	case 8 :
@@ -87,8 +88,12 @@ get_shades (GDisplay *gdisp,
 	}
       break;
 
-    case INDEXED:
+    case FORMAT_INDEXED:
       sprintf (buf, "%d", gdisp->gimage->num_cols);
+      break;
+      
+    case FORMAT_NONE:
+      sprintf (buf, "invalid format");
       break;
     }
 }
@@ -123,12 +128,12 @@ info_window_create (void *gdisp_ptr)
   GDisplay *gdisp;
   InfoWinData *iwd;
   char * title, * title_buf;
-  int type;
+  Format format;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
   title = prune_filename (gimage_filename (gdisp->gimage));
-  type = gimage_base_type (gdisp->gimage);
+  format = gimage_format (gdisp->gimage);
 
   /*  allocate the title buffer  */
   title_buf = (char *) g_malloc (sizeof (char) * (strlen (title) + 15));
@@ -153,11 +158,11 @@ info_window_create (void *gdisp_ptr)
   info_dialog_add_field (info_win, "Display Type: ", iwd->color_type_str);
   info_dialog_add_field (info_win, "Visual Class: ", iwd->visual_class_str);
   info_dialog_add_field (info_win, "Visual Depth: ", iwd->visual_depth_str);
-  if (type == RGB)
+  if (format == FORMAT_RGB)
     info_dialog_add_field (info_win, "Shades of Color: ", iwd->shades_str);
-  else if (type == INDEXED)
+  else if (format == FORMAT_INDEXED)
     info_dialog_add_field (info_win, "Shades: ", iwd->shades_str);
-  else if (type == GRAY)
+  else if (format == FORMAT_GRAY)
     info_dialog_add_field (info_win, "Shades of Gray: ", iwd->shades_str);
 
   /*  update the fields  */
@@ -183,8 +188,7 @@ info_window_update (InfoDialog *info_win,
 {
   GDisplay *gdisp;
   InfoWinData *iwd;
-  int type;
-  int flat;
+  Format format;
 
   gdisp = (GDisplay *) gdisp_ptr;
   iwd = (InfoWinData *) info_win->user_data;
@@ -197,28 +201,21 @@ info_window_update (InfoDialog *info_win,
   sprintf (iwd->scale_str, "%d:%d",
 	   SCALEDEST (gdisp), SCALESRC (gdisp));
 
-  type = gimage_base_type (gdisp->gimage);
-  flat = gimage_is_flat (gdisp->gimage);
+  format = gimage_format (gdisp->gimage);
 
   /*  color type  */
-  if (type == RGB && flat)
+  if (format == FORMAT_RGB)
     sprintf (iwd->color_type_str, "%s", "RGB Color");
-  else if (type == GRAY && flat)
+  else if (format == FORMAT_GRAY)
     sprintf (iwd->color_type_str, "%s", "Grayscale");
-  else if (type == INDEXED && flat)
+  else if (format == FORMAT_INDEXED)
     sprintf (iwd->color_type_str, "%s", "Indexed Color");
-  if (type == RGB && !flat)
-    sprintf (iwd->color_type_str, "%s", "RGB-alpha Color");
-  else if (type == GRAY && !flat)
-    sprintf (iwd->color_type_str, "%s", "Grayscale-alpha");
-  else if (type == INDEXED && !flat)
-    sprintf (iwd->color_type_str, "%s", "Indexed-alpha Color");
 
   /*  visual class  */
-  if (type == RGB ||
-      type == INDEXED)
+  if (format == FORMAT_RGB ||
+      format == FORMAT_INDEXED)
     sprintf (iwd->visual_class_str, "%s", visual_classes[g_visual->type]);
-  else if (type == GRAY)
+  else if (format == FORMAT_GRAY)
     sprintf (iwd->visual_class_str, "%s", visual_classes[g_visual->type]);
 
   /*  visual depth  */

@@ -29,7 +29,7 @@ struct _FlatBuf
   int      height;
   Canvas * canvas;
 
-  int      valid;
+  int      is_alloced;
   int      ref_count;
   void *   data;
 
@@ -55,7 +55,7 @@ flatbuf_new (
   f->height = h;
   f->canvas = c;
   
-  f->valid = FALSE;
+  f->is_alloced = FALSE;
   f->ref_count = 0;
   f->data = NULL;
 
@@ -175,11 +175,11 @@ flatbuf_portion_refro  (
   
   if (f && (x < f->width) && (y < f->height))
     {
-      if (f->valid == FALSE)
+      if (f->is_alloced == FALSE)
         if (canvas_autoalloc (f->canvas) == AUTOALLOC_ON)
           (void) flatbuf_portion_alloc (f, x, y);
       
-      if (f->valid == TRUE)
+      if (f->is_alloced == TRUE)
         {
           f->ref_count++;
           rc = REFRC_OK;
@@ -201,11 +201,11 @@ flatbuf_portion_refrw  (
   
   if (f && (x < f->width) && (y < f->height))
     {
-      if (f->valid == FALSE)
+      if (f->is_alloced == FALSE)
         if (canvas_autoalloc (f->canvas) == AUTOALLOC_ON)
           (void) flatbuf_portion_alloc (f, x, y);
       
-      if (f->valid == TRUE)
+      if (f->is_alloced == TRUE)
         {
           f->ref_count++;
           rc = REFRC_OK;
@@ -326,7 +326,7 @@ flatbuf_portion_alloced (
                          )
 {
   if (f && (x < f->width) && (y < f->height))
-    return f->valid;
+    return f->is_alloced;
   return FALSE;
 }
 
@@ -340,7 +340,7 @@ flatbuf_portion_alloc  (
 {
   if (f && (x < f->width) && (y < f->height))
     {
-      if (f->valid == TRUE)
+      if (f->is_alloced == TRUE)
         {
           return TRUE;
         }
@@ -351,7 +351,7 @@ flatbuf_portion_alloc  (
           if (f->data)
             {
               memset (f->data, 0, n);
-              f->valid = TRUE;
+              f->is_alloced = TRUE;
               if (canvas_portion_init (f->canvas, x, y) != TRUE)
                 g_warning ("flatbuf failed to init portion...");
               return TRUE;
@@ -371,11 +371,15 @@ flatbuf_portion_unalloc  (
 {
   if (f && (x < f->width) && (y < f->height))
     {
-      if ((f->valid == TRUE) && (f->ref_count == 0))
+      if (f->is_alloced == TRUE)
         {
+          if (f->ref_count != 0)
+            {
+              g_warning ("Unallocing a reffed flatbuf.  expect a core...\n");
+            }
           g_free (f->data);
           f->data = NULL;
-          f->valid = FALSE;
+          f->is_alloced = FALSE;
           return TRUE;
         }
     }

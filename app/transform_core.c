@@ -58,16 +58,6 @@ static void *      transform_core_recalc  (Tool *, void *);
 static double      cubic                  (double, int, int, int, int);
 
 
-#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
-                ((1-dy) * ((1-dx)*jk + dx*j1k) + \
-		    dy  * ((1-dx)*jk1 + dx*j1k1))
-
-#define REF_TILE(i,x,y) \
-     tile[i] = tile_manager_get_tile (float_tiles, x, y, 0); \
-     tile_ref (tile[i]); \
-     src[i] = tile[i]->data + tile[i]->bpp * (tile[i]->ewidth * ((y) % TILE_HEIGHT) + ((x) % TILE_WIDTH));
-
-
 void
 transform_core_button_press (tool, bevent, gdisp_ptr)
      Tool *tool;
@@ -868,15 +858,28 @@ transform_core_recalc (tool, gdisp_ptr)
   return (* transform_core->trans_func) (tool, gdisp_ptr, RECALC);
 }
 
-/*  Actually carry out a transformation  */
-Canvas *
-transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
-     GImage *gimage;
-     GimpDrawable *drawable;
-     Canvas *float_tiles;
-     int interpolation;
-     Matrix matrix;
+
+
+
+#define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
+                ((1-dy) * ((1-dx)*jk + dx*j1k) + \
+		    dy  * ((1-dx)*jk1 + dx*j1k1))
+
+#define REF_TILE(i,x,y) \
+     tile[i] = tile_manager_get_tile (float_tiles, x, y, 0); \
+     tile_ref (tile[i]); \
+     src[i] = tile[i]->data + tile[i]->bpp * (tile[i]->ewidth * ((y) % TILE_HEIGHT) + ((x) % TILE_WIDTH));
+
+static Canvas * 
+transform_core_do_u8  (
+                       GImage * gimage,
+                       GimpDrawable * drawable,
+                       Canvas * float_tiles,
+                       int interpolation,
+                       Matrix matrix
+                       )
 {
+#define FIXME
 #if 0
   PixelArea destPR;
   Canvas *tiles;
@@ -1203,6 +1206,30 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
   g_free (dest);
   return tiles;
 #endif
+  return NULL;
+}
+
+
+/*  Actually carry out a transformation  */
+Canvas *
+transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
+     GImage *gimage;
+     GimpDrawable *drawable;
+     Canvas *float_tiles;
+     int interpolation;
+     Matrix matrix;
+{
+  switch (tag_precision (canvas_tag (float_tiles)))
+    {
+    case PRECISION_U8:
+      return transform_core_do_u8 (gimage, drawable, float_tiles, interpolation, matrix);
+    case PRECISION_U16:
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+    default:
+      g_warning ("bad precision");
+    }
+
   return NULL;
 }
 

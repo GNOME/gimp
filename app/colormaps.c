@@ -25,8 +25,10 @@
 #include "general.h"
 #include "gimprc.h"
 #include "gradient.h"
+#include "paint_funcs_area.h"
 #include "palette.h"
 #include "patterns.h"
+#include "pixelrow.h"
 #include "plug_in.h"
 #include "tile_swap.h"
 
@@ -98,21 +100,42 @@ set_app_colors ()
   make_color (&g_normal_guide_pixel, 0, 127, 255, FALSE);
   make_color (&g_active_guide_pixel, 255, 0, 0, FALSE);
 
-  store_color (&foreground_pixel, 0, 0, 0);
-  store_color (&background_pixel, 255, 255, 255);
-  store_color (&old_color_pixel, 0, 0, 0);
-  store_color (&new_color_pixel, 255, 255, 255);
+  {
+    PixelRow col;
+    guchar d[TAG_MAX_BYTES];
 
+    pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), d, 1);
+
+    palette_get_black (&col);
+    store_color (&foreground_pixel, &col);
+    store_color (&old_color_pixel, &col);
+
+    palette_get_white (&col);
+    store_color (&background_pixel, &col);
+    store_color (&new_color_pixel, &col);
+  }
+  
   /* marching ants pixels--if enabled */
   if (cycled_marching_ants)
-    for (i = 0; i < 8; i++)
-      {
-	marching_ants_pixels[i] = reserved_pixels[i + reserved_entries - 8];
-	if (i < 4)
-	  store_color (&marching_ants_pixels[i], 0, 0, 0);
-	else
-	  store_color (&marching_ants_pixels[i], 255, 255, 255);
-      }
+    {
+      COLOR16_NEW (black, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO));
+      COLOR16_NEW (white, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO));
+
+      COLOR16_INIT (black);
+      COLOR16_INIT (white);
+
+      palette_get_black (&black);
+      palette_get_white (&white);
+                                   
+      for (i = 0; i < 8; i++)
+        {
+          marching_ants_pixels[i] = reserved_pixels[i + reserved_entries - 8];
+          if (i < 4)
+            store_color (&marching_ants_pixels[i], &black);
+          else
+            store_color (&marching_ants_pixels[i], &white);
+        }
+    }
 }
 
 
@@ -139,19 +162,22 @@ gamma_correct (int intensity, double gamma)
 
 
 gulong
-get_color (int red,
-	   int green,
-	   int blue)
+get_color (PixelRow * col)
 {
   gulong pixel;
+  PixelRow r;
+  guchar d[TAG_MAX_BYTES];
 
+  pixelrow_init (&r, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), d, 1);
+  copy_row (col, &r);
+  
   if ((g_visual->type == GDK_VISUAL_PSEUDO_COLOR) ||
       (g_visual->type == GDK_VISUAL_GRAYSCALE))
-    pixel = color_pixel_vals [(red_ordered_dither[red].s[1] +
-			       green_ordered_dither[green].s[1] +
-			       blue_ordered_dither[blue].s[1])];
+    pixel = color_pixel_vals [(red_ordered_dither[d[0]].s[1] +
+			       green_ordered_dither[d[1]].s[1] +
+			       blue_ordered_dither[d[2]].s[1])];
   else
-    store_color (&pixel, red, green, blue);
+    store_color (&pixel, col);
 
   return pixel;
 }
@@ -160,8 +186,8 @@ get_color (int red,
 static void
 make_color (gulong *pixel_ptr,
 	    int     red,
-	    int     green,
-	    int     blue,
+            int     green,
+            int     blue,
 	    int     readwrite)
 {
   GdkColor col;
@@ -186,11 +212,15 @@ make_color (gulong *pixel_ptr,
 
 void
 store_color (gulong *pixel_ptr,
-	     int     red,
-	     int     green,
-	     int     blue)
+	     PixelRow * col)
 {
-  make_color (pixel_ptr, red, green, blue, TRUE);
+  PixelRow r;
+  guchar d[TAG_MAX_BYTES];
+
+  pixelrow_init (&r, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), d, 1);
+  copy_row (col, &r);
+
+  make_color (pixel_ptr, d[0], d[1], d[2], TRUE);
 }
 
 

@@ -1431,6 +1431,7 @@ levels_initialize (void *gdisp_ptr)
 
   levels_update (levels_dialog, LOW_INPUT | GAMMA | HIGH_INPUT | LOW_OUTPUT | HIGH_OUTPUT | DRAW);
   levels_update (levels_dialog, INPUT_LEVELS | OUTPUT_LEVELS);
+#define FIXME
 #if 0
   histogram_update (levels_dialog->histogram,
 		    levels_dialog->drawable,
@@ -2410,6 +2411,7 @@ ProcRecord levels_proc =
 static Argument *
 levels_invoker (Argument *args)
 {
+#define FIXME
 #if 0
   PixelArea src_area, dest_area;
   int success = TRUE;

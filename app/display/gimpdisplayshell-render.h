@@ -46,8 +46,6 @@ void render_image (GDisplay *gdisp,
 /*
  *  Extern variables
  */
-extern guchar *check_buf;
-extern guchar *empty_buf;
 extern guchar *temp_buf;
 extern guchar *blend_dark_check;
 extern guchar *blend_light_check;

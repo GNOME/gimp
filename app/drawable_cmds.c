@@ -526,13 +526,17 @@ drawable_type_with_alpha_invoker (Argument *args)
   GimpDrawable *drawable;
   int type_with_alpha = -1;
   Argument *return_args;
-
+  
   success = TRUE;
   if ((drawable = drawable_get_ID (args[0].value.pdb_int)) == NULL)
     success = FALSE;
   if (success)
-    type_with_alpha = drawable_type_with_alpha (drawable);
-
+    {
+      Tag t = drawable_tag (drawable);
+      t = tag_set_alpha (t, ALPHA_YES);
+      type_with_alpha = tag_to_drawable_type (t);
+    }
+  
   return_args = procedural_db_return_args (&drawable_type_with_alpha_proc, success);
 
   if (success)

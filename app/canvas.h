@@ -103,7 +103,9 @@ RefRC          canvas_portion_refrw     (Canvas *, int x, int y);
 RefRC          canvas_portion_unref     (Canvas *, int x, int y);
 
 /* initialize the backing store for this pixel */
-guint          canvas_portion_init      (Canvas *, int x, int y);
+typedef guint (*CanvasInitFunc) (Canvas *, int, int, void *);
+void           canvas_portion_init_setup (Canvas *, CanvasInitFunc, void *);
+guint          canvas_portion_init       (Canvas *, int x, int y);
 
 
 

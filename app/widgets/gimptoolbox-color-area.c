@@ -22,6 +22,7 @@
 #include "color_select.h"
 #include "colormaps.h"
 #include "palette.h"
+#include "pixelrow.h"
 
 #define FORE_AREA 0
 #define BACK_AREA 1
@@ -40,8 +41,13 @@ static GdkPixmap *swap_pixmap = NULL;
 static ColorSelectP color_select = NULL;
 static int color_select_active = 0;
 static int edit_color;
-static unsigned char revert_fg_r, revert_fg_g, revert_fg_b;
-static unsigned char revert_bg_r, revert_bg_g, revert_bg_b;
+
+static PixelRow revert_fg;
+static guchar revert_fg_data[TAG_MAX_BYTES];
+
+static PixelRow revert_bg;
+static guchar revert_bg_data[TAG_MAX_BYTES];
+
 
 /*  Local functions  */
 static int
@@ -137,9 +143,7 @@ color_area_draw (void)
 }
 
 static void
-color_area_select_callback (int   r,
-			    int   g,
-			    int   b,
+color_area_select_callback (PixelRow * color,
 			    ColorSelectState state,
 			    void *client_data)
 {
@@ -152,15 +156,15 @@ color_area_select_callback (int   r,
 	/* Fallthrough */
       case COLOR_SELECT_UPDATE:
 	if (edit_color == FOREGROUND)
-	  palette_set_foreground (r, g, b);
+	  palette_set_foreground (color);
 	else
-	  palette_set_background (r, g, b);
+	  palette_set_background (color);
 	break;
       case COLOR_SELECT_CANCEL:
 	color_select_hide (color_select);
 	color_select_active = 0;
-	palette_set_foreground (revert_fg_r, revert_fg_g, revert_fg_b);
-	palette_set_background (revert_bg_r, revert_bg_g, revert_bg_b);
+	palette_set_foreground (&revert_fg);
+	palette_set_background (&revert_bg);
       }
     }
 }
@@ -168,34 +172,49 @@ color_area_select_callback (int   r,
 static void
 color_area_edit (void)
 {
-  unsigned char r, g, b;
+  PixelRow r;
+  guchar d[TAG_MAX_BYTES];
+
+  pixelrow_init (&r,
+                 tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                 d,
+                 1);
 
   if (!color_select_active)
     {
-      palette_get_foreground (&revert_fg_r, &revert_fg_g, &revert_fg_b);
-      palette_get_background (&revert_bg_r, &revert_bg_g, &revert_bg_b);
+      pixelrow_init (&revert_fg,
+                     tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                     revert_fg_data,
+                     1);
+      palette_get_foreground (&revert_fg);
+
+      pixelrow_init (&revert_bg,
+                     tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                     revert_bg_data,
+                     1);
+      palette_get_background (&revert_bg);
     }
   if (active_color == FOREGROUND)
     {
-      palette_get_foreground (&r, &g, &b);
+      palette_get_foreground (&r);
       edit_color = FOREGROUND;
     }
   else
     {
-      palette_get_background (&r, &g, &b);
+      palette_get_background (&r);
       edit_color = BACKGROUND;
     }
 
   if (! color_select)
     {
-      color_select = color_select_new (r, g, b, color_area_select_callback, NULL, TRUE);
+      color_select = color_select_new (&r, color_area_select_callback, NULL, TRUE);
       color_select_active = 1;
     }
   else
     {
       if (! color_select_active)
 	color_select_show (color_select);
-      color_select_set_color (color_select, r, g, b, 1);
+      color_select_set_color (color_select, &r, 1);
     }
 }
 

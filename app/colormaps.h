@@ -18,6 +18,8 @@
 #ifndef __COLORMAPS_H__
 #define __COLORMAPS_H__
 
+struct _PixelRow;
+
 #include "gimage.h"               /* For the image types  */
 
 /*  This is a macro for arranging the red, green, and blue components into
@@ -62,8 +64,8 @@ extern gulong *g_lookup_blue;
 extern gulong *color_pixel_vals;
 extern gulong *gray_pixel_vals;
 
-gulong get_color (int red, int green, int blue);
-void   store_color (gulong *pixel, int red, int green, int blue);
+gulong get_color (struct _PixelRow *);
+void   store_color (gulong *pixel, struct _PixelRow *);
 void   get_standard_colormaps (void);
 
 

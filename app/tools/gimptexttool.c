@@ -305,10 +305,10 @@ text_button_press (Tool           *tool,
   if (!text_tool->shell)
     text_create_dialog (text_tool);
 
-  switch (gimage_base_type (gdisp->gimage))
+  switch (gimage_format (gdisp->gimage))
     {
-    case RGB:
-    case GRAY:
+    case FORMAT_RGB:
+    case FORMAT_GRAY:
       if (!GTK_WIDGET_VISIBLE (text_tool->antialias_toggle)) {
 	gtk_widget_show (text_tool->antialias_toggle);
 	if (GTK_TOGGLE_BUTTON (text_tool->antialias_toggle)->active)
@@ -317,11 +317,14 @@ text_button_press (Tool           *tool,
 	  text_tool->antialias = FALSE;
       }
       break;
-    case INDEXED:
+    case FORMAT_INDEXED:
       if (GTK_WIDGET_VISIBLE (text_tool->antialias_toggle)) {
 	gtk_widget_hide (text_tool->antialias_toggle);
 	text_tool->antialias = FALSE;
       }
+      break;
+
+    case FORMAT_NONE:
       break;
     }
 
@@ -1901,13 +1904,13 @@ text_render (GImage *gimage,
       COLOR16_NEW (color, drawable_tag (GIMP_DRAWABLE(layer)));
       COLOR16_INIT (color);
 
-      color16_foreground (&color);
-
       pixelarea_init (&textPR, GIMP_DRAWABLE(layer)->tiles,
                       0, 0,
                       0, 0,
                       TRUE);
 
+      palette_get_foreground (&color);
+      
       color_area (&textPR, &color);
 
       /*  apply the text mask  */

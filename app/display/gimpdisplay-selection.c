@@ -24,6 +24,8 @@
 #include "gdisplay_ops.h"
 #include "gimage_mask.h"
 #include "gimprc.h"
+#include "palette.h"
+#include "pixelrow.h"
 #include "selection.h"
 #include "marching_ants.h"
 
@@ -88,14 +90,22 @@ cycle_ant_colors (Selection *select)
 {
   int i;
   int index;
+  COLOR16_NEW (black, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO));
+  COLOR16_NEW (white, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO));
 
+  COLOR16_INIT (black);
+  COLOR16_INIT (white);
+
+  palette_get_black (&black);
+  palette_get_white (&white);
+                                   
   for (i = 0; i < 8; i++)
     {
       index = (i + (8 - select->index_in)) % 8;
       if (index < 4)
-	store_color (&marching_ants_pixels[i], 0, 0, 0);
+        store_color (&marching_ants_pixels[i], &black);
       else
-	store_color (&marching_ants_pixels[i], 255, 255, 255);
+        store_color (&marching_ants_pixels[i], &white);
     }
 }
 
@@ -489,13 +499,11 @@ selection_create (GdkWindow *win,
   GdkColor fg, bg;
   GDisplay *gdisp;
   Selection * new;
-  int base_type;
   int i;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
   new = (Selection *) g_malloc (sizeof (Selection));
-  base_type = gimage_base_type (gdisp->gimage);
 
   if (cycled_marching_ants)
     {

@@ -35,6 +35,9 @@
 #include "interface.h"
 #include "paint_funcs_area.h"
 #include "palette.h"
+#include "pixelrow.h"
+#include "tag.h"
+
 
 #define ENTRY_WIDTH  14
 #define ENTRY_HEIGHT 10
@@ -69,7 +72,7 @@ struct _Palette {
 };
 
 static void palette_create_palette_menu (PaletteP, PaletteEntriesP);
-static PaletteEntryP palette_add_entry (PaletteEntriesP, char *, int, int, int);
+static PaletteEntryP palette_add_entry (PaletteEntriesP, char *, gfloat, gfloat, gfloat);
 static void palette_delete_entry (PaletteP);
 static void palette_calc_scrollbar (PaletteP);
 
@@ -81,7 +84,7 @@ static void palette_entries_free (PaletteEntriesP);
 static void palette_entry_free (PaletteEntryP);
 static void palette_entries_set_callback (GtkWidget *, gpointer);
 
-static void palette_change_color (int, int, int, int);
+static void palette_change_color (PixelRow *, int);
 static gint palette_color_area_expose (GtkWidget *, GdkEventExpose *, PaletteP);
 static gint palette_color_area_events (GtkWidget *, GdkEvent *, PaletteP);
 static void palette_scroll_update (GtkAdjustment *, gpointer);
@@ -95,7 +98,7 @@ static void palette_new_entries_callback (GtkWidget *, gpointer);
 static void palette_add_entries_callback (GtkWidget *, gpointer, gpointer);
 /* static void palette_merge_entries_callback (GtkWidget *, gpointer); */
 static void palette_delete_entries_callback (GtkWidget *, gpointer);
-static void palette_select_callback (int, int, int, ColorSelectState, void *);
+static void palette_select_callback (PixelRow *, ColorSelectState, void *);
 
 static void palette_draw_entries (PaletteP);
 static void palette_draw_current_entry (PaletteP);
@@ -106,8 +109,12 @@ GSList *palette_entries_list = NULL;
 static PaletteP         palette = NULL;
 static PaletteEntriesP  default_palette_entries = NULL;
 static int              num_palette_entries = 0;
-static unsigned char    foreground[3] = { 0, 0, 0 };
-static unsigned char    background[3] = { 255, 255, 255 };
+
+static PixelRow foreground;
+static gfloat foreground_data[3];
+
+static PixelRow background;
+static gfloat background_data[3];
 
 /*  Color select dialog  */
 /* static ColorSelectP color_select = NULL;
@@ -130,66 +137,9 @@ static MenuItem palette_ops[] =
   { NULL, 0, 0, NULL, NULL, NULL, NULL },
 };
 
-/* ------------------------------
-
-   experimental gimp16 stuff
-
-*/
 
 
-#include "tag.h"
-#include "pixelrow.h"
-
-void 
-color16_black  (
-                PixelRow * color
-                )
-{
-  COLOR16_NEWDATA (init, gfloat,
-                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {0.0, 0.0, 0.0};
-  COLOR16_INIT (init);
-  copy_row (&init, color);
-}
-void 
-color16_white  (
-                PixelRow * color
-                )
-{
-  COLOR16_NEWDATA (init, gfloat,
-                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {1.0, 1.0, 1.0};
-  COLOR16_INIT (init);
-  copy_row (&init, color);
-}
-void 
-color16_transparent  (
-                      PixelRow * color
-                      )
-{
-  COLOR16_NEWDATA (init, gfloat,
-                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES) = {0.0, 0.0, 0.0, 0.0};
-  COLOR16_INIT (init);
-  copy_row (&init, color);
-}
-void 
-color16_foreground  (
-                     PixelRow * color
-                     )
-{
-  PixelRow init;
-  pixelrow_init (&init, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), foreground, 1);
-  copy_row (&init, color);
-}
-void 
-color16_background  (
-                     PixelRow * color
-                     )
-{
-  PixelRow init;
-  pixelrow_init (&init, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), background, 1);
-  copy_row (&init, color);
-}
-
-
+/* ================ */
 int
 color16_is_black  (
                    PixelRow * color
@@ -200,6 +150,7 @@ color16_is_black  (
   copy_row (color, &init);
   return (*(gfloat*)init_data == 0) ? 1 : 0;
 }
+
 int
 color16_is_white  (
                    PixelRow * color
@@ -210,6 +161,7 @@ color16_is_white  (
   copy_row (color, &init);
   return (*(gfloat*)init_data == 1) ? 1 : 0;
 }
+
 int
 color16_is_transparent  (
                          PixelRow * color
@@ -220,6 +172,9 @@ color16_is_transparent  (
   copy_row (color, &init);
   return (((gfloat*)init_data)[1] == 0) ? 1 : 0;
 }
+
+
+
 
 
 
@@ -396,62 +351,81 @@ palette_free ()
     }
 }
 
-void
-palette_get_foreground (unsigned char *r,
-			unsigned char *g,
-			unsigned char *b)
+void 
+palette_get_foreground  (
+                         PixelRow * color
+                         )
 {
-  *r = foreground[0];
-  *g = foreground[1];
-  *b = foreground[2];
+  copy_row (&foreground, color);
 }
 
-void
-palette_get_background (unsigned char *r,
-			unsigned char *g,
-			unsigned char *b)
+void 
+palette_get_background  (
+                         PixelRow * color
+                         )
 {
-  *r = background[0];
-  *g = background[1];
-  *b = background[2];
+  copy_row (&background, color);
 }
 
-void
-palette_set_foreground (int r,
-			int g,
-			int b)
+void 
+palette_get_black  (
+                    PixelRow * color
+                    )
 {
-  unsigned char rr, gg, bb;
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {0.0, 0.0, 0.0};
+  COLOR16_INIT (init);
+  copy_row (&init, color);
+}
 
-  /*  Foreground  */
-  foreground[0] = r;
-  foreground[1] = g;
-  foreground[2] = b;
+void 
+palette_get_white  (
+                    PixelRow * color
+                    )
+{
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {1.0, 1.0, 1.0};
+  COLOR16_INIT (init);
+  copy_row (&init, color);
+}
 
-  palette_get_foreground (&rr, &gg, &bb);
+void 
+palette_get_transparent  (
+                          PixelRow * color
+                          )
+{
+  COLOR16_NEWDATA (init, gfloat,
+                   PRECISION_FLOAT, FORMAT_RGB, ALPHA_YES) = {0.0, 0.0, 0.0, 0.0};
+  COLOR16_INIT (init);
+  copy_row (&init, color);
+}
+
+
+
+
+
+void
+palette_set_foreground (
+                        PixelRow * col
+                        )
+{
+  copy_row (col, &foreground);
+
   if (no_interface == FALSE)
     {
-      store_color (&foreground_pixel, rr, gg, bb);
+      store_color (&foreground_pixel, &foreground);
       color_area_update ();
     }
 }
 
 void
-palette_set_background (int r,
-			int g,
-			int b)
+palette_set_background (PixelRow * col)
 {
-  unsigned char rr, gg, bb;
+  copy_row (col, &background);
 
-  /*  Background  */
-  background[0] = r;
-  background[1] = g;
-  background[2] = b;
-
-  palette_get_background (&rr, &gg, &bb);
   if (no_interface == FALSE)
     {
-      store_color (&background_pixel, rr, gg, bb);
+      store_color (&background_pixel, &background);
       color_area_update ();
     }
 }
@@ -459,22 +433,32 @@ palette_set_background (int r,
 void
 palette_set_default_colors (void)
 {
-  palette_set_foreground (0, 0, 0);
-  palette_set_background (255, 255, 255);
+  COLOR16_NEW (col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO));
+
+  COLOR16_INIT (col);
+  
+  palette_get_black (&col);
+  palette_set_foreground (&col);
+
+  palette_get_white (&col);
+  palette_set_background (&col);
 }
 
 
 void 
 palette_swap_colors (void)
 {
-  unsigned char fg_r, fg_g, fg_b;
-  unsigned char bg_r, bg_g, bg_b;
+  COLOR16_NEW (fg, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO));
+  COLOR16_NEW (bg, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO));
+
+  COLOR16_INIT (fg);
+  COLOR16_INIT (bg);
   
-  palette_get_foreground (&fg_r, &fg_g, &fg_b);
-  palette_get_background (&bg_r, &bg_g, &bg_b);
+  palette_get_foreground (&fg);
+  palette_get_background (&bg);
   
-  palette_set_foreground (bg_r, bg_g, bg_b);
-  palette_set_background (fg_r, fg_g, fg_b);
+  palette_set_foreground (&bg);
+  palette_set_background (&fg);
 }
 
 void
@@ -483,6 +467,15 @@ palette_init_palettes (int no_data)
   if(!no_data)
     datafiles_read_directories (palette_path, palette_entries_load, 0);
 
+  pixelrow_init (&foreground,
+                 tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                 (guchar *) foreground_data,
+                 1);
+  
+  pixelrow_init (&background,
+                 tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                 (guchar *) background_data,
+                 1);
 }
 
 
@@ -609,7 +602,7 @@ palette_entries_load (char *filename)
   char            str[512];
   char           *tok;
   FILE           *fp;
-  int             r, g, b;
+  gfloat          r, g, b;
 
   r = g = b = 0;
 
@@ -645,15 +638,15 @@ palette_entries_load (char *filename)
 	{
 	  tok = strtok (str, " \t");
 	  if (tok)
-	    r = atoi (tok);
+	    r = atof (tok);
 
 	  tok = strtok (NULL, " \t");
 	  if (tok)
-	    g = atoi (tok);
+	    g = atof (tok);
 
 	  tok = strtok (NULL, " \t");
 	  if (tok)
-	    b = atoi (tok);
+	    b = atof (tok);
 
 	  tok = strtok (NULL, "\n");
 
@@ -714,7 +707,7 @@ palette_entries_save (PaletteEntriesP  palette,
   while (list)
     {
       entry = (PaletteEntryP) list->data;
-      fprintf (fp, "%d %d %d\t%s\n", entry->color[0], entry->color[1],
+      fprintf (fp, "%f %f %f\t%s\n", entry->color[0], entry->color[1],
 	       entry->color[2], entry->name);
       list = g_slist_next (list);
     }
@@ -779,17 +772,21 @@ palette_entries_set_callback (GtkWidget *w,
 }
 
 static void
-palette_change_color (int r,
-		      int g,
-		      int b,
+palette_change_color (PixelRow * col,
 		      int state)
 {
   if (palette && palette->entries)
     {
+      PixelRow r;
+      gfloat d[3];
+
+      pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), (guchar *) d, 1);
+      copy_row (col, &r);
+      
       switch (state)
 	{
 	case COLOR_NEW:
-	  palette->color = palette_add_entry (palette->entries, "Untitled", r, g, b);
+	  palette->color = palette_add_entry (palette->entries, "Untitled", d[0], d[1], d[2]);
 
 	  palette_calc_scrollbar (palette);
 	  palette_draw_entries (palette);
@@ -797,9 +794,9 @@ palette_change_color (int r,
 	  break;
 
 	case COLOR_UPDATE_NEW:
-	  palette->color->color[0] = r;
-	  palette->color->color[1] = g;
-	  palette->color->color[2] = b;
+	  palette->color->color[0] = d[0];
+	  palette->color->color[1] = d[1];
+	  palette->color->color[2] = d[2];
 	  palette_draw_entries (palette);
 	  palette_draw_current_entry (palette);
 	  break;
@@ -810,18 +807,16 @@ palette_change_color (int r,
     }
 
   if (active_color == FOREGROUND)
-    palette_set_foreground (r, g, b);
+    palette_set_foreground (col);
   else if (active_color == BACKGROUND)
-    palette_set_background (r, g, b);
+    palette_set_background (col);
 }
 
 void
-palette_set_active_color (int r,
-			  int g,
-			  int b,
+palette_set_active_color (PixelRow * col,
 			  int state)
 {
-  palette_change_color (r, g, b, state);
+  palette_change_color (col, state);
 }
 
 static gint
@@ -844,7 +839,6 @@ palette_color_area_events (GtkWidget *widget,
 {
   GdkEventButton *bevent;
   GSList *tmp_link;
-  int r, g, b;
   int width, height;
   int entry_width;
   int entry_height;
@@ -874,14 +868,16 @@ palette_color_area_events (GtkWidget *widget,
 	      palette->color = tmp_link->data;
 
 	      /*  Update either foreground or background colors  */
-	      r = palette->color->color[0];
-	      g = palette->color->color[1];
-	      b = palette->color->color[2];
-	      if (active_color == FOREGROUND)
-		palette_set_foreground (r, g, b);
-	      else if (active_color == BACKGROUND)
-		palette_set_background (r, g, b);
+              {
+                PixelRow col;
+                pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                               (guchar *) palette->color->color, 1);
 
+                if (active_color == FOREGROUND)
+                  palette_set_foreground (&col);
+                else if (active_color == BACKGROUND)
+                  palette_set_background (&col);
+              }
 	      palette_update_current_entry (palette);
 	    }
 	}
@@ -922,11 +918,11 @@ palette_new_callback (GtkWidget *w,
       if (active_color == FOREGROUND)
 	palette->color =
 	  palette_add_entry (palette->entries, "Untitled",
-			     foreground[0], foreground[1], foreground[2]);
+			     foreground_data[0], foreground_data[1], foreground_data[2]);
       else if (active_color == BACKGROUND)
 	palette->color =
 	  palette_add_entry (palette->entries, "Untitled",
-			     background[0], background[1], background[2]);
+			     background_data[0], background_data[1], background_data[2]);
 
       palette_calc_scrollbar (palette);
       palette_draw_entries (palette);
@@ -977,16 +973,18 @@ palette_edit_callback (GtkWidget *w,
 		       gpointer   client_data)
 {
   PaletteP palette;
-  unsigned char *color;
 
   palette = client_data;
   if (palette && palette->entries && palette->color)
     {
-      color = palette->color->color;
+      PixelRow col;
+
+      pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                     (guchar *) palette->color->color, 1);
 
       if (!palette->color_select)
 	{
-	  palette->color_select = color_select_new (color[0], color[1], color[2],
+	  palette->color_select = color_select_new (&col,
 						    palette_select_callback, NULL,
 						    FALSE);
 	  palette->color_select_active = 1;
@@ -999,7 +997,7 @@ palette_edit_callback (GtkWidget *w,
 	      palette->color_select_active = 1;
 	    }
 
-	  color_select_set_color (palette->color_select, color[0], color[1], color[2], 1);
+	  color_select_set_color (palette->color_select, &col, 1);
 	}
     }
 }
@@ -1145,14 +1143,10 @@ palette_delete_entries_callback (GtkWidget *w,
 }
 
 static void
-palette_select_callback (int   r,
-			 int   g,
-			 int   b,
+palette_select_callback (PixelRow * color,
 			 ColorSelectState state,
 			 void *client_data)
 {
-  unsigned char * color;
-
   if (palette && palette->entries)
     {
       switch (state) {
@@ -1161,21 +1155,21 @@ palette_select_callback (int   r,
       case COLOR_SELECT_OK:
 	if (palette->color)
 	  {
-	  color = palette->color->color;
+            /* update the palette */
+            PixelRow col;
+            pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                           (guchar *) palette->color->color, 1);
+            copy_row (color, &col);
 
-	  color[0] = r;
-	  color[1] = g;
-	  color[2] = b;
-
-	  /*  Update either foreground or background colors  */
-	  if (active_color == FOREGROUND)
-	    palette_set_foreground (r, g, b);
-	  else if (active_color == BACKGROUND)
-	    palette_set_background (r, g, b);
+            /*  Update either foreground or background colors  */
+            if (active_color == FOREGROUND)
+              palette_set_foreground (&col);
+            else if (active_color == BACKGROUND)
+              palette_set_background (&col);
 	  
-	  palette_calc_scrollbar (palette);
-	  palette_draw_entries (palette);
-	  palette_draw_current_entry (palette);
+            palette_calc_scrollbar (palette);
+            palette_draw_entries (palette);
+            palette_draw_current_entry (palette);
 	  }
 	/* Fallthrough */
       case COLOR_SELECT_CANCEL:
@@ -1186,7 +1180,7 @@ palette_select_callback (int   r,
 }
 
 static int
-palette_draw_color_row (unsigned char **colors,
+palette_draw_color_row (gfloat        **colors,
 			int             ncolors,
 			int             y,
 			unsigned char  *buffer,
@@ -1262,9 +1256,9 @@ palette_draw_color_row (unsigned char **colors,
 
 	  for (j = 0; j < entry_width; j++)
 	    {
-	      *p++ = colors[i][0];
-	      *p++ = colors[i][1];
-	      *p++ = colors[i][2];
+	      *p++ = colors[i][0] * 255;
+	      *p++ = colors[i][1] * 255;
+	      *p++ = colors[i][2] * 255;
 	    }
 	}
 
@@ -1303,7 +1297,7 @@ palette_draw_entries (PaletteP palette)
 {
   PaletteEntryP entry;
   unsigned char *buffer;
-  unsigned char *colors[COLUMNS];
+  gfloat *colors[COLUMNS];
   GSList *tmp_link;
   int width, height;
   int entry_width;
@@ -1420,9 +1414,9 @@ palette_update_current_entry (PaletteP palette)
 static PaletteEntryP
 palette_add_entry (PaletteEntriesP  entries,
 		   char            *name,
-		   int              r,
-		   int              g,
-		   int              b)
+		   gfloat           r,
+		   gfloat           g,
+		   gfloat           b)
 {
   PaletteEntryP entry;
 
@@ -1607,14 +1601,17 @@ static Argument *
 palette_get_foreground_invoker (Argument *args)
 {
   Argument *return_args;
-  unsigned char r, g, b;
+  PixelRow r;
+  guchar d[TAG_MAX_BYTES];
   unsigned char *col;
 
-  palette_get_foreground (&r, &g, &b);
+  pixelrow_init (&r, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), d, 1);
+  palette_get_foreground (&r);
+
   col = (unsigned char *) g_malloc (3);
-  col[RED_PIX] = r;
-  col[GREEN_PIX] = g;
-  col[BLUE_PIX] = b;
+  col[RED_PIX] = d[0];
+  col[GREEN_PIX] = d[1];
+  col[BLUE_PIX] = d[2];
 
   return_args = procedural_db_return_args (&palette_get_foreground_proc, TRUE);
   return_args[1].value.pdb_pointer = col;
@@ -1661,14 +1658,17 @@ static Argument *
 palette_get_background_invoker (Argument *args)
 {
   Argument *return_args;
-  unsigned char r, g, b;
+  PixelRow r;
+  guchar d[TAG_MAX_BYTES];
   unsigned char *col;
 
-  palette_get_background (&r, &g, &b);
+  pixelrow_init (&r, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), d, 1);
+  palette_get_background (&r);
+
   col = (unsigned char *) g_malloc (3);
-  col[RED_PIX] = r;
-  col[GREEN_PIX] = g;
-  col[BLUE_PIX] = b;
+  col[RED_PIX] = d[0];
+  col[GREEN_PIX] = d[1];
+  col[BLUE_PIX] = d[2];
 
   return_args = procedural_db_return_args (&palette_get_background_proc, TRUE);
   return_args[1].value.pdb_pointer = col;
@@ -1722,8 +1722,12 @@ palette_set_foreground_invoker (Argument *args)
     color = (unsigned char *) args[0].value.pdb_pointer;
 
   if (success)
-    palette_set_foreground (color[RED_PIX], color[GREEN_PIX], color[BLUE_PIX]);
-
+    {
+      PixelRow r;
+      pixelrow_init (&r, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), color, 1);
+      palette_set_foreground (&r);
+    }
+  
   return procedural_db_return_args (&palette_set_foreground_proc, success);
 }
 
@@ -1773,7 +1777,11 @@ palette_set_background_invoker (Argument *args)
     color = (unsigned char *) args[0].value.pdb_pointer;
 
   if (success)
-    palette_set_background (color[RED_PIX], color[GREEN_PIX], color[BLUE_PIX]);
+    {
+      PixelRow r;
+      pixelrow_init (&r, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), color, 1);
+      palette_set_background (&r);
+    }
 
   return procedural_db_return_args (&palette_set_background_proc, success);
 }

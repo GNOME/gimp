@@ -419,11 +419,11 @@ bucket_fill (gimage, drawable, fill_mode, paint_mode,
   
   if (fill_mode == FgColorFill)
     {
-      color16_foreground (&col);
+      palette_get_foreground (&col);
     }
   else if (fill_mode == BgColorFill)
     {
-      color16_background (&col);
+      palette_get_background (&col);
     }
   else if (fill_mode == PatternFill)
     {

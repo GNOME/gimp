@@ -163,6 +163,7 @@
 #include "gradient.h"
 #include "interface.h"
 #include "palette.h"
+#include "pixelrow.h"
 
 
 /***** Magic numbers *****/
@@ -1074,14 +1075,17 @@ grad_free_gradient_editor(void)
 static void
 ed_fetch_foreground(double *fg_r, double *fg_g, double *fg_b, double *fg_a)
 {
-	unsigned char r, g, b;
+  PixelRow col;
+  gfloat d[3];
+
+  pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), (guchar *) d, 1);
 	
- 	palette_get_foreground (&r, &g, &b);
+  palette_get_foreground (&col);
  	
- 	*fg_r = (double) r / 255.0;
- 	*fg_g = (double) g / 255.0;
- 	*fg_b = (double) b / 255.0;
-	*fg_a = 1.0;                 /* opacity 100 % */
+  *fg_r = (double) d[0];
+  *fg_g = (double) d[1];
+  *fg_b = (double) d[2];
+  *fg_a = 1.0;                 /* opacity 100 % */
 } /* ed_fetch_foreground */
 
 
@@ -1910,8 +1914,19 @@ prev_set_foreground(gint x)
 	xpos = control_calc_g_pos(x);
 	grad_get_color_at(xpos, &r, &g, &b, &a);
 
-	palette_set_foreground(r * 255.0, g * 255.0, b * 255.0);
+        {
+          PixelRow col;
+          gfloat d[3];
 
+          d[0] = r;
+          d[1] = g;
+          d[2] = b;
+          
+          pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO), (guchar *) d, 1);
+        
+          palette_set_foreground(&col);
+        }
+        
 	sprintf(str, "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)",
 		(int) (r * 255.0),
 		(int) (g * 255.0),

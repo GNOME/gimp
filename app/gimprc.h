@@ -60,7 +60,7 @@ extern int       color_select_x, color_select_y;
 extern int       tool_options_x, tool_options_y;
 extern int       confirm_on_close;
 extern int       default_width, default_height;
-extern int       default_type;
+extern Format    default_format;
 extern Precision default_precision;
 extern int       show_tips;
 extern int       last_tip;

@@ -76,7 +76,7 @@ typedef struct {
   GtkWidget *width_entry;
   int width;
   int height;
-  int type;
+  Format format;
   Storage storage;
   int fill_type;
 } NewImageValues;
@@ -97,7 +97,7 @@ static void file_new_toggle_callback (GtkWidget *, gpointer);
 /*  static variables  */
 static   int          last_width = 256;
 static   int          last_height = 256;
-static   int          last_type = RGB;
+static   Format       last_format = FORMAT_RGB;
 static   Storage      last_storage = STORAGE_TILED;
 static   int          last_fill_type = BACKGROUND_FILL;
 
@@ -125,7 +125,7 @@ static   int          old_cubic_interpolation;
 static   int          old_confirm_on_close;
 static   int          old_default_width;
 static   int          old_default_height;
-static   int          old_default_type;
+static   Format       old_default_format;
 static   Precision    old_default_precision;
 static   int          new_dialog_run;
 static   int          old_stingy_memory_use;
@@ -180,7 +180,6 @@ file_new_ok_callback (GtkWidget *widget,
   GImage *gimage;
   GDisplay *gdisplay;
   Layer *layer;
-  int type;
   Precision precision = PRECISION_NONE;
   Format format = FORMAT_NONE;
   Alpha alpha = ALPHA_NONE;
@@ -194,7 +193,7 @@ file_new_ok_callback (GtkWidget *widget,
 
   last_width = vals->width;
   last_height = vals->height;
-  last_type = vals->type;
+  last_format = vals->format;
   last_storage = vals->storage;
   last_fill_type = vals->fill_type;
 
@@ -204,17 +203,16 @@ file_new_ok_callback (GtkWidget *widget,
     case FOREGROUND_FILL:
     case WHITE_FILL:
     case NO_FILL:
-      type = (vals->type == RGB) ? RGB_GIMAGE : GRAY_GIMAGE;
-      format = (vals->type == RGB) ? FORMAT_RGB: FORMAT_GRAY;
+      format = (vals->format == FORMAT_RGB) ? FORMAT_RGB: FORMAT_GRAY;
       alpha = ALPHA_NO;
       break;
     case TRANSPARENT_FILL:
-      type = (vals->type == RGB) ? RGBA_GIMAGE : GRAYA_GIMAGE;
-      format = (vals->type == RGB) ? FORMAT_RGB: FORMAT_GRAY;
+      format = (vals->format == FORMAT_RGB) ? FORMAT_RGB: FORMAT_GRAY;
       alpha =  ALPHA_YES;
       break;
     default:
-      type = RGB_GIMAGE;
+      format = FORMAT_NONE;
+      alpha = ALPHA_NONE;
       break;
     }
 
@@ -222,7 +220,7 @@ file_new_ok_callback (GtkWidget *widget,
 
   {  
     Tag tag = tag_new ( precision, format, alpha);
-    gimage = gimage_new_tag (vals->width, vals->height, tag);
+    gimage = gimage_new (vals->width, vals->height, tag);
 
     /*  Make the background (or first) layer  */
     layer = layer_new (gimage->ID, gimage->width, gimage->height,
@@ -300,7 +298,7 @@ file_new_cmd_callback (GtkWidget *widget,
     {
       last_width = default_width;
       last_height = default_height;
-      last_type = default_type;
+      last_format = default_format;
       new_dialog_run = 1;  
     }
 
@@ -320,17 +318,17 @@ file_new_cmd_callback (GtkWidget *widget,
     {
       vals->width = gdisp->gimage->width;
       vals->height = gdisp->gimage->height;
-      vals->type = gimage_base_type (gdisp->gimage);
+      vals->format = tag_format (gimage_tag (gdisp->gimage));
     }
   else
     {
       vals->width = last_width;
       vals->height = last_height;
-      vals->type = last_type;
+      vals->format = last_format;
     }
 
-  if (vals->type == INDEXED)
-    vals->type = RGB;    /* no indexed images */
+  if (vals->format == FORMAT_INDEXED)
+    vals->format = FORMAT_RGB;    /* no indexed images */
 
   vals->dlg = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (vals->dlg), "new_image", "Gimp");
@@ -417,22 +415,22 @@ file_new_cmd_callback (GtkWidget *widget,
   button = gtk_radio_button_new_with_label (NULL, "RGB");
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FORMAT_RGB);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      (GtkSignalFunc) file_new_toggle_callback,
-		      &vals->type);
-  if (vals->type == RGB)
+		      &vals->format);
+  if (vals->format == FORMAT_RGB)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
   button = gtk_radio_button_new_with_label (group, "Grayscale");
   group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
-  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
+  gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) FORMAT_GRAY);
   gtk_signal_connect (GTK_OBJECT (button), "toggled",
 		      (GtkSignalFunc) file_new_toggle_callback,
-		      &vals->type);
-  if (vals->type == GRAY)
+		      &vals->format);
+  if (vals->format == FORMAT_GRAY)
     gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
   gtk_widget_show (button);
 
@@ -744,7 +742,7 @@ file_prefs_save_callback (GtkWidget *widget,
   if (default_width != old_default_width ||
       default_height != old_default_height)
     update = g_list_append (update, "default-image-size");
-  if (default_type != old_default_type)
+  if (default_format != old_default_format)
     update = g_list_append (update, "default-image-type");
   if (default_precision != old_default_precision)
     update = g_list_append (update, "default-image-precision");
@@ -870,7 +868,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   confirm_on_close = old_confirm_on_close;
   default_width = old_default_width;
   default_height = old_default_height;
-  default_type = old_default_type;
+  default_format = old_default_format;
   default_precision = old_default_precision;
   if (preview_size != old_preview_size)
     {
@@ -928,9 +926,9 @@ file_prefs_toggle_callback (GtkWidget *widget,
     edit_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&edit_cycled_marching_ants)
     edit_cycled_marching_ants = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&default_type)
+  else if (data==&default_format)
     {
-      default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
+      default_format = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
     } 
   else if (data==&default_precision)
     {
@@ -1086,7 +1084,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_confirm_on_close = confirm_on_close;
       old_default_width = default_width;
       old_default_height = default_height;
-      old_default_type = default_type;
+      old_default_format = default_format;
       old_default_precision = default_precision;
       old_stingy_memory_use = edit_stingy_memory_use;
       old_tile_cache_size = edit_tile_cache_size;
@@ -1221,21 +1219,21 @@ file_pref_cmd_callback (GtkWidget *widget,
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) RGB);
-      if (default_type == RGB)
+      if (last_format == FORMAT_RGB)
 	gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  (GtkSignalFunc) file_prefs_toggle_callback,
-			  &default_type);
+			  &default_format);
       gtk_widget_show (button);
       button = gtk_radio_button_new_with_label (group, "Grayscale");
       group = gtk_radio_button_group (GTK_RADIO_BUTTON (button));
       gtk_box_pack_start (GTK_BOX (radio_box), button, TRUE, TRUE, 0);
       gtk_object_set_user_data (GTK_OBJECT (button), (gpointer) GRAY);
-      if (last_type == GRAY) 
+      if (last_format == FORMAT_GRAY) 
 	  gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button), TRUE);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                          (GtkSignalFunc) file_prefs_toggle_callback,
-			  &default_type);
+			  &default_format);
       gtk_widget_show (button);
       hbox = gtk_hbox_new (FALSE, 2);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);

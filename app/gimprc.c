@@ -111,7 +111,7 @@ int       tool_options_x = 0, tool_options_y = 345;
 int       confirm_on_close = TRUE;
 int       default_width = 256;
 int       default_height = 256;
-int       default_type = RGB;
+Format    default_format = FORMAT_RGB;
 Precision default_precision = PRECISION_U8;
 int       show_tips = TRUE;
 int       last_tip = -1;
@@ -215,7 +215,7 @@ static ParseFunc funcs[] =
   { "dont-show-tips",        TT_BOOLEAN,    NULL, &show_tips },
   { "last-tip-shown",        TT_INT,        &last_tip, NULL },
   { "default-image-size",    TT_POSITION,   &default_width, &default_height },
-  { "default-image-type",    TT_IMAGETYPE,  &default_type, NULL },
+  { "default-image-type",    TT_IMAGETYPE,  &default_format, NULL },
   { "default-image-precision",TT_INT,       &default_precision, NULL },
   { "plug-in",               TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
@@ -839,10 +839,10 @@ parse_image_type (gpointer val1p,
 		  gpointer val2p)
 {
   int token;
-  int *typep;
+  Format *typep;
   
   g_assert (val1p != NULL);
-  typep = (int *)val1p;
+  typep = (Format *)val1p;
 
   token = peek_next_token ();
   if (!token || (token != TOKEN_SYMBOL))
@@ -850,9 +850,9 @@ parse_image_type (gpointer val1p,
   token = get_next_token ();
  
   if (!strcmp (token_sym, "rgb"))
-    *typep = RGB;
+    *typep = FORMAT_RGB;
   else if ((!strcmp (token_sym, "gray")) || (!strcmp (token_sym, "grey")))
-    *typep = GRAY;
+    *typep = FORMAT_GRAY;
   else
     return ERROR;
 
@@ -1674,10 +1674,10 @@ static char *
 image_type_to_str (gpointer val1p,
 		   gpointer val2p)
 {
-  int type;
+  Format type;
 
-  type = *((int *)val1p);
-  if (type == GRAY)
+  type = *((Format *)val1p);
+  if (type == FORMAT_GRAY)
     return g_strdup ("gray");
   else
     return g_strdup ("rgb");

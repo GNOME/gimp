@@ -37,7 +37,7 @@ struct _ShmBuf
   int      height;
   Canvas * canvas;
 
-  int      valid;
+  int      is_alloced;
   int      ref_count;
   void *   data;
 
@@ -66,7 +66,7 @@ shmbuf_new  (
   f->height = h;
   f->canvas = c;
   
-  f->valid = FALSE;
+  f->is_alloced = FALSE;
   f->ref_count = 0;
   f->data = NULL;
 
@@ -189,11 +189,11 @@ shmbuf_portion_refro  (
   
   if (f && (x < f->width) && (y < f->height))
     {
-      if (f->valid == FALSE)
+      if (f->is_alloced == FALSE)
         if (canvas_autoalloc (f->canvas) == AUTOALLOC_ON)
           (void) shmbuf_portion_alloc (f, x, y);
       
-      if (f->valid == TRUE)
+      if (f->is_alloced == TRUE)
         {
           f->ref_count++;
           rc = REFRC_OK;
@@ -215,11 +215,11 @@ shmbuf_portion_refrw  (
   
   if (f && (x < f->width) && (y < f->height))
     {
-      if (f->valid == FALSE)
+      if (f->is_alloced == FALSE)
         if (canvas_autoalloc (f->canvas) == AUTOALLOC_ON)
           (void) shmbuf_portion_alloc (f, x, y);
       
-      if (f->valid == TRUE)
+      if (f->is_alloced == TRUE)
         {
           f->ref_count++;
           rc = REFRC_OK;
@@ -340,7 +340,7 @@ shmbuf_portion_alloced (
                          )
 {
   if (f && (x < f->width) && (y < f->height))
-    return f->valid;
+    return f->is_alloced;
   return FALSE;
 }
 
@@ -354,7 +354,7 @@ shmbuf_portion_alloc  (
 {
   if (f && (x < f->width) && (y < f->height))
     {
-      if (f->valid == TRUE)
+      if (f->is_alloced == TRUE)
         {
           return TRUE;
         }
@@ -363,7 +363,7 @@ shmbuf_portion_alloc  (
           f->data = f->shmaddr;
           if (f->data != 0)
             {
-              f->valid = TRUE;
+              f->is_alloced = TRUE;
               return TRUE;
             }
         }
@@ -381,10 +381,14 @@ shmbuf_portion_unalloc  (
 {
   if (f && (x < f->width) && (y < f->height))
     {
-      if ((f->valid == TRUE) && (f->ref_count == 0))
+      if (f->is_alloced == TRUE)
         {
+          if (f->ref_count != 0)
+            {
+              g_warning ("Unallocing a reffed flatbuf.  expect a core...\n");
+            }
           f->data = NULL;
-          f->valid = FALSE;
+          f->is_alloced = FALSE;
           return TRUE;
         }
     }

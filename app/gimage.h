@@ -27,33 +27,6 @@
 struct _PixelArea;
 struct _Canvas;
 
-/*
- * NOTE!! These values are duplicated in tag.h
-*/
-
-/* the image types */
-#define RGB_GIMAGE          0
-#define RGBA_GIMAGE         1
-#define GRAY_GIMAGE         2
-#define GRAYA_GIMAGE        3
-#define INDEXED_GIMAGE      4
-#define INDEXEDA_GIMAGE     5
-
-/* These are the 16bit types */
-#define U16_RGB_GIMAGE         6
-#define U16_RGBA_GIMAGE        7
-#define U16_GRAY_GIMAGE        8
-#define U16_GRAYA_GIMAGE       9
-#define U16_INDEXED_GIMAGE     10 
-#define U16_INDEXEDA_GIMAGE    11 
-
-/* These are the float types */
-#define FLOAT_RGB_GIMAGE          12 
-#define FLOAT_RGBA_GIMAGE         13 
-#define FLOAT_GRAY_GIMAGE         14 
-#define FLOAT_GRAYA_GIMAGE        15 
-
-#define TYPE_HAS_ALPHA(t)  ((t)==RGBA_GIMAGE || (t)==GRAYA_GIMAGE || (t)==INDEXEDA_GIMAGE)
 
 #define GRAY_PIX         0
 #define ALPHA_G_PIX      1
@@ -63,15 +36,6 @@ struct _Canvas;
 #define ALPHA_PIX        3
 #define INDEXED_PIX      0
 #define ALPHA_I_PIX      1
-
-#define RGB              0
-#define GRAY             1
-#define INDEXED          2
-#define U16_RGB     	 3    /*16bit*/
-#define U16_GRAY    	 4
-#define U16_INDEXED		 5
-#define FLOAT_RGB 		 6    /*float*/
-#define FLOAT_GRAY 		 7
 
 #define MAX_CHANNELS     4
 
@@ -122,9 +86,9 @@ struct _GImage
   char *filename;		      /*  original filename            */
   int has_filename;                   /*  has a valid filename         */
 
+  Tag tag;
   int width, height;		      /*  width and height attributes  */
   int base_type;                      /*  base gimage type             */
-  Tag base_tag;
 
   unsigned char * cmap;               /*  colormap--for indexed        */
   int num_cols;                       /*  number of cols--for indexed  */
@@ -140,11 +104,7 @@ struct _GImage
   int ID;                             /*  Unique gimage identifier     */
 
                                       /*  Projection attributes  */
-  int flat;                           /*  Is the gimage flat?          */
   int construct_flag;                 /*  flag for construction        */
-  int proj_type;                      /*  type of the projection image */
-  int proj_bytes;                     /*  bpp in projection image      */
-  int proj_level;                     /*  projection level             */
   struct _Canvas *projection;         /*  The projection--layers &     */
                                       /*  channels                     */
 
@@ -181,36 +141,26 @@ struct _GImage
 
 /* function declarations */
 
-GImage *        gimage_new_tag                (int, int, Tag);
-GImage *        gimage_new                    (int, int, int);
+GImage *        gimage_new                    (int, int, Tag);
 void            gimage_set_filename           (GImage *, char *);
 void            gimage_resize                 (GImage *, int, int, int, int);
 void            gimage_scale                  (GImage *, int, int);
-GImage *        gimage_get_named              (char *);
 GImage *        gimage_get_ID                 (int);
 struct _Canvas *gimage_shadow                 (GImage *, int, int, Tag);
 void            gimage_free_shadow            (GImage *);
 void            gimage_delete                 (GImage *);
 
-void            gimage_apply_image            ();
 void            gimage_apply_painthit         (GImage *, GimpDrawable *,
                                                struct _Canvas *,
                                                struct _PixelArea *,
                                                int undo,
                                                gfloat, int mode,
                                                int x, int y);
-void            gimage_replace_image          ();
 void            gimage_replace_painthit       (GImage *, GimpDrawable *,
                                                struct _Canvas *, int undo,
                                                gfloat, struct _Canvas *,
                                                int x, int y);
 
-void            gimage_get_foreground         (GImage *, GimpDrawable *, unsigned char *);
-void            gimage_get_background         (GImage *, GimpDrawable *, unsigned char *);
-void            gimage_get_color              (GImage *, int, unsigned char *,
-					       unsigned char *);
-void            gimage_transform_color        (GImage *, GimpDrawable *, unsigned char *,
-					       unsigned char *, int);
 Guide*          gimage_add_hguide             (GImage *);
 Guide*          gimage_add_vguide             (GImage *);
 void            gimage_add_guide              (GImage *, Guide *);
@@ -252,21 +202,14 @@ Channel *       gimage_add_channel            (GImage *, Channel *, int);
 Channel *       gimage_remove_channel         (GImage *, Channel *);
 void            gimage_construct              (GImage *, int, int, int, int);
 void            gimage_invalidate             (GImage *, int, int, int, int, int, int, int, int);
-#if 0
-void            gimage_validate               (TileManager *, Tile *, int);
-#endif
-void            gimage_inflate                (GImage *);
-void            gimage_deflate                (GImage *);
 
 
 /*  Access functions  */
 
-int             gimage_is_flat                (GImage *);
 int             gimage_is_empty               (GImage *);
 GimpDrawable *  gimage_active_drawable        (GImage *);
 Tag             gimage_tag                    (GImage *);
-int             gimage_base_type              (GImage *);
-int             gimage_base_type_with_alpha   (GImage *);
+Format          gimage_format                 (GImage *);
 char *          gimage_filename               (GImage *);
 int             gimage_enable_undo            (GImage *);
 int             gimage_disable_undo           (GImage *);
@@ -280,17 +223,11 @@ unsigned char * gimage_cmap                   (GImage *);
 /*  projection access functions  */
 
 struct _Canvas *gimage_projection             (GImage *);
-int             gimage_projection_type        (GImage *);
-int             gimage_projection_bytes       (GImage *);
 int             gimage_projection_opacity     (GImage *);
 void            gimage_projection_realloc     (GImage *);
 
-
 /*  composite access functions  */
 
-struct _Canvas *gimage_composite              (GImage *);
-int             gimage_composite_type         (GImage *);
-int             gimage_composite_bytes        (GImage *);
 struct _Canvas *gimage_composite_preview      (GImage *, ChannelType, int, int);
 int             gimage_preview_valid          (GImage *, ChannelType);
 void            gimage_invalidate_preview     (GImage *);

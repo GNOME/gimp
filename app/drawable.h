@@ -33,11 +33,11 @@ struct _Canvas;
 typedef struct _GimpDrawable      GimpDrawable;
 typedef struct _GimpDrawableClass GimpDrawableClass;
 
-Tag drawable_tag (GimpDrawable *);
-
 guint gimp_drawable_get_type (void);
 
+
 /*  drawable access functions  */
+Tag              drawable_tag                (GimpDrawable *);
 int		 drawable_ID		     (GimpDrawable *);
 void             drawable_apply_image        (GimpDrawable *, 
 					      int, int, int, int, 
@@ -53,7 +53,6 @@ int              drawable_dirty              (GimpDrawable *);
 int              drawable_clean              (GimpDrawable *);
 int              drawable_type               (GimpDrawable *);
 int              drawable_has_alpha          (GimpDrawable *);
-int              drawable_type_with_alpha    (GimpDrawable *);
 int              drawable_color              (GimpDrawable *);
 int              drawable_gray               (GimpDrawable *);
 int              drawable_indexed            (GimpDrawable *);

@@ -44,7 +44,7 @@ struct _TileBuf
 
 struct _Tile16
 {
-  short     valid;
+  short     is_alloced;
   short     ref_count;
   guchar  * data;
 };
@@ -80,7 +80,7 @@ tilebuf_new  (
   t->tiles = g_new (Tile16, n);
   while (n--)
     {
-      t->tiles[n].valid = FALSE;
+      t->tiles[n].is_alloced = FALSE;
       t->tiles[n].ref_count = 0;
       t->tiles[n].data = NULL;
     }
@@ -129,7 +129,7 @@ tilebuf_info (
           int i = tile16_index (t, t->width-1, t->height-1) + 1;
           while (i--)
             {
-              if (t->tiles[i].valid)
+              if (t->tiles[i].is_alloced)
                 {
                   trace_printf ("  Tile %d, ref %d, data %x",
                                 i, t->tiles[i].ref_count, t->tiles[i].data);
@@ -226,11 +226,11 @@ tilebuf_portion_refro  (
     {
       Tile16 * tile = &t->tiles[i];
       
-      if (tile->valid == FALSE)
+      if (tile->is_alloced == FALSE)
         if (canvas_autoalloc (t->canvas) == AUTOALLOC_ON)
           (void) tilebuf_portion_alloc (t, x, y);
       
-      if (tile->valid == TRUE)
+      if (tile->is_alloced == TRUE)
         {
           tile->ref_count++;
           rc = REFRC_OK;
@@ -255,11 +255,11 @@ tilebuf_portion_refrw  (
     {
       Tile16 * tile = &t->tiles[i];
       
-      if (tile->valid == FALSE)
+      if (tile->is_alloced == FALSE)
         if (canvas_autoalloc (t->canvas) == AUTOALLOC_ON)
           (void) tilebuf_portion_alloc (t, x, y);
 
-      if (tile->valid == TRUE)
+      if (tile->is_alloced == TRUE)
         {
           tile->ref_count++;
           rc = REFRC_OK;
@@ -416,7 +416,7 @@ tilebuf_portion_alloced (
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
-      return tile->valid;
+      return tile->is_alloced;
     }
   return FALSE;
 }
@@ -433,7 +433,7 @@ tilebuf_portion_alloc  (
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
-      if (tile->valid == TRUE)
+      if (tile->is_alloced == TRUE)
         {
           return TRUE;
         }
@@ -444,7 +444,7 @@ tilebuf_portion_alloc  (
           if (tile->data)
             {
               memset (tile->data, 0, n);
-              tile->valid = TRUE;
+              tile->is_alloced = TRUE;
               if (canvas_portion_init (t->canvas, x, y) != TRUE)
                 g_warning ("tilebuf failed to init portion...");
               return TRUE;
@@ -466,11 +466,15 @@ tilebuf_portion_unalloc  (
   if (i >= 0)
     {
       Tile16 * tile = &t->tiles[i];
-      if ((tile->valid == TRUE) && (tile->ref_count == 0))
+      if (tile->is_alloced == TRUE)
         {
+          if (tile->ref_count != 0)
+            {
+              g_warning ("Unallocing a reffed tile.  expect a core...\n");
+            }
           g_free (tile->data);
           tile->data = NULL;
-          tile->valid = FALSE;
+          tile->is_alloced = FALSE;
           return TRUE;
         }
     }

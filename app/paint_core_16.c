@@ -388,7 +388,7 @@ paint_core_16_button_press  (
 
   /*  pause the current selection and grab the pointer  */
   gdisplays_selection_visibility (gdisp->gimage->ID, SelectionPause);
-#define PAINT_CORE_16_C_1_cw
+
 #if 0
   /* add motion memory if you press mod1 first */
   if (bevent->state & GDK_MOD1_MASK)
@@ -400,6 +400,7 @@ paint_core_16_button_press  (
 		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
 #endif 
+
   /*  Let the specific painting function initialize itself  */
   (* paint_core->paint_func) (paint_core, drawable, INIT_PAINT);
 

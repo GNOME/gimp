@@ -19,12 +19,13 @@
 #include <stdio.h>
 #include "appenv.h"
 #include "actionarea.h"
+#include "canvas.h"
 #include "color_picker.h"
 #include "drawable.h"
 #include "gdisplay.h"
 #include "info_dialog.h"
 #include "palette.h"
-#include "tile_manager.h"
+#include "pixelrow.h"
 #include "tools.h"
 
 
@@ -42,8 +43,9 @@ static void  color_picker_cursor_update    (Tool *, GdkEventMotion *, gpointer);
 static void  color_picker_control          (Tool *, int, void *);
 static void  color_picker_info_window_close_callback  (GtkWidget *, gpointer);
 
-static int   get_color                     (GImage *, GimpDrawable *, int, int, int, int);
-static void  color_picker_info_update      (Tool *, int);
+static int   (*get_color)                 (GImage *, GimpDrawable *, int, int, int, int);
+static void  (*color_picker_info_update)  (Tool *, int);
+static void  color_picker_funcs (Tag);
 
 static Argument *color_picker_invoker (Argument *);
 
@@ -52,7 +54,7 @@ static Argument *color_picker_invoker (Argument *);
 static int            col_value [5] = { 0, 0, 0, 0, 0 };
 static GimpDrawable * active_drawable;
 static int            update_type;
-static int            sample_type;
+static Tag            sample_tag;
 static InfoDialog *   color_picker_info = NULL;
 static char           red_buf   [MAX_INFO_BUF];
 static char           green_buf [MAX_INFO_BUF];
@@ -150,9 +152,9 @@ color_picker_button_press (Tool           *tool,
       active_drawable = gimage_active_drawable (gdisp->gimage);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
-      switch (drawable_type (active_drawable))
+      switch (tag_format (drawable_tag (active_drawable)))
 	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
+	case FORMAT_RGB:
 	  info_dialog_add_field (color_picker_info, "Red", red_buf);
 	  info_dialog_add_field (color_picker_info, "Green", green_buf);
 	  info_dialog_add_field (color_picker_info, "Blue", blue_buf);
@@ -160,7 +162,7 @@ color_picker_button_press (Tool           *tool,
 	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
 	  break;
 
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+	case FORMAT_INDEXED:
 	  info_dialog_add_field (color_picker_info, "Index", index_buf);
 	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf);
 	  info_dialog_add_field (color_picker_info, "Red", red_buf);
@@ -169,7 +171,7 @@ color_picker_button_press (Tool           *tool,
 	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
 	  break;
 
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
+	case FORMAT_GRAY:
 	  info_dialog_add_field (color_picker_info, "Intensity", gray_buf);
 	  info_dialog_add_field (color_picker_info, "Alpha", alpha_buf);
 	  info_dialog_add_field (color_picker_info, "Hex Triplet", hex_buf);
@@ -178,9 +180,13 @@ color_picker_button_press (Tool           *tool,
 	default :
 	  break;
 	}
-  /* Create the action area  */
-  action_items[0].user_data = color_picker_info;
-  build_action_area (GTK_DIALOG (color_picker_info->shell), action_items, 1, 0);
+
+      /* set up the funtion pointers */
+      color_picker_funcs (drawable_tag (active_drawable));
+  
+      /* Create the action area  */
+      action_items[0].user_data = color_picker_info;
+      build_action_area (GTK_DIALOG (color_picker_info->shell), action_items, 1, 0);
     }
 
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
@@ -279,22 +285,21 @@ color_picker_control (Tool     *tool,
 {
 }
 
-static int
-get_color (GImage *gimage,
-	   GimpDrawable *drawable,
-	   int     x,
-	   int     y,
-	   int     sample_merged,
-	   int     final)
+static int 
+get_color_u8  (
+               GImage * gimage,
+               GimpDrawable * drawable,
+               int x,
+               int y,
+               int sample_merged,
+               int final
+               )
 {
-  unsigned char *src, *cmap, alpha;
-  TileManager *tiles;
-  Tile *tile;
+  unsigned char *src;
+  unsigned char *cmap;
+  Canvas *tiles;
   int offx, offy;
   int width, height;
-  int bytes;
-  int index;
-  int has_alpha;
 
   if (!drawable && !sample_merged) 
     return FALSE;
@@ -307,79 +312,87 @@ get_color (GImage *gimage,
       width = drawable_width (drawable);
       height = drawable_height (drawable);
       tiles = drawable_data (drawable);
-      bytes = drawable_bytes (drawable);
-      has_alpha = drawable_has_alpha (drawable);
-      sample_type = drawable_type (drawable);
+      sample_tag = drawable_tag (drawable);
       cmap = drawable_cmap (drawable);
     }
   else
     {
       width = gimage->width;
       height = gimage->height;
-      tiles = gimage_composite (gimage);
-      bytes = gimage_composite_bytes (gimage);
-      sample_type = gimage_composite_type (gimage);
-      has_alpha = (sample_type == RGBA_GIMAGE ||
-		   sample_type == GRAYA_GIMAGE ||
-		   sample_type == INDEXEDA_GIMAGE);
+      tiles = gimage_projection (gimage);
+      sample_tag = gimage_tag (gimage);
       cmap = gimage_cmap (gimage);
     }
 
   if (x >= 0 && y >= 0 && x < width && y < height)
-    {
-      tile = tile_manager_get_tile (tiles, x, y, 0);
-      tile_ref (tile);
-
-      src = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
-    }
+    canvas_portion_refro (tiles, x, y);
   else
     return FALSE;
 
-	  /*  if the alpha channel (if one exists) is 0, out of bounds  */
-  if (has_alpha)
-    {
-      alpha = src[bytes - 1];
-      col_value [ALPHA_PIX] = alpha;
-    }
-
+  src = canvas_portion_data (tiles, x, y);
+  
   /*  If the image is color, get RGB  */
-  switch (sample_type)
+  switch (tag_format (sample_tag))
     {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
+    case FORMAT_RGB:
       col_value [RED_PIX] = src [RED_PIX];
       col_value [GREEN_PIX] = src [GREEN_PIX];
       col_value [BLUE_PIX] = src [BLUE_PIX];
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        col_value [ALPHA_PIX] = src[ALPHA_PIX];
       break;
 
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      col_value [4] = src [0];
-      index = src [0] * 3;
-      col_value [RED_PIX] = cmap [index + 0];
-      col_value [GREEN_PIX] = cmap [index + 1];
-      col_value [BLUE_PIX] = cmap [index + 2];
+    case FORMAT_INDEXED:
+      {
+        int index;
+        col_value [4] = src [0];
+        index = src [0] * 3;
+        col_value [RED_PIX] = cmap [index + 0];
+        col_value [GREEN_PIX] = cmap [index + 1];
+        col_value [BLUE_PIX] = cmap [index + 2];
+        if (tag_alpha (sample_tag) == ALPHA_YES)
+          col_value [ALPHA_I_PIX] = src[ALPHA_I_PIX];
+      }
       break;
 
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
+    case FORMAT_GRAY:
       col_value [RED_PIX] = src [GRAY_PIX];
       col_value [GREEN_PIX] = src [GRAY_PIX];
       col_value [BLUE_PIX] = src [GRAY_PIX];
+      if (tag_alpha (sample_tag) == ALPHA_YES)
+        col_value [ALPHA_G_PIX] = src[ALPHA_G_PIX];
       break;
 
-    default :
+    case FORMAT_NONE:
+    default:
+      g_warning ("bad format");
       break;
     }
 
-  tile_unref (tile, FALSE);
+  canvas_portion_unref (tiles, x, y);
 
-  palette_set_active_color (col_value [RED_PIX], col_value [GREEN_PIX],
-			    col_value [BLUE_PIX], final);
+  {
+    PixelRow col;
+    guchar d[3];
+
+    d[0] = col_value[0];
+    d[1] = col_value[1];
+    d[2] = col_value[2];
+
+    pixelrow_init (&col, tag_new (PRECISION_U8, FORMAT_RGB, ALPHA_NO), d, 1);
+
+    palette_set_active_color (&col, final);
+  }
+
   return TRUE;
 }
 
 
-static void
-color_picker_info_update (Tool *tool,
-			  int   valid)
+static void 
+color_picker_info_update_u8  (
+                              Tool * tool,
+                              int valid
+                              )
 {
   if (!valid)
     {
@@ -393,13 +406,13 @@ color_picker_info_update (Tool *tool,
     }
   else
     {
-      switch (sample_type)
+      switch (tag_format (sample_tag))
 	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
+	case FORMAT_RGB:
 	  sprintf (red_buf, "%d", col_value [RED_PIX]);
 	  sprintf (green_buf, "%d", col_value [GREEN_PIX]);
 	  sprintf (blue_buf, "%d", col_value [BLUE_PIX]);
-	  if (sample_type == RGBA_GIMAGE)
+	  if (tag_alpha (sample_tag) == ALPHA_YES)
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
 	    sprintf (alpha_buf, "N/A");
@@ -407,9 +420,9 @@ color_picker_info_update (Tool *tool,
 		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
 	  break;
 
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
+	case FORMAT_INDEXED:
 	  sprintf (index_buf, "%d", col_value [4]);
-	  if (sample_type == INDEXEDA_GIMAGE)
+	  if (tag_alpha (sample_tag) == ALPHA_YES)
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
 	    sprintf (alpha_buf, "N/A");
@@ -420,21 +433,51 @@ color_picker_info_update (Tool *tool,
 		   col_value [GREEN_PIX], col_value [BLUE_PIX]);
 	  break;
 
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
+	case FORMAT_GRAY:
 	  sprintf (gray_buf, "%d", col_value [GRAY_PIX]);
-	  if (sample_type == GRAYA_GIMAGE)
+	  if (tag_alpha (sample_tag) == ALPHA_YES)
 	    sprintf (alpha_buf, "%d", col_value [ALPHA_PIX]);
 	  else
 	    sprintf (alpha_buf, "N/A");
 	  sprintf (hex_buf, "#%.2x%.2x%.2x", col_value [GRAY_PIX],
 		   col_value [GRAY_PIX], col_value [GRAY_PIX]);
 	  break;
+          
+	case FORMAT_NONE:
+        default:
+          g_warning ("bad format");
+          break;
 	}
     }
 
   info_dialog_update (color_picker_info);
   info_dialog_popup (color_picker_info);
 }
+
+
+static void
+color_picker_funcs (
+                    Tag t
+                    )
+{
+  switch (tag_precision (t))
+    {
+    case PRECISION_U8:
+      get_color = get_color_u8;
+      color_picker_info_update = color_picker_info_update_u8;
+      break;
+    case PRECISION_U16:
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+    default:
+#define FIXME
+      g_warning ("bad precision in color_picker");
+      get_color = get_color_u8;
+      color_picker_info_update = color_picker_info_update_u8;
+      return;
+    }
+}
+
 
 Tool *
 tools_new_color_picker ()
@@ -587,6 +630,9 @@ color_picker_invoker (Argument *args)
   if (success && !sample_merged)
     if (!drawable || (drawable_gimage (drawable)) != gimage)
       success = FALSE;
+
+  /* set up the funcs */
+  color_picker_funcs (drawable_tag (drawable));
 
   /*  call the color_picker procedure  */
   if (success)

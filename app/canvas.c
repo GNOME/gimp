@@ -38,6 +38,10 @@ struct _Canvas
   Storage    storage;
   void *     rep;
 
+  /* function and data for initializing new memory */
+  CanvasInitFunc init_func;
+  void *         init_data;
+  
   /* cached info about the physical rep */
   Tag   tag;
   int   bytes;
@@ -103,6 +107,9 @@ canvas_new (
   c->width  = w;
   c->height = h;
 
+  c->init_func = NULL;
+  c->init_data = NULL;
+    
   c->x = 0;
   c->y = 0;
   
@@ -697,7 +704,7 @@ canvas_portion_unalloc  (
 
    this doesn;t work right for tiles.  edge tiles only get the
    "on-image" portion inited.  the part that lies off the image isn;t
-   inited because the potion_width and height ignore it.
+   inited because the portion_width and portion_height ignore it.
 
    the proper fix for this is to split portion out of canvas and deal
    only with tiles at the canvas level.  for now we just memset the
@@ -712,18 +719,39 @@ canvas_portion_init  (
 {
   if (c)
     {
-      guint xx = canvas_portion_x (c, x, y);
-      guint yy = canvas_portion_y (c, x, y);
-      guint ww = canvas_portion_width (c, xx, yy);
-      guint hh = canvas_portion_height (c, xx, yy);
-      guint nn = ww * hh * canvas_bytes (c);
-      guchar * dd = canvas_portion_data (c, xx, yy);
+      x = canvas_portion_x (c, x, y);
+      y = canvas_portion_y (c, x, y);
 
-      if (dd != NULL)
+      if (c->init_func)
         {
-          memset (dd, 0, nn);
-          return TRUE;
+          return c->init_func (c, x, y, c->init_data);
+        }
+      else
+        {
+          guint w = canvas_portion_width (c, x, y);
+          guint h = canvas_portion_height (c, x, y);
+          guchar * d = canvas_portion_data (c, x, y);
+
+          if (d != NULL)
+            {
+              memset (d, 0, w * h * canvas_bytes (c));
+              return TRUE;
+            }
         }
     }
   return FALSE;
+}
+
+void
+canvas_portion_init_setup (
+                           Canvas * c,
+                           CanvasInitFunc func,
+                           void * data
+                           )
+{
+  if (c)
+    {
+      c->init_func = func;
+      c->init_data = data;
+    }
 }

@@ -370,7 +370,7 @@ convert_to_indexed (void *gimage_ptr)
   gtk_widget_show (text);
   gtk_widget_show (hbox);
 
-  if (gimage->base_type == RGB)
+  if (gimage_format (gimage) == FORMAT_RGB)
     {
 		GtkWidget *menu;
 		GtkWidget *palette_option_menu;
@@ -639,8 +639,9 @@ convert_image (GImage *gimage,
   undo_push_gimage_mod (gimage);
 
   /*  Set the new base type  */
-  old_type = gimage->base_type;
-  gimage->base_type = new_type;
+  old_type = 0;
+  /* old_type = gimage->base_type; */
+  /* gimage->base_type = new_type; */
 
   /*  Convert to indexed?  Build histogram if necessary.  */
   if (new_type == INDEXED)
@@ -780,9 +781,6 @@ convert_image (GImage *gimage,
       undo_push_layer_mod (gimage, layer);
 
       GIMP_DRAWABLE(layer)->tiles = new_tiles;
-      GIMP_DRAWABLE(layer)->bytes = new_layer_bytes;
-      GIMP_DRAWABLE(layer)->type = new_layer_type;
-      GIMP_DRAWABLE(layer)->has_alpha = TYPE_HAS_ALPHA(new_layer_type);
     }
 
   /*  Delete the quantizer object, if there is one */
@@ -2363,7 +2361,7 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
   has_alpha = layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-  src_bytes = GIMP_DRAWABLE(layer)->bytes;
+  src_bytes = drawable_bytes (GIMP_DRAWABLE(layer));
   dest_bytes = new_tiles->levels[0].bpp;
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
@@ -2519,7 +2517,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   has_alpha = layer_has_alpha (layer);
   pixel_region_init (&srcPR, GIMP_DRAWABLE(layer)->tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, FALSE);
   pixel_region_init (&destPR, new_tiles, 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height, TRUE);
-  src_bytes = GIMP_DRAWABLE(layer)->bytes;
+  src_bytes = drawable_bytes (GIMP_DRAWABLE(layer));
   dest_bytes = new_tiles->levels[0].bpp;
   width = GIMP_DRAWABLE(layer)->width;
   height = GIMP_DRAWABLE(layer)->height;
@@ -2851,7 +2849,7 @@ convert_rgb_invoker (Argument *args)
     }
   /*  make sure the drawable is not RGB color  */
   if (success)
-    success = (gimage_base_type (gimage) != RGB);
+    success = (tag_format (gimage_tag (gimage)) != FORMAT_RGB);
 
   if (success)
     convert_image ((void *) gimage, RGB, 0, 0, 0);
@@ -2909,7 +2907,7 @@ convert_grayscale_invoker (Argument *args)
     }
   /*  make sure the drawable is not GRAYSCALE color  */
   if (success)
-    success = (gimage_base_type (gimage) != GRAY);
+    success = (tag_format (gimage_tag (gimage)) != FORMAT_GRAY);
 
   if (success)
     convert_image ((void *) gimage, GRAY, 0, 0, 0);
@@ -2977,7 +2975,7 @@ convert_indexed_invoker (Argument *args)
     }
   /*  make sure the drawable is not INDEXED color  */
   if (success)
-    success = (gimage_base_type (gimage) != INDEXED);
+    success = (tag_format (gimage_tag (gimage)) != FORMAT_INDEXED);
   if (success)
     dither = (args[1].value.pdb_int) ? TRUE : FALSE;
   if (success)
@@ -3063,7 +3061,7 @@ convert_indexed_palette_invoker (Argument *args)
     }
   /*  make sure the drawable is not INDEXED color  */
   if (success)
-    success = (gimage_base_type (gimage) != INDEXED);
+    success = (gimage_format (gimage) != FORMAT_INDEXED);
   if (success)
     dither = (args[1].value.pdb_int) ? TRUE : FALSE;
   if (success)

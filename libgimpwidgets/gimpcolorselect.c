@@ -23,6 +23,8 @@
 #include "colormaps.h"
 #include "errors.h"
 #include "gimprc.h"
+#include "paint_funcs_area.h"
+#include "pixelrow.h"
 
 #define XY_DEF_WIDTH       192
 #define XY_DEF_HEIGHT      192
@@ -68,7 +70,7 @@ struct _ColorSelectFill {
   int y;
   int width;
   int height;
-  int *values;
+  gfloat *values;
   ColorSelectFillUpdateProc update;
 };
 
@@ -94,7 +96,7 @@ static void color_select_slider_update (GtkAdjustment *, gpointer);
 static void color_select_entry_update (GtkWidget *, gpointer);
 static void color_select_toggle_update (GtkWidget *, gpointer);
 
-static void color_select_image_fill (GtkWidget *, ColorSelectFillType, int *);
+static void color_select_image_fill (GtkWidget *, ColorSelectFillType, gfloat *);
 
 static void color_select_draw_z_marker (ColorSelectP, int);
 static void color_select_draw_xy_marker (ColorSelectP, int);
@@ -135,17 +137,15 @@ static ActionAreaItem action_items[2] =
 };
 
 ColorSelectP
-color_select_new (int                  r,
-		  int                  g,
-		  int                  b,
+color_select_new (PixelRow           * col,
 		  ColorSelectCallback  callback,
 		  void                *client_data,
 		  int                  wants_updates)
 {
   /*  static char *toggle_titles[6] = { "Hue", "Saturation", "Value", "Red", "Green", "Blue" }; */
   static char *toggle_titles[6] = { "H", "S", "V", "R", "G", "B" };
-  static gfloat slider_max_vals[6] = { 360, 100, 100, 255, 255, 255 };
-  static gfloat slider_incs[6] = { 0.1, 0.1, 0.1, 1.0, 1.0, 1.0 };
+  static gfloat slider_max_vals[6] = { 360, 100, 100, 1.0, 1.0, 1.0 };
+  static gfloat slider_incs[6] = { 0.1, 0.1, 0.1, 0.001, 0.001, 0.001 };
 
   ColorSelectP csp;
   GtkWidget *main_vbox;
@@ -170,9 +170,16 @@ color_select_new (int                  r,
   csp->gc = NULL;
   csp->wants_updates = wants_updates;
 
-  csp->values[RED] = csp->orig_values[0] = r;
-  csp->values[GREEN] = csp->orig_values[1] = g;
-  csp->values[BLUE] = csp->orig_values[2] = b;
+  {
+    PixelRow r;
+    pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                   (guchar *)&csp->values[3], 1);
+    copy_row (col, &r);
+    pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                   (guchar *) csp->orig_values, 1);
+    copy_row (col, &r);
+  }
+  
   color_select_update_hsv_values (csp);
   color_select_update_pos (csp);
 
@@ -289,7 +296,7 @@ color_select_new (int                  r,
       csp->slider_data[i] = GTK_ADJUSTMENT (gtk_adjustment_new (csp->values[i], 0.0,
 								slider_max_vals[i],
 								slider_incs[i],
-								1.0, 0.0));
+								0.001, 0.0));
 
       slider = gtk_hscale_new (csp->slider_data[i]);
       gtk_table_attach (GTK_TABLE (table), slider, 1, 2, i, i+1,
@@ -302,9 +309,9 @@ color_select_new (int                  r,
       gtk_widget_show (slider);
 
       csp->entries[i] = gtk_entry_new ();
-      sprintf (buffer, "%d", csp->values[i]);
+      sprintf (buffer, "%7.5f", csp->values[i]);
       gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
-      gtk_widget_set_usize (GTK_WIDGET (csp->entries[i]), 40, 0);
+      gtk_widget_set_usize (GTK_WIDGET (csp->entries[i]), 70, 0);
       gtk_table_attach (GTK_TABLE (table), csp->entries[i],
 			2, 3, i, i+1, GTK_FILL, GTK_EXPAND, 0, 0);
       gtk_signal_connect (GTK_OBJECT (csp->entries[i]), "changed",
@@ -363,24 +370,24 @@ color_select_free (ColorSelectP csp)
 
 void
 color_select_set_color (ColorSelectP csp,
-			int          r,
-			int          g,
-			int          b,
+			PixelRow *   col,
 			int          set_current)
 {
   if (csp)
     {
-      csp->orig_values[0] = r;
-      csp->orig_values[1] = g;
-      csp->orig_values[2] = b;
+      PixelRow r;
+
+      pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                     (guchar *) csp->orig_values, 1);
+      copy_row (col, &r);
 
       color_select_update_colors (csp, 1);
 
       if (set_current)
 	{
-	  csp->values[RED] = r;
-	  csp->values[GREEN] = g;
-	  csp->values[BLUE] = b;
+          pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                         (guchar *) &csp->values[3], 1);
+          copy_row (col, &r);
 
 	  color_select_update_hsv_values (csp);
 	  color_select_update_pos (csp);
@@ -441,9 +448,12 @@ color_select_update_caller (ColorSelectP csp)
 {
   if (csp && csp->wants_updates && csp->callback)
     {
-      (* csp->callback) (csp->values[RED],
-			 csp->values[GREEN],
-			 csp->values[BLUE],
+      PixelRow r;
+
+      pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                     (guchar *) &csp->values[3], 1);
+      
+      (* csp->callback) (&r,
 			 COLOR_SELECT_UPDATE,
 			 csp->client_data);
     }
@@ -472,19 +482,19 @@ color_select_update_values (ColorSelectP csp)
 	  csp->values[BLUE] = csp->pos[2];
 	  break;
 	case HUE:
-	  csp->values[VALUE] = csp->pos[0] * 100 / 255;
-	  csp->values[SATURATION] = csp->pos[1] * 100 / 255;
-	  csp->values[HUE] = csp->pos[2] * 360 / 255;
+	  csp->values[VALUE] = csp->pos[0] * 100;
+	  csp->values[SATURATION] = csp->pos[1] * 100;
+	  csp->values[HUE] = csp->pos[2] * 360;
 	  break;
 	case SATURATION:
-	  csp->values[VALUE] = csp->pos[0] * 100 / 255;
-	  csp->values[HUE] = csp->pos[1] * 360 / 255;
-	  csp->values[SATURATION] = csp->pos[2] * 100 / 255;
+	  csp->values[VALUE] = csp->pos[0] * 100;
+	  csp->values[HUE] = csp->pos[1] * 360;
+	  csp->values[SATURATION] = csp->pos[2] * 100;
 	  break;
 	case VALUE:
-	  csp->values[SATURATION] = csp->pos[0] * 100 / 255;
-	  csp->values[HUE] = csp->pos[1] * 360 / 255;
-	  csp->values[VALUE] = csp->pos[2] * 100 / 255;
+	  csp->values[SATURATION] = csp->pos[0] * 100;
+	  csp->values[HUE] = csp->pos[1] * 360;
+	  csp->values[VALUE] = csp->pos[2] * 100;
 	  break;
 	}
 
@@ -518,9 +528,9 @@ color_select_update_rgb_values (ColorSelectP csp)
 
       if (s == 0)
 	{
-	  csp->values[RED] = v * 255;
-	  csp->values[GREEN] = v * 255;
-	  csp->values[BLUE] = v * 255;
+	  csp->values[RED] = v;
+	  csp->values[GREEN] = v;
+	  csp->values[BLUE] = v;
 	}
       else
 	{
@@ -536,34 +546,34 @@ color_select_update_rgb_values (ColorSelectP csp)
 	  switch ((int) h)
 	    {
 	    case 0:
-	      csp->values[RED] = v * 255;
-	      csp->values[GREEN] = t * 255;
-	      csp->values[BLUE] = p * 255;
+	      csp->values[RED] = v;
+	      csp->values[GREEN] = t;
+	      csp->values[BLUE] = p;
 	      break;
 	    case 1:
-	      csp->values[RED] = q * 255;
-	      csp->values[GREEN] = v * 255;
-	      csp->values[BLUE] = p * 255;
+	      csp->values[RED] = q;
+	      csp->values[GREEN] = v;
+	      csp->values[BLUE] = p;
 	      break;
 	    case 2:
-	      csp->values[RED] = p * 255;
-	      csp->values[GREEN] = v * 255;
-	      csp->values[BLUE] = t * 255;
+	      csp->values[RED] = p;
+	      csp->values[GREEN] = v;
+	      csp->values[BLUE] = t;
 	      break;
 	    case 3:
-	      csp->values[RED] = p * 255;
-	      csp->values[GREEN] = q * 255;
-	      csp->values[BLUE] = v * 255;
+	      csp->values[RED] = p;
+	      csp->values[GREEN] = q;
+	      csp->values[BLUE] = v;
 	      break;
 	    case 4:
-	      csp->values[RED] = t * 255;
-	      csp->values[GREEN] = p * 255;
-	      csp->values[BLUE] = v * 255;
+	      csp->values[RED] = t;
+	      csp->values[GREEN] = p;
+	      csp->values[BLUE] = v;
 	      break;
 	    case 5:
-	      csp->values[RED] = v * 255;
-	      csp->values[GREEN] = p * 255;
-	      csp->values[BLUE] = q * 255;
+	      csp->values[RED] = v;
+	      csp->values[GREEN] = p;
+	      csp->values[BLUE] = q;
 	      break;
 	    }
 	}
@@ -573,10 +583,10 @@ color_select_update_rgb_values (ColorSelectP csp)
 static void
 color_select_update_hsv_values (ColorSelectP csp)
 {
-  int r, g, b;
-  float h, s, v;
-  int min, max;
-  int delta;
+  gfloat r, g, b;
+  gfloat h, s, v;
+  gfloat min, max;
+  gfloat delta;
 
   if (csp)
     {
@@ -612,7 +622,7 @@ color_select_update_hsv_values (ColorSelectP csp)
       v = max;
 
       if (max != 0)
-	s = (max - min) / (float) max;
+	s = (max - min) / max;
       else
 	s = 0;
 
@@ -636,7 +646,7 @@ color_select_update_hsv_values (ColorSelectP csp)
 
       csp->values[HUE] = h;
       csp->values[SATURATION] = s * 100;
-      csp->values[VALUE] = v * 100 / 255;
+      csp->values[VALUE] = v * 100;
     }
 }
 
@@ -663,19 +673,19 @@ color_select_update_pos (ColorSelectP csp)
 	  csp->pos[2] = csp->values[BLUE];
 	  break;
 	case HUE:
-	  csp->pos[0] = csp->values[VALUE] * 255 / 100;
-	  csp->pos[1] = csp->values[SATURATION] * 255 / 100;
-	  csp->pos[2] = csp->values[HUE] * 255 / 360;
+	  csp->pos[0] = csp->values[VALUE] / 100;
+	  csp->pos[1] = csp->values[SATURATION] / 100;
+	  csp->pos[2] = csp->values[HUE] / 360;
 	  break;
 	case SATURATION:
-	  csp->pos[0] = csp->values[VALUE] * 255 / 100;
-	  csp->pos[1] = csp->values[HUE] * 255 / 360;
-	  csp->pos[2] = csp->values[SATURATION] * 255 / 100;
+	  csp->pos[0] = csp->values[VALUE] / 100;
+	  csp->pos[1] = csp->values[HUE] / 360;
+	  csp->pos[2] = csp->values[SATURATION] / 100;
 	  break;
 	case VALUE:
-	  csp->pos[0] = csp->values[SATURATION] * 255 / 100;
-	  csp->pos[1] = csp->values[HUE] * 255 / 360;
-	  csp->pos[2] = csp->values[VALUE] * 255 / 100;
+	  csp->pos[0] = csp->values[SATURATION] / 100;
+	  csp->pos[1] = csp->values[HUE] / 360;
+	  csp->pos[2] = csp->values[VALUE] / 100;
 	  break;
 	}
     }
@@ -713,7 +723,7 @@ color_select_update_entries (ColorSelectP csp,
       for (i = 0; i < 6; i++)
 	if (i != skip)
 	  {
-	    sprintf (buffer, "%d", csp->values[i]);
+	    sprintf (buffer, "%7.5f", csp->values[i]);
 
 	    gtk_signal_handler_block_by_data (GTK_OBJECT (csp->entries[i]), csp);
 	    gtk_entry_set_text (GTK_ENTRY (csp->entries[i]), buffer);
@@ -728,31 +738,29 @@ color_select_update_colors (ColorSelectP csp,
 {
   GdkWindow *window;
   GdkColor color;
-  int red, green, blue;
   int width, height;
-
+  PixelRow col;
+  
   if (csp)
     {
       if (which)
 	{
 	  window = csp->orig_color->window;
 	  color.pixel = old_color_pixel;
-	  red = csp->orig_values[0];
-	  green = csp->orig_values[1];
-	  blue = csp->orig_values[2];
+          pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                         (guchar *) csp->orig_values, 1);
 	}
       else
 	{
 	  window = csp->new_color->window;
 	  color.pixel = new_color_pixel;
-	  red = csp->values[RED];
-	  green = csp->values[GREEN];
-	  blue = csp->values[BLUE];
+          pixelrow_init (&col, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                         (guchar *) &csp->values[3], 1);
 	}
 
       gdk_window_get_size (window, &width, &height);
 
-      store_color (&color.pixel, red, green, blue);
+      store_color (&color.pixel, &col);
 
       if (csp->gc)
 	{
@@ -773,11 +781,16 @@ color_select_ok_callback (GtkWidget *w,
   if (csp)
     {
       if (csp->callback)
-	(* csp->callback) (csp->values[RED],
-			   csp->values[GREEN],
-			   csp->values[BLUE],
-			   COLOR_SELECT_OK,
-			   csp->client_data);
+        {
+          PixelRow r;
+
+          pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                         (guchar *) &csp->values[3], 1);
+
+          (* csp->callback) (&r,
+                             COLOR_SELECT_OK,
+                             csp->client_data);
+        }
     }
 }
 
@@ -802,11 +815,16 @@ color_select_cancel_callback (GtkWidget *w,
   if (csp)
     {
       if (csp->callback)
-	(* csp->callback) (csp->orig_values[0],
-			   csp->orig_values[1],
-			   csp->orig_values[2],
-			   COLOR_SELECT_CANCEL,
-			   csp->client_data);
+        {
+          PixelRow r;
+          
+          pixelrow_init (&r, tag_new (PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO),
+                         (guchar *) csp->orig_values, 1);
+          
+          (* csp->callback) (&r,
+                             COLOR_SELECT_CANCEL,
+                             csp->client_data);
+        }
     }
 }
 
@@ -839,17 +857,17 @@ color_select_xy_events (GtkWidget    *widget,
 
       color_select_draw_xy_marker (csp, 1);
 
-      csp->pos[0] = (bevent->x * 255) / (XY_DEF_WIDTH - 1);
-      csp->pos[1] = 255 - (bevent->y * 255) / (XY_DEF_HEIGHT - 1);
+      csp->pos[0] = (bevent->x) / (XY_DEF_WIDTH - 1);
+      csp->pos[1] = 1 - (bevent->y) / (XY_DEF_HEIGHT - 1);
 
       if (csp->pos[0] < 0)
 	csp->pos[0] = 0;
-      if (csp->pos[0] > 255)
-	csp->pos[0] = 255;
+      if (csp->pos[0] > 1)
+	csp->pos[0] = 1;
       if (csp->pos[1] < 0)
 	csp->pos[1] = 0;
-      if (csp->pos[1] > 255)
-	csp->pos[1] = 255;
+      if (csp->pos[1] > 1)
+	csp->pos[1] = 1;
 
       gdk_pointer_grab (csp->xy_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
@@ -864,17 +882,17 @@ color_select_xy_events (GtkWidget    *widget,
 
       color_select_draw_xy_marker (csp, 1);
 
-      csp->pos[0] = (bevent->x * 255) / (XY_DEF_WIDTH - 1);
-      csp->pos[1] = 255 - (bevent->y * 255) / (XY_DEF_HEIGHT - 1);
+      csp->pos[0] = (bevent->x) / (XY_DEF_WIDTH - 1);
+      csp->pos[1] = 1 - (bevent->y) / (XY_DEF_HEIGHT - 1);
 
       if (csp->pos[0] < 0)
 	csp->pos[0] = 0;
-      if (csp->pos[0] > 255)
-	csp->pos[0] = 255;
+      if (csp->pos[0] > 1)
+	csp->pos[0] = 1;
       if (csp->pos[1] < 0)
 	csp->pos[1] = 0;
-      if (csp->pos[1] > 255)
-	csp->pos[1] = 255;
+      if (csp->pos[1] > 1)
+	csp->pos[1] = 1;
 
       gdk_pointer_ungrab (bevent->time);
       color_select_draw_xy_marker (csp, 1);
@@ -892,17 +910,17 @@ color_select_xy_events (GtkWidget    *widget,
 
       color_select_draw_xy_marker (csp, 1);
 
-      csp->pos[0] = (mevent->x * 255) / (XY_DEF_WIDTH - 1);
-      csp->pos[1] = 255 - (mevent->y * 255) / (XY_DEF_HEIGHT - 1);
+      csp->pos[0] = (mevent->x) / (XY_DEF_WIDTH - 1);
+      csp->pos[1] = 1 - (mevent->y) / (XY_DEF_HEIGHT - 1);
 
       if (csp->pos[0] < 0)
 	csp->pos[0] = 0;
-      if (csp->pos[0] > 255)
-	csp->pos[0] = 255;
+      if (csp->pos[0] > 1)
+	csp->pos[0] = 1;
       if (csp->pos[1] < 0)
 	csp->pos[1] = 0;
-      if (csp->pos[1] > 255)
-	csp->pos[1] = 255;
+      if (csp->pos[1] > 1)
+	csp->pos[1] = 1;
 
       color_select_draw_xy_marker (csp, 1);
       color_select_update (csp, UPDATE_VALUES);
@@ -944,11 +962,11 @@ color_select_z_events (GtkWidget    *widget,
 
       color_select_draw_z_marker (csp, 1);
 
-      csp->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
+      csp->pos[2] = 1 - (bevent->y) / (Z_DEF_HEIGHT - 1);
       if (csp->pos[2] < 0)
 	csp->pos[2] = 0;
-      if (csp->pos[2] > 255)
-	csp->pos[2] = 255;
+      if (csp->pos[2] > 1)
+	csp->pos[2] = 1;
 
       gdk_pointer_grab (csp->z_color->window, FALSE,
 			GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
@@ -962,11 +980,11 @@ color_select_z_events (GtkWidget    *widget,
 
       color_select_draw_z_marker (csp, 1);
 
-      csp->pos[2] = 255 - (bevent->y * 255) / (Z_DEF_HEIGHT - 1);
+      csp->pos[2] = 1 - (bevent->y) / (Z_DEF_HEIGHT - 1);
       if (csp->pos[2] < 0)
 	csp->pos[2] = 0;
-      if (csp->pos[2] > 255)
-	csp->pos[2] = 255;
+      if (csp->pos[2] > 1)
+	csp->pos[2] = 1;
 
       gdk_pointer_ungrab (bevent->time);
       color_select_draw_z_marker (csp, 1);
@@ -984,14 +1002,14 @@ color_select_z_events (GtkWidget    *widget,
 
       color_select_draw_z_marker (csp, 1);
 
-      csp->pos[2] = 255 - (mevent->y * 255) / (Z_DEF_HEIGHT - 1);
+      csp->pos[2] = 1 - (mevent->y) / (Z_DEF_HEIGHT - 1);
       if (csp->pos[2] < 0)
 	csp->pos[2] = 0;
-      if (csp->pos[2] > 255)
-	csp->pos[2] = 255;
+      if (csp->pos[2] > 1)
+	csp->pos[2] = 1;
 
       color_select_draw_z_marker (csp, 1);
-      color_select_update (csp, UPDATE_VALUES);
+      color_select_update (csp, UPDATE_VALUES | UPDATE_XY_COLOR);
       break;
 
     default:
@@ -1035,7 +1053,7 @@ color_select_slider_update (GtkAdjustment *adjustment,
 			    gpointer       data)
 {
   ColorSelectP csp;
-  int old_values[6];
+  gfloat old_values[6];
   int update_z_marker;
   int update_xy_marker;
   int i, j;
@@ -1051,7 +1069,7 @@ color_select_slider_update (GtkAdjustment *adjustment,
       for (j = 0; j < 6; j++)
 	old_values[j] = csp->values[j];
 
-      csp->values[i] = (int) adjustment->value;
+      csp->values[i] = adjustment->value;
 
       if ((i >= HUE) && (i <= VALUE))
 	color_select_update_rgb_values (csp);
@@ -1106,7 +1124,7 @@ color_select_entry_update (GtkWidget *w,
 			   gpointer   data)
 {
   ColorSelectP csp;
-  int old_values[6];
+  gfloat old_values[6];
   int update_z_marker;
   int update_xy_marker;
   int i, j;
@@ -1231,7 +1249,7 @@ color_select_toggle_update (GtkWidget *w,
 static void
 color_select_image_fill (GtkWidget           *preview,
 			 ColorSelectFillType  type,
-			 int                 *values)
+			 gfloat              *values)
 {
   ColorSelectFill csf;
   int height;
@@ -1265,7 +1283,7 @@ color_select_draw_z_marker (ColorSelectP csp,
 
   if (csp->gc)
     {
-      y = (Z_DEF_HEIGHT - 1) - ((Z_DEF_HEIGHT - 1) * csp->pos[2]) / 255;
+      y = (Z_DEF_HEIGHT - 1) - ((Z_DEF_HEIGHT - 1) * csp->pos[2]);
       width = csp->z_color->requisition.width;
       if (width <= 0)
 	return;
@@ -1286,8 +1304,8 @@ color_select_draw_xy_marker (ColorSelectP csp,
 
   if (csp->gc)
     {
-      x = ((XY_DEF_WIDTH - 1) * csp->pos[0]) / 255;
-      y = (XY_DEF_HEIGHT - 1) - ((XY_DEF_HEIGHT - 1) * csp->pos[1]) / 255;
+      x = ((XY_DEF_WIDTH - 1) * csp->pos[0]);
+      y = (XY_DEF_HEIGHT - 1) - ((XY_DEF_HEIGHT - 1) * csp->pos[1]);
       width = csp->xy_color->requisition.width;
       height = csp->xy_color->requisition.height;
       if ((width <= 0) || (height <= 0))
@@ -1304,21 +1322,22 @@ static void
 color_select_update_red (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int i, r;
+  gfloat r;
+  int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  r = (csf->height - csf->y + 1) * 255 / csf->height;
+  r = (csf->height - csf->y + 1) / (gfloat) csf->height;
 
   if (r < 0)
     r = 0;
-  if (r > 255)
-    r = 255;
+  if (r > 1)
+    r = 1;
 
   for (i = 0; i < csf->width; i++)
     {
-      *p++ = r;
+      *p++ = r * 255;
       *p++ = 0;
       *p++ = 0;
     }
@@ -1328,22 +1347,23 @@ static void
 color_select_update_green (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int i, g;
+  gfloat g;
+  int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  g = (csf->height - csf->y + 1) * 255 / csf->height;
+  g = (csf->height - csf->y + 1) / (gfloat) csf->height;
 
   if (g < 0)
     g = 0;
-  if (g > 255)
-    g = 255;
+  if (g > 1)
+    g = 1;
 
   for (i = 0; i < csf->width; i++)
     {
       *p++ = 0;
-      *p++ = g;
+      *p++ = g * 255;
       *p++ = 0;
     }
 }
@@ -1352,23 +1372,24 @@ static void
 color_select_update_blue (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int i, b;
+  gfloat b;
+  int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  b = (csf->height - csf->y + 1) * 255 / csf->height;
+  b = (csf->height - csf->y + 1) / (gfloat) csf->height;
 
   if (b < 0)
     b = 0;
-  if (b > 255)
-    b = 255;
+  if (b > 1)
+    b = 1;
 
   for (i = 0; i < csf->width; i++)
     {
       *p++ = 0;
       *p++ = 0;
-      *p++ = b;
+      *p++ = b * 255;
     }
 }
 
@@ -1376,14 +1397,14 @@ static void
 color_select_update_hue (ColorSelectFill *csf)
 {
   unsigned char *p;
-  float h, f;
-  int r, g, b;
+  gfloat h, f;
+  gfloat r, g, b;
   int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  h = csf->y * 360 / csf->height;
+  h = csf->y * 360 / (gfloat) csf->height;
 
   h = 360 - h;
 
@@ -1393,49 +1414,49 @@ color_select_update_hue (ColorSelectFill *csf)
     h = 0;
 
   h /= 60;
-  f = (h - (int) h) * 255;
+  f = (h - (int) h);
 
   r = g = b = 0;
 
   switch ((int) h)
     {
     case 0:
-      r = 255;
+      r = 1;
       g = f;
       b = 0;
       break;
     case 1:
-      r = 255 - f;
-      g = 255;
+      r = 1 - f;
+      g = 1;
       b = 0;
       break;
     case 2:
       r = 0;
-      g = 255;
+      g = 1;
       b = f;
       break;
     case 3:
       r = 0;
-      g = 255 - f;
-      b = 255;
+      g = 1 - f;
+      b = 1;
       break;
     case 4:
       r = f;
       g = 0;
-      b = 255;
+      b = 1;
       break;
     case 5:
-      r = 255;
+      r = 1;
       g = 0;
-      b = 255 - f;
+      b = 1 - f;
       break;
     }
 
   for (i = 0; i < csf->width; i++)
     {
-      *p++ = r;
-      *p++ = g;
-      *p++ = b;
+      *p++ = r * 255;
+      *p++ = g * 255;
+      *p++ = b * 255;
     }
 }
 
@@ -1443,26 +1464,26 @@ static void
 color_select_update_saturation (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int s;
+  gfloat s;
   int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  s = csf->y * 255 / csf->height;
+  s = csf->y / (gfloat) csf->height;
 
   if (s < 0)
     s = 0;
-  if (s > 255)
-    s = 255;
+  if (s > 1)
+    s = 1;
 
-  s = 255 - s;
+  s = 1 - s;
 
   for (i = 0; i < csf->width; i++)
     {
-      *p++ = s;
-      *p++ = s;
-      *p++ = s;
+      *p++ = s * 255;
+      *p++ = s * 255;
+      *p++ = s * 255;
     }
 }
 
@@ -1470,26 +1491,26 @@ static void
 color_select_update_value (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int v;
+  gfloat v;
   int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  v = csf->y * 255 / csf->height;
+  v = csf->y / (gfloat) csf->height;
 
   if (v < 0)
     v = 0;
-  if (v > 255)
-    v = 255;
+  if (v > 1)
+    v = 1;
 
-  v = 255 - v;
+  v = 1 - v;
 
   for (i = 0; i < csf->width; i++)
     {
-      *p++ = v;
-      *p++ = v;
-      *p++ = v;
+      *p++ = v * 255;
+      *p++ = v * 255;
+      *p++ = v * 255;
     }
 }
 
@@ -1497,23 +1518,28 @@ static void
 color_select_update_red_green (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int i, r, b;
-  float g, dg;
+  int i;
+  gfloat r, b;
+  gfloat g, dg;
 
   p = csf->buffer;
 
   csf->y += 1;
   b = csf->values[BLUE];
-  r = (csf->height - csf->y + 1) * 255 / csf->height;
+  r = (csf->height - csf->y + 1) / (gfloat) csf->height;
 
   if (r < 0)
     r = 0;
-  if (r > 255)
-    r = 255;
+  if (r > 1)
+    r = 1;
 
   g = 0;
-  dg = 255.0 / csf->width;
+  dg = 1.0 / csf->width;
 
+  r *= 255;
+  b *= 255;
+  dg *= 255;
+  
   for (i = 0; i < csf->width; i++)
     {
       *p++ = r;
@@ -1528,22 +1554,27 @@ static void
 color_select_update_red_blue (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int i, r, g;
-  float b, db;
+  int i;
+  gfloat r, g;
+  gfloat b, db;
 
   p = csf->buffer;
 
   csf->y += 1;
   g = csf->values[GREEN];
-  r = (csf->height - csf->y + 1) * 255 / csf->height;
+  r = (csf->height - csf->y + 1) / (gfloat) csf->height;
 
   if (r < 0)
     r = 0;
-  if (r > 255)
-    r = 255;
+  if (r > 1)
+    r = 1;
 
   b = 0;
-  db = 255.0 / csf->width;
+  db = 1.0 / csf->width;
+
+  r *= 255;
+  g *= 255;
+  db *= 255;
 
   for (i = 0; i < csf->width; i++)
     {
@@ -1559,22 +1590,27 @@ static void
 color_select_update_green_blue (ColorSelectFill *csf)
 {
   unsigned char *p;
-  int i, g, r;
-  float b, db;
+  int i;
+  gfloat g, r;
+  gfloat b, db;
 
   p = csf->buffer;
 
   csf->y += 1;
   r = csf->values[RED];
-  g = (csf->height - csf->y + 1) * 255 / csf->height;
+  g = (csf->height - csf->y + 1) / (gfloat) csf->height;
 
   if (g < 0)
     g = 0;
-  if (g > 255)
-    g = 255;
+  if (g > 1)
+    g = 1;
 
   b = 0;
-  db = 255.0 / csf->width;
+  db = 1.0 / csf->width;
+
+  r *= 255;
+  g *= 255;
+  db *= 255;
 
   for (i = 0; i < csf->width; i++)
     {
@@ -1591,13 +1627,13 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
 {
   unsigned char *p;
   float h, v, s, ds;
-  int f;
+  gfloat f;
   int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  h = 360 - (csf->y * 360 / csf->height);
+  h = 360 - (csf->y * 360 / (gfloat) csf->height);
 
   if (h < 0)
     h = 0;
@@ -1605,21 +1641,21 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     h = 359;
 
   h /= 60;
-  f = (h - (int) h) * 255;
+  f = (h - (int) h);
 
   s = 0;
   ds = 1.0 / csf->width;
 
-  v = csf->values[VALUE] / 100.0;
+  v = csf->values[VALUE] / 100.0 * 255;
 
   switch ((int) h)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255;
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * 255 * (1 - s);
+	  *p++ = v;
+	  *p++ = v * (1 - (s * (1 - f)));
+	  *p++ = v * (1 - s);
 
 	  s += ds;
 	}
@@ -1627,9 +1663,9 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 1:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
+	  *p++ = v * (1 - s * f);
+	  *p++ = v;
+	  *p++ = v * (1 - s);
 
 	  s += ds;
 	}
@@ -1637,9 +1673,9 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 2:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v *255;
-	  *p++ = v * (255 - (s * (255 - f)));
+	  *p++ = v * (1 - s);
+	  *p++ = v;
+	  *p++ = v * (1 - (s * (1 - f)));
 
 	  s += ds;
 	}
@@ -1647,9 +1683,9 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 3:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
+	  *p++ = v * (1 - s);
+	  *p++ = v * (1 - s * f);
+	  *p++ = v;
 
 	  s += ds;
 	}
@@ -1657,9 +1693,9 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 4:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * (255 * (1 - s));
-	  *p++ = v * 255;
+	  *p++ = v * (1 - (s * (1 - f)));
+	  *p++ = v * ((1 - s));
+	  *p++ = v;
 
 	  s += ds;
 	}
@@ -1667,9 +1703,9 @@ color_select_update_hue_saturation (ColorSelectFill *csf)
     case 5:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
+	  *p++ = v;
+	  *p++ = v * (1 - s);
+	  *p++ = v * (1 - s * f);
 
 	  s += ds;
 	}
@@ -1681,14 +1717,14 @@ static void
 color_select_update_hue_value (ColorSelectFill *csf)
 {
   unsigned char *p;
-  float h, v, dv, s;
-  int f;
+  gfloat h, v, dv, s;
+  gfloat f;
   int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  h = 360 - (csf->y * 360 / csf->height);
+  h = 360 - (csf->y * 360 / (gfloat) csf->height);
 
   if (h < 0)
     h = 0;
@@ -1696,21 +1732,21 @@ color_select_update_hue_value (ColorSelectFill *csf)
     h = 359;
 
   h /= 60;
-  f = (h - (int) h) * 255;
+  f = (h - (int) h);
 
   v = 0;
   dv = 1.0 / csf->width;
 
-  s = csf->values[SATURATION] / 100.0;
+  s = csf->values[SATURATION] / 100.0 * 255;
 
   switch ((int) h)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255;
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * 255 * (1 - s);
+	  *p++ = v;
+	  *p++ = v * (1 - (s * (1 - f)));
+	  *p++ = v * (1 - s);
 
 	  v += dv;
 	}
@@ -1718,9 +1754,9 @@ color_select_update_hue_value (ColorSelectFill *csf)
     case 1:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
+	  *p++ = v * (1 - s * f);
+	  *p++ = v;
+	  *p++ = v * (1 - s);
 
 	  v += dv;
 	}
@@ -1728,9 +1764,9 @@ color_select_update_hue_value (ColorSelectFill *csf)
     case 2:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v *255;
-	  *p++ = v * (255 - (s * (255 - f)));
+	  *p++ = v * (1 - s);
+	  *p++ = v;
+	  *p++ = v * (1 - (s * (1 - f)));
 
 	  v += dv;
 	}
@@ -1738,9 +1774,9 @@ color_select_update_hue_value (ColorSelectFill *csf)
     case 3:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
+	  *p++ = v * (1 - s);
+	  *p++ = v * (1 - s * f);
+	  *p++ = v;
 
 	  v += dv;
 	}
@@ -1748,9 +1784,9 @@ color_select_update_hue_value (ColorSelectFill *csf)
     case 4:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * (255 * (1 - s));
-	  *p++ = v * 255;
+	  *p++ = v * (1 - (s * (1 - f)));
+	  *p++ = v * ((1 - s));
+	  *p++ = v;
 
 	  v += dv;
 	}
@@ -1758,9 +1794,9 @@ color_select_update_hue_value (ColorSelectFill *csf)
     case 5:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
+	  *p++ = v;
+	  *p++ = v * (1 - s);
+	  *p++ = v * (1 - s * f);
 
 	  v += dv;
 	}
@@ -1772,14 +1808,14 @@ static void
 color_select_update_saturation_value (ColorSelectFill *csf)
 {
   unsigned char *p;
-  float h, v, dv, s;
-  int f;
+  gfloat h, v, dv, s;
+  gfloat f;
   int i;
 
   p = csf->buffer;
 
   csf->y += 1;
-  s = (float) csf->y / csf->height;
+  s = (float) csf->y / (gfloat) csf->height;
 
   if (s < 0)
     s = 0;
@@ -1792,19 +1828,19 @@ color_select_update_saturation_value (ColorSelectFill *csf)
   if (h >= 360)
     h -= 360;
   h /= 60;
-  f = (h - (int) h) * 255;
+  f = (h - (int) h);
 
   v = 0;
-  dv = 1.0 / csf->width;
+  dv = 1.0 / csf->width * 255;
 
   switch ((int) h)
     {
     case 0:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255;
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * 255 * (1 - s);
+	  *p++ = v;
+	  *p++ = v * (1 - (s * (1 - f)));
+	  *p++ = v * (1 - s);
 
 	  v += dv;
 	}
@@ -1812,9 +1848,9 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 1:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
+	  *p++ = v * (1 - s * f);
+	  *p++ = v;
+	  *p++ = v * (1 - s);
 
 	  v += dv;
 	}
@@ -1822,9 +1858,9 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 2:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v *255;
-	  *p++ = v * (255 - (s * (255 - f)));
+	  *p++ = v * (1 - s);
+	  *p++ = v;
+	  *p++ = v * (1 - (s * (1 - f)));
 
 	  v += dv;
 	}
@@ -1832,9 +1868,9 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 3:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
-	  *p++ = v * 255;
+	  *p++ = v * (1 - s);
+	  *p++ = v * (1 - s * f);
+	  *p++ = v;
 
 	  v += dv;
 	}
@@ -1842,9 +1878,9 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 4:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * (255 - (s * (255 - f)));
-	  *p++ = v * (255 * (1 - s));
-	  *p++ = v * 255;
+	  *p++ = v * (1 - (s * (1 - f)));
+	  *p++ = v * ((1 - s));
+	  *p++ = v;
 
 	  v += dv;
 	}
@@ -1852,9 +1888,9 @@ color_select_update_saturation_value (ColorSelectFill *csf)
     case 5:
       for (i = 0; i < csf->width; i++)
 	{
-	  *p++ = v * 255;
-	  *p++ = v * 255 * (1 - s);
-	  *p++ = v * (255 - s * f);
+	  *p++ = v;
+	  *p++ = v * (1 - s);
+	  *p++ = v * (1 - s * f);
 
 	  v += dv;
 	}

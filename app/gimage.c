@@ -46,7 +46,6 @@
 
 /*  Local function declarations  */
 static void     gimage_free_projection       (GImage *);
-static void     gimage_allocate_shadow       (GImage *, int, int, Tag);
 static GImage * gimage_create                (void);
 static void     gimage_allocate_projection   (GImage *);
 static void     gimage_free_layers           (GImage *);
@@ -65,6 +64,8 @@ static void     project_indexed              (GImage *, Layer *, PixelArea *,
 					      PixelArea *);
 static void     project_channel              (GImage *, Channel *, PixelArea *,
 					      PixelArea *);
+
+static guint    gimage_validate              (Canvas * c, int x, int y, void * data);
 
 /*
  *  Global variables
@@ -111,7 +112,6 @@ gimage_create (void)
   gimage->shadow = NULL;
   gimage->dirty = 1;
   gimage->undo_on = TRUE;
-  gimage->flat = TRUE;
   gimage->construct_flag = -1;
   gimage->projection = NULL;
   gimage->guides = NULL;
@@ -135,50 +135,43 @@ gimage_create (void)
 
 
 Tag 
-gimage_tag (GImage *gimage)
+gimage_tag  (
+             GImage * gimage
+             )
 {
-  return gimage->base_tag;
+  return (gimage ? gimage->tag : tag_null ());
+}
+
+Format 
+gimage_format  (
+                GImage * gimage
+                )
+{
+  return tag_format (gimage_tag (gimage));
 }
 
 static void
 gimage_allocate_projection (GImage *gimage)
 {
-  Format format;
-  Precision precision;
-  Tag projection_tag;
+  Tag t;
+  
+  t = gimage_tag (gimage);
+
+  t = tag_set_alpha (t, ALPHA_YES);
+
+  if (tag_format (t) == FORMAT_INDEXED)
+    t = tag_set_format (t, FORMAT_RGB);
+  
   if (gimage->projection)
     gimage_free_projection (gimage);
 
-  /*  Find the number of bytes required for the projection.
-   *  This includes the intensity channels and an alpha channel
-   *  if one doesn't exist.
-   */
-  switch ( tag_format (gimage_tag (gimage)))
-    {
-    case FORMAT_RGB:
-    case FORMAT_INDEXED:
-      format = FORMAT_RGB;
-      gimage->proj_type = RGBA_GIMAGE;
-      break;
-    case FORMAT_GRAY:
-      format = FORMAT_GRAY;
-      gimage->proj_type = GRAYA_GIMAGE;
-      break;
-    default:
-      g_message ("gimage format unsupported.\n");
-      return;
-    }
-  
-  precision = tag_precision (gimage_tag(gimage)); 
-  projection_tag = tag_new (precision, format, ALPHA_YES);
-  gimage->proj_bytes = tag_bytes (projection_tag);
-
-  /*  allocate the new projection */
-  gimage->projection = canvas_new (projection_tag, 
+  gimage->projection = canvas_new (t, 
                                    gimage->width, gimage->height,
-                                   STORAGE_FLAT);
-  /*gimage->projection->user_data = (void *) gimage;*/
-  /*tile_manager_set_validate_proc (gimage->projection, gimage_validate);*/
+                                   STORAGE_TILED);
+
+  canvas_portion_init_setup (gimage->projection,
+                             gimage_validate,
+                             (void*) gimage);
 }
 
 static void
@@ -190,45 +183,15 @@ gimage_free_projection (GImage *gimage)
   gimage->projection = NULL;
 }
 
-static void
-gimage_allocate_shadow (GImage *gimage, int width, int height, Tag tag)
-{
-  /*  allocate the new projection  */
-  gimage->shadow = canvas_new (tag, width, height, STORAGE_FLAT);
-}
-
 
 /* function definitions */
 
-GImage *
-gimage_new (int width, int height, int base_type)
-{
-  Precision prec = PRECISION_U8;
-  Format format = FORMAT_NONE;
-  Alpha alpha = ALPHA_NO;
-  Tag   tag;
-
-  switch (base_type)
-    {
-    case RGB:
-      format = FORMAT_RGB;
-      break;
-    case GRAY:
-      format = FORMAT_GRAY;
-      break;
-    case INDEXED:
-      format = FORMAT_INDEXED;
-      break;
-    default:
-      break;
-    }
-  tag = tag_new (prec, format, alpha); 
-  return gimage_new_tag (width, height, tag);
-}
-
-
-GImage *
-gimage_new_tag (int width, int height, Tag tag)
+GImage * 
+gimage_new  (
+             int width,
+             int height,
+             Tag tag
+             )
 {
   GImage *gimage;
   int i;
@@ -239,23 +202,19 @@ gimage_new_tag (int width, int height, Tag tag)
   gimage->width = width;
   gimage->height = height;
   
-  gimage->base_tag = tag;
+  gimage->tag = tag;
 
   switch (tag_format (tag))
     {
-    case FORMAT_RGB:
-    gimage->base_type = RGB;
-      break;
-    case FORMAT_GRAY:
-    gimage->base_type = GRAY;
-      break;
     case FORMAT_INDEXED:
-    gimage->base_type = INDEXED;
       /* always allocate 256 colors for the colormap */
       gimage->num_cols = 0;
       gimage->cmap = (unsigned char *) g_malloc (COLORMAP_SIZE);
       memset (gimage->cmap, 0, COLORMAP_SIZE);
       break;
+    case FORMAT_RGB:
+    case FORMAT_GRAY:
+    case FORMAT_NONE:
     default:
       break;
     }
@@ -453,27 +412,6 @@ gimage_scale (GImage *gimage, int new_width, int new_height)
 
 
 GImage *
-gimage_get_named (char *name)
-{
-  GSList *tmp = image_list;
-  GImage *gimage;
-  char *str;
-
-  while (tmp)
-    {
-      gimage = tmp->data;
-      str = prune_filename (gimage_filename (gimage));
-      if (strcmp (str, name) == 0)
-	return gimage;
-
-      tmp = g_slist_next (tmp);
-    }
-
-  return NULL;
-}
-
-
-GImage *
 gimage_get_ID (int ID)
 {
   GSList *tmp = image_list;
@@ -503,7 +441,8 @@ gimage_shadow (GImage *gimage, int width, int height, Tag tag)
   else if (gimage->shadow)
     return gimage->shadow;
 
-  gimage_allocate_shadow (gimage, width, height, tag);
+  /*  allocate the new projection  */
+  gimage->shadow = canvas_new (tag, width, height, STORAGE_TILED);
 
   return gimage->shadow;
 }
@@ -554,12 +493,6 @@ gimage_delete (GImage *gimage)
     }
 }
 
-void
-gimage_apply_image ()
-{
-  g_warning ("gimage_apply_image() was called");
-}
-
 void 
 gimage_apply_painthit  (
                         GImage * gimage,
@@ -577,7 +510,7 @@ gimage_apply_painthit  (
 
   /* make sure we're doing something legal */
   operation = valid_combinations
-    [drawable_type (drawable)]
+    [drawable_type (drawable) % 6]
     [tag_num_channels (pixelarea_tag (src2_area))];
 
   if (operation == -1)
@@ -634,10 +567,10 @@ gimage_apply_painthit  (
       /* the painthit */
 
       pixelarea_resize (src2_area,
-                      pixelarea_x (src2_area) + (x1-x),
-                      pixelarea_y (src2_area) + (y1-y),
-                      x2 - x1, y2 - y1,
-                      FALSE);
+                        pixelarea_x (src2_area) + (x1-x),
+                        pixelarea_y (src2_area) + (y1-y),
+                        x2 - x1, y2 - y1,
+                        FALSE);
       
       pixelarea_init (&destPR, drawable_data (drawable),
                       x1, y1,
@@ -669,19 +602,6 @@ gimage_apply_painthit  (
       }
     }
   }
-}
-
-/* Similar to gimage_apply_image but works in "replace" mode (i.e.
-   transparent pixels in src2 make the result transparent rather
-   than opaque.
-
-   Takes an additional mask pixel region as well.
-
-*/
-void
-gimage_replace_image ()
-{
-  g_warning ("gimage_replace_image() was called");
 }
 
 
@@ -716,7 +636,7 @@ gimage_replace_painthit  (
    *  if it's actually legal...
    */
   operation = valid_combinations 
-	[drawable_type (drawable)]
+	[drawable_type (drawable) % 6]
 	[tag_num_channels (canvas_tag (src2))];
   
   if (operation == -1)
@@ -816,116 +736,6 @@ gimage_replace_painthit  (
                          opacity, active, operation);
 }
 
-
-void
-gimage_get_foreground (GImage *gimage, GimpDrawable *drawable, unsigned char *fg)
-{
-  unsigned char pfg[3];
-
-  /*  Get the palette color  */
-  palette_get_foreground (&pfg[0], &pfg[1], &pfg[2]);
-
-  gimage_transform_color (gimage, drawable, pfg, fg, RGB);
-}
-
-
-void
-gimage_get_background (GImage *gimage, GimpDrawable *drawable, unsigned char *bg)
-{
-  unsigned char pbg[3];
-
-  /*  Get the palette color  */
-  palette_get_background (&pbg[0], &pbg[1], &pbg[2]);
-
-  gimage_transform_color (gimage, drawable, pbg, bg, RGB);
-}
-
-
-void
-gimage_get_color (GImage *gimage, int d_type,
-		  unsigned char *rgb, unsigned char *src)
-{
-  switch (d_type)
-    {
-    case RGB_GIMAGE: case RGBA_GIMAGE:
-      map_to_color (0, NULL, src, rgb);
-      break;
-    case GRAY_GIMAGE: case GRAYA_GIMAGE:
-      map_to_color (1, NULL, src, rgb);
-      break;
-    case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-      map_to_color (2, gimage->cmap, src, rgb);
-      break;
-    }
-}
-
-
-void
-gimage_transform_color (GImage *gimage, GimpDrawable *drawable,
-			unsigned char *src, unsigned char *dest, int type)
-{
-#define INTENSITY(r,g,b) (r * 0.30 + g * 0.59 + b * 0.11 + 0.001)
-  int d_type;
-
-  d_type = (drawable != NULL) ? drawable_type (drawable) :
-    gimage_base_type_with_alpha (gimage);
-
-  switch (type)
-    {
-    case RGB:
-      switch (d_type)
-	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  /*  Straight copy  */
-	  *dest++ = *src++;
-	  *dest++ = *src++;
-	  *dest++ = *src++;
-	  break;
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	  /*  NTSC conversion  */
-	  *dest = INTENSITY (src[RED_PIX],
-			     src[GREEN_PIX],
-			     src[BLUE_PIX]);
-	  break;
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	  /*  Least squares method  */
-	  *dest = map_rgb_to_indexed (gimage->cmap,
-				      gimage->num_cols,
-				      gimage->ID,
-				      src[RED_PIX],
-				      src[GREEN_PIX],
-				      src[BLUE_PIX]);
-	  break;
-	}
-      break;
-    case GRAY:
-      switch (d_type)
-	{
-	case RGB_GIMAGE: case RGBA_GIMAGE:
-	  /*  Gray to RG&B */
-	  *dest++ = *src;
-	  *dest++ = *src;
-	  *dest++ = *src;
-	  break;
-	case GRAY_GIMAGE: case GRAYA_GIMAGE:
-	  /*  Straight copy  */
-	  *dest = *src;
-	  break;
-	case INDEXED_GIMAGE: case INDEXEDA_GIMAGE:
-	  /*  Least squares method  */
-	  *dest = map_rgb_to_indexed (gimage->cmap,
-				      gimage->num_cols,
-				      gimage->ID,
-				      src[GRAY_PIX],
-				      src[GRAY_PIX],
-				      src[GRAY_PIX]);
-	  break;
-	}
-      break;
-    default:
-      break;
-    }
-}
 
 Guide*
 gimage_add_hguide (GImage *gimage)
@@ -1113,37 +923,6 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
   if ((layer = gimage_floating_sel (gimage)))
     floating_sel_composite (layer, x, y, w, h, FALSE);
 
-  /* Note added by Raph Levien, 27 Jan 1998
-
-     This looks it was intended as an optimization, but it seems to
-     have correctness problems. In particular, if all channels are
-     turned off, the screen simply does not update the projected
-     image. It should be black. Turning off this optimization seems to
-     restore correct behavior. At some future point, it may be
-     desirable to turn the optimization back on.
-
-     */
-#if 0
-  /*  If all channels are not visible, simply return  */
-  switch (gimage_base_type (gimage))
-    {
-    case RGB:
-      if (! gimage_get_component_visible (gimage, Red) &&
-	  ! gimage_get_component_visible (gimage, Green) &&
-	  ! gimage_get_component_visible (gimage, Blue))
-	return;
-      break;
-    case GRAY:
-      if (! gimage_get_component_visible (gimage, Gray))
-	return;
-      break;
-    case INDEXED:
-      if (! gimage_get_component_visible (gimage, Indexed))
-	return;
-      break;
-    }
-#endif
-
   while (list)
     {
       layer = (Layer *) list->data;
@@ -1167,14 +946,17 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
 
       /* configure the pixel regions  */
       pixelarea_init (&src1PR, gimage_projection (gimage), 
-	x1, y1, (x2 - x1), (y2 - y1), TRUE);
+                      x1, y1,
+                      (x2 - x1), (y2 - y1),
+                      TRUE);
 
       /*  If we're showing the layer mask instead of the layer...  */
       if (layer->mask && layer->show_mask)
 	{
 	  pixelarea_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer->mask)),
-			     (x1 - off_x), (y1 - off_y),
-			     (x2 - x1), (y2 - y1), FALSE);
+                          (x1 - off_x), (y1 - off_y),
+                          (x2 - x1), (y2 - y1),
+                          FALSE);
 
 	  copy_gray_to_area (&src2PR, &src1PR);
 	}
@@ -1182,14 +964,16 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
       else
 	{
 	  pixelarea_init (&src2PR, drawable_data (GIMP_DRAWABLE(layer)),
-			     (x1 - off_x), (y1 - off_y),
-			     (x2 - x1), (y2 - y1), FALSE);
+                          (x1 - off_x), (y1 - off_y),
+                          (x2 - x1), (y2 - y1),
+                          FALSE);
 
 	  if (layer->mask && layer->apply_mask)
 	    {
 	      pixelarea_init (&maskPR, drawable_data (GIMP_DRAWABLE(layer->mask)),
-				 (x1 - off_x), (y1 - off_y),
-				 (x2 - x1), (y2 - y1), FALSE);
+                              (x1 - off_x), (y1 - off_y),
+                              (x2 - x1), (y2 - y1),
+                              FALSE);
 	      mask = &maskPR;
 	    }
 	  else
@@ -1198,26 +982,33 @@ gimage_construct_layers (GImage *gimage, int x, int y, int w, int h)
 	  /*  Based on the type of the layer, project the layer onto the
 	   *  projection image...
 	   */
-	  switch (drawable_type (GIMP_DRAWABLE(layer)))
-	    {
-	    case RGB_GIMAGE: case GRAY_GIMAGE:
-	      /* no mask possible */
-	      project_intensity (gimage, layer, &src2PR, &src1PR, mask);
-	      break;
-	    case RGBA_GIMAGE: case GRAYA_GIMAGE:
-	      project_intensity_alpha (gimage, layer, &src2PR, &src1PR, mask);
-	      break;
-	    case INDEXED_GIMAGE:
-	      /* no mask possible */
-	      project_indexed (gimage, layer, &src2PR, &src1PR);
-	      break;
-	    case INDEXEDA_GIMAGE:
-	      project_indexed_alpha (gimage, layer, &src2PR, &src1PR, mask);
-	      break;
-	    default:
-	      break;
-	    }
-	}
+          {
+            Tag t = drawable_tag (GIMP_DRAWABLE(layer));
+            
+            switch (tag_format (t))
+              {
+              case FORMAT_RGB:
+              case FORMAT_GRAY:
+                if (tag_alpha (t) == ALPHA_NO)
+                  project_intensity (gimage, layer, &src2PR, &src1PR, mask);
+                else
+                  project_intensity_alpha (gimage, layer, &src2PR, &src1PR, mask);
+                break;
+                
+              case FORMAT_INDEXED:
+                if (tag_alpha (t) == ALPHA_NO)
+                  project_indexed (gimage, layer, &src2PR, &src1PR);
+                else
+                  project_indexed_alpha (gimage, layer, &src2PR, &src1PR, mask);
+                break;
+                
+              case FORMAT_NONE:
+              default:
+                break;
+              }
+          }
+        }
+
       gimage->construct_flag = 1;  /*  something was projected  */
 
       reverse_list = g_slist_next (reverse_list);
@@ -1269,41 +1060,42 @@ gimage_construct_channels (GImage *gimage, int x, int y, int w, int h)
 static void
 gimage_initialize_projection (GImage *gimage, int x, int y, int w, int h)
 {
-  GSList *list;
-  Layer *layer = NULL;
-  int coverage = 0;
-  PixelArea PR;
-
   /*  this function determines whether a visible layer
    *  provides complete coverage over the image.  If not,
    *  the projection is initialized to transparent
    */
-  list = gimage->layers;
+  GSList * list = gimage->layers;
+
   while (list)
     {
+      Layer * l = (Layer *) list->data;
+      GimpDrawable * d = GIMP_DRAWABLE(l);
       int off_x, off_y;
-      layer = (Layer *) list->data;
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      if (drawable_visible (GIMP_DRAWABLE(layer)) &&
-	  ! layer_has_alpha (layer) &&
+      
+      drawable_offsets (d, &off_x, &off_y);
+      if (drawable_visible (d) &&
+	  ! layer_has_alpha (l) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
-	  (off_x + drawable_width (GIMP_DRAWABLE(layer)) >= x + w) &&
-	  (off_y + drawable_height (GIMP_DRAWABLE(layer)) >= y + h))
-	coverage = 1;
+	  (off_x + drawable_width (d) >= x + w) &&
+	  (off_y + drawable_height (d) >= y + h))
+	return;
 
       list = g_slist_next (list);
     }
 
-  if (!coverage)
-    {
-      COLOR16_NEW (black_color, drawable_tag(GIMP_DRAWABLE(layer)) );
-      COLOR16_INIT (black_color);
-      color16_black (&black_color);
-      pixelarea_init (&PR, gimage_projection (gimage), 
-		x, y, w, h, TRUE);
-      color_area (&PR, &black_color);
-    }
+  {
+    PixelArea PR;
+    COLOR16_NEW (color, canvas_tag (gimage_projection (gimage)));
+    
+    COLOR16_INIT (color);
+    palette_get_transparent (&color);
+    pixelarea_init (&PR, gimage_projection (gimage), 
+                    x, y,
+                    w, h,
+                    TRUE);
+    color_area (&PR, &color);
+  }
 }
 
 
@@ -1335,77 +1127,51 @@ gimage_get_active_channels (GImage *gimage, GimpDrawable *drawable, int *active)
 
 
 void
-gimage_inflate (GImage *gimage)
-{
-  /*  Make sure the projection image is allocated  */
-  gimage_allocate_projection (gimage);
-
-  gimage->flat = FALSE;
-
-  /*  update the gdisplay titles  */
-  gdisplays_update_title (gimage->ID);
-}
-
-
-void
-gimage_deflate (GImage *gimage)
-{
-  /*  Make sure the projection image is deallocated  */
-  gimage_free_projection (gimage);
-
-  gimage->flat = TRUE;
-
-  /*  update the gdisplay titles  */
-  gdisplays_update_title (gimage->ID);
-}
-
-
-void
 gimage_construct (GImage *gimage, int x, int y, int w, int h)
 {
-  /*  if the gimage is not flat, construction is necessary.  */
-  if (! gimage_is_flat (gimage))
-    {
-      /*  set the construct flag, used to determine if anything
-       *  has been written to the gimage raw image yet.
-       */
-      gimage->construct_flag = 0;
-
-      /*  First, determine if the projection image needs to be
-       *  initialized--this is the case when there are no visible
-       *  layers that cover the entire canvas--either because layers
-       *  are offset or only a floating selection is visible
-       */
-      gimage_initialize_projection (gimage, x, y, w, h);
-
-      /*  call functions which process the list of layers and
-       *  the list of channels
-       */
-      gimage_construct_layers (gimage, x, y, w, h);
-      gimage_construct_channels (gimage, x, y, w, h);
-    }
+  gimage->construct_flag = 0;
+  gimage_initialize_projection (gimage, x, y, w, h);
+  gimage_construct_layers (gimage, x, y, w, h);
+  gimage_construct_channels (gimage, x, y, w, h);
 }
 
 void
 gimage_invalidate (GImage *gimage, int x, int y, int w, int h, int x1, int y1,
 		   int x2, int y2)
 {
-  int startx, starty;
-  int endx, endy;
-  int flat;
+  Canvas * c = gimage_projection (gimage);
+  PixelArea a;
+  void * pag;
 
-  flat = gimage_is_flat (gimage);
+  pixelarea_init (&a, c,
+                  x, y,
+                  w, h,
+                  TRUE);
 
-  startx = x;
-  starty = y;
-  endx = x + w;
-  endy = y + h;
+  for (pag = pixelarea_register_noref (1, &a);
+       pag;
+       pag = pixelarea_process (pag))
+    {
+      canvas_portion_unalloc (c,
+                              pixelarea_x (&a),
+                              pixelarea_y (&a));
+    }
+}
 
-#define FIXME
-  /* what should this code do exactly? */
+static guint 
+gimage_validate  (
+                  Canvas * c,
+                  int x,
+                  int y,
+                  void * data
+                  )
+{
+  int w = canvas_portion_width (c, x, y);
+  int h = canvas_portion_height (c, x, y);
+  
+  gimage_construct ((GImage *) data, x, y, w, h);
 
-  if (! flat && (endx - startx) > 0 && (endy - starty) > 0)
-    gimage_construct (gimage, startx, starty, (endx - startx), (endy - starty));
+  return TRUE;
 }
 
 int
@@ -1915,8 +1681,6 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
   int position;
   int active[MAX_CHANNELS] = {1, 1, 1, 1};
   int off_x, off_y;
-  COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(layer)) );
-  COLOR16_INIT (bg_color);
 
   layer = NULL;
   type  = RGBA_GIMAGE;
@@ -2007,15 +1771,16 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 
       /*  init the pixel region  */
       pixelarea_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)),
-	0, 0, gimage->width, gimage->height, TRUE);
+                      0, 0, gimage->width, gimage->height, TRUE);
 
       /*  set the region to the background color  */
-#define FIXME
-      /* note: there used to be a transform_color here while getting
-	the background color */
-      color16_background (&bg_color);
-      color_area (&src1PR, &bg_color);
-
+      {
+        COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(merge_layer)) );
+        COLOR16_INIT (bg_color);
+        palette_get_background (&bg_color);
+        color_area (&src1PR, &bg_color);
+      }
+      
       position = 0;
     }
   else
@@ -2043,12 +1808,16 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
 
       /*  Set the layer to transparent  */
       pixelarea_init (&src1PR, drawable_data (GIMP_DRAWABLE(merge_layer)), 
-		0, 0, (x2 - x1), (y2 - y1), TRUE);
+                      0, 0, (x2 - x1), (y2 - y1), TRUE);
 
       /*  set the region to 0's  */
-      color16_black (&bg_color);
-      color_area (&src1PR, &bg_color);
-
+      {
+        COLOR16_NEW (bg_color, drawable_tag(GIMP_DRAWABLE(merge_layer)) );
+        COLOR16_INIT (bg_color);
+        palette_get_transparent (&bg_color);
+        color_area (&src1PR, &bg_color);
+      }
+      
       /*  Find the index in the layer list of the bottom layer--we need this
        *  in order to add the final, merged layer to the layer list correctly
        */
@@ -2073,7 +1842,7 @@ gimage_merge_layers (GImage *gimage, GSList *merge_list, MergeType merge_type)
        *  if it's actually legal...
        */
       operation = valid_combinations 
-	[drawable_type (GIMP_DRAWABLE(merge_layer))]
+	[drawable_type (GIMP_DRAWABLE(merge_layer)) % 6]
 	[tag_num_channels (drawable_tag (GIMP_DRAWABLE(layer)))];
       
       if (operation == -1)
@@ -2547,65 +2316,6 @@ gimage_remove_channel (GImage *gimage, Channel *channel)
 /************************************************************/
 
 int
-gimage_is_flat (GImage *gimage)
-{
-  Layer *layer;
-  int ac_visible = TRUE;
-  int flat = TRUE;
-  int off_x, off_y;
-  gint num_channels;
-
-  /*  Are there no layers?  */
-  if (gimage_is_empty (gimage))
-    flat = FALSE;
-  /*  Is there more than one layer?  */
-  else if (gimage->layers->next)
-    flat = FALSE;
-  else
-    {
-      /*  determine if all channels are visible  */
-      int a, b;
-
-      layer = gimage->layers->data;
-      num_channels = tag_num_channels (drawable_tag (GIMP_DRAWABLE(layer)));
-      a = layer_has_alpha (layer) ? num_channels - 1 : num_channels;
-      for (b = 0; b < a; b++)
-	if (gimage->visible[b] == FALSE)
-	  ac_visible = FALSE;
-
-      /*  What makes a flat image?
-       *  1) the solitary layer is exactly gimage-sized and placed
-       *  2) no layer mask
-       *  3) opacity == OPAQUE_OPACITY
-       *  4) all channels must be visible
-       */
-      drawable_offsets (GIMP_DRAWABLE(layer), &off_x, &off_y);
-      if ((drawable_width (GIMP_DRAWABLE(layer)) != gimage->width) ||
-	  (drawable_height (GIMP_DRAWABLE(layer)) != gimage->height) ||
-	  (off_x != 0) ||
-	  (off_y != 0) ||
-	  (layer->mask != NULL) ||
-	  (layer->opacity != OPAQUE_OPACITY) ||
-	  (ac_visible == FALSE))
-	flat = FALSE;
-    }
-
-  /*  Are there any channels?  */
-  if (gimage->channels)
-    flat = FALSE;
-
-  if (gimage->flat != flat)
-    {
-      if (flat)
-	gimage_deflate (gimage);
-      else
-	gimage_inflate (gimage);
-    }
-
-  return gimage->flat;
-}
-
-int
 gimage_is_empty (GImage *gimage)
 {
   return (! gimage->layers);
@@ -2631,27 +2341,6 @@ gimage_active_drawable (GImage *gimage)
     }
   else
     return NULL;
-}
-
-int
-gimage_base_type (GImage *gimage)
-{
-  return gimage->base_type;
-}
-
-int
-gimage_base_type_with_alpha (GImage *gimage)
-{
-  switch (gimage->base_type)
-    {
-    case RGB:
-      return RGBA_GIMAGE;
-    case GRAY:
-      return GRAYA_GIMAGE;
-    case INDEXED:
-      return INDEXEDA_GIMAGE;
-    }
-  return RGB_GIMAGE;
 }
 
 char *
@@ -2741,113 +2430,28 @@ gimage_cmap (GImage *gimage)
 Canvas *
 gimage_projection (GImage *gimage)
 {
-  Layer * layer;
-
-  /*  If the gimage is flat, we simply want the data of the
-   *  first layer...Otherwise, we'll pass back the projection
-   */
-  if (gimage_is_flat (gimage))
-    {
-      if ((layer = gimage->active_layer))
-	return drawable_data (GIMP_DRAWABLE(layer));
-      else
-	return NULL;
-    }
-  else
-    {
-      if (( canvas_width (gimage->projection) != gimage->width) ||
-	  ( canvas_height (gimage->projection)!= gimage->height))
-	gimage_allocate_projection (gimage);
-
-      return gimage->projection;
-    }
-}
-
-int
-gimage_projection_type (GImage *gimage)
-{
-  Layer * layer;
-
-  /*  If the gimage is flat, we simply want the type of the
-   *  first layer...Otherwise, we'll pass back the proj_type
-   */
-  if (gimage_is_flat (gimage))
-    {
-      if ((layer =  (gimage->active_layer)))
-	return drawable_type (GIMP_DRAWABLE(layer));
-      else
-	return -1;
-    }
-  else
-    return gimage->proj_type;
-}
-
-int
-gimage_projection_bytes (GImage *gimage)
-{
-  Layer * layer;
-
-  /*  If the gimage is flat, we simply want the bytes in the
-   *  first layer...Otherwise, we'll pass back the proj_bytes
-   */
-  if (gimage_is_flat (gimage))
-    {
-      if ((layer =  (gimage->active_layer)))
-	return drawable_bytes (GIMP_DRAWABLE(layer));
-      else
-	return -1;
-    }
-  else
-    return gimage->proj_bytes;
+  if (( canvas_width (gimage->projection) != gimage->width) ||
+      ( canvas_height (gimage->projection)!= gimage->height))
+    gimage_allocate_projection (gimage);
+  
+  return gimage->projection;
 }
 
 int
 gimage_projection_opacity (GImage *gimage)
 {
-  Layer * layer;
-
-  /*  If the gimage is flat, return the opacity of the active layer
-   *  Otherwise, we'll pass back OPAQUE_OPACITY
-   */
-  if (gimage_is_flat (gimage))
-    {
-      if ((layer =  (gimage->active_layer)))
-	return layer->opacity;
-      else
-	return OPAQUE_OPACITY;
-    }
-  else
-    return OPAQUE_OPACITY;
+  return OPAQUE_OPACITY;
 }
 
 void
 gimage_projection_realloc (GImage *gimage)
 {
-  if (! gimage_is_flat (gimage))
-    gimage_allocate_projection (gimage);
+  gimage_allocate_projection (gimage);
 }
 
 /************************************************************/
 /*  Composition access functions                            */
 /************************************************************/
-
-Canvas *
-gimage_composite (GImage *gimage)
-{
-  return gimage_projection (gimage);
-}
-
-int
-gimage_composite_type (GImage *gimage)
-{
-  return gimage_projection_type (gimage);
-}
-
-int
-gimage_composite_bytes (GImage *gimage)
-{
-  return gimage_projection_bytes (gimage);
-}
 
 static Canvas *
 gimage_construct_composite_preview (GImage *gimage, int width, int height)

@@ -115,7 +115,7 @@ by_color_select_color (GImage        *gimage,
     {
       width = gimage->width;
       height = gimage->height;
-      image = gimage_composite (gimage);
+      image = gimage_projection (gimage);
     }
   else
     {
@@ -265,7 +265,7 @@ by_color_select_button_release (Tool           *tool,
 	{
 	  if (x < 0 || y < 0 || x >= gdisp->gimage->width || y >= gdisp->gimage->height)
 	    return;
-          canvas = gimage_composite (gdisp->gimage);
+          canvas = gimage_projection (gdisp->gimage);
 	}
       else
 	{
@@ -837,7 +837,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
       y = bcd->gimage->height * bevent->y / bcd->preview->requisition.height;
       if (x < 0 || y < 0 || x >= bcd->gimage->width || y >= bcd->gimage->height)
 	return;
-      image = gimage_composite (bcd->gimage);
+      image = gimage_projection (bcd->gimage);
     }
   else
     {

@@ -21,6 +21,9 @@
 #include <glib.h>
 #include "procedural_db.h"
 
+struct _PixelRow;
+
+/* the two basic colors */
 #define FOREGROUND 0
 #define BACKGROUND 1
 
@@ -29,11 +32,7 @@
 #define COLOR_UPDATE_NEW  1
 #define COLOR_UPDATE      2
 
-
-
-/* experimental gimp16 stuff */
-struct _PixelRow;
-
+/* handy macros for dealing with pixelrows */
 #define COLOR16_NEWDATA(name, type, prec, format, alpha) \
         PixelRow name; \
         Tag name##_tag = tag_new (prec, format, alpha); \
@@ -46,31 +45,26 @@ struct _PixelRow;
 
 #define COLOR16_INIT(name) \
         pixelrow_init (&name, name##_tag, (guchar *)name##_data, 1)
+
           
-void color16_black        (struct _PixelRow *);
-void color16_white        (struct _PixelRow *);
-void color16_transparent  (struct _PixelRow *);
-void color16_foreground   (struct _PixelRow *);
-void color16_background   (struct _PixelRow *);
-
-int  color16_is_black        (struct _PixelRow *);
-int  color16_is_white        (struct _PixelRow *);
-int  color16_is_transparent  (struct _PixelRow *);
-
-
-
-
 void palettes_init (int no_data);
 void palettes_free (void);
 void palette_create (void);
 void palette_free (void);
-void palette_get_foreground (unsigned char *, unsigned char *, unsigned char *);
-void palette_get_background (unsigned char *, unsigned char *, unsigned char *);
-void palette_set_foreground (int, int, int);
-void palette_set_background (int, int, int);
-void palette_set_active_color (int, int, int, int);
+
+void palette_get_foreground  (struct _PixelRow *);
+void palette_get_background  (struct _PixelRow *);
+void palette_get_transparent (struct _PixelRow *);
+void palette_get_white       (struct _PixelRow *);
+void palette_get_black       (struct _PixelRow *);
+
+void palette_set_foreground  (struct _PixelRow *);
+void palette_set_background  (struct _PixelRow *);
+
+void palette_set_active_color (struct _PixelRow *, int);
 void palette_set_default_colors (void);
 void palette_swap_colors (void);
+
 
 struct _PaletteEntries {
   char *name;
@@ -82,7 +76,7 @@ struct _PaletteEntries {
 typedef struct _PaletteEntries _PaletteEntries, *PaletteEntriesP;
 
 struct _PaletteEntry {
-  unsigned char color[3];
+  gfloat color[3];
   char *name;
   int position;
 };

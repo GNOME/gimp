@@ -880,6 +880,7 @@ render_preview (Canvas    *preview_buf,
 {
   PixelArea src, back, dest;
   Canvas * temp;
+  Canvas * temp2;
   gint affect[3];
 
   g_return_if_fail (preview_buf != NULL);
@@ -895,9 +896,10 @@ render_preview (Canvas    *preview_buf,
     }
 
 
+  /* create the preview */
   temp = canvas_new (tag_new (PRECISION_U8,
                               FORMAT_RGB,
-                              ALPHA_NO),
+                              ALPHA_YES),
                      width, height,
                      STORAGE_FLAT);
   
@@ -905,8 +907,8 @@ render_preview (Canvas    *preview_buf,
                   0, 0,
                   0, 0,
                   FALSE);
-  
-#define FIXME /* get empty or check buf */
+
+#define FIXME /* this needs to be a checkered or black buffer */
   pixelarea_init (&back, preview_buf,
                   0, 0,
                   0, 0,
@@ -922,18 +924,43 @@ render_preview (Canvas    *preview_buf,
                  combine_areas_type (pixelarea_tag (&src),
                                      pixelarea_tag (&dest)));
 
-  canvas_portion_refro (temp, 0, 0);
+
+  /* remove the alpha channel */
+  temp2 = canvas_new (tag_new (PRECISION_U8,
+                               FORMAT_RGB,
+                               ALPHA_NO),
+                      width, height,
+                      STORAGE_FLAT);
+
+  pixelarea_init (&src, temp,
+                  0, 0,
+                  0, 0,
+                  FALSE);
+  
+  pixelarea_init (&dest, temp2,
+                  0, 0,
+                  0, 0,
+                  TRUE);
+  
+  copy_area (&src, &dest);
+
+
+  /* dump it to screen */
+  canvas_portion_refro (temp2, 0, 0);
   {
     int i;
     for (i = 0; i < height; i++)
       {
-        guchar * t = canvas_portion_data (temp, 0, i);
+        guchar * t = canvas_portion_data (temp2, 0, i);
         gtk_preview_draw_row (GTK_PREVIEW (preview_widget), t, 0, i, width);
       }
   }
-  canvas_portion_unref (temp, 0, 0);
+  canvas_portion_unref (temp2, 0, 0);
 
+
+  /* clean up */
   canvas_delete (temp);
+  canvas_delete (temp2);
 }
 
 void
@@ -1308,7 +1335,7 @@ opacity_scale_update (GtkAdjustment *adjustment,
 {
   GImage *gimage;
   Layer *layer;
-  int opacity;
+  gfloat opacity;
 
   if (! (gimage = gimage_get_ID (layersD->gimage_id)))
     return;
@@ -1316,8 +1343,7 @@ opacity_scale_update (GtkAdjustment *adjustment,
   if (! (layer =  (gimage->active_layer)))
     return;
 
-  /*  add the 0.001 to insure there are no subtle rounding errors  */
-  opacity = (int) (adjustment->value * 2.55 + 0.001);
+  opacity = adjustment->value / 100.0;
   if (layer->opacity != opacity)
     {
       layer->opacity = opacity;
@@ -2264,16 +2290,20 @@ layer_widget_boundary_redraw (LayerWidget *layer_widget,
       if (layersD->green_gc == NULL)
 	{
 	  GdkColor green;
-
-	  green.pixel = get_color (0, 255, 0);
+          COLOR16_NEWDATA (green2, gfloat,
+                           PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {0.0, 1.0, 0.0};
+          COLOR16_INIT (green2);
+	  green.pixel = get_color (&green2);
 	  layersD->green_gc = gdk_gc_new (widget->window);
 	  gdk_gc_set_foreground (layersD->green_gc, &green);
 	}
       if (layersD->red_gc == NULL)
 	{
 	  GdkColor red;
-
-	  red.pixel = get_color (255, 0, 0);
+          COLOR16_NEWDATA (red2, gfloat,
+                           PRECISION_FLOAT, FORMAT_RGB, ALPHA_NO) = {1.0, 0.0, 0.0};
+          COLOR16_INIT (red2);
+	  red.pixel = get_color (&red2);
 	  layersD->red_gc = gdk_gc_new (widget->window);
 	  gdk_gc_set_foreground (layersD->red_gc, &red);
 	}

@@ -157,7 +157,7 @@ gimage_new_invoker (Argument *args)
 
   /*  create the new image  */
   if (success)
-    success = ((gimage = gimage_new_tag (width, height, tag)) != NULL);
+    success = ((gimage = gimage_new (width, height, tag)) != NULL);
 
   return_args = procedural_db_return_args (&gimage_new_proc, success);
 
@@ -885,23 +885,23 @@ gimage_get_component_active_invoker (Argument *args)
 	{
 	case 0:
 	  comp_type = Red;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 1:
 	  comp_type = Green;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 2:
 	  comp_type = Blue;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 3:
 	  comp_type = Gray;
-	  success = (gimage_base_type (gimage) == GRAY);
+	  success = (gimage_format (gimage) == FORMAT_GRAY);
 	  break;
 	case 4:
 	  comp_type = Indexed;
-	  success = (gimage_base_type (gimage) == INDEXED);
+	  success = (gimage_format (gimage) == FORMAT_INDEXED);
 	  break;
 	default: success = FALSE;
 	}
@@ -985,23 +985,23 @@ gimage_get_component_visible_invoker (Argument *args)
 	{
 	case 0:
 	  comp_type = Red;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 1:
 	  comp_type = Green;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 2:
 	  comp_type = Blue;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 3:
 	  comp_type = Gray;
-	  success = (gimage_base_type (gimage) == GRAY);
+	  success = (gimage_format (gimage) == FORMAT_GRAY);
 	  break;
 	case 4:
 	  comp_type = Indexed;
-	  success = (gimage_base_type (gimage) == INDEXED);
+	  success = (gimage_format (gimage) == FORMAT_INDEXED);
 	  break;
 	default: success = FALSE;
 	}
@@ -1266,23 +1266,23 @@ gimage_set_component_active_invoker (Argument *args)
 	{
 	case 0:
 	  comp_type = Red;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 1:
 	  comp_type = Green;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 2:
 	  comp_type = Blue;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 3:
 	  comp_type = Gray;
-	  success = (gimage_base_type (gimage) == GRAY);
+	  success = (gimage_format (gimage) == FORMAT_GRAY);
 	  break;
 	case 4:
 	  comp_type = Indexed;
-	  success = (gimage_base_type (gimage) == INDEXED);
+	  success = (gimage_format (gimage) == FORMAT_INDEXED);
 	  break;
 	default: success = FALSE;
 	}
@@ -1362,23 +1362,23 @@ gimage_set_component_visible_invoker (Argument *args)
 	{
 	case 0:
 	  comp_type = Red;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 1:
 	  comp_type = Green;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 2:
 	  comp_type = Blue;
-	  success = (gimage_base_type (gimage) == RGB);
+	  success = (gimage_format (gimage) == FORMAT_RGB);
 	  break;
 	case 3:
 	  comp_type = Gray;
-	  success = (gimage_base_type (gimage) == GRAY);
+	  success = (gimage_format (gimage) == FORMAT_GRAY);
 	  break;
 	case 4:
 	  comp_type = Indexed;
-	  success = (gimage_base_type (gimage) == INDEXED);
+	  success = (gimage_format (gimage) == FORMAT_INDEXED);
 	  break;
 	default: success = FALSE;
 	}
@@ -1831,9 +1831,9 @@ gimage_add_layer_invoker (Argument *args)
 
       /*  make sure that this layer can be added to the specified image  */
       if ((!success) ||
-          (drawable_color (GIMP_DRAWABLE(layer)) && gimage_base_type (gimage) != RGB) ||
-	  (drawable_gray (GIMP_DRAWABLE(layer)) && gimage_base_type (gimage) != GRAY) ||
-	  (drawable_indexed (GIMP_DRAWABLE(layer)) && gimage_base_type (gimage) != INDEXED))
+          (drawable_color (GIMP_DRAWABLE(layer)) && gimage_format (gimage) != FORMAT_RGB) ||
+	  (drawable_gray (GIMP_DRAWABLE(layer)) && gimage_format (gimage) != FORMAT_GRAY) ||
+	  (drawable_indexed (GIMP_DRAWABLE(layer)) && gimage_format (gimage) != FORMAT_INDEXED))
 	success = FALSE;
     }
   if (success)
@@ -3244,7 +3244,7 @@ duplicate (GImage *gimage)
   int count;
 
   /*  Create a new image  */
-  new_gimage = gimage_new (gimage->width, gimage->height, gimage->base_type);
+  new_gimage = gimage_new (gimage->width, gimage->height, gimage_tag (gimage));
   gimage_disable_undo (new_gimage);
 
   floating_layer = gimage_floating_sel (gimage);
@@ -3332,7 +3332,7 @@ duplicate (GImage *gimage)
     floating_sel_attach (floating_layer, new_floating_sel_drawable);
 
   /*  Copy the colormap if necessary  */
-  if (new_gimage->base_type == INDEXED)
+  if (gimage_format (new_gimage) == FORMAT_INDEXED)
     memcpy (new_gimage->cmap, gimage->cmap, gimage->num_cols * 3);
   new_gimage->num_cols = gimage->num_cols;
 

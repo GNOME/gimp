@@ -2648,6 +2648,7 @@ shapeburst_area  (
                   PixelArea * distPR
                   )
 {
+#define FIXME
 #if 0
   Tile *tile;
   unsigned char *tile_data;
@@ -3640,8 +3641,7 @@ combine_areas  (
       (tag_precision (src1_tag) != tag_precision (dest_tag)) ||
       (tag_format    (src1_tag) != tag_format    (dest_tag)) ||
       (mask_area &&
-       ((tag_precision (src1_tag) != tag_precision (mask_tag)) ||
-        (tag_format    (src1_tag) != tag_format    (mask_tag)))))
+       (tag_precision (src1_tag) != tag_precision (mask_tag))))
     {
       g_warning ("bad tags!");
       return;
@@ -3685,7 +3685,6 @@ combine_areas  (
 	    case COMBINE_INDEXED_INDEXED_A:
 	    case COMBINE_INDEXED_A_INDEXED_A:
 	      /*  Now, apply the paint mode--for indexed images  */
-	      /*combine = apply_indexed_layer_mode (s1, s2, &s, mode, ha1, ha2);*/
 	      combine = apply_indexed_layer_mode (&src1_row, &src2_row, &buf_row, mode);
 	      break;
 
@@ -3694,7 +3693,6 @@ combine_areas  (
 	    case COMBINE_INTEN_INTEN:
 	    case COMBINE_INTEN_A_INTEN_A:
 	      /*  Now, apply the paint mode  */
-	      /*combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h, opacity, src1->w, mode, src1->bytes, src2->bytes, &mode_affect);*/
 	      combine = apply_layer_mode (&src1_row, &src2_row, &buf_row, src1_x, src1_y+ h, opacity, mode, &mode_affect);
 	      break;
 
@@ -3707,17 +3705,14 @@ combine_areas  (
 	  switch (combine)
 	    {
 	    case COMBINE_INDEXED_INDEXED:
-	      /*combine_indexed_and_indexed_pixels (s1, s2, d, m, opacity, affect, src1->w, src1->bytes);*/
               (*combine_indexed_and_indexed_row) (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INDEXED_INDEXED_A:
-	      /*combine_indexed_and_indexed_a_pixels (s1, s2, d, m, opacity, affect, src1->w, src1->bytes);*/
               (*combine_indexed_and_indexed_a_row) (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INDEXED_A_INDEXED_A:
-	      /*combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity, affect, src1->w, src1->bytes);*/
               (*combine_indexed_a_and_indexed_a_row) (&src1_row, &src2_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
@@ -3725,7 +3720,6 @@ combine_areas  (
 	      /*  assume the data passed to this procedure is the
 	       *  indexed layer's colormap
 	       */
-	      /*combine_inten_a_and_indexed_a_pixels (s1, s2, d, m, data, opacity, src1->w, dest->bytes);*/
               (*combine_inten_a_and_indexed_a_row) (&src1_row, &src2_row, &dest_row, &mask_row, data, opacity );
 	      break;
 
@@ -3733,65 +3727,51 @@ combine_areas  (
 	      /*  assume the data passed to this procedure is the channels color
 	       * 
 	       */
-              /*combine_inten_a_and_channel_mask_pixels (s1, s2, d, data, opacity, src1->w, dest->bytes);*/
-/* FIXME -- the data argument should be a Paint to pass to this routine */                
               (*combine_inten_a_and_channel_mask_row) (&src1_row, &src2_row, &dest_row, NULL, opacity );
 	      break;
 
 	    case COMBINE_INTEN_A_CHANNEL_SELECTION:
-	      /*combine_inten_a_and_channel_selection_pixels (s1, s2, d, data, opacity, src1->w, src1->bytes);*/
-/* FIXME -- the data argument should be a Paint to pass to this routine */                
               (*combine_inten_a_and_channel_selection_row) (&src1_row, &src2_row, &dest_row, NULL, opacity );
 	      break;
 
 
 	    case COMBINE_INTEN_INTEN:
-	      /*combine_inten_and_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
               (*combine_inten_and_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INTEN_INTEN_A:
-	      /*combine_inten_and_inten_a_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
               (*combine_inten_and_inten_a_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case COMBINE_INTEN_A_INTEN:
-              /*combine_inten_a_and_inten_pixels (s1, s, d, m, opacity, affect, mode_affect, src1->w, src1->bytes);*/
               (*combine_inten_a_and_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect, mode_affect);
 	      break;
 
 	    case COMBINE_INTEN_A_INTEN_A:
-	      /*combine_inten_a_and_inten_a_pixels (s1, s, d, m, opacity, affect, mode_affect, src1->w, src1->bytes);*/
               (*combine_inten_a_and_inten_a_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect, mode_affect);
 	      break;
 
 	    case BEHIND_INTEN:
-	      /*behind_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
               (*behind_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case BEHIND_INDEXED:
-	      /*behind_indexed_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
               (*behind_indexed_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case REPLACE_INTEN:
-              /*replace_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
               (*replace_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case REPLACE_INDEXED:
-              /*replace_indexed_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes, src2->bytes, ha1, ha2);*/
               (*replace_indexed_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case ERASE_INTEN:
-	      /*erase_inten_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
               (*erase_inten_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
 	    case ERASE_INDEXED:
-              /*erase_indexed_pixels (s1, s, d, m, opacity, affect, src1->w, src1->bytes);*/
               (*erase_indexed_row) (&src1_row, &buf_row, &dest_row, &mask_row, opacity, affect);
 	      break;
 
@@ -4651,95 +4631,4 @@ hls_to_rgb (int *h,
       *s = hls_value (m1, m2, hue - 85);
     }
 }
-
-void
-map_to_color (int            src_type,
-	      unsigned char *cmap,
-	      unsigned char *src,
-	      unsigned char *rgb)
-{
-  switch (src_type)
-    {
-    case 0:  /*  RGB      */
-      /*  Straight copy  */
-      *rgb++ = *src++;
-      *rgb++ = *src++;
-      *rgb   = *src;
-      break;
-    case 1:  /*  GRAY     */
-      *rgb++ = *src;
-      *rgb++ = *src;
-      *rgb   = *src;
-      break;
-    case 2:  /*  INDEXED  */
-      {
-	int index = *src * 3;
-	*rgb++ = cmap [index++];
-	*rgb++ = cmap [index++];
-	*rgb   = cmap [index++];
-      }
-      break;
-    }
-}
-
-
-int
-map_rgb_to_indexed (unsigned char *cmap,
-		    int            num_cols,
-		    int            ID,
-		    int            r,
-		    int            g,
-		    int            b)
-{
-  unsigned int pixel;
-  int hash_index;
-  int cmap_index;
-
-  pixel = (r << 16) | (g << 8) | b;
-  hash_index = pixel % HASH_TABLE_SIZE;
-
-  /*  Hash table lookup hit  */
-  if (color_hash_table[hash_index].colormap_ID == ID &&
-      color_hash_table[hash_index].pixel == pixel)
-    {
-      cmap_index = color_hash_table[hash_index].index;
-      color_hash_hits++;
-    }
-  /*  Hash table lookup miss  */
-  else
-    {
-      unsigned char *col;
-      int diff, sum, max;
-      int i;
-
-      max = MAXDIFF;
-      cmap_index = 0;
-
-      col = cmap;
-      for (i = 0; i < num_cols; i++)
-	{
-	  diff = r - *col++;
-	  sum = diff * diff;
-	  diff = g - *col++;
-	  sum += diff * diff;
-	  diff = b - *col++;
-	  sum += diff * diff;
-
-	  if (sum < max)
-	    {
-	      cmap_index = i;
-	      max = sum;
-	    }
-	}
-
-      /*  update the hash table  */
-      color_hash_table[hash_index].pixel = pixel;
-      color_hash_table[hash_index].index = cmap_index;
-      color_hash_table[hash_index].colormap_ID = ID;
-      color_hash_misses++;
-    }
-
-  return cmap_index;
-}
-
 
