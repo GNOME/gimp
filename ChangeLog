@@ -1,3 +1,7 @@
+Sat Oct 24 22:05:16 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: sinclude by hand to work around automake 1.3 bug
+
 Sat Oct 24 14:53:19 EDT 1998  Adrian Likins <adrian@gimp.org>
 
 	* app/plug_in.c: fix from Tor Lillqvist <tml@iki.fi>
