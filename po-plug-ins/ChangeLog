@@ -1,7 +1,8 @@
 2000-08-22  Kjartan Maraas  <kmaraas@gnome.org>
 
 	* no.po: Updated Norwegian translation.
-	
+	* POTFILES.in: Fixed path to some moved files.
+		
 2000-08-22  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: Alienmap plug-ins moved in the source tree.

@@ -107,12 +107,14 @@ plug-ins/common/sel_gauss.c
 plug-ins/common/semiflatten.c
 plug-ins/common/sharpen.c
 plug-ins/common/shift.c
+plug-ins/common/sinus.c
 plug-ins/common/smooth_palette.c
 plug-ins/common/snoise.c
 plug-ins/common/sobel.c
 plug-ins/common/sparkle.c
 plug-ins/common/spheredesigner.c
 plug-ins/common/spread.c
+plug-ins/common/struc.c
 plug-ins/common/sunras.c
 plug-ins/common/tga.c
 plug-ins/common/threshold_alpha.c
@@ -245,8 +247,6 @@ plug-ins/rcm/rcm_callback.c
 plug-ins/rcm/rcm_dialog.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c
-plug-ins/sinus/sinus.c
-plug-ins/struc/struc.c
 plug-ins/twain/twain.c
 plug-ins/webbrowser/webbrowser.c
 plug-ins/winsnap/winsnap.c
