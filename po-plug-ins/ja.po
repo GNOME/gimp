@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.24\n"
-"POT-Creation-Date: 2000-06-10 11:05+0900\n"
-"PO-Revision-Date: 2000-06-10 11:21+09:00\n"
+"POT-Creation-Date: 2000-06-17 19:06+0900\n"
+"PO-Revision-Date: 2000-06-17 19:11+09:00\n"
 "Last-Translator: 白崎 泰弘 <yasuhiro@gnome.gr.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
 "MIME-Version: 1.0\n"
@@ -1300,11 +1300,11 @@ msgstr "マップするオブジェクトの形状"
 
 #: plug-ins/MapObject/mapobject_ui.c:575
 msgid "Make image transparent outside object"
-msgstr ""
+msgstr "オブジェクト部分以外は透明にする"
 
 #: plug-ins/MapObject/mapobject_ui.c:577
 msgid "Tile Source Image"
-msgstr ""
+msgstr "元画像を並べる"
 
 #: plug-ins/MapObject/mapobject_ui.c:587
 msgid "Tile source image: useful for infinite planes"
@@ -1372,7 +1372,7 @@ msgstr "右:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1137
 msgid "Map Images to Box Faces"
-msgstr ""
+msgstr "画像を直方体の表面にマップ"
 
 #: plug-ins/MapObject/mapobject_ui.c:1178
 #: plug-ins/common/spheredesigner.c:2442
@@ -1381,15 +1381,15 @@ msgstr "拡大縮小 X:"
 
 #: plug-ins/MapObject/mapobject_ui.c:1181
 msgid "X scale (size)"
-msgstr ""
+msgstr "X 拡大縮小 (サイズ)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1192
 msgid "Y scale (size)"
-msgstr ""
+msgstr "Y 拡大縮小 (サイズ)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1203
 msgid "Z scale (size)"
-msgstr ""
+msgstr "Z 拡大縮小 (サイズ)"
 
 #: plug-ins/MapObject/mapobject_ui.c:1231
 msgid "Images for the Cap Faces"
@@ -12098,12 +12098,12 @@ msgstr ""
 "並べる迷路がうまくできないかもしれません."
 
 #. open URL for help
-#: plug-ins/maze/maze_face.c:588
+#: plug-ins/maze/maze_face.c:596
 #, c-format
 msgid "Opening %s"
 msgstr "%s を開いています..."
 
-#: plug-ins/maze/maze_face.c:599
+#: plug-ins/maze/maze_face.c:607
 #, c-format
 msgid "See %s"
 msgstr "%s を見て下さい"
