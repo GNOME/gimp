@@ -168,17 +168,17 @@ GType gimp_gradient_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"                 >*/
-  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-Linear"              >*/
-  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"                 >*/
-  GIMP_GRADIENT_SQUARE,                /*< desc="Square"                 >*/
-  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (symmetric)"    >*/
-  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asymmetric)"   >*/
-  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shapeburst (angular)"   >*/
-  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shapeburst (spherical)" >*/
-  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shapeburst (dimpled)"   >*/
-  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (clockwise)"     >*/
-  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (anticlockwise)" >*/
+  GIMP_GRADIENT_LINEAR,                /*< desc="Linear"            >*/
+  GIMP_GRADIENT_BILINEAR,              /*< desc="Bi-Linear"         >*/
+  GIMP_GRADIENT_RADIAL,                /*< desc="Radial"            >*/
+  GIMP_GRADIENT_SQUARE,                /*< desc="Square"            >*/
+  GIMP_GRADIENT_CONICAL_SYMMETRIC,     /*< desc="Conical (sym)"     >*/
+  GIMP_GRADIENT_CONICAL_ASYMMETRIC,    /*< desc="Conical (asym)"    >*/
+  GIMP_GRADIENT_SHAPEBURST_ANGULAR,    /*< desc="Shaped (angular)"  >*/
+  GIMP_GRADIENT_SHAPEBURST_SPHERICAL,  /*< desc="Shaped (spherical)">*/
+  GIMP_GRADIENT_SHAPEBURST_DIMPLED,    /*< desc="Shaped (dimpled)"  >*/
+  GIMP_GRADIENT_SPIRAL_CLOCKWISE,      /*< desc="Spiral (cw)"       >*/
+  GIMP_GRADIENT_SPIRAL_ANTICLOCKWISE   /*< desc="Spiral (ccw)"      >*/
 } GimpGradientType;
 
 

@@ -1,5 +1,7 @@
-2004-05-26    <maurits@b82017.upc-b.chello.nl>
+2004-05-26  Sven Neumann  <sven@gimp.org>
 
+	* app/core/core-enums.[ch]: shorter names for the gradient types
+	to reduce the width of the blend tool options.
 
 2004-05-26  Maurits Rijk  <m.rijk@chello.nl>
 
