@@ -33,6 +33,9 @@
  * Revision History:
  *
  *   $Log$
+ *   Revision 1.16  1999/12/19 20:28:15  asbjoer
+ *   use g_strcasecmp()
+ *
  *   Revision 1.15  1999/12/16 19:44:01  olofk
  *   Thu Dec 16 20:15:25 CET 1999  Olof S Kylande <olof@gimp.org>
  *
@@ -474,7 +477,7 @@ ps_parameters(int  model,	/* I - Printer model */
     if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0)
+    if (g_strcasecmp(lname, name) == 0)
     {
       valptrs[(*count)] = malloc(strlen(media_sizes[*count]) + 1);
       strcpy(valptrs[(*count)], media_sizes[*count]);
@@ -1153,7 +1156,7 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     if (line[0] != '*')
       continue;
 
-    if (strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
+    if (g_strncasecmp(line, "*OrderDependency:", 17) == 0 && order != NULL)
     {
       sscanf(line, "%*s%d", order);
       continue;
@@ -1161,8 +1164,8 @@ ppd_find(char *ppd_file,	/* I - Name of PPD file */
     else if (sscanf(line, "*%s %[^/:]", lname, loption) != 2)
       continue;
 
-    if (strcasecmp(lname, name) == 0 &&
-        strcasecmp(loption, option) == 0)
+    if (g_strcasecmp(lname, name) == 0 &&
+        g_strcasecmp(loption, option) == 0)
     {
       opt = strchr(line, ':') + 1;
       while (*opt == ' ' || *opt == '\t')

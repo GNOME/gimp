@@ -1,3 +1,10 @@
+1999-12-19  Asbjorn Pettersen  <asbjornP@dualog.no>
+
+	* plug-ins/print/print-ps.c: use g_strcasecmp().
+
+	* plug-ins/print/print.h add <sys/types.h> ,<sys/stat.h> for
+	off_t type. OS/2 version.
+
 1999-12-19  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: create help/C/toolbox/help/Makefile.
