@@ -72,8 +72,8 @@ foreach (sort keys %enums) {
     if (! ($enums{$_}->{header} =~ /libgimp/)) {
         my $gtype = $func = $_;
 
-	for ($gtype) { s/Gimp//; s/([A-Z][^A-Z]+)/\U\1\E_/g; s/_$// }
-	for ($func) { s/Gimp//; s/([A-Z][^A-Z]+)/\L\1\E_/g; s/_$// }
+	for ($gtype) { s/Gimp//; s/([A-Z][^A-Z]+)/\U$1\E_/g; s/_$// }
+	for ($func) { s/Gimp//; s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
 
 	print ENUMFILE "\n#define GIMP_TYPE_$gtype (gimp_$func\_get_type ())\n\n";
 	print ENUMFILE "GType gimp_$func\_get_type (void) G_GNUC_CONST;\n\n";
@@ -126,7 +126,7 @@ foreach (sort keys %enums) {
 	my $enum = $enums{$_};
 	my $func = $_;
 
-	for ($func) { s/Gimp//; s/PDB/Pdb/; s/([A-Z][^A-Z]+)/\L\1\E_/g; s/_$// }
+	for ($func) { s/Gimp//; s/PDB/Pdb/; s/([A-Z][^A-Z]+)/\L$1\E_/g; s/_$// }
 
 	print ENUMFILE "  gimp_$func\_get_type,\n";
     }

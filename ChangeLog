@@ -1,3 +1,8 @@
+2004-10-25  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/enumcode.pl: Use $1 instead of deprecated \1 for
+	regexp group.
+
 2004-10-26  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/siod-wrapper.c (marshall_proc_db_call):
