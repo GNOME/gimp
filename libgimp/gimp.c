@@ -819,6 +819,12 @@ gimp_extension_process (guint timeout)
       gimp_quit ();
     }
 #else
+  /* Zero means infinite wait for us, but g_poll and
+   * g_io_channel_win32_wait_for_condition use -1 to indicate
+   * infinite wait.
+   */
+  if (timeout == 0)
+    timeout = -1;
   if (g_io_channel_win32_wait_for_condition (_readchannel, G_IO_IN, timeout) == 1)
     gimp_single_message ();
 #endif

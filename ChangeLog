@@ -1,3 +1,9 @@
+2000-08-01  Tor Lillqvist  <tml@iki.fi>
+
+	* libgimp/gimp.c (gimp_extension_process): Pass correct timeout
+	value to g_io_channel_win32_wait_for_condition (actually g_poll)
+	to indicate infinite wait.
+
 2000-08-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimputils.[ch]: added g_strcompress from glib-1.3
