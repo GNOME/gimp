@@ -4,7 +4,7 @@
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * http://triq.net/~pearl/thumbnail-spec/
  *
- * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2004  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
@@ -54,9 +54,13 @@ struct _GimpThumbnail
   gint            image_num_layers;
 
   GimpThumbState  thumb_state;
+  GimpThumbSize   thumb_size;
   gchar          *thumb_filename;
   gint64          thumb_filesize;
   gint64          thumb_mtime;
+
+  gpointer        _reserved_1;
+  gpointer        _reserved_2;
 };
 
 struct _GimpThumbnailClass

@@ -213,6 +213,7 @@ gimp_thumbnail_init (GimpThumbnail *thumbnail)
   thumbnail->image_num_layers = 0;
 
   thumbnail->thumb_state      = GIMP_THUMB_STATE_UNKNOWN;
+  thumbnail->thumb_size       = -1;
   thumbnail->thumb_filename   = NULL;
   thumbnail->thumb_mtime      = 0;
   thumbnail->thumb_filesize   = 0;
@@ -545,46 +546,49 @@ static void
 gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail,
                              GimpThumbSize  size)
 {
+  gchar          *filename;
   GimpThumbState  state;
   gint64          filesize = 0;
   gint64          mtime    = 0;
 
+  if (! thumbnail->image_uri)
+    return;
+
   state = thumbnail->thumb_state;
+
+  filename = gimp_thumb_find_thumb (thumbnail->image_uri, &size);
+
+  if (! filename)
+    state = GIMP_THUMB_STATE_NOT_FOUND;
 
   switch (state)
     {
-    case GIMP_THUMB_STATE_UNKNOWN:
-      if (! thumbnail->image_uri)
-        return;
-      /*  fallthrough  */
-
-    case GIMP_THUMB_STATE_NOT_FOUND:
-      g_return_if_fail (thumbnail->thumb_filename == NULL);
-
-      thumbnail->thumb_filename =
-        gimp_thumb_find_thumb (thumbnail->image_uri, &size);
-      break;
-
-    default:
+    case GIMP_THUMB_STATE_EXISTS:
+    case GIMP_THUMB_STATE_OLD:
+    case GIMP_THUMB_STATE_OK:
       g_return_if_fail (thumbnail->thumb_filename != NULL);
+
+      if (thumbnail->thumb_size     == size     &&
+          thumbnail->thumb_filesize == filesize &&
+          thumbnail->thumb_mtime    == mtime)
+        {
+          g_free (filename);
+          return;
+        }
+      break;
+    default:
       break;
     }
 
-  if (thumbnail->thumb_filename &&
-      gimp_thumb_file_test (thumbnail->thumb_filename, &filesize, &mtime))
-    {
-      state = GIMP_THUMB_STATE_EXISTS;
+  if (thumbnail->thumb_filename)
+    g_free (thumbnail->thumb_filename);
 
-      if (thumbnail->thumb_state    == GIMP_THUMB_STATE_OK &&
-          thumbnail->thumb_filesize == filesize            &&
-          thumbnail->thumb_mtime    == mtime)
-        return;
-    }
-  else
-    {
-      state = GIMP_THUMB_STATE_NOT_FOUND;
-    }
+  thumbnail->thumb_filename = filename;
 
+  if (filename)
+    state = GIMP_THUMB_STATE_EXISTS;
+
+  thumbnail->thumb_size     = size;
   thumbnail->thumb_filesize = filesize;
   thumbnail->thumb_mtime    = mtime;
 
@@ -601,6 +605,7 @@ gimp_thumbnail_invalidate_thumb (GimpThumbnail *thumbnail)
       thumbnail->thumb_filename = NULL;
     }
 
+  thumbnail->thumb_size     = -1;
   thumbnail->thumb_filesize = 0;
   thumbnail->thumb_mtime    = 0;
 
@@ -685,7 +690,6 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   gint64          image_size;
 
   g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), NULL);
-  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (! thumbnail->image_uri)
     return NULL;
@@ -695,7 +699,7 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   if (state != GIMP_THUMB_STATE_EXISTS)
     return NULL;
 
-  pixbuf = gdk_pixbuf_new_from_file (thumbnail->thumb_filename, error);
+  pixbuf = gdk_pixbuf_new_from_file (thumbnail->thumb_filename, NULL);
   if (! pixbuf)
     return NULL;
 
@@ -718,13 +722,13 @@ gimp_thumbnail_load_thumb (GimpThumbnail  *thumbnail,
   if (image_mtime == thumbnail->image_mtime &&
       (option == NULL || image_size == thumbnail->image_filesize))
     {
-      if (size == GIMP_THUMB_SIZE_FAIL)
+      if (thumbnail->thumb_size == GIMP_THUMB_SIZE_FAIL)
         state = GIMP_THUMB_STATE_FAILED;
       else
         state = GIMP_THUMB_STATE_OK;
     }
 
-  if (size == GIMP_THUMB_SIZE_FAIL)
+  if (state == GIMP_THUMB_STATE_FAILED)
     gimp_thumbnail_reset_info (thumbnail);
   else
     gimp_thumbnail_set_info_from_pixbuf (thumbnail, pixbuf);
