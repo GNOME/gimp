@@ -1,3 +1,9 @@
+2004-04-02  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/whirlpinch.c: set a proper pixelfetcher 
+	edge mode for bigger radii. Avoids getting garbage at the
+	image borders.
+
 2004-04-02  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/jpeg.c: Added .jpe to the list of extensions 

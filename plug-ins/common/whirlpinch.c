@@ -371,6 +371,9 @@ whirl_pinch (void)
   gimp_pixel_fetcher_set_bg_color (pft, &background);
   gimp_pixel_fetcher_set_bg_color (pfb, &background);
 
+  gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_SMEAR);
+  gimp_pixel_fetcher_set_edge_mode (pfb, GIMP_PIXEL_FETCHER_EDGE_SMEAR);
+
   progress     = 0;
   max_progress = sel_width * sel_height;
 
