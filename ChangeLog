@@ -1,5 +1,12 @@
 2003-04-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-guides.c (gimp_image_add_x,y): new functions
+	snapping to one axis only.
+	(gimp_image_snap_rectangle): use them to enable snapping the
+	rectangle to all its corners, not just the NW and SE one.
+
+2003-04-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptoolcontrol.[ch]: added an API to specify a
 	"snap_offset" and a "snap_width/height". Needed for tools which
 	want to snap to a rectangle and/or a position which is not the

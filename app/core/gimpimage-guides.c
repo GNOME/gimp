@@ -218,6 +218,90 @@ gimp_image_find_guide (GimpImage *gimage,
 }
 
 gboolean
+gimp_image_snap_x (GimpImage *gimage,
+                   gdouble    x,
+                   gint      *tx)
+{
+  GList     *list;
+  GimpGuide *guide;
+  gint       mindist = G_MAXINT;
+  gint       dist;
+  gboolean   snapped = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (tx != NULL, FALSE);
+
+  *tx = x;
+
+  if (x < 0 || x >= gimage->width)
+    return FALSE;
+
+  for (list = gimage->guides; list; list = g_list_next (list))
+    {
+      guide = (GimpGuide *) list->data;
+
+      if (guide->position < 0)
+        continue;
+
+      if (guide->orientation == GIMP_ORIENTATION_VERTICAL)
+        {
+          dist = ABS (guide->position - x);
+
+          if (dist < MIN (GUIDE_EPSILON, mindist))
+            {
+              mindist = dist;
+              *tx = guide->position;
+              snapped = TRUE;
+            }
+        }
+    }
+
+  return snapped;
+}
+
+gboolean
+gimp_image_snap_y (GimpImage *gimage,
+                   gdouble    y,
+                   gint      *ty)
+{
+  GList     *list;
+  GimpGuide *guide;
+  gint       mindist = G_MAXINT;
+  gint       dist;
+  gboolean   snapped = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
+  g_return_val_if_fail (ty != NULL, FALSE);
+
+  *ty = y;
+
+  if (y < 0 || y >= gimage->height)
+    return FALSE;
+
+  for (list = gimage->guides; list; list = g_list_next (list))
+    {
+      guide = (GimpGuide *) list->data;
+
+      if (guide->position < 0)
+        continue;
+
+      if (guide->orientation == GIMP_ORIENTATION_HORIZONTAL)
+        {
+          dist = ABS (guide->position - y);
+
+          if (dist < MIN (GUIDE_EPSILON, mindist))
+            {
+              mindist = dist;
+              *ty = guide->position;
+              snapped = TRUE;
+            }
+        }
+    }
+
+  return snapped;
+}
+
+gboolean
 gimp_image_snap_point (GimpImage *gimage,
                        gdouble    x,
                        gdouble    y,
@@ -296,7 +380,7 @@ gimp_image_snap_rectangle (GimpImage *gimage,
 {
   gint     nx1, ny1;
   gint     nx2, ny2;
-  gboolean snap1, snap2;
+  gboolean snap1, snap2, snap3, snap4;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), FALSE);
   g_return_val_if_fail (tx1 != NULL, FALSE);
@@ -305,10 +389,12 @@ gimp_image_snap_rectangle (GimpImage *gimage,
   *tx1 = x1;
   *ty1 = y1;
 
-  snap1 = gimp_image_snap_point (gimage, x1, y1, &nx1, &ny1);
-  snap2 = gimp_image_snap_point (gimage, x2, y2, &nx2, &ny2);
+  snap1 = gimp_image_snap_x (gimage, x1, &nx1);
+  snap2 = gimp_image_snap_x (gimage, x2, &nx2);
+  snap3 = gimp_image_snap_y (gimage, y1, &ny1);
+  snap4 = gimp_image_snap_y (gimage, y2, &ny2);
 
-  if (snap1 || snap2)
+  if (snap1 || snap2 || snap3 || snap4)
     {
       if (x1 != nx1)
 	*tx1 = nx1;
@@ -319,7 +405,9 @@ gimp_image_snap_rectangle (GimpImage *gimage,
 	*ty1 = ny1;
       else if (y2 != ny2)
 	*ty1 = y1 + (ny2 - y2);
+
+      return TRUE;
     }
 
-  return snap1 || snap2;
+  return FALSE;
 }
