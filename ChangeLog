@@ -1,3 +1,7 @@
+2004-10-05  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/lib.pl: Slight cleanup of doc generating code.
+
 2004-10-06  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/lib.pl: for deprecated procedures, create a gtk-doc
