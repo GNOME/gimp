@@ -34,6 +34,8 @@
 
 #include "tile.h"			/* ick. */
 
+#include "libgimp/gimpmath.h"
+
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
 
@@ -264,13 +266,11 @@ render_image_indexed (RenderInfo *info)
   guchar *src;
   guchar *dest;
   guchar *cmap;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gulong  val;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
 
   cmap = gimage_cmap (info->gdisp->gimage);
 
@@ -278,18 +278,15 @@ render_image_indexed (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error = y * step;
-  error -= ((int)error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0))
+      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+
+      if (!initial && (error == 0))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -314,15 +311,12 @@ render_image_indexed (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -331,18 +325,16 @@ render_image_indexed_a (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  guint *alpha;
+  guint  *alpha;
   guchar *cmap;
-  gulong r, g, b;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gulong  r, g, b;
+  gulong  val;
+  guint   a;
+  gint    dark_light;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
 
   cmap = gimage_cmap (info->gdisp->gimage);
   alpha = info->alpha;
@@ -351,18 +343,15 @@ render_image_indexed_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error = y * step;
-  error -= ((int)error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0) && (y & check_mod))
+      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+
+      if (!initial && (error == 0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -406,15 +395,12 @@ render_image_indexed_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -423,22 +409,15 @@ render_image_gray (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gulong  val;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
 
   y = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
-
-  step = 1.0 / info->scaley;
-
-  error = y * step;
-  error -= ((int)error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -446,7 +425,9 @@ render_image_gray (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0))
+      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+
+      if (!initial && (error == 0))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -471,15 +452,12 @@ render_image_gray (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -488,16 +466,14 @@ render_image_gray_a (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  guint *alpha;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  guint  *alpha;
+  gulong  val;
+  guint   a;
+  gint    dark_light;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
 
   alpha = info->alpha;
 
@@ -505,18 +481,15 @@ render_image_gray_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error = y * step;
-  error -= ((int)error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0) && (y & check_mod))
+      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+
+      if (!initial && (error == 0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -550,15 +523,12 @@ render_image_gray_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -567,21 +537,14 @@ render_image_rgb (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
 
   y = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
-
-  step = 1.0 / info->scaley;
-
-  error = y * step;
-  error -= (int)error - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -589,7 +552,9 @@ render_image_rgb (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0))
+      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+
+      if (!initial && (error == 0))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -614,15 +579,12 @@ render_image_rgb (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -633,16 +595,14 @@ render_image_rgb_a (RenderInfo *info)
 {
   guchar *src;
   guchar *dest;
-  guint *alpha;
-  gulong r, g, b;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-  float error;
-  float step;
+  guint  *alpha;
+  gulong  r, g, b;
+  guint   a;
+  gint    dark_light;
+  gint    byte_order;
+  gint    y, ye;
+  gint    x, xe;
+  gint    initial;
 
   alpha = info->alpha;
 
@@ -650,18 +610,14 @@ render_image_rgb_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  step = 1.0 / info->scaley;
-
-  error = y * step;
-  error -= ((int)error) - step;
-
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (error < 1.0) && (y & check_mod))
+      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+      if (!initial && (error == 0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -704,15 +660,12 @@ render_image_rgb_a (RenderInfo *info)
 
       initial = FALSE;
 
-      if (error >= 1.0)
+      if (error >= 1)
 	{
-	  info->src_y += (int)error;
-	  error -= (int)error;
+	  info->src_y += error;
 	  info->src = render_image_tile_fault (info);
 	  initial = TRUE;
 	}
-
-      error += step;
     }
 }
 
@@ -782,23 +735,16 @@ render_image_accelerate_scaling (int   width,
 				 float scalex)
 {
   static guchar *scale = NULL;
-  float error;
-  float step;
-  int i;
+  gint i;
 
   if (!scale)
     scale = g_new (guchar, GXIMAGE_WIDTH + 1);
 
-  step = 1.0 / scalex;
-
-  error = start * step;
-  error -= ((int)error) - step;
-
   for (i = 0; i <= width; i++)
-  {
-    scale[i] = ((int)error);
-    error += step - (int)error;
-  }    
+    {
+      scale[i] = floor ((start + 1) / scalex) - floor (start / scalex);
+      start++;
+    }
 
   return scale;
 }

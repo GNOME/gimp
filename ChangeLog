@@ -1,3 +1,7 @@
+2003-04-29  Pedro Gimeno  <pggimeno@wanadoo.es>
+
+	* app/image_render.c: merged fix for bug #109933 from HEAD branch.
+
 2003-04-17  Sven Neumann  <sven@gimp.org>
 
 	* app/gimpimage.c (gimp_image_remove_layer_mask): applied a patch
