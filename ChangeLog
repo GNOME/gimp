@@ -1,5 +1,28 @@
 2004-10-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimppaletteeditor.[ch]: added public APIs for
+	zooming the editors. Use gimp_editor_add_action_button() to create
+	all buttons. Removed all button callbacks and all duplicated
+	button sensitivity logic.
+
+	* app/widgets/gimpdataeditor.c (gimp_data_editor_set_data): update
+	the editor's UI manager if it exists.
+
+	* app/actions/gradient-editor-actions.c
+	* app/actions/gradient-editor-commands.[ch]: added zoom actions
+	and callback and call gimp_gradient_editor_zoom(). Fixed
+	gradient_editor_actions_update() to actually set all items'
+	sensitivity (it was possible to modify read-only gradients and
+	even to crash GIMP).
+
+	* app/actions/palette-editor-actions.c
+	* app/actions/palette-editor-commands.[ch]: changed "new" and
+	"zoom" actions to actually do their job instead of calling
+	gtk_button_clicked(editor->foo_button).
+
+2004-10-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.c: removed the "Edit Color"
 	dialog callbacks and use gimp_editor_add_action_button() for
 	the edit button. Removed button sensitivity logic. Hide the

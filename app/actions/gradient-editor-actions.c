@@ -268,7 +268,7 @@ static GimpRadioActionEntry gradient_editor_blending_actions[] =
 
   { "gradient-editor-blending-varies", NULL,
     N_("(Varies)"), NULL, NULL,
-    0,
+    -1,
     GIMP_HELP_GRADIENT_EDITOR_BLENDING }
 };
 
@@ -291,8 +291,29 @@ static GimpRadioActionEntry gradient_editor_coloring_actions[] =
 
   { "gradient-editor-coloring-varies", NULL,
     N_("(Varies)"), NULL, NULL,
-    0,
+    -1,
     GIMP_HELP_GRADIENT_EDITOR_COLORING }
+};
+
+static GimpEnumActionEntry gradient_editor_zoom_actions[] =
+{
+  { "gradient-editor-zoom-in", GTK_STOCK_ZOOM_IN,
+    N_("Zoom In"), NULL,
+    N_("Zoom in"),
+    GIMP_ZOOM_IN,
+    GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN },
+
+  { "gradient-editor-zoom-out", GTK_STOCK_ZOOM_OUT,
+    N_("Zoom Out"), NULL,
+    N_("Zoom out"),
+    GIMP_ZOOM_OUT,
+    GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT },
+
+  { "gradient-editor-zoom-all", GTK_STOCK_ZOOM_FIT,
+    N_("Zoom All"), NULL,
+    N_("Zoom all"),
+    GIMP_ZOOM_TO, /* abused */
+    GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL }
 };
 
 
@@ -335,65 +356,78 @@ gradient_editor_actions_setup (GimpActionGroup *group)
                                        G_N_ELEMENTS (gradient_editor_coloring_actions),
                                        0,
                                        G_CALLBACK (gradient_editor_coloring_type_cmd_callback));
+
+  gimp_action_group_add_enum_actions (group,
+                                      gradient_editor_zoom_actions,
+                                      G_N_ELEMENTS (gradient_editor_zoom_actions),
+                                      G_CALLBACK (gradient_editor_zoom_cmd_callback));
 }
 
 void
 gradient_editor_actions_update (GimpActionGroup *group,
                                 gpointer         data)
 {
-  GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradientEditor  *editor         = GIMP_GRADIENT_EDITOR (data);
+  GimpDataEditor      *data_editor    = GIMP_DATA_EDITOR (data);
+  GimpGradient        *gradient;
   GimpContext         *context;
-  GimpGradientSegment *left_seg;
-  GimpGradientSegment *right_seg;
+  gboolean             editable       = FALSE;
+  GimpGradientSegment *left_seg       = NULL;
+  GimpGradientSegment *right_seg      = NULL;
   GimpRGB              fg;
   GimpRGB              bg;
   gboolean             blending_equal = TRUE;
   gboolean             coloring_equal = TRUE;
-  gboolean             selection;
-  gboolean             delete;
+  gboolean             selection      = FALSE;
+  gboolean             delete         = FALSE;
 
-  context =
-    gimp_get_user_context (GIMP_DATA_EDITOR (editor)->data_factory->gimp);
+  gradient = GIMP_GRADIENT (data_editor->data);
 
-  if (editor->control_sel_l->prev)
-    left_seg = editor->control_sel_l->prev;
-  else
-    left_seg = gimp_gradient_segment_get_last (editor->control_sel_l);
+  context = gimp_get_user_context (data_editor->data_factory->gimp);
 
-  if (editor->control_sel_r->next)
-    right_seg = editor->control_sel_r->next;
-  else
-    right_seg = gimp_gradient_segment_get_first (editor->control_sel_r);
+  if (gradient)
+    {
+      GimpGradientSegmentType  type;
+      GimpGradientSegmentColor color;
+      GimpGradientSegment     *seg, *aseg;
+
+      if (data_editor->data_editable)
+        editable = TRUE;
+
+      if (editor->control_sel_l->prev)
+        left_seg = editor->control_sel_l->prev;
+      else
+        left_seg = gimp_gradient_segment_get_last (editor->control_sel_l);
+
+      if (editor->control_sel_r->next)
+        right_seg = editor->control_sel_r->next;
+      else
+        right_seg = gimp_gradient_segment_get_first (editor->control_sel_r);
+
+      type  = editor->control_sel_l->type;
+      color = editor->control_sel_l->color;
+
+      seg = editor->control_sel_l;
+
+      do
+        {
+          blending_equal = blending_equal && (seg->type == type);
+          coloring_equal = coloring_equal && (seg->color == color);
+
+          aseg = seg;
+          seg  = seg->next;
+        }
+      while (aseg != editor->control_sel_r);
+
+      selection = (editor->control_sel_l != editor->control_sel_r);
+      delete    = (editor->control_sel_l->prev || editor->control_sel_r->next);
+    }
 
   if (context)
     {
       gimp_context_get_foreground (context, &fg);
       gimp_context_get_background (context, &bg);
     }
-
-  {
-    GimpGradientSegmentType  type;
-    GimpGradientSegmentColor color;
-    GimpGradientSegment     *seg, *aseg;
-
-    type  = editor->control_sel_l->type;
-    color = editor->control_sel_l->color;
-
-    seg = editor->control_sel_l;
-
-    do
-      {
-        blending_equal = blending_equal && (seg->type == type);
-        coloring_equal = coloring_equal && (seg->color == color);
-
-        aseg = seg;
-        seg  = seg->next;
-      }
-    while (aseg != editor->control_sel_r);
-  }
-
-  selection = (editor->control_sel_l != editor->control_sel_r);
-  delete    = (editor->control_sel_l->prev || editor->control_sel_r->next);
 
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
@@ -406,15 +440,36 @@ gradient_editor_actions_update (GimpActionGroup *group,
 #define SET_VISIBLE(action,condition) \
         gimp_action_group_set_action_visible (group, action, (condition) != 0)
 
-  SET_COLOR ("gradient-editor-left-color",
-             &editor->control_sel_l->left_color, FALSE);
-  SET_COLOR ("gradient-editor-load-left-left-neighbor",
-             &left_seg->right_color, FALSE);
-  SET_COLOR ("gradient-editor-load-left-right-endpoint",
-             &editor->control_sel_r->right_color, FALSE);
+  SET_SENSITIVE ("gradient-editor-left-color",               editable);
+  SET_SENSITIVE ("gradient-editor-load-left-left-neighbor",  editable);
+  SET_SENSITIVE ("gradient-editor-load-left-right-endpoint", editable);
+
+  if (gradient)
+    {
+      SET_COLOR ("gradient-editor-left-color",
+                 &editor->control_sel_l->left_color, FALSE);
+      SET_COLOR ("gradient-editor-load-left-left-neighbor",
+                 &left_seg->right_color, FALSE);
+      SET_COLOR ("gradient-editor-load-left-right-endpoint",
+                 &editor->control_sel_r->right_color, FALSE);
+    }
+
+  SET_SENSITIVE ("gradient-editor-load-left-fg", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-bg", editable);
 
   SET_COLOR ("gradient-editor-load-left-fg", context ? &fg : NULL, FALSE);
   SET_COLOR ("gradient-editor-load-left-bg", context ? &bg : NULL, FALSE);
+
+  SET_SENSITIVE ("gradient-editor-load-left-01", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-02", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-03", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-04", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-05", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-06", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-07", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-08", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-09", editable);
+  SET_SENSITIVE ("gradient-editor-load-left-10", editable);
 
   SET_COLOR ("gradient-editor-load-left-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-load-left-02", &editor->saved_colors[1], TRUE);
@@ -427,6 +482,17 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_COLOR ("gradient-editor-load-left-09", &editor->saved_colors[8], TRUE);
   SET_COLOR ("gradient-editor-load-left-10", &editor->saved_colors[9], TRUE);
 
+  SET_SENSITIVE ("gradient-editor-save-left-01", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-02", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-03", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-04", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-05", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-06", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-07", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-08", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-09", gradient);
+  SET_SENSITIVE ("gradient-editor-save-left-10", gradient);
+
   SET_COLOR ("gradient-editor-save-left-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-save-left-02", &editor->saved_colors[1], TRUE);
   SET_COLOR ("gradient-editor-save-left-03", &editor->saved_colors[2], TRUE);
@@ -438,15 +504,36 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_COLOR ("gradient-editor-save-left-09", &editor->saved_colors[8], TRUE);
   SET_COLOR ("gradient-editor-save-left-10", &editor->saved_colors[9], TRUE);
 
-  SET_COLOR ("gradient-editor-right-color",
-             &editor->control_sel_r->right_color, FALSE);
-  SET_COLOR ("gradient-editor-load-right-right-neighbor",
-             &right_seg->left_color, FALSE);
-  SET_COLOR ("gradient-editor-load-right-left-endpoint",
-             &editor->control_sel_l->left_color, FALSE);
+  SET_SENSITIVE ("gradient-editor-right-color",               editable);
+  SET_SENSITIVE ("gradient-editor-load-right-right-neighbor", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-left-endpoint",  editable);
+
+  if (gradient)
+    {
+      SET_COLOR ("gradient-editor-right-color",
+                 &editor->control_sel_r->right_color, FALSE);
+      SET_COLOR ("gradient-editor-load-right-right-neighbor",
+                 &right_seg->left_color, FALSE);
+      SET_COLOR ("gradient-editor-load-right-left-endpoint",
+                 &editor->control_sel_l->left_color, FALSE);
+    }
+
+  SET_SENSITIVE ("gradient-editor-load-right-fg", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-bg", editable);
 
   SET_COLOR ("gradient-editor-load-right-fg", context ? &fg : NULL, FALSE);
   SET_COLOR ("gradient-editor-load-right-bg", context ? &bg : NULL, FALSE);
+
+  SET_SENSITIVE ("gradient-editor-load-right-01", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-02", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-03", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-04", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-05", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-06", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-07", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-08", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-09", editable);
+  SET_SENSITIVE ("gradient-editor-load-right-10", editable);
 
   SET_COLOR ("gradient-editor-load-right-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-load-right-02", &editor->saved_colors[1], TRUE);
@@ -459,6 +546,17 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_COLOR ("gradient-editor-load-right-09", &editor->saved_colors[8], TRUE);
   SET_COLOR ("gradient-editor-load-right-10", &editor->saved_colors[9], TRUE);
 
+  SET_SENSITIVE ("gradient-editor-save-right-01", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-02", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-03", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-04", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-05", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-06", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-07", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-08", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-09", gradient);
+  SET_SENSITIVE ("gradient-editor-save-right-10", gradient);
+
   SET_COLOR ("gradient-editor-save-right-01", &editor->saved_colors[0], TRUE);
   SET_COLOR ("gradient-editor-save-right-02", &editor->saved_colors[1], TRUE);
   SET_COLOR ("gradient-editor-save-right-03", &editor->saved_colors[2], TRUE);
@@ -469,6 +567,14 @@ gradient_editor_actions_update (GimpActionGroup *group,
   SET_COLOR ("gradient-editor-save-right-08", &editor->saved_colors[7], TRUE);
   SET_COLOR ("gradient-editor-save-right-09", &editor->saved_colors[8], TRUE);
   SET_COLOR ("gradient-editor-save-right-10", &editor->saved_colors[9], TRUE);
+
+  SET_SENSITIVE ("gradient-editor-flip",           editable);
+  SET_SENSITIVE ("gradient-editor-replicate",      editable);
+  SET_SENSITIVE ("gradient-editor-split-midpoint", editable);
+  SET_SENSITIVE ("gradient-editor-split-uniform",  editable);
+  SET_SENSITIVE ("gradient-editor-delete",         editable && delete);
+  SET_SENSITIVE ("gradient-editor-recenter",       editable);
+  SET_SENSITIVE ("gradient-editor-redistribute",   editable);
 
   if (! selection)
     {
@@ -516,11 +622,15 @@ gradient_editor_actions_update (GimpActionGroup *group,
     }
 
   SET_SENSITIVE ("gradient-editor-blending-varies", FALSE);
-  SET_SENSITIVE ("gradient-editor-coloring-varies", FALSE);
+  SET_VISIBLE   ("gradient-editor-blending-varies", ! blending_equal);
 
-  SET_VISIBLE ("gradient-editor-blending-varies", ! blending_equal);
+  SET_SENSITIVE ("gradient-editor-blending-linear",            editable);
+  SET_SENSITIVE ("gradient-editor-blending-curved",            editable);
+  SET_SENSITIVE ("gradient-editor-blending-sine",              editable);
+  SET_SENSITIVE ("gradient-editor-blending-sphere-increasing", editable);
+  SET_SENSITIVE ("gradient-editor-blending-sphere-decreasing", editable);
 
-  if (blending_equal)
+  if (blending_equal && gradient)
     {
       switch (editor->control_sel_l->type)
         {
@@ -546,9 +656,14 @@ gradient_editor_actions_update (GimpActionGroup *group,
       SET_ACTIVE ("gradient-editor-blending-varies", TRUE);
     }
 
-  SET_VISIBLE ("gradient-editor-coloring-varies", ! coloring_equal);
+  SET_SENSITIVE ("gradient-editor-coloring-varies", FALSE);
+  SET_VISIBLE   ("gradient-editor-coloring-varies", ! coloring_equal);
 
-  if (coloring_equal)
+  SET_SENSITIVE ("gradient-editor-coloring-rgb",     editable);
+  SET_SENSITIVE ("gradient-editor-coloring-hsv-ccw", editable);
+  SET_SENSITIVE ("gradient-editor-coloring-hsv-cw",  editable);
+
+  if (coloring_equal && gradient)
     {
       switch (editor->control_sel_l->color)
         {
@@ -568,9 +683,12 @@ gradient_editor_actions_update (GimpActionGroup *group,
       SET_ACTIVE ("gradient-editor-coloring-varies", TRUE);
     }
 
-  SET_SENSITIVE ("gradient-editor-blend-color",   selection);
-  SET_SENSITIVE ("gradient-editor-blend-opacity", selection);
-  SET_SENSITIVE ("gradient-editor-delete",        delete);
+  SET_SENSITIVE ("gradient-editor-blend-color",   editable && selection);
+  SET_SENSITIVE ("gradient-editor-blend-opacity", editable && selection);
+
+  SET_SENSITIVE ("gradient-editor-zoom-out", gradient);
+  SET_SENSITIVE ("gradient-editor-zoom-in",  gradient);
+  SET_SENSITIVE ("gradient-editor-zoom-all", gradient);
 
 #undef SET_ACTIVE
 #undef SET_COLOR

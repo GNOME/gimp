@@ -65,5 +65,9 @@ void   gradient_editor_blend_color_cmd_callback     (GtkAction *action,
 void   gradient_editor_blend_opacity_cmd_callback   (GtkAction *action,
                                                      gpointer   data);
 
+void   gradient_editor_zoom_cmd_callback            (GtkAction *action,
+                                                     gint       value,
+                                                     gpointer   data);
+
 
 #endif /* __GRADIENT_EDITOR_COMMANDS_H__ */

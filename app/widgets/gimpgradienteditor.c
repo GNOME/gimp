@@ -106,6 +106,10 @@
 static void   gimp_gradient_editor_class_init (GimpGradientEditorClass *klass);
 static void   gimp_gradient_editor_init       (GimpGradientEditor      *editor);
 
+static GObject * gimp_gradient_editor_constructor   (GType               type,
+                                                     guint               n_params,
+                                                     GObjectConstructParam *params);
+
 static void   gimp_gradient_editor_set_data         (GimpDataEditor     *editor,
                                                      GimpData           *data);
 
@@ -115,12 +119,6 @@ static void   gradient_editor_drop_gradient         (GtkWidget          *widget,
                                                      GimpViewable       *viewable,
                                                      gpointer            data);
 static void   gradient_editor_scrollbar_update      (GtkAdjustment      *adj,
-                                                     GimpGradientEditor *editor);
-static void   gradient_editor_zoom_out_callback     (GtkWidget          *widget,
-                                                     GimpGradientEditor *editor);
-static void   gradient_editor_zoom_in_callback      (GtkWidget          *widget,
-                                                     GimpGradientEditor *editor);
-static void   gradient_editor_zoom_all_callback     (GtkWidget          *widget,
                                                      GimpGradientEditor *editor);
 static void   gradient_editor_instant_update_update (GtkWidget          *widget,
                                                      GimpGradientEditor *editor);
@@ -257,11 +255,14 @@ gimp_gradient_editor_get_type (void)
 static void
 gimp_gradient_editor_class_init (GimpGradientEditorClass *klass)
 {
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
   GimpDataEditorClass *editor_class = GIMP_DATA_EDITOR_CLASS (klass);
 
   parent_class = g_type_class_peek_parent (klass);
 
-  editor_class->set_data = gimp_gradient_editor_set_data;
+  object_class->constructor = gimp_gradient_editor_constructor;
+
+  editor_class->set_data    = gimp_gradient_editor_set_data;
 }
 
 static void
@@ -351,26 +352,6 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gtk_box_pack_start (GTK_BOX (editor), editor->scrollbar, FALSE, FALSE, 0);
   gtk_widget_show (editor->scrollbar);
 
-  /*  +, - and Zoom Fit buttons  */
-  gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_OUT, _("Zoom Out"),
-                          GIMP_HELP_GRADIENT_EDITOR_ZOOM_OUT,
-                          G_CALLBACK (gradient_editor_zoom_out_callback),
-                          NULL,
-                          editor);
-  gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_IN, _("Zoom In"),
-                          GIMP_HELP_GRADIENT_EDITOR_ZOOM_IN,
-                          G_CALLBACK (gradient_editor_zoom_in_callback),
-                          NULL,
-                          editor);
-  gimp_editor_add_button (GIMP_EDITOR (editor),
-                          GTK_STOCK_ZOOM_FIT, _("Zoom All"),
-                          GIMP_HELP_GRADIENT_EDITOR_ZOOM_ALL,
-                          G_CALLBACK (gradient_editor_zoom_all_callback),
-                          NULL,
-                          editor);
-
   /* Instant update toggle */
   editor->instant_update = TRUE;
 
@@ -429,6 +410,30 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
   gimp_rgba_set (&editor->saved_colors[7], 0.0, 1.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[8], 0.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
   gimp_rgba_set (&editor->saved_colors[9], 1.0, 0.0, 1.0, GIMP_OPACITY_OPAQUE);
+}
+
+static GObject *
+gimp_gradient_editor_constructor (GType                  type,
+                                  guint                  n_params,
+                                  GObjectConstructParam *params)
+{
+  GObject            *object;
+  GimpGradientEditor *editor;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor = GIMP_GRADIENT_EDITOR (object);
+
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "gradient-editor",
+                                 "gradient-editor-zoom-out", NULL);
+
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "gradient-editor",
+                                 "gradient-editor-zoom-in", NULL);
+
+  gimp_editor_add_action_button (GIMP_EDITOR (editor), "gradient-editor",
+                                 "gradient-editor-zoom-all", NULL);
+
+  return object;
 }
 
 static void
@@ -535,6 +540,63 @@ gimp_gradient_editor_update (GimpGradientEditor *editor)
   control_update (editor, gradient, FALSE);
 }
 
+void
+gimp_gradient_editor_zoom (GimpGradientEditor *editor,
+                           GimpZoomType        zoom_type)
+{
+  GtkAdjustment *adjustment;
+  gdouble        old_value;
+  gdouble        old_page_size;
+  gdouble        value     = 0.0;
+  gdouble        page_size = 1.0;
+
+  g_return_if_fail (GIMP_IS_GRADIENT_EDITOR (editor));
+
+  adjustment = GTK_ADJUSTMENT (editor->scroll_data);
+
+  old_value     = adjustment->value;
+  old_page_size = adjustment->page_size;
+
+  switch (zoom_type)
+    {
+    case GIMP_ZOOM_IN:
+      editor->zoom_factor++;
+
+      page_size = 1.0 / editor->zoom_factor;
+      value     = old_value + (old_page_size - page_size) / 2.0;
+      break;
+
+    case GIMP_ZOOM_OUT:
+      if (editor->zoom_factor <= 1)
+        return;
+
+      editor->zoom_factor--;
+
+      page_size = 1.0 / editor->zoom_factor;
+      value     = old_value - (page_size - old_page_size) / 2.0;
+
+      if (value < 0.0)
+        value = 0.0;
+      else if ((value + page_size) > 1.0)
+        value = 1.0 - page_size;
+      break;
+
+    case GIMP_ZOOM_TO: /* abused as ZOOM_ALL */
+      editor->zoom_factor = 1;
+
+      value     = 0.0;
+      page_size = 1.0;
+      break;
+    }
+
+  adjustment->value          = value;
+  adjustment->page_size      = page_size;
+  adjustment->step_increment = page_size * GRAD_SCROLLBAR_STEP_SIZE;
+  adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
+
+  gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
+}
+
 
 /*  private functions  */
 
@@ -574,86 +636,6 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
                                            adjustment->page_size,
                                            editor->instant_update);
   gimp_gradient_editor_update (editor);
-}
-
-static void
-gradient_editor_zoom_out_callback (GtkWidget          *widget,
-                                   GimpGradientEditor *editor)
-{
-  GtkAdjustment *adjustment;
-  gdouble        old_value;
-  gdouble        value;
-  gdouble        old_page_size;
-  gdouble        page_size;
-
-  if (editor->zoom_factor <= 1)
-    return;
-
-  adjustment = GTK_ADJUSTMENT (editor->scroll_data);
-
-  old_value     = adjustment->value;
-  old_page_size = adjustment->page_size;
-
-  editor->zoom_factor--;
-
-  page_size = 1.0 / editor->zoom_factor;
-  value     = old_value - (page_size - old_page_size) / 2.0;
-
-  if (value < 0.0)
-    value = 0.0;
-  else if ((value + page_size) > 1.0)
-    value = 1.0 - page_size;
-
-  adjustment->value          = value;
-  adjustment->page_size      = page_size;
-  adjustment->step_increment = page_size * GRAD_SCROLLBAR_STEP_SIZE;
-  adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
-
-  gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
-}
-
-static void
-gradient_editor_zoom_in_callback (GtkWidget          *widget,
-                                  GimpGradientEditor *editor)
-{
-  GtkAdjustment *adjustment;
-  gdouble        old_value;
-  gdouble        old_page_size;
-  gdouble        page_size;
-
-  adjustment = GTK_ADJUSTMENT (editor->scroll_data);
-
-  old_value     = adjustment->value;
-  old_page_size = adjustment->page_size;
-
-  editor->zoom_factor++;
-
-  page_size = 1.0 / editor->zoom_factor;
-
-  adjustment->value          = old_value + (old_page_size - page_size) / 2.0;
-  adjustment->page_size      = page_size;
-  adjustment->step_increment = page_size * GRAD_SCROLLBAR_STEP_SIZE;
-  adjustment->page_increment = page_size * GRAD_SCROLLBAR_PAGE_SIZE;
-
-  gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
-}
-
-static void
-gradient_editor_zoom_all_callback (GtkWidget          *widget,
-                                   GimpGradientEditor *editor)
-{
-  GtkAdjustment *adjustment;
-
-  adjustment = GTK_ADJUSTMENT (editor->scroll_data);
-
-  editor->zoom_factor = 1;
-
-  adjustment->value          = 0.0;
-  adjustment->page_size      = 1.0;
-  adjustment->step_increment = GRAD_SCROLLBAR_STEP_SIZE;
-  adjustment->page_increment = GRAD_SCROLLBAR_PAGE_SIZE;
-
-  gtk_adjustment_changed (GTK_ADJUSTMENT (editor->scroll_data));
 }
 
 static void
@@ -765,9 +747,9 @@ view_events (GtkWidget          *widget,
       if (sevent->state & GDK_SHIFT_MASK)
         {
           if (sevent->direction == GDK_SCROLL_UP)
-            gradient_editor_zoom_in_callback (NULL, editor);
+            gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN);
           else
-            gradient_editor_zoom_out_callback (NULL, editor);
+            gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT);
         }
       else
         {
@@ -990,9 +972,9 @@ control_events (GtkWidget          *widget,
       if (sevent->state & GDK_SHIFT_MASK)
         {
           if (sevent->direction == GDK_SCROLL_UP)
-            gradient_editor_zoom_in_callback (NULL, editor);
+            gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN);
           else
-            gradient_editor_zoom_out_callback (NULL, editor);
+            gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT);
         }
       else
         {
@@ -1575,6 +1557,17 @@ control_update (GimpGradientEditor *editor,
   gint           pwidth  = 0;
   gint           pheight = 0;
 
+  if (! editor->control_sel_l || ! editor->control_sel_r)
+    reset_selection = TRUE;
+
+  if (reset_selection)
+    {
+      if (gradient)
+        control_select_single_segment (editor, gradient->segments);
+      else
+        control_select_single_segment (editor, NULL);
+    }
+
   if (! GTK_WIDGET_DRAWABLE (editor->control))
     return;
 
@@ -1594,17 +1587,6 @@ control_update (GimpGradientEditor *editor,
 
       editor->control_pixmap =
         gdk_pixmap_new (editor->control->window, cwidth, cheight, -1);
-    }
-
-  if (! editor->control_sel_l || ! editor->control_sel_r)
-    reset_selection = TRUE;
-
-  if (reset_selection)
-    {
-      if (gradient)
-        control_select_single_segment (editor, gradient->segments);
-      else
-        control_select_single_segment (editor, NULL);
     }
 
   /* Redraw pixmap */

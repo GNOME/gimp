@@ -24,9 +24,26 @@
 
 #include "actions-types.h"
 
+#include "core/gimp.h"
+#include "core/gimpcontext.h"
+#include "core/gimpdatafactory.h"
+#include "core/gimppalette.h"
+
+#include "widgets/gimpcolordialog.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimppaletteeditor.h"
 
 #include "palette-editor-commands.h"
+
+#include "gimp-intl.h"
+
+
+/*  local function prototypes  */
+
+static void  palette_editor_edit_color_update (GimpColorDialog      *dialog,
+                                               const GimpRGB        *color,
+                                               GimpColorDialogState  state,
+                                               GimpPaletteEditor    *editor);
 
 
 /*  public functions  */
@@ -35,69 +52,123 @@ void
 palette_editor_edit_color_cmd_callback (GtkAction *action,
                                         gpointer   data)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+  GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
+  GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
+  GimpPalette       *palette;
 
-  if (GTK_WIDGET_SENSITIVE (editor->edit_button))
-    gtk_button_clicked (GTK_BUTTON (editor->edit_button));
+  if (! (data_editor->data && data_editor->data_editable && editor->color))
+    return;
+
+  palette = GIMP_PALETTE (data_editor->data);
+
+  if (! editor->color_dialog)
+    {
+      editor->color_dialog =
+	gimp_color_dialog_new (GIMP_VIEWABLE (palette),
+                               _("Edit Palette Color"),
+                               GIMP_STOCK_PALETTE,
+                               _("Edit Color Palette Entry"),
+                               GTK_WIDGET (editor),
+                               gimp_dialog_factory_from_name ("toplevel"),
+                               "gimp-palette-editor-color-dialog",
+                               (const GimpRGB *) &editor->color->color,
+                               FALSE, FALSE);
+
+      g_signal_connect (editor->color_dialog, "destroy",
+                        G_CALLBACK (gtk_widget_destroyed),
+                        &editor->color_dialog);
+
+      g_signal_connect (editor->color_dialog, "update",
+                        G_CALLBACK (palette_editor_edit_color_update),
+                        editor);
+    }
+  else
+    {
+      gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (editor->color_dialog),
+                                         GIMP_VIEWABLE (palette));
+      gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (editor->color_dialog),
+                                   &editor->color->color);
+    }
+
+  gtk_window_present (GTK_WINDOW (editor->color_dialog));
 }
 
 void
-palette_editor_new_color_fg_cmd_callback (GtkAction *action,
-                                          gpointer   data)
+palette_editor_new_color_cmd_callback (GtkAction *action,
+                                       gint       value,
+                                       gpointer   data)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+  GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
+  GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
 
-  if (GTK_WIDGET_SENSITIVE (editor->new_button))
-    gimp_button_extended_clicked (GIMP_BUTTON (editor->new_button), 0);
-}
+  if (data_editor->data && data_editor->data_editable)
+    {
+      GimpPalette *palette = GIMP_PALETTE (data_editor->data);
+      GimpContext *context;
+      GimpRGB      color;
 
-void
-palette_editor_new_color_bg_cmd_callback (GtkAction *action,
-                                          gpointer   data)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+      context = gimp_get_user_context (data_editor->data_factory->gimp);
 
-  if (GTK_WIDGET_SENSITIVE (editor->new_button))
-    gimp_button_extended_clicked (GIMP_BUTTON (editor->new_button),
-                                  GDK_CONTROL_MASK);
+      if (value)
+        gimp_context_get_background (context, &color);
+      else
+        gimp_context_get_foreground (context, &color);
+
+      editor->color = gimp_palette_add_entry (palette, NULL, &color);
+    }
 }
 
 void
 palette_editor_delete_color_cmd_callback (GtkAction *action,
                                           gpointer   data)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+  GimpPaletteEditor *editor      = GIMP_PALETTE_EDITOR (data);
+  GimpDataEditor    *data_editor = GIMP_DATA_EDITOR (data);
 
-  if (GTK_WIDGET_SENSITIVE (editor->delete_button))
-    gtk_button_clicked (GTK_BUTTON (editor->delete_button));
+  if (data_editor->data && data_editor->data_editable && editor->color)
+    {
+      GimpPalette *palette = GIMP_PALETTE (data_editor->data);
+
+      gimp_palette_delete_entry (palette, editor->color);
+    }
 }
 
 void
-palette_editor_zoom_in_cmd_callback (GtkAction *action,
-                                     gpointer   data)
+palette_editor_zoom_cmd_callback (GtkAction *action,
+                                  gint       value,
+                                  gpointer   data)
 {
   GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
 
-  if (GTK_WIDGET_SENSITIVE (editor->zoom_in_button))
-    gtk_button_clicked (GTK_BUTTON (editor->zoom_in_button));
+  gimp_palette_editor_zoom (editor, (GimpZoomType) value);
 }
 
-void
-palette_editor_zoom_out_cmd_callback (GtkAction *action,
-                                      gpointer   data)
+
+/*  private functions  */
+
+static void
+palette_editor_edit_color_update (GimpColorDialog      *dialog,
+                                  const GimpRGB        *color,
+                                  GimpColorDialogState  state,
+                                  GimpPaletteEditor    *editor)
 {
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+  GimpPalette *palette = GIMP_PALETTE (GIMP_DATA_EDITOR (editor)->data);
 
-  if (GTK_WIDGET_SENSITIVE (editor->zoom_out_button))
-    gtk_button_clicked (GTK_BUTTON (editor->zoom_out_button));
-}
+  switch (state)
+    {
+    case GIMP_COLOR_DIALOG_UPDATE:
+      break;
 
-void
-palette_editor_zoom_all_cmd_callback (GtkAction *action,
-                                      gpointer   data)
-{
-  GimpPaletteEditor *editor = GIMP_PALETTE_EDITOR (data);
+    case GIMP_COLOR_DIALOG_OK:
+      if (editor->color)
+	{
+	  editor->color->color = *color;
+	  gimp_data_dirty (GIMP_DATA (palette));
+	}
+      /* Fallthrough */
 
-  if (GTK_WIDGET_SENSITIVE (editor->zoom_all_button))
-    gtk_button_clicked (GTK_BUTTON (editor->zoom_all_button));
+    case GIMP_COLOR_DIALOG_CANCEL:
+      gtk_widget_hide (editor->color_dialog);
+      break;
+    }
 }

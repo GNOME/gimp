@@ -115,6 +115,8 @@ GtkWidget * gimp_gradient_editor_new      (Gimp               *gimp,
                                            GimpMenuFactory    *menu_factory);
 
 void        gimp_gradient_editor_update   (GimpGradientEditor *editor);
+void        gimp_gradient_editor_zoom     (GimpGradientEditor *editor,
+                                           GimpZoomType        zoom_type);
 
 
 #endif  /* __GIMP_GRADIENT_EDITOR_H__ */

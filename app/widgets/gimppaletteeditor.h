@@ -76,6 +76,8 @@ GtkWidget * gimp_palette_editor_new        (Gimp               *gimp,
 void        gimp_palette_editor_pick_color (GimpPaletteEditor  *editor,
                                             const GimpRGB      *color,
                                             GimpColorPickState  pick_state);
+void        gimp_palette_editor_zoom       (GimpPaletteEditor  *editor,
+                                            GimpZoomType        zoom_type);
 
 
 #endif /* __GIMP_PALETTE_EDITOR_H__ */

@@ -39,6 +39,7 @@
 #include "gimpdocked.h"
 #include "gimpmenufactory.h"
 #include "gimpsessioninfo.h"
+#include "gimpuimanager.h"
 
 #include "gimp-intl.h"
 
@@ -56,6 +57,9 @@ static void       gimp_data_editor_init       (GimpDataEditor      *view);
 
 static void       gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface);
 
+static GObject  * gimp_data_editor_constructor       (GType            type,
+                                                      guint            n_params,
+                                                      GObjectConstructParam *params);
 static void       gimp_data_editor_set_property      (GObject        *object,
                                                       guint           property_id,
                                                       const GValue   *value,
@@ -136,6 +140,7 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructor  = gimp_data_editor_constructor;
   object_class->set_property = gimp_data_editor_set_property;
   object_class->get_property = gimp_data_editor_get_property;
   object_class->dispose      = gimp_data_editor_dispose;
@@ -173,6 +178,26 @@ gimp_data_editor_init (GimpDataEditor *editor)
   g_signal_connect (editor->name_entry, "focus_out_event",
 		    G_CALLBACK (gimp_data_editor_name_focus_out),
                     editor);
+}
+
+static void
+gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
+{
+  docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
+  docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
+}
+
+static GObject *
+gimp_data_editor_constructor (GType                  type,
+                              guint                  n_params,
+                              GObjectConstructParam *params)
+{
+  GObject        *object;
+  GimpDataEditor *editor;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  editor = GIMP_DATA_EDITOR (object);
 
   editor->save_button =
     gimp_editor_add_button (GIMP_EDITOR (editor),
@@ -189,13 +214,8 @@ gimp_data_editor_init (GimpDataEditor *editor)
                             G_CALLBACK (gimp_data_editor_revert_clicked),
                             NULL,
                             editor);
-}
 
-static void
-gimp_data_editor_docked_iface_init (GimpDockedInterface *docked_iface)
-{
-  docked_iface->set_aux_info = gimp_data_editor_set_aux_info;
-  docked_iface->get_aux_info = gimp_data_editor_get_aux_info;
+  return object;
 }
 
 static void
@@ -356,6 +376,10 @@ gimp_data_editor_set_data (GimpDataEditor *editor,
       GIMP_DATA_EDITOR_GET_CLASS (editor)->set_data (editor, data);
 
       g_object_notify (G_OBJECT (editor), "data");
+
+      if (GIMP_EDITOR (editor)->ui_manager)
+        gimp_ui_manager_update (GIMP_EDITOR (editor)->ui_manager,
+                                GIMP_EDITOR (editor)->popup_data);
     }
 }
 

@@ -276,19 +276,23 @@ gradient_editor_blending_func_cmd_callback (GtkAction *action,
                                             GtkAction *current,
                                             gpointer   data)
 {
-  GimpGradientEditor      *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient            *gradient;
-  GimpGradientSegmentType  type;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
+  gint                value;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  type = (GimpGradientSegmentType)
-    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  gimp_gradient_segment_range_set_blending_function (gradient,
-                                                     editor->control_sel_l,
-                                                     editor->control_sel_r,
-                                                     type);
+  if (gradient && value >= 0)
+    {
+      GimpGradientSegmentType type = value;
+
+      gimp_gradient_segment_range_set_blending_function (gradient,
+                                                         editor->control_sel_l,
+                                                         editor->control_sel_r,
+                                                         type);
+    }
 }
 
 void
@@ -296,27 +300,31 @@ gradient_editor_coloring_type_cmd_callback (GtkAction *action,
                                             GtkAction *current,
                                             gpointer   data)
 {
-  GimpGradientEditor       *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient             *gradient;
-  GimpGradientSegmentColor  color;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
+  gint                value;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
-  color = (GimpGradientSegmentColor)
-    gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
+  value = gtk_radio_action_get_current_value (GTK_RADIO_ACTION (action));
 
-  gimp_gradient_segment_range_set_coloring_type (gradient,
-                                                 editor->control_sel_l,
-                                                 editor->control_sel_r,
-                                                 color);
+  if (gradient && value >= 0)
+    {
+      GimpGradientSegmentColor color = value;
+
+      gimp_gradient_segment_range_set_coloring_type (gradient,
+                                                     editor->control_sel_l,
+                                                     editor->control_sel_r,
+                                                     color);
+    }
 }
 
 void
 gradient_editor_flip_cmd_callback (GtkAction *action,
                                    gpointer   data)
 {
-  GimpGradientEditor  *editor = GIMP_GRADIENT_EDITOR (data);
-  GimpGradient        *gradient;
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+  GimpGradient       *gradient;
 
   gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
 
@@ -571,6 +579,16 @@ gradient_editor_blend_opacity_cmd_callback (GtkAction *action,
                                      &editor->control_sel_l->left_color,
                                      &editor->control_sel_r->right_color,
                                      FALSE, TRUE);
+}
+
+void
+gradient_editor_zoom_cmd_callback (GtkAction *action,
+                                   gint       value,
+                                   gpointer   data)
+{
+  GimpGradientEditor *editor = GIMP_GRADIENT_EDITOR (data);
+
+  gimp_gradient_editor_zoom (editor, (GimpZoomType) value);
 }
 
 
