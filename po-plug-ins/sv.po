@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-03-19 17:46+0900\n"
-"PO-Revision-Date: 2004-03-19 17:48+0900\n"
+"PO-Revision-Date: 2004-03-19 20:50+0100\n"
 "Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5510,7 +5510,7 @@ msgstr "Fel vid läsning av \"%s\". Trasig fil?"
 #: plug-ins/common/png.c:784
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr "Okänd färgmodell i PNG-fil \"%S\"."
+msgstr "Okänd färgmodell i PNG-fil \"%s\"."
 
 #: plug-ins/common/png.c:839
 msgid ""
