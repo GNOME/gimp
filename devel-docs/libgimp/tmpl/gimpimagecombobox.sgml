@@ -1,0 +1,38 @@
+<!-- ##### SECTION Title ##### -->
+gimpimagecombobox
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### USER_FUNCTION GimpImageConstraintFunc ##### -->
+<para>
+
+</para>
+
+@image_id: 
+@data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_combo_box_new ##### -->
+<para>
+
+</para>
+
+@constraint: 
+@data: 
+@Returns: 
+
+

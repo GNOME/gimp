@@ -1,5 +1,13 @@
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-docs.sgml
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpdrawablecombobox.sgml
+	* libgimp/tmpl/gimpimagecombobox.sgml
+	* libgimp/tmpl/gimppixbuf.sgml: added docs for new functions.
+
+2004-04-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-sections.txt	
 	* libgimpwidgets/tmpl/gimpintcombobox.sgml: added new functions
 	gimp_int_combo_box_[prepend|append].

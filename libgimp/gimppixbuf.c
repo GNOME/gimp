@@ -36,6 +36,20 @@ static GdkPixbuf * gimp_pixbuf_from_data (guchar                 *data,
                                           GimpPixbufTransparency  alpha);
 
 
+/**
+ * gimp_image_get_thumbnail:
+ * @image_ID: the image ID
+ * @width:    the requested thumbnail width  (<= 256 pixels)
+ * @height:   the requested thumbnail height (<= 256 pixels)
+ * @alpha:    how to handle an alpha channel
+ *
+ * Retrieves a thumbnail pixbuf for the image identified by @image_ID.
+ * The thumbnail will be not larger than the requested size.
+ *
+ * Return value: a new #GdkPixbuf
+ *
+ * Since: GIMP 2.2
+ **/
 GdkPixbuf *
 gimp_image_get_thumbnail (gint32                  image_ID,
                           gint                    width,
@@ -65,6 +79,21 @@ gimp_image_get_thumbnail (gint32                  image_ID,
                                    alpha);
 }
 
+/**
+ * gimp_drawable_get_thumbnail:
+ * @drawable_ID: the drawable ID
+ * @width:       the requested thumbnail width  (<= 256 pixels)
+ * @height:      the requested thumbnail height (<= 256 pixels)
+ * @alpha:       how to handle an alpha channel
+ *
+ * Retrieves a thumbnail pixbuf for the drawable identified by
+ * @drawable_ID. The thumbnail will be not larger than the requested
+ * size.
+ *
+ * Return value: a new #GdkPixbuf
+ *
+ * Since: GIMP 2.2
+ **/
 GdkPixbuf *
 gimp_drawable_get_thumbnail (gint32                  drawable_ID,
                              gint                    width,

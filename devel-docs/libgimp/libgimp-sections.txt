@@ -623,6 +623,27 @@ gimp_image_undo_thaw
 </SECTION>
 
 <SECTION>
+<FILE>gimppixbuf</FILE>
+GimpPixbufTransparency
+gimp_image_get_thumbnail
+gimp_drawable_get_thumbnail
+</SECTION>
+
+<SECTION>
+<FILE>gimpdrawablecombobox</FILE>
+GimpDrawableConstraintFunc
+gimp_drawable_combo_box_new
+gimp_channel_combo_box_new
+gimp_layer_combo_box_new
+</SECTION>
+
+<SECTION>
+<FILE>gimpimagecombobox</FILE>
+GimpImageConstraintFunc
+gimp_image_combo_box_new
+</SECTION>
+
+<SECTION>
 <FILE>gimpmenu</FILE>
 GimpConstraintFunc
 GimpMenuCallback

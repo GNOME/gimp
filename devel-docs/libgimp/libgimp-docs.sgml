@@ -68,6 +68,9 @@
     <title>GIMP User Interface Library</title>
     <xi:include href="xml/gimpui.xml" />
     <xi:include href="xml/gimpexport.xml" />
+    <xi:include href="xml/gimpdrawablecombobox.xml" />
+    <xi:include href="xml/gimpimagecombobox.xml" />
+    <xi:include href="xml/gimppixbuf.xml" />
     <xi:include href="xml/gimpmenu.xml" />
     <xi:include href="xml/gimpbrushmenu.xml" />
     <xi:include href="xml/gimpfontmenu.xml" />

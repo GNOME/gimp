@@ -46,6 +46,24 @@ static gint  gimp_drawable_combo_box_model_add      (GtkListStore               
 static void  gimp_drawable_combo_box_model_add_none (GtkListStore               *store);
 
 
+/**
+ * gimp_drawable_combo_box_new:
+ * @constraint: a #GimpDrawableConstraintFunc or %NULL
+ * @data:       a pointer that is passed to @constraint
+ *
+ * Creates a new #GimpIntComboBox filled with all currently opened
+ * drawables. If a @constraint function is specified, it is called for
+ * each drawable and only if the function returns %TRUE, the drawable
+ * is added to the combobox.
+ *
+ * Use gimp_int_combo_box_set_active() to get the active drawable ID
+ * and gimp_int_combo_box_get_active() to retrieve the ID of the
+ * selected drawable.
+ *
+ * Return value: a new #GimpIntComboBox.
+ *
+ * Since: GIMP 2.2
+ **/
 GtkWidget *
 gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
                              gpointer                   data)
@@ -95,6 +113,18 @@ gimp_drawable_combo_box_new (GimpDrawableConstraintFunc constraint,
   return combo_box;
 }
 
+/**
+ * gimp_channel_combo_box_new:
+ * @constraint: a #GimpDrawableConstraintFunc or %NULL
+ * @data:       a pointer that is passed to @constraint
+ *
+ * Creates a new #GimpIntComboBox filled with all currently opened
+ * channels. See gimp_drawable_combo_box() for more info.
+ *
+ * Return value: a new #GimpIntComboBox.
+ *
+ * Since: GIMP 2.2
+ **/
 GtkWidget *
 gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
                             gpointer                   data)
@@ -137,6 +167,18 @@ gimp_channel_combo_box_new (GimpDrawableConstraintFunc constraint,
   return combo_box;
 }
 
+/**
+ * gimp_layer_combo_box_new:
+ * @constraint: a #GimpDrawableConstraintFunc or %NULL
+ * @data:       a pointer that is passed to @constraint
+ *
+ * Creates a new #GimpIntComboBox filled with all currently opened
+ * layers. See gimp_drawable_combo_box() for more info.
+ *
+ * Return value: a new #GimpIntComboBox.
+ *
+ * Since: GIMP 2.2
+ **/
 GtkWidget *
 gimp_layer_combo_box_new (GimpDrawableConstraintFunc constraint,
                           gpointer                   data)

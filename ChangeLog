@@ -1,5 +1,13 @@
 2004-04-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawablecombobox.c
+	* libgimp/gimpimagecombobox.c
+	* libgimp/gimppixbuf.c
+	* libgimpwidgets/gimpintcombobox.c
+	* libgimpwidgets/gimpintstore.c: API documentation.
+
+2004-04-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpintcombobox.[ch]: added new functions
 	gimp_int_combo_box_[prepend|append].
 

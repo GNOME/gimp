@@ -103,6 +103,8 @@ gimp_int_store_new (void)
  *
  * Return value: %TRUE if the value has been located and @iter is
  *               valid, %FALSE otherwise.
+ *
+ * Since: GIMP 2.2
  **/
 gboolean
 gimp_int_store_lookup_by_value (GtkTreeModel *model,

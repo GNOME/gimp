@@ -1,0 +1,51 @@
+<!-- ##### SECTION Title ##### -->
+gimppixbuf
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GimpPixbufTransparency ##### -->
+<para>
+
+</para>
+
+@GIMP_PIXBUF_KEEP_ALPHA: 
+@GIMP_PIXBUF_SMALL_CHECKS: 
+@GIMP_PIXBUF_LARGE_CHECKS: 
+
+<!-- ##### FUNCTION gimp_image_get_thumbnail ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@width: 
+@height: 
+@alpha: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_drawable_get_thumbnail ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@width: 
+@height: 
+@alpha: 
+@Returns: 
+
+

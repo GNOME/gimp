@@ -227,6 +227,8 @@ gimp_int_combo_box_new_array (gint         n_values,
  * and calls gtk_list_store_set() for you.
  *
  * The column number must be taken from the enum #GimpIntStoreColumns.
+ *
+ * Since: GIMP 2.2
  **/
 void
 gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
@@ -258,6 +260,8 @@ gimp_int_combo_box_prepend (GimpIntComboBox *combo_box,
  * and calls gtk_list_store_set() for you.
  *
  * The column number must be taken from the enum #GimpIntStoreColumns.
+ *
+ * Since: GIMP 2.2
  **/
 void
 gimp_int_combo_box_append (GimpIntComboBox *combo_box,
