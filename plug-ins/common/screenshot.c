@@ -640,7 +640,7 @@ shoot_dialog (void)
 			    gimp_standard_help_func, HELP_ID,
 
 			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+			    _("Grab"),        GTK_RESPONSE_OK,
 
 			    NULL);
 
