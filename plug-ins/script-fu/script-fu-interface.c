@@ -19,6 +19,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <sys/types.h>
 #include <dirent.h>
 #include <sys/stat.h>
 #include <ctype.h>		/* For toupper() */
@@ -303,7 +304,7 @@ script_fu_find_scripts ()
 
       next_token = local_path;
 
-      token = strtok (next_token, ":");
+      token = strtok (next_token, G_SEARCHPATH_SEPARATOR_S);
 
       while (token)
 	{
@@ -346,6 +347,9 @@ script_fu_find_scripts ()
 
 			  if (!my_err && S_ISREG (filestat.st_mode))
 			    {
+#ifdef __EMX__
+			      _fnslashify(filename);
+#endif
 			      command = g_new (char, strlen ("(load \"\")") + strlen (filename) + 1);
 			      sprintf (command, "(load \"%s\")", filename);
 
@@ -364,7 +368,7 @@ script_fu_find_scripts ()
 
 	  g_free (path);
 
-	  token = strtok (NULL, ":");
+	  token = strtok (NULL, G_SEARCHPATH_SEPARATOR_S);
 	} /* while */
 
       g_free(local_path);
