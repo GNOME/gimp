@@ -38,6 +38,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpcolorbalancetool.h"
+#include "gimpimagemapoptions.h"
 
 #include "gimp-intl.h"
 
@@ -89,7 +90,7 @@ gimp_color_balance_tool_register (GimpToolRegisterCallback  callback,
                                   gpointer                  data)
 {
   (* callback) (GIMP_TYPE_COLOR_BALANCE_TOOL,
-                G_TYPE_NONE, NULL,
+                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
                 0,
                 "gimp-color-balance-tool",
                 _("Color Balance"),

@@ -56,9 +56,6 @@ static void   gimp_color_options_get_property (GObject      *object,
 					       GParamSpec   *pspec);
 
 
-static GimpToolOptionsClass *parent_class = NULL;
-
-
 GType
 gimp_color_options_get_type (void)
 {
@@ -79,7 +76,7 @@ gimp_color_options_get_type (void)
 	NULL            /* instance_init  */
       };
 
-      type = g_type_register_static (GIMP_TYPE_TOOL_OPTIONS,
+      type = g_type_register_static (GIMP_TYPE_IMAGE_MAP_OPTIONS,
                                      "GimpColorOptions",
                                      &info, 0);
     }
@@ -91,8 +88,6 @@ static void
 gimp_color_options_class_init (GimpColorOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
-
-  parent_class = g_type_class_peek_parent (klass);
 
   object_class->set_property = gimp_color_options_set_property;
   object_class->get_property = gimp_color_options_get_property;

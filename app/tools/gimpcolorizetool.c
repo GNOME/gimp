@@ -37,6 +37,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpcolorizetool.h"
+#include "gimpimagemapoptions.h"
 
 #include "gimp-intl.h"
 
@@ -89,7 +90,7 @@ gimp_colorize_tool_register (GimpToolRegisterCallback  callback,
                              gpointer                  data)
 {
   (* callback) (GIMP_TYPE_COLORIZE_TOOL,
-                G_TYPE_NONE, NULL,
+                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
                 0,
                 "gimp-colorize-tool",
                 _("Colorize"),

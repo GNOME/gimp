@@ -33,6 +33,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpitemfactory.h"
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
 
@@ -76,8 +77,9 @@ static void     gimp_image_map_tool_response   (GtkWidget        *widget,
                                                 gint              response_id,
                                                 GimpImageMapTool *image_map_tool);
 
-static void     gimp_image_map_tool_preview_toggled (GtkWidget        *widget,
-                                                     GimpImageMapTool *image_map_tool);
+static void     gimp_image_map_tool_notify_preview (GObject          *config,
+                                                    GParamSpec       *pspec,
+                                                    GimpImageMapTool *image_map_tool);
 
 
 static GimpToolClass *parent_class = NULL;
@@ -146,7 +148,6 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 
   image_map_tool->drawable   = NULL;
   image_map_tool->image_map  = NULL;
-  image_map_tool->preview    = TRUE;
 
   image_map_tool->shell_desc = NULL;
   image_map_tool->shell      = NULL;
@@ -156,13 +157,16 @@ gimp_image_map_tool_init (GimpImageMapTool *image_map_tool)
 void
 gimp_image_map_tool_preview (GimpImageMapTool *image_map_tool)
 {
-  GimpTool *tool;
+  GimpTool            *tool;
+  GimpImageMapOptions *options;
 
   g_return_if_fail (GIMP_IS_IMAGE_MAP_TOOL (image_map_tool));
 
   tool = GIMP_TOOL (image_map_tool);
 
-  if (image_map_tool->preview)
+  options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
+
+  if (options->preview)
     {
       gimp_tool_control_set_preserve (tool->control, TRUE);
 
@@ -231,15 +235,16 @@ gimp_image_map_tool_initialize (GimpTool    *tool,
       gtk_container_add (GTK_CONTAINER (GTK_DIALOG (shell)->vbox), vbox);
 
       /*  The preview toggle  */
-      toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                    image_map_tool->preview);
+      toggle = gimp_prop_check_button_new (G_OBJECT (tool_info->tool_options),
+                                           "preview",
+                                           _("_Preview"));
+
       gtk_box_pack_end (GTK_BOX (image_map_tool->main_vbox), toggle,
                         FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
-      g_signal_connect (toggle, "toggled",
-                        G_CALLBACK (gimp_image_map_tool_preview_toggled),
+      g_signal_connect (tool_info->tool_options, "notify::preview",
+                        G_CALLBACK (gimp_image_map_tool_notify_preview),
                         image_map_tool);
 
       /*  Fill in subclass widgets  */
@@ -346,8 +351,9 @@ gimp_image_map_tool_response (GtkWidget        *widget,
                               gint              response_id,
                               GimpImageMapTool *image_map_tool)
 {
-  GimpDisplayShell *shell;
-  GimpTool         *tool;
+  GimpDisplayShell    *shell;
+  GimpImageMapOptions *options;
+  GimpTool            *tool;
 
   tool = GIMP_TOOL (image_map_tool);
 
@@ -366,7 +372,9 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
       gimp_tool_control_set_preserve (tool->control, TRUE);
 
-      if (! image_map_tool->preview)
+      options = GIMP_IMAGE_MAP_OPTIONS (tool->tool_info->tool_options);
+
+      if (! options->preview)
         {
           gimp_image_map_tool_map (image_map_tool);
         }
@@ -411,14 +419,14 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 }
 
 static void
-gimp_image_map_tool_preview_toggled (GtkWidget        *widget,
-                                     GimpImageMapTool *image_map_tool)
+gimp_image_map_tool_notify_preview (GObject          *config,
+                                    GParamSpec       *pspec,
+                                    GimpImageMapTool *image_map_tool)
 {
-  GimpTool *tool = GIMP_TOOL (image_map_tool);
+  GimpTool            *tool    = GIMP_TOOL (image_map_tool);
+  GimpImageMapOptions *options = GIMP_IMAGE_MAP_OPTIONS (config);
 
-  image_map_tool->preview = GTK_TOGGLE_BUTTON (widget)->active;
-
-  if (image_map_tool->preview)
+  if (options->preview)
     {
       gimp_tool_control_set_preserve (tool->control, TRUE);
 

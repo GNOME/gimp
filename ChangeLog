@@ -1,3 +1,22 @@
+2004-02-22  Sven Neumann  <sven@gimp.org>
+
+	Let all GimpImageMap tools remember the state of the preview toggle
+	(bug #135059):
+
+	* app/tools/Makefile.am
+	* app/tools/gimpimagemapoptions.[ch]
+	* app/tools/tools-types.h: added new GimpToolOptions class to hold
+	the preview setting.
+
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcoloroptions.[ch]
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpimagemaptool.[ch]
+	* app/tools/gimpposterizetool.c
+	* app/tools/tools-types.h: use the new class.
+
 2004-02-21  Manish Singh  <yosh@gimp.org>
 
 	* app/widgets/gimpenummenu.c (gimp_enum_stock_box_set_child_padding):

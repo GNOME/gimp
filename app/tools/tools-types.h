@@ -38,6 +38,7 @@ typedef struct _GimpPaintTool          GimpPaintTool;
 typedef struct _GimpTransformTool      GimpTransformTool;
 
 typedef struct _GimpColorOptions       GimpColorOptions;
+typedef struct _GimpImageMapOptions    GimpImageMapOptions;
 
 
 /*  functions  */

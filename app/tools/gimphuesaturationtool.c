@@ -37,6 +37,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimphuesaturationtool.h"
+#include "gimpimagemapoptions.h"
 
 #include "gimp-intl.h"
 
@@ -103,7 +104,7 @@ gimp_hue_saturation_tool_register (GimpToolRegisterCallback  callback,
                                    gpointer                  data)
 {
   (* callback) (GIMP_TYPE_HUE_SATURATION_TOOL,
-                G_TYPE_NONE, NULL,
+                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
                 0,
                 "gimp-hue-saturation-tool",
                 _("Hue-Saturation"),

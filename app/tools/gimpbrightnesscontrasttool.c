@@ -37,6 +37,7 @@
 #include "display/gimpdisplay.h"
 
 #include "gimpbrightnesscontrasttool.h"
+#include "gimpimagemapoptions.h"
 
 #include "gimp-intl.h"
 
@@ -78,7 +79,7 @@ gimp_brightness_contrast_tool_register (GimpToolRegisterCallback  callback,
                                         gpointer                  data)
 {
   (* callback) (GIMP_TYPE_BRIGHTNESS_CONTRAST_TOOL,
-                G_TYPE_NONE, NULL,
+                GIMP_TYPE_IMAGE_MAP_OPTIONS, NULL,
                 0,
                 "gimp-brightness-contrast-tool",
                 _("Brightness-Contrast"),

@@ -40,8 +40,6 @@ struct _GimpImageMapTool
   GimpDrawable  *drawable;
   GimpImageMap  *image_map;
 
-  gboolean       preview;
-
   /* the dialog */
   const gchar   *shell_desc;
 

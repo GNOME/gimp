@@ -68,6 +68,8 @@ libapptools_a_sources = \
 	gimphistogramoptions.h		\
 	gimphuesaturationtool.c		\
 	gimphuesaturationtool.h		\
+	gimpimagemapoptions.c		\
+	gimpimagemapoptions.h		\
 	gimpimagemaptool.c		\
 	gimpimagemaptool.h		\
 	gimpinkoptions.c		\
