@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "vectors-types.h"
 
 #include "core/gimpimage.h"
@@ -42,6 +44,7 @@
 static void    gimp_vectors_export_path (const GimpVectors *vectors,
                                          FILE              *file);
 static gchar * gimp_vectors_path_data   (const GimpVectors *vectors);
+static gchar * gimp_vectors_image_size  (const GimpImage   *image);
 
 
 /**
@@ -62,6 +65,7 @@ gimp_vectors_export (const GimpImage    *image,
                      GError            **error)
 {
   FILE  *file;
+  gchar *size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
@@ -80,10 +84,17 @@ gimp_vectors_export (const GimpImage    *image,
   fprintf (file,
            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
            "<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 20010904//EN\"\n"
-           "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n");
-  fprintf (file,
-           "<svg xmlns=\"http://www.w3.org/2000/svg\"\n"
-           "     viewBox=\"0 0 %d %d\">\n\n",
+           "              \"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd\">\n"
+           "<svg xmlns=\"http://www.w3.org/2000/svg\"\n");
+
+  size = gimp_vectors_image_size (image);
+  if (size)
+    {
+      fprintf (file, "     %s\n", size);
+      g_free (size);
+    }
+
+  fprintf (file, "     viewBox=\"0 0 %d %d\">\n",
            image->width, image->height);
 
   if (vectors)
@@ -109,6 +120,40 @@ gimp_vectors_export (const GimpImage    *image,
     }
 
   return TRUE;
+}
+
+static gchar *
+gimp_vectors_image_size (const GimpImage *image)
+{
+  const gchar *abbrev = NULL;
+
+  switch (image->unit)
+    {
+    case GIMP_UNIT_INCH:  abbrev = "in";  break;
+    case GIMP_UNIT_MM:    abbrev = "mm";  break;
+    case GIMP_UNIT_POINT: abbrev = "pt";  break;
+    case GIMP_UNIT_PICA:  abbrev = "pc";  break;
+    default:
+      break;
+    }
+
+  if (abbrev)
+    {
+      gchar w[G_ASCII_DTOSTR_BUF_SIZE];
+      gchar h[G_ASCII_DTOSTR_BUF_SIZE];
+
+      g_ascii_formatd (w, sizeof (w), "%g",
+                       (image->width * gimp_unit_get_factor (image->unit) /
+                        image->xresolution));
+      g_ascii_formatd (h, sizeof (h), "%g",
+                       (image->height * gimp_unit_get_factor (image->unit) /
+                        image->yresolution));
+
+      return g_strdup_printf ("width=\"%s%s\" height=\"%s%s\"",
+                              w, abbrev, h, abbrev);
+    }
+
+  return NULL;
 }
 
 static void

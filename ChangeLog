@@ -1,3 +1,13 @@
+2003-09-18  Sven Neumann  <sven@gimp.org>
+
+	* app/vectors/gimpvectors-export.c: save the vectors (or rather
+	image) dimensions in the exported SVG.
+
+	* app/vectors/gimpvectors-import.c: added SVG units parser and
+	finished viewport handling. The parser now respects the size
+	specified in the SVG and the image resolution. Should also handle
+	nested SVGs correctly, but this is untested. 
+
 2003-09-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am (gimp_1_3_LDFLAGS): specifying one symbol per

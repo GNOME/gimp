@@ -7,6 +7,12 @@
  * Some code here is based on code from librsvg that was originally
  * written by Raph Levien <raph@artofcode.com> for Gill.
  *
+ * This SVG path importer implements a subset of SVG that is sufficient
+ * to parse path elements and to apply all defined transformations as
+ * described by the SVG specification: http://www.w3.org/TR/SVG/.
+ * It must handle the SVG files exported by GIMP but it is also supposed
+ * to be able to extract paths from foreign SVG documents.
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -29,6 +35,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "vectors-types.h"
@@ -46,19 +53,27 @@
 #include "gimp-intl.h"
 
 
+typedef struct
+{
+  GQueue    *stack;
+  GimpImage *image;
+} SvgParser;
+
 typedef struct _SvgHandler SvgHandler;
 struct _SvgHandler
 {
   const gchar  *name;
+
+  void (* start) (SvgHandler   *handler,
+                  const gchar **names,
+                  const gchar **values,
+                  SvgParser    *parser);
+
   gdouble       width;
   gdouble       height;
   gchar        *id;
   GList        *paths;
   GimpMatrix3  *transform;
-
-  void (* start) (SvgHandler   *handler,
-                  const gchar **names,
-                  const gchar **values);
 };
 
 typedef struct
@@ -91,23 +106,30 @@ static const GMarkupParser markup_parser =
 
 static void  svg_handler_svg   (SvgHandler   *handler,
                                 const gchar **names,
-                                const gchar **values);
+                                const gchar **values,
+                                SvgParser    *parser);
 static void  svg_handler_group (SvgHandler   *handler,
                                 const gchar **names,
-                                const gchar **values);
+                                const gchar **values,
+                                SvgParser    *parser);
 static void  svg_handler_path  (SvgHandler   *handler,
                                 const gchar **names,
-                                const gchar **values);
+                                const gchar **values,
+                                SvgParser    *parser);
 
-static SvgHandler svg_handlers[] =
+static const SvgHandler svg_handlers[] =
 {
-  { "svg",  0, 0, NULL, NULL, NULL, svg_handler_svg   },
-  { "g",    0, 0, NULL, NULL, NULL, svg_handler_group },
-  { "path", 0, 0, NULL, NULL, NULL, svg_handler_path  },
-  { NULL,   0, 0, NULL, NULL, NULL, NULL              }
+  { "svg", svg_handler_svg   },
+  { "g",   svg_handler_group },
+  { "path",svg_handler_path  }
 };
 
 
+static gboolean   parse_svg_length    (const gchar  *value,
+                                       gdouble       reference,
+                                       gdouble       resolution,
+                                       gdouble      *scale,
+                                       gdouble      *length);
 static gboolean   parse_svg_viewbox   (const gchar  *value,
                                        gdouble       width,
                                        gdouble       height,
@@ -135,8 +157,8 @@ gimp_vectors_import (GimpImage    *image,
                      gboolean      merge,
                      GError      **error)
 {
-  GimpXmlParser *parser;
-  GQueue        *stack;
+  GimpXmlParser *xml_parser;
+  SvgParser      parser;
   GList         *paths;
   SvgHandler    *base;
   gboolean       success = TRUE;
@@ -145,7 +167,8 @@ gimp_vectors_import (GimpImage    *image,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  stack = g_queue_new ();
+  parser.stack = g_queue_new ();
+  parser.image = image;
 
   /*  the base of the stack, defines the size of the view-port  */
   base = g_new0 (SvgHandler, 1);
@@ -153,13 +176,13 @@ gimp_vectors_import (GimpImage    *image,
   base->width  = image->width;
   base->height = image->height;
 
-  g_queue_push_head (stack, base);
+  g_queue_push_head (parser.stack, base);
 
-  parser = gimp_xml_parser_new (&markup_parser, stack);
+  xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
-  success = gimp_xml_parser_parse_file (parser, filename, error);
+  success = gimp_xml_parser_parse_file (xml_parser, filename, error);
 
-  gimp_xml_parser_free (parser);
+  gimp_xml_parser_free (xml_parser);
 
   if (success)
     {
@@ -210,7 +233,7 @@ gimp_vectors_import (GimpImage    *image,
         }
     }
 
-  while ((base = g_queue_pop_head (stack)) != NULL)
+  while ((base = g_queue_pop_head (parser.stack)) != NULL)
     {
       for (paths = base->paths; paths; paths = paths->next)
         {
@@ -229,7 +252,7 @@ gimp_vectors_import (GimpImage    *image,
       g_free (base);
     }
 
-  g_queue_free (stack);
+  g_queue_free (parser.stack);
 
   return success;
 }
@@ -242,29 +265,32 @@ svg_parser_start_element (GMarkupParseContext *context,
                           gpointer             user_data,
                           GError             **error)
 {
-  GQueue     *stack = user_data;
+  SvgParser  *parser = user_data;
+  SvgHandler *handler;
   SvgHandler *base;
-  SvgHandler *handler = NULL;
-  gint        i;
+  gint        i = 0;
 
-  base = g_queue_peek_head (stack);
+  handler = g_new0 (SvgHandler, 1);
+  base    = g_queue_peek_head (parser->stack);
 
-  for (i = 0; !handler && i < G_N_ELEMENTS (svg_handlers); i++)
-    {
-      if (svg_handlers[i].name == NULL)
-        handler = svg_handlers + i;
-      else if (strcmp (svg_handlers[i].name, element_name) == 0)
-        handler = svg_handlers + i;
-    }
+  if (!base->width || !base->height)
+    i = G_N_ELEMENTS (svg_handlers);
 
-  handler = g_memdup (handler, sizeof (SvgHandler));
+  for (; i < G_N_ELEMENTS (svg_handlers); i++)
+    if (strcmp (svg_handlers[i].name, element_name) == 0)
+      {
+        handler->name  = svg_handlers[i].name;
+        handler->start = svg_handlers[i].start;
+        break;
+      }
+
   handler->width  = base->width;
   handler->height = base->height;
 
-  g_queue_push_head (stack, handler);
+  g_queue_push_head (parser->stack, handler);
 
   if (handler->start)
-    handler->start (handler, attribute_names, attribute_values);
+    handler->start (handler, attribute_names, attribute_values, parser);
 }
 
 static void
@@ -273,12 +299,16 @@ svg_parser_end_element (GMarkupParseContext *context,
                         gpointer             user_data,
                         GError             **error)
 {
-  GQueue     *stack = user_data;
+  SvgParser  *parser = user_data;
   SvgHandler *handler;
   SvgHandler *base;
   GList      *paths;
 
-  handler = g_queue_pop_head (stack);
+  handler = g_queue_pop_head (parser->stack);
+
+  g_return_if_fail (handler != NULL &&
+                    (handler->name == NULL ||
+                     strcmp (handler->name, element_name) == 0));
 
   if (handler->paths)
     {
@@ -297,7 +327,7 @@ svg_parser_end_element (GMarkupParseContext *context,
           g_free (handler->transform);
         }
 
-      base = g_queue_peek_head (stack);
+      base = g_queue_peek_head (parser->stack);
       base->paths = g_list_concat (base->paths, handler->paths);
     }
 
@@ -307,27 +337,82 @@ svg_parser_end_element (GMarkupParseContext *context,
 static void
 svg_handler_svg (SvgHandler   *handler,
                  const gchar **names,
-                 const gchar **values)
+                 const gchar **values,
+                 SvgParser    *parser)
 {
+  GimpMatrix3 *matrix;
+  GimpMatrix3  box;
+  const gchar *viewbox = NULL;
+  gdouble      x = 0;
+  gdouble      y = 0;
+  gdouble      w = handler->width;
+  gdouble      h = handler->height;
+  gdouble      xscale = 1.0;
+  gdouble      yscale = 1.0;
+
+  matrix = g_new (GimpMatrix3, 1);
+  gimp_matrix3_identity (matrix);
+
   while (*names)
     {
-      if (strcmp (*names, "viewBox") == 0 && !handler->transform)
+      if (strcmp (*names, "x") == 0)
         {
-          GimpMatrix3  matrix;
-
-          if (parse_svg_viewbox (*values,
-                                 handler->width, handler->height, &matrix))
-            handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            NULL, &x);
         }
+      else if (strcmp (*names, "y") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            NULL, &y);
+        }
+      else if (strcmp (*names, "width") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->width, parser->image->xresolution,
+                            &xscale, &w);
+        }
+      else if (strcmp (*names, "height") == 0)
+        {
+          parse_svg_length (*values,
+                            handler->height, parser->image->yresolution,
+                            &yscale, &h);
+        }
+      else if (strcmp (*names, "viewBox") == 0)
+        {
+          viewbox = *values;
+        }
+
       names++;
       values++;
     }
+
+  handler->width  = w;
+  handler->height = h;
+
+  gimp_matrix3_scale (matrix, xscale, yscale);
+
+  if (x || y)
+    {
+      SvgHandler *base = g_queue_peek_head (parser->stack);
+
+      /* according to the spec offsets are meaningless on the outermost svg */
+      if (strcmp (base->name, "image"))
+        gimp_matrix3_translate (matrix, x, y);
+    }
+
+  if (viewbox && parse_svg_viewbox (viewbox, w, h, &box))
+    gimp_matrix3_mult (&box, matrix);
+
+  handler->transform = matrix;
 }
 
 static void
 svg_handler_group (SvgHandler   *handler,
                    const gchar **names,
-                   const gchar **values)
+                   const gchar **values,
+                   SvgParser    *parser)
 {
   while (*names)
     {
@@ -347,7 +432,8 @@ svg_handler_group (SvgHandler   *handler,
 static void
 svg_handler_path (SvgHandler   *handler,
                   const gchar **names,
-                  const gchar **values)
+                  const gchar **values,
+                  SvgParser    *parser)
 {
   SvgPath *path = g_new0 (SvgPath, 1);
 
@@ -377,52 +463,125 @@ svg_handler_path (SvgHandler   *handler,
 }
 
 static gboolean
+parse_svg_length (const gchar *value,
+                  gdouble      reference,
+                  gdouble      resolution,
+                  gdouble     *scale,
+                  gdouble     *length)
+{
+  GimpUnit  unit = GIMP_UNIT_PIXEL;
+  gdouble   len;
+  gchar    *ptr;
+
+  len = g_ascii_strtod (value, &ptr);
+
+  while (g_ascii_isspace (*ptr))
+    ptr++;
+
+  switch (ptr[0])
+    {
+    case '\0':
+      break;
+
+    case 'p':
+      switch (ptr[1])
+        {
+        case 'x':                         break;
+        case 't': unit = GIMP_UNIT_POINT; break;
+        case 'c': unit = GIMP_UNIT_PICA;  break;
+        default:
+          return FALSE;
+        }
+      ptr += 2;
+      break;
+
+    case 'c':
+      if (ptr[1] == 'm')
+        len *= 10.0, unit = GIMP_UNIT_MM;
+      else
+        return FALSE;
+      ptr += 2;
+      break;
+
+    case 'm':
+      if (ptr[1] == 'm')
+        unit = GIMP_UNIT_MM;
+      else
+        return FALSE;
+      ptr += 2;
+      break;
+
+    case 'i':
+      if (ptr[1] == 'n')
+        unit = GIMP_UNIT_INCH;
+      else
+        return FALSE;
+      ptr += 2;
+      break;
+
+    case '%':
+      unit = GIMP_UNIT_PERCENT;
+      ptr += 1;
+      break;
+
+    default:
+      return FALSE;
+    }
+
+  while (g_ascii_isspace (*ptr))
+    ptr++;
+
+  if (*ptr)
+    return FALSE;
+
+  switch (unit)
+    {
+    case GIMP_UNIT_PERCENT:
+      *scale  = len / 100.0;
+      *length = len * reference / 100.0;
+      break;
+
+    default:
+      len = len / gimp_unit_get_factor (unit) * resolution;
+    case GIMP_UNIT_PIXEL:
+      *scale  = len / reference;
+      *length = len;
+      break;
+    }
+
+  return TRUE;
+}
+
+static gboolean
 parse_svg_viewbox (const gchar *value,
                    gdouble      width,
                    gdouble      height,
                    GimpMatrix3 *matrix)
 {
-  gdouble   x, y, w, h;
-  gchar    *tok;
-  gchar    *str     = g_strdup (value);
-  gboolean  success = FALSE;
+  gdouble  args[4];
+  gchar   *ptr;
+  gint     i;
 
-  x = y = w = h = 0;
+  for (i = 0; *value && i < 4; i++)
+    {
+      args[i] = g_ascii_strtod (value, &ptr);
+
+      while (*ptr == ',' || g_ascii_isspace (*ptr))
+        ptr++;
+
+      value = ptr;
+    }
+
+  if (i < 4)
+    return FALSE;
 
   gimp_matrix3_identity (matrix);
 
-  tok = strtok (str, ", \t");
-  if (tok)
-    {
-      x = g_ascii_strtod (tok, NULL);
-      tok = strtok (NULL, ", \t");
-      if (tok)
-        {
-          y = g_ascii_strtod (tok, NULL);
-          tok = strtok (NULL, ", \t");
-          if (tok != NULL)
-            {
-              w = g_ascii_strtod (tok, NULL);
-              tok = strtok (NULL, ", \t");
-              if (tok)
-                {
-                  h = g_ascii_strtod (tok, NULL);
-                  success = TRUE;
-                }
-            }
-        }
-    }
+  if (args[0] || args[1])
+    gimp_matrix3_translate (matrix, args[0], args[1]);
 
-  g_free (str);
-
-  if (!success)
-    return FALSE;
-
-  if (x || y)
-    gimp_matrix3_translate (matrix, x, y);
-
-  if (w && h)
-    gimp_matrix3_scale (matrix, width / w, height / h);
+  if (args[2] && args[3])
+    gimp_matrix3_scale (matrix, width / args[2], height / args[3]);
 
   return TRUE;
 }
