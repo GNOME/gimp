@@ -1,3 +1,7 @@
+2001-11-29  Abel Cheung  <maddog@linux.org.hk>
+
+	* plug-ins/gap/gap_decode_xanim.c(p_xanim_dialog): fix typo.
+
 2001-11-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpimage.c: gimp_image_construct_layers/channels():
