@@ -613,28 +613,13 @@ blend_pixels (const unsigned char *src1,
 	      int            bytes,
 	      int            has_alpha)
 {
-  const guint blend1 = 256 - blend;
-  const guint blend2 = blend + 1;
-  const guint  c     = bytes - 1;
-  guint b;
+  int b;
+  unsigned char blend2 = (255 - blend);
 
-  while (w--)
+  while (w --)
     {
-      guint a1 = blend1 * src1[c];
-      guint a2 = blend2 * src2[c];
-      guint a  = a1 + a2;
-
-      if (!a)
-	{
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = 0;
-	}
-      else
-	{
-	  for (b = 0; b < c; b++)
-	    dest[b] = (src1[b] * a1 + src2[b] * a2) / a;
-	  dest[c] = a >> 8;
-	}
+      for (b = 0; b < bytes; b++)
+	dest[b] = (src1[b] * blend2 + src2[b] * blend) / 255;
 
       src1 += bytes;
       src2 += bytes;
