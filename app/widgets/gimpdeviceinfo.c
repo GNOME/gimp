@@ -1132,15 +1132,16 @@ device_status_drop_brush (GtkWidget      *widget,
 			  gpointer        data)
 {
   GtkWidget *src;
-  GimpBrush *brush;
+  GimpBrush *brush = NULL;
   guint32 deviceid;
   GList *tmp_list;
   DeviceInfo *device_info = NULL;
 
   src = gtk_drag_get_source_widget (context);
-  if (!GIMP_IS_CONTEXT_PREVIEW (src) || !GIMP_CONTEXT_PREVIEW (src)->data)
+  brush = (GimpBrush *) gtk_object_get_data (GTK_OBJECT (src), "gimp_brush");
+  if (!brush)
     return;
-  brush = GIMP_BRUSH (GIMP_CONTEXT_PREVIEW (src)->data);
+
   deviceid = GPOINTER_TO_UINT (data);
 
   tmp_list = devices_info;
@@ -1172,15 +1173,16 @@ device_status_drop_pattern (GtkWidget      *widget,
 			    gpointer        data)
 {
   GtkWidget *src;
-  GPattern  *pattern;
+  GPattern  *pattern = NULL;
   guint32 deviceid;
   GList *tmp_list;
   DeviceInfo *device_info = NULL;
 
   src = gtk_drag_get_source_widget (context);
-  if (!GIMP_IS_CONTEXT_PREVIEW (src) || !GIMP_CONTEXT_PREVIEW (src)->data)
+  pattern = (GPattern *) gtk_object_get_data (GTK_OBJECT (src), "gimp_pattern");
+  if (!pattern)
     return;
-  pattern = (GPattern *)(GIMP_CONTEXT_PREVIEW (src)->data);
+  
   deviceid = GPOINTER_TO_UINT (data);
 
   tmp_list = devices_info;

@@ -137,7 +137,8 @@ static GtkTargetEntry display_target_table[] =
   GIMP_TARGET_LAYER,
   GIMP_TARGET_CHANNEL,
   GIMP_TARGET_LAYER_MASK,
-  GIMP_TARGET_COLOR
+  GIMP_TARGET_COLOR,
+  GIMP_TARGET_PATTERN
 };
 static guint display_n_targets = (sizeof (display_target_table) /
 				  sizeof (display_target_table[0]));

@@ -1,8 +1,23 @@
+Sat Oct  9 22:23:52 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* app/by_color_select.c:
+	applied a patch from Sam Phillips <sam@usaworks.com> that enables
+	color dnd to the by_color_select dialog
+
+	* app/devices.c
+	* app/disp_callbacks.c
+	* app/gimpcontextpreview.c
+	* app/indicator_area.c
+	* app/interface.c: changed the dnd of the context_preview to follow
+	the more generic style of the other dnd types. Now widgets that are
+	not themselves context_previews can accept dragged brushes, patterns
+	and gradients. The image displays now accepts pattern drags.
+
 Sat Oct  9 14:58:08 EDT 1999 Adrian Likins <adrian@gimp.org>
 
-	* app/about_dialog.c: added some more folks
-	* gimp.1: updated the list of contributors, and
-	a few other misc updates.
+        * app/about_dialog.c: added some more folks
+        * gimp.1: updated the list of contributors, and
+        a few other misc updates.
 
 Sat Oct  9 21:03:08 *EST 1999  Sven Neumann <sven@gimp.org>
 

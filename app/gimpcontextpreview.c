@@ -114,6 +114,13 @@ static gchar* context_preview_drag_window_name[3] =
   "gimp-gradient-drag-window"
 };
 
+static gchar* context_preview_drag_type[3] =
+{
+  "gimp_brush",
+  "gimp_pattern",
+  "gimp_gradient"
+};
+
 /*  signals  */
 enum {
   CLICKED,
@@ -275,7 +282,9 @@ gimp_context_preview_update (GimpContextPreview *gcp,
 			   context_preview_target_table[gcp->type], n_targets,
 			   GDK_ACTION_COPY);
     }
-  
+  gtk_object_set_data (GTK_OBJECT (gcp),
+		       context_preview_drag_type[gcp->type], data);
+
   if (gcp->data && gcp->type == GCP_BRUSH)
     gtk_signal_disconnect_by_data (GTK_OBJECT (gcp->data), gcp);
 

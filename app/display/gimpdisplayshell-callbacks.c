@@ -34,6 +34,7 @@
 #include "interface.h"
 #include "layer_select.h"
 #include "move.h"
+#include "patterns.h"
 #include "scale.h"
 #include "scroll.h"
 #include "tools.h"
@@ -639,6 +640,7 @@ gdisplay_drag_drop (GtkWidget      *widget,
       Channel      *channel        = NULL;
       LayerMask    *layer_mask     = NULL;
       GImage       *component      = NULL;
+      GPattern     *pattern        = NULL;
       ChannelType   component_type = -1;
 
       layer = (Layer *) gtk_object_get_data (GTK_OBJECT (src_widget),
@@ -649,6 +651,8 @@ gdisplay_drag_drop (GtkWidget      *widget,
 						      "gimp_layer_mask");
       component = (GImage *) gtk_object_get_data (GTK_OBJECT (src_widget),
 						  "gimp_component");
+      pattern = (GPattern *) gtk_object_get_data (GTK_OBJECT (src_widget),
+						  "gimp_pattern");
 
       if (layer)
 	{
@@ -756,6 +760,58 @@ gdisplay_drag_drop (GtkWidget      *widget,
 	      return_val = TRUE;
 
 	      undo_push_group_end (dest_gimage);
+	    }
+	}
+      
+      if (pattern)
+	{
+	  GimpImage    *gimage;
+	  GimpDrawable *drawable;
+	  GimpContext  *fill_context;
+	  TileManager  *buf_tiles;
+	  PixelRegion   bufPR;
+	  gint          x1, x2, y1, y2;
+	  gint          bytes;
+	  gboolean      has_alpha;
+
+	  gimage = gdisp->gimage;
+	  drawable = gimage_active_drawable (gimage);
+	  if (drawable)
+	    {
+	      gimp_add_busy_cursors ();
+
+	      /*  Get the fill parameters  */
+	      if (gimp_context_get_current () == gimp_context_get_user () &&
+		  ! global_paint_options)
+		fill_context = tool_info[BUCKET_FILL].tool_context;
+	      else
+		fill_context = gimp_context_get_current ();
+
+	      drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+	      bytes = drawable_bytes (drawable);
+	      has_alpha = drawable_has_alpha (drawable);
+
+	        /*  Fill the region  */
+	      buf_tiles = tile_manager_new ((x2 - x1), (y2 - y1), bytes);
+	      pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
+	      bucket_fill_region (PATTERN_BUCKET_FILL, &bufPR, NULL,
+				  NULL, pattern->mask, x1, y1, has_alpha);
+	      
+	      /*  Apply it to the image  */
+	      pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
+	      gimage_apply_image (gimage, drawable, &bufPR, TRUE,
+				  gimp_context_get_opacity (fill_context) * 255,
+				  gimp_context_get_paint_mode (fill_context),
+				  NULL, x1, y1);
+	      tile_manager_destroy (buf_tiles);
+	      
+	      /*  Update the displays  */
+	      drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+	      gdisplays_flush ();
+	      
+	      gimp_remove_busy_cursors (NULL);
+	      
+	      return_val = TRUE;
 	    }
 	}
     }

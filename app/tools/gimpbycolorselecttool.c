@@ -32,6 +32,8 @@
 #include "gdisplay.h"
 #include "selection_options.h"
 
+#include "gimpdnd.h"
+
 #include "libgimp/gimpintl.h"
 
 #include "tile.h"			/* ick. */
@@ -71,6 +73,15 @@ static SelectionOptions *by_color_options = NULL;
 /*  the by color selection dialog  */
 static ByColorDialog *  by_color_dialog = NULL;
 
+/*  dnd stuff  */
+static GtkTargetEntry by_color_select_image_target_table[] =
+{
+  GIMP_TARGET_COLOR
+};
+static guint n_by_color_select_image_targets = 
+    (sizeof (by_color_select_image_target_table) /
+     sizeof (by_color_select_image_target_table[0]));
+static void by_color_select_color_drop (GtkWidget*, guchar, guchar, guchar, gpointer);
 
 /*  by_color select action functions  */
 
@@ -592,6 +603,17 @@ by_color_select_new_dialog ()
 		      bcd);
   gtk_container_add (GTK_CONTAINER (frame), bcd->preview);
 
+  /* dnd colors to the image window */
+  gtk_drag_dest_set (bcd->preview, 
+                     GTK_DEST_DEFAULT_HIGHLIGHT |
+                     GTK_DEST_DEFAULT_MOTION |
+                     GTK_DEST_DEFAULT_DROP, 
+                     by_color_select_image_target_table, 
+                     n_by_color_select_image_targets,
+                     GDK_ACTION_COPY);
+  gimp_dnd_color_dest_set (bcd->preview, by_color_select_color_drop, bcd);
+
+
   gtk_widget_show (bcd->preview);
   gtk_widget_show (frame);
   gtk_widget_show (util_box);
@@ -928,6 +950,43 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 		   by_color_options->sample_merged);
 
   tile_release (tile, FALSE);
+
+  /*  show selection on all views  */
+  gdisplays_flush ();
+
+  /*  update the preview window  */
+  by_color_select_render (bcd, bcd->gimage);
+  by_color_select_draw (bcd, bcd->gimage);
+}
+
+static void
+by_color_select_color_drop (GtkWidget *widget,
+                            guchar      r,
+                            guchar      g,
+                            guchar      b,
+                            gpointer    data)
+
+{
+  GimpDrawable *drawable;
+  ByColorDialog *bcd;
+  guchar col[3];
+
+  bcd = (ByColorDialog*) data;
+  drawable = gimage_active_drawable (bcd->gimage);
+  
+  col[0] = r;
+  col[1] = g;
+  col[2] = b;
+
+  by_color_select (bcd->gimage, 
+                   drawable, 
+                   col, 
+                   bcd->threshold,
+                   bcd->operation,
+                   by_color_options->antialias,
+                   by_color_options->feather,
+                   by_color_options->feather_radius,
+                   by_color_options->sample_merged);     
 
   /*  show selection on all views  */
   gdisplays_flush ();
