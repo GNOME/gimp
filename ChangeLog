@@ -1,3 +1,27 @@
+2004-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: removed "locale_domain" and "help_domain"
+	parameters from GimpMenusCreateFunc.
+
+	* app/plug-in/plug-ins.c (plug_ins_temp_proc_def_add)
+	* app/actions/plug-in-actions.[ch] (plug_in_actions_add_proc_def):
+	changed accordingly.
+
+	* app/widgets/gimpactiongroup.[ch]: remember all created action
+	groups is a hash table in GimpActionGroupClass.  Added
+	gimp_action_groups_from_name() which returns a GList of all groups
+	with the given name.
+
+	* app/actions/plug-in-actions.[ch] (plug_in_actions_setup):
+	removed the tree sorting code. Actions don't need to be ordered
+	alphabetically.
+
+	(plug_in_actions_update): copied & ported plug_in_menus_update().
+
+	* app/gui/gui-vtable.c (gui_menus_create,delete_entry):
+	dynamically add/remove plug-in actions in all "plug-in" action
+	groups.
+
 2004-04-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp.[ch]: changed GimpMenusDeleteFunc to take

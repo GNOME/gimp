@@ -46,18 +46,22 @@ enum
 };
 
 
-static void   gimp_action_group_init         (GimpActionGroup      *group);
-static void   gimp_action_group_class_init   (GimpActionGroupClass *klass);
+static void   gimp_action_group_init           (GimpActionGroup       *group);
+static void   gimp_action_group_class_init     (GimpActionGroupClass  *klass);
 
-static void   gimp_action_group_finalize     (GObject              *object);
-static void   gimp_action_group_set_property (GObject              *object,
-                                              guint                 prop_id,
-                                              const GValue         *value,
-                                              GParamSpec           *pspec);
-static void   gimp_action_group_get_property (GObject              *object,
-                                              guint                 prop_id,
-                                              GValue               *value,
-                                              GParamSpec           *pspec);
+static GObject * gimp_action_group_constructor (GType                  type,
+                                                guint                  n_params,
+                                                GObjectConstructParam *params);
+static void   gimp_action_group_dispose        (GObject               *object);
+static void   gimp_action_group_finalize       (GObject               *object);
+static void   gimp_action_group_set_property   (GObject               *object,
+                                                guint                  prop_id,
+                                                const GValue          *value,
+                                                GParamSpec            *pspec);
+static void   gimp_action_group_get_property   (GObject               *object,
+                                                guint                  prop_id,
+                                                GValue                *value,
+                                                GParamSpec            *pspec);
 
 
 static GtkActionGroupClass *parent_class = NULL;
@@ -98,6 +102,8 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
+  object_class->constructor  = gimp_action_group_constructor;
+  object_class->dispose      = gimp_action_group_dispose;
   object_class->finalize     = gimp_action_group_finalize;
   object_class->set_property = gimp_action_group_set_property;
   object_class->get_property = gimp_action_group_get_property;
@@ -115,12 +121,45 @@ gimp_action_group_class_init (GimpActionGroupClass *klass)
                                                         NULL,
                                                         G_PARAM_READWRITE));
 
+
+  klass->groups = g_hash_table_new_full (g_str_hash, g_str_equal,
+                                         g_free, NULL);
 }
 
 static void
 gimp_action_group_init (GimpActionGroup *group)
 {
   group->translation_domain = NULL;
+}
+
+static GObject *
+gimp_action_group_constructor (GType                  type,
+                               guint                  n_params,
+                               GObjectConstructParam *params)
+{
+  GObject     *object;
+  const gchar *name;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  name = gtk_action_group_get_name (GTK_ACTION_GROUP (object));
+
+  if (name)
+    {
+      GimpActionGroupClass *group_class;
+      GList                *list;
+
+      group_class = GIMP_ACTION_GROUP_GET_CLASS (object);
+
+      list = g_hash_table_lookup (group_class->groups, name);
+
+      list = g_list_append (list, object);
+
+      g_hash_table_replace (group_class->groups,
+                            g_strdup (name), list);
+    }
+
+  return object;
 }
 
 static void
@@ -135,6 +174,37 @@ gimp_action_group_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_action_group_dispose (GObject *object)
+{
+  const gchar *name;
+
+  name = gtk_action_group_get_name (GTK_ACTION_GROUP (object));
+
+  if (name)
+    {
+      GimpActionGroupClass *group_class;
+      GList                *list;
+
+      group_class = GIMP_ACTION_GROUP_GET_CLASS (object);
+
+      list = g_hash_table_lookup (group_class->groups, name);
+
+      if (list)
+        {
+          list = g_list_remove (list, object);
+
+          if (list)
+            g_hash_table_replace (group_class->groups,
+                                  g_strdup (name), list);
+          else
+            g_hash_table_remove (group_class->groups, name);
+        }
+    }
+
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void
@@ -211,6 +281,23 @@ gimp_action_group_new (Gimp                      *gimp,
   group->update_func = update_func;
 
   return group;
+}
+
+GList *
+gimp_action_groups_from_name (const gchar *name)
+{
+  GimpActionGroupClass *group_class;
+  GList                *list;
+
+  g_return_val_if_fail (name != NULL, NULL);
+
+  group_class = g_type_class_ref (GIMP_TYPE_ACTION_GROUP);
+
+  list = g_hash_table_lookup (group_class->groups, name);
+
+  g_type_class_unref (group_class);
+
+  return list;
 }
 
 void
@@ -688,7 +775,7 @@ gimp_action_group_set_action_important (GimpActionGroup *group,
 
   if (! action)
     {
-      g_warning ("%s: Unable to set \"is_important\" of action "
+      g_warning ("%s: Unable to set \"is-important\" of action "
                  "which doesn't exist: %s",
                  G_STRLOC, action_name);
       return;

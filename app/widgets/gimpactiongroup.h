@@ -48,6 +48,8 @@ struct _GimpActionGroup
 struct _GimpActionGroupClass
 {
   GtkActionGroupClass  parent_class;
+
+  GHashTable          *groups;
 };
 
 struct _GimpActionEntry
@@ -115,7 +117,9 @@ struct _GimpStringActionEntry
 GType            gimp_action_group_get_type (void);
 GimpActionGroup *gimp_action_group_new      (Gimp                  *gimp,
                                              const gchar           *name,
-                                             GimpActionGroupUpdateFunc );
+                                             GimpActionGroupUpdateFunc update_func);
+
+GList *gimp_action_groups_from_name         (const gchar           *name);
 
 void   gimp_action_group_update             (GimpActionGroup       *group,
                                              gpointer               update_data);

@@ -26,9 +26,7 @@ void   plug_in_actions_update      (GimpActionGroup *group,
                                     gpointer         data);
 
 void   plug_in_actions_add_proc    (GimpActionGroup *group,
-                                    PlugInProcDef   *proc_def,
-                                    const gchar     *locale_domain,
-                                    const gchar     *help_domain);
+                                    PlugInProcDef   *proc_def);
 void   plug_in_actions_remove_proc (GimpActionGroup *group,
                                     PlugInProcDef   *proc_def);
 

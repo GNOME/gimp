@@ -1074,15 +1074,13 @@ gimp_menus_init (Gimp        *gimp,
 
 void
 gimp_menus_create_entry (Gimp          *gimp,
-                         PlugInProcDef *proc_def,
-                         const gchar   *locale_domain,
-                         const gchar   *help_domain)
+                         PlugInProcDef *proc_def)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (proc_def != NULL);
 
   if (gimp->gui_menus_create_func)
-    gimp->gui_menus_create_func (gimp, proc_def, locale_domain, help_domain);
+    gimp->gui_menus_create_func (gimp, proc_def);
 }
 
 void

@@ -29,6 +29,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpcontext.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 
 #include "pdb/procedural_db.h"
@@ -38,6 +39,10 @@
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpitemtreeview.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "plug-in-actions.h"
 #include "plug-in-commands.h"
@@ -45,26 +50,9 @@
 #include "gimp-intl.h"
 
 
-typedef struct _PlugInActionEntry PlugInActionEntry;
-
-struct _PlugInActionEntry
-{
-  PlugInProcDef *proc_def;
-  const gchar   *locale_domain;
-  const gchar   *help_domain;
-};
-
-
-/*  local function prototypes  */
-
-static gboolean plug_in_actions_tree_traverse_func (gpointer           foo,
-                                                    PlugInActionEntry *entry,
-                                                    GimpActionGroup   *group);
-
-
 static GimpActionEntry plug_in_actions[] =
 {
-  { "plug-in-menu",                NULL, N_("Filte_rs")      },
+  { "plug-in-menu",                NULL, N_("Filte_rs")       },
   { "plug-in-blur-menu",           NULL, N_("_Blur")          },
   { "plug-in-colors-menu",         NULL, N_("_Colors")        },
   { "plug-in-colors-map-menu",     NULL, N_("Ma_p")           },
@@ -107,8 +95,7 @@ void
 plug_in_actions_setup (GimpActionGroup *group,
                        gpointer         data)
 {
-  GSList *procs;
-  GTree  *action_entries;
+  GSList *list;
 
   gimp_action_group_add_actions (group,
                                  plug_in_actions,
@@ -121,14 +108,11 @@ plug_in_actions_setup (GimpActionGroup *group,
                                       G_CALLBACK (plug_in_repeat_cmd_callback),
                                       data);
 
-  action_entries = g_tree_new_full ((GCompareDataFunc) g_utf8_collate, NULL,
-                                    g_free, g_free);
-
-  for (procs = group->gimp->plug_in_proc_defs;
-       procs;
-       procs = procs->next)
+  for (list = group->gimp->plug_in_proc_defs;
+       list;
+       list = g_slist_next (list))
     {
-      PlugInProcDef *proc_def = procs->data;
+      PlugInProcDef *proc_def = list->data;
 
       if (proc_def->prog         &&
           proc_def->menu_path    &&
@@ -136,67 +120,177 @@ plug_in_actions_setup (GimpActionGroup *group,
           ! proc_def->prefixes   &&
           ! proc_def->magics)
         {
-          PlugInActionEntry *entry;
-          const gchar       *progname;
-          const gchar       *locale_domain;
-          const gchar       *help_domain;
-          gchar             *key;
-
-          progname = plug_in_proc_def_get_progname (proc_def);
-
-          locale_domain = plug_ins_locale_domain (group->gimp,
-                                                  progname, NULL);
-          help_domain = plug_ins_help_domain (group->gimp,
-                                              progname, NULL);
-
-          entry = g_new0 (PlugInActionEntry, 1);
-
-          entry->proc_def      = proc_def;
-          entry->locale_domain = locale_domain;
-          entry->help_domain   = help_domain;
-
-          key = gimp_strip_uline (dgettext (locale_domain,
-                                            proc_def->menu_path));
-          g_tree_insert (action_entries, key, entry);
+          plug_in_actions_add_proc (group, proc_def);
         }
     }
-
-  g_tree_foreach (action_entries,
-                  (GTraverseFunc) plug_in_actions_tree_traverse_func,
-                  group);
-  g_tree_destroy (action_entries);
 }
 
 void
 plug_in_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
+  GimpImage     *gimage = NULL;
+  GimpImageType  type   = -1;
+  GList         *list;
+
+  if (GIMP_IS_ITEM_TREE_VIEW (data))
+    gimage = GIMP_ITEM_TREE_VIEW (data)->gimage;
+  else if (GIMP_IS_DISPLAY_SHELL (data))
+    gimage = GIMP_DISPLAY_SHELL (data)->gdisp->gimage;
+  else if (GIMP_IS_DISPLAY (data))
+    gimage = GIMP_DISPLAY (data)->gimage;
+
+  if (gimage)
+    {
+      GimpDrawable *drawable = gimp_image_active_drawable (gimage);
+
+      type = gimp_drawable_type (drawable);
+    }
+
+  for (list = group->gimp->plug_in_proc_defs;
+       list;
+       list = g_slist_next (list))
+    {
+      PlugInProcDef *proc_def = list->data;
+
+      if (proc_def->menu_path       &&
+          proc_def->image_types_val &&
+          ! proc_def->extensions    &&
+          ! proc_def->prefixes      &&
+          ! proc_def->magics)
+        {
+          gboolean sensitive;
+
+          switch (type)
+            {
+            case GIMP_RGB_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_RGB_IMAGE;
+              break;
+            case GIMP_RGBA_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_RGBA_IMAGE;
+              break;
+            case GIMP_GRAY_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_GRAY_IMAGE;
+              break;
+            case GIMP_GRAYA_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_GRAYA_IMAGE;
+              break;
+            case GIMP_INDEXED_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_INDEXED_IMAGE;
+              break;
+            case GIMP_INDEXEDA_IMAGE:
+              sensitive = proc_def->image_types_val & PLUG_IN_INDEXEDA_IMAGE;
+              break;
+            default:
+              sensitive = FALSE;
+              break;
+            }
+
+          gimp_action_group_set_action_sensitive (group,
+                                                  proc_def->db_info.name,
+                                                  sensitive);
+
+          if (group->gimp->last_plug_in &&
+              group->gimp->last_plug_in == &proc_def->db_info)
+            {
+              const gchar *progname;
+              const gchar *path;
+              gchar       *stripped;
+              gchar       *basename;
+              gchar       *ellipses;
+              gchar       *repeat;
+              gchar       *reshow;
+
+              progname = plug_in_proc_def_get_progname (proc_def);
+
+              path = dgettext (plug_ins_locale_domain (group->gimp,
+                                                       progname, NULL),
+                               proc_def->menu_path);
+
+              stripped = gimp_strip_uline (path);
+              basename = g_path_get_basename (stripped);
+
+              g_free (stripped);
+
+              ellipses = strstr (basename, "...");
+
+              if (ellipses && ellipses == (basename + strlen (basename) - 3))
+                *ellipses = '\0';
+
+              repeat = g_strdup_printf (_("Re_peat \"%s\""), basename);
+              reshow = g_strdup_printf (_("R_e-show \"%s\""), basename);
+
+              g_free (basename);
+
+              gimp_action_group_set_action_label (group, "plug-in-repeat",
+                                                  repeat);
+              gimp_action_group_set_action_label (group, "plug-in-reshow",
+                                                  reshow);
+
+              g_free (repeat);
+              g_free (reshow);
+
+              gimp_action_group_set_action_sensitive (group, "plug-in-repeat",
+                                                      TRUE);
+              gimp_action_group_set_action_sensitive (group, "plug-in-reshow",
+                                                      TRUE);
+	    }
+	}
+    }
+
+  if (! group->gimp->last_plug_in)
+    {
+      gimp_action_group_set_action_label (group, "plug-in-repeat",
+                                          _("Repeat Last"));
+      gimp_action_group_set_action_label (group, "plug-in-reshow",
+                                          _("Re-Show Last"));
+
+      gimp_action_group_set_action_sensitive (group, "plug-in-repeat", FALSE);
+      gimp_action_group_set_action_sensitive (group, "plug-in-reshow", FALSE);
+    }
 }
 
 void
 plug_in_actions_add_proc (GimpActionGroup *group,
-                          PlugInProcDef   *proc_def,
-                          const gchar     *locale_domain,
-                          const gchar     *help_domain)
+                          PlugInProcDef   *proc_def)
 {
   GimpActionEntry  entry;
+  const gchar     *progname;
+  const gchar     *locale_domain;
+  const gchar     *help_domain;
+  gchar           *label;
   gchar           *help_id;
 
   g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
   g_return_if_fail (proc_def != NULL);
 
+  progname = plug_in_proc_def_get_progname (proc_def);
+
+  locale_domain = plug_ins_locale_domain (group->gimp, progname, NULL);
+  help_domain   = plug_ins_help_domain (group->gimp, progname, NULL);
+
   help_id = plug_in_proc_def_get_help_id (proc_def, help_domain);
+
+  label = g_strdup (strrchr (proc_def->menu_path, '/') + 1);
 
   entry.name        = proc_def->db_info.name;
   entry.stock_id    = NULL;
-  entry.label       = strrchr (proc_def->menu_path, '/') + 1;
+  entry.label       = label;
   entry.accelerator = proc_def->accelerator;
   entry.tooltip     = NULL;
   entry.callback    = G_CALLBACK (plug_in_run_cmd_callback);
   entry.help_id     = help_id;
 
+  g_print ("adding plug-in action '%s' (%s)\n",
+           entry.name, label);
+
+  g_object_set (group, "translation-domain", locale_domain, NULL);
+
   gimp_action_group_add_actions (group, &entry, 1, &proc_def->db_info);
 
+  g_object_set (group, "translation-domain", NULL, NULL);
+
+  g_free (label);
   g_free (help_id);
 }
 
@@ -213,21 +307,10 @@ plug_in_actions_remove_proc (GimpActionGroup *group,
                                         proc_def->db_info.name);
 
   if (action)
-    gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
-}
+    {
+      g_print ("removing plug-in action '%s'\n",
+               proc_def->db_info.name);
 
-
-/*  private functions  */
-
-static gboolean
-plug_in_actions_tree_traverse_func (gpointer           foo,
-                                    PlugInActionEntry *entry,
-                                    GimpActionGroup   *group)
-{
-  plug_in_actions_add_proc (group,
-                            entry->proc_def,
-                            entry->locale_domain,
-                            entry->help_domain);
-
-  return FALSE;
+      gtk_action_group_remove_action (GTK_ACTION_GROUP (group), action);
+    }
 }

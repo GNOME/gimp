@@ -30,6 +30,10 @@
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 
+#include "plug-in/plug-ins.h"
+#include "plug-in/plug-in-proc.h"
+
+#include "widgets/gimpactiongroup.h"
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimperrorconsole.h"
 #include "widgets/gimpitemfactory.h"
@@ -40,6 +44,8 @@
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpprogress.h"
+
+#include "actions/plug-in-actions.h"
 
 #include "brush-select.h"
 #include "dialogs.h"
@@ -67,9 +73,7 @@ static void           gui_menus_init           (Gimp          *gimp,
                                                 GSList        *plug_in_defs,
                                                 const gchar   *plugins_domain);
 static void           gui_menus_create_entry   (Gimp          *gimp,
-                                                PlugInProcDef *proc_def,
-                                                const gchar   *locale_domain,
-                                                const gchar   *help_domain);
+                                                PlugInProcDef *proc_def);
 static void           gui_menus_delete_entry   (Gimp          *gimp,
                                                 PlugInProcDef *proc_def);
 static GimpProgress * gui_start_progress       (Gimp          *gimp,
@@ -218,10 +222,25 @@ gui_menus_init (Gimp        *gimp,
 
 static void
 gui_menus_create_entry (Gimp          *gimp,
-                        PlugInProcDef *proc_def,
-                        const gchar   *locale_domain,
-                        const gchar   *help_domain)
+                        PlugInProcDef *proc_def)
 {
+  const gchar *progname;
+  const gchar *locale_domain;
+  const gchar *help_domain;
+  GList       *list;
+
+  for (list = gimp_action_groups_from_name ("plug-in");
+       list;
+       list = g_list_next (list))
+    {
+      plug_in_actions_add_proc (list->data, proc_def);
+    }
+
+  progname = plug_in_proc_def_get_progname (proc_def);
+
+  locale_domain = plug_ins_locale_domain (gimp, progname, NULL);
+  help_domain   = plug_ins_help_domain (gimp, progname, NULL);
+
   plug_in_menus_create_entry (NULL, proc_def, locale_domain, help_domain);
 }
 
@@ -229,7 +248,16 @@ static void
 gui_menus_delete_entry (Gimp          *gimp,
                         PlugInProcDef *proc_def)
 {
+  GList *list;
+
   plug_in_menus_delete_entry (proc_def);
+
+  for (list = gimp_action_groups_from_name ("plug-in");
+       list;
+       list = g_list_next (list))
+    {
+      plug_in_actions_remove_proc (list->data, proc_def);
+    }
 }
 
 static GimpProgress *

@@ -590,19 +590,7 @@ plug_ins_temp_proc_def_add (Gimp          *gimp,
   if (! gimp->no_interface)
     {
       if (proc_def->menu_path)
-        {
-          const gchar *progname;
-          const gchar *locale_domain;
-          const gchar *help_domain;
-
-          progname = plug_in_proc_def_get_progname (proc_def);
-
-          locale_domain = plug_ins_locale_domain (gimp, progname, NULL);
-          help_domain   = plug_ins_help_domain (gimp, progname, NULL);
-
-          gimp_menus_create_entry (gimp, proc_def,
-                                   locale_domain, help_domain);
-        }
+        gimp_menus_create_entry (gimp, proc_def);
     }
 
   /*  Register the procedural database entry  */
