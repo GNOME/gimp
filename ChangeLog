@@ -1,3 +1,8 @@
+Sun Apr 25 16:59:09 BST 1999 Adam D. Moss <adam@gimp.org>
+
+	* plug-ins/gif/gif.c: Save the comment back onto the image
+	as a persistant parasite if the comment was edited.
+
 1999-04-25  Michael Natterer  <mitschel@cs.tu-berlin.de>
 
 	* app/text_tool.c: added resolution support if the tool is used

@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 3.0.1 - 99/03/30
+ * Version 3.0.2 - 99/04/25
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -22,6 +22,10 @@
 
 /*
  * REVISION HISTORY
+ *
+ * 99/04/25
+ * 3.00.02 - Save the comment back onto the image as a persistant
+ *           parasite if the comment was edited.
  *
  * 99/03/30
  * 3.00.01 - Round image timing to nearest 10ms instead of
@@ -348,6 +352,8 @@ static void   comment_entry_callback  (GtkWidget *widget,
 
 
 static gint     radio_pressed[3];
+
+static gboolean comment_was_edited = FALSE;
 
 static gboolean can_crop;
 static GRunModeType run_mode;
@@ -868,6 +874,20 @@ save_image (char   *filename,
   unsigned char bgred, bggreen, bgblue;
 
 
+#ifdef FACEHUGGERS
+  /* Save the comment back to the ImageID, if appropriate */
+  if (globalcomment != NULL &&
+      comment_was_edited)
+    {
+      comment_parasite = parasite_new ("gimp-comment", PARASITE_PERSISTENT,
+				       strlen(globalcomment)+1,
+				       (void*)globalcomment);
+      gimp_image_attach_parasite (image_ID, comment_parasite);
+      parasite_free (comment_parasite);
+      comment_parasite = NULL;
+    }
+#endif
+
 
   /* get a list of layers for this image_ID */
   layers = gimp_image_get_layers (image_ID, &nlayers);  
@@ -1040,11 +1060,11 @@ save_image (char   *filename,
 	     whereas the estimate in the header was pessimistic but still
 	     needs to be upheld... */
 #ifdef GIFDEBUG
-	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!\n",
+	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!",
 		    liberalBPP, BitsPerPixel);
 #endif
-	  g_warning("Transparent colour may be incorrect on viewers which"
-		    " don't support transparency.\n");
+	  g_warning("Transparent colour *might* be incorrect on viewers which"
+		    " don't support transparency.");
 	}
       useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
@@ -2587,7 +2607,9 @@ comment_entry_callback (GtkWidget *widget,
   strcpy(globalcomment, str);
   g_free(str);
 
-  /* g_print ("COMMENT: %s\n",globalcomment); */
+  comment_was_edited = TRUE;
+
+  /*g_print ("COMMENT: %s\n",globalcomment);*/
 }
 
 /* The End */
