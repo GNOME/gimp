@@ -329,7 +329,8 @@ if parser.title == None:
 print '''<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 <html>
 <head>
-<title>%s</title>
+  <title>%s</title>
+  <link rel="icon" href="wilber-icon.png" type="image/png">
 </head>
 <body bgcolor="#ffffff">
 <table width="100%%" cellspacing="0" cellpadding="0" border="0">

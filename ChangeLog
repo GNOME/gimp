@@ -1,5 +1,9 @@
 2001-12-16  Sven Neumann  <sven@gimp.org>
 
+	* docs/make-todo: added icon for developer.gimp.org.
+
+2001-12-16  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-params.[ch]
 	* app/config/gimpconfig-types.[ch]: added support for GimpUnit type.
 	
