@@ -212,8 +212,6 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  (void) name; /* Shut up warnings about unused parameters. */
-
   *nreturn_vals = 1;
   *return_vals = values;
 
@@ -237,28 +235,36 @@ run (const gchar      *name,
   if (run_mode == GIMP_RUN_NONINTERACTIVE)
     {
       if (nparams != 11)
-	status = GIMP_PDB_CALLING_ERROR;
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
       else
 	{
-	  if (param[3].data.d_int32 != 25) {
-	    status = GIMP_PDB_CALLING_ERROR;
-	  } else {
-	    for (y = 0; y < 5; y++)
-	      for (x = 0; x < 5; x++)
-		my_config.matrix[x][y]=param[4].data.d_floatarray[y*5+x];
-	  }
+	  if (param[3].data.d_int32 != 25)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              for (y = 0; y < 5; y++)
+                for (x = 0; x < 5; x++)
+                  my_config.matrix[x][y]=param[4].data.d_floatarray[y*5+x];
+            }
 
 	  my_config.alpha_alg = param[5].data.d_int32;
 	  my_config.divisor   = param[6].data.d_float;
 	  my_config.offset    = param[7].data.d_float;
 
 
-	  if (param[8].data.d_int32 != 5) {
-	    status = GIMP_PDB_CALLING_ERROR;
-	  } else {
-	    for (y = 0; y < 5; y++)
-	      my_config.channels[y] = param[9].data.d_int32array[y];
-	  }
+	  if (param[8].data.d_int32 != 5)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              for (y = 0; y < 5; y++)
+                my_config.channels[y] = param[9].data.d_int32array[y];
+            }
 
 	  my_config.bmode     = param[10].data.d_int32;
 
@@ -275,7 +281,8 @@ run (const gchar      *name,
 	   *  expect the user to set us up with the right values using gdb.
 	   */
 	  check_config ();
-	  if (!dialog())
+
+	  if (! dialog ())
 	    {
 	      /* The dialog was closed, or something similarly evil happened. */
 	      status = GIMP_PDB_EXECUTION_ERROR;
@@ -286,8 +293,8 @@ run (const gchar      *name,
   if (status == GIMP_PDB_SUCCESS)
     {
       /*  Make sure that the drawable is gray or RGB color  */
-      if (gimp_drawable_is_rgb(drawable->drawable_id) ||
-	  gimp_drawable_is_gray(drawable->drawable_id))
+      if (gimp_drawable_is_rgb (drawable->drawable_id) ||
+	  gimp_drawable_is_gray (drawable->drawable_id))
 	{
 	  gimp_progress_init (_("Applying convolution"));
 	  gimp_tile_cache_ntiles (2 * (drawable->width /
@@ -305,6 +312,7 @@ run (const gchar      *name,
 	{
 	  status = GIMP_PDB_EXECUTION_ERROR;
 	}
+
       gimp_drawable_detach (drawable);
     }
 

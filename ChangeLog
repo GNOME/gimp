@@ -1,5 +1,9 @@
 2003-12-21  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/convmatrix.c: indentation & whitespace cleanup.
+
+2003-12-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-dnd.[ch]: added
 	gimp_display_shell_drop_svg() (untested because there is no place
 	to drag an SVG from yet...).
