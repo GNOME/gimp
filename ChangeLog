@@ -1,3 +1,9 @@
+2000-12-18  Daniel Egger <egger@suse.de>
+
+	* plug-ins/ifcompose/ifscompose.c:
+	Second attempt from David Neary which should work
+	better. 
+
 2000-12-18  Jens Lautenbacher  <jtl@gimp.org>
 	    Sven Neumann <sven@gimp.org>
 

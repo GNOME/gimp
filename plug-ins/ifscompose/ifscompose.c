@@ -1354,10 +1354,8 @@ ifs_compose (GimpDrawable *drawable)
 
   num_bands = ceil((gdouble)(width*height*SQR(ifsvals.subdivide)*5)
 		   / (1024 * ifsvals.max_memory));
-  band_height = (height / num_bands) + 1; 
-  /* For bug #9156 - adding 1 guarantees that band_height*num_bands>height
-   * band_height automatically got rounded down, resulting in a diff 
-   * of a few pixels. */ 
+  band_height = (height + num_bands - 1) / num_bands; 
+  
   if (band_height > height)
     band_height = height;
 
