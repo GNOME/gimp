@@ -155,6 +155,7 @@ static gint       color_notebook_hex_entry_events (GtkWidget        *widget,
 						   GdkEvent         *event,
 						   gpointer          data);
 
+static void       color_history_init              (void);
 static void       color_history_color_clicked     (GtkWidget        *widget,
 						   gpointer          data);
 static void       color_history_color_changed     (GtkWidget        *widget,
@@ -225,16 +226,8 @@ color_notebook_new (GimpRGB               *color,
   g_return_val_if_fail (selector_info != NULL, NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  /* EEK */
   if (! color_history_initialized)
-    {
-      gint i;
-
-      for (i = 0; i < COLOR_HISTORY_SIZE; i++)
-	gimp_rgba_set (&color_history[i], 1.0, 1.0, 1.0, 1.0);
-
-      color_history_initialized = TRUE;
-    }
+    color_history_init ();
 
   cnp = g_new0 (ColorNotebook, 1);
 
@@ -496,11 +489,12 @@ color_notebook_new (GimpRGB               *color,
   color_notebook_update_scales (cnp, -1);
 
   /* The color history */
-  hbox = gtk_hbox_new (TRUE, 2);
+  hbox = gtk_hbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new ();
+  gtk_widget_set_usize (button, COLOR_AREA_SIZE, COLOR_AREA_SIZE);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gimp_help_set_help_data (button,
 			   _("Add the current color to the color history"),
@@ -1145,6 +1139,50 @@ color_notebook_hex_entry_events (GtkWidget *widget,
     }
 
   return FALSE;
+}
+
+void
+color_history_add_color_from_rc (GimpRGB *color)
+{
+  static gint index = 0;
+
+  if (! color_history_initialized)
+    color_history_init ();
+
+  if (color && index < COLOR_HISTORY_SIZE)
+    {
+      color_history[index++] = *color;
+    }
+}
+
+void
+color_history_write (FILE *fp)
+{
+  gint i;
+
+  fprintf (fp, "(color-history");
+
+  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+    {
+      fprintf (fp, "\n   (color %f %f %f %f)",
+	       color_history[i].r,
+	       color_history[i].g,
+	       color_history[i].b,
+	       color_history[i].a);
+    }
+
+  fprintf (fp, ")\n\n");
+}
+
+static void
+color_history_init (void)
+{
+  gint i;
+
+  for (i = 0; i < COLOR_HISTORY_SIZE; i++)
+    gimp_rgba_set (&color_history[i], 1.0, 1.0, 1.0, 1.0);
+
+  color_history_initialized = TRUE;
 }
 
 static void

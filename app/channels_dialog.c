@@ -2583,6 +2583,7 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   /*  The table  */
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The name entry hbox, label and entry  */
@@ -2612,7 +2613,6 @@ channels_dialog_new_channel_query (GimpImage* gimage)
   opacity_scale = gtk_hscale_new (GTK_ADJUSTMENT (opacity_scale_data));
   gtk_table_attach_defaults (GTK_TABLE (table), opacity_scale, 1, 2, 1, 2);
   gtk_scale_set_value_pos (GTK_SCALE (opacity_scale), GTK_POS_TOP);
-  gtk_range_set_update_policy (GTK_RANGE (opacity_scale), GTK_UPDATE_DELAYED);
   gtk_signal_connect (GTK_OBJECT (opacity_scale_data), "value_changed",
 		      GTK_SIGNAL_FUNC (channels_dialog_opacity_update),
 		      options->color_panel);
@@ -2737,6 +2737,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   /*  The table  */
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
 
   /*  The name entry  */

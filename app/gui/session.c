@@ -51,21 +51,26 @@
 
 #include "app_procs.h"
 #include "appenv.h"
+#include "color_notebook.h"
 #include "commands.h"
 #include "gimprc.h"
 #include "session.h"
 
 #include "libgimp/gimpenv.h"
 
-static void sessionrc_write_info     (SessionInfo *info,
-				      FILE        *fp);
-static void session_open_dialog      (SessionInfo *info);
-static void session_reset_open_state (SessionInfo *info);
-
-GList *session_info_updates = NULL;
 
 #define LEFT_OFFSET 60
 #define TOP_OFFSET  60
+
+
+static void   sessionrc_write_info     (SessionInfo *info,
+					FILE        *fp);
+static void   session_open_dialog      (SessionInfo *info);
+static void   session_reset_open_state (SessionInfo *info);
+
+
+GList *session_info_updates = NULL;
+
 
 /* global session variables */
 SessionInfo toolbox_session_info =
@@ -168,7 +173,8 @@ SessionInfo document_index_session_info =
 };
 
 
-/* public functions */
+/*  public functions  */
+
 void 
 session_get_window_info (GtkWidget   *window, 
 			 SessionInfo *info)
@@ -257,7 +263,9 @@ save_sessionrc (void)
   g_list_foreach (session_info_updates, (GFunc) sessionrc_write_info, fp);
 
   /* save last tip shown */
-  fprintf(fp, "(last-tip-shown %d)\n\n", last_tip + 1);
+  fprintf (fp, "(last-tip-shown %d)\n\n", last_tip + 1);
+
+  color_history_write (fp);
 
   fclose (fp);
 }
@@ -302,7 +310,8 @@ session_restore (void)
 
 /* internal function */
 static void
-sessionrc_write_info (SessionInfo *info, FILE *fp)
+sessionrc_write_info (SessionInfo *info,
+		      FILE        *fp)
 {
   if (fp == NULL || info == NULL) 
     return;

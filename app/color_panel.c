@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <stdio.h>
+
 #include <gtk/gtk.h>
 
 #include "apptypes.h"

@@ -37,6 +37,7 @@
 
 #include "app_procs.h"
 #include "appenv.h"
+#include "color_notebook.h"
 #include "cursorutil.h"
 #include "devices.h"
 #include "errors.h"
@@ -83,6 +84,7 @@ typedef enum
   TT_XMENUPATH,
   TT_XDEVICE,
   TT_XSESSIONINFO,
+  TT_XCOLORHISTORY,
   TT_XUNITINFO,
   TT_XPARASITE,
   TT_XNAVPREVSIZE,
@@ -207,6 +209,7 @@ static gint parse_unit_info          (gpointer val1p, gpointer val2p);
 static gint parse_parasite           (gpointer val1p, gpointer val2p);
 static gint parse_help_browser       (gpointer val1p, gpointer val2p);
 static gint parse_cursor_mode        (gpointer val1p, gpointer val2p);
+static gint parse_color_history      (gpointer val1p, gpointer val2p);
 
 static gint parse_locale_def (PlugInDef      *plug_in_def);
 static gint parse_help_def   (PlugInDef      *plug_in_def);
@@ -234,17 +237,20 @@ static inline gchar * help_browser_to_str       (gpointer val1p, gpointer val2p)
 static inline gchar * cursor_mode_to_str        (gpointer val1p, gpointer val2p);
 static inline gchar * comment_to_str            (gpointer val1p, gpointer val2p);
 
-static gchar *transform_path           (gchar *path,  gboolean destroy);
-static void   gimprc_set_token         (gchar *token, gchar *value);
-static void   add_gimp_directory_token (gchar *gimp_dir);
+static gchar *transform_path           (gchar    *path, 
+					gboolean  destroy);
+static void   gimprc_set_token         (gchar    *token,
+					gchar    *value);
+static void   add_gimp_directory_token (gchar    *gimp_dir);
 #ifdef __EMX__
-static void   add_x11root_token        (gchar *x11root);
+static void   add_x11root_token        (gchar    *x11root);
 #endif
-static gchar *open_backup_file (gchar  *filename,
-				gchar  *secondary_filename,
-				gchar **name_used,
-				FILE  **fp_new,
-				FILE  **fp_old);
+static gchar *open_backup_file         (gchar    *filename,
+					gchar    *secondary_filename,
+					gchar   **name_used,
+					FILE    **fp_new,
+					FILE    **fp_old);
+
 
 static ParseInfo  parse_info = { NULL };
 
@@ -321,6 +327,7 @@ static ParseFunc funcs[] =
   { "menu-path",                 TT_XMENUPATH,  NULL, NULL },
   { "device",                    TT_XDEVICE,    NULL, NULL },
   { "session-info",              TT_XSESSIONINFO, NULL, NULL },
+  { "color-history",             TT_XCOLORHISTORY, NULL, NULL },
   { "unit-info",                 TT_XUNITINFO,  NULL, NULL },
   { "monitor-xresolution",       TT_DOUBLE,     &monitor_xres, NULL },
   { "monitor-yresolution",       TT_DOUBLE,     &monitor_yres, NULL },
@@ -889,6 +896,8 @@ parse_statement (void)
 	  return parse_device (funcs[i].val1p, funcs[i].val2p);
 	case TT_XSESSIONINFO:
 	  return parse_session_info (funcs[i].val1p, funcs[i].val2p);
+	case TT_XCOLORHISTORY:
+	  return parse_color_history (funcs[i].val1p, funcs[i].val2p);
 	case TT_XUNITINFO:
 	  return parse_unit_info (funcs[i].val1p, funcs[i].val2p);
 	case TT_XPARASITE:
@@ -2347,6 +2356,61 @@ parse_session_info (gpointer val1p,
 }
 
 static gint
+parse_color_history (gpointer val1p, 
+		     gpointer val2p)
+{
+  gint     i;
+  gint     token = 0;
+  GimpRGB  color;
+
+  /* Parse one color per line: (r g b a) */
+
+  while (peek_next_token () == TOKEN_LEFT_PAREN)
+    {
+      token = get_next_token ();
+
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_SYMBOL))
+	return ERROR;
+      token = get_next_token ();
+
+      if (!strcmp ("color", token_sym))
+	{
+	  gdouble col[4];
+
+	  for (i = 0; i < 4; i++)
+	    {
+	      token = peek_next_token ();
+	      if (!token || (token != TOKEN_NUMBER))
+		return ERROR;
+	      token = get_next_token ();
+
+	      col[i] = token_num;
+	    }
+
+	  gimp_rgba_set (&color,
+			 col[0], col[1], col[2], col[3]);
+	  gimp_rgb_clamp (&color);
+
+	  color_history_add_color_from_rc (&color);
+	}
+      else
+	return ERROR;
+      
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_RIGHT_PAREN))
+	return ERROR;
+      token = get_next_token ();
+    }
+
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    return ERROR;
+  token = get_next_token ();
+
+  return OK;
+}
+
+static gint
 parse_unit_info (gpointer val1p, 
 		 gpointer val2p)
 {
@@ -2660,6 +2724,7 @@ value_to_str (gchar *name)
 	case TT_XMENUPATH:
 	case TT_XDEVICE:
 	case TT_XSESSIONINFO:
+	case TT_XCOLORHISTORY:
 	case TT_XUNITINFO:
 	case TT_XPARASITE:
 	  return NULL;
