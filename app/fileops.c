@@ -16,6 +16,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include "config.h"
 
 #ifdef HAVE_SYS_PARAM_H
@@ -82,6 +83,9 @@
 #include "libgimp/gimpintl.h"
 
 
+#define REVERT_DATA_KEY "revert_confirm_dialog"
+
+
 typedef struct _OverwriteData OverwriteData;
 
 struct _OverwriteData
@@ -90,10 +94,14 @@ struct _OverwriteData
   gchar *raw_filename;
 };
 
+
 static void    file_overwrite               (gchar         *filename,
 					     gchar         *raw_filename);
 static void    file_overwrite_callback      (GtkWidget     *widget,
 					     gboolean       overwrite,
+					     gpointer       data);
+static void    file_revert_confirm_callback (GtkWidget     *widget,
+					     gboolean       revert,
 					     gpointer       data);
 
 static GimpImage * file_open_image          (gchar         *filename,
@@ -154,21 +162,20 @@ static void    file_update_menus            (GSList        *procs,
 static GSList* clist_to_slist               (GtkCList *file_list);
 
 
-
-static GtkWidget  *fileload = NULL;
-static GtkWidget  *filesave = NULL;
+static GtkWidget  *fileload     = NULL;
+static GtkWidget  *filesave     = NULL;
 static GtkWidget  *open_options = NULL;
 static GtkWidget  *save_options = NULL;
 
 /* widgets for the open_options menu */
-static GtkPreview *open_options_preview = NULL;
-static GtkWidget  *open_options_fixed = NULL;
-static GtkWidget  *open_options_label = NULL;
-static GtkWidget  *open_options_frame = NULL;
+static GtkPreview *open_options_preview        = NULL;
+static GtkWidget  *open_options_fixed          = NULL;
+static GtkWidget  *open_options_label          = NULL;
+static GtkWidget  *open_options_frame          = NULL;
 static GtkWidget  *open_options_genbuttonlabel = NULL;
 
 /* Some state for the thumbnailer */
-static gchar      *preview_fullname = NULL;
+static gchar *preview_fullname = NULL;
 
 GSList *load_procs = NULL;
 GSList *save_procs = NULL;
@@ -584,35 +591,55 @@ file_revert_callback (GtkWidget *widget,
 {
   GDisplay  *gdisplay;
   GimpImage *gimage;
-  gchar     *filename = NULL;
-  gint       status;
+  GtkWidget *query_box;
 
   gdisplay = gdisplay_active ();
   if (!gdisplay || !gdisplay->gimage)
     return;
 
-  if (gdisplay->gimage->has_filename == FALSE)
+  gimage = gdisplay->gimage;
+
+  query_box = gtk_object_get_data (GTK_OBJECT (gimage), REVERT_DATA_KEY);
+
+  if (gimage->has_filename == FALSE)
     {
       g_message (_("Revert failed.\n"
 		   "No filename associated with this image."));
     }
+  else if (query_box)
+    {
+      gdk_window_raise (query_box->window);
+    }
   else
     {
-      filename = gimage_filename (gdisplay->gimage);
+      gchar *text;
 
-      gimage = file_open_image (filename, filename, _("Revert"),
-				RUN_INTERACTIVE, &status);
+      text = g_strdup_printf (_("Reverting %s to\n"
+				"%s\n\n"
+				"(You will loose all your changes\n"
+				"including all undo information)"),
+			      g_basename (gimage_filename (gimage)),
+			      gimage_filename (gimage));
 
-      if (gimage != NULL)
-	{
-	  undo_free (gimage);
-	  gdisplays_reconnect (gdisplay->gimage, gimage);
-	  gimp_image_clean_all (gimage);
-	}
-      else if (status != PDB_CANCEL)
-	{
-	  g_message (_("Revert failed.\n%s"), filename);
-	}
+      query_box = gimp_query_boolean_box (_("Revert Image?"),
+					  gimp_standard_help_func,
+					  "file/revert.html",
+					  FALSE,
+					  text,
+					  _("Yes"), _("No"),
+					  NULL, NULL,
+					  file_revert_confirm_callback,
+					  gimage);
+
+      gtk_object_set_data (GTK_OBJECT (gimage), REVERT_DATA_KEY, query_box);
+
+      gtk_signal_connect_object_while_alive (GTK_OBJECT (gimage), "destroy",
+					     GTK_SIGNAL_FUNC (gtk_widget_destroy),
+					     GTK_OBJECT (query_box));
+
+      g_free (text);
+
+      gtk_widget_show (query_box);
     }
 }
 
@@ -1838,12 +1865,12 @@ file_overwrite_callback (GtkWidget *widget,
   overwrite_data = (OverwriteData *) data;
 
   if (overwrite)
-  {
+    {
       file_save_with_proc (the_gimage,
 			   overwrite_data->full_filename,
 			   overwrite_data->raw_filename,
 			   save_file_proc);
-  }
+    }
 
   /* always make file save dialog sensitive */
   gtk_widget_set_sensitive (GTK_WIDGET (filesave), TRUE);
@@ -1851,6 +1878,41 @@ file_overwrite_callback (GtkWidget *widget,
   g_free (overwrite_data->full_filename);
   g_free (overwrite_data->raw_filename);
   g_free (overwrite_data);
+}
+
+static void
+file_revert_confirm_callback (GtkWidget *widget,
+			      gboolean   revert,
+			      gpointer   data)
+{
+  GimpImage *old_gimage;
+
+  old_gimage = (GimpImage *) data;
+
+  gtk_object_set_data (GTK_OBJECT (old_gimage), REVERT_DATA_KEY, NULL);
+
+  if (revert)
+    {
+      GimpImage *new_gimage;
+      gchar     *filename;
+      gint       status;
+
+      filename = gimage_filename (old_gimage);
+
+      new_gimage = file_open_image (filename, filename, _("Revert"),
+				    RUN_INTERACTIVE, &status);
+
+      if (new_gimage != NULL)
+	{
+	  undo_free (new_gimage);
+	  gdisplays_reconnect (old_gimage, new_gimage);
+	  gimp_image_clean_all (new_gimage);
+	}
+      else if (status != PDB_CANCEL)
+	{
+	  g_message (_("Revert failed.\n%s"), filename);
+	}
+    }
 }
 
 static PlugInProcDef *

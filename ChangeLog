@@ -1,3 +1,10 @@
+2000-11-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/fileops.c: added a confirm dialog for <Image>/File/Revert
+	as suggested by Marc. The old behaviour of simply reverting
+	withuot asking is questionable because the "Revert" menu item is
+	directly below "Save as..."
+
 2000-11-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/tile.c (tile): sanity check new width and height.
