@@ -531,18 +531,18 @@ gimp_transform_tool_key_press (GimpTool    *tool,
     {
       switch (kevent->keyval)
         {
-          case GDK_KP_Enter:
-          case GDK_Return:
-            gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, trans_tool);
-            break;
+        case GDK_KP_Enter:
+        case GDK_Return:
+          gimp_transform_tool_response (NULL, GTK_RESPONSE_OK, trans_tool);
+          break;
 
-          case GDK_Delete:
-          case GDK_BackSpace:
-            gimp_transform_tool_response (NULL, RESPONSE_RESET, trans_tool);
-            break;
+        case GDK_Delete:
+        case GDK_BackSpace:
+          gimp_transform_tool_response (NULL, RESPONSE_RESET, trans_tool);
+          break;
 
-          default:
-            break;
+        default:
+          break;
         }
     }
 }
@@ -1136,10 +1136,11 @@ gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 void
 gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool)
 {
-  static gint           last_x = 0,
-                        last_y = 0,
-                        last_w = 0,
-                        last_h = 0;
+  static gint           last_x = 0;
+  static gint           last_y = 0;
+  static gint           last_w = 0;
+  static gint           last_h = 0;
+
   GimpDisplayShell     *shell;
   GimpTransformOptions *options;
   gdouble               dx [4], dy [4];
@@ -1148,12 +1149,13 @@ gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool)
 
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
 
-  options = GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
+  options =
+    GIMP_TRANSFORM_OPTIONS (GIMP_TOOL (tr_tool)->tool_info->tool_options);
 
   if (! (tr_tool->use_grid && options->show_preview))
     return;
 
-  g_return_if_fail (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp));
+  g_return_if_fail (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)));
 
   shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
 
@@ -1204,7 +1206,7 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
 {
   GimpTool *tool = GIMP_TOOL (tr_tool);
 
-  if (GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
     {
       GimpDisplayShell *shell;
 
@@ -1556,7 +1558,7 @@ gimp_transform_tool_notify_preview (GimpTransformOptions *options,
   GimpDisplayShell *shell;
   gboolean          show_preview;
 
-  if (! GIMP_IS_DISPLAY (GIMP_DRAW_TOOL (tr_tool)->gdisp))
+  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tr_tool)))
     return;
 
   shell = GIMP_DISPLAY_SHELL (GIMP_DRAW_TOOL (tr_tool)->gdisp->shell);
