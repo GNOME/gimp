@@ -25,19 +25,16 @@
 #include "dialogs-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-colormap.h"
-#include "core/gimplayer.h"
-
-#include "vectors/gimpvectors.h"
 
 #include "config/gimpguiconfig.h"
 
 #include "widgets/gimpbrusheditor.h"
 #include "widgets/gimpbrushfactoryview.h"
 #include "widgets/gimpbufferview.h"
+#include "widgets/gimpchanneltreeview.h"
 #include "widgets/gimpcoloreditor.h"
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpcontainergridview.h"
@@ -56,7 +53,7 @@
 #include "widgets/gimphistogrameditor.h"
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpimageview.h"
-#include "widgets/gimpitemtreeview.h"
+#include "widgets/gimplayertreeview.h"
 #include "widgets/gimppaletteeditor.h"
 #include "widgets/gimppatternfactoryview.h"
 #include "widgets/gimpselectioneditor.h"
@@ -528,10 +525,9 @@ dialogs_layer_list_view_new (GimpDialogFactory *factory,
     preview_size = context->gimp->config->layer_preview_size;
 
   return
-    gimp_item_tree_view_new (preview_size, 2,
+    gimp_item_tree_view_new (GIMP_TYPE_LAYER_TREE_VIEW,
+                             preview_size, 2,
                              gimp_context_get_image (context),
-                             GIMP_TYPE_LAYER,
-                             "active_layer_changed",
                              factory->menu_factory, "<Layers>",
                              "/layers-popup");
 }
@@ -545,10 +541,9 @@ dialogs_channel_list_view_new (GimpDialogFactory *factory,
     preview_size = context->gimp->config->layer_preview_size;
 
   return
-    gimp_item_tree_view_new (preview_size, 1,
+    gimp_item_tree_view_new (GIMP_TYPE_CHANNEL_TREE_VIEW,
+                             preview_size, 1,
                              gimp_context_get_image (context),
-                             GIMP_TYPE_CHANNEL,
-                             "active_channel_changed",
                              factory->menu_factory, "<Channels>",
                              "/channels-popup");
 }
@@ -562,10 +557,9 @@ dialogs_vectors_list_view_new (GimpDialogFactory *factory,
     preview_size = context->gimp->config->layer_preview_size;
 
   return
-    gimp_item_tree_view_new (preview_size, 1,
+    gimp_item_tree_view_new (GIMP_TYPE_VECTORS_TREE_VIEW,
+                             preview_size, 1,
                              gimp_context_get_image (context),
-                             GIMP_TYPE_VECTORS,
-                             "active_vectors_changed",
                              factory->menu_factory, "<Vectors>",
                              "/vectors-popup");
 }

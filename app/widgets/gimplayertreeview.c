@@ -224,6 +224,9 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
   tree_view_class->drop_uri_list   = gimp_layer_tree_view_drop_uri_list;
 
+  item_view_class->item_type       = GIMP_TYPE_LAYER;
+  item_view_class->signal_name     = "active-layer-changed";
+
   item_view_class->set_image       = gimp_layer_tree_view_set_image;
   item_view_class->get_container   = gimp_image_get_layers;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;

@@ -112,6 +112,9 @@ gimp_channel_tree_view_class_init (GimpChannelTreeViewClass *klass)
 
   item_view_class->set_image       = gimp_channel_tree_view_set_image;
 
+  item_view_class->item_type       = GIMP_TYPE_CHANNEL;
+  item_view_class->signal_name     = "active-channel-changed";
+
   item_view_class->get_container   = gimp_image_get_channels;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_channel;
   item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_channel;

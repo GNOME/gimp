@@ -126,6 +126,9 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
 
   view_class->drop_svg             = gimp_vectors_tree_view_drop_svg;
 
+  item_view_class->item_type       = GIMP_TYPE_VECTORS;
+  item_view_class->signal_name     = "active-vectors-changed";
+
   item_view_class->get_container   = gimp_image_get_vectors;
   item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
   item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;

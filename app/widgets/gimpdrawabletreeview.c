@@ -105,7 +105,7 @@ gimp_drawable_tree_view_get_type (void)
 
       view_type = g_type_register_static (GIMP_TYPE_ITEM_TREE_VIEW,
                                           "GimpDrawableTreeView",
-                                          &view_info, 0);
+                                          &view_info, G_TYPE_FLAG_ABSTRACT);
 
       g_type_add_interface_static (view_type, GIMP_TYPE_CONTAINER_VIEW,
                                    &view_iface_info);

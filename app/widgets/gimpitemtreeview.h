@@ -60,9 +60,6 @@ struct _GimpItemTreeView
   GimpContext           *context;
   GimpImage             *gimage;
 
-  GType                  item_type;
-  gchar                 *signal_name;
-
   GtkWidget             *edit_button;
   GtkWidget             *new_button;
   GtkWidget             *raise_button;
@@ -87,6 +84,9 @@ struct _GimpItemTreeViewClass
   /*  signals  */
   void (* set_image) (GimpItemTreeView *view,
                       GimpImage        *gimage);
+
+  GType                 item_type;
+  const gchar          *signal_name;
 
   /*  virtual functions for manipulating the image's item tree  */
   GimpGetContainerFunc  get_container;
@@ -117,11 +117,10 @@ struct _GimpItemTreeViewClass
 
 GType       gimp_item_tree_view_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_item_tree_view_new      (gint             preview_size,
+GtkWidget * gimp_item_tree_view_new      (GType            view_type,
+                                          gint             preview_size,
                                           gint             preview_border_width,
                                           GimpImage       *gimage,
-                                          GType            item_type,
-                                          const gchar     *signal_name,
                                           GimpMenuFactory *menu_facotry,
                                           const gchar     *menu_identifier,
                                           const gchar     *ui_identifier);
