@@ -13,13 +13,13 @@ Overview of Changes in GIMP 2.1.4
 - Rewritten internal handling of progress indicators. Embed progress
   bars to the File Open dialog to reduce annoying dialogs popping up.
 
+- Added an API for plug-ins to embed a progress bar. Let the Script-Fu
+  dialog swallow the progress bars created by running the script.
+
 - Ported remaining plug-ins and modules to GimpPreviewArea and removed
   GimpOldPreview.
 
 - Show progress while converting from RGB to Indexed Colors.
-
-- Better previews in Unsharp Mask and Scatter RGB plug-ins, added
-  preview to Edge and Selective Gaussian Blur plug-ins.
 
 - Added new plug-ins Cartoon, Neon, Photocopy and Softglow.
 
@@ -29,11 +29,36 @@ Overview of Changes in GIMP 2.1.4
 
 - Improved GIH and guillotine plug-ins.
 
+- Added GimpMessageBox widget. Collect error messages in a single
+  dialog to reduce popups.
+
+- Renamed the core GimpPreview widget to GimpView.
+
+- Added a GimpPreview widget to libgimpwidgets. This is an abstract
+  class that combines a GimpPreviewArea with scrollbars and a "Preview"
+  toggle button.
+
+- Added GimpDrawablePreview derived from GimpPreview.
+
+- Improved previews in Unsharp Mask, Scatter RGB, Sharpen, Neon, Soft
+  Glow, Spread and Grid plug-ins.
+
+- Added previews to Edge, Gaussian Blur and Selective Gaussian Blur.
+
+- Added a logarithmic mode for the slider in a GimpScaleEntry.
+
+- Script-Fu code cleanups.
+
+- Fixed composite assembly code.
+
+- Pass user settings for the checkerboard to plug-ins.
+
 
 Contributors:
 
    Michael Natterer, Sven Neumann, David Odin, Shlomi Fish, Bill Skaggs,
-   Simon Budig, Ari Pollak, Spencer Kimball, Michael Schumacher
+   Simon Budig, Ari Pollak, Spencer Kimball, Michael Schumacher, Joao
+   S. O. Bueno, Manish Singh, Helvetix Victorinox
 
 
 
