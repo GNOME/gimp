@@ -1,5 +1,9 @@
 2004-09-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/grid.c: ported to GimpDrawablePreview.
+
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/plasma.c (plasma_dialog): left-align the preview.
 
 	* plug-ins/common/grid.c (dialog): pack the preview as in other

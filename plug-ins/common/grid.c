@@ -65,9 +65,9 @@ static void   run    (const gchar      *name,
 static guchar      best_cmap_match (const guchar  *cmap,
                                     gint           ncolors,
                                     const GimpRGB *color);
-static void        doit            (gint32         image_ID,
+static void        grid            (gint32         image_ID,
                                     GimpDrawable  *drawable,
-                                    gboolean       preview_mode);
+                                    GimpPreview   *preview);
 static gint        dialog          (gint32         image_ID,
                                     GimpDrawable  *drawable);
 
@@ -84,10 +84,6 @@ static gint sx1, sy1, sx2, sy2;
 static GtkWidget *main_dialog    = NULL;
 static GtkWidget *hcolor_button  = NULL;
 static GtkWidget *vcolor_button  = NULL;
-
-#define PREVIEW_SIZE 128
-static GtkWidget *preview;
-static gint       preview_width, preview_height;
 
 typedef struct
 {
@@ -245,7 +241,7 @@ run (const gchar      *name,
       gimp_progress_init (_("Drawing Grid..."));
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
 
-      doit (image_ID, drawable, FALSE);
+      grid (image_ID, drawable, NULL);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
@@ -330,12 +326,12 @@ pix_composite (guchar   *p1,
 }
 
 static void
-doit (gint32        image_ID,
+grid (gint32        image_ID,
       GimpDrawable *drawable,
-      gboolean      preview_mode)
+      GimpPreview  *preview)
 {
   GimpPixelRgn  srcPR, destPR;
-  gint          width, height, bytes;
+  gint          bytes;
   gint          x_offset, y_offset;
   guchar       *dest, *buffer = NULL;
   gint          x, y;
@@ -347,9 +343,12 @@ doit (gint32        image_ID,
   guchar       *cmap;
   gint          ncolors;
 
-  gimp_rgba_get_uchar (&grid_cfg.hcolor, hcolor, hcolor + 1, hcolor + 2, hcolor + 3);
-  gimp_rgba_get_uchar (&grid_cfg.vcolor, vcolor, vcolor + 1, vcolor + 2, vcolor + 3);
-  gimp_rgba_get_uchar (&grid_cfg.icolor, icolor, icolor + 1, icolor + 2, icolor + 3);
+  gimp_rgba_get_uchar (&grid_cfg.hcolor,
+                       hcolor, hcolor + 1, hcolor + 2, hcolor + 3);
+  gimp_rgba_get_uchar (&grid_cfg.vcolor,
+                       vcolor, vcolor + 1, vcolor + 2, vcolor + 3);
+  gimp_rgba_get_uchar (&grid_cfg.icolor,
+                       icolor, icolor + 1, icolor + 2, icolor + 3);
 
   switch (gimp_image_base_type (image_ID))
     {
@@ -366,13 +365,11 @@ doit (gint32        image_ID,
 
     case GIMP_INDEXED:
       cmap = gimp_image_get_cmap (image_ID, &ncolors);
+
       hcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.hcolor);
       vcolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.vcolor);
       icolor[0] = best_cmap_match (cmap, ncolors, &grid_cfg.icolor);
-      if (preview_mode)
-        gimp_preview_area_set_cmap (GIMP_PREVIEW_AREA (preview),
-                                    cmap,
-                                    ncolors);
+
       g_free (cmap);
       blend = FALSE;
       break;
@@ -384,31 +381,29 @@ doit (gint32        image_ID,
 
   bytes = drawable->bpp;
   alpha = gimp_drawable_has_alpha (drawable->drawable_id);
-  if (preview_mode)
-    {
-      sx1 = sy1 = 0;
-      sx2 = preview_width;
-      sy2 = preview_height;
-      width  = sx2;
-      height = sy2;
 
-      buffer = g_new (guchar, bytes * width * height);
+  if (preview)
+    {
+      gimp_preview_get_position (preview, &sx1, &sy1);
+      gimp_preview_get_size (preview, &sx2, &sy2);
+
+      buffer = g_new (guchar, bytes * sx2 * sy2);
+
+      sx2 += sx1;
+      sy2 += sy1;
     }
   else
     {
-      /* Get the input area. This is the bounding box of the selection in
-       *  the image (or the entire image if there is no selection).
-       */
       gimp_drawable_mask_bounds (drawable->drawable_id, &sx1, &sy1, &sx2, &sy2);
-      width  = gimp_drawable_width (drawable->drawable_id);
-      height = gimp_drawable_height (drawable->drawable_id);
 
-      /*  initialize the pixel regions  */
-      gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&destPR,
+                           drawable, 0, 0, sx2 - sx1, sy2 - sy1, TRUE, TRUE);
     }
-  gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  dest = g_new (guchar, width * bytes);
+  gimp_pixel_rgn_init (&srcPR,
+                       drawable, 0, 0, sx2 - sx1, sy2 - sy1, FALSE, FALSE);
+
+  dest = g_new (guchar, (sx2 - sx1) * bytes);
   for (y = sy1; y < sy2; y++)
     {
       gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2 - sx1));
@@ -470,26 +465,24 @@ doit (gint32        image_ID,
               pix_composite (&dest[(x-sx1) * bytes], icolor, bytes, blend, alpha);
             }
         }
-      if (preview_mode)
+      if (preview)
         {
-          memcpy (buffer + y * width * bytes, dest, width * bytes);
+          memcpy (buffer + (y - sy1) * (sx2 - sx1) * bytes,
+                  dest,
+                  (sx2 - sx1) * bytes);
         }
       else
         {
-          gimp_pixel_rgn_set_row (&destPR, dest, sx1, y, (sx2-sx1) );
+          gimp_pixel_rgn_set_row (&destPR, dest, sx1, y, (sx2 - sx1) );
           gimp_progress_update ((double) y / (double) (sy2 - sy1));
         }
     }
+
   g_free (dest);
 
-  /*  update the timred region  */
-  if (preview_mode)
+  if (preview)
     {
-      gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                              0, 0, width, height,
-                              gimp_drawable_type (drawable->drawable_id),
-                              buffer,
-                              width * bytes);
+      gimp_drawable_preview_draw (GIMP_DRAWABLE_PREVIEW (preview), buffer);
       g_free (buffer);
     }
   else
@@ -541,15 +534,12 @@ update_values (void)
 }
 
 static void
-update_preview (void)
+update_preview (GimpPreview  *preview,
+                GimpDrawable *drawable)
 {
-  GimpDrawable *drawable;
-
   update_values ();
 
-  drawable = g_object_get_data (G_OBJECT (main_dialog), "drawable");
-
-  doit (0, drawable, TRUE);
+  grid (gimp_drawable_get_image (drawable->drawable_id), drawable, preview);
 }
 
 static void
@@ -582,8 +572,6 @@ entry_callback (GtkWidget *widget,
       x = new_x;
       y = new_y;
     }
-
-  update_preview ();
 }
 
 static void
@@ -597,14 +585,10 @@ color_callback (GtkWidget *widget,
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (widget), &color);
 
       if (widget == vcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (hcolor_button),
-                                     &color);
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (hcolor_button), &color);
       else if (widget == hcolor_button)
-        gimp_color_button_set_color (GIMP_COLOR_BUTTON (vcolor_button),
-                                     &color);
+        gimp_color_button_set_color (GIMP_COLOR_BUTTON (vcolor_button), &color);
     }
-
-  update_preview ();
 }
 
 
@@ -616,11 +600,11 @@ dialog (gint32        image_ID,
   GtkWidget *vbox;
   GtkWidget *vbox2;
   GtkWidget *hbox;
-  GtkWidget *frame;
 
   GtkSizeGroup *group;
   GtkWidget    *label;
 
+  GtkWidget *preview;
   GtkWidget *button;
   GtkWidget *width;
   GtkWidget *space;
@@ -658,17 +642,13 @@ dialog (gint32        image_ID,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  preview = gimp_preview_area_new ();
-  preview_width  = MIN (PREVIEW_SIZE, drawable->width);
-  preview_height = MIN (PREVIEW_SIZE, drawable->height);
-  gtk_widget_set_size_request (preview, preview_width, preview_height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
   gtk_widget_show (preview);
+
+  g_signal_connect (preview, "invalidated",
+                    G_CALLBACK (update_preview),
+                    drawable);
 
   vbox2 = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
@@ -707,7 +687,8 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 1, 0.0,
                                          drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (width), 2, 0.0,
-                                         MAX (drawable->width, drawable->height));
+                                         MAX (drawable->width,
+                                              drawable->height));
   gtk_table_set_row_spacing (GTK_TABLE (width), 0, 6);
   gtk_table_set_col_spacings (GTK_TABLE (width), 6);
   gtk_table_set_col_spacing (GTK_TABLE (width), 2, 12);
@@ -745,6 +726,9 @@ dialog (gint32        image_ID,
   g_signal_connect (width, "value_changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
+  g_signal_connect_swapped (width, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  The spacing entries  */
   space = gimp_size_entry_new (3,                            /*  number_of_fields  */
@@ -777,7 +761,8 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 1, 1.0,
                                          drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (space), 2, 0.0,
-                                         MAX (drawable->width, drawable->height));
+                                         MAX (drawable->width,
+                                              drawable->height));
   gtk_table_set_col_spacings (GTK_TABLE (space), 6);
   gtk_table_set_col_spacing (GTK_TABLE (space), 2, 12);
 
@@ -808,6 +793,9 @@ dialog (gint32        image_ID,
   g_signal_connect (space, "unit_changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
+  g_signal_connect_swapped (space, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  The offset entries  */
   offset = gimp_size_entry_new (3,                            /*  number_of_fields  */
@@ -840,7 +828,8 @@ dialog (gint32        image_ID,
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 1, 0.0,
                                          drawable->height);
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (offset), 2, 0.0,
-                                         MAX (drawable->width, drawable->height));
+                                         MAX (drawable->width,
+                                              drawable->height));
   gtk_table_set_col_spacings (GTK_TABLE (offset), 6);
   gtk_table_set_col_spacing (GTK_TABLE (offset), 2, 12);
 
@@ -877,6 +866,9 @@ dialog (gint32        image_ID,
   g_signal_connect (offset, "unit_changed",
                     G_CALLBACK (entry_callback),
                     chain_button);
+  g_signal_connect_swapped (offset, "value_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   /*  put a chain_button under the color_buttons  */
   chain_button = gimp_chain_button_new (GIMP_CHAIN_BOTTOM);
@@ -900,6 +892,9 @@ dialog (gint32        image_ID,
   g_signal_connect (hcolor_button, "color_changed",
                     G_CALLBACK (color_callback),
                     chain_button);
+  g_signal_connect_swapped (hcolor_button, "color_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   vcolor_button = gimp_color_button_new (_("Vertical Color"),
                                          COLOR_BUTTON_WIDTH, 16,
@@ -915,6 +910,9 @@ dialog (gint32        image_ID,
   g_signal_connect (vcolor_button, "color_changed",
                     G_CALLBACK (color_callback),
                     chain_button);
+  g_signal_connect_swapped (vcolor_button, "color_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   button = gimp_color_button_new (_("Intersection Color"),
                                   COLOR_BUTTON_WIDTH, 16,
@@ -927,20 +925,17 @@ dialog (gint32        image_ID,
   g_signal_connect (button, "color_changed",
                     G_CALLBACK (gimp_color_button_get_color),
                     &grid_cfg.icolor);
-  g_signal_connect (button, "color_changed",
-                    G_CALLBACK (update_preview),
-                    NULL);
+  g_signal_connect_swapped (button, "color_changed",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (table);
 
   gtk_widget_show (dlg);
 
-  g_object_set_data (G_OBJECT (dlg), "width",    width);
-  g_object_set_data (G_OBJECT (dlg), "space",    space);
-  g_object_set_data (G_OBJECT (dlg), "offset",   offset);
-  g_object_set_data (G_OBJECT (dlg), "drawable", drawable);
-
-  doit (image_ID, drawable, TRUE); /* render preview */
+  g_object_set_data (G_OBJECT (dlg), "width",  width);
+  g_object_set_data (G_OBJECT (dlg), "space",  space);
+  g_object_set_data (G_OBJECT (dlg), "offset", offset);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
 
