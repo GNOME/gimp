@@ -302,9 +302,16 @@ clone_paint_func (PaintCore    *paint_core,
 		     active_tool);
   else if (state == POSTTRACE_PAINT)
     {
+      gint off_x, off_y;
+
+      gimp_drawable_offsets (src_drawable_, &off_x, &off_y);
+
       /*  Find the target cursor's location onscreen  */
-      gdisplay_transform_coords (src_gdisp, src_x, src_y,
-				 &trans_tx, &trans_ty, TRUE);
+      gdisplay_transform_coords (src_gdisp,
+                                 src_x + off_x,
+                                 src_y + off_y,
+				 &trans_tx, &trans_ty,
+                                 FALSE);
       draw_core_resume (paint_core->core, active_tool);      
     }
   return NULL;
