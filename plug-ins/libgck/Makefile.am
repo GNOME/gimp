@@ -1,9 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
-SRC_SUBDIRS = gck
 SUBDIRS = gck
 
 EXTRA_DIST = \
+	ChangeLog				\
+	NEWS					\
+	README					\
 	TODO					\
 	docs/html/gck.html			\
 	docs/html/gck_application_window.html	\

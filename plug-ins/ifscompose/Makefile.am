@@ -2,6 +2,8 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
+EXTRA_DIST = README.ifscompose
+
 pluginlib_PROGRAMS = ifscompose
 
 ifscompose_SOURCES = \
@@ -19,20 +21,9 @@ LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
-DEPS = \
-	$(top_builddir)/libgimp/libgimp.la	
-
-ifscompose_DEPENDENCIES = $(DEPS)
-
 .PHONY: files
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
-	done
-	@for subdir in $(SUBDIRS); do \
-	  files=`cd $$subdir; $(MAKE) files | grep -v "make\[[1-9]\]"`; \
-	  for file in $$files; do \
-	    echo $$subdir/$$file; \
-	  done; \
 	done

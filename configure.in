@@ -171,46 +171,46 @@ LDFLAGS="$LDFLAGS `echo $GTK_LIBS | sed 's/\(.*\)\(-lgtk.*\)/\1/'`"
 LIBS="$LIBS $GTK_LIBS"
 
 dnl Test for Xmu
-  if test -z "$LIBXMU_LIB"; then
+  if test -z "$LIBXMU"; then
     AC_CHECK_LIB(Xmu, XmuClientWindow,
       AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt -lSM -lICE',
+	WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt -lSM -lICE',
 	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
 	AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	  AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-	    WEBBROWSER="webbrowser"; LIBXMU_LIB='-lXmu -lXt',
+	    WEBBROWSER="webbrowser"; LIBXMU='-lXmu -lXt',
 	    AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU header file not found) ***)),
 	AC_MSG_WARN(*** webbrowser plug-in will not be built (XMU library not found) ***), -lXt), -lXt -lSM -lICE)
   fi
 
 dnl Test for libaa
-  if test -z "$LIBAA_LIB"; then
+  if test -z "$LIBAA"; then
     AC_CHECK_LIB(aa, aa_printf,
       AC_CHECK_HEADER(aalib.h,
-	AA='aa'; LIBAA_LIB='-laa',
+	AA='aa'; LIBAA='-laa',
 	AC_MSG_WARN(*** AA plug-in will not be built (AA header file not found) ***)),
       AC_MSG_WARN(*** AA plug-in will not be built (AA library not found) ***))
   fi
 
 dnl Test for libtiff
-  if test -z "$LIBTIFF_LIB"; then
+  if test -z "$LIBTIFF"; then
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       AC_CHECK_HEADER(tiffio.h,
-	TIFF='tiff'; LIBTIFF_LIB='-ltiff',
+	TIFF='tiff'; LIBTIFF='-ltiff',
 	AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
       AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	AC_CHECK_HEADER(tiffio.h,
-          TIFF='tiff'; LIBTIFF_LIB='-ltiff -ljpeg -lz',
+          TIFF='tiff'; LIBTIFF='-ltiff -ljpeg -lz',
 	  AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
 	AC_CHECK_LIB(tiff34, TIFFFlushData,
 	  AC_CHECK_HEADER(tiffio.h,
-            TIFF='tiff'; LIBTIFF_LIB='-ltiff34 -ljpeg -lz',
+            TIFF='tiff'; LIBTIFF='-ltiff34 -ljpeg -lz',
 	    AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF header files not found) ***)),
         AC_MSG_WARN(*** TIFF plug-in will not be built (TIFF library not found) ***), -ljpeg -lz -lm), -ljpeg -lz -lm), -lm)
   fi
 
 dnl Test for libjpeg
-  if test -z "$LIBJPEG_LIB"; then
+  if test -z "$LIBJPEG"; then
     AC_CHECK_LIB(jpeg, jpeg_destroy_decompress,
       jpeg_ok=yes,
       jpeg_ok=no
@@ -227,7 +227,7 @@ dnl Test for libjpeg
 	jpeg_ok=no)
       AC_MSG_RESULT($jpeg_ok)
       if test "$jpeg_ok" = yes; then
-	JPEG='jpeg'; XJT='xjt'; LIBJPEG_LIB='-ljpeg'
+	JPEG='jpeg'; XJT='xjt'; LIBJPEG='-ljpeg'
 	AC_CHECK_LIB(jpeg, jpeg_simple_progression,	
 	  AC_DEFINE(HAVE_PROGRESSIVE_JPEG),
 	  AC_MSG_WARN(JPEG library does not support progressive saving.))
@@ -239,7 +239,7 @@ dnl Test for libjpeg
   fi
 
 dnl Test for libpng
-  if test -z "$LIBPNG_LIB"; then
+  if test -z "$LIBPNG"; then
     AC_CHECK_LIB(png, png_read_info,
       AC_CHECK_HEADER(png.h,
 	png_ok=yes,
@@ -253,7 +253,7 @@ dnl Test for libpng
         png_ok=no)
       AC_MSG_RESULT($png_ok)
       if test "$png_ok" = yes; then
-        PNG='png'; LIBPNG_LIB='-lpng -lz'
+        PNG='png'; LIBPNG='-lpng -lz'
       else
         AC_MSG_WARN(*** PNG plug-in will not be built (PNG library is too old) ***)
       fi
@@ -263,19 +263,19 @@ dnl Test for libpng
   fi
 
 dnl Test for libmpeg
-  if test -z "$LIBMPEG_LIB"; then
+  if test -z "$LIBMPEG"; then
     AC_CHECK_LIB(mpeg, GetMPEGFrame,
       AC_CHECK_HEADER(mpeg.h,
-	MPEG='mpeg'; LIBMPEG_LIB='-lmpeg',
+	MPEG='mpeg'; LIBMPEG='-lmpeg',
 	AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG header file not found) ***)),
       AC_MSG_WARN(*** MPEG plug-in will not be built (MPEG library not found) ***))
   fi
 
 dnl Test for libXpm
-  if test -z "$LIBXPM_LIB"; then
+  if test -z "$LIBXPM"; then
     AC_CHECK_LIB(Xpm, XpmReadFileToXpmImage,
       AC_CHECK_HEADER(X11/xpm.h,
-	XPM='xpm'; LIBXPM_LIB='-lXpm',
+	XPM='xpm'; LIBXPM='-lXpm',
 	AC_MSG_WARN(*** XPM plug-in will not be built (XPM header file not found) ***)),
       AC_MSG_WARN(*** XPM plug-in will not be built (XPM library not found) ***), $X_LIBS)
   fi
@@ -348,14 +348,14 @@ if test $gimp_ok = no; then
 fi
 
 dnl Check for random number functions
-LIBUCB_LIB=""
+LIBUCB=""
 AC_CHECK_FUNC(random, [
   AC_DEFINE(RAND_FUNC, random)
   AC_DEFINE(SRAND_FUNC, srandom)],
   [AC_CHECK_LIB(ucb, random, [
     AC_DEFINE(RAND_FUNC, random)
     AC_DEFINE(SRAND_FUNC, srandom)
-    LIBUCB_LIB='-lucb'],
+    LIBUCB='-lucb'],
     [AC_CHECK_FUNC(lrand48,
       [AC_DEFINE(RAND_FUNC, lrand48) AC_DEFINE(SRAND_FUNC, srand48)],
       [AC_DEFINE(RAND_FUNC, rand) AC_DEFINE(SRAND_FUNC, srand)])])])
@@ -581,21 +581,21 @@ AC_SUBST(gradientdata)
 AC_SUBST(palettedata)
 AC_SUBST(patterndata)
 AC_SUBST(WEBBROWSER)
-AC_SUBST(LIBXMU_LIB)
+AC_SUBST(LIBXMU)
 AC_SUBST(TIFF)
-AC_SUBST(LIBTIFF_LIB)
+AC_SUBST(LIBTIFF)
 AC_SUBST(JPEG)
 AC_SUBST(XJT)
-AC_SUBST(LIBJPEG_LIB)
+AC_SUBST(LIBJPEG)
 AC_SUBST(PNG)
-AC_SUBST(LIBPNG_LIB)
+AC_SUBST(LIBPNG)
 AC_SUBST(AA)
-AC_SUBST(LIBAA_LIB)
+AC_SUBST(LIBAA)
 AC_SUBST(MPEG)
-AC_SUBST(LIBMPEG_LIB)
+AC_SUBST(LIBMPEG)
 AC_SUBST(XPM)
-AC_SUBST(LIBXPM_LIB)
-AC_SUBST(LIBUCB_LIB)
+AC_SUBST(LIBXPM)
+AC_SUBST(LIBUCB)
 AC_SUBST(LP_DEF)
 AC_SUBST(LPSTAT_DEF)
 AC_SUBST(LPR_DEF)
@@ -645,10 +645,6 @@ plug-ins/fits/Makefile
 plug-ins/flame/Makefile
 plug-ins/fp/Makefile
 plug-ins/gap/Makefile
-plug-ins/gap/iter_ALT/Makefile
-plug-ins/gap/iter_ALT/gen/Makefile
-plug-ins/gap/iter_ALT/mod/Makefile
-plug-ins/gap/iter_ALT/old/Makefile
 plug-ins/gdyntext/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile

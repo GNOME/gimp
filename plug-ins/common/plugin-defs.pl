@@ -94,7 +94,6 @@
     'sobel' => { libdep => 'gtk' },
     'sparkle' => { libdep => 'gtk' },
     'spread' => { libdep => 'gtk' },
-    'struc' => { libdep => 'gtk' },
     'sunras' => { libdep => 'gtk' },
     'tga' => { libdep => 'gtk' },
     'threshold_alpha' => { libdep => 'gtk' },

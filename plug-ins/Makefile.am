@@ -7,8 +7,6 @@ SUBDIRS = 			\
 	dbbrowser		\
 	script-fu		\
 	$(GIMP_PERL)		\
-	$(WEBBROWSER)		\
-	$(XJT)			\
 	AlienMap		\
 	FractalExplorer		\
 	Lighting		\
@@ -32,9 +30,9 @@ SUBDIRS = 			\
 	sinus			\
 	struc			\
 	unsharp			\
+	$(WEBBROWSER)		\
+	$(XJT)			\
 	common
-
-scriptdata =
 
 .PHONY: files
 

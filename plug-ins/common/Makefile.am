@@ -9,127 +9,127 @@ INCLUDES = \
 	-I$(includedir)
 
 pluginlib_PROGRAMS = \
-	CEL		\
-	CML_explorer		\
-	$(AA)		\
-	align_layers		\
-	animationplay		\
-	animoptimize		\
-	apply_lens		\
-	autocrop		\
-	autostretch_hsv		\
-	blinds		\
-	blur		\
-	borderaverage		\
-	bumpmap		\
-	bz2		\
-	c_astretch		\
-	checkerboard		\
-	colorify		\
-	compose		\
-	convmatrix		\
-	cubism		\
-	decompose		\
-	deinterlace		\
-	depthmerge		\
-	despeckle		\
-	destripe		\
-	diffraction		\
-	displace		\
-	edge		\
-	emboss		\
-	engrave		\
-	exchange		\
-	film		\
-	flarefx		\
-	fractaltrace		\
-	gauss_iir		\
-	gauss_rle		\
-	gbr		\
-	gee		\
-	gicon		\
-	gif		\
-	gifload		\
-	glasstile		\
-	gqbist		\
-	gradmap		\
-	grid		\
-	gtm		\
-	guillotine		\
-	gz		\
-	header		\
-	hot		\
-	hrz		\
-	illusion		\
-	iwarp		\
-	jigsaw		\
-	$(JPEG)		\
-	laplace		\
-	lic		\
-	mail		\
-	mapcolor		\
-	max_rgb		\
-	mblur		\
-	$(MPEG)		\
-	newsprint		\
-	nlfilt		\
-	noisify		\
-	normalize		\
-	nova		\
-	oilify		\
-	palette		\
-	papertile		\
-	pat		\
-	pcx		\
-	pix		\
-	pixelize		\
-	plasma		\
-	plugindetails		\
-	$(PNG)		\
-	pnm		\
-	polar		\
-	ps		\
-	psd		\
-	randomize		\
-	ripple		\
-	rotate		\
-	rotators		\
-	scatter_hsv		\
-	screenshot		\
-	semiflatten		\
-	sharpen		\
-	shift		\
-	smooth_palette		\
-	snoise		\
-	sobel		\
-	sparkle		\
-	spread		\
-	sunras		\
-	tga		\
-	threshold_alpha		\
-	$(TIFF)		\
-	tile		\
-	tileit		\
-	tiler		\
-	url		\
-	video		\
-	vinvert		\
-	vpropagate		\
-	waves		\
-	whirlpinch		\
-	wind		\
-	wmf		\
-	xbm		\
-	$(XPM)		\
-	xwd		\
+	CEL \
+	CML_explorer \
+	$(AA) \
+	align_layers \
+	animationplay \
+	animoptimize \
+	apply_lens \
+	autocrop \
+	autostretch_hsv \
+	blinds \
+	blur \
+	borderaverage \
+	bumpmap \
+	bz2 \
+	c_astretch \
+	checkerboard \
+	colorify \
+	compose \
+	convmatrix \
+	cubism \
+	decompose \
+	deinterlace \
+	depthmerge \
+	despeckle \
+	destripe \
+	diffraction \
+	displace \
+	edge \
+	emboss \
+	engrave \
+	exchange \
+	film \
+	flarefx \
+	fractaltrace \
+	gauss_iir \
+	gauss_rle \
+	gbr \
+	gee \
+	gicon \
+	gif \
+	gifload \
+	glasstile \
+	gqbist \
+	gradmap \
+	grid \
+	gtm \
+	guillotine \
+	gz \
+	header \
+	hot \
+	hrz \
+	illusion \
+	iwarp \
+	jigsaw \
+	$(JPEG) \
+	laplace \
+	lic \
+	mail \
+	mapcolor \
+	max_rgb \
+	mblur \
+	$(MPEG) \
+	newsprint \
+	nlfilt \
+	noisify \
+	normalize \
+	nova \
+	oilify \
+	palette \
+	papertile \
+	pat \
+	pcx \
+	pix \
+	pixelize \
+	plasma \
+	plugindetails \
+	$(PNG) \
+	pnm \
+	polar \
+	ps \
+	psd \
+	randomize \
+	ripple \
+	rotate \
+	rotators \
+	scatter_hsv \
+	screenshot \
+	semiflatten \
+	sharpen \
+	shift \
+	smooth_palette \
+	snoise \
+	sobel \
+	sparkle \
+	spread \
+	sunras \
+	tga \
+	threshold_alpha \
+	$(TIFF) \
+	tile \
+	tileit \
+	tiler \
+	url \
+	video \
+	vinvert \
+	vpropagate \
+	waves \
+	whirlpinch \
+	wind \
+	wmf \
+	xbm \
+	$(XPM) \
+	xwd \
 	zealouscrop
 
 EXTRA_PROGRAMS = \
-	aa		\
-	jpeg		\
-	mpeg		\
-	png		\
-	tiff		\
+	aa \
+	jpeg \
+	mpeg \
+	png \
+	tiff \
 	xpm
 
 CEL_SOURCES = \
@@ -153,7 +153,7 @@ aa_SOURCES = \
 
 aa_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBAA_LIB)	\
+	$(LIBAA)	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -580,7 +580,7 @@ jpeg_SOURCES = \
 
 jpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBJPEG_LIB)	\
+	$(LIBJPEG)	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -638,7 +638,7 @@ mpeg_SOURCES = \
 
 mpeg_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBMPEG_LIB)	\
+	$(LIBMPEG)	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -760,7 +760,7 @@ png_SOURCES = \
 
 png_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBPNG_LIB)	\
+	$(LIBPNG)	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -938,7 +938,7 @@ tiff_SOURCES = \
 
 tiff_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBTIFF_LIB)	\
+	$(LIBTIFF)	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
@@ -1044,7 +1044,7 @@ xpm_SOURCES = \
 
 xpm_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
-	$(LIBXPM_LIB)	\
+	$(LIBXPM)	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 

@@ -19,11 +19,6 @@ LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
-DEPS = \
-	$(top_builddir)/libgimp/libgimp.la	
-
-gfli_DEPENDENCIES = $(DEPS)
-
 .PHONY: files
 
 files:

@@ -27,12 +27,6 @@ LDADD = \
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
 
-DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	
-
-FractalExplorer_DEPENDENCIES = $(DEPS)
-
 .PHONY: files
 
 files:

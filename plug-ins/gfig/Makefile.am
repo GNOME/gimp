@@ -4,6 +4,8 @@ SUBDIRS = gfig-examples
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
+EXTRA_DIST = README
+
 pluginlib_PROGRAMS = gfig
 
 gfig_SOURCES = \
@@ -20,12 +22,6 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
-
-DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	
-
-gfig_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 

@@ -10,15 +10,16 @@ foreach (sort keys %plugins) {
     $bins .= "\t";
     if (exists $plugins{$_}->{optional}) {
 	$bins .= "\$(\U$_\E)";
-	$opts .= "\t$_\t\t\\\n";
+	$opts .= "\t$_ \\\n";
     }
     else {
 	$bins .= $_;
     }
-    $bins .= "\t\t\\\n";
+    $bins .= " \\\n";
 }
 
-foreach ($bins, $opts) { s/\t\t\\\n$//s }
+
+foreach ($bins, $opts) { s/ \\\n$//s }
 
 print MK <<EOT;
 pluginlibdir = \$(gimpplugindir)/plug-ins
@@ -49,7 +50,7 @@ foreach (sort keys %plugins) {
 
     my $optlib = ""; 
     if (exists $plugins{$_}->{optional}) {
-	$optlib = "\n\t\$(LIB\U$_\E_LIB)\t\\";
+	$optlib = "\n\t\$(LIB\U$_\E)\t\\";
     }
 
     if (exists $plugins{$_}->{libsupp}) {

@@ -18,12 +18,13 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "appenv.h"
+#include <gtk/gtk.h>
 #include "resize.h"
 
 #define EVENT_MASK  GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
 #define DRAWING_AREA_SIZE 200
 #define TEXT_WIDTH 35
+
 
 typedef struct _ResizePrivate ResizePrivate;
 
@@ -371,9 +372,9 @@ resize_bound_off_x (Resize *resize,
   private = (ResizePrivate *) resize->private_part;
 
   if (private->old_width <= resize->width)
-    off_x = BOUNDS (off_x, 0, (resize->width - private->old_width));
+    off_x = CLAMP (off_x, 0, (resize->width - private->old_width));
   else
-    off_x = BOUNDS (off_x, (resize->width - private->old_width), 0);
+    off_x = CLAMP (off_x, (resize->width - private->old_width), 0);
 
   return off_x;
 }
@@ -387,9 +388,9 @@ resize_bound_off_y (Resize *resize,
   private = (ResizePrivate *) resize->private_part;
 
   if (private->old_height <= resize->height)
-    off_y = BOUNDS (off_y, 0, (resize->height - private->old_height));
+    off_y = CLAMP (off_y, 0, (resize->height - private->old_height));
   else
-    off_y = BOUNDS (off_y, (resize->height - private->old_height), 0);
+    off_y = CLAMP (off_y, (resize->height - private->old_height), 0);
 
   return off_y;
 }

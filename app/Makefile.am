@@ -421,12 +421,6 @@ gimp_LDADD = \
 	$(GIMP_MP_LIBS)				\
 	$(INTLLIBS)
 
-DEPS = \
-	libgimpim.a \
-	$(top_builddir)/libgimp/libgimpi.a
-
-gimp_DEPENDENCIES = $(DEPS)
-
 .PHONY: files
 
 files:

@@ -2,6 +2,8 @@
 
 pluginlibdir = $(gimpplugindir)/plug-ins
 
+EXTRA_DIST = README
+
 pluginlib_PROGRAMS = flame
 
 flame_SOURCES = \
@@ -25,24 +27,12 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimpui.la	\
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
-	$(LIBUCB_LIB)				\
+	$(LIBUCB)				\
 	$(INTLLIBS)
-
-DEPS = \
-	$(top_builddir)/libgimp/libgimpui.la	\
-	$(top_builddir)/libgimp/libgimp.la	
-
-flame_DEPENDENCIES = $(DEPS)
 
 .PHONY: files
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
-	done
-	@for subdir in $(SUBDIRS); do \
-	  files=`cd $$subdir; $(MAKE) files | grep -v "make\[[1-9]\]"`; \
-	  for file in $$files; do \
-	    echo $$subdir/$$file; \
-	  done; \
 	done

@@ -19,13 +19,8 @@ INCLUDES = \
 LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
-	@LIBXMU_LIB@				\
+	$(LIBXMU)				\
 	$(INTLLIBS)
-
-DEPS = \
-	$(top_builddir)/libgimp/libgimp.la	
-
-webbrowser_DEPENDENCIES = $(DEPS)
 
 EXTRA_DIST = $(scriptdata_DATA)
 
@@ -34,10 +29,4 @@ EXTRA_DIST = $(scriptdata_DATA)
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \
 	  echo $$p; \
-	done
-	@for subdir in $(SUBDIRS); do \
-	  files=`cd $$subdir; $(MAKE) files | grep -v "make\[[1-9]\]"`; \
-	  for file in $$files; do \
-	    echo $$subdir/$$file; \
-	  done; \
 	done

@@ -2,8 +2,6 @@
 
 SUBDIRS = scripts
 
-scriptdata =
-
 pluginlibdir = $(gimpplugindir)/plug-ins
 
 pluginlib_PROGRAMS = script-fu
@@ -39,13 +37,6 @@ LDADD = \
 	$(top_builddir)/libgimp/libgimp.la			\
 	$(GTK_LIBS)						\
 	$(INTLLIBS)
-
-DEPS = \
-	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\
-	$(top_builddir)/libgimp/libgimpui.la			\
-	$(top_builddir)/libgimp/libgimp.la
-
-script_fu_DEPENDENCIES = $(DEPS)
 
 AM_CPPFLAGS = \
 	-DREGEX_MALLOC
