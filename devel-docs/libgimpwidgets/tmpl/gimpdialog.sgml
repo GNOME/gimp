@@ -21,7 +21,12 @@ dialog-related stuff.
 </para>
 
 
-<!-- ##### ARG GimpDialog:role ##### -->
+<!-- ##### ARG GimpDialog:help-func ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpDialog:help-id ##### -->
 <para>
 
 </para>

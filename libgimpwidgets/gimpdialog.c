@@ -106,11 +106,21 @@ gimp_dialog_class_init (GimpDialogClass *klass)
 
   dialog_class->close        = gimp_dialog_close;
 
+  /**
+   * GimpDialog::help-func:
+   *
+   * Since: GIMP 2.2
+   **/
   g_object_class_install_property (object_class, PROP_HELP_FUNC,
                                    g_param_spec_pointer ("help-func", NULL, NULL,
                                                          G_PARAM_READWRITE |
                                                          G_PARAM_CONSTRUCT_ONLY));
 
+  /**
+   * GimpDialog::help-id:
+   *
+   * Since: GIMP 2.2
+   **/
   g_object_class_install_property (object_class, PROP_HELP_ID,
                                    g_param_spec_string ("help-id", NULL, NULL,
                                                         NULL,

@@ -1,5 +1,10 @@
 2004-07-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpdialog.c (gimp_dialog_class_init): document
+	that "help-func" and "help-id" properties have been added for 2.2.
+
+2004-07-09  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphistogrameditor.c
 	(gimp_histogram_editor_menu_update): reverted my last change.
 	(gimp_histogram_editor_item_visible): fix the problem here instead.
