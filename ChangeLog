@@ -1,3 +1,14 @@
+Fri May 26 00:08:26 BST 2000 Andy Thomas <alt@gimp.org>
+
+	* plug-ins/common/glasstile.c
+
+	More changes to the preview so it actually does preview.
+	Changed pluging so alpha channel is also tiled. This 
+	seems to produce better results. 
+
+	Fixed some some boundary conditions bugs 
+	that caused "streaks" to appear when using some tile spaces.
+	
 2000-05-25  Sven Neumann  <sven@gimp.org>
 
 	* app/color_select.c: update the color-selector when Return
