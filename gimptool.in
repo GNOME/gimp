@@ -3,12 +3,13 @@
 prefix=@prefix@
 exec_prefix=@exec_prefix@
 exec_prefix_set=no
+plug_in_dir=@gimpplugindir@
 
 usage="\
-Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c]"
+Usage: gimptool [--prefix[=DIR]] [--exec-prefix[=DIR]] [--version] [--libs] [--cflags] [--build plug-in.c] [--install plug-in.c] [--install-admin plug-in.c]"
 
 noarg="\
-Error: --build needs a filename to work with"
+Error: Need a plug-in source file to build"
 
 notfound="\
 Error: Couldn't find source file to build"
@@ -71,14 +72,22 @@ while test $# -gt 0; do
     --libs)
       echo -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`
       ;;
-    --build)
+    --build | --install | --install-admin)
+      case $1 in
+        --build)
+          install_dir=. ;;
+        --install)
+          install_dir="$HOME/.gimp/plug-ins" ;;
+        --install-admin)
+          install_dir="$plug_in_dir/plug-ins" ;;
+      esac
       if test @includedir@ != /usr/include ; then
         includes=-I@includedir@
       fi
       shift
       if test "x$1" != "x"; then
         if test -e "$1"; then
-          cmd="$cc $cflags $includes `gtk-config --cflags` -o `echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
+          cmd="$cc $cflags $includes `$gtk_config --cflags` -o $install_dir/`echo $1|sed 's/\.[^\.]*$//'` $1 -L@libdir@ -lgimpui -lgimp `$gtk_config --libs`"
           echo $cmd
           eval $cmd
         else

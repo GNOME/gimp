@@ -1,3 +1,8 @@
+Thu May  7 16:32:15 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: added --install and --install-admin options
+	to build and install a plug-in automagically
+
 Thu May  7 15:24:31 EDT 1998  Matthew Wilson <msw@gimp.org>
 
 	* app/fileops.c: more changes to fileselection
