@@ -1,6 +1,4 @@
 #!/usr/bin/perl
-# by Seth Burgess <sjburges@gimp.org>
-
 #[Xach] start off with an image, then pixelize it
 #[Xach] then add alpha->add layer mask                                   [20:21]
 #[Xach] render a checkerboard into the layer mask
@@ -17,9 +15,7 @@
 
 # Revision 1.1: Marc Lehman <pcg@goof.com> added undo capability
 # Revision 1.2: Marc Lehman <pcg@goof.com>, changed function name
-# Revision 1.3: Seth Burgess <sjburges@gimp.org>, changed location and 
-#                 added my email address
-#
+
 # Here's the boring start of every script...
 
 use Gimp;
@@ -29,9 +25,9 @@ register "xach_shadows",
          "Xach's Shadows o' Fun",
          "Screen of 50% of your drawing into a dropshadowed layer.",
          "Seth Burgess",
-         "Seth Burgess <sjburges\@gimp.org>",
-         "2-15-98",
-         "<Image>/Filters/Map/Xach Shadows",
+         "Seth Burgess",
+         "1.2",
+         "<Image>/Filters/Misc/Xach Shadows",
          "RGB*, GRAY*",
          [
           [PF_SLIDER,	"Block size",	"The size of the blocks...", 10, [0, 255, 1]],
@@ -79,6 +75,5 @@ register "xach_shadows",
 	gimp_displays_flush();
 	return();
 };
-
 exit main;
 
