@@ -1,3 +1,7 @@
+Wed Apr  8 23:47:59 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* configure.in: add AC_FUNC_ALLOCA for regex
+
 Wed Apr  8 21:12:01 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: redid libjpeg check to make sure old versions
