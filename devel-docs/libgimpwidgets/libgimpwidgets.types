@@ -2,7 +2,7 @@
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
-#include "libgimpwidgets-include.c"
+#include "devel-docs/libgimpwidgets/libgimpwidgets-include.c"
 
 gimp_chain_button_get_type
 gimp_color_button_get_type

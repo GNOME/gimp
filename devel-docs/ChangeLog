@@ -1,5 +1,10 @@
 2002-03-08  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/libgimpwidgets.types: build fixes.
+
+2002-03-08  Sven Neumann  <sven@gimp.org>
+
 	Revival of the API reference for GIMP-1.3. Needs more tweaking ...
 	
 	* libgimp/Makefile.am

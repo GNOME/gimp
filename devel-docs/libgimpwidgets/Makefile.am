@@ -35,7 +35,7 @@ HTML_IMAGES=
 content_files =
 
 # Other files to distribute
-extra_files = libgimp-include.c
+extra_files = libgimpwidgets-include.c
 
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
