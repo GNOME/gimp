@@ -1,3 +1,7 @@
+2005-02-09  Sven Neumann  <neumann@jpk.com>
+
+	* POTFILES.in: added uri plug-in backends.
+
 2005-02-06  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.

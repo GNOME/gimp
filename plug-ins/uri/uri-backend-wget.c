@@ -111,12 +111,14 @@ uri_backend_load_image (const gchar  *uri,
       gboolean  file_found   = FALSE;
       gchar     sizestr[32];
       gint      size         = 0;
-      gchar    *message;
       gint      i, j;
       gchar     dot;
       gint      kilobytes    = 0;
       gboolean  finished     = FALSE;
       gboolean  debug        = FALSE;
+      gchar    *message;
+      gchar    *timeout_msg;
+      gchar    *progress;
 
 #define DEBUG(x) if (debug) g_printerr (x)
 
@@ -139,20 +141,27 @@ uri_backend_load_image (const gchar  *uri,
       /*  The second line is the local copy of the file  */
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          g_set_error (error, 0, 0,
+                       _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
 
       DEBUG (buf);
 
       /*  The third line is "Connecting to..."  */
-      gimp_progress_init ("Connecting to server... "
-                          "(timeout is "TIMEOUT" seconds)");
+
+      timeout_msg = g_strdup_printf (_("(timeout is %s seconds)"), TIMEOUT);
+
+      progress = g_strdup_printf ("%s %s",
+                                  _("Connecting to server..."), timeout_msg);
+      gimp_progress_init (progress);
+      g_free (progress);
 
     read_connect:
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          g_set_error (error, 0, 0,
+                       _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
       else if (strstr (buf, "connected"))
@@ -169,17 +178,21 @@ uri_backend_load_image (const gchar  *uri,
       DEBUG (buf);
 
       /*  The fourth line is either the network request or an error  */
-      gimp_progress_init ("Opening URI... "
-                          "(timeout is "TIMEOUT" seconds)");
+      progress = g_strdup_printf ("%s %s",
+                                  _("Opening URI..."), timeout_msg);
+      gimp_progress_init (progress);
+      g_free (progress);
 
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          g_set_error (error, 0, 0,
+                       _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
       else if (! connected)
         {
-          g_set_error (error, 0, 0, "A network error occured: %s", buf);
+          g_set_error (error, 0, 0,
+                       _("A network error occured: %s"), buf);
 
           DEBUG (buf);
 
@@ -191,7 +204,8 @@ uri_backend_load_image (const gchar  *uri,
       /*  The fifth line is either the length of the file or an error  */
       if (fgets (buf, BUFSIZE, input) == NULL)
         {
-          g_set_error (error, 0, 0, "wget exited abnormally on URI '%s'", uri);
+          g_set_error (error, 0, 0,
+                       _("wget exited abnormally on URI '%s'"), uri);
           return FALSE;
         }
       else if (strstr (buf, "Length"))
@@ -200,7 +214,8 @@ uri_backend_load_image (const gchar  *uri,
         }
       else
         {
-          g_set_error (error, 0, 0, "A network error occured: %s", buf);
+          g_set_error (error, 0, 0,
+                       _("A network error occured: %s"), buf);
 
           DEBUG (buf);
 
@@ -231,9 +246,13 @@ uri_backend_load_image (const gchar  *uri,
       size = atoi (sizestr);
 
       /*  Start the actual download...  */
-      message = g_strdup_printf ("Downloading %d bytes of image data... "
-                                 "(timeout is "TIMEOUT" seconds)", size);
-      gimp_progress_init (message);
+      message = g_strdup_printf (_("Downloading %s of image data... "),
+                                 gimp_memsize_to_string (size));
+
+      progress = g_strdup_printf ("%s %s", message, timeout_msg);
+      gimp_progress_init (progress);
+      g_free (progress);
+
       g_free (message);
 
       /*  Switch to byte parsing wget's output...  */

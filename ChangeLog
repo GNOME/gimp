@@ -1,3 +1,7 @@
+2005-02-09  Sven Neumann  <neumann@jpk.com>
+
+	* plug-ins/uri/uri-backend-wget.c: marked strings for translation.
+
 2005-02-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpsizeentry.[ch]
