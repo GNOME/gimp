@@ -322,6 +322,27 @@ drw_get_width(PyGimpDrawable *self, void *closure)
 }
 
 static PyObject *
+drw_get_linked(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_get_linked(self->ID));
+}
+
+static int
+drw_set_linked(PyGimpDrawable *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "cannot delete linked");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mismatch");
+	return -1;
+    }
+    gimp_drawable_set_linked(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
 drw_get_tattoo(PyGimpDrawable *self, void *closure)
 {
     return PyInt_FromLong(gimp_drawable_get_tattoo(self->ID));
@@ -380,6 +401,7 @@ static  PyGetSetDef drw_getsets[] = {
     { "type", (getter)drw_get_type, (setter)0 },
     { "type_with_alpha", (getter)drw_get_type_with_alpha, (setter)0 },
     { "width", (getter)drw_get_width, (setter)0 },
+    { "linked", (getter)drw_get_linked, (setter)drw_set_linked },
     { "tattoo", (getter)drw_get_tattoo, (setter)drw_set_tattoo },
     { "visible", (getter)drw_get_visible, (setter)drw_set_visible },
     { NULL, (getter)0, (setter)0 }
@@ -656,27 +678,6 @@ lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
 }
 
 static PyObject *
-lay_get_linked(PyGimpLayer *self, void *closure)
-{
-    return PyInt_FromLong(gimp_drawable_get_linked(self->ID));
-}
-
-static int
-lay_set_linked(PyGimpLayer *self, PyObject *value, void *closure)
-{
-    if (value == NULL) {
-        PyErr_SetString(PyExc_TypeError, "cannot delete linked");
-        return -1;
-    }
-    if (!PyInt_Check(value)) {
-	PyErr_SetString(PyExc_TypeError, "type mismatch");
-	return -1;
-    }
-    gimp_drawable_set_linked(self->ID, PyInt_AsLong(value));
-    return 0;
-}
-
-static PyObject *
 lay_get_mode(PyGimpLayer *self, void *closure)
 {
     return PyInt_FromLong(gimp_layer_get_mode(self->ID));
@@ -766,7 +767,6 @@ static PyGetSetDef lay_getsets[] = {
     { "mask", (getter)lay_get_mask, (setter)0 },
     { "apply_mask", (getter)lay_get_apply_mask, (setter)lay_set_apply_mask },
     { "edit_mask", (getter)lay_get_edit_mask, (setter)lay_set_edit_mask },
-    { "linked", (getter)lay_get_linked, (setter)lay_set_linked },
     { "mode", (getter)lay_get_mode, (setter)lay_set_mode },
     { "opacity", (getter)lay_get_opacity, (setter)lay_set_opacity },
     { "preserve_trans", (getter)lay_get_preserve_trans,

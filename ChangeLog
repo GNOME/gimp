@@ -1,3 +1,8 @@
+2003-12-04  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-drawable.c: made linked an attribute of
+	GimpDrawable.
+
 2003-12-04  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/convert.pdb: renamed gimp_convert_*() functions
