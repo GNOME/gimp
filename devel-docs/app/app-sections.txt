@@ -3892,6 +3892,7 @@ gimp_editor_new
 gimp_editor_create_menu
 gimp_editor_add_button
 gimp_editor_add_stock_box
+gimp_editor_set_box_style
 <SUBSECTION Standard>
 GimpEditorClass
 GIMP_EDITOR
@@ -6220,7 +6221,9 @@ gui_vtable_init
 <FILE>themes</FILE>
 themes_init
 themes_exit
+themes_list_themes
 themes_get_theme_dir
+themes_apply_theme
 </SECTION>
 
 <SECTION>

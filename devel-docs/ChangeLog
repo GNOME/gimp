@@ -1,3 +1,7 @@
+2003-11-13  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt: updated.
+
 2003-11-11  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am (IGNORE_HFILES): removed
