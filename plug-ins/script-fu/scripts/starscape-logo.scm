@@ -118,9 +118,9 @@
 					size
 					glow-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-starscape-logo-effect img logo-layer size glow-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-starscape-logo-alpha"

@@ -132,61 +132,61 @@ internal_procs_init (Gimp               *gimp,
   (* status_callback) (NULL, _("Image"), 0.358);
   register_image_procs (gimp);
 
-  (* status_callback) (NULL, _("Layer"), 0.544);
+  (* status_callback) (NULL, _("Layer"), 0.529);
   register_layer_procs (gimp);
 
-  (* status_callback) (NULL, _("Message procedures"), 0.613);
+  (* status_callback) (NULL, _("Message procedures"), 0.599);
   register_message_procs (gimp);
 
-  (* status_callback) (NULL, _("Miscellaneous"), 0.622);
+  (* status_callback) (NULL, _("Miscellaneous"), 0.608);
   register_misc_procs (gimp);
 
-  (* status_callback) (NULL, _("Misc Tool procedures"), 0.628);
+  (* status_callback) (NULL, _("Misc Tool procedures"), 0.613);
   register_misc_tools_procs (gimp);
 
-  (* status_callback) (NULL, _("Paint Tool procedures"), 0.637);
+  (* status_callback) (NULL, _("Paint Tool procedures"), 0.622);
   register_paint_tools_procs (gimp);
 
-  (* status_callback) (NULL, _("Palette"), 0.68);
+  (* status_callback) (NULL, _("Palette"), 0.666);
   register_palette_procs (gimp);
 
-  (* status_callback) (NULL, _("Palette UI"), 0.698);
+  (* status_callback) (NULL, _("Palette UI"), 0.683);
   register_palette_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Palettes"), 0.706);
+  (* status_callback) (NULL, _("Palettes"), 0.692);
   register_palettes_procs (gimp);
 
-  (* status_callback) (NULL, _("Parasite procedures"), 0.721);
+  (* status_callback) (NULL, _("Parasite procedures"), 0.706);
   register_parasite_procs (gimp);
 
-  (* status_callback) (NULL, _("Paths"), 0.756);
+  (* status_callback) (NULL, _("Paths"), 0.741);
   register_paths_procs (gimp);
 
-  (* status_callback) (NULL, _("Pattern UI"), 0.799);
+  (* status_callback) (NULL, _("Pattern UI"), 0.785);
   register_pattern_select_procs (gimp);
 
-  (* status_callback) (NULL, _("Patterns"), 0.808);
+  (* status_callback) (NULL, _("Patterns"), 0.794);
   register_patterns_procs (gimp);
 
-  (* status_callback) (NULL, _("Plug-in"), 0.823);
+  (* status_callback) (NULL, _("Plug-in"), 0.808);
   register_plug_in_procs (gimp);
 
-  (* status_callback) (NULL, _("Procedural database"), 0.84);
+  (* status_callback) (NULL, _("Procedural database"), 0.826);
   register_procedural_db_procs (gimp);
 
-  (* status_callback) (NULL, _("Image mask"), 0.863);
+  (* status_callback) (NULL, _("Image mask"), 0.849);
   register_selection_procs (gimp);
 
-  (* status_callback) (NULL, _("Selection Tool procedures"), 0.916);
+  (* status_callback) (NULL, _("Selection Tool procedures"), 0.901);
   register_selection_tools_procs (gimp);
 
-  (* status_callback) (NULL, _("Text procedures"), 0.93);
+  (* status_callback) (NULL, _("Text procedures"), 0.916);
   register_text_tool_procs (gimp);
 
-  (* status_callback) (NULL, _("Transform Tool procedures"), 0.942);
+  (* status_callback) (NULL, _("Transform Tool procedures"), 0.927);
   register_transform_tools_procs (gimp);
 
-  (* status_callback) (NULL, _("Undo"), 0.959);
+  (* status_callback) (NULL, _("Undo"), 0.945);
   register_undo_procs (gimp);
 
   (* status_callback) (NULL, _("Units"), 0.965);

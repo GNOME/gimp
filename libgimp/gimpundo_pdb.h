@@ -29,8 +29,13 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_undo_push_group_start (gint32 image_ID);
-gboolean gimp_undo_push_group_end   (gint32 image_ID);
+gboolean gimp_image_undo_group_start (gint32 image_ID);
+gboolean gimp_image_undo_group_end   (gint32 image_ID);
+gboolean gimp_image_undo_is_enabled  (gint32 image_ID);
+gboolean gimp_image_undo_disable     (gint32 image_ID);
+gboolean gimp_image_undo_enable      (gint32 image_ID);
+gboolean gimp_image_undo_freeze      (gint32 image_ID);
+gboolean gimp_image_undo_thaw        (gint32 image_ID);
 
 
 G_END_DECLS

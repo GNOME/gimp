@@ -276,7 +276,7 @@ tile (gint32  image_id,
     }
   else
     {
-      gimp_undo_push_group_start (image_id);
+      gimp_image_undo_group_start (image_id);
 
       gimp_image_resize (image_id,
 			 tvals.new_width, tvals.new_height,
@@ -349,7 +349,9 @@ tile (gint32  image_id,
       gimp_drawable_detach (new_layer);
     }
   else
-    gimp_undo_push_group_end (image_id);
+    {
+      gimp_image_undo_group_end (image_id);
+    }
 
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);

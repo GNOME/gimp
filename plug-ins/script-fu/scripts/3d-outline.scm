@@ -92,12 +92,12 @@
 					 s-offset-x
 					 s-offset-y)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-3d-outline-logo-effect img logo-layer text-pattern
 				  outline-blur-radius shadow-blur-radius
 				  bump-map-blur-radius noninteractive
 				  s-offset-x s-offset-y)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-3d-outline-logo-alpha"

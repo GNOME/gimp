@@ -46,7 +46,7 @@
 	 (image-height (car (gimp-image-height image)))
 	 (old-bg (car (gimp-palette-get-background))))
 
-    (gimp-undo-push-group-start image)
+    (gimp-image-undo-group-start image)
     (gimp-layer-add-alpha drawable)
     
     
@@ -107,7 +107,7 @@
 
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
-    (gimp-undo-push-group-end image)
+    (gimp-image-undo-group-end image)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-xach-effect"

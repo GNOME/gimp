@@ -98,11 +98,11 @@
 				    ol-color
 				    bg-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-comic-logo-effect img logo-layer
 			     gradient gradient-reverse
 			     ol-width ol-color bg-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-comic-logo-alpha"

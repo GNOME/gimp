@@ -88,10 +88,10 @@
 				    base-color
 				    bg-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-t-o-p-logo-effect img logo-layer b-size hit-rate
 			     edge-size edge-only base-color bg-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-t-o-p-logo-alpha"

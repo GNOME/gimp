@@ -284,7 +284,7 @@ align_layers (gint32 image_id)
 	base_y = min_y;
     }
 
-  gimp_undo_push_group_start (image_id);
+  gimp_image_undo_group_start (image_id);
 
   for (vindex = -1, index = 0; index < layer_num; index++)
     {
@@ -339,7 +339,7 @@ align_layers (gint32 image_id)
       gimp_layer_set_offsets (layers[index], x, y);
     }
 
-  gimp_undo_push_group_end (image_id);
+  gimp_image_undo_group_end (image_id);
 
   return GIMP_PDB_SUCCESS;
 }

@@ -108,10 +108,10 @@
 					 num-bands
 					 do-fade)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-alien-neon-logo-effect img logo-layer fg-color bg-color 
 				  band-size gap-size num-bands do-fade)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-alien-neon-logo-alpha"

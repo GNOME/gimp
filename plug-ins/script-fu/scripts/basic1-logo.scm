@@ -43,9 +43,9 @@
 				     bg-color
 				     text-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-basic1-logo-effect img logo-layer bg-color text-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-basic1-logo-alpha"

@@ -77,9 +77,9 @@
 				     size
 				     bg-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-frosty-logo-effect img logo-layer size bg-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 

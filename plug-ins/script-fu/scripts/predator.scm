@@ -36,7 +36,7 @@
 	 (image-width (car (gimp-image-width image)))
 	 (image-height (car (gimp-image-height image))))
     
-    (gimp-undo-push-group-start image)
+    (gimp-image-undo-group-start image)
     (gimp-layer-add-alpha drawable)
     
     (if (= (car (gimp-selection-is-empty image)) TRUE)
@@ -92,7 +92,7 @@
     
     (gimp-image-set-active-layer image drawable)
     (gimp-image-remove-channel image active-selection)
-    (gimp-undo-push-group-end image)
+    (gimp-image-undo-group-end image)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-predator"

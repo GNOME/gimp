@@ -29,7 +29,7 @@
 	 (num-visi-layers 0)
 	 (layer-array (cadr layers)))
   
-  (gimp-undo-push-group-start image)
+  (gimp-image-undo-group-start image)
 	
   ; copy all visible layers and make them invisible
   (set! layer-count 1)
@@ -68,7 +68,7 @@
   
   (gimp-image-set-active-layer image drawable)
 
-  (gimp-undo-push-group-end image)
+  (gimp-image-undo-group-end image)
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-copy-visible"

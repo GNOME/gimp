@@ -108,11 +108,11 @@
 				      blend-gradient
 				      blend-gradient-reverse)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-blended-logo-effect img logo-layer b-size bg-color
 			       blend-mode blend-fg blend-bg
 			       blend-gradient blend-gradient-reverse)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 

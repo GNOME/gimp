@@ -68,9 +68,9 @@
 				     offsets
 				     bg-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-chrome-logo-effect img logo-layer offsets bg-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chrome-logo-alpha"

@@ -337,11 +337,6 @@ gimp_image_add_channel
 gimp_image_remove_channel
 gimp_image_active_drawable
 gimp_image_base_type
-gimp_image_undo_is_enabled
-gimp_image_undo_enable
-gimp_image_undo_disable
-gimp_image_undo_freeze
-gimp_image_undo_thaw
 gimp_image_clean_all
 gimp_image_is_dirty
 gimp_image_floating_selection
@@ -592,8 +587,13 @@ gimp_transform_2d
 
 <SECTION>
 <FILE>gimpundo</FILE>
-gimp_undo_push_group_start
-gimp_undo_push_group_end
+gimp_image_undo_group_start
+gimp_image_undo_group_end
+gimp_image_undo_is_enabled
+gimp_image_undo_disable
+gimp_image_undo_enable
+gimp_image_undo_freeze
+gimp_image_undo_thaw
 </SECTION>
 
 <SECTION>

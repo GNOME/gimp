@@ -59,9 +59,9 @@
 			      logo-layer
 			      bg-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-chalk-logo-effect img logo-layer bg-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chalk-logo-alpha"

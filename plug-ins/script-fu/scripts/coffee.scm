@@ -28,7 +28,7 @@
    (set! theNumber inNumber)
    (set! theSize (min theWidth theHeight))
 
-   (gimp-undo-push-group-start theImage)
+   (gimp-image-undo-group-start theImage)
 
    (while (> theNumber 0)
 	  (set! theNumber (- theNumber 1))
@@ -64,7 +64,7 @@
 
    (gimp-selection-none theImage)
 
-   (gimp-undo-push-group-end theImage)
+   (gimp-image-undo-group-end theImage)
 
    (gimp-gradients-set-gradient old-gradient)
    (gimp-displays-flush))

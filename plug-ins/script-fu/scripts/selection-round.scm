@@ -48,7 +48,7 @@
 	 (cut-radius 0)
 	 (ellipse-radius 0))
 
-  (gimp-undo-push-group-start image)
+  (gimp-image-undo-group-start image)
 
   (if (> select-width select-height)
       (set! cut-radius (trunc (+ 1 (* radius (/ select-height 2)))))
@@ -115,7 +115,7 @@
 		       TRUE
 		       FALSE 0)
 
-  (gimp-undo-push-group-end image)
+  (gimp-image-undo-group-end image)
   (gimp-displays-flush)))
 
 

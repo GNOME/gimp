@@ -99,11 +99,6 @@ guint8*           _gimp_image_get_cmap                (gint32                ima
 gboolean          _gimp_image_set_cmap                (gint32                image_ID,
 						       gint                  num_bytes,
 						       const guint8         *cmap);
-gboolean          gimp_image_undo_is_enabled          (gint32                image_ID);
-gboolean          gimp_image_undo_enable              (gint32                image_ID);
-gboolean          gimp_image_undo_disable             (gint32                image_ID);
-gboolean          gimp_image_undo_freeze              (gint32                image_ID);
-gboolean          gimp_image_undo_thaw                (gint32                image_ID);
 gboolean          gimp_image_clean_all                (gint32                image_ID);
 gboolean          gimp_image_is_dirty                 (gint32                image_ID);
 gint32            gimp_image_floating_selection       (gint32                image_ID);

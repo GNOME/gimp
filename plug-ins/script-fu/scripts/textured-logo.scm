@@ -106,10 +106,10 @@
 				       blend-fg
 				       blend-bg)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-textured-logo-effect img logo-layer b-size text-pattern tile-type
 				bg-color blend-fg blend-bg)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-textured-logo-alpha"

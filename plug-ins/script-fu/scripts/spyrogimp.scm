@@ -242,7 +242,7 @@
  ;; Execution starts here.
  ;;
 
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
 
     ; Set new color, brush, opacity, paint mode.
     (gimp-palette-set-foreground color)
@@ -291,7 +291,7 @@
     (gimp-brushes-set-opacity old-opacity)
     (gimp-brushes-set-paint-mode old-paint-mode)
 
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)
   )
 )

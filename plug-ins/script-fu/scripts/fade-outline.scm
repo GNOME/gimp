@@ -67,7 +67,7 @@
         (if (= (car (gimp-drawable-is-layer-mask inLayer)) 0)
             (begin
 
-              (gimp-undo-push-group-start inImage)
+              (gimp-image-undo-group-start inImage)
               
               ; if the layer has no alpha add alpha channel
               (if (= (car (gimp-drawable-has-alpha inLayer)) FALSE)
@@ -172,7 +172,7 @@
               )
 
              (gimp-palette-set-background l-old-bg-color)
-             (gimp-undo-push-group-end inImage)
+             (gimp-image-undo-group-end inImage)
              (gimp-displays-flush)
              )
         ))

@@ -313,51 +313,6 @@ and operations involving multiple layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_image_undo_is_enabled ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_enable ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_disable ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_freeze ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_image_undo_thaw ##### -->
-<para>
-
-</para>
-
-@image_ID: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_image_clean_all ##### -->
 <para>
 

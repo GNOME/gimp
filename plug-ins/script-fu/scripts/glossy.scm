@@ -155,7 +155,7 @@
 				     s-offset-x
 				     s-offset-y)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-glossy-logo-effect img logo-layer
 			      blend-gradient-text
 			      blend-gradient-text-reverse
@@ -167,7 +167,7 @@
 			      use-pattern-overlay pattern-overlay
 			      noninteractive shadow-toggle
 			      s-offset-x s-offset-y)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 

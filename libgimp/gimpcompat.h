@@ -78,6 +78,9 @@ G_BEGIN_DECLS
 #define gimp_gradients_get_active               gimp_gradients_get_gradient
 #define gimp_gradients_set_active               gimp_gradients_set_gradient
 
+#define gimp_undo_push_group_start              gimp_image_undo_group_start
+#define gimp_undo_push_group_end                gimp_image_undo_group_end
+
 #define gimp_help_init()                        ((void) 0)
 #define gimp_help_free()                        ((void) 0)
 

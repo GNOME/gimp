@@ -81,10 +81,10 @@
 					     bevel-width
 					     bg-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-gradient-bevel-logo-effect img logo-layer b-size
 				      bevel-height bevel-width bg-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-gradient-bevel-logo-alpha"

@@ -251,17 +251,20 @@ do_zcrop (GimpDrawable *drawable,
 	gimp_progress_update ((double) area / (double) total_area);
     }
 
-    g_free (buffer);
+  g_free (buffer);
 
-    g_free (killrows);
-    g_free (killcols);
+  g_free (killrows);
+  g_free (killcols);
 
-    gimp_progress_update (1.00);
-    gimp_undo_push_group_start (image_id);
-    gimp_drawable_flush (drawable);
-    gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
-    gimp_image_crop (image_id, livingcols, livingrows, 0, 0);
-    gimp_undo_push_group_end (image_id);
+  gimp_progress_update (1.00);
+
+  gimp_image_undo_group_start (image_id);
+
+  gimp_drawable_flush (drawable);
+  gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
+  gimp_image_crop (image_id, livingcols, livingrows, 0, 0);
+
+  gimp_image_undo_group_end (image_id);
 }
 
 
@@ -275,9 +278,7 @@ colours_equal (const guchar *col1,
   for (b = 0; b < bytes; b++)
     {
       if (col1[b] != col2[b])
-	{
-	  return FALSE;
-	}
+        return FALSE;
     }
 
   return TRUE;

@@ -487,7 +487,7 @@ run (const gchar      *name,
 	  gchar        *str;
 	  GimpParasite *parasite;
 
-          gimp_undo_push_group_start (image_id);
+          gimp_image_undo_group_start (image_id);
 
           /*  run the effect  */
           ifs_compose (active_drawable);
@@ -509,7 +509,7 @@ run (const gchar      *name,
 
 	  g_free (str);
 
-          gimp_undo_push_group_end (image_id);
+          gimp_image_undo_group_end (image_id);
 	}
       else
         {

@@ -690,7 +690,7 @@ run (const gchar      *name,
   l_image_id = param[1].data.d_int32;
   l_layer_id = param[2].data.d_drawable;
 
-  gimp_undo_push_group_start (l_image_id);
+  gimp_image_undo_group_start (l_image_id);
 
   if (! gimp_drawable_is_layer (l_layer_id))
     {
@@ -806,14 +806,14 @@ run (const gchar      *name,
           status = GIMP_PDB_CANCEL;
         }
 
-      gimp_undo_push_group_end (l_image_id);
+      gimp_image_undo_group_end (l_image_id);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
     }
   else
     {
-      gimp_undo_push_group_end (l_image_id);
+      gimp_image_undo_group_end (l_image_id);
     }
 
   values[0].data.d_status = status;

@@ -51,7 +51,7 @@
 			  0		; feather radius
 			  )))
 
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (gimp-selection-none img)
     (srand (realtime))
     (while (< index num-of-lines)
@@ -66,7 +66,7 @@
 	  ;; (gimp-image-set-active-layer img drw)
 	  ;; delete extra channel by Sven Neumann <neumanns@uni-duesseldorf.de>
 	  (gimp-image-remove-channel img old-selection)))
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register

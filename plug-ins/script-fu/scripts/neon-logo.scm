@@ -169,9 +169,9 @@
 				   glow-color
 				   shadow)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-neon-logo-effect img tube-layer size bg-color glow-color shadow)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-neon-logo-alpha"

@@ -25,7 +25,7 @@
 ; Define the function:
 
 (define (script-fu-old-photo inImage inLayer inDefocus inBorderSize inSepia inMottle inCopy)
-  (gimp-undo-push-group-start inImage)
+  (gimp-image-undo-group-start inImage)
   (gimp-selection-all inImage)
   (set! theImage (if (= inCopy TRUE)
 		     (car (gimp-image-duplicate inImage))
@@ -76,7 +76,7 @@
 	  ()
 	  )
   (gimp-selection-none inImage)
-  (gimp-undo-push-group-end inImage)
+  (gimp-image-undo-group-end inImage)
   (gimp-displays-flush theImage)
   )
 

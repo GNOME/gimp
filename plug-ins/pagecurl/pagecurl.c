@@ -993,12 +993,14 @@ clear_curled_region (void)
 static void
 page_curl (void)
 {
-  gimp_undo_push_group_start (image_id);
+  gimp_image_undo_group_start (image_id);
+
   gimp_progress_init (_("Page Curl..."));
   init_calculation ();
   do_curl_effect ();
   clear_curled_region ();
-  gimp_undo_push_group_end (image_id);
+
+  gimp_image_undo_group_end (image_id);
 }
 
 /*

@@ -23,7 +23,7 @@
    (set! theHeight (car (gimp-drawable-height theLayer)))
    (set! theWidth (car (gimp-drawable-width theLayer)))
 
-   (gimp-undo-push-group-start theImage)
+   (gimp-image-undo-group-start theImage)
    (gimp-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
 
    (gimp-rect-select theImage 0 0 theWidth theHeight REPLACE 0 0)
@@ -44,7 +44,7 @@
 
    (gimp-layer-resize theLayer theWidth theHeight (- 0 theWidth) (- 0 theHeight))
    (gimp-layer-set-offsets theLayer 0 0)
-   (gimp-undo-push-group-end theImage)
+   (gimp-image-undo-group-end theImage)
    (gimp-displays-flush)
 )
 

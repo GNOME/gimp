@@ -3534,7 +3534,7 @@ gfig_paint_callback (void)
   if (bdesc)
     mygimp_brush_set (bdesc->name);
 
-  gimp_undo_push_group_start (gfig_image);
+  gimp_image_undo_group_start (gfig_image);
 
   while (objs)
     {
@@ -3591,7 +3591,7 @@ gfig_paint_callback (void)
       && selopt.fill_when == FILL_AFTER)
     paint_layer_fill ();
 
-  gimp_undo_push_group_end (gfig_image);
+  gimp_image_undo_group_end (gfig_image);
 
   gimp_displays_flush ();
 }

@@ -71,9 +71,9 @@
 					spots-y
 					bg-color)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-bovinated-logo-effect img logo-layer spots-x spots-y bg-color)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-bovinated-logo-alpha"

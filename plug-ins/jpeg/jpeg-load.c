@@ -497,7 +497,7 @@ run (const gchar      *name,
               /* we start an undo_group and immediately freeze undo saving
                  so that we can avoid sucking up tile cache with our unneeded
                  preview steps. */
-              gimp_undo_push_group_start (image_ID);
+              gimp_image_undo_group_start (image_ID);
               gimp_image_undo_freeze (image_ID);
 
               undo_touched = TRUE;
@@ -515,7 +515,7 @@ run (const gchar      *name,
             {
               /* thaw undo saving and end the undo_group. */
               gimp_image_undo_thaw (image_ID);
-              gimp_undo_push_group_end (image_ID);
+              gimp_image_undo_group_end (image_ID);
             }
 
           if (!err)
@@ -1587,7 +1587,7 @@ make_preview (void)
           /* we start an undo_group and immediately freeze undo saving
              so that we can avoid sucking up tile cache with our unneeded
              preview steps. */
-          gimp_undo_push_group_start (image_ID_global);
+          gimp_image_undo_group_start (image_ID_global);
           gimp_image_undo_freeze (image_ID_global);
 
           undo_touched = TRUE;
@@ -1613,9 +1613,7 @@ static void
 destroy_preview (void)
 {
   if (abort_me)
-    {
-      *abort_me = TRUE;   /* signal the background save to stop */
-    }
+    *abort_me = TRUE;   /* signal the background save to stop */
 
   if (drawable_global)
     {

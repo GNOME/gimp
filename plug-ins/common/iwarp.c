@@ -768,7 +768,8 @@ iwarp (void)
 	{
 	  animate_deform_value = 1.0;
 	  delta = -1.0 / (animate_num_frames - 1);
-      gimp_undo_push_group_start (imageID);
+
+          gimp_image_undo_group_start (imageID);
 	}
       else
 	{
@@ -790,8 +791,9 @@ iwarp (void)
 	  gimp_progress_init (st);
 	  g_free (st);
 
-	  if (animate_deform_value >0.0)
+	  if (animate_deform_value > 0.0)
 	    iwarp_frame ();
+
 	  gimp_image_add_layer (imageID, animlayers[i], 0);
 	  animate_deform_value = animate_deform_value + delta;
 	  frame_number++;
@@ -806,7 +808,9 @@ iwarp (void)
 	    {
 	      gimp_progress_update ((gdouble) i / (animate_num_frames - 1));
 	      layerID = gimp_layer_copy (animlayers[animate_num_frames-i-1]);
-      gimp_undo_push_group_end (imageID);
+
+              gimp_image_undo_group_end (imageID);
+
 	      gimp_layer_add_alpha (layerID);
 	      st = g_strdup_printf (_("Frame %d"), i + animate_num_frames);
 	      gimp_drawable_set_name (layerID, st);

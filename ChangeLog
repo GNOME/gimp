@@ -1,5 +1,35 @@
 2003-12-05  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/image.pdb: removed gimp_image_undo_*() functions...
+
+	* tools/pdbgen/pdb/undo.pdb: ...and added them here. Renamed
+	gimp_undo_push_group_start,end() to
+	gimp_image_undo_group_start,end().
+
+	* app/pdb/procedural_db.c
+	* libgimp/gimpcompat.h: added compat stuff for the old undo group API.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/undo_cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimpundo_pdb.[ch]: regenerated.
+
+	* plug-ins/common/align_layers.c
+	* plug-ins/common/colortoalpha.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/iwarp.c
+	* plug-ins/common/jpeg.c
+	* plug-ins/common/rotate.c
+	* plug-ins/common/tile.c
+	* plug-ins/common/zealouscrop.c
+	* plug-ins/gfig/gfig.c
+	* plug-ins/ifscompose/ifscompose.c
+	* plug-ins/pagecurl/pagecurl.c
+	* plug-ins/script-fu/scripts/*.scm: changed accordingly.
+
+2003-12-05  Michael Natterer  <mitch@gimp.org>
+
 	Made 3rd party scripts work again after all that PDB function
 	renaming:
 

@@ -122,11 +122,11 @@
 					keep-back
 					pattern)
   (begin
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (apply-chip-away-logo-effect img logo-layer spread-amount blur-amount
 				 invert drop-shadow keep-bump bg-fill
 				 keep-back pattern)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-displays-flush)))
 
 (script-fu-register "script-fu-chip-away-logo-alpha"

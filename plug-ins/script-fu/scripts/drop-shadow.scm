@@ -54,7 +54,7 @@
 	 (active-selection 0)
 	 (shadow-layer 0))
 
-  (gimp-undo-push-group-start image)
+  (gimp-image-undo-group-start image)
   
   (gimp-layer-add-alpha drawable)
   (if (= (car (gimp-selection-is-empty image)) TRUE)
@@ -152,7 +152,7 @@
 
   (gimp-image-set-active-layer image drawable)
   (gimp-palette-set-background old-bg)
-  (gimp-undo-push-group-end image)
+  (gimp-image-undo-group-end image)
   (gimp-displays-flush)))
 
 (script-fu-register "script-fu-drop-shadow"

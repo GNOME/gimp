@@ -43,7 +43,7 @@
 	 (old-fg (car (gimp-palette-get-foreground)))
 	)
     
-    (gimp-undo-push-group-start image)
+    (gimp-image-undo-group-start image)
 
     (gimp-layer-add-alpha drawable)
     
@@ -120,7 +120,7 @@
     (gimp-image-remove-channel image active-selection)
     (gimp-image-set-active-layer image drawable)
 
-    (gimp-undo-push-group-end image)
+    (gimp-image-undo-group-end image)
 
     (gimp-displays-flush)))
 

@@ -15,7 +15,7 @@ Control of undo/redo.
 
 </para>
 
-<!-- ##### FUNCTION gimp_undo_push_group_start ##### -->
+<!-- ##### FUNCTION gimp_image_undo_group_start ##### -->
 <para>
 
 </para>
@@ -24,7 +24,52 @@ Control of undo/redo.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_undo_push_group_end ##### -->
+<!-- ##### FUNCTION gimp_image_undo_group_end ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_undo_is_enabled ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_undo_disable ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_undo_enable ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_undo_freeze ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_image_undo_thaw ##### -->
 <para>
 
 </para>

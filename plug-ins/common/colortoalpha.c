@@ -35,26 +35,28 @@
 #define PRV_WIDTH  40
 #define PRV_HEIGHT 20
 
+
 typedef struct
 {
   GimpRGB  color;
 } C2AValues;
 
+
 /* Declare local functions.
  */
-static void      query  (void);
-static void      run    (const gchar       *name,
-			 gint               nparams,
-			 const GimpParam   *param,
-			 gint              *nreturn_vals,
-			 GimpParam        **return_vals);
+static void        query               (void);
+static void        run                 (const gchar       *name,
+                                        gint               nparams,
+                                        const GimpParam   *param,
+                                        gint              *nreturn_vals,
+                                        GimpParam        **return_vals);
 
-static void inline colortoalpha             (GimpRGB       *src,
-                                             const GimpRGB *color);
-static void        toalpha                  (GimpDrawable  *drawable);
+static void inline colortoalpha        (GimpRGB           *src,
+                                        const GimpRGB     *color);
+static void        toalpha             (GimpDrawable      *drawable);
 
 /* UI stuff */
-static gboolean    colortoalpha_dialog      (GimpDrawable  *drawable);
+static gboolean    colortoalpha_dialog (GimpDrawable      *drawable);
 
 
 static GimpRunMode run_mode;
@@ -71,6 +73,7 @@ static C2AValues pvals =
 {
   { 1.0, 1.0, 1.0, 1.0 } /* white default */
 };
+
 
 MAIN ()
 
@@ -115,11 +118,11 @@ run (const gchar      *name,
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
-  *return_vals = values;
+  *return_vals  = values;
 
   INIT_I18N ();
 
-  values[0].type = GIMP_PDB_STATUS;
+  values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
   /*  Get the specified drawable  */
@@ -131,7 +134,7 @@ run (const gchar      *name,
     case GIMP_RUN_INTERACTIVE:
       gimp_palette_get_foreground (&pvals.color);
       gimp_get_data ("plug_in_colortoalpha", &pvals);
-      if (! colortoalpha_dialog (drawable ))
+      if (! colortoalpha_dialog (drawable))
 	{
 	  gimp_drawable_detach (drawable);
 	  return;
@@ -156,7 +159,8 @@ run (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gimp_undo_push_group_start (image_ID);
+      gimp_image_undo_group_start (image_ID);
+
       /*  Add alpha if not present */
       gimp_layer_add_alpha (drawable->drawable_id);
       drawable = gimp_drawable_get (drawable->drawable_id);
@@ -170,9 +174,13 @@ run (const gchar      *name,
 
 	  toalpha (drawable);
 	}
+
       gimp_drawable_detach (drawable);
-      gimp_undo_push_group_end (image_ID);
-      gimp_displays_flush ();
+
+      gimp_image_undo_group_end (image_ID);
+
+      if (run_mode != GIMP_RUN_NONINTERACTIVE)
+        gimp_displays_flush ();
     }
   else
     {
@@ -195,7 +203,7 @@ colortoalpha (GimpRGB       *src,
 
   if (color->r < 0.0001)
     alpha.r = src->r;
-  else if ( src->r > color->r )
+  else if (src->r > color->r)
     alpha.r = (src->r - color->r) / (1.0 - color->r);
   else if (src->r < color->r)
     alpha.r = (color->r - src->r) / color->r;
@@ -203,23 +211,23 @@ colortoalpha (GimpRGB       *src,
 
   if (color->g < 0.0001)
     alpha.g = src->g;
-  else if ( src->g > color->g )
+  else if (src->g > color->g)
     alpha.g = (src->g - color->g) / (1.0 - color->g);
-  else if ( src->g < color->g )
+  else if (src->g < color->g)
     alpha.g = (color->g - src->g) / (color->g);
   else alpha.g = 0.0;
 
   if (color->b < 0.0001)
     alpha.b = src->b;
-  else if ( src->b > color->b )
+  else if (src->b > color->b)
     alpha.b = (src->b - color->b) / (1.0 - color->b);
-  else if ( src->b < color->b )
+  else if (src->b < color->b)
     alpha.b = (color->b - src->b) / (color->b);
   else alpha.b = 0.0;
 
-  if ( alpha.r > alpha.g )
+  if (alpha.r > alpha.g)
     {
-      if ( alpha.r > alpha.b )
+      if (alpha.r > alpha.b)
 	{
 	  src->a = alpha.r;
 	}
@@ -228,7 +236,7 @@ colortoalpha (GimpRGB       *src,
 	  src->a = alpha.b;
 	}
     }
-  else if ( alpha.g > alpha.b )
+  else if (alpha.g > alpha.b)
     {
       src->a = alpha.g;
     }
@@ -259,7 +267,7 @@ colortoalpha (GimpRGB       *src,
   <sjburges> because neither one uses the other
   <clahey>   sjburges: That's exactly as it should be.  They are both just getting
              reduced to the same amount, limited by the the darkest color.
-  <clahey>   Then a2 = b2 * alpha + c2 * ( 1- alpha).  Solving for b2 gives
+  <clahey>   Then a2 = b2 * alpha + c2 * (1- alpha).  Solving for b2 gives
              b2 = (a1-c2)/alpha + c2.
   <sjburges> yeah
   <clahey>   That gives us are formula for if the background is darker than the

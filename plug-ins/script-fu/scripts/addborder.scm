@@ -105,7 +105,7 @@
 	 (height (+ oheight (* 2 ysize)))
 	 (layer (car (gimp-layer-new img width height RGBA-IMAGE "Border-Layer" 100 NORMAL-MODE))))
 ;Add this for debugging    (verbose 4)
-    (gimp-undo-push-group-start img)
+    (gimp-image-undo-group-start img)
     (gimp-drawable-fill layer TRANSPARENT-FILL)
     (gimp-image-resize img
 		       width
@@ -152,7 +152,7 @@
     (gimp-edit-fill layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (gimp-image-add-layer img layer 0)
-    (gimp-undo-push-group-end img)
+    (gimp-image-undo-group-end img)
     (gimp-palette-set-background old-bg)
     (gimp-displays-flush)
     )
