@@ -40,9 +40,8 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
-#include "plug-in/plug-in.h"
-
 #include "gimp-intl.h"
+#include "plug-in/plug-in.h"
 
 static ProcRecord drawable_merge_shadow_proc;
 static ProcRecord drawable_fill_proc;

@@ -1,5 +1,18 @@
 2003-03-25  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext.c: include locale.h for setlocale().
+	
+	* app/base/Makefile.am
+	* app/core/Makefile.am
+	* app/display/Makefile.am
+	* app/widgets/Makefile.am: changed rules that generate enums code
+	to include gimp-intl.h instead of libgimp-intl.h.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/*.pdb: include gimp-intl.h.
+
+2003-03-25  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am
 	* gimpintl.h: removed this header file.
 

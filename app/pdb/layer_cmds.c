@@ -39,9 +39,8 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
-#include "pdb_glue.h"
-
 #include "gimp-intl.h"
+#include "pdb_glue.h"
 
 static ProcRecord layer_new_proc;
 static ProcRecord layer_copy_proc;

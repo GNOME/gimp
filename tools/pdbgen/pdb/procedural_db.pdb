@@ -342,7 +342,7 @@ HELP
     );
 }
 
-@headers = qw(<string.h> "libgimp/gimpintl.h");
+@headers = qw(<string.h> "gimp-intl.h");
 
 $extra{app}->{decls} = <<'CODE';
 /*  Query structure  */

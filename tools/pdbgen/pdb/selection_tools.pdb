@@ -310,7 +310,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimpimage-mask-select.h" "libgimp/gimpintl.h");
+@headers = qw("core/gimpimage-mask-select.h" "gimp-intl.h");
 
 @procs = qw(by_color_select ellipse_select free_select fuzzy_select
 	    rect_select);

@@ -46,7 +46,6 @@
 #include "core/gimpdrawable-invert.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
-
 #include "gimp-intl.h"
 
 static ProcRecord brightness_contrast_proc;

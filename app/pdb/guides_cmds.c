@@ -32,7 +32,6 @@
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
-
 #include "gimp-intl.h"
 
 static ProcRecord image_add_hguide_proc;

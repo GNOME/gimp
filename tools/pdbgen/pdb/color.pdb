@@ -739,7 +739,7 @@ CODE
 @headers = qw("base/gimphistogram.h" "base/gimplut.h" "base/lut-funcs.h"
 	      "base/pixel-region.h" "base/pixel-processor.h"
               "core/gimpdrawable.h" "core/gimpimage.h"
-              "libgimp/gimpintl.h");
+              "gimp-intl.h");
 
 @procs = qw(brightness_contrast levels posterize desaturate equalize invert
 	    curves_spline curves_explicit color_balance histogram

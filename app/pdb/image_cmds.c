@@ -47,8 +47,8 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimpunit.h"
-
 #include "gimp-intl.h"
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 

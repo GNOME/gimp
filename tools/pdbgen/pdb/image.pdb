@@ -1547,7 +1547,7 @@ CODE
               "core/gimplist.h" "core/gimpunit.h"
               "base/temp-buf.h" "libgimpmath/gimpmath.h"
               "libgimpbase/gimpbase.h"
-              "libgimp/gimpintl.h");
+              "gimp-intl.h");
 
 $extra{app}->{code} = <<'CODE';
 #if defined (HAVE_FINITE)

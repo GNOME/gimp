@@ -863,7 +863,7 @@ HEADER
 	print IFILE qq@#include <glib-object.h>\n\n@;
 	print IFILE qq@#include "pdb-types.h"\n\n@;
 	print IFILE qq@#include "core/gimp.h"\n\n@;
-	print IFILE qq@#include "libgimp/gimpintl.h"\n\n@;
+	print IFILE qq@#include "gimp-intl.h"\n\n@;
 	print IFILE "/* Forward declarations for registering PDB procs */\n\n";
 	foreach (@group_decls) {
 	    print IFILE "void $_" . ' ' x ($longest - length $_) . " (Gimp *gimp);\n";

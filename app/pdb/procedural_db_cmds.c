@@ -32,6 +32,7 @@
 #include "procedural_db.h"
 
 #include "core/gimp.h"
+#include "gimp-intl.h"
 
 #ifdef HAVE_GLIBC_REGEX
 #include <regex.h>
@@ -40,7 +41,6 @@
 #endif
 
 
-#include "gimp-intl.h"
 #include "libgimpbase/gimpbasetypes.h"
 
 /*  Query structure  */

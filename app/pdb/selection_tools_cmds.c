@@ -32,8 +32,8 @@
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-mask-select.h"
 #include "core/gimpimage.h"
-
 #include "gimp-intl.h"
+
 #include "libgimpcolor/gimpcolor.h"
 
 static ProcRecord by_color_select_proc;

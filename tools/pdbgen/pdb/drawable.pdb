@@ -557,7 +557,7 @@ CODE
 @headers = qw("core/gimp.h" "core/gimplayermask.h" "core/gimpchannel.h"
               "core/gimpdrawable.h" "core/gimpdrawable-offset.h"
 	      "base/tile.h" "base/tile-manager.h" "base/temp-buf.h"
-              "libgimp/gimpintl.h");
+              "gimp-intl.h");
 
 @procs = qw(drawable_merge_shadow drawable_fill drawable_update
 	    drawable_mask_bounds drawable_image drawable_type
