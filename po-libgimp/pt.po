@@ -1,12 +1,13 @@
 # libgimp's Portuguese Translation
-# Copyright (C) 2002 Free Software Foundation, Inc.
+# Copyright (C) 2002, 2003 gimp
+# Distributed under the same licence as the gimp package
 # Duarte Loreto <happyguy_pt@hotmail.com>, 2002, 2003
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.2\n"
-"POT-Creation-Date: 2003-04-14 21:38+0200\n"
-"PO-Revision-Date: 2003-03-02 02:15+0000\n"
+"POT-Creation-Date: 2003-04-17 19:55+0100\n"
+"PO-Revision-Date: 2003-04-17 19:59+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -175,34 +176,34 @@ msgid "percent"
 msgstr "percentagem"
 
 #: libgimpbase/gimputils.c:118
-#, fuzzy, c-format
+#, c-format
 msgid "%d Bytes"
-msgstr "Bytes"
+msgstr "%d Bytes"
 
 #: libgimpbase/gimputils.c:122
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: libgimpbase/gimputils.c:126
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: libgimpbase/gimputils.c:130
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: libgimpbase/gimputils.c:135
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: libgimpbase/gimputils.c:140
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
