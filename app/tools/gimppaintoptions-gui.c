@@ -35,6 +35,8 @@
 #include "paint/gimppaintoptions.h"
 
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimppreview.h"
+#include "widgets/gimppreviewrenderergradient.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gtkhwrapbox.h"
 #include "widgets/gimpviewablebutton.h"
@@ -67,6 +69,10 @@ static GtkWidget * gradient_options_gui (GimpGradientOptions *gradient,
                                          GimpPaintOptions    *paint_options,
                                          GType                tool_type,
                                          GtkWidget           *incremental_toggle);
+
+static void gradient_options_reverse_notify (GimpPaintOptions *paint_options,
+                                             GParamSpec       *pspec,
+                                             GimpPreview      *preview);
 
 
 GtkWidget *
@@ -164,20 +170,46 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   if (g_type_is_a (tool_type, GIMP_TYPE_PAINTBRUSH_TOOL) ||
       tool_options->tool_info->tool_type == GIMP_TYPE_BLEND_TOOL)
     {
-      button = gimp_viewable_button_new (context->gimp->gradient_factory->container,
-                                         context,
-                                         GIMP_PREVIEW_SIZE_LARGE, 1,
-                                         dialog_factory,
-                                         "gimp-gradient-list",
-                                         GIMP_STOCK_TOOL_BLEND,
-                                         _("Open the gradient selection dialog"));
+      GtkWidget *hbox;
+      GtkWidget *gradient_button;
+      GtkWidget *preview;
+
+      hbox = gtk_hbox_new (FALSE, 4);
+
+      gradient_button =
+        gimp_viewable_button_new (context->gimp->gradient_factory->container,
+                                  context,
+                                  GIMP_PREVIEW_SIZE_LARGE, 1,
+                                  dialog_factory,
+                                  "gimp-gradient-list",
+                                  GIMP_STOCK_TOOL_BLEND,
+                                  _("Open the gradient selection dialog"));
 
       /*  use smaller previews for the popup  */
-      GIMP_VIEWABLE_BUTTON (button)->preview_size = GIMP_PREVIEW_SIZE_SMALL;
+      GIMP_VIEWABLE_BUTTON (gradient_button)->preview_size =
+        GIMP_PREVIEW_SIZE_SMALL;
+
+      gtk_box_pack_start (GTK_BOX (hbox), gradient_button, FALSE, FALSE, 0);
+      gtk_widget_show (gradient_button);
+
+      button = gimp_prop_check_button_new (config, "gradient-reverse",
+                                           _("Reverse"));
+      gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+      gtk_widget_show (button);
 
       gimp_table_attach_aligned (GTK_TABLE (table), 0, table_row++,
                                  _("Gradient:"), 1.0, 0.5,
-                                 button, 2, TRUE);
+                                 hbox, 2, FALSE);
+
+      preview = GTK_BIN (gradient_button)->child;
+
+      g_signal_connect_object (config, "notify::gradient-reverse",
+                               G_CALLBACK (gradient_options_reverse_notify),
+                               G_OBJECT (preview), 0);
+
+      gradient_options_reverse_notify (GIMP_PAINT_OPTIONS (config),
+                                       NULL,
+                                       GIMP_PREVIEW (preview));
     }
 
   /*  the "incremental" toggle  */
@@ -439,15 +471,28 @@ gradient_options_gui (GimpGradientOptions *gradient,
 
       g_object_set_data (G_OBJECT (unitmenu), "set_digits", spinbutton);
 
-      /*  the gradient type  */
-      enummenu = gimp_prop_enum_option_menu_new (config, "gradient-type",
+      /*  the repeat type  */
+      enummenu = gimp_prop_enum_option_menu_new (config, "gradient-repeat",
                                                  0, 0);
       gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                                 _("Type:"), 1.0, 0.5,
+                                 _("Repeat:"), 1.0, 0.5,
                                  enummenu, 2, TRUE);
 
       gtk_widget_show (table);
     }
 
   return frame;
+}
+
+static void
+gradient_options_reverse_notify (GimpPaintOptions *paint_options,
+                                 GParamSpec       *pspec,
+                                 GimpPreview      *preview)
+{
+  GimpPreviewRendererGradient *rendergrad;
+
+  rendergrad = GIMP_PREVIEW_RENDERER_GRADIENT (preview->renderer);
+
+  gimp_preview_renderer_gradient_set_reverse (rendergrad,
+                                              paint_options->gradient_options->gradient_reverse);
 }

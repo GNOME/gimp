@@ -43,6 +43,8 @@ struct _GimpPreviewRendererGradient
   gint                 width;
   gdouble              left;
   gdouble              right;
+
+  gboolean             reverse;
 };
 
 struct _GimpPreviewRendererGradientClass
@@ -57,6 +59,8 @@ void    gimp_preview_renderer_gradient_set_offsets (GimpPreviewRendererGradient 
                                                     gdouble                      left,
                                                     gdouble                      right,
                                                     gboolean                     instant_update);
+void    gimp_preview_renderer_gradient_set_reverse (GimpPreviewRendererGradient *renderer,
+                                                    gboolean                     reverse);
 
 
 #endif /* __GIMP_PREVIEW_RENDERER_GRADIENT_H__ */
