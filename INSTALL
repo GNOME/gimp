@@ -1,7 +1,7 @@
 There are three basic steps to building and installing the
 GIMP on unix:
 
-  1. You need to have installed GTK version 1.0.1 or better
+  1. You need to have installed GTK version 1.1.10 or better
   2. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
      perl, etc.
@@ -19,8 +19,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install the GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-1.0.0.tar.gz   # unpack the sources
-  % cd gimp-1.0.0                # change to the toplevel directory
+  % tar xvfz gimp-1.1.0.tar.gz   # unpack the sources
+  % cd gimp-1.1.0                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build the GIMP
   % make install                 # install the GIMP

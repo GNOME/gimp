@@ -1,6 +1,9 @@
 The GIMP: the GNU Image Manipulation Program
 --------------------------------------------
 
+This is an unstable release of the GIMP, intended for developers only.
+For production use, please use the 1.0.x series.
+
 The GIMP's home page is at 
 
 	http://www.gimp.org
