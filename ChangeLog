@@ -1,5 +1,11 @@
 2004-11-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/wmf.c (run): applied patch by Tim Mooney that
+	increase the size of values[] + to accomodate the use of
+	file_wmf_load_thumb (bug #159601).
+
+2004-11-27  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/drawable.pdb: minor change to the PDB docs.
 
 	* libgimp/gimpdrawable_pdb.c

@@ -165,7 +165,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[2];
+  static GimpParam   values[4];
   GimpRunMode        run_mode;
   GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
   const gchar       *filename = NULL;
