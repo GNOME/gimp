@@ -1,3 +1,14 @@
+2004-08-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-ins.c
+	(plug_ins_file_register_magic)
+	(plug_ins_file_register_mime): don't dereference
+	gimp->current_plug_in->plug_in_def if it's NULL.
+	Fixes bug #149678.
+
+	(plug_ins_file_register_mime): moved returning the proc_def inside
+	the right if() statement.
+
 2004-08-09  Hans Breuer  <hans@breuer.org>
 
 	* app/core/gimp-edit.c(gimp_edit_paste_as_new) :

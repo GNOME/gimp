@@ -431,7 +431,7 @@ plug_ins_file_register_magic (Gimp        *gimp,
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (name != NULL, NULL);
 
-  if (gimp->current_plug_in)
+  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
     list = gimp->current_plug_in->plug_in_def->proc_defs;
   else
     list = gimp->plug_in_proc_defs;
@@ -490,7 +490,7 @@ plug_ins_file_register_mime (Gimp        *gimp,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (mime_type != NULL, NULL);
 
-  if (gimp->current_plug_in)
+  if (gimp->current_plug_in && gimp->current_plug_in->plug_in_def)
     list = gimp->current_plug_in->plug_in_def->proc_defs;
   else
     list = gimp->plug_in_proc_defs;
@@ -504,9 +504,9 @@ plug_ins_file_register_mime (Gimp        *gimp,
           if (proc_def->mime_type)
             g_free (proc_def->mime_type);
           proc_def->mime_type = g_strdup (mime_type);
-        }
 
-      return proc_def;
+          return proc_def;
+        }
     }
 
   return NULL;
