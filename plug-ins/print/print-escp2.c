@@ -30,11 +30,12 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.7  1998/05/11 19:49:56  neo
- *   Updated print plug-in to version 2.0
+ *   Revision 1.8  1998/05/14 00:32:46  yosh
+ *   updated print plugin
  *
+ *   stubbed out nonworking frac code
  *
- *   --Sven
+ *   -Yosh
  *
  *   Revision 1.10  1998/05/08  21:18:34  mike
  *   Now enable microweaving in 720 DPI mode.

@@ -22,11 +22,12 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.5  1998/05/11 19:53:31  neo
- *   Updated print plug-in to version 2.0
+ *   Revision 1.6  1998/05/14 00:32:53  yosh
+ *   updated print plugin
  *
+ *   stubbed out nonworking frac code
  *
- *   --Sven
+ *   -Yosh
  *
  *   Revision 1.11  1998/05/08  19:20:50  mike
  *   Updated for new driver interface.

@@ -32,11 +32,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.7  1998/05/11 19:51:06  neo
- *   Updated print plug-in to version 2.0
+ *   Revision 1.8  1998/05/14 00:32:49  yosh
+ *   updated print plugin
  *
+ *   stubbed out nonworking frac code
  *
- *   --Sven
+ *   -Yosh
+ *
+ *   Revision 1.12  1998/05/11  23:56:56  mike
+ *   Removed unused outptr variable.
  *
  *   Revision 1.11  1998/05/08  19:20:50  mike
  *   Updated to support PPD files, media size, imageable area, and parameter
@@ -296,8 +300,7 @@ ps_print(int       model,		/* I - Model (Level 1 or 2) */
   int		x, y;		/* Looping vars */
   GPixelRgn	rgn;		/* Image region */
   guchar	*in,		/* Input pixels from image */
-		*out,		/* Output pixels for printer */
-		*outptr;	/* Current output pixel */
+		*out;		/* Output pixels for printer */
   int		page_left,	/* Left margin of page */
 		page_right,	/* Right margin of page */
 		page_top,	/* Top of page */

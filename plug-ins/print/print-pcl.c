@@ -31,11 +31,12 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.7  1998/05/11 19:50:36  neo
- *   Updated print plug-in to version 2.0
+ *   Revision 1.8  1998/05/14 00:32:48  yosh
+ *   updated print plugin
  *
+ *   stubbed out nonworking frac code
  *
- *   --Sven
+ *   -Yosh
  *
  *   Revision 1.10  1998/05/08  21:22:00  mike
  *   Added quality mode command for DeskJet printers (high quality for 300

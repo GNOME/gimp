@@ -34,11 +34,16 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.8  1998/05/11 19:51:25  neo
- *   Updated print plug-in to version 2.0
+ *   Revision 1.9  1998/05/14 00:32:50  yosh
+ *   updated print plugin
  *
+ *   stubbed out nonworking frac code
  *
- *   --Sven
+ *   -Yosh
+ *
+ *   Revision 1.13  1998/05/13  17:00:36  mike
+ *   Minor change to CMYK generation code - now cube black difference value
+ *   for better colors.
  *
  *   Revision 1.12  1998/05/08  19:20:50  mike
  *   Updated CMYK generation code to use new method.
@@ -295,6 +300,7 @@ dither_cmyk(guchar        *rgb,		/* I - RGB pixels */
       */
 
       diff = 255 - (abs(c - m) + abs(c - y) + abs(m - y)) / 3;
+      diff = diff * diff * diff / 65025; /* diff = diff^3 */
       k    = diff * k / 255;
       divk = 255 - k;
       

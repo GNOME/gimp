@@ -39,11 +39,15 @@
  * Revision History:
  *
  *   $Log$
- *   Revision 1.8  1998/05/11 19:52:36  neo
- *   Updated print plug-in to version 2.0
+ *   Revision 1.9  1998/05/14 00:32:51  yosh
+ *   updated print plugin
  *
+ *   stubbed out nonworking frac code
  *
- *   --Sven
+ *   -Yosh
+ *
+ *   Revision 1.17  1998/05/11  23:56:05  mike
+ *   Miscellaneous portability changes.
  *
  *   Revision 1.16  1998/05/08  20:52:55  mike
  *   Whoops, wasn't showing/hiding PPD file browse button.
@@ -1305,7 +1309,7 @@ plist_build_menu(GtkWidget *option,				/* I - Option button */
     *menu = NULL;
   };
 
-  if (num_items == NULL)
+  if (num_items == 0)
   {
     gtk_widget_hide(option);
     return;
@@ -2099,7 +2103,7 @@ get_printers(void)
   memset(plist, 0, sizeof(plist));
   plist_count = 1;
   strcpy(plist[0].name, "File");
-  sprintf(plist[0].command, "", line);
+  plist[0].command[0] = '\0';
   strcpy(plist[0].driver, "ps2");
   plist[0].output_type = OUTPUT_COLOR;
 

@@ -11,6 +11,34 @@
 #include "xcf.h"
 #include "frac.h"
 
+#define FRAC_DONT_WORK
+
+#ifdef FRAC_DONT_WORK
+
+void xcf_compress_frac_info (int _layer_type)
+{
+}
+
+void xcf_save_compress_frac_init (int _dom_density, double quality)
+{
+}
+
+void xcf_load_compress_frac_init (int _image_scale, int _iterations)
+{
+}
+
+gint xcf_load_frac_compressed_tile (XcfInfo *info, Tile *tile)
+{
+  return 0;
+}
+
+gint xcf_save_frac_compressed_tile (XcfInfo *info, Tile *tile)
+{
+  return 0;
+}
+
+#else /* FRAC_DONT_WORK */
+
 #define float double
 
 typedef unsigned char image_data;
@@ -1374,3 +1402,5 @@ pete_fatal (char *shoutAtPete)
 {
   g_error ("Pete, you are a dumbass because %s\n", shoutAtPete);
 }
+
+#endif /* FRAC_DONT_WORK */
