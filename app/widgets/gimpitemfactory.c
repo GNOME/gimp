@@ -1453,7 +1453,7 @@ menus_item_key_press (GtkWidget   *widget,
 		      GdkEventKey *kevent,
 		      gpointer     data)
 {
-  GtkItemFactory *item_factory = NULL;
+  GtkItemFactory *item_factory     = NULL;
   GtkWidget      *active_menu_item = NULL;
   gchar *factory_path = NULL;
   gchar *help_path    = NULL;
@@ -1493,7 +1493,7 @@ menus_item_key_press (GtkWidget   *widget,
   gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "key_press_event");
 
   factory_path = (gchar *) gtk_object_get_data (GTK_OBJECT (item_factory),
-					     "factory_path");
+						"factory_path");
 
   if (! help_page ||
       ! *help_page)
@@ -1935,17 +1935,24 @@ tearoff_cmd_callback (GtkWidget *widget,
 }
 
 #ifdef ENABLE_DEBUG_ENTRY
+
+#include <unistd.h>
+
 static void
 menus_debug_recurse_menu (GtkWidget *menu,
 			  gint       depth,
 			  gchar     *path)
 {
+  GtkItemFactory      *item_factory;
   GtkItemFactoryItem  *item;
   GtkItemFactoryClass *class;
   GtkWidget           *menu_item;
   GList   *list;
   gchar   *label;
   gchar   *help_page;
+  gchar   *help_path;
+  gchar   *factory_path;
+  gchar   *hash;
   gchar   *full_path;
   gchar   *accel;
   gchar   *format_str;
@@ -1957,23 +1964,65 @@ menus_debug_recurse_menu (GtkWidget *menu,
       if (GTK_IS_LABEL (GTK_BIN (menu_item)->child))
 	{
 	  gtk_label_get (GTK_LABEL (GTK_BIN (menu_item)->child), &label);
-	  help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), 
-						     "help_page");
-	  
 	  full_path = g_strconcat (path, "/", label, NULL);
 	  class = gtk_type_class (GTK_TYPE_ITEM_FACTORY);
 	  item = g_hash_table_lookup (class->item_ht, full_path);
 	  if (item)
-	    accel = gtk_accelerator_name (item->accelerator_key, 
-					  item->accelerator_mods);
+	    {
+	      accel = gtk_accelerator_name (item->accelerator_key, 
+					    item->accelerator_mods);
+	    }
 	  else
-	    accel = NULL;
+	    {
+	      accel = NULL;
+	    }
+
+	  item_factory = gtk_item_factory_from_path (path);
+	  if (item_factory)
+	    {
+	      factory_path = (gchar *) gtk_object_get_data (GTK_OBJECT (item_factory),
+							    "factory_path");
+	      help_page = g_strconcat (factory_path ? factory_path : "",
+				       factory_path ? G_DIR_SEPARATOR_S : "",
+				       (gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), 
+								      "help_page"),
+				       NULL);
+	    }
+	  else
+	    {
+	      help_page = g_strdup ((gchar *) gtk_object_get_data (GTK_OBJECT (menu_item), 
+								   "help_page"));
+	    } 
+
+	  if (help_page)
+	    {
+	      help_path = g_strconcat (gimp_data_directory (), G_DIR_SEPARATOR_S, 
+				       "help", G_DIR_SEPARATOR_S, 
+				       "C", G_DIR_SEPARATOR_S,
+				       help_page, NULL);
+
+	      if ((hash = strchr (help_path, '#')) != NULL)
+		*hash = '\0';
+
+	      if (access (help_path, R_OK))
+		{
+		  g_free (help_path);
+		  help_path = g_strconcat ("! ", help_page, NULL);
+		  g_free (help_page);
+		  help_page = help_path;
+		}
+	      else
+		{
+		  g_free (help_path);
+		}
+	    }
 
 	  format_str = g_strdup_printf ("%%%ds%%%ds %%-20s %%s\n", 
 					depth * 2, depth * 2 - 40);
 	  g_print (format_str, 
 		   "", label, accel ? accel : "", help_page ? help_page : "");
 	  g_free (format_str);
+	  g_free (help_page);
 
 	  if (GTK_MENU_ITEM (menu_item)->submenu)
 	    menus_debug_recurse_menu (GTK_MENU_ITEM (menu_item)->submenu, 
@@ -1989,12 +2038,12 @@ menus_debug_cmd_callback (GtkWidget *widget,
 			  gpointer   callback_data,
 			  guint      callback_action)
 {
-  gint n_factories = 7;
-  GtkItemFactory *factories[7];
+  gint  n_factories = 7;
+  GtkItemFactory       *factories[7];
   GimpItemFactoryEntry *entries[7];
 
   GtkWidget *menu_item;
-  gint   i;
+  gint       i;
 
   factories[0] = toolbox_factory;
   factories[1] = image_factory;

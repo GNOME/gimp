@@ -1,5 +1,10 @@
 2000-12-14  Sven Neumann  <sven@gimp.org>
 
+	* app/menus.c: modified debug function to help to find missing 
+	help files.
+
+2000-12-14  Sven Neumann  <sven@gimp.org>
+
 	* app/gimpimage.c
 	* app/layer.c
 	* app/layers_dialog.c
