@@ -1,3 +1,8 @@
+2004-04-02  Dave Neary  <bolsh@gimp.org>
+
+	* plug-ins/common/jpeg.c: Added .jpe to the list of extensions 
+	that the jpeg plug-in recognises. Fixes bug #138776.
+
 2004-04-01  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/user-install-dialog.c: unset the bg_pixmap and tweak
