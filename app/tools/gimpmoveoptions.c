@@ -110,7 +110,7 @@ gimp_move_options_class_init (GimpMoveOptionsClass *klass)
                                     0);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_CHANGE_ACTIVE,
                                     "change-active", NULL,
-                                    TRUE,
+                                    FALSE,
                                     0);
 
 }
