@@ -683,11 +683,22 @@ undo_pop_image_guide (GimpUndo            *undo,
   old_position = gu->guide->position;
 
   if (gu->guide->position == -1)
-    gimp_image_add_guide (undo->gimage, gu->guide, gu->position);
+    {
+      undo->gimage->guides = g_list_prepend (undo->gimage->guides, gu->guide);
+      gu->guide->position = gu->position;
+      gimp_image_guide_ref (gu->guide);
+      gimp_image_update_guide (undo->gimage, gu->guide);
+    }
   else if (gu->position == -1)
-    gimp_image_remove_guide (undo->gimage, gu->guide, FALSE);
+    {
+      gimp_image_remove_guide (undo->gimage, gu->guide, FALSE);
+    }
   else
-    gimp_image_move_guide (undo->gimage, gu->guide, gu->position, FALSE);
+    {
+      gimp_image_update_guide (undo->gimage, gu->guide);
+      gu->guide->position = gu->position;
+      gimp_image_update_guide (undo->gimage, gu->guide);
+    }
 
   gu->position = old_position;
 

@@ -1,5 +1,17 @@
 2003-03-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-resize.c (gimp_image_resize): fixed to check
+	the *new* guide position to be within bounds, not the old
+	one. Cleanup.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_image_guide): undo
+	guide removal and moves manually instead of calling
+	gimp_image_[add|move]_guide() because the latter may run into
+	g_return_if_fail(position <= gimage->width/height) if the undo
+	step is part of a resize or crop undo group.
+
+2003-03-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-callbacks.c
 	(gimp_display_shell_origin_menu_popup): set the active display
 	before showing the menu (fixes bug #109472).

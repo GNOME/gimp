@@ -45,11 +45,8 @@ gimp_image_resize (GimpImage *gimage,
 		   gint       offset_x, 
 		   gint       offset_y)
 {
-  GimpChannel *channel;
-  GimpLayer   *layer;
-  GimpLayer   *floating_layer;
-  GList       *list;
-  GList       *guide_list;
+  GimpLayer *floating_layer;
+  GList     *list;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_width > 0 && new_height > 0);
@@ -78,44 +75,43 @@ gimp_image_resize (GimpImage *gimage,
        list; 
        list = g_list_next (list))
     {
-      channel = (GimpChannel *) list->data;
+      GimpChannel *channel = list->data;
 
       gimp_channel_resize (channel, new_width, new_height, offset_x, offset_y);
     }
 
   /*  Reposition or remove any guides  */
-  guide_list = gimage->guides;
-  while (guide_list)
+  list = gimage->guides;
+  while (list)
     {
-      GimpGuide *guide;
+      GimpGuide *guide        = list->data;
+      gboolean   remove_guide = FALSE;
       gint       new_position;
 
-      guide = (GimpGuide *) guide_list->data;
-      guide_list = g_list_next (guide_list);
+      list = g_list_next (list);
 
       switch (guide->orientation)
 	{
 	case GIMP_ORIENTATION_HORIZONTAL:
           new_position = guide->position + offset_y;
-
-	  if (guide->position < 0 || guide->position > new_height)
-            gimp_image_remove_guide (gimage, guide, TRUE);
-          else
-            gimp_image_move_guide (gimage, guide, new_position, TRUE);
+	  if (new_position < 0 || new_position > new_height)
+            remove_guide = TRUE;
 	  break;
 
 	case GIMP_ORIENTATION_VERTICAL:
           new_position = guide->position + offset_x;
-
-	  if (guide->position < 0 || guide->position > new_width)
-            gimp_image_remove_guide (gimage, guide, TRUE);
-          else
-            gimp_image_move_guide (gimage, guide, new_position, TRUE);
+	  if (new_position < 0 || new_position > new_width)
+            remove_guide = TRUE;
 	  break;
 
 	default:
 	  g_error ("Unknown guide orientation\n");
 	}
+
+      if (remove_guide)
+        gimp_image_remove_guide (gimage, guide, TRUE);
+      else
+        gimp_image_move_guide (gimage, guide, new_position, TRUE);
     }
 
   /*  Don't forget the selection mask!  */
@@ -128,7 +124,7 @@ gimp_image_resize (GimpImage *gimage,
        list; 
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      GimpLayer *layer = list->data;
 
       gimp_layer_translate (layer, offset_x, offset_y, TRUE);
     }
