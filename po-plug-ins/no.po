@@ -301,31 +301,31 @@ msgstr "Andre parameterinnstillinger"
 
 #: plug-ins/common/CML_explorer.c:1459
 msgid "Channel independed parameters"
-msgstr ""
+msgstr "Kanaluavhengige parametere"
 
 #: plug-ins/common/CML_explorer.c:1463
 msgid "Initial value"
-msgstr ""
+msgstr "Initiell verdi"
 
 #: plug-ins/common/CML_explorer.c:1469
 msgid "Zoom scale"
-msgstr ""
+msgstr "Zoom skala"
 
 #: plug-ins/common/CML_explorer.c:1474
 msgid "Start offset"
-msgstr ""
+msgstr "Start-avstand"
 
 #: plug-ins/common/CML_explorer.c:1494
 msgid "Seed of random (only for \"from seed\" modes)"
-msgstr ""
+msgstr "Seed for vilkårlig (kun for \"fra seed\" modus)"
 
 #: plug-ins/common/CML_explorer.c:1498
 msgid "Seed"
-msgstr ""
+msgstr "Seed"
 
 #: plug-ins/common/CML_explorer.c:1508
 msgid "Switch to \"from seed\" with the last seed"
-msgstr ""
+msgstr "Bytt til \"fra seed\" med siste seed"
 
 #: plug-ins/common/CML_explorer.c:1515
 msgid ""
@@ -337,47 +337,47 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1532
 msgid "Others"
-msgstr ""
+msgstr "Andre"
 
 #: plug-ins/common/CML_explorer.c:1539
 msgid "Misc operations"
-msgstr ""
+msgstr "Forskjellige operasjoner"
 
 #: plug-ins/common/CML_explorer.c:1544
 msgid "Copy settings"
-msgstr ""
+msgstr "Innstillinger for kopiering"
 
 #: plug-ins/common/CML_explorer.c:1548
 msgid "Source ch."
-msgstr ""
+msgstr "Kildekanal"
 
 #: plug-ins/common/CML_explorer.c:1554 plug-ins/common/CML_explorer.c:1588
 msgid "Destination ch."
-msgstr ""
+msgstr "Målkanal"
 
 #: plug-ins/common/CML_explorer.c:1560
 msgid "Do copy parameters"
-msgstr ""
+msgstr "Kopier parametere"
 
 #: plug-ins/common/CML_explorer.c:1578
 msgid "Selective load settings"
-msgstr ""
+msgstr "Selektive instillinger for lasting"
 
 #: plug-ins/common/CML_explorer.c:1582
 msgid "Source ch. in file"
-msgstr ""
+msgstr "Kildekanal i fil"
 
 #: plug-ins/common/CML_explorer.c:1608
 msgid "Misc ops."
-msgstr ""
+msgstr "Forskjellige operasjoner."
 
 #: plug-ins/common/CML_explorer.c:1644
 msgid "Function type"
-msgstr ""
+msgstr "Funksjonstype"
 
 #: plug-ins/common/CML_explorer.c:1651
 msgid "Composition"
-msgstr ""
+msgstr "Komposisjon"
 
 #: plug-ins/common/CML_explorer.c:1658
 msgid "Misc arrange"
@@ -401,7 +401,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1691
 msgid "# of subranges"
-msgstr ""
+msgstr "antall underområder"
 
 #: plug-ins/common/CML_explorer.c:1698
 msgid "P(ower factor)"
@@ -409,7 +409,7 @@ msgstr ""
 
 #: plug-ins/common/CML_explorer.c:1705
 msgid "Parameter k"
-msgstr ""
+msgstr "Parameter k"
 
 #: plug-ins/common/CML_explorer.c:1712
 msgid "Range low"
@@ -453,50 +453,50 @@ msgstr ""
 #: plug-ins/common/ps.c:2290 plug-ins/common/xbm.c:959
 #: plug-ins/common/xpm.c:763 plug-ins/print/print.c:1104
 msgid "OK"
-msgstr ""
+msgstr "Ok"
 
 #: plug-ins/common/CML_explorer.c:1830
 msgid "The Graph"
-msgstr ""
+msgstr "Grafen"
 
 #: plug-ins/common/CML_explorer.c:1922
 msgid "Warning: the source and the destination are the same channel."
-msgstr ""
+msgstr "Advarsel: kilde og mål er samme kanal."
 
 #. Action Area
 #: plug-ins/common/CML_explorer.c:2010
 msgid "Execute"
-msgstr ""
+msgstr "Kjør"
 
 #: plug-ins/common/CML_explorer.c:2019
 msgid "Execute and Exit"
-msgstr ""
+msgstr "Kjør og avslutt"
 
 #: plug-ins/common/CML_explorer.c:2027
 msgid "Exit"
-msgstr ""
+msgstr "Avslutt"
 
 #: plug-ins/common/CML_explorer.c:2045
 msgid "Save parameters to"
-msgstr ""
+msgstr "Lagre parametere til"
 
 #: plug-ins/common/CML_explorer.c:2108 plug-ins/common/CML_explorer.c:2301
 #, c-format
 msgid "Error: could not open \"%s\""
-msgstr ""
+msgstr "Feil kunne ikke åpne \"%s\""
 
 #: plug-ins/common/CML_explorer.c:2173
 msgid "CML file operation warning"
-msgstr ""
+msgstr "CML filoperasjonsadvarsel"
 
 #: plug-ins/common/CML_explorer.c:2180
 #, c-format
 msgid "%s exists, overwrite?"
-msgstr ""
+msgstr "%s eksisterer, overskriv?"
 
 #: plug-ins/common/CML_explorer.c:2223
 msgid "Load parameters from"
-msgstr ""
+msgstr "Last parametere fra"
 
 #: plug-ins/common/CML_explorer.c:2225
 msgid "Selective load from"
@@ -529,7 +529,7 @@ msgstr ""
 #: plug-ins/common/xbm.c:969 plug-ins/common/xpm.c:772
 #: plug-ins/print/print.c:991 plug-ins/print/print.c:1097
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #: plug-ins/Lighting/lighting_main.c:172
 msgid "Apply various lighting effects to an image"
@@ -537,7 +537,7 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_main.c:173
 msgid "No help yet"
-msgstr ""
+msgstr "Ingen hjelp ennå"
 
 #: plug-ins/Lighting/lighting_main.c:177
 msgid "<Image>/Filters/Light Effects/Lighting Effects"
@@ -557,35 +557,35 @@ msgstr ""
 
 #: plug-ins/Lighting/lighting_ui.c:37
 msgid "No light"
-msgstr ""
+msgstr "Ingen lys"
 
 #: plug-ins/Lighting/lighting_ui.c:43
 msgid "From image"
-msgstr ""
+msgstr "Fra bilde"
 
 #: plug-ins/Lighting/lighting_ui.c:44
 msgid "Waves"
-msgstr ""
+msgstr "Bølger"
 
 #: plug-ins/Lighting/lighting_ui.c:50
 msgid "Linear"
-msgstr ""
+msgstr "Lineær"
 
 #: plug-ins/Lighting/lighting_ui.c:51
 msgid "Logarithmic"
-msgstr ""
+msgstr "Logaritmisk"
 
 #: plug-ins/Lighting/lighting_ui.c:52
 msgid "Sinusoidal"
-msgstr ""
+msgstr "Sinus"
 
 #: plug-ins/Lighting/lighting_ui.c:53
 msgid "Spherical"
-msgstr ""
+msgstr "Sfærisk"
 
 #: plug-ins/Lighting/lighting_ui.c:569
 msgid "General options"
-msgstr ""
+msgstr "Generelle alternativer"
 
 #: plug-ins/Lighting/lighting_ui.c:572
 msgid "Use bump mapping"
