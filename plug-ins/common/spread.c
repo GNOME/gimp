@@ -65,8 +65,6 @@ static void      spread  (GDrawable * drawable);
 static gint      spread_dialog          (gint32     image_ID);
 static void      spread_ok_callback     (GtkWidget *widget,
 				         gpointer   data);
-static void      spread_entry_callback  (GtkWidget *widget,
-					 gpointer   data);
 
 static GTile *   spread_pixel (GDrawable *drawable,
 			       GTile     *tile,
@@ -357,10 +355,7 @@ spread_dialog (gint32 image_ID)
 {
   GtkWidget *dlg;
   GtkWidget *frame;
-  GtkObject *adj;
-  GtkWidget *spinbutton;
   GtkWidget *size;
-  GtkWidget *chain;
   GUnit      unit;
   gdouble    xres;
   gdouble    yres;
@@ -400,45 +395,20 @@ spread_dialog (gint32 image_ID)
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
-  /* two sizeentries */
-  spinbutton = gimp_spin_button_new (&adj, 1, 0, 1, 1, 10, 1, 1, 2);
-  size = gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE, 75, 
-			      GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (size), 0, 4);  
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size),
-			     GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (size), spinbutton, 1, 2, 0, 1);
+  /* sizeentries */
+  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75, 
+			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size), UNIT_PIXEL);
+			       _("Horizontal:"), spvals.spread_amount_x,
+			       xres, 0, 200,
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 1, yres, TRUE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 0, 0.0, 200.0);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 1, 0.0, 200.0);
-
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, spvals.spread_amount_x);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, spvals.spread_amount_y);
-
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size), _("Horizontal:"), 0, 0, 1.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size), _("Vertical:"), 1, 0, 1.0);
-
-  /*  put a chain_button to the right  */
-  chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  if ( spvals.spread_amount_x == spvals.spread_amount_y)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (size), chain, 2, 3, 0, 2);
-  gtk_widget_show (chain);
-
-  gtk_signal_connect (GTK_OBJECT (size), "value_changed", 
-		      GTK_SIGNAL_FUNC (spread_entry_callback),
-		      chain);
-
+			       _("Vertical:"), spvals.spread_amount_y,
+			       yres, 0, 200);
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
   gtk_object_set_data (GTK_OBJECT (dlg), "size",  size);
 
-  gtk_widget_show (spinbutton);
   gtk_widget_show (size);
   gtk_widget_show (frame);
 
@@ -508,38 +478,4 @@ spread_ok_callback (GtkWidget *widget,
     }
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-spread_entry_callback (GtkWidget *widget, 
-		       gpointer   data)
-{
-  static gdouble x = -1.0;
-  static gdouble y = -1.0;
-  gdouble new_x;
-  gdouble new_y;
-
-  new_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-  new_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
-
-  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
-    {
-      if (new_x != x)
-	{
-	  y = new_y = x = new_x;
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, y);
-	}
-      else if (new_y != y)
-	{
-	  x = new_x = y = new_y;
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, x);
-	}
-    }
-  else
-    {
-      if (new_x != x)
-	x = new_x;
-      if (new_y != y)
-	y = new_y;
-    }     
 }

@@ -22,6 +22,7 @@
 
 #include "config.h"
 
+#include "gimpchainbutton.h"
 #include "gimphelpui.h"
 #include "gimpunitmenu.h"
 #include "gimpwidgets.h"
@@ -526,6 +527,127 @@ gimp_random_seed_new (gint *seed,
   return hbox;
 }
 
+typedef struct
+{
+  GimpChainButton *chainbutton;
+  gdouble          last_x;
+  gdouble          last_y;
+} GimpCoordinatesData;
+
+static void
+gimp_coordinates_callback (GtkWidget *widget, 
+			   gpointer   data)
+{
+  GimpCoordinatesData *gcd;
+  gdouble new_x;
+  gdouble new_y;
+
+  gcd = (GimpCoordinatesData *) data;
+
+  new_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
+  new_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
+
+  if (gimp_chain_button_get_active (gcd->chainbutton))
+    {
+      gtk_signal_emit_stop_by_name (GTK_OBJECT (widget), "value_changed");
+
+      if (new_x != gcd->last_x)
+        {
+          gcd->last_y = new_y = gcd->last_x = new_x;
+          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
+        }
+      else if (new_y != gcd->last_y)
+        {
+          gcd->last_x = new_x = gcd->last_y = new_y;
+          gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
+        }
+    }
+  else
+    {
+      if (new_x != gcd->last_x)
+        gcd->last_x = new_x;
+      if (new_y != gcd->last_y)
+        gcd->last_y = new_y;
+    }     
+}
+
+GtkWidget *
+gimp_coordinates_new (GUnit            unit,
+		      gchar           *unit_format,
+		      gboolean         menu_show_pixels,
+		      gboolean         menu_show_percent,
+		      gint             spinbutton_usize,
+		      GimpSizeEntryUP  update_policy,
+
+		      gchar           *xlabel,
+		      gdouble          x,
+		      gdouble          xres,
+		      gint             lower_boundary_x,
+		      gint             upper_boundary_x,
+
+		      gchar           *ylabel,
+		      gdouble          y,
+		      gdouble          yres,
+		      gint             lower_boundary_y,
+		      gint             upper_boundary_y)
+{
+  GimpCoordinatesData *gcd;
+  GtkObject *adjustment;
+  GtkWidget *spinbutton;
+  GtkWidget *sizeentry;
+  GtkWidget *chainbutton;
+
+  spinbutton = gimp_spin_button_new (&adjustment, 1, 0, 1, 1, 10, 1, 1, 2);
+  sizeentry = gimp_size_entry_new (1, unit, unit_format,
+				   menu_show_pixels,
+				   menu_show_percent,
+				   FALSE,
+				   spinbutton_usize,
+				   update_policy);
+  gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 0, 4);  
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
+                             GTK_SPIN_BUTTON (spinbutton), NULL);
+  gtk_table_attach_defaults (GTK_TABLE (sizeentry), spinbutton, 1, 2, 0, 1);
+  gtk_widget_show (spinbutton);
+
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry), UNIT_PIXEL);
+
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0, xres, TRUE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1, yres, TRUE);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+					 lower_boundary_x, upper_boundary_x);
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+					 lower_boundary_y, upper_boundary_y);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1, y);
+
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry), xlabel, 0, 0, 1.0);
+  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (sizeentry), ylabel, 1, 0, 1.0);
+
+  chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  if (x == y)
+    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chainbutton), TRUE);
+  gtk_table_attach (GTK_TABLE (sizeentry), chainbutton, 2, 3, 0, 2,
+		    GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_widget_show (chainbutton);
+
+  gcd = g_new (GimpCoordinatesData, 1);
+  gcd->chainbutton = GIMP_CHAIN_BUTTON (chainbutton);
+  gcd->last_x      = x;
+  gcd->last_y      = y;
+
+  gtk_signal_connect_object (GTK_OBJECT (sizeentry), "destroy",
+			     GTK_SIGNAL_FUNC (g_free),
+			     (GtkObject *) gcd);
+
+  gtk_signal_connect (GTK_OBJECT (sizeentry), "value_changed", 
+                      GTK_SIGNAL_FUNC (gimp_coordinates_callback),
+                      gcd);
+
+  return sizeentry;
+}
+
 /*
  *  Standard Callbacks
  */
@@ -542,7 +664,7 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
     gtk_object_get_data (GTK_OBJECT (toggle_button), "set_sensitive");
   while (set_sensitive)
     {
-      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), active);
+      gtk_widget_set_sensitive (set_sensitive, active);
       set_sensitive =
         gtk_object_get_data (GTK_OBJECT (set_sensitive), "set_sensitive");
     }
@@ -551,7 +673,7 @@ gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button)
     gtk_object_get_data (GTK_OBJECT (toggle_button), "inverse_sensitive");
   while (set_sensitive)
     {
-      gtk_widget_set_sensitive (GTK_WIDGET (set_sensitive), ! active);
+      gtk_widget_set_sensitive (set_sensitive, ! active);
       set_sensitive =
         gtk_object_get_data (GTK_OBJECT (set_sensitive), "inverse_sensitive");
     }

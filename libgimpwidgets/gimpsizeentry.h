@@ -20,6 +20,7 @@
 #define __GIMP_SIZE_ENTRY_H__
 
 #include <gtk/gtk.h>
+
 #include "gimpunit.h"
 
 #ifdef __cplusplus

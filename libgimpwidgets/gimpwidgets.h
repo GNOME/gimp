@@ -24,6 +24,8 @@
 
 #include <gtk/gtk.h>
 
+#include "gimpsizeentry.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -117,6 +119,25 @@ GtkWidget * gimp_random_seed_new   (gint               *seed,
 				    gint               *use_time,
 				    gint                time_true,
 				    gint                time_false);
+
+GtkWidget * gimp_coordinates_new   (GUnit               unit,
+				    gchar              *unit_format,
+				    gboolean            menu_show_pixels,
+				    gboolean            menu_show_percent,
+				    gint                spinbutton_usize,
+				    GimpSizeEntryUP     update_policy,
+
+				    gchar              *xlabel,
+				    gdouble             x,
+				    gdouble             xres,
+				    gint                lower_boundary_x,
+				    gint                upper_boundary_x,
+
+				    gchar              *ylabel,
+				    gdouble             y,
+				    gdouble             yres,
+				    gint                lower_boundary_y,
+				    gint                upper_boundary_y);
 
 /*
  *  Standard Callbacks

@@ -310,9 +310,10 @@ gimp_size_entry_new (gint             number_of_fields,
   gse->unitmenu = gimp_unit_menu_new (unit_format, unit,
 				      gse->menu_show_pixels,
 				      gse->menu_show_percent, TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (gse), gse->unitmenu,
-			     i+2, i+3,
-			     gse->show_refval+1, gse->show_refval+2);
+  gtk_table_attach (GTK_TABLE (gse), gse->unitmenu,
+		    i+2, i+3,
+		    gse->show_refval+1, gse->show_refval+2,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (gse->unitmenu), "unit_changed",
 		      (GtkSignalFunc) gimp_size_entry_unit_callback, gse);
   gtk_widget_show (gse->unitmenu);
@@ -420,8 +421,8 @@ gimp_size_entry_attach_label (GimpSizeEntry *gse,
   label = gtk_label_new (text);
   gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
 
-  gtk_table_attach_defaults (GTK_TABLE (gse), label,
-			     column, column+1, row, row+1);
+  gtk_table_attach (GTK_TABLE (gse), label, column, column+1, row, row+1,
+		    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
   gtk_widget_show (label);
 }
 

@@ -85,8 +85,7 @@ static void      transfer_pixels  (gdouble * src1,
 
 static void      gauss_ok_callback     (GtkWidget *widget,
 					gpointer   data);
-static void      gauss_entry_callback  (GtkWidget *widget,
-					gpointer   data);
+
 GPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -422,11 +421,8 @@ gauss_iir2_dialog (gint32     image_ID,
 		   GDrawable *drawable)
 {
   GtkWidget *dlg;
-  GtkWidget *spinbutton;
-  GtkObject *adj;
   GtkWidget *frame;
   GtkWidget *size;
-  GtkWidget *chain;
   GUnit      unit;
   gdouble    xres;
   gdouble    yres;
@@ -466,50 +462,17 @@ gauss_iir2_dialog (gint32     image_ID,
   gimp_image_get_resolution (image_ID, &xres, &yres);
   unit = gimp_image_get_unit (image_ID);
 
-  adj = gtk_adjustment_new (1, 1, 1, 1, 10, 1);
-  spinbutton = gtk_spin_button_new (GTK_ADJUSTMENT (adj), 1, 2);
-  gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON (spinbutton),
-				   GTK_SHADOW_NONE);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  size = gimp_coordinates_new (unit, "%a", TRUE, FALSE, 75, 
+			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-  size = gimp_size_entry_new (1, unit, "%a", TRUE, FALSE, FALSE, 75, 
-			      GIMP_SIZE_ENTRY_UPDATE_SIZE);
-  gtk_table_set_col_spacing (GTK_TABLE (size), 0, 4);  
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (size), GTK_SPIN_BUTTON (spinbutton), NULL);
-  gtk_table_attach_defaults (GTK_TABLE (size), spinbutton, 1, 2, 0, 1);
+			       _("Horizontal:"), b2vals.horizontal,
+			       xres, 0, MAX (drawable->width, drawable->height),
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size), UNIT_PIXEL);
-
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 0, xres, TRUE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (size), 1, yres, TRUE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 0, 
-					 0.0, (gdouble)(MAX (drawable->width, drawable->height)));
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (size), 1, 
-					 0.0, (gdouble)(MAX (drawable->width, drawable->height)));
-  gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (size), 0, 1);
-  gimp_size_entry_set_refval_digits (GIMP_SIZE_ENTRY (size), 1, 1);
-  
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 0, b2vals.horizontal);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (size), 1, b2vals.vertical);
-
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size), _("Horizontal:"), 0, 0, 1.0);
-  gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (size), _("Vertical:"), 1, 0, 1.0);
-
-  /*  put a chain_button to the right  */
-  chain = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  if (b2vals.horizontal == b2vals.vertical)
-    gimp_chain_button_set_active (GIMP_CHAIN_BUTTON (chain), TRUE);
-  gtk_table_attach_defaults (GTK_TABLE (size), chain, 2, 3, 0, 2);
-  gtk_widget_show (chain);
-
-  gtk_signal_connect (GTK_OBJECT (size), "value_changed", 
-		      (GtkSignalFunc) gauss_entry_callback, chain);
-
+			       _("Vertical:"), b2vals.horizontal,
+			       yres, 0, MAX (drawable->width, drawable->height));
   gtk_container_set_border_width (GTK_CONTAINER (size), 4);
   gtk_container_add (GTK_CONTAINER (frame), size);
 
-  gtk_widget_show (spinbutton);
   gtk_widget_show (size);
   gtk_widget_show (frame);
   gtk_widget_show (dlg);
@@ -931,38 +894,4 @@ gauss_ok_callback (GtkWidget *widget,
     }
 
   gtk_widget_destroy (GTK_WIDGET (data));
-}
-
-static void
-gauss_entry_callback (GtkWidget *widget, 
-		      gpointer   data)
-{
-  static gdouble x = -1.0;
-  static gdouble y = -1.0;
-  gdouble new_x;
-  gdouble new_y;
-
-  new_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
-  new_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
-
-  if (gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (data)))
-    {
-      if (new_x != x)
-	{
-	  y = new_y = x = new_x;
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, y);
-	}
-      if (new_y != y)
-	{
-	  x = new_x = y = new_y;
-	  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, x);
-	}
-    }
-  else
-    {
-      if (new_x != x)
-	x = new_x;
-      if (new_y != y)
-	y = new_y;
-    }     
 }

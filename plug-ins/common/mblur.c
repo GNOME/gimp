@@ -758,9 +758,8 @@ static gboolean
 mblur_dialog (void)
 {
   GtkWidget *dialog;
-  GtkWidget *oframe;
-  GtkWidget *iframe;
-  GtkWidget *ovbox;
+  GtkWidget *main_vbox;
+  GtkWidget *frame;
   GtkWidget *table;
   GtkObject *adjustment;
 
@@ -792,16 +791,12 @@ mblur_dialog (void)
 		      GTK_SIGNAL_FUNC (gtk_main_quit),
 		      NULL);
 
-  oframe = gtk_frame_new (_("Parameter Settings"));
-  gtk_container_set_border_width (GTK_CONTAINER (oframe), 6);
-  gtk_frame_set_shadow_type (GTK_FRAME (oframe), GTK_SHADOW_ETCHED_IN);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), oframe);
+  main_vbox = gtk_vbox_new (FALSE, 4);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
+  gtk_widget_show (main_vbox);
 
-  ovbox = gtk_vbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (ovbox), 4);
-  gtk_container_add (GTK_CONTAINER (oframe), ovbox);
-
-  iframe =
+  frame =
     gimp_radio_group_new2 (TRUE, _("Blur Type"),
 			   gimp_radio_button_update,
 			   &mbvals.mblur_type, (gpointer) mbvals.mblur_type,
@@ -811,13 +806,19 @@ mblur_dialog (void)
 			   _("Zoom"),   (gpointer) MBLUR_ZOOM, NULL,
 
 			   NULL);
-  gtk_box_pack_start (GTK_BOX (ovbox), iframe, FALSE, FALSE, 0);
-  gtk_widget_show (iframe);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  frame = gtk_frame_new (_("Blur Parameters"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   table = gtk_table_new (2, 3, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 4);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (ovbox), table, FALSE, FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 4);
+  gtk_container_add (GTK_CONTAINER (frame), table);
+  gtk_widget_show (table);
 
   adjustment = gimp_scale_entry_new (GTK_TABLE (table), 0, 0,
 				     _("Length:"), 150, 0,
@@ -835,11 +836,6 @@ mblur_dialog (void)
 		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
 		      &mbvals.angle);
 
-  gtk_widget_show (table);
-
-  gtk_widget_show (ovbox);
-
-  gtk_widget_show (oframe);
   gtk_widget_show (dialog);
 
   gtk_main ();

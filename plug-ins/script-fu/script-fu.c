@@ -17,6 +17,7 @@
  */
 
 #include "config.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -24,9 +25,8 @@
 #include <unistd.h>
 #endif
 
-#include "gtk/gtk.h"
-#include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
+#include <gtk/gtk.h>
+#include <libgimp/gimp.h>
 
 #include "siod.h"
 #include "script-fu-console.h"
@@ -34,12 +34,14 @@
 #include "script-fu-scripts.h"
 #include "script-fu-server.h"
 
+#include "libgimp/stdplugins-intl.h"
+
 extern FILE *siod_output;
 
 /* External functions
  */
-extern void gimp_extension_process (guint timeout);
-extern void gimp_extension_ack     (void);
+extern void  gimp_extension_process (guint timeout);
+extern void  gimp_extension_ack     (void);
 
 extern void  init_subrs (void);
 extern void  init_trace (void);
@@ -49,48 +51,51 @@ extern long  nlength      (LISP obj);
 extern LISP  leval_define (LISP args,
 			   LISP env);
 
-extern void  fput_st (FILE *f, char *st);
+extern void  fput_st (FILE  *f,
+		      gchar *st);
 
 /* Declare local functions.
  */
 static void      sfquit (void);
 static void      query  (void);
-static void      run    (char      *name,
-			 int        nparams,
+static void      run    (gchar     *name,
+			 gint       nparams,
 			 GParam    *param,
-			 int       *nreturn_vals,
+			 gint      *nreturn_vals,
 			 GParam   **return_vals);
 
-static gint      init_interp      (void);
-static void      init_gimp        (void);
-static void      init_procedures  (void);
-static void      init_constants   (void);
-static void      convert_string   (char * str);
+static gint      init_interp              (void);
+static void      init_gimp                (void);
+static void      init_procedures          (void);
+static void      init_constants           (void);
+static void      convert_string           (gchar *str);
 
-static int       sputs_fcn (char *st, void *dest);
-static LISP      lprin1s   (LISP exp, char *dest);
+static gint      sputs_fcn                (gchar *st,
+					   void  *dest);
+static LISP      lprin1s                  (LISP   exp,
+					   gchar *dest);
 
 static LISP      marshall_proc_db_call    (LISP a);
 static LISP      script_fu_register_call  (LISP a);
 static LISP      script_fu_quit_call      (LISP a);
 
 static void      script_fu_auxillary_init (void);
-static void      script_fu_refresh_proc   (char     *name,
-					   int       nparams,
+static void      script_fu_refresh_proc   (gchar    *name,
+					   gint      nparams,
 					   GParam   *params,
-					   int      *nreturn_vals,
+					   gint     *nreturn_vals,
 					   GParam  **return_vals);
 
 
 GPlugInInfo PLUG_IN_INFO =
 {
-  NULL,    /* init_proc */
-  sfquit,  /* quit_proc */
-  query,   /* query_proc */
-  run,     /* run_proc */
+  NULL,   /* init_proc  */
+  sfquit, /* quit_proc  */
+  query,  /* query_proc */
+  run,    /* run_proc   */
 };
 
-static char *siod_argv[] =
+static gchar *siod_argv[] =
 {
   "siod",
   "-h100000:10",
@@ -190,10 +195,10 @@ query (void)
 }
 
 static void
-run (char    *name,
-     int      nparams,
+run (gchar   *name,
+     gint     nparams,
      GParam  *param,
-     int     *nreturn_vals,
+     gint    *nreturn_vals,
      GParam **return_vals)
 {
   siod_output = stdout;
@@ -291,21 +296,21 @@ init_gimp (void)
 static void
 init_procedures (void)
 {
-  char **proc_list;
-  char *proc_name;
-  char *arg_name;
-  char *proc_blurb;
-  char *proc_help;
-  char *proc_author;
-  char *proc_copyright;
-  char *proc_date;
-  int proc_type;
-  int nparams;
-  int nreturn_vals;
+  gchar **proc_list;
+  gchar  *proc_name;
+  gchar  *arg_name;
+  gchar  *proc_blurb;
+  gchar  *proc_help;
+  gchar  *proc_author;
+  gchar  *proc_copyright;
+  gchar  *proc_date;
+  gint    proc_type;
+  gint    nparams;
+  gint    nreturn_vals;
   GParamDef *params;
   GParamDef *return_vals;
-  int num_procs;
-  int i;
+  gint  num_procs;
+  gint  i;
 
   /*  register the database execution procedure  */
   init_lsubr ("gimp-proc-db-call", marshall_proc_db_call);
@@ -448,8 +453,7 @@ init_constants (void)
 }
 
 static void
-convert_string (str)
-     char *str;
+convert_string (gchar *str)
 {
   while (*str)
     {
@@ -458,8 +462,9 @@ convert_string (str)
     }
 }
 
-static int
-sputs_fcn (char *st, void *dest)
+static gint
+sputs_fcn (gchar *st,
+	   void  *dest)
 {
   strcpy (*((char**)dest), st);
   *((char**)dest) += strlen(st);
@@ -467,7 +472,8 @@ sputs_fcn (char *st, void *dest)
 }
 
 static LISP
-lprin1s (LISP exp, char *dest)
+lprin1s (LISP   exp,
+	 gchar *dest)
 {
   struct gen_printio s;
   s.putc_fcn = NULL;
@@ -987,7 +993,7 @@ script_fu_quit_call (LISP a)
 }
 
 static void
-script_fu_auxillary_init ()
+script_fu_auxillary_init (void)
 {
   static GParamDef args[] =
   {
@@ -1012,10 +1018,10 @@ script_fu_auxillary_init ()
 }
 
 static void
-script_fu_refresh_proc (char     *name,
-			int       nparams,
+script_fu_refresh_proc (gchar    *name,
+			gint      nparams,
 			GParam   *params,
-			int      *nreturn_vals,
+			gint     *nreturn_vals,
 			GParam  **return_vals)
 {
   static GParam values[1];
