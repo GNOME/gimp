@@ -113,7 +113,7 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
                                         GError           **error);
 
 
-/* private convieniece macros */
+/* private convenience macros */
 #define xcf_write_int32_check_error(info, data, count) G_STMT_START { \
   info->cp += xcf_write_int32 (info->fp, data, count, &tmp_error); \
   if (tmp_error)                                                   \
@@ -188,6 +188,16 @@ static gboolean xcf_save_vectors       (XcfInfo           *info,
                  error->message);                               \
       return FALSE;                                             \
     }                                                           \
+  } G_STMT_END
+
+#define xcf_write_prop_type_check_error(info, prop_type) G_STMT_START { \
+  guint32 _prop_int32 = prop_type;                     \
+  xcf_write_int32_check_error (info, &_prop_int32, 1); \
+  } G_STMT_END
+
+#define xcf_write_prop_type_print_error(info, prop_type) G_STMT_START { \
+  guint32 _prop_int32 = prop_type;                     \
+  xcf_write_int32_print_error (info, &_prop_int32, 1); \
   } G_STMT_END
 
 #define xcf_check_error(x) G_STMT_START { \
@@ -602,7 +612,7 @@ xcf_save_prop (XcfInfo   *info,
     case PROP_END:
       size = 0;
 
-      xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+      xcf_write_prop_type_check_error (info, prop_type);
       xcf_write_int32_check_error (info, &size, 1);
       break;
     case PROP_COLORMAP:
@@ -614,7 +624,7 @@ xcf_save_prop (XcfInfo   *info,
 	colors = va_arg (args, guchar*);
 	size = 4 + ncolors;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &ncolors, 1);
 	xcf_write_int8_check_error  (info, colors, ncolors * 3);
@@ -625,7 +635,7 @@ xcf_save_prop (XcfInfo   *info,
     case PROP_SELECTION:
       size = 0;
 
-      xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+      xcf_write_prop_type_check_error (info, prop_type);
       xcf_write_int32_check_error (info, &size, 1);
       break;
     case PROP_FLOATING_SELECTION:
@@ -635,7 +645,7 @@ xcf_save_prop (XcfInfo   *info,
 	dummy = 0;
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	info->floating_sel_offset = info->cp;
 	xcf_write_int32_check_error (info, &dummy, 1);
@@ -652,7 +662,7 @@ xcf_save_prop (XcfInfo   *info,
 
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &uint_opacity, 1);
       }
@@ -664,7 +674,7 @@ xcf_save_prop (XcfInfo   *info,
 	mode = va_arg (args, gint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, (guint32 *) &mode, 1);
       }
@@ -676,7 +686,7 @@ xcf_save_prop (XcfInfo   *info,
 	visible = va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &visible, 1);
       }
@@ -688,7 +698,7 @@ xcf_save_prop (XcfInfo   *info,
 	linked = va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &linked, 1);
       }
@@ -700,7 +710,7 @@ xcf_save_prop (XcfInfo   *info,
 	preserve_trans = va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &preserve_trans, 1);
       }
@@ -712,7 +722,7 @@ xcf_save_prop (XcfInfo   *info,
 	apply_mask = va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &apply_mask, 1);
       }
@@ -724,7 +734,7 @@ xcf_save_prop (XcfInfo   *info,
 	edit_mask = va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &edit_mask, 1);
       }
@@ -736,7 +746,7 @@ xcf_save_prop (XcfInfo   *info,
 	show_mask = va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &show_mask, 1);
       }
@@ -748,7 +758,7 @@ xcf_save_prop (XcfInfo   *info,
 	show_masked = va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &show_masked, 1);
       }
@@ -761,7 +771,7 @@ xcf_save_prop (XcfInfo   *info,
 	offsets[1] = va_arg (args, gint32);
 	size = 8;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, (guint32 *) offsets, 2);
       }
@@ -773,7 +783,7 @@ xcf_save_prop (XcfInfo   *info,
 	color = va_arg (args, guchar*);
 	size = 3;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int8_check_error  (info, color, 3);
       }
@@ -785,7 +795,7 @@ xcf_save_prop (XcfInfo   *info,
 	compression = (guint8) va_arg (args, guint32);
 	size = 1;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int8_check_error  (info, &compression, 1);
       }
@@ -803,7 +813,7 @@ xcf_save_prop (XcfInfo   *info,
 
 	size = nguides * (4 + 1);
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 
 	for (; guides; guides = g_list_next (guides))
@@ -843,7 +853,7 @@ xcf_save_prop (XcfInfo   *info,
 
 	size = 4*2;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 
 	xcf_write_float_check_error (info, &xresolution, 1);
@@ -857,7 +867,7 @@ xcf_save_prop (XcfInfo   *info,
 	tattoo =  va_arg (args, guint32);
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &tattoo, 1);
       }
@@ -872,7 +882,8 @@ xcf_save_prop (XcfInfo   *info,
 
 	if (gimp_parasite_list_persistent_length (list) > 0)
 	  {
-	    xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+            xcf_write_prop_type_check_error (info, prop_type);
+
 	    /* because we don't know how much room the parasite list will take
 	     * we save the file position and write the length later
 	     */
@@ -904,7 +915,7 @@ xcf_save_prop (XcfInfo   *info,
 
 	size = 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_int32_check_error (info, &unit, 1);
       }
@@ -914,11 +925,11 @@ xcf_save_prop (XcfInfo   *info,
 	guint32 base, length;
 	glong   pos;
 
-        xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 
         /* because we don't know how much room the paths list will take
-           we save the file position and write the length later
-        */
+         * we save the file position and write the length later
+         */
         pos = info->cp;
         xcf_write_int32_check_error (info, &length, 1);
 
@@ -966,7 +977,7 @@ xcf_save_prop (XcfInfo   *info,
 	  strlen (unit_strings[3]) ? strlen (unit_strings[3]) + 5 : 4 +
 	  strlen (unit_strings[4]) ? strlen (unit_strings[4]) + 5 : 4;
 
-	xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 	xcf_write_int32_check_error (info, &size, 1);
 	xcf_write_float_check_error (info, &factor, 1);
 	xcf_write_int32_check_error (info, &digits, 1);
@@ -978,11 +989,11 @@ xcf_save_prop (XcfInfo   *info,
 	guint32 base, length;
 	glong   pos;
 
-        xcf_write_int32_check_error (info, (guint32 *) &prop_type, 1);
+        xcf_write_prop_type_check_error (info, prop_type);
 
         /* because we don't know how much room the paths list will take
-           we save the file position and write the length later
-        */
+         * we save the file position and write the length later
+         */
         pos = info->cp;
         xcf_write_int32_check_error (info, &length, 1);
 

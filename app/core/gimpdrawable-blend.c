@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 
 #include <glib-object.h>
 
@@ -946,8 +947,8 @@ gradient_fill_region (GimpImage        *gimage,
         gimp_rgb_to_hsv (&rbd.fg, &fg_hsv);
         gimp_rgb_to_hsv (&rbd.bg, &bg_hsv);
 
-        rbd.fg = *((GimpRGB *) &fg_hsv);
-        rbd.bg = *((GimpRGB *) &bg_hsv);
+        memcpy (&rbd.fg, &fg_hsv, sizeof (GimpRGB));
+        memcpy (&rbd.bg, &bg_hsv, sizeof (GimpRGB));
       }
       break;
 

@@ -953,6 +953,7 @@ xcf_load_layer_mask (XcfInfo   *info,
 		     GimpImage *gimage)
 {
   GimpLayerMask *layer_mask;
+  GimpChannel   *channel;
   guint32        hierarchy_offset;
   gint           width;
   gint           height;
@@ -978,7 +979,8 @@ xcf_load_layer_mask (XcfInfo   *info,
     return NULL;
 
   /* read in the layer_mask properties */
-  if (!xcf_load_channel_props (info, gimage, (GimpChannel **) &layer_mask))
+  channel = GIMP_CHANNEL (layer_mask);
+  if (!xcf_load_channel_props (info, gimage, &channel))
     goto error;
 
   /* read the hierarchy and layer mask offsets */

@@ -282,21 +282,21 @@ gimp_parasite_list_deserialize (GimpConfig *list,
               if (! gimp_scanner_parse_string (scanner, &parasite_name))
                 break;
 
-             token = G_TOKEN_INT;
+              token = G_TOKEN_INT;
 
               if (g_scanner_peek_next_token (scanner) != token)
-                break;
+                goto cleanup;
 
               if (! gimp_scanner_parse_int (scanner, &parasite_flags))
-                break;
+                goto cleanup;
 
               token = G_TOKEN_STRING;
 
               if (g_scanner_peek_next_token (scanner) != token)
-                break;
+                goto cleanup;
 
               if (! gimp_scanner_parse_string (scanner, &parasite_data))
-                break;
+                goto cleanup;
 
               parasite = gimp_parasite_new (parasite_name,
                                             parasite_flags,
@@ -307,6 +307,10 @@ gimp_parasite_list_deserialize (GimpConfig *list,
               gimp_parasite_free (parasite);
 
               token = G_TOKEN_RIGHT_PAREN;
+
+              g_free (parasite_data);
+cleanup:
+              g_free (parasite_name);
             }
           break;
 

@@ -1,3 +1,18 @@
+2004-01-26  Manish Singh  <yosh@gimp.org>
+
+	* app/core/gimpdrawable-blend.c (gradient_fill_region): use memcpy
+	instead of casted assignment for storing HSV values in rbd.fg/bg,
+	for C99 aliasing compliance.
+
+	* app/xcf/xcf-load.c (xcf_load_layer_mask): use a GimpChannel *
+	explictly for xcf_load_channel_props, for the above reason.
+
+	* app/xcf/xcf-save.c (xcf_save_prop): use a temporary guint32 for
+	saving property types, for the above reason.
+
+	* app/core/gimpparasitelist.c (gimp_parasite_list_deserialize): plug
+	a memory leak, since data is copied on parasite creation.
+	
 2004-01-26  Simon Budig  <simon@gimp.org>
 
 	* app/tools/gimpvectortool.c: do nothing in _button_press when
