@@ -7,6 +7,14 @@
 gdouble bx1,by1,bx2,by2;
 get_ray_color_func get_ray_color;
 
+typedef struct {
+  gdouble u,v;
+  gdouble t;
+  GckVector3 s;
+  GckVector3 n;
+  gint face;
+} FaceIntersectInfo;
+
 /*****************/
 /* Phong shading */
 /*****************/
@@ -337,10 +345,10 @@ GckRGB get_ray_color_sphere(GckVector3 *pos)
 
           /* Compute a mix of the first and second colors */
           /* ============================================ */
-          
-          color.r = color.r*color2.r;
-          color.g = color.g*color2.g;
-          color.b = color.b*color2.b;
+
+          color.r = color.r*color.a+(1.0-color.a)*color2.r;
+          color.g = color.g*color.a+(1.0-color.a)*color2.g;
+          color.b = color.b*color.a+(1.0-color.a)*color2.b; 
           color.a = color.a+color2.a;
 
           gck_rgba_clamp(&color);
@@ -411,3 +419,492 @@ void compute_bounding_box(void)
   bx2=p2.x;
   by2=p2.y;
 }
+
+/* These two were taken from the Mesa source. Mesa is written   */
+/* and is (C) by Brian Paul. vecmulmat() performs a post-mul by */
+/* a 4x4 matrix to a 1x4(3) vector. rotmat() creates a matrix   */
+/* that by post-mul will rotate a 1x4(3) vector the given angle */
+/* about the given axis.                                        */
+/* ============================================================ */
+
+void vecmulmat(GckVector3 *u,GckVector3 *v,gfloat m[16])
+{
+   gfloat v0=v->x, v1=v->y, v2=v->z;
+#define M(row,col)  m[col*4+row]
+   u->x = v0 * M(0,0) + v1 * M(1,0) + v2 * M(2,0) + M(3,0);
+   u->y = v0 * M(0,1) + v1 * M(1,1) + v2 * M(2,1) + M(3,1);
+   u->z = v0 * M(0,2) + v1 * M(1,2) + v2 * M(2,2) + M(3,2);
+#undef M
+}
+
+void rotatemat(gfloat angle,GckVector3 *v,gfloat m[16])
+{
+   /* This function contributed by Erich Boleyn (erich@uruk.org) */
+   gfloat mag, s, c;
+   gfloat xx, yy, zz, xy, yz, zx, xs, ys, zs, one_c;
+   gfloat IdentityMat[16];
+   gint cnt;
+
+   s = sin( angle * (M_PI / 180.0) );
+   c = cos( angle * (M_PI / 180.0) );
+
+   mag = sqrt( v->x*v->x + v->y*v->y + v->z*v->z );
+
+   if (mag == 0.0) {
+      /* generate an identity matrix and return */
+
+      for (cnt=0;cnt<16;cnt++)
+        IdentityMat[cnt]=0.0;
+    
+      IdentityMat[0] = 1.0;
+      IdentityMat[5] = 1.0;
+      IdentityMat[10] = 1.0;
+      IdentityMat[15] = 1.0;
+
+      memcpy(m, IdentityMat, sizeof(gfloat)*16);
+      return;
+   }
+
+   v->x /= mag;
+   v->y /= mag;
+   v->z /= mag;
+
+#define M(row,col)  m[col*4+row]
+
+   xx = v->x * v->x;
+   yy = v->y * v->y;
+   zz = v->z * v->z;
+   xy = v->x * v->y;
+   yz = v->y * v->z;
+   zx = v->z * v->x;
+   xs = v->x * s;
+   ys = v->y * s;
+   zs = v->z * s;
+   one_c = 1.0F - c;
+
+   M(0,0) = (one_c * xx) + c;
+   M(0,1) = (one_c * xy) - zs;
+   M(0,2) = (one_c * zx) + ys;
+   M(0,3) = 0.0F;
+
+   M(1,0) = (one_c * xy) + zs;
+   M(1,1) = (one_c * yy) + c;
+   M(1,2) = (one_c * yz) - xs;
+   M(1,3) = 0.0F;
+
+   M(2,0) = (one_c * zx) - ys;
+   M(2,1) = (one_c * yz) + xs;
+   M(2,2) = (one_c * zz) + c;
+   M(2,3) = 0.0F;
+
+   M(3,0) = 0.0F;
+   M(3,1) = 0.0F;
+   M(3,2) = 0.0F;
+   M(3,3) = 1.0F;
+
+#undef M
+}
+
+/* Transpose the matrix m. If m is orthogonal (like a rotation matrix), */
+/* this is equal to the inverse of the matrix.                          */
+/* ==================================================================== */
+
+void transpose_mat(gfloat m[16])
+{
+  gint i,j;
+  gfloat t;
+
+  for (i=0;i<4;i++)
+    {
+      for (j=0;j<i;j++)
+        {
+          t = m[j*4+i];
+          m[j*4+i] = m[i*4+j];
+          m[i*4+j] = t;
+        }
+    }
+}
+
+/* Compute the matrix product c=a*b */
+/* ================================ */
+
+void matmul(gfloat a[16],gfloat b[16],gfloat c[16])
+{
+  gint   i,j,k;
+  gfloat value;
+  
+#define A(row,col)  a[col*4+row]
+#define B(row,col)  b[col*4+row]
+#define C(row,col)  c[col*4+row]
+
+  for (i=0;i<4;i++)
+    {
+      for (j=0;j<4;j++)
+        {
+	  value = 0.0;
+	  for (k=0;k<4;k++)
+	    value += A(i,k)*B(k,j);
+          
+          C(i,j) = value;
+        }
+    }
+
+#undef A
+#undef B
+#undef C
+}
+
+void ident_mat(gfloat m[16])
+{
+  gint   i,j;
+  
+#define M(row,col)  m[col*4+row]
+  
+  for (i=0;i<4;i++)
+    {
+      for (j=0;j<4;j++)
+        {
+          if (i==j)
+            M(i,j) = 1.0;
+          else
+            M(i,j) = 0.0;
+        }
+    }  
+
+#undef M
+}
+
+gboolean intersect_rect(gdouble u,gdouble v,gdouble w,
+                        GckVector3 viewp,GckVector3 dir,
+                        FaceIntersectInfo *face_info)
+{
+  gboolean result = FALSE;
+  gdouble u2,v2;
+  
+  if (dir.z!=0.0)
+    {
+      u2 = u / 2.0;
+      v2 = v / 2.0;
+
+      face_info->t = (w-viewp.z)/dir.z;
+      face_info->s.x = viewp.x + face_info->t*dir.x;
+      face_info->s.y = viewp.y + face_info->t*dir.y;
+      face_info->s.z = 0.0;
+
+      if (face_info->s.x>=-u2 && face_info->s.x<=u2 && 
+          face_info->s.y>=-v2 && face_info->s.y<=v2)
+        {
+          face_info->u = (face_info->s.x + u2)/u;
+          face_info->v = (face_info->s.y + v2)/v;
+          result = TRUE;
+        }
+    }
+  
+  return(result);
+}
+
+gboolean intersect_box(GckVector3 scale, GckVector3 viewp, GckVector3 dir,
+                       FaceIntersectInfo *face_intersect)
+{
+  GckVector3 v,d,tmp,axis[3];
+  FaceIntersectInfo face_tmp;
+  gboolean result = FALSE;
+  gfloat m[16];
+  gint i = 0;
+
+  gck_vector3_set(&axis[0], 1.0,0.0,0.0);
+  gck_vector3_set(&axis[1], 0.0,1.0,0.0);
+  gck_vector3_set(&axis[2], 0.0,0.0,1.0);
+
+  /* Front side */
+  /* ========== */
+
+  if (intersect_rect(scale.x,scale.y,scale.z/2.0,viewp,dir,&face_intersect[i])==TRUE)
+    {
+      face_intersect[i].face = 0;
+      gck_vector3_set(&face_intersect[i++].n, 0.0,0.0,1.0);
+      result = TRUE;
+    }
+
+  /* Back side */
+  /* ========= */
+
+  if (intersect_rect(scale.x,scale.y,-scale.z/2.0,viewp,dir,&face_intersect[i])==TRUE)
+    {
+      face_intersect[i].face = 1;
+      gck_vector3_set(&face_intersect[i++].n, 0.0,0.0,-1.0);
+      face_intersect[i].u = 1.0 - face_intersect[i].u;
+      face_intersect[i].v = 1.0 - face_intersect[i].v;
+      result = TRUE;
+    }
+
+  /* Check if we've found the two possible intersection points */
+  /* ========================================================= */
+  
+  if (i<2)
+    {
+      /* Top: Rotate viewpoint and direction into rectangle's local coordinate system */
+      /* ============================================================================ */
+  
+      rotatemat(90, &axis[0], m);
+      vecmulmat(&v,&viewp,m);
+      vecmulmat(&d,&dir,m);
+    
+      if (intersect_rect(scale.x,scale.z,scale.y/2.0,v,d,&face_intersect[i])==TRUE)
+        {
+          face_intersect[i].face = 2;
+
+          transpose_mat(m);
+          vecmulmat(&tmp, &face_intersect[i].s, m);
+          face_intersect[i].s = tmp;
+          
+          gck_vector3_set(&face_intersect[i++].n, 0.0,-1.0,0.0);
+          result = TRUE;
+        } 
+    }
+
+  /* Check if we've found the two possible intersection points */
+  /* ========================================================= */
+  
+  if (i<2)
+    {
+      /* Bottom: Rotate viewpoint and direction into rectangle's local coordinate system */
+      /* =============================================================================== */
+    
+      rotatemat(90, &axis[0], m);  
+      vecmulmat(&v,&viewp,m);
+      vecmulmat(&d,&dir,m);
+    
+      if (intersect_rect(scale.x,scale.z,-scale.y/2.0,v,d,&face_intersect[i])==TRUE)
+        {
+          face_intersect[i].face = 3;
+
+          transpose_mat(m);
+
+          vecmulmat(&tmp, &face_intersect[i].s, m);
+          face_intersect[i].s = tmp;
+
+          face_intersect[i].v = 1.0 - face_intersect[i].v;
+
+          gck_vector3_set(&face_intersect[i++].n, 0.0,1.0,0.0);
+
+          result = TRUE;
+        }
+    }
+
+  /* Check if we've found the two possible intersection points */
+  /* ========================================================= */
+  
+  if (i<2)
+    {
+      /* Left side: Rotate viewpoint and direction into rectangle's local coordinate system */
+      /* ================================================================================== */
+    
+      rotatemat(90, &axis[1], m);  
+      vecmulmat(&v,&viewp,m);
+      vecmulmat(&d,&dir,m);
+
+      if (intersect_rect(scale.z,scale.y,scale.x/2.0,v,d,&face_intersect[i])==TRUE)
+        {
+          face_intersect[i].face = 4;
+    
+          transpose_mat(m);
+          vecmulmat(&tmp, &face_intersect[i].s, m);
+          face_intersect[i].s = tmp;
+
+          gck_vector3_set(&face_intersect[i++].n, 1.0,0.0,0.0);
+          result = TRUE;
+        }
+    }
+
+  /* Check if we've found the two possible intersection points */
+  /* ========================================================= */
+  
+  if (i<2)
+    {
+      /* Right side: Rotate viewpoint and direction into rectangle's local coordinate system */
+      /* =================================================================================== */
+  
+      rotatemat(90, &axis[1], m);  
+      vecmulmat(&v,&viewp,m);
+      vecmulmat(&d,&dir,m);
+    
+      if (intersect_rect(scale.z,scale.y,-scale.x/2.0,v,d,&face_intersect[i])==TRUE)
+        {
+          face_intersect[i].face = 5;
+
+          transpose_mat(m);
+          vecmulmat(&tmp, &face_intersect[i].s, m);
+
+          face_intersect[i].u = 1.0 - face_intersect[i].u;
+
+          gck_vector3_set(&face_intersect[i++].n, -1.0,0.0,0.0);
+          result = TRUE;
+        }
+    }
+
+  /* Sort intersection points */
+  /* ======================== */
+  
+  if (face_intersect[0].t>face_intersect[1].t)
+    {
+      face_tmp = face_intersect[0];
+      face_intersect[0] = face_intersect[1];
+      face_intersect[1] = face_tmp;
+    }
+
+  return(result);  
+}
+
+GckRGB get_ray_color_box(GckVector3 *pos)
+{
+  GckVector3 lvp,ldir,vp,p,dir,ns,nn;
+  GckRGB color, color2;
+  gfloat m[16];
+  gint i;
+  FaceIntersectInfo face_intersect[2];
+  
+  color=background;
+  vp = mapvals.viewpoint;
+  p = *pos;
+
+  /* Translate viewpoint so that the box has its origin */
+  /* at its lower left corner.                          */
+  /* ================================================== */
+
+  vp.x = vp.x - mapvals.position.x;
+  vp.y = vp.y - mapvals.position.y;
+  vp.z = vp.z - mapvals.position.z;
+
+  p.x = p.x - mapvals.position.x;
+  p.y = p.y - mapvals.position.y;
+  p.z = p.z - mapvals.position.z;
+
+  /* Compute direction */
+  /* ================= */
+  
+  gck_vector3_sub(&dir,&p,&vp);
+  gck_vector3_normalize(&dir);
+
+  /* Compute inverse of rotation matrix and apply it to   */
+  /* the viewpoint and direction. This transforms the     */
+  /* observer into the local coordinate system of the box */
+  /* ==================================================== */
+
+  memcpy(m,rotmat,sizeof(gfloat)*16);
+  
+  transpose_mat(m);
+  
+  vecmulmat(&lvp,&vp,m);
+  vecmulmat(&ldir,&dir,m);
+
+  /* Ok. Now the observer is in the space where the box is located */
+  /* with its lower left corner at the origin and its axis aligned */
+  /* to the cartesian basis. Check if the transformed ray hits it. */
+  /* ============================================================= */
+
+  face_intersect[0].t = 1000000.0;
+  face_intersect[1].t = 1000000.0;
+  
+  if (intersect_box(mapvals.scale,lvp,ldir,face_intersect)==TRUE)
+    {
+      /* We've hit the box. Transform the hit points and */
+      /* normals back into the world coordinate system   */
+      /* =============================================== */
+      
+      for (i=0;i<2;i++)
+        {
+          vecmulmat(&ns,&face_intersect[i].s,rotmat);
+          vecmulmat(&nn,&face_intersect[i].n,rotmat);
+
+          ns.x = ns.x + mapvals.position.x;
+          ns.y = ns.y + mapvals.position.y;
+          ns.z = ns.z + mapvals.position.z;
+          
+          face_intersect[i].s = ns;
+          face_intersect[i].n = nn;
+        }
+
+      color = get_box_image_color(face_intersect[0].face,
+                                  face_intersect[0].u,face_intersect[0].v);
+
+      /* Check for total transparency... */
+      /* =============================== */
+
+      if (color.a<1.0)
+        {
+          /* Hey, we can see  through here!      */
+          /* Lets see what's on the other side.. */
+          /* =================================== */
+          
+          color=phong_shade(
+            &face_intersect[0].s,
+            &mapvals.viewpoint,
+            &face_intersect[0].n,
+            &mapvals.lightsource.position,
+            &color,
+            &mapvals.lightsource.color,
+            mapvals.lightsource.type);      
+    
+          gck_rgba_clamp(&color);
+
+          color2 = get_box_image_color(face_intersect[1].face,
+                                       face_intersect[1].u,face_intersect[1].v);
+
+          /* Make the normal point inwards */
+          /* ============================= */
+
+          gck_vector3_mul(&face_intersect[1].n,-1.0);
+
+          color2=phong_shade(
+            &face_intersect[1].s,
+            &mapvals.viewpoint,
+            &face_intersect[1].n,
+            &mapvals.lightsource.position,
+            &color2,
+            &mapvals.lightsource.color,
+            mapvals.lightsource.type);      
+
+          gck_rgba_clamp(&color2);
+          
+          if (mapvals.transparent_background==FALSE && color2.a<1.0)
+            {
+              color2.r = (color2.r*color2.a)+(background.r*(1.0-color2.a));
+              color2.g = (color2.g*color2.a)+(background.g*(1.0-color2.a));
+              color2.b = (color2.b*color2.a)+(background.b*(1.0-color2.a));
+              color2.a = 1.0;
+            }
+
+          /* Compute a mix of the first and second colors */
+          /* ============================================ */
+          
+          color.r = color.r*color.a+(1.0-color.a)*color2.r;
+          color.g = color.g*color.a+(1.0-color.a)*color2.g;
+          color.b = color.b*color.a+(1.0-color.a)*color2.b; 
+          color.a = color.a+color2.a;
+
+          gck_rgba_clamp(&color);
+        }
+      else if (color.a!=0.0 && mapvals.lightsource.type!=NO_LIGHT)
+        {
+           color=phong_shade(
+             &face_intersect[0].s,
+             &mapvals.viewpoint,
+             &face_intersect[0].n,
+             &mapvals.lightsource.position,
+             &color,
+             &mapvals.lightsource.color,
+             mapvals.lightsource.type);      
+    
+           gck_rgba_clamp(&color);
+        }
+    }
+  else
+    {
+      if (mapvals.transparent_background==TRUE)
+        color.a = 0.0;
+    }
+  
+  return(color);
+}
+

@@ -9,9 +9,11 @@
 /*************/
 
 gdouble imat[4][4];
+gfloat rotmat[16], a[16], b[16];
 
 void init_compute(void)
 {
+  gint i;
 
   switch (mapvals.maptype)
     {
@@ -72,6 +74,45 @@ void init_compute(void)
         imat[2][3]=mapvals.position.z-mapvals.viewpoint.z;
 
         get_ray_color=get_ray_color_plane;
+
+        break;
+      case MAP_BOX:
+        gck_vector3_set(&mapvals.firstaxis, 1.0,0.0,0.0);
+        gck_vector3_set(&mapvals.secondaxis,0.0,1.0,0.0);
+        gck_vector3_set(&mapvals.normal,0.0,0.0,1.0);
+
+        get_ray_color=get_ray_color_box;
+        
+        ident_mat(rotmat);
+        
+        rotatemat(mapvals.alpha, &mapvals.firstaxis, a);
+
+        matmul(a,rotmat,b);
+
+        memcpy(rotmat, b, sizeof(gfloat)*16);
+
+        rotatemat(mapvals.beta, &mapvals.secondaxis, a);
+        matmul(a,rotmat,b);
+
+        memcpy(rotmat, b, sizeof(gfloat)*16);
+
+        rotatemat(mapvals.gamma, &mapvals.normal, a);
+        matmul(a,rotmat,b);
+
+        memcpy(rotmat, b, sizeof(gfloat)*16);
+
+        /* Set up pixel regions for the box face images */
+        /* ============================================ */
+
+        for (i=0;i<6;i++)
+          {
+             box_drawables[i] = gimp_drawable_get (mapvals.boxmap_id[i]);
+             
+             gimp_pixel_rgn_init (&box_regions[i], box_drawables[i],
+                                 0, 0,
+                                 box_drawables[i]->width, box_drawables[i]->height,
+                                 FALSE, FALSE);
+          }
 
         break;
     }
@@ -139,11 +180,18 @@ void compute_image(void)
 
   gimp_pixel_rgn_init (&dest_region, output_drawable, 0, 0, width, height, TRUE, TRUE);
 
-  if (mapvals.maptype==MAP_PLANE)
-    gimp_progress_init("Map to object (plane)");
-  else
-    gimp_progress_init("Map to object (sphere)");
-
+  switch (mapvals.maptype)
+    {
+    case MAP_PLANE:
+      gimp_progress_init("Map to object (plane)");
+      break;
+    case MAP_SPHERE:
+      gimp_progress_init("Map to object (sphere)");
+      break;
+    case MAP_BOX:
+      gimp_progress_init("Map to object (box)");
+      break;
+    }
   if (mapvals.antialiasing==FALSE)
     {
       for (ycount=0;ycount<height;ycount++)

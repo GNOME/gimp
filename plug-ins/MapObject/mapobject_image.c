@@ -10,6 +10,9 @@
 GDrawable *input_drawable,*output_drawable;
 GPixelRgn source_region,dest_region;
 
+GDrawable *box_drawables[6];
+GPixelRgn box_regions[6];
+
 guchar *preview_rgb_data = NULL;
 GdkImage *image = NULL;
 
@@ -48,6 +51,30 @@ GckRGB peek(gint x,gint y)
   return(color);
 }
 
+GckRGB peek_image(gint image, gint x,gint y)
+{
+  static guchar data[4];
+  GckRGB color;
+
+  gimp_pixel_rgn_get_pixel(&box_regions[image],data,x,y);
+
+  color.r=(gdouble)(data[0])/255.0;
+  color.g=(gdouble)(data[1])/255.0;
+  color.b=(gdouble)(data[2])/255.0;
+
+  if (box_drawables[image]->bpp==4)
+    {
+      if (gimp_drawable_has_alpha(box_drawables[image]->id))
+        color.a=(gdouble)(data[3])/255.0;
+      else
+        color.a=1.0;
+    }
+  else
+    color.a=1.0;
+
+  return(color);
+}
+
 void poke(gint x,gint y,GckRGB *color)
 {
   static guchar data[4];
@@ -63,6 +90,19 @@ void poke(gint x,gint y,GckRGB *color)
 gint checkbounds(gint x,gint y)
 {
   if (x<border_x1 || y<border_y1 || x>=border_x2 || y>=border_y2)
+    return(FALSE);
+  else
+    return(TRUE);
+}
+
+gint checkbounds_image(gint image, gint x,gint y)
+{
+  gint w,h;
+
+  w = box_drawables[image]->width;
+  h = box_drawables[image]->height;
+
+  if (x<0 || y<0 || x>=w || y>=h)
     return(FALSE);
   else
     return(TRUE);
@@ -137,6 +177,34 @@ GckRGB get_image_color(gdouble u,gdouble v,gint *inside)
   p[2] = peek(x1, y2);
   p[3] = peek(x2, y2);
   return(gck_bilinear_rgba(u * width, v * height, p));
+}
+
+GckRGB get_box_image_color(gint image,gdouble u,gdouble v)
+{
+  gint   w,h, x1, y1, x2, y2;
+  GckRGB p[4];
+ 
+  w = box_drawables[image]->width;
+  h = box_drawables[image]->height;
+
+  x1 = (gint)((u*(gdouble)w));
+  y1 = (gint)((v*(gdouble)h));
+
+  if (checkbounds_image(image, x1,y1)==FALSE)
+    return(background);
+
+  x2 = (x1 + 1);
+  y2 = (y1 + 1);
+
+  if (checkbounds_image(image, x2,y2)==FALSE)
+    return(peek_image(image, x1,y1));
+
+  p[0] = peek_image(image, x1, y1);
+  p[1] = peek_image(image, x2, y1);
+  p[2] = peek_image(image, x1, y2);
+  p[3] = peek_image(image, x2, y2);
+
+  return(gck_bilinear_rgba(u*w, v*h, p));
 }
 
 /****************************************/

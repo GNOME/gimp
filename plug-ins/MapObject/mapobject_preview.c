@@ -16,9 +16,16 @@ BackBuffer backbuf={0,0,0,0,NULL};
 void update_light       (gint xpos,gint ypos);
 void draw_light_marker  (gint xpos,gint ypos);
 void clear_light_marker (void);
-void draw_wireframe_plane(gint startx,gint starty,gint pw,gint ph);
-void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph);
-void clear_wireframe(void);
+
+gint draw_line (gint n, gint startx,gint starty,gint pw,gint ph,
+                gdouble cx1, gdouble cy1, gdouble cx2, gdouble cy2,
+                GckVector3 a,GckVector3 b);
+
+void draw_wireframe_plane  (gint startx,gint starty,gint pw,gint ph);
+void draw_wireframe_sphere (gint startx,gint starty,gint pw,gint ph);
+void draw_wireframe_box    (gint startx,gint starty,gint pw,gint ph);
+
+void clear_wireframe (void);
 
 /**************************************************************/
 /* Computes a preview of the rectangle starting at (x,y) with */
@@ -309,6 +316,9 @@ void draw_wireframe(gint startx,gint starty,gint pw,gint ph)
       case MAP_SPHERE:
         draw_wireframe_sphere(startx,starty,pw,ph);
         break;
+      case MAP_BOX:
+        draw_wireframe_box(startx,starty,pw,ph);
+        break;
     }
 }
 
@@ -512,6 +522,96 @@ void draw_wireframe_sphere(gint startx,gint starty,gint pw,gint ph)
         }
       cnt2+=2;
     }
+
+  /* Mark end of lines */
+  /* ================= */
+
+  linetab[n].x1=-1;
+}
+
+gint draw_line(gint n, gint startx,gint starty,gint pw,gint ph,
+               gdouble cx1, gdouble cy1, gdouble cx2, gdouble cy2,
+               GckVector3 a,GckVector3 b)
+{
+  gdouble x1,y1,x2,y2;
+  gint i = n;
+  
+  gck_3d_to_2d(startx,starty,pw,ph,&x1,&y1,&mapvals.viewpoint,&a);
+  gck_3d_to_2d(startx,starty,pw,ph,&x2,&y2,&mapvals.viewpoint,&b);
+ 
+  if (gck_clip_line(&x1,&y1,&x2,&y2,cx1,cy1,cx2,cy2)==TRUE)
+    {
+      linetab[i].x1=(gint)(x1+0.5);
+      linetab[i].y1=(gint)(y1+0.5);
+      linetab[i].x2=(gint)(x2+0.5);
+      linetab[i].y2=(gint)(y2+0.5);
+      linetab[i].linewidth=3;
+      linetab[i].linestyle=GDK_LINE_SOLID;
+      gdk_gc_set_line_attributes(gc,linetab[i].linewidth,linetab[i].linestyle,
+                                 GDK_CAP_NOT_LAST,GDK_JOIN_MITER);
+      gdk_draw_line(previewarea->window,gc,linetab[i].x1,linetab[i].y1,
+                    linetab[i].x2,linetab[i].y2);
+      i++;
+    }
+
+  return(i);
+}
+
+void draw_wireframe_box(gint startx,gint starty,gint pw,gint ph)
+{
+  GckVector3 p[8], tmp, scale;
+  gint n=0,i;
+  gdouble cx1,cy1,cx2,cy2;
+  
+  /* Compute wireframe points */
+  /* ======================== */
+
+  init_compute();
+
+  scale = mapvals.scale;
+  gck_vector3_mul(&scale,0.5);
+
+  gck_vector3_set(&p[0], -scale.x, -scale.y, scale.z);
+  gck_vector3_set(&p[1],  scale.x, -scale.y, scale.z);
+  gck_vector3_set(&p[2],  scale.x,  scale.y, scale.z);
+  gck_vector3_set(&p[3], -scale.x,  scale.y, scale.z);
+
+  gck_vector3_set(&p[4], -scale.x, -scale.y, -scale.z);
+  gck_vector3_set(&p[5],  scale.x, -scale.y, -scale.z);
+  gck_vector3_set(&p[6],  scale.x,  scale.y, -scale.z);
+  gck_vector3_set(&p[7], -scale.x,  scale.y, -scale.z);
+
+  /* Rotate and translate points */
+  /* =========================== */
+  
+  for (i=0;i<8;i++)
+    {
+      vecmulmat(&tmp,&p[i],rotmat);
+      gck_vector3_add(&p[i],&tmp,&mapvals.position);
+    }
+
+  /* Draw the box */
+  /* ============ */
+
+  cx1=(gdouble)startx;
+  cy1=(gdouble)starty;
+  cx2=cx1+(gdouble)pw;
+  cy2=cy1+(gdouble)ph;
+
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[0],p[1]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[1],p[2]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[2],p[3]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[3],p[0]);
+
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[4],p[5]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[5],p[6]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[6],p[7]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[7],p[4]);
+
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[0],p[4]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[1],p[5]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[2],p[6]);
+  n = draw_line(n, startx,starty,pw,ph, cx1,cy1,cx2,cy2, p[3],p[7]);
 
   /* Mark end of lines */
   /* ================= */

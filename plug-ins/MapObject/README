@@ -1,9 +1,11 @@
 
-MapObject 1.00 -- image filter plug-in for The GIMP program
+MapObject 1.10 -- image filter plug-in for The GIMP program
 ===========================================================
 
 Copyright (C) 1996-98 Tom Bech
 Copyright (C) 1996-98 Federico Mena Quintero
+
+Released 17th of July, 1998
 
 You can reach the author(s) via E-mail:
 tomb@gimp.org (Tom) or quartic@gimp.org (Federico).
@@ -36,14 +38,14 @@ In other words, you can't sue us for whatever happens while using this ;)
 Compiling
 =========
 
-To compile you'll need The GIMP 0.99.20 and GTK+ 0.99.7 or later.
+To compile you'll need The GIMP 1.0 and GTK+ 1.0.4 or later.
 You'll also need GCK 1.00 (http://www.ii.uib.no/~tomb/gck.html)
 
 1) Edit the Makefile to reflect your system setup.
 
 2) Type "make" and then "make install"
 
-You should now be ready to run. "make install" puts the executable "map_object"
+You should now be ready to run. "make install" puts the executable "MapObject"
 in the standard plug-in directory.
 
 Documentation
@@ -56,3 +58,4 @@ Please send me a mail if you find any bugs.
 Have fun,
 
 Tom
+

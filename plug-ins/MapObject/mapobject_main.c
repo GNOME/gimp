@@ -1,5 +1,5 @@
 /*********************************************************************************/
-/* MapObject 1.00 -- image filter plug-in for The Gimp program                   */
+/* MapObject 1.10 -- image filter plug-in for The Gimp program                   */
 /* Copyright (C) 1996-98 Tom Bech                                                */
 /* Copyright (C) 1996-98 Federico Mena Quintero                                  */
 /*===============================================================================*/
@@ -17,7 +17,7 @@
 /*===============================================================================*/
 /* You should have received a copy of the GNU General Public License along with  */
 /* this program (read the "COPYING" file); if not, write to the Free Software    */
-/* Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.    */
+/* Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.                     */
 /*===============================================================================*/
 /* In other words, you can't sue us for whatever happens while using this ;)     */
 /*********************************************************************************/
@@ -42,6 +42,8 @@ void mapobject_noninteractive (GDrawable *drawable);
 
 void set_default_settings(void)
 {
+  gint i;
+
   gck_vector3_set(&mapvals.viewpoint,  0.5,0.5,2.0);
   gck_vector3_set(&mapvals.firstaxis,  1.0,0.0,0.0);
   gck_vector3_set(&mapvals.secondaxis, 0.0,1.0,0.0);
@@ -49,6 +51,7 @@ void set_default_settings(void)
   gck_vector3_set(&mapvals.position,   0.5,0.5,0.0);
   gck_vector3_set(&mapvals.lightsource.position, -0.5,-0.5,2.0);
   gck_vector3_set(&mapvals.lightsource.direction, -1.0,-1.0,1.0);
+  gck_vector3_set(&mapvals.scale, 0.5,0.5,0.5);
 
   mapvals.maptype=MAP_PLANE;
 
@@ -76,52 +79,83 @@ void set_default_settings(void)
   mapvals.material.diffuse_ref = 0.5;
   mapvals.material.specular_ref = 0.5;
   mapvals.material.highlight = 27.0;
+  
+  for (i=0;i<6;i++)
+    mapvals.boxmap_id[i] = -1;
 }
 
-MAIN()
+void check_drawables(GDrawable *drawable)
+{
+  gint i;
+
+  /* Check that boxmap images are valid */
+  /* ================================== */
+
+  for (i=0;i<mapvals.boxmap_id[i];i++)
+    {
+      if (mapvals.boxmap_id[i]==-1)
+        mapvals.boxmap_id[i] = drawable->id;
+      else if (mapvals.boxmap_id[i]!=-1 && gimp_drawable_image_id(mapvals.boxmap_id[i])==-1)
+        mapvals.boxmap_id[i] = drawable->id;
+      else if (gimp_drawable_gray(mapvals.boxmap_id[i]))
+        mapvals.boxmap_id[i] = drawable->id;
+    }
+}
+
+MAIN();
 
 static void query(void)
 {
 
   static GParamDef args[] =
     {
-      { PARAM_INT32,      "run_mode",              "Interactive (0), non-interactive (1)" },
-      { PARAM_IMAGE,      "image",                 "Input image" },
-      { PARAM_DRAWABLE,   "drawable",              "Input drawable" },
-      { PARAM_INT32,      "maptype",               "Type of mapping (0=plane,1=sphere)" },
-      { PARAM_FLOAT, "viewpoint_x",                "Position of viewpoint (x,y,z)" },
-      { PARAM_FLOAT, "viewpoint_y",                "Position of viewpoint (x,y,z)" },
-      { PARAM_FLOAT, "viewpoint_z",                "Position of viewpoint (x,y,z)" },
-      { PARAM_FLOAT, "position_x",              "Object position (x,y,z)" },
-      { PARAM_FLOAT, "position_y",              "Object position (x,y,z)" },
-      { PARAM_FLOAT, "position_z",              "Object position (x,y,z)" },
-      { PARAM_FLOAT, "firstaxis_x",             "First axis of object [x,y,z]" },
-      { PARAM_FLOAT, "firstaxis_y",             "First axis of object [x,y,z]" },
-      { PARAM_FLOAT, "firstaxis_z",             "First axis of object [x,y,z]" },
-      { PARAM_FLOAT, "secondaxis_x",            "Second axis of object [x,y,z]" },
-      { PARAM_FLOAT, "secondaxis_y",            "Second axis of object [x,y,z]" },
-      { PARAM_FLOAT, "secondaxis_z",            "Second axis of object [x,y,z]" },
-      { PARAM_FLOAT, "rotationangle_x",         "Axis rotation (xy,xz,yz) in degrees" },
-      { PARAM_FLOAT, "rotationangle_y",         "Axis rotation (xy,xz,yz) in degrees" },
-      { PARAM_FLOAT, "rotationangle_z",         "Axis rotation (xy,xz,yz) in degrees" },
-      { PARAM_INT32,      "lighttype",             "Type of lightsource (0=point,1=directional,3=none)" },
-      { PARAM_COLOR,      "lightcolor",            "Lightsource color (r,g,b)" },
-      { PARAM_FLOAT, "lightposition_x",         "Lightsource position (x,y,z)" },
-      { PARAM_FLOAT, "lightposition_y",         "Lightsource position (x,y,z)" },
-      { PARAM_FLOAT, "lightposition_z",         "Lightsource position (x,y,z)" },
-      { PARAM_FLOAT, "lightdirection_x",        "Lightsource direction [x,y,z]" },
-      { PARAM_FLOAT, "lightdirection_y",        "Lightsource direction [x,y,z]" },
-      { PARAM_FLOAT, "lightdirection_z",        "Lightsource direction [x,y,z]" },
-      { PARAM_FLOAT,      "ambient_intensity",     "Material ambient intensity (0..1)" },
-      { PARAM_FLOAT,      "diffuse_intensity",     "Material diffuse intensity (0..1)" },
-      { PARAM_FLOAT,      "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
-      { PARAM_FLOAT,      "specular_reflectivity", "Material specular reflectivity (0..1)" },
-      { PARAM_FLOAT,      "highlight",             "Material highlight (0..->), note: it's expotential" },
-      { PARAM_INT32,      "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
-      { PARAM_INT32,      "tiled",                 "Tile source image (TRUE/FALSE)" },
-      { PARAM_INT32,      "newimage",              "Create a new image (TRUE/FALSE)" },
-      { PARAM_INT32,      "transparentbackground", "Make background transparent (TRUE/FALSE)" },
-      { PARAM_FLOAT,      "radius",                "Sphere radius (only used when maptype=1)" }
+      { PARAM_INT32,    "run_mode",              "Interactive (0), non-interactive (1)" },
+      { PARAM_IMAGE,    "image",                 "Input image" },
+      { PARAM_DRAWABLE, "drawable",              "Input drawable" },
+      { PARAM_INT32,    "maptype",               "Type of mapping (0=plane,1=sphere,2=box)" },
+      { PARAM_FLOAT,    "viewpoint_x",           "Position of viewpoint (x,y,z)" },
+      { PARAM_FLOAT,    "viewpoint_y",           "Position of viewpoint (x,y,z)" },
+      { PARAM_FLOAT,    "viewpoint_z",           "Position of viewpoint (x,y,z)" },
+      { PARAM_FLOAT,    "position_x",            "Object position (x,y,z)" },
+      { PARAM_FLOAT,    "position_y",            "Object position (x,y,z)" },
+      { PARAM_FLOAT,    "position_z",            "Object position (x,y,z)" },
+      { PARAM_FLOAT,    "firstaxis_x",           "First axis of object [x,y,z]" },
+      { PARAM_FLOAT,    "firstaxis_y",           "First axis of object [x,y,z]" },
+      { PARAM_FLOAT,    "firstaxis_z",           "First axis of object [x,y,z]" },
+      { PARAM_FLOAT,    "secondaxis_x",          "Second axis of object [x,y,z]" },
+      { PARAM_FLOAT,    "secondaxis_y",          "Second axis of object [x,y,z]" },
+      { PARAM_FLOAT,    "secondaxis_z",          "Second axis of object [x,y,z]" },
+      { PARAM_FLOAT,    "rotationangle_x",       "Rotation about X axis in degrees" },
+      { PARAM_FLOAT,    "rotationangle_y",       "Rotation about Y axis in degrees" },
+      { PARAM_FLOAT,    "rotationangle_z",       "Rotation about Z axis in degrees" },
+      { PARAM_INT32,    "lighttype",             "Type of lightsource (0=point,1=directional,3=none)" },
+      { PARAM_COLOR,    "lightcolor",            "Lightsource color (r,g,b)" },
+      { PARAM_FLOAT,    "lightposition_x",       "Lightsource position (x,y,z)" },
+      { PARAM_FLOAT,    "lightposition_y",       "Lightsource position (x,y,z)" },
+      { PARAM_FLOAT,    "lightposition_z",       "Lightsource position (x,y,z)" },
+      { PARAM_FLOAT,    "lightdirection_x",      "Lightsource direction [x,y,z]" },
+      { PARAM_FLOAT,    "lightdirection_y",      "Lightsource direction [x,y,z]" },
+      { PARAM_FLOAT,    "lightdirection_z",      "Lightsource direction [x,y,z]" },
+      { PARAM_FLOAT,    "ambient_intensity",     "Material ambient intensity (0..1)" },
+      { PARAM_FLOAT,    "diffuse_intensity",     "Material diffuse intensity (0..1)" },
+      { PARAM_FLOAT,    "diffuse_reflectivity",  "Material diffuse reflectivity (0..1)" },
+      { PARAM_FLOAT,    "specular_reflectivity", "Material specular reflectivity (0..1)" },
+      { PARAM_FLOAT,    "highlight",             "Material highlight (0..->), note: it's expotential" },
+      { PARAM_INT32,    "antialiasing",          "Apply antialiasing (TRUE/FALSE)" },
+      { PARAM_INT32,    "tiled",                 "Tile source image (TRUE/FALSE)" },
+      { PARAM_INT32,    "newimage",              "Create a new image (TRUE/FALSE)" },
+      { PARAM_INT32,    "transparentbackground", "Make background transparent (TRUE/FALSE)" },
+      { PARAM_FLOAT,    "radius",                "Sphere radius (only used when maptype=1)" },
+      { PARAM_FLOAT,    "x_scale",               "Box x size (0..->)" },
+      { PARAM_FLOAT,    "y_scale",               "Box y size (0..->)" },
+      { PARAM_FLOAT,    "z_scale",               "Box z size (0..->)"},
+      { PARAM_DRAWABLE, "front_drawable",        "Box front face (set these to -1 if not used)" },
+      { PARAM_DRAWABLE, "back_drawable",         "Box back face" },
+      { PARAM_DRAWABLE, "top_drawable",          "Box top face" },
+      { PARAM_DRAWABLE, "bottom_drawable",       "Box bottom face" },
+      { PARAM_DRAWABLE, "left_drawable",         "Box left face" },
+      { PARAM_DRAWABLE, "right_drawable",        "Box right face" }
+      
     };
 
   static GParamDef *return_vals = NULL;
@@ -129,12 +163,12 @@ static void query(void)
   static gint nreturn_vals = 0;
 
   gimp_install_procedure ("plug_in_map_object",
-			  "Maps a picture to a object (plane, sphere)",
+			  "Maps a picture to a object (plane, sphere or box)",
 			  "No help yet",
 			  "Tom Bech & Federico Mena Quintero",
 			  "Tom Bech & Federico Mena Quintero",
-			  "Version 1.00, March 15 1998",
-			  "<Image>/Filters/Map/Map Object",
+			  "Version 1.10, July 17 1998",
+			  "<Image>/Filters/Distorts/Map Object",
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
@@ -151,6 +185,7 @@ static void run(gchar   *name,
   GDrawable *drawable;
   GRunModeType run_mode;
   GStatusType status = STATUS_SUCCESS;
+  gint i;
 
   run_mode = param[0].data.d_int32;
 
@@ -178,16 +213,18 @@ static void run(gchar   *name,
         /* ====================== */
     
         gimp_get_data ("plug_in_map_object", &mapvals);
+        check_drawables(drawable);
         mapobject_interactive(drawable);
         gimp_set_data("plug_in_map_object", &mapvals, sizeof(MapObjectValues));
         break;
       case RUN_WITH_LAST_VALS:
         gimp_get_data ("plug_in_map_object", &mapvals);
+        check_drawables(drawable);
         image_setup(drawable,FALSE);
         compute_image();
         break;
       case RUN_NONINTERACTIVE:
-        if (nparams != 37)
+        if (nparams != 46)
           status = STATUS_CALLING_ERROR;
         else if (status == STATUS_SUCCESS)
           {
@@ -227,20 +264,26 @@ static void run(gchar   *name,
             mapvals.create_new_image        = (gint)param[34].data.d_int32;
             mapvals.transparent_background  = (gint)param[35].data.d_int32;
             mapvals.radius                  = param[36].data.d_float;
+            mapvals.scale.x                 = param[37].data.d_float;
+            mapvals.scale.y                 = param[38].data.d_float;
+            mapvals.scale.z                 = param[39].data.d_float;
+            
+            for (i=0;i<6;i++)
+              mapvals.boxmap_id[i] = gimp_drawable_get(param[40+i].data.d_drawable)->id;
 
+            check_drawables(drawable);
             image_setup(drawable, FALSE);
             compute_image();
           }
         break;
     }
 
-  if (run_mode != RUN_NONINTERACTIVE)
-     gimp_displays_flush();
-
-
   values[0].data.d_status = status;
+  
+  if (run_mode != RUN_NONINTERACTIVE)
+    gimp_displays_flush();
+  
   gimp_drawable_detach(drawable);
-  	
 }
 
 GPlugInInfo PLUG_IN_INFO =
@@ -263,7 +306,6 @@ void mapobject_interactive(GDrawable *drawable)
   gdk_set_use_xshm(gimp_use_xshm());
 
   gtk_init (&argc, &argv);
-  gtk_rc_parse (gimp_gtkrc ());
 
   /* Set up ArcBall stuff */
   /* ==================== */

@@ -3,11 +3,11 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <math.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>
 #include <gck/gck.h>
 #include <libgimp/gimp.h>
+#include <libgimp/gimpui.h>
 
 #include "arcball.h"
 #include "mapobject_main.h"

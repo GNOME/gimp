@@ -13,4 +13,5 @@ Changes (post 0.31):
            annoying bugs. Better support for partial transparency (only filtered
            transparency now, perhaps additive later). Compiles without warnings with
            -Wall and -ansi.
-
+-> 1.10    Added box object and changed PDB interface accordingly; this will unfortunately
+           break old scripts. The transparency code should be a little saner now.

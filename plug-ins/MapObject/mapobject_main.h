@@ -31,7 +31,8 @@ typedef enum {
 
 typedef enum {
   MAP_PLANE,
-  MAP_SPHERE
+  MAP_SPHERE,
+  MAP_BOX
 } MapType;
 
 /* Typedefs */
@@ -57,7 +58,7 @@ typedef struct
 } LightSettings;
 
 typedef struct {
-  GckVector3    viewpoint,firstaxis,secondaxis,normal,position;
+  GckVector3    viewpoint,firstaxis,secondaxis,normal,position,scale;
   LightSettings lightsource;
 
   MaterialSettings material;
@@ -79,6 +80,8 @@ typedef struct {
   gdouble pixeltreshold;
   gdouble radius;
 
+  gint32 boxmap_id[6];
+  
 } MapObjectValues;
 
 /* Externally visible variables */
