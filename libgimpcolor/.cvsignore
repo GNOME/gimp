@@ -1,6 +1,7 @@
 Makefile
 Makefile.in
 makefile.mingw
+test-color-parser
 *.lo
 _libs
 .libs

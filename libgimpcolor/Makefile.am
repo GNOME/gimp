@@ -97,6 +97,26 @@ libgimpcolor_2_0_la_DEPENDENCIES = $(gimpcolor_def) $(libgimpbase)
 
 libgimpcolor_2_0_la_LIBADD = $(GLIB_LIBS) $(libm)
 
+
+#
+# test programs, not to be built by default and never installed
+#
+
+TESTS = test-color-parser$(EXEEXT)
+
+EXTRA_PROGRAMS = test-color-parser
+
+test_color_parser_DEPENDENCIES = \
+	$(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+
+test_color_parser_LDADD = \
+	$(GLIB_LIBS) 		\
+	$(test_color_parser_DEPENDENCIES)
+
+
+CLEANFILES = $(EXTRA_PROGRAMS)
+
+
 install-data-local: install-ms-lib install-libtool-import-lib
 
 uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib

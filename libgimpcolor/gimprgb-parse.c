@@ -524,7 +524,7 @@ else if (css[3] == '(')
       while (*end && *end != ',' && *end != '%' && *end != ')')
         end++;
 
-      if (*end == '%')
+      if (i == 3 || *end == '%')
         {
           values[i] = g_ascii_strtod (css, (gchar **) &end);
 

@@ -3,11 +3,15 @@
  * as given in section A.5 of RFC 1321, reproduced below.
  */
 
-#include <glib.h>
+#include "config.h"
 
+#include <stdlib.h>
 #include <string.h>
 
+#include <glib.h>
+
 #include "gimpmd5.h"
+
 
 static const gchar * test[7][2] =
 {
@@ -41,6 +45,7 @@ main (void)
 
           g_snprintf (buf, 3, "%02x", digest[j]);
           g_print (buf);
+
           if (strncmp (buf, test[i][1] + j*2, 2))
             correct = FALSE;
         }
@@ -48,13 +53,14 @@ main (void)
 
       if (!correct)
         {
-          g_print
-            ("\nWRONG digest!! Please report to http://bugzilla.gnome.org/\n");
-          return 1;
+          g_print ("\nWRONG digest!! "
+                   "Please report to http://bugzilla.gnome.org/\n");
+          return EXIT_FAILURE;
         }
     }
 
   g_print ("\nLooks good.\n\n");
-  return 0;
+
+  return EXIT_SUCCESS;
 }
 

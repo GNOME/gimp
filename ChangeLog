@@ -1,5 +1,15 @@
 2004-07-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/Makefile.am
+	* libgimpcolor/test-color-parser.c: added a simple unit test
+	framework for the color parser.
+
+	* libgimpcolor/gimprgb-parse.c: fixed parsing of rgba() values.
+
+	* libgimpmath/test-md5.c: minor cleanup.
+
+2004-07-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimpcolor/gimprgb-parse.c (gimp_rgba_parse_css): added support 
 	for the "transparent" color name.
 
