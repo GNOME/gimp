@@ -398,8 +398,6 @@ gimp_container_tree_view_drag_data_received (GtkWidget             *widget,
                                              svg_data, svg_data_length,
                                              dest_viewable, drop_pos);
 
-                  g_free (svg_data);
-
                   success = TRUE;
                 }
             }
