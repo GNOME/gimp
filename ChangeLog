@@ -1,3 +1,8 @@
+2002-12-01  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpdatafiles.c: s/S_ISLINK/S_ISNLK/ (was never
+	compiled before Hans fixed the #ifdef).
+
 2002-11-30  Hans Breuer  <hans@breuer.org>
 
 	* */makefile.msc */*/makefile.msc : updated
