@@ -21,16 +21,11 @@
 
 #include "config.h"
 
-#include <string.h>
-
-#ifdef __GNUC__
-#warning GTK_DISABLE_DEPRECATED
-#endif
-#undef GTK_DISABLE_DEPRECATED
-
 #include <gtk/gtk.h>
 
 #include "gimp.h"
+
+#include "gimppixbuf.h"
 
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpmenu.h"
@@ -422,98 +417,23 @@ gimp_menu_make_preview (gint32     any_ID,
                         gint       width,
                         gint       height)
 {
-  GtkWidget *preview;
-  guchar    *preview_data;
-  gint       bpp;
-  gint       x, y;
-  guchar    *src;
-  gdouble    r, g, b, a;
-  gdouble    c0, c1;
-  guchar    *p0, *p1, *even, *odd;
-
-  bpp = 0; /* Only returned */
-
-  preview = gtk_preview_new (GTK_PREVIEW_COLOR);
-  gtk_preview_set_dither (GTK_PREVIEW (preview), GDK_RGB_DITHER_MAX);
-  gtk_widget_set_size_request (GTK_WIDGET (preview), width, height);
+  GtkWidget *image;
+  GdkPixbuf *pixbuf;
 
   if (is_image)
-    preview_data = gimp_image_get_thumbnail_data (any_ID,
-                                                  &width, &height, &bpp);
+    pixbuf = gimp_image_get_thumbnail (any_ID,
+                                       width, height,
+                                       GIMP_PIXBUF_SMALL_CHECKS);
   else
-    preview_data = gimp_drawable_get_thumbnail_data (any_ID,
-                                                     &width, &height, &bpp);
+    pixbuf = gimp_drawable_get_thumbnail (any_ID,
+                                          width, height,
+                                          GIMP_PIXBUF_SMALL_CHECKS);
 
-  gtk_preview_size (GTK_PREVIEW (preview), width, height);
+  image = gtk_image_new_from_pixbuf (pixbuf);
 
-  even = g_malloc (width * 3);
-  odd  = g_malloc (width * 3);
-  src  = preview_data;
+  g_object_unref (pixbuf);
 
-  for (y = 0; y < height; y++)
-    {
-      p0 = even;
-      p1 = odd;
-
-      for (x = 0; x < width; x++)
-	{
-	  if (bpp == 4)
-	    {
-	      r = ((gdouble) src[x*4+0]) / 255.0;
-	      g = ((gdouble) src[x*4+1]) / 255.0;
-	      b = ((gdouble) src[x*4+2]) / 255.0;
-	      a = ((gdouble) src[x*4+3]) / 255.0;
-	    }
-	  else if (bpp == 3)
-	    {
-	      r = ((gdouble) src[x*3+0]) / 255.0;
-	      g = ((gdouble) src[x*3+1]) / 255.0;
-	      b = ((gdouble) src[x*3+2]) / 255.0;
-	      a = 1.0;
-	    }
-	  else
-	    {
-	      r = g = b = ((gdouble) src[x*bpp+0]) / 255.0;
-
-	      if (bpp == 2)
-		a = ((gdouble) src[x*bpp+1]) / 255.0;
-	      else
-		a = 1.0;
-	    }
-
-	  if ((x / GIMP_CHECK_SIZE_SM) & 1)
-	    {
-	      c0 = GIMP_CHECK_LIGHT;
-	      c1 = GIMP_CHECK_DARK;
-	    }
-	  else
-	    {
-	      c0 = GIMP_CHECK_DARK;
-	      c1 = GIMP_CHECK_LIGHT;
-	    }
-
-	  *p0++ = (c0 + (r - c0) * a) * 255.0;
-	  *p0++ = (c0 + (g - c0) * a) * 255.0;
-	  *p0++ = (c0 + (b - c0) * a) * 255.0;
-
-	  *p1++ = (c1 + (r - c1) * a) * 255.0;
-	  *p1++ = (c1 + (g - c1) * a) * 255.0;
-	  *p1++ = (c1 + (b - c1) * a) * 255.0;
-	}
-
-      if ((y / GIMP_CHECK_SIZE_SM) & 1)
-	gtk_preview_draw_row (GTK_PREVIEW (preview), odd,  0, y, width);
-      else
-	gtk_preview_draw_row (GTK_PREVIEW (preview), even, 0, y, width);
-
-      src += width * bpp;
-    }
-
-  g_free (preview_data);
-  g_free (even);
-  g_free (odd);
-
-  return preview;
+  return image;
 }
 
 static void
