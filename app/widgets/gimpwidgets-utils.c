@@ -265,7 +265,7 @@ gimp_enum_radio_frame_add (GtkFrame  *frame,
   gtk_box_pack_start (GTK_BOX (hbox), spacer, FALSE, FALSE, 0);
   gtk_widget_show (spacer);
 
-  gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), widget, TRUE, TRUE, 0);
   gtk_widget_show (widget);
 
   for (list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (radio));
