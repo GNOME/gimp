@@ -1,0 +1,44 @@
+<!-- ##### SECTION Title ##### -->
+gimpconfig-serialize
+
+<!-- ##### SECTION Short_Description ##### -->
+Serializing for libgimpconfig.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Serializing interface for libgimpconfig.
+
+</para>
+
+
+<!-- ##### FUNCTION gimp_config_serialize_properties ##### -->
+<para>
+
+</para>
+
+@config:
+@writer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_config_serialize_changed_properties ##### -->
+<para>
+
+</para>
+
+@config:
+@writer: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_config_serialize_value ##### -->
+<para>
+
+</para>
+
+@value:
+@str:
+@escaped: 
+@Returns: 
+
+

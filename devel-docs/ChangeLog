@@ -1,5 +1,18 @@
 2005-01-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* libgimpconfig/tmpl/gimpconfig-error.sgml: removed, no need
+	for this.
+
+	* libgimpconfig/tmpl/gimpconfig-deserialize.sgml:
+	* libgimpconfig/tmpl/gimpconfig-iface.sgml:
+	* libgimpconfig/tmpl/gimpconfig-serialize.sgml:
+	* libgimpconfig/tmpl/gimpconfig-utils.sgml:
+	* libgimpconfig/tmpl/gimpconfigwriter.sgml: gtkdoc templates
+	for libgimpconfig.
+	
+
+2005-01-24  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* libgimpconfig/Makefile.am
 	* libgimpconfig/libgimpconfig-docs.sgml
 	* libgimpconfig/libgimpconfig-overrides.txt
