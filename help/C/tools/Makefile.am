@@ -31,7 +31,6 @@ helpdata_DATA = \
         measure.html			\
         move.html			\
         paintbrush.html			\
-        path.html			\
         pencil.html			\
         posterize.html			\
         rect_select.html		\

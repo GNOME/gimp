@@ -1,5 +1,10 @@
 2000-12-24  Michael Natterer  <mitch@gimp.org>
 
+	* C/tools/Makefile.am
+	* C/tools/path.html: removed obsolete html file.
+
+2000-12-24  Michael Natterer  <mitch@gimp.org>
+
 	* Pre 1.2 Version 5 with some fixes for the path documentation
 	from Andy Thomas.
 
