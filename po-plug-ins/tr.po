@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "POT-Creation-Date: 2001-03-15 16:09+0100\n"
-"PO-Revision-Date: 2001-03-15 16:10+0100\n"
+"PO-Revision-Date: 2001-03-15 16:23+0100\n"
 "Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -336,7 +336,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1229
 #: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3548
 msgid "Load"
-msgstr ""
+msgstr "Yükle"
 
 #: plug-ins/FractalExplorer/Dialogs.c:526
 msgid "Load a fractal from file"
@@ -449,7 +449,7 @@ msgstr ""
 #: plug-ins/common/noisify.c:588 plug-ins/common/noisify.c:624
 #: plug-ins/fp/fp_gtk.c:20
 msgid "Red:"
-msgstr ""
+msgstr "Kýrmýzý:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:676
 msgid "Change the intensity of the red channel"
@@ -462,7 +462,7 @@ msgstr ""
 #: plug-ins/common/noisify.c:599 plug-ins/common/noisify.c:635
 #: plug-ins/fp/fp_gtk.c:21
 msgid "Green:"
-msgstr ""
+msgstr "Yeþil:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:686
 msgid "Change the intensity of the green channel"
@@ -475,7 +475,7 @@ msgstr ""
 #: plug-ins/common/noisify.c:610 plug-ins/common/noisify.c:646
 #: plug-ins/fp/fp_gtk.c:22
 msgid "Blue:"
-msgstr ""
+msgstr "Mavi:"
 
 #: plug-ins/FractalExplorer/Dialogs.c:696
 msgid "Change the intensity of the blue channel"
@@ -491,7 +491,7 @@ msgstr ""
 #: plug-ins/common/convmatrix.c:86 plug-ins/common/decompose.c:116
 #: plug-ins/common/newsprint.c:396
 msgid "Red"
-msgstr ""
+msgstr "Kýrmýzý"
 
 #: plug-ins/FractalExplorer/Dialogs.c:717
 #: plug-ins/FractalExplorer/Dialogs.c:758
@@ -559,14 +559,14 @@ msgstr ""
 #: plug-ins/common/convmatrix.c:87 plug-ins/common/decompose.c:117
 #: plug-ins/common/newsprint.c:404
 msgid "Green"
-msgstr ""
+msgstr "Yeþil"
 
 #. Bluemode radio frame
 #: plug-ins/FractalExplorer/Dialogs.c:795 plug-ins/common/AlienMap.c:1512
 #: plug-ins/common/convmatrix.c:88 plug-ins/common/decompose.c:118
 #: plug-ins/common/newsprint.c:412
 msgid "Blue"
-msgstr ""
+msgstr "Mavi"
 
 #. Colormode toggle box
 #: plug-ins/FractalExplorer/Dialogs.c:836
@@ -1376,7 +1376,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
 #: plug-ins/twain/twain.c:722 plug-ins/winsnap/winsnap.c:1235
 msgid "Background"
-msgstr ""
+msgstr "Arkaplan"
 
 #: plug-ins/bmp/bmpwrite.c:104
 msgid "BMP: cannot operate on unknown image types or alpha images"
@@ -1411,7 +1411,7 @@ msgstr ""
 #. parameter settings
 #: plug-ins/bmp/bmpwrite.c:576
 msgid "Save Options"
-msgstr ""
+msgstr "Kaydetme seçenekleri"
 
 #: plug-ins/bmp/bmpwrite.c:584
 msgid "RLE encoded"
@@ -1829,7 +1829,7 @@ msgstr ""
 #: plug-ins/gimpressionist/orientation.c:131
 #: plug-ins/gimpressionist/size.c:130
 msgid "Value"
-msgstr ""
+msgstr "Deðer"
 
 #: plug-ins/common/CML_explorer.c:473
 msgid "<Image>/Filters/Render/Pattern/CML Explorer..."
@@ -2341,13 +2341,13 @@ msgstr ""
 #: plug-ins/common/ripple.c:638 plug-ins/common/tileit.c:451
 #: plug-ins/pagecurl/pagecurl.c:647
 msgid "Horizontal"
-msgstr ""
+msgstr "Ufki"
 
 #: plug-ins/common/blinds.c:374 plug-ins/common/grid.c:771
 #: plug-ins/common/ripple.c:639 plug-ins/common/tileit.c:459
 #: plug-ins/pagecurl/pagecurl.c:648
 msgid "Vertical"
-msgstr ""
+msgstr "Dikey"
 
 #: plug-ins/common/blinds.c:387 plug-ins/common/fractaltrace.c:772
 #: plug-ins/common/papertile.c:380 plug-ins/gfig/gfig.c:2831
@@ -2383,7 +2383,7 @@ msgstr ""
 
 #: plug-ins/common/blur.c:667 plug-ins/common/randomize.c:756
 msgid "Repeat:"
-msgstr ""
+msgstr "Tekrarlama:"
 
 #: plug-ins/common/blur.c:670 plug-ins/common/randomize.c:759
 msgid "Number of times to apply filter"
@@ -2542,7 +2542,7 @@ msgstr ""
 #: plug-ins/gimpressionist/color.c:56 plug-ins/imagemap/imap_menu.c:325
 #: plug-ins/print/gimp_main_window.c:758
 msgid "Color"
-msgstr ""
+msgstr "Renk"
 
 #: plug-ins/common/colorify.c:351
 msgid "Custom Color:"
@@ -2727,7 +2727,7 @@ msgstr ""
 
 #: plug-ins/common/convmatrix.c:96
 msgid "Crop"
-msgstr ""
+msgstr "Kes"
 
 #: plug-ins/common/convmatrix.c:195
 msgid "<Image>/Filters/Generic/Convolution Matrix..."
@@ -3004,7 +3004,7 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:130 plug-ins/common/newsprint.c:441
 msgid "Yellow"
-msgstr ""
+msgstr "Sarý"
 
 #: plug-ins/common/decompose.c:131 plug-ins/common/decompose.c:135
 msgid "cyan_k"
@@ -3604,12 +3604,12 @@ msgstr ""
 #: plug-ins/common/gauss_iir.c:476 plug-ins/common/gauss_rle.c:471
 #: plug-ins/common/jigsaw.c:2545 plug-ins/common/spread.c:410
 msgid "Horizontal:"
-msgstr ""
+msgstr "Ufki:"
 
 #: plug-ins/common/gauss_iir.c:480 plug-ins/common/gauss_rle.c:475
 #: plug-ins/common/jigsaw.c:2558 plug-ins/common/spread.c:414
 msgid "Vertical:"
-msgstr ""
+msgstr "Dikey:"
 
 #: plug-ins/common/gauss_rle.c:179
 msgid "<Image>/Filters/Blur/Gaussian Blur (RLE)..."
@@ -3632,7 +3632,7 @@ msgstr ""
 #: plug-ins/common/gbr.c:355 plug-ins/common/gih.c:488
 #: plug-ins/common/gih.c:1122
 msgid "Unnamed"
-msgstr ""
+msgstr "Isimsiz"
 
 #: plug-ins/common/gbr.c:485
 msgid "GIMP brushes are either GRAYSCALE or RGBA\n"
@@ -3649,7 +3649,7 @@ msgstr ""
 
 #: plug-ins/common/gbr.c:590
 msgid "Spacing:"
-msgstr ""
+msgstr "Boþluk:"
 
 #: plug-ins/common/gbr.c:599 plug-ins/common/gih.c:892
 #: plug-ins/common/pat.c:478 plug-ins/gimpressionist/presets.c:373
@@ -3815,7 +3815,7 @@ msgstr ""
 
 #: plug-ins/common/gih.c:941
 msgid "Pixels"
-msgstr ""
+msgstr "Piksel"
 
 #: plug-ins/common/gih.c:946 plug-ins/common/newsprint.c:1274
 msgid "Cell Size:"
@@ -4214,7 +4214,7 @@ msgstr ""
 
 #: plug-ins/common/iwarp.c:1097 plug-ins/gflare/gflare.c:3012
 msgid "Max Depth:"
-msgstr ""
+msgstr "Azami Derinlik:"
 
 #. parameter settings
 #: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1384
@@ -4622,7 +4622,7 @@ msgstr ""
 #: plug-ins/common/warp.c:676 plug-ins/gimpressionist/orientmap.c:551
 #: plug-ins/ifscompose/ifscompose.c:577
 msgid "Angle:"
-msgstr ""
+msgstr "Açý:"
 
 #: plug-ins/common/mpeg.c:232
 msgid "Loading MPEG movie..."
@@ -4685,7 +4685,7 @@ msgstr ""
 #: plug-ins/common/newsprint.c:1287 plug-ins/gap/gap_mov_dialog.c:265
 #: plug-ins/gflare/gflare.c:597
 msgid "Screen"
-msgstr ""
+msgstr "Ekran"
 
 #: plug-ins/common/newsprint.c:1310
 msgid "Black Pullout (%):"
@@ -4925,7 +4925,7 @@ msgstr ""
 
 #: plug-ins/common/plugindetails.c:46
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "GIMP Eklemi"
 
 #: plug-ins/common/plugindetails.c:47
 msgid "GIMP Extension"
@@ -5255,7 +5255,7 @@ msgstr ""
 #. * Gray *
 #: plug-ins/common/ps.c:2704 plug-ins/rcm/rcm_dialog.c:398
 msgid "Gray"
-msgstr ""
+msgstr "Gri"
 
 #: plug-ins/common/ps.c:2716
 msgid "Text Antialiasing"
@@ -5328,7 +5328,7 @@ msgstr ""
 
 #: plug-ins/common/ps.c:2956
 msgid "Preview Size:"
-msgstr ""
+msgstr "Önizleme Boyutu:"
 
 #: plug-ins/common/psd.c:1604
 msgid "Unnamed channel"
@@ -7023,7 +7023,7 @@ msgstr ""
 #: plug-ins/dbbrowser/dbbrowser_utils.c:517
 #: plug-ins/gap/gap_dbbrowser_utils.c:496 plug-ins/imagemap/imap_settings.c:89
 msgid "Author:"
-msgstr ""
+msgstr "Yazar:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:532
 #: plug-ins/gap/gap_dbbrowser_utils.c:511
@@ -7033,7 +7033,7 @@ msgstr "Tarih:"
 #: plug-ins/dbbrowser/dbbrowser_utils.c:547
 #: plug-ins/gap/gap_dbbrowser_utils.c:526
 msgid "Copyright:"
-msgstr ""
+msgstr "Telif hakký:"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:642
 msgid "DB Browser (by name - please wait)"
@@ -7118,7 +7118,7 @@ msgstr ""
 
 #: plug-ins/flame/flame.c:690
 msgid "Speed:"
-msgstr ""
+msgstr "Hýz:"
 
 #: plug-ins/flame/flame.c:706
 msgid "Randomize"
@@ -7371,7 +7371,7 @@ msgstr ""
 #: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
 #: plug-ins/imagemap/imap_cmd_select.c:49
 msgid "Select"
-msgstr ""
+msgstr "Seç"
 
 #: plug-ins/gap/gap_dbbrowser_utils.c:65
 msgid "GAP Animated Filter apply"
@@ -8217,7 +8217,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:267
 msgid "Difference"
-msgstr ""
+msgstr "Fark"
 
 #: plug-ins/gap/gap_mov_dialog.c:268 plug-ins/gflare/gflare.c:595
 msgid "Addition"
@@ -8611,7 +8611,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:2025
 msgid "Add Point"
-msgstr ""
+msgstr "Nokta Ekle"
 
 #: plug-ins/gap/gap_mov_dialog.c:2033
 msgid ""
@@ -8646,7 +8646,7 @@ msgstr ""
 #: plug-ins/imagemap/imap_cmd_delete_point.c:57
 #: plug-ins/imagemap/imap_polygon.c:669
 msgid "Delete Point"
-msgstr ""
+msgstr "Nokta sil"
 
 #: plug-ins/gap/gap_mov_dialog.c:2075
 msgid "Delete current Controlpoint"
@@ -9167,7 +9167,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_range_ops.c:120
 msgid "New Width:"
-msgstr ""
+msgstr "Yeni Geniþlik:"
 
 #: plug-ins/gap/gap_range_ops.c:129
 msgid "New Height:"
@@ -9584,7 +9584,7 @@ msgstr ""
 
 #: plug-ins/gap/resize.c:111
 msgid "Resize"
-msgstr ""
+msgstr "Yeniden boyutlandýr"
 
 #: plug-ins/gap/resize.c:127
 msgid "New width:"
@@ -9634,11 +9634,11 @@ msgstr ""
 #: plug-ins/imagemap/imap_rectangle.c:391
 #: plug-ins/imagemap/imap_rectangle.c:397
 msgid "pixels"
-msgstr ""
+msgstr "piksel"
 
 #: plug-ins/gdyntext/font_selection.c:167
 msgid "points"
-msgstr ""
+msgstr "punto"
 
 #: plug-ins/gdyntext/gdyntext.c:94
 msgid "<Image>/Filters/Render/Dynamic Text..."
@@ -9977,7 +9977,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2356
 msgid "Pencil"
-msgstr ""
+msgstr "Kalem"
 
 #: plug-ins/gfig/gfig.c:2357 plug-ins/gfig/gfig.c:3183
 msgid "Pattern"
@@ -10035,7 +10035,7 @@ msgstr ""
 
 #: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3184
 msgid "Foreground"
-msgstr ""
+msgstr "Önalan"
 
 #: plug-ins/gfig/gfig.c:2839
 msgid ""
@@ -10358,7 +10358,7 @@ msgstr ""
 #: plug-ins/gfig/gfig.c:5225
 #, c-format
 msgid "%s copy"
-msgstr ""
+msgstr "kopya %s"
 
 #: plug-ins/gfig/gfig.c:5270
 msgid "Save as..."
@@ -10479,7 +10479,7 @@ msgstr ""
 
 #: plug-ins/gflare/gflare.c:3246
 msgid "untitled"
-msgstr ""
+msgstr "isimsiz"
 
 #: plug-ins/gflare/gflare.c:3264
 #, c-format
@@ -11502,7 +11502,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:164 plug-ins/imagemap/imap_grid.c:198
 msgid "Width"
-msgstr ""
+msgstr "Geniþlik"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:169
 msgid "Left Start at"
@@ -11510,7 +11510,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_cmd_guides.c:174 plug-ins/imagemap/imap_grid.c:204
 msgid "Height"
-msgstr ""
+msgstr "Yükseklik"
 
 #: plug-ins/imagemap/imap_cmd_guides.c:179
 msgid "Top Start at"
@@ -12025,11 +12025,11 @@ msgstr "Tercihler"
 
 #: plug-ins/imagemap/imap_toolbar.c:142
 msgid "Zoom in"
-msgstr ""
+msgstr "Yakýnlaþ"
 
 #: plug-ins/imagemap/imap_toolbar.c:145
 msgid "Zoom out"
-msgstr ""
+msgstr "Uzaklaþ"
 
 #: plug-ins/imagemap/imap_toolbar.c:150
 msgid "Edit Map Info"

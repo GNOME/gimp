@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
 "POT-Creation-Date: 2001-03-15 16:13+0100\n"
-"PO-Revision-Date: 2001-03-15 16:14+0100\n"
+"PO-Revision-Date: 2001-03-15 16:25+0100\n"
 "Last-Translator: Fatih Demir <kabalak@gtranslator.org>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -35,7 +35,7 @@ msgstr ""
 #. The current command
 #: plug-ins/script-fu/script-fu-console.c:286
 msgid "Current Command"
-msgstr ""
+msgstr "Geçerli Komuta"
 
 #: plug-ins/script-fu/script-fu-console.c:307
 msgid "Browse..."
@@ -101,7 +101,7 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-scripts.c:1493
 msgid "About"
-msgstr ""
+msgstr "Bilgi"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1507
 #: plug-ins/script-fu/script-fu-server.c:544
@@ -125,11 +125,11 @@ msgstr ""
 
 #: plug-ins/script-fu/script-fu-scripts.c:2004
 msgid "Author:"
-msgstr ""
+msgstr "Yazar:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2010
 msgid "Copyright:"
-msgstr ""
+msgstr "Telif hakký:"
 
 #: plug-ins/script-fu/script-fu-scripts.c:2016
 msgid "Date:"
@@ -1040,7 +1040,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
 #: plug-ins/script-fu/scripts/perspective-shadow.scm:0
 msgid "Color"
-msgstr ""
+msgstr "Renk"
 
 #: plug-ins/script-fu/scripts/erase-rows.scm:0
 msgid "Columns"
@@ -1481,7 +1481,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Height"
-msgstr ""
+msgstr "Yükseklik"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm:0
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm:0
@@ -2275,7 +2275,7 @@ msgstr ""
 #: plug-ins/script-fu/scripts/mkbrush.scm:0
 #: plug-ins/script-fu/scripts/swirltile.scm:0
 msgid "Width"
-msgstr ""
+msgstr "Geniþlik"
 
 #: plug-ins/script-fu/scripts/add-bevel.scm:0
 #: plug-ins/script-fu/scripts/fuzzyborder.scm:0
