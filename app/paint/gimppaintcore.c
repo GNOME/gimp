@@ -887,19 +887,18 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   for (n = 0; n < num_points; n++)
     {
       GimpBrush *current_brush;
-      gdouble    pressure;
-      gdouble    t = t0 + n*dt;
+
+      gdouble    t = t0 + n * dt;
+      gdouble    p = (gdouble) n / num_points;
 
       core->cur_coords.x        = core->last_coords.x        + t * delta_vec.x;
       core->cur_coords.y        = core->last_coords.y        + t * delta_vec.y;
 
-      /*  avoid negative pressure, see bug #123811  */
-      pressure = core->last_coords.pressure + t * delta_pressure;
-      core->cur_coords.pressure = MAX (pressure, 0.0);
 
-      core->cur_coords.xtilt    = core->last_coords.xtilt    + t * delta_xtilt;
-      core->cur_coords.ytilt    = core->last_coords.ytilt    + t * delta_ytilt;
-      core->cur_coords.wheel    = core->last_coords.wheel    + t * delta_wheel;
+      core->cur_coords.pressure = core->last_coords.pressure + p * delta_pressure;
+      core->cur_coords.xtilt    = core->last_coords.xtilt    + p * delta_xtilt;
+      core->cur_coords.ytilt    = core->last_coords.ytilt    + p * delta_ytilt;
+      core->cur_coords.wheel    = core->last_coords.wheel    + p * delta_wheel;
 
       core->distance            = initial                    + t * dist;
       core->pixel_dist          = pixel_initial              + t * pixel_dist;

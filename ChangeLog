@@ -1,3 +1,8 @@
+2004-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_interpolate): better
+	fix for bug #123811, merged from HEAD branch.
+
 2004-05-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdatafactoryview.c
