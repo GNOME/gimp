@@ -1,3 +1,9 @@
+2003-11-15  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gee.c
+	* plug-ins/common/gee_zoom.c: use gimp_dialog_new() and connect to
+	"response".
+
 2003-11-15  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/screenshot.c: added an optional time out before

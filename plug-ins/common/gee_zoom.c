@@ -57,20 +57,18 @@ static void run   (const gchar      *name,
 		   gint             *nreturn_vals,
 		   GimpParam       **return_vals);
 
-static void       do_fun                 (void);
+static void       do_fun                   (void);
 
-static gboolean   window_delete_callback (GtkWidget *widget,
-                                          GdkEvent  *event,
-                                          gpointer   data);
-static void       window_close_callback  (GtkWidget *widget,
-                                          gpointer   data);
-static gboolean   iteration_callback     (gpointer   data);
-static void       toggle_feedbacktype    (GtkWidget *widget,
-                                          gpointer   data);
+static void       window_response_callback (GtkWidget *widget,
+                                            gint       response_id,
+                                            gpointer   data);
+static gboolean   iteration_callback       (gpointer   data);
+static void       toggle_feedbacktype      (GtkWidget *widget,
+                                            gpointer   data);
 
-static void       render_frame           (void);
-static void       show_frame             (void);
-static void       init_preview_misc      (void);
+static void       render_frame             (void);
+static void       show_frame               (void);
+static void       init_preview_misc        (void);
 
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -82,9 +80,9 @@ GimpPlugInInfo PLUG_IN_INFO =
 };
 
 
-static const guint  width = 256;
-static const guint height = 256;
-static GRand *gr;
+static const guint  width  = 256;
+static const guint  height = 256;
+static GRand       *gr;
 
 
 #define LUTSIZE 512
@@ -111,7 +109,7 @@ static GimpImageBaseType  imagetype;
 static guchar     *palette;
 static gint        ncolours;
 
-static gint       idle_tag;
+static guint      idle_tag;
 static GtkWidget *eventbox;
 static gboolean   feedbacktype = FALSE;
 static gboolean   wiggly = TRUE;
@@ -199,30 +197,20 @@ build_dialog (void)
 
   gimp_ui_init ("gee_zoom", TRUE);
 
-  dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg),
-			_("GEE-ZOOM: The Plug-In Formerly Known As \"The GIMP E'er Egg\""));
-  gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  dlg = gimp_dialog_new (_("GEE-ZOOM: The Plug-In Formerly Known As "
+                           "\"The GIMP E'er Egg\""),
+                         "gee_zoom",
+                         NULL, 0,
+                         gimp_standard_help_func, "filters/gee_zoom.html",
+                         NULL);
 
-  g_signal_connect (dlg, "delete_event",
-                    G_CALLBACK (window_delete_callback),
+  button = gtk_dialog_add_button (GTK_DIALOG (dlg),
+                                  _("** Thank you for choosing GIMP **"),
+                                  GTK_RESPONSE_OK);
+
+  g_signal_connect (dlg, "response",
+                    G_CALLBACK (window_response_callback),
                     NULL);
-
-  gimp_help_connect (dlg, gimp_standard_help_func,
-                     "filters/gee.html", NULL);
-
-  /* Action area - 'close' button only. */
-
-  button = gtk_button_new_with_label (_("** Thank you for choosing GIMP **"));
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area),
-		      button, TRUE, TRUE, 0);
-  gtk_widget_grab_default (button);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (window_close_callback),
-                            dlg);
 
   gimp_help_set_help_data (button,
                            _("An obsolete creation of Adam D. Moss / "
@@ -234,7 +222,7 @@ build_dialog (void)
   frame = gtk_frame_new (NULL);
 
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 3);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 6);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   hbox = gtk_hbox_new (FALSE, 5);
@@ -332,7 +320,6 @@ do_fun (void)
   show_frame();
 
   gtk_main ();
-  gdk_flush ();
 }
 
 
@@ -843,28 +830,15 @@ do_iteration (void)
 
 /*  Callbacks  */
 
-static gboolean
-window_delete_callback (GtkWidget *widget,
-		        GdkEvent  *event,
-		        gpointer   data)
+static void
+window_response_callback (GtkWidget *widget,
+                          gint       response_id,
+                          gpointer   data)
 {
   g_source_remove (idle_tag);
   idle_tag = 0;
 
-  gdk_flush ();
-  gtk_main_quit ();
-
-  return FALSE;
-}
-
-static void
-window_close_callback (GtkWidget *widget,
-                       gpointer   data)
-{
-  if (data)
-    gtk_widget_destroy (GTK_WIDGET (data));
-
-  window_delete_callback (NULL, NULL, NULL);
+  gtk_widget_destroy (widget);
 }
 
 static void
