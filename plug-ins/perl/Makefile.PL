@@ -264,7 +264,7 @@ setver:
 }
 
 $GIMP_INC_NOUI = "-I../../ $GIMP_INC_NOUI" if $IN_GIMP;
-@DIRS= qw/Gimp Net UI po/;
+@DIRS= qw/Gimp Net UI/;
 
 $build_module = $IN_GIMP || $ENV{GIMP_PERL_MODULE_INC};
 # temporarily disabled because of politics
