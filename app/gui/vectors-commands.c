@@ -28,6 +28,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-mask.h"
@@ -328,19 +329,26 @@ vectors_vectors_tool (GimpVectors *vectors)
 
   if (! GIMP_IS_VECTOR_TOOL (active_tool))
     {
-      GimpToolInfo *tool_info;
+      GimpContainer *tool_info_list;
+      GimpToolInfo  *tool_info;
 
-      tool_info = tool_manager_get_info_by_type (gimage->gimp,
-                                                 GIMP_TYPE_VECTOR_TOOL);
+      tool_info_list = gimage->gimp->tool_info_list;
 
-      gimp_context_set_tool (gimp_get_current_context (gimage->gimp),
-                             tool_info);
+      tool_info = (GimpToolInfo *)
+        gimp_container_get_child_by_name (tool_info_list,
+                                          "gimp-vector-tool");
 
-      active_tool = tool_manager_get_active (gimage->gimp);
+      if (GIMP_IS_TOOL_INFO (tool_info))
+        {
+          gimp_context_set_tool (gimp_get_current_context (gimage->gimp),
+                                 tool_info);
+
+          active_tool = tool_manager_get_active (gimage->gimp);
+        }
     }
 
-  gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool),
-                                vectors);
+  if (GIMP_IS_VECTOR_TOOL (active_tool))
+    gimp_vector_tool_set_vectors (GIMP_VECTOR_TOOL (active_tool), vectors);
 }
 
 /**********************************/

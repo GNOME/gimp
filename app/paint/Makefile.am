@@ -18,8 +18,8 @@ noinst_LIBRARIES = libapppaint.a
 libapppaint_a_sources = \
 	paint-enums.h		\
 	paint-types.h		\
-	paint.c			\
-	paint.h			\
+	gimp-paint.c		\
+	gimp-paint.h		\
 	gimpairbrush.c		\
 	gimpairbrush.h		\
 	gimpairbrushoptions.c	\

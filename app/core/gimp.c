@@ -34,7 +34,7 @@
 #include "pdb/procedural_db.h"
 #include "pdb/internal_procs.h"
 
-#include "paint/paint.h"
+#include "paint/gimp-paint.h"
 
 #include "text/gimp-fonts.h"
 
@@ -425,7 +425,7 @@ gimp_finalize (GObject *object)
   if (gimp->module_db)
     gimp_modules_exit (gimp);
 
-  paint_exit (gimp);
+  gimp_paint_exit (gimp);
 
   if (gimp->parasites)
     {
@@ -735,7 +735,7 @@ gimp_initialize (Gimp               *gimp,
 			   gimp_palette_get_standard);
   gimp_object_set_name (GIMP_OBJECT (gimp->palette_factory), "palette factory");
 
-  paint_init (gimp);
+  gimp_paint_init (gimp);
 
   /* Set the last values used to default values. */
 

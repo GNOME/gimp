@@ -1004,20 +1004,23 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                   space_shaded_tool = active_tool->tool_info;
                   space_press_state = state;
 
-                  g_print ("%s: pushing move tool\n", G_GNUC_FUNCTION);
+                  move_tool_info = (GimpToolInfo *)
+                    gimp_container_get_child_by_name (gimp->tool_info_list,
+                                                      "gimp-move-tool");
 
-                  gdk_keyboard_grab (canvas->window, FALSE, time);
+                  if (GIMP_IS_TOOL_INFO (move_tool_info))
+                    {
+                      g_print ("%s: pushing move tool\n", G_GNUC_FUNCTION);
 
-                  move_tool_info =
-                    tool_manager_get_info_by_type (gimp,
-                                                   GIMP_TYPE_MOVE_TOOL);
+                      gdk_keyboard_grab (canvas->window, FALSE, time);
 
-                  gimp_context_set_tool (gimp_get_user_context (gimp),
-                                         move_tool_info);
+                      gimp_context_set_tool (gimp_get_user_context (gimp),
+                                             move_tool_info);
 
-                  gimp_display_shell_update_tool_modifiers (shell, 0, state);
+                      gimp_display_shell_update_tool_modifiers (shell, 0, state);
 
-                  shell->space_pressed = TRUE;
+                      shell->space_pressed = TRUE;
+                    }
                 }
             }
 

@@ -1,3 +1,34 @@
+2003-09-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/Makefile.am
+	* app/paint/paint.[ch]: removed...
+	* app/paint/gimp-paint.[ch]: ...and added.
+
+	* app/core/gimp.c: changed accordingly.
+
+	* app/tools/Makefile.am
+	* app/tools/tools.[ch]: removed...
+
+	* app/tools/gimp-tools.[ch]: ...and added. Added
+	gimp_tools_restore() and gimp_tools_save() and moved the entire
+	tool registering and tool_options loading/saving code here. Call
+	tool_manager_init() from gimp_tools_init() and tool_manager_exit()
+	from gimp_tools_exit().
+
+	* app/tools/tool_manager.[ch]: removed the code which now lives
+	in gimp-tools.[ch]. The tool manager now has no knowledge about
+	individual tools any more and just handles the active_tool
+	and the tool part of tool <-> display interaction.
+	Removed tool_manager_get_info_by_type().
+
+	* app/tools/gimpvectortool.c (gimp_vector_tool_register): the
+	tool's identifier is "gimp-vector-tool", not "gimp-path-tool".
+
+	* app/app_procs.c
+	* app/display/gimpdisplayshell-callbacks.c
+	* app/gui/vectors-commands.c
+	* app/tools/gimppainttool.c: changed accordingly.
+
 2003-09-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c (create_image): rewritten pixel

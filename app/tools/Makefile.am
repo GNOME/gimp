@@ -5,8 +5,11 @@ noinst_LIBRARIES = libapptools.a
 libapptools_a_sources = \
 	tools-enums.h			\
 	tools-types.h			\
-	tools.c				\
-	tools.h				\
+	gimp-tools.c			\
+	gimp-tools.h			\
+	tool_manager.c			\
+	tool_manager.h			\
+	\
 	gimpairbrushtool.c		\
 	gimpairbrushtool.h		\
 	gimpblendoptions.c		\
@@ -136,9 +139,7 @@ libapptools_a_sources = \
 	gimpvectoroptions.c		\
 	gimpvectoroptions.h		\
 	gimpvectortool.c		\
-	gimpvectortool.h		\
-	tool_manager.c			\
-	tool_manager.h
+	gimpvectortool.h
 
 libapptools_a_built_sources = tools-enums.c
 

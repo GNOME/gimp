@@ -16,12 +16,15 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PAINT_H__
-#define __PAINT_H__
+#ifndef __GIMP_TOOLS_H__
+#define __GIMP_TOOLS_H__
 
 
-void   paint_init (Gimp *gimp);
-void   paint_exit (Gimp *gimp);
+void   gimp_tools_init    (Gimp *gimp);
+void   gimp_tools_exit    (Gimp *gimp);
+
+void   gimp_tools_restore (Gimp *gimp);
+void   gimp_tools_save    (Gimp *gimp);
 
 
-#endif  /* __PAINT_H__ */
+#endif  /* __GIMP_TOOLS_H__ */

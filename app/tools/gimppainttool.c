@@ -37,6 +37,7 @@
 
 #include "core/gimp.h"
 #include "core/gimpbrush.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
@@ -55,7 +56,6 @@
 #include "gimpcolorpickertool.h"
 #include "gimppainttool.h"
 #include "gimptoolcontrol.h"
-#include "tool_manager.h"
 
 #include "gimp-intl.h"
 
@@ -567,20 +567,28 @@ gimp_paint_tool_modifier_key (GimpTool        *tool,
     {
       if (press)
         {
-          GimpToolInfo *info;
+          GimpContainer *tool_info_list;
+          GimpToolInfo  *info;
 
-          info = tool_manager_get_info_by_type (gdisp->gimage->gimp,
-                                                GIMP_TYPE_COLOR_PICKER_TOOL);
+          tool_info_list = gdisp->gimage->gimp->tool_info_list;
 
-          if (gimp_draw_tool_is_active (draw_tool))
-            gimp_draw_tool_stop (draw_tool);
+          info = (GimpToolInfo *)
+            gimp_container_get_child_by_name (tool_info_list,
+                                              "gimp-color-picker-tool");
 
-          gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
-                                  GIMP_COLOR_OPTIONS (info->tool_options));
+          if (GIMP_IS_TOOL_INFO (info))
+            {
+              if (gimp_draw_tool_is_active (draw_tool))
+                gimp_draw_tool_stop (draw_tool);
+
+              gimp_color_tool_enable (GIMP_COLOR_TOOL (tool),
+                                      GIMP_COLOR_OPTIONS (info->tool_options));
+            }
         }
       else
         {
-          gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
+          if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
+            gimp_color_tool_disable (GIMP_COLOR_TOOL (tool));
         }
     }
 }

@@ -26,7 +26,7 @@
 #include "core/gimplist.h"
 #include "core/gimppaintinfo.h"
 
-#include "paint.h"
+#include "gimp-paint.h"
 #include "gimpairbrush.h"
 #include "gimpclone.h"
 #include "gimpconvolve.h"
@@ -39,16 +39,16 @@
 
 /*  local function prototypes  */
 
-static void   paint_register (Gimp        *gimp,
-                              GType        paint_type,
-                              GType        paint_options_type,
-                              const gchar *blurb);
+static void   gimp_paint_register (Gimp        *gimp,
+                                   GType        paint_type,
+                                   GType        paint_options_type,
+                                   const gchar *blurb);
 
 
 /*  public functions  */
 
 void
-paint_init (Gimp *gimp)
+gimp_paint_init (Gimp *gimp)
 {
   GimpPaintRegisterFunc register_funcs[] =
   {
@@ -72,12 +72,12 @@ paint_init (Gimp *gimp)
 
   for (i = 0; i < G_N_ELEMENTS (register_funcs); i++)
     {
-      register_funcs[i] (gimp, paint_register);
+      register_funcs[i] (gimp, gimp_paint_register);
     }
 }
 
 void
-paint_exit (Gimp *gimp)
+gimp_paint_exit (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -92,10 +92,10 @@ paint_exit (Gimp *gimp)
 /*  private functions  */
 
 static void
-paint_register (Gimp        *gimp,
-                GType        paint_type,
-                GType        paint_options_type,
-                const gchar *blurb)
+gimp_paint_register (Gimp        *gimp,
+                     GType        paint_type,
+                     GType        paint_options_type,
+                     const gchar *blurb)
 {
   GimpPaintInfo *paint_info;
 

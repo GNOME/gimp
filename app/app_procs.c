@@ -48,7 +48,7 @@
 #include "file/file-open.h"
 #include "file/file-utils.h"
 
-#include "tools/tool_manager.h"
+#include "tools/gimp-tools.h"
 
 #include "gui/gui.h"
 #include "gui/splash.h"
@@ -250,7 +250,7 @@ app_init (const gchar         *full_prog_name,
   if (! no_interface)
     {
       gui_environ_init (the_gimp);
-      tool_manager_init (the_gimp);
+      gimp_tools_init (the_gimp);
     }
 
   /*  Load all data files
@@ -260,7 +260,7 @@ app_init (const gchar         *full_prog_name,
   if (! no_interface)
     {
       gui_init (the_gimp);
-      tool_manager_restore (the_gimp);
+      gimp_tools_restore (the_gimp);
     }
 
   /*  Initialize the plug-in structures
@@ -401,8 +401,8 @@ app_exit_callback (Gimp     *gimp,
 
   if (! gimp->no_interface)
     {
-      tool_manager_save (gimp);
-      tool_manager_exit (gimp);
+      gimp_tools_save (gimp);
+      gimp_tools_exit (gimp);
     }
 
   return FALSE; /* continue exiting */
@@ -417,8 +417,8 @@ app_exit_finish_callback (Gimp     *gimp,
 
   base_exit ();
 
-  /*  There used to be foo_main_quit() here, but there's a chance 
-   *  that foo_main() was never called before we reach this point. --Sven  
+  /*  There used to be foo_main_quit() here, but there's a chance
+   *  that foo_main() was never called before we reach this point. --Sven
    */
   exit (0);
 
@@ -455,7 +455,7 @@ gimprc_notify_callback (GObject    *object,
     }
   else
     {
-      g_print ("  %s changed but we failed to serialize its value!\n", 
+      g_print ("  %s changed but we failed to serialize its value!\n",
                pspec->name);
     }
 

@@ -20,75 +20,55 @@
 #define __TOOL_MANAGER_H__
 
 
-void           tool_manager_init                  (Gimp             *gimp);
-void           tool_manager_exit                  (Gimp             *gimp);
+void       tool_manager_init                  (Gimp             *gimp);
+void       tool_manager_exit                  (Gimp             *gimp);
 
-void           tool_manager_restore               (Gimp             *gimp);
-void           tool_manager_save                  (Gimp             *gimp);
+GimpTool * tool_manager_get_active            (Gimp             *gimp);
 
-GimpTool     * tool_manager_get_active            (Gimp             *gimp);
+void       tool_manager_select_tool           (Gimp             *gimp,
+                                               GimpTool         *tool);
 
-void           tool_manager_select_tool           (Gimp             *gimp,
-						   GimpTool         *tool);
-
-void           tool_manager_push_tool             (Gimp             *gimp,
-						   GimpTool         *tool);
-void           tool_manager_pop_tool              (Gimp             *gimp);
+void       tool_manager_push_tool             (Gimp             *gimp,
+                                               GimpTool         *tool);
+void       tool_manager_pop_tool              (Gimp             *gimp);
 
 
-void           tool_manager_initialize_active     (Gimp             *gimp,
-						   GimpDisplay      *gdisp);
-void           tool_manager_control_active        (Gimp             *gimp,
-						   GimpToolAction    action,
-						   GimpDisplay      *gdisp);
-void           tool_manager_button_press_active   (Gimp             *gimp,
-                                                   GimpCoords       *coords,
-                                                   guint32           time,
-                                                   GdkModifierType   state,
-                                                   GimpDisplay      *gdisp);
-void           tool_manager_button_release_active (Gimp             *gimp,
-                                                   GimpCoords       *coords,
-                                                   guint32           time,
-                                                   GdkModifierType   state,
-                                                   GimpDisplay      *gdisp);
-void           tool_manager_motion_active         (Gimp             *gimp,
-                                                   GimpCoords       *coords,
-                                                   guint32           time,
-                                                   GdkModifierType   state,
-                                                   GimpDisplay      *gdisp);
-void           tool_manager_arrow_key_active      (Gimp             *gimp,
-                                                   GdkEventKey      *kevent,
-                                                   GimpDisplay      *gdisp);
-void           tool_manager_modifier_key_active   (Gimp             *gimp,
-                                                   GdkModifierType   key,
-                                                   gboolean          press,
-                                                   GdkModifierType   state,
-                                                   GimpDisplay      *gdisp);
-void           tool_manager_oper_update_active    (Gimp             *gimp,
-                                                   GimpCoords       *coords,
-                                                   GdkModifierType   state,
-                                                   GimpDisplay      *gdisp);
-void           tool_manager_cursor_update_active  (Gimp             *gimp,
-                                                   GimpCoords       *coords,
-                                                   GdkModifierType   state,
-                                                   GimpDisplay      *gdisp);
-
-void           tool_manager_register_tool         (GType             tool_type,
-                                                   GType             tool_options_type,
-                                                   GimpToolOptionsGUIFunc  options_gui_func,
-						   GimpContextPropMask     context_props,
-						   const gchar      *identifier,
-						   const gchar      *blurb,
-						   const gchar      *help,
-						   const gchar      *menu_path,
-						   const gchar      *menu_accel,
-						   const gchar      *help_domain,
-						   const gchar      *help_data,
-						   const gchar      *stock_id,
-                                                   gpointer          data);
-
-GimpToolInfo * tool_manager_get_info_by_type      (Gimp             *gimp,
-						   GType             tool_type);
+void       tool_manager_initialize_active     (Gimp             *gimp,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_control_active        (Gimp             *gimp,
+                                               GimpToolAction    action,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_button_press_active   (Gimp             *gimp,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+                                               GdkModifierType   state,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_button_release_active (Gimp             *gimp,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+                                               GdkModifierType   state,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_motion_active         (Gimp             *gimp,
+                                               GimpCoords       *coords,
+                                               guint32           time,
+                                               GdkModifierType   state,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_arrow_key_active      (Gimp             *gimp,
+                                               GdkEventKey      *kevent,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_modifier_key_active   (Gimp             *gimp,
+                                               GdkModifierType   key,
+                                               gboolean          press,
+                                               GdkModifierType   state,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_oper_update_active    (Gimp             *gimp,
+                                               GimpCoords       *coords,
+                                               GdkModifierType   state,
+                                               GimpDisplay      *gdisp);
+void       tool_manager_cursor_update_active  (Gimp             *gimp,
+                                               GimpCoords       *coords,
+                                               GdkModifierType   state,
+                                               GimpDisplay      *gdisp);
 
 
 #endif  /*  __TOOL_MANAGER_H__  */

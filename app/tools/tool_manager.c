@@ -25,27 +25,17 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
-#include "core/gimpimage.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimplist.h"
+#include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
-#include "core/gimptooloptions.h"
 
 #include "display/gimpdisplay.h"
 
-#include "gimpairbrushtool.h"
-#include "gimpclonetool.h"
-#include "gimpconvolvetool.h"
-#include "gimpdodgeburntool.h"
-#include "gimperasertool.h"
-#include "gimpimagemaptool.h"
-#include "gimppaintbrushtool.h"
-#include "gimppenciltool.h"
-#include "gimprectselecttool.h"
-#include "gimpsmudgetool.h"
+#include "gimpdrawtool.h"
 #include "gimptoolcontrol.h"
-#include "gimptooloptions-gui.h"
 #include "tool_manager.h"
-#include "tools.h"
 
 #include "gimp-intl.h"
 
@@ -110,24 +100,6 @@ tool_manager_init (Gimp *gimp)
   g_signal_connect (user_context, "tool_changed",
 		    G_CALLBACK (tool_manager_tool_changed),
 		    tool_manager);
-
-  /* register internal tools */
-  tools_init (gimp);
-
-  gimp_tool_info_set_standard (gimp, tool_manager_get_info_by_type (gimp, GIMP_TYPE_RECT_SELECT_TOOL));
-
-  if (tool_manager->active_tool)
-    {
-      GimpToolInfo *tool_info;
-
-      tool_info = tool_manager->active_tool->tool_info;
-
-      if (tool_info->context_props)
-        gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
-                                 gimp_get_user_context (gimp));
-    }
-
-  gimp_container_thaw (gimp->tool_info_list);
 }
 
 void
@@ -149,72 +121,6 @@ tool_manager_exit (Gimp *gimp)
     g_object_unref (tool_manager->active_tool);
 
   g_free (tool_manager);
-}
-
-void
-tool_manager_restore (Gimp *gimp)
-{
-  GimpToolManager *tool_manager;
-  GimpToolInfo    *tool_info;
-  GList           *list;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  tool_manager = tool_manager_get (gimp);
-
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpToolOptionsGUIFunc  options_gui_func;
-      GtkWidget              *options_gui;
-
-      tool_info = GIMP_TOOL_INFO (list->data);
-
-      gimp_tool_options_deserialize (tool_info->tool_options, NULL, NULL);
-
-      options_gui_func = g_object_get_data (G_OBJECT (tool_info),
-                                            "gimp-tool-options-gui-func");
-
-      if (options_gui_func)
-        {
-          options_gui = (* options_gui_func) (tool_info->tool_options);
-        }
-      else
-        {
-          GtkWidget *label;
-
-          options_gui = gimp_tool_options_gui (tool_info->tool_options);
-
-          label = gtk_label_new (_("This tool has no options."));
-          gtk_box_pack_start (GTK_BOX (options_gui), label, FALSE, FALSE, 6);
-          gtk_widget_show (label);
-        }
-
-      g_object_set_data (G_OBJECT (tool_info->tool_options),
-                         "gimp-tool-options-gui", options_gui);
-    }
-}
-
-void
-tool_manager_save (Gimp *gimp)
-{
-  GimpToolManager *tool_manager;
-  GimpToolInfo    *tool_info;
-  GList           *list;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-
-  tool_manager = tool_manager_get (gimp);
-
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
-       list;
-       list = g_list_next (list))
-    {
-      tool_info = GIMP_TOOL_INFO (list->data);
-
-      gimp_tool_options_serialize (tool_info->tool_options, NULL, NULL);
-    }
 }
 
 GimpTool *
@@ -493,130 +399,6 @@ tool_manager_cursor_update_active (Gimp            *gimp,
                                coords, state,
                                gdisp);
     }
-}
-
-void
-tool_manager_register_tool (GType                   tool_type,
-                            GType                   tool_options_type,
-                            GimpToolOptionsGUIFunc  options_gui_func,
-			    GimpContextPropMask     context_props,
-			    const gchar            *identifier,
-			    const gchar            *blurb,
-			    const gchar            *help,
-			    const gchar            *menu_path,
-			    const gchar            *menu_accel,
-			    const gchar            *help_domain,
-			    const gchar            *help_data,
-			    const gchar            *stock_id,
-			    gpointer                data)
-{
-  Gimp            *gimp = (Gimp *) data;
-  GimpToolManager *tool_manager;
-  GimpToolInfo    *tool_info;
-  const gchar     *paint_core_name;
-
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL));
-  g_return_if_fail (tool_options_type == G_TYPE_NONE ||
-                    g_type_is_a (tool_options_type, GIMP_TYPE_TOOL_OPTIONS));
-
-  if (tool_options_type == G_TYPE_NONE)
-    tool_options_type = GIMP_TYPE_TOOL_OPTIONS;
-
-  if (tool_type == GIMP_TYPE_PENCIL_TOOL)
-    {
-      paint_core_name = "GimpPencil";
-    }
-  else if (tool_type == GIMP_TYPE_PAINTBRUSH_TOOL)
-    {
-      paint_core_name = "GimpPaintbrush";
-    }
-  else if (tool_type == GIMP_TYPE_ERASER_TOOL)
-    {
-      paint_core_name = "GimpEraser";
-    }
-  else if (tool_type == GIMP_TYPE_AIRBRUSH_TOOL)
-    {
-      paint_core_name = "GimpAirbrush";
-    }
-  else if (tool_type == GIMP_TYPE_CLONE_TOOL)
-    {
-      paint_core_name = "GimpClone";
-    }
-  else if (tool_type == GIMP_TYPE_CONVOLVE_TOOL)
-    {
-      paint_core_name = "GimpConvolve";
-    }
-  else if (tool_type == GIMP_TYPE_SMUDGE_TOOL)
-    {
-      paint_core_name = "GimpSmudge";
-    }
-  else if (tool_type == GIMP_TYPE_DODGEBURN_TOOL)
-    {
-      paint_core_name = "GimpDodgeBurn";
-    }
-  else
-    {
-      paint_core_name = "GimpPaintbrush";
-    }
-
-  tool_manager = tool_manager_get (gimp);
-
-  tool_info = gimp_tool_info_new (gimp,
-				  tool_type,
-                                  tool_options_type,
-				  context_props,
-				  identifier,
-				  blurb,
-				  help,
-				  menu_path,
-				  menu_accel,
-				  help_domain,
-				  help_data,
-                                  paint_core_name,
-				  stock_id);
-
-  if (g_type_is_a (tool_type, GIMP_TYPE_IMAGE_MAP_TOOL))
-    tool_info->in_toolbox = FALSE;
-
-  g_object_set_data (G_OBJECT (tool_info), "gimp-tool-options-gui-func",
-                     options_gui_func);
-
-  if (tool_info->context_props)
-    {
-      gimp_context_define_properties (GIMP_CONTEXT (tool_info->tool_options),
-                                      tool_info->context_props, FALSE);
-
-      gimp_context_copy_properties (gimp_get_user_context (gimp),
-                                    GIMP_CONTEXT (tool_info->tool_options),
-                                    GIMP_CONTEXT_ALL_PROPS_MASK);
-    }
-
-  gimp_container_add (gimp->tool_info_list, GIMP_OBJECT (tool_info));
-  g_object_unref (tool_info);
-}
-
-GimpToolInfo *
-tool_manager_get_info_by_type (Gimp  *gimp,
-			       GType  tool_type)
-{
-  GimpToolInfo *tool_info;
-  GList        *list;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (g_type_is_a (tool_type, GIMP_TYPE_TOOL), NULL);
-
-  for (list = GIMP_LIST (gimp->tool_info_list)->list;
-       list;
-       list = g_list_next (list))
-    {
-      tool_info = (GimpToolInfo *) list->data;
-
-      if (tool_info->tool_type == tool_type)
-	return tool_info;
-    }
-
-  return NULL;
 }
 
 
