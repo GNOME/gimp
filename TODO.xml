@@ -19,14 +19,15 @@
   <title>GIMP TODO List</title>
 
   <section>
-    <title>General Cleanup</title>
+    <title>General</title>
 
-    <entry size="medium" difficulty="easy" status="80%" target="1.4">
-      <title>Header cleanup</title>
+    <entry size="big" difficulty="advanced" status="0%" target="1.4">
+      <title>Port to glib-2.0 and gtk+-2.0</title>
       <description>
 	<p>
-	  Headers should only include other headers if absolutely necessary
-	  (for derived objects for example).
+	  This is directly connected to the objectification task mentioned
+	  below and should probably be addressed after all objects have
+	  been reviewed.
 	</p>
       </description>
       <contact>
@@ -34,7 +35,21 @@
       </contact>
     </entry>    
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="easy" status="80%" target="1.4">
+      <title>Header cleanup</title>
+      <description>
+	<p>
+	  Headers should only include other headers if absolutely necessary
+	  (for derived objects for example). All functions must be
+	  properly prototyped.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>    
+
+    <entry size="big" difficulty="medium" status="0%" target="1.4">
       <title>Code reorganization</title>
       <description>
 	<p>
@@ -48,7 +63,7 @@
       </contact>
     </entry>    
 
-  </section>  <!-- General Cleanup -->
+  </section>  <!-- General -->
 
   <section>
     <title>Objectification</title>
@@ -80,12 +95,12 @@
       </contact>
     </entry>
 
-    <entry size="small" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="advanced" status="0%" target="1.4">
       <title>Generic data structures</title>
       <description>
 	<p>
 	  Brushes, Patterns, Gradients should be derived from a GimpData
-	  object.
+	  object. This object has to provide hooks to generate previews.
 	</p>
       </description>
       <contact>
@@ -111,7 +126,7 @@
       </contact>
     </entry>
 
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+    <entry size="medium" difficulty="advanced" status="0%" target="1.4">
       <title>Abstract GimpBrush object and derived brush types</title>
       <description>
 	<p>
@@ -119,7 +134,8 @@
 	  We need an abstract object to derive the different kinds of brushes
 	  from (BrushPipes, parametric brushes, ...). It has to provide 
 	  methods for the PaintCore to transparently select and use the brush 
-	  data.
+	  data. Paint tools should have to care about the brush type as less 
+	  as possible.
 	</p>
       </description>
       <contact>
@@ -128,6 +144,51 @@
     </entry>
 
   </section> <!-- Objectification -->
+
+  <section>
+    <title>LibGimp</title>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>Restructure LibGimp</title>
+      <description>
+	<p>
+	  Put libgimp, libgimpui (and new libs) into their own subdirectories
+	  under a toplevel libs directory. Install all libs under 
+	  $prefix/lib/gimp/1.3/ and change gimptool accordingly.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="small" difficulty="easy" status="0%" target="1.4">
+      <title>Utility library</title>
+      <description>
+	<p>
+	  Put utility functions that are also used by the core into
+	  a seperate library.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
+    <entry size="medium" difficulty="medium" status="0%" target="1.4">
+      <title>File plug-in library</title>
+      <description>
+	<p>
+	  Write a library with a bunch of common functions for file plug-ins
+	  to remove code duplication in these plug-ins. 
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+    
+  </section> <!-- LibGimp -->    
 
   <section>
     <title>User Interface</title>
@@ -190,25 +251,6 @@
   </section> <!-- User Interface -->    
   
   <section>
-    <title>LibGimp</title>
-
-    <entry size="medium" difficulty="medium" status="0%" target="1.4">
-      <title>File plug-in library</title>
-      <description>
-	<p>
-	  Write a library with a bunch of common functions for file plug-ins
-	  to remove code duplication in these plug-ins.
-	</p>
-      </description>
-      <contact>
-	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
-      </contact>
-    </entry>
-    
-
-  </section> <!-- LibGimp -->    
-
-  <section>
     <title>Internationalization</title>
 
     <entry size="small" difficulty="medium" status="0%" target="1.4">
@@ -233,4 +275,3 @@
   </section> <!-- Internationalization -->    
 
 </todo>
-
