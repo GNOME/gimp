@@ -1,5 +1,13 @@
 2003-09-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/channels-menu.c
+	* app/gui/layers-menu.c
+	* app/gui/vectors-menu.c: removed accelerators from popup menus.
+	The HIG says nono and we will use the global <Image> accelerator
+	table all over the place soon. First part of fix for bug #119878.
+
+2003-09-01  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/edge.c (run): fixed check for the number of
 	arguments (don't always fail). Fixes bug #121176.
 
