@@ -35,6 +35,8 @@ echo "mkdir $2/plug-ins"
 mkdir $2/plug-ins
 echo "mkdir $2/modules"
 mkdir $2/modules
+echo "mkdir $2/environ"
+mkdir $2/environ
 echo "mkdir $2/scripts"
 mkdir $2/scripts
 echo "mkdir $2/tmp"

@@ -217,6 +217,15 @@ tree_items[] =
        "during initialization.")
   },
   {
+    TRUE, "environ",
+    N_("This folder is used to store user created, temporary,\n"
+       "or otherwise non-system-supported additions to the\n"
+       "plug-in environment.  The GIMP checks this folder in\n"
+       "addition to the system-wide GIMP environment folder\n"
+       "when searching for plug-in environment modification\n"
+       "files.")
+  },
+  {
     TRUE, "scripts",
     N_("This folder is used to store user created and installed\n"
        "scripts.  The GIMP checks this folder in addition to\n"

@@ -160,6 +160,8 @@ typedef struct _GimpImageMap        GimpImageMap;
 
 typedef struct _GimpText            GimpText;
 
+typedef struct _GimpEnvironTable    GimpEnvironTable;
+
 
 /*  undo objects  */
 

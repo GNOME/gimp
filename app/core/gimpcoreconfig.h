@@ -27,6 +27,7 @@ struct _GimpCoreConfig
   gchar                 *plug_in_path;
   gchar                 *tool_plug_in_path;
   gchar                 *module_path;
+  gchar                 *environ_path;
 
   gchar                 *brush_path;
   gchar                 *pattern_path;

@@ -324,7 +324,8 @@ gimprc_init (Gimp *gimp)
 	{ "pluginrc-path",            TT_PATH,      NULL, NULL },
 	{ "module-load-inhibit",      TT_PATH,      NULL, NULL },
 	{ "thumbnail-size",           TT_XTHUMBSIZE,NULL, NULL },
-	{ "tool-plug-in-path",        TT_PATH,      NULL, NULL }
+	{ "tool-plug-in-path",        TT_PATH,      NULL, NULL },
+	{ "environ-path",             TT_PATH,      NULL, NULL }
       };
 
       /*  this hurts badly  */
@@ -358,6 +359,7 @@ gimprc_init (Gimp *gimp)
       core_funcs[20].val1p = &gimp->config->module_db_load_inhibit;
       core_funcs[21].val1p = &gimp->config->thumbnail_size;
       core_funcs[22].val1p = &gimp->config->tool_plug_in_path;
+      core_funcs[23].val1p = &gimp->config->environ_path;
 
       parse_func_hash = g_hash_table_new (g_str_hash, g_str_equal);
 

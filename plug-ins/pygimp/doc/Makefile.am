@@ -1,13 +1,14 @@
 
 noinst_DATA = pygimp.html
 
-EXTRA_DIST = pygimp.sgml \
-	pygimp.html \
-	structure-of-plugin.html \
-	procedural-database.html \
-	gimp-module-procedures.html \
-	gimp-objects.html \
-	support-modules.html \
+EXTRA_DIST = \
+	pygimp.sgml			\
+	pygimp.html			\
+	structure-of-plugin.html	\
+	procedural-database.html	\
+	gimp-module-procedures.html	\
+	gimp-objects.html		\
+	support-modules.html		\
 	end-note.html
 
 printed: pygimp.ps pygimp.pdf

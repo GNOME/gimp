@@ -14,6 +14,7 @@
 (exec_prefix "@exec_prefix@")
 (gimp_data_dir "@gimpdatadir@")
 (gimp_plugin_dir "@gimpplugindir@")
+(gimp_environ_dir "@gimpenvirondir@")
 
 # Set the temporary storage directory...files will appear here
 #  during the course of running the gimp.  Most files will disappear
@@ -79,6 +80,9 @@
 
 # Set the path to modules that are to be initialized at startup
 (module-path "${gimp_dir}/modules:${gimp_plugin_dir}/modules")
+
+# Set the path to files to fill the plug-in environment
+(environ-path "${gimp_dir}/environ:${gimp_plugin_dir}/environ")
 
 # Specify a theme for the GUI. If none is specified it defaults to "Default"
 (theme "Default")

@@ -170,7 +170,11 @@ intltoolize --copy --force --automake
 
 cd $ORIGDIR
 
-$srcdir/configure --enable-maintainer-mode --enable-gtk-doc "$@"
+if $srcdir/configure --enable-maintainer-mode --enable-gtk-doc "$@"; then
+  echo
+  echo "Now type 'make' to compile $PROJECT."
+else
+  echo
+  echo "Configure failed or did not finish!"
+fi
 
-echo
-echo "Now type 'make' to compile $PROJECT."

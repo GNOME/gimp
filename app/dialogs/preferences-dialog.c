@@ -159,6 +159,7 @@ static gchar            * old_swap_path;
 static gchar            * old_plug_in_path;
 static gchar            * old_tool_plug_in_path;
 static gchar            * old_module_path;
+static gchar            * old_environ_path;
 static gchar            * old_brush_path;
 static gchar            * old_pattern_path;
 static gchar            * old_palette_path;
@@ -193,6 +194,7 @@ static gchar            * edit_swap_path          = NULL;
 static gchar            * edit_plug_in_path       = NULL;
 static gchar            * edit_tool_plug_in_path  = NULL;
 static gchar            * edit_module_path        = NULL;
+static gchar            * edit_environ_path       = NULL;
 static gchar            * edit_brush_path         = NULL;
 static gchar            * edit_pattern_path       = NULL;
 static gchar            * edit_palette_path       = NULL;
@@ -376,6 +378,7 @@ prefs_check_settings (Gimp *gimp)
       prefs_strcmp (old_plug_in_path,      edit_plug_in_path)      ||
       prefs_strcmp (old_tool_plug_in_path, edit_tool_plug_in_path) ||
       prefs_strcmp (old_module_path,       edit_module_path)       ||
+      prefs_strcmp (old_environ_path,      edit_environ_path)      ||
       prefs_strcmp (old_brush_path,        edit_brush_path)        ||
       prefs_strcmp (old_pattern_path,      edit_pattern_path)      ||
       prefs_strcmp (old_palette_path,      edit_palette_path)      ||
@@ -511,6 +514,7 @@ prefs_save_callback (GtkWidget *widget,
   gchar      *save_plug_in_path;
   gchar      *save_tool_plug_in_path;
   gchar      *save_module_path;
+  gchar      *save_environ_path;
   gchar      *save_brush_path;
   gchar      *save_pattern_path;
   gchar      *save_palette_path;
@@ -563,6 +567,7 @@ prefs_save_callback (GtkWidget *widget,
   save_plug_in_path       = gimp->config->plug_in_path;
   save_tool_plug_in_path  = gimp->config->tool_plug_in_path;
   save_module_path        = gimp->config->module_path;
+  save_environ_path       = gimp->config->environ_path;
   save_brush_path         = gimp->config->brush_path;
   save_pattern_path       = gimp->config->pattern_path;
   save_palette_path       = gimp->config->palette_path;
@@ -813,6 +818,11 @@ prefs_save_callback (GtkWidget *widget,
       gimp->config->module_path = edit_module_path;
       update = g_list_append (update, "module-path");
     }
+  if (prefs_strcmp (old_environ_path, edit_environ_path))
+    {
+      gimp->config->environ_path = edit_environ_path;
+      update = g_list_append (update, "environ-path");
+    }
   if (prefs_strcmp (old_brush_path, edit_brush_path))
     {
       gimp->config->brush_path = edit_brush_path;
@@ -868,6 +878,7 @@ prefs_save_callback (GtkWidget *widget,
   gimp->config->plug_in_path       = save_plug_in_path;
   gimp->config->tool_plug_in_path  = save_tool_plug_in_path;
   gimp->config->module_path        = save_module_path;
+  gimp->config->environ_path       = save_environ_path;
   gimp->config->brush_path         = save_brush_path;
   gimp->config->pattern_path       = save_pattern_path;
   gimp->config->palette_path       = save_palette_path;
@@ -981,6 +992,7 @@ prefs_cancel_callback (GtkWidget *widget,
   prefs_strset (&edit_plug_in_path,        old_plug_in_path);
   prefs_strset (&edit_tool_plug_in_path,   old_tool_plug_in_path);
   prefs_strset (&edit_module_path,         old_module_path);
+  prefs_strset (&edit_environ_path,        old_environ_path);
   prefs_strset (&edit_brush_path,          old_brush_path);
   prefs_strset (&edit_pattern_path,        old_pattern_path);
   prefs_strset (&edit_palette_path,        old_palette_path);
@@ -1648,6 +1660,7 @@ preferences_dialog_create (Gimp *gimp)
       edit_plug_in_path       = prefs_strdup (gimp->config->plug_in_path);
       edit_tool_plug_in_path  = prefs_strdup (gimp->config->tool_plug_in_path);
       edit_module_path        = prefs_strdup (gimp->config->module_path);
+      edit_environ_path       = prefs_strdup (gimp->config->environ_path);
       edit_brush_path         = prefs_strdup (gimp->config->brush_path);
       edit_pattern_path       = prefs_strdup (gimp->config->pattern_path);
       edit_palette_path       = prefs_strdup (gimp->config->palette_path);
@@ -1721,6 +1734,7 @@ preferences_dialog_create (Gimp *gimp)
   prefs_strset (&old_plug_in_path,       edit_plug_in_path);
   prefs_strset (&old_tool_plug_in_path,  edit_tool_plug_in_path);
   prefs_strset (&old_module_path,        edit_module_path);
+  prefs_strset (&old_environ_path,       edit_environ_path);
   prefs_strset (&old_brush_path,         edit_brush_path);
   prefs_strset (&old_pattern_path,       edit_pattern_path);
   prefs_strset (&old_palette_path,       edit_palette_path);
@@ -2796,6 +2810,10 @@ preferences_dialog_create (Gimp *gimp)
 	"dialogs/preferences/folders.html#modules",
 	N_("Select Module Folders"),
 	&edit_module_path },
+      { N_("Environment"), N_("Environment Folders"), "folders-environ.png",
+	"dialogs/preferences/folders.html#environ",
+	N_("Select Environment Folders"),
+	&edit_environ_path },
       { N_("Themes"), N_("Theme Folders"), "folders-themes.png",
 	"dialogs/preferences/folders.html#themes",
 	N_("Select Theme Folders"),

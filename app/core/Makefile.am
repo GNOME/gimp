@@ -78,6 +78,8 @@ libappcore_a_sources = \
 	gimpdrawable-transform-utils.h	\
 	gimpedit.c			\
 	gimpedit.h			\
+	gimpenvirontable.h		\
+	gimpenvirontable.c		\
 	gimpgradient.c			\
 	gimpgradient.h			\
 	gimpimage.c			\

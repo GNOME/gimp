@@ -10,6 +10,7 @@ PREFS_IMAGES = \
 	folders-brushes.png		\
 	folders-gradients.png		\
 	folders-modules.png		\
+	folders-environ.png		\
 	folders-palettes.png		\
 	folders-patterns.png		\
 	folders-plug-ins.png		\

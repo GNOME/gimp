@@ -1180,6 +1180,7 @@ themes/Default/Makefile
 themes/Default/images/Makefile
 themes/Default/images/preferences/Makefile
 data/Makefile
+data/environ/Makefile
 data/misc/Makefile
 data/misc/gimp.desktop.in
 data/images/Makefile

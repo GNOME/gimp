@@ -87,6 +87,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpcoreconfig.h"
 #include "core/gimpdrawable.h"
+#include "core/gimpenvirontable.h"
 #include "core/gimpimage.h"
 
 #include "gui/plug-in-menus.h"
@@ -620,7 +621,8 @@ plug_in_open (PlugIn *plug_in)
            *  be reached, unless some strange error condition
            *  exists.
            */
-          execvp (plug_in->args[0], plug_in->args);
+          execve (plug_in->args[0], plug_in->args,
+	          gimp_environ_table_get_envp (plug_in->gimp->environ_table));
           _exit (1);
 	}
       else if (plug_in->pid == -1)

@@ -50,6 +50,7 @@ enum
   PROP_PLUG_IN_PATH,
   PROP_TOOL_PLUG_IN_PATH,
   PROP_MODULE_PATH,
+  PROP_ENVIRON_PATH,
   PROP_BRUSH_PATH,
   PROP_PATTERN_PATH,
   PROP_PALETTE_PATH,
@@ -133,6 +134,9 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_MODULE_PATH,
                                  "module-path",
                                  gimp_config_build_plug_in_path ("modules"));
+  GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_ENVIRON_PATH,
+                                 "environ-path",
+                                 gimp_config_build_plug_in_path ("environ"));
   GIMP_CONFIG_INSTALL_PROP_PATH (object_class, PROP_BRUSH_PATH,
                                  "brush-path",
                                  gimp_config_build_data_path ("brushes"));
@@ -220,6 +224,7 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->plug_in_path);
   g_free (core_config->tool_plug_in_path);
   g_free (core_config->module_path);
+  g_free (core_config->environ_path);
   g_free (core_config->brush_path);
   g_free (core_config->pattern_path);
   g_free (core_config->palette_path);
@@ -261,6 +266,10 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_MODULE_PATH:
       g_free (core_config->module_path);
       core_config->module_path = g_value_dup_string (value);
+      break;
+    case PROP_ENVIRON_PATH:
+      g_free (core_config->environ_path);
+      core_config->environ_path = g_value_dup_string (value);
       break;
     case PROP_BRUSH_PATH:
       g_free (core_config->brush_path);
@@ -375,6 +384,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_MODULE_PATH:
       g_value_set_string (value, core_config->module_path);
+      break;
+    case PROP_ENVIRON_PATH:
+      g_value_set_string (value, core_config->environ_path);
       break;
     case PROP_BRUSH_PATH:
       g_value_set_string (value, core_config->brush_path);

@@ -45,6 +45,7 @@
 #include "gimpcoreconfig.h"
 #include "gimpdatafactory.h"
 #include "gimpdocumentlist.h"
+#include "gimpenvirontable.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
@@ -147,6 +148,8 @@ gimp_init (Gimp *gimp)
   paint_init (gimp);
 
   gimp_modules_init (gimp);
+ 
+  gimp->environ_table = gimp_environ_table_new (); 
 
   gimp->images              = gimp_list_new (GIMP_TYPE_IMAGE,
 					     GIMP_CONTAINER_POLICY_WEAK);
@@ -326,6 +329,12 @@ gimp_finalize (GObject *object)
     {
       g_object_unref (G_OBJECT (gimp->images));
       gimp->images = NULL;
+    }
+
+  if (gimp->environ_table)
+    {
+      g_object_unref (gimp->environ_table);
+      gimp->environ_table = NULL;
     }
 
   if (gimp->module_db)
@@ -522,6 +531,9 @@ gimp_initialize (Gimp               *gimp,
   /*  register all internal procedures  */
   (* status_callback) (_("Procedural Database"), NULL, -1);
   internal_procs_init (gimp, status_callback);
+
+  (* status_callback) (_("Plug-In Environment"), "", -1);
+  gimp_environ_table_load (gimp->environ_table, gimp->config->environ_path);
 }
 
 void

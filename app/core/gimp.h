@@ -76,6 +76,8 @@ struct _Gimp
   GimpModuleDB          *module_db;
   gboolean               write_modulerc;
 
+  GimpEnvironTable      *environ_table;
+
   GimpContainer         *images;
   gint                   next_image_ID;
   guint32                next_guide_ID;

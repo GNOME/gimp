@@ -1,3 +1,43 @@
+2002-11-11  Manish Singh  <yosh@gimp.org>
+
+	* autogen.sh: don't say "Now type 'make'" if configure failed.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h 
+	* app/core/gimpenvirontable.[ch]: Implemented GimpEnvironTable,
+	keeps an envp array built from system environment and *.env files.
+
+	* app/core/gimp.[ch]: keep a GimpEnvironTable around.
+
+	* app/gimprc.c
+	* app/config/gimpcoreconfig.[ch]
+	* app/core/gimpcoreconfig.h
+	* app/gui/preferences-dialog.c
+	* app/gui/user-install-dialog.c: environ-path config stuff
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/folder-environ.png: just copied
+	folder.png here, need a better one.
+
+	* app/plug-in/plug-in.c: quick hack to use the envp in the
+	GimpEnvironTable. Only on unix now, should really port the
+	code to use g_spawn_*.
+
+	* data/misc/user_install
+	* etc/gimprc.in: add environ-path stuff
+
+	* data/environ/Makefile: creates system environ directory.
+ 
+	* data/environ/default.env: sample env file info.
+
+	* data/Makefile.am
+	* configure.in: added data/environ dir
+
+	* plug-ins/pygimp/Makefile.am: python module files get put in
+	$(gimpplugindir)/python now, install pygimp.env to point to it.
+
+	* plug-ins/pygimp/doc/Makefile.am: minor clean up.
+
 2002-11-09  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/common/png.c: allow setting compression level 0 from
