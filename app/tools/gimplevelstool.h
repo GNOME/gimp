@@ -50,13 +50,13 @@ struct _GimpLevelsTool
   GimpHistogram        *hist;
   GtkWidget            *hist_view;
   GtkWidget            *active_picker;
-  GtkAdjustment        *low_input_data;
-  GtkAdjustment        *gamma_data;
-  GtkAdjustment        *high_input_data;
-  GtkAdjustment        *low_output_data;
-  GtkAdjustment        *high_output_data;
-  GtkWidget            *input_levels_da[2];
-  GtkWidget            *output_levels_da[2];
+  GtkAdjustment        *low_input;
+  GtkAdjustment        *gamma;
+  GtkAdjustment        *low_output;
+  GtkAdjustment        *high_input;
+  GtkAdjustment        *high_output;
+  GtkWidget            *input_area[2];
+  GtkWidget            *output_area[2];
   GtkWidget            *channel_menu;
 
   GtkWidget            *file_dialog;

@@ -1,3 +1,8 @@
+2004-01-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimplevelstool.[ch]: code cleanup; draw in the
+	expose_event handler only.
+
 2004-01-18  DindinX  <david@dindinx.org>
 
 	* plug-ins/common/nova.c: fixed a stupid bug which could crashes with
