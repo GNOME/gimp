@@ -8,6 +8,7 @@ tipsdata_DATA = \
 	gimp_tips.de.txt	\
 	gimp_tips.es.txt 	\
 	gimp_tips.fr.txt	\
+	gimp_tips.hu.txt	\
 	gimp_tips.it.txt	\
 	gimp_tips.ja.txt	\
 	gimp_tips.ko.txt	\

@@ -22,6 +22,9 @@ install : all
 %.fr.utf8: %.fr.txt
 	iconv -f ISO-8859-1 -t UTF-8 $< >$@
 
+%.fr.utf8: %.hu.txt
+	iconv -f ISO-8859-2 -t UTF-8 $< >$@
+
 %.it.utf8: %.it.txt
 	iconv -f ISO-8859-1 -t UTF-8 $< >$@
 
