@@ -84,10 +84,10 @@ static gboolean   gimp_selection_bounds        (GimpChannel     *channel,
                                                 gint            *y1,
                                                 gint            *x2,
                                                 gint            *y2);
+static gboolean   gimp_selection_is_empty      (GimpChannel     *channel);
 static gint       gimp_selection_value         (GimpChannel     *channel,
                                                 gint             x,
                                                 gint             y);
-static gboolean   gimp_selection_is_empty      (GimpChannel     *channel);
 static void       gimp_selection_feather       (GimpChannel     *channel,
                                                 gdouble          radius_x,
                                                 gdouble          radius_y,
@@ -175,8 +175,8 @@ gimp_selection_class_init (GimpSelectionClass *klass)
 
   channel_class->boundary             = gimp_selection_boundary;
   channel_class->bounds               = gimp_selection_bounds;
-  channel_class->value                = gimp_selection_value;
   channel_class->is_empty             = gimp_selection_is_empty;
+  channel_class->value                = gimp_selection_value;
   channel_class->feather              = gimp_selection_feather;
   channel_class->sharpen              = gimp_selection_sharpen;
   channel_class->clear                = gimp_selection_clear;
@@ -444,14 +444,6 @@ gimp_selection_bounds (GimpChannel *channel,
   return GIMP_CHANNEL_CLASS (parent_class)->bounds (channel, x1, y1, x2, y2);
 }
 
-static gint
-gimp_selection_value (GimpChannel *channel,
-                      gint         x,
-                      gint         y)
-{
-  return GIMP_CHANNEL_CLASS (parent_class)->value (channel, x, y);
-}
-
 static gboolean
 gimp_selection_is_empty (GimpChannel *channel)
 {
@@ -465,6 +457,14 @@ gimp_selection_is_empty (GimpChannel *channel)
     return TRUE;
 
   return GIMP_CHANNEL_CLASS (parent_class)->is_empty (channel);
+}
+
+static gint
+gimp_selection_value (GimpChannel *channel,
+                      gint         x,
+                      gint         y)
+{
+  return GIMP_CHANNEL_CLASS (parent_class)->value (channel, x, y);
 }
 
 static void

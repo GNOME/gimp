@@ -115,10 +115,10 @@ static gboolean   gimp_channel_real_bounds   (GimpChannel      *channel,
                                               gint             *y1,
                                               gint             *x2,
                                               gint             *y2);
+static gboolean   gimp_channel_real_is_empty (GimpChannel      *channel);
 static gint       gimp_channel_real_value    (GimpChannel      *channel,
                                               gint              x,
                                               gint              y);
-static gboolean   gimp_channel_real_is_empty (GimpChannel      *channel);
 static void       gimp_channel_real_feather  (GimpChannel      *channel,
                                               gdouble           radius_x,
                                               gdouble           radius_y,
@@ -219,8 +219,8 @@ gimp_channel_class_init (GimpChannelClass *klass)
 
   klass->boundary                     = gimp_channel_real_boundary;
   klass->bounds                       = gimp_channel_real_bounds;
-  klass->value                        = gimp_channel_real_value;
   klass->is_empty                     = gimp_channel_real_is_empty;
+  klass->value                        = gimp_channel_real_value;
   klass->feather                      = gimp_channel_real_feather;
   klass->sharpen                      = gimp_channel_real_sharpen;
   klass->clear                        = gimp_channel_real_clear;
@@ -832,38 +832,6 @@ gimp_channel_real_bounds (GimpChannel *channel,
   return ! channel->empty;
 }
 
-static gint
-gimp_channel_real_value (GimpChannel *channel,
-                         gint         x,
-                         gint         y)
-{
-  Tile *tile;
-  gint  val;
-
-  /*  Some checks to cut back on unnecessary work  */
-  if (channel->bounds_known)
-    {
-      if (channel->empty)
-	return 0;
-      else if (x < channel->x1 || x >= channel->x2 ||
-               y < channel->y1 || y >= channel->y2)
-	return 0;
-    }
-  else
-    {
-      if (x < 0 || x >= GIMP_ITEM (channel)->width ||
-	  y < 0 || y >= GIMP_ITEM (channel)->height)
-	return 0;
-    }
-
-  tile = tile_manager_get_tile (GIMP_DRAWABLE (channel)->tiles, x, y,
-                                TRUE, FALSE);
-  val = *(guchar *) (tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
-  tile_release (tile, FALSE);
-
-  return val;
-}
-
 static gboolean
 gimp_channel_real_is_empty (GimpChannel *channel)
 {
@@ -915,6 +883,38 @@ gimp_channel_real_is_empty (GimpChannel *channel)
   channel->y2             = GIMP_ITEM (channel)->height;
 
   return TRUE;
+}
+
+static gint
+gimp_channel_real_value (GimpChannel *channel,
+                         gint         x,
+                         gint         y)
+{
+  Tile *tile;
+  gint  val;
+
+  /*  Some checks to cut back on unnecessary work  */
+  if (channel->bounds_known)
+    {
+      if (channel->empty)
+	return 0;
+      else if (x < channel->x1 || x >= channel->x2 ||
+               y < channel->y1 || y >= channel->y2)
+	return 0;
+    }
+  else
+    {
+      if (x < 0 || x >= GIMP_ITEM (channel)->width ||
+	  y < 0 || y >= GIMP_ITEM (channel)->height)
+	return 0;
+    }
+
+  tile = tile_manager_get_tile (GIMP_DRAWABLE (channel)->tiles, x, y,
+                                TRUE, FALSE);
+  val = *(guchar *) (tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
+  tile_release (tile, FALSE);
+
+  return val;
 }
 
 static void
@@ -1552,6 +1552,14 @@ gimp_channel_bounds (GimpChannel *channel,
   return GIMP_CHANNEL_GET_CLASS (channel)->bounds (channel, x1, y1, x2, y2);
 }
 
+gboolean
+gimp_channel_is_empty (GimpChannel *channel)
+{
+  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
+
+  return GIMP_CHANNEL_GET_CLASS (channel)->is_empty (channel);
+}
+
 gint
 gimp_channel_value (GimpChannel *channel,
 		    gint         x,
@@ -1560,14 +1568,6 @@ gimp_channel_value (GimpChannel *channel,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), 0);
 
   return GIMP_CHANNEL_GET_CLASS (channel)->value (channel, x, y);
-}
-
-gboolean
-gimp_channel_is_empty (GimpChannel *channel)
-{
-  g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
-
-  return GIMP_CHANNEL_GET_CLASS (channel)->is_empty (channel);
 }
 
 void

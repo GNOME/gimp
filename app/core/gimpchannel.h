@@ -74,10 +74,11 @@ struct _GimpChannelClass
                          gint            *y1,
                          gint            *x2,
                          gint            *y2);
+  gboolean (* is_empty) (GimpChannel     *channel);
   gint     (* value)    (GimpChannel     *channel,
                          gint             x,
                          gint             y);
-  gboolean (* is_empty) (GimpChannel     *channel);
+
   void     (* feather)  (GimpChannel     *channel,
                          gdouble          radius_x,
                          gdouble          radius_y,
@@ -175,10 +176,10 @@ gboolean      gimp_channel_bounds             (GimpChannel       *mask,
                                                gint              *y1,
                                                gint              *x2,
                                                gint              *y2);
+gboolean      gimp_channel_is_empty           (GimpChannel       *mask);
 gint          gimp_channel_value              (GimpChannel       *mask,
                                                gint               x,
                                                gint               y);
-gboolean      gimp_channel_is_empty           (GimpChannel       *mask);
 
 void          gimp_channel_feather            (GimpChannel       *mask,
                                                gdouble            radius_x,

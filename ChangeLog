@@ -1,3 +1,10 @@
+2003-09-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpchannel.[ch]
+	* app/core/gimpselection.c: reordered GimpChannel::is_empty()
+	after GimpChannel::boudary() and GimpChannel::bounds() because it
+	belongs to that group of functions.
+
 2003-09-04  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: Bah. Fixed stupid error from
