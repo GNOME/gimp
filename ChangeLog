@@ -1,3 +1,9 @@
+2003-11-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c (load_image): inform the user when a PNG
+	file specifies an offset that causes the layer to be positioned
+	outside the image area. Fixes "bug" #127307.
+
 2003-11-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/colorize.[ch]: changed the range of the "lightness"

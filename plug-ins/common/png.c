@@ -94,7 +94,8 @@ static void run (const gchar      *name,
                  gint             *nreturn_vals,
                  GimpParam       **return_vals);
 
-static gint32 load_image (const gchar *filename);
+static gint32 load_image (const gchar *filename,
+                          gboolean     interactive);
 static gint   save_image (const gchar *filename,
                           gint32       image_ID,
                           gint32       drawable_ID,
@@ -235,7 +236,10 @@ run (const gchar      *name,
 
   if (strcmp (name, "file_png_load") == 0)
     {
-      image_ID = load_image (param[1].data.d_string);
+      run_mode = param[0].data.d_int32;
+
+      image_ID = load_image (param[1].data.d_string,
+                             run_mode == GIMP_RUN_INTERACTIVE);
 
       if (image_ID != -1)
         {
@@ -416,7 +420,8 @@ find_unused_ia_colour (guchar *pixels,
  */
 
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar *filename,
+            gboolean     interactive)
 {
   int i,                        /* Looping var */
     trns,                       /* Transparency present */
@@ -565,7 +570,7 @@ load_image (const gchar *filename)
 
   switch (info->color_type)
     {
-    case PNG_COLOR_TYPE_RGB:   /* RGB */
+    case PNG_COLOR_TYPE_RGB:           /* RGB */
       bpp = 3;
       image_type = GIMP_RGB;
       layer_type = GIMP_RGB_IMAGE;
@@ -577,7 +582,7 @@ load_image (const gchar *filename)
       layer_type = GIMP_RGBA_IMAGE;
       break;
 
-    case PNG_COLOR_TYPE_GRAY:  /* Grayscale */
+    case PNG_COLOR_TYPE_GRAY:          /* Grayscale */
       bpp = 1;
       image_type = GIMP_GRAY;
       layer_type = GIMP_GRAY_IMAGE;
@@ -637,12 +642,22 @@ load_image (const gchar *filename)
       gimp_image_parasite_attach (image, parasite);
       gimp_parasite_free (parasite);
     }
+
   if (png_get_valid (pp, info, PNG_INFO_oFFs))
     {
-      gimp_layer_set_offsets (layer,
-                              png_get_x_offset_pixels (pp, info),
-                              png_get_y_offset_pixels (pp, info));
+      gint offset_x = png_get_x_offset_pixels (pp, info);
+      gint offset_y = png_get_y_offset_pixels (pp, info);
+
+      gimp_layer_set_offsets (layer, offset_x, offset_y);
+
+      if ((abs (offset_x) > info->width) || (abs (offset_y) > info->height))
+        {
+          if (interactive)
+            g_message (_("The PNG file specifies an offset that caused "
+                         "the layer to be positioned outside the image."));
+        }
     }
+
   if (png_get_valid (pp, info, PNG_INFO_pHYs))
     {
       png_uint_32  xres;
