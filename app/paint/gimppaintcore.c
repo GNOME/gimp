@@ -732,10 +732,11 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   pixel_dist    = gimp_vector2_length (&delta_vec);
   pixel_initial = core->pixel_dist;
 
-  /*  FIXME: need to adapt the spacing to the size  */
-  /*   lastscale = MIN (gimp_paint_tool->lastpressure, 1/256); */
-  /*   curscale = MIN (gimp_paint_tool->curpressure,  1/256); */
-  /*   spacing = gimp_paint_tool->spacing * sqrt (0.5 * (lastscale + curscale)); */
+  /*  FIXME: need to adapt the spacing to the size                       */
+  /*   lastscale = MIN (gimp_paint_tool->lastpressure, 1/256);           */
+  /*   curscale = MIN (gimp_paint_tool->curpressure,  1/256);            */
+  /*   spacing =                                                         */
+  /*     gimp_paint_tool->spacing * sqrt (0.5 * (lastscale + curscale)); */
 
   /*  Compute spacing parameters such that a brush position will be
    *  made each time the line crosses the *center* of a pixel row or
@@ -886,11 +887,16 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   for (n = 0; n < num_points; n++)
     {
       GimpBrush *current_brush;
+      gdouble    pressure;
       gdouble    t = t0 + n*dt;
 
       core->cur_coords.x        = core->last_coords.x        + t * delta_vec.x;
       core->cur_coords.y        = core->last_coords.y        + t * delta_vec.y;
-      core->cur_coords.pressure = core->last_coords.pressure + t * delta_pressure;
+
+      /*  avoid negative pressure, see bug #123811  */
+      pressure = core->last_coords.pressure + t * delta_pressure;
+      core->cur_coords.pressure = MAX (pressure, 0.0);
+
       core->cur_coords.xtilt    = core->last_coords.xtilt    + t * delta_xtilt;
       core->cur_coords.ytilt    = core->last_coords.ytilt    + t * delta_ytilt;
       core->cur_coords.wheel    = core->last_coords.wheel    + t * delta_wheel;
@@ -918,7 +924,6 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
   core->pixel_dist = pixel_initial + pixel_dist;
 
   core->last_coords = core->cur_coords;
-
 }
 
 
