@@ -1,3 +1,8 @@
+2004-11-07  Sigurd Gartmann  <sigurd-translate@brogar.org>
+
+	* no.po, nb.po: Added norwegian bokmål nb translation, and
+	updated the no bokmål translation.
+
 2004-11-07  Francisco Javier F. Serrador  <serrador@cvs.gnome.org>
 
 	* es.po: Updated Spanish translation.
