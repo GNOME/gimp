@@ -6241,35 +6241,35 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:569
 msgid "Saved"
-msgstr ""
+msgstr "Збережено"
 
 #: plug-ins/common/uniteditor.c:570
 msgid "ID"
-msgstr ""
+msgstr "╤дентиф╕катор"
 
 #: plug-ins/common/uniteditor.c:571
 msgid "Factor"
-msgstr ""
+msgstr "Множник"
 
 #: plug-ins/common/uniteditor.c:572
 msgid "Digits"
-msgstr ""
+msgstr "Цифри"
 
 #: plug-ins/common/uniteditor.c:573
 msgid "Symbol"
-msgstr ""
+msgstr "Позначення"
 
 #: plug-ins/common/uniteditor.c:574
 msgid "Abbr."
-msgstr ""
+msgstr "Скорочення"
 
 #: plug-ins/common/uniteditor.c:575
 msgid "Singular"
-msgstr ""
+msgstr "Однина"
 
 #: plug-ins/common/uniteditor.c:576
 msgid "Plural"
-msgstr ""
+msgstr "Множина"
 
 #: plug-ins/common/uniteditor.c:630
 msgid "Create a new unit from scratch."
@@ -6277,7 +6277,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:632
 msgid "Duplicate Unit"
-msgstr ""
+msgstr "Дублювати одиницю"
 
 #: plug-ins/common/uniteditor.c:639
 msgid "Create a new unit with the currently seleted unit as template."
@@ -6293,7 +6293,7 @@ msgstr ""
 
 #: plug-ins/common/uniteditor.c:654
 msgid "Save Unit"
-msgstr ""
+msgstr "Зберегти одиницю"
 
 #: plug-ins/common/uniteditor.c:661
 msgid "Save the currently selected unit before GIMP exits."
@@ -6305,7 +6305,7 @@ msgstr "<Image>/Ф╕льти/Покращення/Неч╕тка маска..."
 
 #: plug-ins/common/unsharp.c:395
 msgid "Merging..."
-msgstr ""
+msgstr "Зливання..."
 
 #: plug-ins/common/unsharp.c:781
 msgid "Unsharp Mask"
@@ -6394,11 +6394,11 @@ msgstr ""
 
 #: plug-ins/common/vpropagate.c:171
 msgid "Only Foreground"
-msgstr ""
+msgstr "Лише передн╕й план"
 
 #: plug-ins/common/vpropagate.c:174
 msgid "Only Background"
-msgstr ""
+msgstr "Лише тло"
 
 #: plug-ins/common/vpropagate.c:177
 msgid "More Opaque"
