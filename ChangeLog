@@ -1,3 +1,7 @@
+Thu Sep  9 15:45:20 PDT 1999 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/common/rotate.c: i18n buglet fix
+
 Fri Sep 10 00:28:34 CEST 1999  vidar@prosalg.no  (Vidar Madsen)
 
 	* plug-ins/gimpressionist/*.[ch]: switched to G_PIs and RAND_FUNC()s
