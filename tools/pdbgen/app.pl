@@ -70,6 +70,16 @@ sub make_arg_test {
     if ($yes || $no) {
 	&$reverse(\$test) if $yes;
 
+	if (exists $arg->{cond}) {
+	    my $cond = "";
+	    foreach (@{$arg->{cond}}) {
+		$cond .= '!' if $yes;
+		$cond .= /\W/ ? "($_)" : $_;
+		$cond .= $yes ? ' !! ' : ' && ';
+	    }
+	    $test = "$cond($test)";
+	}
+
 	$result = ' ' x 2 . "if ($test)\n";
 
 	$result .= &format_code_frag($arg->{on_success}, 1) if $yes;
@@ -169,7 +179,11 @@ sub make_arg_recs {
 					    }
 					    $info =~ s/$nick \(.*?\)(, )?//
 					}				 
-					$info =~ s/, $//;		 last };
+					$info =~ s/, $//;
+					if (!$#{[$info =~ /,/g]} &&
+					     $desc !~ /{ %%desc%% }/) {
+					    $info =~ s/,/ or/
+					}				 last };
 		}
 
 		$desc =~ s/%%desc%%/$info/eg;

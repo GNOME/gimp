@@ -193,21 +193,21 @@ package Gimp::CodeGen::enums;
 	},
     GradientType =>
 	{ contig => 1,
-	  symbols => [ qw(Linear BiLinear Radial Square ConicalSymmetric
-			  ConicalAsymmetric ShapeburstAngular
-			  ShapeburstSpherical ShapeburstDimpled
-			  SpiralClockwise SpiralAntiClockwise) ],
-	  mapping => { Linear => '0',
-		       BiLinear => '1',
-		       Radial => '2',
-		       Square => '3',
-		       ConicalSymmetric => '4',
-		       ConicalAsymmetric => '5',
-		       ShapeburstAngular => '6',
-		       ShapeburstSpherical => '7',
-		       ShapeburstDimpled => '8',
-		       SpiralClockwise => '9',
-		       SpiralAntiClockwise => '10' }
+	  symbols => [ qw(LINEAR BILINEAR RADIAL SQUARE CONICAL_SYMMETRIC
+			  CONICAL_ASYMMETRIC SHAPEBURST_ANGULAR
+			  SHAPEBURST_SPHERICAL SHAPEBURST_DIMPLED
+			  SPIRAL_CLOCKWISE SPIRAL_ANTICLOCKWISE) ],
+	  mapping => { LINEAR => '0',
+		       BILINEAR => '1',
+		       RADIAL => '2',
+		       SQUARE => '3',
+		       CONICAL_SYMMETRIC => '4',
+		       CONICAL_ASYMMETRIC => '5',
+		       SHAPEBURST_ANGULAR => '6',
+		       SHAPEBURST_SPHERICAL => '7',
+		       SHAPEBURST_DIMPLED => '8',
+		       SPIRAL_CLOCKWISE => '9',
+		       SPIRAL_ANTICLOCKWISE => '10' }
 	},
     BlendMode =>
 	{ contig => 1,
@@ -216,7 +216,11 @@ package Gimp::CodeGen::enums;
 	  mapping => { FG_BG_RGB_MODE => '0',
 		       FG_BG_HSV_MODE => '1',
 		       FG_TRANS_MODE => '2',
-		       CUSTOM_MODE => '3' }
+		       CUSTOM_MODE => '3' },
+	  nicks   => { FG_BG_RGB_MODE => 'FG_BG_RGB',
+		       FG_BG_HSV_MODE => 'FG_BG_HSV',
+		       FG_TRANS_MODE => 'FG_TRANS',
+		       CUSTOM_MODE => 'CUSTOM' }
 	},
     RepeatMode =>
 	{ contig => 1,
@@ -225,25 +229,28 @@ package Gimp::CodeGen::enums;
 		       REPEAT_SAWTOOTH => '1',
 		       REPEAT_TRIANGULAR => '2' }
 	},
-    FillMode =>
+    BucketFillMode =>
 	{ contig => 1,
-	  symbols => [ qw(FgColorFill BgColorFill PatternFill) ],
-	  mapping => { FgColorFill => '0',
-		       BgColorFill => '1',
-		       PatternFill => '2' }
+	  symbols => [ qw(FG_BUCKET_FILL BG_BUCKET_FILL PATTERN_BUCKET_FILL) ],
+	  mapping => { FG_BUCKET_FILL => '0',
+		       BG_BUCKET_FILL => '1',
+		       PATTERN_BUCKET_FILL => '2' }
 	},
     CloneType =>
 	{ contig => 1,
-	  symbols => [ qw(ImageClone PatternClone) ],
-	  mapping => { ImageClone => '0',
-		       PatternClone => '1' }
+	  symbols => [ qw(IMAGE_CLONE PATTERN_CLONE) ],
+	  mapping => { IMAGE_CLONE => '0',
+		       PATTERN_CLONE => '1' }
 	},
     ConvolveType =>
 	{ contig => 1,
-	  symbols => [ qw(Blur Sharpen Custom) ],
-	  mapping => { Blur => '0',
-		       Sharpen => '1',
-		       Custom => '2' }
+	  symbols => [ qw(BLUR_CONVOLVE SHARPEN_CONVOLVE CUSTOM_CONVOLVE) ],
+	  mapping => { BLUR_CONVOLVE => '0',
+		       SHARPEN_CONVOLVE => '1',
+		       CUSTOM_CONVOLVE => '2' },
+	  nicks   => { BLUR_CONVOLVE => 'BLUR',
+		       SHARPEN_CONVOLVE => 'SHARPEN',
+		       CUSTOM_CONVOLVE => 'CUSTOM' }
 	},
     ChannelOps =>
 	{ contig => 1,
@@ -267,6 +274,16 @@ package Gimp::CodeGen::enums;
 		       INCREMENTAL => '1' },
 	  nicks   => { CONSTANT => 'CONTINUOUS' }
 	},
+    GradientPaintMode =>
+	{ contig => 1,
+	  symbols => [ qw(ONCE_FORWARD ONCE_BACKWARDS LOOP_SAWTOOTH
+			  LOOP_TRIANGLE ONCE_END_COLOR) ],
+	  mapping => { ONCE_FORWARD => '0',
+		       ONCE_BACKWARDS => '1',
+		       LOOP_SAWTOOTH => '2',
+		       LOOP_TRIANGLE => '3',
+		       ONCE_END_COLOR => '4' }
+	},
     ChannelLutType =>
 	{ contig => 1,
 	  symbols => [ qw(VALUE_LUT RED_LUT GREEN_LUT BLUE_LUT) ],
@@ -278,6 +295,14 @@ package Gimp::CodeGen::enums;
 		       RED_LUT => 'RED',
 		       GREEN_LUT => 'GREEN',
 		       BLUE_LUT => 'BLUE' }
+	},
+    ShearType =>
+	{ contig => 1,
+	  symbols => [ qw(HORZ_SHEAR VERT_SHEAR) ],
+	  mapping => { HORZ_SHEAR => '0',
+		       VERT_SHEAR => '1' },
+	  nicks   => { HORZ_SHEAR => 'HORIZONTAL',
+		       VERT_SHEAR => 'VERTICAL' }
 	}
 );
 

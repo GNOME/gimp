@@ -35,4 +35,8 @@ sub std_antialias_arg () {{
     desc => 'Antialiasing (%%desc%%)'
 }}
 
+sub std_layer_mode_enum () {
+    'enum LayerModeEffects (no ERASE_MODE, REPLACE_MODE)'
+}
+
 1;

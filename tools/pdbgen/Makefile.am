@@ -13,7 +13,8 @@ enum_headers = \
 	../../app/channel.h		\
 	../../app/eraser.h		\
 	../../app/paint_core.h		\
-	../../app/lut_funcs.h
+	../../app/lut_funcs.h		\
+	../../app/shear_tool.h
 
 enums.pl: enumgen.pl $(enum_headers)
 	cd $(srcdir) \
