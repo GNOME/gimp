@@ -157,6 +157,8 @@
 (ruler-units pixels)
 
 # Disable auto saving
+#  Auto saving is not yet implemented! Nothing will be auto-saved, no matter
+#  how you set this here.  
 #  Just uncomment the line below...
 # (dont-auto-save)
 

@@ -1261,14 +1261,18 @@ file_pref_cmd_callback (GtkWidget *widget,
                           &allow_resize_windows);
       gtk_widget_show (button);
       
-      button = gtk_check_button_new_with_label("Auto save");
-      gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
+      /* Don't show the Auto-save button until we really 
+	 have auto-saving in the gimp.
+      
+	 button = gtk_check_button_new_with_label("Auto save");
+	 gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
                                    auto_save);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_signal_connect (GTK_OBJECT (button), "toggled",
-                          (GtkSignalFunc) file_prefs_toggle_callback,
-                          &auto_save);
-      gtk_widget_show (button);
+	 gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+	 gtk_signal_connect (GTK_OBJECT (button), "toggled",
+	                           (GtkSignalFunc) file_prefs_toggle_callback,
+                                   &auto_save);
+         gtk_widget_show (button);
+      */
 
       button = gtk_check_button_new_with_label("Disable cursor updating");
       gtk_toggle_button_set_state (GTK_TOGGLE_BUTTON (button),
