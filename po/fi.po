@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1\n"
 "POT-Creation-Date: 2000-05-27 21:18-0700\n"
-"PO-Revision-Date: 2000-04-26 10:26+02:00\n"
+"PO-Revision-Date: 2000-05-30 22:05+03:00\n"
 "Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -293,7 +293,7 @@ msgstr "Kirkkaus- ja kontrastisäätö ei toimi indeksoiduille kuville."
 #: app/user_install.c:1188 modules/cdisplay_gamma.c:330
 #: modules/cdisplay_highcontrast.c:323
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: app/brightness_contrast.c:216 app/by_color_select.c:694
 #: app/color_balance.c:273 app/curves.c:560 app/file_new_dialog.c:355
@@ -305,15 +305,13 @@ msgstr "Palauta"
 
 #. Create the brightness scale widget
 #: app/brightness_contrast.c:234
-#, fuzzy
 msgid "Brightness:"
-msgstr "Kirkkaus"
+msgstr "Kirkkaus:"
 
 #. Create the contrast scale widget
 #: app/brightness_contrast.c:265
-#, fuzzy
 msgid "Contrast:"
-msgstr "Kontrasti"
+msgstr "Kontrasti:"
 
 #. The preview toggle
 #: app/brightness_contrast.c:300 app/color_balance.c:441 app/curves.c:682
@@ -746,7 +744,7 @@ msgstr " - "
 
 #: app/color_select.c:238
 msgid "H"
-msgstr ""
+msgstr "H"
 
 #: app/color_select.c:239
 msgid "S"
@@ -754,19 +752,19 @@ msgstr ""
 
 #: app/color_select.c:240
 msgid "V"
-msgstr ""
+msgstr "V"
 
 #: app/color_select.c:241 app/hue_saturation.c:352
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: app/color_select.c:242 app/hue_saturation.c:354
 msgid "G"
-msgstr ""
+msgstr "G"
 
 #: app/color_select.c:243 app/hue_saturation.c:356
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: app/color_select.c:247 app/layers_dialog.c:383 app/paint_funcs.c:94
 #: app/tool_options.c:929
@@ -1071,20 +1069,23 @@ msgid ""
 "<Shift> Raise window if already open\n"
 "<Ctrl> Load Image dialog"
 msgstr ""
+"Avaa valittu kohde\n"
+"<Shift> Nosta ikkuna jos jo auki\n"
+"<Ctrl> Lataa Kuva -dialogi"
 
 #: app/docindex.c:118
-#, fuzzy
 msgid ""
 "Move the selected entry up in the index\n"
 "<Shift> To top"
-msgstr "Siirrä valittu ylöspäin"
+msgstr "Siirrä valittu ylöspäin\n"
+"<Shift> Ensimmäiseksi"
 
 #: app/docindex.c:122
-#, fuzzy
 msgid ""
 "Move the selected entry down in the index\n"
 "<Shift> To bottom"
-msgstr "Siirrä valittu alaspäin"
+msgstr "Siirrä valittu alaspäin\n"
+"<Shift> Viimeiseksi"
 
 #: app/docindex.c:126
 msgid "Remove the selected entry from the index"
@@ -1105,11 +1106,11 @@ msgstr "Tyyppi"
 
 #: app/dodgeburn.c:163
 msgid "Dodge"
-msgstr ""
+msgstr "Tummenna (dodge)"
 
 #: app/dodgeburn.c:165
 msgid "Burn"
-msgstr ""
+msgstr "Vaalenna (burn)"
 
 #: app/dodgeburn.c:175
 msgid "Mode"
@@ -1246,11 +1247,12 @@ msgid "No Selection."
 msgstr "Ei valintaa"
 
 #: app/fileops.c:450 app/fileops.c:1772 app/fileops.c:1867
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s"
-msgstr "Tallennus epäonnistui: %s"
+msgstr "Tallennus epäonnistui.\n"
+"%s"
 
 #: app/fileops.c:475 app/fileops.c:507
 msgid "Save Image"
@@ -1265,39 +1267,42 @@ msgid "Determine File Type:"
 msgstr "Päättele tiedoston tyyppi:"
 
 #: app/fileops.c:593
-#, fuzzy
 msgid ""
 "Revert failed.\n"
 "No filename associated with this image."
 msgstr ""
-"En voi palauttaa kuvaa ennalleen. En tiedä mistä tiedostosta kuva on "
-"alunperin luettu."
+"Kuvan palautus epäonnistui.\n"
+"Ei tietoa mistä tiedostosta kuva on alunperin luettu."
 
 #: app/fileops.c:600
-#, fuzzy
 msgid "Revert"
 msgstr "Palauta"
 
 #: app/fileops.c:611
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Revert failed.\n"
 "%s"
-msgstr "Palautus epäonnistui."
+msgstr "Palautus epäonnistui.\n"
+"%s"
 
 #: app/fileops.c:708
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s: Unknown file type."
-msgstr "Tuntemattoman kuvatyypin täyttö ei mahdollista."
+msgstr ""
+"%s epäonnistui.\n"
+"%s: Tuntematon tiedostotyyppi."
 
 #: app/fileops.c:725
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "%s failed.\n"
 "%s is not a regular file."
-msgstr "%s ei ole tavallinen tiedosto (%s)"
+msgstr ""
+"%s epäonnistui.\n"
+"%s ei ole tavallinen tiedosto."
 
 #: app/fileops.c:746
 #, c-format
@@ -1305,24 +1310,30 @@ msgid ""
 "%s failed.\n"
 "%s: Permission denied."
 msgstr ""
+"%s epäonnistui.\n"
+"%s: Ei sallittua."
 
 #: app/fileops.c:795
 msgid "Open"
 msgstr "Avaa"
 
 #: app/fileops.c:1102
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s: Unknown file type."
-msgstr "Tuntemattoman kuvatyypin täyttö ei mahdollista."
+msgstr ""
+"Tallennus epäonnistui.\n"
+"%s: Tuntematon tiedostotyyppi."
 
 #: app/fileops.c:1117
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Save failed.\n"
 "%s is not a regular file."
-msgstr "%s ei ole tavallinen tiedosto (%s)"
+msgstr ""
+"Tallennus epäonnistui.\n"
+"%s ei ole tavallinen tiedosto"
 
 #: app/fileops.c:1136
 #, c-format
@@ -1330,6 +1341,8 @@ msgid ""
 "Save failed.\n"
 "%s: Permission denied."
 msgstr ""
+"Tallennus epäonnistui.\n"
+"%s: Ei sallittua."
 
 #: app/fileops.c:1386
 msgid "(This thumbnail may be out of date)"
@@ -1360,11 +1373,13 @@ msgid "(could not make preview)"
 msgstr "(esikatselukuvaa ei voitu tehdä)"
 
 #: app/fileops.c:1618 app/fileops.c:1698
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Open failed.\n"
 "%s"
-msgstr "Avaus epäonnistui: %s"
+msgstr ""
+"Avaus epäonnistui.\n"
+"%s"
 
 #: app/fileops.c:1820
 #, c-format
@@ -1421,7 +1436,7 @@ msgstr "RGB-tyhjä"
 
 #: app/gdisplay.c:220 app/image_new.c:60 app/preferences_dialog.c:1623
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: app/gdisplay.c:223
 msgid "grayscale-empty"
@@ -1588,7 +1603,7 @@ msgstr "parasiitin liittäminen kuvaan"
 
 #: app/gimpdrawable.c:536
 msgid "detach parasite from drawable"
-msgstr ""
+msgstr "irrota parasiitti kuvasta"
 
 #: app/gimpdrawable.c:743
 msgid "unnamed"
@@ -1801,7 +1816,7 @@ msgstr "pistettä"
 
 #: app/gimpunit.c:66
 msgid "pica"
-msgstr ""
+msgstr "pica"
 
 #: app/gimpunit.c:66
 msgid "picas"
@@ -2130,7 +2145,7 @@ msgstr "edustaväri"
 #: app/gradient.c:4096
 #, c-format
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
-msgstr ""
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: app/gradient.c:4616 app/gradient.c:4686
 msgid "(Varies)"
@@ -2235,15 +2250,15 @@ msgstr "Pää"
 
 #: app/hue_saturation.c:353
 msgid "Y"
-msgstr ""
+msgstr "Y"
 
 #: app/hue_saturation.c:355
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: app/hue_saturation.c:357
 msgid "M"
-msgstr ""
+msgstr "M"
 
 #: app/hue_saturation.c:442
 msgid "Hue / Lightness / Saturation Adjustments"
@@ -2251,21 +2266,18 @@ msgstr "Sävyn (H) / Valoisuuden (L) / Värikylläisyyden (S) säätö"
 
 #. Create the hue scale widget
 #: app/hue_saturation.c:454
-#, fuzzy
 msgid "Hue:"
-msgstr "Sävy (H)"
+msgstr "Sävy (H):"
 
 #. Create the lightness scale widget
 #: app/hue_saturation.c:488
-#, fuzzy
 msgid "Lightness:"
-msgstr "Valoisuus (L)"
+msgstr "Valoisuus (L):"
 
 #. Create the saturation scale widget
 #: app/hue_saturation.c:522
-#, fuzzy
 msgid "Saturation:"
-msgstr "Värikylläisyys (S)"
+msgstr "Värikylläisyys (S):"
 
 #: app/image_new.c:65 app/info_window.c:65 app/info_window.c:534
 #: app/preferences_dialog.c:1624
@@ -2288,27 +2300,27 @@ msgstr "%d tavua"
 #: app/image_new.c:337
 #, c-format
 msgid "%.2f KB"
-msgstr ""
+msgstr "%.2f KB"
 
 #: app/image_new.c:339
 #, c-format
 msgid "%.1f KB"
-msgstr ""
+msgstr "%.1f KB"
 
 #: app/image_new.c:341
 #, c-format
 msgid "%d KB"
-msgstr ""
+msgstr "%d KB"
 
 #: app/image_new.c:343
 #, c-format
 msgid "%.2f MB"
-msgstr ""
+msgstr "%.2f MB"
 
 #: app/image_new.c:345
 #, c-format
 msgid "%.1f MB"
-msgstr ""
+msgstr "%.1f MB"
 
 #: app/indicator_area.c:138
 msgid ""
@@ -2361,19 +2373,19 @@ msgstr "Suoraväritila"
 
 #: app/info_window.c:161
 msgid "R:"
-msgstr ""
+msgstr "R:"
 
 #: app/info_window.c:167
 msgid "G:"
-msgstr ""
+msgstr "G:"
 
 #: app/info_window.c:173
 msgid "B:"
-msgstr ""
+msgstr "B:"
 
 #: app/info_window.c:179
 msgid "A:"
-msgstr ""
+msgstr "A:"
 
 #: app/info_window.c:211
 msgid "Extended"
@@ -2408,7 +2420,7 @@ msgstr "Näyttöluokan syvyys:"
 #: app/info_window.c:314
 #, c-format
 msgid "Info: %s-%d.%d"
-msgstr ""
+msgstr "Tietoja: %s-%d.%d"
 
 #: app/info_window.c:508
 #, c-format
@@ -3824,7 +3836,7 @@ msgstr "Pyyhi"
 
 #: app/paintbrush.c:220
 msgid "Fade Out"
-msgstr ""
+msgstr "Haalistu"
 
 #. the gradient type
 #: app/paintbrush.c:299
@@ -4169,7 +4181,7 @@ msgid "Extensions"
 msgstr "Lisäykset"
 
 #: app/plug_in.c:822
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Liitännäistä ei lötynyt: \"%s\""
 
@@ -4298,7 +4310,7 @@ msgstr "Kuvan oletusresoluutio ja sen mittayksikkö"
 
 #: app/preferences_dialog.c:1581 app/preferences_dialog.c:2352
 msgid "dpi"
-msgstr ""
+msgstr "dpi"
 
 #: app/preferences_dialog.c:1628
 msgid "Default Image Type:"
@@ -4377,7 +4389,7 @@ msgstr "8-bittiset näytöt"
 
 #: app/preferences_dialog.c:1750
 msgid "Minimum Number of Colors:"
-msgstr ""
+msgstr "Värien vähimmäismäärä:"
 
 #: app/preferences_dialog.c:1753
 msgid "Install Colormap"
@@ -4450,7 +4462,7 @@ msgstr "sisäinen"
 
 #: app/preferences_dialog.c:1924
 msgid "Netscape"
-msgstr ""
+msgstr "Netscape"
 
 #: app/preferences_dialog.c:1928
 msgid "Help Browser to Use:"
@@ -4466,7 +4478,7 @@ msgstr "Kuvaikkunan esitys"
 
 #: app/preferences_dialog.c:1945
 msgid "Use \"Dot for Dot\" by default"
-msgstr ""
+msgstr "Käytä \"piste pisteeltä\" oletuksena"
 
 #: app/preferences_dialog.c:1954
 msgid "Resize Window on Zoom"
@@ -4858,7 +4870,7 @@ msgstr "X-suhde:"
 
 #: app/resize.c:433
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: app/resize.c:489
 msgid "Print Size & Display Unit"
@@ -4977,16 +4989,15 @@ msgstr "Raja:"
 
 #: app/tips_dialog.c:72
 msgid "gimp_tips.txt"
-msgstr ""
+msgstr "gimp_tips.txt"
 
 #: app/tips_dialog.c:84
 msgid "GIMP Tip of the Day"
 msgstr "Päivän GIMP-vihje"
 
 #: app/tips_dialog.c:145
-#, fuzzy
 msgid "Show tip next time GIMP starts"
-msgstr "Näytä vihjeet seuraavalla kerralla"
+msgstr "Näytä vihjeet seuraavalla kerralla GIMPin käynnistyessä"
 
 #: app/tips_dialog.c:175
 msgid "Previous Tip"
@@ -5200,9 +5211,8 @@ msgid "Magnify"
 msgstr "Suurenna"
 
 #: app/tools.c:214
-#, fuzzy
 msgid "/Tools/Transform Tools/Magnify"
-msgstr "/Työkalut/Muunnokset/Siirto"
+msgstr "/Työkalut/Muunnokset/Suurennus"
 
 #: app/tools.c:219
 msgid "Zoom in & out"
@@ -6275,26 +6285,23 @@ msgstr "Värien gammasuodatus"
 
 #: modules/cdisplay_gamma.c:325
 msgid "Gamma"
-msgstr ""
+msgstr "Gamma"
 
 #: modules/cdisplay_gamma.c:344
 msgid "Gamma:"
-msgstr ""
+msgstr "Gamma:"
 
 #: modules/cdisplay_highcontrast.c:96
-#, fuzzy
 msgid "High Contrast color display filter"
-msgstr "Värien gammasuodatus"
+msgstr "VÄrien suurkontrastinen suodatus"
 
 #: modules/cdisplay_highcontrast.c:318
-#, fuzzy
 msgid "High Contrast"
-msgstr "Kontrasti"
+msgstr "Suuri kontrasti"
 
 #: modules/cdisplay_highcontrast.c:337
-#, fuzzy
 msgid "Contrast Cycles:"
-msgstr "Kontrasti"
+msgstr "Kontrastisyklejä:"
 
 #: modules/colorsel_gtk.c:53
 msgid "GTK color selector as a pluggable color selector"
