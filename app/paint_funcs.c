@@ -1740,8 +1740,7 @@ combine_inten_a_and_channel_mask_pixels (unsigned char *src,
 	  dest[b] = new_alpha;
 	}
       else
-	for (b = 0; b < bytes; b++)
-	  dest[b] = src[b];
+	memcpy(dest, src, bytes);
 
       /*  advance pointers  */
       src+=bytes;
@@ -1784,8 +1783,7 @@ combine_inten_a_and_channel_selection_pixels (unsigned char *src,
 	  dest[b] = new_alpha;
 	}
       else
-	for (b = 0; b < bytes; b++)
-	  dest[b] = src[b];
+	memcpy(dest, src, bytes);
 
       /*  advance pointers  */
       src+=bytes;
@@ -3353,6 +3351,7 @@ shapeburst_region (PixelRegion *srcPR,
   float *distp_prev;
   float *tmp;
   float min_prev;
+  float float_tmp;
   int min;
   int min_left;
   int length;
@@ -3380,8 +3379,7 @@ shapeburst_region (PixelRegion *srcPR,
   for (i = 0; i < srcPR->h; i++)
     {
       /*  set the current dist row to 0's  */
-      for (j = 0; j < length; j++)
-	distp_cur[j - 1] = 0.0;
+      memset(distp_cur - 1, 0, sizeof(float) * (length - 1));
 
       for (j = 0; j < srcPR->w; j++)
 	{
@@ -3442,10 +3440,10 @@ shapeburst_region (PixelRegion *srcPR,
 	      min++;
 	    }
 
-	  distp_cur[j] = min + fraction / 256.0;
+	  float_tmp = distp_cur[j] = min + fraction / 256.0;
 
-	  if (distp_cur[j] > max_iterations)
-	    max_iterations = distp_cur[j];
+	  if (float_tmp > max_iterations)
+	    max_iterations = float_tmp;
 	}
 
       /*  set the dist row  */

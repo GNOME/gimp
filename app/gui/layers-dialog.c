@@ -784,7 +784,8 @@ layers_dialog_update (int gimage_id)
       list = next_item(list);
       layer_widget_delete (lw);
     }
-  layersD->layer_widgets = free_list (layersD->layer_widgets);
+  free_list (layersD->layer_widgets);
+  layersD->layer_widgets = NULL;
 
   if (! (gimage = gimage_get_ID (layersD->gimage_id)))
     return;

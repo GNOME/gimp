@@ -30,6 +30,7 @@
 
 
 #include <math.h>
+#include <string.h>
 
 #include "appenv.h"
 #include "asupsample.h"
@@ -114,17 +115,8 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 	block = g_malloc((sub_pixel_size + 1) * sizeof(sample_t *)); /* Rows */
 
 	for (y = 0; y < (sub_pixel_size + 1); y++)
-		block[y] = g_malloc((sub_pixel_size + 1) * sizeof(sample_t)); /* Columns */
-
-	for (y = 0; y < (sub_pixel_size + 1); y++)
-		for (x = 0; x < (sub_pixel_size + 1); x++) {
-			block[y][x].ready = 0;
-
-			block[y][x].color.r = 0.0;
-			block[y][x].color.g = 0.0;
-			block[y][x].color.b = 0.0;
-			block[y][x].color.a = 0.0;
-		} /* for */
+	    /* Columns */
+	    block[y] = g_malloc0((sub_pixel_size + 1) * sizeof(sample_t));
 
 	/* Render region */
 
@@ -152,10 +144,9 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 
 			/* Copy samples from top row to block */
 
-			for (xtt = 0, xt = (x - x1) * sub_pixel_size;
-			     xtt < (sub_pixel_size + 1);
-			     xtt++, xt++)
-				block[0][xtt] = top_row[xt];
+			memcpy(block[0],
+			       top_row + ((x - x1) * sub_pixel_size),
+			       sizeof(sample_t) * sub_pixel_size);
 
 			/* Render pixel on (x, y) */
 
@@ -171,10 +162,9 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 
 			top_row[((x - x1) + 1) * sub_pixel_size] = block[0][sub_pixel_size];
 
-			for (xtt = 0, xt = (x - x1) * sub_pixel_size;
-			     xtt < (sub_pixel_size + 1);
-			     xtt++, xt++)
-				bot_row[xt] = block[sub_pixel_size][xtt];
+			memcpy(bot_row + ((x - x1) * sub_pixel_size),
+			       block[sub_pixel_size],
+			       sub_pixel_size * sizeof(sample_t));
 
 			/* Swap first and last columns */
 
@@ -226,7 +216,7 @@ render_sub_pixel(int max_depth, int depth, sample_t **block,
 
 	/* Get offsets for corners */
 
-	dx1 = (double) (x1 - sub_pixel_size / 2) / sub_pixel_size;
+        dx1 = (double) (x1 - sub_pixel_size / 2) / sub_pixel_size;
 	dx3 = (double) (x3 - sub_pixel_size / 2) / sub_pixel_size;
 
 	dy1 = (double) (y1 - sub_pixel_size / 2) / sub_pixel_size;
