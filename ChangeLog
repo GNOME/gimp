@@ -1,5 +1,9 @@
 2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* app/tools/gimpcurvestool.c: reverted.
+	
+2004-06-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* plug-ins/script-fu/scripts: HIG-ified capitalization on
 	all.  Finishes this for everything in plug-ins.  Bug #123699 is
 	now mostly fixed.
