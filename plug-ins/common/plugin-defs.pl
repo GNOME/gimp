@@ -97,6 +97,7 @@
     'snoise' => { libdep => 'gtk' },
     'sobel' => { libdep => 'gtk' },
     'sparkle' => { libdep => 'gtk' },
+    'spheredesigner' => { libdep => 'gtk' },
     'spread' => { libdep => 'gtk' },
     'sunras' => { libdep => 'gtk' },
     'tga' => { libdep => 'gtk' },
