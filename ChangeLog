@@ -1,5 +1,11 @@
 2004-03-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/colortoalpha.c: when running in interactive
+	mode, get the foreground color after restoring the parameters from
+	the last run.
+
+2004-03-11  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_initialize):
 	connect to notify::preview using g_signal_connect_object().
 	Fixes bug #136850.
