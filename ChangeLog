@@ -1,3 +1,7 @@
+Sat Jan 15 15:40:26 CET 2000  Stanislav Brabec  <utx@penguin.cz>
+
+	* plug-ins/webbrowser/webbrowser.c: Small i18n fix.
+
 Sat Jan 15 13:49:37 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/preferences_dialog.c: Moved a few entries to other pages. 

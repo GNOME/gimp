@@ -121,7 +121,7 @@ query ()
 			  "Misha Dynin <misha@xcf.berkeley.edu>",
 			  "Misha Dynin, Jamie Zawinski, Spencer Kimball & Peter Mattis",
 			  "1997",
-			  _("<Toolbox>/Xtns/Web Browser/Open URL..."),
+			  N_("<Toolbox>/Xtns/Web Browser/Open URL..."),
 			  NULL,
 			  PROC_EXTENSION,
 			  nargs, nreturn_vals,
