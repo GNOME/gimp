@@ -600,6 +600,63 @@ file_prefs_ok_callback (GtkWidget *widget,
     gtk_tooltips_disable (tool_tips);
 }
 
+static gint
+file_prefs_restart_delete_callback (GtkWidget *w,
+				    GdkEvent *e,
+				    gpointer   client_data)
+{
+  return FALSE;
+}
+
+static void
+file_prefs_restart_dialog_callback (GtkWidget *w,
+				    gpointer data)
+{
+  GtkWidget *dlg;
+  
+  dlg = (GtkWidget *) data;
+
+  gtk_widget_destroy(dlg);
+}
+
+void
+file_prefs_restart_create ()
+{
+  GtkWidget *shell, *vbox, *label;
+
+  ActionAreaItem action_items[1] =
+  {
+    { "OK", file_prefs_restart_dialog_callback, NULL, NULL }
+  };
+
+  /*  The shell and main vbox  */
+  shell = gtk_dialog_new ();
+
+  gtk_window_set_wmclass (GTK_WINDOW (shell), "restart_notification", "Notice");
+  gtk_window_set_title (GTK_WINDOW (shell), "Notice");
+  gtk_window_set_policy (GTK_WINDOW (shell), FALSE, TRUE, TRUE);
+
+  vbox = gtk_vbox_new (FALSE, 2);
+  gtk_container_border_width (GTK_CONTAINER (vbox), 2);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (shell)->vbox), vbox, TRUE, TRUE, 0);
+
+  label = gtk_label_new ("You will need to restart GIMP for these changes to take effect.");
+  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  /* handle the window manager trying to close the window */
+  gtk_signal_connect (GTK_OBJECT (shell), "delete_event",
+		      GTK_SIGNAL_FUNC (file_prefs_restart_delete_callback),
+		      shell);
+
+  action_items[0].user_data = shell;
+  build_action_area (GTK_DIALOG (shell), action_items, 1, 0);
+
+  gtk_widget_show (vbox);
+  gtk_widget_show (shell);
+}
+
+
 static void
 file_prefs_save_callback (GtkWidget *widget,
 			  GtkWidget *dlg)
@@ -617,6 +674,7 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_palette_path;
   gchar *save_plug_in_path;
   gchar *save_gradient_path;
+  int restart_notification = FALSE;
 
   file_prefs_ok_callback (widget, dlg);
 
@@ -673,56 +731,67 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "stingy-memory-use");
       stingy_memory_use = edit_stingy_memory_use;
+      restart_notification = TRUE;
     }
   if (edit_tile_cache_size != tile_cache_size)
     {
       update = g_list_append (update, "tile-cache-size");
       tile_cache_size = edit_tile_cache_size;
+      restart_notification = TRUE;
     }
-  if (edit_install_cmap != install_cmap)
+  if (edit_install_cmap != old_install_cmap)
     {
       update = g_list_append (update, "install-colormap");
       install_cmap = edit_install_cmap;
+      restart_notification = TRUE;
     }
   if (edit_cycled_marching_ants != cycled_marching_ants)
     {
       update = g_list_append (update, "colormap-cycling");
       cycled_marching_ants = edit_cycled_marching_ants;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (temp_path, edit_temp_path))
     {
       update = g_list_append (update, "temp-path");
       temp_path = edit_temp_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (swap_path, edit_swap_path))
     {
       update = g_list_append (update, "swap-path");
       swap_path = edit_swap_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (brush_path, edit_brush_path))
     {
       update = g_list_append (update, "brush-path");
       brush_path = edit_brush_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (pattern_path, edit_pattern_path))
     {
       update = g_list_append (update, "pattern-path");
       pattern_path = edit_pattern_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (palette_path, edit_palette_path))
     {
       update = g_list_append (update, "palette-path");
       palette_path = edit_palette_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
     {
       update = g_list_append (update, "plug-in-path");
       plug_in_path = edit_plug_in_path;
+      restart_notification = TRUE;
     }
   if (file_prefs_strcmp (gradient_path, edit_gradient_path))
     {
       update = g_list_append (update, "gradient-path");
       gradient_path = edit_gradient_path;
+      restart_notification = TRUE;
     }
   save_gimprc (&update, &remove);
 
@@ -738,6 +807,9 @@ file_prefs_save_callback (GtkWidget *widget,
   palette_path = save_palette_path;
   plug_in_path = save_plug_in_path;
   gradient_path = save_gradient_path;
+
+  if (restart_notification)
+    file_prefs_restart_create();
   
   g_list_free (update);
   g_list_free (remove);
@@ -822,12 +894,12 @@ file_prefs_toggle_callback (GtkWidget *widget,
     cubic_interpolation = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&confirm_on_close)
     confirm_on_close = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&old_stingy_memory_use)
-    old_stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&old_install_cmap)
-    old_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
-  else if (data==&old_cycled_marching_ants)
-    old_cycled_marching_ants = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data==&edit_stingy_memory_use)
+    stingy_memory_use = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data==&edit_install_cmap)
+    edit_install_cmap = GTK_TOGGLE_BUTTON (widget)->active;
+  else if (data==&edit_cycled_marching_ants)
+    edit_cycled_marching_ants = GTK_TOGGLE_BUTTON (widget)->active;
   else if (data==&default_type)
     {
       default_type = (long) gtk_object_get_user_data (GTK_OBJECT (widget));
@@ -1330,7 +1402,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
 			  (GtkSignalFunc) file_prefs_toggle_callback,
-			  &old_stingy_memory_use);
+			  &edit_stingy_memory_use);
       gtk_widget_show (button);
       
       hbox = gtk_hbox_new (FALSE, 2);
@@ -1348,7 +1420,7 @@ file_pref_cmd_callback (GtkWidget *widget,
       gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
       gtk_signal_connect (GTK_OBJECT (entry), "changed",
                           (GtkSignalFunc) file_prefs_text_callback,
-                          &old_tile_cache_size);
+                          &edit_tile_cache_size);
       gtk_widget_show (entry);
       
       button = gtk_check_button_new_with_label("Install colormap (8-bit only)");
@@ -1356,7 +1428,7 @@ file_pref_cmd_callback (GtkWidget *widget,
 				   install_cmap);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
-                          &old_install_cmap);
+                          &edit_install_cmap);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
@@ -1365,8 +1437,10 @@ file_pref_cmd_callback (GtkWidget *widget,
                                    cycled_marching_ants);
       gtk_signal_connect (GTK_OBJECT (button), "toggled",
                           (GtkSignalFunc) file_prefs_toggle_callback,
-                          &old_cycled_marching_ants);
+                          &edit_cycled_marching_ants);
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+      if (g_visual->depth != 8)
+	gtk_widget_set_sensitive (GTK_WIDGET(button), FALSE);
       gtk_widget_show (button);
       
       label = gtk_label_new ("Environment");

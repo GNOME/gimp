@@ -1,3 +1,8 @@
+Fri Apr 10 00:17:23 EDT 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/commands.c: Fixed (hopefully) the preferences code.  Added
+	a warning to restart GIMP for those changes that require restarts.
+
 Fri Apr 10 01:55:50 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* added three new logo-scripts from keebler@wco.com: 
