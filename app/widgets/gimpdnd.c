@@ -1202,18 +1202,28 @@ gimp_dnd_open_files (GtkWidget *widget,
         continue;
 
       D (g_print ("gimp_dnd_open_files: trying to convert "
-                  \"%s\" to an uri.\n", dnd_crap));
+                  "\"%s\" to an uri.\n", dnd_crap));
 
       filename = g_filename_from_uri (dnd_crap, NULL, NULL);
 
-      if (filename) /*  if we got a correctly encoded "file:" uri  */
+      if (filename)
         {
+          /*  if we got a correctly encoded "file:" uri...  */
+
           uri = g_filename_to_uri (filename, NULL, NULL);
 
           g_free (filename);
         }
-      else  /*  else to evil things...  */
+      else if (g_file_test (dnd_crap, G_FILE_TEST_EXISTS))
         {
+          /*  ...else if we got a valid local filename...  */
+
+          uri = g_filename_to_uri (dnd_crap, NULL, NULL);
+        }
+      else
+        {
+          /*  ...otherwise do evil things...  */
+
           const gchar *start = dnd_crap;
 
           if (! strncmp (dnd_crap, "file://", strlen ("file://")))

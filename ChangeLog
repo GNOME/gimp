@@ -1,5 +1,11 @@
 2004-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_open_files): if the dropped
+	stuff is a local filename (no file URI), convert it to an
+	URI instead of forwarding it unmodified.
+
+2004-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimppreview.c (gimp_preview_button_press_event):
 	don't invoke the popup preview if there is no viewable.
 
