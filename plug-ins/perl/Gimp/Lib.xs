@@ -1846,7 +1846,7 @@ gimp_pixel_rgn_get_row(pr, x, y, width)
 	int	y
 	int	width
 	CODE:
-        RETVAL = new_pdl (width, 0, pr->bpp);
+        RETVAL = new_pdl (0, width, pr->bpp);
 	gimp_pixel_rgn_get_row (pr, RETVAL->data, x, y, width);
 	OUTPUT:
 	RETVAL
@@ -1858,7 +1858,7 @@ gimp_pixel_rgn_get_col(pr, x, y, height)
 	int	y
 	int	height
 	CODE:
-        RETVAL = new_pdl (0, height, pr->bpp);
+        RETVAL = new_pdl (height, 0, pr->bpp);
 	gimp_pixel_rgn_get_col (pr, RETVAL->data, x, y, height);
 	OUTPUT:
 	RETVAL
@@ -1871,7 +1871,7 @@ gimp_pixel_rgn_get_rect(pr, x, y, width, height)
 	int	width
 	int	height
 	CODE:
-        RETVAL = new_pdl (width, height, pr->bpp);
+        RETVAL = new_pdl (height, width, pr->bpp);
 	gimp_pixel_rgn_get_rect (pr, RETVAL->data, x, y, width, height);
 	OUTPUT:
 	RETVAL
@@ -1914,7 +1914,7 @@ gimp_pixel_rgn_set_rect(pr, pdl, x, y)
 	int	y
 	CODE:
         old_pdl (&pdl, 2, pr->bpp);
-	gimp_pixel_rgn_set_rect (pr, pdl->data, x, y, pdl->dims[pdl->ndims-1], pdl->dims[pdl->ndims-2]);
+	gimp_pixel_rgn_set_rect (pr, pdl->data, x, y, pdl->dims[pdl->ndims-2], pdl->dims[pdl->ndims-1]);
 
 pdl *
 gimp_pixel_rgn_data(pr,newdata=0)

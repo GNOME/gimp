@@ -39,7 +39,7 @@ sub import {
    my $pkg = shift;
    my $feature;
 
-   local $Gimp::in_query=($ARGV[0] eq "-gimp");
+   local $Gimp::in_query=(@ARGV and $ARGV[0] eq "-gimp");
    while(defined (my $feature = shift)) {
       $feature=~s/^://;
       need($feature);

@@ -1,0 +1,165 @@
+#!/usr/bin/perl
+
+# implements some algorithms described in
+# http://www.biocomputer.com/Thesis.html
+
+use Gimp::Feature 'pdl';
+use Gimp 1.098;
+use Gimp::Fu;
+use Gimp::Util;
+use PDL::LiteF;
+
+register "gouge_smooth",
+         "smooth (low pass filter) an image using the gouge algorithm",
+         "Low-Pass filtering (smoothing) using a fast algorithm found in a paper by James O. Gouge.",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "19990723",
+         "<Image>/Filters/Blur/Gouge",
+         "RGB*, GRAY*",	
+         [],
+         sub {
+   my($image,$drawable)=@_;
+
+   Gimp->progress_init ("Gouge smoothing...");
+
+   my @bounds = $drawable->mask;
+   my @off = $drawable->offsets;
+   $bounds[2]-- if $bounds[0]+$bounds[2] >= ($drawable->offsets)[0]+$drawable->width;
+   $bounds[3]-- if $bounds[1]+$bounds[3] >= ($drawable->offsets)[1]+$drawable->height;
+   {
+      my $src = new PixelRgn ($drawable->get,@bounds[0,1],$bounds[2]+1,$bounds[3]+1,0,0);
+      my $dst = new PixelRgn ($drawable->get,@bounds,1,1);
+
+      my $bpp = $src->bpp > 1 ? ":," : "";
+
+      $iter = Gimp->pixel_rgns_register ($dst);
+
+      do {
+         my ($x,$y,$w,$h)=($dst->x,$dst->y,$dst->w,$dst->h);
+
+         my $reg = $src->get_rect($x,$y,$w+1,$h+1)->convert(short);
+
+         $dst->data(($reg->slice("${bpp}0:-2,0:-2")+
+                     $reg->slice("${bpp}1:-1,0:-2")+
+                     $reg->slice("${bpp}1:-1,1:-1")+
+                     $reg->slice("${bpp}0:-2,1:-1"))>>2);
+
+         Gimp->progress_update (($dst->y-$bounds[1])/$bounds[2]);
+      } while (Gimp->pixel_rgns_process ($iter));
+   }
+   Gimp->progress_update (1);
+
+   $drawable->merge_shadow (1);
+   $drawable->update (@bounds);
+
+   ();
+};
+
+register "gouge_contrast",
+         "contrast enhance an image using the gouge algorithm",
+         "Contrast Enhance an image using a fast algorithm found in a paper by James O. Gouge.",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "19990723",
+         "<Image>/Filters/Enhance/Contrast",
+         "RGB*, GRAY*",	
+         [],
+         sub {
+   my($image,$drawable)=@_;
+
+   Gimp->progress_init ("Gouge contrast enhancing...");
+
+   my @bounds = $drawable->mask;
+   my @off = $drawable->offsets;
+   $bounds[2]-- if $bounds[0]+$bounds[2] >= ($drawable->offsets)[0]+$drawable->width;
+   $bounds[3]-- if $bounds[1]+$bounds[3] >= ($drawable->offsets)[1]+$drawable->height;
+   {
+      my $src = new PixelRgn ($drawable->get,@bounds[0,1],$bounds[2]+1,$bounds[3]+1,0,0);
+      my $dst = new PixelRgn ($drawable->get,@bounds,1,1);
+
+      my $bpp = $src->bpp > 1 ? ":," : "";
+
+      $iter = Gimp->pixel_rgns_register ($dst);
+
+      do {
+         my ($x,$y,$w,$h)=($dst->x,$dst->y,$dst->w,$dst->h);
+
+         my $reg = $src->get_rect($x,$y,$w+1,$h+1)->convert(short);
+         my $T   = $reg->slice("${bpp}0:-2,0:-2");
+         my $D   = $reg->slice("${bpp}1:-1,1:-1");
+
+         $dst->data((($T<<1)-$D)->clip(0,255));
+
+         Gimp->progress_update (($dst->y-$bounds[1])/$bounds[2]);
+      } while (Gimp->pixel_rgns_process ($iter));
+   }
+   Gimp->progress_update (1);
+
+   $drawable->merge_shadow (1);
+   $drawable->update (@bounds);
+
+   ();
+};
+
+register "gouge_edge",
+         "detect edges in an image using the gouge algorithm",
+         "Detect edges in the image using a fast algorithm found in a paper by James O. Gouge. It is similar to Sobel, yet sharper.",
+         "Marc Lehmann",
+         "Marc Lehmann <pcg\@goof.com>",
+         "19990723",
+         "<Image>/Filters/Edge-Detect/Gouge",
+         "RGB*, GRAY*",	
+         [],
+         sub {
+   my($image,$drawable)=@_;
+
+   Gimp->progress_init ("Gouge edge detection...");
+
+   my @bounds = $drawable->mask;
+   my @off = $drawable->offsets;
+   $bounds[2]-- if $bounds[0]+$bounds[2] >= ($drawable->offsets)[0]+$drawable->width;
+   $bounds[3]-- if $bounds[1]+$bounds[3] >= ($drawable->offsets)[1]+$drawable->height;
+   {
+      my $src = new PixelRgn ($drawable->get,@bounds[0,1],$bounds[2]+1,$bounds[3]+1,0,0);
+      my $dst = new PixelRgn ($drawable->get,@bounds,1,1);
+
+      my $bpp = $src->bpp > 1 ? ":," : "";
+
+      $iter = Gimp->pixel_rgns_register ($dst);
+
+      do {
+         my ($x,$y,$w,$h)=($dst->x,$dst->y,$dst->w,$dst->h);
+
+         my $reg = $src->get_rect($x,$y,$w+1,$h+1)->convert(short);
+         my $T   = $reg->slice("${bpp}0:-2,0:-2");
+         my $R   = $reg->slice("${bpp}1:-1,0:-2");
+         my $D   = $reg->slice("${bpp}1:-1,1:-1");
+
+         $dst->data(abs(cat($T-$R,$T-$D))
+                    ->convert(byte)
+                    ->mv(!!$bpp+2,0)
+                    ->maximum);
+
+         Gimp->progress_update (($src->y-$bounds[1])/$bounds[2]);
+      } while (Gimp->pixel_rgns_process ($iter));
+   }
+   Gimp->progress_update (1);
+
+   $drawable->merge_shadow (1);
+   $drawable->update (@bounds);
+
+   ();
+};
+
+exit main;
+
+
+
+
+
+
+
+
+
+
