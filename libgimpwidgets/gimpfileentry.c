@@ -309,7 +309,7 @@ gimp_file_selection_entry_focus_out_callback (GtkWidget *widget,
 {
   gimp_file_selection_entry_callback (widget, data);
 
-  return TRUE;
+  return FALSE;
 }
 
 /*  local callbacks of gimp_file_selection_browse_callback()  */

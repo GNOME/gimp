@@ -70,6 +70,7 @@ struct _TextOptions
 {
   GimpToolOptions  tool_options;
 
+  gchar           *fontname_d;
   GtkWidget       *font_selection;
 
   gdouble          size;
@@ -226,17 +227,17 @@ text_tool_options_reset (GimpToolOptions *tool_options)
 
   options = (TextOptions *) tool_options;
 
-  /* FIXME: reset font */
-  
+  gimp_font_selection_set_fontname 
+    (GIMP_FONT_SELECTION (options->font_selection), options->fontname_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->size_w),
 			    options->size_d);
   gtk_adjustment_set_value (GTK_ADJUSTMENT (options->border_w),
 			    options->border_d);
   
+  /* resetting the unit menu is a bit tricky ... */
   options->unit = options->unit_d;
   gimp_unit_menu_set_unit (GIMP_UNIT_MENU (options->unit_w),
                            options->unit_d);
-
   spinbutton =
     g_object_get_data (G_OBJECT (options->unit_w), "set_digits");
   while (spinbutton)
@@ -253,20 +254,23 @@ text_tool_options_new (GimpTextTool *text_tool)
   TextOptions *options;
   GtkWidget   *vbox;
   GtkWidget   *table;
-  GtkWidget   *spinbutton;
+  GtkWidget   *size_spinbutton;
+  GtkWidget   *border_spinbutton;
 
   options = g_new0 (TextOptions, 1);
   tool_options_init ((GimpToolOptions *) options, text_tool_options_reset);
 
-  options->border = options->border_d = 0;
-  options->size   = options->size_d   = DEFAULT_FONT_SIZE;
-  options->unit   = options->unit_d   = GIMP_UNIT_PIXEL;
+  options->fontname_d                   = DEFAULT_FONT;
+  options->border  = options->border_d  = 0;
+  options->size    = options->size_d    = DEFAULT_FONT_SIZE;
+  options->unit    = options->unit_d    = GIMP_UNIT_PIXEL;
 
   /*  the main vbox  */
   vbox = options->tool_options.main_vbox;
 
   options->font_selection = gimp_font_selection_new (text_tool->pango_context);
-  gimp_font_selection_set_fontname (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);
+  gimp_font_selection_set_fontname 
+    (GIMP_FONT_SELECTION (options->font_selection), DEFAULT_FONT);
   gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET (options->font_selection),
                       FALSE, FALSE, 0);
   gtk_widget_show (options->font_selection);
@@ -278,29 +282,27 @@ text_tool_options_new (GimpTextTool *text_tool)
 
   options->size_w = gtk_adjustment_new (options->size_d, 1e-5, 32767.0,
                                         1.0, 50.0, 0.0);
-  spinbutton = 
+  size_spinbutton = 
     gtk_spin_button_new (GTK_ADJUSTMENT (options->size_w), 1.0, 0.0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (size_spinbutton), TRUE);
   g_signal_connect (G_OBJECT (options->size_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->size);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Size:"), 1.0, 0.5,
-                             spinbutton, 1, FALSE);
+                             size_spinbutton, 1, FALSE);
 
   options->border_w = gtk_adjustment_new (options->border_d, 1e-5, 32767.0,
                                           1.0, 50.0, 0.0);
-  spinbutton =
+  border_spinbutton =
     gtk_spin_button_new (GTK_ADJUSTMENT (options->border_w), 1.0, 0.0);
-  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (spinbutton), TRUE);
-  gtk_widget_set_usize (spinbutton, 75, 0);
+  gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (border_spinbutton), TRUE);
   g_signal_connect (G_OBJECT (options->border_w), "value_changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &options->border);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("Border:"), 1.0, 0.5,
-                             spinbutton, 1, FALSE);
+                             border_spinbutton, 1, FALSE);
 
   options->unit_w =
     gimp_unit_menu_new ("%a", options->unit_d, TRUE, FALSE, TRUE);
@@ -308,10 +310,13 @@ text_tool_options_new (GimpTextTool *text_tool)
                     G_CALLBACK (gimp_unit_menu_update),
                     &options->unit);
   g_object_set_data (G_OBJECT (options->unit_w), "set_digits",
-                     spinbutton);
+                     size_spinbutton);
+  g_object_set_data (G_OBJECT (size_spinbutton), "set_digits",
+                     border_spinbutton);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("Unit:"), 1.0, 0.5,
                              options->unit_w, 1, FALSE);
+
   gtk_widget_show (table);
 
   return options;
@@ -360,7 +365,7 @@ text_tool_button_press (GimpTool       *tool,
   if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage,
                                                 text_tool->click_x,
                                                 text_tool->click_y)))
-    /*  If there is a floating selection, and this aint it, use the move tool  */
+    /* if there is a floating selection, and this aint it, use the move tool */
     if (gimp_layer_is_floating_sel (layer))
       {
 	init_edit_selection (tool, gdisp, bevent, EDIT_LAYER_TRANSLATE);
@@ -390,7 +395,7 @@ text_tool_cursor_update (GimpTool       *tool,
 			       &x, &y, FALSE, FALSE);
 
   if ((layer = gimp_image_pick_correlate_layer (gdisp->gimage, x, y)))
-    /*  if there is a floating selection, and this aint it...  */
+    /* if there is a floating selection, and this aint it ... */
     if (gimp_layer_is_floating_sel (layer))
       {
 	gdisplay_install_tool_cursor (gdisp, GDK_FLEUR,
@@ -399,8 +404,7 @@ text_tool_cursor_update (GimpTool       *tool,
 	return;
       }
 
-  gdisplay_install_tool_cursor (gdisp,
-				GDK_XTERM,
+  gdisplay_install_tool_cursor (gdisp, GDK_XTERM,
 				GIMP_TEXT_TOOL_CURSOR,
 				GIMP_CURSOR_MODIFIER_NONE);
 }
@@ -412,12 +416,37 @@ text_tool_render (GimpTextTool *text_tool)
   PangoFontDescription *font_desc;
   gchar                *fontname;
   gchar                *text;
+  gdouble               border; 
+  gdouble               size;
+  gdouble               factor;
 
   gdisp = text_tool->gdisp;
   
-  font_desc = gimp_font_selection_get_font_desc (GIMP_FONT_SELECTION (text_tool_options->font_selection));
+  font_desc = gimp_font_selection_get_font_desc 
+    (GIMP_FONT_SELECTION (text_tool_options->font_selection));
+
+  if (!font_desc)
+    {
+      g_message (_("No font choosen or font invalid."));
+      return;
+    }
   
-  font_desc->size = (gdouble) PANGO_SCALE * MAX (1, text_tool_options->size);
+  size   = text_tool_options->size;
+  border = text_tool_options->border;
+
+  switch (text_tool_options->unit)
+    {
+    case GIMP_UNIT_PIXEL:
+      break;
+    default:
+      factor = (gdisp->gimage->xresolution / 
+                gimp_unit_get_factor (text_tool_options->unit));
+      size   *= factor;
+      border *= factor;
+      break;
+    }
+
+  font_desc->size = (gdouble) PANGO_SCALE * MAX (1, size);
   fontname = pango_font_description_to_string (font_desc);
   pango_font_description_free (font_desc);
 
@@ -425,7 +454,7 @@ text_tool_render (GimpTextTool *text_tool)
 
   text_render (gdisp->gimage, gimp_image_active_drawable (gdisp->gimage),
 	       text_tool->click_x, text_tool->click_y,
-	       fontname, text, text_tool_options->border,
+	       fontname, text, border,
                TRUE /* antialias */);
 
   g_free (fontname);
@@ -449,7 +478,7 @@ text_render (GimpImage    *gimage,
   PangoRectangle        ink;
   PangoRectangle        logical;
   GimpImageType         layer_type;
-  GimpLayer            *layer;
+  GimpLayer            *layer = NULL;
 
   g_return_val_if_fail (fontname != NULL, FALSE);
   g_return_val_if_fail (text != NULL, FALSE);
@@ -476,6 +505,11 @@ text_render (GimpImage    *gimage,
 
   pango_layout_get_pixel_extents (layout, &ink, &logical);
 
+  g_print ("ink rect: %d x %d @ %d, %d\n", 
+           ink.width, ink.height, ink.x, ink.y);
+  g_print ("logical rect: %d x %d @ %d, %d\n", 
+           logical.width, logical.height, logical.x, logical.y);
+  
   if (ink.width > 0 && ink.height > 0)
     {
       TileManager *mask;
@@ -496,15 +530,10 @@ text_render (GimpImage    *gimage,
 
       bitmap.buffer = g_malloc0 (bitmap.rows * bitmap.pitch);
       
-      g_print ("ink rect: %d x %d @ %d, %d\n", 
-               ink.width, ink.height, ink.x, ink.y);
-      g_print ("logical rect: %d x %d @ %d, %d\n", 
-               logical.width, logical.height, logical.x, logical.y);
-
       pango_ft2_render_layout (&bitmap, layout, 
                                - ink.x,
                                - ink.height - ink.y);
-      
+     
       width  = ink.width  + 2 * border;
       height = ink.height + 2 * border;
 

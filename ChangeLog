@@ -1,3 +1,17 @@
+2001-08-14  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimptexttool.c: take image resolution and choosen unit 
+	into account for font and border size.
+	
+	* app/widgets/gimpfontselection-dialog.[ch]
+	* app/widgets/gimpfontselection.[ch]
+	* app/widgets/widgets-types.h: added an indicator for font validity.
+	Added a font preview to the font selection dialog.
+	
+	* libgimpwidgets/gimpfileselection.c: return FALSE from 
+	gimp_file_selection_entry_focus_out_callback() since we do not want
+	to stop signal emission.
+	
 2001-08-12  Michael Natterer  <mitch@gimp.org>
 
 	Switched to GObject reference counting:

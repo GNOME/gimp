@@ -39,13 +39,15 @@ typedef struct _GimpFontSelectionClass  GimpFontSelectionClass;
 
 struct _GimpFontSelection
 {
-  GtkHBox               parent_instance;
+  GtkHBox                  parent_instance;
 
-  PangoContext         *context;
-  PangoFontDescription *font_desc;
+  PangoContext            *context;
+  PangoFontDescription    *font_desc;
 
-  GtkWidget            *entry;
-  GtkWidget            *dialog;
+  GtkWidget               *valid;
+  GtkWidget               *entry;
+
+  GimpFontSelectionDialog *dialog;
 };
 
 struct _GimpFontSelectionClass

@@ -28,6 +28,9 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <pango/pangoft2.h>
+
+#include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
@@ -42,10 +45,27 @@
 #define  FONT_STYLE_LIST_WIDTH  170
 
 
-static void   gimp_font_selection_dialog_class_init (GimpFontSelectionDialogClass *klass);
-static void   gimp_font_selection_dialog_init       (GimpFontSelectionDialog      *dialog);
-static void   gimp_font_selection_dialog_finalize   (GObject                      *object);
+struct _GimpFontSelectionDialog
+{
+  GimpFontSelection    *fontsel;
+  PangoFontDescription *font_desc;
 
+  GtkWidget            *dialog;
+
+  GtkWidget            *font_clist;
+  GtkWidget            *font_style_clist;
+
+  GtkWidget            *preview;
+  FT_Bitmap             bitmap;
+  PangoLayout          *layout;
+};
+
+
+static void   gimp_font_selection_dialog_ok           (GtkWidget      *widget,
+                                                       gpointer        data);
+static void   gimp_font_selection_dialog_apply        (GtkWidget      *widget,
+                                                       gpointer        data);
+static void   gimp_font_selection_dialog_preview      (GimpFontSelectionDialog *dialog);
 static void   gimp_font_selection_dialog_select_font  (GtkWidget      *widget,
                                                        gint            row,
                                                        gint            column,
@@ -56,62 +76,86 @@ static void   gimp_font_selection_dialog_select_style (GtkWidget      *widget,
                                                        gint            column,
                                                        GdkEventButton *bevent,
                                                        gpointer        data);
-static void   gimp_font_selection_dialog_response     (GimpFontSelectionDialog      *dialog,
-                                                       gint                          response_id,
-                                                       gpointer                      data);
 
 static void   gimp_font_selection_dialog_show_available_fonts  (GimpFontSelectionDialog *dialog);
 static void   gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialog);
+static gboolean  gimp_font_selection_dialog_preview_expose (GtkWidget      *widget,
+                                                            GdkEventExpose *event,
+                                                            gpointer        data);
+static void      gimp_font_selection_dialog_preview_resize (GtkWidget      *widget,
+                                                            GtkAllocation  *allocation,
+                                                            gpointer        data);
+static void      gimp_font_selection_dialog_preview        (GimpFontSelectionDialog *dialog);
 
 
-static GtkDialogClass *parent_class = NULL;
-
-
-GType
-gimp_font_selection_dialog_get_type (void)
+/**
+ * gimp_font_selection_dialog_new:
+ * @fontsel: the GimpFontSelection that creates and owns this dialog.
+ *
+ * Creates a new #GimpFontSelectionDialog.
+ *
+ * Returns: A pointer to the new #GimpFontSelectionDialog.
+ **/
+GimpFontSelectionDialog *
+gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
 {
-  static GType dialog_type = 0;
+  GimpFontSelectionDialog *dialog;
 
-  if (!dialog_type)
-    {
-      static const GTypeInfo dialog_info =
-      {
-        sizeof (GimpFontSelectionDialogClass),
-	(GBaseInitFunc) NULL,
-	(GBaseFinalizeFunc) NULL,
-	(GClassInitFunc) gimp_font_selection_dialog_class_init,
-	NULL,		/* class_finalize */
-	NULL,		/* class_data     */
-	sizeof (GimpFontSelectionDialog),
-	0,              /* n_preallocs    */
-	(GInstanceInitFunc) gimp_font_selection_dialog_init,
-      };
-
-      dialog_type = g_type_register_static (GTK_TYPE_DIALOG, 
-                                            "GimpFontSelectionDialog", 
-                                             &dialog_info, 0);
-    }
-  
-  return dialog_type;
-}
-
-static void
-gimp_font_selection_dialog_class_init (GimpFontSelectionDialogClass *klass)
-{
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
-  
-  parent_class = g_type_class_peek_parent (klass);
-
-  object_class->finalize = gimp_font_selection_dialog_finalize;
-}
-
-static void
-gimp_font_selection_dialog_init (GimpFontSelectionDialog *dialog)
-{
   GtkWidget *scrolled_win;
   GtkWidget *table;
   GtkWidget *label;
-  GtkWidget *button;
+  GtkWidget *frame;
+
+  g_return_val_if_fail (GIMP_IS_FONT_SELECTION (fontsel), NULL);
+
+  dialog = g_new0 (GimpFontSelectionDialog, 1);
+
+  dialog->fontsel = fontsel;
+
+  if (fontsel->font_desc)
+    dialog->font_desc = pango_font_description_copy (fontsel->font_desc);
+  else
+    dialog->font_desc = pango_font_description_from_string ("");
+
+  dialog->layout = pango_layout_new (fontsel->context);
+  pango_layout_set_text (dialog->layout, 
+                         "my mind is going ...", -1);
+
+  dialog->dialog = 
+    gimp_dialog_new (_("GIMP Font Selection"), "font_selection",
+                     gimp_standard_help_func, "dialogs/font_selection.html",
+                     GTK_WIN_POS_MOUSE,
+                     FALSE, TRUE, TRUE,
+                     
+                     GTK_STOCK_OK, gimp_font_selection_dialog_ok,
+                     dialog, NULL, NULL, TRUE, FALSE,
+                     
+                     GTK_STOCK_APPLY, gimp_font_selection_dialog_apply,
+                     dialog, NULL, NULL, TRUE, FALSE,
+                     
+                     GTK_STOCK_CANCEL, gtk_widget_hide,
+                     NULL, (gpointer) 1, NULL, FALSE, TRUE,
+                     
+                     NULL);
+
+  gtk_container_set_border_width (GTK_CONTAINER (dialog->dialog), 1);
+
+  /* Create the font preview */
+  frame = gtk_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox), frame, 
+                      FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+ 
+  dialog->preview = gtk_drawing_area_new ();
+  gtk_widget_set_usize (dialog->preview, -1, 30);
+  gtk_container_add (GTK_CONTAINER (frame), dialog->preview);
+  gtk_widget_show (dialog->preview);
+  g_signal_connect (G_OBJECT (dialog->preview), "size_allocate",
+                    G_CALLBACK (gimp_font_selection_dialog_preview_resize),
+                    dialog);
+  g_signal_connect (G_OBJECT (dialog->preview), "expose_event",
+                    G_CALLBACK (gimp_font_selection_dialog_preview_expose),
+                    dialog);
 
   /* Create the table of font & style. */
   table = gtk_table_new (2, 2, FALSE);
@@ -165,7 +209,7 @@ gimp_font_selection_dialog_init (GimpFontSelectionDialog *dialog)
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
 		    GTK_FILL, 0, 0, 0);
 
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), table, 
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox), table, 
                       FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -177,69 +221,37 @@ gimp_font_selection_dialog_init (GimpFontSelectionDialog *dialog)
                     G_CALLBACK (gimp_font_selection_dialog_select_style),
                     dialog);
 
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog), 
-                                  GTK_STOCK_OK, GTK_RESPONSE_OK);
-  gtk_widget_grab_default (button);
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  GTK_STOCK_APPLY, GTK_RESPONSE_APPLY);
-  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
-
-  g_signal_connect (GTK_DIALOG (dialog), "response",
-                    G_CALLBACK (gimp_font_selection_dialog_response),
-                    NULL);
-                    
-}
-
-static void
-gimp_font_selection_dialog_finalize (GObject *object)
-{
-  GimpFontSelectionDialog *dialog = GIMP_FONT_SELECTION_DIALOG (object);
-
-  if (dialog->font_desc)
-    pango_font_description_free (dialog->font_desc);
-
-  if (G_OBJECT_CLASS (parent_class)->finalize)
-    G_OBJECT_CLASS (parent_class)->finalize (object);
-}
-
-
-/**
- * gimp_font_selection_dialog_new:
- * @fontsel: the GimpFontSelection that creates and owns this dialog.
- *
- * Creates a new #GimpFontSelectionDialog.
- *
- * Returns: A pointer to the new #GimpFontSelectionDialog.
- **/
-GtkWidget *
-gimp_font_selection_dialog_new (GimpFontSelection *fontsel)
-{
-  GimpFontSelectionDialog *dialog;
-
-  g_return_val_if_fail (GIMP_IS_FONT_SELECTION (fontsel), NULL);
-
-  dialog= g_object_new (GIMP_TYPE_FONT_SELECTION_DIALOG, NULL);
-  dialog->fontsel = fontsel;
-
-  if (fontsel->font_desc)
-    dialog->font_desc = pango_font_description_copy (fontsel->font_desc);
-  else
-    dialog->font_desc = pango_font_description_from_string ("");
-
-  gtk_window_set_title (GTK_WINDOW (dialog), _("GIMP Font Selection"));  
-
   gimp_font_selection_dialog_show_available_fonts (dialog);  
   gimp_font_selection_dialog_show_available_styles (dialog);
 
-  return GTK_WIDGET (dialog);
+  gimp_font_selection_dialog_preview (dialog);
+
+  return dialog;
+}
+
+void 
+gimp_font_selection_dialog_destroy (GimpFontSelectionDialog *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+
+  gtk_widget_destroy (dialog->dialog);
+  g_free (dialog->bitmap.buffer);
+  g_free (dialog);
+}
+
+void 
+gimp_font_selection_dialog_show (GimpFontSelectionDialog *dialog)
+{
+  g_return_if_fail (dialog != NULL);
+  
+  gtk_widget_show (dialog->dialog);
 }
 
 void
 gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
                                           PangoFontDescription    *new_desc)
 {
-  g_return_if_fail (GIMP_IS_FONT_SELECTION_DIALOG (dialog));
+  g_return_if_fail (dialog != NULL);
  
   if (dialog->font_desc)
     pango_font_description_free (dialog->font_desc);
@@ -248,6 +260,25 @@ gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
   
   gimp_font_selection_dialog_show_available_fonts (dialog);  
   gimp_font_selection_dialog_show_available_styles (dialog);
+}
+
+static void
+gimp_font_selection_dialog_ok (GtkWidget *widget,
+                               gpointer   data)
+{
+  GimpFontSelectionDialog *dialog = (GimpFontSelectionDialog *) data;
+
+  gimp_font_selection_set_font_desc (dialog->fontsel, dialog->font_desc);
+  gtk_widget_hide (dialog->dialog);
+}
+
+static void
+gimp_font_selection_dialog_apply (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpFontSelectionDialog *dialog = (GimpFontSelectionDialog *) data;
+
+  gimp_font_selection_set_font_desc (dialog->fontsel, dialog->font_desc);
 }
 
 static void
@@ -261,7 +292,7 @@ gimp_font_selection_dialog_select_font (GtkWidget      *widget,
   gchar *family_name;
   gint   index;
 
-  dialog = GIMP_FONT_SELECTION_DIALOG (data);
+  dialog = (GimpFontSelectionDialog *) data;
 
   if (GTK_CLIST (dialog->font_clist)->selection)
     {
@@ -280,6 +311,8 @@ gimp_font_selection_dialog_select_font (GtkWidget      *widget,
           if (gtk_clist_row_is_visible (GTK_CLIST (dialog->font_style_clist), 0) != GTK_VISIBILITY_FULL)
             gtk_clist_moveto (GTK_CLIST (dialog->font_style_clist), 0, -1,
                               0.5, 0);
+
+          gimp_font_selection_dialog_preview (dialog);
 	}
     }
 } 
@@ -296,7 +329,7 @@ gimp_font_selection_dialog_select_style (GtkWidget      *widget,
   gchar *style_name;
   gint   index;
 
-  dialog    = GIMP_FONT_SELECTION_DIALOG (data);
+  dialog = (GimpFontSelectionDialog *) data;
 
   if (GTK_CLIST (dialog->font_style_clist)->selection)
     {
@@ -313,29 +346,10 @@ gimp_font_selection_dialog_select_style (GtkWidget      *widget,
           
           pango_font_description_free (tmp_desc);
 	}
+
+      gimp_font_selection_dialog_preview (dialog);
     }
 }     
-
-static void
-gimp_font_selection_dialog_response (GimpFontSelectionDialog *dialog,
-                                     gint                     response_id,
-                                     gpointer                 data)
-{
-  switch (response_id)
-    {
-    case GTK_RESPONSE_OK:
-      gtk_widget_hide (GTK_WIDGET (dialog));      
-      /* fallthrough */
-    case GTK_RESPONSE_APPLY:
-      gimp_font_selection_set_font_desc (dialog->fontsel, dialog->font_desc);
-      break;
-    case GTK_RESPONSE_CLOSE:
-      gtk_widget_hide (GTK_WIDGET (dialog));
-      break;
-    default:
-      break;
-    }
-}
 
 static int
 compare_strings (gconstpointer a, 
@@ -449,3 +463,90 @@ gimp_font_selection_dialog_show_available_styles (GimpFontSelectionDialog *dialo
 
   pango_font_descriptions_free (descs, n_descs);
 }  
+
+static void
+gimp_font_selection_dialog_preview (GimpFontSelectionDialog *dialog)
+{
+  PangoRectangle rect;
+
+  if (dialog->font_desc)
+    {
+      dialog->font_desc->size = PANGO_SCALE * 24;
+      pango_layout_set_font_description (dialog->layout, dialog->font_desc);
+      dialog->font_desc->size = 0;
+
+      pango_layout_get_pixel_extents (dialog->layout, NULL, &rect);
+
+      if (rect.height + 4 > dialog->preview->allocation.height)
+        gtk_widget_set_usize (dialog->preview, -1, rect.height + 4);
+
+      /* FIXME: align on baseline */
+      
+      memset (dialog->bitmap.buffer, 0,
+              dialog->bitmap.rows * dialog->bitmap.pitch);
+      pango_ft2_render_layout (&dialog->bitmap, dialog->layout, 2, 2);
+    }
+
+  gtk_widget_queue_draw (dialog->preview);
+}
+
+static gboolean
+gimp_font_selection_dialog_preview_expose (GtkWidget      *widget,
+                                           GdkEventExpose *event,
+                                           gpointer        data)
+{
+  GimpFontSelectionDialog *dialog = (GimpFontSelectionDialog *) data;
+  GdkRectangle            *area;
+  
+  if (!GTK_WIDGET_DRAWABLE (widget))
+    return FALSE;
+
+  area = &event->area;
+  gdk_draw_rectangle (widget->window,
+                      widget->style->white_gc,
+                      TRUE, area->x, area->y, area->width, area->height);      
+  
+  if (dialog->font_desc && dialog->bitmap.buffer)
+    {
+      guchar *src;
+      GdkGC  *gc;
+
+      src = dialog->bitmap.buffer + area->y * dialog->bitmap.pitch + area->x;
+
+      gc = widget->style->fg_gc[GTK_WIDGET_STATE (widget)];
+      gdk_gc_set_function (gc, GDK_COPY_INVERT);
+
+      gdk_draw_gray_image (widget->window,
+                           widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
+                           area->x, area->y, 
+                           area->width, area->height,
+                           GDK_RGB_DITHER_NORMAL, 
+                           src, dialog->bitmap.pitch);
+
+      gdk_gc_set_function (gc, GDK_COPY);
+    }
+
+  return FALSE;
+}
+
+static void
+gimp_font_selection_dialog_preview_resize (GtkWidget     *widget,
+                                           GtkAllocation *allocation,
+                                           gpointer       data)
+{
+  GimpFontSelectionDialog *dialog = (GimpFontSelectionDialog *) data;
+  FT_Bitmap *bitmap;
+  
+  bitmap = &dialog->bitmap;
+  if (bitmap->buffer)
+    g_free (bitmap->buffer);
+
+  bitmap->rows  = allocation->height;
+  bitmap->width = allocation->width;
+  bitmap->pitch = allocation->width;
+  if (bitmap->pitch & 3)
+    bitmap->pitch += 4 - (bitmap->pitch & 3);
+  bitmap->buffer = g_malloc (bitmap->rows * bitmap->pitch);
+
+  gimp_font_selection_dialog_preview (dialog);
+}

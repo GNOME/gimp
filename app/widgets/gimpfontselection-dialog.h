@@ -28,37 +28,11 @@ extern "C" {
 #endif /* __cplusplus */
 
 
-#define GIMP_TYPE_FONT_SELECTION_DIALOG            (gimp_font_selection_dialog_get_type ())
-#define GIMP_FONT_SELECTION_DIALOG(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FONT_SELECTION_DIALOG, GimpFontSelectionDialog))
-#define GIMP_FONT_SELECTION_DIALOG_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FONT_SELECTION_DIALOG, GimpFontSelectionDialogClass))
-#define GIMP_IS_FONT_SELECTION_DIALOG(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_FONT_SELECTION_DIALOG))
-#define GIMP_IS_FONT_SELECTION_DIALOG_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FONT_SELECTION_DIALOG))
-
-
-typedef struct _GimpFontSelectionDialog       GimpFontSelectionDialog;
-typedef struct _GimpFontSelectionDialogClass  GimpFontSelectionDialogClass;
-
-struct _GimpFontSelectionDialog
-{
-  GtkDialog             parent_instance;
-
-  GimpFontSelection    *fontsel;
-  PangoFontDescription *font_desc;
-
-  GtkWidget            *font_clist;
-  GtkWidget            *font_style_clist;
-};
-
-struct _GimpFontSelectionDialogClass
-{
-  GtkDialogClass        parent_class;
-};
-
-
-GType        gimp_font_selection_dialog_get_type (void);
-GtkWidget *  gimp_font_selection_dialog_new      (GimpFontSelection *fontsel);
-void    gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
-                                                  PangoFontDescription    *new_desc);
+GimpFontSelectionDialog * gimp_font_selection_dialog_new (GimpFontSelection *fontsel);
+void gimp_font_selection_dialog_destroy       (GimpFontSelectionDialog *dialog);
+void gimp_font_selection_dialog_show          (GimpFontSelectionDialog *dialog);
+void gimp_font_selection_dialog_set_font_desc (GimpFontSelectionDialog *dialog,
+                                               PangoFontDescription    *new_desc);
 
 
 #ifdef __cplusplus

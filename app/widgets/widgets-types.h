@@ -112,49 +112,50 @@ typedef struct _GimpDialogFactory     GimpDialogFactory;
 
 /*  widgets  */
 
-typedef struct _GimpPreview           GimpPreview;
-typedef struct _GimpImagePreview      GimpImagePreview;
-typedef struct _GimpDrawablePreview   GimpDrawablePreview;
-typedef struct _GimpBrushPreview      GimpBrushPreview;
-typedef struct _GimpNavigationPreview GimpNavigationPreview;
-typedef struct _GimpPatternPreview    GimpPatternPreview;
-typedef struct _GimpPalettePreview    GimpPalettePreview;
-typedef struct _GimpGradientPreview   GimpGradientPreview;
-typedef struct _GimpToolInfoPreview   GimpToolInfoPreview;
-typedef struct _GimpBufferPreview     GimpBufferPreview;
+typedef struct _GimpPreview             GimpPreview;
+typedef struct _GimpImagePreview        GimpImagePreview;
+typedef struct _GimpDrawablePreview     GimpDrawablePreview;
+typedef struct _GimpBrushPreview        GimpBrushPreview;
+typedef struct _GimpNavigationPreview   GimpNavigationPreview;
+typedef struct _GimpPatternPreview      GimpPatternPreview;
+typedef struct _GimpPalettePreview      GimpPalettePreview;
+typedef struct _GimpGradientPreview     GimpGradientPreview;
+typedef struct _GimpToolInfoPreview     GimpToolInfoPreview;
+typedef struct _GimpBufferPreview       GimpBufferPreview;
 
-typedef struct _GimpContainerMenu     GimpContainerMenu;
-typedef struct _GimpContainerMenuImpl GimpContainerMenuImpl;
+typedef struct _GimpContainerMenu       GimpContainerMenu;
+typedef struct _GimpContainerMenuImpl   GimpContainerMenuImpl;
 
-typedef struct _GimpMenuItem          GimpMenuItem;
+typedef struct _GimpMenuItem            GimpMenuItem;
 
-typedef struct _GimpContainerView     GimpContainerView;
-typedef struct _GimpContainerListView GimpContainerListView;
-typedef struct _GimpContainerGridView GimpContainerGridView;
+typedef struct _GimpContainerView       GimpContainerView;
+typedef struct _GimpContainerListView   GimpContainerListView;
+typedef struct _GimpContainerGridView   GimpContainerGridView;
 
-typedef struct _GimpDrawableListView  GimpDrawableListView;
-typedef struct _GimpLayerListView     GimpLayerListView;
-typedef struct _GimpChannelListView   GimpChannelListView;
+typedef struct _GimpDrawableListView    GimpDrawableListView;
+typedef struct _GimpLayerListView       GimpLayerListView;
+typedef struct _GimpChannelListView     GimpChannelListView;
 
-typedef struct _GimpContainerEditor   GimpContainerEditor;
-typedef struct _GimpBufferView        GimpBufferView;
-typedef struct _GimpDataFactoryView   GimpDataFactoryView;
-typedef struct _GimpBrushFactoryView  GimpBrushFactoryView;
+typedef struct _GimpContainerEditor     GimpContainerEditor;
+typedef struct _GimpBufferView          GimpBufferView;
+typedef struct _GimpDataFactoryView     GimpDataFactoryView;
+typedef struct _GimpBrushFactoryView    GimpBrushFactoryView;
 
-typedef struct _GimpListItem          GimpListItem;
-typedef struct _GimpChannelListItem   GimpChannelListItem;
-typedef struct _GimpDrawableListItem  GimpDrawableListItem;
-typedef struct _GimpLayerListItem     GimpLayerListItem;
-typedef struct _GimpComponentListItem GimpComponentListItem;
+typedef struct _GimpListItem            GimpListItem;
+typedef struct _GimpChannelListItem     GimpChannelListItem;
+typedef struct _GimpDrawableListItem    GimpDrawableListItem;
+typedef struct _GimpLayerListItem       GimpLayerListItem;
+typedef struct _GimpComponentListItem   GimpComponentListItem;
 
-typedef struct _GimpDock              GimpDock;
-typedef struct _GimpImageDock         GimpImageDock;
-typedef struct _GimpDockable          GimpDockable;
-typedef struct _GimpDockbook          GimpDockbook;
+typedef struct _GimpDock                GimpDock;
+typedef struct _GimpImageDock           GimpImageDock;
+typedef struct _GimpDockable            GimpDockable;
+typedef struct _GimpDockbook            GimpDockbook;
 
-typedef struct _GimpFontSelection     GimpFontSelection;
+typedef struct _GimpFontSelection       GimpFontSelection;
+typedef struct _GimpFontSelectionDialog GimpFontSelectionDialog;
 
-typedef struct _HistogramWidget       HistogramWidget;
+typedef struct _HistogramWidget         HistogramWidget;
 
 
 /*  function types  */
