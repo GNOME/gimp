@@ -1,3 +1,10 @@
+Thu Apr  9 02:53:14 EST 1998 Matthew Wilson <msw@gimp.org>
+
+	* app/app_procs.c: Added a little wrapper when loading files from
+	command line that loads the files after gtk_main starts.  This
+	fixes the segfault from the tips dialog when you load images on
+	the command line.  Cudos to Owen for the fix.
+
 Wed Apr  8 23:47:59 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: add AC_FUNC_ALLOCA for regex

@@ -103,6 +103,18 @@ static ProcRecord quit_proc =
 };
 
 
+/*  Warning: This is a hack.  This makes the files load _after_ the gtk_main
+    loop starts.  This means that if a file is on the command line, the
+    file handling plug-in's gtk_main won't cause any dialogs that have
+    set a gtk_quit_add_destroy (...) to die when the plug-in ends.
+    Thanks to Owen for this.
+*/
+
+GtkFunction file_open_wrapper (char *name) {
+   file_open (name, name);
+     return FALSE;
+}
+
 void
 gimp_init (int    gimp_argc,
 	   char **gimp_argv)
@@ -115,7 +127,7 @@ gimp_init (int    gimp_argc,
     while (gimp_argc--)
       {
 	if (*gimp_argv)
-	  file_open (*gimp_argv, *gimp_argv);
+	  gtk_idle_add ((GtkFunction *) file_open_wrapper, *gimp_argv);
 	gimp_argv++;
       }
 
