@@ -1,5 +1,9 @@
 2003-12-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimphelp.c (gimp_idle_help): cleanup.
+
+2003-12-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/xcf/xcf-private.h: added "GimpTattoo tattoo_state" to the
 	XcfInfo struct.
 

@@ -112,25 +112,16 @@ gimp_help (Gimp        *gimp,
 static gboolean
 gimp_idle_help (gpointer data)
 {
-  GimpIdleHelp        *idle_help;
+  GimpIdleHelp        *idle_help = data;
   GimpHelpBrowserType  browser;
-
-  idle_help = (GimpIdleHelp *) data;
 
   browser = GIMP_GUI_CONFIG (idle_help->gimp->config)->help_browser;
 
 #ifdef DEBUG_HELP
-  if (idle_help->help_domain)
-    g_print ("Help Domain: %s\n", idle_help->help_domain);
-  else
-    g_print ("Help Domain: NULL\n");
-
-  if (idle_help->help_id)
-    g_print ("Help ID: %s\n", idle_help->help_id);
-  else
-    g_print ("Help ID: NULL\n");
-
-  g_print ("\n");
+  g_print ("Help Domain: %s\n",
+           idle_help->help_domain ? idle_help->help_domain : "NULL");
+  g_print ("Help ID: %s\n\n",
+           idle_help->help_id ? idle_help->help_id : "NULL");
 #endif  /*  DEBUG_HELP  */
 
   switch (browser)
