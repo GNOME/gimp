@@ -54,7 +54,7 @@ CODE
 }
 
 sub display_delete {
-    $blurb = 'Delete the specified display';
+    $blurb = 'Delete the specified display.';
 
     $help = <<'HELP';
 This procedure removes the specified display. If this is the last remaining 

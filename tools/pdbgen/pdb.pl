@@ -1,5 +1,5 @@
 # The GIMP -- an image manipulation program
-# Copyright (C) 1998 Manish Singh <yosh@gimp.org>
+# Copyright (C) 1998-1999 Manish Singh <yosh@gimp.org>
 
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,7 +72,7 @@ package Gimp::CodeGen::pdb;
     enum    => { name => 'INT32', type => 'gint32 '   },
     boolean => { name => 'INT32', type => 'gboolean ' },
 
-    region => { name => 'REGION', type => 'gpointer ' }, # not supported
+    region => { name => 'REGION', type => 'gpointer ' } # not supported
 );
 
 # Split out the parts of an arg constraint
@@ -97,7 +97,12 @@ sub arg_parse {
 
 	return @retvals;
     }
-    elsif ($arg =~ /^([\d\.-].*?)? *(<=|<)? *(\w+) *(<=|<)? *([\d\.-].*?)?/) {
+    elsif ($arg =~ /^([+-.\d].*?)? \s*
+		     (<=|<)? \s*
+		     (\w+) \s*
+		     (<=|<)? \s*
+		     ([\d\.-].*?)?
+		   /x) {
 	return ($3, $1, $2 ? $testmap{$2} : $2, $5, $4 ? $testmap{$4} : $4);
     }
 }

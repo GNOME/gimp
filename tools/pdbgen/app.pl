@@ -29,6 +29,18 @@ $destdir = "$main::destdir/app";
 *write_file = \&Gimp::CodeGen::util::write_file;
 *FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
 
+use Text::Wrap qw(wrap);
+
+sub quotewrap {
+    my ($str, $indent) = @_;
+    my $leading = ' ' x $indent . '"';
+    $Text::Wrap::columns = 1000;
+    $str = wrap($leading, $leading, $str);
+    $str =~ s/^\s*//s;
+    $str =~ s/(.)$/$1"/mg;
+    $str;
+}
+
 sub declare_args {
     my $proc = shift;
     my $out = shift;
@@ -98,7 +110,7 @@ sub make_args {
   {
     PDB_$arg_types{$type}->{name},
     "$arg->{name}",
-    "$desc"
+    @{[ &quotewrap($desc, 4) ]}
   },
 CODE
 	    }
@@ -152,36 +164,60 @@ CODE
 	    $code .= ' ? TRUE : FALSE' if $pdbtype eq 'boolean';
 	    $code .= ";\n";
 
-	    if ($pdbtype eq 'string') {
-		$code .= ' ' x 2 . "success = $var != NULL;\n";
-	    }
-	    elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
-		my $tests = 0; my $extra = "";
-
-		if ($pdbtype eq 'enum') {
-		    my $name = pop @typeinfo;
-
-		    foreach (@typeinfo) { $extra .= " && $var != $_" }
-
-		    $typeinfo[0] = $enums{$name}->{start};
-		    $typeinfo[1] = '>=';
-		    $typeinfo[2] = $enums{$name}->{end};
-		    $typeinfo[3] = '<=';
+	    if (!exists $_->{no_success}) {
+		if ($pdbtype eq 'string') {
+		    $code .= ' ' x 2 . "success = $var != NULL;\n";
 		}
+		elsif ($pdbtype eq 'enum' && !$enums{$typeinfo[0]}->{contig}) {
+		    my %vals; my $symbols = $enums{pop @typeinfo}->{symbols};
+		    @vals{@$symbols}++; delete @vals{@typeinfo};
+		
+		    $code .= <<CODE;
+  switch ($var)
+    {
+CODE
 
-		$code .= ' ' x 2 . "success = ";
+		    foreach (@$symbols) {
+			$code .= ' ' x 4 . "case $_:\n" if exists $vals{$_};
+		    }
 
-		if (defined $typeinfo[0]) {
-		    $code .= "$var $typeinfo[1] $typeinfo[0]";
-		    $tests++;
+		    $code .= <<CODE;
+      break;
+
+    default:
+      success = FALSE;
+      break;
+    }
+CODE
 		}
+		elsif (defined $typeinfo[0] || defined $typeinfo[2]) {
+		    my $tests = 0; my $extra = "";
 
-		if (defined $typeinfo[2]) {
-		    $code .= ' && ' if $tests;
-		    $code .= "$var $typeinfo[3] $typeinfo[2]";
+		    if ($pdbtype eq 'enum') {
+			my $symbols = $enums{pop @typeinfo}->{symbols};
+
+			foreach (@typeinfo) { $extra .= " && $var != $_" }
+
+			$typeinfo[0] = $symbols->[0];
+			$typeinfo[1] = '>=';
+			$typeinfo[2] = $symbols->[$#$symbols];
+			$typeinfo[3] = '<=';
+		    }
+
+		    $code .= ' ' x 2 . "success = ";
+
+		    if (defined $typeinfo[0]) {
+			$code .= "$var $typeinfo[1] $typeinfo[0]";
+			$tests++;
+		    }
+
+		    if (defined $typeinfo[2]) {
+			$code .= ' && ' if $tests;
+			$code .= "$var $typeinfo[3] $typeinfo[2]";
+		    }
+
+		    $code .= "$extra;\n";
 		}
-
-		$code .= "$extra;\n";
 	    }
 
 	    if ($code =~ /success/) {
@@ -339,8 +375,8 @@ CODE
 static ProcRecord ${name}_proc =
 {
   "gimp_$name",
-  "$proc->{blurb}",
-  "$proc->{help}",
+  @{[ &quotewrap($proc->{blurb}, 2) ]},
+  @{[ &quotewrap($proc->{help},  2) ]},
   "$proc->{author}",
   "$proc->{copyright}",
   "$proc->{date}",

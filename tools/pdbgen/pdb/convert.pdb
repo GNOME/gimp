@@ -116,7 +116,7 @@ HELP
 	{ name => 'dither', type => 'boolean',
 	  desc => 'Floyd-Steinberg dithering' },
 	{ name => 'palette_type', type => 'enum ConvertPaletteType',
-	  desc => 'The type of palette to use: %%desc%%' },
+	  desc => 'The type of palette to use: %%desc%%', no_success => 1 },
 	{ name => 'num_cols', type => 'int32',
 	  desc => 'the number of colors to quantize to, ignored unless
 		   (palette_type == MAKE_PALETTE)' },
@@ -137,7 +137,7 @@ HELP
       switch (palette_type)
 	{
 	case MAKE_PALETTE:
-  	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
+	  if (num_cols < 1 || num_cols > MAXNUMCOLORS)
 	    success = FALSE;
 	  break;
 

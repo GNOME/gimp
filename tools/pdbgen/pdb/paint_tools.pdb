@@ -52,12 +52,6 @@ sub threshold_arg () {{
     desc => 'Threshold in intensity levels %%desc%%'
 }}
 
-sub antialias_arg () {{
-    name => 'antialias',
-    type => 'boolean',
-    desc => 'Antialiasing (%%desc%%)'
-}}
-
 sub feather_select_args () {(
     { name => 'feather', type => 'boolean',
       desc => 'Feather option for selections' },
@@ -247,7 +241,7 @@ HELP
 	  desc => 'The color to select' },
 	&threshold_arg,
 	&operation_arg,
-	&antialias_arg,
+	&std_antialias_arg,
 	&feather_select_args,
 	&sample_merged_arg
     );
@@ -455,7 +449,7 @@ HELP
 	{ name => 'height', type => '0 < float',
 	  desc => 'The height of the ellipse: %%desc%%' },
 	&operation_arg,
-	&antialias_arg,
+	&std_antialias_arg,
 	&feather_args
     );
 
@@ -592,7 +586,7 @@ HELP
 	  array => { desc => 'Number of points (count 1 coordinate as two
 		     	      points)' } },
 	&operation_arg,
-	&antialias_arg,
+	&std_antialias_arg,
 	&feather_select_args
     );
 
@@ -641,7 +635,7 @@ HELP
 	  	   coordinates)' },
 	&threshold_arg,
 	&operation_arg,
-	&antialias_arg,
+	&std_antialias_arg,
 	&feather_select_args,
 	&sample_merged_arg
     );
@@ -1110,83 +1104,12 @@ CODE
     );
 }
 
-sub text {
-    $blurb = <<'BLURB';
-Add text at the specified location as a floating selection or a new layer.
-BLURB
+@procs = qw(airbrush blend bucket_fill by_color_select clone color_picker
+	    convolve crop ellipse_select eraser flip free_select fuzzy_select
+	    paintbrush pencil perspective rect_select rotate_invoker scale
+	    shear);
+%exports = (app => [@procs]);
 
-    $help = <<'HELP';
-This tool requires font information in the form of nine parameters: size,
-foundry, family, weight, slant, set_width, spacing, registry, encoding. The
-font size can either be specified in units of pixels or points, and the
-appropriate metric is specified using the size_type argument. The x and y
-parameters together control the placement of the new text by specifying the
-upper left corner of the text bounding box. If the antialias parameter is
-non-zero, the generated text will blend more smoothly with underlying layers.
-This option requires more time and memory to compute than non-antialiased text;
-the resulting floating selection or layer, however, will require the same
-amount of memory with or without antialiasing. If the specified drawable
-parameter is valid, the text will be created as a floating selection attached
-to the drawable. If the drawable parameter is not valid (-1), the text will
-appear as a new layer. Finally, a border can be specified around the final
-rendered text. The border is measured in pixels.
-HELP
+$desc = 'Tool procedures';
 
-   &std_pdb_misc;
-   $author = 'Martin Edlman';
-   $date = '1998';
-
-   @inargs = (
-	&drawable_arg,
-	{ name => 'x', type => 'float',
-	  desc => 'The x coordinate for the left of the text bounding box' },
-	{ name => 'y', type => 'float',
-	  desc => 'The y coordinate for the top of the text bounding box' },
-	{ name => 'text', type => 'string',
-	  desc => 'The text to generate',
-	{ name => 'border', type => '-1 <= int32',
-	  desc => 'The size of the border: %%desc%%' }
-	&antialias_arg,
-	{ name => 'size', type => '0 < float',
-	  desc => 'The size of text in either pixels or points' },
-	{ name => 'size_type', type => 'enum SizeType',
-	  desc => 'The units of specified size: %%desc%%' }
-   );
-
-   foreach (qw(foundry family weight slant set-width spacing registry
-   	       encoding)) {
-	my $var = $_;
-	$var =~ s/-/_/g;
-
-	push @inargs, { name => $var, type => 'string',
-			desc => qq/The font $_, "*" for any/ }
-   }
-
-   @outargs = (
-	{ name => 'text_layer', type => 'layer',
-	  desc => 'The new text layer' }
-   );
-
-   %invoke = (
-	headers => [ qw("text_tool.h") ],
-	vars => ['GimpImage *gimage', 'gchar *fontname[2048]'],
-	code => <<'CODE'
-{
-  if (antialias)
-    size *= SUPERSAMPLE;
-
-  success = text_get_xlfd (size, size_type, foundry, family, weight,
-  			   slant, set_width, spacing, registry, encoding,
-			   fontname);
-
-  if (success)
-    {
-      gimage = drawable_gimage (GIMP_DRAWABLE (drawable));
-      text_layer = text_render (gimage, drawable, x, y, fontname, text,
-      				border, antialias);
-      success = text_layer != NULL;
-    }
-}
-CODE
-   );
-}
+1;
