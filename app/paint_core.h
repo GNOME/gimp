@@ -31,6 +31,7 @@
 /* brush application types  */
 #define HARD            0  /* pencil */
 #define SOFT            1  /* paintbrush */
+#define PRESSURE        2  /* paintbrush with variable pressure */
 
 /* paint application modes  */
 #define CONSTANT        0  /* pencil, paintbrush, airbrush, clone */
@@ -44,12 +45,21 @@ struct _paint_core
 
   double          startx;       /*  starting x coord            */
   double          starty;       /*  starting y coord            */
+  double          startpressure;  /* starting pressure          */
+  double          startxtilt;    /* starting xtilt              */
+  double          startytilt;  /* starting ytilt                */
 
   double          curx;         /*  current x coord             */
   double          cury;         /*  current y coord             */
+  double          curpressure;   /*  current pressure            */
+  double          curxtilt;     /*  current xtilt               */
+  double          curytilt;     /*  current ytilt               */
 
   double          lastx;        /*  last x coord                */
   double          lasty;        /*  last y coord                */
+  double          lastpressure; /* last pressure               */
+  double          lastxtilt;    /* last xtilt                  */
+  double          lastytilt;    /* last ytilt                  */
 
   int             state;        /*  state of buttons and keys   */
 
@@ -74,6 +84,9 @@ struct _paint_undo
   int             tool_ID;
   double          lastx;
   double          lasty;
+  double	  lastpressure;
+  double          lastxtilt;
+  double          lastytilt;
 };
 
 /*  paint tool action functions  */

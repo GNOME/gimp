@@ -1018,6 +1018,18 @@ undo_pop_paint (GImage *gimage,
   pc->lasty = pu->lasty;
   pu->lasty = tmp;
 
+  tmp = pc->lastpressure;
+  pc->lastpressure = pu->lastpressure;
+  pu->lastpressure = tmp;
+
+  tmp = pc->lastxtilt;
+  pc->lastxtilt = pu->lastxtilt;
+  pu->lastxtilt = tmp;
+
+  tmp = pc->lastytilt;
+  pc->lastytilt = pu->lastytilt;
+  pu->lastytilt = tmp;
+
   return TRUE;
 }
 

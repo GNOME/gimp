@@ -29,6 +29,7 @@
 #include "buildmenu.h"
 #include "colormaps.h"
 #include "datafiles.h"
+#include "devices.h"
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
@@ -351,6 +352,8 @@ select_brush (GBrushP brush)
   /*  Keep up appearances in the brush dialog  */
   if (brush_select_dialog)
     brush_select_select (brush_select_dialog, brush->index);
+
+  device_status_update (current_device);
 }
 
 

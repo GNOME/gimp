@@ -75,6 +75,7 @@ static GSList *   gdisplay_process_area_list(GSList *, GArea *);
 static void       gdisplay_add_update_area  (GDisplay *, int, int, int, int);
 static void       gdisplay_add_display_area (GDisplay *, int, int, int, int);
 static void       gdisplay_paint_area       (GDisplay *, int, int, int, int);
+static void	  gdisplay_draw_cursor	    (GDisplay *);
 static void       gdisplay_display_area     (GDisplay *, int, int, int, int);
 static guint      gdisplay_hash             (GDisplay *);
 
@@ -120,6 +121,10 @@ gdisplay_new (GImage       *gimage,
   gdisp->current_cursor = -1;
   gdisp->draw_guides = TRUE;
   gdisp->snap_to_guides = TRUE;
+
+  gdisp->draw_cursor = FALSE;
+  gdisp->proximity = FALSE;
+  gdisp->have_cursor = FALSE;
 
   /*  add the new display to the list so that it isn't lost  */
   display_list = g_slist_append (display_list, (void *) gdisp);
@@ -340,6 +345,10 @@ gdisplay_flush (GDisplay *gdisp)
       /* draw the guides */
       gdisplay_draw_guides (gdisp);
 
+      /* and the cursor (if we have a software cursor */
+      if (gdisp->have_cursor)
+	gdisplay_draw_cursor (gdisp);
+
       /* restart (and recalculate) the selection boundaries */
       selection_start (gdisp->select, TRUE);
 
@@ -520,10 +529,10 @@ gdisplay_find_guide (GDisplay *gdisp,
 
 void
 gdisplay_snap_point (GDisplay *gdisp,
-		     int       x ,
-		     int       y,
-		     int      *tx,
-		     int      *ty)
+		     gdouble   x ,
+		     gdouble   y,
+		     gdouble   *tx,
+		     gdouble   *ty)
 {
   GList *tmp_list;
   Guide *guide;
@@ -598,8 +607,8 @@ gdisplay_snap_rectangle (GDisplay *gdisp,
 			 int      *tx1,
 			 int      *ty1)
 {
-  int nx1, ny1;
-  int nx2, ny2;
+  double nx1, ny1;
+  double nx2, ny2;
 
   *tx1 = x1;
   *ty1 = y1;
@@ -611,18 +620,73 @@ gdisplay_snap_rectangle (GDisplay *gdisp,
       gdisplay_snap_point (gdisp, x1, y1, &nx1, &ny1);
       gdisplay_snap_point (gdisp, x2, y2, &nx2, &ny2);
 
-      if (x1 != nx1)
+      if (x1 != (int)nx1)
 	*tx1 = nx1;
-      else if (x2 != nx2)
+      else if (x2 != (int)nx2)
 	*tx1 = x1 + (nx2 - x2);
 
-      if (y1 != ny1)
+      if (y1 != (int)ny1)
 	*ty1 = ny1;
-      else if (y2 != ny2)
+      else if (y2 != (int)ny2)
 	*ty1 = y1 + (ny2 - y2);
     }
 }
 
+void
+gdisplay_draw_cursor (GDisplay *gdisp)
+{
+  int x = gdisp->cursor_x;
+  int y = gdisp->cursor_y;
+  
+  gdk_draw_line (gdisp->canvas->window,
+		 gdisp->canvas->style->white_gc,
+		 x - 7, y-1, x + 7, y-1);
+  gdk_draw_line (gdisp->canvas->window,
+		 gdisp->canvas->style->black_gc,
+		 x - 7, y, x + 7, y);
+  gdk_draw_line (gdisp->canvas->window,
+		 gdisp->canvas->style->white_gc,
+		 x - 7, y+1, x + 7, y+1);
+  gdk_draw_line (gdisp->canvas->window,
+		 gdisp->canvas->style->white_gc,
+		 x-1, y - 7, x-1, y + 7);
+  gdk_draw_line (gdisp->canvas->window,
+		 gdisp->canvas->style->black_gc,
+		 x, y - 7, x, y + 7);
+  gdk_draw_line (gdisp->canvas->window,
+		 gdisp->canvas->style->white_gc,
+		 x+1, y - 7, x+1, y + 7);
+}
+
+void
+gdisplay_update_cursor (GDisplay *gdisp, int x, int y)
+{
+  int new_cursor;
+
+  new_cursor = gdisp->draw_cursor && gdisp->proximity;
+  
+  /* Erase old cursor, if necessary */
+
+  if (gdisp->have_cursor && (!new_cursor || x != gdisp->cursor_x ||
+			     y != gdisp->cursor_y))
+    {
+      gdisplay_expose_area (gdisp, gdisp->cursor_x - 7,
+			    gdisp->cursor_y - 7,
+			    15, 15);
+      if (!new_cursor)
+	{
+	  gdisp->have_cursor = FALSE;
+	  gdisplay_flush (gdisp);
+	}
+    }
+  
+  gdisp->have_cursor = new_cursor;
+  gdisp->cursor_x = x;
+  gdisp->cursor_y = y;
+
+  if (new_cursor)
+    gdisplay_flush (gdisp);
+}
 
 void
 gdisplay_remove_and_delete (GDisplay *gdisp)

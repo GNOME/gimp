@@ -20,6 +20,7 @@
 #include "appenv.h"
 #include "colormaps.h"
 #include "cursorutil.h"
+#include "devices.h"
 #include "disp_callbacks.h"
 #include "gdisplay.h"
 #include "general.h"
@@ -35,6 +36,10 @@
 
 #define HORIZONTAL  1
 #define VERTICAL    2
+
+/* Function declarations */
+
+static void gdisplay_check_device_cursor (GDisplay *gdisp);
 
 static void
 redraw (GDisplay *gdisp,
@@ -62,6 +67,29 @@ redraw (GDisplay *gdisp,
     }
 }
 
+static void
+gdisplay_check_device_cursor (GDisplay *gdisp)
+{
+  GList *tmp_list;
+
+  /* gdk_input_list_devices returns an internal list, so we shouldn't
+     free it afterwards */
+  tmp_list = gdk_input_list_devices();
+
+  while (tmp_list)
+    {
+      GdkDeviceInfo *info = (GdkDeviceInfo *)tmp_list->data;
+
+      if (info->deviceid == current_device)
+	{
+	  gdisp->draw_cursor = !info->has_cursor;
+	  break;
+	}
+      
+      tmp_list = tmp_list->next;
+    }
+}
+
 gint
 gdisplay_canvas_events (GtkWidget *canvas,
 			GdkEvent  *event)
@@ -71,8 +99,7 @@ gdisplay_canvas_events (GtkWidget *canvas,
   GdkEventMotion *mevent;
   GdkEventButton *bevent;
   GdkEventKey *kevent;
-  gint tx, ty;
-  GdkModifierType tmask;
+  gdouble tx, ty;
   guint state = 0;
   gint return_val = FALSE;
   static gboolean scrolled = FALSE;
@@ -111,9 +138,11 @@ gdisplay_canvas_events (GtkWidget *canvas,
       setup_scale (gdisp);
     }
 
-  /*  get the pointer position  */
-  gdk_window_get_pointer (canvas->window, &tx, &ty, &tmask);
-
+  /* Find out what device the event occurred upon */
+  
+  if (devices_check_change (event))
+    gdisplay_check_device_cursor (gdisp);
+  
   switch (event->type)
     {
     case GDK_EXPOSE:
@@ -130,6 +159,16 @@ gdisplay_canvas_events (GtkWidget *canvas,
 	  gdisp->disp_height = gdisp->canvas->allocation.height;
 	  resize_display (gdisp, 0, FALSE);
 	}
+      break;
+
+    case GDK_LEAVE_NOTIFY:
+      gdisp->proximity = FALSE;
+      gdisplay_update_cursor (gdisp, 0, 0);
+      break;
+
+    case GDK_PROXIMITY_OUT:
+      gdisp->proximity = FALSE;
+      gdisplay_update_cursor (gdisp, 0, 0);
       break;
 
     case GDK_BUTTON_PRESS:
@@ -254,13 +293,24 @@ gdisplay_canvas_events (GtkWidget *canvas,
       mevent = (GdkEventMotion *) event;
       state = mevent->state;
 
+     /* Ask for the pointer position, but ignore it except for cursor
+      * handling, so motion events sync with the button press/release events */
+
       if (mevent->is_hint)
+	gdk_input_window_get_pointer (canvas->window, current_device, &tx, &ty,
+				      NULL, NULL, NULL, NULL);
+      else
 	{
-	  mevent->x = tx;
-	  mevent->y = ty;
-	  mevent->state = tmask;
+	  tx = mevent->x;
+	  ty = mevent->y;
 	}
 
+      if (!gdisp->proximity)
+	{
+	  gdisp->proximity = TRUE;
+	  gdisplay_check_device_cursor (gdisp);
+	}
+      
       if (active_tool && ((active_tool->type == MOVE) ||
 			  !gimage_is_empty (gdisp->gimage)) &&
 	  (mevent->state & GDK_BUTTON1_MASK))
@@ -368,6 +418,8 @@ gdisplay_canvas_events (GtkWidget *canvas,
       else if (gimage_is_empty (gdisp->gimage))
 	gdisplay_install_tool_cursor (gdisp, GDK_TOP_LEFT_ARROW);
     }
+
+  gdisplay_update_cursor (gdisp, tx, ty);
 
   return return_val;
 }

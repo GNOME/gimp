@@ -32,6 +32,7 @@
 #include "convert.h"
 #include "curves.h"
 #include "desaturate.h"
+#include "devices.h"
 #include "channel_ops.h"
 #include "drawable.h"
 #include "equalize.h"
@@ -2434,6 +2435,20 @@ dialogs_tools_options_cmd_callback (GtkWidget *widget,
 				    gpointer   client_data)
 {
   tools_options_dialog_show ();
+}
+
+void
+dialogs_input_devices_cmd_callback (GtkWidget *widget,
+				    gpointer   client_data)
+{
+  create_input_dialog ();
+}
+
+void
+dialogs_device_status_cmd_callback (GtkWidget *widget,
+				  gpointer   client_data)
+{
+  create_device_status ();
 }
 
 void

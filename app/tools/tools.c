@@ -31,6 +31,7 @@
 #include "crop.h"
 #include "cursorutil.h"
 #include "curves.h"
+#include "devices.h"
 #include "eraser.h"
 #include "gdisplay.h"
 #include "hue_saturation.h"
@@ -58,12 +59,12 @@
 
 Tool * active_tool = NULL;
 Layer * active_tool_layer = NULL;
+ToolType active_tool_type = -1;
 
 /* Local Data */
 
 static GtkWidget *options_shell = NULL;
 static GtkWidget *options_vbox = NULL;
-static ToolType active_tool_type = -1;
 
 static int global_tool_ID = 0;
 
@@ -362,6 +363,10 @@ tools_select (ToolType type)
 
   gtk_container_enable_resize (GTK_CONTAINER (options_shell));
 
+  /* Update the device-information dialog */
+  
+  device_status_update (current_device);
+
   /*  Set the paused count variable to 0
    */
   active_tool->paused_count = 0;
@@ -582,7 +587,6 @@ tools_options_dialog_new ()
 
   gtk_widget_show (options_vbox);
 }
-
 
 void
 tools_options_dialog_show ()

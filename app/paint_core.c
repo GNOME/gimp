@@ -40,6 +40,7 @@ PaintCore  non_gui_paint_core;
 
 /*  local function prototypes  */
 static MaskBuf * paint_core_subsample_mask  (MaskBuf *, double, double);
+static MaskBuf * paint_core_pressurize_mask  (MaskBuf *, double, double, double);
 static MaskBuf * paint_core_solidify_mask   (MaskBuf *);
 static MaskBuf * paint_core_get_brush_mask  (PaintCore *, int);
 static void      paint_core_paste           (PaintCore *, MaskBuf *, GimpDrawable *, int, int, int, int);
@@ -67,6 +68,7 @@ static TempBuf *  canvas_buf = NULL;
 
 
 /*  brush buffers  */
+static MaskBuf *  pressure_brush;
 static MaskBuf *  solid_brush;
 static MaskBuf *  kernel_brushes[5][5];
 
@@ -141,6 +143,9 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
   if (! paint_core_init (paint_core, drawable, x, y))
     return;
 
+  paint_core->curpressure = bevent->pressure;
+  paint_core->curxtilt = bevent->xtilt;
+  paint_core->curytilt = bevent->ytilt;
   paint_core->state = bevent->state;
 
   /*  if this is a new image, reinit the core vals  */
@@ -150,6 +155,9 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
       /*  initialize some values  */
       paint_core->startx = paint_core->lastx = paint_core->curx;
       paint_core->starty = paint_core->lasty = paint_core->cury;
+      paint_core->startpressure = paint_core->lastpressure = paint_core->curpressure;
+      paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt;
+      paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt;
     }
   /*  If shift is down and this is not the first paint
    *  stroke, then draw a line from the last coords to the pointer
@@ -159,6 +167,9 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
       draw_line = 1;
       paint_core->startx = paint_core->lastx;
       paint_core->starty = paint_core->lasty;
+      paint_core->startpressure = paint_core->lastpressure;
+      paint_core->startxtilt = paint_core->lastxtilt;
+      paint_core->startytilt = paint_core->lastytilt;
     }
 
   tool->state = ACTIVE;
@@ -187,6 +198,9 @@ paint_core_button_press (tool, bevent, gdisp_ptr)
       paint_core_interpolate (paint_core, drawable);
       paint_core->lastx = paint_core->curx;
       paint_core->lasty = paint_core->cury;
+      paint_core->lastpressure = paint_core->curpressure;
+      paint_core->lastxtilt = paint_core->curxtilt;
+      paint_core->lastytilt = paint_core->curytilt;
     }
   else
     (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
@@ -238,6 +252,9 @@ paint_core_motion (tool, mevent, gdisp_ptr)
 
   gdisplay_untransform_coords_f (gdisp, (double) mevent->x, (double) mevent->y,
 				 &paint_core->curx, &paint_core->cury, TRUE);
+  paint_core->curpressure = mevent->pressure;
+  paint_core->curxtilt = mevent->xtilt;
+  paint_core->curytilt = mevent->ytilt;
   paint_core->state = mevent->state;
 
   paint_core_interpolate (paint_core, gimage_active_drawable (gdisp->gimage));
@@ -246,6 +263,9 @@ paint_core_motion (tool, mevent, gdisp_ptr)
 
   paint_core->lastx = paint_core->curx;
   paint_core->lasty = paint_core->cury;
+  paint_core->lastpressure = paint_core->curpressure;
+  paint_core->lastxtilt = paint_core->curxtilt;
+  paint_core->lastytilt = paint_core->curytilt;
 }
 
 void
@@ -382,6 +402,11 @@ paint_core_init (paint_core, drawable, x, y)
   paint_core->curx = x;
   paint_core->cury = y;
 
+  /* Set up some defaults for non-gui use */
+  paint_core->startpressure = paint_core->lastpressure = paint_core->curpressure = 0.5;
+  paint_core->startxtilt = paint_core->lastxtilt = paint_core->curxtilt = 0;
+  paint_core->startytilt = paint_core->lastytilt = paint_core->curytilt = 0;
+
   /*  Each buffer is the same size as the maximum bounds of the active brush... */
   if (!(brush = get_active_brush ()))
     {
@@ -425,7 +450,7 @@ paint_core_interpolate (paint_core, drawable)
      GimpDrawable *drawable;
 {
   int n;
-  double dx, dy;
+  double dx, dy, dpressure, dxtilt, dytilt;
   double left;
   double t;
   double initial;
@@ -434,8 +459,11 @@ paint_core_interpolate (paint_core, drawable)
 
   dx = paint_core->curx - paint_core->lastx;
   dy = paint_core->cury - paint_core->lasty;
+  dpressure = paint_core->curpressure - paint_core->lastpressure;
+  dxtilt = paint_core->curxtilt - paint_core->lastxtilt;
+  dytilt = paint_core->curytilt - paint_core->lastytilt;
 
-  if (!dx && !dy)
+  if (!dx && !dy && !dpressure && !dxtilt && !dytilt)
     return;
 
   dist = sqrt (SQR (dx) + SQR (dy));
@@ -454,6 +482,9 @@ paint_core_interpolate (paint_core, drawable)
 
 	  paint_core->curx = paint_core->lastx + dx * t;
 	  paint_core->cury = paint_core->lasty + dy * t;
+	  paint_core->curpressure = paint_core->lastpressure + dpressure * t;
+	  paint_core->curxtilt = paint_core->lastxtilt + dxtilt * t;
+	  paint_core->curytilt = paint_core->lastytilt + dytilt * t;
 	  (* paint_core->paint_func) (paint_core, drawable, MOTION_PAINT);
 	}
     }
@@ -461,6 +492,9 @@ paint_core_interpolate (paint_core, drawable)
   paint_core->distance = total;
   paint_core->curx = paint_core->lastx + dx;
   paint_core->cury = paint_core->lasty + dy;
+  paint_core->curpressure = paint_core->lastpressure + dpressure;
+  paint_core->curxtilt = paint_core->lastxtilt + dxtilt;
+  paint_core->curytilt = paint_core->lastytilt + dytilt;
 }
 
 void
@@ -478,6 +512,7 @@ paint_core_finish (paint_core, drawable, tool_id)
   /*  Determine if any part of the image has been altered--
    *  if nothing has, then just return...
    */
+
   if ((paint_core->x2 == paint_core->x1) || (paint_core->y2 == paint_core->y1))
     return;
 
@@ -487,6 +522,9 @@ paint_core_finish (paint_core, drawable, tool_id)
   pu->tool_ID = tool_id;
   pu->lastx = paint_core->startx;
   pu->lasty = paint_core->starty;
+  pu->lastpressure = paint_core->startpressure;
+  pu->lastxtilt = paint_core->startxtilt;
+  pu->lastytilt = paint_core->startytilt;
 
   /*  Push a paint undo  */
   undo_push_paint (gimage, pu);
@@ -743,6 +781,95 @@ paint_core_subsample_mask (mask, x, y)
 }
 
 static MaskBuf *
+paint_core_pressurize_mask (brush_mask, x, y, pressure)
+     MaskBuf * brush_mask;
+     double x, y;
+     double pressure;
+{
+  static MaskBuf *last_brush = NULL;
+  static double map[256];
+  static unsigned char mapi[256];
+  unsigned char *source;
+  unsigned char *dest;
+  MaskBuf *subsample_mask;
+  int i;
+  double ds,s,c;
+
+  /* Get the raw subsampled mask */
+  subsample_mask = paint_core_subsample_mask(brush_mask, x, y);
+
+  /* Special case pressure = 0.5 */
+  if ((int)(pressure*100+0.5) == 50)
+    return subsample_mask;
+
+  /* Make sure we have the right sized buffer */
+  if (brush_mask != last_brush)
+    {
+      if (pressure_brush)
+	mask_buf_free (pressure_brush);
+      pressure_brush = mask_buf_new (brush_mask->width + 2,
+				     brush_mask->height +2);
+    }
+
+  /* Create the pressure profile
+
+     It is: I'(I) = tanh(20*(pressure-0.5)*I) : pressure > 0.5
+            I'(I) = 1 - tanh(20*(0.5-pressure)*(1-I)) : pressure < 0.5
+
+     It looks like:
+
+        low pressure      medium pressure     high pressure
+
+             |                   /                 --
+             |    		/                 /
+            /     	       /                 |
+          --                  /	                 |
+
+  */
+
+  ds = (pressure - 0.5)*(20./256.);
+  s = 0;
+  c = 1.0;
+
+  if (ds > 0)
+    {
+      for (i=0;i<256;i++)
+	{
+	  map[i] = s/c;
+	  s += c*ds;
+	  c += s*ds;
+	}
+      for (i=0;i<256;i++)
+	mapi[i] = (int)(255*map[i]/map[255]);
+    }
+  else
+    {
+      ds = -ds;
+      for (i=255;i>=0;i--)
+	{
+	  map[i] = s/c;
+	  s += c*ds;
+	  c += s*ds;
+	}
+      for (i=0;i<256;i++)
+	mapi[i] = (int)(255*(1-map[i]/map[0]));
+    }
+
+  /* Now convert the brush */
+
+  source = mask_buf_data (subsample_mask);
+  dest = mask_buf_data (pressure_brush);
+
+  i = subsample_mask->width * subsample_mask->height;
+  while (i--)
+    {
+      *dest++ = mapi[(*source++)];
+    }
+
+  return pressure_brush;
+}
+
+static MaskBuf *
 paint_core_solidify_mask (brush_mask)
      MaskBuf * brush_mask;
 {
@@ -789,6 +916,9 @@ paint_core_get_brush_mask (paint_core, brush_hardness)
       break;
     case HARD:
       bm = paint_core_solidify_mask (paint_core->brush_mask);
+      break;
+    case PRESSURE:
+      bm = paint_core_pressurize_mask (paint_core->brush_mask, paint_core->curx, paint_core->cury, paint_core->curpressure);
       break;
     default:
       bm = NULL;

@@ -23,6 +23,7 @@
 #include "colormaps.h"
 #include "color_area.h"
 #include "commands.h"
+#include "devices.h"
 #include "disp_callbacks.h"
 #include "errors.h"
 #include "gdisplay.h"
@@ -52,6 +53,9 @@ static gint  gdisplay_delete       (GtkWidget *widget,
 
 static void  toolbox_destroy       (void);
 static gint  toolbox_delete        (GtkWidget *,
+				    GdkEvent *,
+				    gpointer);
+static gint  toolbox_check_device  (GtkWidget *,
 				    GdkEvent *,
 				    gpointer);
 
@@ -238,6 +242,14 @@ toolbox_destroy ()
   app_exit_finish ();
 }
 
+static gint
+toolbox_check_device   (GtkWidget *w, GdkEvent *e, gpointer data)
+{
+  devices_check_change (e);
+  
+  return FALSE;
+}
+
 static void
 gdisplay_destroy (GtkWidget *w,
 		  GDisplay  *gdisp)
@@ -326,6 +338,28 @@ create_color_area (GtkWidget *parent)
   gtk_widget_show (frame);
 }
 
+
+GdkPixmap *  
+create_tool_pixmap (GtkWidget *parent, ToolType type)
+{
+  int i;
+
+  if (type == SCALE || type == SHEAR || type == PERSPECTIVE)
+    type = ROTATE;
+  else if (type == FLIP_VERT)
+    type = FLIP_HORZ;
+
+  for (i=0; i<21; i++)
+    {
+      if ((ToolType)tool_data[i].callback_data == type)
+	  return create_pixmap (parent->window, NULL,
+				tool_data[i].icon_data, 22, 22);
+    }
+  
+  g_return_val_if_fail (FALSE, NULL);
+  
+  return NULL;	/* not reached */
+}
 
 static void
 create_tools (GtkWidget *parent)
@@ -499,6 +533,7 @@ create_toolbox ()
   GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *menubar;
+  GList *device_list;
   GtkAcceleratorTable *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -512,6 +547,31 @@ create_toolbox ()
   gtk_signal_connect (GTK_OBJECT (window), "destroy",
 		      (GtkSignalFunc) toolbox_destroy,
 		      NULL);
+
+  /* We need to know when the current device changes, so we can update
+   * the correct tool - to do this we connect to motion events.
+   * We can't just use EXTENSION_EVENTS_CURSOR though, since that
+   * would get us extension events for the mouse pointer, and our
+   * device would change to that and not change back. So we check
+   * manually that all devices have a cursor, before establishing the check.
+   */
+  device_list = gdk_input_list_devices ();
+  while (device_list)
+    {
+      if (!((GdkDeviceInfo *)(device_list->data))->has_cursor)
+	break;
+      
+      device_list = device_list->next;
+    }
+
+  if (!device_list)		/* all devices have cursor */
+    {
+      gtk_signal_connect (GTK_OBJECT (window), "motion_notify_event",
+			  GTK_SIGNAL_FUNC (toolbox_check_device), NULL);
+      
+      gtk_widget_set_events (window, GDK_POINTER_MOTION_MASK);
+      gtk_widget_set_extension_events (window, GDK_EXTENSION_EVENTS_CURSOR);
+    }
 
   main_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_border_width (GTK_CONTAINER (main_vbox), 1);
@@ -682,6 +742,7 @@ create_display_shell (int   gdisp_id,
   gdisp->canvas = gtk_drawing_area_new ();
   gtk_drawing_area_size (GTK_DRAWING_AREA (gdisp->canvas), n_width, n_height);
   gtk_widget_set_events (gdisp->canvas, CANVAS_EVENT_MASK);
+  gtk_widget_set_extension_events (gdisp->canvas, GDK_EXTENSION_EVENTS_ALL);
   GTK_WIDGET_SET_FLAGS (gdisp->canvas, GTK_CAN_FOCUS);
   gtk_signal_connect (GTK_OBJECT (gdisp->canvas), "event",
 		      (GtkSignalFunc) gdisplay_canvas_events,

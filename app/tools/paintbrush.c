@@ -224,7 +224,7 @@ paintbrush_motion (PaintCore *paint_core,
       /*  paste the newly painted canvas to the gimage which is being worked on  */
       paint_core_paste_canvas (paint_core, drawable, blend,
 			       (int) (get_brush_opacity () * 255),
-			       get_brush_paint_mode (), SOFT,
+			       get_brush_paint_mode (), PRESSURE, 
 			       incremental ? INCREMENTAL : CONSTANT);
     }
 }

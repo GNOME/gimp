@@ -1,3 +1,38 @@
+Fri Jun  5 22:37:40 1998  Owen Taylor  <otaylor@gtk.org>
+
+	* app/Makefile.am app/app_procs.c app/brushes.c app/commands.[ch]
+	  app/disp_callbacks.c app/gdisplay.[ch] app/gimprc.c
+	  app/interface.[ch] app/menus.c app/paint_core.[ch]
+	  app/paintbrush.c app/palette.c app/scroll.c
+	  app/tools.[ch] app/undo.c 
+
+	- Added two new dialogs - input devices; (GtkInputDialog)
+	  and DeviceStatus - which shows the tool/color for
+	  each device.
+
+	- Added device_status_update() call that gets called 
+	  whenever the tool/color etc. are changed.
+
+	- Added ~/.gimp/devicerc file to store settings
+
+	- Code to draw cursor on canvas for non XFree86 XInput
+	  where device can't control cursor and extended input
+	  device simultaneously.
+
+	- Changed input handling so that we always use the pointer
+	  position from the device, not from gdk_input_window_get_cursor,
+	  so that motion and cursor position sync.
+
+	- Various changes so things work with non-integer coordinates
+
+	- Pay attention to pressure and tilt in basic tool support.
+	
+        - New paint mode PRESSURE that changes the brush based on
+	  the brush pressure
+	
+	- Left in a few XInput hacks that should be removed, but I no longer
+	  remember what they are.
+
 Fri Jun  5 18:08:32 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* configure.in: bumped to 1.1

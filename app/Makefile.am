@@ -79,6 +79,8 @@ gimp_SOURCES = \
 	datafiles.h		\
 	desaturate.c		\
 	desaturate.h		\
+	devices.c		\
+	devices.h		\
 	dialog_types.h		\
 	disp_callbacks.c	\
 	disp_callbacks.h	\

@@ -57,6 +57,8 @@ static GtkMenuEntry menu_items[] =
   { "<Toolbox>/File/Dialogs/Palette...", "<control>P", dialogs_palette_cmd_callback, NULL },
   { "<Toolbox>/File/Dialogs/Gradient Editor...", "<control>G", dialogs_gradient_editor_cmd_callback, NULL },
   { "<Toolbox>/File/Dialogs/Tool Options...", "<control><shift>T", dialogs_tools_options_cmd_callback, NULL },
+  { "<Toolbox>/File/Dialogs/Input Devices...", NULL, dialogs_input_devices_cmd_callback, NULL },
+  { "<Toolbox>/File/Dialogs/Device Status...", NULL, dialogs_device_status_cmd_callback, NULL },
   
   { "<Toolbox>/File/<separator>",NULL,NULL,NULL},
 
@@ -199,6 +201,8 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Dialogs/Layers & Channels...", "<control>L", dialogs_lc_cmd_callback, NULL },
   { "<Image>/Dialogs/Indexed Palette...", NULL, dialogs_indexed_palette_cmd_callback, NULL },
   { "<Image>/Dialogs/Tool Options...", NULL, dialogs_tools_options_cmd_callback, NULL },
+  { "<Image>/Dialogs/Input Devices...", NULL, dialogs_input_devices_cmd_callback, NULL },
+  { "<Image>/Dialogs/Device Status...", NULL, dialogs_device_status_cmd_callback, NULL },
 
   { "<Load>/Automatic", NULL, file_load_by_extension_callback, NULL },
   { "<Load>/<separator>", NULL, NULL, NULL },

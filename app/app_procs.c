@@ -30,6 +30,7 @@
 #include "brushes.h"
 #include "color_transfer.h"
 #include "curves.h"
+#include "devices.h"
 #include "gdisplay.h"
 #include "colormaps.h"
 #include "fileops.h"
@@ -511,6 +512,7 @@ app_init (void)
   if (no_interface == FALSE)
     {
       get_standard_colormaps ();
+      devices_init ();
       create_toolbox ();
       gximage_init ();
       render_setup (transparency_type, transparency_size);

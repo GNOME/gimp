@@ -25,6 +25,7 @@
 
 #include "app_procs.h"
 #include "appenv.h"
+#include "devices.h"
 #include "errors.h"
 #include "fileops.h"
 #include "general.h"
@@ -32,6 +33,7 @@
 #include "menus.h"
 #include "plug_in.h"
 #include "gimage.h"
+#include "tools.h"
 
 #define ERROR  0
 #define DONE   1
@@ -51,7 +53,8 @@ typedef enum {
   TT_XRULERUNIT,
   TT_XPLUGIN,
   TT_XPLUGINDEF,
-  TT_XMENUPATH
+  TT_XMENUPATH,
+  TT_XDEVICE
 } TokenType;
 
 typedef struct _ParseFunc ParseFunc;
@@ -133,6 +136,7 @@ static int parse_preview_size (gpointer val1p, gpointer val2p);
 static int parse_ruler_units (gpointer val1p, gpointer val2p);
 static int parse_plug_in (gpointer val1p, gpointer val2p);
 static int parse_plug_in_def (gpointer val1p, gpointer val2p);
+static int parse_device (gpointer val1p, gpointer val2p);
 static int parse_menu_path (gpointer val1p, gpointer val2p);
 
 static int parse_proc_def (PlugInProcDef **proc_def);
@@ -218,6 +222,7 @@ static ParseFunc funcs[] =
   { "plug-in",               TT_XPLUGIN,    NULL, NULL },
   { "plug-in-def",           TT_XPLUGINDEF, NULL, NULL },
   { "menu-path",             TT_XMENUPATH,  NULL, NULL },
+  { "device",                TT_XDEVICE,    NULL, NULL },
   { "show-tool-tips",        TT_BOOLEAN,    &show_tool_tips, NULL },
   { "dont-show-tool-tips",   TT_BOOLEAN,    NULL, &show_tool_tips },
 };
@@ -570,6 +575,8 @@ parse_statement ()
 	  return parse_plug_in_def (funcs[i].val1p, funcs[i].val2p);
 	case TT_XMENUPATH:
 	  return parse_menu_path (funcs[i].val1p, funcs[i].val2p);
+	case TT_XDEVICE:
+	  return parse_device (funcs[i].val1p, funcs[i].val2p);
 	}
 
   return parse_unknown (token_sym);
@@ -1491,6 +1498,233 @@ transform_path (char *path,
   return new_path;
 }
 
+/* Copied from gtk_menu_factory_parse_accelerator() */
+static void
+parse_device_accelerator (const char   *accelerator,
+			  GdkDeviceKey *key)
+{
+  int done;
+
+  g_return_if_fail (accelerator != NULL);
+  g_return_if_fail (key != NULL);
+
+  key->modifiers = 0;
+
+  done = FALSE;
+  while (!done)
+    {
+      if (strncmp (accelerator, "<shift>", 7) == 0)
+        {
+          accelerator += 7;
+          key->modifiers |= GDK_SHIFT_MASK;
+        }
+      else if (strncmp (accelerator, "<alt>", 5) == 0)
+        {
+          accelerator += 5;
+          key->modifiers |= GDK_MOD1_MASK;
+        }
+      else if (strncmp (accelerator, "<control>", 9) == 0)
+        {
+          accelerator += 9;
+          key->modifiers |= GDK_CONTROL_MASK;
+        }
+      else
+        {
+          done = TRUE;
+	  /* Tricky, but works... ("" => keyval = 0, or no translation) */
+          key->keyval = accelerator[0];
+        }
+    }
+}
+
+static int 
+parse_device (gpointer val1p, 
+	      gpointer val2p)
+{
+  DeviceValues values = 0;
+  int i;
+  int token;
+  
+  /* The initialized values here are meaningless */
+  gchar *name = NULL;
+  GdkInputMode mode = GDK_MODE_DISABLED;
+  gint num_axes = 0;
+  GdkAxisUse *axes = NULL;
+  gint num_keys = 0;
+  GdkDeviceKey *keys = NULL;
+  gchar *brush_name = NULL;
+  ToolType tool = RECT_SELECT;
+  guchar foreground[3] = { 0, 0, 0 };
+
+  token = peek_next_token ();
+  if (!token || (token != TOKEN_STRING))
+    goto error;
+  token = get_next_token ();
+
+  name = g_strdup (token_str);
+
+  /* Parse options for device */
+
+  while ( peek_next_token () == TOKEN_LEFT_PAREN )
+    {
+      token = get_next_token ();
+
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_SYMBOL))
+	goto error;
+      token = get_next_token ();
+
+      if (!strcmp ("mode", token_sym))
+	{
+	  values |= DEVICE_MODE;
+	  
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_SYMBOL))
+	    goto error;
+	  token = get_next_token ();
+
+	  if (!strcmp ("disabled", token_sym))
+	    mode = GDK_MODE_DISABLED;
+	  else if (!strcmp ("window", token_sym))
+	    mode = GDK_MODE_WINDOW;
+	  else if (!strcmp ("screen", token_sym))
+	    mode = GDK_MODE_SCREEN;
+	  else
+	    goto error;
+	}
+      else if (!strcmp ("axes", token_sym))
+	{
+	  values |= DEVICE_AXES;
+	  
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto error;
+	  token = get_next_token ();
+
+	  num_axes = token_int;
+	  axes = g_new (GdkAxisUse, num_axes);
+	  
+	  for (i=0; i<num_axes; i++)
+	    {
+	      token = peek_next_token ();
+	      if (!token || (token != TOKEN_SYMBOL))
+		goto error;
+	      token = get_next_token ();
+	      
+	      if (!strcmp ("ignore", token_sym))
+		axes[i] = GDK_AXIS_IGNORE;
+	      else if (!strcmp ("x", token_sym))
+		axes[i] = GDK_AXIS_X;
+	      else if (!strcmp ("y", token_sym))
+		axes[i] = GDK_AXIS_Y;
+	      else if (!strcmp ("pressure", token_sym))
+		axes[i] = GDK_AXIS_PRESSURE;
+	      else if (!strcmp ("xtilt", token_sym))
+		axes[i] = GDK_AXIS_XTILT;
+	      else if (!strcmp ("ytilt", token_sym))
+		axes[i] = GDK_AXIS_YTILT;
+	      else
+		goto error;
+	    }
+	}
+      else if (!strcmp ("keys", token_sym))
+	{
+	  values |= DEVICE_KEYS;
+	  
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_NUMBER))
+	    goto error;
+	  token = get_next_token ();
+
+	  num_keys = token_int;
+	  keys = g_new (GdkDeviceKey, num_keys);
+	  
+	  for (i=0; i<num_keys; i++)
+	    {
+	      token = peek_next_token ();
+	      if (!token || (token != TOKEN_STRING))
+		goto error;
+	      token = get_next_token ();
+	      
+	      parse_device_accelerator (token_str, &keys[i]);
+	    }
+	}
+      else if (!strcmp ("brush", token_sym))
+	{
+	  values |= DEVICE_BRUSH;
+	  
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto error;
+	  token = get_next_token ();
+
+	  brush_name = g_strdup (token_str);
+	}
+      else if (!strcmp ("tool", token_sym))
+	{
+	  values |= DEVICE_TOOL;
+
+	  token = peek_next_token ();
+	  if (!token || (token != TOKEN_STRING))
+	    goto error;
+	  token = get_next_token ();
+
+	  /* FIXME: this shouldn't be hard coded like this */
+	  for (tool = RECT_SELECT; tool <= CONVOLVE; tool++)
+	    {
+	      if (!strcmp(tool_info[tool].tool_name, token_str))
+		break;
+	    }
+	  if (tool > CONVOLVE)
+	    goto error;
+	  
+	}
+      else if (!strcmp ("foreground", token_sym))
+	{
+	  values |= DEVICE_FOREGROUND;
+	  
+	  for (i=0; i<3; i++)
+	    {
+	      token = peek_next_token ();
+	      if (!token || (token != TOKEN_NUMBER))
+		goto error;
+	      token = get_next_token ();
+
+	      foreground[i] = token_int;
+	    }
+	}
+      else
+	goto error;
+      
+      token = peek_next_token ();
+      if (!token || (token != TOKEN_RIGHT_PAREN))
+	goto error;
+      token = get_next_token ();
+    }
+
+  if (!token || (token != TOKEN_RIGHT_PAREN))
+    goto error;
+  token = get_next_token ();
+
+  devices_rc_update (name, values, mode, num_axes, axes, num_keys, keys,
+		     brush_name, tool, foreground);
+
+  g_free (brush_name);
+  g_free (name);
+  g_free (axes);
+  g_free (keys);
+
+  return OK;
+
+error:
+  g_free (brush_name);
+  g_free (name);
+  g_free (axes);
+  g_free (keys);
+
+  return ERROR;
+}
+
 static int
 parse_unknown (char *token_sym)
 {
@@ -1578,6 +1812,7 @@ value_to_str (char *name)
 	case TT_XPLUGIN:
 	case TT_XPLUGINDEF:
 	case TT_XMENUPATH:
+	case TT_XDEVICE:
 	  return NULL;
 	}
   return NULL;

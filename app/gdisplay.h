@@ -89,6 +89,12 @@ struct _GDisplay
   GSList *display_areas;          /*  Display areas list                      */
 
   GdkCursorType current_cursor;   /*  Currently installed cursor              */
+
+  short draw_cursor;		  /* should we draw software cursor ? */
+  int cursor_x;			  /* software cursor X value */
+  int cursor_y;			  /* software cursor Y value */
+  short proximity;		  /* is a device in proximity of gdisplay ? */
+  short have_cursor;		  /* is cursor currently drawn ? */
 };
 
 
@@ -116,8 +122,9 @@ void       gdisplay_flush                  (GDisplay *);
 void       gdisplay_draw_guides            (GDisplay *);
 void       gdisplay_draw_guide             (GDisplay *, Guide *, int);
 Guide*     gdisplay_find_guide             (GDisplay *, int, int);
-void       gdisplay_snap_point             (GDisplay *, int , int, int *, int *);
+void       gdisplay_snap_point             (GDisplay *, double , double, double *, double *);
 void       gdisplay_snap_rectangle         (GDisplay *, int, int, int, int, int *, int *);
+void	   gdisplay_update_cursor	   (GDisplay *, int, int);
 
 /*  function declarations  */
 

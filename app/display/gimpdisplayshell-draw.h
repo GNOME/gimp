@@ -18,6 +18,8 @@
 #ifndef __INTERFACE_H__
 #define __INTERFACE_H__
 
+#include "tools.h"
+
 /* typedefs */
 typedef void (*QueryFunc) (GtkWidget *, gpointer, gpointer);
 
@@ -28,6 +30,7 @@ extern GtkTooltips *tool_tips;
 
 /* function declarations */
 GtkWidget *  create_pixmap_widget (GdkWindow *, char **, int, int);
+GdkPixmap *  create_tool_pixmap (GtkWidget *, ToolType);
 void         create_toolbox (void);
 void	     toolbox_free (void);
 void         toolbox_raise_callback (GtkWidget *, gpointer);

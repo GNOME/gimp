@@ -29,6 +29,7 @@
 #include "color_area.h"
 #include "color_select.h"
 #include "datafiles.h"
+#include "devices.h"
 #include "errors.h"
 #include "general.h"
 #include "gimprc.h"
@@ -338,6 +339,7 @@ palette_set_foreground (int r,
     {
       store_color (&foreground_pixel, rr, gg, bb);
       color_area_update ();
+      device_status_update (current_device);
     }
 }
 

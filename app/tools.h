@@ -135,6 +135,7 @@ struct _ToolInfo
 /*  Global Data Structure  */
 
 extern Tool * active_tool;
+extern ToolType active_tool_type;
 extern Layer * active_tool_layer;
 extern ToolInfo tool_info[];
 

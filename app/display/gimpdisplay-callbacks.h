@@ -21,7 +21,9 @@
 #define CANVAS_EVENT_MASK  GDK_EXPOSURE_MASK | GDK_POINTER_MOTION_MASK | \
                            GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON_PRESS_MASK | \
 			   GDK_BUTTON_RELEASE_MASK | GDK_STRUCTURE_MASK | \
-			   GDK_ENTER_NOTIFY_MASK | GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK
+			   GDK_ENTER_NOTIFY_MASK | GDK_LEAVE_NOTIFY_MASK | \
+			   GDK_KEY_PRESS_MASK | GDK_KEY_RELEASE_MASK | \
+			   GDK_PROXIMITY_OUT_MASK
 
 gint gdisplay_canvas_events (GtkWidget *, GdkEvent *);
 gint gdisplay_hruler_button_press (GtkWidget *, GdkEventButton *, gpointer);
