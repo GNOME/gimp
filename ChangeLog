@@ -1,3 +1,7 @@
+2001-11-23  Sven Neumann  <sven@gimp.org>
+
+	* app/about_dialog.c: sink the GtkPreview created for the logo.
+
 2001-11-22  Tor Lillqvist  <tml@iki.fi>
 
 	* accompat.m4: New file. Should solve the AM_GLIB_GNU_GETTEXT and
