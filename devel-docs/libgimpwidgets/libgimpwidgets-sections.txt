@@ -1,4 +1,4 @@
-2<SECTION>
+<SECTION>
 <FILE>gimpchainbutton</FILE>
 <TITLE>GimpChainButton</TITLE>
 GimpChainButton
