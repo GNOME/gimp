@@ -1,3 +1,7 @@
+Tue May 11 11:43:36 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* modules/colorsel_water.c: small change not worth a ChangeLog entry
+
 Mon May 10 18:28:11 CEST 1999 Marc Lehmann <pcg@goof.com>
 
         * configure.in: undo the part of patch "Tue May 4 15:51:16 PDT

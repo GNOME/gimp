@@ -105,7 +105,7 @@ typedef struct {
 static gdouble    bucket[N_BUCKETS + 1][3];
 static GtkWidget *color_preview[N_BUCKETS + 1];
 static gdouble    last_x, last_y, last_pressure;
-static gfloat     pressure_adjust = 100.0;
+static gfloat     pressure_adjust = 1.0;
 static guint32    motion_time;
 static gint       button_state;
 static ColorselWater *coldata;
@@ -277,7 +277,7 @@ add_pigment (gboolean erase, gdouble x, gdouble y, gdouble much)
 {
   gdouble r, g, b;
 
-  much *= (gdouble)pressure_adjust / 100.0; 
+  much *= (gdouble)pressure_adjust; 
 
 #ifdef VERBOSE
   g_print ("x: %g, y: %g, much: %g\n", x, y, much);
@@ -456,7 +456,7 @@ reset_color_callback (GtkWidget *widget, gpointer data)
 static void
 pressure_adjust_update (GtkAdjustment *adj, gpointer data)
 {
-  pressure_adjust = adj->value;
+  pressure_adjust = adj->value / 100;
 }
 
 
