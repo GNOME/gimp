@@ -2166,7 +2166,7 @@ fileselect (GtkFileChooserAction  action,
 
   if (!windows[action])
     {
-      windows[action] =
+      GtkWidget *dialog = windows[action] =
         gtk_file_chooser_dialog_new (gettext (titles[action]),
                                      GTK_WINDOW (parent),
                                      action,
@@ -2179,16 +2179,12 @@ fileselect (GtkFileChooserAction  action,
 
                                      NULL);
 
-      gimp_help_connect (windows[action], gimp_standard_help_func,
-                         "plug-in-spheredesigner", NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-      g_signal_connect (windows[action], "destroy",
+      g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &windows[action]);
-      g_signal_connect (windows[action], "delete_event",
-                        G_CALLBACK (gtk_true),
-                        NULL);
-      g_signal_connect (windows[action], "response",
+      g_signal_connect (dialog, "response",
                         G_CALLBACK (handlers[action]),
                         NULL);
     }

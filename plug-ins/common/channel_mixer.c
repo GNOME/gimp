@@ -863,7 +863,7 @@ cm_load_file_callback (GtkWidget    *widget,
 
                                      NULL);
 
-      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (cm_load_file_response_callback),
@@ -995,7 +995,7 @@ cm_save_file_callback (GtkWidget    *widget,
 
                                      NULL);
 
-      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (cm_save_file_response_callback),

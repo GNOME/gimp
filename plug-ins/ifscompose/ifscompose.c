@@ -2639,7 +2639,7 @@ ifs_compose_save (GtkWidget *parent)
 
                                      NULL);
 
-      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
@@ -2669,7 +2669,7 @@ ifs_compose_load (GtkWidget *parent)
 
                                      NULL);
 
-      gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+      gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
       g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),

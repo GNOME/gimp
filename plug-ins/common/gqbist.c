@@ -701,10 +701,9 @@ dialog_load (GtkWidget *widget,
 
                                         NULL);
 
-  gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                 qbist_info.path);
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {
@@ -740,10 +739,9 @@ dialog_save (GtkWidget *widget,
 
                                         NULL);
 
-  gimp_help_connect (dialog, gimp_standard_help_func, HELP_ID, NULL);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
-  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
-                                 qbist_info.path);
+  gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 
   if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_OK)
     {

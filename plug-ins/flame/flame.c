@@ -489,8 +489,6 @@ make_file_dlg (const gchar *title,
   g_signal_connect (file_dlg, "response",
                     G_CALLBACK (file_response_callback),
                     NULL);
-
-  gimp_help_connect (file_dlg, gimp_standard_help_func, HELP_ID, NULL);
 }
 
 static void
