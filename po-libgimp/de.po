@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
-"POT-Creation-Date: 2002-02-08 17:29+0100\n"
-"PO-Revision-Date: 2000-06-28 00:04+02:00\n"
+"POT-Creation-Date: 2002-02-28 11:16+0100\n"
+"PO-Revision-Date: 2002-02-28 11:20+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -99,11 +99,11 @@ msgstr "Alphakanal hinzufügen"
 #. the dialog
 #: libgimp/gimpexport.c:356
 msgid "Confirm Save"
-msgstr ""
+msgstr "Sichern bestätigen"
 
 #: libgimp/gimpexport.c:360
 msgid "Confirm"
-msgstr ""
+msgstr "Bestätigen"
 
 #: libgimp/gimpexport.c:362
 msgid "Cancel"
@@ -157,31 +157,80 @@ msgid "percent"
 msgstr "Prozent"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
-#, fuzzy
 msgid "/Foreground Color"
-msgstr "/Vordergrundfarbe verwenden"
+msgstr "/Vordergrundfarbe"
 
 #: libgimpwidgets/gimpcolorbutton.c:87
-#, fuzzy
 msgid "/Background Color"
-msgstr "/Hintergrundfarbe verwenden"
+msgstr "/Hintergrundfarbe"
 
 #: libgimpwidgets/gimpcolorbutton.c:90
 msgid "/Black"
-msgstr ""
+msgstr "/Schwarz"
 
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
-msgstr ""
+msgstr "/Weiss"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Datei auswählen"
+msgstr "Verzeichnis auswählen"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Datei auswählen"
+
+#: libgimpwidgets/gimpstock.c:88
+msgid "Anchor"
+msgstr "Verankern"
+
+#: libgimpwidgets/gimpstock.c:89
+msgid "Duplicate"
+msgstr "Duplizieren"
+
+#: libgimpwidgets/gimpstock.c:90
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: libgimpwidgets/gimpstock.c:91
+msgid "Linked"
+msgstr "Verknüpft"
+
+#: libgimpwidgets/gimpstock.c:92
+msgid "Paste"
+msgstr "Einfügen"
+
+#: libgimpwidgets/gimpstock.c:93
+msgid "Paste as New"
+msgstr "Einfügen als Neu"
+
+#: libgimpwidgets/gimpstock.c:94
+msgid "Paste Into"
+msgstr "Einfügen in Auswahl"
+
+#: libgimpwidgets/gimpstock.c:95
+msgid "_Reset"
+msgstr "_Rücksetzen"
+
+#: libgimpwidgets/gimpstock.c:96
+msgid "Visible"
+msgstr "Sichtbar"
+
+#: libgimpwidgets/gimpstock.c:144
+msgid "Transform"
+msgstr "Transformation"
+
+#: libgimpwidgets/gimpstock.c:147
+msgid "Rotate"
+msgstr "Rotieren"
+
+#: libgimpwidgets/gimpstock.c:148
+msgid "Scale"
+msgstr "Skalieren"
+
+#: libgimpwidgets/gimpstock.c:149
+msgid "Shear"
+msgstr "Scheren"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -231,40 +280,3 @@ msgstr "KiloByte"
 #: libgimpwidgets/gimpwidgets.c:1131
 msgid "MegaBytes"
 msgstr "MegaByte"
-
-#~ msgid "pixel"
-#~ msgstr "Pixel"
-
-#~ msgid "pixels"
-#~ msgstr "Pixel"
-
-#~ msgid "inch"
-#~ msgstr "Inch"
-
-#~ msgid "inches"
-#~ msgstr "Inch"
-
-#~ msgid "millimeter"
-#~ msgstr "Millimeter"
-
-#~ msgid "millimeters"
-#~ msgstr "Millimeter"
-
-#~ msgid "point"
-#~ msgstr "Punkt"
-
-#~ msgid "points"
-#~ msgstr "Punkt"
-
-#~ msgid "pica"
-#~ msgstr "Pica"
-
-#~ msgid "picas"
-#~ msgstr "Pica"
-
-#, fuzzy
-#~ msgid "Select Directory"
-#~ msgstr "Datei auswählen"
-
-#~ msgid "OK"
-#~ msgstr "OK"

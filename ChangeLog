@@ -1,3 +1,7 @@
+2002-02-28  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/file-commands.c: fixed message string.
+
 2002-02-27  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/stock-button-stroke.png

@@ -6,5 +6,6 @@ libgimp/gimpunit.c
 libgimpwidgets/gimpcolorbutton.c
 libgimpwidgets/gimpfileselection.c
 libgimpwidgets/gimpquerybox.c
+libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c

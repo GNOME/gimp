@@ -17,17 +17,25 @@ app/core/gimp.c
 app/core/gimpbrush.c
 app/core/gimpbrushpipe.c
 app/core/gimpchannel.c
+app/core/gimpcontext.c
 app/core/gimpdatafactory.c
 app/core/gimpdrawable.c
 app/core/gimpdrawable-bucket-fill.c
+app/core/gimpdrawable-transform.c
 app/core/gimpedit.c
+app/core/gimpgradient.c
 app/core/gimpimage-convert.c
 app/core/gimpimage-mask.c
+app/core/gimpimage-merge.c
 app/core/gimpimage-new.c
 app/core/gimpimage.c
+app/core/gimpimagefile.c
+app/core/gimpitem.c
 app/core/gimplayer.c
 app/core/gimplayer-floating-sel.c
 app/core/gimplayermask.c
+app/core/gimpmoduleinfo.c
+app/core/gimpmodules.c
 app/core/gimppalette-import.c
 app/core/gimppalette.c
 app/core/gimppattern.c
@@ -36,8 +44,10 @@ app/core/gimpunit.c
 app/display/gimpdisplay.c
 app/display/gimpdisplayshell.c
 app/display/gimpdisplayshell-callbacks.c
+app/display/gimpdisplayshell-filter-dialog.c
 app/display/gimpdisplayshell-layer-select.c
 app/display/gimpprogress.c
+app/display/gimpstatusbar.c
 
 app/file/file-open.c
 app/file/file-save.c
@@ -53,12 +63,15 @@ app/gui/colormap-dialog.c
 app/gui/convert-dialog.c
 app/gui/device-status-dialog.c
 app/gui/dialogs-constructors.c
+app/gui/drawable-commands.c
 app/gui/edit-commands.c
+app/gui/error-console-dialog.c
 app/gui/file-commands.c
 app/gui/file-new-dialog.c
 app/gui/file-open-dialog.c
 app/gui/file-save-dialog.c
 app/gui/gradient-editor.c
+app/gui/gradient-editor-commands.c
 app/gui/gradient-select.c
 app/gui/gradients-commands.c
 app/gui/gui.c
@@ -87,6 +100,10 @@ app/gui/tips-parser.c
 app/gui/tool-options-dialog.c
 app/gui/toolbox.c
 app/gui/user-install-dialog.c
+app/gui/vectors-commands.c
+
+app/paint/gimpclone.c
+app/paint/gimppaintcore.c
 
 app/pdb/image_cmds.c
 app/pdb/internal_procs.c
@@ -138,12 +155,14 @@ app/tools/gimptexttool.c
 app/tools/gimpthresholdtool.c
 app/tools/gimptool.c
 app/tools/gimptransformtool.c
+app/tools/gimpvectortool.c
 app/tools/paint_options.c
 app/tools/selection_options.c
 app/tools/tool_options.c
 app/tools/transform_options.c
 
 app/widgets/gimpbrushfactoryview.c
+app/widgets/gimpbufferview.c
 app/widgets/gimpchannellistview.c
 app/widgets/gimpcomponentlistitem.c
 app/widgets/gimpcontainergridview.c
@@ -152,8 +171,11 @@ app/widgets/gimpdocumentview.c
 app/widgets/gimpdrawablelistview.c
 app/widgets/gimpfontselection-dialog.c
 app/widgets/gimpimagedock.c
+app/widgets/gimpitemfactory.c
+app/widgets/gimpitemlistview.c
 app/widgets/gimplayerlistview.c
-app/widgets/gimpwidgets-constructors.h
+app/widgets/gimpvectorslistview.c
+app/widgets/gimpwidgets-constructors.c
 app/widgets/gimpwidgets-utils.c
 
 app/xcf/xcf-load.c
