@@ -100,7 +100,6 @@ plug-ins/common/photocopy.c
 plug-ins/common/pix.c
 plug-ins/common/pixelize.c
 plug-ins/common/plasma.c
-plug-ins/common/plugindetails.c
 plug-ins/common/png.c
 plug-ins/common/pnm.c
 plug-ins/common/polar.c
@@ -153,8 +152,10 @@ plug-ins/common/xbm.c
 plug-ins/common/xpm.c
 plug-ins/common/xwd.c
 plug-ins/common/zealouscrop.c
-plug-ins/dbbrowser/dbbrowser.c
-plug-ins/dbbrowser/dbbrowser_utils.c
+plug-ins/dbbrowser/gimpprocbrowser.c
+plug-ins/dbbrowser/gimpprocview.c
+plug-ins/dbbrowser/plugin-browser.c
+plug-ins/dbbrowser/procedure-browser.c
 plug-ins/faxg3/faxg3.c
 plug-ins/fits/fits.c
 plug-ins/flame/flame.c
