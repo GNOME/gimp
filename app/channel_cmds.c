@@ -96,7 +96,6 @@ channel_new_invoker (Argument *args)
 
   if (success)
     {
-      channel_set_opacity (channel, opacity);
       channel = channel_new (gimage, width, height, name, opacity, color);
       success = channel != NULL;
     }

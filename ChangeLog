@@ -1,3 +1,16 @@
+Thu Jul 29 02:42:17 1999  Tor Lillqvist  <tml@iki.fi>
+
+	* tools/pdbgen/pdb/channel.pdb: Remove a call to
+ 	channel_set_opacity() at a point where channel always is NULL,
+ 	causing a crash. The next statement calls channel_new() (passing
+ 	the opacity), and assigns its return value to channel, so there
+ 	shouldn't be any need to call channel_set_opacity()?
+
+	* app/channel_cmds.c: Corresponding change in generated file.
+
+	* plug-ins/makefile.{cygwin,msc}: Add the new curve_bend and
+ 	sample_colorize plug-ins.
+
 Wed Jul 28 16:17:29 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdbgen.pl: eval "defined $_" -> eval "defined scalar $_"
