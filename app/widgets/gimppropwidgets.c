@@ -1692,9 +1692,10 @@ gimp_prop_size_entry_connect (GObject     *config,
   GParamSpec *unit_param_spec;
   gdouble     x_value;
   gdouble     y_value;
+  GimpUnit    unit_value;
   gdouble    *old_x_value;
   gdouble    *old_y_value;
-  GimpUnit    unit_value;
+  GimpUnit   *old_unit_value;
   gboolean    chain_checked = FALSE;
 
   g_return_val_if_fail (GIMP_IS_SIZE_ENTRY (sizeentry), FALSE);
@@ -1817,6 +1818,15 @@ gimp_prop_size_entry_connect (GObject     *config,
                           old_y_value,
                           (GDestroyNotify) g_free);
 
+  if (unit_property_name)
+    {
+      old_unit_value  = g_new0 (GimpUnit, 1);
+      *old_unit_value = unit_value;
+      g_object_set_data_full (G_OBJECT (sizeentry), "old-unit-value",
+                              old_unit_value,
+                              (GDestroyNotify) g_free);
+    }
+
   if (chainbutton)
     {
       if (chain_checked)
@@ -1868,6 +1878,7 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   GimpUnit    unit_value;
   gdouble    *old_x_value;
   gdouble    *old_y_value;
+  GimpUnit   *old_unit_value;
 
   x_param_spec = g_object_get_data (G_OBJECT (sizeentry),
                                     "gimp-config-param-spec-x");
@@ -1883,10 +1894,11 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
   y_value    = gimp_size_entry_get_refval (sizeentry, 1);
   unit_value = gimp_size_entry_get_unit (sizeentry);
 
-  old_x_value = g_object_get_data (G_OBJECT (sizeentry), "old-x-value");
-  old_y_value = g_object_get_data (G_OBJECT (sizeentry), "old-y-value");
+  old_x_value    = g_object_get_data (G_OBJECT (sizeentry), "old-x-value");
+  old_y_value    = g_object_get_data (G_OBJECT (sizeentry), "old-y-value");
+  old_unit_value = g_object_get_data (G_OBJECT (sizeentry), "old-unit-value");
 
-  if (! old_x_value || ! old_y_value)
+  if (! old_x_value || ! old_y_value || (unit_param_spec && ! old_unit_value))
     return;
 
   if (x_value != y_value)
@@ -1905,11 +1917,16 @@ gimp_prop_coordinates_callback (GimpSizeEntry *sizeentry,
         }
     }
 
-  if (*old_x_value == x_value && *old_y_value == y_value)
+  if (*old_x_value == x_value &&
+      *old_y_value == y_value &&
+      (old_unit_value == NULL || *old_unit_value == unit_value))
     return;
 
   *old_x_value = x_value;
   *old_y_value = y_value;
+
+  if (old_unit_value)
+    *old_unit_value = unit_value;
 
   if (G_IS_PARAM_SPEC_INT (x_param_spec) &&
       G_IS_PARAM_SPEC_INT (y_param_spec))

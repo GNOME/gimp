@@ -20,16 +20,10 @@
 #define __GIMP_IMAGE_NEW_H__
 
 
-GimpTemplate * gimp_image_new_template_new       (Gimp         *gimp,
-                                                  GimpImage    *gimage);
-
-void           gimp_image_new_set_last_template  (Gimp         *gimp,
-                                                  GimpTemplate *template);
-
-gchar        * gimp_image_new_get_memsize_string (gsize         memsize);
-
-GimpImage    * gimp_image_new_create_image       (Gimp         *gimp,
-                                                  GimpTemplate *template);
+GimpTemplate * gimp_image_new_get_last_template (Gimp         *gimp,
+                                                 GimpImage    *gimage);
+void           gimp_image_new_set_last_template (Gimp         *gimp,
+                                                 GimpTemplate *template);
 
 
 #endif /* __GIMP_IMAGE_NEW__ */

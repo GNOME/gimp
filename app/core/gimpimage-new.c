@@ -35,8 +35,8 @@
 
 
 GimpTemplate *
-gimp_image_new_template_new (Gimp      *gimp,
-                             GimpImage *gimage)
+gimp_image_new_get_last_template (Gimp      *gimp,
+                                  GimpImage *gimage)
 {
   GimpTemplate *template;
 
@@ -72,45 +72,4 @@ gimp_image_new_set_last_template (Gimp         *gimp,
   gimp_config_copy_properties (G_OBJECT (template),
                                G_OBJECT (gimp->image_new_last_template));
   gimp->have_current_cut_buffer = FALSE;
-}
-
-gchar *
-gimp_image_new_get_memsize_string (gsize memsize)
-{
-  if (memsize < 4096)
-    {
-      return g_strdup_printf (_("%d Bytes"), (gint) memsize);
-    }
-  else if (memsize < 1024 * 10)
-    {
-      return g_strdup_printf (_("%.2f KB"), (gdouble) memsize / 1024.0);
-    }
-  else if (memsize < 1024 * 100)
-    {
-      return g_strdup_printf (_("%.1f KB"), (gdouble) memsize / 1024.0);
-    }
-  else if (memsize < 1024 * 1024)
-    {
-      return g_strdup_printf (_("%d KB"), (gint) memsize / 1024);
-    }
-  else if (memsize < 1024 * 1024 * 10)
-    {
-      return g_strdup_printf (_("%.2f MB"), (gdouble) memsize / 1024.0 / 1024.0);
-    }
-  else
-    {
-      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0 / 1024.0);
-    }
-}
-
-GimpImage *
-gimp_image_new_create_image (Gimp         *gimp,
-			     GimpTemplate *template)
-{
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
-
-  gimp_image_new_set_last_template (gimp, template);
-
-  return gimp_template_create_image (gimp, template);
 }

@@ -28,6 +28,8 @@
 
 #include "gimputils.h"
 
+#include "libgimp/libgimp-intl.h"
+
 
 /**
  * gimp_utf8_strtrim:
@@ -95,4 +97,44 @@ gimp_utf8_strtrim (const gchar *str,
     }
 
   return NULL;
+}
+
+/**
+ * gimp_memsize_to_string:
+ * @memsize: A memory size in bytes.
+ * 
+ * This function returns a human readable, translated representation
+ * of the passed @memsize. Large values are rounded to the closest
+ * reasonable memsize unit, e.g.: "3456" becomes "3456 Bytes", "4100"
+ * becomes "4 KB" and so on.
+ * 
+ * Return value: A human-readable, translated string.
+ **/
+gchar *
+gimp_memsize_to_string (gulong memsize)
+{
+  if (memsize < 4096)
+    {
+      return g_strdup_printf (_("%d Bytes"), (gint) memsize);
+    }
+  else if (memsize < 1024 * 10)
+    {
+      return g_strdup_printf (_("%.2f KB"), (gdouble) memsize / 1024.0);
+    }
+  else if (memsize < 1024 * 100)
+    {
+      return g_strdup_printf (_("%.1f KB"), (gdouble) memsize / 1024.0);
+    }
+  else if (memsize < 1024 * 1024)
+    {
+      return g_strdup_printf (_("%d KB"), (gint) memsize / 1024);
+    }
+  else if (memsize < 1024 * 1024 * 10)
+    {
+      return g_strdup_printf (_("%.2f MB"), (gdouble) memsize / 1024.0 / 1024.0);
+    }
+  else
+    {
+      return g_strdup_printf (_("%.1f MB"), (gdouble) memsize / 1024.0 / 1024.0);
+    }
 }

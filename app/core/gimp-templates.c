@@ -43,7 +43,7 @@ gimp_templates_load (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_LIST (gimp->templates));
 
-  filename = gimp_personal_rc_file ("templates");
+  filename = gimp_personal_rc_file ("templaterc");
 
   if (!gimp_config_deserialize (G_OBJECT (gimp->templates),
                                 filename,
@@ -62,11 +62,11 @@ void
 gimp_templates_save (Gimp *gimp)
 {
   const gchar *header =
-    "GIMP templates\n"
+    "GIMP templaterc\n"
     "\n"
     "This file will be entirely rewritten every time you quit the gimp.";
   const gchar *footer =
-    "end of templates";
+    "end of templaterc";
 
   gchar  *filename;
   GError *error = NULL;
@@ -74,7 +74,7 @@ gimp_templates_save (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (GIMP_IS_LIST (gimp->templates));
 
-  filename = gimp_personal_rc_file ("templates");
+  filename = gimp_personal_rc_file ("templaterc");
 
   if (! gimp_config_serialize (G_OBJECT (gimp->templates),
                                filename, header, footer, NULL, &error))

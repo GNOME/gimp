@@ -21,10 +21,10 @@
 
 
 #include "gimpobject.h"
-#include "gimpimage-new.h"
 
 
-typedef void         (* GimpThreadFunc)        (Gimp        *gimp);
+typedef void         (* GimpThreadEnterFunc)   (Gimp        *gimp);
+typedef void         (* GimpThreadLeaveFunc)   (Gimp        *gimp);
 typedef GimpObject * (* GimpCreateDisplayFunc) (GimpImage   *gimage,
                                                 guint        scale);
 typedef void         (* GimpSetBusyFunc)       (Gimp        *gimp);
@@ -58,8 +58,8 @@ struct _Gimp
   GimpMessageHandlerType  message_handler;
   GimpStackTraceMode      stack_trace_mode;
 
-  GimpThreadFunc          gui_threads_enter_func;
-  GimpThreadFunc          gui_threads_leave_func;
+  GimpThreadEnterFunc     gui_threads_enter_func;
+  GimpThreadLeaveFunc     gui_threads_leave_func;
   GimpCreateDisplayFunc   gui_create_display_func;
   GimpSetBusyFunc         gui_set_busy_func;
   GimpUnsetBusyFunc       gui_unset_busy_func;

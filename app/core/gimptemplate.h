@@ -50,6 +50,11 @@ struct _GimpTemplate
   
   GimpImageBaseType  image_type;
   GimpFillType       fill_type;
+
+  gchar             *filename;
+
+  gulong             initial_size;
+  gboolean           initial_size_too_large;
 };
 
 struct _GimpTemplateClass
@@ -66,8 +71,6 @@ void           gimp_template_set_from_config (GimpTemplate   *template,
                                               GimpCoreConfig *config);
 void           gimp_template_set_from_image  (GimpTemplate   *template,
                                               GimpImage      *gimage);
-
-gsize          gimp_template_calc_memsize    (GimpTemplate   *values);
 
 GimpImage    * gimp_template_create_image    (Gimp           *gimp,
                                               GimpTemplate   *template);

@@ -21,8 +21,10 @@
 #define __GIMP_UTILS_H__
 
 
-gchar * gimp_utf8_strtrim (const gchar *str,
-			   gint         max_chars);
+gchar * gimp_utf8_strtrim      (const gchar *str,
+                                gint         max_chars);
+
+gchar * gimp_memsize_to_string (gulong       memsize);
 
 
 #endif  /* __GIMP_UTILS_H__ */

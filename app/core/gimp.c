@@ -55,7 +55,6 @@
 #include "gimpenvirontable.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
-#include "gimpimage-new.h"
 #include "gimpimagefile.h"
 #include "gimplist.h"
 #include "gimpmarshal.h"

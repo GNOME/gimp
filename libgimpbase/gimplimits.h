@@ -27,7 +27,7 @@
 /*  pixel sizes
  */
 #define GIMP_MIN_IMAGE_SIZE  1
-#define GIMP_MAX_IMAGE_SIZE  16777216  /*  2^24  */
+#define GIMP_MAX_IMAGE_SIZE  262144    /*  2^18  */
 
 /*  dots per inch
  */

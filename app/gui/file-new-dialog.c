@@ -53,24 +53,21 @@ typedef struct
   GtkWidget    *dialog;
   GtkWidget    *confirm_dialog;
 
-  GtkWidget    *option_menu;
-  GtkWidget    *container_menu;
+  GtkWidget    *template_menu;
 
   GtkWidget    *size_se;
   GtkWidget    *memsize_label;
   GtkWidget    *resolution_se;
-  GtkWidget    *couple_resolutions;
 
-  GimpTemplate *template;
-  gdouble       size;
+  GtkWidget    *ok_button;
 
   Gimp         *gimp;
+  GimpTemplate *template;
+  gulong        memsize;
 } NewImageInfo;
 
 
 /*  local function prototypes  */
-
-static void   file_new_confirm_dialog  (NewImageInfo      *info);
 
 static void   file_new_ok_callback     (GtkWidget         *widget,
                                         NewImageInfo      *info);
@@ -82,9 +79,10 @@ static void   file_new_template_notify (GimpTemplate      *template,
                                         GParamSpec        *param_spec,
                                         NewImageInfo      *info);
 static void   file_new_template_select (GimpContainerMenu *menu,
-                                        GimpViewable      *object,
+                                        GimpTemplate      *template,
                                         gpointer           insert_data,
                                         NewImageInfo      *info);
+static void   file_new_confirm_dialog  (NewImageInfo      *info);
 
 
 /*  public functions  */
@@ -105,6 +103,8 @@ file_new_dialog_create (Gimp      *gimp,
   GtkObject    *adjustment;
   GtkWidget    *spinbutton;
   GtkWidget    *spinbutton2;
+  GtkWidget    *chainbutton;
+  GtkWidget    *optionmenu;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimage == NULL || GIMP_IS_IMAGE (gimage));
@@ -112,7 +112,8 @@ file_new_dialog_create (Gimp      *gimp,
   info = g_new0 (NewImageInfo, 1);
 
   info->gimp     = gimp;
-  info->template = gimp_image_new_template_new (gimp, gimage);
+  info->template = gimp_image_new_get_last_template (gimp, gimage);
+  info->memsize  = 0;
 
   g_signal_connect (info->template, "notify",
                     G_CALLBACK (file_new_template_notify),
@@ -133,7 +134,7 @@ file_new_dialog_create (Gimp      *gimp,
                               info, NULL, NULL, FALSE, TRUE,
 
                               GTK_STOCK_OK, file_new_ok_callback,
-                              info, NULL, NULL, TRUE, FALSE,
+                              info, NULL, &info->ok_button, TRUE, FALSE,
 
                               NULL);
 
@@ -154,21 +155,20 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  info->option_menu = gtk_option_menu_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), info->option_menu, TRUE, TRUE, 0);
-  gtk_widget_show (info->option_menu);
+  optionmenu = gtk_option_menu_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), optionmenu, TRUE, TRUE, 0);
+  gtk_widget_show (optionmenu);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), info->option_menu);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), optionmenu);
 
-  info->container_menu = gimp_container_menu_new (gimp->templates, NULL, 16);
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (info->option_menu),
-			    info->container_menu);
-  gtk_widget_show (info->container_menu);
+  info->template_menu = gimp_container_menu_new (gimp->templates, NULL, 16);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (optionmenu), info->template_menu);
+  gtk_widget_show (info->template_menu);
 
-  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (info->container_menu),
+  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (info->template_menu),
                                    NULL);
 
-  g_signal_connect (info->container_menu, "select_item",
+  g_signal_connect (info->template_menu, "select_item",
                     G_CALLBACK (file_new_template_select),
                     info);
 
@@ -330,10 +330,10 @@ file_new_dialog_create (Gimp      *gimp,
                                      1, 2);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), SB_WIDTH);
 
-  info->resolution_se =  gimp_size_entry_new (1, info->template->resolution_unit,
-                                              _("pixels/%a"),
-                                              FALSE, FALSE, FALSE, SB_WIDTH,
-                                              GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
+  info->resolution_se = gimp_size_entry_new (1, info->template->resolution_unit,
+                                             _("pixels/%a"),
+                                             FALSE, FALSE, FALSE, SB_WIDTH,
+                                             GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
   gtk_table_set_col_spacing (GTK_TABLE (info->resolution_se), 1, 2);
   gtk_table_set_col_spacing (GTK_TABLE (info->resolution_se), 2, 2);
   gtk_table_set_row_spacing (GTK_TABLE (info->resolution_se), 0, 2);
@@ -348,16 +348,15 @@ file_new_dialog_create (Gimp      *gimp,
   gtk_widget_show (info->resolution_se);
 
   /*  the resolution chainbutton  */
-  info->couple_resolutions = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
-  gtk_table_attach_defaults (GTK_TABLE (info->resolution_se),
-			     info->couple_resolutions, 2, 3, 0, 2);
-  gtk_widget_show (info->couple_resolutions);
+  chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+  gtk_table_attach_defaults (GTK_TABLE (info->resolution_se), chainbutton,
+                             2, 3, 0, 2);
+  gtk_widget_show (chainbutton);
 
   gimp_prop_size_entry_connect (G_OBJECT (info->template),
                                 "xresolution", "yresolution",
                                 "resolution-unit",
-                                info->resolution_se,
-                                info->couple_resolutions,
+                                info->resolution_se, chainbutton,
                                 1.0, 1.0);
 
   /*  hbox containing the Image type and fill type frames  */
@@ -383,6 +382,9 @@ file_new_dialog_create (Gimp      *gimp,
 
   gimp_size_entry_grab_focus (GIMP_SIZE_ENTRY (info->size_se));
 
+  /*  update the size label  */
+  file_new_template_notify (info->template, NULL, info);
+
   gtk_widget_show (info->dialog);
 }
 
@@ -393,14 +395,15 @@ static void
 file_new_ok_callback (GtkWidget    *widget,
 		      NewImageInfo *info)
 {
-  if (info->size > GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size)
+  if (info->memsize > GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size)
     {
       file_new_confirm_dialog (info);
     }
   else
     {
       gtk_widget_destroy (info->dialog);
-      gimp_image_new_create_image (info->gimp, info->template);
+      gimp_template_create_image (info->gimp, info->template);
+      gimp_image_new_set_last_template (info->gimp, info->template);
       g_object_unref (info->template);
       g_free (info);
     }
@@ -419,25 +422,99 @@ static void
 file_new_reset_callback (GtkWidget    *widget,
 			 NewImageInfo *info)
 {
-  gint width;
-  gint height;
+  g_signal_handlers_disconnect_by_func (info->template,
+                                        file_new_template_notify,
+                                        info);
 
-  width  = info->gimp->config->default_image_width;
-  height = info->gimp->config->default_image_height;
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
+                                  info->gimp->config->default_xresolution,
+                                  FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
+                                  info->gimp->config->default_yresolution,
+                                  FALSE);
 
   gimp_template_set_from_config (info->template, info->gimp->config);
 
   g_object_set (info->template,
-                "width",     width,
-                "height",    height,
                 "fill-type", GIMP_BACKGROUND_FILL,
                 NULL);
-
-  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (info->container_menu),
+  gimp_container_menu_select_item (GIMP_CONTAINER_MENU (info->template_menu),
                                    NULL);
+
+  g_signal_connect (info->template, "notify",
+                    G_CALLBACK (file_new_template_notify),
+                    info);
+  file_new_template_notify (info->template, NULL, info);
 }
 
-/*  local callback of file_new_confirm_dialog()  */
+static void
+file_new_template_notify (GimpTemplate *template,
+                          GParamSpec   *param_spec,
+                          NewImageInfo *info)
+{
+  if (param_spec)
+    {
+      if (! strcmp (param_spec->name, "xresolution"))
+        {
+          gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
+                                          template->xresolution, FALSE);
+        }
+      else if (! strcmp (param_spec->name, "yresolution"))
+        {
+          gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
+                                          template->yresolution, FALSE);
+        }
+    }
+
+  if (info->memsize != template->initial_size)
+    {
+      gchar *text;
+
+      info->memsize = template->initial_size;
+
+      if (template->initial_size_too_large)
+        text = g_strdup (_("Too large!"));
+      else
+        text = gimp_memsize_to_string (info->memsize);
+
+      gtk_label_set_text (GTK_LABEL (info->memsize_label), text);
+      g_free (text);
+
+      gtk_widget_set_sensitive (info->ok_button,
+                                ! template->initial_size_too_large);
+    }
+}
+
+static void
+file_new_template_select (GimpContainerMenu *menu,
+                          GimpTemplate      *template,
+                          gpointer           insert_data,
+                          NewImageInfo      *info)
+{
+  if (template)
+    {
+      g_signal_handlers_disconnect_by_func (info->template,
+                                            file_new_template_notify,
+                                            info);
+
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
+                                      template->xresolution, FALSE);
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
+                                      template->yresolution, FALSE);
+
+      gimp_config_copy_properties (G_OBJECT (template),
+                                   G_OBJECT (info->template));
+
+      g_signal_connect (info->template, "notify",
+                        G_CALLBACK (file_new_template_notify),
+                        info);
+      file_new_template_notify (info->template, NULL, info);
+    }
+}
+
+
+/*  the confirm dialog  */
+
 static void
 file_new_confirm_dialog_callback (GtkWidget *widget,
 				  gboolean   create,
@@ -450,7 +527,8 @@ file_new_confirm_dialog_callback (GtkWidget *widget,
   if (create)
     {
       gtk_widget_destroy (info->dialog);
-      gimp_image_new_create_image (info->gimp, info->template);
+      gimp_template_create_image (info->gimp, info->template);
+      gimp_image_new_set_last_template (info->gimp, info->template);
       g_object_unref (info->template);
       g_free (info);
     }
@@ -463,12 +541,12 @@ file_new_confirm_dialog_callback (GtkWidget *widget,
 static void
 file_new_confirm_dialog (NewImageInfo *info)
 {
-  gchar *size;
-  gchar *max_size;
+  gchar *size_str;
+  gchar *max_size_str;
   gchar *text;
 
-  size     = gimp_image_new_get_memsize_string (info->size);
-  max_size = gimp_image_new_get_memsize_string (GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size);
+  size_str     = gimp_memsize_to_string (info->memsize);
+  max_size_str = gimp_memsize_to_string (GIMP_GUI_CONFIG (info->gimp->config)->max_new_image_size);
 
   text = g_strdup_printf (_("You are trying to create an image with\n"
 			    "an initial size of %s.\n\n"
@@ -479,7 +557,10 @@ file_new_confirm_dialog (NewImageInfo *info)
 			    "increase the \"Maximum Image Size\"\n"
 			    "setting (currently %s) in the\n"
 			    "Preferences dialog."),
-                          size, max_size);
+                          size_str, max_size_str);
+
+  g_free (size_str);
+  g_free (max_size_str);
 
   info->confirm_dialog =
     gimp_query_boolean_box (_("Confirm Image Size"),
@@ -493,8 +574,6 @@ file_new_confirm_dialog (NewImageInfo *info)
 			    info);
 
   g_free (text);
-  g_free (max_size);
-  g_free (size);
 
   gtk_window_set_transient_for (GTK_WINDOW (info->confirm_dialog),
 				GTK_WINDOW (info->dialog));
@@ -502,53 +581,4 @@ file_new_confirm_dialog (NewImageInfo *info)
   gtk_widget_set_sensitive (info->dialog, FALSE);
 
   gtk_widget_show (info->confirm_dialog);
-}
-
-static void
-file_new_template_notify (GimpTemplate *template,
-                          GParamSpec   *param_spec,
-                          NewImageInfo *info)
-{
-  gchar *text;
-
-  if (! strcmp (param_spec->name, "xresolution"))
-    {
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 0,
-                                      template->xresolution, FALSE);
-    }
-  else if (! strcmp (param_spec->name, "yresolution"))
-    {
-      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (info->size_se), 1,
-                                      template->yresolution, FALSE);
-    }
-
-  info->size = gimp_template_calc_memsize (info->template);
-
-  text = gimp_image_new_get_memsize_string (info->size);
-  gtk_label_set_text (GTK_LABEL (info->memsize_label), text);
-  g_free (text);
-}
-
-static void
-file_new_template_select (GimpContainerMenu *menu,
-                          GimpViewable      *object,
-                          gpointer           insert_data,
-                          NewImageInfo      *info)
-{
-  if (object)
-    {
-      gint width;
-      gint height;
-
-      width  = GIMP_TEMPLATE (object)->width;
-      height = GIMP_TEMPLATE (object)->height;
-
-      gimp_config_copy_properties (G_OBJECT (object),
-                                   G_OBJECT (info->template));
-
-      g_object_set (info->template,
-                    "width",  width,
-                    "height", height,
-                    NULL);
-    }
 }

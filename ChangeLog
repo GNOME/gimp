@@ -1,3 +1,36 @@
+2003-04-04  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimplimits.h: reduced GIMP_MAX_IMAGE_SIZE to 2^18.
+
+	* libgimpbase/gimputils.[ch]: added gimp_memsize_to_string()
+	utility function (which is definitely broken on 64bit systems).
+
+	* app/core/gimpimage-new.[ch]: removed
+	gimp_image_new_get_memsize_string() and gimp_image_new_create_image().
+	Renamed gimp_image_new_template_new() to
+	gimp_image_new_get_last_template().
+
+	* app/core/gimpimagefile.c
+	* app/display/gimpdisplayshell-title.c: changed accordingly.
+
+	* app/core/gimp-templates.c: changed filename from "templates"
+	to "templaterc".
+
+	* app/core/gimp.[ch]
+	* app/core/gimpimage-duplicate.c: don't include "gimpimage-new.h".
+
+	* app/core/gimptemplate.[ch]: removed
+	gimp_template_calc_memsize().  Instead, added the size and a
+	boolean indicating that it is valid to the GimpTemplate
+	struct. Added GObject::notify() implementation and update the
+	values there.
+
+	* app/widgets/gimppropwidgets.c: connect to the unit property
+	correctly.
+
+	* app/gui/file-new-dialog.c: changed accordingly. Disconnect
+	from the template's "notify" signal while changing all values.
+
 2003-04-04  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/image-menu.c (image_menu_set_zoom)

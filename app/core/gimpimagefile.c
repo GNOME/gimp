@@ -5,7 +5,7 @@
  * Thumbnail handling according to the Thumbnail Managing Standard.
  * http://triq.net/~pearl/thumbnail-spec/
  *
- * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2001-2003  Sven Neumann <sven@gimp.org>
  *                          Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -34,7 +34,6 @@
 #include <unistd.h>
 #endif
 
-#include <glib-object.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #ifdef G_OS_WIN32
@@ -47,7 +46,7 @@
 #  endif
 #endif
 
-#include "libgimpbase/gimpversion.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "core-types.h"
 
@@ -714,7 +713,7 @@ gimp_imagefile_get_description (GimpImagefile *imagefile)
           {
             gchar *size;
 
-            size = gimp_image_new_get_memsize_string (imagefile->image_size);
+            size = gimp_memsize_to_string (imagefile->image_size);
 
             g_string_append (str, size);
             g_free (size);

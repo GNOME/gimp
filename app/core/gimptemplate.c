@@ -51,7 +51,8 @@ enum
   PROP_YRESOLUTION,
   PROP_RESOLUTION_UNIT,
   PROP_IMAGE_TYPE,
-  PROP_FILL_TYPE
+  PROP_FILL_TYPE,
+  PROP_FILENAME
 };
 
 
@@ -67,6 +68,8 @@ static void      gimp_template_set_property  (GObject          *object,
 static void      gimp_template_get_property  (GObject          *object,
                                               guint             property_id,
                                               GValue           *value,
+                                              GParamSpec       *pspec);
+static void      gimp_template_notify        (GObject          *object,
                                               GParamSpec       *pspec);
 
 static gboolean  gimp_template_serialize     (GObject          *object,
@@ -134,6 +137,7 @@ gimp_template_class_init (GimpTemplateClass *klass)
 
   object_class->set_property = gimp_template_set_property;
   object_class->get_property = gimp_template_get_property;
+  object_class->notify       = gimp_template_notify;
 
   viewable_class->default_stock_id = "gimp-template";
 
@@ -178,6 +182,12 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                  NULL,
                                  GIMP_TYPE_FILL_TYPE, GIMP_BACKGROUND_FILL,
                                  0);
+
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FILENAME,
+                                   "filename",
+                                   NULL,
+                                   NULL,
+                                   0);
 }
 
 static void
@@ -238,6 +248,11 @@ gimp_template_set_property (GObject      *object,
     case PROP_FILL_TYPE:
       template->fill_type = g_value_get_enum (value);
       break;
+    case PROP_FILENAME:
+      if (template->filename)
+        g_free (template->filename);
+      template->filename = g_value_dup_string (value);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -280,9 +295,46 @@ gimp_template_get_property (GObject    *object,
     case PROP_FILL_TYPE:
       g_value_set_enum (value, template->fill_type);
       break;
+    case PROP_FILENAME:
+      g_value_set_string (value, template->filename);
+      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
+    }
+}
+
+static void
+gimp_template_notify (GObject    *object,
+                      GParamSpec *pspec)
+{
+  GimpTemplate *template;
+  guint64       size;
+  gint          channels;
+
+  template = GIMP_TEMPLATE (object);
+
+  if (G_OBJECT_CLASS (parent_class)->notify)
+    G_OBJECT_CLASS (parent_class)->notify (object, pspec);
+
+  channels = ((template->image_type == GIMP_RGB ? 3 : 1)     /* color      */ +
+              (template->fill_type == GIMP_TRANSPARENT_FILL) /* alpha      */ +
+              1                                              /* selection  */ +
+              (template->image_type == GIMP_RGB ? 4 : 2)     /* projection */);
+
+  size = ((guint64) channels        *
+          (guint64) template->width *
+          (guint64) template->height);
+
+  if (size > G_MAXULONG)
+    {
+      template->initial_size           = G_MAXULONG;
+      template->initial_size_too_large = TRUE;
+    }
+  else
+    {
+      template->initial_size           = (gulong) size;
+      template->initial_size_too_large = FALSE;
     }
 }
 
@@ -353,27 +405,14 @@ gimp_template_set_from_image (GimpTemplate *template,
     image_type = GIMP_RGB;
 
   g_object_set (template,
-                "width",       gimp_image_get_width (gimage),
-                "height",      gimp_image_get_height (gimage),
-                "unit",        gimp_image_get_unit (gimage),
-                "xresolution", xresolution,
-                "yresolution", yresolution,
-                "image-type",  image_type,
+                "width",           gimp_image_get_width (gimage),
+                "height",          gimp_image_get_height (gimage),
+                "unit",            gimp_image_get_unit (gimage),
+                "xresolution",     xresolution,
+                "yresolution",     yresolution,
+                "resolution-unit", gimage->gimp->config->default_resolution_unit,
+                "image-type",      image_type,
                 NULL);
-}
-
-gsize
-gimp_template_calc_memsize (GimpTemplate *template)
-{
-  gint channels;
-
-  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), 0);
-
-  channels = ((template->image_type == GIMP_RGB ? 3 : 1)     /* color     */ +
-              (template->fill_type == GIMP_TRANSPARENT_FILL) /* alpha     */ +
-              1                                              /* selection */);
-
-  return channels * template->width * template->height;
 }
 
 GimpImage *
