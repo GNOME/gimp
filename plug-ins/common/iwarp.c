@@ -1221,7 +1221,7 @@ iwarp_update_preview (gint x0,
 
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
                           x0, y0,
-                          x1 - x0, y1 - x0,
+                          x1 - x0, y1 - y0,
                           gimp_drawable_type(drawable->drawable_id),
                           dstimage + (y0 * preview_width + x0) * preview_bpp,
                           preview_width * preview_bpp);
