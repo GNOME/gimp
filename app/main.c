@@ -61,7 +61,7 @@ static int gimp_argc;
 static char **gimp_argv;
 
 /*
- *  argv processing: 
+ *  argv processing:
  *      Arguments are either switches, their associated
  *      values, or image files.  As switches and their
  *      associated values are processed, those slots in
@@ -99,9 +99,11 @@ main (int argc, char **argv)
   gtk_set_locale ();
   setlocale(LC_NUMERIC, "C");  /* must use dot, not comma, as decimal separator */
   gtk_init (&argc, &argv);
-  gtk_accelerator_table_set_mod_mask (NULL, GDK_SHIFT_MASK |
-                                            GDK_CONTROL_MASK |
-                                            GDK_MOD1_MASK);
+#if 0
+  gtk_accelerator_set_default_mod_mask (GDK_SHIFT_MASK |
+					GDK_CONTROL_MASK |
+					GDK_MOD1_MASK);
+#endif
 
 #ifdef HAVE_PUTENV
   display_name = gdk_get_display ();
@@ -262,7 +264,7 @@ main (int argc, char **argv)
   /* Main application loop */
   if (!app_exit_finish_done ())
     gtk_main ();
-  
+
   return 0;
 }
 

@@ -511,14 +511,12 @@ clientname_hash (gpointer key)
 static void
 server_log (gchar *format, ...)
 {
-  va_list args, args2;
+  va_list args;
   char *buf;
 
   va_start (args, format);
-  va_start (args2, format);
-  buf = g_vsprintf (format, &args, &args2);
+  buf = g_strdup_vprintf (format, args);
   va_end (args);
-  va_end (args2);
 
   fputs (buf, server_log_file);
   if (server_log_file != stdout)

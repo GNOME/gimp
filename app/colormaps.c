@@ -218,25 +218,8 @@ get_standard_colormaps ()
   info = gtk_preview_get_info ();
   g_visual = info->visual;
 
-  if (((g_visual->type == GDK_VISUAL_PSEUDO_COLOR) ||
-       (g_visual->type == GDK_VISUAL_GRAYSCALE)) &&
-      info->reserved_pixels == NULL) {
-    g_print("GIMP cannot get enough colormaps to boot.\n");
-    g_print("Try exiting other color intensive applications.\n");
-    g_print("Also try enabling the (install-colormap) option in gimprc.\n");
-    swapping_free ();
-    brushes_free ();
-    patterns_free ();
-    palettes_free ();
-    gradients_free ();
-    palette_free ();
-    procedural_db_free ();
-    plug_in_kill ();
-    tile_swap_exit ();
-    gtk_exit(0);
-  }
-
   g_cmap = info->cmap;
+#if 0
   color_pixel_vals = info->color_pixels;
   gray_pixel_vals = info->gray_pixels;
   reserved_pixels = info->reserved_pixels;
@@ -251,6 +234,7 @@ get_standard_colormaps ()
   g_lookup_red = info->lookup_red;
   g_lookup_green = info->lookup_green;
   g_lookup_blue = info->lookup_blue;
+#endif
 
   set_app_colors ();
 }

@@ -119,8 +119,9 @@ static gint tools_options_delete_callback (GtkWidget *, GdkEvent *, gpointer);
 static void
 active_tool_free (void)
 {
+    /*
   gtk_container_disable_resize (GTK_CONTAINER (options_shell));
-
+    */
   if (!active_tool)
     return;
 
@@ -360,7 +361,9 @@ tools_select (ToolType type)
   if (tool_info[(int) active_tool->type].tool_options)
     gtk_widget_show (tool_info[(int) active_tool->type].tool_options);
 
-  gtk_container_enable_resize (GTK_CONTAINER (options_shell));
+  /*
+    gtk_container_enable_resize (GTK_CONTAINER (options_shell));
+  */
 
   /*  Set the paused count variable to 0
    */
@@ -540,7 +543,9 @@ tools_initialize (ToolType type, GDisplay *gdisp_ptr)
   if (tool_info[(int) active_tool->type].tool_options)
     gtk_widget_show (tool_info[(int) active_tool->type].tool_options);
 
+  /*
   gtk_container_enable_resize (GTK_CONTAINER (options_shell));
+  */
 
   /*  Set the paused count variable to 0
    */

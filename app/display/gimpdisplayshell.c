@@ -499,7 +499,7 @@ create_toolbox ()
   GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *menubar;
-  GtkAcceleratorTable *table;
+  GtkAccelGroup *table;
 
   window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
   gtk_window_set_wmclass (GTK_WINDOW (window), "toolbox", "Gimp");
@@ -535,7 +535,7 @@ create_toolbox ()
   gtk_widget_show (menubar);
 
   /*  Install the accelerator table in the main window  */
-  gtk_window_add_accelerator_table (GTK_WINDOW (window), table);
+  gtk_window_add_accel_group (GTK_WINDOW (window), table);
 
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, TRUE, TRUE, 0);
@@ -560,7 +560,7 @@ toolbox_free ()
   for (i = 21; i < NUM_TOOLS; i++)
     {
       gtk_object_sink    (GTK_OBJECT (tool_widgets[i]));
-    }			  
+    }
   gtk_object_destroy (GTK_OBJECT (tool_tips));
   gtk_object_unref   (GTK_OBJECT (tool_tips));
 }
@@ -581,7 +581,7 @@ create_display_shell (int   gdisp_id,
 		      int   type)
 {
   static GtkWidget *image_popup_menu = NULL;
-  static GtkAcceleratorTable *image_accelerator_table = NULL;
+  static GtkAccelGroup *image_accel_group = NULL;
   GDisplay *gdisp;
   GtkWidget *table;
   int n_width, n_height;
@@ -705,13 +705,13 @@ create_display_shell (int   gdisp_id,
 		    GTK_FILL, GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   if (! image_popup_menu)
-    menus_get_image_menu (&image_popup_menu, &image_accelerator_table);
+    menus_get_image_menu (&image_popup_menu, &image_accel_group);
 
   /*  the popup menu  */
   gdisp->popup = image_popup_menu;
 
   /*  the accelerator table for images  */
-  gtk_window_add_accelerator_table (GTK_WINDOW (gdisp->shell), image_accelerator_table);
+  gtk_window_add_accel_group (GTK_WINDOW (gdisp->shell), image_accel_group);
 
   gtk_widget_show (gdisp->hsb);
   gtk_widget_show (gdisp->vsb);
@@ -996,12 +996,16 @@ progress_start ()
 			    tool_label_area->allocation.width,
 			    tool_label_area->allocation.height);
 
+      /*
       gtk_container_disable_resize (GTK_CONTAINER (progress_area->parent));
+      */
 
       gtk_widget_hide (tool_label_area);
       gtk_widget_show (progress_area);
 
+      /*
       gtk_container_enable_resize (GTK_CONTAINER (progress_area->parent));
+      */
     }
 }
 
@@ -1021,7 +1025,8 @@ progress_step ()
 
   if (GTK_WIDGET_VISIBLE (progress_area))
     {
-      val = GTK_PROGRESS_BAR (progress_area)->percentage + 0.01;
+      val = gtk_progress_get_current_percentage(&(GTK_PROGRESS_BAR(progress_area)->progress))+
+						  0.01;
       if (val > 1.0)
 	val = 0.0;
 
@@ -1034,12 +1039,16 @@ progress_end ()
 {
   if (GTK_WIDGET_VISIBLE (progress_area))
     {
-      gtk_container_disable_resize (GTK_CONTAINER (progress_area->parent));
+      /*
+      tk_container_disable_resize (GTK_CONTAINER (progress_area->parent));
+      */
 
       gtk_widget_hide (progress_area);
       gtk_widget_show (tool_label_area);
 
+      /*
       gtk_container_enable_resize (GTK_CONTAINER (progress_area->parent));
+      */
 
       gdk_flush ();
 

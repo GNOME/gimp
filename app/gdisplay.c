@@ -56,6 +56,35 @@ static GdkCursorType   default_gdisplay_cursor = GDK_TOP_LEFT_ARROW;
 
 #define MAX_TITLE_BUF 4096
 
+/*  some useful macros  */
+
+/* unpacking the user scale level (char) */
+#define  SCALESRC(g)    (g->scale & 0x00ff)
+#define  SCALEDEST(g)   (g->scale >> 8)
+
+/* finding the effective screen resolution (float) */
+#define  SCREEN_XRES(g) (g->dot_for_dot? g->gimage->xresolution : monitor_xres)
+#define  SCREEN_YRES(g) (g->dot_for_dot? g->gimage->yresolution : monitor_yres)
+
+/* calculate scale factors (float) */
+#define  SCALEFACTOR_X(g)  ((SCALEDEST(g) * SCREEN_XRES(g)) /          \
+			    (SCALESRC(g) * g->gimage->xresolution))
+#define  SCALEFACTOR_Y(g)  ((SCALEDEST(g) * SCREEN_YRES(g)) /          \
+			    (SCALESRC(g) * g->gimage->yresolution))
+
+/* scale values */
+#define  SCALEX(g,x)    ((int)(x * SCALEFACTOR_X(g)))
+#define  SCALEY(g,y)    ((int)(y * SCALEFACTOR_Y(g)))
+
+/* unscale values */
+#define  UNSCALEX(g,x)  ((int)(x / SCALEFACTOR_X(g)))
+#define  UNSCALEY(g,y)  ((int)(y / SCALEFACTOR_Y(g)))
+
+
+
+#define LOWPASS(x) ((x>0) ? x : 0)
+/* #define HIGHPASS(x,y) ((x>y) ? y : x) */ /* unused - == MIN */
+
 static char *image_type_strs[] =
 {
   "RGB",
@@ -202,7 +231,7 @@ gdisplay_delete (GDisplay *gdisp)
 
   /*  free the selection structure  */
   selection_free (gdisp->select);
-  
+
   if (gdisp->scroll_gc)
     gdk_gc_destroy (gdisp->scroll_gc);
 

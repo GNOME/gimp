@@ -17,9 +17,9 @@
  */
 
 
-/* 
+/*
    dbbrowser_utils.h
-   0.08  26th sept 97  by Thomas NOEL <thomas@minet.net> 
+   0.08  26th sept 97  by Thomas NOEL <thomas@minet.net>
 */
 
 /* configuration */
@@ -51,6 +51,7 @@ typedef struct {
   GtkWidget* descr_table;
 
   GtkWidget* clist;
+  GtkWidget* scrolled_win;
 
   /* the currently selected procedure */
   gchar *selected_proc_name;
@@ -64,7 +65,7 @@ typedef struct {
   int selected_nparams;
   int selected_nreturn_vals;
   GParamDef *selected_params;
-  GParamDef *selected_return_vals; 
+  GParamDef *selected_return_vals;
 
   void (*apply_callback) ( gchar *selected_proc_name,
 			   gchar *selected_scheme_proc_name,
@@ -88,27 +89,26 @@ dialog_apply_callback(GtkWidget *, gpointer );
 
 static gint
 procedure_select_callback (GtkWidget *widget,
-			   gint row, 
-			   gint column, 
+			   gint row,
+			   gint column,
 			   GdkEventButton * bevent,
 			   gpointer data);
 
 
 static void
-dialog_search_callback(GtkWidget *, 
+dialog_search_callback(GtkWidget *,
 		       gpointer);
 
 static void
-dialog_select(dbbrowser_t *dbbrowser, 
+dialog_select(dbbrowser_t *dbbrowser,
 	      gchar *proc_name);
 
 static void
-dialog_close_callback(GtkWidget *, 
+dialog_close_callback(GtkWidget *,
 		      gpointer);
 
-static void      
+static void
 convert_string (gchar *str);
 
-static gchar* 
+static gchar*
 GParamType2char(GParamType t);
-

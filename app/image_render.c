@@ -25,7 +25,9 @@
 #include "image_render.h"
 #include "pixel_region.h"
 #include "scale.h"
+#include "gdisplay.h"
 
+#include "tile.h"			/* ick. */
 
 typedef struct _RenderInfo  RenderInfo;
 typedef void (*RenderFunc) (RenderInfo *info);
@@ -40,8 +42,8 @@ struct _RenderInfo
   guchar *dest;
   int x, y;
   int w, h;
-  int scalesrc;
-  int scaledest;
+  float scalex;
+  float scaley;
   int src_x, src_y;
   int src_bpp;
   int dest_bpp;
@@ -173,30 +175,12 @@ render_free (void)
 
 /*  Render Image functions  */
 
-static void    render_image_indexed_1   (RenderInfo *info);
-static void    render_image_indexed_2   (RenderInfo *info);
-static void    render_image_indexed_3   (RenderInfo *info);
-static void    render_image_indexed_4   (RenderInfo *info);
-static void    render_image_indexed_a_1 (RenderInfo *info);
-static void    render_image_indexed_a_2 (RenderInfo *info);
-static void    render_image_indexed_a_3 (RenderInfo *info);
-static void    render_image_indexed_a_4 (RenderInfo *info);
-static void    render_image_gray_1      (RenderInfo *info);
-static void    render_image_gray_2      (RenderInfo *info);
-static void    render_image_gray_3      (RenderInfo *info);
-static void    render_image_gray_4      (RenderInfo *info);
-static void    render_image_gray_a_1    (RenderInfo *info);
-static void    render_image_gray_a_2    (RenderInfo *info);
-static void    render_image_gray_a_3    (RenderInfo *info);
-static void    render_image_gray_a_4    (RenderInfo *info);
-static void    render_image_rgb_1       (RenderInfo *info);
-static void    render_image_rgb_2       (RenderInfo *info);
-static void    render_image_rgb_3       (RenderInfo *info);
-static void    render_image_rgb_4       (RenderInfo *info);
-static void    render_image_rgb_a_1     (RenderInfo *info);
-static void    render_image_rgb_a_2     (RenderInfo *info);
-static void    render_image_rgb_a_3     (RenderInfo *info);
-static void    render_image_rgb_a_4     (RenderInfo *info);
+static void    render_image_rgb       (RenderInfo *info);
+static void    render_image_rgb_a     (RenderInfo *info);
+static void    render_image_gray      (RenderInfo *info);
+static void    render_image_gray_a    (RenderInfo *info);
+static void    render_image_indexed   (RenderInfo *info);
+static void    render_image_indexed_a (RenderInfo *info);
 
 static void    render_image_init_info          (RenderInfo   *info,
 						GDisplay     *gdisp,
@@ -207,50 +191,18 @@ static void    render_image_init_info          (RenderInfo   *info,
 static guint*  render_image_init_alpha         (int           mult);
 static guchar* render_image_accelerate_scaling (int           width,
 						int           start,
-						int           bpp,
-						int           scalesrc,
-						int           scaledest);
+						float         scalex);
 static guchar* render_image_tile_fault         (RenderInfo   *info);
 
 
-static RenderFunc render_funcs[6][4] =
+static RenderFunc render_funcs[6] =
 {
-  {
-    render_image_rgb_1,
-    render_image_rgb_2,
-    render_image_rgb_3,
-    render_image_rgb_4,
-  },
-  {
-    render_image_rgb_a_1,
-    render_image_rgb_a_2,
-    render_image_rgb_a_3,
-    render_image_rgb_a_4,
-  },
-  {
-    render_image_gray_1,
-    render_image_gray_2,
-    render_image_gray_3,
-    render_image_gray_4,
-  },
-  {
-    render_image_gray_a_1,
-    render_image_gray_a_2,
-    render_image_gray_a_3,
-    render_image_gray_a_4,
-  },
-  {
-    render_image_indexed_1,
-    render_image_indexed_2,
-    render_image_indexed_3,
-    render_image_indexed_4,
-  },
-  {
-    render_image_indexed_a_1,
-    render_image_indexed_a_2,
-    render_image_indexed_a_3,
-    render_image_indexed_a_4,
-  },
+    render_image_rgb,
+    render_image_rgb_a,
+    render_image_gray,
+    render_image_gray_a,
+    render_image_indexed,
+    render_image_indexed_a,
 };
 
 
@@ -287,7 +239,12 @@ render_image (GDisplay *gdisp,
       return;
     }
 
-  (* render_funcs[image_type][info.dest_bpp-1]) (&info);
+  /* Currently, only RGBA and GRAYA projection types are used - the rest
+   * are in case of future need.  -- austin, 28th Nov 1998. */
+  if (image_type != RGBA_GIMAGE && image_type != GRAYA_GIMAGE)
+      g_warning ("using untested projection type %d", image_type);
+
+  (* render_funcs[image_type]) (&info);
 }
 
 
@@ -297,67 +254,7 @@ render_image (GDisplay *gdisp,
 /*************************/
 
 static void
-render_image_indexed_1 (RenderInfo *info)
-{
-  GtkDitherInfo ra, ga, ba;
-  GtkDitherInfo *dither_red;
-  GtkDitherInfo *dither_green;
-  GtkDitherInfo *dither_blue;
-  gulong *pixels;
-  guchar **dither_matrix;
-  guchar *matrix;
-  guchar *src;
-  guchar *dest;
-  guchar *cmap;
-  int val;
-  int y, ye;
-  int x, xe;
-
-  dither_red = red_ordered_dither;
-  dither_green = green_ordered_dither;
-  dither_blue = blue_ordered_dither;
-  pixels = color_pixel_vals;
-  cmap = gimage_cmap (info->gdisp->gimage);
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      src = info->src;
-      dest = info->dest;
-      dither_matrix = ordered_dither_matrix[y & 0x7];
-
-      g_return_if_fail (src != NULL);
-      
-      for (x = info->x; x < xe; x++)
-	{
-	  val = *src++ * 3;
-	  ra = dither_red[cmap[val+0]];
-	  ga = dither_green[cmap[val+1]];
-	  ba = dither_blue[cmap[val+2]];
-
-	  matrix = dither_matrix[x & 0x7];
-	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
-			    ga.c[matrix[ga.s[1]]] +
-			    ba.c[matrix[ba.s[1]]])];
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-    }
-}
-
-static void
-render_image_indexed_2 (RenderInfo *info)
+render_image_indexed (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -370,6 +267,8 @@ render_image_indexed_2 (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -380,13 +279,18 @@ render_image_indexed_2 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest))
+      if (!initial && (error < 1.0))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -395,280 +299,36 @@ render_image_indexed_2 (RenderInfo *info)
 
 	  g_return_if_fail (src != NULL);
 
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = src[INDEXED_PIX] * 3;
-		val = COLOR_COMPOSE (cmap[val+0], cmap[val+1], cmap[val+2]);
-		src += 1;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest += 2;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = src[INDEXED_PIX] * 3;
-		val = COLOR_COMPOSE (cmap[val+0], cmap[val+1], cmap[val+2]);
-		src += 1;
-
-		dest[0] = val >> 8;
-		dest[1] = val;
-		dest += 2;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_indexed_3 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guchar *cmap;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  cmap = gimage_cmap (info->gdisp->gimage);
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
-	  
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = src[INDEXED_PIX] * 3;
-		val = COLOR_COMPOSE (cmap[val+0], cmap[val+1], cmap[val+2]);
-		src += 1;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 3;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = src[INDEXED_PIX] * 3;
-		val = COLOR_COMPOSE (cmap[val+0], cmap[val+1], cmap[val+2]);
-		src += 1;
-
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
-		dest += 3;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_indexed_4 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guchar *cmap;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  cmap = gimage_cmap (info->gdisp->gimage);
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = src[INDEXED_PIX] * 3;
-		val = COLOR_COMPOSE (cmap[val+0], cmap[val+1], cmap[val+2]);
-		src += 1;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 4;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = src[INDEXED_PIX] * 3;
-		val = COLOR_COMPOSE (cmap[val+0], cmap[val+1], cmap[val+2]);
-		src += 1;
-
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
-		dest += 4;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-
-static void
-render_image_indexed_a_1 (RenderInfo *info)
-{
-  GtkDitherInfo ra, ga, ba;
-  GtkDitherInfo *dither_red;
-  GtkDitherInfo *dither_green;
-  GtkDitherInfo *dither_blue;
-  gulong *pixels;
-  guchar **dither_matrix;
-  guchar *matrix;
-  guchar *src;
-  guchar *dest;
-  guchar *cmap;
-  guint *alpha;
-  guint a;
-  int dark_light;
-  int val;
-  int y, ye;
-  int x, xe;
-
-  dither_red = red_ordered_dither;
-  dither_green = green_ordered_dither;
-  dither_blue = blue_ordered_dither;
-  pixels = color_pixel_vals;
-  cmap = gimage_cmap (info->gdisp->gimage);
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      src = info->src;
-      dest = info->dest;
-      dither_matrix = ordered_dither_matrix[y & 0x7];
-
-      dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-      g_return_if_fail (src != NULL);
-
-      for (x = info->x; x < xe; x++)
-	{
-	  val = src[INDEXED_PIX] * 3;
-	  a = alpha[src[ALPHA_I_PIX]];
-	  src += 2;
-
-	  if (dark_light & 0x1)
+	  for (x = info->x; x < xe; x++)
 	    {
-	      ra = dither_red[blend_dark_check[(a | cmap[val+0])]];
-	      ga = dither_green[blend_dark_check[(a | cmap[val+1])]];
-	      ba = dither_blue[blend_dark_check[(a | cmap[val+2])]];
-	    }
-	  else
-	    {
-	      ra = dither_red[blend_light_check[(a | cmap[val+0])]];
-	      ga = dither_green[blend_light_check[(a | cmap[val+1])]];
-	      ba = dither_blue[blend_light_check[(a | cmap[val+2])]];
-	    }
+	      val = src[INDEXED_PIX] * 3;
+	      src += 1;
 
-	  matrix = dither_matrix[x & 0x7];
-	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
-			    ga.c[matrix[ga.s[1]]] +
-			    ba.c[matrix[ba.s[1]]])];
-
-	  if (((x + 1) & check_mod) == 0)
-	    dark_light += 1;
+	      dest[0] = cmap[val+0];
+	      dest[1] = cmap[val+1];
+	      dest[2] = cmap[val+2];
+	      dest += 3;
+	    }
 	}
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
+
+      error += step;
     }
 }
 
 static void
-render_image_indexed_a_2 (RenderInfo *info)
+render_image_indexed_a (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -685,6 +345,8 @@ render_image_indexed_a_2 (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -696,123 +358,10 @@ render_image_indexed_a_2 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
+  step = 1.0 / info->scaley;
 
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
-      
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_I_PIX]];
-		val = src[INDEXED_PIX] * 3;
-		src += 2;
-
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | cmap[val+0])];
-		    g = blend_dark_check[(a | cmap[val+1])];
-		    b = blend_dark_check[(a | cmap[val+2])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | cmap[val+0])];
-		    g = blend_light_check[(a | cmap[val+1])];
-		    b = blend_light_check[(a | cmap[val+2])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest += 2;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_I_PIX]];
-		val = src[INDEXED_PIX] * 3;
-		src += 2;
-
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | cmap[val+0])];
-		    g = blend_dark_check[(a | cmap[val+1])];
-		    b = blend_dark_check[(a | cmap[val+2])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | cmap[val+0])];
-		    g = blend_light_check[(a | cmap[val+1])];
-		    b = blend_light_check[(a | cmap[val+2])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-
-		dest[0] = val >> 8;
-		dest[1] = val;
-		dest += 2;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_indexed_a_3 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  guchar *cmap;
-  gulong r, g, b;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  cmap = gimage_cmap (info->gdisp->gimage);
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
+  error = y * step;
+  error -= ((int)error) - step;
 
   initial = TRUE;
   byte_order = info->byte_order;
@@ -820,7 +369,7 @@ render_image_indexed_a_3 (RenderInfo *info)
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
+      if (!initial && (error < 1.0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -831,1281 +380,125 @@ render_image_indexed_a_3 (RenderInfo *info)
 
 	  g_return_if_fail (src != NULL);
 
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_I_PIX]];
-		val = src[INDEXED_PIX] * 3;
-		src += 2;
-
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | cmap[val+0])];
-		    g = blend_dark_check[(a | cmap[val+1])];
-		    b = blend_dark_check[(a | cmap[val+2])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | cmap[val+0])];
-		    g = blend_light_check[(a | cmap[val+1])];
-		    b = blend_light_check[(a | cmap[val+2])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 3;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_I_PIX]];
-		val = src[INDEXED_PIX] * 3;
-		src += 2;
-
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | cmap[val+0])];
-		    g = blend_dark_check[(a | cmap[val+1])];
-		    b = blend_dark_check[(a | cmap[val+2])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | cmap[val+0])];
-		    g = blend_light_check[(a | cmap[val+1])];
-		    b = blend_light_check[(a | cmap[val+2])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
-		dest += 3;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_indexed_a_4 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  guchar *cmap;
-  gulong r, g, b;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  cmap = gimage_cmap (info->gdisp->gimage);
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
-      
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_I_PIX]];
-		val = src[INDEXED_PIX] * 3;
-		src += 2;
-
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | cmap[val+0])];
-		    g = blend_dark_check[(a | cmap[val+1])];
-		    b = blend_dark_check[(a | cmap[val+2])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | cmap[val+0])];
-		    g = blend_light_check[(a | cmap[val+1])];
-		    b = blend_light_check[(a | cmap[val+2])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 4;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_I_PIX]];
-		val = src[INDEXED_PIX] * 3;
-		src += 2;
-
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | cmap[val+0])];
-		    g = blend_dark_check[(a | cmap[val+1])];
-		    b = blend_dark_check[(a | cmap[val+2])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | cmap[val+0])];
-		    g = blend_light_check[(a | cmap[val+1])];
-		    b = blend_light_check[(a | cmap[val+2])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
-		dest += 4;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-
-static void
-render_image_gray_1 (RenderInfo *info)
-{
-  GtkDitherInfo gray;
-  GtkDitherInfo *dither_gray;
-  guchar **dither_matrix;
-  guchar *matrix;
-  guchar *src;
-  guchar *dest;
-  int y, ye;
-  int x, xe;
-
-  dither_gray = gray_ordered_dither;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      src = info->src;
-      dest = info->dest;
-      dither_matrix = ordered_dither_matrix[y & 0x7];
-
-      g_return_if_fail (src != NULL);
-
-      for (x = info->x; x < xe; x++)
-	{
-	  gray = dither_gray[*src++];
-	  matrix = dither_matrix[x & 0x7];
-	  *dest++ = gray.c[matrix[gray.s[1]]];
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-    }
-}
-
-static void
-render_image_gray_2 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[GRAY_PIX], src[GRAY_PIX], src[GRAY_PIX]);
-		src += 1;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest += 2;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[GRAY_PIX], src[GRAY_PIX], src[GRAY_PIX]);
-		src += 1;
-
-		dest[0] = val >> 8;
-		dest[1] = val;
-		dest += 2;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_gray_3 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-	  
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[GRAY_PIX], src[GRAY_PIX], src[GRAY_PIX]);
-		src += 1;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 3;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[GRAY_PIX], src[GRAY_PIX], src[GRAY_PIX]);
-		src += 1;
-
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
-		dest += 3;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_gray_4 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[GRAY_PIX], src[GRAY_PIX], src[GRAY_PIX]);
-		src += 1;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 4;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[GRAY_PIX], src[GRAY_PIX], src[GRAY_PIX]);
-		src += 1;
-
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
-		dest += 4;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-
-static void
-render_image_gray_a_1 (RenderInfo *info)
-{
-  GtkDitherInfo gray;
-  GtkDitherInfo *dither_gray;
-  guchar **dither_matrix;
-  guchar *matrix;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  guint a;
-  int dark_light;
-  int y, ye;
-  int x, xe;
-
-  dither_gray = gray_ordered_dither;
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      src = info->src;
-      dest = info->dest;
-      dither_matrix = ordered_dither_matrix[y & 0x7];
-
-      dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-      g_return_if_fail (src != NULL);
-
-      for (x = info->x; x < xe; x++)
-	{
-	  a = alpha[src[ALPHA_G_PIX]];
-	  if (dark_light & 0x1)
-	    gray = dither_gray[blend_dark_check[(a | src[GRAY_PIX])]];
-	  else
-	    gray = dither_gray[blend_light_check[(a | src[GRAY_PIX])]];
-	  src += 2;
-
-	  matrix = dither_matrix[x & 0x7];
-	  *dest++ = gray.c[matrix[gray.s[1]]];
-
-	  if (((x + 1) & check_mod) == 0)
-	    dark_light += 1;
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-    }
-}
-
-static void
-render_image_gray_a_2 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
-      
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_G_PIX]];
-		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | src[GRAY_PIX])];
-		else
-		  val = blend_light_check[(a | src[GRAY_PIX])];
-		val = COLOR_COMPOSE (val, val, val);
-		src += 2;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest += 2;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_G_PIX]];
-		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | src[GRAY_PIX])];
-		else
-		  val = blend_light_check[(a | src[GRAY_PIX])];
-		val = COLOR_COMPOSE (val, val, val);
-		src += 2;
-
-		dest[0] = val >> 8;
-		dest[1] = val;
-		dest += 2;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_gray_a_3 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_G_PIX]];
-		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | src[GRAY_PIX])];
-		else
-		  val = blend_light_check[(a | src[GRAY_PIX])];
-		val = COLOR_COMPOSE (val, val, val);
-		src += 2;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 3;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_G_PIX]];
-		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | src[GRAY_PIX])];
-		else
-		  val = blend_light_check[(a | src[GRAY_PIX])];
-		val = COLOR_COMPOSE (val, val, val);
-		src += 2;
-
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
-		dest += 3;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_gray_a_4 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_G_PIX]];
-		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | src[GRAY_PIX])];
-		else
-		  val = blend_light_check[(a | src[GRAY_PIX])];
-		val = COLOR_COMPOSE (val, val, val);
-		src += 2;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 4;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_G_PIX]];
-		if (dark_light & 0x1)
-		  val = blend_dark_check[(a | src[GRAY_PIX])];
-		else
-		  val = blend_light_check[(a | src[GRAY_PIX])];
-		val = COLOR_COMPOSE (val, val, val);
-		src += 2;
-
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
-		dest += 4;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-
-static void
-render_image_rgb_1 (RenderInfo *info)
-{
-  GtkDitherInfo ra, ga, ba;
-  GtkDitherInfo *dither_red;
-  GtkDitherInfo *dither_green;
-  GtkDitherInfo *dither_blue;
-  gulong *pixels;
-  guchar **dither_matrix;
-  guchar *matrix;
-  guchar *src;
-  guchar *dest;
-  int y, ye;
-  int x, xe;
-
-  dither_red = red_ordered_dither;
-  dither_green = green_ordered_dither;
-  dither_blue = blue_ordered_dither;
-  pixels = color_pixel_vals;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      src = info->src;
-      dest = info->dest;
-      dither_matrix = ordered_dither_matrix[y & 0x7];
-
-      g_return_if_fail (src != NULL);
-
-      for (x = info->x; x < xe; x++)
-	{
-	  ra = dither_red[src[RED_PIX]];
-	  ga = dither_green[src[GREEN_PIX]];
-	  ba = dither_blue[src[BLUE_PIX]];
-	  src += 3;
-
-	  matrix = dither_matrix[x & 0x7];
-	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
-			    ga.c[matrix[ga.s[1]]] +
-			    ba.c[matrix[ba.s[1]]])];
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-    }
-}
-
-static void
-render_image_rgb_2 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[RED_PIX], src[GREEN_PIX], src[BLUE_PIX]);
-		src += 3;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest += 2;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[RED_PIX], src[GREEN_PIX], src[BLUE_PIX]);
-		src += 3;
-
-		dest[0] = val >> 8;
-		dest[1] = val;
-		dest += 2;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_rgb_3 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
-	  
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[RED_PIX], src[GREEN_PIX], src[BLUE_PIX]);
-		src += 3;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 3;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[RED_PIX], src[GREEN_PIX], src[BLUE_PIX]);
-		src += 3;
-
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
-		dest += 3;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-static void
-render_image_rgb_4 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  gulong val;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if ((y % info->scaledest) && !initial)
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[RED_PIX], src[GREEN_PIX], src[BLUE_PIX]);
-		src += 3;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 4;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		val = COLOR_COMPOSE (src[RED_PIX], src[GREEN_PIX], src[BLUE_PIX]);
-		src += 3;
-
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
-		dest += 4;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
-
-static void
-render_image_rgb_a_1 (RenderInfo *info)
-{
-  GtkDitherInfo ra, ga, ba;
-  GtkDitherInfo *dither_red;
-  GtkDitherInfo *dither_green;
-  GtkDitherInfo *dither_blue;
-  gulong *pixels;
-  guchar **dither_matrix;
-  guchar *matrix;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  guint a;
-  int dark_light;
-  int y, ye;
-  int x, xe;
-
-  dither_red = red_ordered_dither;
-  dither_green = green_ordered_dither;
-  dither_blue = blue_ordered_dither;
-  pixels = color_pixel_vals;
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      src = info->src;
-      dest = info->dest;
-      dither_matrix = ordered_dither_matrix[y & 0x7];
-
-      dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-      g_return_if_fail (src != NULL);
-
-      for (x = info->x; x < xe; x++)
-	{
-	  a = alpha[src[ALPHA_PIX]];
-	  if (dark_light & 0x1)
+	  for (x = info->x; x < xe; x++)
 	    {
-	      ra = dither_red[blend_dark_check[(a | src[RED_PIX])]];
-	      ga = dither_green[blend_dark_check[(a | src[GREEN_PIX])]];
-	      ba = dither_blue[blend_dark_check[(a | src[BLUE_PIX])]];
-	    }
-	  else
+	      a = alpha[src[ALPHA_I_PIX]];
+	      val = src[INDEXED_PIX] * 3;
+	      src += 2;
+
+	      if (dark_light & 0x1)
+		{
+		  r = blend_dark_check[(a | cmap[val+0])];
+		  g = blend_dark_check[(a | cmap[val+1])];
+		  b = blend_dark_check[(a | cmap[val+2])];
+		}
+	      else
+		{
+		  r = blend_light_check[(a | cmap[val+0])];
+		  g = blend_light_check[(a | cmap[val+1])];
+		  b = blend_light_check[(a | cmap[val+2])];
+		}
+
+		dest[0] = r;
+		dest[1] = g;
+		dest[2] = b;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      initial = FALSE;
+
+      if (error >= 1.0)
+	{
+	  info->src_y += (int)error;
+	  error -= (int)error;
+	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
+	}
+
+      error += step;
+    }
+}
+
+static void
+render_image_gray (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guchar *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+  float error;
+  float step;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (error < 1.0))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = info->src;
+	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
+
+	  for (x = info->x; x < xe; x++)
 	    {
-	      ra = dither_red[blend_light_check[(a | src[RED_PIX])]];
-	      ga = dither_green[blend_light_check[(a | src[GREEN_PIX])]];
-	      ba = dither_blue[blend_light_check[(a | src[BLUE_PIX])]];
+	      val = src[GRAY_PIX];
+	      src += 1;
+
+	      dest[0] = val;
+	      dest[1] = val;
+	      dest[2] = val;
+	      dest += 3;
 	    }
-	  src += 4;
-
-	  matrix = dither_matrix[x & 0x7];
-	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
-			    ga.c[matrix[ga.s[1]]] +
-			    ba.c[matrix[ba.s[1]]])];
-
-	  if (((x + 1) & check_mod) == 0)
-	    dark_light += 1;
 	}
 
       info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-    }
-}
-
-static void
-render_image_rgb_a_2 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  gulong r, g, b;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	   
-	  /* this catches the case when ye is too large, and we loop through
-	   * regions where render_image_tile_fault returns NULL.  I don't 
-	   * think this is a long term solution, but better to warn than to
-	   * die.
-	   *
-	   *  --Larry
-	   */
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_PIX]];
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | src[RED_PIX])];
-		    g = blend_dark_check[(a | src[GREEN_PIX])];
-		    b = blend_dark_check[(a | src[BLUE_PIX])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | src[RED_PIX])];
-		    g = blend_light_check[(a | src[GREEN_PIX])];
-		    b = blend_light_check[(a | src[BLUE_PIX])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-		src += 4;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest += 2;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_PIX]];
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | src[RED_PIX])];
-		    g = blend_dark_check[(a | src[GREEN_PIX])];
-		    b = blend_dark_check[(a | src[BLUE_PIX])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | src[RED_PIX])];
-		    g = blend_light_check[(a | src[GREEN_PIX])];
-		    b = blend_light_check[(a | src[BLUE_PIX])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-		src += 4;
-
-		dest[0] = val >> 8;
-		dest[1] = val;
-		dest += 2;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
 
       initial = FALSE;
+
+      if (error >= 1.0)
+	{
+	  info->src_y += (int)error;
+	  error -= (int)error;
+	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
+	}
+
+      error += step;
     }
 }
 
 static void
-render_image_rgb_a_3 (RenderInfo *info)
+render_image_gray_a (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -2113,7 +506,6 @@ render_image_rgb_a_3 (RenderInfo *info)
   guchar *src;
   guchar *dest;
   guint *alpha;
-  gulong r, g, b;
   gulong val;
   guint a;
   int dark_light;
@@ -2121,6 +513,8 @@ render_image_rgb_a_3 (RenderInfo *info)
   int y, ye;
   int x, xe;
   int initial;
+  float error;
+  float step;
 
   lookup_red = g_lookup_red;
   lookup_green = g_lookup_green;
@@ -2131,13 +525,176 @@ render_image_rgb_a_3 (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
   initial = TRUE;
   byte_order = info->byte_order;
   info->src = render_image_tile_fault (info);
 
   for (; y < ye; y++)
     {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
+      if (!initial && (error < 1.0) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  g_return_if_fail (src != NULL);
+
+	  for (x = info->x; x < xe; x++)
+	    {
+	      a = alpha[src[ALPHA_G_PIX]];
+	      if (dark_light & 0x1)
+		val = blend_dark_check[(a | src[GRAY_PIX])];
+	      else
+		val = blend_light_check[(a | src[GRAY_PIX])];
+	      src += 2;
+
+	      dest[0] = val;
+	      dest[1] = val;
+	      dest[2] = val;
+	      dest += 3;
+
+	      if (((x + 1) & check_mod) == 0)
+		dark_light += 1;
+	    }
+	}
+
+      info->dest += info->dest_bpl;
+
+      initial = FALSE;
+
+      if (error >= 1.0)
+	{
+	  info->src_y += (int)error;
+	  error -= (int)error;
+	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
+	}
+
+      error += step;
+    }
+}
+
+static void
+render_image_rgb (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guchar *src;
+  guchar *dest;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+  float error;
+  float step;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= (int)error - step;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (error < 1.0))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = info->src;
+	  dest = info->dest;
+
+	  g_return_if_fail (src != NULL);
+
+	  /* replace this with memcpy, or better yet, avoid it altogether? */
+	  for (x = info->x; x < xe; x++)
+	    {
+	      dest[0] = src[0];
+	      dest[1] = src[1];
+	      dest[2] = src[2];
+
+	      src += 3;
+	      dest += 3;
+	    }
+	}
+
+      info->dest += info->dest_bpl;
+
+      initial = FALSE;
+
+      if (error >= 1.0)
+	{
+	  info->src_y += (int)error;
+	  error -= (int)error;
+	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
+	}
+
+      error += step;
+    }
+}
+
+
+
+static void
+render_image_rgb_a (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guchar *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+  float error;
+  float step;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  step = 1.0 / info->scaley;
+
+  error = y * step;
+  error -= ((int)error) - step;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (error < 1.0) && (y & check_mod))
 	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
       else
 	{
@@ -2165,12 +722,11 @@ render_image_rgb_a_3 (RenderInfo *info)
 		    b = blend_light_check[(a | src[BLUE_PIX])];
 		  }
 
-		val = COLOR_COMPOSE (r, g, b);
 		src += 4;
 
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
+		dest[0] = r;
+		dest[1] = g;
+		dest[2] = b;
 		dest += 3;
 
 		if (((x + 1) & check_mod) == 0)
@@ -2193,12 +749,11 @@ render_image_rgb_a_3 (RenderInfo *info)
 		    b = blend_light_check[(a | src[BLUE_PIX])];
 		  }
 
-		val = COLOR_COMPOSE (r, g, b);
 		src += 4;
 
-		dest[0] = val >> 16;
-		dest[1] = val >> 8;
-		dest[2] = val;
+		dest[0] = r;
+		dest[1] = g;
+		dest[2] = b;
 		dest += 3;
 
 		if (((x + 1) & check_mod) == 0)
@@ -2208,130 +763,19 @@ render_image_rgb_a_3 (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      if (((y + 1) % info->scaledest) == 0)
+      initial = FALSE;
+
+      if (error >= 1.0)
 	{
-	  info->src_y += info->scalesrc;
+	  info->src_y += (int)error;
+	  error -= (int)error;
 	  info->src = render_image_tile_fault (info);
+	  initial = TRUE;
 	}
 
-      initial = FALSE;
+      error += step;
     }
 }
-
-static void
-render_image_rgb_a_4 (RenderInfo *info)
-{
-  gulong *lookup_red;
-  gulong *lookup_green;
-  gulong *lookup_blue;
-  guchar *src;
-  guchar *dest;
-  guint *alpha;
-  gulong r, g, b;
-  gulong val;
-  guint a;
-  int dark_light;
-  int byte_order;
-  int y, ye;
-  int x, xe;
-  int initial;
-
-  lookup_red = g_lookup_red;
-  lookup_green = g_lookup_green;
-  lookup_blue = g_lookup_blue;
-  alpha = info->alpha;
-
-  y = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  initial = TRUE;
-  byte_order = info->byte_order;
-  info->src = render_image_tile_fault (info);
-
-  for (; y < ye; y++)
-    {
-      if (!initial && (y % info->scaledest) && (y & check_mod))
-	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-      else
-	{
-	  src = info->src;
-	  dest = info->dest;
-
-	  dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-	  g_return_if_fail (src != NULL);
-
-	  if (byte_order == GDK_LSB_FIRST)
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_PIX]];
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | src[RED_PIX])];
-		    g = blend_dark_check[(a | src[GREEN_PIX])];
-		    b = blend_dark_check[(a | src[BLUE_PIX])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | src[RED_PIX])];
-		    g = blend_light_check[(a | src[GREEN_PIX])];
-		    b = blend_light_check[(a | src[BLUE_PIX])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-		src += 4;
-
-		dest[0] = val;
-		dest[1] = val >> 8;
-		dest[2] = val >> 16;
-		dest += 4;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	  else
-	    for (x = info->x; x < xe; x++)
-	      {
-		a = alpha[src[ALPHA_PIX]];
-		if (dark_light & 0x1)
-		  {
-		    r = blend_dark_check[(a | src[RED_PIX])];
-		    g = blend_dark_check[(a | src[GREEN_PIX])];
-		    b = blend_dark_check[(a | src[BLUE_PIX])];
-		  }
-		else
-		  {
-		    r = blend_light_check[(a | src[RED_PIX])];
-		    g = blend_light_check[(a | src[GREEN_PIX])];
-		    b = blend_light_check[(a | src[BLUE_PIX])];
-		  }
-
-		val = COLOR_COMPOSE (r, g, b);
-		src += 4;
-
-		dest[1] = val >> 16;
-		dest[2] = val >> 8;
-		dest[3] = val;
-		dest += 4;
-
-		if (((x + 1) & check_mod) == 0)
-		  dark_light += 1;
-	      }
-	}
-
-      info->dest += info->dest_bpl;
-
-      if (((y + 1) % info->scaledest) == 0)
-	{
-	  info->src_y += info->scalesrc;
-	  info->src = render_image_tile_fault (info);
-	}
-
-      initial = FALSE;
-    }
-}
-
 
 static void
 render_image_init_info (RenderInfo *info,
@@ -2342,22 +786,22 @@ render_image_init_info (RenderInfo *info,
 			int         h)
 {
   info->gdisp = gdisp;
+  info->src_tiles = gimage_projection (gdisp->gimage);
   info->x = x + gdisp->offset_x;
   info->y = y + gdisp->offset_y;
   info->w = w;
   info->h = h;
-  info->scalesrc = SCALESRC (gdisp);
-  info->scaledest = SCALEDEST (gdisp);
-  info->src_x = UNSCALE (gdisp, info->x);
-  info->src_y = UNSCALE (gdisp, info->y);
+  info->scalex = SCALEFACTOR_X (gdisp);
+  info->scaley = SCALEFACTOR_Y (gdisp);
+  info->src_x = UNSCALEX (gdisp, info->x);
+  info->src_y = UNSCALEY (gdisp, info->y);
   info->src_bpp = gimage_projection_bytes (gdisp->gimage);
   info->dest = gximage_get_data ();
   info->dest_bpp = gximage_get_bpp ();
   info->dest_bpl = gximage_get_bpl ();
   info->dest_width = info->w * info->dest_bpp;
   info->byte_order = gximage_get_byte_order ();
-  info->src_tiles = gimage_projection (gdisp->gimage);
-  info->scale = render_image_accelerate_scaling (w, info->x, info->src_bpp, info->scalesrc, info->scaledest);
+  info->scale = render_image_accelerate_scaling (w, info->x, info->scalex);
   info->alpha = NULL;
 
   switch (gimage_projection_type (gdisp->gimage))
@@ -2391,28 +835,28 @@ render_image_init_alpha (int mult)
 }
 
 static guchar*
-render_image_accelerate_scaling (int width,
-				 int start,
-				 int  bpp,
-				 int  scalesrc,
-				 int  scaledest)
+render_image_accelerate_scaling (int   width,
+				 int   start,
+				 float scalex)
 {
   static guchar *scale = NULL;
-  static int swidth = -1;
-  static int sstart = -1;
-  guchar step;
+  float error;
+  float step;
   int i;
 
-  if ((swidth != width) || (sstart != start))
-    {
-      if (!scale)
-	scale = g_new (guchar, GXIMAGE_WIDTH + 1);
+  if (!scale)
+    scale = g_new (guchar, GXIMAGE_WIDTH + 1);
 
-      step = scalesrc * bpp;
+  step = 1.0 / scalex;
 
-      for (i = 0; i <= width; i++)
-	scale[i] = ((i + start + 1) % scaledest) ? 0 : step;
-    }
+  error = start * step;
+  error -= ((int)error) - step;
+
+  for (i = 0; i <= width; i++)
+  {
+    scale[i] = ((int)error);
+    error += step - (int)error;
+  }
 
   return scale;
 }
@@ -2428,6 +872,7 @@ render_image_tile_fault (RenderInfo *info)
   int tilex;
   int tiley;
   int step;
+  int bpp = info->src_bpp;
   int x, b;
 
   tilex = info->src_x / TILE_WIDTH;
@@ -2437,13 +882,11 @@ render_image_tile_fault (RenderInfo *info)
   if (!tile)
     return NULL;
 
-  tile_ref (tile);
   data = (tile->data +
-	  ((info->src_y % TILE_HEIGHT) * tile->ewidth +
-	   (info->src_x % TILE_WIDTH)) * tile->bpp);
+          ((info->src_y % TILE_HEIGHT) * tile->ewidth +
+           (info->src_x % TILE_WIDTH)) * tile->bpp);
 
   scale = info->scale;
-  step = info->scalesrc * info->src_bpp;
   dest = tile_buf;
 
   x = info->src_x;
@@ -2451,13 +894,14 @@ render_image_tile_fault (RenderInfo *info)
 
   while (width--)
     {
-      for (b = 0; b < info->src_bpp; b++)
+      for (b = 0; b < bpp; b++)
 	*dest++ = data[b];
 
-      if (*scale++ != 0)
+      step = *scale++;
+      if (step != 0)
 	{
-	  x += info->scalesrc;
-	  data += step;
+	  x += step;
+	  data += step * bpp;
 
 	  if ((x >> tile_shift) != tilex)
 	    {
@@ -2468,10 +912,10 @@ render_image_tile_fault (RenderInfo *info)
 	      if (!tile)
 		return tile_buf;
 
-	      tile_ref (tile);
-	      data = (tile->data +
-		      ((info->src_y % TILE_HEIGHT) * tile->ewidth +
-		       (x % TILE_WIDTH)) * tile->bpp);
+              data = (tile->data +
+                      ((info->src_y % TILE_HEIGHT) * tile->ewidth +
+                       (x % TILE_WIDTH)) * tile->bpp);
+ 
 	    }
 	}
     }

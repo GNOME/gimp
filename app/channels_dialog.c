@@ -92,7 +92,7 @@ struct _ChannelsDialog {
   GtkWidget *channel_list;
   GtkWidget *preview;
   GtkWidget *ops_menu;
-  GtkAcceleratorTable *accel_table;
+  GtkAccelGroup *accel_group;
 
   int num_components;
   int base_type;
@@ -204,7 +204,7 @@ channels_dialog_create ()
       channelsD->active_channel = NULL;
       channelsD->floating_sel = NULL;
       channelsD->channel_widgets = NULL;
-      channelsD->accel_table = gtk_accelerator_table_new ();
+      channelsD->accel_group = gtk_accel_group_new ();
 
       if (preview_size)
 	{
@@ -217,7 +217,7 @@ channels_dialog_create ()
       gtk_container_border_width (GTK_CONTAINER (vbox), 2);
 
       /*  The layers commands pulldown menu  */
-      channelsD->ops_menu = build_menu (channels_ops, channelsD->accel_table);
+      channelsD->ops_menu = build_menu (channels_ops, channelsD->accel_group);
 
       /*  The channels listbox  */
       listbox = gtk_scrolled_window_new (NULL, NULL);
@@ -233,7 +233,7 @@ channels_dialog_create ()
       gtk_container_set_focus_vadjustment (GTK_CONTAINER (channelsD->channel_list),
 					   gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (listbox)));
       GTK_WIDGET_UNSET_FLAGS (GTK_SCROLLED_WINDOW (listbox)->vscrollbar, GTK_CAN_FOCUS);
-      
+
       gtk_widget_show (channelsD->channel_list);
       gtk_widget_show (listbox);
 
@@ -584,7 +584,7 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
   /*  get the list item data  */
   state = channel_widget->list_item->state;
 
-  if (channel_widget->type == Auxillary) 
+  if (channel_widget->type == Auxillary)
     {
       /*  turn on the specified auxillary channel  */
       index = gimage_get_channel_index (channel_widget->gimage, channel_widget->channel);
@@ -594,8 +594,8 @@ channels_dialog_set_channel (ChannelWidget *channel_widget)
 	  gtk_list_select_item (GTK_LIST (channelsD->channel_list), index + channelsD->num_components);
 	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
 	}
-    } 
-  else 
+    }
+  else
     {
       if (state != GTK_STATE_SELECTED)
 	{
@@ -638,7 +638,7 @@ channels_dialog_unset_channel (ChannelWidget * channel_widget)
   /*  get the list item data  */
   state = channel_widget->list_item->state;
 
-  if (channel_widget->type == Auxillary) 
+  if (channel_widget->type == Auxillary)
     {
       /*  turn off the specified auxillary channel  */
       index = gimage_get_channel_index (channel_widget->gimage, channel_widget->channel);
@@ -673,7 +673,7 @@ channels_dialog_unset_channel (ChannelWidget * channel_widget)
 	  gtk_object_set_user_data (GTK_OBJECT (channel_widget->list_item), channel_widget);
 	}
     }
-  
+
   suspend_gimage_notify--;
 }
 
@@ -694,7 +694,7 @@ channels_dialog_position_channel (ChannelWidget *channel_widget,
   list = g_list_append (list, channel_widget->list_item);
   gtk_list_remove_items (GTK_LIST (channelsD->channel_list), list);
   channelsD->channel_widgets = g_slist_remove (channelsD->channel_widgets, channel_widget);
-  
+
   suspend_gimage_notify--;
 
   /*  Add it back at the proper index  */
@@ -826,24 +826,24 @@ channel_list_events (GtkWidget *widget,
 
 static void
 channels_dialog_map_callback (GtkWidget *w,
-			    gpointer   client_data)
-{
-  if (!channelsD)
-    return;
-
-  gtk_window_add_accelerator_table (GTK_WINDOW (lc_shell),
-				    channelsD->accel_table);
-}
-
-static void
-channels_dialog_unmap_callback (GtkWidget *w,
 			      gpointer   client_data)
 {
   if (!channelsD)
     return;
 
-  gtk_window_remove_accelerator_table (GTK_WINDOW (lc_shell),
-				       channelsD->accel_table);
+  gtk_window_add_accel_group (GTK_WINDOW (lc_shell),
+			      channelsD->accel_group);
+}
+
+static void
+channels_dialog_unmap_callback (GtkWidget *w,
+				gpointer   client_data)
+{
+  if (!channelsD)
+    return;
+
+  gtk_window_remove_accel_group (GTK_WINDOW (lc_shell),
+				 channelsD->accel_group);
 }
 
 static void
@@ -1662,7 +1662,7 @@ channel_widget_channel_flush (GtkWidget *widget,
     {
       /*  select if this is the active channel  */
       if (channelsD->active_channel == (channel_widget->channel))
-	channels_dialog_set_channel (channel_widget); 
+	channels_dialog_set_channel (channel_widget);
       /*  unselect if this is not the active channel  */
       else
 	channels_dialog_unset_channel (channel_widget);
@@ -1894,13 +1894,13 @@ edit_channel_query_ok_callback (GtkWidget *w,
 
 
   if (gimage_get_ID (options->gimage_id)) {
-    
+
     /*  Set the new channel name  */
     if (GIMP_DRAWABLE(channel)->name)
       g_free (GIMP_DRAWABLE(channel)->name);
     GIMP_DRAWABLE(channel)->name = g_strdup (gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
     gtk_label_set (GTK_LABEL (options->channel_widget->label), GIMP_DRAWABLE(channel)->name);
-    
+
     if (channel->opacity != opacity)
       {
 	channel->opacity = opacity;
@@ -1912,7 +1912,7 @@ edit_channel_query_ok_callback (GtkWidget *w,
 	  channel->col[i] = options->color_panel->color[i];
 	  update = TRUE;
 	}
-    
+
     if (update)
       {
 	drawable_update (GIMP_DRAWABLE(channel), 0, 0, GIMP_DRAWABLE(channel)->width, GIMP_DRAWABLE(channel)->height);
@@ -1969,7 +1969,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->channel_widget = channel_widget;
   options->gimage_id = channel_widget->gimage->ID;
   options->opacity = (double) channel_widget->channel->opacity / 2.55;
-  for (i = 0; i < 3; i++) 
+  for (i = 0; i < 3; i++)
     channel_color[i] =  channel_widget->channel->col[i];
 
   options->color_panel = color_panel_new (channel_color, 48, 64);
@@ -2038,5 +2038,3 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   gtk_widget_show (vbox);
   gtk_widget_show (options->query_box);
 }
-
-

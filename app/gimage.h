@@ -151,6 +151,8 @@ struct _GImage
                                       /*  Composite preview  */
   TempBuf *comp_preview;              /*  the composite preview        */
   int comp_preview_valid[3];          /*  preview valid-1/channel      */
+  float xresolution;                  /*  image x-res, in dpi          */
+  float yresolution;                  /*  image y-res, in dpi          */
 };
 
 

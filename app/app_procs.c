@@ -62,15 +62,15 @@
 #include "config.h"
 
 #define LOGO_WIDTH_MIN 350
-#define LOGO_HEIGHT_MIN 110 
+#define LOGO_HEIGHT_MIN 110
 #define NAME "The GIMP"
 #define BROUGHT "brought to you by"
-#define AUTHORS "Spencer Kimball and Peter Mattis" 
- 
+#define AUTHORS "Spencer Kimball and Peter Mattis"
+
 #define SHOW_NEVER 0
 #define SHOW_LATER 1
 #define SHOW_NOW 2
- 
+
 /*  Function prototype for affirmation dialog when exiting application  */
 static void      really_quit_dialog (void);
 static Argument* quit_invoker       (Argument *args);
@@ -252,7 +252,7 @@ splash_text_draw (GtkWidget *widget)
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, NAME)) / 2), 
+		   ((logo_area_width - gdk_string_width (font, NAME)) / 2),
 		   (0.25 * logo_area_height),
 		   NAME);
 
@@ -260,19 +260,19 @@ splash_text_draw (GtkWidget *widget)
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2), 
+		   ((logo_area_width - gdk_string_width (font, GIMP_VERSION)) / 2),
 		   (0.45 * logo_area_height),
 		   GIMP_VERSION);
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, BROUGHT)) / 2), 
+		   ((logo_area_width - gdk_string_width (font, BROUGHT)) / 2),
 		   (0.65 * logo_area_height),
 		   BROUGHT);
   gdk_draw_string (widget->window,
 		   font,
 		   widget->style->fg_gc[GTK_STATE_NORMAL],
-		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2), 
+		   ((logo_area_width - gdk_string_width (font, AUTHORS)) / 2),
 		   (0.80 * logo_area_height),
 		   AUTHORS);
 }
@@ -282,7 +282,7 @@ splash_logo_draw (GtkWidget *widget)
 {
   gdk_draw_pixmap (widget->window,
 		   widget->style->black_gc,
-		   logo_pixmap, 
+		   logo_pixmap,
 		   0, 0,
 		   ((logo_area_width - logo_width) / 2), ((logo_area_height - logo_height) / 2),
 		   logo_width, logo_height);
@@ -292,7 +292,7 @@ static void
 splash_logo_expose (GtkWidget *widget)
 {
   switch (show_logo) {
-     case SHOW_NEVER: 
+     case SHOW_NEVER:
      case SHOW_LATER:
        splash_text_draw (widget);
        break;
@@ -339,7 +339,7 @@ make_initialization_status_window(void)
 	  gtk_window_set_title(GTK_WINDOW(win_initstatus),
 		               "GIMP Startup");
 
-	  if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus)) 
+	  if (no_splash_image == FALSE && splash_logo_load_size (win_initstatus))
 	    {
 	      show_logo = SHOW_LATER;
 	    }
@@ -366,25 +366,25 @@ make_initialization_status_window(void)
 	  gtk_box_pack_start_defaults(GTK_BOX(vbox), label1);
 	  label2 = gtk_label_new("");
 	  gtk_box_pack_start_defaults(GTK_BOX(vbox), label2);
-      
+
 	  pbar = gtk_progress_bar_new();
 	  gtk_box_pack_start_defaults(GTK_BOX(vbox), pbar);
-      
+
 	  gtk_widget_show(vbox);
 	  gtk_widget_show (logo_area);
 	  gtk_widget_show(label1);
 	  gtk_widget_show(label2);
 	  gtk_widget_show(pbar);
-      
+
 	  gtk_window_position(GTK_WINDOW(win_initstatus),
 			      GTK_WIN_POS_CENTER);
-      
+
 	  gtk_widget_show(win_initstatus);
 
 	  gtk_window_set_policy (GTK_WINDOW (win_initstatus), FALSE, TRUE, FALSE);
 	  /*
-	   *  This is a hack: we try to compute a good guess for the maximum 
-	   *  number of charcters that will fit into the splash-screen using 
+	   *  This is a hack: we try to compute a good guess for the maximum
+	   *  number of charcters that will fit into the splash-screen using
 	   *  the default_font
 	   */
 	  style = gtk_widget_get_style (win_initstatus);
@@ -422,8 +422,11 @@ app_init_update_status(char *label1val,
 	    }
 	  gtk_label_set(GTK_LABEL(label2), label2val);
 	}
-      if(pct_progress >= 0
-	 && GTK_PROGRESS_BAR(pbar)->percentage != pct_progress)
+      if (pct_progress >= 0.0 && pct_progress <= 1.0 &&
+	  gtk_progress_get_current_percentage(&(GTK_PROGRESS_BAR(pbar)->progress)) != pct_progress)
+	 /*
+	  GTK_PROGRESS_BAR(pbar)->percentage != pct_progress)
+	 */
 	{
 	  gtk_progress_bar_update(GTK_PROGRESS_BAR(pbar), pct_progress);
 	}
@@ -459,7 +462,7 @@ app_init (void)
   if (no_interface == FALSE && no_splash == FALSE && win_initstatus) {
     splash_text_draw (logo_area);
   }
-    
+
   /*
    *  Initialize the procedural database
    *    We need to do this first because any of the init
@@ -614,7 +617,7 @@ really_quit_cancel_callback (GtkWidget *widget,
 static gint
 really_quit_delete_callback (GtkWidget *widget,
 			     GdkEvent  *event,
-			     gpointer client_data) 
+			     gpointer client_data)
 {
   really_quit_cancel_callback (widget, (GtkWidget *) client_data);
 
@@ -640,7 +643,7 @@ really_quit_dialog ()
   gtk_signal_connect (GTK_OBJECT (dialog), "delete_event",
 		      (GtkSignalFunc) really_quit_delete_callback,
 		      dialog);
- 
+
   button = gtk_button_new_with_label ("Yes");
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",

@@ -20,7 +20,7 @@
  */
 
 
-/* hof: Hofer Wolfgang, 1998.01.27   avoid resize bug by keeping 
+/* hof: Hofer Wolfgang, 1998.01.27   avoid resize bug by keeping
  *                                   preview widgetsize constant.
  * hof: Hofer Wolfgang, 1997.10.17   Added "Load From FG color"
  */
@@ -320,7 +320,7 @@ typedef struct {
 	GtkWidget           *control_coloring_popup;          /* Coloring type menu */
 	GtkWidget           *control_sel_ops_popup;           /* Selection ops menu */
 
-	GtkAcceleratorTable *accelerator_table;
+	GtkAccelGroup *accel_group;
 
 	/* Blending and coloring menus */
 
@@ -636,7 +636,7 @@ grad_get_color_at(double pos, double *r, double *g, double *b, double *a)
 	double          h1, s1, v1;
 
 	/* if there is no gradient return a totally transparent black */
-	if (curr_gradient == NULL) 
+	if (curr_gradient == NULL)
 	  {
 	    r = 0; g = 0; b = 0; a = 0;
 	    return;
@@ -946,10 +946,10 @@ grad_create_gradient_editor(void)
 	gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(button), TRUE);
 	gtk_widget_show(button);
 
-	/* hbox for that holds the frame for gradient preview and gradient control; 
-           this is only here, because resizing the preview doesn't work (and is disabled) 
+	/* hbox for that holds the frame for gradient preview and gradient control;
+           this is only here, because resizing the preview doesn't work (and is disabled)
            to keep the preview and controls together */
-	
+
 	hbox = gtk_hbox_new(FALSE, 0);
 	gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 	gtk_widget_show(hbox);
@@ -962,7 +962,7 @@ grad_create_gradient_editor(void)
 	gtk_widget_show(frame);
 
 	gvbox = gtk_vbox_new(FALSE, 0);
-	gtk_container_add(GTK_CONTAINER(frame), gvbox); 
+	gtk_container_add(GTK_CONTAINER(frame), gvbox);
 	gtk_widget_show(gvbox);
 
 	/* Gradient preview */
@@ -1015,7 +1015,7 @@ grad_create_gradient_editor(void)
 	g_editor->control_coloring_popup          = NULL;
 	g_editor->control_sel_ops_popup           = NULL;
 
-	g_editor->accelerator_table = NULL;
+	g_editor->accel_group = NULL;
 
 	for (i = 0;
 	     i < (sizeof(g_editor->control_blending_items) / sizeof(g_editor->control_blending_items[0]));
@@ -1075,9 +1075,9 @@ static void
 ed_fetch_foreground(double *fg_r, double *fg_g, double *fg_b, double *fg_a)
 {
 	unsigned char r, g, b;
-	
+
  	palette_get_foreground (&r, &g, &b);
- 	
+
  	*fg_r = (double) r / 255.0;
  	*fg_g = (double) g / 255.0;
  	*fg_b = (double) b / 255.0;
@@ -1340,7 +1340,7 @@ ed_copy_gradient_callback(GtkWidget *widget, gpointer client_data)
 {
 	char *name;
 
-	if (curr_gradient == NULL) 
+	if (curr_gradient == NULL)
                return;
 
 	name = g_malloc((strlen(curr_gradient->name) + 6) * sizeof(char));
@@ -1605,7 +1605,7 @@ ed_refresh_callback(GtkWidget *widget, gpointer client_data)
 
 	ed_set_list_of_gradients();
 
-	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL); 
+	ed_update_editor(GRAD_UPDATE_PREVIEW | GRAD_RESET_CONTROL);
 } /* ed_refresh_callback */
 
 /*****/
@@ -1802,7 +1802,7 @@ prev_events(GtkWidget *widget, GdkEvent *event)
 	GdkEventButton *bevent;
 
 	/* ignore events when no gradient is present */
-	if (curr_gradient == NULL) 
+	if (curr_gradient == NULL)
 	        return FALSE;
 
 	switch (event->type) {
@@ -1934,7 +1934,7 @@ prev_update(int recalculate)
 
 	/* We only update if we can draw to the widget and a gradient is present */
 
-	if (curr_gradient == NULL) 
+	if (curr_gradient == NULL)
 	        return;
 	if (!GTK_WIDGET_DRAWABLE(g_editor->preview))
 		return;
@@ -1948,13 +1948,13 @@ prev_update(int recalculate)
 	 *      The original code allows expansion of the preview
 	 *      on window resize events. But once expanded, there is no way to shrink
 	 *      the window back to the original size.
-	 *  A full Bugfix should change the preview size according to the users     
-	 *  window resize actions.   
+	 *  A full Bugfix should change the preview size according to the users
+	 *  window resize actions.
 	 */
 
 	       width   = GRAD_PREVIEW_WIDTH;
 	       height  = GRAD_PREVIEW_HEIGHT;
-	
+
 	pwidth  = GTK_PREVIEW(g_editor->preview)->buffer_width;
 	pheight = GTK_PREVIEW(g_editor->preview)->buffer_height;
 
@@ -2639,7 +2639,7 @@ control_move(grad_segment_t *range_l, grad_segment_t *range_r, double delta)
 			control_compress_range(range_l->prev, range_l->prev,
 					       range_l->prev->left, range_l->left);
 	  }
-	
+
 	if (!is_last)
 	  {
 		if (!g_editor->control_compress)
@@ -2648,7 +2648,7 @@ control_move(grad_segment_t *range_l, grad_segment_t *range_r, double delta)
 			control_compress_range(range_r->next, range_r->next,
 					       range_r->right, range_r->next->right);
 	  }
-	
+
 	return delta;
 } /* control_move */
 
@@ -2664,8 +2664,8 @@ control_update(int recalculate)
 
 	/* We only update if we can redraw and a gradient is present */
 
-	if (curr_gradient == NULL) 
-	        return;	
+	if (curr_gradient == NULL)
+	        return;
 	if (!GTK_WIDGET_DRAWABLE(g_editor->control))
 		return;
 
@@ -2871,16 +2871,16 @@ cpopup_create_main_menu(void)
 	GtkWidget           *menu;
 	GtkWidget           *menuitem;
 	GtkWidget           *label;
-	GtkAcceleratorTable *acc_table;
+	GtkAccelGroup *acc_group;
 
 	menu      = gtk_menu_new();
-	acc_table = gtk_accelerator_table_new();
+	acc_group = gtk_accel_group_new();
 
-	g_editor->accelerator_table = acc_table;
+	g_editor->accel_group = acc_group;
 
-	gtk_menu_set_accelerator_table(GTK_MENU(menu), acc_table);
-	gtk_window_add_accelerator_table(GTK_WINDOW(g_editor->shell), acc_table);
-	gtk_window_add_accelerator_table(GTK_WINDOW(g_editor->shell), acc_table);
+	gtk_menu_set_accel_group(GTK_MENU(menu), acc_group);
+	gtk_window_add_accel_group(GTK_WINDOW(g_editor->shell), acc_group);
+	gtk_window_add_accel_group(GTK_WINDOW(g_editor->shell), acc_group);
 
 	/* Left endpoint */
 
@@ -2891,7 +2891,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'L', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'L', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	menuitem = gtk_menu_item_new_with_label("Load from");
 	g_editor->control_left_load_popup = cpopup_create_load_menu(g_editor->left_load_color_boxes,
@@ -2929,7 +2933,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'R', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'R', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	menuitem = gtk_menu_item_new_with_label("Load from");
 	g_editor->control_right_load_popup = cpopup_create_load_menu(g_editor->right_load_color_boxes,
@@ -2988,7 +2996,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'S', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'S', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Split uniformly */
 
@@ -2998,7 +3010,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'U', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'U', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Delete */
 
@@ -3009,8 +3025,11 @@ cpopup_create_main_menu(void)
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
 	g_editor->control_delete_menu_item = menuitem;
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'D', 0);
-
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'D', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 	/* Recenter */
 
 	menuitem = cpopup_create_menu_item_with_label("", &g_editor->control_recenter_label);
@@ -3019,7 +3038,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'C', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'C', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Redistribute */
 
@@ -3029,7 +3052,11 @@ cpopup_create_main_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'C', GDK_CONTROL_MASK);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'C', GDK_CONTROL_MASK,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Selection ops */
 
@@ -3175,7 +3202,7 @@ cpopup_adjust_menus(void)
 				fg_g,
 				fg_b,
 				fg_a);
-	
+
 	/* Render saved color boxes */
 
 	for (i = 0; i < GRAD_NUM_COLORS; i++)
@@ -3476,13 +3503,13 @@ cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 {
 	GtkWidget           *menu;
 	GtkWidget           *menuitem;
-	GtkAcceleratorTable *acc_table;
+	GtkAccelGroup *acc_group;
 	int                  i;
 
 	menu      = gtk_menu_new();
-	acc_table = g_editor->accelerator_table;
+	acc_group = g_editor->accel_group;
 
-	gtk_menu_set_accelerator_table(GTK_MENU(menu), acc_table);
+	gtk_menu_set_accel_group(GTK_MENU(menu), acc_group);
 
 	/* Create items */
 
@@ -3503,18 +3530,27 @@ cpopup_create_load_menu(GtkWidget **color_boxes, GtkWidget **labels,
 
 		switch (i) {
 			case 0:
-				gtk_widget_install_accelerator(menuitem, acc_table, "activate",
-							       accel_key_0, accel_mods_0);
+				gtk_widget_add_accelerator(menuitem,
+							   "activate",
+							   acc_group,
+							   accel_key_0, accel_mods_0,
+							   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 				break;
 
 			case 1:
-				gtk_widget_install_accelerator(menuitem, acc_table, "activate",
-							       accel_key_1, accel_mods_1);
+				gtk_widget_add_accelerator(menuitem,
+							   "activate",
+							   acc_group,
+							   accel_key_1, accel_mods_1,
+							   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 				break;
 
 			case 2:
-				gtk_widget_install_accelerator(menuitem, acc_table, "activate",
-							       accel_key_2, accel_mods_2);
+				gtk_widget_add_accelerator(menuitem,
+							   "activate",
+							   acc_group,
+							   accel_key_2, accel_mods_2,
+							   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 				break;
 
 			default:
@@ -3886,12 +3922,12 @@ cpopup_create_sel_ops_menu(void)
 {
 	GtkWidget           *menu;
 	GtkWidget           *menuitem;
-	GtkAcceleratorTable *acc_table;
+	GtkAccelGroup *acc_group;
 
 	menu      = gtk_menu_new();
-	acc_table = g_editor->accelerator_table;
+	acc_group = g_editor->accel_group;
 
-	gtk_menu_set_accelerator_table(GTK_MENU(menu), acc_table);
+	gtk_menu_set_accel_group(GTK_MENU(menu), acc_group);
 
 	/* Flip */
 
@@ -3901,7 +3937,11 @@ cpopup_create_sel_ops_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'F', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'F', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Replicate */
 
@@ -3911,7 +3951,11 @@ cpopup_create_sel_ops_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'M', 0);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'M', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	/* Blend colors / opacity */
 
@@ -3926,7 +3970,10 @@ cpopup_create_sel_ops_menu(void)
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
 	g_editor->control_blend_colors_menu_item = menuitem;
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'B', 0);
+	gtk_widget_add_accelerator(menuitem, "activate",
+				   acc_group,
+				   'B', 0,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 
 	menuitem = gtk_menu_item_new_with_label("Blend endpoints' opacity");
 	gtk_signal_connect(GTK_OBJECT(menuitem), "activate",
@@ -3934,7 +3981,11 @@ cpopup_create_sel_ops_menu(void)
 			   NULL);
 	gtk_menu_append(GTK_MENU(menu), menuitem);
 	gtk_widget_show(menuitem);
-	gtk_widget_install_accelerator(menuitem, acc_table, "activate", 'B', GDK_CONTROL_MASK);
+	gtk_widget_add_accelerator(menuitem,
+				   "activate",
+				   acc_group,
+				   'B', GDK_CONTROL_MASK,
+				   GTK_ACCEL_VISIBLE | GTK_ACCEL_LOCKED);
 	g_editor->control_blend_opacity_menu_item = menuitem;
 
 	return menu;

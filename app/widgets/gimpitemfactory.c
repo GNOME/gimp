@@ -57,7 +57,7 @@ static GtkMenuEntry menu_items[] =
   { "<Toolbox>/File/Dialogs/Palette...", "<control>P", dialogs_palette_cmd_callback, NULL },
   { "<Toolbox>/File/Dialogs/Gradient Editor...", "<control>G", dialogs_gradient_editor_cmd_callback, NULL },
   { "<Toolbox>/File/Dialogs/Tool Options...", "<control><shift>T", dialogs_tools_options_cmd_callback, NULL },
-  
+
   { "<Toolbox>/File/<separator>",NULL,NULL,NULL},
 
   { "<Toolbox>/File/Quit", "<control>Q", file_quit_cmd_callback, NULL },
@@ -120,7 +120,7 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/View/<separator>", NULL, NULL, NULL },
   { "<Image>/View/New View", NULL, view_new_view_cmd_callback, NULL },
   { "<Image>/View/Shrink Wrap", "<control>E", view_shrink_wrap_cmd_callback, NULL },
-  
+
   { "<Image>/Image/Colors/Equalize", NULL, image_equalize_cmd_callback, NULL },
   { "<Image>/Image/Colors/Invert", NULL, image_invert_cmd_callback, NULL },
   { "<Image>/Image/Colors/Posterize", NULL, image_posterize_cmd_callback, NULL },
@@ -180,7 +180,7 @@ static GtkMenuEntry menu_items[] =
   { "<Image>/Tools/Clone", "C", tools_select_cmd_callback, (gpointer) CLONE },
   { "<Image>/Tools/Convolve", "V", tools_select_cmd_callback, (gpointer) CONVOLVE },
   { "<Image>/Tools/Default Colors", "D", tools_default_colors_cmd_callback, NULL},
-  { "<Image>/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, NULL},  
+  { "<Image>/Tools/Swap Colors", "X", tools_swap_colors_cmd_callback, NULL},
   { "<Image>/Tools/<separator>", NULL, NULL, NULL },
   { "<Image>/Tools/Toolbox", NULL, toolbox_raise_callback, NULL },
 
@@ -216,54 +216,54 @@ static GHashTable *entry_ht = NULL;
 
 void
 menus_get_toolbox_menubar (GtkWidget           **menubar,
-			   GtkAcceleratorTable **table)
+			   GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
 
   if (menubar)
     *menubar = subfactories[0]->widget;
-  if (table)
-    *table = subfactories[0]->table;
+  if (accel_group)
+    *accel_group = subfactories[0]->accel_group;
 }
 
 void
 menus_get_image_menu (GtkWidget           **menu,
-		      GtkAcceleratorTable **table)
+		      GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
 
   if (menu)
     *menu = subfactories[1]->widget;
-  if (table)
-    *table = subfactories[1]->table;
+  if (accel_group)
+    *accel_group = subfactories[1]->accel_group;
 }
 
 void
 menus_get_load_menu (GtkWidget           **menu,
-		     GtkAcceleratorTable **table)
+		     GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
 
   if (menu)
     *menu = subfactories[2]->widget;
-  if (table)
-    *table = subfactories[2]->table;
+  if (accel_group)
+    *accel_group = subfactories[2]->accel_group;
 }
 
 void
 menus_get_save_menu (GtkWidget           **menu,
-		     GtkAcceleratorTable **table)
+		     GtkAccelGroup **accel_group)
 {
   if (initialize)
     menus_init ();
 
   if (menu)
     *menu = subfactories[3]->widget;
-  if (table)
-    *table = subfactories[3]->table;
+  if (accel_group)
+    *accel_group = subfactories[3]->accel_group;
 }
 
 void
@@ -290,17 +290,6 @@ menus_create (GtkMenuEntry *entries,
       }
 
   gtk_menu_factory_add_entries (factory, entries, nmenu_entries);
-
-  for (i = 0; i < nmenu_entries; i++)
-    if (entries[i].widget && GTK_BIN (entries[i].widget)->child)
-      {
-	gtk_signal_connect (GTK_OBJECT (entries[i].widget), "install_accelerator",
-			    (GtkSignalFunc) menus_install_accel,
-			    entries[i].path);
-	gtk_signal_connect (GTK_OBJECT (entries[i].widget), "remove_accelerator",
-			    (GtkSignalFunc) menus_remove_accel,
-			    entries[i].path);
-      }
 }
 
 void
@@ -364,22 +353,22 @@ menus_quit ()
   char filename[512];
   char *gimp_dir;
 
-  if (entry_ht) 
+  if (entry_ht)
     {
       gimp_dir = gimp_directory ();
       if ('\000' != gimp_dir[0])
 	{
 	  sprintf (filename, "%s/menurc", gimp_dir);
-	  
+
 	  fp = fopen (filename, "w");
-	  if (fp) 
+	  if (fp)
 	    {
 	      g_hash_table_foreach (entry_ht, menus_foreach, fp);
 	      fclose (fp);
 	    }
 	}
     }
-  
+
   if (!initialize)
     {
       gtk_menu_factory_destroy (factory);
@@ -425,16 +414,16 @@ menus_foreach (gpointer key,
 {
   char accel[64];
   int i, j;
- 
+
   for (i = j = 0; ((char*) value)[i] != '\0'; i++, j++)
     {
       if (((char *) value)[i] == '"' || ((char *) value)[i] == '\\')
         accel[j++] = '\\';
       accel[j] = ((char *) value)[i];
     }
- 
+
   accel[j] = '\0';
- 
+
   fprintf ((FILE*) user_data, "(menu-path \"%s\" \"%s\")\n", (char*) key, accel);
 }
 
@@ -488,4 +477,3 @@ menus_remove_accel (GtkWidget *widget,
       g_hash_table_insert (entry_ht, path, g_strdup (""));
     }
 }
-

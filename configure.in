@@ -65,9 +65,9 @@ AC_PROG_CPP
 
 AC_GIMP_CHECK
 
-if test "$gtk_config_major_version.$gtk_config_minor_version" != "1.0"; then
-  AC_MSG_ERROR(The GIMP requires GTK 1.0.x. See the file 'INSTALL' for help.)
-fi
+#if test "$gtk_config_major_version.$gtk_config_minor_version" != "1.0"; then
+#  AC_MSG_ERROR(The GIMP requires GTK 1.0.x. See the file 'INSTALL' for help.)
+#fi
 
 if eval "test x$GCC = xyes"; then
   if echo "$CFLAGS" | grep "\-Wall" > /dev/null 2> /dev/null; then
@@ -354,7 +354,7 @@ AC_EGREP_CPP(glib_defines_inline,
 AC_MSG_RESULT($have_glib_inline)
 if test "$have_glib_inline" = "no"; then
   AC_C_INLINE
-fi  
+fi
 
 CPPFLAGS="$gimp_save_CPPFLAGS"
 LDFLAGS="$gimp_save_LDFLAGS"

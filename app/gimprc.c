@@ -115,6 +115,9 @@ int       default_type = RGB;
 int       show_tips = TRUE;
 int       last_tip = -1;
 int       show_tool_tips = TRUE;
+float     monitor_xres = 72.0;
+float     monitor_yres = 72.0;
+int       using_xserver_resolution = FALSE;
 
 static int get_next_token (void);
 static int peek_next_token (void);

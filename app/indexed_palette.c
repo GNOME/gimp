@@ -119,7 +119,7 @@ indexed_palette_create (int gimage_id)
   GtkWidget *menu_bar;
   GtkWidget *menu_bar_item;
   GtkWidget *hbox;
-  GtkAcceleratorTable *table;
+  GtkAccelGroup *accel_group;
   int default_index;
 
   if (!indexedP)
@@ -127,14 +127,14 @@ indexed_palette_create (int gimage_id)
       indexedP = g_malloc (sizeof (IndexedPalette));
       indexedP->gimage_id = -1;
 
-      table = gtk_accelerator_table_new ();
+      accel_group = gtk_accel_group_new ();
 
       /*  The shell and main vbox  */
       indexedP->shell = gtk_dialog_new ();
       gtk_window_set_wmclass (GTK_WINDOW (indexedP->shell), "indexed_color_palette", "Gimp");
-      gtk_window_set_policy (GTK_WINDOW (indexedP->shell), FALSE, FALSE, FALSE); 
+      gtk_window_set_policy (GTK_WINDOW (indexedP->shell), FALSE, FALSE, FALSE);
       gtk_window_set_title (GTK_WINDOW (indexedP->shell), "Indexed Color Palette");
-      gtk_window_add_accelerator_table (GTK_WINDOW (indexedP->shell), table);
+      gtk_window_add_accel_group (GTK_WINDOW (indexedP->shell), accel_group);
       gtk_signal_connect (GTK_OBJECT (indexedP->shell), "delete_event",
 			  GTK_SIGNAL_FUNC (gtk_widget_hide_on_delete),
 			  NULL);
@@ -161,7 +161,7 @@ indexed_palette_create (int gimage_id)
       gtk_widget_show (label);
 
       /*  The indexed palette commands pulldown menu  */
-      ops_menu = build_menu (indexed_color_ops, table);
+      ops_menu = build_menu (indexed_color_ops, accel_group);
 
       menu_bar = gtk_menu_bar_new ();
       gtk_box_pack_start (GTK_BOX (util_box), menu_bar, FALSE, FALSE, 2);
@@ -374,7 +374,7 @@ indexed_palette_select_callback (int   r,
 	gimage->cmap[indexedP->col_index * 3 + 0] = r;
 	gimage->cmap[indexedP->col_index * 3 + 1] = g;
 	gimage->cmap[indexedP->col_index * 3 + 2] = b;
-	
+
 	gdisplays_update_full (gimage->ID);
 	indexed_palette_draw ();
 	/* Fallthrough */
@@ -410,12 +410,12 @@ indexed_palette_area_events (GtkWidget *widget,
 	  r = gimage->cmap[indexedP->col_index * 3 + 0];
 	  g = gimage->cmap[indexedP->col_index * 3 + 1];
 	  b = gimage->cmap[indexedP->col_index * 3 + 2];
-	  if (active_color == FOREGROUND) 
+	  if (active_color == FOREGROUND)
 	    palette_set_foreground (r, g, b);
 	  else if (active_color == BACKGROUND)
-	    palette_set_background (r, g, b); 
+	    palette_set_background (r, g, b);
 	}
- 
+
         if (bevent->button == 3)
 	{
 	  indexedP->col_index = 16 * ((int)bevent->y / CELL_HEIGHT) + ((int)bevent->x / CELL_WIDTH);
@@ -486,7 +486,7 @@ create_image_menu (int              *default_id,
       if (gimage_base_type (gimage) == INDEXED)
 	{
 	  id = -1;
-	  
+
 	  /*  make sure the default index gets set to _something_, if possible  */
 	  if (*default_index == -1)
 	    {

@@ -42,6 +42,6 @@ struct _MenuItem
 
 
 /* Function declarations */
-GtkWidget *  build_menu (MenuItem *, GtkAcceleratorTable *);
+GtkWidget *  build_menu (MenuItem *, GtkAccelGroup *);
 
 #endif /* BUILDMENU_H */
