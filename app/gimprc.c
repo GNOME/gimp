@@ -134,6 +134,7 @@ int       show_tool_tips = TRUE;
 float     monitor_xres = 72.0;
 float     monitor_yres = 72.0;
 int       using_xserver_resolution = FALSE;
+int       num_processors = 1;
 
 static int get_next_token (void);
 static int peek_next_token (void);
@@ -255,7 +256,8 @@ static ParseFunc funcs[] =
   { "device",                TT_XDEVICE,    NULL, NULL },
   { "session-info",          TT_XSESSIONINFO, NULL, NULL},
   { "monitor-xresolution",   TT_FLOAT,     &monitor_xres, NULL },
-  { "monitor-yresolution",   TT_FLOAT,     &monitor_yres, NULL }
+  { "monitor-yresolution",   TT_FLOAT,     &monitor_yres, NULL },
+  { "num-processors",        TT_INT,       &num_processors, NULL }
 };
 static int nfuncs = sizeof (funcs) / sizeof (funcs[0]);
 

@@ -107,6 +107,7 @@ static   char *       old_gradient_path;
 static   float        old_monitor_xres;
 static   float        old_monitor_yres;
 static   int          old_using_xserver_resolution;
+static   int          old_num_processors;
 
 static   char *       edit_temp_path = NULL;
 static   char *       edit_swap_path = NULL;
@@ -120,12 +121,14 @@ static   int          edit_tile_cache_size;
 static   int          edit_install_cmap;
 static   int          edit_cycled_marching_ants;
 static   int          edit_last_opened_size;
+static   int          edit_num_processors;
 
 static   GtkWidget   *tile_cache_size_spinbutton = NULL;
 static   int          divided_tile_cache_size;
 static   int          mem_size_unit;
 static   GtkWidget   *xres_spinbutton = NULL;
 static   GtkWidget   *yres_spinbutton = NULL;
+static   GtkWidget   *num_processors_spinbutton = NULL;
 
 /* Some information regarding preferences, compiled by Raph Levien 11/3/97.
 
@@ -214,6 +217,12 @@ file_prefs_ok_callback (GtkWidget *widget,
       levels_of_undo = old_levels_of_undo;
       return;
     }
+  if (num_processors < 1 || num_processors > 30) 
+    {
+      g_message (_("Error: Number of processors must be between 1 and 30."));
+      num_processors = old_num_processors;
+      return;
+    }
   if (marching_speed < 50)
     {
       g_message (_("Error: Marching speed must be 50 or greater."));
@@ -262,6 +271,7 @@ file_prefs_save_callback (GtkWidget *widget,
   GList *remove = NULL; /* options that should be commented out */
   int save_stingy_memory_use;
   int save_tile_cache_size;
+  int save_num_processors;
   int save_install_cmap;
   int save_cycled_marching_ants;
   int save_last_opened_size;
@@ -289,6 +299,7 @@ file_prefs_save_callback (GtkWidget *widget,
   save_palette_path = palette_path;
   save_plug_in_path = plug_in_path;
   save_gradient_path = gradient_path;
+  save_num_processors = num_processors;
 
   if (levels_of_undo != old_levels_of_undo)
     update = g_list_append (update, "undo-levels");
@@ -364,6 +375,8 @@ file_prefs_save_callback (GtkWidget *widget,
   if (using_xserver_resolution != old_using_xserver_resolution ||
       ABS(monitor_yres - old_monitor_yres) > 1e-5)
     update = g_list_append (update, "monitor-yresolution");
+  if (edit_num_processors != num_processors)
+    update = g_list_append (update, "num-processors");
   if (edit_stingy_memory_use != stingy_memory_use)
     {
       update = g_list_append (update, "stingy-memory-use");
@@ -509,6 +522,7 @@ file_prefs_cancel_callback (GtkWidget *widget,
   monitor_xres = old_monitor_xres;
   monitor_yres = old_monitor_yres;
   using_xserver_resolution = old_using_xserver_resolution;
+  num_processors = old_num_processors;
 
   if (preview_size != old_preview_size)
     {
@@ -837,6 +851,8 @@ file_pref_cmd_callback (GtkWidget *widget,
       old_monitor_xres = monitor_xres;
       old_monitor_yres = monitor_yres;
       old_using_xserver_resolution = using_xserver_resolution;
+      old_num_processors = num_processors;
+
       file_prefs_strset (&old_temp_path, edit_temp_path);
       file_prefs_strset (&old_swap_path, edit_swap_path);
       file_prefs_strset (&old_brush_path, edit_brush_path);
@@ -1283,6 +1299,31 @@ file_pref_cmd_callback (GtkWidget *widget,
 	if (mem_size_unit == mem_size_units[i].unit)
 	  gtk_option_menu_set_history(GTK_OPTION_MENU (optionmenu),i);
       
+      hbox = gtk_hbox_new (FALSE, 2);
+      gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+      gtk_widget_show (hbox);
+
+      label = gtk_label_new (_("Number of processors to use:"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      adj = (GtkAdjustment *) gtk_adjustment_new (num_processors, 1,
+                                                  30, 1.0,
+                                                  2.0, 0.0);
+      num_processors_spinbutton = gtk_spin_button_new (adj, 1.0, 0.0);
+      gtk_spin_button_set_shadow_type (GTK_SPIN_BUTTON(num_processors_spinbutton),
+				       GTK_SHADOW_NONE);      
+      gtk_spin_button_set_numeric(GTK_SPIN_BUTTON(num_processors_spinbutton),
+				  TRUE);
+      gtk_widget_set_usize (num_processors_spinbutton, 75, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), num_processors_spinbutton,
+			  FALSE, FALSE, 0);
+      gtk_signal_connect (GTK_OBJECT (num_processors_spinbutton), "changed",
+                          (GtkSignalFunc) file_prefs_spinbutton_callback,
+                          &num_processors);
+      gtk_widget_show (num_processors_spinbutton);
+
+
       button = gtk_check_button_new_with_label(_("Install colormap (8-bit only)"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
 				    install_cmap);

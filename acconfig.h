@@ -14,6 +14,7 @@
    Leave the following blank line there!!  Autoheader needs it.  */
 
 
+#undef ENABLE_MP
 #undef ENABLE_NLS
 #undef HAVE_CATGETS
 #undef HAVE_DIRENT_H

@@ -425,6 +425,21 @@ if test "x$with_threads" = "xposix" || test "x$with_threads" = "xyes"; then
       GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
 fi
 
+dnl Multi-Processor Support
+AC_ARG_WITH(mp, [  --with-mp=[no]          support multiple processors ])
+GIMP_THREAD_LIBS=
+if test "x$with_mp" = "xyes"; then
+  AC_CHECK_LIB(pthread, pthread_attr_init, 
+    [AC_DEFINE(ENABLE_MP)
+    GIMP_THREAD_LIBS="-lpthread"
+    GIMP_THREAD_FLAGS="-D_REENTRANT"],
+    # AIX has libpthreads, cause they're special. Special friends (TM)
+    AC_CHECK_LIB(pthreads, pthread_attr_init,
+      [AC_DEFINE(ENABLE_MP)
+      GIMP_THREAD_LIBS="-lpthreads"
+      GIMP_THREAD_FLAGS="-D_REENTRANT -D_THREAD_SAFE"]))
+fi
+
 gimpdatadir=$datadir/gimp
 gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
 localedir=$datadir/locale

@@ -1,3 +1,17 @@
+1999-01-22  Jay Cox  <jaycox@earthlink.net>
+
+	* app/pixel_region.c, app/pixel_region.h: new function 
+	pixel_regions_process_parallel
+	
+	* app/paint_funcs.c: use pixel_regions_process_parallel in 
+	combine_regions.  fixed bug in combine_inten_a_and_inten_a_pixels
+	
+	* app/gimprc.c, app/gimprc.h, app/preferences_dialog.c: added 
+	num-processors variable
+
+	* config.h.in, configure.in, acconfig.h: add configure option
+ 	--with-mp and define ENABLE_MP.
+	
 Thu Jan 21 22:58:00 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* gimp1_1_splash.ppm: new splash, from Shaw Terwilliger

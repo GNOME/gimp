@@ -709,7 +709,6 @@ color_only_pixels (const unsigned char *src1,
     }
 }
 
-
 void
 multiply_pixels (const unsigned char *src1,
 		 const unsigned char *src2,
@@ -1002,7 +1001,7 @@ dissolve_pixels (const unsigned char *src,
       rand_val = (rand() & 0xFF);
 
       if (has_alpha)
-	dest[alpha] = (rand_val > opacity) ? 0 : src[alpha];
+	dest[alpha] = (rand_val > src[alpha]) ? 0 : src[alpha];
       else
 	dest[alpha] = (rand_val > opacity) ? 0 : OPAQUE_OPACITY;
 
@@ -1350,6 +1349,34 @@ initial_inten_pixels (const unsigned char *src,
    */
   dest_bytes = bytes + 1;
 
+  if (bytes == 3 && affect[0] && affect[1] && affect[2])
+  {
+    if (!affect[bytes])
+      opacity = 0;
+    destp = dest + bytes;
+    if (mask && opacity != 0)
+      while(length--)
+      {
+	dest[0] = src[0];
+	dest[1] = src[1];
+	dest[2] = src[2];
+	dest[3] = INT_MULT(opacity, *m, tmp);
+	src  += bytes;
+	dest += dest_bytes;
+	m++;
+      }
+    else
+      while(length--)
+      {
+	dest[0] = src[0];
+	dest[1] = src[1];
+	dest[2] = src[2];
+	dest[3] = opacity;
+	src  += bytes;
+	dest += dest_bytes;
+      }
+    return;
+  }
   for (b =0; b < bytes; b++)
   {
     destp = dest + b;
@@ -1971,7 +1998,9 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 	  int i,j;
 
 	  /* HEAD */
-	  i = ((int)m) & (sizeof(int)-1);
+	  i =  (((int)m) & (sizeof(int)-1));
+	  if (i != 0)
+	    i = sizeof(int) - i;
 	  length -= i;
 	  while (i--)
 	    {
@@ -2082,7 +2111,9 @@ combine_inten_a_and_inten_a_pixels (const unsigned char *src1,
 	  int i,j;
 
 	  /* HEAD */
-	  i = ((int)m) & (sizeof(int)-1);
+	  i = (((int)m) & (sizeof(int)-1));
+	  if (i != 0)
+	    i = sizeof(int) - i;
 	  length -= i;
 	  while (i--)
 	    {
@@ -4744,6 +4775,194 @@ initial_region (PixelRegion   *src,
     }
 }
 
+struct combine_regions_struct
+{
+  int opacity;
+  int mode;
+  int *affect;
+  int type;
+  unsigned char *data;
+  int has_alpha1, has_alpha2;
+};
+
+
+
+void
+combine_sub_region(struct combine_regions_struct *st,
+		   PixelRegion *src1, PixelRegion *src2,
+		   PixelRegion *dest, PixelRegion *mask)
+{
+  unsigned char *data;
+  int            opacity;
+  int            mode;
+  int           *affect;
+  int            type;
+  int h;
+  int has_alpha1, has_alpha2;
+  int combine = 0;
+  int mode_affect;
+  unsigned char * s, * s1, * s2;
+  unsigned char * d, * m;
+  unsigned char buf[512];
+
+/*   fprintf (stderr, "combine_whack_region: %p, %p, %p, %p, %p, %p\n", */
+/* 	   (p4_func)combine_whack_region, */
+/* 	   &st, src1, src2, dest, mask); */
+  opacity = st->opacity;
+  mode = st->mode;
+  affect = st->affect;
+  type = st->type;
+  data = st->data;
+  has_alpha1 = st->has_alpha1;
+  has_alpha2 = st->has_alpha2;
+
+  s1 = src1->data;
+  s2 = src2->data;
+  d = dest->data;
+  m = (mask) ? mask->data : NULL;
+
+  if (src1->w > 128)
+    fprintf(stderr, "combine_sub_region::src1->w = %d\n", src1->w);
+  for (h = 0; h < src1->h; h++)
+  {
+    s = buf;
+
+    /*  apply the paint mode based on the combination type & mode  */
+    switch (type)
+    {
+     case COMBINE_INTEN_A_INDEXED_A:
+     case COMBINE_INTEN_A_CHANNEL_MASK:
+     case COMBINE_INTEN_A_CHANNEL_SELECTION:
+       combine = type;
+       break;
+
+     case COMBINE_INDEXED_INDEXED:
+     case COMBINE_INDEXED_INDEXED_A:
+     case COMBINE_INDEXED_A_INDEXED_A:
+       /*  Now, apply the paint mode--for indexed images  */
+       combine = apply_indexed_layer_mode (s1, s2, &s, mode, has_alpha1, has_alpha2);
+       break;
+
+     case COMBINE_INTEN_INTEN_A:
+     case COMBINE_INTEN_A_INTEN:
+     case COMBINE_INTEN_INTEN:
+     case COMBINE_INTEN_A_INTEN_A:
+       /*  Now, apply the paint mode  */
+       combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h, opacity, src1->w, mode,
+				   src1->bytes, src2->bytes, has_alpha1, has_alpha2, &mode_affect);
+       break;
+
+     default:
+       break;
+    }
+
+    /*  based on the type of the initial image...  */
+    switch (combine)
+    {
+     case COMBINE_INDEXED_INDEXED:
+       combine_indexed_and_indexed_pixels (s1, s2, d, m, opacity,
+					   affect, src1->w, src1->bytes);
+       break;
+
+     case COMBINE_INDEXED_INDEXED_A:
+       combine_indexed_and_indexed_a_pixels (s1, s2, d, m, opacity,
+					     affect, src1->w, src1->bytes);
+       break;
+
+     case COMBINE_INDEXED_A_INDEXED_A:
+       combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity,
+					       affect, src1->w, src1->bytes);
+       break;
+
+     case COMBINE_INTEN_A_INDEXED_A:
+       /*  assume the data passed to this procedure is the
+	*  indexed layer's colormap
+	*/
+       combine_inten_a_and_indexed_a_pixels (s1, s2, d, m, data, opacity,
+					     src1->w, dest->bytes);
+       break;
+
+     case COMBINE_INTEN_A_CHANNEL_MASK:
+       /*  assume the data passed to this procedure is the
+	*  indexed layer's colormap
+	*/
+       combine_inten_a_and_channel_mask_pixels (s1, s2, d, data, opacity,
+						src1->w, dest->bytes);
+       break;
+
+     case COMBINE_INTEN_A_CHANNEL_SELECTION:
+       combine_inten_a_and_channel_selection_pixels (s1, s2, d, data, opacity,
+						     src1->w, src1->bytes);
+       break;
+
+     case COMBINE_INTEN_INTEN:
+       combine_inten_and_inten_pixels (s1, s, d, m, opacity,
+				       affect, src1->w, src1->bytes);
+       break;
+
+     case COMBINE_INTEN_INTEN_A:
+       combine_inten_and_inten_a_pixels (s1, s, d, m, opacity,
+					 affect, src1->w, src1->bytes);
+       break;
+
+     case COMBINE_INTEN_A_INTEN:
+       combine_inten_a_and_inten_pixels (s1, s, d, m, opacity,
+					 affect, mode_affect, src1->w, src1->bytes);
+       break;
+
+     case COMBINE_INTEN_A_INTEN_A:
+       combine_inten_a_and_inten_a_pixels (s1, s, d, m, opacity,
+					   affect, mode_affect, src1->w, src1->bytes);
+       break;
+
+     case BEHIND_INTEN:
+       behind_inten_pixels (s1, s, d, m, opacity,
+			    affect, src1->w, src1->bytes,
+			    src2->bytes, has_alpha1, has_alpha2);
+       break;
+
+     case BEHIND_INDEXED:
+       behind_indexed_pixels (s1, s, d, m, opacity,
+			      affect, src1->w, src1->bytes,
+			      src2->bytes, has_alpha1, has_alpha2);
+       break;
+
+     case REPLACE_INTEN:
+       replace_inten_pixels (s1, s, d, m, opacity,
+			     affect, src1->w, src1->bytes,
+			     src2->bytes, has_alpha1, has_alpha2);
+       break;
+
+     case REPLACE_INDEXED:
+       replace_indexed_pixels (s1, s, d, m, opacity,
+			       affect, src1->w, src1->bytes,
+			       src2->bytes, has_alpha1, has_alpha2);
+       break;
+
+     case ERASE_INTEN:
+       erase_inten_pixels (s1, s, d, m, opacity,
+			   affect, src1->w, src1->bytes);
+       break;
+
+     case ERASE_INDEXED:
+       erase_indexed_pixels (s1, s, d, m, opacity,
+			     affect, src1->w, src1->bytes);
+       break;
+
+     case NO_COMBINATION:
+       break;
+
+     default:
+       break;
+    }
+
+    s1 += src1->rowstride;
+    s2 += src2->rowstride;
+    d += dest->rowstride;
+    if (mask)
+      m += mask->rowstride;
+  }
+}
 
 void
 combine_regions (PixelRegion   *src1,
@@ -4758,13 +4977,12 @@ combine_regions (PixelRegion   *src1,
 {
   int h;
   int has_alpha1, has_alpha2;
-  int combine;
   int mode_affect;
   unsigned char * s, * s1, * s2;
   unsigned char * d, * m;
   unsigned char * buf;
   void * pr;
-  combine = 0;
+  struct combine_regions_struct st;
 
   /*  Determine which sources have alpha channels  */
   switch (type)
@@ -4790,155 +5008,15 @@ combine_regions (PixelRegion   *src1,
       has_alpha1 = has_alpha2 = 0;
     }
 
-  buf = paint_funcs_get_buffer (src1->w * (src1->bytes + 1));
-
-  for (pr = pixel_regions_register (4, src1, src2, dest, mask); pr != NULL; pr = pixel_regions_process (pr))
-    {
-      s1 = src1->data;
-      s2 = src2->data;
-      d = dest->data;
-      m = (mask) ? mask->data : NULL;
-
-      for (h = 0; h < src1->h; h++)
-	{
-	  s = buf;
-
-	  /*  apply the paint mode based on the combination type & mode  */
-	  switch (type)
-	    {
-	    case COMBINE_INTEN_A_INDEXED_A:
-	    case COMBINE_INTEN_A_CHANNEL_MASK:
-	    case COMBINE_INTEN_A_CHANNEL_SELECTION:
-	      combine = type;
-	      break;
-
-	    case COMBINE_INDEXED_INDEXED:
-	    case COMBINE_INDEXED_INDEXED_A:
-	    case COMBINE_INDEXED_A_INDEXED_A:
-	      /*  Now, apply the paint mode--for indexed images  */
-	      combine = apply_indexed_layer_mode (s1, s2, &s, mode, has_alpha1, has_alpha2);
-	      break;
-
-	    case COMBINE_INTEN_INTEN_A:
-	    case COMBINE_INTEN_A_INTEN:
-	    case COMBINE_INTEN_INTEN:
-	    case COMBINE_INTEN_A_INTEN_A:
-	      /*  Now, apply the paint mode  */
-	      combine = apply_layer_mode (s1, s2, &s, src1->x, src1->y + h, opacity, src1->w, mode,
-					  src1->bytes, src2->bytes, has_alpha1, has_alpha2, &mode_affect);
-	      break;
-
-	    default:
-	      break;
-	    }
-
-	  /*  based on the type of the initial image...  */
-	  switch (combine)
-	    {
-	    case COMBINE_INDEXED_INDEXED:
-	      combine_indexed_and_indexed_pixels (s1, s2, d, m, opacity,
-						  affect, src1->w, src1->bytes);
-	      break;
-
-	    case COMBINE_INDEXED_INDEXED_A:
-	      combine_indexed_and_indexed_a_pixels (s1, s2, d, m, opacity,
-						    affect, src1->w, src1->bytes);
-	      break;
-
-	    case COMBINE_INDEXED_A_INDEXED_A:
-	      combine_indexed_a_and_indexed_a_pixels (s1, s2, d, m, opacity,
-						      affect, src1->w, src1->bytes);
-	      break;
-
-	    case COMBINE_INTEN_A_INDEXED_A:
-	      /*  assume the data passed to this procedure is the
-	       *  indexed layer's colormap
-	       */
-	      combine_inten_a_and_indexed_a_pixels (s1, s2, d, m, data, opacity,
-						    src1->w, dest->bytes);
-	      break;
-
-	    case COMBINE_INTEN_A_CHANNEL_MASK:
-	      /*  assume the data passed to this procedure is the
-	       *  indexed layer's colormap
-	       */
-	      combine_inten_a_and_channel_mask_pixels (s1, s2, d, data, opacity,
-						       src1->w, dest->bytes);
-	      break;
-
-	    case COMBINE_INTEN_A_CHANNEL_SELECTION:
-	      combine_inten_a_and_channel_selection_pixels (s1, s2, d, data, opacity,
-							    src1->w, src1->bytes);
-	      break;
-
-	    case COMBINE_INTEN_INTEN:
-	      combine_inten_and_inten_pixels (s1, s, d, m, opacity,
-					      affect, src1->w, src1->bytes);
-	      break;
-
-	    case COMBINE_INTEN_INTEN_A:
-	      combine_inten_and_inten_a_pixels (s1, s, d, m, opacity,
-						affect, src1->w, src1->bytes);
-	      break;
-
-	    case COMBINE_INTEN_A_INTEN:
-	      combine_inten_a_and_inten_pixels (s1, s, d, m, opacity,
-						affect, mode_affect, src1->w, src1->bytes);
-	      break;
-
-	    case COMBINE_INTEN_A_INTEN_A:
-	      combine_inten_a_and_inten_a_pixels (s1, s, d, m, opacity,
-						  affect, mode_affect, src1->w, src1->bytes);
-	      break;
-
-	    case BEHIND_INTEN:
-	      behind_inten_pixels (s1, s, d, m, opacity,
-				   affect, src1->w, src1->bytes,
-				   src2->bytes, has_alpha1, has_alpha2);
-	      break;
-
-	    case BEHIND_INDEXED:
-	      behind_indexed_pixels (s1, s, d, m, opacity,
-				     affect, src1->w, src1->bytes,
-				     src2->bytes, has_alpha1, has_alpha2);
-	      break;
-
-	    case REPLACE_INTEN:
-	      replace_inten_pixels (s1, s, d, m, opacity,
-				    affect, src1->w, src1->bytes,
-				    src2->bytes, has_alpha1, has_alpha2);
-	      break;
-
-	    case REPLACE_INDEXED:
-	      replace_indexed_pixels (s1, s, d, m, opacity,
-				      affect, src1->w, src1->bytes,
-				      src2->bytes, has_alpha1, has_alpha2);
-	      break;
-
-	    case ERASE_INTEN:
-	      erase_inten_pixels (s1, s, d, m, opacity,
-				  affect, src1->w, src1->bytes);
-	      break;
-
-	    case ERASE_INDEXED:
-	      erase_indexed_pixels (s1, s, d, m, opacity,
-				    affect, src1->w, src1->bytes);
-	      break;
-
-	    case NO_COMBINATION:
-	      break;
-
-	    default:
-	      break;
-	    }
-
-	  s1 += src1->rowstride;
-	  s2 += src2->rowstride;
-	  d += dest->rowstride;
-	  if (mask)
-	    m += mask->rowstride;
-	}
-    }
+  st.opacity = opacity;
+  st.mode = mode;
+  st.affect = affect;
+  st.type = type;
+  st.data = data;
+  st.has_alpha1 = has_alpha1;
+  st.has_alpha2 = has_alpha2;
+  pixel_regions_process_parallel ((p_func)combine_sub_region, &st, 4,
+				    src1, src2, dest, mask);
 }
 
 void
