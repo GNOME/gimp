@@ -176,7 +176,8 @@ guillotine (gint32 image_ID)
       gchar *filename;
       gint   h, v, hpad, vpad;
       gint   x, y;
-      const gchar *hformat, *format;
+      gchar *hformat;
+      gchar *format;
 
       filename = gimp_image_get_filename (image_ID);
       if (!filename)
@@ -192,7 +193,7 @@ guillotine (gint32 image_ID)
 
       /* format for the x-y coordinates in the filename */
       hformat = g_strdup_printf ("%%0%i", MAX (hpad, vpad));
-      format  = g_strdup_printf ("-%si-%si", hformat, hformat); 
+      format  = g_strdup_printf ("-%si-%si", hformat, hformat);
 
       /*  Do the actual dup'ing and cropping... this isn't a too naive a
        *  way to do this since we got copy-on-write tiles, either.
@@ -228,23 +229,23 @@ guillotine (gint32 image_ID)
 
               /* show the rough coordinates of the image in the title */
               fileindex    = g_strdup_printf (format, x, y);
-              
+
               /* get the position of the file extension - last . in filename */
               fileextension = strrchr (new_filename->str, '.');
               pos           = fileextension - new_filename->str;
-              
+
               /* insert the coordinates before the extension */
               g_string_insert (new_filename, pos, fileindex);
 	      g_free (fileindex);
-              
+
               gimp_image_set_filename (new_image, new_filename->str);
               g_string_free (new_filename, TRUE);
-              
+
               while ((guide = gimp_image_find_next_guide (new_image, 0)))
                 gimp_image_delete_guide (new_image, guide);
-              
+
               gimp_image_undo_enable (new_image);
-              
+
               gimp_display_new (new_image);
             }
         }
