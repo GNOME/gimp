@@ -71,6 +71,8 @@ if test -n "$DEBUGFLAG"; then
   CFLAGS="$DEBUGFLAG $CFLAGS"
 fi
 
+AC_C_BIGENDIAN
+
 dnl Checks for programs.
 AC_PROG_CC
 AM_PROG_CC_STDC
@@ -461,12 +463,13 @@ libgimp/Makefile
 plug-ins/Makefile
 plug-ins/build
 plug-ins/gbr/Makefile
-plug-ins/tiff/Makefile
-plug-ins/sgi/Makefile
 plug-ins/pat/Makefile
+plug-ins/sgi/Makefile
+plug-ins/rll/Makefile
+plug-ins/tiff/Makefile
+plug-ins/lic/Makefile
 plug-ins/script-fu/Makefile
-plug-ins/script-fu/scripts/Makefile
-plug-ins/dbbrowser/Makefile
+plug-ins/psd/Makefile
 app/Makefile
 docs/Makefile,
 chmod +x gimptool
