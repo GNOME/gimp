@@ -113,6 +113,7 @@ libexec_PROGRAMS = \
 	snoise \
 	sobel \
 	sparkle \
+	spheredesigner \
 	spread \
 	sunras \
 	tga \
@@ -949,6 +950,14 @@ sparkle_SOURCES = \
 	sparkle.c
 
 sparkle_LDADD = \
+	$(top_builddir)/libgimp/libgimp.la	\
+	$(GTK_LIBS)				\
+	$(INTLLIBS)
+
+spheredesigner_SOURCES = \
+	spheredesigner.c
+
+spheredesigner_LDADD = \
 	$(top_builddir)/libgimp/libgimp.la	\
 	$(GTK_LIBS)				\
 	$(INTLLIBS)
