@@ -701,7 +701,7 @@ browser_dialog_new (void)
                     G_CALLBACK (browser_tree_selection_changed),
                     browser);
 
-  label = gtk_label_new (_("Tree view"));
+  label = gtk_label_new (_("Tree View"));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook), swindow, label);
   gtk_container_add (GTK_CONTAINER (swindow), tree_view);
 

@@ -1,5 +1,10 @@
 2004-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/dbbrowser/plugin-browser.c (browser_dialog_new): fixed
+	capitalization of notebook tab label.
+
+2004-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimputils.[ch]: renamed gimp_flags_get_value() to
 	gimp_flags_get_first_value(). Reordered functions so enum and
 	flags functions are grouped together. Added missing docs.
