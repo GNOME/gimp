@@ -1,4 +1,4 @@
-.TH GIMPTOOL 1 "23 June 2000" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMPTOOL 1 "26 June 2001" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 .SH NAME
 gimptool - script to perform various Gimpy functions
 .SH SYNOPSIS
@@ -104,55 +104,55 @@ Compile,link, and strip \fIplug-in.c\fP into a \fIGimp\fP plug-in.
 .TP 8
 .B  \-\-install \fIplug-in.c\fP
 Compile, link, and install \fIplug-in.c\fP into the user's personal \fIGimp\fP
-plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-strip \fIplug-in.c\fP
 Compile, link,strip,  and install \fIplug-in.c\fP into the user's personal \fIGimp\fP
-plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin \fIplug-in.c\fP
 Compile, link, and install \fIplug-in.c\fP into the system-wide \fIGimp\fP
-plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-bin \fIplug-in\fP
 Install \fIplug-in\fP into the user's personal \fIGimp\fP
-plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin\-bin \fIplug-in\fP
 Install \fIplug-in\fP into the system-wide \fIGimp\fP
-plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-bin\-strip \fIplug-in\fP
 Install stripped \fIplug-in\fP into the user's personal \fIGimp\fP
-plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
 .TP 8
 .B  \-\-install\-admin\-bin\-strip \fIplug-in\fP
 Install stripped \fIplug-in\fP into the system-wide \fIGimp\fP
-plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-install\-script \fIscript.scm\fP
 Install \fIscript.scm\fP into the user's personal \fIGimp\fP
-script directory (\fB$HOME\fP/.gimp/scripts)
+script directory (\fB$HOME\fP/@gimpdir@/scripts)
 .TP 8
 .B  \-\-install\-admin\-script \fIscript.scm\fP
 Install \fIscript.scm\fP into the system-wide \fIGimp\fP
-script directory (\fB$PREFIX\fP/share/gimp/scripts)
+script directory (@gimpdatadir@/scripts)
 .TP 8
 .B  \-\-uninstall\-bin \fIplug-in\fP
 Uninstall \fIplug-in\fP from the user's personal \fIGimp\fP
-plug-in directory (\fB$HOME\fP/.gimp/plug-ins)
+plug-in directory (\fB$HOME\fP/@gimpdir@/plug-ins)
 .TP 8
 .B  \-\-uninstall\-admin\-bin \fIplug-in\fP
 Uninstall \fIplug-in\fP from the system-wide \fIGimp\fP
-plug-in directory (\fB$PREFIX\fP/lib/gimp/1.0/plug-ins)
+plug-in directory (@gimpplugindir@/plug-ins)
 .TP 8
 .B  \-\-uninstall\-script \fIscript.scm\fP
 Uninstall \fIscript.scm\fP from the user's personal \fIGimp\fP
-script directory (\fB$HOME\fP/.gimp/scripts)
+script directory (\fB$HOME\fP/@gimpdir@/scripts)
 .TP 8
 .B  \-\-uninstall\-admin\-script \fIscript.scm\fP
 Uninstall \fIscript.scm\fP from the system-wide \fIGimp\fP
-script directory (\fB$PREFIX\fP/share/gimp/scripts)
+script directory (@gimpdatadir@/scripts)
 .TP 8
 .B  \-\-libs
 Print the linker flags that are necessary to link a \fIGimp\fP plug-in.

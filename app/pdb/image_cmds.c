@@ -1880,16 +1880,12 @@ image_set_cmap_invoker (Argument *args)
 
   if (success)
     {
-      if (gimage->cmap)
-	{
-	  g_free (gimage->cmap);
-	  gimage->cmap = NULL;
-	}
+      if (gimage->cmap == NULL)
+	gimage->cmap = g_new (guchar, COLORMAP_SIZE);
+    
       if (num_bytes)
-	{
-	  gimage->cmap = g_new (guchar, COLORMAP_SIZE);
-	  memcpy (gimage->cmap, cmap, num_bytes);
-	}
+	memcpy (gimage->cmap, cmap, num_bytes);
+    
       gimage->num_cols = num_bytes / 3;
     
       /* A colormap alteration affects the whole image */
