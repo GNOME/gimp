@@ -1,5 +1,10 @@
 2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
+	* plug-ins/metadata/interface.c: fix spelling error
+	noted in bug #169656.
+	
+2005-03-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
 	* app/tools/gimprectangletool.[ch]
 	* app/tools/gimprectangleoptions.[ch]: add size entry in
 	options to control dimensions.  Still work in progress.

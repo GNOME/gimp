@@ -481,7 +481,7 @@ export_dialog_response (GtkWidget *dlg,
         {
           metadata_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),
                                    _("Save failed"),
-                                   _("Some error occured while saving"));
+                                   _("Some error occurred while saving"));
           g_free (buffer);
           g_free (filename);
           return;
