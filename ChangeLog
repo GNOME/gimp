@@ -1,3 +1,7 @@
+2004-02-26  Sven Neumann  <sven@gimp.org>
+
+	* libgimpthumb/gimpthumbnail.c: fixed my fixes.
+
 2004-02-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_load_thumb): never

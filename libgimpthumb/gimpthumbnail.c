@@ -44,7 +44,8 @@
 #include "libgimp/libgimp-intl.h"
 
 
-/*  #define GIMP_THUMB_DEBUG   */
+/*  #define GIMP_THUMB_DEBUG  */
+
 
 #if defined (GIMP_THUMB_DEBUG) && defined (__GNUC__)
 #define GIMP_THUMB_DEBUG_CALL(t) \
@@ -642,6 +643,7 @@ gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail,
     {
     case GIMP_THUMB_STATE_EXISTS:
     case GIMP_THUMB_STATE_OLD:
+    case GIMP_THUMB_STATE_FAILED:
     case GIMP_THUMB_STATE_OK:
       g_return_if_fail (thumbnail->thumb_filename != NULL);
 
@@ -663,7 +665,9 @@ gimp_thumbnail_update_thumb (GimpThumbnail *thumbnail,
   thumbnail->thumb_filename = filename;
 
   if (filename)
-    state = GIMP_THUMB_STATE_EXISTS;
+    state = (size > GIMP_THUMB_SIZE_FAIL ?
+             GIMP_THUMB_STATE_EXISTS :
+             GIMP_THUMB_STATE_FAILED);
 
   thumbnail->thumb_size     = size;
   thumbnail->thumb_filesize = filesize;
@@ -902,7 +906,7 @@ gimp_thumbnail_save_thumb (GimpThumbnail  *thumbnail,
       success = (chmod (name, 0600) == 0);
 
       if (success)
-        g_object_set (thumbnail, "thumb-state", GIMP_THUMB_STATE_OK, NULL);
+        gimp_thumbnail_update_thumb (thumbnail, size);
       else
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      "Could not set permissions of thumbnail for %s: %s",
@@ -980,7 +984,7 @@ gimp_thumbnail_save_failure (GimpThumbnail  *thumbnail,
       success = (chmod (name, 0600) == 0);
 
       if (success)
-        g_object_set (thumbnail, "thumb-state", GIMP_THUMB_STATE_FAILED, NULL);
+        gimp_thumbnail_update_thumb (thumbnail, GIMP_THUMB_SIZE_NORMAL);
       else
         g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                      "Could not set permissions of thumbnail '%s': %s",
