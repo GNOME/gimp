@@ -1,6 +1,6 @@
 2004-07-30  Sven Neumann  <sven@gimp.org>
 
-	Applied a bunch of small changes contributed by Tim Mooney that fix
+	Applied a bunch of small changes contributed by Tim Mooney to fix
 	stack corruption on Tru64 and Aix (bug #129867).
 
 	* app/Makefile.am
