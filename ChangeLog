@@ -1,7 +1,7 @@
 2004-05-08  Henrik Brix Andersen  <brix@gimp.org>
 
 	* plug-ins/common/screenshot.c (shoot_dialog): HIGify the
-	screenshot plug-in.
+	screenshot plug-in. Fixes part of bug #141772.
 
 2004-05-08  Sven Neumann  <sven@gimp.org>
 
