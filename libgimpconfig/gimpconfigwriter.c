@@ -106,6 +106,8 @@ gimp_config_writer_newline (GimpConfigWriter *writer)
  * @filename when the writer is closed.
  *
  * Return value: a new #GimpConfigWriter or %NULL in case of an error
+ *
+ * Since: GIMP 2.4
  **/
 GimpConfigWriter *
 gimp_config_writer_new_file (const gchar  *filename,
@@ -164,6 +166,14 @@ gimp_config_writer_new_file (const gchar  *filename,
   return writer;
 }
 
+/**
+ * gimp_config_writer_new_fd:
+ * @fd:
+ *
+ * Return value: a new #GimpConfigWriter or %NULL in case of an error
+ *
+ * Since: GIMP 2.4
+ **/
 GimpConfigWriter *
 gimp_config_writer_new_fd (gint fd)
 {
@@ -179,6 +189,14 @@ gimp_config_writer_new_fd (gint fd)
   return writer;
 }
 
+/**
+ * gimp_config_writer_new_string:
+ * @string:
+ *
+ * Return value: a new #GimpConfigWriter or %NULL in case of an error
+ *
+ * Since: GIMP 2.4
+ **/
 GimpConfigWriter *
 gimp_config_writer_new_string (GString *string)
 {
@@ -204,6 +222,8 @@ gimp_config_writer_new_string (GString *string)
  *
  * Since comments have to start at the beginning of a line, this
  * funtion will insert a newline if necessary.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_comment_mode (GimpConfigWriter *writer,
@@ -239,6 +259,8 @@ gimp_config_writer_comment_mode (GimpConfigWriter *writer,
  * This function writes the opening parenthese followed by @name.
  * It also increases the indentation level and sets a mark that
  * can be used by gimp_config_writer_revert().
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_open (GimpConfigWriter *writer,
@@ -269,6 +291,8 @@ gimp_config_writer_open (GimpConfigWriter *writer,
  *
  * Appends a space followed by @string to the @writer. Note that string
  * must not contain any special characters that might need to be escaped.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_print (GimpConfigWriter  *writer,
@@ -298,6 +322,8 @@ gimp_config_writer_print (GimpConfigWriter  *writer,
  * @Varargs: list of arguments according to @format
  *
  * A printf-like function for #GimpConfigWriter.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_printf (GimpConfigWriter *writer,
@@ -330,6 +356,8 @@ gimp_config_writer_printf (GimpConfigWriter *writer,
  *
  * Writes a string value to @writer. The @string is quoted and special
  * characters are escaped.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_string (GimpConfigWriter *writer,
@@ -351,6 +379,8 @@ gimp_config_writer_string (GimpConfigWriter *writer,
  *
  * Writes an identifier to @writer. The @string is *not* quoted and special
  * characters are *not* escaped.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_identifier (GimpConfigWriter *writer,
@@ -365,6 +395,15 @@ gimp_config_writer_identifier (GimpConfigWriter *writer,
   g_string_append_printf (writer->buffer, " %s", identifier);
 }
 
+
+/**
+ * gimp_config_writer_data:
+ * @writer: a #GimpConfigWriter
+ * @length:
+ * @data:
+ *
+ * Since: GIMP 2.4
+ **/
 void
 gimp_config_writer_data (GimpConfigWriter *writer,
                          gint              length,
@@ -399,6 +438,8 @@ gimp_config_writer_data (GimpConfigWriter *writer,
  * Reverts all changes to @writer that were done since the last call
  * to gimp_config_writer_open(). This can only work if you didn't call
  * gimp_config_writer_close() yet.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_revert (GimpConfigWriter *writer)
@@ -422,6 +463,8 @@ gimp_config_writer_revert (GimpConfigWriter *writer)
  * @writer: a #GimpConfigWriter
  *
  * Closes an element opened with gimp_config_writer_open().
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_close (GimpConfigWriter *writer)
@@ -457,6 +500,8 @@ gimp_config_writer_close (GimpConfigWriter *writer)
  *
  * Return value: %TRUE if everything could be successfully written,
  *               %FALSE otherwise
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_writer_finish (GimpConfigWriter  *writer,
@@ -531,6 +576,8 @@ gimp_config_writer_linefeed (GimpConfigWriter *writer)
  * Appends the @comment to @str and inserts linebreaks and hash-marks to
  * format it as a comment. Note that this function does not handle non-ASCII
  * characters.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_writer_comment (GimpConfigWriter *writer,

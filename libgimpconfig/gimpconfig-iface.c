@@ -1,5 +1,5 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Config file serialization and deserialization interface
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
@@ -251,6 +251,8 @@ gimp_config_iface_reset (GimpConfig *config)
  * calls the serialize function of the @config's #GimpConfigInterface.
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_serialize_to_file (GimpConfig   *config,
@@ -275,6 +277,19 @@ gimp_config_serialize_to_file (GimpConfig   *config,
   return gimp_config_writer_finish (writer, footer, error);
 }
 
+/**
+ * gimp_config_serialize_to_fd:
+ * @config: a #GObject that implements the #GimpConfigInterface.
+ * @fd: a file descriptor, opened for writing
+ * @data: user data passed to the serialize implementation.
+ *
+ * Serializes the object properties of @config to the given file
+ * descriptor.
+ *
+ * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_config_serialize_to_fd (GimpConfig *config,
                              gint        fd,
@@ -302,6 +317,8 @@ gimp_config_serialize_to_fd (GimpConfig *config,
  * Serializes the object properties of @config to a string.
  *
  * Return value: a newly allocated %NUL-terminated string.
+ *
+ * Since: GIMP 2.4
  **/
 gchar *
 gimp_config_serialize_to_string (GimpConfig *config,
@@ -335,6 +352,8 @@ gimp_config_serialize_to_string (GimpConfig *config,
  * deserialize function of the @config's #GimpConfigInterface.
  *
  * Return value: %TRUE if deserialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_deserialize_file (GimpConfig   *config,
@@ -377,6 +396,8 @@ gimp_config_deserialize_file (GimpConfig   *config,
  * function of the @config's #GimpConfigInterface.
  *
  * Returns: %TRUE if deserialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_deserialize_string (GimpConfig      *config,
@@ -405,6 +426,16 @@ gimp_config_deserialize_string (GimpConfig      *config,
   return success;
 }
 
+/**
+ * gimp_config_deserialize_return:
+ * @scanner:
+ * @expected_token:
+ * @nest_level:
+ *
+ * Returns:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_config_deserialize_return (GScanner     *scanner,
                                 GTokenType    expected_token,
@@ -452,6 +483,8 @@ gimp_config_deserialize_return (GScanner     *scanner,
  * properties.
  *
  * Return value: the duplicated #GimpConfig object
+ *
+ * Since: GIMP 2.4
  **/
 gpointer
 gimp_config_duplicate (GimpConfig *config)
@@ -472,6 +505,8 @@ gimp_config_duplicate (GimpConfig *config)
  * properties.
  *
  * Return value: %TRUE if the two objects are equal.
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_is_equal_to (GimpConfig *a,
@@ -492,6 +527,8 @@ gimp_config_is_equal_to (GimpConfig *a,
  * Resets the object to its default state. The default implementation of the
  * #GimpConfigInterface only works for objects that are completely defined by
  * their properties.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_reset (GimpConfig *config)

@@ -1,5 +1,5 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Config file serialization and deserialization interface
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
@@ -26,6 +26,15 @@
 #include "gimpconfig-error.h"
 
 
+/**
+ * gimp_config_error_quark:
+ *
+ * This function is never called directly. Use GIMP_CONFIG_ERROR() instead.
+ *
+ * Return value: the #GQuark that defines the GimpConfig error domain.
+ *
+ * Since: GIMP 2.4
+ **/
 GQuark
 gimp_config_error_quark (void)
 {

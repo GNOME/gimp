@@ -1,5 +1,5 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Object properties deserialization routines
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
@@ -106,7 +106,9 @@ scanner_string_utf8_valid (GScanner    *scanner,
  *
  * This function uses the @scanner to configure the properties of @config.
  *
- * Return value:
+ * Return value: %TRUE on success, %FALSE otherwise.
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_deserialize_properties (GimpConfig *config,
@@ -189,6 +191,22 @@ gimp_config_deserialize_properties (GimpConfig *config,
   return gimp_config_deserialize_return (scanner, token, nest_level);
 }
 
+/**
+ * gimp_config_deserialize_property:
+ * @config: a #GimpConfig.
+ * @scanner: a #GScanner.
+ * @nest_level:
+ *
+ * This function deserializes a single property of @config. You
+ * shouldn't need to call this function directly. If possible, use
+ * gimp_config_deserialize_properties() instead.
+ *
+ * Return value: %G_TOKEN_RIGHT_PAREN on success, otherwise the
+ * expected #GTokenType or %G_TOKEN_NONE if the expected token was
+ * found but couldn't be parsed.
+ *
+ * Since: GIMP 2.4
+ **/
 GTokenType
 gimp_config_deserialize_property (GimpConfig *config,
                                   GScanner   *scanner,

@@ -68,6 +68,15 @@ static void       gimp_scanner_message (GScanner     *scanner,
 
 /*  public functions  */
 
+/**
+ * gimp_scanner_new_file:
+ * @filename:
+ * @error:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 GScanner *
 gimp_scanner_new_file (const gchar  *filename,
 		       GError      **error)
@@ -104,6 +113,16 @@ gimp_scanner_new_file (const gchar  *filename,
   return scanner;
 }
 
+/**
+ * gimp_scanner_new_string:
+ * @text:
+ * @text_len:
+ * @error:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 GScanner *
 gimp_scanner_new_string (const gchar  *text,
 			 gint          text_len,
@@ -153,6 +172,12 @@ gimp_scanner_new (const gchar  *name,
   return scanner;
 }
 
+/**
+ * gimp_scanner_destroy:
+ * @scanner:
+ *
+ * Since: GIMP 2.4
+ **/
 void
 gimp_scanner_destroy (GScanner *scanner)
 {
@@ -175,7 +200,15 @@ gimp_scanner_destroy (GScanner *scanner)
   g_scanner_destroy (scanner);
 }
 
-
+/**
+ * gimp_scanner_parse_token:
+ * @scanner:
+ * @token:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_token (GScanner   *scanner,
                           GTokenType  token)
@@ -188,6 +221,15 @@ gimp_scanner_parse_token (GScanner   *scanner,
   return TRUE;
 }
 
+/**
+ * gimp_scanner_parse_identifier:
+ * @scanner:
+ * @identifier:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_identifier (GScanner    *scanner,
                                const gchar *identifier)
@@ -203,6 +245,15 @@ gimp_scanner_parse_identifier (GScanner    *scanner,
   return TRUE;
 }
 
+/**
+ * gimp_scanner_parse_string:
+ * @scanner:
+ * @dest:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_string (GScanner  *scanner,
                            gchar    **dest)
@@ -230,6 +281,15 @@ gimp_scanner_parse_string (GScanner  *scanner,
   return TRUE;
 }
 
+/**
+ * gimp_scanner_parse_string_no_validate:
+ * @scanner:
+ * @dest:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_string_no_validate (GScanner  *scanner,
                                        gchar    **dest)
@@ -247,6 +307,16 @@ gimp_scanner_parse_string_no_validate (GScanner  *scanner,
   return TRUE;
 }
 
+/**
+ * gimp_scanner_parse_data:
+ * @scanner:
+ * @length:
+ * @dest:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_data (GScanner  *scanner,
                          gint       length,
@@ -265,6 +335,15 @@ gimp_scanner_parse_data (GScanner  *scanner,
   return TRUE;
 }
 
+/**
+ * gimp_scanner_parse_int:
+ * @scanner:
+ * @dest:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_int (GScanner *scanner,
                         gint     *dest)
@@ -290,6 +369,15 @@ gimp_scanner_parse_int (GScanner *scanner,
   return TRUE;
 }
 
+/**
+ * gimp_scanner_parse_float:
+ * @scanner:
+ * @dest:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_float (GScanner *scanner,
                           gdouble  *dest)
@@ -312,6 +400,15 @@ enum
   COLOR_HSVA
 };
 
+/**
+ * gimp_scanner_parse_color:
+ * @scanner:
+ * @dest:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_color (GScanner *scanner,
                           GimpRGB  *dest)
@@ -425,6 +522,15 @@ gimp_scanner_parse_color (GScanner *scanner,
   return (token == G_TOKEN_NONE);
 }
 
+/**
+ * gimp_scanner_parse_matrix2:
+ * @scanner:
+ * @dest:
+ *
+ * Return value:
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_scanner_parse_matrix2 (GScanner    *scanner,
                             GimpMatrix2 *dest)

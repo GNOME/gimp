@@ -1,4 +1,4 @@
-/* The GIMP -- an image manipulation program
+/* LIBGIMP - The GIMP Library
  * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Utitility functions for GimpConfig.
@@ -151,6 +151,8 @@ gimp_config_diff_other (GimpConfig  *a,
  * compared.
  *
  * Return value: a GList of differing GParamSpecs.
+ *
+ * Since: GIMP 2.4
  **/
 GList *
 gimp_config_diff (GimpConfig  *a,
@@ -187,6 +189,8 @@ gimp_config_diff (GimpConfig  *a,
  * value_type are synchronized
  *
  * Return value: %TRUE if @dest was modified, %FALSE otherwise
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_sync (GimpConfig  *src,
@@ -241,6 +245,8 @@ gimp_config_sync (GimpConfig  *src,
  * Resets all writable properties of @object to the default values as
  * defined in their #GParamSpec. Properties marked as "construct-only"
  * are not touched.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_reset_properties (GimpConfig *config)
@@ -321,6 +327,8 @@ gimp_config_reset_properties (GimpConfig *config)
  * algorithm is different from the one used by g_strescape() since it
  * leaves non-ASCII characters intact and thus preserves UTF-8
  * strings. Only control characters and quotes are being escaped.
+ *
+ * Since: GIMP 2.4
  **/
 void
 gimp_config_string_append_escaped (GString     *string,

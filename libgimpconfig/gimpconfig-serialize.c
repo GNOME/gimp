@@ -1,5 +1,5 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
  * Object properties serialization routines
  * Copyright (C) 2001-2002  Sven Neumann <sven@gimp.org>
@@ -44,9 +44,11 @@
  * This function writes all object properties to the @writer.
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
-gimp_config_serialize_properties (GimpConfig          *config,
+gimp_config_serialize_properties (GimpConfig       *config,
                                   GimpConfigWriter *writer)
 {
   GObjectClass  *klass;
@@ -88,6 +90,8 @@ gimp_config_serialize_properties (GimpConfig          *config,
  * their default values to the @writer.
  *
  * Returns: %TRUE if serialization succeeded, %FALSE otherwise
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_serialize_changed_properties (GimpConfig       *config,
@@ -132,6 +136,17 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
   return TRUE;
 }
 
+/**
+ * gimp_config_serialize_properties:
+ * @config: a #GimpConfig.
+ * @writer: a #GimpConfigWriter.
+ *
+ * This function serializes a single object property to the @writer.
+ *
+ * Returns: %TRUE if serialization succeeded, %FALSE otherwise
+ *
+ * Since: GIMP 2.4
+ **/
 gboolean
 gimp_config_serialize_property (GimpConfig       *config,
                                 GParamSpec       *param_spec,
@@ -283,6 +298,8 @@ gimp_config_serialize_property (GimpConfig       *config,
  * This utility function appends a string representation of #GValue to @str.
  *
  * Return value: %TRUE if serialization succeeded, %FALSE otherwise.
+ *
+ * Since: GIMP 2.4
  **/
 gboolean
 gimp_config_serialize_value (const GValue *value,

@@ -1,5 +1,17 @@
 2005-01-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-deserialize.c
+	* libgimpconfig/gimpconfig-error.c
+	* libgimpconfig/gimpconfig-iface.c
+	* libgimpconfig/gimpconfig-path.c
+	* libgimpconfig/gimpconfig-serialize.c
+	* libgimpconfig/gimpconfig-utils.c
+	* libgimpconfig/gimpconfigwriter.c
+	* libgimpconfig/gimpscanner.c: use libgimp header,
+	added "Since: GIMP 2.4" to the gtk-doc comments.
+
+2005-01-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpenumwidgets.[ch]: use libgimp header,
 	added "Since: GIMP 2.4" to the gtk-doc comments.
 

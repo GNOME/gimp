@@ -1,7 +1,7 @@
-/* The GIMP -- an image manipulation program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
  *
- * String substitution utilities for config files
+ * gimpconfig-path.c
  * Copyright (C) 2001  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -181,7 +181,14 @@ static gchar        * gimp_config_path_expand_only   (const gchar  *path,
                                                       GError      **error);
 static inline gchar * gimp_config_path_extract_token (const gchar **str);
 
-
+/**
+ * gimp_config_build_data_path:
+ * @name:
+ *
+ * Returns:
+ *
+ * Since: GIMP 2.4
+ **/
 gchar *
 gimp_config_build_data_path (const gchar *name)
 {
@@ -191,12 +198,14 @@ gimp_config_build_data_path (const gchar *name)
                       NULL);
 }
 
-gchar *
-gimp_config_build_writable_path (const gchar *name)
-{
-  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name, NULL);
-}
-
+/**
+ * gimp_config_build_plug_in_path:
+ * @name:
+ *
+ * Returns:
+ *
+ * Since: GIMP 2.4
+ **/
 gchar *
 gimp_config_build_plug_in_path (const gchar *name)
 {
@@ -204,6 +213,20 @@ gimp_config_build_plug_in_path (const gchar *name)
                       G_SEARCHPATH_SEPARATOR_S,
                       "${gimp_plug_in_dir}", G_DIR_SEPARATOR_S, name,
                       NULL);
+}
+
+/**
+ * gimp_config_build_writable_path:
+ * @name:
+ *
+ * Returns:
+ *
+ * Since: GIMP 2.4
+ **/
+gchar *
+gimp_config_build_writable_path (const gchar *name)
+{
+  return g_strconcat ("${gimp_dir}", G_DIR_SEPARATOR_S, name, NULL);
 }
 
 
@@ -222,6 +245,8 @@ gimp_config_build_plug_in_path (const gchar *name)
  * filesystem encoding.
  *
  * Return value: a newly allocated %NUL-terminated string
+ *
+ * Since: GIMP 2.4
  **/
 gchar *
 gimp_config_path_expand (const gchar  *path,
