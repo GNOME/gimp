@@ -1,9 +1,16 @@
+2003-08-14  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: libgimpbase/gimpversion.h is now only updated if
+	its contents actually change. This should prevent rebuilding
+	everything if only configure is run.
+
+	* libgimpbase/gimpversion.h.in: no longer needed
+
 2003-08-13  Jay Cox  <jaycox@gimp.org>
 
 	* app/widgets/gimpbrushfactoryview.c: Reduced the range of the
 	spacing scale widget for convenience.  Extreme values may still be
 	entered in the spin box.
-
 
 2003-08-14  Tor Lillqvist  <tml@iki.fi>
 
