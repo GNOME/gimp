@@ -1,5 +1,14 @@
 2004-05-21  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/preferences-dialog.c: added some GtkSizeGroups and
+	changed spacings to improve the dialog layout.
+
+	* app/gui/file-new-dialog.c
+	* app/widgets/gimpgrideditor.c
+	* app/widgets/gimptemplateeditor.c: minor changes for consistency.
+
+2004-05-21  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/gflare/gflare.c
 	* plug-ins/gfli/gfli.c
 	* plug-ins/ifscompose/ifscompose.c

@@ -477,7 +477,7 @@ prefs_notebook_append_page (Gimp          *gimp,
   gimp_help_set_help_data (event_box, NULL, help_id);
 
   vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
 
@@ -603,27 +603,14 @@ prefs_frame_new (const gchar  *label,
 		 GtkContainer *parent,
                  gboolean      expand)
 {
-  const gboolean   hig_compliant = TRUE;
-  GtkWidget       *frame;
-  GtkWidget       *vbox;
+  GtkWidget *frame;
+  GtkWidget *vbox;
 
-  if (hig_compliant)
-    {
-      frame = gimp_frame_new (label);
+  frame = gimp_frame_new (label);
 
-      vbox = gtk_vbox_new (FALSE, 6);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-    }
-  else
-    {
-      frame = gtk_frame_new (label);
-
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-      gtk_container_add (GTK_CONTAINER (frame), vbox);
-      gtk_widget_show (vbox);
-    }
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
 
   if (GTK_IS_BOX (parent))
     gtk_box_pack_start (GTK_BOX (parent), frame, expand, expand, 0);
@@ -637,34 +624,14 @@ prefs_frame_new (const gchar  *label,
 
 static GtkWidget *
 prefs_table_new (gint          rows,
-                 GtkContainer *parent,
-                 gboolean      left_align)
+                 GtkContainer *parent)
 {
   GtkWidget *table;
 
-  if (left_align)
-    {
-      GtkWidget *hbox;
-
-      hbox = gtk_hbox_new (FALSE, 0);
-
-      if (GTK_IS_BOX (parent))
-        gtk_box_pack_start (GTK_BOX (parent), hbox, FALSE, FALSE, 0);
-      else
-        gtk_container_add (parent, hbox);
-
-      gtk_widget_show (hbox);
-
-      parent = GTK_CONTAINER (hbox);
-    }
-
   table = gtk_table_new (rows, 2, FALSE);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
 
-  if (rows > 1)
-    gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
 
   if (GTK_IS_BOX (parent))
     gtk_box_pack_start (GTK_BOX (parent), table, FALSE, FALSE, 0);
@@ -726,109 +693,113 @@ prefs_check_button_add_with_icon (GObject     *config,
 }
 
 static GtkWidget *
-prefs_color_button_add (GObject     *config,
-                        const gchar *property_name,
-                        const gchar *label,
-                        const gchar *title,
-                        GtkTable    *table,
-                        gint         table_row)
+prefs_widget_add_aligned (GtkWidget    *widget,
+                          const gchar  *text,
+                          GtkTable     *table,
+                          gint          table_row,
+                          gboolean      left_align,
+                          GtkSizeGroup *group)
 {
-  GtkWidget *button;
+  GtkWidget *label = gimp_table_attach_aligned (table, 0, table_row,
+                                                text, 0.0, 0.5,
+                                                widget, 1, left_align);
+  if (group)
+    gtk_size_group_add_widget (group, label);
 
-  button = gimp_prop_color_button_new (config, property_name, title,
-                                       20, 20, GIMP_COLOR_AREA_FLAT);
+  return label;
+}
+
+static GtkWidget *
+prefs_color_button_add (GObject      *config,
+                        const gchar  *property_name,
+                        const gchar  *label,
+                        const gchar  *title,
+                        GtkTable     *table,
+                        gint          table_row,
+                        GtkSizeGroup *group)
+{
+  GtkWidget *button = gimp_prop_color_button_new (config, property_name, title,
+                                                  60, 20,
+                                                  GIMP_COLOR_AREA_FLAT);
 
   if (button)
-    gimp_table_attach_aligned (table, 0, table_row,
-                               label, 0.0, 0.5,
-                               button, 1, TRUE);
+    prefs_widget_add_aligned (button, label, table, table_row, TRUE, group);
 
   return button;
 }
 
 static GtkWidget *
-prefs_enum_combo_box_add (GObject     *config,
-                          const gchar *property_name,
-                          gint         minimum,
-                          gint         maximum,
-                          const gchar *label,
-                          GtkTable    *table,
-                          gint         table_row)
+prefs_enum_combo_box_add (GObject      *config,
+                          const gchar  *property_name,
+                          gint          minimum,
+                          gint          maximum,
+                          const gchar  *label,
+                          GtkTable     *table,
+                          gint          table_row,
+                          GtkSizeGroup *group)
 {
-  GtkWidget *combo_box;
+  GtkWidget *combo = gimp_prop_enum_combo_box_new (config, property_name,
+                                                   minimum, maximum);
 
-  combo_box = gimp_prop_enum_combo_box_new (config, property_name,
-                                            minimum, maximum);
+  if (combo)
+    prefs_widget_add_aligned (combo, label, table, table_row, FALSE, group);
 
-  if (combo_box)
-    gimp_table_attach_aligned (table, 0, table_row,
-                               label, 0.0, 0.5,
-                               combo_box, 1, TRUE);
-
-  return combo_box;
+  return combo;
 }
 
 static GtkWidget *
-prefs_boolean_combo_box_add (GObject     *config,
-                             const gchar *property_name,
-                             const gchar *true_text,
-                             const gchar *false_text,
-                             const gchar *label,
-                             GtkTable    *table,
-                             gint         table_row)
+prefs_boolean_combo_box_add (GObject      *config,
+                             const gchar  *property_name,
+                             const gchar  *true_text,
+                             const gchar  *false_text,
+                             const gchar  *label,
+                             GtkTable     *table,
+                             gint          table_row,
+                             GtkSizeGroup *group)
 {
-  GtkWidget *menu;
+  GtkWidget *combo = gimp_prop_boolean_combo_box_new (config, property_name,
+                                                      true_text, false_text);
 
-  menu = gimp_prop_boolean_combo_box_new (config, property_name,
-                                          true_text, false_text);
+  if (combo)
+    prefs_widget_add_aligned (combo, label, table, table_row, FALSE, group);
 
-  if (menu)
-    gimp_table_attach_aligned (table, 0, table_row,
-                               label, 0.0, 0.5,
-                               menu, 1, TRUE);
-
-  return menu;
+  return combo;
 }
 
 static GtkWidget *
-prefs_spin_button_add (GObject     *config,
-                       const gchar *property_name,
-                       gdouble      step_increment,
-                       gdouble      page_increment,
-                       gint         digits,
-                       const gchar *label,
-                       GtkTable    *table,
-                       gint         table_row)
+prefs_spin_button_add (GObject      *config,
+                       const gchar  *property_name,
+                       gdouble       step_increment,
+                       gdouble       page_increment,
+                       gint          digits,
+                       const gchar  *label,
+                       GtkTable     *table,
+                       gint          table_row,
+                       GtkSizeGroup *group)
 {
-  GtkWidget *spinbutton;
+  GtkWidget *button = gimp_prop_spin_button_new (config, property_name,
+                                                 step_increment,
+                                                 page_increment,
+                                                 digits);
 
-  spinbutton = gimp_prop_spin_button_new (config, property_name,
-                                          step_increment, page_increment,
-                                          digits);
+  if (button)
+    prefs_widget_add_aligned (button, label, table, table_row, TRUE, group);
 
-  if (spinbutton)
-    gimp_table_attach_aligned (table, 0, table_row,
-                               label, 0.0, 0.5,
-                               spinbutton, 1, TRUE);
-
-  return spinbutton;
+  return button;
 }
 
 static GtkWidget *
-prefs_memsize_entry_add (GObject     *config,
-                         const gchar *property_name,
-                         const gchar *label,
-                         GtkTable    *table,
-                         gint         table_row)
+prefs_memsize_entry_add (GObject      *config,
+                         const gchar  *property_name,
+                         const gchar  *label,
+                         GtkTable     *table,
+                         gint          table_row,
+                         GtkSizeGroup *group)
 {
-  GtkWidget *entry;
-
-  entry = gimp_prop_memsize_entry_new (config, property_name);
+  GtkWidget *entry = gimp_prop_memsize_entry_new (config, property_name);
 
   if (entry)
-    gimp_table_attach_aligned (table, 0, table_row,
-                               label, 0.0, 0.5,
-                               entry, 1, TRUE);
+    prefs_widget_add_aligned (entry, label, table, table_row, TRUE, group);
 
   return entry;
 }
@@ -885,15 +856,16 @@ prefs_display_options_frame_add (Gimp         *gimp,
                           _("Show Gri_d"),
                           GTK_BOX (checks_vbox));
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox));
 
   prefs_enum_combo_box_add (object, "padding-mode", 0, 0,
-                            _("Canvas Padding Mode:"), GTK_TABLE (table), 0);
+                            _("Canvas Padding Mode:"), GTK_TABLE (table), 0,
+                            NULL);
 
   button = prefs_color_button_add (object, "padding-color",
                                    _("Custom Padding Color:"),
                                    _("Select Custom Canvas Padding Color"),
-                                   GTK_TABLE (table), 1);
+                                   GTK_TABLE (table), 1, NULL);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 gimp_get_user_context (gimp));
 }
@@ -929,6 +901,7 @@ prefs_dialog_new (Gimp       *gimp,
   GtkTreeIter        grandchild_iter;
   gint               page_index;
 
+  GtkSizeGroup      *size_group = NULL;
   GtkWidget         *ebox;
   GtkWidget         *frame;
   GtkWidget         *notebook;
@@ -977,8 +950,8 @@ prefs_dialog_new (Gimp       *gimp,
                     dialog);
 
   /* The main hbox */
-  hbox = gtk_hbox_new (FALSE, 8);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 8);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), hbox);
   gtk_widget_show (hbox);
 
@@ -1015,7 +988,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  vbox = gtk_vbox_new (FALSE, 4);
+  vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -1029,14 +1002,13 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_container_add (GTK_CONTAINER (ebox), frame);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 6);
   gtk_widget_show (label);
 
   attrs = pango_attr_list_new ();
@@ -1094,7 +1066,7 @@ prefs_dialog_new (Gimp       *gimp,
   /* select this page in the tree */
   gtk_tree_selection_select_iter (sel, &top_iter);
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox));
 
   {
     GtkWidget *combo;
@@ -1115,10 +1087,10 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_box_pack_start (GTK_BOX (vbox), editor, FALSE, FALSE, 0);
   gtk_widget_show (editor);
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox), TRUE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox));
   prefs_memsize_entry_add (object, "max-new-image-size",
                            _("Maximum New Image Size:"),
-                           GTK_TABLE (table), 1);
+                           GTK_TABLE (table), 1, size_group);
 
 
   /******************/
@@ -1165,17 +1137,25 @@ prefs_dialog_new (Gimp       *gimp,
                           _("_Enable Layer & Channel Previews"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "layer-preview-size", 0, 0,
                             _("Default _Layer & Channel Preview Size:"),
-                            GTK_TABLE (table), 0);
+                            GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "navigation-preview-size", 0, 0,
                             _("_Navigation Preview Size:"),
-                            GTK_TABLE (table), 1);
+                            GTK_TABLE (table), 1, size_group);
   prefs_enum_combo_box_add (object, "undo-preview-size", 0, 0,
                             _("_Undo History Preview Size:"),
-                            GTK_TABLE (table), 2);
+                            GTK_TABLE (table), 2, size_group);
+
+  /* Keyboard Shortcuts */
+  vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "can-change-accels",
+                          _("Use Dynamic _Keyboard Shortcuts"),
+                          GTK_BOX (vbox2));
 
   /* Dialog Bahavior */
   vbox2 = prefs_frame_new (_("Dialog Behavior"), GTK_CONTAINER (vbox), FALSE);
@@ -1191,19 +1171,11 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Enable _Tearoff Menus"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_spin_button_add (object, "last-opened-size", 1.0, 5.0, 0,
                          _("Open _Recent Menu Size:"),
-                         GTK_TABLE (table), 3);
-
-  /* Keyboard Shortcuts */
-  vbox2 = prefs_frame_new (_("Keyboard Shortcuts"),
-                           GTK_CONTAINER (vbox), FALSE);
-
-  prefs_check_button_add (object, "can-change-accels",
-                          _("Use Dynamic _Keyboard Shortcuts"),
-                          GTK_BOX (vbox2));
+                         GTK_TABLE (table), 3, size_group);
 
   /* Themes */
   vbox2 = prefs_frame_new (_("Select Theme"), GTK_CONTAINER (vbox), TRUE);
@@ -1303,6 +1275,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
@@ -1318,25 +1292,28 @@ prefs_dialog_new (Gimp       *gimp,
 
   /*  Help Browser  */
   vbox2 = prefs_frame_new (_("Help Browser"), GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "help-browser", 0, 0,
                             _("Help _Browser to Use:"),
-                            GTK_TABLE (table), 0);
+                            GTK_TABLE (table), 0, size_group);
 
   /*  Web Browser  (unused on win32)  */
 #ifndef G_OS_WIN32
   vbox2 = prefs_frame_new (_("Web Browser"), GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   fileselection = gimp_prop_file_entry_new (object, "web-browser",
                                             _("Select Web Browser"),
                                             FALSE, FALSE);
 
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("Web Browser to Use:"), 0.0, 0.5,
-                             fileselection, 1, TRUE);
+  prefs_widget_add_aligned (fileselection, _("Web Browser to Use:"),
+                            GTK_TABLE (table), 0, FALSE, size_group);
 #endif
+
+  g_object_unref (size_group);
+  size_group = NULL;
+
 
   /******************************/
   /*  Interface / Tool Options  */
@@ -1352,31 +1329,33 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  Snapping Distance  */
   vbox2 = prefs_frame_new (_("Guide and Grid Snapping"),
                            GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_spin_button_add (object, "snap-distance", 1.0, 5.0, 0,
                          _("_Snap Distance:"),
-                         GTK_TABLE (table), 0);
+                         GTK_TABLE (table), 0, size_group);
 
   /*  Contiguous Regions  */
   vbox2 = prefs_frame_new (_("Finding Contiguous Regions"),
                            GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_spin_button_add (object, "default-threshold", 1.0, 5.0, 0,
                          _("Default _Threshold:"),
-                         GTK_TABLE (table), 0);
+                         GTK_TABLE (table), 0, size_group);
 
   /*  Scaling  */
   vbox2 = prefs_frame_new (_("Scaling"), GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), TRUE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "interpolation-type", 0, 0,
                             _("Default _Interpolation:"),
-                            GTK_TABLE (table), 0);
+                            GTK_TABLE (table), 0, size_group);
 
   /*  Global Brush, Pattern, ...  */
   vbox2 = prefs_frame_new (_("Paint Options Shared Between Tools"),
@@ -1391,6 +1370,9 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_check_button_add_with_icon (object, "global-gradient",
                                     _("_Gradient"), GIMP_STOCK_GRADIENT,
                                     GTK_BOX (vbox2));
+
+  g_object_unref (size_group);
+  size_group = NULL;
 
 
   /*******************************/
@@ -1411,8 +1393,7 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1440,6 +1421,8 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  General  */
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox), FALSE);
 
@@ -1447,11 +1430,11 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Use \"_Dot for Dot\" by default"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_spin_button_add (object, "marching-ants-speed", 10.0, 100.0, 0,
                          _("Marching _Ants Speed:"),
-                         GTK_TABLE (table), 0);
+                         GTK_TABLE (table), 0, size_group);
 
   /*  Zoom & Resize Behavior  */
   vbox2 = prefs_frame_new (_("Zoom & Resize Behavior"),
@@ -1464,13 +1447,13 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Resize Window on Image _Size Change"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_boolean_combo_box_add (object, "initial-zoom-to-fit",
                                _("Fit to Window"),
                                "1:1",
                                _("Inital Zoom Ratio:"),
-                               GTK_TABLE (table), 0);
+                               GTK_TABLE (table), 0, size_group);
 
   /*  Pointer Movement Feedback  */
   vbox2 = prefs_frame_new (_("Pointer Movement Feedback"),
@@ -1486,11 +1469,14 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Enable Cursor _Updating"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
                             _("Cursor M_ode:"),
-                            GTK_TABLE (table), 0);
+                            GTK_TABLE (table), 0, size_group);
+
+  g_object_unref (size_group);
+  size_group = NULL;
 
 
   /********************************************/
@@ -1656,16 +1642,18 @@ prefs_dialog_new (Gimp       *gimp,
 				     &child_iter,
 				     page_index++);
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /*  Transparency  */
   vbox2 = prefs_frame_new (_("Transparency"), GTK_CONTAINER (vbox), FALSE);
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "transparency-type", 0, 0,
                             _("Transparency _Type:"),
-                            GTK_TABLE (table), 0);
+                            GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "transparency-size", 0, 0,
                             _("Check _Size:"),
-                            GTK_TABLE (table), 1);
+                            GTK_TABLE (table), 1, size_group);
 
   /*  8-Bit Displays  */
   vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox), FALSE);
@@ -1676,14 +1664,17 @@ prefs_dialog_new (Gimp       *gimp,
     gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
 #endif
 
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2));
 
   prefs_spin_button_add (object, "min-colors", 1.0, 8.0, 0,
                          _("Minimum Number of Colors:"),
-                         GTK_TABLE (table), 0);
+                         GTK_TABLE (table), 0, size_group);
   prefs_check_button_add (object, "install-colormap",
                           _("Install Colormap"),
                           GTK_BOX (vbox2));
+
+  g_object_unref (size_group);
+  size_group = NULL;
 
 
   /*************************/
@@ -1746,8 +1737,7 @@ prefs_dialog_new (Gimp       *gimp,
   gtk_widget_show (sizeentry);
   gtk_widget_set_sensitive (sizeentry, ! display_config->monitor_res_from_gdk);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
 
   calibrate_button = gtk_button_new_with_mnemonic (_("C_alibrate"));
   gtk_misc_set_padding (GTK_MISC (GTK_BIN (calibrate_button)->child), 4, 0);
@@ -1820,15 +1810,15 @@ prefs_dialog_new (Gimp       *gimp,
   vbox2 = prefs_frame_new (_("Window Manager Hints"),
                            GTK_CONTAINER (vbox), FALSE);
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_enum_combo_box_add (object, "toolbox-window-hint", 0, 0,
                             _("Hint for the _Toolbox:"),
-                            GTK_TABLE (table), 0);
+                            GTK_TABLE (table), 0, size_group);
 
   prefs_enum_combo_box_add (object, "dock-window-hint", 0, 0,
                             _("Hint for the _Docks:"),
-                            GTK_TABLE (table), 1);
+                            GTK_TABLE (table), 1, size_group);
 
   vbox2 = prefs_frame_new (_("Focus"),
                            GTK_CONTAINER (vbox), FALSE);
@@ -1852,24 +1842,26 @@ prefs_dialog_new (Gimp       *gimp,
 				     &top_iter,
 				     page_index++);
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   vbox2 = prefs_frame_new (_("Resource Consumption"),
                            GTK_CONTAINER (vbox), FALSE);
 
 #ifdef ENABLE_MP
-  table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (4, GTK_CONTAINER (vbox2));
 #else
-  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2));
 #endif /* ENABLE_MP */
 
   prefs_spin_button_add (object, "undo-levels", 1.0, 5.0, 0,
                          _("Minimal Number of Undo Levels:"),
-                         GTK_TABLE (table), 0);
+                         GTK_TABLE (table), 0, size_group);
   prefs_memsize_entry_add (object, "undo-size",
                            _("Maximum Undo Memory:"),
-                           GTK_TABLE (table), 1);
+                           GTK_TABLE (table), 1, size_group);
   prefs_memsize_entry_add (object, "tile-cache-size",
                            _("Tile Cache Size:"),
-                           GTK_TABLE (table), 2);
+                           GTK_TABLE (table), 2, size_group);
 
 #ifdef ENABLE_MP
   prefs_spin_button_add (object, "num-processors", 1.0, 4.0, 0,
@@ -1889,16 +1881,19 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Confirm Closing of Unsaved Images"),
                           GTK_BOX (vbox2));
 
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2));
 
   prefs_boolean_combo_box_add (object, "trust-dirty-flag",
                                _("Only when Modified"),
                                _("Always"),
                                _("\"File -> Save\" Saves the Image:"),
-                               GTK_TABLE (table), 0);
+                               GTK_TABLE (table), 0, size_group);
   prefs_enum_combo_box_add (object, "thumbnail-size", 0, 0,
                             _("Size of Thumbnail Files:"),
-                            GTK_TABLE (table), 1);
+                            GTK_TABLE (table), 1, size_group);
+
+  g_object_unref (size_group);
+  size_group = NULL;
 
 
   /************************/
@@ -1925,8 +1920,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("R_estore Saved Window Positions on Start-up"),
                           GTK_BOX (vbox2));
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1958,8 +1952,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Restore Saved Keyboard Shortcuts on Start-up"),
                           GTK_BOX (vbox2));
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -1988,8 +1981,7 @@ prefs_dialog_new (Gimp       *gimp,
                           _("Save Input Device Settings on Exit"),
                           GTK_BOX (vbox2));
 
-  hbox = gtk_hbox_new (FALSE, 4);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -2039,8 +2031,7 @@ prefs_dialog_new (Gimp       *gimp,
       { N_("Swap Dir:"), N_("Select Swap Dir"), "swap-path" },
     };
 
-    table = prefs_table_new (G_N_ELEMENTS (dirs) + 1,
-                             GTK_CONTAINER (vbox), FALSE);
+    table = prefs_table_new (G_N_ELEMENTS (dirs) + 1, GTK_CONTAINER (vbox));
 
     for (i = 0; i < G_N_ELEMENTS (dirs); i++)
       {

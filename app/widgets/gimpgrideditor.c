@@ -37,8 +37,11 @@
 #include "gimp-intl.h"
 
 
-#define GRID_EDITOR_DEFAULT_RESOLUTION 72.0
-#define GRID_EDITOR_COLOR_BUTTON_SIZE  20
+#define GRID_EDITOR_DEFAULT_RESOLUTION   72.0
+
+#define GRID_EDITOR_COLOR_BUTTON_WIDTH   60
+#define GRID_EDITOR_COLOR_BUTTON_HEIGHT  20
+
 
 enum
 {
@@ -205,8 +208,8 @@ gimp_grid_editor_constructor (GType                  type,
   gtk_widget_show (frame);
 
   table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   style = gimp_prop_enum_combo_box_new (G_OBJECT (editor->grid), "style",
@@ -214,12 +217,12 @@ gimp_grid_editor_constructor (GType                  type,
                                         GIMP_GRID_SOLID);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Line _Style:"), 0.0, 0.5,
-                             style, 1, TRUE);
+                             style, 1, FALSE);
 
   color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "fgcolor",
                                              _("Change Grid Foreground Color"),
-                                             GRID_EDITOR_COLOR_BUTTON_SIZE,
-                                             GRID_EDITOR_COLOR_BUTTON_SIZE,
+                                             GRID_EDITOR_COLOR_BUTTON_WIDTH,
+                                             GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Foreground Color:"), 0.0, 0.5,
@@ -227,8 +230,8 @@ gimp_grid_editor_constructor (GType                  type,
 
   color_button = gimp_prop_color_button_new (G_OBJECT (editor->grid), "bgcolor",
                                              _("Change Grid Background Color"),
-                                             GRID_EDITOR_COLOR_BUTTON_SIZE,
-                                             GRID_EDITOR_COLOR_BUTTON_SIZE,
+                                             GRID_EDITOR_COLOR_BUTTON_WIDTH,
+                                             GRID_EDITOR_COLOR_BUTTON_HEIGHT,
                                              GIMP_COLOR_AREA_FLAT);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Background Color:"), 0.0, 0.5,
@@ -240,8 +243,7 @@ gimp_grid_editor_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   sizeentry = gimp_prop_coordinates_new (G_OBJECT (editor->grid),
@@ -273,8 +275,7 @@ gimp_grid_editor_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (editor), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), hbox);
 
   sizeentry = gimp_prop_coordinates_new (G_OBJECT (editor->grid),
