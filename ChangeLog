@@ -1,9 +1,13 @@
+2004-05-10  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/tips-dialog.c: added missing newline in error message.
+
 2004-05-10  Michael Natterer  <mitch@gimp.org>
 
 	More GimpContainerView chopping:
 
 	* app/widgets/gimpcontainerview.[ch]: added
-	GimpContainerViewPrivate struct (which is currently puclic :-) and
+	GimpContainerViewPrivate struct (which is currently public :-) and
 	removed all members from the GimpContainerView struct. Added
 	accessors for "context", "container" and "preview_size /
 	preview_border_width". Added macro to get the private struct

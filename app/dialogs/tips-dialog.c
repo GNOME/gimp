@@ -102,7 +102,7 @@ tips_dialog_create (Gimp *gimp)
         }
       else if (error)
         {
-          g_printerr ("Error while parsing '%s': %s",
+          g_printerr ("Error while parsing '%s': %s\n",
                       filename, error->message);
           g_error_free (error);
         }
