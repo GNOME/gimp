@@ -95,8 +95,6 @@ gimp_dockable_destroy (GtkObject *object)
 
   dockable = GIMP_DOCKABLE (object);
 
-  g_print ("gimp_dockable_destroy()\n");
-
   if (dockable->context)
     gimp_dockable_set_context (dockable, NULL);
 

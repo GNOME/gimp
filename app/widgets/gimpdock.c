@@ -150,8 +150,6 @@ gimp_dock_destroy (GtkObject *object)
 
   dock = GIMP_DOCK (object);
 
-  g_print ("gimp_dock_destroy()\n");
-
   while (dock->dockbooks)
     gimp_dock_remove_book (dock, GIMP_DOCKBOOK (dock->dockbooks->data));
 
@@ -263,14 +261,6 @@ gimp_dock_add_book (GimpDock     *dock,
   gtk_widget_show (separator);
 }
 
-gboolean
-gimp_dock_idle_destroy (gpointer data)
-{
-  gtk_widget_destroy (GTK_WIDGET (data));
-
-  return FALSE;
-}
-
 void
 gimp_dock_remove_book (GimpDock     *dock,
 		       GimpDockbook *dockbook)
@@ -314,7 +304,7 @@ gimp_dock_remove_book (GimpDock     *dock,
 
   if (length == 1)
     {
-      g_idle_add (gimp_dock_idle_destroy, dock);
+      gtk_widget_destroy (GTK_WIDGET (dock));
     }
 }
 

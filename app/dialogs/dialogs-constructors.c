@@ -974,8 +974,6 @@ dialogs_set_editor_context_func (GimpDockable *dockable,
   editor = (GimpContainerEditor *) g_object_get_data (G_OBJECT (dockable),
 						      "gimp-dialogs-view");
 
-  g_print ("dialogs_set_editor_context_func()\n");
-
   if (editor)
     gimp_container_view_set_context (editor->view, context);
 }

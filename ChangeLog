@@ -1,3 +1,11 @@
+2001-07-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/dialogs-constructors.c
+	* app/widgets/gimpdockable.c: removed debugging g_print().
+
+	* app/widgets/gimpdock.c: ditto, fixed a crash caused by some
+	intermediate porting hack.
+
 2001-07-24  Michael Natterer  <mitch@gimp.org>
 
 	Port to glib/gtk+ 2.0 episode I (every segfault has it's beginning)
