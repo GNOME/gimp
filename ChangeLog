@@ -1,5 +1,10 @@
 2004-05-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mblur.c: fixed range check of blur type
+	parameter (bug #142965, merged from HEAD branch).
+
+2004-05-24  Sven Neumann  <sven@gimp.org>
+
 	Applied a patch from Philip Lafleur (bug #142808):
 
 	* app/paint/gimppaintcore.h: define PRESSURE_SCALE to 1.5
