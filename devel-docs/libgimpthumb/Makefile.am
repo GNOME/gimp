@@ -46,8 +46,8 @@ GTKDOC_CFLAGS = \
 	@GDK_PIXBUF_CFLAGS@
 
 GTKDOC_LIBS = \
-        $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
-        $(top_builddir)/libgimpthumb/libgimpthumb-$(LT_RELEASE).la	\
+        $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la   \
+        $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la \
 	@GDK_PIXBUF_LIBS@
 
 GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC)

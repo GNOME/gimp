@@ -26,15 +26,15 @@ SUBDIRS = \
 	$(GIMP_DEVEL_DOCS)	\
 	docs
 
-bin_SCRIPTS = gimptool-2.0 @GIMPINSTALL@
+bin_SCRIPTS = gimptool-@GIMP_TOOL_VERSION@ @GIMPINSTALL@
 
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = \
-	gimp-2.0.pc		\
-	gimpthumb-2.0.pc	\
-	gimpui-2.0.pc
+	gimp-@GIMP_PKGCONFIG_VERSION@.pc	\
+	gimpthumb-@GIMP_PKGCONFIG_VERSION@.pc	\
+	gimpui-@GIMP_PKGCONFIG_VERSION@.pc
 
-EXTRA_SCRIPTS = gimpinstall-$(LT_RELEASE)
+EXTRA_SCRIPTS = gimpinstall-@GIMP_TOOL_VERSION@
 
 EXTRA_DIST = \
 	AUTHORS			\
@@ -71,14 +71,14 @@ DISTCLEANFILES = \
 	intltool-update
 
 
-gimpinstall-@LT_RELEASE@:
-	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-$(LT_RELEASE)
+gimpinstall-@GIMP_TOOL_VERSION@:
+	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
 
 install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimptool \
-	&& $(LN_S) gimptool-2.0 gimptool
+	&& $(LN_S) gimptool-@GIMP_TOOL_VERSION@ gimptool
 endif
 
 uninstall-local:

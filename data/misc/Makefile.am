@@ -30,18 +30,18 @@ install-data-local:
 if DESKTOP_DATADIR
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/applications; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/applications \
-		&& rm -f gimp-$(LT_RELEASE).desktop \
-		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-$(LT_RELEASE).desktop \
+		&& rm -f gimp-$(GIMP_APP_VERSION).desktop \
+		&& $(LN_S) $(miscdatadir)/gimp.desktop gimp-$(GIMP_APP_VERSION).desktop \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/application-registry; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/application-registry \
-		&& rm -f gimp-$(LT_RELEASE).applications \
-		&& $(LN_S) $(miscdatadir)/gimp.applications gimp-$(LT_RELEASE).applications \
+		&& rm -f gimp-$(GIMP_APP_VERSION).applications \
+		&& $(LN_S) $(miscdatadir)/gimp.applications gimp-$(GIMP_APP_VERSION).applications \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/mime-info; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/mime-info \
-		&& rm -f gimp-$(LT_RELEASE).keys \
-		&& $(LN_S) $(miscdatadir)/gimp.keys gimp-$(LT_RELEASE).keys \
+		&& rm -f gimp-$(GIMP_APP_VERSION).keys \
+		&& $(LN_S) $(miscdatadir)/gimp.keys gimp-$(GIMP_APP_VERSION).keys \
 	; fi
 endif
 
@@ -49,15 +49,15 @@ uninstall-local:
 if DESKTOP_DATADIR
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/applications; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/applications \
-		&& rm -f gimp-$(LT_RELEASE).desktop \
+		&& rm -f gimp-$(GIMP_APP_VERSION).desktop \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/application-registry; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/application-registry \
-		&& rm -f gimp-$(LT_RELEASE).applications \
+		&& rm -f gimp-$(GIMP_APP_VERSION).applications \
 	; fi
 	if test -d $(DESTDIR)@DESKTOP_DATADIR@/mime-info; then \
 		cd $(DESTDIR)@DESKTOP_DATADIR@/mime-info \
-		&& rm -f gimp-$(LT_RELEASE).keys \
+		&& rm -f gimp-$(GIMP_APP_VERSION).keys \
 	; fi
 endif
 

@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
 twain_LDFLAGS = -mwindows
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -26,10 +32,10 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GLIB_LIBS)							\
-	$(RT_LIBS)							\
-	$(INTLLIBS)							\
+	$(libgimp)	\
+	$(libgimpcolor)	\
+	$(libgimpbase)	\
+	$(GLIB_LIBS)	\
+	$(RT_LIBS)	\
+	$(INTLLIBS)	\
 	-luser32

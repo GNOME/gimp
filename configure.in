@@ -1,42 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 
-###############
-# Sanity checks
-###############
-
-# require autoconf 2.54
 AC_PREREQ(2.54)
 
-AC_INIT(app/core/gimp.c)
-
-
-############
-# Versioning
-############
-
-GLIB_REQUIRED_VERSION=2.2.0
-GTK_REQUIRED_VERSION=2.2.2
-GDKPIXBUF_REQUIRED_VERSION=$GTK_REQUIRED_VERSION
-PANGOFT2_REQUIRED_VERSION=1.2.2
-FONTCONFIG_REQUIRED_VERSION=2.2.0
-GTKDOC_REQUIRED_VERSION=1.0
-GTKHTML2_REQUIRED_VERSION=2.0.0
-GIMPPRINT_REQUIRED_VERSION=4.2.0
-GIMPPRINT_TOONEW_VERSION=4.3.0
-RSVG_REQUIRED_VERSION=2.2.0
-WMF_REQUIRED_VERSION=0.2.8
-
-AC_SUBST(GLIB_REQUIRED_VERSION)
-AC_SUBST(GTK_REQUIRED_VERSION)
-AC_SUBST(PANGOFT2_REQUIRED_VERSION)
-AC_SUBST(FONTCONFIG_REQUIRED_VERSION)
-AC_SUBST(GTKHTML2_REQUIRED_VERSION)
-AC_SUBST(GIMPPRINT_REQUIRED_VERSION)
-AC_SUBST(GIMPPRINT_TOONEW_VERSION)
-AC_SUBST(RSVG_REQUIRED_VERSION)
-AC_SUBST(WMF_REQUIRED_VERSION)
-
-#
 # Making releases:
 #   GIMP_MICRO_VERSION += 1;
 #   GIMP_INTERFACE_AGE += 1;
@@ -44,63 +9,119 @@ AC_SUBST(WMF_REQUIRED_VERSION)
 # if any functions have been added, set GIMP_INTERFACE_AGE to 0.
 # if backwards compatibility has been broken,
 # set GIMP_BINARY_AGE and GIMP_INTERFACE_AGE to 0.
-#
-GIMP_MAJOR_VERSION=1
-GIMP_MINOR_VERSION=3
-GIMP_MICRO_VERSION=26
-GIMP_INTERFACE_AGE=0
-GIMP_BINARY_AGE=2
 
-#GIMP_VERSION=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION.$GIMP_MICRO_VERSION
-GIMP_VERSION=2.0pre3
+m4_define([gimp_major_version], [1])
+m4_define([gimp_minor_version], [3])
+m4_define([gimp_micro_version], [26])
+m4_define([gimp_real_version],
+          [gimp_major_version.gimp_minor_version.gimp_micro_version])
+m4_define([gimp_version], [gimp_real_version])
+m4_define([gimp_interface_age], [0])
+m4_define([gimp_binary_age], [2])
 
+# For overriding the version string. Comment out if not needed.
+m4_define([gimp_version], [2.0pre3])
+
+# This is the X.Y used in -lgimp-X.Y
+m4_define([gimp_api_version], [1.3])
+
+# Versions used for apps, plugins, tools, pkg-config files, and data,
+# as well as global and user prefs
+m4_define([gimp_app_version], [1.3])
+m4_define([gimp_plugin_version], [1.3])
+m4_define([gimp_tool_version], [2.0])
+m4_define([gimp_pkgconfig_version], [2.0])
+m4_define([gimp_data_version], [1.3])
+m4_define([gimp_sysconf_version], [1.3])
+m4_define([gimp_user_version], [1.3])
+
+# required versions of other packages
+m4_define([glib_required_version], [2.2.0])
+m4_define([gtk_required_version], [2.2.2])
+m4_define([gdk_pixbuf_required_version], [gtk_required_version])
+m4_define([pangoft2_required_version], [1.2.2])
+m4_define([fontconfig_required_version], [2.2.0])
+m4_define([gtkdoc_required_version], [1.0])
+m4_define([gtkhtml2_required_version], [2.0.0])
+m4_define([gimpprint_required_version], [4.2.0])
+m4_define([gimpprint_toonew_version], [4.3.0])
+m4_define([rsvg_required_version], [2.2.0])
+m4_define([wmf_required_version], [0.2.8])
+
+AC_INIT([GIMP], [gimp_version],
+        [http://bugzilla.gnome.org/enter_bug.cgi?product=GIMP],
+        [gimp])
+
+AC_CONFIG_SRCDIR([app/core/gimp.c])
+
+AM_INIT_AUTOMAKE(no-define)
+AM_CONFIG_HEADER(config.h)
+
+GIMP_MAJOR_VERSION=gimp_major_version
+GIMP_MINOR_VERSION=gimp_minor_version
+GIMP_MICRO_VERSION=gimp_micro_version
+GIMP_INTERFACE_AGE=gimp_interface_age
+GIMP_BINARY_AGE=gimp_binary_age
+GIMP_VERSION=gimp_version
+GIMP_REAL_VERSION=gimp_real_version
+GIMP_API_VERSION=gimp_api_version
+GIMP_APP_VERSION=gimp_app_version
+GIMP_PLUGIN_VERSION=gimp_plugin_version
+GIMP_TOOL_VERSION=gimp_tool_version
+GIMP_PKGCONFIG_VERSION=gimp_pkgconfig_version
+GIMP_DATA_VERSION=gimp_data_version
+GIMP_SYSCONF_VERSION=gimp_sysconf_version
+GIMP_USER_VERSION=gimp_user_version
 AC_SUBST(GIMP_MAJOR_VERSION)
 AC_SUBST(GIMP_MINOR_VERSION)
 AC_SUBST(GIMP_MICRO_VERSION)
+AC_SUBST(GIMP_INTERFACE_AGE)
+AC_SUBST(GIMP_BINARY_AGE)
+AC_SUBST(GIMP_API_VERSION)
 AC_SUBST(GIMP_VERSION)
+AC_SUBST(GIMP_REAL_VERSION)
+AC_SUBST(GIMP_API_VERSION)
+AC_SUBST(GIMP_APP_VERSION)
+AC_SUBST(GIMP_PLUGIN_VERSION)
+AC_SUBST(GIMP_TOOL_VERSION)
+AC_SUBST(GIMP_PKGCONFIG_VERSION)
+AC_SUBST(GIMP_DATA_VERSION)
+AC_SUBST(GIMP_SYSCONF_VERSION)
+AC_SUBST(GIMP_USER_VERSION)
 
 
-dnl libtool versioning
-LT_RELEASE=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-LT_CURRENT=`expr $GIMP_MICRO_VERSION - $GIMP_INTERFACE_AGE`
-LT_REVISION=$GIMP_INTERFACE_AGE
-LT_AGE=`expr $GIMP_BINARY_AGE - $GIMP_INTERFACE_AGE`
-LT_CURRENT_MINUS_AGE=`expr $LT_CURRENT - $LT_AGE`
+# libtool versioning
+#LT_RELEASE=$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+#LT_CURRENT=`expr $GIMP_MICRO_VERSION - $GIMP_INTERFACE_AGE`
+#LT_REVISION=$GIMP_INTERFACE_AGE
+#LT_AGE=`expr $GIMP_BINARY_AGE - $GIMP_INTERFACE_AGE`
+#LT_CURRENT_MINUS_AGE=`expr $LT_CURRENT - $LT_AGE`
 
-AC_SUBST(LT_RELEASE)
-AC_SUBST(LT_CURRENT)
-AC_SUBST(LT_REVISION)
-AC_SUBST(LT_AGE)
+m4_define([lt_current], [m4_eval(gimp_micro_version - gimp_interface_age)])
+m4_define([lt_revision], [gimp_interface_age])
+m4_define([lt_age], [m4_eval(gimp_binary_age - gimp_interface_age)])
+LT_VERSION_INFO="lt_current:lt_revision:lt_age"
+LT_CURRENT_MINUS_AGE=m4_eval(lt_current - lt_age)
+AC_SUBST(LT_VERSION_INFO)
 AC_SUBST(LT_CURRENT_MINUS_AGE)
 
 
-#####################
-# Initialize automake
-#####################
+GETTEXT_PACKAGE=gimp20
+AC_SUBST(GETTEXT_PACKAGE)
+AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
+                   [The prefix for our gettext translation domains.])
 
-VERSION=$GIMP_VERSION
-PACKAGE=gimp
-
-AM_INIT_AUTOMAKE($PACKAGE, $VERSION, no-define)
-
-dnl Specify a configuration file
-AM_CONFIG_HEADER(config.h)
-
-dnl Initialize maintainer mode
-AM_MAINTAINER_MODE
-
-# Honor aclocal flags
-ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
-
-
-####################
-# Initialize libtool
-####################
 
 dnl Initialize libtool
 AC_PROG_CC
+AM_DISABLE_STATIC
 AC_LIBTOOL_WIN32_DLL
-AC_PROG_LIBTOOL
+AM_PROG_LIBTOOL
+
+AM_PROG_AS
+
+dnl Initialize maintainer mode
+AM_MAINTAINER_MODE
 
 
 ###########################
@@ -160,6 +181,7 @@ esac
 AC_MSG_RESULT([$os_win32])
 AC_SUBST(PATHSEP)
 AM_CONDITIONAL(OS_WIN32, test "$os_win32" = "yes")
+AM_CONDITIONAL(OS_UNIX, test "$os_win32" != "yes")
 
 if test "$os_win32" = "yes"; then
   AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
@@ -174,11 +196,8 @@ AM_CONDITIONAL(MS_LIB_AVAILABLE, test x$ms_librarian = xyes)
 dnl Checks for programs.
 AC_ISC_POSIX
 AM_PROG_CC_STDC
-AM_PROG_AS
 AC_PROG_INSTALL
-AC_PROG_LN_S
 AC_PROG_MAKE_SET
-AC_PROG_CPP
 
 dnl Large file support for the swap file
 AC_SYS_LARGEFILE
@@ -215,6 +234,7 @@ AC_ARG_ENABLE(ansi,
               [  --enable-ansi           turn on strict ansi (default=no)],,
               enable_ansi=no)
 
+changequote(,)dnl
 if eval "test x$GCC = xyes"; then
   case " $CFLAGS " in
   *[\ \	]-Wall[\ \	]*) ;;
@@ -233,6 +253,7 @@ if eval "test x$GCC = xyes"; then
     esac
   fi
 fi
+changequote([,])dnl
 
 # Ensure MSVC-compatible struct packing convention is used when
 # compiling for Win32 with gcc.
@@ -269,6 +290,9 @@ if test x"$os_win32" = xyes; then
   fi
 fi
 
+# Honor aclocal flags
+ACLOCAL="$ACLOCAL $ACLOCAL_FLAGS"
+
 
 AC_HEADER_DIRENT
 AC_HEADER_STDC
@@ -291,11 +315,6 @@ AC_CHECK_FUNCS(difftime putenv mmap)
 # Internationalisation
 ######################
 
-GETTEXT_PACKAGE=gimp20
-AC_SUBST(GETTEXT_PACKAGE)
-AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
-                   [The prefix for our gettext translation domains.])
-
 dnl Note to translators: you MUST have .po files in all 4 directories: po,
 dnl po-libgimp, po-plug-ins, and po-script-fu before adding you language
 dnl code to ALL_LINGUAS
@@ -309,7 +328,7 @@ AM_GLIB_GNU_GETTEXT
 # Checks for required libraries
 ###############################
 
-AM_PATH_GLIB_2_0($GLIB_REQUIRED_VERSION,,
+AM_PATH_GLIB_2_0(glib_required_version, :,
   AC_MSG_ERROR(Test for GLIB failed. See the file 'INSTALL' for help.),
   gobject)
 
@@ -326,7 +345,7 @@ LIBS=$gimp_save_LIBS
 
 AC_PATH_XTRA
 
-AM_PATH_GTK_2_0($GTK_REQUIRED_VERSION,,
+AM_PATH_GTK_2_0(gtk_required_version, :,
     AC_MSG_ERROR(Test for GTK+ failed. See the file 'INSTALL' for help.))
 
 AC_MSG_CHECKING([if GTK+ is version 2.3.0 or newer])
@@ -337,7 +356,7 @@ else
 fi
 AC_MSG_RESULT($have_gtk_2_3)
 
-PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= $GDKPIXBUF_REQUIRED_VERSION)
+PKG_CHECK_MODULES(GDK_PIXBUF, gdk-pixbuf-2.0 >= gdk_pixbuf_required_version)
 AC_SUBST(GDK_PIXBUF_CFLAGS)
 AC_SUBST(GDK_PIXBUF_LIBS)
 
@@ -350,18 +369,18 @@ PKG_CHECK_MODULES(LIBART, libart-2.0)
 AC_SUBST(LIBART_CFLAGS)
 AC_SUBST(LIBART_LIBS)
 
-PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= $PANGOFT2_REQUIRED_VERSION,,
+PKG_CHECK_MODULES(PANGOFT2, pangoft2 >= pangoft2_required_version, :,
   AC_MSG_ERROR([Test for PangoFT2 failed.
 *** We require Pango with the optional support for FreeType2 compiled in.
 *** See the file 'INSTALL' for more help.]))
 AC_SUBST(PANGOFT2_CFLAGS)
 AC_SUBST(PANGOFT2_LIBS)
 
-PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= $FONTCONFIG_REQUIRED_VERSION)
+PKG_CHECK_MODULES(FONTCONFIG, fontconfig >= fontconfig_required_version)
 
 AC_PATH_PROG(FREETYPE_CONFIG, freetype-config, no)
 if test "x$FREETYPE_CONFIG" != "xno" ; then
-  AC_MSG_CHECKING(FREETYPE_LIBS)
+  AC_MSG_CHECKING([for Freetype libraries])
   FREETYPE_LIBS=`$FREETYPE_CONFIG --libs`
   AC_MSG_RESULT($FREETYPE_LIBS)
 fi
@@ -740,13 +759,13 @@ if test "$gdk_target" = x11; then
       LDFLAGS="$LDFLAGS $X_LIBS"
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-          GIMP_REMOTE='gimp-remote-1.3';
+          GIMP_REMOTE='gimp-remote-gimp_app_version';
 	  have_libxmu=yes
           LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	  [AC_MSG_WARN(*** gimp-remote will not be built (XMU header file not found) ***)])],
 	  [AC_CHECK_LIB(Xmu, XmuUpdateMapHints,
 	    [AC_CHECK_HEADER(X11/Xmu/WinUtil.h,
-              GIMP_REMOTE='gimp-remote-1.3';
+              GIMP_REMOTE='gimp-remote-gimp_app_version';
 	      have_libxmu=yes
 	      LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	      [AC_MSG_WARN(*** gimp-remote will not be built (XMU header file not found) ***)])],
@@ -985,7 +1004,7 @@ AC_SUBST(LIBXPM)
 # Check for gtkhtml2
 ####################
 
-PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= $GTKHTML2_REQUIRED_VERSION,
+PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= gtkhtml2_required_version,
   have_gtkhtml2=yes,
   AC_MSG_WARN([*** Help browser plug-in will not be built (GtkHtml2 not found) ***]))
 AC_SUBST(GTKHTML2_CFLAGS)
@@ -997,7 +1016,7 @@ AM_CONDITIONAL(BUILD_HELPBROWSER, test x$have_gtkhtml2 = xyes)
 # Check for librsvg
 ###################
 
-PKG_CHECK_MODULES(SVG, librsvg-2.0 >= $RSVG_REQUIRED_VERSION,
+PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
   SVG=svg
   LIBSVG=$SVG_LIBS,
   AC_MSG_WARN([*** SVG import plug-in will not be built (librsvg not found) ***]))
@@ -1016,8 +1035,8 @@ AC_ARG_ENABLE(print, [  --disable-print         build without print support (req
     if test "x$PRINT_CONFIG" != "xno"; then
       AC_MSG_CHECKING(for appropriate gimpprint library)
       print_version=`$PRINT_CONFIG --version`
-      if expr $print_version \>= $GIMPPRINT_REQUIRED_VERSION >/dev/null; then
-        if expr $print_version \< $GIMPPRINT_TOONEW_VERSION >/dev/null; then
+      if expr $print_version \>= gimpprint_required_version >/dev/null; then
+        if expr $print_version \< gimpprint_toonew_version >/dev/null; then
           AC_MSG_RESULT([yes (version $print_version)])
           have_gimp_print=yes
           PRINT_LIBS=`$PRINT_CONFIG --libs`
@@ -1026,12 +1045,12 @@ AC_ARG_ENABLE(print, [  --disable-print         build without print support (req
           AC_MSG_WARN([
 *** libgimpprint version $print_version is too new.
 *** It is likely an unstable development version.
-*** You need a version before $GIMPPRINT_TOONEW_VERSION.])
+*** You need a version before gimpprint_toonew_version.])
         fi
       else
         AC_MSG_WARN([
 *** libgimpprint version $print_version is too old.
-*** You need at least version $GIMPPRINT_REQUIRED_VERSION.])
+*** You need at least version gimpprint_required_version.])
       fi
     fi
   fi
@@ -1055,9 +1074,9 @@ AM_CONDITIONAL(BUILD_PRINT,
 
 AC_PATH_PROG(WMF_CONFIG, libwmf-config, no)
 if test "x$WMF_CONFIG" != "xno" ; then
-  AC_MSG_CHECKING(for libwmf >= $WMF_REQUIRED_VERSION)
+  AC_MSG_CHECKING(for libwmf >= wmf_required_version)
   wmf_version=`$WMF_CONFIG --version`
-  if expr $wmf_version \>= $WMF_REQUIRED_VERSION >/dev/null; then
+  if expr $wmf_version \>= wmf_required_version >/dev/null; then
     AC_MSG_RESULT([yes (version $wmf_version)])
     WMF=wmf
     LIBWMF=`$WMF_CONFIG --libs`
@@ -1232,7 +1251,7 @@ AC_CHECK_PROG(GTKDOC, gtkdoc-mkdb, true, false)
 
 if $GTKDOC ; then 
    gtk_doc_version=`gtkdoc-mkdb --version`
-   AC_MSG_CHECKING([gtk-doc version ($gtk_doc_version) >= $GTKDOC_REQUIRED_VERSION])
+   AC_MSG_CHECKING([gtk-doc version ($gtk_doc_version) >= gtkdoc_required_version])
    IFS="${IFS= 	}"; gimp_save_IFS="$IFS"; IFS="."
    set $gtk_doc_version
    for min in $gtk_doc_min_version ; do
@@ -1299,17 +1318,17 @@ if test x$enable_gimp_console = xyes ; then
 fi
 
 dnl Possibly change default gimpdir from .gimp-major.minor
-gimpdir=.$PACKAGE-$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-AC_ARG_WITH(gimpdir, [  --with-gimpdir=DIR      change default gimpdir from .gimp-1.3 to DIR],
+gimpdir=.gimp-gimp_user_version
+AC_ARG_WITH(gimpdir, [  --with-gimpdir=DIR      change default gimpdir from .gimp-gimp_user_version to DIR],
 if eval "test x$with_gimpdir != x"; then
   if eval "test x$with_gimpdir != xyes"; then
     gimpdir=$with_gimpdir
   fi
 fi)
 
-gimpdatadir=$datadir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-gimpplugindir=$libdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
-gimpsysconfdir=$sysconfdir/$PACKAGE/$GIMP_MAJOR_VERSION.$GIMP_MINOR_VERSION
+gimpdatadir="$datadir/$PACKAGE/gimp_data_version"
+gimpplugindir="$libdir/$PACKAGE/gimp_plugin_version"
+gimpsysconfdir="$sysconfdir/$PACKAGE/gimp_sysconf_version"
 
 localedir='${prefix}/${DATADIRNAME}/locale'
 
@@ -1326,7 +1345,7 @@ AC_SUBST(localedir)
 
 GIMPINSTALL=
 if test "$INSTALL" = "$ac_install_sh"; then
-  GIMPINSTALL="gimpinstall-1.3"
+  GIMPINSTALL="gimpinstall-gimp_tool_version"
 fi
 AC_SUBST(GIMPINSTALL)
 
@@ -1361,7 +1380,7 @@ GIMP_MODULES=modules
 AC_SUBST(GIMP_PLUGINS)
 AC_SUBST(GIMP_MODULES)
 
-AC_CONFIG_COMMANDS([libgimp/gimpversion.h], [
+AC_CONFIG_COMMANDS([libgimpbase/gimpversion.h], [
   outfile=gimpversion.h-tmp
   cat > $outfile <<\_______EOF
 /* gimpversion.h
@@ -1377,15 +1396,14 @@ G_BEGIN_DECLS
 
 _______EOF
 
-
   cat >>$outfile <<_______EOF
 #define GIMP_MAJOR_VERSION                              ($gimp_major_ver)
 #define GIMP_MINOR_VERSION                              ($gimp_minor_ver)
 #define GIMP_MICRO_VERSION                              ($gimp_micro_ver)
 #define GIMP_VERSION                                    "$gimp_ver"
 _______EOF
-
-cat >>$outfile <<\_______EOF
+                                                                                
+  cat >>$outfile <<\_______EOF
 #define GIMP_CHECK_VERSION(major, minor, micro) \
     (GIMP_MAJOR_VERSION > (major) || \
      (GIMP_MAJOR_VERSION == (major) && GIMP_MINOR_VERSION > (minor)) || \
@@ -1405,10 +1423,10 @@ _______EOF
     mv $outfile libgimpbase/gimpversion.h
   fi
 ],[
-  gimp_major_ver="$GIMP_MAJOR_VERSION"
-  gimp_minor_ver="$GIMP_MINOR_VERSION"
-  gimp_micro_ver="$GIMP_MICRO_VERSION"
-  gimp_ver="$GIMP_VERSION"
+  gimp_major_ver=gimp_major_version
+  gimp_minor_ver=gimp_minor_version
+  gimp_micro_ver=gimp_micro_version
+  gimp_ver=gimp_version
 ])
 
 AC_CONFIG_FILES([
@@ -1538,7 +1556,7 @@ Makefile
 ])
 
 AC_CONFIG_COMMANDS([chmod-scripts],
-[chmod +x gimptool-2.0])
+[chmod +x gimptool-gimp_tool_version])
 
 AC_CONFIG_COMMANDS([sed-po-makefiles],
 [sed -e "/POTFILES =/r po-libgimp/POTFILES" po-libgimp/Makefile.in > po-libgimp/Makefile

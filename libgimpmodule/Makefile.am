@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
 if PLATFORM_WIN32
 no_undefined = -no-undefined
 endif
@@ -9,11 +11,11 @@ gimpmodule_def = gimpmodule.def
 libgimpmodule_export_symbols = -export-symbols gimpmodule.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpmodule-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpmodule-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) gimpmodule.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpmodule-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpmodule-$(GIMP_API_VERSION).dll.a
 	-rm $(DESTDIR)$(libdir)/gimpmodule.def
 else
 install-libtool-import-lib:
@@ -21,23 +23,23 @@ uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpmodule-$(LT_RELEASE).lib
+noinst_DATA = gimpmodule-$(GIMP_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpmodule-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpmodule-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpmodule-$(LT_RELEASE).lib
+	-rm $(DESTDIR)$(libdir)/gimpmodule-$(GIMP_API_VERSION).lib
 
-gimpmodule-@LT_RELEASE@.lib: gimpmodule.def
-	lib -name:libgimpmodule-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmodule.def -out:$@
+gimpmodule-@GIMP_API_VERSION@.lib: gimpmodule.def
+	lib -name:libgimpmodule-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmodule.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpmoduleincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpmodule
+libgimpmoduleincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpmodule
 
 AM_CPPFLAGS = \
 	-DPREFIX=\""$(prefix)"\"		\
@@ -74,15 +76,14 @@ libgimpmoduleinclude_HEADERS = \
 	gimpmoduledb.h
 
 libgimpmodule_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-	$(no_undefined) 					\
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined) 			\
 	$(libgimpmodule_export_symbols)
 
 libgimpmodule_1_3_la_DEPENDENCIES = $(gimpmodule_def)
 
 libgimpmodule_1_3_la_LIBADD = \
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GLIB_LIBS)							\
+	$(libgimpbase)	\
 	$(GMODULE_LIBS)
 
 install-data-local: install-ms-lib install-libtool-import-lib

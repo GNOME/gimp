@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: GIMP UI
 Description: GIMP User Interface Library
-Version: @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.@GIMP_MICRO_VERSION@
-Requires: gimp-2.0 gtk+-2.0 >= 2.2.0
-Libs: -L${libdir} -lgimpui-@LT_RELEASE@ -lgimpwidgets-@LT_RELEASE@
-Cflags: -I${includedir}/gimp-@LT_RELEASE@
+Version: @GIMP_REAL_VERSION@
+Requires: gimp-@GIMP_PKGCONFIG_VERSION@ gtk+-2.0 >= 2.2.0
+Libs: -L${libdir} -lgimpui-@GIMP_API_VERSION@ -lgimpwidgets-@GIMP_API_VERSION@
+Cflags: -I${includedir}/gimp-@GIMP_API_VERSION@

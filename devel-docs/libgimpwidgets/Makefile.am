@@ -50,12 +50,12 @@ GTKDOC_CFLAGS = \
 	@GTK_CFLAGS@
 
 GTKDOC_LIBS = \
-        $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la        \
-        $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la      \
-        $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la        \
-        $(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la  \
-        $(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-        $(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
+        $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la        \
+        $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la      \
+        $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la        \
+        $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la  \
+        $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la		      \
+        $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la	      \
 	@GTK_LIBS@
 
 GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC)

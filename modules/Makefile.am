@@ -1,8 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 if OS_WIN32
 no_undefined = -no-undefined

@@ -46,7 +46,7 @@ GTKDOC_CFLAGS = \
 	@GMODULE_CFLAGS@
 
 GTKDOC_LIBS = \
-	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
+	$(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la \
 	@GMODULE_LIBS@
 
 GTKDOC_CC = $(LIBTOOL) --mode=compile $(CC)

@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: GIMP Thumb
 Description: GIMP Thumbnail Library
-Version: @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.@GIMP_MICRO_VERSION@
+Version: @GIMP_REAL_VERSION@
 Requires: gdk-pixbuf-2.0
-Libs: -L${libdir} -lgimpmath-@LT_RELEASE@ -lgimpthumb-@LT_RELEASE@
-Cflags: -I${includedir}/gimp-@LT_RELEASE@
+Libs: -L${libdir} -lgimpthumb-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@
+Cflags: -I${includedir}/gimp-@GIMP_API_VERSION@

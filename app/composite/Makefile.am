@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Composite\"	\
 	@GIMP_THREAD_FLAGS@			\
@@ -8,8 +10,7 @@ AM_CPPFLAGS = \
 AM_CCASFLAGS = \
 	-I$(top_builddir)	\
 	-I$(top_srcdir) 	\
-	-I$(top_srcdir)/app	\
-	-g
+	-I$(top_srcdir)/app
 
 INCLUDES = \
 	-I$(top_srcdir)		\
@@ -20,23 +21,23 @@ INCLUDES = \
 noinst_LIBRARIES = libappcomposite.a
 
 libappcomposite_a_sources = \
-	gimp-composite-3dnow.c			\
-	gimp-composite-3dnow.h			\
-	gimp-composite-altivec.c		\
-	gimp-composite-altivec.h		\
-	gimp-composite-generic.c		\
-	gimp-composite-generic.h		\
-	gimp-composite-mmx.c			\
-	gimp-composite-mmx.h			\
-	gimp-composite-sse.c			\
-	gimp-composite-sse.h			\
-	gimp-composite-sse2.c			\
-	gimp-composite-sse2.h			\
-	gimp-composite-util.h			\
-	gimp-composite-vis.c			\
-	gimp-composite-vis.h			\
-	gimp-composite-x86.h			\
-	gimp-composite.c			\
+	gimp-composite-3dnow.c		\
+	gimp-composite-3dnow.h		\
+	gimp-composite-altivec.c	\
+	gimp-composite-altivec.h	\
+	gimp-composite-generic.c	\
+	gimp-composite-generic.h	\
+	gimp-composite-mmx.c		\
+	gimp-composite-mmx.h		\
+	gimp-composite-sse.c		\
+	gimp-composite-sse.h		\
+	gimp-composite-sse2.c		\
+	gimp-composite-sse2.h		\
+	gimp-composite-util.h		\
+	gimp-composite-vis.c		\
+	gimp-composite-vis.h		\
+	gimp-composite-x86.h		\
+	gimp-composite.c		\
 	gimp-composite.h
 
 libappcomposite_a_built_sources = \
@@ -92,9 +93,9 @@ gimp_composite_test_SOURCES = \
 gimp_composite_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_test_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
+	libappcomposite.a	\
+	../base/libappbase.a	\
+	$(libgimpcolor)		\
 	$(GLIB_LIBS)
 
 
@@ -106,9 +107,9 @@ gimp_composite_mmx_test_SOURCES = \
 gimp_composite_mmx_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_mmx_test_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
+	libappcomposite.a	\
+	../base/libappbase.a	\
+	$(libgimpcolor)		\
 	$(GLIB_LIBS)
 
 gimp_composite_sse_test_SOURCES = \
@@ -119,9 +120,9 @@ gimp_composite_sse_test_SOURCES = \
 gimp_composite_sse_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_sse_test_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
+	libappcomposite.a	\
+	../base/libappbase.a	\
+	$(libgimpcolor)		\
 	$(GLIB_LIBS)
 
 gimp_composite_sse2_test_SOURCES = \
@@ -132,9 +133,9 @@ gimp_composite_sse2_test_SOURCES = \
 gimp_composite_sse2_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_sse2_test_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
+	libappcomposite.a	\
+	../base/libappbase.a	\
+	$(libgimpcolor)		\
 	$(GLIB_LIBS)
 
 
@@ -146,9 +147,9 @@ gimp_composite_3dnow_test_SOURCES = \
 gimp_composite_3dnow_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_3dnow_test_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
+	libappcomposite.a	\
+	../base/libappbase.a	\
+	$(libgimpcolor)		\
 	$(GLIB_LIBS)
 
 
@@ -160,9 +161,9 @@ gimp_composite_altivec_test_SOURCES = \
 gimp_composite_altivec_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_altivec_test_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
+	libappcomposite.a	\
+	../base/libappbase.a	\
+	$(libgimpcolor)		\
 	$(GLIB_LIBS)
 
 gimp_composite_vis_test_SOURCES = \
@@ -173,7 +174,7 @@ gimp_composite_vis_test_SOURCES = \
 gimp_composite_vis_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_vis_test_LDADD = \
-	libappcomposite.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/app/base/libappbase.a				\
+	libappcomposite.a	\
+	../base/libappbase.a	\
+	$(libgimpcolor)		\
 	$(GLIB_LIBS)

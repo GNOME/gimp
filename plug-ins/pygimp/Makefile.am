@@ -1,3 +1,11 @@
+## Process this file with automake to produce Makefile.in
+
+libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
 SUBDIRS = doc plug-ins
 
 INCLUDES = -I$(top_srcdir) $(PYTHON_INCLUDES) $(GLIB_CFLAGS)
@@ -20,10 +28,10 @@ gimpmodule_la_LDFLAGS = -module -avoid-version \
 	-export-symbols-regex 'initgimp|PLUG_IN_INFO'
 
 gimpmodule_la_LIBADD = \
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(GLIB_LIBS)							\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
 	$(RT_LIBS)
 
 pygimp_PYTHON = \

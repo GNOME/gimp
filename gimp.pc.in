@@ -5,10 +5,11 @@ includedir=@includedir@
 
 gimpdatadir=@gimpdatadir@
 gimplibdir=@gimpplugindir@
+gimpsysconfdir=@gimpsysconfdir@
 
 Name: GIMP
 Description: GIMP Library
-Version: @GIMP_MAJOR_VERSION@.@GIMP_MINOR_VERSION@.@GIMP_MICRO_VERSION@
+Version: @GIMP_REAL_VERSION@
 Requires: glib-2.0
-Libs: -L${libdir}  -lgimpbase-1.3 -lgimpcolor-1.3  -lgimpmath-1.3 -lgimp-1.3 
-Cflags: -I${includedir}/gimp-1.3
+Libs: -L${libdir} -lgimp-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ @RT_LIBS@
+Cflags: -I${includedir}/gimp-@GIMP_API_VERSION@

@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -17,11 +17,11 @@ gimpwidgets_def = gimpwidgets.def
 libgimpwidgets_export_symbols = -export-symbols gimpwidgets.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpwidgets-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpwidgets-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) gimpwidgets.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpwidgets-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpwidgets-$(GIMP_API_VERSION).dll.a
 	-rm $(DESTDIR)$(libdir)/gimpwidgets.def
 else
 install-libtool-import-lib:
@@ -29,28 +29,26 @@ uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpwidgets-$(LT_RELEASE).lib
+noinst_DATA = gimpwidgets-$(GIMP_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpwidgets-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpwidgets-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpwidgets-$(LT_RELEASE).lib
+	-rm $(DESTDIR)$(libdir)/gimpwidgets-$(GIMP_API_VERSION).lib
 
-gimpwidgets-@LT_RELEASE@.lib: gimpwidgets.def
-	lib -name:libgimpwidgets-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpwidgets.def -out:$@
+gimpwidgets-@GIMP_API_VERSION@.lib: gimpwidgets.def
+	lib -name:libgimpwidgets-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpwidgets.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpwidgetsincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpwidgets
+libgimpwidgetsincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpwidgets
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpWidgets\"	\
-	-DLT_RELEASE=\"@LT_RELEASE@\"		\
-	-DLT_CURRENT_MINUS_AGE=\"@LT_CURRENT_MINUS_AGE@\" \
+	-DG_LOG_DOMAIN=\"LibGimpWidgets\"			\
 	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
@@ -159,8 +157,8 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpunitmenu.h
 
 libgimpwidgets_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	$(no_undefined) \
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined) 			\
 	$(libgimpwidgets_export_symbols)
 
 libgimpwidgets_1_3_la_LIBADD = \

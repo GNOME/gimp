@@ -1,10 +1,10 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
-libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la
-libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la
-libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la
-libgimp = ./libgimp-$(LT_RELEASE).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+libgimp = ./libgimp-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -17,14 +17,14 @@ libgimp_export_symbols = -export-symbols gimp.def
 libgimpui_export_symbols = -export-symbols gimpui.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimp-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
-	$(INSTALL) .libs/libgimpui-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimp-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpui-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) gimp.def $(DESTDIR)$(libdir)
 	$(INSTALL) gimpui.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimp-$(LT_RELEASE).dll.a
-	-rm $(DESTDIR)$(libdir)/libgimpui-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimp-$(GIMP_API_VERSION).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpui-$(GIMP_API_VERSION).dll.a
 	-rm $(DESTDIR)$(libdir)/gimp.def
 	-rm $(DESTDIR)$(libdir)/gimpui.def
 else
@@ -33,28 +33,28 @@ uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimp-$(LT_RELEASE).lib gimpui-$(LT_RELEASE).lib 
+noinst_DATA = gimp-$(GIMP_API_VERSION).lib gimpui-$(GIMP_API_VERSION).lib 
 
 install-ms-lib:
-	$(INSTALL) gimp-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
-	$(INSTALL) gimpui-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimp-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpui-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimp-$(LT_RELEASE).lib
-	-rm $(DESTDIR)$(libdir)/gimpui-$(LT_RELEASE).lib
+	-rm $(DESTDIR)$(libdir)/gimp-$(GIMP_API_VERSION).lib
+	-rm $(DESTDIR)$(libdir)/gimpui-$(GIMP_API_VERSION).lib
 
-gimp-@LT_RELEASE@.lib: gimp.def
-	lib -name:libgimp-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimp.def -out:$@
+gimp-@GIMP_API_VERSION@.lib: gimp.def
+	lib -name:libgimp-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimp.def -out:$@
 
-gimpui-@LT_RELEASE@.lib: gimpui.def
-	lib -name:libgimpui-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpui.def -out:$@
+gimpui-@GIMP_API_VERSION@.lib: gimpui.def
+	lib -name:libgimpui-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpui.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-gimpincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimp
+gimpincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimp
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimp\"	\
@@ -240,8 +240,8 @@ gimpinclude_HEADERS = \
 	gimppatternmenu.h
 
 libgimp_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	$(no_undefined) \
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined)				\
 	$(libgimp_export_symbols)
 
 libgimp_1_3_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
@@ -249,8 +249,8 @@ libgimp_1_3_la_LIBADD = $(libgimpcolor) $(libgimpbase) $(GLIB_LIBS) $(RT_LIBS)
 libgimp_1_3_la_DEPENDENCIES = $(gimp_def) $(libgimpcolor) $(libgimpbase)
 
 libgimpui_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE) \
-	$(no_undefined) \
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined)				\
 	$(libgimpui_export_symbols)
 
 libgimpui_1_3_la_LIBADD = $(libgimp) $(libgimpwidgets) $(libgimpcolor) \

@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
 if OS_WIN32
 mwindows = -mwindows
 endif
@@ -41,15 +47,15 @@ REGEXREPL = $(top_builddir)/regexrepl/libregex.a
 endif
 
 LDADD = \
-	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o		\
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	siod/libsiod.a							\
-	$(GTK_LIBS)							\
-	$(SOCKET_LIBS)							\
-	$(RT_LIBS)							\
-	$(INTLLIBS)							\
+	$(top_builddir)/plug-ins/dbbrowser/dbbrowser_utils.o	\
+	$(libgimpui)						\
+	$(libgimpwidgets)					\
+	$(libgimp)						\
+	$(libgimpcolor)						\
+	$(libgimpbase)						\
+	siod/libsiod.a						\
+	$(GTK_LIBS)						\
+	$(SOCKET_LIBS)						\
+	$(RT_LIBS)						\
+	$(INTLLIBS)						\
 	$(REGEXREPL)

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -16,11 +16,11 @@ gimpcolor_def = gimpcolor.def
 libgimpcolor_export_symbols = -export-symbols gimpcolor.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpcolor-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpcolor-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) gimpcolor.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpcolor-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpcolor-$(GIMP_API_VERSION).dll.a
 	-rm $(DESTDIR)$(libdir)/gimpcolor.def
 else
 install-libtool-import-lib:
@@ -28,23 +28,23 @@ uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpcolor-$(LT_RELEASE).lib
+noinst_DATA = gimpcolor-$(GIMP_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpcolor-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpcolor-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpcolor-$(LT_RELEASE).lib
+	-rm $(DESTDIR)$(libdir)/gimpcolor-$(GIMP_API_VERSION).lib
 
-gimpcolor-@LT_RELEASE@.lib: gimpcolor.def
-	lib -name:libgimpcolor-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpcolor.def -out:$@
+gimpcolor-@GIMP_API_VERSION@.lib: gimpcolor.def
+	lib -name:libgimpcolor-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpcolor.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpcolorincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpcolor
+libgimpcolorincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpcolor
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpColor\"	\
@@ -88,8 +88,8 @@ libgimpcolorinclude_HEADERS = \
 	gimprgb.h
 
 libgimpcolor_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-	$(no_undefined) 					\
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined) 			\
 	$(libgimpcolor_export_symbols)
 
 libgimpcolor_1_3_la_DEPENDENCIES = $(gimpcolor_def) $(libgimpbase)

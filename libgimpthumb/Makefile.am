@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la
+libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -11,45 +11,45 @@ gimpthumb_def = gimpthumb.def
 libgimpthumb_export_symbols = -export-symbols gimpthumb.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpthumb-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpthumb-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpthumb-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpthumb-$(GIMP_API_VERSION).dll.a
 else
 install-libtool-import-lib:
 uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpthumb-$(LT_RELEASE).lib
+noinst_DATA = gimpthumb-$(GIMP_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpthumb-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpthumb-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpthumb-$(LT_RELEASE).lib
+	-rm $(DESTDIR)$(libdir)/gimpthumb-$(GIMP_API_VERSION).lib
 
-gimpthumb-@LT_RELEASE@.lib: gimpthumb.def
-	lib -name:libgimpthumb-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpthumb.def -out:$@
+gimpthumb-@GIMP_API_VERSION@.lib: gimpthumb.def
+	lib -name:libgimpthumb-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpthumb.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpthumbincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpthumb
+libgimpthumbincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpthumb
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpThumb\"	\
 	@GIMP_THREAD_FLAGS@
 
 INCLUDES = \
-	-I$(top_srcdir)	\
+	-I$(top_srcdir)		\
 	$(GDK_PIXBUF_CFLAGS)	\
 	-I$(includedir)
 
 EXTRA_DIST = \
-	makefile.msc		\
+	makefile.msc	\
 	gimpthumb.def
 
 lib_LTLIBRARIES = libgimpthumb-1.3.la
@@ -75,8 +75,8 @@ libgimpthumbinclude_HEADERS = \
 	gimpthumbnail.h
 
 libgimpthumb_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-	$(no_undefined)						\
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined)				\
 	$(libgimpthumb_export_symbols)
 
 libgimpthumb_1_3_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS)

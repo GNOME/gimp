@@ -1,5 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpui = $(top_builddir)/libgimp/libgimpui-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+libgimp = $(top_builddir)/libgimp/libgimp-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+
 winsnap_LDFLAGS = -mwindows
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -23,14 +29,14 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	winsnap-win32res.o						\
-	$(top_builddir)/libgimp/libgimpui-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimp/libgimp-$(LT_RELEASE).la		\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(RT_LIBS)							\
-	$(GTK_LIBS)							\
+	winsnap-win32res.o	\
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimp)		\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(RT_LIBS)		\
+	$(GTK_LIBS)		\
 	$(INTLLIBS)
 
 winsnap-win32res.o: winsnap.rc select.cur small.ico winsnap.ico

@@ -1,5 +1,12 @@
 ## Process this file with automake to produce Makefile.in
 
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
+libgimpcolor = $(top_builddir)/libgimpcolor/libgimpcolor-$(GIMP_API_VERSION).la
+libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).la
+libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
+libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
+
 SUBDIRS = \
 	paint-funcs	\
 	composite	\
@@ -71,68 +78,68 @@ INCLUDES = \
 	-I$(includedir)
 
 gimp_1_3_LDADD = \
-	config/libappconfig.a						\
-	gui/libappgui.a							\
-	display/libappdisplay.a						\
-	tools/libapptools.a						\
-	widgets/libappwidgets.a						\
-	core/libappcore.a						\
-	pdb/libapppdb.a							\
-	paint/libapppaint.a						\
-	xcf/libappxcf.a							\
-	text/libapptext.a						\
-	vectors/libappvectors.a						\
-	file/libappfile.a						\
-	plug-in/libappplug-in.a						\
-	paint-funcs/libapppaint-funcs.a					\
-	composite/libappcomposite.a					\
-	base/libappbase.a						\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpthumb/libgimpthumb-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpwidgets/libgimpwidgets-$(LT_RELEASE).la	\
-	$(GTK_LIBS)							\
-	$(LIBART_LIBS)							\
-	$(PANGOFT2_LIBS)						\
-	$(FONTCONFIG_LIBS)						\
-	$(FREETYPE_LIBS)						\
-	$(GIMP_THREAD_LIBS)						\
-	$(GIMP_MP_LIBS)							\
-	$(RT_LIBS)							\
-	$(INTLLIBS)							\
+	config/libappconfig.a		\
+	gui/libappgui.a			\
+	display/libappdisplay.a		\
+	tools/libapptools.a		\
+	widgets/libappwidgets.a		\
+	core/libappcore.a		\
+	pdb/libapppdb.a			\
+	paint/libapppaint.a		\
+	xcf/libappxcf.a			\
+	text/libapptext.a		\
+	vectors/libappvectors.a		\
+	file/libappfile.a		\
+	plug-in/libappplug-in.a		\
+	paint-funcs/libapppaint-funcs.a	\
+	composite/libappcomposite.a	\
+	base/libappbase.a		\
+	$(libgimpwidgets)		\
+	$(libgimpmodule)		\
+	$(libgimpcolor)			\
+	$(libgimpthumb)			\
+	$(libgimpmath)			\
+	$(libgimpbase)			\
+	$(GTK_LIBS)			\
+	$(LIBART_LIBS)			\
+	$(PANGOFT2_LIBS)		\
+	$(FONTCONFIG_LIBS)		\
+	$(FREETYPE_LIBS)		\
+	$(GIMP_THREAD_LIBS)		\
+	$(GIMP_MP_LIBS)			\
+	$(RT_LIBS)			\
+	$(INTLLIBS)			\
 	$(REGEXREPL)
 
 if ENABLE_GIMP_CONSOLE
 gimp_console_1_3_SOURCES = $(gimp_1_3_SOURCES)
 
 gimp_console_1_3_LDADD = \
-	config/libappconfig.a						\
-	core/libappcore.a						\
-	pdb/libapppdb.a							\
-	paint/libapppaint.a						\
-	xcf/libappxcf.a							\
-	text/libapptext.a						\
-	vectors/libappvectors.a						\
-	file/libappfile.a						\
-	plug-in/libappplug-in.a						\
-	paint-funcs/libapppaint-funcs.a					\
-	base/libappbase.a						\
-	composite/libappcomposite.a					\
-	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpthumb/libgimpthumb-$(LT_RELEASE).la	\
-	$(top_builddir)/libgimpmodule/libgimpmodule-$(LT_RELEASE).la	\
-	$(GDK_PIXBUF_LIBS)						\
-	$(LIBART_LIBS)							\
-	$(PANGOFT2_LIBS)						\
-	$(FONTCONFIG_LIBS)						\
-	$(FREETYPE_LIBS)						\
-	$(GIMP_THREAD_LIBS)						\
-	$(GIMP_MP_LIBS)							\
-	$(INTLLIBS)							\
+	config/libappconfig.a		\
+	core/libappcore.a		\
+	pdb/libapppdb.a			\
+	paint/libapppaint.a		\
+	xcf/libappxcf.a			\
+	text/libapptext.a		\
+	vectors/libappvectors.a		\
+	file/libappfile.a		\
+	plug-in/libappplug-in.a		\
+	paint-funcs/libapppaint-funcs.a	\
+	base/libappbase.a		\
+	composite/libappcomposite.a	\
+	$(libgimpmodule)		\
+	$(libgimpcolor)			\
+	$(libgimpthumb)			\
+	$(libgimpmath)			\
+	$(libgimpbase)			\
+	$(GDK_PIXBUF_LIBS)		\
+	$(LIBART_LIBS)			\
+	$(PANGOFT2_LIBS)		\
+	$(FONTCONFIG_LIBS)		\
+	$(FREETYPE_LIBS)		\
+	$(GIMP_THREAD_LIBS)		\
+	$(GIMP_MP_LIBS)			\
+	$(INTLLIBS)			\
 	$(REGEXREPL)
 endif
 
@@ -140,11 +147,11 @@ install-exec-hook:
 if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp$(EXEEXT) \
-	&& $(LN_S) gimp-$(LT_RELEASE)$(EXEEXT) gimp$(EXEEXT)
+	&& $(LN_S) gimp-$(GIMP_APP_VERSION)$(EXEEXT) gimp$(EXEEXT)
 if ENABLE_GIMP_CONSOLE
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp-console$(EXEEXT) \
-	&& $(LN_S) gimp-console-$(LT_RELEASE)$(EXEEXT) gimp-console$(EXEEXT)
+	&& $(LN_S) gimp-console-$(GIMP_APP_VERSION)$(EXEEXT) gimp-console$(EXEEXT)
 endif
 endif
 
@@ -160,6 +167,6 @@ endif
 # hooks to assure that the system gimprc and the gimprc manpage are
 # uptodate when a release is made
 
-dist-hook: gimp-1.3
+dist-hook: gimp-@GIMP_APP_VERSION@
 	./$< --dump-gimprc-system > $(top_srcdir)/etc/gimprc
-	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc-$(LT_RELEASE).5.in
+	./$< --dump-gimprc-manpage > $(top_srcdir)/docs/gimprc-$(GIMP_APP_VERSION).5.in

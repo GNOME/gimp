@@ -1,3 +1,18 @@
+2004-01-21  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: modernized, made a lot of things m4 macros, and made
+	versioning a lot more finegrained, in anticipation for post-2.0.
+
+	* autogen.sh: bumped up libtool and glib minimum requirements to match
+	reality.
+
+	* gimp-2.0.pc.in
+	* gimpthumb-2.0.pc.in
+	* gimpui-2.0.pc.in: adapted to new versioning variables, and bring
+	in RT_LIBS when needed.
+
+	* */*/Makefile.am: adapted to new versioning variables.
+
 2004-01-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimplayer-floating-sel.c (floating_sel_anchor):

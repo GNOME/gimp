@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la
+libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -16,11 +16,11 @@ gimpmath_def = gimpmath.def
 libgimpmath_export_symbols = -export-symbols gimpmath.def
 
 install-libtool-import-lib:
-	$(INSTALL) .libs/libgimpmath-$(LT_RELEASE).dll.a $(DESTDIR)$(libdir)
+	$(INSTALL) .libs/libgimpmath-$(GIMP_API_VERSION).dll.a $(DESTDIR)$(libdir)
 	$(INSTALL) gimpmath.def $(DESTDIR)$(libdir)
 
 uninstall-libtool-import-lib:
-	-rm $(DESTDIR)$(libdir)/libgimpmath-$(LT_RELEASE).dll.a
+	-rm $(DESTDIR)$(libdir)/libgimpmath-$(GIMP_API_VERSION).dll.a
 	-rm $(DESTDIR)$(libdir)/gimpmath.def
 else
 install-libtool-import-lib:
@@ -28,23 +28,23 @@ uninstall-libtool-import-lib:
 endif
 
 if MS_LIB_AVAILABLE
-noinst_DATA = gimpmath-$(LT_RELEASE).lib
+noinst_DATA = gimpmath-$(GIMP_API_VERSION).lib
 
 install-ms-lib:
-	$(INSTALL) gimpmath-$(LT_RELEASE).lib $(DESTDIR)$(libdir)
+	$(INSTALL) gimpmath-$(GIMP_API_VERSION).lib $(DESTDIR)$(libdir)
 
 uninstall-ms-lib:
-	-rm $(DESTDIR)$(libdir)/gimpmath-$(LT_RELEASE).lib
+	-rm $(DESTDIR)$(libdir)/gimpmath-$(GIMP_API_VERSION).lib
 
-gimpmath-@LT_RELEASE@.lib: gimpmath.def
-	lib -name:libgimpmath-$(LT_RELEASE)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmath.def -out:$@
+gimpmath-@GIMP_API_VERSION@.lib: gimpmath.def
+	lib -name:libgimpmath-$(GIMP_API_VERSION)-@LT_CURRENT_MINUS_AGE@.dll -def:gimpmath.def -out:$@
 
 else
 install-ms-lib:
 uninstall-ms-lib:
 endif
 
-libgimpmathincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpmath
+libgimpmathincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpmath
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimpMath\"	\
@@ -79,8 +79,8 @@ libgimpmathinclude_HEADERS = \
 	gimpvector.h
 
 libgimpmath_1_3_la_LDFLAGS = \
-	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
-	$(no_undefined)						\
+	-version-info $(LT_VERSION_INFO)	\
+	$(no_undefined)				\
 	$(libgimpmath_export_symbols)
 
 libgimpmath_1_3_la_DEPENDENCIES = $(gimpmath_def) $(libgimpbase)
@@ -97,7 +97,7 @@ TESTS = test-md5$(EXEEXT)
 EXTRA_PROGRAMS = test-md5
 
 test_md5_DEPENDENCIES = \
-	$(top_builddir)/libgimpmath/libgimpmath-$(LT_RELEASE).la
+	$(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
 
 test_md5_LDADD = \
 	$(GLIB_LIBS) 		\
