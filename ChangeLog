@@ -1,3 +1,8 @@
+2005-02-23  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/common/displace.c: fixed the numbers of parameters check
+	in RUN_NONINTERACTIVE. (it was a typo).
+
 2005-02-22  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: removed redundant casts,

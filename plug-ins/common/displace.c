@@ -242,7 +242,7 @@ run (const gchar      *name,
     case GIMP_RUN_NONINTERACTIVE:
       /*  Make sure all the arguments are there!  */
       /* The mode argument is optional to ensure backwards compatibility */
-      if (nparams != 9 && nparams != 10)
+      if (nparams != 10 && nparams != 11)
         {
           status = GIMP_PDB_CALLING_ERROR;
         }
