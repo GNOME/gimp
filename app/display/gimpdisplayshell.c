@@ -588,7 +588,7 @@ gimp_display_shell_new (GimpDisplay     *gdisp,
                                                        "<Image>",
                                                        GTK_TYPE_MENU_BAR,
                                                        gdisp,
-                                                       TRUE);
+                                                       FALSE);
 
   shell->popup_factory = popup_factory;
 

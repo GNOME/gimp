@@ -226,6 +226,7 @@ gimp_item_factory_new (Gimp                      *gimp,
   factory->gimp            = gimp;
   factory->update_func     = update_func;
   factory->update_on_popup = update_on_popup;
+  factory->create_tearoff  = create_tearoff;
   factory->title           = g_strdup (title);
   factory->help_id         = g_strdup (help_id);
 
@@ -240,10 +241,7 @@ gimp_item_factory_new (Gimp                      *gimp,
   gimp_item_factory_create_items (factory,
                                   n_entries,
                                   entries,
-                                  callback_data,
-                                  2,
-                                  create_tearoff,
-                                  TRUE);
+                                  callback_data, 2, TRUE);
 
   g_type_class_unref (factory_class);
 
@@ -300,7 +298,6 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
                                const gchar           *textdomain,
                                gpointer               callback_data,
                                guint                  callback_type,
-                               gboolean               create_tearoff,
                                gboolean               static_entry)
 {
   GtkWidget *menu_item;
@@ -314,12 +311,12 @@ gimp_item_factory_create_item (GimpItemFactory       *item_factory,
 
   if (! (strstr (entry->entry.path, "tearoff")))
     {
-      if (tearoffs && create_tearoff)
+      if (tearoffs && item_factory->create_tearoff)
 	{
 	  gimp_item_factory_create_branches (item_factory, entry, textdomain);
 	}
     }
-  else if (! tearoffs || ! create_tearoff)
+  else if (! tearoffs || ! item_factory->create_tearoff)
     {
       return;
     }
@@ -387,7 +384,6 @@ gimp_item_factory_create_items (GimpItemFactory      *item_factory,
                                 GimpItemFactoryEntry *entries,
                                 gpointer              callback_data,
                                 guint                 callback_type,
-                                gboolean              create_tearoff,
                                 gboolean              static_entries)
 {
   gint i;
@@ -399,7 +395,6 @@ gimp_item_factory_create_items (GimpItemFactory      *item_factory,
                                      NULL,
                                      callback_data,
                                      callback_type,
-                                     create_tearoff,
                                      static_entries);
     }
 }
@@ -864,7 +859,7 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
 	  gimp_item_factory_create_item (factory,
                                          &branch_entry,
                                          textdomain,
-                                         NULL, 2, TRUE, FALSE);
+                                         NULL, 2, TRUE);
 
 	  g_object_set_data (G_OBJECT (factory), "complete", NULL);
 	}
@@ -887,7 +882,7 @@ gimp_item_factory_create_branches (GimpItemFactory      *factory,
           gimp_item_factory_create_item (factory,
                                          &tearoff_entry,
                                          textdomain,
-                                         NULL, 2, TRUE, FALSE);
+                                         NULL, 2, TRUE);
 	}
 
       p = strchr (p + 1, '/');

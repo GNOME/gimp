@@ -226,7 +226,7 @@ tool_options_menu_update_presets (GtkItemFactory         *factory,
                                                   GIMP_OBJECT (options)->name);
               gimp_item_factory_create_item (GIMP_ITEM_FACTORY (factory),
                                              &entry, NULL,
-                                             options, 2, FALSE, FALSE);
+                                             options, 2, FALSE);
               g_free (entry.entry.path);
             }
         }

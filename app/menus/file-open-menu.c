@@ -105,8 +105,7 @@ file_open_menu_setup (GimpItemFactory *factory)
       gimp_item_factory_create_item (factory,
                                      &entry,
                                      locale_domain,
-                                     file_proc, 2,
-                                     TRUE, FALSE);
+                                     file_proc, 2, TRUE);
 
       if (is_xcf)
         {

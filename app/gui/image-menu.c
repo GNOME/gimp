@@ -1104,12 +1104,6 @@ image_menu_setup (GimpItemFactory *factory)
 {
   if (GTK_IS_MENU_BAR (GTK_ITEM_FACTORY (factory)->widget))
     {
-      if (GIMP_GUI_CONFIG (factory->gimp->config)->tearoff_menus)
-        {
-          gimp_item_factory_set_visible (GTK_ITEM_FACTORY (factory),
-                                         "/tearoff", FALSE);
-        }
-
       gimp_item_factory_set_visible (GTK_ITEM_FACTORY (factory),
                                      "/filters-separator", FALSE);
     }
@@ -1149,8 +1143,7 @@ image_menu_setup (GimpItemFactory *factory)
             gimp_item_factory_create_item (factory,
                                            &entry,
                                            NULL,
-                                           factory->gimp, 2,
-                                           TRUE, FALSE);
+                                           factory->gimp, 2, TRUE);
           }
       }
   }

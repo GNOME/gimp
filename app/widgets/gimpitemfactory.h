@@ -50,6 +50,7 @@ struct _GimpItemFactory
   Gimp                      *gimp;
   GimpItemFactoryUpdateFunc  update_func;
   gboolean                   update_on_popup;
+  gboolean                   create_tearoff;
   gchar                     *title;
   gchar                     *help_id;
 
@@ -86,14 +87,12 @@ void   gimp_item_factory_create_item      (GimpItemFactory       *factory,
                                            const gchar           *textdomain,
                                            gpointer               callback_data,
                                            guint                  callback_type,
-                                           gboolean               create_tearoff,
                                            gboolean               static_entry);
 void   gimp_item_factory_create_items     (GimpItemFactory       *factory,
                                            guint                  n_entries,
                                            GimpItemFactoryEntry  *entries,
                                            gpointer               callback_data,
                                            guint                  callback_type,
-                                           gboolean               create_tearoff,
                                            gboolean               static_entries);
 
 void   gimp_item_factory_update           (GimpItemFactory       *item_factory,

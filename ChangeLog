@@ -1,3 +1,23 @@
+2003-11-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpitemfactory.[ch]: remember the "create_tearoff"
+	passed to gimp_item_factory_new() in the GimpItemFactory struct
+	and removed "create_tearoff" from the create_item functions
+	(it makes no sense to pass this per create_item).
+
+	* app/gui/file-open-menu.c
+	* app/gui/file-save-menu.c
+	* app/gui/image-menu.c
+	* app/gui/menus.c
+	* app/gui/plug-in-menus.c
+	* app/gui/tool-options-menu.c: changed accordingly.
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): create
+	the menu bar without tearoff entries. It is very confusing to have
+	both the popup menu (which is global and works on the active
+	display) and the menu bar submenus (which are specific to this
+	display) be torn off at the same time.
+
 2003-11-08  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: renamed version.xml.in to version.in in all API
