@@ -144,6 +144,8 @@ run (const gchar      *name,
   GimpRunMode        run_mode;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
+  INIT_I18N ();
+
   run_mode = param[0].data.d_int32;
 
   *nreturn_vals = 1;
