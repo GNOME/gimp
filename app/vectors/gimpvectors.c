@@ -503,6 +503,7 @@ gimp_vectors_transform (GimpItem               *item,
                         gpointer                progress_data)
 {
   GimpVectors *vectors;
+  GimpMatrix3  local_matrix;
   GList       *list;
 
   vectors = GIMP_VECTORS (item);
@@ -513,6 +514,11 @@ gimp_vectors_transform (GimpItem               *item,
                                     _("Transform Path"),
                                     vectors);
 
+  local_matrix = *matrix;
+
+  if (direction == GIMP_TRANSFORM_BACKWARD)
+    gimp_matrix3_invert (&local_matrix);
+
   for (list = vectors->strokes; list; list = g_list_next (list))
     {
       GimpStroke *stroke = list->data;
@@ -522,7 +528,7 @@ gimp_vectors_transform (GimpItem               *item,
         {
           GimpAnchor *anchor = list2->data;
 
-          gimp_matrix3_transform_point (matrix,
+          gimp_matrix3_transform_point (&local_matrix,
                                         anchor->position.x,
                                         anchor->position.y,
                                         &anchor->position.x,
@@ -533,7 +539,7 @@ gimp_vectors_transform (GimpItem               *item,
   gimp_vectors_thaw (vectors);
 }
 
-static void 
+static void
 gimp_vectors_real_thaw (GimpVectors *vectors)
 {
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (vectors));

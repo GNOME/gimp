@@ -1,5 +1,11 @@
 2003-07-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpvectors.c (gimp_vectors_transform): invert the
+	matrix for direction == GIMP_TRANSFORM_BACKWARD. Fixes corrective
+	transformation of paths.
+
+2003-07-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppainttool.c (gimp_paint_tool_draw): add a small
 	EPSILON to the brush coordinates before rounding them (fixes
 	off-by-one floating point rounding fnord for "hard edge" painting
