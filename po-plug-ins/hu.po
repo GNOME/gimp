@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 01:47+0100\n"
-"PO-Revision-Date: 2004-12-06 12:02+0100\n"
+"POT-Creation-Date: 2004-12-19 03:13+0100\n"
+"PO-Revision-Date: 2004-12-19 09:46+0100\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian <gnome@gnome.hu>\n"
 "MIME-Version: 1.0\n"
@@ -2215,9 +2215,8 @@ msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr "c_astretch: a cmap NULL. Kilépés...\n"
 
 #: plug-ins/common/cartoon.c:147
-#, fuzzy
 msgid "Ca_rtoon..."
-msgstr "Karikatúra"
+msgstr "K_arikatúra..."
 
 #: plug-ins/common/cartoon.c:228 plug-ins/common/dog.c:246
 #: plug-ins/common/gauss.c:430 plug-ins/common/neon.c:222
@@ -5618,14 +5617,12 @@ msgid "PNM image"
 msgstr "PNM-kép"
 
 #: plug-ins/common/pnm.c:260
-#, fuzzy
 msgid "PGM image"
-msgstr "PNM-kép"
+msgstr "PGM-kép"
 
 #: plug-ins/common/pnm.c:272
-#, fuzzy
 msgid "PPM image"
-msgstr "PNM-kép"
+msgstr "PPM-kép"
 
 #: plug-ins/common/pnm.c:465 plug-ins/common/pnm.c:486
 #: plug-ins/common/pnm.c:493 plug-ins/common/pnm.c:502
@@ -11669,6 +11666,3 @@ msgstr "Hiba: nem sikerült beolvasni a(z) \"%s\" XJT-tulajdonságfájlt."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Hiba: a(z) \"%s\" XJT-tulajdonságfájl üres."
-
-#~ msgid "Gfig layer %d"
-#~ msgstr "%d. GFig-réteg"
