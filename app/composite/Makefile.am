@@ -36,7 +36,7 @@ libappcomposite_a_built_sources = \
 libappcomposite_a_SOURCES = $(libappcomposite_a_built_sources) $(libappcomposite_a_sources)
 
 
-gimp-composite-dispatch.c: make-gimp-composite-dispatch.py gimp-composite-generic.o
+gimp-composite-dispatch.c: make-gimp-composite-dispatch.py
 	$(srcdir)/make-gimp-composite-dispatch.py gimp-composite-generic.o
 
 gimp-composite-dispatch.h: gimp-composite-dispatch.c
@@ -54,20 +54,26 @@ EXTRA_PROGRAMS = test-composite gimp-composite-test
 
 TESTS = test-composite gimp-composite-test
 
-test_composite_DEPENDENCIES = $(gimpcomposite_dependencies) gimp-composite-regression.o
+test_composite_SOURCES = \
+	gimp-composite-regression.c	\
+	test-composite.c
+
+test_composite_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 test_composite_LDADD = \
 	libappcomposite.a					\
-	gimp-composite-regression.o \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)
 
 
-gimp_composite_test_DEPENDENCIES = $(gimpcomposite_dependencies) gimp-composite-regression.o
+gimp_composite_test_SOURCES = \
+	gimp-composite-regression.c	\
+	gimp-composite-test.c
+
+gimp_composite_test_DEPENDENCIES = $(gimpcomposite_dependencies)
 
 gimp_composite_test_LDADD = \
 	libappcomposite.a					\
-	gimp-composite-regression.o \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(GLIB_LIBS)
 

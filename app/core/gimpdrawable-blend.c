@@ -872,6 +872,7 @@ gradient_put_pixel (int      x,
           if (g_rand_double (ppd->dither_rand) < dither_prob)
             color->a += (1.0 / 255.0);
 
+          if (gray > 1.0)     gray     = 1.0;
           if (color->a > 1.0) color->a = 1.0;
         }
 
@@ -1147,6 +1148,7 @@ gradient_fill_region (GimpImage        *gimage,
                           if (g_rand_double (dither_rand) < dither_prob)
                             color.a += (1.0 / 255.0);
 
+                          if (gray > 1.0)    gray    = 1.0;
                           if (color.a > 1.0) color.a = 1.0;
                         }
 
