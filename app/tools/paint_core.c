@@ -1068,8 +1068,8 @@ paint_core_get_paint_area (PaintCore    *paint_core,
 				   &bwidth, &bheight);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  x = (gint) paint_core->curx - (bwidth  >> 1);
-  y = (gint) paint_core->cury - (bheight >> 1);
+  x = (gint) floor (paint_core->curx) - (bwidth  >> 1);
+  y = (gint) floor (paint_core->cury) - (bheight >> 1);
 
   dwidth  = drawable_width  (drawable);
   dheight = drawable_height (drawable);
@@ -1785,8 +1785,8 @@ brush_to_canvas_tiles (PaintCore *paint_core,
 		     canvas_buf->x, canvas_buf->y,
 		     canvas_buf->width, canvas_buf->height, TRUE);
 
-  x = (gint) paint_core->curx - (brush_mask->width  >> 1);
-  y = (gint) paint_core->cury - (brush_mask->height >> 1);
+  x = (gint) floor (paint_core->curx) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_core->cury) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -1814,8 +1814,8 @@ brush_to_canvas_buf (PaintCore *paint_core,
   gint xoff;
   gint yoff;
 
-  x = (gint) paint_core->curx - (brush_mask->width  >> 1);
-  y = (gint) paint_core->cury - (brush_mask->height >> 1);
+  x = (gint) floor (paint_core->curx) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_core->cury) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -1858,8 +1858,8 @@ paint_to_canvas_tiles (PaintCore *paint_core,
 		     canvas_buf->x, canvas_buf->y,
 		     canvas_buf->width, canvas_buf->height, TRUE);
 
-  x = (gint) paint_core->curx - (brush_mask->width  >> 1);
-  y = (gint) paint_core->cury - (brush_mask->height >> 1);
+  x = (gint) floor (paint_core->curx) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_core->cury) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -1903,8 +1903,8 @@ paint_to_canvas_buf (PaintCore *paint_core,
   gint xoff;
   gint yoff;
 
-  x = (gint) paint_core->curx - (brush_mask->width  >> 1);
-  y = (gint) paint_core->cury - (brush_mask->height >> 1);
+  x = (gint) floor (paint_core->curx) - (brush_mask->width  >> 1);
+  y = (gint) floor (paint_core->cury) - (brush_mask->height >> 1);
   xoff = (x < 0) ? -x : 0;
   yoff = (y < 0) ? -y : 0;
 
@@ -2056,8 +2056,8 @@ paint_core_color_area_with_pixmap (PaintCore            *paint_core,
    * paint_core_get_paint_area.  Ugly to have to do this here, too.
    */
 
-  ulx = (gint) paint_core->curx - (pixmap_mask->width  >> 1);
-  uly = (gint) paint_core->cury - (pixmap_mask->height >> 1);
+  ulx = (gint) floor (paint_core->curx) - (pixmap_mask->width  >> 1);
+  uly = (gint) floor (paint_core->cury) - (pixmap_mask->height >> 1);
 
   offsetx = area->x - ulx;
   offsety = area->y - uly;
