@@ -2645,7 +2645,6 @@ gimp_image_merge_layers (GimpImage *gimage,
   Layer            *merge_layer;
   Layer            *layer;
   Layer            *bottom;
-  LayerModeEffects  bottom_mode;
   guchar            bg[4] = {0, 0, 0, 0};
   GimpImageType     type;
   gint              count;
@@ -2663,7 +2662,6 @@ gimp_image_merge_layers (GimpImage *gimage,
   type  = RGBA_GIMAGE;
   x1 = y1 = x2 = y2 = 0;
   bottom = NULL;
-  bottom_mode = NORMAL_MODE;
 
   /*  Get the layer extents  */
   count = 0;
@@ -2821,28 +2819,18 @@ gimp_image_merge_layers (GimpImage *gimage,
 	g_slist_length (gimage->layers) - 
 	gimp_image_get_layer_index (gimage, layer);
     }
-  /* set the mode of the bottom layer to normal so that the contents
-   *  aren't lost when merging with the all-alpha merge_layer
-   *  Keep a pointer to it so that we can set the mode right after it's
-   *  been merged so that undo works correctly.
-   */
-  bottom = layer;
-  bottom_mode = bottom->mode;
 
-  /* DISSOLVE_MODE is special since it is the only mode that does not
-   *  work on the projection with the lower layer, but only locally on
-   *  the layers alpha channel. 
-   */
-  if (bottom->mode != DISSOLVE_MODE)
-    bottom->mode = NORMAL_MODE;
+  bottom = layer;
 
   /* Copy the tattoo and parasites of the bottom layer to the new layer */
-  layer_set_tattoo(merge_layer, layer_get_tattoo(layer));
-  GIMP_DRAWABLE(merge_layer)->parasites =
-    parasite_list_copy (GIMP_DRAWABLE(layer)->parasites);
+  layer_set_tattoo (merge_layer, layer_get_tattoo (bottom));
+  GIMP_DRAWABLE (merge_layer)->parasites =
+    parasite_list_copy (GIMP_DRAWABLE (bottom)->parasites);
 
   while (reverse_list)
     {
+      LayerModeEffects  mode;
+
       layer = (Layer *) reverse_list->data;
 
       /*  determine what sort of operation is being attempted and
@@ -2884,16 +2872,20 @@ gimp_image_merge_layers (GimpImage *gimage,
       else
 	mask = NULL;
 
+      /* DISSOLVE_MODE is special since it is the only mode that does not
+       *  work on the projection with the lower layer, but only locally on
+       *  the layers alpha channel. 
+       */
+      mode = layer->mode;
+      if (layer == bottom && mode != DISSOLVE_MODE)
+	mode = NORMAL_MODE;
+
       combine_regions (&src1PR, &src2PR, &src1PR, mask, NULL,
-		       layer->opacity, layer->mode, active, operation);
+		       layer->opacity, mode, active, operation);
 
       gimp_image_remove_layer (gimage, layer);
       reverse_list = g_slist_next (reverse_list);
     }
-
-  /* Save old mode in undo */
-  if (bottom)
-    bottom->mode = bottom_mode;
 
   g_slist_free (reverse_list);
 

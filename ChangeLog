@@ -1,3 +1,10 @@
+2003-01-05  Sven Neumann  <sven@gimp.org>
+
+	* app/gimpimage.c (gimp_image_merge_layers): redid the fix for bug
+	#101036 since Garry's fix introduced a crash if the flattened
+	image has undo disabled. Instead of temporarily changing the layer
+	mode, just use a different mode for combine_regions().
+ 
 2003-01-02  Sven Neumann  <sven@gimp.org>
 
 	* app/channel.c (channel_feather): pass offsets to
