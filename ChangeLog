@@ -91,7 +91,6 @@ Mon May 17 14:25:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
 	* app/xcf.c: fixed bogus computation of the maximum size
  	of a compressed tile in xcf_load_level and xcf_save_level.
 
->>>>>>> 1.1118
 1999-05-16  Scott Goehring  <scott@poverty.bloomington.in.us>
 
 	* plug-ins/displace/displace.c (run): Fixed a dumb typo reported
