@@ -2287,7 +2287,6 @@ plug_in_callback (GtkWidget *widget,
 
   /* get the active gdisplay */
   gdisplay = gdisplay_active ();
-  if (!gdisplay) return;
 
   proc_rec = (ProcRecord*) client_data;
 

@@ -1,3 +1,9 @@
+1999-06-28  Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/plug_in.c (plug_in_callback): removed the check for
+	gdisplay_active() returning NULL because it caused all extensions
+	to be un-callable when no image was open.
+
 Sun Jun 27 19:34:22 1999  ape@gandalf.spacetec.no  (Asbjorn Pettersen)
 
 	* app/session.c (save_sessionrc): fp = fopen (filename, "wt");
