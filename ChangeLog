@@ -8,6 +8,7 @@
 
 	* app/display/gimpdisplayshell-callbacks.c
 	* app/display/gimpdisplayshell.c: implemented the new behaviour.
+	Fixes bug #109527.
 
 2003-11-20  Michael Natterer  <mitch@gimp.org>
 
