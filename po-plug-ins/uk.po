@@ -3253,15 +3253,15 @@ msgstr "Яскрав╕сть:"
 
 #: plug-ins/common/diffraction.c:726
 msgid "Scattering:"
-msgstr ""
+msgstr "Розс╕ювання:"
 
 #: plug-ins/common/diffraction.c:735
 msgid "Polatization:"
-msgstr ""
+msgstr "Поляризац╕я:"
 
 #: plug-ins/common/diffraction.c:743
 msgid "Other options"
-msgstr ""
+msgstr "╤нш╕ параметри"
 
 #: plug-ins/common/displace.c:183
 msgid "<Image>/Filters/Map/Displace..."
@@ -3363,7 +3363,7 @@ msgstr "Гравюра"
 
 #: plug-ins/common/engrave.c:247
 msgid "Limit Line Width"
-msgstr ""
+msgstr "Обмеження ширини л╕н╕╖"
 
 #. Height Scale
 #. table col, row
@@ -3458,17 +3458,17 @@ msgstr "Видалити"
 #. Film height/colour
 #: plug-ins/common/film.c:1177 plug-ins/common/film.c:1210
 msgid "Film"
-msgstr "Ф╕льм"
+msgstr "Пл╕вка"
 
 #. Keep maximum image height
 #: plug-ins/common/film.c:1219
 msgid "Fit Height to Images"
-msgstr ""
+msgstr "Розтягувати до висоти зображення"
 
 #. Film color
 #: plug-ins/common/film.c:1251
 msgid "Select Film Color"
-msgstr ""
+msgstr "Виб╕р кольору пл╕вки"
 
 #: plug-ins/common/film.c:1255 plug-ins/common/film.c:1299
 #: plug-ins/common/nova.c:499 plug-ins/gimpressionist/color.c:76
@@ -3478,11 +3478,11 @@ msgstr "Кол╕р:"
 #. Film numbering: Startindex/Font/colour
 #: plug-ins/common/film.c:1262
 msgid "Numbering"
-msgstr ""
+msgstr "Нумерац╕я"
 
 #: plug-ins/common/film.c:1283
 msgid "Start Index:"
-msgstr ""
+msgstr "Початковий ╕ндекс:"
 
 #: plug-ins/common/film.c:1291
 msgid "Font:"
@@ -3491,7 +3491,7 @@ msgstr "Шрифт:"
 #. Numbering color
 #: plug-ins/common/film.c:1295
 msgid "Select Number Color"
-msgstr ""
+msgstr "Виб╕р кольору номер╕в"
 
 #: plug-ins/common/film.c:1305
 msgid "At Bottom"
@@ -3504,11 +3504,11 @@ msgstr "Вгор╕"
 #. ** The right frame keeps the image selection **
 #: plug-ins/common/film.c:1320
 msgid "Image Selection"
-msgstr ""
+msgstr "Виб╕р зображення"
 
 #: plug-ins/common/film.c:1337
 msgid "Advanced Settings (All Values are Fractions of the Film Height)"
-msgstr ""
+msgstr "Розширен╕ установки (Вс╕ значення - дроби висоти пл╕вки)"
 
 #: plug-ins/common/film.c:1353
 msgid "Image Height:"
@@ -3516,27 +3516,27 @@ msgstr "Висота зображення:"
 
 #: plug-ins/common/film.c:1367
 msgid "Image Spacing:"
-msgstr ""
+msgstr "╤нтервал м╕ж зображеннями:"
 
 #: plug-ins/common/film.c:1388
 msgid "Hole Offset:"
-msgstr ""
+msgstr "Зм╕щення отвор╕в:"
 
 #: plug-ins/common/film.c:1402
 msgid "Hole Width:"
-msgstr ""
+msgstr "Ширина отвор╕в:"
 
 #: plug-ins/common/film.c:1416
 msgid "Hole Height:"
-msgstr ""
+msgstr "Висота отвор╕в:"
 
 #: plug-ins/common/film.c:1430
 msgid "Hole Spacing:"
-msgstr ""
+msgstr "╤нтервал м╕ж отворами:"
 
 #: plug-ins/common/film.c:1451
 msgid "Number Height:"
-msgstr ""
+msgstr "Висота номер╕в:"
 
 #: plug-ins/common/film.c:1476
 msgid "Reset to Defaults"
@@ -3548,21 +3548,21 @@ msgstr "<Image>/Ф╕льтри/Св╕тлов╕ ефекти/В╕дблиск..."
 
 #: plug-ins/common/flarefx.c:290
 msgid "Render Flare..."
-msgstr ""
+msgstr "Створення в╕дблиску..."
 
 #: plug-ins/common/flarefx.c:326
 msgid "FlareFX"
-msgstr ""
+msgstr "В╕дблиск"
 
 #. to avoid side effects while initialization
 #: plug-ins/common/flarefx.c:771
 msgid "Center of FlareFX"
-msgstr ""
+msgstr "Центр в╕дблиску"
 
 #. show / hide cursor
 #: plug-ins/common/flarefx.c:845 plug-ins/common/nova.c:668
 msgid "Show Cursor"
-msgstr ""
+msgstr "Показати курсор"
 
 #: plug-ins/common/fractaltrace.c:126
 msgid "<Image>/Filters/Map/Fractal Trace..."
@@ -3588,7 +3588,7 @@ msgstr ""
 
 #: plug-ins/common/fractaltrace.c:783
 msgid "Mandelbrot Parameters"
-msgstr ""
+msgstr "Параметри фрактала Мандельброта"
 
 #: plug-ins/common/gauss_iir.c:183
 msgid "<Image>/Filters/Blur/Gaussian Blur (IIR)..."
@@ -3596,7 +3596,7 @@ msgstr "<Image>/Ф╕льтри/Розмивання/Гаусеве розмивання (IIR)..."
 
 #: plug-ins/common/gauss_iir.c:256
 msgid "gauss_iir: you must specify either horizontal or vertical (or both)"
-msgstr ""
+msgstr "gauss_iir: необх╕дно вказати горизонтальне, вертикальне, або обидва розмивання"
 
 #: plug-ins/common/gauss_iir.c:306 plug-ins/common/gauss_iir.c:360
 #: plug-ins/common/gauss_iir.c:443
@@ -3637,7 +3637,7 @@ msgstr "<Image>/Ф╕льтри/Розмивання/Гаусеве розмивання (RLE)..."
 
 #: plug-ins/common/gauss_rle.c:250
 msgid "gauss_rle: you must specify either horizontal or vertical (or both)"
-msgstr ""
+msgstr "gauss_rle: необх╕дно вказати горизонтальне, вертикальне, або обидва розмивання"
 
 #: plug-ins/common/gauss_rle.c:301 plug-ins/common/gauss_rle.c:355
 #: plug-ins/common/gauss_rle.c:438
