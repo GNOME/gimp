@@ -17,6 +17,7 @@ sub register($$$$$$$$$;@) {
    my($function,$blurb,$help,$author,$copyright,$date,
       $menupath,$imagetypes,$params,$code)=@_;
    $function =~ s%^perl_fu_%logulator_% or die;
+   $imagetypes ||= "RGBA,GREYA,INDEXEDA";
    my($i,$j)=0;
    my($ti,$fsi,$fi);
    $i=@$params;
