@@ -1,6 +1,6 @@
 2004-07-20  Helvetix Victorinox  <helvetix@gimp.org>
 
-	* app/composite/Makefile (regenerate): Updated make-installer.py
+	* app/composite/Makefile.am (regenerate): Updated make-installer.py
 	command line to take advantage of the new compile time method of
 	determining which instruction set to compile.
 
