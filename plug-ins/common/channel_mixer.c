@@ -91,14 +91,14 @@ typedef struct
 } CmParamsType;
 
 
-static GtkWidget *preview;
-
 static void     query (void);
 static void     run   (const gchar      *name,
                        gint              nparams,
                        const GimpParam  *param,
                        gint             *nreturn_vals,
                        GimpParam       **return_vals);
+
+static void cm_set_defaults (CmParamsType *mix);
 
 static void     channel_mixer (GimpDrawable *drawable);
 static gboolean cm_dialog     (GimpDrawable *drawable);
@@ -123,6 +123,8 @@ static void cm_save_file_callback           (GtkWidget        *widget,
 static void cm_save_file_response_callback  (GtkWidget        *dialog,
                                              gint              response_id,
                                              CmParamsType     *mix);
+static void cm_reset_callback               (GtkWidget        *widget,
+                                             CmParamsType     *mix);
 static void cm_combo_callback               (GtkWidget        *widget,
                                              CmParamsType     *mix);
 
@@ -141,6 +143,7 @@ static inline guchar cm_mix_pixel (CmChannelType *ch,
 static void cm_preview       (CmParamsType *mix,
                               GimpPreview  *preview);
 static void cm_set_adjusters (CmParamsType *mix);
+static void cm_update_ui     (CmParamsType *mix);
 
 static void cm_save_file (CmParamsType *mix,
                           FILE         *fp);
@@ -154,17 +157,9 @@ GimpPlugInInfo PLUG_IN_INFO =
   run    /* run_proc   */
 };
 
-static CmParamsType mix =
-{
-  { 1.0, 0.0, 0.0 },
-  { 0.0, 1.0, 0.0 },
-  { 0.0, 0.0, 1.0 },
-  { 1.0, 0.0, 0.0 },
-  FALSE,
-  FALSE,
-  CM_RED_CHANNEL,
-  TRUE
-};
+static CmParamsType  mix;
+static GtkWidget    *preview;
+
 
 MAIN ()
 
@@ -235,6 +230,9 @@ run (const gchar      *name,
 
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
+      cm_set_defaults (&mix);
+      mix.preview = TRUE;
+
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
@@ -304,6 +302,22 @@ run (const gchar      *name,
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
+}
+
+static void
+cm_set_defaults (CmParamsType *mix)
+{
+  static CmParamsType defaults = {
+    { 1.0, 0.0, 0.0 },
+    { 0.0, 1.0, 0.0 },
+    { 0.0, 0.0, 1.0 },
+    { 1.0, 0.0, 0.0 },
+    FALSE,
+    FALSE,
+    CM_RED_CHANNEL
+  };
+
+  memcpy (mix, &defaults, G_STRUCT_OFFSET (CmParamsType, preview));
 }
 
 static gdouble
@@ -659,6 +673,14 @@ cm_dialog (GimpDrawable *drawable)
                     G_CALLBACK (cm_save_file_callback),
                     &mix);
 
+  button = gtk_button_new_from_stock (GIMP_STOCK_RESET);
+  gtk_container_add (GTK_CONTAINER (hbox), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (cm_reset_callback),
+                    &mix);
+
   gtk_widget_show (dialog);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
@@ -921,17 +943,11 @@ cm_load_file_response_callback (GtkWidget    *dialog,
           else
             mix->monochrome_flag = FALSE;
 
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->monochrome_toggle),
-                                        mix->monochrome_flag);
-
           fscanf (fp, "%*s %s", buf[0]);
           if (strcmp (buf[0], "TRUE") == 0)
             mix->preserve_luminosity_flag = TRUE;
           else
             mix->preserve_luminosity_flag = FALSE;
-
-          gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->preserve_luminosity_toggle),
-                                        mix->preserve_luminosity_flag);
 
           fscanf (fp, "%*s %s %s %s", buf[0], buf[1], buf[2]);
           mix->red.red_gain   = g_ascii_strtod (buf[0], NULL);
@@ -955,11 +971,7 @@ cm_load_file_response_callback (GtkWidget    *dialog,
 
           fclose (fp);
 
-          gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (mix->combo),
-                                         mix->output_channel);
-          cm_set_adjusters (mix);
-
-          gimp_preview_invalidate (GIMP_PREVIEW (preview));
+          cm_update_ui (mix);
         }
       else
         {
@@ -1166,6 +1178,14 @@ cm_save_file (CmParamsType *mix,
 }
 
 static void
+cm_reset_callback (GtkWidget    *widget,
+                   CmParamsType *mix)
+{
+  cm_set_defaults (mix);
+  cm_update_ui (mix);
+}
+
+static void
 cm_combo_callback (GtkWidget    *widget,
                    CmParamsType *mix)
 {
@@ -1207,4 +1227,21 @@ cm_set_adjusters (CmParamsType *mix)
       gtk_adjustment_set_value (mix->blue_data,  mix->blue.blue_gain  * 100.0);
       break;
     }
+}
+
+static void
+cm_update_ui (CmParamsType *mix)
+{
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->monochrome_toggle),
+                                mix->monochrome_flag);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->preserve_luminosity_toggle),
+                                mix->preserve_luminosity_flag);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (mix->combo),
+                                 mix->output_channel);
+
+  cm_set_adjusters (mix);
+
+  gimp_preview_invalidate (GIMP_PREVIEW (preview));
 }
