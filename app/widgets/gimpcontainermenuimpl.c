@@ -285,13 +285,16 @@ gimp_container_menu_impl_set_preview_size (GimpContainerMenu *menu)
        list;
        list = g_list_next (list))
     {
-      GimpMenuItem *menu_item;
+      if (GIMP_IS_MENU_ITEM (list->data))
+        {
+          GimpMenuItem *menu_item;
 
-      menu_item = GIMP_MENU_ITEM (list->data);
+          menu_item = GIMP_MENU_ITEM (list->data);
 
-      gimp_preview_set_size (GIMP_PREVIEW (menu_item->preview),
-			     menu->preview_size,
-			     GIMP_PREVIEW (menu_item->preview)->border_width);
+          gimp_preview_set_size (GIMP_PREVIEW (menu_item->preview),
+                                 menu->preview_size,
+                                 GIMP_PREVIEW (menu_item->preview)->border_width);
+        }
     }
 }
 

@@ -552,6 +552,15 @@ gimp_preview_set_viewable (GimpPreview  *preview,
                     g_type_is_a (G_TYPE_FROM_INSTANCE (preview),
                                  gimp_preview_type_from_viewable (viewable)));
 
+  if (viewable == preview->viewable)
+    return;
+
+  if (preview->buffer)
+    {
+      g_free (preview->buffer);
+      preview->buffer = NULL;
+    }
+
   if (preview->viewable)
     {
       g_object_remove_weak_pointer (G_OBJECT (preview->viewable),

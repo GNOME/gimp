@@ -353,6 +353,13 @@ gimp_document_view_delete_dangling_foreach (GimpImagefile     *imagefile,
 }
 
 static void
+gimp_document_view_update_foreach (GimpImagefile     *imagefile,
+                                   GimpContainerView *container_view)
+{
+  gimp_imagefile_update (imagefile, container_view->preview_size);
+}
+
+static void
 gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
                                              guint             state,
                                              GimpDocumentView *view)
@@ -365,13 +372,13 @@ gimp_document_view_refresh_extended_clicked (GtkWidget        *widget,
     {
       gimp_container_foreach (editor->view->container,
                               (GFunc) gimp_document_view_delete_dangling_foreach,
-                              editor->view->container);
+                              editor->view);
     }
   else if (state & GDK_SHIFT_MASK)
     {
       gimp_container_foreach (editor->view->container,
-                              (GFunc) gimp_imagefile_update,
-                              (gpointer) editor->view->preview_size);
+                              (GFunc) gimp_document_view_update_foreach,
+                              editor->view);
     }
 }
 

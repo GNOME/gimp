@@ -1,5 +1,21 @@
 2002-05-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainermenuimpl.c: don't try to set the
+	preview_size of plain GtkMenuItems.
+
+	* app/widgets/gimpdocumentview.c: fixed the "update" and
+	"delete dangling" functionals. They got passed wrong user_data.
+
+	* app/widgets/gimpitemfactory.c (gtk_item_factory_set_visible): if
+	the widget found is a menu, get it's parent item and show/hide
+	that.
+
+	* app/widgets/gimppreview.c (gimp_preview_set_viewable): always
+	clear preview->buffer so we don't display previews of vanished
+	viewables.
+
+2002-05-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpcontainer.c: disabled debuggind output.
 
 	* app/core/gimpdrawable.c (gimp_drawable_init): no need to
