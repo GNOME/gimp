@@ -795,7 +795,7 @@ blend (GImage       *gimage,
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), TRUE);
 
   gradient_fill_region (gimage, drawable,
-			&bufPR, (x2 - x1), (y2 - y1),
+  			&bufPR, (x2 - x1), (y2 - y1),
 			blend_mode, gradient_type, offset, repeat,
 			supersample, max_depth, threshold,
 			(startx - x1), (starty - y1),
@@ -1848,7 +1848,7 @@ blend_invoker (Argument *args)
   if (success)
     {
       int_value = args[2].value.pdb_int;
-      if (int_value >= NORMAL_MODE && int_value <= VALUE_MODE)
+      if (int_value >= NORMAL_MODE && int_value <= DIVIDE_MODE)
 	paint_mode = int_value;
       else
 	success = FALSE;

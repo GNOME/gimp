@@ -1,3 +1,7 @@
+Sun Nov 15 13:09:43 CET 1998 Marc Lehmann <pcg@goof.com>
+
+	* app/blend.c: allow the use of DIVIDE_MODE.
+
 Sat Nov 14 23:16:55 GMT 1998  Austin Donnelly  <austin@greenend.org.uk>
 
 	* app/gimpimage.h
