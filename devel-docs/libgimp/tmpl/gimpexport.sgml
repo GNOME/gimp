@@ -35,7 +35,7 @@ as it will most probably have to open a dialog.
 @CAN_HANDLE_INDEXED: Use if the plug_in can save INDEXED images.
 @CAN_HANDLE_ALPHA: Use if the plugin can save an alpha channel with 
                    all image_types.
-@CAN_HANDLE_LAYERS: Use if the plugin can save multiple layers. 
+@CAN_HANDLE_LAYERS: Use if the plugin can save multiple layers.
 @CAN_HANDLE_LAYERS_AS_ANIMATION: Use if the plugin can save multiple layers
                                  but treats them as frames in an animation.
 @NEEDS_ALPHA: Use if the plugin needs an alpha channels and can't save

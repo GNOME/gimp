@@ -162,7 +162,20 @@ gimp_path_editor_get_type (void)
   return gpe_type;
 }
 
-
+/**
+ * gimp_path_editor_new:
+ * @filesel_title: The title of the #GtkFileSelection dialog which can be
+ *                 popped up by the attached #GimpFileSelection.
+ * @path: The initial search path.
+ *
+ * Creates a new #GimpPathEditor widget.
+ *
+ * The elements of the initial search path must be separated with the
+ * #G_SEARCHPATH_SEPARATOR character.
+ *
+ * Returns: A pointer to the new #GimpPathEditor widget.
+ *
+ */
 GtkWidget *
 gimp_path_editor_new (gchar *filesel_title,
 		      gchar *path)
@@ -237,7 +250,6 @@ gimp_path_editor_realize (GtkWidget *widget)
   GdkPixmap      *pixmap;
   GdkBitmap      *mask;
   GtkWidget      *gtk_pixmap;
-  /* GList          *list = NULL; */
 
   gpe = GIMP_PATH_EDITOR (widget);
 
@@ -295,6 +307,18 @@ gimp_path_editor_realize (GtkWidget *widget)
   gdk_bitmap_unref (mask);
 }
 
+/**
+ * gimp_path_editor_get_path:
+ * @gpe: The path editor you want to get the search path from.
+ *
+ * The elements of the returned search path string are separated with the
+ * #G_SEARCHPATH_SEPARATOR character.
+ *
+ * Note that you have to g_free() the returned string.
+ *
+ * Returns: The search path the user has selected in the path editor.
+ *
+ */
 gchar *
 gimp_path_editor_get_path (GimpPathEditor *gpe)
 {
@@ -398,9 +422,10 @@ gimp_path_editor_new_callback (GtkWidget *widget,
   gtk_widget_set_sensitive (gpe->down_button, FALSE);
   gtk_widget_set_sensitive (gpe->file_selection, TRUE);
 
-  gtk_editable_set_position (GTK_EDITABLE (GIMP_FILE_SELECTION (gpe->file_selection)->entry), -1);
-  /* gtk_editable_select_region (GTK_EDITABLE (gpe->entry), 0, -1); */
-  gtk_widget_grab_focus (GTK_WIDGET (GIMP_FILE_SELECTION (gpe->file_selection)->entry));
+  gtk_editable_set_position
+    (GTK_EDITABLE (GIMP_FILE_SELECTION (gpe->file_selection)->entry), -1);
+  gtk_widget_grab_focus
+    (GTK_WIDGET (GIMP_FILE_SELECTION (gpe->file_selection)->entry));
 }
 
 static void

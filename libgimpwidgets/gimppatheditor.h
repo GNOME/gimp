@@ -63,15 +63,13 @@ struct _GimpPathEditorClass
   void (* path_changed) (GimpPathEditor *gpe);
 };
 
+/* For information look into the C source or the html documentation */
+
 GtkType     gimp_path_editor_get_type (void);
 
-/*  creates a new GimpPathEditor widget
- */
-GtkWidget * gimp_path_editor_new      (gchar *filesel_title,
-				       gchar *path);
+GtkWidget * gimp_path_editor_new      (gchar          *filesel_title,
+				       gchar          *path);
 
-/*  it's up to the caller to g_free() the returned string
- */
 gchar     * gimp_path_editor_get_path (GimpPathEditor *gpe);
 
 #ifdef __cplusplus

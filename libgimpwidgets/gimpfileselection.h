@@ -40,7 +40,7 @@ typedef struct _GimpFileSelectionClass  GimpFileSelectionClass;
 
 struct _GimpFileSelection
 {
-  GtkVBox    hbox;
+  GtkHBox    hbox;
 
   GtkWidget *file_exists;
   GtkWidget *entry;
@@ -65,21 +65,15 @@ struct _GimpFileSelectionClass
   void (* filename_changed) (GimpFileSelection *gfs);
 };
 
+/* For information look into the C source or the html documentation */
+
 GtkType     gimp_file_selection_get_type    (void);
 
-/*  creates a new GimpFileSelection widget
- *
- *  dir_only    == TRUE  will allow only directories
- *  check_valid == TRUE  will show a pixmap which indicates if
- *                       the filename is valid
- */
-GtkWidget*  gimp_file_selection_new         (gchar             *title,
-					     gchar             *filename,
-					     gboolean           dir_only,
-					     gboolean           check_valid);
+GtkWidget*  gimp_file_selection_new         (gchar              *title,
+					     gchar              *filename,
+					     gboolean            dir_only,
+					     gboolean            check_valid);
 
-/*  it's up to the caller to g_free() the returned string
- */
 gchar*      gimp_file_selection_get_filename (GimpFileSelection *gfs);
 
 void        gimp_file_selection_set_filename (GimpFileSelection *gfs,

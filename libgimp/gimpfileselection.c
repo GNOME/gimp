@@ -179,6 +179,19 @@ gimp_file_selection_get_type (void)
   return gfs_type;
 }
 
+/**
+ * gimp_file_selection_new:
+ * @title: The title of the #GtkFileSelection dialog.
+ * @filename: The initial filename.
+ * @dir_only: #TRUE if the file selection should accept directories only.
+ * @check_valid: #TRUE if the widget should check if the entered file
+ *               really exists.
+ *
+ * Creates a new #GimpFileSelection widget.
+ *
+ * Returns: A pointer to the new #GimpFileSelection widget.
+ *
+ */
 GtkWidget *
 gimp_file_selection_new (gchar    *title,
 			 gchar    *filename,
@@ -228,6 +241,15 @@ gimp_file_selection_realize (GtkWidget *widget)
   gtk_widget_show (gfs->file_exists);
 }
 
+/**
+ * gimp_file_selection_get_filename:
+ * @gfs: The file selection you want to know the filename from.
+ *
+ * Note that you have to g_free() the returned string.
+ *
+ * Returns: The file or directory the user has entered.
+ *
+ */
 gchar *
 gimp_file_selection_get_filename (GimpFileSelection *gfs)
 {
@@ -237,6 +259,16 @@ gimp_file_selection_get_filename (GimpFileSelection *gfs)
   return gtk_editable_get_chars (GTK_EDITABLE (gfs->entry), 0, -1);
 }
 
+/**
+ * gimp_file_selection_set_filename:
+ * @gfs: The file selection you want to set the filename for.
+ * @filename: The new filename.
+ *
+ * If you specified @check_valid as #TRUE in gimp_file_selection_new()
+ * the #GimpFileSelection will immediately check the validity of the file
+ * name.
+ *
+ */
 void
 gimp_file_selection_set_filename (GimpFileSelection *gfs,
 				  gchar             *filename)

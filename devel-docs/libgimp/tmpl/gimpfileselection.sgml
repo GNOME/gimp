@@ -2,11 +2,28 @@
 GimpFileSelection
 
 <!-- ##### SECTION Short_Description ##### -->
-
+Widget for entering a filename.
 
 <!-- ##### SECTION Long_Description ##### -->
 <para>
-
+This widget is used to enter filenames or directories.
+</para>
+<para>
+There is a #GtkEntry for entering the filename manually and a "..."
+button which will pop up a #GtkFileSelection dialog.
+</para>
+<para>
+You can restrict the #GimpFileSelection to directories. In this case
+the filename listbox of the #GtkFileSelection dialog will be hidden.
+</para>
+<para>
+If you specify @check_valid as #TRUE in gimp_file_selection_new()
+the entered filename will be checked for validity and a pixmap will be
+shown which indicates if the file exists or not.
+</para>
+<para>
+Whenever the user changes the filename, the "filename_changed" signal
+will be emitted.
 </para>
 
 <!-- ##### SECTION See_Also ##### -->
@@ -22,7 +39,8 @@ GimpFileSelection
 
 <!-- ##### MACRO GIMP_FILE_SELECTION ##### -->
 <para>
-
+Checks if the passed pointer is a pointer to a #GimpFileSelection and
+performes the cast if valid.
 </para>
 
 @obj: The pointer to cast.
@@ -60,7 +78,7 @@ GimpFileSelection
 
 <!-- ##### SIGNAL GimpFileSelection::filename-changed ##### -->
 <para>
-
+This signal is emitted whenever the user changes the filename.
 </para>
 
 @gimpfileselection: the object which received the signal.

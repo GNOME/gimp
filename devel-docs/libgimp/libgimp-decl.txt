@@ -2298,7 +2298,7 @@ void
 <FUNCTION>
 <NAME>gimp_file_selection_new</NAME>
 <RETURNS>GtkWidget *</RETURNS>
-gchar             *title,gchar             *filename,gboolean           dir_only,gboolean           check_valid
+gchar              *title,gchar              *filename,gboolean            dir_only,gboolean            check_valid
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_file_selection_get_filename</NAME>
@@ -2708,7 +2708,7 @@ void
 <FUNCTION>
 <NAME>gimp_path_editor_new</NAME>
 <RETURNS>GtkWidget  *</RETURNS>
-gchar *filesel_title,gchar *path
+gchar          *filesel_title,gchar          *path
 </FUNCTION>
 <FUNCTION>
 <NAME>gimp_path_editor_get_path</NAME>

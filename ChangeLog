@@ -1,3 +1,8 @@
+2000-02-08  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimpfileselection.[ch]
+	* libgimp/gimppatheditor.[ch]: document the two widgets.
+
 Tue Feb  8 18:19:29 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/gimpdnd.c: When dragging a layer, show it in its full size 
