@@ -1923,7 +1923,7 @@ xcf_load_image_props (XcfInfo *info,
 	    info->cp += xcf_read_int32 (info->fp, &unit, 1);
 	    
 	    if ((unit <= GIMP_UNIT_PIXEL) ||
-		(unit >= gimp_unit_get_number_of_units()))
+		(unit >= gimp_unit_get_number_of_built_in_units()))
 	      {
 		g_message ("Warning, unit out of range in XCF file, falling back to inches");
 		unit = GIMP_UNIT_INCH;
