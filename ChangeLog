@@ -1,3 +1,8 @@
+Fri Jul 30 02:01:16 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+        * docs/parasites.txt: add some suggested colour parasites (no icc
+        profile).
+
 Thu Jul 29 17:18:42 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* tools/pdbgen/pdb/tools.pdb: hard code orientation constants for
