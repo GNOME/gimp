@@ -1,3 +1,17 @@
+2002-02-02  Manish Singh  <yosh@gimp.org>
+
+	* configure.in
+	* Makefile.am
+	* app/Makefile.am 
+	* docs/Makefile.am
+	* plug-ins/print/Makefile.am
+	* tools/Makefile.am
+	* (the various manpages): versioned the binaries and manpages.
+        Added an --enable-default-binary switch to configure to make
+        symlinks for unversioned things (defaults to no for 1.3). The
+	perl stuff isn't touched, but that's disabled in the build here
+	anyway.
+
 2002-02-01  Manish Singh  <yosh@gimp.org>
 
 	* libgimpwidgets/gimppatheditor.[ch]: treeviewized and undeprecated

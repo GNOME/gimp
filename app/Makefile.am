@@ -152,3 +152,15 @@ gimp_1_3_LDADD = @STRIP_BEGIN@ \
 	$(INTLLIBS)							\
 	$(REGEXREPL)							\
 @STRIP_END@
+
+install-exec-hook:
+if DEFAULT_BINARY
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f gimp \
+	&& $(LN_S) gimp-1.3 gimp
+endif
+
+uninstall-local:
+if DEFAULT_BINARY
+	rm -f $(DESTDIR)$(bindir)/gimp
+endif

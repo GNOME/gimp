@@ -10,7 +10,7 @@ libexecdir = $(gimpplugindir)/plug-ins
 
 libexec_PROGRAMS = print
 
-bin_PROGRAMS = escputil
+bin_PROGRAMS = escputil-1.3
 
 print_SOURCES = @STRIP_BEGIN@ \
 	print-canon.c		\
@@ -31,9 +31,9 @@ print_SOURCES = @STRIP_BEGIN@ \
 	print_gimp.h		\
 @STRIP_END@
 
-escputil_SOURCES = escputil.c
+escputil_1_3_SOURCES = escputil.c
 
-man_MANS = escputil.1
+man_MANS = escputil-1.3.1
 
 EXTRA_DIST = print-printers.c
 
@@ -59,4 +59,41 @@ LDADD = @STRIP_BEGIN@ \
 	$(INTLLIBS)							\
 @STRIP_END@
 
-escputil_LDADD =
+escputil_1_3_LDADD =
+
+install-exec-hook:
+if DEFAULT_BINARY
+	cd $(DESTDIR)$(bindir) \
+	&& rm -f escputil \
+	&& $(LN_S) escputil-1.3 escputil
+endif
+
+install-data-hook:
+if DEFAULT_BINARY
+	@list='$(man_MANS)'; \
+	for i in $$list; do \
+	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
+	  n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
+	  f="$$n.$$s"; \
+	  echo "cd $(DESTDIR)$(mandir)/man$$s"; \
+	  cd $(DESTDIR)$(mandir)/man$$s; \
+	  echo "rm -f $$f"; \
+	  rm -f $$f; \
+	  echo "ln -s $$i $$f"; \
+	  ln -s $$i $$f; \
+	done
+endif
+
+uninstall-local:
+if DEFAULT_BINARY
+	@echo " rm -f $(DESTDIR)$(bindir)/escputil"; \
+	rm -f $(DESTDIR)$(bindir)/escputil
+	@list='$(man_MANS)'; \
+	for i in $$list; do \
+	  s=`echo $$i | sed -e 's/.*\\(.\\)$$/\1/'`; \
+	  n=`echo $$i | sed -e 's/-[^-]*$$//'`; \
+	  f="$$n.$$s"; \
+	  echo " rm -f $(DESTDIR)$(mandir)/man$$s/$$f"; \
+	  rm -f $(DESTDIR)$(mandir)/man$$s/$$f; \
+	done
+endif

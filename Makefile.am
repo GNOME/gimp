@@ -32,7 +32,7 @@ bin_SCRIPTS = gimptool-1.3 @GIMPINSTALL@
 pkgconfigdir = $(libdir)/pkgconfig
 pkgconfig_DATA = gimp-1.3.pc gimpui-1.3.pc
 
-EXTRA_SCRIPTS = gimpinstall
+EXTRA_SCRIPTS = gimpinstall-1.3
 
 EXTRA_DIST = \
 	AUTHORS				\
@@ -60,13 +60,17 @@ EXTRA_DIST = \
 	po-script-fu/script-fu-xgettext	\
 	po-script-fu/update.sh
 
-gimpinstall:
-	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall
+gimpinstall-1.3:
+	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-1.3
 
-install-exec-local:
+install-exec-hook:
+if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
-	&& rm -f gimp-config-1.3 \
-	&& $(LN_S) gimptool-1.3 gimp-config-1.3
+	&& rm -f gimptool \
+	&& $(LN_S) gimptool-1.3 gimptool
+endif
 
 uninstall-local:
-	rm -f $(DESTDIR)$(bindir)/gimp-config-1.3
+if DEFAULT_BINARY
+	rm -f $(DESTDIR)$(bindir)/gimptool
+endif
