@@ -67,8 +67,6 @@ changed_cb(GtkTreeSelection *selection, gpointer param)
 {
   Selection_t *data = (Selection_t*) param;
 
-  printf("changed_cb\n");
-
   if (data->select_lock) {
     data->select_lock = FALSE;
   } else {
@@ -78,12 +76,13 @@ changed_cb(GtkTreeSelection *selection, gpointer param)
     GtkTreeModel *model;
     Command_t *command;
 
-    gtk_tree_selection_get_selected (selection, &model, &iter);
-    gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
-
-    printf("%d %d\n", count, obj->selected);
+    if (count == 0)
+      return;
 
     if (count == 1) {
+      gtk_tree_selection_get_selected (selection, &model, &iter);
+      gtk_tree_model_get (GTK_TREE_MODEL(data->store), &iter, 0, &obj, -1);
+
       if (obj->selected) {
 	gtk_tree_selection_unselect_iter (selection, &iter);
 	command = unselect_command_new (obj);
