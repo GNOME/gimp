@@ -1,31 +1,30 @@
-# Copyright (C) 2002-2003 Free Software Foundation, Inc.
+# Copyright (C) 2002-2005 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
 # Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
-# translators@gnome.pl
+# translators@gnomepl.org
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # This file is distributed under the same license as the gimp package.
 #
-# Artur Polaczyński <artii@o2.pl>, 2002-2003.
-# GNOME PL Team <translators@gnome.pl>, 2002-2004.
-#
 # do przejrzenia !!! grep (TODO)
+# Artur Polaczyński <artii@o2.pl>, 2002-2003.
+# GNOME PL Team <translators@gnome.pl>, 2002-2005.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp20-tips\n"
+"Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 00:46+0100\n"
-"PO-Revision-Date: 2004-03-22 11:06+0100\n"
-"Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
-"Language-Team: Polish <pl@li.org>\n"
+"POT-Creation-Date: 2005-01-29 16:35+0100\n"
+"PO-Revision-Date: 2005-01-28 22:43+0100\n"
+"Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
+"Language-Team: Polski <translators@gnomepl.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
 
 #: tips/gimp-tips.xml.in.h:1
-#, fuzzy
 msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Witaj w programie GIMP!</big>"
 
@@ -77,7 +76,6 @@ msgstr ""
 "warstw."
 
 #: tips/gimp-tips.xml.in.h:7
-#, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -86,11 +84,10 @@ msgid ""
 msgstr ""
 "Przed wykonaniem jakichkolwiek operacji na oderwanym zaznaczeniu należy je "
 "przytwierdzić do nowej lub istniejącej warstwy. Aby to uzyskać, wystarczy w "
-"oknie z warstwami kliknąć przycisk nowej warstwy lub przycisk zakotwiczający "
-"warstwę. Ten sam efekt można uzyskać korzystając z menu kontekstowego."
+"oknie z warstwami kliknąć przycisk \"Nowa warstwa\" lub przycisk \"Zakotwicz "
+"warstwę\". Ten sam efekt można uzyskać korzystając z menu kontekstowego."
 
 #: tips/gimp-tips.xml.in.h:8
-#, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -103,11 +100,10 @@ msgstr ""
 "trakcie działania. Aby to zrobić, wystarczy otworzyć menu z wybranym "
 "poleceniem, wyróżnić pozycję odpowiadającą poleceniu, a następnie przycisnąć "
 "kombinację klawiszy stanowiącą nowy skrót klawiszowy. Jeśli w preferencjach "
-"aktywna jest opcja \"Zapis skrótów klawiszowych przed zakończeniem\", to "
-"wszystkie nowe lub zmienione skróty będą zapamiętywane automatycznie."
+"aktywna jest opcja \"Zapisz skróty klawiszowe przed zakończeniem\", to "
+"wszystkie skróty klawiszowe będą zapamiętane przy zakończeniu GIMP-a"
 
 #: tips/gimp-tips.xml.in.h:9
-#, fuzzy
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -115,12 +111,11 @@ msgid ""
 msgstr ""
 "Aby umieścić na obrazie prowadnicę, należy kliknąć linijkę i przeciągnąć ją "
 "w wybrane miejsce obrazu. Przy wszystkich operacjach wykonywanych z użyciem "
-"myszki wskaźnik będzie przyciągany do prowadnic. Aby usunąć wybraną "
-"prowadnicę, wystarczy wybrać narzędzie przesuwania, a następnie przeciągnąć "
-"prowadnicę na linijkę."
+"myszki wskaźnik będzie przyciągany do prowadnic. Aby usunąć prowadnicę, "
+"wystarczy wybrać narzędzie przesuwania, a następnie przeciągnąć prowadnicę "
+"poza obraz."
 
 #: tips/gimp-tips.xml.in.h:10
-#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -128,11 +123,11 @@ msgid ""
 "correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
 msgstr ""
 "Jeśli zeskanowane zdjęcia wydają się niezbyt kolorowe, można poprawić ich "
-"rozpiętość tonalną korzystając z narzędzia \"Poziomy\" (\"Warstwa/Kolory/"
+"kolorystykę korzystając z narzędzia \"Poziomy...\" (\"Warstwa&gt;Kolory&gt;"
 "Poziomy...\"). Najprostszym sposobem użycia narzędzia jest kliknięcie w jego "
 "oknie dialogowym przycisku \"Automatycznie\". Występowanie zniekształceń "
 "kolorów (ang. color cast) można skorygować za pomocą narzędzia \"Krzywe"
-"\" (\"Warstwa/Kolory/Krzywe...\")."
+"\" (\"Warstwa&gt;Kolory&gt;Krzywe...\")."
 
 #: tips/gimp-tips.xml.in.h:11
 msgid ""
@@ -140,10 +135,10 @@ msgid ""
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
 msgstr ""
-"Podczas tworzenia pociągnięcia wzdłuż ścieżki (\"Edycja/Pociągnij ścieżkę..."
-"\") możliwe jest użycie dowolnego narzędzia rysowania z jego bieżącymi "
-"ustawieniami. Można więc pociągnąć ścieżkę pędzlem w trybie gradientu, a "
-"nawet gumką lub narzędziem rozsmarowywania."
+"Podczas tworzenia pociągnięcia wzdłuż ścieżki (\"Edycja&gt;Pociągnij "
+"ścieżkę...\") możliwe jest użycie dowolnego narzędzia rysowania z jego "
+"bieżącymi ustawieniami. Można więc pociągnąć ścieżkę pędzlem w trybie "
+"gradientu, a nawet gumką lub narzędziem rozsmarowywania."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -162,10 +157,9 @@ msgid ""
 msgstr ""
 "Większość wtyczek wykonuje operacje tylko na aktywnej warstwie. Jeśli "
 "operacja dotyczyć ma całego obrazu, przed jej wykonaniem należy połączyć "
-"wszystkie warstwy w jedną (\"Obraz/Spłasz obraz\")."
+"wszystkie warstwy w jedną (\"Obraz&gt;Spłasz obraz\")."
 
 #: tips/gimp-tips.xml.in.h:14
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -173,10 +167,10 @@ msgid ""
 "Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
 msgstr ""
 "Nie wszystkie efekty mogą być wykorzystywane na obrazach dowolnych typów. "
-"Efekty, których nie można użyć na bieżącym obrazie, reprezentowane są przez "
-"nieaktywne (zwykle wyszarzone) pozycje menu. Aby ich użyć, należy zazwyczaj "
-"zmienić tryb obrazu na RGB (\"Obraz/Tryb/RGB\"), dodać kanał alfa (\"Warstwa/"
-"Przezroczystość/Dodaj kanał alfa\") lub też spłaszczyć obraz (\"Obraz/"
+"Efekty, których nie można użyć na bieżącym obrazie, są to wyszarzone  "
+"pozycje menu. Aby ich użyć, należy zazwyczaj zmienić tryb obrazu na RGB "
+"(\"Obraz&gt;Tryb&gt;RGB\"), dodać kanał alfa (\"Warstwa&gt;"
+"Przezroczystość&gt;Dodaj kanał alfa\") lub też spłaszczyć obraz (\"Obraz&gt;"
 "Spłaszcz obraz\")."
 
 #: tips/gimp-tips.xml.in.h:15
@@ -195,6 +189,8 @@ msgstr ""
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr ""
+"Program GIMP potrafi cofnąć większość operacji robionych na obrazie. Nie bój "
+"się więc eksperymentować."
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -219,7 +215,6 @@ msgstr ""
 "złożeniem zawartości składników stosu."
 
 #: tips/gimp-tips.xml.in.h:19
-#, fuzzy
 msgid ""
 "The layer named &quot;Background&quot; is special because it lacks "
 "transparency. This prevents you from moving the layer up in the stack. You "
@@ -229,11 +224,10 @@ msgstr ""
 "Warstwa o nazwie \"Tło\" jest wyjątkowa ze względu na brak przezroczystości. "
 "Uniemożliwia to dodanie maski kanału oraz podniesienie warstwy ponad inne na "
 "stosie warstw. Możliwe jest dodanie do warstwy przezroczystości poprzez "
-"kliknięcie jej podglądu (w oknie z warstwami) prawym przyciskiem i wybór "
+"kliknięcie prawym klawiszem myszy jej podglądu (w oknie z warstwami) i wybór "
 "polecenia \"Dodaj kanał alfa\"."
 
 #: tips/gimp-tips.xml.in.h:20
-#, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
@@ -278,15 +272,14 @@ msgstr ""
 "PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:23
-#, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Try "
 "pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "Możesz ustawić zaznaczenie a następnie przesunąć je myszką przytrzymując "
-"klawisz <tt>Alt</tt>. Jeśli to powoduje ruch okna to sprubuj użyć <tt>Shift"
-"+Alt</tt>."
+"klawisz <tt>Alt</tt>. Jeśli to powoduje przesunięcie okna, spróbuj użyć "
+"jednocześnie klawiszy <tt>Shift+Alt</tt>."
 
 #: tips/gimp-tips.xml.in.h:24
 msgid ""
@@ -332,10 +325,10 @@ msgid ""
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters-&gt;Render-&gt;Gfig."
 msgstr ""
-"\"Edycja -&gt; Rysuj\" pozwala na rysowanie bieżącym pędzlem prostych "
-"prostokątów lub okręgów wzdłuż krawędzi zaznaczenia. Bardziej skomplikowane "
-"figury uzyskasz, wybierając z menu opcję \"Filtry -&gt; Renderowanie -&gt; "
-"Gfig\"."
+"\"Edycja -&gt; Po_ciągnij wzdłuż zaznaczenia...\" pozwala na rysowanie "
+"bieżącym pędzlem prostych prostokątów lub okręgów wzdłuż krawędzi "
+"zaznaczenia. Bardziej skomplikowane figury uzyskasz, wybierając z menu opcję "
+"\"Filtry -&gt; Renderowanie -&gt; Gfigury\"."
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""
@@ -354,14 +347,13 @@ msgstr ""
 "klikając drugim przyciskiem myszy nazwę warstwy w oknie \"Warstwy\"."
 
 #: tips/gimp-tips.xml.in.h:31
-#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
 "are making a selection in order to constrain it to a square or a circle, or "
 "to have it centered on its starting point."
 msgstr ""
-"Użycie klawisza <tt>Shift</tt> w czasie zaznaczania spowoduje utworzenie "
-"idealnego kwadratu lub koła. Klawisz <tt>Ctrl</tt> wymusi wycentrowanie "
+"Użycie klawisza <tt>Shift</tt> i <tt>Ctrl</tt> w czasie zaznaczania, "
+"spowoduje utworzenie idealnego kwadratu lub koła, oraz wymusi wycentrowanie "
 "zaznaczenia do początkowego punktu zaznaczenia."
 
 #: tips/gimp-tips.xml.in.h:32
@@ -394,7 +386,6 @@ msgstr ""
 
 # TODO
 #: tips/gimp-tips.xml.in.h:35
-#, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
@@ -402,28 +393,7 @@ msgid ""
 "it back to a normal selection."
 msgstr ""
 "Do zmiany zaznaczenia możesz używać narzędzi malowania. Kliknij przycisk "
-"\"Szybka maska\" w lewym dolnym rogu okna obrazu (małe mrowki). Od tej "
+"\"Szybka maska\" w lewym dolnym rogu okna obrazu (mały kwadracik). Od tej "
 "chwili możesz modyfikować zaznaczenie jako kolor, używając bieżącego "
-"narzędzia. Po zakończeniu modyfikacji przywróć zwykły widok, klikając jeszce "
-"raz na przycisk z \"mrówkami\"."
-
-#~ msgid ""
-#~ "The file selection dialog box has command-line completion with <tt>Tab</"
-#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
-#~ "voila, it's completed."
-#~ msgstr ""
-#~ "W oknie, które służy do wybierania plików przy ich otwieraniu lub "
-#~ "zapisywaniu, możliwe jest automatycznie uzupełnianie nazw plików. "
-#~ "Operacja ta wygląda podobnie, jak w powłoce uniksowej: wystarczy wpisać "
-#~ "początek nazwy pliku i przycisnąć klawisz <tt>Tab</tt>, a jej pozostała "
-#~ "część zostanie dopisana przez program."
-
-#~ msgid ""
-#~ "Nearly all image operations are performed by right-clicking on the image. "
-#~ "And don't worry, you can undo most mistakes..."
-#~ msgstr ""
-#~ "Niemal wszystkie operacje na obrazie można wykonywać po kliknięciu obrazu "
-#~ "prawym przyciskiem myszy. Nie należy przy tym obawiać się "
-#~ "eksperymentowania, gdyż większość pomyłek można cofnąć (Ctrl-Z). Uwagi "
-#~ "odnoszące się do polskich tłumaczeń programu GIMP oraz propozycje nowych "
-#~ "porad prosimy wysyłać na adres <b>translators@gnome.pl</b>."
+"narzędzia. Po zakończeniu modyfikacji przywróć zwykły widok, klikając "
+"jeszcze raz na przycisk z \"kwadracikiem\"."

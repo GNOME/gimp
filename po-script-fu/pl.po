@@ -1,21 +1,21 @@
-# Copyright (C) 2001-2003, 2005 Free Software Foundation, Inc.
+# Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnome.pl
 # (:pserver:anonymous@cvs.gnome.pl:/home/cvs, puste hasło)
 # Jeśli masz jakiekolwiek uwagi odnoszące się do tłumaczenia lub chcesz
 # pomóc w jego rozwijaniu i pielęgnowaniu, napisz do nas na adres:
-# translators@gnomepl.pl
+# translators@gnomepl.org
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
-# GNOME PL Team <translators@gnomepl.pl>, 1999-2005.
+# GNOME PL Team <translators@gnomepl.pl>, 1999-2003.
 # Artur Polaczyński <artie@kmfms.com>, 1999,2000.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-25 10:32+0100\n"
-"PO-Revision-Date: 2005-01-24 02:04+0100\n"
+"POT-Creation-Date: 2005-01-29 16:33+0100\n"
+"PO-Revision-Date: 2005-01-28 16:33+0100\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
-"Language-Team:  <pl@li.org>\n"
+"Language-Team: Polski <translators@gnomepl.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -472,7 +472,7 @@ msgstr "Tekst"
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
-msgstr "Truchet _3D..."
+msgstr "Wzorek _3D..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: plug-ins/script-fu/scripts/camo.scm.h:1
@@ -605,7 +605,7 @@ msgstr "Przyrost wartości koloru"
 #: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
-msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Nieziemskie jarzenie"
+msgstr "<Toolbox>/Dodatki/Script-Fu/Motywy stron WWW/Nieziemska poświata"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -631,7 +631,7 @@ msgstr "Spłaszczenie obrazu"
 #: plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
-msgstr "Kolor jarzenia"
+msgstr "Kolor poświaty"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
@@ -695,7 +695,7 @@ msgstr "_Przycisk"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
-msgstr "Promień jarzenia"
+msgstr "Promień poświaty"
 
 #: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
 #: plug-ins/script-fu/scripts/beveled-button.scm.h:6
@@ -719,11 +719,11 @@ msgstr "Kolor tekstu"
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Alien _Glow..."
-msgstr "_Nieziemskie jarzenie..."
+msgstr "_Nieziemska poświata..."
 
 #: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
-msgstr "Rozmiar jarzenia (piksele * 4)"
+msgstr "Rozmiar poświaty (piksele * 4)"
 
 #: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
 msgid "Alien _Neon..."
@@ -909,7 +909,7 @@ msgstr "Gęstość Y punktów"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
 msgid "Add glowing"
-msgstr "Dodaj jarzenie"
+msgstr "Dodaj jaskrawość"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
 msgid "After glow"
@@ -921,7 +921,7 @@ msgstr "_Wypalanie..."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Burn-In: Need two layers in total!"
-msgstr "Burn-In: Wymagane są dokładnie dwie warstwy!"
+msgstr "Wypalanie: Wymagane są dokładnie dwie warstwy!"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona width"
@@ -937,7 +937,7 @@ msgstr "Szerokość zanikania"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
-msgstr "Przygotowanie do GIF-a"
+msgstr "Przygotuj do GIF-a"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
@@ -1045,7 +1045,7 @@ msgstr "Zachowaj tło"
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:2
 msgid "C_hrome-It..."
-msgstr "C_hromuj..."
+msgstr "C_hromowe..."
 
 #: plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
@@ -1085,7 +1085,7 @@ msgstr "Balans podświetlenia"
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "C_hrome..."
-msgstr "C_hromuj..."
+msgstr "C_hromowe..."
 
 #: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
@@ -1439,7 +1439,7 @@ msgstr "_Tekst"
 
 #: plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
-msgstr "O_szronione..."
+msgstr "M_roźne..."
 
 #: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
@@ -1469,7 +1469,7 @@ msgstr "<Toolbox>/Dodatki/Script-Fu/Motowy stron WWW/Classic.Gimp.Org"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Autocrop"
-msgstr "autoprzycinanie"
+msgstr "Autoprzycinanie"
 
 #: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Dark color"
@@ -1662,7 +1662,7 @@ msgstr "Nowa p_rowadnica"
 
 #: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "_Remove all Guides"
-msgstr "Usuń wszystkie prowadnice"
+msgstr "Usuń _wszystkie prowadnice"
 
 #: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 #: plug-ins/script-fu/scripts/image-structure.scm.h:1
@@ -2067,7 +2067,6 @@ msgid "To _Pattern..."
 msgstr "D_o desenia..."
 
 #: plug-ins/script-fu/scripts/selection-round.scm.h:1
-#, fuzzy
 msgid "Concave"
 msgstr "Wklęsłość"
 
@@ -2403,7 +2402,7 @@ msgstr "Kolor linii"
 
 #: plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
-msgstr "_Truchet..."
+msgstr "W_zorek..."
 
 #: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
 msgid "Mask opacity"
