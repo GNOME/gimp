@@ -1,9 +1,15 @@
+2005-01-07  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): handle RTL layouts (fixes
+	bug #162663).
+
 2005-01-07  Shlomi Fish  <shlomif@iglu.org.il>
 
 	* plug-ins/script-fu/scripts/frosty-logo.scm: made sure the shadow
-	is given enough space and then truncated instead of translated to the 
-	center of the image, thus preventing the display of shadows with 
-	a completely horizontal or vertical edge. 
+	is given enough space and then truncated instead of translated to
+	the center of the image, thus preventing the display of shadows
+	with a completely horizontal or vertical edge.
 
 	Fixes bug #132145.
 
