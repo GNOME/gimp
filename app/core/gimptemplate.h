@@ -51,6 +51,7 @@ struct _GimpTemplate
   GimpImageBaseType  image_type;
   GimpFillType       fill_type;
 
+  gchar             *comment;
   gchar             *filename;
 
   gulong             initial_size;

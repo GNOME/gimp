@@ -57,9 +57,6 @@
 #include "gimp-intl.h"
 
 
-#define MAX_COMMENT_LENGTH 512  /* arbitrary */
-
-
 /*  preferences local functions  */
 
 static GtkWidget * prefs_dialog_new               (Gimp       *gimp,
@@ -864,9 +861,6 @@ prefs_dialog_new (Gimp       *gimp,
   GtkWidget         *sizeentry;
   GtkWidget         *separator;
   GtkWidget         *calibrate_button;
-  GtkWidget         *scrolled_window;
-  GtkWidget         *text_view;
-  GtkTextBuffer     *text_buffer;
   PangoAttrList     *attrs;
   PangoAttribute    *attr;
   GSList            *group;
@@ -1046,44 +1040,6 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_memsize_entry_add (object, "max-new-image-size",
                            _("Maximum Image Size:"),
                            GTK_TABLE (table), 1);
-
-  /*********************************/
-  /*  New Image / Default Comment  */
-  /*********************************/
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Default Image Comment"),
-                                     "default-comment.png",
-				     GTK_TREE_STORE (tree),
-				     _("Default Comment"),
-				     GIMP_HELP_PREFS_NEW_IMAGE_COMMENT,
-				     &top_iter,
-				     &child_iter,
-				     page_index++);
-
-  /*  Comment  */
-  vbox2 = prefs_frame_new (_("Comment Used for New Images"),
-                           GTK_CONTAINER (vbox), TRUE);
-
-  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_AUTOMATIC);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
-                                       GTK_SHADOW_ETCHED_IN);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
-  gtk_container_add (GTK_CONTAINER (vbox2), scrolled_window);
-  gtk_widget_show (scrolled_window);
-
-  text_buffer = gimp_prop_text_buffer_new (object, "default-comment",
-                                           MAX_COMMENT_LENGTH);
-
-  text_view = gtk_text_view_new_with_buffer (text_buffer);
-  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
-  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
-  gtk_widget_show (text_view);
-
-  g_object_unref (text_buffer);
 
 
   /*********************************/

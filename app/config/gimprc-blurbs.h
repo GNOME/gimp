@@ -46,9 +46,6 @@ N_("Context-dependent cursors are cool.  They are enabled by default. " \
 "Specify a default brush.  The brush is searched for in the " \
 "specified brush path."
 
-#define DEFAULT_COMMENT_BLURB \
-"Sets the default comment."
-
 #define DEFAULT_DOT_FOR_DOT_BLURB \
 N_("When enabled, this will ensure that each pixel of an image gets " \
    "mapped to a pixel on the screen.")

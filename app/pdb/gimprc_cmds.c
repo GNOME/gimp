@@ -33,6 +33,7 @@
 #include "config/gimpdisplayconfig.h"
 #include "config/gimprc.h"
 #include "core/gimp.h"
+#include "core/gimptemplate.h"
 
 static ProcRecord gimprc_query_proc;
 static ProcRecord gimprc_set_proc;
@@ -178,7 +179,7 @@ get_default_comment_invoker (Gimp     *gimp,
   Argument *return_args;
   gchar *comment;
 
-  comment = g_strdup (gimp->config->default_comment);
+  comment = g_strdup (gimp->config->default_image->comment);
   success = TRUE;
 
   return_args = procedural_db_return_args (&get_default_comment_proc, success);

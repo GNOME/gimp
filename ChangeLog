@@ -1,3 +1,25 @@
+2003-10-15  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpconfig-utils.c (gimp_config_diff_internal): minor
+	cleanup.
+
+	* app/core/gimptemplate.[ch]: added a comment property.
+
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: removed "default_comment" property
+	and set the default comment on the default image template.
+
+	* app/widgets/gimptemplateeditor.c: added a comment editor widget.
+
+	* app/core/gimp.c
+	* app/gui/file-new-dialog.c
+	* app/gui/preferences-dialog.c
+	* app/pdb/gimprc_cmds.c
+	* tools/pdbgen/pdb/gimprc.pdb: changed accordingly.
+
+	* libgimpwidgets/gimpmemsizeentry.c (gimp_memsize_entry_init):
+	increased spacing between the spinbutton and the menu.
+
 2003-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/widgets-enums.[ch]: new enum GimpColorFrameMode.

@@ -44,7 +44,8 @@
 #include "gimp-intl.h"
 
 
-#define SB_WIDTH 10
+#define SB_WIDTH            10
+#define MAX_COMMENT_LENGTH  512  /* arbitrary */
 
 enum
 {
@@ -199,6 +200,9 @@ gimp_template_editor_constructor (GType                  type,
   GtkWidget          *xres;
   GtkWidget          *yres;
   GtkWidget          *chainbutton;
+  GtkWidget          *scrolled_window;
+  GtkWidget          *text_view;
+  GtkTextBuffer      *text_buffer;
   GList              *focus_chain = NULL;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
@@ -417,6 +421,11 @@ gimp_template_editor_constructor (GType                  type,
 			     0, 1, 0, 1);
   gtk_widget_show (xres);
 
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_se), 0,
+                                  editor->template->xresolution, FALSE);
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_se), 1,
+                                  editor->template->yresolution, FALSE);
+
   /*  the resolution chainbutton  */
   chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
   gtk_table_attach_defaults (GTK_TABLE (editor->resolution_se), chainbutton,
@@ -461,10 +470,30 @@ gimp_template_editor_constructor (GType                  type,
   gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_se), 0,
-                                  editor->template->xresolution, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (editor->size_se), 1,
-                                  editor->template->yresolution, FALSE);
+  /* frame for Comment */
+  frame = gtk_frame_new (_("Image Comment"));
+  gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+				  GTK_POLICY_AUTOMATIC,
+				  GTK_POLICY_AUTOMATIC);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_ETCHED_IN);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 4);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
+  text_buffer = gimp_prop_text_buffer_new (G_OBJECT (editor->template),
+                                           "comment", MAX_COMMENT_LENGTH);
+
+  text_view = gtk_text_view_new_with_buffer (text_buffer);
+  g_object_unref (text_buffer);
+
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
 
   g_signal_connect (editor->template, "notify",
                     G_CALLBACK (gimp_template_editor_template_notify),

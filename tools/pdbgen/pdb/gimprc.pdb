@@ -148,10 +148,10 @@ sub get_default_comment {
     );
 
     %invoke = (
-	headers => [ qw("config/gimpcoreconfig.h") ],
+	headers => [ qw("config/gimpcoreconfig.h" "core/gimptemplate.h") ],
 	code => <<'CODE'
 {
-  comment = g_strdup (gimp->config->default_comment);
+  comment = g_strdup (gimp->config->default_image->comment);
   success = TRUE;
 }
 CODE

@@ -135,12 +135,12 @@ gimp_config_diff_internal (GimpConfig  *a,
                   if (! gimp_config_is_equal_to (g_value_get_object (&a_value),
                                                  g_value_get_object (&b_value)))
                     {
-                      list = g_list_prepend (list, param_specs[i]);
+                      list = g_list_prepend (list, prop_spec);
                     }
                 }
               else
                 {
-                  list = g_list_prepend (list, param_specs[i]);
+                  list = g_list_prepend (list, prop_spec);
                 }
             }
 

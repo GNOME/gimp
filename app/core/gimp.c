@@ -1148,16 +1148,19 @@ gimp_create_image (Gimp              *gimp,
 
   gimp_container_add (gimp->images, GIMP_OBJECT (gimage));
 
-  if (attach_comment && gimp->config->default_comment)
+  if (attach_comment)
     {
-      GimpParasite *parasite;
+      const gchar *comment = gimp->config->default_image->comment;
 
-      parasite = gimp_parasite_new ("gimp-comment",
-				    GIMP_PARASITE_PERSISTENT,
-				    strlen (gimp->config->default_comment) + 1,
-				    gimp->config->default_comment);
-      gimp_image_parasite_attach (gimage, parasite);
-      gimp_parasite_free (parasite);
+      if (comment)
+        {
+          GimpParasite *parasite = gimp_parasite_new ("gimp-comment",
+                                                      GIMP_PARASITE_PERSISTENT,
+                                                      strlen (comment) + 1,
+                                                      comment);
+          gimp_image_parasite_attach (gimage, parasite);
+          gimp_parasite_free (parasite);
+        }
     }
 
   return gimage;

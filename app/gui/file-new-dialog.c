@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -242,9 +244,24 @@ file_new_template_select (GimpContainerMenu *menu,
                           gpointer           insert_data,
                           FileNewDialog     *dialog)
 {
-  if (template)
-    gimp_config_sync (GIMP_CONFIG (template),
-                      GIMP_CONFIG (dialog->template), 0);
+  gchar *comment = NULL;
+
+  if (!template)
+    return;
+
+  if (!template->comment || !strlen (template->comment))
+    comment = g_strdup (dialog->template->comment);
+
+  gimp_config_sync (GIMP_CONFIG (template), GIMP_CONFIG (dialog->template), 0);
+
+  if (comment)
+    {
+      g_object_set (dialog->template,
+                    "comment", comment,
+                    NULL);
+
+      g_free (comment);
+    }
 }
 
 

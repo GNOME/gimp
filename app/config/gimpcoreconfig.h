@@ -55,7 +55,6 @@ struct _GimpCoreConfig
   gchar                 *default_gradient;
   gchar                 *default_font;
   GimpTemplate          *default_image;
-  gchar                 *default_comment;
   GimpGrid              *default_grid;
   gint                   levels_of_undo;
   gulong                 undo_size;

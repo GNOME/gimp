@@ -90,7 +90,7 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 
   object_class->finalize = gimp_memsize_entry_finalize;
 
-  gimp_memsize_entry_signals[VALUE_CHANGED] = 
+  gimp_memsize_entry_signals[VALUE_CHANGED] =
     g_signal_new ("value_changed",
 		  G_TYPE_FROM_CLASS (klass),
 		  G_SIGNAL_RUN_FIRST,
@@ -105,7 +105,7 @@ gimp_memsize_entry_class_init (GimpMemsizeEntryClass *klass)
 static void
 gimp_memsize_entry_init (GimpMemsizeEntry *entry)
 {
-  gtk_box_set_spacing (GTK_BOX (entry), 2);
+  gtk_box_set_spacing (GTK_BOX (entry), 4);
 
   entry->value      = 0;
   entry->lower      = 0;
@@ -240,7 +240,7 @@ gulong
 gimp_memsize_entry_get_value (GimpMemsizeEntry *entry)
 {
   g_return_val_if_fail (GIMP_IS_MEMSIZE_ENTRY (entry), 0);
-  
+
   return entry->value;
 }
 

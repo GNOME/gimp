@@ -86,7 +86,6 @@ enum
   PROP_DEFAULT_GRADIENT,
   PROP_DEFAULT_FONT,
   PROP_DEFAULT_IMAGE,
-  PROP_DEFAULT_COMMENT,
   PROP_DEFAULT_GRID,
   PROP_UNDO_LEVELS,
   PROP_UNDO_SIZE,
@@ -213,10 +212,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    "default-image", DEFAULT_IMAGE_BLURB,
                                    GIMP_TYPE_TEMPLATE,
                                    GIMP_PARAM_AGGREGATE);
-  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DEFAULT_COMMENT,
-                                   "default-comment", DEFAULT_COMMENT_BLURB,
-                                   DEFAULT_COMMENT,
-                                   0);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_GRID,
                                    "default-grid", DEFAULT_GRID_BLURB,
                                    GIMP_TYPE_GRID,
@@ -267,7 +262,9 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
 static void
 gimp_core_config_init (GimpCoreConfig *config)
 {
-  config->default_image = g_object_new (GIMP_TYPE_TEMPLATE, NULL);
+  config->default_image = g_object_new (GIMP_TYPE_TEMPLATE,
+                                        "comment", DEFAULT_COMMENT,
+                                        NULL);
   g_signal_connect (config->default_image, "notify",
                     G_CALLBACK (gimp_core_config_default_image_changed),
                     config);
@@ -298,7 +295,6 @@ gimp_core_config_finalize (GObject *object)
   g_free (core_config->default_palette);
   g_free (core_config->default_gradient);
   g_free (core_config->default_font);
-  g_free (core_config->default_comment);
   g_free (core_config->plug_in_rc_path);
 
   if (core_config->default_image)
@@ -381,10 +377,6 @@ gimp_core_config_set_property (GObject      *object,
       if (g_value_get_object (value))
         gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
                           GIMP_CONFIG (core_config->default_image), 0);
-      break;
-    case PROP_DEFAULT_COMMENT:
-      g_free (core_config->default_comment);
-      core_config->default_comment = g_value_dup_string (value);
       break;
     case PROP_DEFAULT_GRID:
       if (g_value_get_object (value))
@@ -482,9 +474,6 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_IMAGE:
       g_value_set_object (value, core_config->default_image);
-      break;
-    case PROP_DEFAULT_COMMENT:
-      g_value_set_string (value, core_config->default_comment);
       break;
     case PROP_DEFAULT_GRID:
       g_value_set_object (value, core_config->default_grid);

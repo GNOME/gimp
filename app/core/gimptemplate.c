@@ -54,6 +54,7 @@ enum
   PROP_RESOLUTION_UNIT,
   PROP_IMAGE_TYPE,
   PROP_FILL_TYPE,
+  PROP_COMMENT,
   PROP_FILENAME
 };
 
@@ -184,6 +185,12 @@ gimp_template_class_init (GimpTemplateClass *klass)
                                  GIMP_TYPE_FILL_TYPE, GIMP_BACKGROUND_FILL,
                                  0);
 
+  GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_COMMENT,
+                                   "comment",
+                                   NULL,
+                                   NULL,
+                                   0);
+
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_FILENAME,
                                    "filename",
                                    NULL,
@@ -202,6 +209,12 @@ static void
 gimp_template_finalize (GObject *object)
 {
   GimpTemplate *template = GIMP_TEMPLATE (object);
+
+  if (template->comment)
+    {
+      g_free (template->comment);
+      template->comment = NULL;
+    }
 
   if (template->filename)
     {
@@ -245,6 +258,11 @@ gimp_template_set_property (GObject      *object,
       break;
     case PROP_FILL_TYPE:
       template->fill_type = g_value_get_enum (value);
+      break;
+    case PROP_COMMENT:
+      if (template->comment)
+        g_free (template->comment);
+      template->comment = g_value_dup_string (value);
       break;
     case PROP_FILENAME:
       if (template->filename)
@@ -290,6 +308,9 @@ gimp_template_get_property (GObject    *object,
       break;
     case PROP_FILL_TYPE:
       g_value_set_enum (value, template->fill_type);
+      break;
+    case PROP_COMMENT:
+      g_value_set_string (value, template->comment);
       break;
     case PROP_FILENAME:
       g_value_set_string (value, template->filename);
@@ -372,9 +393,11 @@ void
 gimp_template_set_from_image (GimpTemplate *template,
                               GimpImage    *gimage)
 {
-  gdouble           xresolution;
-  gdouble           yresolution;
-  GimpImageBaseType image_type;
+  gdouble            xresolution;
+  gdouble            yresolution;
+  GimpImageBaseType  image_type;
+  GimpParasite      *parasite;
+  gchar             *comment = NULL;
 
   g_return_if_fail (GIMP_IS_TEMPLATE (template));
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
@@ -386,6 +409,11 @@ gimp_template_set_from_image (GimpTemplate *template,
   if (image_type == GIMP_INDEXED)
     image_type = GIMP_RGB;
 
+  parasite =  gimp_image_parasite_find (gimage, "gimp-comment");
+  if (parasite)
+    comment = g_strndup (gimp_parasite_data (parasite),
+                         gimp_parasite_data_size (parasite));
+
   g_object_set (template,
                 "width",           gimp_image_get_width (gimage),
                 "height",          gimp_image_get_height (gimage),
@@ -394,7 +422,11 @@ gimp_template_set_from_image (GimpTemplate *template,
                 "yresolution",     yresolution,
                 "resolution-unit", gimage->gimp->config->default_image->resolution_unit,
                 "image-type",      image_type,
+                "comment",         comment,
                 NULL);
+
+  if (comment)
+    g_free (comment);
 }
 
 GimpImage *
@@ -412,9 +444,21 @@ gimp_template_create_image (Gimp         *gimp,
   gimage = gimp_create_image (gimp,
 			      template->width, template->height,
 			      template->image_type,
-			      TRUE);
+			      FALSE);
 
   gimp_image_undo_disable (gimage);
+
+  if (template->comment)
+    {
+      GimpParasite *parasite;
+
+      parasite = gimp_parasite_new ("gimp-comment",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (template->comment) + 1,
+                                    template->comment);
+      gimp_image_parasite_attach (gimage, parasite);
+      gimp_parasite_free (parasite);
+    }
 
   gimp_image_set_resolution (gimage,
                              template->xresolution, template->yresolution);
