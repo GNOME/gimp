@@ -75,12 +75,6 @@ void draw_polygon(GdkWindow *window, GdkGC *gc, GList *list);
 
 const char *get_filename(void);
 
-void set_arrow_func(void);
-void set_fuzzy_select_func(void);
-void set_rectangle_func(void);
-void set_circle_func(void);
-void set_polygon_func(void);
-
 ObjectList_t *get_shapes(void);
 void add_shape(Object_t *obj);
 void update_shape(Object_t *obj);

@@ -3,7 +3,7 @@
  *
  * Generates clickable image maps.
  *
- * Copyright (C) 1998-2004 Maurits Rijk  m.rijk@chello.nl
+ * Copyright (C) 1998-2005 Maurits Rijk  m.rijk@chello.nl
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,6 +26,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "imap_about.h"
 #include "imap_circle.h"
 #include "imap_file.h"
 #include "imap_grid.h"
@@ -33,7 +34,6 @@
 #include "imap_menu.h"
 #include "imap_menu_funcs.h"
 #include "imap_polygon.h"
-#include "imap_popup.h"
 #include "imap_preferences.h"
 #include "imap_rectangle.h"
 #include "imap_settings.h"
@@ -42,15 +42,29 @@
 #include "imap_tools.h"
 
 #include "libgimp/stdplugins-intl.h"
+#include "libgimpwidgets/gimpstock.h"
 
-static gint _menu_callback_lock;
+void save();
+void do_close();
+void do_quit();
+void do_cut();
+void do_copy();
+void do_paste();
+void do_clear();
+void do_select_all();
+void do_deselect_all();
+void do_grid_settings_dialog();
+void imap_help();
+void set_func(int func);
+
 static Menu_t _menu;
+GtkUIManager *ui_manager;
 
-static void
-menu_select(GtkWidget *item)
+static void 
+set_sensitive (const gchar *path, gboolean sensitive)
 {
-   _menu_callback_lock = TRUE;
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(item), TRUE);
+  GtkAction *action = gtk_ui_manager_get_action (ui_manager, path);
+  g_object_set (action, "sensitive", sensitive, NULL);
 }
 
 static void
@@ -71,135 +85,25 @@ menu_mru(GtkWidget *widget, gpointer data)
 void
 menu_set_zoom_sensitivity(gint factor)
 {
-   gtk_widget_set_sensitive(_menu.zoom_in, factor < 8);
-   gtk_widget_set_sensitive(_menu.zoom_out, factor > 1);
+  set_sensitive ("/MainMenu/ViewMenu/ZoomIn", factor < 8);
+  set_sensitive ("/MainMenu/ViewMenu/ZoomOut", factor > 1);
 }
 
 void
 menu_shapes_selected(gint count)
 {
-   gboolean sensitive = (count > 0);
-   gtk_widget_set_sensitive(_menu.cut, sensitive);
-   gtk_widget_set_sensitive(_menu.copy, sensitive);
-   gtk_widget_set_sensitive(_menu.clear, sensitive);
-   gtk_widget_set_sensitive(_menu.edit, sensitive);
-   gtk_widget_set_sensitive(_menu.deselect_all, sensitive);
-}
-
-static void
-menu_zoom_to(GtkWidget *widget, gpointer data)
-{
-   if (gtk_check_menu_item_get_active(GTK_CHECK_MENU_ITEM(widget))) {
-      gint factor = GPOINTER_TO_INT (data);
-
-      if (_menu_callback_lock) {
-	 _menu_callback_lock--;
-      } else {
-	 set_zoom(factor);
-      }
-      menu_set_zoom_sensitivity(factor);
-   }
-}
-
-static void
-menu_rectangle(GtkWidget *widget, gpointer data)
-{
-   if (_menu_callback_lock) {
-      _menu_callback_lock = FALSE;
-   } else {
-      set_rectangle_func();
-      tools_select_rectangle();
-      popup_select_rectangle();
-   }
-}
-
-static void
-menu_circle(GtkWidget *widget, gpointer data)
-{
-   if (_menu_callback_lock) {
-      _menu_callback_lock = FALSE;
-   } else {
-      set_circle_func();
-      tools_select_circle();
-      popup_select_circle();
-   }
-}
-
-static void
-menu_polygon(GtkWidget *widget, gpointer data)
-{
-   if (_menu_callback_lock) {
-      _menu_callback_lock = FALSE;
-   } else {
-      set_polygon_func();
-      tools_select_polygon();
-      popup_select_polygon();
-   }
-}
-
-static void
-menu_arrow(GtkWidget *widget, gpointer data)
-{
-   if (_menu_callback_lock) {
-      _menu_callback_lock = FALSE;
-   } else {
-      set_arrow_func();
-      tools_select_arrow();
-      popup_select_arrow();
-   }
-}
-
-static void
-menu_fuzzy_select(GtkWidget *widget, gpointer data)
-{
-   if (_menu_callback_lock) {
-      _menu_callback_lock = FALSE;
-   } else {
-/*
-      set_fuzzy_select_func();
-      tools_select_fuzzy();
-      popup_select_fuzzy();
-*/
-   }
-}
-
-static void
-menu_grid(GtkWidget *widget, gpointer data)
-{
-   if (_menu_callback_lock) {
-      _menu_callback_lock = FALSE;
-   } else {
-      gint grid = toggle_grid();
-      popup_check_grid(grid);
-      main_toolbar_set_grid(grid);
-   }
-}
-
-static void
-make_file_menu(GtkWidget *menu_bar)
-{
-   GtkWidget *file_menu = make_menu_bar_item(menu_bar, _("_File"));
-   GtkWidget *item;
-
-   _menu.file_menu = file_menu;
-   make_item_with_image(file_menu, GTK_STOCK_OPEN, menu_command,
-			&_menu.cmd_open);
-   _menu.open_recent = make_sub_menu(file_menu, _("Open recent"));
-   make_item_with_image(file_menu, GTK_STOCK_SAVE, menu_command,
-			&_menu.cmd_save);
-   item = make_item_with_image(file_menu, GTK_STOCK_SAVE_AS, menu_command,
-			       &_menu.cmd_save_as);
-   add_accelerator(item, 'S', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
-   make_separator(file_menu);
-   make_item_with_image(file_menu, GTK_STOCK_CLOSE, menu_command,
-			&_menu.cmd_close);
-   make_item_with_image(file_menu, GTK_STOCK_QUIT, menu_command,
-			&_menu.cmd_quit);
+  gboolean sensitive = (count > 0);
+  set_sensitive ("/MainMenu/EditMenu/Cut", sensitive);
+  set_sensitive ("/MainMenu/EditMenu/Copy", sensitive);
+  set_sensitive ("/MainMenu/EditMenu/Clear", sensitive);
+  set_sensitive ("/MainMenu/EditMenu/EditAreaInfo", sensitive);
+  set_sensitive ("/MainMenu/EditMenu/DeselectAll", sensitive);
 }
 
 static void
 command_list_changed(Command_t *command, gpointer data)
 {
+#ifdef _NOT_READY_YET_
    gchar *scratch;
    GtkWidget *icon;
 
@@ -233,204 +137,278 @@ command_list_changed(Command_t *command, gpointer data)
    icon = gtk_image_new_from_stock(GTK_STOCK_REDO, GTK_ICON_SIZE_MENU);
    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_menu.redo), icon);
    gtk_widget_show(icon);
+#endif
 }
 
 static void
 paste_buffer_added(Object_t *obj, gpointer data)
 {
-   gtk_widget_set_sensitive((GtkWidget*) data, TRUE);
+  set_sensitive("/MainMenu/EditMenu/Paste", TRUE);
 }
 
 static void
 paste_buffer_removed(Object_t *obj, gpointer data)
 {
-   gtk_widget_set_sensitive((GtkWidget*) data, FALSE);
+  set_sensitive("/MainMenu/EditMenu/Paste", FALSE);
 }
 
-static void
-make_edit_menu(GtkWidget *menu_bar)
-{
-   GtkWidget *edit_menu = make_menu_bar_item(menu_bar, _("_Edit"));
-   GtkWidget *item, *paste;
+/* Normal items */
+static GtkActionEntry entries[] = {
+  { "FileMenu", NULL, "_File" },
+  { "Open", GTK_STOCK_OPEN, "_Open...", NULL, "Open", do_file_open_dialog},
+  { "OpenRecentMenu", NULL, "Open Recent" },
+  { "Save", GTK_STOCK_SAVE, "_Save...", NULL, "Save", save},
+  { "SaveAs", GTK_STOCK_SAVE_AS, "Save _as...", NULL, NULL, 
+    do_file_save_as_dialog},
+  { "Close", GTK_STOCK_CLOSE, NULL, NULL, NULL, do_close},
+  { "Quit", GTK_STOCK_QUIT, NULL, NULL, NULL, do_quit},
 
-   _menu.edit_menu = edit_menu;
-   command_list_changed(NULL, NULL);
+  { "EditMenu", NULL, "_Edit" },
+  { "Undo", GTK_STOCK_UNDO, NULL, NULL, "Undo", NULL},
+  { "Redo", GTK_STOCK_REDO, NULL, NULL, "Redo", NULL},
+  { "Cut", GTK_STOCK_CUT, NULL, NULL, "Cut", do_cut},
+  { "Copy", GTK_STOCK_COPY, NULL, NULL, "Copy", do_copy},
+  { "Paste", GTK_STOCK_PASTE, NULL, NULL, "Paste", do_paste},
+  { "Clear", GTK_STOCK_CLEAR, NULL, "<control>K", NULL, do_clear},
+  { "SelectAll", NULL, "Select _All", "<control>A", NULL, do_select_all},
+  { "DeselectAll", NULL, "Deselect _All", "<shift><control>A", NULL, 
+    do_deselect_all},
+  { "EditAreaInfo", NULL, "Edit Area Info...", NULL, NULL, NULL},
+  { "Preferences", GTK_STOCK_PREFERENCES, NULL, NULL, "Preferences", NULL},
+  { "MoveToFront", IMAP_STOCK_TO_FRONT, NULL, NULL, "Move to Front", NULL},
+  { "SendToBack", IMAP_STOCK_TO_BACK, NULL, NULL, "Send to Back", NULL},
+  { "DeleteArea", NULL, "Delete Area", NULL, NULL, NULL},
+  { "MoveUp", NULL, "Move Up", NULL, NULL, NULL},
+  { "MoveDown", NULL, "Move Down", NULL, NULL, NULL},
 
-   make_separator(edit_menu);
-   _menu.cut = make_item_with_image(edit_menu, GTK_STOCK_CUT, menu_command,
-				    &_menu.cmd_cut);
-   _menu.copy = make_item_with_image(edit_menu, GTK_STOCK_COPY, menu_command,
-				     &_menu.cmd_copy);
-   paste = make_item_with_image(edit_menu, GTK_STOCK_PASTE, menu_command,
-				&_menu.cmd_paste);
-   gtk_widget_set_sensitive(paste, FALSE);
-   _menu.clear = make_item_with_image(edit_menu, GTK_STOCK_CLEAR, menu_command,
-				      &_menu.cmd_clear);
-   add_accelerator(_menu.clear, 'K', GDK_CONTROL_MASK);
-   make_separator(edit_menu);
-   item = make_item_with_label(edit_menu, _("Select _all"), menu_command,
-			       &_menu.cmd_select_all);
-   add_accelerator(item, 'A', GDK_CONTROL_MASK);
-   _menu.deselect_all = make_item_with_label(edit_menu, _("Deselect _all"),
-					     menu_command,
-					     &_menu.cmd_deselect_all);
-   add_accelerator(_menu.deselect_all, 'A', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
-   make_separator(edit_menu);
-   _menu.edit = make_item_with_label(edit_menu, _("Edit area info..."),
-				     menu_command, &_menu.cmd_edit_area_info);
-   make_separator(edit_menu);
-   make_item_with_image(edit_menu, GTK_STOCK_PREFERENCES, menu_command,
-			&_menu.cmd_preferences);
+  { "ViewMenu", NULL, "_View" },
+  { "Source", NULL, "Source...", NULL, NULL, NULL},
+  { "ZoomIn", GTK_STOCK_ZOOM_IN, NULL, NULL, "Zoom in", NULL},
+  { "ZoomOut", GTK_STOCK_ZOOM_OUT, NULL, NULL, "Zoom out", NULL},
+  { "ZoomToMenu", NULL, "_Zoom To" },
 
-   paste_buffer_add_add_cb(paste_buffer_added, (gpointer) paste);
-   paste_buffer_add_remove_cb(paste_buffer_removed, (gpointer) paste);
+  { "MappingMenu", NULL, "_Mapping" },
+  { "EditMapInfo", IMAP_STOCK_MAP_INFO, "Edit Map Info...", NULL, NULL, NULL},
+  
+  { "ToolsMenu", NULL, "_Tools" },
+  { "GridSettings", NULL, "Grid Settings...", NULL, NULL, 
+    do_grid_settings_dialog},
+  { "UseGimpGuides", NULL, "Use GIMP Guides...", NULL, NULL, NULL},
+  { "CreateGuides", NULL, "Create Guides...", NULL, NULL, NULL},
 
-   command_list_add_update_cb(command_list_changed, NULL);
-}
+  { "HelpMenu", NULL, "_Help" },
+  { "Contents", NULL, "_Contents", NULL, NULL, imap_help},
+  { "About", NULL, "_About ImageMap...", NULL, NULL, do_about_dialog},
 
-static void
-make_view_menu(GtkWidget *menu_bar)
-{
-   GtkWidget *view_menu = make_menu_bar_item(menu_bar, _("_View"));
-   GtkWidget *zoom_menu, *item;
-   GSList *group = NULL;
+  { "ZoomMenu", NULL, "_Zoom" },
+};
 
-   item = make_check_item(view_menu, _("Area list"), menu_command,
-			  &_menu.cmd_area_list);
-   GTK_CHECK_MENU_ITEM(item)->active = TRUE;
+/* Toggle items */
+static GtkToggleActionEntry toggle_entries[] = {
+  { "AreaList", NULL, "Area List", NULL, NULL, NULL, TRUE },
+  { "Grid", GIMP_STOCK_GRID, "_Grid", NULL, "Grid", NULL, FALSE }
+};
 
-   make_item_with_label(view_menu, _("Source..."), menu_command,
-			&_menu.cmd_source);
-   make_separator(view_menu);
+static GtkRadioActionEntry color_entries[] = {
+  { "Color", NULL, "Color", NULL, NULL, 0},
+  { "Gray", NULL, "Gray", NULL, NULL, 1},  
+};
 
-   _menu.color = make_radio_item(view_menu, NULL, _("Color"), menu_command,
-				 &_menu.cmd_color);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.color));
+static GtkRadioActionEntry mapping_entries[] = {
+  { "Arrow", IMAP_STOCK_ARROW, "Arrow", NULL, "Select existing area", 0},
+  { "Rectangle", IMAP_STOCK_RECTANGLE, "Rectangle", NULL, 
+    "Define Rectangle area", 1},
+  { "Circle", IMAP_STOCK_CIRCLE, "Circle", NULL, "Define Circle/Oval area", 2},
+  { "Polygon", IMAP_STOCK_POLYGON, "Polygon", NULL, "Define Polygon area", 3},
+};
 
-   _menu.gray = make_radio_item(view_menu, group, _("Grayscale"), menu_command,
-				&_menu.cmd_gray);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.gray));
+static GtkRadioActionEntry zoom_entries[] = {
+  { "Zoom1:1", NULL, "1:1", NULL, NULL, 0},
+  { "Zoom1:2", NULL, "1:2", NULL, NULL, 1},
+  { "Zoom1:3", NULL, "1:3", NULL, NULL, 2},
+  { "Zoom1:4", NULL, "1:4", NULL, NULL, 3},
+  { "Zoom1:5", NULL, "1:5", NULL, NULL, 4},
+  { "Zoom1:6", NULL, "1:6", NULL, NULL, 5},
+  { "Zoom1:7", NULL, "1:7", NULL, NULL, 6},
+  { "Zoom1:8", NULL, "1:8", NULL, NULL, 7},
+};
 
-   if (!get_map_info()->color) { /* Gray image */
-      gtk_widget_set_sensitive(_menu.color, FALSE);
-      GTK_CHECK_MENU_ITEM(_menu.color)->active = FALSE;
-      GTK_CHECK_MENU_ITEM(_menu.gray)->active = TRUE;
-   }
-
-   make_separator(view_menu);
-
-   _menu.zoom_in = make_item_with_image(view_menu, GTK_STOCK_ZOOM_IN,
-					menu_command, &_menu.cmd_zoom_in);
-   _menu.zoom_out = make_item_with_image(view_menu, GTK_STOCK_ZOOM_OUT,
-					 menu_command, &_menu.cmd_zoom_out);
-   gtk_widget_set_sensitive(_menu.zoom_out, FALSE);
-
-   zoom_menu = make_sub_menu(view_menu, _("Zoom to"));
-
-   _menu.zoom[0] = make_radio_item(zoom_menu, NULL, "1:1", menu_zoom_to,
-				   (gpointer) 1);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[0]));
-   _menu.zoom[1] = make_radio_item(zoom_menu, group, "1:2", menu_zoom_to,
-				   (gpointer) 2);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[1]));
-   _menu.zoom[2] = make_radio_item(zoom_menu, group, "1:3", menu_zoom_to,
-				   (gpointer) 3);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[2]));
-   _menu.zoom[3] = make_radio_item(zoom_menu, group, "1:4", menu_zoom_to,
-				   (gpointer) 4);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[3]));
-   _menu.zoom[4] = make_radio_item(zoom_menu, group, "1:5", menu_zoom_to,
-				   (gpointer) 5);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[4]));
-   _menu.zoom[5] = make_radio_item(zoom_menu, group, "1:6", menu_zoom_to,
-				   (gpointer) 6);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[5]));
-   _menu.zoom[6] = make_radio_item(zoom_menu, group, "1:7", menu_zoom_to,
-				   (gpointer) 7);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.zoom[6]));
-   _menu.zoom[7] = make_radio_item(zoom_menu, group, "1:8", menu_zoom_to,
-				   (gpointer) 8);
-}
-
-static void
-make_mapping_menu(GtkWidget *menu_bar)
-{
-   GtkWidget *menu = make_menu_bar_item(menu_bar, _("_Mapping"));
-   GSList    *group;
-
-   _menu.arrow = make_radio_item(menu, NULL, _("Arrow"), menu_arrow, NULL);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.arrow));
-#ifdef _NOT_READY_YET_
-   _menu.fuzzy_select = make_radio_item(menu, group,
-					_("Select contiguous region"),
-					menu_fuzzy_select, NULL);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.fuzzy_select));
-#endif
-   _menu.rectangle = make_radio_item(menu, group, _("Rectangle"),
-				     menu_rectangle, NULL);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.rectangle));
-   _menu.circle = make_radio_item(menu, group, _("Circle"), menu_circle, NULL);
-   group = gtk_radio_menu_item_get_group(GTK_RADIO_MENU_ITEM(_menu.circle));
-   _menu.polygon = make_radio_item(menu, group, _("Polygon"), menu_polygon,
-				   NULL);
-   make_separator(menu);
-   make_item_with_image(menu, IMAP_STOCK_MAP_INFO, menu_command,
-			&_menu.cmd_edit_map_info);
-}
-
-static void
-make_tools_menu(GtkWidget *menu_bar)
-{
-   GtkWidget *tools_menu = make_menu_bar_item(menu_bar, _("_Tools"));
-   _menu.grid = make_check_item(tools_menu, _("Grid"), menu_grid, NULL);
-   make_item_with_label(tools_menu, _("Grid settings..."), menu_command,
-			&_menu.cmd_grid_settings);
-   make_separator(tools_menu);
-   make_item_with_label(tools_menu, _("Use GIMP guides..."), menu_command,
-			&_menu.cmd_use_gimp_guides);
-   make_item_with_label(tools_menu, _("Create guides..."), menu_command,
-			&_menu.cmd_create_guides);
-}
-
-static void
-make_help_menu(GtkWidget *menu_bar)
-{
-  GtkWidget *item;
-  GtkWidget *help_menu = make_menu_bar_item(menu_bar, _("_Help"));
-
-  item = make_item_with_label(help_menu, _("_Contents"), menu_command,
-                              &_menu.cmd_help);
-  add_accelerator(item, GDK_F1, 0);
-
-  make_item_with_label(help_menu, _("_About ImageMap"), menu_command,
-                       &_menu.cmd_about);
-}
+static const char *ui_description =
+"<ui>"
+"  <menubar name='MainMenu'>"
+"    <menu action='FileMenu'>"
+"      <menuitem action='Open'/>"
+"      <menuitem action='Save'/>"
+"      <menuitem action='SaveAs'/>"
+"      <separator/>"
+"      <menuitem action='Close'/>"
+"      <menuitem action='Quit'/>"
+"    </menu>"
+"    <menu action='EditMenu'>"
+"      <menuitem action='Cut'/>"
+"      <menuitem action='Copy'/>"
+"      <menuitem action='Paste'/>"
+"      <menuitem action='Clear'/>"
+"      <separator/>"
+"      <menuitem action='SelectAll'/>"
+"      <menuitem action='DeselectAll'/>"
+"      <separator/>"
+"      <menuitem action='EditAreaInfo'/>"
+"      <separator/>"
+"      <menuitem action='Preferences'/>"
+"    </menu>"
+"    <menu action='ViewMenu'>"
+"      <menuitem action='AreaList'/>"
+"      <menuitem action='Source'/>"
+"      <separator/>"
+"      <menuitem action='Color'/>"
+"      <menuitem action='Gray'/>"
+"      <separator/>"
+"      <menuitem action='ZoomIn'/>"
+"      <menuitem action='ZoomOut'/>"
+"      <menu action='ZoomToMenu'>"
+"        <menuitem action='Zoom1:1'/>"
+"        <menuitem action='Zoom1:2'/>"
+"        <menuitem action='Zoom1:3'/>"
+"        <menuitem action='Zoom1:4'/>"
+"        <menuitem action='Zoom1:5'/>"
+"        <menuitem action='Zoom1:6'/>"
+"        <menuitem action='Zoom1:7'/>"
+"        <menuitem action='Zoom1:8'/>"
+"      </menu>"
+"    </menu>"
+"    <menu action='MappingMenu'>"
+"      <menuitem action='Arrow'/>"
+"      <menuitem action='Rectangle'/>"
+"      <menuitem action='Circle'/>"
+"      <menuitem action='Polygon'/>"
+"      <separator/>"
+"      <menuitem action='EditMapInfo'/>"
+"    </menu>"
+"    <menu action='ToolsMenu'>"
+"      <menuitem action='Grid'/>"
+"      <menuitem action='GridSettings'/>"
+"      <separator/>"
+"      <menuitem action='UseGimpGuides'/>"
+"      <menuitem action='CreateGuides'/>"
+"    </menu>"
+"    <menu action='HelpMenu'>"
+"      <menuitem action='Contents'/>"
+"      <menuitem action='About'/>"
+"    </menu>"
+"  </menubar>"
+""
+"  <popup name='PopupMenu'>"
+"    <menuitem action='EditMapInfo'/>"
+"    <menu action='ToolsMenu'>"
+"      <menuitem action='Arrow'/>"
+"      <menuitem action='Rectangle'/>"
+"      <menuitem action='Circle'/>"
+"      <menuitem action='Polygon'/>"
+"    </menu>"
+"    <menu action='ZoomMenu'>"
+"      <menuitem action='ZoomIn'/>"
+"      <menuitem action='ZoomOut'/>"
+"    </menu>"
+"    <menuitem action='Grid'/>"
+"    <menuitem action='GridSettings'/>"
+"    <menuitem action='CreateGuides'/>"
+"    <menuitem action='Paste'/>"
+"  </popup>"
+""
+"  <popup name='ObjectPopupMenu'>"
+"    <menuitem action='EditAreaInfo'/>"
+"    <menuitem action='DeleteArea'/>"
+"    <menuitem action='MoveUp'/>"
+"    <menuitem action='MoveDown'/>"
+"    <menuitem action='Cut'/>"
+"    <menuitem action='Copy'/>"
+"  </popup>"
+""
+"  <toolbar name='Toolbar'>"
+"    <toolitem action='Open'/>"
+"    <toolitem action='Save'/>"
+"    <separator/>"
+"    <toolitem action='Preferences'/>"
+"    <separator/>"
+"    <toolitem action='Undo'/>"
+"    <toolitem action='Redo'/>"
+"    <separator/>"
+"    <toolitem action='Cut'/>"
+"    <toolitem action='Copy'/>"
+"    <toolitem action='Paste'/>"
+"    <separator/>"
+"    <toolitem action='ZoomIn'/>"
+"    <toolitem action='ZoomOut'/>"
+"    <separator/>"
+"    <toolitem action='EditMapInfo'/>"
+"    <separator/>"
+"    <toolitem action='Grid'/>"
+"  </toolbar>"
+""
+"  <toolbar name='Tools'>"
+"    <toolitem action='Arrow'/>"
+"    <toolitem action='Rectangle'/>"
+"    <toolitem action='Circle'/>"
+"    <toolitem action='Polygon'/>"
+"  </toolbar>"
+"</ui>";
 
 Menu_t*
 make_menu(GtkWidget *main_vbox, GtkWidget *window)
 {
-   GtkWidget *menu_bar = gtk_menu_bar_new();
+  GtkWidget *menubar;
+  GtkActionGroup *action_group;
+  GtkAccelGroup *accel_group;
+  GError *error;
 
-   gtk_box_pack_start(GTK_BOX(main_vbox), menu_bar, FALSE, TRUE, 0);
-   gtk_widget_show(menu_bar);
+  action_group = gtk_action_group_new ("MenuActions");
+  gtk_action_group_add_actions (action_group, entries, G_N_ELEMENTS (entries), 
+				window);
+  gtk_action_group_add_toggle_actions (action_group, toggle_entries, 
+				       G_N_ELEMENTS (toggle_entries), window);
+  gtk_action_group_add_radio_actions (action_group, color_entries, 
+				      G_N_ELEMENTS (color_entries), 0, 
+				      NULL, window);
+  gtk_action_group_add_radio_actions (action_group, zoom_entries, 
+				      G_N_ELEMENTS (zoom_entries), 0, 
+				      NULL, window);
+  gtk_action_group_add_radio_actions (action_group, mapping_entries, 
+				      G_N_ELEMENTS (mapping_entries), 0, 
+				      G_CALLBACK (set_func), window);
 
-   init_accel_group(window);
+  ui_manager = gtk_ui_manager_new ();
+  gtk_ui_manager_insert_action_group (ui_manager, action_group, 0);
+  
+  accel_group = gtk_ui_manager_get_accel_group (ui_manager);
+  gtk_window_add_accel_group (GTK_WINDOW (window), accel_group);
+  
+  error = NULL;
+  if (!gtk_ui_manager_add_ui_from_string (ui_manager, ui_description, -1, 
+					  &error))
+    {
+      g_message ("building menus failed: %s", error->message);
+      g_error_free (error);
+      /* exit (EXIT_FAILURE); */
+    }
+  
+  menubar = gtk_ui_manager_get_widget (ui_manager, "/MainMenu");
+  gtk_widget_show (menubar);
+  gtk_box_pack_start (GTK_BOX (main_vbox), menubar, FALSE, FALSE, 0);
 
-   make_file_menu(menu_bar);
-   make_edit_menu(menu_bar);
-   make_view_menu(menu_bar);
-   make_mapping_menu(menu_bar);
-   make_tools_menu(menu_bar);
-   make_help_menu(menu_bar);
+  paste_buffer_add_add_cb(paste_buffer_added, NULL);
+  paste_buffer_add_remove_cb(paste_buffer_removed, NULL);
 
-   menu_shapes_selected(0);
+  set_sensitive ("/MainMenu/EditMenu/Paste", FALSE);
+  menu_shapes_selected (0);
 
-   return &_menu;
+  return &_menu;
 }
 
 void
 menu_build_mru_items(MRU_t *mru)
 {
+  return;
    GList *p;
    gint position = 0;
    int i;
@@ -460,47 +438,24 @@ menu_build_mru_items(MRU_t *mru)
 }
 
 void
-menu_select_arrow(void)
+do_main_popup_menu(GdkEventButton *event)
 {
-   menu_select(_menu.arrow);
+  GtkWidget *popup = gtk_ui_manager_get_widget (ui_manager, "/PopupMenu");
+  gtk_menu_popup (GTK_MENU (popup), NULL, NULL, NULL, NULL,
+		  event->button, event->time);
 }
 
 void
-menu_select_fuzzy_select(void)
+menu_check_grid(gboolean check)
 {
-   menu_select(_menu.fuzzy_select);
-}
-
-void
-menu_select_rectangle(void)
-{
-   menu_select(_menu.rectangle);
-}
-
-void
-menu_select_circle(void)
-{
-   menu_select(_menu.circle);
-}
-
-void
-menu_select_polygon(void)
-{
-   menu_select(_menu.polygon);
-}
-
-void
-menu_check_grid(gint check)
-{
-   _menu_callback_lock = TRUE;
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_menu.grid), check);
+  GtkAction *action = gtk_ui_manager_get_action (ui_manager, 
+						 "/MainMenu/ToolsMenu/Grid");
+  gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), check);
 }
 
 void
 menu_set_zoom(gint factor)
 {
-   _menu_callback_lock = 2;
-   gtk_check_menu_item_set_active(GTK_CHECK_MENU_ITEM(_menu.zoom[factor - 1]),
-				  TRUE);
-   menu_set_zoom_sensitivity(factor);
+  menu_set_zoom_sensitivity (factor);
 }
+

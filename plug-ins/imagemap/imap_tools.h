@@ -28,31 +28,11 @@
 
 typedef struct {
    GtkWidget *container;
-   GtkWidget *arrow;
-   GtkWidget *fuzzy_select;
-   GtkWidget *rectangle;
-   GtkWidget *circle;
-   GtkWidget *polygon;
-   GtkWidget *edit;
-   GtkWidget *delete;
-
-   CommandFactory_t cmd_delete;
-   CommandFactory_t cmd_edit;
 } Tools_t;
 
 Tools_t *make_tools(GtkWidget *window);
-void tools_select_arrow(void);
-void tools_select_rectangle(void);
-void tools_select_circle(void);
-void tools_select_polygon(void);
-void tools_set_sensitive(gboolean sensitive);
 
 gboolean arrow_on_button_press(GtkWidget *widget, GdkEventButton *event, 
 			       gpointer data);
-
-#define tools_set_delete_command(tools, command) \
-	((tools)->cmd_delete = (command))
-#define tools_set_edit_command(tools, command) \
-	((tools)->cmd_edit = (command))
 
 #endif /* _IMAP_TOOLS_H */

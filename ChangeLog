@@ -1,3 +1,27 @@
+2005-01-02  Maurits Rijk  <m.rijk@chello.nl>
+
+	* plug-ins/imagemap/imap_about.c: bumped version number
+
+	* plug-ins/imagemap/AUTHORS
+	* plug-ins/imagemap/NEWS
+	* plug-ins/imagemap/README
+	* plug-ins/imagemap/TODO: removed since they don't contain relevant
+	information anymore.
+
+	* plug-ins/imagemap/imap_popup.[ch]: removed
+
+	* plug-ins/imagemap/Makefile.am
+	* po-plug-ins/POTFILES.in: changed accordingly
+
+	* plug-ins/imagemap/imap_grid.c
+	* plug-ins/imagemap/imap_main.[ch]
+	* plug-ins/imagemap/imap_menu.[ch]
+	* plug-ins/imagemap/imap_object_popup.c
+	* plug-ins/imagemap/imap_preview.c
+	* plug-ins/imagemap/imap_toolbar.[ch]
+	* plug-ins/imagemap/imap_tools.[ch]: first set of changes to fix
+	#138841 (Use action based menus in Imagemap plug-in).
+	
 2005-01-02  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/splash.c (splash_update): fixed display of progress

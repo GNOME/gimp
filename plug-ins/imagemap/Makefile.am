@@ -19,10 +19,6 @@ libexecdir = $(gimpplugindir)/plug-ins
 libexec_PROGRAMS = imagemap
 
 EXTRA_DIST = \
-	AUTHORS		\
-	NEWS		\
-	README		\
-	TODO		\
 	imap_cern.l  	\
 	imap_csim.l  	\
 	imap_ncsa.l	\
@@ -103,8 +99,6 @@ imagemap_SOURCES = \
 	imap_object_popup.h		\
 	imap_polygon.c			\
 	imap_polygon.h			\
-	imap_popup.c			\
-	imap_popup.h			\
 	imap_preferences.c		\
 	imap_preferences.h		\
 	imap_preview.c			\

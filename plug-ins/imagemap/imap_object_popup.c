@@ -92,26 +92,13 @@ popup_copy(GtkWidget *widget, gpointer data)
    command_execute(command);
 }
 
+extern GtkUIManager *ui_manager;
+
 ObjectPopup_t*
 make_object_popup(void)
 {
    ObjectPopup_t *popup = g_new (ObjectPopup_t, 1);
-   GtkWidget     *menu;
-
-   popup->menu = menu = gtk_menu_new ();
-   make_item_with_label (menu,
-                        _("Edit Area Info..."), popup_edit_area_info, NULL);
-   make_item_with_label (menu,
-                         _("Delete Area"), popup_delete_area, NULL);
-   popup->up = make_item_with_label (menu,
-                                     _("Move Up"), popup_move_up, NULL);
-   popup->down = make_item_with_label (menu,
-                                       _("Move Down"), popup_move_down, NULL);
-   make_item_with_label (menu,
-                         _("Cut"), popup_cut, NULL);
-   make_item_with_label (menu,
-                         _("Copy"), popup_copy, NULL);
-
+   popup->menu = gtk_ui_manager_get_widget (ui_manager, "/ObjectPopupMenu");
    return popup;
 }
 
@@ -128,11 +115,12 @@ object_handle_popup(ObjectPopup_t *popup, Object_t *obj, GdkEventButton *event)
    int position = object_get_position_in_list(obj) + 1;
 
    _current_obj = popup->obj = obj;
+#ifdef _TEMP_
    gtk_widget_set_sensitive(popup->up, (position > 1) ? TRUE : FALSE);
    gtk_widget_set_sensitive(popup->down,
 			    (position < g_list_length(obj->list->list))
 			    ? TRUE : FALSE);
-
+#endif
    gtk_menu_popup(GTK_MENU(popup->menu), NULL, NULL, NULL, NULL,
 		  event->button, event->time);
 }

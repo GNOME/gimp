@@ -33,7 +33,6 @@
 #include "imap_grid.h"
 #include "imap_main.h"
 #include "imap_menu.h"
-#include "imap_popup.h"
 #include "imap_preview.h"
 #include "imap_table.h"
 #include "imap_toolbar.h"
@@ -89,8 +88,6 @@ grid_settings_ok_cb(gpointer data)
 
    if (grid_snap != new_snap) {
       grid_snap = new_snap;
-      main_toolbar_set_grid(grid_snap);
-      popup_check_grid(grid_snap);
       menu_check_grid(grid_snap);
    }
    redraw_preview();
