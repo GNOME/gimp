@@ -1177,11 +1177,6 @@ _gp_params_read (GIOChannel  *channel,
 	    goto cleanup;
           break;
 
-        case GIMP_PDB_PALETTE:
-	  if (!wire_read_int32 (channel, (guint32*) &(*params)[i].data.d_palette, 1))
-	    goto cleanup;
-          break;
-
 	case GIMP_PDB_END:
 	  break;
 	}
@@ -1346,11 +1341,6 @@ _gp_params_write (GIOChannel *channel,
 	      }
 	  }
 	  break;
-	  
-        case GIMP_PDB_PALETTE:
-	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_palette, 1))
-	    return;
-          break;
 
         case GIMP_PDB_STATUS:
 	  if (!wire_write_int32 (channel, (guint32*) &params[i].data.d_status, 1))
@@ -1428,7 +1418,6 @@ _gp_params_destroy (GPParam *params,
 	    g_free(params[i].data.d_parasite.data);
 	  break;
 
-	case GIMP_PDB_PALETTE:
 	case GIMP_PDB_END:
 	  break;
 	}

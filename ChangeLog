@@ -1,5 +1,19 @@
 2001-11-09  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpprotocol.[ch]: removed the "palette" PDB type
+	again. Incremented protocol version.
+
+	* app/plug_in.c
+	* app/pdb/procedural_db.c
+	* libgimp/gimp.c
+	* libgimpbase/gimpbasetypes.h: changed accordingly.
+
+	* app/pdb/procedural_db_cmds.c
+	* plug-ins/script-fu/script-fu-constants.c
+	* tools/pdbgen/enums.pl: regenerated.
+
+2001-11-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/undo.c: should set the fs.backing_store TileManager pointer
 	to NULL after deleting it. Why the heck didn't this crash
 	before...?

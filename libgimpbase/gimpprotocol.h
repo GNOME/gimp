@@ -29,7 +29,7 @@ extern "C" {
 
 /* Increment every time the protocol changes
  */
-#define GP_VERSION 0x000A
+#define GP_VERSION 0x000B
 
 
 enum
@@ -132,7 +132,6 @@ struct _GPParam
       guint32   size;
       gpointer  data;
     } d_parasite;
-    gint32 d_palette;
     gint32 d_status;
   } data;
 };
