@@ -1,3 +1,10 @@
+2002-01-22  Sven Neumann  <sven@gimp.org>
+
+	* gimptool-1.3.in: fixed usage info.
+	
+	* themes/Default/images/Makefile.am: should really install the stock
+	icons defined in our gtkrc.
+
 2002-01-18  Raja R Harinath  <harinath@cs.umn.edu>
 
 	* configure.in: Add a few [] to nested AC_CHECK_* invocations.

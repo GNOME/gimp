@@ -22,7 +22,7 @@ gimpdatadir=@gimpdatadir@
 usage()
 {
   cat <<EOF
-Usage: gimptool-1.4 [OPTION]...
+Usage: gimptool-1.3 [OPTION]...
 
 General options:
   --help                  print this message

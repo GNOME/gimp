@@ -11,21 +11,24 @@ DIALOG_IMAGES = @STRIP_BEGIN@ \
 	gimp-dialog-warning.png			\
 @STRIP_END@
 
+GTK_STOCK_IMAGES = @STRIP_BEGIN@ \
+	stock-button-delete.png			\
+	stock-button-lower.png			\
+	stock-button-new.png			\
+	stock-button-raise.png			\
+	stock-button-refresh.png		\
+@STRIP_END@
+
 STOCK_IMAGES = @STRIP_BEGIN@ \
 	stock-button-anchor.png			\
-	stock-button-delete.png			\
 	stock-button-duplicate.png		\
 	stock-button-edit.png			\
 	stock-button-eye.png			\
 	stock-button-linked.png			\
-	stock-button-lower.png			\
-	stock-button-new.png			\
 	stock-button-paste.png			\
 	stock-button-paste-as-new.png		\
 	stock-button-paste-into.png		\
 	stock-button-stroke.png			\
-	stock-button-raise.png			\
-	stock-button-refresh.png		\
 	stock-button-to-path.png		\
 	stock-button-to-selection.png		\
 	stock-button-selection-replace.png	\
@@ -48,7 +51,7 @@ WILBER_IMAGES = @STRIP_BEGIN@ \
 	stock-wilber-64x64.png			\
 @STRIP_END@
 
-themedata_DATA = $(DIALOG_IMAGES)
+themedata_DATA = $(DIALOG_IMAGES) $(GTK_STOCK_IMAGES)
 
 EXTRA_DIST = \
 	$(themedata_DATA)	\
