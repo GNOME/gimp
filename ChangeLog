@@ -1,5 +1,9 @@
 2004-08-01  Manish Singh  <yosh@gimp.org>
 
+	* configure.in: Really really really fix WINDRES logic.
+
+2004-08-01  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/mkgen.pl: update install-% rule to match newer
 	libtool commands.
 
