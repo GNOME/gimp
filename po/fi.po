@@ -1,13 +1,14 @@
-#  Finnish translation of GIMP 1.1.0
-# Copyright (C) YEAR Free Software Foundation, Inc.
-# Ville Hautamäki <villeh@cs.joensuu.fi>, 1998.
+# Finnish translation of GIMP 1.1
+# Copyright (C) 1999-2000 Free Software Foundation, Inc.
+# Ville Hautamäki <villeh@cs.joensuu.fi>
+# Tor Lillqvist <tml@iki.fi>
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp 1.1.9\n"
+"Project-Id-Version: GIMP 1.1\n"
 "POT-Creation-Date: 2000-02-11 10:24-0800\n"
-"PO-Revision-Date: 1999-03-18 19:00+0100\n"
-"Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
+"PO-Revision-Date: 2000-02-11 23:15+0200\n"
+"Last-Translator: Tor Lillqvist <tml@iki.fi>\n"
 "Language-Team: fi <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -51,9 +52,8 @@ msgid "-*-helvetica-bold-r-normal--*-120-*-*-*-*-*-*,*"
 msgstr ""
 
 #: app/app_procs.c:285 app/app_procs.c:287
-#, fuzzy
 msgid "brought to you by"
-msgstr "Version %s tekijät:"
+msgstr "tekijöinä"
 
 #: app/app_procs.c:355
 msgid "GIMP Startup"
@@ -742,40 +742,36 @@ msgid "Feather Selection"
 msgstr "Pehmennä valinta"
 
 #: app/commands.c:339
-#, fuzzy
 msgid "Feather Selection by:"
-msgstr "Pehmennä valinta:"
+msgstr "Pehmennyssäde:"
 
 #: app/commands.c:372
 msgid "Shrink Selection"
-msgstr "Pienennä valinta"
+msgstr "Kavenna valinta"
 
 #: app/commands.c:375
-#, fuzzy
 msgid "Shrink Selection by:"
-msgstr "Pienennä valintaa:"
+msgstr "Kavennus:"
 
 #: app/commands.c:384
 msgid "Shrink from image border"
-msgstr "Pienennä kuvan rajoista"
+msgstr "Kavenna kuvan rajoista"
 
 #: app/commands.c:406
 msgid "Grow Selection"
-msgstr "Kasvata valintaa"
+msgstr "Laajenna valintaa"
 
 #: app/commands.c:409
-#, fuzzy
 msgid "Grow Selection by:"
-msgstr "Kasvata valintaa:"
+msgstr "Laajennus:"
 
 #: app/commands.c:429
 msgid "Border Selection"
 msgstr "Tee reuna valinnalle"
 
 #: app/commands.c:432
-#, fuzzy
 msgid "Border Selection by:"
-msgstr "Tee reuna valinnalle"
+msgstr "Reunan leveys:"
 
 #: app/commands.c:1307
 msgid "Resize Error: Both width and height must be greater than zero."
@@ -2317,9 +2313,9 @@ msgid "Info: %s-%d.%d"
 msgstr ""
 
 #: app/info_window.c:512
-#, fuzzy, c-format
+#, c-format
 msgid "%d x %d pixels"
-msgstr "pikseleitä"
+msgstr "%s x %d pikseliä"
 
 #: app/info_window.c:536
 msgid "RGB Color"
@@ -2330,9 +2326,8 @@ msgid "Indexed Color"
 msgstr "Indeksoitu"
 
 #: app/info_window.c:541
-#, fuzzy
 msgid "colors"
-msgstr "Värit"
+msgstr "väriä"
 
 #. size slider
 #: app/ink.c:296
