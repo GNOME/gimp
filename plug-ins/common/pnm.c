@@ -29,6 +29,7 @@
 
 #include <errno.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <setjmp.h>
 #include <sys/types.h>
