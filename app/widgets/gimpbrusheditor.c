@@ -217,6 +217,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   GimpBrushEditor         *brush_editor;
   GimpBrushGeneratedShape  shape = GIMP_BRUSH_GENERATED_CIRCLE;
   gdouble                  radius   = 0.0;
+  gint                     spikes   = 2;
   gdouble                  hardness = 0.0;
   gdouble                  ratio    = 0.0;
   gdouble                  angle    = 0.0;
@@ -244,6 +245,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
 
       shape    = gimp_brush_generated_get_shape        (brush);
       radius   = gimp_brush_generated_get_radius       (brush);
+      spikes   = gimp_brush_generated_get_spikes       (brush);
       hardness = gimp_brush_generated_get_hardness     (brush);
       ratio    = gimp_brush_generated_get_aspect_ratio (brush);
       angle    = gimp_brush_generated_get_angle        (brush);
@@ -255,6 +257,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
   gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (brush_editor->shape_group),
                                    shape);
   gtk_adjustment_set_value (brush_editor->radius_data,       radius);
+  gtk_adjustment_set_value (brush_editor->spikes_data,       spikes);
   gtk_adjustment_set_value (brush_editor->hardness_data,     hardness);
   gtk_adjustment_set_value (brush_editor->aspect_ratio_data, ratio);
   gtk_adjustment_set_value (brush_editor->angle_data,        angle);

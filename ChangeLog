@@ -1,5 +1,10 @@
 2004-08-01  Simon Budig  <simon@gimp.org>
 
+	* app/widgets/gimpbrusheditor.c: Fixed oversight that accidentially
+	reset the number of spikes to 2.
+
+2004-08-01  Simon Budig  <simon@gimp.org>
+
 	* app/core/gimpbrushgenerated.[ch]: Added optional spikes for
 	the generated brushes, enabling star shaped generated brushes.
 
