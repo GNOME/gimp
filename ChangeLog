@@ -1,5 +1,11 @@
 2003-11-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/tools-commands.c (tools_select_cmd_callback): don't
+	call tool_manager_initialize_active() with a NULL GimpDisplay.
+	Fixes bug #126462.
+
+2003-11-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimphistogramview.c
 	* app/widgets/gimpnavigationpreview.c: destroy GdkGCs in
 	GtkWidget::unrealize().

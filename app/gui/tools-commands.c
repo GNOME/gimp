@@ -75,6 +75,7 @@ tools_select_cmd_callback (GtkWidget *widget,
   Gimp         *gimp;
   GimpToolInfo *tool_info;
   GimpContext  *context;
+  GimpDisplay  *gdisp;
   const gchar  *identifier;
   return_if_no_gimp (gimp, data);
 
@@ -96,5 +97,8 @@ tools_select_cmd_callback (GtkWidget *widget,
       gimp_context_tool_changed (context);
     }
 
-  tool_manager_initialize_active (gimp, gimp_context_get_display (context));
+  gdisp = gimp_context_get_display (context);
+
+  if (gdisp)
+    tool_manager_initialize_active (gimp, gdisp);
 }
