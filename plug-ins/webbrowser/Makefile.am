@@ -31,6 +31,7 @@ LDADD = @STRIP_BEGIN@ \
 	$(top_builddir)/libgimpcolor/libgimpcolor-$(LT_RELEASE).la	\
 	$(top_builddir)/libgimpbase/libgimpbase-$(LT_RELEASE).la	\
 	$(GTK_LIBS)							\
+	$(X_LIBS)							\
 	$(LIBXMU)							\
 	$(INTLLIBS)							\
 @STRIP_END@
