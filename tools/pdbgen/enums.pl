@@ -29,6 +29,18 @@ package Gimp::CodeGen::enums;
 		       WEB_PALETTE => '2',
 		       MONO_PALETTE => '3',
 		       CUSTOM_PALETTE => '4' }
+	},
+    ChannelOffsetType =>
+	{ contig => 1,
+	  symbols => [ qw(OFFSET_BACKGROUND OFFSET_TRANSPARENT) ],
+	  mapping => { OFFSET_BACKGROUND => '0',
+		       OFFSET_TRANSPARENT => '1' }
+	},
+    SizeType =>
+	{ contig => 1,
+	  symbols => [ qw(PIXELS POINTS) ],
+	  mapping => { PIXELS => '0',
+		       POINTS => '1' }
 	}
 );
 

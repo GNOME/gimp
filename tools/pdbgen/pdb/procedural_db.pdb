@@ -141,7 +141,7 @@ HELP
 	{
 	    name  => 'procedure_names',
 	    type  => 'stringarray',
-	    desc  => 'The list of procedure names'
+	    desc  => 'The list of procedure names',
 	    alias => 'pdb_query.list_or_procs'
 	}
     );
@@ -175,7 +175,7 @@ CODE
 sub procedural_db_proc_info {
     $alias{lib} = 'query_procedure';
 
-    $blurb = <<'BLURB'
+    $blurb = <<'BLURB';
 Queries the procedural database for information on the specified procedure.
 BLURB
 
@@ -253,7 +253,7 @@ HELP
     @globals = ('static GList *data_list = NULL');
 
     %invoke = (
-	headers => [ qw("procedural.db.h" ],
+	headers => [ qw("procedural.db.h") ],
 	vars => ['PDBData *data', 'char *data_copy', 'GList *list'],
 	code => <<'CODE'
 {
@@ -300,7 +300,7 @@ HELP
     $outargs[0]->{alias} = 'data->bytes';
 
     %invoke = (
-	headers => [ qw("procedural.db.h" ],
+	headers => [ qw("procedural.db.h") ],
 	vars => ['PDBData *data', 'GList *list'],
 	code => <<'CODE'
 {
@@ -340,7 +340,7 @@ HELP
     $inargs[2]->{alias} = 'data_src';
 
     %invoke = (
-	headers => [ qw("procedural.db.h" ],
+	headers => [ qw("procedural.db.h") ],
 	vars => ['PDBData *data = NULL', 'GList *list'],
 	code => <<'CODE'
 {

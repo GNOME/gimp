@@ -138,7 +138,7 @@ CODE
 		$return_marshal = "" unless $once++;
 
 	        if (exists $_->{num}) {
-		    if (not exists $_->{no_lib}) {
+		    if (!exists $_->{no_lib}) {
 			$arglist .= "gint \*$_->{name}, ";
 			push @arraynums, $_;
 		    }

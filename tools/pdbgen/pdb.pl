@@ -35,34 +35,37 @@ package Gimp::CodeGen::pdb;
 
     display   => { name => 'DISPLAY',
 		   type => 'GDisplay *',
+		   headers => [ qw("gdisplay.h") ],
 		   id_func => 'gdisplay_get_ID',
-		   id_ret_func => '$var->ID',
-		   id_headers => [ qw("gdisplay.h") ] },
+		   id_ret_func => '$var->ID' },
     image     => { name => 'IMAGE',
 		   type => 'GimpImage *', 
+		   headers => [ qw("procedural_db.h") ],
 		   id_func => 'pdb_id_to_image',
-		   id_ret_func => 'pdb_image_to_id ($var)',
-		   id_headers => [ qw("procedural_db.h") ] },
+		   id_ret_func => 'pdb_image_to_id ($var)' },
     layer     => { name => 'LAYER',
 		   type => 'GimpLayer *', 
+		   headers => [ qw("drawable.h" "layer.h") ],
 		   id_func => 'layer_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		   id_headers => [ qw("drawable.h" "layer.h") ] },
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
     channel   => { name => 'CHANNEL',
 		   type => 'Channel *',
+		   headers => [ qw("drawable.h" "channel.h") ],
 		   id_func => 'channel_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		   id_headers => [ qw("drawable.h" "channel.h") ] },
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
     drawable  => { name => 'DRAWABLE',
 		   type => 'GimpDrawable *',
+		   headers => [ qw("drawable.h") ],
 		   id_func => 'gimp_drawable_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		   id_headers => [ qw("drawable.h") ] },
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
     selection => { name => 'SELECTION',
 		   type => 'Channel *',
+		   headers => [ qw("drawable.h" "channel.h") ],
 		   id_func => 'channel_get_ID',
-		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))',
-		   id_headers => [ qw("drawable.h" "channel.h") ] },
+		   id_ret_func => 'drawable_ID (GIMP_DRAWABLE ($var))' },
+
+    parasite => { name => 'PARASITE', type => 'Parasite *',
+		  headers => [ qw("libgimp/parasite.h") ] },
 
     boundary => { name => 'BOUNDARY', type => 'gpointer ' }, # ??? FIXME
     path     => { name => 'PATH'    , type => 'gpointer ' }, # ??? FIXME
@@ -97,11 +100,9 @@ sub arg_parse {
 
 	return @retvals;
     }
-    elsif ($arg =~ /^([+-.\d].*?)? \s*
-		     (<=|<)? \s*
-		     (\w+) \s*
-		     (<=|<)? \s*
-		     ([\d\.-].*?)?
+    elsif ($arg =~ /^(?:([+-.\d].*?) \s* (<=|<))?
+		     \s* (\w+) \s*
+		     (?:(<=|<) \s* ([+-.\d].*?))?
 		   /x) {
 	return ($3, $1, $2 ? $testmap{$2} : $2, $5, $4 ? $testmap{$4} : $4);
     }
@@ -115,7 +116,7 @@ sub arg_ptype {
 	elsif ($arg->{type} =~ /\*/)      { 'pointer' }
 	elsif ($arg->{type} =~ /boolean/) { 'int'     }
 	elsif ($arg->{type} =~ /int/)     { 'int'     }
-	elsif ($arg->{type} =~ /float/)   { 'float'   }
+	elsif ($arg->{type} =~ /double/)  { 'float'   }
 	else                              { 'pointer' }
     };
 }

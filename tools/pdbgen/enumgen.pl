@@ -18,11 +18,23 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 BEGIN {
+    $srcdir = '.';
     $destdir = '.';
 }
 
+use lib $srcdir;
+
 use Text::Wrap qw(wrap $columns);
 $columns = 79;
+
+require 'util.pl';
+
+eval <<'CODE';
+*write_file = \&Gimp::CodeGen::util::write_file;
+*FILE_EXT   = \$Gimp::CodeGen::util::FILE_EXT;
+CODE
+
+$FILE_EXT = $FILE_EXT;
 
 my $header = <<'HEADER';
 :# The GIMP -- an image manipulation program
@@ -188,6 +200,8 @@ ENTRY
 
 $code =~ s/,\n$/\n/s;
 
-open OUTFILE, "> $destdir/enums.pl";
+$outfile = "$destdir/enums.pl$FILE_EXT";
+open OUTFILE, "> $outfile";
 print OUTFILE $header, $code, $footer;
 close OUTFILE;
+&write_file($outfile);

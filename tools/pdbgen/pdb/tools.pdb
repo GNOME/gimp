@@ -161,7 +161,7 @@ Fill the area specified either by the current selection if there is one, or by
 a seed fill starting at the specified coordinates.
 BLURB
 
-    $help = <<'HELP'
+    $help = <<'HELP';
 This tool requires information on the paint application mode, and the fill
 mode, which can either be in the foreground color, or in the currently active
 pattern. If there is no selection, a seed fill is executed at the specified
@@ -172,12 +172,12 @@ the composite image will be used instead of that for the specified drawable.
 This is equivalent to sampling for colors after merging all visible layers. In
 the case of merged sampling, the x,y coordinates are relative to the image's
 origin; otherwise, they are relative to the drawable's origin.
-HELP;
+HELP
 
     &std_pdb_misc;
 
     my $validity = 'This parameter is only valid when there is no selection in
-		    the specified image.'
+		    the specified image.';
     my $coord = "The \$a coordinate of this bucket fill's application.
 		 $validity";
 
@@ -187,16 +187,16 @@ HELP;
 	  desc => 'The type of fill: %%desc%%' },
 	{ name => paint_mode, type => 'enum PaintMode',
 	  desc => 'The paint application mode: %%desc%%' },
-	{ name => opacity, type => '0 <= float <= 100',
+	{ name => 'opacity', type => '0 <= float <= 100',
 	  desc => 'The opacity of the final bucket fill %%desc%%' },
-	{ name => threshold, type => '0 <= float <= 255',
+	{ name => 'threshold', type => '0 <= float <= 255',
 	  desc => "The threshold determines how extensive the seed fill will
 		   be. It's value is specified in terms of intensity levels
 		   %%desc%%. $validity" },
 	&sample_merged_arg,
-	{ name => x, type => 'float',
+	{ name => 'x', type => 'float',
 	  desc => eval qq/{\$a = 'x'; "$coord";}/ },
-	{ name => y, type => 'float',
+	{ name => 'y', type => 'float',
 	  desc => eval qq/{\$a = 'y';"$coord";}/ }
     );
 
@@ -214,12 +214,12 @@ CODE
 }
 
 sub by_color_select {
-    $blurb = <<'BLURB'
+    $blurb = <<'BLURB';
 Create a selection by selecting all pixels (in the specified drawable) with the
 same (or similar) color to that specified.
 BLURB
 
-    $help = <<'HELP'
+    $help = <<'HELP';
 This tool creates a selection over the specified image. A by-color selection is
 determined by the supplied color under the constraints of the specified
 threshold. Essentially, all pixels (in the drawable) that have color
@@ -260,11 +260,11 @@ CODE
 }
 
 sub clone {
-    $blurb = <<'BLURB'
+    $blurb = <<'BLURB';
 Clone from the source to the dest drawable using the current brush
 BLURB
 
-    $help = <<'HELP'
+    $help = <<'HELP';
 This tool clones (copies) from the source drawable starting at the specified 
 source coordinates to the dest drawable. If the "clone_type" argument is set 
 to PATTERN-CLONE, then the current pattern is used as the source and the
@@ -373,7 +373,7 @@ HELP
 	&drawable_arg,
 	{ name => 'pressure', type => '0 <= float <= 100',
 	  desc => 'The pressure: %%desc%%' },
-	{ name => 'convolve_type', type 'enum Convolve (no CUSTOM)',
+	{ name => 'convolve_type', type => 'enum Convolve (no CUSTOM)',
 	  desc => 'Convolve type: %%desc%%' },
 	&stroke_arg
     );
@@ -479,7 +479,7 @@ HELP
 	&drawable_arg,
 	&stroke_arg,
 	{ name => 'hardness', type => 'enum EraserHardness',
-	  desc => '%%desc%%' }
+	  desc => '%%desc%%' },
 	{ name => 'method', type => 'enum EraserMethod',
 	  desc => '%%desc%%' }
     );
@@ -839,9 +839,9 @@ HELP
 	{ name => 'y', type => 'float',
 	  desc => 'y coordinate of upper-left corner of rectangle' },
 	{ name => 'width', type => '0 < float',
-	  desc => 'The width of the rectangle: %%desc%%' }
+	  desc => 'The width of the rectangle: %%desc%%' },
 	{ name => 'height', type => '0 < float',
-	  desc => 'The height of the rectangle: %%desc%%' }
+	  desc => 'The height of the rectangle: %%desc%%' },
 	&operation_arg,
 	&feather_select_args,
     );
@@ -876,7 +876,7 @@ HELP
     @inargs = (
 	&drawable_arg,
 	{ name => 'interpolation', type => 'boolean',
-	  desc => 'Whether to use interpolation' }
+	  desc => 'Whether to use interpolation' },
 	{ name => 'angle', type => 'float',
 	  desc => 'The angle of rotation (radians)' }
     );
@@ -1046,7 +1046,7 @@ HELP
     @inargs = (
 	&drawable_arg,
 	{ name => 'interpolation', type => 'boolean',
-	  desc => 'Whether to use interpolation' }
+	  desc => 'Whether to use interpolation' },
 	{ name => 'shear_type', type => 'enum ShearType',
 	  desc => 'Type of shear: %%desc%%' },
 	{ name => 'magnitude', type => 'float',

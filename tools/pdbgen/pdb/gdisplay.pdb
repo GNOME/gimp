@@ -47,7 +47,7 @@ HELP
   if (gimage->layers == NULL)
     success = FALSE;
   else
-    success = ((gdisp = gdisplay_new (gimage, scale)) != NULL);
+    success = (gdisp = gdisplay_new (gimage, scale)) != NULL;
 }
 CODE
     );

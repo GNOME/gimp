@@ -17,4 +17,4 @@
 
 # Modify this list for the groups to parse in the pdb directory
 @groups = qw(gdisplay edit floating_sel undo palette gradient
-	     convert);
+	     convert channel_ops text gimprc parasite);

@@ -1,0 +1,64 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+# The defs
+
+sub gimprc_query {
+    $blurb = <<'BLURB';
+Queries the gimprc file parser for information on a specified token.
+BLURB
+
+    $help = <<'HELP';
+This procedure is used to locate additional information contained in the gimprc
+file considered extraneous to the operation of the GIMP. Plug-ins that need
+configuration information can expect it will be stored in the user's gimprc
+file and can use this procedure to retrieve it. This query procedure will
+return the value associated with the specified token. This corresponds _only_
+to entries with the format: (<token> <value>). The value must be a string.
+Entries not corresponding to this format will cause warnings to be issued on
+gimprc parsing a nd will not be queryable.
+HELP
+
+    &std_pdb_misc;
+    $date = '1997';
+
+    @inargs = (
+	{ name => 'token', type => 'string',
+	  desc => 'The token to query for' }
+    );
+
+    @outargs = (
+	{ name => 'value', type => 'string',
+	  desc => 'The value associated with the queried token',
+	  alias => 'g_strdup (value)', no_declare => 1 }
+    );
+
+    %invoke = (
+	headers => [ qw("gimprc.h") ],
+	vars => ['gchar *value'],
+	code => 'success = (value = gimprc_find_token (token)) != NULL;'
+    );
+}
+
+@procs = qw(gimprc_query);
+%exports = (app => [@procs]);
+
+$desc = 'Gimprc procedures';
+
+1;

@@ -41,6 +41,25 @@ sub quotewrap {
     $str;
 }
 
+sub format_code_frag {
+    my ($code, $indent) = @_;
+
+    chomp $code;
+    $code =~ s/\t/' ' x 8/eg;
+
+    if (!$indent && $code =~ /^\s*{\s*\n.*\n\s*}\s*$/s) {
+	$code =~ s/^\s*{\s*\n//s;
+	$code =~ s/\n\s*}\s*$//s;
+    }
+    else {
+	$code =~ s/^/' ' x ($indent ? 4 : 2)/meg;
+    }
+    $code =~ s/^ {8}/\t/mg;
+    $code .= "\n";
+
+    $code;
+}
+
 sub declare_args {
     my $proc = shift;
     my $out = shift;
@@ -53,7 +72,7 @@ sub declare_args {
 	foreach (@args) {
 	    my $arg = $arg_types{(&arg_parse($_->{type}))[0]};
 
-	    if ($arg->{array} && (not exists $_->{array})) {
+	    if ($arg->{array} && !exists $_->{array}) {
 		warn "Array without number of elements param in $proc->{name}";
 	    }
 
@@ -64,8 +83,8 @@ sub declare_args {
 		}
 		$result .= ";\n";
 
-		if (exists $arg->{id_headers}) {
-		    foreach (@{$arg->{id_headers}}) {
+		if (exists $arg->{headers}) {
+		    foreach (@{$arg->{headers}}) {
 			$out->{headers}->{$_}++;
 		    }
 		}
@@ -76,7 +95,7 @@ sub declare_args {
     $result;
 } 
 
-sub make_args {
+sub make_arg_recs {
     my $proc = shift;
 
     my $result = "";
@@ -86,8 +105,7 @@ sub make_args {
 	my @args = @{$proc->{$_}} if exists $proc->{$_};
 
 	if (scalar @args) {
-	    $result .= "\nstatic ProcArg $proc->{name}_${_}[] =";
-	    $result .= "\n{\n";
+	    $result .= "\nstatic ProcArg $proc->{name}_${_}[] =\n{\n";
 
 	    foreach $arg (@{$proc->{$_}}) {
 		my ($type, $name, @remove) = &arg_parse($arg->{type});
@@ -115,7 +133,7 @@ sub make_args {
 CODE
 	    }
 
-	    $result =~ s/,\n$/\n/;
+	    $result =~ s/,\n$/\n/s;
 	    $result .= "};\n";
 	}
     }
@@ -124,11 +142,10 @@ CODE
 }
 
 sub marshal_inargs {
-    my $proc = shift;
+    my ($proc, $argc) = @_;
 
     my $result = "";
     my %decls;
-    my $argc = 0;
 
     my @inargs = @{$proc->{inargs}} if exists $proc->{inargs};
 
@@ -139,19 +156,28 @@ sub marshal_inargs {
 	my $var = &arg_vname($_);
 	
 	if (exists $arg->{id_func}) {
-	    my $test = exists $_->{on_success} ? '!=' : '==';
-
 	    $result .= <<CODE;
-  if (($var = $arg->{id_func} (args[$argc].value.pdb_$type)) $test NULL)
+  $var = $arg->{id_func} (args[$argc].value.pdb_$type);
 CODE
 
-	    $result .= <<CODE if exists $_->{on_success};
-    $_->{on_success}
-  else
-CODE
-	    $result .= ' ' x 4 . "success = FALSE;\n";
+	    if (!exists $_->{no_success}) {
+		$result .= ' ' x 2 . "if ($var ";
+		$result .= exists $_->{on_success} ? '!=' : '==';
+		$result .= " NULL)\n";
 
-	    $success = 1;
+		if (exists $_->{on_success}) {
+		    $result .= &format_code_frag($_->{on_success}, 1);
+		    $result .= ' ' x 2 . "else\n";
+		}
+
+		$result .= ' ' x 4 . "success = FALSE;\n";
+
+		if (exists $_->{on_fail}) {
+		    $result .= &format_code_frag($_->{on_fail}, 1);
+		}
+
+		$success = 1;
+	    }
 	}
 	else {
 	    my $code = ' ' x 2 . "$var =";
@@ -218,21 +244,35 @@ CODE
 
 		    $code .= "$extra;\n";
 		}
-	    }
 
-	    if ($code =~ /success/) {
-		if ($success) {
-		    $code =~ s/^/' ' x 4/meg;
-		    $code =~ s/^ {8}/\t/mg;
+		if ($code =~ /success/) {
+		    my $tests = 0;
 
-		    $code .= ' '  x 4 . "}\n";
-		    $result .= ' ' x 2 . "if (success)\n" . ' ' x 4 . "{\n";
+		    if (exists $_->{on_success}) {
+			$code .= ' ' x 2 . "if (success)\n";
+			$code .= &format_code_frag($_->{on_success}, 1);
+			$tests++;
+		    }
+
+		    if (exists $_->{on_fail}) {
+			$code .= ' ' x 2;
+			$code .= $tests ? "else\n" : "if (success)\n"; 
+			$code .= &format_code_frag($_->{on_fail}, 1);
+		    }
+
+		    if ($success) {
+			$code =~ s/^/' ' x 4/meg;
+			$code =~ s/^ {8}/\t/mg;
+
+			$code .= ' '  x 4 . "}\n";
+			$result .= ' ' x 2 . "if (success)\n" . ' ' x 4 . "{\n";
+		    }
+		    else {
+			$success_init = 0;
+		    }
+
+		    $success = 1;
 		}
-		else {
-		    $success_init = 0;
-		}
-
-		$success = 1;
 	    }
 
 	    $result .= $code;
@@ -324,51 +364,128 @@ CODE
 	$out->{code} .= "\nstatic Argument *\n";
 	$out->{code} .= "${name}_invoker (Argument *args)\n{\n";
 
-	my $invoker = "";
-	$invoker .= ' ' x 2 . "Argument *return_args;\n" if scalar @outargs;
-	$invoker .= &declare_args($proc, $out, qw(inargs outargs));
+	my $code = "";
 
-	if (exists $proc->{invoke}->{vars}) {
-	    foreach (@{$proc->{invoke}->{vars}}) {
-		$invoker .= ' ' x 2 . $_ . ";\n";
+	if (exists $proc->{invoke}->{pass_through}) {
+	    my $invoke = $proc->{invoke};
+
+	    my $argc = 0;
+	    $argc += @{$invoke->{pass_args}} if exists $invoke->{pass_args};
+	    $argc += @{$invoke->{make_args}} if exists $invoke->{make_args};
+
+	    my %pass; my @passgroup;
+	    my $before = 0; my $contig = 0; my $pos = -1;
+	    if (exists $invoke->{pass_args}) {
+		foreach (@{$invoke->{pass_args}}) {
+		    $pass{$_}++;
+		    $_ - 1 == $before ? $contig = 1 : $pos++;
+		    push @{$passgroup[$pos]}, $_;
+		    $before = $_;
+		}
+	    } 
+	    $code .= ' ' x 2 . "int i;\n" if $contig;
+
+	    $code .= ' ' x 2 . "Argument argv[$argc];\n";
+
+	    my $tempproc; $pos = 0;
+	    foreach (@{$proc->{inargs}}) {
+		$_->{argpos} = $pos++;
+		push @{$tempproc->{inargs}}, $_ if !exists $pass{$_->{argpos}};
 	    }
-	}
 
-	$invoker.= &marshal_inargs($proc);
+	    $code .= &declare_args($tempproc, $out, qw(inargs)) . "\n";
 
-	$invoker .= "\n" if $invoker && $invoker !~ /\n\n/s;
+	    my $marshal = "";
+	    foreach (@{$tempproc->{inargs}}) {
+		my $argproc; $argproc->{inargs} = [ $_ ];
+		$marshal .= &marshal_inargs($argproc, $_->{argpos});
+	    }
 
-	my $code = $proc->{invoke}->{code};
+	    if ($success) {
+		$marshal .= <<CODE;
+  if (!success)
+    return procedural_db_return_args (\&${name}_proc, FALSE);
 
-	chomp $code;
-	$code =~ s/\t/' ' x 8/eg;
+CODE
+	    }
 
-	if ($code =~ /^\s*\{\s*\n.*\n\s*\}\s*$/s && !$success) {
-	    $code =~ s/^\s*\{\s*\n//s;
-	    $code =~ s/\n\s*}\s*$//s;
+	    $marshal = substr($marshal, 1) if $marshal;
+	    $code .= $marshal;
+
+	    foreach (@passgroup) {
+		$code .= ($#$_ ? <<LOOP : <<CODE) . "\n";
+  for (i = $_->[0]; i < @{[ $_->[$#$_] + 1 ]}; i++)
+    argv[i] = args[i];
+LOOP
+  argv[$_->[0]] = args[$_->[0]];
+CODE
+	    }
+
+	    if (exists $invoke->{make_args}) {
+		$pos = 0;
+		foreach (@{$invoke->{make_args}}) {
+		    while (exists $pass{$pos}) { $pos++ }
+		    
+		    my $arg = $arg_types{(&arg_parse($_->{type}))[0]};
+		    my $type = &arg_ptype($arg);
+
+		    $code .= <<CODE;
+  argv[$pos].arg_type = PDB_$arg->{name};
+CODE
+
+		    my $frag = $_->{code};
+		    $frag =~ s/%%arg%%/"argv[$pos].value.pdb_$type"/e;
+		    $code .= &format_code_frag($frag, 0);
+
+		    $pos++;
+		}
+		$code .= "\n";
+	    }
+
+	    $code .= <<CODE;
+  return $invoke->{pass_through}_invoker (argv);
+}
+CODE
 	}
 	else {
-	    $code =~ s/^/' ' x 2/meg;
-	    $code =~ s/^/' ' x 2/meg if $success;
-	}
-	$code =~ s/^ {8}/\t/mg;
+	    my $invoker = "";
+	
+	    $invoker .= ' ' x 2 . "Argument *return_args;\n" if scalar @outargs;
+	    $invoker .= &declare_args($proc, $out, qw(inargs outargs));
 
-	$code = ' ' x 2 . "if (success)\n" . $code if $success;
-	$success = ($code =~ /success =/) unless $success;
+	    if (exists $proc->{invoke}->{vars}) {
+		foreach (@{$proc->{invoke}->{vars}}) {
+		   $invoker .= ' ' x 2 . $_ . ";\n";
+		}
+	    }
+
+	    $invoker .= &marshal_inargs($proc, 0);
+
+	    $invoker .= "\n" if $invoker && $invoker !~ /\n\n/s;
+
+	    my $frag = &format_code_frag($proc->{invoke}->{code}, $success);
+
+	    $frag = ' ' x 2 . "if (success)\n" . $frag if $success;
+	    $success = ($frag =~ /success =/) unless $success;
+
+	    $code .= $invoker . $frag;
+	    $code .= "\n" if $frag =~ /\n\n/s || $invoker;
+	    $code .= &marshal_outargs($proc) . "}\n";
+	}
 
 	if ($success) {
 	    $success_init = 0 if $proc->{invoke}->{success} eq 'NONE';
 
-	    $out->{code} .= ' ' x 2 . "gboolean success";
-	    $out->{code} .= " = $proc->{invoke}->{success}" if $success_init;
-	    $out->{code} .= ";\n";
+	    my $header = ' ' x 2 . "gboolean success";
+	    $header .= " = $proc->{invoke}->{success}" if $success_init;
+	    $header .= ";\n";
+
+	    $out->{code} .= $header;
 	}
 
-	$out->{code} .= $invoker . $code . "\n";
-	$out->{code} .= "\n" if $code =~ /\n/s || $invoker;
-	$out->{code} .= &marshal_outargs($proc) . "}\n";
+        $out->{code} .= $code;
 
-	$out->{code} .= &make_args($proc, qw(inargs outargs));
+	$out->{code} .= &make_arg_recs($proc, qw(inargs outargs));
 
 	$out->{code} .= <<CODE;
 

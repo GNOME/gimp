@@ -38,6 +38,13 @@ sub fontname_arg () {{
     	     Conventions)'
 }}
 
+sub size_args () {(
+    { name => 'size', type => '0 < float',
+      desc => 'The size of text in either pixels or points' },
+    { name => 'size_type', type => 'enum SizeType',
+      desc => 'The units of specified size: %%desc%%' }
+)}
+
 sub render_args () {(
     &std_image_arg,
     { name => 'drawable', type => 'drawable',
@@ -49,21 +56,16 @@ sub render_args () {(
       desc => 'The y coordinate for the top of the text bounding box' },
     &text_arg,
     { name => 'border', type => '-1 <= int32',
-      desc => 'The size of the border: %%desc%%' }
-    &std_antialias_arg
+      desc => 'The size of the border: %%desc%%' },
+    &std_antialias_arg,
+    &size_args
 )}
 
-sub size_args () {(
-    { name => 'size', type => '0 < float',
-      desc => 'The size of text in either pixels or points' },
-    { name => 'size_type', type => 'enum SizeType',
-      desc => 'The units of specified size: %%desc%%' }
-)}
+@props = qw(foundry family weight slant set-width spacing registry encoding);
 
 sub font_prop_args {
    my @result;
-   foreach (qw(foundry family weight slant set-width spacing registry
-   	       encoding)) {
+   foreach (@props) {
 	my $var = $_;
 	$var =~ s/-/_/g;
 
@@ -85,6 +87,15 @@ sub extents_outargs {
 	push @outargs, { name => $_, type => 'int32',
 			 desc => "The $_ of the specified font" }
     }
+}
+
+sub fontname_makeargs {
+    my @args;
+    foreach (map { s/-/_/; uc } @props) {
+	push @args, { type => 'string',
+		      code => "%%arg%% = text_get_field (fontname, $_);" }
+    }
+    @args;
 }
 
 sub text {
@@ -109,19 +120,18 @@ appear as a new layer. Finally, a border can be specified around the final
 rendered text. The border is measured in pixels.
 HELP
 
-   &pdb_misc;
+    &pdb_misc;
 
-   @inargs = (
+    @inargs = (
 	&render_args,
-	&size_args,
         &font_prop_args
-   );
+    );
 
-   &render_outargs;
+    &render_outargs;
 
-   %invoke = (
+    %invoke = (
 	headers => [ qw("text_tool.h") ],
-	vars => ['GimpImage *gimage', 'gchar *fontname[2048]'],
+	vars => ['gchar *fontname[2048]'],
 	code => <<'CODE'
 {
   if (antialias)
@@ -132,13 +142,13 @@ HELP
 
   if (success)
     success = text_get_xlfd (size, size_type, foundry, family, weight,
-  			     slant, set_width, spacing, registry, encoding,
+			     slant, set_width, spacing, registry, encoding,
 			     fontname);
 
   if (success)
     {
       text_layer = text_render (gimage, drawable, x, y, fontname, text,
-      				border, antialias);
+				border, antialias);
       success = text_layer != NULL;
     }
 }
@@ -170,12 +180,13 @@ HELP
 	code => <<'CODE'
 {
   success = text_get_xlfd (size, size_type, foundry, family, weight,
-  			   slant, set_width, spacing, registry, encoding,
+			   slant, set_width, spacing, registry, encoding,
 			   fontname);
 
   if (success)
     success = text_get_extents (fontname, text, &width, &height, &ascent,
-    				&descent);
+				&descent);
+}
 CODE
     );
 }
@@ -197,19 +208,59 @@ than non-antialiased text; the resulting floating selection or layer, however,
 will require the same amount of memory with or without antialiasing. If the
 specified drawable parameter is valid, the text will be created as a floating
 selection attached to the drawable. If the drawable parameter is not valid
-(-1), the text will appear as a new layer.  Finally, a border can be specified
+(-1), the text will appear as a new layer. Finally, a border can be specified
 around the final rendered text. The border is measured in pixels.
 HELP
 
     &pdb_misc;
-    $author .= ', Sven Neumann';
+    $author .= ' & Sven Neumann';
 
     @inargs = (
         &render_args,
 	&fontname_arg
     );
 
+    &render_outargs;
+
     %invoke = (
 	headers => [ qw("text_tool.h") ],
+	pass_through => 'text',
+	pass_args => [ 0..8 ],
+	make_args => [ &fontname_makeargs ]
     );
 }
+
+sub text_get_extents_fontname {
+    $blurb = 'Get extents of the bounding box for the specified text.';
+
+    $help = <<'HELP';
+This tool returns the width and height of a bounding box for the specified text
+string with the specified font information. Ascent and descent for the
+specified font are returned as well.
+HELP
+
+    &pdb_misc;
+    $author .= ' & Sven Neumann';
+ 
+    @inargs = (
+	&text_arg,
+	&size_args,
+	&fontname_arg
+    );
+
+    &extents_outargs;
+
+    %invoke = (
+	headers => [ qw("text_tool.h") ],
+	pass_through => 'text_get_extents',
+	pass_args => [ 0..2 ],
+	make_args => [ &fontname_makeargs ]
+    );
+}
+
+@procs = qw(text text_get_extents text_fontname text_get_extents_fontname);
+%exports = (app => [@procs]);
+
+$desc = 'Text procedures';
+
+1;

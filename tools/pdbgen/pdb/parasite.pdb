@@ -1,0 +1,68 @@
+# The GIMP -- an image manipulation program
+# Copyright (C) 1998 Jay Cox <jaycox@earthlink.net>
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+# The defs
+
+sub pdb_misc {
+    $author = $copyright = 'Jay Cox';
+    $date = 1998;
+}
+
+sub parasite_new {
+    $blurb = 'Creates a new parasite.';
+
+    $help = 'Creates a new parasite unatached to to any image or drawable.';
+
+    &pdb_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+ 	  desc => 'The name of the parasite to create', no_success => 1 },
+	{ name => 'flags', type => 'int32',
+	  desc => 'The flags (persistance == 1)' },
+	{ name => 'size', type => '0 <= int32',
+	  desc => 'The size of the data in bytes' },
+	{ name => 'data', type => 'string',
+	  desc => 'The data', no_success => 1 }
+    );
+
+    @outargs = (
+	{ name => 'parasite', type => 'parasite',
+	  desc => 'The new parasite' }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimp/parasite.h") ],
+	code => <<'CODE'
+{
+  if (size > 0 && data == NULL)
+    success = FALSE;
+  else
+    success = (parasite = parasite_new (name, flags, size, data)) != NULL;
+}
+CODE
+    );
+}
+
+@procs = qw(parasite_new);
+%exports = (app => [@procs]);
+
+$desc = 'Parasite procedures';
+
+1;

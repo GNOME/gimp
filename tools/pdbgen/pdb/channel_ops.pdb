@@ -38,7 +38,7 @@ HELP
 	  desc => 'The drawable to offset' },
 	{ name => 'wrap_around', type => 'boolean',
 	  desc => 'wrap image around or fill vacated regions' },
-	{ name => 'fill_type', type => 'enum GimpOffsetType',
+	{ name => 'fill_type', type => 'enum ChannelOffsetType',
 	  desc => 'fill vacated regions of drawable with background or
 		   transparent: %%desc%%' },
 	{ name => 'offset_x', type => 'int32',
@@ -48,7 +48,7 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw(channel_ops.h) ],
+	headers => [ qw("channel_ops.h") ],
 	vars => ['GimpImage *gimage'],
 	code => <<'CODE'
 {
