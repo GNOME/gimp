@@ -1,3 +1,8 @@
+2004-07-21  Shlomi Fish  <shlomif@iglu.org.il>
+
+	* plug-ins/gimpressionist/: normalized the identifiers in 
+	placement.c.
+
 2004-07-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/context-actions.c: changed names of actions which

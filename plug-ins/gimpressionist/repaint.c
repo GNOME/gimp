@@ -661,7 +661,7 @@ void repaint(ppm_t *p, ppm_t *a)
       tx = xpos[i-1];
       ty = ypos[i-1];
     }
-    if(runningvals.placecenter) {
+    if(runningvals.placement_center) {
       double z = g_rand_double_range (random_generator, 0, 0.75);
       tx = tx * (1.0-z) + tmp.width/2 * z;
       ty = ty * (1.0-z) + tmp.height/2 * z;

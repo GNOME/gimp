@@ -61,7 +61,7 @@ typedef struct
   int        placetype;
   vector_t   orientvector[MAXORIENTVECT];
   int        numorientvector;
-  int        placecenter;
+  int        placement_center;
   double     brushaspect;
   double     orientangoff;
   double     orientstrexp;

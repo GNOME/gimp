@@ -354,7 +354,7 @@ static void set_values (const gchar *key, const gchar *val)
   else if(!strcmp(key, "placetype"))
     pcvals.placetype = atoi(val);
   else if(!strcmp(key, "placecenter"))
-    pcvals.placecenter = atoi(val);
+    pcvals.placement_center = atoi(val);
 
   else if(!strcmp(key, "selectedbrush"))
     g_strlcpy (pcvals.selectedbrush, val, sizeof (pcvals.selectedbrush));
@@ -735,7 +735,7 @@ static void save_preset(void)
   fprintf(f, "color=%02x%02x%02x\n", color[0], color[1], color[2]);
 
   fprintf(f, "placetype=%d\n", pcvals.placetype);
-  fprintf(f, "placecenter=%d\n", pcvals.placecenter);
+  fprintf(f, "placecenter=%d\n", pcvals.placement_center);
 
   fprintf(f, "numorientvector=%d\n", pcvals.numorientvector);
   for(i = 0; i < pcvals.numorientvector; i++)
