@@ -341,6 +341,26 @@ coefficients taken from the NTSC analog television standard.
 
 
 
+<!-- ##### MACRO GIMP_TYPE_PARAM_RGB ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION gimp_param_spec_rgb ##### -->
+<para>
+
+</para>
+
+@name: 
+@nick: 
+@blurb: 
+@default_value: 
+@flags: 
+@Returns: 
+
+
 <!-- ##### MACRO GIMP_VALUE_HOLDS_RGB ##### -->
 <para>
 

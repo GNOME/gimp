@@ -1,0 +1,66 @@
+<!-- ##### SECTION Title ##### -->
+gimppath
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ENUM GimpParamPathType ##### -->
+<para>
+
+</para>
+
+@GIMP_PARAM_PATH_FILE: 
+@GIMP_PARAM_PATH_FILE_LIST: 
+@GIMP_PARAM_PATH_DIR: 
+@GIMP_PARAM_PATH_DIR_LIST: 
+
+<!-- ##### MACRO GIMP_TYPE_PARAM_PATH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_IS_PARAM_SPEC_PATH ##### -->
+<para>
+
+</para>
+
+@pspec: 
+
+
+<!-- ##### FUNCTION gimp_param_spec_path ##### -->
+<para>
+
+</para>
+
+@name: 
+@nick: 
+@blurb: 
+@type: 
+@default_value: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_param_spec_path_type ##### -->
+<para>
+
+</para>
+
+@pspec: 
+@Returns: 
+
+

@@ -1,5 +1,20 @@
 2005-01-23  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/libgimpbase-docs.sgml
+	* libgimpbase/libgimpbase-sections.txt
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpmath/libgimpmath-sections.txt: updated for new param-specs.
+
+	* libgimpbase/tmpl/gimpbasetypes.sgml
+	* libgimpbase/tmpl/gimpmemsize.sgml
+	* libgimpbase/tmpl/gimpunit.sgml
+	* libgimpcolor/tmpl/gimprgb.sgml
+	* libgimpmath/tmpl/gimpmatrix.sgml: regenerated.
+
+	* libgimpbase/tmpl/gimppath.sgml: new file.
+
+2005-01-23  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-sections.txt
 	* libgimp/tmpl/gimpenums.sgml
 	* libgimpbase/libgimpbase-sections.txt

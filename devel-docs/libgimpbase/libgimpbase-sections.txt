@@ -8,6 +8,10 @@ gimp_enum_set_value_descriptions
 gimp_enum_get_value_descriptions
 gimp_flags_get_value_descriptions
 gimp_flags_set_value_descriptions
+GIMP_TYPE_PATH
+GIMP_VALUE_HOLDS_PATH
+<SUBSECTION Standard>
+gimp_path_get_type
 </SECTION>
 
 <SECTION>
@@ -129,9 +133,13 @@ gimp_memsize_serialize
 gimp_memsize_deserialize
 gimp_memsize_to_string
 GIMP_TYPE_MEMSIZE
+GIMP_TYPE_PARAM_MEMSIZE
+GIMP_IS_PARAM_SPEC_MEMSIZE
+gimp_param_spec_memsize
 GIMP_VALUE_HOLDS_MEMSIZE
 <SUBSECTION Standard>
 gimp_memsize_get_type
+gimp_param_memsize_get_type
 </SECTION>
 
 <SECTION>
@@ -165,6 +173,17 @@ GIMP_PIXPIPE_MAXDIM
 gimp_pixpipe_params_init
 gimp_pixpipe_params_parse
 gimp_pixpipe_params_build
+</SECTION>
+
+<SECTION>
+<FILE>gimppath</FILE>
+GimpParamPathType
+GIMP_TYPE_PARAM_PATH
+GIMP_IS_PARAM_SPEC_PATH
+gimp_param_spec_path
+gimp_param_spec_path_type
+<SUBSECTION Standard>
+gimp_param_path_get_type
 </SECTION>
 
 <SECTION>
@@ -218,9 +237,13 @@ gimp_unit_get_abbreviation
 gimp_unit_get_singular
 gimp_unit_get_plural
 GIMP_TYPE_UNIT
+GIMP_TYPE_PARAM_UNIT
+GIMP_IS_PARAM_SPEC_UNIT
+gimp_param_spec_unit
 GIMP_VALUE_HOLDS_UNIT
 <SUBSECTION Standard>
 gimp_unit_get_type
+gimp_param_unit_get_type
 </SECTION>
 
 <SECTION>
