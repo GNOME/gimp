@@ -1,3 +1,8 @@
+Tue Feb 22 01:20:05 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* libgimp/gimpchainbutton.c: set the widget's requisition so it 
+	can be properly packed before it's realized. Fixes bug #6470.
+
 Mon Feb 21 19:41:49 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/pixmaps2.h: Tried to bring a little more shape into the

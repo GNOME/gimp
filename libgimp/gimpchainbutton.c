@@ -32,6 +32,18 @@ static gchar **gimp_chain_broken_xpm[] =
   chain_broken_ver_xpm 
 };
 
+static guint gimp_chain_width[] =
+{
+  24,
+  9
+};
+
+static guint gimp_chain_height[] =
+{
+  9,
+  24
+};
+
 static void gimp_chain_button_destroy          (GtkObject       *object);
 static void gimp_chain_button_realize          (GtkWidget       *widget);
 
@@ -84,7 +96,6 @@ static void
 gimp_chain_button_init (GimpChainButton *gcb)
 {
   gcb->position    = GIMP_CHAIN_TOP;
-  gcb->button      = gtk_button_new ();
   gcb->line1       = gtk_drawing_area_new ();
   gcb->line2       = gtk_drawing_area_new ();
   gcb->pixmap      = NULL;
@@ -93,6 +104,12 @@ gimp_chain_button_init (GimpChainButton *gcb)
   gcb->chain       = NULL;
   gcb->chain_mask  = NULL;
   gcb->active      = FALSE;
+
+  gcb->button = gtk_button_new ();
+  gtk_button_set_relief (GTK_BUTTON (gcb->button), GTK_RELIEF_NONE);
+
+  gcb->pixmap = gtk_type_new (gtk_pixmap_get_type ());
+  gtk_pixmap_set_build_insensitive (GTK_PIXMAP (gcb->pixmap), TRUE);
 
   gtk_signal_connect (GTK_OBJECT(gcb->button), "clicked",
 		      GTK_SIGNAL_FUNC (gimp_chain_button_clicked_callback), gcb);
@@ -156,6 +173,15 @@ gimp_chain_button_new (GimpChainPosition position)
 
   gcb->position = position;
 
+  gcb->pixmap->requisition.width = 
+    gimp_chain_width[position % 2] + GTK_MISC (gcb->pixmap)->xpad * 2;
+  gcb->pixmap->requisition.height = 
+    gimp_chain_height[position % 2] + GTK_MISC (gcb->pixmap)->ypad * 2;
+
+  gtk_container_add (GTK_CONTAINER (gcb->button), gcb->pixmap);
+  gtk_widget_show (gcb->pixmap);
+  gtk_widget_show (gcb->button);
+
   if (position & GIMP_CHAIN_LEFT) /* are we a vertical chainbutton? */
     {
       gtk_table_resize (GTK_TABLE (gcb), 3, 1);
@@ -175,7 +201,6 @@ gimp_chain_button_new (GimpChainPosition position)
 
   gtk_widget_show (gcb->line1);
   gtk_widget_show (gcb->line2);
-  gtk_button_set_relief (GTK_BUTTON (gcb->button), GTK_RELIEF_NONE);
 
   return GTK_WIDGET (gcb);
 }
@@ -249,13 +274,9 @@ gimp_chain_button_realize (GtkWidget *widget)
 					      gimp_chain_broken_xpm[gcb->position % 2]);
 
   if (gcb->active) 
-    gcb->pixmap = gtk_pixmap_new (gcb->chain, gcb->chain_mask);
+    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->chain, gcb->chain_mask);
   else
-    gcb->pixmap = gtk_pixmap_new (gcb->broken, gcb->broken_mask);
-
-  gtk_container_add (GTK_CONTAINER (gcb->button), gcb->pixmap);
-  gtk_widget_show (gcb->pixmap);
-  gtk_widget_show (gcb->button);
+    gtk_pixmap_set (GTK_PIXMAP (gcb->pixmap), gcb->broken, gcb->broken_mask);
 }
 
 static void
