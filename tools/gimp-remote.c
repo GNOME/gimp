@@ -188,7 +188,7 @@ start_new_gimp (GdkScreen   *screen,
   gint          i;
 
   if (startup_id)
-    setenv ("DESKTOP_STARTUP_ID", startup_id, TRUE);
+    putenv (g_strdup_printf ("DESKTOP_STARTUP_ID=%s", startup_id));
 
   if (file_list->len > 0)
     file_list = g_string_prepend (file_list, "\n");
