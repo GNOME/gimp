@@ -803,9 +803,7 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
 
   if (layer)
     {
-      GimpLayerModeEffects mode;
-
-      mode = (GimpLayerModeEffects)
+      GimpLayerModeEffects mode =
 	GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                             "gimp-item-data"));
 
@@ -817,8 +815,9 @@ gimp_layer_tree_view_paint_mode_menu_callback (GtkWidget         *widget,
           undo = gimp_undo_stack_peek (gimage->undo_stack);
 
           /*  compress layer mode undos  */
-          if (GIMP_IS_ITEM_UNDO (undo)                &&
-              undo->undo_type == GIMP_UNDO_LAYER_MODE &&
+          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+              GIMP_IS_ITEM_UNDO (undo)                    &&
+              undo->undo_type == GIMP_UNDO_LAYER_MODE     &&
               GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
             push_undo = FALSE;
 
@@ -872,9 +871,7 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
 
   if (layer)
     {
-      gdouble opacity;
-
-      opacity = adjustment->value / 100.0;
+      gdouble opacity = adjustment->value / 100.0;
 
       if (gimp_layer_get_opacity (layer) != opacity)
 	{
@@ -884,8 +881,9 @@ gimp_layer_tree_view_opacity_scale_changed (GtkAdjustment     *adjustment,
           undo = gimp_undo_stack_peek (gimage->undo_stack);
 
           /*  compress opacity undos  */
-          if (GIMP_IS_ITEM_UNDO (undo)                   &&
-              undo->undo_type == GIMP_UNDO_LAYER_OPACITY &&
+          if (! gimp_undo_stack_peek (gimage->redo_stack) &&
+              GIMP_IS_ITEM_UNDO (undo)                    &&
+              undo->undo_type == GIMP_UNDO_LAYER_OPACITY  &&
               GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (layer))
             push_undo = FALSE;
 

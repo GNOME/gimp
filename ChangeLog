@@ -1,3 +1,9 @@
+2004-03-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpeditselectiontool.c
+	* app/widgets/gimplayertreeview.c: compress undo steps only
+	if the redo stack is empty.
+
 2004-03-02  Pedro Gimeno  <pggimeno@wanadoo.es>
 
 	* plug-ins/common/bumpmap.c (bumpmap): Fix handling of positive Y
