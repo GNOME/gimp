@@ -91,20 +91,45 @@ file_dialog_update_name (PlugInProcDef    *proc,
 }
 
 void
-file_dialog_update_menus (GSList *procs,
-			  gint    image_type)
+file_dialog_update_menus (GSList        *procs,
+			  GimpImageType  image_type)
 {
-  PlugInProcDef *file_proc;
+  PlugInProcDef   *file_proc;
+  PlugInImageType  plug_in_image_type = 0;
 
-  while (procs)
+  switch (image_type)
     {
-      file_proc = procs->data;
-      procs     = procs->next;
+    case GIMP_RGB_IMAGE:
+      plug_in_image_type = PLUG_IN_RGB_IMAGE;
+      break;
+    case GIMP_RGBA_IMAGE:
+      plug_in_image_type = PLUG_IN_RGBA_IMAGE;
+      break;
+    case GIMP_GRAY_IMAGE:
+      plug_in_image_type = PLUG_IN_GRAY_IMAGE;
+      break;
+    case GIMP_GRAYA_IMAGE:
+      plug_in_image_type = PLUG_IN_GRAYA_IMAGE;
+      break;
+    case GIMP_INDEXED_IMAGE:
+      plug_in_image_type = PLUG_IN_INDEXED_IMAGE;
+      break;
+    case GIMP_INDEXEDA_IMAGE:
+      plug_in_image_type = PLUG_IN_INDEXEDA_IMAGE;
+      break;
+    default:
+      g_assert_not_reached ();
+      break;
+    }
+
+  for (; procs; procs = g_slist_next (procs))
+    {
+      file_proc = (PlugInProcDef *) procs->data;
 
       if (file_proc->db_info.proc_type != GIMP_EXTENSION)
         {
           gimp_menu_item_set_sensitive (file_proc->menu_path,
-                                        (file_proc->image_types_val & image_type));
+                                        (file_proc->image_types_val & plug_in_image_type));
         }
     }
 }

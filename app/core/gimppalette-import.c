@@ -259,18 +259,18 @@ gimp_palette_import_from_image (GimpImage   *gimage,
 				gint         n_colors,
 				gint         threshold)
 {
-  PixelRegion  imagePR;
-  guchar      *image_data;
-  guchar      *idata;
-  guchar       rgb[MAX_CHANNELS];
-  guchar       rgb_real[MAX_CHANNELS];
-  gint         has_alpha, indexed;
-  gint         width, height;
-  gint         bytes, alpha;
-  gint         i, j;
-  void        *pr;
-  gint         d_type;
-  GHashTable  *store_array = NULL;
+  PixelRegion    imagePR;
+  guchar        *image_data;
+  guchar        *idata;
+  guchar         rgb[MAX_CHANNELS];
+  guchar         rgb_real[MAX_CHANNELS];
+  gboolean       has_alpha, indexed;
+  gint           width, height;
+  gint           bytes, alpha;
+  gint           i, j;
+  void          *pr;
+  GimpImageType  d_type;
+  GHashTable    *store_array = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
@@ -278,10 +278,10 @@ gimp_palette_import_from_image (GimpImage   *gimage,
   g_return_val_if_fail (threshold > 0, NULL);
 
   /*  Get the image information  */
-  bytes     = gimp_image_projection_bytes (gimage);
   d_type    = gimp_image_projection_type (gimage);
+  bytes     = gimp_image_projection_bytes (gimage);
   has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
-  indexed   = d_type == GIMP_INDEXEDA_IMAGE || d_type == GIMP_INDEXED_IMAGE;
+  indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
   width     = gimage->width;
   height    = gimage->height;
 
@@ -340,9 +340,6 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (gimp_image_base_type (gimage) == GIMP_INDEXED, NULL);
   g_return_val_if_fail (palette_name != NULL, NULL);
-
-  if (! (gimage && gimp_image_base_type (gimage) == GIMP_INDEXED))
-    return NULL;
 
   palette = GIMP_PALETTE (gimp_palette_new (palette_name));
 

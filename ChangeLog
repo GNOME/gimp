@@ -1,3 +1,39 @@
+2001-12-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage.[ch]: added
+	GIMP_IMAGE_TYPE_IS_[RGB|GRAY|INDEXED]() and
+	GIMP_IMAGE_TYPE_BASE_TYPE() macros.
+
+	* app/plug-in/plug-in.[ch]: new enum PlugInImageType instead of
+	multiple #defines.
+
+	* app/gui/file-dialog-utils.[ch]: file_dialog_update_menus(): take
+	a GimpImageType instead of the PlugInImageType.
+
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpdrawable-transform.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimpimage-mask.c
+	* app/core/gimpimage-merge.c
+	* app/core/gimplayermask.c
+	* app/core/gimppalette-import.c
+	* app/display/gimpdisplay-handlers.c
+	* app/display/gimpdisplayshell-render.c
+	* app/gui/file-save-dialog.c
+	* app/gui/toolbox.c
+	* app/tools/gimpclonetool.c
+	* app/tools/gimpcolorpickertool.c
+	* tools/pdbgen/pdb/convert.pdb
+	* tools/pdbgen/pdb/image.pdb: use the new macros, cleanups like
+	storing GimpImageType in GimpImageType variables, not just gint.
+
+	* app/pdb/convert_cmds.c
+	* app/pdb/image_cmds.c: regenerated.
+
+	* app/widgets/gimpdialogfactory.c: save the state of the "Auto"
+	button in sessionrc.
+
 2001-12-13  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpconfig-deserialize.h

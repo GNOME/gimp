@@ -615,22 +615,17 @@ HELP
 	  desc => 'The layer position' }
     );
 
-    $invoke{code} = "{\n  if ("; my $once = 0;
-    foreach (qw(color gray indexed)) {
-        my $base = 'GIMP_';
-	$base .= $_ eq 'color' ? 'RGB' : uc($_);
-	$invoke{code} .= ' ' x 6 if $once++;
-	$invoke{code} .= <<CODE
-(gimp_drawable_is_$_ (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != $base) ||
-CODE
+    $invoke{code} = <<'CODE';
+{
+  if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
+      gimp_image_base_type (gimage))
+    {
+      success = FALSE;
     }
-    $invoke{code} =~ s/ \|\|\n$/)\n/s;
-    $invoke{code} =~ s/color/rgb/;
-
-    $invoke{code} .= <<'CODE';
-    success = FALSE;
   else
-    success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
+    {
+      success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
+    }
 }
 CODE
 }

@@ -584,9 +584,9 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 
   g_return_if_fail (gimage != NULL);
 
-  switch (gimp_drawable_type (drawable))
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
     {
-    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
+    case GIMP_RGB:
       gimp_rgba_get_uchar (color,
 			   &c[RED_PIX],
 			   &c[GREEN_PIX],
@@ -596,7 +596,7 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 	c[ALPHA_PIX] = 255;
       break;
 
-    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
+    case GIMP_GRAY:
       gimp_rgba_get_uchar (color,
 			   &c[GRAY_PIX],
 			   NULL,
@@ -606,7 +606,7 @@ gimp_drawable_fill (GimpDrawable  *drawable,
 	c[ALPHA_G_PIX] = 255;
       break;
 
-    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
+    case GIMP_INDEXED:
       gimp_rgb_get_uchar (color,
 			  &c[RED_PIX],
 			  &c[GREEN_PIX],
@@ -749,30 +749,7 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  if (gimp_drawable_has_alpha (drawable))
-    {
-      return gimp_drawable_type (drawable);
-    }
-  else
-    {
-      switch (gimp_drawable_type (drawable))
-	{
-	case GIMP_RGB_IMAGE:
-	  return GIMP_RGBA_IMAGE;
-	  break;
-	case GIMP_GRAY_IMAGE:
-	  return GIMP_GRAYA_IMAGE;
-	  break;
-	case GIMP_INDEXED_IMAGE:
-	  return GIMP_INDEXEDA_IMAGE;
-	  break;
-	default:
-	  g_assert_not_reached ();
-	  break;
-	}
-    }
-
-  return -1;
+  return GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 }
 
 gboolean
@@ -780,11 +757,7 @@ gimp_drawable_is_rgb (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  if (gimp_drawable_type (drawable) == GIMP_RGBA_IMAGE ||
-      gimp_drawable_type (drawable) == GIMP_RGB_IMAGE)
-    return TRUE;
-  else
-    return FALSE;
+  return GIMP_IMAGE_TYPE_IS_RGB (gimp_drawable_type (drawable));
 }
 
 gboolean
@@ -792,11 +765,7 @@ gimp_drawable_is_gray (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  if (gimp_drawable_type (drawable) == GIMP_GRAYA_IMAGE ||
-      gimp_drawable_type (drawable) == GIMP_GRAY_IMAGE)
-    return TRUE;
-  else
-    return FALSE;
+  return GIMP_IMAGE_TYPE_IS_GRAY (gimp_drawable_type (drawable));
 }
 
 gboolean
@@ -804,11 +773,7 @@ gimp_drawable_is_indexed (const GimpDrawable *drawable)
 {
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
-  if (gimp_drawable_type (drawable) == GIMP_INDEXEDA_IMAGE ||
-      gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE)
-    return TRUE;
-  else
-    return FALSE;
+  return GIMP_IMAGE_TYPE_IS_INDEXED (gimp_drawable_type (drawable));
 }
 
 TileManager *
@@ -844,32 +809,13 @@ gimp_drawable_bytes (const GimpDrawable *drawable)
 gint
 gimp_drawable_bytes_with_alpha (const GimpDrawable *drawable)
 {
+  GimpImageType type;
+
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), -1);
 
-  if (gimp_drawable_has_alpha (drawable))
-    {
-      return drawable->bytes;
-    }
-  else
-    {
-      switch (gimp_drawable_type (drawable))
-	{
-	case GIMP_RGB_IMAGE:
-	  return 4;
-	  break;
-	case GIMP_GRAY_IMAGE:
-	  return 2;
-	  break;
-	case GIMP_INDEXED_IMAGE:
-	  return 2;
-	  break;
-	default:
-	  g_assert_not_reached ();
-	  break;
-	}
-    }
+  type = GIMP_IMAGE_TYPE_WITH_ALPHA (gimp_drawable_type (drawable));
 
-  return -1;
+  return GIMP_IMAGE_TYPE_BYTES (type);
 }
 
 gint

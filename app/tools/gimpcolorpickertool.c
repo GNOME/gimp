@@ -302,32 +302,47 @@ gimp_color_picker_tool_button_press (GimpTool        *tool,
                                                      NULL);
 
       /*  if the gdisplay is for a color image, the dialog must have RGB  */
-      switch (gimp_drawable_type (tool->drawable))
+      switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (tool->drawable)))
 	{
-	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Red:"), red_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Green:"), green_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Blue:"), blue_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Alpha:"), alpha_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Hex Triplet:"), hex_buf);
+	case GIMP_RGB:
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Red:"), red_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Green:"), green_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Blue:"), blue_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Alpha:"), alpha_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Hex Triplet:"), hex_buf);
 	  break;
 
-	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Index:"), index_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Red:"), red_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Green:"), green_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Blue:"), blue_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Alpha:"), alpha_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Hex Triplet"), hex_buf);
+	case GIMP_GRAY:
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Intensity:"), gray_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Alpha:"), alpha_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Hex Triplet:"), hex_buf);
 	  break;
 
-	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Intensity:"), gray_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Alpha:"), alpha_buf);
-	  info_dialog_add_label (gimp_color_picker_tool_info, _("Hex Triplet:"), hex_buf);
+	case GIMP_INDEXED:
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Index:"), index_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Red:"), red_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Green:"), green_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Blue:"), blue_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Alpha:"), alpha_buf);
+	  info_dialog_add_label (gimp_color_picker_tool_info,
+                                 _("Hex Triplet"), hex_buf);
 	  break;
 
-	default :
+	default:
+          g_assert_not_reached ();
 	  break;
 	}
 
@@ -628,9 +643,9 @@ gimp_color_picker_tool_info_update (GimpTool  *tool,
       if (! GTK_WIDGET_IS_SENSITIVE (color_area))
 	gtk_widget_set_sensitive (color_area, TRUE);
 
-      switch (sample_type)
+      switch (GIMP_IMAGE_TYPE_BASE_TYPE (sample_type))
 	{
-	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
+	case GIMP_RGB:
 	  g_snprintf (index_buf, MAX_INFO_BUF, _("N/A"));
 	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
 	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
@@ -651,7 +666,25 @@ gimp_color_picker_tool_info_update (GimpTool  *tool,
 	    a = col_value [ALPHA_PIX];
 	  break;
 
-	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
+	case GIMP_GRAY:
+	  g_snprintf (gray_buf, MAX_INFO_BUF, "%d", col_value [GRAY_PIX]);
+	  if (sample_type == GIMP_GRAYA_IMAGE)
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
+	  else
+	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
+	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
+		      col_value [GRAY_PIX],
+		      col_value [GRAY_PIX],
+		      col_value [GRAY_PIX]);
+
+	  r = col_value [GRAY_PIX];
+	  g = col_value [GRAY_PIX];
+	  b = col_value [GRAY_PIX];
+	  if (sample_type == GIMP_GRAYA_IMAGE)
+	    a = col_value [ALPHA_PIX];
+	  break;
+
+	case GIMP_INDEXED:
 	  g_snprintf (index_buf, MAX_INFO_BUF, "%d", col_value [4]);
 	  g_snprintf (red_buf,   MAX_INFO_BUF, "%d", col_value [RED_PIX]);
 	  g_snprintf (green_buf, MAX_INFO_BUF, "%d", col_value [GREEN_PIX]);
@@ -669,24 +702,6 @@ gimp_color_picker_tool_info_update (GimpTool  *tool,
 	  g = col_value [GREEN_PIX];
 	  b = col_value [BLUE_PIX];
 	  if (sample_type == GIMP_INDEXEDA_IMAGE)
-	    a = col_value [ALPHA_PIX];
-	  break;
-
-	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
-	  g_snprintf (gray_buf, MAX_INFO_BUF, "%d", col_value [GRAY_PIX]);
-	  if (sample_type == GIMP_GRAYA_IMAGE)
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, "%d", col_value [ALPHA_PIX]);
-	  else
-	    g_snprintf (alpha_buf, MAX_INFO_BUF, _("N/A"));
-	  g_snprintf (hex_buf, MAX_INFO_BUF, "#%.2x%.2x%.2x",
-		      col_value [GRAY_PIX],
-		      col_value [GRAY_PIX],
-		      col_value [GRAY_PIX]);
-
-	  r = col_value [GRAY_PIX];
-	  g = col_value [GRAY_PIX];
-	  b = col_value [GRAY_PIX];
-	  if (sample_type == GIMP_GRAYA_IMAGE)
 	    a = col_value [ALPHA_PIX];
 	  break;
 	}

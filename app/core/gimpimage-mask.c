@@ -197,6 +197,8 @@ gimp_image_mask_translate (GimpImage *gimage,
                            gint       off_x,
                            gint       off_y)
 {
+  g_return_if_fail (GIMP_IS_IMAGE (gimage));
+
   gimp_channel_translate (gimp_image_get_mask (gimage), off_x, off_y);
 }
 
@@ -208,18 +210,19 @@ gimp_image_mask_extract (GimpImage    *gimage,
                          gboolean      keep_indexed,
                          gboolean      add_alpha)
 {
-  TileManager *tiles;
-  GimpChannel *sel_mask;
-  PixelRegion  srcPR, destPR, maskPR;
-  guchar       bg[MAX_CHANNELS];
-  gint         bytes, type;
-  gint         x1, y1;
-  gint         x2, y2;
-  gint         off_x, off_y;
-  gboolean     non_empty;
+  TileManager       *tiles;
+  GimpChannel       *sel_mask;
+  PixelRegion        srcPR, destPR, maskPR;
+  guchar             bg[MAX_CHANNELS];
+  GimpImageBaseType  base_type = GIMP_RGB;
+  gint               bytes     = 0;
+  gint               x1, y1;
+  gint               x2, y2;
+  gint               off_x, off_y;
+  gboolean           non_empty;
 
-  if (!drawable) 
-    return NULL;
+  g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (gimage), NULL);
 
   /*  If there are no bounds, then just extract the entire image
    *  This may not be the correct behavior, but after getting rid
@@ -236,31 +239,33 @@ gimp_image_mask_extract (GimpImage    *gimage,
     }
 
   /*  How many bytes in the temp buffer?  */
-  switch (gimp_drawable_type (drawable))
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
     {
-    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
+    case GIMP_RGB:
       bytes = add_alpha ? 4 : drawable->bytes;
-      type = GIMP_RGB;
+      base_type = GIMP_RGB;
       break;
-    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
+
+    case GIMP_GRAY:
       bytes = add_alpha ? 2 : drawable->bytes;
-      type = GIMP_GRAY;
+      base_type = GIMP_GRAY;
       break;
-    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
+
+    case GIMP_INDEXED:
       if (keep_indexed)
 	{
 	  bytes = add_alpha ? 2 : drawable->bytes;
-	  type = GIMP_GRAY;
+	  base_type = GIMP_GRAY;
 	}
       else
 	{
 	  bytes = add_alpha ? 4 : drawable->bytes;
-	  type = GIMP_INDEXED;
+	  base_type = GIMP_INDEXED;
 	}
       break;
+
     default:
-      bytes = 3;
-      type  = GIMP_RGB;
+      g_assert_not_reached ();
       break;
     }
 
@@ -292,13 +297,13 @@ gimp_image_mask_extract (GimpImage    *gimage,
   /*  If there is a selection, extract from it  */
   if (non_empty)
     {
-      pixel_region_init (&maskPR, GIMP_DRAWABLE(sel_mask)->tiles,
+      pixel_region_init (&maskPR, GIMP_DRAWABLE (sel_mask)->tiles,
 			 (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1),
 			 FALSE);
 
       extract_from_region (&srcPR, &destPR, &maskPR,
 			   gimp_drawable_cmap (drawable),
-			   bg, type,
+			   bg, base_type,
 			   gimp_drawable_has_alpha (drawable), cut_gimage);
 
       if (cut_gimage)
@@ -319,10 +324,10 @@ gimp_image_mask_extract (GimpImage    *gimage,
   else
     {
       /*  If the layer is indexed...we need to extract pixels  */
-      if (type == GIMP_INDEXED && !keep_indexed)
+      if (base_type == GIMP_INDEXED && !keep_indexed)
 	extract_from_region (&srcPR, &destPR, NULL,
 			     gimp_drawable_cmap (drawable),
-			     bg, type,
+			     bg, base_type,
 			     gimp_drawable_has_alpha (drawable), FALSE);
       /*  If the layer doesn't have an alpha channel, add one  */
       else if (bytes > srcPR.bytes)

@@ -3551,11 +3551,11 @@ plug_in_args_destroy (Argument *args,
   g_free (args);
 }
 
-gint
+PlugInImageType
 plug_in_image_types_parse (gchar *image_types)
 {
-  gchar *type_spec = image_types;
-  gint   types = 0;
+  gchar           *type_spec = image_types;
+  PlugInImageType  types     = 0;
 
   /* 
    *  If the plug_in registers with image_type == NULL or "", return 0

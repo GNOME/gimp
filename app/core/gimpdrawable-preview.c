@@ -114,18 +114,16 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
   /*  The hard way  */
   else
     {
-      switch (gimp_drawable_type (drawable))
+      type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
+
+      switch (type)
 	{
-	case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
-	  type  = GIMP_RGB;
+	case GIMP_RGB:
+	case GIMP_GRAY:
 	  bytes = gimp_drawable_bytes (drawable);
 	  break;
-	case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
-	  type  = GIMP_GRAY;
-	  bytes = gimp_drawable_bytes (drawable);
-	  break;
-	case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
-	  type  = GIMP_INDEXED;
+
+	case GIMP_INDEXED:
 	  bytes = (gimp_drawable_type (drawable) == GIMP_INDEXED_IMAGE) ? 3 : 4;
 	  break;
 	}

@@ -1478,12 +1478,15 @@ image_add_layer_invoker (Gimp     *gimp,
 
   if (success)
     {
-      if ((gimp_drawable_is_rgb (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GIMP_RGB) ||
-	  (gimp_drawable_is_gray (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GIMP_GRAY) ||
-	  (gimp_drawable_is_indexed (GIMP_DRAWABLE (layer)) && gimp_image_base_type (gimage) != GIMP_INDEXED))
-	success = FALSE;
+      if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (GIMP_DRAWABLE (layer))) !=
+	  gimp_image_base_type (gimage))
+	{
+	  success = FALSE;
+	}
       else
-	success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
+	{
+	  success = gimp_image_add_layer (gimage, layer, MAX (position, -1));
+	}
     }
 
   return procedural_db_return_args (&image_add_layer_proc, success);

@@ -90,7 +90,6 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
   guchar      *start;
   gboolean     has_alpha;
   gboolean     indexed;
-  gint         type;
   gint         bytes;
   Tile        *tile;
 
@@ -101,10 +100,9 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
     {
       pixel_region_init (&srcPR, gimp_image_projection (gimage), 0, 0,
 			 gimage->width, gimage->height, FALSE);
-      type = gimp_image_projection_type (gimage);
-      has_alpha = (type == GIMP_RGBA_IMAGE ||
-		   type == GIMP_GRAYA_IMAGE ||
-		   type == GIMP_INDEXEDA_IMAGE);
+
+      has_alpha =
+        GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (gimage));
     }
   else
     {
@@ -113,6 +111,7 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
 			 gimp_drawable_width (drawable),
 			 gimp_drawable_height (drawable),
 			 FALSE);
+
       has_alpha = gimp_drawable_has_alpha (drawable);
     }
   indexed = gimp_drawable_is_indexed (drawable);
@@ -123,10 +122,10 @@ gimp_image_contiguous_region_by_seed (GimpImage    *gimage,
       bytes = has_alpha ? 4 : 3;
     }
   mask = gimp_channel_new_mask (gimage, srcPR.w, srcPR.h);
-  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE(mask)),
+  pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)),
 		     0, 0, 
-		     gimp_drawable_width (GIMP_DRAWABLE(mask)), 
-		     gimp_drawable_height (GIMP_DRAWABLE(mask)), 
+		     gimp_drawable_width (GIMP_DRAWABLE (mask)), 
+		     gimp_drawable_height (GIMP_DRAWABLE (mask)), 
 		     TRUE);
 
   tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
@@ -156,19 +155,19 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
    *  use the same antialiasing scheme as in fuzzy_select.  Modify the gimage's
    *  mask to reflect the additional selection
    */
-  GimpChannel *mask;
-  PixelRegion  imagePR, maskPR;
-  guchar      *image_data;
-  guchar      *mask_data;
-  guchar      *idata, *mdata;
-  guchar       rgb[MAX_CHANNELS];
-  gint         has_alpha, indexed;
-  gint         width, height;
-  gint         bytes, color_bytes, alpha;
-  gint         i, j;
-  gpointer     pr;
-  gint         d_type;
-  guchar       col[MAX_CHANNELS];
+  GimpChannel   *mask;
+  PixelRegion    imagePR, maskPR;
+  guchar        *image_data;
+  guchar        *mask_data;
+  guchar        *idata, *mdata;
+  guchar         rgb[MAX_CHANNELS];
+  gint           has_alpha, indexed;
+  gint           width, height;
+  gint           bytes, color_bytes, alpha;
+  gint           i, j;
+  gpointer       pr;
+  GimpImageType  d_type;
+  guchar         col[MAX_CHANNELS];
 
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -179,16 +178,17 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
   /*  Get the image information  */
   if (sample_merged)
     {
-      bytes  = gimp_image_projection_bytes (gimage);
-      d_type = gimp_image_projection_type (gimage);
-      has_alpha = (d_type == GIMP_RGBA_IMAGE ||
-		   d_type == GIMP_GRAYA_IMAGE ||
-		   d_type == GIMP_INDEXEDA_IMAGE);
-      indexed = d_type == GIMP_INDEXEDA_IMAGE || d_type == GIMP_INDEXED_IMAGE;
-      width = gimage->width;
-      height = gimage->height;
+      bytes     = gimp_image_projection_bytes (gimage);
+      d_type    = gimp_image_projection_type (gimage);
+      has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (d_type);
+      indexed   = GIMP_IMAGE_TYPE_IS_INDEXED (d_type);
+      width     = gimage->width;
+      height    = gimage->height;
+
       pixel_region_init (&imagePR, gimp_image_projection (gimage),
-			 0, 0, width, height, FALSE);
+			 0, 0,
+                         width, height,
+                         FALSE);
     }
   else
     {
@@ -200,7 +200,9 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
       height    = gimp_drawable_height (drawable);
 
       pixel_region_init (&imagePR, gimp_drawable_data (drawable),
-			 0, 0, width, height, FALSE);
+			 0, 0,
+                         width, height,
+                         FALSE);
     }
 
   if (indexed)
@@ -216,8 +218,11 @@ gimp_image_contiguous_region_by_color (GimpImage     *gimage,
 
   alpha = bytes - 1;
   mask = gimp_channel_new_mask (gimage, width, height);
+
   pixel_region_init (&maskPR, gimp_drawable_data (GIMP_DRAWABLE (mask)), 
-		     0, 0, width, height, TRUE);
+		     0, 0,
+                     width, height,
+                     TRUE);
 
   /*  iterate over the entire image  */
   for (pr = pixel_regions_register (2, &imagePR, &maskPR);

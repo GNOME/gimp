@@ -25,9 +25,17 @@
 
 #define COLORMAP_SIZE 768
 
+#define GIMP_IMAGE_TYPE_IS_RGB(t)          ((t) == GIMP_RGB_IMAGE ||         \
+				            (t) == GIMP_RGBA_IMAGE)
+#define GIMP_IMAGE_TYPE_IS_GRAY(t)         ((t) == GIMP_GRAY_IMAGE ||        \
+				            (t) == GIMP_GRAYA_IMAGE)
+#define GIMP_IMAGE_TYPE_IS_INDEXED(t)      ((t) == GIMP_INDEXED_IMAGE ||     \
+				            (t) == GIMP_INDEXEDA_IMAGE)
+
 #define GIMP_IMAGE_TYPE_HAS_ALPHA(t)       ((t) == GIMP_RGBA_IMAGE  ||       \
 				            (t) == GIMP_GRAYA_IMAGE ||       \
 				            (t) == GIMP_INDEXEDA_IMAGE)
+
 #define GIMP_IMAGE_TYPE_WITH_ALPHA(t)     (((t) == GIMP_RGB_IMAGE ||         \
                                             (t) == GIMP_RGBA_IMAGE) ?        \
                                            GIMP_RGBA_IMAGE :                 \
@@ -43,6 +51,15 @@
                                             (t) == GIMP_GRAY_IMAGE     ? 1 : \
                                             (t) == GIMP_INDEXEDA_IMAGE ? 2 : \
                                             (t) == GIMP_INDEXED_IMAGE  ? 1 : -1)
+#define GIMP_IMAGE_TYPE_BASE_TYPE(t)      (((t) == GIMP_RGB_IMAGE ||         \
+                                            (t) == GIMP_RGBA_IMAGE) ?        \
+                                           GIMP_RGB :                        \
+                                           ((t) == GIMP_GRAY_IMAGE ||        \
+                                            (t) == GIMP_GRAYA_IMAGE) ?       \
+                                           GIMP_GRAY :                       \
+                                           ((t) == GIMP_INDEXED_IMAGE ||     \
+                                            (t) == GIMP_INDEXEDA_IMAGE) ?    \
+                                           GIMP_INDEXED : -1)
 
 #define GIMP_IMAGE_TYPE_FROM_BASE_TYPE(b)  ((b) == GIMP_RGB ?                \
                                             GIMP_RGB_IMAGE :                 \

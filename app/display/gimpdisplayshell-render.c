@@ -792,17 +792,10 @@ render_image_init_info (RenderInfo       *info,
   info->scale      = render_image_accelerate_scaling (w, info->x, info->scalex);
   info->alpha      = NULL;
 
-  switch (gimp_image_projection_type (shell->gdisp->gimage))
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_image_projection_type (shell->gdisp->gimage)))
     {
-    case GIMP_RGBA_IMAGE:
-    case GIMP_GRAYA_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
       info->alpha =
 	render_image_init_alpha (gimp_image_projection_opacity (shell->gdisp->gimage));
-      break;
-    default:
-      /* nothing special needs doing */
-      break;
     }
 }
 

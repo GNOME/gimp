@@ -26,7 +26,7 @@ gboolean   file_dialog_hide         (GtkWidget        *filesel);
 void       file_dialog_update_name  (PlugInProcDef    *proc,
 				     GtkFileSelection *filesel);
 void       file_dialog_update_menus (GSList           *procs,
-				     gint              image_type);
+				     GimpImageType     image_type);
 
 
 #endif /* __FILE_DIALOG_UTILS_H__ */

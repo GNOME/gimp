@@ -27,6 +27,7 @@
 
 #include "core-types.h"
 
+#include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimpmarshal.h"
 
@@ -45,7 +46,7 @@ enum
 
 
 static void   gimp_layer_mask_class_init (GimpLayerMaskClass *klass);
-static void   gimp_layer_mask_init       (GimpLayerMask      *layermask);
+static void   gimp_layer_mask_init       (GimpLayerMask      *layer_mask);
 
 
 static guint  layer_mask_signals[LAST_SIGNAL] = { 0 };
@@ -169,16 +170,21 @@ gimp_layer_mask_copy (const GimpLayerMask *layer_mask)
 }
 
 void
-gimp_layer_mask_set_layer (GimpLayerMask *mask,
+gimp_layer_mask_set_layer (GimpLayerMask *layer_mask,
 			   GimpLayer     *layer)
 {
-  mask->layer = layer;
+  g_return_if_fail (GIMP_IS_LAYER_MASK (layer_mask));
+  g_return_if_fail (! layer || GIMP_IS_LAYER (layer));
+
+  layer_mask->layer = layer;
 }
 
 GimpLayer *
-gimp_layer_mask_get_layer (const GimpLayerMask *mask)
+gimp_layer_mask_get_layer (const GimpLayerMask *layer_mask)
 {
-  return mask->layer;
+  g_return_val_if_fail (GIMP_IS_LAYER_MASK (layer_mask), NULL);
+
+  return layer_mask->layer;
 }
 
 void
@@ -189,7 +195,7 @@ gimp_layer_mask_set_apply (GimpLayerMask *layer_mask,
 
   if (layer_mask->apply_mask != apply)
     {
-      layer_mask->apply_mask = apply;
+      layer_mask->apply_mask = apply ? TRUE : FALSE;
 
       if (layer_mask->layer)
         {
@@ -224,7 +230,7 @@ gimp_layer_mask_set_edit (GimpLayerMask *layer_mask,
 
   if (layer_mask->edit_mask != edit)
     {
-      layer_mask->edit_mask = edit;
+      layer_mask->edit_mask = edit ? TRUE : FALSE;
 
       g_signal_emit (G_OBJECT (layer_mask),
 		     layer_mask_signals[EDIT_CHANGED], 0);
@@ -247,7 +253,7 @@ gimp_layer_mask_set_show (GimpLayerMask *layer_mask,
 
   if (layer_mask->show_mask != show)
     {
-      layer_mask->show_mask = show;
+      layer_mask->show_mask = show ? TRUE : FALSE;
 
       if (layer_mask->layer)
         {

@@ -138,10 +138,12 @@ gimp_display_colormap_changed_handler (GimpImage   *gimage,
                                        GimpDisplay *gdisp)
 {
   if (gimp_image_base_type (gdisp->gimage) == GIMP_INDEXED)
-    gimp_display_add_update_area (gdisp,
-                                  0, 0,
-                                  gdisp->gimage->width,
-                                  gdisp->gimage->height);
+    {
+      gimp_display_add_update_area (gdisp,
+                                    0, 0,
+                                    gdisp->gimage->width,
+                                    gdisp->gimage->height);
+    }
 }
 
 static void

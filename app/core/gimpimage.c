@@ -763,20 +763,8 @@ gimp_image_get_new_preview (GimpViewable *viewable,
        *  Send in all TRUE for visible since that info doesn't matter
        *   for previews
        */
-      switch (gimp_drawable_type (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
 	{
-	case GIMP_RGB_IMAGE: case GIMP_GRAY_IMAGE: case GIMP_INDEXED_IMAGE:
-	  if (! construct_flag)
-	    initial_region (&src2PR, &src1PR, 
-			    mask, NULL, layer->opacity,
-			    layer->mode, visible, INITIAL_INTENSITY);
-	  else
-	    combine_regions (&src1PR, &src2PR, &src1PR, 
-			     mask, NULL, layer->opacity,
-			     layer->mode, visible, COMBINE_INTEN_A_INTEN);
-	  break;
-
-	case GIMP_RGBA_IMAGE: case GIMP_GRAYA_IMAGE: case GIMP_INDEXEDA_IMAGE:
 	  if (! construct_flag)
 	    initial_region (&src2PR, &src1PR, 
 			    mask, NULL, layer->opacity,
@@ -785,11 +773,18 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 	    combine_regions (&src1PR, &src2PR, &src1PR, 
 			     mask, NULL, layer->opacity,
 			     layer->mode, visible, COMBINE_INTEN_A_INTEN_A);
-	  break;
-
-	default:
-	  break;
-	}
+        }
+      else
+        {
+	  if (! construct_flag)
+	    initial_region (&src2PR, &src1PR, 
+			    mask, NULL, layer->opacity,
+			    layer->mode, visible, INITIAL_INTENSITY);
+	  else
+	    combine_regions (&src1PR, &src2PR, &src1PR, 
+			     mask, NULL, layer->opacity,
+			     layer->mode, visible, COMBINE_INTEN_A_INTEN);
+        }
 
       construct_flag = TRUE;
     }

@@ -305,12 +305,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   if (merge_type == FLATTEN_IMAGE ||
       gimp_drawable_type (GIMP_DRAWABLE (layer)) == GIMP_INDEXED_IMAGE)
     {
-      switch (gimp_image_base_type (gimage))
-	{
-	case GIMP_RGB: type = GIMP_RGB_IMAGE; break;
-	case GIMP_GRAY: type = GIMP_GRAY_IMAGE; break;
-	case GIMP_INDEXED: type = GIMP_INDEXED_IMAGE; break;
-	}
+      type = GIMP_IMAGE_TYPE_FROM_BASE_TYPE (gimp_image_base_type (gimage));
 
       merge_layer = gimp_layer_new (gimage, (x2 - x1), (y2 - y1),
 				    type,

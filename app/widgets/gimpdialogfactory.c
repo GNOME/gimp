@@ -1205,16 +1205,18 @@ gimp_dialog_factory_get_aux_info (GtkWidget       *dialog,
   if (GIMP_IS_IMAGE_DOCK (dialog))
     {
       GimpImageDock *dock;
-      gboolean       menu_shown;
 
       dock = GIMP_IMAGE_DOCK (dialog);
 
-      menu_shown = GTK_WIDGET_VISIBLE (dock->option_menu->parent);
-
       info->aux_info = g_list_append (info->aux_info,
-				      menu_shown ?
+				      dock->show_image_menu ?
 				      g_strdup ("menu-shown") :
 				      g_strdup ("menu-hidden"));
+
+      info->aux_info = g_list_append (info->aux_info,
+				      dock->auto_follow_active ?
+				      g_strdup ("follow-active-image") :
+				      g_strdup ("dont-follow-active-image"));
     }
 }
 
@@ -1228,7 +1230,8 @@ gimp_dialog_factory_set_aux_info (GtkWidget       *dialog,
 
   if (GIMP_IS_IMAGE_DOCK (dialog))
     {
-      gboolean menu_shown = TRUE;
+      gboolean menu_shown  = TRUE;
+      gboolean auto_follow = TRUE;
 
       for (aux = info->aux_info; aux; aux = g_list_next (aux))
 	{
@@ -1240,10 +1243,17 @@ gimp_dialog_factory_set_aux_info (GtkWidget       *dialog,
 	    menu_shown = TRUE;
 	  else if (! strcmp (str, "menu-hidden"))
 	    menu_shown = FALSE;
+
+	  else if (! strcmp (str, "follow-active-image"))
+	    auto_follow = TRUE;
+	  else if (! strcmp (str, "dont-follow-active-image"))
+	    auto_follow = FALSE;
 	}
 
       gimp_image_dock_set_show_image_menu (GIMP_IMAGE_DOCK (dialog),
 					   menu_shown);
+      gimp_image_dock_set_auto_follow_active (GIMP_IMAGE_DOCK (dialog),
+                                              auto_follow);
     }
 }
 

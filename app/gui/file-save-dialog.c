@@ -172,27 +172,8 @@ file_save_dialog_show (GimpImage *gimage)
 				   filename :
                                    "." G_DIR_SEPARATOR_S);
 
-  switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
-    {
-    case GIMP_RGB_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGB_IMAGE);
-      break;
-    case GIMP_RGBA_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGBA_IMAGE);
-      break;
-    case GIMP_GRAY_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAY_IMAGE);
-      break;
-    case GIMP_GRAYA_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAYA_IMAGE);
-      break;
-    case GIMP_INDEXED_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXED_IMAGE);
-      break;
-    case GIMP_INDEXEDA_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXEDA_IMAGE);
-      break;
-    }
+  file_dialog_update_menus (gimage->gimp->save_procs,
+                            gimp_drawable_type (gimp_image_active_drawable (gimage)));
 
   file_dialog_show (filesave);
 }
@@ -227,27 +208,8 @@ file_save_a_copy_dialog_show (GimpImage *gimage)
                                    filename :
                                    "." G_DIR_SEPARATOR_S);
 
-  switch (gimp_drawable_type (gimp_image_active_drawable (gimage)))
-    {
-    case GIMP_RGB_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGB_IMAGE);
-      break;
-    case GIMP_RGBA_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_RGBA_IMAGE);
-      break;
-    case GIMP_GRAY_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAY_IMAGE);
-      break;
-    case GIMP_GRAYA_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_GRAYA_IMAGE);
-      break;
-    case GIMP_INDEXED_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXED_IMAGE);
-      break;
-    case GIMP_INDEXEDA_IMAGE:
-      file_dialog_update_menus (gimage->gimp->save_procs, PLUG_IN_INDEXEDA_IMAGE);
-      break;
-    }
+  file_dialog_update_menus (gimage->gimp->save_procs,
+                            gimp_drawable_type (gimp_image_active_drawable (gimage)));
 
   file_dialog_show (filesave);
 }

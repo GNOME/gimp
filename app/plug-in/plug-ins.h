@@ -28,12 +28,15 @@
 
 #define WRITE_BUFFER_SIZE  512
 
-#define PLUG_IN_RGB_IMAGE       0x01
-#define PLUG_IN_GRAY_IMAGE      0x02
-#define PLUG_IN_INDEXED_IMAGE   0x04
-#define PLUG_IN_RGBA_IMAGE      0x08
-#define PLUG_IN_GRAYA_IMAGE     0x10
-#define PLUG_IN_INDEXEDA_IMAGE  0x20
+typedef enum /*< pdb-skip> */ /*< skip> */
+{
+  PLUG_IN_RGB_IMAGE      = 0x1 << 0,
+  PLUG_IN_GRAY_IMAGE     = 0x1 << 1,
+  PLUG_IN_INDEXED_IMAGE  = 0x1 << 2,
+  PLUG_IN_RGBA_IMAGE     = 0x1 << 3,
+  PLUG_IN_GRAYA_IMAGE    = 0x1 << 4,
+  PLUG_IN_INDEXEDA_IMAGE = 0x1 << 5
+} PlugInImageType;
 
 
 struct _PlugIn
@@ -69,19 +72,19 @@ struct _PlugIn
 
 struct _PlugInProcDef
 {
-  gchar      *prog;
-  gchar      *menu_path;
-  gchar      *accelerator;
-  gchar      *extensions;
-  gchar      *prefixes;
-  gchar      *magics;
-  gchar      *image_types;
-  gint        image_types_val;
-  ProcRecord  db_info;
-  GSList     *extensions_list;
-  GSList     *prefixes_list;
-  GSList     *magics_list;
-  time_t      mtime;
+  gchar           *prog;
+  gchar           *menu_path;
+  gchar           *accelerator;
+  gchar           *extensions;
+  gchar           *prefixes;
+  gchar           *magics;
+  gchar           *image_types;
+  PlugInImageType  image_types_val;
+  ProcRecord       db_info;
+  GSList          *extensions_list;
+  GSList          *prefixes_list;
+  GSList          *magics_list;
+  time_t           mtime;
 };
 
 
@@ -166,15 +169,15 @@ void            plug_in_set_menu_sensitivity (GimpImageType  type);
  * handlers, which are organized around the plug-in data structure.
  * This could all be done a little better, but oh well.  -josh
  */
-void            plug_in_add_internal         (PlugInProcDef *proc_def);
-GSList        * plug_in_extensions_parse     (gchar         *extensions);
-gint            plug_in_image_types_parse    (gchar         *image_types);
+void              plug_in_add_internal         (PlugInProcDef *proc_def);
+GSList          * plug_in_extensions_parse     (gchar         *extensions);
+PlugInImageType   plug_in_image_types_parse    (gchar         *image_types);
 
-void            plug_in_progress_init        (PlugIn        *plug_in,
-					      gchar         *message,
-					      gint           gdisp_ID);
-void            plug_in_progress_update      (PlugIn        *plug_in,
-					      gdouble        percentage);
+void              plug_in_progress_init        (PlugIn        *plug_in,
+                                                gchar         *message,
+                                                gint           gdisp_ID);
+void              plug_in_progress_update      (PlugIn        *plug_in,
+                                                gdouble        percentage);
 
 
 extern PlugIn *current_plug_in;

@@ -216,7 +216,7 @@ convert_indexed_invoker (Gimp     *gimp,
 	}
     
       if (success)
-	gimp_image_convert ((void *) gimage, GIMP_INDEXED, num_cols, dither_type,
+	gimp_image_convert (gimage, GIMP_INDEXED, num_cols, dither_type,
 			    alpha_dither, remove_unused, palette_type, palette);
     }
 

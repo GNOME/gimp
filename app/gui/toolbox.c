@@ -529,17 +529,7 @@ toolbox_drop_drawable (GtkWidget    *widget,
   height = gimp_drawable_height (drawable);
   bytes  = gimp_drawable_bytes  (drawable);
 
-  switch (gimp_drawable_type (drawable))
-    {
-    case GIMP_RGB_IMAGE: case GIMP_RGBA_IMAGE:
-      type = GIMP_RGB; break;
-    case GIMP_GRAY_IMAGE: case GIMP_GRAYA_IMAGE:
-      type = GIMP_GRAY; break;
-    case GIMP_INDEXED_IMAGE: case GIMP_INDEXEDA_IMAGE:
-      type = GIMP_INDEXED; break;
-    default:
-      type = GIMP_RGB; break;
-    }
+  type = GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable));
 
   new_gimage = gimp_create_image (gimage->gimp,
 				  width, height,
