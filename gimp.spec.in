@@ -3,6 +3,7 @@
 %define ver      @VERSION@
 %define prefix	 /usr
 %define sysconfdir	/etc
+%define desktopdir /usr/share
 
 Summary: The GNU Image Manipulation Program
 Name: 		gimp
@@ -95,7 +96,10 @@ make
 %install
 [ -n "$RPM_BUILD_ROOT" -a "$RPM_BUILD_ROOT" != / ] && rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT/%{prefix}/info $RPM_BUILD_ROOT/%{prefix}/include \
-	$RPM_BUILD_ROOT/%{prefix}/lib $RPM_BUILD_ROOT/%{prefix}/bin
+	$RPM_BUILD_ROOT/%{prefix}/lib $RPM_BUILD_ROOT/%{prefix}/bin \
+	$RPM_BUILD_ROOT/%{desktopdir}/applications \
+	$RPM_BUILD_ROOT/%{desktopdir}/share/application-registry \
+	$RPM_BUILD_ROOT/%{desktopdir}/share/mime-info 
 make destdir=$RPM_BUILD_ROOT DESTDIR=$RPM_BUILD_ROOT install
 
 #
@@ -130,6 +134,10 @@ cat gimp-plugin-files gimp-tips-files > gimp.files
 %dir %{prefix}/lib/gimp/%{subver}
 %dir %{prefix}/lib/gimp/%{subver}/modules
 %dir %{prefix}/lib/gimp/%{subver}/plug-ins
+
+%{desktopdir}/applications/gimp-%{subver}.desktop
+%{desktopdir}/application-registry/gimp-%{subver}.applications
+%{desktopdir}/mime-info/gimp-%{subver}.keys
 
 %{prefix}/share/gimp/%{subver}/brushes/
 %{prefix}/share/gimp/%{subver}/fractalexplorer/
