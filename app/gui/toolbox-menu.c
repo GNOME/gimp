@@ -157,7 +157,7 @@ GimpItemFactoryEntry toolbox_menu_entries[] =
 
   { { N_("/File/Dialogs/Colo_rs..."), NULL,
       dialogs_create_dockable_cmd_callback, 0,
-      "<StockItem>", GTK_STOCK_SELECT_COLOR },
+      "<StockItem>", GIMP_STOCK_DEFAULT_COLORS },
     "gimp-color-editor",
     NULL, NULL },
   { { N_("/File/Dialogs/Brus_hes..."), "<control><shift>B",

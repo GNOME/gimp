@@ -1,5 +1,46 @@
 2003-07-08  Michael Natterer  <mitch@gimp.org>
 
+	Added configurable styles for dockable tabs (fixes bug #87376):
+
+	* app/widgets/widgets-enums.[ch]: added new enum GimpTabStyle
+	which can be one on { ICON, NAME, ICON_NAME, ICON_BLURB }.
+
+	* app/widgets/gimpdockable.[ch]: added a GimpTabStyle member to
+	the GimpDockable struct which defaults to GIMP_TAB_STYLE_ICON.
+	Renamed "short_name" to "name" and "name" to "blurb". Renamed
+	GimpDockableGetTabFunc to GimpDockableGetIconFunc. Implemented all
+	tab styles in gimp_dockable_real_get_tab_widget() and use the
+	"get_icon_func" only for creating the tab's icon, not the entire
+	tab widget.
+
+	* app/widgets/gimpdockbook.[ch]: changed accordingly. Create the
+	menu widgets and the DND icon using gimp_dockable_get_tab_widget()
+	with tab_style == GIMP_TAB_STYLE_ICON_BLURB instead of duplicating
+	tons of code. Made gimp_dockbook_get_tab_widget() public because
+	it's needed for exchanging tabs on-the-fly.
+
+	* app/widgets/gimpimagedock.c: changed accordingly.
+
+	* app/widgets/gimpdialogfactory.c: remember the dockables' tab
+	style in sessionrc.
+
+	* app/gui/dialogs-menu.c: added a submenu to select the tab style
+	for each dockable.
+
+	* app/gui/dialogs-commands.[ch]: new callback
+	dialogs_tab_style_cmd_callback().
+
+	* app/gui/dialogs-constructors.[ch]: added stock_ids to all
+	dockables, swapped the "name" and "blurb" parameters, reordered
+	functions, cleanup.
+
+	* app/gui/dialogs-menu.c
+	* app/gui/image-menu.c
+	* app/gui/toolbox-menu.c: use GIMP_STOCK_DEFAULT_COLORS for the
+	color editor dockable and renamed it to "FG/BG Color".
+
+2003-07-08  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h: added GimpGradientSegment typedef.
 
 	* app/core/gimpgradient.h: removed it here.

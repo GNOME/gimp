@@ -58,6 +58,19 @@ typedef enum
 } GimpHistogramScale;
 
 
+#define GIMP_TYPE_TAB_STYLE (gimp_tab_style_get_type ())
+
+GType gimp_tab_style_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_TAB_STYLE_ICON,       /*< desc="Icon"        >*/
+  GIMP_TAB_STYLE_NAME,       /*< desc="Text"        >*/
+  GIMP_TAB_STYLE_ICON_NAME,  /*< desc="Icon & Text" >*/
+  GIMP_TAB_STYLE_ICON_BLURB  /*< desc="Icon & Desc" >*/
+} GimpTabStyle;
+
+
 #define GIMP_TYPE_VIEW_TYPE (gimp_view_type_get_type ())
 
 GType gimp_view_type_get_type (void) G_GNUC_CONST;

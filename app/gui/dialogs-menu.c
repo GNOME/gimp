@@ -29,6 +29,7 @@
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimpcontainerview-utils.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdockable.h"
 #include "widgets/gimpdockbook.h"
 #include "widgets/gimpimagedock.h"
 #include "widgets/gimpitemfactory.h"
@@ -46,6 +47,9 @@
 #define PREVIEW_SIZE(path,size) \
   { { (path), NULL, dialogs_preview_size_cmd_callback, \
       (size), "/Preview Size/Tiny" }, NULL, NULL, NULL }
+#define TAB_STYLE(path,style) \
+  { { (path), NULL, dialogs_tab_style_cmd_callback, \
+      (style), "/Tab Style/Icon" }, NULL, NULL, NULL }
 
 
 GimpItemFactoryEntry dialogs_menu_entries[] =
@@ -78,7 +82,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   MENU_SEPARATOR ("/Add Tab/---"),
 
   ADD_TAB (N_("/Add Tab/Colors..."),           "gimp-color-editor",
-           "<StockItem>",                      GTK_STOCK_SELECT_COLOR),
+           "<StockItem>",                      GIMP_STOCK_DEFAULT_COLORS),
   ADD_TAB (N_("/Add Tab/Brushes..."),          "gimp-brush-grid",
            "<StockItem>",                      GIMP_STOCK_TOOL_PAINTBRUSH),
   ADD_TAB (N_("/Add Tab/Patterns..."),         "gimp-pattern-grid",
@@ -112,7 +116,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
       "<StockItem>", GTK_STOCK_REMOVE },
     NULL, NULL, NULL },
 
-  MENU_SEPARATOR ("/view-type-separator"),
+  MENU_SEPARATOR ("/---"),
 
   MENU_BRANCH ("/Preview Size"),
 
@@ -129,6 +133,16 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
   PREVIEW_SIZE (N_("/Preview Size/Huge"),        GIMP_PREVIEW_SIZE_HUGE),
   PREVIEW_SIZE (N_("/Preview Size/Enormous"),    GIMP_PREVIEW_SIZE_ENORMOUS),
   PREVIEW_SIZE (N_("/Preview Size/Gigantic"),    GIMP_PREVIEW_SIZE_GIGANTIC),
+
+  MENU_BRANCH ("/Tab Style"),
+
+  { { N_("/Tab Style/Icon"), NULL,
+      dialogs_tab_style_cmd_callback,
+      GIMP_TAB_STYLE_ICON, "<RadioItem>" },
+    NULL, NULL, NULL },
+
+  TAB_STYLE (N_("/Tab Style/Text"),        GIMP_TAB_STYLE_NAME),
+  TAB_STYLE (N_("/Tab Style/Icon & Text"), GIMP_TAB_STYLE_ICON_NAME),
 
   { { N_("/View as List"), NULL,
       dialogs_toggle_view_cmd_callback, GIMP_VIEW_TYPE_LIST, "<RadioItem>" },
@@ -149,6 +163,7 @@ GimpItemFactoryEntry dialogs_menu_entries[] =
 
 #undef ADD_TAB
 #undef PREVIEW_SIZE
+#undef TAB_STYLE
 
 gint n_dialogs_menu_entries = G_N_ELEMENTS (dialogs_menu_entries);
 
@@ -171,6 +186,7 @@ dialogs_menu_update (GtkItemFactory *factory,
       gboolean                list_view_available = FALSE;
       gboolean                grid_view_available = FALSE;
       GimpPreviewSize         preview_size        = -1;
+      GimpTabStyle            tab_style;
 
       page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
 
@@ -213,15 +229,14 @@ dialogs_menu_update (GtkItemFactory *factory,
       if (view)
         preview_size = view->preview_size;
 
+      tab_style = dockable->tab_style;
+
 #define SET_ACTIVE(path,active) \
         gimp_item_factory_set_active (factory, (path), (active))
 #define SET_VISIBLE(path,active) \
         gimp_item_factory_set_visible (factory, (path), (active))
 #define SET_SENSITIVE(path,sensitive) \
         gimp_item_factory_set_sensitive (factory, (path), (sensitive))
-
-      SET_VISIBLE ("/view-type-separator",
-                   preview_size != -1 || view_type != -1);
 
       SET_VISIBLE ("/Preview Size", preview_size != -1);
 
@@ -264,6 +279,13 @@ dialogs_menu_update (GtkItemFactory *factory,
               SET_ACTIVE ("/Preview Size/Tiny", TRUE);
             }
         }
+
+      if (tab_style == GIMP_TAB_STYLE_ICON)
+        SET_ACTIVE ("/Tab Style/Icon", TRUE); 
+      else if (tab_style == GIMP_TAB_STYLE_NAME)
+        SET_ACTIVE ("/Tab Style/Text", TRUE); 
+      else if (tab_style == GIMP_TAB_STYLE_ICON_NAME)
+        SET_ACTIVE ("/Tab Style/Icon & Text", TRUE); 
 
       SET_VISIBLE ("/View as Grid", view_type != -1);
       SET_VISIBLE ("/View as List", view_type != -1);

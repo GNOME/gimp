@@ -268,6 +268,46 @@ dialogs_preview_size_cmd_callback (GtkWidget *widget,
 }
 
 void
+dialogs_tab_style_cmd_callback (GtkWidget *widget,
+                                gpointer   data,
+                                guint      action)
+{
+  GimpDockbook *dockbook;
+  GimpTabStyle  tab_style;
+
+  if (! GTK_CHECK_MENU_ITEM (widget)->active)
+    return;
+
+  dockbook = (GimpDockbook *) gtk_item_factory_popup_data_from_widget (widget);
+
+  tab_style = (gint) action;
+
+  if (dockbook)
+    {
+      GimpDockable *dockable;
+      gint          page_num;
+
+      page_num = gtk_notebook_get_current_page (GTK_NOTEBOOK (dockbook));
+
+      dockable = (GimpDockable *)
+	gtk_notebook_get_nth_page (GTK_NOTEBOOK (dockbook), page_num);
+
+      if (dockable)
+        {
+          GtkWidget *tab_widget;
+
+          dockable->tab_style = tab_style;
+
+          tab_widget = gimp_dockbook_get_tab_widget (dockbook, dockable);
+
+          gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
+                                      GTK_WIDGET (dockable),
+                                      tab_widget);
+        }
+    }
+}
+
+void
 dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
 					gpointer   data,
 					guint      action)

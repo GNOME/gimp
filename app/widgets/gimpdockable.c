@@ -43,7 +43,8 @@ static void        gimp_dockable_style_set           (GtkWidget      *widget,
 						      GtkStyle       *prev_style);
 
 static GtkWidget * gimp_dockable_real_get_tab_widget (GimpDockable   *dockable,
-						      GimpDockbook   *dockbook,
+                                                      GimpContext    *context,
+                                                      GimpTabStyle    tab_style,
 						      GtkIconSize     size);
 static void        gimp_dockable_real_set_context    (GimpDockable   *dockable,
 						      GimpContext    *context);
@@ -113,12 +114,13 @@ static void
 gimp_dockable_init (GimpDockable *dockable)
 {
   dockable->name             = NULL;
-  dockable->short_name       = NULL;
+  dockable->blurb            = NULL;
   dockable->stock_id         = NULL;
+  dockable->tab_style        = GIMP_TAB_STYLE_ICON;
   dockable->dockbook         = NULL;
   dockable->context          = NULL;
-  dockable->get_tab_func     = NULL;
-  dockable->get_tab_data     = NULL;
+  dockable->get_icon_func    = NULL;
+  dockable->get_icon_data    = NULL;
   dockable->set_context_func = NULL;
 }
 
@@ -138,10 +140,10 @@ gimp_dockable_destroy (GtkObject *object)
       dockable->name = NULL;
     }
 
-  if (dockable->short_name)
+  if (dockable->blurb)
     {
-      g_free (dockable->short_name);
-      dockable->short_name = NULL;
+      g_free (dockable->blurb);
+      dockable->blurb = NULL;
     }
 
   if (dockable->stock_id)
@@ -216,25 +218,26 @@ gimp_dockable_style_set (GtkWidget *widget,
 
 GtkWidget *
 gimp_dockable_new (const gchar                *name,
-		   const gchar                *short_name,
+		   const gchar                *blurb,
                    const gchar                *stock_id,
-		   GimpDockableGetTabFunc      get_tab_func,
-                   gpointer                    get_tab_data,
+		   GimpDockableGetIconFunc     get_icon_func,
+                   gpointer                    get_icon_data,
 		   GimpDockableSetContextFunc  set_context_func)
 {
   GimpDockable *dockable;
 
   g_return_val_if_fail (name != NULL, NULL);
-  g_return_val_if_fail (short_name != NULL, NULL);
+  g_return_val_if_fail (blurb != NULL, NULL);
+  g_return_val_if_fail (stock_id != NULL, NULL);
 
   dockable = g_object_new (GIMP_TYPE_DOCKABLE, NULL);
 
-  dockable->name        = g_strdup (name);
-  dockable->short_name  = g_strdup (short_name);
-  dockable->stock_id    = g_strdup (stock_id);
+  dockable->name     = g_strdup (name);
+  dockable->blurb    = g_strdup (blurb);
+  dockable->stock_id = g_strdup (stock_id);
 
-  dockable->get_tab_func     = get_tab_func;
-  dockable->get_tab_data     = get_tab_data;
+  dockable->get_icon_func     = get_icon_func;
+  dockable->get_icon_data     = get_icon_data;
   dockable->set_context_func = set_context_func;
 
   return GTK_WIDGET (dockable);
@@ -242,20 +245,20 @@ gimp_dockable_new (const gchar                *name,
 
 GtkWidget *
 gimp_dockable_get_tab_widget (GimpDockable *dockable,
-			      GimpDockbook *dockbook,
-			      GtkIconSize   size)
+                              GimpContext  *context,
+                              GimpTabStyle  tab_style,
+                              GtkIconSize   size)
 {
   g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  return GIMP_DOCKABLE_GET_CLASS (dockable)->get_tab_widget (dockable,
-							     dockbook,
-							     size);
+  return GIMP_DOCKABLE_GET_CLASS (dockable)->get_tab_widget (dockable, context,
+                                                             tab_style, size);
 }
 
 void
 gimp_dockable_set_context (GimpDockable *dockable,
-			   GimpContext  *context)
+                           GimpContext  *context)
 {
   g_return_if_fail (GIMP_IS_DOCKABLE (dockable));
   g_return_if_fail (context == NULL || GIMP_IS_CONTEXT (context));
@@ -266,20 +269,58 @@ gimp_dockable_set_context (GimpDockable *dockable,
 
 static GtkWidget *
 gimp_dockable_real_get_tab_widget (GimpDockable *dockable,
-				   GimpDockbook *dockbook,
-				   GtkIconSize   size)
+                                   GimpContext  *context,
+                                   GimpTabStyle  tab_style,
+                                   GtkIconSize   size)
 {
-  g_return_val_if_fail (GIMP_IS_DOCKABLE (dockable), NULL);
-  g_return_val_if_fail (GIMP_IS_DOCKBOOK (dockbook), NULL);
+  GtkWidget *tab_widget = NULL;
+  GtkWidget *label      = NULL;
+  GtkWidget *icon       = NULL;
 
-  if (dockable->get_tab_func)
-    return dockable->get_tab_func (dockable, dockbook, size,
-                                   dockable->get_tab_data);
+  if (tab_style == GIMP_TAB_STYLE_NAME ||
+      tab_style == GIMP_TAB_STYLE_ICON_NAME)
+    {
+      label = gtk_label_new (dockable->name);
+    }
+  else if (tab_style == GIMP_TAB_STYLE_ICON_BLURB)
+    {
+      label = gtk_label_new (dockable->blurb);
+    }
 
-  if (dockable->stock_id)
-    return gtk_image_new_from_stock (dockable->stock_id, size);
+  if (tab_style == GIMP_TAB_STYLE_ICON      ||
+      tab_style == GIMP_TAB_STYLE_ICON_NAME ||
+      tab_style == GIMP_TAB_STYLE_ICON_BLURB)
+    {
+      if (dockable->get_icon_func)
+        icon = dockable->get_icon_func (dockable, context, size,
+                                        dockable->get_icon_data);
+      else
+        icon = gtk_image_new_from_stock (dockable->stock_id, size);
+    }
 
-  return gtk_label_new (dockable->short_name);
+  switch (tab_style)
+    {
+    case GIMP_TAB_STYLE_ICON:
+      tab_widget = icon;
+      break;
+
+    case GIMP_TAB_STYLE_NAME:
+      tab_widget = label;
+      break;
+
+    case GIMP_TAB_STYLE_ICON_NAME:
+    case GIMP_TAB_STYLE_ICON_BLURB:
+      tab_widget = gtk_hbox_new (FALSE, 4);
+
+      gtk_box_pack_start (GTK_BOX (tab_widget), icon, FALSE, FALSE, 0);
+      gtk_widget_show (icon);
+
+      gtk_box_pack_start (GTK_BOX (tab_widget), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+      break;
+    }
+
+  return tab_widget;
 }
 
 static void

@@ -409,7 +409,7 @@ gimp_image_dock_update_title_idle (GimpImageDock *image_dock)
         {
           GimpDockable *dockable = child->data;
 
-          g_string_append (title, dockable->short_name);
+          g_string_append (title, dockable->name);
 
           if (g_list_next (child))
             g_string_append (title, ", ");

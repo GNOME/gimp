@@ -88,6 +88,12 @@ GtkWidget * dialogs_tool_list_view_new     (GimpDialogFactory *factory,
 GtkWidget * dialogs_buffer_list_view_new   (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+GtkWidget * dialogs_document_list_new      (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+GtkWidget * dialogs_template_list_new      (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
 
 GtkWidget * dialogs_image_grid_view_new    (GimpDialogFactory *factory,
 					    GimpContext       *context,
@@ -113,6 +119,9 @@ GtkWidget * dialogs_tool_grid_view_new     (GimpDialogFactory *factory,
 GtkWidget * dialogs_buffer_grid_view_new   (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
+GtkWidget * dialogs_document_grid_new      (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
 
 GtkWidget * dialogs_layer_list_view_new    (GimpDialogFactory *factory,
 					    GimpContext       *context,
@@ -136,18 +145,11 @@ GtkWidget * dialogs_undo_history_new       (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 
+GtkWidget * dialogs_navigation_view_new    (GimpDialogFactory *factory,
+					    GimpContext       *context,
+                                            gint               preview_size);
+
 GtkWidget * dialogs_color_editor_new       (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-
-GtkWidget * dialogs_document_list_new      (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-GtkWidget * dialogs_document_grid_new      (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
-
-GtkWidget * dialogs_template_list_new      (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 
@@ -165,10 +167,6 @@ GtkWidget * dialogs_palette_editor_get     (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
 void        dialogs_edit_palette_func      (GimpData          *data);
-
-GtkWidget * dialogs_navigation_view_new    (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
 
 
 #endif /* __DIALOGS_CONSTRUCTORS_H__ */

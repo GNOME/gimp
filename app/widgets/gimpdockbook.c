@@ -71,8 +71,6 @@ static gboolean    gimp_dockbook_drag_drop        (GtkWidget      *widget,
                                                    gint            y,
                                                    guint           time);
 
-static GtkWidget * gimp_dockbook_get_tab_widget   (GimpDockbook   *dockbook,
-                                                   GimpDockable   *dockable);
 static void        gimp_dockbook_menu_switch_page (GtkWidget      *widget,
                                                    GimpDockable   *dockable);
 static void        gimp_dockbook_menu_end         (GimpDockbook   *dockbook);
@@ -339,34 +337,12 @@ gimp_dockbook_add (GimpDockbook *dockbook,
 
   g_return_if_fail (GTK_IS_WIDGET (tab_widget));
 
-  menu_widget = gimp_dockable_get_tab_widget (dockable, dockbook,
+  menu_widget = gimp_dockable_get_tab_widget (dockable,
+                                              dockbook->dock->context,
+                                              GIMP_TAB_STYLE_ICON_BLURB,
 					      MENU_WIDGET_ICON_SIZE);
 
   g_return_if_fail (GTK_IS_WIDGET (menu_widget));
-
-  if (GIMP_IS_PREVIEW (menu_widget) || GTK_IS_IMAGE (menu_widget))
-    {
-      GtkWidget *hbox;
-      GtkWidget *label;
-
-      hbox = gtk_hbox_new (FALSE, MENU_WIDGET_SPACING);
-
-      gtk_box_pack_start (GTK_BOX (hbox), menu_widget, FALSE, FALSE, 0);
-      gtk_widget_show (menu_widget);
-
-      label = gtk_label_new (dockable->name);
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-      gtk_widget_show (label);
-
-      menu_widget = hbox;
-    }
-  else if (GTK_IS_LABEL (menu_widget))
-    {
-      gtk_widget_destroy (menu_widget);
-
-      menu_widget = gtk_label_new (dockable->name);
-      gtk_misc_set_alignment (GTK_MISC (menu_widget), 0.0, 0.5);
-    }
 
   if (position == -1)
     {
@@ -471,7 +447,7 @@ gimp_dockbook_remove (GimpDockbook *dockbook,
   g_list_free (children);
 }
 
-static GtkWidget *
+GtkWidget *
 gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
                               GimpDockable *dockable)
 {
@@ -482,7 +458,10 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
                         "tab_icon_size", &tab_size,
                         NULL);
 
-  tab_widget = gimp_dockable_get_tab_widget (dockable, dockbook, tab_size);
+  tab_widget = gimp_dockable_get_tab_widget (dockable,
+                                             dockbook->dock->context,
+                                             dockable->tab_style,
+                                             tab_size);
 
   if (! GIMP_IS_PREVIEW (tab_widget))
     {
@@ -495,7 +474,7 @@ gimp_dockbook_get_tab_widget (GimpDockbook *dockbook,
       tab_widget = event_box;
     }
 
-  gimp_help_set_help_data (tab_widget, dockable->name, NULL);
+  gimp_help_set_help_data (tab_widget, dockable->blurb, NULL);
 
   g_object_set_data (G_OBJECT (tab_widget), "gimp-dockable", dockable);
 
@@ -651,34 +630,10 @@ gimp_dockbook_tab_drag_begin (GtkWidget      *widget,
   gtk_container_add (GTK_CONTAINER (window), frame);
   gtk_widget_show (frame);
 
-  preview = gimp_dockable_get_tab_widget (dockable, dockable->dockbook,
+  preview = gimp_dockable_get_tab_widget (dockable,
+                                          dockable->context,
+                                          GIMP_TAB_STYLE_ICON_BLURB,
 					  DND_WIDGET_ICON_SIZE);
-
-  if (GIMP_IS_PREVIEW (preview))
-    {
-      GtkWidget *hbox;
-      GtkWidget *label;
-
-      hbox = gtk_hbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-
-      gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
-      gtk_widget_show (preview);
-
-      label = gtk_label_new (dockable->name);
-      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 2);
-      gtk_widget_show (label);
-
-      preview = hbox;
-    }
-  else if (GTK_IS_LABEL (preview))
-    {
-      gtk_widget_destroy (preview);
-
-      preview = gtk_label_new (dockable->name);
-      gtk_misc_set_padding (GTK_MISC (preview), 10, 5);
-    }
-
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 

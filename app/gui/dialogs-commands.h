@@ -43,6 +43,9 @@ void   dialogs_toggle_view_cmd_callback       (GtkWidget *widget,
 void   dialogs_preview_size_cmd_callback      (GtkWidget *widget,
                                                gpointer   data,
                                                guint      action);
+void   dialogs_tab_style_cmd_callback         (GtkWidget *widget,
+                                               gpointer   data,
+                                               guint      action);
 
 void   dialogs_toggle_image_menu_cmd_callback (GtkWidget *widget,
 					       gpointer   data,

@@ -66,6 +66,27 @@ gimp_histogram_scale_get_type (void)
 }
 
 
+static const GEnumValue gimp_tab_style_enum_values[] =
+{
+  { GIMP_TAB_STYLE_ICON, N_("Icon"), "icon" },
+  { GIMP_TAB_STYLE_NAME, N_("Text"), "name" },
+  { GIMP_TAB_STYLE_ICON_NAME, N_("Icon & Text"), "icon-name" },
+  { GIMP_TAB_STYLE_ICON_BLURB, N_("Icon & Desc"), "icon-blurb" },
+  { 0, NULL, NULL }
+};
+
+GType
+gimp_tab_style_get_type (void)
+{
+  static GType enum_type = 0;
+
+  if (!enum_type)
+    enum_type = g_enum_register_static ("GimpTabStyle", gimp_tab_style_enum_values);
+
+  return enum_type;
+}
+
+
 static const GEnumValue gimp_view_type_enum_values[] =
 {
   { GIMP_VIEW_TYPE_LIST, N_("View as List"), "list" },

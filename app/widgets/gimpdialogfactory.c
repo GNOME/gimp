@@ -1146,7 +1146,10 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 				    GimpDialogFactory *factory,
 				    GimpConfigWriter  *writer)
 {
-  GList *list;
+  GEnumClass *enum_class;
+  GList      *list;
+
+  enum_class = g_type_class_ref (GIMP_TYPE_TAB_STYLE);
 
   for (list = factory->session_infos; list; list = g_list_next (list))
     {
@@ -1249,28 +1252,36 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 		  if (entry)
                     {
                       GimpContainerView *view;
+                      GEnumValue        *enum_value;
+                      gchar             *tab_style    = "icon";
                       gint               preview_size = -1;
 
                       gimp_config_writer_linefeed (writer);
 
+                      enum_value = g_enum_get_value (enum_class,
+                                                     dockable->tab_style);
+
+                      if (enum_value)
+                        tab_style = enum_value->value_nick;
+
                       view = gimp_container_view_get_by_dockable (dockable);
 
                       if (view && view->preview_size >= GIMP_PREVIEW_SIZE_TINY)
-                        {
-                          preview_size = view->preview_size;
-                        }
+                        preview_size = view->preview_size;
 
                       if (preview_size > 0 &&
                           preview_size != entry->preview_size)
                         {
-                          gimp_config_writer_printf (writer, "\"%s@%d\"",
+                          gimp_config_writer_printf (writer, "\"%s@%s:%d\"",
                                                      entry->identifier,
+                                                     tab_style,
                                                      preview_size);
                         }
                       else
                         {
-                          gimp_config_writer_printf (writer, "\"%s\"",
-                                                     entry->identifier);
+                          gimp_config_writer_printf (writer, "\"%s@%s\"",
+                                                     entry->identifier,
+                                                     tab_style);
                         }
                     }
 		}
@@ -1285,6 +1296,8 @@ gimp_dialog_factories_save_foreach (gchar             *name,
 
       gimp_config_writer_close (writer);  /* session-info */
     }
+
+  g_type_class_unref (enum_class);
 }
 
 static void
@@ -1319,10 +1332,13 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 	}
       else
 	{
-	  GimpDock *dock;
-	  GList    *books;
+	  GimpDock   *dock;
+	  GList      *books;
+          GEnumClass *enum_class;
 
 	  dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory));
+
+          enum_class = g_type_class_ref (GIMP_TYPE_TAB_STYLE);
 
 	  if (dock && info->aux_info)
 	    gimp_dialog_factory_set_aux_info (GTK_WIDGET (dock), info);
@@ -1338,23 +1354,50 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 
 	      for (pages = books->data; pages; pages = g_list_next (pages))
 		{
-		  GtkWidget *dockable;
-		  gchar     *identifier;
-                  gchar     *substring;
-                  gint       preview_size = -1;
+		  GtkWidget    *dockable;
+		  gchar        *identifier;
+                  gchar        *substring;
+                  gint          preview_size = -1;
+                  GimpTabStyle  tab_style = GIMP_TAB_STYLE_ICON;
 
 		  identifier = (gchar *) pages->data;
 
                   if ((substring = strstr (identifier, "@")))
                     {
+                      gchar **split;
+
                       *substring = '\0';
+                      substring++;
 
-                      preview_size = atoi (substring + 1);
+                      split = g_strsplit (substring, ":", 16);
 
-                      if (preview_size < GIMP_PREVIEW_SIZE_TINY ||
-			  preview_size > GIMP_PREVIEW_SIZE_GIGANTIC)
-                        preview_size = -1;
+                      if (split[0])
+                        {
+                          if (split[1] || ! g_ascii_isdigit (split[0][0]))
+                            {
+                              GEnumValue *enum_value;
+
+                              enum_value = g_enum_get_value_by_nick (enum_class,
+                                                                     split[0]);
+
+                              if (enum_value)
+                                tab_style = enum_value->value;
+                            }
+                          else
+                            {
+                              preview_size = atoi (split[0]);
+                            }
+                        }
+
+                      if (split[1])
+                        preview_size = atoi (split[1]);
+
+                      g_strfreev (split);
                     }
+
+                  if (preview_size < GIMP_PREVIEW_SIZE_TINY ||
+                      preview_size > GIMP_PREVIEW_SIZE_GIGANTIC)
+                    preview_size = -1;
 
                   /*  use the new dock's dialog factory to create dockables
                    *  because it may be different from the dialog factory
@@ -1365,6 +1408,8 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
                                                       dock,
                                                       identifier,
                                                       preview_size);
+
+                  GIMP_DOCKABLE (dockable)->tab_style = tab_style;
 
 		  if (dockable)
 		    gimp_dockbook_add (GIMP_DOCKBOOK (dockbook),
@@ -1380,6 +1425,8 @@ gimp_dialog_factories_restore_foreach (gchar             *name,
 	  info->sub_dialogs = NULL;
 
 	  gtk_widget_show (GTK_WIDGET (dock));
+
+          g_type_class_unref (enum_class);
 	}
 
       g_list_foreach (info->aux_info, (GFunc) g_free, NULL);
