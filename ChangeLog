@@ -1,3 +1,8 @@
+Sat Jul  4 22:58:23 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* plug-ins/autostretch_hsv/autostretch_hsv.c: corrected progress
+	display caption
+
 Sat Jul  4 16:58:43 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/tile_swap.c: made the g_message errors a little smarter instead

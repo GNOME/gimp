@@ -109,7 +109,7 @@ run (char    *name,
   /*  Make sure that the drawable is gray or RGB color  */
   if (gimp_drawable_color (drawable->id) || gimp_drawable_gray (drawable->id))
     {
-      gimp_progress_init ("Auto-Stretching Contrast...");
+      gimp_progress_init ("Auto-Stretching HSV...");
       gimp_tile_cache_ntiles (2 * (drawable->width / gimp_tile_width () + 1));
       autostretch_hsv (drawable);
 
