@@ -4,7 +4,7 @@ Thu Oct 14 04:59:11 BST 1999 Nick Lamb <njl195@zepler.org>
 	* app/fileops.c
 	* app/plug_in.c
 
-	Fixed #2169 and as a side-effect discovered that RGB_IMAGE means
+	Fixed #2152 and as a side-effect discovered that RGB_IMAGE means
 	something quite different for app vs plug-ins. The one in app is
 	now called RGB_IMAGE_OK to differentiate them.
 
