@@ -234,12 +234,14 @@ gimp_preview_init (GimpPreview *preview)
   preview->toggle_update = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle_update),
                                 preview->update_preview);
+
   gtk_table_set_row_spacing (GTK_TABLE (preview), 1, 6);
   gtk_table_attach (table, preview->toggle_update,
                     0, 2, 2, 3, GTK_FILL, GTK_FILL, 0, 0);
-  g_signal_connect_after (preview->toggle_update, "toggled",
-                          G_CALLBACK (gimp_preview_toggle_callback),
-                          preview);
+
+  g_signal_connect (preview->toggle_update, "toggled",
+                    G_CALLBACK (gimp_preview_toggle_callback),
+                    preview);
 }
 
 static void
@@ -323,14 +325,16 @@ gimp_preview_area_realize (GtkWidget   *widget,
 {
   GdkDisplay *display = gtk_widget_get_display (widget);
 
-  g_return_if_fail (preview->cursor == NULL);
+  g_return_if_fail (preview->cursor_move == NULL);
+  g_return_if_fail (preview->cursor_busy == NULL);
 
-  preview->cursor = gdk_cursor_new_for_display (display, GDK_FLEUR);
+  preview->cursor_move = gdk_cursor_new_for_display (display, GDK_FLEUR);
+  preview->cursor_busy = gdk_cursor_new_for_display (display, GDK_WATCH);
 
   if (preview->xmax - preview->xmin > preview->width  ||
       preview->ymax - preview->ymin > preview->height)
     {
-      gdk_window_set_cursor (widget->window, preview->cursor);
+      gdk_window_set_cursor (widget->window, preview->cursor_move);
     }
   else
     {
@@ -342,10 +346,15 @@ static void
 gimp_preview_area_unrealize (GtkWidget   *widget,
                              GimpPreview *preview)
 {
-  if (preview->cursor)
+  if (preview->cursor_move)
     {
-      gdk_cursor_unref (preview->cursor);
-      preview->cursor = NULL;
+      gdk_cursor_unref (preview->cursor_move);
+      preview->cursor_move = NULL;
+    }
+  if (preview->cursor_busy)
+    {
+      gdk_cursor_unref (preview->cursor_busy);
+      preview->cursor_busy = NULL;
     }
 }
 
@@ -375,7 +384,7 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
 
       gtk_widget_show (preview->hscr);
 
-      cursor = preview->cursor;
+      cursor = preview->cursor_move;
     }
   else
     {
@@ -396,7 +405,7 @@ gimp_preview_area_size_allocate (GtkWidget     *widget,
 
       gtk_widget_show (preview->vscr);
 
-      cursor = preview->cursor;
+      cursor = preview->cursor_move;
     }
   else
     {
@@ -423,12 +432,12 @@ gimp_preview_area_event (GtkWidget   *area,
     case GDK_BUTTON_PRESS:
       gtk_widget_get_pointer (area, &x, &y);
 
-      preview->in_drag = TRUE;
-      preview->drag_x = x;
-      preview->drag_y = y;
+      preview->drag_x    = x;
+      preview->drag_y    = y;
       preview->drag_xoff = preview->xoff;
       preview->drag_yoff = preview->yoff;
 
+      preview->in_drag = TRUE;
       gtk_grab_add (area);
       break;
 
@@ -518,6 +527,7 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
   else
     {
       preview->update_preview = FALSE;
+      gimp_preview_draw (preview);
     }
 
   g_object_notify (G_OBJECT (preview), "update");
@@ -526,9 +536,35 @@ gimp_preview_toggle_callback (GtkWidget   *toggle,
 static gboolean
 gimp_preview_invalidate_now (GimpPreview *preview)
 {
+  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (preview));
+
   preview->timeout_id = 0;
 
-  g_signal_emit (preview, preview_signals[INVALIDATED], 0);
+  if (toplevel && GTK_WIDGET_REALIZED (toplevel))
+    {
+      gdk_window_set_cursor (toplevel->window, preview->cursor_busy);
+      gdk_window_set_cursor (preview->area->window, preview->cursor_busy);
+
+      gdk_flush ();
+
+      g_signal_emit (preview, preview_signals[INVALIDATED], 0);
+
+      if (preview->xmax - preview->xmin > preview->width  ||
+          preview->ymax - preview->ymin > preview->height)
+        {
+          gdk_window_set_cursor (preview->area->window, preview->cursor_move);
+        }
+      else
+        {
+          gdk_window_set_cursor (preview->area->window, NULL);
+        }
+
+      gdk_window_set_cursor (toplevel->window, NULL);
+    }
+  else
+    {
+      g_signal_emit (preview, preview_signals[INVALIDATED], 0);
+    }
 
   return FALSE;
 }

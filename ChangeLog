@@ -1,5 +1,13 @@
 2004-09-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.[ch]: set a busy cursor while the
+	preview is being recalculated.
+
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw_original):
+	do nothing if there's no drawable.
+
+2004-09-01  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreviewarea.c (CHECK_COLOR): oops, swapped x
 	and y variables.
 

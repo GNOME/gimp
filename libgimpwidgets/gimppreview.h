@@ -57,7 +57,8 @@ struct _GimpPreview
   GtkWidget    *toggle_update;
   gboolean      update_preview;
   guint         timeout_id;
-  GdkCursor    *cursor;
+  GdkCursor    *cursor_move;
+  GdkCursor    *cursor_busy;
 };
 
 struct _GimpPreviewClass

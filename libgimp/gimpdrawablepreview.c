@@ -123,6 +123,9 @@ gimp_drawable_preview_draw_original (GimpPreview *preview)
   GimpPixelRgn         srcPR;
   guint                rowstride;
 
+  if (! drawable)
+    return;
+
   rowstride = preview->width * drawable->bpp;
   buffer    = g_new (guchar, rowstride * preview->height);
 
