@@ -460,7 +460,8 @@ end_plasma (GimpDrawable     *drawable,
     }
   else
     {
-      gimp_preview_draw_buffer (preview, preview_buffer, preview_width * bpp);
+      gimp_preview_draw_buffer (GIMP_PREVIEW (preview),
+                                preview_buffer, preview_width * bpp);
       g_free (preview_buffer);
     }
 

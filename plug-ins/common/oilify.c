@@ -309,7 +309,8 @@ oilify_rgb (GimpDrawable *drawable,
 
       if (preview)
         {
-          gimp_drawable_preview_draw_region (preview, &dest_rgn);
+          gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                             &dest_rgn);
         }
       else
         {
@@ -428,7 +429,8 @@ oilify_intensity (GimpDrawable *drawable,
 
       if (preview)
         {
-          gimp_drawable_preview_draw_region (preview, &dest_rgn);
+          gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
+                                             &dest_rgn);
         }
       else
         {
