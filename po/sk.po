@@ -6,8 +6,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.4\n"
-"POT-Creation-Date: 2002-03-28 14:48+0100\n"
-"PO-Revision-Date: 2002-03-15 13:19+0100\n"
+"POT-Creation-Date: 2002-03-25 20:37+0100\n"
+"PO-Revision-Date: 2002-03-28 13:53+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
@@ -28,10 +28,8 @@ msgstr ""
 "nointerface'\n"
 
 #: app/app_procs.c:109
-msgid ""
-"To perform user installation, run the GIMP without the '--nointerface' flag\n"
-msgstr ""
-"Ak chcete pou¾ívateµskú in¹taláciu, spustite GIMP bez voµby '--nointerface'\n"
+msgid "To perform user installation, run the GIMP without the '--nointerface' flag\n"
+msgstr "Ak chcete pou¾ívateµskú in¹taláciu, spustite GIMP bez voµby '--nointerface'\n"
 
 #: app/gimphelp.c:198
 msgid "Could not find GIMP Help Browser"
@@ -51,42 +49,42 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Namiesto neho pou¾ijem Netscape"
 
-#: app/gimprc.c:479
+#: app/gimprc.c:490
 #, c-format
 msgid "parsing \"%s\"\n"
 msgstr "analyzuje sa \"%s\"\n"
 
-#: app/gimprc.c:496
+#: app/gimprc.c:507
 #, c-format
 msgid "error parsing: \"%s\"\n"
 msgstr "chyba pri analýze: \"%s\"\n"
 
-#: app/gimprc.c:497
+#: app/gimprc.c:508
 #, c-format
 msgid "  at line %d column %d\n"
 msgstr "  na riadku %d v ståpci %d\n"
 
-#: app/gimprc.c:498
+#: app/gimprc.c:509
 #, c-format
 msgid "  unexpected token: %s\n"
 msgstr "  neoèakávaný symbol: %s\n"
 
-#: app/gimprc.c:2563
+#: app/gimprc.c:2774
 #, c-format
 msgid "Can't open %s; %s"
 msgstr "Nie je mo¾né otvori» %s; %s"
 
-#: app/gimprc.c:2582
+#: app/gimprc.c:2793
 #, c-format
 msgid "Can't rename %s to %s.old; %s"
 msgstr "Nie je mo¾né premenova» %s na %s.old; %s"
 
-#: app/gimprc.c:2588
+#: app/gimprc.c:2799
 #, c-format
 msgid "Couldn't reopen %s\n"
 msgstr "Nie je mo¾né znovu otvori» %s\n"
 
-#: app/gimprc.c:2600
+#: app/gimprc.c:2811
 #, c-format
 msgid "Can't write to %s; %s"
 msgstr "Nie je mo¾né zapisova» do %s; %s"
@@ -138,8 +136,7 @@ msgstr ""
 msgid ""
 "  -d, --no-data            Do not load brushes, gradients, palettes, "
 "patterns.\n"
-msgstr ""
-"  -d, --no-data            Nenaèíta» vzorky, prechody, palety a ¹tetce.\n"
+msgstr "  -d, --no-data            Nenaèíta» vzorky, prechody, palety a ¹tetce.\n"
 
 #: app/main.c:339
 msgid "  -i, --no-interface       Run without a user interface.\n"
@@ -182,13 +179,11 @@ msgstr ""
 "zásuvnými modulmi.\n"
 
 #: app/main.c:348
-#, fuzzy
 msgid "  --no-mmx                 Do not use MMX routines.\n"
-msgstr "  --no-xshm                Nepou¾íva» X roz¹írenia zdieµanej pamäti.\n"
+msgstr "  --no-mmx                 Nepou¾íva» MMX.\n"
 
 #: app/main.c:349
-msgid ""
-"  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
+msgid "  --debug-handlers         Enable non-fatal debugging signal handlers.\n"
 msgstr "  --debug-handlers         Povoli» ladenie obsluhy signálov.\n"
 
 #: app/main.c:350
@@ -197,8 +192,7 @@ msgstr "  --display <obrazovka>      Pou¾i» zvolenú X obrazovku.\n"
 
 #: app/main.c:351
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
-msgstr ""
-"  --system-gimprc <gimprc> Pou¾i» alternatívny systémový gimprc súbor.\n"
+msgstr "  --system-gimprc <gimprc> Pou¾i» alternatívny systémový gimprc súbor.\n"
 
 #: app/main.c:353
 msgid ""
@@ -381,7 +375,7 @@ msgstr "Premiestni» vrstvu"
 msgid "Layer Move"
 msgstr "Posunú» vrstvu"
 
-#: app/gui/channels-commands.c:336 app/undo.c:3566
+#: app/gui/channels-commands.c:334 app/undo.c:3566
 msgid "New Channel"
 msgstr "Nový kanál"
 
@@ -438,12 +432,12 @@ msgstr "%s: história"
 msgid "[ base image ]"
 msgstr "[ základný obrázok ]"
 
-#: app/display/gimpdisplayshell.c:933 app/pdb/internal_procs.c:181
+#: app/display/gimpdisplayshell.c:931 app/pdb/internal_procs.c:181
 #: app/undo_history.c:923
 msgid "Undo"
 msgstr "Vráti» spä»"
 
-#: app/display/gimpdisplayshell.c:934 app/undo_history.c:930
+#: app/display/gimpdisplayshell.c:932 app/undo_history.c:930
 msgid "Redo"
 msgstr "Znovu"
 
@@ -456,9 +450,8 @@ msgid "Linear"
 msgstr "Lineárny"
 
 #: app/base/base-enums.c:15
-#, fuzzy
 msgid "Cubic (Best)"
-msgstr "Kubicky (najpomal¹ie a najlep¹ie)"
+msgstr "Kubicky (najlep¹ie)"
 
 #: app/base/base-enums.c:70 app/core/core-enums.c:149
 #: app/gui/preferences-dialog.c:2077
@@ -531,8 +524,7 @@ msgstr "Alfa"
 #: app/config/gimpconfig-deserialize.c:318
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
-"pre logický výraz %s sa oèakáva symbol 'yes' alebo 'no', prijaté je '%s'"
+msgstr "pre logický výraz %s sa oèakáva symbol 'yes' alebo 'no', prijaté je '%s'"
 
 #: app/config/gimpconfig-deserialize.c:374
 #, c-format
@@ -545,9 +537,9 @@ msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pre symbol %s nie je platným UTF-8 re»azcom"
 
 #: app/config/gimpconfig.c:149 app/config/gimpconfig.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open file: '%s': %s"
-msgstr "Nepodarilo sa otvori» súbor '%s': %s"
+msgstr "Nepodarilo sa otvori» súbor: '%s': %s"
 
 #: app/config/gimpconfig.c:246
 #, c-format
@@ -555,6 +547,8 @@ msgid ""
 "Error while parsing '%s' in line %d:\n"
 " %s"
 msgstr ""
+"Chyba poèas analýzy '%s' na riadku %d:\n"
+" %s"
 
 #: app/config/gimprc.c:169
 #, c-format
@@ -655,14 +649,12 @@ msgid "Tiny"
 msgstr "Drobná"
 
 #: app/core/core-enums.c:148
-#, fuzzy
 msgid "Very Small"
-msgstr "Malá"
+msgstr "Veµmi malá"
 
 #: app/core/core-enums.c:152
-#, fuzzy
 msgid "Very Large"
-msgstr "Extra veµká"
+msgstr "Veµmi veµká"
 
 #: app/core/core-enums.c:153
 msgid "Huge"
@@ -670,7 +662,7 @@ msgstr "Obrovská"
 
 #: app/core/core-enums.c:154
 msgid "Enormous"
-msgstr ""
+msgstr "Enormná"
 
 #: app/core/core-enums.c:155
 msgid "Gigantic"
@@ -775,7 +767,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Nesprávny UTF-8 re»azec v súbore '%s'."
 
 #: app/core/gimpbrush.c:547 app/core/gimpbrushpipe.c:331
-#: app/core/gimpcontext.c:1039 app/core/gimpgradient.c:354
+#: app/core/gimpcontext.c:1037 app/core/gimpgradient.c:354
 #: app/core/gimppalette.c:343 app/core/gimppattern.c:346
 msgid "Unnamed"
 msgstr "Nepomenovaný"
@@ -825,7 +817,7 @@ msgstr "(kópia)"
 msgid "%s copy"
 msgstr "%s (kópia)"
 
-#: app/core/gimpdrawable-bucket-fill.c:114 app/paint/gimpclone.c:253
+#: app/core/gimpdrawable-bucket-fill.c:115 app/paint/gimpclone.c:253
 msgid "No patterns available for this operation."
 msgstr "Pre túto operáciu nie sú k dispozícii ¾iadne vzorky."
 
@@ -908,7 +900,7 @@ msgstr ""
 msgid "There are not enough visible layers for a merge down."
 msgstr "Málo viditeµných vrstiev pre splynutie."
 
-#: app/core/gimpimage-new.c:52 app/display/gimpdisplayshell.c:2111
+#: app/core/gimpimage-new.c:52 app/display/gimpdisplayshell.c:2109
 #: app/gui/preferences-dialog.c:1979
 msgid "RGB"
 msgstr "RGB"
@@ -1017,7 +1009,7 @@ msgstr "Cestu nie je mo¾né umiestni» vy¹¹ie."
 msgid "Path cannot be lowered more."
 msgstr "Cestu nie je mo¾né umiestni» ni¾¹ie."
 
-#: app/core/gimpimagefile.c:276
+#: app/core/gimpimagefile.c:270
 #, c-format
 msgid ""
 "Could not open thumbnail\n"
@@ -1253,50 +1245,50 @@ msgid "Fatal parsing error: Pattern file '%s' appears truncated."
 msgstr "Záva¾ná chyba: Súbor so vzorkou '%s' je zrejme useknutý."
 
 #. pseudo unit
-#: app/core/gimpunit.c:55
+#: app/core/gimpunit.c:60
 msgid "pixel"
 msgstr "bod"
 
-#: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:572
+#: app/core/gimpunit.c:60 app/tools/gimpmeasuretool.c:572
 #: app/tools/gimpmeasuretool.c:575 app/tools/gimppainttool.c:566
 msgid "pixels"
 msgstr "bodov"
 
 #. standard units
-#: app/core/gimpunit.c:58
+#: app/core/gimpunit.c:63
 msgid "inch"
 msgstr "palec"
 
-#: app/core/gimpunit.c:58
+#: app/core/gimpunit.c:63
 msgid "inches"
 msgstr "palcov"
 
-#: app/core/gimpunit.c:59
+#: app/core/gimpunit.c:64
 msgid "millimeter"
 msgstr "mm"
 
-#: app/core/gimpunit.c:59
+#: app/core/gimpunit.c:64
 msgid "millimeters"
 msgstr "mm"
 
 #. professional units
-#: app/core/gimpunit.c:62
+#: app/core/gimpunit.c:67
 msgid "point"
 msgstr "bod"
 
-#: app/core/gimpunit.c:62
+#: app/core/gimpunit.c:67
 msgid "points"
 msgstr "bodov"
 
-#: app/core/gimpunit.c:63
+#: app/core/gimpunit.c:68
 msgid "pica"
 msgstr "pica"
 
-#: app/core/gimpunit.c:63
+#: app/core/gimpunit.c:68
 msgid "picas"
 msgstr "pica"
 
-#: app/core/gimpunit.c:70
+#: app/core/gimpunit.c:75
 msgid "percent"
 msgstr "%"
 
@@ -1313,58 +1305,58 @@ msgid "Crosshair only"
 msgstr "Iba nitkový krí¾"
 
 #. create the contents of the right_vbox  ********************************
-#: app/display/gimpdisplayshell.c:595
+#: app/display/gimpdisplayshell.c:593
 msgid "Set Canvas Padding Color"
 msgstr "Nastavi» farbu výplne plátna"
 
-#: app/display/gimpdisplayshell.c:602
+#: app/display/gimpdisplayshell.c:600
 msgid "Set canvas padding color"
 msgstr "Nastavi» farbu výplne plátna"
 
-#: app/display/gimpdisplayshell.c:615
+#: app/display/gimpdisplayshell.c:613
 msgid "/Default Color"
 msgstr "/©tandardná farba"
 
-#: app/display/gimpdisplayshell.c:650
+#: app/display/gimpdisplayshell.c:648
 msgid "Toggle QuickMask"
 msgstr "Prepnú» rýchlu masku"
 
-#: app/display/gimpdisplayshell.c:928
+#: app/display/gimpdisplayshell.c:926
 #, c-format
 msgid "Undo %s"
 msgstr "Vráti» spä» %s"
 
-#: app/display/gimpdisplayshell.c:931
+#: app/display/gimpdisplayshell.c:929
 #, c-format
 msgid "Redo %s"
 msgstr "Znovu %s"
 
-#: app/display/gimpdisplayshell.c:2111
+#: app/display/gimpdisplayshell.c:2109
 msgid "RGB-empty"
 msgstr "RGB-prázdny"
 
-#: app/display/gimpdisplayshell.c:2114
+#: app/display/gimpdisplayshell.c:2112
 msgid "grayscale-empty"
 msgstr "odtiene ¹edej-prázdny"
 
-#: app/display/gimpdisplayshell.c:2114
+#: app/display/gimpdisplayshell.c:2112
 msgid "grayscale"
 msgstr "odtiene ¹edej"
 
-#: app/display/gimpdisplayshell.c:2117
+#: app/display/gimpdisplayshell.c:2115
 msgid "indexed-empty"
 msgstr "indexovaný-prázdny"
 
-#: app/display/gimpdisplayshell.c:2117
+#: app/display/gimpdisplayshell.c:2115
 msgid "indexed"
 msgstr "indexovaný"
 
-#: app/display/gimpdisplayshell.c:2317
+#: app/display/gimpdisplayshell.c:2315
 #, c-format
 msgid "Close %s?"
 msgstr "Zatvori» %s?"
 
-#: app/display/gimpdisplayshell.c:2319
+#: app/display/gimpdisplayshell.c:2317
 #, c-format
 msgid ""
 "Changes were made to %s.\n"
@@ -1383,25 +1375,23 @@ msgstr "Dostupné filtre"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:179
 msgid "Add the selected filter to the list of active filters."
-msgstr ""
+msgstr "Prida» oznaèené filtre do zoznamu aktívnych filtrov."
 
 #: app/display/gimpdisplayshell-filter-dialog.c:196
 msgid "Remove the selected filter from the list of active filters."
-msgstr ""
+msgstr "Odstráni» oznaèené filtre zo zoznamu aktívnych filtrov."
 
 #: app/display/gimpdisplayshell-filter-dialog.c:210
-#, fuzzy
 msgid "Move the selected filter up"
-msgstr "Odstráni» zvolenú polo¾ku"
+msgstr "Posunú» oznaèený filter vy¹¹ie"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:219
-#, fuzzy
 msgid "Move the selected filter down"
-msgstr "Presun vrstiev a výberov"
+msgstr "Posunú» oznaèený filter ni¾¹ie"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:228
 msgid "Configure the selected filter"
-msgstr ""
+msgstr "Nastavi» zvolený filter"
 
 #: app/display/gimpdisplayshell-filter-dialog.c:255
 msgid "Active Filters"
@@ -1508,32 +1498,31 @@ msgstr ""
 "Nie je mo¾né spusti» spätnú odozvu ¹tetca.\n"
 "Zodpovedajúci zásuvný modul asi spadol."
 
-#: app/gui/channels-commands.c:273
+#: app/gui/channels-commands.c:271
 msgid "Empty Channel Copy"
 msgstr "Prázdna kópia kanálu"
 
-#: app/gui/channels-commands.c:291
+#: app/gui/channels-commands.c:289
 msgid "New Channel Color"
 msgstr "Nový farebný kanál"
 
-#: app/gui/channels-commands.c:298
+#: app/gui/channels-commands.c:296
 msgid "New Channel Options"
 msgstr "Vlastnosti nového kanálu"
 
-#: app/gui/channels-commands.c:339 app/gui/channels-commands.c:492
-#, fuzzy
+#: app/gui/channels-commands.c:337 app/gui/channels-commands.c:490
 msgid "Channel Name:"
 msgstr "Názov kanálu:"
 
-#: app/gui/channels-commands.c:344 app/gui/channels-commands.c:497
+#: app/gui/channels-commands.c:342 app/gui/channels-commands.c:495
 msgid "Fill Opacity:"
 msgstr "Krytie vyplòovania:"
 
-#: app/gui/channels-commands.c:439
+#: app/gui/channels-commands.c:437
 msgid "Edit Channel Color"
 msgstr "Upravi» farebný kanál"
 
-#: app/gui/channels-commands.c:446
+#: app/gui/channels-commands.c:444
 msgid "Edit Channel Attributes"
 msgstr "Úpravy vlastností kanálu"
 
@@ -1603,7 +1592,7 @@ msgstr "Prida» aktuálnu farbu do histórie farieb"
 msgid "Hex Triplet:"
 msgstr "Hex trojica:"
 
-#: app/gui/colormap-editor-commands.c:109
+#: app/gui/colormap-editor-commands.c:107
 msgid "Edit Indexed Color"
 msgstr "Upravi» indexovanú farbu"
 
@@ -1653,15 +1642,13 @@ msgid "[ Warning ]"
 msgstr "[ Varovanie ]"
 
 #: app/gui/convert-dialog.c:338
-#, fuzzy
 msgid ""
 "You are attempting to convert an image with an alpha channel to indexed "
 "colors.\n"
 "Do not generate a palette of more than 255 colors if you intend to create a "
 "transparent or animated GIF file."
 msgstr ""
-"Pokú¹ate sa skonvertova» obrázok s alfa kanálom alebo vrstvami z RGB alebo "
-"©EDEJ do indexovaných farieb.\n"
+"Pokú¹ate sa skonvertova» obrázok s alfa kanálom do indexovaných farieb.\n"
 "Nemali by ste pou¾i» paletu s viac ako 255 farbami, ak plánujete vytvori» "
 "priesvitný alebo animovaný súbor GIF z tohoto obrázku."
 
@@ -1684,9 +1671,9 @@ msgid "Background: %d, %d, %d"
 msgstr "Pozadie: %d, %d, %d"
 
 #: app/gui/dialogs-constructors.c:1058 app/gui/dialogs-constructors.c:1098
-#, fuzzy, c-format
+#, c-format
 msgid "%s Options"
-msgstr "Mo¾nosti:\n"
+msgstr "%s Mo¾nosti"
 
 #: app/gui/drawable-commands.c:74
 msgid "Desaturate operates only on RGB color drawables."
@@ -1700,19 +1687,19 @@ msgstr "Invertovanie sa nedá aplikova» na indexované obrázky."
 msgid "Equalize does not operate on indexed drawables."
 msgstr "Vyrovnanie nepracuje s indexovanými farbami."
 
-#: app/gui/edit-commands.c:202
+#: app/gui/edit-commands.c:200
 msgid "Cut Named"
 msgstr "Vystrihnú» pomenované"
 
-#: app/gui/edit-commands.c:205 app/gui/edit-commands.c:223
+#: app/gui/edit-commands.c:203 app/gui/edit-commands.c:221
 msgid "Enter a name for this buffer"
 msgstr "Vlo¾te názov pre tento zásobník"
 
-#: app/gui/edit-commands.c:220
+#: app/gui/edit-commands.c:218
 msgid "Copy Named"
 msgstr "Kopírova» pomenované"
 
-#: app/gui/edit-commands.c:301 app/gui/edit-commands.c:330
+#: app/gui/edit-commands.c:299 app/gui/edit-commands.c:328
 msgid "(Unnamed Buffer)"
 msgstr "(Nepomenovaný zásobník)"
 
@@ -1816,7 +1803,7 @@ msgid "Height:"
 msgstr "Vý¹ka:"
 
 #: app/gui/file-new-dialog.c:218 app/gui/preferences-dialog.c:1886
-#: app/gui/preferences-dialog.c:1925 app/gui/user-install-dialog.c:1236
+#: app/gui/preferences-dialog.c:1925 app/gui/user-install-dialog.c:1223
 msgid "Pixels"
 msgstr "Bodov"
 
@@ -1828,7 +1815,7 @@ msgstr "Rozlí¹enie X:"
 #: app/gui/file-new-dialog.c:297 app/gui/info-window.c:199
 #: app/gui/offset-dialog.c:130 app/gui/resize-dialog.c:367
 #: app/gui/resize-dialog.c:459 app/gui/resize-dialog.c:604
-#: app/gui/user-install-dialog.c:1249 app/tools/gimpcroptool.c:980
+#: app/gui/user-install-dialog.c:1236 app/tools/gimpcroptool.c:980
 #: app/tools/gimprotatetool.c:203 app/tools/gimpscaletool.c:209
 #: app/tools/gimpsheartool.c:181
 msgid "Y:"
@@ -2098,12 +2085,11 @@ msgid "Gradient Selection"
 msgstr "Výber prechodu"
 
 #: app/gui/gradient-select.c:280
-#, fuzzy
 msgid ""
 "Unable to run gradient callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
-"Nie je mo¾né spusti» spätnú odozvu ¹tetca.\n"
+"Nie je mo¾né spusti» spätnú odozvu prechodu.\n"
 "Zodpovedajúci zásuvný modul asi spadol."
 
 #: app/gui/gradients-commands.c:106
@@ -2136,11 +2122,8 @@ msgid "Adding theme '%s' (%s)\n"
 msgstr "Pridanie témy '%s' (%s)\n"
 
 #: app/gui/image-commands.c:197
-#, fuzzy
 msgid "Cannot crop because the current selection is empty."
-msgstr ""
-"Nie je mo¾né vystrihnú»/kopírova», preto¾e\n"
-"zvolená oblas» je prázdna."
+msgstr "Nie je mo¾né oreza», preto¾e výber je prázdny."
 
 #: app/gui/image-commands.c:289
 msgid "Layers Merge Options"
@@ -2676,14 +2659,12 @@ msgid "/View/Info Window..."
 msgstr "/Zobrazenie/Informácie..."
 
 #: app/gui/menus.c:544
-#, fuzzy
 msgid "/View/Navigation Window..."
-msgstr "/Zobrazenie/Navigátor..."
+msgstr "/Zobrazenie/Navigaèné okno..."
 
 #: app/gui/menus.c:549
-#, fuzzy
 msgid "/View/Display Filters..."
-msgstr "/Dialógy/Filtre..."
+msgstr "/Zobrazenie/Zobrazi» filtre..."
 
 #: app/gui/menus.c:556
 msgid "/View/Toggle Selection"
@@ -2744,9 +2725,8 @@ msgid "/Image/Scale Image..."
 msgstr "/Obrázok/Veµkos»..."
 
 #: app/gui/menus.c:634
-#, fuzzy
 msgid "/Image/Crop Image"
-msgstr "Orezanie obrázku"
+msgstr "/Obrázok/Oreza» obrázok"
 
 #: app/gui/menus.c:639
 msgid "/Image/Duplicate"
@@ -2761,9 +2741,8 @@ msgid "/Image/Flatten Image"
 msgstr "/Obrázok/Do jednej vrstvy"
 
 #: app/gui/menus.c:658
-#, fuzzy
 msgid "/Image/Undo History..."
-msgstr "/Zobrazenie/História..."
+msgstr "/Obrázok/História..."
 
 #. <Image>/Layer
 #. <Image>/Layer/Stack
@@ -3486,19 +3465,16 @@ msgid "/Save as POV-Ray..."
 msgstr "/Ulo¾i» ako POV-Ray..."
 
 #: app/gui/menus.c:1747
-#, fuzzy
 msgid "/New Color"
-msgstr "Skutoèná farba"
+msgstr "/Nová farba"
 
 #: app/gui/menus.c:1752 app/gui/menus.c:1848
-#, fuzzy
 msgid "/Edit Color..."
-msgstr "/Farba µavého koncového bodu..."
+msgstr "/Upravi» farbu..."
 
 #: app/gui/menus.c:1757
-#, fuzzy
 msgid "/Delete Color"
-msgstr "/©tandardná farba"
+msgstr "/Odstráni» farbu"
 
 #: app/gui/menus.c:1769
 msgid "/New Palette"
@@ -3545,9 +3521,8 @@ msgid "/Delete Buffer"
 msgstr "/Zmaza» zásobník"
 
 #: app/gui/menus.c:1843
-#, fuzzy
 msgid "/Add Color"
-msgstr "Indexovaná farba"
+msgstr "/Prida» farbu"
 
 #: app/gui/menus.c:1860
 msgid "/Open Image"
@@ -3702,9 +3677,8 @@ msgid "Edit Palette Color"
 msgstr "Upravi» farby palety"
 
 #: app/gui/palette-import-dialog.c:104
-#, fuzzy
 msgid "Select a Gradient to Create a Palette from"
-msgstr "Zvoµte prieèinky prechodu"
+msgstr "Zvoµte prechod pre vytvorenie palety z"
 
 #: app/gui/palette-import-dialog.c:372
 msgid "Import Palette"
@@ -3748,12 +3722,11 @@ msgid "Select"
 msgstr "Výber"
 
 #: app/gui/palette-select.c:259
-#, fuzzy
 msgid ""
 "Unable to run palette callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
-"Nie je mo¾né spusti» spätnú odozvu ¹tetca.\n"
+"Nie je mo¾né spusti» spätnú odozvu palety.\n"
 "Zodpovedajúci zásuvný modul asi spadol."
 
 #: app/gui/palettes-commands.c:122
@@ -3764,7 +3737,7 @@ msgstr "Pripoji» paletu"
 msgid "Enter a name for merged palette"
 msgstr "Vlo¾te názov pripájanej palety"
 
-#: app/gui/paths-dialog.c:165 app/gui/vectors-commands.c:486
+#: app/gui/paths-dialog.c:165 app/gui/vectors-commands.c:484
 msgid "New Path"
 msgstr "Nová cesta"
 
@@ -3809,7 +3782,7 @@ msgstr "Upravi» bod"
 msgid "Path %d"
 msgstr "Cesta %d"
 
-#: app/gui/paths-dialog.c:990 app/gui/vectors-commands.c:555
+#: app/gui/paths-dialog.c:990 app/gui/vectors-commands.c:553
 msgid "Edit Path Attributes"
 msgstr "Úpravy vlastností cesty"
 
@@ -3868,12 +3841,11 @@ msgid "Save Path"
 msgstr "Ulo¾i» cestu"
 
 #: app/gui/pattern-select.c:263
-#, fuzzy
 msgid ""
 "Unable to run pattern callback.\n"
 "The corresponding plug-in may have crashed."
 msgstr ""
-"Nie je mo¾né spusti» spätnú odozvu ¹tetca.\n"
+"Nie je mo¾né spusti» spätnú odozvu vzorky.\n"
 "Zodpovedajúci zásuvný modul asi spadol."
 
 #: app/gui/preferences-dialog.c:412
@@ -3975,9 +3947,8 @@ msgstr "Då¾ka zoznamu predo¹lých dokumentov:"
 
 #. Dialog Bahaviour
 #: app/gui/preferences-dialog.c:2098
-#, fuzzy
 msgid "Dialog Behavior"
-msgstr "Správanie paliet"
+msgstr "Správanie sa dialógov"
 
 #: app/gui/preferences-dialog.c:2100
 msgid "Navigation Window per Display"
@@ -4006,7 +3977,6 @@ msgid "Save Window Positions on Exit"
 msgstr "Zapísa» pozície okien pri ukonèení"
 
 #: app/gui/preferences-dialog.c:2116
-#, fuzzy
 msgid "Restore Saved Window Positions on Start-up"
 msgstr "Obnovi» ulo¾enú pozíciu okien pri ¹tarte"
 
@@ -4203,7 +4173,7 @@ msgstr "Získa» rozlí¹enie monitora"
 msgid "(Currently %d x %d dpi)"
 msgstr "(Teraz %d × %d dpi)"
 
-#: app/gui/preferences-dialog.c:2563 app/gui/user-install-dialog.c:1287
+#: app/gui/preferences-dialog.c:2563 app/gui/user-install-dialog.c:1274
 msgid "Calibrate"
 msgstr "Kalibrova»"
 
@@ -4231,7 +4201,7 @@ msgstr "©etrné pou¾ívanie pamäte"
 msgid "Levels of Undo:"
 msgstr "Poèet úrovní návratu:"
 
-#: app/gui/preferences-dialog.c:2654 app/gui/user-install-dialog.c:1135
+#: app/gui/preferences-dialog.c:2654 app/gui/user-install-dialog.c:1122
 msgid "Tile Cache Size:"
 msgstr "Veµkos» vyrovnávacej pamäte dla¾díc:"
 
@@ -4259,9 +4229,8 @@ msgid "Always"
 msgstr "V¾dy"
 
 #: app/gui/preferences-dialog.c:2699
-#, fuzzy
 msgid "\"File -> Save\" Saves the Image:"
-msgstr "\"Súbor > Ulo¾i»\" ulo¾í obrázok:"
+msgstr "\"Súbor > Ulo¾i»\" Ulo¾í obrázok:"
 
 #: app/gui/preferences-dialog.c:2709
 msgid "Never"
@@ -4287,7 +4256,7 @@ msgstr "Vyberte doèasný prieèinok"
 msgid "Swap Dir:"
 msgstr "Odkladací prieèinok:"
 
-#: app/gui/preferences-dialog.c:2742 app/gui/user-install-dialog.c:1155
+#: app/gui/preferences-dialog.c:2742 app/gui/user-install-dialog.c:1142
 msgid "Select Swap Dir"
 msgstr "Vyberte odkladací prieèinok"
 
@@ -4530,20 +4499,18 @@ msgid "tips-locale:C"
 msgstr "tips-locale:C"
 
 #: app/gui/tool-options-dialog.c:112
-#, fuzzy
 msgid "Save current settings to disk"
-msgstr "Pri ukonèení ulo¾i» nastavenia vstupného zariadenia"
+msgstr "Ulo¾i» aktuálne nastavenia na disk"
 
 #: app/gui/tool-options-dialog.c:121
 msgid "Restore saved settings"
-msgstr ""
+msgstr "Naèíta» ulo¾ené nastavania"
 
 #: app/gui/tool-options-dialog.c:130
-#, fuzzy
 msgid "Reset"
 msgstr "Návrat"
 
-#: app/gui/user-install-dialog.c:131
+#: app/gui/user-install-dialog.c:130
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -4556,7 +4523,7 @@ msgstr ""
 "Tu sú tie¾ nastavené cesty pre hµadanie ¹tetcov,\n"
 "paliet, prechodov, vzoriek, zásuvných modulov a modulov."
 
-#: app/gui/user-install-dialog.c:139
+#: app/gui/user-install-dialog.c:138
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -4564,7 +4531,7 @@ msgstr ""
 "GIMP pou¾íva tie¾ dodatoèný súbor gtkrc a preto ho je mo¾né nastavi» tak,\n"
 ", aby bol jeho vzhµad iný ako ostatných GTK aplikácií."
 
-#: app/gui/user-install-dialog.c:144
+#: app/gui/user-install-dialog.c:143
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -4580,7 +4547,7 @@ msgstr ""
 "súboru. Tento súbor je navrhnutý výhradne pre\n"
 "pou¾itie programom GIMP a nemal by by» editovaný."
 
-#: app/gui/user-install-dialog.c:153
+#: app/gui/user-install-dialog.c:152
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -4596,7 +4563,7 @@ msgstr ""
 "Ak tento súbor zma¾ete, obnovia sa pôvodné\n"
 "klávesové skratky."
 
-#: app/gui/user-install-dialog.c:162
+#: app/gui/user-install-dialog.c:161
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -4606,7 +4573,7 @@ msgstr ""
 "ukonèenia programu. Mô¾ete GIMP nastavi» tak,\n"
 "aby boli tieto okná po spustení otvorené na týchto pozíciách."
 
-#: app/gui/user-install-dialog.c:168
+#: app/gui/user-install-dialog.c:167
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -4620,7 +4587,7 @@ msgstr ""
 "body a piky. Tento súbor je prepísaný,\n"
 "pri ka¾dom ukonèení GIMPu."
 
-#: app/gui/user-install-dialog.c:176
+#: app/gui/user-install-dialog.c:175
 msgid ""
 "This folder is used to store user defined brushes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -4632,16 +4599,15 @@ msgstr ""
 "GIMP prehµadáva tento prieèinok, keï hµadá ¹tetce\n"
 "spolu so systémovým prieèinkom GIMPu pre ¹tetce."
 
-#: app/gui/user-install-dialog.c:183
-#, fuzzy
+#: app/gui/user-install-dialog.c:182
 msgid ""
 "This folder is used to store brushes that are created\n"
 "with the brush editor."
 msgstr ""
-"Tento prieèinok sa pou¾íva na ukladanie  ¹tetcov,\n"
+"Tento prieèinok sa pou¾íva na ukladanie ¹tetcov,\n"
 "ktoré sú vytvorené v editore ¹tetcov."
 
-#: app/gui/user-install-dialog.c:188
+#: app/gui/user-install-dialog.c:187
 msgid ""
 "This folder is used to store user defined gradients\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -4653,7 +4619,7 @@ msgstr ""
 "GIMP prehµadáva tento prieèinok, keï hµadá prechody\n"
 "spolu so systémovým prieèinkom GIMPu pre prechody."
 
-#: app/gui/user-install-dialog.c:195
+#: app/gui/user-install-dialog.c:194
 msgid ""
 "This folder is used to store user defined palettes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -4665,7 +4631,7 @@ msgstr ""
 "GIMP prehµadáva tento prieèinok, keï hµadá palety\n"
 "spolu so systémovým prieèinkom GIMPu pre palety."
 
-#: app/gui/user-install-dialog.c:202
+#: app/gui/user-install-dialog.c:201
 msgid ""
 "This folder is used to store user defined patterns.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -4677,7 +4643,7 @@ msgstr ""
 "GIMP prehµadáva tento prieèinok, keï hµadá vzorky\n"
 "spolu so systémovým prieèinkom GIMPu pre vzorky."
 
-#: app/gui/user-install-dialog.c:209
+#: app/gui/user-install-dialog.c:208
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported plug-ins.  The GIMP\n"
@@ -4689,7 +4655,7 @@ msgstr ""
 "modulov. GIMP prehµadáva tento prieèinok, keï hµadá\n"
 "zásuvné moduly spolu so systémovým prieèinkom GIMPu."
 
-#: app/gui/user-install-dialog.c:216
+#: app/gui/user-install-dialog.c:215
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported DLL modules.  The\n"
@@ -4703,7 +4669,7 @@ msgstr ""
 "so systémovým prieèinkom GIMPu, keï hµadá moduly\n"
 "pre naèítanie poèas inicializácie."
 
-#: app/gui/user-install-dialog.c:224
+#: app/gui/user-install-dialog.c:223
 msgid ""
 "This folder is used to store user created and installed\n"
 "scripts.  The GIMP checks this folder in addition to\n"
@@ -4715,7 +4681,7 @@ msgstr ""
 "GIMP prehµadáva tento prieèinok, keï hµadá skripty\n"
 "spolu so systémovým prieèinkom GIMPu pre skripty."
 
-#: app/gui/user-install-dialog.c:231
+#: app/gui/user-install-dialog.c:230
 msgid ""
 "This folder is used to temporarily store undo buffers\n"
 "to reduce memory usage.  If The GIMP is unceremoniously\n"
@@ -4729,7 +4695,7 @@ msgstr ""
 "pretrva» v tomto prieèinku. Tieto súbory nie je mo¾né pou¾i»\n"
 "mimo sedenia relácie GIMP a preto ich pokojne mô¾ete odstráni»."
 
-#: app/gui/user-install-dialog.c:239
+#: app/gui/user-install-dialog.c:238
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Curves tool."
@@ -4737,7 +4703,7 @@ msgstr ""
 "Tento prieèinok sa pou¾íva na ukladanie\n"
 "parametrických súborov pre nástroj Krivky."
 
-#: app/gui/user-install-dialog.c:244
+#: app/gui/user-install-dialog.c:243
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
@@ -4745,7 +4711,7 @@ msgstr ""
 "Tento prieèinok sa pou¾íva na ukladanie\n"
 "parametrických súborov pre nástroj Úrovne."
 
-#: app/gui/user-install-dialog.c:249
+#: app/gui/user-install-dialog.c:248
 msgid ""
 "This is folder used to store user defined fractals to\n"
 "be used by the FractalExplorer plug-in.  The GIMP\n"
@@ -4757,7 +4723,7 @@ msgstr ""
 "module FractalExplorer. GIMP prehµadáva tento prieèinok,\n"
 "keï hµadá fraktály spolu so systémovým prieèinkom FractalExplorera."
 
-#: app/gui/user-install-dialog.c:256
+#: app/gui/user-install-dialog.c:255
 msgid ""
 "This folder is used to store user defined figures to\n"
 "be used by the GFig plug-in.  The GIMP checks this\n"
@@ -4769,7 +4735,7 @@ msgstr ""
 "module GFig. GIMP prehµadáva tento prieèinok,\n"
 "keï hµadá gfig kresby spolu so systémovým prieèinkom GFig."
 
-#: app/gui/user-install-dialog.c:263
+#: app/gui/user-install-dialog.c:262
 msgid ""
 "This folder is used to store user defined gflares to\n"
 "be used by the GFlare plug-in.  The GIMP checks this\n"
@@ -4781,7 +4747,7 @@ msgstr ""
 "module GFlare. GIMP prehµadáva tento prieèinok,\n"
 "keï hµadá GFlare ¾iary spolu so systémovým prieèinkom GFlare."
 
-#: app/gui/user-install-dialog.c:270
+#: app/gui/user-install-dialog.c:269
 msgid ""
 "This folder is used to store user defined data to be\n"
 "used by the Gimpressionist plug-in.  The GIMP checks\n"
@@ -4793,7 +4759,7 @@ msgstr ""
 "module Gimpressionist. GIMP prehµadáva tento prieèinok,\n"
 "keï hµadá takéto dáta spolu so systémovým prieèinkom Gimpressionist."
 
-#: app/gui/user-install-dialog.c:336
+#: app/gui/user-install-dialog.c:335
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
@@ -4801,15 +4767,15 @@ msgstr ""
 "Èakajte prosím, pokiaµ sa vytvára\n"
 "vá¹ osobný GIMP prieèinok..."
 
-#: app/gui/user-install-dialog.c:538
+#: app/gui/user-install-dialog.c:526
 msgid "GIMP User Installation"
 msgstr "Pou¾ívateµská in¹talácia programu GIMP"
 
-#: app/gui/user-install-dialog.c:546
+#: app/gui/user-install-dialog.c:534
 msgid "Continue"
 msgstr "Pokraèova»"
 
-#: app/gui/user-install-dialog.c:686
+#: app/gui/user-install-dialog.c:674
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -4817,23 +4783,21 @@ msgstr ""
 "Vitajte\n"
 "v in¹talácii programu GIMP"
 
-#: app/gui/user-install-dialog.c:688
+#: app/gui/user-install-dialog.c:676
 msgid "Click \"Continue\" to enter the GIMP user installation."
-msgstr ""
-"Kliknite na \"Pokraèova»\" na vstup do pou¾ívateµskej in¹talácií GIMPu."
+msgstr "Kliknite na \"Pokraèova»\" na vstup do pou¾ívateµskej in¹talácií GIMPu."
 
-#: app/gui/user-install-dialog.c:692
-#, fuzzy
+#: app/gui/user-install-dialog.c:680
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
-"Copyright (C) 1995-2002\n"
+"Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team."
 msgstr ""
 "GIMP - GNU Program na manipuláciu s obrázkami\n"
 "Copyright (C) 1995-2000\n"
 "Spencer Kimball, Peter Mattis a GIMP Vývojársky tím."
 
-#: app/gui/user-install-dialog.c:702
+#: app/gui/user-install-dialog.c:690
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -4845,7 +4809,7 @@ msgstr ""
 "vo Free Software Foundation; èi u¾ verzie 2 alebo\n"
 "(podµa va¹ej voµby) akoukoµvek nov¹ou."
 
-#: app/gui/user-install-dialog.c:708
+#: app/gui/user-install-dialog.c:696
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -4857,7 +4821,7 @@ msgstr ""
 "PREDAJNOSTI alebo VHODNOSTI PRE URÈITÝ ÚÈEL.\n"
 "Ïal¹ie podrobnosti hµadajte vo V¹eobecnej verejnej licencii GNU."
 
-#: app/gui/user-install-dialog.c:714
+#: app/gui/user-install-dialog.c:702
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -4869,16 +4833,15 @@ msgstr ""
 "Foundation, Inc., 59 Temple Place - Suite 330, Boston,\n"
 "MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:738
+#: app/gui/user-install-dialog.c:728
 msgid "Personal GIMP Folder"
 msgstr "Osobný GIMP prieèinok"
 
-#: app/gui/user-install-dialog.c:739
+#: app/gui/user-install-dialog.c:729
 msgid "Click \"Continue\" to create your personal GIMP folder."
-msgstr ""
-"Kliknite na \"Pokraèova»\" na vytvorenie vá¹ho osobného GIMP prieèinku."
+msgstr "Kliknite na \"Pokraèova»\" na vytvorenie vá¹ho osobného GIMP prieèinku."
 
-#: app/gui/user-install-dialog.c:776
+#: app/gui/user-install-dialog.c:748
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
@@ -4887,7 +4850,7 @@ msgstr ""
 "Aby bola in¹taláciu GIMPu správna, musí by»\n"
 "vytvorený prieèinok %s."
 
-#: app/gui/user-install-dialog.c:782
+#: app/gui/user-install-dialog.c:754
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
@@ -4897,31 +4860,31 @@ msgstr ""
 "Kliknite na jeden zo súborov alebo prieèinkov v strome\n"
 "a získate viac informácií o zvolenej polo¾ke."
 
-#: app/gui/user-install-dialog.c:849
+#: app/gui/user-install-dialog.c:840
 msgid "User Installation Log"
 msgstr "Protokol o pou¾ívateµskej in¹talácii"
 
-#: app/gui/user-install-dialog.c:855
+#: app/gui/user-install-dialog.c:846
 msgid "GIMP Performance Tuning"
 msgstr "Ladenie výkonu GIMPu"
 
-#: app/gui/user-install-dialog.c:856
+#: app/gui/user-install-dialog.c:847
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Kliknite na \"Pokraèova»\" na akceptáciu vy¹¹ie uvedených nastavení."
 
-#: app/gui/user-install-dialog.c:859
+#: app/gui/user-install-dialog.c:850
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr "Pre optimálny výkon GIMPu musia by» niektoré nastavenia upravené."
 
-#: app/gui/user-install-dialog.c:868
+#: app/gui/user-install-dialog.c:859
 msgid "Monitor Resolution"
 msgstr "Rozlí¹enie monitora"
 
-#: app/gui/user-install-dialog.c:869
+#: app/gui/user-install-dialog.c:860
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Kliknite na \"Pokraèova»\" na spustenie GIMPu"
 
-#: app/gui/user-install-dialog.c:872
+#: app/gui/user-install-dialog.c:863
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
@@ -4929,19 +4892,19 @@ msgstr ""
 "Na zobrazenie obrázkov v ich prirodzenej veµkosti potrebuje GIMP pozna» "
 "rozlí¹enie vá¹ho monitora."
 
-#: app/gui/user-install-dialog.c:881
+#: app/gui/user-install-dialog.c:872
 msgid "Aborting Installation..."
 msgstr "Ru¹ím in¹taláciu..."
 
-#: app/gui/user-install-dialog.c:955
+#: app/gui/user-install-dialog.c:943
 msgid "does not exist.  Cannot install."
 msgstr " neexistuje. In¹talácia nie je mo¾ná."
 
-#: app/gui/user-install-dialog.c:967
+#: app/gui/user-install-dialog.c:955
 msgid "has invalid permissions.  Cannot install."
 msgstr "má nedostatoèné práva. In¹talácia nie je mo¾ná."
 
-#: app/gui/user-install-dialog.c:1016
+#: app/gui/user-install-dialog.c:1004
 msgid ""
 "Did you notice any error messages in the console window?\n"
 "If not, installation was successful!\n"
@@ -4951,7 +4914,7 @@ msgstr ""
 "na konzole? Ak nie, in¹talácia sa podarila!\n"
 "V opaènom prípade ukonèite program a pohµadajte mo¾né dôvody..."
 
-#: app/gui/user-install-dialog.c:1079
+#: app/gui/user-install-dialog.c:1066
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -4961,15 +4924,15 @@ msgstr ""
 "Ak nie, in¹talácia sa podarila!\n"
 "V opaènom prípade ukonèite program a pohµadajte mo¾né dôvody..."
 
-#: app/gui/user-install-dialog.c:1095
+#: app/gui/user-install-dialog.c:1082
 msgid "Click \"Continue\" to complete GIMP installation."
 msgstr "Kliknite na \"Pokraèova»\" na dokonèenie GIMP in¹talácie."
 
-#: app/gui/user-install-dialog.c:1100
+#: app/gui/user-install-dialog.c:1087
 msgid "Installation failed.  Contact system administrator."
 msgstr "In¹talácia sa nepodarila. Kontaktujte prosím administrátora."
 
-#: app/gui/user-install-dialog.c:1121
+#: app/gui/user-install-dialog.c:1108
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -4980,7 +4943,7 @@ msgstr ""
 "veµkosti celkovej pamäte. Berte v¹ak ohµad aj na mno¾stvo pamäte pou¾itej\n"
 "inými procesmi."
 
-#: app/gui/user-install-dialog.c:1146
+#: app/gui/user-install-dialog.c:1133
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -4993,11 +4956,11 @@ msgstr ""
 "priestorom (niekoµko MB). V systémoch UNIX budete na toto chcie» asi pou¾i»\n"
 "systémový temp-adresár (\"/tmp\" alebo \"/var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1161
+#: app/gui/user-install-dialog.c:1148
 msgid "Swap Folder:"
 msgstr "Swap prieèinok:"
 
-#: app/gui/user-install-dialog.c:1209
+#: app/gui/user-install-dialog.c:1196
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -5005,20 +4968,20 @@ msgstr ""
 "GIMP mô¾e tieto informácie získa» od správcu okien.\n"
 "Av¹ak ten neposkytuje obyèajne u¾itoèné informácie."
 
-#: app/gui/user-install-dialog.c:1216
+#: app/gui/user-install-dialog.c:1203
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr "Získa» rozlí¹enie od správcu okien (Aktuálne %d × %d dpi)"
 
-#: app/gui/user-install-dialog.c:1230
+#: app/gui/user-install-dialog.c:1217
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternatívou je manuálne nastavenie rozlí¹enia monitora."
 
-#: app/gui/user-install-dialog.c:1243
+#: app/gui/user-install-dialog.c:1230
 msgid "Monitor Resolution X:"
 msgstr "Rozlí¹enie monitora X:"
 
-#: app/gui/user-install-dialog.c:1280
+#: app/gui/user-install-dialog.c:1267
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -5026,16 +4989,16 @@ msgstr ""
 "Tie¾ mô¾ete stlaèi» tlaèítko \"Kalibrova»\" a otvorí sa vám okno,\n"
 "ktoré vám pomô¾e interaktívne urèi» rozlí¹enie vá¹ho monitora."
 
-#: app/gui/vectors-commands.c:285
+#: app/gui/vectors-commands.c:283
 msgid "There is no active Layer or Channel to stroke to"
 msgstr "Nie je aktívna vrstva alebo kanál pre »ah"
 
-#: app/gui/vectors-commands.c:440
+#: app/gui/vectors-commands.c:438
 msgid "New Path Options"
 msgstr "Nové nastavenie cesty"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:475 app/gui/vectors-commands.c:595
+#: app/gui/vectors-commands.c:473 app/gui/vectors-commands.c:593
 msgid "Path name:"
 msgstr "Názov cesty:"
 
@@ -5184,9 +5147,8 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: app/pdb/internal_procs.c:145
-#, fuzzy
 msgid "Palette UI"
-msgstr "Paleta"
+msgstr "Paleta UI"
 
 #: app/pdb/internal_procs.c:151
 msgid "Parasite procedures"
@@ -5263,12 +5225,12 @@ msgstr "Roz¹írenie programu GIMP"
 msgid "Temporary Procedure"
 msgstr "Pomocná procedúra"
 
-#: app/plug-in/plug-in.c:402
+#: app/plug-in/plug-in.c:405
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Nie je mo¾né nájs» zásuvný modul: \"%s\""
 
-#: app/plug-in/plug-in.c:991
+#: app/plug-in/plug-in.c:994
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5285,9 +5247,13 @@ msgstr ""
 "Asi by ste mali ulo¾i» svoje obrázky a znovu spusti» GIMP,\n"
 "aby v¹etko bolo tak ako má by»."
 
-#: app/plug-in/plug-in-rc.c:134
+#: app/plug-in/plug-in-rc.c:156
 msgid "fatal parse error"
 msgstr "záva¾ná chyba pre analýze"
+
+#: app/plug-in/plug-in-rc.c:421
+msgid "invalid UTF-8 string"
+msgstr "nesprávny UTF-8 re»azec"
 
 #: app/tools/gimpcroptool.c:971 app/tools/tools-enums.c:13
 msgid "Crop"
@@ -5540,9 +5506,8 @@ msgid "Color balance operates only on RGB color drawables."
 msgstr "Farebné vyvá¾enie pracuje len s RGB obrázkami."
 
 #: app/tools/gimpcolorbalancetool.c:369
-#, fuzzy
 msgid "Color Levels"
-msgstr "Úrovne farieb:"
+msgstr "Úrovne farieb"
 
 #: app/tools/gimpcolorbalancetool.c:382
 msgid "Cyan"
@@ -5790,9 +5755,8 @@ msgid "Eraser"
 msgstr "Guma"
 
 #: app/tools/gimperasertool.c:67
-#, fuzzy
 msgid "Erase to background or transparency"
-msgstr "Povoli» rozptyl priesvitnosti"
+msgstr "Odfarbi» do pozadia alebo priesvitnosti"
 
 #: app/tools/gimperasertool.c:68
 msgid "/Tools/Paint Tools/Eraser"
@@ -6338,9 +6302,8 @@ msgid "Text Layer"
 msgstr "Textová vrstva"
 
 #: app/tools/gimptexttool.c:612
-#, fuzzy
 msgid "Font:"
-msgstr "Poèet:"
+msgstr "Písmo:"
 
 #: app/tools/gimptexttool.c:629
 msgid "Border:"
@@ -6416,12 +6379,11 @@ msgstr "Dostratena"
 
 #: app/tools/paint_options.c:444 app/tools/paint_options.c:505
 msgid "Length:"
-msgstr ""
+msgstr "Då¾ka:"
 
 #: app/tools/paint_options.c:478
-#, fuzzy
 msgid "Use Color from Gradient"
-msgstr "Vlastný prechod"
+msgstr "Pou¾i» farbu z prechodu"
 
 #: app/tools/paint_options.c:535
 msgid "Type:"
@@ -6660,17 +6622,14 @@ msgid "_Style:"
 msgstr "©_týl:"
 
 #: app/widgets/gimpgradienteditor.c:386 app/widgets/gimppaletteeditor.c:277
-#, fuzzy
 msgid "Zoom All"
 msgstr "Zväè¹i» v¹etko"
 
 #: app/widgets/gimpgradienteditor.c:393 app/widgets/gimppaletteeditor.c:284
-#, fuzzy
 msgid "Zoom In"
 msgstr "Zväè¹i»"
 
 #: app/widgets/gimpgradienteditor.c:400 app/widgets/gimppaletteeditor.c:291
-#, fuzzy
 msgid "Zoom Out"
 msgstr "Zmen¹i»"
 
@@ -6681,70 +6640,66 @@ msgstr "Okam¾itá aktualizácia"
 #: app/widgets/gimpgradienteditor.c:564
 #, c-format
 msgid "Zoom factor: %d:1"
-msgstr ""
+msgstr "Faktor zmeny: %d:1"
 
 #: app/widgets/gimpgradienteditor.c:567
-#, fuzzy, c-format
+#, c-format
 msgid "Displaying [%0.6f, %0.6f]"
-msgstr "Faktor zväè¹enia: %d:1    Zobrazuje sa [%0.6f, %0.6f]"
+msgstr "Zobrazenie [%0.6f, %0.6f]"
 
 #: app/widgets/gimpgradienteditor.c:838
-#, fuzzy, c-format
+#, c-format
 msgid "Position: %0.6f"
-msgstr "Pozícia riadiaceho bodu: %0.6f"
+msgstr "Pozícia: %0.6f"
 
 #: app/widgets/gimpgradienteditor.c:840
-#, fuzzy, c-format
+#, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)    Opacity: %0.3f"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "RGB (%0.3f, %0.3f, %0.3f)    Krytie: %0.3f"
 
 #: app/widgets/gimpgradienteditor.c:843
-#, fuzzy, c-format
+#, c-format
 msgid "HSV (%0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpgradienteditor.c:874 app/widgets/gimpgradienteditor.c:909
-#, fuzzy, c-format
+#, c-format
 msgid "RGB (%d, %d, %d)"
-msgstr "Pozadie: %d, %d, %d"
+msgstr "RGB (%d, %d, %d)"
 
 #: app/widgets/gimpgradienteditor.c:879 app/widgets/gimpgradienteditor.c:914
-#, fuzzy, c-format
+#, c-format
 msgid "(%0.3f, %0.3f, %0.3f)"
-msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "(%0.3f, %0.3f, %0.3f)"
 
 #: app/widgets/gimpgradienteditor.c:882
 msgid "Foreground color set to:"
-msgstr ""
+msgstr "Farba popredia nastavená na:"
 
 #: app/widgets/gimpgradienteditor.c:917
 msgid "Background color set to:"
-msgstr ""
+msgstr "Farba pozadia nastavená na:"
 
 #: app/widgets/gimpgradienteditor.c:1201
 msgid "Drag: move"
-msgstr ""
+msgstr "«ahanie: posun"
 
 #: app/widgets/gimpgradienteditor.c:1202 app/widgets/gimpgradienteditor.c:1236
-#, fuzzy
 msgid "<Shift>+Drag: move & compress"
-msgstr "«ahanie: posun    <Shift>+»ahanie: posun a kompresia"
+msgstr "<Shift>+»ahanie: posun a kompresia"
 
 #: app/widgets/gimpgradienteditor.c:1206 app/widgets/gimpgradienteditor.c:1213
-#, fuzzy
 msgid "Click: select"
-msgstr "Replikova» oznaèené"
+msgstr "Kliknutie: výber"
 
 #: app/widgets/gimpgradienteditor.c:1207 app/widgets/gimpgradienteditor.c:1214
 #: app/widgets/gimpgradienteditor.c:1222 app/widgets/gimpgradienteditor.c:1235
-#, fuzzy
 msgid "<Shift>+Click: extend selection"
-msgstr "Kliknutie: výber    <Shift>+kliknutie: roz¹íri» selekciu"
+msgstr "<Shift>+kliknutie: roz¹íri» selekciu"
 
 #: app/widgets/gimpgradienteditor.c:1221 app/widgets/gimpgradienteditor.c:1234
-#, fuzzy
 msgid "Click: select    Drag: move"
-msgstr "Kliknutie: výber    <Shift>+kliknutie: roz¹íri» výber   «ahanie: posun"
+msgstr "Kliknutie: výber    «ahanie: posun"
 
 #: app/widgets/gimpgradienteditor.c:1491 app/widgets/gimpgradienteditor.c:1500
 #, c-format
@@ -6799,9 +6754,8 @@ msgid "Undefined"
 msgstr "Nedefinované"
 
 #: app/widgets/gimppaletteeditor.c:260
-#, fuzzy
 msgid "Columns:"
-msgstr "Poèet:"
+msgstr "Ståpce:"
 
 #: app/widgets/gimptoolbox-color-area.c:452
 msgid "Color Selection"
@@ -6965,31 +6919,27 @@ msgstr "otvorenie %s zlyhalo: %s\n"
 
 #: modules/cdisplay_gamma.c:35 modules/cdisplay_gamma.c:331
 msgid "Gamma"
-msgstr ""
+msgstr "Gama"
 
 #: modules/cdisplay_gamma.c:94
-#, fuzzy
 msgid "Gamma color display filter"
-msgstr "Filtre farebného zobrazenia"
+msgstr "Filter farebného zobrazenia gama"
 
 #: modules/cdisplay_gamma.c:353
 msgid "Gamma:"
-msgstr ""
+msgstr "Gama:"
 
 #: modules/cdisplay_highcontrast.c:36 modules/cdisplay_highcontrast.c:323
-#, fuzzy
 msgid "High Contrast"
-msgstr "Kontrast:"
+msgstr "Vysoký kontrast:"
 
 #: modules/cdisplay_highcontrast.c:95
-#, fuzzy
 msgid "High Contrast color display filter"
-msgstr "Filtre farebného zobrazenia"
+msgstr "Filter farebného zobrazenia vysokého kontrastu"
 
 #: modules/cdisplay_highcontrast.c:345
-#, fuzzy
 msgid "Contrast Cycles:"
-msgstr "Kontrast:"
+msgstr "Cykly kontrastu:"
 
 #: modules/colorsel_triangle.c:79
 msgid "Painter-style color selector as a pluggable color selector"
@@ -7019,160 +6969,3 @@ msgstr "Vytváranie a úprava obrázkov alebo fotografií"
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilný)"
 
-#~ msgid "Add"
-#~ msgstr "Prida»"
-
-#~ msgid "Remove"
-#~ msgstr "Odstráni»"
-
-#~ msgid "Up"
-#~ msgstr "Hore"
-
-#~ msgid "Down"
-#~ msgstr "Dole"
-
-#~ msgid "Configure"
-#~ msgstr "Nastavi»"
-
-#~ msgid "Brush Selection"
-#~ msgstr "Výber ¹tetca"
-
-#~ msgid "Custom Palette Options"
-#~ msgstr "Vlastnosti vlastnej palety"
-
-#~ msgid "This brush cannot be edited."
-#~ msgstr "Tento ¹tetec nie je mo¾né upravova»."
-
-#~ msgid ""
-#~ "Failed to run gradient callback function.\n"
-#~ "The corresponding plug-in may have crashed."
-#~ msgstr ""
-#~ "Nie je mo¾né spusti» spätnú prechodu ¹tetca.\n"
-#~ "Zodpovedajúci zásuvný modul asi spadol."
-
-#~ msgid "/File/Dialogs/Display Filters..."
-#~ msgstr "/Súbor/Dialógy/Filtre zobrazenia..."
-
-#~ msgid "Palette Selection"
-#~ msgstr "Výber palety"
-
-#~ msgid "Pattern Selection"
-#~ msgstr "Výber vzorky"
-
-#~ msgid "Error: Levels of undo must be zero or greater."
-#~ msgstr "Chyba: Poèet úrovní návratu musí by» nula alebo väè¹í."
-
-#~ msgid "Error: Marching speed must be 50 or greater."
-#~ msgstr "Chyba: Rýchlos» vyznaèenia výberu musí by» väè¹ia ako 50"
-
-#~ msgid "Error: Default width must be one or greater."
-#~ msgstr "Chyba: Implicitná ¹írka musí by» jedna alebo väè¹ia."
-
-#~ msgid "Error: Default height must be one or greater."
-#~ msgstr "Chyba: Implicitná vý¹ka musí by» jedna alebo väè¹ia."
-
-#~ msgid "Error: Default unit must be within unit range."
-#~ msgstr "Chyba: Implicitná jednotka musí by» v rozsahu jednotiek."
-
-#~ msgid "Error: Default resolution must not be zero."
-#~ msgstr "Chyba: Implicitné rozlí¹enie nesmie by» nula."
-
-#~ msgid "Error: Default resolution unit must be within unit range."
-#~ msgstr "Chyba: Implicitná jednotka rozlí¹enia musí by» v rozsahu jednotiek."
-
-#~ msgid "Error: Monitor resolution must not be zero."
-#~ msgstr "Chyba: Rozlí¹enie monitora nesmie by» nula."
-
-#~ msgid "Error: Image title format must not be NULL."
-#~ msgstr "Chyba: Formát dla¾dice nesmie by» nula."
-
-#~ msgid "Error: Image status format must not be NULL."
-#~ msgstr "Chyba: Stav formátu obrázku nemô¾e by» NIÈ."
-
-#~ msgid "Error: Number of processors must be between 1 and 30."
-#~ msgstr "Chyba: Poèet procesorov musí by» medzi 1 a 30."
-
-#~ msgid "Extra Small"
-#~ msgstr "Extra Malá"
-
-#~ msgid "Paint Options"
-#~ msgstr "Nastavenia pre kreslenie"
-
-#~ msgid "Use Global Paint Options"
-#~ msgstr "Pou¾i» globálne nastavenia pre kreslenie"
-
-#~ msgid "Resource configuration"
-#~ msgstr "Konfigurácia zdrojov"
-
-#~ msgid "New Plug-ins"
-#~ msgstr "Nový zásuvný modul"
-
-#~ msgid "querying plug-in: \"%s\"\n"
-#~ msgstr "po¾iadavka na zásuvný modul: \"%s\"\n"
-
-#~ msgid "writing \"%s\"\n"
-#~ msgstr "zapisuje sa \"%s\"\n"
-
-#~ msgid "Plug-ins"
-#~ msgstr "Zásuvné moduly"
-
-#~ msgid "initializing plug-in: \"%s\"\n"
-#~ msgstr "inicializácia zásuvného modulu: \"%s\"\n"
-
-#~ msgid "Starting extensions: "
-#~ msgstr "Spú¹»ajú sa roz¹írenia: "
-
-#~ msgid "Extensions"
-#~ msgstr "Roz¹írenia"
-
-#~ msgid "Repeat \"%s\""
-#~ msgstr "Opakova» \"%s\""
-
-#~ msgid "Re-show \"%s\""
-#~ msgstr "Znovu zobrazi» \"%s\""
-
-#~ msgid "Repeat Last"
-#~ msgstr "Opakova» posledný"
-
-#~ msgid "Re-Show Last"
-#~ msgstr "Znovu zobrazi» posledný"
-
-#~ msgid "invalid UTF-8 string"
-#~ msgstr "nesprávny UTF-8 re»azec"
-
-#~ msgid "Gradient Options"
-#~ msgstr "Nastavenia prechodov"
-
-#~ msgid "Brush Editor"
-#~ msgstr "Editor ¹tetcov"
-
-#~ msgid "Gradient Editor"
-#~ msgstr "Editor prechodov"
-
-#~ msgid "Default"
-#~ msgstr "Prednastavené"
-
-#~ msgid ""
-#~ "Position: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
-#~ "0.3f)    Opacity: %0.3f"
-#~ msgstr ""
-#~ "Pozícia: %0.6f    RGB (%0.3f, %0.3f, %0.3f)    HSV (%0.3f, %0.3f, %"
-#~ "0.3f)    Krytie: %0.3f"
-
-#~ msgid "Foreground color set to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-#~ msgstr ""
-#~ "Farba popredia nastavená na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-
-#~ msgid "Background color to RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-#~ msgstr ""
-#~ "Farba pozadia nastavená na RGB (%d, %d, %d) <-> (%0.3f, %0.3f, %0.3f)"
-
-#~ msgid ""
-#~ "Click: select    <Shift>+Click: extend selection    Drag: move    <Shift>"
-#~ "+Drag: move & compress"
-#~ msgstr ""
-#~ "Kliknutie: výber    <Shift>+kliknutie: roz¹íri» výber    «ahanie: "
-#~ "posun    <Shift>+»ahanie: posun a kompresia"
-
-#~ msgid "Palette Editor"
-#~ msgstr "Editor palety"

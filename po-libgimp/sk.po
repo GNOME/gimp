@@ -5,10 +5,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2002-03-28 14:51+0100\n"
-"PO-Revision-Date: 2002-01-26 15:15GMT+0100\n"
+"POT-Creation-Date: 2002-03-26 00:02+0100\n"
+"PO-Revision-Date: 2002-03-28 13:58+0100\n"
 "Last-Translator: Zdenko Podobný <zdpo@mailbox.sk>\n"
-"Language-Team: Slovak <sk-i18n@linux.sk>\n"
+"Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -137,8 +137,7 @@ msgstr "Ignorova»"
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
-msgstr ""
-"Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovných dôvodov:"
+msgstr "Vá¹ obrázok by mal by» pred ulo¾ením exportovaný z nasledovných dôvodov:"
 
 #. the footline
 #: libgimp/gimpexport.c:503
@@ -174,63 +173,60 @@ msgid "/White"
 msgstr "/Biela"
 
 #: libgimpwidgets/gimpfileselection.c:352
-#, fuzzy
 msgid "Select Folder"
-msgstr "Výber súboru"
+msgstr "Výber prieèinka"
 
 #: libgimpwidgets/gimpfileselection.c:366
 msgid "Select File"
 msgstr "Výber súboru"
 
 #: libgimpwidgets/gimpstock.c:88
-#, fuzzy
 msgid "Anchor"
-msgstr "palcov"
+msgstr "Ukotvenie"
 
 #: libgimpwidgets/gimpstock.c:89
-#, fuzzy
 msgid "Duplicate"
-msgstr "pica"
+msgstr "Duplikova»"
 
 #: libgimpwidgets/gimpstock.c:90
 msgid "Edit"
-msgstr ""
+msgstr "Upravi»"
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Linked"
-msgstr ""
+msgstr "Prepojené"
 
 #: libgimpwidgets/gimpstock.c:92
 msgid "Paste as New"
-msgstr ""
+msgstr "Vlo¾i» ako Nový"
 
 #: libgimpwidgets/gimpstock.c:93
 msgid "Paste Into"
-msgstr ""
+msgstr "Vlo¾i» do"
 
 #: libgimpwidgets/gimpstock.c:94
 msgid "_Reset"
-msgstr ""
+msgstr "_Znovunastavenie"
 
 #: libgimpwidgets/gimpstock.c:95
 msgid "Visible"
-msgstr ""
+msgstr "Viditeµné"
 
 #: libgimpwidgets/gimpstock.c:155
 msgid "Transform"
-msgstr ""
+msgstr "Transformovanie"
 
 #: libgimpwidgets/gimpstock.c:158
 msgid "Rotate"
-msgstr ""
+msgstr "Otoèenie"
 
 #: libgimpwidgets/gimpstock.c:159
 msgid "Scale"
-msgstr ""
+msgstr "Mierka"
 
 #: libgimpwidgets/gimpstock.c:160
 msgid "Shear"
-msgstr ""
+msgstr "Skosenie"
 
 #: libgimpwidgets/gimpunitmenu.c:265
 msgid "More..."
@@ -264,8 +260,7 @@ msgstr "Èas"
 msgid ""
 "Seed random number generator from the current time - this guarantees a "
 "reasonable randomization"
-msgstr ""
-"Hniezdo náhodného generátoru z aktuálneho èasu - zaruèuje primeranú náhodnos»"
+msgstr "Hniezdo náhodného generátoru z aktuálneho èasu - zaruèuje primeranú náhodnos»"
 
 #: libgimpwidgets/gimpwidgets.c:1170
 msgid "Bytes"
@@ -279,29 +274,3 @@ msgstr "v kilobytoch"
 msgid "MegaBytes"
 msgstr "v megabytoch"
 
-#~ msgid "pixel"
-#~ msgstr "bod"
-
-#~ msgid "pixels"
-#~ msgstr "bodov"
-
-#~ msgid "inches"
-#~ msgstr "palcov"
-
-#~ msgid "millimeter"
-#~ msgstr "milimeter"
-
-#~ msgid "millimeters"
-#~ msgstr "milimetre"
-
-#~ msgid "point"
-#~ msgstr "bod"
-
-#~ msgid "points"
-#~ msgstr "body"
-
-#~ msgid "picas"
-#~ msgstr "pica"
-
-#~ msgid "Select Directory"
-#~ msgstr "Zvoµte prieèinok"
