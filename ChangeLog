@@ -1,3 +1,7 @@
+Thu Mar 25 22:40:36 GMT 1999 Andy Thomas <alt@gimp.org>
+
+	The paths .pdb stub for Yosh to look at.
+
 1999-03-25  Jay Cox  <jaycox@earthlink.net>
 
 	* app/paint_funcs.[ch]: Added an edge_lock parameter to
