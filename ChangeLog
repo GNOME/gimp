@@ -1,3 +1,7 @@
+Fri May 29 21:36:36 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* app/xcf.c: changed fopen parameters for better portability
+
 Thu May 28 20:12:02 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* scripts/blend-anim.scm: use gimp-message to output an

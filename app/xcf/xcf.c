@@ -294,7 +294,7 @@ xcf_load_invoker (Argument *args)
 
   filename = args[1].value.pdb_pointer;
 
-  info.fp = fopen (filename, "r");
+  info.fp = fopen (filename, "rb");
   if (info.fp)
     {
       info.cp = 0;
@@ -362,7 +362,7 @@ xcf_save_invoker (Argument *args)
   gimage = gimage_get_ID (args[1].value.pdb_int);
   filename = args[3].value.pdb_pointer;
 
-  info.fp = fopen (filename, "w");
+  info.fp = fopen (filename, "wb");
   if (info.fp)
     {
       info.cp = 0;
