@@ -96,7 +96,7 @@ gimp_image_duplicate (GimpImage *gimage)
   /*  Copy the layers  */
   for (list = GIMP_LIST (gimage->layers)->list, count = 0;
        list;
-       list = g_list_next (list), count++)
+       list = g_list_next (list))
     {
       layer = (GimpLayer *) list->data;
 
@@ -108,12 +108,11 @@ gimp_image_duplicate (GimpImage *gimage)
       gimp_object_set_name (GIMP_OBJECT (new_layer),
 			    gimp_object_get_name (GIMP_OBJECT (layer)));
 
-      /*  Make sure if the layer has a layer mask, it's name isn't screwed up  */
+      /*  Make sure that if the layer has a layer mask,
+          it's name isn't screwed up  */
       if (new_layer->mask)
-	{
-	  gimp_object_set_name (GIMP_OBJECT (new_layer->mask),
-				gimp_object_get_name (GIMP_OBJECT (layer->mask)));
-	}
+        gimp_object_set_name (GIMP_OBJECT (new_layer->mask),
+                              gimp_object_get_name (GIMP_OBJECT(layer->mask)));
 
       if (gimp_image_get_active_layer (gimage) == layer)
 	active_layer = new_layer;
@@ -126,13 +125,13 @@ gimp_image_duplicate (GimpImage *gimage)
 
       /*  Add the layer  */
       if (floating_layer != new_layer)
-	gimp_image_add_layer (new_gimage, new_layer, count);
+	gimp_image_add_layer (new_gimage, new_layer, count++);
     }
 
   /*  Copy the channels  */
   for (list = GIMP_LIST (gimage->channels)->list, count = 0;
        list;
-       list = g_list_next (list), count++)
+       list = g_list_next (list))
     {
       channel = (GimpChannel *) list->data;
  
@@ -152,7 +151,7 @@ gimp_image_duplicate (GimpImage *gimage)
 	new_floating_sel_drawable = GIMP_DRAWABLE (new_channel);
 
       /*  Add the channel  */
-      gimp_image_add_channel (new_gimage, new_channel, count);
+      gimp_image_add_channel (new_gimage, new_channel, count++);
     }
 
   /*  Copy the selection mask  */
@@ -227,7 +226,7 @@ gimp_image_duplicate (GimpImage *gimage)
   paths = gimp_image_get_paths (gimage);
   if (paths)
     {
-      GSList   *plist = NULL;
+      GSList   *plist     = NULL;
       GSList   *new_plist = NULL;
       Path     *path;
       PathList *new_paths;
@@ -238,7 +237,8 @@ gimp_image_duplicate (GimpImage *gimage)
 	  new_plist = g_slist_append (new_plist, path_copy (new_gimage, path));
 	}
       
-      new_paths = path_list_new (new_gimage, paths->last_selected_row, new_plist);
+      new_paths = path_list_new (new_gimage,
+                                 paths->last_selected_row, new_plist);
       gimp_image_set_paths (new_gimage, new_paths);
     }
 

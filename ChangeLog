@@ -1,5 +1,12 @@
 2002-10-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-duplicate.c: an attempt to fix bug #94749
+	(gimp_image_duplicate crashes if floating selection exists).
+
+	* data/images/gimp_splash.png: a new blinkensplash from Paris.
+
+2002-10-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/ps.c: applied a patch from Peter Kirchgessner
 	that fixes bug #78310 (wrong bounding box when exporting to EPS).
 
