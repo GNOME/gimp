@@ -247,6 +247,7 @@ plug-ins/struc/struc.c
 plug-ins/twain/twain.c
 plug-ins/webbrowser/webbrowser.c
 plug-ins/winsnap/winsnap.c
+plug-ins/xjt/xjt.c
 libgimp/gimpcolorbutton.c
 libgimp/gimpexport.c
 libgimp/gimpfileselection.c

@@ -36,6 +36,7 @@
  */
 
 /* revision history:
+ * version 1.1.15;  2000/01/20  hof: parasites, Translate Guide Orientation to XJT orientation
  * version 1.02.00; 1999/02/01  hof: PDB-calls to load/save resolution tattoos and parasites
  *                                   busy_cursors (needs GIMP 1.1.1)
  * version 1.01.00; 1998/11/22  hof: PDB-calls to load/save guides under GIMP 1.1
@@ -55,6 +56,9 @@
 #include "xpdb_calls.h"
 
 extern int xjt_debug;
+
+#define XJT_ORIENTATION_HORIZONTAL 0
+#define XJT_ORIENTATION_VERTICAL   1
 
 /* ============================================================================
  * p_procedure_available
@@ -495,7 +499,7 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
    GParam          *return_vals;
    int              nreturn_vals;
 
-   if(orientation != 1 )  /* in GIMP 1.1 we could use (orientation != ORIENTATION_HORIZONTAL) */
+   if(orientation != XJT_ORIENTATION_HORIZONTAL)
    {
       l_add_guide_proc = "gimp_image_add_vguide";
    }
@@ -630,11 +634,11 @@ gint  p_gimp_image_get_guide_orientation(gint32 image_id, gint32 guide_id)
                                     
       if (return_vals[0].data.d_status == STATUS_SUCCESS)
       {
-         if(return_vals[1].data.d_int32 != 1)  /* in GIMP 1.1 we could use (orientation != ORIENTATION_HORIZONTAL) */
+         if(return_vals[1].data.d_int32 != ORIENTATION_HORIZONTAL)
          {
-           return(0);
+           return(XJT_ORIENTATION_VERTICAL);
          }
-         return(return_vals[1].data.d_int32);  /* return the guide orientation */
+         return(XJT_ORIENTATION_HORIZONTAL);  /* return the guide orientation */
       }
       printf("XJT: Error: PDB call of %s failed\n", l_get_guide_pos_orient);
    }
@@ -784,3 +788,47 @@ gint32  p_gimp_channel_get_tattoo (gint32 channel_id)
    }
    return(0);
 }	/* end p_gimp_channel_get_tattoo */
+
+/* ============================================================================
+ * p_gimp_parasite_list
+ *
+ * ============================================================================
+ */
+
+char **
+p_gimp_parasite_list (gint32 *num_parasites)
+{
+   static char     *l_procname = "gimp_parasite_list";
+   GParam          *return_vals;
+   int              nreturn_vals;
+   int              l_idx;
+   char           **l_array;
+   char           **parasite_names;
+
+   if (p_procedure_available(l_procname) >= 0)
+   {
+      return_vals = gimp_run_procedure (l_procname,
+                                    &nreturn_vals,
+                                    PARAM_END);
+                                    
+      if (return_vals[0].data.d_status == STATUS_SUCCESS)
+      {
+         *num_parasites = return_vals[1].data.d_int32;
+	 l_array = (char **) return_vals[2].data.d_stringarray;
+	 parasite_names = g_malloc(sizeof(char *) * *num_parasites);
+	 for(l_idx = 0; l_idx < *num_parasites; l_idx++)
+	 {
+	    parasite_names[l_idx] = g_strdup(l_array[l_idx]);
+	    printf("parasite_list: NAME:%s:\n", parasite_names[l_idx]);
+	 }
+         return(parasite_names);  /* OK */
+      }
+      printf("XJT: Error: PDB call of %s failed\n", l_procname);
+   }
+   else
+   {
+      printf("XJT: Warning: Procedure %s not found.\n",  l_procname);
+   }
+   *num_parasites = 0;
+   return(NULL);
+}	/* end p_gimp_parasite_list */

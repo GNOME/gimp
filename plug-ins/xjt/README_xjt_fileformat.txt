@@ -1,9 +1,13 @@
+------------------------------ 
 XJT Fileformat specification:   
 ------------------------------
-
- (XJT 1.1,   1998.10.31 - 1999.03.16)
-       
-----------------------------------------------------------------  
+TODO: 
+  extend and implement xjt fileformat for 
+  - load/save pathes, 
+  - load/save units and user_units
+  
+ (XJT 1.1.15,   2000.01.23)
+ (XJT 1.1,      1998.10.31 - 1999.03.16)
 
    XJT Fileformat was designed to save compressed GIMP Images with
    all the properties that are available in GIMP.
@@ -192,6 +196,7 @@ Syntax of the PRP -file
        (properties for the default values are not written)
 
            PROP_NAME
+	   PROP_PARASITE_FLAGS
 
 --------------------------
 Properties Summary
@@ -247,7 +252,7 @@ Boolean tokens default always to FALSE and become TRUE when specified.
    PROP_TATTOO,                "tto",    PTYP_INT,                 0,
    PROP_PARASITES,             "pte",	 PTYP_INT,		   0,
 
-
+   PROP_PARASITE_FLAGS,        "ptf",    PTYP_INT,                 1,    /* PARASITE_PERSISTENT */
    PROP_FLOATING_ATTACHED,     "fa",	 PTYP_BOOLEAN,  	   FALSE, 
    PROP_NAME,		       "n",	 PTYP_STRING,		   "",
    PROP_DIMENSION,	       "w/h",	 PTYP_2xINT,		   0, 0,
@@ -261,25 +266,39 @@ PROP_OPACITY  valid values are
 	      100.0      (full opaque)
 	      
 PROP_TYPE     valid values are:
-              0 ... RGB 
-	      1 ... GRAY
+              0 ... XJT_RGB 
+	      1 ... XJT_GRAY
 
 PROP_MODE     valid values are:
-              0  ...  NORMAL_MODE
-              1  ...  DISSOLVE_MODE
-              3  ...  MULTIPLY_MODE
-              4  ...  SCREEN_MODE
-              5  ...  OVERLAY_MODE
-              6  ...  DIFFERENCE_MODE
-              7  ...  ADDITION_MODE
-              8  ...  SUBTRACT_MODE
-              9  ...  DARKEN_ONLY_MODE
-              10 ...  LIGHTEN_ONLY_MODE
-              11 ...  HUE_MODE
-              12 ...  SATURATION_MODE
-              13 ...  COLOR_MODE
-              14 ...  VALUE_MODE
+              0  ...  XJT_NORMAL_MODE
+              1  ...  XJT_DISSOLVE_MODE
+	      2  ...  XJT_BEHIND_MODE
+              3  ...  XJT_MULTIPLY_MODE
+              4  ...  XJT_SCREEN_MODE
+              5  ...  XJT_OVERLAY_MODE
+              6  ...  XJT_DIFFERENCE_MODE
+              7  ...  XJT_ADDITION_MODE
+              8  ...  XJT_SUBTRACT_MODE
+              9  ...  XJT_DARKEN_ONLY_MODE
+              10 ...  XJT_LIGHTEN_ONLY_MODE
+              11 ...  XJT_HUE_MODE
+              12 ...  XJT_SATURATION_MODE
+              13 ...  XJT_COLOR_MODE
+              14 ...  XJT_VALUE_MODE
+	      15 ...  XJT_DIVIDE_MODE
  
+PROP_GUIDES
+    valid values for the 1.st integer are positve integers
+    valid values for the 2.nd integer are:
+              0 ... XJT_ORIENTATION_HORIZONTAL
+	      1 ... XJT_ORIENTATION_VERTICAL
+	      
+    Note: 
+     in older xjt files (older than xjt version 1.1.15)
+     there was no exact specification and the gimp internal
+     representation of the guide orientation was written
+     to the xjt guide orientation property.
+     Unforunately this gimp internal representation has changed
 
 
 -----------------------------------------------------------

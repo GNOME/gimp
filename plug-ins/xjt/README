@@ -1,89 +1,45 @@
 xjt is a file plug-in to load and save GIMP RGB and GRAY Images with
-all its layers, channels and guides.
-
-Started implementation TATTOO, PARASITE RESOLUTION 1999.02.01
+all its layers, channels, parasites and guides.
 
 (see README_xjt_fileformat.txt for more Information about XJT)
 
 
    The XJT Load/Save Plugin requires:
 
-     - GIMP 1.0.0 (or better)
+     - GIMP 1.1.5 (or better)
      - libjpeg
      - Unix tar
      - Unix gzip   (optional)
      - Unix bzip2  (optional)
-     - gap_patches (optional)  **)
-     
-        **) NO PATCHES are required if you have the latest development version of GIMP 1.1
-
-
 
 Installation:
 -------------
    
-   If You are using GIMP 1.0.2 (or older versions):
+   The XJT Plugin is Part of the gimp (since 1.1.x development release)
+   and should be built and installed by the gimp installation.
        
-       # (optional) install gap_patches
-       # they are available at the registry at:
-
-       # http://gimp.foebud.org/registry/detailview.phtml?plugin=gap_patches            
-       # or at:
-       # http://gimp.foebud.org/registry/detailview.phtml?plugin=gap
-      
-       
-       cp Makefile.1.0 Makefile
-  
-   If you are using GIMP 1.1.1
-   
-       # GIMP 1.1.1 is an unstable prerelease.
-       
-       cp Makefile.1.1 Makefile
- 
-   # edit the Makefile to fit your setup
-   # then type 
-   make            # to compile and
-   make install    # to install the plugin
-   
-   
-
-
-Change Log:
+Change Log: (see also revision history in the source files)
 -----------
+ (XJT 1.1.15,   2000.01.23)
+                  - impementation of parasites
+	          - string prpoerties now can contain \" and \n characters.
+		    Images saved with the new XJT 1.1.15 Plugin
+		    cannot be loaded by the older XJT 1.1 Plugin
+		    if those characters are used in layer or channel names.
+		  - The gimp internal representation of Guide orientation has changed
+		    since the first xjt release (more than one time).
+		    XJT  1.1.15 defines XJT_ORIENTATION_HORIZONTAL 0
+		    for orientation values in the xjt guide property.
+		    and is now independent from the gimp internal representation.
+		    (Gimp's ORIENTATION_HORIZONTAL is translated to XJT_ORIENTATION_HORIZONTAL
+		    
+		    Expect Guide orientation swap problems if
+		    you load xjt 1.1 if they were saved with
+		    older gimp 1.1.x development version prior to gimp 1.1.15
+
+ (XJT 1.1,      1998.10.31 - 1999.03.16)
+       
  1.02  1999.02.??  added load/save for resolution, tattoos, and parasites 
                    (works only with gimp 1.1.1)
  1.01  1998.11.24  added load/save for guides (works only with gimp 1.1)
                    added Makefiles to compile xjt under gimp 1.0.2 and 1.1
-
-Restrictions of the XJT release 1.01:
------------------------------------------
-   The 1.01 implementation of xjt is now able to save and load
-   the full Image Information (including guides) on RGB and GRAY Images.
-   when xjt is used with the latest development version of GIMP 1.1.
-   
-   If xjt is used with GIMP 1.0.2 (or earlier versions)
-   there are some restrictions:
-
-   GUIDES  are ignored at save and load.
-           (GIMP 1.0.2 has no Interface to access GUIDES from a plugin)
-          
-   LINKED to load/save the linked state of a Layer 
-          you must install the GAP_PATCHES to the gimp core.
-          (GIMP 1.0.2 has no Interface to access the Layers LINKED state from a plugin)
-
-   FLOATING_SELECTION
-          are supported by the XJT Fileformat, but you need to apply the GAP_PATCHES
-	  to the gimp core.
-	  Without the patches:
-	  - XJT can not find out the drawable where the floating selection
-	    is attached to. (the PROP_FLOATING_ATTACHED property information
-	    is not saved to the PRP file in that case)
-	  - XJT can not attach the floating selection to a layer or channel
-	    at load. (even if you add the PROP_FLOATING_ATTACHED to the PRP file
-	    with an editor)
-	    
-   
-  The GAP_PATCHES provide some of the missing PDB-interfaces 
-  (except those for guides, tattoos, parasites and resolution)
-  for GIMP-core versions from 1.0.0 upto 1.0.2.  
-

@@ -485,16 +485,14 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
    GParam          *return_vals;
    int              nreturn_vals;
 
-   if(orientation == 0 )  /* in GIMP 1.1 we could use (orientation == ORIENTATION_VERTICAL) */
+   if (orientation == ORIENTATION_VERTICAL)
    {
-      l_add_guide_proc = "gimp_image_add_vguide";
+     l_add_guide_proc = "gimp_image_add_vguide";
    }
    else
    {
-      l_add_guide_proc = "gimp_image_add_hguide";
+     l_add_guide_proc = "gimp_image_add_hguide";
    }
-
-
 
    if (p_pdb_procedure_available(l_add_guide_proc) >= 0)
    {

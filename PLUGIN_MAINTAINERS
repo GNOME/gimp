@@ -1,9 +1,6 @@
 GIMP Plugins and their maintainers
 ----------------------------------
 
-Created       : Tue Jan  4 21:49:56 2000
-Last Modified : Tue Jan  4 22:21:53 2000 by Sven Neumann <sven@gimp.org>
-
 
 This file lists all GIMP plug-ins and their authors. If you find
 a bug in a plug-in, please check if has already been reported at 
@@ -616,7 +613,7 @@ COMMENT    :
 -----------
 NAME       : pagecurl
 AUTHOR     : Federico Mena Quintero and Simon Budig
-MAINTAINER : 
+MAINTAINER : Simon Budig <Simon.Budig@unix-ag.org> 
 SIZE       :  33.2 kB  in  1 file  (only C files counted)
 COMMENT    : 
 -----------

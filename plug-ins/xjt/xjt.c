@@ -8,23 +8,10 @@
  *  gzip and bzip2 compression Programs.
  *
  * IMPORTANT NOTE:
- *   The GIMP-core 1.0.2 does not provide all Interfaces (PDB-Procedures)
- *   to enable a plugin to save/load all properties of an image.
- *
- *   The most of the missing PDB-Interfaces are available in the registry
- *   as patches to the gimp core. (look for gap-patches or gap)
- * 
- *   If you dont install the patches XJT will work on GIMP 1.0.2, 
- *   but some Informations can not be saved or loaded.
- *   - floating selections
- *   - the layers linked state
- *   - guides                     (NO PATCH available)
- *
- * GIMP 1.1 will provide all the procedures to run XJT at full fuctionality.
- * There are no Patches required to run XJT in the latest GIMP 1.1
- * development version
+ *   This plugin needs GIMP 1.1.15 or newer versions of the GIMP-core to run.
  *
  * Things left to do for next XJT release
+ *    - load/save path
  *    - show continous progress while loading/saving
  */
  
@@ -47,12 +34,13 @@
  */
 
 /* TODO:
- *   load tattoos (code is prepared for tattos, but
- *                 ** there is no PDB interface available in gimp 1.1.2 **)
- *   load/save support for parasites
+ *   load tattoos (code is prepared for tattos)
  */
 
 /* revision history:
+ * version 1.1.15a; 2000/01/23  hof: NLS_macros, save/load parasites, \" and \n characters in names
+ *                                   use G_DIR_SEPARATOR (but you still need UNIX tar to run this plugin)
+ *                                   older gimp releases (prior to 1.1.15) are not supported any more.
  * version 1.02.00; 1999/03/16  hof: - save layer/channel Tattoos
  *                                   - load/save image resolution added
  *                                   - tolerate unknown properties with warnings
@@ -72,8 +60,11 @@
 #include <unistd.h>
 
 /* GIMP includes */
+#include "config.h"
+
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* XJT includes */
 #include "xjpeg.h"
@@ -82,11 +73,15 @@
 #define GIMP_XJ_IMAGE  "GIMP_XJ_IMAGE"
 
 #define SCALE_WIDTH 125
-#define MAX_LINE_LEN  1024
+#define MAX_LINE_LEN  10000
 
 
 int xjt_debug = FALSE;
 pid_t   g_pid;
+char   *global_parasite_prop_lines = NULL;
+gint    global_parasite_id = 0;
+char **global_all_parasite_names = NULL;
+gint32 global_num_parasites = 0;
 
 typedef struct
 {
@@ -129,6 +124,7 @@ typedef enum
   PROP_TYPE = 92,
   PROP_VERSION = 93,
   PROP_FLOATING_ATTACHED = 94,
+  PROP_PARASITE_FLAGS = 95,
   PROP_SYNTAX_ERROR = 99
 } t_proptype;
 
@@ -144,6 +140,41 @@ typedef enum
   PTYP_2xFLT = 7,
   PTYP_3xFLT = 8
 } t_param_typ;
+
+typedef enum
+{
+  XJT_IMAGE_PARASITE = 0,
+  XJT_LAYER_PARASITE = 1,
+  XJT_LAYER_MASK_PARASITE = 2,
+  XJT_CHANNEL_PARASITE = 3
+} t_parasitetype;
+
+typedef enum
+{
+  XJT_RGB,
+  XJT_GRAY,
+  XJT_INDEXED
+} XJTImageBaseType;
+
+typedef enum
+{
+  XJT_NORMAL_MODE,
+  XJT_DISSOLVE_MODE,
+  XJT_BEHIND_MODE,
+  XJT_MULTIPLY_MODE,
+  XJT_SCREEN_MODE,
+  XJT_OVERLAY_MODE,
+  XJT_DIFFERENCE_MODE,
+  XJT_ADDITION_MODE,
+  XJT_SUBTRACT_MODE,
+  XJT_DARKEN_ONLY_MODE,
+  XJT_LIGHTEN_ONLY_MODE,
+  XJT_HUE_MODE,
+  XJT_SATURATION_MODE,
+  XJT_COLOR_MODE,
+  XJT_VALUE_MODE,
+  XJT_DIVIDE_MODE
+} XJTLayerModeEffects;
 
 typedef struct
 {
@@ -166,6 +197,15 @@ typedef struct
   gdouble  flt_val3;
   char    *string_val;
 }  t_param_prop;
+
+typedef struct {
+  t_parasitetype  parasite_type;   
+  gint32          parasite_id;
+  gint32          flags;
+  char           *name;
+  gint32          obj_pos;
+  void           *next;
+} t_parasite_props;
 
 typedef struct
 {
@@ -233,10 +273,11 @@ typedef struct {
   t_channel_props *channel_props;
   t_channel_props *mask_props;
   t_guide_props   *guide_props;
+  t_parasite_props *parasite_props;
 } t_image_props;
 
 
-#define PROP_TABLE_ENTRIES 27
+#define PROP_TABLE_ENTRIES 28
 t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {             
   /* t_proptype              mnemonic   t_paramtyp             default values */
   { PROP_END,                   "*",      PTYP_NOT_SUPPORTED,       0.0,  0.0,  0.0 } ,
@@ -263,6 +304,7 @@ t_prop_table g_prop_table[PROP_TABLE_ENTRIES] = {
   { PROP_PARASITES,             "pte",	  PTYP_INT,		    0.0,  0.0,  0.0 } ,
 
 
+  { PROP_PARASITE_FLAGS,        "ptf",    PTYP_INT,                 1.0,  0.0,  0.0 } ,
   { PROP_FLOATING_ATTACHED,     "fa",     PTYP_BOOLEAN,             0.0,  0.0,  0.0 } ,
   { PROP_NAME,                  "n",      PTYP_STRING,              0.0,  0.0,  0.0 } ,
   { PROP_DIMENSION,             "w/h",    PTYP_2xINT,               0.0,  0.0,  0.0 } ,
@@ -376,12 +418,14 @@ query ()
   };
   static int nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
+  INIT_I18N ();
+
   gimp_install_procedure ("file_xjt_load",
-                          "loads files of the jpeg-tar file format",
-			  "FIXME: help not available",
+                          _("loads files of the jpeg-tar file format"),
+			  _("loads files of the jpeg-tar file format"),
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "1999-Mar-16",
+                          "2000-Jan-23",
 			  "<Load>/xjt",
 			  NULL,
                           PROC_PLUG_IN,
@@ -389,11 +433,11 @@ query ()
                           load_args, load_return_vals);
 
   gimp_install_procedure ("file_xjt_save",
-                          "saves files in the jpeg-tar file format",
-			  "FIXME: help not available",
+                          _("saves files in the jpeg-tar file format"),
+			  _("saves files in the jpeg-tar file format"),
                           "Wolfgang Hofer",
                           "Wolfgang Hofer",
-                          "1999-Mar-16",
+                          "2000-Jan-23",
                           "<Save>/xjt",
 			  "RGB*, GRAY*",
                           PROC_PLUG_IN,
@@ -432,6 +476,16 @@ run (char    *name,
   *return_vals = values;
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_CALLING_ERROR;
+
+  if (run_mode == RUN_NONINTERACTIVE)
+  {
+    INIT_I18N();
+  }
+  else
+  {
+    INIT_I18N_UI();
+  }
+
 
   if (strcmp (name, "file_xjt_load") == 0)
   {
@@ -510,6 +564,57 @@ run (char    *name,
   }
 }	/* end run */
 
+/* -- type transformer routines XJT -- GIMP internal enums ----------------- */
+
+GimpLayerModeEffects
+p_to_GimpLayerModeEffects(XJTLayerModeEffects intype)
+{
+  switch(intype)
+  {
+    case XJT_NORMAL_MODE:         return(GIMP_NORMAL_MODE);
+    case XJT_DISSOLVE_MODE:       return(GIMP_DISSOLVE_MODE);
+    case XJT_BEHIND_MODE:         return(GIMP_BEHIND_MODE);
+    case XJT_MULTIPLY_MODE:       return(GIMP_MULTIPLY_MODE);
+    case XJT_SCREEN_MODE:         return(GIMP_SCREEN_MODE);
+    case XJT_OVERLAY_MODE:        return(GIMP_OVERLAY_MODE);
+    case XJT_DIFFERENCE_MODE:     return(GIMP_DIFFERENCE_MODE);
+    case XJT_ADDITION_MODE:       return(GIMP_ADDITION_MODE);
+    case XJT_SUBTRACT_MODE:       return(GIMP_SUBTRACT_MODE);
+    case XJT_DARKEN_ONLY_MODE:    return(GIMP_DARKEN_ONLY_MODE);
+    case XJT_LIGHTEN_ONLY_MODE:   return(GIMP_LIGHTEN_ONLY_MODE);
+    case XJT_HUE_MODE:            return(GIMP_HUE_MODE);
+    case XJT_SATURATION_MODE:     return(GIMP_SATURATION_MODE);
+    case XJT_COLOR_MODE:          return(GIMP_COLOR_MODE);
+    case XJT_VALUE_MODE:          return(GIMP_VALUE_MODE);
+    case XJT_DIVIDE_MODE:         return(GIMP_DIVIDE_MODE);
+  }
+  return(GIMP_NORMAL_MODE);
+}
+
+XJTLayerModeEffects
+p_to_XJTLayerModeEffects(GimpLayerModeEffects intype)
+{
+  switch(intype)
+  {
+    case GIMP_NORMAL_MODE:         return(XJT_NORMAL_MODE);
+    case GIMP_DISSOLVE_MODE:       return(XJT_DISSOLVE_MODE);
+    case GIMP_BEHIND_MODE:         return(XJT_BEHIND_MODE);
+    case GIMP_MULTIPLY_MODE:       return(XJT_MULTIPLY_MODE);
+    case GIMP_SCREEN_MODE:         return(XJT_SCREEN_MODE);
+    case GIMP_OVERLAY_MODE:        return(XJT_OVERLAY_MODE);
+    case GIMP_DIFFERENCE_MODE:     return(XJT_DIFFERENCE_MODE);
+    case GIMP_ADDITION_MODE:       return(XJT_ADDITION_MODE);
+    case GIMP_SUBTRACT_MODE:       return(XJT_SUBTRACT_MODE);
+    case GIMP_DARKEN_ONLY_MODE:    return(XJT_DARKEN_ONLY_MODE);
+    case GIMP_LIGHTEN_ONLY_MODE:   return(XJT_LIGHTEN_ONLY_MODE);
+    case GIMP_HUE_MODE:            return(XJT_HUE_MODE);
+    case GIMP_SATURATION_MODE:     return(XJT_SATURATION_MODE);
+    case GIMP_COLOR_MODE:          return(XJT_COLOR_MODE);
+    case GIMP_VALUE_MODE:          return(XJT_VALUE_MODE);
+    case GIMP_DIVIDE_MODE:         return(XJT_DIVIDE_MODE);
+  }
+  return(XJT_NORMAL_MODE);
+}
 /* ---------------------- SAVE DIALOG procedures  -------------------------- */
 
 static gint
@@ -529,13 +634,13 @@ save_dialog ()
 
   argc = 1;
   argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("save");
+  argv[0] = g_strdup ("xjt save");
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Save as xjt");
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Save xjt"));
   gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) save_close_callback,
@@ -549,7 +654,7 @@ save_dialog ()
   gtk_box_pack_end (GTK_BOX (GTK_DIALOG (dlg)->action_area), hbbox, FALSE, FALSE, 0);
   gtk_widget_show (hbbox);
  
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
 		      (GtkSignalFunc) save_ok_callback,
@@ -558,7 +663,7 @@ save_dialog ()
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
@@ -567,7 +672,7 @@ save_dialog ()
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Parameter Settings");
+  frame = gtk_frame_new (_("Parameter Settings"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
   gtk_container_border_width (GTK_CONTAINER (frame), 10);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
@@ -575,7 +680,7 @@ save_dialog ()
   gtk_container_border_width (GTK_CONTAINER (table), 10);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  label = gtk_label_new ("Quality");
+  label = gtk_label_new (_("Quality"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
   scale_data = gtk_adjustment_new (jsvals.quality, 0.0, 1.0, 0.01, 0.01, 0.0);
@@ -591,7 +696,7 @@ save_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  label = gtk_label_new ("Smoothing");
+  label = gtk_label_new (_("Smoothing"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2, GTK_FILL | GTK_EXPAND, GTK_FILL, 5, 0);
   scale_data = gtk_adjustment_new (jsvals.smoothing, 0.0, 1.0, 0.01, 0.01, 0.0);
@@ -607,14 +712,14 @@ save_dialog ()
   gtk_widget_show (label);
   gtk_widget_show (scale);
 
-  toggle = gtk_check_button_new_with_label("Optimize");
+  toggle = gtk_check_button_new_with_label(_("Optimize"));
   gtk_table_attach(GTK_TABLE(table), toggle, 0, 1, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc)save_optimize_update, NULL);
   gtk_toggle_button_set_state(GTK_TOGGLE_BUTTON(toggle), jsvals.optimize);
   gtk_widget_show(toggle);
 
-  toggle = gtk_check_button_new_with_label("Clear_Transparent");
+  toggle = gtk_check_button_new_with_label(_("Clear_Transparent"));
   gtk_table_attach(GTK_TABLE(table), toggle, 1, 2, 2, 3, GTK_FILL, 0, 0, 0);
   gtk_signal_connect(GTK_OBJECT(toggle), "toggled",
                      (GtkSignalFunc)save_clr_transparent_update, NULL);
@@ -696,8 +801,61 @@ p_get_property_index(t_proptype proptype)
 
 
 /* ============================================================================
- * p_write_prop
- *   write out the property mnemonic 
+ * p_namedup
+ *   copy name and make sure that double quote backslash and newline
+ *   characters are escaped by a backslash
+ * ============================================================================
+ */
+char *
+p_namedup(char *name)
+{
+  char *l_name;
+  char *l_str;
+  char *l_ptr;
+  gint  l_len;
+
+  l_str = name;
+  l_len = 0;
+  while(*l_str != '\0')
+  {
+       if((*l_str == '\"')
+       || (*l_str == '\n')
+       || (*l_str == '\\'))
+       { 
+         l_len++;
+       }
+       l_str++;
+       l_len++;
+  }
+  
+  l_name = g_malloc(l_len+2);
+  l_str = name;
+  l_ptr = l_name;
+  while(*l_str != '\0')
+  {
+       if((*l_str == '\"')
+       || (*l_str == '\n')
+       || (*l_str == '\\'))
+       { 
+         *l_ptr = '\\';
+	 l_ptr++;
+	 if(*l_str == '\n') { *l_ptr = 'n'; }
+	 else               { *l_ptr = *l_str; }
+       }
+       else
+       {
+         *l_ptr = *l_str;
+       }
+       l_ptr++;
+       l_str++;
+  }
+  *l_ptr = '\0';
+  return(l_name);
+}
+ 
+/* ============================================================================
+ * p_write_prop_string
+ *   write out the property mnemonic to buffer
  *   and parameter(s) according to the property type
  *
  *   wr_all_prp is used for debug only and causes to write out all properties
@@ -707,13 +865,16 @@ p_get_property_index(t_proptype proptype)
  */
 
 static void
-p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp)
+p_write_prop_string(char *buffer, t_proptype proptype, t_param_prop *param, gint wr_all_prp)
 {
   int l_prop_idx;
   int l_idx;
   char f_buff[100];
   char *l_str;
 
+  if(buffer == NULL) return;
+  *buffer = '\0';
+  
   l_prop_idx = p_get_property_index(proptype);
  
   switch (g_prop_table[l_prop_idx].param_typ)
@@ -722,13 +883,13 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
          /* boolean properties are written if they are not FALSE */
          if(param->int_val1)
          {
-            fprintf(fp, " %s", g_prop_table[l_prop_idx].prop_mnemonic);
+            sprintf(buffer, " %s", g_prop_table[l_prop_idx].prop_mnemonic);
          }
          else
          {
            if(wr_all_prp)
            {
-              fprintf(fp, " %s!", g_prop_table[l_prop_idx].prop_mnemonic);
+              sprintf(buffer, " %s!", g_prop_table[l_prop_idx].prop_mnemonic);
            }
          }
          break;
@@ -737,7 +898,7 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
          if((param->int_val1 != g_prop_table[l_prop_idx].default_val1) 
          || (wr_all_prp))
          {
-           fprintf(fp, " %s:%d", g_prop_table[l_prop_idx].prop_mnemonic, 
+           sprintf(buffer, " %s:%d", g_prop_table[l_prop_idx].prop_mnemonic, 
                                  (int)param->int_val1);
          }
          break;
@@ -754,7 +915,7 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
 	     l_idx--;
 	   }
 	   
-           fprintf(fp, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
+           sprintf(buffer, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
          }
          break;
      case PTYP_2xFLT:
@@ -772,7 +933,7 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
 	     l_idx--;
 	   }
 	   
-           fprintf(fp, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
+           sprintf(buffer, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
          }
          break;
      case PTYP_3xFLT:
@@ -792,7 +953,7 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
 	     l_idx--;
 	   }
 	   
-           fprintf(fp, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
+           sprintf(buffer, " %s:%s", g_prop_table[l_prop_idx].prop_mnemonic, f_buff);
          }
          break;
      case PTYP_STRING:
@@ -801,18 +962,12 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
            if((*param->string_val != '\0')
            || (wr_all_prp))
            {
-	      /* make sure thar string does not contain double quotes
-	       * (by replacing them by single ones)
-	       */
-	      l_str = param->string_val;
-	      while(*l_str != '\0')
+	      l_str = p_namedup(param->string_val);
+	      if(l_str)
 	      {
-	         if(*l_str == '\"') { *l_str = '\''; }
-	         if(*l_str == '\n') { *l_str = ' '; }
-		 l_str++;
+                sprintf(buffer, " %s:\"%s\"", g_prop_table[l_prop_idx].prop_mnemonic, l_str);
+                g_free(l_str);
 	      }
-              fprintf(fp, " %s:\"%s\"", g_prop_table[l_prop_idx].prop_mnemonic, 
-                                 param->string_val);
            }
          }
          break;
@@ -821,7 +976,7 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
          || (param->int_val2 != g_prop_table[l_prop_idx].default_val2)
          || (wr_all_prp))
          {
-           fprintf(fp, " %s:%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
+           sprintf(buffer, " %s:%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
                                  (int)param->int_val1, (int)param->int_val2);
          }
          break;
@@ -831,7 +986,7 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
          || (param->int_val3 != g_prop_table[l_prop_idx].default_val3)
          || (wr_all_prp))
          {
-           fprintf(fp, " %s:%d,%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
+           sprintf(buffer, " %s:%d,%d,%d", g_prop_table[l_prop_idx].prop_mnemonic, 
                                  (int)param->int_val1, 
 				 (int)param->int_val2,
 				 (int)param->int_val3);
@@ -841,8 +996,140 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
          break;
   }
 
+}	/* end p_write_prop_string */
+
+/* ============================================================================
+ * p_write_prop
+ *   write out the property mnemonic to file
+ *   and parameter(s) according to the property type
+ *
+ *   wr_all_prp is used for debug only and causes to write out all properties
+ *   Normally (wr_all_prp == FALSE) properties are NOT written, if they are
+ *   equal to their default value.
+ * ============================================================================
+ */
+
+static void
+p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp)
+{
+  char    l_buff[300];
+  p_write_prop_string(l_buff, proptype, param, wr_all_prp);
+  
+  if(l_buff[0] != '\0')
+  {
+    fprintf(fp, "%s", l_buff);
+  }
 }	/* end p_write_prop */
 
+
+/* ============================================================================
+ * p_write_parasite
+ *   write out one parasite by
+ *    - write property to PRP file
+ *    - write parasite data to parasite_file
+ *    - and prepare global_parasite_prop_lines
+ * ============================================================================
+ */
+
+gint
+p_write_parasite(char *dirname, FILE *fp,
+                 Parasite *parasite, gint wr_all_prp)
+{
+  char *l_new_parasite_prop_lines;
+  char  l_parasite_buff[1000];
+  char  l_parasite_file[512];
+  char  l_buff[300];
+  char  l_buff2[50];
+  FILE *l_fp_pte;
+  t_param_prop   l_param;
+  
+  if(parasite->flags & PARASITE_PERSISTENT)  /* check if Parasite should be saved */
+  {
+     global_parasite_id++;
+     
+     l_param.int_val1 = global_parasite_id;
+     p_write_prop (fp, PROP_PARASITES, &l_param, TRUE);
+     
+     /* add parasite line like this:
+      *     p2 n:"layer parasite A" ptf:1
+      * to global_parasite_prop_lines buffer.
+      * (the buffer is written as last block to the PRP file)
+      */
+     l_param.string_val = parasite->name;
+     p_write_prop_string(l_buff, PROP_NAME, &l_param, wr_all_prp);
+
+     l_param.int_val1 = parasite->flags;
+     p_write_prop_string(l_buff2, PROP_PARASITE_FLAGS, &l_param, wr_all_prp);
+
+     sprintf(l_parasite_buff, "p%d%s%s\n"
+             , (int)global_parasite_id
+	     , l_buff
+             , l_buff2
+	      );
+     
+
+     if(global_parasite_prop_lines == NULL)
+     {
+       global_parasite_prop_lines = g_strdup(l_parasite_buff);
+     }
+     else
+     {
+       l_new_parasite_prop_lines = g_malloc(strlen(global_parasite_prop_lines) + strlen(l_parasite_buff));
+       sprintf(l_new_parasite_prop_lines, "%s%s", global_parasite_prop_lines, l_parasite_buff);
+       g_free(global_parasite_prop_lines);
+       global_parasite_prop_lines = l_new_parasite_prop_lines;
+     }
+
+     /* write the parasite data to a file named p1.pte */
+     sprintf (l_parasite_file, "%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)global_parasite_id);
+     l_fp_pte = fopen(l_parasite_file, "wb");
+     if(l_fp_pte == NULL)
+     {
+       g_message (_("Can't open (write): %s"), l_parasite_file);
+       return -1;
+     }
+     else
+     {
+       fwrite(parasite->data, parasite->size, 1, l_fp_pte);
+       fclose(l_fp_pte);
+     }
+  }
+  return 0;
+}
+
+void
+p_write_image_parasites(char *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
+{
+  Parasite  *l_parasite;
+  gint32     l_idx;
+  
+  for(l_idx = 0; l_idx < global_num_parasites; l_idx++)
+  {
+    l_parasite = gimp_image_parasite_find(image_id, global_all_parasite_names[l_idx]);
+    if(l_parasite)
+    {
+       if(xjt_debug) printf("p_write_image_parasites NAME:%s:\n",  global_all_parasite_names[l_idx]);
+       p_write_parasite(dirname, fp, l_parasite, wr_all_prp);
+    }
+  }
+}
+
+void
+p_write_drawable_parasites(char *dirname, FILE *fp, gint32 drawable_id, gint wr_all_prp)
+{
+  Parasite  *l_parasite;
+  gint32     l_idx;
+  
+  for(l_idx = 0; l_idx < global_num_parasites; l_idx++)
+  {
+    l_parasite = gimp_drawable_parasite_find(drawable_id, global_all_parasite_names[l_idx]);
+    if(l_parasite)
+    {
+       if(xjt_debug) printf("p_write_drawable_parasites NAME:%s:\n",  global_all_parasite_names[l_idx]);
+       p_write_parasite(dirname, fp, l_parasite, wr_all_prp);
+    }
+  }
+}
 
 /* ============================================================================
  * p_write_layer_prp
@@ -851,7 +1138,8 @@ p_write_prop(FILE *fp, t_proptype proptype, t_param_prop *param, gint wr_all_prp
  */
 
 static void
-p_write_layer_prp(FILE *fp,  char *layer_shortname,
+p_write_layer_prp(char *dirname,
+                  FILE *fp,  char *layer_shortname,
 		  gint32  image_id,
 		  gint32  layer_id,
 		  gint    wr_all_prp)
@@ -874,7 +1162,7 @@ p_write_layer_prp(FILE *fp,  char *layer_shortname,
   l_param.flt_val1 = gimp_layer_get_opacity(layer_id);
   p_write_prop (fp, PROP_OPACITY, &l_param, wr_all_prp);
 
-  l_param.int_val1 = (gint32)gimp_layer_get_mode(layer_id);
+  l_param.int_val1 = (gint32)p_to_XJTLayerModeEffects(gimp_layer_get_mode(layer_id));
   p_write_prop (fp, PROP_MODE, &l_param, wr_all_prp);
   
   l_param.int_val1 = p_invert(gimp_layer_get_visible(layer_id));
@@ -906,11 +1194,12 @@ p_write_layer_prp(FILE *fp,  char *layer_shortname,
   l_param.string_val = gimp_layer_get_name(layer_id);
   p_write_prop (fp, PROP_NAME, &l_param, wr_all_prp);
 
+  p_write_drawable_parasites(dirname, fp, layer_id, wr_all_prp);
+
 
   fprintf(fp, "\n");
 
 }	/* end p_write_layer_prp */
-
 
 
 /* ============================================================================
@@ -920,7 +1209,8 @@ p_write_layer_prp(FILE *fp,  char *layer_shortname,
  */
 
 static void
-p_write_channel_prp(FILE *fp,  char *channel_shortname,
+p_write_channel_prp(char *dirname,
+                  FILE *fp,  char *channel_shortname,
 		  gint32  image_id,
 		  gint32  channel_id,
 		  gint    wr_all_prp)
@@ -967,6 +1257,8 @@ p_write_channel_prp(FILE *fp,  char *channel_shortname,
   l_param.string_val = gimp_channel_get_name(channel_id);
   p_write_prop (fp, PROP_NAME, &l_param, wr_all_prp);
 
+  p_write_drawable_parasites(dirname, fp, channel_id, wr_all_prp);
+
 
   fprintf(fp, "\n");
 
@@ -980,7 +1272,7 @@ p_write_channel_prp(FILE *fp,  char *channel_shortname,
  */
 
 static void
-p_write_image_prp(FILE *fp, gint32 image_id, gint wr_all_prp)
+p_write_image_prp(char *dirname, FILE *fp, gint32 image_id, gint wr_all_prp)
 {
    GImageType l_image_type;
    guint   l_width, l_height;
@@ -996,7 +1288,7 @@ p_write_image_prp(FILE *fp, gint32 image_id, gint wr_all_prp)
    fprintf(fp, "%s", GIMP_XJ_IMAGE);
    
  
-   l_param.string_val = "1.1";
+   l_param.string_val = "1.1.15a";
    p_write_prop (fp, PROP_VERSION, &l_param, wr_all_prp);
   
    l_param.int_val1 = l_width;
@@ -1030,9 +1322,17 @@ p_write_image_prp(FILE *fp, gint32 image_id, gint wr_all_prp)
      l_guide_id = p_gimp_image_findnext_guide(image_id, l_guide_id);
    }
 
- 
-   l_param.int_val1 = (gint32)l_image_type;
+   if(l_image_type == GIMP_GRAY)
+   {
+     l_param.int_val1 = (gint32)XJT_GRAY;
+   }
+   else
+   {
+     l_param.int_val1 = (gint32)XJT_RGB;
+   }
    p_write_prop (fp, PROP_TYPE, &l_param, wr_all_prp);
+
+   p_write_image_parasites(dirname, fp, image_id, wr_all_prp);
 
    fprintf(fp, "\n");
 
@@ -1079,39 +1379,59 @@ save_xjt_image (char   *filename,
    l_wr_all_prp = FALSE;     /* FALSE write only non-default properties
                               * TRUE  write all properties (should be used for DEBUG only)
 			      */
+   global_parasite_id = 0;
+   global_parasite_prop_lines = NULL;
+    
+   /* get the list of all parasite names */
+   /* global_all_parasite_names = p_gimp_parasite_list (&global_num_parasites); */
+
+   /* TODO:
+    * the PDB Procedure gimp_parasite_list returns a list
+    * of all gimp global parasites.
+    * this list does NOT contain image and drawable specific parasites
+    * 
+    * - for xjt we need one or two PDB-Procedure(s) to get all the names
+    *   of the image and drawable specific parasites !!!
+    *
+    * For DEBUG reasons we init the list of parasite names
+    * with one known drawable-parasite name ("gdyntext-parasite")
+    * so we can test save and load of parasites
+    */
+
+   { /* START of debug code */
+   global_num_parasites = 1;
+   global_all_parasite_names = g_malloc(sizeof(char *) * global_num_parasites);
+   global_all_parasite_names[0] = g_strdup("gdyntext-parasite");
+   }   /* END of debug code */
 
    /* get info about the image */
    l_image_type = gimp_image_base_type(image_id);
    switch (l_image_type)
    {
-      case RGB_IMAGE:
-      case GRAY_IMAGE:
-      case RGBA_IMAGE:
-      case GRAYA_IMAGE:
+      case GIMP_RGB:
+      case GIMP_GRAY:
 	break;
-      case INDEXED_IMAGE:
-	g_message ("xjt: cannot operate on indexed color images");
+      case GIMP_INDEXED:
+	g_message (_("xjt: cannot operate on indexed color images"));
 	return -1;
 	break;
       default:
-	g_message ("xjt: cannot operate on unknown image types");
+	g_message (_("xjt: cannot operate on unknown image types"));
 	return -1;
 	break;
    }
 
-   l_name = malloc (strlen (filename) + 11);
-
-   sprintf (l_name, "Saving %s:", filename);
+   l_name = g_strdup_printf (_("Saving %s:"), filename);
    gimp_progress_init (l_name);
-   free (l_name);
+   g_free (l_name);
    
    /* create temporary directory  <filename>.tmpdir.<PID> */
    sprintf (l_dirname, "%s.tmpdir.%d", filename, (int)g_pid);
-   sprintf (l_prop_file, "%s/PRP", l_dirname);
+   sprintf (l_prop_file, "%s%cPRP", l_dirname, G_DIR_SEPARATOR);
    l_mode_dir = 0777;
    if(mkdir(l_dirname, l_mode_dir) != 0)
    {
-     g_message ("can't create working dir: %s\n", l_dirname);
+     g_message (_("Can't create working dir: %s"), l_dirname);
      goto cleanup;
    }
    
@@ -1120,12 +1440,12 @@ save_xjt_image (char   *filename,
    l_fp_prp = fopen(l_prop_file, "w");
    if(l_fp_prp == NULL)
    {
-     g_message ("can't open %s\n", l_prop_file);
+     g_message (_("Can't open : %s"), l_prop_file);
      goto cleanup;
    }
    
    /* write image properties */
-   p_write_image_prp(l_fp_prp, image_id, l_wr_all_prp);
+   p_write_image_prp(l_dirname, l_fp_prp, image_id, l_wr_all_prp);
 
 
    l_floating_layer_id = gimp_image_floating_selection(image_id);
@@ -1147,7 +1467,7 @@ save_xjt_image (char   *filename,
       if(xjt_debug) printf("Layer [%d] id=%d\n", (int)l_idx, (int)l_layer_id);
 
       /* save layer as jpeg file */  
-      sprintf (l_jpg_file, "%s/l%d.jpg", l_dirname, l_idx);
+      sprintf (l_jpg_file, "%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
       if(xjt_debug) printf("XJT-DEBUG: saving layer to file %s\n", l_jpg_file);  
 
       if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1161,12 +1481,12 @@ save_xjt_image (char   *filename,
       /* write out the layer properties */
       if(gimp_drawable_has_alpha(l_layer_id)) { sprintf (l_jpg_file, "L%d", l_idx); }
       else                                    { sprintf (l_jpg_file, "l%d", l_idx); }
-      p_write_layer_prp(l_fp_prp, l_jpg_file, image_id, l_layer_id, l_wr_all_prp);
+      p_write_layer_prp(l_dirname, l_fp_prp, l_jpg_file, image_id, l_layer_id, l_wr_all_prp);
       
       /* check, and save alpha channel */
       if(gimp_drawable_has_alpha(l_layer_id))
       {
-         sprintf (l_jpg_file, "%s/la%d.jpg", l_dirname, l_idx);
+         sprintf (l_jpg_file, "%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
          if(xjt_debug) printf("XJT-DEBUG: saving alpha-channel to file %s\n", l_jpg_file);  
          
          if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1182,7 +1502,7 @@ save_xjt_image (char   *filename,
        l_channel_id = gimp_layer_get_mask_id(l_layer_id);
        if(l_channel_id >= 0)
        {
-          sprintf (l_jpg_file, "%s/lm%d.jpg", l_dirname, l_idx);
+          sprintf (l_jpg_file, "%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
           if(xjt_debug) printf("XJT-DEBUG: saving layer-mask to file %s\n", l_jpg_file);  
 
           if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1195,7 +1515,7 @@ save_xjt_image (char   *filename,
 
           /* write out the layer_mask (== channel) properties */
           sprintf (l_jpg_file, "m%d", l_idx);
-          p_write_channel_prp(l_fp_prp, l_jpg_file, image_id, l_channel_id, l_wr_all_prp);
+          p_write_channel_prp(l_dirname, l_fp_prp, l_jpg_file, image_id, l_channel_id, l_wr_all_prp);
        }
    }  	/* end foreach layer */
 
@@ -1220,7 +1540,7 @@ save_xjt_image (char   *filename,
       if(xjt_debug) printf("channel [%d] id=%d\n", (int)l_idx, (int)l_channel_id);
 
       /* save channel as jpeg file */  
-      sprintf (l_jpg_file, "%s/c%d.jpg", l_dirname, l_idx);
+      sprintf (l_jpg_file, "%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, l_idx);
       if(xjt_debug) printf("XJT-DEBUG: saving channel to file %s\n", l_jpg_file);  
       
       if(TRUE != xjpg_save_drawable(l_jpg_file, 
@@ -1233,11 +1553,16 @@ save_xjt_image (char   *filename,
 
       /* write out the channel properties */
       sprintf (l_jpg_file, "c%d", l_idx);
-      p_write_channel_prp(l_fp_prp, l_jpg_file, image_id, l_channel_id, l_wr_all_prp);
+      p_write_channel_prp(l_dirname, l_fp_prp, l_jpg_file, image_id, l_channel_id, l_wr_all_prp);
       
    }    	/* end foreach channel */
 
 
+   if(global_parasite_prop_lines != NULL)
+   {
+     /* have to add parasite lines at end of PRP file */
+     fprintf(l_fp_prp, "%s", global_parasite_prop_lines);
+   }
    fclose( l_fp_prp );
    l_fp_prp = NULL;
 
@@ -1314,7 +1639,7 @@ t_layer_props * p_new_layer_prop()
 {
   t_layer_props  *l_new_prop;
 
-  l_new_prop = malloc(sizeof(t_layer_props));
+  l_new_prop = g_malloc(sizeof(t_layer_props));
   if(l_new_prop != NULL)
   {
     l_new_prop->active_layer       = g_prop_table[p_get_property_index(PROP_ACTIVE_LAYER)].default_val1;
@@ -1352,7 +1677,7 @@ t_channel_props * p_new_channel_prop()
 {
   t_channel_props  *l_new_prop;
 
-  l_new_prop = malloc(sizeof(t_channel_props));
+  l_new_prop = g_malloc(sizeof(t_channel_props));
   if(l_new_prop != NULL)
   {
     l_new_prop->active_channel    = g_prop_table[p_get_property_index(PROP_ACTIVE_CHANNEL)].default_val1;
@@ -1387,7 +1712,7 @@ t_guide_props * p_new_guide_prop()
 {
   t_guide_props  *l_new_prop;
 
-  l_new_prop = malloc(sizeof(t_guide_props));
+  l_new_prop = g_malloc(sizeof(t_guide_props));
   if(l_new_prop != NULL)
   {
     l_new_prop->position = 0;
@@ -1400,6 +1725,30 @@ t_guide_props * p_new_guide_prop()
 }	/* end p_new_guide_prop */
 
 /* ============================================================================
+ * p_new_parasite_prop
+ *   allocate new parasite_properties element and init with default values
+ * ============================================================================
+ */
+t_parasite_props * p_new_parasite_prop()
+{
+  t_parasite_props  *l_new_prop;
+
+  l_new_prop = g_malloc(sizeof(t_parasite_props));
+  if(l_new_prop != NULL)
+  {
+    l_new_prop->parasite_type = XJT_IMAGE_PARASITE;
+    l_new_prop->parasite_id = -1;
+    l_new_prop->name = NULL;
+    l_new_prop->obj_pos = -1;
+    l_new_prop->flags = PARASITE_PERSISTENT;
+    l_new_prop->next = NULL;
+  }
+    
+  return(l_new_prop);
+
+}	/* end p_new_parasite_prop */
+
+/* ============================================================================
  * p_new_image_prop
  *   allocate new layer_properties element and init with default values
  * ============================================================================
@@ -1408,7 +1757,7 @@ t_image_props * p_new_image_prop()
 {
   t_image_props  *l_new_prop;
 
-  l_new_prop = malloc(sizeof(t_image_props));
+  l_new_prop = g_malloc(sizeof(t_image_props));
   if(l_new_prop != NULL)
   {
     l_new_prop->image_type       = g_prop_table[p_get_property_index(PROP_TYPE)].default_val1;
@@ -1423,6 +1772,7 @@ t_image_props * p_new_image_prop()
     l_new_prop->channel_props = NULL;
     l_new_prop->mask_props = NULL;
     l_new_prop->guide_props = NULL;
+    l_new_prop->parasite_props = NULL;
   }
     
   return(l_new_prop);
@@ -1683,11 +2033,39 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
 	       return (l_ptr);
            }
            l_ptr++;
-           for(l_ids= 0; l_ids < (MAX_LINE_LEN-1); l_ids++)
+           for(l_ids= 0; l_ids < (MAX_LINE_LEN-2); l_ids++)
            {
+              if(*l_ptr == '\0')
+              {
+                 break;
+              }
+              if(*l_ptr == '\\')
+              {
+                 if(l_ptr[1] == '\"')
+		 {
+                     l_string_buff[l_ids] = '\"';
+                     l_ptr++;
+                     l_ptr++;
+		     continue;
+		 }
+                 if(l_ptr[1] == 'n')
+		 {
+                     l_string_buff[l_ids] = '\n';
+                     l_ptr++;
+                     l_ptr++;
+		     continue;
+		 }
+                 if(l_ptr[1] == '\\')
+		 {
+                     l_string_buff[l_ids] = '\\';
+                     l_ptr++;
+                     l_ptr++;
+		     continue;
+		 }
+                 l_ptr++;
+              }
               if((*l_ptr == '\"') || 
-                 (*l_ptr == '\n') ||
-                 (*l_ptr == '\0'))
+                 (*l_ptr == '\n'))
               {
                  break;
               }
@@ -1698,7 +2076,7 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
            if (*l_ptr == '\"')
            { 
              l_ptr++;
-             param->string_val = malloc(strlen(l_string_buff) +1);
+             param->string_val = g_malloc(strlen(l_string_buff) +1);
              strcpy(param->string_val, l_string_buff);
              if(xjt_debug) printf("%s", param->string_val);  
            }
@@ -1746,6 +2124,128 @@ static char * p_scann_token(char* scan_ptr, t_param_prop *param, t_proptype *pro
 
 
 /* ============================================================================
+ * p_find_parasite
+ *   if the parasite_props list has an item with parasite_id
+ *   return the pointer to the matching item,
+ *   else return NULL (no matching item found)
+ * ============================================================================
+ */
+t_parasite_props*
+p_find_parasite(t_parasite_props *parasite_props, gint32 parasite_id)
+{
+  t_parasite_props  *l_prop;
+  
+  l_prop = parasite_props;
+  while(l_prop)
+  {
+     if(l_prop->parasite_id == parasite_id)
+     {
+       return(l_prop);
+     }
+     l_prop = (t_parasite_props *)l_prop->next;
+  }
+  
+  return(NULL);
+}
+/* ============================================================================
+ * p_create_and_attach_parasite
+ * ============================================================================
+ */
+gint
+p_create_and_attach_parasite(gint32 gimp_obj_id, char *dirname, t_parasite_props *parasite_props)
+{
+  char  l_parasite_file[512];
+  Parasite          l_parasite;
+  struct stat       l_stat_buf;
+  FILE *l_fp_pte;
+
+  /* create filename dirname/p1.pte  1 == parasite_id */
+  sprintf (l_parasite_file, "%s%cp%d.pte", dirname, G_DIR_SEPARATOR, (int)parasite_props->parasite_id);
+
+  if (0 != stat(l_parasite_file, &l_stat_buf))
+  {
+     /* stat error (file does not exist) */
+     g_message (_("Can't open (read): %s"), l_parasite_file);
+     return(-1);
+  }
+
+  l_fp_pte = fopen(l_parasite_file, "rb");
+  if(l_fp_pte == NULL)
+  {
+     g_message (_("Can't open (read): %s"), l_parasite_file);
+     return(-1);
+  }
+
+  l_parasite.size = l_stat_buf.st_size;
+  l_parasite.data = g_malloc(l_parasite.size);
+  l_parasite.flags = parasite_props->flags | PARASITE_PERSISTENT;
+  if(parasite_props->name)
+  {
+     l_parasite.name = g_strdup(parasite_props->name);
+  }
+  else
+  {
+     l_parasite.name = g_strdup("\0");
+  }
+  
+  /* read the parasitedata from file */
+  fread(l_parasite.data, l_parasite.size, 1, l_fp_pte);
+  fclose(l_fp_pte);
+  
+  
+  /* attach the parasite to gimp_obj_id 
+   * (is an Image or drawable id depending on parasite_type)
+   */
+  if(parasite_props->parasite_type == XJT_IMAGE_PARASITE)
+  {
+     gimp_image_attach_new_parasite(gimp_obj_id,
+                                       l_parasite.name,
+				       l_parasite.flags,
+				       l_parasite.size,
+				       l_parasite.data);
+  }
+  else
+  {
+     gimp_drawable_attach_new_parasite(gimp_obj_id,
+                                       l_parasite.name,
+				       l_parasite.flags,
+				       l_parasite.size,
+				       l_parasite.data);
+  }
+  
+  if(l_parasite.data) g_free(l_parasite.data);
+  if(l_parasite.name) g_free(l_parasite.name);
+
+  return (0); /*OK */
+}	/* end p_create_and_attach_parasite */
+
+/* ============================================================================
+ * p_check_and_add_parasite
+ *   find parasite by type and pos (obj_pos)
+ * ============================================================================
+ */
+gint
+p_check_and_add_parasite(gint32 gimp_obj_id, char *dirname,
+                         t_parasite_props *parasite_props, gint32 pos, t_parasitetype  parasite_type)
+{
+  t_parasite_props  *l_prop;
+  gint l_rc;
+  
+  l_prop = parasite_props;
+  while(l_prop)
+  {
+     if((l_prop->parasite_type == parasite_type)
+     && (l_prop->obj_pos == pos))
+     {
+       l_rc = p_create_and_attach_parasite(gimp_obj_id, dirname, l_prop);
+       return (l_rc);
+     }
+     l_prop = (t_parasite_props *)l_prop->next;
+  }
+  return (0); /*OK */
+}	/* end p_check_and_add_parasite */
+
+/* ============================================================================
  * p_scann_layer_prop
  *   scann one inputline for layer properties (also used for layer_mask props)
  * ============================================================================
@@ -1754,6 +2254,7 @@ gint p_scann_layer_prop(char* scan_ptr, t_image_props *image_prop)
 {
 
   t_layer_props  *l_new_prop;
+  t_parasite_props *l_parasite_prop;
   char           *l_ptr;
   t_param_prop    l_param;
   t_proptype      l_prop_id;
@@ -1803,7 +2304,7 @@ gint p_scann_layer_prop(char* scan_ptr, t_image_props *image_prop)
             l_new_prop->opacity = l_param.flt_val1;
             break;
        case PROP_MODE:
-            l_new_prop->mode = l_param.int_val1;
+            l_new_prop->mode = p_to_GimpLayerModeEffects(l_param.int_val1);
             break;
        case PROP_VISIBLE:
             l_new_prop->visible = p_invert(l_param.int_val1);
@@ -1833,6 +2334,22 @@ gint p_scann_layer_prop(char* scan_ptr, t_image_props *image_prop)
        case PROP_TATTOO:
             l_new_prop->tattoo = l_param.int_val1;
             break;
+       case PROP_PARASITES:
+            l_parasite_prop = p_find_parasite(image_prop->parasite_props, l_param.int_val1);
+	    if(l_parasite_prop == NULL)
+	    {
+              l_parasite_prop = p_new_parasite_prop();
+              l_parasite_prop->next = image_prop->parasite_props;
+              image_prop->parasite_props = l_parasite_prop;
+	    }
+
+            if(l_parasite_prop)
+            {
+              l_parasite_prop->parasite_id = l_param.int_val1;
+              l_parasite_prop->parasite_type = XJT_LAYER_PARASITE;
+              l_parasite_prop->obj_pos = l_new_prop->layer_pos;
+            }
+            break;
        default :
             /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
             /* return -1; */ /* skip unknow tokens */
@@ -1852,9 +2369,11 @@ gint p_scann_channel_prop(char* scan_ptr, t_image_props *image_prop)
 {
 
   t_channel_props  *l_new_prop;
+  t_parasite_props *l_parasite_prop;
   char           *l_ptr;
   t_param_prop    l_param;
   t_proptype      l_prop_id;
+  t_parasitetype  l_parasite_type;   
 
   l_new_prop = p_new_channel_prop();
   if(l_new_prop == NULL)
@@ -1875,12 +2394,14 @@ gint p_scann_channel_prop(char* scan_ptr, t_image_props *image_prop)
     /* add the new element to the mask_props list of the image */
     l_new_prop->next = image_prop->mask_props;
     image_prop->mask_props = l_new_prop;
+    l_parasite_type = XJT_LAYER_MASK_PARASITE;
   }
   else
   {
     /* add the new element to the channel_props list of the image */
     l_new_prop->next = image_prop->channel_props;
     image_prop->channel_props = l_new_prop;
+    l_parasite_type = XJT_CHANNEL_PARASITE;
   }
 
   
@@ -1927,6 +2448,22 @@ gint p_scann_channel_prop(char* scan_ptr, t_image_props *image_prop)
        case PROP_TATTOO:
             l_new_prop->tattoo = l_param.int_val1;
             break;
+       case PROP_PARASITES:
+            l_parasite_prop = p_find_parasite(image_prop->parasite_props, l_param.int_val1);
+	    if(l_parasite_prop == NULL)
+	    {
+              l_parasite_prop = p_new_parasite_prop();
+              l_parasite_prop->next = image_prop->parasite_props;
+              image_prop->parasite_props = l_parasite_prop;
+	    }
+
+            if(l_parasite_prop)
+            {
+              l_parasite_prop->parasite_id = l_param.int_val1;
+              l_parasite_prop->parasite_type = l_parasite_type;
+              l_parasite_prop->obj_pos = l_new_prop->channel_pos;
+            }
+            break;
        default :
             /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
             /* return -1; */ /* skip unknow tokens */
@@ -1947,7 +2484,8 @@ gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
   t_param_prop    l_param;
   t_proptype      l_prop_id;
   t_guide_props  *l_guide_prop;
-
+  t_parasite_props  *l_parasite_prop;
+  
   if(strncmp(scan_ptr, GIMP_XJ_IMAGE, strlen(GIMP_XJ_IMAGE)) != 0)
   {
     fprintf(stderr, "XJT: PRP file %s identstring missing, scanned bad line:\n%s\n", GIMP_XJ_IMAGE, scan_ptr);
@@ -1970,16 +2508,16 @@ gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
             image_prop->version = l_param.string_val;
             break;
        case PROP_TYPE:
-            image_prop->image_type = l_param.int_val1;
-	    switch(image_prop->image_type)
+ 	    switch(l_param.int_val1)
 	    {
-	      case RGB_IMAGE:
-	      case GRAY_IMAGE:
-	      case RGBA_IMAGE:
-	      case GRAYA_IMAGE:
-                 break;
+	      case XJT_RGB:
+                image_prop->image_type = GIMP_RGB;
+	        break;
+	      case XJT_GRAY:
+                image_prop->image_type = GIMP_GRAY;
+	        break;
 	      default:
-                fprintf(stderr, "XJT: PRP unsupported image_type %d\n", (int)image_prop->image_type);
+                fprintf(stderr, "XJT: PRP unsupported image_type %d\n", (int)l_param.int_val1);
                 return -1;
                 break;
 	    }
@@ -1999,6 +2537,22 @@ gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
               l_guide_prop->orientation = l_param.int_val2;
             }
             break;
+       case PROP_PARASITES:
+            l_parasite_prop = p_find_parasite(image_prop->parasite_props, l_param.int_val1);
+	    if(l_parasite_prop == NULL)
+	    {
+              l_parasite_prop = p_new_parasite_prop();
+              l_parasite_prop->next = image_prop->parasite_props;
+              image_prop->parasite_props = l_parasite_prop;
+	    }
+
+            if(l_parasite_prop)
+            {
+              l_parasite_prop->parasite_id = l_param.int_val1;
+              l_parasite_prop->parasite_type = XJT_IMAGE_PARASITE;
+              l_parasite_prop->obj_pos = 0;
+            }
+            break;
        case PROP_RESOLUTION:
             image_prop->xresolution = l_param.flt_val1;
             image_prop->yresolution = l_param.flt_val2;
@@ -2012,9 +2566,69 @@ gint p_scann_image_prop(char* scan_ptr, t_image_props *image_prop)
             break;
      }
   }
-
 }	/* end p_scann_image_prop */
 
+
+/* ============================================================================
+ * p_scann_parasite_prop
+ *   scann one inputline for parasite properties
+ * ============================================================================
+ */
+gint p_scann_parasite_prop(char* scan_ptr, t_image_props *image_prop)
+{
+
+  t_parasite_props  *l_new_prop;
+  char           *l_ptr;
+  t_param_prop    l_param;
+  t_proptype      l_prop_id;
+  gint32          l_parasite_id;
+
+  l_parasite_id = strtol(&scan_ptr[1], &l_ptr, 10);   /*  Scan integer (base = 10)  */
+  if(l_ptr == scan_ptr)
+  {
+     fprintf(stderr, "XJT: PRP file parasite# missing, scanned bad line:\n%s\n", scan_ptr);
+     return -1; 
+  }
+
+  l_new_prop = p_find_parasite(image_prop->parasite_props, l_parasite_id);
+  if(l_new_prop == NULL)
+  {
+     l_new_prop = p_new_parasite_prop();
+     /* add the new element to the parasite_props list of the image */
+     l_new_prop->next = image_prop->parasite_props;
+     image_prop->parasite_props = l_new_prop;
+  }
+
+  if(l_new_prop == NULL)
+  {
+     return -1; 
+  }
+
+  l_new_prop->parasite_id = l_parasite_id;
+  
+  while(1)
+  {
+     l_ptr = p_skip_blanks(l_ptr);
+     l_ptr = p_scann_token(l_ptr, &l_param, &l_prop_id);
+
+     switch(l_prop_id)
+     {
+       case PROP_END:
+            return 0;
+            break;
+       case PROP_NAME:
+            l_new_prop->name  = l_param.string_val;
+            break;
+       case PROP_PARASITE_FLAGS:
+            l_new_prop->flags = l_param.int_val1;
+            break;
+       default :
+            /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
+            /* return -1; */ /* skip unknow tokens */
+            break;
+     }
+  }
+}	/* end p_scann_parasite_prop */
 
 /* ============================================================================
  * p_load_prop_file
@@ -2095,8 +2709,15 @@ t_image_props * p_load_prop_file(char *prop_filename)
        }
        else
        {
-        fprintf(stderr, "XJT: Warning, undefined PRP line scanned:\n%s\n", l_file_buffer);
-        /* goto cleanup; */
+         if(*l_ptr == 'p')
+         {
+           l_rc = p_scann_parasite_prop(l_file_buffer, l_image_prop);
+         }
+	 else
+         {
+           fprintf(stderr, "XJT: Warning, undefined PRP line scanned:\n%s\n", l_file_buffer);
+           /* goto cleanup; */
+	 }
        }
      }
   }
@@ -2153,26 +2774,24 @@ load_xjt_image (char *filename)
    l_fsel_attached_to_id = -1;    /* -1  assume fsel is not available (and not attached to any drawable) */
    l_fsel_id = -1;                /* -1  assume there is no floating selection */
 
-   l_name = malloc (strlen (filename) + 11);
-
-   sprintf (l_name, "Loading %s:", filename);
+   l_name = g_strdup_printf (_("Loading %s:"), filename);
    gimp_progress_init (l_name);
-   free (l_name);
-
+   g_free (l_name);
    
    /* create temporary directory  <filename>.tmpdir.<PID> */
    sprintf (l_dirname, "%s.tmpdir.%d", filename, (int)g_pid);
-   sprintf (l_prop_file, "%s/PRP", l_dirname);
+   sprintf (l_prop_file, "%s%cPRP", l_dirname, G_DIR_SEPARATOR);
    l_mode_dir = 0777;
    if(mkdir(l_dirname, l_mode_dir) != 0)
    {
-     g_message ("can't create working dir: %s\n", l_dirname);
+     g_message (_("Can't create working dir: %s"), l_dirname);
      goto cleanup;
    }
 
 
    /* prepare for extract tar files directly from filename into l_dirname */
-   if(*filename == '/')
+   if((*filename == G_DIR_SEPARATOR)
+   || (filename[1] == ':'))
    {
       /* filename with absolute path */
       sprintf(l_cmd, "cd %s; tar -xf \"%s\"; cd ..", l_dirname, filename);
@@ -2180,7 +2799,7 @@ load_xjt_image (char *filename)
    else
    {
       /* filename with relative path */
-      sprintf(l_cmd, "cd %s; tar -xf \"../%s\" *; cd ..", l_dirname, filename);
+      sprintf(l_cmd, "cd %s; tar -xf \"..%c%s\" *; cd ..", l_dirname, G_DIR_SEPARATOR, filename);
    }
 
    l_len = strlen(filename);
@@ -2199,13 +2818,13 @@ load_xjt_image (char *filename)
       */
      if(strcmp(&filename[l_len - 3], "bz2") == 0)
      {
-       sprintf(l_cmd, "bunzip2 <\"%s\" >\"%s/arc.tar\"",filename , l_dirname);
+       sprintf(l_cmd, "bunzip2 <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
        l_rc = p_system(l_cmd);
        sprintf(l_cmd, "cd %s; tar -xf arc.tar; cd ..", l_dirname);
      }
      else if(strcmp(&filename[l_len - 2], "gz") == 0)
      {
-       sprintf(l_cmd, "gzip -cdf <\"%s\" >\"%s/arc.tar\"",filename , l_dirname);
+       sprintf(l_cmd, "gzip -cdf <\"%s\" >\"%s%carc.tar\"",filename , l_dirname, G_DIR_SEPARATOR);
        l_rc = p_system(l_cmd);
        sprintf(l_cmd, "cd %s; tar -xf arc.tar; cd ..", l_dirname);
      }
@@ -2219,7 +2838,7 @@ load_xjt_image (char *filename)
       goto cleanup;
 
    /* check and read Property file (PRP must exist in each xjt archive) */
-   sprintf (l_prop_file, "%s/PRP", l_dirname);
+   sprintf (l_prop_file, "%s%cPRP", l_dirname, G_DIR_SEPARATOR);
    
    l_image_prp_ptr = p_load_prop_file(l_prop_file);
    if (l_image_prp_ptr == NULL)
@@ -2241,14 +2860,19 @@ load_xjt_image (char *filename)
    p_gimp_image_set_resolution  (l_image_id, 
                                  l_image_prp_ptr->xresolution,
                                  l_image_prp_ptr->yresolution);
-   
+
+   p_check_and_add_parasite(l_image_id,
+                            l_dirname,
+			    l_image_prp_ptr->parasite_props,
+			    0,
+			    XJT_IMAGE_PARASITE);
    /* load all layers */
 
    for(l_layer_prp_ptr = l_image_prp_ptr->layer_props;
        l_layer_prp_ptr != NULL;
        l_layer_prp_ptr = (t_layer_props *)l_layer_prp_ptr->next)
    {
-     sprintf(l_jpg_file, "%s/l%d.jpg", l_dirname, (int)l_layer_prp_ptr->layer_pos);
+     sprintf(l_jpg_file, "%s%cl%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
      if(xjt_debug) printf("XJT-DEBUG: loading layer from file %s\n", l_jpg_file);  
 
      l_layer_id = xjpg_load_layer (l_jpg_file,
@@ -2282,7 +2906,7 @@ load_xjt_image (char *filename)
      /* check for alpha channel */
      if(l_layer_prp_ptr->has_alpha)
      {
-       sprintf(l_jpg_file, "%s/la%d.jpg", l_dirname, (int)l_layer_prp_ptr->layer_pos);
+       sprintf(l_jpg_file, "%s%cla%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
        if(xjt_debug) printf("XJT-DEBUG: loading alpha-channel from file %s\n", l_jpg_file);  
 
        if( xjpg_load_layer_alpha (l_jpg_file, l_image_id, l_layer_id) != 0)
@@ -2303,6 +2927,14 @@ load_xjt_image (char *filename)
         l_active_layer_id = l_layer_id;
      }
 
+     /* Handle layer parasites */
+     p_check_and_add_parasite(l_layer_id,
+                            l_dirname,
+			    l_image_prp_ptr->parasite_props,
+			    l_layer_prp_ptr->layer_pos,
+			    XJT_LAYER_PARASITE);
+
+
      /* search for the properties of the layermask */
      for(l_channel_prp_ptr = l_image_prp_ptr->mask_props;
          l_channel_prp_ptr != NULL;
@@ -2311,7 +2943,7 @@ load_xjt_image (char *filename)
         if(l_channel_prp_ptr->channel_pos == l_layer_prp_ptr->layer_pos)
         {
            /* layermask properties found: load the layermask */
-           sprintf(l_jpg_file, "%s/lm%d.jpg", l_dirname, (int)l_layer_prp_ptr->layer_pos);
+           sprintf(l_jpg_file, "%s%clm%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_layer_prp_ptr->layer_pos);
            if(xjt_debug) printf("XJT-DEBUG: loading layer-mask from file %s\n", l_jpg_file);  
 
            l_channel_id = gimp_layer_create_mask(l_layer_id, 0 /* mask_type 0 = WHITE_MASK */ );
@@ -2343,6 +2975,13 @@ load_xjt_image (char *filename)
               gimp_layer_set_apply_mask (l_layer_id, l_layer_prp_ptr->apply_mask);
               gimp_layer_set_edit_mask  (l_layer_id, l_layer_prp_ptr->edit_mask);
               gimp_layer_set_show_mask  (l_layer_id, l_layer_prp_ptr->show_mask);
+
+              /* Handle layermask parasites */
+              p_check_and_add_parasite(l_channel_id,
+                            l_dirname,
+			    l_image_prp_ptr->parasite_props,
+			    l_channel_prp_ptr->channel_pos,
+			    XJT_LAYER_MASK_PARASITE);
            }
            break;
         }
@@ -2356,7 +2995,7 @@ load_xjt_image (char *filename)
        l_channel_prp_ptr != NULL;
        l_channel_prp_ptr = (t_channel_props *)l_channel_prp_ptr->next)
    {
-     sprintf(l_jpg_file, "%s/c%d.jpg", l_dirname, (int)l_channel_prp_ptr->channel_pos);
+     sprintf(l_jpg_file, "%s%cc%d.jpg", l_dirname, G_DIR_SEPARATOR, (int)l_channel_prp_ptr->channel_pos);
      if(xjt_debug) printf("XJT-DEBUG: loading channel from file %s\n", l_jpg_file);  
 
      l_channel_id = xjpg_load_channel (l_jpg_file,
@@ -2373,6 +3012,13 @@ load_xjt_image (char *filename)
         l_rc = -1;
         break;
      }
+
+     /* Handle channel parasites */
+     p_check_and_add_parasite(l_channel_id,
+                            l_dirname,
+			    l_image_prp_ptr->parasite_props,
+			    l_channel_prp_ptr->channel_pos,
+			    XJT_CHANNEL_PARASITE);
      
      if(l_channel_prp_ptr->selection)
      {

@@ -20,6 +20,7 @@
  */
 
 /* revision history:
+ * version 1.1.15;  2000/01/20  hof: parasites
  * version 1.02.00; 1999/02/01  hof: PDB-calls to load/save resolution tattoos and parasites
  *                                   (needs GIMP 1.1.1)-- UNDER CONSTRUCTION ---
  * version 1.01.00; 1998/11/22  hof: PDB-calls to load/save guides under GIMP 1.1
@@ -55,6 +56,6 @@ gint   p_gimp_image_set_resolution(gint32 image_id, float xresolution, float yre
 gint32 p_gimp_layer_get_tattoo(gint32 layer_id);
 gint32 p_gimp_channel_get_tattoo(gint32 channel_id);
 
-Parasite  *gimp_image_parasite_find(gint32 image_id, const char *name);
+char** p_gimp_parasite_list (gint32 *num_parasites);
 
 #endif

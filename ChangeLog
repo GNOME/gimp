@@ -1,3 +1,16 @@
+Mon Jan 24 22:15:46 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* PLUGIN_MAINTAINERS: Simon Budig maintains PageCurl
+
+	* plug-ins/gap/gap_pdb_calls.c
+	* plug-ins/xjt/README
+	* plug-ins/xjt/README_xjt_fileformat.txt
+	* plug-ins/xjt/xjt.c
+	* plug-ins/xjt/xpdb_calls.c
+	* plug-ins/xjt/xpdb_calls.h
+	* po-plug-ins/POTFILES.in: applied (modified) patches from
+	Wolfgang Hofer <hof@hotbot.com>.
+
 Mon Jan 24 21:30:26 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* tips/gimp_tips.pl.txt
