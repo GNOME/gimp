@@ -1,5 +1,13 @@
 2004-06-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontrollers.c (gimp_controllers_event_mapped):
+	start supporting GIMP_CONTROLLER_EVENT_VALUE of type gdouble.
+	Assume the double value is in a [0.0..1.0] range and temporarily
+	change the value of the called GimpEnumAction to a range of
+	[0..1000] when invoking it. All still very hackish...
+
+2004-06-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcontrollerinfo.c (gimp_controller_info_event):
 	more debugging output.
 

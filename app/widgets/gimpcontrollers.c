@@ -39,6 +39,7 @@
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollers.h"
 #include "gimpcontrollerwheel.h"
+#include "gimpenumaction.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
@@ -304,7 +305,32 @@ gimp_controllers_event_mapped (GimpControllerInfo        *info,
 
       if (action)
         {
-          gtk_action_activate (action);
+          switch (event->type)
+            {
+            case GIMP_CONTROLLER_EVENT_VALUE:
+              if (G_VALUE_HOLDS_DOUBLE (&event->value.value) &&
+                  GIMP_IS_ENUM_ACTION (action))
+                {
+                  gdouble value;
+                  gint    save = GIMP_ENUM_ACTION (action)->value;
+
+                  value = g_value_get_double (&event->value.value);
+
+                  GIMP_ENUM_ACTION (action)->value = value * 1000;
+
+                  gtk_action_activate (action);
+
+                  GIMP_ENUM_ACTION (action)->value = save;
+
+                  break;
+                }
+
+            case GIMP_CONTROLLER_EVENT_TRIGGER:
+            default:
+              gtk_action_activate (action);
+              break;
+            }
+
           return TRUE;
         }
     }
