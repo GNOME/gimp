@@ -25,7 +25,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#define GDYNTEXT_VERSION				"1.4.0"
+#define GDYNTEXT_VERSION				"1.4.1"
 #define GDYNTEXT_MAGIC					"GDT09"
 #define GDYNTEXT_WEB_PAGE				"http://www.geocities.com/Tokyo/1474/gimp/"
 #define MAX_TEXT_SIZE						(64 * 1024)

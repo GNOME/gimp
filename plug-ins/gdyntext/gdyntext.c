@@ -522,7 +522,7 @@ void gdt_set_values(GdtVals *data)
 void gdt_render_text(GdtVals *data)
 {
 	gint layer_ox, layer_oy, i, nret_vals, xoffs;
-	gint32 layer_f;
+	gint32 layer_f, selection_empty, selection_channel;
 	gint32 text_width, text_height;
   gint32 text_ascent, text_descent;
   gint32 layer_width, layer_height;
@@ -535,6 +535,22 @@ void gdt_render_text(GdtVals *data)
 	ret_vals = gimp_run_procedure("gimp_undo_push_group_start", &nret_vals,
 		PARAM_IMAGE, data->image_id, PARAM_END);
 	gimp_destroy_params(ret_vals, nret_vals);
+
+  /* save and remove current selection */
+  ret_vals = gimp_run_procedure("gimp_selection_is_empty", &nret_vals,
+		PARAM_IMAGE, data->image_id, PARAM_END);
+  selection_empty = ret_vals[1].data.d_int32;
+  gimp_destroy_params(ret_vals, nret_vals);
+  if (selection_empty == FALSE) {
+		/* there is an active selection to save */
+    ret_vals = gimp_run_procedure("gimp_selection_save", &nret_vals,
+			PARAM_IMAGE, data->image_id, PARAM_END);
+    selection_channel = ret_vals[1].data.d_int32;
+    gimp_destroy_params(ret_vals, nret_vals);
+    ret_vals = gimp_run_procedure("gimp_selection_none", &nret_vals,
+			PARAM_IMAGE, data->image_id, PARAM_END);
+    gimp_destroy_params(ret_vals, nret_vals);
+  }
 
 	text_style = strsplit(data->font_style, '-');
 
@@ -743,6 +759,17 @@ void gdt_render_text(GdtVals *data)
 	}
 
 	gimp_layer_set_preserve_transparency(data->layer_id, 1);
+
+  /* restore old selection if any */
+  if (selection_empty == FALSE) {
+    ret_vals = gimp_run_procedure("gimp_selection_load", &nret_vals,
+#ifndef GIMP_HAVE_PARASITES
+			PARAM_IMAGE, data->image_id,
+#endif
+      PARAM_CHANNEL, selection_channel, PARAM_END);
+    gimp_destroy_params(ret_vals, nret_vals);
+    gimp_image_remove_channel(data->image_id, selection_channel);
+  }
 
 	ret_vals = gimp_run_procedure("gimp_undo_push_group_end", &nret_vals,
 		PARAM_IMAGE, data->image_id, PARAM_END);
