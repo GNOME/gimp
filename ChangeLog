@@ -1,3 +1,7 @@
+Mon Mar 29 22:51:43 MEST 1999  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gap/README: doh, forgot to commit that one yesterday
+
 1999-03-29  Pavel Machek  <pavel@artax.karlin.mff.cuni.cz>
 
 	* app/menus.c (toolbox_entries): underline letters so keyboard is

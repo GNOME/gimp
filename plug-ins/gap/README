@@ -4,7 +4,7 @@ Project gap "Gimp Animation Package"   17. Mar 1999  release 0.99.00
 Introduction
 --------------------------------------------------------------------
 
-The GIMP (1.0.2) is a great Program for creating and manipulating
+The GIMP (1.0.2 and 1.1.x) is a great Program for creating and manipulating
 Pixelbased Images of many types. The Plugin Concept and the Procedural Database
 allows Programmers to extend the Gimp's Functions in many ways.
 
@@ -70,72 +70,8 @@ Concept:
 Installation
 --------------------------------------------------------------------
 
-This GAP-release 0.99.00 runs stable under GIMP 1.0.2 when
-some Patches are made to the GIMP-core.
-
-Most of the GAP 0.99.00 Functions are now changed to run 
-on the latest Development release of GIMP 1.1.3 / gtk 1.2 too.
-
-   1. copy the tar file to gimp's plugin directory  <gimp_dir>/plug-ins
-       then:
-       cd  <gimp_dir>/plug-ins
-
-    2. extract the tar file (should expand to a directory named gap
-    2.a
-       # if you have gnu tar:
-       tar -xzvf gap.tgz
-    2.b 
-       # if you dont have gnu tar:
-       # gunzip, then extract 
-       gzip -cfd <gap.tgz >gap.tar
-       tar -xvf gap.tar
-     
-    3 # IF you have GIMP 1.1 (latest) 
-        #    No Patches to the GIMP 1.1 core are needed !
-        #    (goto Step 4.)
-        #
-        # IF you have GIMP 1.0.2 (or older GIMP releases)
-        #   check if your gimp version is supported by
-        #   the ./apply_patch.sh  script
-        #
-        #   to do this, read the comments within this script
-
-    3.1 
-        #   check if your gimp version is supported by
-        #   the ./apply_patch.sh  script
-
-    
-    3.2 # Apply the patch to gimp core and install it
-        #   check if your gimp version is supported by
-        #   the ./apply_patch.sh  script
-        #
-        #   to do this, read the comments within this script
-   
-       cd <gimp_dir>/plug-ins/gap
-       ./apply_patch.sh   1.0.0     # specify your gimp version here
-       cd ../../app
-       make install
-
-    4. Compile GAP Plugins and install it
-
-       cd  $GIMP/plug-ins/gap
-       
-       # for GIMP 1.0.2 (and older)  
-       cp Makefile.1.0 Makefile
-      
-       # for GIMP 1.1  
-       cp Makefile.1.1 Makefile       
-
-       # Edit the Makefile to fit your configuration
-       
-       make
-       make install
-       
-    5. Install Script-Fu Scripts
-       # Just copy *.scm to  /usr/local/share/gimp/scripts
-       #              (or to $HOME/.gimp/scripts )
-       cd  $GIMP/plug-ins/gap
-       cp *.scm  /usr/local/share/gimp/scripts
+GAP is part of the development Gimp distribution since GIMP 1.1.4 and
+should get installed along with the other plug-ins.
 
     
    Notes:
@@ -165,8 +101,7 @@ Change Log
             (update preview did'nt work with gimp 1.1.2 and gtk 1.1)
           - Animated Filtercalls:
             added a 2.nd Set of Iterators (iter_ALT Procedures) for
-            Plugins of GIMP 1.1.3 that is compiled with Makefile 1.1
-            (Makefile 1.0 still uses Iterators for the old 1.0 PDB-Interfaces)
+            Plugins of GIMP 1.1.3.
           - bugfixes in iterator code generator.
           - GAP now uses gimp standard procedures to copy layers and channels.
           - prepared filename-handling for win/dos conventions.
