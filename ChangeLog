@@ -1,5 +1,10 @@
 2003-03-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/xpm.c: don't add a transparent color entry for
+	images that don't have an alpha channel (fixes bug #108034).
+
+2003-03-10  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpscanner.[ch]: removed gimp_scanner_parse_string_list()
 	since the format it read wasn't proper s-expressions syntax.
 

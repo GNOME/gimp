@@ -16,9 +16,11 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* XPM plugin version 1.2.4 */
+/* XPM plugin version 1.2.5 */
 
 /*
+1.2.5 only creates a "None" color entry if the image has alpha (bug #108034)
+
 1.2.4 displays an error message if saving fails (bug #87588)
 
 1.2.3 fixes bug when running in noninteractive mode
@@ -533,8 +535,8 @@ create_colormap_from_hash (gpointer gkey,
 			   gpointer value, 
 			   gpointer user_data)
 {
-  rgbkey *key = gkey;
-  gchar *string = g_new(char, 8);
+  rgbkey *key    = gkey;
+  gchar  *string = g_new (gchar, 8);
 
   sprintf (string, "#%02X%02X%02X", (int)key->r, (int)key->g, (int)key->b);
   set_XpmImage (user_data, *((int *) value), string);
@@ -546,6 +548,7 @@ save_image (gchar  *filename,
             gint32  drawable_ID)
 {
   GimpDrawable *drawable;    
+  GimpPixelRgn  pixel_rgn;
 
   gint       width;
   gint       height;
@@ -558,8 +561,6 @@ save_image (gchar  *filename,
   XpmImage  *image;
 
   guint     *ibuff   = NULL;
-  /*guint   *mbuff   = NULL;*/
-  GimpPixelRgn  pixel_rgn;
   guchar    *buffer;
   guchar    *data;
 
@@ -571,23 +572,19 @@ save_image (gchar  *filename,
   gboolean   rc = FALSE;
 
   /* get some basic stats about the image */
-  alpha = gimp_drawable_has_alpha (drawable_ID);
-  color = !gimp_drawable_is_gray (drawable_ID);
+  alpha   = gimp_drawable_has_alpha (drawable_ID);
+  color   = !gimp_drawable_is_gray (drawable_ID);
   indexed = gimp_drawable_is_indexed (drawable_ID);
 
   drawable = gimp_drawable_get (drawable_ID);
   width    = drawable->width;
   height   = drawable->height;
   
-  /* allocate buffers making the assumption that ibuff and mbuff
-     are 32 bit aligned... */
+  /* allocate buffer making the assumption that ibuff is 32 bit aligned... */
   if ((ibuff = g_new (guint, width * height)) == NULL)
     goto cleanup;
 
-  /*if ((mbuff = g_new(guint, width*height)) == NULL)
-    goto cleanup;*/
-  
-  if ((hash = g_hash_table_new ((GHashFunc)rgbhash, 
+  if ((hash = g_hash_table_new ((GHashFunc) rgbhash, 
 				(GCompareFunc) compare)) == NULL)
     goto cleanup;
   
@@ -599,6 +596,8 @@ save_image (gchar  *filename,
     gimp_progress_init (name);
     g_free (name);
   }
+
+  ncolors = alpha ? 1 : 0;
 
   /* allocate a pixel region to work with */
   buffer = g_new (guchar, gimp_tile_height() * width * drawable->bpp);
@@ -623,13 +622,12 @@ save_image (gchar  *filename,
         {
           /* go to the start of this row in each image */
           guint *idata = ibuff + (i+j) * width;
-          /*guint *mdata = mbuff + (i+j) * width;*/
 
           /* do each pixel in the row */
           for (k=0; k<width; k++)
             {
 	      rgbkey *key = g_new (rgbkey, 1);
-	      guchar a;
+	      guchar  a;
   
               /* get pixel data */
               key->r = *(data++);
@@ -645,7 +643,7 @@ save_image (gchar  *filename,
 		{
 		  if (indexed)
 		    {
-		      *(idata++) = (key->r)+1;
+		      *(idata++) = (key->r) + (alpha ? 1 : 0);
 		    }
 		  else
 		    {
@@ -670,44 +668,54 @@ save_image (gchar  *filename,
 
   if (indexed)
     {
-      guchar *cmap;
-      cmap = gimp_image_get_cmap(image_ID, &ncolors);
-      ncolors++; /* for transparency */
+      guchar *cmap = gimp_image_get_cmap (image_ID, &ncolors);
+
+      if (alpha)
+	ncolors++;
+
       colormap = g_new (XpmColor, ncolors);
-      cpp = (gdouble) 1.0 + 
-	(gdouble) log (ncolors) / (double) log (sizeof (linenoise)-1.0);
-      set_XpmImage (colormap, 0, "None");
-      for (i=0; i<ncolors-1; i++)
+      cpp = 
+	1 + (gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
+
+      if (alpha)
+	set_XpmImage (colormap, 0, "None");
+
+      for (i = alpha ? 1 : 0; i < ncolors; i++)
 	{
 	  gchar *string;
 	  guchar r, g, b;
+
 	  r = *(cmap++);
 	  g = *(cmap++);
 	  b = *(cmap++);
+
 	  string = g_new (gchar, 8);
 	  sprintf (string, "#%02X%02X%02X", (int)r, (int)g, (int)b);
-	  set_XpmImage (colormap, i+1, string);
-	} 
+	  set_XpmImage (colormap, i, string);
+	}
+
+      g_free (cmap);
     }
   else
     {
       colormap = g_new (XpmColor, ncolors);
-      
-      cpp = (gdouble) 1.0 + 
-	(gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
-      set_XpmImage (colormap, 0, "None");
-      
+      cpp =
+	1 + (gdouble) log (ncolors) / (gdouble) log (sizeof (linenoise) - 1.0);
+
+      if (alpha)
+	set_XpmImage (colormap, 0, "None");
+
       g_hash_table_foreach (hash, create_colormap_from_hash, colormap);
     }
 
   image = g_new (XpmImage, 1);
  
-  image->width=width;
-  image->height=height;
-  image->ncolors=ncolors;
-  image->cpp=cpp;
-  image->colorTable=colormap;	    
-  image->data = ibuff;
+  image->width      = width;
+  image->height     = height;
+  image->ncolors    = ncolors;
+  image->cpp        = cpp;
+  image->colorTable = colormap;	    
+  image->data       = ibuff;
   
   /* do the save */
   rc = (XpmWriteFileFromXpmImage (filename, image, NULL) == XpmSuccess);
@@ -717,7 +725,7 @@ save_image (gchar  *filename,
   gimp_drawable_detach (drawable);
   
   g_free (ibuff);
-  /*if (mbuff) g_free(mbuff);*/
+
   if (hash)  
     g_hash_table_destroy (hash);
   
