@@ -1,5 +1,10 @@
 2004-11-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpoffsetarea.c (gimp_offset_area_resize): queue
+	a resize. Fixes remaining issues with bug #157495.
+
+2004-11-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/url.c: removed debug output.
 
 2004-11-08  Sven Neumann  <sven@gimp.org>

@@ -20,7 +20,7 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#include <stdio.h>
+#include "config.h"
 
 #include <gtk/gtk.h>
 
@@ -193,15 +193,14 @@ gimp_offset_area_set_size (GimpOffsetArea *area,
                            gint            width,
                            gint            height)
 {
-  gint offset_x;
-  gint offset_y;
-
   g_return_if_fail (GIMP_IS_OFFSET_AREA (area));
-
   g_return_if_fail (width > 0 && height > 0);
 
   if (area->width != width || area->height != height)
     {
+      gint offset_x;
+      gint offset_y;
+
       area->width  = width;
       area->height = height;
 
@@ -215,18 +214,17 @@ gimp_offset_area_set_size (GimpOffsetArea *area,
       else
         offset_y = CLAMP (area->offset_y, area->height - area->orig_height, 0);
 
-      area->offset_x = offset_x;
-      area->offset_y = offset_y;
-
-      gimp_offset_area_resize (area);
-      gtk_widget_queue_draw (GTK_WIDGET (area));
-
       if (offset_x != area->offset_x || offset_y != area->offset_y)
         {
+          area->offset_x = offset_x;
+          area->offset_y = offset_y;
+
           g_signal_emit (area,
                          gimp_offset_area_signals[OFFSETS_CHANGED], 0,
-                         area->offset_x, area->offset_y);
+                         offset_x, offset_y);
         }
+
+      gimp_offset_area_resize (area);
     }
 }
 
@@ -288,6 +286,7 @@ gimp_offset_area_resize (GimpOffsetArea *area)
   height = ratio * (gdouble) height;
 
   gtk_widget_set_size_request (GTK_WIDGET (area), width, height);
+  gtk_widget_queue_resize (GTK_WIDGET (area));
 }
 
 static void
