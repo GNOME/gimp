@@ -46,10 +46,10 @@
       </menu>
       <separator />
       <menu action="context-brush-menu" name="Brush">
-        <menuitem action="context-brush-first" />
-        <menuitem action="context-brush-last" />
-        <menuitem action="context-brush-previous" />
-        <menuitem action="context-brush-next" />
+        <menuitem action="context-brush-select-first" />
+        <menuitem action="context-brush-select-last" />
+        <menuitem action="context-brush-select-previous" />
+        <menuitem action="context-brush-select-next" />
 	<separator />
         <menuitem action="context-brush-radius-minimum" />
         <menuitem action="context-brush-radius-maximum" />
@@ -80,28 +80,28 @@
         <menuitem action="context-brush-angle-increase-skip" />
       </menu>
       <menu action="context-pattern-menu" name="Pattern">
-        <menuitem action="context-pattern-first" />
-        <menuitem action="context-pattern-last" />
-        <menuitem action="context-pattern-previous" />
-        <menuitem action="context-pattern-next" />
+        <menuitem action="context-pattern-select-first" />
+        <menuitem action="context-pattern-select-last" />
+        <menuitem action="context-pattern-select-previous" />
+        <menuitem action="context-pattern-select-next" />
       </menu>
       <menu action="context-palette-menu" name="Palette">
-        <menuitem action="context-palette-first" />
-        <menuitem action="context-palette-last" />
-        <menuitem action="context-palette-previous" />
-        <menuitem action="context-palette-next" />
+        <menuitem action="context-palette-select-first" />
+        <menuitem action="context-palette-select-last" />
+        <menuitem action="context-palette-select-previous" />
+        <menuitem action="context-palette-select-next" />
       </menu>
       <menu action="context-gradient-menu" name="Gradient">
-        <menuitem action="context-gradient-first" />
-        <menuitem action="context-gradient-last" />
-        <menuitem action="context-gradient-previous" />
-        <menuitem action="context-gradient-next" />
+        <menuitem action="context-gradient-select-first" />
+        <menuitem action="context-gradient-select-last" />
+        <menuitem action="context-gradient-select-previous" />
+        <menuitem action="context-gradient-select-next" />
       </menu>
       <menu action="context-font-menu" name="Font">
-        <menuitem action="context-font-first" />
-        <menuitem action="context-font-last" />
-        <menuitem action="context-font-previous" />
-        <menuitem action="context-font-next" />
+        <menuitem action="context-font-select-first" />
+        <menuitem action="context-font-select-last" />
+        <menuitem action="context-font-select-previous" />
+        <menuitem action="context-font-select-next" />
       </menu>
     </menu>
 

@@ -289,19 +289,19 @@ static GimpEnumActionEntry context_opacity_actions[] =
 
 static GimpEnumActionEntry context_tool_select_actions[] =
 {
-  { "context-tool-first", GTK_STOCK_GOTO_FIRST,
+  { "context-tool-select-first", GTK_STOCK_GOTO_FIRST,
     "First Tool", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
-  { "context-tool-last", GTK_STOCK_GOTO_LAST,
+  { "context-tool-select-last", GTK_STOCK_GOTO_LAST,
     "Last Tool", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
-  { "context-tool-previous", GTK_STOCK_GO_BACK,
+  { "context-tool-select-previous", GTK_STOCK_GO_BACK,
     "Previous Tool", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
-  { "context-tool-next", GTK_STOCK_GO_FORWARD,
+  { "context-tool-select-next", GTK_STOCK_GO_FORWARD,
     "Next Tool", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL }
@@ -309,19 +309,19 @@ static GimpEnumActionEntry context_tool_select_actions[] =
 
 static GimpEnumActionEntry context_brush_select_actions[] =
 {
-  { "context-brush-first", GTK_STOCK_GOTO_FIRST,
+  { "context-brush-select-first", GTK_STOCK_GOTO_FIRST,
     "First Brush", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
-  { "context-brush-last", GTK_STOCK_GOTO_LAST,
+  { "context-brush-select-last", GTK_STOCK_GOTO_LAST,
     "Last Brush", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
-  { "context-brush-previous", GTK_STOCK_GO_BACK,
+  { "context-brush-select-previous", GTK_STOCK_GO_BACK,
     "Previous Brush", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
-  { "context-brush-next", GTK_STOCK_GO_FORWARD,
+  { "context-brush-select-next", GTK_STOCK_GO_FORWARD,
     "Next Brush", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL }
@@ -329,19 +329,19 @@ static GimpEnumActionEntry context_brush_select_actions[] =
 
 static GimpEnumActionEntry context_pattern_select_actions[] =
 {
-  { "context-pattern-first", GTK_STOCK_GOTO_FIRST,
+  { "context-pattern-select-first", GTK_STOCK_GOTO_FIRST,
     "First Pattern", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
-  { "context-pattern-last", GTK_STOCK_GOTO_LAST,
+  { "context-pattern-select-last", GTK_STOCK_GOTO_LAST,
     "Last Pattern", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
-  { "context-pattern-previous", GTK_STOCK_GO_BACK,
+  { "context-pattern-select-previous", GTK_STOCK_GO_BACK,
     "Previous Pattern", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
-  { "context-pattern-next", GTK_STOCK_GO_FORWARD,
+  { "context-pattern-select-next", GTK_STOCK_GO_FORWARD,
     "Next Pattern", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL }
@@ -349,19 +349,19 @@ static GimpEnumActionEntry context_pattern_select_actions[] =
 
 static GimpEnumActionEntry context_palette_select_actions[] =
 {
-  { "context-palette-first", GTK_STOCK_GOTO_FIRST,
+  { "context-palette-select-first", GTK_STOCK_GOTO_FIRST,
     "First Palette", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
-  { "context-palette-last", GTK_STOCK_GOTO_LAST,
+  { "context-palette-select-last", GTK_STOCK_GOTO_LAST,
     "Last Palette", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
-  { "context-palette-previous", GTK_STOCK_GO_BACK,
+  { "context-palette-select-previous", GTK_STOCK_GO_BACK,
     "Previous Palette", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
-  { "context-palette-next", GTK_STOCK_GO_FORWARD,
+  { "context-palette-select-next", GTK_STOCK_GO_FORWARD,
     "Next Palette", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL }
@@ -369,19 +369,19 @@ static GimpEnumActionEntry context_palette_select_actions[] =
 
 static GimpEnumActionEntry context_gradient_select_actions[] =
 {
-  { "context-gradient-first", GTK_STOCK_GOTO_FIRST,
+  { "context-gradient-select-first", GTK_STOCK_GOTO_FIRST,
     "First Gradient", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
-  { "context-gradient-last", GTK_STOCK_GOTO_LAST,
+  { "context-gradient-select-last", GTK_STOCK_GOTO_LAST,
     "Last Gradient", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
-  { "context-gradient-previous", GTK_STOCK_GO_BACK,
+  { "context-gradient-select-previous", GTK_STOCK_GO_BACK,
     "Previous Gradient", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
-  { "context-gradient-next", GTK_STOCK_GO_FORWARD,
+  { "context-gradient-select-next", GTK_STOCK_GO_FORWARD,
     "Next Gradient", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL }
@@ -389,19 +389,19 @@ static GimpEnumActionEntry context_gradient_select_actions[] =
 
 static GimpEnumActionEntry context_font_select_actions[] =
 {
-  { "context-font-first", GTK_STOCK_GOTO_FIRST,
+  { "context-font-select-first", GTK_STOCK_GOTO_FIRST,
     "First Font", NULL, NULL,
     GIMP_ACTION_SELECT_FIRST,
     NULL },
-  { "context-font-last", GTK_STOCK_GOTO_LAST,
+  { "context-font-select-last", GTK_STOCK_GOTO_LAST,
     "Last Font", NULL, NULL,
     GIMP_ACTION_SELECT_LAST,
     NULL },
-  { "context-font-previous", GTK_STOCK_GO_BACK,
+  { "context-font-select-previous", GTK_STOCK_GO_BACK,
     "Previous Font", NULL, NULL,
     GIMP_ACTION_SELECT_PREVIOUS,
     NULL },
-  { "context-font-next", GTK_STOCK_GO_FORWARD,
+  { "context-font-select-next", GTK_STOCK_GO_FORWARD,
     "Next Font", NULL, NULL,
     GIMP_ACTION_SELECT_NEXT,
     NULL }

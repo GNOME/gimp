@@ -1,5 +1,13 @@
 2004-07-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/actions/context-actions.c: changed names of actions which
+	select brushes, patterns etc. from e.g. "context-brush-first" to
+	"context-brush-select-first".
+
+	* menus/image-menu.xml.in: changed accordingly.
+
+2004-07-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/preferences-dialog.c: remember the keyboard shortcut
 	dialog and show it only once.
 
