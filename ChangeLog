@@ -1,3 +1,8 @@
+2005-01-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdockable.c (gimp_dockable_expose_event): blink
+	more correctly.
+
 2005-01-18  Carol Spears  <carol@gimp.org>
 
 	* data/images/gimp-splash.png a different splash for the

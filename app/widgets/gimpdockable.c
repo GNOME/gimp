@@ -581,7 +581,8 @@ gimp_dockable_expose_event (GtkWidget      *widget,
           text_y = title_area.y + (title_area.height - layout_height) / 2;
 
           gtk_paint_layout (widget->style, widget->window,
-                            widget->state, TRUE,
+                            (dockable->blink_counter & 1) ?
+                            GTK_STATE_SELECTED : widget->state, TRUE,
                             &expose_area, widget, NULL,
                             text_x, text_y, dockable->title_layout);
         }
