@@ -49,13 +49,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "core/gimp.h"
-
-#include "file/file-utils.h"
 
 #include "gimperrorconsole.h"
 #include "gimphelp-ids.h"

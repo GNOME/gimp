@@ -30,13 +30,12 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-
-#include "file/file-utils.h"
 
 #include "gimpbrushgenerated.h"
 

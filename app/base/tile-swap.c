@@ -32,8 +32,10 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #ifdef G_OS_WIN32
-#include <libgimpbase/gimpwin32-io.h>
+#include "libgimpbase/gimpwin32-io.h"
 #endif
 
 #include "base-types.h"
@@ -44,8 +46,6 @@
 #ifndef _O_TEMPORARY
 #define _O_TEMPORARY 0
 #endif
-
-#include "file/file-utils.h"
 
 #include "tile.h"
 #include "tile-private.h"

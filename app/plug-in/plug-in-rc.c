@@ -34,8 +34,6 @@
 
 #include "core/gimp.h"
 
-#include "file/file-utils.h"
-
 #include "plug-ins.h"
 #include "plug-in-def.h"
 #include "plug-in-proc.h"

@@ -51,8 +51,6 @@
 
 #include "config/gimpbaseconfig.h"
 
-#include "file/file-utils.h"
-
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"
 #include "gimpbrushgenerated.h"

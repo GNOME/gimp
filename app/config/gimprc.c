@@ -37,8 +37,6 @@
 
 #include "config-types.h"
 
-#include "file/file-utils.h"
-
 #include "gimpconfig.h"
 #include "gimpconfig-deserialize.h"
 #include "gimpconfig-error.h"

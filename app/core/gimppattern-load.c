@@ -49,8 +49,6 @@
 
 #include "base/temp-buf.h"
 
-#include "file/file-utils.h"
-
 #include "gimpimage.h"
 #include "gimppattern.h"
 #include "gimppattern-header.h"

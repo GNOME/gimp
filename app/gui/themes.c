@@ -33,8 +33,6 @@
 
 #include "core/gimp.h"
 
-#include "file/file-utils.h"
-
 #include "themes.h"
 
 #include "gimp-intl.h"

@@ -29,8 +29,6 @@
 
 #include "libgimpbase/gimpbase.h"
 
-#include "file/file-utils.h"
-
 #include "core-types.h"
 
 #include "gimpenvirontable.h"

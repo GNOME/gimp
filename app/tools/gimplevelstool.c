@@ -49,8 +49,6 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
-#include "file/file-utils.h"
-
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimphistogramview.h"

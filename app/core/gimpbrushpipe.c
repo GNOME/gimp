@@ -40,14 +40,13 @@
 #include <io.h>
 #endif
 
-#include "libgimpmath/gimpmath.h"
+#include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpparasiteio.h"
+#include "libgimpmath/gimpmath.h"
 
 #include "core-types.h"
 
 #include "base/temp-buf.h"
-
-#include "file/file-utils.h"
 
 #include "gimpbrush.h"
 #include "gimpbrush-header.h"

@@ -26,9 +26,7 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpenv.h"
-
-#include "file/file-utils.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "gimpconfig-path.h"
 
@@ -161,7 +159,7 @@ gimp_config_path_expand_only (const gchar  *path,
             substs = g_renew (gchar *, substs, 2 * (n_substs + SUBSTS_ALLOC));
 
           substs[2*n_substs]     = token;
-          substs[2*n_substs + 1] = gimp_filename_to_utf8 (s);
+          substs[2*n_substs + 1] = (gchar *) gimp_filename_to_utf8 (s);
           n_substs++;
 
           length += strlen (s);

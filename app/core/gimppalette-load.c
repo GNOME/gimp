@@ -35,8 +35,6 @@
 
 #include "base/temp-buf.h"
 
-#include "file/file-utils.h"
-
 #include "gimppalette.h"
 
 #include "gimp-intl.h"

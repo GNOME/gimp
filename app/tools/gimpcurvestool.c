@@ -50,8 +50,6 @@
 #include "core/gimpimagemap.h"
 #include "core/gimptoolinfo.h"
 
-#include "file/file-utils.h"
-
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpenummenu.h"
 #include "widgets/gimphelp-ids.h"

@@ -33,14 +33,13 @@
 #include <process.h>		/* For _getpid() */
 #endif
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "base-types.h"
 
 #include "config/gimpbaseconfig.h"
 #include "config/gimpconfig-path.h"
-
-#include "file/file-utils.h"
 
 #include "pixel-region.h"
 #include "temp-buf.h"

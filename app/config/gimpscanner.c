@@ -41,8 +41,6 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "file/file-utils.h"
-
 #include "config-types.h"
 
 #include "gimpconfig-error.h"

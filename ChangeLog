@@ -1,5 +1,10 @@
 2004-01-19  Sven Neumann  <sven@gimp.org>
 
+	* app/*/*.c: include "libgimpbase/gimpbase.h" where needed; removed
+	now unnecessary inclusions of "file/file-utils.h".
+
+2004-01-19  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-utils.[ch]: removed file_utils_filename_to_utf8() ...
 
 	* libgimpbase/gimputils.[ch]: ... and added it here as

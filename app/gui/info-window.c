@@ -37,8 +37,6 @@
 #include "core/gimptemplate.h"
 #include "core/gimpunit.h"
 
-#include "file/file-utils.h"
-
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 

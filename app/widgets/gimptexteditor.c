@@ -28,13 +28,12 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
 
 #include "core/gimpmarshal.h"
-
-#include "file/file-utils.h"
 
 #include "gimpenummenu.h"
 #include "gimphelp-ids.h"

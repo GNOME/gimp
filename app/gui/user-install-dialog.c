@@ -34,16 +34,14 @@
 #include <direct.h> /* _mkdir() */
 #endif
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
 
 #include "config/gimpconfig-utils.h"
 #include "config/gimprc.h"
-
-#include "file/file-utils.h"
 
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"

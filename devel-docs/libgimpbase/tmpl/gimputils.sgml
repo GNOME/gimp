@@ -26,6 +26,15 @@ Utilities of general interest
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_filename_to_utf8 ##### -->
+<para>
+
+</para>
+
+@filename: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_utf8_strtrim ##### -->
 <para>
 

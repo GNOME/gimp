@@ -24,14 +24,14 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "vectors-types.h"
 
 #include "core/gimpimage.h"
 #include "core/gimpitem.h"
 #include "core/gimplist.h"
 #include "core/gimpunit.h"
-
-#include "file/file-utils.h"
 
 #include "gimpanchor.h"
 #include "gimpstroke.h"

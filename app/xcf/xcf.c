@@ -25,12 +25,12 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core/core-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpimage.h"
-
-#include "file/file-utils.h"
 
 #include "pdb/procedural_db.h"
 
