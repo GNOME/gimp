@@ -4,6 +4,11 @@
 	separator crept back in while hacking GimpFileDialog. Removed it
 	again.
 
+2004-03-04  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.c (gimp_message_box): set the
+	window icon to the icon displayed in the message dialog.
+
 2004-03-04  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/animationplay.c: Display Frame numbers from
