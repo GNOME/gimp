@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.2\n"
-"POT-Creation-Date: 2003-05-19 15:07-0700\n"
+"POT-Creation-Date: 2003-06-14 11:09-0700\n"
 "PO-Revision-Date: 2002-02-14 15:41+0100\n"
 "Last-Translator: Karl Trygve Kalleberg <karltk@users.sourceforge.net>\n"
 "Language-Team: Norwegian (Nynorsk) <nn@li.org>\n"
@@ -125,14 +125,14 @@ msgstr "Avslutt"
 
 #. the cancel button
 #: app/app_procs.c:796 app/brightness_contrast.c:244 app/channel_ops.c:99
-#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
+#: app/channels_dialog.c:2543 app/channels_dialog.c:2706
 #: app/color_balance.c:299 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:592 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4948
 #: app/gradient.c:5509 app/hue_saturation.c:403 app/interface.c:1051
-#: app/layers_dialog.c:3575 app/layers_dialog.c:3759 app/layers_dialog.c:3854
-#: app/layers_dialog.c:4115 app/levels.c:375 app/palette.c:1825
+#: app/layers_dialog.c:3578 app/layers_dialog.c:3762 app/layers_dialog.c:3857
+#: app/layers_dialog.c:4118 app/levels.c:375 app/palette.c:1825
 #: app/posterize.c:229 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:301 app/user_install.c:605
@@ -291,11 +291,11 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Lysstyrke-kontrast kan ikkje operere på indekserte tegneobjekt."
 
 #: app/brightness_contrast.c:240 app/channel_ops.c:97
-#: app/channels_dialog.c:2539 app/channels_dialog.c:2702
+#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:295 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:588 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3573
-#: app/layers_dialog.c:3757 app/layers_dialog.c:3852 app/layers_dialog.c:4113
+#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3576
+#: app/layers_dialog.c:3760 app/layers_dialog.c:3855 app/layers_dialog.c:4116
 #: app/levels.c:371 app/module_db.c:315 app/posterize.c:225
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:297
@@ -522,11 +522,11 @@ msgid "Wrap Around"
 msgstr "Bryt rundt"
 
 #: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296
-#: app/layers_dialog.c:3677
+#: app/layers_dialog.c:3680
 msgid "Background"
 msgstr "Bakgrunn"
 
-#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3679
+#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3682
 msgid "Transparent"
 msgstr "Gjennomsiktig"
 
@@ -535,7 +535,7 @@ msgstr "Gjennomsiktig"
 msgid "Offset by (x/2),(y/2)"
 msgstr "Avstand med (x/2),(y/2)"
 
-#: app/channels_dialog.c:231 app/channels_dialog.c:2577
+#: app/channels_dialog.c:231 app/channels_dialog.c:2579
 msgid "New Channel"
 msgstr "Ny kanal:"
 
@@ -590,21 +590,21 @@ msgstr "Grå"
 msgid "Indexed"
 msgstr "indeksert"
 
-#: app/channels_dialog.c:2533
+#: app/channels_dialog.c:2535
 msgid "New Channel Options"
 msgstr "Nye kanalalternativ"
 
 #. The name entry hbox, label and entry
-#: app/channels_dialog.c:2566 app/channels_dialog.c:2729
+#: app/channels_dialog.c:2568 app/channels_dialog.c:2731
 msgid "Channel name:"
 msgstr "Kanal namn:"
 
 #. The opacity scale
-#: app/channels_dialog.c:2581 app/channels_dialog.c:2744
+#: app/channels_dialog.c:2583 app/channels_dialog.c:2746
 msgid "Fill Opacity:"
 msgstr "Ugjennomsiktlegheit for fyll:"
 
-#: app/channels_dialog.c:2696
+#: app/channels_dialog.c:2698
 msgid "Edit Channel Attributes"
 msgstr "Rediger attributtar for kanal"
 
@@ -985,7 +985,7 @@ msgid "Width:"
 msgstr "Breidd:"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3617 app/resize.c:284 app/resize.c:309 app/resize.c:543
+#: app/layers_dialog.c:3620 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Høgd:"
@@ -1050,7 +1050,7 @@ msgid "Load/Save Curves"
 msgstr "Last inn/Lagre kurver"
 
 #: app/curves.c:1693 app/curves.c:1711 app/levels.c:1511 app/levels.c:1529
-#: app/paths_dialog.c:1918
+#: app/paths_dialog.c:1920
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Ikkje i stand til å opne fil %s"
@@ -1750,7 +1750,7 @@ msgstr "GIMP-melding"
 msgid "pixel"
 msgstr "piksel"
 
-#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:545
+#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:549
 msgid "pixels"
 msgstr "pikslar"
 
@@ -2316,11 +2316,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Gråtonar"
 
-#: app/image_new.c:77 app/layers_dialog.c:3676
+#: app/image_new.c:77 app/layers_dialog.c:3679
 msgid "Foreground"
 msgstr "Framgrunn"
 
-#: app/image_new.c:87 app/layers_dialog.c:3678
+#: app/image_new.c:87 app/layers_dialog.c:3681
 msgid "White"
 msgstr "Kvit"
 
@@ -2682,7 +2682,7 @@ msgstr "maske"
 msgid "Layer Select"
 msgstr "KCharSelect"
 
-#: app/layers_dialog.c:272 app/layers_dialog.c:3607
+#: app/layers_dialog.c:272 app/layers_dialog.c:3610
 msgid "New Layer"
 msgstr "Nytt lag"
 
@@ -2768,94 +2768,94 @@ msgstr "Gjennomsiktig "
 msgid "Empty Layer Copy"
 msgstr ""
 
-#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3786
+#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3789
 #, fuzzy
 msgid "Floating Selection"
 msgstr "Formel utval"
 
-#: app/layers_dialog.c:3567
+#: app/layers_dialog.c:3570
 #, fuzzy
 msgid "New Layer Options"
 msgstr "Tar-val"
 
 #. The name label and entry
-#: app/layers_dialog.c:3596
+#: app/layers_dialog.c:3599
 #, fuzzy
 msgid "Layer Name:"
 msgstr "Spelarnamn"
 
 #. The size labels
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3614
 #, fuzzy
 msgid "Layer Width:"
 msgstr "Linjebreidd:"
 
-#: app/layers_dialog.c:3672
+#: app/layers_dialog.c:3675
 #, fuzzy
 msgid "Layer Fill Type"
 msgstr "Filtype"
 
-#: app/layers_dialog.c:3751
+#: app/layers_dialog.c:3754
 msgid "Edit Layer Attributes"
 msgstr "Rediger attributtar for lag"
 
-#: app/layers_dialog.c:3778
+#: app/layers_dialog.c:3781
 msgid "Layer name:"
 msgstr "Namn på lag:"
 
-#: app/layers_dialog.c:3846
+#: app/layers_dialog.c:3849
 #, fuzzy
 msgid "Add Mask Options"
 msgstr "Make-val"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3864
+#: app/layers_dialog.c:3867
 msgid "Initialize Layer Mask to:"
 msgstr ""
 
-#: app/layers_dialog.c:3869
+#: app/layers_dialog.c:3872
 msgid "White (Full Opacity)"
 msgstr ""
 
-#: app/layers_dialog.c:3871
+#: app/layers_dialog.c:3874
 #, fuzzy
 msgid "Black (Full Transparency)"
 msgstr "ViskelÃ¦r (gjennomsiktig)"
 
-#: app/layers_dialog.c:3873
+#: app/layers_dialog.c:3876
 #, fuzzy
 msgid "Layer's Alpha Channel"
 msgstr "A&lfa-kanal:"
 
-#: app/layers_dialog.c:3935 app/layers_dialog.c:4021
+#: app/layers_dialog.c:3938 app/layers_dialog.c:4024
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
 msgstr ""
 
-#: app/layers_dialog.c:4107
+#: app/layers_dialog.c:4110
 #, fuzzy
 msgid "Layer Merge Options"
 msgstr "Tar-val"
 
-#: app/layers_dialog.c:4132
+#: app/layers_dialog.c:4135
 msgid "Final, Merged Layer should be:"
 msgstr ""
 
-#: app/layers_dialog.c:4133
+#: app/layers_dialog.c:4136
 msgid "Final, Anchored Layer should be:"
 msgstr ""
 
-#: app/layers_dialog.c:4138
+#: app/layers_dialog.c:4141
 msgid "Expanded as necessary"
 msgstr ""
 
-#: app/layers_dialog.c:4140
+#: app/layers_dialog.c:4143
 #, fuzzy
 msgid "Clipped to image"
 msgstr "Tid gÃ¥tt:"
 
-#: app/layers_dialog.c:4142
+#: app/layers_dialog.c:4145
 #, fuzzy
 msgid "Clipped to bottom layer"
 msgstr "Slett mot botnen"
@@ -4017,7 +4017,7 @@ msgstr "Navigeringselement"
 msgid "Navigation: No Image"
 msgstr "Navigeringselement"
 
-#: app/paint_core.c:806
+#: app/paint_core.c:810
 #, fuzzy
 msgid "No brushes available for use with this tool."
 msgstr "Inga skildring tilgjengeleg."
@@ -4283,54 +4283,54 @@ msgstr "Rediger punkt"
 msgid "Path %d"
 msgstr "Sti"
 
-#: app/paths_dialog.c:989
+#: app/paths_dialog.c:991
 #, fuzzy
 msgid "Edit Path Attributes"
 msgstr " attributtar"
 
-#: app/paths_dialog.c:992
+#: app/paths_dialog.c:994
 #, fuzzy
 msgid "Enter a new name for the path"
 msgstr "Oppgi eit nytt namn pÃ¥ gruppa."
 
-#: app/paths_dialog.c:1933
+#: app/paths_dialog.c:1935
 #, fuzzy, c-format
 msgid "Failed to read from %s"
 msgstr "Kunne ikkje lesa katalog."
 
-#: app/paths_dialog.c:1948
+#: app/paths_dialog.c:1950
 #, fuzzy, c-format
 msgid "Failed to read path from %s"
 msgstr "Kunne ikkje lesa katalog."
 
-#: app/paths_dialog.c:1955
+#: app/paths_dialog.c:1957
 #, fuzzy, c-format
 msgid "No points specified in path file %s"
 msgstr ""
 "Du har ikkje oppgitt ei gyldig fil:\n"
 " %1"
 
-#: app/paths_dialog.c:1966
+#: app/paths_dialog.c:1968
 #, fuzzy, c-format
 msgid "Failed to read path points from %s"
 msgstr "Kunne ikkje lesa katalog."
 
-#: app/paths_dialog.c:2039
+#: app/paths_dialog.c:2041
 #, fuzzy, c-format
 msgid "open failed on %s: %s\n"
 msgstr "Feil ved opning"
 
-#: app/paths_dialog.c:2061
+#: app/paths_dialog.c:2063
 #, fuzzy
 msgid "Load/Store Bezier Curves"
 msgstr "Lag Bezier-kurve"
 
-#: app/paths_dialog.c:2101
+#: app/paths_dialog.c:2103
 #, fuzzy
 msgid "Load Path"
 msgstr "Last palett"
 
-#: app/paths_dialog.c:2123
+#: app/paths_dialog.c:2125
 #, fuzzy
 msgid "Store Path"
 msgstr "Arbeidskatalog"

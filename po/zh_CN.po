@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2003-05-19 15:07-0700\n"
+"POT-Creation-Date: 2003-06-14 11:09-0700\n"
 "PO-Revision-Date: 2001-10-26 17:30+0800\n"
 "Last-Translator: Xie Yuheng <phycommusyee@263.net>\n"
 "Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
@@ -127,14 +127,14 @@ msgstr ""
 
 #. the cancel button
 #: app/app_procs.c:796 app/brightness_contrast.c:244 app/channel_ops.c:99
-#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
+#: app/channels_dialog.c:2543 app/channels_dialog.c:2706
 #: app/color_balance.c:299 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:592 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4948
 #: app/gradient.c:5509 app/hue_saturation.c:403 app/interface.c:1051
-#: app/layers_dialog.c:3575 app/layers_dialog.c:3759 app/layers_dialog.c:3854
-#: app/layers_dialog.c:4115 app/levels.c:375 app/palette.c:1825
+#: app/layers_dialog.c:3578 app/layers_dialog.c:3762 app/layers_dialog.c:3857
+#: app/layers_dialog.c:4118 app/levels.c:375 app/palette.c:1825
 #: app/posterize.c:229 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:301 app/user_install.c:605
@@ -293,11 +293,11 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "不能对索引图像进行亮度-对比度操作。"
 
 #: app/brightness_contrast.c:240 app/channel_ops.c:97
-#: app/channels_dialog.c:2539 app/channels_dialog.c:2702
+#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:295 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:588 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3573
-#: app/layers_dialog.c:3757 app/layers_dialog.c:3852 app/layers_dialog.c:4113
+#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3576
+#: app/layers_dialog.c:3760 app/layers_dialog.c:3855 app/layers_dialog.c:4116
 #: app/levels.c:371 app/module_db.c:315 app/posterize.c:225
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:297
@@ -527,11 +527,11 @@ msgid "Wrap Around"
 msgstr "环绕"
 
 #: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296
-#: app/layers_dialog.c:3677
+#: app/layers_dialog.c:3680
 msgid "Background"
 msgstr "背景"
 
-#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3679
+#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3682
 msgid "Transparent"
 msgstr "透明"
 
@@ -540,7 +540,7 @@ msgstr "透明"
 msgid "Offset by (x/2),(y/2)"
 msgstr "位移 (x/2),(y/2)"
 
-#: app/channels_dialog.c:231 app/channels_dialog.c:2577
+#: app/channels_dialog.c:231 app/channels_dialog.c:2579
 msgid "New Channel"
 msgstr "新建通道"
 
@@ -603,21 +603,21 @@ msgstr "灰度"
 msgid "Indexed"
 msgstr "索引"
 
-#: app/channels_dialog.c:2533
+#: app/channels_dialog.c:2535
 msgid "New Channel Options"
 msgstr "新建通道选项"
 
 #. The name entry hbox, label and entry
-#: app/channels_dialog.c:2566 app/channels_dialog.c:2729
+#: app/channels_dialog.c:2568 app/channels_dialog.c:2731
 msgid "Channel name:"
 msgstr "通道名字："
 
 #. The opacity scale
-#: app/channels_dialog.c:2581 app/channels_dialog.c:2744
+#: app/channels_dialog.c:2583 app/channels_dialog.c:2746
 msgid "Fill Opacity:"
 msgstr "填充不透明度："
 
-#: app/channels_dialog.c:2696
+#: app/channels_dialog.c:2698
 msgid "Edit Channel Attributes"
 msgstr "编辑通道属性"
 
@@ -1002,7 +1002,7 @@ msgid "Width:"
 msgstr "宽度："
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3617 app/resize.c:284 app/resize.c:309 app/resize.c:543
+#: app/layers_dialog.c:3620 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "高度："
@@ -1067,7 +1067,7 @@ msgid "Load/Save Curves"
 msgstr "加载/保存曲线"
 
 #: app/curves.c:1693 app/curves.c:1711 app/levels.c:1511 app/levels.c:1529
-#: app/paths_dialog.c:1918
+#: app/paths_dialog.c:1920
 #, c-format
 msgid "Unable to open file %s"
 msgstr "无法打开文件 %s"
@@ -1808,7 +1808,7 @@ msgstr ""
 msgid "pixel"
 msgstr "像素"
 
-#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:545
+#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:549
 msgid "pixels"
 msgstr "像素"
 
@@ -2339,11 +2339,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "灰度"
 
-#: app/image_new.c:77 app/layers_dialog.c:3676
+#: app/image_new.c:77 app/layers_dialog.c:3679
 msgid "Foreground"
 msgstr "前景"
 
-#: app/image_new.c:87 app/layers_dialog.c:3678
+#: app/image_new.c:87 app/layers_dialog.c:3681
 msgid "White"
 msgstr "白色"
 
@@ -2682,7 +2682,7 @@ msgstr "%s蒙板"
 msgid "Layer Select"
 msgstr "图层选择"
 
-#: app/layers_dialog.c:272 app/layers_dialog.c:3607
+#: app/layers_dialog.c:272 app/layers_dialog.c:3610
 msgid "New Layer"
 msgstr "新建图层"
 
@@ -2776,58 +2776,58 @@ msgstr "保持透明部分"
 msgid "Empty Layer Copy"
 msgstr ""
 
-#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3786
+#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3789
 msgid "Floating Selection"
 msgstr "浮动选择"
 
-#: app/layers_dialog.c:3567
+#: app/layers_dialog.c:3570
 msgid "New Layer Options"
 msgstr "新建图层选项"
 
 #. The name label and entry
-#: app/layers_dialog.c:3596
+#: app/layers_dialog.c:3599
 msgid "Layer Name:"
 msgstr "图层名字："
 
 #. The size labels
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3614
 msgid "Layer Width:"
 msgstr "图层宽度："
 
-#: app/layers_dialog.c:3672
+#: app/layers_dialog.c:3675
 msgid "Layer Fill Type"
 msgstr "图层填充类型"
 
-#: app/layers_dialog.c:3751
+#: app/layers_dialog.c:3754
 msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
-#: app/layers_dialog.c:3778
+#: app/layers_dialog.c:3781
 msgid "Layer name:"
 msgstr "图层名字："
 
-#: app/layers_dialog.c:3846
+#: app/layers_dialog.c:3849
 msgid "Add Mask Options"
 msgstr "添加蒙板选项"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3864
+#: app/layers_dialog.c:3867
 msgid "Initialize Layer Mask to:"
 msgstr "初始化图层蒙板为："
 
-#: app/layers_dialog.c:3869
+#: app/layers_dialog.c:3872
 msgid "White (Full Opacity)"
 msgstr "白色(全不透明)"
 
-#: app/layers_dialog.c:3871
+#: app/layers_dialog.c:3874
 msgid "Black (Full Transparency)"
 msgstr "黑色(全透明)"
 
-#: app/layers_dialog.c:3873
+#: app/layers_dialog.c:3876
 msgid "Layer's Alpha Channel"
 msgstr "图层的 Alpha 通道"
 
-#: app/layers_dialog.c:3935 app/layers_dialog.c:4021
+#: app/layers_dialog.c:3938 app/layers_dialog.c:4024
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2835,27 +2835,27 @@ msgstr ""
 "无效的宽度或高度。\n"
 "两者都必须为正。"
 
-#: app/layers_dialog.c:4107
+#: app/layers_dialog.c:4110
 msgid "Layer Merge Options"
 msgstr "图层合并选项"
 
-#: app/layers_dialog.c:4132
+#: app/layers_dialog.c:4135
 msgid "Final, Merged Layer should be:"
 msgstr "最后，合并的图层应该是："
 
-#: app/layers_dialog.c:4133
+#: app/layers_dialog.c:4136
 msgid "Final, Anchored Layer should be:"
 msgstr "最后，固定的图层应该是："
 
-#: app/layers_dialog.c:4138
+#: app/layers_dialog.c:4141
 msgid "Expanded as necessary"
 msgstr "必要时扩展"
 
-#: app/layers_dialog.c:4140
+#: app/layers_dialog.c:4143
 msgid "Clipped to image"
 msgstr "剪贴板到图像"
 
-#: app/layers_dialog.c:4142
+#: app/layers_dialog.c:4145
 msgid "Clipped to bottom layer"
 msgstr "剪贴板到底部图层"
 
@@ -3915,7 +3915,7 @@ msgstr "导航：%s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "导航：没有图像"
 
-#: app/paint_core.c:806
+#: app/paint_core.c:810
 msgid "No brushes available for use with this tool."
 msgstr "没有可供此工具使用的画笔"
 
@@ -4179,48 +4179,48 @@ msgstr "编辑点"
 msgid "Path %d"
 msgstr "路径 %d"
 
-#: app/paths_dialog.c:989
+#: app/paths_dialog.c:991
 msgid "Edit Path Attributes"
 msgstr "编辑路径属性"
 
-#: app/paths_dialog.c:992
+#: app/paths_dialog.c:994
 msgid "Enter a new name for the path"
 msgstr "给路径输入一个新的名字"
 
-#: app/paths_dialog.c:1933
+#: app/paths_dialog.c:1935
 #, c-format
 msgid "Failed to read from %s"
 msgstr "读入 %s 失败"
 
-#: app/paths_dialog.c:1948
+#: app/paths_dialog.c:1950
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "从 %s 读入路径失败"
 
-#: app/paths_dialog.c:1955
+#: app/paths_dialog.c:1957
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "路径文件 %s 中没有给出点"
 
-#: app/paths_dialog.c:1966
+#: app/paths_dialog.c:1968
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "从 %s 读入路径点失败"
 
-#: app/paths_dialog.c:2039
+#: app/paths_dialog.c:2041
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "在 %s 上打开失败：%s\n"
 
-#: app/paths_dialog.c:2061
+#: app/paths_dialog.c:2063
 msgid "Load/Store Bezier Curves"
 msgstr "加载/储存 Bezier 曲线"
 
-#: app/paths_dialog.c:2101
+#: app/paths_dialog.c:2103
 msgid "Load Path"
 msgstr "加载路径"
 
-#: app/paths_dialog.c:2123
+#: app/paths_dialog.c:2125
 msgid "Store Path"
 msgstr "储存路径"
 

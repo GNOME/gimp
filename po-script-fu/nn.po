@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2003-05-19 15:16-0700\n"
+"POT-Creation-Date: 2003-06-02 21:15-0700\n"
 "PO-Revision-Date: 2000-09-07 20:17+02:00\n"
 "Last-Translator: Karl Trygve Kalleberg <karltk@users.sourceforge.net>\n"
 "Language-Team: Norwegian (Nynorsk) <nn@li.org>\n"
@@ -106,12 +106,12 @@ msgid "About"
 msgstr "Om"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:561
+#: plug-ins/script-fu/script-fu-server.c:562
 msgid "OK"
 msgstr "OK"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:563
+#: plug-ins/script-fu/script-fu-server.c:564
 msgid "Cancel"
 msgstr "Avbryt"
 
@@ -162,15 +162,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:556
+#: plug-ins/script-fu/script-fu-server.c:557
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu tenarinnstillingar"
 
-#: plug-ins/script-fu/script-fu-server.c:583
+#: plug-ins/script-fu/script-fu-server.c:584
 msgid "Server Port:"
 msgstr "Tenarport"
 
-#: plug-ins/script-fu/script-fu-server.c:589
+#: plug-ins/script-fu/script-fu-server.c:590
 msgid "Server Logfile:"
 msgstr "Tenarloggfil:"
 

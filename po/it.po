@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.29\n"
-"POT-Creation-Date: 2003-05-19 15:07-0700\n"
+"POT-Creation-Date: 2003-06-14 11:09-0700\n"
 "PO-Revision-Date: 2000-11-06 13:16+01:00\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -124,14 +124,14 @@ msgstr "Esci"
 
 #. the cancel button
 #: app/app_procs.c:796 app/brightness_contrast.c:244 app/channel_ops.c:99
-#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
+#: app/channels_dialog.c:2543 app/channels_dialog.c:2706
 #: app/color_balance.c:299 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:592 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4948
 #: app/gradient.c:5509 app/hue_saturation.c:403 app/interface.c:1051
-#: app/layers_dialog.c:3575 app/layers_dialog.c:3759 app/layers_dialog.c:3854
-#: app/layers_dialog.c:4115 app/levels.c:375 app/palette.c:1825
+#: app/layers_dialog.c:3578 app/layers_dialog.c:3762 app/layers_dialog.c:3857
+#: app/layers_dialog.c:4118 app/levels.c:375 app/palette.c:1825
 #: app/posterize.c:229 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:301 app/user_install.c:605
@@ -290,11 +290,11 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "Luminosità e contrasto non operano su figure in scala di colore"
 
 #: app/brightness_contrast.c:240 app/channel_ops.c:97
-#: app/channels_dialog.c:2539 app/channels_dialog.c:2702
+#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:295 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:588 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3573
-#: app/layers_dialog.c:3757 app/layers_dialog.c:3852 app/layers_dialog.c:4113
+#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3576
+#: app/layers_dialog.c:3760 app/layers_dialog.c:3855 app/layers_dialog.c:4116
 #: app/levels.c:371 app/module_db.c:315 app/posterize.c:225
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:297
@@ -521,11 +521,11 @@ msgid "Wrap Around"
 msgstr "Avvolgente"
 
 #: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296
-#: app/layers_dialog.c:3677
+#: app/layers_dialog.c:3680
 msgid "Background"
 msgstr "Sfondo"
 
-#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3679
+#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3682
 msgid "Transparent"
 msgstr "Trasparente"
 
@@ -534,7 +534,7 @@ msgstr "Trasparente"
 msgid "Offset by (x/2),(y/2)"
 msgstr "Sposta per (x/2,(y/2)"
 
-#: app/channels_dialog.c:231 app/channels_dialog.c:2577
+#: app/channels_dialog.c:231 app/channels_dialog.c:2579
 msgid "New Channel"
 msgstr "Nuovo canale"
 
@@ -589,21 +589,21 @@ msgstr "Grigio"
 msgid "Indexed"
 msgstr "Scala di colore"
 
-#: app/channels_dialog.c:2533
+#: app/channels_dialog.c:2535
 msgid "New Channel Options"
 msgstr "Opzioni nuovo canale"
 
 #. The name entry hbox, label and entry
-#: app/channels_dialog.c:2566 app/channels_dialog.c:2729
+#: app/channels_dialog.c:2568 app/channels_dialog.c:2731
 msgid "Channel name:"
 msgstr "Nome canale:"
 
 #. The opacity scale
-#: app/channels_dialog.c:2581 app/channels_dialog.c:2744
+#: app/channels_dialog.c:2583 app/channels_dialog.c:2746
 msgid "Fill Opacity:"
 msgstr "Opacità del riempimento:"
 
-#: app/channels_dialog.c:2696
+#: app/channels_dialog.c:2698
 msgid "Edit Channel Attributes"
 msgstr "Modifica attributi canale"
 
@@ -986,7 +986,7 @@ msgid "Width:"
 msgstr "Larghezza:"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3617 app/resize.c:284 app/resize.c:309 app/resize.c:543
+#: app/layers_dialog.c:3620 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "Altezza:"
@@ -1051,7 +1051,7 @@ msgid "Load/Save Curves"
 msgstr "Apri/salva curve"
 
 #: app/curves.c:1693 app/curves.c:1711 app/levels.c:1511 app/levels.c:1529
-#: app/paths_dialog.c:1918
+#: app/paths_dialog.c:1920
 #, c-format
 msgid "Unable to open file %s"
 msgstr "Impossibile aprire il file %s"
@@ -1773,7 +1773,7 @@ msgstr "Messaggio GIMP"
 msgid "pixel"
 msgstr "pixel"
 
-#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:545
+#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:549
 msgid "pixels"
 msgstr "pixel"
 
@@ -2287,11 +2287,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "Scala di grigio"
 
-#: app/image_new.c:77 app/layers_dialog.c:3676
+#: app/image_new.c:77 app/layers_dialog.c:3679
 msgid "Foreground"
 msgstr "Primo piano"
 
-#: app/image_new.c:87 app/layers_dialog.c:3678
+#: app/image_new.c:87 app/layers_dialog.c:3681
 msgid "White"
 msgstr "Bianco"
 
@@ -2628,7 +2628,7 @@ msgstr "%s maschera"
 msgid "Layer Select"
 msgstr "Selezione livello"
 
-#: app/layers_dialog.c:272 app/layers_dialog.c:3607
+#: app/layers_dialog.c:272 app/layers_dialog.c:3610
 msgid "New Layer"
 msgstr "Nuovo livello"
 
@@ -2712,58 +2712,58 @@ msgstr "Mantieni la trasparenza"
 msgid "Empty Layer Copy"
 msgstr "Copia livello vuoto"
 
-#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3786
+#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3789
 msgid "Floating Selection"
 msgstr "Selezione fluttuante"
 
-#: app/layers_dialog.c:3567
+#: app/layers_dialog.c:3570
 msgid "New Layer Options"
 msgstr "Opzioni nuovo livello"
 
 #. The name label and entry
-#: app/layers_dialog.c:3596
+#: app/layers_dialog.c:3599
 msgid "Layer Name:"
 msgstr "Nome livello:"
 
 #. The size labels
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3614
 msgid "Layer Width:"
 msgstr "Larghezza livello:"
 
-#: app/layers_dialog.c:3672
+#: app/layers_dialog.c:3675
 msgid "Layer Fill Type"
 msgstr "Tipo di riempimento livello"
 
-#: app/layers_dialog.c:3751
+#: app/layers_dialog.c:3754
 msgid "Edit Layer Attributes"
 msgstr "Modifica attributi livello"
 
-#: app/layers_dialog.c:3778
+#: app/layers_dialog.c:3781
 msgid "Layer name:"
 msgstr "Nome livello:"
 
-#: app/layers_dialog.c:3846
+#: app/layers_dialog.c:3849
 msgid "Add Mask Options"
 msgstr "Aggiungi opzioni maschera"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3864
+#: app/layers_dialog.c:3867
 msgid "Initialize Layer Mask to:"
 msgstr "Inizializza livello maschera a:"
 
-#: app/layers_dialog.c:3869
+#: app/layers_dialog.c:3872
 msgid "White (Full Opacity)"
 msgstr "Bianco (totale opacità)"
 
-#: app/layers_dialog.c:3871
+#: app/layers_dialog.c:3874
 msgid "Black (Full Transparency)"
 msgstr "Nero (Trasparenza Totale)"
 
-#: app/layers_dialog.c:3873
+#: app/layers_dialog.c:3876
 msgid "Layer's Alpha Channel"
 msgstr "Canale alpha del livello"
 
-#: app/layers_dialog.c:3935 app/layers_dialog.c:4021
+#: app/layers_dialog.c:3938 app/layers_dialog.c:4024
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2771,27 +2771,27 @@ msgstr ""
 "Larghezza o Altezza Invalida.\n"
 "Entrambe devono essere positive."
 
-#: app/layers_dialog.c:4107
+#: app/layers_dialog.c:4110
 msgid "Layer Merge Options"
 msgstr "Opzioni incolla livello"
 
-#: app/layers_dialog.c:4132
+#: app/layers_dialog.c:4135
 msgid "Final, Merged Layer should be:"
 msgstr "Il livello incollato finale deve essere:"
 
-#: app/layers_dialog.c:4133
+#: app/layers_dialog.c:4136
 msgid "Final, Anchored Layer should be:"
 msgstr "Il livello ancorato finale deve essere:"
 
-#: app/layers_dialog.c:4138
+#: app/layers_dialog.c:4141
 msgid "Expanded as necessary"
 msgstr "Espandi se necessario"
 
-#: app/layers_dialog.c:4140
+#: app/layers_dialog.c:4143
 msgid "Clipped to image"
 msgstr "Ridimensiona all'immagine"
 
-#: app/layers_dialog.c:4142
+#: app/layers_dialog.c:4145
 msgid "Clipped to bottom layer"
 msgstr "Ridimensiona al livello base"
 
@@ -3852,7 +3852,7 @@ msgstr "Navigazione: %s-%d.%d"
 msgid "Navigation: No Image"
 msgstr "Navigazione: nessuna immagine"
 
-#: app/paint_core.c:806
+#: app/paint_core.c:810
 msgid "No brushes available for use with this tool."
 msgstr "Nessun pennello disponibile all'uso con questo strumento."
 
@@ -4105,48 +4105,48 @@ msgstr "Modifica punto"
 msgid "Path %d"
 msgstr "Tracciati %d"
 
-#: app/paths_dialog.c:989
+#: app/paths_dialog.c:991
 msgid "Edit Path Attributes"
 msgstr "Modifica attributi tracciato"
 
-#: app/paths_dialog.c:992
+#: app/paths_dialog.c:994
 msgid "Enter a new name for the path"
 msgstr "Inserisci un nuovo nome per il tracciato"
 
-#: app/paths_dialog.c:1933
+#: app/paths_dialog.c:1935
 #, c-format
 msgid "Failed to read from %s"
 msgstr "Impossibile leggere da %s"
 
-#: app/paths_dialog.c:1948
+#: app/paths_dialog.c:1950
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "Impossibile leggere da %s"
 
-#: app/paths_dialog.c:1955
+#: app/paths_dialog.c:1957
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "Nessun punto specificato nel file tracciato %s"
 
-#: app/paths_dialog.c:1966
+#: app/paths_dialog.c:1968
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "Impossibile leggere punti tracciato da %s"
 
-#: app/paths_dialog.c:2039
+#: app/paths_dialog.c:2041
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "Errore aprendo il file %s: %s\n"
 
-#: app/paths_dialog.c:2061
+#: app/paths_dialog.c:2063
 msgid "Load/Store Bezier Curves"
 msgstr "Apri/Salva curve Bezier"
 
-#: app/paths_dialog.c:2101
+#: app/paths_dialog.c:2103
 msgid "Load Path"
 msgstr "Apri tracciato"
 
-#: app/paths_dialog.c:2123
+#: app/paths_dialog.c:2125
 msgid "Store Path"
 msgstr "Salva tracciato"
 

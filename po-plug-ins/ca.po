@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plugins 1.2.2\n"
-"POT-Creation-Date: 2003-05-16 14:24-0700\n"
+"POT-Creation-Date: 2003-06-14 10:59-0700\n"
 "PO-Revision-Date: 2002-05-29 23:44+0200\n"
 "Last-Translator: Softcatalà <tradgnome@softcatala.org>\n"
 "Language-Team: Catalan\n"
@@ -16,7 +16,7 @@ msgstr ""
 #: plug-ins/FractalExplorer/Dialogs.c:282
 #: plug-ins/FractalExplorer/Dialogs.c:1378 plug-ins/common/AlienMap.c:1396
 #: plug-ins/common/AlienMap2.c:1388 plug-ins/gdyntext/gdyntext_ui.c:561
-#: plug-ins/gfig/gfig.c:3375 plug-ins/imagemap/imap_about.c:36
+#: plug-ins/gfig/gfig.c:3374 plug-ins/imagemap/imap_about.c:36
 #: plug-ins/print/gimp_main_window.c:331 plug-ins/webbrowser/webbrowser.c:279
 msgid "About"
 msgstr "Quant a"
@@ -54,7 +54,7 @@ msgstr "Quant a"
 #: plug-ins/common/grid.c:661 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:570
 #: plug-ins/common/iwarp.c:1142 plug-ins/common/jigsaw.c:2561
-#: plug-ins/common/jpeg.c:1604 plug-ins/common/lic.c:1021
+#: plug-ins/common/jpeg.c:1604 plug-ins/common/lic.c:1022
 #: plug-ins/common/mail.c:467 plug-ins/common/mapcolor.c:558
 #: plug-ins/common/max_rgb.c:349 plug-ins/common/mblur.c:763
 #: plug-ins/common/newsprint.c:1211 plug-ins/common/nlfilt.c:370
@@ -72,7 +72,7 @@ msgstr "Quant a"
 #: plug-ins/common/snoise.c:528 plug-ins/common/sobel.c:251
 #: plug-ins/common/sparkle.c:349 plug-ins/common/spread.c:382
 #: plug-ins/common/struc.c:1281 plug-ins/common/sunras.c:1590
-#: plug-ins/common/tga.c:1186 plug-ins/common/threshold_alpha.c:271
+#: plug-ins/common/tga.c:1196 plug-ins/common/threshold_alpha.c:271
 #: plug-ins/common/tiff.c:1601 plug-ins/common/tile.c:405
 #: plug-ins/common/tileit.c:389 plug-ins/common/uniteditor.c:173
 #: plug-ins/common/unsharp.c:787 plug-ins/common/video.c:2155
@@ -87,8 +87,8 @@ msgstr "Quant a"
 #: plug-ins/gap/gap_mod_layer.c:147 plug-ins/gap/gap_mov_dialog.c:498
 #: plug-ins/gap/gap_mpege.c:191 plug-ins/gap/gap_resi_dialog.c:149
 #: plug-ins/gdyntext/gdyntext_ui.c:199 plug-ins/gdyntext/gdyntext_ui.c:574
-#: plug-ins/gfig/gfig.c:4081 plug-ins/gfig/gfig.c:4426
-#: plug-ins/gfig/gfig.c:4509 plug-ins/gfig/gfig.c:4818
+#: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4425
+#: plug-ins/gfig/gfig.c:4508 plug-ins/gfig/gfig.c:4817
 #: plug-ins/gflare/gflare.c:2474 plug-ins/gflare/gflare.c:3488
 #: plug-ins/gfli/gfli.c:821 plug-ins/gfli/gfli.c:890
 #: plug-ins/gimpressionist/gimpressionist.c:356
@@ -137,7 +137,7 @@ msgstr "D'acord"
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
 #: plug-ins/common/illusion.c:572 plug-ins/common/iwarp.c:1146
 #: plug-ins/common/jigsaw.c:2563 plug-ins/common/jpeg.c:1606
-#: plug-ins/common/lic.c:1023 plug-ins/common/mail.c:469
+#: plug-ins/common/lic.c:1024 plug-ins/common/mail.c:469
 #: plug-ins/common/mapcolor.c:560 plug-ins/common/max_rgb.c:351
 #: plug-ins/common/mblur.c:765 plug-ins/common/newsprint.c:1213
 #: plug-ins/common/nlfilt.c:372 plug-ins/common/noisify.c:495
@@ -154,7 +154,7 @@ msgstr "D'acord"
 #: plug-ins/common/smooth_palette.c:410 plug-ins/common/snoise.c:530
 #: plug-ins/common/sobel.c:253 plug-ins/common/sparkle.c:351
 #: plug-ins/common/spread.c:384 plug-ins/common/struc.c:1283
-#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1188
+#: plug-ins/common/sunras.c:1592 plug-ins/common/tga.c:1198
 #: plug-ins/common/threshold_alpha.c:273 plug-ins/common/tiff.c:1603
 #: plug-ins/common/tile.c:407 plug-ins/common/tileit.c:391
 #: plug-ins/common/uniteditor.c:175 plug-ins/common/unsharp.c:789
@@ -172,9 +172,9 @@ msgstr "D'acord"
 #: plug-ins/gap/gap_mod_layer.c:264 plug-ins/gap/gap_mov_dialog.c:529
 #: plug-ins/gap/gap_mov_dialog.c:2680 plug-ins/gap/gap_mpege.c:189
 #: plug-ins/gap/gap_mpege.c:240 plug-ins/gap/gap_range_ops.c:1244
-#: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3934
-#: plug-ins/gfig/gfig.c:4081 plug-ins/gfig/gfig.c:4428
-#: plug-ins/gfig/gfig.c:4511 plug-ins/gfig/gfig.c:5026
+#: plug-ins/gap/gap_resi_dialog.c:158 plug-ins/gfig/gfig.c:3933
+#: plug-ins/gfig/gfig.c:4080 plug-ins/gfig/gfig.c:4427
+#: plug-ins/gfig/gfig.c:4510 plug-ins/gfig/gfig.c:5025
 #: plug-ins/gflare/gflare.c:2476 plug-ins/gflare/gflare.c:3389
 #: plug-ins/gflare/gflare.c:3490 plug-ins/gfli/gfli.c:823
 #: plug-ins/gfli/gfli.c:892 plug-ins/gimpressionist/gimpressionist.c:486
@@ -206,7 +206,7 @@ msgstr "Cancel·la"
 #: plug-ins/common/sinus.c:2151 plug-ins/common/tileit.c:410
 #: plug-ins/common/waves.c:576 plug-ins/common/whirlpinch.c:826
 #: plug-ins/common/wind.c:1059 plug-ins/flame/flame.c:943
-#: plug-ins/gfig/gfig.c:3957 plug-ins/gflare/gflare.c:2501
+#: plug-ins/gfig/gfig.c:3956 plug-ins/gflare/gflare.c:2501
 #: plug-ins/gflare/gflare.c:3513 plug-ins/gimpressionist/orientmap.c:502
 #: plug-ins/gimpressionist/preview.c:106 plug-ins/gimpressionist/sizemap.c:402
 #: plug-ins/ifscompose/ifscompose.c:918
@@ -344,7 +344,7 @@ msgstr ""
 "fractals tret del Mandelbrot i l'Spierinski)"
 
 #: plug-ins/FractalExplorer/Dialogs.c:520 plug-ins/common/CML_explorer.c:1237
-#: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3549
+#: plug-ins/common/gqbist.c:686 plug-ins/gfig/gfig.c:3548
 msgid "Load"
 msgstr "Carrega"
 
@@ -365,8 +365,8 @@ msgid "Reset parameters to default values"
 msgstr "Fes que els paràmetres tornin als valors per defecte"
 
 #: plug-ins/FractalExplorer/Dialogs.c:537 plug-ins/common/CML_explorer.c:1230
-#: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3928
-#: plug-ins/gfig/gfig.c:5261 plug-ins/imagemap/imap_menu.c:219
+#: plug-ins/common/gqbist.c:694 plug-ins/gfig/gfig.c:3927
+#: plug-ins/gfig/gfig.c:5260 plug-ins/imagemap/imap_menu.c:219
 #: plug-ins/imagemap/imap_toolbar.c:114
 msgid "Save"
 msgstr "Desa"
@@ -616,12 +616,12 @@ msgstr "Gradient del FractalExplorer"
 msgid "Fractals"
 msgstr "Fractals"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1572 plug-ins/gfig/gfig.c:1459
+#: plug-ins/FractalExplorer/Dialogs.c:1572
 #, c-format
 msgid "Error opening: %s"
 msgstr "S'ha produït un error en obrir: %s"
 
-#: plug-ins/FractalExplorer/Dialogs.c:1574 plug-ins/gfig/gfig.c:1461
+#: plug-ins/FractalExplorer/Dialogs.c:1574
 msgid "Could not save."
 msgstr "No s'ha pogut desar."
 
@@ -686,7 +686,7 @@ msgstr "<Image>/Filtres/Executa/Patró/Fractal Explorer..."
 msgid "Rendering Fractal..."
 msgstr "S'està generant una visualització realista del fractal..."
 
-#: plug-ins/FractalExplorer/FractalExplorer.c:732 plug-ins/gfig/gfig.c:5017
+#: plug-ins/FractalExplorer/FractalExplorer.c:732 plug-ins/gfig/gfig.c:5016
 #: plug-ins/gflare/gflare.c:3380
 #, c-format
 msgid ""
@@ -701,8 +701,8 @@ msgid "Delete Fractal"
 msgstr "Suprimeix el fractal"
 
 #: plug-ins/FractalExplorer/FractalExplorer.c:741
-#: plug-ins/FractalExplorer/FractalExplorer.c:1401 plug-ins/gfig/gfig.c:3569
-#: plug-ins/gfig/gfig.c:5026 plug-ins/gflare/gflare.c:3113
+#: plug-ins/FractalExplorer/FractalExplorer.c:1401 plug-ins/gfig/gfig.c:3568
+#: plug-ins/gfig/gfig.c:5025 plug-ins/gflare/gflare.c:3113
 #: plug-ins/gflare/gflare.c:3389 plug-ins/gimpressionist/presets.c:648
 #: plug-ins/ifscompose/ifscompose.c:807 plug-ins/imagemap/imap_cmd_delete.c:56
 #: plug-ins/imagemap/imap_selection.c:177 plug-ins/imagemap/imap_tools.c:155
@@ -750,7 +750,7 @@ msgid "Choose Fractal by double-clicking on it"
 msgstr "Trieu el fractal fent-hi un doble clic a sobre"
 
 #. Put buttons in
-#: plug-ins/FractalExplorer/FractalExplorer.c:1391 plug-ins/gfig/gfig.c:3538
+#: plug-ins/FractalExplorer/FractalExplorer.c:1391 plug-ins/gfig/gfig.c:3537
 msgid "Rescan"
 msgstr "Torna a escanejar"
 
@@ -935,7 +935,7 @@ msgstr "Posició de la font de llum X en l'espai XYZ"
 #: plug-ins/MapObject/mapobject_ui.c:1093
 #: plug-ins/MapObject/mapobject_ui.c:1189 plug-ins/common/flarefx.c:804
 #: plug-ins/common/nova.c:628 plug-ins/common/papertile.c:294
-#: plug-ins/common/xbm.c:1247 plug-ins/flame/flame.c:1205
+#: plug-ins/common/xbm.c:1246 plug-ins/flame/flame.c:1205
 #: plug-ins/gap/gap_mov_dialog.c:1855 plug-ins/gflare/gflare.c:2891
 #: plug-ins/ifscompose/ifscompose.c:549
 msgid "Y:"
@@ -1107,8 +1107,8 @@ msgstr "Imatge de l'entorn per utilitzar"
 
 #. Options section
 #: plug-ins/Lighting/lighting_ui.c:1072 plug-ins/MapObject/mapobject_ui.c:1314
-#: plug-ins/common/lic.c:1037 plug-ins/common/ripple.c:604
-#: plug-ins/gap/gap_mov_dialog.c:872 plug-ins/gfig/gfig.c:4011
+#: plug-ins/common/lic.c:1038 plug-ins/common/ripple.c:604
+#: plug-ins/gap/gap_mov_dialog.c:872 plug-ins/gfig/gfig.c:4010
 #: plug-ins/mosaic/mosaic.c:577
 msgid "Options"
 msgstr "Opcions"
@@ -1304,7 +1304,7 @@ msgstr "Mida"
 #: plug-ins/MapObject/mapobject_ui.c:1272 plug-ins/common/despeckle.c:745
 #: plug-ins/common/nlfilt.c:432 plug-ins/common/nova.c:504
 #: plug-ins/common/unsharp.c:812 plug-ins/common/whirlpinch.c:877
-#: plug-ins/gfig/gfig.c:3176 plug-ins/gflare/gflare.c:2922
+#: plug-ins/gfig/gfig.c:3175 plug-ins/gflare/gflare.c:2922
 #: plug-ins/imagemap/imap_circle.c:275
 msgid "Radius:"
 msgstr "Radi:"
@@ -1354,7 +1354,7 @@ msgstr "Mostra/amaga la visualització prèvia del Wireframe"
 #. memory mapped file data
 #. must check file size
 #: plug-ins/bmp/bmpread.c:52 plug-ins/common/CEL.c:266
-#: plug-ins/common/gbr.c:296 plug-ins/common/gifload.c:300
+#: plug-ins/common/gbr.c:296 plug-ins/common/gifload.c:303
 #: plug-ins/common/gih.c:632 plug-ins/common/hrz.c:333
 #: plug-ins/common/jpeg.c:738 plug-ins/common/pat.c:266
 #: plug-ins/common/pcx.c:301 plug-ins/common/pix.c:326
@@ -1399,18 +1399,18 @@ msgstr "%s: el color del mapa és erroni"
 #: plug-ins/bmp/bmpread.c:335 plug-ins/common/CEL.c:304
 #: plug-ins/common/blinds.c:380 plug-ins/common/compose.c:543
 #: plug-ins/common/decompose.c:465 plug-ins/common/film.c:1002
-#: plug-ins/common/gifload.c:843 plug-ins/common/hrz.c:374
+#: plug-ins/common/gifload.c:858 plug-ins/common/hrz.c:374
 #: plug-ins/common/jpeg.c:893 plug-ins/common/lic.c:904
 #: plug-ins/common/papertile.c:316 plug-ins/common/pat.c:341
 #: plug-ins/common/pcx.c:332 plug-ins/common/pcx.c:338
 #: plug-ins/common/pix.c:370 plug-ins/common/png.c:614
 #: plug-ins/common/pnm.c:499 plug-ins/common/psd.c:2114
 #: plug-ins/common/smooth_palette.c:246 plug-ins/common/sunras.c:932
-#: plug-ins/common/tga.c:918 plug-ins/common/tiff.c:674
+#: plug-ins/common/tga.c:928 plug-ins/common/tiff.c:674
 #: plug-ins/common/tile.c:280 plug-ins/common/winclipboard.c:557
 #: plug-ins/common/wmf.c:2350 plug-ins/common/xbm.c:869
 #: plug-ins/faxg3/faxg3.c:448 plug-ins/fits/fits.c:521
-#: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3186 plug-ins/sgi/sgi.c:378
+#: plug-ins/gfig/gfig.c:2832 plug-ins/gfig/gfig.c:3185 plug-ins/sgi/sgi.c:378
 #: plug-ins/twain/twain.c:750 plug-ins/winsnap/winsnap.c:1235
 msgid "Background"
 msgstr "Fons"
@@ -1434,7 +1434,7 @@ msgstr "No es pot obrir %s"
 #: plug-ins/common/pix.c:532 plug-ins/common/png.c:846
 #: plug-ins/common/png.c:848 plug-ins/common/pnm.c:783
 #: plug-ins/common/ps.c:1018 plug-ins/common/sunras.c:525
-#: plug-ins/common/tga.c:1017 plug-ins/common/tiff.c:1351
+#: plug-ins/common/tga.c:1027 plug-ins/common/tiff.c:1351
 #: plug-ins/common/xbm.c:978 plug-ins/common/xpm.c:677
 #: plug-ins/common/xwd.c:543 plug-ins/fits/fits.c:472 plug-ins/gfli/gfli.c:679
 #: plug-ins/sgi/sgi.c:548 plug-ins/sgi/sgi.c:550 plug-ins/xjt/xjt.c:1628
@@ -1858,7 +1858,7 @@ msgid "Randoms from seed (shared)"
 msgstr "Aleatoris des de"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/CML_explorer.c:1290
-#: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1058
+#: plug-ins/common/decompose.c:122 plug-ins/common/lic.c:1063
 #: plug-ins/fp/fp_gtk.c:283 plug-ins/fp/fp_gtk.c:415
 #: plug-ins/gap/gap_mov_dialog.c:272 plug-ins/gimpressionist/orientation.c:188
 #: plug-ins/gimpressionist/size.c:186
@@ -1866,7 +1866,7 @@ msgid "Hue"
 msgstr "Tinta"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/CML_explorer.c:1295
-#: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1059
+#: plug-ins/common/decompose.c:123 plug-ins/common/lic.c:1064
 #: plug-ins/fp/fp_gtk.c:287 plug-ins/fp/fp_gtk.c:419 plug-ins/fp/fp_gtk.c:483
 #: plug-ins/gap/gap_mov_dialog.c:273 plug-ins/rcm/rcm_dialog.c:513
 msgid "Saturation"
@@ -2180,7 +2180,7 @@ msgstr "Alinea les capes visibles"
 #: plug-ins/common/gauss_iir.c:378 plug-ins/common/gauss_rle.c:373
 #: plug-ins/common/glasstile.c:294 plug-ins/common/grid.c:722
 #: plug-ins/common/illusion.c:606 plug-ins/common/jpeg.c:1652
-#: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:382
+#: plug-ins/common/lic.c:1095 plug-ins/common/max_rgb.c:382
 #: plug-ins/common/nlfilt.c:411 plug-ins/common/noisify.c:528
 #: plug-ins/common/nova.c:478 plug-ins/common/oilify.c:470
 #: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:357
@@ -2212,7 +2212,7 @@ msgid "Fill (right to left)"
 msgstr "Omple (de dreta a esquerra)"
 
 #: plug-ins/common/align_layers.c:460 plug-ins/common/align_layers.c:493
-#: plug-ins/gfig/gfig.c:3408
+#: plug-ins/gfig/gfig.c:3407
 msgid "Snap to Grid"
 msgstr "Desplaça-ho a la graella"
 
@@ -2288,7 +2288,7 @@ msgstr "Animació Playback: "
 #: plug-ins/dbbrowser/dbbrowser_utils.c:176 plug-ins/gap/gap_arr_dialog.c:783
 #: plug-ins/gap/gap_navigator_dialog.c:3160
 #: plug-ins/gdyntext/charmap_window.c:139 plug-ins/gdyntext/gdyntext_ui.c:594
-#: plug-ins/gfig/gfig.c:1953 plug-ins/gfig/gfig.c:2013
+#: plug-ins/gfig/gfig.c:1952 plug-ins/gfig/gfig.c:2012
 #: plug-ins/helpbrowser/helpbrowser.c:833
 #: plug-ins/ifscompose/ifscompose.c:1255 plug-ins/imagemap/imap_menu.c:228
 #: plug-ins/print/gimp_color_window.c:189
@@ -2412,7 +2412,7 @@ msgid "Vertical"
 msgstr "Vertical"
 
 #: plug-ins/common/blinds.c:387 plug-ins/common/fractaltrace.c:772
-#: plug-ins/common/papertile.c:380 plug-ins/gfig/gfig.c:2832
+#: plug-ins/common/papertile.c:380 plug-ins/gfig/gfig.c:2831
 #: plug-ins/gimpressionist/general.c:240
 msgid "Transparent"
 msgstr "Transparent"
@@ -2773,7 +2773,7 @@ msgid "Channel Representations"
 msgstr "Representacions dels canals"
 
 #: plug-ins/common/convmatrix.c:85 plug-ins/common/newsprint.c:383
-#: plug-ins/gfig/gfig.c:3323
+#: plug-ins/gfig/gfig.c:3322
 msgid "Grey"
 msgstr "Gris"
 
@@ -2853,7 +2853,7 @@ msgid "Prefixed Name:"
 msgstr "Nom prefixat:"
 
 #: plug-ins/common/csource.c:684 plug-ins/common/mail.c:529
-#: plug-ins/common/tiff.c:1637 plug-ins/common/xbm.c:1205
+#: plug-ins/common/tiff.c:1637 plug-ins/common/xbm.c:1204
 msgid "Comment:"
 msgstr "Comentari:"
 
@@ -2951,7 +2951,7 @@ msgstr "Curve Bend"
 
 #. menu_item copy
 #: plug-ins/common/curve_bend.c:1363 plug-ins/gap/gap_navigator_dialog.c:2922
-#: plug-ins/gfig/gfig.c:2836 plug-ins/gfig/gfig.c:5288
+#: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:5287
 #: plug-ins/gflare/gflare.c:3112 plug-ins/imagemap/imap_cmd_copy.c:52
 #: plug-ins/imagemap/imap_cmd_copy_object.c:53
 #: plug-ins/imagemap/imap_menu.c:290 plug-ins/imagemap/imap_toolbar.c:134
@@ -3002,7 +3002,7 @@ msgstr "Suavitza"
 
 #. The antialiasing toggle
 #: plug-ins/common/curve_bend.c:1523 plug-ins/common/newsprint.c:1410
-#: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3149
+#: plug-ins/common/ripple.c:613 plug-ins/gfig/gfig.c:3148
 #: plug-ins/mosaic/mosaic.c:585
 msgid "Antialiasing"
 msgstr "Contrarèplica"
@@ -3354,7 +3354,7 @@ msgstr "Taca"
 #: plug-ins/common/fractaltrace.c:774 plug-ins/common/newsprint.c:449
 #: plug-ins/common/ripple.c:653 plug-ins/common/warp.c:523
 #: plug-ins/fits/fits.c:1008 plug-ins/flame/flame.c:1110
-#: plug-ins/gfig/gfig.c:3321
+#: plug-ins/gfig/gfig.c:3320
 msgid "Black"
 msgstr "Negra"
 
@@ -3636,7 +3636,7 @@ msgid "Warp"
 msgstr "Trama"
 
 #: plug-ins/common/fractaltrace.c:776 plug-ins/fits/fits.c:1009
-#: plug-ins/gfig/gfig.c:2835 plug-ins/gfig/gfig.c:3322
+#: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3321
 msgid "White"
 msgstr "Blanca"
 
@@ -3963,18 +3963,18 @@ msgstr "Rangs:"
 msgid "Selection:"
 msgstr "Selecció:"
 
-#: plug-ins/common/gifload.c:845
+#: plug-ins/common/gifload.c:860
 #, c-format
 msgid "Background (%dms)"
 msgstr "Fons (%dms)"
 
-#: plug-ins/common/gifload.c:893 plug-ins/common/iwarp.c:741
+#: plug-ins/common/gifload.c:908 plug-ins/common/iwarp.c:741
 #: plug-ins/common/iwarp.c:765 plug-ins/common/mpeg.c:303
 #, c-format
 msgid "Frame %d"
 msgstr "Marc %d"
 
-#: plug-ins/common/gifload.c:895 plug-ins/common/mpeg.c:300
+#: plug-ins/common/gifload.c:910 plug-ins/common/mpeg.c:300
 #, c-format
 msgid "Frame %d (%dms)"
 msgstr "Marc %d (%dms)"
@@ -4037,7 +4037,7 @@ msgstr "<Image>/Filtres/Genera una visualització realista/Patró/Graella..."
 msgid "Drawing Grid..."
 msgstr "S'està dibuixant la graella..."
 
-#: plug-ins/common/grid.c:656 plug-ins/gfig/gfig.c:3397
+#: plug-ins/common/grid.c:656 plug-ins/gfig/gfig.c:3396
 #: plug-ins/imagemap/imap_menu.c:403 plug-ins/imagemap/imap_popup.c:148
 #: plug-ins/imagemap/imap_toolbar.c:165
 msgid "Grid"
@@ -4078,7 +4078,7 @@ msgstr "Color de la intersecció"
 msgid "GIMP Table Magic"
 msgstr "Taula màgica del GIMP"
 
-#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4076
+#: plug-ins/common/gtm.c:400 plug-ins/gfig/gfig.c:4075
 msgid "Warning"
 msgstr "Avís"
 
@@ -4352,7 +4352,7 @@ msgstr "Profunditat màxima:"
 #. parameter settings
 #: plug-ins/common/iwarp.c:1120 plug-ins/common/sample_colorize.c:1384
 #: plug-ins/common/sinus.c:1875 plug-ins/gap/gap_mod_layer.c:222
-#: plug-ins/gfig/gfig.c:3968 plug-ins/gflare/gflare.c:3052
+#: plug-ins/gfig/gfig.c:3967 plug-ins/gflare/gflare.c:3052
 msgid "Settings"
 msgstr "Paràmetres"
 
@@ -4523,11 +4523,11 @@ msgstr "Laplace..."
 msgid "Cleanup..."
 msgstr "Recuperació..."
 
-#: plug-ins/common/lic.c:914 plug-ins/common/lic.c:1016
+#: plug-ins/common/lic.c:914 plug-ins/common/lic.c:1017
 msgid "Van Gogh (LIC)"
 msgstr "Van Gogh (LIC)"
 
-#: plug-ins/common/lic.c:1046
+#: plug-ins/common/lic.c:1047
 msgid ""
 "Create\n"
 "New Image"
@@ -4535,63 +4535,63 @@ msgstr ""
 "Crea\n"
 "una imatge nova"
 
-#: plug-ins/common/lic.c:1053
+#: plug-ins/common/lic.c:1058
 msgid "Effect Channel"
 msgstr "Efecte canal"
 
-#: plug-ins/common/lic.c:1060
+#: plug-ins/common/lic.c:1065
 msgid "Brightness"
 msgstr "Brillantor"
 
-#: plug-ins/common/lic.c:1066
+#: plug-ins/common/lic.c:1071
 msgid "Effect Operator"
 msgstr "Efecte operador"
 
-#: plug-ins/common/lic.c:1071
+#: plug-ins/common/lic.c:1076
 msgid "Derivative"
 msgstr "Derivatiu"
 
-#: plug-ins/common/lic.c:1072 plug-ins/common/sinus.c:2012
+#: plug-ins/common/lic.c:1077 plug-ins/common/sinus.c:2012
 msgid "Gradient"
 msgstr "Gradient"
 
-#: plug-ins/common/lic.c:1078
+#: plug-ins/common/lic.c:1083
 msgid "Convolve"
 msgstr "Torsió"
 
-#: plug-ins/common/lic.c:1083
+#: plug-ins/common/lic.c:1088
 msgid "With White Noise"
 msgstr "Amb soroll blanc"
 
-#: plug-ins/common/lic.c:1084
+#: plug-ins/common/lic.c:1089
 msgid "With Source Image"
 msgstr "Amb la imatge font"
 
-#: plug-ins/common/lic.c:1112
+#: plug-ins/common/lic.c:1117
 msgid "Effect Image:"
 msgstr "Efecte imatge:"
 
-#: plug-ins/common/lic.c:1128
+#: plug-ins/common/lic.c:1133
 msgid "Filter Length:"
 msgstr "Longitud del filtre:"
 
-#: plug-ins/common/lic.c:1137
+#: plug-ins/common/lic.c:1142
 msgid "Noise Magnitude:"
 msgstr "Magnitud del soroll:"
 
-#: plug-ins/common/lic.c:1146
+#: plug-ins/common/lic.c:1151
 msgid "Integration Steps:"
 msgstr "Passos d'integració:"
 
-#: plug-ins/common/lic.c:1155
+#: plug-ins/common/lic.c:1160
 msgid "Minimum Value:"
 msgstr "Valor mínim:"
 
-#: plug-ins/common/lic.c:1164
+#: plug-ins/common/lic.c:1169
 msgid "Maximum Value:"
 msgstr "Valor màxim:"
 
-#: plug-ins/common/lic.c:1220
+#: plug-ins/common/lic.c:1225
 msgid "<Image>/Filters/Map/Van Gogh (LIC)..."
 msgstr "<Image>/Filtres/Mapa/Van Gogh (LIC)..."
 
@@ -4615,7 +4615,7 @@ msgstr "Remitent:"
 msgid "Subject:"
 msgstr "Assumpte:"
 
-#: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3750
+#: plug-ins/common/mail.c:541 plug-ins/gfig/gfig.c:3749
 #: plug-ins/imagemap/imap_settings.c:80
 msgid "Filename:"
 msgstr "Nom de fitxer:"
@@ -6253,22 +6253,22 @@ msgstr "TGA: no es pot llegir el peu de pàgina de \"%s\"\n"
 msgid "TGA: Cannot read extension from \"%s\"\n"
 msgstr "TGA: no es pot llegir l'extensió de \"%s\"\n"
 
-#: plug-ins/common/tga.c:1181
+#: plug-ins/common/tga.c:1191
 msgid "Save as TGA"
 msgstr "Desa com a TGA"
 
 #. regular tga parameter settings
-#: plug-ins/common/tga.c:1198
+#: plug-ins/common/tga.c:1208
 msgid "Targa Options"
 msgstr "Opcions del Targa"
 
 #. rle
-#: plug-ins/common/tga.c:1208
+#: plug-ins/common/tga.c:1218
 msgid "RLE compression"
 msgstr "Compressió RLE"
 
 #. origin
-#: plug-ins/common/tga.c:1217
+#: plug-ins/common/tga.c:1227
 #, fuzzy
 msgid "Origin at bottom left"
 msgstr "Origen a baix a l'esquerra"
@@ -7115,24 +7115,24 @@ msgid "Identifier Prefix:"
 msgstr "Prefix de l'identificador:"
 
 #. hotspot toggle
-#: plug-ins/common/xbm.c:1213
+#: plug-ins/common/xbm.c:1212
 msgid "Write Hot Spot Values"
 msgstr "Escriviu els valors dels punts calents"
 
-#: plug-ins/common/xbm.c:1237
+#: plug-ins/common/xbm.c:1236
 msgid "Hot Spot X:"
 msgstr "Punt calent X:"
 
 #. mask file
-#: plug-ins/common/xbm.c:1251
+#: plug-ins/common/xbm.c:1250
 msgid "Mask File"
 msgstr "Fitxer màscara"
 
-#: plug-ins/common/xbm.c:1262
+#: plug-ins/common/xbm.c:1261
 msgid "Write Extra Mask File"
 msgstr "Escriu el fitxer de la màscara extra"
 
-#: plug-ins/common/xbm.c:1273
+#: plug-ins/common/xbm.c:1272
 msgid "Mask File Extension:"
 msgstr "Extensió del fitxer màscara"
 
@@ -7359,7 +7359,7 @@ msgstr "Moviment"
 msgid "Horseshoe"
 msgstr "Ferradura"
 
-#: plug-ins/flame/flame.c:729 plug-ins/gfig/gfig.c:3306
+#: plug-ins/flame/flame.c:729 plug-ins/gfig/gfig.c:3305
 msgid "Polar"
 msgstr "Polar"
 
@@ -7586,7 +7586,7 @@ msgstr "Valor: "
 msgid "Press Button"
 msgstr "Prem el botó"
 
-#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4006
+#: plug-ins/gap/gap_arr_dialog.c:1042 plug-ins/gfig/gfig.c:4005
 #: plug-ins/imagemap/imap_cmd_select.c:52 plug-ins/imagemap/imap_tools.c:130
 msgid "Select"
 msgstr "Selecciona"
@@ -8507,7 +8507,7 @@ msgstr "S'esan modificant els marcs/capa(es)..."
 msgid "No selected Layer in start frame"
 msgstr "No hi ha cap capa seleccionada en el marc d'inici"
 
-#: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3320
+#: plug-ins/gap/gap_mov_dialog.c:262 plug-ins/gfig/gfig.c:3319
 #: plug-ins/gflare/gflare.c:594 plug-ins/gimpressionist/orientmap.c:590
 msgid "Normal"
 msgstr "Normal"
@@ -8533,7 +8533,7 @@ msgstr "Diferència"
 msgid "Addition"
 msgstr "Suma"
 
-#: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3139
+#: plug-ins/gap/gap_mov_dialog.c:269 plug-ins/gfig/gfig.c:3138
 msgid "Subtract"
 msgstr "Resta"
 
@@ -10279,11 +10279,11 @@ msgstr " S'està actualitzant la capa vella del text GDyn a %s."
 msgid "Dismiss"
 msgstr "Corregeix"
 
-#: plug-ins/gfig/gfig.c:673
+#: plug-ins/gfig/gfig.c:674
 msgid "<Image>/Filters/Render/Gfig..."
 msgstr "<Image>/Filtres/Genera/Gfig..."
 
-#: plug-ins/gfig/gfig.c:819
+#: plug-ins/gfig/gfig.c:820
 #, c-format
 msgid ""
 "No gfig-path in gimprc:\n"
@@ -10296,163 +10296,170 @@ msgstr ""
 "(gfig-path \"%s\")\n"
 "al fitxer %s."
 
-#: plug-ins/gfig/gfig.c:836
+#: plug-ins/gfig/gfig.c:837
 msgid "gfig-path misconfigured - the following directories were not found"
 msgstr ""
 "el camí gfig està mal configurat - els directoris següents no s'han trobat"
 
-#: plug-ins/gfig/gfig.c:1059
+#: plug-ins/gfig/gfig.c:1060
 msgid "First Gfig"
 msgstr "Primer Gfig"
 
-#: plug-ins/gfig/gfig.c:1560
+#: plug-ins/gfig/gfig.c:1460
+#, fuzzy, c-format
+msgid ""
+"Error opening file '%s':\n"
+"%s"
+msgstr "S'ha produït un error en obrir el fitxer"
+
+#: plug-ins/gfig/gfig.c:1559
 #, fuzzy
 msgid "Save Gfig drawing"
 msgstr "Suprimeix el dibuix Gfig"
 
-#: plug-ins/gfig/gfig.c:1886
+#: plug-ins/gfig/gfig.c:1885
 msgid "Prev"
 msgstr "Anterior"
 
 #. More Buttons
-#: plug-ins/gfig/gfig.c:1915 plug-ins/gfig/gfig.c:5301
+#: plug-ins/gfig/gfig.c:1914 plug-ins/gfig/gfig.c:5300
 #: plug-ins/gflare/gflare.c:3111 plug-ins/imagemap/imap_menu.c:280
 #: plug-ins/imagemap/imap_selection.c:173 plug-ins/imagemap/imap_tools.c:150
 msgid "Edit"
 msgstr "Edita"
 
-#: plug-ins/gfig/gfig.c:1920
+#: plug-ins/gfig/gfig.c:1919
 msgid "Edit Gfig object collection"
 msgstr "Edita la col·leció d'objectes del Gfig"
 
-#: plug-ins/gfig/gfig.c:1923
+#: plug-ins/gfig/gfig.c:1922
 msgid "Merge"
 msgstr "Refon"
 
-#: plug-ins/gfig/gfig.c:1928
+#: plug-ins/gfig/gfig.c:1927
 msgid "Merge Gfig Object collection into the current edit session"
 msgstr "Refon el recull d'objectes Gfig amb l'actual sessió d'edició"
 
-#: plug-ins/gfig/gfig.c:1967
+#: plug-ins/gfig/gfig.c:1966
 msgid "Number of Sides/Points/Turns:"
 msgstr "Nombre de cares/punts/girs:"
 
-#: plug-ins/gfig/gfig.c:1983
+#: plug-ins/gfig/gfig.c:1982
 msgid "Clockwise"
 msgstr "Sentit igual a les agulles del rellotge"
 
-#: plug-ins/gfig/gfig.c:1984
+#: plug-ins/gfig/gfig.c:1983
 msgid "Anti-Clockwise"
 msgstr "Sentit invers a les agulles del rellotge"
 
-#: plug-ins/gfig/gfig.c:1988 plug-ins/gimpressionist/orientation.c:121
+#: plug-ins/gfig/gfig.c:1987 plug-ins/gimpressionist/orientation.c:121
 #: plug-ins/print/gimp_main_window.c:464
 msgid "Orientation:"
 msgstr "Orientació:"
 
-#: plug-ins/gfig/gfig.c:2008
+#: plug-ins/gfig/gfig.c:2007
 msgid "Bezier Settings"
 msgstr "Paràmetres Bezier"
 
-#: plug-ins/gfig/gfig.c:2028
+#: plug-ins/gfig/gfig.c:2027
 msgid "Closed"
 msgstr "Tancat"
 
-#: plug-ins/gfig/gfig.c:2033
+#: plug-ins/gfig/gfig.c:2032
 msgid "Close curve on completion"
 msgstr "Tanca la corba en la compleció"
 
-#: plug-ins/gfig/gfig.c:2038
+#: plug-ins/gfig/gfig.c:2037
 msgid "Show Line Frame"
 msgstr "Mostra la línia del marc"
 
-#: plug-ins/gfig/gfig.c:2043
+#: plug-ins/gfig/gfig.c:2042
 msgid "Draws lines between the control points. Only during curve creation"
 msgstr "Dibuixa línies entre els punts de control. Només durant la creació"
 
-#: plug-ins/gfig/gfig.c:2059
+#: plug-ins/gfig/gfig.c:2058
 msgid "Regular Polygon Number of Sides"
 msgstr "Polígon regular Nombre de cares"
 
-#: plug-ins/gfig/gfig.c:2071
+#: plug-ins/gfig/gfig.c:2070
 msgid "Star Number of Points"
 msgstr "Estrella Nombre de punts"
 
-#: plug-ins/gfig/gfig.c:2083
+#: plug-ins/gfig/gfig.c:2082
 msgid "Spiral Number of Points"
 msgstr "Espiral Nombre de punts"
 
-#: plug-ins/gfig/gfig.c:2107
+#: plug-ins/gfig/gfig.c:2106
 msgid "Ops"
 msgstr "Ops"
 
-#: plug-ins/gfig/gfig.c:2120
+#: plug-ins/gfig/gfig.c:2119
 msgid "Create line"
 msgstr "Crea una línia"
 
-#: plug-ins/gfig/gfig.c:2125
+#: plug-ins/gfig/gfig.c:2124
 msgid "Create circle"
 msgstr "Crea un cercle"
 
-#: plug-ins/gfig/gfig.c:2130
+#: plug-ins/gfig/gfig.c:2129
 msgid "Create ellipse"
 msgstr "Crea una el·lipse"
 
-#: plug-ins/gfig/gfig.c:2135
+#: plug-ins/gfig/gfig.c:2134
 msgid "Create arch"
 msgstr "Crea un arc"
 
-#: plug-ins/gfig/gfig.c:2144
+#: plug-ins/gfig/gfig.c:2143
 msgid "Create reg polygon"
 msgstr "Crea un polígon regular"
 
-#: plug-ins/gfig/gfig.c:2152
+#: plug-ins/gfig/gfig.c:2151
 msgid "Create star"
 msgstr "Crea un estrella"
 
-#: plug-ins/gfig/gfig.c:2161
+#: plug-ins/gfig/gfig.c:2160
 msgid "Create spiral"
 msgstr "Crea un espiral"
 
-#: plug-ins/gfig/gfig.c:2171
+#: plug-ins/gfig/gfig.c:2170
 msgid "Create bezier curve. Shift + Button ends object creation."
 msgstr "Crea una corba de Bezier. Maj + botó acaben la creació de l’objecte."
 
-#: plug-ins/gfig/gfig.c:2177
+#: plug-ins/gfig/gfig.c:2176
 msgid "Move an object"
 msgstr "Mou un objecte"
 
-#: plug-ins/gfig/gfig.c:2182
+#: plug-ins/gfig/gfig.c:2181
 msgid "Move a single point"
 msgstr "Mou només un punt"
 
-#: plug-ins/gfig/gfig.c:2187
+#: plug-ins/gfig/gfig.c:2186
 msgid "Copy an object"
 msgstr "Copia un objecte"
 
-#: plug-ins/gfig/gfig.c:2192
+#: plug-ins/gfig/gfig.c:2191
 msgid "Delete an object"
 msgstr "Suprimeix un objecte"
 
-#: plug-ins/gfig/gfig.c:2355 plug-ins/gfig/gfig.c:2790
-#: plug-ins/gfig/gfig.c:3998 plug-ins/gimpressionist/brush.c:353
+#: plug-ins/gfig/gfig.c:2354 plug-ins/gfig/gfig.c:2789
+#: plug-ins/gfig/gfig.c:3997 plug-ins/gimpressionist/brush.c:353
 #: plug-ins/gimpressionist/brush.c:358
 msgid "Brush"
 msgstr "Pinzell"
 
-#: plug-ins/gfig/gfig.c:2356
+#: plug-ins/gfig/gfig.c:2355
 msgid "Airbrush"
 msgstr "Aerògraf"
 
-#: plug-ins/gfig/gfig.c:2357
+#: plug-ins/gfig/gfig.c:2356
 msgid "Pencil"
 msgstr "Llapis"
 
-#: plug-ins/gfig/gfig.c:2358 plug-ins/gfig/gfig.c:3184
+#: plug-ins/gfig/gfig.c:2357 plug-ins/gfig/gfig.c:3183
 msgid "Pattern"
 msgstr "Patró"
 
-#: plug-ins/gfig/gfig.c:2365
+#: plug-ins/gfig/gfig.c:2364
 msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to circles/"
@@ -10463,40 +10470,40 @@ msgstr ""
 "cercles/el·lipses si s'ha configurat la commutació aproximada de cercles/"
 "el·lipses."
 
-#: plug-ins/gfig/gfig.c:2771 plug-ins/rcm/rcm_dialog.c:125
+#: plug-ins/gfig/gfig.c:2770 plug-ins/rcm/rcm_dialog.c:125
 msgid "Original"
 msgstr "Original"
 
-#: plug-ins/gfig/gfig.c:2772 plug-ins/gfig/gfig.c:3559
+#: plug-ins/gfig/gfig.c:2771 plug-ins/gfig/gfig.c:3558
 #: plug-ins/gflare/gflare.c:3110 plug-ins/ifscompose/ifscompose.c:805
 #: plug-ins/webbrowser/webbrowser.c:319
 msgid "New"
 msgstr "Nou"
 
-#: plug-ins/gfig/gfig.c:2773
+#: plug-ins/gfig/gfig.c:2772
 msgid "Multiple"
 msgstr "Múltiple"
 
-#: plug-ins/gfig/gfig.c:2778
+#: plug-ins/gfig/gfig.c:2777
 msgid "Draw all objects on one layer (original or new) or one object per layer"
 msgstr ""
 "Dibuixa tots els objectes en una capa (original o nova) o un objecte per capa"
 
-#: plug-ins/gfig/gfig.c:2783
+#: plug-ins/gfig/gfig.c:2782
 msgid "Draw on:"
 msgstr "Dibuixa en:"
 
 #. Create selection
-#: plug-ins/gfig/gfig.c:2792 plug-ins/imagemap/imap_selection.c:360
+#: plug-ins/gfig/gfig.c:2791 plug-ins/imagemap/imap_selection.c:360
 #: plug-ins/rcm/rcm_dialog.c:668
 msgid "Selection"
 msgstr "Selecció"
 
-#: plug-ins/gfig/gfig.c:2794
+#: plug-ins/gfig/gfig.c:2793
 msgid "Selection+Fill"
 msgstr "Sel·lecció+farciment"
 
-#: plug-ins/gfig/gfig.c:2821
+#: plug-ins/gfig/gfig.c:2820
 msgid ""
 "Draw type. Either a brush or a selection. See brush page or selection page "
 "for more options"
@@ -10504,15 +10511,15 @@ msgstr ""
 "Dibuix tipus. És igual un pinzell o una selecció. Per més opcions aneu a la "
 "pàgina de pinzells o a la pàgina de selecció"
 
-#: plug-ins/gfig/gfig.c:2825
+#: plug-ins/gfig/gfig.c:2824
 msgid "Using:"
 msgstr "S’està utilitzant:"
 
-#: plug-ins/gfig/gfig.c:2834 plug-ins/gfig/gfig.c:3185
+#: plug-ins/gfig/gfig.c:2833 plug-ins/gfig/gfig.c:3184
 msgid "Foreground"
 msgstr "Primer pla"
 
-#: plug-ins/gfig/gfig.c:2840
+#: plug-ins/gfig/gfig.c:2839
 msgid ""
 "Layer background type. Copy causes previous layer to be copied before the "
 "draw is performed"
@@ -10520,31 +10527,31 @@ msgstr ""
 "Tipus de capa de fons. El fet de copiar fa que la capa anterior es copiï "
 "abans que el dibuix estigui acabat"
 
-#: plug-ins/gfig/gfig.c:2845
+#: plug-ins/gfig/gfig.c:2844
 msgid "With BG of:"
 msgstr "Amb el fons de:"
 
-#: plug-ins/gfig/gfig.c:2848
+#: plug-ins/gfig/gfig.c:2847
 msgid "Reverse Line"
 msgstr "Inverteix la línia"
 
-#: plug-ins/gfig/gfig.c:2855
+#: plug-ins/gfig/gfig.c:2854
 msgid "Draw lines in reverse order"
 msgstr "Dibuixa les línies en ordre invers"
 
-#: plug-ins/gfig/gfig.c:2863
+#: plug-ins/gfig/gfig.c:2862
 msgid "Scale to Image"
 msgstr "Ajusta a la imatge"
 
-#: plug-ins/gfig/gfig.c:2871
+#: plug-ins/gfig/gfig.c:2870
 msgid "Scale drawings to images size"
 msgstr "Ajusta els dibuixos a la mida de les imatges"
 
-#: plug-ins/gfig/gfig.c:2893
+#: plug-ins/gfig/gfig.c:2892
 msgid "Approx. Circles/Ellipses"
 msgstr "Cercles/el·lipses aproximades"
 
-#: plug-ins/gfig/gfig.c:2900
+#: plug-ins/gfig/gfig.c:2899
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
@@ -10552,218 +10559,218 @@ msgstr ""
 "Cercles/el·lipses aproximades fent servir línies. Permet l’ús de la "
 "difuminació amb aquest tipus d’objectes."
 
-#: plug-ins/gfig/gfig.c:2935
+#: plug-ins/gfig/gfig.c:2934
 msgid "Gfig brush selection"
 msgstr "Selecció de pinzell Gfig"
 
-#: plug-ins/gfig/gfig.c:2976
+#: plug-ins/gfig/gfig.c:2975
 msgid "Fade out:"
 msgstr "Difumina:"
 
-#: plug-ins/gfig/gfig.c:2999
+#: plug-ins/gfig/gfig.c:2998
 msgid "Gradient:"
 msgstr "Gradient:"
 
-#: plug-ins/gfig/gfig.c:3019
+#: plug-ins/gfig/gfig.c:3018
 msgid "Pressure:"
 msgstr "Pressió:"
 
-#: plug-ins/gfig/gfig.c:3037
+#: plug-ins/gfig/gfig.c:3036
 msgid "No Options..."
 msgstr "Sense opcions..."
 
 #. Start of new brush selection code
-#: plug-ins/gfig/gfig.c:3052
+#: plug-ins/gfig/gfig.c:3051
 msgid "Set Brush..."
 msgstr "Determina el pinzell..."
 
-#: plug-ins/gfig/gfig.c:3138 plug-ins/gimpressionist/orientmap.c:531
+#: plug-ins/gfig/gfig.c:3137 plug-ins/gimpressionist/orientmap.c:531
 #: plug-ins/gimpressionist/sizemap.c:431
 msgid "Add"
 msgstr "Afegeix"
 
-#: plug-ins/gfig/gfig.c:3140
+#: plug-ins/gfig/gfig.c:3139
 msgid "Replace"
 msgstr "Substitueix"
 
-#: plug-ins/gfig/gfig.c:3141
+#: plug-ins/gfig/gfig.c:3140
 msgid "Intersect"
 msgstr "Interseca"
 
-#: plug-ins/gfig/gfig.c:3145
+#: plug-ins/gfig/gfig.c:3144
 msgid "Selection Type:"
 msgstr "Tipus de selecció:"
 
 #. 3
-#: plug-ins/gfig/gfig.c:3158
+#: plug-ins/gfig/gfig.c:3157
 msgid "Feather"
 msgstr "Plomall"
 
-#: plug-ins/gfig/gfig.c:3190
+#: plug-ins/gfig/gfig.c:3189
 msgid "Fill Type:"
 msgstr "Tipus farciment:"
 
-#: plug-ins/gfig/gfig.c:3203
+#: plug-ins/gfig/gfig.c:3202
 msgid "Fill Opacity:"
 msgstr "Omple l’opacitat:"
 
-#: plug-ins/gfig/gfig.c:3211
+#: plug-ins/gfig/gfig.c:3210
 msgid "Each Selection"
 msgstr "Cada selecció"
 
-#: plug-ins/gfig/gfig.c:3212
+#: plug-ins/gfig/gfig.c:3211
 msgid "All Selections"
 msgstr "Totes les seleccions"
 
-#: plug-ins/gfig/gfig.c:3216
+#: plug-ins/gfig/gfig.c:3215
 msgid "Fill after:"
 msgstr "Omple després:"
 
-#: plug-ins/gfig/gfig.c:3223
+#: plug-ins/gfig/gfig.c:3222
 msgid "Segment"
 msgstr "Segment"
 
-#: plug-ins/gfig/gfig.c:3224
+#: plug-ins/gfig/gfig.c:3223
 msgid "Sector"
 msgstr "Sector"
 
-#: plug-ins/gfig/gfig.c:3228
+#: plug-ins/gfig/gfig.c:3227
 msgid "Arc as:"
 msgstr "Fes l’arc com:"
 
 #. Put buttons in
-#: plug-ins/gfig/gfig.c:3282
+#: plug-ins/gfig/gfig.c:3281
 msgid "Show Image"
 msgstr "Mostra la imatge"
 
-#: plug-ins/gfig/gfig.c:3293
+#: plug-ins/gfig/gfig.c:3292
 msgid "Reload Image"
 msgstr "Actualitza la imatge"
 
-#: plug-ins/gfig/gfig.c:3305 plug-ins/imagemap/imap_menu.c:387
+#: plug-ins/gfig/gfig.c:3304 plug-ins/imagemap/imap_menu.c:387
 #: plug-ins/imagemap/imap_popup.c:132 plug-ins/imagemap/imap_rectangle.c:64
 #: plug-ins/imagemap/imap_tools.c:135
 msgid "Rectangle"
 msgstr "Rectangle"
 
-#: plug-ins/gfig/gfig.c:3307
+#: plug-ins/gfig/gfig.c:3306
 msgid "Isometric"
 msgstr "Isomètric"
 
-#: plug-ins/gfig/gfig.c:3311
+#: plug-ins/gfig/gfig.c:3310
 msgid "Grid Type:"
 msgstr "Tipus graella:"
 
-#: plug-ins/gfig/gfig.c:3324
+#: plug-ins/gfig/gfig.c:3323
 msgid "Darker"
 msgstr "Més fosc"
 
-#: plug-ins/gfig/gfig.c:3325
+#: plug-ins/gfig/gfig.c:3324
 msgid "Lighter"
 msgstr "Més clar"
 
-#: plug-ins/gfig/gfig.c:3326
+#: plug-ins/gfig/gfig.c:3325
 msgid "Very Dark"
 msgstr "Molt fosc"
 
-#: plug-ins/gfig/gfig.c:3330
+#: plug-ins/gfig/gfig.c:3329
 msgid "Grid Color:"
 msgstr "Color de graella:"
 
-#: plug-ins/gfig/gfig.c:3334
+#: plug-ins/gfig/gfig.c:3333
 msgid "Max Undo:"
 msgstr "Desfés al màxim:"
 
-#: plug-ins/gfig/gfig.c:3342
+#: plug-ins/gfig/gfig.c:3341
 msgid "Show Position"
 msgstr "Mostra la posició"
 
-#: plug-ins/gfig/gfig.c:3353
+#: plug-ins/gfig/gfig.c:3352
 msgid "Hide Control Points"
 msgstr "Amaga els punts de control"
 
-#: plug-ins/gfig/gfig.c:3365
+#: plug-ins/gfig/gfig.c:3364
 msgid "Show Tooltips"
 msgstr "Mostra els consells de les eines"
 
-#: plug-ins/gfig/gfig.c:3416
+#: plug-ins/gfig/gfig.c:3415
 msgid "Display Grid"
 msgstr "Mostra la graella"
 
-#: plug-ins/gfig/gfig.c:3427
+#: plug-ins/gfig/gfig.c:3426
 msgid "Lock on Grid"
 msgstr "Bloca la graella"
 
-#: plug-ins/gfig/gfig.c:3442
+#: plug-ins/gfig/gfig.c:3441
 msgid "Grid Spacing:"
 msgstr "Espaiat de la graella:"
 
-#: plug-ins/gfig/gfig.c:3507
+#: plug-ins/gfig/gfig.c:3506
 msgid "Object"
 msgstr "Objecte"
 
-#: plug-ins/gfig/gfig.c:3543
+#: plug-ins/gfig/gfig.c:3542
 msgid "Select directory and rescan Gfig object collection"
 msgstr ""
 "Selecciona el directori i torna a escanejar la col·lecció d’objectes Gfig"
 
-#: plug-ins/gfig/gfig.c:3554
+#: plug-ins/gfig/gfig.c:3553
 msgid "Load a single Gfig object collection"
 msgstr "Carrega només una col·lecció d’objectes Gfig"
 
-#: plug-ins/gfig/gfig.c:3563
+#: plug-ins/gfig/gfig.c:3562
 msgid "Create a new Gfig object collection for editing"
 msgstr "Crea una col·lecció d’objectes Gfig nova per editar"
 
-#: plug-ins/gfig/gfig.c:3573
+#: plug-ins/gfig/gfig.c:3572
 msgid "Delete currently selected Gfig Object collection"
 msgstr "Suprimeix la col·lecció d’objectes Gfig seleccionada actualment"
 
 #. Position labels
-#: plug-ins/gfig/gfig.c:3687
+#: plug-ins/gfig/gfig.c:3686
 msgid "XY Position:"
 msgstr "Posició XY:"
 
-#: plug-ins/gfig/gfig.c:3708
+#: plug-ins/gfig/gfig.c:3707
 msgid "Object Details"
 msgstr "Detalls de l’objecte"
 
-#: plug-ins/gfig/gfig.c:3737
+#: plug-ins/gfig/gfig.c:3736
 msgid "Collection Details"
 msgstr "Detalls de la col·lecció"
 
-#: plug-ins/gfig/gfig.c:3744
+#: plug-ins/gfig/gfig.c:3743
 msgid "Draw Name:"
 msgstr "Dibuixa el nom:"
 
-#: plug-ins/gfig/gfig.c:3756 plug-ins/gfig/gfig.c:3762
+#: plug-ins/gfig/gfig.c:3755 plug-ins/gfig/gfig.c:3761
 msgid "(none)"
 msgstr "(cap)"
 
 #. Start buildng the dialog up
-#: plug-ins/gfig/gfig.c:3919
+#: plug-ins/gfig/gfig.c:3918
 msgid "GFig"
 msgstr "GFig"
 
-#: plug-ins/gfig/gfig.c:3924
+#: plug-ins/gfig/gfig.c:3923
 msgid "Done"
 msgstr "Fet"
 
-#: plug-ins/gfig/gfig.c:3926 plug-ins/gfig/gfig.c:3993
+#: plug-ins/gfig/gfig.c:3925 plug-ins/gfig/gfig.c:3992
 msgid "Paint"
 msgstr "Pinta"
 
-#: plug-ins/gfig/gfig.c:3930 plug-ins/imagemap/imap_cmd_clear.c:53
+#: plug-ins/gfig/gfig.c:3929 plug-ins/imagemap/imap_cmd_clear.c:53
 #: plug-ins/imagemap/imap_menu.c:301
 msgid "Clear"
 msgstr "Neteja"
 
-#: plug-ins/gfig/gfig.c:3932 plug-ins/ifscompose/ifscompose.c:1205
+#: plug-ins/gfig/gfig.c:3931 plug-ins/ifscompose/ifscompose.c:1205
 #: plug-ins/imagemap/imap_toolbar.c:122
 msgid "Undo"
 msgstr "Desfés"
 
-#: plug-ins/gfig/gfig.c:4074
+#: plug-ins/gfig/gfig.c:4073
 #, c-format
 msgid ""
 "%d unsaved Gfig objects.\n"
@@ -10772,95 +10779,95 @@ msgstr ""
 "%d d’objectes Gfig no desats.\n"
 "Voleu continuar i sortir?"
 
-#: plug-ins/gfig/gfig.c:4421
+#: plug-ins/gfig/gfig.c:4420
 msgid "Enter Gfig Entry Name"
 msgstr "Introduïu el nom d’entrada Gfig"
 
-#: plug-ins/gfig/gfig.c:4445
+#: plug-ins/gfig/gfig.c:4444
 msgid "Gfig Object Name:"
 msgstr "Nom d’objecte Gfig:"
 
 #. the dialog
-#: plug-ins/gfig/gfig.c:4504
+#: plug-ins/gfig/gfig.c:4503
 msgid "Rescan for Gfig Objects"
 msgstr "Torna a escanejar els objectes Gfig"
 
-#: plug-ins/gfig/gfig.c:4522
+#: plug-ins/gfig/gfig.c:4521
 msgid "Add Gfig Path"
 msgstr "Afegeix un camí Gfig"
 
 #. Load a single object
-#: plug-ins/gfig/gfig.c:4600
+#: plug-ins/gfig/gfig.c:4599
 msgid "Load Gfig obj"
 msgstr "Carrega un objecte Gfig"
 
-#: plug-ins/gfig/gfig.c:4625
+#: plug-ins/gfig/gfig.c:4624
 msgid "Error in copy layer for onlayers"
 msgstr "S'ha produït un error en copiar una capa de les capes superiors"
 
 #. RGBA or GRAYA type
 #. opacity
 #. mode
-#: plug-ins/gfig/gfig.c:4657
+#: plug-ins/gfig/gfig.c:4656
 msgid "Error in creating layer"
 msgstr "S'ha produït un error en crear una capa"
 
-#: plug-ins/gfig/gfig.c:4738
+#: plug-ins/gfig/gfig.c:4737
 #, c-format
 msgid "Gfig Layer %d"
 msgstr "%d capa Gfig"
 
-#: plug-ins/gfig/gfig.c:4813
+#: plug-ins/gfig/gfig.c:4812
 msgid "About GFig"
 msgstr "Quant a Gfig"
 
-#: plug-ins/gfig/gfig.c:4837
+#: plug-ins/gfig/gfig.c:4836
 msgid "Gfig - GIMP plug-in"
 msgstr "Gfig – connector GIMP"
 
-#: plug-ins/gfig/gfig.c:4842
+#: plug-ins/gfig/gfig.c:4841
 msgid "Release 1.3"
 msgstr "Llançament 1.3"
 
-#: plug-ins/gfig/gfig.c:4852
+#: plug-ins/gfig/gfig.c:4851
 msgid "Email alt@picnic.demon.co.uk"
 msgstr "Correu alt@picnic.demon.co.uk"
 
-#: plug-ins/gfig/gfig.c:4862
+#: plug-ins/gfig/gfig.c:4861
 msgid "Isometric grid By Rob Saunders"
 msgstr "Graella isomètrica per Rob Saunders"
 
-#: plug-ins/gfig/gfig.c:4895
+#: plug-ins/gfig/gfig.c:4894
 msgid "New gfig obj"
 msgstr "Nou objecte Gfig"
 
-#: plug-ins/gfig/gfig.c:5021
+#: plug-ins/gfig/gfig.c:5020
 msgid "Delete Gfig Drawing"
 msgstr "Suprimeix el dibuix Gfig"
 
-#: plug-ins/gfig/gfig.c:5049 plug-ins/gfig/gfig.c:5089
+#: plug-ins/gfig/gfig.c:5048 plug-ins/gfig/gfig.c:5088
 msgid "<NONE>"
 msgstr "<CAP>"
 
-#: plug-ins/gfig/gfig.c:5127
+#: plug-ins/gfig/gfig.c:5126
 msgid "Editing read-only object - you will not be able to save it"
 msgstr "S’està editant un objecte de només lectura – no podreu desar-lo"
 
 #. Create new entry with name + copy at end & copy object into it
-#: plug-ins/gfig/gfig.c:5230
+#: plug-ins/gfig/gfig.c:5229
 #, c-format
 msgid "%s copy"
 msgstr "%s còpia"
 
-#: plug-ins/gfig/gfig.c:5275
+#: plug-ins/gfig/gfig.c:5274
 msgid "Save as..."
 msgstr "Anomena i desa..."
 
-#: plug-ins/gfig/gfig.c:6158
+#: plug-ins/gfig/gfig.c:6157
 msgid "Error reading file"
 msgstr "S'ha produït un error en llegir el fitxer"
 
-#: plug-ins/gfig/gfig.c:6515
+#: plug-ins/gfig/gfig.c:6514
 msgid "Hey where has the object gone ?"
 msgstr "On ha anat l’objecte?"
 

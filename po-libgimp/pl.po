@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
-"POT-Creation-Date: 2003-01-14 17:02-0800\n"
+"POT-Creation-Date: 2003-06-02 21:15-0700\n"
 "PO-Revision-Date: 2001-10-25 21:36+0200\n"
 "Last-Translator: GNOME PL Team <translators@gnome.pl>\n"
 "Language-Team: Polish <pl@li.org>\n"
@@ -25,55 +25,55 @@ msgstr "/Wykorzystaj bie¿±cy kolor"
 msgid "/Use Background Color"
 msgstr "/Wykorzystaj kolor t³a"
 
-#: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
 msgid "can't handle layers"
 msgstr "nie obs³uguje warstw"
 
-#: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
 msgid "Merge Visible Layers"
 msgstr "Po³±cz widoczne warstwy"
 
-#: libgimp/gimpexport.c:179
+#: libgimp/gimpexport.c:192
 msgid "can't handle layer offsets, size or opacity"
 msgstr "nie obs³uguje przesuniêæ, rozmiarów ani nieprzepuszczalno¶ci warstw"
 
-#: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
 msgid "can only handle layers as animation frames"
 msgstr "obs³uguje warstwy wy³±cznie jako ramki animacji"
 
-#: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
 msgid "Save as Animation"
 msgstr "Zapisz w postaci animacji"
 
-#: libgimp/gimpexport.c:198 libgimp/gimpexport.c:207 libgimp/gimpexport.c:216
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
 msgid "Flatten Image"
 msgstr "Sp³aszcz obraz"
 
-#: libgimp/gimpexport.c:215
+#: libgimp/gimpexport.c:228
 msgid "can't handle transparency"
 msgstr "nie obs³uguje przezroczysto¶ci"
 
-#: libgimp/gimpexport.c:224
+#: libgimp/gimpexport.c:237
 msgid "can only handle RGB images"
 msgstr "obs³uguje wy³±cznie obrazy RGB"
 
-#: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
 msgid "Convert to RGB"
 msgstr "Przekonwertuj na RGB"
 
-#: libgimp/gimpexport.c:233
+#: libgimp/gimpexport.c:246
 msgid "can only handle grayscale images"
 msgstr "obs³uguje wy³±cznie obrazy w odcieniach szaro¶ci"
 
-#: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
 msgid "Convert to Grayscale"
 msgstr "Przekonwertuj na odcienie szaro¶ci"
 
-#: libgimp/gimpexport.c:242
+#: libgimp/gimpexport.c:255
 msgid "can only handle indexed images"
 msgstr "obs³uguje wy³±cznie obrazy indeksowane"
 
-#: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -81,23 +81,23 @@ msgstr ""
 "Przekonwertuj na indeksowany z u¿yciem ustawieñ domy¶lnych\n"
 "(rêczna konwersja pozwoli na lepsze dopasowanie ustawieñ)"
 
-#: libgimp/gimpexport.c:252
+#: libgimp/gimpexport.c:265
 msgid "can only handle RGB or grayscale images"
 msgstr "obs³uguje wy³±cznie obrazy RGB lub w odcieniach szaro¶ci"
 
-#: libgimp/gimpexport.c:261
+#: libgimp/gimpexport.c:274
 msgid "can only handle RGB or indexed images"
 msgstr "obs³uguje wy³±cznie obrazy RGB lub indeksowane"
 
-#: libgimp/gimpexport.c:271
+#: libgimp/gimpexport.c:284
 msgid "can only handle grayscale or indexed images"
 msgstr "obs³uguje wy³±cznie obrazy indeksowane lub w odcieniach szaro¶ci"
 
-#: libgimp/gimpexport.c:282
+#: libgimp/gimpexport.c:295
 msgid "needs an alpha channel"
 msgstr "Wymaga kana³u alfa"
 
-#: libgimp/gimpexport.c:283
+#: libgimp/gimpexport.c:296
 msgid "Add Alpha Channel"
 msgstr "Dodaj kana³ alfa"
 
@@ -106,22 +106,22 @@ msgstr "Dodaj kana³ alfa"
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:356
+#: libgimp/gimpexport.c:369
 msgid "Confirm Save"
 msgstr "Potwierdzenie zapisu"
 
-#: libgimp/gimpexport.c:360
+#: libgimp/gimpexport.c:373
 msgid "Confirm"
 msgstr "Zatwierd¼"
 
-#: libgimp/gimpexport.c:362 libgimp/gimpexport.c:423
+#: libgimp/gimpexport.c:375 libgimp/gimpexport.c:436
 #: libgimp/gimpquerybox.c:204 libgimp/gimpquerybox.c:260
 #: libgimp/gimpquerybox.c:318 libgimp/gimpquerybox.c:383
 #: libgimp/gimpunitmenu.c:505
 msgid "Cancel"
 msgstr "Anuluj"
 
-#: libgimp/gimpexport.c:376
+#: libgimp/gimpexport.c:389
 #, c-format
 msgid ""
 "You are about to save %s as %s.\n"
@@ -135,19 +135,19 @@ msgstr ""
 #. *  Otherwise bad things will happen now!!
 #.
 #. the dialog
-#: libgimp/gimpexport.c:414
+#: libgimp/gimpexport.c:427
 msgid "Export File"
 msgstr "Eksport pliku"
 
-#: libgimp/gimpexport.c:419
+#: libgimp/gimpexport.c:432
 msgid "Export"
 msgstr "Wyeksportuj"
 
-#: libgimp/gimpexport.c:421
+#: libgimp/gimpexport.c:434
 msgid "Ignore"
 msgstr "Zignoruj"
 
-#: libgimp/gimpexport.c:438
+#: libgimp/gimpexport.c:451
 msgid ""
 "Your image should be exported before it can be saved for the following "
 "reasons:"
@@ -156,15 +156,15 @@ msgstr ""
 "wyeksportowany:"
 
 #. the footline
-#: libgimp/gimpexport.c:501
+#: libgimp/gimpexport.c:514
 msgid "The export conversion won't modify your original image."
 msgstr "Konwersja podczas eksportu nie zmodyfikuje oryginalnego obrazu."
 
-#: libgimp/gimpexport.c:569
+#: libgimp/gimpexport.c:582
 msgid "a layer mask"
 msgstr "maska warstwy"
 
-#: libgimp/gimpexport.c:571
+#: libgimp/gimpexport.c:584
 msgid "a channel (saved selection)"
 msgstr "kana³ (zapisane zaznaczenie)"
 

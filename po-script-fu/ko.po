@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Script-Fu 1.2.4\n"
-"POT-Creation-Date: 2003-05-19 15:16-0700\n"
+"POT-Creation-Date: 2003-06-02 21:15-0700\n"
 "PO-Revision-Date: 2002-08-28 15:15+0200\n"
 "Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: <ko@li.org>\n"
@@ -109,12 +109,12 @@ msgid "About"
 msgstr "대하여"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:561
+#: plug-ins/script-fu/script-fu-server.c:562
 msgid "OK"
 msgstr "확인"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:563
+#: plug-ins/script-fu/script-fu-server.c:564
 msgid "Cancel"
 msgstr "취소"
 
@@ -166,16 +166,16 @@ msgid ""
 "%s"
 msgstr "Script-Fu 파일 셀렉션"
 
-#: plug-ins/script-fu/script-fu-server.c:556
+#: plug-ins/script-fu/script-fu-server.c:557
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu 서버 옵션"
 
-#: plug-ins/script-fu/script-fu-server.c:583
+#: plug-ins/script-fu/script-fu-server.c:584
 #, fuzzy
 msgid "Server Port:"
 msgstr "서버 포트:"
 
-#: plug-ins/script-fu/script-fu-server.c:589
+#: plug-ins/script-fu/script-fu-server.c:590
 #, fuzzy
 msgid "Server Logfile:"
 msgstr "서버 로그파일:"

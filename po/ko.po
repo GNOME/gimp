@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 1.1.12\n"
-"POT-Creation-Date: 2003-05-19 15:07-0700\n"
+"POT-Creation-Date: 2003-06-14 11:09-0700\n"
 "PO-Revision-Date: 1999-11-26 03:49:46+0900\n"
 "Last-Translator: Sung-Hyun Nam <namsh@kldp.org>\n"
 "Language-Team: Korean <ko@li.org>\n"
@@ -123,14 +123,14 @@ msgstr "종료"
 
 #. the cancel button
 #: app/app_procs.c:796 app/brightness_contrast.c:244 app/channel_ops.c:99
-#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
+#: app/channels_dialog.c:2543 app/channels_dialog.c:2706
 #: app/color_balance.c:299 app/color_notebook.c:128 app/convert.c:517
 #: app/curves.c:592 app/file_new_dialog.c:212 app/file_new_dialog.c:362
 #: app/gdisplay_ops.c:313 app/gimphelp.c:201 app/gimpprogress.c:120
 #: app/global_edit.c:792 app/gradient.c:1884 app/gradient.c:4948
 #: app/gradient.c:5509 app/hue_saturation.c:403 app/interface.c:1051
-#: app/layers_dialog.c:3575 app/layers_dialog.c:3759 app/layers_dialog.c:3854
-#: app/layers_dialog.c:4115 app/levels.c:375 app/palette.c:1825
+#: app/layers_dialog.c:3578 app/layers_dialog.c:3762 app/layers_dialog.c:3857
+#: app/layers_dialog.c:4118 app/levels.c:375 app/palette.c:1825
 #: app/posterize.c:229 app/preferences_dialog.c:1485 app/qmask.c:282
 #: app/resize.c:225 app/resize.c:1400 app/resolution_calibrate.c:116
 #: app/threshold.c:301 app/user_install.c:605
@@ -294,11 +294,11 @@ msgid "Brightness-Contrast does not operate on indexed drawables."
 msgstr "명도대비는 인덱스된 그리기에서 작동하지 않습니다."
 
 #: app/brightness_contrast.c:240 app/channel_ops.c:97
-#: app/channels_dialog.c:2539 app/channels_dialog.c:2702
+#: app/channels_dialog.c:2541 app/channels_dialog.c:2704
 #: app/color_balance.c:295 app/color_notebook.c:125 app/convert.c:515
 #: app/curves.c:588 app/file_new_dialog.c:212 app/file_new_dialog.c:358
-#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3573
-#: app/layers_dialog.c:3757 app/layers_dialog.c:3852 app/layers_dialog.c:4113
+#: app/gimpui.c:127 app/hue_saturation.c:399 app/layers_dialog.c:3576
+#: app/layers_dialog.c:3760 app/layers_dialog.c:3855 app/layers_dialog.c:4116
 #: app/levels.c:371 app/module_db.c:315 app/posterize.c:225
 #: app/preferences_dialog.c:1481 app/qmask.c:280 app/resize.c:219
 #: app/resize.c:1400 app/resolution_calibrate.c:114 app/threshold.c:297
@@ -530,11 +530,11 @@ msgid "Wrap Around"
 msgstr "덮어 씌움"
 
 #: app/channel_ops.c:180 app/image_new.c:82 app/image_new.c:296
-#: app/layers_dialog.c:3677
+#: app/layers_dialog.c:3680
 msgid "Background"
 msgstr "배경"
 
-#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3679
+#: app/channel_ops.c:181 app/image_new.c:92 app/layers_dialog.c:3682
 msgid "Transparent"
 msgstr "투명"
 
@@ -543,7 +543,7 @@ msgstr "투명"
 msgid "Offset by (x/2),(y/2)"
 msgstr "(x/2),(y/2)의 옵셋"
 
-#: app/channels_dialog.c:231 app/channels_dialog.c:2577
+#: app/channels_dialog.c:231 app/channels_dialog.c:2579
 msgid "New Channel"
 msgstr "새 채널"
 
@@ -598,21 +598,21 @@ msgstr "회색"
 msgid "Indexed"
 msgstr "인덱스됨"
 
-#: app/channels_dialog.c:2533
+#: app/channels_dialog.c:2535
 msgid "New Channel Options"
 msgstr "새 채널 옵션"
 
 #. The name entry hbox, label and entry
-#: app/channels_dialog.c:2566 app/channels_dialog.c:2729
+#: app/channels_dialog.c:2568 app/channels_dialog.c:2731
 msgid "Channel name:"
 msgstr "채널 이름:"
 
 #. The opacity scale
-#: app/channels_dialog.c:2581 app/channels_dialog.c:2744
+#: app/channels_dialog.c:2583 app/channels_dialog.c:2746
 msgid "Fill Opacity:"
 msgstr "불투명 채움:"
 
-#: app/channels_dialog.c:2696
+#: app/channels_dialog.c:2698
 msgid "Edit Channel Attributes"
 msgstr "채널 속성 편집"
 
@@ -1010,7 +1010,7 @@ msgid "Width:"
 msgstr "넓이:"
 
 #: app/crop.c:1099 app/file_new_dialog.c:400 app/file_new_dialog.c:418
-#: app/layers_dialog.c:3617 app/resize.c:284 app/resize.c:309 app/resize.c:543
+#: app/layers_dialog.c:3620 app/resize.c:284 app/resize.c:309 app/resize.c:543
 #: app/scale_tool.c:87 app/scale_tool.c:94 app/tool_options.c:369
 msgid "Height:"
 msgstr "높이:"
@@ -1078,7 +1078,7 @@ msgid "Load/Save Curves"
 msgstr "레벨 읽기/저장"
 
 #: app/curves.c:1693 app/curves.c:1711 app/levels.c:1511 app/levels.c:1529
-#: app/paths_dialog.c:1918
+#: app/paths_dialog.c:1920
 #, c-format
 msgid "Unable to open file %s"
 msgstr "%s 파일을 열 수 없습니다"
@@ -1777,7 +1777,7 @@ msgstr ""
 msgid "pixel"
 msgstr "픽셀"
 
-#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:545
+#: app/gimpunit.c:63 app/measure.c:520 app/measure.c:524 app/paint_core.c:549
 msgid "pixels"
 msgstr "픽셀"
 
@@ -2292,11 +2292,11 @@ msgstr ""
 msgid "Grayscale"
 msgstr "그레이스케일"
 
-#: app/image_new.c:77 app/layers_dialog.c:3676
+#: app/image_new.c:77 app/layers_dialog.c:3679
 msgid "Foreground"
 msgstr "전경"
 
-#: app/image_new.c:87 app/layers_dialog.c:3678
+#: app/image_new.c:87 app/layers_dialog.c:3681
 msgid "White"
 msgstr "흰색"
 
@@ -2639,7 +2639,7 @@ msgstr "마스크 %s"
 msgid "Layer Select"
 msgstr "계층 선택"
 
-#: app/layers_dialog.c:272 app/layers_dialog.c:3607
+#: app/layers_dialog.c:272 app/layers_dialog.c:3610
 msgid "New Layer"
 msgstr "새 계층"
 
@@ -2724,58 +2724,58 @@ msgstr "투명"
 msgid "Empty Layer Copy"
 msgstr "빈 계층 복사"
 
-#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3786
+#: app/layers_dialog.c:2233 app/layers_dialog.c:3416 app/layers_dialog.c:3789
 msgid "Floating Selection"
 msgstr "유동적 셀렉션"
 
-#: app/layers_dialog.c:3567
+#: app/layers_dialog.c:3570
 msgid "New Layer Options"
 msgstr "새 계층 옵션"
 
 #. The name label and entry
-#: app/layers_dialog.c:3596
+#: app/layers_dialog.c:3599
 msgid "Layer Name:"
 msgstr "계층 이름:"
 
 #. The size labels
-#: app/layers_dialog.c:3611
+#: app/layers_dialog.c:3614
 msgid "Layer Width:"
 msgstr "계층 넓이:"
 
-#: app/layers_dialog.c:3672
+#: app/layers_dialog.c:3675
 msgid "Layer Fill Type"
 msgstr "계층 채움 유형"
 
-#: app/layers_dialog.c:3751
+#: app/layers_dialog.c:3754
 msgid "Edit Layer Attributes"
 msgstr "계층 속성 편집"
 
-#: app/layers_dialog.c:3778
+#: app/layers_dialog.c:3781
 msgid "Layer name:"
 msgstr "계층 이름:"
 
-#: app/layers_dialog.c:3846
+#: app/layers_dialog.c:3849
 msgid "Add Mask Options"
 msgstr "마스크 옵션 추가"
 
 #. The radio frame and box
-#: app/layers_dialog.c:3864
+#: app/layers_dialog.c:3867
 msgid "Initialize Layer Mask to:"
 msgstr "다음과 같이 계층 마스크를 초기화 합니다:"
 
-#: app/layers_dialog.c:3869
+#: app/layers_dialog.c:3872
 msgid "White (Full Opacity)"
 msgstr "백색 (완전 불투명)"
 
-#: app/layers_dialog.c:3871
+#: app/layers_dialog.c:3874
 msgid "Black (Full Transparency)"
 msgstr "흑색 (완전 투명)"
 
-#: app/layers_dialog.c:3873
+#: app/layers_dialog.c:3876
 msgid "Layer's Alpha Channel"
 msgstr "계층의 알파 채널"
 
-#: app/layers_dialog.c:3935 app/layers_dialog.c:4021
+#: app/layers_dialog.c:3938 app/layers_dialog.c:4024
 msgid ""
 "Invalid width or height.\n"
 "Both must be positive."
@@ -2783,27 +2783,27 @@ msgstr ""
 "넓이 혹은 높이가 틀립니다.\n"
 "둘 다 양수이어야 합니다."
 
-#: app/layers_dialog.c:4107
+#: app/layers_dialog.c:4110
 msgid "Layer Merge Options"
 msgstr "계층 머지 옵션"
 
-#: app/layers_dialog.c:4132
+#: app/layers_dialog.c:4135
 msgid "Final, Merged Layer should be:"
 msgstr "마지막으로 머지된 계층은 다음과 같이 해야만 합니다:"
 
-#: app/layers_dialog.c:4133
+#: app/layers_dialog.c:4136
 msgid "Final, Anchored Layer should be:"
 msgstr "마지막으로 고정된 계층은 다음과 같이 해야만 합니다:"
 
-#: app/layers_dialog.c:4138
+#: app/layers_dialog.c:4141
 msgid "Expanded as necessary"
 msgstr "필요한 만큼 확장"
 
-#: app/layers_dialog.c:4140
+#: app/layers_dialog.c:4143
 msgid "Clipped to image"
 msgstr "이미지 고정"
 
-#: app/layers_dialog.c:4142
+#: app/layers_dialog.c:4145
 msgid "Clipped to bottom layer"
 msgstr "아래 계층 고정"
 
@@ -3909,7 +3909,7 @@ msgstr "창 정보:%s-%d.%d"
 msgid "Navigation: No Image"
 msgstr ""
 
-#: app/paint_core.c:806
+#: app/paint_core.c:810
 msgid "No brushes available for use with this tool."
 msgstr "이 도구을 사용하기 위해 사용가능한 브러쉬 없음."
 
@@ -4164,49 +4164,49 @@ msgstr "포인트 편집"
 msgid "Path %d"
 msgstr "경로 %d"
 
-#: app/paths_dialog.c:989
+#: app/paths_dialog.c:991
 #, fuzzy
 msgid "Edit Path Attributes"
 msgstr "계층 속성 편집"
 
-#: app/paths_dialog.c:992
+#: app/paths_dialog.c:994
 msgid "Enter a new name for the path"
 msgstr "경로의 새 이름 입력"
 
-#: app/paths_dialog.c:1933
+#: app/paths_dialog.c:1935
 #, c-format
 msgid "Failed to read from %s"
 msgstr "%s로 부터 읽기 실패"
 
-#: app/paths_dialog.c:1948
+#: app/paths_dialog.c:1950
 #, c-format
 msgid "Failed to read path from %s"
 msgstr "%s로 부터 경로 읽기 실패"
 
-#: app/paths_dialog.c:1955
+#: app/paths_dialog.c:1957
 #, c-format
 msgid "No points specified in path file %s"
 msgstr "%s 파일 경로에서 지정된 포인트들이 없습니다."
 
-#: app/paths_dialog.c:1966
+#: app/paths_dialog.c:1968
 #, c-format
 msgid "Failed to read path points from %s"
 msgstr "%s 로부터 포인트 경로 읽기 실패"
 
-#: app/paths_dialog.c:2039
+#: app/paths_dialog.c:2041
 #, c-format
 msgid "open failed on %s: %s\n"
 msgstr "%s에서 열기 실패: %s\n"
 
-#: app/paths_dialog.c:2061
+#: app/paths_dialog.c:2063
 msgid "Load/Store Bezier Curves"
 msgstr "베지어 곡선 읽기/저장"
 
-#: app/paths_dialog.c:2101
+#: app/paths_dialog.c:2103
 msgid "Load Path"
 msgstr "경로 읽기"
 
-#: app/paths_dialog.c:2123
+#: app/paths_dialog.c:2125
 msgid "Store Path"
 msgstr "경로 저장"
 

@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu \n"
-"POT-Creation-Date: 2003-05-19 15:16-0700\n"
+"POT-Creation-Date: 2003-06-02 21:15-0700\n"
 "PO-Revision-Date: 2000-06-16 19:40+0300\n"
 "Last-Translator: Ville Hautamäki <villeh@cs.joensuu.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
@@ -106,12 +106,12 @@ msgid "About"
 msgstr "Tietoja"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:561
+#: plug-ins/script-fu/script-fu-server.c:562
 msgid "OK"
 msgstr "OK"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:563
+#: plug-ins/script-fu/script-fu-server.c:564
 msgid "Cancel"
 msgstr "Peru"
 
@@ -162,15 +162,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:556
+#: plug-ins/script-fu/script-fu-server.c:557
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu palvelimen valinnat"
 
-#: plug-ins/script-fu/script-fu-server.c:583
+#: plug-ins/script-fu/script-fu-server.c:584
 msgid "Server Port:"
 msgstr "Palvelimen portti:"
 
-#: plug-ins/script-fu/script-fu-server.c:589
+#: plug-ins/script-fu/script-fu-server.c:590
 msgid "Server Logfile:"
 msgstr "Palvelimen lokitiedosto:"
 

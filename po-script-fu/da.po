@@ -19,7 +19,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu/gnome-cvs\n"
-"POT-Creation-Date: 2003-05-19 15:16-0700\n"
+"POT-Creation-Date: 2003-06-02 21:15-0700\n"
 "PO-Revision-Date: 2002-04-14 19:42+0200\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <sslug-locale@sslug.dk>\n"
@@ -120,12 +120,12 @@ msgid "About"
 msgstr "Om"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:561
+#: plug-ins/script-fu/script-fu-server.c:562
 msgid "OK"
 msgstr "O.k."
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:563
+#: plug-ins/script-fu/script-fu-server.c:564
 msgid "Cancel"
 msgstr "Annullér"
 
@@ -176,15 +176,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:556
+#: plug-ins/script-fu/script-fu-server.c:557
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-tjenesteindstillinger"
 
-#: plug-ins/script-fu/script-fu-server.c:583
+#: plug-ins/script-fu/script-fu-server.c:584
 msgid "Server Port:"
 msgstr "Tjenesteport: "
 
-#: plug-ins/script-fu/script-fu-server.c:589
+#: plug-ins/script-fu/script-fu-server.c:590
 msgid "Server Logfile:"
 msgstr "Tjenestelogfil:"
 

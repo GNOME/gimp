@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: script-fu\n"
-"POT-Creation-Date: 2003-05-19 15:16-0700\n"
+"POT-Creation-Date: 2003-06-02 21:15-0700\n"
 "PO-Revision-Date: 2000-09-27 11:36-03:00\n"
 "Last-Translator: Marcia Norie Nakaza <norie@conectiva.com.br>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar.conectiva.com.br>\n"
@@ -106,12 +106,12 @@ msgid "About"
 msgstr "Sobre"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1476
-#: plug-ins/script-fu/script-fu-server.c:561
+#: plug-ins/script-fu/script-fu-server.c:562
 msgid "OK"
 msgstr "OK"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1485
-#: plug-ins/script-fu/script-fu-server.c:563
+#: plug-ins/script-fu/script-fu-server.c:564
 msgid "Cancel"
 msgstr "Cancelar"
 
@@ -159,15 +159,15 @@ msgid ""
 "%s"
 msgstr "Seleção de arquivo Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:556
+#: plug-ins/script-fu/script-fu-server.c:557
 msgid "Script-Fu Server Options"
 msgstr "Opções de servidor de Script-Fu"
 
-#: plug-ins/script-fu/script-fu-server.c:583
+#: plug-ins/script-fu/script-fu-server.c:584
 msgid "Server Port:"
 msgstr "Porta do servidor:"
 
-#: plug-ins/script-fu/script-fu-server.c:589
+#: plug-ins/script-fu/script-fu-server.c:590
 msgid "Server Logfile:"
 msgstr "Arquivo de registros do servidor:"
 
