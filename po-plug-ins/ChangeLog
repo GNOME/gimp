@@ -1,3 +1,8 @@
+2001-11-05  Abel Cheung  <maddog@linux.org.hk>
+
+	* zh_TW.po: Partially merged traditional Chinese translations from
+	<object@mis.mgt.ncu.edu.tw> and <cjj@u.washington.edu>.
+
 2001-11-05  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: added missing files
