@@ -373,7 +373,8 @@ gimp_brush_generated_dirty (GimpData *data)
   gdouble             exponent;
   guchar              a;
   gint                length;
-  gint                width, height;
+  gint                width  = 0;
+  gint                height = 0;
   guchar             *lookup;
   gdouble             sum;
   gdouble             c, s, cs, ss;
@@ -395,20 +396,25 @@ gimp_brush_generated_dirty (GimpData *data)
 
   switch (brush->shape)
     {
-      case GIMP_BRUSH_GENERATED_CIRCLE:
-        width  = ceil (sqrt (gbrush->x_axis.x * gbrush->x_axis.x +
-                             gbrush->y_axis.x * gbrush->y_axis.x));
-        height = ceil (sqrt (gbrush->x_axis.y * gbrush->x_axis.y +
-                             gbrush->y_axis.y * gbrush->y_axis.y));
-        break;
-      case GIMP_BRUSH_GENERATED_SQUARE:
-        width  = ceil (fabs (gbrush->x_axis.x) + fabs (gbrush->y_axis.x));
-        height = ceil (fabs (gbrush->x_axis.y) + fabs (gbrush->y_axis.y));
-        break;
-      case GIMP_BRUSH_GENERATED_DIAMOND:
-        width  = ceil (MAX (fabs (gbrush->x_axis.x), fabs (gbrush->y_axis.x)));
-        height = ceil (MAX (fabs (gbrush->x_axis.y), fabs (gbrush->y_axis.y)));
-        break;
+    case GIMP_BRUSH_GENERATED_CIRCLE:
+      width  = ceil (sqrt (gbrush->x_axis.x * gbrush->x_axis.x +
+                           gbrush->y_axis.x * gbrush->y_axis.x));
+      height = ceil (sqrt (gbrush->x_axis.y * gbrush->x_axis.y +
+                           gbrush->y_axis.y * gbrush->y_axis.y));
+      break;
+
+    case GIMP_BRUSH_GENERATED_SQUARE:
+      width  = ceil (fabs (gbrush->x_axis.x) + fabs (gbrush->y_axis.x));
+      height = ceil (fabs (gbrush->x_axis.y) + fabs (gbrush->y_axis.y));
+      break;
+
+    case GIMP_BRUSH_GENERATED_DIAMOND:
+      width  = ceil (MAX (fabs (gbrush->x_axis.x), fabs (gbrush->y_axis.x)));
+      height = ceil (MAX (fabs (gbrush->x_axis.y), fabs (gbrush->y_axis.y)));
+      break;
+
+    default:
+      g_return_if_reached ();
     }
 
   if (brush->spikes > 2)
@@ -489,7 +495,7 @@ gimp_brush_generated_dirty (GimpData *data)
               while (angle > G_PI / brush->spikes)
                 {
                   gdouble sx = tx, sy = ty;
-                  
+
                   tx = cs * sx - ss * sy;
                   ty = ss * sx + cs * sy;
 
@@ -500,15 +506,15 @@ gimp_brush_generated_dirty (GimpData *data)
           ty *= brush->aspect_ratio;
           switch (brush->shape)
             {
-              case GIMP_BRUSH_GENERATED_CIRCLE:
-                d = sqrt (tx*tx + ty*ty);
-                break;
-              case GIMP_BRUSH_GENERATED_SQUARE:
-                d = MAX (fabs (tx), fabs (ty));
-                break;
-              case GIMP_BRUSH_GENERATED_DIAMOND:
-                d = fabs (tx) + fabs (ty);
-                break;
+            case GIMP_BRUSH_GENERATED_CIRCLE:
+              d = sqrt (tx*tx + ty*ty);
+              break;
+            case GIMP_BRUSH_GENERATED_SQUARE:
+              d = MAX (fabs (tx), fabs (ty));
+              break;
+            case GIMP_BRUSH_GENERATED_DIAMOND:
+              d = fabs (tx) + fabs (ty);
+              break;
             }
 
           if (d < brush->radius + 1)
@@ -662,6 +668,7 @@ gimp_brush_generated_load (const gchar  *filename,
                        _("Fatal parse error in brush file '%s': "
                          "Unknown GIMP brush shape."),
                        gimp_filename_to_utf8 (filename));
+          g_free (name);
           return NULL;
         }
 
