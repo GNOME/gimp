@@ -1,3 +1,7 @@
+2000-01-29  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/script-fu/script-fu.c: more _() tagging.
+
 Sat Jan 29 15:40:01 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/convert.c

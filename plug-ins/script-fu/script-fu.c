@@ -141,7 +141,7 @@ query (void)
 
   gimp_install_procedure ("extension_script_fu",
 			  _("A scheme interpreter for scripting GIMP operations"),
-			  _("More help here later"),
+			  "More help here later",
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
@@ -995,13 +995,15 @@ script_fu_auxillary_init ()
   };
   static gint nargs = sizeof (args) / sizeof (args[0]);
 
+  INIT_I18N();
+
   gimp_install_temp_proc ("script_fu_refresh",
-			  "Re-read all available scripts",
-			  "Re-read all available scripts",
+			  _("Re-read all available scripts"),
+			  _("Re-read all available scripts"),
 			  "Spencer Kimball & Peter Mattis",
 			  "Spencer Kimball & Peter Mattis",
 			  "1997",
-			  "<Toolbox>/Xtns/Script-Fu/Refresh",
+			  N_("<Toolbox>/Xtns/Script-Fu/Refresh"),
 			  NULL,
 			  PROC_TEMPORARY,
 			  nargs, 0,
