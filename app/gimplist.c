@@ -185,7 +185,7 @@ gimp_list_foreach (GimpContainer *container,
   g_list_foreach (list->list, func, user_data);
 }
 
-GimpList *
+GimpContainer *
 gimp_list_new (GtkType              children_type,
 	       GimpContainerPolicy  policy)
 {
@@ -200,7 +200,7 @@ gimp_list_new (GtkType              children_type,
   GIMP_CONTAINER (list)->children_type = children_type;
   GIMP_CONTAINER (list)->policy        = policy;
 
-  return list;
+  return GIMP_CONTAINER (list);
 }
 
 static GimpObject *

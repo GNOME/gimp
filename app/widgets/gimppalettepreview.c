@@ -34,6 +34,10 @@
 static void   gimp_palette_preview_class_init (GimpPalettePreviewClass *klass);
 static void   gimp_palette_preview_init       (GimpPalettePreview      *preview);
 
+static void          gimp_palette_preview_get_size     (GimpPreview *preview,
+							gint         size,
+							gint        *width,
+							gint        *height);
 static void          gimp_palette_preview_render       (GimpPreview *preview);
 static GtkWidget   * gimp_palette_preview_create_popup (GimpPreview *preview);
 static gboolean      gimp_palette_preview_needs_popup  (GimpPreview *preview);
@@ -81,6 +85,7 @@ gimp_palette_preview_class_init (GimpPalettePreviewClass *klass)
 
   parent_class = gtk_type_class (GIMP_TYPE_PREVIEW);
 
+  preview_class->get_size     = gimp_palette_preview_get_size;
   preview_class->render       = gimp_palette_preview_render;
   preview_class->create_popup = gimp_palette_preview_create_popup;
   preview_class->needs_popup  = gimp_palette_preview_needs_popup;
@@ -97,6 +102,16 @@ gimp_palette_preview_init (GimpPalettePreview *palette_preview)
 				GIMP_TYPE_PALETTE,
 				gimp_palette_preview_drag_viewable,
 				palette_preview);
+}
+
+static void
+gimp_palette_preview_get_size (GimpPreview *preview,
+			       gint         size,
+			       gint        *width,
+			       gint        *height)
+{
+  *width  = size * 3;
+  *height = size;
 }
 
 static void
@@ -137,8 +152,6 @@ gimp_palette_preview_create_popup (GimpPreview *preview)
     popup_width = MIN (palette->n_colors, 16);
 
   popup_height = MAX (1, palette->n_colors / popup_width);
-
-  g_print ("columns: %d\n", palette->n_columns);
 
   return gimp_preview_new_full (preview->viewable,
 				popup_width  * 4,

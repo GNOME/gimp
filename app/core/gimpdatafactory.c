@@ -124,7 +124,7 @@ gimp_data_factory_new (GtkType                            data_type,
 
   factory = gtk_type_new (GIMP_TYPE_DATA_FACTORY);
 
-  factory->container = GIMP_CONTAINER (gimp_data_list_new (data_type));
+  factory->container = gimp_data_list_new (data_type);
 
   gtk_object_ref (GTK_OBJECT (factory->container));
   gtk_object_sink (GTK_OBJECT (factory->container));

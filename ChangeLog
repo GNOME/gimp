@@ -1,5 +1,17 @@
 2001-02-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/context_manager.c
+	* app/gimpdatafactory.c
+	* app/gimpdatalist.[ch]
+	* app/gimplist.[ch]
+	* app/module_db.c: return a GimpContainer from all container
+	subclass constructors.
+
+	* app/gimppalettepreview.c
+	* app/palette.c: changed the preview a bit. Still ugly.
+
+2001-02-19  Michael Natterer  <mitch@gimp.org>
+
 	* gimp.m4
 	* gimptool.in: removed.
 

@@ -188,8 +188,7 @@ context_manager_init (void)
 					  sizeof (palette_loader_entries[0]));
 
   /* Create the context of all existing images */
-  image_context = GIMP_CONTAINER (gimp_list_new (GIMP_TYPE_IMAGE,
-						 GIMP_CONTAINER_POLICY_WEAK));
+  image_context = gimp_list_new (GIMP_TYPE_IMAGE, GIMP_CONTAINER_POLICY_WEAK);
 
   /* Create the global data factories */
   global_brush_factory =

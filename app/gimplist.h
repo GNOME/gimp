@@ -45,9 +45,9 @@ struct _GimpListClass
 };
 
 
-GtkType      gimp_list_get_type           (void);
-GimpList   * gimp_list_new                (GtkType              children_type,
-					   GimpContainerPolicy  policy);
+GtkType         gimp_list_get_type (void);
+GimpContainer * gimp_list_new      (GtkType              children_type,
+				    GimpContainerPolicy  policy);
 
 
 #endif  /* __GIMP_LIST_H__ */

@@ -128,7 +128,7 @@ gimp_data_list_remove (GimpContainer *container,
   list->list = g_list_remove (list->list, object);
 }
 
-GimpDataList *
+GimpContainer *
 gimp_data_list_new (GtkType  children_type)
 
 {
@@ -141,7 +141,7 @@ gimp_data_list_new (GtkType  children_type)
   GIMP_CONTAINER (list)->children_type = children_type;
   GIMP_CONTAINER (list)->policy        = GIMP_CONTAINER_POLICY_STRONG;
 
-  return list;
+  return GIMP_CONTAINER (list);
 }
 
 static void

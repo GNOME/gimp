@@ -485,9 +485,8 @@ palette_dialog_new (gboolean editor)
 				global_palette_factory,
 				editor ? NULL : palette_dialog_edit_palette,
 				palette_dialog->context,
-				64, /* FIXME: SM_PREVIEW_WIDTH */
-				3, /* FIXME: STD_PALETTE_COLUMNS */
-				3); /* FIXME: STD_PALETTE_ROWS */
+				SM_PREVIEW_HEIGHT,
+				2, 4);
 
   if (! editor)
     {
