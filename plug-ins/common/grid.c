@@ -104,21 +104,21 @@ void query (void)
     {PARAM_IMAGE,    "image",    "Input image"},
     {PARAM_DRAWABLE, "drawable", "Input drawable"},
 
-    {PARAM_INT32,    "hwidth",   "Horizontal Width"},
-    {PARAM_INT32,    "hspace",   "Horizontal Spacing"},
-    {PARAM_INT32,    "hoffset",  "Horizontal Offset"},
+    {PARAM_INT32,    "hwidth",   "Horizontal Width   (>= 0)"},
+    {PARAM_INT32,    "hspace",   "Horizontal Spacing (>= 0)"},
+    {PARAM_INT32,    "hoffset",  "Horizontal Offset  (>= 0)"},
     {PARAM_COLOR,    "hcolor",   "Horizontal Colour"},
     {PARAM_INT8,     "hopacity", "Horizontal Opacity (0...255)"},
 
-    {PARAM_INT32,    "vwidth",   "Vertical Width"},
-    {PARAM_INT32,    "vspace",   "Vertical Spacing"},
-    {PARAM_INT32,    "voffset",  "Vertical Offset"},
+    {PARAM_INT32,    "vwidth",   "Vertical Width   (>= 0)"},
+    {PARAM_INT32,    "vspace",   "Vertical Spacing (>= 0)"},
+    {PARAM_INT32,    "voffset",  "Vertical Offset  (>= 0)"},
     {PARAM_COLOR,    "vcolor",   "Vertical Colour"},
     {PARAM_INT8,     "vopacity", "Vertical Opacity (0...255)"},
 
-    {PARAM_INT32,    "iwidth",   "Intersection Width"},
-    {PARAM_INT32,    "ispace",   "Intersection Spacing"},
-    {PARAM_INT32,    "ioffset",  "Intersection Offset"},
+    {PARAM_INT32,    "iwidth",   "Intersection Width   (>= 0)"},
+    {PARAM_INT32,    "ispace",   "Intersection Spacing (>= 0)"},
+    {PARAM_INT32,    "ioffset",  "Intersection Offset  (>= 0)"},
     {PARAM_COLOR,    "icolor",   "Intersection Colour"},
     {PARAM_INT8,     "iopacity", "Intersection Opacity (0...255)"},
   };
@@ -168,27 +168,27 @@ run (gchar   *name,
       if (n_params != 18)
 	status = STATUS_CALLING_ERROR;
 
-      if( status == STATUS_SUCCESS)
+      if (status == STATUS_SUCCESS)
 	{
-	  grid_cfg.hwidth    = param[3].data.d_int32;
-	  grid_cfg.hspace    = param[4].data.d_int32;
-	  grid_cfg.hoffset   = param[5].data.d_int32;
+	  grid_cfg.hwidth    = MAX (0, param[3].data.d_int32);
+	  grid_cfg.hspace    = MAX (0, param[4].data.d_int32);
+	  grid_cfg.hoffset   = MAX (0, param[5].data.d_int32);
 	  grid_cfg.hcolor[0] = param[6].data.d_color.red;
 	  grid_cfg.hcolor[1] = param[6].data.d_color.green;
 	  grid_cfg.hcolor[2] = param[6].data.d_color.blue;
 	  grid_cfg.hcolor[3] = param[7].data.d_int8;
 
-	  grid_cfg.vwidth    = param[8].data.d_int32;
-	  grid_cfg.vspace    = param[9].data.d_int32;
-	  grid_cfg.voffset   = param[10].data.d_int32;
+	  grid_cfg.vwidth    = MAX (0, param[8].data.d_int32);
+	  grid_cfg.vspace    = MAX (0, param[9].data.d_int32);
+	  grid_cfg.voffset   = MAX (0, param[10].data.d_int32);
 	  grid_cfg.vcolor[0] = param[11].data.d_color.red;
 	  grid_cfg.vcolor[1] = param[11].data.d_color.green;
 	  grid_cfg.vcolor[2] = param[11].data.d_color.blue;
 	  grid_cfg.vcolor[3] = param[12].data.d_int8;
 
-	  grid_cfg.iwidth    = param[13].data.d_int32;
-	  grid_cfg.ispace    = param[14].data.d_int32;
-	  grid_cfg.ioffset   = param[15].data.d_int32;
+	  grid_cfg.iwidth    = MAX (0, param[13].data.d_int32);
+	  grid_cfg.ispace    = MAX (0, param[14].data.d_int32);
+	  grid_cfg.ioffset   = MAX (0, param[15].data.d_int32);
 	  grid_cfg.icolor[0] = param[16].data.d_color.red;
 	  grid_cfg.icolor[1] = param[16].data.d_color.green;
 	  grid_cfg.icolor[2] = param[16].data.d_color.blue;
@@ -297,7 +297,9 @@ doit (GDrawable * drawable)
     {
       gimp_pixel_rgn_get_row (&srcPR, dest, sx1, y, (sx2-sx1));
 
-      y_offset = grid_cfg.vspace + y - grid_cfg.voffset;
+      y_offset = y - grid_cfg.voffset;
+      while (y_offset < 0)
+	y_offset += grid_cfg.vspace;
 
       if ((y_offset + (grid_cfg.vwidth / 2)) % grid_cfg.vspace < grid_cfg.vwidth)
 	{
@@ -312,6 +314,8 @@ doit (GDrawable * drawable)
 	  for (x = sx1; x < sx2; x++)
 	    {
 	      x_offset = grid_cfg.hspace + x - grid_cfg.hoffset;
+	      while (x_offset < 0)
+		x_offset += grid_cfg.hspace;
 
               if ((x_offset % grid_cfg.hspace >= grid_cfg.ispace
 		   && 
@@ -329,6 +333,8 @@ doit (GDrawable * drawable)
       for (x = sx1; x < sx2; x++)
         {
 	  x_offset = grid_cfg.hspace + x - grid_cfg.hoffset;
+	  while (x_offset < 0)
+	    x_offset += grid_cfg.hspace;
 
           if ((x_offset + (grid_cfg.hwidth / 2)) % grid_cfg.hspace < grid_cfg.hwidth)
             {
