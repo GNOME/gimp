@@ -22,6 +22,8 @@
 #include <fontconfig/fontconfig.h>
 #include <pango/pangoft2.h>
 
+#include "libgimpbase/gimpenv.h"
+
 #include "sanity.h"
 
 
@@ -174,13 +176,7 @@ sanity_check_filename_encoding (void)
 
   result = g_filename_to_utf8 ("", -1, NULL, NULL, &error);
 
-  if (result)
-    {
-      g_free (result);
-
-      return NULL;
-    }
-  else
+  if (! result)
     {
       gchar *msg =
         g_strdup_printf
@@ -194,4 +190,30 @@ sanity_check_filename_encoding (void)
 
       return msg;
     }
+
+  g_free (result);
+
+  result = g_filename_to_utf8 (gimp_directory (), -1, NULL, NULL, &error);
+
+  if (! result)
+    {
+      gchar *msg =
+        g_strdup_printf
+        ("The name of the directory holding the GIMP user configuration "
+         "cannot be converted to UTF-8: "
+         "%s\n\n"
+         "Most probably your filesystem stores files in an encoding different "
+         "from UTF-8 and you didn't tell GLib about this. Please set the "
+         "environment variable G_FILENAME_ENCODING (or G_BROKEN_FILENAMES if "
+         "you are still using GLib-2.2).",
+         error->message);
+
+      g_error_free (error);
+
+      return msg;
+    }
+
+  g_free (result);
+
+  return NULL;
 }
