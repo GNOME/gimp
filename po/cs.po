@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-14 11:45+0200\n"
-"PO-Revision-Date: 2003-09-15 01:03+0200\n"
+"POT-Creation-Date: 2003-09-20 11:37+0200\n"
+"PO-Revision-Date: 2003-09-20 18:57+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -261,8 +261,9 @@ msgstr "Světla"
 
 #: app/config/gimpconfig-deserialize.c:209 app/config/gimpconfig.c:375
 #: app/config/gimpconfig.c:388 app/config/gimpscanner.c:391
-#: app/config/gimpscanner.c:462 app/core/gimpmodules.c:134
-#: app/core/gimpunits.c:157 app/gui/session.c:176 app/plug-in/plug-in-rc.c:134
+#: app/config/gimpscanner.c:462 app/core/gimp-modules.c:134
+#: app/core/gimp-units.c:157 app/gui/session.c:176
+#: app/plug-in/plug-in-rc.c:134
 msgid "fatal parse error"
 msgstr "fatální chyba zpracování"
 
@@ -294,7 +295,7 @@ msgstr "při zpracování prvku %s: %s"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pro prvek %s není platný řetězec v kódování UTF-8"
 
-#: app/config/gimpconfig-path.c:126
+#: app/config/gimpconfig-path.c:128
 #, c-format
 msgid "can not expand ${%s}"
 msgstr "nelze rozbalit ${%s}"
@@ -766,8 +767,7 @@ msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Je-li povoleno, stisknutí F1 otevře prohlížeč nápovědy."
 
 #: app/config/gimpscanner.c:90 app/tools/gimpcurvestool.c:1292
-#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:74
-#: app/vectors/gimpvectors-import.c:147
+#: app/tools/gimplevelstool.c:1490 app/vectors/gimpvectors-export.c:79
 #, c-format
 msgid "Failed to open file: '%s': %s"
 msgstr "Nepodařilo se otevřít soubor '%s': %s"
@@ -1090,7 +1090,7 @@ msgid "Guide"
 msgstr "Vodítko"
 
 #: app/core/core-enums.c:502 app/core/core-enums.c:532
-#: app/core/gimpchannel.c:1497 app/core/gimpselection.c:593
+#: app/core/gimpchannel.c:1498 app/core/gimpselection.c:593
 msgid "Selection Mask"
 msgstr "Maska výběru"
 
@@ -1138,16 +1138,16 @@ msgstr "Plovoucí výběr"
 msgid "Anchor Floating Selection"
 msgstr "Ukotvit plovoucí výběr"
 
-#: app/core/core-enums.c:513 app/core/gimpedit.c:197
+#: app/core/core-enums.c:513 app/core/gimp-edit.c:197
 #: app/widgets/gimpbufferview.c:143
 msgid "Paste"
 msgstr "Vložit"
 
-#: app/core/core-enums.c:514 app/core/gimpedit.c:60
+#: app/core/core-enums.c:514 app/core/gimp-edit.c:60
 msgid "Cut"
 msgstr "Vyjmout"
 
-#: app/core/core-enums.c:515 app/core/gimpedit.c:117
+#: app/core/core-enums.c:515 app/core/gimp-edit.c:117
 msgid "Copy"
 msgstr "Kopírovat"
 
@@ -1174,7 +1174,7 @@ msgstr "Připojení parazita"
 msgid "Remove Parasite"
 msgstr "Odstranění parazita"
 
-#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:187
+#: app/core/core-enums.c:521 app/vectors/gimpvectors-import.c:198
 msgid "Import Paths"
 msgstr "Importovat cesty"
 
@@ -1217,7 +1217,7 @@ msgstr "Nastavit spojení položky"
 
 #: app/core/core-enums.c:537 app/gui/layers-commands.c:633
 #: app/gui/layers-commands.c:665 app/gui/layers-commands.c:697
-#: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:208
+#: app/widgets/gimpdrawabletreeview.c:219 app/widgets/gimplayertreeview.c:210
 msgid "New Layer"
 msgstr "Nová vrstva"
 
@@ -1256,7 +1256,7 @@ msgstr "Nastavit Zachovat změny"
 
 #: app/core/core-enums.c:546 app/gui/channels-commands.c:312
 #: app/gui/channels-commands.c:343 app/gui/channels-commands.c:380
-#: app/widgets/gimpchanneltreeview.c:119
+#: app/widgets/gimpchanneltreeview.c:121
 msgid "New Channel"
 msgstr "Nový kanál"
 
@@ -1308,6 +1308,30 @@ msgstr "uvolnění výběru"
 msgid "EEK: can't undo"
 msgstr "EEK: nemohu vrátit zpět"
 
+#: app/core/gimp-edit.c:188 app/core/gimp-edit.c:266
+msgid "Pasted Layer"
+msgstr "Vložená vrstva"
+
+#: app/core/gimp-edit.c:314
+msgid "Clear"
+msgstr "Vymazat"
+
+#: app/core/gimp-edit.c:352
+msgid "Fill with FG Color"
+msgstr "Vyplnit barvou popředí"
+
+#: app/core/gimp-edit.c:357 app/core/gimp-edit.c:382
+msgid "Fill with BG Color"
+msgstr "Vyplnit barvou pozadí"
+
+#: app/core/gimp-edit.c:364
+msgid "Fill with White"
+msgstr "Vyplnit bílou"
+
+#: app/core/gimp-edit.c:373
+msgid "Fill with Transparency"
+msgstr "Vyplnit průhledností"
+
 #: app/core/gimp-gradients.c:75
 msgid "FG to BG (HSV counter-clockwise)"
 msgstr "Popředí do pozadí (HSV proti směru hodinových ručiček)"
@@ -1317,65 +1341,65 @@ msgid "FG to BG (HSV clockwise hue)"
 msgstr "Popředí do pozadí (HSV odstín po směru hodinových ručiček)"
 
 #. register all internal procedures
-#: app/core/gimp.c:769
+#: app/core/gimp.c:768
 msgid "Procedural Database"
 msgstr "Procedurální databáze"
 
-#: app/core/gimp.c:772
+#: app/core/gimp.c:771
 msgid "Plug-In Environment"
 msgstr "Prostředí zásuvných modulů"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:788
+#: app/core/gimp.c:787
 msgid "Looking for data files"
 msgstr "Hledají se datové soubory"
 
-#: app/core/gimp.c:788
+#: app/core/gimp.c:787
 msgid "Parasites"
 msgstr "Parazity"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:792 app/gui/dialogs-constructors.c:346
+#: app/core/gimp.c:791 app/gui/dialogs-constructors.c:346
 #: app/gui/dialogs-constructors.c:570 app/gui/preferences-dialog.c:1932
 #: app/pdb/internal_procs.c:84
 msgid "Brushes"
 msgstr "Stopy"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:796 app/gui/dialogs-constructors.c:368
+#: app/core/gimp.c:795 app/gui/dialogs-constructors.c:368
 #: app/gui/dialogs-constructors.c:592 app/gui/preferences-dialog.c:1936
 #: app/pdb/internal_procs.c:168
 msgid "Patterns"
 msgstr "Vzorky"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:800 app/gui/dialogs-constructors.c:412
+#: app/core/gimp.c:799 app/gui/dialogs-constructors.c:412
 #: app/gui/dialogs-constructors.c:636 app/gui/preferences-dialog.c:1940
 #: app/pdb/internal_procs.c:156
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:804 app/gui/dialogs-constructors.c:390
+#: app/core/gimp.c:803 app/gui/dialogs-constructors.c:390
 #: app/gui/dialogs-constructors.c:614 app/gui/preferences-dialog.c:1944
 #: app/pdb/internal_procs.c:123
 msgid "Gradients"
 msgstr "Přechody"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:808 app/gui/dialogs-constructors.c:432
+#: app/core/gimp.c:807 app/gui/dialogs-constructors.c:432
 #: app/gui/dialogs-constructors.c:656 app/gui/preferences-dialog.c:1858
 #: app/gui/preferences-dialog.c:1948 app/pdb/internal_procs.c:114
 msgid "Fonts"
 msgstr "Písem"
 
 #. initialize the document history
-#: app/core/gimp.c:812
+#: app/core/gimp.c:811
 msgid "Documents"
 msgstr "Dokumenty"
 
 #. initialize the template list
-#: app/core/gimp.c:816 app/gui/dialogs-constructors.c:523
+#: app/core/gimp.c:815 app/gui/dialogs-constructors.c:523
 msgid "Templates"
 msgstr "Šablony"
 
@@ -1418,7 +1442,7 @@ msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 #: app/core/gimpcontext.c:1305 app/core/gimpgradient.c:386
 #: app/core/gimpitem.c:427 app/core/gimppalette.c:441
 #: app/core/gimppattern.c:413 app/gui/templates-commands.c:127
-#: app/tools/gimpvectortool.c:317
+#: app/tools/gimpvectortool.c:323
 msgid "Unnamed"
 msgstr "Beze jména"
 
@@ -1467,7 +1491,7 @@ msgstr "Kanál"
 msgid "Rename Channel"
 msgstr "Přejmenovat kanál"
 
-#: app/core/gimpchannel.c:233
+#: app/core/gimpchannel.c:233 app/tools/gimpeditselectiontool.c:1122
 msgid "Move Channel"
 msgstr "Přesunout kanál"
 
@@ -1503,39 +1527,39 @@ msgstr "Zvětšit kanál"
 msgid "Shrink Channel"
 msgstr "Zmenšit kanál"
 
-#: app/core/gimpchannel.c:448
+#: app/core/gimpchannel.c:449
 msgid "Scale Channel"
 msgstr "Velikost kanálu"
 
-#: app/core/gimpchannel.c:477
+#: app/core/gimpchannel.c:478
 msgid "Resize Channel"
 msgstr "Změnit velikost kanálu"
 
-#: app/core/gimpchannel.c:506
+#: app/core/gimpchannel.c:507
 msgid "Flip Channel"
 msgstr "Překlopit kanál"
 
-#: app/core/gimpchannel.c:533
+#: app/core/gimpchannel.c:534
 msgid "Rotate Channel"
 msgstr "Rotovat kanál"
 
-#: app/core/gimpchannel.c:563 app/core/gimpdrawable-transform.c:1105
+#: app/core/gimpchannel.c:564 app/core/gimpdrawable-transform.c:1105
 msgid "Transform Channel"
 msgstr "Transformovat kanál"
 
-#: app/core/gimpchannel.c:602
+#: app/core/gimpchannel.c:603
 msgid "Cannot stroke empty channel."
 msgstr "Nemohu vykreslit prázdný kanál."
 
-#: app/core/gimpchannel.c:607
+#: app/core/gimpchannel.c:608
 msgid "Stroke Channel"
 msgstr "Vykreslit kanál"
 
-#: app/core/gimpchannel.c:1376
+#: app/core/gimpchannel.c:1377
 msgid "Set Channel Color"
 msgstr "Nastavit barvu kanálu"
 
-#: app/core/gimpchannel.c:1425
+#: app/core/gimpchannel.c:1426
 msgid "Set Channel Opacity"
 msgstr "Nastavit krytí kanálu"
 
@@ -1633,30 +1657,6 @@ msgstr "Vložit transformaci"
 #: app/core/gimpdrawable-transform.c:1102 app/core/gimplayer.c:683
 msgid "Transform Layer"
 msgstr "Transformovat vrstvu"
-
-#: app/core/gimpedit.c:188 app/core/gimpedit.c:266
-msgid "Pasted Layer"
-msgstr "Vložená vrstva"
-
-#: app/core/gimpedit.c:314
-msgid "Clear"
-msgstr "Vymazat"
-
-#: app/core/gimpedit.c:352
-msgid "Fill with FG Color"
-msgstr "Vyplnit barvou popředí"
-
-#: app/core/gimpedit.c:357 app/core/gimpedit.c:382
-msgid "Fill with BG Color"
-msgstr "Vyplnit barvou pozadí"
-
-#: app/core/gimpedit.c:364
-msgid "Fill with White"
-msgstr "Vyplnit bílou"
-
-#: app/core/gimpedit.c:373
-msgid "Fill with Transparency"
-msgstr "Vyplnit průhledností"
 
 #: app/core/gimpenvirontable.c:285
 #, c-format
@@ -1818,8 +1818,8 @@ msgid "Can't undo %s"
 msgstr "Nelze vrátit %s"
 
 #: app/core/gimpimage.c:1069 app/core/gimppalette-import.c:205
-#: app/core/gimppalette.c:655 app/gui/palette-import-dialog.c:590
-#: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:281
+#: app/core/gimppalette.c:655 app/gui/palette-import-dialog.c:591
+#: app/pdb/image_cmds.c:3754 app/widgets/gimpdatafactoryview.c:299
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -1924,19 +1924,19 @@ msgstr "Přidat cestu"
 msgid "Remove Path"
 msgstr "Odstranit cestu"
 
-#: app/core/gimpimage.c:3233
+#: app/core/gimpimage.c:3231
 msgid "Path cannot be raised higher."
 msgstr "Cesta nemůže být ještě výš."
 
-#: app/core/gimpimage.c:3238 app/widgets/gimpvectorstreeview.c:134
+#: app/core/gimpimage.c:3236 app/widgets/gimpvectorstreeview.c:134
 msgid "Raise Path"
 msgstr "Zvýšit cestu"
 
-#: app/core/gimpimage.c:3254
+#: app/core/gimpimage.c:3252
 msgid "Path cannot be lowered more."
 msgstr "Cesta nemůže být ještě níž."
 
-#: app/core/gimpimage.c:3259 app/widgets/gimpvectorstreeview.c:138
+#: app/core/gimpimage.c:3257 app/widgets/gimpvectorstreeview.c:138
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
@@ -2032,8 +2032,8 @@ msgid "Rename Layer"
 msgstr "Přejmenovat vrstvu"
 
 #: app/core/gimplayer.c:510 app/pdb/layer_cmds.c:638 app/pdb/layer_cmds.c:769
-#: app/tools/gimpeditselectiontool.c:245
-#: app/tools/gimpeditselectiontool.c:1015
+#: app/tools/gimpeditselectiontool.c:251
+#: app/tools/gimpeditselectiontool.c:1124
 msgid "Move Layer"
 msgstr "Přemístit vrstvu"
 
@@ -2191,8 +2191,8 @@ msgstr "Neplatný řetězec v kódování UTF-8 v souboru se vzorkem '%s'."
 msgid "Fatal parsing error: Pattern file '%s' appears truncated."
 msgstr "Fatální chyba zpracování: Soubor vzorku '%s' vypadá useknutý."
 
-#: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:243
-#: app/tools/gimpeditselectiontool.c:1011
+#: app/core/gimpselection.c:192 app/tools/gimpeditselectiontool.c:247
+#: app/tools/gimpeditselectiontool.c:1031
 msgid "Move Selection"
 msgstr "Přesunout výběr"
 
@@ -2237,7 +2237,7 @@ msgid "Stroke Selection"
 msgstr "Vykreslit výběr"
 
 #: app/core/gimpselection.c:625 app/gui/channels-commands.c:206
-#: app/pdb/selection_cmds.c:915 app/pdb/selection_cmds.c:1031
+#: app/pdb/selection_cmds.c:915 app/pdb/selection_cmds.c:1032
 #: app/widgets/gimpchanneltreeview.c:291
 msgid "Channel to Selection"
 msgstr "Kanál do výběru"
@@ -2248,7 +2248,7 @@ msgid "pixel"
 msgstr "pixel"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:580
-#: app/tools/gimpmeasuretool.c:583 app/tools/gimppainttool.c:662
+#: app/tools/gimpmeasuretool.c:583 app/tools/gimppainttool.c:673
 msgid "pixels"
 msgstr "pixelů"
 
@@ -2614,7 +2614,7 @@ msgstr "Vlastnosti kanálu"
 msgid "Edit Channel Color"
 msgstr "Úpravy barvy kanálu"
 
-#: app/gui/channels-commands.c:505 app/widgets/gimpchanneltreeview.c:123
+#: app/gui/channels-commands.c:505 app/widgets/gimpchanneltreeview.c:119
 msgid "Edit Channel Attributes"
 msgstr "Úpravy vlastností kanálu"
 
@@ -2674,19 +2674,11 @@ msgstr "Navrátit předchozí barvu"
 msgid "Add the current color to the color history"
 msgstr "Přidá aktuální barvy do historie barev"
 
-#: app/gui/colormap-editor-commands.c:101
-msgid "Edit Indexed Color"
-msgstr "Úpravy indexované barvy"
-
-#: app/gui/colormap-editor-commands.c:103
-msgid "Edit Indexed Image Palette Color"
-msgstr "Úpravy barvy palety indexovaného obrázku"
-
-#: app/gui/colormap-editor-menu.c:40 app/gui/palette-editor-menu.c:40
+#: app/gui/colormap-editor-menu.c:41 app/gui/palette-editor-menu.c:40
 msgid "/_Edit Color..."
 msgstr "/_Upravit barvu..."
 
-#: app/gui/colormap-editor-menu.c:45
+#: app/gui/colormap-editor-menu.c:46
 msgid "/_Add Color"
 msgstr "/_Přidat barvu"
 
@@ -2884,7 +2876,7 @@ msgid "Channel List"
 msgstr "Seznam kanálů"
 
 #: app/gui/dialogs-constructors.c:831 app/pdb/internal_procs.c:162
-#: app/tools/gimpvectortool.c:127
+#: app/tools/gimpvectortool.c:148
 msgid "Paths"
 msgstr "Cesty"
 
@@ -3173,7 +3165,7 @@ msgstr "Zadejte jméno tohoto bufferu"
 msgid "Copy Named"
 msgstr "Kopírovat pojmenované"
 
-#: app/gui/edit-commands.c:272 app/gui/vectors-commands.c:194
+#: app/gui/edit-commands.c:272 app/gui/vectors-commands.c:195
 #: app/widgets/gimpvectorstreeview.c:317
 msgid "There is no active layer or channel to stroke to."
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat."
@@ -3195,7 +3187,7 @@ msgid "/Save _Selection to File..."
 msgstr "/Uložit vý_běr do souboru..."
 
 #: app/gui/file-commands.c:188 app/gui/file-open-dialog.c:704
-#: app/widgets/gimpdocumentview.c:454 app/widgets/gimpdnd.c:1005
+#: app/widgets/gimpdocumentview.c:453 app/widgets/gimpdnd.c:1005
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -4750,7 +4742,7 @@ msgstr "Y:"
 #: app/gui/info-window.c:579 app/gui/info-window.c:580
 #: app/gui/info-window.c:581 app/gui/info-window.c:584
 #: app/gui/info-window.c:585 app/gui/info-window.c:610
-#: app/tools/gimpcolorpickertool.c:361 app/tools/gimpcolorpickertool.c:367
+#: app/tools/gimpcolorpickertool.c:371 app/tools/gimpcolorpickertool.c:377
 msgid "N/A"
 msgstr "Není"
 
@@ -4899,7 +4891,7 @@ msgstr "Typ vyplňování vrstvy"
 msgid "Layer Attributes"
 msgstr "Vlastností vrstvy"
 
-#: app/gui/layers-commands.c:841 app/widgets/gimplayertreeview.c:212
+#: app/gui/layers-commands.c:841 app/widgets/gimplayertreeview.c:208
 msgid "Edit Layer Attributes"
 msgstr "Úpravy vlastností vrstvy"
 
@@ -6038,41 +6030,41 @@ msgstr "/_Upravit šablonu..."
 msgid "/_Delete Template..."
 msgstr "/_Odstranit šablonu..."
 
-#: app/gui/tips-dialog.c:91
-msgid "<b>The GIMP tips file could not be parsed correctly!</b>"
-msgstr "<b>Soubor s tipy pro program GIMP nebylo možné správně zpracovat!</b>"
+#: app/gui/tips-dialog.c:94
+msgid "<b>Your GIMP tips file appears to be missing!</b>"
+msgstr "<b>Váš soubor s tipy GIMPu zřejmě chybí!</b>"
 
-#: app/gui/tips-dialog.c:112
+#: app/gui/tips-dialog.c:96
+#, c-format
+msgid "There should be a file called '%s'. Please check your installation."
+msgstr "Měl existovat soubor s názvem '%s'. Zkontrolujte prosím svou instalaci."
+
+#: app/gui/tips-dialog.c:102
+msgid "<b>The GIMP tips file could not be parsed!</b>"
+msgstr "<b>Soubor s tipy GIMPu nebylo možné zpracovat!</b>"
+
+#: app/gui/tips-dialog.c:133
 msgid "GIMP Tip of the Day"
 msgstr "GIMP: Tip dne"
 
-#: app/gui/tips-dialog.c:176
+#: app/gui/tips-dialog.c:197
 msgid "Show tip next time GIMP starts"
 msgstr "Zobrazit tip při příštím spuštění programu GIMP"
 
-#: app/gui/tips-dialog.c:200
+#: app/gui/tips-dialog.c:221
 msgid "_Previous Tip"
 msgstr "_Předchozí tip"
 
-#: app/gui/tips-dialog.c:210
+#: app/gui/tips-dialog.c:231
 msgid "_Next Tip"
 msgstr "_Následující tip"
-
-#: app/gui/tips-parser.c:166
-#, c-format
-msgid ""
-"Your GIMP tips file appears to be missing! There should be a file called '%"
-"s'. Please check your installation."
-msgstr ""
-"Soubor s tipy programu GIMP zřejmě chybí! Měl by to být soubor se jménem '%"
-"s'.Prosím zkontrolujte svou instalaci."
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
 #. according to the name of the po file used for gimp-tips.xml.
 #. E.g. for the german translation, that would be "tips-locale:de".
 #.
-#: app/gui/tips-parser.c:181
+#: app/gui/tips-parser.c:165
 msgid "tips-locale:C"
 msgstr "tips-locale:cs"
 
@@ -6644,7 +6636,7 @@ msgid "Cannot open '%s' for writing: %s"
 msgstr "Nelze otevřít '%s' pro zápis: %s"
 
 #: app/gui/user-install-dialog.c:1014 app/gui/user-install-dialog.c:1037
-#: app/vectors/gimpvectors-export.c:106
+#: app/vectors/gimpvectors-export.c:114
 #, c-format
 msgid "Error while writing '%s': %s"
 msgstr "Chyba při zápisu '%s': %s"
@@ -6738,42 +6730,42 @@ msgstr ""
 msgid "Calibrate"
 msgstr "Kalibrovat"
 
-#: app/gui/vectors-commands.c:162 app/pdb/paths_cmds.c:1128
+#: app/gui/vectors-commands.c:163 app/pdb/paths_cmds.c:1128
 #: app/widgets/gimpvectorstreeview.c:271
 msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
-#: app/gui/vectors-commands.c:407
+#: app/gui/vectors-commands.c:415
 msgid "Empty Vectors Copy"
 msgstr "Kopie prázdných vektorů"
 
-#: app/gui/vectors-commands.c:421 app/gui/vectors-commands.c:467
-#: app/widgets/gimpvectorstreeview.c:126
+#: app/gui/vectors-commands.c:429 app/gui/vectors-commands.c:475
+#: app/widgets/gimpvectorstreeview.c:128
 msgid "New Path"
 msgstr "Nová cesta"
 
-#: app/gui/vectors-commands.c:423
+#: app/gui/vectors-commands.c:431
 msgid "New Path Options"
 msgstr "Volby nové cesty"
 
 #. The name entry hbox, label and entry
-#: app/gui/vectors-commands.c:456 app/gui/vectors-commands.c:571
+#: app/gui/vectors-commands.c:464 app/gui/vectors-commands.c:579
 msgid "Path name:"
 msgstr "Název cesty:"
 
-#: app/gui/vectors-commands.c:536
+#: app/gui/vectors-commands.c:544
 msgid "Path Attributes"
 msgstr "Vlastností cesty"
 
-#: app/gui/vectors-commands.c:538 app/widgets/gimpvectorstreeview.c:130
+#: app/gui/vectors-commands.c:546 app/widgets/gimpvectorstreeview.c:126
 msgid "Edit Path Attributes"
 msgstr "Úpravy vlastností cesty"
 
-#: app/gui/vectors-commands.c:631
+#: app/gui/vectors-commands.c:639
 msgid "Import Paths from SVG"
 msgstr "Importovat cesty z SVG"
 
-#: app/gui/vectors-commands.c:694
+#: app/gui/vectors-commands.c:698
 msgid "Export Path to SVG"
 msgstr "Exportovat cestu do SVG"
 
@@ -7071,7 +7063,7 @@ msgstr "Procedury transformačních nástrojů"
 msgid "Units"
 msgstr "Jednotky"
 
-#: app/pdb/procedural_db.c:177
+#: app/pdb/procedural_db.c:174
 #, c-format
 msgid ""
 "PDB calling error:\n"
@@ -7080,7 +7072,7 @@ msgstr ""
 "Chyba volání PDB:\n"
 "procedura '%s' nenalezena"
 
-#: app/pdb/procedural_db.c:215 app/pdb/procedural_db.c:314
+#: app/pdb/procedural_db.c:212 app/pdb/procedural_db.c:311
 #, c-format
 msgid ""
 "PDB calling error for procedure '%s':\n"
@@ -7276,16 +7268,16 @@ msgid "Transform Active Path"
 msgstr "Transformovat aktivní cestu"
 
 #: app/tools/tools-enums.c:73
-msgid "Extend Stroke/Move Nodes"
-msgstr "Rozšířit vykreslení/přesunout uzly"
+msgid "Design"
+msgstr "Návrh"
 
-#: app/tools/tools-enums.c:74
-msgid "Insert/Delete Nodes"
-msgstr "Vložit/odstranit uzly"
+#: app/tools/tools-enums.c:74 app/widgets/gimpdatafactoryview.c:216
+msgid "Edit"
+msgstr "Úpravy"
 
-#: app/tools/tools-enums.c:75
-msgid "Move Stroke/Path"
-msgstr "Přesunout vykreslení/cestu"
+#: app/tools/tools-enums.c:75 app/tools/gimpmovetool.c:105
+msgid "Move"
+msgstr "Přesun"
 
 #: app/tools/tools-enums.c:93
 msgid "Don't Show Grid"
@@ -7551,47 +7543,47 @@ msgstr "Poloměr:"
 msgid "Update Active Color"
 msgstr "Zaktualizovat aktivní barvu"
 
-#: app/tools/gimpcolorpickertool.c:103 app/tools/gimpcolorpickertool.c:262
+#: app/tools/gimpcolorpickertool.c:104 app/tools/gimpcolorpickertool.c:272
 msgid "Color Picker"
 msgstr "Barevná pipeta"
 
-#: app/tools/gimpcolorpickertool.c:104
+#: app/tools/gimpcolorpickertool.c:105
 msgid "Pick colors from the image"
 msgstr "Nasátí barvy z obrázku"
 
-#: app/tools/gimpcolorpickertool.c:105
+#: app/tools/gimpcolorpickertool.c:106
 msgid "/Tools/C_olor Picker"
 msgstr "/Nástroje/Barevná p_ipeta"
 
-#: app/tools/gimpcolorpickertool.c:264
+#: app/tools/gimpcolorpickertool.c:274
 msgid "Color Picker Information"
 msgstr "Informace o barevné pipetě"
 
-#: app/tools/gimpcolorpickertool.c:280 app/tools/gimpcolorpickertool.c:291
+#: app/tools/gimpcolorpickertool.c:290 app/tools/gimpcolorpickertool.c:301
 msgid "Red:"
 msgstr "Červená:"
 
-#: app/tools/gimpcolorpickertool.c:281 app/tools/gimpcolorpickertool.c:292
+#: app/tools/gimpcolorpickertool.c:291 app/tools/gimpcolorpickertool.c:302
 msgid "Green:"
 msgstr "Zelená:"
 
-#: app/tools/gimpcolorpickertool.c:282 app/tools/gimpcolorpickertool.c:293
+#: app/tools/gimpcolorpickertool.c:292 app/tools/gimpcolorpickertool.c:303
 msgid "Blue:"
 msgstr "Modrá:"
 
-#: app/tools/gimpcolorpickertool.c:286
+#: app/tools/gimpcolorpickertool.c:296
 msgid "Intensity:"
 msgstr "Intenzita:"
 
-#: app/tools/gimpcolorpickertool.c:290
+#: app/tools/gimpcolorpickertool.c:300
 msgid "Index:"
 msgstr "Index:"
 
-#: app/tools/gimpcolorpickertool.c:301
+#: app/tools/gimpcolorpickertool.c:311
 msgid "Alpha:"
 msgstr "Alfa:"
 
-#: app/tools/gimpcolorpickertool.c:302 app/widgets/gimpcolormapeditor.c:373
+#: app/tools/gimpcolorpickertool.c:312
 msgid "Hex Triplet:"
 msgstr "Hex trojice:"
 
@@ -7611,7 +7603,7 @@ msgstr "Druh změny ostrosti  %s"
 
 #. tool toggle
 #: app/tools/gimpcropoptions.c:191 app/tools/gimpmagnifyoptions.c:230
-#: app/tools/gimpmoveoptions.c:180
+#: app/tools/gimpmoveoptions.c:192
 #, c-format
 msgid "Tool Toggle  %s"
 msgstr "Přepínač nástrojů  %s"
@@ -7738,12 +7730,17 @@ msgstr "Režim"
 msgid "Exposure:"
 msgstr "Míra:"
 
-#: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1013
+#: app/tools/gimpeditselectiontool.c:249
+#: app/tools/gimpeditselectiontool.c:1071 app/vectors/gimpvectors.c:345
+msgid "Move Path"
+msgstr "Přesunout cestu"
+
+#: app/tools/gimpeditselectiontool.c:253
+#: app/tools/gimpeditselectiontool.c:1115
 msgid "Move Floating Layer"
 msgstr "Přesunout plovoucí vrstvu"
 
-#: app/tools/gimpeditselectiontool.c:376 app/tools/gimpeditselectiontool.c:656
+#: app/tools/gimpeditselectiontool.c:429 app/tools/gimpeditselectiontool.c:709
 msgid "Move: "
 msgstr "Přesun: "
 
@@ -7769,7 +7766,8 @@ msgstr "/Nástroje/Nástroje kreslení/_Guma"
 msgid "Anti Erase  %s"
 msgstr "Opak gumy  %s"
 
-#: app/tools/gimpflipoptions.c:175 app/tools/gimptransformoptions.c:295
+#: app/tools/gimpflipoptions.c:175 app/tools/gimpmoveoptions.c:186
+#: app/tools/gimptransformoptions.c:295
 msgid "Affect:"
 msgstr "Ovlivnit:"
 
@@ -8098,31 +8096,13 @@ msgstr "Vzdálenost:"
 msgid "degrees"
 msgstr "stupně"
 
-#: app/tools/gimpmoveoptions.c:184
-msgid "Move Current Layer"
-msgstr "Přesun aktuální vrstvy"
-
-#: app/tools/gimpmoveoptions.c:185
-msgid "Pick a Layer to Move"
-msgstr "Vyberte vrstvu k přesunutí"
-
-#. move mask
-#: app/tools/gimpmoveoptions.c:192
-#, c-format
-msgid "Move Mode  %s"
-msgstr "Režim přesunu  %s"
-
 #: app/tools/gimpmoveoptions.c:196
-msgid "Move Selection Outline"
-msgstr "Přesun obvodu výběru"
+msgid "Move Current Layer / Path"
+msgstr "Přesunout aktuální vrstvu / cestu"
 
 #: app/tools/gimpmoveoptions.c:197
-msgid "Move Pixels"
-msgstr "Přesun pixelů"
-
-#: app/tools/gimpmovetool.c:105
-msgid "Move"
-msgstr "Přesun"
+msgid "Pick a Layer / Path to Move"
+msgstr "Vyberte vrstvu / cestu, kterou přesunout"
 
 #: app/tools/gimpmovetool.c:106
 msgid "Move layers & selections"
@@ -8539,17 +8519,127 @@ msgstr "Režim úprav"
 msgid "Polygonal"
 msgstr "Mnohoúhelník"
 
-#: app/tools/gimpvectortool.c:128
+#: app/tools/gimpvectortool.c:149
 msgid "Create and edit paths"
 msgstr "Vytvořit a upravit cesty"
 
-#: app/tools/gimpvectortool.c:129
+#: app/tools/gimpvectortool.c:150
 msgid "/Tools/_Paths"
 msgstr "/Nástroje/_Cesty"
 
-#: app/tools/tool_manager.c:189
-msgid "This tool has no options."
-msgstr "Tento nástroj nemá volby."
+#: app/tools/gimpvectortool.c:345
+msgid "Add Stroke"
+msgstr "Přidat vykreslení"
+
+#: app/tools/gimpvectortool.c:361
+msgid "Add Anchor"
+msgstr "Přidat ukotvení"
+
+#: app/tools/gimpvectortool.c:382
+msgid "Insert Anchor"
+msgstr "Vložit ukotvení"
+
+#: app/tools/gimpvectortool.c:409
+msgid "Drag Handle"
+msgstr "Táhnout řídicí bod"
+
+#: app/tools/gimpvectortool.c:431
+msgid "Drag Anchor"
+msgstr "Táhnout ukotvení"
+
+#: app/tools/gimpvectortool.c:444
+msgid "Drag Anchors"
+msgstr "Táhnout ukotvení"
+
+#: app/tools/gimpvectortool.c:465
+msgid "Drag Curve"
+msgstr "Táhnout křivku"
+
+#: app/tools/gimpvectortool.c:487
+msgid "Connect Strokes"
+msgstr "Spojit vykreslení"
+
+#: app/tools/gimpvectortool.c:525
+msgid "Convert Edge"
+msgstr "Převést hranu"
+
+#: app/tools/gimpvectortool.c:554
+msgid "Delete Anchor"
+msgstr "Odstranit ukotvení"
+
+#: app/tools/gimpvectortool.c:575
+msgid "Delete Segment"
+msgstr "Odstranit segment"
+
+#: app/tools/gimpvectortool.c:757
+msgid "Move Anchors"
+msgstr "Přesunout ukotvení"
+
+#: app/tools/gimpvectortool.c:1092
+msgid "Click to pick Path to edit"
+msgstr "Kliknutím vyberete cestu, kterou upravit"
+
+#: app/tools/gimpvectortool.c:1095
+msgid "Click to create a new Path"
+msgstr "Kliknutím vytvoříte novou cestu"
+
+#: app/tools/gimpvectortool.c:1098
+msgid "Click to create a new component of the path"
+msgstr "Kliknutím vytvoříte novou komponentu cesty"
+
+#: app/tools/gimpvectortool.c:1101
+msgid "Click to create a new anchor, use SHIFT to create a new component."
+msgstr "Kliknutím vytvoříte nové ukotvení, použijte SHIFT pro vytvoření nové komponenty."
+
+#: app/tools/gimpvectortool.c:1105
+msgid "Click-Drag to move the anchor around"
+msgstr "Tažením s kliknutím přesunete ukotvení"
+
+#: app/tools/gimpvectortool.c:1108
+msgid "Click-Drag to move the anchors around"
+msgstr "Tažením s kliknutím přesunete ukotvení"
+
+#: app/tools/gimpvectortool.c:1111
+msgid ""
+"Click-Drag to move the handle around. SHIFT moves the opposite handle "
+"symmetrically."
+msgstr "Tažením s kliknutím přesunete řídicí bod. SHIFT symetricky přesouvá opačný řídicí bod."
+
+#: app/tools/gimpvectortool.c:1115
+msgid ""
+"Click-Drag to change the shape of the curve. SHIFT moves the opposite "
+"handles of the endpoints symmetrically."
+msgstr "Tažením s kliknutím změníte tvar křivky. SHIFT symetricky přesouvá opačné řídicí body koncových bodů."
+
+#: app/tools/gimpvectortool.c:1120 app/tools/gimpvectortool.c:1124
+msgid ""
+"Click-Drag to move the component around. SHIFT moves the complete path "
+"around."
+msgstr "Tažením s kliknutím přesunete komponentu. SHIFT posouvá celou cestu."
+
+#: app/tools/gimpvectortool.c:1128
+msgid "Click to insert an anchor on the path."
+msgstr "Kliknutím vložíte ukotvení na cestu."
+
+#: app/tools/gimpvectortool.c:1131
+msgid "Click to delete this anchor."
+msgstr "Kliknutím odstraníte toto ukotvení."
+
+#: app/tools/gimpvectortool.c:1134
+msgid "Click to connect this anchor with the selected endpoint."
+msgstr "Kliknutím spojíte toto ukotvení s vybraným koncovým bodem."
+
+#: app/tools/gimpvectortool.c:1138
+msgid "Click to open up the path."
+msgstr "Kliknutím otevřete cestu."
+
+#: app/tools/gimpvectortool.c:1141
+msgid "Click to make this node angular."
+msgstr "Kliknutím změníte tento uzel na úhlový."
+
+#: app/tools/gimpvectortool.c:1144
+msgid "Nothing to see here. Move along."
+msgstr "Tady není nic k vidění. Rozejděte se."
 
 #: app/vectors/gimpvectors.c:217
 msgid "Path"
@@ -8558,10 +8648,6 @@ msgstr "Cesta"
 #: app/vectors/gimpvectors.c:218
 msgid "Rename Path"
 msgstr "Přejmenování cesty"
-
-#: app/vectors/gimpvectors.c:345
-msgid "Move Path"
-msgstr "Přesunout cestu"
 
 #: app/vectors/gimpvectors.c:374
 msgid "Scale Path"
@@ -8575,23 +8661,23 @@ msgstr "Změnit velikost cesty"
 msgid "Flip Path"
 msgstr "Překlopit cestu"
 
-#: app/vectors/gimpvectors.c:487
+#: app/vectors/gimpvectors.c:486
 msgid "Rotate Path"
 msgstr "Rotovat cestu"
 
-#: app/vectors/gimpvectors.c:518
+#: app/vectors/gimpvectors.c:517
 msgid "Transform Path"
 msgstr "Transformovat cestu"
 
-#: app/vectors/gimpvectors.c:549
+#: app/vectors/gimpvectors.c:548
 msgid "Cannot stroke empty path."
 msgstr "Nemohu vykreslit prázdnou cestu."
 
-#: app/vectors/gimpvectors-import.c:189 app/vectors/gimpvectors-import.c:201
+#: app/vectors/gimpvectors-import.c:209
 msgid "Imported Path"
 msgstr "Importovaná cesta"
 
-#: app/vectors/gimpvectors-import.c:213
+#: app/vectors/gimpvectors-import.c:231
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "V '%s' nebyla nalezena žádná cesta"
@@ -8680,7 +8766,7 @@ msgstr "Vložit jako nové"
 msgid "Delete"
 msgstr "Smazat"
 
-#: app/widgets/gimpchanneltreeview.c:121
+#: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
 msgstr "Duplikovat kanál"
 
@@ -8725,9 +8811,29 @@ msgstr "Změnit barvu popředí"
 msgid "Edit Background Color"
 msgstr "Změnit barvu pozadí"
 
-#: app/widgets/gimpcolormapeditor.c:362
+#: app/widgets/gimpcolormapeditor.c:220 app/widgets/gimppaletteeditor.c:280
+msgid "Edit Color"
+msgstr "Upravit barvu"
+
+#: app/widgets/gimpcolormapeditor.c:228
+msgid "Add Color"
+msgstr "Přidat barvu"
+
+#: app/widgets/gimpcolormapeditor.c:386
 msgid "Color Index:"
 msgstr "Barevný index:"
+
+#: app/widgets/gimpcolormapeditor.c:397
+msgid "He_x Triplet:"
+msgstr "He_x trojice:"
+
+#: app/widgets/gimpcolormapeditor.c:943
+msgid "Edit Indexed Color"
+msgstr "Úpravy indexované barvy"
+
+#: app/widgets/gimpcolormapeditor.c:945
+msgid "Edit Indexed Image Palette Color"
+msgstr "Úpravy barvy palety indexovaného obrázku"
 
 #: app/widgets/gimpcontainergridview.c:201
 #: app/widgets/gimpcontainergridview.c:581
@@ -8750,17 +8856,13 @@ msgstr "Uložit"
 msgid "Revert"
 msgstr "Navrátit"
 
-#: app/widgets/gimpdatafactoryview.c:216
+#: app/widgets/gimpdatafactoryview.c:224
 msgid "New"
 msgstr "Nový"
 
-#: app/widgets/gimpdatafactoryview.c:224
+#: app/widgets/gimpdatafactoryview.c:232
 msgid "Duplicate"
 msgstr "Duplikovat"
-
-#: app/widgets/gimpdatafactoryview.c:232
-msgid "Edit"
-msgstr "Úpravy"
 
 #: app/widgets/gimpdatafactoryview.c:248
 msgid "Refresh"
@@ -8801,7 +8903,7 @@ msgstr "Pozadí: %d, %d, %d"
 msgid "You can drop dockable dialogs here."
 msgstr "Sem můžete upustit ukotvitelné dialogy."
 
-#: app/widgets/gimpdocumentview.c:166
+#: app/widgets/gimpdocumentview.c:165
 #, c-format
 msgid ""
 "Open the selected entry\n"
@@ -8812,11 +8914,11 @@ msgstr ""
 "%s  Vyzvednout okno, je-li již otevřena\n"
 "%s  Otevřít dialog obrázku"
 
-#: app/widgets/gimpdocumentview.c:184
+#: app/widgets/gimpdocumentview.c:183
 msgid "Remove selected entry"
 msgstr "Odstranit vybranou položku"
 
-#: app/widgets/gimpdocumentview.c:190
+#: app/widgets/gimpdocumentview.c:189
 #, c-format
 msgid ""
 "Recreate preview\n"
@@ -9027,7 +9129,7 @@ msgstr "Smazat tento obrázek"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpitemtreeview.c:276
+#: app/widgets/gimpitemtreeview.c:285
 #, c-format
 msgid ""
 "%s\n"
@@ -9036,7 +9138,7 @@ msgstr ""
 "%s\n"
 "%s  Nahoru"
 
-#: app/widgets/gimpitemtreeview.c:290
+#: app/widgets/gimpitemtreeview.c:299
 #, c-format
 msgid ""
 "%s\n"
@@ -9045,11 +9147,11 @@ msgstr ""
 "%s\n"
 "%s  Dolů"
 
-#: app/widgets/gimpitemtreeview.c:1192
+#: app/widgets/gimpitemtreeview.c:1197
 msgid "Set Item Exclusive Visible"
 msgstr "Nastavit položku exkluzivně viditelnou"
 
-#: app/widgets/gimplayertreeview.c:210
+#: app/widgets/gimplayertreeview.c:212
 msgid "Duplicate Layer"
 msgstr "Duplikovat vrstvu"
 
@@ -9073,23 +9175,19 @@ msgstr "Nedefinováno"
 msgid "Columns:"
 msgstr "Sloupce:"
 
-#: app/widgets/gimppaletteeditor.c:280
+#: app/widgets/gimppaletteeditor.c:288
 msgid "New Color"
 msgstr "Nová barva"
-
-#: app/widgets/gimppaletteeditor.c:288
-msgid "Edit Color"
-msgstr "Upravit barvu"
 
 #: app/widgets/gimppaletteeditor.c:296
 msgid "Delete Color"
 msgstr "Smazat barvu"
 
-#: app/widgets/gimppaletteeditor.c:1032
+#: app/widgets/gimppaletteeditor.c:1006
 msgid "Edit Palette Color"
 msgstr "Úpravy barvy palety"
 
-#: app/widgets/gimppaletteeditor.c:1034
+#: app/widgets/gimppaletteeditor.c:1008
 msgid "Edit Color Palette Entry"
 msgstr "Úpravy položky palety barev"
 
@@ -9123,27 +9221,27 @@ msgstr "_Ikona:"
 msgid "Too large!"
 msgstr "Příliš velký!"
 
-#: app/widgets/gimptemplateview.c:173
-msgid "Create a new template"
-msgstr "Vytvořit novou šablonu"
-
-#: app/widgets/gimptemplateview.c:182
-msgid "Duplicate the selected template"
-msgstr "Duplikovat vybranou šablonu"
-
-#: app/widgets/gimptemplateview.c:191
-msgid "Edit the selected template"
-msgstr "Upravit vybranou šablonu"
-
-#: app/widgets/gimptemplateview.c:200
+#: app/widgets/gimptemplateview.c:179
 msgid "Create a new image from the selected template"
 msgstr "Vytvořit nový obrázek z vybrané šablony"
 
-#: app/widgets/gimptemplateview.c:209
+#: app/widgets/gimptemplateview.c:188
+msgid "Create a new template"
+msgstr "Vytvořit novou šablonu"
+
+#: app/widgets/gimptemplateview.c:197
+msgid "Duplicate the selected template"
+msgstr "Duplikovat vybranou šablonu"
+
+#: app/widgets/gimptemplateview.c:206
+msgid "Edit the selected template"
+msgstr "Upravit vybranou šablonu"
+
+#: app/widgets/gimptemplateview.c:215
 msgid "Delete the selected template"
 msgstr "Odstranit vybranou šablonu"
 
-#: app/widgets/gimptemplateview.c:378
+#: app/widgets/gimptemplateview.c:384
 #, c-format
 msgid ""
 "Are you sure you want to delete\n"
@@ -9152,7 +9250,7 @@ msgstr ""
 "Jste si jisti, že chcete ze seznamu\n"
 "odstranit šablonu \"%s\"?"
 
-#: app/widgets/gimptemplateview.c:382
+#: app/widgets/gimptemplateview.c:388
 msgid "Delete Template"
 msgstr "Odstranit šablonu"
 
@@ -9226,7 +9324,7 @@ msgstr "Zrušit vrácení"
 msgid "[ Base Image ]"
 msgstr "[ Základní obrázek ]"
 
-#: app/widgets/gimpvectorstreeview.c:128
+#: app/widgets/gimpvectorstreeview.c:130
 msgid "Duplicate Path"
 msgstr "Duplikovat cestu"
 
@@ -9434,6 +9532,27 @@ msgstr "Vytváření a úpravy obrázků a fotografií"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (nestabilní)"
+
+#~ msgid "Extend Stroke/Move Nodes"
+#~ msgstr "Rozšířit vykreslení/přesunout uzly"
+
+#~ msgid "Insert/Delete Nodes"
+#~ msgstr "Vložit/odstranit uzly"
+
+#~ msgid "Move Stroke/Path"
+#~ msgstr "Přesunout vykreslení/cestu"
+
+#~ msgid "Move Mode  %s"
+#~ msgstr "Režim přesunu  %s"
+
+#~ msgid "Move Selection Outline"
+#~ msgstr "Přesun obvodu výběru"
+
+#~ msgid "Move Pixels"
+#~ msgstr "Přesun pixelů"
+
+#~ msgid "This tool has no options."
+#~ msgstr "Tento nástroj nemá volby."
 
 #~ msgid "/_Raise Displays"
 #~ msgstr "/_Zvýšit zobrazení"

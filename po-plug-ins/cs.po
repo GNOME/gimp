@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-14 11:48+0200\n"
-"PO-Revision-Date: 2003-09-14 20:09+0200\n"
+"POT-Creation-Date: 2003-09-20 11:41+0200\n"
+"PO-Revision-Date: 2003-09-20 18:58+0200\n"
 "Last-Translator: Miloslav Trmac <mitr@volny.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -442,6 +442,7 @@ msgstr "Klepnutím zde lze zapsat soubor"
 msgid "Click here to cancel save procedure"
 msgstr "Klepnutím zde lze zrušit zápisovou proceduru"
 
+#. Do not rely on librsvg setting GError on failure!
 #: plug-ins/FractalExplorer/Dialogs.c:2008 plug-ins/bmp/bmpread.c:97
 #: plug-ins/common/CEL.c:253 plug-ins/common/CML_explorer.c:2391
 #: plug-ins/common/gbr.c:298 plug-ins/common/gih.c:628
@@ -450,7 +451,8 @@ msgstr "Klepnutím zde lze zrušit zápisovou proceduru"
 #: plug-ins/common/pix.c:333 plug-ins/common/png.c:487
 #: plug-ins/common/pnm.c:407 plug-ins/common/ps.c:879
 #: plug-ins/common/psd.c:1711 plug-ins/common/psp.c:1489
-#: plug-ins/common/sunras.c:393 plug-ins/common/tga.c:425
+#: plug-ins/common/sunras.c:393 plug-ins/common/svg.c:214
+#: plug-ins/common/svg.c:412 plug-ins/common/tga.c:425
 #: plug-ins/common/tiff.c:443 plug-ins/common/xbm.c:730
 #: plug-ins/common/xwd.c:383 plug-ins/faxg3/faxg3.c:218
 #: plug-ins/fits/fits.c:349 plug-ins/gfli/gfli.c:425 plug-ins/gfli/gfli.c:460
@@ -1164,8 +1166,8 @@ msgstr "Špatná barevná mapa"
 
 #. Set up progress display
 #: plug-ins/bmp/bmpread.c:102 plug-ins/common/CEL.c:257
-#: plug-ins/common/gbr.c:303 plug-ins/common/gih.c:632
-#: plug-ins/common/gifload.c:300 plug-ins/common/hrz.c:341
+#: plug-ins/common/gbr.c:303 plug-ins/common/gifload.c:300
+#: plug-ins/common/gih.c:632 plug-ins/common/hrz.c:341
 #: plug-ins/common/jpeg.c:775 plug-ins/common/pat.c:273
 #: plug-ins/common/pcx.c:305 plug-ins/common/pix.c:338
 #: plug-ins/common/png.c:493 plug-ins/common/pnm.c:411
@@ -2337,7 +2339,8 @@ msgstr "Žádná rozumná přípona, ukládám jako gzipovaný XCF."
 
 #: plug-ins/common/bz2.c:351 plug-ins/common/gz.c:446
 msgid "No sensible extension, attempting to load with file magic."
-msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
+msgstr ""
+"Žádná rozumná přípona, pokouším se načíst pomocí souborů magických čísel."
 
 #: plug-ins/common/c_astretch.c:88
 msgid "<Image>/Layer/Colors/Auto/_Stretch Contrast"
@@ -2765,7 +2768,7 @@ msgstr "Použít _1bajtové run-length kódování"
 msgid "Sa_ve Alpha Channel (RGBA/RGB)"
 msgstr "_Zapsat alfa kanál (RGBA/RGB)"
 
-#: plug-ins/common/csource.c:762 plug-ins/common/sparkle.c:433
+#: plug-ins/common/csource.c:762 plug-ins/common/sparkle.c:438
 msgid "Op_acity:"
 msgstr "_Krytí:"
 
@@ -3915,6 +3918,22 @@ msgstr "Chyba při zápisu výstupního souboru."
 msgid "The default comment is limited to %d characters."
 msgstr "Výchozí komentář je omezen na %d znaků."
 
+#: plug-ins/common/gifload.c:858
+#, c-format
+msgid "Background (%dms)"
+msgstr "Pozadí (%dms)"
+
+#: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:781
+#: plug-ins/common/iwarp.c:810
+#, c-format
+msgid "Frame %d"
+msgstr "Políčko %d"
+
+#: plug-ins/common/gifload.c:908
+#, c-format
+msgid "Frame %d (%dms)"
+msgstr "Políčko %d (%d ms)"
+
 #: plug-ins/common/gih.c:304
 #, c-format
 msgid "Layer %s doesn't have an alpha channel, skipped"
@@ -3983,22 +4002,6 @@ msgstr "Zařazení:"
 #: plug-ins/common/gih.c:1090
 msgid "Selection:"
 msgstr "Výběr:"
-
-#: plug-ins/common/gifload.c:858
-#, c-format
-msgid "Background (%dms)"
-msgstr "Pozadí (%dms)"
-
-#: plug-ins/common/gifload.c:906 plug-ins/common/iwarp.c:781
-#: plug-ins/common/iwarp.c:810
-#, c-format
-msgid "Frame %d"
-msgstr "Políčko %d"
-
-#: plug-ins/common/gifload.c:908
-#, c-format
-msgid "Frame %d (%dms)"
-msgstr "Políčko %d (%d ms)"
 
 #: plug-ins/common/glasstile.c:123
 msgid "<Image>/Filters/Glass Effects/_Glass Tile..."
@@ -5908,49 +5911,49 @@ msgstr "_Sytost:"
 msgid "_Value:"
 msgstr "_Jas:"
 
-#: plug-ins/common/screenshot.c:136
+#: plug-ins/common/screenshot.c:138
 msgid "<Toolbox>/File/Acquire/_Screen Shot..."
 msgstr "<Toolbox>/Soubor/Získat/_Snímek obrazovky..."
 
-#: plug-ins/common/screenshot.c:267
+#: plug-ins/common/screenshot.c:269
 msgid "Error grabbing the pointer"
 msgstr "Chyba při zachytávání ukazatele"
 
-#. main dialog
-#: plug-ins/common/screenshot.c:343 plug-ins/common/screenshot.c:511
-msgid "Screen Shot"
-msgstr "Pracovní plocha"
-
-#: plug-ins/common/screenshot.c:360
+#: plug-ins/common/screenshot.c:341
 msgid "Loading Screen Shot..."
 msgstr "Načítám snímek obrazovky..."
 
-#: plug-ins/common/screenshot.c:437
+#. main dialog
+#: plug-ins/common/screenshot.c:347 plug-ins/common/screenshot.c:524
+msgid "Screen Shot"
+msgstr "Pracovní plocha"
+
+#: plug-ins/common/screenshot.c:448
 msgid "Specified window not found"
 msgstr "Určené okno nenalezeno"
 
-#: plug-ins/common/screenshot.c:469
+#: plug-ins/common/screenshot.c:480
 msgid "Error obtaining Screen Shot"
 msgstr "Chyba při získávání snímku obrazovky"
 
 #. single window
-#: plug-ins/common/screenshot.c:535 plug-ins/winsnap/winsnap.c:906
+#: plug-ins/common/screenshot.c:548 plug-ins/winsnap/winsnap.c:906
 msgid "Grab"
 msgstr "Nabrat"
 
-#: plug-ins/common/screenshot.c:544
+#: plug-ins/common/screenshot.c:557
 msgid "a _Single Window"
 msgstr "_Jedno okno"
 
-#: plug-ins/common/screenshot.c:559
+#: plug-ins/common/screenshot.c:572
 msgid "the _Whole Screen"
 msgstr "_Celou obrazovku"
 
-#: plug-ins/common/screenshot.c:578
+#: plug-ins/common/screenshot.c:591
 msgid "_after"
 msgstr "_po uplynutí"
 
-#: plug-ins/common/screenshot.c:591 plug-ins/winsnap/winsnap.c:1023
+#: plug-ins/common/screenshot.c:604 plug-ins/winsnap/winsnap.c:1023
 msgid "Seconds Delay"
 msgstr "prodlevy v sekundách"
 
@@ -6223,133 +6226,131 @@ msgstr "Zachovat znamén_ko výsledku (pouze jeden směr)"
 msgid "Sobel Edge Detecting..."
 msgstr "Sobelova detekce hran..."
 
-#. don't translate '<Image>', it's a special
-#. * keyword for the gtk toolkit
-#: plug-ins/common/sparkle.c:193
+#: plug-ins/common/sparkle.c:195
 msgid "<Image>/Filters/Light Effects/_Sparkle..."
 msgstr "<Image>/Filtry/Efekty se světlem/_Jiskření..."
 
-#: plug-ins/common/sparkle.c:296
+#: plug-ins/common/sparkle.c:298
 msgid "Sparkling..."
 msgstr "Jiskří se..."
 
-#: plug-ins/common/sparkle.c:344
+#: plug-ins/common/sparkle.c:349
 msgid "Sparkle"
 msgstr "Jiskření"
 
-#: plug-ins/common/sparkle.c:372
+#: plug-ins/common/sparkle.c:377
 msgid "Luminosity _Threshold:"
 msgstr "Prá_h jasu:"
 
-#: plug-ins/common/sparkle.c:375
+#: plug-ins/common/sparkle.c:380
 msgid "Adjust the Luminosity Threshold"
 msgstr "Úprava prahu jasu"
 
-#: plug-ins/common/sparkle.c:382
+#: plug-ins/common/sparkle.c:387
 msgid "F_lare Intensity:"
 msgstr "_Intenzita záře:"
 
-#: plug-ins/common/sparkle.c:385
+#: plug-ins/common/sparkle.c:390
 msgid "Adjust the Flare Intensity"
 msgstr "Nastavení intenzity záře"
 
-#: plug-ins/common/sparkle.c:392
+#: plug-ins/common/sparkle.c:397
 msgid "_Spike Length:"
 msgstr "Délka h_rotů:"
 
-#: plug-ins/common/sparkle.c:395
+#: plug-ins/common/sparkle.c:400
 msgid "Adjust the Spike Length"
 msgstr "Nastavení délky hrotů"
 
-#: plug-ins/common/sparkle.c:402
+#: plug-ins/common/sparkle.c:407
 msgid "Sp_ike Points:"
 msgstr "_Počet hrotů:"
 
-#: plug-ins/common/sparkle.c:405
+#: plug-ins/common/sparkle.c:410
 msgid "Adjust the Number of Spikes"
 msgstr "Nastavení počtu hrotů"
 
-#: plug-ins/common/sparkle.c:412
+#: plug-ins/common/sparkle.c:417
 msgid "Spi_ke Angle (-1: Random):"
 msgstr "Úhe_l hrotu (-1: náhodný):"
 
-#: plug-ins/common/sparkle.c:415
+#: plug-ins/common/sparkle.c:420
 msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
 msgstr "Nastavení úhlu hrotu (-1 znamená, že bude zvolen náhodný úhel)"
 
-#: plug-ins/common/sparkle.c:423
+#: plug-ins/common/sparkle.c:428
 msgid "Spik_e Density:"
 msgstr "Hustot_a hrotů:"
 
-#: plug-ins/common/sparkle.c:426
+#: plug-ins/common/sparkle.c:431
 msgid "Adjust the Spike Density"
 msgstr "Nastavení hustoty hrotů"
 
-#: plug-ins/common/sparkle.c:436
+#: plug-ins/common/sparkle.c:441
 msgid "Adjust the Opacity of the Spikes"
 msgstr "Nastavení krytí hrotů"
 
-#: plug-ins/common/sparkle.c:443
+#: plug-ins/common/sparkle.c:448
 msgid "_Random Hue:"
 msgstr "Náh_odný odstín:"
 
-#: plug-ins/common/sparkle.c:446
+#: plug-ins/common/sparkle.c:451
 msgid "Adjust the Value how much the Hue should be changed randomly"
 msgstr "Úprava hodnoty, o kterou se může odstín náhodně měnit"
 
-#: plug-ins/common/sparkle.c:454
+#: plug-ins/common/sparkle.c:459
 msgid "Rando_m Saturation:"
 msgstr "Náhodná _sytost:"
 
-#: plug-ins/common/sparkle.c:457
+#: plug-ins/common/sparkle.c:462
 msgid "Adjust the Value how much the Saturation should be changed randomly"
 msgstr "Úprava hodnoty, o kterou se může sytost náhodně měnit"
 
-#: plug-ins/common/sparkle.c:475
+#: plug-ins/common/sparkle.c:480
 msgid "_Preserve Luminosity"
 msgstr "Zachovat _jas"
 
-#: plug-ins/common/sparkle.c:481
+#: plug-ins/common/sparkle.c:487
 msgid "Should the Luminosity be preserved?"
 msgstr "Má být zachován jas?"
 
-#: plug-ins/common/sparkle.c:488
+#: plug-ins/common/sparkle.c:493
 msgid "In_verse"
 msgstr "In_verze"
 
-#: plug-ins/common/sparkle.c:493
+#: plug-ins/common/sparkle.c:499
 msgid "Should an Inverse Effect be done?"
 msgstr "Má být proveden inverzní efekt?"
 
-#: plug-ins/common/sparkle.c:499
+#: plug-ins/common/sparkle.c:505
 msgid "A_dd Border"
 msgstr "Při_dat obvod"
 
-#: plug-ins/common/sparkle.c:505
+#: plug-ins/common/sparkle.c:511
 msgid "Draw a Border of Spikes around the Image"
 msgstr "Kreslit okolo obrázku hranici hrotů"
 
-#: plug-ins/common/sparkle.c:522
+#: plug-ins/common/sparkle.c:527
 msgid "_Natural Color"
 msgstr "Přiroze_ná barva"
 
-#: plug-ins/common/sparkle.c:525
+#: plug-ins/common/sparkle.c:530
 msgid "_Foreground Color"
 msgstr "_Barva popředí"
 
-#: plug-ins/common/sparkle.c:528
+#: plug-ins/common/sparkle.c:533
 msgid "_Background Color"
 msgstr "Barva po_zadí"
 
-#: plug-ins/common/sparkle.c:537
+#: plug-ins/common/sparkle.c:542
 msgid "Use the Color of the Image"
 msgstr "Použít barvu obrázku"
 
-#: plug-ins/common/sparkle.c:538
+#: plug-ins/common/sparkle.c:543
 msgid "Use the Foreground Color"
 msgstr "Použít barvu popředí"
 
-#: plug-ins/common/sparkle.c:539
+#: plug-ins/common/sparkle.c:544
 msgid "Use the Background Color"
 msgstr "Použít barvu pozadí"
 
@@ -6601,6 +6602,34 @@ msgstr "Zapsat jako SUNRAS"
 #: plug-ins/common/sunras.c:1607
 msgid "RunLength Encoded"
 msgstr "Kódované RunLength"
+
+#: plug-ins/common/svg.c:220
+#, c-format
+msgid "Loading %s:"
+msgstr "Načítám %s:"
+
+#: plug-ins/common/svg.c:232
+msgid "Rendered SVG"
+msgstr "Vykreslené SVG"
+
+#: plug-ins/common/svg.c:420
+msgid "Load SVG"
+msgstr "Načíst SVG"
+
+#. Scalable Vector Graphics is SVG, should perhaps not be translated
+#: plug-ins/common/svg.c:438
+msgid "Render Scalable Vector Graphics"
+msgstr "Vykreslit Scalable Vector Graphics"
+
+#: plug-ins/common/svg.c:466 plug-ins/print/gimp_main_window.c:1000
+#: plug-ins/print/gimp_main_window.c:1216
+msgid "Width:"
+msgstr "Šířka:"
+
+#: plug-ins/common/svg.c:472 plug-ins/print/gimp_main_window.c:1017
+#: plug-ins/print/gimp_main_window.c:1229
+msgid "Height:"
+msgstr "Výška:"
 
 #: plug-ins/common/tga.c:435
 #, c-format
@@ -9517,6 +9546,35 @@ msgid ""
 "influence"
 msgstr "Režim Voronoi bere v úvahu pouze vliv bodu nejbližšího vektor mv"
 
+#: plug-ins/helpbrowser/dialog.c:152
+msgid "GIMP Help Browser"
+msgstr "Prohlížeč nápovědy GIMPu"
+
+#: plug-ins/helpbrowser/dialog.c:467 plug-ins/imagemap/imap_main.c:585
+#: plug-ins/imagemap/imap_settings.c:167
+msgid "<Untitled>"
+msgstr "<Beze jména>"
+
+#: plug-ins/helpbrowser/dialog.c:535
+msgid "Document Not Found"
+msgstr "Dokument nenalezen"
+
+#: plug-ins/helpbrowser/dialog.c:537
+msgid "Could not locate help document"
+msgstr "Nemohu nalézt dokument nápovědy"
+
+#: plug-ins/helpbrowser/dialog.c:539
+msgid ""
+"The requested document could not be found in your GIMP help path as shown "
+"above. This means that the topic has not yet been written or your "
+"installation is not complete. Ensure that your installation is complete "
+"before reporting this error as a bug."
+msgstr ""
+"Požadovaný dokument nelze nalézt na cestě s nápovědou pro GIMP uvedené výše. "
+"To znamená, že toto téma nebylo ještě sepsáno, nebo vaše instalace není "
+"kompletní. Před nahlášením této chyby se ujistěte, že je vaše instalace "
+"kompletní."
+
 #: plug-ins/ifscompose/ifscompose.c:369
 msgid "<Image>/Filters/Render/Nature/Ifs_Compose..."
 msgstr "<Image>/Filtry/Vyobrazení/Příroda/Ifs _kompozice..."
@@ -10069,10 +10127,6 @@ msgstr "_Náhled"
 #: plug-ins/imagemap/imap_main.c:128
 msgid "<Image>/Filters/Web/_ImageMap..."
 msgstr "<Image>/Filtry/Web/_Obrázková mapa..."
-
-#: plug-ins/imagemap/imap_main.c:585 plug-ins/imagemap/imap_settings.c:167
-msgid "<Untitled>"
-msgstr "<Beze jména>"
 
 #: plug-ins/imagemap/imap_main.c:737
 msgid "Some data has been changed!"
@@ -11029,19 +11083,9 @@ msgstr "Velikost média:"
 msgid "Dimensions:"
 msgstr "Rozměry:"
 
-#: plug-ins/print/gimp_main_window.c:1000
-#: plug-ins/print/gimp_main_window.c:1216
-msgid "Width:"
-msgstr "Šířka:"
-
 #: plug-ins/print/gimp_main_window.c:1011
 msgid "Width of the paper that you wish to print to"
 msgstr "Šířka papíru, na který chcete tisknout"
-
-#: plug-ins/print/gimp_main_window.c:1017
-#: plug-ins/print/gimp_main_window.c:1229
-msgid "Height:"
-msgstr "Výška:"
 
 #: plug-ins/print/gimp_main_window.c:1028
 msgid "Height of the paper that you wish to print to"
@@ -11516,20 +11560,6 @@ msgstr "Chyba: Soubor XJT vlastností %s je prázdný"
 
 #~ msgid "With _Decorations"
 #~ msgstr "S _dekorací"
-
-#~ msgid "Document Not Found"
-#~ msgstr "Dokument nenalezen"
-
-#~ msgid ""
-#~ "The requested document could not be found in your GIMP help path as shown "
-#~ "above. This means that the topic has not yet been written or your "
-#~ "installation is not complete. Ensure that your installation is complete "
-#~ "before reporting this error as a bug."
-#~ msgstr ""
-#~ "Požadovaný dokument nelze nalézt na cestě s nápovědou pro GIMP uvedené "
-#~ "výše. To znamená, že toto téma nebylo ještě sepsáno, nebo vaše instalace "
-#~ "není kompletní. Před nahlášením této chyby se ujistěte, že je vaše "
-#~ "instalace kompletní."
 
 #~ msgid ""
 #~ "GIMP Help Browser Error.\n"
