@@ -3708,6 +3708,8 @@ duplicate (GImage *gimage)
   Layer *floating_layer;
   Channel *channel, *new_channel;
   GSList *list;
+  GList *glist;
+  Guide *guide = NULL;
   Layer *active_layer = NULL;
   Channel *active_channel = NULL;
   GimpDrawable *new_floating_sel_drawable = NULL;
@@ -3818,7 +3820,29 @@ duplicate (GImage *gimage)
       new_gimage->active[count] = gimage->active[count];
     }
 
-#warning NEED TO COPY GUIDES ALSO
+  /*  Copy any Guides  */
+  glist = gimage->guides;
+  while (glist)
+    {
+      Guide* new_guide;
+
+      guide = (Guide*) glist->data;
+      glist = g_list_next (glist);
+
+      switch (guide->orientation)
+	{
+	case HORIZONTAL_GUIDE:
+	  new_guide = gimp_image_add_hguide(new_gimage);
+	  new_guide->position = guide->position;
+	  break;
+	case VERTICAL_GUIDE:
+	  new_guide = gimp_image_add_vguide(new_gimage);
+	  new_guide->position = guide->position;
+	  break;
+	default:
+	  g_error("Unknown guide orientation.\n");
+	}
+    }
 
   gimage_enable_undo (new_gimage);
 

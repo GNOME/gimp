@@ -1659,6 +1659,7 @@ layers_dialog_lower_layer_callback (GtkWidget *w,
     return;
 
   gimage_lower_layer (gimage, gimage->active_layer);
+
   gdisplays_flush ();
 }
 
@@ -3273,6 +3274,7 @@ struct _EditLayerOptions {
   GtkWidget *query_box;
   GtkWidget *name_entry;
   GimpLayer *layer;
+  GImage    *gimage;
 };
 
 static void
@@ -3296,6 +3298,7 @@ edit_layer_query_ok_callback (GtkWidget *w,
 	    }
 	}
       layer_set_name(layer, gtk_entry_get_text (GTK_ENTRY (options->name_entry)));
+      gimage_dirty (options->gimage);
     }
 
   gdisplays_flush ();
@@ -3342,6 +3345,7 @@ layers_dialog_edit_layer_query (LayerWidget *layer_widget)
   /*  the new options structure  */
   options = (EditLayerOptions *) g_malloc (sizeof (EditLayerOptions));
   options->layer = layer_widget->layer;
+  options->gimage = layer_widget->gimage;
   /*  the dialog  */
   options->query_box = gtk_dialog_new ();
   gtk_window_set_wmclass (GTK_WINDOW (options->query_box), "edit_layer_attrributes", "Gimp");

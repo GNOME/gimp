@@ -410,6 +410,8 @@ gimp_image_scale (GimpImage *gimage, int new_width, int new_height)
   Layer *layer;
   Layer *floating_layer;
   GSList *list;
+  GList *glist;
+  Guide *guide;
   int old_width, old_height;
   int layer_width, layer_height;
 
@@ -458,7 +460,25 @@ gimp_image_scale (GimpImage *gimage, int new_width, int new_height)
       list = g_slist_next (list);
     }
 
-#warning NEED TO SCALE GUIDES ALSO
+  /*  Scale any Guides  */
+  glist = gimage->guides;
+  while (glist)
+    {
+      guide = (Guide*) glist->data;
+      glist = g_list_next (glist);
+
+      switch (guide->orientation)
+	{
+	case HORIZONTAL_GUIDE:
+	  guide->position = (guide->position * new_height) / old_height;
+	  break;
+	case VERTICAL_GUIDE:
+	  guide->position = (guide->position * new_width) / old_width;
+	  break;
+	default:
+	  g_error("Unknown guide orientation II.\n");
+	}
+    }
 
   /*  Make sure the projection matches the gimage size  */
   gimp_image_projection_realloc (gimage);
@@ -1746,6 +1766,8 @@ gimp_image_raise_layer (GimpImage *gimage, Layer *layer_arg)
 	      /*  invalidate the composite preview  */
 	      gimp_image_invalidate_preview (gimage);
 
+	      gimp_image_dirty(gimage);
+
 	      return prev_layer;
 	    }
 	  else
@@ -1817,6 +1839,8 @@ gimp_image_lower_layer (GimpImage *gimage, Layer *layer_arg)
 	      
 	      /*  invalidate the composite preview  */
 	      gimp_image_invalidate_preview (gimage);
+
+	      gimp_image_dirty(gimage);
 
 	      return next_layer;
 	    }
@@ -1896,6 +1920,8 @@ gimp_image_raise_layer_to_top (GimpImage *gimage, Layer *layer_arg)
   
   /*  invalidate the composite preview  */
   gimp_image_invalidate_preview (gimage);
+
+  gimp_image_dirty (gimage);
   
   return layer;
 }
@@ -1989,6 +2015,9 @@ gimp_image_lower_layer_to_bottom (GimpImage *gimage, Layer *layer_arg)
 
   /*  invalidate the composite preview  */
   gimp_image_invalidate_preview (gimage);
+
+  gimp_image_dirty (gimage);
+
   return layer_arg;
 }
 

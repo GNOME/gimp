@@ -1,3 +1,12 @@
+Sun Jan 17 20:36:45 GMT 1999 Adam D. Moss <adam@gimp.org>
+
+	* app/gimage_cmds.c app/gimpimage.c app/layers_dialog.c
+
+	Guides are now duplicated upon image duplication.
+	Guides are now scaled upon image scaling.
+	Lowering, raising, and renaming a layer now correctly
+	mark the image as dirty.
+
 Sun Jan 17 18:28:58 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/gdisplay.c app/paint_funcs.c: Fixed a thinko/bug
