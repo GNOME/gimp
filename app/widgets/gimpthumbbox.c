@@ -22,6 +22,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpthumb/gimpthumb.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -268,16 +269,6 @@ gimp_thumb_box_progress_set_value (GimpProgress *progress,
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
 
       gtk_progress_bar_set_fraction (bar, percentage);
-
-      if (box->idle_id)
-        {
-          const gchar *desc = gimp_imagefile_get_desc_string (box->imagefile);
-          gchar       *text;
-
-          text = g_strdup_printf ("%s\n\n%s", desc, _("Creating Preview ..."));
-          gtk_label_set_text (GTK_LABEL (box->info), text);
-          g_free (text);
-        }
     }
 }
 
@@ -692,13 +683,13 @@ gimp_thumb_box_create_thumbnail (GimpThumbBox      *box,
 }
 
 static gboolean
-gimp_thumb_box_auto_thumbnail (GimpThumbBox  *box)
+gimp_thumb_box_auto_thumbnail (GimpThumbBox *box)
 {
   Gimp          *gimp  = box->imagefile->gimp;
   GimpThumbnail *thumb = box->imagefile->thumbnail;
   const gchar   *uri   = gimp_object_get_name (GIMP_OBJECT (box->imagefile));
 
-  g_object_add_weak_pointer (G_OBJECT (box), (gpointer *) &box);
+  g_object_add_weak_pointer (G_OBJECT (box), (gpointer) &box);
 
   switch (thumb->thumb_state)
     {
@@ -714,6 +705,26 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox  *box)
            *  thumbnail.
            */
           GimpImagefile *local = gimp_imagefile_new (gimp, uri);
+
+          if (thumb->image_filesize > 0)
+            {
+              gchar *size;
+              gchar *text;
+
+              size = gimp_memsize_to_string (thumb->image_filesize);
+              text = g_strdup_printf ("%s\n%s",
+                                      size, _("Creating Preview ..."));
+
+              gtk_label_set_text (GTK_LABEL (box->info), text);
+
+              g_free (text);
+              g_free (size);
+            }
+          else
+            {
+              gtk_label_set_text (GTK_LABEL (box->info),
+                                  _("Creating Preview ..."));
+            }
 
           gimp_imagefile_create_thumbnail (local,
                                            gimp_get_user_context (gimp),
@@ -739,7 +750,7 @@ gimp_thumb_box_auto_thumbnail (GimpThumbBox  *box)
 
   if (box)
     {
-      g_object_remove_weak_pointer (G_OBJECT (box), (gpointer *) &box);
+      g_object_remove_weak_pointer (G_OBJECT (box), (gpointer) &box);
 
       box->idle_id = 0;
     }

@@ -1,5 +1,10 @@
 2004-10-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpthumbbox.c: tweaked the text shown while
+	updating the preview so that the dialog doesn't need to resize.
+
+2004-10-08  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpcoreconfig.[ch]
 	* app/config/gimprc-blurbs.h: added new gimprc option
 	"thumbnail-filesize-limit" that allows to control the maximum
