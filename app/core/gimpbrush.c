@@ -61,71 +61,21 @@ enum
   LAST_SIGNAL
 };
 
-static GimpBrush * gimp_brush_select_brush     (PaintCore *paint_core);
-static gboolean    gimp_brush_want_null_motion (PaintCore *paint_core);
+
+static void        gimp_brush_class_init       (GimpBrushClass *klass);
+static void        gimp_brush_init             (GimpBrush      *brush);
+static void        gimp_brush_destroy          (GtkObject      *object);
+static TempBuf   * gimp_brush_preview          (GimpViewable   *viewable,
+						gint            width,
+						gint            height);
+
+static GimpBrush * gimp_brush_select_brush     (PaintCore      *paint_core);
+static gboolean    gimp_brush_want_null_motion (PaintCore      *paint_core);
 
 
 static guint gimp_brush_signals[LAST_SIGNAL] = { 0 };
 
-static GimpObjectClass *parent_class = NULL;
-
-
-static void
-gimp_brush_destroy (GtkObject *object)
-{
-  GimpBrush *brush = GIMP_BRUSH (object);
-
-  g_free (brush->filename);
-
-  if (brush->mask)
-    temp_buf_free (brush->mask);
-
-  if (GTK_OBJECT_CLASS (parent_class)->destroy)
-    GTK_OBJECT_CLASS (parent_class)->destroy (object);
-}
-
-static void
-gimp_brush_class_init (GimpBrushClass *klass)
-{
-  GtkObjectClass *object_class;
-
-  object_class = (GtkObjectClass *) klass;
-
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
-  
-  gimp_brush_signals[DIRTY] =
-    gtk_signal_new ("dirty",
-                    GTK_RUN_FIRST,
-                    object_class->type,
-                    GTK_SIGNAL_OFFSET (GimpBrushClass,
-				       dirty),
-                    gtk_signal_default_marshaller,
-                    GTK_TYPE_NONE, 0);
-
-  gtk_object_class_add_signals (object_class, gimp_brush_signals, LAST_SIGNAL);
-
-  object_class->destroy = gimp_brush_destroy;
-
-  klass->dirty            = NULL;
-
-  klass->select_brush     = gimp_brush_select_brush;
-  klass->want_null_motion = gimp_brush_want_null_motion;
-}
-
-void
-gimp_brush_init (GimpBrush *brush)
-{
-  brush->filename  = NULL;
-
-  brush->spacing   = 20;
-  brush->x_axis.x  = 15.0;
-  brush->x_axis.y  =  0.0;
-  brush->y_axis.x  =  0.0;
-  brush->y_axis.y  = 15.0;
-
-  brush->mask      = NULL;
-  brush->pixmap    = NULL;
-}
+static GimpViewableClass *parent_class = NULL;
 
 
 GtkType
@@ -147,9 +97,87 @@ gimp_brush_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-    type = gtk_type_unique (GIMP_TYPE_OBJECT, &info);
+    type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &info);
   }
   return type;
+}
+
+static void
+gimp_brush_class_init (GimpBrushClass *klass)
+{
+  GtkObjectClass    *object_class;
+  GimpViewableClass *viewable_class;
+
+  object_class   = (GtkObjectClass *) klass;
+  viewable_class = (GimpViewableClass *) klass;
+
+  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+  
+  gimp_brush_signals[DIRTY] =
+    gtk_signal_new ("dirty",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpBrushClass,
+				       dirty),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
+
+  gtk_object_class_add_signals (object_class, gimp_brush_signals, LAST_SIGNAL);
+
+  object_class->destroy = gimp_brush_destroy;
+
+  viewable_class->preview = gimp_brush_preview;
+
+  klass->dirty            = NULL;
+
+  klass->select_brush     = gimp_brush_select_brush;
+  klass->want_null_motion = gimp_brush_want_null_motion;
+}
+
+static void
+gimp_brush_init (GimpBrush *brush)
+{
+  brush->filename  = NULL;
+
+  brush->spacing   = 20;
+  brush->x_axis.x  = 15.0;
+  brush->x_axis.y  =  0.0;
+  brush->y_axis.x  =  0.0;
+  brush->y_axis.y  = 15.0;
+
+  brush->mask      = NULL;
+  brush->pixmap    = NULL;
+}
+
+static void
+gimp_brush_destroy (GtkObject *object)
+{
+  GimpBrush *brush;
+
+  brush = GIMP_BRUSH (object);
+
+  g_free (brush->filename);
+
+  if (brush->mask)
+    temp_buf_free (brush->mask);
+
+  if (GTK_OBJECT_CLASS (parent_class)->destroy)
+    GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static TempBuf *
+gimp_brush_preview (GimpViewable *viewable,
+		    gint          width,
+		    gint          height)
+{
+  GimpBrush *brush;
+
+  brush = GIMP_BRUSH (viewable);
+
+  if (brush->pixmap)
+    return brush->pixmap;
+
+  return brush->mask;
 }
 
 GimpBrush *

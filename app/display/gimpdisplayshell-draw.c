@@ -522,6 +522,22 @@ create_display_shell (GDisplay *gdisp,
   gtk_widget_realize (gdisp->cursor_label);
   gdisplay_resize_cursor_label (gdisp);
 
+  /*
+  {
+    GtkWidget *hbox;
+    GtkWidget *preview;
+
+    hbox = gtk_hbox_new (FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (main_vbox), hbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbox);
+
+    preview = gimp_preview_new (GIMP_VIEWABLE (gdisp->gimage->layers->data));
+    gtk_widget_set_usize (preview, 64, 64);
+    gtk_box_pack_start (GTK_BOX (hbox), preview, FALSE, FALSE, 0);
+    gtk_widget_show (preview);
+  }
+  */
+
   gtk_widget_show (main_vbox);
   gtk_widget_show (gdisp->shell);
 

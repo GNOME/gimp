@@ -37,6 +37,9 @@
 #include "tile_manager.h"
 
 
+#define MAX_PREVIEW_SIZE 256  /* EEK */
+
+
 typedef struct _RenderInfo  RenderInfo;
 
 typedef void (* RenderFunc) (RenderInfo *info);
@@ -142,11 +145,11 @@ render_setup (GimpCheckType check_type,
   g_free (render_temp_buf);
 
   /*  calculate check buffer for previews  */
-  if (preview_size)
+  if (TRUE /* preview_size */)
     {
-      render_check_buf = g_new (guchar, (preview_size + 4) * 3);
+      render_check_buf = g_new (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
 
-      for (i = 0; i < (preview_size + 4); i++)
+      for (i = 0; i < (MAX_PREVIEW_SIZE + 4); i++)
 	{
 	  if (i & 0x4)
 	    {
@@ -162,8 +165,8 @@ render_setup (GimpCheckType check_type,
 	    }
 	}
 
-      render_empty_buf = g_new0 (guchar, (preview_size + 4) * 3);
-      render_temp_buf  = g_new  (guchar, (preview_size + 4) * 3);
+      render_empty_buf = g_new0 (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
+      render_temp_buf  = g_new  (guchar, (MAX_PREVIEW_SIZE + 4) * 3);
     }
   else
     {

@@ -75,6 +75,9 @@
 #include "undo.h"
 #include "undo_history.h"
 
+#include "brushes.h"
+#include "patterns.h"
+
 #ifdef DISPLAY_FILTERS
 #include "gdisplay_color_ui.h"
 #endif /* DISPLAY_FILTERS */
@@ -1309,6 +1312,81 @@ dialogs_module_browser_cmd_callback (GtkWidget *widget,
 
   module_browser = module_db_browser_new ();
   gtk_widget_show (module_browser);
+}
+
+void
+dialogs_test_image_container_view_cmd_callback (GtkWidget *widget,
+						gpointer   client_data)
+{
+  GtkWidget *dialog;
+  GtkWidget *view;
+
+  dialog = gimp_dialog_new ("Image List", "test",
+			    gimp_standard_help_func,
+			    NULL,
+			    GTK_WIN_POS_MOUSE,
+			    TRUE, TRUE, TRUE,
+
+			    _("Close"), gtk_widget_destroy,
+			    NULL, 1, NULL, TRUE, TRUE,
+
+			    NULL);
+
+  view = gimp_container_list_view_new (image_context);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
+  gtk_widget_show (view);
+
+  gtk_widget_show (dialog);
+}
+
+void
+dialogs_test_pattern_container_view_cmd_callback (GtkWidget *widget,
+						  gpointer   client_data)
+{
+  GtkWidget *dialog;
+  GtkWidget *view;
+
+  dialog = gimp_dialog_new ("Pattern List", "test",
+			    gimp_standard_help_func,
+			    NULL,
+			    GTK_WIN_POS_MOUSE,
+			    TRUE, TRUE, TRUE,
+
+			    _("Close"), gtk_widget_destroy,
+			    NULL, 1, NULL, TRUE, TRUE,
+
+			    NULL);
+
+  view = gimp_container_list_view_new (global_pattern_list);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
+  gtk_widget_show (view);
+
+  gtk_widget_show (dialog);
+}
+
+void
+dialogs_test_brush_container_view_cmd_callback (GtkWidget *widget,
+						gpointer   client_data)
+{
+  GtkWidget *dialog;
+  GtkWidget *view;
+
+  dialog = gimp_dialog_new ("Brush List", "test",
+			    gimp_standard_help_func,
+			    NULL,
+			    GTK_WIN_POS_MOUSE,
+			    TRUE, TRUE, TRUE,
+
+			    _("Close"), gtk_widget_destroy,
+			    NULL, 1, NULL, TRUE, TRUE,
+
+			    NULL);
+
+  view = gimp_container_list_view_new (global_brush_list);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), view);
+  gtk_widget_show (view);
+
+  gtk_widget_show (dialog);
 }
 
 /*****  Help  *****/

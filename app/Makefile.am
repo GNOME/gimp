@@ -282,6 +282,12 @@ gimp_SOURCES = \
 	tile_swap.c		\
 	tile_swap.h		\
 	\
+	gimpcontainerlistview.h	\
+	gimpcontainerlistview.c	\
+	gimpcontainerview.h	\
+	gimpcontainerview.c	\
+	gimppreview.h		\
+	gimppreview.c		\
 	gtkwrapbox.c		\
 	gtkwrapbox.h		\
 	gtkhwrapbox.c		\

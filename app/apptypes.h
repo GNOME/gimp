@@ -69,7 +69,10 @@ typedef struct _GimpPalette         GimpPalette;
 
 /*  widgets  */
 
-typedef struct _HistogramWidget     HistogramWidget;
+typedef struct _GimpPreview           GimpPreview;
+typedef struct _GimpContainerListView GimpContainerListView;
+typedef struct _GimpContainerGridView GimpContainerGridView;
+typedef struct _HistogramWidget       HistogramWidget;
 
 
 /*  other stuff  */

@@ -20,7 +20,7 @@
 #define __GIMP_BRUSH_H__
 
 
-#include "gimpobject.h"
+#include "gimpviewable.h"
 
 
 #define GIMP_TYPE_BRUSH            (gimp_brush_get_type ())
@@ -34,19 +34,19 @@ typedef struct _GimpBrushClass GimpBrushClass;
 
 struct _GimpBrush
 {
-  GimpObject   parent_instance;
+  GimpViewable  parent_instance;
 
-  gchar       *filename;   /*  actual filename--brush's location on disk  */
-  gint         spacing;    /*  brush's spacing                            */
-  GimpVector2  x_axis;     /*  for calculating brush spacing              */
-  GimpVector2  y_axis;     /*  for calculating brush spacing              */
-  TempBuf     *mask;       /*  the actual mask                            */
-  TempBuf     *pixmap;     /*  optional pixmap data                       */
+  gchar        *filename;   /*  actual filename--brush's location on disk  */
+  gint          spacing;    /*  brush's spacing                            */
+  GimpVector2   x_axis;     /*  for calculating brush spacing              */
+  GimpVector2   y_axis;     /*  for calculating brush spacing              */
+  TempBuf      *mask;       /*  the actual mask                            */
+  TempBuf      *pixmap;     /*  optional pixmap data                       */
 };
 
 struct _GimpBrushClass
 {
-  GimpObjectClass parent_class;
+  GimpViewableClass parent_class;
 
   void        (* dirty)            (GimpBrush *brush);
 

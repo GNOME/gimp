@@ -96,11 +96,7 @@ drawable_update (GimpDrawable *drawable,
   y += offset_y;
   gdisplays_update_area (gimage, x, y, w, h);
 
-  drawable->preview_valid = FALSE;
-
-  /*  invalidate the preview  */
-  if (gimage)
-    gimage->comp_preview_valid = FALSE;
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
 }
 
 void

@@ -52,12 +52,15 @@
 #include "libgimp/gimpintl.h"
 
 
-static void   gimp_pattern_class_init (GimpPatternClass *klass);
-static void   gimp_pattern_init       (GimpPattern      *pattern);
-static void   gimp_pattern_destroy    (GtkObject        *object);
+static void      gimp_pattern_class_init (GimpPatternClass *klass);
+static void      gimp_pattern_init       (GimpPattern      *pattern);
+static void      gimp_pattern_destroy    (GtkObject        *object);
+static TempBuf * gimp_pattern_preview    (GimpViewable     *viewable,
+					  gint              width,
+					  gint              height);
 
 
-static GimpObjectClass *parent_class = NULL;
+static GimpViewableClass *parent_class = NULL;
 
 
 GtkType
@@ -79,7 +82,7 @@ gimp_pattern_get_type (void)
         (GtkClassInitFunc) NULL
       };
 
-      pattern_type = gtk_type_unique (GIMP_TYPE_OBJECT, &pattern_info);
+      pattern_type = gtk_type_unique (GIMP_TYPE_VIEWABLE, &pattern_info);
   }
 
   return pattern_type;
@@ -88,13 +91,17 @@ gimp_pattern_get_type (void)
 static void
 gimp_pattern_class_init (GimpPatternClass *klass)
 {
-  GtkObjectClass *object_class;
+  GtkObjectClass    *object_class;
+  GimpViewableClass *viewable_class;
 
-  object_class = (GtkObjectClass *) klass;
+  object_class   = (GtkObjectClass *) klass;
+  viewable_class = (GimpViewableClass *) klass;
 
-  parent_class = gtk_type_class (GIMP_TYPE_OBJECT);
-  
+  parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+
   object_class->destroy = gimp_pattern_destroy;
+
+  viewable_class->preview = gimp_pattern_preview;
 }
 
 static void
@@ -118,6 +125,18 @@ gimp_pattern_destroy (GtkObject *object)
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
+}
+
+static TempBuf *
+gimp_pattern_preview (GimpViewable *viewable,
+		      gint          width,
+		      gint          height)
+{
+  GimpPattern *pattern;
+
+  pattern = GIMP_PATTERN (viewable);
+
+  return pattern->mask;
 }
 
 GimpPattern *

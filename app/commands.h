@@ -129,6 +129,10 @@ void dialogs_undo_history_cmd_callback    (GtkWidget *, gpointer);
 
 void dialogs_module_browser_cmd_callback  (GtkWidget *, gpointer);
 
+void dialogs_test_image_container_view_cmd_callback   (GtkWidget *, gpointer);
+void dialogs_test_pattern_container_view_cmd_callback (GtkWidget *, gpointer);
+void dialogs_test_brush_container_view_cmd_callback   (GtkWidget *, gpointer);
+
 void help_help_cmd_callback         (GtkWidget *, gpointer);
 void help_context_help_cmd_callback (GtkWidget *, gpointer);
 void help_tips_cmd_callback         (GtkWidget *, gpointer);

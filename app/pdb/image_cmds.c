@@ -3004,7 +3004,7 @@ image_get_component_active_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > INDEXED_CHANNEL)
+  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
@@ -3035,7 +3035,7 @@ static ProcArg image_get_component_active_inargs[] =
   {
     PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4) }"
+    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   }
 };
 
@@ -3077,7 +3077,7 @@ image_set_component_active_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > INDEXED_CHANNEL)
+  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   active = args[2].value.pdb_int ? TRUE : FALSE;
@@ -3108,7 +3108,7 @@ static ProcArg image_set_component_active_inargs[] =
   {
     PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4) }"
+    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   },
   {
     PDB_INT32,
@@ -3146,7 +3146,7 @@ image_get_component_visible_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > INDEXED_CHANNEL)
+  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   if (success)
@@ -3177,7 +3177,7 @@ static ProcArg image_get_component_visible_inargs[] =
   {
     PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4) }"
+    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   }
 };
 
@@ -3219,7 +3219,7 @@ image_set_component_visible_invoker (Argument *args)
     success = FALSE;
 
   component = args[1].value.pdb_int;
-  if (component < RED_CHANNEL || component > INDEXED_CHANNEL)
+  if (component < RED_CHANNEL || component > ALPHA_CHANNEL)
     success = FALSE;
 
   visible = args[2].value.pdb_int ? TRUE : FALSE;
@@ -3250,7 +3250,7 @@ static ProcArg image_set_component_visible_inargs[] =
   {
     PDB_INT32,
     "component",
-    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4) }"
+    "The image component: { RED_CHANNEL (0), GREEN_CHANNEL (1), BLUE_CHANNEL (2), GRAY_CHANNEL (3), INDEXED_CHANNEL (4), ALPHA_CHANNEL (5) }"
   },
   {
     PDB_INT32,
