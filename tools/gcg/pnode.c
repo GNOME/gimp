@@ -117,28 +117,22 @@ void p_unref(PNode* node){
 typedef struct{
 	FILE* f;
 	PRoot* p;
-} PWrite;
-
-typedef struct{
-	PWrite* w;
 	PNode* n;
 } PCollect;
-
-static void p_write(PNode* node, PWrite* w);
-
 
 void cb_pwrite(gpointer key, gpointer value, gpointer data){
 	PCollect* c = data;
 	PNodeCreateFunc func = c->n->u.c.func;
 	(void)key;
 	if(func)
-		p_write(func(value), c->w);
+		p_write(func(value), c->f, c->p);
 	else
-		p_write(value, c->w);
+		p_write(value, c->f, c->p);
 }
 	
 
-static void p_write(PNode* node, PWrite* w){
+void p_write(PNode* node, FILE* f, PRoot* r){
+	g_assert(f);
 	BE_NODE(node);
 	switch(node->type){
 	case NODE_DATA:{
@@ -147,25 +141,40 @@ static void p_write(PNode* node, PWrite* w){
 		
 		for(i = 0; i < n; i++){
 			if(bl[i].str)
-				fputs(bl[i].str, w->f);
-			p_write(bl[i].node, w);
+				fputs(bl[i].str, f);
+			p_write(bl[i].node, f, r);
 		}
 		break;
 	}
 	case NODE_NIL:
 		break;
-	case NODE_COLLECT:{
-		GHashTable* h = g_datalist_id_get_data(&w->p->data,
-						       node->u.c.tag);
-		PCollect c;
-		c.w = w;
-		c.n = node;
-		if(!h)
-			break;
-		g_hash_table_foreach(h, cb_pwrite, &c);
+	case NODE_COLLECT:
+		if(r){
+			GHashTable* h = g_datalist_id_get_data(&r->data,
+							       node->u.c.tag);
+			PCollect c;
+			c.f = f;
+			c.p = r;
+			c.n = node;
+			if(h)
+				g_hash_table_foreach(h, cb_pwrite, &c);
+		}
 		break;
 	}
-	}
+}
+
+gchar* p_to_str(PNode* n, PRoot* pr){
+	FILE* f = tmpfile();
+	glong len;
+	gchar* buf;
+	p_write(n, f, pr);
+	len = ftell(f);
+	rewind(f);
+	buf = g_new(gchar, len+1);
+	fread(buf, len, 1, f);
+	buf[len]='\0';
+	fclose(f);
+	return buf;
 }
 
 static PNode* p_simple_string(gchar* str){
@@ -180,6 +189,9 @@ static PNode* p_simple_string(gchar* str){
 PNode* p_str(const gchar* str){
 	PNode* n;
 
+	if(!str)
+		return p_nil;
+	
 	if(!p_str_hash)
 		p_str_hash = g_hash_table_new(g_str_hash, g_str_equal);
 	n = g_hash_table_lookup(p_str_hash, str);
@@ -270,7 +282,8 @@ PRoot* pr_new(void){
 	return pr;
 }
 
-void pr_add(PRoot* pr, const gchar* tag, PNode* node){
+/*
+  void pr_add(PRoot* pr, const gchar* tag, PNode* node){
 	PRNode* n;
 	g_assert(pr);
 	BE_NODE(node);
@@ -282,7 +295,7 @@ void pr_add(PRoot* pr, const gchar* tag, PNode* node){
 	pr->nodes = g_list_prepend(pr->nodes, n);
 	p_ref(node);
 }
-
+*/
 void pr_put(PRoot* pr, const gchar* tag, gpointer datum){
 	GHashTable* h = g_datalist_get_data(&pr->data, tag);
 	if(!h){
@@ -293,38 +306,6 @@ void pr_put(PRoot* pr, const gchar* tag, gpointer datum){
 	g_hash_table_insert(h, datum, datum);
 }
 
-void pr_write(PRoot* pr, FILE* stream, const gchar* tag){
-	GList* l;
-	GQuark q;
-	PWrite w;
-	
-	g_assert(pr);
-
-	w.p = pr;
-	w.f = stream;
-	q = g_quark_from_string(tag);
-	for(l=g_list_last(pr->nodes);l;l=l->prev){
-		PRNode* node = l->data;
-		if(node->tag == q)
-			p_write(node->node, &w);
-	}
-}
-
-gchar* pr_to_str(PRoot* pr, const gchar* tag){
-	FILE* f = tmpfile();
-	glong len;
-	gchar* buf;
-	pr_write(pr, f, tag);
-	len = ftell(f);
-	rewind(f);
-	buf = g_new(gchar, len+1);
-	fread(buf, len, 1, f);
-	buf[len]='\0';
-	fclose(f);
-	return buf;
-}
-	
-	
 	
 void pr_free(PRoot* pr){
 	GList* l;

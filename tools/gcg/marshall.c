@@ -112,13 +112,22 @@ PNode* p_gtktype(Type* t){
 		case TYPE_ENUM:
 		case TYPE_FLAGS:
 			return p_macro_name(t->prim, "TYPE", NULL);
+		case TYPE_CHAR:
+			return p_str("GTK_TYPE_CHAR");
+		case TYPE_FOREIGN:
+			g_error("Cannot marshall foreign type %s.%s!",
+				t->prim->module->package->name,
+				t->prim->name);
+			return NULL;
 		default:
-			g_assert_not_reached();
-			return p_str("GTK_TYPE_NONE");
+			g_error("Cannot marshall type by value: %s.%s",
+				t->prim->module->package->name,
+				t->prim->name);
+			return NULL;
 		}
 	}else if(t->indirection==1
 		 && t->prim
-		 && (t->prim->kind==TYPE_FOREIGN
+		 && (t->prim->kind==TYPE_BOXED
 		     || t->prim->kind==TYPE_OBJECT))
 		return p_macro_name(t->prim, "TYPE", NULL);
 	else

@@ -19,13 +19,15 @@ PNode* p_fmt(const gchar* f, ...);
 PNode* p_lst(PNode* n, ...);
 PNode* p_for(GSList* l, PNodeCreateFunc func, gpointer user_data);
 PNode* p_col(const gchar* tag, PNodeCreateFunc func);
+void p_write(PNode* node, FILE* f, PRoot* r);
+gchar* p_to_str(PNode* n, PRoot* pr);
+
+
 
 PRoot* pr_new(void);
-void pr_add(PRoot* root, const gchar* tag, PNode* node);
 void pr_put(PRoot* pr, const gchar* tag, gpointer datum);
 void pr_write(PRoot* pr, FILE* stream, const gchar* tag);
 void pr_free(PRoot* root);
-gchar* pr_to_str(PRoot* pr, const gchar* tags);
 
 
 

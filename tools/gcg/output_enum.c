@@ -12,7 +12,7 @@ PNode* p_enum_decl(EnumDef* e){
 		     "\t~ = ~\n"
 		     "} ~;\n",
 		     p_for(e->alternatives, p_enum_member, t),
-		     p_macro_name(t, NULL, "LAST"),
+		     p_macro_name(t, NULL, "last"),
 		     p_macro_name(t, NULL,
 				   g_slist_last(e->alternatives)->data),
 		     p_primtype(t));
@@ -50,6 +50,6 @@ void output_enum_type_init(PRoot* out, EnumDef* e){
 void output_enum(PRoot* out, Def* d){
 	EnumDef* e = (EnumDef*)d;
 	output_enum_type_init(out, e);
-	pr_add(out, "type", p_enum_decl(e));
+	pr_put(out, "type", p_enum_decl(e));
 }
 

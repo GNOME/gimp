@@ -60,6 +60,8 @@ PNode* p_c_ident(Id id);
 PNode* p_c_macro(Id id);
 PNode* p_prot_header(Module* m);
 PNode* p_type_header(Module* m);
+PNode* p_func_header(Module* m);
+
 
 
 void output_func(PRoot* out,
@@ -77,6 +79,10 @@ void output_object(PRoot* out, Def* d);
 void output_enum(PRoot* out, Def* d);
 void output_flags(PRoot* out, Def* d);
 PNode* p_type_include(Module* m);
+PNode* p_prot_include(Module* m);
+PNode* p_func_include(Module* m);
+
+
 
 
 

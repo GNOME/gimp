@@ -5,42 +5,41 @@
 
 PNode* p_c_ident(Id id){
 	PNode* n;
-	gchar* c;
-	gchar* s;
-
-	c=s=g_strdup(id);
-
-	while(*c){
-		*c=tolower(*c);
-		if(!isalnum(*c))
-			*c='_';
-		c++;
+	gint i = 0;
+	GString* s = g_string_new(NULL);
+	
+	for(i = 0; id[i]; i++){
+		if(!isalnum(id[i]) || (i && isupper(id[i])))
+			g_string_append_c(s, '_');
+		if(isalnum(id[i]))
+			g_string_append_c(s, tolower(id[i]));
 	}
-	n=p_str(s);
-	g_free(s);
+	n = p_str(s->str);
+	g_string_free(s, TRUE);
 	return n;
 }
 
 PNode* p_c_macro(Id id){
 	PNode* n;
-	gchar* c;
-	gchar* s;
-
-	c=s=g_strdup(id);
-	while(*c){
-		*c=toupper(*c);
-		if(!isalnum(*c))
-			*c='_';
-		c++;
+	gint i = 0;
+	GString* s = g_string_new(NULL);
+	
+	for(i = 0; id[i]; i++){
+		if(!isalnum(id[i]) || (i && isupper(id[i])))
+			g_string_append_c(s, '_');
+		if(isalnum(id[i]))
+			g_string_append_c(s, toupper(id[i]));
 	}
-	n=p_str(s);
-	g_free(s);
+	n = p_str(s->str);
+	g_string_free(s, TRUE);
 	return n;
 }
 
 PNode* p_param(FunParams* p, ParamOptions* opt){
-	return p_fmt("~~~~",
-		     opt->first ? p_nil : p_str(", "),
+	return p_fmt("~~~~~~",
+		     opt->first ? p_nil : p_str(","),
+		     !opt->first && !opt->types ? p_str(" ") : p_nil,
+		     opt->types ? p_str("\n\t") : p_nil,
 		     opt->types ? p_type(&p->type) : p_nil,
 		     opt->types && opt->names ? p_str(" ") : p_nil,
 		     opt->names ? p->name : p_nil);
@@ -51,7 +50,9 @@ PNode* p_prot_header(Module* m){
 		return p_str(m->header);
 	else
 		return p_fmt("~/~_p.h",
-			     p_c_ident(m->package->name),
+			     m->package->headerbase
+			     ? p_str(m->package->headerbase)
+			     : p_c_ident(m->package->name),
 			     p_c_ident(m->name));
 }
 
@@ -60,7 +61,20 @@ PNode* p_type_header(Module* m){
 		return p_str(m->header);
 	else
 		return p_fmt("~/~_t.h",
-			     p_c_ident(m->package->name),
+			     m->package->headerbase
+			     ? p_str(m->package->headerbase)
+			     : p_c_ident(m->package->name),
+			     p_c_ident(m->name));
+}
+
+PNode* p_func_header(Module* m){
+	if(m->header)
+		return p_str(m->header);
+	else
+		return p_fmt("~/~.h",
+			     m->package->headerbase
+			     ? p_str(m->package->headerbase)
+			     : p_c_ident(m->package->name),
 			     p_c_ident(m->name));
 }
 
@@ -68,6 +82,17 @@ PNode* p_type_include(Module* m){
 	return p_fmt("#include <~>\n",
 		     p_type_header(m));
 }
+
+PNode* p_prot_include(Module* m){
+	return p_fmt("#include <~>\n",
+		     p_prot_header(m));
+}
+
+PNode* p_func_include(Module* m){
+	return p_fmt("#include <~>\n",
+		     p_func_header(m));
+}
+
 
 PNode* p_params(FunParams* args, ParamOptions* opt){
 	ParamOptions o=*opt;
@@ -155,21 +180,21 @@ PNode* p_type_guard(Type* t, PNode* var){
 		     ((t->indirection==1 && p->kind == TYPE_OBJECT)
 		      ? (t->notnull
 			 ? p_fmt("\tg_assert (~(~));\n",
-				 p_macro_name(p, "IS", NULL),
+				 p_macro_name(p, "is", NULL),
 				 var)
 			 : p_fmt("\tg_assert (!~ || ~(~));\n",
 				 var,
-				 p_macro_name(p, "IS", NULL),
+				 p_macro_name(p, "is", NULL),
 				 var))
 		      : (t->indirection==0
 			 ? ((p->kind == TYPE_ENUM)
 			    ? p_fmt("\tg_assert (~ <= ~);\n",
 				    var,
-				    p_macro_name(p, NULL, "LAST"))
+				    p_macro_name(p, NULL, "last"))
 			    : ((p->kind == TYPE_FLAGS)
 			       ? p_fmt("\tg_assert ((~ << 1) < ~);\n",
 				       var,
-				       p_macro_name(p, NULL, "LAST"))
+				       p_macro_name(p, NULL, "last"))
 			       : p_nil))
 			 : p_nil)));
 }
@@ -199,7 +224,7 @@ PNode* p_prototype(Type* rettype, PNode* name,
 }
 
 void output_var_alias(PRoot* out, PrimType* t, PNode* basename){
-	pr_add(out, "import_alias",
+	pr_put(out, "import_alias",
 	       p_fmt("#define ~ ~_~\n",
 		     basename,
 		     p_c_ident(t->module->package->name),
@@ -207,7 +232,7 @@ void output_var_alias(PRoot* out, PrimType* t, PNode* basename){
 }
 
 void output_type_alias(PRoot* out, PrimType* t, PNode* basename){
-	pr_add(out, "import_alias",
+	pr_put(out, "import_alias",
 	       p_fmt("typedef ~~ ~;\n",
 		     p_str(t->module->package->name),
 		     basename,
@@ -222,13 +247,13 @@ void output_func(PRoot* out,
 		 PNode* args1,
 		 FunParams* args2,
 		 PNode* body){
-	pr_add(out, tag ? tag : "source_head",
+	pr_put(out, tag ? tag : "source_head",
 	       p_fmt("~~;\n",
 		     tag
 		     ? p_nil
 		     : p_str("static "),
 		     p_prototype(rettype, name, args1, args2)));
-	pr_add(out, "source",
+	pr_put(out, "source",
 	       p_fmt("~~{\n"
 		     "~"
 		     "~"
@@ -252,11 +277,11 @@ PNode* p_macro_name(PrimType* t, Id mid, Id post){
 
 void output_var(PRoot* out, Id tag, PNode* type, PNode* name){
 	if(tag)
-		pr_add(out, tag,
+		pr_put(out, tag,
 		       p_fmt("extern ~ ~;\n",
 			     type,
 			     name));
-	pr_add(out, "source_head",
+	pr_put(out, "source_head",
 	       p_fmt("~~ ~;\n",
 		     tag?p_nil:p_str("static "),
 		     type,
@@ -268,13 +293,13 @@ void output_def(PRoot* out, Def* d){
 	PNode* type_var=p_internal_varname(t, p_str("type"));
 	
 	/* GTK_TYPE_FOO macro */
-	pr_add(out, "type", p_str("\n\n"));
-	pr_add(out, "source", p_str("\n"));
-	pr_add(out, "protected", p_str("\n\n"));
-	pr_add(out, "source_head", p_str("\n"));
-	pr_add(out, "type", p_fmt("#define ~ \\\n"
+	pr_put(out, "type", p_str("\n\n"));
+	pr_put(out, "source", p_str("\n"));
+	pr_put(out, "protected", p_str("\n\n"));
+	pr_put(out, "source_head", p_str("\n"));
+	pr_put(out, "type", p_fmt("#define ~ \\\n"
 				  " (~ ? ~() : (void)0, ~)\n",
-				  p_macro_name(t, "TYPE", NULL),
+				  p_macro_name(t, "type", NULL),
 				  type_var,
 				  p_internal_varname(t, p_str("init_type")),
 				  type_var));

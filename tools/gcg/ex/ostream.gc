@@ -1,0 +1,12 @@
+#include <stream.gh>
+
+module Ex.Ostream;
+import g;
+
+
+class Ostream {
+	public virtual void putchar (char c);
+	public virtual void putstring (char* str);
+	public virtual void flush ();
+	public virtual void close ();
+}

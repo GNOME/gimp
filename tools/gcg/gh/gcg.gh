@@ -1,0 +1,11 @@
+
+package Gtk{
+	module <gtk/gtksignal.h>{
+		class Object;
+	}
+}
+
+#include <glib.gh>
+
+root Gtk.Object;
+

@@ -2,8 +2,9 @@
 %option yylineno
 
 %{
-#include "gcg.h"	
+#include "gcg.h"
 #include "parser.h"
+#include "parse.h"
 %}
 
 
@@ -14,9 +15,10 @@ comment		\/\/[^\n]*\n
 string		\"(([^\"]*)|\\\"|\\\\)*\"
 preproc         ^#.*\n
 
+
+
 %%
 
-class return T_CLASS;
 public return T_PUBLIC;
 static return T_STATIC;
 protected return T_PROTECTED;
@@ -27,7 +29,7 @@ read-only return T_READ_ONLY;
 read-write return T_READ_WRITE;
 private return T_PRIVATE;
 const return T_CONST;
-abstract return T_ABSTRACT;
+virtual return T_ABSTRACT;
 direct return T_DIRECT;
 type return T_TYPE;
 attribute return T_ATTRIBUTE;
@@ -36,15 +38,17 @@ import return T_IMPORT;
 header return T_HEADER;
 opaque return T_OPAQUE;
 package return T_PACKAGE;
-
 void return T_VOID;
+root return T_ROOT;
+
+class return T_CLASS;
 enum return T_ENUM;
 flags return T_FLAGS;
-@int return T_INT;
-real return T_DOUBLE;
+integer return T_INT;
+double return T_DOUBLE;
 boxed return T_BOXED;
 foreign return T_FOREIGN;
-
+character return T_CHAR;
 
 {ident} {
 	yylval.id=g_quark_to_string(g_quark_from_string(yytext));

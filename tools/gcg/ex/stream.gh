@@ -1,0 +1,14 @@
+#include <gcg.gh>
+
+package Ex {
+	module Ostream{
+		class Ostream;
+	}
+	module FileOstream{
+		class FileOstream;
+	}
+	module StringOstream{
+		class StringOstream;
+	}
+}
+

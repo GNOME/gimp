@@ -34,11 +34,14 @@ typedef enum{
 	TYPE_ENUM,
 	TYPE_FLAGS,
 	TYPE_FOREIGN,
-	TYPE_OBJECT
+	TYPE_OBJECT,
+	TYPE_BOXED,
+	TYPE_CHAR
 } TypeKind;
 
 struct _Package {
 	Id name;
+	Id headerbase;
 	GHashTable* type_hash;
 	GHashTable* mod_hash;
 };

@@ -1,0 +1,30 @@
+package g {
+	module <glib.h> {
+		integer int;
+		integer uint;
+		integer boolean;
+		character char;
+		character uchar;
+	}
+}
+
+package G {
+	module <glib.h> {
+		boxed List;
+		boxed SList;
+		boxed HashTable;
+		boxed String;
+		boxed Array;
+		boxed Cache;
+		boxed Data;
+		boxed Node;
+		boxed Scanner;
+		boxed ScannerConfig;
+		boxed Relation;
+		boxed MemChunk;
+		boxed Hook;
+		foreign Func;
+		foreign HashFunc;
+		foreign HFunc;
+	}
+}

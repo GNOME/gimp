@@ -1,9 +1,11 @@
 noinst_PROGRAMS = gcg
 
+CPP=cpp -nostdinc -I /usr/share/gcg -I /usr/local/share/gcg -I .
 
-CFLAGS=-g -Wall -W -DCPP="$(CPP)" -ansi -pedantic
+CFLAGS=-g -Wall -W "-DCPP=\"$(CPP)\""
 INCLUDES		= @GLIB_CFLAGS@
-YFLAGS			= -d -v 2>/dev/null
+YFLAGS			= -d -v
+LFLAGS			= -d 
 LIBS			= @GLIB_LIBS@
 
 lexer.c: $(srcdir)/lexer.l

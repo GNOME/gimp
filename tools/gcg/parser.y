@@ -1,13 +1,17 @@
 %{
 #include "gcg.h"
+#include "parse.h"
+	
 #define YYDEBUG 1
 
 static Package* current_package;
-static Module* current_module;
+Module* current_module;
 static ObjectDef* current_class;
 static Method* current_method;
-
+static PrimType* root_class;
 static GSList* imports_list;
+
+ 
  
 %}
 
@@ -71,11 +75,14 @@ static GSList* imports_list;
 %token T_SIGNAL
 %token T_FOREIGN
 %token T_PACKAGE
+%token T_ROOT
+%token T_CHAR
 
 %token<id> T_IDENT
 %token<id> T_HEADERNAME
 %token<str> T_STRING
 
+%type<id> maybeident
 %type<id> ident
 %type<id> headerdef
 %type<fund_type> fundtype
@@ -110,7 +117,17 @@ start_symbol: deffile ;
 
 deffile: declarations definitions;
 
-declarations: /* empty */ | declarations package;
+declarations: /* empty */ | declarations package | declarations rootdef;
+
+
+rootdef: T_ROOT primtype T_END {
+	if($2->kind != TYPE_OBJECT)
+		g_error("Bad root type: %s.%s",
+			$2->module->package->name,
+			$2->name);
+	root_class = $2;
+};
+
 
 definitions: current_module_def deflist;
 
@@ -132,13 +149,18 @@ importlist: ident {
 	imports_list = g_slist_prepend(imports_list, p);
 }
 
-package: T_PACKAGE ident T_OPEN_B {
-	Package* p = get_pkg($2);
+package: T_PACKAGE maybeident headerdef T_OPEN_B {
+	Package* p;
+	Id i = $2;
+	if(!i)
+		i = GET_ID("");
+	p = get_pkg(i);
 	if(!p){
 		p = g_new(Package, 1);
-		p->name = $2;
+		p->name = i;
 		p->type_hash = g_hash_table_new(NULL, NULL);
 		p->mod_hash = g_hash_table_new(NULL, NULL);
+		p->headerbase = $3;
 		put_pkg(p);
 	}
 	current_package = p;
@@ -165,8 +187,13 @@ headerdef: /* empty */ {
 }| T_HEADERNAME;
 
 
+maybeident: ident | /* empty */ {
+	$$ = NULL;
+};
 
-module: T_MODULE ident headerdef T_OPEN_B {
+	
+
+module: T_MODULE maybeident headerdef T_OPEN_B {
 	Module* m = get_mod(current_package, $2);
 	if(!m){
 		m = g_new(Module, 1);
@@ -186,15 +213,21 @@ fundtype: T_INT {
 	$$ = TYPE_INT;
 } | T_DOUBLE {
 	$$ = TYPE_DOUBLE;
-} | T_BOXED {
-	$$ = TYPE_FOREIGN;
 } | T_CLASS {
 	$$ = TYPE_OBJECT;
 } | T_ENUM {
 	$$ = TYPE_ENUM;
 } | T_FLAGS {
 	$$ = TYPE_FLAGS;
-}
+} | T_BOXED {
+	$$ = TYPE_BOXED;
+} | T_FOREIGN {
+	$$ = TYPE_FOREIGN;
+} | T_CHAR {
+	$$ = TYPE_CHAR;
+};
+
+
 
 simpledecl: fundtype ident T_END {
 	PrimType* t = g_new(PrimType, 1);
@@ -214,7 +247,12 @@ semitype: const_def primtype {
 	$$.indirection++;
 };
 
-type: semitype | semitype T_NOTNULLPTR {
+type: semitype {
+	if(!$$.indirection){
+		g_assert($$.prim->kind != TYPE_OBJECT);
+		g_assert($$.prim->kind != TYPE_BOXED);
+	}
+} | semitype T_NOTNULLPTR {
 	$$ = $1;
 	$$.indirection++;
 	$$.notnull = TRUE;
@@ -231,14 +269,18 @@ typeorvoid: type | T_VOID {
 };
 
 	
-primtype: ident T_SCOPE ident {
-	Package* p=get_pkg($1);
+primtype: maybeident T_SCOPE ident {
+	Id i = $1;
+	Package* p;
 	PrimType* t;
+	if(!i)
+		i = GET_ID("");
+	p = get_pkg(i);
 	if(!p)
-		g_error("Unknown package %s!", $1);
+		g_error("Unknown package %s!", i);
 	t = get_type(p, $3);
 	if(!t)
-		g_error("Unknown type %s:%s", $1, $3);
+		g_error("Unknown type %s:%s", i, $3);
 	$$ = t;
 } | ident {
 	Package* p = current_module->package;
@@ -358,7 +400,8 @@ flagsdef: T_FLAGS primtype docstring T_OPEN_B idlist T_CLOSE_B T_END {
 };
 
 parent: /* empty */{
-	$$=NULL;
+	g_assert(root_class);
+	$$ = root_class;
 } | T_INHERITANCE primtype{
 	$$=$2;
 }

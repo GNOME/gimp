@@ -10,12 +10,16 @@ void init_db(void){
 }
 
 PrimType* get_type(Package* pkg, Id name){
-	return g_hash_table_lookup(pkg->type_hash, name);
+	if(pkg)
+		return g_hash_table_lookup(pkg->type_hash, name);
+	else
+		return NULL;
 }
 
 void put_type(PrimType* t){
-	g_hash_table_insert(t->module->package->type_hash,
-			    (gpointer)t->name, t);
+	if(t->module && t->module->package)
+		g_hash_table_insert(t->module->package->type_hash,
+				    (gpointer)t->name, t);
 }
 
 void put_def(Def* d){
@@ -31,11 +35,15 @@ void put_pkg(Package* pkg){
 }
 
 Module* get_mod(Package* pkg, Id modname){
-	return g_hash_table_lookup(pkg->mod_hash, modname);
+	if(pkg)
+		return g_hash_table_lookup(pkg->mod_hash, modname);
+	else
+		return NULL;
 }
 
 void put_mod(Module* m){
-	g_hash_table_insert(m->package->mod_hash, (gpointer)m->name, m);
+	if(m->package)
+		g_hash_table_insert(m->package->mod_hash, (gpointer)m->name, m);
 }
 
 void foreach_def(DefFunc f, gpointer user_data){

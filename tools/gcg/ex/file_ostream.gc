@@ -1,0 +1,15 @@
+#include "stream.gh"
+
+package{
+	module <stdio.h> {
+	foreign FILE;
+	}
+}
+
+module Ex.FileOstream;
+
+
+class FileOstream : Ostream{
+	.FILE* file;
+	public static FileOstream* open(g.char* filename);
+}

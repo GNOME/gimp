@@ -23,7 +23,7 @@ PNode* p_flags_decl(FlagsDef* e){
 		     p_for(e->flags, p_flags_member, &d),
 		     p_primtype(d.t),
 		     p_primtype(d.t),
-		     p_macro_name(d.t, NULL, "LAST"),
+		     p_macro_name(d.t, NULL, "last"),
 		     p_macro_name(d.t, NULL, g_slist_last(e->flags)->data));
 }
 
@@ -58,7 +58,7 @@ void output_flags_type_init(PRoot* out, FlagsDef* e){
 	   
 void output_flags(PRoot* out, Def* d){
 	FlagsDef* f = (FlagsDef*) d;
-	pr_add(out, "type", p_flags_decl(f));
+	pr_put(out, "type", p_flags_decl(f));
 	output_flags_type_init(out, f);
 }
 
