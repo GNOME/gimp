@@ -46,8 +46,6 @@
 #include "widgets/gimpuimanager.h"
 
 #include "dialogs/dialogs.h"
-#include "dialogs/info-dialog.h"
-#include "dialogs/info-window.h"
 
 #include "actions.h"
 #include "view-commands.h"
@@ -293,34 +291,6 @@ view_scroll_vertical_cmd_callback (GtkAction *action,
                                 shell->vsbdata->page_increment,
                                 FALSE);
   gtk_adjustment_set_value (shell->vsbdata, offset);
-}
-
-void
-view_info_window_cmd_callback (GtkAction *action,
-                               gpointer   data)
-{
-  GimpDisplay      *gdisp;
-  GimpDisplayShell *shell;
-  return_if_no_display (gdisp, data);
-
-  shell = GIMP_DISPLAY_SHELL (gdisp->shell);
-
-  if (GIMP_GUI_CONFIG (gdisp->gimage->gimp->config)->info_window_per_display)
-    {
-      if (! shell->info_dialog)
-        shell->info_dialog = info_window_create (gdisp);
-
-      /* To update the fields of the info window for the first time. *
-       * It's no use updating it in info_window_create() because the *
-       * pointer of the info window is not present in the shell yet. */
-      info_window_update (gdisp);
-
-      info_dialog_present (shell->info_dialog);
-    }
-  else
-    {
-      info_window_follow_auto (gdisp->gimage->gimp);
-    }
 }
 
 void

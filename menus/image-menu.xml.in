@@ -233,7 +233,6 @@
       <menuitem action="view-fullscreen" />
       <menu action="view-move-to-screen-menu" name="Move to Screen" />
       <separator />
-      <menuitem action="view-info-window" />
       <menuitem action="view-navigation-window" />
       <menuitem action="view-display-filters" />
       <separator />

@@ -46,12 +46,6 @@
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-window.h"
-
 #include "tools/tool_manager.h"
 
 #include "gimpcanvas.h"
@@ -289,7 +283,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->cursor_y               = 0;
 
   shell->close_dialog           = NULL;
-  shell->info_dialog            = NULL;
   shell->scale_dialog           = NULL;
   shell->nav_popup              = NULL;
   shell->grid_dialog            = NULL;
@@ -408,12 +401,6 @@ gimp_display_shell_destroy (GtkObject *object)
     {
       g_source_remove (shell->title_idle_id);
       shell->title_idle_id = 0;
-    }
-
-  if (shell->info_dialog)
-    {
-      info_window_free (shell->info_dialog);
-      shell->info_dialog = NULL;
     }
 
   if (shell->nav_popup)

@@ -34,6 +34,8 @@
 #include "dialogs.h"
 #include "dialogs-constructors.h"
 
+#include "info-dialog.h" /* EEK */
+
 #include "gimp-intl.h"
 
 
@@ -325,4 +327,14 @@ dialogs_get_toolbox (void)
     }
 
   return NULL;
+}
+
+void
+dialogs_eek (void)
+{
+#ifdef __GNUC__
+#warning FIXME: get rid of info-dialog
+#endif
+  g_error ("eek we suck");
+  info_dialog_free (NULL);
 }

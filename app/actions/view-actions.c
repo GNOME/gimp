@@ -90,11 +90,6 @@ static GimpActionEntry view_actions[] =
     G_CALLBACK (view_zoom_fit_to_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_TO },
 
-  { "view-info-window", GIMP_STOCK_INFO,
-    N_("_Info Window"), "<control><shift>I", NULL,
-    G_CALLBACK (view_info_window_cmd_callback),
-    GIMP_HELP_INFO_DIALOG },
-
   { "view-navigation-window", GIMP_STOCK_NAVIGATION,
     N_("Na_vigation Window"), NULL, NULL,
     G_CALLBACK (view_navigation_window_cmd_callback),

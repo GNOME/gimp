@@ -23,10 +23,6 @@
 #include <gtk/gtkwindow.h>
 
 
-/*  FIXME: remove all dialogs/ stuff  */
-#include "dialogs/dialogs-types.h"
-
-
 /* Apply to a float the same rounding mode used in the renderer */
 #define  PROJ_ROUND(coord) ((gint) ceil (coord))
 
@@ -138,7 +134,6 @@ struct _GimpDisplayShell
   gint              cursor_y;          /* software cursor Y value             */
 
   GtkWidget        *close_dialog;      /*  close dialog                       */
-  InfoDialog       *info_dialog;       /*  image information dialog           */
   GtkWidget        *scale_dialog;      /*  scale (zoom) dialog                */
   GtkWidget        *nav_popup;         /*  navigation popup                   */
   GtkWidget        *grid_dialog;       /*  grid configuration dialog          */

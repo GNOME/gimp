@@ -27,12 +27,6 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-window.h"
-
 #include "widgets/gimpcursor.h"
 #include "widgets/gimpcursorview.h"
 #include "widgets/gimpdialogfactory.h"
@@ -168,18 +162,6 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
   if (session_info && session_info->widget)
     cursor_view = gtk_bin_get_child (GTK_BIN (session_info->widget));
 
-  if (t_x < 0              ||
-      t_y < 0              ||
-      t_x >= gimage->width ||
-      t_y >= gimage->height)
-    {
-      info_window_update_cursor (shell->gdisp, -1, -1);
-    }
-  else
-    {
-      info_window_update_cursor (shell->gdisp, t_x, t_y);
-    }
-
   if (cursor_view)
     gimp_cursor_view_update_cursor (GIMP_CURSOR_VIEW (cursor_view),
                                     shell->gdisp->gimage, shell->unit,
@@ -196,8 +178,6 @@ gimp_display_shell_clear_cursor (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimp_statusbar_clear_cursor (GIMP_STATUSBAR (shell->statusbar));
-
-  info_window_update_cursor (shell->gdisp, -1, -1);
 
   factory = gimp_dialog_factory_from_name ("dock");
   session_info = gimp_dialog_factory_find_session_info (factory,

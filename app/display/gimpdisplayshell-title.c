@@ -36,12 +36,6 @@
 
 #include "file/file-utils.h"
 
-#ifdef __GNUC__
-#warning FIXME #include "dialogs/dialogs-types.h"
-#endif
-#include "dialogs/dialogs-types.h"
-#include "dialogs/info-window.h"
-
 #include "gimpdisplay.h"
 #include "gimpdisplayshell.h"
 #include "gimpdisplayshell-scale.h"
@@ -119,11 +113,6 @@ gimp_display_shell_update_title_idle (gpointer data)
     }
 
   gimp_statusbar_replace (GIMP_STATUSBAR (shell->statusbar), "title", title);
-
-#ifdef __GNUC__
-#warning FIXME: dont call info_window_update() here.
-#endif
-  info_window_update (shell->gdisp);
 
   return FALSE;
 }

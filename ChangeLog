@@ -1,3 +1,21 @@
+2005-04-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/Makefile.am
+	* app/dialogs/info-window.[ch]: removed.
+
+	* app/actions/view-actions.c
+	* app/actions/view-commands.[ch]
+	* menus/image-menu.xml.in: removed its action and menu stuff.
+
+	* app/display/gimpdisplayshell-cursor.c
+	* app/display/gimpdisplayshell-title.c
+	* app/display/gimpdisplayshell.[ch]: removed info window stuff.
+	This was the last display -> dialogs dependency.
+
+	* app/dialogs/dialogs.c: added ugly hack that references
+	info_dialog. Otherwise the still existing tools -> dialogs
+	dependency breaks the build.
+
 2005-04-05  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.[ch]
