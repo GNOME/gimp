@@ -45,13 +45,16 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+
 #define SCALE_WIDTH      125
 #define TILE_CACHE_SIZE  16
 
+
 typedef struct
 {
-  gint    independent;
-  gdouble noise[4];     /*  per channel  */
+  gboolean   independent;
+  gboolean   correlated ;
+  gdouble    noise[4];     /*  per channel  */
 } NoisifyVals;
 
 typedef struct
@@ -79,12 +82,13 @@ static void     noisify_func (const guchar     *src,
 static void     noisify      (GimpPreview      *preview);
 
 
-static gdouble  gauss                            (GRand *gr);
+static gdouble  gauss                            (GRand         *gr);
 
-static gboolean noisify_dialog                   (GimpDrawable    *drawable,
-                                                  gint             channels);
-static void     noisify_double_adjustment_update (GtkAdjustment   *adjustment,
-                                                  gpointer         data);
+static gboolean noisify_dialog                   (GimpDrawable  *drawable,
+                                                  gint           channels);
+static void     noisify_double_adjustment_update (GtkAdjustment *adjustment,
+                                                  gpointer       data);
+
 
 GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -97,6 +101,7 @@ GimpPlugInInfo PLUG_IN_INFO =
 static NoisifyVals nvals =
 {
   TRUE,
+  FALSE,
   { 0.20, 0.20, 0.20, 0.0 }
 };
 
@@ -106,13 +111,26 @@ static NoisifyInterface noise_int =
   { NULL, NULL, NULL, NULL }
 };
 
+static GRand *noise_gr ; /* Global random number object */
 
 MAIN ()
 
 static void
 query (void)
 {
-  static GimpParamDef args[] =
+  static GimpParamDef scatter_args[] =
+  {
+    { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
+    { GIMP_PDB_DRAWABLE, "drawable",    "Input drawable" },
+    { GIMP_PDB_INT32,    "independent", "Noise in channels independent" },
+    { GIMP_PDB_INT32,    "correlated",  "Noise correlated (i.e. multiplicative not additive)" },
+    { GIMP_PDB_FLOAT,    "noise_1",     "Noise in the first channel (red, gray)" },
+    { GIMP_PDB_FLOAT,    "noise_2",     "Noise in the second channel (green, gray_alpha)" },
+    { GIMP_PDB_FLOAT,    "noise_3",     "Noise in the third channel (blue)" },
+    { GIMP_PDB_FLOAT,    "noise_4",     "Noise in the fourth channel (alpha)" }
+  };
+  static GimpParamDef noisify_args[] =
   {
     { GIMP_PDB_INT32,    "run_mode",    "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,    "image",       "Input image (unused)" },
@@ -124,19 +142,40 @@ query (void)
     { GIMP_PDB_FLOAT,    "noise_4",     "Noise in the fourth channel (alpha)" }
   };
 
-  gimp_install_procedure ("plug_in_noisify",
-                          "Adds random noise to a drawable's channels",
-                          "More here later",
+
+  gimp_install_procedure ("plug_in_scatter_rgb",
+                          "Adds random noise to image channels ",
+                          "Add normally distributed (zero mean) random values "
+                          "to image channels.  Noise may be additive "
+                          "(uncorrelated) or multiplicative (correlated - "
+                          "also known as speckle noise). "
+                          "For colour images colour channels may be treated "
+                          "together or independently.",
                           "Torsten Martinsen",
                           "Torsten Martinsen",
                           "May 2000",
                           N_("_Scatter RGB..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
-                          G_N_ELEMENTS (args), 0,
-                          args, NULL);
+                          G_N_ELEMENTS (scatter_args), 0,
+                          scatter_args, NULL);
 
-  gimp_plugin_menu_register ("plug_in_noisify", "<Image>/Filters/Noise");
+  gimp_plugin_menu_register ("plug_in_scatter_rgb", "<Image>/Filters/Noise");
+
+  gimp_install_procedure ("plug_in_noisify",
+                          "Adds random noise to image channels ",
+                          "Add normally distributed random values to "
+                          "image channels. For colour images each "
+                          "colour channel may be treated together or "
+                          "independently.",
+                          "Torsten Martinsen",
+                          "Torsten Martinsen",
+                          "May 2000",
+                          NULL,
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (noisify_args), 0,
+                          noisify_args, NULL);
 }
 
 static void
@@ -161,45 +200,75 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
+  noise_gr = g_rand_new ();
+
   /*  Get the specified drawable  */
   drawable = gimp_drawable_get (param[2].data.d_drawable);
 
   if (gimp_drawable_is_gray (drawable->drawable_id))
-    nvals.noise[1] = 0.;
+    nvals.noise[1] = 0.0;
 
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_noisify", &nvals);
+      gimp_get_data ("plug_in_scatter_rgb", &nvals);
 
       /*  First acquire information with a dialog  */
       if (! noisify_dialog (drawable, drawable->bpp))
         {
           gimp_drawable_detach (drawable);
+          g_rand_free (noise_gr);
           return;
         }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Make sure all the arguments are there!  */
-      if (nparams != 8)
+      if (strcmp (name, "plug_in_noisify") == 0)
         {
-          status = GIMP_PDB_CALLING_ERROR;
+          /*  Make sure all the arguments are there!  */
+          if (nparams != 8)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              nvals.independent =
+                param[3].data.d_int32 ? TRUE : FALSE;
+              nvals.correlated  = FALSE ;
+              nvals.noise[0]    = param[4].data.d_float;
+              nvals.noise[1]    = param[5].data.d_float;
+              nvals.noise[2]    = param[6].data.d_float;
+              nvals.noise[3]    = param[7].data.d_float;
+            }
+        }
+      else if (strcmp (name, "plug_in_scatter_rgb") == 0)
+        {
+          if (nparams != 9)
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          else
+            {
+              nvals.independent =
+                param[3].data.d_int32 ? TRUE : FALSE;
+              nvals.correlated  =
+                param[4].data.d_int32 ? TRUE : FALSE;
+              nvals.noise[0]    = param[5].data.d_float;
+              nvals.noise[1]    = param[6].data.d_float;
+              nvals.noise[2]    = param[7].data.d_float;
+              nvals.noise[3]    = param[8].data.d_float;
+            }
         }
       else
         {
-          nvals.independent = param[3].data.d_int32 ? TRUE : FALSE;
-          nvals.noise[0]    = param[4].data.d_float;
-          nvals.noise[1]    = param[5].data.d_float;
-          nvals.noise[2]    = param[6].data.d_float;
-          nvals.noise[3]    = param[7].data.d_float;
+          status = GIMP_PDB_CALLING_ERROR;
         }
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
       /*  Possibly retrieve data  */
-      gimp_get_data ("plug_in_noisify", &nvals);
+      gimp_get_data ("plug_in_scatter_rgb", &nvals);
       break;
 
     default:
@@ -207,35 +276,33 @@ run (const gchar      *name,
     }
 
   /*  Make sure that the drawable is gray or RGB color  */
-  if (gimp_drawable_is_rgb (drawable->drawable_id) ||
-      gimp_drawable_is_gray (drawable->drawable_id))
-    {
-      GRand *gr = g_rand_new ();
+  if (gimp_drawable_is_indexed (drawable->drawable_id))
+    status = GIMP_PDB_EXECUTION_ERROR;
 
+  if (status == GIMP_PDB_SUCCESS)
+    {
       gimp_progress_init (_("Adding Noise..."));
       gimp_tile_cache_ntiles (TILE_CACHE_SIZE);
 
       /*  compute the luminosity which exceeds the luminosity threshold  */
-      gimp_rgn_iterate2 (drawable, 0 /* unused */, noisify_func, gr);
-
-      g_rand_free (gr);
+      gimp_rgn_iterate2 (drawable, 0 /* unused */, noisify_func, noise_gr);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
 
       /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data ("plug_in_noisify", &nvals, sizeof (NoisifyVals));
+        gimp_set_data ("plug_in_scatter_rgb", &nvals, sizeof (NoisifyVals));
     }
   else
     {
-      /* gimp_message ("blur: cannot operate on indexed color images"); ??? BLUR ??? */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   values[0].data.d_status = status;
 
   gimp_drawable_detach (drawable);
+  g_rand_free (noise_gr);
 }
 
 static void
@@ -248,19 +315,24 @@ noisify_func (const guchar *src,
   gint   noise = 0;
   gint   b;
 
-  if (! nvals.independent)
-    noise = (gint) (nvals.noise[0] * gauss (gr) * 127);
-
   for (b = 0; b < bpp; b++)
     {
+      if (b == 0 || nvals.independent ||
+          (b == 1 && bpp == 2) || (b == 3 && bpp == 4))
+        noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
+
       if (nvals.noise[b] > 0.0)
         {
           gint p;
 
-          if (nvals.independent || (b == 1 && bpp == 2) || (b == 3 && bpp == 4))
-            noise = (gint) (nvals.noise[b] * gauss (gr) * 127);
-
-          p = src[b] + noise;
+          if (nvals.correlated)
+            {
+              p = (gint) (src[b] + (src[b] * (noise / 127.0)));
+            }
+          else
+            {
+              p = src[b] + noise;
+            }
           dest[b] = CLAMP0255 (p);
         }
       else
@@ -280,7 +352,7 @@ noisify (GimpPreview *preview)
   gint          x1, y1;
   gint          width, height;
   gint          bpp;
-  GRand        *gr = g_rand_new ();
+  GRand        *gr = g_rand_copy (noise_gr);
 
   drawable =
     gimp_drawable_preview_get_drawable (GIMP_DRAWABLE_PREVIEW (preview));
@@ -368,6 +440,7 @@ noisify_dialog (GimpDrawable *drawable,
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
+  GtkWidget *vbox;
   GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *table;
@@ -397,12 +470,29 @@ noisify_dialog (GimpDrawable *drawable,
                     G_CALLBACK (noisify),
                     NULL);
 
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
+  toggle = gtk_check_button_new_with_mnemonic (_("Co_rrelated noise"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                nvals.correlated);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &nvals.correlated);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
+
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
       toggle = gtk_check_button_new_with_mnemonic (_("_Independent RGB"));
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
                                     nvals.independent);
-      gtk_box_pack_start (GTK_BOX (main_vbox), toggle, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
@@ -471,26 +561,32 @@ noisify_dialog (GimpDrawable *drawable,
 }
 
 /*
- * Return a Gaussian (aka normal) random variable.
+ * Return a Gaussian (aka normal) distributed random variable.
  *
- * Adapted from ppmforge.c, which is part of PBMPLUS.
- * The algorithm comes from:
- * 'The Science Of Fractal Images'. Peitgen, H.-O., and Saupe, D. eds.
- * Springer Verlag, New York, 1988.
+ * Adapted from gauss.c included in GNU scientific library.
  *
- * It would probably be better to use another algorithm, such as that
- * in Knuth
- */
+ * Ratio method (Kinderman-Monahan); see Knuth v2, 3rd ed, p130
+ * K+M, ACM Trans Math Software 3 (1977) 257-260.
+*/
 static gdouble
 gauss (GRand *gr)
 {
-  gint    i;
-  gdouble sum = 0.0;
+  gdouble u, v, x;
 
-  for (i = 0; i < 4; i++)
-    sum += g_rand_int_range (gr, 0, 0x7FFF);
+  do
+    {
+      v = g_rand_double (gr);
 
-  return sum * 5.28596089837e-5 - 3.46410161514;
+      do
+        u = g_rand_double (gr);
+      while (u == 0);
+
+      /* Const 1.715... = sqrt(8/e) */
+      x = 1.71552776992141359295 * (v - 0.5) / u;
+    }
+  while (x * x > -4.0 * log (u));
+
+  return x;
 }
 
 static void
@@ -510,18 +606,10 @@ noisify_double_adjustment_update (GtkAdjustment *adjustment,
 
       switch (noise_int.channels)
         {
-        case 1:
-          n = 1;
-          break;
-        case 2:
-          n = 1;
-          break;
-        case 3:
-          n = 3;
-          break;
-        default:
-          n = 3;
-          break;
+        case 1:  n = 1;  break;
+        case 2:  n = 1;  break;
+        case 3:  n = 3;  break;
+        default: n = 3;  break;
         }
 
       for (i = 0; i < n; i++)

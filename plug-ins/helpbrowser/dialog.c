@@ -153,6 +153,8 @@ browser_dialog_open (void)
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help browser"));
   gtk_window_set_role (GTK_WINDOW (window), "helpbrowser");
 
+  gtk_window_set_default_size (GTK_WINDOW (window), 420, 500);
+
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_main_quit),
                     NULL);
@@ -251,7 +253,7 @@ browser_dialog_open (void)
   html  = html_view_new ();
   queue = queue_new ();
 
-  gtk_widget_set_size_request (GTK_WIDGET (html), -1, 240);
+  gtk_widget_set_size_request (GTK_WIDGET (html), -1, 200);
 
   scroll =
     gtk_scrolled_window_new (gtk_layout_get_hadjustment (GTK_LAYOUT (html)),
