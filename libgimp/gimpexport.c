@@ -485,7 +485,7 @@ export_dialog (GSList      *actions,
   tmp_text = g_strdup_printf (_("Your image should be exported before it "
                                 "can be saved as %s for the following reasons:"),
                               format_name);
-  text = g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>",
+  text = g_strdup_printf ("<span size=\"larger\">%s</span>",
                           tmp_text);
   g_free (tmp_text);
 
@@ -505,15 +505,11 @@ export_dialog (GSList      *actions,
       GtkWidget    *frame;
       GtkWidget    *vbox;
 
-      label = gtk_label_new (NULL);
       text = g_strdup_printf (gettext (action->reason), format_name);
-      gtk_label_set_markup (GTK_LABEL (label), text);
+      frame = gimp_frame_new (text);
       g_free (text);
 
-      frame = gtk_frame_new (NULL);
-      gtk_frame_set_label_widget (GTK_FRAME (frame), label);
       gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (label);
       gtk_widget_show (frame);
 
       vbox = gtk_vbox_new (FALSE, 4);

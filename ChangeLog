@@ -1,3 +1,7 @@
+2004-11-27  Øyvind Kolås  <pippin@gimp.org>
+
+	* libgimp/gimpexport.c: minor layout adjustments for HIG compliance.
+
 2004-11-27  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/spyrogimp.scm: Force number of teeth
