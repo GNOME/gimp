@@ -1,3 +1,11 @@
+Sat Nov 13 19:43:11 1999  ape@spacetec.no  (Asbjorn Pettersen)
+
+	* modules/modregister.h: 
+	* modules/modregister.c: Place all OS/2 functions here.
+ 	mod_color_selector_register()
+	mod_color_selector_unregister() new OS/2 functions for register
+	and unregister. Shall replace OS/2 code in modules. 
+
 Sat Nov 13 01:58:31 MET 1999  Sven Neumann <sven@gimp.org>
 
 	* app/airbrush.c
