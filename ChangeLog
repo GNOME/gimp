@@ -1,3 +1,7 @@
+2005-01-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontrollerkeyboard.c: changed "Key" to "Cursor".
+
 2005-01-09  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/sparkle.c: added a preview. This will need more
