@@ -29,6 +29,9 @@ static ProcRecord path_get_current_proc;
 static ProcRecord path_set_current_proc;
 static ProcRecord path_set_points_proc;
 static ProcRecord path_stroke_current_proc;
+static ProcRecord path_get_point_at_dist_proc;
+static ProcRecord path_get_tattoo_proc;
+static ProcRecord get_path_by_tattoo_proc;
 
 void
 register_paths_procs (void)
@@ -39,6 +42,9 @@ register_paths_procs (void)
   procedural_db_register (&path_set_current_proc);
   procedural_db_register (&path_set_points_proc);
   procedural_db_register (&path_stroke_current_proc);
+  procedural_db_register (&path_get_point_at_dist_proc);
+  procedural_db_register (&path_get_tattoo_proc);
+  procedural_db_register (&get_path_by_tattoo_proc);
 }
 
 static Argument *
@@ -524,4 +530,279 @@ static ProcRecord path_stroke_current_proc =
   0,
   NULL,
   { { path_stroke_current_invoker } }
+};
+
+static Argument *
+path_get_point_at_dist_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gdouble distance;
+  gint32 x_point = 0;
+  gint32 y_point = 0;
+  gdouble gradient = 0;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  distance = args[1].value.pdb_float;
+
+  if (success)
+    {
+	  /* Get the path with the given name */
+	  PathsList *plist = gimage->paths;
+	  
+	  if(plist && plist->bz_paths)
+	    {
+	      PATHP          pptr    = NULL;
+	      
+	      if(plist->last_selected_row >= 0)
+	        {
+	          pptr = (PATHP)g_slist_nth_data(plist->bz_paths,plist->last_selected_row);
+	          success = paths_distance(pptr,distance,&x_point,&y_point,&gradient);
+	        }
+	      else
+	        {
+	          success = FALSE;
+	        }
+	    }
+	  else
+	    {
+	      success = FALSE;
+	    }
+    }
+
+  return_args = procedural_db_return_args (&path_get_point_at_dist_proc, success);
+
+  if (success)
+    {
+      return_args[1].value.pdb_int = x_point;
+      return_args[2].value.pdb_int = y_point;
+      return_args[3].value.pdb_float = gradient;
+    }
+
+  return return_args;
+}
+
+static ProcArg path_get_point_at_dist_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The ID of the image the paths belongs to"
+  },
+  {
+    PDB_FLOAT,
+    "distance",
+    "The distance along the path"
+  }
+};
+
+static ProcArg path_get_point_at_dist_outargs[] =
+{
+  {
+    PDB_INT32,
+    "x_point",
+    "The x position of the point"
+  },
+  {
+    PDB_INT32,
+    "y_point",
+    "The y position of the point"
+  },
+  {
+    PDB_FLOAT,
+    "gradient",
+    "The gradient at the specified point"
+  }
+};
+
+static ProcRecord path_get_point_at_dist_proc =
+{
+  "gimp_path_get_point_at_dist",
+  "Get point on a path at a specified distance along the path",
+  "This will return the x,y position of a point at a given distance along the bezier curve. The distance will the obtained by first digitizing the curve internally an then walking along the curve. For a closed curve the start of the path is the first point on the path that was created. This might not be obvious. Note the current path is used.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  2,
+  path_get_point_at_dist_inargs,
+  3,
+  path_get_point_at_dist_outargs,
+  { { path_get_point_at_dist_invoker } }
+};
+
+static Argument *
+path_get_tattoo_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gchar *pname;
+  gint32 tattoo = 0;
+  PathsList *plist;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  pname = (gchar *) args[1].value.pdb_pointer;
+  if (pname == NULL)
+    success = FALSE;
+
+  if (success)
+    {
+      PATHP pptr = NULL;
+      /* Get the path with the given name */
+      plist = gimage->paths;
+	  
+      if (plist && plist->bz_paths)
+	{
+	  GSList *pl = plist->bz_paths;
+    
+	  while (pl)
+	    {
+	      pptr = pl->data;
+    
+	      if (strcmp (pname, pptr->name->str) == 0)
+	        break; /* Found the path */
+    
+	      pl = pl->next;
+	      pptr = NULL;
+	    }
+    
+	  if (pl && pptr)
+	    {
+	       tattoo = paths_get_tattoo(pptr);
+	    }
+	  else
+	    success = FALSE;
+	 }
+    }
+
+  return_args = procedural_db_return_args (&path_get_tattoo_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = tattoo;
+
+  return return_args;
+}
+
+static ProcArg path_get_tattoo_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The ID of the image"
+  },
+  {
+    PDB_STRING,
+    "pathname",
+    "the name of the path whose tattoo should be obtained"
+  }
+};
+
+static ProcArg path_get_tattoo_outargs[] =
+{
+  {
+    PDB_INT32,
+    "tattoo",
+    "The tattoo associated with the name path"
+  }
+};
+
+static ProcRecord path_get_tattoo_proc =
+{
+  "gimp_path_get_tattoo",
+  "Returns the tattoo associated with the name path",
+  "This procedure returns the tattoo associated with the specified path. A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  2,
+  path_get_tattoo_inargs,
+  1,
+  path_get_tattoo_outargs,
+  { { path_get_tattoo_invoker } }
+};
+
+static Argument *
+get_path_by_tattoo_invoker (Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpImage *gimage;
+  gint32 tattoo;
+  PathsList *plist;
+  PATHP pptr = NULL;
+
+  gimage = pdb_id_to_image (args[0].value.pdb_int);
+  if (gimage == NULL)
+    success = FALSE;
+
+  tattoo = args[1].value.pdb_int;
+
+  if (success)
+    {
+      /* Get the path with the given name */
+      plist = gimage->paths;
+    
+      if (plist && plist->bz_paths)
+      {        
+	if((pptr = paths_get_path_by_tattoo(gimage,tattoo)) == NULL)
+	  success = FALSE;
+      }
+      else
+	success = FALSE;
+    }
+
+  return_args = procedural_db_return_args (&get_path_by_tattoo_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = g_strdup (pptr->name->str);
+
+  return return_args;
+}
+
+static ProcArg get_path_by_tattoo_inargs[] =
+{
+  {
+    PDB_IMAGE,
+    "image",
+    "The ID of the image"
+  },
+  {
+    PDB_INT32,
+    "tattoo",
+    "The tattoo of the required path"
+  }
+};
+
+static ProcArg get_path_by_tattoo_outargs[] =
+{
+  {
+    PDB_STRING,
+    "path_name",
+    "The name of the path with the specified tattoo"
+  }
+};
+
+static ProcRecord get_path_by_tattoo_proc =
+{
+  "gimp_get_path_by_tattoo",
+  "Return the name of the path with the given tattoo",
+  "The procedure returns the name of the path in the specified image which has the passed tattoo. The tattoos are unique within the image and will be preserved across sessions and through renaming of the path. An error is returned if no path woth the specified tattoo can be found.",
+  "Andy Thomas",
+  "Andy Thomas",
+  "1999",
+  PDB_INTERNAL,
+  2,
+  get_path_by_tattoo_inargs,
+  1,
+  get_path_by_tattoo_outargs,
+  { { get_path_by_tattoo_invoker } }
 };

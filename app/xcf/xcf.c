@@ -777,13 +777,14 @@ static void write_one_path(gpointer pptr, gpointer iptr)
   info->cp += xcf_write_int32(info->fp, &closed,1);
   num_points = g_slist_length(bzp->path_details);
   info->cp += xcf_write_int32(info->fp, &num_points,1);
-  version = 2;
+  version = 3;
   info->cp += xcf_write_int32(info->fp, &version,1);
   info->cp += xcf_write_int32(info->fp, &bzp->pathtype,1);
+  info->cp += xcf_write_int32(info->fp, &bzp->tattoo,1); 
   g_slist_foreach(bzp->path_details,write_bz_point,info);
 }
 
-static PATHP read_one_path(XcfInfo *info)
+static PATHP read_one_path(GImage *gimage,XcfInfo *info)
 {
   PATHP bzp;
   gchar *name;
@@ -792,6 +793,7 @@ static PATHP read_one_path(XcfInfo *info)
   guint32 closed;
   guint32 num_points;
   guint32 version; /* changed from num_paths */
+  Tattoo  tattoo = 0;
   GSList *pts_list = NULL;
   PathType ptype;
 
@@ -825,12 +827,25 @@ static PATHP read_one_path(XcfInfo *info)
         pts_list = g_slist_append(pts_list,bpt);
       }
     }
+  else if(version == 3)
+    {
+      /* Has extra tatto field */
+      info->cp += xcf_read_int32(info->fp, (guint32 *)&ptype,1);
+      info->cp += xcf_read_int32(info->fp, (guint32 *)&tattoo,1);
+      while(num_points-- > 0)
+      {
+        PATHPOINTP bpt;
+        /* Read in a path */
+        bpt = read_bz_point(info);
+        pts_list = g_slist_append(pts_list,bpt);
+      }
+    }
   else
     {
       g_warning("Unknown path type..Possibly corrupt XCF file");
     }
 
-  bzp = path_new(ptype,pts_list,closed,(gint)state,locked,name);
+  bzp = path_new(gimage,ptype,pts_list,closed,(gint)state,locked,tattoo,name);
 
   return(bzp);
 }
@@ -866,7 +881,7 @@ static PathsList * read_bzpaths(GImage *gimage, XcfInfo *info)
     {
       PATHP bzp;
       /* Read in a path */
-      bzp = read_one_path(info);
+      bzp = read_one_path(gimage,info);
       bzp_list = g_slist_append(bzp_list,bzp);
     }
 

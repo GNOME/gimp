@@ -316,10 +316,182 @@ CODE
     );
 }
 
+sub  path_get_point_at_dist {
+    $blurb = 'Get point on a path at a specified distance along the path';
+
+    $help = <<'HELP';
+This will return the x,y position of a point at a given distance along the
+bezier curve. The distance will the obtained by first digitizing the 
+curve internally an then walking along the curve. For a closed curve the
+start of the path is the first point on the path that was created. This might
+not be obvious. Note the current path is used.
+HELP
+
+    &pdb_misc;
+
+    @inargs = ( &std_image_arg,
+	{ name => 'distance',
+	  type => 'float',
+	  desc => 'The distance along the path'
+	}
+ 	);
+    $inargs[0]->{desc} = 'The ID of the image the paths belongs to';
+
+    @outargs = (
+	{ name => 'x_point',
+	  init => 1,
+	  type => 'int32',
+	  desc => 'The x position of the point'
+	},
+	{ name => 'y_point',
+	  type => 'int32',
+	  desc => 'The y position of the point',
+	  init => 1
+	},
+	{ name => 'gradient',
+	  type => 'float',
+	  desc => 'The gradient at the specified point',
+	  init => 1
+	}
+    );
+
+    %invoke = (
+	code  => <<'CODE'
+{
+      /* Get the path with the given name */
+      PathsList *plist = gimage->paths;
+      
+      if(plist && plist->bz_paths)
+	{
+	  PATHP          pptr    = NULL;
+	  
+	  if(plist->last_selected_row >= 0)
+	    {
+	      pptr = (PATHP)g_slist_nth_data(plist->bz_paths,plist->last_selected_row);
+	      success = paths_distance(pptr,distance,&x_point,&y_point,&gradient);
+	    }
+	  else
+	    {
+	      success = FALSE;
+	    }
+	}
+      else
+	{
+	  success = FALSE;
+	}
+}
+CODE
+    );
+}
+
+sub path_get_tattoo {
+    $blurb = 'Returns the tattoo associated with the name path';
+
+    $help = <<'HELP';
+This procedure returns the tattoo associated with the specified path.  A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions.
+HELP
+
+    &pdb_misc;
+
+    @inargs = (
+	&std_image_arg,
+	{ name => 'pathname', type => 'string',
+	  desc => 'the name of the path whose tattoo should be obtained',
+	  alias => 'pname' }
+    );
+    $inargs[0]->{desc} = 'The ID of the image';
+
+    @outargs = (
+	{ name => 'tattoo',
+	  type => 'int32',
+	  init => 1,  
+	  desc => 'The tattoo associated with the name path',
+	},
+    );
+
+    %invoke = (
+	vars => [ 'PathsList *plist' ],
+	code => <<'CODE'
+{
+  PATHP pptr = NULL;
+  /* Get the path with the given name */
+  plist = gimage->paths;
+      
+  if (plist && plist->bz_paths)
+    {
+      GSList *pl = plist->bz_paths;
+
+      while (pl)
+	{
+	  pptr = pl->data;
+
+	  if (strcmp (pname, pptr->name->str) == 0)
+	    break; /* Found the path */
+
+	  pl = pl->next;
+	  pptr = NULL;
+	}
+
+      if (pl && pptr)
+	{
+	   tattoo = paths_get_tattoo(pptr);
+	}
+      else
+	success = FALSE;
+     }
+}
+CODE
+    );
+}
+
+sub get_path_by_tattoo {
+    $blurb = 'Return the name of the path with the given tattoo';
+
+    $help = <<'HELP';
+The procedure returns the name of the path in the specified image which has the passed tattoo. The tattoos are unique within the image and will be preserved across sessions and through renaming of the path. An error is returned if no path woth the specified tattoo can be found.
+HELP
+
+    &pdb_misc;
+    @inargs = (
+	&std_image_arg,
+	{ name => 'tattoo', type => 'int32',
+	  desc => 'The tattoo of the required path',
+	 }
+    );
+
+    $inargs[0]->{desc} = 'The ID of the image';
+
+    @outargs = (
+	{ name => 'path_name', type => 'string',
+	  desc => 'The name of the path with the specified tattoo',
+	  alias => 'g_strdup (pptr->name->str)', no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'PathsList *plist', 'PATHP pptr = NULL' ],
+	code => <<'CODE'
+{
+  /* Get the path with the given name */
+  plist = gimage->paths;
+
+  if (plist && plist->bz_paths)
+  {	
+    if((pptr = paths_get_path_by_tattoo(gimage,tattoo)) == NULL)
+      success = FALSE;
+  }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+
 @headers = qw("gimage.h" "pathsP.h");
 
 @procs = qw(path_list path_get_points path_get_current path_set_current
-	    path_set_points path_stroke_current);
+	    path_set_points path_stroke_current path_get_point_at_dist
+	    path_get_tattoo get_path_by_tattoo);
 %exports = (app => [@procs]);
 
 $desc = 'Paths';

@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 #include "appenv.h"
 #include "draw_core.h"
 #include "edit_selection.h"
@@ -61,6 +62,8 @@
 #define NO  0
 #define YES 1
 
+#define ROUND(x)  ((int) ((x) + 0.5))
+
 /* bezier select type definitions */
 
 typedef double BezierMatrix[4][4];
@@ -84,6 +87,24 @@ struct _named_buffer
   char *        name;
 };
 
+typedef struct {
+  gdouble *stroke_points;
+  gint	   num_stroke_points;	/* num of valid points */
+  gint	   len_stroke_points;	/* allocated length */
+} BezierRenderPnts;
+
+typedef struct {
+  gboolean firstpnt;
+  gdouble  curdist;
+  gdouble  dist;
+  gdouble  *gradient;
+  gint     *x;
+  gint     *y;
+  gdouble  lastx;
+  gdouble  lasty;
+  gboolean found;
+} BezierDistance;
+
 static void  bezier_select_button_press    (Tool *, GdkEventButton *, gpointer);
 static void  bezier_select_button_release  (Tool *, GdkEventButton *, gpointer);
 static void  bezier_select_motion          (Tool *, GdkEventMotion *, gpointer);
@@ -96,20 +117,20 @@ static void  bezier_draw_handles           (BezierSelect *);
 static void  bezier_draw_current           (BezierSelect *);
 static void  bezier_draw_point             (BezierSelect *, BezierPoint *, int);
 static void  bezier_draw_line              (BezierSelect *, BezierPoint *, BezierPoint *);
-static void  bezier_draw_segment           (BezierSelect *, BezierPoint *, int, int, BezierPointsFunc);
-static void  bezier_draw_segment_points    (BezierSelect *, GdkPoint *, int);
+static void  bezier_draw_segment           (BezierSelect *, BezierPoint *, int, int, BezierPointsFunc,gpointer);
+static void  bezier_draw_segment_points    (BezierSelect *, GdkPoint *, int, gpointer);
 static void  bezier_compose                (BezierMatrix, BezierMatrix, BezierMatrix);
 
 static void  bezier_convert                (BezierSelect *, GDisplay *, int, int);
-static void  bezier_convert_points         (BezierSelect *, GdkPoint *, int);
+static void  bezier_convert_points         (BezierSelect *, GdkPoint *, int, gpointer);
 static void  bezier_convert_line           (GSList **, int, int, int, int);
 static GSList * bezier_insert_in_list      (GSList *, int);
 
 static int   test_add_point_on_segment     (BezierSelect *, BezierPoint *, int, int, int, int, int);
 static void  bezier_to_sel_internal        (BezierSelect *, Tool *, GDisplay *, gint, gint);
-static void  bezier_stack_points	   (BezierSelect *, GdkPoint *, int);
+static void  bezier_stack_points	   (BezierSelect *, GdkPoint *, int, gpointer);
 static gboolean stroke_interpolatable    (int, int, int, int, gdouble);
-static void bezier_stack_points_aux      (GdkPoint *, int, int, gdouble);
+static void bezier_stack_points_aux      (GdkPoint *, int, int, gdouble, BezierRenderPnts *);
 
 static BezierMatrix basis =
 {
@@ -233,7 +254,10 @@ bezier_select_load (void        *gdisp_ptr,
 }
 
 void
-bezier_draw_curve (BezierSelect *bezier_sel,BezierPointsFunc func, gint coord)
+bezier_draw_curve (BezierSelect    *bezier_sel,
+		   BezierPointsFunc func, 
+		   gint             coord,
+		   gpointer         udata)
 {
   BezierPoint * points;
   BezierPoint * start_pt;
@@ -248,7 +272,8 @@ bezier_draw_curve (BezierSelect *bezier_sel,BezierPointsFunc func, gint coord)
       do {
 	bezier_draw_segment (bezier_sel, points,
 			     SUBDIVIDE, coord,
-			     func);
+			     func,
+			     udata);
 
 	points = points->next;
 	points = points->next;
@@ -263,7 +288,8 @@ bezier_draw_curve (BezierSelect *bezier_sel,BezierPointsFunc func, gint coord)
 	{
 	  bezier_draw_segment (bezier_sel, points,
 			       SUBDIVIDE, coord,
-			       func);
+			       func,
+			       udata);
 
 	  points = points->next;
 	  points = points->next;
@@ -447,7 +473,7 @@ bezier_add_point_on_segment(int           x,
     if (test_add_point_on_segment (bezier_sel,       
 				   points,
 				   SUBDIVIDE, 
-				   SCREEN_COORDS,
+				   IMAGE_COORDS,
 				   x, y,
 				   halfwidth))
       {
@@ -953,7 +979,7 @@ bezier_select_draw (Tool *tool)
     }
 
   if (draw_curve)
-    bezier_draw_curve (bezier_sel,bezier_draw_segment_points,SCREEN_COORDS);
+    bezier_draw_curve (bezier_sel,bezier_draw_segment_points,SCREEN_COORDS,NULL);
   if (draw_handles)
     bezier_draw_handles (bezier_sel);
   if (draw_current)
@@ -1082,7 +1108,8 @@ bezier_draw_current (BezierSelect *bezier_sel)
   if (points)
     bezier_draw_segment (bezier_sel, points,
 			 SUBDIVIDE, SCREEN_COORDS,
-			 bezier_draw_segment_points);
+			 bezier_draw_segment_points,
+			 NULL);
 
   if (points != bezier_sel->cur_anchor)
     {
@@ -1095,7 +1122,8 @@ bezier_draw_current (BezierSelect *bezier_sel)
       if (points)
 	bezier_draw_segment (bezier_sel, bezier_sel->cur_anchor,
 			     SUBDIVIDE, SCREEN_COORDS,
-			     bezier_draw_segment_points);
+			     bezier_draw_segment_points,
+			     NULL);
     }
 }
 
@@ -1158,7 +1186,8 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
 		     BezierPoint      *points,
 		     int               subdivisions,
 		     int               space,
-		     BezierPointsFunc  points_func)
+		     BezierPointsFunc  points_func,
+		     gpointer          udata)
 {
 #define ROUND(x)  ((int) ((x) + 0.5))
 
@@ -1275,7 +1304,7 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
 	  /* if the point buffer is full put it to the screen and zero it out */
 	  if (index >= npoints)
 	    {
-	      (* points_func) (bezier_sel, gdk_points, index);
+	      (* points_func) (bezier_sel, gdk_points, index, udata);
 	      index = 0;
 	    }
 	}
@@ -1286,13 +1315,14 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
 
   /* if there are points in the buffer, then put them on the screen */
   if (index)
-    (* points_func) (bezier_sel, gdk_points, index);
+    (* points_func) (bezier_sel, gdk_points, index, udata);
 }
 
 static void
 bezier_draw_segment_points (BezierSelect *bezier_sel,
 			    GdkPoint     *points,
-			    int           npoints)
+			    int           npoints,
+			    gpointer      udata)
 {
   gdk_draw_points (bezier_sel->core->win,
 		   bezier_sel->core->gc, points, npoints);
@@ -1388,7 +1418,8 @@ bezier_convert (BezierSelect *bezier_sel,
   do {
     bezier_draw_segment (bezier_sel, points,
 			 subdivisions, draw_type,
-			 bezier_convert_points);
+			 bezier_convert_points,
+			 NULL);
 
     /*  advance to the next segment  */
     points = points->next;
@@ -1478,7 +1509,8 @@ bezier_convert (BezierSelect *bezier_sel,
 static void
 bezier_convert_points (BezierSelect *bezier_sel,
 		       GdkPoint     *points,
-		       int           npoints)
+		       int           npoints,
+		       gpointer      udata)
 {
   int i;
 
@@ -1765,8 +1797,6 @@ test_add_point_on_segment (BezierSelect     *bezier_sel,
 			    int halfwidth)
 
 {
-#define ROUND(x)  ((int) ((x) + 0.5))
-
   BezierPoint *points;
   BezierMatrix geometry;
   BezierMatrix tmp1, tmp2;
@@ -2042,10 +2072,6 @@ void printSel( BezierSelect *sel)
   printf("state: %d\n", sel->state);
 }
 
-static gdouble	*stroke_points = NULL;
-static gint	num_stroke_points = 0;	/* num of valid points */
-static gint	len_stroke_points = 0;	/* allocated length */
-
 /* check whether vectors (offx, offy), (l_offx, l_offy) have the same angle. */
 static gboolean
 stroke_interpolatable (int offx, int offy, int l_offx, int l_offy, gdouble error)
@@ -2088,35 +2114,36 @@ static void
 bezier_stack_points_aux (GdkPoint *points,
 			 int      start,
 			 int	  end,
-			 gdouble  error)
+			 gdouble  error,
+			 BezierRenderPnts *rpnts)
 {
   const gint	expand_size = 32;
   gint		med;
   gint		offx, offy, l_offx, l_offy;
 
-  if (stroke_points == NULL)
+  if (rpnts->stroke_points == NULL)
     return;
 
   /* BASE CASE: stack the end point */
   if (end - start <= 1)
     {
-      if ((stroke_points[num_stroke_points * 2 - 2] == points[end].x)
-	  && (stroke_points[num_stroke_points * 2 - 1] == points[end].y))
+      if ((rpnts->stroke_points[rpnts->num_stroke_points * 2 - 2] == points[end].x)
+	  && (rpnts->stroke_points[rpnts->num_stroke_points * 2 - 1] == points[end].y))
 	return;
 
-      num_stroke_points++;
-      if (len_stroke_points <= num_stroke_points)
+      rpnts->num_stroke_points++;
+      if (rpnts->len_stroke_points <= rpnts->num_stroke_points)
 	{
-	  len_stroke_points += expand_size;
-	  stroke_points = g_renew (double, stroke_points, 2 * len_stroke_points);
-	  if (stroke_points == NULL)
+	  rpnts->len_stroke_points += expand_size;
+	  rpnts->stroke_points = g_renew (double, rpnts->stroke_points, 2 * rpnts->len_stroke_points);
+	  if (rpnts->stroke_points == NULL)
 	    {
-	      len_stroke_points = num_stroke_points = 0;
+	      rpnts->len_stroke_points = rpnts->num_stroke_points = 0;
 	      return;
 	    }
 	}
-      stroke_points[num_stroke_points * 2 - 2] = points[end].x;
-      stroke_points[num_stroke_points * 2 - 1] = points[end].y;
+      rpnts->stroke_points[rpnts->num_stroke_points * 2 - 2] = points[end].x;
+      rpnts->stroke_points[rpnts->num_stroke_points * 2 - 1] = points[end].y;
       return;
     }
 
@@ -2125,7 +2152,7 @@ bezier_stack_points_aux (GdkPoint *points,
       gint i;
 
       for (i = start+ 1; i <= end; i++)
-	bezier_stack_points_aux (points, i, i, 0);
+	bezier_stack_points_aux (points, i, i, 0,rpnts);
       return;
     }
   /* Otherwise, check whether to divide the segment recursively */
@@ -2138,8 +2165,8 @@ bezier_stack_points_aux (GdkPoint *points,
 
   if (! stroke_interpolatable (offx, offy, l_offx, l_offy, error))
     {
-      bezier_stack_points_aux (points, start, med, error);
-      bezier_stack_points_aux (points, med, end, error);
+      bezier_stack_points_aux (points, start, med, error, rpnts);
+      bezier_stack_points_aux (points, med, end, error, rpnts);
       return;
     }
 
@@ -2148,33 +2175,35 @@ bezier_stack_points_aux (GdkPoint *points,
 
   if (! stroke_interpolatable (offx, offy, l_offx, l_offy, error))
     {
-      bezier_stack_points_aux (points, start, med, error);
-      bezier_stack_points_aux (points, med, end, error);
+      bezier_stack_points_aux (points, start, med, error, rpnts);
+      bezier_stack_points_aux (points, med, end, error, rpnts);
       return;
     }
   /* Now, the curve can be represented by a points pair: (start, end).
      So, add the last point to stroke_points. */
-  bezier_stack_points_aux (points, end, end, 0);
+  bezier_stack_points_aux (points, end, end, 0, rpnts);
 }
 
 static void
 bezier_stack_points (BezierSelect *bezier_sel,
 		     GdkPoint     *points,
-		     int           npoints)
+		     int           npoints,
+		     gpointer      udata)
 {
   gint	i;
   gint	expand_size = 32;
   gint	minx, maxx, miny, maxy;
   gdouble error;
+  BezierRenderPnts *rpnts = udata;
 
   if (npoints < 2)		/* Does this happen? */
     return;
 
-  if (stroke_points == NULL)	/*  initialize it here */
+  if (rpnts->stroke_points == NULL)	/*  initialize it here */
     {
-      num_stroke_points = 0;
-      len_stroke_points = expand_size;
-      stroke_points = g_new (double, 2 * len_stroke_points);
+      rpnts->num_stroke_points = 0;
+      rpnts->len_stroke_points = expand_size;
+      rpnts->stroke_points = g_new (double, 2 * rpnts->len_stroke_points);
     }
 
   maxx = minx = points[0].x;
@@ -2194,41 +2223,39 @@ bezier_stack_points (BezierSelect *bezier_sel,
   error = 2.0 / MAX(maxx - minx, maxy - miny);
 
   /* add the start point */
-  bezier_stack_points_aux (points, 0, 0, 0);
+  bezier_stack_points_aux (points, 0, 0, 0, rpnts);
 
   /* divide segments recursively */
-  bezier_stack_points_aux (points, 0, npoints - 1, error);
+  bezier_stack_points_aux (points, 0, npoints - 1, error, rpnts);
 
   /* printf ("npoints: %d\n", npoints); */
 }
 
-void
-bezier_stroke (BezierSelect *bezier_sel,
-	       GDisplay     *gdisp,
-	       int          subdivisions,
-	       int	    open_path)
+static gint
+bezier_gen_points(BezierSelect     *bezier_sel,
+		  int	            open_path,
+		  BezierRenderPnts *rpnts)
 {
   BezierPoint * points;
   int num_points;
-  Argument *return_vals;
-  int nreturn_vals;
   int redraw = FALSE;
 
   /* stack points */
   points = bezier_sel->points;
   num_points = bezier_sel->num_points;
-
+  
   if (bezier_sel->closed && (! open_path))
     {
       BezierPoint * start_pt;
-
+      
       start_pt = bezier_sel->points;
-
+      
       do {
 	bezier_draw_segment (bezier_sel, points,
 			     SUBDIVIDE, IMAGE_COORDS,
-			     bezier_stack_points);
-
+			     bezier_stack_points,
+			     (gpointer)rpnts);
+	
 	points = points->next;
 	points = points->next;
 	points = points->next;
@@ -2245,7 +2272,8 @@ bezier_stroke (BezierSelect *bezier_sel,
 	{
 	  bezier_draw_segment (bezier_sel, points,
 			       SUBDIVIDE, IMAGE_COORDS,
-			       bezier_stack_points);
+			       bezier_stack_points,
+			       (gpointer)rpnts);
 
 	  points = points->next;
 	  points = points->next;
@@ -2254,7 +2282,23 @@ bezier_stroke (BezierSelect *bezier_sel,
 	}
     }
 
-  if (stroke_points)
+  return (redraw);
+}
+
+void
+bezier_stroke (BezierSelect *bezier_sel,
+	       GDisplay     *gdisp,
+	       int          subdivisions,
+	       int	    open_path)
+{
+  Argument *return_vals;
+  int nreturn_vals;
+  int redraw;
+  BezierRenderPnts *rpnts = g_new0(BezierRenderPnts,1);
+
+  redraw = bezier_gen_points(bezier_sel,open_path,rpnts);
+
+  if (rpnts->stroke_points)
     {
       GimpDrawable *drawable;
       int offset_x, offset_y;
@@ -2266,8 +2310,8 @@ bezier_stroke (BezierSelect *bezier_sel,
        {
          gdouble *ptr;
 
-         ptr = stroke_points;
-         while (ptr < stroke_points + (num_stroke_points * 2))
+         ptr = rpnts->stroke_points;
+         while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))
            {
              *ptr++ -= offset_x;
              *ptr++ -= offset_y;
@@ -2278,8 +2322,8 @@ bezier_stroke (BezierSelect *bezier_sel,
 					    &nreturn_vals,
 					    PDB_DRAWABLE, drawable_ID (drawable),
 					    PDB_FLOAT, (gdouble) 0,
-					    PDB_INT32, (gint32) num_stroke_points * 2,
-					    PDB_FLOATARRAY, stroke_points,
+					    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
+					    PDB_FLOATARRAY, rpnts->stroke_points,
 					    PDB_END);
 
       if (return_vals[0].value.pdb_int == PDB_SUCCESS)
@@ -2295,10 +2339,206 @@ bezier_stroke (BezierSelect *bezier_sel,
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
 
-      g_free (stroke_points);
+      g_free (rpnts->stroke_points);
     }
   /* printf ("num_stroke_points: %d\ndone.\n", num_stroke_points); */
 
-  stroke_points = NULL;
-  len_stroke_points = num_stroke_points = 0;
+  rpnts->stroke_points = NULL;
+  rpnts->len_stroke_points = rpnts->num_stroke_points = 0;
+
+  g_free(rpnts);
+}
+
+static void
+bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
+				  BezierPoint      *points,
+				  int               subdivisions,
+				  BezierDistance   *bdist)
+{
+  BezierMatrix geometry;
+  BezierMatrix tmp1, tmp2;
+  BezierMatrix deltas;
+  double x, dx, dx2, dx3;
+  double y, dy, dy2, dy3;
+  double d, d2, d3;
+  int index;
+  int i;
+
+  /* construct the geometry matrix from the segment */
+  /* assumes that a valid segment containing 4 points is passed in */
+
+  if(bdist->found)
+    return;
+
+  for (i = 0; i < 4; i++)
+    {
+      if (!points)
+	fatal_error (_("bad bezier segment"));
+
+      geometry[i][0] = points->x;
+      geometry[i][1] = points->y;
+      geometry[i][2] = 0;
+      geometry[i][3] = 0;
+
+      points = points->next;
+    }
+
+  /* subdivide the curve n times */
+  /* n can be adjusted to give a finer or coarser curve */
+
+  d = 1.0 / subdivisions;
+  d2 = d * d;
+  d3 = d * d * d;
+
+  /* construct a temporary matrix for determining the forward diffencing deltas */
+
+  tmp2[0][0] = 0;     tmp2[0][1] = 0;     tmp2[0][2] = 0;    tmp2[0][3] = 1;
+  tmp2[1][0] = d3;    tmp2[1][1] = d2;    tmp2[1][2] = d;    tmp2[1][3] = 0;
+  tmp2[2][0] = 6*d3;  tmp2[2][1] = 2*d2;  tmp2[2][2] = 0;    tmp2[2][3] = 0;
+  tmp2[3][0] = 6*d3;  tmp2[3][1] = 0;     tmp2[3][2] = 0;    tmp2[3][3] = 0;
+
+  /* compose the basis and geometry matrices */
+  bezier_compose (basis, geometry, tmp1);
+
+  /* compose the above results to get the deltas matrix */
+  bezier_compose (tmp2, tmp1, deltas);
+
+  /* extract the x deltas */
+  x = deltas[0][0];
+  dx = deltas[1][0];
+  dx2 = deltas[2][0];
+  dx3 = deltas[3][0];
+
+  /* extract the y deltas */
+  y = deltas[0][1];
+  dy = deltas[1][1];
+  dy2 = deltas[2][1];
+  dy3 = deltas[3][1];
+
+  index = 1;
+
+  /* loop over the curve */
+  for (i = 0; i < subdivisions; i++)
+    {
+      /* increment the x values */
+      x += dx;
+      dx += dx2;
+      dx2 += dx3;
+
+      /* increment the y values */
+      y += dy;
+      dy += dy2;
+      dy2 += dy3;
+
+/*       printf("x = %g, y = %g\n",x,y); */
+
+      /* if this point is different than the last one...then draw it */
+      /* Note :
+       * It assumes the udata is the place we want the 
+       * floating version of the coords to be stuffed.
+       * These are needed when we calculate the gradient of the 
+       * curve.
+       */
+
+      if(!bdist->firstpnt)
+	{
+	  gdouble rx = x;
+	  gdouble ry = y;
+ 	  gdouble dx = bdist->lastx - rx; 
+ 	  gdouble dy = bdist->lasty - ry; 
+
+ 	  bdist->curdist += sqrt((dx*dx)+(dy*dy)); 
+ 	  if(bdist->curdist >= bdist->dist) 
+ 	    { 
+ 	      *(bdist->x) = (gint)ROUND((rx + dx/2)); 
+ 	      *(bdist->y) = (gint)ROUND((ry + dy/2)); 
+ 	      if(dx == 0.0) 
+ 		*(bdist->gradient) = G_MAXDOUBLE; 
+ 	      else 
+ 		*(bdist->gradient) = dy/dx; 
+
+/* 	      printf("found x = %d, y = %d\n",*(bdist->x),*(bdist->y)); */
+	      bdist->found = TRUE;
+ 	      break; 
+ 	    } 
+ 	  bdist->lastx = rx; 
+ 	  bdist->lasty = ry; 
+	}
+      else
+	{
+	  bdist->firstpnt = FALSE;
+	  bdist->lastx = x;
+	  bdist->lasty = y;
+	}
+    }
+}
+
+static void
+bezier_draw_curve_for_distance (BezierSelect    *bezier_sel,
+				BezierDistance  *udata)
+{
+  BezierPoint * points;
+  BezierPoint * start_pt;
+  int num_points;
+
+  points = bezier_sel->points;
+
+  if (bezier_sel->closed)
+    {
+      start_pt = bezier_sel->points;
+
+      do {
+	bezier_draw_segment_for_distance (bezier_sel, points,
+					  SUBDIVIDE, 
+					  udata);
+
+	points = points->next;
+	points = points->next;
+	points = points->next;
+      } while (points != start_pt);
+    }
+  else
+    {
+      num_points = bezier_sel->num_points;
+
+      while (num_points >= 4)
+	{
+	  bezier_draw_segment_for_distance (bezier_sel, points,
+					    SUBDIVIDE, 
+					    udata);
+	  points = points->next;
+	  points = points->next;
+	  points = points->next;
+	  num_points -= 3;
+	}
+    }
+}
+
+gint
+bezier_distance_along(BezierSelect *bezier_sel,
+		      int	    open_path,
+		      gdouble       dist,
+		      gint         *x,
+		      gint         *y,
+		      gdouble      *gradient)
+{
+  /* Render the curve as points then walk along it... */
+  BezierDistance *bdist = g_new0(BezierDistance,1);
+  gint ret;
+
+  bdist->firstpnt = TRUE;
+  bdist->curdist = 0.0;
+  bdist->lastx = 0.0;
+  bdist->lasty = 0.0;
+  bdist->dist = dist;
+  bdist->x = x;
+  bdist->y = y;
+  bdist->gradient = gradient;
+  bdist->found = FALSE;
+
+  bezier_draw_curve_for_distance (bezier_sel,bdist);
+  ret = bdist->found;
+
+  g_free(bdist);
+  return (ret);
 }

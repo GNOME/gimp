@@ -1,3 +1,31 @@
+Mon Apr  5 23:24:30 BST 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+	
+	* app/bezier_select.c 
+	* app/bezier_selectP.h
+	* app/paths_cmds.c 
+	* app/pathsP.h 
+	* app/paths_dialog.c 
+	* app/xcf.c
+	* tools/pdbgen/pdb/paths.pdb
+
+	New PDB functions. 
+	  gimp_path_get_point_at_dist (gets the x,y of a point a given distance 
+	                          along the curve & the normal at the point).
+	  gimp_path_get_tattoo 
+	  gimp_get_path_by_tattoo
+
+
+       	Paths now have tattoos (similar to the layer and image tattoos).
+
+	* app/move.c 
+	* app/scroll.c 
+
+	Try to fix the problem where mouse events from the rulers get
+	mixed up with those from the canvas causing guides & image dragging
+	to "jump" around when the mouse enters the ruler areas.
+
 Mon Apr  5 23:59:37 MEST 1999 Sven Neumann <sven@gimp.org>
 
 	* app/color_balance.c: Color-balance didn't work when used

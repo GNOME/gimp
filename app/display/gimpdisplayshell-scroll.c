@@ -85,6 +85,11 @@ void
 grab_and_scroll (GDisplay       *gdisp,
 		 GdkEventMotion *mevent)
 {
+  if(mevent && mevent->window != gdisp->canvas->window)
+    {
+      return;
+    }
+
   scroll_display (gdisp, (startx - mevent->x - gdisp->offset_x),
 		  (starty - mevent->y - gdisp->offset_y));
 }

@@ -102,6 +102,8 @@ typedef struct {
   PATHP   bzp;
 } PATHWIDGET, *PATHWIDGETP;
 
+static gchar * unique_name(gchar *);
+
 static gint path_widget_preview_events (GtkWidget *, GdkEvent *);
 static void paths_dialog_realized      (GtkWidget *widget);
 static void paths_select_row           (GtkWidget *widget,gint row,gint column,GdkEventButton *event,gpointer data);
@@ -386,17 +388,22 @@ path_free(gpointer data,gpointer user_data)
 }
 
 static PATHP
-bzpath_dialog_new(gint name_seed, gpointer udata)
+path_dialog_new(GimpImage *gimage,gint name_seed, gpointer udata)
 {
-  PATHP bzp = g_new0(PATH,1);
-
+  PATHP    bzp;
   GString *s = g_string_new (NULL);
+  gchar   *suniq;
 
   g_string_sprintf (s, "path %d",name_seed);
-
-  bzp->pathtype = BEZIER;
-  bzp->name = s;
-  bzp->path_details = (GSList *)udata; /* If called via button/menu this will be NULL */
+  suniq = unique_name(s->str);
+  if(suniq)
+    {
+      g_string_free(s,TRUE);
+      s = g_string_new(suniq);
+      g_free(suniq);
+    }
+  bzp = path_new(gimage,BEZIER,(GSList *)udata,0,0,0,0,s->str);
+  g_string_free(s,TRUE);
   return bzp;
 }
 
@@ -493,7 +500,7 @@ unique_name(gchar *cstr)
 }
 
 static PATHP
-path_copy(PATHP p)
+path_copy(GimpImage *gimage,PATHP p)
 {
   PATHP p_copy = g_new0(PATH,1);
   gchar *ext;
@@ -505,7 +512,7 @@ path_copy(PATHP p)
   p_copy->state = p->state;
   p_copy->pathtype = p->pathtype;
   p_copy->path_details = pathpoints_copy(p->path_details);
-
+  p_copy->tattoo = gimp_image_get_new_tattoo(gimage);
   return p_copy;
 }
 
@@ -1148,7 +1155,7 @@ static PATHP
 paths_dialog_new_path(PATHIMAGELISTP *plp,gpointer points,GimpImage *gimage,gint pos)
 {
   static gint nseed = 0;
-  PATHP bzp = bzpath_dialog_new(nseed++,points);
+  PATHP bzp = path_dialog_new(gimage,nseed++,points);
   *plp = path_add_to_current(*plp,bzp,gimage,pos);
   return(bzp);
 }
@@ -1239,7 +1246,7 @@ paths_dialog_dup_path_callback (GtkWidget * widget, gpointer udata)
   bzp = (PATHP)g_slist_nth_data(plp->bz_paths,row); 
 
   /* Insert at the current position */
-  bzp = path_copy(bzp);
+  bzp = path_copy(paths_dialog->gimage,bzp);
   plp->bz_paths = g_slist_insert(plp->bz_paths,bzp,row);
   paths_add_path(bzp,row);
 
@@ -1277,7 +1284,7 @@ paths_dialog_path_to_sel_callback (GtkWidget * widget, gpointer udata)
 
   if(!bzp->closed)
     {
-      PATHP bzpcopy = path_copy(bzp);
+      PATHP bzpcopy = path_copy(paths_dialog->gimage,bzp);
       /* Close it */
       path_close(bzpcopy);
       bezier_sel = path_to_beziersel(bzpcopy);
@@ -1449,8 +1456,9 @@ paths_replaced_current(PATHIMAGELISTP plp,BezierSelect *bezier_sel)
 
 static void 
 paths_draw_segment_points(BezierSelect *bezier_sel, 
-			  GdkPoint *pnt, 
-			  int npoints)
+			  GdkPoint     *pnt, 
+			  int           npoints,
+			  gpointer      udata)
 {
   /* 
    * hopefully the image points are already in image space co-ords.
@@ -1520,7 +1528,7 @@ paths_update_preview(BezierSelect *bezier_sel)
       clear_pixmap_preview(pwidget);
 
       /* update .. */
-      bezier_draw_curve (bezier_sel,paths_draw_segment_points,IMAGE_COORDS);
+      bezier_draw_curve (bezier_sel,paths_draw_segment_points,IMAGE_COORDS,NULL);
 
       /* update the pixmap */
 
@@ -1661,12 +1669,14 @@ pathpoint_new(gint type,
 }
 
 PATHP
-path_new(PathType ptype,
-	   GSList * path_details,
-	   gint     closed,
-	   gint     state,
-	   gint     locked,
-	   gchar  * name)
+path_new(GimpImage *gimage,
+	 PathType   ptype,
+	 GSList    *path_details,
+	 gint       closed,
+	 gint       state,
+	 gint       locked,
+	 gint       tattoo,  
+	 gchar     *name)
 {
   PATHP path = g_new0(PATH,1);
 
@@ -1676,6 +1686,10 @@ path_new(PathType ptype,
   path->locked = locked;
   path->name = g_string_new(name);
   path->pathtype = ptype;
+  if(tattoo)
+    path->tattoo = tattoo;
+  else
+    path->tattoo = gimp_image_get_new_tattoo(gimage);
 
   return path;
 }
@@ -1789,11 +1803,13 @@ static void file_ok_callback(GtkWidget * widget, gpointer client_data)
 	      pts_list = g_slist_append(pts_list,bpt);
 	    }
 
-	  bzpath = path_new(BEZIER,
+	  bzpath = path_new(paths_dialog->gimage,
+			    BEZIER,
 			    pts_list,
 			    closed,
 			    state,
 			    0, /* Can't be locked */
+			    0, /* No tattoo assigned */
 			    txt);
 	  
 	  g_free(txtstart);
@@ -2027,11 +2043,13 @@ paths_set_path_points(GimpImage * gimage,
     {
       GSList *bzp_list = NULL;
       /* No paths at all.... create one & rename */
-      bzpath = path_new(ptype,
+      bzpath = path_new(gimage,
+			ptype,
 			pts_list,
 			pclosed,
 			(pclosed)?BEZIER_EDIT:BEZIER_ADD,/*state,*/
 			0, /* Can't be locked */
+			0, /* No tattoo assigned */
 			pname);
       bzp_list = g_slist_append(bzp_list,bzpath);
       plist = pathsList_new(gimage,0,bzp_list);
@@ -2075,11 +2093,13 @@ paths_set_path_points(GimpImage * gimage,
 	}
       else
 	{
-	  bzpath = path_new(ptype,
+	  bzpath = path_new(gimage,
+			    ptype,
 			    pts_list,
 			    pclosed,
 			    (pclosed)?BEZIER_EDIT:BEZIER_ADD,/*state,*/
 			    0, /* Can't be locked */
+			    0, /* No tattoo assigned */
 			    pname);
 
 	  path_add_to_current(plist,bzpath,gimage,-1);
@@ -2122,4 +2142,56 @@ paths_stroke(GimpImage *gimage,PathsList *pl,PATHP bzp)
   bezier_sel = path_to_beziersel(bzp);
   bezier_stroke (bezier_sel, gdisp, SUBDIVIDE, !bzp->closed);
   beziersel_free(bezier_sel);
+}
+
+gint 
+paths_distance(PATHP bzp,gdouble dist,gint *x,gint *y, gdouble *grad)
+{
+  gint ret;
+  BezierSelect * bezier_sel;
+  bezier_sel = path_to_beziersel(bzp);
+  ret = bezier_distance_along(bezier_sel,!bzp->closed,dist,x,y,grad);
+  beziersel_free(bezier_sel);
+  return(ret);
+}
+
+Tattoo
+paths_get_tattoo(PATHP p)
+{
+  if(!p)
+    {
+      g_warning(_("paths_get_tattoo: invalid path"));
+      return 0;
+    }
+
+  return (p->tattoo);
+}
+
+PATHP
+paths_get_path_by_tattoo(GimpImage *gimage,Tattoo tattoo)
+{
+  GSList        *tlist;
+  PATHIMAGELISTP plp;
+
+  if(!gimage || !tattoo)
+    return NULL;
+
+  /* Go around the list and check all tattoos. */
+
+  /* Get path structure  */
+  plp = (PATHIMAGELISTP)gimp_image_get_paths(gimage);
+
+  if(!plp)
+    return (NULL);
+
+  tlist = plp->bz_paths;
+  
+  while(tlist)
+    {
+      PATHP p = (PATHP)(tlist->data);
+      if(p->tattoo == tattoo)
+	return (p);
+      tlist = g_slist_next(tlist);
+    }
+  return (NULL);
 }

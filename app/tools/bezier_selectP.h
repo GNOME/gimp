@@ -63,17 +63,17 @@ struct _bezier_select
   GSList **scanlines;        /* used in converting a curve        */
 };
 
-typedef void (*BezierPointsFunc) (BezierSelect *, GdkPoint *, int);
+typedef void (*BezierPointsFunc) (BezierSelect *, GdkPoint *, int,gpointer);
 
 /*  Functions  */
 int   bezier_select_load                   (void *, BezierPoint *, int, int);
-void  bezier_draw_curve                    (BezierSelect *,BezierPointsFunc, int);
+void  bezier_draw_curve                    (BezierSelect *,BezierPointsFunc, int,gpointer);
 void  bezier_select_reset                  (BezierSelect *);
 void  bezier_add_point                     (BezierSelect *, int, int, int);
 void  bezier_paste_bezierselect_to_current (GDisplay *,BezierSelect *);
 void  bezier_select_mode                   (gint);
 void  bezier_stroke 		           (BezierSelect *, GDisplay *, int, int);
 void  bezier_to_selection                  (BezierSelect *, GDisplay *);
-
+gint  bezier_distance_along                (BezierSelect *, gint, gdouble,gint *,gint *,gdouble *);
 
 #endif /* __BEZIER_SELECTP_H__ */

@@ -34,6 +34,7 @@ typedef struct {
   gboolean       closed;
   guint32        state;
   guint32        locked;  /* Only bottom bit used */
+  Tattoo         tattoo;  /* The tattoo for the path */
   GString      * name;
 }  PATH, *PATHP;
 
@@ -58,11 +59,14 @@ typedef enum {
 } PathType;
 
 PATHPOINTP    pathpoint_new(gint,gdouble,gdouble);
-PATHP         path_new(PathType,GSList *,gint,gint,gint,gchar *);
+PATHP         path_new(GimpImage *,PathType,GSList *,gint,gint,gint,gint,gchar *);
 PathsList   * pathsList_new(GimpImage *,gint,GSList *);
 gboolean      paths_set_path(GimpImage *,gchar *);
 gboolean      paths_set_path_points(GimpImage *,gchar *,gint,gint,gint,gdouble *);
 void          paths_stroke(GimpImage *,PathsList *,PATHP);
+gint          paths_distance(PATHP ,gdouble ,gint *,gint *, gdouble *);
+Tattoo        paths_get_tattoo(PATHP);
+PATHP         paths_get_path_by_tattoo(GimpImage *,Tattoo);
 
 
 #endif  /*  __PATHSP_H__  */

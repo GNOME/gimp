@@ -262,6 +262,12 @@ move_tool_motion (Tool           *tool,
   if (private->guide)
     {
       move_draw_guide (gdisp, private->guide);
+
+      if(mevent && mevent->window != gdisp->canvas->window)
+	{
+	  private->guide->position = -1;
+	  return;
+	}
       
       if (mevent)
 	{
