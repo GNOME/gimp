@@ -1404,6 +1404,7 @@ message_box (gchar       *message,
   gtk_widget_show (vbox);
 
   label = gtk_label_new (message);
+  gtk_label_set_justify (label, GTK_JUSTIFY_LEFT);
   gtk_box_pack_start (GTK_BOX (vbox), label, TRUE, FALSE, 0);
   gtk_widget_show (label);
 

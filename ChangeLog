@@ -1,3 +1,8 @@
+Tue Aug  3 18:13:47 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+        * app/interface.c: Display multi-line messages left-justified
+        instead of centered.
+
 Tue Aug  3 02:13:57 1999  Jay Cox  (jaycox@earthlink.net)
 
 	* app/paint_core.c: Improvements to the transform_core_do and cubic
