@@ -294,7 +294,6 @@ plug-ins/ifscompose/Makefile
 plug-ins/iwarp/Makefile
 plug-ins/hrz/Makefile
 plug-ins/hot/Makefile
-plug-ins/holes/Makefile
 plug-ins/gz/Makefile
 plug-ins/header/Makefile
 plug-ins/grid/Makefile
@@ -338,12 +337,6 @@ plug-ins/png/Makefile
 plug-ins/tiff/Makefile
 plug-ins/xd/Makefile
 plug-ins/bmp/Makefile
-plug-ins/aa/Makefile
-plug-ins/gag-0.3/Makefile
-plug-ins/Anamorphose/Makefile
-plug-ins/CentralReflection/Makefile
-plug-ins/Curtain/Makefile
-plug-ins/Encrypt_Decrypt/Makefile
 plug-ins/MapObject/Makefile
 plug-ins/megawidget/Makefile
 plug-ins/libgck/Makefile
@@ -355,9 +348,7 @@ plug-ins/flame/Makefile
 plug-ins/gimptcl/Makefile
 plug-ins/gimptcl/scripts/Makefile
 plug-ins/fuse/Makefile
-plug-ins/rcm/Makefile
 plug-ins/struc/Makefile
-plug-ins/twist/Makefile
 plug-ins/user_filter/Makefile
 plug-ins/zealouscrop/Makefile
 plug-ins/xwd/Makefile
@@ -412,9 +403,7 @@ plug-ins/colorify/Makefile
 plug-ins/papertile/Makefile
 plug-ins/illusion/Makefile
 plug-ins/fractaltrace/Makefile
-plug-ins/DigitalSignature/Makefile
 plug-ins/FractalExplorer/Makefile
-plug-ins/stegano/Makefile
 plug-ins/fs/Makefile
 plug-ins/flarefx/Makefile
 app/Makefile

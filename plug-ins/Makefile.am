@@ -5,18 +5,12 @@ SUBDIRS = 			\
 	libgck 			\
 	MapObject		\
 	AlienMap		\
-	Anamorphose		\
-	CentralReflection	\
-	Curtain			\
-	Encrypt_Decrypt		\
-	DigitalSignature	\
 	dbbrowser		\
 	fuse			\
 	gflare			\
 	@GIMPTCL@		\
 	script-fu		\
 	struc			\
-	twist			\
 	@TIFF@			\
 	@JPEG@			\
 	@PNG@			\
@@ -72,7 +66,6 @@ SUBDIRS = 			\
 	grid			\
 	gz			\
 	header			\
-	holes			\
 	hot			\
 	hrz			\
 	ifscompose		\
@@ -116,7 +109,6 @@ SUBDIRS = 			\
 	sobel			\
 	sparkle			\
 	spread			\
-	stegano			\
 	stereogram		\
 	sunras			\
 	tga			\
