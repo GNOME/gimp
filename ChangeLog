@@ -1,5 +1,10 @@
 2001-10-10  Sven Neumann  <sven@gimp.org>
 
+	* app/docindex.c: rewrote parser to make it more robust against a 
+	corrupt ideas file (bug #61894).
+
+2001-10-10  Sven Neumann  <sven@gimp.org>
+
 	* app/blend.c
 	* app/by_color_select.c
 	* app/channel_ops.c

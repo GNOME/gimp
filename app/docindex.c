@@ -84,9 +84,6 @@ static void      idea_hide_callback                (GtkWidget   *widget,
 static void      load_idea_manager                 (IdeaManager *ideas);
 static void      save_idea_manager                 (IdeaManager *ideas);
 
-static void      clear_white                       (FILE        *fp);
-static gint      getinteger                        (FILE        *fp);
-
 
 /*  local variables  */
 
@@ -195,17 +192,15 @@ document_index_parse_init (void)
 gchar *
 document_index_parse_line (FILE * fp)
 {
-  gint   length;
-  gchar *filename;
+  gint  n, len;
+  gchar buf[4096];
 
-  length = getinteger (fp);
-
-  if (!feof (fp) && !ferror (fp))
+  while (fgets (buf, sizeof (buf), fp))
     {
-      filename = g_malloc0 (length + 1);
-      filename[fread (filename, 1, length, fp)] = 0;
-      clear_white (fp);
-      return filename;
+      len = n = 0;
+      sscanf (buf, "%d %n", &len, &n);
+      if (len > 0 && n < strlen (buf))
+        return g_strndup (buf + n, len);
     }
 
   return NULL;
@@ -236,8 +231,6 @@ load_idea_manager (IdeaManager *ideas)
       if (fp)
 	{
 	  gchar *title;
-
-	  clear_white (fp);
 
 	  while ((title = document_index_parse_line (fp)))
 	    {
@@ -512,54 +505,6 @@ open_or_raise (gchar    *file_name,
     {
       file_open (file_name, file_name);
     }
-}
-
-
-/*  file parsing functions  */
-
-static gint
-getinteger (FILE *fp)
-{
-  gchar    nextchar;
-  gint     response = 0;
-  gboolean negative = FALSE;
-
-  while (isspace (nextchar = fgetc (fp)))
-    /* empty statement */ ;
-
-  if (nextchar == '-')
-    {
-      negative = TRUE;
-      while (isspace (nextchar = fgetc (fp)))
-	/* empty statement */ ;
-    }
-
-  for (; '0' <= nextchar && '9' >= nextchar; nextchar = fgetc (fp))
-    {
-      response *= 10;
-      response += nextchar - '0';
-    }
-  for (; isspace (nextchar); nextchar = fgetc (fp))
-    /* empty statement */ ;
-
-  if (!feof(fp))
-    ungetc (nextchar, fp);
-  if (negative)
-    response = -response;
-
-  return response;
-}
-
-static void
-clear_white (FILE *fp)
-{
-  gint nextchar;
-
-  while (isspace (nextchar = fgetc (fp)))
-    /* empty statement */ ;
-
-  if (!feof(fp))
-    ungetc (nextchar, fp);
 }
 
 
