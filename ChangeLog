@@ -1,3 +1,8 @@
+2001-06-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/burn-in-anim.scm: added Burn-In script
+	written by Roland Berger <roland@fuchur.leute.server.de>.
+
 2001-06-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpmath/gimpmath.h: do not include math.h conditionally.

@@ -26,6 +26,7 @@ scriptdata_DATA = \
 	blend-anim.scm				\
 	blended-logo.scm			\
 	bovinated-logo.scm			\
+	burn-in-anim.scm			\
 	camo.scm				\
 	carve-it.scm				\
 	carved-logo.scm				\
