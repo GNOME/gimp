@@ -31,67 +31,6 @@ void  paint_funcs_setup     (void);
 void  paint_funcs_free      (void);
 
 
-/*  Paint functions  */
-
-void  color_pixels          (unsigned char *, unsigned char *,
-			     int, int);
-
-void  blend_pixels          (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int);
-
-void  shade_pixels          (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int);
-
-void  extract_alpha_pixels  (unsigned char *, unsigned char *,
-			     unsigned char *, int, int);
-
-void  darken_pixels         (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int);
-
-void  lighten_pixels        (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int);
-
-void  hsv_only_pixels       (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int, int);
-
-void  color_only_pixels     (unsigned char *, unsigned char *,
-	 		     unsigned char *, int, int, int, int, int, int);
-
-void  multiply_pixels       (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
-
-void  screen_pixels         (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
-
-void  overlay_pixels        (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
-
-void  add_pixels            (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
-
-void  subtract_pixels       (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
-
-void  difference_pixels     (unsigned char *, unsigned char *,
-			     unsigned char *, int, int, int, int, int);
-
-void  dissolve_pixels       (unsigned char *, unsigned char *, int, int,
-			     int, int, int, int, int);
-
-void  swap_pixels           (unsigned char *, unsigned char *, int);
-
-void  scale_pixels          (unsigned char *, unsigned char *,
-			     int, int);
-
-void  add_alpha_pixels      (unsigned char *, unsigned char *,
-			     int, int);
-
-void  flatten_pixels        (unsigned char *, unsigned char *,
-			     unsigned char *, int, int);
-
-void  gray_to_rgb_pixels    (unsigned char *, unsigned char *,
-			     int, int);
-
 
 /*  apply the mask data to the alpha channel of the pixel data  */
 void  apply_mask_to_alpha_channel         (unsigned char *, unsigned char *,
@@ -271,27 +210,7 @@ void  extract_from_indexed_pixels         (unsigned char *, unsigned char *,
 					   unsigned char *, unsigned char *,
 					   unsigned char *, int, int, int, int);
 
-#if 0
-/*  variable source to RGB color mapping
- *  src_type == 0  (RGB)
- *  src_type == 1  (GRAY)
- *  src_type == 2  (INDEXED)
- */
-void
-map_to_color                              (int, unsigned char *,
-					   unsigned char *, unsigned char *);
-
-
-/*  RGB to index mapping functions...
- *
- *  Hash table lookup speeds up the standard
- *  least squares method
- */
-int    map_rgb_to_indexed                 (unsigned char *, int, int,
-					   int, int, int);
-
-#endif
-/*  Region functions  */
+/*  Area functions  */
 void  color_region                        (PixelRegion *, unsigned char *);
 
 
@@ -411,12 +330,6 @@ void  combine_regions_replace             (PixelRegion *, PixelRegion *,
 					   unsigned char *,
 					   int, int *, int);
 
-
-/*  Color conversion routines  */
-void  rgb_to_hsv            (int *, int *, int *);
-void  hsv_to_rgb            (int *, int *, int *);
-void  rgb_to_hls            (int *, int *, int *);
-void  hls_to_rgb            (int *, int *, int *);
 
 /* Opacities */
 #define TRANSPARENT_OPACITY        0

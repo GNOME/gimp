@@ -143,7 +143,7 @@ tag_set_alpha (
 
 
 guint
-tag_bytes (
+tag_num_channels (
            Tag x
            )
 {
@@ -175,6 +175,17 @@ tag_bytes (
       return 0;
     }
 
+  return y;
+}
+
+guint
+tag_bytes (
+           Tag x
+           )
+{
+  int y;
+  
+  y = tag_num_channels (x);
   switch (tag_precision (x))
     {
     case PRECISION_U8:

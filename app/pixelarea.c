@@ -104,6 +104,58 @@ pixelarea_getdata  (
                    pa->w);
 }
 
+/* copies the data from the PixelArea to the PixelRow */
+void
+pixelarea_copy_row ( 
+		    PixelArea *pa,
+		    PixelRow *pr,
+		    int x,
+		    int y,
+                    int length, 
+                    int subsample
+		   )
+{
+}
+
+
+/* copies the data from the PixelArea to the PixelRow col*/
+void
+pixelarea_copy_col ( 
+		    PixelArea *pa,
+		    PixelRow *col,
+		    int x,
+		    int y,
+                    int length, 
+                    int subsample
+		   )
+{
+}
+
+
+/* copies the data from the PixelRow to the PixelArea */
+void
+pixelarea_write_row ( 
+		    PixelArea *pa,
+		    PixelRow *pr,
+		    int x,
+		    int y,
+                    int length 
+		   )
+{
+}
+
+
+/* copies the data from the PixelRow col to the PixelRow */
+void
+pixelarea_write_col ( 
+		    PixelArea *pa,
+		    PixelRow *row,
+		    int x,
+		    int y,
+                    int length 
+		   )
+{
+}
 
 Paint *
 pixelarea_convert_paint (
@@ -158,6 +210,24 @@ pixelarea_height  (
                    )
 {
   return pa->h;
+}
+
+
+int 
+pixelarea_x  (
+                  PixelArea * pa
+                  )
+{
+  return pa->x;
+}
+
+
+int 
+pixelarea_y  (
+                  PixelArea * pa
+                  )
+{
+  return pa->y;
 }
 
 

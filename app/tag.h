@@ -72,7 +72,7 @@ Tag       tag_set_alpha         (Tag, Alpha);
 
 guint     tag_bytes             (Tag);
 guint     tag_equal             (Tag, Tag);
-
+guint     tag_num_channels      (Tag);
 guchar *  tag_string_precision  (Precision);
 guchar *  tag_string_format     (Format);
 guchar *  tag_string_alpha      (Alpha);

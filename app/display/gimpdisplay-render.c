@@ -23,8 +23,10 @@
 #include "gimprc.h"
 #include "gximage.h"
 #include "image_render.h"
+#include "lookup_tables.h"
 #include "pixel_region.h"
 #include "scale.h"
+#include "tag.h"
 
 
 typedef struct _RenderInfo  RenderInfo;
@@ -44,6 +46,7 @@ struct _RenderInfo
   int scaledest;
   int src_x, src_y;
   int src_bpp;
+  int src_precision;
   int dest_bpp;
   int dest_bpl;
   int dest_width;
@@ -172,31 +175,64 @@ render_free (void)
 }
 
 /*  Render Image functions  */
+static void    render_image_indexed_u8_1   (RenderInfo *info);
+static void    render_image_indexed_u8_2   (RenderInfo *info);
+static void    render_image_indexed_u8_3   (RenderInfo *info);
+static void    render_image_indexed_u8_4   (RenderInfo *info);
+static void    render_image_indexed_a_u8_1 (RenderInfo *info);
+static void    render_image_indexed_a_u8_2 (RenderInfo *info);
+static void    render_image_indexed_a_u8_3 (RenderInfo *info);
+static void    render_image_indexed_a_u8_4 (RenderInfo *info);
+static void    render_image_gray_u8_1      (RenderInfo *info);
+static void    render_image_gray_u8_2      (RenderInfo *info);
+static void    render_image_gray_u8_3      (RenderInfo *info);
+static void    render_image_gray_u8_4      (RenderInfo *info);
+static void    render_image_gray_a_u8_1    (RenderInfo *info);
+static void    render_image_gray_a_u8_2    (RenderInfo *info);
+static void    render_image_gray_a_u8_3    (RenderInfo *info);
+static void    render_image_gray_a_u8_4    (RenderInfo *info);
+static void    render_image_rgb_u8_1       (RenderInfo *info);
+static void    render_image_rgb_u8_2       (RenderInfo *info);
+static void    render_image_rgb_u8_3       (RenderInfo *info);
+static void    render_image_rgb_u8_4       (RenderInfo *info);
+static void    render_image_rgb_a_u8_1     (RenderInfo *info);
+static void    render_image_rgb_a_u8_2     (RenderInfo *info);
+static void    render_image_rgb_a_u8_3     (RenderInfo *info);
+static void    render_image_rgb_a_u8_4     (RenderInfo *info);
 
-static void    render_image_indexed_1   (RenderInfo *info);
-static void    render_image_indexed_2   (RenderInfo *info);
-static void    render_image_indexed_3   (RenderInfo *info);
-static void    render_image_indexed_4   (RenderInfo *info);
-static void    render_image_indexed_a_1 (RenderInfo *info);
-static void    render_image_indexed_a_2 (RenderInfo *info);
-static void    render_image_indexed_a_3 (RenderInfo *info);
-static void    render_image_indexed_a_4 (RenderInfo *info);
-static void    render_image_gray_1      (RenderInfo *info);
-static void    render_image_gray_2      (RenderInfo *info);
-static void    render_image_gray_3      (RenderInfo *info);
-static void    render_image_gray_4      (RenderInfo *info);
-static void    render_image_gray_a_1    (RenderInfo *info);
-static void    render_image_gray_a_2    (RenderInfo *info);
-static void    render_image_gray_a_3    (RenderInfo *info);
-static void    render_image_gray_a_4    (RenderInfo *info);
-static void    render_image_rgb_1       (RenderInfo *info);
-static void    render_image_rgb_2       (RenderInfo *info);
-static void    render_image_rgb_3       (RenderInfo *info);
-static void    render_image_rgb_4       (RenderInfo *info);
-static void    render_image_rgb_a_1     (RenderInfo *info);
-static void    render_image_rgb_a_2     (RenderInfo *info);
-static void    render_image_rgb_a_3     (RenderInfo *info);
-static void    render_image_rgb_a_4     (RenderInfo *info);
+static void    render_image_gray_u16_1      (RenderInfo *info);
+static void    render_image_gray_u16_2      (RenderInfo *info);
+static void    render_image_gray_u16_3      (RenderInfo *info);
+static void    render_image_gray_u16_4      (RenderInfo *info);
+static void    render_image_gray_a_u16_1    (RenderInfo *info);
+static void    render_image_gray_a_u16_2    (RenderInfo *info);
+static void    render_image_gray_a_u16_3    (RenderInfo *info);
+static void    render_image_gray_a_u16_4    (RenderInfo *info);
+static void    render_image_rgb_u16_1       (RenderInfo *info);
+static void    render_image_rgb_u16_2       (RenderInfo *info);
+static void    render_image_rgb_u16_3       (RenderInfo *info);
+static void    render_image_rgb_u16_4       (RenderInfo *info);
+static void    render_image_rgb_a_u16_1     (RenderInfo *info);
+static void    render_image_rgb_a_u16_2     (RenderInfo *info);
+static void    render_image_rgb_a_u16_3     (RenderInfo *info);
+static void    render_image_rgb_a_u16_4     (RenderInfo *info);
+
+static void    render_image_gray_float_1      (RenderInfo *info);
+static void    render_image_gray_float_2      (RenderInfo *info);
+static void    render_image_gray_float_3      (RenderInfo *info);
+static void    render_image_gray_float_4      (RenderInfo *info);
+static void    render_image_gray_a_float_1    (RenderInfo *info);
+static void    render_image_gray_a_float_2    (RenderInfo *info);
+static void    render_image_gray_a_float_3    (RenderInfo *info);
+static void    render_image_gray_a_float_4    (RenderInfo *info);
+static void    render_image_rgb_float_1       (RenderInfo *info);
+static void    render_image_rgb_float_2       (RenderInfo *info);
+static void    render_image_rgb_float_3       (RenderInfo *info);
+static void    render_image_rgb_float_4       (RenderInfo *info);
+static void    render_image_rgb_a_float_1     (RenderInfo *info);
+static void    render_image_rgb_a_float_2     (RenderInfo *info);
+static void    render_image_rgb_a_float_3     (RenderInfo *info);
+static void    render_image_rgb_a_float_4     (RenderInfo *info);
 
 static void    render_image_init_info          (RenderInfo   *info,
 						GDisplay     *gdisp,
@@ -213,46 +249,101 @@ static guchar* render_image_accelerate_scaling (int           width,
 static guchar* render_image_tile_fault         (RenderInfo   *info);
 
 
-static RenderFunc render_funcs[6][4] =
+static RenderFunc render_funcs_u8[6][4] =
 {
   {
-    render_image_rgb_1,
-    render_image_rgb_2,
-    render_image_rgb_3,
-    render_image_rgb_4,
+    render_image_rgb_u8_1,
+    render_image_rgb_u8_2,
+    render_image_rgb_u8_3,
+    render_image_rgb_u8_4,
   },
   {
-    render_image_rgb_a_1,
-    render_image_rgb_a_2,
-    render_image_rgb_a_3,
-    render_image_rgb_a_4,
+    render_image_rgb_a_u8_1,
+    render_image_rgb_a_u8_2,
+    render_image_rgb_a_u8_3,
+    render_image_rgb_a_u8_4,
   },
   {
-    render_image_gray_1,
-    render_image_gray_2,
-    render_image_gray_3,
-    render_image_gray_4,
+    render_image_gray_u8_1,
+    render_image_gray_u8_2,
+    render_image_gray_u8_3,
+    render_image_gray_u8_4,
   },
   {
-    render_image_gray_a_1,
-    render_image_gray_a_2,
-    render_image_gray_a_3,
-    render_image_gray_a_4,
+    render_image_gray_a_u8_1,
+    render_image_gray_a_u8_2,
+    render_image_gray_a_u8_3,
+    render_image_gray_a_u8_4,
   },
   {
-    render_image_indexed_1,
-    render_image_indexed_2,
-    render_image_indexed_3,
-    render_image_indexed_4,
+    render_image_indexed_u8_1,
+    render_image_indexed_u8_2,
+    render_image_indexed_u8_3,
+    render_image_indexed_u8_4,
   },
   {
-    render_image_indexed_a_1,
-    render_image_indexed_a_2,
-    render_image_indexed_a_3,
-    render_image_indexed_a_4,
+    render_image_indexed_a_u8_1,
+    render_image_indexed_a_u8_2,
+    render_image_indexed_a_u8_3,
+    render_image_indexed_a_u8_4,
   },
 };
 
+static RenderFunc render_funcs_u16[4][4] =
+{
+  {
+    render_image_rgb_u16_1,
+    render_image_rgb_u16_2,
+    render_image_rgb_u16_3,
+    render_image_rgb_u16_4,
+  },
+  {
+    render_image_rgb_a_u16_1,
+    render_image_rgb_a_u16_2,
+    render_image_rgb_a_u16_3,
+    render_image_rgb_a_u16_4,
+  },
+  {
+    render_image_gray_u16_1,
+    render_image_gray_u16_2,
+    render_image_gray_u16_3,
+    render_image_gray_u16_4,
+  },
+  {
+    render_image_gray_a_u16_1,
+    render_image_gray_a_u16_2,
+    render_image_gray_a_u16_3,
+    render_image_gray_a_u16_4,
+  },
+};
+
+static RenderFunc render_funcs_float[4][4] =
+{
+  {
+    render_image_rgb_float_1,
+    render_image_rgb_float_2,
+    render_image_rgb_float_3,
+    render_image_rgb_float_4,
+  },
+  {
+    render_image_rgb_a_float_1,
+    render_image_rgb_a_float_2,
+    render_image_rgb_a_float_3,
+    render_image_rgb_a_float_4,
+  },
+  {
+    render_image_gray_float_1,
+    render_image_gray_float_2,
+    render_image_gray_float_3,
+    render_image_gray_float_4,
+  },
+  {
+    render_image_gray_a_float_1,
+    render_image_gray_a_float_2,
+    render_image_gray_a_float_3,
+    render_image_gray_a_float_4,
+  },
+};
 
 /*****************************************************************/
 /*  This function is the core of the display--it offsets and     */
@@ -287,7 +378,20 @@ render_image (GDisplay *gdisp,
       return;
     }
 
-  (* render_funcs[image_type][info.dest_bpp-1]) (&info);
+  switch( info.src_precision )
+    {
+      case PRECISION_U8:
+        (* render_funcs_u8[image_type][info.dest_bpp-1]) (&info);
+        break;
+      case PRECISION_U16:
+        (* render_funcs_u16[image_type][info.dest_bpp-1]) (&info);
+  	break;
+       case PRECISION_FLOAT:
+        (* render_funcs_float[image_type][info.dest_bpp-1]) (&info);
+  	break;
+       case PRECISION_NONE:
+        break;
+    } 
 }
 
 
@@ -297,7 +401,7 @@ render_image (GDisplay *gdisp,
 /*************************/
 
 static void
-render_image_indexed_1 (RenderInfo *info)
+render_image_indexed_u8_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -355,7 +459,7 @@ render_image_indexed_1 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_2 (RenderInfo *info)
+render_image_indexed_u8_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -428,7 +532,7 @@ render_image_indexed_2 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_3 (RenderInfo *info)
+render_image_indexed_u8_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -503,7 +607,7 @@ render_image_indexed_3 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_4 (RenderInfo *info)
+render_image_indexed_u8_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -579,7 +683,7 @@ render_image_indexed_4 (RenderInfo *info)
 
 
 static void
-render_image_indexed_a_1 (RenderInfo *info)
+render_image_indexed_a_u8_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -658,7 +762,7 @@ render_image_indexed_a_1 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_a_2 (RenderInfo *info)
+render_image_indexed_a_u8_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -774,7 +878,7 @@ render_image_indexed_a_2 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_a_3 (RenderInfo *info)
+render_image_indexed_a_u8_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -892,7 +996,7 @@ render_image_indexed_a_3 (RenderInfo *info)
 }
 
 static void
-render_image_indexed_a_4 (RenderInfo *info)
+render_image_indexed_a_u8_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1011,7 +1115,7 @@ render_image_indexed_a_4 (RenderInfo *info)
 
 
 static void
-render_image_gray_1 (RenderInfo *info)
+render_image_gray_u8_1 (RenderInfo *info)
 {
   GtkDitherInfo gray;
   GtkDitherInfo *dither_gray;
@@ -1054,7 +1158,7 @@ render_image_gray_1 (RenderInfo *info)
 }
 
 static void
-render_image_gray_2 (RenderInfo *info)
+render_image_gray_u8_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1123,7 +1227,7 @@ render_image_gray_2 (RenderInfo *info)
 }
 
 static void
-render_image_gray_3 (RenderInfo *info)
+render_image_gray_u8_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1194,7 +1298,7 @@ render_image_gray_3 (RenderInfo *info)
 }
 
 static void
-render_image_gray_4 (RenderInfo *info)
+render_image_gray_u8_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1266,7 +1370,7 @@ render_image_gray_4 (RenderInfo *info)
 
 
 static void
-render_image_gray_a_1 (RenderInfo *info)
+render_image_gray_a_u8_1 (RenderInfo *info)
 {
   GtkDitherInfo gray;
   GtkDitherInfo *dither_gray;
@@ -1324,7 +1428,7 @@ render_image_gray_a_1 (RenderInfo *info)
 }
 
 static void
-render_image_gray_a_2 (RenderInfo *info)
+render_image_gray_a_u8_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1415,7 +1519,7 @@ render_image_gray_a_2 (RenderInfo *info)
 }
 
 static void
-render_image_gray_a_3 (RenderInfo *info)
+render_image_gray_a_u8_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1508,7 +1612,7 @@ render_image_gray_a_3 (RenderInfo *info)
 }
 
 static void
-render_image_gray_a_4 (RenderInfo *info)
+render_image_gray_a_u8_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1602,7 +1706,7 @@ render_image_gray_a_4 (RenderInfo *info)
 
 
 static void
-render_image_rgb_1 (RenderInfo *info)
+render_image_rgb_u8_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -1657,7 +1761,7 @@ render_image_rgb_1 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_2 (RenderInfo *info)
+render_image_rgb_u8_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1726,7 +1830,7 @@ render_image_rgb_2 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_3 (RenderInfo *info)
+render_image_rgb_u8_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1797,7 +1901,7 @@ render_image_rgb_3 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_4 (RenderInfo *info)
+render_image_rgb_u8_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -1869,7 +1973,7 @@ render_image_rgb_4 (RenderInfo *info)
 
 
 static void
-render_image_rgb_a_1 (RenderInfo *info)
+render_image_rgb_a_u8_1 (RenderInfo *info)
 {
   GtkDitherInfo ra, ga, ba;
   GtkDitherInfo *dither_red;
@@ -1943,7 +2047,7 @@ render_image_rgb_a_1 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_a_2 (RenderInfo *info)
+render_image_rgb_a_u8_2 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -2053,7 +2157,7 @@ render_image_rgb_a_2 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_a_3 (RenderInfo *info)
+render_image_rgb_a_u8_3 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -2165,7 +2269,7 @@ render_image_rgb_a_3 (RenderInfo *info)
 }
 
 static void
-render_image_rgb_a_4 (RenderInfo *info)
+render_image_rgb_a_u8_4 (RenderInfo *info)
 {
   gulong *lookup_red;
   gulong *lookup_green;
@@ -2276,6 +2380,2595 @@ render_image_rgb_a_4 (RenderInfo *info)
     }
 }
 
+/*************************/
+/*  16 Bit channel data functions */
+/*************************/
+
+static void
+render_image_gray_u16_1 (RenderInfo *info)
+{
+  GtkDitherInfo gray;
+  GtkDitherInfo *dither_gray;
+  guchar **dither_matrix;
+  guchar *matrix;
+  guint16 *src;
+  guchar *dest;
+  int y, ye;
+  int x, xe;
+
+  dither_gray = gray_ordered_dither;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(guint16*)info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      for (x = info->x; x < xe; x++)
+	{
+	  gray = dither_gray[g_lookup_16_to_8[*src++]];
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = gray.c[matrix[gray.s[1]]];
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+static void
+render_image_gray_u16_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (guint16 *)info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		src += 1;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_u16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*)info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		src += 1;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_u16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]],
+				     g_lookup_16_to_8[src[GRAY_PIX]]);
+		src += 1;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_gray_a_u16_1 (RenderInfo *info)
+{
+  GtkDitherInfo gray;
+  GtkDitherInfo *dither_gray;
+  guchar **dither_matrix;
+  guchar *matrix;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  guint a;
+  int dark_light;
+  int y, ye;
+  int x, xe;
+
+  dither_gray = gray_ordered_dither;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(guint16 *) info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      for (x = info->x; x < xe; x++)
+	{
+	  a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+	  if (dark_light & 0x1)
+	    gray = dither_gray[blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])]];
+	  else
+	    gray = dither_gray[blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])]];
+	  src += 2;
+
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = gray.c[matrix[gray.s[1]]];
+
+	  if (((x + 1) & check_mod) == 0)
+	    dark_light += 1;
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+static void
+render_image_gray_a_u16_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		else
+		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		else
+		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_a_u16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		else
+		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		else
+		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_a_u16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		else
+		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		a = alpha[g_lookup_16_to_8[src[ALPHA_G_PIX]]];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		else
+		  val = blend_light_check[(a | g_lookup_16_to_8[src[GRAY_PIX]])];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_rgb_u16_1 (RenderInfo *info)
+{
+  GtkDitherInfo ra, ga, ba;
+  GtkDitherInfo *dither_red;
+  GtkDitherInfo *dither_green;
+  GtkDitherInfo *dither_blue;
+  gulong *pixels;
+  guchar **dither_matrix;
+  guchar *matrix;
+  guint16 *src;
+  guchar *dest;
+  int y, ye;
+  int x, xe;
+
+  dither_red = red_ordered_dither;
+  dither_green = green_ordered_dither;
+  dither_blue = blue_ordered_dither;
+  pixels = color_pixel_vals;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(guint16*)info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      for (x = info->x; x < xe; x++)
+	{
+	  ra = dither_red[g_lookup_16_to_8[src[RED_PIX]]];
+	  ga = dither_green[g_lookup_16_to_8[src[GREEN_PIX]]];
+	  ba = dither_blue[g_lookup_16_to_8[src[BLUE_PIX]]];
+	  src += 3;
+
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
+			    ga.c[matrix[ga.s[1]]] +
+			    ba.c[matrix[ba.s[1]]])];
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+
+static void
+render_image_rgb_u16_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (guint16 *)info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
+				     g_lookup_16_to_8[src[GREEN_PIX]],
+				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
+				     g_lookup_16_to_8[src[GREEN_PIX]],
+				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		src += 3;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_u16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
+				     g_lookup_16_to_8[src[GREEN_PIX]],
+				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
+				     g_lookup_16_to_8[src[GREEN_PIX]],
+				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		src += 3;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_u16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if ((y % info->scaledest) && !initial)
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
+				     g_lookup_16_to_8[src[GREEN_PIX]],
+				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (g_lookup_16_to_8[src[RED_PIX]],
+				     g_lookup_16_to_8[src[GREEN_PIX]],
+				     g_lookup_16_to_8[src[BLUE_PIX]]);
+		src += 3;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_rgb_a_u16_1 (RenderInfo *info)
+{
+  GtkDitherInfo ra, ga, ba;
+  GtkDitherInfo *dither_red;
+  GtkDitherInfo *dither_green;
+  GtkDitherInfo *dither_blue;
+  gulong *pixels;
+  guchar **dither_matrix;
+  guchar *matrix;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  guint a;
+  int dark_light;
+  int y, ye;
+  int x, xe;
+
+  dither_red = red_ordered_dither;
+  dither_green = green_ordered_dither;
+  dither_blue = blue_ordered_dither;
+  pixels = color_pixel_vals;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(guint16*) info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      for (x = info->x; x < xe; x++)
+	{
+	  a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+	  if (dark_light & 0x1)
+	    {
+	      ra = dither_red[blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])]];
+	      ga = dither_green[blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])]];
+	      ba = dither_blue[blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])]];
+	    }
+	  else
+	    {
+	      ra = dither_red[blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])]];
+	      ga = dither_green[blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])]];
+	      ba = dither_blue[blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])]];
+	    }
+	  src += 4;
+
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
+			    ga.c[matrix[ga.s[1]]] +
+			    ba.c[matrix[ba.s[1]]])];
+
+	  if (((x + 1) & check_mod) == 0)
+	    dark_light += 1;
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+static void
+render_image_rgb_a_u16_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_a_u16_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (guint16 *)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_a_u16_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  guint16 *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(guint16*) info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[g_lookup_16_to_8[src[ALPHA_PIX]]];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_dark_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_dark_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | g_lookup_16_to_8[src[RED_PIX]])];
+		    g = blend_light_check[(a | g_lookup_16_to_8[src[GREEN_PIX]])];
+		    b = blend_light_check[(a | g_lookup_16_to_8[src[BLUE_PIX]])];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+/*************************/
+/*  Float channel data functions */
+/*************************/
+#define FLOAT_TO_8BIT( x ) (int)( 255*(x) + .5 ) 
+
+static void
+render_image_gray_float_1 (RenderInfo *info)
+{
+  GtkDitherInfo gray;
+  GtkDitherInfo *dither_gray;
+  guchar **dither_matrix;
+  guchar *matrix;
+  gfloat *src;
+  guchar *dest;
+  int y, ye;
+  int x, xe;
+
+  dither_gray = gray_ordered_dither;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(gfloat*)info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      for (x = info->x; x < xe; x++)
+	{
+	  gray = dither_gray[ FLOAT_TO_8BIT(*src++) ];
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = gray.c[matrix[gray.s[1]]];
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+static void
+render_image_gray_float_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  gint src8bit;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (gfloat *)info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( src[GRAY_PIX] );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( src[GRAY_PIX] );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_float_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  gint src8bit;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*)info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( src[GRAY_PIX] );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( src[GRAY_PIX] );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_float_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  gint src8bit;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( src[GRAY_PIX] );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		src8bit = FLOAT_TO_8BIT( src[GRAY_PIX] );
+		val = COLOR_COMPOSE ( src8bit, src8bit, src8bit);
+		src += 1;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_gray_a_float_1 (RenderInfo *info)
+{
+  GtkDitherInfo gray;
+  GtkDitherInfo *dither_gray;
+  guchar **dither_matrix;
+  guchar *matrix;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  guint a;
+  int dark_light;
+  int y, ye;
+  int x, xe;
+
+  dither_gray = gray_ordered_dither;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(gfloat *) info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      for (x = info->x; x < xe; x++)
+	{
+	  a = alpha[ FLOAT_TO_8BIT(src[ALPHA_G_PIX]) ];
+	  if (dark_light & 0x1)
+	    gray = dither_gray[blend_dark_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))]];
+	  else
+	    gray = dither_gray[blend_light_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))]];
+	  src += 2;
+
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = gray.c[matrix[gray.s[1]]];
+
+	  if (((x + 1) & check_mod) == 0)
+	    dark_light += 1;
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+static void
+render_image_gray_a_float_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT(src[ALPHA_G_PIX]) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT(src[ALPHA_G_PIX]) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_a_float_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*) info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT(src[ALPHA_G_PIX]) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT(src[ALPHA_G_PIX]) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_gray_a_float_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT(src[ALPHA_G_PIX]) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[ FLOAT_TO_8BIT(src[ALPHA_G_PIX]) ];
+		if (dark_light & 0x1)
+		  val = blend_dark_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		else
+		  val = blend_light_check[(a | FLOAT_TO_8BIT(src[GRAY_PIX]))];
+		val = COLOR_COMPOSE (val, val, val);
+		src += 2;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_rgb_float_1 (RenderInfo *info)
+{
+  GtkDitherInfo ra, ga, ba;
+  GtkDitherInfo *dither_red;
+  GtkDitherInfo *dither_green;
+  GtkDitherInfo *dither_blue;
+  gulong *pixels;
+  guchar **dither_matrix;
+  guchar *matrix;
+  gfloat *src;
+  guchar *dest;
+  int y, ye;
+  int x, xe;
+
+  dither_red = red_ordered_dither;
+  dither_green = green_ordered_dither;
+  dither_blue = blue_ordered_dither;
+  pixels = color_pixel_vals;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(gfloat*)info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      for (x = info->x; x < xe; x++)
+	{
+	  ra = dither_red[FLOAT_TO_8BIT(src[RED_PIX])];
+	  ga = dither_green[FLOAT_TO_8BIT(src[GREEN_PIX])];
+	  ba = dither_blue[FLOAT_TO_8BIT(src[BLUE_PIX])];
+	  src += 3;
+
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
+			    ga.c[matrix[ga.s[1]]] +
+			    ba.c[matrix[ba.s[1]]])];
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+
+static void
+render_image_rgb_float_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (gfloat *)info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(src[RED_PIX]),
+				     FLOAT_TO_8BIT(src[GREEN_PIX]),
+				     FLOAT_TO_8BIT(src[BLUE_PIX]));
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(src[RED_PIX]),
+				     FLOAT_TO_8BIT(src[GREEN_PIX]),
+				     FLOAT_TO_8BIT(src[BLUE_PIX]));
+		src += 3;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_float_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(src[RED_PIX]),
+				     FLOAT_TO_8BIT(src[GREEN_PIX]),
+				     FLOAT_TO_8BIT(src[BLUE_PIX]));
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(src[RED_PIX]),
+				     FLOAT_TO_8BIT(src[GREEN_PIX]),
+				     FLOAT_TO_8BIT(src[BLUE_PIX]));
+		src += 3;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_float_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  gulong val;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if ((y % info->scaledest) && !initial)
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (gfloat *) info->src;
+	  dest = info->dest;
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(src[RED_PIX]),
+				     FLOAT_TO_8BIT(src[GREEN_PIX]),
+				     FLOAT_TO_8BIT(src[BLUE_PIX]));
+		src += 3;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+		val = COLOR_COMPOSE (FLOAT_TO_8BIT(src[RED_PIX]),
+				     FLOAT_TO_8BIT(src[GREEN_PIX]),
+				     FLOAT_TO_8BIT(src[BLUE_PIX]));
+		src += 3;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+
+static void
+render_image_rgb_a_float_1 (RenderInfo *info)
+{
+  GtkDitherInfo ra, ga, ba;
+  GtkDitherInfo *dither_red;
+  GtkDitherInfo *dither_green;
+  GtkDitherInfo *dither_blue;
+  gulong *pixels;
+  guchar **dither_matrix;
+  guchar *matrix;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  guint a;
+  int dark_light;
+  int y, ye;
+  int x, xe;
+
+  dither_red = red_ordered_dither;
+  dither_green = green_ordered_dither;
+  dither_blue = blue_ordered_dither;
+  pixels = color_pixel_vals;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      src =(gfloat*) info->src;
+      dest = info->dest;
+      dither_matrix = ordered_dither_matrix[y & 0x7];
+
+      dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      for (x = info->x; x < xe; x++)
+	{
+	  a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+	  if (dark_light & 0x1)
+	    {
+	      ra = dither_red[blend_dark_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))]];
+	      ga = dither_green[blend_dark_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))]];
+	      ba = dither_blue[blend_dark_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))]];
+	    }
+	  else
+	    {
+	      ra = dither_red[blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))]];
+	      ga = dither_green[blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))]];
+	      ba = dither_blue[blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))]];
+	    }
+	  src += 4;
+
+	  matrix = dither_matrix[x & 0x7];
+	  *dest++ = pixels[(ra.c[matrix[ra.s[1]]] +
+			    ga.c[matrix[ga.s[1]]] +
+			    ba.c[matrix[ba.s[1]]])];
+
+	  if (((x + 1) & check_mod) == 0)
+	    dark_light += 1;
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+    }
+}
+
+static void
+render_image_rgb_a_float_2 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val >> 8;
+		dest[1] = val;
+		dest += 2;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_a_float_3 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src = (gfloat *)info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val >> 16;
+		dest[1] = val >> 8;
+		dest[2] = val;
+		dest += 3;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
+
+static void
+render_image_rgb_a_float_4 (RenderInfo *info)
+{
+  gulong *lookup_red;
+  gulong *lookup_green;
+  gulong *lookup_blue;
+  gfloat *src;
+  guchar *dest;
+  guint *alpha;
+  gulong r, g, b;
+  gulong val;
+  guint a;
+  int dark_light;
+  int byte_order;
+  int y, ye;
+  int x, xe;
+  int initial;
+
+  lookup_red = g_lookup_red;
+  lookup_green = g_lookup_green;
+  lookup_blue = g_lookup_blue;
+  alpha = info->alpha;
+
+  y = info->y;
+  ye = info->y + info->h;
+  xe = info->x + info->w;
+
+  initial = TRUE;
+  byte_order = info->byte_order;
+  info->src = render_image_tile_fault (info);
+
+  for (; y < ye; y++)
+    {
+      if (!initial && (y % info->scaledest) && (y & check_mod))
+	memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+      else
+	{
+	  src =(gfloat*) info->src;
+	  dest = info->dest;
+
+	  dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+	  if (byte_order == GDK_LSB_FIRST)
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[0] = val;
+		dest[1] = val >> 8;
+		dest[2] = val >> 16;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	  else
+	    for (x = info->x; x < xe; x++)
+	      {
+	        a = alpha[FLOAT_TO_8BIT(src[ALPHA_PIX])];
+		if (dark_light & 0x1)
+		  {
+		    r = blend_dark_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_dark_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_dark_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+		else
+		  {
+		    r = blend_light_check[(a | FLOAT_TO_8BIT(src[RED_PIX]))];
+		    g = blend_light_check[(a | FLOAT_TO_8BIT(src[GREEN_PIX]))];
+		    b = blend_light_check[(a | FLOAT_TO_8BIT(src[BLUE_PIX]))];
+		  }
+
+		val = COLOR_COMPOSE (r, g, b);
+		src += 4;
+
+		dest[1] = val >> 16;
+		dest[2] = val >> 8;
+		dest[3] = val;
+		dest += 4;
+
+		if (((x + 1) & check_mod) == 0)
+		  dark_light += 1;
+	      }
+	}
+
+      info->dest += info->dest_bpl;
+
+      if (((y + 1) % info->scaledest) == 0)
+	{
+	  info->src_y += info->scalesrc;
+	  info->src = render_image_tile_fault (info);
+	}
+
+      initial = FALSE;
+    }
+}
 
 static void
 render_image_init_info (RenderInfo *info,
@@ -2423,3 +5116,4 @@ render_image_tile_fault (RenderInfo *info)
   tile_unref (tile, FALSE);
   return tile_buf;
 }
+

@@ -15,385 +15,479 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
-
 #ifndef __PAINT_FUNCS_ROW_H__
 #define __PAINT_FUNCS_ROW_H__
 
-
-/* forward declarations */
-struct _Paint;
 struct _PixelRow;
-
-
-/* pixel level functions */
-void
-color_row           (
-                     struct _PixelRow * dest,
-                     struct _Paint    * col
-                     );
+struct _Paint;
 
 void
-blend_row           (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest,
-                     struct _Paint    * blend
-                     );
+paint_funcs_randomize_row (
+			   int y
+			  );
 
-void 
-shade_row           (
-                     struct _PixelRow * src,
-                     struct _PixelRow * dest,
-                     struct _Paint    * col
-                     );
+void
+color_row (
+	      struct _PixelRow *dest_row,
+	      struct _Paint   *col
+	      );
+void
+blend_row (
+              struct _PixelRow *src1_row,
+	      struct _PixelRow *src2_row,
+	      struct _PixelRow *dest_row,
+	      struct _Paint    *blend
+              );
+void
+shade_row (
+		 struct _PixelRow *src_row,
+	         struct _PixelRow *dest_row,
+	         struct _Paint    *color,
+		 struct _Paint    *blend
+	         );
+void
+extract_alpha_row (
+		      struct _PixelRow *src_row,
+		      struct _PixelRow *mask_row,
+		      struct _PixelRow *dest_row
+		      );
 
-void 
-extract_alpha_row   (
-                     struct _PixelRow * src,
-                     struct _PixelRow * mask,
-                     struct _PixelRow * dest
-                     );
+void
+darken_row (
+	 	struct _PixelRow *src1_row,
+		struct _PixelRow *src2_row,
+		struct _PixelRow *dest_row
+	       );
+void
+lighten_row (
+		   struct _PixelRow *src1_row,
+		   struct _PixelRow *src2_row,
+                   struct _PixelRow *dest_row
+		   );
+void
+hsv_only_row (
+		    struct _PixelRow *src1_row,
+		    struct _PixelRow *src2_row,
+		    struct _PixelRow *dest_row,
+		    gint       mode
+		    );
+void
+color_only_row (
+		      struct _PixelRow *src1_row,
+		      struct _PixelRow *src2_row,
+		      struct _PixelRow *dest_row,
+		      gint       mode
+		     );
+void
+multiply_row (
+		 struct _PixelRow *src1_row,
+		 struct _PixelRow *src2_row,
+		 struct _PixelRow *dest_row
+		 );
+void
+screen_row (
+		  struct _PixelRow *src1_row,
+		  struct _PixelRow *src2_row,
+		  struct _PixelRow *dest_row
+	          );
 
-void 
-darken_row          (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+overlay_row (
+		   struct _PixelRow *src1_row,
+		   struct _PixelRow *src2_row,
+		   struct _PixelRow *dest_row
+		   );
 
-void 
-lighten_row         (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+add_row ( 
+	       struct _PixelRow *src1_row,
+	       struct _PixelRow *src2_row,
+	       struct _PixelRow *dest_row
+	      );
 
-void 
-hsv_only_row        (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest,
-                     int mode
-                     );
+void
+subtract_row (
+		    struct _PixelRow *src1_row,
+		    struct _PixelRow *src2_row,
+		    struct _PixelRow *dest_row
+		    );
 
-void 
-color_only_row      (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest,
-                     int mode
-                     );
+void
+difference_row (
+		      struct _PixelRow *src1_row,
+		      struct _PixelRow *src2_row,
+		      struct _PixelRow *dest_row
+		      );
 
-void 
-multiply_row        (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+dissolve_row (
+		    struct _PixelRow *src_row,
+		    struct _PixelRow *dest_row,
+		    gint      x,
+		    gint      y,
+		    struct _Paint    *opac
+		    );
 
-void 
-screen_row          (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+replace_row (
+		   struct _PixelRow *src1_row,
+		   struct _PixelRow *src2_row,
+		   struct _PixelRow *dest_row,
+		   struct _PixelRow *mask_row,
+		   struct _Paint    *opac,
+		   gint      *affect
+		   );
 
-void 
-overlay_row         (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+swap_row (
+                struct _PixelRow *src_row,
+	        struct _PixelRow *dest_row
+	        );
 
-void 
-add_row             (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+scale_row (
+		 struct _PixelRow *src_row,
+		 struct _PixelRow *dest_row,
+		 gfloat      scale
+		  );
 
-void 
-subtract_row        (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+add_alpha_row (
+		  struct _PixelRow *src_row,
+		  struct _PixelRow *dest_row
+		  );
 
-void 
-difference_row      (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest
-                     );
+void
+flatten_row (
+		   struct _PixelRow *src_row,
+		   struct _PixelRow *dest_row,
+ 		   struct _Paint    *background
+		  );
 
-void 
-dissolve_row        (
-                     struct _PixelRow * src,
-                     struct _PixelRow * dest,
-                     struct _Paint    * opacity,
-                     int x,
-                     int y
-                     );
+void
+multiply_alpha_row( 
+		      struct _PixelRow * src_row
+		     );
 
-void 
-replace_row         (
-                     struct _PixelRow * src1,
-                     struct _PixelRow * src2,
-                     struct _PixelRow * dest,
-                     struct _PixelRow * mask,
-                     struct _Paint    * opacity
-                     );
-
-void 
-swap_row            (
-                     struct _PixelRow * src,
-                     struct _PixelRow * dest
-                     );
-void 
-scale_row           (
-                     struct _PixelRow * src,
-                     struct _PixelRow * dest,
-                     gfloat scale
-                     );
-
-void 
-add_alpha_row       (
-                     struct _PixelRow * src,
-                     struct _PixelRow * dest
-                     );
-
-void 
-flatten_row         (
-                     struct _PixelRow * src,
-                     struct _PixelRow * dest,
-                     struct _Paint    * bgcol
-                     );
-
-void 
-apply_mask_to_alpha_row     (
-                             struct _PixelRow * src,
-                             struct _PixelRow * mask,
-                             struct _Paint    * opacity
-                             );
-
-void 
-combine_mask_and_alpha_row  (
-                             struct _PixelRow * src,
-                             struct _PixelRow * mask,
-                             struct _Paint    * opacity
-                             );
-
-void 
-copy_gray_to_inten_a_row    (
-                             struct _PixelRow * src,
-                             struct _PixelRow * dest
-                             );
-
-void 
-initial_channel_row         (
-                             struct _PixelRow * src,
-                             struct _PixelRow * dest
-                             );
-
-/* FIXME cmap */
-void 
-initial_indexed_row         (
-                             struct _PixelRow * src,
-                             struct _PixelRow * dest,
-                             unsigned char * cmap
-                             );
-
-/* FIXME cmap */
-void 
-initial_indexed_a_row       (
-                             struct _PixelRow * src,
-                             struct _PixelRow * dest,
-                             struct _PixelRow * mask,
-                             struct _Paint    * opacity,
-                             unsigned char * cmap
-                             );
-
-void 
-initial_inten_row           (
-                             struct _PixelRow * src,
-                             struct _PixelRow * dest,
-                             struct _PixelRow * mask,
-                             struct _Paint    * opacity
-                             );
-
-void 
-initial_inten_a_row         (
-                             struct _PixelRow * src,
-                             struct _PixelRow * dest,
-                             struct _PixelRow * mask,
-                             struct _Paint    * opacity
-                             );
-
-
-
-
-void 
-combine_indexed_and_indexed_row        (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity
-                                        );
-
-void 
-combine_indexed_and_indexed_a_row      (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity
-                                        );
-
-void 
-combine_indexed_a_and_indexed_a_row    (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity
-                                        );
-
-void 
-combine_inten_a_and_indexed_a_row      (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity
-                                        );
-
-void 
-combine_inten_and_inten_row            (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity
-                                        );
-
-void 
-combine_inten_and_inten_a_row          (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity
-                                        );
-
-void 
-combine_inten_a_and_inten_row          (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity,
-                                        int mode_affect
-                                        );
-
-void 
-combine_inten_a_and_inten_a_row        (
-                                        struct _PixelRow * src1,
-                                        struct _PixelRow * src2,
-                                        struct _PixelRow * dest,
-                                        struct _PixelRow * mask,
-                                        struct _Paint    * opacity,
-                                        int mode_affect
-                                        );
-
-void 
-combine_inten_a_and_channel_mask_row   (
-                                        struct _PixelRow * src,
-                                        struct _PixelRow * channel,
-                                        struct _PixelRow * dest,
-                                        struct _Paint    * col,
-                                        struct _Paint    * opacity
-                                        );
-
-void 
-combine_inten_a_and_channel_selection_row  (
-                                            struct _PixelRow * src,
-                                            struct _PixelRow * channel,
-                                            struct _PixelRow * dest,
-                                            struct _Paint    * col,
-                                            struct _Paint    * opacity
-                                            );
-
-void 
-behind_inten_row          (
-                           struct _PixelRow * src1,
-                           struct _PixelRow * src2,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * opacity
+void separate_alpha_row( 
+			    struct _PixelRow *src_row
                            );
 
-void 
-behind_indexed_row        (
-                           struct _PixelRow * src1,
-                           struct _PixelRow * src2,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * opacity
-                           );
+void
+gray_to_rgb_row (
+		       struct _PixelRow *src_row,
+		       struct _PixelRow *dest_row
+		       );
 
-void 
-replace_inten_row         (
-                           struct _PixelRow * src1,
-                           struct _PixelRow * src2,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * opacity
-                           );
+/*  apply the mask data to the alpha channel of the pixel data  */
+void
+apply_mask_to_alpha_channel_row (
+				struct _PixelRow *src_row,
+				struct _PixelRow *mask_row,
+				struct _Paint    *opac
+			       );
 
-void 
-replace_indexed_row       (
-                           struct _PixelRow * src1,
-                           struct _PixelRow * src2,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * opacity
-                           );
+/*  combine the mask data with the alpha channel of the pixel data  */
+void
+combine_mask_and_alpha_channel_row (
+				    struct _PixelRow *src_row,
+				    struct _PixelRow *mask_row,
+				    struct _Paint        *opac
+				    );
 
-void 
-erase_inten_row           (
-                           struct _PixelRow * src1,
-                           struct _PixelRow * src2,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * opacity
-                           );
+/*  copy gray pixels to intensity-alpha pixels.  This function
+ *  essentially takes a source that is only a grayscale image and
+ *  copies it to the destination, expanding to RGB if necessary and
+ *  adding an alpha channel.  (OPAQUE);
+ */
+void
+copy_gray_to_inten_a_row (
+				struct _PixelRow *src_row,
+				struct _PixelRow *dest_row
+			        );
+/*  lay down the initial pixels in the case of only one
+ *  channel being visible and no layers...In this singular
+ *  case, we want to display a grayscale image w/o transparency
+ */
+void
+initial_channel_row (
+			   struct _PixelRow *src_row,
+			   struct _PixelRow *dest_row
+			  );
 
-void 
-erase_indexed_row         (
-                           struct _PixelRow * src1,
-                           struct _PixelRow * src2,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * opacity
-                           );
+/*  lay down the initial pixels in the case of an indexed image.
+ *  This process obviously requires no composition
+ */
+void
+initial_indexed_row (
+			    struct _PixelRow *src_row,
+			    struct _PixelRow *dest_row,
+			    unsigned char *cmap
+			   );
 
-void 
-extract_from_inten_row    (
-                           struct _PixelRow * src,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * bg,
-                           int cut
-                           );
+/*  lay down the initial pixels in the case of an indexed image.
+ *  This process obviously requires no composition
+ */
+void
+initial_indexed_a_row (
+			     struct _PixelRow *src_row,
+			     struct _PixelRow *dest_row,
+			     struct _PixelRow *mask_row,
+			     unsigned char *cmap,
+			     struct _Paint    *opac
+			     );
 
-void 
-extract_from_indexed_row  (
-                           struct _PixelRow * src,
-                           struct _PixelRow * dest,
-                           struct _PixelRow * mask,
-                           struct _Paint    * bg,
-                           int cut
-                           );
+/*  lay down the initial pixels for the base layer.
+ *  This process obviously requires no composition.
+ */
+void
+initial_inten_row (
+			  struct _PixelRow *src_row,
+			  struct _PixelRow *dest_row,
+			  struct _PixelRow *mask_row,
+			  struct _Paint    *opac,
+			  gint      *affect
+		         );
 
-#endif  /*  __PAINT_FUNCS_ROW_H__  */
+/*  lay down the initial pixels for the base layer.
+ *  This process obviously requires no composition.
+ */
+void
+initial_inten_a_row (
+			    struct _PixelRow *src_row,
+			    struct _PixelRow *dest_row,
+			    struct _PixelRow *mask_row,
+			    struct _Paint    *opac,
+			    gint     *affect
+			   );
+
+/*  combine indexed images with an optional mask which
+ *  is interpreted as binary...destination is indexed...
+ */
+void
+combine_indexed_and_indexed_row (
+					struct _PixelRow *src1_row,
+					struct _PixelRow *src2_row,
+					struct _PixelRow *dest_row,
+					struct _PixelRow *mask_row,
+					struct _Paint    *opac,
+				        gint     *affect
+				       );
+
+/*  combine indexed images with indexed-alpha images
+ *  result is an indexed image
+ */
+void
+combine_indexed_and_indexed_a_row (
+					struct _PixelRow *src1_row,
+					struct _PixelRow *src2_row,
+					struct _PixelRow *dest_row,
+					struct _PixelRow *mask_row,
+					struct _Paint    *opac,
+				        gint     *affect
+				        ); 
+
+/*  combine indexed-alpha images with indexed-alpha images
+ *  result is an indexed-alpha image.  use this for painting
+ *  to an indexed floating sel
+ */
+void
+combine_indexed_a_and_indexed_a_row (
+					    struct _PixelRow *src1_row,
+					    struct _PixelRow *src2_row,
+					    struct _PixelRow *dest_row,
+					    struct _PixelRow *mask_row,
+					    struct _Paint    *opac,
+					    gint      *affect
+					   );
+
+/*  combine intensity with indexed, destination is
+ *  intensity-alpha...use this for an indexed floating sel
+ */
+void
+combine_inten_a_and_indexed_a_row (
+					  struct _PixelRow *src1_row,
+					  struct _PixelRow *src2_row,
+					  struct _PixelRow *dest_row,
+					  struct _PixelRow *mask_row,
+					  unsigned char *cmap,
+					  struct _Paint    *opac
+					 );
+
+/*  combine RGB image with RGB or GRAY with GRAY
+ *  destination is intensity-only...
+ */
+void
+combine_inten_and_inten_row (
+				    struct _PixelRow *src1_row,
+				    struct _PixelRow *src2_row,
+				    struct _PixelRow *dest_row,
+				    struct _PixelRow *mask_row,
+				    struct _Paint    *opac,
+				    gint      *affect
+				   );
+/*  combine an RGBA or GRAYA image with an RGB or GRAY image
+ *  destination is intensity-only...
+ */
+void
+combine_inten_and_inten_a_row (
+				      struct _PixelRow *src1_row,
+				      struct _PixelRow *src2_row,
+				      struct _PixelRow *dest_row,
+				      struct _PixelRow *mask_row,
+				      struct _Paint    *opac,
+				      gint      *affect
+				      );
+
+/*  combine an RGB or GRAY image with an RGBA or GRAYA image
+ *  destination is intensity-alpha...
+ */
+void
+combine_inten_a_and_inten_row (
+				      struct _PixelRow *src1_row,
+				      struct _PixelRow *src2_row,
+				      struct _PixelRow *dest_row,
+				      struct _PixelRow *mask_row,
+				      struct _Paint    *opac,
+				      gint      *affect,
+				      gint       mode_affect /* how does the combination mode affect alpha?  */
+				      );  
+
+/*  combine an RGBA or GRAYA image with an RGBA or GRAYA image
+ *  destination is of course intensity-alpha...
+ */
+void
+combine_inten_a_and_inten_a_row (
+					struct _PixelRow *src1_row,
+					struct _PixelRow *src2_row,
+					struct _PixelRow *dest_row,
+					struct _PixelRow *mask_row,
+					struct _Paint    *opac,
+					gint      *affect,
+					gint       mode_affect
+					);
+
+/*  combine a channel with intensity-alpha pixels based
+ *  on some opacity, and a channel color...
+ *  destination is intensity-alpha
+ */
+void
+combine_inten_a_and_channel_mask_row (
+					    struct _PixelRow *src_row,
+					    struct _PixelRow *channel_row,
+					    struct _PixelRow *dest_row,
+					    struct _Paint    *col,
+					    struct _Paint    *opac
+					    );
+void
+combine_inten_a_and_channel_selection_row (
+						  struct _PixelRow *src_row,
+						  struct _PixelRow *channel_row,
+						  struct _PixelRow *dest_row,
+						  struct _Paint    *col,
+						  struct _Paint    *opac
+						 );
+/*  paint "behind" the existing pixel row.
+ *  This is similar in appearance to painting on a layer below
+ *  the existing pixels.
+ */
+void
+behind_inten_row (
+			struct _PixelRow *src1_row,
+			struct _PixelRow *src2_row,
+			struct _PixelRow *dest_row,
+			struct _PixelRow *mask_row,
+			struct _Paint    *opac,
+			gint      *affect
+                        );
+/*  paint "behind" the existing pixel row (for indexed images);.
+ *  This is similar in appearance to painting on a layer below
+ *  the existing pixels.
+ */
+void
+behind_indexed_row (
+			  struct _PixelRow *src1_row,
+			  struct _PixelRow *src2_row,
+			  struct _PixelRow *dest_row,
+			  struct _PixelRow *mask_row,
+			  struct _Paint    *opac,
+			  gint     *affect
+			  );
+
+/*  replace the contents of one pixel row with the other
+ *  The operation is still bounded by mask/opacity constraints
+ */
+void
+replace_inten_row (
+			  struct _PixelRow *src1_row,
+			  struct _PixelRow *src2_row,
+			  struct _PixelRow *dest_row,
+			  struct _PixelRow *mask_row,
+			  struct _Paint    *opac,
+			  gint     *affect
+			 );
+
+/*  replace the contents of one pixel row with the other
+ *  The operation is still bounded by mask/opacity constraints
+ */
+void
+replace_indexed_row (
+			    struct _PixelRow *src1_row,
+			    struct _PixelRow *src2_row,
+			    struct _PixelRow *dest_row,
+			    struct _PixelRow *mask_row,
+			    struct _Paint    *opac,
+			    gint     *affect
+			   );
+
+/*  apply source 2 to source 1, but in a non-additive way,
+ *  multiplying alpha channels  (works for intensity);
+ */
+void
+erase_inten_row (
+			struct _PixelRow *src1_row,
+			struct _PixelRow *src2_row,
+			struct _PixelRow *dest_row,
+			struct _PixelRow *mask_row,
+			struct _Paint    *opac,
+			gint     *affect
+			);
+
+/*  apply source 2 to source 1, but in a non-additive way,
+ *  multiplying alpha channels  (works for indexed);
+ */
+void
+erase_indexed_row (
+			  struct _PixelRow *src1_row,
+			  struct _PixelRow *src2_row,
+			  struct _PixelRow *dest_row,
+			  struct _PixelRow *mask_row,
+			  struct _Paint    *opac,
+			  gint     *affect
+			 );
+
+/*  extract information from intensity pixels based on
+ *  a mask.
+ */
+void
+extract_from_inten_row (
+			      struct _PixelRow *src_row,
+			      struct _PixelRow *dest_row,
+			      struct _PixelRow *mask_row,
+			      struct _Paint    *background,
+			      gint      cut
+			      );
+
+/*  extract information from indexed pixels based on
+ *  a mask.
+ */
+void
+extract_from_indexed_row (
+				struct _PixelRow *src_row,
+				struct _PixelRow *dest_row,
+				struct _PixelRow *mask_row,
+				unsigned char   *cmap,
+				struct _Paint *background,
+				gint      cut
+				);
+#endif

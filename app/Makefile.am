@@ -12,10 +12,18 @@ gimp_SOURCES = \
 	paint.h                 \
 	canvas.c                \
 	canvas.h                \
+        lookup_tables.c         \
+        lookup_tables.h         \
 	pixelrow.c              \
 	pixelrow.h              \
 	pixelarea.c             \
 	pixelarea.h             \
+	paint_funcs_row_u8.c    \
+	paint_funcs_row_u8.h    \
+	paint_funcs_row_u16.c   \
+	paint_funcs_row_u16.h   \
+	paint_funcs_row_float.c \
+	paint_funcs_row_float.h \
 	paint_funcs_row.c       \
 	paint_funcs_row.h       \
 	paint_funcs_area.c      \

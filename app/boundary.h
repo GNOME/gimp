@@ -18,7 +18,7 @@
 #ifndef  __BOUNDARY_H__
 #define  __BOUNDARY_H__
 
-#include "paint_funcs.h"
+#include "pixel_region.h"
 
 typedef struct _BoundSeg BoundSeg;
 

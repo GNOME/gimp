@@ -98,73 +98,189 @@ unsigned char *   paint_funcs_area_get_buffer  (int);
 void              paint_funcs_area_randomize   (int);
 
 
-void  color_area              (struct _PixelArea *, struct _Paint *);
+void 
+color_area  (
+             struct _PixelArea * src,
+             struct _Paint * color
+             );
 
-void  blend_area              (struct _PixelArea *, struct _PixelArea *,
-                               struct _PixelArea *, gfloat);
+void 
+blend_area  (
+             struct _PixelArea * src1_area,
+             struct _PixelArea * src2_area,
+             struct _PixelArea * dest_area,
+             struct _Paint * blend
+            );
 
-void  shade_area              (struct _PixelArea *, struct _PixelArea *,
-                               struct _Paint *, gfloat);
+void
+shade_area  (
+             struct _PixelArea * src_area,
+             struct _PixelArea * dest_area,
+             struct _Paint * col,
+             struct _Paint * blend
+             );
 
-void  copy_area               (struct _PixelArea *, struct _PixelArea *);
+void 
+copy_area  (
+            struct _PixelArea * src_area,
+            struct _PixelArea * dest_area
+            );
 
-void  add_alpha_area          (struct _PixelArea *, struct _PixelArea *);
+void 
+add_alpha_area  (
+                 struct _PixelArea * src_area,
+                 struct _PixelArea * dest_area
+                 );
 
-void  flatten_area            (struct _PixelArea *, struct _PixelArea *,
-                               struct _Paint *);
+void 
+flatten_area  (
+               struct _PixelArea * src_area,
+               struct _PixelArea * dest_area,
+               struct _Paint * bg
+               );
 
-void  extract_alpha_area      (struct _PixelArea *, struct _PixelArea *,
-                               struct _PixelArea *);
+void 
+extract_alpha_area  (
+                     struct _PixelArea * src_area,
+                     struct _PixelArea * mask_area,
+                     struct _PixelArea * dest_area
+                     );
 
-void  extract_from_area       (struct _PixelArea *, struct _PixelArea *,
-                               struct _PixelArea *, struct _Paint *, int);
+void 
+extract_from_area  (
+                    struct _PixelArea * src_area,
+                    struct _PixelArea * dest_area,
+                    struct _PixelArea * mask_area,
+                    struct _Paint *bg,
+                    unsigned char *cmap,
+                    gint cut
+                    );
 
-void  convolve_area           (struct _PixelArea *, struct _PixelArea *,
-                               int *, int, int, int);
+void
+convolve_area (
+	 	struct _PixelArea   *src_area,
+		struct _PixelArea   *dest_area,
+		gint         *matrix,
+		gint          matrix_size,
+		gint          divisor,
+		gint          mode
+		);
 
-void  multiply_alpha_area     (struct _PixelArea *);
+void 
+multiply_alpha_area  (
+                      struct _PixelArea * src_area
+                      );
 
-void  separate_alpha_area     (struct _PixelArea *);
+void 
+separate_alpha_area  (
+                      struct _PixelArea * src_row
+                      );
 
-void  gaussian_blur_area      (struct _PixelArea *, double);
+void
+gaussian_blur_area (
+		    struct _PixelArea    *src_area,
+		    gdouble       radius
+		   );
 
-void  border_area             (struct _PixelArea *, void *, int, int);
+void
+border_area (
+	     struct _PixelArea *dest_area,
+	     void      *bs_ptr,
+	     gint       bs_segs,
+	     gint       radius
+	    );
 
-void  scale_area              (struct _PixelArea *, struct _PixelArea *);
+void
+scale_area_no_resample (
+			struct _PixelArea *src_area,
+			struct _PixelArea *dest_area
+		       );
 
-void  scale_area_no_resample  (struct _PixelArea *, struct _PixelArea *);
+void
+scale_area (
+	    struct _PixelArea *src_area,
+	    struct _PixelArea *dest_area
+           );
 
-void  subsample_area          (struct _PixelArea *, struct _PixelArea *, int);
+void
+subsample_area (
+		struct _PixelArea *src_area,
+		struct _PixelArea *dest_area,
+		gint        subsample
+	       );
 
-float shapeburst_area         (struct _PixelArea *, struct _PixelArea *);
+float
+shapeburst_area (
+                 struct _PixelArea *srcPR,
+                 struct _PixelArea *distPR
+                 );
 
-int   thin_area               (struct _PixelArea *, int);
+gint
+thin_area (
+	   struct _PixelArea *src_area,
+	   gint          type
+          );
 
-void  swap_area               (struct _PixelArea *, struct _PixelArea *);
+void 
+swap_area  (
+            struct _PixelArea * src_area,
+            struct _PixelArea * dest_area
+            );
 
+void 
+apply_mask_to_area  (
+                     struct _PixelArea * src_area,
+                     struct _PixelArea * mask_area,
+                     struct _Paint * opacity
+                     );
 
-void  apply_mask_to_area      (struct _PixelArea *, struct _PixelArea *, struct _Paint *);
+void 
+combine_mask_and_area  (
+                        struct _PixelArea * src_area,
+                        struct _PixelArea * mask_area,
+                        struct _Paint * opacity
+                        );
 
-void  combine_mask_and_area   (struct _PixelArea *, struct _PixelArea *, struct _Paint *);
+void 
+copy_gray_to_area  (
+                    struct _PixelArea * src_area,
+                    struct _PixelArea * dest_area
+                    );
 
-void  copy_gray_to_area       (struct _PixelArea *, struct _PixelArea *);
+void 
+initial_area  (
+               struct _PixelArea * src_area,
+               struct _PixelArea * dest_area,
+               struct _PixelArea * mask_area,
+               unsigned char * data,    /*data is a cmap or color if needed*/
+               struct _Paint * opacity,
+               gint mode,
+               gint * affect,
+               gint type
+               );
 
-/* FIXME args */
-void  initial_area            (struct _PixelArea *, struct _PixelArea *,
-                               struct _PixelArea *, unsigned char *,
-                               int, int, int *, int);
+void 
+combine_areas  (
+                struct _PixelArea * src1_area,
+                struct _PixelArea * src2_area,
+                struct _PixelArea * dest_area,
+                struct _PixelArea * mask_area,
+                unsigned char * data,   /* a colormap or a color --if needed */
+                struct _Paint * opacity,
+                gint mode,
+                gint * affect,
+                gint type
+                );
 
-/* FIXME args */
-void  combine_areas           (struct _PixelArea *, struct _PixelArea *,
-                               struct _PixelArea *, struct _PixelArea *,
-                               unsigned char *, int,
-                               int, int *, int);
-
-/* FIXME args */
-void  combine_areas_replace   (struct _PixelArea *, struct _PixelArea *,
-                               struct _PixelArea *, struct _PixelArea *,
-                               unsigned char *,
-                               int, int *, int);
-
-
+void 
+combine_areas_replace  (
+                        struct _PixelArea *src1_area,
+                        struct _PixelArea *src2_area,
+                        struct _PixelArea *dest_area,
+                        struct _PixelArea *mask_area,
+                        guchar    *data,
+                        struct _Paint     *opacity,
+                        gint       *affect,
+                        gint        type
+                        );
 #endif  /*  __PAINT_FUNCS_AREA_H__  */

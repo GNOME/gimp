@@ -55,11 +55,17 @@ void              pixelarea_init          (PixelArea *, struct _Canvas *,
                                            int will_dirty);
 
 void              pixelarea_getdata       (PixelArea *, struct _PixelRow *, int);
+void              pixelarea_copy_row ( PixelArea *, struct _PixelRow *, int, int, int, int);
+void              pixelarea_copy_col ( PixelArea *, struct _PixelRow *, int, int, int, int);
+void              pixelarea_write_row ( PixelArea *, struct _PixelRow *, int, int, int);
+void              pixelarea_write_col ( PixelArea *, struct _PixelRow *, int, int, int);
 struct _Paint *   pixelarea_convert_paint (PixelArea *, struct _Paint *);
 
 Tag               pixelarea_tag           (PixelArea *);
 int               pixelarea_width         (PixelArea *);
 int               pixelarea_height        (PixelArea *);
+int               pixelarea_x             (PixelArea *);
+int               pixelarea_y             (PixelArea *);
 guchar *          pixelarea_data          (PixelArea *);
 int               pixelarea_rowstride     (PixelArea *);
 

@@ -25,1906 +25,1279 @@
 #include "gimprc.h"
 #include "paint.h"
 #include "paint_funcs_row.h"
+#include "paint_funcs_row_u8.h"
+#include "paint_funcs_row_u16.h"
+#include "paint_funcs_row_float.h"
 #include "pixelrow.h"
 
-
-#define EPSILON            0.0001
-#define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
-
-
-#if 0
-static unsigned char no_mask = OPAQUE;
-#endif
+#define RANDOM_SEED        314159265
+#define RANDOM_TABLE_SIZE  4096
+static int random_table [RANDOM_TABLE_SIZE];
+static int random_table_initialized = FALSE;
+static void random_table_initialize (void);
 
 
-void 
-color_row  (
-            PixelRow * row,
-            Paint * color
-            )
+static void
+random_table_initialize ( 
+			)
 {
-  guchar *src   = paint_data (color);
-  guchar *dest  = pixelrow_getdata (row, 0);
-  int     bytes = paint_bytes (color);
-  int     w     = pixelrow_width (row);
-
-  while (w--)
-    {
-      guchar *s = src;
-      int b = bytes;
-      while (b--)
-        *dest++ = *s++;
-    }
-}
-
-
-void 
-blend_row  (
-            PixelRow * src1,
-            PixelRow * src2,
-            PixelRow * dest,
-            Paint * blend
-            )
-{
-#if 0
-  int alpha, b;
-  unsigned char blend2 = (255 - blend);
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  while (w --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = (src1[b] * blend2 + src2[b] * blend) / 255;
-
-      if (has_alpha)
-	dest[alpha] = src1[alpha];  /*  alpha channel--assume src2 has none  */
-
-      src1 += bytes;
-      src2 += bytes;
-      dest += bytes;
-    }
-#endif
-}
-
-
-void 
-shade_row  (
-            PixelRow * src,
-            PixelRow * dest,
-            Paint * col
-            )
-{
-#if 0
-  int alpha, b;
-  unsigned char blend2 = (255 - blend);
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  while (w --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = (src[b] * blend2 + col[b] * blend) / 255;
-
-      if (has_alpha)
-	dest[alpha] = src[alpha];  /* alpha channel */
-
-      src += bytes;
-      dest += bytes;
-    }
-#endif
-}
-
-void 
-extract_alpha_row  (
-                    PixelRow * src,
-                    PixelRow * mask,
-                    PixelRow * dest
-                    )
-{
-#if 0
-  int alpha;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = bytes - 1;
-  while (w --)
-    {
-      *dest++ = (src[alpha] * *m) / 255;
-
-      if (mask)
-	m++;
-      src += bytes;
-    }
-#endif
-}
-
-
-void 
-darken_row  (
-             PixelRow * src1,
-             PixelRow * src2,
-             PixelRow * dest
-             )
-{
-#if 0
-  int b, alpha;
-  unsigned char s1, s2;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length--)
-    {
-      for (b = 0; b < alpha; b++)
-	{
-	  s1 = src1[b];
-	  s2 = src2[b];
-	  dest[b] = (s1 < s2) ? s1 : s2;
-	}
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-lighten_row  (
-              PixelRow * src1,
-              PixelRow * src2,
-              PixelRow * dest
-              )
-{
-#if 0
-  int b, alpha;
-  unsigned char s1, s2;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length--)
-    {
-      for (b = 0; b < alpha; b++)
-	{
-	  s1 = src1[b];
-	  s2 = src2[b];
-	  dest[b] = (s1 < s2) ? s2 : s1;
-	}
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-hsv_only_row  (
-               PixelRow * src1,
-               PixelRow * src2,
-               PixelRow * dest,
-               int mode
-               )
-{
-#if 0
-  int r1, g1, b1;
-  int r2, g2, b2;
-
-  /*  assumes inputs are only 4 byte RGBA pixels  */
-  while (length--)
-    {
-      r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
-      r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-      rgb_to_hsv (&r1, &g1, &b1);
-      rgb_to_hsv (&r2, &g2, &b2);
-
-      switch (mode)
-	{
-	case HUE_MODE:
-	  r1 = r2;
-	  break;
-	case SATURATION_MODE:
-	  g1 = g2;
-	  break;
-	case VALUE_MODE:
-	  b1 = b2;
-	  break;
-	}
-
-      /*  set the destination  */
-      hsv_to_rgb (&r1, &g1, &b1);
-
-      dest[0] = r1; dest[1] = g1; dest[2] = b1;
-
-      if (ha1 && ha2)
-	dest[3] = MIN (src1[3], src2[3]);
-      else if (ha2)
-	dest[3] = src2[3];
-
-      src1 += bytes1;
-      src2 += bytes2;
-      dest += bytes2;
-    }
-#endif
-}
-
-
-void 
-color_only_row  (
-                 PixelRow * src1,
-                 PixelRow * src2,
-                 PixelRow * dest,
-                 int mode
-                 )
-{
-#if 0
-  int r1, g1, b1;
-  int r2, g2, b2;
-
-  /*  assumes inputs are only 4 byte RGBA pixels  */
-  while (length--)
-    {
-      r1 = src1[0]; g1 = src1[1]; b1 = src1[2];
-      r2 = src2[0]; g2 = src2[1]; b2 = src2[2];
-      rgb_to_hls (&r1, &g1, &b1);
-      rgb_to_hls (&r2, &g2, &b2);
-
-      /*  transfer hue and saturation to the source pixel  */
-      r1 = r2;
-      b1 = b2;
-
-      /*  set the destination  */
-      hls_to_rgb (&r1, &g1, &b1);
-
-      dest[0] = r1; dest[1] = g1; dest[2] = b1;
-
-      if (ha1 && ha2)
-	dest[3] = MIN (src1[3], src2[3]);
-      else if (ha2)
-	dest[3] = src2[3];
-
-      src1 += bytes1;
-      src2 += bytes2;
-      dest += bytes2;
-    }
-#endif
-}
-
-
-void 
-multiply_row  (
-               PixelRow * src1,
-               PixelRow * src2,
-               PixelRow * dest
-               )
-{
-#if 0
-  int alpha, b;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = (src1[b] * src2[b]) / 255;
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-screen_row  (
-             PixelRow * src1,
-             PixelRow * src2,
-             PixelRow * dest
-             )
-{
-#if 0
-  int alpha, b;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = 255 - ((255 - src1[b]) * (255 - src2[b])) / 255;
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-overlay_row  (
-              PixelRow * src1,
-              PixelRow * src2,
-              PixelRow * dest
-              )
-{
-#if 0
-  int alpha, b;
-  int screen, mult;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	{
-	  screen = 255 - ((255 - src1[b]) * (255 - src2[b])) / 255;
-	  mult = (src1[b] * src2[b]) / 255;
-	  dest[b] = (screen * src1[b] + mult * (255 - src1[b])) / 255;
-	}
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-add_row  (
-          PixelRow * src1,
-          PixelRow * src2,
-          PixelRow * dest
-          )
-{
-#if 0
-  int alpha, b;
-  int sum;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	{
-	  sum = src1[b] + src2[b];
-	  dest[b] = (sum > 255) ? 255 : sum;
-	}
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-subtract_row  (
-               PixelRow * src1,
-               PixelRow * src2,
-               PixelRow * dest
-               )
-{
-#if 0
-  int alpha, b;
-  int diff;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	{
-	  diff = src1[b] - src2[b];
-	  dest[b] = (diff < 0) ? 0 : diff;
-	}
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-difference_row  (
-                 PixelRow * src1,
-                 PixelRow * src2,
-                 PixelRow * dest
-                 )
-{
-#if 0
-  int alpha, b;
-  int diff;
-
-  alpha = (ha1 || ha2) ? MAX (b1, b2) - 1 : b1;
-
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	{
-	  diff = src1[b] - src2[b];
-	  dest[b] = (diff < 0) ? -diff : diff;
-	}
-
-      if (ha1 && ha2)
-	dest[alpha] = MIN (src1[alpha], src2[alpha]);
-      else if (ha2)
-	dest[alpha] = src2[alpha];
-
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-    }
-#endif
-}
-
-
-void 
-dissolve_row  (
-               PixelRow * src,
-               PixelRow * dest,
-               Paint * opacity,
-               int x,
-               int y
-               )
-{
-#if 0
-  int alpha, b;
-  int rand_val;
-
-  /*  Set up the random number generator  */
-  paint_funcs_area_randomize(y);
-  for (b = 0; b < x; b++)
-    rand ();
-
-  alpha = db - 1;
-
-  while (length --)
-    {
-      /*  preserve the intensity values  */
-      for (b = 0; b < alpha; b++)
-	dest[b] = src[b];
-
-      /*  dissolve if random value is > opacity  */
-      rand_val = (rand() & 0xFF);
-
-      if (has_alpha)
-	dest[alpha] = (rand_val > opacity) ? 0 : src[alpha];
-      else
-	dest[alpha] = (rand_val > opacity) ? 0 : OPAQUE;
-
-      dest += db;
-      src += sb;
-    }
-#endif
-}
-
-
-void 
-replace_row  (
-              PixelRow * src1,
-              PixelRow * src2,
-              PixelRow * dest,
-              PixelRow * mask,
-              Paint * opacity
-              )
-{
-#if 0
-  int alpha;
-  int b;
-  double a_val, a_recip, mask_val;
-  double norm_opacity;
-  int s1_a, s2_a;
-  int new_val;
-
-  if (b1 != b2)
-    {
-      g_warning ("replace_row only works on commensurate pixel regions");
-      return;
-    }
-
-  alpha = b1 - 1;
-  norm_opacity = opacity * (1.0 / 65025.0);
-
-  while (length --)
-    {
-      mask_val = mask[0] * norm_opacity;
-      /* calculate new alpha first. */
-      s1_a = src1[alpha];
-      s2_a = src2[alpha];
-      a_val = s1_a + mask_val * (s2_a - s1_a);
-      if (a_val == 0)
-	a_recip = 0;
-      else
-	a_recip = 1.0 / a_val;
-      /* possible optimization: fold a_recip into s1_a and s2_a */
-      for (b = 0; b < alpha; b++)
-	{
-	  new_val = 0.5 + a_recip * (src1[b] * s1_a + mask_val *
-				     (src2[b] * s2_a - src1[b] * s1_a));
-	  dest[b] = affect[b] ? MIN (new_val, 255) : src1[b];
-	}
-      dest[alpha] = affect[alpha] ? a_val + 0.5: s1_a;
-      src1 += b1;
-      src2 += b2;
-      dest += b2;
-      mask++;
-    }
-#endif
-}
-
-
-/* used in undo */
-void 
-swap_row  (
-           PixelRow * src,
-           PixelRow * dest
-           )
-{
-#if 0
-  while (length--)
-    {
-      *src = *src ^ *dest;
-      *dest = *dest ^ *src;
-      *src = *src ^ *dest;
-      src++;
-      dest++;
-    }
-#endif
-}
-
-void 
-scale_row  (
-            PixelRow * src,
-            PixelRow * dest,
-            gfloat scale
-            )
-{
-#if 0
-  while (length --)
-    *dest++ = (unsigned char) ((*src++ * scale) / 255);
-#endif
-}
-
-
-void 
-add_alpha_row  (
-                PixelRow * src,
-                PixelRow * dest
-                )
-{
-#if 0
-  int alpha, b;
-
-  alpha = bytes + 1;
-  while (length --)
-    {
-      for (b = 0; b < bytes; b++)
-	dest[b] = src[b];
-
-      dest[b] = OPAQUE;
-
-      src += bytes;
-      dest += alpha;
-    }
-#endif
-}
-
-
-void 
-flatten_row  (
-              PixelRow * src,
-              PixelRow * dest,
-              Paint * bgcol
-              )
-{
-#if 0
-  int alpha, b;
-  int t1, t2;
-
-  alpha = bytes - 1;
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = INT_MULT (src[b], src[alpha], t1) + INT_MULT (bg[b], (255 - src[alpha]), t2);
-
-      src += bytes;
-      dest += alpha;
-    }
-#endif
-}
-
-
-
-static void 
-u8_apply_mask_to_alpha_row  (
-                             PixelRow * src,
-                             PixelRow * mask,
-                             Paint * opacity
-                             )
-{
-  guchar *s_data = pixelrow_getdata (src, 0);
-  guchar *m_data = pixelrow_getdata (mask, 0);
-  int w          = pixelrow_width (src);
-  int o          = ((guchar *) paint_data (opacity))[0];
-
-  switch (tag_format (pixelrow_tag (src)))
-    {
-    case FORMAT_RGB:
-      while (w --)
-        {
-          s_data[3] = (s_data[3] * *m_data++ * o) / 65025;
-          s_data += 4;
-        }
-      break;
-
-    case FORMAT_GRAY:
-    case FORMAT_INDEXED:
-      while (w --)
-        {
-          s_data[1] = (s_data[1] * *m_data++ * o) / 65025;
-          s_data += 2;
-        }
-      break;
-      
-    case FORMAT_NONE:
-    default:
-      break;
-    }
-}
-
-
-static void 
-u16_apply_mask_to_alpha_row  (
-                              PixelRow * src,
-                              PixelRow * mask,
-                              Paint * opacity
-                              )
-{
-}
-
-
-static void 
-float_apply_mask_to_alpha_row  (
-                                PixelRow * src,
-                                PixelRow * mask,
-                                Paint * opacity
-                                )
-{
-}
-
-
-void 
-apply_mask_to_alpha_row  (
-                          PixelRow * src,
-                          PixelRow * mask,
-                          Paint * opacity
-                          )
-{
-  Tag s_tag = pixelrow_tag (src);
-  Tag m_tag = pixelrow_tag (mask);
-  Tag o_tag = paint_tag (opacity);
+  gint i;
+  /*  generate a table of random seeds  */
+  srand (RANDOM_SEED);
+  for (i = 0; i < RANDOM_TABLE_SIZE; i++)
+    random_table[i] = rand ();
   
-  if ((tag_precision (s_tag) != tag_precision (m_tag)) ||
-      (tag_precision (s_tag) != tag_precision (o_tag)) ||
-      (tag_alpha (s_tag)     != ALPHA_YES) ||
-      (tag_format (m_tag)    != FORMAT_GRAY) ||
-      (tag_format (o_tag)    != FORMAT_GRAY))
-    return;
+  random_table_initialized = TRUE;
+}
 
-  switch (tag_precision (s_tag))
+void
+paint_funcs_randomize_row (int y)
+{
+  srand (random_table [y % RANDOM_TABLE_SIZE]);
+}
+
+void
+color_row (
+	      PixelRow *dest_row,
+	      Paint   *col
+	      )
+{
+
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
     case PRECISION_U8:
-      return u8_apply_mask_to_alpha_row (src, mask, opacity);
-    case PRECISION_U16:
-      return u16_apply_mask_to_alpha_row (src, mask, opacity);
-    case PRECISION_FLOAT:
-      return float_apply_mask_to_alpha_row (src, mask, opacity);
-    case PRECISION_NONE:
-    default:
+      color_row_u8 (dest_row, col);
       break;
+    case PRECISION_U16:
+      color_row_u16 (dest_row, col);
+      break;
+    case PRECISION_FLOAT:
+      color_row_float (dest_row, col);
+      break;
+    case PRECISION_NONE:
+      break;	
     }
 }
-
-
-void 
-combine_mask_and_alpha_row  (
-                             PixelRow * src,
-                             PixelRow * mask,
-                             Paint * opacity
-                             )
+void
+blend_row (
+              PixelRow *src1_row,
+	      PixelRow *src2_row,
+	      PixelRow *dest_row,
+	      Paint    *blend
+              )
 {
-#if 0
-  unsigned char mask_val;
-  int alpha;
-
-  alpha = bytes - 1;
-  while (length --)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      mask_val = (*mask++ * opacity) / 255;
-      src[alpha] = src[alpha] + ((255 - src[alpha]) * mask_val) / 255;
-      src += bytes;
+    case PRECISION_U8:
+      blend_row_u8 (src1_row, src2_row, dest_row, blend);
+      break;
+    case PRECISION_U16:
+      blend_row_u16 (src1_row, src2_row, dest_row, blend);
+      break;
+    case PRECISION_FLOAT:
+      blend_row_float (src1_row, src2_row, dest_row, blend);
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-#endif
+}
+void
+shade_row (
+		 PixelRow *src_row,
+	         PixelRow *dest_row,
+	         Paint    *color,
+		 Paint    *blend
+	         )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      shade_row_u8 (src_row, dest_row, color, blend);
+      break;
+    case PRECISION_U16:
+      shade_row_u16 (src_row, dest_row, color, blend);
+      break;
+    case PRECISION_FLOAT:
+      shade_row_float (src_row, dest_row, color, blend);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+void
+extract_alpha_row (
+		      PixelRow *src_row,
+		      PixelRow *mask_row,
+		      PixelRow *dest_row
+		      )
+
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      extract_alpha_row_u8 (src_row, mask_row, dest_row);
+      break;
+    case PRECISION_U16:
+      extract_alpha_row_u16 (src_row, mask_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      extract_alpha_row_float (src_row, mask_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+void
+darken_row (
+	 	PixelRow *src1_row,
+		PixelRow *src2_row,
+		PixelRow *dest_row
+	       )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      darken_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      darken_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      darken_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+void
+lighten_row (
+		   PixelRow *src1_row,
+		   PixelRow *src2_row,
+                   PixelRow *dest_row
+		   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      lighten_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      lighten_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      lighten_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+void
+hsv_only_row (
+		    PixelRow *src1_row,
+		    PixelRow *src2_row,
+		    PixelRow *dest_row,
+		    gint       mode
+		    )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      hsv_only_row_u8 (src1_row, src2_row, dest_row, mode);
+      break;
+    case PRECISION_U16:
+      hsv_only_row_u16 (src1_row, src2_row, dest_row, mode);
+      break;
+    case PRECISION_FLOAT:
+      hsv_only_row_float (src1_row, src2_row, dest_row, mode);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+void
+color_only_row (
+		      PixelRow *src1_row,
+		      PixelRow *src2_row,
+		      PixelRow *dest_row,
+		      gint       mode
+		     )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      color_only_row_u8 (src1_row, src2_row, dest_row, mode);
+      break;
+    case PRECISION_U16:
+      color_only_row_u16 (src1_row, src2_row, dest_row, mode);
+      break;
+    case PRECISION_FLOAT:
+      color_only_row_float (src1_row, src2_row, dest_row, mode);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+void
+multiply_row (
+		 PixelRow *src1_row,
+		 PixelRow *src2_row,
+		 PixelRow *dest_row
+		 )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      multiply_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      multiply_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      multiply_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
 }
 
+void
+screen_row (
+		  PixelRow *src1_row,
+		  PixelRow *src2_row,
+		  PixelRow *dest_row
+	          )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      screen_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      screen_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      screen_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
 
-void 
-copy_gray_to_inten_a_row  (
-                           PixelRow * src,
-                           PixelRow * dest
+void
+overlay_row (
+		   PixelRow *src1_row,
+		   PixelRow *src2_row,
+		   PixelRow *dest_row
+		   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      overlay_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      overlay_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      overlay_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+add_row ( 
+	       PixelRow *src1_row,
+	       PixelRow *src2_row,
+	       PixelRow *dest_row
+	      )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      add_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      add_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      add_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+subtract_row (
+		    PixelRow *src1_row,
+		    PixelRow *src2_row,
+		    PixelRow *dest_row
+		    )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      subtract_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      subtract_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      subtract_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+difference_row (
+		      PixelRow *src1_row,
+		      PixelRow *src2_row,
+		      PixelRow *dest_row
+		      )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      difference_row_u8 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_U16:
+      difference_row_u16 (src1_row, src2_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      difference_row_float (src1_row, src2_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+dissolve_row (
+		    PixelRow *src_row,
+		    PixelRow *dest_row,
+		    gint      x,
+		    gint      y,
+		    Paint    *opac
+		    )
+{
+  gint b;
+  
+  if (!random_table_initialized) 
+    random_table_initialize();
+  
+  /*  Set up the random number generator  */
+  srand (random_table [y % RANDOM_TABLE_SIZE]);
+  for (b = 0; b < x; b++)
+    rand ();
+  
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      dissolve_row_u8 (src_row, dest_row, x, y, opac);
+      break;
+    case PRECISION_U16:
+      dissolve_row_u16 (src_row, dest_row, x, y, opac);
+      break;
+    case PRECISION_FLOAT:
+      dissolve_row_float (src_row, dest_row, x, y, opac);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+replace_row (
+		   PixelRow *src1_row,
+		   PixelRow *src2_row,
+		   PixelRow *dest_row,
+		   PixelRow *mask_row,
+		   Paint    *opac,
+		   gint      *affect
+		   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      replace_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      replace_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      replace_row_float (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+swap_row (
+                PixelRow *src_row,
+	        PixelRow *dest_row
+	        )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      swap_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      swap_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      swap_row_float (src_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+scale_row (
+		 PixelRow *src_row,
+		 PixelRow *dest_row,
+		 gfloat      scale
+		  )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      scale_row_u8 (src_row, dest_row, scale);
+      break;
+    case PRECISION_U16:
+      scale_row_u16 (src_row, dest_row, scale);
+      break;
+    case PRECISION_FLOAT:
+      scale_row_float (src_row, dest_row, scale);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+add_alpha_row (
+		  PixelRow *src_row,
+		  PixelRow *dest_row
+		  )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      add_alpha_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      add_alpha_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      add_alpha_row_float (src_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+flatten_row (
+		   PixelRow *src_row,
+		   PixelRow *dest_row,
+ 		   Paint    *background
+		  )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      flatten_row_u8 (src_row, dest_row, background);
+      break;
+    case PRECISION_U16:
+      flatten_row_u16 (src_row, dest_row, background);
+      break;
+    case PRECISION_FLOAT:
+      flatten_row_float (src_row, dest_row, background);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+multiply_alpha_row( 
+		      PixelRow * src_row
+		     )
+{
+  switch (tag_precision (pixelrow_tag (src_row)))
+    {
+    case PRECISION_U8:
+      multiply_alpha_row_u8 (src_row);
+      break;
+    case PRECISION_U16:
+      multiply_alpha_row_u16 (src_row);
+      break;
+    case PRECISION_FLOAT:
+      multiply_alpha_row_float (src_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void separate_alpha_row( 
+			    PixelRow *src_row
                            )
 {
-#if 0
-  int b;
-  int alpha;
-
-  alpha = bytes - 1;
-  while (length --)
+  switch (tag_precision (pixelrow_tag (src_row)))
     {
-      for (b = 0; b < alpha; b++)
-	dest[b] = *src;
-      dest[b] = OPAQUE;
-
-      src ++;
-      dest += bytes;
+    case PRECISION_U8:
+      separate_alpha_row_u8 (src_row);
+      break;
+    case PRECISION_U16:
+      separate_alpha_row_u16 (src_row);
+      break;
+    case PRECISION_FLOAT:
+      separate_alpha_row_float (src_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-#endif
 }
 
-
-void 
-initial_channel_row  (
-                      PixelRow * src,
-                      PixelRow * dest
-                      )
+void
+gray_to_rgb_row (
+		       PixelRow *src_row,
+		       PixelRow *dest_row
+		       )
 {
-#if 0
-  int alpha, b;
-
-  alpha = bytes - 1;
-  while (length --)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      for (b = 0; b < alpha; b++)
-	dest[b] = src[0];
-
-      dest[alpha] = OPAQUE;
-
-      dest += bytes;
-      src ++;
+    case PRECISION_U8:
+      gray_to_rgb_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      gray_to_rgb_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      gray_to_rgb_row_float (src_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-#endif
 }
 
-
-void 
-initial_indexed_row  (
-                      PixelRow * src,
-                      PixelRow * dest,
-                      unsigned char * cmap
-                      )
+/*  apply the mask data to the alpha channel of the pixel data  */
+void
+apply_mask_to_alpha_channel_row (
+				PixelRow *src_row,
+				PixelRow *mask_row,
+				Paint    *opac
+			       )
 {
-#if 0
-  int col_index;
-
-  /*  This function assumes always that we're mapping from
-   *  an RGB colormap to an RGBA image...
-   */
-  while (length--)
+  switch (tag_precision (pixelrow_tag (src_row)))
     {
-      col_index = *src++ * 3;
-      *dest++ = cmap[col_index++];
-      *dest++ = cmap[col_index++];
-      *dest++ = cmap[col_index++];
-      *dest++ = OPAQUE;
+    case PRECISION_U8:
+      apply_mask_to_alpha_channel_row_u8 (src_row, mask_row, opac);
+      break;
+    case PRECISION_U16:
+      apply_mask_to_alpha_channel_row_u16 (src_row, mask_row, opac);
+      break;
+    case PRECISION_FLOAT:
+      apply_mask_to_alpha_channel_row_float (src_row, mask_row, opac);
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-#endif
 }
 
+/*  combine the mask data with the alpha channel of the pixel data  */
+void
+combine_mask_and_alpha_channel_row (
+				    PixelRow *src_row,
+				    PixelRow *mask_row,
+				    Paint        *opac
+				    )
+{
+  switch (tag_precision (pixelrow_tag (src_row)))
+    {
+    case PRECISION_U8:
+      combine_mask_and_alpha_channel_row_u8 (src_row, mask_row, opac);
+      break;
+    case PRECISION_U16:
+      combine_mask_and_alpha_channel_row_u16 (src_row, mask_row, opac);
+      break;
+    case PRECISION_FLOAT:
+      combine_mask_and_alpha_channel_row_float (src_row, mask_row, opac);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
 
-void 
-initial_indexed_a_row  (
-                        PixelRow * src,
-                        PixelRow * dest,
-                        PixelRow * mask,
-                        Paint * opacity,
-                        unsigned char * cmap
+/*  copy gray pixels to intensity-alpha pixels.  This function
+ *  essentially takes a source that is only a grayscale image and
+ *  copies it to the destination, expanding to RGB if necessary and
+ *  adding an alpha channel.  (OPAQUE)
+ */
+void
+copy_gray_to_inten_a_row (
+				PixelRow *src_row,
+				PixelRow *dest_row
+			        )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      copy_gray_to_inten_a_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      copy_gray_to_inten_a_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      copy_gray_to_inten_a_row_float (src_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  lay down the initial pixels in the case of only one
+ *  channel being visible and no layers...In this singular
+ *  case, we want to display a grayscale image w/o transparency
+ */
+void
+initial_channel_row (
+			   PixelRow *src_row,
+			   PixelRow *dest_row
+			  )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      initial_channel_row_u8 (src_row, dest_row);
+      break;
+    case PRECISION_U16:
+      initial_channel_row_u16 (src_row, dest_row);
+      break;
+    case PRECISION_FLOAT:
+      initial_channel_row_float (src_row, dest_row);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  lay down the initial pixels in the case of an indexed image.
+ *  This process obviously requires no composition
+ */
+void
+initial_indexed_row (
+			    PixelRow *src_row,
+			    PixelRow *dest_row,
+			    unsigned char *cmap
+			   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      initial_indexed_row_u8 (src_row, dest_row, cmap);
+      break;
+    case PRECISION_U16:
+      initial_indexed_row_u16 (src_row, dest_row, cmap);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  lay down the initial pixels in the case of an indexed image.
+ *  This process obviously requires no composition
+ */
+void
+initial_indexed_a_row (
+			     PixelRow *src_row,
+			     PixelRow *dest_row,
+			     PixelRow *mask_row,
+			     unsigned char *cmap,
+			     Paint    *opac
+			     )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      initial_indexed_a_row_u8 (src_row, dest_row, mask_row, cmap, opac);
+      break;
+    case PRECISION_U16:
+      initial_indexed_a_row_u16 (src_row, dest_row, mask_row, cmap, opac);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  lay down the initial pixels for the base layer.
+ *  This process obviously requires no composition.
+ */
+void
+initial_inten_row (
+			  PixelRow *src_row,
+			  PixelRow *dest_row,
+			  PixelRow *mask_row,
+			  Paint    *opac,
+			  gint      *affect
+		         )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      initial_inten_row_u8 (src_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      initial_inten_row_u16 (src_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      initial_inten_row_float (src_row, dest_row, mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  lay down the initial pixels for the base layer.
+ *  This process obviously requires no composition.
+ */
+void
+initial_inten_a_row (
+			    PixelRow *src_row,
+			    PixelRow *dest_row,
+			    PixelRow *mask_row,
+			    Paint    *opac,
+			    gint     *affect
+			   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      initial_inten_a_row_u8 (src_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      initial_inten_a_row_u16 (src_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      initial_inten_a_row_float (src_row, dest_row, mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine indexed images with an optional mask which
+ *  is interpreted as binary...destination is indexed...
+ */
+void
+combine_indexed_and_indexed_row (
+					PixelRow *src1_row,
+					PixelRow *src2_row,
+					PixelRow *dest_row,
+					PixelRow *mask_row,
+					Paint    *opac,
+				        gint     *affect
+				       )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_indexed_and_indexed_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      combine_indexed_and_indexed_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine indexed images with indexed-alpha images
+ *  result is an indexed image
+ */
+void
+combine_indexed_and_indexed_a_row (
+					PixelRow *src1_row,
+					PixelRow *src2_row,
+					PixelRow *dest_row,
+					PixelRow *mask_row,
+					Paint    *opac,
+				        gint     *affect
+				        ) 
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_indexed_and_indexed_a_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      combine_indexed_and_indexed_a_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine indexed-alpha images with indexed-alpha images
+ *  result is an indexed-alpha image.  use this for painting
+ *  to an indexed floating sel
+ */
+void
+combine_indexed_a_and_indexed_a_row (
+					    PixelRow *src1_row,
+					    PixelRow *src2_row,
+					    PixelRow *dest_row,
+					    PixelRow *mask_row,
+					    Paint    *opac,
+					    gint      *affect
+					   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_indexed_a_and_indexed_a_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      combine_indexed_a_and_indexed_a_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine intensity with indexed, destination is
+ *  intensity-alpha...use this for an indexed floating sel
+ */
+void
+combine_inten_a_and_indexed_a_row (
+					  PixelRow *src1_row,
+					  PixelRow *src2_row,
+					  PixelRow *dest_row,
+					  PixelRow *mask_row,
+					  unsigned char *cmap,
+					  Paint    *opac
+					 )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_inten_a_and_indexed_a_row_u8 (src1_row, src2_row, dest_row, mask_row, cmap, opac);
+      break;
+    case PRECISION_U16:
+      combine_inten_a_and_indexed_a_row_u16 (src1_row, src2_row, dest_row, mask_row, cmap, opac);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine RGB image with RGB or GRAY with GRAY
+ *  destination is intensity-only...
+ */
+void
+combine_inten_and_inten_row (
+				    PixelRow *src1_row,
+				    PixelRow *src2_row,
+				    PixelRow *dest_row,
+				    PixelRow *mask_row,
+				    Paint    *opac,
+				    gint      *affect
+				   )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_inten_and_inten_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      combine_inten_and_inten_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      combine_inten_and_inten_row_float (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine an RGBA or GRAYA image with an RGB or GRAY image
+ *  destination is intensity-only...
+ */
+void
+combine_inten_and_inten_a_row (
+				      PixelRow *src1_row,
+				      PixelRow *src2_row,
+				      PixelRow *dest_row,
+				      PixelRow *mask_row,
+				      Paint    *opac,
+				      gint      *affect
+				      )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_inten_and_inten_a_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      combine_inten_and_inten_a_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      combine_inten_and_inten_a_row_float (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine an RGB or GRAY image with an RGBA or GRAYA image
+ *  destination is intensity-alpha...
+ */
+void
+combine_inten_a_and_inten_row (
+				      PixelRow *src1_row,
+				      PixelRow *src2_row,
+				      PixelRow *dest_row,
+				      PixelRow *mask_row,
+				      Paint    *opac,
+				      gint      *affect,
+				      gint       mode_affect /* how does the combination mode affect alpha?  */
+				      )  
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_inten_a_and_inten_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect, mode_affect);
+      break;
+    case PRECISION_U16:
+      combine_inten_a_and_inten_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect, mode_affect);
+      break;
+    case PRECISION_FLOAT:
+      combine_inten_a_and_inten_row_float (src1_row, src2_row, dest_row, mask_row, opac, affect, mode_affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine an RGBA or GRAYA image with an RGBA or GRAYA image
+ *  destination is of course intensity-alpha...
+ */
+void
+combine_inten_a_and_inten_a_row (
+					PixelRow *src1_row,
+					PixelRow *src2_row,
+					PixelRow *dest_row,
+					PixelRow *mask_row,
+					Paint    *opac,
+					gint      *affect,
+					gint       mode_affect
+					)
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_inten_a_and_inten_a_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect, mode_affect);
+      break;
+    case PRECISION_U16:
+      combine_inten_a_and_inten_a_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect, mode_affect);
+      break;
+    case PRECISION_FLOAT:
+      combine_inten_a_and_inten_a_row_float (src1_row, src2_row, dest_row, mask_row, opac, affect, mode_affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  combine a channel with intensity-alpha pixels based
+ *  on some opacity, and a channel color...
+ *  destination is intensity-alpha
+ */
+void
+combine_inten_a_and_channel_mask_row (
+					    PixelRow *src_row,
+					    PixelRow *channel_row,
+					    PixelRow *dest_row,
+					    Paint    *col,
+					    Paint    *opac
+					    )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_inten_a_and_channel_mask_row_u8 (src_row, channel_row, dest_row, col, opac);
+      break;
+    case PRECISION_U16:
+      combine_inten_a_and_channel_mask_row_u16 (src_row, channel_row, dest_row, col, opac);
+      break;
+    case PRECISION_FLOAT:
+      combine_inten_a_and_channel_mask_row_float (src_row, channel_row, dest_row, col, opac);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+void
+combine_inten_a_and_channel_selection_row (
+						  PixelRow *src_row,
+						  PixelRow *channel_row,
+						  PixelRow *dest_row,
+						  Paint    *col,
+						  Paint    *opac
+						 )
+{
+  switch (tag_precision (pixelrow_tag (dest_row)))
+    {
+    case PRECISION_U8:
+      combine_inten_a_and_channel_selection_row_u8 (src_row, channel_row, dest_row, col, opac);
+      break;
+    case PRECISION_U16:
+      combine_inten_a_and_channel_selection_row_u16 (src_row, channel_row, dest_row, col, opac);
+      break;
+    case PRECISION_FLOAT:
+      combine_inten_a_and_channel_selection_row_float (src_row, channel_row, dest_row, col, opac);
+      break;	
+    case PRECISION_NONE:
+      break;	
+    }
+}
+
+/*  paint "behind" the existing pixel row.
+ *  This is similar in appearance to painting on a layer below
+ *  the existing pixels.
+ */
+void
+behind_inten_row (
+			PixelRow *src1_row,
+			PixelRow *src2_row,
+			PixelRow *dest_row,
+			PixelRow *mask_row,
+			Paint    *opac,
+			gint      *affect
                         )
 {
-#if 0
-  int col_index;
-  unsigned char new_alpha;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  while (length --)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      col_index = *src++ * 3;
-      new_alpha = (*src++ * *m * opacity) / 65025;
-
-      *dest++ = cmap[col_index++];
-      *dest++ = cmap[col_index++];
-      *dest++ = cmap[col_index++];
-      /*  Set the alpha channel  */
-      *dest++ = (new_alpha > 127) ? OPAQUE : TRANSPARENT;
-
-      if (mask)
-	m++;
+    case PRECISION_U8:
+      behind_inten_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      behind_inten_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      behind_inten_row_float (src1_row, src2_row, dest_row,mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-#endif
 }
 
-
-void 
-initial_inten_row  (
-                    PixelRow * src,
-                    PixelRow * dest,
-                    PixelRow * mask,
-                    Paint * opacity
-                    )
+/*  paint "behind" the existing pixel row (for indexed images).
+ *  This is similar in appearance to painting on a layer below
+ *  the existing pixels.
+ */
+void
+behind_indexed_row (
+			  PixelRow *src1_row,
+			  PixelRow *src2_row,
+			  PixelRow *dest_row,
+			  PixelRow *mask_row,
+			  Paint    *opac,
+			  gint     *affect
+			  )
 {
-#if 0
-  int b, dest_bytes;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  /*  This function assumes the source has no alpha channel and
-   *  the destination has an alpha channel.  So dest_bytes = bytes + 1
-   */
-  dest_bytes = bytes + 1;
-
-  if (mask)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      while (length --)
-	{
-	  for (b = 0; b < bytes; b++)
-	    dest [b] = affect [b] ? src [b] : 0;
-	    
-	  /*  Set the alpha channel  */
-	  dest[b] = affect [b] ? (opacity * *m) / 255 : 0;
-	    
-	  m++;
-	  dest += dest_bytes;
-	  src += bytes;
-	}
+    case PRECISION_U8:
+      behind_indexed_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      behind_indexed_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
     }
-  else
-    {
-      while (length --)
-	{
-	  for (b = 0; b < bytes; b++)
-	    dest [b] = affect [b] ? src [b] : 0;
-	    
-	  /*  Set the alpha channel  */
-	  dest[b] = affect [b] ? opacity : 0;
-	    
-	  dest += dest_bytes;
-	  src += bytes;
-	}
-    }
-#endif
 }
 
-
-void 
-initial_inten_a_row  (
-                      PixelRow * src,
-                      PixelRow * dest,
-                      PixelRow * mask,
-                      Paint * opacity
-                      )
+/*  replace the contents of one pixel row with the other
+ *  The operation is still bounded by mask/opacity constraints
+ */
+void
+replace_inten_row (
+			  PixelRow *src1_row,
+			  PixelRow *src2_row,
+			  PixelRow *dest_row,
+			  PixelRow *mask_row,
+			  Paint    *opac,
+			  gint     *affect
+			 )
 {
-#if 0
-  int alpha, b;
-  unsigned char * m;
-
-  alpha = bytes - 1;
-  if (mask)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      m = mask;
-      while (length --)
-	{
-	  for (b = 0; b < alpha; b++)
-	    dest[b] = src[b] * affect[b];
-	  
-	  /*  Set the alpha channel  */
-	  dest[alpha] = affect [alpha] ? (opacity * src[alpha] * *m) / 65025 : 0;
-	  
-	  m++;
-	  
-	  dest += bytes;
-	  src += bytes;
-	}
+    case PRECISION_U8:
+      replace_inten_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      replace_inten_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      replace_inten_row_float (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-  else
-    {
-      while (length --)
-	{
-	  for (b = 0; b < alpha; b++)
-	    dest[b] = src[b] * affect[b];
-	  
-	  /*  Set the alpha channel  */
-	  dest[alpha] = affect [alpha] ? (opacity * src[alpha]) / 255 : 0;
-	  
-	  dest += bytes;
-	  src += bytes;
-	}
-    }
-#endif
 }
 
-
-void 
-combine_indexed_and_indexed_row  (
-                                  PixelRow * src1,
-                                  PixelRow * src2,
-                                  PixelRow * dest,
-                                  PixelRow * mask,
-                                  Paint * opacity
-                                  )
+/*  replace the contents of one pixel row with the other
+ *  The operation is still bounded by mask/opacity constraints
+ */
+void
+replace_indexed_row (
+			    PixelRow *src1_row,
+			    PixelRow *src2_row,
+			    PixelRow *dest_row,
+			    PixelRow *mask_row,
+			    Paint    *opac,
+			    gint     *affect
+			   )
 {
-#if 0
-  int b;
-  unsigned char new_alpha;
-  unsigned char * m;
-
-  if (mask)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      m = mask;
-      while (length --)
-	{
-	  new_alpha = (*m * opacity) / 255;
-	  
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-	  
-	  m++;
-	  
-	  src1 += bytes;
-	  src2 += bytes;
-	  dest += bytes;
-	}
+    case PRECISION_U8:
+      replace_indexed_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      replace_indexed_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
     }
-  else
-    {
-      while (length --)
-	{
-	  new_alpha = opacity;
-	  
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-	  
-	  src1 += bytes;
-	  src2 += bytes;
-	  dest += bytes;
-	}
-    }
-#endif
 }
 
-
-void 
-combine_indexed_and_indexed_a_row  (
-                                    PixelRow * src1,
-                                    PixelRow * src2,
-                                    PixelRow * dest,
-                                    PixelRow * mask,
-                                    Paint * opacity
-                                    )
+/*  apply source 2 to source 1, but in a non-additive way,
+ *  multiplying alpha channels  (works for intensity)
+ */
+void
+erase_inten_row (
+			PixelRow *src1_row,
+			PixelRow *src2_row,
+			PixelRow *dest_row,
+			PixelRow *mask_row,
+			Paint    *opac,
+			gint     *affect
+			)
 {
-#if 0
-  int b, alpha;
-  unsigned char new_alpha;
-  unsigned char * m;
-  int src2_bytes;
-
-  alpha = 1;
-  src2_bytes = 2;
-
-  if (mask)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      m = mask;
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
-
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-
-	  m++;
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
+    case PRECISION_U8:
+      erase_inten_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      erase_inten_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+      erase_inten_row_float (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-  else
-    {
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
-
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
-    }
-#endif
 }
 
-
-void 
-combine_indexed_a_and_indexed_a_row  (
-                                      PixelRow * src1,
-                                      PixelRow * src2,
-                                      PixelRow * dest,
-                                      PixelRow * mask,
-                                      Paint * opacity
-                                      )
+/*  apply source 2 to source 1, but in a non-additive way,
+ *  multiplying alpha channels  (works for indexed)
+ */
+void
+erase_indexed_row (
+			  PixelRow *src1_row,
+			  PixelRow *src2_row,
+			  PixelRow *dest_row,
+			  PixelRow *mask_row,
+			  Paint    *opac,
+			  gint     *affect
+			 )
 {
-#if 0
-  int b, alpha;
-  unsigned char new_alpha;
-  unsigned char * m;
-
-  alpha = 1;
-
-  if (mask)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      m = mask;
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
-
-	  for (b = 0; b < alpha; b++)
-	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-
-	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? OPAQUE : src1[alpha];
-
-	  m++;
-
-	  src1 += bytes;
-	  src2 += bytes;
-	  dest += bytes;
-	}
+    case PRECISION_U8:
+      erase_indexed_row_u8 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_U16:
+      erase_indexed_row_u16 (src1_row, src2_row, dest_row, mask_row, opac, affect);
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
     }
-  else
-    {
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
-
-	  for (b = 0; b < alpha; b++)
-	    dest[b] = (affect[b] && new_alpha > 127) ? src2[b] : src1[b];
-
-	  dest[alpha] = (affect[alpha] && new_alpha > 127) ? OPAQUE : src1[alpha];
-
-	  src1 += bytes;
-	  src2 += bytes;
-	  dest += bytes;
-	}
-    }
-#endif
 }
 
-
-void 
-combine_inten_a_and_indexed_a_row  (
-                                    PixelRow * src1,
-                                    PixelRow * src2,
-                                    PixelRow * dest,
-                                    PixelRow * mask,
-                                    Paint * opacity
-                                    )
+/*  extract information from intensity pixels based on
+ *  a mask.
+ */
+void
+extract_from_inten_row (
+			      PixelRow *src_row,
+			      PixelRow *dest_row,
+			      PixelRow *mask_row,
+			      Paint    *background,
+			      gint      cut
+			      )
 {
-#if 0
-  int b, alpha;
-  unsigned char new_alpha;
-  int src2_bytes;
-  int index;
-
-  alpha = 1;
-  src2_bytes = 2;
-
-  if (mask)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      unsigned char *m = mask;
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
-
-	  index = src2[0] * 3;
-
-	  for (b = 0; b < bytes-1; b++)
-	    dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
-
-	  dest[b] = (new_alpha > 127) ? OPAQUE : src1[b];  /*  alpha channel is opaque  */
-
-	  m++;
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
+    case PRECISION_U8:
+      extract_from_inten_row_u8 (src_row, dest_row, mask_row, background, cut); 
+      break;
+    case PRECISION_U16:
+      extract_from_inten_row_u16 (src_row, dest_row, mask_row, background, cut); 
+      break;
+    case PRECISION_FLOAT:
+      extract_from_inten_row_float (src_row, dest_row, mask_row, background, cut); 
+      break;	
+    case PRECISION_NONE:
+      break;	
     }
-  else
-    {
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
-
-	  index = src2[0] * 3;
-
-	  for (b = 0; b < bytes-1; b++)
-	    dest[b] = (new_alpha > 127) ? cmap[index + b] : src1[b];
-
-	  dest[b] = (new_alpha > 127) ? OPAQUE : src1[b];  /*  alpha channel is opaque  */
-
-	  /* m++; /Per */
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
-    }
-#endif
 }
 
-
-void 
-combine_inten_and_inten_row  (
-                              PixelRow * src1,
-                              PixelRow * src2,
-                              PixelRow * dest,
-                              PixelRow * mask,
-                              Paint * opacity
-                              )
+/*  extract information from indexed pixels based on
+ *  a mask.
+ */
+void
+extract_from_indexed_row (
+				PixelRow *src_row,
+				PixelRow *dest_row,
+				PixelRow *mask_row,
+				unsigned char   *cmap,
+				Paint *background,
+				gint      cut
+				)
 {
-#if 0
-  int b;
-  unsigned char new_alpha;
-  unsigned char * m;
-
-  if (mask)
+  switch (tag_precision (pixelrow_tag (dest_row)))
     {
-      m = mask;
-      while (length --)
-	{
-	  new_alpha = (*m * opacity) / 255;
-
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
-	    src1[b];
-
-	  m++;
-
-	  src1 += bytes;
-	  src2 += bytes;
-	  dest += bytes;
-	}
+    case PRECISION_U8:
+      extract_from_indexed_row_u8 (src_row, dest_row, mask_row,cmap, background, cut); 
+      break;
+    case PRECISION_U16:
+      extract_from_indexed_row_u16 (src_row, dest_row, mask_row,cmap, background, cut); 
+      break;
+    case PRECISION_FLOAT:
+    case PRECISION_NONE:
+      break;	
     }
-  else
-    {
-      while (length --)
-	{
-	  new_alpha = opacity;
-
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
-	    src1[b];
-
-	  src1 += bytes;
-	  src2 += bytes;
-	  dest += bytes;
-	}
-    }
-#endif
 }
-
-
-void 
-combine_inten_and_inten_a_row  (
-                                PixelRow * src1,
-                                PixelRow * src2,
-                                PixelRow * dest,
-                                PixelRow * mask,
-                                Paint * opacity
-                                )
-{
-#if 0
-  int alpha, b;
-  int src2_bytes;
-  unsigned char new_alpha;
-  unsigned char * m;
-
-  alpha = bytes;
-  src2_bytes = bytes + 1;
-
-  if (mask)
-    {
-      m = mask;
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * *m * opacity) / 65025;
-
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
-	    src1[b];
-
-	  m++;
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
-    }
-  else
-    {
-      while (length --)
-	{
-	  new_alpha = (src2[alpha] * opacity) / 255;
-
-	  for (b = 0; b < bytes; b++)
-	    dest[b] = (affect[b]) ?
-	      (src2[b] * new_alpha + src1[b] * (255 - new_alpha)) / 255 :
-	    src1[b];
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
-    }
-#endif
-}
-
-#define alphify(src2_alpha,new_alpha) \
-	if (new_alpha == 0 || src2_alpha == 0)							\
-	  {											\
-	    for (b = 0; b < alpha; b++)								\
-	      dest[b] = src1 [b];								\
-	  }											\
-	else if (src2_alpha == new_alpha){							\
-	  for (b = 0; b < alpha; b++)								\
-	    dest [b] = affect [b] ? src2 [b] : src1 [b];					\
-	} else {										\
-	  ratio = (float) src2_alpha / new_alpha;						\
-	  compl_ratio = 1.0 - ratio;								\
-	  											\
-	  for (b = 0; b < alpha; b++)								\
-	    dest[b] = affect[b] ?								\
-	      (unsigned char) (src2[b] * ratio + src1[b] * compl_ratio + EPSILON) : src1[b];	\
-	}
-	
-void 
-combine_inten_a_and_inten_row  (
-                                PixelRow * src1,
-                                PixelRow * src2,
-                                PixelRow * dest,
-                                PixelRow * mask,
-                                Paint * opacity,
-                                int mode_affect
-                                )
-{
-#if 0
-  int alpha, b;
-  int src2_bytes;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  unsigned char * m;
-  float ratio, compl_ratio;
-
-  src2_bytes = bytes - 1;
-  alpha = bytes - 1;
-
-  if (mask)
-    {
-      m = mask;
-      while (length --)
-	{
-	  src2_alpha = (*m * opacity) / 255;
-	  new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
-	  alphify (src2_alpha, new_alpha);
-	  
-	  if (mode_affect)
-	    dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-	  else
-	    dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
-
-	  m++;
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
-    }
-  else
-    {
-      while (length --)
-	{
-	  src2_alpha = opacity;
-	  new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
-	  alphify (src2_alpha, new_alpha);
-	  
-	  if (mode_affect)
-	    dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-	  else
-	    dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
-
-	  src1 += bytes;
-	  src2 += src2_bytes;
-	  dest += bytes;
-	}
-    }
-#endif
-}
-
-
-void 
-combine_inten_a_and_inten_a_row  (
-                                  PixelRow * src1,
-                                  PixelRow * src2,
-                                  PixelRow * dest,
-                                  PixelRow * mask,
-                                  Paint * opacity,
-                                  int mode_affect
-                                  )
-{
-#if 0
-  int alpha, b;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  unsigned char * m;
-  float ratio, compl_ratio;
-
-  alpha = bytes - 1;
-  if (mask){
-    m = mask;
-    while (length --)
-      {
-	src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-	new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
-
-	alphify (src2_alpha, new_alpha);
-	
-	if (mode_affect)
-	  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-	else
-	  dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
-	
-	m++;
-	
-	src1 += bytes;
-	src2 += bytes;
-	dest += bytes;
-      }
-  } else {
-    while (length --)
-      {
-	src2_alpha = (src2[alpha] * opacity) / 255;
-	new_alpha = src1[alpha] + ((255 - src1[alpha]) * src2_alpha) / 255;
-
-	alphify (src2_alpha, new_alpha);
-	
-	if (mode_affect)
-	  dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-	else
-	  dest[alpha] = (src1[alpha]) ? src1[alpha] : (affect[alpha] ? new_alpha : src1[alpha]);
-
-	src1 += bytes;
-	src2 += bytes;
-	dest += bytes;
-      }
-  }
-#endif
-}
-#undef alphify
-
-void 
-combine_inten_a_and_channel_mask_row  (
-                                       PixelRow * src,
-                                       PixelRow * channel,
-                                       PixelRow * dest,
-                                       Paint * col,
-                                       Paint * opacity
-                                       )
-{
-#if 0
-  int alpha, b;
-  unsigned char channel_alpha;
-  unsigned char new_alpha;
-  unsigned char compl_alpha;
-  int t, s;
-
-  alpha = bytes - 1;
-  while (length --)
-    {
-      channel_alpha = INT_MULT (255 - *channel, opacity, t);
-      if (channel_alpha)
-	{
-	  new_alpha = src[alpha] + INT_MULT ((255 - src[alpha]), channel_alpha, t);
-
-	  if (new_alpha != 255)
-	    channel_alpha = (channel_alpha * 255) / new_alpha;
-	  compl_alpha = 255 - channel_alpha;
-
-	  for (b = 0; b < alpha; b++)
-	    dest[b] = INT_MULT (col[b], channel_alpha, t) +
-	      INT_MULT (src[b], compl_alpha, s);
-	  dest[b] = new_alpha;
-	}
-      else
-	for (b = 0; b < bytes; b++)
-	  dest[b] = src[b];
-
-      /*  advance pointers  */
-      src+=bytes;
-      dest+=bytes;
-      channel++;
-    }
-#endif
-}
-
-
-void 
-combine_inten_a_and_channel_selection_row  (
-                                            PixelRow * src,
-                                            PixelRow * channel,
-                                            PixelRow * dest,
-                                            Paint * col,
-                                            Paint * opacity
-                                            )
-{
-#if 0
-  int alpha, b;
-  unsigned char channel_alpha;
-  unsigned char new_alpha;
-  unsigned char compl_alpha;
-  int t, s;
-
-  alpha = bytes - 1;
-  while (length --)
-    {
-      channel_alpha = INT_MULT (*channel, opacity, t);
-      if (channel_alpha)
-	{
-	  new_alpha = src[alpha] + INT_MULT ((255 - src[alpha]), channel_alpha, t);
-
-	  if (new_alpha != 255)
-	    channel_alpha = (channel_alpha * 255) / new_alpha;
-	  compl_alpha = 255 - channel_alpha;
-
-	  for (b = 0; b < alpha; b++)
-	    dest[b] = INT_MULT (col[b], channel_alpha, t) +
-	      INT_MULT (src[b], compl_alpha, s);
-	  dest[b] = new_alpha;
-	}
-      else
-	for (b = 0; b < bytes; b++)
-	  dest[b] = src[b];
-
-      /*  advance pointers  */
-      src+=bytes;
-      dest+=bytes;
-      channel++;
-    }
-#endif
-}
-
-
-void 
-behind_inten_row  (
-                   PixelRow * src1,
-                   PixelRow * src2,
-                   PixelRow * dest,
-                   PixelRow * mask,
-                   Paint * opacity
-                   )
-{
-#if 0
-  int alpha, b;
-  unsigned char src1_alpha;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  unsigned char * m;
-  float ratio, compl_ratio;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  /*  the alpha channel  */
-  alpha = b1 - 1;
-
-  while (length --)
-    {
-      src1_alpha = src1[alpha];
-      src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-      new_alpha = src2_alpha + ((255 - src2_alpha) * src1_alpha) / 255;
-      if (new_alpha)
-	ratio = (float) src1_alpha / new_alpha;
-      else
-	ratio = 0.0;
-      compl_ratio = 1.0 - ratio;
-
-      for (b = 0; b < alpha; b++)
-	dest[b] = (affect[b]) ?
-	  (unsigned char) (src1[b] * ratio + src2[b] * compl_ratio + EPSILON) :
-	src1[b];
-
-      dest[alpha] = (affect[alpha]) ? new_alpha : src1[alpha];
-
-      if (mask)
-	m++;
-
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
-    }
-#endif
-}
-
-
-void 
-behind_indexed_row  (
-                     PixelRow * src1,
-                     PixelRow * src2,
-                     PixelRow * dest,
-                     PixelRow * mask,
-                     Paint * opacity
-                     )
-{
-#if 0
-  int alpha, b;
-  unsigned char src1_alpha;
-  unsigned char src2_alpha;
-  unsigned char new_alpha;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  /*  the alpha channel  */
-  alpha = b1 - 1;
-
-  while (length --)
-    {
-      src1_alpha = src1[alpha];
-      src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-      new_alpha = (src2_alpha > 127) ? OPAQUE : TRANSPARENT;
-
-      for (b = 0; b < b1; b++)
-	dest[b] = (affect[b] && new_alpha == OPAQUE && (src1_alpha > 127)) ?
-	  src2[b] : src1[b];
-
-      if (mask)
-	m++;
-
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
-    }
-#endif
-}
-
-
-void 
-replace_inten_row  (
-                    PixelRow * src1,
-                    PixelRow * src2,
-                    PixelRow * dest,
-                    PixelRow * mask,
-                    Paint * opacity
-                    )
-{
-#if 0
-  int bytes, b;
-  unsigned char mask_alpha;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  bytes = MIN (b1, b2);
-  while (length --)
-    {
-      mask_alpha = (*m * opacity) / 255;
-
-      for (b = 0; b < bytes; b++)
-	dest[b] = (affect[b]) ?
-	  (src2[b] * mask_alpha + src1[b] * (255 - mask_alpha)) / 255 :
-	src1[b];
-
-      if (ha1 && !ha2)
-	dest[b] = src1[b];
-
-      if (mask)
-	m++;
-
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
-    }
-#endif
-}
-
-
-void 
-replace_indexed_row  (
-                      PixelRow * src1,
-                      PixelRow * src2,
-                      PixelRow * dest,
-                      PixelRow * mask,
-                      Paint * opacity
-                      )
-{
-#if 0
-  int bytes, b;
-  unsigned char mask_alpha;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  bytes = MIN (b1, b2);
-  while (length --)
-    {
-      mask_alpha = (*m * opacity) / 255;
-
-      for (b = 0; b < bytes; b++)
-	dest[b] = (affect[b] && mask_alpha) ?
-	  src2[b] : src1[b];
-
-      if (ha1 && !ha2)
-	dest[b] = src1[b];
-
-      if (mask)
-	m++;
-
-      src1 += b1;
-      src2 += b2;
-      dest += b1;
-    }
-#endif
-}
-
-
-void 
-erase_inten_row  (
-                  PixelRow * src1,
-                  PixelRow * src2,
-                  PixelRow * dest,
-                  PixelRow * mask,
-                  Paint * opacity
-                  )
-{
-#if 0
-  int alpha, b;
-  unsigned char src2_alpha;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = bytes - 1;
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = src1[b];
-
-      src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-      dest[alpha] = src1[alpha] - (src1[alpha] * src2_alpha) / 255;
-
-      if (mask)
-	m++;
-
-      src1 += bytes;
-      src2 += bytes;
-      dest += bytes;
-    }
-#endif
-}
-
-
-void 
-erase_indexed_row  (
-                    PixelRow * src1,
-                    PixelRow * src2,
-                    PixelRow * dest,
-                    PixelRow * mask,
-                    Paint * opacity
-                    )
-{
-#if 0
-  int alpha, b;
-  unsigned char src2_alpha;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = bytes - 1;
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = src1[b];
-
-      src2_alpha = (src2[alpha] * *m * opacity) / 65025;
-      dest[alpha] = (src2_alpha > 127) ? TRANSPARENT : src1[alpha];
-
-      if (mask)
-	m++;
-
-      src1 += bytes;
-      src2 += bytes;
-      dest += bytes;
-    }
-#endif
-}
-
-
-void 
-extract_from_inten_row  (
-                         PixelRow * src,
-                         PixelRow * dest,
-                         PixelRow * mask,
-                         Paint * bg,
-                         int cut
-                         )
-{
-#if 0
-  int b, alpha;
-  int dest_bytes;
-  unsigned char * m;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  alpha = (has_alpha) ? bytes - 1 : bytes;
-  dest_bytes = (has_alpha) ? bytes : bytes + 1;
-  while (length --)
-    {
-      for (b = 0; b < alpha; b++)
-	dest[b] = src[b];
-
-      if (has_alpha)
-	{
-	  dest[alpha] = (*m * src[alpha]) / 255;
-	  if (cut)
-	    src[alpha] = ((255 - *m) * src[alpha]) / 255;
-	}
-      else
-	{
-	  dest[alpha] = *m;
-	  if (cut)
-	    for (b = 0; b < bytes; b++)
-	      src[b] = (*m * bg[b] + (255 - *m) * src[b]) / 255;
-	}
-
-      if (mask)
-	m++;
-
-      src += bytes;
-      dest += dest_bytes;
-    }
-#endif
-}
-
-
-void 
-extract_from_indexed_row  (
-                           PixelRow * src,
-                           PixelRow * dest,
-                           PixelRow * mask,
-                           Paint * bg,
-                           int cut
-                           )
-{
-#if 0
-  int b;
-  int index;
-  unsigned char * m;
-  int t;
-
-  if (mask)
-    m = mask;
-  else
-    m = &no_mask;
-
-  while (length --)
-    {
-      index = src[0] * 3;
-      for (b = 0; b < 3; b++)
-	dest[b] = cmap[index + b];
-
-      if (has_alpha)
-	{
-	  dest[3] = INT_MULT (*m, src[1], t);
-	  if (cut)
-	    src[1] = INT_MULT ((255 - *m), src[1], t);
-	}
-      else
-	{
-	  dest[3] = *m;
-	  if (cut)
-	    src[0] = (*m > 127) ? bg[0] : src[0];
-	}
-
-      if (mask)
-	m++;
-
-      src += bytes;
-      dest += 4;
-    }
-#endif
-}
-
-
