@@ -182,13 +182,13 @@ static const Compressor compressors[] =
     "loads files compressed with bzip2",
     "You need to have bzip2 installed.",
     "bzip2", "-cfd",
-    NULL,
+    "bzip2 -cfd",
 
     "file_bz2_save",
     "saves files compressed with bzip2",
     "You need to have bzip2 installed",
     "bzip2", "-cf",
-    NULL
+    "bzip2 -cf"
   }
 };
 
