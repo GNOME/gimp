@@ -1,3 +1,8 @@
+2001-01-04  Tor Lillqvist  <tml@iki.fi>
+
+	* plug-ins/script-fu/scripts/title-header.scm (script-fu-title-header):
+	Correct args to gimp-color-picker. Thanks to Piet van Oostrum.
+
 2001-01-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/levels.c: reverted the behaviour of the "Reset" button back
