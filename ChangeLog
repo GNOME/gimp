@@ -1,3 +1,11 @@
+Wed Apr 14 00:27:53 BST 1999 Andy Thomas <alt@gimp.org>
+
+	Changed:-
+
+	* Makefile.am
+
+	Added new pixmap file to Makefile.am EXTRA_DIST
+
 Tue Apr 13 22:17:23 BST 1999 Andy Thomas <alt@gimp.org>
 
 	Changed:-

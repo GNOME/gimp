@@ -13,6 +13,7 @@ EXTRA_DIST = \
 	pixmaps/eye.xbm		 \
 	pixmaps/layer.xbm	 \
 	pixmaps/linked.xbm	 \
+	pixmaps/locked.xpm	 \
 	pixmaps/lower.xpm	 \
 	pixmaps/mask.xbm	 \
 	pixmaps/new.xpm		 \
