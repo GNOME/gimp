@@ -1,3 +1,11 @@
+Fri Apr  9 18:58:41 1999  Raph Levien  <raph@gimp.org>
+
+	* app/lut_funcs.h: changed the include to "gimphistogram.h" rather
+	tha "gimphistogramF.h". I could have split the typedef struct
+	_GimpHistogram GimpHistogram into a newly created gimphistogramF.h
+	file as some modules seem to do, but chose this because it seemed
+	like a less drastic fix.
+
 1999-04-08  Jay Cox  <jaycox@earthlink.net>
 
 	* app/Makefile.am: build color_cmds, lut_funcs, and pixel_processor
