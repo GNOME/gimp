@@ -1,3 +1,8 @@
+2004-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpconfig-path.c (gimp_config_path_expand): return
+	early if gimp_config_path_expand_only() fails.
+
 2004-01-28  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/tiff.c: Removed duplicate TIFF entry from save 

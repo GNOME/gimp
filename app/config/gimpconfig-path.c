@@ -69,16 +69,17 @@ gimp_config_path_expand (const gchar  *path,
       gchar *retval;
       gchar *expanded = gimp_config_path_expand_only (path, error);
 
+      if (! expanded)
+        return NULL;
+
       retval = g_filename_from_utf8 (expanded, -1, NULL, NULL, error);
 
       g_free (expanded);
 
       return retval;
     }
-  else
-    {
-      return gimp_config_path_expand_only (path, error);
-    }
+
+  return gimp_config_path_expand_only (path, error);
 }
 
 static gchar *
