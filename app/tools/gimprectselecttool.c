@@ -17,6 +17,7 @@
  */
 #include <stdlib.h>
 #include "gdk/gdkkeysyms.h"
+
 #include "appenv.h"
 #include "gdisplay.h"
 #include "gimage_mask.h"
@@ -39,7 +40,15 @@ static SelectionOptions *rect_options = NULL;
 
 /*  in gimp, ellipses are rectangular, too ;)  */
 extern SelectionOptions *ellipse_options;
-extern void ellipse_select (GImage *, int, int, int, int, int, int, int, double);
+extern void ellipse_select (GimpImage *gimage,
+			    gint       x,
+			    gint       y,
+			    gint       w,
+			    gint       h,
+			    SelectOps  op,
+			    gboolean   antialias,
+			    gboolean   feather,
+			    gdouble    feather_radius);
 
 static void selection_tool_update_op_state (RectSelect *rect_sel,
 					    gint        x,
@@ -52,15 +61,15 @@ static void selection_tool_update_op_state (RectSelect *rect_sel,
 
 void
 rect_select (GimpImage *gimage,
-	     int        x,
-	     int        y,
-	     int        w,
-	     int        h,
-	     int        op,
-	     int        feather,
-	     double     feather_radius)
+	     gint       x,
+	     gint       y,
+	     gint       w,
+	     gint       h,
+	     SelectOps  op,
+	     gboolean   feather,
+	     gdouble    feather_radius)
 {
-  Channel * new_mask;
+  Channel *new_mask;
 
   /*  if applicable, replace the current selection  */
   if (op == SELECTION_REPLACE)
@@ -114,14 +123,14 @@ rect_select_button_press (Tool           *tool,
   switch (tool->type)
     {
     case RECT_SELECT:
-      rect_sel->fixed_size = rect_options->fixed_size;
-      rect_sel->fixed_width = rect_options->fixed_width;
+      rect_sel->fixed_size   = rect_options->fixed_size;
+      rect_sel->fixed_width  = rect_options->fixed_width;
       rect_sel->fixed_height = rect_options->fixed_height;
       unit = rect_options->fixed_unit;
       break;
     case ELLIPSE_SELECT:
-      rect_sel->fixed_size = ellipse_options->fixed_size;
-      rect_sel->fixed_width = ellipse_options->fixed_width;
+      rect_sel->fixed_size   = ellipse_options->fixed_size;
+      rect_sel->fixed_width  = ellipse_options->fixed_width;
       rect_sel->fixed_height = ellipse_options->fixed_height;
       unit = ellipse_options->fixed_unit;
       break;
@@ -148,7 +157,7 @@ rect_select_button_press (Tool           *tool,
       break;
     }
 
-  rect_sel->fixed_width = MAX (1, rect_sel->fixed_width);
+  rect_sel->fixed_width  = MAX (1, rect_sel->fixed_width);
   rect_sel->fixed_height = MAX (1, rect_sel->fixed_height);
 
   rect_sel->w = 0;
@@ -208,9 +217,11 @@ rect_select_button_release (Tool           *tool,
 			    GdkEventButton *bevent,
 			    gpointer        gdisp_ptr)
 {
-  RectSelect * rect_sel;
-  GDisplay * gdisp;
-  int x1, y1, x2, y2, w, h;
+  RectSelect *rect_sel;
+  GDisplay   *gdisp;
+  gint x1, y1;
+  gint x2, y2;
+  gint w, h;
 
   gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
@@ -279,14 +290,14 @@ rect_select_motion (Tool           *tool,
 		    GdkEventMotion *mevent,
 		    gpointer        gdisp_ptr)
 {
-  RectSelect * rect_sel;
-  GDisplay * gdisp;
-  gchar size[STATUSBAR_SIZE];
-  int ox, oy;
-  int x, y;
-  int w, h, s;
-  int tw, th;
-  double ratio;
+  RectSelect *rect_sel;
+  GDisplay   *gdisp;
+  gchar   size[STATUSBAR_SIZE];
+  gint    ox, oy;
+  gint    x, y;
+  gint    w, h, s;
+  gint    tw, th;
+  gdouble ratio;
 
   gdisp = (GDisplay *) gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
@@ -362,14 +373,14 @@ rect_select_motion (Tool           *tool,
       s = MAX (abs (w), abs (h));
 	  
       if (w < 0)
-		w = -s;
+	w = -s;
       else
-		w = s;
+	w = s;
 
       if (h < 0)
-		h = -s;
+	h = -s;
       else
-		h = s;
+	h = s;
     }
 
   /*  If the control key is down, create the selection from the center out */
@@ -441,9 +452,10 @@ rect_select_motion (Tool           *tool,
 void
 rect_select_draw (Tool *tool)
 {
-  GDisplay * gdisp;
-  RectSelect * rect_sel;
-  int x1, y1, x2, y2;
+  GDisplay   *gdisp;
+  RectSelect *rect_sel;
+  gint x1, y1;
+  gint x2, y2;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   rect_sel = (RectSelect *) tool->private;
@@ -468,27 +480,50 @@ selection_tool_update_op_state (RectSelect *rect_sel,
 				gint        state,  
 				GDisplay   *gdisp)
 {
+  Layer *layer;
+  Layer *floating_sel;
+  gint   tx, ty;
+
   if (active_tool->state == ACTIVE)
     return;
 
+  gdisplay_untransform_coords (gdisp, x, y, &tx, &ty, FALSE, FALSE);
+
+  layer = gimage_pick_correlate_layer (gdisp->gimage, tx, ty);
+  floating_sel = gimage_floating_sel (gdisp->gimage);
+
   if (state & GDK_MOD1_MASK &&
-      !(layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage))))
-    rect_sel->op = SELECTION_MOVE_MASK;  /* move just the selection mask */
-  else if (layer_is_floating_sel (gimage_get_active_layer (gdisp->gimage)) || 
-	   (!(state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
-	    gdisplay_mask_value (gdisp, x, y)))
-    rect_sel->op = SELECTION_MOVE;      /* move the selection */
+      !gimage_mask_is_empty (gdisp->gimage))
+    {
+      rect_sel->op = SELECTION_MOVE_MASK;  /* move just the selection mask */
+    }
+  else if (!(state & (GDK_SHIFT_MASK | GDK_CONTROL_MASK)) &&
+	   layer &&
+	   (layer == floating_sel ||
+	    (gdisplay_mask_value (gdisp, x, y) &&
+	     !floating_sel)))
+    {
+      rect_sel->op = SELECTION_MOVE;      /* move the selection */
+    }
   else if ((state & GDK_SHIFT_MASK) &&
 	   !(state & GDK_CONTROL_MASK))
-    rect_sel->op = SELECTION_ADD;       /* add to the selection */
+    {
+      rect_sel->op = SELECTION_ADD;       /* add to the selection */
+    }
   else if ((state & GDK_CONTROL_MASK) &&
 	   !(state & GDK_SHIFT_MASK))
-    rect_sel->op = SELECTION_SUB;      /* subtract from the selection */
+    {
+      rect_sel->op = SELECTION_SUB;      /* subtract from the selection */
+    }
   else if ((state & GDK_CONTROL_MASK) &&
 	   (state & GDK_SHIFT_MASK))
-    rect_sel->op = SELECTION_INTERSECT;/* intersect with selection */
+    {
+      rect_sel->op = SELECTION_INTERSECT;/* intersect with selection */
+    }
   else
-    rect_sel->op = SELECTION_REPLACE;  /* replace the selection */
+    {
+      rect_sel->op = SELECTION_REPLACE;  /* replace the selection */
+    }
 }
 
 void
@@ -548,12 +583,11 @@ rect_select_cursor_update (Tool           *tool,
 			   GdkEventMotion *mevent,
 			   gpointer        gdisp_ptr)
 {
-  int active;
   RectSelect *rect_sel;
-  GDisplay *gdisp;
-  gdisp = (GDisplay *)gdisp_ptr;
-  active = (active_tool->state == ACTIVE);
-  rect_sel = (RectSelect*)tool->private;
+  GDisplay   *gdisp;
+
+  rect_sel = (RectSelect *) tool->private;
+  gdisp = (GDisplay *) gdisp_ptr;
 
   switch (rect_sel->op)
     {
@@ -574,6 +608,7 @@ rect_select_cursor_update (Tool           *tool,
       break;
     case SELECTION_MOVE: 
       gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+      break;
     }
 }
 
@@ -582,21 +617,21 @@ rect_select_control (Tool       *tool,
 		     ToolAction  action,
 		     gpointer    gdisp_ptr)
 {
-  RectSelect * rect_sel;
+  RectSelect *rect_sel;
 
   rect_sel = (RectSelect *) tool->private;
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (rect_sel->core, tool);
       break;
 
-    case RESUME :
+    case RESUME:
       draw_core_resume (rect_sel->core, tool);
       break;
 
-    case HALT :
+    case HALT:
       draw_core_stop (rect_sel->core, tool);
       break;
 
@@ -606,13 +641,13 @@ rect_select_control (Tool       *tool,
 }
 
 static void
-rect_select_options_reset ()
+rect_select_options_reset (void)
 {
   selection_options_reset (rect_options);
 }
 
 Tool *
-tools_new_rect_select ()
+tools_new_rect_select (void)
 {
   Tool * tool;
   RectSelect * private;

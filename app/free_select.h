@@ -21,21 +21,25 @@
 #include "gimpimageF.h"
 #include "scan_convert.h"
 
-void          free_select (GimpImage *, int, ScanConvertPoint *, int, int, int,
-    			   double);
-
 /*  free select action functions  */
 
-void          free_select_button_press      (Tool *, GdkEventButton *, gpointer);
-void          free_select_button_release    (Tool *, GdkEventButton *, gpointer);
-void          free_select_motion            (Tool *, GdkEventMotion *, gpointer);
+void   free_select_button_press   (Tool *, GdkEventButton *, gpointer);
+void   free_select_button_release (Tool *, GdkEventButton *, gpointer);
+void   free_select_motion         (Tool *, GdkEventMotion *, gpointer);
 
 
 /*  free select functions  */
 
-void          free_select_dialog       (void);
-void          free_select_draw         (Tool *);
-Tool *        tools_new_free_select    (void);
-void          tools_free_free_select   (Tool *);
+void   free_select                (GimpImage        *gimage,
+				   gint              num_pts,
+				   ScanConvertPoint *pts,
+				   SelectOps         op,
+				   gboolean          antialias,
+				   gboolean          feather,
+				   gdouble           feather_radius);
+void   free_select_draw           (Tool             *tool);
+
+Tool * tools_new_free_select      (void);
+void   tools_free_free_select     (Tool             *tool);
 
 #endif  /*  __FREE_SELECT_H__  */

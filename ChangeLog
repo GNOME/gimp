@@ -1,3 +1,21 @@
+2000-03-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/bezier_select.h
+	* app/bezier_selectP.h
+	* app/by_color_select.[ch]
+	* app/ellipse_select.[ch]
+	* app/free_select.[ch]
+	* app/move.[ch]
+	* app/rect_select.[ch]: kindof selection tools code review:
+
+	- use SelectOps instead of int.
+	- removed some unused prototyped and callbacks.
+	- don't show the SELECTION_MOVE_MASK cursor if there is no
+	  selection and don't try to move the mask in that case.
+	- re(?)-enabled moving the selection mask even if there is a
+	  floating selection.
+	- usual bunch of cleanups.
+
 2000-03-29  Sven Neumann  <sven@gimp.org>
 
 	* app/gimpui.[ch]: (gimp_dialog_hide) new function that calls

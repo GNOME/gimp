@@ -16,6 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 #include <stdlib.h>
+
 #include "appenv.h"
 #include "edit_selection.h"
 #include "ellipse_select.h"
@@ -36,16 +37,16 @@ SelectionOptions * ellipse_options = NULL;
 
 void
 ellipse_select (GimpImage *gimage,
-		int        x,
-		int        y,
-		int        w,
-		int        h,
-		int        op,
-		int        antialias,
-		int        feather,
-		double     feather_radius)
+		gint       x,
+		gint       y,
+		gint       w,
+		gint       h,
+		SelectOps  op,
+		gboolean   antialias,
+		gboolean   feather,
+		gdouble    feather_radius)
 {
-  Channel * new_mask;
+  Channel *new_mask;
 
   /*  if applicable, replace the current selection  */
   if (op == SELECTION_REPLACE)
@@ -74,15 +75,17 @@ ellipse_select (GimpImage *gimage,
       channel_delete (new_mask);
     }
   else
-    channel_combine_ellipse (gimage_get_mask (gimage), op, x, y, w, h, antialias);
+    channel_combine_ellipse (gimage_get_mask (gimage), op,
+			     x, y, w, h, antialias);
 }
 
 void
 ellipse_select_draw (Tool *tool)
 {
-  GDisplay * gdisp;
-  EllipseSelect * ellipse_sel;
-  int x1, y1, x2, y2;
+  GDisplay      *gdisp;
+  EllipseSelect *ellipse_sel;
+  gint x1, y1;
+  gint x2, y2;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   ellipse_sel = (EllipseSelect *) tool->private;
@@ -109,7 +112,7 @@ ellipse_select_options_reset (void)
 Tool *
 tools_new_ellipse_select  (void)
 {
-  Tool *tool;
+  Tool          *tool;
   EllipseSelect *private;
 
   /*  The tool options  */

@@ -31,11 +31,17 @@ void   rect_select_oper_update     (Tool *, GdkEventMotion *, gpointer);
 void   rect_select_control         (Tool *, ToolAction,       gpointer);
 
 /*  rect select functions  */
-void   rect_select_draw           (Tool *);
-void   rect_select                (GimpImage *, int, int, int, int, int, int,
-				   double);
+void   rect_select_draw            (Tool      *tool);
+void   rect_select                 (GimpImage *gimage,
+				    gint       x,
+				    gint       y,
+				    gint       w,
+				    gint       g,
+				    SelectOps  op,
+				    gboolean   feather,
+				    gdouble    feather_radius);
 
-Tool * tools_new_rect_select      (void);
-void   tools_free_rect_select     (Tool *);
+Tool * tools_new_rect_select       (void);
+void   tools_free_rect_select      (Tool      *tool);
 
 #endif  /*  __RECT_SELECT_H__  */

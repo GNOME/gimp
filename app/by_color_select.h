@@ -32,10 +32,10 @@ void   by_color_select                     (GimpImage    *gimage,
 					    GimpDrawable *drawable,
 					    guchar       *color,
 					    gint          threshold,
-					    gint          op,
-					    gint          antialias,
-					    gint          feather,
+					    SelectOps     op,
+					    gboolean      antialias,
+					    gboolean      feather,
 					    gdouble       feather_radius,
-					    gint          sample_merged);
+					    gboolean      sample_merged);
 
 #endif  /*  __BY_COLOR_SELECT_H__  */

@@ -22,10 +22,13 @@
 
 /*  move functions  */
 
-void          move_tool_start_hguide (Tool *, void *);
-void          move_tool_start_vguide (Tool *, void *);
-Tool *        tools_new_move_tool    (void);
-void          tools_free_move_tool   (Tool *);
+void   move_tool_start_hguide (Tool     *tool,
+			       GDisplay *gdisp);
+void   move_tool_start_vguide (Tool     *tool,
+			       GDisplay *gdisp);
+
+Tool * tools_new_move_tool    (void);
+void   tools_free_move_tool   (Tool     *tool);
 
 
 #endif  /*  __MOVE_H__  */

@@ -50,8 +50,8 @@ typedef struct _ByColorSelect ByColorSelect;
 
 struct _ByColorSelect
 {
-  gint  x, y;       /*  Point from which to execute seed fill  */
-  gint  operation;  /*  add, subtract, normal color selection  */
+  gint       x, y;       /*  Point from which to execute seed fill  */
+  SelectOps  operation;  /*  add, subtract, normal color selection  */
 };
 
 typedef struct _ByColorDialog ByColorDialog;
@@ -82,8 +82,11 @@ static GtkTargetEntry by_color_select_targets[] =
 static guint n_by_color_select_targets =  (sizeof (by_color_select_targets) /
 					   sizeof (by_color_select_targets[0]));
 
-static void by_color_select_color_drop (GtkWidget *, guchar, guchar, guchar,
-					gpointer);
+static void by_color_select_color_drop (GtkWidget *widget,
+					guchar     r,
+					guchar     g,
+					guchar     b,
+					gpointer   data);
 
 /*  by_color select action functions  */
 
@@ -101,10 +104,8 @@ static void   by_color_select_draw                 (ByColorDialog *, GImage *);
 static gint   by_color_select_preview_events       (GtkWidget *,
 						    GdkEventButton *,
 						    ByColorDialog *);
-static void   by_color_select_type_callback        (GtkWidget *, gpointer);
 static void   by_color_select_reset_callback       (GtkWidget *, gpointer);
 static void   by_color_select_close_callback       (GtkWidget *, gpointer);
-static void   by_color_select_fuzzy_update         (GtkAdjustment *, gpointer);
 static void   by_color_select_preview_button_press (ByColorDialog *,
 						    GdkEventButton *);
 
@@ -169,9 +170,9 @@ static Channel *
 by_color_select_color (GImage       *gimage,
 		       GimpDrawable *drawable,
 		       guchar       *color,
-		       gint          antialias,
+		       gboolean      antialias,
 		       gint          threshold,
-		       gint          sample_merged)
+		       gboolean      sample_merged)
 {
   /*  Scan over the gimage's active layer, finding pixels within the specified
    *  threshold from the given R, G, & B values.  If antialiasing is on,
@@ -279,11 +280,11 @@ by_color_select (GImage       *gimage,
 		 GimpDrawable *drawable,
 		 guchar       *color,
 		 gint          threshold,
-		 gint          op,
-		 gint          antialias,
-		 gint          feather,
+		 SelectOps     op,
+		 gboolean      antialias,
+		 gboolean      feather,
 		 gdouble       feather_radius,
-		 gint          sample_merged)
+		 gboolean      sample_merged)
 {
   Channel *new_mask;
   gint     off_x, off_y;
@@ -295,7 +296,7 @@ by_color_select (GImage       *gimage,
 				    antialias, threshold, sample_merged);
 
   /*  if applicable, replace the current selection  */
-  if (op == REPLACE)
+  if (op == SELECTION_REPLACE)
     gimage_mask_clear (gimage);
   else
     gimage_mask_undo (gimage);
@@ -454,30 +455,30 @@ by_color_select_cursor_update (Tool           *tool,
   if (by_color_options->sample_merged ||
       ((layer = gimage_pick_correlate_layer (gdisp->gimage, x, y)) &&
        layer == gdisp->gimage->active_layer))
-      {
-	switch (by_col_sel->operation)
-	  {
-	  case SELECTION_ADD:
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
-	    break;
-	  case SELECTION_SUB:
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
-	    break;
-	  case SELECTION_INTERSECT: 
-	    gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_INTERSECT_CURSOR);
-	    break;
-	  case SELECTION_REPLACE:
-	    gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
-	    break;
-	  case SELECTION_MOVE_MASK:
-	    gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
-	    break;
-	  case SELECTION_MOVE: 
-	    gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
-	  }
+    {
+      switch (by_col_sel->operation)
+	{
+	case SELECTION_ADD:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_ADD_CURSOR);
+	  break;
+	case SELECTION_SUB:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_SUBTRACT_CURSOR);
+	  break;
+	case SELECTION_INTERSECT: 
+	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_INTERSECT_CURSOR);
+	  break;
+	case SELECTION_REPLACE:
+	  gdisplay_install_tool_cursor (gdisp, GDK_TCROSS);
+	  break;
+	case SELECTION_MOVE_MASK:
+	  gdisplay_install_tool_cursor (gdisp, GIMP_SELECTION_MOVE_CURSOR);
+	  break;
+	case SELECTION_MOVE: 
+	  gdisplay_install_tool_cursor (gdisp, GDK_FLEUR);
+	}
 
-	return;
-      }
+      return;
+    }
 
   gdisplay_install_tool_cursor (gdisp, GIMP_BAD_CURSOR);
 }
@@ -675,7 +676,7 @@ by_color_select_dialog_new (void)
 
   bcd = g_new (ByColorDialog, 1);
   bcd->gimage    = NULL;
-  bcd->operation = REPLACE;
+  bcd->operation = SELECTION_REPLACE;
   bcd->threshold = DEFAULT_FUZZINESS;
 
   /*  The shell and main vbox  */
@@ -743,16 +744,15 @@ by_color_select_dialog_new (void)
 
   /*  Create the selection mode radio box  */
   frame = 
-    gimp_radio_group_new (TRUE, _("Selection Mode"),
+    gimp_radio_group_new2 (TRUE, _("Selection Mode"),
+			   gimp_radio_button_update,
+			   &by_color_dialog->operation,
+			   (gpointer) by_color_dialog->operation,
 
-			  _("Replace"), by_color_select_type_callback,
-			  (gpointer) SELECTION_REPLACE, NULL, NULL, TRUE,
-			  _("Add"), by_color_select_type_callback,
-			  (gpointer) SELECTION_ADD, NULL, NULL, FALSE,
-			  _("Subtract"), by_color_select_type_callback,
-			  (gpointer) SELECTION_SUB, NULL, NULL, FALSE,
-			  _("Intersect"), by_color_select_type_callback,
-			  (gpointer) SELECTION_INTERSECT, NULL, NULL, FALSE,
+			  _("Replace"),   (gpointer) SELECTION_REPLACE, NULL,
+			  _("Add"),       (gpointer) SELECTION_ADD, NULL,
+			  _("Subtract"),  (gpointer) SELECTION_SUB, NULL,
+			  _("Intersect"), (gpointer) SELECTION_INTERSECT, NULL,
 
 			  NULL);
 
@@ -776,8 +776,8 @@ by_color_select_dialog_new (void)
   gtk_range_set_update_policy (GTK_RANGE (slider), GTK_UPDATE_DELAYED);
 
   gtk_signal_connect (GTK_OBJECT (data), "value_changed",
-		      GTK_SIGNAL_FUNC (by_color_select_fuzzy_update),
-		      bcd);
+		      GTK_SIGNAL_FUNC (gimp_int_adjustment_update),
+		      &bcd->threshold);
 
   gtk_widget_show (slider);
 
@@ -800,7 +800,7 @@ by_color_select_render (ByColorDialog *bcd,
   MaskBuf * scaled_buf = NULL;
   guchar *buf;
   PixelRegion srcPR, destPR;
-  guchar * src;
+  guchar *src;
   gint subsample;
   gint width, height;
   gint srcwidth;
@@ -937,14 +937,6 @@ by_color_select_preview_events (GtkWidget      *widget,
 }
 
 static void
-by_color_select_type_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  if (by_color_dialog)
-    by_color_dialog->operation = (long) data;
-}
-
-static void
 by_color_select_reset_callback (GtkWidget *widget,
 				gpointer   data)
 {
@@ -988,25 +980,15 @@ by_color_select_close_callback (GtkWidget *widget,
 }
 
 static void
-by_color_select_fuzzy_update (GtkAdjustment *adjustment,
-			      gpointer       data)
-{
-  ByColorDialog *bcd;
-
-  bcd = (ByColorDialog *) data;
-
-  bcd->threshold = (gint) (adjustment->value + 0.5);
-}
-
-static void
 by_color_select_preview_button_press (ByColorDialog  *bcd,
 				      GdkEventButton *bevent)
 {
-  gint x, y;
-  gint replace, operation;
+  gint          x, y;
+  gboolean      replace;
+  SelectOps     operation;
   GimpDrawable *drawable;
-  Tile *tile;
-  guchar *col;
+  Tile         *tile;
+  guchar       *col;
 
   if (!bcd->gimage)
     return;
@@ -1019,7 +1001,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
 
   /*  Defaults  */
   replace = FALSE;
-  operation = REPLACE;
+  operation = SELECTION_REPLACE;
 
   /*  Based on modifiers, and the "by color" dialog's selection mode  */
   if ((bevent->state & GDK_SHIFT_MASK) &&
@@ -1049,7 +1031,7 @@ by_color_select_preview_button_press (ByColorDialog  *bcd,
     }
   else
     {
-      int offx, offy;
+      gint offx, offy;
 
       drawable_offsets (drawable, &offx, &offy);
       x = drawable_width (drawable) * bevent->x / bcd->preview->requisition.width - offx;

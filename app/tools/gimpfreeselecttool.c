@@ -17,6 +17,7 @@
  */
 #include <stdlib.h>
 #include <string.h>
+
 #include "appenv.h"
 #include "draw_core.h"
 #include "edit_selection.h"
@@ -39,9 +40,9 @@
 typedef struct _FreeSelect FreeSelect;
 struct _FreeSelect
 {
-  DrawCore *core;       /*  Core select object                      */
+  DrawCore  *core;      /*  Core select object                      */
 
-  gint      op;         /*  selection operation (ADD, SUB, etc)     */
+  SelectOps  op;        /*  selection operation (ADD, SUB, etc)     */
 
   gint      current_x;  /*  these values are updated on every motion event  */
   gint      current_y;  /*  (enables immediate cursor updating on modifier
@@ -56,16 +57,16 @@ struct _FreeSelect
 static SelectionOptions * free_options = NULL;
 
 /*  The global array of XPoints for drawing the polygon...  */
-static GdkPoint *         global_pts = NULL;
-static int                max_segs = 0;
+static GdkPoint *global_pts = NULL;
+static gint      max_segs = 0;
 
 
 /*  functions  */
 
-static int
-add_point (int num_pts,
-	   int x,
-	   int y)
+static gint
+add_point (gint num_pts,
+	   gint x,
+	   gint y)
 {
   if (num_pts >= max_segs)
     {
@@ -85,17 +86,17 @@ add_point (int num_pts,
 
 
 static Channel *
-scan_convert (GimpImage       *gimage,
-	      int              num_pts,
+scan_convert (GimpImage        *gimage,
+	      gint              num_pts,
 	      ScanConvertPoint *pts,
-	      int              width,
-	      int              height,
-	      int              antialias)
+	      gint              width,
+	      gint              height,
+	      gboolean          antialias)
 {
-  Channel * mask;
+  Channel       *mask;
   ScanConverter *sc;
 
-  sc = scan_converter_new (width, height, antialias? SUPERSAMPLE : 1);
+  sc = scan_converter_new (width, height, antialias ? SUPERSAMPLE : 1);
   scan_converter_add_points (sc, num_pts, pts);
 
   mask = scan_converter_to_channel (sc, gimage);
@@ -109,24 +110,25 @@ scan_convert (GimpImage       *gimage,
 /*  Polygonal selection apparatus    */
 
 void
-free_select (GImage          *gimage,
-	     int              num_pts,
+free_select (GImage           *gimage,
+	     gint              num_pts,
 	     ScanConvertPoint *pts,
-	     int              op,
-	     int              antialias,
-	     int              feather,
-	     double           feather_radius)
+	     SelectOps         op,
+	     gboolean          antialias,
+	     gboolean          feather,
+	     gdouble           feather_radius)
 {
   Channel *mask;
 
   /*  if applicable, replace the current selection  */
   /*  or insure that a floating selection is anchored down...  */
-  if (op == REPLACE)
+  if (op == SELECTION_REPLACE)
     gimage_mask_clear (gimage);
   else
     gimage_mask_undo (gimage);
 
-  mask = scan_convert (gimage, num_pts, pts, gimage->width, gimage->height, antialias);
+  mask = scan_convert (gimage, num_pts, pts,
+		       gimage->width, gimage->height, antialias);
 
   if (mask)
     {
@@ -147,7 +149,7 @@ free_select_button_press (Tool           *tool,
 			  GdkEventButton *bevent,
 			  gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GDisplay   *gdisp;
   FreeSelect *free_sel;
 
   gdisp = (GDisplay *) gdisp_ptr;
@@ -163,14 +165,14 @@ free_select_button_press (Tool           *tool,
   tool->gdisp_ptr = gdisp_ptr;
 
   switch (free_sel->op)
-  {
-   case SELECTION_MOVE_MASK:
-     init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
-     return;
-   case SELECTION_MOVE:
-     init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
-     return;
-  }
+    {
+    case SELECTION_MOVE_MASK:
+      init_edit_selection (tool, gdisp_ptr, bevent, MaskTranslate);
+      return;
+    case SELECTION_MOVE:
+      init_edit_selection (tool, gdisp_ptr, bevent, MaskToLayerTranslate);
+      return;
+    }
 
   add_point (0, bevent->x, bevent->y);
   free_sel->num_pts = 1;
@@ -185,10 +187,10 @@ free_select_button_release (Tool           *tool,
 			    GdkEventButton *bevent,
 			    gpointer        gdisp_ptr)
 {
-  FreeSelect *free_sel;
+  FreeSelect       *free_sel;
   ScanConvertPoint *pts;
-  GDisplay *gdisp;
-  int i;
+  GDisplay         *gdisp;
+  gint              i;
 
   gdisp = (GDisplay *) gdisp_ptr;
   free_sel = (FreeSelect *) tool->private;
@@ -203,7 +205,7 @@ free_select_button_release (Tool           *tool,
   /*  First take care of the case where the user "cancels" the action  */
   if (! (bevent->state & GDK_BUTTON3_MASK))
     {
-      pts = (ScanConvertPoint *) g_malloc (sizeof (ScanConvertPoint) * free_sel->num_pts);
+      pts = g_new (ScanConvertPoint, free_sel->num_pts);
 
       for (i = 0; i < free_sel->num_pts; i++)
 	{
@@ -227,7 +229,7 @@ free_select_motion (Tool           *tool,
 		    gpointer        gdisp_ptr)
 {
   FreeSelect *free_sel;
-  GDisplay *gdisp;
+  GDisplay   *gdisp;
 
   gdisp = (GDisplay *) gdisp_ptr;
   free_sel = (FreeSelect *) tool->private;
@@ -256,21 +258,21 @@ free_select_control (Tool       *tool,
 		     ToolAction  action,
 		     gpointer    gdisp_ptr)
 {
-  FreeSelect * free_sel;
+  FreeSelect *free_sel;
 
   free_sel = (FreeSelect *) tool->private;
 
   switch (action)
     {
-    case PAUSE :
+    case PAUSE:
       draw_core_pause (free_sel->core, tool);
       break;
 
-    case RESUME :
+    case RESUME:
       draw_core_resume (free_sel->core, tool);
       break;
 
-    case HALT :
+    case HALT:
       draw_core_stop (free_sel->core, tool);
       break;
 
@@ -282,8 +284,8 @@ free_select_control (Tool       *tool,
 void
 free_select_draw (Tool *tool)
 {
-  FreeSelect * free_sel;
-  int i;
+  FreeSelect *free_sel;
+  gint        i;
 
   free_sel = (FreeSelect *) tool->private;
 
@@ -294,7 +296,7 @@ free_select_draw (Tool *tool)
 }
 
 static void
-free_select_options_reset ()
+free_select_options_reset (void)
 {
   selection_options_reset (free_options);
 }
@@ -302,8 +304,8 @@ free_select_options_reset ()
 Tool *
 tools_new_free_select (void)
 {
-  Tool * tool;
-  FreeSelect * private;
+  Tool       *tool;
+  FreeSelect *private;
 
   /*  The tool options  */
   if (!free_options)
@@ -316,9 +318,9 @@ tools_new_free_select (void)
   tool = tools_new_tool (FREE_SELECT);
   private = g_new (FreeSelect, 1);
 
-  private->core = draw_core_new (free_select_draw);
+  private->core    = draw_core_new (free_select_draw);
   private->num_pts = 0;
-  private->op = SELECTION_REPLACE;
+  private->op      = SELECTION_REPLACE;
 
   tool->scroll_lock = TRUE;   /*  Do not allow scrolling  */
 
@@ -338,7 +340,7 @@ tools_new_free_select (void)
 void
 tools_free_free_select (Tool *tool)
 {
-  FreeSelect * free_sel;
+  FreeSelect *free_sel;
 
   free_sel = (FreeSelect *) tool->private;
 
