@@ -42,7 +42,7 @@
 #define  SUPERSAMPLE       3
 #define  MAG_THRESHOLD     7.5
 #define  COUNT_THRESHOLD   0.1
-#define  MAX_POINTS       12
+#define  MAX_POINTS        12
 
 #define  SQUARES  0
 #define  HEXAGONS 1
@@ -61,7 +61,7 @@ typedef struct
 
 typedef struct
 {
-  gint npts;
+  guint  npts;
   Vertex pts[MAX_POINTS];
 } Polygon;
 
@@ -171,7 +171,7 @@ static void      split_poly           (Polygon      *poly,
                                        gint          y1,
                                        gint          x2,
                                        gint          y2,
-                                       GimpPreview  *preview);
+                                       guchar       *dest);
 static void      clip_poly            (gdouble      *vec,
                                        gdouble      *pt,
                                        Polygon      *poly,
@@ -192,7 +192,7 @@ static void      process_poly         (Polygon      *poly,
                                        gint          y1,
                                        gint          x2,
                                        gint          y2,
-                                       GimpPreview  *preview);
+                                       guchar       *dest);
 static void      render_poly          (Polygon      *poly,
                                        GimpDrawable *drawable,
                                        guchar       *col,
@@ -201,7 +201,7 @@ static void      render_poly          (Polygon      *poly,
                                        gint          y1,
                                        gint          x2,
                                        gint          y2,
-                                       GimpPreview  *preview);
+                                       guchar       *dest);
 static void      find_poly_dir        (Polygon      *poly,
                                        guchar       *m_gr,
                                        guchar       *h_gr,
@@ -231,7 +231,7 @@ static void      fill_poly_color      (Polygon      *poly,
                                        gint          y1,
                                        gint          x2,
                                        gint          y2,
-                                       GimpPreview  *preview);
+                                       guchar       *dest);
 static void      fill_poly_image      (Polygon      *poly,
                                        GimpDrawable *drawable,
                                        gdouble       vary,
@@ -239,7 +239,8 @@ static void      fill_poly_image      (Polygon      *poly,
                                        gint          y1,
                                        gint          x2,
                                        gint          y2,
-                                       GimpPreview  *preview);
+                                       guchar       *dest);
+
 static void      calc_spec_vec        (SpecVec      *vec,
                                        gint          xs,
                                        gint          ys,
@@ -259,7 +260,7 @@ static void      convert_segment      (gint          x1,
 static void      polygon_add_point    (Polygon      *poly,
                                        gdouble       x,
                                        gdouble       y);
-static gint      polygon_find_center  (Polygon      *poly,
+static gboolean  polygon_find_center  (Polygon      *poly,
                                        gdouble      *x,
                                        gdouble      *y);
 static void      polygon_translate    (Polygon      *poly,
@@ -267,7 +268,7 @@ static void      polygon_translate    (Polygon      *poly,
                                        gdouble       ty);
 static void      polygon_scale        (Polygon      *poly,
                                        gdouble       scale);
-static gint      polygon_extents      (Polygon      *poly,
+static gboolean  polygon_extents      (Polygon      *poly,
                                        gdouble      *min_x,
                                        gdouble      *min_y,
                                        gdouble      *max_x,
@@ -310,7 +311,7 @@ static MosaicVals mvals =
   HEXAGONS,    /* tile_type */
   SMOOTH,      /* tile_surface */
   BW,          /* grout_color */
-  FALSE        /* preview */
+  TRUE         /* preview */
 };
 
 GimpPlugInInfo PLUG_IN_INFO =
@@ -1486,7 +1487,7 @@ grid_render (GimpDrawable *drawable,
 {
   GimpPixelRgn  src_rgn;
   gint          i, j, k;
-  guchar       *dest, *d;
+  guchar       *dest = NULL, *d;
   guchar        col[4];
   gint          bytes;
   gint          size, frac_size;
@@ -1498,28 +1499,40 @@ grid_render (GimpDrawable *drawable,
 
   bytes = drawable->bpp;
 
-  /*  Fill the image with the background color  */
-  gimp_pixel_rgn_init (&src_rgn, drawable,
-                       x1, y1, (x2 - x1), (y2 - y1),
-                       preview == NULL, TRUE);
-  for (pr = gimp_pixel_rgns_register (1, &src_rgn);
-       pr != NULL;
-       pr = gimp_pixel_rgns_process (pr))
+  if (preview)
     {
-      size = src_rgn.w * src_rgn.h;
-      dest = src_rgn.data;
+      dest = g_new (guchar, bytes * (x2 - x1) * (y2 - y1));
 
-      for (i = 0; i < src_rgn.h ; i++)
+      d = dest;
+      for (i = 0; i < (x2 - x1) * (y2 - y1); i++, d += bytes)
+        memcpy (d, back, bytes);
+    }
+  else
+    {
+      /*  Fill the image with the background color  */
+      gimp_pixel_rgn_init (&src_rgn, drawable,
+                           x1, y1, (x2 - x1), (y2 - y1),
+                           TRUE, TRUE);
+      for (pr = gimp_pixel_rgns_register (1, &src_rgn);
+           pr != NULL;
+           pr = gimp_pixel_rgns_process (pr))
         {
-          d = dest;
-          for (j = 0; j < src_rgn.w ; j++)
+          size = src_rgn.w * src_rgn.h;
+          dest = src_rgn.data;
+
+          for (i = 0; i < src_rgn.h ; i++)
             {
-              for (k = 0; k < bytes; k++)
-                d[k] = back[k];
-              d += bytes;
+              d = dest;
+              for (j = 0; j < src_rgn.w ; j++)
+                {
+                  for (k = 0; k < bytes; k++)
+                    d[k] = back[k];
+                  d += bytes;
+                }
+              dest += src_rgn.rowstride;
             }
-          dest += src_rgn.rowstride;
         }
+      dest = NULL;
     }
 
   size = (grid_rows + grid_row_pad) * (grid_cols + grid_col_pad);
@@ -1551,7 +1564,7 @@ grid_render (GimpDrawable *drawable,
                                grid[index + grid_rowstride].y);
 
             process_poly (&poly, mvals.tile_allow_split, drawable, col, vary,
-                          x1, y1, x2, y2, preview);
+                          x1, y1, x2, y2, dest);
             break;
 
           case HEXAGONS:
@@ -1576,7 +1589,7 @@ grid_render (GimpDrawable *drawable,
                                grid[index + 3].x,
                                grid[index + 3].y);
             process_poly (&poly, mvals.tile_allow_split, drawable, col, vary,
-                          x1, y1, x2, y2, preview);
+                          x1, y1, x2, y2, dest);
 
             /*  The auxillary hexagon  */
             polygon_reset (&poly);
@@ -1599,7 +1612,7 @@ grid_render (GimpDrawable *drawable,
                                grid[index + grid_rowstride + 1].x,
                                grid[index + grid_rowstride + 1].y);
             process_poly (&poly, mvals.tile_allow_split, drawable, col, vary,
-                          x1, y1, x2, y2, preview);
+                          x1, y1, x2, y2, dest);
             break;
 
           case OCTAGONS:
@@ -1610,7 +1623,7 @@ grid_render (GimpDrawable *drawable,
                                  grid[index + k].x,
                                  grid[index + k].y);
             process_poly (&poly, mvals.tile_allow_split, drawable, col, vary,
-                          x1, y1, x2, y2, preview);
+                          x1, y1, x2, y2, dest);
 
             /*  The auxillary octagon  */
             polygon_reset (&poly);
@@ -1639,7 +1652,7 @@ grid_render (GimpDrawable *drawable,
                                grid[index + 4].x,
                                grid[index + 4].y);
             process_poly (&poly, mvals.tile_allow_split, drawable, col, vary,
-                          x1, y1, x2, y2, preview);
+                          x1, y1, x2, y2, dest);
 
             /*  The main square  */
             polygon_reset (&poly);
@@ -1656,7 +1669,7 @@ grid_render (GimpDrawable *drawable,
                                grid[index + 3].x,
                                grid[index + 3].y);
             process_poly (&poly, FALSE, drawable, col, vary,
-                          x1, y1, x2, y2, preview);
+                          x1, y1, x2, y2, dest);
 
             /*  The auxillary square  */
             polygon_reset (&poly);
@@ -1673,7 +1686,7 @@ grid_render (GimpDrawable *drawable,
                                grid[index + grid_rowstride].x,
                                grid[index + grid_rowstride].y);
             process_poly (&poly, FALSE, drawable, col, vary,
-                          x1, y1, x2, y2, preview);
+                          x1, y1, x2, y2, dest);
             break;
           }
 
@@ -1681,7 +1694,13 @@ grid_render (GimpDrawable *drawable,
           gimp_progress_update ((double) count++ / (double) size);
       }
 
-  if (!preview)
+  if (preview)
+    {
+      gimp_preview_draw_buffer (preview,
+                                dest,
+                                (x2 - x1) * bytes);
+    }
+  else
     gimp_progress_update (1.0);
 }
 
@@ -1695,7 +1714,7 @@ process_poly (Polygon      *poly,
               gint          y1,
               gint          x2,
               gint          y2,
-              GimpPreview  *preview)
+              guchar       *dest)
 {
   gdouble dir[2];
   gdouble loc[2];
@@ -1720,11 +1739,11 @@ process_poly (Polygon      *poly,
    *  THRESHOLD, split the polygon into two new polygons
    */
   if (magnitude > MAG_THRESHOLD && (2 * distance / mvals.tile_size) < 0.5 && allow_split)
-    split_poly (poly, drawable, col, dir, color_vary, x1, y1, x2, y2, preview);
+    split_poly (poly, drawable, col, dir, color_vary, x1, y1, x2, y2, dest);
   /*  Otherwise, render the original polygon
    */
   else
-    render_poly (poly, drawable, col, color_vary, x1, y1, x2, y2, preview);
+    render_poly (poly, drawable, col, color_vary, x1, y1, x2, y2, dest);
 }
 
 static void
@@ -1736,7 +1755,7 @@ render_poly (Polygon      *poly,
              gint          y1,
              gint          x2,
              gint          y2,
-             GimpPreview  *preview)
+             guchar       *dest)
 {
   gdouble cx, cy;
 
@@ -1748,9 +1767,9 @@ render_poly (Polygon      *poly,
   scale_poly (poly, cx, cy, scale);
 
   if (mvals.color_averaging)
-    fill_poly_color (poly, drawable, col, x1, y1, x2, y2, preview);
+    fill_poly_color (poly, drawable, col, x1, y1, x2, y2, dest);
   else
-    fill_poly_image (poly, drawable, vary, x1, y1, x2, y2, preview);
+    fill_poly_image (poly, drawable, vary, x1, y1, x2, y2, dest);
 }
 
 static void
@@ -1763,7 +1782,7 @@ split_poly (Polygon      *poly,
             gint          y1,
             gint          x2,
             gint          y2,
-            GimpPreview  *preview)
+            guchar       *dest)
 {
   Polygon new_poly;
   gdouble spacing;
@@ -1793,9 +1812,9 @@ split_poly (Polygon      *poly,
         find_poly_color (&new_poly, drawable, col, vary, x1, y1, x2, y2);
       scale_poly (&new_poly, cx, cy, scale);
       if (mvals.color_averaging)
-        fill_poly_color (&new_poly, drawable, col, x1, y1, x2, y2, preview);
+        fill_poly_color (&new_poly, drawable, col, x1, y1, x2, y2, dest);
       else
-        fill_poly_image (&new_poly, drawable, vary, x1, y1, x2, y2, preview);
+        fill_poly_image (&new_poly, drawable, vary, x1, y1, x2, y2, dest);
     }
 
   vec[0] = -vec[0];
@@ -1813,9 +1832,9 @@ split_poly (Polygon      *poly,
         find_poly_color (&new_poly, drawable, col, vary, x1, y1, x2, y2);
       scale_poly (&new_poly, cx, cy, scale);
       if (mvals.color_averaging)
-        fill_poly_color (&new_poly, drawable, col, x1, y1, x2, y2, preview);
+        fill_poly_color (&new_poly, drawable, col, x1, y1, x2, y2, dest);
       else
-        fill_poly_image (&new_poly, drawable, vary, x1, y1, x2, y2, preview);
+        fill_poly_image (&new_poly, drawable, vary, x1, y1, x2, y2, dest);
     }
 }
 
@@ -2121,7 +2140,7 @@ fill_poly_color (Polygon      *poly,
                  gint          y1,
                  gint          x2,
                  gint          y2,
-                 GimpPreview  *preview)
+                 guchar       *dest)
 {
   GimpPixelRgn  src_rgn;
   gdouble       dmin_x, dmin_y;
@@ -2236,7 +2255,7 @@ fill_poly_color (Polygon      *poly,
 
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0,
                        drawable->width, drawable->height,
-                       preview == NULL, TRUE);
+                       dest == NULL, TRUE);
 
   vals = g_new (gint, size_x);
   for (i = 0; i < size_y; i++, min_scanlines_iter++, max_scanlines_iter++)
@@ -2282,18 +2301,15 @@ fill_poly_color (Polygon      *poly,
                               buf[b] = ((pixel * val) + (back[b] * (255 - val))) / 255;
                             }
 
-                          gimp_pixel_rgn_set_pixel (&src_rgn, buf, x, y);
+                          if (dest)
+                            memcpy (dest + ((y - y1) * (x2 - x1) + (x - x1)) * bytes, buf, bytes);
+                          else
+                            gimp_pixel_rgn_set_pixel (&src_rgn, buf, x, y);
                         }
                     }
                 }
             }
         }
-    }
-
-  if (preview)
-    {
-      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                         &src_rgn);
     }
 
   g_free (vals);
@@ -2309,7 +2325,7 @@ fill_poly_image (Polygon      *poly,
                  gint          y1,
                  gint          x2,
                  gint          y2,
-                 GimpPreview  *preview)
+                 guchar       *dest)
 {
   GimpPixelRgn  src_rgn, dest_rgn;
   gdouble       dmin_x, dmin_y;
@@ -2390,9 +2406,10 @@ fill_poly_image (Polygon      *poly,
   gimp_pixel_rgn_init (&src_rgn, drawable, 0, 0,
                        drawable->width, drawable->height,
                        FALSE, FALSE);
-  gimp_pixel_rgn_init (&dest_rgn, drawable, 0, 0,
-                       drawable->width, drawable->height,
-                       preview == NULL, TRUE);
+  if (!dest)
+    gimp_pixel_rgn_init (&dest_rgn, drawable, 0, 0,
+                         drawable->width, drawable->height,
+                         TRUE, TRUE);
   vals = g_new (gint, size_x);
   for (i = 0; i < size_y; i++)
     {
@@ -2445,18 +2462,15 @@ fill_poly_image (Polygon      *poly,
                               buf[b] = ((back[b] << 8) + (pixel - back[b]) * val) >> 8;
                             }
 
-                          gimp_pixel_rgn_set_pixel (&dest_rgn, buf, x, y);
+                          if (dest)
+                            memcpy (dest + ((y - y1) * (x2 - x1) + (x - x1)) * bytes, buf, bytes);
+                          else
+                            gimp_pixel_rgn_set_pixel (&dest_rgn, buf, x, y);
                         }
                     }
                 }
             }
         }
-    }
-
-  if (preview)
-    {
-      gimp_drawable_preview_draw_region (GIMP_DRAWABLE_PREVIEW (preview),
-                                         &dest_rgn);
     }
 
   g_free (vals);
@@ -2473,7 +2487,8 @@ calc_spec_vec (SpecVec *vec,
 {
   gdouble r;
 
-  vec->base_x = x1;  vec->base_y = y1;
+  vec->base_x = x1;
+  vec->base_y = y1;
   r = sqrt (SQR (x2 - x1) + SQR (y2 - y1));
   if (r > 0.0)
     {
@@ -2536,7 +2551,7 @@ convert_segment (gint  x1,
                  gint *min,
                  gint *max)
 {
-  gint ydiff, y, tmp;
+  gint    ydiff, y, tmp;
   gdouble xinc, xstart;
 
   if (y1 > y2)
@@ -2550,12 +2565,10 @@ convert_segment (gint  x1,
     {
       xinc = (gdouble) (x2 - x1) / (gdouble) ydiff;
       xstart = x1 + 0.5 * xinc;
-      for (y = y1 ; y < y2; y++)
+      for (y = y1; y < y2; y++)
         {
-          if (xstart < min[y - offset])
-            min[y - offset] = xstart;
-          if (xstart > max[y - offset])
-            max[y - offset] = xstart;
+          min[y - offset] = MIN (min[y - offset], xstart);
+          max[y - offset] = MAX (max[y - offset], xstart);
 
           xstart += xinc;
         }
@@ -2577,15 +2590,15 @@ polygon_add_point (Polygon *poly,
     g_print ( _("Unable to add additional point.\n"));
 }
 
-static int
+static gboolean
 polygon_find_center (Polygon *poly,
                      gdouble *cx,
                      gdouble *cy)
 {
-  gint i;
+  guint i;
 
   if (!poly->npts)
-    return 0;
+    return FALSE;
 
   *cx = 0.0;
   *cy = 0.0;
@@ -2599,7 +2612,7 @@ polygon_find_center (Polygon *poly,
   *cx /= poly->npts;
   *cy /= poly->npts;
 
-  return 1;
+  return TRUE;
 }
 
 static void
@@ -2607,7 +2620,7 @@ polygon_translate (Polygon *poly,
                    gdouble  tx,
                    gdouble  ty)
 {
-  gint i;
+  guint i;
 
   for (i = 0; i < poly->npts; i++)
     {
@@ -2620,7 +2633,7 @@ static void
 polygon_scale (Polygon *poly,
                gdouble  poly_scale)
 {
-  gint i;
+  guint i;
 
   for (i = 0; i < poly->npts; i++)
     {
@@ -2629,34 +2642,30 @@ polygon_scale (Polygon *poly,
     }
 }
 
-static gint
+static gboolean
 polygon_extents (Polygon *poly,
-                 gdouble *x1,
-                 gdouble *y1,
-                 gdouble *x2,
-                 gdouble *y2)
+                 gdouble *min_x,
+                 gdouble *min_y,
+                 gdouble *max_x,
+                 gdouble *max_y)
 {
-  gint i;
+  guint i;
 
   if (!poly->npts)
-    return 0;
+    return FALSE;
 
-  *x1 = *x2 = poly->pts[0].x;
-  *y1 = *y2 = poly->pts[0].y;
+  *min_x = *max_x = poly->pts[0].x;
+  *min_y = *max_y = poly->pts[0].y;
 
   for (i = 1; i < poly->npts; i++)
     {
-      if (poly->pts[i].x < *x1)
-        *x1 = poly->pts[i].x;
-      if (poly->pts[i].x > *x2)
-        *x2 = poly->pts[i].x;
-      if (poly->pts[i].y < *y1)
-        *y1 = poly->pts[i].y;
-      if (poly->pts[i].y > *y2)
-        *y2 = poly->pts[i].y;
+      *min_x = MIN (*min_x, poly->pts[i].x);
+      *max_x = MAX (*max_x, poly->pts[i].x);
+      *min_y = MIN (*min_y, poly->pts[i].y);
+      *max_y = MAX (*max_y, poly->pts[i].y);
     }
 
-  return 1;
+  return TRUE;
 }
 
 static void

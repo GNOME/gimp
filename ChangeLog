@@ -1,3 +1,7 @@
+2005-01-08  DindinX  <dindinx@gimp.org>
+
+	* plug-ins/common/mosaic.c: made the preview fast enough to be useful.
+
 2005-01-08  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcontainertreeview.c
