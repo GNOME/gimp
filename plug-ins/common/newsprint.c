@@ -80,18 +80,6 @@ static char rcsid[] = "$Id$";
 #define DEBUG_PRINT(x)
 #endif
 
-/* HACK so we compile with old gtks.  Won't work on machines where the
- * size of an int is different from the size of a void*, eg Alphas */
-#ifndef GINT_TO_POINTER
-#warning glib did not define GINT_TO_POINTER, assuming same size as int
-#define GINT_TO_POINTER(x) ((gpointer)(x))
-#endif
-
-#ifndef GPOINTER_TO_INT
-#warning glib did not define GPOINTER_TO_INT, assuming same size as int
-#define GPOINTER_TO_INT(x) ((int)(x))
-#endif
-
 /*#define TIMINGS*/
 
 #define TILE_CACHE_SIZE     16

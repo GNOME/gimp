@@ -1,5 +1,12 @@
 2003-12-02  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/common/channel_mixer.c: fix call to gimp_dialog_run.
+
+	* plug-ins/common/newsprint.c: remove GINT_POINTER definition hack,
+	we always have it now.
+
+2003-12-02  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/common/CML_explorer.c: fix save dialog handling.
 
 2003-12-02  Manish Singh  <yosh@gimp.org>
