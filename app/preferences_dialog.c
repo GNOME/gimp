@@ -168,6 +168,7 @@ static gint               edit_last_opened_size;
 static gboolean           edit_show_indicators;
 static gboolean           edit_nav_window_per_display;
 static gboolean           edit_info_window_follows_mouse;
+static gboolean           edit_disable_tearoff_menus;
 static gchar            * edit_temp_path      = NULL;
 static gchar            * edit_swap_path      = NULL;
 static gchar            * edit_brush_path     = NULL;
@@ -177,7 +178,6 @@ static gchar            * edit_palette_path   = NULL;
 static gchar            * edit_gradient_path  = NULL;
 static gchar            * edit_plug_in_path   = NULL;
 static gchar            * edit_module_path    = NULL;
-static gboolean           edit_disable_tearoff_menus;
 
 /*  variables which will be changed _after_ closing the dialog  */
 static guint              edit_tile_cache_size;
@@ -759,6 +759,7 @@ prefs_save_callback (GtkWidget *widget,
     }
   if (edit_disable_tearoff_menus != old_disable_tearoff_menus)
     {
+      disable_tearoff_menus = edit_disable_tearoff_menus;
       update = g_list_append (update, "disable-tearoff-menus");
     }
 

@@ -248,6 +248,20 @@
       </contact>
     </entry>
 
+    <entry size="small" difficulty="easy" status="0%" target="1.4">
+      <title>Optionally set a different background for the image window</title>
+      <description>
+	<p>
+	  It's often useful to view the image you're editing on a pure
+	  white or pure black background instead of the theme's default
+	  background.
+	</p>
+      </description>
+      <contact>
+	GIMP Developer List &lt;gimp-developer@xcf.berkeley.edu&gt;
+      </contact>
+    </entry>
+
     <entry size="medium" difficulty="medium" status="0%" target="1.4">
       <title>Better keyboard navigation</title>
       <description>
