@@ -134,7 +134,7 @@ static gchar *authors[] =
   "Sergey Panov",
   "Asbjorn Pettersen",
   "Mike Phillips",
-  "Artur Polaczyaski",
+  "Artur Polaczynski",
   "Raphael Quinet",
   "Vincent Renardias",
   "Jens Restemeier",
