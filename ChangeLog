@@ -1,3 +1,20 @@
+2001-10-24  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpbutton.[ch]: added
+	gimp_button_extended_clicked() which emits the resp. signal.
+
+	* app/gui/menus.[ch]: added new item factories "<Buffers>" and
+	"<Documents>".
+
+	* app/gui/Makefile.am
+	* app/gui/buffers-commands.[ch]
+	* app/gui/documents-commands.[ch]: new files for the callbacks.
+
+	* app/gui/dialogs-constructors.c: use them.
+
+	* app/gui/file-open-dialog.c: set the title to "Open Image",
+	not "Load Image".
+
 2001-10-23  Michael Natterer  <mitch@gimp.org>
 
 	* app/app_procs.c: pass a "Gimp" to gui_libs_init(), initialize

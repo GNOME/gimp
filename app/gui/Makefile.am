@@ -12,6 +12,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	brush-select.h			\
 	brushes-commands.c		\
 	brushes-commands.h		\
+	buffers-commands.c		\
+	buffers-commands.h		\
 	channels-commands.c		\
 	channels-commands.h		\
 	color-area.c			\
@@ -34,6 +36,8 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	dialogs-commands.h		\
 	dialogs-constructors.c		\
 	dialogs-constructors.h		\
+	documents-commands.c		\
+	documents-commands.h		\
 	edit-commands.c			\
 	edit-commands.h			\
 	error-console-dialog.c		\

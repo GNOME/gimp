@@ -126,6 +126,23 @@ gimp_button_new (void)
   return GTK_WIDGET (button);
 }
 
+/**
+ * gimp_button_extended_clicked:
+ * @button: a #GimpButton.
+ * @state:  a state as found in #GdkEventButton->state, e.g. #GDK_SHIFT_MASK.
+ * 
+ * Emits the button's "extended_clicked" signal.
+ **/
+void
+gimp_button_extended_clicked (GimpButton *button,
+                              guint       state)
+{
+  g_return_if_fail (GIMP_IS_BUTTON (button));
+
+  g_signal_emit (G_OBJECT (button), button_signals[EXTENDED_CLICKED], 0,
+                 state);
+}
+
 static gboolean
 gimp_button_button_press (GtkWidget      *widget,
 			  GdkEventButton *bevent)
@@ -170,9 +187,8 @@ gimp_button_button_release (GtkWidget      *widget,
 	  (GIMP_BUTTON (button)->press_state &
 	   (GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK)))
 	{
-	  g_signal_emit (G_OBJECT (widget),
-                         button_signals[EXTENDED_CLICKED], 0,
-                         GIMP_BUTTON (button)->press_state);
+	  gimp_button_extended_clicked (GIMP_BUTTON (button),
+                                        GIMP_BUTTON (button)->press_state);
 
 	  extended_clicked  = TRUE;
 

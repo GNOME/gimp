@@ -61,9 +61,12 @@ struct _GimpButtonClass
 };
 
 
-GType       gimp_button_get_type (void);
+GType       gimp_button_get_type         (void);
 
-GtkWidget * gimp_button_new      (void);
+GtkWidget * gimp_button_new              (void);
+
+void        gimp_button_extended_clicked (GimpButton *button,
+                                          guint       state);
 
 
 #ifdef __cplusplus

@@ -159,7 +159,7 @@ file_open_dialog_show (void)
 
   gtk_file_selection_set_filename (GTK_FILE_SELECTION (fileload),
 				   "." G_DIR_SEPARATOR_S);
-  gtk_window_set_title (GTK_WINDOW (fileload), _("Load Image"));
+  gtk_window_set_title (GTK_WINDOW (fileload), _("Open Image"));
 
   file_dialog_show (fileload);
 }

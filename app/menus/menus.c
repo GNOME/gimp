@@ -45,10 +45,12 @@
 #include "tools/gimpthresholdtool.h"
 #include "tools/tool_manager.h"
 
+#include "buffers-commands.h"
 #include "channels-commands.h"
 #include "commands.h"
 #include "data-commands.h"
 #include "dialogs-commands.h"
+#include "documents-commands.h"
 #include "edit-commands.h"
 #include "file-commands.h"
 #include "gradients-commands.h"
@@ -1502,6 +1504,68 @@ static GimpItemFactoryEntry palettes_entries[] =
 };
 
 
+/*****  <Buffers>  *****/
+
+static GimpItemFactoryEntry buffers_entries[] =
+{
+  { { N_("/Paste Buffer"), NULL,
+      buffers_paste_buffer_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_PASTE },
+    NULL,
+    NULL, NULL },
+  { { N_("/Paste Buffer Into"), NULL,
+      buffers_paste_buffer_into_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_PASTE_INTO },
+    NULL,
+    NULL, NULL },
+  { { N_("/Paste Buffer as New"), NULL,
+      buffers_paste_buffer_as_new_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_PASTE_AS_NEW },
+    NULL,
+    NULL, NULL },
+  { { N_("/Delete Buffer"), NULL,
+      buffers_delete_buffer_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DELETE },
+    NULL,
+    NULL, NULL }
+};
+
+
+/*****  <Documents>  *****/
+
+static GimpItemFactoryEntry documents_entries[] =
+{
+  { { N_("/Open Image"), NULL,
+      documents_open_document_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
+    NULL,
+    NULL, NULL },
+  { { N_("/Raise or Open Image"), NULL,
+      documents_raise_or_open_document_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
+    NULL,
+    NULL, NULL },
+  { { N_("/File Open Dialog..."), NULL,
+      documents_file_open_dialog_cmd_callback, 0,
+      "<StockItem>", GTK_STOCK_OPEN },
+    NULL,
+    NULL, NULL },
+  { { N_("/Remove Entry"), NULL,
+      documents_delete_document_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_DELETE },
+    NULL,
+    NULL, NULL },
+
+  SEPARATOR ("/---"),
+
+  { { N_("/Refresh History"), NULL,
+      documents_refresh_documents_cmd_callback, 0,
+      "<StockItem>", GIMP_STOCK_REFRESH },
+    NULL,
+    NULL, NULL }
+};
+
+
 static gboolean menus_initialized = FALSE;
 
 
@@ -1517,6 +1581,8 @@ static GtkItemFactory *brushes_factory   = NULL;
 static GtkItemFactory *patterns_factory  = NULL;
 static GtkItemFactory *gradients_factory = NULL;
 static GtkItemFactory *palettes_factory  = NULL;
+static GtkItemFactory *buffers_factory   = NULL;
+static GtkItemFactory *documents_factory = NULL;
 
 
 /*  public functions  */
@@ -1546,6 +1612,8 @@ menus_init (Gimp *gimp)
   patterns_factory  = menus_get_patterns_factory ();
   gradients_factory = menus_get_gradients_factory ();
   palettes_factory  = menus_get_palettes_factory ();
+  buffers_factory   = menus_get_buffers_factory ();
+  documents_factory = menus_get_documents_factory ();
 
   for (list = GIMP_LIST (gimp->tool_info_list)->list;
        list;
@@ -1700,6 +1768,18 @@ menus_exit (Gimp *gimp)
     {
       g_object_unref (G_OBJECT (palettes_factory));
       palettes_factory = NULL;
+    }
+
+  if (buffers_factory)
+    {
+      g_object_unref (G_OBJECT (buffers_factory));
+      buffers_factory = NULL;
+    }
+
+  if (documents_factory)
+    {
+      g_object_unref (G_OBJECT (documents_factory));
+      documents_factory = NULL;
     }
 }
 
@@ -2137,6 +2217,38 @@ menus_get_palettes_factory (void)
     }
 
   return palettes_factory;
+}
+
+GtkItemFactory *
+menus_get_buffers_factory (void)
+{
+  if (! buffers_factory)
+    {
+      buffers_factory = menus_item_factory_new (GTK_TYPE_MENU,
+                                                "<Buffers>", "buffers",
+                                                G_N_ELEMENTS (buffers_entries),
+                                                buffers_entries,
+                                                NULL,
+                                                FALSE);
+    }
+
+  return buffers_factory;
+}
+
+GtkItemFactory *
+menus_get_documents_factory (void)
+{
+  if (! documents_factory)
+    {
+      documents_factory = menus_item_factory_new (GTK_TYPE_MENU,
+                                                  "<Documents>", "documents",
+                                                  G_N_ELEMENTS (documents_entries),
+                                                  documents_entries,
+                                                  NULL,
+                                                  FALSE);
+    }
+
+  return documents_factory;
 }
 
 void

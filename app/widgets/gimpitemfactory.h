@@ -49,6 +49,8 @@ GtkItemFactory * menus_get_brushes_factory   (void);
 GtkItemFactory * menus_get_patterns_factory  (void);
 GtkItemFactory * menus_get_gradients_factory (void);
 GtkItemFactory * menus_get_palettes_factory  (void);
+GtkItemFactory * menus_get_buffers_factory   (void);
+GtkItemFactory * menus_get_documents_factory (void);
 
 
 void   menus_create_item_from_full_path (GimpItemFactoryEntry  *entry,

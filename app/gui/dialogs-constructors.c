@@ -24,7 +24,6 @@
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "gui-types.h"
-#include "tools/tools-types.h"
 
 #include "core/gimp.h"
 #include "core/gimpbrushgenerated.h"
@@ -54,11 +53,13 @@
 #include "brush-editor.h"
 #include "brush-select.h"
 #include "brushes-commands.h"
+#include "buffers-commands.h"
 #include "channels-commands.h"
 #include "color-area.h"
 #include "colormap-dialog.h"
 #include "dialogs.h"
 #include "dialogs-constructors.h"
+#include "documents-commands.h"
 #include "error-console-dialog.h"
 #include "gradient-editor.h"
 #include "gradient-select.h"
@@ -462,7 +463,7 @@ dialogs_buffer_list_view_new (GimpDialogFactory *factory,
 			       context,
 			       32,
 			       5, 3,
-			       NULL);
+			       buffers_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Buffer List", "Buffers",
@@ -601,7 +602,7 @@ dialogs_buffer_grid_view_new (GimpDialogFactory *factory,
 			       context,
 			       32,
 			       5, 3,
-			       NULL);
+			       buffers_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Buffer Grid", "Buffers",
@@ -749,7 +750,7 @@ dialogs_document_history_new (GimpDialogFactory *factory,
                                  context,
                                  32,
                                  5, 3,
-                                 NULL);
+                                 documents_show_context_menu);
 
   return dialogs_dockable_new (view,
 			       "Document History", "History",
