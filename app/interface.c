@@ -79,13 +79,6 @@ static GdkPixmap *create_pixmap    (GdkWindow      *parent,
 				    gint            height);
 
 static void     toolbox_set_drag_dest      (GtkWidget        *widget);
-static void     toolbox_drag_data_received (GtkWidget        *widget,
-					    GdkDragContext   *context,
-					    gint              x,
-					    gint              y,
-					    GtkSelectionData *data,
-					    guint             info,
-					    guint             time);
 static gboolean toolbox_drag_drop          (GtkWidget        *widget,
 					    GdkDragContext   *context,
 					    gint              x,
@@ -96,7 +89,6 @@ static ToolType toolbox_drag_tool          (GtkWidget        *widget,
 static void     toolbox_drop_tool          (GtkWidget        *widget,
 					    ToolType          tool,
 					    gpointer          data);
-static void     gimp_dnd_open_files        (gchar            *buffer);
 
 static gint pixmap_colors[8][3] =
 {
@@ -1114,38 +1106,12 @@ toolbox_set_drag_dest (GtkWidget *object)
 		     toolbox_target_table, toolbox_n_targets,
 		     GDK_ACTION_COPY);
 
-  gtk_signal_connect (GTK_OBJECT (object), "drag_data_received",
-		      GTK_SIGNAL_FUNC (toolbox_drag_data_received),
-		      object);
   gtk_signal_connect (GTK_OBJECT (object), "drag_drop",
 		      GTK_SIGNAL_FUNC (toolbox_drag_drop),
 		      NULL);
 
+  gimp_dnd_file_dest_set (object);
   gimp_dnd_tool_dest_set (object, toolbox_drop_tool, NULL);
-}
-
-static void
-toolbox_drag_data_received (GtkWidget        *widget,
-			    GdkDragContext   *context,
-			    gint              x,
-			    gint              y,
-			    GtkSelectionData *data,
-			    guint             info,
-			    guint             time)
-{
-  switch (context->action)
-    {
-    case GDK_ACTION_DEFAULT:
-    case GDK_ACTION_COPY:
-    case GDK_ACTION_MOVE:
-    case GDK_ACTION_LINK:
-    case GDK_ACTION_ASK:
-    default:
-      gimp_dnd_open_files ((gchar *) data->data);
-      gtk_drag_finish (context, TRUE, FALSE, time);
-      break;
-    }
-  return;
 }
 
 static gboolean
@@ -1316,39 +1282,4 @@ toolbox_drop_tool (GtkWidget *widget,
 		   gpointer   data)
 {
   gimp_context_set_tool (gimp_context_get_user (), tool);
-}
-
-static void
-gimp_dnd_open_files (gchar *buffer)
-{
-  gchar	 name_buffer[1024];
-  const gchar *data_type = "file:";
-  const gint sig_len = strlen (data_type);
-
-  while (*buffer)
-    {
-      gchar *name = name_buffer;
-      gint len = 0;
-
-      while ((*buffer != 0) && (*buffer != '\n') && len < 1024)
-	{
-	  *name++ = *buffer++;
-	  len++;
-	}
-      if (len == 0)
-	break;
-
-      if (*(name - 1) == 0xd)	/* gmc uses RETURN+NEWLINE as delimiter */
-	*(name - 1) = '\0';
-      else
-	*name = '\0';
-      name = name_buffer;
-      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
-	name += sig_len;
-      
-      file_open (name, name);
-      
-      if (*buffer)
-	buffer++;
-    }
 }

@@ -1,5 +1,13 @@
 2000-05-06  Michael Natterer  <mitch@gimp.org>
 
+	* app/gimpdnd.[ch]: new public function gimp_dnd_file_dest_set().
+	Moved the file/url dnd stuff from interface.c to gimpdnd.c.
+
+	* app/docindex.c
+	* app/interface.c: use the function from gimpdnd.
+
+2000-05-06  Michael Natterer  <mitch@gimp.org>
+
 	* po/POTFILES.in
 	* app/Makefile.am
 	* app/docindexif.[ch]: removed because it was not doing core/ui

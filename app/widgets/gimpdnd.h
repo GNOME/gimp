@@ -199,4 +199,8 @@ void  gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
 					  GdkDragContext *context,
 					  GimpDrawable   *drawable);
 
+/*  file / url dnd functions  */
+
+void  gimp_dnd_file_dest_set (GtkWidget *widget);
+
 #endif /* __GIMP_DND_H__ */

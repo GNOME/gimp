@@ -15,6 +15,9 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+#include <string.h>
+
+#include "fileops.h"
 #include "gimage.h"
 #include "gimpcontextpreview.h"
 #include "gimpdnd.h"
@@ -1203,3 +1206,75 @@ gimp_dnd_set_drawable_preview_icon (GtkWidget      *widget,
   gtk_drag_set_icon_widget (context, window,
 			    DRAG_ICON_OFFSET, DRAG_ICON_OFFSET);
 }
+
+/******************************/
+/*  file / url dnd functions  */
+/******************************/
+
+static void
+gimp_dnd_file_open_files (gchar *buffer)
+{
+  gchar  name_buffer[1024];
+  const gchar *data_type = "file:";
+  const gint   sig_len = strlen (data_type);
+
+  while (*buffer)
+    {
+      gchar *name = name_buffer;
+      gint len = 0;
+
+      while ((*buffer != 0) && (*buffer != '\n') && len < 1024)
+        {
+          *name++ = *buffer++;
+          len++;
+        }
+      if (len == 0)
+        break;
+
+      if (*(name - 1) == 0xd)   /* gmc uses RETURN+NEWLINE as delimiter */
+        *(name - 1) = '\0';
+      else
+        *name = '\0';
+      name = name_buffer;
+      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
+        name += sig_len;
+
+      file_open (name, name);
+
+      if (*buffer)
+        buffer++;
+    }
+}
+
+static void
+gimp_dnd_file_drag_data_received (GtkWidget        *widget,
+				  GdkDragContext   *context,
+				  gint              x,
+				  gint              y,
+				  GtkSelectionData *data,
+				  guint             info,
+				  guint             time)
+{
+  switch (context->action)
+    {
+    case GDK_ACTION_DEFAULT:
+    case GDK_ACTION_COPY:
+    case GDK_ACTION_MOVE:
+    case GDK_ACTION_LINK:
+    case GDK_ACTION_ASK:
+    default:
+      gimp_dnd_file_open_files ((gchar *) data->data);
+      gtk_drag_finish (context, TRUE, FALSE, time);
+      break;
+    }
+  return;
+}
+
+void
+gimp_dnd_file_dest_set (GtkWidget *widget)
+{
+  gtk_signal_connect (GTK_OBJECT (widget), "drag_data_received",
+                      GTK_SIGNAL_FUNC (gimp_dnd_file_drag_data_received),
+                      NULL);
+}
+

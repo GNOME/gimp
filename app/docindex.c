@@ -53,7 +53,9 @@ static GList       *idea_list = NULL;
 
 static GtkTargetEntry drag_types[] =
 {
-  GIMP_TARGET_URI_LIST
+  GIMP_TARGET_URI_LIST,
+  GIMP_TARGET_TEXT_PLAIN,
+  GIMP_TARGET_NETSCAPE_URL
 };
 static gint n_drag_types = sizeof (drag_types) / sizeof (drag_types[0]);
 
@@ -144,52 +146,6 @@ idea_manager_parse_line (FILE * fp)
 
 
 /*  local functions  */
-
-static void
-docindex_dnd_filenames_dropped (GtkWidget        *widget,
-				GdkDragContext   *context,
-				gint              x,
-				gint              y,
-				GtkSelectionData *selection_data,
-				guint             info,
-				guint             time)
-{
-  gint   len;
-  gchar *data;
-  gchar *end;
-
-  switch (info)
-    {
-    case GIMP_DND_TYPE_URI_LIST:
-      data = (gchar *) selection_data->data;
-      len = selection_data->length;
-      while (len > 0)
-	{
-	  end = strstr (data, "\x0D\x0A");
-	  if (end != NULL)
-	    *end = 0;
-	  if (*data != '#')
-	    {
-	      gchar *filename = strchr (data, ':');
-	      if (filename != NULL)
-		filename ++;
-	      else
-		filename = data;
-
-	      file_open (filename, filename);
-	    }
-	  if (end)
-	    {
-	      len -= end - data + 2;
-	      data = end + 2;
-	    }
-	  else
-	    len = 0;
-	}
-      break;
-    }
-  return;
-}
 
 static void
 load_from_list (gpointer data,
@@ -739,15 +695,11 @@ open_idea_window (void)
   gtk_widget_show (ideas->list);
 
   gtk_drag_dest_set (ideas->window,
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_DROP,
+                     GTK_DEST_DEFAULT_ALL,
                      drag_types, n_drag_types,
                      GDK_ACTION_COPY);
 
-  gtk_signal_connect (GTK_OBJECT (ideas->window), "drag_data_received",
-		      GTK_SIGNAL_FUNC (docindex_dnd_filenames_dropped),
-		      NULL);
+  gimp_dnd_file_dest_set (ideas->window);
 
   dialog_register (ideas->window);
   session_set_window_geometry (ideas->window, &document_index_session_info,
