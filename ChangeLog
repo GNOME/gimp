@@ -1,3 +1,38 @@
+Sun Feb 14 01:27:29 GMT 1999  Austin Donnelly  <austin@gimp.org>
+
+	New manpage plus bumper fun pack of bugfixes.
+
+	* gimprc.5.in: NEW FILE: beginnings of some docs on gimprc file
+	     format.
+	* configure.in: generate gimprc.5 from gimprc.5.in
+	* Makefile.am: install gimprc.5
+	* .cvsignore: ignore gimprc.5, it's auto generated.
+
+	* gimp.1: fix a few paths and URLs.  Mention the modules/
+	     directory in user's gimpdir.
+
+	* app/commands.c: cancel resize or scale dialogs when image
+ 	     they're for is destroyed, rather than segfaulting when Ok is
+ 	     clicked.  Thanks to Peter Teichman <peter@zeno.dorm.duke.edu>
+ 	     for pointing this one out.  Layer resize/scale still suffers
+ 	     from same problem, but Adam's working on L&C at the moment.
+
+	* app/gdisplay.c: off-by one error on bounds check in making image
+	     title.
+
+	* app/module_db.c: some would consider it foolish returning to
+ 	     code you've just unloaded.  So don't do that.
+
+	* app/plug_in.c: when superceeding a PDB function with a newer one
+	     of the same name, remove pointers to the old one from the
+	     plugins that originally registered them.  Fixes Nick Lamb's
+	     pluginrc file corruption thing, and catches the (common?)
+	     error of copying a plugin to a different name but failing to
+	     change what it registers.  Also, if registering a file
+	     loader/saver, make sure it has set an extension, prefix, or
+	     magic number it's interested in - that way code that relies
+	     on checking this doesn't get confused.
+
 Sat Feb 13 19:05:16 CET 1999 Marc Lehmann <pcg@goof.com>
 
         * app/internal_procs.c

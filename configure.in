@@ -649,6 +649,7 @@ dnl Output the Makefiles
 AC_OUTPUT([
 gimprc
 gimprc_user
+gimprc.5
 gimptool
 libgimp/gimpfeatures.h
 Makefile

@@ -60,6 +60,7 @@ typedef struct {
   gboolean        ondisk;     /* TRUE if file still exists */
   /* stuff from now on may be NULL depending on the state the module is in */
   GimpModuleInfo *info;       /* returned values from module_init */
+  gint            refs;       /* how many time we're running in the module */
   GModule        *module;     /* handle on the module */
   gchar          *last_module_error;
   GimpModuleInitFunc   *init;
@@ -110,6 +111,10 @@ static void browser_select_callback (GtkWidget *widget, GtkWidget *child);
 static void browser_load_unload_callback (GtkWidget *widget, gpointer data);
 static void browser_refresh_callback (GtkWidget *widget, gpointer data);
 static void make_list_item (gpointer data, gpointer user_data);
+
+static void gimp_module_ref (module_info *mod);
+static void gimp_module_unref (module_info *mod);
+
 
 
 /**************************************************************/
@@ -457,8 +462,11 @@ mod_unload_completed_callback (void *data)
 
   g_return_if_fail (mod->state == ST_UNLOAD_REQUESTED);
 
-  g_module_close (mod->module);
-  mod->module = NULL;
+  if (mod->refs == 0)
+  {
+      g_module_close (mod->module);
+      mod->module = NULL;
+  }
   mod->info = NULL;
 
   mod->state = ST_UNLOADED_OK;
@@ -477,8 +485,12 @@ mod_unload (module_info *mod, gboolean verbose)
 
   mod->state = ST_UNLOAD_REQUESTED;
 
-  /* send the unload request */
+  /* send the unload request.  Need to ref the module so we don't
+   * accidentally unload it while this call is in progress (eg if the
+   * callback is called before the unload function returns). */
+  gimp_module_ref (mod);
   mod->unload (mod->info->shutdown_data, mod_unload_completed_callback, mod);
+  gimp_module_unref (mod);
 }
 
 
@@ -819,3 +831,29 @@ browser_refresh_callback (GtkWidget *widget, gpointer data)
   datafiles_read_directories (module_path,
 			      module_initialize, 0 /* no flags */);
 }
+
+
+static void
+gimp_module_ref (module_info *mod)
+{
+  g_return_if_fail (mod->refs >= 0);
+  g_return_if_fail (mod->module != NULL);
+  mod->refs++;
+}
+
+static void
+gimp_module_unref (module_info *mod)
+{
+  g_return_if_fail (mod->refs > 0);
+  g_return_if_fail (mod->module != NULL);
+
+  mod->refs--;
+
+  if (mod->refs == 0)
+  {
+    g_module_close (mod->module);
+    mod->module = NULL;
+  }
+}
+
+/* End of module_db.c */

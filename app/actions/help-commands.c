@@ -789,6 +789,11 @@ image_resize_cmd_callback (GtkWidget *widget,
 		      GTK_SIGNAL_FUNC (image_delete_callback),
 		      image_resize);
 
+  /* handle the image disappearing under our feet */
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "destroy",
+		      GTK_SIGNAL_FUNC (image_cancel_callback),
+		      image_resize);
+
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
@@ -834,6 +839,11 @@ image_scale_cmd_callback (GtkWidget *widget,
   /* handle the wm close signal */
   gtk_signal_connect (GTK_OBJECT (image_scale->shell), "delete_event",
 		      GTK_SIGNAL_FUNC (image_delete_callback),
+		      image_scale);
+
+  /* handle the image disappearing under our feet */
+  gtk_signal_connect (GTK_OBJECT (gdisp->gimage), "destroy",
+		      GTK_SIGNAL_FUNC (image_cancel_callback),
 		      image_scale);
 
   /*  the main vbox  */
@@ -1134,6 +1144,11 @@ image_resize_callback (GtkWidget *w,
   GImage *gimage;
 
   image_resize = (ImageResize *) client_data;
+
+  gtk_signal_disconnect_by_func (GTK_OBJECT (image_resize->gimage),
+				 GTK_SIGNAL_FUNC (image_cancel_callback),
+				 image_resize);
+
   if ((gimage = image_resize->gimage) != NULL)
     {
       if (image_resize->resize->width > 0 &&
@@ -1166,6 +1181,11 @@ image_scale_callback (GtkWidget *w,
   GImage *gimage;
 
   image_scale = (ImageResize *) client_data;
+
+  gtk_signal_disconnect_by_func (GTK_OBJECT (image_scale->gimage),
+				 GTK_SIGNAL_FUNC (image_cancel_callback),
+				 image_scale);
+
   if ((gimage = image_scale->gimage) != NULL)
     {
       if (image_scale->resize->width > 0 &&
@@ -1206,6 +1226,10 @@ image_cancel_callback (GtkWidget *w,
   ImageResize *image_resize;
 
   image_resize = (ImageResize *) client_data;
+
+  gtk_signal_disconnect_by_func (GTK_OBJECT (image_resize->gimage),
+				 GTK_SIGNAL_FUNC (image_cancel_callback),
+				 image_resize);
 
   gtk_widget_destroy (image_resize->shell);
   resize_widget_free (image_resize->resize);

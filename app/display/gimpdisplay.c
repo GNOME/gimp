@@ -271,7 +271,7 @@ gdisplay_format_title (GDisplay *gdisp,
     format++;
   }
 
-  title[MIN(i, title_len)] = 0;
+  title[MIN(i, title_len-1)] = 0;
 }
 
 

@@ -25,6 +25,7 @@ EXTRA_DIST = \
 gimpdata_DATA = \
 	gimprc			\
 	gimprc_user		\
+	gimprc.5		\
 	gtkrc			\
 	gimp_logo.ppm		\
 	gimp_splash.ppm		\
@@ -35,7 +36,7 @@ gimpdata_DATA = \
 
 gimpdata_SCRIPTS = user_install
 
-man_MANS=gimp.1 gimptool.1
+man_MANS=gimp.1 gimptool.1 gimprc.5
 
 m4datadir = $(datadir)/aclocal
 m4data_DATA = gimp.m4

@@ -99,7 +99,7 @@ placed in users home directories the first time gimp is ran.
 \fB$HOME\fP/.gimp/gtkrc - users set of GTK config settings. Options
 such as widget color and fonts sizes can be set here.
 
-\fB$PREFIX\fP/share/gtkrc - sytem wide default set of GTK config settings.
+\fB$PREFIX\fP/share/gimp/gtkrc - sytem wide default set of GTK config settings.
 
 \fB$HOME\fP/.gimp/menurc - user's set of keybindings.
 
@@ -109,6 +109,8 @@ such as widget color and fonts sizes can be set here.
 
 \fB$HOME\fP/.gimp/pluginrc - plugin initialization values are stored
 here. This file is parsed on startup and regenerated if need be.
+
+\fB$HOME\fP/.gimp/modules - location of user installed modules.
 
 \fB$HOME\fP/.gimp/tmp - default location that gimp uses as temporary space.
 
@@ -205,16 +207,16 @@ better.
 
 .SH OTHER INFO
 
-The canonical place to find GIMP info is at http://www.gimp.org.
+The canonical place to find GIMP info is at http://www.gimp.org/.
 Here you can find links to just about every other gimp site, tutorials, data 
 sets, mailing list archives, and more.
 
 There is also a Gimp User Manual available at 
-http://www.dtek.chalmers.se/~d95olofs/manual/ that goes into much more detail 
+http://manual.gimp.org/ that goes into much more detail 
 about the interactive use of Gimp.
 
 The latest version of Gimp and the gtk libs is always available at 
-ftp://ftp.gimp.org.
+ftp://ftp.gimp.org/.
 
 .SH AUTHORS
 Spencer Kimball and Peter Mattis.
@@ -239,8 +241,5 @@ Tracy Scott, Manish Singh, Nathan Summers,
 Mike Sweet, Eiichi Takamori, Tristan Tarrant,
 Owen Taylor, Ian Tester, James Wang, Kris Wehner.
 
-
-
-
-
-
+.SH "SEE ALSO"
+.BR gimprc (5)

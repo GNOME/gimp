@@ -106,7 +106,9 @@ static void plug_in_add_to_db             (void);
 static void plug_in_make_menu             (void);
 static void plug_in_callback              (GtkWidget         *widget,
 					   gpointer           client_data);
-static void plug_in_proc_def_insert       (PlugInProcDef     *proc_def);
+static void plug_in_proc_def_insert       (PlugInProcDef     *proc_def,
+					   void (*superceed_fn)(void *));
+static void plug_in_proc_def_dead         (void *freed_proc_def);
 static void plug_in_proc_def_remove       (PlugInProcDef     *proc_def);
 static void plug_in_proc_def_destroy      (PlugInProcDef     *proc_def,
 					   int                data_only);
@@ -394,6 +396,7 @@ ProcRecord plugin_query_proc =
 };
 
 
+
 void
 plug_in_init ()
 {
@@ -500,7 +503,7 @@ plug_in_init ()
     {
       proc_def = g_new (PlugInProcDef, 1);
       *proc_def = *((PlugInProcDef*) tmp->data);
-      plug_in_proc_def_insert (proc_def);
+      plug_in_proc_def_insert (proc_def, NULL);
       tmp = tmp->next;
     }
 
@@ -517,7 +520,7 @@ plug_in_init ()
 	  tmp2 = tmp2->next;
 
  	  proc_def->mtime = plug_in_def->mtime; 
-	  plug_in_proc_def_insert (proc_def);
+	  plug_in_proc_def_insert (proc_def, plug_in_proc_def_dead);
 	}
     }
 
@@ -788,6 +791,7 @@ plug_in_def_add (PlugInDef *plug_in_def)
 {
   GSList *tmp;
   PlugInDef *tplug_in_def;
+  PlugInProcDef *proc_def;
   char *t1, *t2;
 
   t1 = strrchr (plug_in_def->prog, '/');
@@ -795,6 +799,27 @@ plug_in_def_add (PlugInDef *plug_in_def)
     t1 = t1 + 1;
   else
     t1 = plug_in_def->prog;
+
+  /* If this is a file load or save plugin, make sure we have
+   * something for one of the extensions, prefixes, or magic number.
+   * Other bits of code rely on detecting file plugins by the presence
+   * of one of these things, but Nick Lamb's alien/unknown format
+   * loader needs to be able to register no extensions, prefixes or
+   * magics. -- austin 13/Feb/99 */
+  tmp = plug_in_def->proc_defs;
+  while (tmp)
+  {
+    proc_def = tmp->data;
+    if (!proc_def->extensions && !proc_def->prefixes && !proc_def->magics &&
+	proc_def->menu_path &&
+	(!strncmp (proc_def->menu_path, "<Load>", 6) ||
+	 !strncmp (proc_def->menu_path, "<Save>", 6)))
+    {
+      proc_def->extensions = g_strdup("");
+    }
+    tmp = tmp->next;
+  }
+
 
   tmp = plug_in_defs;
   while (tmp)
@@ -2388,7 +2413,8 @@ plug_in_callback (GtkWidget *widget,
 }
 
 static void
-plug_in_proc_def_insert (PlugInProcDef *proc_def)
+plug_in_proc_def_insert (PlugInProcDef *proc_def,
+			 void (*superceed_fn)(void*))
 {
   PlugInProcDef *tmp_proc_def;
   GSList *tmp, *prev;
@@ -2416,6 +2442,9 @@ plug_in_proc_def_insert (PlugInProcDef *proc_def)
 	  tmp_proc_def->menu_path = NULL;
 	  tmp_proc_def->accelerator = NULL;
 
+	  if (superceed_fn)
+	    (*superceed_fn) (tmp_proc_def);
+
 	  plug_in_proc_def_destroy (tmp_proc_def, FALSE);
 	  return;
 	}
@@ -2439,6 +2468,31 @@ plug_in_proc_def_insert (PlugInProcDef *proc_def)
     }
 
   proc_defs = g_slist_append (proc_defs, proc_def);
+}
+
+/* called when plug_in_proc_def_insert causes a proc_def to be
+ * overridden and thus g_free()d. */
+static void
+plug_in_proc_def_dead (void *freed_proc_def)
+{
+  GSList *tmp;
+  PlugInDef *plug_in_def;
+  PlugInProcDef *proc_def = freed_proc_def;
+
+  g_warning (_("removing duplicate PDB procedure \"%s\""),
+	     proc_def->db_info.name);
+
+  /* search the plugin list to see if any plugins had references to 
+   * the recently freed proc_def. */
+  tmp = plug_in_defs;
+  while (tmp)
+    {
+      plug_in_def = tmp->data;
+
+      plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
+					       freed_proc_def);
+      tmp = tmp->next;
+    }
 }
 
 static void
