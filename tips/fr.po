@@ -2,14 +2,15 @@
 # Copyright (C) 2002,2004 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
-# Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
+# maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
+# Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips 2.0pre4\n"
+"Project-Id-Version: gimp-tips 2.2.0pre1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 21:51+0100\n"
-"PO-Revision-Date: 2004-02-28 16:07+0100\n"
+"POT-Creation-Date: 2004-11-13 18:06+0100\n"
+"PO-Revision-Date: 2004-11-13 18:06+0100\n"
 "Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -17,7 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: tips/gimp-tips.xml.in.h:1
-#, fuzzy
 msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Bienvenue sur Le Gimp !</big>"
 
@@ -46,7 +46,6 @@ msgstr ""
 "d'arrière-plan au lieu de la couleur de premier-plan."
 
 #: tips/gimp-tips.xml.in.h:5
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -59,8 +58,8 @@ msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"<tt>Shift</tt>-cliquez sur l'icone œil dans le dialogue des calques pour "
-"cacher tous les calques sauf celui-là. <tt>Shift</tt>-cliquez à nouveau pour "
+"<tt>Maj</tt>-cliquez sur l'icone œil dans le dialogue des calques pour "
+"cacher tous les calques sauf celui-là. <tt>Maj</tt>-cliquez à nouveau pour "
 "afficher tous les calques."
 
 #: tips/gimp-tips.xml.in.h:7
@@ -93,7 +92,6 @@ msgstr ""
 "clavier» est activé, Ils sont enregistrés lorsque vous quittez GIMP."
 
 #: tips/gimp-tips.xml.in.h:9
-#, fuzzy
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -118,15 +116,14 @@ msgstr ""
 "&gt;Couleurs-&gt;Courbes)."
 
 #: tips/gimp-tips.xml.in.h:11
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
 msgstr ""
 "Si vous tracez un chemin (Édition-&gt;Tracer un chemin), un outil courant de "
-"dessin avec ses réglages peut être utilisé. Vous pouvez utilisez le pinceau "
-"en mode dégradé ou même la gomme ou l'outil éclaircir/assombrir."
+"peinture avec ses réglages courants peut être utilisé. Vous pouvez utilisez "
+"le pinceau en mode dégradé ou même la gomme ou l'outil éclaircir/assombrir."
 
 #: tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -138,7 +135,6 @@ msgstr ""
 "d'outils et les autres dialogues."
 
 #: tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -149,7 +145,6 @@ msgstr ""
 "l'image) si vous souhaitez que le filtre agisse sur l'image entière."
 
 #: tips/gimp-tips.xml.in.h:14
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -168,7 +163,7 @@ msgid ""
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
-"Presser et maintenir la touche <tt>Shift</tt> avant de faire une sélection "
+"Presser et maintenir la touche <tt>Maj</tt> avant de faire une sélection "
 "vous permet de l'ajouter à la sélection courante au lieu de la remplacer. "
 "Utiliser <tt>Ctrl</tt> avant de faire une sélection la soustrait de la "
 "sélection courante."
@@ -177,6 +172,8 @@ msgstr ""
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr ""
+"Gimp peut presque annuler tous les changements faits dans l'image, n'hésitez "
+"donc pas à expérimenter."
 
 #: tips/gimp-tips.xml.in.h:17
 msgid ""
@@ -214,7 +211,6 @@ msgstr ""
 "alpha »."
 
 #: tips/gimp-tips.xml.in.h:20
-#, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
@@ -222,7 +218,7 @@ msgid ""
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
-"Pour créer un cercle parfait maintenez la touche <tt>Shift</tt> tandis que "
+"Pour créer un cercle parfait maintenez la touche <tt>Maj</tt> tandis que "
 "vous faites une sélection elliptique. Pour placer un cercle précisement, "
 "mettez en place des guides verticaux et horizontaux tangents au cercle que "
 "vous voulez faire, placez votre curseur à l'intersection des guides et la "
@@ -235,7 +231,7 @@ msgid ""
 "cursor position. If you also press <tt>Ctrl</tt>, the line will be "
 "constrained to 15 degree angles."
 msgstr ""
-"En utilisant un outil de dessin (Pinceau, Aérographe ou Crayon), <tt>Shift</"
+"En utilisant un outil de dessin (Pinceau, Aérographe ou Crayon), <tt>Maj</"
 "tt>-clic vous dessinera une ligne droite depuis votre dernier point tracé "
 "jusqu'à la position courante du curseur. Si vous appuyer également sur "
 "<tt>Ctrl</tt> la ligne sera contrainte à des angles multiples de 15°."
@@ -253,14 +249,13 @@ msgstr ""
 "qu'un projet est terminé, vous pouvez l'enregistrer en JPEG, PNG, GIF, ..."
 
 #: tips/gimp-tips.xml.in.h:23
-#, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Try "
 "pressing <tt>Shift</tt> at the same time."
 msgstr ""
 "Vous pouvez ajuster ou replacer une sélection en utilisant <tt>Alt</tt> "
-"glissé. Si cette action porvoque un déplacement de la fenêtre c'est que "
+"glissé. Si cette action provoque un déplacement de la fenêtre c'est que "
 "votre gestionnaire utilise déjà la touche <tt>Alt</tt>. Essayer alors "
 "d'appuyer sur <tt>Maj</tt> en même temps."
 
@@ -273,7 +268,6 @@ msgstr ""
 "cliquant et en vous déplacant à gauche et à droite."
 
 #: tips/gimp-tips.xml.in.h:25
-#, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -304,7 +298,6 @@ msgstr ""
 "sélection avec cette couleur."
 
 #: tips/gimp-tips.xml.in.h:28
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -313,7 +306,7 @@ msgstr ""
 "Vous pouvez dessiner de simples carrés ou cercles en utilisant Édition-&gt;"
 "Tracer la sélection. Il trace les contours de votre sélection courante. Des "
 "figures géométriques plus complexes sont réalisables avec l'outil chemin ou "
-"avec Filtres-&gt;Rendu-&gt;GFig."
+"avec Filtres-&gt;Rendu-&gt;Figures géométriques."
 
 #: tips/gimp-tips.xml.in.h:29
 msgid ""
@@ -332,13 +325,12 @@ msgstr ""
 "d'un calque dans le dialogue des calques."
 
 #: tips/gimp-tips.xml.in.h:31
-#, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
 "are making a selection in order to constrain it to a square or a circle, or "
 "to have it centered on its starting point."
 msgstr ""
-"Vous pouvez presser et maintenir les touches <tt>Shift</tt> et <tt>Ctrl</tt> "
+"Vous pouvez presser et maintenir les touches <tt>Maj</tt> et <tt>Ctrl</tt> "
 "tandis que vous faites une sélection de façon à la contraindre à un cercle "
 "ou un carré parfait, ou pour l'avoir centrée sur son point de départ."
 
@@ -351,9 +343,9 @@ msgid ""
 msgstr ""
 "Vous pouvez sauvegarder une sélection dans un canal (Sélection-&gt;"
 "Enregistrer dans un canal) puis la modifier avec n'importe quel outil de "
-"dessin. En utilisant les boutons du dialogues des canaux, vous pouvez "
-"activer/désactiver la visibilté de ce nouveau canal ou le convertir comme "
-"une sélection."
+"dessin. En utilisant les boutons du dialogue des canaux, vous pouvez activer/"
+"désactiver la visibilité de ce nouveau canal ou le convertir comme une "
+"sélection."
 
 #: tips/gimp-tips.xml.in.h:33
 msgid ""
@@ -391,7 +383,7 @@ msgstr ""
 #~ msgstr ""
 #~ "La boite de dialogue de sélection de fichier à une complétion de type "
 #~ "commande en ligne <tt>Tab</tt> tout comme la console. Tapez le début d'un "
-#~ "nom de fichier, appuyer sur <tt>Tab</tt> et voilà c'est complèté."
+#~ "nom de fichier, appuyer sur <tt>Tab</tt> et voilà c'est complété."
 
 #~ msgid ""
 #~ "Nearly all image operations are performed by right-clicking on the image. "

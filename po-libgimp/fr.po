@@ -5,17 +5,18 @@
 # Vincent Renardias <vincent@ldsol.com>, 1998-1999.
 # David Monniaux <monniaux@ens.fr>, 1999.
 # Joaquim Fellmann <joaquim@hrnet.fr>, 2000.
-# maintainer: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2004.
-# Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
+# Christophe Merlet (RedFox) <redfox@redfoxcenter.org>, 2000-2004.
+# maintainer: Raymond Ostertag <r.ostertag@caramail.com>, 2003-2004.
+# Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp 2.0.1\n"
+"Project-Id-Version: gimp-libgimp 2.2.0pre1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-31 23:17+0100\n"
-"PO-Revision-Date: 2004-04-24 19:50+0200\n"
-"Last-Translator: Christophe Merlet (RedFox) <redfox@redfoxcenter.org>\n"
-"Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
+"POT-Creation-Date: 2004-11-13 17:50+0100\n"
+"PO-Revision-Date: 2004-11-13 17:46+0100\n"
+"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
+"Language-Team: GNOME french Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -67,7 +68,7 @@ msgstr "%s ne peut manipuler les masques de calque"
 
 #: libgimp/gimpexport.c:270
 msgid "Apply Layer Masks"
-msgstr "Aplliquer les masques de calque"
+msgstr "Appliquer les masques de calque"
 
 #: libgimp/gimpexport.c:278
 #, c-format
@@ -99,7 +100,7 @@ msgid ""
 msgstr ""
 "Convertir en couleurs indexées en utilisant\n"
 "les réglages par défaut (faites-le à la main\n"
-"pour régler le résultat)"
+"pour optimiser le résultat)"
 
 #: libgimp/gimpexport.c:306
 #, c-format
@@ -112,7 +113,7 @@ msgid ""
 "(Do it manually to tune the result)"
 msgstr ""
 "Convertir en couleurs indexées en utilisant les réglages par défaut\n"
-"(faites-le à la main pour régler le résultat)"
+"(faites-le à la main pour optimiser le résultat)"
 
 #: libgimp/gimpexport.c:316
 #, c-format
@@ -199,14 +200,13 @@ msgstr "Sélecteur de polices"
 msgid "Gradient Selection"
 msgstr "Sélecteur de dégradés"
 
-#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:182
+#: libgimp/gimpmenu.c:406 libgimpwidgets/gimpintstore.c:181
 msgid "(Empty)"
-msgstr ""
+msgstr "(Vide)"
 
 #: libgimp/gimppalettemenu.c:91
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Sélection des motifs"
+msgstr "Sélection de palettes"
 
 #: libgimp/gimppatternmenu.c:113
 msgid "Pattern Selection"
@@ -218,73 +218,71 @@ msgstr "pourcent"
 
 #: libgimpbase/gimpbaseenums.c:23
 msgid "Small"
-msgstr ""
+msgstr "Petit"
 
 #: libgimpbase/gimpbaseenums.c:24
 msgid "Medium"
-msgstr ""
+msgstr "Moyen"
 
 #: libgimpbase/gimpbaseenums.c:25
 msgid "Large"
-msgstr ""
+msgstr "Grand"
 
 #: libgimpbase/gimpbaseenums.c:57
 msgid "Light Checks"
-msgstr ""
+msgstr "Damier clair"
 
 #: libgimpbase/gimpbaseenums.c:58
 msgid "Mid-Tone Checks"
-msgstr ""
+msgstr "Damier de ton moyen"
 
 #: libgimpbase/gimpbaseenums.c:59
 msgid "Dark Checks"
-msgstr ""
+msgstr "Damier sombre"
 
 #: libgimpbase/gimpbaseenums.c:60
 msgid "White Only"
-msgstr ""
+msgstr "Blanc seulement"
 
 #: libgimpbase/gimpbaseenums.c:61
 msgid "Gray Only"
-msgstr ""
+msgstr "Gris seulement"
 
 #: libgimpbase/gimpbaseenums.c:62
-#, fuzzy
 msgid "Black Only"
-msgstr "Noir"
+msgstr "Noir seulement"
 
 #: libgimpbase/gimpbaseenums.c:91
 msgid "RGB color"
-msgstr ""
+msgstr "Couleur RVB"
 
 #: libgimpbase/gimpbaseenums.c:92 libgimpbase/gimpbaseenums.c:127
-#, fuzzy
 msgid "Grayscale"
-msgstr "Convertir en niveaux de gris"
+msgstr "Niveaux de gris"
 
 #: libgimpbase/gimpbaseenums.c:93
 msgid "Indexed color"
-msgstr ""
+msgstr "Couleur indexée"
 
 #: libgimpbase/gimpbaseenums.c:125
 msgid "RGB"
-msgstr ""
+msgstr "RVB"
 
 #: libgimpbase/gimpbaseenums.c:126
 msgid "RGB-alpha"
-msgstr ""
+msgstr "RVB-Alpha"
 
 #: libgimpbase/gimpbaseenums.c:128
 msgid "Grayscale-alpha"
-msgstr ""
+msgstr "Niveaux de gris-Alpha"
 
 #: libgimpbase/gimpbaseenums.c:129
 msgid "Indexed"
-msgstr ""
+msgstr "Indexé"
 
 #: libgimpbase/gimpbaseenums.c:130
 msgid "Indexed-alpha"
-msgstr ""
+msgstr "Indexé-Alpha"
 
 #: libgimpbase/gimpmemsize.c:177
 #, c-format
@@ -379,25 +377,25 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Échec lors de la création du dossier de vignettes « %s »."
 
 #: libgimpthumb/gimpthumbnail.c:917
-#, fuzzy, c-format
+#, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Échec lors de la création du dossier de vignettes « %s »."
+msgstr "Impossible de créer de vignettes pour « %s » : %s"
 
-#: libgimpwidgets/gimpcolorbutton.c:93
-msgid "/_Foreground Color"
-msgstr "/Couleur de _premier plan"
+#: libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "Couleur de _premier plan"
 
-#: libgimpwidgets/gimpcolorbutton.c:95
-msgid "/_Background Color"
-msgstr "/Couleur d'_arrière-plan"
+#: libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "Couleur d'_arrière-plan"
 
-#: libgimpwidgets/gimpcolorbutton.c:98
-msgid "/Blac_k"
-msgstr "/_Noir"
+#: libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "_Noir"
 
-#: libgimpwidgets/gimpcolorbutton.c:100
-msgid "/_White"
-msgstr "/_Blanc"
+#: libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "_Blanc"
 
 #: libgimpwidgets/gimpcolorscales.c:133
 msgid "Scales"
@@ -461,13 +459,12 @@ msgid "Alpha"
 msgstr "Alpha"
 
 #: libgimpwidgets/gimpcolorscales.c:243
-#, fuzzy
 msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "Notation hexadécimal de la couleur tel qu'utilisé en HTML"
+msgstr "Notation hexadécimale de la couleur telle qu'utilisée en HTML et CSS"
 
 #: libgimpwidgets/gimpcolorscales.c:248
 msgid "HTML _Notation:"
-msgstr ""
+msgstr "_Notation HTML :"
 
 #: libgimpwidgets/gimpcolorselection.c:203
 msgid "Current:"
@@ -486,19 +483,16 @@ msgid "Select File"
 msgstr "Sélectionnez un fichier"
 
 #: libgimpwidgets/gimpmemsizeentry.c:232
-#, fuzzy
 msgid "Kilobytes"
-msgstr "Kilo-octets"
+msgstr "Kilooctets"
 
 #: libgimpwidgets/gimpmemsizeentry.c:233
-#, fuzzy
 msgid "Megabytes"
-msgstr "Méga-octets"
+msgstr "Mégaoctets"
 
 #: libgimpwidgets/gimpmemsizeentry.c:234
-#, fuzzy
 msgid "Gigabytes"
-msgstr "Giga-octets"
+msgstr "Gigaoctets"
 
 #: libgimpwidgets/gimppatheditor.c:243
 msgid "Writable"
@@ -518,16 +512,16 @@ msgstr ""
 
 #: libgimpwidgets/gimppreviewarea.c:126
 msgid "Check Size"
-msgstr ""
+msgstr "Taille du damier"
 
 #: libgimpwidgets/gimppreviewarea.c:133
 msgid "Check Style"
-msgstr ""
+msgstr "Style du damier"
 
 #. toggle button to (des)activate the instant preview
 #: libgimpwidgets/gimppreview.c:240
 msgid "_Preview"
-msgstr ""
+msgstr "_Aperçu"
 
 #: libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -563,7 +557,7 @@ msgstr "Visible"
 
 #: libgimpwidgets/gimpstock.c:153 libgimpwidgets/gimpstock.c:157
 msgid "_Stroke"
-msgstr ""
+msgstr "_Tracer"
 
 #: libgimpwidgets/gimpstock.c:169
 msgid "L_etter Spacing"
@@ -579,7 +573,7 @@ msgstr "_Redimensionner"
 
 #: libgimpwidgets/gimpstock.c:186 libgimpwidgets/gimpstock.c:290
 msgid "_Scale"
-msgstr "_Étirer"
+msgstr "_Échelle"
 
 #: libgimpwidgets/gimpstock.c:269
 msgid "Crop"
@@ -696,15 +690,16 @@ msgstr "Absolute Colorimetric"
 
 #: modules/cdisplay_proof.c:138
 msgid "Color proof filter using ICC color profile"
-msgstr "Filtre d'épreuve des couleurs utilisant le profil colorimétrique ICC"
+msgstr ""
+"Filtre de calibration des couleurs utilisant le profil colorimétrique ICC"
 
 #: modules/cdisplay_proof.c:238
 msgid "Color Proof"
-msgstr "Épreuve des couleurs"
+msgstr "Calibration des couleurs"
 
 #: modules/cdisplay_proof.c:457
 msgid "_Intent:"
-msgstr "_Intent :"
+msgstr "_Rendu des couleurs :"
 
 #: modules/cdisplay_proof.c:460
 msgid "Choose an ICC Color Profile"
@@ -716,7 +711,7 @@ msgstr "_Profil :"
 
 #: modules/cdisplay_proof.c:471
 msgid "_Black Point Compensation"
-msgstr "_Point de compensation du noir"
+msgstr "Point de _compensation du noir"
 
 #: modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
@@ -759,13 +754,12 @@ msgid "Black"
 msgstr "Noir"
 
 #: modules/colorsel_cmyk.c:191
-#, fuzzy
 msgid "Black _Pullout:"
-msgstr "Supplément de noir (%) :"
+msgstr "_Supplément de noir :"
 
 #: modules/colorsel_cmyk.c:208
 msgid "The percentage of black to pull out of the colored inks."
-msgstr ""
+msgstr "Le pourcentage de noir à ajouter aux encres de couleur."
 
 #: modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -786,9 +780,3 @@ msgstr "Aquarelle"
 #: modules/colorsel_water.c:220
 msgid "Pressure"
 msgstr "Pression"
-
-#~ msgid "He_x Triplet:"
-#~ msgstr "Triplet he_xa :"
-
-#~ msgid "None"
-#~ msgstr "Aucun"
