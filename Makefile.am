@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = m4  \
+SUBDIRS = \
 	tools		\
 	intl		\
 	libgimp		\
@@ -284,5 +284,3 @@ checkin: populate
 
 release:
 	$(MAKE) dist distdir=$(PACKAGE)`date +"%y%m%d"`
-
-ACLOCAL_AMFLAGS = -I m4
