@@ -1,5 +1,9 @@
 2002-05-06  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimprc.c (gimp_rc_query): free the list of properties.
+
+2002-05-06  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpconfig-serialize.c
 	* app/config/gimpconfig-utils.[ch]
 	* app/config/gimpconfig.[ch]

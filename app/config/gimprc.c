@@ -221,6 +221,8 @@ gimp_rc_query (GimpRc      *rc,
                                                            key));
     }
 
+  g_free (property_specs);
+
   return retval;
 }
 
