@@ -819,6 +819,7 @@ help/C/image/image/mode/Makefile
 help/C/image/image/transforms/Makefile
 help/C/image/select/Makefile
 help/C/image/view/Makefile
+help/C/images/Makefile
 help/C/layers/Makefile
 help/C/layers/stack/Makefile
 help/C/open/Makefile

@@ -1,0 +1,435 @@
+<HTML
+><HEAD
+><TITLE
+>Command Line Options</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="contents.html"><LINK
+REL="PREVIOUS"
+TITLE="Keyboard Shortcuts"
+HREF="keyboard_shortcuts.html"><LINK
+REL="NEXT"
+TITLE="GIMP Tool"
+HREF="gimptool.html"></HEAD
+><BODY
+CLASS="APPENDIX"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="keyboard_shortcuts.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="gimptool.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="APPENDIX"
+><H1
+><A
+NAME="COMMAND-LINE"
+>Appendix B. Command Line Options</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="command_line.html#AEN4203"
+>GIMP</A
+></DT
+><DT
+><A
+HREF="gimptool.html"
+>GIMP Tool</A
+></DT
+><DT
+><A
+HREF="gimp_remote.html"
+><SPAN
+CLASS="APPLICATION"
+>GIMP Remote</SPAN
+></A
+></DT
+></DL
+></DIV
+><A
+NAME="AEN4201"
+></A
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN4203"
+>GIMP</A
+></H1
+><P
+>      When you launch <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>, it will often be
+      from a graphical menu where you simply click on the
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> entry. This usually launches
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> in its default form without any
+      images loaded. If you launch <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> from
+      a console, or edit the command used to launch it from the menu,
+      you can pass several options to it. These are in the format:
+      <B
+CLASS="COMMAND"
+>gimp [options ... ] [files ... ]</B
+>
+    </P
+><P
+>      <P
+></P
+><DL
+><P
+><B
+><SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> Options</B
+></P
+><DT
+><B
+CLASS="COMMAND"
+>-h, --help</B
+></DT
+><DD
+><P
+>	      Displays a list of available options, and gives a terse
+	      description of each one.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>-v, --version</B
+></DT
+><DD
+><P
+>	      Prints the version number of the installed
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>-b, --batch &lt;commands&gt;</B
+></DT
+><DD
+><P
+>	      Runs <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> in batch
+	      (non-interactive) mode. Can someone explain how this
+	      works please!!
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>-g, --gimprc &lt;gimprc&gt;</B
+></DT
+><DD
+><P
+>	      Use an alternative <TT
+CLASS="FILENAME"
+>gimprc</TT
+>
+	      (<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> settings file) instead of the
+	      default which is usually located at
+	      <TT
+CLASS="FILENAME"
+>~/gimp-1.1/gimprc</TT
+>. This is useful
+	      where plug-in paths or machine specifications may be different.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>-n, --no-interface</B
+></DT
+><DD
+><P
+>	      Run without a user interface.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>-r, --restore-session</B
+></DT
+><DD
+><P
+>	      Attempt to restore a saved session. This will start
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> with the various dialogs
+	      as they were in the saved state.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--no-data</B
+></DT
+><DD
+><P
+>	      Start <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> without loading
+	      patterns, gradients, palettes and brushes. This
+	      significantly reduces the startup time, and is often
+	      useful when using <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> in
+	      non-interactive situations.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--verbose</B
+></DT
+><DD
+><P
+>	      Prints startup messages to the console, showing all the
+	      settings files which are parsed and the modules
+	      loaded. This is often useful in debugging situations.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--no-splash</B
+></DT
+><DD
+><P
+>	      Do not show the splash screen. This significantly
+	      decreases the load time, although you will not see the
+	      progress bar from the splash screen. This automatically
+	      implies <B
+CLASS="COMMAND"
+>--verbose</B
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--no-splash-image</B
+></DT
+><DD
+><P
+>	      Do not show the splash screen image as part of the splash
+	      screen. Only shows text information in the splash
+	      screen. The progress indicator is still visible. This
+	      decreases <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>'s load time.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--no-shm</B
+></DT
+><DD
+><P
+>	      Do not use shared memory between
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> and its plug-ins. Instead
+	      of using shared memory, <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>
+	      will send data via pipe. This will result in slower
+	      performance than using shared memory.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--no-xshm</B
+></DT
+><DD
+><P
+>	      Do not use the X Shared Memory extension. If
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> is being displayed on a
+	      remote X server, this probably needs to be enabled. It is
+	      also useful for any X server that doesn't properly support
+	      the X shared memory extension. This will result in slower
+	      performance than with X shared memory enabled.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--display &lt;display&gt;</B
+></DT
+><DD
+><P
+>	      Use the specified X display.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--console-messages</B
+></DT
+><DD
+><P
+>	      Do not pop-up dialog boxes on errors or warning, print
+	      them to the console instead.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--debug-handlers</B
+></DT
+><DD
+><P
+>	      Enable debug handlers which turns on the stack trace prompt
+	      for all signals, not just fatal ones.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--system-gimprc &lt;gimprc&gt;</B
+></DT
+><DD
+><P
+>	      Use an alternate system-wide gimprc file.
+	    </P
+></DD
+></DL
+>
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="keyboard_shortcuts.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="gimptool.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Keyboard Shortcuts</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>GIMP Tool</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

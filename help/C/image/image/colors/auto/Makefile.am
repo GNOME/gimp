@@ -3,8 +3,7 @@
 helpdatadir = $(gimpdatadir)/help/C/image/image/colors/auto
 
 helpdata_DATA = \
-        equalize.html \
-        index.html
+        equalize.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

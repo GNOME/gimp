@@ -3,11 +3,10 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/palette_editor
 
 helpdata_DATA = \
-	delete_palette.html \
-        import_palette.html \
-        index.html \
-        merge_palette.html \
-        new_palette.html \
+	delete_palette.html	\
+        import_palette.html	\
+        merge_palette.html	\
+        new_palette.html	\
         palette_editor.html 
 
 EXTRA_DIST = $(helpdata_DATA)

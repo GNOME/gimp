@@ -3,16 +3,15 @@
 helpdatadir = $(gimpdatadir)/help/C/image/edit
 
 helpdata_DATA = \
-        clear.html \
-        copy.html \
-        cut.html \
-        fill.html \
-        index.html \
-        paste.html \
-        paste_as_new.html \
-        paste_into.html \
-        redo.html \
-        stroke.html \
+        clear.html		\
+        copy.html		\
+        cut.html		\
+        fill.html		\
+        paste.html		\
+        paste_as_new.html	\
+        paste_into.html		\
+        redo.html		\
+        stroke.html		\
         undo.html 
 
 EXTRA_DIST = $(helpdata_DATA)

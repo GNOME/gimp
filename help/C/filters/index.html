@@ -1,64 +1,422 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Index for filters</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">filters Index</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p><p>
-          <a href="../index.html">Top index</a><p>
-          <p>Topics in this directory:<p>
-          <a href="avi.html">avi</a><br>
-          <a href="bmp.html">bmp</a><br>
-          <a href="bz2.html">bz2</a><br>
-          <a href="cel.html">cel</a><br>
-          <a href="dataurl.html">dataurl</a><br>
-          <a href="faxg3.html">faxg3</a><br>
-          <a href="fits.html">fits</a><br>
-          <a href="gbr.html">gbr</a><br>
-          <a href="gfli.html">gfli</a><br>
-          <a href="gicon.html">gicon</a><br>
-          <a href="gif.html">gif</a><br>
-          <a href="gimp_xcf_load.html">gimp_xcf_load</a><br>
-          <a href="gimp_xcf_save.html">gimp_xcf_save</a><br>
-          <a href="gpb.html">gpb</a><br>
-          <a href="gtm.html">gtm</a><br>
-          <a href="gz.html">gz</a><br>
-          <a href="hrz.html">hrz</a><br>
-          <a href="jpeg.html">jpeg</a><br>
-          <a href="miff.html">miff</a><br>
-          <a href="mpeg.html">mpeg</a><br>
-          <a href="pat.html">pat</a><br>
-          <a href="pcx.html">pcx</a><br>
-          <a href="pix.html">pix</a><br>
-          <a href="png.html">png</a><br>
-          <a href="pnm.html">pnm</a><br>
-          <a href="psd.html">psd</a><br>
-          <a href="ps.html">ps</a><br>
-          <a href="psp.html">psp</a><br>
-          <a href="sgi.html">sgi</a><br>
-          <a href="sunras.html">sunras</a><br>
-          <a href="tga.html">tga</a><br>
-          <a href="tiff.html">tiff</a><br>
-          <a href="url.html">url</a><br>
-          <a href="wmf.html">wmf</a><br>
-          <a href="xbm.html">xbm</a><br>
-          <a href="xjt.html">xjt</a><br>
-          <a href="xpm.html">xpm</a><br>
-          <a href="xwd.html">xwd</a><br>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
+<HTML
+><HEAD
+><TITLE
+>Filters</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="PREVIOUS"
+TITLE=" Edit Qmask Attributes "
+HREF="../dialogs/edit_qmask_attributes.html"><LINK
+REL="NEXT"
+TITLE="Reshow Last"
+HREF="../filters/reshow_last.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../dialogs/edit_qmask_attributes.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/reshow_last.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="FILTERS-FILTERS-CHAPTER"
+>Chapter 13. Filters</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="../filters/index.html#FILTERS-FILTERS-INTRODUCTION"
+>Filters Introduction</A
+></DT
+><DT
+><A
+HREF="../filters/reshow_last.html"
+>Reshow Last</A
+></DT
+><DT
+><A
+HREF="../filters/repeat_last.html"
+>Repeat Last</A
+></DT
+><DT
+><A
+HREF="../filters/applycanvas.html"
+>Description for Apply Canvas Filter</A
+></DT
+><DT
+><A
+HREF="../filters/blinds.html"
+>Blinds</A
+></DT
+><DT
+><A
+HREF="../filters/blur.html"
+>Blur</A
+></DT
+><DT
+><A
+HREF="../filters/bz2.html"
+>BZ2</A
+></DT
+><DT
+><A
+HREF="../filters/cubism.html"
+>Cubism</A
+></DT
+><DT
+><A
+HREF="../filters/fits.html"
+><SPAN
+CLASS="ACRONYM"
+>FITS</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/gpb.html"
+><SPAN
+CLASS="ACRONYM"
+>GPB</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/gtm.html"
+><SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> Table Magic</A
+></DT
+><DT
+><A
+HREF="../filters/gauss_iir.html"
+><SPAN
+CLASS="ACRONYM"
+>IIR</SPAN
+> Gaussian Blur</A
+></DT
+><DT
+><A
+HREF="../filters/gauss_rle.html"
+><SPAN
+CLASS="ACRONYM"
+>RLE</SPAN
+> Gaussian Blur</A
+></DT
+><DT
+><A
+HREF="../filters/gz.html"
+>GZ</A
+></DT
+><DT
+><A
+HREF="../filters/hrz.html"
+>HRZ</A
+></DT
+><DT
+><A
+HREF="../filters/jpeg.html"
+><SPAN
+CLASS="ACRONYM"
+>JPEG</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/miff.html"
+><SPAN
+CLASS="ACRONYM"
+>MIFF</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/oilify.html"
+>Oilify</A
+></DT
+><DT
+><A
+HREF="../filters/pat.html"
+><SPAN
+CLASS="ABBREV"
+>PAT</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/pixelize.html"
+>Pixelize</A
+></DT
+><DT
+><A
+HREF="../filters/png.html"
+><SPAN
+CLASS="ACRONYM"
+>PNG</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/pnm.html"
+><SPAN
+CLASS="ACRONYM"
+>PNM</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/print.html"
+>The <SPAN
+CLASS="INTERFACE"
+>Print</SPAN
+> Plugin</A
+></DT
+><DT
+><A
+HREF="../filters/psd.html"
+><SPAN
+CLASS="ACRONYM"
+>PSD</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/psp.html"
+><SPAN
+CLASS="ACRONYM"
+>PSP</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/gqbist.html"
+>Qbist</A
+></DT
+><DT
+><A
+HREF="../filters/ripple.html"
+>Ripple</A
+></DT
+><DT
+><A
+HREF="../filters/scatter_hsv.html"
+>Scatter <SPAN
+CLASS="ACRONYM"
+>HSV</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/semiflatten.html"
+>Semi Flatten</A
+></DT
+><DT
+><A
+HREF="../filters/sgi.html"
+><SPAN
+CLASS="ACRONYM"
+>SGI</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/sharpen.html"
+>Sharpen</A
+></DT
+><DT
+><A
+HREF="../filters/shift.html"
+>Shift</A
+></DT
+><DT
+><A
+HREF="../filters/sunras.html"
+>Sunras</A
+></DT
+><DT
+><A
+HREF="../filters/tga.html"
+>TGA</A
+></DT
+><DT
+><A
+HREF="../filters/tiff.html"
+><SPAN
+CLASS="ACRONYM"
+>TIFF</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/tile.html"
+>Tile</A
+></DT
+><DT
+><A
+HREF="../filters/url.html"
+><SPAN
+CLASS="ACRONYM"
+>URL</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/vinvert.html"
+>Value Invert</A
+></DT
+><DT
+><A
+HREF="../filters/wmf.html"
+><SPAN
+CLASS="ACRONYM"
+>WMF</SPAN
+></A
+></DT
+><DT
+><A
+HREF="../filters/xwd.html"
+><SPAN
+CLASS="ACRONYM"
+>XWD</SPAN
+></A
+></DT
+></DL
+></DIV
+><A
+NAME="AEN2869"
+></A
+><A
+NAME="AEN2871"
+></A
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTERS-FILTERS-INTRODUCTION"
+>Filters Introduction</A
+></H1
+><A
+NAME="AEN2875"
+></A
+><A
+NAME="AEN2877"
+></A
+><P
+>    This chapter describes the filters (or Plug-Ins) shipping with
+    the <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> main distribution.
+  </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../dialogs/edit_qmask_attributes.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/reshow_last.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="INTERFACE"
+>Edit Qmask Attributes</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Reshow Last</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

@@ -1671,7 +1671,7 @@ prefs_cmd_callback (GtkWidget *widget,
 					  _("Default Comment"),
 					  GTK_CTREE (ctree),
 					  _("Default Comment"),
-					  "dialogs/preferences/default_comment.html",
+					  "dialogs/preferences/new_file.html#default_comment",
 					  top_insert,
 					  &child_insert,
 					  page_index);

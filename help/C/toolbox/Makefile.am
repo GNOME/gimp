@@ -5,7 +5,7 @@ SUBDIRS = help
 helpdatadir = $(gimpdatadir)/help/C/toolbox
 
 helpdata_DATA = \
-        index.html \
+        index.html	\
         toolbox.html 
 
 EXTRA_DIST = $(helpdata_DATA)

@@ -156,7 +156,7 @@ static HelpPage pages[] =
     NULL,
     NULL,
     NULL,
-    "welcome.html"
+    "introduction.html"
   }
 };
 
@@ -425,7 +425,7 @@ html_source (HelpPage *page,
       gtk_signal_handler_unblock_by_data (GTK_OBJECT (GTK_COMBO (combo)->entry),
 					  combo);
     }
-      
+
   update_toolbar (page);
 }
 
@@ -443,7 +443,8 @@ load_page (HelpPage *source_page,
   gchar    *old_dir;
   gchar    *new_dir, *new_base;
   gchar    *new_ref;
-  gboolean  page_valid = FALSE;
+  gboolean  page_valid  = FALSE;
+  gboolean  filters_dir = FALSE;
 
   g_return_val_if_fail (ref != NULL && source_page != NULL && dest_page != NULL, FALSE);
 
@@ -469,6 +470,9 @@ load_page (HelpPage *source_page,
 
       goto FINISH;
     }
+
+  if (strcmp (g_basename (new_dir), "filters") == 0)
+    filters_dir = TRUE;
 
   g_free (new_dir);
   new_dir = g_get_current_dir ();
@@ -497,6 +501,25 @@ load_page (HelpPage *source_page,
       while (fgets (aline, sizeof (aline), afile))
 	file_contents = g_string_append (file_contents, aline);
       fclose (afile);
+    }
+  else if (filters_dir)
+    {
+      gchar *undocumented_filter;
+
+      undocumented_filter = g_strconcat (new_dir, G_DIR_SEPARATOR_S,
+					 "undocumented_filter.html", NULL);
+
+
+      afile = fopen (undocumented_filter, "rt");
+
+      if (afile != NULL)
+	{
+	  while (fgets (aline, sizeof (aline), afile))
+	    file_contents = g_string_append (file_contents, aline);
+	  fclose (afile);
+	}
+
+      g_free (undocumented_filter);
     }
 
   if (strlen (file_contents->str) <= 0)
@@ -1014,7 +1037,7 @@ run_temp_proc (gchar      *name,
   help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
 			   GIMP_HELP_PREFIX, NULL);
   locale    = g_strdup ("C");
-  help_file = g_strdup ("welcome.html");
+  help_file = g_strdup ("introduction.html");
 
   /*  Make sure all the arguments are there!  */
   if (nparams == 3)
@@ -1182,7 +1205,7 @@ run (gchar      *name,
 	  help_path = g_strconcat (gimp_data_directory(), G_DIR_SEPARATOR_S, 
 				   GIMP_HELP_PREFIX, NULL);
 	  locale    = g_strdup ("C");
-	  help_file = g_strdup ("welcome.html");
+	  help_file = g_strdup ("introduction.html");
 	  
 	  /*  Make sure all the arguments are there!  */
 	  if (nparams == 4)

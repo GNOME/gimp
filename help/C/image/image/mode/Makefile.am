@@ -3,9 +3,8 @@
 helpdatadir = $(gimpdatadir)/help/C/image/image/mode
 
 helpdata_DATA = \
-        convert_to_grayscale.html \
-        convert_to_rgb.html \
-        index.html 
+        convert_to_grayscale.html	\
+        convert_to_rgb.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

@@ -193,12 +193,12 @@ resize_widget_new (ResizeType    type,
 	  case ResizeLayer:
 	    wmclass = "resize_layer";
 	    window_title = _("Set Layer Boundary Size");
-	    help_page = "layers/dialogs/resize_layer.html";
+	    help_page = "layers/dialogs/layer_boundary_size.html";
 	    break;
 	  case ResizeImage:
 	    wmclass = "resize_image";
 	    window_title = _("Set Canvas Size");
-	    help_page = "dialogs/resize_image.html";
+	    help_page = "dialogs/set_canvas_size.html";
 	    break;
 	  }
 	frame = gtk_frame_new (_("Size"));
@@ -215,7 +215,7 @@ resize_widget_new (ResizeType    type,
 		       user_data, NULL, NULL, TRUE, FALSE,
 
 		       _("Reset"), reset_callback,
-		       resize, NULL, NULL, FALSE, TRUE,
+		       resize, NULL, NULL, FALSE, FALSE,
 
 		       _("Cancel"), cancel_cb ? cancel_cb : gtk_widget_destroy,
 		       cancel_cb ? user_data : NULL,

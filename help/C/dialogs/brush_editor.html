@@ -1,52 +1,254 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<HTML>
-<HEAD>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <TITLE>Brush Editor</TITLE>
-</HEAD>
-<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
-<TABLE width="100%" cellspacing="1" cellpadding="1">
-  <TR bgcolor="black">
-    <TD width="100%" align="center"><FONT size="+2" color="white">Brush
-      Editor</FONT></TD>
-  </TR>
-  <TR bgcolor="white" >
-    <TD width="100%" align="left"><P> 
-    <P>
-    The Brush Editor dialog allows you to make alterations to brushes. 
-At the top of the dialog, you can see the name of the brush (a new 
-brush will be called "Untitled"). This name can be edited to change the 
-brush name. If you choose a name which is the same as another brush, 
-Gimp will suffix "#<em>x</em>" (where <em>x</em> is a number).
-    <P>
-    Below the title, you can see a preview of how the final brush will 
-look. If you resize the brush to a size larger than the preview area, 
-the preveiw will be scaled, and the scale factor shown below it as a 
-ratio, such as 2:1 for 50% zoomed out.
-    <H4>
-    Settings
-    </H4>
-    The remainder of the dialog controls how the brush will be look. 
-The Radius controls the distance from the center of the brush to the 
-furthest edge in pixels. The radius of a brush is 100 pixels.
-    <P>
-    The Hardness slider controls how much the brush fades towards it's 
-edges. A value closer to 1 will give a sharp edge, and closer to 0 will 
-give a fuzzy, blured effect.
-    <P>
-    The Aspect Ratio defines the diameter vertical as a ratio against the 
-horizontal diameter. A value of 1.0 will give a round brush since this 
-means that the horizontal diameter is 1x the vertical. The maximum 
-value is 20, where the horizontal diameter is 20x the vertical, which 
-gives a very squashed eliptical brush.
-    <P>
-    The final setting is Angle which is used when the aspect ratio is 
-more than 1.0. The angle can be between 0 and 180 degrees, which works 
-in an anti-clockwise direction.
-    <P>
-    <A href="index.html">Index</A>
-    </TD>
-  </TR>
-</TABLE>
-</BODY>
-</HTML>
+<HTML
+><HEAD
+><TITLE
+> Brush Editor </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Dialogs"
+HREF="../dialogs/index.html"><LINK
+REL="PREVIOUS"
+TITLE="The Brush Selection Dialog"
+HREF="../dialogs/brush_selection.html"><LINK
+REL="NEXT"
+TITLE=" The Gradient Selection Dialog"
+HREF="../dialogs/gradient_selection.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../dialogs/brush_selection.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 12. Dialogs</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../dialogs/gradient_selection.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="DIALOGS-BRUSH-EDITOR"
+><SPAN
+CLASS="INTERFACE"
+>Brush Editor</SPAN
+></A
+></H1
+><A
+NAME="AEN2413"
+></A
+><P
+>    The <SPAN
+CLASS="INTERFACE"
+>Brush Editor</SPAN
+> dialog allows you to make
+    alterations to brushes. At the top of the dialog, you can see the
+    name of the brush (a new brush will be called
+    <SPAN
+CLASS="GUILABEL"
+>Untitled</SPAN
+>). This name can be edited to change
+    the brush name. If you choose a name which is the same as another
+    brush, <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> will suffix the name with
+    #<TT
+CLASS="REPLACEABLE"
+><I
+>x</I
+></TT
+>.<A
+NAME="AEN2420"
+HREF="#FTN.AEN2420"
+>[1]</A
+>
+  </P
+><P
+>    Below the title, you can see a preview of the final brush. If you
+    size the brush to a size larger than the preview
+    area, the preview will be scaled and the scale factor shown below
+    it as a ratio, such as 2:1 for 50% zoomed out.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="BRUSHEDITOR-SETTINGS"
+>Settings</A
+></H2
+><P
+>      The remainder of the dialog controls how the brush will look.
+      The <SPAN
+CLASS="GUIBUTTON"
+>Radius</SPAN
+> controls the distance from the
+      center of the brush to the furthest edge in pixels. The maximum
+      radius of a brush is 100 pixels.
+    </P
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Hardness</SPAN
+> slider controls how much the
+      brush fades towards its edges. A value closer to 1 will give a
+      sharp edge and closer to 0 will give a fuzzy, blurred effect.
+    </P
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Aspect Ratio</SPAN
+> defines the vertical
+      diameter in a ratio to the horizontal diameter. A value of 1.0
+      will give a round brush since this means that the horizontal
+      diameter is the same as the vertical. The maximum value is 20
+      which gives a horizontal diameter twenty times larger than the
+      vertical, resulting in a very squashed, elliptical brush.
+    </P
+><P
+>      The final setting is <SPAN
+CLASS="GUIBUTTON"
+>Angle</SPAN
+> which is used
+      when the aspect ratio is more than 1.0. The angle can be between
+      0 and 180 degrees, measured counterclockwise.
+    </P
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN2420"
+HREF="../dialogs/brush_editor.html#AEN2420"
+>[1]</A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+> where
+    <TT
+CLASS="REPLACEABLE"
+><I
+>x</I
+></TT
+> is a number.</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../dialogs/brush_selection.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../dialogs/gradient_selection.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>The <SPAN
+CLASS="INTERFACE"
+>Brush Selection</SPAN
+> Dialog</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../dialogs/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The <SPAN
+CLASS="INTERFACE"
+>Gradient Selection</SPAN
+> Dialog</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

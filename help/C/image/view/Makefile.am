@@ -3,15 +3,14 @@
 helpdatadir = $(gimpdatadir)/help/C/image/view
 
 helpdata_DATA = \
-        dot_for_dot.html \
-        index.html \
-        new_view.html \
-        shrink_wrap.html \
-        snap_to_guides.html \
-        toggle_guides.html \
-        toggle_rulers.html \
-        toggle_selection.html \
-        toggle_statusbar.html \
+        dot_for_dot.html	\
+        new_view.html		\
+        shrink_wrap.html	\
+        snap_to_guides.html	\
+        toggle_guides.html	\
+        toggle_rulers.html	\
+        toggle_selection.html	\
+        toggle_statusbar.html	\
         zoom.html 
 
 EXTRA_DIST = $(helpdata_DATA)

@@ -3,7 +3,6 @@
 helpdatadir = $(gimpdatadir)/help/C/layers/stack
 
 helpdata_DATA = \
-        index.html \
         stack.html 
 
 EXTRA_DIST = $(helpdata_DATA)

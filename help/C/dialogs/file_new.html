@@ -1,66 +1,257 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<HTML>
-<HEAD>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <TITLE>New Image</TITLE>
-</HEAD>
-<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
-<TABLE width="100%" cellspacing="1" cellpadding="1">
-  <TR bgcolor="black">
-    <TD width="100%" align="center"><FONT size="+2" color="white">New Image</FONT></TD>
-  </TR>
-  <TR bgcolor="white" >
-    <TD width="100%" align="left"><P>
-      <P>
-      File New will create a new Gimp image in either RGB (color) or Grayscale
-      mode. You can't create an Indexed image since you will not know which colors
-      your palette should have. Besides, working in Indexed mode is not a good choice
-      instead work in RGB and convert to Indexed just before saving the image.
-      <P>
-      How to create a new image:
-      <P>
-      <DL>
-	<DT>
-	  <EM>Set the resolution:</EM>
-	<DD>
-	  The resolution is how many pixels per length unit you what your image to
-	  built up with. The default 72ppi (72 pixels/inch) is good if you want to
-	  create web graphics (you can alter the default value in the preferences dialog).
-	  However if you going to print your image you will probably need a lot more
-	  than 72ppi.<BR>
-	  You have several choices about how you want to measure the resolution pixels
-	  per inch, mm, points or picas (there is also an option which will bring
-	  up a dialog with even more choices). We suggest that you stick to ppi since
-	  that the most common format when you are dealing with images.<BR>
-	  You can have different X and Y resolutions by unchecking the chain but that
-	  is not recommended.
-	<DT>
-	  <EM>Set the size:</EM>
-	<DD>
-	  You have two options either you can set it directly in pixels in the
-	  top frame or in a real world unit in the middle frame. If you are working
-	  with web graphics we suggest that you deal with pixels directly. If you going
-	  to print your image then setting in a real world unit is the preferred.
-	<DT>
-	  <EM>Set the mode/type of image:</EM>
-	<DD>
-	  Set the mode to either RGB or Grayscale
-	<DT>
-	  <EM>Set fill type:</EM>
-	<DD>
-	  Foreground takes the currently active foreground color from the toolbox<BR>
-	  Background take the currently active background color from the toolbox<BR>
-	  White sets the fill color to white no matter what the toolbox
-	  color is<BR>
-	  Transparent prevents the image from filling instead you will get a
-	  totally "empty" image to start with.
-      </DL>
-      <P>
-      The Reset button resets all values their default values. OK creates a new
-      image.
-      <P>
-      <A href="index.html">Index</A>
-    </TD>
-  </TR>
-</TABLE>
-</BODY></HTML>
+<HTML
+><HEAD
+><TITLE
+> New Image </TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="File"
+HREF="../file/index.html"><LINK
+REL="PREVIOUS"
+TITLE="File"
+HREF="../file/index.html"><LINK
+REL="NEXT"
+TITLE=" Open File "
+HREF="../dialogs/file_open.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../file/index.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 9. File</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../dialogs/file_open.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="DIALOGS-FILE-NEW"
+><SPAN
+CLASS="INTERFACE"
+>New Image</SPAN
+></A
+></H1
+><A
+NAME="AEN1956"
+></A
+><P
+>    <SPAN
+CLASS="GUIMENUITEM"
+>File New</SPAN
+> will create a new image in
+    either <SPAN
+CLASS="ACRONYM"
+>RGB</SPAN
+> (color) or grayscale mode. You can't
+    create an indexed image since <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> will
+    not know which colors your palette should have. Working in indexed
+    mode is usually not a good choice.  Instead work in
+    <SPAN
+CLASS="ACRONYM"
+>RGB</SPAN
+> and convert to indexed just before saving
+    the image.
+  </P
+><P
+>    How to create a new image:
+    
+    <P
+></P
+><DL
+><DT
+>Set the resolution</DT
+><DD
+><P
+>	    The resolution is how many pixels per unit you want for
+	    your image. The default 72dpi (72 pixels/inch) is good if
+	    you want to create web graphics (you can alter the default
+	    value in the <SPAN
+CLASS="INTERFACE"
+>preferences</SPAN
+> dialog).
+	    However if you are going to print your image, you will
+	    probably need a lot more than 72dpi. You have several
+	    choices about how you want to measure the resolution
+	    &mdash; pixels per inch, mm, points or picas (there is
+	    also an option which will bring up a dialog with even more
+	    choices). We suggest that you stick to ppi since that the
+	    most common format when you are dealing with images. You
+	    can have different X and Y resolutions by unlinking the
+	    <SPAN
+CLASS="GUIBUTTON"
+>chain</SPAN
+>, but that is not recommended.
+	  </P
+></DD
+><DT
+>Set the size</DT
+><DD
+><P
+>	    You have two options. Either you can set it directly in
+	    pixels in the top frame or in a real world unit in the
+	    middle frame. If you are working with web graphics we
+	    suggest that you deal with pixels directly. If you are
+	    going to print your image, then setting in a real world
+	    unit is the preferred.
+	  </P
+></DD
+><DT
+>Set the mode/type of image</DT
+><DD
+><P
+>	    Set the mode to either <SPAN
+CLASS="ACRONYM"
+>RGB</SPAN
+> or Grayscale
+	  </P
+></DD
+><DT
+>Set fill type</DT
+><DD
+><P
+>	    <SPAN
+CLASS="GUILABEL"
+>Foreground</SPAN
+> takes the current
+	    foreground color from the <SPAN
+CLASS="INTERFACE"
+>toolbox</SPAN
+>.
+	    <SPAN
+CLASS="GUILABEL"
+>Background</SPAN
+> takes the current
+	    background color from the <SPAN
+CLASS="INTERFACE"
+>toolbox</SPAN
+>.
+	    White sets the fill color to white no matter what the
+	    toolbox colors are.  Transparent prevents the image from
+	    filling. Instead you will get a totally
+	    <SPAN
+CLASS="QUOTE"
+>"empty"</SPAN
+> image to start.
+	  </P
+></DD
+></DL
+>
+  </P
+><P
+>    The <SPAN
+CLASS="GUIBUTTON"
+>Reset</SPAN
+> button resets all values to
+    their default values. <SPAN
+CLASS="GUIBUTTON"
+>OK</SPAN
+> creates a new image.
+  </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../file/index.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../dialogs/file_open.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>File</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../file/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="INTERFACE"
+>Open File</SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

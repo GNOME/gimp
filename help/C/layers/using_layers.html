@@ -1,0 +1,283 @@
+<HTML
+><HEAD
+><TITLE
+>Using Layers</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Layers"
+HREF="../layers/index.html"><LINK
+REL="PREVIOUS"
+TITLE="Layers"
+HREF="../layers/index.html"><LINK
+REL="NEXT"
+TITLE="Layers Dialog"
+HREF="../dialogs/layers/layers.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../layers/index.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 5. Layers</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../dialogs/layers/layers.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="LAYERS-USING-LAYERS"
+>Using Layers</A
+></H1
+><P
+>    Layer-related functions in <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> are
+    performed in the <SPAN
+CLASS="INTERFACE"
+>Layers Dialog</SPAN
+> which can be
+    accessed from <SPAN
+CLASS="GUIMENU"
+><SPAN
+CLASS="ACCEL"
+>F</SPAN
+>ile</SPAN
+> -&#62;
+    <SPAN
+CLASS="GUISUBMENU"
+>Dialogs</SPAN
+> -&#62; <SPAN
+CLASS="GUIMENUITEM"
+>Layers, Channels
+      &amp; Paths...</SPAN
+> or by pressing <B
+CLASS="KEYCAP"
+>Ctrl</B
+>+<B
+CLASS="KEYCAP"
+>L</B
+>
+  </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="LAYERS-DIALOG-PNG"
+></A
+><P
+><B
+>Figure 5-3. The Layers Dialog</B
+></P
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="../images/layers_dialog.png"
+></IMG
+></P
+></DIV
+></DIV
+><P
+>    At the top of the dialog is a combo-box which defines what image
+    the <SPAN
+CLASS="INTERFACE"
+>layers dialog</SPAN
+> is displaying. If 
+    <SPAN
+CLASS="GUIBUTTON"
+>"Auto"</SPAN
+> is selected, the currently
+    focused image will be the default. Alternativly, you can change
+    the image by clicking on the box and selecting a different image
+    from the menu. A small preview of the image is given next to its
+    name.
+  </P
+><P
+>    The most useful part of the dialog is the area with the off-white
+    background in <A
+HREF="../layers/using_layers.html#LAYERS-DIALOG-PNG"
+>Figure 5-3</A
+>. This shows all
+      the layers in the image.  The topmost layer is at the top of the
+      dialog. Each layer has a name, such as "Background", "Wilber" and
+      "Text - GIMP" in the example above. Every layer must have a unique
+      name. Next to the layers name, a small preview of the contents of
+      that layer is displayed. You should also give layers
+      a suitable name which describes their contents so that you can
+      find them later.
+  </P
+><P
+>    Next to the layer preview is up to two icons. You can see in
+    <A
+HREF="../layers/using_layers.html#LAYERS-DIALOG-PNG"
+>Figure 5-3</A
+> that the layer
+      <SPAN
+CLASS="QUOTE"
+>"Horizontal Line"</SPAN
+> has both an <SPAN
+CLASS="QUOTE"
+>"eye"</SPAN
+>
+      icon and a <SPAN
+CLASS="QUOTE"
+>"four-way arrow"</SPAN
+> icon. The 
+      <SPAN
+CLASS="GUIICON"
+>eye</SPAN
+>  means that
+      the image is visible. Clicking the <SPAN
+CLASS="GUIICON"
+>eye</SPAN
+> will
+      make that layer
+      invisible in the image window, although it still exists.
+      Clicking again makes the layer visible again. The
+      <SPAN
+CLASS="GUIICON"
+>four-way arrow</SPAN
+> 
+      means that that layer is linked to all other layers which are
+      also showing the <SPAN
+CLASS="GUIICON"
+>four-way arrow</SPAN
+>. In this
+      circumstance, when you move an
+      one layer, the linked layers will also move.
+  </P
+><P
+>    The "Opacity" function above the layers list defines as a
+    percentage how transparent (see-through) a layer is. 100.0 makes
+    the layer opaque, and 0.0 makes it completely transparent.. The
+    "Mode" function defines how the layer interacts with the layers
+    beneath it.
+  </P
+><P
+>    The <SPAN
+CLASS="GUIMENU"
+>layers menu</SPAN
+> also contains a menu to
+    perform functions.  It is
+    accessible by right-clicking on the layers list area.
+  </P
+><DIV
+CLASS="FIGURE"
+><P
+><B
+>Figure 5-4. <SPAN
+CLASS="GUIMENU"
+>The Layers Menu</SPAN
+></B
+></P
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="../images/layers_menu.png"
+></IMG
+></P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../layers/index.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../dialogs/layers/layers.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Layers</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../layers/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Layers Dialog</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

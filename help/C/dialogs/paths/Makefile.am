@@ -3,11 +3,10 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/paths
 
 helpdata_DATA = \
-        export_path.html \
-        import_path.html \
-        index.html \
-        paths.html \
-        rename_path.html 
+	edit_path_attributes.html	\
+        export_path.html 		\
+        import_path.html 		\
+        paths.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

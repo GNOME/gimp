@@ -3,8 +3,7 @@
 helpdatadir = $(gimpdatadir)/help/C/toolbox/help
 
 helpdata_DATA = \
-	context_help.html \
-        index.html
+	context_help.html
 
 EXTRA_DIST = $(helpdata_DATA)
 
@@ -19,4 +18,4 @@ install-data-local:
 	rm -f $(DESTDIR)$(helpdatadir)/dialogs
 	$(LN_S) ../../dialogs $(DESTDIR)$(helpdatadir)/dialogs
 	rm -f $(DESTDIR)$(helpdatadir)/filters
-	$(LN_S) ../filters $(DESTDIR)$(helpdatadir)/filters
+	$(LN_S) ../../filters $(DESTDIR)$(helpdatadir)/filters

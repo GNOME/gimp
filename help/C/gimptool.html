@@ -1,0 +1,695 @@
+<HTML
+><HEAD
+><TITLE
+>GIMP Tool</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="contents.html"><LINK
+REL="UP"
+TITLE="Command Line Options"
+HREF="command_line.html"><LINK
+REL="PREVIOUS"
+TITLE="Command Line Options"
+HREF="command_line.html"><LINK
+REL="NEXT"
+TITLE="GIMP Remote"
+HREF="gimp_remote.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="command_line.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Appendix B. Command Line Options</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="gimp_remote.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="AEN4308"
+>GIMP Tool</A
+></H1
+><P
+>      gimptool is a support script for <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>
+      which allows you to build and install scripts and plug-ins, and can
+      provide information to other programs about the libraries and
+      paths that <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> was compiled with. The
+      format is: <B
+CLASS="COMMAND"
+>gimptool [options ... ]</B
+>
+    </P
+><P
+>      <P
+></P
+><DL
+><P
+><B
+><SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> Tool Options</B
+></P
+><DT
+><B
+CLASS="COMMAND"
+>--help</B
+></DT
+><DD
+><P
+>	      Displays a list of available options, and gives a terse
+	      description of each one.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--version</B
+></DT
+><DD
+><P
+>	      Prints the version number of the installed
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--quiet</B
+></DT
+><DD
+><P
+>	      Runs without printing any of the build commands.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>-n, --dry-run</B
+></DT
+><DD
+><P
+>	      Print commands, but don't actually execute them. Useful
+	      for making dry-runs for testing.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--bindir</B
+></DT
+><DD
+><P
+>	      Prints the bindir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--sbindir</B
+></DT
+><DD
+><P
+>	      Prints the sbindir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--libexecdir</B
+></DT
+><DD
+><P
+>	      Prints the libexecdir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--datadir</B
+></DT
+><DD
+><P
+>	      Prints the datadir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--sysconfdir</B
+></DT
+><DD
+><P
+>	      Prints the sysconfdir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--sharedstatedir</B
+></DT
+><DD
+><P
+>	      Prints the sharedstatedir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--localstatedir</B
+></DT
+><DD
+><P
+>	      Prints the localstatedir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--libdir</B
+></DT
+><DD
+><P
+>	      Prints the libdir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--infodir</B
+></DT
+><DD
+><P
+>	      Prints the infodir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--mandir</B
+></DT
+><DD
+><P
+>	      Prints the mandir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> man (manual) pages.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--includedir</B
+></DT
+><DD
+><P
+>	      Prints the includedir used to install
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--gimpdatadir</B
+></DT
+><DD
+><P
+>	      Prints the actual directory where
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> data files, such as
+	      patterns and brushes, were installed.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--plugindir</B
+></DT
+><DD
+><P
+>	      Prints the actual directory where
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> plug-ins were installed.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--build &lt;plug-in.c&gt;</B
+></DT
+><DD
+><P
+>	      Compile and link plug-in.c into a
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> plug-in.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--build-strip &lt;plug-in.c&gt;</B
+></DT
+><DD
+><P
+>	      Compile, link and strip plug-in.c into a
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> plug-in.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install &lt;plug-in.c&gt;</B
+></DT
+><DD
+><P
+>	      Compile, link and install plug-in.c into the users personal
+	      plug-in directory - <TT
+CLASS="FILENAME"
+>~/.gimp-1.1/plug-ins/</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-strip &lt;plug-in.c&gt;</B
+></DT
+><DD
+><P
+>	      Compile, link, strip and install plug-in.c into the users personal
+	      plug-in directory - <TT
+CLASS="FILENAME"
+>~/.gimp-1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-admin &lt;plug-in.c&gt;</B
+></DT
+><DD
+><P
+>	      Compile, link, and install plug-in.c into the system-wide
+	      plug-in directory - 
+	      <TT
+CLASS="FILENAME"
+>$PREFIX/lib/gimp/1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-bin &lt;plug-in&gt;</B
+></DT
+><DD
+><P
+>	      Install a plug-in, which has already been compiled and
+	      linked, into the users personal plug-in directory - 
+	      <TT
+CLASS="FILENAME"
+>~/.gimp-1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-admin-bin &lt;plug-in&gt;</B
+></DT
+><DD
+><P
+>	      Install a plug-in, which has already been compiled and
+	      linked, into the system-wide plug-in directory - 
+	      <TT
+CLASS="FILENAME"
+>$PREFIX/gimp/1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-bin-strip &lt;plug-in&gt;</B
+></DT
+><DD
+><P
+>	      Install a striped plug-in, which has already been compiled
+	      and linked, into the users personal plug-in directory - 
+	      <TT
+CLASS="FILENAME"
+>~/.gimp-1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-admin-bin-strip &lt;plug-in&gt;</B
+></DT
+><DD
+><P
+>	      Install a striped plug-in, which has already been compiled
+	      and linked, into the system-wide plug-in directory - 
+	      <TT
+CLASS="FILENAME"
+>$PREFIX/lib/gimp/1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-script &lt;script.scm&gt;</B
+></DT
+><DD
+><P
+>	      Install script.scm, into the users personal scripts
+	      directory - <TT
+CLASS="FILENAME"
+>~/.gimp-1.1/scripts</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--install-admin-script &lt;script.scm&gt;</B
+></DT
+><DD
+><P
+>	      Install script.scm, into the system-wide scripts
+	      directory - <TT
+CLASS="FILENAME"
+>$PREFIX/share/gimp/scripts</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--uninstall-bin &lt;plug-in&gt;</B
+></DT
+><DD
+><P
+>	      Uninstall a plug-in from a users personal plug-in directory
+	      - <TT
+CLASS="FILENAME"
+>~/.gimp-1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--uninstall-admin-bin &lt;plug-in&gt;</B
+></DT
+><DD
+><P
+>	      Uninstall a plug-in from the system-wide plug-in directory
+	      - <TT
+CLASS="FILENAME"
+>$PREFIX/lib/gimp/1.1/plug-ins</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--uninstall-script &lt;script.scm&gt;</B
+></DT
+><DD
+><P
+>	      Uninstall a script from a users personal scripts directory
+	      - <TT
+CLASS="FILENAME"
+>~/.gimp-1.1/scripts</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--uninstall-admin-script &lt;script.scm&gt;</B
+></DT
+><DD
+><P
+>	      Uninstall a script from the system-wide scripts directory
+	      - <TT
+CLASS="FILENAME"
+>$PREFIX/share/gimp/scripts</TT
+>.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--libs</B
+></DT
+><DD
+><P
+>	      Print the linker flags that are nessecery to link a
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> plug-in.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--libs-noui</B
+></DT
+><DD
+><P
+>	      Print the linker flags that are nessecery to link a
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> plug-in which doesn't
+	      require the GTK+ libraries.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--cflags</B
+></DT
+><DD
+><P
+>	      Print the compiler flags that are nessecery to link a
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> plug-in.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--cflags-noui</B
+></DT
+><DD
+><P
+>	      Print the compiler flags that are nessecery to link a
+	      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> plug-in which doesn't
+	      require the GTK+ libraries.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--prefix=PREFIX</B
+></DT
+><DD
+><P
+>	      If specified, use PREFIX instead of the installation
+	      prefix that GIMP was built with when computing the output
+	      for the --cflags and --libs options. This option is also
+	      used for the exec prefix if --exec-prefix was not
+	      specified.  This option must be specified before any
+	      --libs or --cflags options.
+	    </P
+></DD
+><DT
+><B
+CLASS="COMMAND"
+>--exec-prefix=PREFIX</B
+></DT
+><DD
+><P
+>	      If specified, use PREFIX instead of the installation exec
+	      prefix that GIMP was built with when computing the output
+	      for the --cflags and --libs options. This option must be
+	      specified before any --libs or --cflags options.
+	    </P
+></DD
+></DL
+>
+    </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="command_line.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="gimp_remote.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Command Line Options</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="command_line.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="APPLICATION"
+>GIMP Remote</SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

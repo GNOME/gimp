@@ -1,3 +1,21 @@
+2000-12-15  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in
+	* help/*: Updated Gimp-Help. See help/ChangeLog for details.
+
+	* app/channels_dialog.c
+	* app/gdisplay.c
+	* app/gradient.c
+	* app/layers_dialog.c
+	* app/menus.c
+	* app/paths_dialog.c
+	* app/preferences_dialog.c
+	* app/resize.c: fixed menu paths.
+
+	* plug-ins/helpbrowser/helpbrowser.c: load a special
+	"undocumented_filter.html" page if a filter was not found.
+	Adapted to the new help structure.
+
 2000-12-14  Sven Neumann  <sven@gimp.org>
 
 	* app/nav_window.c: missed a place that needed the same fix for

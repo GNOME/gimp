@@ -3,11 +3,10 @@
 helpdatadir = $(gimpdatadir)/help/C/file
 
 helpdata_DATA = \
-        close.html \
-        index.html \
-        last_opened.html \
-        quit.html \
-        revert.html 
+        close.html		\
+        index.html		\
+        last_opened.html	\
+        quit.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

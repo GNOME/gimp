@@ -1,69 +1,242 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<HTML>
-<HEAD>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <TITLE>Preferences / Environment</TITLE>
-</HEAD>
-<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
-<TABLE width="100%" cellspacing="1" cellpadding="1">
-  <TR bgcolor="black">
-    <TD width="100%" align="center"><FONT size="+2" color="white">Environment</FONT></TD>
-  </TR>
-  <TR bgcolor="white" >
-    <TD width="100%" align="left"><P>
-      <P>
-      <DL>
-	<DT>
-	  <EM>Conservative Memory Usage:</EM>
-	<DD>
-	  Gimp is optimized to speed i.e speed is more important than memory usage.
-	  Enabling Conservative Memory Usage will "optimize" Gimp to use less memory.
-	  The tradeoff is of course speed but if your system is low on memory then
-	  it can be an option to use Conservative Memory Usage.
-	<DT>
-	  <EM>Tile Cache Size:</EM>
-	<DD>
-	  This is the most important parameter that Gimp has, if you set it to low
-	  Gimp will be very slow. There isn't a upper level of how much memory that
-	  you can give Gimp i.e give Gimp as much as you can. But don't give Gimp more
-	  that your physical memory (i.e pure memory without swap). In reality you
-	  have to measure how much memory you usually use and give Gimp a little less
-	  than the rest of it.
-	<DT>
-	  <EM>Maximum Image Size:</EM>
-	<DD>
-	  Gimp will warn you if you try to create images bigger than this value.
-	<DT>
-	<DD>
-	<DT>
-	  <EM>Install Colormap:</EM>
-	<DD>
-	  Not used since we use GdkRgb now
-	<DT>
-	  <EM>Colormap Cycling:</EM>
-	<DD>
-	  Still TODO
-	<DT>
-	<DD>
-	<DT>
-	  <EM>Try to Write a Thumbnail File:</EM>
-	<DD>
-	  By default when you save a image a thumbnail file will be created storing
-	  a little image of your image. When you mark a image in the file open dialog
-	  you will see this thumbnail. If you set this option to Never you have to
-	  press on the thumbnail button in the file open dialog to be able to see a
-	  thumbnail of your image.
-	<DT>
-	  <EM>"File &gt; Save" saves the image:</EM>
-	<DD>
-	  This is by default set to Always but if you e.g saves your image on a networked
-	  disk (nfs, smb etc.) then saves some times are slow and saving always isn't
-	  that necessary. Instead you will only save when the file is really changed.
-	<DD>
-      </DL>
-      <P>
-      <A href="index.html">Index</A>
-    </TD>
-  </TR>
-</TABLE>
-</BODY></HTML>
+<HTML
+><HEAD
+><TITLE
+>Environment Settings</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../../contents.html"><LINK
+REL="UP"
+TITLE="Dialogs"
+HREF="../../dialogs/index.html"><LINK
+REL="PREVIOUS"
+TITLE="Display Settings"
+HREF="../../dialogs/preferences/display.html"><LINK
+REL="NEXT"
+TITLE="Session Management"
+HREF="../../dialogs/preferences/session.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../../dialogs/preferences/display.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 12. Dialogs</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../../dialogs/preferences/session.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="DIALOGS-PREFERENCES-ENVIRONMENT"
+>Environment Settings</A
+></H1
+><A
+NAME="AEN2314"
+></A
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2316"
+>Conservative Memory Usage</A
+></H2
+><P
+>      GIMP is optimized to speed i.e speed is more important than memory
+      usage. Enabling Conservative Memory Usage will "optimize" GIMP to
+      use less memory. The tradeoff is of course speed but if your system
+      is low on memory then it can be an option to use Conservative Memory
+      Usage.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2319"
+>Levels of Undo</A
+></H2
+><P
+>      By default <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> has five levels of undo.
+      The amount of undo levels is only limited by disk space. A high
+      amount of undo levels requires a large amount of disk space so use
+      it with care. The default value is reasonably good for most use.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2323"
+>Tile Cache Size</A
+></H2
+><P
+>      This is the most important parameter that GIMP has, if you set it
+      to low GIMP will be very slow. There isn't a upper level of how much
+      memory that you can give GIMP i.e give GIMP as much as you can. But
+      don't give GIMP more that your physical memory (i.e pure memory
+      without swap). In reality you have to measure how much memory you
+      usually use and give GIMP a little less than the rest of it.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2326"
+>Interpolation Type</A
+></H2
+><P
+>      When you scale a image (make it bigger) you have to fill in missing
+      pixels what color and value that those pixels should have is calculated
+      in a interpolation algorithm . Gimp uses a Linear interpolation
+      algorithm by default. Linear is a gives you a mid quality interpolation.
+      Linear interpolation has less quality trade off for speed that Nearest
+      Neighbour interpolation algorithm does. Nearest Neighbour is the fastest
+      way to interpolate but it has the lowest quality of the interpolation
+      algorithms. The Cubic interpolation algorithm produces the highest
+      quality of the three interpolation types supported by GIMP. However it
+      is considerably slower that the linear interpolation algorithm.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2329"
+>Try to Write a Thumbnail File</A
+></H2
+><P
+>      By default when you save a image a thumbnail file will be created
+      storing a little image of your image. When you mark a image in the
+      file open dialog you will see this thumbnail. If you set this option
+      to Never you have to press on the thumbnail button in the
+      <A
+HREF="../../dialogs/file_open.html"
+>File Open Dialog</A
+> to be able
+      to see a thumbnail of your image.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN2333"
+>"File &gt; Save" Saves the Image</A
+></H2
+><P
+>      This is by default set to Always but if you e.g saves your image on
+      a networked disk (nfs, smb etc.) then saves some times are slow and
+      saving always isn't that necessary. Instead you will only save when
+      the file is really changed.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../../dialogs/preferences/display.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../../dialogs/preferences/session.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Display Settings</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../../dialogs/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Session Management</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

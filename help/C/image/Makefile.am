@@ -5,7 +5,7 @@ SUBDIRS = edit select view image
 helpdatadir = $(gimpdatadir)/help/C/image
 
 helpdata_DATA = \
-        image_window.html \
+        image_window.html	\
         index.html 
 
 EXTRA_DIST = $(helpdata_DATA)

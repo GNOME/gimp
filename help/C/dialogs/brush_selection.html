@@ -1,103 +1,320 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<HTML>
-<HEAD>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <TITLE>The Brush Selection Dialog</TITLE>
-</HEAD>
-<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
-<TABLE width="100%" cellspacing="1" cellpadding="1">
-  <TR bgcolor="black">
-    <TD width="100%" align="center"><FONT size="+2" color="white">The Brush Selection
-      Dialog</FONT></TD>
-  </TR>
-  <TR bgcolor="white" >
-    <TD width="100%" align="left"><P>
-      <P>
-      It's in this dialog you choose what brush you want to use, and the settings
-      you want to apply to the brush. The dialog displays all the available brushes.
-      You may also notice some unusual brushes, like colored brushes (pixmap brushes),
-      brushes with a red triangle in the right corner a so called "Image House"
-      brush , brushes with artistic text, little flourishes or doodles, etc.
-      <P>
-      All of those brushes are relatively easy to create in Gimp and save them
-      in the appropriate format. Gimp also provides you with a <A 
-href="brush_editor.html">brush editor</A>
-      where you can create and edit brushes (you can only edit brushes that are
-      created in the brush editor).
-      <H4>
-	Preview and Brush Information
-      </H4>
-      <P>
-      You will see that some of the brushes in the dialog has a little + sign.
-      The + sign is indicating that the brush preview is scaled to fit, i.e. the
-      brush is larger in reality. To view the real size of the brush, click and
-      hold on the brush square and the real size brush will appear (and disappear
-      when you release the mouse).
-      <P>
-      When you choose a brush the name and the size of the brush will appear in
-      the brush dialog. The brush size is measured in pixels.
-      <H4>
-	Settings
-      </H4>
-      <P>
-      Spacing is the distance between your brush marks. If you set the spacing
-      to 100 the brushmarks will be like a bead of pearls. If you set the spacing
-      to zero, the brushmarks will create a solid, brush-shaped line. If the spacing
-      is higher than 100 the brushmarks will form a dotted line. Note: It is mostly
-      not useful to set the spacing to zero since the brush (most notably fuzzy
-      ones) will look unnatural.
-      <H4>
-	Pixmap Brushes
-      </H4>
-      <P>
-      Pixmap brushes are small images (with or without color) that can be used
-      as a brush. Since the brush is a image you can't alter it's color, i.e the
-      color setting in the toolbox will not apply to this image. Note: That if
-      you use color as a pressure sensitivity when you paint you will be able to
-      change the color of the pixmap brush. For information how to create and save
-      a Pixmap Brush please see the <A HREF="../save/filters/gpb.html">Gimp Pixmap
-      Brush</A> page.
-      <H4>
-	Image Hose Brushes
-      </H4>
-      <P>
-      The Image Hose brush is a specialized pixmap brush, you will notice that
-      the brush is a Image Hose by the little red triangle in the bottom right
-      corner. The difference between a Pixmap brush and a Image Hose is that the
-      Image Hose contains one or several Pixmap brushes.
-      <P>
-      The preview of an Image Hose is also a bit special, since an Image hose is
-      built up of several Pixmap brushes you will see all brushes displayed as
-      a small animation when you invoke the preview function (press and hold on
-      the brush preview).
-      <P>
-      Since the Image Hose is built up of several Pixmap brushes there are functions
-      to control which of the brushes you will paint with. The functions are
-      incremental, angular, random, velocity, pressure, xtilt and ytilt. To give
-      you an idea say that the Image Hose is built up of several arrows and has
-      angular as control function. Then you will be able to paint arrows that follows
-      your movements when you draw. Note: That you can't edit those function they
-      are built into the Image Hose brush file when it was created. For further
-      explanation of how to create Image Hoses please see the
-      <A HREF="../save/filters/gpb.html">Gimp Pixmap Brush</A> page.
-      <H4>
-	New, Edit and Delete Brushes
-      </H4>
-      <P>
-      You can create new brushes by clicking on the new button. This will bring
-      up the <A HREF="../dialogs/brush_editor.html">Brush Editor</A> dialog where
-      you can create your brush. You can edit brushes created in the brush dialog,
-      invoking edit on brush of that type will once again bring up the Brush Editor
-      dialog where you can alter your brush. Naturally you can also delete brushes
-      created in the Brush Editor, just click on Delete and they will vanish.
-      <H3>
-      Additional Information
-      </H3>
-      <P>
-      Default Keyboard Shortcut: Ctrl+Shift+B
-      <P>
-      <A href="index.html">Index</A>
-    </TD>
-  </TR>
-</TABLE>
-</BODY></HTML>
+<HTML
+><HEAD
+><TITLE
+>The Brush Selection Dialog</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Dialogs"
+HREF="../dialogs/index.html"><LINK
+REL="PREVIOUS"
+TITLE="Directories"
+HREF="../dialogs/preferences/directories.html"><LINK
+REL="NEXT"
+TITLE=" Brush Editor "
+HREF="../dialogs/brush_editor.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../dialogs/preferences/directories.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 12. Dialogs</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../dialogs/brush_editor.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="DIALOGS-BRUSH-SELECTION"
+>The <SPAN
+CLASS="INTERFACE"
+>Brush Selection</SPAN
+> Dialog</A
+></H1
+><A
+NAME="AEN2377"
+></A
+><P
+>    In this dialog you choose what brush you want to use
+    and the <A
+HREF="../dialogs/brush_selection.html#BRUSHSELECTION-SETTINGS"
+>settings</A
+> you
+    want to apply to the brush. The dialog displays all the available
+    brushes.  You may also notice some of
+    <SPAN
+CLASS="APPLICATION"
+><SPAN
+CLASS="ACRONYM"
+>GIMP</SPAN
+></SPAN
+>'s special
+    features like colored brushes (pixmap brushes), brushes with a red
+    triangle in the right corner (so-called <SPAN
+CLASS="QUOTE"
+>"Image Hose"</SPAN
+>
+    brushes), brushes with artistic text, little flourishes and
+    doodles, etc.
+  </P
+><P
+>    All of those brushes are relatively easy to create in
+    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> and save in the appropriate
+    format. <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> also provides you with a
+    <A
+HREF="../dialogs/brush_editor.html"
+>brush editor</A
+>
+    where you can create and edit brushes. <A
+NAME="AEN2388"
+HREF="#FTN.AEN2388"
+>[1]</A
+>
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PREVIEW"
+>Preview and Brush Information</A
+></H2
+><P
+>      You will see that some of the brushes in the dialog have a
+      little <SPAN
+CLASS="GUIICON"
+>+</SPAN
+> sign. The <SPAN
+CLASS="GUIICON"
+>+</SPAN
+> sign
+      is indicating that the brush preview is scaled to fit the space.
+      To view the real size of the brush, click and hold on the
+      <SPAN
+CLASS="GUIBUTTON"
+>brush square</SPAN
+> and the real size brush will
+      appear (and disappear when you release the mouse).
+    </P
+><P
+>      When you choose a brush, the name and the size of the brush will
+      appear in the <SPAN
+CLASS="INTERFACE"
+>brush dialog</SPAN
+>. The brush
+      size is measured in pixels.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="BRUSHSELECTION-SETTINGS"
+>Settings</A
+></H2
+><P
+>      <SPAN
+CLASS="GUILABEL"
+>Spacing</SPAN
+> is the distance between your brush
+      marks. If you set the spacing to 100, the brushmarks will be
+      like a string of pearls. If you set the spacing to zero, the
+      brushmarks will create a solid, brush-shaped line. If the
+      spacing is higher than 100, the brushmarks will form a dotted
+      line.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PIXMAPBRUSHES"
+>Pixmap Brushes</A
+></H2
+><P
+>      Pixmap brushes are small images that can be used as a brush.
+      Since the brush is an image, you can't alter its color. The
+      color setting in the toolbox will not apply to this image.
+      <DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	  If you use color as a pressure sensitivity when you paint
+	  you will be able to change the color of the pixmap brush.
+	  For information on how to create and save a Pixmap Brush
+	  please see the <A
+HREF="../filters/gpb.html"
+>	    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> Pixmap Brush</A
+> page. 
+	</P
+></TD
+></TR
+></TABLE
+></DIV
+>
+    </P
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN2388"
+HREF="../dialogs/brush_selection.html#AEN2388"
+>[1]</A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+> you can
+    only edit brushes that are created in the <SPAN
+CLASS="INTERFACE"
+>brush
+    editor</SPAN
+> </P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../dialogs/preferences/directories.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../dialogs/brush_editor.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Directories</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../dialogs/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="INTERFACE"
+>Brush Editor</SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

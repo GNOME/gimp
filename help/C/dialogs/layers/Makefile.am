@@ -3,13 +3,12 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/layers
 
 helpdata_DATA = \
-        add_mask.html \
-        edit_layer_attributes.html \
-        index.html \
-        layers.html \
-	layer_boundary_size.html \
-        merge_visible_layers.html \
-        new_layer.html \
+        add_layer_mask.html		\
+        edit_layer_attributes.html	\
+        layers.html			\
+	layer_boundary_size.html	\
+        merge_visible_layers.html	\
+        new_layer.html			\
         scale_layer.html 
 
 EXTRA_DIST = $(helpdata_DATA)

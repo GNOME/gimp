@@ -3,14 +3,13 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/gradient_editor
 
 helpdata_DATA = \
-        copy_gradient.html \
-        delete_gradient.html \
-        gradient_editor.html \
-        index.html \
-        new_gradient.html \
-        rename_gradient.html \
-        replicate_segment.html \
-        save_as_pov_ray.html \
+        copy_gradient.html		\
+        delete_gradient.html		\
+        gradient_editor.html		\
+        new_gradient.html		\
+        rename_gradient.html		\
+        replicate_segment.html		\
+        save_as_povray.html		\
         split_segments_uniformly.html 
 
 EXTRA_DIST = $(helpdata_DATA)

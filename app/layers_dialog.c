@@ -3823,7 +3823,7 @@ layers_dialog_add_mask_query (Layer *layer)
   options->query_box =
     gimp_dialog_new (_("Add Mask Options"), "add_mask_options",
 		     gimp_standard_help_func,
-		     "dialogs/layers/add_mask.html",
+		     "dialogs/layers/add_layer_mask.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

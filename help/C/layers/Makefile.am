@@ -5,18 +5,19 @@ SUBDIRS = stack
 helpdatadir = $(gimpdatadir)/help/C/layers
 
 helpdata_DATA = \
-        add_alpha_channel.html \
-        alpha_to_selection.html \
-        anchor_layer.html \
-	apply_mask.html \
-        delete_layer.html \
-	delete_mask.html \
-        duplicate_layer.html \
-        flatten_image.html \
-        index.html \
-	layer_to_image_size.html \
-        mask_to_selection.html \
-        merge_down.html 
+        add_alpha_channel.html		\
+        alpha_to_selection.html		\
+        anchor_layer.html		\
+	apply_mask.html			\
+        delete_layer.html		\
+	delete_mask.html		\
+        duplicate_layer.html		\
+        flatten_image.html		\
+        index.html			\
+	layer_to_image_size.html	\
+        mask_to_selection.html		\
+        merge_down.html			\
+	using_layers.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

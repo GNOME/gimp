@@ -2,8 +2,7 @@
 
 helpdatadir = $(gimpdatadir)/help/C/image/image/transforms
 
-helpdata_DATA = \
-        index.html 
+helpdata_DATA =
 
 EXTRA_DIST = $(helpdata_DATA)
 

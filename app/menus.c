@@ -210,7 +210,7 @@ static GimpItemFactoryEntry image_entries[] =
     "file/dialogs/file_save.html", NULL },
   { { N_("/File/Save As..."), NULL, file_save_as_cmd_callback, 0 },
     "file/dialogs/file_save.html", NULL },
-  { { N_("/File/Revert"), NULL, file_revert_cmd_callback, 0 },
+  { { N_("/File/Revert..."), NULL, file_revert_cmd_callback, 0 },
     "file/revert.html", NULL },
 
   { { "/File/---", NULL, NULL, 0, "<Separator>" },
@@ -623,7 +623,7 @@ static GimpItemFactoryEntry layers_entries[] =
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Layer Boundary Size..."), "<control>R", layers_dialog_resize_layer_callback, 0 },
-    "dialogs/resize_layer.html", NULL },
+    "dialogs/layer_boundary_size.html", NULL },
   { { N_("/Layer to Imagesize"), NULL, layers_dialog_resize_to_image_callback, 0 },
     "layer_to_image_size.html", NULL },
   { { N_("/Scale Layer..."), "<control>S", layers_dialog_scale_layer_callback, 0 },
@@ -641,7 +641,7 @@ static GimpItemFactoryEntry layers_entries[] =
   { { "/---", NULL, NULL, 0, "<Separator>" },
     NULL, NULL },
   { { N_("/Add Layer Mask..."), NULL, layers_dialog_add_layer_mask_callback, 0 },
-    "dialogs/add_mask.html", NULL },
+    "dialogs/add_layer_mask.html", NULL },
   { { N_("/Apply Layer Mask"), NULL, layers_dialog_apply_layer_mask_callback, 0 },
     "apply_mask.html", NULL },
   { { N_("/Delete Layer Mask"), NULL, layers_dialog_delete_layer_mask_callback, 0 },
@@ -1462,14 +1462,20 @@ menus_item_key_press (GtkWidget   *widget,
   item_factory = (GtkItemFactory *) data;
   active_menu_item = GTK_MENU_SHELL (widget)->active_menu_item;
 
-  /*  first, check if the user tries to assign a shortcut to the help
-   *  menu items and ignore it...
+  /*  first, get the help page from the item
    */
   if (active_menu_item)
     {
       help_page = (gchar *) gtk_object_get_data (GTK_OBJECT (active_menu_item),
 						 "help_page");
+    }
 
+  /*  For any key except F1, continue with the standard
+   *  GtkItemFactory callback and assign a new shortcut, but don't
+   *  assign a shortcut to the help menu entries...
+   */
+  if (kevent->keyval != GDK_F1)
+    {
       if (help_page &&
 	  *help_page &&
 	  item_factory == toolbox_factory &&
@@ -1480,13 +1486,11 @@ menus_item_key_press (GtkWidget   *widget,
 					"key_press_event");
 	  return TRUE;
 	}
+      else
+	{
+	  return FALSE;
+	}
     }
-
-  /*  ...otherwise, for any key except F1, continue with the standard
-   *  GtkItemFactory callback and assign a new shortcut...
-   */
-  if (kevent->keyval != GDK_F1)
-    return FALSE;
 
   /*  ...finally, if F1 was pressed over any menu, show it's help page...
    */

@@ -1,45 +1,306 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<HTML>
-<HEAD>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <TITLE>File Save or Save As</TITLE>
-</HEAD>
-<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
-<TABLE width="100%" cellspacing="1" cellpadding="1">
-  <TR bgcolor="black">
-    <TD width="100%" align="center"><FONT size="+2" color="white">File Save or
-      Save As</FONT></TD>
-  </TR>
-  <TR bgcolor="white" >
-    <TD width="100%" align="left"><P>
-      <P>
-      File save lets you save your file either by it's extension e.g save a file.xcf
-      as a a XCF image. The XCF file format is Gimps native file format and is
-      the preferred format to save all your images in. You can of course
-      save as e.g TIFF or JPEG but all the specific Gimp image information will
-      be lost (i.e the information about layers, channels, parasites, etc).
-      <P>
-      When you save a image in a non Gimp format (i.e not as a XCF or XJT image)
-      will get the opportunity to export it. By exporting it you will be sure of
-      getting all the visual image information saved in the non native format.
-      If you Ignore export then only the currently active layer will be saved.
-      <P>
-      The save dialog works like any other file dialogs but you also have two ways
-      to fast navigation. Tab completion, e.g if you have a directory /gimp and
-      the save dialog is currently with in the /home/gimp directly. Then you only
-      have to type /gi and hit tab and the name will be completed (It works
-      just like tab completion in bash or tchs sells in UNIX or if you have turned
-      it on as tab completion in the cms in NT). You also have a drop down directory
-      menu which will enable you to quickly move up in the directory hirarcy.
-      <P>
-      To even extend the opportunity you can create directories, delete and rename
-      files in the save dialog. Creating directories is very handy since often
-      end up doing a new image for a new project before you made a directory to
-      contain images for the project. However you must sometimes step up and down
-      once in the directory hierarcy before Gimp will be able to see the new directory.
-      <P>
-      <A href="index.html">Index</A>
-    </TD>
-  </TR>
-</TABLE>
-</BODY></HTML>
+<HTML
+><HEAD
+><TITLE
+> File Save or Save
+    As</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="File"
+HREF="../file/index.html"><LINK
+REL="PREVIOUS"
+TITLE=" Open File "
+HREF="../dialogs/file_open.html"><LINK
+REL="NEXT"
+TITLE="Revert Image"
+HREF="../dialogs/revert_image.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../dialogs/file_open.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 9. File</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../dialogs/revert_image.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="DIALOGS-FILE-SAVE"
+><SPAN
+CLASS="INTERFACE"
+>File Save</SPAN
+> or <SPAN
+CLASS="INTERFACE"
+>Save
+    As</SPAN
+></A
+></H1
+><A
+NAME="AEN2020"
+></A
+><P
+>    <SPAN
+CLASS="INTERFACE"
+>File Save</SPAN
+> lets you save your file either by
+    its extension e.g.  save a
+    <TT
+CLASS="FILENAME"
+><TT
+CLASS="REPLACEABLE"
+><I
+>file</I
+></TT
+>.xcf</TT
+> as an
+    <SPAN
+CLASS="ACRONYM"
+>XCF</SPAN
+> image. The <SPAN
+CLASS="ACRONYM"
+>XCF</SPAN
+> file
+    format is <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>'s native file format
+    and is the preferred format to save all your images in.
+      
+    <DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	You can of course save as <SPAN
+CLASS="ACRONYM"
+>TIFF</SPAN
+>,
+	<SPAN
+CLASS="ACRONYM"
+>JPEG</SPAN
+>, or one of the other available
+	formats, but all the specific <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>
+	image information will be lost (i.e the information about
+	layers, channels, parasites, etc).
+      </P
+></TD
+></TR
+></TABLE
+></DIV
+>
+  </P
+><P
+>    When you save an image in a non-<SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>
+    format (i.e not as a <SPAN
+CLASS="ACRONYM"
+>XCF</SPAN
+> or
+    <SPAN
+CLASS="ACRONYM"
+>XJT</SPAN
+> image) you could be asked to export it. By
+    exporting it, you will be sure of getting all the visual image
+    information saved in the non-native format.  (Exporting will, for
+    example, flatten an image to be saved as
+    <TT
+CLASS="FILENAME"
+>.jpg</TT
+>) Ignoring the suggestion to export runs
+    the risk of losing valuable image information such as nonactive
+    layers.
+  </P
+><P
+>    The <SPAN
+CLASS="INTERFACE"
+>save</SPAN
+> dialog works like any other file
+    dialog, but you also have two means of fast navigation. Tab
+    completion, if you have a directory <TT
+CLASS="FILENAME"
+>/gimp</TT
+> and the
+    <SPAN
+CLASS="INTERFACE"
+>save</SPAN
+> dialog is currently with in the
+    <TT
+CLASS="FILENAME"
+>/home/gimp</TT
+> directly.  Then
+    you only have to type <TT
+CLASS="USERINPUT"
+><B
+>/gi</B
+></TT
+> and hit
+    <B
+CLASS="KEYCAP"
+>TAB</B
+> and the name will be completed (It works just
+    like <B
+CLASS="KEYCAP"
+>TAB</B
+> completion in
+    <SPAN
+CLASS="APPLICATION"
+>bash</SPAN
+> or <SPAN
+CLASS="APPLICATION"
+>tsh</SPAN
+>
+    shells in UNIX or if you have turned it on as <B
+CLASS="KEYCAP"
+>TAB</B
+>
+    completion in the <SPAN
+CLASS="APPLICATION"
+>cms</SPAN
+> in
+    <SPAN
+CLASS="APPLICATION"
+>NT</SPAN
+>). You also have a drop down
+    directory menu which will enable you to quickly move up in the
+    directory hierarchy.
+  </P
+><P
+>    You can also create directories and delete or rename files in the
+    <SPAN
+CLASS="INTERFACE"
+>save</SPAN
+> dialog. Sometimes it is necessary to
+    step up and down once in the directory hierarchy before
+    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> will be able to see the new
+    directory.
+  </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../dialogs/file_open.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../dialogs/revert_image.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="INTERFACE"
+>Open File</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../file/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Revert Image</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

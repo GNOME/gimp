@@ -1,31 +1,274 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for gqbist</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">gqbist help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/filters/gqbist.html)<p>
-        Sorry but the help file for gqbist is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+<HTML
+><HEAD
+><TITLE
+>Qbist</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Filters"
+HREF="../filters/index.html"><LINK
+REL="PREVIOUS"
+TITLE="PSP"
+HREF="../filters/psp.html"><LINK
+REL="NEXT"
+TITLE="Ripple"
+HREF="../filters/ripple.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../filters/psp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Filters</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/ripple.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTER-QBIST"
+>Qbist</A
+></H1
+><A
+NAME="AEN3479"
+></A
+><P
+>    Located in <SPAN
+CLASS="GUISUBMENU"
+>Filters</SPAN
+>
+    <SPAN
+CLASS="GUISUBMENU"
+>Render</SPAN
+> <SPAN
+CLASS="GUISUBMENU"
+>Pattern</SPAN
+>
+    <SPAN
+CLASS="GUIMENUITEM"
+>Qbist...</SPAN
+>, this plug-in renders
+    essentially randomly mixed colours in a potentially impressive
+    display of algorthmic disco.
+  </P
+><P
+>    To be more concise, it provides nine sets of equations which
+    alter the image's appearance drastically.  The resulting effect is
+    a specific mesh of colours, arranged in varying ways, according to
+    the output of the given equation.  Generally, this is some number
+    of gradient blends, intermingling to create new gradients and
+    shapes.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="QBIST-DIALOG"
+>The Qbist dialog</A
+></H2
+><P
+>      In the dialogue, nine preview boxes are displayed.  The
+      preview in the center is the active one.  That is, without
+      further input, the preview displayed in the center will be
+      rendered into the image.  Each of the previews are image
+      buttons.  Selecting any preview enacts a corresponding
+      equation.  The selected equation is applied to the active
+      preview and changes all 9 previews to reflect a new set of
+      input parameters.  When a desirable effect results, pressing
+      the <SPAN
+CLASS="GUIBUTTON"
+>OK</SPAN
+> button applies the center
+      preview to the current image.  <SPAN
+CLASS="GUIBUTTON"
+>Cancel</SPAN
+>
+      will close the dialog without making any changes to the
+      original image.
+    </P
+><DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	The generated images do not relate in any signifigant way to
+	the original image content.  The same equations will not
+	always correspond to the same preview button.  Qbist is,
+	effectively, a randomizer.
+      </P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>      This filter includes a 'Load and Save' function for presets.
+      Because the generated images and equations do not rely on the
+      original image content, there is no exact way to guarantee an
+      absolute reproduction of any set of effects.  Therefore, as an
+      alternate, the user may save at least the current, center
+      preview parameters.
+    </P
+><DIV
+CLASS="TIP"
+><P
+></P
+><TABLE
+CLASS="TIP"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/tip.gif"
+HSPACE="5"
+ALT="Tip"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	Qbist works best by repeatedly hitting any of the various
+	preview buttons until a desirable effect is observed.  Being
+	run largely on random outputs based on random inputs, it
+	tends to be not so useful if the user advances with some
+	strategy.  It seems better to simply request new renders
+	repeatedly until the user sees something
+	attractive.
+      </P
+></TD
+></TR
+></TABLE
+></DIV
+><P
+>      Quote from the author:
+      <SPAN
+CLASS="QUOTE"
+>" This plug-in generates images
+      from genetic formulas. It's based on an algorithm I've seen in
+      a magazine."</SPAN
+>
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../filters/psp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/ripple.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="ACRONYM"
+>PSP</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../filters/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Ripple</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

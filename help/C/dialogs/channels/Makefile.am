@@ -3,9 +3,8 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/channels
 
 helpdata_DATA = \
-        channels.html \
-        edit_channel_attributes.html \
-        index.html \
+        channels.html			\
+        edit_channel_attributes.html	\
         new_channel.html 
 
 EXTRA_DIST = $(helpdata_DATA)

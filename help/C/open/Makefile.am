@@ -3,7 +3,7 @@
 helpdatadir = $(gimpdatadir)/help/C/open
 
 helpdata_DATA = \
-        index.html \
+        index.html		\
         open_by_extension.html 
 
 EXTRA_DIST = $(helpdata_DATA)

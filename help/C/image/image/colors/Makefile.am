@@ -5,9 +5,8 @@ SUBDIRS = auto
 helpdatadir = $(gimpdatadir)/help/C/image/image/colors
 
 helpdata_DATA = \
-        desaturate.html \
-        index.html \
-        invert.html 
+        desaturate.html	\
+	invert.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

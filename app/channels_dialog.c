@@ -2656,7 +2656,7 @@ channels_dialog_edit_channel_query (ChannelWidget *channel_widget)
   options->query_box =
     gimp_dialog_new (_("Edit Channel Attributes"), "edit_channel_attributes",
 		     gimp_standard_help_func,
-		     "dialogs/channels/dialogs/edit_channel_attributes.html",
+		     "dialogs/channels/edit_channel_attributes.html",
 		     GTK_WIN_POS_MOUSE,
 		     FALSE, TRUE, FALSE,
 

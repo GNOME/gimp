@@ -907,7 +907,7 @@ gradient_editor_create (void)
   gtk_widget_show (button);
 
   button = ed_create_button (_("Save as POV-Ray"),
-			     "dialogs/gradient_editor/save_as_pov_ray.html",
+			     "dialogs/gradient_editor/save_as_povray.html",
 			     GTK_SIGNAL_FUNC (ed_save_pov_callback),
 			     NULL);
   GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
@@ -1866,7 +1866,7 @@ ed_save_pov_callback (GtkWidget *widget,
 
   /*  Connect the "F1" help key  */
   gimp_help_connect_help_accel (window, gimp_standard_help_func,
-				"dialogs/gradient_editor/save_as_pov_ray.html");
+				"dialogs/gradient_editor/save_as_povray.html");
 
   gtk_widget_show (window);
   gtk_widget_set_sensitive (g_editor->shell, FALSE);

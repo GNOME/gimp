@@ -5,8 +5,7 @@ SUBDIRS = colors mode transforms
 helpdatadir = $(gimpdatadir)/help/C/image/image
 
 helpdata_DATA = \
-        duplicate.html \
-        index.html 
+        duplicate.html
 
 EXTRA_DIST = $(helpdata_DATA)
 

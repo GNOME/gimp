@@ -1,79 +1,287 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for gtm</title>
-</head>
+<HTML
+><HEAD
+><TITLE
+>GIMP Table Magic</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Filters"
+HREF="../filters/index.html"><LINK
+REL="PREVIOUS"
+TITLE="GPB"
+HREF="../filters/gpb.html"><LINK
+REL="NEXT"
+TITLE="IIR Gaussian Blur"
+HREF="../filters/gauss_iir.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../filters/gpb.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Filters</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/gauss_iir.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTERS-GTM"
+><SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> Table Magic</A
+></H1
+><A
+NAME="AEN3001"
+></A
+><P
+>    Allows you to configure settings for saving an image as a 
+    formatted <SPAN
+CLASS="ACRONYM"
+>HTML</SPAN
+> table.
+  </P
+><P
+>    If <SPAN
+CLASS="GUIBUTTON"
+>Generate Full HTML Document</SPAN
+> is
+    selected, Gimp will create a full document with
+    &lt;<TT
+CLASS="SGMLTAG"
+>HTML</TT
+>&gt;,
+    &lt;<TT
+CLASS="SGMLTAG"
+>BODY</TT
+>&gt;, etc. instead of just producing
+    the code for the table.
+  </P
+><P
+>    The <SPAN
+CLASS="GUIBUTTON"
+>Use Cellspan</SPAN
+> option makes the
+    resulting HTML table use the &lt;<TT
+CLASS="SGMLTAG"
+>ROWSPAN</TT
+>&gt;
+    and &lt;<TT
+CLASS="SGMLTAG"
+>COLSPAN</TT
+>&gt; tags to merge contiguous
+    cells of the same color into one large cell. This will make the
+    resulting document smaller but may not show correctly in older
+    browsers.
+  </P
+><P
+>    The <SPAN
+CLASS="GUIBUTTON"
+>Compress TD Tags</SPAN
+> option makes Table
+    Magic leave no space between the &lt;<TT
+CLASS="SGMLTAG"
+>TD</TT
+>&gt;
+    tag and the cell contents.  This improves the layout quality of
+    the result.
+  </P
+><P
+>    A caption can be added to the table by using the
+    <SPAN
+CLASS="GUIBUTTON"
+>Caption</SPAN
+> option.
+  </P
+><P
+>    Each cell will usually need some content to allow the cell to be
+    visible. You can use any character her, including
+    <SPAN
+CLASS="ACRONYM"
+>HTML</SPAN
+> escape codes.  The default is
+    <SPAN
+CLASS="QUOTE"
+>"&amp;nbsp;"</SPAN
+> which enters a non-breaking space
+    which appears like a normal space but allow the cell to be
+    visible.  A normal space character is not sufficient to force
+    the cell to be visible.
+  </P
+><P
+>    <SPAN
+CLASS="GUILABEL"
+>Table options</SPAN
+> defines the standard
+    <SPAN
+CLASS="ACRONYM"
+>HTML</SPAN
+> options for the table:
 
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">Gimp Table Magic Help Page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<P>
-	Allows you to configure settings for saving an image as a 
-formatted HTML table.
-	<H4>
-	HTML Page Options
-	</H4>
-	If "Generate Full HTML Document" is selected, Gimp will create 
-a full document with &lt;HTML&gt;, &lt;BODY&gt;, etc. instead of just 
-producing the code for the table.
-	<H4>
-	Table Creation Options
-	</H4>
-	The "Use Cellspan" option makes the resulting HTML table use 
-the &lt;ROWSPAN&gt; and &lt;COLSPAN&gt; tags to merge contiguous cells 
-of the same color into one large cell. This will make the resulting 
-document smaller but may not show correctly in older browsers.
-	<P>
-	The "Compress TD Tags" option makes Table Magic leave no space 
-between the TD tag and the cell contents. This improves the layout 
-quality of the result.
-	<P>
-	A caption can be added to the table by using the "Caption" 
-option.
-	<P>
-	Each cell will usually need some content to allow the cell to 
-be visible. You can use any character her, including HTML escape codes. 
-The default is "&amp;nbsp;" which enters a space which can't be seen by 
-the user but allow the cell to be visible.
-	<H4>
-	Table Options
-	</H4>
-	Table options defines the standard HTML options for the table:
-	<P>
-	Border - The number of pixels in the table border.
-	<BR>
-	Width - The width for each table cell, either in pixel or 
-percent.
-	<BR>
-	Height - The height for each table cell, either in pixel or 
-percent.
-	<BR>
-	Cell-Padding - The distance between a cell edge and its 
-contents in pixels.
-	<BR>
-	Cell-Spacing - The distance between cells in pixels.	
-        <H3>
-	Additional Information
-	</H3>
-	<A href="http://www.w3.org/MarkUp/">HTML Information</A> - From 
-the W3C.
-	<BR><BR>
-	<P>
-	<a href="index.html">Index</a><p>
-	(/filters/gtm.html)
-	<P>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+    <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Border</SPAN
+></DT
+><DD
+><P
+>	    The number of pixels in the table border.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Width</SPAN
+></DT
+><DD
+><P
+>	    The width for each table cell, either in pixels or
+	    percent.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Height</SPAN
+></DT
+><DD
+><P
+>	    The height for each table cell, either in pixels or
+	    percent.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Cell-Padding</SPAN
+></DT
+><DD
+><P
+>	    The distance between a cell edge and its contents in
+	    pixels.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Cell-Spacing</SPAN
+></DT
+><DD
+><P
+>	    The distance between cells in pixels.
+	  </P
+></DD
+></DL
+>
+  </P
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../filters/gpb.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/gauss_iir.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="ACRONYM"
+>GPB</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../filters/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="ACRONYM"
+>IIR</SPAN
+> Gaussian Blur</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

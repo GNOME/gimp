@@ -1,31 +1,900 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Help Page for print</title>
-</head>
+<HTML
+><HEAD
+><TITLE
+>The Print Plugin</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="UP"
+TITLE="Filters"
+HREF="../filters/index.html"><LINK
+REL="PREVIOUS"
+TITLE="PNM"
+HREF="../filters/pnm.html"><LINK
+REL="NEXT"
+TITLE="PSD"
+HREF="../filters/psd.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../filters/pnm.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 13. Filters</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../filters/psd.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FILTERS-PRINT"
+>The <SPAN
+CLASS="INTERFACE"
+>Print</SPAN
+> Plugin</A
+></H1
+><A
+NAME="AEN3275"
+></A
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PRINT-MAIN-PNG"
+></A
+><P
+><B
+>Figure 13-1. The Main Window</B
+></P
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="../images/print_main.png"
+></IMG
+></P
+></DIV
+></DIV
+><P
+>    The main window is divided into five panes:
+    <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+></DT
+><DD
+><P
+>	    The <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+> pane contains a
+	    <SPAN
+CLASS="GUIBUTTON"
+>positioning widget</SPAN
+> that allows
+	    interactive positioning of the output on the page. It
+	    contains an outer border, representing the sheet of paper;
+	    an inner border, representing the printable area of the
+	    printer; an arrow, pointing to the top of the page (the
+	    end that is fed into the printer); and a black rectangle,
+	    representing the position of the image on the page. The
+	    image can be moved around on the paper. When the first
+	    (<SPAN
+CLASS="MOUSEBUTTON"
+>left</SPAN
+>) button is used, the
+	    image is moved in screen pixels; when any other button is
+	    used, the image is moved in points<A
+NAME="AEN3292"
+HREF="#FTN.AEN3292"
+>[1]</A
+>. The
+	    arrow resizes depending upon the media size chosen; the
+	    shaft of the arrow is always equal to one inch on
+	    the output.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Printer Settings</SPAN
+></DT
+><DD
+><P
+>	    The <SPAN
+CLASS="GUILABEL"
+>Printer Settings</SPAN
+> pane contains a
+	    dropdown menu for selecting a printer. There
+	    is a special <SPAN
+CLASS="QUOTE"
+>"printer"</SPAN
+> named File that allows
+	    you to choose a file to print to, rather than a printer
+	    queue. The <SPAN
+CLASS="GUILABEL"
+>Setup</SPAN
+> box to the right
+	    allows specification of a printer type, a PPD
+	    file<A
+NAME="AEN3302"
+HREF="#FTN.AEN3302"
+>[2]</A
+>, and the command to be used to
+	    print. Each distinct printer in the
+	    <SPAN
+CLASS="GUIBUTTON"
+>Printer</SPAN
+> list can have different
+	    settings applied to it. Below that is a <SPAN
+CLASS="GUIBUTTON"
+>combo
+	    box</SPAN
+> allowing choice of media size. The choices
+	    are constrained to those that the printer supports.  Below
+	    that are <SPAN
+CLASS="GUIBUTTON"
+>dropdown</SPAN
+> menus for
+	    choosing media type (what kind of paper), media source
+	    (what input tray), ink type, and resolution.  All of these
+	    settings are printer-specific.
+	  </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PRINT-SETUP-PNG"
+></A
+><P
+><B
+>Figure 13-2. The setup</B
+></P
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="../images/print_setup.png"
+></IMG
+></P
+></DIV
+></DIV
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Position</SPAN
+></DT
+><DD
+><P
+>	    The <SPAN
+CLASS="GUILABEL"
+>Position</SPAN
+> pane contains various
+	    widgets to place the image on the paper. These widgets
+	    work in conjunction with the <SPAN
+CLASS="GUILABEL"
+>Preview</SPAN
+>
+	    pane. At the top left of the pane is a button to center
+	    the image on the paper (not on the printable area). To its
+	    right is a <SPAN
+CLASS="GUIBUTTON"
+>button group</SPAN
+> that allows
+	    choosing English (inch) units or metric (centimeter)
+	    units. Below these are <SPAN
+CLASS="GUIBUTTON"
+>four boxes</SPAN
+>
+	    that allow entry of the left, top, right, and bottom of
+	    the image. These positions are relative to the top left of
+	    the paper<A
+NAME="AEN3321"
+HREF="#FTN.AEN3321"
+>[3]</A
+>.  There are two additional boxes
+	    that allow specification of the right margin and bottom
+	    margin if you prefer; these are relative to the bottom
+	    right corner of the paper. Any of these may have values
+	    entered into them. The preview image will be moved
+	    appropriately. <DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="90%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>These entries do not resize the
+	    image.</P
+></TD
+></TR
+></TABLE
+></DIV
+> Finally, there is a pick box for
+	    <SPAN
+CLASS="GUIBUTTON"
+>orientation</SPAN
+> (landscape or
+	    portrait).  There is an <SPAN
+CLASS="GUIBUTTON"
+>Auto</SPAN
+> mode
+	    that picks the orientation
+	    that best matches that of the image to be printed.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Scaling</SPAN
+></DT
+><DD
+><P
+>	    The <SPAN
+CLASS="GUILABEL"
+>Scaling</SPAN
+> pane contains a slider
+	    that allows scaling of the image. The image can be scaled
+	    in either percent of the printable area (NOT the page in
+	    this case) or pixels per inch (<SPAN
+CLASS="ACRONYM"
+>PPI</SPAN
+>) via
+	    a <SPAN
+CLASS="GUIBUTTON"
+>radio button</SPAN
+> below the slider.
+	    <SPAN
+CLASS="ACRONYM"
+>PPI</SPAN
+> allows matching image resolution to
+	    printer resolution.  The image may be scaled using either
+	    method to between 5 and 100% of the imageable area. It is
+	    not possible to crop with the Print plugin. In
+	    <SPAN
+CLASS="GUIBUTTON"
+>Percent</SPAN
+> mode, the image is scaled
+	    so that neither axis will be longer than the percent of
+	    the printable area specified. For example, if you print an
+	    image at 20%, it will be possible to tile the image 5
+	    times on one axis and at least 5 times on the other. To
+	    the right of the radio button is a button called
+	    <SPAN
+CLASS="GUIBUTTON"
+>Set Image Scale</SPAN
+>. This sets the
+	    scaling to <SPAN
+CLASS="ACRONYM"
+>PPI</SPAN
+>, and sets the resolution
+	    as closely as possible to the resolution stored in the
+	    image. To the right of the <SPAN
+CLASS="GUIBUTTON"
+>Set Image
+	    Scale</SPAN
+> button are two boxes that allow entry of
+	    <SPAN
+CLASS="GUIBUTTON"
+>width</SPAN
+> and
+	    <SPAN
+CLASS="GUIBUTTON"
+>height</SPAN
+> of the image. These set the
+	    scaling mode to <SPAN
+CLASS="ACRONYM"
+>PPI</SPAN
+>.  Specifying one
+	    automatically sets the other, and the image is
+	    repositioned as needed to prevent it from falling off the
+	    edge of the page.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Image Settings</SPAN
+></DT
+><DD
+><P
+>	    The <SPAN
+CLASS="GUILABEL"
+>Image Settings</SPAN
+> pane allows choice
+	    of <SPAN
+CLASS="GUIBUTTON"
+>Line Art</SPAN
+>, <SPAN
+CLASS="GUIBUTTON"
+>Solid
+	    Colors</SPAN
+>, <SPAN
+CLASS="GUIBUTTON"
+>Photograph</SPAN
+>, or
+	    <SPAN
+CLASS="GUIBUTTON"
+>Monochrome</SPAN
+> image type. Line art or
+	    Solid Colors should be used for graphics containing mostly
+	    solid areas of color. They're very similar to each other.
+	    Photograph mode dithers more slowly, but produces more
+	    accurate colors. Finally, Monochrome mode can be used to
+	    print absolute black and white very quickly. To the right
+	    of these four radio buttons is a button called
+	    <SPAN
+CLASS="GUIBUTTON"
+>Adjust Color</SPAN
+>. This pops up a new
+	    window that controls various output quality settings. That
+	    will be described separately. Finally, there is a choice
+	    of Black and White and Color output.
+	  </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Action Buttons</SPAN
+></DT
+><DD
+><P
+>	    The last pane contains four action buttons:
 
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">print help page</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	<a href="index.html">Index</a><p>
-	(/filters/print.html)<p>
-        Sorry but the help file for print is not yet done.
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+	    <P
+></P
+><UL
+><LI
+><P
+>		  <SPAN
+CLASS="GUIBUTTON"
+>Print and Save Settings</SPAN
+>
+		  &mdash; immediately print the image (or, if the File
+		  printer is chosen, display a file selection window to
+		  pick the output file), and save all current settings
+		  for all printers.
+	        </P
+></LI
+><LI
+><P
+>		  <SPAN
+CLASS="GUIBUTTON"
+>Save Settings</SPAN
+> &mdash;
+		  immediately save the settings, and continue working
+		  in the Print plugin.
+  	        </P
+></LI
+><LI
+><P
+>		  <SPAN
+CLASS="GUIBUTTON"
+>Print</SPAN
+> &mdash; immediately
+		  print the image (or, if the File printer is chosen,
+		  display a file selection window to pick the output
+		  file), but do not save settings.
+ 	        </P
+></LI
+><LI
+><P
+>		  <SPAN
+CLASS="GUIBUTTON"
+>Cancel</SPAN
+> &mdash; immediately
+		  quits without saving or printing.
+ 	        </P
+></LI
+></UL
+> 
+	  </P
+></DD
+></DL
+> 
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="ADJUST-COLOR"
+><SPAN
+CLASS="GUIBUTTON"
+>Adjust Color</SPAN
+></A
+></H2
+><P
+>      The <SPAN
+CLASS="GUIBUTTON"
+>Adjust Color</SPAN
+> button pops up a
+      non-modal dialog that
+      allows adjustment of various parameters related to the print
+      quality. These are independent of the controls within the
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> itself and only affect the
+      print.
+    </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="PRINT-COLOR-PNG"
+></A
+><P
+><B
+>Figure 13-3. The Color Settings</B
+></P
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="../images/print_color.png"
+></IMG
+></P
+></DIV
+></DIV
+><P
+>      At the top of the window is a thumbnail of the image that
+      changes to reflect the color settings of the image.  This
+      enables you to get an idea of how the image will print out as
+      you adjust settings.
+    </P
+><P
+>      Below that there are eight sliders:
+      
+      <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Brightness (0-2.0, default 1.0)</SPAN
+></DT
+><DD
+><P
+>	      adjust the brightness of the image.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Contrast (0-4.0, default 1.0)</SPAN
+></DT
+><DD
+><P
+>	      adjust the output contrast.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Cyan, Magenta, Yellow (0-4.0, default 1.0)
+	    </SPAN
+></DT
+><DD
+><P
+>	      adjust the cyan, magenta, and yellow in the output.
+	      These should not normally need to be adjusted very much;
+	      even very small adjustments can go quite a long way to
+	      restoring color balance..
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Saturation (0-9.0, default 1.0)
+	    </SPAN
+></DT
+><DD
+><P
+>	      adjust the color brilliance (saturation) of the output.
+	      Saturation of 0 means pure gray scale, with no color.
+	      Saturation of 9.0 will make just about anything but
+	      pure grays brilliantly colored.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Density (0.1-2.0, default 1.0)
+	    </SPAN
+></DT
+><DD
+><P
+>	      adjust the density (amount of ink) in the print. The
+	      density is automatically corrected for the particular
+	      printer, resolution, and, in some cases, paper choices.
+	      If solid black in the input is not solid in the print,
+	      the density needs to be increased; if there is excessive
+	      ink bleed-through and muddy dark colors, the density
+	      should be decreased. <DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="90%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>The density will not
+	      increase beyond a certain amount no matter what the
+	      slider is set to.</P
+></TD
+></TR
+></TABLE
+></DIV
+>
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Gamma (0.1-4.0, default 1.0)
+	    </SPAN
+></DT
+><DD
+><P
+>	      adjust the output gamma. The gamma value is
+	      automatically corrected for the choice of printer; this
+	      is used if you believe the automatic setting is
+	      incorrect.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Dither Algorithm</SPAN
+></DT
+><DD
+><P
+>	      There is also a selection box for the <SPAN
+CLASS="GUILABEL"
+>dither
+	      algorithm</SPAN
+> to be used. There are currently
+	      seven choices:
+	      <P
+></P
+><UL
+><LI
+><P
+>		    <SPAN
+CLASS="GUILABEL"
+>Adaptive Hybrid</SPAN
+> usually
+		    yields the best output
+		    quality.  It chooses a modified Floyd-Steinberg
+		    error diffusion algorithm or ordered dithering
+		    depending upon the image characteristics.
+		  </P
+></LI
+><LI
+><P
+>		    <SPAN
+CLASS="GUILABEL"
+>Ordered</SPAN
+> uses a pure ordered
+		    dither. It generally
+		    yields excellent quality for simple black and
+		    white or four color printers without variable drop
+		    size or drop modulation.  It is not recommended if
+		    high quality is desired on six color printers.  It
+		    is considerably faster than <SPAN
+CLASS="GUILABEL"
+>Adaptive
+		    Hybrid</SPAN
+>. 
+		  </P
+></LI
+><LI
+><P
+>		    <SPAN
+CLASS="GUILABEL"
+>Fast</SPAN
+> also uses a pure ordered
+		    dither, but uses a
+		    very simple black model and makes no attempt to
+		    handle multi-level (6-color, variable drop size,
+		    or drop modulation) at all cleanly. It is
+		    substantially faster than
+		    <SPAN
+CLASS="GUILABEL"
+>Ordered</SPAN
+> dither. The
+		    quality tends to be quite poor except on simple
+		    four color printers. On three color printers,
+		    quality is probably competitive with anything
+		    else.
+		  </P
+></LI
+><LI
+><P
+>		   <SPAN
+CLASS="GUILABEL"
+>Very Fast</SPAN
+> is similar to
+		   <SPAN
+CLASS="GUILABEL"
+>Fast</SPAN
+>, except that it uses a
+		   very simple dither matrix that can be looked up
+		   much more quickly than the matrix used in the
+		   <SPAN
+CLASS="GUILABEL"
+>Fast dither</SPAN
+>.  For simple pure
+		   black and white images dominated by horizontal and
+		   vertical lines, this may actually yield the best
+		   results.  For other types of images, the quality
+		   will be poor.
+		  </P
+></LI
+><LI
+><P
+>		    <SPAN
+CLASS="GUILABEL"
+>Adaptive Random</SPAN
+> is similar to
+		    <SPAN
+CLASS="GUILABEL"
+>Adaptive Hybrid</SPAN
+>,
+		    except that the modifications to the
+		    Floyd-Steinberg algorithm are slightly different.
+		    This is slower than <SPAN
+CLASS="GUILABEL"
+>Adaptive
+		    Hybrid</SPAN
+> on most
+		    systems.  For some images the quality may be
+		    better, but generally
+		    <SPAN
+CLASS="GUILABEL"
+>Adaptive Hybrid</SPAN
+> should yield
+		    slightly superior
+		    images.
+		  </P
+></LI
+><LI
+><P
+>		    <SPAN
+CLASS="GUILABEL"
+>Hybrid Floyd-Steinberg</SPAN
+> uses
+		    the modified
+		    Floyd-Steinberg algorithm of <SPAN
+CLASS="GUILABEL"
+>Adaptive
+		    Hybrid</SPAN
+> on
+		    the entire image.  Generally, the results are poor
+		    in pale regions.
+		  </P
+></LI
+><LI
+><P
+>		    <SPAN
+CLASS="GUILABEL"
+>Random Floyd-Steinberg</SPAN
+> uses
+		    the modified Floyd-Steinberg algorithm of
+		    <SPAN
+CLASS="GUILABEL"
+>Adaptive Random</SPAN
+> on
+		    the entire image. Generally, the results are poor
+		    in pale regions.
+		  </P
+></LI
+></UL
+>
+            </P
+></DD
+></DL
+> 
+    </P
+></DIV
+></DIV
+><H3
+CLASS="FOOTNOTES"
+>Notes</H3
+><TABLE
+BORDER="0"
+CLASS="FOOTNOTES"
+WIDTH="100%"
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN3292"
+HREF="../filters/print.html#AEN3292"
+>[1]</A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>the
+	    output resolution of the plugin</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN3302"
+HREF="../filters/print.html#AEN3302"
+>[2]</A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>for Postscript
+	    printers</P
+></TD
+></TR
+><TR
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="5%"
+><A
+NAME="FTN.AEN3321"
+HREF="../filters/print.html#AEN3321"
+>[3]</A
+></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+WIDTH="95%"
+><P
+>again, that's relative to the
+	    paper corner, not the printable area, which is usually
+	    smaller</P
+></TD
+></TR
+></TABLE
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../filters/pnm.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../filters/psd.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="ACRONYM"
+>PNM</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../filters/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><SPAN
+CLASS="ACRONYM"
+>PSD</SPAN
+></TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

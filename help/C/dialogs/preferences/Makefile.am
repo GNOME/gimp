@@ -3,15 +3,13 @@
 helpdatadir = $(gimpdatadir)/help/C/dialogs/preferences
 
 helpdata_DATA = \
-	default_comment.html \
-        directories.html \
-        display.html \
-        environment.html \
-        index.html \
-        interface.html \
-        monitor.html \
-        new_file.html \
-        preferences.html \
+        directories.html	\
+        display.html		\
+        environment.html	\
+        interface.html		\
+        monitor.html		\
+        new_file.html		\
+        preferences.html	\
         session.html 
 
 EXTRA_DIST = $(helpdata_DATA)

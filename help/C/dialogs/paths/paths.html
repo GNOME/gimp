@@ -1,120 +1,473 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<HTML>
-<HEAD>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <TITLE>The Paths Dialog</TITLE>
-</HEAD>
-<BODY text="#000000" bgcolor="#FFFFFF" link="#0000FF" vlink="#FF0000" alink="#000088">
-<TABLE width="100%" cellspacing="1" cellpadding="1">
-  <TR bgcolor="black">
-    <TD width="100%" align="center"><FONT size="+2" color="white">The Paths
-      Dialog</FONT></TD>
-  </TR>
-  <TR bgcolor="white" >
-    <TD width="100%" align="left"><P>
-      <P>
-      Basically paths is a way to store bezier selections. But if you limit path
-      to that statement you will miss a lot of functionality. A better way to see
-      it is a way to manage vectors curves. If you are familiar with vector drawing
-      programs such as e.g Sketch, Illustrator&reg; or Corel Draw&reg; then paths
-      will be something that is very natural.
-      <P>
-      You will work with paths just like you work with bezier curves. Bezier
-      (select)curves are as a matter of fact Paths you may just not be aware of
-      the power that is hidden. The big difference is that you can edit your curve,
-      and you can paint with your curve or even save, import and export the curve.
-      <P>
-      There are three commando areas in the Paths dialog, the top edit area, the
-      path area with it's right button popup menu and the bottom control area.
-      <P>
-      <DL>
-	<DT>
-	  <EM>Control area:</EM>
-	<DD>
-	  From left to right we count<BR>
-	  <BR>
-	  New Path, you will create a new path and activate the bezier tool. The path
-	  is named Path X where X is a number. If you want to rename it you have to
-	  double click on the path in the path area. If you do so a name dialog will
-	  appear.<BR>
-	  <BR>
-	  Duplicate Path: Will duplicate your currently active path. To activate/mark
-	  a path you single click on it in the path area. The name is by default OldName#X
-	  where X indicates the N:th duplication of the path.<BR>
-	  <BR>
-	  Path to selection: Will create a selection out of a path. Note the path doesn't
-	  have to be closed. The created selection will simply join the endpoints with
-	  a line that will follow the curves direction in each endpoint.<BR>
-	  <BR>
-	  Selection to Path: Will create a path out of a selection. Beware of complicated
-	  selection such as selections done by quick mask or select by color. Such
-	  selection will create very complexed paths, which are hard to control.<BR>
-	  <BR>
-	  Stroke path: Will stroke the path with the currently (active device) active
-	  brush. The path doesn't have to be closed. The stoke will stoke from one
-	  endpoint to another.<BR>
-	  <BR>
-	  Delete Path: Will delete the currently active path (Note: no confirmation
-	  dialog).
-	<DT>
-	<DD>
-	<DT>
-	  <EM>Edit area:</EM>
-	<DD>
-	  To be able to edit a path the bezier tool must be active, if it isn't you
-	  will not be able to edit a path. In the top edit area we count from left
-	  to right.<BR>
-	  <BR>
-	  New point. This command will add a control point to the path and make aline
-	  from the last control point to the new point. There a two ways to create
-	  a path either you just click to add a point. This will crate a curve with
-	  sharp corners. However if you click and drag you will stretch and form the
-	  curve related to the added control point. If you create the path this way
-	  you will end up with a curve with smooth "corners". You can naturally combine
-	  the two ways to create curves. <BR>
-	  You close your path by joining the first and last point (this is done by
-	  adding the last point really close to the first point) a square sign will
-	  now appear inside the path. This command will turn the path into a selection.
-	  However if you click outside the previously closed curve you will start a
-	  new bezier curve. The square path to selection command will now be deactivated
-	  and you can add more points inside the previously closed curve. You can have
-	  as many closed curves as you want but you can only have one that isn't closed
-	  in the same Path. This may look like a limitation but you can have as many
-	  paths as you like which will enable you to have as may unclosed curves as
-	  you want as long as they are in separate paths.<BR>
-	  <BR>
-	  Add point: Will add a point to your curve. The new point must be located
-	  on the curve, you can't add a point outside the curve. You will notice that
-	  your cursor will have a little + sign when you are over a curve in the image.
-	  When the + sign appears it means that you are able to add a point by clicking
-	  on the curve. The new point will be adjusted to fit the curve and the curves
-	  shape will not be altered.<BR>
-	  <BR>
-	  Remove point: Will remove a point in your curve. The point must be a between
-	  the endpoints in a non-closed curve. If the curve is closed it can be any
-	  point within the curve. You must however always have two point in the curve.<BR>
-	  <BR>
-	  Edit Point: Will allow you to adjust the curve. When you click on an anchor
-	  point, two little handles appear. If you pull the handles, they will change
-	  size and direction and shape a curve. By pressing Ctrl, you can move an anchor
-	  point anyway you like. To be able to adjust each handle separately you have
-	  to press Shift.
-	<DT>
-	<DD>
-	<DT>
-	  <EM>Path area:</EM>
-	<DD>
-	  The path area is where you choose the path that you want to work with. If
-	  you right click on a path a popup menu will appear with command for copy,
-	  paste etc. please see <A HREF="../../paths/index.html">Path Index</A> for
-	  reference of those commands. The default name of a path is simple it's just
-	  Path followed with a number. It can sometimes be really useful too change
-	  name. To change name simply double click on the path and a name dialog will
-	  appear.
-      </DL>
-      <P>
-      <A href="index.html">Index</A>
-    </TD>
-  </TR>
-</TABLE>
-</BODY></HTML>
+<HTML
+><HEAD
+><TITLE
+>The Paths Dialog</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../../contents.html"><LINK
+REL="UP"
+TITLE="Paths"
+HREF="../../paths/index.html"><LINK
+REL="PREVIOUS"
+TITLE="Paths"
+HREF="../../paths/index.html"><LINK
+REL="NEXT"
+TITLE="New Path"
+HREF="../../paths/new_path.html"></HEAD
+><BODY
+CLASS="SECT1"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../../paths/index.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+>Chapter 7. Paths</TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../../paths/new_path.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="PATHS"
+>The <SPAN
+CLASS="INTERFACE"
+>Paths Dialog</SPAN
+></A
+></H1
+><A
+NAME="AEN1565"
+></A
+><P
+>    Basically paths are a way to store bezier selections. Limiting
+    paths to that statement misses a lot of their functionality
+    though. A better way to see it is as a way to manage vector curves.
+    If you are familiar with vector drawing programs such as
+    <SPAN
+CLASS="APPLICATION"
+>Adobe Illustrator</SPAN
+> and
+    <SPAN
+CLASS="APPLICATION"
+>Corel Draw</SPAN
+>, then paths will be
+    something very familiar.
+  </P
+><P
+>    You will work with paths just like you work with bezier curves.
+    Bezier curves are, as a matter of fact, Paths. You may just not be
+    aware of the power that is hidden within them. The big difference
+    is that you can edit your curve, you can paint with your curve, or
+    even save, import and export the curve.
+  </P
+><P
+>    There are three command areas in the Paths dialog:
+    <P
+></P
+><UL
+><LI
+><P
+>	  The top edit area
+        </P
+></LI
+><LI
+><P
+>	  The path area with its right button popup menu 
+        </P
+></LI
+><LI
+><P
+>	  The bottom control area
+        </P
+></LI
+></UL
+>
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN1580"
+>Control area:</A
+></H2
+><P
+>      From left to right we count:
+      <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>New Path</SPAN
+></DT
+><DD
+><P
+>	      You will create a new path and activate the bezier tool.
+	      The path is named Path X where X is a number. If you
+	      want to rename it you have to double click on the path
+	      in the path area. If you do so a <SPAN
+CLASS="INTERFACE"
+>name
+	      dialog</SPAN
+> will appear.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Duplicate Path</SPAN
+></DT
+><DD
+><P
+>	      Will duplicate the active path. To activate/mark a path
+	      you single click on it in the path area. The name is, by
+	      default, OldName#X where X indicates the N:th
+	      duplication of the path.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Path to Selection</SPAN
+></DT
+><DD
+><P
+>	      Will create a selection out of a path. Notice that the
+	      path doesn't have to be closed. The created selection
+	      will simply join the endpoints with a line that will
+	      follow the curves direction in each endpoint.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Selection to Path</SPAN
+></DT
+><DD
+><P
+>	      Will create a path out of a selection. Beware of
+	      complicated selections such as selections done by quick
+	      mask or select by color. Such selections will create
+	      very complex paths which are hard to control.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Stroke Path</SPAN
+></DT
+><DD
+><P
+>	      Will stroke the path with the (active device's) active
+	      brush. The path doesn't have to be closed. The stoke
+	      will stroke from one endpoint to another.
+	    </P
+></DD
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Delete Path</SPAN
+></DT
+><DD
+><P
+>	      Will delete the active path.
+	      <DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="90%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../../../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>		  No confirmation dialog will appear.
+	        </P
+></TD
+></TR
+></TABLE
+></DIV
+>
+	    </P
+></DD
+></DL
+>
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN1617"
+>Edit area:</A
+></H2
+><P
+>      To be able to edit a path, the bezier tool must be active.  If
+      it isn't, you will not be able to edit a path. In the top edit
+      area we count from left to right.
+      <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>New Point</SPAN
+></DT
+><DD
+><P
+>	      This command will add a control point to the path and
+	      make a line from the last control point to the new
+	      point. There a two ways to create a path. You can just
+	      click to add a point. This will create a curve with
+	      sharp corners. If instead you click and drag you will
+	      stretch and form the curve related to the added control
+	      point. If you create the path this way, you will end up
+	      with a curve with smooth <SPAN
+CLASS="QUOTE"
+>"corners"</SPAN
+>. You can,
+	      naturally, combine the two ways to create curves.
+	    </P
+><P
+>	      You close your path by joining the first and last point
+	      (this is done by adding the last point really close to
+	      the first point) a <SPAN
+CLASS="GUIBUTTON"
+>square</SPAN
+> sign
+	      will now appear inside the path. This command will turn
+	      the path into a selection. Clicking outside the
+	      previously closed curve will start a new bezier curve.
+	      The square path to selection command will now be
+	      deactivated and you can add more points inside the
+	      previously closed curve. You can have as many closed
+	      curves as you want, but you can only have one that isn't
+	      closed in the same Path. This may look like a
+	      limitation, but you can have as many paths as you like.
+	      This will enable you to have as many unclosed curves as
+	      you want as long as they are in separate paths.
+	    </P
+></DD
+></DL
+>
+	  
+      <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Add Point</SPAN
+></DT
+><DD
+><P
+>	      Will add a point to your curve. The new point must be
+	      located on the curve.  You can't add a point outside the
+	      curve.  You will notice that your cursor will have a
+	      little <SPAN
+CLASS="GUIBUTTON"
+>+</SPAN
+> sign when you are over a
+	      curve in the image.  When the <SPAN
+CLASS="GUIBUTTON"
+>+</SPAN
+>
+	      sign appears it means that you are able to add a point
+	      by clicking on the curve. The new point will be adjusted
+	      to fit the curve and the curve's shape will not be
+	      altered.
+	    </P
+></DD
+></DL
+>
+	  
+      <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Remove Point</SPAN
+></DT
+><DD
+><P
+>	      Will remove a point in your curve. The point must be
+	      between the endpoints in a non-closed curve. If the
+	      curve is closed it can be any point within the curve.
+	      You must, however, always have two points in the
+	      curve.
+	    </P
+></DD
+></DL
+>
+	  
+      <P
+></P
+><DL
+><DT
+><SPAN
+CLASS="GUILABEL"
+>Edit Point</SPAN
+></DT
+><DD
+><P
+>	      Will allow you to adjust the curve. When you click on an
+	      anchor point, two little handles appear. If you pull the
+	      handles, they will change size and direction and shape a
+	      curve. By pressing <B
+CLASS="KEYCAP"
+>Ctrl</B
+>, you can move
+	      an anchor point anyway you like. To be able to adjust
+	      each handle separately,  you have to press
+	      <B
+CLASS="KEYCAP"
+>Shift</B
+>.
+	    </P
+></DD
+></DL
+>
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="AEN1651"
+>Path area:</A
+></H2
+><P
+>	  
+      The path area is where you choose the path that you want to work
+      with. If you <SPAN
+CLASS="MOUSEBUTTON"
+>right</SPAN
+> click on a path, a
+      popup menu will appear with commands for copy, paste etc. Please
+      see <A
+HREF="../../paths/index.html"
+>Chapter 7</A
+> for references of
+      those commands. The default name of a path is simple &mdash;
+      it's just <TT
+CLASS="FILENAME"
+>Path</TT
+> followed by a number. It can
+      be useful to change a path's name. To change
+      its name, simply double click on the path and a name dialog will
+      appear.
+    </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../../paths/index.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../../paths/new_path.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>Paths</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../../paths/index.html"
+>Up</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>New Path</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

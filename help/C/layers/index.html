@@ -1,44 +1,320 @@
-<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<html>
-<head>
-  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-  <title>Index for layers</title>
-</head>
-
-<body text="#000000" bgcolor="#FFFFFF" link="#0000FF"
-      vlink="#FF0000" alink="#000088">
-
-  <table width="100%" cellspacing="1" cellpadding="1">
-    <tr bgcolor="black">
-      <td width="100%" align="center">
-        <font size="+2" color="white">layers Index</font>
-      </td>
-    </tr>  
-    <tr bgcolor="white" >
-      <td width="100%" align="left">
-	<p>
-	(/layers/index.html)<p>
-          <a href="../index.html">Top index</a><p>
-          Subtopics available:<p>
-          <a href="stack/index.html">stack</a><br>
-          <p>Topics in this directory:<p>
-          <a href="add_alpha_channel.html">add_alpha_channel</a><br>
-          <a href="alpha_to_selection.html">alpha_to_selection</a><br>
-          <a href="anchor_layer.html">anchor_layer</a><br>
-          <a href="apply_mask.html">apply_mask</a><br>
-          <a href="delete_layer.html">delete_layer</a><br>
-          <a href="delete_mask.html">delete_mask</a><br>
-          <a href="duplicate_layer.html">duplicate_layer</a><br>
-          <a href="flatten_image.html">flatten_image</a><br>
-          <a href="layer_to_image_size.html">layer_to_image_size</a><br>
-          <a href="mask_to_selection.html">mask_to_selection</a><br>
-          <a href="merge_down.html">merge_down</a><br>
-	<p>
-	/Karin & Olof
-	<p>
-      </td>
-    </tr>
-  </table>
-
-</body>
-</html>
+<HTML
+><HEAD
+><TITLE
+>Layers</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="../contents.html"><LINK
+REL="PREVIOUS"
+TITLE="Duplicate"
+HREF="../image/image/duplicate.html"><LINK
+REL="NEXT"
+TITLE="Using Layers"
+HREF="../layers/using_layers.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="../image/image/duplicate.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="../layers/using_layers.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="LAYERS-LAYERS-CHAPTER"
+>Chapter 5. Layers</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="../layers/index.html#LAYERS-LAYERS-INTRODUCTION"
+>What are Layers?</A
+></DT
+><DT
+><A
+HREF="../layers/using_layers.html"
+>Using Layers</A
+></DT
+><DT
+><A
+HREF="../dialogs/layers/layers.html"
+>Layers Dialog</A
+></DT
+><DT
+><A
+HREF="../dialogs/layers/new_layer.html"
+>New Layer</A
+></DT
+><DT
+><A
+HREF="../layers/stack/stack.html"
+>Stack</A
+></DT
+><DT
+><A
+HREF="../layers/duplicate_layer.html"
+>Duplicate Layer</A
+></DT
+><DT
+><A
+HREF="../layers/anchor_layer.html"
+>Anchor Layer</A
+></DT
+><DT
+><A
+HREF="../layers/delete_layer.html"
+>Delete Layer</A
+></DT
+><DT
+><A
+HREF="../dialogs/layers/layer_boundary_size.html"
+>Layer Boundary Size</A
+></DT
+><DT
+><A
+HREF="../layers/layer_to_image_size.html"
+>Layer to Image Size</A
+></DT
+><DT
+><A
+HREF="../dialogs/layers/scale_layer.html"
+>Scale Layer</A
+></DT
+><DT
+><A
+HREF="../dialogs/layers/merge_visible_layers.html"
+>Merge Visible Layers</A
+></DT
+><DT
+><A
+HREF="../layers/merge_down.html"
+>Merge Down</A
+></DT
+><DT
+><A
+HREF="../layers/flatten_image.html"
+>Flatten Image</A
+></DT
+><DT
+><A
+HREF="../dialogs/layers/add_layer_mask.html"
+>Add Layer Mask</A
+></DT
+><DT
+><A
+HREF="../layers/apply_mask.html"
+>Apply Layer Mask</A
+></DT
+><DT
+><A
+HREF="../layers/delete_mask.html"
+>Delete Layer Mask</A
+></DT
+><DT
+><A
+HREF="../layers/mask_to_selection.html"
+>Layer Mask to Selection</A
+></DT
+><DT
+><A
+HREF="../layers/add_alpha_channel.html"
+>Add Alpha Channel</A
+></DT
+><DT
+><A
+HREF="../layers/alpha_to_selection.html"
+>Aplha to Selection</A
+></DT
+><DT
+><A
+HREF="../dialogs/layers/edit_layer_attributes.html"
+>Edit Layer Attributes</A
+></DT
+></DL
+></DIV
+><A
+NAME="AEN1223"
+></A
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="LAYERS-LAYERS-INTRODUCTION"
+>What are Layers?</A
+></H1
+><A
+NAME="AEN1227"
+></A
+><P
+>    When you create an image, it is made up of thousands of tiny
+    pixels, each of which has a color, position, and form the image. It
+    can be hard to work on an image organised at this level. It is
+    also hard to work on an entire image as one block &mdash; this is
+    the reason for layers. Layers are in between the tiny size of
+    pixels and the large size of the whole image.
+  </P
+><P
+>    Using layers, you can construct an image of several conceptual
+    parts which can be manipulated without affecting any other part of
+    the image. Layers are stacked on top of each other.  The bottom
+    layer is the background of the image, then components in the
+    foreground of the image come above it. Layers can be made to
+    affect the look of layers below them.  If, for example, a layer is made 
+    translucent layers underneath will look faded without
+    that layer being altered at all. If the translucent layer is later
+    removed, the image below returns to how it looked before.
+  </P
+><DIV
+CLASS="FIGURE"
+><A
+NAME="LAYERS-OVERVIEW-PNG"
+></A
+><P
+><B
+>Figure 5-1. 3D Representation of an Image with Layers</B
+></P
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="../../images/layers_overview.png"
+></IMG
+></P
+></DIV
+></DIV
+><DIV
+CLASS="FIGURE"
+><A
+NAME="LAYERS-EXAMPLE-PNG"
+></A
+><P
+><B
+>Figure 5-2. The Final Image</B
+></P
+><DIV
+CLASS="MEDIAOBJECT"
+><P
+><IMG
+SRC="../../images/layers_example.png"
+></IMG
+></P
+></DIV
+></DIV
+><P
+>    Layers are one of the most powerful features in
+    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> so it is important to
+    understand how they can be used.
+  </P
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="../image/image/duplicate.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="../contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="../layers/using_layers.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><SPAN
+CLASS="GUIMENUITEM"
+>Duplicate</SPAN
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>Using Layers</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>

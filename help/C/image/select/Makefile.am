@@ -3,12 +3,11 @@
 helpdatadir = $(gimpdatadir)/help/C/image/select
 
 helpdata_DATA = \
-        all.html \
-        float.html \
-        index.html \
-        invert.html \
-        none.html \
-        save_to_channel.html \
+        all.html		\
+        float.html		\
+        invert.html		\
+        none.html		\
+        save_to_channel.html	\
         sharpen.html 
 
 EXTRA_DIST = $(helpdata_DATA)

@@ -1,0 +1,434 @@
+<HTML
+><HEAD
+><TITLE
+>Using GIMP</TITLE
+><META
+NAME="GENERATOR"
+CONTENT="Modular DocBook HTML Stylesheet Version 1.49"><LINK
+REL="HOME"
+TITLE="GIMP User Manual"
+HREF="contents.html"><LINK
+REL="PREVIOUS"
+TITLE="What Can GIMP Do For Me?"
+HREF="why_gimp.html"><LINK
+REL="NEXT"
+TITLE="The Main Interface"
+HREF="main_interface.html"></HEAD
+><BODY
+CLASS="CHAPTER"
+BGCOLOR="#FFFFFF"
+TEXT="#000000"
+><DIV
+CLASS="NAVHEADER"
+><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TH
+COLSPAN="3"
+ALIGN="center"
+>GIMP User Manual</TH
+></TR
+><TR
+><TD
+WIDTH="10%"
+ALIGN="left"
+VALIGN="bottom"
+><A
+HREF="why_gimp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="80%"
+ALIGN="center"
+VALIGN="bottom"
+></TD
+><TD
+WIDTH="10%"
+ALIGN="right"
+VALIGN="bottom"
+><A
+HREF="main_interface.html"
+>Next</A
+></TD
+></TR
+></TABLE
+><HR
+ALIGN="LEFT"
+WIDTH="100%"></DIV
+><DIV
+CLASS="CHAPTER"
+><H1
+><A
+NAME="USING-GIMP"
+>Chapter 2. Using GIMP</A
+></H1
+><DIV
+CLASS="TOC"
+><DL
+><DT
+><B
+>Table of Contents</B
+></DT
+><DT
+><A
+HREF="using_gimp.html#FIRST-TIME"
+>Starting for the First Time</A
+></DT
+><DT
+><A
+HREF="main_interface.html"
+>The Main Interface</A
+></DT
+><DT
+><A
+HREF="file_formats.html"
+>File Formats</A
+></DT
+></DL
+></DIV
+><DIV
+CLASS="SECT1"
+><H1
+CLASS="SECT1"
+><A
+NAME="FIRST-TIME"
+>Starting for the First Time</A
+></H1
+><A
+NAME="AEN145"
+></A
+><P
+>    When you launch <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> for the first
+    time, you will see a special dialog box. This allows you to setup
+    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> to your personal settings, without
+    affecting the way <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> runs for other
+    users. The first thing you'll see is the license to the
+    <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> &mdash; the <SPAN
+CLASS="ACRONYM"
+>GNU</SPAN
+>
+    General Public License. Click <SPAN
+CLASS="GUIBUTTON"
+>continue</SPAN
+> if
+    you accept the license.
+  </P
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="USERDIR"
+>User Directory</A
+></H2
+><P
+>      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> now needs to create a
+      directory to hold your personal settings. Under UNIX, Linux,
+      and UNIX-like systems, the directory will be <TT
+CLASS="FILENAME"
+>~/.gimp-1.1</TT
+> (the tilde ~
+      means <SPAN
+CLASS="QUOTE"
+>"your home directory"</SPAN
+> &mdash; often
+      <TT
+CLASS="FILENAME"
+>/home/<TT
+CLASS="REPLACEABLE"
+><I
+>username</I
+></TT
+></TT
+>).
+      Under <SPAN
+CLASS="PRODUCTNAME"
+>Microsoft Windows</SPAN
+> the
+      directory location will vary. All the files and directories
+      which will be created are listed on the left-hand side. Click
+      on any of the entries to see what it is for. If you want these
+      files and directories to be created, click
+      <SPAN
+CLASS="GUIBUTTON"
+>Continue</SPAN
+>.
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> will give you a list of what
+      was done. You should check this list for any errors and if
+      everything is OK, click <SPAN
+CLASS="GUIBUTTON"
+>Continue</SPAN
+> again.
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="PERFORMANCETUNING"
+>Performance Tuning</A
+></H2
+><P
+>      To make <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> perform as well as
+      possible, you can adjust several settings. For storing data
+      about images which are being edited,
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> uses a section of memory
+      called the <SPAN
+CLASS="QUOTE"
+>"Tile Cache"</SPAN
+>. A good way to decide on
+      a good size for your Tile Cache is to use two-thirds of the
+      <SPAN
+CLASS="ACRONYM"
+>RAM</SPAN
+> available in your system. For example,
+      32<SPAN
+CLASS="ACRONYM"
+>MB</SPAN
+> would be a good size if your system
+      has 48<SPAN
+CLASS="ACRONYM"
+>MB</SPAN
+> of <SPAN
+CLASS="ACRONYM"
+>RAM</SPAN
+>.
+    </P
+><P
+>      Some images are just too big to fit into this cache, and so
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> can use your hard disk as a
+      type of additional memory. You should set your swap directory
+      to an area on your hard disk which has enough free space &mdash;
+      around 200<SPAN
+CLASS="ACRONYM"
+>MB</SPAN
+>. To enhance performance when you
+      have several hard disks, you can set the swap file to the
+      fastest one. To locate a directory, click on the
+      <SPAN
+CLASS="GUIBUTTON"
+>...</SPAN
+> button
+      or enter it directly into the box. You should make sure that
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> shows you a
+      <SPAN
+CLASS="GUIICON"
+>checkmark</SPAN
+> next to
+      the box, otherwise <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> can't
+      access the directory.
+    </P
+><P
+>      Once you have made your settings, click
+      <SPAN
+CLASS="GUIBUTTON"
+>Continue</SPAN
+>.
+      <DIV
+CLASS="NOTE"
+><P
+></P
+><TABLE
+CLASS="NOTE"
+WIDTH="100%"
+BORDER="0"
+><TR
+><TD
+WIDTH="25"
+ALIGN="CENTER"
+VALIGN="TOP"
+><IMG
+SRC="../images/note.gif"
+HSPACE="5"
+ALT="Note"></TD
+><TD
+ALIGN="LEFT"
+VALIGN="TOP"
+><P
+>	  You can change these settings later in
+	  <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>'s preferences.
+	</P
+></TD
+></TR
+></TABLE
+></DIV
+>
+    </P
+></DIV
+><DIV
+CLASS="SECT2"
+><H2
+CLASS="SECT2"
+><A
+NAME="MONITORRES"
+>Monitor Resolution</A
+></H2
+><P
+>      Every monitor is slightly different, and, to make images look
+      correct, <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> needs to know the
+      resolution of your monitor. You may find information on your
+      monitor's resolution in its manual. If you are not sure, click
+      <SPAN
+CLASS="GUIBUTTON"
+>Calibrate</SPAN
+>. You need to then find a
+      ruler and measure the length of the white bars.  Enter their
+      measurements in the <SPAN
+CLASS="GUILABEL"
+>horizontal</SPAN
+> and
+      <SPAN
+CLASS="GUILABEL"
+>vertical</SPAN
+> boxes. You can select the units
+      used for measuring the bars from the drop-down list. Click
+      <SPAN
+CLASS="GUIBUTTON"
+>OK</SPAN
+> when you have finished calibrating.
+    </P
+><P
+>      When you are ready, click <SPAN
+CLASS="GUIBUTTON"
+>Continue</SPAN
+> to
+      finish the configuration and start <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>.
+    </P
+><P
+>      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> will show a splash-screen with
+      a progress-bar at the bottom showing what
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> is doing. When
+      <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> starts, it looks through all
+      your personal directories for items such as plug-ins and
+      patterns. The first time <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+>
+      starts, this process will take much longer than future times
+      because <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> creates a
+      <SPAN
+CLASS="QUOTE"
+>"cache"</SPAN
+> of the files.
+    </P
+></DIV
+></DIV
+></DIV
+><DIV
+CLASS="NAVFOOTER"
+><HR
+ALIGN="LEFT"
+WIDTH="100%"><TABLE
+WIDTH="100%"
+BORDER="0"
+CELLPADDING="0"
+CELLSPACING="0"
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+><A
+HREF="why_gimp.html"
+>Prev</A
+></TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+><A
+HREF="contents.html"
+>Home</A
+></TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+><A
+HREF="main_interface.html"
+>Next</A
+></TD
+></TR
+><TR
+><TD
+WIDTH="33%"
+ALIGN="left"
+VALIGN="top"
+>What Can <SPAN
+CLASS="APPLICATION"
+>GIMP</SPAN
+> Do For Me?</TD
+><TD
+WIDTH="34%"
+ALIGN="center"
+VALIGN="top"
+>&nbsp;</TD
+><TD
+WIDTH="33%"
+ALIGN="right"
+VALIGN="top"
+>The Main Interface</TD
+></TR
+></TABLE
+></DIV
+></BODY
+></HTML
+>
