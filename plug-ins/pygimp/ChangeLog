@@ -1,5 +1,17 @@
 2002-08-30  James Henstridge  <james@daa.com.au>
 
+	* pygimp-drawable.c (PyGimpDrawable_Type): add getsets for common
+	drawable attributes.
+	(PyGimpLayer_Type): convert getattr and setattr to getsets.
+	(PyGimpChannel_Type): convert to getsets.
+
+	* gimpmodule.c (new_parasite): remove.  Superceded by
+	gimp.Parasite constructor.
+	(pygimp_image_list): rename to match actual API.
+
+	* pygimp-parasite.c (PyGimpParasite_Type): switch to getsets.
+	(para_init): add constructor.
+
 	* pygimp-tile.c (PyGimpPixelRgn_Type): convert to use getsets.
 	(PyGimpTile_Type): convert to use getsets.
 

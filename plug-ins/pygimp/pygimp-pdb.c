@@ -548,7 +548,7 @@ pdb_query(PyGimpPDB *self, PyObject *args)
     return ret;
 }
 
-static struct PyMethodDef pdb_methods[] = {
+static PyMethodDef pdb_methods[] = {
     {"query", (PyCFunction)pdb_query, METH_VARARGS},
     {NULL,		NULL}		/* sentinel */
 };
@@ -752,7 +752,7 @@ static struct PyMemberDef pf_members[] = {
 static PyObject *
 pf_repr(PyGimpPDBFunction *self)
 {
-    return PyString_FromFormat("<pdb function %s>",
+    return PyString_FromFormat("<pdb function '%s'>",
 			       PyString_AsString(self->proc_name));
 }
 

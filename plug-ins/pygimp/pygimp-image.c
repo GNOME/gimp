@@ -432,7 +432,7 @@ img_get_guide_position(PyGimpImage *self, PyObject *args)
     return PyInt_FromLong(gimp_image_get_guide_position(self->ID, guide));
 }
 
-static struct PyMethodDef img_methods[] = {
+static PyMethodDef img_methods[] = {
     {"add_channel",	(PyCFunction)img_add_channel,	METH_VARARGS},
     {"add_layer",	(PyCFunction)img_add_layer,	METH_VARARGS},
     {"add_layer_mask",	(PyCFunction)img_add_layer_mask,	METH_VARARGS},
@@ -704,7 +704,7 @@ img_set_unit(PyGimpImage *self, PyObject *value, void *closure)
     return 0;
 }
 
-static struct PyGetSetDef img_getsets[] = {
+static PyGetSetDef img_getsets[] = {
     { "ID", (getter)img_get_ID, (setter)0 },
     { "active_channel", (getter)img_get_active_channel,
       (setter)img_set_active_channel },
@@ -758,7 +758,7 @@ img_repr(PyGimpImage *self)
     gchar *name;
 
     name = gimp_image_get_filename(self->ID);
-    s = PyString_FromFormat("<gimp.image %s>", name?name:"(null)");
+    s = PyString_FromFormat("<gimp.image '%s'>", name?name:"(null)");
     g_free(name);
     return s;
 }

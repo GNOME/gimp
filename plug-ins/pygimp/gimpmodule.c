@@ -295,12 +295,12 @@ pygimp_progress_update(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-pygimp_query_images(PyObject *self, PyObject *args)
+pygimp_image_list(PyObject *self, PyObject *args)
 {
     gint32 *imgs;
     int nimgs, i;
     PyObject *ret;
-    if (!PyArg_ParseTuple(args, ":query_images"))
+    if (!PyArg_ParseTuple(args, ":image_list"))
 	return NULL;
     imgs = gimp_image_list(&nimgs);
     ret = PyList_New(nimgs);
@@ -720,17 +720,6 @@ pygimp_extension_process(PyObject *self, PyObject *args)
 }
 
 static PyObject *
-new_parasite(PyObject *self, PyObject *args)
-{
-    char *name, *data;
-    int flags, size;
-    if (!PyArg_ParseTuple(args, "sis#:parasite", &name, &flags,
-			  &data, &size))
-	return NULL;
-    return pygimp_parasite_new(gimp_parasite_new(name, flags, size, data));
-}
-
-static PyObject *
 pygimp_parasite_find(PyObject *self, PyObject *args)
 {
     char *name;
@@ -828,7 +817,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"get_data",	(PyCFunction)pygimp_get_data,	METH_VARARGS},
     {"progress_init",	(PyCFunction)pygimp_progress_init,	METH_VARARGS},
     {"progress_update",	(PyCFunction)pygimp_progress_update,	METH_VARARGS},
-    {"query_images",	(PyCFunction)pygimp_query_images,	METH_VARARGS},
+    {"image_list",	(PyCFunction)pygimp_image_list,	METH_VARARGS},
     {"install_procedure",	(PyCFunction)pygimp_install_procedure,	METH_VARARGS},
     {"install_temp_proc",	(PyCFunction)pygimp_install_temp_proc,	METH_VARARGS},
     {"uninstall_temp_proc",	(PyCFunction)pygimp_uninstall_temp_proc,	METH_VARARGS},
@@ -855,7 +844,6 @@ static struct PyMethodDef gimp_methods[] = {
     {"tile_height", (PyCFunction)pygimp_tile_height, METH_VARARGS},
     {"extension_ack", (PyCFunction)pygimp_extension_ack, METH_VARARGS},
     {"extension_process", (PyCFunction)pygimp_extension_process, METH_VARARGS},
-    {"parasite",           (PyCFunction)new_parasite,            METH_VARARGS},
     {"parasite_find",      (PyCFunction)pygimp_parasite_find,      METH_VARARGS},
     {"parasite_attach",    (PyCFunction)pygimp_parasite_attach,    METH_VARARGS},
     {"attach_new_parasite",(PyCFunction)pygimp_attach_new_parasite,METH_VARARGS},

@@ -33,7 +33,7 @@ def _createMenu(items, callback, data):
 
 def ImageMenu(constraint=None, callback=None, data=None):
     items = []
-    for img in gimp.query_images():
+    for img in gimp.image_list():
 	if constraint and not constraint(img):
 	    continue
 	items.append((img.filename, img))
@@ -42,7 +42,7 @@ def ImageMenu(constraint=None, callback=None, data=None):
 
 def LayerMenu(constraint=None, callback=None, data=None):
     items = []
-    for img in gimp.query_images():
+    for img in gimp.image_list():
 	filename = img.filename
 	for layer in img.layers:
 	    if constraint and not constraint(img, layer):
@@ -54,7 +54,7 @@ def LayerMenu(constraint=None, callback=None, data=None):
 
 def ChannelMenu(constraint=None, callback=None, data=None):
     items = []
-    for img in gimp.query_images():
+    for img in gimp.image_list():
 	filename = img.filename
 	for channel in img.channels:
 	    if constraint and not constraint(img, channel):
@@ -66,7 +66,7 @@ def ChannelMenu(constraint=None, callback=None, data=None):
 
 def DrawableMenu(constraint=None, callback=None, data=None):
     items = []
-    for img in gimp.query_images():
+    for img in gimp.image_list():
 	filename = img.filename
 	for drawable in img.layers + img.channels:
 	    if constraint and not constraint(img, drawable):

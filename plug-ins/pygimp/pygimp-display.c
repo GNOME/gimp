@@ -22,7 +22,7 @@
 #endif
 #include "pygimp.h"
 
-static struct PyMethodDef disp_methods[] = {
+static PyMethodDef disp_methods[] = {
     {NULL,		NULL}		/* sentinel */
 };
 

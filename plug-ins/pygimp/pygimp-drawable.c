@@ -158,34 +158,6 @@ drw_parasite_detach(PyGimpDrawable *self, PyObject *args)
     return Py_None;
 }
 
-static void
-drw_dealloc(PyGimpLayer *self)
-{
-    if (self->drawable)
-	gimp_drawable_detach(self->drawable);
-    PyObject_DEL(self);
-}
-
-static PyObject *
-drw_repr(PyGimpLayer *self)
-{
-    PyObject *s;
-    gchar *name;
-
-    name = gimp_drawable_name(self->ID);
-    s = PyString_FromFormat("<gimp.Drawable %s>", name);
-    g_free(name);
-    return s;
-}
-
-static int
-drw_cmp(PyGimpLayer *self, PyGimpLayer *other)
-{
-    if (self->ID == other->ID) return 0;
-    if (self->ID > other->ID) return -1;
-    return 1;
-}
-
 /* for inclusion with the methods of layer and channel objects */
 static PyMethodDef drw_methods[] = {
     {"flush",	(PyCFunction)drw_flush,	METH_VARARGS},
@@ -201,6 +173,129 @@ static PyMethodDef drw_methods[] = {
     {"parasite_detach",     (PyCFunction)drw_parasite_detach, METH_VARARGS},
     {NULL, NULL, 0}
 };
+
+static PyObject *
+drw_get_ID(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(self->ID);
+}
+
+static PyObject *
+drw_get_bpp(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_bpp(self->ID));
+}
+
+static PyObject *
+drw_get_has_alpha(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_has_alpha(self->ID));
+}
+
+static PyObject *
+drw_get_height(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_height(self->ID));
+}
+
+static PyObject *
+drw_get_is_rgb(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
+}
+
+static PyObject *
+drw_get_is_gray(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
+}
+
+static PyObject *
+drw_get_is_indexed(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_is_indexed(self->ID));
+}
+
+static PyObject *
+drw_get_is_layer_mask(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_is_layer_mask(self->ID));
+}
+
+static PyObject *
+drw_get_mask_bounds(PyGimpDrawable *self, void *closure)
+{
+    gint x1, y1, x2, y2;
+
+    gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2);
+    return Py_BuildValue("(iiii)", x1, y1, x2, y2);
+}
+
+static PyObject *
+drw_get_offsets(PyGimpDrawable *self, void *closure)
+{
+    gint x, y;
+
+    gimp_drawable_offsets(self->ID, &x, &y);
+    return Py_BuildValue("(ii)", x, y);
+}
+
+static PyObject *
+drw_get_type(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_type(self->ID));
+}
+
+static PyObject *
+drw_get_width(PyGimpDrawable *self, void *closure)
+{
+    return PyInt_FromLong(gimp_drawable_width(self->ID));
+}
+
+static  PyGetSetDef drw_getsets[] = {
+    { "ID", (getter)drw_get_ID, (setter)0 },
+    { "bpp", (getter)drw_get_bpp, (setter)0 },
+    { "has_alpha", (getter)drw_get_has_alpha, (setter)0 },
+    { "height", (getter)drw_get_height, (setter)0 },
+    { "is_rgb", (getter)drw_get_is_rgb, (setter)0 },
+    { "is_gray", (getter)drw_get_is_gray, (setter)0 },
+    { "is_grey", (getter)drw_get_is_gray, (setter)0 },
+    { "is_indexed", (getter)drw_get_is_indexed, (setter)0 },
+    { "is_layer_mask", (getter)drw_get_is_layer_mask, (setter)0 },
+    { "mask_bounds", (getter)drw_get_mask_bounds, (setter)0 },
+    { "offsets", (getter)drw_get_offsets, (setter)0 },
+    { "type", (getter)drw_get_type, (setter)0 },
+    { "width", (getter)drw_get_width, (setter)0 },
+    { NULL, (getter)0, (setter)0 }
+};
+
+static void
+drw_dealloc(PyGimpLayer *self)
+{
+    if (self->drawable)
+	gimp_drawable_detach(self->drawable);
+    PyObject_DEL(self);
+}
+
+static PyObject *
+drw_repr(PyGimpLayer *self)
+{
+    PyObject *s;
+    gchar *name;
+
+    name = gimp_drawable_name(self->ID);
+    s = PyString_FromFormat("<gimp.Drawable '%s'>", name);
+    g_free(name);
+    return s;
+}
+
+static int
+drw_cmp(PyGimpLayer *self, PyGimpLayer *other)
+{
+    if (self->ID == other->ID) return 0;
+    if (self->ID > other->ID) return -1;
+    return 1;
+}
 
 PyTypeObject PyGimpDrawable_Type = {
     PyObject_HEAD_INIT(NULL)
@@ -234,7 +329,7 @@ PyTypeObject PyGimpDrawable_Type = {
     (iternextfunc)0,			/* tp_iternext */
     drw_methods,			/* tp_methods */
     0,					/* tp_members */
-    0,					/* tp_getset */
+    drw_getsets,			/* tp_getset */
     (PyTypeObject *)0,			/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */
@@ -385,7 +480,7 @@ lay_get_tattoo(PyGimpLayer *self, PyObject *args)
     return PyInt_FromLong(gimp_layer_get_tattoo(self->ID));
 }
 
-static struct PyMethodDef lay_methods[] = {
+static PyMethodDef lay_methods[] = {
     {"copy",	(PyCFunction)lay_copy,	METH_VARARGS},
     {"add_alpha",	(PyCFunction)lay_add_alpha,	METH_VARARGS},
     {"create_mask",	(PyCFunction)lay_create_mask,	METH_VARARGS},
@@ -397,193 +492,220 @@ static struct PyMethodDef lay_methods[] = {
     {NULL,		NULL}		/* sentinel */
 };
 
+static PyObject *
+lay_get_image(PyGimpLayer *self, void *closure)
+{
+    gint32 id = gimp_layer_get_image_id(self->ID);
 
-
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+    return pygimp_image_new(id);
+}
 
 static PyObject *
-lay_getattr(PyGimpLayer *self, char *attr)
+lay_get_is_floating_selection(PyGimpLayer *self, void *closure)
 {
-    gint32 id;
-	
-    if (!strcmp(attr, "__members__"))
-	return Py_BuildValue("[ssssssssssssssssssss]", "ID", "apply_mask",
-			     "bpp", "edit_mask", "has_alpha", "height",
-			     "image", "is_color", "is_colour",
-			     "is_floating_selection", "is_gray", "is_grey",
-			     "is_indexed", "is_rgb", "mask", "mask_bounds",
-			     "mode", "name", "offsets", "opacity",
-			     "preserve_transparency", "show_mask", "type",
-			     "visible", "width");
-    if (!strcmp(attr, "ID"))
-	return PyInt_FromLong(self->ID);
-    if (!strcmp(attr, "bpp"))
-	return PyInt_FromLong((long) gimp_drawable_bpp(self->ID));
-    if (!strcmp(attr, "has_alpha"))
-	return PyInt_FromLong(gimp_drawable_has_alpha(self->ID));
-    if (!strcmp(attr, "height"))
-	return PyInt_FromLong((long) gimp_drawable_height(self->ID));
-    if (!strcmp(attr, "image")) {
-	id = gimp_layer_get_image_id(self->ID);
-	if (id == -1) {
-	    Py_INCREF(Py_None);
-	    return Py_None;
-	}
-	return pygimp_image_new(id);
+    return PyInt_FromLong(gimp_layer_is_floating_selection(self->ID));
+}
+
+static PyObject *
+lay_get_mask(PyGimpLayer *self, void *closure)
+{
+    gint32 id = gimp_layer_get_mask_id(self->ID);
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
     }
-    if (!strcmp(attr, "is_color") || !strcmp(attr, "is_colour") ||
-	!strcmp(attr, "is_rgb"))
-	return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
-    if (!strcmp(attr, "is_floating_selection"))
-	return PyInt_FromLong(
-			      gimp_layer_is_floating_selection(self->ID));
-    if (!strcmp(attr, "is_gray") || !strcmp(attr, "is_grey"))
-	return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
-    if (!strcmp(attr, "is_indexed"))
-	return PyInt_FromLong(gimp_drawable_is_indexed(self->ID));
-    if (!strcmp(attr, "mask")) {
-	id = gimp_layer_get_mask_id(self->ID);
-	if (id == -1) {
-	    Py_INCREF(Py_None);
-	    return Py_None;
-	}
-	return pygimp_channel_new(id);
-    }
-    if (!strcmp(attr, "mask_bounds")) {
-	gint x1, y1, x2, y2;
-	gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2);
-	return Py_BuildValue("(iiii)", x1, y1, x2, y2);
-    }
-    if (!strcmp(attr, "apply_mask"))
-	return PyInt_FromLong((long) gimp_layer_get_apply_mask(
-							       self->ID));
-    if (!strcmp(attr, "edit_mask"))
-	return PyInt_FromLong((long) gimp_layer_get_edit_mask(
-							      self->ID));
-    if (!strcmp(attr, "mode"))
-	return PyInt_FromLong((long) gimp_layer_get_mode(self->ID));
-    if (!strcmp(attr, "name"))
-	return PyString_FromString(gimp_layer_get_name(self->ID));
-    if (!strcmp(attr, "offsets")) {
-	gint x, y;
-	gimp_drawable_offsets(self->ID, &x, &y);
-	return Py_BuildValue("(ii)", x, y);
-    }
-    if (!strcmp(attr, "opacity"))
-	return PyFloat_FromDouble((double) gimp_layer_get_opacity(
-								  self->ID));
-    if (!strcmp(attr, "preserve_transparency"))
-	return PyInt_FromLong((long)
-			      gimp_layer_get_preserve_transparency(self->ID));
-    if (!strcmp(attr, "show_mask"))
-	return PyInt_FromLong((long) gimp_layer_get_show_mask(
-							      self->ID));
-    if (!strcmp(attr, "type"))
-	return PyInt_FromLong((long) gimp_drawable_type(self->ID));
-    if (!strcmp(attr, "visible"))
-	return PyInt_FromLong((long) gimp_layer_get_visible(self->ID));
-    if (!strcmp(attr, "width"))
-	return PyInt_FromLong((long) gimp_drawable_width(self->ID));
-    {
-	PyObject *name = PyString_FromString(attr);
-	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
-	Py_DECREF(name);
-	return ret;
-    }
+    return pygimp_channel_new(id);
+}
+
+static PyObject *
+lay_get_apply_mask(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_apply_mask(self->ID));
 }
 
 static int
-lay_setattr(PyGimpLayer *self, char *attr, PyObject *v)
+lay_set_apply_mask(PyGimpLayer *self, PyObject *value, void *closure)
 {
-    if (v == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete attributes.");
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete apply_mask.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    /* Set attribute 'name' to value 'v'. v==NULL means delete */
-    if (!strcmp(attr, "apply_mask")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_apply_mask(self->ID, PyInt_AsLong(v));
-	return 0;
-    }
-    if (!strcmp(attr, "edit_mask")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_edit_mask(self->ID, PyInt_AsLong(v));
-	return 0;
-    }
-    if (!strcmp(attr, "mode")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_mode(self->ID, (GimpLayerModeEffects)PyInt_AsLong(v));
-	return 0;
-    }
-    if (!strcmp(attr, "name")) {
-	if (!PyString_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_name(self->ID, PyString_AsString(v));
-	return 0;
-    }
-    if (!strcmp(attr, "opacity")) {
-	if (!PyFloat_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_opacity(self->ID, PyFloat_AsDouble(v));
-	return 0;
-    }
-    if (!strcmp(attr, "preserve_transparency")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_preserve_transparency(self->ID,
-					     PyInt_AsLong(v));
-	return 0;
-    }
-    if (!strcmp(attr, "show_mask")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_show_mask(self->ID, PyInt_AsLong(v));
-	return 0;
-    }
-    if (!strcmp(attr, "visible")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_layer_set_visible(self->ID, PyInt_AsLong(v));
-	return 0;
-    }
-    if (!strcmp(attr, "ID") ||
-	!strcmp(attr, "bpp") || !strcmp(attr, "height") ||
-	!strcmp(attr, "image") || !strcmp(attr, "mask") ||
-	!strcmp(attr, "type") || !strcmp(attr, "width") ||
-	!strcmp(attr, "is_floating_selection") ||
-	!strcmp(attr, "offsets") || !strcmp(attr, "mask_bounds") ||
-	!strcmp(attr, "has_alpha") || !strcmp(attr, "is_color") ||
-	!strcmp(attr, "is_colour") || !strcmp(attr, "is_rgb") ||
-	!strcmp(attr, "is_gray") || !strcmp(attr, "is_grey") ||
-	!strcmp(attr, "is_indexed") || !strcmp(attr, "__members__")) {
-	PyErr_SetString(PyExc_TypeError, "read-only attribute.");
-	return -1;
-    }
-    {
-	PyObject *name = PyString_FromString(attr);
-	int ret = PyObject_GenericSetAttr((PyObject *)self, name, v);
-	Py_DECREF(name);
-	return ret;
-    }
+    gimp_layer_set_apply_mask(self->ID, PyInt_AsLong(value));
+    return 0;
 }
+
+static PyObject *
+lay_get_edit_mask(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_edit_mask(self->ID));}
+
+static int
+lay_set_edit_mask(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete edit_mask.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_edit_mask(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
+lay_get_mode(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_mode(self->ID));
+}
+
+static int
+lay_set_mode(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete mode.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_mode(self->ID, (GimpLayerModeEffects)PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
+lay_get_name(PyGimpLayer *self, void *closure)
+{
+    return PyString_FromString(gimp_layer_get_name(self->ID));
+}
+
+static int
+lay_set_name(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete name.");
+        return -1;
+    }
+    if (!PyString_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_name(self->ID, PyString_AsString(value));
+    return 0;
+}
+
+static PyObject *
+lay_get_opacity(PyGimpLayer *self, void *closure)
+{
+    return PyFloat_FromDouble(gimp_layer_get_opacity(self->ID));
+}
+
+static int
+lay_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete opacity.");
+        return -1;
+    }
+    if (!PyFloat_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_opacity(self->ID, PyFloat_AsDouble(value));
+    return 0;
+}
+
+static PyObject *
+lay_get_preserve_transparency(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_preserve_transparency(self->ID));
+}
+
+static int
+lay_set_preserve_transparency(PyGimpLayer *self, PyObject *value,
+			      void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError,
+			"can not delete preserve_transparency.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_preserve_transparency(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
+lay_get_show_mask(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_show_mask(self->ID));
+}
+
+static int
+lay_set_show_mask(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete show_mask.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_show_mask(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
+lay_get_visible(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_layer_get_visible(self->ID));
+}
+
+static int
+lay_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete visible.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_layer_set_visible(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyGetSetDef lay_getsets[] = {
+    { "image", (getter)lay_get_image, (setter)0 },
+    { "is_floating_selection", (getter)lay_get_is_floating_selection,
+      (setter)0 },
+    { "mask", (getter)lay_get_mask, (setter)0 },
+    { "apply_mask", (getter)lay_get_apply_mask, (setter)lay_set_apply_mask },
+    { "edit_mask", (getter)lay_get_edit_mask, (setter)lay_set_edit_mask },
+    { "mode", (getter)lay_get_mode, (setter)lay_set_mode },
+    { "name", (getter)lay_get_name, (setter)lay_set_name },
+    { "opacity", (getter)lay_get_opacity, (setter)lay_set_opacity },
+    { "preserve_transparency", (getter)lay_get_preserve_transparency,
+      (setter)lay_set_preserve_transparency },
+    { "show_mask", (getter)lay_get_show_mask, (setter)lay_set_show_mask },
+    { "visible", (getter)lay_get_visible, (setter)lay_set_visible },
+    { NULL, (getter)0, (setter)0 }
+};
 
 static PyObject *
 lay_repr(PyGimpLayer *self)
@@ -592,7 +714,7 @@ lay_repr(PyGimpLayer *self)
     gchar *name;
 
     name = gimp_layer_get_name(self->ID);
-    s = PyString_FromFormat("<gimp.Layer %s>", name);
+    s = PyString_FromFormat("<gimp.Layer '%s'>", name);
     g_free(name);
     return s;
 }
@@ -631,8 +753,8 @@ PyTypeObject PyGimpLayer_Type = {
     /* methods */
     (destructor)drw_dealloc,            /* tp_dealloc */
     (printfunc)0,                       /* tp_print */
-    (getattrfunc)lay_getattr,           /* tp_getattr */
-    (setattrfunc)lay_setattr,           /* tp_setattr */
+    (getattrfunc)0,                     /* tp_getattr */
+    (setattrfunc)0,                     /* tp_setattr */
     (cmpfunc)drw_cmp,                   /* tp_compare */
     (reprfunc)lay_repr,                 /* tp_repr */
     0,                                  /* tp_as_number */
@@ -654,7 +776,7 @@ PyTypeObject PyGimpLayer_Type = {
     (iternextfunc)0,			/* tp_iternext */
     lay_methods,			/* tp_methods */
     0,					/* tp_members */
-    0,					/* tp_getset */
+    lay_getsets,			/* tp_getset */
     &PyGimpDrawable_Type,		/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */
@@ -709,191 +831,148 @@ chn_get_tattoo(PyGimpChannel *self, PyObject *args)
     return PyInt_FromLong(gimp_channel_get_tattoo(self->ID));
 }
 
-static struct PyMethodDef chn_methods[] = {
+static PyMethodDef chn_methods[] = {
     {"copy",	(PyCFunction)chn_copy,	METH_VARARGS},
     {"get_tattoo", (PyCFunction)chn_get_tattoo, METH_VARARGS},
     {NULL,		NULL}		/* sentinel */
 };
 
-
 static PyObject *
-chn_getattr(PyGimpChannel *self, char *attr)
+chn_get_color(PyGimpChannel *self, void *closure)
 {
-    gint32 id;
-	
-    if (!strcmp(attr, "__members__"))
-	return Py_BuildValue("[ssssssssssssssssssssssss]", "ID",
-			     "bpp", "color", "colour", "has_alpha", "height",
-			     "image", "is_color", "is_colour", "is_gray",
-			     "is_grey", "is_indexed", "is_layer_mask",
-			     "is_rgb", "layer", "layer_mask", "mask_bounds",
-			     "name", "offsets", "opacity", "show_masked",
-			     "type", "visible", "width");
-    if (!strcmp(attr, "ID"))
-	return PyInt_FromLong(self->ID);
-    if (!strcmp(attr, "bpp"))
-	return PyInt_FromLong(gimp_drawable_bpp(self->ID));
-    if (!strcmp(attr, "color") || !strcmp(attr, "colour")) {
-	GimpRGB colour;
-	guchar r, g, b;
+    GimpRGB colour;
+    guchar r, g, b;
 
-	gimp_channel_get_color(self->ID, &colour);
-	gimp_rgb_get_uchar(&colour, &r, &g, &b);
-	return Py_BuildValue("(iii)", (long)r, (long)g, (long)b);
-    }
-    if (!strcmp(attr, "has_alpha"))
-	return PyInt_FromLong(gimp_drawable_has_alpha(self->ID));
-    if (!strcmp(attr, "height"))
-	return PyInt_FromLong((long)gimp_drawable_height(self->ID));
-    if (!strcmp(attr, "image")) {
-	id = gimp_channel_get_image_id(self->ID);
-	if (id == -1) {
-	    Py_INCREF(Py_None);
-	    return Py_None;
-	}
-	return pygimp_image_new(id);
-    }
-    if (!strcmp(attr, "is_color") || !strcmp(attr, "is_colour") ||
-	!strcmp(attr, "is_rgb"))
-	return PyInt_FromLong(gimp_drawable_is_rgb(self->ID));
-    if (!strcmp(attr, "is_gray") || !strcmp(attr, "is_grey"))
-	return PyInt_FromLong(gimp_drawable_is_gray(self->ID));
-    if (!strcmp(attr, "is_indexed"))
-	return PyInt_FromLong(gimp_drawable_is_indexed(self->ID));
-    if (!strcmp(attr, "layer")) {
-	/* id = gimp_channel_get_layer_id(self->ID); */
-	/* It isn't quite clear what that was supposed to achieve, but
-	   the gimp_channel_get_layer_id call no longer exists, which
-	   was breaking everything that tried to load gimpmodule.so.
-
-	   With no-one apparently maintaing it, the options seem to be:
-	    A) remove this "layer" attribute entirely, as it doesn't
-	       seem to make much sense.
-            B) Just return the channel ID.
-	   
-	    The latter seems more conservative, so that's what I'll do.
-	    -- acapnotic@users.sourceforge.net (08/09/2000) */
-	id = self->ID;
-	if (id == -1) {
-	    Py_INCREF(Py_None);
-	    return Py_None;
-	}
-	return pygimp_layer_new(id);
-    }
-    if (!strcmp(attr, "layer_mask") || !strcmp(attr, "is_layer_mask"))
-	return PyInt_FromLong(gimp_drawable_is_layer_mask(self->ID));
-    if (!strcmp(attr, "mask_bounds")) {
-	gint x1, y1, x2, y2;
-	gimp_drawable_mask_bounds(self->ID, &x1, &y1, &x2, &y2);
-	return Py_BuildValue("(iiii)", x1, y1, x2, y2);
-    }
-    if (!strcmp(attr, "name"))
-	return PyString_FromString(gimp_channel_get_name(self->ID));
-    if (!strcmp(attr, "offsets")) {
-	gint x, y;
-	gimp_drawable_offsets(self->ID, &x, &y);
-	return Py_BuildValue("(ii)", x, y);
-    }
-    if (!strcmp(attr, "opacity"))
-	return PyFloat_FromDouble(gimp_channel_get_opacity(self->ID));
-    if (!strcmp(attr, "show_masked"))
-	return PyInt_FromLong(gimp_channel_get_show_masked(self->ID));
-    if (!strcmp(attr, "type"))
-	return PyInt_FromLong(gimp_drawable_type(self->ID));
-    if (!strcmp(attr, "visible"))
-	return PyInt_FromLong(gimp_channel_get_visible(self->ID));
-    if (!strcmp(attr, "width"))
-	return PyInt_FromLong(gimp_drawable_width(self->ID));
-
-    {
-	PyObject *name = PyString_FromString(attr);
-	PyObject *ret = PyObject_GenericGetAttr((PyObject *)self, name);
-	Py_DECREF(name);
-	return ret;
-    }
+    gimp_channel_get_color(self->ID, &colour);
+    gimp_rgb_get_uchar(&colour, &r, &g, &b);
+    return Py_BuildValue("(iii)", (long)r, (long)g, (long)b);
 }
 
 static int
-chn_setattr(PyGimpChannel *self, char *attr, PyObject *v)
+chn_set_color(PyGimpChannel *self, PyObject *value, void *closure)
 {
-    if (v == NULL) {
-	PyErr_SetString(PyExc_TypeError, "can not delete attributes.");
-	return -1;
-    }
-    if (!strcmp(attr, "color") || !strcmp(attr, "colour")) {
-	PyObject *r, *g, *b;
-	GimpRGB colour;
+    guchar r, g, b;
+    GimpRGB colour;
 
-	if (!PySequence_Check(v) || PySequence_Length(v) < 3) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	r = PySequence_GetItem(v, 0);
-	g = PySequence_GetItem(v, 1);
-	b = PySequence_GetItem(v, 2);
-	if (!PyInt_Check(r) || !PyInt_Check(g) || !PyInt_Check(b)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    Py_DECREF(r); Py_DECREF(g); Py_DECREF(b);
-	    return -1;
-	}
-	gimp_rgb_set_uchar(&colour, PyInt_AsLong(r),
-			   PyInt_AsLong(g), PyInt_AsLong(b));
-	Py_DECREF(r); Py_DECREF(g); Py_DECREF(b);
-	gimp_channel_set_color(self->ID, &colour);
-	return 0;
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete colour.");
+        return -1;
     }
-    if (!strcmp(attr, "name")) {
-	if (!PyString_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_channel_set_name(self->ID, PyString_AsString(v));
-	return 0;
-    }
-    if (!strcmp(attr, "opacity")) {
-	if (!PyFloat_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_channel_set_opacity(self->ID, PyFloat_AsDouble(v));
-	return 0;
-    }
-    /*	if (!strcmp(attr, "show_masked")) {
-	if (!PyInt_Check(v)) {
+    if (!PyTuple_Check(value) || !PyArg_ParseTuple(value, "(BBB)", &r,&g,&b)) {
+	PyErr_Clear();
 	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
-	}
-	gimp_channel_set_show_masked(self->ID, PyInt_AsLong(v));
-	return 0;
-	}
-    */	if (!strcmp(attr, "visible")) {
-	if (!PyInt_Check(v)) {
-	    PyErr_SetString(PyExc_TypeError, "type mis-match.");
-	    return -1;
-	}
-	gimp_channel_set_visible(self->ID, PyInt_AsLong(v));
-	return 0;
     }
-    if (!strcmp(attr, "height") || !strcmp(attr, "image") ||
-	!strcmp(attr, "layer") || !strcmp(attr, "width") ||
-	!strcmp(attr, "ID") || !strcmp(attr, "bpp") ||
-	!strcmp(attr, "layer_mask") || !strcmp(attr, "mask_bounds") ||
-	!strcmp(attr, "offsets") || !strcmp(attr, "type") ||
-	!strcmp(attr, "has_alpha") || !strcmp(attr, "is_color") ||
-	!strcmp(attr, "is_colour") || !strcmp(attr, "is_rgb") ||
-	!strcmp(attr, "is_gray") || !strcmp(attr, "is_grey") ||
-	!strcmp(attr, "is_indexed") || !strcmp(attr, "is_layer_mask") ||
-	!strcmp(attr, "__members__")) {
-	PyErr_SetString(PyExc_TypeError, "read-only attribute.");
+    gimp_rgb_set_uchar(&colour, r, g, b);
+    gimp_channel_set_color(self->ID, &colour);
+    return 0;
+}
+
+static PyObject *
+chn_get_image(PyGimpChannel *self, void *closure)
+{
+    gint32 id = gimp_channel_get_image_id(self->ID);
+    if (id == -1) {
+	Py_INCREF(Py_None);
+	return Py_None;
+    }
+    return pygimp_image_new(id);
+}
+
+static PyObject *
+chn_get_name(PyGimpChannel *self, void *closure)
+{
+    return PyString_FromString(gimp_channel_get_name(self->ID));
+}
+
+static int
+chn_set_name(PyGimpChannel *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete name.");
+        return -1;
+    }
+    if (!PyString_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
 	return -1;
     }
-    {
-	PyObject *name = PyString_FromString(attr);
-	int ret = PyObject_GenericSetAttr((PyObject *)self, name, v);
-	Py_DECREF(name);
-	return ret;
-    }
+    gimp_channel_set_name(self->ID, PyString_AsString(value));
+    return 0;
 }
+
+static PyObject *
+chn_get_opacity(PyGimpLayer *self, void *closure)
+{
+    return PyFloat_FromDouble(gimp_channel_get_opacity(self->ID));
+}
+
+static int
+chn_set_opacity(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete opacity.");
+        return -1;
+    }
+    if (!PyFloat_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_channel_set_opacity(self->ID, PyFloat_AsDouble(value));
+    return 0;
+}
+
+static PyObject *
+chn_get_show_masked(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_channel_get_show_masked(self->ID));
+}
+
+static int
+chn_set_show_masked(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete show_masked.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_channel_set_show_masked(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyObject *
+chn_get_visible(PyGimpLayer *self, void *closure)
+{
+    return PyInt_FromLong(gimp_channel_get_visible(self->ID));
+}
+
+static int
+chn_set_visible(PyGimpLayer *self, PyObject *value, void *closure)
+{
+    if (value == NULL) {
+        PyErr_SetString(PyExc_TypeError, "can not delete visible.");
+        return -1;
+    }
+    if (!PyInt_Check(value)) {
+	PyErr_SetString(PyExc_TypeError, "type mis-match.");
+	return -1;
+    }
+    gimp_channel_set_visible(self->ID, PyInt_AsLong(value));
+    return 0;
+}
+
+static PyGetSetDef chn_getsets[] = {
+    { "color", (getter)chn_get_color, (setter)chn_set_color },
+    { "colour", (getter)chn_get_color, (setter)chn_set_color },
+    { "image", (getter)chn_get_image, (setter)0 },
+    { "name", (getter)chn_get_name, (setter)chn_set_name },
+    { "opacity", (getter)chn_get_opacity, (setter)chn_set_opacity },
+    { "show_masked", (getter)chn_get_show_masked, (setter)chn_set_show_masked},
+    { "visible", (getter)chn_get_visible, (setter)chn_set_visible },
+    { NULL, (getter)0, (setter)0 }
+};
 
 static PyObject *
 chn_repr(PyGimpChannel *self)
@@ -902,7 +981,7 @@ chn_repr(PyGimpChannel *self)
     gchar *name;
 
     name = gimp_channel_get_name(self->ID);
-    s = PyString_FromFormat("<gimp.Channel %s>", name);
+    s = PyString_FromFormat("<gimp.Channel '%s'>", name);
     g_free(name);
     return s;
 }
@@ -940,8 +1019,8 @@ PyTypeObject PyGimpChannel_Type = {
     /* methods */
     (destructor)drw_dealloc,            /* tp_dealloc */
     (printfunc)0,                       /* tp_print */
-    (getattrfunc)chn_getattr,           /* tp_getattr */
-    (setattrfunc)chn_setattr,           /* tp_setattr */
+    (getattrfunc)0,                     /* tp_getattr */
+    (setattrfunc)0,                     /* tp_setattr */
     (cmpfunc)drw_cmp,                   /* tp_compare */
     (reprfunc)chn_repr,                 /* tp_repr */
     0,                                  /* tp_as_number */
@@ -963,7 +1042,7 @@ PyTypeObject PyGimpChannel_Type = {
     (iternextfunc)0,			/* tp_iternext */
     chn_methods,			/* tp_methods */
     0,					/* tp_members */
-    0,					/* tp_getset */
+    chn_getsets,			/* tp_getset */
     &PyGimpDrawable_Type,		/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */

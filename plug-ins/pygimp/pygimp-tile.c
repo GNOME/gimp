@@ -37,7 +37,7 @@ tile_flush(PyGimpTile *self, PyObject *args)
 }
 
 
-static struct PyMethodDef tile_methods[] = {
+static PyMethodDef tile_methods[] = {
     {"flush",	(PyCFunction)tile_flush,	METH_VARARGS},
     {NULL,		NULL}		/* sentinel */
 };
@@ -124,9 +124,9 @@ tile_repr(PyGimpTile *self)
 
     name = gimp_drawable_name(self->tile->drawable->drawable_id);
     if (self->tile->shadow)
-	s = PyString_FromFormat("<gimp.Tile for drawable %s (shadow)>", name);
+	s = PyString_FromFormat("<gimp.Tile for drawable '%s' (shadow)>",name);
     else
-	s = PyString_FromFormat("<gimp.Tile for drawable %s>", name);
+	s = PyString_FromFormat("<gimp.Tile for drawable '%s'>", name);
     g_free(name);
     return s;
 }
@@ -279,7 +279,7 @@ pr_resize(PyGimpPixelRgn *self, PyObject *args)
 
 
 
-static struct PyMethodDef pr_methods[] = {
+static PyMethodDef pr_methods[] = {
     {"resize",	(PyCFunction)pr_resize,	METH_VARARGS},
  
     {NULL,		NULL}		/* sentinel */
@@ -606,7 +606,7 @@ pr_repr(PyGimpPixelRgn *self)
     gchar *name;
 
     name = gimp_drawable_name(self->drawable->drawable->drawable_id);
-    s = PyString_FromFormat("<gimp.PixelRgn for drawable %s>", name);
+    s = PyString_FromFormat("<gimp.PixelRgn for drawable '%s'>", name);
     g_free(name);
     return s;
 }
