@@ -2469,21 +2469,17 @@ sphere_response (GtkWidget *widget,
 GtkWidget *
 makewindow (void)
 {
-  GtkListStore      *list_store;
+  GtkListStore      *store;
   GtkTreeViewColumn *col;
   GtkWidget  *window;
+  GtkWidget  *main_hbox;
   GtkWidget  *table;
   GtkWidget  *frame;
   GtkWidget  *scrolled;
   GtkWidget  *hbox;
+  GtkWidget  *vbox;
   GtkWidget  *button;
-  GtkWidget  *label;
   GtkWidget  *list;
-  GtkWidget  *_scalescale;
-  GtkWidget  *_rotscale;
-  GtkWidget  *_turbulencescale;
-  GtkWidget  *_amountscale;
-  GtkWidget  *_expscale;
   GimpRGB     rgb;
 
   window = gimp_dialog_new (_("Sphere Designer"), "spheredesigner",
@@ -2501,17 +2497,18 @@ makewindow (void)
                     G_CALLBACK (sphere_response),
                     NULL);
 
-  table = gtk_table_new (3, 3, FALSE);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), table);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 12);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 12);
-  gtk_container_set_border_width (GTK_CONTAINER (table), 12);
-  gtk_widget_show (table);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (window)->vbox), main_hbox);
+  gtk_widget_show (main_hbox);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_table_attach (GTK_TABLE (table), frame, 0, 1, 0, 1,
-                    GTK_SHRINK, GTK_SHRINK, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   drawarea = gtk_drawing_area_new ();
@@ -2523,12 +2520,35 @@ makewindow (void)
                     G_CALLBACK (expose_event), NULL);
 
   button = gtk_button_new_with_mnemonic (_("Update _Preview"));
-  gtk_table_attach (GTK_TABLE (table), button, 0, 1, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (restartrender), NULL);
+
+  hbox = gtk_hbox_new (TRUE, 0);
+  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (loadpreset),
+                    window);
+
+  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (savepreset),
+                    window);
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
 
   scrolled = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled),
@@ -2536,13 +2556,12 @@ makewindow (void)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled),
                                   GTK_POLICY_NEVER,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_table_attach (GTK_TABLE (table), scrolled, 1, 2, 0, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), scrolled, TRUE, TRUE, 0);
   gtk_widget_show (scrolled);
 
-  list_store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
-  list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
-  g_object_unref (list_store);
+  store = gtk_list_store_new (NUM_COLUMNS, G_TYPE_STRING, G_TYPE_POINTER);
+  list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (store));
+  g_object_unref (store);
 
   texturelist = GTK_TREE_VIEW (list);
 
@@ -2561,8 +2580,7 @@ makewindow (void)
   gtk_tree_view_append_column (texturelist, col);
 
   hbox = gtk_hbox_new (TRUE, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   button = gtk_button_new_from_stock (GTK_STOCK_NEW);
@@ -2583,275 +2601,20 @@ makewindow (void)
                             G_CALLBACK (deltexture), NULL);
   gtk_widget_show (button);
 
-  hbox = gtk_hbox_new (TRUE, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 0, 1, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (loadpreset),
-                    window);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (savepreset),
-                    window);
-
   frame = gimp_frame_new (_("Texture Properties"));
-  gtk_table_attach (GTK_TABLE (table), frame, 2, 3, 0, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (6, 4, FALSE);
-  gtk_widget_show (table);
-  gtk_container_add (GTK_CONTAINER (frame), table);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  table = gtk_table_new (7, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
-
-  label = gtk_label_new (_("Type:"));
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (_("Texture:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-
-  label = gtk_label_new (_("Colors:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach (GTK_TABLE (table), hbox, 1, 2, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_widget_show (hbox);
-
-  button = gimp_color_button_new (_("Color Selection Dialog"),
-                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-                                  GIMP_COLOR_AREA_FLAT);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, FALSE, 0);
-  gtk_widget_show (button);
-  drawcolor1 (button);
-
-  g_signal_connect (button, "color_changed",
-                    G_CALLBACK (color1_changed),
-                    NULL);
-
-  button = gimp_color_button_new (_("Color Selection Dialog"),
-                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
-                                  GIMP_COLOR_AREA_FLAT);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, FALSE, 0);
-  gtk_widget_show (button);
-  drawcolor2 (button);
-
-  g_signal_connect (button, "color_changed",
-                    G_CALLBACK (color2_changed),
-                    NULL);
-
-  label = gtk_label_new (_("Scale:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _scalescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (scalescale =
-                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_widget_show (_scalescale);
-  gtk_table_attach (GTK_TABLE (table), _scalescale, 1, 2, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  g_signal_connect (scalescale, "value_changed",
-                    G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Turbulence:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 4, 5,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _turbulencescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (turbulencescale =
-                     gtk_adjustment_new (0.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_turbulencescale, 100, -1);
-  gtk_widget_show (_turbulencescale);
-  gtk_table_attach (GTK_TABLE (table), _turbulencescale, 1, 2, 4, 5,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_scale_set_digits (GTK_SCALE (_turbulencescale), 2);
-  g_signal_connect (turbulencescale, "value_changed",
-                    G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Scale X:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _scalescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (scalexscale =
-                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  gtk_widget_show (_scalescale);
-  gtk_table_attach (GTK_TABLE (table), _scalescale, 3, 4, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (scalexscale, "value_changed",
-                    G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Scale Y:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _scalescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (scaleyscale =
-                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  gtk_widget_show (_scalescale);
-  gtk_table_attach (GTK_TABLE (table), _scalescale, 3, 4, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (scaleyscale, "value_changed",
-                    G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Scale Z:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _scalescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (scalezscale =
-                     gtk_adjustment_new (1.0, 0.0, 5.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  gtk_widget_show (_scalescale);
-  gtk_table_attach (GTK_TABLE (table), _scalescale, 3, 4, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (scalezscale, "value_changed",
-                    G_CALLBACK (getscales), NULL);
-
-
-  label = gtk_label_new (_("Rotate X:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _rotscale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (rotxscale =
-                     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_rotscale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
-  gtk_widget_show (_rotscale);
-  gtk_table_attach (GTK_TABLE (table), _rotscale, 3, 4, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (rotxscale, "value_changed", G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Rotate Y:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 4, 5,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _rotscale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (rotyscale =
-                     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_rotscale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
-  gtk_widget_show (_rotscale);
-  gtk_table_attach (GTK_TABLE (table), _rotscale, 3, 4, 4, 5,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (rotyscale, "value_changed", G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Rotate Z:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 2, 3, 5, 6,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _rotscale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (rotzscale =
-                     gtk_adjustment_new (1.0, 0.0, 360.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_rotscale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_rotscale), 2);
-  gtk_widget_show (_rotscale);
-  gtk_table_attach (GTK_TABLE (table), _rotscale, 3, 4, 5, 6,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (rotzscale, "value_changed", G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Pos X:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 5, 6, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _scalescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (posxscale =
-                     gtk_adjustment_new (0.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  gtk_widget_show (_scalescale);
-  gtk_table_attach (GTK_TABLE (table), _scalescale, 6, 7, 0, 1,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (posxscale, "value_changed", G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Pos Y:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 5, 6, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _scalescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (posyscale =
-                     gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  gtk_widget_show (_scalescale);
-  gtk_table_attach (GTK_TABLE (table), _scalescale, 6, 7, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (posyscale, "value_changed", G_CALLBACK (getscales), NULL);
-
-  label = gtk_label_new (_("Pos Z:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 5, 6, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
-
-  _scalescale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (poszscale =
-                     gtk_adjustment_new (1.0, -20.0, 20.1, 0.1, 0.1, 0.1)));
-  gtk_widget_set_size_request (_scalescale, 100, -1);
-  gtk_scale_set_digits (GTK_SCALE (_scalescale), 2);
-  gtk_widget_show (_scalescale);
-  gtk_table_attach (GTK_TABLE (table), _scalescale, 6, 7, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  g_signal_connect (poszscale, "value_changed", G_CALLBACK (getscales), NULL);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   typemenu = gimp_int_combo_box_new (_("Texture"), 0,
                                      _("Bump"),    1,
@@ -2861,9 +2624,9 @@ makewindow (void)
                               G_CALLBACK (selecttype),
                               NULL);
 
-  gtk_table_attach (GTK_TABLE (table), typemenu, 1, 2, 0, 1,
-                    GTK_FILL | GTK_EXPAND, GTK_EXPAND, 0, 0);
-  gtk_widget_show (typemenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("Type:"), 0.0, 0.5,
+                             typemenu, 2, FALSE);
 
   texturemenu = gimp_int_combo_box_new (NULL, 0);
 
@@ -2881,44 +2644,143 @@ makewindow (void)
                               G_CALLBACK (selecttexture),
                               NULL);
 
-  gtk_table_attach (GTK_TABLE (table), texturemenu, 1, 2, 1, 2,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND, 0, 0);
-  gtk_widget_show (texturemenu);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+                             _("Texture:"), 0.0, 0.5,
+                             texturemenu, 2, FALSE);
 
-  label = gtk_label_new (_("Amount:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 5, 6,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
+  hbox = gtk_hbox_new (FALSE, 12);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+                             _("Colors:"), 0.0, 0.5,
+                             hbox, 2, FALSE);
 
-  _amountscale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (amountscale =
-                     gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
-  gtk_widget_set_size_request (_amountscale, 100, -1);
-  gtk_widget_show (_amountscale);
-  gtk_table_attach (GTK_TABLE (table), _amountscale, 1, 2, 5, 6,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_scale_set_digits (GTK_SCALE (_amountscale), 2);
+  button = gimp_color_button_new (_("Color Selection Dialog"),
+                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
+                                  GIMP_COLOR_AREA_FLAT);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+  drawcolor1 (button);
+
+  g_signal_connect (button, "color_changed",
+                    G_CALLBACK (color1_changed),
+                    NULL);
+
+  button = gimp_color_button_new (_("Color Selection Dialog"),
+                                  COLORBUTTONWIDTH, COLORBUTTONHEIGHT, &rgb,
+                                  GIMP_COLOR_AREA_FLAT);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  gtk_widget_show (button);
+  drawcolor2 (button);
+
+  g_signal_connect (button, "color_changed",
+                    G_CALLBACK (color2_changed),
+                    NULL);
+
+  scalescale = gimp_scale_entry_new (GTK_TABLE (table), 0, 3, _("Scale:"),
+                                     100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 1,
+                                     TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (scalescale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  turbulencescale = gimp_scale_entry_new (GTK_TABLE (table), 0, 4,
+                                          _("Turbulence:"),
+                                          100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 1,
+                                          TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (turbulencescale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  amountscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 5, _("Amount:"),
+                                       100, -1, 1.0, 0.0, 1.0, 0.01, 0.1, 2,
+                                       TRUE, 0.0, 0.0, NULL, NULL);
   g_signal_connect (amountscale, "value_changed",
-                    G_CALLBACK (getscales), NULL);
+                    G_CALLBACK (getscales),
+                    NULL);
 
-  label = gtk_label_new (_("Exp:"));
-  gtk_widget_show (label);
-  gtk_table_attach (GTK_TABLE (table), label, 0, 1, 6, 7,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.9);
+  expscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 6, _("Exp.:"),
+                                   100, -1, 1.0, 0.0, 1.0, 0.01, 0.1, 2,
+                                   TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (expscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
 
-  _expscale =
-    gtk_hscale_new (GTK_ADJUSTMENT
-                    (expscale =
-                     gtk_adjustment_new (1.0, 0, 1.01, .01, .01, .01)));
-  gtk_widget_set_size_request (_expscale, 100, -1);
-  gtk_widget_show (_expscale);
-  gtk_table_attach (GTK_TABLE (table), _expscale, 1, 2, 6, 7,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
-  gtk_scale_set_digits (GTK_SCALE (_expscale), 2);
-  g_signal_connect (expscale, "value_changed", G_CALLBACK (getscales), NULL);
+  frame = gimp_frame_new (_("Texture Transformations"));
+  gtk_box_pack_start (GTK_BOX (main_hbox), frame, TRUE, TRUE, 0);
+  gtk_widget_show (frame);
+
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), vbox);
+  gtk_widget_show (vbox);
+
+  table = gtk_table_new (9, 3, FALSE);
+  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 2, 12);
+  gtk_table_set_row_spacing (GTK_TABLE (table), 5, 12);
+  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
+
+  scalexscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 0, _("Scale X:"),
+                                      100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 2,
+                                      TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (scalexscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  scaleyscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 1, _("Scale Y:"),
+                                      100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 2,
+                                      TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (scaleyscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+  scalezscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 2, _("Scale Z:"),
+                                      100, -1, 1.0, 0.0, 10.0, 0.1, 1.0, 2,
+                                      TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (scalezscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  rotxscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 3, _("Rotate X:"),
+                                    100, -1, 0.0, 0.0, 360.0, 1.0, 10.0, 1,
+                                    TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (rotxscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  rotyscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 4, _("Rotate Y:"),
+                                    100, -1, 0.0, 0.0, 360.0, 1.0, 10.0, 1,
+                                    TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (rotyscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  rotzscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 5, _("Rotate Z:"),
+                                    100, -1, 0.0, 0.0, 360.0, 1.0, 10.0, 1,
+                                    TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (rotzscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  posxscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 6, _("Position X:"),
+                                    100, -1, 0.0, -20.0, 20.0, 0.1, 1.0, 1,
+                                    TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (rotxscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  posyscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 7, _("Position Y:"),
+                                    100, -1, 0.0, -20.0, 20.0, 0.1, 1.0, 1,
+                                    TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (rotyscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
+
+  poszscale = gimp_scale_entry_new (GTK_TABLE (table), 0, 8, _("Position Z:"),
+                                    100, -1, 0.0, -20.0, 20.0, 0.1, 1.0, 1,
+                                    TRUE, 0.0, 0.0, NULL, NULL);
+  g_signal_connect (rotzscale, "value_changed",
+                    G_CALLBACK (getscales),
+                    NULL);
 
   gtk_widget_show (window);
 
