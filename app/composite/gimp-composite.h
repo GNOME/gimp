@@ -145,7 +145,7 @@ struct GimpCompositeOptions {
 
 extern struct GimpCompositeOptions gimp_composite_options;
 
-extern GimpCompositeFunction gimp_composite_dispatch(GimpCompositeContext *);
+extern void gimp_composite_dispatch(GimpCompositeContext *);
 extern void gimp_composite_init(void);
 extern void gimp_composite_context_print(GimpCompositeContext *);
 

@@ -179,7 +179,7 @@ struct {
 extern char *gimp_composite_function_name[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N];
 extern void (*gimp_composite_function[GIMP_COMPOSITE_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N][GIMP_PIXELFORMAT_N]);
 
-GimpCompositeFunction
+void
 gimp_composite_dispatch(GimpCompositeContext *ctx)
 {
   void (*function)();
@@ -188,9 +188,9 @@ gimp_composite_dispatch(GimpCompositeContext *ctx)
 
   if (function)
     (*function)(ctx);
-  else {
-    printf("unsupported composite operation %d %d %d (see gimp-composite.h)\n", ctx->op, ctx->pixelformat_A, ctx->pixelformat_B);
-  }
+  else
+    printf("unsupported composite operation %d %d %d (see gimp-composite.h)\n",
+	   ctx->op, ctx->pixelformat_A, ctx->pixelformat_B);
 }
 
 void

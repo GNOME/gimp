@@ -1,11 +1,16 @@
+2003-07-22  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite.[ch]: gimp_composite_dispatch()
+	doesn't have a return value, made it a void function.
+
 2003-07-21  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/make-gimp-composite-dispatch.py: big code cleanup.
 
 	* app/composite/Makefile.am: removed references to $(builddir)
 
-	* app/composite/test-composite.c: cleanup, preparation for transition to
-	automatically generated regression testing code.
+	* app/composite/test-composite.c: cleanup, preparation for
+	transition to automatically generated regression testing code.
 
 	* app/composite/gimp-composite.c: Clean up of typedef usage
 
