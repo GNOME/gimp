@@ -716,7 +716,7 @@ CODE
 @procs = qw(path_list path_get_points path_get_current path_set_current
 	    path_set_points path_stroke_current path_get_point_at_dist
 	    path_get_tattoo get_path_by_tattoo path_delete path_get_locked
-	    path_set_locked path_set_tattoo);
+	    path_set_locked);
 %exports = (app => [@procs]);
 
 $desc = 'Paths';

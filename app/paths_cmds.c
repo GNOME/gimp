@@ -719,7 +719,7 @@ static ProcRecord path_get_tattoo_proc =
 {
   "gimp_path_get_tattoo",
   "Returns the tattoo associated with the name path.",
-  "This procedure returns the tattoo associated with the specified path. A tattoo is a unique and permenant identifier attached to a path that can be used to uniquely identify a path within an image even between sessions.",
+  "This procedure returns the tattoo associated with the specified path. A tattoo is a unique and permanent identifier attached to a path that can be used to uniquely identify a path within an image even between sessions.",
   "Andy Thomas",
   "Andy Thomas",
   "1999",
