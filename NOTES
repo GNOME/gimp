@@ -1,7 +1,7 @@
-Some notes on GIMP-0.99.22:
+Some notes on GIMP-0.99.23:
 
 Please remove everything from your old plugins dir before upgrading to
-0.99.22. Some plugins are no longer in the dist and will not be updated.
+0.99.23. Some plugins are no longer in the dist and will not be updated.
 
 -- Federico Mena <federico@nuclecu.unam.mx>
 -- Christoph Hoegl <darkwing@bsddmail.franken.de>
