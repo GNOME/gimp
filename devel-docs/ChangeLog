@@ -1,3 +1,8 @@
+2004-09-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpimage.sgml: added gimp_image_resize_to_layers().
+
 2004-09-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt

@@ -123,6 +123,15 @@ and operations involving multiple layers.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_image_resize_to_layers ##### -->
+<para>
+
+</para>
+
+@image_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_image_scale ##### -->
 <para>
 
