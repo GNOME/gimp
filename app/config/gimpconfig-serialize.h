@@ -19,12 +19,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SERIALIZE_H__
-#define __SERIALIZE_H__
+#ifndef __GIMP_CONFIG_SERIALIZE_H__
+#define __GIMP_CONFIG_SERIALIZE_H__
 
 
 void gimp_config_serialize_properties (GObject *object,
                                        FILE    *file);
 
 
-#endif /* __SERIALIZE_H__ */
+#endif /* __GIMP_CONFIG_SERIALIZE_H__ */

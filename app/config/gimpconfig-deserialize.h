@@ -19,12 +19,12 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __DESERIALIZE_H__
-#define __DESERIALIZE_H__
+#ifndef __GIMP_CONFIG_DESERIALIZE_H__
+#define __GIMP_CONFIG_DESERIALIZE_H__
 
 
 gboolean gimp_config_deserialize_properties (GObject  *object,
                                              GScanner *scanner);
 
 
-#endif /* __DESERIALIZE_H__ */
+#endif /* __GIMP_CONFIG_DESERIALIZE_H__ */

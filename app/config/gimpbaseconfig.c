@@ -23,6 +23,9 @@
 #include "base/base-enums.h"
 
 #include "gimpconfig.h"
+#include "gimpconfig-params.h"
+#include "gimpconfig-types.h"
+
 #include "gimpbaseconfig.h"
 
 
@@ -123,16 +126,18 @@ gimp_base_config_class_init (GimpBaseConfigClass *klass)
                                     PROP_NUM_PROCESSORS,
                                     g_param_spec_uint ("num-processors",
                                                        NULL, NULL,
-                                                       1, 30, 1,
+                                                       1, 30, 
+                                                       1,
                                                        G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT));
    g_object_class_install_property (object_class,
                                     PROP_TILE_CACHE_SIZE,
-                                    g_param_spec_uint ("tile-cache-size",
-                                                       NULL, NULL,
-                                                       0, G_MAXINT, 1 << 25,
-                                                       G_PARAM_READWRITE |
-                                                       G_PARAM_CONSTRUCT));
+                                    gimp_param_spec_memsize ("tile-cache-size",
+                                                             NULL, NULL,
+                                                             0, G_MAXUINT, 
+                                                             1 << 25,
+                                                             G_PARAM_READWRITE |
+                                                             G_PARAM_CONSTRUCT));
    g_object_class_install_property (object_class,
                                     PROP_INTERPOLATION_TYPE,
                                     g_param_spec_enum ("interpolation-type",

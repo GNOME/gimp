@@ -7,8 +7,12 @@ libappconfig_a_SOURCES = @STRIP_BEGIN@ 	\
 	gimpconfig.h			\
 	gimpconfig-deserialize.c	\
 	gimpconfig-deserialize.h	\
+	gimpconfig-params.c		\
+	gimpconfig-params.h		\
 	gimpconfig-serialize.c		\
 	gimpconfig-serialize.h		\
+	gimpconfig-types.c		\
+	gimpconfig-types.h		\
 	gimpbaseconfig.c		\
 	gimpbaseconfig.h		\
 @STRIP_END@

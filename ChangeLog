@@ -1,3 +1,17 @@
+2001-12-08  Sven Neumann  <sven@gimp.org>
+
+	* app/config/Makefile.am
+	* app/config/gimpconfig-params.[ch]
+	* app/config/gimpconfig-types.[ch]: new files implementing special
+	GParamSpecs and GValueTypes needed for GimpConfig.
+	
+	* app/config/gimpbaseconfig.c: register tile-cache-size property
+	with GimpParamSpecMemsize.
+	
+	* app/config/gimpconfig-deserialize.[ch]
+	* app/config/gimpconfig-serialize.[ch]: enable serialization and 
+	deserialization of non-fundamental types.
+
 2001-12-07  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

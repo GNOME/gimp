@@ -30,6 +30,7 @@
 #include <glib-object.h>
 
 #include "gimpconfig-deserialize.h"
+#include "gimpconfig-types.h"
 
 
 static void  gimp_config_deserialize_property (GObject    *object,
@@ -120,40 +121,65 @@ gimp_config_deserialize_property (GObject    *object,
                                   GTokenType *token)
 {
   GParamSpec *prop_spec;
-  GType       fundamental_type;
-  GValue      value = { 0, };
+  gchar      *orig_cset_first = NULL;
+  gchar      *orig_cset_nth   = NULL;
+  GValue      value           = { 0, };
 
   prop_spec = G_PARAM_SPEC (scanner->value.v_symbol);  
-  g_value_init (&value, prop_spec->value_type);
 
-  fundamental_type = G_TYPE_FUNDAMENTAL (G_VALUE_TYPE (&value));
-
-  switch (fundamental_type)
+  if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
     {
-    case G_TYPE_STRING:
-      *token = G_TOKEN_STRING;
-      break;
-
-    case G_TYPE_BOOLEAN:
-    case G_TYPE_ENUM:
       *token = G_TOKEN_IDENTIFIER;
-      break;
+    }
+  else if (G_TYPE_IS_FUNDAMENTAL (prop_spec->value_type))
+    {
+      switch (G_TYPE_FUNDAMENTAL (prop_spec->value_type))
+        {
+        case G_TYPE_STRING:
+          *token = G_TOKEN_STRING;
+          break;
+          
+        case G_TYPE_BOOLEAN:
+           *token = G_TOKEN_IDENTIFIER;
+          break;
+        
+        case G_TYPE_INT:
+        case G_TYPE_UINT:
+        case G_TYPE_LONG:
+        case G_TYPE_ULONG:
+          *token = G_TOKEN_INT;
+          break;
+          
+        case G_TYPE_FLOAT:
+        case G_TYPE_DOUBLE:
+          *token = G_TOKEN_FLOAT;
+          break;
+          
+        default:
+          g_assert_not_reached ();
+        }
+    }
+  else  /* not an enum and not a fundamental type */
+    {
+      if (g_value_type_transformable (G_TYPE_STRING, prop_spec->value_type))
+        {
+          *token = G_TOKEN_IDENTIFIER;
+        }
+      else
+        {
+          g_warning ("%s: %s can not be transformed from a string",
+                     G_STRLOC, g_type_name (prop_spec->value_type));
+          g_assert_not_reached ();
+        }
 
-    case G_TYPE_INT:
-    case G_TYPE_UINT:
-    case G_TYPE_LONG:
-    case G_TYPE_ULONG:
-      *token = G_TOKEN_INT;
-      break;
+      if (prop_spec->value_type == GIMP_TYPE_MEMSIZE)
+        {
+          orig_cset_first = scanner->config->cset_identifier_first;
+          orig_cset_nth   = scanner->config->cset_identifier_nth;
 
-    case G_TYPE_FLOAT:
-    case G_TYPE_DOUBLE:
-      *token = G_TOKEN_FLOAT;
-      break;
-
-    default:
-      g_assert_not_reached ();
-      break;
+          scanner->config->cset_identifier_first = G_CSET_DIGITS;
+          scanner->config->cset_identifier_nth   = G_CSET_DIGITS "gGmMkKbB";
+        }
     }
 
   if (g_scanner_peek_next_token (scanner) != *token)
@@ -161,72 +187,89 @@ gimp_config_deserialize_property (GObject    *object,
 
   g_scanner_get_next_token (scanner);
 
-  switch (fundamental_type)
+  g_value_init (&value, prop_spec->value_type);
+
+  if (G_TYPE_FUNDAMENTAL (prop_spec->value_type) == G_TYPE_ENUM)
     {
-    case G_TYPE_STRING:
-      g_value_set_string (&value, scanner->value.v_string);
-      break;
-
-    case G_TYPE_BOOLEAN:
-      if (! g_ascii_strcasecmp (scanner->value.v_identifier, "yes") ||
-          ! g_ascii_strcasecmp (scanner->value.v_identifier, "true"))
-        g_value_set_boolean (&value, TRUE);
-      else if (! g_ascii_strcasecmp (scanner->value.v_identifier, "no") ||
-               ! g_ascii_strcasecmp (scanner->value.v_identifier, "false"))
-        g_value_set_boolean (&value, FALSE);
+      GEnumClass *enum_class;
+      GEnumValue *enum_value;
+      
+      enum_class = g_type_class_peek (G_VALUE_TYPE (&value));
+      enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class), 
+                                             scanner->value.v_identifier);
+      if (!enum_value)
+        enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class), 
+                                               scanner->value.v_identifier);
+      
+      if (enum_value)
+        g_value_set_enum (&value, enum_value->value);
       else
-        g_scanner_warn 
-          (scanner, 
-           "expected 'yes' or 'no' for boolean property %s, got '%s'", 
-           prop_spec->name, scanner->value.v_identifier);
-      break;
-
-    case G_TYPE_ENUM:
-      {
-	GEnumClass *enum_class;
-	GEnumValue *enum_value;
-
-	enum_class = g_type_class_peek (G_VALUE_TYPE (&value));
-	enum_value = g_enum_get_value_by_nick (G_ENUM_CLASS (enum_class), 
-					       scanner->value.v_identifier);
-        if (!enum_value)
-          enum_value = g_enum_get_value_by_name (G_ENUM_CLASS (enum_class), 
-                                                 scanner->value.v_identifier);
-          
-        if (enum_value)
-          g_value_set_enum (&value, enum_value->value);
-        else
-          g_scanner_warn (scanner, 
-                          "invalid value '%s' for enum property %s", 
-                          scanner->value.v_identifier, prop_spec->name);
-      }
-      break;
-
-    case G_TYPE_INT:
-      g_value_set_int (&value, scanner->value.v_int);
-      break;
-    case G_TYPE_UINT:
-      g_value_set_uint (&value, scanner->value.v_int);
-      break;
-    case G_TYPE_LONG:
-      g_value_set_int (&value, scanner->value.v_int);
-      break;
-    case G_TYPE_ULONG:
-      g_value_set_uint (&value, scanner->value.v_int);
-      break;      
-    case G_TYPE_FLOAT:
-      g_value_set_float (&value, scanner->value.v_float);
-      break;
-    case G_TYPE_DOUBLE:
-      g_value_set_double (&value, scanner->value.v_float);
-      break;
-
-    default:
-      g_assert_not_reached ();
+        g_scanner_warn (scanner, 
+                        "invalid value '%s' for enum property %s", 
+                        scanner->value.v_identifier, prop_spec->name);
     }
+  else if (G_TYPE_IS_FUNDAMENTAL (prop_spec->value_type))
+    {
+      switch (G_TYPE_FUNDAMENTAL (prop_spec->value_type))
+        {
+        case G_TYPE_STRING:
+          g_value_set_string (&value, scanner->value.v_string);
+          break;
+          
+        case G_TYPE_BOOLEAN:
+          if (! g_ascii_strcasecmp (scanner->value.v_identifier, "yes") ||
+              ! g_ascii_strcasecmp (scanner->value.v_identifier, "true"))
+            g_value_set_boolean (&value, TRUE);
+          else if (! g_ascii_strcasecmp (scanner->value.v_identifier, "no") ||
+                   ! g_ascii_strcasecmp (scanner->value.v_identifier, "false"))
+            g_value_set_boolean (&value, FALSE);
+          else
+            g_scanner_warn 
+              (scanner, 
+               "expected 'yes' or 'no' for boolean property %s, got '%s'", 
+               prop_spec->name, scanner->value.v_identifier);
+          break;
+          
+        case G_TYPE_INT:
+          g_value_set_int (&value, scanner->value.v_int);
+          break;
+        case G_TYPE_UINT:
+          g_value_set_uint (&value, scanner->value.v_int);
+          break;
+        case G_TYPE_LONG:
+          g_value_set_int (&value, scanner->value.v_int);
+          break;
+        case G_TYPE_ULONG:
+          g_value_set_uint (&value, scanner->value.v_int);
+          break;      
+        case G_TYPE_FLOAT:
+          g_value_set_float (&value, scanner->value.v_float);
+          break;
+        case G_TYPE_DOUBLE:
+          g_value_set_double (&value, scanner->value.v_float);
+          break;
 
+        default:
+          g_assert_not_reached ();          
+        }
+    }
+  else  /* not an enum and not a fundamental type */
+    {
+      GValue src = { 0, };
+      
+      g_value_init (&src, G_TYPE_STRING);
+      g_value_set_string (&src, scanner->value.v_identifier);
+      
+      g_value_transform (&src, &value);
+    }
+    
   g_object_set_property (object, prop_spec->name, &value);
   g_value_unset (&value);
   
+  if (orig_cset_first)
+    scanner->config->cset_identifier_first = orig_cset_first;
+  if (orig_cset_nth)
+    scanner->config->cset_identifier_nth = orig_cset_nth;
+
   *token = G_TOKEN_RIGHT_PAREN;        
 }

@@ -85,7 +85,7 @@ gimp_config_serialize_properties (GObject *object,
           GEnumClass *enum_class;
           GEnumValue *enum_value;
 
-          enum_class = g_type_class_peek (G_VALUE_TYPE (&value));
+          enum_class = g_type_class_peek (prop_spec->value_type);
           enum_value = g_enum_get_value (G_ENUM_CLASS (enum_class),
                                          g_value_get_enum (&value));
 
@@ -95,14 +95,14 @@ gimp_config_serialize_properties (GObject *object,
             g_warning ("Couldn't get nick for enum_value of %s", 
                        G_ENUM_CLASS_TYPE_NAME (enum_class));
         }
-      else if (g_value_type_transformable (G_VALUE_TYPE (&value), 
+      else if (g_value_type_transformable (prop_spec->value_type, 
                                            G_TYPE_STRING))
         {
           GValue tmp_value = { 0, };
           
           g_value_init (&tmp_value, G_TYPE_STRING);
           g_value_transform (&value, &tmp_value);
-          str = g_strescape (g_value_get_string (&tmp_value), NULL);
+          str = g_value_dup_string (&tmp_value);
           g_value_unset (&tmp_value);
         }
 
