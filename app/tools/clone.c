@@ -315,7 +315,7 @@ clone_motion (PaintCore *paint_core,
 	      int        offset_y)
 {
   GImage *gimage;
-  GImage *src_gimage;
+  GImage *src_gimage = NULL;
   unsigned char * s;
   unsigned char * d;
   TempBuf * orig;
@@ -323,25 +323,31 @@ clone_motion (PaintCore *paint_core,
   void * pr;
   int y;
   int x1, y1, x2, y2;
-  int has_alpha;
+  int has_alpha = -1;
   PixelRegion srcPR, destPR;
   GPatternP pattern;
 
   pr      = NULL;
   pattern = NULL;
 
-  /*  Make sure we still have a source!  */
-  if (!src_drawable ||
-      (! (src_gimage = drawable_gimage (src_drawable)) && type == ImageClone) ||
-      ! (gimage = drawable_gimage (drawable)))
+  /*  Make sure we still have a source if we are doing image cloning */
+  if (type == ImageClone)
+    {
+      if (!src_drawable)
+	return;
+      if (! (src_gimage = drawable_gimage (src_drawable)))
+	return;
+      /*  Determine whether the source image has an alpha channel  */
+      has_alpha = drawable_has_alpha (src_drawable);
+    }
+
+  /*  We always need a destination image */
+  if (! (gimage = drawable_gimage (drawable)))
     return;
 
   /*  Get a region which can be used to paint to  */
   if (! (area = paint_core_get_paint_area (paint_core, drawable)))
     return;
-
-  /*  Determine whether the source image has an alpha channel  */
-  has_alpha = drawable_has_alpha (src_drawable);
 
   switch (type)
     {
