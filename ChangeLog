@@ -1,3 +1,7 @@
+Sun Jun 25 22:44:12 CEST 2000  Marc Lehmann <pcg@goof.com>
+
+	* paint_funcs.c: Fix small bug in last patch.
+
 2000-06-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpexport.c: added a new export_action type
