@@ -49,6 +49,13 @@ enum
   LAST_SIGNAL
 };
 
+enum
+{
+  PROP_0,
+  PROP_CHILDREN_TYPE,
+  PROP_POLICY
+};
+
 
 /*  local function prototypes  */
 
@@ -56,6 +63,15 @@ static void   gimp_container_class_init          (GimpContainerClass *klass);
 static void   gimp_container_init                (GimpContainer      *container);
 
 static void   gimp_container_dispose             (GObject            *object);
+
+static void   gimp_container_set_property        (GObject            *object,
+                                                  guint               property_id,
+                                                  const GValue       *value,
+                                                  GParamSpec         *pspec);
+static void   gimp_container_get_property        (GObject            *object,
+                                                  guint               property_id,
+                                                  GValue             *value,
+                                                  GParamSpec         *pspec);
 
 static void   gimp_container_disconnect_callback (GimpObject         *object,
 						  gpointer            data);
@@ -65,6 +81,27 @@ static guint   container_signals[LAST_SIGNAL] = { 0 };
 
 static GimpObjectClass *parent_class = NULL;
 
+
+GType
+gimp_container_policy_get_type (void)
+{
+  static GType policy_type = 0;
+
+  if (! policy_type)
+    {
+      static const GEnumValue container_policy_values[] =
+      {
+        { GIMP_CONTAINER_POLICY_STRONG, "GIMP_CONTAINER_POLICY_STRONG", "strong" },
+        { GIMP_CONTAINER_POLICY_WEAK,   "GIMP_CONTAINER_POLICY_WEAK",   "weak"   },
+        { 0, NULL, NULL }
+      };
+
+      policy_type = g_enum_register_static ("GimpContainerPolicy",
+                                            container_policy_values);
+    }
+
+  return policy_type;
+}
 
 GType
 gimp_container_get_type (void)
@@ -152,25 +189,52 @@ gimp_container_class_init (GimpContainerClass *klass)
 		  g_cclosure_marshal_VOID__VOID,
 		  G_TYPE_NONE, 0);
 
-  object_class->dispose     = gimp_container_dispose;
+  object_class->dispose      = gimp_container_dispose;
+  object_class->set_property = gimp_container_set_property;
+  object_class->get_property = gimp_container_get_property;
 
-  klass->add                = NULL;
-  klass->remove             = NULL;
-  klass->reorder            = NULL;
-  klass->freeze             = NULL;
-  klass->thaw               = NULL;
+  klass->add                 = NULL;
+  klass->remove              = NULL;
+  klass->reorder             = NULL;
+  klass->freeze              = NULL;
+  klass->thaw                = NULL;
 
-  klass->have               = NULL;
-  klass->foreach            = NULL;
-  klass->get_child_by_name  = NULL;
-  klass->get_child_by_index = NULL;
-  klass->get_child_index    = NULL;
+  klass->have                = NULL;
+  klass->foreach             = NULL;
+  klass->get_child_by_name   = NULL;
+  klass->get_child_by_index  = NULL;
+  klass->get_child_index     = NULL;
+
+  /*  spit out a warning once GType becomes a gpointer  */
+  {
+    guint32 *foo = NULL;
+    GType   *bar;
+
+    bar = foo;
+  }
+
+  g_object_class_install_property (object_class,
+				   PROP_CHILDREN_TYPE,
+				   g_param_spec_uint ("children_type",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_OBJECT,
+                                                      G_MAXINT,
+                                                      GIMP_TYPE_OBJECT,
+                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class,
+				   PROP_POLICY,
+				   g_param_spec_enum ("policy",
+                                                      NULL, NULL,
+                                                      GIMP_TYPE_CONTAINER_POLICY,
+                                                      GIMP_CONTAINER_POLICY_STRONG,
+                                                      G_PARAM_READWRITE | G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_container_init (GimpContainer *container)
 {
-  container->children_type = GIMP_TYPE_OBJECT;
+  container->children_type = G_TYPE_NONE;
   container->policy        = GIMP_CONTAINER_POLICY_STRONG;
   container->num_children  = 0;
 
@@ -192,7 +256,62 @@ gimp_container_dispose (GObject *object)
 				      container->handlers->data)->quark);
     }
 
+  if (container->children_type != G_TYPE_NONE)
+    {
+      g_type_class_unref (g_type_class_peek (container->children_type));
+      container->children_type = G_TYPE_NONE;
+    }
+
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_container_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GimpContainer *container;
+
+  container = GIMP_CONTAINER (object);
+
+  switch (property_id)
+    {
+    case PROP_CHILDREN_TYPE:
+      container->children_type = (GType) g_value_get_uint (value);
+      g_type_class_ref (container->children_type);
+      break;
+    case PROP_POLICY:
+      container->policy = g_value_get_enum (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_container_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GimpContainer *container;
+
+  container = GIMP_CONTAINER (object);
+
+  switch (property_id)
+    {
+    case PROP_CHILDREN_TYPE:
+      g_value_set_uint (value, (guint) container->children_type);
+      break;
+    case PROP_POLICY:
+      g_value_set_enum (value, container->policy);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void

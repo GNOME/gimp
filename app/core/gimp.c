@@ -291,12 +291,6 @@ gimp_new (void)
 {
   Gimp *gimp;
 
-  /* EEK */
-  g_type_class_ref (GIMP_TYPE_CONTEXT);
-  g_type_class_ref (GIMP_TYPE_CONTAINER);
-  g_type_class_ref (GIMP_TYPE_IMAGE);
-  g_type_class_ref (GIMP_TYPE_IMAGEFILE);
-
   gimp = g_object_new (GIMP_TYPE_GIMP, NULL);
 
   return gimp;
@@ -314,31 +308,23 @@ gimp_initialize (Gimp *gimp)
     { gimp_brush_generated_load, GIMP_BRUSH_GENERATED_FILE_EXTENSION },
     { gimp_brush_pipe_load,      GIMP_BRUSH_PIPE_FILE_EXTENSION      }
   };
-  static gint n_brush_loader_entries = (sizeof (brush_loader_entries) /
-					sizeof (brush_loader_entries[0]));
 
   static const GimpDataFactoryLoaderEntry pattern_loader_entries[] =
   {
     { gimp_pattern_load, GIMP_PATTERN_FILE_EXTENSION }
   };
-  static gint n_pattern_loader_entries = (sizeof (pattern_loader_entries) /
-					  sizeof (pattern_loader_entries[0]));
 
   static const GimpDataFactoryLoaderEntry gradient_loader_entries[] =
   {
     { gimp_gradient_load, GIMP_GRADIENT_FILE_EXTENSION },
     { gimp_gradient_load, NULL /* legacy loader */     }
   };
-  static gint n_gradient_loader_entries = (sizeof (gradient_loader_entries) /
-					   sizeof (gradient_loader_entries[0]));
 
   static const GimpDataFactoryLoaderEntry palette_loader_entries[] =
   {
     { gimp_palette_load, GIMP_PALETTE_FILE_EXTENSION },
     { gimp_palette_load, NULL /* legacy loader */    }
   };
-  static gint n_palette_loader_entries = (sizeof (palette_loader_entries) /
-					  sizeof (palette_loader_entries[0]));
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -346,7 +332,7 @@ gimp_initialize (Gimp *gimp)
     gimp_data_factory_new (GIMP_TYPE_BRUSH,
 			   (const gchar **) &gimp->config->brush_path,
 			   brush_loader_entries,
-			   n_brush_loader_entries,
+			   G_N_ELEMENTS (brush_loader_entries),
 			   gimp_brush_new,
 			   gimp_brush_get_standard);
 
@@ -354,7 +340,7 @@ gimp_initialize (Gimp *gimp)
     gimp_data_factory_new (GIMP_TYPE_PATTERN,
 			   (const gchar **) &gimp->config->pattern_path,
 			   pattern_loader_entries,
-			   n_pattern_loader_entries,
+			   G_N_ELEMENTS (pattern_loader_entries),
 			   gimp_pattern_new,
 			   gimp_pattern_get_standard);
 
@@ -362,7 +348,7 @@ gimp_initialize (Gimp *gimp)
     gimp_data_factory_new (GIMP_TYPE_GRADIENT,
 			   (const gchar **) &gimp->config->gradient_path,
 			   gradient_loader_entries,
-			   n_gradient_loader_entries,
+			   G_N_ELEMENTS (gradient_loader_entries),
 			   gimp_gradient_new,
 			   gimp_gradient_get_standard);
 
@@ -370,7 +356,7 @@ gimp_initialize (Gimp *gimp)
     gimp_data_factory_new (GIMP_TYPE_PALETTE,
 			   (const gchar **) &gimp->config->palette_path,
 			   palette_loader_entries,
-			   n_palette_loader_entries,
+			   G_N_ELEMENTS (palette_loader_entries),
 			   gimp_palette_new,
 			   gimp_palette_get_standard);
 

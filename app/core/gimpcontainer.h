@@ -32,6 +32,7 @@ typedef enum
   GIMP_CONTAINER_POLICY_WEAK
 } GimpContainerPolicy;
 
+#define GIMP_TYPE_CONTAINER_POLICY     (gimp_container_policy_get_type ())
 
 #define GIMP_TYPE_CONTAINER            (gimp_container_get_type ())
 #define GIMP_CONTAINER(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CONTAINER, GimpContainer))
@@ -86,6 +87,8 @@ struct _GimpContainerClass
 				       const GimpObject    *object);
 };
 
+
+GType        gimp_container_policy_get_type    (void);
 
 GType        gimp_container_get_type           (void);
 

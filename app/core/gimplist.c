@@ -203,10 +203,10 @@ gimp_list_new (GType                children_type,
   g_return_val_if_fail (policy == GIMP_CONTAINER_POLICY_STRONG ||
                         policy == GIMP_CONTAINER_POLICY_WEAK, NULL);
 
-  list = g_object_new (GIMP_TYPE_LIST, NULL);
-
-  GIMP_CONTAINER (list)->children_type = children_type;
-  GIMP_CONTAINER (list)->policy        = policy;
+  list = g_object_new (GIMP_TYPE_LIST,
+                       "children_type", children_type,
+                       "policy",        policy,
+                       NULL);
 
   return GIMP_CONTAINER (list);
 }

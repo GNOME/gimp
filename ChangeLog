@@ -1,3 +1,18 @@
+2001-10-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.[ch]: added properties for "children_type"
+	and "policy". Ref/unref the "children_type" class so we can do
+	signal lookups and use other introspection features without an
+	existing instance of "children_type".
+
+	The new properties are G_PARAM_CONSTRUCT_ONLY and *MUST* be passed
+	to g_object_new() to ref/unref children_type's class correctly.
+
+	* app/core/gimpdatalist.c
+	* app/core/gimplist.c: pass them as construct properties.
+
+	* app/core/gimp.c: no need to manually ref classes any more.
+
 2001-10-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpchannellistview.c: added a handler for GimpImage's
