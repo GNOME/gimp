@@ -61,7 +61,7 @@ static void   gimp_layer_tree_view_set_container  (GimpContainerView   *view,
 static gpointer gimp_layer_tree_view_insert_item  (GimpContainerView   *view,
                                                    GimpViewable        *viewable,
                                                    gint                 index);
-static void   gimp_layer_tree_view_select_item    (GimpContainerView   *view,
+static gboolean gimp_layer_tree_view_select_item  (GimpContainerView   *view,
 						   GimpViewable        *item,
 						   gpointer             insert_data);
 static void   gimp_layer_tree_view_set_preview_size (GimpContainerView *view);
@@ -434,7 +434,7 @@ gimp_layer_tree_view_insert_item (GimpContainerView *view,
   return iter;
 }
 
-static void
+static gboolean
 gimp_layer_tree_view_select_item (GimpContainerView *view,
 				  GimpViewable      *item,
 				  gpointer           insert_data)
@@ -444,22 +444,26 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
   gboolean           options_sensitive   = FALSE;
   gboolean           anchor_sensitive    = FALSE;
   gboolean           raise_sensitive     = FALSE;
+  gboolean           success;
 
   item_view  = GIMP_ITEM_TREE_VIEW (view);
   layer_view = GIMP_LAYER_TREE_VIEW (view);
 
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
-                                                         insert_data);
+  success = GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
+                                                                   insert_data);
 
   if (item)
     {
-      gimp_layer_tree_view_update_borders (layer_view,
-                                           (GtkTreeIter *) insert_data);
-      gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (item));
+      if (success)
+        {
+          gimp_layer_tree_view_update_borders (layer_view,
+                                               (GtkTreeIter *) insert_data);
+          gimp_layer_tree_view_update_options (layer_view, GIMP_LAYER (item));
+        }
 
       options_sensitive = TRUE;
 
-      if (gimp_layer_is_floating_sel (GIMP_LAYER (item)))
+      if (! success || gimp_layer_is_floating_sel (GIMP_LAYER (item)))
 	{
 	  anchor_sensitive = TRUE;
 
@@ -481,6 +485,8 @@ gimp_layer_tree_view_select_item (GimpContainerView *view,
   gtk_widget_set_sensitive (layer_view->options_box,   options_sensitive);
   gtk_widget_set_sensitive (item_view->raise_button,   raise_sensitive);
   gtk_widget_set_sensitive (layer_view->anchor_button, anchor_sensitive);
+
+  return success;
 }
 
 static void

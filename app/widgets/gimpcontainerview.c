@@ -127,11 +127,11 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   view_signals[SELECT_ITEM] =
     g_signal_new ("select_item",
 		  G_TYPE_FROM_CLASS (klass),
-		  G_SIGNAL_RUN_FIRST,
+		  G_SIGNAL_RUN_LAST,
 		  G_STRUCT_OFFSET (GimpContainerViewClass, select_item),
 		  NULL, NULL,
-		  gimp_marshal_VOID__OBJECT_POINTER,
-		  G_TYPE_NONE, 2,
+		  gimp_marshal_BOOLEAN__OBJECT_POINTER,
+		  G_TYPE_BOOLEAN, 2,
 		  GIMP_TYPE_OBJECT,
 		  G_TYPE_POINTER);
 
@@ -483,12 +483,14 @@ gimp_container_view_set_size_request (GimpContainerView *view,
                                height > 0 ? height + border_y : -1);
 }
 
-void
+gboolean
 gimp_container_view_select_item (GimpContainerView *view,
 				 GimpViewable      *viewable)
 {
-  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (! viewable || GIMP_IS_VIEWABLE (viewable));
+  gboolean success = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
+  g_return_val_if_fail (viewable == NULL || GIMP_IS_VIEWABLE (viewable), FALSE);
 
   if (view->hash_table)
     {
@@ -497,8 +499,10 @@ gimp_container_view_select_item (GimpContainerView *view,
       insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
       g_signal_emit (view, view_signals[SELECT_ITEM], 0,
-                     viewable, insert_data);
+                     viewable, insert_data, &success);
     }
+
+  return success;
 }
 
 void
@@ -537,16 +541,18 @@ gimp_container_view_context_item (GimpContainerView *view,
     }
 }
 
-void
+gboolean
 gimp_container_view_item_selected (GimpContainerView *view,
 				   GimpViewable      *viewable)
 {
-  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
-  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+  gboolean success;
 
-  gimp_container_view_select_item (view, viewable);
+  g_return_val_if_fail (GIMP_IS_CONTAINER_VIEW (view), FALSE);
+  g_return_val_if_fail (GIMP_IS_VIEWABLE (viewable), FALSE);
 
-  if (view->container && view->context)
+  success = gimp_container_view_select_item (view, viewable);
+
+  if (success && view->container && view->context)
     {
       GimpContext *context;
 
@@ -569,6 +575,8 @@ gimp_container_view_item_selected (GimpContainerView *view,
 
       g_object_unref (context);
     }
+
+  return success;
 }
 
 void
@@ -686,10 +694,16 @@ gimp_container_view_context_changed (GimpContext       *context,
 				     GimpContainerView *view)
 {
   gpointer insert_data;
+  gboolean success = FALSE;
 
   insert_data = g_hash_table_lookup (view->hash_table, viewable);
 
-  g_signal_emit (view, view_signals[SELECT_ITEM], 0, viewable, insert_data);
+  g_signal_emit (view, view_signals[SELECT_ITEM], 0,
+                 viewable, insert_data, &success);
+
+  if (! success)
+    g_warning ("gimp_container_view_context_changed(): select_item() failed "
+               "(should not happen)");
 }
 
 static void

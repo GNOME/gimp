@@ -47,7 +47,7 @@ static void   gimp_channel_tree_view_init       (GimpChannelTreeView      *view)
 static void   gimp_channel_tree_view_set_image      (GimpItemTreeView     *item_view,
 						     GimpImage            *gimage);
 
-static void   gimp_channel_tree_view_select_item    (GimpContainerView   *view,
+static gboolean  gimp_channel_tree_view_select_item (GimpContainerView   *view,
 						     GimpViewable        *item,
 						     gpointer             insert_data);
 static void   gimp_channel_tree_view_set_preview_size (GimpContainerView *view);
@@ -198,20 +198,20 @@ gimp_channel_tree_view_set_image (GimpItemTreeView *item_view,
 
 /*  GimpContainerView methods  */
 
-static void
+static gboolean
 gimp_channel_tree_view_select_item (GimpContainerView *view,
 				    GimpViewable      *item,
 				    gpointer           insert_data)
 {
   GimpItemTreeView    *item_view;
   GimpChannelTreeView *tree_view;
+  gboolean             success;
 
   item_view = GIMP_ITEM_TREE_VIEW (view);
   tree_view = GIMP_CHANNEL_TREE_VIEW (view);
 
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view,
-                                                         item,
-                                                         insert_data);
+  success = GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
+                                                                   insert_data);
 
   if (item_view->gimage)
     {
@@ -222,7 +222,10 @@ gimp_channel_tree_view_select_item (GimpContainerView *view,
       gtk_widget_set_sensitive (GIMP_EDITOR (view)->button_box, ! floating_sel);
     }
 
-  gtk_widget_set_sensitive (tree_view->toselection_button, item != NULL);
+  gtk_widget_set_sensitive (tree_view->toselection_button,
+                            success && item != NULL);
+
+  return success;
 }
 
 static void

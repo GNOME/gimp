@@ -60,7 +60,7 @@ struct _GimpContainerViewClass
   GimpEditorClass  parent_class;
 
   /*  signals  */
-  void     (* select_item)      (GimpContainerView *view,
+  gboolean (* select_item)      (GimpContainerView *view,
 				 GimpViewable      *object,
 				 gpointer           insert_data);
   void     (* activate_item)    (GimpContainerView *view,
@@ -115,7 +115,7 @@ void      gimp_container_view_set_size_request (GimpContainerView   *view,
                                                 gint                 width,
                                                 gint                 height);
 
-void      gimp_container_view_select_item      (GimpContainerView   *view,
+gboolean  gimp_container_view_select_item      (GimpContainerView   *view,
 						GimpViewable        *viewable);
 void      gimp_container_view_activate_item    (GimpContainerView   *view,
 						GimpViewable        *viewable);
@@ -125,7 +125,7 @@ void      gimp_container_view_context_item     (GimpContainerView   *view,
 
 /*  protected  */
 
-void      gimp_container_view_item_selected    (GimpContainerView   *view,
+gboolean  gimp_container_view_item_selected    (GimpContainerView   *view,
 						GimpViewable        *item);
 void      gimp_container_view_item_activated   (GimpContainerView   *view,
 						GimpViewable        *item);

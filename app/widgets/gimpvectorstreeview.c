@@ -45,7 +45,7 @@
 static void   gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass);
 static void   gimp_vectors_tree_view_init       (GimpVectorsTreeView      *view);
 
-static void   gimp_vectors_tree_view_select_item    (GimpContainerView   *view,
+static gboolean gimp_vectors_tree_view_select_item  (GimpContainerView   *view,
 						     GimpViewable        *item,
 						     gpointer             insert_data);
 static void   gimp_vectors_tree_view_toselection_clicked
@@ -199,20 +199,23 @@ gimp_vectors_tree_view_init (GimpVectorsTreeView *view)
 
 /*  GimpContainerView methods  */
 
-static void
+static gboolean
 gimp_vectors_tree_view_select_item (GimpContainerView *view,
 				    GimpViewable      *item,
 				    gpointer           insert_data)
 {
   GimpVectorsTreeView *tree_view;
+  gboolean             success;
 
   tree_view = GIMP_VECTORS_TREE_VIEW (view);
 
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
-                                                         insert_data);
+  success = GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
+                                                                   insert_data);
 
   gtk_widget_set_sensitive (tree_view->toselection_button, item != NULL);
   gtk_widget_set_sensitive (tree_view->stroke_button,      item != NULL);
+
+  return success;
 }
 
 static void

@@ -42,7 +42,7 @@
 static void   gimp_container_editor_class_init (GimpContainerEditorClass *klass);
 static void   gimp_container_editor_init       (GimpContainerEditor      *view);
 
-static void   gimp_container_editor_select_item      (GtkWidget           *widget,
+static gboolean gimp_container_editor_select_item    (GtkWidget           *widget,
 						      GimpViewable        *viewable,
 						      gpointer             insert_data,
 						      GimpContainerEditor *editor);
@@ -180,7 +180,7 @@ gimp_container_editor_construct (GimpContainerEditor *editor,
 
 /*  private functions  */
 
-static void
+static gboolean
 gimp_container_editor_select_item (GtkWidget           *widget,
 				   GimpViewable        *viewable,
 				   gpointer             insert_data,
@@ -192,6 +192,8 @@ gimp_container_editor_select_item (GtkWidget           *widget,
 
   if (klass->select_item)
     klass->select_item (editor, viewable);
+
+  return TRUE;
 }
 
 static void

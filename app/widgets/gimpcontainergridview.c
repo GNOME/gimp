@@ -69,7 +69,7 @@ static void     gimp_container_grid_view_reorder_item (GimpContainerView      *v
 						       GimpViewable           *viewable,
 						       gint                    new_index,
 						       gpointer                insert_data);
-static void     gimp_container_grid_view_select_item  (GimpContainerView      *view,
+static gboolean  gimp_container_grid_view_select_item (GimpContainerView      *view,
                                                        GimpViewable           *viewable,
                                                        gpointer                insert_data);
 static void     gimp_container_grid_view_clear_items  (GimpContainerView      *view);
@@ -433,12 +433,14 @@ gimp_container_grid_view_reorder_item (GimpContainerView *view,
 			      preview, new_index);
 }
 
-static void
+static gboolean
 gimp_container_grid_view_select_item (GimpContainerView *view,
                                       GimpViewable      *viewable,
                                       gpointer           insert_data)
 {
   gimp_container_grid_view_highlight_item (view, viewable, insert_data);
+
+  return TRUE;
 }
 
 static void
@@ -503,10 +505,12 @@ static void
 gimp_container_grid_view_item_context (GtkWidget *widget,
 				       gpointer   data)
 {
-  gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
-				     GIMP_PREVIEW (widget)->viewable);
-  gimp_container_view_item_context (GIMP_CONTAINER_VIEW (data),
-				    GIMP_PREVIEW (widget)->viewable);
+  if (gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
+                                         GIMP_PREVIEW (widget)->viewable))
+    {
+      gimp_container_view_item_context (GIMP_CONTAINER_VIEW (data),
+                                        GIMP_PREVIEW (widget)->viewable);
+    }
 }
 
 static void

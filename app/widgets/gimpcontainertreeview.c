@@ -69,7 +69,7 @@ static void     gimp_container_tree_view_reorder_item (GimpContainerView      *v
 						       GimpViewable           *viewable,
 						       gint                    new_index,
 						       gpointer                insert_data);
-static void     gimp_container_tree_view_select_item  (GimpContainerView      *view,
+static gboolean  gimp_container_tree_view_select_item (GimpContainerView      *view,
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
 static void     gimp_container_tree_view_clear_items  (GimpContainerView      *view);
@@ -493,7 +493,7 @@ gimp_container_tree_view_reorder_item (GimpContainerView *view,
     }
 }
 
-static void
+static gboolean
 gimp_container_tree_view_select_item (GimpContainerView *view,
 				      GimpViewable      *viewable,
 				      gpointer           insert_data)
@@ -525,7 +525,7 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
           g_object_unref (renderer);
 
           if (equal)
-            return;
+            return TRUE;
         }
 
       path = gtk_tree_model_get_path (tree_view->model, iter);
@@ -556,6 +556,8 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
     {
       gtk_tree_selection_unselect_all (tree_view->selection);
     }
+
+  return TRUE;
 }
 
 static void
@@ -758,10 +760,12 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
         case 1:
           if (bevent->type == GDK_BUTTON_PRESS)
             {
+              gboolean success = TRUE;
+
               /*  don't select item if a toggle was clicked */
               if (! toggled_cell)
-                gimp_container_view_item_selected (container_view,
-                                                   renderer->viewable);
+                success = gimp_container_view_item_selected (container_view,
+                                                             renderer->viewable);
 
               /*  a callback invoked by selecting the item may have
                *  destroyed us, so check if the container is still there
@@ -798,38 +802,48 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
             }
           else if (bevent->type == GDK_2BUTTON_PRESS)
             {
-              if (edit_cell)
+              gboolean success = TRUE;
+
+              /*  don't select item if a toggle was clicked */
+              if (! toggled_cell)
+                success = gimp_container_view_item_selected (container_view,
+                                                             renderer->viewable);
+
+              if (success)
                 {
+                  if (edit_cell)
+                    {
 #ifdef __GNUC__
 #warning FIXME: remove this hack as soon as #108956 is fixed.
 #endif
-                  if (column->editable_widget)
-                    gtk_cell_editable_remove_widget (column->editable_widget);
+                      if (column->editable_widget)
+                        gtk_cell_editable_remove_widget (column->editable_widget);
 
 #ifdef __GNUC__
 #warning FIXME: make sure the orig text gets restored when cancelling editing
 #endif
-                  if (edit_cell == tree_view->name_cell)
-                    {
-                      const gchar *real_name;
+                      if (edit_cell == tree_view->name_cell)
+                        {
+                          const gchar *real_name;
 
-                      real_name =
-                        gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
+                          real_name =
+                            gimp_object_get_name (GIMP_OBJECT (renderer->viewable));
 
-                      gtk_list_store_set (GTK_LIST_STORE (tree_view->model),
-                                          &iter,
-                                          tree_view->model_column_name,
-                                          real_name,
-                                          -1);
+                          gtk_list_store_set (GTK_LIST_STORE (tree_view->model),
+                                              &iter,
+                                              tree_view->model_column_name,
+                                              real_name,
+                                              -1);
+                        }
+
+                      gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
+                                                        column, edit_cell, TRUE);
                     }
-
-                  gtk_tree_view_set_cursor_on_cell (tree_view->view, path,
-                                                    column, edit_cell, TRUE);
-                }
-              else if (! toggled_cell) /* ignore double click on toggles */
-                {
-                  gimp_container_view_item_activated (container_view,
-                                                      renderer->viewable);
+                  else if (! toggled_cell) /* ignore double click on toggles */
+                    {
+                      gimp_container_view_item_activated (container_view,
+                                                          renderer->viewable);
+                    }
                 }
             }
           break;
@@ -838,12 +852,13 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
           break;
 
         case 3:
-          gimp_container_view_item_selected (container_view,
-                                             renderer->viewable);
-
-          if (container_view->container)
-            gimp_container_view_item_context (GIMP_CONTAINER_VIEW (tree_view),
-                                              renderer->viewable);
+          if (gimp_container_view_item_selected (container_view,
+                                                 renderer->viewable))
+            {
+              if (container_view->container)
+                gimp_container_view_item_context (GIMP_CONTAINER_VIEW (tree_view),
+                                                  renderer->viewable);
+            }
           break;
 
         default:

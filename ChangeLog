@@ -1,5 +1,29 @@
 2003-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpmarshal.list: added BOOLEAN: OBJECT, POINTER.
+
+	* app/widgets/gimpcontainerview.[ch]: added a boolean return
+	value to GimpContainerView::select_item() which indicates if
+	the select operation was successful.
+
+	* app/widgets/gimpchanneltreeview.c
+	* app/widgets/gimpcontainereditor.c
+	* app/widgets/gimpcontainergridview.c
+	* app/widgets/gimpcontainertreeview.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimpvectorstreeview.c: changed accordingly.
+
+	* app/widgets/gimpdrawabletreeview.c: ditto. Removed the
+	tree_view's select_function because it was only constraining the
+	widget, not the underlying select operation. Instead, implement
+	GimpContainerView::select_item() and disallow anything but the
+	floating selection to be selected. Also re-enabled the
+	"floating_selection_changed" callback and explicitely set the
+	active item so the button states get updated. Fixes bug #112487.
+
+2003-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/vectors/gimpvectors.[ch]: added new function
 	gimp_vectors_convert() which duplicates a GimpVectors for another
 	image.

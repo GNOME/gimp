@@ -74,7 +74,7 @@ static void   gimp_item_tree_view_set_container     (GimpContainerView *view,
 static gpointer gimp_item_tree_view_insert_item     (GimpContainerView *view,
                                                      GimpViewable      *viewable,
                                                      gint               index);
-static void   gimp_item_tree_view_select_item       (GimpContainerView *view,
+static gboolean gimp_item_tree_view_select_item     (GimpContainerView *view,
                                                      GimpViewable      *item,
                                                      gpointer           insert_data);
 static void   gimp_item_tree_view_activate_item     (GimpContainerView *view,
@@ -582,7 +582,7 @@ gimp_item_tree_view_insert_item (GimpContainerView *view,
   return iter;
 }
 
-static void
+static gboolean
 gimp_item_tree_view_select_item (GimpContainerView *view,
                                  GimpViewable      *item,
                                  gpointer           insert_data)
@@ -593,11 +593,12 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
   gboolean          duplicate_sensitive = FALSE;
   gboolean          edit_sensitive      = FALSE;
   gboolean          delete_sensitive    = FALSE;
+  gboolean          success;
 
   tree_view = GIMP_ITEM_TREE_VIEW (view);
 
-  GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
-                                                         insert_data);
+  success = GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
+                                                                   insert_data);
 
   if (item)
     {
@@ -639,6 +640,8 @@ gimp_item_tree_view_select_item (GimpContainerView *view,
   gtk_widget_set_sensitive (tree_view->duplicate_button, duplicate_sensitive);
   gtk_widget_set_sensitive (tree_view->edit_button,      edit_sensitive);
   gtk_widget_set_sensitive (tree_view->delete_button,    delete_sensitive);
+
+  return success;
 }
 
 static void

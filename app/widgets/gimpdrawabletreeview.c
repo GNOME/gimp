@@ -62,15 +62,12 @@ static void  gimp_drawable_tree_view_set_container  (GimpContainerView *view,
 static gpointer gimp_drawable_tree_view_insert_item (GimpContainerView *view,
                                                      GimpViewable      *viewable,
                                                      gint               index);
+static gboolean gimp_drawable_tree_view_select_item (GimpContainerView *view,
+						     GimpViewable      *item,
+						     gpointer           insert_data);
 
 static void   gimp_drawable_tree_view_set_image  (GimpItemTreeView     *view,
                                                   GimpImage            *gimage);
-
-static gboolean gimp_drawable_tree_view_select   (GtkTreeSelection     *selection,
-                                                  GtkTreeModel         *model,
-                                                  GtkTreePath          *path,
-                                                  gboolean              path_currently_selected,
-                                                  gpointer              data);
 
 static void   gimp_drawable_tree_view_floating_selection_changed
                                                  (GimpImage            *gimage,
@@ -142,6 +139,7 @@ gimp_drawable_tree_view_class_init (GimpDrawableTreeViewClass *klass)
 
   container_view_class->set_container = gimp_drawable_tree_view_set_container;
   container_view_class->insert_item   = gimp_drawable_tree_view_insert_item;
+  container_view_class->select_item   = gimp_drawable_tree_view_select_item;
 
   item_view_class->set_image          = gimp_drawable_tree_view_set_image;
 }
@@ -199,10 +197,6 @@ gimp_drawable_tree_view_constructor (GType                  type,
                     G_CALLBACK (gimp_drawable_tree_view_eye_clicked),
                     drawable_view);
 
-  gtk_tree_selection_set_select_function (tree_view->selection,
-                                          gimp_drawable_tree_view_select,
-                                          drawable_view, NULL);
-
   return object;
 }
 
@@ -253,6 +247,33 @@ gimp_drawable_tree_view_insert_item (GimpContainerView *view,
   return iter;
 }
 
+static gboolean
+gimp_drawable_tree_view_select_item (GimpContainerView *view,
+                                     GimpViewable      *item,
+                                     gpointer           insert_data)
+{
+  GimpItemTreeView *item_view;
+  gboolean          success = TRUE;
+
+  item_view = GIMP_ITEM_TREE_VIEW (view);
+
+  if (item_view->gimage)
+    {
+      GimpViewable *floating_sel;
+
+      floating_sel = (GimpViewable *)
+        gimp_image_floating_sel (item_view->gimage);
+
+      success = (item == NULL || floating_sel == NULL || item == floating_sel);
+    }
+
+  if (success)
+    return GIMP_CONTAINER_VIEW_CLASS (parent_class)->select_item (view, item,
+                                                                  insert_data);
+
+  return success;
+}
+
 
 /*  GimpItemTreeView methods  */
 
@@ -282,88 +303,23 @@ gimp_drawable_tree_view_set_image (GimpItemTreeView *item_view,
                         "floating_selection_changed",
 			G_CALLBACK (gimp_drawable_tree_view_floating_selection_changed),
 			view);
-
-      if (gimp_image_floating_sel (item_view->gimage))
-	gimp_drawable_tree_view_floating_selection_changed (item_view->gimage,
-                                                            view);
     }
 }
 
 
 /*  callbacks  */
 
-static gboolean
-gimp_drawable_tree_view_select (GtkTreeSelection *selection,
-                                GtkTreeModel     *model,
-                                GtkTreePath      *path,
-                                gboolean          path_currently_selected,
-                                gpointer          data)
-{
-  GimpItemTreeView *item_view;
-  GtkTreeIter       iter;
-  gboolean          retval = TRUE;
-
-  item_view = GIMP_ITEM_TREE_VIEW (data);
-
-  if (gimp_image_floating_sel (item_view->gimage) &&
-      gtk_tree_model_get_iter (model, &iter, path))
-    {
-      GimpContainerTreeView *tree_view;
-      GimpPreviewRenderer   *renderer;
-
-      tree_view = GIMP_CONTAINER_TREE_VIEW (item_view);
-
-      gtk_tree_model_get (model, &iter,
-                          tree_view->model_column_renderer, &renderer,
-                          -1);
-
-      if (((GimpLayer *) renderer->viewable ==
-           gimp_image_floating_sel (item_view->gimage)))
-        {
-          if (path_currently_selected)
-            retval = FALSE;
-        }
-      else
-        {
-          if (! path_currently_selected)
-            retval = FALSE;
-        }
-
-      g_object_unref (renderer);
-    }
-
-  return retval;
-}
-
 static void
 gimp_drawable_tree_view_floating_selection_changed (GimpImage            *gimage,
 						    GimpDrawableTreeView *view)
 {
-#if 0
-  GimpViewable *floating_sel;
-  GList        *list;
-  GList        *free_list;
+  GimpItem *item;
 
-  floating_sel = (GimpViewable *) gimp_image_floating_sel (gimage);
-
-  list = free_list = gtk_container_get_children
-    (GTK_CONTAINER (GIMP_CONTAINER_TREE_VIEW (view)->gtk_tree));
-
-  for (; list; list = g_list_next (list))
-    {
-      if (! (GIMP_PREVIEW (GIMP_TREE_ITEM (list->data)->preview)->viewable ==
-	     floating_sel))
-	{
-	  gtk_widget_set_sensitive (GTK_WIDGET (list->data),
-				    floating_sel == NULL);
-	}
-    }
-
-  g_list_free (free_list);
+  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (gimage);
 
   /*  update button states  */
-  /* gimp_drawable_tree_view_drawable_changed (gimage, view); */
-#endif
+  gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
+                                   (GimpViewable *) item);
 }
 
 static void
