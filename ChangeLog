@@ -1,5 +1,18 @@
 2003-09-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-bucket-fill.c
+	(gimp_drawable_bucket_fill_full): set the transformed color's
+	alpha to OPAQUE so it works with color_region().
+
+	* app/core/gimpdrawable-stroke.c (gimp_drawable_stroke_vectors):
+	no need to transform the color into a newly allocated array,
+	simply use guchar[MAX_CHANNELS] instead.
+
+	Cleaned up both functions to use RED_PIX, GREEN_PIX and BLUE_PIX
+	instead of 0, 1 and 2.
+
+2003-09-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint-funcs/paint-funcs.[ch]: added new functions
 	color_region_mask() which works like color_region() but takes an
 	additional maskPR parameters and pattern_region() which fills

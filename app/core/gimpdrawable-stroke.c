@@ -186,22 +186,21 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
     case GIMP_STROKE_STYLE_SOLID:
       {
         GimpRGB *color;
-        guchar   ucolor[4] = { 0, 0, 0, OPAQUE_OPACITY };
-        guchar  *src_bytes;
+        guchar   tmp_col[MAX_CHANNELS] = { 0, };
+        guchar   col[MAX_CHANNELS]     = { 0, };
 
         g_object_get (options, "foreground", &color, NULL);
-        gimp_rgb_get_uchar (color, ucolor + 0, ucolor + 1, ucolor + 2);
+        gimp_rgb_get_uchar (color,
+                            &tmp_col[RED_PIX],
+                            &tmp_col[GREEN_PIX],
+                            &tmp_col[BLUE_PIX]);
         g_free (color);
 
-        src_bytes = g_malloc0 (bytes);
-
-        src_bytes[bytes - 1] = OPAQUE_OPACITY;
         gimp_image_transform_color (GIMP_ITEM (drawable)->gimage, drawable,
-                                    src_bytes, GIMP_RGB, ucolor);
+                                    col, GIMP_RGB, tmp_col);
+        col[bytes - 1] = OPAQUE_OPACITY;
 
-        color_region_mask (&basePR, &maskPR, src_bytes);
-
-        g_free (src_bytes);
+        color_region_mask (&basePR, &maskPR, col);
       }
       break;
 

@@ -134,8 +134,8 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
   g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
   g_return_if_fail (fill_mode != GIMP_PATTERN_BUCKET_FILL ||
                     GIMP_IS_PATTERN (pattern));
-  g_return_if_fail ((fill_mode != GIMP_FG_BUCKET_FILL &&
-                     fill_mode != GIMP_BG_BUCKET_FILL) || color != NULL);
+  g_return_if_fail (fill_mode == GIMP_PATTERN_BUCKET_FILL ||
+                    color != NULL);
 
   gimage = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -146,9 +146,13 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
     {
       guchar tmp_col[MAX_CHANNELS];
 
-      gimp_rgb_get_uchar (color, &tmp_col[0], &tmp_col[1], &tmp_col[2]);
+      gimp_rgb_get_uchar (color,
+                          &tmp_col[RED_PIX],
+                          &tmp_col[GREEN_PIX],
+                          &tmp_col[BLUE_PIX]);
 
       gimp_image_transform_color (gimage, drawable, col, GIMP_RGB, tmp_col);
+      col[gimp_drawable_bytes_with_alpha (drawable) - 1] = OPAQUE_OPACITY;
     }
   else if (fill_mode == GIMP_PATTERN_BUCKET_FILL)
     {
@@ -245,7 +249,7 @@ gimp_drawable_bucket_fill_full (GimpDrawable       *drawable,
        */
       if (! has_alpha)
 	{
-	  bytes ++;
+	  bytes++;
 	  has_alpha = TRUE;
 	}
     }
