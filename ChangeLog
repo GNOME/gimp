@@ -1,3 +1,8 @@
+2003-05-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-rotate.c (gimp_image_rotate): fixed a harmless
+	compiler warning.
+
 2003-05-20  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpchannel.c (gimp_channel_rotate): don't default to

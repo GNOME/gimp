@@ -56,7 +56,7 @@ gimp_image_rotate (GimpImage        *gimage,
   gint       progress_current = 1;
   gint       new_image_width;
   gint       new_image_height;
-  gboolean   size_changed     = FALSE;
+  gboolean   size_changed;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
 
@@ -93,6 +93,10 @@ gimp_image_rotate (GimpImage        *gimage,
       new_image_height = gimage->height;
       size_changed     = FALSE;
      break;
+
+    default:
+      g_assert_not_reached ();
+      return;
     }
 
   /*  Rotate all channels  */
