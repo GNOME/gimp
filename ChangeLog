@@ -1,3 +1,8 @@
+1999-08-22  Tomas Ogren  <stric@ing.umu.se>
+
+	* app/tool_options.c: Remember kids, "Options" is spelled "Options",
+	not "Ootions"
+
 1999-08-22  Tor Lillqvist  <tml@iki.fi>
 
 	* app/convert.c: Use spinbutton for number of colours.

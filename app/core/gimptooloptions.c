@@ -572,7 +572,7 @@ paint_options_init (PaintOptions         *options,
 			       ((tool_type == SMUDGE) ?
 				_("Smudge Options") :
 				((tool_type == PIXMAPBRUSH) ?
-				 _("Pixmap Brush Ootions") :
+				 _("Pixmap Brush Options") :
 				_("ERROR: Unknown Paint Type"))))))))))))),
 		     reset_func);
 
