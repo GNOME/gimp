@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.1\n"
-"POT-Creation-Date: 2003-01-22 01:08+0100\n"
-"PO-Revision-Date: 2003-01-22 01:10+0100\n"
+"POT-Creation-Date: 2003-01-26 17:20+0100\n"
+"PO-Revision-Date: 2003-01-26 17:30+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,8 @@ msgstr "Flett sammen synlige lag"
 #: libgimp/gimpexport.c:179
 #, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s kan ikke håndtere avstand, størrelse eller ugjennomsiktighet for lag"
+msgstr ""
+"%s kan ikke håndtere avstand, størrelse eller ugjennomsiktighet for lag"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
 #, c-format
@@ -302,15 +303,15 @@ msgstr "Velg mappe"
 msgid "Select File"
 msgstr "Velg fil"
 
-#: libgimpwidgets/gimpmemsizeentry.c:186
+#: libgimpwidgets/gimpmemsizeentry.c:185
 msgid "KiloBytes"
 msgstr "KiloBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:187
+#: libgimpwidgets/gimpmemsizeentry.c:186
 msgid "MegaBytes"
 msgstr "MegaBytes"
 
-#: libgimpwidgets/gimpmemsizeentry.c:188
+#: libgimpwidgets/gimpmemsizeentry.c:187
 msgid "GigaBytes"
 msgstr "GigaBytes"
 
@@ -318,69 +319,69 @@ msgstr "GigaBytes"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr ""
+msgstr "Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen for å velge denne fargen."
 
-#: libgimpwidgets/gimpstock.c:88
+#: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
 msgstr "Anker"
 
-#: libgimpwidgets/gimpstock.c:89
+#: libgimpwidgets/gimpstock.c:92
 msgid "_Duplicate"
 msgstr "_Duplikat"
 
-#: libgimpwidgets/gimpstock.c:90
+#: libgimpwidgets/gimpstock.c:93
 msgid "_Edit"
 msgstr "R_ediger"
 
-#: libgimpwidgets/gimpstock.c:91
+#: libgimpwidgets/gimpstock.c:94
 msgid "Linked"
 msgstr "Lenket"
 
-#: libgimpwidgets/gimpstock.c:92
+#: libgimpwidgets/gimpstock.c:95
 msgid "Paste as New"
 msgstr "Lim inn som nytt"
 
-#: libgimpwidgets/gimpstock.c:93
+#: libgimpwidgets/gimpstock.c:96
 msgid "Paste Into"
 msgstr "Lim inn i"
 
-#: libgimpwidgets/gimpstock.c:94
+#: libgimpwidgets/gimpstock.c:97
 msgid "_Reset"
 msgstr "_Nullstill"
 
-#: libgimpwidgets/gimpstock.c:95
+#: libgimpwidgets/gimpstock.c:98
 msgid "Visible"
 msgstr "Synlig"
 
-#: libgimpwidgets/gimpstock.c:128
+#: libgimpwidgets/gimpstock.c:131
 msgid "_Resize"
 msgstr "End_re størrelse"
 
-#: libgimpwidgets/gimpstock.c:129 libgimpwidgets/gimpstock.c:181
+#: libgimpwidgets/gimpstock.c:132 libgimpwidgets/gimpstock.c:184
 msgid "_Scale"
 msgstr "_Skaler"
 
-#: libgimpwidgets/gimpstock.c:137
+#: libgimpwidgets/gimpstock.c:140
 msgid "L_etter Spacing"
 msgstr "M_ellomrom mellom bokstaver"
 
-#: libgimpwidgets/gimpstock.c:138
+#: libgimpwidgets/gimpstock.c:141
 msgid "L_ine Spacing"
 msgstr "Mellomrom mellom l_injer"
 
-#: libgimpwidgets/gimpstock.c:159
+#: libgimpwidgets/gimpstock.c:162
 msgid "Crop"
 msgstr "Beskjær"
 
-#: libgimpwidgets/gimpstock.c:177
+#: libgimpwidgets/gimpstock.c:180
 msgid "_Transform"
 msgstr "_Transformer"
 
-#: libgimpwidgets/gimpstock.c:180
+#: libgimpwidgets/gimpstock.c:183
 msgid "_Rotate"
 msgstr "_Roter"
 
-#: libgimpwidgets/gimpstock.c:182
+#: libgimpwidgets/gimpstock.c:185
 msgid "_Shear"
 msgstr "_Klipp"
 
@@ -401,53 +402,50 @@ msgid "Factor"
 msgstr "Faktor"
 
 #: libgimpwidgets/gimpwidgets.c:984
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr ""
-"Hvis \"Tid\" knappen ikke er trykket ned, bruker du denne verdien som "
-"startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt "
-"\"tilfeldig\" operasjon"
+msgstr "Bruk denne verdien som startverdi for generering av tilfeldige tall - dette lar deg gjenta en gitt «tilfeldig» operasjon"
 
 #: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
-msgstr ""
+msgstr "Gjø_r tilfeldig"
 
 #: libgimpwidgets/gimpwidgets.c:999
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Startverdi til generator av tilfeldige tall fra tiden nå - dette garanterer "
-"en noen lunde tilfeldig verdi"
+msgstr "Gi generator for tilfeldige tall et generert tilfeldig tall som startverdi"
 
-#: modules/cdisplay_colorblind.c:101
-msgid "Colorblind display filter"
-msgstr "Visningsfilter for fargeblinde"
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "Simuleringsfilter for fargeblindhet (Brettel-Vienot-Mollon-algoritmen)"
 
-#: modules/cdisplay_colorblind.c:167
+#: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Fargesvakt syn"
 
-#: modules/cdisplay_colorblind.c:327
+#: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
-msgstr ""
+msgstr "Type fargesvakt syn:"
 
-#: modules/cdisplay_colorblind.c:337
-msgid "Protonopia (insensitivity to red)"
-msgstr ""
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
+msgstr "Ingen (vanlig syn)"
 
-#: modules/cdisplay_colorblind.c:341
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopi (usensitiv for rød)"
+
+#: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopi (usensitiv for grønn)"
 
-#: modules/cdisplay_colorblind.c:345
+#: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Tritanopi (usensitiv for blå)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Visningsfilter for gammafarger"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
@@ -459,7 +457,7 @@ msgstr "Gamme:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Visningsfilter for farger med høy kontrast"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
@@ -467,11 +465,11 @@ msgstr "Kontrast"
 
 #: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
-msgstr ""
+msgstr "Kontrastsykluser:"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Fargevelger i malerstil"
 
 #: modules/colorsel_triangle.c:182
 msgid "_Triangle"
@@ -479,7 +477,7 @@ msgstr "_Trekant"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Fargevelger i vannfargestil"
 
 #: modules/colorsel_water.c:176
 msgid "_Watercolor"

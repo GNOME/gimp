@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: achtung 1.1.25\n"
-"POT-Creation-Date: 2003-01-04 00:30+0100\n"
-"PO-Revision-Date: 2003-01-04 00:32+0100\n"
+"POT-Creation-Date: 2003-01-26 17:16+0100\n"
+"PO-Revision-Date: 2003-01-26 17:18+0100\n"
 "Last-Translator: Kjartan Maraas <kmaraas@gnome.org>\n"
 "Language-Team: Norwegian <no@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -137,15 +137,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:569
+#: plug-ins/script-fu/script-fu-server.c:574
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu tjeneralternativer"
 
-#: plug-ins/script-fu/script-fu-server.c:596
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Port:"
 msgstr "Tjenerport:"
 
-#: plug-ins/script-fu/script-fu-server.c:602
+#: plug-ins/script-fu/script-fu-server.c:607
 msgid "Server Logfile:"
 msgstr "Loggfil på tjener:"
 
@@ -337,7 +337,7 @@ msgstr "Tekststørrelse (piksler)"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline Blur Radius"
-msgstr ""
+msgstr "Radius for uskarpt omriss"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:8
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -352,7 +352,7 @@ msgstr "Mønster"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:9
 msgid "Shadow Blur Radius"
-msgstr ""
+msgstr "Radius for uskarp skygge"
 
 #: plug-ins/script-fu/scripts/3d-outline.scm.h:10
 #: plug-ins/script-fu/scripts/glossy.scm.h:14
@@ -850,6 +850,9 @@ msgid ""
 "        A foreground text layer with transparency\n"
 "        and a background layer."
 msgstr ""
+"Burn-In: Må ha to lag totalt!\n"
+"         Et forgrunnstekstlag med gjennomsiktighet\n"
+"         og et bakgrunnslag."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -957,7 +960,7 @@ msgstr "Blur mengde"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:4
 msgid "Chip Amount"
-msgstr ""
+msgstr "Mengde hugging"
 
 #: plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Drop Shadow"
@@ -1092,6 +1095,8 @@ msgid ""
 "Darken Only\n"
 "(Better, but only for Images with alot of White)"
 msgstr ""
+"Kun mørkere\n"
+"(Bedre, men kun for bilder med mye hvitt)"
 
 #: plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1258,12 +1263,12 @@ msgstr "Tøm ikke-valgt maskeområde"
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
 msgid "Fade From %"
-msgstr ""
+msgstr "Glidende overgang fra %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:8
 #, no-c-format
 msgid "Fade To   %"
-msgstr ""
+msgstr "Gli over til %"
 
 #: plug-ins/script-fu/scripts/fade-outline.scm.h:9
 msgid "Use Growing Selection"
