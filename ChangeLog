@@ -8,6 +8,11 @@
 
 2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
+	* plug-ins/common/smooth_palette.c (doit): fix for #82489 (selection 
+	is ignored). Also adds mnemonics to dialog.
+
+2002-05-24  Maurits Rijk  <lpeek.mrijk@consunet.nl>
+
 	* plug-ins/common/iwarp.c (iwarp_dialog): fix for #82494 (strange 
 	behaviour 'Number of Frames' entry). Also adds mnemonics to dialog.
 

@@ -43,7 +43,7 @@ static void run    (gchar      *name,
 		    gint       *nreturn_vals,
 		    GimpParam **return_vals);
 
-static gint   dialog (void);
+static gboolean   dialog (void);
 
 static gint32 doit   (GimpDrawable *drawable,
 		      gint32       *layer_id);
@@ -56,7 +56,7 @@ GimpPlugInInfo PLUG_IN_INFO =
   run,   /* run_proc   */
 };
 
-gboolean run_flag = FALSE;
+static gboolean run_flag = FALSE;
 
 MAIN ()
 
@@ -203,8 +203,8 @@ pix_diff (guchar *pal,
 
   for (k = 0; k < bpp; k++)
     {
-      int p1 = pal[j * bpp + k];
-      int p2 = pal[i * bpp + k];
+      gint p1 = pal[j * bpp + k];
+      gint p2 = pal[i * bpp + k];
       r += (p1 - p2) * (p1 - p2);
     }
 
@@ -236,6 +236,8 @@ doit (GimpDrawable *drawable,
   gint       psize, i, j;
   guchar    *pal;
   gint       bpp = drawable->bpp;
+  gint 	     sel_x1, sel_x2, sel_y1, sel_y2;
+  gint       width, height;
   GimpPixelRgn  pr;
 
   srand(time(0));
@@ -252,15 +254,19 @@ doit (GimpDrawable *drawable,
 
   pal = g_malloc (psize * bpp);
 
-  gimp_pixel_rgn_init (&pr, drawable, 0, 0, drawable->width,
-		       drawable->height,
+  gimp_drawable_mask_bounds (drawable->drawable_id,
+			     &sel_x1, &sel_y1, &sel_x2, &sel_y2);
+  width = sel_x2 - sel_x1;
+  height = sel_y2 - sel_y1;
+
+  gimp_pixel_rgn_init (&pr, drawable, sel_x1, sel_y1, width, height,
 		       FALSE, FALSE);
 
   /* get initial palette */
   for (i = 0; i < psize; i++)
     {
-      gint x = rand() % drawable->width;
-      gint y = rand() % drawable->height;
+      gint x = sel_x1 + rand() % width;
+      gint y = sel_y1 + rand() % height;
 
       gimp_pixel_rgn_get_pixel (&pr, pal + bpp * i, x, y);
     }
@@ -268,13 +274,13 @@ doit (GimpDrawable *drawable,
   /* reorder */
   if (1)
     {
-      guchar  *pal_best = g_malloc (psize * bpp);
-      guchar  *original = g_malloc (psize * bpp);
+      guchar  *pal_best;
+      guchar  *original;
       gdouble  len_best = 0;
       gint     try;
 
-      memcpy (pal_best, pal, bpp * psize);
-      memcpy (original, pal, bpp * psize);
+      pal_best = g_memdup (pal, bpp * psize);
+      original = g_memdup (pal, bpp * psize);
 
       for (try = 0; try < config.ntries; try++)
 	{
@@ -387,7 +393,7 @@ ok_callback (GtkWidget *widget,
   gtk_widget_destroy (GTK_WIDGET (data));
 }
 
-static gint
+static gboolean
 dialog (void)
 {
   GtkWidget *dlg;
@@ -431,7 +437,7 @@ dialog (void)
   spinbutton = gimp_spin_button_new (&adj, config.width,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Width:"), 1.0, 0.5,
+			     _("_Width:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -440,7 +446,7 @@ dialog (void)
   spinbutton = gimp_spin_button_new (&adj, config.height,
 				     1, GIMP_MAX_IMAGE_SIZE, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Height:"), 1.0, 0.5,
+			     _("_Height:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
@@ -449,7 +455,7 @@ dialog (void)
   spinbutton = gimp_spin_button_new (&adj, config.ntries,
 				     1, 1024, 1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Search Time:"), 1.0, 0.5,
+			     _("_Search Time:"), 1.0, 0.5,
 			     spinbutton, 1, FALSE);
   g_signal_connect (G_OBJECT (adj), "value_changed",
                     G_CALLBACK (gimp_int_adjustment_update),
