@@ -171,7 +171,8 @@ edit_paste_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success = gimp_item_is_attached (GIMP_ITEM (drawable));
+      success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
+		 gimp->global_buffer != NULL);
     
       if (success)
 	{

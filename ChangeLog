@@ -1,3 +1,12 @@
+2004-02-05  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/edit.pdb (edit_paste): don't call
+	gimp_edit_paste() with a NULL buffer. Instead, return an execution
+	error if there is no global buffer to paste. Fixes the warning
+	triggered by bug #133244 (but not the bug itself of course).
+
+	* app/pdb/edit_cmds.c: regenerated.
+
 2004-02-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/imagemap/imap_main.c (dialog): quit the main loop when
