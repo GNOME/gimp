@@ -30,16 +30,16 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_gradients_refresh           (void);
-gchar**  gimp_gradients_get_list          (gint     *num_gradients);
+gchar**  gimp_gradients_get_list          (gint           *num_gradients);
 gchar*   gimp_gradients_get_gradient      (void);
-gboolean gimp_gradients_set_gradient      (gchar    *name);
-gdouble* gimp_gradients_sample_uniform    (gint      num_samples);
-gdouble* gimp_gradients_sample_custom     (gint      num_samples,
-					   gdouble  *positions);
-gchar*   gimp_gradients_get_gradient_data (gchar    *name,
-					   gint      sample_size,
-					   gint     *width,
-					   gdouble **grad_data);
+gboolean gimp_gradients_set_gradient      (const gchar    *name);
+gdouble* gimp_gradients_sample_uniform    (gint            num_samples);
+gdouble* gimp_gradients_sample_custom     (gint            num_samples,
+					   const gdouble  *positions);
+gchar*   gimp_gradients_get_gradient_data (const gchar    *name,
+					   gint            sample_size,
+					   gint           *width,
+					   gdouble       **grad_data);
 
 
 G_END_DECLS

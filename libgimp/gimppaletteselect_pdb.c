@@ -38,9 +38,9 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palettes_popup (gchar *palette_callback,
-		     gchar *popup_title,
-		     gchar *initial_palette)
+gimp_palettes_popup (const gchar *palette_callback,
+		     const gchar *popup_title,
+		     const gchar *initial_palette)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -71,7 +71,7 @@ gimp_palettes_popup (gchar *palette_callback,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palettes_close_popup (gchar *palette_callback)
+gimp_palettes_close_popup (const gchar *palette_callback)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -101,8 +101,8 @@ gimp_palettes_close_popup (gchar *palette_callback)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palettes_set_popup (gchar *palette_callback,
-			 gchar *palette_name)
+gimp_palettes_set_popup (const gchar *palette_callback,
+			 const gchar *palette_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

@@ -102,13 +102,13 @@ _gimp_unit_get_number_of_built_in_units (void)
  * Returns: The new unit's ID.
  */
 GimpUnit
-_gimp_unit_new (gchar   *identifier,
-		gdouble  factor,
-		gint     digits,
-		gchar   *symbol,
-		gchar   *abbreviation,
-		gchar   *singular,
-		gchar   *plural)
+_gimp_unit_new (const gchar *identifier,
+		gdouble      factor,
+		gint         digits,
+		const gchar *symbol,
+		const gchar *abbreviation,
+		const gchar *singular,
+		const gchar *plural)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

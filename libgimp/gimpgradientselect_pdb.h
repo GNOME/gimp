@@ -29,13 +29,13 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_gradients_popup       (gchar *gradient_callback,
-				     gchar *popup_title,
-				     gchar *initial_gradient,
-				     gint   sample_size);
-gboolean gimp_gradients_close_popup (gchar *gradient_callback);
-gboolean gimp_gradients_set_popup   (gchar *gradient_callback,
-				     gchar *gradient_name);
+gboolean gimp_gradients_popup       (const gchar *gradient_callback,
+				     const gchar *popup_title,
+				     const gchar *initial_gradient,
+				     gint         sample_size);
+gboolean gimp_gradients_close_popup (const gchar *gradient_callback);
+gboolean gimp_gradients_set_popup   (const gchar *gradient_callback,
+				     const gchar *gradient_name);
 
 
 G_END_DECLS

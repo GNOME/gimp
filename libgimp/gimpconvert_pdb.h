@@ -37,7 +37,7 @@ gboolean gimp_convert_indexed   (gint32                  image_ID,
 				 gint                    num_cols,
 				 gboolean                alpha_dither,
 				 gboolean                remove_unused,
-				 gchar                  *palette);
+				 const gchar            *palette);
 
 
 G_END_DECLS

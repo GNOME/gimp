@@ -30,24 +30,24 @@ G_BEGIN_DECLS
 
 
 gint32   gimp_file_load                   (GimpRunMode  run_mode,
-					   gchar       *filename,
-					   gchar       *raw_filename);
+					   const gchar *filename,
+					   const gchar *raw_filename);
 gboolean gimp_file_save                   (GimpRunMode  run_mode,
 					   gint32       image_ID,
 					   gint32       drawable_ID,
-					   gchar       *filename,
-					   gchar       *raw_filename);
-gchar*   gimp_temp_name                   (gchar       *extension);
-gboolean gimp_register_magic_load_handler (gchar       *procedure_name,
-					   gchar       *extensions,
-					   gchar       *prefixes,
-					   gchar       *magics);
-gboolean gimp_register_load_handler       (gchar       *procedure_name,
-					   gchar       *extensions,
-					   gchar       *prefixes);
-gboolean gimp_register_save_handler       (gchar       *procedure_name,
-					   gchar       *extensions,
-					   gchar       *prefixes);
+					   const gchar *filename,
+					   const gchar *raw_filename);
+gchar*   gimp_temp_name                   (const gchar *extension);
+gboolean gimp_register_magic_load_handler (const gchar *procedure_name,
+					   const gchar *extensions,
+					   const gchar *prefixes,
+					   const gchar *magics);
+gboolean gimp_register_load_handler       (const gchar *procedure_name,
+					   const gchar *extensions,
+					   const gchar *prefixes);
+gboolean gimp_register_save_handler       (const gchar *procedure_name,
+					   const gchar *extensions,
+					   const gchar *prefixes);
 
 
 G_END_DECLS

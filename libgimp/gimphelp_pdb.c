@@ -44,8 +44,8 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_help (gchar *prog_name,
-	   gchar *help_page)
+gimp_help (const gchar *prog_name,
+	   const gchar *help_page)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

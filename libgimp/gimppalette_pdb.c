@@ -104,7 +104,7 @@ gimp_palette_get_background (GimpRGB *background)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palette_set_foreground (GimpRGB *foreground)
+gimp_palette_set_foreground (const GimpRGB *foreground)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -136,7 +136,7 @@ gimp_palette_set_foreground (GimpRGB *foreground)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palette_set_background (GimpRGB *background)
+gimp_palette_set_background (const GimpRGB *background)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

@@ -37,7 +37,7 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_message (gchar *message)
+gimp_message (const gchar *message)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

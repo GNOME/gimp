@@ -29,12 +29,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_patterns_popup       (gchar *pattern_callback,
-				    gchar *popup_title,
-				    gchar *initial_pattern);
-gboolean gimp_patterns_close_popup (gchar *pattern_callback);
-gboolean gimp_patterns_set_popup   (gchar *pattern_callback,
-				    gchar *pattern_name);
+gboolean gimp_patterns_popup       (const gchar *pattern_callback,
+				    const gchar *popup_title,
+				    const gchar *initial_pattern);
+gboolean gimp_patterns_close_popup (const gchar *pattern_callback);
+gboolean gimp_patterns_set_popup   (const gchar *pattern_callback,
+				    const gchar *pattern_name);
 
 
 G_END_DECLS

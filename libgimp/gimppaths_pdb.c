@@ -109,8 +109,8 @@ gimp_path_get_current (gint32 image_ID)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_path_set_current (gint32  image_ID,
-		       gchar  *set_current_path_name)
+gimp_path_set_current (gint32       image_ID,
+		       const gchar *set_current_path_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -141,8 +141,8 @@ gimp_path_set_current (gint32  image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_path_delete (gint32  image_ID,
-		  gchar  *path_name_to_del)
+gimp_path_delete (gint32       image_ID,
+		  const gchar *path_name_to_del)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -176,11 +176,11 @@ gimp_path_delete (gint32  image_ID,
  * Returns: The type of the path. Currently only one type (1 = Bezier) is supported.
  */
 gint
-gimp_path_get_points (gint32    image_ID,
-		      gchar    *pathname,
-		      gint     *path_closed,
-		      gint     *num_path_point_details,
-		      gdouble **points_pairs)
+gimp_path_get_points (gint32        image_ID,
+		      const gchar  *pathname,
+		      gint         *path_closed,
+		      gint         *num_path_point_details,
+		      gdouble     **points_pairs)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -224,11 +224,11 @@ gimp_path_get_points (gint32    image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_path_set_points (gint32   image_ID,
-		      gchar   *pathname,
-		      gint     ptype,
-		      gint     num_path_points,
-		      gdouble *points_pairs)
+gimp_path_set_points (gint32         image_ID,
+		      const gchar   *pathname,
+		      gint           ptype,
+		      gint           num_path_points,
+		      const gdouble *points_pairs)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -340,8 +340,8 @@ gimp_path_get_point_at_dist (gint32   image_ID,
  * Returns: The tattoo associated with the name path.
  */
 gint
-gimp_path_get_tattoo (gint32  image_ID,
-		      gchar  *pathname)
+gimp_path_get_tattoo (gint32       image_ID,
+		      const gchar *pathname)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -378,9 +378,9 @@ gimp_path_get_tattoo (gint32  image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_path_set_tattoo (gint32  image_ID,
-		      gchar  *pathname,
-		      gint    tattovalue)
+gimp_path_set_tattoo (gint32       image_ID,
+		      const gchar *pathname,
+		      gint         tattovalue)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -451,8 +451,8 @@ gimp_get_path_by_tattoo (gint32 image_ID,
  * Returns: The lock status associated with the name path. 0 returned if the path is not locked. 1 is returned if the path is locked.
  */
 gint
-gimp_path_get_locked (gint32  image_ID,
-		      gchar  *pathname)
+gimp_path_get_locked (gint32       image_ID,
+		      const gchar *pathname)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -487,9 +487,9 @@ gimp_path_get_locked (gint32  image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_path_set_locked (gint32  image_ID,
-		      gchar  *pathname,
-		      gint    lockstatus)
+gimp_path_set_locked (gint32       image_ID,
+		      const gchar *pathname,
+		      gint         lockstatus)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

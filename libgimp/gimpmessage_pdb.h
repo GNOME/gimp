@@ -29,7 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean               gimp_message             (gchar                  *message);
+gboolean               gimp_message             (const gchar            *message);
 GimpMessageHandlerType gimp_message_get_handler (void);
 gboolean               gimp_message_set_handler (GimpMessageHandlerType  handler);
 

@@ -59,12 +59,12 @@ gimp_text_fontname (gint32        image_ID,
 		    gint32        drawable_ID,
 		    gdouble       x,
 		    gdouble       y,
-		    gchar        *text,
+		    const gchar  *text,
 		    gint          border,
 		    gboolean      antialias,
 		    gdouble       size,
 		    GimpSizeType  size_type,
-		    gchar        *fontname)
+		    const gchar  *fontname)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -112,10 +112,10 @@ gimp_text_fontname (gint32        image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_text_get_extents_fontname (gchar        *text,
+gimp_text_get_extents_fontname (const gchar  *text,
 				gdouble       size,
 				GimpSizeType  size_type,
-				gchar        *fontname,
+				const gchar  *fontname,
 				gint         *width,
 				gint         *height,
 				gint         *ascent,
@@ -201,19 +201,19 @@ gimp_text (gint32        image_ID,
 	   gint32        drawable_ID,
 	   gdouble       x,
 	   gdouble       y,
-	   gchar        *text,
+	   const gchar  *text,
 	   gint          border,
 	   gboolean      antialias,
 	   gdouble       size,
 	   GimpSizeType  size_type,
-	   gchar        *foundry,
-	   gchar        *family,
-	   gchar        *weight,
-	   gchar        *slant,
-	   gchar        *set_width,
-	   gchar        *spacing,
-	   gchar        *registry,
-	   gchar        *encoding)
+	   const gchar  *foundry,
+	   const gchar  *family,
+	   const gchar  *weight,
+	   const gchar  *slant,
+	   const gchar  *set_width,
+	   const gchar  *spacing,
+	   const gchar  *registry,
+	   const gchar  *encoding)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -275,17 +275,17 @@ gimp_text (gint32        image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_text_get_extents (gchar        *text,
+gimp_text_get_extents (const gchar  *text,
 		       gdouble       size,
 		       GimpSizeType  size_type,
-		       gchar        *foundry,
-		       gchar        *family,
-		       gchar        *weight,
-		       gchar        *slant,
-		       gchar        *set_width,
-		       gchar        *spacing,
-		       gchar        *registry,
-		       gchar        *encoding,
+		       const gchar  *foundry,
+		       const gchar  *family,
+		       const gchar  *weight,
+		       const gchar  *slant,
+		       const gchar  *set_width,
+		       const gchar  *spacing,
+		       const gchar  *registry,
+		       const gchar  *encoding,
 		       gint         *width,
 		       gint         *height,
 		       gint         *ascent,

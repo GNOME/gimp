@@ -30,13 +30,13 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_palettes_refresh           (void);
-gchar**  gimp_palettes_get_list          (gint    *num_palettes);
-gchar*   gimp_palettes_get_palette       (gint    *num_colors);
-gboolean gimp_palettes_set_palette       (gchar   *name);
-gchar*   gimp_palettes_get_palette_entry (gchar   *name,
-					  gint     entry_num,
-					  gint    *num_colors,
-					  GimpRGB *color);
+gchar**  gimp_palettes_get_list          (gint        *num_palettes);
+gchar*   gimp_palettes_get_palette       (gint        *num_colors);
+gboolean gimp_palettes_set_palette       (const gchar *name);
+gchar*   gimp_palettes_get_palette_entry (const gchar *name,
+					  gint         entry_num,
+					  gint        *num_colors,
+					  GimpRGB     *color);
 
 
 G_END_DECLS

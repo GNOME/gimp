@@ -131,6 +131,11 @@ sub generate {
 		$privatevars++;
 	    }
 	    else {
+		if ($type eq 'string' ||
+		    $type eq 'color' ||
+		    $type =~ /array$/) {
+		    $arglist .= 'const '
+		}
 		$arglist .= &libtype($_);
 		$arglist .= $_->{name};
 		$arglist .= '_ID' if $id;
@@ -394,7 +399,7 @@ CODE
 	    my @arglist = split(/, /, $arglist);
 	    my $longest = 0; my $seen = 0;
 	    foreach (@arglist) {
-		/(\w+) \S+/;
+		/(const \w+) \S+/ || /(\w+) \S+/;
 		my $len = length($1);
 		my $num = scalar @{[ /\*/g ]};
 		$seen = $num if $seen < $num;
@@ -405,9 +410,10 @@ CODE
 
 	    my $once = 0; $arglist = "";
 	    foreach (@arglist) {
-		my $len = $longest - index($_, ' ') + 1;
+		my $space = rindex($_, ' ');
+		my $len = $longest - $space + 1;
 		$len -= scalar @{[ /\*/g ]};
-		s/ /' ' x $len/e if $len > 1;
+		substr($_, $space, 1) = ' ' x $len if $space != -1 && $len > 1;
 		$arglist .= "\t" if $once;
                 $arglist .= $_;
                 $arglist .= ",\n";
@@ -533,7 +539,7 @@ LGPL
 	    }
 
 	    foreach (split(/,/, $arglist->[2])) {
-		next if !/(\w+) \S+/;
+		next unless /(const \w+) \S+/ || /(\w+) \S+/;
 		$len = length($1) + 1;
 		my $num = scalar @{[ /\*/g ]};
 		$seen = $num if $seen < $num;
@@ -551,10 +557,11 @@ LGPL
 
 	    my @args = split(/,/, $arglist); $arglist = "";
 	    foreach (@args) {
-		my $len = $longest[2] - index($_, ' ') + 1;
+		$space = rindex($_, ' ');
+		my $len = $longest[2] - $space + 1;
 		$len -= scalar @{[ /\*/g ]};
 		$len++ if /\t/;
-		s/ /' ' x $len/e if $len > 1;
+		substr($_, $space, 1) = ' ' x $len if $space != -1 && $len > 1;
 		$arglist .= $_;
 		$arglist .= "," if !/;\n$/;
 	    }

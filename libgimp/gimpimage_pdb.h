@@ -98,7 +98,7 @@ guint8*           _gimp_image_get_cmap                (gint32                ima
 						       gint                 *num_bytes);
 gboolean          _gimp_image_set_cmap                (gint32                image_ID,
 						       gint                  num_bytes,
-						       guint8               *cmap);
+						       const guint8         *cmap);
 gboolean          gimp_image_undo_is_enabled          (gint32                image_ID);
 gboolean          gimp_image_undo_enable              (gint32                image_ID);
 gboolean          gimp_image_undo_disable             (gint32                image_ID);
@@ -141,7 +141,7 @@ gboolean          gimp_image_set_component_visible    (gint32                ima
 						       gboolean              visible);
 gchar*            gimp_image_get_filename             (gint32                image_ID);
 gboolean          gimp_image_set_filename             (gint32                image_ID,
-						       gchar                *filename);
+						       const gchar          *filename);
 gchar*            gimp_image_get_name                 (gint32                image_ID);
 gboolean          gimp_image_get_resolution           (gint32                image_ID,
 						       gdouble              *xresolution,

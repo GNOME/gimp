@@ -29,12 +29,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_palettes_popup       (gchar *palette_callback,
-				    gchar *popup_title,
-				    gchar *initial_palette);
-gboolean gimp_palettes_close_popup (gchar *palette_callback);
-gboolean gimp_palettes_set_popup   (gchar *palette_callback,
-				    gchar *palette_name);
+gboolean gimp_palettes_popup       (const gchar *palette_callback,
+				    const gchar *popup_title,
+				    const gchar *initial_palette);
+gboolean gimp_palettes_close_popup (const gchar *palette_callback);
+gboolean gimp_palettes_set_popup   (const gchar *palette_callback,
+				    const gchar *palette_name);
 
 
 G_END_DECLS

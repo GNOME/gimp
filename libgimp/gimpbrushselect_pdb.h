@@ -29,15 +29,15 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_brushes_popup       (gchar                *brush_callback,
-				   gchar                *popup_title,
-				   gchar                *initial_brush,
+gboolean gimp_brushes_popup       (const gchar          *brush_callback,
+				   const gchar          *popup_title,
+				   const gchar          *initial_brush,
 				   gdouble               opacity,
 				   gint                  spacing,
 				   GimpLayerModeEffects  paint_mode);
-gboolean gimp_brushes_close_popup (gchar                *brush_callback);
-gboolean gimp_brushes_set_popup   (gchar                *brush_callback,
-				   gchar                *brush_name,
+gboolean gimp_brushes_close_popup (const gchar          *brush_callback);
+gboolean gimp_brushes_set_popup   (const gchar          *brush_callback,
+				   const gchar          *brush_name,
 				   gdouble               opacity,
 				   gint                  spacing,
 				   GimpLayerModeEffects  paint_mode);

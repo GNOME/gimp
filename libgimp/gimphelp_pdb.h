@@ -29,8 +29,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_help (gchar *prog_name,
-		    gchar *help_page);
+gboolean gimp_help (const gchar *prog_name,
+		    const gchar *help_page);
 
 
 G_END_DECLS

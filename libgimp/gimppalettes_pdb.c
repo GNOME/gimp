@@ -141,7 +141,7 @@ gimp_palettes_get_palette (gint *num_colors)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_palettes_set_palette (gchar *name)
+gimp_palettes_set_palette (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -175,10 +175,10 @@ gimp_palettes_set_palette (gchar *name)
  * Returns: The palette name.
  */
 gchar *
-gimp_palettes_get_palette_entry (gchar   *name,
-				 gint     entry_num,
-				 gint    *num_colors,
-				 GimpRGB *color)
+gimp_palettes_get_palette_entry (const gchar *name,
+				 gint         entry_num,
+				 gint        *num_colors,
+				 GimpRGB     *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

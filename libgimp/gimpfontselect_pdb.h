@@ -29,12 +29,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_fonts_popup       (gchar *font_callback,
-				 gchar *popup_title,
-				 gchar *initial_font);
-gboolean gimp_fonts_close_popup (gchar *font_callback);
-gboolean gimp_fonts_set_popup   (gchar *font_callback,
-				 gchar *font_name);
+gboolean gimp_fonts_popup       (const gchar *font_callback,
+				 const gchar *popup_title,
+				 const gchar *initial_font);
+gboolean gimp_fonts_close_popup (const gchar *font_callback);
+gboolean gimp_fonts_set_popup   (const gchar *font_callback,
+				 const gchar *font_name);
 
 
 G_END_DECLS

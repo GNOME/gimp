@@ -33,7 +33,7 @@ gint32               _gimp_layer_new               (gint32                image_
 						    gint                  width,
 						    gint                  height,
 						    GimpImageType         type,
-						    gchar                *name,
+						    const gchar          *name,
 						    gdouble               opacity,
 						    GimpLayerModeEffects  mode);
 gint32               _gimp_layer_copy              (gint32                layer_ID,
@@ -63,7 +63,7 @@ gint32               gimp_layer_new_from_drawable  (gint32                drawab
 						    gint32                dest_image_ID);
 gchar*               gimp_layer_get_name           (gint32                layer_ID);
 gboolean             gimp_layer_set_name           (gint32                layer_ID,
-						    gchar                *name);
+						    const gchar          *name);
 gboolean             gimp_layer_get_visible        (gint32                layer_ID);
 gboolean             gimp_layer_set_visible        (gint32                layer_ID,
 						    gboolean              visible);

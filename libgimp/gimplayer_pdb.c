@@ -51,7 +51,7 @@ _gimp_layer_new (gint32                image_ID,
 		 gint                  width,
 		 gint                  height,
 		 GimpImageType         type,
-		 gchar                *name,
+		 const gchar          *name,
 		 gdouble               opacity,
 		 GimpLayerModeEffects  mode)
 {
@@ -530,8 +530,8 @@ gimp_layer_get_name (gint32 layer_ID)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_layer_set_name (gint32  layer_ID,
-		     gchar  *name)
+gimp_layer_set_name (gint32       layer_ID,
+		     const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

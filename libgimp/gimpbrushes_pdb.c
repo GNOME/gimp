@@ -152,7 +152,7 @@ gimp_brushes_get_brush (gint *width,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_brushes_set_brush (gchar *name)
+gimp_brushes_set_brush (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -379,7 +379,7 @@ gimp_brushes_set_paint_mode (GimpLayerModeEffects paint_mode)
  * Returns: The brush name.
  */
 gchar *
-gimp_brushes_get_brush_data (gchar                 *name,
+gimp_brushes_get_brush_data (const gchar           *name,
 			     gdouble               *opacity,
 			     gint                  *spacing,
 			     GimpLayerModeEffects  *paint_mode,

@@ -43,10 +43,10 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_airbrush (gint32   drawable_ID,
-	       gdouble  pressure,
-	       gint     num_strokes,
-	       gdouble *strokes)
+gimp_airbrush (gint32         drawable_ID,
+	       gdouble        pressure,
+	       gint           num_strokes,
+	       const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -84,9 +84,9 @@ gimp_airbrush (gint32   drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_airbrush_default (gint32   drawable_ID,
-		       gint     num_strokes,
-		       gdouble *strokes)
+gimp_airbrush_default (gint32         drawable_ID,
+		       gint           num_strokes,
+		       const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -140,7 +140,7 @@ gimp_clone (gint32         drawable_ID,
 	    gdouble        src_x,
 	    gdouble        src_y,
 	    gint           num_strokes,
-	    gdouble       *strokes)
+	    const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -182,9 +182,9 @@ gimp_clone (gint32         drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_clone_default (gint32   drawable_ID,
-		    gint     num_strokes,
-		    gdouble *strokes)
+gimp_clone_default (gint32         drawable_ID,
+		    gint           num_strokes,
+		    const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -226,7 +226,7 @@ gimp_convolve (gint32            drawable_ID,
 	       gdouble           pressure,
 	       GimpConvolveType  convolve_type,
 	       gint              num_strokes,
-	       gdouble          *strokes)
+	       const gdouble    *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -265,9 +265,9 @@ gimp_convolve (gint32            drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_convolve_default (gint32   drawable_ID,
-		       gint     num_strokes,
-		       gdouble *strokes)
+gimp_convolve_default (gint32         drawable_ID,
+		       gint           num_strokes,
+		       const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -308,7 +308,7 @@ gimp_dodgeburn (gint32             drawable_ID,
 		GimpDodgeBurnType  dodgeburn_type,
 		GimpTransferMode   dodgeburn_mode,
 		gint               num_strokes,
-		gdouble           *strokes)
+		const gdouble     *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -347,9 +347,9 @@ gimp_dodgeburn (gint32             drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_dodgeburn_default (gint32   drawable_ID,
-			gint     num_strokes,
-			gdouble *strokes)
+gimp_dodgeburn_default (gint32         drawable_ID,
+			gint           num_strokes,
+			const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -390,7 +390,7 @@ gimp_dodgeburn_default (gint32   drawable_ID,
 gboolean
 gimp_eraser (gint32                    drawable_ID,
 	     gint                      num_strokes,
-	     gdouble                  *strokes,
+	     const gdouble            *strokes,
 	     GimpBrushApplicationMode  hardness,
 	     GimpPaintApplicationMode  method)
 {
@@ -431,9 +431,9 @@ gimp_eraser (gint32                    drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_eraser_default (gint32   drawable_ID,
-		     gint     num_strokes,
-		     gdouble *strokes)
+gimp_eraser_default (gint32         drawable_ID,
+		     gint           num_strokes,
+		     const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -482,7 +482,7 @@ gboolean
 gimp_paintbrush (gint32                    drawable_ID,
 		 gdouble                   fade_out,
 		 gint                      num_strokes,
-		 gdouble                  *strokes,
+		 const gdouble            *strokes,
 		 GimpPaintApplicationMode  method,
 		 gdouble                   gradient_length)
 {
@@ -533,9 +533,9 @@ gimp_paintbrush (gint32                    drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_paintbrush_default (gint32   drawable_ID,
-			 gint     num_strokes,
-			 gdouble *strokes)
+gimp_paintbrush_default (gint32         drawable_ID,
+			 gint           num_strokes,
+			 const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -573,9 +573,9 @@ gimp_paintbrush_default (gint32   drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_pencil (gint32   drawable_ID,
-	     gint     num_strokes,
-	     gdouble *strokes)
+gimp_pencil (gint32         drawable_ID,
+	     gint           num_strokes,
+	     const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -611,10 +611,10 @@ gimp_pencil (gint32   drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_smudge (gint32   drawable_ID,
-	     gdouble  pressure,
-	     gint     num_strokes,
-	     gdouble *strokes)
+gimp_smudge (gint32         drawable_ID,
+	     gdouble        pressure,
+	     gint           num_strokes,
+	     const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -651,9 +651,9 @@ gimp_smudge (gint32   drawable_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_smudge_default (gint32   drawable_ID,
-		     gint     num_strokes,
-		     gdouble *strokes)
+gimp_smudge_default (gint32         drawable_ID,
+		     gint           num_strokes,
+		     const gdouble *strokes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

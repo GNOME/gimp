@@ -149,7 +149,7 @@ gimp_patterns_get_pattern (gint *width,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_patterns_set_pattern (gchar *name)
+gimp_patterns_set_pattern (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -186,12 +186,12 @@ gimp_patterns_set_pattern (gchar *name)
  * Returns: The pattern name.
  */
 gchar *
-gimp_patterns_get_pattern_data (gchar   *name,
-				gint    *width,
-				gint    *height,
-				gint    *mask_bpp,
-				gint    *length,
-				guint8 **mask_data)
+gimp_patterns_get_pattern_data (const gchar  *name,
+				gint         *width,
+				gint         *height,
+				gint         *mask_bpp,
+				gint         *length,
+				guint8      **mask_data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

@@ -29,12 +29,12 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar*   gimp_gimprc_query           (gchar   *token);
-gboolean gimp_gimprc_set             (gchar   *token,
-				      gchar   *value);
+gchar*   gimp_gimprc_query           (const gchar *token);
+gboolean gimp_gimprc_set             (const gchar *token,
+				      const gchar *value);
 gchar*   gimp_get_default_comment    (void);
-gboolean gimp_get_monitor_resolution (gdouble *xres,
-				      gdouble *yres);
+gboolean gimp_get_monitor_resolution (gdouble     *xres,
+				      gdouble     *yres);
 
 
 G_END_DECLS

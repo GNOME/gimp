@@ -41,9 +41,9 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_brushes_popup (gchar                *brush_callback,
-		    gchar                *popup_title,
-		    gchar                *initial_brush,
+gimp_brushes_popup (const gchar          *brush_callback,
+		    const gchar          *popup_title,
+		    const gchar          *initial_brush,
 		    gdouble               opacity,
 		    gint                  spacing,
 		    GimpLayerModeEffects  paint_mode)
@@ -80,7 +80,7 @@ gimp_brushes_popup (gchar                *brush_callback,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_brushes_close_popup (gchar *brush_callback)
+gimp_brushes_close_popup (const gchar *brush_callback)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -113,8 +113,8 @@ gimp_brushes_close_popup (gchar *brush_callback)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_brushes_set_popup (gchar                *brush_callback,
-			gchar                *brush_name,
+gimp_brushes_set_popup (const gchar          *brush_callback,
+			const gchar          *brush_name,
 			gdouble               opacity,
 			gint                  spacing,
 			GimpLayerModeEffects  paint_mode)

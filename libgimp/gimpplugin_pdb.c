@@ -38,7 +38,7 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_progress_init (gchar *message)
+gimp_progress_init (const gchar *message)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -136,8 +136,8 @@ gimp_temp_PDB_name (void)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_plugin_domain_register (gchar *domain_name,
-			     gchar *domain_path)
+gimp_plugin_domain_register (const gchar *domain_name,
+			     const gchar *domain_path)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -171,7 +171,7 @@ gimp_plugin_domain_register (gchar *domain_name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_plugin_help_register (gchar *help_path)
+gimp_plugin_help_register (const gchar *help_path)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

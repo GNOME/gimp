@@ -139,7 +139,7 @@ gimp_gradients_get_gradient (void)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradients_set_gradient (gchar *name)
+gimp_gradients_set_gradient (const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -216,8 +216,8 @@ gimp_gradients_sample_uniform (gint num_samples)
  * Returns: Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  */
 gdouble *
-gimp_gradients_sample_custom (gint     num_samples,
-			      gdouble *positions)
+gimp_gradients_sample_custom (gint           num_samples,
+			      const gdouble *positions)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -258,10 +258,10 @@ gimp_gradients_sample_custom (gint     num_samples,
  * Returns: The gradient name.
  */
 gchar *
-gimp_gradients_get_gradient_data (gchar    *name,
-				  gint      sample_size,
-				  gint     *width,
-				  gdouble **grad_data)
+gimp_gradients_get_gradient_data (const gchar  *name,
+				  gint          sample_size,
+				  gint         *width,
+				  gdouble     **grad_data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

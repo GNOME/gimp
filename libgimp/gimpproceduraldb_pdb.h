@@ -29,17 +29,17 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_procedural_db_dump          (gchar             *filename);
-gboolean gimp_procedural_db_query         (gchar             *name,
-					   gchar             *blurb,
-					   gchar             *help,
-					   gchar             *author,
-					   gchar             *copyright,
-					   gchar             *date,
-					   gchar             *proc_type,
+gboolean gimp_procedural_db_dump          (const gchar       *filename);
+gboolean gimp_procedural_db_query         (const gchar       *name,
+					   const gchar       *blurb,
+					   const gchar       *help,
+					   const gchar       *author,
+					   const gchar       *copyright,
+					   const gchar       *date,
+					   const gchar       *proc_type,
 					   gint              *num_matches,
 					   gchar           ***procedure_names);
-gboolean _gimp_procedural_db_proc_info    (gchar             *procedure,
+gboolean _gimp_procedural_db_proc_info    (const gchar       *procedure,
 					   gchar            **blurb,
 					   gchar            **help,
 					   gchar            **author,
@@ -48,23 +48,23 @@ gboolean _gimp_procedural_db_proc_info    (gchar             *procedure,
 					   GimpPDBProcType   *proc_type,
 					   gint              *num_args,
 					   gint              *num_values);
-gboolean gimp_procedural_db_proc_arg      (gchar             *procedure,
+gboolean gimp_procedural_db_proc_arg      (const gchar       *procedure,
 					   gint               arg_num,
 					   GimpPDBArgType    *arg_type,
 					   gchar            **arg_name,
 					   gchar            **arg_desc);
-gboolean gimp_procedural_db_proc_val      (gchar             *procedure,
+gboolean gimp_procedural_db_proc_val      (const gchar       *procedure,
 					   gint               val_num,
 					   GimpPDBArgType    *val_type,
 					   gchar            **val_name,
 					   gchar            **val_desc);
-gboolean _gimp_procedural_db_get_data     (gchar             *identifier,
+gboolean _gimp_procedural_db_get_data     (const gchar       *identifier,
 					   gint              *bytes,
 					   guint8           **data);
-gint     gimp_procedural_db_get_data_size (gchar             *identifier);
-gboolean _gimp_procedural_db_set_data     (gchar             *identifier,
+gint     gimp_procedural_db_get_data_size (const gchar       *identifier);
+gboolean _gimp_procedural_db_set_data     (const gchar       *identifier,
 					   gint               bytes,
-					   guint8            *data);
+					   const guint8      *data);
 
 
 G_END_DECLS

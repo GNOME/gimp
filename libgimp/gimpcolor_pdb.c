@@ -277,7 +277,7 @@ gboolean
 gimp_curves_spline (gint32              drawable_ID,
 		    GimpChannelLutType  channel,
 		    gint                num_points,
-		    guint8             *control_pts)
+		    const guint8       *control_pts)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -321,7 +321,7 @@ gboolean
 gimp_curves_explicit (gint32              drawable_ID,
 		      GimpChannelLutType  channel,
 		      gint                num_bytes,
-		      guint8             *curve)
+		      const guint8       *curve)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

@@ -44,7 +44,7 @@
  * Returns: The value associated with the queried token.
  */
 gchar *
-gimp_gimprc_query (gchar *token)
+gimp_gimprc_query (const gchar *token)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -82,8 +82,8 @@ gimp_gimprc_query (gchar *token)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gimprc_set (gchar *token,
-		 gchar *value)
+gimp_gimprc_set (const gchar *token,
+		 const gchar *value)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

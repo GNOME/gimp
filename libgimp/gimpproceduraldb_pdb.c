@@ -42,7 +42,7 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_dump (gchar *filename)
+gimp_procedural_db_dump (const gchar *filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -91,15 +91,15 @@ gimp_procedural_db_dump (gchar *filename)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_query (gchar   *name,
-			  gchar   *blurb,
-			  gchar   *help,
-			  gchar   *author,
-			  gchar   *copyright,
-			  gchar   *date,
-			  gchar   *proc_type,
-			  gint    *num_matches,
-			  gchar ***procedure_names)
+gimp_procedural_db_query (const gchar   *name,
+			  const gchar   *blurb,
+			  const gchar   *help,
+			  const gchar   *author,
+			  const gchar   *copyright,
+			  const gchar   *date,
+			  const gchar   *proc_type,
+			  gint          *num_matches,
+			  gchar       ***procedure_names)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -160,7 +160,7 @@ gimp_procedural_db_query (gchar   *name,
  * Returns: TRUE on success.
  */
 gboolean
-_gimp_procedural_db_proc_info (gchar            *procedure,
+_gimp_procedural_db_proc_info (const gchar      *procedure,
 			       gchar           **blurb,
 			       gchar           **help,
 			       gchar           **author,
@@ -224,7 +224,7 @@ _gimp_procedural_db_proc_info (gchar            *procedure,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_proc_arg (gchar           *procedure,
+gimp_procedural_db_proc_arg (const gchar     *procedure,
 			     gint             arg_num,
 			     GimpPDBArgType  *arg_type,
 			     gchar          **arg_name,
@@ -276,7 +276,7 @@ gimp_procedural_db_proc_arg (gchar           *procedure,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_procedural_db_proc_val (gchar           *procedure,
+gimp_procedural_db_proc_val (const gchar     *procedure,
 			     gint             val_num,
 			     GimpPDBArgType  *val_type,
 			     gchar          **val_name,
@@ -326,9 +326,9 @@ gimp_procedural_db_proc_val (gchar           *procedure,
  * Returns: TRUE on success.
  */
 gboolean
-_gimp_procedural_db_get_data (gchar   *identifier,
-			      gint    *bytes,
-			      guint8 **data)
+_gimp_procedural_db_get_data (const gchar  *identifier,
+			      gint         *bytes,
+			      guint8      **data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -370,7 +370,7 @@ _gimp_procedural_db_get_data (gchar   *identifier,
  * Returns: The number of bytes in the data.
  */
 gint
-gimp_procedural_db_get_data_size (gchar *identifier)
+gimp_procedural_db_get_data_size (const gchar *identifier)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -404,9 +404,9 @@ gimp_procedural_db_get_data_size (gchar *identifier)
  * Returns: TRUE on success.
  */
 gboolean
-_gimp_procedural_db_set_data (gchar  *identifier,
-			      gint    bytes,
-			      guint8 *data)
+_gimp_procedural_db_set_data (const gchar  *identifier,
+			      gint          bytes,
+			      const guint8 *data)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

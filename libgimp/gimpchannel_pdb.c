@@ -47,12 +47,12 @@
  * Returns: The newly created channel.
  */
 gint32
-_gimp_channel_new (gint32   image_ID,
-		   gint     width,
-		   gint     height,
-		   gchar   *name,
-		   gdouble  opacity,
-		   GimpRGB *color)
+_gimp_channel_new (gint32         image_ID,
+		   gint           width,
+		   gint           height,
+		   const gchar   *name,
+		   gdouble        opacity,
+		   const GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -223,8 +223,8 @@ gimp_channel_get_name (gint32 channel_ID)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_channel_set_name (gint32  channel_ID,
-		       gchar  *name)
+gimp_channel_set_name (gint32       channel_ID,
+		       const gchar *name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -480,8 +480,8 @@ gimp_channel_get_color (gint32   channel_ID,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_channel_set_color (gint32   channel_ID,
-			GimpRGB *color)
+gimp_channel_set_color (gint32         channel_ID,
+			const GimpRGB *color)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

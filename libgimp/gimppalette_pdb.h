@@ -29,10 +29,10 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_palette_get_foreground     (GimpRGB *foreground);
-gboolean gimp_palette_get_background     (GimpRGB *background);
-gboolean gimp_palette_set_foreground     (GimpRGB *foreground);
-gboolean gimp_palette_set_background     (GimpRGB *background);
+gboolean gimp_palette_get_foreground     (GimpRGB       *foreground);
+gboolean gimp_palette_get_background     (GimpRGB       *background);
+gboolean gimp_palette_set_foreground     (const GimpRGB *foreground);
+gboolean gimp_palette_set_background     (const GimpRGB *background);
 gboolean gimp_palette_set_default_colors (void);
 gboolean gimp_palette_swap_colors        (void);
 

@@ -44,8 +44,8 @@
  */
 gint32
 gimp_file_load (GimpRunMode  run_mode,
-		gchar       *filename,
-		gchar       *raw_filename)
+		const gchar *filename,
+		const gchar *raw_filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -89,8 +89,8 @@ gboolean
 gimp_file_save (GimpRunMode  run_mode,
 		gint32       image_ID,
 		gint32       drawable_ID,
-		gchar       *filename,
-		gchar       *raw_filename)
+		const gchar *filename,
+		const gchar *raw_filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -124,7 +124,7 @@ gimp_file_save (GimpRunMode  run_mode,
  * Returns: The new temp filename.
  */
 gchar *
-gimp_temp_name (gchar *extension)
+gimp_temp_name (const gchar *extension)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -158,10 +158,10 @@ gimp_temp_name (gchar *extension)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_register_magic_load_handler (gchar *procedure_name,
-				  gchar *extensions,
-				  gchar *prefixes,
-				  gchar *magics)
+gimp_register_magic_load_handler (const gchar *procedure_name,
+				  const gchar *extensions,
+				  const gchar *prefixes,
+				  const gchar *magics)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -196,9 +196,9 @@ gimp_register_magic_load_handler (gchar *procedure_name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_register_load_handler (gchar *procedure_name,
-			    gchar *extensions,
-			    gchar *prefixes)
+gimp_register_load_handler (const gchar *procedure_name,
+			    const gchar *extensions,
+			    const gchar *prefixes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -232,9 +232,9 @@ gimp_register_load_handler (gchar *procedure_name,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_register_save_handler (gchar *procedure_name,
-			    gchar *extensions,
-			    gchar *prefixes)
+gimp_register_save_handler (const gchar *procedure_name,
+			    const gchar *extensions,
+			    const gchar *prefixes)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

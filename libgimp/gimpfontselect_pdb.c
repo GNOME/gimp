@@ -38,9 +38,9 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_fonts_popup (gchar *font_callback,
-		  gchar *popup_title,
-		  gchar *initial_font)
+gimp_fonts_popup (const gchar *font_callback,
+		  const gchar *popup_title,
+		  const gchar *initial_font)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -71,7 +71,7 @@ gimp_fonts_popup (gchar *font_callback,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_fonts_close_popup (gchar *font_callback)
+gimp_fonts_close_popup (const gchar *font_callback)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -101,8 +101,8 @@ gimp_fonts_close_popup (gchar *font_callback)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_fonts_set_popup (gchar *font_callback,
-		      gchar *font_name)
+gimp_fonts_set_popup (const gchar *font_callback,
+		      const gchar *font_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

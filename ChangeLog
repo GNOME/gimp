@@ -1,3 +1,9 @@
+2003-07-02  Manish Singh  <yosh@gimp.org>
+
+	* tools/pdbgen/lib.pl: constify input strings, colors, and arrays
+
+	* libgimp/*_pdb.[ch]: regenerated
+
 2003-07-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins: more plug-ins adapted to libgimp changes.

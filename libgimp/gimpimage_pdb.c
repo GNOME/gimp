@@ -1156,9 +1156,9 @@ _gimp_image_get_cmap (gint32  image_ID,
  * Returns: TRUE on success.
  */
 gboolean
-_gimp_image_set_cmap (gint32  image_ID,
-		      gint    num_bytes,
-		      guint8 *cmap)
+_gimp_image_set_cmap (gint32        image_ID,
+		      gint          num_bytes,
+		      const guint8 *cmap)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -2073,8 +2073,8 @@ gimp_image_get_filename (gint32 image_ID)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_image_set_filename (gint32  image_ID,
-			 gchar  *filename)
+gimp_image_set_filename (gint32       image_ID,
+			 const gchar *filename)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

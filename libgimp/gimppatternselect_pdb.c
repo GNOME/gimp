@@ -38,9 +38,9 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_patterns_popup (gchar *pattern_callback,
-		     gchar *popup_title,
-		     gchar *initial_pattern)
+gimp_patterns_popup (const gchar *pattern_callback,
+		     const gchar *popup_title,
+		     const gchar *initial_pattern)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -71,7 +71,7 @@ gimp_patterns_popup (gchar *pattern_callback,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_patterns_close_popup (gchar *pattern_callback)
+gimp_patterns_close_popup (const gchar *pattern_callback)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -101,8 +101,8 @@ gimp_patterns_close_popup (gchar *pattern_callback)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_patterns_set_popup (gchar *pattern_callback,
-			 gchar *pattern_name)
+gimp_patterns_set_popup (const gchar *pattern_callback,
+			 const gchar *pattern_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

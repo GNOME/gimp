@@ -48,11 +48,11 @@ gboolean gimp_invert              (gint32              drawable_ID);
 gboolean gimp_curves_spline       (gint32              drawable_ID,
 				   GimpChannelLutType  channel,
 				   gint                num_points,
-				   guint8             *control_pts);
+				   const guint8       *control_pts);
 gboolean gimp_curves_explicit     (gint32              drawable_ID,
 				   GimpChannelLutType  channel,
 				   gint                num_bytes,
-				   guint8             *curve);
+				   const guint8       *curve);
 gboolean gimp_color_balance       (gint32              drawable_ID,
 				   GimpTransferMode    transfer_mode,
 				   gboolean            preserve_lum,

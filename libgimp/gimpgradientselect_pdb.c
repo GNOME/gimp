@@ -39,10 +39,10 @@
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradients_popup (gchar *gradient_callback,
-		      gchar *popup_title,
-		      gchar *initial_gradient,
-		      gint   sample_size)
+gimp_gradients_popup (const gchar *gradient_callback,
+		      const gchar *popup_title,
+		      const gchar *initial_gradient,
+		      gint         sample_size)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -74,7 +74,7 @@ gimp_gradients_popup (gchar *gradient_callback,
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradients_close_popup (gchar *gradient_callback)
+gimp_gradients_close_popup (const gchar *gradient_callback)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
@@ -104,8 +104,8 @@ gimp_gradients_close_popup (gchar *gradient_callback)
  * Returns: TRUE on success.
  */
 gboolean
-gimp_gradients_set_popup (gchar *gradient_callback,
-			  gchar *gradient_name)
+gimp_gradients_set_popup (const gchar *gradient_callback,
+			  const gchar *gradient_name)
 {
   GimpParam *return_vals;
   gint nreturn_vals;

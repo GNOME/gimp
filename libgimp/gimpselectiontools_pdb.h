@@ -30,7 +30,7 @@ G_BEGIN_DECLS
 
 
 gboolean gimp_by_color_select (gint32          drawable_ID,
-			       GimpRGB        *color,
+			       const GimpRGB  *color,
 			       gint            threshold,
 			       GimpChannelOps  operation,
 			       gboolean        antialias,
@@ -48,7 +48,7 @@ gboolean gimp_ellipse_select  (gint32          image_ID,
 			       gdouble         feather_radius);
 gboolean gimp_free_select     (gint32          image_ID,
 			       gint            num_segs,
-			       gdouble        *segs,
+			       const gdouble  *segs,
 			       GimpChannelOps  operation,
 			       gboolean        antialias,
 			       gboolean        feather,
