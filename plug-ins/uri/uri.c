@@ -70,24 +70,39 @@ query (void)
     { GIMP_PDB_IMAGE, "image", "Output image" }
   };
 
-  gimp_install_procedure ("file_uri_load",
-                          "loads files given an URI",
-                          "You need to have GNU Wget installed.",
-                          "Spencer Kimball & Peter Mattis",
-                          "Spencer Kimball & Peter Mattis",
-                          "1995-1997",
-                          N_("URI"),
-			  NULL,
-                          GIMP_PLUGIN,
-                          G_N_ELEMENTS (load_args),
-                          G_N_ELEMENTS (load_return_vals),
-                          load_args, load_return_vals);
+  GError *error = NULL;
 
-  gimp_plugin_icon_register ("file_uri_load",
-                             GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
-  gimp_register_load_handler ("file_uri_load",
-			      "",
-			      uri_backend_get_load_protocols ());
+  if (! uri_backend_init (&error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+
+      return;
+    }
+
+  if (uri_backend_get_load_protocols ())
+    {
+      gimp_install_procedure ("file_uri_load",
+                              "loads files given an URI",
+                              "You need to have GNU Wget installed.",
+                              "Spencer Kimball & Peter Mattis",
+                              "Spencer Kimball & Peter Mattis",
+                              "1995-1997",
+                              N_("URI"),
+                              NULL,
+                              GIMP_PLUGIN,
+                              G_N_ELEMENTS (load_args),
+                              G_N_ELEMENTS (load_return_vals),
+                              load_args, load_return_vals);
+
+      gimp_plugin_icon_register ("file_uri_load",
+                                 GIMP_ICON_TYPE_STOCK_ID, GIMP_STOCK_WEB);
+      gimp_register_load_handler ("file_uri_load",
+                                  "",
+                                  uri_backend_get_load_protocols ());
+    }
+
+  uri_backend_shutdown ();
 }
 
 static void
@@ -97,10 +112,11 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam  values[2];
-  GimpRunMode       run_mode;
-  GimpPDBStatusType status = GIMP_PDB_EXECUTION_ERROR;
-  gint32            image_ID;
+  static GimpParam   values[2];
+  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_EXECUTION_ERROR;
+  gint32             image_ID;
+  GError            *error = NULL;
 
   run_mode = param[0].data.d_int32;
 
@@ -110,7 +126,15 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = status;
 
-  if (strcmp (name, "file_uri_load") == 0)
+  if (! uri_backend_init (&error))
+    {
+      g_message (error->message);
+      g_clear_error (&error);
+
+      return;
+    }
+
+  if (! strcmp (name, "file_uri_load") && uri_backend_get_load_protocols ())
     {
       image_ID = load_image (param[2].data.d_string, run_mode);
 
@@ -127,6 +151,8 @@ run (const gchar      *name,
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
+
+  uri_backend_shutdown ();
 
   values[0].data.d_status = status;
 }

@@ -41,6 +41,17 @@
 #define BUFSIZE 1024
 
 
+gboolean
+uri_backend_init (GError **error)
+{
+  return TRUE;
+}
+
+void
+uri_backend_shutdown (void)
+{
+}
+
 const gchar *
 uri_backend_get_load_protocols (void)
 {

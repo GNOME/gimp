@@ -35,11 +35,76 @@ static gboolean   copy_uri (const gchar  *src_uri,
                             GError      **error);
 
 
+/*  private variables  */
+
+static gchar *supported_protocols = NULL;
+
+
 /*  public functions  */
+
+gboolean
+uri_backend_init (GError **error)
+{
+  if (! gnome_vfs_init ())
+    {
+      g_set_error (error, 0, 0, "Could not initialize GnomeVFS");
+      return FALSE;
+    }
+
+  return TRUE;
+}
+
+void
+uri_backend_shutdown (void)
+{
+  gnome_vfs_shutdown ();
+}
 
 const gchar *
 uri_backend_get_load_protocols (void)
 {
+  if (! supported_protocols)
+    {
+      static const gchar *protocols[] =
+      {
+        "http:",
+        "https:",
+        "ftp:",
+        "sftp:",
+        "ssh:",
+        "smb:",
+        "dav:",
+        "davs:"
+      };
+
+      GString *string = g_string_new (NULL);
+      gint     i;
+
+      for (i = 0; i < G_N_ELEMENTS (protocols); i++)
+        {
+          gchar       *uri;
+          GnomeVFSURI *vfs_uri;
+
+          uri = g_strdup_printf ("%s//foo/bar.xcf", protocols[i]);
+
+          vfs_uri = gnome_vfs_uri_new (uri);
+
+          if (vfs_uri)
+            {
+              if (string->len > 0)
+                g_string_append_c (string, ',');
+
+              g_string_append (string, protocols[i]);
+
+              gnome_vfs_uri_unref (vfs_uri);
+            }
+
+          g_free (uri);
+        }
+
+      supported_protocols = g_string_free (string, FALSE);
+    }
+
   return "http:,https:,ftp:,sftp:,ssh:,smb:,dav:,davs:";
 }
 
@@ -55,8 +120,6 @@ uri_backend_load_image (const gchar  *uri,
   dest_uri = g_filename_to_uri (tmpname, NULL, NULL);
   success = copy_uri (uri, dest_uri, error);
   g_free (dest_uri);
-
-  gnome_vfs_shutdown ();
 
   return success;
 }
@@ -77,12 +140,6 @@ copy_uri (const gchar  *src_uri,
   guchar            buffer[BUFSIZE];
   GnomeVFSResult    result;
   gchar            *message;
-
-  if (! gnome_vfs_init ())
-    {
-      g_set_error (error, 0, 0, "Could not initialize GnomeVFS");
-      return FALSE;
-    }
 
   gimp_progress_init (_("Connecting to server..."));
 
@@ -121,16 +178,14 @@ copy_uri (const gchar  *src_uri,
     }
 
   if (file_size > 0)
-    {
-      message = g_strdup_printf (_("Downloading %llu bytes of image data..."),
-                                 file_size);
-      gimp_progress_init (message);
-      g_free (message);
-    }
+    message = g_strdup_printf (_("Downloading %llu bytes of image data..."),
+                               file_size);
   else
-    {
-      gimp_progress_init (_("Downloaded 0 bytes of image data"));
-    }
+    message = g_strdup_printf (_("Downloaded %llu bytes of image data"),
+                               (GnomeVFSFileSize) 0);
+
+  gimp_progress_init (message);
+  g_free (message);
 
   while (TRUE)
     {
@@ -193,4 +248,3 @@ copy_uri (const gchar  *src_uri,
 
   return TRUE;
 }
-

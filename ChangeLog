@@ -1,3 +1,19 @@
+2005-02-07  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/uri/uri-backend.h: added backend methods
+	uri_backend_init() and uri_backend_shutdown().
+
+	* plug-ins/uri/uri.c: call them around using other backend
+	functions (both in query() and run()).
+
+	* plug-ins/uri/uri-backend-gnomevfs.c: moved init()/shutdown() of
+	GnomeVFS into the new backend methods. Create the list of
+	supported protocols dynamically. Get rid of one translatable
+	string.
+
+	* plug-ins/uri/uri-backend-wget.c: implement the new methods as
+	empty stubs which always succeed.
+
 2005-02-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/Makefile.am
