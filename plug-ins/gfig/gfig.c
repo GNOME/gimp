@@ -108,7 +108,7 @@ extern void * gdk_root_parent;
 
 /***** Magic numbers *****/
 
-#define PREVIEW_SIZE 650
+#define PREVIEW_SIZE 400
 #define SCALE_WIDTH  120
 
 #define MIN_GRID 10
@@ -548,8 +548,7 @@ static GtkWidget *delete_frame_to_freeze; /* Top preview frame window */
 static GtkWidget *fade_out_hbox;   /* Fade out widget in brush page */
 static GtkWidget *pressure_hbox;   /* Pressure widget in brush page */
 static GtkWidget *pencil_hbox;     /* Dummy widget in brush page */
-static GtkWidget *x_pos_label;     /* X pos marker */
-static GtkWidget *y_pos_label;     /* Y pos marker */
+static GtkWidget *pos_label;       /* XY pos marker */
 static GtkWidget *brush_page_widget; /* Widget for the brush part of notebook */
 static GtkWidget *select_page_widget; /* Widget for the selection part
 				       * of notebook */
@@ -3338,8 +3337,8 @@ options_page (void)
 		      (gpointer) 1);
   gtk_widget_show (toggle); 
 
-  toggle = gtk_check_button_new_with_label (_("Hide Cntr Pnts"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 1, 2, 4, 5,
+  toggle = gtk_check_button_new_with_label (_("Hide Control Points"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 1, 3, 4, 5,
 		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_signal_connect (GTK_OBJECT (toggle), "toggled",
 		      GTK_SIGNAL_FUNC (gimp_toggle_button_update),
@@ -3586,8 +3585,7 @@ gfig_pos_enable (GtkWidget *widget,
 		 gpointer   data)
 {
   gint enable = selvals.showpos;
-  gtk_widget_set_sensitive (GTK_WIDGET (x_pos_label), enable);
-  gtk_widget_set_sensitive (GTK_WIDGET (y_pos_label), enable);
+  gtk_widget_set_sensitive (GTK_WIDGET (pos_label), enable);
 }
 
 static void
@@ -3598,19 +3596,8 @@ gfig_pos_update_labels (gpointer data)
   /*gtk_idle_remove (pos_tag);*/
   pos_tag = -1;
 
-  if (x_pos_val < 0)
-    g_snprintf (buf, sizeof (buf), " X:%.3d ", x_pos_val);
-  else
-    g_snprintf (buf, sizeof (buf), " X:  %.3d ", x_pos_val);
-
-  gtk_label_set_text (GTK_LABEL (x_pos_label), buf);
-
-  if (y_pos_val < 0)
-    g_snprintf (buf, sizeof (buf), " Y:%.3d ", y_pos_val);
-  else
-    g_snprintf (buf, sizeof (buf), " Y:  %.3d ", y_pos_val);
-
-  gtk_label_set_text (GTK_LABEL (y_pos_label), buf);
+  g_snprintf (buf, sizeof (buf), "%d, %d", x_pos_val, y_pos_val);
+  gtk_label_set_text (GTK_LABEL (pos_label), buf);
 }
 
 static void
@@ -3651,7 +3638,7 @@ gfig_obj_size_label (void)
   GtkWidget *hbox;
   gchar buf[256];
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (TRUE, 6);
 
   /* Position labels */
   label = gtk_label_new ("Size: ");
@@ -3678,35 +3665,22 @@ gfig_pos_labels (void)
 {
   GtkWidget *label;
   GtkWidget *hbox;
-  GtkWidget *vbox;
   gchar      buf[256];
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 1);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_widget_show (hbox);
 
   /* Position labels */
-  label = gtk_label_new (_("XY Pos:"));
+  label = gtk_label_new (_("XY Position:"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
-  gtk_widget_show (vbox);
+  pos_label = gtk_label_new ("");
+  gtk_box_pack_start (GTK_BOX (hbox), pos_label, FALSE, FALSE, 0);
+  gtk_widget_show (pos_label);
 
-  x_pos_label = gtk_label_new ("");
-  gtk_widget_show (x_pos_label);
-  gtk_container_add (GTK_CONTAINER (vbox), x_pos_label);
-
-  y_pos_label = gtk_label_new ("");
-  gtk_widget_show (y_pos_label);
-  gtk_container_add (GTK_CONTAINER (vbox), y_pos_label);
-
-  g_snprintf (buf, sizeof (buf), " X:  %.3d ", 0);
-  gtk_label_set_text (GTK_LABEL (x_pos_label), buf);
-
-  g_snprintf (buf, sizeof (buf), " Y:  %.3d ", 0);
-  gtk_label_set_text (GTK_LABEL (y_pos_label), buf);
+  g_snprintf (buf, sizeof (buf), "%d, %d", 0, 0);
+  gtk_label_set_text (GTK_LABEL (pos_label), buf);
 
   return hbox;
 }
@@ -3718,14 +3692,15 @@ make_pos_info (void)
   GtkWidget *hbox;
   GtkWidget *label;
 
-  xframe = gtk_frame_new (_("Obj Details"));
+  xframe = gtk_frame_new (_("Object Details"));
 
-  hbox = gtk_hbox_new (TRUE, 1);
+  hbox = gtk_hbox_new (TRUE, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
   gtk_container_add (GTK_CONTAINER (xframe), hbox);  
 
   /* Add labels */
   label = gfig_pos_labels ();
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
   gfig_pos_enable (NULL, NULL);
 
 #if 0
@@ -3750,25 +3725,29 @@ make_status (void)
 
   gtk_frame_set_shadow_type (GTK_FRAME (xframe), GTK_SHADOW_ETCHED_IN);
   table = gtk_table_new (6, 6, FALSE);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 1, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (table), 2);
 
   label = gtk_label_new (_("Draw Name:"));
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 0, 1,
-		    0, GTK_FILL, 0, 0);
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   label = gtk_label_new (_("Filename:"));
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_RIGHT);
+  gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), label, 1, 2, 1, 2,
-		    0, GTK_FILL, 0, 0);
+		    GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
   status_label_dname = gtk_label_new (_("(none)"));
+  gtk_misc_set_alignment (GTK_MISC (status_label_dname), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), status_label_dname, 2, 4, 0, 1,
 		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (status_label_dname);
 
   status_label_fname = gtk_label_new (_("(none)"));
+  gtk_misc_set_alignment (GTK_MISC (status_label_fname), 0.0, 0.5);
   gtk_table_attach (GTK_TABLE (table), status_label_fname, 2, 4, 1, 2,
 		    GTK_FILL | GTK_EXPAND, 0, 0, 0);
   gtk_widget_show (status_label_fname);

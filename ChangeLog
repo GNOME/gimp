@@ -1,3 +1,8 @@
+Sun Mar 12 04:26:41 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* plug-ins/gfig.c: reduced the preview_size and tweaked the dialog 
+	a bit. Gfig should now be useable on 800x600. (adresses bug #5008)
+
 Sun Mar 12 02:25:58 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* app/color_notebook.c: connect the wm close event to the Close
