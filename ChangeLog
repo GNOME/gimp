@@ -1,3 +1,7 @@
+Fri Sep 10 00:18:17 EDT 1999 Adrian Likins <adrian@gimp.org>
+
+	* app/paintbrush.c:  Make gradient brushes work again.
+
 1999-09-09  Kelly Lynn Martin  <kelly@poverty.bloomington.in.us>
 
 	* plug-ins/FractalExplorer/Callbacks.[ch]

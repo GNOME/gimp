@@ -460,11 +460,12 @@ paintbrush_motion (PaintCore            *paint_core,
 	      col[3] = a * 255.0;
 	      paint_appl_mode = INCREMENTAL;
 	    }
-	  else
+	  else if(!gradient_length) 
 	    {
 	      gimage_get_foreground (gimage, drawable, col);
 	      col[area->bytes - 1] = OPAQUE_OPACITY;
 	    }
+	 
 
 	  color_pixels (temp_buf_data (area), col,
 			area->width * area->height, area->bytes);
