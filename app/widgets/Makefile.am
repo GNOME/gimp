@@ -1,8 +1,25 @@
 ## Process this file with automake to produce Makefile.in
 
+AM_CPPFLAGS = @STRIP_BEGIN@ \
+	-DG_LOG_DOMAIN=\"Gimp-Widgets\"	\
+	@GIMP_THREAD_FLAGS@ 		\
+	@GIMP_MP_FLAGS@			\
+@STRIP_END@
+
+INCLUDES = @STRIP_BEGIN@ \
+	-I$(top_builddir)		\
+	-I$(top_srcdir)			\
+	-I$(top_builddir)/app		\
+	-I$(top_srcdir)/app		\
+	$(GTK_CFLAGS)			\
+	$(PANGOFT2_CFLAGS)		\
+	-I$(includedir)			\
+@STRIP_END@
+
 noinst_LIBRARIES = libappwidgets.a
 
-libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
+libappwidgets_a_sources = @STRIP_BEGIN@ \
+	widgets-enums.h			\
 	widgets-types.h			\
 	gimpbrusheditor.c		\
 	gimpbrusheditor.h		\
@@ -124,18 +141,26 @@ libappwidgets_a_SOURCES = @STRIP_BEGIN@ \
 	gimpconstrainedhwrapbox.h	\
 @STRIP_END@
 
-AM_CPPFLAGS = @STRIP_BEGIN@ \
-	-DG_LOG_DOMAIN=\"Gimp-Widgets\"	\
-	@GIMP_THREAD_FLAGS@ 		\
-	@GIMP_MP_FLAGS@			\
+libappwidgets_a_built_sources = @STRIP_BEGIN@ \
+	widgets-enums.c			\
 @STRIP_END@
 
-INCLUDES = @STRIP_BEGIN@ \
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(GTK_CFLAGS)			\
-	$(PANGOFT2_CFLAGS)		\
-	-I$(includedir)			\
-@STRIP_END@
+libappwidgets_a_SOURCES = $(libappwidgets_a_built_sources) $(libappwidgets_a_sources)
+
+#
+# rules to generate built sources
+#
+# setup autogeneration dependancies
+gen_sources = xgen-wec
+CLEANFILES = $(gen_sources)
+
+$(srcdir)/widgets-enums.c: $(srcdir)/widgets-enums.h
+	$(GLIB_MKENUMS) \
+		--fhead "#include <gtk/gtk.h>\n#include \"widgets-enums.h\"" \
+		--fprod "\n/* enumerations from \"@filename@\" */" \
+		--vhead "\nstatic const GEnumValue @enum_name@_enum_values[] =\n{" \
+		--vprod "  { @VALUENAME@, \"@VALUENAME@\", \"@valuenick@\" }," \
+		--vtail "  { 0, NULL, NULL }\n};\n\nGType\n@enum_name@_get_type (void)\n{\n  static GType enum_type = 0;\n\n  if (!enum_type)\n    enum_type = g_enum_register_static (\"@EnumName@\", @enum_name@_enum_values);\n\n  return enum_type;\n}\n" \
+		$(srcdir)/widgets-enums.h > xgen-wec \
+	&& cp xgen-wec $(@F) \
+	&& rm -f xgen-wec

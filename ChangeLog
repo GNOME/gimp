@@ -1,3 +1,17 @@
+2002-03-13  Sven Neumann  <sven@gimp.org>
+
+	* app/core/core-enums.h: register GimpChannelType and 
+	GimpSelectionControl enums with the type system.
+
+	* app/core/gimpimage.c: use them in signal declarations.
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-enums.h
+	* app/widgets/widgets-types.h: split enums into it's own file and
+	generate widgets-enums.c. Register GimpZoomType enum.
+
+	* app/widgets/gimpnavigationpreview.c: use GIMP_TYPE_ZOOM_TYPE.
+
 2002-03-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimpguiconfig.[ch]: removed "global_paint_options".

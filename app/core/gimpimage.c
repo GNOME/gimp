@@ -241,9 +241,9 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, component_visibility_changed),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
+		  gimp_marshal_VOID__ENUM,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+		  GIMP_TYPE_CHANNEL_TYPE);
 
   gimp_image_signals[COMPONENT_ACTIVE_CHANGED] =
     g_signal_new ("component_active_changed",
@@ -251,9 +251,9 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, component_active_changed),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
+		  gimp_marshal_VOID__ENUM,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+		  GIMP_TYPE_CHANNEL_TYPE);
 
   gimp_image_signals[MASK_CHANGED] =
     g_signal_new ("mask_changed",
@@ -297,9 +297,9 @@ gimp_image_class_init (GimpImageClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpImageClass, selection_control),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
+		  gimp_marshal_VOID__ENUM,
 		  G_TYPE_NONE, 1,
-                  G_TYPE_INT);
+                  GIMP_TYPE_SELECTION_CONTROL);
 
   gimp_image_signals[CLEAN] =
     g_signal_new ("clean",

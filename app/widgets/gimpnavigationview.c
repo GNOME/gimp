@@ -133,9 +133,9 @@ gimp_navigation_preview_class_init (GimpNavigationPreviewClass *klass)
 		  G_SIGNAL_RUN_FIRST,
 		  G_STRUCT_OFFSET (GimpNavigationPreviewClass, zoom),
 		  NULL, NULL,
-		  gimp_marshal_VOID__INT,
+		  gimp_marshal_VOID__ENUM,
 		  G_TYPE_NONE, 1,
-		  G_TYPE_INT);
+		  GIMP_TYPE_ZOOM_TYPE);
 
   preview_signals[SCROLL] =
     g_signal_new ("scroll",

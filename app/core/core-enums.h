@@ -67,11 +67,25 @@ typedef enum  /*< pdb-skip >*/
 } GimpPreviewSize;
 
 
-/*
- * non-registered enums; register them if needed
- */
+#define GIMP_TYPE_SELECTION_CONTROL (gimp_selection_control_get_type ())
 
-typedef enum  /*< skip >*/
+GType gimp_selection_control_get_type (void) G_GNUC_CONST;
+
+typedef enum  /*< pdb-skip >*/
+{
+  GIMP_SELECTION_OFF,
+  GIMP_SELECTION_LAYER_OFF,
+  GIMP_SELECTION_ON,
+  GIMP_SELECTION_PAUSE,
+  GIMP_SELECTION_RESUME
+} GimpSelectionControl;
+
+
+#define GIMP_TYPE_CHANNEL_TYPE (gimp_channel_type_get_type ())
+
+GType gimp_channel_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
 {
   GIMP_RED_CHANNEL,
   GIMP_GREEN_CHANNEL,
@@ -80,6 +94,11 @@ typedef enum  /*< skip >*/
   GIMP_INDEXED_CHANNEL,
   GIMP_ALPHA_CHANNEL
 } GimpChannelType;
+
+
+/*
+ * non-registered enums; register them if needed
+ */
 
 typedef enum  /*< skip >*/
 {
@@ -137,15 +156,6 @@ typedef enum  /*< skip >*/
   GIMP_INDEXEDA_IMAGE
 } GimpImageType;
 
-typedef enum   /*< pdb-skip >*/ /*< skip >*/
-{
-  GIMP_SELECTION_OFF,
-  GIMP_SELECTION_LAYER_OFF,
-  GIMP_SELECTION_ON,
-  GIMP_SELECTION_PAUSE,
-  GIMP_SELECTION_RESUME
-} GimpSelectionControl;
-
 typedef enum  /*< skip >*/
 {
   GIMP_SHADOWS,
@@ -153,7 +163,7 @@ typedef enum  /*< skip >*/
   GIMP_HIGHLIGHTS
 } GimpTransferMode;
 
-typedef enum   /*< pdb-skip >*/ /*< skip >*/
+typedef enum  /*< pdb-skip >*/ /*< skip >*/
 {
   GIMP_TRANSFORM_FORWARD,
   GIMP_TRANSFORM_BACKWARD
