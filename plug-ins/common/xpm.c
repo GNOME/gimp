@@ -207,10 +207,10 @@ run (gchar   *name,
   values[0].type = PARAM_STATUS;
   values[0].data.d_status = STATUS_EXECUTION_ERROR;
 
-  INIT_I18N();
-
   if (strcmp (name, "file_xpm_load") == 0)
     {
+      INIT_I18N();
+
       image_ID = load_image (param[1].data.d_string);
 
       if (image_ID != -1)
@@ -226,6 +226,8 @@ run (gchar   *name,
     }
   else if (strcmp (name, "file_xpm_save") == 0)
     {
+      INIT_I18N_UI();
+
       init_gtk ();
 
       image_ID    = param[1].data.d_int32;

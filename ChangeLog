@@ -1,3 +1,8 @@
+2000-03-27  Shirasaki Yasuhiro  <yasuhiro@gnome.gr.jp>
+
+	* plug-ins/common/xpm.c: INIT_I18N_UI() instead of INIT_I18N()
+	for save dialog.
+
 2000-03-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/transform_core.c: the button_press and cursor_update
