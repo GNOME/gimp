@@ -1,9 +1,12 @@
 2002-03-30  Tor Lillqvist  <tml@iki.fi>
 
-	* libgimpbase/Makefile.am: Additions for Win32: Use
-	-no-undefined. Use the gimpbase.def file. Produce MS style import
+	* libgimpbase/Makefile.am
+	* libgimpcolor/Makefile.am: Additions for Win32: Use
+	-no-undefined. Use the .def file. Produce MS style import
 	library if possible. Install (and uninstall) import
-	libraries. Pass definition of PREFIX in CPPFLAGS.
+	libraries.
+
+	* libgimpbase/Makefile.am: Pass definition of PREFIX in CPPFLAGS.
 
 	* libgimpbase/gimpbase.def: Do export gimp_signal_private.
 
@@ -25,7 +28,8 @@
 	call g_error(), thus requiring that calls of this are enclosed with
 	#ifdef G_OS_UNIX?
 
-	* libgimpbase/makefile.mingw.in: Add comment that it is seriously
+	* libgimpbase/makefile.mingw.in
+	* libgimpcolor/makefile.mingw.in: Add comment that it is seriously
 	out-of-date.
 
 	* libgimpbase/makefile.msc: Do compile gimpsignal.c.

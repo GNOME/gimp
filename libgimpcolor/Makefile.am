@@ -1,5 +1,45 @@
 ## Process this file with automake to produce Makefile.in
 
+if PLATFORM_WIN32
+no_undefined = -no-undefined
+endif
+
+if PLATFORM_WIN32
+else
+libm = -lm
+endif
+
+if OS_WIN32
+gimpcolor_def = gimpcolor.def
+libgimpcolor_export_symbols = -export-symbols gimpcolor.def
+
+install-libtool-import-lib:
+	$(INSTALL) .libs/libgimpcolor-1.3.dll.a $(DESTDIR)$(libdir)
+
+uninstall-libtool-import-lib:
+	-rm $(DESTDIR)$(libdir)/libgimpcolor-1.3.dll.a
+else
+install-libtool-import-lib:
+uninstall-libtool-import-lib:
+endif
+
+if MS_LIB_AVAILABLE
+noinst_DATA = gimpcolor-1.3.lib
+
+install-ms-lib:
+	$(INSTALL) gimpcolor-1.3.lib $(DESTDIR)$(libdir)
+
+uninstall-ms-lib:
+	-rm $(DESTDIR)$(libdir)/gimpcolor-1.3.lib
+
+gimpcolor-1.3.lib: gimpcolor.def
+	lib -name:libgimpcolor-1.3-@LT_CURRENT_MINUS_AGE@.dll -def:gimpcolor.def -out:$@
+
+else
+install-ms-lib:
+uninstall-ms-lib:
+endif
+
 libgimpcolorincludedir = $(includedir)/gimp-$(LT_RELEASE)/libgimpcolor
 
 AM_CPPFLAGS = @STRIP_BEGIN@ \
@@ -53,6 +93,14 @@ EXTRA_HEADERS =
 
 libgimpcolor_1_3_la_LDFLAGS = @STRIP_BEGIN@ \
 	-version-info $(LT_CURRENT):$(LT_REVISION):$(LT_AGE)	\
+	$(no_undefined) \
+	$(libgimpcolor_export_symbols) \
 @STRIP_END@
 
-libgimpcolor_1_3_la_LIBADD = $(GLIB_LIBS) -lm
+libgimpcolor_1_3_la_LIBADD = $(GLIB_LIBS) $(libm)
+
+libgimpcolor_1_3_la_DEPENDENCIES = $(gimpcolor_def)
+
+install-data-local: install-ms-lib install-libtool-import-lib
+
+uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
