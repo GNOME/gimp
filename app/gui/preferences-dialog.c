@@ -28,6 +28,7 @@
 #include "lc_dialog.h"
 #include "layer_select.h"
 #include "session.h"
+#include "tile_cache.h"
 
 #include "config.h"
 #include "libgimp/gimpchainbutton.h"
@@ -37,10 +38,18 @@
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 
+
+typedef enum {
+  PREFS_OK,
+  PREFS_CORRUPT,
+  PREFS_RESTART
+} PrefsState;
+
 /*  preferences local functions  */
-static void file_prefs_ok_callback     (GtkWidget *, GtkWidget *);
-static void file_prefs_save_callback   (GtkWidget *, GtkWidget *);
-static void file_prefs_cancel_callback (GtkWidget *, GtkWidget *);
+static PrefsState file_prefs_check_settings        (void);
+static void file_prefs_ok_callback                 (GtkWidget *, GtkWidget *);
+static void file_prefs_save_callback               (GtkWidget *, GtkWidget *);
+static void file_prefs_cancel_callback             (GtkWidget *, GtkWidget *);
 
 static void file_prefs_toggle_callback             (GtkWidget *, gpointer);
 static void file_prefs_preview_size_callback       (GtkWidget *, gpointer);
@@ -56,6 +65,7 @@ static void file_prefs_default_size_callback       (GtkWidget *, gpointer);
 static void file_prefs_default_resolution_callback (GtkWidget *, gpointer);
 static void file_prefs_res_source_callback         (GtkWidget *, gpointer);
 static void file_prefs_monitor_resolution_callback (GtkWidget *, gpointer);
+static void file_prefs_restart_notification        (void);
 
 /*  static variables  */
 static int        old_perfectmouse;
@@ -210,46 +220,45 @@ file_prefs_strcmp (gchar *src1,
 		 src2 == NULL ? "" : src2);
 }
 
-static void
-file_prefs_ok_callback (GtkWidget *widget,
-			GtkWidget *dlg)
+static PrefsState
+file_prefs_check_settings (void)
 {
   if (levels_of_undo < 0) 
     {
       g_message (_("Error: Levels of undo must be zero or greater."));
       levels_of_undo = old_levels_of_undo;
-      return;
+      return PREFS_CORRUPT;
     }
   if (num_processors < 1 || num_processors > 30) 
     {
       g_message (_("Error: Number of processors must be between 1 and 30."));
       num_processors = old_num_processors;
-      return;
+      return PREFS_CORRUPT;
     }
   if (marching_speed < 50)
     {
       g_message (_("Error: Marching speed must be 50 or greater."));
       marching_speed = old_marching_speed;
-      return;
+      return PREFS_CORRUPT;
     }
   if (default_width < 1)
     {
       g_message (_("Error: Default width must be one or greater."));
       default_width = old_default_width;
-      return;
+      return PREFS_CORRUPT;
     }
   if (default_height < 1)
     {
       g_message (_("Error: Default height must be one or greater."));
       default_height = old_default_height;
-      return;
+      return PREFS_CORRUPT;
     }
   if (default_units < UNIT_INCH ||
       default_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default unit must be within unit range."));
       default_units = old_default_units;
-      return;
+      return PREFS_CORRUPT;
     }
   if (default_xresolution < GIMP_MIN_RESOLUTION ||
       default_yresolution < GIMP_MIN_RESOLUTION)
@@ -257,14 +266,14 @@ file_prefs_ok_callback (GtkWidget *widget,
       g_message (_("Error: Default resolution must not be zero."));
       default_xresolution = old_default_xresolution;
       default_yresolution = old_default_yresolution;
-      return;
+      return PREFS_CORRUPT;
     }
   if (default_resolution_units < UNIT_INCH ||
       default_resolution_units >= gimp_unit_get_number_of_units ())
     {
       g_message (_("Error: Default resolution unit must be within unit range."));
       default_resolution_units = old_default_resolution_units;
-      return;
+      return PREFS_CORRUPT;
     }
   if (monitor_xres < GIMP_MIN_RESOLUTION ||
       monitor_yres < GIMP_MIN_RESOLUTION)
@@ -272,27 +281,142 @@ file_prefs_ok_callback (GtkWidget *widget,
       g_message (_("Error: Monitor resolution must not be zero."));
       monitor_xres = old_monitor_xres;
       monitor_yres = old_monitor_yres;
-      return;
+      return PREFS_CORRUPT;
     }
   if (image_title_format == NULL)
     {
       g_message (_("Error: Image title format must not be NULL."));
       image_title_format = old_image_title_format;
-      return;
+      return PREFS_CORRUPT;
     }
 
-  gtk_widget_destroy (dlg);
-  prefs_dlg = NULL;
+  if (edit_stingy_memory_use != stingy_memory_use)
+    return PREFS_RESTART;
+  if (edit_install_cmap != old_install_cmap)
+    return PREFS_RESTART;
+  if (edit_cycled_marching_ants != cycled_marching_ants)
+    return PREFS_RESTART;
+  if (edit_last_opened_size != last_opened_size)
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (temp_path, edit_temp_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (swap_path, edit_swap_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (module_path, edit_module_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (brush_path, edit_brush_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (brush_vbr_path, edit_brush_vbr_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (pattern_path, edit_pattern_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (palette_path, edit_palette_path))
+    return PREFS_RESTART;
+  if (file_prefs_strcmp (gradient_path, edit_gradient_path))
+    return PREFS_RESTART;
+  if (show_indicators != old_show_indicators)
+    return PREFS_RESTART;
+  if (edit_nav_window_per_display != old_nav_window_per_display)
+    return PREFS_RESTART;
+  if (edit_info_window_follows_mouse != old_info_window_follows_mouse)
+    return PREFS_RESTART;
+    
+  return PREFS_OK;
+}
+
+static void
+file_prefs_restart_notification_close_callback (GtkWidget *widget,
+						gpointer   data)
+{
+  gtk_widget_destroy (GTK_WIDGET (data));
+  gtk_main_quit ();
+}
+
+static void
+file_prefs_restart_notification_save_callback (GtkWidget *widget,
+					       gpointer   data)
+{
+  file_prefs_save_callback (widget, prefs_dlg);
+  file_prefs_restart_notification_close_callback (widget, data);
+}
+
+/* The user pressed OK and not Save, but has changed some settings that
+   only take effect after he restarts the GIMP. Allow him to save the
+   settings. */
+static void
+file_prefs_restart_notification (void)
+{
+  GtkWidget *dlg;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  
+  dlg = gimp_dialog_new (_("Save Preferences ?"), "gimp_message",
+			 NULL, NULL,
+			 GTK_WIN_POS_MOUSE,
+			 FALSE, FALSE, FALSE,
+			 
+			 _("Save"), file_prefs_restart_notification_save_callback,
+			 NULL, NULL, NULL, TRUE, FALSE,
+			 _("Close"), file_prefs_restart_notification_close_callback,
+			 NULL, NULL, NULL, FALSE, TRUE,
+			 
+			 NULL);
+
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, TRUE, FALSE, 4);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (_("At least one of the changes you made will only\n"
+			   "take effect after you restart the GIMP.\n\n"
+                           "You may choose 'Save' now to make your changes\n"
+			   "permanent, so you can restart GIMP or hit 'Close'\n"
+			   "and the critical parts of your changes will not\n"
+			   "be applied."));
+  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, FALSE, 4);
+  gtk_widget_show (label);
+
+  gtk_widget_show (dlg);
+
+  gtk_main ();
+}
+
+static void
+file_prefs_ok_callback (GtkWidget *widget,
+			GtkWidget *dlg)
+{
+  PrefsState state;
 
   if (show_tool_tips)
     gimp_help_enable_tooltips ();
   else
     gimp_help_disable_tooltips ();
 
-  /* This needs modification to notify the user of which simply cannot be
-   * changed on the fly.  Currently it ignores these options if only OK is
-   * pressed.
-   */
+  if (edit_tile_cache_size != tile_cache_size)
+    tile_cache_set_size (edit_tile_cache_size);
+
+  state = file_prefs_check_settings ();
+  switch (state)
+    {
+    case PREFS_CORRUPT:
+      return;
+      break;
+    case PREFS_RESTART:
+      gtk_widget_set_sensitive (prefs_dlg, FALSE);
+      file_prefs_restart_notification ();
+      /* don't break */
+    case PREFS_OK:
+    default:
+      break;
+    }
+
+  if (prefs_dlg)
+    {
+      gtk_widget_destroy (prefs_dlg);
+      prefs_dlg = NULL;
+    }
 }
 
 static void
@@ -301,9 +425,10 @@ file_prefs_save_callback (GtkWidget *widget,
 {
   GList *update = NULL; /* options that should be updated in .gimprc */
   GList *remove = NULL; /* options that should be commented out */
+  
+  PrefsState state;
 
   int    save_stingy_memory_use;
-  int    save_tile_cache_size;
   int    save_install_cmap;
   int    save_cycled_marching_ants;
   int    save_last_opened_size;
@@ -320,13 +445,33 @@ file_prefs_save_callback (GtkWidget *widget,
   gchar *save_palette_path;
   gchar *save_gradient_path;
 
-  int    restart_notification = FALSE;
+  if (show_tool_tips)
+    gimp_help_enable_tooltips ();
+  else
+    gimp_help_disable_tooltips ();
 
-  file_prefs_ok_callback (widget, dlg);
+  if (edit_tile_cache_size != tile_cache_size)
+    tile_cache_set_size (edit_tile_cache_size);
+
+  state = file_prefs_check_settings ();
+  switch (state)
+    {
+    case PREFS_CORRUPT:
+      return;
+      break;
+    case PREFS_RESTART:
+      gtk_widget_set_sensitive (prefs_dlg, FALSE);
+      g_message (_("You will need to restart GIMP for these changes to take effect."));
+      /* don't break */
+    case PREFS_OK:
+    default:
+      break;
+    }
+  gtk_widget_destroy (prefs_dlg);
+  prefs_dlg = NULL;
 
   /* Save variables so that we can restore them later */
   save_stingy_memory_use = stingy_memory_use;
-  save_tile_cache_size = tile_cache_size;
   save_install_cmap = install_cmap;
   save_cycled_marching_ants = cycled_marching_ants;
   save_last_opened_size = last_opened_size;
@@ -400,7 +545,6 @@ file_prefs_save_callback (GtkWidget *widget,
     {
       update = g_list_append (update, "show-indicators");
       remove = g_list_append (remove, "dont-show-indicators");
-      restart_notification = TRUE;
     }
   if (always_restore_session != old_always_restore_session)
     update = g_list_append (update, "always-restore-session");
@@ -435,90 +579,34 @@ file_prefs_save_callback (GtkWidget *widget,
     update = g_list_append (update, "monitor-yresolution");
   if (edit_num_processors != num_processors)
     update = g_list_append (update, "num-processors");
-  if (edit_stingy_memory_use != stingy_memory_use)
-    {
-      update = g_list_append (update, "stingy-memory-use");
-      stingy_memory_use = edit_stingy_memory_use;
-      restart_notification = TRUE;
-    }
   if (edit_tile_cache_size != tile_cache_size)
-    {
-      update = g_list_append (update, "tile-cache-size");
-      tile_cache_size = edit_tile_cache_size;
-      restart_notification = TRUE;
-    }
+    update = g_list_append (update, "tile-cache-size");
+  if (edit_stingy_memory_use != stingy_memory_use)
+    update = g_list_append (update, "stingy-memory-use");
   if (edit_install_cmap != old_install_cmap)
-    {
       update = g_list_append (update, "install-colormap");
-      install_cmap = edit_install_cmap;
-      restart_notification = TRUE;
-    }
   if (edit_cycled_marching_ants != cycled_marching_ants)
-    {
       update = g_list_append (update, "colormap-cycling");
-      cycled_marching_ants = edit_cycled_marching_ants;
-      restart_notification = TRUE;
-    }
   if (edit_last_opened_size != last_opened_size)
-    {
       update = g_list_append (update, "last-opened-size");
-      last_opened_size = edit_last_opened_size;
-      restart_notification = TRUE;
-    }
   if (file_prefs_strcmp (temp_path, edit_temp_path))
-    {
       update = g_list_append (update, "temp-path");
-      temp_path = edit_temp_path;
-      restart_notification = TRUE;
-    }
   if (file_prefs_strcmp (swap_path, edit_swap_path))
-    {
       update = g_list_append (update, "swap-path");
-      swap_path = edit_swap_path;
-      restart_notification = TRUE;
-    }
   if (file_prefs_strcmp (plug_in_path, edit_plug_in_path))
-    {
       update = g_list_append (update, "plug-in-path");
-      plug_in_path = edit_plug_in_path;
-      restart_notification = TRUE;
-    }
   if (file_prefs_strcmp (module_path, edit_module_path))
-    {
       update = g_list_append (update, "module-path");
-      module_path = edit_module_path;
-      restart_notification = TRUE;
-    }
-  if (file_prefs_strcmp (brush_path, edit_brush_path))
-    {
+   if (file_prefs_strcmp (brush_path, edit_brush_path))
       update = g_list_append (update, "brush-path");
-      brush_path = edit_brush_path;
-      restart_notification = TRUE;
-    }
   if (file_prefs_strcmp (brush_vbr_path, edit_brush_vbr_path))
-    {
       update = g_list_append (update, "brush-vbr-path");
-      brush_vbr_path = edit_brush_vbr_path;
-      restart_notification = TRUE;
-    }
   if (file_prefs_strcmp (pattern_path, edit_pattern_path))
-    {
-      update = g_list_append (update, "pattern-path");
-      pattern_path = edit_pattern_path;
-      restart_notification = TRUE;
-    }
+       update = g_list_append (update, "pattern-path");
   if (file_prefs_strcmp (palette_path, edit_palette_path))
-    {
       update = g_list_append (update, "palette-path");
-      palette_path = edit_palette_path;
-      restart_notification = TRUE;
-    }
   if (file_prefs_strcmp (gradient_path, edit_gradient_path))
-    {
       update = g_list_append (update, "gradient-path");
-      gradient_path = edit_gradient_path;
-      restart_notification = TRUE;
-    }
   if (using_xserver_resolution)
     {
       /* special value of 0 for either x or y res in the gimprc file
@@ -552,14 +640,12 @@ file_prefs_save_callback (GtkWidget *widget,
       update = g_list_append (update, "nav-window-per-display");
       remove = g_list_append (remove, "nav-window-follows-auto");
       nav_window_per_display = edit_nav_window_per_display;
-      restart_notification = TRUE;
     }
   if (edit_info_window_follows_mouse != old_info_window_follows_mouse)
     {
       update = g_list_append (update, "info-window-follows-mouse");
       remove = g_list_append (remove, "info-window-per-display");
       info_window_follows_mouse = edit_info_window_follows_mouse;
-      restart_notification = TRUE;
     }
   if (help_browser != old_help_browser)
     update = g_list_append (update, "help-browser");
@@ -571,7 +657,6 @@ file_prefs_save_callback (GtkWidget *widget,
 
   /* Restore variables which must not change */
   stingy_memory_use = save_stingy_memory_use;
-  tile_cache_size = save_tile_cache_size;
   install_cmap = save_install_cmap;
   cycled_marching_ants = save_cycled_marching_ants;
   last_opened_size = save_last_opened_size;
@@ -587,10 +672,6 @@ file_prefs_save_callback (GtkWidget *widget,
   gradient_path = save_gradient_path;
   nav_window_per_display = save_nav_window_per_display;
   info_window_follows_mouse = save_info_window_follows_mouse;
-
-  if (restart_notification)
-    g_message (_("You will need to restart GIMP for these changes to take "
-		 "effect."));
 
   g_list_free (update);
   g_list_free (remove);
@@ -2288,3 +2369,5 @@ file_pref_cmd_callback (GtkWidget *widget,
 
   gtk_widget_show (prefs_dlg);
 }
+
+

@@ -1,3 +1,14 @@
+Fri Jan  7 23:03:51 CET 2000  Sven Neumann <sven@gimp.org> 
+
+	* app/preferences_dialog.c: Doh, how much do I hate to hack this 
+	sucker... Added the possibility to change the tile_cache_size on 
+	the fly (untested!!) and tried to give some better user feedback on
+	changes that are only applied after a restart. 
+	
+	We should try to get rid of most of those cases wherever posssible
+	since the message "You have to restart." strongly reminds me to that 
+	braindead thing... (you know, some people call it an OS). 
+
 Fri Jan  7 20:27:55 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/common/sunras.c
