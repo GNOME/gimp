@@ -1,3 +1,7 @@
+Tue Aug 25 14:55:25 PDT 1998 Manish Singh <yosh@gimp.org>
+
+	* gimptool.in: use LDFLAGS and LIBS for building too
+
 Mon Aug 24 13:41:49 CDT 1998  Larry Ewing  <lewing@gimp.org>
 
 	* app/fileops.c (file_save): move the mru and docindex calls to
