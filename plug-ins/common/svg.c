@@ -38,7 +38,7 @@
 
 
 #define SVG_VERSION             "2.5.0"
-#define SVG_DEFAULT_RESOLUTION  72.0
+#define SVG_DEFAULT_RESOLUTION  90.0
 #define SVG_DEFAULT_SIZE        500
 #define SVG_PREVIEW_SIZE        128
 
