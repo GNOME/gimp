@@ -25,6 +25,7 @@
 #endif
 #include <string.h>
 #include <errno.h>
+#include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_SYS_PARAM_H
 #include <sys/param.h>
@@ -196,6 +197,9 @@ static inline char* units_to_str (gpointer val1p, gpointer val2p);
 static char* transform_path (char *path, int destroy);
 static void gimprc_set_token (char *token, char *value);
 static void add_gimp_directory_token (char *gimp_dir);
+#ifdef __EMX__
+static void add_x11root_token (char *x11root);
+#endif
 static char* open_backup_file (char *filename,
 			       char *secondary_filename,
 			       char **name_used,
@@ -335,6 +339,9 @@ parse_gimprc ()
 
   gimp_dir = gimp_directory ();
   add_gimp_directory_token (gimp_dir);
+#ifdef __EMX__
+  add_x11root_token(getenv("X11ROOT"));
+#endif
 
   strcpy (libfilename, gimp_system_rc_file ());
   if (alternate_system_gimprc != NULL) 
@@ -370,7 +377,7 @@ parse_gimprc_file (char *filename)
       filename = rfilename;
     }
 
-  parse_info.fp = fopen (filename, "r");
+  parse_info.fp = fopen (filename, "rt");
   if (!parse_info.fp)
     return;
 
@@ -2441,6 +2448,30 @@ add_gimp_directory_token (char *gimp_dir)
   unknown_tokens = g_list_append (unknown_tokens, ut);
 }
 
+#ifdef __EMX__
+static void
+add_x11root_token (char *x11root)
+{
+  UnknownToken *ut;
+
+  if (x11root == NULL)
+    return;
+  /*
+    The token holds data from a static buffer which is initialized
+    once.  There should be no need to change an already-existing
+    value.
+  */
+  if (gimprc_find_token ("x11root") != NULL)
+    return;
+
+  ut = g_new (UnknownToken, 1);
+  ut->token = g_strdup ("x11root");
+  ut->value = g_strdup (x11root);
+
+  unknown_tokens = g_list_append (unknown_tokens, ut);
+}
+#endif
+
 /* Try to:
 
    1. Open the personal file for reading.
@@ -2465,9 +2496,9 @@ open_backup_file (char *filename,
   char *oldfilename = NULL;
 
   /* Rename the file to *.old, open it for reading and create the new file. */
-  if ((*fp_old = fopen (filename, "r")) == NULL)
+  if ((*fp_old = fopen (filename, "rt")) == NULL)
     {
-      if ((*fp_old = fopen (secondary_filename, "r")) == NULL)
+      if ((*fp_old = fopen (secondary_filename, "rt")) == NULL)
 	{
 	  return g_strdup_printf (_("Can't open %s; %s"),
 				  secondary_filename, g_strerror (errno));
@@ -2479,7 +2510,7 @@ open_backup_file (char *filename,
     {
       *name_used = filename;
       oldfilename = g_strdup_printf ("%s.old", filename);
-#ifdef NATIVE_WIN32
+#if defined(NATIVE_WIN32) || defined(__EMX__)
       /* Can't rename open files... */
       fclose (*fp_old);
       /* Also, can't rename to an existing file name */
@@ -2491,9 +2522,9 @@ open_backup_file (char *filename,
 	  return g_strdup_printf (_("Can't rename %s to %s.old; %s"),
 				    filename, filename, g_strerror (errno));
 	}
-#ifdef NATIVE_WIN32
+#if defined(NATIVE_WIN32) || defined(__EMX__)
       /* Can't rename open files... */
-      if ((*fp_old = fopen (oldfilename, "r")) == NULL)
+      if ((*fp_old = fopen (oldfilename, "rt")) == NULL)
 	g_error (_("Couldn't reopen %s\n"), oldfilename);
 #endif
     }

@@ -1,3 +1,10 @@
+Wed Apr 28 16:28:08 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* app/gimprc.c: Add <sys/types.h>, Open text files with "rt".
+	Add OS/2 function  add_x11root_token (char *x11root).
+
+	* app/install.c (install_run): Add install for OS/2.
+
 Tue Apr 27 23:52:26 PDT 1999 Manish Singh <yosh@gimp.org>
 
 	* configure.in
