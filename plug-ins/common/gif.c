@@ -435,8 +435,6 @@ run (const gchar      *name,
 
   if (strcmp (name, "file_gif_save") == 0)
     {
-      gimp_ui_init ("gif", FALSE);
-
       image_ID    = orig_image_ID = param[1].data.d_int32;
       drawable_ID = param[2].data.d_int32;
 
@@ -445,6 +443,7 @@ run (const gchar      *name,
 	{
 	case GIMP_RUN_INTERACTIVE:
 	case GIMP_RUN_WITH_LAST_VALS:
+          gimp_ui_init ("gif", FALSE);
 	  export = gimp_export_image (&image_ID, &drawable_ID, "GIF",
 				      (GIMP_EXPORT_CAN_HANDLE_INDEXED |
 				       GIMP_EXPORT_CAN_HANDLE_GRAY |

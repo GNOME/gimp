@@ -1,3 +1,8 @@
+2004-02-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/gif.c: only call gimp_ui_init() when being run
+	in interactively. Should fix bug #134423.
+
 2004-02-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdata.c (gimp_data_init): using
