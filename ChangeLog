@@ -1,3 +1,10 @@
+2003-03-10  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpbycolorselecttool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimpconvolvetool.c: resolved conflicts in tool
+	keybindings (bug #107975).
+
 2003-03-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdatalist.c (gimp_data_list_uniquefy_data_name): use

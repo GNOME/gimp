@@ -88,7 +88,7 @@ gimp_convolve_tool_register (GimpToolRegisterCallback  callback,
                 "gimp-convolve-tool",
                 _("Convolve"),
                 _("Blur or Sharpen"),
-                N_("/Tools/Paint Tools/Convolve"), "B",
+                N_("/Tools/Paint Tools/Convolve"), "V",
                 NULL, "tools/convolve.html",
                 GIMP_STOCK_TOOL_BLUR,
                 data);
