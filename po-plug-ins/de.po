@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.2.3\n"
-"POT-Creation-Date: 2001-11-29 16:44+0100\n"
-"PO-Revision-Date: 2001-11-29 16:45+0100\n"
+"POT-Creation-Date: 2001-12-16 13:46+0100\n"
+"PO-Revision-Date: 2001-12-16 13:51+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1049,7 +1049,8 @@ msgstr "Linear"
 msgid "Logarithmic"
 msgstr "Logarithmisch"
 
-#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/flame/flame.c:725
+#: plug-ins/Lighting/lighting_ui.c:944 plug-ins/common/sinus.c:1990
+#: plug-ins/flame/flame.c:725
 msgid "Sinusoidal"
 msgstr "Sinusförmig"
 
@@ -5917,10 +5918,6 @@ msgstr "Zweite Farbe:"
 msgid "Blend Settings"
 msgstr "Verlauf Einstellungen"
 
-#: plug-ins/common/sinus.c:1990
-msgid "Sinusodial"
-msgstr "Sinusförmig"
-
 #: plug-ins/common/sinus.c:2002
 msgid "Exponent:"
 msgstr "Exponent:"
@@ -7712,7 +7709,7 @@ msgstr "Voraussetzungen um Xanim lesbares Video in Frames aufteilen"
 
 #: plug-ins/gap/gap_decode_xanim.c:122
 msgid "1.) xanim 2.80.0 exporting edition (the loki version)"
-msgstr "1.) xanim 2.80.0 exporting edition (variante von loki entertainment)"
+msgstr "1.) xanim 2.80.0 exporting edition (Variante von Loki Entertainment)"
 
 #: plug-ins/gap/gap_decode_xanim.c:126
 msgid "    must be installed somewhere in your PATH"
@@ -7754,12 +7751,12 @@ msgstr "Video:"
 msgid ""
 "Name of a videofile to READ by xanim.\n"
 "Frames are extracted from the videofile\n"
-"and written to seperate diskfiles.\n"
+"and written to separate diskfiles.\n"
 "xanim exporting edition is required."
 msgstr ""
-"Name einer Videodatei die von xanim GELESEN werden soll.\n"
-"Frames werden aus der Videodatei extrahiert\n"
-"und in separate Dateien auf der Festplatte geschrieben.\n"
+"Name einer Videodatei die von xanim GELESEN werden\n"
+"soll. Frames werden aus der Videodatei extrahiert und\n"
+"in separate Dateien auf der Festplatte geschrieben.\n"
 "xanim mit Export-Funktionen wird benötigt."
 
 #: plug-ins/gap/gap_decode_xanim.c:245
@@ -7767,8 +7764,8 @@ msgid ""
 "Basename for the AnimFrames to write on disk\n"
 "(framenumber and extension is added)"
 msgstr ""
-"Basisname für die AnimFrames, die auf Festplatte geschrieben werden\n"
-"(Framenummer und Erweiterung wird hinzugefügt)"
+"Basisname für die AnimFrames, die auf Festplatte geschrieben\n"
+"werden (Framenummer und Erweiterung wird hinzugefügt)"
 
 #: plug-ins/gap/gap_decode_xanim.c:252
 msgid "Format"
@@ -13379,6 +13376,9 @@ msgstr "Fehler: Kann XJT Eigenschaften-Datei %s nicht lesen"
 #, c-format
 msgid "Error: XJT propertyfile %s is empty"
 msgstr "Fehler: XJT Eigenschaften-Datei %s ist leer"
+
+#~ msgid "Sinusodial"
+#~ msgstr "Sinusförmig"
 
 #~ msgid "Force baseline JPEG (Readable by all decoders)"
 #~ msgstr "Erzwinge \"Baseline JPEG\" (alle Decoder können das lesen)"
