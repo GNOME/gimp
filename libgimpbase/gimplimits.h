@@ -42,15 +42,4 @@
                                                   */
 
 
-/*  the size of the checks which indicate transparency...
- */
-#define GIMP_CHECK_SIZE      8
-#define GIMP_CHECK_SIZE_SM   4
-
-/*  ...and their colors
- */
-#define GIMP_CHECK_DARK      0.4
-#define GIMP_CHECK_LIGHT     0.6
-
-
 #endif /* __GIMP_LIMITS_H__ */

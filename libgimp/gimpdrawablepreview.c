@@ -229,6 +229,7 @@ gimp_drawable_preview_draw (GimpDrawablePreview *preview,
   GimpDrawable *drawable;
 
   g_return_if_fail (GIMP_IS_DRAWABLE_PREVIEW (preview));
+  g_return_if_fail (preview->drawable != NULL);
   g_return_if_fail (buf != NULL);
 
   gimp_preview = GIMP_PREVIEW (preview);

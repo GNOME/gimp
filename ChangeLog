@@ -1,3 +1,15 @@
+2004-09-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpchecks.h
+	* libgimpbase/gimplimits.h: moved check size and check color
+	defines. It makes a lot more sense to keep them in gimpchecks.h.
+
+	* libgimpbase/gimpchecks.c (gimp_checks_get_shades): documented.
+
+	* libgimp/gimpdrawablepreview.c (gimp_drawable_preview_draw):
+	added a sanity check so we don't crash if the drawable pointer
+	should ever be NULL here.
+
 2004-09-02  Helvetix Victorinox  <helvetix@gimp.org>
 
 	* app/composite/gimp-composite-*test.c: a regression test now
