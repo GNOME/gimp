@@ -1,3 +1,10 @@
+gimp (0.99.23-1) frozen unstable; urgency=low
+
+  * New upstream version; fixes lots of bugs with iscissors.
+  * .diff.gz has been integrated with CVS upstream.
+
+ -- Ben Gertzfield <che@debian.org>  Sat, 28 Mar 1998 11:01:35 -0800
+
 gimp (0.99.22-2) frozen unstable; urgency=low
 
   * /usr/share/gimp/gfig/ directory was accidentally left out of -1,
