@@ -186,17 +186,6 @@ query (void)
     { GIMP_PDB_IMAGE,  "image",          "Output image" }
   };
 
-  gimp_install_procedure ("file_gih_save",
-			  "saves images in GIMP brush pipe format",
-			  "This plug-in saves an image in the GIMP brush pipe format. The image must have an alpha chnannel and can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes.",
-			  "Tor Lillqvist",
-			  "Tor Lillqvist",
-			  "1999",
-			  "<Save>/GIH",
-			  "RGBA, GRAYA",
-			  GIMP_PLUGIN,
-                          G_N_ELEMENTS (gih_save_args), 0,
-			  gih_save_args, NULL);
 
   gimp_install_procedure ("file_gih_load",
 			  "loads images in GIMP brush pipe format",
@@ -204,20 +193,37 @@ query (void)
 			  "Jens Lautenbacher, Sven Neumann",
 			  "Jens Lautenbacher, Sven Neumann",
 			  "2000",
-			  "<Load>/GIH",
+                          N_("GIMP brush (animated)"),
 			  NULL,
 			  GIMP_PLUGIN,
                           G_N_ELEMENTS (gih_load_args),
                           G_N_ELEMENTS (gih_load_return_vals),
                           gih_load_args, gih_load_return_vals);
 
-  gimp_register_save_handler ("file_gih_save",
-			      "gih",
-			      "");
+  gimp_plugin_menu_register ("file_gih_load", "<Load>");
+  gimp_register_file_handler_mime ("file_gih_load", "image/x-gimp-gih");
   gimp_register_magic_load_handler ("file_gih_load",
 				    "gih",
 				    "",
 				    "");
+
+  gimp_install_procedure ("file_gih_save",
+			  "saves images in GIMP brush pipe format",
+			  "This plug-in saves an image in the GIMP brush pipe format. The image must have an alpha chnannel and can be multi-layered, and additionally the layers can be divided into a rectangular array of brushes.",
+			  "Tor Lillqvist",
+			  "Tor Lillqvist",
+			  "1999",
+			  N_("GIMP brush (animated)"),
+			  "RGBA, GRAYA",
+			  GIMP_PLUGIN,
+                          G_N_ELEMENTS (gih_save_args), 0,
+			  gih_save_args, NULL);
+
+  gimp_plugin_menu_register ("file_gih_save", "<Save>");
+  gimp_register_file_handler_mime ("file_gih_save", "image/x-gimp-gih");
+  gimp_register_save_handler ("file_gih_save",
+			      "gih",
+			      "");
 }
 
 static void

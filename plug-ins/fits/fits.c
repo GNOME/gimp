@@ -156,12 +156,19 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner (peter@kirchgessner.net)",
                           "1997",
-                          "<Load>/FITS",
+                          N_("Flexible Image Transport System"),
                           NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_fits_load", "<Load>");
+  gimp_register_file_handler_mime ("file_fits_load", "image/x-fits");
+  gimp_register_magic_load_handler ("file_fits_load",
+				    "fit,fits",
+				    "",
+                                    "0,string,SIMPLE");
 
   gimp_install_procedure ("file_fits_save",
                           "save file in the FITS file format",
@@ -169,20 +176,17 @@ query (void)
                           "Peter Kirchgessner",
                           "Peter Kirchgessner (peter@kirchgessner.net)",
                           "1997",
-                          "<Save>/FITS",
+                          N_("Flexible Image Transport System"),
                           "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  /* Register file plugin by plugin name and handable extensions */
-  gimp_register_magic_load_handler ("file_fits_load",
-				    "fit,fits",
-				    "",
-                                    "0,string,SIMPLE");
-  gimp_register_save_handler       ("file_fits_save",
-				    "fit,fits",
-				    "");
+  gimp_plugin_menu_register ("file_fits_save", "<Save>");
+  gimp_register_file_handler_mime ("file_fits_save", "image/x-fits");
+  gimp_register_save_handler ("file_fits_save",
+                              "fit,fits",
+                              "");
 }
 
 

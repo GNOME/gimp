@@ -359,12 +359,19 @@ query (void)
 			  "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
-                          "<Load>/PSP",
+                          N_("Paint Shop Pro image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_psp_load", "<Load>");
+  gimp_register_file_handler_mime ("file_psp_load", "image/x-psp");
+  gimp_register_magic_load_handler ("file_psp_load",
+				    "psp,tub",
+				    "",
+				    "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
 
 /* Removed until Saving is implemented -- njl195@zepler.org
   gimp_install_procedure ("file_psp_save",
@@ -376,21 +383,16 @@ query (void)
                           "Tor Lillqvist",
                           "Tor Lillqvist",
                           "1999",
-                          "<Save>/PSP",
+                          N_("Paint Shop Pro image"),
 			  "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
-*/
 
-  gimp_register_magic_load_handler ("file_psp_load",
-				    "psp,tub",
-				    "",
-				    "0,string,Paint\\040Shop\\040Pro\\040Image\\040File\n\032");
-/* Removed until Saving is implemented -- njl195@zepler.org
-  gimp_register_save_handler       ("file_psp_save",
-                                    "psp,tub",
-                                    "");
+  gimp_plugin_menu_register ("file_psp_save", "<Save>");
+  gimp_register_save_handler ("file_psp_save",
+                              "psp,tub",
+                              "");
 */
 }
 

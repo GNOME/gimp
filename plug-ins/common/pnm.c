@@ -225,12 +225,20 @@ query (void)
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
-                          "<Load>/PNM",
+                          N_("PNM Image"),
 			  NULL,
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (load_args),
                           G_N_ELEMENTS (load_return_vals),
                           load_args, load_return_vals);
+
+  gimp_plugin_menu_register ("file_pnm_load", "<Load>");
+  gimp_register_file_handler_mime ("file_pnm_load", "image/x-portable-anymap");
+  gimp_register_magic_load_handler ("file_pnm_load",
+                                    "pnm,ppm,pgm,pbm",
+				    "",
+				    "0,string,P1,0,string,P2,0,string,P3,0,"
+				    "string,P4,0,string,P5,0,string,P6");
 
   gimp_install_procedure ("file_pnm_save",
                           "saves files in the pnm file format",
@@ -238,20 +246,17 @@ query (void)
                           "Erik Nygren",
                           "Erik Nygren",
                           "1996",
-                          "<Save>/PNM",
+                          N_("PNM image"),
 			  "RGB, GRAY, INDEXED",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_magic_load_handler ("file_pnm_load",
-				    "pnm,ppm,pgm,pbm",
-				    "",
-				    "0,string,P1,0,string,P2,0,string,P3,0,"
-				    "string,P4,0,string,P5,0,string,P6");
-  gimp_register_save_handler       ("file_pnm_save",
-				    "pnm,ppm,pgm",
-				    "");
+  gimp_plugin_menu_register ("file_pnm_save", "<Save>");
+  gimp_register_file_handler_mime ("file_pnm_save", "image/x-portable-anymap");
+  gimp_register_save_handler ("file_pnm_save",
+                              "pnm,ppm,pgm",
+                              "");
 }
 
 static void

@@ -1,5 +1,20 @@
 2004-05-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/aa.c
+	* plug-ins/common/gbr.c
+	* plug-ins/common/gih.c
+	* plug-ins/common/gtm.c
+	* plug-ins/common/header.c
+	* plug-ins/common/pat.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/psp.c
+	* plug-ins/fits/fits.c
+	* plug-ins/gfli/gfli.c: register a mimetype, set a translatable
+	action name (mostly taken from shared-mime-info) and register to
+	the <Load> and <Save> menus using gimp_plugin_menu_register().
+
+2004-05-14  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/fileops.pdb: added new PDB function
 	gimp_register_file_handler_mime() that allows to associate a MIME
 	type with a file procecdurre.

@@ -97,14 +97,16 @@ query (void)
                           "Tim Newsome <nuisance@cmu.edu>",
                           "Tim Newsome <nuisance@cmu.edu>",
                           "1997",
-                          "<Save>/AA",
+                          N_("ASCII art"),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
+  gimp_plugin_menu_register ("file_aa_save", "<Save>");
+  gimp_register_file_handler_mime ("file_aa_save", "text/plain");
   gimp_register_save_handler ("file_aa_save",
-                              "ansi,txt,text",
+                              "txt,ansi,text",
                               "");
 }
 
