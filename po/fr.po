@@ -4203,9 +4203,8 @@ msgid "/Delete Channel"
 msgstr "/Effacer Canal"
 
 #: app/menus.c:788
-#, fuzzy
 msgid "/Edit Channel Attributes..."
-msgstr "Édition des Attributs du Canal"
+msgstr "/Éditer les attributs du canal..."
 
 #: app/menus.c:799
 msgid "/New Path"
@@ -4248,9 +4247,8 @@ msgid "/Export Path..."
 msgstr "/Exporter Chemin..."
 
 #: app/menus.c:825
-#, fuzzy
 msgid "/Edit Path Attributes..."
-msgstr "Éditer les Attributs du Calque"
+msgstr "/Éditer les attributs du chemin"
 
 #: app/menus.c:1334
 #, c-format
@@ -4349,9 +4347,8 @@ msgid "Autoload during startup"
 msgstr "Charger automatiquement durant le démarrage"
 
 #: app/move.c:454
-#, fuzzy
 msgid "Move Tool"
-msgstr "Options de l'Outil Déplacement"
+msgstr "Outil déplacement"
 
 #. create the info dialog
 #: app/nav_window.c:1257
@@ -4571,9 +4568,8 @@ msgid "Palette Selection"
 msgstr "Sélection de Palette"
 
 #: app/path_tool.c:1411
-#, fuzzy
 msgid "Path Tool"
-msgstr "Options de l'outil chemin"
+msgstr "Outil chemin"
 
 #: app/paths_dialog.c:169
 msgid "New Path"
@@ -4621,9 +4617,8 @@ msgid "Path %d"
 msgstr "Chemin %d"
 
 #: app/paths_dialog.c:1239
-#, fuzzy
 msgid "Edit Path Attributes"
-msgstr "Éditer les Attributs du Calque"
+msgstr "Édition des attributs du chemin"
 
 #: app/paths_dialog.c:1242
 msgid "Enter a new name for the path"
@@ -5525,36 +5520,30 @@ msgid "This tool has no options."
 msgstr "Cet outil n'a pas d'option."
 
 #: app/tool_options.c:119
-#, fuzzy
 msgid "Rectangular Selection"
-msgstr "Option de la Sélection Rectangulaire"
+msgstr "Sélection rectangulaire"
 
 #: app/tool_options.c:121
-#, fuzzy
 msgid "Elliptical Selection"
-msgstr "Options de la Sélection Elliptique"
+msgstr "Sélection elliptique"
 
 #: app/tool_options.c:123
-#, fuzzy
 msgid "Free-Hand Selection"
-msgstr "Options de la Sélection Mains Libres"
+msgstr "Sélection à main levée"
 
 #: app/tool_options.c:125
-#, fuzzy
 msgid "Fuzzy Selection"
 msgstr "Sélection floue"
 
 #: app/tool_options.c:127
-#, fuzzy
 msgid "Bezier Selection"
-msgstr "Sélection Bézier"
+msgstr "Sélection par courbes de Bézier"
 
 #: app/tool_options.c:129 app/tools.c:173
 msgid "Intelligent Scissors"
 msgstr "Ciseaux Intelligents"
 
 #: app/tool_options.c:131
-#, fuzzy
 msgid "By-Color Selection"
 msgstr "Sélection par Couleur"
 
@@ -5575,9 +5564,8 @@ msgid "Bucket Fill"
 msgstr "Remplissage"
 
 #: app/tool_options.c:424
-#, fuzzy
 msgid "Blend Tool"
-msgstr "Mélange : "
+msgstr "Outil dégradé"
 
 #: app/tool_options.c:426 app/tools.c:394
 msgid "Pencil"
@@ -5596,9 +5584,8 @@ msgid "Airbrush"
 msgstr "Aérographe"
 
 #: app/tool_options.c:434
-#, fuzzy
 msgid "Clone Tool"
-msgstr "Options de l'Outil Duplication"
+msgstr "Option duplication"
 
 #: app/tool_options.c:436
 msgid "Convolver"
@@ -5787,9 +5774,8 @@ msgid "Pick colors from the image"
 msgstr "Récupère des couleurs dans l'image"
 
 #: app/tools.c:361
-#, fuzzy
 msgid "/Tools/Paint Tools/Bucket Fill"
-msgstr "/Outils/Remplissage"
+msgstr "/Outils/Dessin/Remplissage"
 
 #: app/tools.c:365
 msgid "Fill with a color or pattern"
@@ -5800,45 +5786,40 @@ msgid "Blend"
 msgstr "Mélange"
 
 #: app/tools.c:378
-#, fuzzy
 msgid "/Tools/Paint Tools/Blend"
-msgstr "/Outils/Mélange"
+msgstr "/Outils/Dessin/Dégradé"
 
 #: app/tools.c:382
 msgid "Fill with a color gradient"
 msgstr "Remplir avec un dégradé de couleur"
 
 #: app/tools.c:395
-#, fuzzy
 msgid "/Tools/Paint Tools/Pencil"
-msgstr "/Outils/Crayon"
+msgstr "/Outils/Dessin/Crayon"
 
 #: app/tools.c:399
 msgid "Draw sharp pencil strokes"
 msgstr "Trace des traits de crayon précis"
 
 #: app/tools.c:412
-#, fuzzy
 msgid "/Tools/Paint Tools/Paintbrush"
-msgstr "/Outils/Pinceau"
+msgstr "/Outils/Dessin/Pinceau"
 
 #: app/tools.c:416
 msgid "Paint fuzzy brush strokes"
 msgstr "Peint au pinceau, d'une façon un peu floue"
 
 #: app/tools.c:429
-#, fuzzy
 msgid "/Tools/Paint Tools/Eraser"
-msgstr "/Outils/Gomme"
+msgstr "/Outils/Dessin/Gomme"
 
 #: app/tools.c:433
 msgid "Erase to background or transparency"
 msgstr "Gomme (met la couleur de fond ou rend transparent)"
 
 #: app/tools.c:446
-#, fuzzy
 msgid "/Tools/Paint Tools/Airbrush"
-msgstr "/Outils/Pinceau"
+msgstr "/Outils/Dessin/Aérographe"
 
 #: app/tools.c:450
 msgid "Airbrush with variable pressure"
@@ -5849,9 +5830,8 @@ msgid "Clone"
 msgstr "Dupliquer"
 
 #: app/tools.c:463
-#, fuzzy
 msgid "/Tools/Paint Tools/Clone"
-msgstr "/Outils/Dupliquer"
+msgstr "/Outils/Dessin/Duplicateur"
 
 #: app/tools.c:467
 msgid "Paint using patterns or image regions"
@@ -5862,9 +5842,8 @@ msgid "Convolve"
 msgstr "Convolution"
 
 #: app/tools.c:480
-#, fuzzy
 msgid "/Tools/Paint Tools/Convolve"
-msgstr "/Outils/Convolution"
+msgstr "/Outils/Dessin/Convolution"
 
 #: app/tools.c:484
 msgid "Blur or sharpen"
@@ -5875,32 +5854,28 @@ msgid "Ink"
 msgstr "Encre"
 
 #: app/tools.c:497
-#, fuzzy
 msgid "/Tools/Paint Tools/Ink"
-msgstr "/Outils/Pinceau"
+msgstr "/Outils/Dessin/Encre"
 
 #: app/tools.c:501
 msgid "Draw in ink"
 msgstr "Dessine à l'encre"
 
 #: app/tools.c:514
-#, fuzzy
 msgid "/Tools/Paint Tools/DodgeBurn"
-msgstr "/Outils/MultiplierDiviser"
+msgstr "/Outils/Dessin/Multiplier ou diviser"
 
 #: app/tools.c:530 app/tools.c:535
 msgid "Smudge"
 msgstr "Barbouiller"
 
 #: app/tools.c:531
-#, fuzzy
 msgid "/Tools/Paint Tools/Smudge"
-msgstr "/Outils/Barbouiller"
+msgstr "/Outils/Dessin/Barbouiller"
 
 #: app/tools.c:548
-#, fuzzy
 msgid "/Tools/Paint Tools/XinputAirbrush"
-msgstr "/Outils/AérographeXinput"
+msgstr "/Outils/Dessin/Aérographe Xinput"
 
 #: app/tools.c:552
 msgid "Natural Airbrush"
@@ -6031,9 +6006,8 @@ msgid "Transformation"
 msgstr "Transformation"
 
 #: app/transform_tool.c:190
-#, fuzzy
 msgid "Transform Tool"
-msgstr "Transformer"
+msgstr "Outil « transformations » (rotation, agrandissement, rapetissement, cisaillement, perspective)"
 
 #: app/transform_tool.c:213
 msgid "Rotation"
