@@ -48,10 +48,10 @@ static gint channel_signals[LAST_SIGNAL] = { 0 };
 
 static GimpDrawableClass *parent_class = NULL;
 
-guint
+GtkType
 gimp_channel_get_type ()
 {
-  static guint channel_type = 0;
+  static GtkType channel_type = 0;
 
   if (!channel_type)
     {
@@ -62,8 +62,9 @@ gimp_channel_get_type ()
 	sizeof (GimpChannelClass),
 	(GtkClassInitFunc) gimp_channel_class_init,
 	(GtkObjectInitFunc) gimp_channel_init,
-	(GtkArgSetFunc) NULL,
-	(GtkArgGetFunc) NULL,
+        /* reversed_1 */ NULL,
+	/* reversed_2 */ NULL,
+	(GtkClassInitFunc) NULL,
       };
 
       channel_type = gtk_type_unique (gimp_drawable_get_type (), &channel_info);

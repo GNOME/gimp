@@ -60,10 +60,10 @@ static gint layer_mask_signals[LAST_SIGNAL] = { 0 };
 static GimpDrawableClass *layer_parent_class = NULL;
 static GimpChannelClass *layer_mask_parent_class = NULL;
 
-guint
+GtkType
 gimp_layer_get_type ()
 {
-  static guint layer_type = 0;
+  static GtkType layer_type = 0;
 
   if (!layer_type)
     {
@@ -74,8 +74,9 @@ gimp_layer_get_type ()
 	sizeof (GimpLayerClass),
 	(GtkClassInitFunc) gimp_layer_class_init,
 	(GtkObjectInitFunc) gimp_layer_init,
-	(GtkArgSetFunc) NULL,
-	(GtkArgGetFunc) NULL,
+        /* reversed_1 */ NULL,
+	/* reversed_2 */ NULL,
+	(GtkClassInitFunc) NULL,
       };
 
       layer_type = gtk_type_unique (gimp_drawable_get_type (), &layer_info);
@@ -108,10 +109,10 @@ gimp_layer_init (GimpLayer *layer)
 {
 }
 
-guint
+GtkType
 gimp_layer_mask_get_type ()
 {
-  static guint layer_mask_type = 0;
+  static GtkType layer_mask_type = 0;
 
   if (!layer_mask_type)
     {
@@ -122,8 +123,9 @@ gimp_layer_mask_get_type ()
 	sizeof (GimpLayerMaskClass),
 	(GtkClassInitFunc) gimp_layer_mask_class_init,
 	(GtkObjectInitFunc) gimp_layer_mask_init,
-	(GtkArgSetFunc) NULL,
-	(GtkArgGetFunc) NULL,
+        /* reversed_1 */ NULL,
+	/* reversed_2 */ NULL,
+	(GtkClassInitFunc) NULL,
       };
 
       layer_mask_type = gtk_type_unique (gimp_channel_get_type (), &layer_mask_info);

@@ -1,3 +1,17 @@
+Sun Jun 28 08:32:20 1998  Tim Janik  <timj@gtk.org>
+
+	* app/layer.c (gimp_layer_mask_get_type): 
+	(gimp_layer_get_type): 
+	* app/drawable.c (gimp_drawable_get_type): 
+	* app/channel.c (gimp_channel_get_type):
+	return a GtkType value and initialize the GtkTypeInfo structure
+ 	correctly.
+
+	* app/layer.h: 
+	* app/drawable.h: 
+	* app/channel.h:
+	provide GIMP_TYPE_* and GIMP_IS_*_CLASS() macros.
+
 Sat Jun 27 23:28:26 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/interface.c: minor unused variable warning cleanup

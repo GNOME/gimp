@@ -38,13 +38,17 @@ typedef enum
 
 /* structure declarations */
 
-#define GIMP_LAYER(obj)        GTK_CHECK_CAST (obj, gimp_layer_get_type (), GimpLayer)
-#define GIMP_LAYER_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_layer_get_type(), GimpLayerClass)
-#define GIMP_IS_LAYER(obj)     GTK_CHECK_TYPE (obj, gimp_layer_get_type())
+#define GIMP_TYPE_LAYER                  (gimp_layer_get_type ())
+#define GIMP_LAYER(obj)                  (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER, GimpLayer))
+#define GIMP_LAYER_CLASS(klass)          (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER, GimpLayerClass))
+#define GIMP_IS_LAYER(obj)               (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LAYER))
+#define GIMP_IS_LAYER_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER))
 
-#define GIMP_LAYER_MASK(obj)         GTK_CHECK_CAST (obj, gimp_layer_mask_get_type (), GimpLayerMask)
-#define GIMP_LAYER_MASK_CLASS(klass) GTK_CHECK_CLASS_CAST (klass, gimp_layer_mask_get_type(), GimpLayerMaskClass)
-#define GIMP_IS_LAYER_MASK(obj)      GTK_CHECK_TYPE (obj, gimp_layer_mask_get_type())
+#define GIMP_TYPE_LAYER_MASK                  (gimp_layer_mask_get_type ())
+#define GIMP_LAYER_MASK(obj)                  (GTK_CHECK_CAST ((obj), GIMP_TYPE_LAYER_MASK, GimpLayerMask))
+#define GIMP_LAYER_MASK_CLASS(klass)          (GTK_CHECK_CLASS_CAST ((klass), GIMP_TYPE_LAYER_MASK, GimpLayerMaskClass))
+#define GIMP_IS_LAYER_MASK(obj)               (GTK_CHECK_TYPE ((obj), GIMP_TYPE_LAYER_MASK))
+#define GIMP_IS_LAYER_MASK_CLASS(klass)       (GTK_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_LAYER_MASK))
 
 typedef struct _GimpLayer      GimpLayer;
 typedef struct _GimpLayerClass GimpLayerClass;
@@ -54,8 +58,8 @@ typedef struct _GimpLayerMaskClass GimpLayerMaskClass;
 typedef GimpLayer Layer;		/* convenience */
 typedef GimpLayerMask LayerMask;	/* convenience */
 
-guint gimp_layer_get_type (void);
-guint gimp_layer_mask_get_type (void);
+GtkType gimp_layer_get_type (void);
+GtkType gimp_layer_mask_get_type (void);
 
 /*  Special undo types  */
 

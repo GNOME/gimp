@@ -48,10 +48,10 @@ static gint drawable_signals[LAST_SIGNAL] = { 0 };
 static GimpDrawableClass *parent_class = NULL;
 
 
-guint
+GtkType
 gimp_drawable_get_type ()
 {
-  static guint drawable_type = 0;
+  static GtkType drawable_type = 0;
 
   if (!drawable_type)
     {
@@ -62,8 +62,9 @@ gimp_drawable_get_type ()
 	sizeof (GimpDrawableClass),
 	(GtkClassInitFunc) gimp_drawable_class_init,
 	(GtkObjectInitFunc) gimp_drawable_init,
-	(GtkArgSetFunc) NULL,
-	(GtkArgGetFunc) NULL,
+        /* reversed_1 */ NULL,
+	/* reversed_2 */ NULL,
+	(GtkClassInitFunc) NULL,
       };
 
       drawable_type = gtk_type_unique (gtk_data_get_type (), &drawable_info);
