@@ -43,6 +43,8 @@ typedef struct _GimpDrawableListItemClass  GimpDrawableListItemClass;
 struct _GimpDrawableListItem
 {
   GimpListItem  parent_instance;
+
+  GtkWidget    *eye_button;
 };
 
 struct _GimpDrawableListItemClass

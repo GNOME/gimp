@@ -291,6 +291,7 @@ gimp_layer_copy (GimpLayer *layer,
   GIMP_DRAWABLE (new_layer)->offset_x = GIMP_DRAWABLE (layer)->offset_x;
   GIMP_DRAWABLE (new_layer)->offset_y = GIMP_DRAWABLE (layer)->offset_y;
   GIMP_DRAWABLE (new_layer)->visible  = GIMP_DRAWABLE (layer)->visible;
+
   new_layer->linked         = layer->linked;
   new_layer->preserve_trans = layer->preserve_trans;
 
@@ -1186,7 +1187,7 @@ gimp_layer_pick_correlate (GimpLayer *layer,
 
   if (x >= 0 && x < GIMP_DRAWABLE (layer)->width &&
       y >= 0 && y < GIMP_DRAWABLE (layer)->height &&
-      GIMP_DRAWABLE (layer)->visible)
+      gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
     {
       /*  If the point is inside, and the layer has no
        *  alpha channel, success!

@@ -477,7 +477,7 @@ channel_get_visible_invoker (Argument *args)
   return_args = procedural_db_return_args (&channel_get_visible_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_DRAWABLE (channel)->visible;
+    return_args[1].value.pdb_int = gimp_channel_get_visible (channel);
 
   return return_args;
 }
@@ -530,7 +530,7 @@ channel_set_visible_invoker (Argument *args)
   visible = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    GIMP_DRAWABLE (channel)->visible = visible;
+    gimp_channel_set_visible (channel, visible);
 
   return procedural_db_return_args (&channel_set_visible_proc, success);
 }

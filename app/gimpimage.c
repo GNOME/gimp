@@ -1695,8 +1695,10 @@ gimp_image_construct_layers (GimpImage *gimage,
       /*  only add layers that are visible and not floating selections 
 	  to the list  */
       if (! gimp_layer_is_floating_sel (layer) && 
-	  gimp_drawable_visible (GIMP_DRAWABLE (layer)))
-	reverse_list = g_slist_prepend (reverse_list, layer);
+	  gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
+	{
+	  reverse_list = g_slist_prepend (reverse_list, layer);
+	}
     }
 
   while (reverse_list)
@@ -1801,7 +1803,7 @@ gimp_image_construct_channels (GimpImage *gimage,
     {
       channel = (GimpChannel *) reverse_list->data;
 
-      if (gimp_drawable_visible (GIMP_DRAWABLE (channel)))
+      if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
 	{
 	  /* configure the pixel regions  */
 	  pixel_region_init (&src1PR,
@@ -1852,7 +1854,7 @@ gimp_image_initialize_projection (GimpImage *gimage,
       layer = (GimpLayer *) list->data;
       gimp_drawable_offsets (GIMP_DRAWABLE (layer), &off_x, &off_y);
 
-      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)) &&
+      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)) &&
 	  ! gimp_layer_has_alpha (layer) &&
 	  (off_x <= x) &&
 	  (off_y <= y) &&
@@ -1931,7 +1933,7 @@ gimp_image_construct (GimpImage *gimage,
       (! g_slist_next (gimage->layers)) &&        /* It's the only layer.  */
       (gimp_layer_has_alpha ((GimpLayer *) (gimage->layers->data))) && /* It's !flat.  */
                                                   /* It's visible.         */
-      (gimp_drawable_visible (GIMP_DRAWABLE (gimage->layers->data))) &&
+      (gimp_drawable_get_visible (GIMP_DRAWABLE (gimage->layers->data))) &&
       (gimp_drawable_width (GIMP_DRAWABLE (gimage->layers->data)) ==
        gimage->width) &&
       (gimp_drawable_height (GIMP_DRAWABLE (gimage->layers->data)) ==
@@ -2730,7 +2732,7 @@ gimp_image_merge_visible_layers (GimpImage *gimage,
     {
       layer = (GimpLayer *) list->data;
 
-      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (merge_list, layer);
     }
 
@@ -2781,7 +2783,7 @@ gimp_image_flatten (GimpImage *gimage)
     {
       layer = (GimpLayer *) list->data;
 
-      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (merge_list, layer);
     }
 
@@ -2821,7 +2823,7 @@ gimp_image_merge_down (GimpImage *gimage,
     {
       layer = (GimpLayer *) layer_list->data;
       
-      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
 	merge_list = g_slist_append (NULL, layer);
     }
 
@@ -3137,7 +3139,7 @@ gimp_image_merge_layers (GimpImage *gimage,
   undo_push_group_end (gimage);
 
   /*  Update the gimage  */
-  GIMP_DRAWABLE (merge_layer)->visible = TRUE;
+  gimp_drawable_set_visible (GIMP_DRAWABLE (merge_layer), TRUE);
 
   gtk_signal_emit (GTK_OBJECT (gimage), gimp_image_signals[RESTRUCTURE]);
 
@@ -3540,7 +3542,7 @@ gimp_image_add_channel (GimpImage   *gimage,
   gimp_image_set_active_channel (gimage, channel);
 
   /*  if channel is visible, update the image  */
-  if (gimp_drawable_visible (GIMP_DRAWABLE (channel)))
+  if (gimp_drawable_get_visible (GIMP_DRAWABLE (channel)))
     drawable_update (GIMP_DRAWABLE (channel), 
 		     0, 0, 
 		     gimp_drawable_width (GIMP_DRAWABLE (channel)), 
@@ -3977,7 +3979,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
       layer = (GimpLayer *) list->data;
 
       /*  only add layers that are visible to the list  */
-      if (gimp_drawable_visible (GIMP_DRAWABLE (layer)))
+      if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
 	{
 	  /*  floating selections are added right above the layer 
 	      they are attached to  */

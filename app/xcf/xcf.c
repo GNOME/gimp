@@ -659,17 +659,21 @@ xcf_save_layer_props (XcfInfo   *info,
     }
 
   xcf_save_prop (info, PROP_OPACITY, layer->opacity);
-  xcf_save_prop (info, PROP_VISIBLE, GIMP_DRAWABLE(layer)->visible);
+  xcf_save_prop (info, PROP_VISIBLE,
+		 gimp_drawable_get_visible (GIMP_DRAWABLE (layer)));
   xcf_save_prop (info, PROP_LINKED, layer->linked);
   xcf_save_prop (info, PROP_PRESERVE_TRANSPARENCY, layer->preserve_trans);
   xcf_save_prop (info, PROP_APPLY_MASK, layer->apply_mask);
   xcf_save_prop (info, PROP_EDIT_MASK, layer->edit_mask);
   xcf_save_prop (info, PROP_SHOW_MASK, layer->show_mask);
-  xcf_save_prop (info, PROP_OFFSETS, GIMP_DRAWABLE(layer)->offset_x, GIMP_DRAWABLE(layer)->offset_y);
+  xcf_save_prop (info, PROP_OFFSETS,
+		 GIMP_DRAWABLE (layer)->offset_x,
+		 GIMP_DRAWABLE (layer)->offset_y);
   xcf_save_prop (info, PROP_MODE, layer->mode);
-  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE(layer)->tattoo);
-  if (parasite_list_length (GIMP_DRAWABLE(layer)->parasites) > 0)
-    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE(layer)->parasites);
+  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE (layer)->tattoo);
+
+  if (parasite_list_length (GIMP_DRAWABLE (layer)->parasites) > 0)
+    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE (layer)->parasites);
 
   xcf_save_prop (info, PROP_END);
 }
@@ -679,6 +683,8 @@ xcf_save_channel_props (XcfInfo     *info,
 			GImage      *gimage,
 			GimpChannel *channel)
 {
+  guchar col[3];
+
   if (channel == gimp_image_get_active_channel (gimage))
     xcf_save_prop (info, PROP_ACTIVE_CHANNEL);
 
@@ -686,19 +692,17 @@ xcf_save_channel_props (XcfInfo     *info,
     xcf_save_prop (info, PROP_SELECTION);
 
   xcf_save_prop (info, PROP_OPACITY, (gint) (channel->color.a * 255.999));
-  xcf_save_prop (info, PROP_VISIBLE, GIMP_DRAWABLE(channel)->visible);
+  xcf_save_prop (info, PROP_VISIBLE,
+		 gimp_drawable_get_visible (GIMP_DRAWABLE (channel)));
   xcf_save_prop (info, PROP_SHOW_MASKED, channel->show_masked);
 
-  {
-    guchar col[3];
+  gimp_rgb_get_uchar (&channel->color, &col[0], &col[1], &col[2]);
+  xcf_save_prop (info, PROP_COLOR, col);
 
-    gimp_rgb_get_uchar (&channel->color, &col[0], &col[1], &col[2]);
-    xcf_save_prop (info, PROP_COLOR, col);
-  }
+  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE (channel)->tattoo);
 
-  xcf_save_prop (info, PROP_TATTOO, GIMP_DRAWABLE(channel)->tattoo);
-  if (parasite_list_length (GIMP_DRAWABLE(channel)->parasites) > 0)
-    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE(channel)->parasites);
+  if (parasite_list_length (GIMP_DRAWABLE (channel)->parasites) > 0)
+    xcf_save_prop (info, PROP_PARASITES, GIMP_DRAWABLE (channel)->parasites);
 
   xcf_save_prop (info, PROP_END);
 }
@@ -2067,7 +2071,13 @@ xcf_load_layer_props (XcfInfo   *info,
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->opacity, 1);
 	  break;
 	case PROP_VISIBLE:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(layer)->visible, 1);
+	  {
+	    gboolean visible;
+
+	    info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
+	    gimp_drawable_set_visible (GIMP_DRAWABLE (layer),
+				       visible ? TRUE : FALSE);
+	  }
 	  break;
 	case PROP_LINKED:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &layer->linked, 1);
@@ -2166,7 +2176,13 @@ xcf_load_channel_props (XcfInfo     *info,
 	  }
 	  break;
 	case PROP_VISIBLE:
-	  info->cp += xcf_read_int32 (info->fp, (guint32*) &GIMP_DRAWABLE(channel)->visible, 1);
+	  {
+	    gboolean visible;
+
+	    info->cp += xcf_read_int32 (info->fp, (guint32 *) &visible, 1);
+	    gimp_drawable_set_visible (GIMP_DRAWABLE (channel),
+				       visible ? TRUE : FALSE);
+	  }
 	  break;
 	case PROP_SHOW_MASKED:
 	  info->cp += xcf_read_int32 (info->fp, (guint32*) &channel->show_masked, 1);

@@ -1029,7 +1029,7 @@ layer_get_visible_invoker (Argument *args)
   return_args = procedural_db_return_args (&layer_get_visible_proc, success);
 
   if (success)
-    return_args[1].value.pdb_int = GIMP_DRAWABLE (layer)->visible;
+    return_args[1].value.pdb_int = gimp_layer_get_visible (layer);
 
   return return_args;
 }
@@ -1082,7 +1082,7 @@ layer_set_visible_invoker (Argument *args)
   visible = args[1].value.pdb_int ? TRUE : FALSE;
 
   if (success)
-    GIMP_DRAWABLE (layer)->visible = visible;
+    gimp_layer_set_visible (layer, visible);
 
   return procedural_db_return_args (&layer_set_visible_proc, success);
 }

@@ -109,7 +109,6 @@ void            gimp_channel_resize            (GimpChannel       *channel,
 						gint               offx,
 						gint               offy);
 
-gboolean        gimp_channel_toggle_visibility (GimpChannel       *channel);
 
 /* selection mask functions  */
 

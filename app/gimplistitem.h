@@ -58,6 +58,10 @@ struct _GimpListItem
 struct _GimpListItemClass
 {
   GtkListItemClass  parent_class;
+
+  void (* set_viewable) (GimpListItem *list_item,
+                         GimpViewable *viewable,
+                         gint          preview_size);
 };
 
 

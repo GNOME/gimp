@@ -246,11 +246,7 @@ CODE
 
 &channel_accessors('name', 'string', 'name', 1);
 
-&channel_accessors('visible', 'boolean', 'visibility', 0,
-		   [ '$outargs[0]->{alias} =~
-			  s/(channel)/GIMP_DRAWABLE ($1)/',
-		     '$invoke{code} =~
-			  s/(channel)/GIMP_DRAWABLE ($1)/' ]);
+&channel_accessors('visible', 'boolean', 'visibility', 1);
 
 &channel_accessors('show_masked', 'boolean', 'composite method', 0,
 		   <<'CODE');

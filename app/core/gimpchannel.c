@@ -204,7 +204,9 @@ gimp_channel_copy (const GimpChannel *channel)
 				  GIMP_DRAWABLE (channel)->height, 
 				  channel_name,
 				  &channel->color);
+
   GIMP_DRAWABLE (new_channel)->visible = GIMP_DRAWABLE (channel)->visible;
+
   new_channel->show_masked = channel->show_masked;
 
   /*  copy the contents across channels  */
@@ -411,14 +413,6 @@ gimp_channel_resize (GimpChannel *channel,
 		   0, 0,
 		   GIMP_DRAWABLE (channel)->width,
 		   GIMP_DRAWABLE (channel)->height);
-}
-
-gboolean
-gimp_channel_toggle_visibility (GimpChannel *channel)
-{
-  GIMP_DRAWABLE (channel)->visible = !GIMP_DRAWABLE (channel)->visible;
-
-  return GIMP_DRAWABLE (channel)->visible;
 }
 
 

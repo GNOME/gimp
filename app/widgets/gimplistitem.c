@@ -30,12 +30,27 @@
 #include "gimpdrawable.h"
 #include "gimpdrawablelistitem.h"
 #include "gimplistitem.h"
+#include "gimpmarshal.h"
 #include "gimppreview.h"
 #include "gimpviewable.h"
 
 
+enum
+{
+  SET_VIEWABLE,
+  LAST_SIGNAL
+};
+
+
 static void           gimp_list_item_class_init    (GimpListItemClass *klass);
 static void           gimp_list_item_init          (GimpListItem      *list_item);
+
+static void           gimp_list_item_set_viewable  (GimpListItem      *list_item,
+                                                    GimpViewable      *viewable,
+                                                    gint               preview_size);
+static void           gimp_list_item_real_set_viewable (GimpListItem  *list_item,
+                                                        GimpViewable  *viewable,
+                                                        gint           preview_size);
 
 static void           gimp_list_item_draw          (GtkWidget         *widget,
                                                     GdkRectangle      *area);
@@ -59,7 +74,9 @@ static GimpViewable * gimp_list_item_drag_viewable (GtkWidget         *widget,
                                                     gpointer           data);
 
 
-static GtkListItemClass *parent_class = NULL;
+static guint list_item_signals[LAST_SIGNAL] = { 0 };
+
+static GtkListItemClass *parent_class       = NULL;
 
 
 GtkType
@@ -98,10 +115,23 @@ gimp_list_item_class_init (GimpListItemClass *klass)
 
   parent_class = gtk_type_class (GTK_TYPE_LIST_ITEM);
 
+  list_item_signals[SET_VIEWABLE] = 
+    gtk_signal_new ("set_viewable",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpListItemClass,
+                                       set_viewable),
+                    gimp_marshal_NONE__OBJECT_INT,
+                    GTK_TYPE_NONE, 2,
+                    GIMP_TYPE_VIEWABLE,
+                    GTK_TYPE_INT);
+
   widget_class->draw        = gimp_list_item_draw;
   widget_class->drag_leave  = gimp_list_item_drag_leave;
   widget_class->drag_motion = gimp_list_item_drag_motion;
   widget_class->drag_drop   = gimp_list_item_drag_drop;
+
+  klass->set_viewable       = gimp_list_item_real_set_viewable;
 }
 
 static void
@@ -243,6 +273,25 @@ gimp_list_item_new (GimpViewable  *viewable,
       list_item = gtk_type_new (GIMP_TYPE_LIST_ITEM);
     }
 
+  gimp_list_item_set_viewable (list_item, viewable, preview_size);
+
+  return GTK_WIDGET (list_item);
+}
+
+static void
+gimp_list_item_set_viewable (GimpListItem *list_item,
+                             GimpViewable *viewable,
+                             gint          preview_size)
+{
+  gtk_signal_emit (GTK_OBJECT (list_item), list_item_signals[SET_VIEWABLE],
+                   viewable, preview_size);
+}
+
+static void
+gimp_list_item_real_set_viewable (GimpListItem *list_item,
+                                  GimpViewable *viewable,
+                                  gint          preview_size)
+{
   list_item->preview = gimp_preview_new (viewable, preview_size, 1, FALSE);
   gtk_box_pack_start (GTK_BOX (list_item->hbox), list_item->preview,
                       FALSE, FALSE, 0);
@@ -272,8 +321,6 @@ gimp_list_item_new (GimpViewable  *viewable,
                                   GTK_DEST_DEFAULT_ALL,
                                   GTK_OBJECT (viewable)->klass->type,
                                   GDK_ACTION_MOVE);
-
-  return GTK_WIDGET (list_item);
 }
 
 void

@@ -468,9 +468,7 @@ HELP
 
 &layer_accessors('name', 'string', 'name', 1, 0);
 
-&layer_accessors('visible', 'boolean', 'visibility', 0, 0,
-		 [ '$outargs[0]->{alias} =~ s/(layer)/GIMP_DRAWABLE ($1)/',
-		   '$invoke{code} =~ s/(layer)/GIMP_DRAWABLE ($1)/' ]);
+&layer_accessors('visible', 'boolean', 'visibility', 1, 0);
 
 &layer_accessors('preserve_trans', 'boolean', 'preserve transperancy', 0, 1);
 

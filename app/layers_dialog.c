@@ -2656,7 +2656,8 @@ layer_widget_button_events (GtkWidget *widget,
       
       if (widget == layer_widget->eye_widget)
 	{
-	  old_state = GIMP_DRAWABLE (layer_widget->layer)->visible;
+	  old_state =
+            gimp_drawable_get_visible (GIMP_DRAWABLE (layer_widget->layer));
 
 	  /*  If this was a shift-click, make all/none visible  */
 	  if (event->button.state & GDK_SHIFT_MASK)
@@ -2667,8 +2668,8 @@ layer_widget_button_events (GtkWidget *widget,
 	  else
 	    {
 	      exclusive = FALSE;
-	      GIMP_DRAWABLE (layer_widget->layer)->visible =
-		!GIMP_DRAWABLE (layer_widget->layer)->visible;
+	      gimp_drawable_set_visible (GIMP_DRAWABLE (layer_widget->layer),
+                                         ! old_state);
 	      layer_widget_eye_redraw (layer_widget);
 	    }
 	}
@@ -2698,7 +2699,7 @@ layer_widget_button_events (GtkWidget *widget,
 				     layer_widget->gimage->height);
 	      gdisplays_flush ();
 	    }
-	  else if (old_state != GIMP_DRAWABLE (layer_widget->layer)->visible)
+	  else if (old_state != gimp_drawable_get_visible (GIMP_DRAWABLE (layer_widget->layer)))
 	    {
 	      /*  Invalidate the gimage preview  */
 	      gimp_viewable_invalidate_preview
@@ -2733,8 +2734,8 @@ layer_widget_button_events (GtkWidget *widget,
 		}
 	      else
 		{
-		  GIMP_DRAWABLE (layer_widget->layer)->visible =
-		    !GIMP_DRAWABLE (layer_widget->layer)->visible;
+		  gimp_drawable_set_visible (GIMP_DRAWABLE (layer_widget->layer),
+                                             ! gimp_drawable_get_visible (GIMP_DRAWABLE (layer_widget->layer)));
 		  layer_widget_eye_redraw (layer_widget);
 		}
 	    }
@@ -3219,7 +3220,7 @@ layer_widget_eye_redraw (LayerWidget *layer_widget)
 
   gdk_window_set_background (layer_widget->eye_widget->window, color);
 
-  if (GIMP_DRAWABLE(layer_widget->layer)->visible)
+  if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer_widget->layer)))
     {
       if (!eye_pixmap[NORMAL])
 	{
@@ -3354,7 +3355,7 @@ layer_widget_exclusive_visible (LayerWidget *layer_widget)
       lw = (LayerWidget *) list->data;
 
       if (lw != layer_widget)
-	visible |= GIMP_DRAWABLE (lw->layer)->visible;
+	visible |= gimp_drawable_get_visible (GIMP_DRAWABLE (lw->layer));
     }
 
   /*  Now, toggle the visibility for all layers except the specified one  */
@@ -3363,9 +3364,9 @@ layer_widget_exclusive_visible (LayerWidget *layer_widget)
       lw = (LayerWidget *) list->data;
 
       if (lw != layer_widget)
-	GIMP_DRAWABLE (lw->layer)->visible = !visible;
+	gimp_drawable_set_visible (GIMP_DRAWABLE (lw->layer), ! visible);
       else
-	GIMP_DRAWABLE (lw->layer)->visible = TRUE;
+	gimp_drawable_set_visible (GIMP_DRAWABLE (lw->layer), TRUE);
 
       layer_widget_eye_redraw (lw);
     }

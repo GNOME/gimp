@@ -220,7 +220,7 @@ floating_sel_to_layer (GimpLayer *layer)
   /*  Set pointers  */
   layer->fs.drawable = NULL;
   gimage->floating_sel = NULL;
-  GIMP_DRAWABLE (layer)->visible = TRUE;
+  gimp_drawable_set_visible (GIMP_DRAWABLE (layer), TRUE);
 
   /*  if the floating selection exceeds the attached layer's extents,
       update the new layer  */
@@ -406,14 +406,18 @@ floating_sel_composite (GimpLayer *layer,
    *  is constructed, before any other composition takes place.
    */
 
-  /*  If this isn't the first composite, restore the image underneath  */
+  /*  If this isn't the first composite,
+   *  restore the image underneath
+   */
   if (! layer->fs.initial)
     floating_sel_restore (layer, x, y, w, h);
-  else if (GIMP_DRAWABLE(layer)->visible)
+  else if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
     layer->fs.initial = FALSE;
 
-  /*  First restore what's behind the image if necessary, then check for visibility  */
-  if (GIMP_DRAWABLE(layer)->visible)
+  /*  First restore what's behind the image if necessary,
+   *  then check for visibility
+   */
+  if (gimp_drawable_get_visible (GIMP_DRAWABLE (layer)))
     {
       /*  Find the minimum area we need to composite -- in gimage space  */
       gimp_drawable_offsets (layer->fs.drawable, &offx, &offy);

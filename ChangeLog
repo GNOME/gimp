@@ -1,3 +1,33 @@
+2001-03-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdrawable.[ch]: new function gimp_drawable_set_visible().
+	Renamed gimp_drawable_visible() to gimp_drawable_get_visible().
+	Added a "visibility_changed" signal.
+
+	* app/gimpdrawablelistitem.[ch]
+
+	* app/gimplistitem.[ch]
+
+	* app/gimpchannel.[ch]: removed unused function
+	gimp_channel_toggle_visibility().
+
+	* app/channels_dialog.c
+	* app/floating_sel.c
+	* app/gimage_mask.c
+	* app/gimpimage.c
+	* app/gimplayer.c
+	* app/layers_dialog.c
+	* app/xcf.c
+	* app/pdb/channel_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/pdb_glue.h
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/layer.pdb: removed direct access of
+	drawable->visible and use the functions instead. Also makes PDB
+	code generation nicer.
+
+	* pixmaps/eye.xpm: cropped it a bit.
+
 2001-03-04  Zbigniew Chyla  <cyba@gnome.pl>
 
 	* app/commands.c (image_scale_callback),

@@ -1898,6 +1898,7 @@ channel_widget_button_events (GtkWidget *widget,
 			      gpointer   data)
 {
   ChannelWidget  *channel_widget;
+  GimpChannel    *channel;
   GtkWidget      *event_widget;
   GdkEventButton *bevent;
   gint            return_val;
@@ -1913,10 +1914,12 @@ channel_widget_button_events (GtkWidget *widget,
     (ChannelWidget *) gtk_object_get_user_data (GTK_OBJECT (widget));
   return_val = FALSE;
 
+  channel = channel_widget->channel;
+
   switch (channel_widget->type)
     {
     case AUXILLARY_CHANNEL:
-      visible = GIMP_DRAWABLE (channel_widget->channel)->visible;
+      visible = gimp_drawable_get_visible (GIMP_DRAWABLE (channel));
       width   = GIMP_DRAWABLE (channel_widget->channel)->width;
       height  = GIMP_DRAWABLE (channel_widget->channel)->height;
       break;
@@ -1965,7 +1968,7 @@ channel_widget_button_events (GtkWidget *widget,
 	    {
 	      exclusive = FALSE;
 	      if (channel_widget->type == AUXILLARY_CHANNEL)
-		GIMP_DRAWABLE (channel_widget->channel)->visible = !visible;
+		gimp_drawable_set_visible (GIMP_DRAWABLE (channel), ! visible);
 	      else
 		gimp_image_set_component_visible (channel_widget->gimage,
 						  channel_widget->type,
@@ -2014,7 +2017,8 @@ channel_widget_button_events (GtkWidget *widget,
 	      else
 		{
 		  if (channel_widget->type == AUXILLARY_CHANNEL)
-		    GIMP_DRAWABLE (channel_widget->channel)->visible = !visible;
+		    gimp_drawable_set_visible (GIMP_DRAWABLE (channel),
+					       ! visible);
 		  else
 		    gimp_image_set_component_visible (channel_widget->gimage,
 						      channel_widget->type,
@@ -2306,7 +2310,8 @@ channel_widget_eye_redraw (ChannelWidget *channel_widget)
   switch (channel_widget->type)
     {
     case AUXILLARY_CHANNEL:
-      visible = GIMP_DRAWABLE (channel_widget->channel)->visible;
+      visible =
+	gimp_drawable_get_visible (GIMP_DRAWABLE (channel_widget->channel));
       break;
     default:
       visible = gimp_image_get_component_visible (channel_widget->gimage,
@@ -2375,7 +2380,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 	  switch (cw->type)
 	    {
 	    case AUXILLARY_CHANNEL:
-	      visible |= GIMP_DRAWABLE (cw->channel)->visible;
+	      visible |= gimp_drawable_get_visible (GIMP_DRAWABLE (cw->channel));
 	      break;
 	    default:
 	      visible |= gimp_image_get_component_visible (cw->gimage, cw->type);
@@ -2393,7 +2398,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 	switch (cw->type)
 	  {
 	  case AUXILLARY_CHANNEL:
-	    GIMP_DRAWABLE (cw->channel)->visible = !visible;
+	    gimp_drawable_set_visible (GIMP_DRAWABLE (cw->channel), ! visible);
 	    break;
 	  default:
 	    gimp_image_set_component_visible (cw->gimage, cw->type, !visible);
@@ -2403,7 +2408,7 @@ channel_widget_exclusive_visible (ChannelWidget *channel_widget)
 	switch (cw->type)
 	  {
 	  case AUXILLARY_CHANNEL:
-	    GIMP_DRAWABLE (cw->channel)->visible = TRUE;
+	    gimp_drawable_set_visible (GIMP_DRAWABLE (cw->channel), TRUE);
 	    break;
 	  default:
 	    gimp_image_set_component_visible (cw->gimage, cw->type, TRUE);

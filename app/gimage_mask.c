@@ -557,7 +557,8 @@ gimage_mask_save (GImage *gimage)
   new_channel = gimp_channel_copy (gimp_image_get_mask (gimage));
 
   /*  saved selections are not visible by default  */
-  GIMP_DRAWABLE(new_channel)->visible = FALSE;
+  gimp_drawable_set_visible (GIMP_DRAWABLE (new_channel), FALSE);
+
   gimp_image_add_channel (gimage, new_channel, -1);
 
   return new_channel;

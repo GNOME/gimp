@@ -52,6 +52,7 @@
 
 enum
 {
+  VISIBILITY_CHANGED,
   REMOVED,
   LAST_SIGNAL
 };
@@ -111,6 +112,15 @@ gimp_drawable_class_init (GimpDrawableClass *klass)
   viewable_class    = (GimpViewableClass *) klass;
 
   parent_class = gtk_type_class (GIMP_TYPE_VIEWABLE);
+
+  gimp_drawable_signals[VISIBILITY_CHANGED] =
+    gtk_signal_new ("visibility_changed",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpDrawableClass,
+                                       visibility_changed),
+                    gtk_signal_default_marshaller,
+                    GTK_TYPE_NONE, 0);
 
   gimp_drawable_signals[REMOVED] =
     gtk_signal_new ("removed",
@@ -346,8 +356,9 @@ gimp_drawable_configure (GimpDrawable  *drawable,
   if (drawable->tiles)
     tile_manager_destroy (drawable->tiles);
 
-  drawable->tiles   = tile_manager_new (width, height, bpp);
-  drawable->visible = TRUE;
+  drawable->tiles = tile_manager_new (width, height, bpp);
+
+  gimp_drawable_set_visible (drawable, TRUE);
 
   if (gimage)
     gimp_drawable_set_gimage (drawable, gimage);
@@ -594,11 +605,30 @@ gimp_drawable_type_with_alpha (const GimpDrawable *drawable)
 }
 
 gboolean
-gimp_drawable_visible (const GimpDrawable *drawable)
+gimp_drawable_get_visible (const GimpDrawable *drawable)
 {
+  g_return_val_if_fail (drawable != NULL, FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
 
   return drawable->visible;
+}
+
+void
+gimp_drawable_set_visible (GimpDrawable *drawable,
+                           gboolean      visible)
+{
+  g_return_if_fail (drawable != NULL);
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
+  visible = visible ? TRUE : FALSE;
+
+  if (drawable->visible != visible)
+    {
+      drawable->visible = visible;
+
+      gtk_signal_emit (GTK_OBJECT (drawable),
+                       gimp_drawable_signals[VISIBILITY_CHANGED]);
+    }
 }
 
 guchar *
