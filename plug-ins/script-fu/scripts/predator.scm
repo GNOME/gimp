@@ -105,7 +105,7 @@
 		    "Adrian Likins <adrian@gimp.org>"
 		    "Adrian Likins"
 		    "10/12/97"
-		    "RGB RGBA GRAY GRAYA"
+		    "RGB RGBA"
 		    SF-IMAGE "Image" 0
 		    SF-DRAWABLE "Drawable" 0
 		    SF-VALUE "edge-amount" "2"

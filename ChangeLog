@@ -1,3 +1,9 @@
+Tue May 26 17:20:26 EDT 1998 Adrian Likins <adrian@gimp.org>
+
+	* plug-ins/sript-fu/scripts/predator.scm: made insesitive on
+	greyscale images
+
+
 Tue May 26 12:03:07 PDT 1998 Manish Singh <yosh@gimp.org>
 
 	* app/batch.c: do "-" to "_" conversion after an failed pdb
