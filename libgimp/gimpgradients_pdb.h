@@ -44,6 +44,11 @@ gchar*   gimp_gradients_get_gradient_data (const gchar    *name,
 					   gboolean        reverse,
 					   gint           *width,
 					   gdouble       **grad_data);
+gchar*   gimp_gradients_new               (const gchar    *name);
+gchar*   gimp_gradients_duplicate         (const gchar    *name);
+gboolean gimp_gradients_delete            (const gchar    *name);
+gchar*   gimp_gradients_rename            (const gchar    *name,
+					   const gchar    *new_name);
 
 
 G_END_DECLS

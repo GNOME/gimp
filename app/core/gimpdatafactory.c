@@ -428,6 +428,33 @@ gimp_data_factory_data_duplicate (GimpDataFactory *factory,
   return new_data;
 }
 
+gboolean
+gimp_data_factory_data_delete (GimpDataFactory  *factory,
+                               GimpData         *data,
+                               gboolean          delete_from_disk,
+                               GError          **error)
+{
+  gboolean retval = TRUE;
+
+  g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), FALSE);
+  g_return_val_if_fail (GIMP_IS_DATA (data), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (gimp_container_have (factory->container, GIMP_OBJECT (data)))
+    {
+      g_object_ref (data);
+
+      gimp_container_remove (factory->container, GIMP_OBJECT (data));
+
+      if (delete_from_disk && data->filename)
+        retval = gimp_data_delete_from_disk (data, error);
+
+      g_object_unref (data);
+    }
+
+  return retval;
+}
+
 GimpData *
 gimp_data_factory_data_get_standard (GimpDataFactory *factory)
 {

@@ -44,6 +44,10 @@ static ProcRecord gradients_set_gradient_proc;
 static ProcRecord gradients_sample_uniform_proc;
 static ProcRecord gradients_sample_custom_proc;
 static ProcRecord gradients_get_gradient_data_proc;
+static ProcRecord gradients_new_proc;
+static ProcRecord gradients_duplicate_proc;
+static ProcRecord gradients_delete_proc;
+static ProcRecord gradients_rename_proc;
 
 void
 register_gradients_procs (Gimp *gimp)
@@ -55,6 +59,10 @@ register_gradients_procs (Gimp *gimp)
   procedural_db_register (gimp, &gradients_sample_uniform_proc);
   procedural_db_register (gimp, &gradients_sample_custom_proc);
   procedural_db_register (gimp, &gradients_get_gradient_data_proc);
+  procedural_db_register (gimp, &gradients_new_proc);
+  procedural_db_register (gimp, &gradients_duplicate_proc);
+  procedural_db_register (gimp, &gradients_delete_proc);
+  procedural_db_register (gimp, &gradients_rename_proc);
 }
 
 static Argument *
@@ -581,4 +589,307 @@ static ProcRecord gradients_get_gradient_data_proc =
   3,
   gradients_get_gradient_data_outargs,
   { { gradients_get_gradient_data_invoker } }
+};
+
+static Argument *
+gradients_new_invoker (Gimp        *gimp,
+                       GimpContext *context,
+                       Argument    *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpGradient * gradient = NULL;;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      gradient = (GimpGradient *)
+        gimp_data_factory_data_new (gimp->gradient_factory, name);
+    }
+
+  return_args = procedural_db_return_args (&gradients_new_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient)->name);
+
+  return return_args;
+}
+
+static ProcArg gradients_new_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The requested name of the new gradient"
+  }
+};
+
+static ProcArg gradients_new_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The actual new gradient name"
+  }
+};
+
+static ProcRecord gradients_new_proc =
+{
+  "gimp_gradients_new",
+  "Creates a new gradient",
+  "This procedure creates a new, uninitialized gradient",
+  "Shlomi Fish",
+  "Shlomi Fish",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  gradients_new_inargs,
+  1,
+  gradients_new_outargs,
+  { { gradients_new_invoker } }
+};
+
+static Argument *
+gradients_duplicate_invoker (Gimp        *gimp,
+                             GimpContext *context,
+                             Argument    *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  GimpGradient *gradient = NULL;
+  GimpGradient *gradient_copy = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (strlen (name))
+      {
+        gradient = (GimpGradient *)
+          gimp_container_get_child_by_name (gimp->gradient_factory->container,
+                                            name);
+      }
+    else
+      {
+        gradient = gimp_context_get_gradient (context);
+      }
+
+      if (gradient)
+        {
+          gradient_copy = (GimpGradient *)
+            gimp_data_factory_data_duplicate (gimp->gradient_factory,
+                                              GIMP_DATA (gradient));
+
+          success = (gradient_copy != NULL);
+        }
+       else
+        {
+          success = FALSE;
+        }
+    }
+
+  return_args = procedural_db_return_args (&gradients_duplicate_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient_copy)->name);
+
+  return return_args;
+}
+
+static ProcArg gradients_duplicate_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the gradient to duplicate"
+  }
+};
+
+static ProcArg gradients_duplicate_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the gradient's copy"
+  }
+};
+
+static ProcRecord gradients_duplicate_proc =
+{
+  "gimp_gradients_duplicate",
+  "Duplicates a gradient",
+  "This procedure creates an identical gradient by a different name",
+  "Shlomi Fish",
+  "Shlomi Fish",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  gradients_duplicate_inargs,
+  1,
+  gradients_duplicate_outargs,
+  { { gradients_duplicate_invoker } }
+};
+
+static Argument *
+gradients_delete_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
+{
+  gboolean success = TRUE;
+  gchar *name;
+  GimpGradient *gradient = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (strlen (name))
+      {
+        gradient = (GimpGradient *)
+          gimp_container_get_child_by_name (gimp->gradient_factory->container,
+                                            name);
+      }
+    else
+      {
+        gradient = gimp_context_get_gradient (context);
+      }
+
+      success = (gradient && GIMP_DATA (gradient)->deletable);
+
+      if (success)
+        {
+          GError *error = NULL;
+
+          success = gimp_data_factory_data_delete (gimp->gradient_factory,
+                                                   GIMP_DATA (gradient),
+                                                   TRUE, &error);
+
+          if (! success)
+            {
+              g_message (error->message);
+              g_clear_error (&error);
+            }
+        }
+    }
+
+  return procedural_db_return_args (&gradients_delete_proc, success);
+}
+
+static ProcArg gradients_delete_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the gradient to delete"
+  }
+};
+
+static ProcRecord gradients_delete_proc =
+{
+  "gimp_gradients_delete",
+  "Deletes a gradient",
+  "This procedure deletes a gradient",
+  "Shlomi Fish",
+  "Shlomi Fish",
+  "2004",
+  GIMP_INTERNAL,
+  1,
+  gradients_delete_inargs,
+  0,
+  NULL,
+  { { gradients_delete_invoker } }
+};
+
+static Argument *
+gradients_rename_invoker (Gimp        *gimp,
+                          GimpContext *context,
+                          Argument    *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  gchar *name;
+  gchar *new_name;
+  GimpGradient *gradient = NULL;
+
+  name = (gchar *) args[0].value.pdb_pointer;
+  if (name == NULL || !g_utf8_validate (name, -1, NULL))
+    success = FALSE;
+
+  new_name = (gchar *) args[1].value.pdb_pointer;
+  if (new_name == NULL || !g_utf8_validate (new_name, -1, NULL))
+    success = FALSE;
+
+  if (success)
+    {
+      if (strlen (name))
+      {
+        gradient = (GimpGradient *)
+          gimp_container_get_child_by_name (gimp->gradient_factory->container,
+                                            name);
+      }
+    else
+      {
+        gradient = gimp_context_get_gradient (context);
+      }
+
+      success = (gradient && GIMP_DATA (gradient)->writable);
+
+      if (success)
+        gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+    }
+
+  return_args = procedural_db_return_args (&gradients_rename_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_pointer = g_strdup (GIMP_OBJECT (gradient)->name);
+
+  return return_args;
+}
+
+static ProcArg gradients_rename_inargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The name of the gradient to rename"
+  },
+  {
+    GIMP_PDB_STRING,
+    "new_name",
+    "The new name of the gradient"
+  }
+};
+
+static ProcArg gradients_rename_outargs[] =
+{
+  {
+    GIMP_PDB_STRING,
+    "name",
+    "The actual new name of the gradient"
+  }
+};
+
+static ProcRecord gradients_rename_proc =
+{
+  "gimp_gradients_rename",
+  "Rename a gradient",
+  "This procedure renames a gradient",
+  "Shlomi Fish",
+  "Shlomi Fish",
+  "2004",
+  GIMP_INTERNAL,
+  2,
+  gradients_rename_inargs,
+  1,
+  gradients_rename_outargs,
+  { { gradients_rename_invoker } }
 };

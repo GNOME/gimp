@@ -134,26 +134,17 @@ data_delete_callback (GtkWidget *widget,
 {
   GimpDataDeleteData *delete_data = data;
 
-  if (delete && gimp_container_have (delete_data->factory->container,
-                                     GIMP_OBJECT (delete_data->data)))
+  if (delete)
     {
-      g_object_ref (delete_data->data);
+      GError *error = NULL;
 
-      gimp_container_remove (delete_data->factory->container,
-			     GIMP_OBJECT (delete_data->data));
-
-      if (delete_data->data->filename)
+      if (! gimp_data_factory_data_delete (delete_data->factory,
+                                           delete_data->data,
+                                           TRUE, &error))
         {
-          GError *error = NULL;
-
-          if (! gimp_data_delete_from_disk (delete_data->data, &error))
-            {
-              g_message (error->message);
-              g_clear_error (&error);
-            }
+          g_message (error->message);
+          g_clear_error (&error);
         }
-
-      g_object_unref (delete_data->data);
     }
 }
 

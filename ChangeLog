@@ -1,5 +1,20 @@
 2004-06-01  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdatafactory.[ch]: added new function
+	gimp_data_factory_data_delete().
+
+	* app/actions/data-commands.c (data_delete_callback): use it.
+
+	* tools/pdbgen/pdb/gradients.pdb: applied (slightly modified)
+	patch from Shlomi Fish which adds PDB wrappers to create, delete,
+	duplicate and rename gradients.
+
+	* app/pdb/gradients_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpgradients_pdb.[ch]: regenerated.
+
+2004-06-01  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.h: renamed the values of the
 	GimpGradientSegment* enums from GIMP_GRAD_* to
 	GIMP_GRADIENT_SEGMENT_* because they are exported now.

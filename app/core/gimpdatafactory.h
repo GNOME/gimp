@@ -87,18 +87,22 @@ GimpDataFactory * gimp_data_factory_new      (Gimp                             *
 					      GimpDataNewFunc                   new_func,
 					      GimpDataGetStandardFunc           standard_func);
 
-void       gimp_data_factory_data_init         (GimpDataFactory *factory,
-						gboolean         no_data);
-void       gimp_data_factory_data_save         (GimpDataFactory *factory);
-void       gimp_data_factory_data_free         (GimpDataFactory *factory);
+void       gimp_data_factory_data_init         (GimpDataFactory  *factory,
+						gboolean          no_data);
+void       gimp_data_factory_data_save         (GimpDataFactory  *factory);
+void       gimp_data_factory_data_free         (GimpDataFactory  *factory);
 
-GimpData * gimp_data_factory_data_new          (GimpDataFactory *factory,
-						const gchar     *name);
-GimpData * gimp_data_factory_data_duplicate    (GimpDataFactory *factory,
-						GimpData        *data);
-GimpData * gimp_data_factory_data_get_standard (GimpDataFactory *factory);
-gboolean   gimp_data_factory_data_save_single  (GimpDataFactory *factory,
-                                                GimpData        *data);
+GimpData * gimp_data_factory_data_new          (GimpDataFactory  *factory,
+						const gchar      *name);
+GimpData * gimp_data_factory_data_duplicate    (GimpDataFactory  *factory,
+						GimpData         *data);
+gboolean   gimp_data_factory_data_delete       (GimpDataFactory  *factory,
+                                                GimpData         *data,
+                                                gboolean          delete_from_disk,
+                                                GError          **error);
+GimpData * gimp_data_factory_data_get_standard (GimpDataFactory  *factory);
+gboolean   gimp_data_factory_data_save_single  (GimpDataFactory  *factory,
+                                                GimpData         *data);
 
 
 #endif  /*  __GIMP_DATA_FACTORY_H__  */

@@ -300,3 +300,125 @@ gimp_gradients_get_gradient_data (const gchar  *name,
 
   return ret_name;
 }
+
+/**
+ * gimp_gradients_new:
+ * @name: The requested name of the new gradient.
+ *
+ * Creates a new gradient
+ *
+ * This procedure creates a new, uninitialized gradient
+ *
+ * Returns: The actual new gradient name.
+ */
+gchar *
+gimp_gradients_new (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_new",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+/**
+ * gimp_gradients_duplicate:
+ * @name: The name of the gradient to duplicate.
+ *
+ * Duplicates a gradient
+ *
+ * This procedure creates an identical gradient by a different name
+ *
+ * Returns: The name of the gradient's copy.
+ */
+gchar *
+gimp_gradients_duplicate (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_duplicate",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}
+
+/**
+ * gimp_gradients_delete:
+ * @name: The name of the gradient to delete.
+ *
+ * Deletes a gradient
+ *
+ * This procedure deletes a gradient
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_gradients_delete (const gchar *name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_delete",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_gradients_rename:
+ * @name: The name of the gradient to rename.
+ * @new_name: The new name of the gradient.
+ *
+ * Rename a gradient
+ *
+ * This procedure renames a gradient
+ *
+ * Returns: The actual new name of the gradient.
+ */
+gchar *
+gimp_gradients_rename (const gchar *name,
+		       const gchar *new_name)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gchar *ret_name = NULL;
+
+  return_vals = gimp_run_procedure ("gimp_gradients_rename",
+				    &nreturn_vals,
+				    GIMP_PDB_STRING, name,
+				    GIMP_PDB_STRING, new_name,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    ret_name = g_strdup (return_vals[1].data.d_string);
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return ret_name;
+}

@@ -17,9 +17,14 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
-sub pdb_misc {
+sub federico_misc {
     $author = $copyright = 'Federico Mena Quintero';
     $date = '1997';
+}
+
+sub shlomi_misc {
+    $author = $copyright = 'Shlomi Fish';
+    $date = '2004';
 }
 
 # The defs
@@ -49,12 +54,12 @@ sub gradients_get_list {
     $blurb = 'Retrieve the list of loaded gradients.';
 
     $help = <<'HELP';
-This procedure returns a list of the gradients that are currently loaded in the 
+This procedure returns a list of the gradients that are currently loaded in the
 gradient editor. You can later use the gimp_gradients_set_active function to
 set the active gradient.
 HELP
 
-    &pdb_misc;
+    &federico_misc;
 
     @inargs = (
 	{ name => 'filter',
@@ -83,7 +88,7 @@ sub gradients_get_gradient {
 This procedure returns the name of the active gradient in the gradient editor.
 HELP
 
-    &pdb_misc;
+    &federico_misc;
 
     @outargs = (
 	{ name  => 'name', type  => 'string',
@@ -106,7 +111,7 @@ procedure will return an error. Otherwise, the specified gradient will become
 active and will be used for subsequent custom gradient operations.
 HELP
 
-    &pdb_misc;
+    &federico_misc;
 
     @inargs = (
 	{ name => 'name', type => 'string',
@@ -161,7 +166,7 @@ samples to take is 2, in which case the returned colors will correspond to the
 is 3, the procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
 HELP
 
-    &pdb_misc;
+    &federico_misc;
 
     @inargs = (
 	 &sample_num_arg('2 <= '),
@@ -210,7 +215,7 @@ procedure returns a list of floating-point values which correspond to the RGBA
 values for each sample.
 HELP
 
-    &pdb_misc;
+    &federico_misc;
 
     @inargs = (
 	{ name  => 'positions',
@@ -268,7 +273,7 @@ This procedure retrieves information about the gradient. This includes the
 gradient name, and the sample data for the gradient.
 HELP
 
-    &pdb_misc;
+    &federico_misc;
 
     @inargs = (
 	{ name => 'name', type => 'string',
@@ -335,6 +340,169 @@ CODE
     );
 }
 
+sub gradients_new
+{
+    $blurb = "Creates a new gradient";
+    $help  = "This procedure creates a new, uninitialized gradient";
+
+    &shlomi_misc;
+
+    @inargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The requested name of the new gradient' }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => 'The actual new gradient name',
+	  alias => 'g_strdup (GIMP_OBJECT (gradient)->name)', no_declare => 1 },
+    );
+
+    %invoke = (
+        vars => [ 'GimpGradient * gradient = NULL;'],
+        code => <<'CODE'
+{
+  gradient = (GimpGradient *)
+    gimp_data_factory_data_new (gimp->gradient_factory, name);
+}
+CODE
+    );
+}
+
+my $_get_gradient_from_name_code = <<'CODE';
+if (strlen (name))
+  {
+    gradient = (GimpGradient *)
+      gimp_container_get_child_by_name (gimp->gradient_factory->container,
+                                        name);
+  }
+else
+  {
+    gradient = gimp_context_get_gradient (context);
+  }
+CODE
+
+
+sub gradients_duplicate
+{
+    $blurb = "Duplicates a gradient";
+    $help  = "This procedure creates an identical gradient by a different name";
+
+    &shlomi_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => "The name of the gradient to duplicate" }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The name of the gradient's copy",
+	  alias => 'g_strdup (GIMP_OBJECT (gradient_copy)->name)',
+          no_declare => 1 }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient = NULL',
+                  'GimpGradient *gradient_copy = NULL' ],
+        code => <<"CODE"
+{
+  $_get_gradient_from_name_code
+
+  if (gradient)
+    {
+      gradient_copy = (GimpGradient *)
+        gimp_data_factory_data_duplicate (gimp->gradient_factory,
+                                          GIMP_DATA (gradient));
+
+      success = (gradient_copy != NULL);
+    }
+   else
+    {
+      success = FALSE;
+    }
+}
+CODE
+    );
+}
+
+
+sub gradients_delete
+{
+    $blurb = "Deletes a gradient";
+    $help  = "This procedure deletes a gradient";
+
+    &shlomi_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => "The name of the gradient to delete" }
+    );
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient = NULL' ],
+	code => <<"CODE"
+{
+  $_get_gradient_from_name_code
+
+  success = (gradient && GIMP_DATA (gradient)->deletable);
+
+  if (success)
+    {
+      GError *error = NULL;
+
+      success = gimp_data_factory_data_delete (gimp->gradient_factory,
+                                               GIMP_DATA (gradient),
+                                               TRUE, &error);
+
+      if (! success)
+        {
+          g_message (error->message);
+          g_clear_error (&error);
+        }
+    }
+}
+CODE
+    );
+}
+
+
+sub gradients_rename
+{
+    $blurb = "Rename a gradient";
+    $help  = "This procedure renames a gradient";
+
+    &shlomi_misc;
+
+    @inargs = (
+        { name => 'name', type => 'string',
+          desc => "The name of the gradient to rename" },
+        { name => 'new_name', type => 'string',
+          desc => "The new name of the gradient" }
+    );
+
+    @outargs = (
+	{ name => 'name', type => 'string',
+	  desc => "The actual new name of the gradient",
+	  alias => 'g_strdup (GIMP_OBJECT (gradient)->name)', no_declare => 1 },
+    );
+
+    %invoke = (
+	vars => [ 'GimpGradient *gradient = NULL' ],
+	code => <<"CODE"
+{
+  $_get_gradient_from_name_code
+
+  success = (gradient && GIMP_DATA (gradient)->writable);
+
+  if (success)
+    gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
+}
+CODE
+    );
+}
+
+
 @headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
               "core/gimpcontainer.h" "core/gimpdatafactory.h"
               "core/gimplist.h" "core/gimpgradient.h");
@@ -342,7 +510,9 @@ CODE
 @procs = qw(gradients_refresh gradients_get_list
             gradients_get_gradient gradients_set_gradient
 	    gradients_sample_uniform gradients_sample_custom
-            gradients_get_gradient_data);
+            gradients_get_gradient_data
+            gradients_new gradients_duplicate
+            gradients_delete gradients_rename);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Gradients';
