@@ -90,6 +90,11 @@ enum
   PROP_DEFAULT_PALETTE,
   PROP_DEFAULT_GRADIENT,
   PROP_DEFAULT_FONT,
+  PROP_GLOBAL_BRUSH,
+  PROP_GLOBAL_PATTERN,
+  PROP_GLOBAL_PALETTE,
+  PROP_GLOBAL_GRADIENT,
+  PROP_GLOBAL_FONT,
   PROP_DEFAULT_IMAGE,
   PROP_DEFAULT_GRID,
   PROP_UNDO_LEVELS,
@@ -242,6 +247,26 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    "default-font", DEFAULT_FONT_BLURB,
                                    DEFAULT_FONT,
                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_BRUSH,
+                                    "global-brush", GLOBAL_BRUSH_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_PATTERN,
+                                    "global-pattern", GLOBAL_PATTERN_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_PALETTE,
+                                    "global-palette", GLOBAL_PALETTE_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_GRADIENT,
+                                    "global-gradient", GLOBAL_GRADIENT_BLURB,
+                                    TRUE,
+                                    0);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_GLOBAL_FONT,
+                                    "global-font", GLOBAL_FONT_BLURB,
+                                    TRUE,
+                                    0);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_IMAGE,
                                    "default-image", DEFAULT_IMAGE_BLURB,
                                    GIMP_TYPE_TEMPLATE,
@@ -423,6 +448,21 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->default_font);
       core_config->default_font = g_value_dup_string (value);
       break;
+    case PROP_GLOBAL_BRUSH:
+      core_config->global_brush = g_value_get_boolean (value);
+      break;
+    case PROP_GLOBAL_PATTERN:
+      core_config->global_pattern = g_value_get_boolean (value);
+      break;
+    case PROP_GLOBAL_PALETTE:
+      core_config->global_palette = g_value_get_boolean (value);
+      break;
+    case PROP_GLOBAL_GRADIENT:
+      core_config->global_gradient = g_value_get_boolean (value);
+      break;
+    case PROP_GLOBAL_FONT:
+      core_config->global_font = g_value_get_boolean (value);
+      break;
     case PROP_DEFAULT_IMAGE:
       if (g_value_get_object (value))
         gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
@@ -531,6 +571,21 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_DEFAULT_FONT:
       g_value_set_string (value, core_config->default_font);
+      break;
+    case PROP_GLOBAL_BRUSH:
+      g_value_set_boolean (value, core_config->global_brush);
+      break;
+    case PROP_GLOBAL_PATTERN:
+      g_value_set_boolean (value, core_config->global_pattern);
+      break;
+    case PROP_GLOBAL_PALETTE:
+      g_value_set_boolean (value, core_config->global_palette);
+      break;
+    case PROP_GLOBAL_GRADIENT:
+      g_value_set_boolean (value, core_config->global_gradient);
+      break;
+    case PROP_GLOBAL_FONT:
+      g_value_set_boolean (value, core_config->global_font);
       break;
     case PROP_DEFAULT_IMAGE:
       g_value_set_object (value, core_config->default_image);

@@ -1,5 +1,18 @@
 2004-03-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimpcoreconfig.[ch]
+	* app/config/gimprc-blurbs.h: added boolean properties
+	"global-brush", "global-pattern" etc.
+
+	* app/gui/preferences-dialog.c: added GUI for them to the
+	"Tool Options" page.
+
+	* app/tools/tool_manager.c (tool_manager_tool_changed): honor the
+	new prefs options when copying the new tool's properties.
+	Fixed bug #122519.
+
+2004-03-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimptoolinfo.c: minor cleanup.
 
 2004-03-04  Michael Natterer  <mitch@gimp.org>

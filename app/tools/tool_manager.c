@@ -31,6 +31,8 @@
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "display/gimpdisplay.h"
 
 #include "gimpdrawtool.h"
@@ -513,9 +515,23 @@ tool_manager_tool_changed (GimpContext  *user_context,
   /*  connect the new tool's context  */
   if (tool_info->context_props)
     {
+      GimpCoreConfig      *config       = user_context->gimp->config;
+      GimpContextPropMask  global_props = 0;
+
+      if (config->global_brush)
+        global_props |= GIMP_CONTEXT_BRUSH_MASK;
+      if (config->global_pattern)
+        global_props |= GIMP_CONTEXT_PATTERN_MASK;
+      if (config->global_palette)
+        global_props |= GIMP_CONTEXT_PALETTE_MASK;
+      if (config->global_gradient)
+        global_props |= GIMP_CONTEXT_GRADIENT_MASK;
+      if (config->global_font)
+        global_props |= GIMP_CONTEXT_FONT_MASK;
+
       gimp_context_copy_properties (GIMP_CONTEXT (tool_info->tool_options),
                                     user_context,
-                                    tool_info->context_props);
+                                    tool_info->context_props & ~global_props);
       gimp_context_set_parent (GIMP_CONTEXT (tool_info->tool_options),
                                user_context);
     }

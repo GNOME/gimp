@@ -59,6 +59,11 @@ struct _GimpCoreConfig
   gchar                 *default_palette;
   gchar                 *default_gradient;
   gchar                 *default_font;
+  gboolean               global_brush;
+  gboolean               global_pattern;
+  gboolean               global_palette;
+  gboolean               global_gradient;
+  gboolean               global_font;
   GimpTemplate          *default_image;
   GimpGrid              *default_grid;
   gint                   levels_of_undo;

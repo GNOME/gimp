@@ -1377,6 +1377,26 @@ prefs_dialog_new (Gimp       *gimp,
                               _("Default _Interpolation:"),
                               GTK_TABLE (table), 0);
 
+  /*  Global Brush, Pattern, ...  */
+  vbox2 = prefs_frame_new (_("Paint Options Shared Between Tools"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  prefs_check_button_add (object, "global-brush",
+                          _("_Brush"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "global-pattern",
+                          _("_Pattern"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "global-palette",
+                          _("Pa_lette"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "global-gradient",
+                          _("_Gradient"),
+                          GTK_BOX (vbox2));
+  prefs_check_button_add (object, "global-font",
+                          _("_Font"),
+                          GTK_BOX (vbox2));
+
 
   /*******************************/
   /*  Interface / Input Devices  */
