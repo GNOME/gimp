@@ -1066,7 +1066,7 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
 void
 gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
                                          Gimp             *gimp,
-                                         gboolean          update_popup)
+                                         gboolean          popup_only)
 {
   GtkItemFactory *item_factory = NULL;
   GimpDisplay    *gdisp        = NULL;
@@ -1088,19 +1088,20 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
   gint            lind         = -1;
   gint            lnum         = -1;
 
-  g_return_if_fail (! shell || GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (shell == NULL || GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (popup_only == TRUE || GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
   if (shell)
     {
       gdisp = shell->gdisp;
 
-      if (update_popup)
+      if (popup_only)
         item_factory = GTK_ITEM_FACTORY (shell->popup_factory);
       else
         item_factory = GTK_ITEM_FACTORY (shell->menubar_factory);
     }
-  else if (update_popup)
+  else if (popup_only)
     {
       item_factory = GTK_ITEM_FACTORY (gimp_item_factory_from_path ("<Image>"));
     }
@@ -1330,16 +1331,22 @@ gimp_display_shell_set_menu_sensitivity (GimpDisplayShell *shell,
 
   plug_in_set_menu_sensitivity (GIMP_ITEM_FACTORY (item_factory), type);
 
-  /*  update the popup menu if this is the active display  */
-  if (shell && ! update_popup)
+  /*  update the popup menu  */
+  if (! popup_only)
     {
       GimpContext *user_context;
 
-      user_context = gimp_get_user_context (gdisp->gimage->gimp);
+      user_context = gimp_get_user_context (gimp);
 
-      if (gimp_context_get_display (user_context) == gdisp)
+      if (shell)
         {
-          gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp,
+          if (gimp_context_get_display (user_context) == gdisp)
+            gimp_display_shell_set_menu_sensitivity (shell, gdisp->gimage->gimp,
+                                                     TRUE);
+        }
+      else
+        {
+          gimp_display_shell_set_menu_sensitivity (NULL, gdisp->gimage->gimp,
                                                    TRUE);
         }
     }
@@ -1852,7 +1859,7 @@ gimp_display_shell_set_padding (GimpDisplayShell       *shell,
       else
         {
           shell->padding_color = *padding_color;
-       }
+        }
       break;
 
     case GIMP_DISPLAY_PADDING_MODE_LIGHT_CHECK:

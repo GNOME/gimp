@@ -1,5 +1,12 @@
 2002-12-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell.[ch]
+	(gimp_display_shell_set_menu_sensitivity): renamed paramater
+	"update_popup" to "popup_only" because it's less confusing. Fixed
+	the function to update the popup correctly for shell = NULL.
+
+2002-12-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/plug-in-commands.c (plug_in_repeat_cmd_callback):
 	use gdisp->gimage->gimp instead of the_gimp.
 

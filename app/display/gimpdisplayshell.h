@@ -209,7 +209,7 @@ void        gimp_display_shell_untransform_xy_f      (GimpDisplayShell *shell,
 
 void        gimp_display_shell_set_menu_sensitivity  (GimpDisplayShell *shell,
                                                       Gimp             *gimp,
-                                                      gboolean          update_popup);
+                                                      gboolean          popup_only);
 
 GimpGuide * gimp_display_shell_find_guide            (GimpDisplayShell *shell,
                                                       gdouble           x,
