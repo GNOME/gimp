@@ -45,6 +45,8 @@ Bugs fixed in GIMP 2.0pre3
 - 132297: Disable some warnings while loading TIFFs (Raphael)
 - 129529: Add a "randomize" toggle to random number widget (Dave Neary)
 - 133099: Duplicate PDB entries problem (Mitch)
+- 133122: Disallow renaming of layer masks and some floating selections (Mitch)
+- 130118: Allow non-UTF8 characters in the GIMP home directory (Mitch)
 
 Other contributions:
   Manish Singh, Tor Lillqvist, Jakub Steiner, Michael Natterer,
