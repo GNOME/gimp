@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:02+0200\n"
-"PO-Revision-Date: 2004-08-04 14:31-0400\n"
+"POT-Creation-Date: 2004-10-02 19:57-0400\n"
+"PO-Revision-Date: 2004-10-02 14:31-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -4913,8 +4913,6 @@ msgstr "Blur Parameters"
 msgid "_Angle:"
 msgstr "_Angle:"
 
-#. Inform the user that we couldn't losslessly save the
-#. * transparency & just use the full palette
 #: plug-ins/common/mng.c:442 plug-ins/common/png.c:1558
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
@@ -6650,7 +6648,7 @@ msgstr "Colours:"
 
 #: plug-ins/common/spheredesigner.c:2639 plug-ins/common/spheredesigner.c:2650
 msgid "Color Selection Dialog"
-msgstr "Colour Selection Dialog"
+msgstr "Colour Selection Dialogue"
 
 #. Scale
 #: plug-ins/common/spheredesigner.c:2661 plug-ins/gimpressionist/paper.c:152
@@ -7530,7 +7528,7 @@ msgid ""
 "Please specify a web browser using the Preferences Dialog."
 msgstr ""
 "Web browser not specified.\n"
-"Please specify a web browser using the Preferences Dialog."
+"Please specify a web browser using the Preferences Dialogue."
 
 #: plug-ins/common/webbrowser.c:161
 #, c-format
@@ -7789,7 +7787,6 @@ msgstr ""
 "'%s':\n"
 "No image data type specified"
 
-#. The image is not black-and-white.
 #: plug-ins/common/xbm.c:959
 msgid ""
 "The image which you are trying to save as an XBM contains more than two "
@@ -9332,7 +9329,6 @@ msgstr "<Image>/Filters/Artistic/_GIMPressionist..."
 msgid "Painting..."
 msgstr "Painting..."
 
-#. don't translate the gimprc entry
 #: plug-ins/gimpressionist/gimpressionist.c:64
 #, c-format
 msgid ""

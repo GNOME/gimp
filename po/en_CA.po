@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-09-25 00:01+0200\n"
-"PO-Revision-Date: 2004-09-23 14:29-0400\n"
+"POT-Creation-Date: 2004-10-02 19:52-0400\n"
+"PO-Revision-Date: 2004-10-02 14:29-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: English/Canada <adamw@FreeBSD.org>\n"
 "MIME-Version: 1.0\n"
@@ -157,7 +157,7 @@ msgid ""
 "  -c, --console-messages   Display warnings to console instead of a dialog "
 "box.\n"
 msgstr ""
-"  -c, --console-messages   Display warnings to console instead of a dialog "
+"  -c, --console-messages   Display warnings to console instead of a dialogue "
 "box.\n"
 
 #: app/main.c:530
@@ -625,7 +625,7 @@ msgid ""
 "down when working with large images."
 msgstr ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
-"the layers and channels dialog are nice to have but they can slow things "
+"the layers and channels dialogue are nice to have but they can slow things "
 "down when working with large images."
 
 #: app/config/gimprc-blurbs.h:239
@@ -660,7 +660,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:257
 msgid "Save the positions and sizes of the main dialogs when the GIMP exits."
-msgstr "Save the positions and sizes of the main dialogs when the GIMP exits."
+msgstr "Save the positions and sizes of the main dialogues when the GIMP exits."
 
 #: app/config/gimprc-blurbs.h:263
 msgid ""
@@ -2263,7 +2263,6 @@ msgstr ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 
-#. maybe we should just abort?
 #: app/core/gimppalette.c:493
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
@@ -3190,7 +3189,7 @@ msgstr "/_Raise or Open Image"
 
 #: app/gui/documents-menu.c:53
 msgid "/File Open _Dialog"
-msgstr "/File Open _Dialog"
+msgstr "/File Open _Dialogue"
 
 #: app/gui/documents-menu.c:58
 msgid "/Remove _Entry"
@@ -3357,8 +3356,8 @@ msgstr ""
 "Choose OK to create this image anyway.\n"
 "Choose Cancel if you did not intend to create such a large image.\n"
 "\n"
-"To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
-"setting (currently %s) in the Preferences dialog."
+"To prevent this dialogue from appearing, increase the \"Maximum Image Size\" "
+"setting (currently %s) in the Preferences dialogue."
 
 #: app/gui/file-new-dialog.c:285
 msgid "Confirm Image Size"
@@ -3788,8 +3787,8 @@ msgstr ""
 "Choose OK to create this image anyway.\n"
 "Choose Cancel if you did not intend to create such a large image.\n"
 "\n"
-"To prevent this dialog from appearing, increase the \"Maximum Image Size\" "
-"setting (currently %s) in the Preferences dialog."
+"To prevent this dialogue from appearing, increase the \"Maximum Image Size\" "
+"setting (currently %s) in the Preferences dialogue."
 
 #: app/gui/image-commands.c:535
 msgid "Image exceeds maximum image size"
@@ -4488,111 +4487,111 @@ msgstr "/Tools/_Colour Tools"
 #. <Image>/Dialogs
 #: app/gui/image-menu.c:947
 msgid "/_Dialogs"
-msgstr "/_Dialogs"
+msgstr "/_Dialogues"
 
 #: app/gui/image-menu.c:949
 msgid "/Dialogs/Create New Doc_k"
-msgstr "/Dialogs/Create New Doc_k"
+msgstr "/Dialogues/Create New Doc_k"
 
 #: app/gui/image-menu.c:951
 msgid "/Dialogs/Create New Dock/_Layers, Channels & Paths"
-msgstr "/Dialogs/Create New Dock/_Layers, Channels & Paths"
+msgstr "/Dialogues/Create New Dock/_Layers, Channels & Paths"
 
 #: app/gui/image-menu.c:955
 msgid "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
+msgstr "/Dialogues/Create New Dock/_Brushes, Patterns & Gradients"
 
 #: app/gui/image-menu.c:959
 msgid "/Dialogs/Create New Dock/_Misc. Stuff"
-msgstr "/Dialogs/Create New Dock/_Misc. Stuff"
+msgstr "/Dialogues/Create New Dock/_Misc. Stuff"
 
 #: app/gui/image-menu.c:964
 msgid "/Dialogs/Tool _Options"
-msgstr "/Dialogs/Tool _Options"
+msgstr "/Dialogues/Tool _Options"
 
 #: app/gui/image-menu.c:969
 msgid "/Dialogs/_Device Status"
-msgstr "/Dialogs/_Device Status"
+msgstr "/Dialogues/_Device Status"
 
 #: app/gui/image-menu.c:977
 msgid "/Dialogs/_Layers"
-msgstr "/Dialogs/_Layers"
+msgstr "/Dialogues/_Layers"
 
 #: app/gui/image-menu.c:982
 msgid "/Dialogs/_Channels"
-msgstr "/Dialogs/_Channels"
+msgstr "/Dialogues/_Channels"
 
 #: app/gui/image-menu.c:987
 msgid "/Dialogs/_Paths"
-msgstr "/Dialogs/_Paths"
+msgstr "/Dialogues/_Paths"
 
 #: app/gui/image-menu.c:992
 msgid "/Dialogs/Inde_xed Palette"
-msgstr "/Dialogs/Inde_xed Palette"
+msgstr "/Dialogues/Inde_xed Palette"
 
 #: app/gui/image-menu.c:997
 msgid "/Dialogs/Histogra_m"
-msgstr "/Dialogs/Histogra_m"
+msgstr "/Dialogues/Histogra_m"
 
 #: app/gui/image-menu.c:1002
 msgid "/Dialogs/_Selection Editor"
-msgstr "/Dialogs/_Selection Editor"
+msgstr "/Dialogues/_Selection Editor"
 
 #: app/gui/image-menu.c:1007
 msgid "/Dialogs/Na_vigation"
-msgstr "/Dialogs/Na_vigation"
+msgstr "/Dialogues/Na_vigation"
 
 #: app/gui/image-menu.c:1012
 msgid "/Dialogs/_Undo History"
-msgstr "/Dialogs/_Undo History"
+msgstr "/Dialogues/_Undo History"
 
 #: app/gui/image-menu.c:1020
 msgid "/Dialogs/Colo_rs"
-msgstr "/Dialogs/Colou_rs"
+msgstr "/Dialogues/Colou_rs"
 
 #: app/gui/image-menu.c:1025
 msgid "/Dialogs/Brus_hes"
-msgstr "/Dialogs/Brus_hes"
+msgstr "/Dialogues/Brus_hes"
 
 #: app/gui/image-menu.c:1030
 msgid "/Dialogs/P_atterns"
-msgstr "/Dialogs/P_atterns"
+msgstr "/Dialogues/P_atterns"
 
 #: app/gui/image-menu.c:1035
 msgid "/Dialogs/_Gradients"
-msgstr "/Dialogs/_Gradients"
+msgstr "/Dialogues/_Gradients"
 
 #: app/gui/image-menu.c:1040
 msgid "/Dialogs/Pal_ettes"
-msgstr "/Dialogs/Pal_ettes"
+msgstr "/Dialogues/Pal_ettes"
 
 #: app/gui/image-menu.c:1045
 msgid "/Dialogs/_Fonts"
-msgstr "/Dialogs/_Fonts"
+msgstr "/Dialogues/_Fonts"
 
 #: app/gui/image-menu.c:1050
 msgid "/Dialogs/_Buffers"
-msgstr "/Dialogs/_Buffers"
+msgstr "/Dialogues/_Buffers"
 
 #: app/gui/image-menu.c:1058
 msgid "/Dialogs/_Images"
-msgstr "/Dialogs/_Images"
+msgstr "/Dialogues/_Images"
 
 #: app/gui/image-menu.c:1063
 msgid "/Dialogs/Document Histor_y"
-msgstr "/Dialogs/Document Histor_y"
+msgstr "/Dialogues/Document Histor_y"
 
 #: app/gui/image-menu.c:1068
 msgid "/Dialogs/_Templates"
-msgstr "/Dialogs/_Templates"
+msgstr "/Dialogues/_Templates"
 
 #: app/gui/image-menu.c:1073
 msgid "/Dialogs/T_ools"
-msgstr "/Dialogs/T_ools"
+msgstr "/Dialogues/T_ools"
 
 #: app/gui/image-menu.c:1078
 msgid "/Dialogs/Error Co_nsole"
-msgstr "/Dialogs/Error Co_nsole"
+msgstr "/Dialogues/Error Co_nsole"
 
 #: app/gui/image-menu.c:1088
 msgid "/Filte_rs"
@@ -5049,7 +5048,7 @@ msgstr "Paths Menu"
 
 #: app/gui/menus.c:163
 msgid "Dialogs Menu"
-msgstr "Dialogs Menu"
+msgstr "Dialogues Menu"
 
 #: app/gui/menus.c:170
 msgid "Brushes Menu"
@@ -5501,7 +5500,7 @@ msgstr "_Undo History Preview Size:"
 #. Dialog Bahavior
 #: app/gui/preferences-dialog.c:1222
 msgid "Dialog Behavior"
-msgstr "Dialog Behaviour"
+msgstr "Dialogue Behaviour"
 
 #: app/gui/preferences-dialog.c:1225
 msgid "_Info Window Per Display"
@@ -6384,111 +6383,111 @@ msgstr "/File/_Preferences"
 #. <Toolbox>/File/Dialogs
 #: app/gui/toolbox-menu.c:91
 msgid "/File/_Dialogs"
-msgstr "/File/_Dialogs"
+msgstr "/File/_Dialogues"
 
 #: app/gui/toolbox-menu.c:93
 msgid "/File/Dialogs/Create New Doc_k"
-msgstr "/File/Dialogs/Create New Doc_k"
+msgstr "/File/Dialogues/Create New Doc_k"
 
 #: app/gui/toolbox-menu.c:95
 msgid "/File/Dialogs/Create New Dock/_Layers, Channels & Paths"
-msgstr "/File/Dialogs/Create New Dock/_Layers, Channels & Paths"
+msgstr "/File/Dialogues/Create New Dock/_Layers, Channels & Paths"
 
 #: app/gui/toolbox-menu.c:99
 msgid "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
-msgstr "/File/Dialogs/Create New Dock/_Brushes, Patterns & Gradients"
+msgstr "/File/Dialogues/Create New Dock/_Brushes, Patterns & Gradients"
 
 #: app/gui/toolbox-menu.c:103
 msgid "/File/Dialogs/Create New Dock/_Misc. Stuff"
-msgstr "/File/Dialogs/Create New Dock/_Misc. Stuff"
+msgstr "/File/Dialogues/Create New Dock/_Misc. Stuff"
 
 #: app/gui/toolbox-menu.c:108
 msgid "/File/Dialogs/Tool _Options"
-msgstr "/File/Dialogs/Tool _Options"
+msgstr "/File/Dialogues/Tool _Options"
 
 #: app/gui/toolbox-menu.c:113
 msgid "/File/Dialogs/_Device Status"
-msgstr "/File/Dialogs/_Device Status"
+msgstr "/File/Dialogues/_Device Status"
 
 #: app/gui/toolbox-menu.c:121
 msgid "/File/Dialogs/_Layers"
-msgstr "/File/Dialogs/_Layers"
+msgstr "/File/Dialogues/_Layers"
 
 #: app/gui/toolbox-menu.c:126
 msgid "/File/Dialogs/_Channels"
-msgstr "/File/Dialogs/_Channels"
+msgstr "/File/Dialogues/_Channels"
 
 #: app/gui/toolbox-menu.c:131
 msgid "/File/Dialogs/_Paths"
-msgstr "/File/Dialogs/_Paths"
+msgstr "/File/Dialogues/_Paths"
 
 #: app/gui/toolbox-menu.c:136
 msgid "/File/Dialogs/Inde_xed Palette"
-msgstr "/File/Dialogs/Inde_xed Palette"
+msgstr "/File/Dialogues/Inde_xed Palette"
 
 #: app/gui/toolbox-menu.c:141
 msgid "/File/Dialogs/Histogra_m"
-msgstr "/File/Dialogs/Histogra_m"
+msgstr "/File/Dialogues/Histogra_m"
 
 #: app/gui/toolbox-menu.c:146
 msgid "/File/Dialogs/_Selection Editor"
-msgstr "/File/Dialogs/_Selection Editor"
+msgstr "/File/Dialogues/_Selection Editor"
 
 #: app/gui/toolbox-menu.c:151
 msgid "/File/Dialogs/Na_vigation"
-msgstr "/File/Dialogs/Na_vigation"
+msgstr "/File/Dialogues/Na_vigation"
 
 #: app/gui/toolbox-menu.c:156
 msgid "/File/Dialogs/_Undo History"
-msgstr "/File/Dialogs/_Undo History"
+msgstr "/File/Dialogues/_Undo History"
 
 #: app/gui/toolbox-menu.c:164
 msgid "/File/Dialogs/Colo_rs"
-msgstr "/File/Dialogs/Colou_rs"
+msgstr "/File/Dialogues/Colou_rs"
 
 #: app/gui/toolbox-menu.c:169
 msgid "/File/Dialogs/Brus_hes"
-msgstr "/File/Dialogs/Brus_hes"
+msgstr "/File/Dialogues/Brus_hes"
 
 #: app/gui/toolbox-menu.c:174
 msgid "/File/Dialogs/P_atterns"
-msgstr "/File/Dialogs/P_atterns"
+msgstr "/File/Dialogues/P_atterns"
 
 #: app/gui/toolbox-menu.c:179
 msgid "/File/Dialogs/_Gradients"
-msgstr "/File/Dialogs/_Gradients"
+msgstr "/File/Dialogues/_Gradients"
 
 #: app/gui/toolbox-menu.c:184
 msgid "/File/Dialogs/Pal_ettes"
-msgstr "/File/Dialogs/Pal_ettes"
+msgstr "/File/Dialogues/Pal_ettes"
 
 #: app/gui/toolbox-menu.c:189
 msgid "/File/Dialogs/_Fonts"
-msgstr "/File/Dialogs/_Fonts"
+msgstr "/File/Dialogues/_Fonts"
 
 #: app/gui/toolbox-menu.c:194
 msgid "/File/Dialogs/_Buffers"
-msgstr "/File/Dialogs/_Buffers"
+msgstr "/File/Dialogues/_Buffers"
 
 #: app/gui/toolbox-menu.c:202
 msgid "/File/Dialogs/_Images"
-msgstr "/File/Dialogs/_Images"
+msgstr "/File/Dialogues/_Images"
 
 #: app/gui/toolbox-menu.c:207
 msgid "/File/Dialogs/Document Histor_y"
-msgstr "/File/Dialogs/Document Histor_y"
+msgstr "/File/Dialogues/Document Histor_y"
 
 #: app/gui/toolbox-menu.c:212
 msgid "/File/Dialogs/_Templates"
-msgstr "/File/Dialogs/_Templates"
+msgstr "/File/Dialogues/_Templates"
 
 #: app/gui/toolbox-menu.c:217
 msgid "/File/Dialogs/T_ools"
-msgstr "/File/Dialogs/T_ools"
+msgstr "/File/Dialogues/T_ools"
 
 #: app/gui/toolbox-menu.c:222
 msgid "/File/Dialogs/Error Co_nsole"
-msgstr "/File/Dialogs/Error Co_nsole"
+msgstr "/File/Dialogues/Error Co_nsole"
 
 #: app/gui/toolbox-menu.c:229
 msgid "/File/D_ebug"
@@ -6572,8 +6571,8 @@ msgid ""
 "you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
 "the saved position."
 msgstr ""
-"The sessionrc is used to store what dialog windows were open the last time "
-"you quit The GIMP.  You can configure The GIMP to reopen these dialogs at "
+"The sessionrc is used to store what dialogue windows were open the last time "
+"you quit The GIMP.  You can configure The GIMP to reopen these dialogues at "
 "the saved position."
 
 #: app/gui/user-install-dialog.c:174
@@ -8275,7 +8274,7 @@ msgstr "/Tools/Paint Tools/_Paintbrush"
 
 #: app/tools/gimppaintoptions-gui.c:145
 msgid "Open the brush selection dialog"
-msgstr "Open the brush selection dialog"
+msgstr "Open the brush selection dialogue"
 
 #: app/tools/gimppaintoptions-gui.c:148
 msgid "Brush:"
@@ -8283,7 +8282,7 @@ msgstr "Brush:"
 
 #: app/tools/gimppaintoptions-gui.c:162
 msgid "Open the pattern selection dialog"
-msgstr "Open the pattern selection dialog"
+msgstr "Open the pattern selection dialogue"
 
 #: app/tools/gimppaintoptions-gui.c:165
 msgid "Pattern:"
@@ -8291,7 +8290,7 @@ msgstr "Pattern:"
 
 #: app/tools/gimppaintoptions-gui.c:186
 msgid "Open the gradient selection dialog"
-msgstr "Open the gradient selection dialog"
+msgstr "Open the gradient selection dialogue"
 
 #: app/tools/gimppaintoptions-gui.c:196
 msgid "Reverse"
@@ -8545,7 +8544,7 @@ msgstr "Modify line spacing"
 
 #: app/tools/gimptextoptions.c:426
 msgid "Open the font selection dialog"
-msgstr "Open the font selection dialog"
+msgstr "Open the font selection dialogue"
 
 #: app/tools/gimptextoptions.c:429
 msgid "_Font:"
@@ -8934,7 +8933,7 @@ msgid ""
 "%s New Channel Dialog"
 msgstr ""
 "New Channel\n"
-"%s New Channel Dialog"
+"%s New Channel Dialogue"
 
 #: app/widgets/gimpchanneltreeview.c:123
 msgid "Duplicate Channel"
@@ -9178,7 +9177,7 @@ msgstr "Invalid UTF-8"
 
 #: app/widgets/gimpdock.c:394
 msgid "You can drop dockable dialogs here."
-msgstr "You can drop dockable dialogs here."
+msgstr "You can drop dockable dialogues here."
 
 #: app/widgets/gimpdockable.c:212
 msgid "Close this Tab"
@@ -9193,7 +9192,7 @@ msgid ""
 msgstr ""
 "Open the selected entry\n"
 "%s  Raise window if already open\n"
-"%s  Open image dialog"
+"%s  Open image dialogue"
 
 #: app/widgets/gimpdocumentview.c:186
 msgid "Remove selected entry"
@@ -9437,7 +9436,7 @@ msgstr "Auto"
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
 msgstr ""
-"When enabled the dialog automatically follows the image you are working on."
+"When enabled the dialogue automatically follows the image you are working on."
 
 #: app/widgets/gimpimageview.c:139
 msgid "Raise this image's displays"
@@ -9489,7 +9488,7 @@ msgid ""
 "%s  New Layer Dialog"
 msgstr ""
 "New Layer\n"
-"%s  New Layer Dialog"
+"%s  New Layer Dialogue"
 
 #: app/widgets/gimplayertreeview.c:209
 msgid "Duplicate Layer"
@@ -9679,7 +9678,7 @@ msgid ""
 "Click to open the Brush Dialog."
 msgstr ""
 "The active brush.\n"
-"Click to open the Brush Dialog."
+"Click to open the Brush Dialogue."
 
 #: app/widgets/gimptoolbox-indicator-area.c:180
 msgid ""
@@ -9687,7 +9686,7 @@ msgid ""
 "Click to open the Pattern Dialog."
 msgstr ""
 "The active pattern.\n"
-"Click to open the Pattern Dialog."
+"Click to open the Pattern Dialogue."
 
 #: app/widgets/gimptoolbox-indicator-area.c:211
 msgid ""
@@ -9695,7 +9694,7 @@ msgid ""
 "Click to open the Gradient Dialog."
 msgstr ""
 "The active gradient.\n"
-"Click to open the Gradient Dialog."
+"Click to open the Gradient Dialogue."
 
 #: app/widgets/gimptoolbox.c:738
 msgid ""
@@ -9704,7 +9703,7 @@ msgid ""
 msgstr ""
 "Foreground & background colours.  The black and white squares reset "
 "colours.  The arrows swap colours. Double click to open the colour selection "
-"dialog."
+"dialogue."
 
 #: app/widgets/gimptooloptionseditor.c:146
 msgid "Save options to..."
@@ -9755,7 +9754,7 @@ msgid ""
 "%s New Path Dialog"
 msgstr ""
 "New Path\n"
-"%s New Path Dialog"
+"%s New Path Dialogue"
 
 #: app/widgets/gimpvectorstreeview.c:133
 msgid "Duplicate Path"
@@ -9886,7 +9885,7 @@ msgid ""
 "Messages are redirected to stderr."
 msgstr ""
 "WARNING:\n"
-"Too many open message dialogs.\n"
+"Too many open message dialogues.\n"
 "Messages are redirected to stderr."
 
 #: app/widgets/gimpwidgets-utils.c:157
