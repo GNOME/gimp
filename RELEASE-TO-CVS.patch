@@ -4,7 +4,7 @@ RCS file: /cvs/gnome/gimp/app/gui/menus.c,v
 retrieving revision 1.243
 diff -u -p -r1.243 menus.c
 --- app/gui/menus.c	2001/11/16 15:08:53	1.243
-+++ app/gui/menus.c	2001/11/20 23:02:52
++++ app/gui/menus.c	2001/11/21 17:20:25
 @@ -1820,7 +1820,7 @@ menus_init (Gimp *gimp)
    }
  
@@ -26,10 +26,10 @@ diff -u -p -r1.243 menus.c
 Index: app/tools/gimptexttool.c
 ===================================================================
 RCS file: /cvs/gnome/gimp/app/tools/gimptexttool.c,v
-retrieving revision 1.133
-diff -u -p -r1.133 gimptexttool.c
---- app/tools/gimptexttool.c	2001/11/20 23:00:47	1.133
-+++ app/tools/gimptexttool.c	2001/11/20 23:02:56
+retrieving revision 1.134
+diff -u -p -r1.134 gimptexttool.c
+--- app/tools/gimptexttool.c	2001/11/21 17:18:43	1.134
++++ app/tools/gimptexttool.c	2001/11/21 17:20:26
 @@ -54,6 +54,8 @@
  #include "floating_sel.h"
  #include "undo.h"
@@ -82,3 +82,13 @@ diff -u -p -r1.133 gimptexttool.c
    layout = pango_layout_new (context);
    pango_layout_set_font_description (layout, font_desc);
    pango_font_description_free (font_desc);
+@@ -592,7 +601,8 @@ text_tool_options_new (GimpToolInfo *too
+   /*  the main vbox  */
+   vbox = options->tool_options.main_vbox;
+ 
+-  pango_context = pango_ft2_get_context ();
++  pango_context = pango_ft2_get_context (gimprc.monitor_xres,
++                                         gimprc.monitor_yres);
+ 
+   options->font_selection = gimp_font_selection_new (pango_context);
+ 

@@ -1,5 +1,9 @@
 2001-11-21  Michael Natterer  <mitch@gimp.org>
 
+	* RELEASE-TO-CVS.patch: regenerated with the stuff below included.
+
+2001-11-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptexttool.c: seems I've comitted something which
 	should only be in RELEASE-TO-CVS.patch. Sorry...
 
