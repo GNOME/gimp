@@ -163,13 +163,6 @@ void      gimp_paint_core_interpolate (GimpPaintCore       *core,
 
 /*  protected functions  */
 
-void    gimp_paint_core_get_color_from_gradient
-                                         (GimpPaintCore            *core,
-                                          GimpGradient             *gradient,
-                                          gdouble                   gradient_length,
-                                          GimpRGB                  *color,
-                                          GimpGradientPaintMode     mode);
-
 TempBuf * gimp_paint_core_get_paint_area (GimpPaintCore            *core,
                                           GimpDrawable             *drawable,
                                           gdouble                   scale);

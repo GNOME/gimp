@@ -271,7 +271,7 @@ gradients_sample_uniform_invoker (Gimp     *gimp,
     
       while (i--)
 	{
-	  gimp_gradient_get_color_at (gradient, pos, &color);
+	  gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
     
 	  *pv++ = color.r;
 	  *pv++ = color.g;
@@ -362,7 +362,7 @@ gradients_sample_custom_invoker (Gimp     *gimp,
     
       while (i--)
 	{
-	  gimp_gradient_get_color_at (gradient, *pos, &color);
+	  gimp_gradient_get_color_at (gradient, *pos, FALSE, &color);
     
 	  *pv++ = color.r;
 	  *pv++ = color.g;
@@ -456,12 +456,14 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
 	  gradient = (GimpGradient *)
 	    gimp_container_get_child_by_name (gimp->gradient_factory->container,
 					      name);
-    
-	  if (gradient)
-	    success = TRUE;
 	}
       else
-	success = (gradient = gimp_context_get_gradient (gimp_get_current_context (gimp))) != NULL;
+	{
+	   gradient = gimp_context_get_gradient (gimp_get_current_context (gimp));;
+	}
+    
+      if (gradient)
+	success = TRUE;
     
       if (success)
 	{
@@ -478,7 +480,7 @@ gradients_get_gradient_data_invoker (Gimp     *gimp,
     
 	  while (i--)
 	    {
-	      gimp_gradient_get_color_at (gradient, pos, &color);
+	      gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
     
 	      *pv++ = color.r;
 	      *pv++ = color.g;

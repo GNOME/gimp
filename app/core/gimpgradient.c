@@ -238,7 +238,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
 
   for (x = 0; x < width; x++)
     {
-      gimp_gradient_get_color_at (gradient, cur_x, &color);
+      gimp_gradient_get_color_at (gradient, cur_x, FALSE, &color);
 
       *p++ = color.r * 255.0;
       *p++ = color.g * 255.0;
@@ -253,7 +253,7 @@ gimp_gradient_get_new_preview (GimpViewable *viewable,
   buf = temp_buf_data (temp_buf);
 
   for (y = 0; y < height; y++)
-    memcpy (buf + (width * y * 4), row, width * 4); 
+    memcpy (buf + (width * y * 4), row, width * 4);
 
   g_free (row);
 
@@ -380,7 +380,7 @@ gimp_gradient_load (const gchar  *filename,
         }
       else
         {
-          g_message (_("Invalid UTF-8 string in gradient file '%s'."), 
+          g_message (_("Invalid UTF-8 string in gradient file '%s'."),
                      filename);
           gimp_object_set_name (GIMP_OBJECT (gradient), _("Unnamed"));
         }
@@ -440,7 +440,7 @@ gimp_gradient_load (const gchar  *filename,
         seg->left_color.b = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
         seg->left_color.a = g_ascii_strtod (end, &end);
-        
+
       if (end && errno != ERANGE)
         seg->right_color.r = g_ascii_strtod (end, &end);
       if (end && errno != ERANGE)
@@ -601,13 +601,13 @@ gimp_gradient_save_as_pov (GimpGradient  *gradient,
 	  /* Left */
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->left);
-          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->left_color.r);
-          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->left_color.g);
-          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->left_color.b);
-          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            1.0 - seg->left_color.a);
 
 	  fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
@@ -617,13 +617,13 @@ gimp_gradient_save_as_pov (GimpGradient  *gradient,
 	  /* Middle */
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->middle);
-          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            (seg->left_color.r + seg->right_color.r) / 2.0);
-          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            (seg->left_color.g + seg->right_color.g) / 2.0);
-          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            (seg->left_color.b + seg->right_color.b) / 2.0);
-          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            1.0 - (seg->left_color.a + seg->right_color.a) / 2.0);
 
 	  fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
@@ -633,13 +633,13 @@ gimp_gradient_save_as_pov (GimpGradient  *gradient,
 	  /* Right */
           g_ascii_formatd (buf, G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->right);
-          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[0], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->right_color.r);
-          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[1], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->right_color.g);
-          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[2], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            seg->right_color.b);
-          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f", 
+          g_ascii_formatd (color_buf[3], G_ASCII_DTOSTR_BUF_SIZE, "%f",
                            1.0 - seg->right_color.a);
 
 	  fprintf (file, "\t[%s color rgbt <%s, %s, %s, %s>]\n",
@@ -657,6 +657,7 @@ gimp_gradient_save_as_pov (GimpGradient  *gradient,
 void
 gimp_gradient_get_color_at (GimpGradient *gradient,
 			    gdouble       pos,
+                            gboolean      reverse,
 			    GimpRGB      *color)
 {
   gdouble              factor = 0.0;
@@ -668,17 +669,10 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
   g_return_if_fail (GIMP_IS_GRADIENT (gradient));
   g_return_if_fail (color != NULL);
 
-  /* if there is no gradient return a totally transparent black */
-  if (gradient == NULL) 
-    {
-      gimp_rgba_set (color, 0.0, 0.0, 0.0, 0.0);
-      return;
-    }
+  pos = CLAMP (pos, 0.0, 1.0);
 
-  if (pos < 0.0)
-    pos = 0.0;
-  else if (pos > 1.0)
-    pos = 1.0;
+  if (reverse)
+    pos = 1.0 - pos;
 
   seg = gimp_gradient_get_segment_at (gradient, pos);
 
@@ -718,7 +712,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
       break;
 
     default:
-      g_warning ("%s: Unknown gradient type %d.", 
+      g_warning ("%s: Unknown gradient type %d.",
 		 G_GNUC_PRETTY_FUNCTION, seg->type);
       break;
     }
@@ -727,7 +721,7 @@ gimp_gradient_get_color_at (GimpGradient *gradient,
 
   if (seg->color == GIMP_GRAD_RGB)
     {
-      rgb.r = 
+      rgb.r =
         seg->left_color.r + (seg->right_color.r - seg->left_color.r) * factor;
 
       rgb.g =
@@ -985,7 +979,7 @@ gimp_gradient_segment_split_midpoint (GimpGradient         *gradient,
   g_return_if_fail (newr != NULL);
 
   /* Get color at original segment's midpoint */
-  gimp_gradient_get_color_at (gradient, lseg->middle, &color);
+  gimp_gradient_get_color_at (gradient, lseg->middle, FALSE, &color);
 
   /* Create a new segment and insert it in the list */
 
@@ -1063,8 +1057,8 @@ gimp_gradient_segment_split_uniform (GimpGradient         *gradient,
       seg->right  = lseg->left + (i + 1) * seg_len;
       seg->middle = (seg->left + seg->right) / 2.0;
 
-      gimp_gradient_get_color_at (gradient, seg->left,  &seg->left_color);
-      gimp_gradient_get_color_at (gradient, seg->right, &seg->right_color);
+      gimp_gradient_get_color_at (gradient, seg->left,  FALSE, &seg->left_color);
+      gimp_gradient_get_color_at (gradient, seg->right, FALSE, &seg->right_color);
 
       seg->type  = lseg->type;
       seg->color = lseg->color;

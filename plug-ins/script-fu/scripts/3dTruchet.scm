@@ -25,10 +25,26 @@
 ;
 ;         The utility of this script is left as an exercise for the reader.
 
-(define (center-ellipse img cx cy rx ry op aa feather frad)
-  (gimp-ellipse-select img (- cx rx) (- cy ry) (+ rx rx ) (+ ry ry ) op aa feather frad))
+(define (center-ellipse img
+			cx
+			cy
+			rx
+			ry
+			op
+			aa
+			feather
+			frad)
+  (gimp-ellipse-select img (- cx rx) (- cy ry) (+ rx rx) (+ ry ry)
+		       op aa feather frad))
 
-(define (use-tile img drawable height width img2 drawable2 xoffset yoffset)
+(define (use-tile img
+		  drawable
+		  height
+		  width
+		  img2
+		  drawable2
+		  xoffset
+		  yoffset)
   (gimp-edit-copy drawable2)
   (let ((floating-sel (car (gimp-edit-paste drawable FALSE))))
     (gimp-layer-set-offsets floating-sel xoffset yoffset)
@@ -37,7 +53,15 @@
   )
 
 
-(define (create-tile img drawable1 drawable2 size thickness backcolor begincolor endcolor supersample)
+(define (create-tile img
+		     drawable1
+		     drawable2
+		     size
+		     thickness
+		     backcolor
+		     begincolor
+		     endcolor
+		     supersample)
   (let* (
 	 (half-thickness (/ thickness 2))
 	 (outer-radius (+ (/ size 2) half-thickness))
@@ -51,8 +75,10 @@
     (let* (
 	   (tempSize (* size 3))
 	   (temp-img (car (gimp-image-new tempSize tempSize RGB)))
-	   (temp-draw (car (gimp-layer-new temp-img tempSize tempSize RGB_IMAGE "Jabar" 100 NORMAL)))
-      	   (temp-draw2 (car (gimp-layer-new temp-img tempSize tempSize RGB_IMAGE "Jabar" 100 NORMAL))))
+	   (temp-draw (car (gimp-layer-new temp-img tempSize tempSize
+					   RGB_IMAGE "Jabar" 100 NORMAL)))
+      	   (temp-draw2 (car (gimp-layer-new temp-img tempSize tempSize
+					    RGB_IMAGE "Jabar" 100 NORMAL))))
 
       (gimp-image-undo-disable temp-img)
       (gimp-image-add-layer temp-img temp-draw 0)
@@ -65,21 +91,38 @@
       (gimp-palette-set-background begincolor)
       (gimp-palette-set-foreground endcolor)
 
-      (center-ellipse temp-img size size outer-radius outer-radius REPLACE TRUE FALSE 0)
-      (center-ellipse temp-img size size inner-radius inner-radius SUB TRUE FALSE 0)
+      (center-ellipse temp-img size size outer-radius outer-radius
+		      REPLACE TRUE FALSE 0)
+      (center-ellipse temp-img size size inner-radius inner-radius
+		      SUB TRUE FALSE 0)
       
-      (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius ADD TRUE FALSE 0)
-      (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius SUB TRUE FALSE 0)
-      (gimp-blend temp-draw FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 FALSE supersample 3 .2 TRUE size size (* size 2) (/ size 2) )
+      (center-ellipse temp-img (* size 2) (*  size 2)  outer-radius outer-radius
+		      ADD TRUE FALSE 0)
+      (center-ellipse temp-img (* size 2) (*  size 2)  inner-radius inner-radius
+		      SUB TRUE FALSE 0)
 
-      (center-ellipse temp-img size (* size 2)  outer-radius outer-radius REPLACE TRUE FALSE 0)
-      (center-ellipse temp-img size (* size 2) inner-radius inner-radius SUB TRUE FALSE 0)
+      (gimp-blend temp-draw FG-BG-RGB NORMAL
+		  SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		  supersample 3 .2 TRUE
+		  size size (* size 2) (/ size 2))
 
-      (center-ellipse temp-img (* size 2) size  outer-radius outer-radius ADD TRUE FALSE 0)
-      (center-ellipse temp-img (* size 2) size  inner-radius inner-radius SUB TRUE FALSE 0)
+      (center-ellipse temp-img size (* size 2)  outer-radius outer-radius
+		      REPLACE TRUE FALSE 0)
+      (center-ellipse temp-img size (* size 2) inner-radius inner-radius
+		      SUB TRUE FALSE 0)
+
+      (center-ellipse temp-img (* size 2) size  outer-radius outer-radius
+		      ADD TRUE FALSE 0)
+      (center-ellipse temp-img (* size 2) size  inner-radius inner-radius
+		      SUB TRUE FALSE 0)
+
       ;(gimp-edit-fill temp-img temp-draw2 BG-IMAGE-FILL)
-      (gimp-blend temp-draw2 FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 FALSE supersample 3 .2 TRUE size size (* size 2) (* size 2) )
-      
+
+      (gimp-blend temp-draw2 FG-BG-RGB NORMAL
+		  SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		  supersample 3 .2 TRUE
+		  size size (* size 2) (* size 2))
+
       (gimp-selection-none temp-img)
 
       (gimp-image-resize temp-img size size (- size) (- size))
@@ -105,7 +148,14 @@
   )
 
 
-(define (script-fu-3dtruchet size thickness backcolor begincolor endcolor supersample xtiles ytiles)
+(define (script-fu-3dtruchet size
+			     thickness
+			     backcolor
+			     begincolor
+			     endcolor
+			     supersample
+			     xtiles
+			     ytiles)
   (let* (
 	 (width (* size xtiles))
 	 (height (* size ytiles))
@@ -122,11 +172,10 @@
 
     (gimp-image-undo-disable img)
     (gimp-image-undo-disable tile)
-    
+
     (gimp-image-add-layer img layer-one 0)
     (gimp-image-add-layer tile tiledraw1 0)
     (gimp-image-add-layer tile tiledraw2 0)
-
  
     ;just to look a little better
     (gimp-selection-all img)
@@ -134,22 +183,24 @@
     (gimp-edit-fill layer-one BG-IMAGE-FILL)
     (gimp-selection-none img)
 
-    (create-tile tile tiledraw1 tiledraw2 size thickness backcolor begincolor endcolor supersample)
+    (create-tile tile tiledraw1 tiledraw2 size thickness
+		 backcolor begincolor endcolor supersample)
     
 
     (while (<= Xindex xtiles)
 	   (while (<= Yindex ytiles)
 		  (if (= (rand 2) 0)
-		      (use-tile img layer-one height width tile tiledraw1 (* Xindex size) (* Yindex size))
-		      (use-tile img layer-one height width tile tiledraw2 (* Xindex size) (* Yindex size))
+		      (use-tile img layer-one height width tile
+				tiledraw1 (* Xindex size) (* Yindex size))
+		      (use-tile img layer-one height width tile
+				tiledraw2 (* Xindex size) (* Yindex size))
 		      )
 		  (set! Yindex (+ Yindex 1))
 		  )
 	   (set! Yindex 0)
 	   (set! Xindex (+ Xindex 1))
 	   )
-    
-    
+ 
     (gimp-image-delete tile)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)
@@ -165,12 +216,11 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Block Size" '(64 5 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Thickness" '(12 2 100 1 10 0 1)
-		    SF-COLOR  _"Background Color" '(255 255 255)
-		    SF-COLOR  _"Start Blend" '(0 0 0)
-		    SF-COLOR  _"End Blend" '(255 255 255)
-		    SF-TOGGLE _"Supersample" TRUE
+		    SF-ADJUSTMENT _"Block Size"        '(64 5 1000 1 10 0 1)
+		    SF-ADJUSTMENT _"Thickness"         '(12 2 100 1 10 0 1)
+		    SF-COLOR      _"Background Color"  '(255 255 255)
+		    SF-COLOR      _"Start Blend"       '(0 0 0)
+		    SF-COLOR      _"End Blend"         '(255 255 255)
+		    SF-TOGGLE     _"Supersample"       TRUE
 		    SF-ADJUSTMENT _"Number of X Tiles" '(5 1 1000 1 10 0 1)
-		    SF-ADJUSTMENT _"Number of Y Tiles" '(5 1 1000 1 10 0 1)
-		    )
+		    SF-ADJUSTMENT _"Number of Y Tiles" '(5 1 1000 1 10 0 1))

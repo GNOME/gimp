@@ -11,6 +11,7 @@
 	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Shadow" 100 MULTIPLY)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
@@ -27,7 +28,12 @@
     (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     (gimp-palette-set-foreground '(255 255 255))
-    (gimp-blend logo-layer FG-BG-RGB MULTIPLY RADIAL 100 20 REPEAT-NONE FALSE 0 0 TRUE 0 0 width height)
+
+    (gimp-blend logo-layer FG-BG-RGB MULTIPLY
+		RADIAL 100 20 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 width height)
+
     (gimp-layer-translate shadow-layer 3 3)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
@@ -49,10 +55,10 @@
 		    "Spencer Kimball"
 		    "1996"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"             0
+                    SF-DRAWABLE   "Drawable"          0
 		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-COLOR      _"Text Color" '(6 6 206))
+		    SF-COLOR      _"Text Color"       '(6 6 206))
 
 (define (script-fu-basic1-logo text
 			       size
@@ -61,6 +67,7 @@
 			       text-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font))))
+
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
     (apply-basic1-logo-effect img text-layer bg-color text-color)
@@ -74,8 +81,8 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-STRING     _"Text" "The Gimp"
+		    SF-STRING     _"Text"               "The Gimp"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Dragonwick"
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-COLOR      _"Text Color" '(6 6 206))
+		    SF-FONT       _"Font"               "Dragonwick"
+		    SF-COLOR      _"Background Color"   '(255 255 255)
+		    SF-COLOR      _"Text Color"         '(6 6 206))

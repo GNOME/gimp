@@ -44,6 +44,7 @@
 
 GimpPalette *
 gimp_palette_import_from_gradient (GimpGradient *gradient,
+                                   gboolean      reverse,
 				   const gchar  *palette_name,
 				   gint          n_colors)
 {
@@ -62,7 +63,7 @@ gimp_palette_import_from_gradient (GimpGradient *gradient,
 
   for (loop = 0, cur_x = 0; loop < n_colors; loop++, cur_x += dx)
     {
-      gimp_gradient_get_color_at (gradient, cur_x, &color);
+      gimp_gradient_get_color_at (gradient, cur_x, reverse, &color);
       gimp_palette_add_entry (palette, NULL, &color);
     }
 
@@ -88,9 +89,9 @@ struct _ImgColors
 static gint count_color_entries = 0;
 
 static GHashTable *
-gimp_palette_import_store_colors (GHashTable *h_array, 
+gimp_palette_import_store_colors (GHashTable *h_array,
 				  guchar     *colors,
-				  guchar     *colors_real, 
+				  guchar     *colors_real,
 				  gint        n_colors)
 {
   gpointer   found_color = NULL;
@@ -206,8 +207,8 @@ gimp_palette_import_create_image_palette (gpointer data,
   /* Adjust the colors to the mean of the the sample */
   gimp_rgba_set_uchar
     (&color,
-     (guchar) color_tab->r + (color_tab->r_adj / color_tab->count), 
-     (guchar) color_tab->g + (color_tab->g_adj / color_tab->count), 
+     (guchar) color_tab->r + (color_tab->r_adj / color_tab->count),
+     (guchar) color_tab->g + (color_tab->g_adj / color_tab->count),
      (guchar) color_tab->b + (color_tab->b_adj / color_tab->count),
      255);
 

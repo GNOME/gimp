@@ -122,7 +122,7 @@ gimp_blend_tool_get_type (void)
       };
 
       tool_type = g_type_register_static (GIMP_TYPE_DRAW_TOOL,
-					  "GimpBlendTool", 
+					  "GimpBlendTool",
                                           &tool_info, 0);
     }
 
@@ -159,7 +159,7 @@ gimp_blend_tool_init (GimpBlendTool *blend_tool)
   GimpTool *tool;
 
   tool = GIMP_TOOL (blend_tool);
- 
+
   gimp_tool_control_set_scroll_lock (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_BLEND_TOOL_CURSOR);
 
@@ -215,14 +215,16 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                                 GimpDisplay     *gdisp)
 {
   GimpBlendTool    *blend_tool;
+  GimpPaintOptions *paint_options;
   GimpBlendOptions *options;
   GimpContext      *context;
   GimpImage        *gimage;
   GimpProgress     *progress;
 
-  blend_tool = GIMP_BLEND_TOOL (tool);
-  options    = GIMP_BLEND_OPTIONS (tool->tool_info->tool_options);
-  context    = GIMP_CONTEXT (options);
+  blend_tool    = GIMP_BLEND_TOOL (tool);
+  paint_options = GIMP_PAINT_OPTIONS (tool->tool_info->tool_options);
+  options       = GIMP_BLEND_OPTIONS (paint_options);
+  context       = GIMP_CONTEXT (options);
 
   gimage = gdisp->gimage;
 
@@ -246,7 +248,8 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                            options->gradient_type,
                            gimp_context_get_opacity (context),
                            options->offset,
-                           options->repeat,
+                           paint_options->gradient_options->gradient_repeat,
+                           paint_options->gradient_options->gradient_reverse,
                            options->supersample,
                            options->supersample_depth,
                            options->supersample_threshold,
@@ -255,7 +258,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
                            blend_tool->starty,
                            blend_tool->endx,
                            blend_tool->endy,
-                           progress ? gimp_progress_update_and_flush : NULL, 
+                           progress ? gimp_progress_update_and_flush : NULL,
                            progress);
 
       if (progress)
@@ -304,13 +307,13 @@ gimp_blend_tool_motion (GimpTool        *tool,
 	  for (i = 0; i < 6; i++)
 	    {
 	      if (frac < tangens2[i])
-		break;  
+		break;
 	    }
 
-	  dx = dx > 0 ? 
+	  dx = dx > 0 ?
             (cosinus[6-i] * radius) >> 8 : - ((cosinus[6-i] * radius) >> 8);
 
-	  dy = dy > 0 ? 
+	  dy = dy > 0 ?
             (cosinus[i]   * radius) >> 8 : - ((cosinus[i]   * radius) >> 8);
 	}
 

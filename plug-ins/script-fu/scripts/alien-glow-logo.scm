@@ -14,6 +14,7 @@
 	 (glow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Alien Glow" 100 NORMAL)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
@@ -28,9 +29,15 @@
     (gimp-palette-set-foreground glow-color)
     (gimp-edit-fill glow-layer FG-IMAGE-FILL)
     (gimp-selection-none img)
+
     (gimp-palette-set-background '(0 0 0))
     (gimp-palette-set-foreground '(79 79 79))
-    (gimp-blend logo-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 1 1)
+
+    (gimp-blend logo-layer FG-BG-RGB NORMAL
+		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 1 1)
+
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
 
@@ -51,10 +58,10 @@
 		    "Spencer Kimball"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"                   0
+                    SF-DRAWABLE   "Drawable"                0
 		    SF-ADJUSTMENT _"Glow Size (pixels * 4)" '(150 2 1000 1 10 0 1)
-		    SF-COLOR      _"Glow Color" '(63 252 0))
+		    SF-COLOR      _"Glow Color"             '(63 252 0))
 
 (define (script-fu-alien-glow-logo text
 				   size
@@ -69,6 +76,7 @@
 	 (height (car (gimp-drawable-height text-layer)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
     (apply-alien-glow-logo-effect img text-layer size glow-color)
@@ -82,7 +90,7 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "ALIEN"
+		    SF-STRING     _"Text"               "ALIEN"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Futura_Poster"
-		    SF-COLOR      _"Glow Color" '(63 252 0))
+		    SF-FONT       _"Font"               "Futura_Poster"
+		    SF-COLOR      _"Glow Color"         '(63 252 0))

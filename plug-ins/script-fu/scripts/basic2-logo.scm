@@ -5,6 +5,7 @@
   (let ((r (car color))
 	(g (cadr color))
 	(b (caddr color)))
+
     (set! r (+ r (* (- 255 r) 0.75)))
     (set! g (+ g (* (- 255 g) 0.75)))
     (set! b (+ b (* (- 255 b) 0.75)))
@@ -16,13 +17,14 @@
 				  text-color)
   (let* ((width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-     (posx (- (car (gimp-drawable-offsets logo-layer))))
-     (posy (- (cadr (gimp-drawable-offsets logo-layer))))
+	 (posx (- (car (gimp-drawable-offsets logo-layer))))
+	 (posy (- (cadr (gimp-drawable-offsets logo-layer))))
 	 (bg-layer (car (gimp-layer-new img width height RGB_IMAGE "Background" 100 NORMAL)))
 	 (highlight-layer (car (gimp-layer-copy logo-layer TRUE)))
 	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Shadow" 100 MULTIPLY)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
@@ -43,7 +45,12 @@
     (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
     (gimp-selection-none img)
     (gimp-palette-set-foreground '(255 255 255))
-    (gimp-blend logo-layer FG-BG-RGB MULTIPLY RADIAL 100 20 REPEAT-NONE FALSE 0 0 TRUE 0 0 width height)
+
+    (gimp-blend logo-layer FG-BG-RGB MULTIPLY
+		RADIAL 100 20 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 width height)
+
     (gimp-layer-translate shadow-layer 3 3)
     (gimp-layer-translate highlight-layer (- posx 2) (- posy 2))
     (gimp-layer-set-name highlight-layer "Highlight")
@@ -79,6 +86,7 @@
 			       text-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text 10 TRUE size PIXELS font))))
+
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
     (apply-basic2-logo-effect img text-layer bg-color text-color)
@@ -92,8 +100,8 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-STRING     _"Text" "SCRIPT-FU"
+		    SF-STRING     _"Text"               "SCRIPT-FU"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Futura_Poster"
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-COLOR      _"Text Color" '(206 6 50))
+		    SF-FONT       _"Font"               "Futura_Poster"
+		    SF-COLOR      _"Background Color"   '(255 255 255)
+		    SF-COLOR      _"Text Color"         '(206 6 50))

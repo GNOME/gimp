@@ -38,22 +38,16 @@
 (define (text-descent extents)
   (cadr (cddr extents)))
 
-(define (blend-bumpmap img drawable x1 y1 x2 y2)
-  (gimp-blend drawable
-	      FG-BG-RGB
-	      DARKEN-ONLY
-	      LINEAR
-	      100
-	      0
-	      REPEAT-NONE
-	      FALSE
-	      0
-	      0
-	      TRUE
-	      x1
-	      y1
-	      x2
-	      y2))
+(define (blend-bumpmap img
+		       drawable
+		       x1
+		       y1
+		       x2
+		       y2)
+  (gimp-blend drawable FG-BG-RGB DARKEN-ONLY
+	      LINEAR 100 0 REPEAT-NONE FALSE
+	      FALSE 0 0 TRUE
+	      x1 y1 x2 y2))
 
 (define (script-fu-button00 text
 			    size
@@ -66,14 +60,14 @@
 			    pressed)
   (let* ((old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
-	 
+
 	 (text-extents (gimp-text-get-extents-fontname text
 					      size
 					      PIXELS
 					      font))
 	 (ascent (text-ascent text-extents))
 	 (descent (text-descent text-extents))
-	 
+
 	 (img-width (+ (* 2 (+ padding bevel-width))
 		       (text-width text-extents)))
 	 (img-height (+ (* 2 (+ padding bevel-width))
@@ -112,23 +106,14 @@
     (gimp-image-add-layer img gradient -1)
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
-    (gimp-blend gradient
-		FG-BG-RGB
-		NORMAL
-		LINEAR
-		100
-		0
-		REPEAT-NONE
-		FALSE
-		0
-		0
-		TRUE
-		0
-		0
-		(- img-width 1)
-		(- img-height 1))
 
-    (plug-in-bump-map 1 img gradient bumpmap 135 45 bevel-width 0 0 0 0 TRUE pressed 0)
+    (gimp-blend gradient FG-BG-RGB NORMAL
+		LINEAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 (- img-width 1) (- img-height 1))
+
+    (plug-in-bump-map 1 img gradient bumpmap
+		      135 45 bevel-width 0 0 0 0 TRUE pressed 0)
 
     ; Create text layer
 
@@ -147,8 +132,6 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
-; Register!
-
 (script-fu-register "script-fu-button00"
 		    _"<Toolbox>/Xtns/Script-Fu/Buttons/Simple Beveled Button..."
 		    "Simple beveled button"
@@ -156,12 +139,12 @@
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-STRING     _"Text" "Hello world!"
+		    SF-STRING     _"Text"               "Hello world!"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(16 2 100 1 1 0 1)
-		    SF-FONT       _"Font" "Sans"
-		    SF-COLOR      _"Upper-Left color" '(0 255 127)
-		    SF-COLOR      _"Lower-Right color" '(0 127 255)
-		    SF-COLOR      _"Text Color" '(0 0 0)
-		    SF-ADJUSTMENT _"Padding" '(2 1 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width" '(4 1 100 1 10 0 1)
-		    SF-TOGGLE     _"Pressed" FALSE)
+		    SF-FONT       _"Font"               "Sans"
+		    SF-COLOR      _"Upper-Left color"   '(0 255 127)
+		    SF-COLOR      _"Lower-Right color"  '(0 127 255)
+		    SF-COLOR      _"Text Color"         '(0 0 0)
+		    SF-ADJUSTMENT _"Padding"            '(2 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel Width"        '(4 1 100 1 10 0 1)
+		    SF-TOGGLE     _"Pressed"            FALSE)

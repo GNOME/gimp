@@ -1033,7 +1033,9 @@ paintbrush_invoker (Gimp     *gimp,
     
       g_object_set (options,
 		    "application-mode", method,
+		    "use-fade",         fade_out > 0.0,
 		    "fade-length",      fade_out,
+		    "use-gradient",     gradient_length > 0.0,
 		    "gradient-length",  gradient_length,
 		    NULL);
     

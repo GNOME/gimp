@@ -89,11 +89,6 @@ init_generated_constants (void)
   setvar (cintern ("TRANSPARENT-FILL"), flocons (3), NIL);
   setvar (cintern ("NO-FILL"), flocons (4), NIL);
 
-  setvar (cintern ("GRADIENT-ONCE-FORWARD"), flocons (0), NIL);
-  setvar (cintern ("GRADIENT-ONCE-BACKWARD"), flocons (1), NIL);
-  setvar (cintern ("GRADIENT-LOOP-SAWTOOTH"), flocons (2), NIL);
-  setvar (cintern ("GRADIENT-LOOP-TRIANGLE"), flocons (3), NIL);
-
   setvar (cintern ("LINEAR"), flocons (0), NIL);
   setvar (cintern ("BILINEAR"), flocons (1), NIL);
   setvar (cintern ("RADIAL"), flocons (2), NIL);

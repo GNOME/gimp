@@ -62,6 +62,7 @@ blend_invoker (Gimp     *gimp,
   gdouble opacity;
   gdouble offset;
   gint32 repeat;
+  gboolean reverse;
   gboolean supersample;
   gint32 max_depth;
   gdouble threshold;
@@ -99,25 +100,27 @@ blend_invoker (Gimp     *gimp,
   if (repeat < GIMP_REPEAT_NONE || repeat > GIMP_REPEAT_TRIANGULAR)
     success = FALSE;
 
-  supersample = args[7].value.pdb_int ? TRUE : FALSE;
+  reverse = args[7].value.pdb_int ? TRUE : FALSE;
 
-  max_depth = args[8].value.pdb_int;
+  supersample = args[8].value.pdb_int ? TRUE : FALSE;
+
+  max_depth = args[9].value.pdb_int;
   if (supersample && (max_depth < 1 || max_depth > 9))
     success = FALSE;
 
-  threshold = args[9].value.pdb_float;
+  threshold = args[10].value.pdb_float;
   if (supersample && (threshold < 0.0 || threshold > 4.0))
     success = FALSE;
 
-  dither = args[10].value.pdb_int ? TRUE : FALSE;
+  dither = args[11].value.pdb_int ? TRUE : FALSE;
 
-  x1 = args[11].value.pdb_float;
+  x1 = args[12].value.pdb_float;
 
-  y1 = args[12].value.pdb_float;
+  y1 = args[13].value.pdb_float;
 
-  x2 = args[13].value.pdb_float;
+  x2 = args[14].value.pdb_float;
 
-  y2 = args[14].value.pdb_float;
+  y2 = args[15].value.pdb_float;
 
   if (success)
     {
@@ -132,7 +135,7 @@ blend_invoker (Gimp     *gimp,
 			       paint_mode,
 			       gradient_type,
 			       opacity / 100.0,
-			       offset, repeat,
+			       offset, repeat, reverse,
 			       supersample, max_depth,
 			       threshold, dither,
 			       x1, y1, x2, y2,
@@ -179,6 +182,11 @@ static ProcArg blend_inargs[] =
     GIMP_PDB_INT32,
     "repeat",
     "Repeat mode: { GIMP_REPEAT_NONE (0), GIMP_REPEAT_SAWTOOTH (1), GIMP_REPEAT_TRIANGULAR (2) }"
+  },
+  {
+    GIMP_PDB_INT32,
+    "reverse",
+    "Use the reverse gradient (TRUE or FALSE)"
   },
   {
     GIMP_PDB_INT32,
@@ -231,7 +239,7 @@ static ProcRecord blend_proc =
   "Spencer Kimball & Peter Mattis",
   "1995-1996",
   GIMP_INTERNAL,
-  15,
+  16,
   blend_inargs,
   0,
   NULL,

@@ -143,8 +143,8 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   GimpGradientOptions      *gradient_options;
   GimpContext              *context;
   GimpImage                *gimage;
+  GimpRGB                   gradient_color;
   TempBuf                  *area;
-  gdouble                   gradient_length;
   guchar                    col[MAX_CHANNELS];
   gdouble                   scale;
   GimpPaintApplicationMode  paint_appl_mode;
@@ -166,35 +166,6 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
   paint_appl_mode = paint_options->application_mode;
 
-  if (gradient_options->use_gradient)
-    {
-      gdouble unit_factor;
-
-      switch (gradient_options->gradient_unit)
-        {
-        case GIMP_UNIT_PIXEL:
-          gradient_length = gradient_options->gradient_length;
-          break;
-        case GIMP_UNIT_PERCENT:
-          gradient_length = (MAX (gimage->width, gimage->height) *
-                             gradient_options->gradient_length / 100);
-          break;
-        default:
-          unit_factor = gimp_unit_get_factor (gradient_options->gradient_unit);
-          gradient_length = (gradient_options->gradient_length *
-                             MAX (gimage->xresolution,
-                                  gimage->yresolution) / unit_factor);
-          break;
-        }
-    }
-  else
-    {
-      gradient_length = 0.0;
-    }
-
-  if (pressure_options->color)
-    gradient_length = 1.0; /* not really used, only for if cases */
-
   if (pressure_options->size)
     scale = paint_core->cur_coords.pressure;
   else
@@ -204,27 +175,14 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (! (area = gimp_paint_core_get_paint_area (paint_core, drawable, scale)))
     return;
 
-  if (gradient_length)
+  if (gimp_paint_options_get_gradient_color (paint_options, gimage,
+                                             paint_core->cur_coords.pressure,
+                                             paint_core->pixel_dist,
+                                             &gradient_color))
     {
-      GimpGradient *gradient;
-      GimpRGB       color;
+      opacity *= gradient_color.a;
 
-      gradient = gimp_context_get_gradient (context);
-
-      if (pressure_options->color)
-        gimp_gradient_get_color_at (gradient,
-                                    paint_core->cur_coords.pressure,
-                                    &color);
-      else
-        gimp_paint_core_get_color_from_gradient (paint_core,
-                                                 gradient,
-                                                 gradient_length,
-                                                 &color,
-                                                 gradient_options->gradient_type);
-
-      opacity *= color.a;
-
-      gimp_rgb_get_uchar (&color,
+      gimp_rgb_get_uchar (&gradient_color,
                           &col[RED_PIX],
                           &col[GREEN_PIX],
                           &col[BLUE_PIX]);

@@ -30,28 +30,24 @@
 
 (define (script-fu-title-header text
 				size
-;				foundry
-;				family
-;				weight
-;				slant
-;				set-width
-				fontname)
+				fontname
+				gradient-reverse)
   (let* (; Parameters
 	 
 	 (padding 8)
 	 (fade-width 64)
-	 
+
 	 ; Save foreground and background colors
 
 	 (old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
-	 
+
 	 ; Image 
 
 	 (img (car (gimp-image-new 256 256 RGB)))
 
 	 ; Text layer
-	 
+
 	 (text-layer (car (gimp-text-fontname
 			   img
 			   -1
@@ -75,7 +71,8 @@
 
 	 ; Additional layers
 	 
-	 (bg-layer (car (gimp-layer-new img img-width img-height RGBA_IMAGE "bg-layer" 100 NORMAL)))
+	 (bg-layer (car (gimp-layer-new img img-width img-height RGBA_IMAGE
+					"bg-layer" 100 NORMAL)))
 	 (bumpmap-layer (car (gimp-layer-new img
 					     text-width
 					     text-height
@@ -83,13 +80,14 @@
 					     "bumpmap-layer"
 					     100
 					     NORMAL)))
-	 (fore-layer (car (gimp-layer-new img text-width text-height RGBA_IMAGE "fore-layer" 100 NORMAL))))
-    
+	 (fore-layer (car (gimp-layer-new img text-width text-height RGBA_IMAGE
+					  "fore-layer" 100 NORMAL))))
+
     ; Create image
-    
+
     (gimp-image-undo-disable img)
     (gimp-image-resize img img-width img-height 0 0)
-    
+
     (gimp-image-add-layer img bg-layer -1)
     (gimp-image-add-layer img bumpmap-layer -1)
     (gimp-image-add-layer img fore-layer -1)
@@ -122,41 +120,36 @@
 
     (gimp-layer-set-visible text-layer TRUE)
     (gimp-layer-set-preserve-trans text-layer TRUE)
-    (gimp-blend text-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0.2 3 TRUE
-		padding
-		padding
-		(- text-width padding 1)
-		(- text-height padding 1))
+
+    (gimp-blend text-layer CUSTOM NORMAL
+		LINEAR 100 0 REPEAT-NONE gradient-reverse
+		FALSE 0.2 3 TRUE
+		padding padding
+		(- text-width padding 1) (- text-height padding 1))
 
     ; Semicircle at the left
 
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
-    
+
     (gimp-ellipse-select img 0 0 text-height text-height REPLACE TRUE FALSE 0)
-    (gimp-palette-set-background (car (gimp-color-picker img text-layer text-layers-offset 0 TRUE FALSE 0)))
+    (gimp-palette-set-background (car (gimp-color-picker img text-layer
+							 text-layers-offset 0
+							 TRUE FALSE 0)))
     (gimp-edit-fill bg-layer BG-IMAGE-FILL)
 
     ; Fade-out gradient at the right
 
-    (gimp-rect-select img (- img-width fade-width) 0 fade-width text-height REPLACE FALSE 0)
+    (gimp-rect-select img (- img-width fade-width) 0 fade-width text-height
+		      REPLACE FALSE 0)
     (gimp-palette-set-foreground (car (gimp-palette-get-background)))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend bg-layer
-		FG-BG-RGB
-		NORMAL
-		LINEAR
-		100
-		0
-		REPEAT-NONE
-		FALSE
-		0.2
-		3
-		TRUE
-		(- img-width fade-width)
-		0
-		(- img-width 1)
-		0)
+
+    (gimp-blend bg-layer FG-BG-RGB NORMAL
+		LINEAR 100 0 REPEAT-NONE FALSE
+		FALSE 0.2 3 TRUE
+		(- img-width fade-width) 0 (- img-width 1) 0)
+
     (gimp-selection-none img)
 
     ; Done
@@ -174,11 +167,7 @@
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-STRING     _"Text" "Hello world!"
+		    SF-STRING     _"Text"               "Hello world!"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(32 2 256 1 10 0 0)
-		    SF-FONT       _"Font" "Sans")
-
-
-
-
-
+		    SF-FONT       _"Font"               "Sans"
+		    SF-TOGGLE     _"Gradient Reverse"   FALSE)

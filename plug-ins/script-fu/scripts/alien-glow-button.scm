@@ -35,32 +35,26 @@
 (define (text-descent extents)
   (cadr (cddr extents)))
 
-(define (blend-bumpmap img drawable x1 y1 x2 y2)
-  (gimp-blend drawable
-	      FG-BG-RGB
-	      DARKEN-ONLY
-	      LINEAR
-	      100
-	      0
-	      REPEAT-NONE
-	      FALSE
-	      0
-	      0
-	      TRUE
-	      x1
-	      y1
-	      x2
-	      y2))
+(define (blend-bumpmap img
+		       drawable
+		       x1
+		       y1
+		       x2
+		       y2)
+  (gimp-blend drawable FG-BG-RGB DARKEN-ONLY
+	      LINEAR 100 0 REPEAT-NONE FALSE
+	      FALSE 0 0 TRUE
+	      x1 y1 x2 y2))
 
 (define (script-fu-alien-glow-button text
-			    font
-			    size
-			    text-color
-			    glow-color
-			    bg-color
-			    padding
-			    glow-radius
-			    flatten)
+				     font
+				     size
+				     text-color
+				     glow-color
+				     bg-color
+				     padding
+				     glow-radius
+				     flatten)
   (let* ((old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
 	 (text-extents (gimp-text-get-extents-fontname text
@@ -101,9 +95,21 @@
     (gimp-rect-select img 0 0 img-width img-height REPLACE FALSE 0)
     (gimp-palette-set-foreground '(100 100 100))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend button-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 img-height img-width)
+
+    (gimp-blend button-layer FG-BG-RGB NORMAL
+		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 img-height img-width)
+
     (gimp-edit-clear glow-layer)
-    (gimp-rect-select img (/ glow-radius 4) (/ glow-radius 4) (- img-width (/ glow-radius 2)) (- img-height (/ glow-radius 2)) REPLACE FALSE 0 )
+
+    (gimp-rect-select img
+		      (/ glow-radius 4)
+		      (/ glow-radius 4)
+		      (- img-width (/ glow-radius 2))
+		      (- img-height (/ glow-radius 2))
+		      REPLACE FALSE 0 )
+
     (gimp-palette-set-foreground glow-color)
     (gimp-edit-fill glow-layer FG-IMAGE-FILL)
     (gimp-selection-none img)
@@ -123,8 +129,6 @@
 	(gimp-image-flatten img))
     (gimp-display-new img)))
 
-; Register!
-
 (script-fu-register "script-fu-alien-glow-button"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Button..."
 		    "Button with an eerie glow"
@@ -132,12 +136,12 @@
 		    "Adrian Likins"
 		    "July 1997"
 		    ""
-		    SF-STRING _"Text" "Hello world!"
-		    SF-FONT   _"Font" "Futura_Poster"
+		    SF-STRING     _"Text"               "Hello world!"
+		    SF-FONT       _"Font"               "Futura_Poster"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(22 2 100 1 1 0 1)
-		    SF-COLOR      _"Text Color" '(0 0 0)
-		    SF-COLOR      _"Glow Color" '(63 252 0)
-		    SF-COLOR      _"Background Color" '(0 0 0)
-		    SF-ADJUSTMENT _"Padding" '(6 1 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Glow Radius" '(10 1 200 1 10 0 1)
-		    SF-TOGGLE     _"Flatten Image" TRUE)
+		    SF-COLOR      _"Text Color"         '(0 0 0)
+		    SF-COLOR      _"Glow Color"         '(63 252 0)
+		    SF-COLOR      _"Background Color"   '(0 0 0)
+		    SF-ADJUSTMENT _"Padding"            '(6 1 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Glow Radius"        '(10 1 200 1 10 0 1)
+		    SF-TOGGLE     _"Flatten Image"      TRUE)

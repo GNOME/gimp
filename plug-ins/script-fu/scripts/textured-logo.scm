@@ -21,15 +21,22 @@
 	 (ts-size (- b-size-2 3))
 	 (width (car (gimp-drawable-width logo-layer)))
 	 (height (car (gimp-drawable-height logo-layer)))
-	 (blend-layer (car (gimp-layer-new img width height RGBA_IMAGE "Blend" 100 NORMAL)))
-	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Shadow" 100 NORMAL)))
-	 (text-shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Text Shadow" 100 MULTIPLY)))
-	 (tsl-layer-mask (car (gimp-layer-create-mask text-shadow-layer BLACK-MASK)))
-	 (drop-shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE "Drop Shadow" 100 MULTIPLY)))
-	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer BLACK-MASK)))
+	 (blend-layer (car (gimp-layer-new img width height RGBA_IMAGE
+					   "Blend" 100 NORMAL)))
+	 (shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE
+					    "Shadow" 100 NORMAL)))
+	 (text-shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE
+						 "Text Shadow" 100 MULTIPLY)))
+	 (tsl-layer-mask (car (gimp-layer-create-mask text-shadow-layer
+						      BLACK-MASK)))
+	 (drop-shadow-layer (car (gimp-layer-new img width height RGBA_IMAGE
+						 "Drop Shadow" 100 MULTIPLY)))
+	 (dsl-layer-mask (car (gimp-layer-create-mask drop-shadow-layer
+						      BLACK-MASK)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
-	 (old-pattern (car (gimp-patterns-get-pattern))))    
+	 (old-pattern (car (gimp-patterns-get-pattern))))
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img blend-layer 1)
@@ -44,7 +51,8 @@
     (gimp-edit-clear drop-shadow-layer)
     (gimp-palette-set-background bg-color)
     (gimp-drawable-fill shadow-layer BG-IMAGE-FILL)
-    (gimp-rect-select img b-size-2 b-size-2 (- width b-size) (- height b-size) REPLACE TRUE b-size-2)
+    (gimp-rect-select img b-size-2 b-size-2 (- width b-size) (- height b-size)
+		      REPLACE TRUE b-size-2)
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
     (gimp-selection-layer-alpha logo-layer)
@@ -57,12 +65,24 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill text-shadow-layer BG-IMAGE-FILL)
     (gimp-palette-set-foreground '(255 255 255))
-    (gimp-blend text-shadow-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 1 1)
+
+    (gimp-blend text-shadow-layer FG-BG-RGB NORMAL
+		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 1 1)
+
     (gimp-selection-none img)
     (gimp-palette-set-foreground blend-fg)
     (gimp-palette-set-background blend-bg)
-    (gimp-blend blend-layer FG-BG-RGB NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 width 0)
-    (plug-in-mosaic 1 img blend-layer 12 1 1 0.7 TRUE 135 0.2 TRUE FALSE tile-type 1 0)
+
+    (gimp-blend blend-layer FG-BG-RGB NORMAL
+		LINEAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 width 0)
+
+    (plug-in-mosaic 1 img blend-layer 12 1 1 0.7 TRUE 135 0.2 TRUE FALSE
+		    tile-type 1 0)
+
     (gimp-layer-translate logo-layer (- b-size-2) (- b-size-2))
     (gimp-layer-translate blend-layer (- b-size) (- b-size))
     (gimp-layer-translate text-shadow-layer (- ts-size) (- ts-size))
@@ -99,15 +119,16 @@
 		    "Spencer Kimball"
 		    "1996"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"                 0
+                    SF-DRAWABLE   "Drawable"              0
 		    SF-ADJUSTMENT _"Border Size (pixels)" '(20 1 100 1 10 0 1)
-		    SF-PATTERN    _"Pattern" "Fibers"
-		    SF-OPTION     _"Mosaic Tile Type" '(_"Squares" _"Hexagons" _"Octagons")
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-COLOR      _"Starting Blend" '(32 106 0)
-		    SF-COLOR      _"Ending Blend" '(0 0 106)
-		    )
+		    SF-PATTERN    _"Pattern"              "Fibers"
+		    SF-OPTION     _"Mosaic Tile Type"     '(_"Squares"
+							     _"Hexagons"
+							     _"Octagons")
+		    SF-COLOR      _"Background Color"     '(255 255 255)
+		    SF-COLOR      _"Starting Blend"       '(32 106 0)
+		    SF-COLOR      _"Ending Blend"         '(0 0 106))
 
 (define (script-fu-textured-logo text
 				 size
@@ -119,7 +140,8 @@
 				 blend-bg)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (b-size (scale size 0.1))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS fontname))))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size
+					      TRUE size PIXELS fontname))))
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
     (apply-textured-logo-effect img text-layer b-size text-pattern tile-type
@@ -134,12 +156,13 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-STRING     _"Text" "The GIMP"
+		    SF-STRING     _"Text"               "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(200 1 1000 1 10 0 1)
-		    SF-FONT       _"Font" "CuneiFont"
-		    SF-PATTERN    _"Text Pattern" "Fibers"
-		    SF-OPTION     _"Mosaic Tile Type" '(_"Squares" _"Hexagons" _"Octagons")
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-COLOR      _"Starting Blend" '(32 106 0)
-		    SF-COLOR      _"Ending Blend" '(0 0 106)
-		    )
+		    SF-FONT       _"Font"               "CuneiFont"
+		    SF-PATTERN    _"Text Pattern"       "Fibers"
+		    SF-OPTION     _"Mosaic Tile Type"   '(_"Squares"
+							   _"Hexagons"
+							   _"Octagons")
+		    SF-COLOR      _"Background Color"   '(255 255 255)
+		    SF-COLOR      _"Starting Blend"     '(32 106 0)
+		    SF-COLOR      _"Ending Blend"       '(0 0 106))

@@ -1,13 +1,17 @@
 ;  Nova Starscape
 ;  Create a text effect that simulates an eerie alien glow around text
 
-(define (find-blend-coords w h)
+(define (find-blend-coords w
+			   h)
   (let* ((denom (+ (/ w h) (/ h w)))
 	 (bx    (/ (* -2 h) denom))
 	 (by    (/ (* -2 w) denom)))
     (cons bx by)))
 
-(define (find-nova-x-coord drawable x1 x2 y)
+(define (find-nova-x-coord drawable
+			   x1
+			   x2
+			   y)
   (let* ((x 0)
 	 (alpha 3)
 	 (range (- x2 x1))
@@ -59,6 +63,7 @@
 	 (old-pattern (car (gimp-patterns-get-pattern)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (gimp-selection-none img)
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
@@ -88,21 +93,25 @@
     (gimp-selection-none img)
     (gimp-palette-set-background '(31 31 31))
     (gimp-palette-set-foreground '(255 255 255))
-    (gimp-blend logo-layer FG-BG-RGB NORMAL BILINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE cx cy bx by)
+
+    (gimp-blend logo-layer FG-BG-RGB NORMAL
+		BILINEAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		cx cy bx by)
 
     (plug-in-nova 1 img glow-layer novax novay glow-color novaradius 100 0)
 
     (gimp-selection-all img)
     (gimp-patterns-set-pattern "Stone")
     (gimp-bucket-fill bump-channel PATTERN-BUCKET-FILL NORMAL 100 0 FALSE 0 0)
-    (plug-in-bump-map 1 img logo-layer bump-channel 135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
+    (plug-in-bump-map 1 img logo-layer bump-channel
+		      135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
     (gimp-image-remove-channel img bump-channel)
     (gimp-selection-none img)
 
     (gimp-patterns-set-pattern old-pattern)
     (gimp-palette-set-background old-bg)
     (gimp-palette-set-foreground old-fg)))
-
 
 (define (script-fu-starscape-logo-alpha img
 					logo-layer
@@ -121,11 +130,10 @@
 		    "Spencer Kimball"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"                     0
+                    SF-DRAWABLE   "Drawable"                  0
 		    SF-ADJUSTMENT _"Effect Size (pixels * 4)" '(150 1 1000 1 10 0 1)
-		    SF-COLOR      _"Glow Color" '(28 65 188)
-		    )
+		    SF-COLOR      _"Glow Color"               '(28 65 188))
 
 
 (define (script-fu-starscape-logo text
@@ -134,7 +142,8 @@
 				  glow-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS fontname))))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text border
+					      TRUE size PIXELS fontname))))
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
     (apply-starscape-logo-effect img text-layer size glow-color)
@@ -148,8 +157,7 @@
 		    "Spencer Kimball"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "Nova"
+		    SF-STRING     _"Text"               "Nova"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 1 1000 1 10 0 1)
-            SF-FONT       _"Font" "Engraver"
-		    SF-COLOR      _"Glow Color" '(28 65 188)
-		    )
+		    SF-FONT       _"Font"               "Engraver"
+		    SF-COLOR      _"Glow Color"         '(28 65 188))

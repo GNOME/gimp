@@ -107,24 +107,26 @@
 ; ----------------------------------------------------------------------
 
 
-(define (script-fu-test-sphere radius 
-			       light 
-			       shadow 
-			       bg-color 
-			       sphere-color 
-			       brush 
-			       text 
-			       pattern 
-			       gradient 
-			       font 
-			       size 
+(define (script-fu-test-sphere radius
+			       light
+			       shadow
+			       bg-color
+			       sphere-color
+			       brush
+			       text
+			       pattern
+			       gradient
+			       gradient-reverse
+			       font
+			       size
 			       filename
 			       orientation
 			       dirname)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
-	 (drawable (car (gimp-layer-new img width height RGB_IMAGE "Sphere Layer" 100 NORMAL)))
+	 (drawable (car (gimp-layer-new img width height RGB_IMAGE
+					"Sphere Layer" 100 NORMAL)))
 	 (radians (/ (* light *pi*) 180))
 	 (cx (/ width 2))
 	 (cy (/ height 2))
@@ -140,14 +142,17 @@
 	 (old-gradient (car (gimp-gradients-get-gradient)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (gimp-image-undo-disable img)
     (gimp-image-add-layer img drawable 0)
     (gimp-palette-set-foreground sphere-color)
     (gimp-palette-set-background bg-color)
     (gimp-edit-fill drawable BG-IMAGE-FILL)
     (gimp-palette-set-background '(20 20 20))
+
     (if (and
-	 (or (and (>= light 45) (<= light 75)) (and (<= light 135) (>= light 105)))
+	 (or (and (>= light 45) (<= light 75))
+	     (and (<= light 135) (>= light 105)))
 	 (= shadow TRUE))
 	(let ((shadow-w (* (* radius 2.5) (cos (+ *pi* radians))))
 	      (shadow-h (* radius 0.5))
@@ -156,18 +161,31 @@
 	  (if (< shadow-w 0)
 	      (prog1 (set! shadow-x (+ cx shadow-w))
 		     (set! shadow-w (- shadow-w))))
-	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h REPLACE TRUE TRUE 7.5)
+
+	  (gimp-ellipse-select img shadow-x shadow-y shadow-w shadow-h
+			       REPLACE TRUE TRUE 7.5)
 	  (gimp-patterns-set-pattern pattern)
-	  (gimp-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY 100 0 FALSE 0 0)))
-    (gimp-ellipse-select img (- cx radius) (- cy radius) (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
-    (gimp-blend drawable FG-BG-RGB NORMAL RADIAL 100 offset REPEAT-NONE
-		FALSE 0 0 TRUE light-x light-y light-end-x light-end-y)
+	  (gimp-bucket-fill drawable PATTERN-BUCKET-FILL MULTIPLY
+			    100 0 FALSE 0 0)))
+
+    (gimp-ellipse-select img (- cx radius) (- cy radius)
+			 (* 2 radius) (* 2 radius) REPLACE TRUE FALSE 0)
+
+    (gimp-blend drawable FG-BG-RGB NORMAL
+		RADIAL 100 offset REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		light-x light-y light-end-x light-end-y)
+
     (gimp-selection-none img)
 
     (gimp-gradients-set-gradient gradient)
     (gimp-ellipse-select img 10 10 50 50 REPLACE TRUE FALSE 0)
-    (gimp-blend drawable CUSTOM NORMAL LINEAR 100 offset REPEAT-NONE
-		FALSE 0 0 TRUE 10 10 30 60)
+
+    (gimp-blend drawable CUSTOM NORMAL
+		LINEAR 100 offset REPEAT-NONE gradient-reverse
+		FALSE 0 0 TRUE
+		10 10 30 60)
+
     (gimp-selection-none img)
 
     (gimp-palette-set-foreground '(0 0 0))
@@ -194,15 +212,16 @@
 		    ""
 		    SF-ADJUSTMENT "Radius (in pixels)" '(100 1 5000 1 10 0 1)
 		    SF-ADJUSTMENT "Lighting (degrees)" '(45 0 360 1 10 1 0)
-		    SF-TOGGLE "Shadow" TRUE
-		    SF-COLOR "Background Color" '(255 255 255)
-		    SF-COLOR "Sphere Color" '(255 0 0)
-		    SF-BRUSH "Brush" '("Circle (03)" 1.0 44 0)
-		    SF-STRING "Text" "Script-Fu rocks!"
-		    SF-PATTERN "Pattern" "Maple Leaves"
-		    SF-GRADIENT "Gradient" "Deep Sea"
-		    SF-FONT "Font" "Agate"
+		    SF-TOGGLE     "Shadow"             TRUE
+		    SF-COLOR      "Background Color"   '(255 255 255)
+		    SF-COLOR      "Sphere Color"       '(255 0 0)
+		    SF-BRUSH      "Brush"              '("Circle (03)" 1.0 44 0)
+		    SF-STRING     "Text"               "Script-Fu rocks!"
+		    SF-PATTERN    "Pattern"            "Maple Leaves"
+		    SF-GRADIENT   "Gradient"           "Deep Sea"
+		    SF-TOGGLE     "Gradient Reverse"   FALSE
+		    SF-FONT       "Font"               "Agate"
 		    SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
-		    SF-FILENAME "Environment Map" (string-append "" gimp-data-dir "/scripts/beavis.jpg")
-		    SF-OPTION "Orientation" '("Horizontal" "Vertical")
-		    SF-DIRNAME "Output Directory" "/var/tmp/")
+		    SF-FILENAME   "Environment Map"    (string-append "" gimp-data-dir "/scripts/beavis.jpg")
+		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
+		    SF-DIRNAME    "Output Directory"   "/var/tmp/")

@@ -28,7 +28,7 @@ G_BEGIN_DECLS
 /* This file contains aliases that are kept for historical
  * reasons, because a wide code base depends on them.
  *
- * These defines will be removed in the next development cycle. 
+ * These defines will be removed in the next development cycle.
  */
 
 #define GimpRunModeType                         GimpRunMode
@@ -105,14 +105,6 @@ enum
 {
   GIMP_APPLY   = GIMP_MASK_APPLY,
   GIMP_DISCARD = GIMP_MASK_DISCARD
-};
-
-enum
-{
-  GIMP_ONCE_FORWARD   = GIMP_GRADIENT_ONCE_FORWARD,
-  GIMP_ONCE_BACKWARDS = GIMP_GRADIENT_ONCE_BACKWARD,
-  GIMP_LOOP_SAWTOOTH  = GIMP_GRADIENT_LOOP_SAWTOOTH,
-  GIMP_LOOP_TRIANGLE  = GIMP_GRADIENT_LOOP_TRIANGLE,
 };
 
 enum

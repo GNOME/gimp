@@ -101,11 +101,12 @@ gimp_preview_renderer_gradient_class_init (GimpPreviewRendererGradientClass *kla
 static void
 gimp_preview_renderer_gradient_init (GimpPreviewRendererGradient *renderer)
 {
-  renderer->even  = NULL;
-  renderer->odd   = NULL;
-  renderer->width = -1;
-  renderer->left  = 0.0;
-  renderer->right = 1.0;
+  renderer->even    = NULL;
+  renderer->odd     = NULL;
+  renderer->width   = -1;
+  renderer->left    = 0.0;
+  renderer->right   = 1.0;
+  renderer->reverse = FALSE;
 }
 
 static void
@@ -173,7 +174,7 @@ gimp_preview_renderer_gradient_render (GimpPreviewRenderer *renderer,
     {
       guchar r, g, b;
 
-      gimp_gradient_get_color_at (gradient, cur_x, &color);
+      gimp_gradient_get_color_at (gradient, cur_x, rendergrad->reverse, &color);
       cur_x += dx;
 
       a = ((gint) (color.a * 255.0)) << 8;
@@ -240,5 +241,20 @@ gimp_preview_renderer_gradient_set_offsets (GimpPreviewRendererGradient *rendere
 
       if (instant_update)
         gimp_preview_renderer_update (GIMP_PREVIEW_RENDERER (renderer));
+    }
+}
+
+void
+gimp_preview_renderer_gradient_set_reverse (GimpPreviewRendererGradient *renderer,
+                                            gboolean                     reverse)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW_RENDERER_GRADIENT (renderer));
+
+  if (reverse != renderer->reverse)
+    {
+      renderer->reverse = reverse ? TRUE : FALSE;
+
+      gimp_preview_renderer_invalidate (GIMP_PREVIEW_RENDERER (renderer));
+      gimp_preview_renderer_update (GIMP_PREVIEW_RENDERER (renderer));
     }
 }

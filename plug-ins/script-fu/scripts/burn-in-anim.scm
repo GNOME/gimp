@@ -11,168 +11,171 @@
 ;  Copying Policy:  GNU Public License http://www.gnu.org
 ;
 
-(define (script-fu-burn-in-anim org-img org-layer glow-color
-    fadeout bl-width corona-width after-glow show-glow optimize speed)
+(define (script-fu-burn-in-anim org-img
+				org-layer
+				glow-color
+				fadeout
+				bl-width
+				corona-width
+				after-glow
+				show-glow
+				optimize
+				speed)
 
-(let* (
-	;--- main variable: "bl-x" runs from 0 to layer-width
-	(bl-x 0)
-	(frame-nr 0)
-	(old-fg (car (gimp-palette-get-foreground)))
-	(old-bg (car (gimp-palette-get-background))) )
+  (let* (
+	 ;--- main variable: "bl-x" runs from 0 to layer-width
+	 (bl-x 0)
+	 (frame-nr 0)
+	 (old-fg (car (gimp-palette-get-foreground)))
+	 (old-bg (car (gimp-palette-get-background))))
 
     (if (< speed 1)
 	(set! speed (* -1 speed)) )
 
-;--- check image and work on a copy
-(if (= (car (gimp-image-get-layers org-img)) 2)
+    ;--- check image and work on a copy
+    (if (= (car (gimp-image-get-layers org-img)) 2)
     
-    ;--- main program structure starts here, begin of "if-1"
-    (begin
-    (set! img (car (gimp-image-duplicate org-img)))
-    (gimp-image-undo-disable img) 
-    (if (> (car (gimp-drawable-type org-layer)) 1 )
-		(gimp-convert-rgb img))
-    (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
-    (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
-    (set! source-layer-width (car (gimp-drawable-width  source-layer)))
-
-;--- hide layers, cause we want to "merge visible layers" later
-    (gimp-layer-set-visible source-layer FALSE)
-    (gimp-layer-set-visible bg-source-layer     FALSE)
-
-;--- process image horizontal with pixel-speed
-(while (< bl-x (+ source-layer-width bl-width))
-    (set! bl-layer (car (gimp-layer-copy source-layer TRUE)))
-    (set! bl-layer-name (string-append "fr-nr"
-	(number->string frame-nr 10) ) )
-
-	(gimp-image-add-layer img bl-layer -2)
-	(gimp-layer-set-name bl-layer bl-layer-name)
-	(gimp-layer-set-visible bl-layer TRUE)
-	(gimp-layer-set-preserve-trans bl-layer TRUE)
-	(gimp-layer-add-alpha bl-layer)
-
-;--- add an alpha mask for blending and select it
-    (gimp-selection-layer-alpha bl-layer)
-    (set! bl-mask (car (gimp-layer-create-mask bl-layer BLACK-MASK)))
-    (gimp-image-add-layer-mask img bl-layer bl-mask)
-
-;--- handle layer geometry
-    (set! bl-layer-width source-layer-width)
-    (set! bl-height      (car (gimp-drawable-height bl-layer)))
-    (set! bl-x-off (- bl-x     bl-width))
-    (set! bl-x-off (+ bl-x-off (car  (gimp-drawable-offsets bl-layer))))
-    (set! bl-y-off             (cadr (gimp-drawable-offsets bl-layer)))
-
-;--- select a rectangular area to blend
-    (gimp-rect-select img bl-x-off bl-y-off bl-width bl-height REPLACE 0 0)
-    ;--- select at least 1 pixel!
-    (gimp-rect-select img bl-x-off bl-y-off (+ bl-width 1) bl-height ADD 0 0)
-
-    (if (= fadeout FALSE)
+        ;--- main program structure starts here, begin of "if-1"
 	(begin
-	(set! nofadeout-bl-x-off (car (gimp-drawable-offsets bl-layer)))
-	(set! nofadeout-bl-width (+ nofadeout-bl-x-off bl-x))
-	(set! nofadeout-bl-width (max nofadeout-bl-width 1))
-	(gimp-rect-select img nofadeout-bl-x-off bl-y-off
-	    nofadeout-bl-width bl-height REPLACE 0 0)
-    ) )
+	  (set! img (car (gimp-image-duplicate org-img)))
+	  (gimp-image-undo-disable img) 
+	  (if (> (car (gimp-drawable-type org-layer)) 1 )
+	      (gimp-convert-rgb img))
+	  (set! source-layer    (aref (cadr (gimp-image-get-layers img)) 0 ))
+	  (set! bg-source-layer (aref (cadr (gimp-image-get-layers img)) 1 ))
+	  (set! source-layer-width (car (gimp-drawable-width  source-layer)))
 
-;--- alpha blending text to trans (fadeout)
-    (gimp-palette-set-foreground '(255 255 255))
-    (gimp-palette-set-background '(  0   0   0))
-    (if (= fadeout TRUE)
-	(begin
-        ; blend with 20% offset to get less transparency in the front
-	(gimp-blend bl-mask FG-BG-RGB NORMAL-MODE LINEAR 100 20 REPEAT-NONE
-    	    FALSE 0 0 TRUE
-	    (+ bl-x-off bl-width) 0 bl-x-off 0)
-	)
-    )
-    (if (= fadeout FALSE)
-	(begin
-	(gimp-palette-set-foreground '(255 255 255))
-	(gimp-bucket-fill bl-mask FG-BUCKET-FILL NORMAL-MODE
-	    100 255 0 0 0) ) )
+          ;--- hide layers, cause we want to "merge visible layers" later
+	  (gimp-layer-set-visible source-layer FALSE)
+	  (gimp-layer-set-visible bg-source-layer     FALSE)
 
-    (gimp-image-remove-layer-mask img bl-layer APPLY)
+          ;--- process image horizontal with pixel-speed
+	  (while (< bl-x (+ source-layer-width bl-width))
+		 (set! bl-layer (car (gimp-layer-copy source-layer TRUE)))
+		 (set! bl-layer-name (string-append "fr-nr"
+						    (number->string frame-nr 10) ) )
 
-;--- add bright glow in front
-(if (= show-glow TRUE) (begin
-    ;--- add some brightness to whole text
-    (if (= fadeout TRUE)
-	(gimp-brightness-contrast bl-layer 100 0)
-	)
+		 (gimp-image-add-layer img bl-layer -2)
+		 (gimp-layer-set-name bl-layer bl-layer-name)
+		 (gimp-layer-set-visible bl-layer TRUE)
+		 (gimp-layer-set-preserve-trans bl-layer TRUE)
+		 (gimp-layer-add-alpha bl-layer)
 
-    ;--- blend glow color inside the letters
-    (gimp-palette-set-foreground glow-color)
-    (gimp-blend bl-layer FG-TRANS NORMAL-MODE LINEAR 100 0 REPEAT-NONE
-            FALSE 0 0 TRUE
-	       (+ bl-x-off bl-width)                      0
-	    (- (+ bl-x-off bl-width) after-glow         ) 0)
+                 ;--- add an alpha mask for blending and select it
+		 (gimp-selection-layer-alpha bl-layer)
+		 (set! bl-mask (car (gimp-layer-create-mask bl-layer BLACK-MASK)))
+		 (gimp-image-add-layer-mask img bl-layer bl-mask)
 
-    ;--- add corona effect
-    (gimp-selection-layer-alpha bl-layer)
-    (gimp-selection-sharpen img)
-    (gimp-selection-grow img corona-width)
-    (gimp-layer-set-preserve-trans bl-layer FALSE)
-    (gimp-selection-feather img corona-width)
-    (gimp-palette-set-foreground glow-color)
-    (gimp-blend bl-layer FG-TRANS NORMAL-MODE LINEAR 100 0 REPEAT-NONE
-            FALSE 0 0 TRUE
-	    (- (+ bl-x-off bl-width) corona-width) 0
-	    (- (+ bl-x-off bl-width) after-glow  ) 0)
-    ))
+                 ;--- handle layer geometry
+		 (set! bl-layer-width source-layer-width)
+		 (set! bl-height      (car (gimp-drawable-height bl-layer)))
+		 (set! bl-x-off (- bl-x     bl-width))
+		 (set! bl-x-off (+ bl-x-off (car  (gimp-drawable-offsets bl-layer))))
+		 (set! bl-y-off             (cadr (gimp-drawable-offsets bl-layer)))
 
-;--- merge with bg layer
-    (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
-    (gimp-image-add-layer img bg-layer -1)
-    (gimp-image-lower-layer img bg-layer)
-    (set! bg-layer-name (string-append "bg-"
-	(number->string frame-nr 10) ) )
-    (gimp-layer-set-name bg-layer bg-layer-name)
-    (gimp-layer-set-visible bg-layer TRUE)
-    (set! blended-layer (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-    ;(set! blended-layer bl-layer)
-    (gimp-layer-set-visible blended-layer FALSE)
+                 ;--- select a rectangular area to blend
+		 (gimp-rect-select img bl-x-off bl-y-off bl-width bl-height REPLACE 0 0)
+                 ;--- select at least 1 pixel!
+		 (gimp-rect-select img bl-x-off bl-y-off (+ bl-width 1) bl-height ADD 0 0)
 
-;--- end of "while" loop
-    (set! frame-nr (+ frame-nr 1))
-    (set! bl-x     (+ bl-x speed))
-)
+		 (if (= fadeout FALSE)
+		     (begin
+		       (set! nofadeout-bl-x-off (car (gimp-drawable-offsets bl-layer)))
+		       (set! nofadeout-bl-width (+ nofadeout-bl-x-off bl-x))
+		       (set! nofadeout-bl-width (max nofadeout-bl-width 1))
+		       (gimp-rect-select img nofadeout-bl-x-off bl-y-off
+					 nofadeout-bl-width bl-height
+					 REPLACE 0 0)))
 
+                 ;--- alpha blending text to trans (fadeout)
+		 (gimp-palette-set-foreground '(255 255 255))
+		 (gimp-palette-set-background '(  0   0   0))
+		 (if (= fadeout TRUE)
+		     (begin
+                       ; blend with 20% offset to get less transparency in the front
+		       (gimp-blend bl-mask FG-BG-RGB NORMAL-MODE
+				   LINEAR 100 20 REPEAT-NONE FALSE
+				   FALSE 0 0 TRUE
+				   (+ bl-x-off bl-width) 0 bl-x-off 0)))
 
-;--- finalize the job
-    (gimp-selection-none img)
-    (gimp-image-remove-layer img    source-layer)
-    (gimp-image-remove-layer img bg-source-layer)
+		 (if (= fadeout FALSE)
+		     (begin
+		       (gimp-palette-set-foreground '(255 255 255))
+		       (gimp-bucket-fill bl-mask FG-BUCKET-FILL NORMAL-MODE
+					 100 255 0 0 0)))
 
-    (gimp-image-set-filename img "burn-in")
+		 (gimp-image-remove-layer-mask img bl-layer APPLY)
 
-    (if (= optimize TRUE) (begin
-	(gimp-convert-indexed img 1 WEB-PALETTE 250 FALSE TRUE "")
-        (set! img-out (car (plug-in-animationoptimize 0 img bl-layer)))
-        ))
+                 ;--- add bright glow in front
+		 (if (= show-glow TRUE)
+		     (begin
+                       ;--- add some brightness to whole text
+		       (if (= fadeout TRUE)
+			   (gimp-brightness-contrast bl-layer 100 0)))
 
-    (gimp-layer-set-visible (aref (cadr (gimp-image-get-layers img)) 0 ) TRUE)
-    (gimp-image-undo-enable img)
-    (gimp-image-clean-all img)
-    (set! img-display (car (gimp-display-new img)))
-    (gimp-palette-set-foreground old-fg)
-    (gimp-palette-set-background old-bg)
+                     ;--- blend glow color inside the letters
+		     (gimp-palette-set-foreground glow-color)
+		     (gimp-blend bl-layer FG-TRANS NORMAL-MODE
+				 LINEAR 100 0 REPEAT-NONE FALSE
+				 FALSE 0 0 TRUE
+				 (+ bl-x-off bl-width) 0
+				 (- (+ bl-x-off bl-width) after-glow) 0)
 
-    (gimp-displays-flush)
+                     ;--- add corona effect
+		     (gimp-selection-layer-alpha bl-layer)
+		     (gimp-selection-sharpen img)
+		     (gimp-selection-grow img corona-width)
+		     (gimp-layer-set-preserve-trans bl-layer FALSE)
+		     (gimp-selection-feather img corona-width)
+		     (gimp-palette-set-foreground glow-color)
+		     (gimp-blend bl-layer FG-TRANS NORMAL-MODE
+				 LINEAR 100 0 REPEAT-NONE FALSE
+				 FALSE 0 0 TRUE
+				 (- (+ bl-x-off bl-width) corona-width) 0
+				 (- (+ bl-x-off bl-width) after-glow) 0)))
 
-;--- false form of "if-1"
-    )
-    (gimp-message _"Burn-In: Need two layers in total!
-        A foreground text layer with transparency
-        and a background layer.")
-    )
+          ;--- merge with bg layer
+	  (set! bg-layer (car (gimp-layer-copy bg-source-layer FALSE)))
+	  (gimp-image-add-layer img bg-layer -1)
+	  (gimp-image-lower-layer img bg-layer)
+	  (set! bg-layer-name (string-append "bg-"
+					     (number->string frame-nr 10)))
+	  (gimp-layer-set-name bg-layer bg-layer-name)
+	  (gimp-layer-set-visible bg-layer TRUE)
+	  (set! blended-layer (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
+          ;(set! blended-layer bl-layer)
+	  (gimp-layer-set-visible blended-layer FALSE)
 
-;--- end of main program
-))
+          ;--- end of "while" loop
+	  (set! frame-nr (+ frame-nr 1))
+	  (set! bl-x     (+ bl-x speed)))
+
+        ;--- finalize the job
+	(gimp-selection-none img)
+	(gimp-image-remove-layer img    source-layer)
+	(gimp-image-remove-layer img bg-source-layer)
+
+	(gimp-image-set-filename img "burn-in")
+
+	(if (= optimize TRUE)
+	    (begin
+	      (gimp-convert-indexed img 1 WEB-PALETTE 250 FALSE TRUE "")
+	      (set! img-out (car (plug-in-animationoptimize 0 img bl-layer)))))
+
+	(gimp-layer-set-visible (aref (cadr (gimp-image-get-layers img)) 0)
+				TRUE)
+	(gimp-image-undo-enable img)
+	(gimp-image-clean-all img)
+	(set! img-display (car (gimp-display-new img)))
+	(gimp-palette-set-foreground old-fg)
+	(gimp-palette-set-background old-bg)
+
+	(gimp-displays-flush))
+
+    ;--- false form of "if-1"
+    (gimp-message _"Burn-In: Need two layers in total!"
+		  "A foreground text layer with transparency"
+		  "and a background layer.")))
 
 
 (script-fu-register "script-fu-burn-in-anim"
@@ -182,14 +185,13 @@
 		    "Roland Berger"
 		    "January 2001"
 		    "RGBA GRAYA INDEXEDA"
-		    SF-IMAGE "The Image" 0
-		    SF-DRAWABLE "Layer to animate" 0
-		    SF-COLOR  _"Glow Color" '(255 255 255)
-		    SF-TOGGLE _"Fadeout" FALSE
-		    SF-VALUE  _"Fadeout Width" "100"
-		    SF-VALUE  _"Corona Width" "7"
-		    SF-VALUE  _"After Glow" "50"
-		    SF-TOGGLE _"Add Glowing" TRUE
-		    SF-TOGGLE _"Prepare for GIF" FALSE
-		    SF-VALUE  _"Speed (pixels/frame)" "50"
-)
+		    SF-IMAGE "The Image"              0
+		    SF-DRAWABLE "Layer to animate"    0
+		    SF-COLOR  _"Glow Color"           '(255 255 255)
+		    SF-TOGGLE _"Fadeout"              FALSE
+		    SF-VALUE  _"Fadeout Width"        "100"
+		    SF-VALUE  _"Corona Width"         "7"
+		    SF-VALUE  _"After Glow"           "50"
+		    SF-TOGGLE _"Add Glowing"          TRUE
+		    SF-TOGGLE _"Prepare for GIF"      FALSE
+		    SF-VALUE  _"Speed (pixels/frame)" "50")

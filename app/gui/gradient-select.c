@@ -161,7 +161,7 @@ gradient_select_free (GradientSelect *gsp)
 
   if (gsp->context)
     g_object_unref (gsp->context);
- 
+
    g_free (gsp);
 }
 
@@ -199,7 +199,7 @@ gradient_select_dialogs_check (void)
       if (gsp->callback_name)
         {
           if (! procedural_db_lookup (gsp->context->gimp, gsp->callback_name))
-            gradient_select_close_callback (NULL, gsp); 
+            gradient_select_close_callback (NULL, gsp);
         }
     }
 }
@@ -228,7 +228,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 
   if (proc && gradient)
     {
-      Argument *return_vals; 
+      Argument *return_vals;
       gint      nreturn_vals;
       gdouble  *values, *pv;
       double    pos, delta;
@@ -238,13 +238,13 @@ gradient_select_change_callbacks (GradientSelect *gsp,
       i      = gsp->sample_size;
       pos    = 0.0;
       delta  = 1.0 / (i - 1);
-      
+
       values = g_new (gdouble, 4 * i);
       pv     = values;
 
       while (i--)
 	{
-	  gimp_gradient_get_color_at (gradient, pos, &color);
+	  gimp_gradient_get_color_at (gradient, pos, FALSE, &color);
 
 	  *pv++ = color.r;
 	  *pv++ = color.g;
@@ -263,7 +263,7 @@ gradient_select_change_callbacks (GradientSelect *gsp,
 				GIMP_PDB_FLOATARRAY, values,
 				GIMP_PDB_INT32,      (gint) closing,
 				GIMP_PDB_END);
- 
+
       if (!return_vals || return_vals[0].value.pdb_int != GIMP_PDB_SUCCESS)
 	g_message (_("Unable to run gradient callback.\n"
                      "The corresponding plug-in may have crashed."));

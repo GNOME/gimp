@@ -40,13 +40,12 @@ struct _GimpBlendOptions
 
   gdouble           offset;
   GimpGradientType  gradient_type;
-  GimpRepeatMode    repeat;
-   
-  gboolean          dither;
-  
+
   gboolean          supersample;
   gint              supersample_depth;
   gdouble           supersample_threshold;
+
+  gboolean          dither;
 };
 
 

@@ -378,18 +378,6 @@ package Gimp::CodeGen::enums;
 	  mapping => { GIMP_DODGE => '0',
 		       GIMP_BURN => '1' }
 	},
-    GimpGradientPaintMode =>
-	{ contig => 1,
-	  header => 'paint/paint-enums.h',
-	  symbols => [ qw(GIMP_GRADIENT_ONCE_FORWARD
-			  GIMP_GRADIENT_ONCE_BACKWARD
-			  GIMP_GRADIENT_LOOP_SAWTOOTH
-			  GIMP_GRADIENT_LOOP_TRIANGLE) ],
-	  mapping => { GIMP_GRADIENT_ONCE_FORWARD => '0',
-		       GIMP_GRADIENT_ONCE_BACKWARD => '1',
-		       GIMP_GRADIENT_LOOP_SAWTOOTH => '2',
-		       GIMP_GRADIENT_LOOP_TRIANGLE => '3' }
-	},
     GimpConvolveType =>
 	{ contig => 1,
 	  header => 'paint/paint-enums.h',

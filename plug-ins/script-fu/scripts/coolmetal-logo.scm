@@ -8,7 +8,8 @@
 				      logo-layer
 				      size
 				      bg-color
-				      gradient)
+				      gradient
+				      gradient-reverse)
   (let* ((feather (/ size 5))
 	 (smear 7.5)
 	 (period (/ size 3))
@@ -30,6 +31,7 @@
 	 (old-gradient (car (gimp-gradients-get-gradient)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (gimp-selection-none img)
     (gimp-image-resize img img-width img-height posx posy)
     (gimp-image-add-layer img bg-layer 1)
@@ -44,7 +46,12 @@
     (gimp-edit-fill shadow-layer BG-IMAGE-FILL)
 
     (gimp-gradients-set-gradient gradient)
-    (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 0 (+ height 5))
+
+    (gimp-blend logo-layer CUSTOM NORMAL
+		LINEAR 100 0 REPEAT-NONE gradient-reverse
+		FALSE 0 0 TRUE
+		0 0 0 (+ height 5))
+
     (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) REPLACE 0 0)
     (plug-in-gauss-iir 1 img logo-layer smear TRUE TRUE)
     (gimp-selection-none img)
@@ -88,8 +95,10 @@
     (gimp-image-add-layer-mask img reflect-layer layer-mask)
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend layer-mask FG-BG-RGB NORMAL LINEAR 100 0 REPEAT-NONE
-		FALSE 0 0 TRUE 0 (- (/ height 2)) 0 height)
+    (gimp-blend layer-mask FG-BG-RGB NORMAL
+		LINEAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 (- (/ height 2)) 0 height)
 
     (gimp-image-remove-channel img channel)
 
@@ -102,10 +111,12 @@
 					 logo-layer
 					 size
 					 bg-color
-					 gradient)
+					 gradient
+					 gradient-reverse)
   (begin
     (gimp-undo-push-group-start img)
-    (apply-cool-metal-logo-effect img logo-layer size bg-color gradient)
+    (apply-cool-metal-logo-effect img logo-layer size bg-color
+				  gradient gradient-reverse)
     (gimp-undo-push-group-end img)
     (gimp-displays-flush)))
 
@@ -116,24 +127,27 @@
 		    "Spencer Kimball & Rob Malda"
 		    "1997"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
+                    SF-IMAGE      "Image"                 0
+                    SF-DRAWABLE   "Drawable"              0
 		    SF-ADJUSTMENT _"Effect Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-GRADIENT   _"Gradient" "Horizon 1"
-		    )
+		    SF-COLOR      _"Background Color"     '(255 255 255)
+		    SF-GRADIENT   _"Gradient"             "Horizon 1"
+		    SF-TOGGLE     _"Gradient Reverse"     FALSE)
 
 
 (define (script-fu-cool-metal-logo text
 				   size
 				   font
 				   bg-color
-				   gradient)
+				   gradient
+				   gradient-reverse)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text 0 TRUE size PIXELS font))))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text 0 TRUE
+					      size PIXELS font))))
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
-    (apply-cool-metal-logo-effect img text-layer size bg-color gradient)
+    (apply-cool-metal-logo-effect img text-layer size bg-color
+				  gradient gradient-reverse)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
@@ -144,9 +158,9 @@
 		    "Spencer Kimball & Rob Malda"
 		    "1997"
 		    ""
-		    SF-STRING     _"Text" "Cool Metal"
+		    SF-STRING     _"Text"               "Cool Metal"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Crillee"
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-GRADIENT   _"Gradient" "Horizon 1"
-		    )
+		    SF-FONT       _"Font"               "Crillee"
+		    SF-COLOR      _"Background Color"   '(255 255 255)
+		    SF-GRADIENT   _"Gradient"           "Horizon 1"
+		    SF-TOGGLE     _"Gradient Reverse"   FALSE)

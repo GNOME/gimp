@@ -315,11 +315,6 @@ init_constants (void)
   setvar (cintern ("HARD"),      flocons (GIMP_BRUSH_HARD), NIL);
   setvar (cintern ("SOFT"),      flocons (GIMP_BRUSH_SOFT), NIL);
 
-  setvar (cintern ("ONCE-FORWARD"),   flocons (GIMP_GRADIENT_ONCE_FORWARD),  NIL);
-  setvar (cintern ("ONCE-BACKWARDS"), flocons (GIMP_GRADIENT_ONCE_BACKWARD), NIL);
-  setvar (cintern ("LOOP-SAWTOOTH"),  flocons (GIMP_GRADIENT_LOOP_SAWTOOTH), NIL);
-  setvar (cintern ("LOOP-TRIANGLE"),  flocons (GIMP_GRADIENT_LOOP_TRIANGLE), NIL);
-
   setvar (cintern ("CONTINUOUS"),  flocons (GIMP_PAINT_CONSTANT),    NIL);
   setvar (cintern ("INCREMENTAL"), flocons (GIMP_PAINT_INCREMENTAL), NIL);
 

@@ -22,6 +22,7 @@
 (define (apply-comic-logo-effect img
 				 logo-layer
 				 gradient
+				 gradient-reverse
 				 ol-width
 				 ol-color
 				 bg-color)
@@ -35,6 +36,7 @@
 	 (old-gradient (car (gimp-gradients-get-gradient)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img white-layer 1)
@@ -71,7 +73,12 @@
     (gimp-gradients-set-gradient gradient)
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
-    (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 (* height 0.33333) 0 (* height 0.83333))
+
+    (gimp-blend logo-layer CUSTOM NORMAL
+		LINEAR 100 0 REPEAT-NONE gradient-reverse
+		FALSE 0 0 TRUE
+		0 (* height 0.33333) 0 (* height 0.83333))
+
     (plug-in-noisify 1 img logo-layer 0 0.20 0.20 0.20 0.20)
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans logo-layer FALSE)
@@ -102,19 +109,20 @@
 		    "Brian McFee"
 		    "April 1998"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-		    SF-GRADIENT   _"Gradient" "Incandescent"
-		    SF-ADJUSTMENT _"Outline Size" '(5 1 100 1 10 0 1)
-		    SF-COLOR      _"Outline Color" '(255 255 255)
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    )
+                    SF-IMAGE      "Image"             0
+                    SF-DRAWABLE   "Drawable"          0
+		    SF-GRADIENT   _"Gradient"         "Incandescent"
+		    SF-TOGGLE     _"Gradient Reverse" FALSE
+		    SF-ADJUSTMENT _"Outline Size"     '(5 1 100 1 10 0 1)
+		    SF-COLOR      _"Outline Color"    '(255 255 255)
+		    SF-COLOR      _"Background Color" '(255 255 255))
 
 
 (define (script-fu-comic-logo text
 			      size
 			      font
 			      gradient
+			      gradient-reverse
 			      ol-width
 			      ol-color
 			      bg-color)
@@ -123,7 +131,8 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
-    (apply-comic-logo-effect img text-layer gradient ol-width ol-color
+    (apply-comic-logo-effect img text-layer gradient gradient-reverse
+			     ol-width ol-color
 			     bg-color)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
@@ -135,11 +144,11 @@
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-STRING     _"Text" "Moo"
+		    SF-STRING     _"Text"               "Moo"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(85 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Tribeca"
-		    SF-GRADIENT   _"Gradient" "Incandescent"
-		    SF-ADJUSTMENT _"Outline Size" '(5 1 100 1 10 0 1)
-		    SF-COLOR      _"Outline Color" '(255 255 255)
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    )
+		    SF-FONT       _"Font"               "Tribeca"
+		    SF-GRADIENT   _"Gradient"           "Incandescent"
+		    SF-TOGGLE     _"Gradient Reverse"   FALSE
+		    SF-ADJUSTMENT _"Outline Size"       '(5 1 100 1 10 0 1)
+		    SF-COLOR      _"Outline Color"      '(255 255 255)
+		    SF-COLOR      _"Background Color"   '(255 255 255))

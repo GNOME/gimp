@@ -37,30 +37,35 @@
 (define (text-descent extents)
   (cadr (cddr extents)))
 
-(define (round-select img x y width height ratio)
+(define (round-select img
+		      x
+		      y
+		      width
+		      height
+		      ratio)
   (let* ((diameter (* ratio height)))
     (gimp-ellipse-select img x y diameter height ADD FALSE 0 0)
     (gimp-ellipse-select img (+ x (- width diameter)) y
 			 diameter height ADD FALSE 0 0)
     (gimp-rect-select img (+ x (/ diameter 2)) y
 		      (- width diameter) height ADD FALSE 0)))
-  
+
 (define (script-fu-round-button text
-			    size
-			    font
-			    ul-color
-			    lr-color
-			    text-color
-			    ul-color-high
-			    lr-color-high
-			    hlight-color
-			    xpadding
-			    ypadding
-			    bevel
-			    ratio
-			    notpressed
-			    notpressed-active
-			    pressed)
+				size
+				font
+				ul-color
+				lr-color
+				text-color
+				ul-color-high
+				lr-color-high
+				hlight-color
+				xpadding
+				ypadding
+				bevel
+				ratio
+				notpressed
+				notpressed-active
+				pressed)
 
   (cond ((eqv? notpressed TRUE)
 	 (do-pupibutton text size font ul-color lr-color
@@ -71,29 +76,29 @@
   (cond ((eqv? pressed TRUE)
 	 (do-pupibutton text size font ul-color-high lr-color-high
 			hlight-color xpadding ypadding bevel ratio 1))))
-  
+
 (define (do-pupibutton text
-			    size
-			    font
-			    ul-color
-			    lr-color
-			    text-color
-			    xpadding
-			    ypadding
-			    bevel
-			    ratio
-			    pressed)
+		       size
+		       font
+		       ul-color
+		       lr-color
+		       text-color
+		       xpadding
+		       ypadding
+		       bevel
+		       ratio
+		       pressed)
 
   (let* ((old-fg-color (car (gimp-palette-get-foreground)))
 	 (old-bg-color (car (gimp-palette-get-background)))
 	 
 	 (text-extents (gimp-text-get-extents-fontname text
-					      size
-					      PIXELS
-					      font))
+						       size
+						       PIXELS
+						       font))
 	 (ascent (text-ascent text-extents))
 	 (descent (text-descent text-extents))
-	 
+
 	 (height (+ (* 2 (+ ypadding bevel))
 			(+ ascent descent)))
 
@@ -109,6 +114,7 @@
 				       RGBA_IMAGE "Bumpmap" 100 NORMAL)))
 	 (gradient (car (gimp-layer-new img width height
 					RGBA_IMAGE "Button" 100 NORMAL))))
+
     (gimp-image-undo-disable img)
 
     ; Create bumpmap layer
@@ -134,21 +140,10 @@
     (gimp-palette-set-foreground ul-color)
     (gimp-palette-set-background lr-color)
 
-    (gimp-blend gradient
-		FG-BG-RGB
-		NORMAL
-		LINEAR
-		100
-		0
-		REPEAT-NONE
-		FALSE
-		0
-		0
-		TRUE
-		0
-		0
-		0
-		(- height 1))
+    (gimp-blend gradient FG-BG-RGB NORMAL
+		LINEAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 0 (- height 1))
 
     (gimp-selection-none img)
 
@@ -185,8 +180,6 @@
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
-; Register!
-
 (script-fu-register "script-fu-round-button"
 		    _"<Toolbox>/Xtns/Script-Fu/Buttons/Round Button..."
 		    "Round button"
@@ -194,21 +187,19 @@
 		    "Arturo Espinosa & Federico Mena Quintero"
 		    "June 1998"
 		    ""
-		    SF-STRING     _"Text" "The GIMP"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(16 2 100 1 1 0 1)
-		    SF-FONT       _"Font" "Sans"
-		    SF-COLOR      _"Upper Color" '(192 192 0)
-		    SF-COLOR      _"Lower Color" '(128 108 0)
-		    SF-COLOR      _"Text Color" '(0 0 0)
+		    SF-STRING     _"Text"                 "The GIMP"
+		    SF-ADJUSTMENT _"Font Size (pixels)"   '(16 2 100 1 1 0 1)
+		    SF-FONT       _"Font"                 "Sans"
+		    SF-COLOR      _"Upper Color"          '(192 192 0)
+		    SF-COLOR      _"Lower Color"          '(128 108 0)
+		    SF-COLOR      _"Text Color"           '(0 0 0)
 		    SF-COLOR      _"Upper Color (Active)" '(255 255 0)
 		    SF-COLOR      _"Lower Color (Active)" '(128 108 0)
-		    SF-COLOR      _"Text Color (Active)" '(0 0 192)
-		    SF-ADJUSTMENT _"Padding X" '(4 0 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Padding Y" '(4 0 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width" '(2 0 100 1 10 0 1)
-		    SF-ADJUSTMENT _"Round Ratio" '(1 0.05 20 0.05 1 2 1)
-		    SF-TOGGLE     _"Not Pressed" TRUE
+		    SF-COLOR      _"Text Color (Active)"  '(0 0 192)
+		    SF-ADJUSTMENT _"Padding X"            '(4 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Padding Y"            '(4 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Bevel Width"          '(2 0 100 1 10 0 1)
+		    SF-ADJUSTMENT _"Round Ratio"          '(1 0.05 20 0.05 1 2 1)
+		    SF-TOGGLE     _"Not Pressed"          TRUE
 		    SF-TOGGLE     _"Not Pressed (Active)" TRUE
-		    SF-TOGGLE     _"Pressed" TRUE)
-
-
+		    SF-TOGGLE     _"Pressed"              TRUE)

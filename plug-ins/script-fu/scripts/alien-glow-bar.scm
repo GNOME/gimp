@@ -20,7 +20,11 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(define (script-fu-alien-glow-horizontal-ruler  length height glow-color bg-color flatten)
+(define (script-fu-alien-glow-horizontal-ruler length
+					       height
+					       glow-color
+					       bg-color
+					       flatten)
   (let* ((img (car (gimp-image-new height length RGB)))
 	 (border (/ height 4))
 	 (ruler-layer (car (gimp-layer-new img (+ length height) (+ height height) RGBA_IMAGE "Ruler" 100 NORMAL)))
@@ -43,7 +47,11 @@
     (gimp-rect-select img (/ height 2) (/ height 2) length height REPLACE FALSE 0)
     (gimp-palette-set-foreground '(79 79 79))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend ruler-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 height height)
+
+    (gimp-blend ruler-layer FG-BG-RGB NORMAL
+		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 height height)
 
     (gimp-palette-set-foreground glow-color)
     (gimp-selection-grow img border)
@@ -61,8 +69,6 @@
     (gimp-display-new img)))
 
 
-
-
 (script-fu-register "script-fu-alien-glow-horizontal-ruler"
 		    _"<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/Hrule..."
 		    "Create an Hrule with the Alien Glow look"
@@ -70,12 +76,8 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Bar Length" '(480 5 1500 1 10 0 1)
-		    SF-ADJUSTMENT _"Bar Height" '(16 1 100 1 10 0 1)
-		    SF-COLOR  _"Glow Color" '(63 252 0)
-		    SF-COLOR  _"Background Color" '(0 0 0)
-		    SF-TOGGLE _"Flatten Image" TRUE)
-
-
-
-
+		    SF-ADJUSTMENT _"Bar Length"       '(480 5 1500 1 10 0 1)
+		    SF-ADJUSTMENT _"Bar Height"       '(16 1 100 1 10 0 1)
+		    SF-COLOR      _"Glow Color"       '(63 252 0)
+		    SF-COLOR      _"Background Color" '(0 0 0)
+		    SF-TOGGLE     _"Flatten Image"    TRUE)

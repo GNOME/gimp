@@ -822,34 +822,6 @@ gimp_paint_core_interpolate (GimpPaintCore    *core,
 
 /*  protected functions  */
 
-void
-gimp_paint_core_get_color_from_gradient (GimpPaintCore         *core,
-                                         GimpGradient          *gradient,
-					 gdouble                gradient_length,
-					 GimpRGB               *color,
-					 GimpGradientPaintMode  mode)
-{
-  gdouble pos;
-
-  if (gradient_length > 0.0)
-    pos = (gdouble) core->pixel_dist / gradient_length;
-  else
-    pos = 1.0;
-
-  /*  for the once modes, set pos close to 1.0 after the first chunk  */
-  if ((mode == GIMP_GRADIENT_ONCE_FORWARD ||
-       mode == GIMP_GRADIENT_ONCE_BACKWARD) && pos >= 1.0)
-    pos = 0.9999999;
-
-  if ((((gint) pos & 1) && mode != GIMP_GRADIENT_LOOP_SAWTOOTH) ||
-      mode == GIMP_GRADIENT_ONCE_BACKWARD)
-    pos = 1.0 - (pos - (gint) pos);
-  else
-    pos = pos - (gint) pos;
-
-  gimp_gradient_get_color_at (gradient, pos, color);
-}
-
 TempBuf *
 gimp_paint_core_get_paint_area (GimpPaintCore *core,
 				GimpDrawable  *drawable,

@@ -34,6 +34,7 @@
  * @opacity: The opacity of the final blend.
  * @offset: Offset relates to the starting and ending coordinates specified for the blend. This parameter is mode dependent.
  * @repeat: Repeat mode.
+ * @reverse: Use the reverse gradient.
  * @supersample: Do adaptive supersampling.
  * @max_depth: Maximum recursion levels for supersampling.
  * @threshold: Supersampling threshold.
@@ -61,6 +62,7 @@ gimp_blend (gint32               drawable_ID,
 	    gdouble              opacity,
 	    gdouble              offset,
 	    GimpRepeatMode       repeat,
+	    gboolean             reverse,
 	    gboolean             supersample,
 	    gint                 max_depth,
 	    gdouble              threshold,
@@ -83,6 +85,7 @@ gimp_blend (gint32               drawable_ID,
 				    GIMP_PDB_FLOAT, opacity,
 				    GIMP_PDB_FLOAT, offset,
 				    GIMP_PDB_INT32, repeat,
+				    GIMP_PDB_INT32, reverse,
 				    GIMP_PDB_INT32, supersample,
 				    GIMP_PDB_INT32, max_depth,
 				    GIMP_PDB_FLOAT, threshold,

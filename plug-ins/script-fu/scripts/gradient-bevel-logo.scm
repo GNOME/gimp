@@ -33,6 +33,7 @@
 	 (blur-layer (car (gimp-layer-new img width height RGBA_IMAGE "Blur" 100 NORMAL)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img bg-layer 1)
     (gimp-image-add-layer img blur-layer 1)
@@ -57,7 +58,12 @@
     (gimp-palette-set-foreground '(255 255 255))
     (gimp-layer-set-preserve-trans logo-layer TRUE)
     (gimp-selection-all img)
-    (gimp-blend logo-layer FG-BG-RGB NORMAL RADIAL 95 0 REPEAT-NONE FALSE 0 0 TRUE indentX indentY indentX (- height indentY))
+
+    (gimp-blend logo-layer FG-BG-RGB NORMAL
+		RADIAL 95 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		indentX indentY indentX (- height indentY))
+
     (gimp-selection-none img)
     (gimp-layer-set-preserve-trans logo-layer FALSE)
     (plug-in-bump-map 1 img logo-layer blur-layer 115 bevel-height 5 0 0 0 15 TRUE FALSE 0)
@@ -88,13 +94,12 @@
 		    "Brian McFee"
 		    "April 1998"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Border Size (pixels)" '(22 1 300 1 10 0 1)
+                    SF-IMAGE      "Image"                     0
+                    SF-DRAWABLE   "Drawable"                  0
+		    SF-ADJUSTMENT _"Border Size (pixels)"     '(22 1 300 1 10 0 1)
 		    SF-ADJUSTMENT _"Bevel Height (Sharpness)" '(40 1 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width" '(2.5 1 200 1 10 1 1)
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    )
+		    SF-ADJUSTMENT _"Bevel Width"              '(2.5 1 200 1 10 1 1)
+		    SF-COLOR      _"Background Color"         '(255 255 255))
 
 (define (script-fu-gradient-bevel-logo text
 				       size
@@ -104,7 +109,8 @@
 				       bg-color)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
          (border (/ size 4))
-	 (text-layer (car (gimp-text-fontname img -1 0 0 text border TRUE size PIXELS font))))
+	 (text-layer (car (gimp-text-fontname img -1 0 0 text
+					      border TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
     (apply-gradient-bevel-logo-effect img text-layer border
@@ -119,10 +125,9 @@
 		    "Brian McFee"
 		    "April 1998"
 		    ""
-		    SF-STRING     _"Text" "Moo"
-		    SF-ADJUSTMENT _"Font Size (pixels)" '(90 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Futura_Poster"
+		    SF-STRING     _"Text"                     "Moo"
+		    SF-ADJUSTMENT _"Font Size (pixels)"       '(90 2 1000 1 10 0 1)
+		    SF-FONT       _"Font"                     "Futura_Poster"
 		    SF-ADJUSTMENT _"Bevel Height (Sharpness)" '(40 1 250 1 10 0 1)
-		    SF-ADJUSTMENT _"Bevel Width" '(2.5 1 200 1 10 1 1)
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    )
+		    SF-ADJUSTMENT _"Bevel Width"              '(2.5 1 200 1 10 1 1)
+		    SF-COLOR      _"Background Color"         '(255 255 255))

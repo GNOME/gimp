@@ -34,26 +34,27 @@ typedef struct _GimpGradientOptions GimpGradientOptions;
 
 struct _GimpPressureOptions
 {
-  gboolean   opacity;
-  gboolean   pressure;
-  gboolean   rate;
-  gboolean   size;
-  gboolean   color;
+  gboolean  opacity;
+  gboolean  pressure;
+  gboolean  rate;
+  gboolean  size;
+  gboolean  color;
 };
 
 struct _GimpFadeOptions
 {
-  gboolean   use_fade;
-  gdouble    fade_length;
-  GimpUnit   fade_unit;
+  gboolean  use_fade;
+  gdouble   fade_length;
+  GimpUnit  fade_unit;
 };
 
 struct _GimpGradientOptions
 {
-  gboolean   use_gradient;
-  gdouble    gradient_length;
-  GimpUnit   gradient_unit;
-  gint       gradient_type;
+  gboolean        use_gradient;
+  gboolean        gradient_reverse;
+  gdouble         gradient_length;
+  GimpUnit        gradient_unit;
+  GimpRepeatMode  gradient_repeat;
 };
 
 
@@ -95,6 +96,12 @@ GimpPaintOptions * gimp_paint_options_new      (Gimp             *gimp,
 gdouble            gimp_paint_options_get_fade (GimpPaintOptions *paint_options,
                                                 GimpImage        *gimage,
                                                 gdouble           pixel_dist);
+
+gboolean gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
+                                                GimpImage        *gimage,
+                                                gdouble           pressure,
+                                                gdouble           pixel_dist,
+                                                GimpRGB          *color);
 
 GimpBrushApplicationMode
              gimp_paint_options_get_brush_mode (GimpPaintOptions *paint_options);

@@ -50,6 +50,7 @@ typedef gdouble (* BlendRepeatFunc) (gdouble);
 typedef struct
 {
   GimpGradient     *gradient;
+  gboolean          reverse;
   gdouble           offset;
   gdouble           sx, sy;
   GimpBlendMode     blend_mode;
@@ -120,7 +121,7 @@ static gdouble gradient_repeat_sawtooth          (gdouble       val);
 static gdouble gradient_repeat_triangular        (gdouble       val);
 
 static void    gradient_precalc_shapeburst       (GimpImage    *gimage,
-						  GimpDrawable *drawable, 
+						  GimpDrawable *drawable,
 						  PixelRegion  *PR,
 						  gdouble       dist);
 
@@ -142,7 +143,8 @@ static void    gradient_fill_region          (GimpImage        *gimage,
                                               GimpGradientType  gradient_type,
                                               gdouble           offset,
                                               GimpRepeatMode    repeat,
-                                              gint              supersample,
+                                              gboolean          reverse,
+                                              gboolean          supersample,
                                               gint              max_depth,
                                               gdouble           threshold,
                                               gboolean          dither,
@@ -171,23 +173,24 @@ static PixelRegion distR =
 /*  public functions  */
 
 void
-gimp_drawable_blend (GimpDrawable     *drawable,
-                     GimpBlendMode     blend_mode,
-                     int               paint_mode,
-                     GimpGradientType  gradient_type,
-                     gdouble           opacity,
-                     gdouble           offset,
-                     GimpRepeatMode    repeat,
-                     gint              supersample,
-                     gint              max_depth,
-                     gdouble           threshold,
-                     gboolean          dither,
-                     gdouble           startx,
-                     gdouble           starty,
-                     gdouble           endx,
-                     gdouble           endy,
-                     GimpProgressFunc  progress_callback,
-                     gpointer          progress_data)
+gimp_drawable_blend (GimpDrawable         *drawable,
+                     GimpBlendMode         blend_mode,
+                     GimpLayerModeEffects  paint_mode,
+                     GimpGradientType      gradient_type,
+                     gdouble               opacity,
+                     gdouble               offset,
+                     GimpRepeatMode        repeat,
+                     gboolean              reverse,
+                     gboolean              supersample,
+                     gint                  max_depth,
+                     gdouble               threshold,
+                     gboolean              dither,
+                     gdouble               startx,
+                     gdouble               starty,
+                     gdouble               endx,
+                     gdouble               endy,
+                     GimpProgressFunc      progress_callback,
+                     gpointer              progress_data)
 {
   GimpImage   *gimage;
   TileManager *buf_tiles;
@@ -222,7 +225,7 @@ gimp_drawable_blend (GimpDrawable     *drawable,
 
   gradient_fill_region (gimage, drawable,
 			&bufPR, (x2 - x1), (y2 - y1),
-			blend_mode, gradient_type, offset, repeat,
+			blend_mode, gradient_type, offset, repeat, reverse,
 			supersample, max_depth, threshold, dither,
 			(startx - x1), (starty - y1),
 			(endx - x1), (endy - y1),
@@ -684,9 +687,9 @@ gradient_precalc_shapeburst (GimpImage    *gimage,
 
 
 static void
-gradient_render_pixel (double    x, 
-		       double    y, 
-		       GimpRGB  *color, 
+gradient_render_pixel (double    x,
+		       double    y,
+		       GimpRGB  *color,
 		       gpointer  render_data)
 {
   RenderBlendData *rbd;
@@ -763,11 +766,14 @@ gradient_render_pixel (double    x,
 
   if (rbd->blend_mode == GIMP_CUSTOM_MODE)
     {
-      gimp_gradient_get_color_at (rbd->gradient, factor, color);
+      gimp_gradient_get_color_at (rbd->gradient, factor, rbd->reverse, color);
     }
   else
     {
       /* Blend values */
+
+      if (rbd->reverse)
+        factor = 1.0 - factor;
 
       color->r = rbd->fg.r + (rbd->bg.r - rbd->fg.r) * factor;
       color->g = rbd->fg.g + (rbd->bg.g - rbd->fg.g) * factor;
@@ -786,9 +792,9 @@ gradient_render_pixel (double    x,
 }
 
 static void
-gradient_put_pixel (int      x, 
-		    int      y, 
-		    GimpRGB *color, 
+gradient_put_pixel (int      x,
+		    int      y,
+		    GimpRGB *color,
 		    void    *put_pixel_data)
 {
   PutPixelData  *ppd;
@@ -823,13 +829,13 @@ gradient_put_pixel (int      x,
           ftmp = color->b * 255.0;
           itmp = ftmp;
           dither_prob = ftmp - itmp;
-          if(g_rand_double (ppd->dither_rand) < dither_prob)
+          if (g_rand_double (ppd->dither_rand) < dither_prob)
             color->b += (1.0 / 255.0);
 
           ftmp = color->a * 255.0;
           itmp = ftmp;
           dither_prob = ftmp - itmp;
-          if(g_rand_double (ppd->dither_rand) < dither_prob)
+          if (g_rand_double (ppd->dither_rand) < dither_prob)
             color->a += (1.0 / 255.0);
 
           if (color->r > 1.0) color->r = 1.0;
@@ -847,25 +853,25 @@ gradient_put_pixel (int      x,
     {
       /* Convert to grayscale */
       gdouble gray = INTENSITY (color->r, color->g, color->b);
-                      
+
       if (ppd->dither)
         {
 	  gdouble dither_prob;
           gdouble ftmp;
           gint    itmp;
-                          
+
           ftmp = gray * 255.0;
           itmp = ftmp;
           dither_prob = ftmp - itmp;
           if (g_rand_double (ppd->dither_rand) < dither_prob)
             gray += (1.0 / 255.0);
-                          
+
           ftmp = color->a * 255.0;
           itmp = ftmp;
           dither_prob = ftmp - itmp;
           if (g_rand_double (ppd->dither_rand) < dither_prob)
             color->a += (1.0 / 255.0);
-                      
+
           if (color->a > 1.0) color->a = 1.0;
         }
 
@@ -889,7 +895,8 @@ gradient_fill_region (GimpImage        *gimage,
 		      GimpGradientType  gradient_type,
 		      gdouble           offset,
 		      GimpRepeatMode    repeat,
-		      gint              supersample,
+                      gboolean          reverse,
+		      gboolean          supersample,
 		      gint              max_depth,
 		      gdouble           threshold,
 		      gboolean          dither,
@@ -913,6 +920,7 @@ gradient_fill_region (GimpImage        *gimage,
   context = gimp_get_current_context (gimage->gimp);
 
   rbd.gradient = gimp_context_get_gradient (context);
+  rbd.reverse  = reverse;
 
   /* Get foreground and background colors, normalized */
 
@@ -1080,7 +1088,7 @@ gradient_fill_region (GimpImage        *gimage,
 			  gdouble dither_prob;
                           gdouble ftmp;
                           gint    itmp;
-                    
+
                           ftmp = color.r * 255.0;
                           itmp = ftmp;
                           dither_prob = ftmp - itmp;
@@ -1104,7 +1112,7 @@ gradient_fill_region (GimpImage        *gimage,
                           dither_prob = ftmp - itmp;
                           if (g_rand_double (dither_rand) < dither_prob)
                             color.a += (1.0 / 255.0);
-                      
+
                           if (color.r > 1.0) color.r = 1.0;
                           if (color.g > 1.0) color.g = 1.0;
                           if (color.b > 1.0) color.b = 1.0;
@@ -1120,25 +1128,25 @@ gradient_fill_region (GimpImage        *gimage,
                     {
                       /* Convert to grayscale */
                       gdouble gray = INTENSITY (color.r, color.g, color.b);
-                      
+
 		      if (dither)
                         {
 			  gdouble dither_prob;
                           gdouble ftmp;
                           gint    itmp;
-                          
+
                           ftmp = gray * 255.0;
                           itmp = ftmp;
                           dither_prob = ftmp - itmp;
                           if (g_rand_double (dither_rand) < dither_prob)
                             gray += (1.0 / 255.0);
-                          
+
                           ftmp = color.a * 255.0;
                           itmp = ftmp;
                           dither_prob = ftmp - itmp;
                           if (g_rand_double (dither_rand) < dither_prob)
                             color.a += (1.0 / 255.0);
-                      
+
                           if (color.a > 1.0) color.a = 1.0;
                         }
 

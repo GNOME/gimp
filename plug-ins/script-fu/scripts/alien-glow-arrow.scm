@@ -1,5 +1,3 @@
-
-
 ; The GIMP -- an image manipulation program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis
 ; 
@@ -26,11 +24,8 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-
-
-
-
-(define (make-point x y)
+(define (make-point x
+		    y)
   (cons x y))
 
 (define (point-x p)
@@ -52,13 +47,16 @@
     (convert point-list a 0)
     a))
 
-(define (make-arrow size offset)
+(define (make-arrow size
+		    offset)
   (list (make-point offset offset)
 	(make-point (- size offset) (/ size 2))
 	(make-point offset (- size offset))))
 
 
-(define (rotate-points points size orientation)
+(define (rotate-points points
+		       size
+		       orientation)
   (if (null? points)
       '()
       (let* ((p (car points))
@@ -71,7 +69,11 @@
   (rotate-points (cdr points) size orientation))
 
 
-(define (script-fu-alien-glow-right-arrow size orientation glow-color bg-color flatten)
+(define (script-fu-alien-glow-right-arrow size
+					  orientation
+					  glow-color
+					  bg-color
+					  flatten)
   (let* ((img (car (gimp-image-new size size RGB)))
 	 (grow-amount (/ size 12))
 	 (blur-radius (/ size 3))
@@ -82,8 +84,8 @@
 	 (big-arrow (point-list->double-array (rotate-points (make-arrow size offset) size orientation)))
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background))))
-    
-    
+
+
     (gimp-image-undo-disable img)
     ;(gimp-image-resize img (+ length height) (+ height height) 0 0)
     (gimp-image-add-layer img bg-layer 1)
@@ -93,12 +95,15 @@
     (gimp-edit-clear glow-layer)
     (gimp-edit-clear ruler-layer)
 
-
     (gimp-free-select img 6 big-arrow REPLACE TRUE FALSE 0)
 
     (gimp-palette-set-foreground '(103 103 103))
     (gimp-palette-set-background '(0 0 0))
-    (gimp-blend ruler-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 size size)
+
+    (gimp-blend ruler-layer FG-BG-RGB NORMAL
+		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 size size)
     
     (gimp-selection-grow img grow-amount)
     (gimp-palette-set-foreground glow-color)
@@ -127,11 +132,11 @@
 		    "Adrian Likins"
 		    "1997"
 		    ""
-		    SF-ADJUSTMENT _"Size" '(32 5 150 1 10 0 1)
-		    SF-OPTION     _"Orientation" '(_"Right" 
-						   _"Left" 
-						   _"Up" 
-						   _"Down")
-		    SF-COLOR      _"Glow Color" '(63 252 0)
+		    SF-ADJUSTMENT _"Size"            '(32 5 150 1 10 0 1)
+		    SF-OPTION     _"Orientation"     '(_"Right" 
+							_"Left" 
+							_"Up" 
+							_"Down")
+		    SF-COLOR      _"Glow Color"       '(63 252 0)
 		    SF-COLOR      _"Background Color" '(0 0 0)
-		    SF-TOGGLE     _"Flatten Image" TRUE)
+		    SF-TOGGLE     _"Flatten Image"    TRUE)

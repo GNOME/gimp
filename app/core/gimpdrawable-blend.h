@@ -20,23 +20,24 @@
 #define  __GIMP_DRAWABLE_BLEND_H__
 
 
-void   gimp_drawable_blend (GimpDrawable     *drawable,
-                            GimpBlendMode     blend_mode,
-                            gint              paint_mode,
-                            GimpGradientType  gradient_type,
-                            gdouble           opacity,
-                            gdouble           offset,
-                            GimpRepeatMode    repeat,
-                            gint              supersample,
-                            gint              max_depth,
-                            gdouble           threshold,
-                            gboolean          dither,
-                            gdouble           startx,
-                            gdouble           starty,
-                            gdouble           endx,
-                            gdouble           endy,
-                            GimpProgressFunc  progress_callback,
-                            gpointer          progress_data);
+void   gimp_drawable_blend (GimpDrawable         *drawable,
+                            GimpBlendMode         blend_mode,
+                            GimpLayerModeEffects  paint_mode,
+                            GimpGradientType      gradient_type,
+                            gdouble               opacity,
+                            gdouble               offset,
+                            GimpRepeatMode        repeat,
+                            gboolean              reverse,
+                            gboolean              supersample,
+                            gint                  max_depth,
+                            gdouble               threshold,
+                            gboolean              dither,
+                            gdouble               startx,
+                            gdouble               starty,
+                            gdouble               endx,
+                            gdouble               endy,
+                            GimpProgressFunc      progress_callback,
+                            gpointer              progress_data);
 
 
 #endif /* __GIMP_DRAWABLE_BLEND_H__ */

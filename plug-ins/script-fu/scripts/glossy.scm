@@ -25,7 +25,9 @@
 (define (apply-glossy-logo-effect img
 				  logo-layer
 				  blend-gradient-text
+				  blend-gradient-text-reverse
 				  blend-gradient-outline
+				  blend-gradient-outline-reverse
 				  grow-size
 				  bg-color
 				  use-pattern-text
@@ -77,7 +79,11 @@
     (if (= use-pattern-text FALSE)
       (begin
         (gimp-gradients-set-gradient blend-gradient-text)
-        (gimp-blend logo-layer CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 0 (+ height 5))))
+
+        (gimp-blend logo-layer CUSTOM NORMAL
+		    LINEAR 100 0 REPEAT-NONE blend-gradient-text-reverse
+		    FALSE 0 0 TRUE
+		    0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
 
@@ -98,7 +104,11 @@
     (if (= use-pattern-outline FALSE)
       (begin
         (gimp-gradients-set-gradient blend-gradient-outline)
-        (gimp-blend grow-me CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 0 (+ height 5))))
+
+        (gimp-blend grow-me CUSTOM NORMAL
+		    LINEAR 100 0 REPEAT-NONE blend-gradient-outline-reverse
+		    FALSE 0 0 TRUE
+		    0 0 0 (+ height 5))))
 
     (gimp-selection-none img)
 
@@ -129,7 +139,9 @@
 (define (script-fu-glossy-logo-alpha img
 				     logo-layer
 				     blend-gradient-text
+				     blend-gradient-text-reverse
 				     blend-gradient-outline
+				     blend-gradient-outline-reverse
 				     grow-size
 				     bg-color
 				     use-pattern-text
@@ -144,8 +156,12 @@
 				     s-offset-y)
   (begin
     (gimp-undo-push-group-start img)
-    (apply-glossy-logo-effect img logo-layer blend-gradient-text
-			      blend-gradient-outline grow-size bg-color
+    (apply-glossy-logo-effect img logo-layer
+			      blend-gradient-text
+			      blend-gradient-text-reverse
+			      blend-gradient-outline
+			      blend-gradient-outline-reverse
+			      grow-size bg-color
 			      use-pattern-text pattern-text
 			      use-pattern-outline pattern-outline
 			      use-pattern-overlay pattern-overlay
@@ -162,30 +178,33 @@
                     "Hrvoje Horvat"
                     "14/04/1998"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-                    SF-GRADIENT   _"Blend Gradient (Text)" "Shadows 2"
+                    SF-IMAGE      "Image"                     0
+                    SF-DRAWABLE   "Drawable"                  0
+                    SF-GRADIENT   _"Blend Gradient (Text)"    "Shadows 2"
+		    SF-TOGGLE     _"Text Gradient Reverse"    FALSE
                     SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows 2"
-                    SF-ADJUSTMENT _"Outline Size" '(5 0 250 1 10 0 1)
-		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-TOGGLE     _"Outline Gradient Reverse" FALSE
+                    SF-ADJUSTMENT _"Outline Size"             '(5 0 250 1 10 0 1)
+		    SF-COLOR      _"Background Color"         '(255 255 255)
 		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Text)" "Electric Blue"
+		    SF-PATTERN    _"Pattern (Text)"           "Electric Blue"
 		    SF-TOGGLE     _"Use Pattern for Outline instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Outline)" "Electric Blue"
-		    SF-TOGGLE     _"Use Pattern Overlay" FALSE
-		    SF-PATTERN    _"Pattern (Overlay)" "Parque #1"
+		    SF-PATTERN    _"Pattern (Outline)"        "Electric Blue"
+		    SF-TOGGLE     _"Use Pattern Overlay"      FALSE
+		    SF-PATTERN    _"Pattern (Overlay)"        "Parque #1"
 		    SF-TOGGLE     _"Default Bumpmap Settings" TRUE
-		    SF-TOGGLE     _"Shadow" TRUE
-		    SF-ADJUSTMENT _"Shadow X Offset" '(8 0 100 1 10 0 1)
-                    SF-ADJUSTMENT _"Shadow Y Offset" '(8 0 100 1 10 0 1)
-		    )
+		    SF-TOGGLE     _"Shadow"                   TRUE
+		    SF-ADJUSTMENT _"Shadow X Offset"          '(8 0 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Shadow Y Offset"          '(8 0 100 1 10 0 1))
 
 
 (define (script-fu-glossy-logo text
 			       size
 			       font
 			       blend-gradient-text
+			       blend-gradient-text-reverse
 			       blend-gradient-outline
+			       blend-gradient-outline-reverse
 			       grow-size
 			       bg-color
 			       use-pattern-text
@@ -202,8 +221,12 @@
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text 30 TRUE size PIXELS font))))
     (gimp-image-undo-disable img)
     (gimp-layer-set-name text-layer text)
-    (apply-glossy-logo-effect img text-layer blend-gradient-text
-			      blend-gradient-outline grow-size bg-color
+    (apply-glossy-logo-effect img text-layer
+			      blend-gradient-text
+			      blend-gradient-text-reverse
+			      blend-gradient-outline
+			      blend-gradient-outline-reverse
+			      grow-size bg-color
 			      use-pattern-text pattern-text
 			      use-pattern-outline pattern-outline
 			      use-pattern-overlay pattern-overlay
@@ -219,21 +242,22 @@
                     "Hrvoje Horvat"
                     "14/04/1998"
                     ""
-                    SF-STRING     _"Text" "Galaxy"
-                    SF-ADJUSTMENT _"Font Size (pixels)" '(100 2 1000 1 10 0 1)
-                    SF-FONT       _"Font" "Eras"
-                    SF-GRADIENT   _"Blend Gradient (Text)" "Shadows 2"
+                    SF-STRING     _"Text"                     "Galaxy"
+                    SF-ADJUSTMENT _"Font Size (pixels)"       '(100 2 1000 1 10 0 1)
+                    SF-FONT       _"Font"                     "Eras"
+                    SF-GRADIENT   _"Blend Gradient (Text)"    "Shadows 2"
+		    SF-TOGGLE     _"Text Gradient Reverse"    FALSE
                     SF-GRADIENT   _"Blend Gradient (Outline)" "Shadows 2"
-                    SF-ADJUSTMENT _"Outline Size" '(5 0 250 1 10 0 1)
-		    SF-COLOR      _"Background Color" '(255 255 255)
+		    SF-TOGGLE     _"Outline Gradient Reverse" FALSE
+                    SF-ADJUSTMENT _"Outline Size"             '(5 0 250 1 10 0 1)
+		    SF-COLOR      _"Background Color"         '(255 255 255)
 		    SF-TOGGLE     _"Use Pattern for Text instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Text)" "Electric Blue"
+		    SF-PATTERN    _"Pattern (Text)"           "Electric Blue"
 		    SF-TOGGLE     _"Use Pattern for Outline instead of Gradient" FALSE
-		    SF-PATTERN    _"Pattern (Outline)" "Electric Blue"
-		    SF-TOGGLE     _"Use Pattern Overlay" FALSE
-		    SF-PATTERN    _"Pattern (Overlay)" "Parque #1"
+		    SF-PATTERN    _"Pattern (Outline)"        "Electric Blue"
+		    SF-TOGGLE     _"Use Pattern Overlay"      FALSE
+		    SF-PATTERN    _"Pattern (Overlay)"        "Parque #1"
 		    SF-TOGGLE     _"Default Bumpmap Settings" TRUE
-		    SF-TOGGLE     _"Shadow" TRUE
-		    SF-ADJUSTMENT _"Shadow X Offset" '(8 0 100 1 10 0 1)
-                    SF-ADJUSTMENT _"Shadow Y Offset" '(8 0 100 1 10 0 1)
-		    )
+		    SF-TOGGLE     _"Shadow"                   TRUE
+		    SF-ADJUSTMENT _"Shadow X Offset"          '(8 0 100 1 10 0 1)
+                    SF-ADJUSTMENT _"Shadow Y Offset"          '(8 0 100 1 10 0 1))

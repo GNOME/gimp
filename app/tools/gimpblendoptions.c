@@ -44,7 +44,6 @@ enum
   PROP_0,
   PROP_OFFSET,
   PROP_GRADIENT_TYPE,
-  PROP_REPEAT,
   PROP_SUPERSAMPLE,
   PROP_SUPERSAMPLE_DEPTH,
   PROP_SUPERSAMPLE_THRESHOLD,
@@ -100,7 +99,7 @@ gimp_blend_options_get_type (void)
   return type;
 }
 
-static void 
+static void
 gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
 {
   GObjectClass *object_class;
@@ -120,11 +119,6 @@ gimp_blend_options_class_init (GimpBlendOptionsClass *klass)
                                  "gradient-type", NULL,
                                  GIMP_TYPE_GRADIENT_TYPE,
                                  GIMP_LINEAR,
-                                 0);
-  GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_REPEAT,
-                                 "repeat", NULL,
-                                 GIMP_TYPE_REPEAT_MODE,
-                                 GIMP_REPEAT_NONE,
                                  0);
 
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SUPERSAMPLE,
@@ -169,9 +163,6 @@ gimp_blend_options_set_property (GObject      *object,
     case PROP_GRADIENT_TYPE:
       options->gradient_type = g_value_get_enum (value);
       break;
-    case PROP_REPEAT:
-      options->repeat = g_value_get_enum (value);
-      break;
 
     case PROP_SUPERSAMPLE:
       options->supersample = g_value_get_boolean (value);
@@ -186,7 +177,7 @@ gimp_blend_options_set_property (GObject      *object,
     case PROP_DITHER:
       options->dither = g_value_get_boolean (value);
       break;
-    
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -211,9 +202,6 @@ gimp_blend_options_get_property (GObject    *object,
     case PROP_GRADIENT_TYPE:
       g_value_set_enum (value, options->gradient_type);
       break;
-    case PROP_REPEAT:
-      g_value_set_enum (value, options->repeat);
-      break;
 
     case PROP_SUPERSAMPLE:
       g_value_set_boolean (value, options->supersample);
@@ -228,7 +216,7 @@ gimp_blend_options_get_property (GObject    *object,
     case PROP_DITHER:
       g_value_set_boolean (value, options->dither);
       break;
-    
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -267,7 +255,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 			     menu, 2, TRUE);
 
   /*  the repeat option  */
-  menu = gimp_prop_enum_option_menu_new (config, "repeat", 0, 0);
+  menu = gimp_prop_enum_option_menu_new (config, "gradient-repeat", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
 			     _("Repeat:"), 1.0, 0.5,
 			     menu, 2, TRUE);
@@ -280,7 +268,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
                                        _("Dithering"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  
+
   /*  frame for supersampling options  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);

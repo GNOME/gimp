@@ -66,27 +66,6 @@ gimp_dodge_burn_type_get_type (void)
 }
 
 
-static const GEnumValue gimp_gradient_paint_mode_enum_values[] =
-{
-  { GIMP_GRADIENT_ONCE_FORWARD, N_("Once Forward"), "once-forward" },
-  { GIMP_GRADIENT_ONCE_BACKWARD, N_("Once Backward"), "once-backward" },
-  { GIMP_GRADIENT_LOOP_SAWTOOTH, N_("Loop Sawtooth"), "loop-sawtooth" },
-  { GIMP_GRADIENT_LOOP_TRIANGLE, N_("Loop Triangle"), "loop-triangle" },
-  { 0, NULL, NULL }
-};
-
-GType
-gimp_gradient_paint_mode_get_type (void)
-{
-  static GType enum_type = 0;
-
-  if (!enum_type)
-    enum_type = g_enum_register_static ("GimpGradientPaintMode", gimp_gradient_paint_mode_enum_values);
-
-  return enum_type;
-}
-
-
 static const GEnumValue gimp_convolve_type_enum_values[] =
 {
   { GIMP_BLUR_CONVOLVE, N_("Blur"), "blur-convolve" },

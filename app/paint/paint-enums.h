@@ -70,19 +70,6 @@ typedef enum
 } GimpDodgeBurnType;
 
 
-#define GIMP_TYPE_GRADIENT_PAINT_MODE (gimp_gradient_paint_mode_get_type ())
-
-GType gimp_gradient_paint_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_GRADIENT_ONCE_FORWARD,   /*< desc="Once Forward"  >*/
-  GIMP_GRADIENT_ONCE_BACKWARD,  /*< desc="Once Backward" >*/
-  GIMP_GRADIENT_LOOP_SAWTOOTH,  /*< desc="Loop Sawtooth" >*/
-  GIMP_GRADIENT_LOOP_TRIANGLE   /*< desc="Loop Triangle" >*/
-} GimpGradientPaintMode;
-
-
 #define GIMP_TYPE_CONVOLVE_TYPE (gimp_convolve_type_get_type ())
 
 GType gimp_convolve_type_get_type (void) G_GNUC_CONST;

@@ -19,9 +19,12 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-(define (script-fu-gradient-example width height)
+(define (script-fu-gradient-example width
+				    height
+				    gradient-reverse)
   (let* ((img (car (gimp-image-new width height RGB)))
-	 (drawable (car (gimp-layer-new img width height RGB "Gradient example" 100 NORMAL)))
+	 (drawable (car (gimp-layer-new img width height RGB
+					"Gradient example" 100 NORMAL)))
 
 	 ; Save old foreground and background colors
 
@@ -44,7 +47,10 @@
 
     ; Render gradient
 
-    (gimp-blend drawable CUSTOM NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 (- width 1) 0)
+    (gimp-blend drawable CUSTOM NORMAL
+		LINEAR 100 0 REPEAT-NONE gradient-reverse
+		FALSE 0 0 TRUE
+		0 0 (- width 1) 0)
 
     ; Terminate
 
@@ -60,5 +66,6 @@
 		    "Federico Mena Quintero"
 		    "June 1997"
 		    ""
-		    SF-ADJUSTMENT _"Width" '(400 1 2000 1 10 0 1)
-		    SF-ADJUSTMENT _"Height" '(30 1 2000 1 10 0 1))
+		    SF-ADJUSTMENT _"Width"            '(400 1 2000 1 10 0 1)
+		    SF-ADJUSTMENT _"Height"           '(30 1 2000 1 10 0 1)
+		    SF-TOGGLE     _"Gradient Reverse" FALSE)

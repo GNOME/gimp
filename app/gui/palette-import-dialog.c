@@ -599,6 +599,7 @@ palette_import_make_palette (ImportDialog *import_dialog)
     {
     case GRADIENT_IMPORT:
       palette = gimp_palette_import_from_gradient (gradient,
+                                                   FALSE,
 						   palette_name,
 						   n_colors);
       break;
@@ -606,7 +607,7 @@ palette_import_make_palette (ImportDialog *import_dialog)
     case IMAGE_IMPORT:
       if (gimp_image_base_type (gimage) == GIMP_INDEXED)
         {
-          palette = 
+          palette =
             gimp_palette_import_from_indexed_image (gimage,
                                                     palette_name);
         }

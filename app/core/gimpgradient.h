@@ -82,6 +82,7 @@ gboolean              gimp_gradient_save_as_pov      (GimpGradient  *gradient,
 
 void                  gimp_gradient_get_color_at     (GimpGradient  *gradient,
 						      gdouble        pos,
+                                                      gboolean       reverse,
 						      GimpRGB       *color);
 GimpGradientSegment * gimp_gradient_get_segment_at   (GimpGradient  *grad,
 						      gdouble        pos);

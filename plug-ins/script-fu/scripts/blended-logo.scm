@@ -5,7 +5,9 @@
 ;  if the blend colors are specified as high intensity, the sharp option
 ;   should be enabled or the logo will come out blurry
 
-(define (scale size percent) (* size percent))
+(define (scale size
+	       percent)
+  (* size percent))
 
 (define (apply-blended-logo-effect img
 				   logo-layer
@@ -14,7 +16,8 @@
 				   blend-mode
 				   blend-fg
 				   blend-bg
-				   blend-gradient)
+				   blend-gradient
+				   blend-gradient-reverse)
   (let* ((b-size-2 (scale b-size 0.5))
 	 (f-size (scale b-size 0.75))
 	 (ds-size (scale b-size 0.5))
@@ -30,6 +33,7 @@
 	 (old-fg (car (gimp-palette-get-foreground)))
 	 (old-bg (car (gimp-palette-get-background)))
 	 (old-grad (car (gimp-gradients-get-gradient))))
+
     (script-fu-util-image-resize-from-layer img logo-layer)
     (gimp-image-add-layer img shadow-layer 1)
     (gimp-image-add-layer img blend-layer 1)
@@ -54,12 +58,22 @@
     (gimp-palette-set-background '(0 0 0))
     (gimp-edit-fill text-shadow-layer BG-IMAGE-FILL)
     (gimp-palette-set-foreground '(255 255 255))
-    (gimp-blend text-shadow-layer FG-BG-RGB NORMAL SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 1 1)
+
+    (gimp-blend text-shadow-layer FG-BG-RGB NORMAL
+		SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
+		FALSE 0 0 TRUE
+		0 0 1 1)
+
     (gimp-selection-none img)
     (gimp-palette-set-foreground blend-fg)
     (gimp-palette-set-background blend-bg)
     (gimp-gradients-set-gradient blend-gradient)
-    (gimp-blend blend-layer blend-mode NORMAL LINEAR 100 0 REPEAT-NONE FALSE 0 0 TRUE 0 0 width 0)
+
+    (gimp-blend blend-layer blend-mode NORMAL
+		LINEAR 100 0 REPEAT-NONE blend-gradient-reverse
+		FALSE 0 0 TRUE
+		0 0 width 0)
+
     (gimp-layer-translate logo-layer (- b-size-2) (- b-size-2))
     (gimp-layer-translate blend-layer (- b-size) (- b-size))
     (gimp-layer-translate text-shadow-layer (- ts-size) (- ts-size))
@@ -81,11 +95,13 @@
 				      blend-mode
 				      blend-fg
 				      blend-bg
-				      blend-gradient)
+				      blend-gradient
+				      blend-gradient-reverse)
   (begin
     (gimp-undo-push-group-start img)
     (apply-blended-logo-effect img logo-layer b-size bg-color
-			       blend-mode blend-fg blend-bg blend-gradient)
+			       blend-mode blend-fg blend-bg
+			       blend-gradient blend-gradient-reverse)
     (gimp-undo-push-group-end img)
     (gimp-displays-flush)))
 
@@ -97,17 +113,17 @@
 		    "Spencer Kimball"
 		    "1996"
 		    "RGBA"
-                    SF-IMAGE      "Image" 0
-                    SF-DRAWABLE   "Drawable" 0
-		    SF-ADJUSTMENT _"Offset (pixels)" '(15 1 100 1 10 0 1)
+                    SF-IMAGE      "Image"             0
+                    SF-DRAWABLE   "Drawable"          0
+		    SF-ADJUSTMENT _"Offset (pixels)"  '(15 1 100 1 10 0 1)
 		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-OPTION     _"Blend Mode" '(_"FG-BG-RGB" _"FG-BG-HSV"
-						   _"FG-Transparent"
-						   _"Custom Gradient")
-		    SF-COLOR      _"Start Blend" '(22 9 129)
-		    SF-COLOR      _"End Blend" '(129 9 82)
-		    SF-GRADIENT   _"Gradient" "Golden"
-		    )
+		    SF-OPTION     _"Blend Mode"       '(_"FG-BG-RGB" _"FG-BG-HSV"
+							 _"FG-Transparent"
+							 _"Custom Gradient")
+		    SF-COLOR      _"Start Blend"      '(22 9 129)
+		    SF-COLOR      _"End Blend"        '(129 9 82)
+		    SF-GRADIENT   _"Gradient"         "Golden"
+		    SF-TOGGLE     _"Gradient Reverse" FALSE)
 
 (define (script-fu-blended-logo text
 				size
@@ -117,7 +133,8 @@
 				blend-mode
 				blend-fg
 				blend-bg
-				blend-gradient)
+				blend-gradient
+				blend-gradient-reverse)
   (let* ((img (car (gimp-image-new 256 256 RGB)))
 	 (b-size (scale size 0.1))
 	 (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
@@ -129,7 +146,8 @@
     (gimp-edit-fill text-layer FG-IMAGE-FILL)
     (gimp-palette-set-foreground old-fg)
     (apply-blended-logo-effect img text-layer b-size bg-color
-			       blend-mode blend-fg blend-bg blend-gradient)
+			       blend-mode blend-fg blend-bg
+			       blend-gradient blend-gradient-reverse)
     (gimp-image-undo-enable img)
     (gimp-display-new img)))
 
@@ -140,15 +158,16 @@
 		    "Spencer Kimball"
 		    "1996"
 		    ""
-		    SF-STRING     _"Text" "The GIMP"
+		    SF-STRING     _"Text"               "The GIMP"
 		    SF-ADJUSTMENT _"Font Size (pixels)" '(150 2 1000 1 10 0 1)
-		    SF-FONT       _"Font" "Crillee"
-		    SF-COLOR      _"Text Color" '(124 174 255)
-		    SF-COLOR      _"Background Color" '(255 255 255)
-		    SF-OPTION     _"Blend Mode" '(_"FG-BG-RGB" _"FG-BG-HSV"
-						   _"FG-Transparent"
-						   _"Custom Gradient")
-		    SF-COLOR      _"Start Blend" '(22 9 129)
-		    SF-COLOR      _"End Blend" '(129 9 82)
-		    SF-GRADIENT   _"Gradient" "Golden"
-		    )
+		    SF-FONT       _"Font"               "Crillee"
+		    SF-COLOR      _"Text Color"         '(124 174 255)
+		    SF-COLOR      _"Background Color"   '(255 255 255)
+		    SF-OPTION     _"Blend Mode"         '(_"FG-BG-RGB"
+							   _"FG-BG-HSV"
+							   _"FG-Transparent"
+							   _"Custom Gradient")
+		    SF-COLOR      _"Start Blend"        '(22 9 129)
+		    SF-COLOR      _"End Blend"          '(129 9 82)
+		    SF-GRADIENT   _"Gradient"           "Golden"
+		    SF-TOGGLE     _"Gradient Reverse"   FALSE)
