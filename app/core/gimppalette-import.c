@@ -19,9 +19,18 @@
 #include "config.h"
 
 #include <string.h> /* memcpy */
+#include <errno.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <sys/types.h>
+#include <fcntl.h>
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"
@@ -352,6 +361,64 @@ gimp_palette_import_from_indexed_image (GimpImage   *gimage,
 
       gimp_palette_add_entry (palette, NULL, &color);
     }
+
+  return palette;
+}
+
+
+/*  create a palette from a PAL file  **********************************/
+
+GimpPalette *
+gimp_palette_import_from_file (const gchar  *filename,
+                               const gchar  *palette_name,
+                               GError      **error)
+{
+  GimpPalette *palette;
+  GimpRGB      color;
+  gint         fd;
+  guchar       header[28];
+  guchar       color_bytes[4];
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (palette_name != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  fd = open (filename, O_RDONLY);
+  if (! fd)
+    {
+      g_set_error (error,
+                   G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Opening '%s' failed: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return NULL;
+    }
+
+  /* TODO: Parse header correctly. For now, we just skip the 28 bytes */
+  if (read (fd, header, sizeof (header)) != sizeof (header) ||
+      strncmp (header + 0, "RIFF", 4) ||
+      strncmp (header + 8, "PAL data", 8))
+    {
+      close (fd);
+      g_set_error (error,
+                   0, 0,
+                   _("Not a RIFF palette file:\n%s"),
+                   gimp_filename_to_utf8 (filename));
+      return NULL;
+    }
+
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name, FALSE));
+
+  while (read (fd, color_bytes, sizeof (color_bytes)) == sizeof (color_bytes))
+    {
+      gimp_rgba_set_uchar (&color,
+                           color_bytes[0],
+                           color_bytes[1],
+                           color_bytes[2],
+                           255);
+      gimp_palette_add_entry (palette, NULL, &color);
+    }
+
+  close (fd);
 
   return palette;
 }

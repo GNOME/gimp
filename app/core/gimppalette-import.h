@@ -30,6 +30,8 @@ GimpPalette * gimp_palette_import_from_image         (GimpImage    *gimage,
 						      gint          treshold);
 GimpPalette * gimp_palette_import_from_indexed_image (GimpImage    *gimage,
 						      const gchar  *palette_name);
-
+GimpPalette * gimp_palette_import_from_file          (const gchar  *filename,
+                                                      const gchar  *palette_name,
+                                                      GError      **error);
 
 #endif  /* __GIMP_PALETTE_IMPORT_H__ */

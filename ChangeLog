@@ -1,3 +1,9 @@
+2004-04-15  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppalette-import.[ch]
+	* app/gui/palette-import-dialog.c: added palette import from RIFF
+	palette files based on a patch from ÉRDI Gergõ (bug #129788).
+
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/xcf/xcf.c (xcf_save_invoker) (xcf_load_invoker): forgot
