@@ -16,6 +16,7 @@
  * Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 #include <string.h>
+#include <stdio.h>
 
 #include "appenv.h"
 #include "actionarea.h"

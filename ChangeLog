@@ -1,3 +1,11 @@
+Mon Jun  8 04:30:00 EDT 1998 Chris Lahey  <clahey@umich.edu>
+
+	* app/devices.c: stdio.h
+	* plug-ins/depthmerge/depthmerge.c: stdio.h
+	* plug-ins/gtm/gtm.c: stdio.h
+	* plug-ins/nlfilt/nlfilt.c: stdio.h, stdlib.h
+	Added the listed includes to get it to compile.
+
 Sun Jun  7 19:30:22 EDT 1998 Adrian Likins <adrian@gimp.org>
 
 	*app/commands.c: more fiddling with the file_new dialog.
