@@ -1,5 +1,16 @@
 2003-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in.c (plug_in_open): added
+	G_SPAWN_CHILD_INHERITS_STDIN to the flags passed to g_spawn_async().
+	Needed to get batch-mode working again.
+
+	* app/batch.[ch]: some cleanup.
+
+	* plug-ins/script-fu/script-fu-text-console.c: improved error
+	reporting.
+
+2003-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.c: don't emit the "scaled"
 	signal from gimp_display_shell_scale_setup(). Emit it explicitely
 	from gimp_display_shell_scale_resize() instead.

@@ -437,7 +437,9 @@ plug_in_open (PlugIn *plug_in)
 
   argv = args;
   envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
-  spawn_flags = G_SPAWN_LEAVE_DESCRIPTORS_OPEN | G_SPAWN_DO_NOT_REAP_CHILD;
+  spawn_flags = (G_SPAWN_LEAVE_DESCRIPTORS_OPEN |
+                 G_SPAWN_DO_NOT_REAP_CHILD      |
+                 G_SPAWN_CHILD_INHERITS_STDIN);
 
   debug = FALSE;
 

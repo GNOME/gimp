@@ -37,57 +37,54 @@
 #include "pdb/procedural_db.h"
 
 
-static void batch_run_cmd  (Gimp              *gimp,
-			    gchar             *cmd);
-static void batch_pserver  (Gimp              *gimp,
-			    gint               run_mode,
-                            gint               flags,
-                            gint               extra);
+static void   batch_run_cmd      (Gimp        *gimp,
+                                  const gchar *cmd);
+static void   batch_perl_server  (Gimp        *gimp,
+                                  GimpRunMode  run_mode,
+                                  gint         flags,
+                                  gint         extra);
 
 
-static ProcRecord *eval_proc;
+static ProcRecord *eval_proc = NULL;
 
 
 void
-batch_init (Gimp   *gimp,
-            gchar **batch_cmds)
+batch_init (Gimp         *gimp,
+            const gchar **batch_cmds)
 {
-  gboolean read_from_stdin             = FALSE;
   gboolean perl_server_already_running = FALSE;
   gint     i;
 
-  eval_proc = procedural_db_lookup (gimp, "extension_script_fu_eval");
-
-  if (batch_cmds[0] && ! strcmp (batch_cmds[0], "-"))
+  if (batch_cmds[0] && strcmp (batch_cmds[0], "-") == 0)
     {
       batch_cmds[0] = "(extension-script-fu-text-console RUN-INTERACTIVE)";
-
-      if (batch_cmds[1])
-	batch_cmds[1] = NULL;
-
-      read_from_stdin = TRUE;
+      batch_cmds[1] = NULL;
     }
 
   for (i = 0; batch_cmds[i]; i++)
     {
-
       /* until --batch-interp=xxx or something similar is implemented 
        * and gimp-1.0 is not extinct use a shortcut to speed up starting the
        * perl-server tremendously. This is also fully compatible with 1.0.
        */
       {
-        gint run_mode, flags, extra;
+        gint  run_mode, flags, extra;
 
-        if (sscanf (batch_cmds[i], "(extension%*[-_]perl%*[-_]server %i %i %i)", &run_mode, &flags, &extra) == 3)
+        if (sscanf (batch_cmds[i],
+                    "(extension%*[-_]perl%*[-_]server %i %i %i)",
+                    &run_mode, &flags, &extra) == 3)
           {
             if (!perl_server_already_running)
-             {
-               batch_pserver (gimp, run_mode, flags, extra);
-               perl_server_already_running = 1;
-             }
+              {
+                batch_perl_server (gimp, run_mode, flags, extra);
+                perl_server_already_running = TRUE;
+              }
             continue;
           }
       }
+
+      if (! eval_proc)
+        eval_proc = procedural_db_lookup (gimp, "extension_script_fu_eval");
 
       if (! eval_proc)
         {
@@ -96,16 +93,13 @@ batch_init (Gimp   *gimp,
         }
 
       batch_run_cmd (gimp, batch_cmds[i]);
-
-      if (read_from_stdin)
-	gimp_exit (gimp, FALSE);
     }
 }
 
 
 static void
-batch_run_cmd (Gimp  *gimp,
-	       gchar *cmd)
+batch_run_cmd (Gimp        *gimp,
+	       const gchar *cmd)
 {
   Argument *args;
   Argument *vals;
@@ -113,16 +107,16 @@ batch_run_cmd (Gimp  *gimp,
 
   if (g_ascii_strcasecmp (cmd, "(gimp-quit 0)") == 0)
     {
-      gimp_exit (gimp, FALSE);
-      exit (0);
+      gimp_exit (gimp, TRUE);
+      return;
     }
 
   args = g_new0 (Argument, eval_proc->num_args);
   for (i = 0; i < eval_proc->num_args; i++)
     args[i].arg_type = eval_proc->args[i].arg_type;
 
-  args[0].value.pdb_int = 1;
-  args[1].value.pdb_pointer = cmd;
+  args[0].value.pdb_int     = GIMP_RUN_NONINTERACTIVE;
+  args[1].value.pdb_pointer = (gpointer) cmd;
 
   vals = procedural_db_execute (gimp, "extension_script_fu_eval", args);
 
@@ -142,16 +136,16 @@ batch_run_cmd (Gimp  *gimp,
     }
   
   procedural_db_destroy_args (vals, eval_proc->num_values);
-  g_free(args);
+  g_free (args);
 
   return;
 }
 
 static void
-batch_pserver (Gimp *gimp,
-	       gint  run_mode,
-               gint  flags,
-               gint  extra)
+batch_perl_server (Gimp        *gimp,
+                   GimpRunMode  run_mode,
+                   gint         flags,
+                   gint         extra)
 {
   ProcRecord *pserver_proc;
   Argument   *args;
@@ -162,7 +156,8 @@ batch_pserver (Gimp *gimp,
 
   if (!pserver_proc)
     {
-      g_message ("extension_perl_server not available: unable to start the perl server\n");
+      g_message ("extension_perl_server not available: "
+                 "unable to start the perl server");
       return;
     }
 
@@ -179,13 +174,13 @@ batch_pserver (Gimp *gimp,
   switch (vals[0].value.pdb_int)
     {
     case GIMP_PDB_EXECUTION_ERROR:
-      g_print ("perl server: experienced an execution error.\n");
+      g_printerr ("perl server: experienced an execution error.\n");
       break;
     case GIMP_PDB_CALLING_ERROR:
-      g_print ("perl server: experienced a calling error.\n");
+      g_printerr ("perl server: experienced a calling error.\n");
       break;
     case GIMP_PDB_SUCCESS:
-      g_print ("perl server: executed successfully.\n");
+      g_printerr ("perl server: executed successfully.\n");
       break;
     default:
       break;

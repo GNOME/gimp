@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <errno.h>
 #include <stdio.h>
 #if HAVE_UNISTD_H
 #include <unistd.h>
@@ -81,9 +82,9 @@ read_command (GString *command)
 {
   guchar c;
   gint   next;
-  gint   level  = 0;
+  gint   level = 0;
 
-  g_string_assign (command, "");
+  g_string_truncate (command, 0);
 
   while ((next = fgetc (stdin)) != EOF)
     {
@@ -111,6 +112,9 @@ read_command (GString *command)
 
       g_string_append_c (command, c);
     }
+
+  if (errno)
+    g_printerr ("error reading from stdin: %s\n", g_strerror (errno));
 
   return FALSE;
 }
