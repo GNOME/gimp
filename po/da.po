@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP /gnome-cvs\n"
 "POT-Creation-Date: 2000-04-22 11:49-0700\n"
-"PO-Revision-Date: 2000-04-24 03:31+02:00\n"
+"PO-Revision-Date: 2000-04-25 03:31+02:00\n"
 "Last-Translator: Keld Simonsen <keld@dkuug.dk>\n"
 "Language-Team: Danish <dansk@klid.dk>\n"
 "MIME-Version: 1.0\n"
@@ -138,11 +138,11 @@ msgstr "Bezier-sti allerede lukket."
 msgid "Corrupt curve"
 msgstr "Ødelagt kurve"
 
-#: app/bezier_select.c:2939
+#: app/bezier_select.c:2941
 msgid "Curve not closed!"
 msgstr "Kurve ikke lukket!"
 
-#: app/bezier_select.c:3226 app/gimage_mask.c:618
+#: app/bezier_select.c:3228 app/gimage_mask.c:618
 msgid "Paintbrush operation failed."
 msgstr "Malepensel-operation fejlede."
 
@@ -322,7 +322,7 @@ msgstr "Penselredigering"
 #: app/crop.c:1054 app/devices.c:755 app/docindexif.c:105
 #: app/errorconsole.c:281 app/gdisplay_ops.c:316 app/gradient.c:801
 #: app/gradient_select.c:153 app/histogram_tool.c:276 app/info_window.c:255
-#: app/lc_dialog.c:195 app/measure.c:321 app/nav_window.c:1345
+#: app/lc_dialog.c:195 app/measure.c:321 app/nav_window.c:1344
 #: app/palette.c:2072 app/palette.c:2088 app/palette.c:3118
 #: app/palette_select.c:66 app/pattern_select.c:172
 #: app/preferences_dialog.c:360 app/tips_dialog.c:157 app/tools.c:1088
@@ -508,12 +508,12 @@ msgstr "Y:"
 msgid "Wrap Around"
 msgstr "Flyd udenom"
 
-#: app/channel_ops.c:174 app/image_new.c:70 app/image_new.c:234
+#: app/channel_ops.c:174 app/image_new.c:73 app/image_new.c:287
 #: app/layers_dialog.c:3538
 msgid "Background"
 msgstr "Baggrund"
 
-#: app/channel_ops.c:175 app/image_new.c:80 app/layers_dialog.c:3540
+#: app/channel_ops.c:175 app/image_new.c:83 app/layers_dialog.c:3540
 msgid "Transparent"
 msgstr "Gennemsigtig"
 
@@ -1352,7 +1352,7 @@ msgstr ""
 msgid "RGB-empty"
 msgstr "RGB-tom"
 
-#: app/gdisplay.c:217 app/image_new.c:54 app/preferences_dialog.c:1608
+#: app/gdisplay.c:217 app/image_new.c:57 app/preferences_dialog.c:1608
 msgid "RGB"
 msgstr "RGB"
 
@@ -2206,45 +2206,45 @@ msgstr "Lys"
 msgid "Saturation"
 msgstr "Mætning"
 
-#: app/image_new.c:59 app/info_window.c:65 app/info_window.c:534
+#: app/image_new.c:62 app/info_window.c:65 app/info_window.c:534
 #: app/preferences_dialog.c:1609
 msgid "Grayscale"
 msgstr "Gråtoner"
 
-#: app/image_new.c:65 app/layers_dialog.c:3537
+#: app/image_new.c:68 app/layers_dialog.c:3537
 msgid "Foreground"
 msgstr "Forgrund"
 
-#: app/image_new.c:75 app/layers_dialog.c:3539
+#: app/image_new.c:78 app/layers_dialog.c:3539
 msgid "White"
 msgstr "Hvid"
 
-#: app/image_new.c:273
+#: app/image_new.c:330
 #, c-format
 msgid "%d Bytes"
 msgstr "%d byte"
 
-#: app/image_new.c:275
+#: app/image_new.c:332
 #, c-format
 msgid "%.2f KB"
 msgstr "%.2f Kb"
 
-#: app/image_new.c:277
+#: app/image_new.c:334
 #, c-format
 msgid "%.1f KB"
 msgstr "%.1f Kb"
 
-#: app/image_new.c:279
+#: app/image_new.c:336
 #, c-format
 msgid "%d KB"
 msgstr "%d Kb"
 
-#: app/image_new.c:281
+#: app/image_new.c:338
 #, c-format
 msgid "%.2f MB"
 msgstr "%.2f Mb"
 
-#: app/image_new.c:283
+#: app/image_new.c:340
 #, c-format
 msgid "%.1f MB"
 msgstr "%.1f Mb"
@@ -2782,44 +2782,44 @@ msgstr "Zoom ind"
 msgid "Zoom out"
 msgstr "Zoom ud"
 
-#: app/main.c:274
+#: app/main.c:280
 msgid "GIMP version"
 msgstr "GIMP version"
 
-#: app/main.c:278
+#: app/main.c:284
 #, c-format
 msgid "Usage: %s [option ...] [files ...]\n"
 msgstr "Brug: %s [flag ...] [filer ...]\n"
 
-#: app/main.c:279
+#: app/main.c:285
 msgid "Valid options are:\n"
 msgstr "Gyldige flag:\n"
 
-#: app/main.c:280
+#: app/main.c:286
 msgid "  -h --help                Output this help.\n"
 msgstr "  -h --help                Vis denne hjælpetekst.\n"
 
-#: app/main.c:281
+#: app/main.c:287
 msgid "  -v --version             Output version info.\n"
 msgstr "  -v --version             Vis versionsinformation.\n"
 
-#: app/main.c:282
+#: app/main.c:288
 msgid "  -b --batch <commands>    Run in batch mode.\n"
 msgstr "  -b --batch <kommandoer>  Kør i batch-tilstand.\n"
 
-#: app/main.c:283
+#: app/main.c:289
 msgid "  -g --gimprc <gimprc>     Use an alternate gimprc file.\n"
 msgstr "  -g --gimprc <gimprc>     Brug en alternativ gimprc fil.\n"
 
-#: app/main.c:284
+#: app/main.c:290
 msgid "  -n --no-interface        Run without a user interface.\n"
 msgstr "  -n --no-interface        Kør uden brugergrænseflade.\n"
 
-#: app/main.c:285
+#: app/main.c:291
 msgid "  -r --restore-session     Try to restore saved session.\n"
 msgstr "  -r --restore-session     Prøv at gendanne en gemt session.\n"
 
-#: app/main.c:286
+#: app/main.c:292
 msgid ""
 "  --no-data                Do not load patterns, gradients, palettes, "
 "brushes.\n"
@@ -2827,19 +2827,19 @@ msgstr ""
 "  --no-data                Indlæs ikke mønstre, gradienter, paletter og "
 "pensler.\n"
 
-#: app/main.c:287
+#: app/main.c:293
 msgid "  --verbose                Show startup messages.\n"
 msgstr "  --verbose                Vis meddelelser under opstart.\n"
 
-#: app/main.c:288
+#: app/main.c:294
 msgid "  --no-splash              Do not show the startup window.\n"
 msgstr "  --no-splash              Vis ikke opstartsvinduet.\n"
 
-#: app/main.c:289
+#: app/main.c:295
 msgid "  --no-splash-image        Do not add an image to the startup window.\n"
 msgstr "  --no-splash-image        Vis ikke billede i opstartsvinduet.\n"
 
-#: app/main.c:290
+#: app/main.c:296
 msgid ""
 "  --no-shm                 Do not use shared memory between GIMP and its "
 "plugins.\n"
@@ -2847,12 +2847,12 @@ msgstr ""
 "  --no-shm            Brug ikke delt hukommelse mellem GIMP og dens "
 "indstik.\n"
 
-#: app/main.c:291
+#: app/main.c:297
 msgid "  --no-xshm                Do not use the X Shared Memory extension.\n"
 msgstr ""
 "  --no-xshm                Brug ikke X-udvidelsen for delt hukommelse.\n"
 
-#: app/main.c:292
+#: app/main.c:298
 msgid ""
 "  --console-messages       Display warnings to console instead of a dialog "
 "box.\n"
@@ -2860,19 +2860,19 @@ msgstr ""
 "  --console-messages       Vis advarsler i konsollen istedetfor i en "
 "dialogboks.\n"
 
-#: app/main.c:293
+#: app/main.c:299
 msgid "  --debug-handlers         Enable debugging signal handlers.\n"
 msgstr "  --debug-handlers         Brug aflusningssignalhåndtagene.\n"
 
-#: app/main.c:294
+#: app/main.c:300
 msgid "  --display <display>      Use the designated X display.\n"
 msgstr "  --display <skærm>        Brug den angivede X-skærm.\n"
 
-#: app/main.c:295
+#: app/main.c:301
 msgid "  --system-gimprc <gimprc> Use an alternate system gimprc file.\n"
 msgstr "  --system-gimprc <gimprc> Brug en alternativ system gimprc fil.\n"
 
-#: app/main.c:312
+#: app/main.c:318
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Dette konsolvindue vil lukke om ti sekunder)\n"
 
@@ -3737,12 +3737,12 @@ msgid "Move Tool"
 msgstr "Flytteværktøj"
 
 #. create the info dialog
-#: app/nav_window.c:1233
+#: app/nav_window.c:1232
 #, c-format
 msgid "Navigation: %s-%d.%d"
 msgstr "Navigation: %s-%d.%d"
 
-#: app/nav_window.c:1531
+#: app/nav_window.c:1530
 msgid "Navigation: No Image"
 msgstr "Navigation: Intet billede"
 
