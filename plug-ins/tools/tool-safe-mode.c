@@ -70,11 +70,11 @@ safe_mode_register_tool ()
 static void 
 safe_mode_init (void)
 {
-  gchar *tool_plug_in_path;
+  gchar *tool_plug_in_path, *free_me;
 
   g_message ("tool-safe-mode init called");
 
-  tool_plug_in_path = gimp_gimprc_query ("tool-plug-in-path");
+  free_me = tool_plug_in_path = gimp_gimprc_query ("tool-plug-in-path");
 
   /* FIXME: why does it return the string with quotes around it?
    * gflare-path does not
@@ -147,7 +147,7 @@ safe_mode_init (void)
         }
 
       gimp_path_free (path);
-      g_free (tool_plug_in_path);
+      g_free (free_me);
    }
 
   g_message ("tool-safe-mode init done");
