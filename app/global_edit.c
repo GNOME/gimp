@@ -374,7 +374,7 @@ edit_fill (GImage *gimage,
   Tag d_tag = drawable_tag (drawable);
   COLOR16_NEW (background_color, d_tag);
   COLOR16_INIT (background_color);
-  palette_get_black (&background_color);
+  palette_get_background (&background_color);
 
   if (!gimage || drawable == NULL)
     return FALSE;

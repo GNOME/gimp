@@ -123,7 +123,7 @@ create_clone_options (void)
   /*  the new options structure  */
   options = (CloneOptions *) g_malloc (sizeof (CloneOptions));
   options->type = ImageClone;
-  options->aligned = AlignRegister;
+  options->aligned = AlignNo;
 
   /*  the main vbox  */
   vbox = gtk_vbox_new (FALSE, 1);
