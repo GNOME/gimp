@@ -461,7 +461,7 @@ gauss_rle2_dialog (gint32     image_ID,
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
 			       b2vals.horizontal == b2vals.vertical,
-			       FALSE, NULL,
+			       FALSE,
 
 			       _("Horizontal:"), b2vals.horizontal, xres,
 			       0, 8 * MAX (drawable->width, drawable->height),

@@ -38,3 +38,12 @@ performs the cast if valid.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_pixmap_set ##### -->
+<para>
+
+</para>
+
+@pixmap: 
+@xpm_data: 
+
+

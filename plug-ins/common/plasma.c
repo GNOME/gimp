@@ -317,8 +317,8 @@ plasma_dialog (void)
   gtk_container_set_border_width (GTK_CONTAINER (table), 4);
   gtk_container_add (GTK_CONTAINER (frame), table);
 
-  seed_hbox = gimp_random_seed_new (&pvals.seed, NULL,
-				    &pvals.timeseed, NULL,
+  seed_hbox = gimp_random_seed_new (&pvals.seed,
+				    &pvals.timeseed,
 				    TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,

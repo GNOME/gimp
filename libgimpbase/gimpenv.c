@@ -249,11 +249,12 @@ gimp_gtkrc (void)
 /**
  * gimp_path_parse:
  * @path: A list of directories separated by #G_SEARCHPATH_SEPARATOR.
- * @max_path: The maximum number of directories to return.
+ * @max_paths: The maximum number of directories to return.
  * @check: #TRUE if you want the directories to be checked.
- * @not_found: #
+ * @check_failed: Returns a #GList of path elements for which the
+ *                check failed.
  *
- * Return: A list of all directories in @path.
+ * Returns: A #GList of all directories in @path.
  *
  */
 GList *

@@ -572,6 +572,10 @@ gimp_directory
 gimp_personal_rc_file
 gimp_data_directory
 gimp_gtkrc
+gimp_path_parse
+gimp_path_free
+gimp_path_to_str
+gimp_path_get_user_writable_dir
 </SECTION>
 
 <SECTION>
@@ -713,6 +717,7 @@ GimpPixmap
 GIMP_PIXMAP
 <TITLE>GimpPixmap</TITLE>
 gimp_pixmap_new
+gimp_pixmap_set
 <SUBSECTION Standard>
 GIMP_TYPE_PIXMAP
 GIMP_IS_PIXMAP
@@ -870,11 +875,16 @@ GIMP_SCALE_ENTRY_SCALE_ADJ
 GIMP_SCALE_ENTRY_SPINBUTTON
 GIMP_SCALE_ENTRY_SPINBUTTON_ADJ
 gimp_random_seed_new
+GIMP_RANDOM_SEED_SPINBUTTON
+GIMP_RANDOM_SEED_SPINBUTTON_ADJ
+GIMP_RANDOM_SEED_TOGGLEBUTTON
 gimp_coordinates_new
+GIMP_COORDINATES_CHAINBUTTON
 gimp_pixmap_button_new
+gimp_toggle_button_sensitive_update
 gimp_toggle_button_update
-gimp_menu_item_update
 gimp_radio_button_update
+gimp_menu_item_update
 gimp_int_adjustment_update
 gimp_float_adjustment_update
 gimp_double_adjustment_update

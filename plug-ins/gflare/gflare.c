@@ -2864,7 +2864,7 @@ dlg_make_page_settings (GFlareDialog *dlg,
     gimp_coordinates_new (gimp_image_get_unit (image_ID), "%a",
 			  TRUE, TRUE, 75, GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-			  FALSE, FALSE, &chain,
+			  FALSE, FALSE,
 
 			  _("X:"), pvals.xcenter, xres,
 			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
@@ -2873,6 +2873,9 @@ dlg_make_page_settings (GFlareDialog *dlg,
 			  _("Y:"), pvals.ycenter, yres,
 			  -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE,
 			  0, gimp_drawable_height (drawable->id));
+
+  chain = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (center));
+
   gtk_container_set_border_width (GTK_CONTAINER (center), 4);
   gtk_container_add (GTK_CONTAINER (frame), center);
   gtk_signal_connect (GTK_OBJECT (center), "value_changed",
@@ -4094,9 +4097,13 @@ ed_make_page_sflare (GFlareEditor *ed,
   gtk_box_pack_start (GTK_BOX (seed_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  seed = gimp_random_seed_new (&gflare->sflare_seed, &entry,
-			       &gflare->sflare_seed_time, &toggle,
+  seed = gimp_random_seed_new (&gflare->sflare_seed,
+			       &gflare->sflare_seed_time,
 			       TRUE, FALSE);
+
+  entry = GTK_WIDGET (GIMP_RANDOM_SEED_SPINBUTTON (seed));
+  toggle = GTK_WIDGET (GIMP_RANDOM_SEED_TOGGLEBUTTON (seed));
+
   gtk_box_pack_start (GTK_BOX (seed_hbox), seed, FALSE, TRUE, 0);
   gtk_widget_show (seed);
 

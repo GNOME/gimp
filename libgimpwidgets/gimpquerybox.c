@@ -383,7 +383,8 @@ gimp_query_size_box (gchar                 *title,
  * @false_button: The string to be shown in the dialog's right button.
  * @object: The object this query box is associated with.
  * @signal: The object's signal which will cause the query box to be closed.
- * @callback: The function which will be called when the user selects "OK".
+ * @callback: The function which will be called when the user clicks one
+ *            of the buttons.
  * @data: The callback's user data.
  *
  * Returns: A pointer to the new #GtkDialog.

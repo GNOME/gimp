@@ -1,15 +1,23 @@
+2000-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/libgimp-decl.txt
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpenv.sgml
+	* libgimp/tmpl/gimppixmap.sgml
+	* libgimp/tmpl/gimpwidgets.sgml: various updates and documentation
+	for all gimpwidgets.[ch] functions. 
+
 Mon Feb 21 11:55:18 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* libgimp/libgimp-decl.txt
-	* libgimp/tmpl/gimpwidgets.sgml; updated
+	* libgimp/tmpl/gimpwidgets.sgml: updated
 
 2000-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/libgimp-decl.txt
 	* libgimp/tmpl/gimpmatrix.sgml
 	* libgimp/tmpl/gimpvector.sgml
-	* libgimp/tmpl/libgimp-unused.sgml: updates and
-	cleanups.
+	* libgimp/tmpl/libgimp-unused.sgml: updates and cleanups.
 
 2000-02-18  Michael Natterer  <mitch@gimp.org>
 

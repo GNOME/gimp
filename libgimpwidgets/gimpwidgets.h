@@ -30,6 +30,8 @@
 extern "C" {
 #endif
 
+/* For information look into the C source or the html documentation */
+
 /*
  *  Widget Constructors
  */
@@ -110,13 +112,13 @@ GtkWidget * gimp_spin_button_new   (/* return value: */
         GTK_HSCALE (gtk_object_get_data (GTK_OBJECT(adj), "scale"))
 #define GIMP_SCALE_ENTRY_SCALE_ADJ(adj) \
         gtk_range_get_adjustment \
-        (GTK_RANGE (gtk_object_get_data (GTK_OBJECT(adj), "scale")))
+        (GTK_RANGE (gtk_object_get_data (GTK_OBJECT (adj), "scale")))
 
 #define GIMP_SCALE_ENTRY_SPINBUTTON(adj) \
-        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT(adj), "spinbutton"))
+        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (adj), "spinbutton"))
 #define GIMP_SCALE_ENTRY_SPINBUTTON_ADJ(adj) \
         gtk_spin_button_get_adjustment \
-        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT(adj), "spinbutton")))
+        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (adj), "spinbutton")))
 
 GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    gint                column,
@@ -136,12 +138,24 @@ GtkObject * gimp_scale_entry_new   (GtkTable           *table,
 				    gchar              *tooltip,
 				    gchar              *private_tip);
 
+#define GIMP_RANDOM_SEED_SPINBUTTON(hbox) \
+        GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT( hbox), "spinbutton"))
+#define GIMP_RANDOM_SEED_SPINBUTTON_ADJ(hbox) \
+        gtk_spin_button_get_adjustment \
+        (GTK_SPIN_BUTTON (gtk_object_get_data (GTK_OBJECT (hbox), "spinbutton")))
+
+#define GIMP_RANDOM_SEED_TOGGLEBUTTON(hbox) \
+        GTK_TOGGLE_BUTTON (gtk_object_get_data (GTK_OBJECT (hbox), \
+                                                "togglebutton"))
+
 GtkWidget * gimp_random_seed_new   (gint               *seed,
-				    GtkWidget         **seed_spinbutton,
 				    gint               *use_time,
-				    GtkWidget         **time_button,
 				    gint                time_true,
 				    gint                time_false);
+
+#define GIMP_COORDINATES_CHAINBUTTON(sizeentry) \
+        GIMP_CHAIN_BUTTON (gtk_object_get_data (GTK_OBJECT (sizeentry), \
+                                                "chainbutton"))
 
 GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 				    gchar              *unit_format,
@@ -152,8 +166,6 @@ GtkWidget * gimp_coordinates_new   (GimpUnit            unit,
 
 				    gboolean            chainbutton_active,
 				    gboolean            chain_constrains_ratio,
-				    /* return value: */
-				    GtkWidget         **chainbutton,
 
 				    gchar              *xlabel,
 				    gdouble             x,
@@ -178,32 +190,33 @@ GtkWidget * gimp_pixmap_button_new (gchar             **xpm_data,
  *  Standard Callbacks
  */
 
-void gimp_toggle_button_update     (GtkWidget          *widget,
-				    gpointer            data);
+void gimp_toggle_button_sensitive_update (GtkToggleButton *toggle_button);
 
-void gimp_menu_item_update         (GtkWidget          *widget,
-				    gpointer            data);
+void gimp_toggle_button_update           (GtkWidget       *widget,
+					  gpointer         data);
 
-void gimp_radio_button_update      (GtkWidget          *widget,
-				    gpointer            data);
+void gimp_radio_button_update            (GtkWidget       *widget,
+					  gpointer         data);
 
-void gimp_int_adjustment_update    (GtkAdjustment      *adjustment,
-				    gpointer            data);
+void gimp_menu_item_update               (GtkWidget       *widget,
+					  gpointer         data);
 
-void gimp_float_adjustment_update  (GtkAdjustment      *adjustment,
-				    gpointer            data);
+void gimp_int_adjustment_update          (GtkAdjustment   *adjustment,
+					  gpointer         data);
 
-void gimp_double_adjustment_update (GtkAdjustment      *adjustment,
-				    gpointer            data);
+void gimp_float_adjustment_update        (GtkAdjustment   *adjustment,
+					  gpointer         data);
 
-void gimp_unit_menu_update         (GtkWidget          *widget,
-				    gpointer            data);
+void gimp_double_adjustment_update       (GtkAdjustment   *adjustment,
+					  gpointer         data);
+
+void gimp_unit_menu_update               (GtkWidget       *widget,
+					  gpointer         data);
 
 /*
  *  Helper Functions
  */
 
-/*  add aligned label & widget to a table  */
 void gimp_table_attach_aligned     (GtkTable           *table,
 				    gint                column,
 				    gint                row,

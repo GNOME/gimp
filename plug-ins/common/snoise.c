@@ -549,8 +549,8 @@ solid_noise_dialog (void)
   gtk_container_add (GTK_CONTAINER (frame), table);
 
   /*  Random Seed  */
-  seed_hbox = gimp_random_seed_new (&snvals.seed, NULL,
-				    &snvals.timeseed, NULL,
+  seed_hbox = gimp_random_seed_new (&snvals.seed,
+				    &snvals.timeseed,
 				    TRUE, FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
 			     _("Random Seed:"), 1.0, 0.5,

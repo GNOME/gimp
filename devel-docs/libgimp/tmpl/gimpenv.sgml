@@ -48,3 +48,41 @@ configuration files.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_path_parse ##### -->
+<para>
+
+</para>
+
+@path: 
+@max_paths: 
+@check: 
+@check_failed: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_free ##### -->
+<para>
+
+</para>
+
+@path: 
+
+
+<!-- ##### FUNCTION gimp_path_to_str ##### -->
+<para>
+
+</para>
+
+@path: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_path_get_user_writable_dir ##### -->
+<para>
+
+</para>
+
+@path: 
+@Returns: 
+
+

@@ -403,7 +403,7 @@ spread_dialog (gint32     image_ID,
 			       GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
 			       spvals.spread_amount_x == spvals.spread_amount_y,
-			       FALSE, NULL,
+			       FALSE,
 
 			       _("Horizontal:"), spvals.spread_amount_x, xres,
 			       0, MAX (drawable->width, drawable->height),

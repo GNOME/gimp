@@ -415,7 +415,7 @@ tile_dialog (gint32 image_ID,
   sizeentry = gimp_coordinates_new (unit, "%a", TRUE, TRUE, 75,
 				    GIMP_SIZE_ENTRY_UPDATE_SIZE,
 
-				    tvals.constrain, TRUE, &tint.chainbutton,
+				    tvals.constrain, TRUE,
 
 				    _("Width:"), width, xres,
 				    1, GIMP_MAX_IMAGE_SIZE,
@@ -430,6 +430,7 @@ tile_dialog (gint32 image_ID,
   gtk_widget_show (sizeentry);
 
   tint.sizeentry = sizeentry;
+  tint.chainbutton = GTK_WIDGET (GIMP_COORDINATES_CHAINBUTTON (sizeentry));
 
   toggle = gtk_check_button_new_with_label (_("Create New Image"));
   gtk_table_attach (GTK_TABLE (sizeentry), toggle, 0, 4, 2, 3,

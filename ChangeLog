@@ -1,3 +1,27 @@
+2000-02-23  Michael Natterer  <mitch@gimp.org>
+
+	* app/file_new_dialog.c: use a gimp_query_boolean_box().
+
+	* libgimp/gimpenv.c
+	* libgimp/gimpquerybox.c: documentation updates.
+
+	* libgimp/gimpwidgets.[ch]: changed the widget constructors to
+	return only the container widget and added access marcos for the
+	sub-widgets. Added documentation for all functions.
+	Made gimp_toggle_button_sensitive_update() public so this feature
+	can be properly documented.
+
+	* plug-ins/common/blur.c
+	* plug-ins/common/gauss_iir.c
+	* plug-ins/common/gauss_rle.c
+	* plug-ins/common/plasma.c
+	* plug-ins/common/randomize.c
+	* plug-ins/common/snoise.c
+	* plug-ins/common/spread.c
+	* plug-ins/common/tile.c
+	* plug-ins/gflare/gflare.c: updated according to the
+	gimpwidgets.[ch] changes.
+
 Wed Feb 23 14:50:09 CET 2000  Sven Neumann <sven@gimp.org>
 
 	* plug-ins/print/print-escp2.c

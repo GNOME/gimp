@@ -148,58 +148,39 @@ file_new_cancel_callback (GtkWidget *widget,
   g_free (info);
 }
 
-/*  local callbacks of file_new_confirm_dialog()  */
+/*  local callback of file_new_confirm_dialog()  */
 static void
-file_new_confirm_dialog_ok_callback (GtkWidget *widget,
-                                     gpointer  data)
+file_new_confirm_dialog_callback (GtkWidget *widget,
+				  gboolean   create,
+				  gpointer   data)
 {
   NewImageInfo *info;
 
   info = (NewImageInfo*) data;
 
-  gtk_widget_destroy (info->confirm_dlg);
-  gtk_widget_destroy (info->dlg);
-  image_new_create_image (info->values);
-  image_new_values_free (info->values);
-  g_free (info);
-}
-
-static void
-file_new_confirm_dialog_cancel_callback (GtkWidget *widget,
-					 gpointer  data)
-{
-  NewImageInfo *info;
-
-  info = (NewImageInfo*) data;
-
-  gtk_widget_destroy (info->confirm_dlg);
   info->confirm_dlg = NULL;
-  gtk_widget_set_sensitive (info->dlg, TRUE);
+
+  if (create)
+    {
+      gtk_widget_destroy (info->dlg);
+      image_new_create_image (info->values);
+      image_new_values_free (info->values);
+      g_free (info);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (info->dlg, TRUE);
+    }
 }
 
 static void
 file_new_confirm_dialog (NewImageInfo *info)
 {
-  GtkWidget *label;
   gchar *size;
   gchar *max_size;
   gchar *text;
 
   gtk_widget_set_sensitive (info->dlg, FALSE);
-
-  info->confirm_dlg =
-    gimp_dialog_new (_("Confirm Image Size"), "confirm_size",
-		     gimp_standard_help_func,
-		     "dialogs/file_new.html#confirm_size",
-		     GTK_WIN_POS_MOUSE,
-		     FALSE, FALSE, FALSE,
-
-		     _("OK"), file_new_confirm_dialog_ok_callback,
-		     info, NULL, NULL, TRUE, FALSE,
-		     _("Cancel"), file_new_confirm_dialog_cancel_callback,
-		     info, NULL, NULL, FALSE, TRUE,
-
-		     NULL);
 
   size = image_new_get_size_string (info->size);
   max_size = image_new_get_size_string (max_new_image_size);
@@ -216,11 +197,17 @@ file_new_confirm_dialog (NewImageInfo *info)
 			    "setting (currently %s) in the\n"
 			    "preferences dialog."),
                           size, max_size);
-  label = gtk_label_new (text);
-  gtk_misc_set_padding (GTK_MISC (label), 6, 6);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (info->confirm_dlg)->vbox), label,
-		      TRUE, TRUE, 0);
-  gtk_widget_show (label);
+
+  info->confirm_dlg =
+    gimp_query_boolean_box (_("Confirm Image Size"),
+			    gimp_standard_help_func,
+			    "dialogs/file_new.html#confirm_size",
+			    FALSE,
+			    text,
+			    _("OK"), _("Cancel"),
+			    NULL, NULL,
+			    file_new_confirm_dialog_callback,
+			    info);
 
   g_free (text);
   g_free (max_size);

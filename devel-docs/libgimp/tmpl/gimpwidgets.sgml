@@ -18,6 +18,46 @@ helper functions.
 <!-- ##### FUNCTION gimp_option_menu_new ##### -->
 <para>
 
+The @va_list describing the #GtkMenuItem's has the following format:
+
+<informaltable pgwide=1 frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<tbody>
+
+<row>
+<entry>#gchar label,</entry>
+<entry>The menu item's label.</entry>
+</row>
+
+<row>
+<entry>#GtkSignalFunc callback,</entry>
+<entry>The callback which will be connected to the menu item's
+"activate" signal</entry>
+</row>
+
+<row>
+<entry>#gpointer data,</entry>
+<entry>The callback data which will be used in gtk_signal_connect().</entry>
+</row>
+
+<row>
+<entry>#gpointer user_data,</entry>
+<entry>The menu item's @user_data which will be set with
+gtk_object_set_user_data().</entry>
+</row>
+
+<row>
+<entry>#GtkWidget **widget_ptr,</entry>
+<entry>A pointer to store the created menu item in.</entry>
+</row>
+
+<row>
+<entry>#gboolean active,</entry>
+<entry>#TRUE if this should be the initially selected menu item.</entry>
+</row>
+
+</tbody></tgroup></informaltable>
+
 </para>
 
 @menu_only: 
@@ -27,6 +67,30 @@ helper functions.
 
 <!-- ##### FUNCTION gimp_option_menu_new2 ##### -->
 <para>
+
+The @va_list describing the #GtkMenuItem's has the following format:
+
+<informaltable pgwide=1 frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<tbody>
+
+<row>
+<entry>#gchar label,</entry>
+<entry>The menu item's label.</entry>
+</row>
+
+<row>
+<entry>#gpointer user_data,</entry>
+<entry>The menu item's @user_data which will be set with
+gtk_object_set_user_data().</entry>
+</row>
+
+<row>
+<entry>#GtkWidget **widget_ptr,</entry>
+<entry>A pointer to store the created menu item in.</entry>
+</row>
+
+</tbody></tgroup></informaltable>
 
 </para>
 
@@ -50,6 +114,46 @@ helper functions.
 <!-- ##### FUNCTION gimp_radio_group_new ##### -->
 <para>
 
+The @va_list describing the #GtkRadioButton's has the following format:
+
+<informaltable pgwide=1 frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<tbody>
+
+<row>
+<entry>#gchar label,</entry>
+<entry>The radio button's label.</entry>
+</row>
+
+<row>
+<entry>#GtkSignalFunc callback,</entry>
+<entry>The callback which will be connected to the radio button's
+"toggled" signal</entry>
+</row>
+
+<row>
+<entry>#gpointer data,</entry>
+<entry>The callback data which will be used in gtk_signal_connect().</entry>
+</row>
+
+<row>
+<entry>#gpointer user_data,</entry>
+<entry>The radio button's @user_data which will be set with
+gtk_object_set_user_data().</entry>
+</row>
+
+<row>
+<entry>#GtkWidget **widget_ptr,</entry>
+<entry>A pointer to store the created radio button in.</entry>
+</row>
+
+<row>
+<entry>#gboolean active,</entry>
+<entry>#TRUE if this should be the initially pressed radio button.</entry>
+</row>
+
+</tbody></tgroup></informaltable>
+
 </para>
 
 @in_frame: 
@@ -60,6 +164,30 @@ helper functions.
 
 <!-- ##### FUNCTION gimp_radio_group_new2 ##### -->
 <para>
+
+The @va_list describing the #GtkRadioButton's has the following format:
+
+<informaltable pgwide=1 frame="none" role="struct">
+<tgroup cols="2"><colspec colwidth="4*"><colspec colwidth="8*">
+<tbody>
+
+<row>
+<entry>#gchar label,</entry>
+<entry>The radio button's label.</entry>
+</row>
+
+<row>
+<entry>#gpointer user_data,</entry>
+<entry>The radio button's @user_data which will be set with
+gtk_object_set_user_data().</entry>
+</row>
+
+<row>
+<entry>#GtkWidget **widget_ptr,</entry>
+<entry>A pointer to store the created radio button in.</entry>
+</row>
+
+</tbody></tgroup></informaltable>
 
 </para>
 
@@ -116,42 +244,42 @@ helper functions.
 
 <!-- ##### MACRO GIMP_SCALE_ENTRY_LABEL ##### -->
 <para>
-
+Returns the scale_entry's #GtkLabel.
 </para>
 
-@adj: 
+@adj: The #GtkAdjustment returned by gimp_scale_entry_new().
 
 
 <!-- ##### MACRO GIMP_SCALE_ENTRY_SCALE ##### -->
 <para>
-
+Returns the scale_entry's #GtkHScale.
 </para>
 
-@adj: 
+@adj: The #GtkAdjustment returned by gimp_scale_entry_new().
 
 
 <!-- ##### MACRO GIMP_SCALE_ENTRY_SCALE_ADJ ##### -->
 <para>
-
+Returns the #GtkAdjustment of the scale_entry's #GtkHScale.
 </para>
 
-@adj: 
+@adj: The #GtkAdjustment returned by gimp_scale_entry_new().
 
 
 <!-- ##### MACRO GIMP_SCALE_ENTRY_SPINBUTTON ##### -->
 <para>
-
+Returns the scale_entry's #GtkSpinButton.
 </para>
 
-@adj: 
+@adj: The #GtkAdjustment returned by gimp_scale_entry_new().
 
 
 <!-- ##### MACRO GIMP_SCALE_ENTRY_SPINBUTTON_ADJ ##### -->
 <para>
-
+Returns the #GtkAdjustment of the scale_entry's #GtkSpinButton.
 </para>
 
-@adj: 
+@adj: The #GtkAdjustment returned by gimp_scale_entry_new().
 
 
 <!-- ##### FUNCTION gimp_random_seed_new ##### -->
@@ -160,12 +288,34 @@ helper functions.
 </para>
 
 @seed: 
-@seed_spinbutton: 
 @use_time: 
-@time_button: 
 @time_true: 
 @time_false: 
 @Returns: 
+
+
+<!-- ##### MACRO GIMP_RANDOM_SEED_SPINBUTTON ##### -->
+<para>
+Returns the random_seed's #GtkSpinButton.
+</para>
+
+@hbox: The #GtkHBox returned by gimp_random_seed_new().
+
+
+<!-- ##### MACRO GIMP_RANDOM_SEED_SPINBUTTON_ADJ ##### -->
+<para>
+Returns the #GtkAdjustment of the random_seed's #GtkSpinButton.
+</para>
+
+@hbox: The #GtkHBox returned by gimp_random_seed_new().
+
+
+<!-- ##### MACRO GIMP_RANDOM_SEED_TOGGLEBUTTON ##### -->
+<para>
+Returns the random_seed's #GtkToggleButton.
+</para>
+
+@hbox: The #GtkHBox returned by gimp_random_seed_new().
 
 
 <!-- ##### FUNCTION gimp_coordinates_new ##### -->
@@ -181,7 +331,6 @@ helper functions.
 @update_policy: 
 @chainbutton_active: 
 @chain_constrains_ratio: 
-@chainbutton: 
 @xlabel: 
 @x: 
 @xres: 
@@ -199,6 +348,14 @@ helper functions.
 @Returns: 
 
 
+<!-- ##### MACRO GIMP_COORDINATES_CHAINBUTTON ##### -->
+<para>
+Returns the #GimpChainButton which is attached to the #GimpSizeEntry.
+</para>
+
+@sizeentry: The #GimpSizeEntry returned by gimp_coordinates_new().
+
+
 <!-- ##### FUNCTION gimp_pixmap_button_new ##### -->
 <para>
 
@@ -207,6 +364,14 @@ helper functions.
 @xpm_data: 
 @text: 
 @Returns: 
+
+
+<!-- ##### FUNCTION gimp_toggle_button_sensitive_update ##### -->
+<para>
+
+</para>
+
+@toggle_button: 
 
 
 <!-- ##### FUNCTION gimp_toggle_button_update ##### -->
@@ -218,7 +383,7 @@ helper functions.
 @data: 
 
 
-<!-- ##### FUNCTION gimp_menu_item_update ##### -->
+<!-- ##### FUNCTION gimp_radio_button_update ##### -->
 <para>
 
 </para>
@@ -227,7 +392,7 @@ helper functions.
 @data: 
 
 
-<!-- ##### FUNCTION gimp_radio_button_update ##### -->
+<!-- ##### FUNCTION gimp_menu_item_update ##### -->
 <para>
 
 </para>
