@@ -56,14 +56,13 @@ static void   gimp_scale_tool_class_init     (GimpScaleToolClass *klass);
 static void   gimp_scale_tool_init           (GimpScaleTool      *sc_tool);
 
 static void   gimp_scale_tool_dialog         (GimpTransformTool  *tr_tool);
+static void   gimp_scale_tool_dialog_update  (GimpTransformTool  *tr_tool);
 static void   gimp_scale_tool_prepare        (GimpTransformTool  *tr_tool,
                                               GimpDisplay        *gdisp);
 static void   gimp_scale_tool_motion         (GimpTransformTool  *tr_tool,
                                               GimpDisplay        *gdisp);
 static void   gimp_scale_tool_recalc         (GimpTransformTool  *tr_tool,
                                               GimpDisplay        *gdisp);
-
-static void   gimp_scale_tool_info_update    (GimpTransformTool  *tr_tool);
 
 static void   gimp_scale_tool_size_changed   (GtkWidget          *widget,
                                               GimpTransformTool  *tr_tool);
@@ -73,15 +72,7 @@ static void   gimp_scale_tool_aspect_changed (GtkWidget          *widget,
                                               GimpTransformTool  *tr_tool);
 
 
-/*  storage for information dialog fields  */
-static gchar      orig_width_buf[MAX_INFO_BUF];
-static gchar      orig_height_buf[MAX_INFO_BUF];
-static gdouble    size_vals[2];
-static gchar      x_ratio_buf[MAX_INFO_BUF];
-static gchar      y_ratio_buf[MAX_INFO_BUF];
-
-/*  needed for original size unit update  */
-static GtkWidget *sizeentry = NULL;
+/*  private variables  */
 
 static GimpTransformToolClass *parent_class = NULL;
 
@@ -143,10 +134,11 @@ gimp_scale_tool_class_init (GimpScaleToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  trans_class->dialog  = gimp_scale_tool_dialog;
-  trans_class->prepare = gimp_scale_tool_prepare;
-  trans_class->motion  = gimp_scale_tool_motion;
-  trans_class->recalc  = gimp_scale_tool_recalc;
+  trans_class->dialog         = gimp_scale_tool_dialog;
+  trans_class->dialog_update  = gimp_scale_tool_dialog_update;
+  trans_class->prepare        = gimp_scale_tool_prepare;
+  trans_class->motion         = gimp_scale_tool_motion;
+  trans_class->recalc         = gimp_scale_tool_recalc;
 }
 
 static void
@@ -164,40 +156,41 @@ gimp_scale_tool_init (GimpScaleTool *scale_tool)
 static void
 gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 {
-  GtkWidget *spinbutton;
+  GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
+  GtkWidget     *spinbutton;
 
   info_dialog_add_label (tr_tool->info_dialog,
                          _("Original Width:"),
-                         orig_width_buf);
+                         scale->orig_width_buf);
   info_dialog_add_label (tr_tool->info_dialog,
                          _("Height:"),
-                         orig_height_buf);
+                         scale->orig_height_buf);
 
   spinbutton = info_dialog_add_spinbutton (tr_tool->info_dialog,
                                            _("Current width:"),
                                            NULL, -1, 1, 1, 10, 1, 1, 2,
                                            NULL, NULL);
-  sizeentry = info_dialog_add_sizeentry (tr_tool->info_dialog,
-                                         _("Current height:"),
-                                         size_vals, 1,
-                                         GIMP_UNIT_PIXEL, "%a",
-                                         TRUE, TRUE, FALSE,
-                                         GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                         G_CALLBACK (gimp_scale_tool_size_changed),
-                                         tr_tool);
-  g_signal_connect (sizeentry, "unit_changed",
+  scale->sizeentry = info_dialog_add_sizeentry (tr_tool->info_dialog,
+                                                _("Current height:"),
+                                                scale->size_vals, 1,
+                                                GIMP_UNIT_PIXEL, "%a",
+                                                TRUE, TRUE, FALSE,
+                                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                G_CALLBACK (gimp_scale_tool_size_changed),
+                                                tr_tool);
+  g_signal_connect (scale->sizeentry, "unit_changed",
                     G_CALLBACK (gimp_scale_tool_unit_changed),
                     tr_tool);
 
-  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (sizeentry),
+  gimp_size_entry_add_field (GIMP_SIZE_ENTRY (scale->sizeentry),
                              GTK_SPIN_BUTTON (spinbutton), NULL);
 
   info_dialog_add_label (tr_tool->info_dialog,
                          _("Scale ratio X:"),
-                         x_ratio_buf);
+                         scale->x_ratio_buf);
   info_dialog_add_label (tr_tool->info_dialog,
                          _("Scale ratio Y:"),
-                         y_ratio_buf);
+                         scale->y_ratio_buf);
 
   spinbutton = info_dialog_add_spinbutton (tr_tool->info_dialog,
                                            _("Aspect Ratio:"),
@@ -213,48 +206,139 @@ gimp_scale_tool_dialog (GimpTransformTool *tr_tool)
 }
 
 static void
+gimp_scale_tool_dialog_update (GimpTransformTool *tr_tool)
+{
+  GimpTool             *tool  = GIMP_TOOL (tr_tool);
+  GimpScaleTool        *scale = GIMP_SCALE_TOOL (tr_tool);
+  GimpTransformOptions *options;
+  Gimp                 *gimp;
+  gdouble               ratio_x, ratio_y;
+  gint                  x1, y1, x2, y2, x3, y3, x4, y4;
+  GimpUnit              unit;
+  gdouble               unit_factor;
+  gchar                 format_buf[16];
+
+  static GimpUnit       label_unit = GIMP_UNIT_PIXEL;
+
+  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
+
+  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (scale->sizeentry));
+
+  /*  Find original sizes  */
+  x1 = tr_tool->x1;
+  y1 = tr_tool->y1;
+  x2 = tr_tool->x2;
+  y2 = tr_tool->y2;
+
+  if (unit != GIMP_UNIT_PERCENT)
+    label_unit = unit;
+
+  gimp = tool->tool_info->gimp;
+
+  unit_factor = _gimp_unit_get_factor (gimp, label_unit);
+
+  if (label_unit) /* unit != GIMP_UNIT_PIXEL */
+    {
+      g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s",
+                  _gimp_unit_get_digits (gimp, label_unit) + 1,
+                  _gimp_unit_get_symbol (gimp, label_unit));
+      g_snprintf (scale->orig_width_buf, MAX_INFO_BUF, format_buf,
+                  (x2 - x1) * unit_factor / tool->gdisp->gimage->xresolution);
+      g_snprintf (scale->orig_height_buf, MAX_INFO_BUF, format_buf,
+                  (y2 - y1) * unit_factor / tool->gdisp->gimage->yresolution);
+    }
+  else /* unit == GIMP_UNIT_PIXEL */
+    {
+      g_snprintf (scale->orig_width_buf, MAX_INFO_BUF, "%d", x2 - x1);
+      g_snprintf (scale->orig_height_buf, MAX_INFO_BUF, "%d", y2 - y1);
+    }
+
+  /*  Find current sizes  */
+  x3 = (gint) tr_tool->trans_info[X0];
+  y3 = (gint) tr_tool->trans_info[Y0];
+  x4 = (gint) tr_tool->trans_info[X1];
+  y4 = (gint) tr_tool->trans_info[Y1];
+
+  scale->size_vals[0] = x4 - x3;
+  scale->size_vals[1] = y4 - y3;
+
+  ratio_x = ratio_y = 0.0;
+
+  if (x2 - x1)
+    ratio_x = (double) (x4 - x3) / (double) (x2 - x1);
+  if (y2 - y1)
+    ratio_y = (double) (y4 - y3) / (double) (y2 - y1);
+
+  /* Detecting initial update, aspect_ratio reset */
+  if ((ratio_x == 1) && (ratio_y == 1))
+    tr_tool->aspect_ratio = 0;
+
+  /* Only when one or the two options are disabled, is necessary to
+   * update the value Taking care of the initial update too
+   */
+  if (! options->constrain_1 ||
+      ! options->constrain_2 ||
+      tr_tool->aspect_ratio == 0 )
+    {
+      tr_tool->aspect_ratio =
+        ((tr_tool->trans_info[X1] - tr_tool->trans_info[X0]) /
+         (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]));
+    }
+
+  g_snprintf (scale->x_ratio_buf, sizeof (scale->x_ratio_buf),
+              "%0.2f", ratio_x);
+  g_snprintf (scale->y_ratio_buf, sizeof (scale->y_ratio_buf),
+              "%0.2f", ratio_y);
+
+  info_dialog_update (tr_tool->info_dialog);
+  info_dialog_show (tr_tool->info_dialog);
+}
+
+static void
 gimp_scale_tool_prepare (GimpTransformTool *tr_tool,
                          GimpDisplay       *gdisp)
 {
-  size_vals[0] = tr_tool->x2 - tr_tool->x1;
-  size_vals[1] = tr_tool->y2 - tr_tool->y1;
+  GimpScaleTool *scale = GIMP_SCALE_TOOL (tr_tool);
 
-  g_signal_handlers_block_by_func (sizeentry,
+  scale->size_vals[0] = tr_tool->x2 - tr_tool->x1;
+  scale->size_vals[1] = tr_tool->y2 - tr_tool->y1;
+
+  g_signal_handlers_block_by_func (scale->sizeentry,
                                    gimp_scale_tool_size_changed,
                                    tr_tool);
-  g_signal_handlers_block_by_func (sizeentry,
+  g_signal_handlers_block_by_func (scale->sizeentry,
                                    gimp_scale_tool_unit_changed,
                                    tr_tool);
 
-  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (sizeentry),
+  gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (scale->sizeentry),
                             GIMP_DISPLAY_SHELL (gdisp->shell)->unit);
 
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 0,
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
                                   gdisp->gimage->xresolution, FALSE);
-  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (sizeentry), 1,
+  gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (scale->sizeentry), 1,
                                   gdisp->gimage->yresolution, FALSE);
 
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
                                          GIMP_MIN_IMAGE_SIZE,
                                          GIMP_MAX_IMAGE_SIZE);
-  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (sizeentry), 1,
+  gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (scale->sizeentry), 1,
                                          GIMP_MIN_IMAGE_SIZE,
                                          GIMP_MAX_IMAGE_SIZE);
 
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 0,
-                            0, size_vals[0]);
-  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (sizeentry), 1,
-                            0, size_vals[1]);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
+                            0, scale->size_vals[0]);
+  gimp_size_entry_set_size (GIMP_SIZE_ENTRY (scale->sizeentry), 1,
+                            0, scale->size_vals[1]);
 
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0,
-                              size_vals[0]);
-  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 1,
-                              size_vals[1]);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (scale->sizeentry), 0,
+                              scale->size_vals[0]);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (scale->sizeentry), 1,
+                              scale->size_vals[1]);
 
-  g_signal_handlers_unblock_by_func (sizeentry,
+  g_signal_handlers_unblock_by_func (scale->sizeentry,
                                      gimp_scale_tool_size_changed,
                                      tr_tool);
-  g_signal_handlers_unblock_by_func (sizeentry,
+  g_signal_handlers_unblock_by_func (scale->sizeentry,
                                      gimp_scale_tool_unit_changed,
                                      tr_tool);
 
@@ -400,98 +484,6 @@ gimp_scale_tool_recalc (GimpTransformTool *tr_tool,
                                tr_tool->trans_info[X1],
                                tr_tool->trans_info[Y1],
                                &tr_tool->transform);
-
-  /*  transform the bounding box  */
-  gimp_transform_tool_transform_bounding_box (tr_tool);
-
-  /*  update the information dialog  */
-  gimp_scale_tool_info_update (tr_tool);
-}
-
-static void
-gimp_scale_tool_info_update (GimpTransformTool *tr_tool)
-{
-  GimpTool             *tool = GIMP_TOOL (tr_tool);
-  GimpTransformOptions *options;
-  Gimp                 *gimp;
-  gdouble               ratio_x, ratio_y;
-  gint                  x1, y1, x2, y2, x3, y3, x4, y4;
-  GimpUnit              unit;
-  gdouble               unit_factor;
-  gchar                 format_buf[16];
-
-  static GimpUnit       label_unit = GIMP_UNIT_PIXEL;
-
-  options = GIMP_TRANSFORM_OPTIONS (tool->tool_info->tool_options);
-
-  unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (sizeentry));
-
-  /*  Find original sizes  */
-  x1 = tr_tool->x1;
-  y1 = tr_tool->y1;
-  x2 = tr_tool->x2;
-  y2 = tr_tool->y2;
-
-  if (unit != GIMP_UNIT_PERCENT)
-    label_unit = unit;
-
-  gimp = tool->tool_info->gimp;
-
-  unit_factor = _gimp_unit_get_factor (gimp, label_unit);
-
-  if (label_unit) /* unit != GIMP_UNIT_PIXEL */
-    {
-      g_snprintf (format_buf, sizeof (format_buf), "%%.%df %s",
-                  _gimp_unit_get_digits (gimp, label_unit) + 1,
-                  _gimp_unit_get_symbol (gimp, label_unit));
-      g_snprintf (orig_width_buf, MAX_INFO_BUF, format_buf,
-                  (x2 - x1) * unit_factor / tool->gdisp->gimage->xresolution);
-      g_snprintf (orig_height_buf, MAX_INFO_BUF, format_buf,
-                  (y2 - y1) * unit_factor / tool->gdisp->gimage->yresolution);
-    }
-  else /* unit == GIMP_UNIT_PIXEL */
-    {
-      g_snprintf (orig_width_buf, MAX_INFO_BUF, "%d", x2 - x1);
-      g_snprintf (orig_height_buf, MAX_INFO_BUF, "%d", y2 - y1);
-    }
-
-  /*  Find current sizes  */
-  x3 = (gint) tr_tool->trans_info[X0];
-  y3 = (gint) tr_tool->trans_info[Y0];
-  x4 = (gint) tr_tool->trans_info[X1];
-  y4 = (gint) tr_tool->trans_info[Y1];
-
-  size_vals[0] = x4 - x3;
-  size_vals[1] = y4 - y3;
-
-  ratio_x = ratio_y = 0.0;
-
-  if (x2 - x1)
-    ratio_x = (double) (x4 - x3) / (double) (x2 - x1);
-  if (y2 - y1)
-    ratio_y = (double) (y4 - y3) / (double) (y2 - y1);
-
-  /* Detecting initial update, aspect_ratio reset */
-  if ((ratio_x == 1) && (ratio_y == 1))
-    tr_tool->aspect_ratio = 0;
-
-  /* Only when one or the two options are disabled, is necessary to
-   * update the value Taking care of the initial update too
-   */
-  if (! options->constrain_1 ||
-      ! options->constrain_2 ||
-      tr_tool->aspect_ratio == 0 )
-    {
-      tr_tool->aspect_ratio =
-        ((tr_tool->trans_info[X1] - tr_tool->trans_info[X0]) /
-         (tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0]));
-    }
-
-  g_snprintf (x_ratio_buf, sizeof (x_ratio_buf), "%0.2f", ratio_x);
-  g_snprintf (y_ratio_buf, sizeof (y_ratio_buf), "%0.2f", ratio_y);
-
-  info_dialog_update (tr_tool->info_dialog);
-  info_dialog_show (tr_tool->info_dialog);
 }
 
 static void
@@ -530,7 +522,7 @@ gimp_scale_tool_size_changed (GtkWidget         *widget,
       tr_tool->trans_info[X1] = tr_tool->trans_info[X0] + width;
       tr_tool->trans_info[Y1] = tr_tool->trans_info[Y0] + height;
 
-      gimp_scale_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
       gimp_transform_tool_expose_preview (tr_tool);
 
@@ -542,7 +534,7 @@ static void
 gimp_scale_tool_unit_changed (GtkWidget         *widget,
                               GimpTransformTool *tr_tool)
 {
-  gimp_scale_tool_info_update (tr_tool);
+  gimp_scale_tool_dialog_update (tr_tool);
 }
 
 static void
@@ -558,7 +550,7 @@ gimp_scale_tool_aspect_changed (GtkWidget         *widget,
      tr_tool->aspect_ratio) +
     tr_tool->trans_info[Y0];
 
-  gimp_scale_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+  gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
 }

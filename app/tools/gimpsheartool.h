@@ -38,6 +38,7 @@ struct _GimpShearTool
 {
   GimpTransformTool  parent_instance;
 
+  /*  shear dialog  */
   gdouble            xshear_val;
   gdouble            yshear_val;
 };

@@ -105,23 +105,25 @@ struct _GimpTransformToolClass
   GimpDrawToolClass parent_class;
 
   /*  virtual functions  */
-  void          (* dialog)    (GimpTransformTool *tool);
-  void          (* prepare)   (GimpTransformTool *tool,
-                               GimpDisplay       *gdisp);
-  void          (* motion)    (GimpTransformTool *tool,
-                               GimpDisplay       *gdisp);
-  void          (* recalc)    (GimpTransformTool *tool,
-                               GimpDisplay       *gdisp);
-  TileManager * (* transform) (GimpTransformTool *tool,
-                               GimpItem          *item,
-                               GimpDisplay       *gdisp);
+  void          (* dialog)        (GimpTransformTool *tool);
+  void          (* dialog_update) (GimpTransformTool *tool);
+  void          (* prepare)       (GimpTransformTool *tool,
+                                   GimpDisplay       *gdisp);
+  void          (* motion)        (GimpTransformTool *tool,
+                                   GimpDisplay       *gdisp);
+  void          (* recalc)        (GimpTransformTool *tool,
+                                   GimpDisplay       *gdisp);
+  TileManager * (* transform)     (GimpTransformTool *tool,
+                                   GimpItem          *item,
+                                   GimpDisplay       *gdisp);
 };
 
 
-GType   gimp_transform_tool_get_type               (void) G_GNUC_CONST;
+GType   gimp_transform_tool_get_type       (void) G_GNUC_CONST;
 
-void    gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
-void    gimp_transform_tool_expose_preview         (GimpTransformTool *tr_tool);
+void    gimp_transform_tool_recalc         (GimpTransformTool *tr_tool,
+                                            GimpDisplay       *gdisp);
+void    gimp_transform_tool_expose_preview (GimpTransformTool *tr_tool);
 
 
 #endif  /*  __GIMP_TRANSFORM_TOOL_H__  */

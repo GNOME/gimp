@@ -35,7 +35,16 @@ typedef struct _GimpScaleToolClass GimpScaleToolClass;
 
 struct _GimpScaleTool
 {
-  GimpTransformTool parent_instance;
+  GimpTransformTool  parent_instance;
+
+  /*  scale dialog  */
+  gchar              orig_width_buf[MAX_INFO_BUF];
+  gchar              orig_height_buf[MAX_INFO_BUF];
+  gdouble            size_vals[2];
+  gchar              x_ratio_buf[MAX_INFO_BUF];
+  gchar              y_ratio_buf[MAX_INFO_BUF];
+
+  GtkWidget         *sizeentry;
 };
 
 struct _GimpScaleToolClass

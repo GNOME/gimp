@@ -130,10 +130,9 @@ static void     gimp_transform_tool_bounds         (GimpTransformTool *tr_tool,
 static void     gimp_transform_tool_dialog         (GimpTransformTool *tr_tool);
 static void     gimp_transform_tool_prepare        (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
-static void     gimp_transform_tool_recalc         (GimpTransformTool *tr_tool,
-                                                    GimpDisplay       *gdisp);
 static void     gimp_transform_tool_doit           (GimpTransformTool *tr_tool,
                                                     GimpDisplay       *gdisp);
+static void     gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool);
 static void     gimp_transform_tool_grid_recalc    (GimpTransformTool *tr_tool);
 
 static void     gimp_transform_tool_force_expose_preview (GimpTransformTool *tr_tool);
@@ -205,6 +204,7 @@ gimp_transform_tool_class_init (GimpTransformToolClass *klass)
   draw_class->draw           = gimp_transform_tool_draw;
 
   klass->dialog              = NULL;
+  klass->dialog_update       = NULL;
   klass->prepare             = NULL;
   klass->motion              = NULL;
   klass->recalc              = NULL;
@@ -404,6 +404,7 @@ gimp_transform_tool_control (GimpTool       *tool,
       break;
 
     case RESUME:
+      gimp_transform_tool_bounds (tr_tool, gdisp);
       gimp_transform_tool_recalc (tr_tool, gdisp);
       break;
 
@@ -471,6 +472,9 @@ gimp_transform_tool_button_release (GimpTool        *tool,
       for (i = 0; i < TRAN_INFO_SIZE; i++)
         tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
 
+      /*  reget the selection bounds  */
+      gimp_transform_tool_bounds (tr_tool, gdisp);
+
       /*  recalculate the tool's transformation matrix  */
       gimp_transform_tool_recalc (tr_tool, gdisp);
 
@@ -509,8 +513,7 @@ gimp_transform_tool_motion (GimpTool        *tool,
 
       gimp_transform_tool_expose_preview (tr_tool);
 
-      if (tr_tool_class->recalc)
-        tr_tool_class->recalc (tr_tool, gdisp);
+      gimp_transform_tool_recalc (tr_tool, gdisp);
     }
 
   tr_tool->lastx = tr_tool->curx;
@@ -1029,6 +1032,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
                                                                   gdisp);
 
   gimp_transform_tool_prepare (tr_tool, gdisp);
+  gimp_transform_tool_bounds (tr_tool, gdisp);
   gimp_transform_tool_recalc (tr_tool, gdisp);
 
   switch (options->type)
@@ -1093,7 +1097,7 @@ gimp_transform_tool_doit (GimpTransformTool  *tr_tool,
   gimp_transform_tool_halt (tr_tool);
 }
 
-void
+static void
 gimp_transform_tool_transform_bounding_box (GimpTransformTool *tr_tool)
 {
   g_return_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool));
@@ -1483,14 +1487,17 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
     GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->prepare (tr_tool, gdisp);
 }
 
-static void
+void
 gimp_transform_tool_recalc (GimpTransformTool *tr_tool,
                             GimpDisplay       *gdisp)
 {
-  gimp_transform_tool_bounds (tr_tool, gdisp);
-
   if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc)
     GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->recalc (tr_tool, gdisp);
+
+  gimp_transform_tool_transform_bounding_box (tr_tool);
+
+  if (GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update)
+    GIMP_TRANSFORM_TOOL_GET_CLASS (tr_tool)->dialog_update (tr_tool);
 }
 
 static void
@@ -1512,6 +1519,9 @@ gimp_transform_tool_response (GtkWidget         *widget,
         /*  Restore the previous transformation info  */
         for (i = 0; i < TRAN_INFO_SIZE; i++)
           tr_tool->trans_info[i] = tr_tool->old_trans_info[i];
+
+        /*  reget the selection bounds  */
+        gimp_transform_tool_bounds (tr_tool, tool->gdisp);
 
         /*  recalculate the tool's transformation matrix  */
         gimp_transform_tool_recalc (tr_tool, tool->gdisp);
@@ -1546,6 +1556,9 @@ gimp_transform_tool_notify_type (GimpTransformOptions *options,
 
   if (tr_tool->function != TRANSFORM_CREATING)
     {
+      /*  reget the selection bounds  */
+      gimp_transform_tool_bounds (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+
       /*  recalculate the tool's transformation matrix  */
       gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
 

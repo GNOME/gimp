@@ -1,5 +1,27 @@
 2004-08-06  Michael Natterer  <mitch@gimp.org>
 
+	Transform tool cleanup:
+
+	* app/tools/gimptransformtool.[ch]: added new virtual function
+	GimpTransformTool::dialog_update().
+	Made wrapper for ::recalc() public and function
+	transform_bounding_box() private.
+	Call ::dialog_update() and transform_bounding_box() from the
+	::recalc() wrapper.
+
+	* app/tools/gimpperspectivetool.[ch]
+	* app/tools/gimprotatetool.[ch]
+	* app/tools/gimpscaletool.[ch]
+	* app/tools/gimpsheartool.[ch]: turned all info_dialog update
+	functions into GimpTransformTool::dialog_update() implementations
+	and don't call them from ::recalc(), also removed calls to
+	transform_bounding_box(); both functions are called by the parent
+	class now. Call gimp_transform_tool_recalc() when dialog values
+	were changed, not the tool's internal function.
+	Moved all static variables to the instance structs.
+
+2004-08-06  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpsheartool.[ch]: applied (modified) patch from Ari
 	Pollak which enables controlling the shear direction from the
 	dialog and changing the shear direction without hitting "Reset".

@@ -37,6 +37,9 @@ typedef struct _GimpPerspectiveToolClass GimpPerspectiveToolClass;
 struct _GimpPerspectiveTool
 {
   GimpTransformTool  parent_instance;
+
+  /*  perspective dialog  */
+  gchar              matrix_row_buf [3][MAX_INFO_BUF];
 };
 
 struct _GimpPerspectiveToolClass

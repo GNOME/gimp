@@ -52,19 +52,17 @@
 static void   gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass);
 static void   gimp_perspective_tool_init       (GimpPerspectiveTool      *tool);
 
-static void   gimp_perspective_tool_dialog     (GimpTransformTool *tr_tool);
-static void   gimp_perspective_tool_prepare    (GimpTransformTool *tr_tool,
-                                                GimpDisplay       *gdisp);
-static void   gimp_perspective_tool_motion     (GimpTransformTool *tr_tool,
-                                                GimpDisplay       *gdisp);
-static void   gimp_perspective_tool_recalc     (GimpTransformTool *tr_tool,
-                                                GimpDisplay       *gdisp);
+static void   gimp_perspective_tool_dialog        (GimpTransformTool *tr_tool);
+static void   gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool);
+static void   gimp_perspective_tool_prepare       (GimpTransformTool *tr_tool,
+                                                   GimpDisplay       *gdisp);
+static void   gimp_perspective_tool_motion        (GimpTransformTool *tr_tool,
+                                                   GimpDisplay       *gdisp);
+static void   gimp_perspective_tool_recalc        (GimpTransformTool *tr_tool,
+                                                   GimpDisplay       *gdisp);
 
-static void   perspective_info_update          (GimpTransformTool *tr_tool);
 
-
-/*  storage for information dialog fields  */
-static gchar  matrix_row_buf [3][MAX_INFO_BUF];
+/*  private variables  */
 
 static GimpTransformToolClass *parent_class = NULL;
 
@@ -123,10 +121,11 @@ gimp_perspective_tool_class_init (GimpPerspectiveToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  trans_class->dialog  = gimp_perspective_tool_dialog;
-  trans_class->prepare = gimp_perspective_tool_prepare;
-  trans_class->motion  = gimp_perspective_tool_motion;
-  trans_class->recalc  = gimp_perspective_tool_recalc;
+  trans_class->dialog        = gimp_perspective_tool_dialog;
+  trans_class->dialog_update = gimp_perspective_tool_dialog_update;
+  trans_class->prepare       = gimp_perspective_tool_prepare;
+  trans_class->motion        = gimp_perspective_tool_motion;
+  trans_class->recalc        = gimp_perspective_tool_recalc;
 }
 
 static void
@@ -145,12 +144,37 @@ gimp_perspective_tool_init (GimpPerspectiveTool *perspective_tool)
 static void
 gimp_perspective_tool_dialog (GimpTransformTool *tr_tool)
 {
+  GimpPerspectiveTool *perspective = GIMP_PERSPECTIVE_TOOL (tr_tool);
+
   info_dialog_add_label (tr_tool->info_dialog, _("Matrix:"),
-                         matrix_row_buf[0]);
+                         perspective->matrix_row_buf[0]);
   info_dialog_add_label (tr_tool->info_dialog, "",
-                         matrix_row_buf[1]);
+                         perspective->matrix_row_buf[1]);
   info_dialog_add_label (tr_tool->info_dialog, "",
-                         matrix_row_buf[2]);
+                         perspective->matrix_row_buf[2]);
+}
+
+static void
+gimp_perspective_tool_dialog_update (GimpTransformTool *tr_tool)
+{
+  GimpPerspectiveTool *perspective = GIMP_PERSPECTIVE_TOOL (tr_tool);
+  gint                 i;
+
+  for (i = 0; i < 3; i++)
+    {
+      gchar *p = perspective->matrix_row_buf[i];
+      gint   j;
+
+      for (j = 0; j < 3; j++)
+	{
+	  p += g_snprintf (p,
+                           MAX_INFO_BUF - (p - perspective->matrix_row_buf[i]),
+			   "%10.3g", tr_tool->transform.coeff[i][j]);
+	}
+    }
+
+  info_dialog_update (tr_tool->info_dialog);
+  info_dialog_show (tr_tool->info_dialog);
 }
 
 static void
@@ -226,31 +250,4 @@ gimp_perspective_tool_recalc (GimpTransformTool *tr_tool,
                                      tr_tool->trans_info[X3],
                                      tr_tool->trans_info[Y3],
                                      &tr_tool->transform);
-
-  /*  transform the bounding box  */
-  gimp_transform_tool_transform_bounding_box (tr_tool);
-
-  /*  update the information dialog  */
-  perspective_info_update (tr_tool);
-}
-
-static void
-perspective_info_update (GimpTransformTool *tr_tool)
-{
-  gint i;
-
-  for (i = 0; i < 3; i++)
-    {
-      gchar *p = matrix_row_buf[i];
-      gint   j;
-
-      for (j = 0; j < 3; j++)
-	{
-	  p += g_snprintf (p, MAX_INFO_BUF - (p - matrix_row_buf[i]),
-			   "%10.3g", tr_tool->transform.coeff[i][j]);
-	}
-    }
-
-  info_dialog_update (tr_tool->info_dialog);
-  info_dialog_show (tr_tool->info_dialog);
 }

@@ -60,23 +60,23 @@
 
 /*  local function prototypes  */
 
-static void   gimp_shear_tool_class_init (GimpShearToolClass *klass);
-static void   gimp_shear_tool_init       (GimpShearTool      *shear_tool);
+static void   gimp_shear_tool_class_init    (GimpShearToolClass *klass);
+static void   gimp_shear_tool_init          (GimpShearTool      *shear_tool);
 
-static void   gimp_shear_tool_dialog     (GimpTransformTool  *tr_tool);
-static void   gimp_shear_tool_prepare    (GimpTransformTool  *tr_tool,
-                                          GimpDisplay        *gdisp);
-static void   gimp_shear_tool_motion     (GimpTransformTool  *tr_tool,
-                                          GimpDisplay        *gdisp);
-static void   gimp_shear_tool_recalc     (GimpTransformTool  *tr_tool,
-                                          GimpDisplay        *gdisp);
+static void   gimp_shear_tool_dialog        (GimpTransformTool  *tr_tool);
+static void   gimp_shear_tool_dialog_update (GimpTransformTool  *tr_tool);
 
-static void   shear_info_update          (GimpTransformTool  *tr_tool);
+static void   gimp_shear_tool_prepare       (GimpTransformTool  *tr_tool,
+                                             GimpDisplay        *gdisp);
+static void   gimp_shear_tool_motion        (GimpTransformTool  *tr_tool,
+                                             GimpDisplay        *gdisp);
+static void   gimp_shear_tool_recalc        (GimpTransformTool  *tr_tool,
+                                             GimpDisplay        *gdisp);
 
-static void   shear_x_mag_changed        (GtkWidget          *widget,
-                                          GimpTransformTool  *tr_tool);
-static void   shear_y_mag_changed        (GtkWidget          *widget,
-                                          GimpTransformTool  *tr_tool);
+static void   shear_x_mag_changed           (GtkWidget          *widget,
+                                             GimpTransformTool  *tr_tool);
+static void   shear_y_mag_changed           (GtkWidget          *widget,
+                                             GimpTransformTool  *tr_tool);
 
 
 /*  private variables  */
@@ -138,10 +138,11 @@ gimp_shear_tool_class_init (GimpShearToolClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  trans_class->dialog  = gimp_shear_tool_dialog;
-  trans_class->prepare = gimp_shear_tool_prepare;
-  trans_class->motion  = gimp_shear_tool_motion;
-  trans_class->recalc  = gimp_shear_tool_recalc;
+  trans_class->dialog        = gimp_shear_tool_dialog;
+  trans_class->dialog_update = gimp_shear_tool_dialog_update;
+  trans_class->prepare       = gimp_shear_tool_prepare;
+  trans_class->motion        = gimp_shear_tool_motion;
+  trans_class->recalc        = gimp_shear_tool_recalc;
 }
 
 static void
@@ -175,6 +176,18 @@ gimp_shear_tool_dialog (GimpTransformTool *tr_tool)
                               -65536, 65536, 1, 15, 1, 1, 0,
                               G_CALLBACK (shear_y_mag_changed),
                               tr_tool);
+}
+
+static void
+gimp_shear_tool_dialog_update (GimpTransformTool *tr_tool)
+{
+  GimpShearTool *shear = GIMP_SHEAR_TOOL (tr_tool);
+
+  shear->xshear_val = tr_tool->trans_info[XSHEAR];
+  shear->yshear_val = tr_tool->trans_info[YSHEAR];
+
+  info_dialog_update (tr_tool->info_dialog);
+  info_dialog_show (tr_tool->info_dialog);
 }
 
 static void
@@ -286,24 +299,6 @@ gimp_shear_tool_recalc (GimpTransformTool *tr_tool,
                                tr_tool->trans_info[HORZ_OR_VERT],
                                amount,
                                &tr_tool->transform);
-
-  /*  transform the bounding box  */
-  gimp_transform_tool_transform_bounding_box (tr_tool);
-
-  /*  update the information dialog  */
-  shear_info_update (tr_tool);
-}
-
-static void
-shear_info_update (GimpTransformTool *tr_tool)
-{
-  GimpShearTool *shear = GIMP_SHEAR_TOOL (tr_tool);
-
-  shear->xshear_val = tr_tool->trans_info[XSHEAR];
-  shear->yshear_val = tr_tool->trans_info[YSHEAR];
-
-  info_dialog_update (tr_tool->info_dialog);
-  info_dialog_show (tr_tool->info_dialog);
 }
 
 static void
@@ -323,12 +318,12 @@ shear_x_mag_changed (GtkWidget         *widget,
 
       tr_tool->trans_info[XSHEAR] = value;
 
-      gimp_shear_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+
+      gimp_transform_tool_expose_preview (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
-
-  gimp_transform_tool_expose_preview (tr_tool);
 }
 
 static void
@@ -348,10 +343,10 @@ shear_y_mag_changed (GtkWidget         *widget,
 
       tr_tool->trans_info[YSHEAR] = value;
 
-      gimp_shear_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+      gimp_transform_tool_recalc (tr_tool, GIMP_TOOL (tr_tool)->gdisp);
+
+      gimp_transform_tool_expose_preview (tr_tool);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tr_tool));
     }
-
-  gimp_transform_tool_expose_preview (tr_tool);
 }
