@@ -1,0 +1,232 @@
+# This is a list of tips for the GIMP.  Every time the GIMP is
+# started, one tip will be selected from this file and will be
+# displayed in the "Tip of the day" dialog.
+#
+# - Lines starting with '#' are comments.
+# - Blank lines or comments separate two tips (they are not ignored).
+#   Multiple blank lines are treated as one.  If you want to have a
+#   blank line in a tip, put a space or tab in it.
+# - Text will appear in the dialog as it is in this file.  This is
+#   done on purpose in order to have more freedom in the layout of the
+#   tips than with automatic word-wrapping, but this also means that
+#   you have to avoid excessively long lines in this file.
+# - Tips should be concise: 3 lines or less.
+#
+# Tips in this file have been contributed by Zachary Beane, Mo Oishi,
+# Raphael Quinet, Sven Neumann and other people on the gimp mailing 
+# lists.
+# --------------------------------------------------------------------
+
+# The first tip should be a welcome message, because this is the
+# first thing that a new user will see.
+#
+
+# FIXME: re-write this welcome message:
+
+##                            Welcome to the GIMP !
+##      
+##Nearly all image operations are performed by right-clicking
+##on the image.  And don't worry, you can undo most mistakes...    
+	    Добро пожаловать в GIMP!
+
+Почти все операции выполняются при помощи нажатия на правую
+клавишу мыши в изображении. И не беспокойтесь, Вы сможете отменить
+большинство ошибочных действий...	    
+# Tips for beginners start here
+#
+
+#The GIMP uses layers to let you organize your image.  Think of them 
+#as a stack of slides or filters, such that looking through them you 
+#see a composite of their contents.
+GIMP использует слои позволяя организовать Ваше изображение. Представьте
+себе стопку фильтров или слайдов, глядя сквозь которую, Вы увидите
+состоящее из них изображение.
+
+#You can perform many layer operations by right-clicking on the text
+#label of a layer in the Layers dialog (Dialogs->Layers & Channels).
+Вы можете выполнить большинство операций со слоями щелкая правой клавишей
+мыши на названии слоя в диалоге "Слои и каналы".
+
+#When trying to save files as GIF, XPM, or any other indexed 
+#color format, you need to convert the image to indexed using 
+#the Image menu.
+Если Вы собираетесь сохранить файл как GIF, XPM или в любом другом
+формате с индексированными цветами, то Вам надо конвертировать изображение
+в индексированное используя меню "Изображение"
+
+#You can get the Tool Options menu to open by double-clicking 
+#any button in the toolbar.
+Вы можете вызвать меню "Параметры инструмента" двойным щелчком мыши
+на любой кнопке в панели инструментов
+
+#You can change the name of a layer by double-clicking 
+#on its name in the Layers dialog box.
+Вы можете изменить название слоя дважды щелкнув мышью
+на названии в диалоговом окне "Слои"
+
+#The layer named "Background" is special.  You can't add 
+#transparency or a layer mask to it.  To add transparency, you 
+#must first "add alpha" to the layer by right-clicking in the 
+#layers dialog and selecting "Add Alpha Channel". 
+Слой с названием "Фон" - особый. Вы не можете добавить к нему
+маску слоя или прозрачность. Чтобы добавить прозрачность, Вы должны
+сначала добавить альфа-канал к слою щелкнув правой клавишей мыши
+в диалоге "Слои" и выбрав "Добавить альфа-канал"
+
+#When using a drawing tool (Paintbrush, Airbrush, or Pencil), 
+#Shift-click will draw a straight line from your last drawing 
+#point to your current cursor position.
+При использовании рисующего инструмента (кисть, аэрограф или карандаш),
+щелчок при нажатой клавише Shift даст прямую линию от последней
+нарисованной точки до текущей позиции курсора.
+
+#Most plug-ins work on the current layer of the current image.  In 
+#some cases, you will have to merge all layers (Layers->Flatten Image) 
+#if you want the plug-in to work on the whole image.
+Большинство дополнений работают с текущим слоем в текущем изображении.
+В некоторых случаях, Вам надо будет об`единять все слои
+(Слои->Свести изображение) если Вы захотите чтобы дополнение работало
+с целым изображением.
+
+#Most file-formats can't handle layers and for that reason only 
+#the active layer is saved.  Use XCF, the GIMP's native file format 
+#to keep layers, channels and guides when saving.
+Большинство форматов файлов не поддерживают слои и поэтому сохраняется
+только активный слой. Используйте XCF - собственный формат GIMP для сохранения
+слоёв, каналов и направляющих.
+
+#Not all effects can be applied to all kinds of images.  This 
+#is indicated by a grayed-out menu-entry.  You may need to 
+#change the image to RGB, add an alpha-channel or flatten it.
+Не все эффекты можно применить к любому виду изображений. Это
+отображается серой строкой в меню. Вам может понадобиться изменить
+изображение в RGB, добавить альфа-канал или свести его.
+
+## Tips for intermediate users start here
+##
+
+#The file selection dialog box has command-line completion with 
+#Tab, just like the shell.  Type part of a filename, hit tab, and voila!
+#It's completed.
+Диалог выбора файла имеет дополнение командной строки клавишей Tab,
+также как в командной оболочке. Наберите часть имени файла, нажмите Tab,
+и voila! Оно дополнено.
+
+#You can reassign shortcut keys on any menu by bringing up the menu,
+#selecting a menu item, and pressing the new shortcut key combination.
+#This is dynamic and is saved when you exit GIMP.
+Вы можете переопределить комбинации клавиш для любых меню, для этого
+вызовите его, выберите нужный пункт и нажмите новую комбинацию клавиш.
+Она будет динамически связана и сохранена при выходе из GIMP.
+
+#All the old channel operations have been replaced with the more
+#powerful and flexible Layer and Layer Mode operations.  They may 
+#take getting used to, but they are simply a better way to operate.
+Каналы и все операции с каналами заменены на более мощные и гибкие
+слои и операции в режиме слоя.
+
+#You can use the middle mouse button to pan around 
+#the image, if it's larger than its display window.
+Вы можете использовать среднюю кнопку мыши
+для прокручивания изображения, если его слой больше
+размера окна.
+
+#Click and drag on a ruler to place a Guide on an image.  All 
+#dragged selections will snap to the guides.  You can remove 
+#guides by dragging them off the image with the Move tool.
+Нажмите на линейке и перетащите ее, чтобы поместить в изображении
+направляющую. Все перетаскиваемые выделенные области будут выравниваться
+по направляющим. Вы можете удалить направляющие, перетащив их за пределы
+изображения инструментом "Перемещение".
+
+#The GIMP supports gzip compression on the fly.  Just add 
+#'.gz' (or '.bz2', if you have bzip2 installed) to the filename 
+#and your image will be saved compressed.  Of course loading 
+#compressed images works too.
+GIMP поддерживает gzip-сжатие "на лету". Просто добавьте '.gz'
+(или '.bz2', если у Вас установлен bzip2) к имени файла и Ваше изображение
+будет сохранено сжатым. Конечно же автораспаковка при загрузке сжатых
+изображений тоже действует.
+
+#Pressing and holding the Shift key before making a selection allows
+#you to add to the current selection instead of replacing it.  Using
+#Ctrl before making a selection subtracts from the current one.
+Если до начала выделения нажать и удерживать клавишу Shift, то 
+новая область выделения будет добавляться к текущей, а не заменять ее.
+Аналогично клавиша Ctrl позволяет вычитать выделение.
+
+#You can press or release the Shift and Ctrl keys while you are
+#making a selection in order to constrain it to a perfect square 
+#or circle, or to have it centered on its starting point.
+Если нажать или отпустить Shift и Ctrl во время выделения прямоугольной
+или эллиптической области, то область станет точным квадратом или кругом,
+или же будет центрирована относительно стартовой точки соответственно.
+
+# Tips for advanced users start here
+#
+
+#You can adjust the selection range for fuzzy select 
+#by clicking and dragging left and right.
+Вы можете подправить диапазон выделения для "выделения в ручную",
+нажав на клавишу мыши и протянув курсор влево и вправо.
+
+#Shift-click on the eye icon in the Layers dialog to hide all 
+#layers but that one.  Shift-click again to show all layers.
+Если щелкнуть на пиктограмме "глаз" любого слоя в диалоге "Слои"
+удерживая клавишу Shift, будут скрыты все слои кроме этого. Повторный щелчок
+сделает все слои видимыми.
+
+#Ctrl-click on the layer mask's preview in the Layers dialog 
+#toggles the effect of the layer mask.
+Щелчок на изображении маски слоя в диалоге "Слои" при удержанной клавише Ctrl
+переключает эффект маски слоя.
+
+#Alt-click on the layer mask's preview in the Layers dialog 
+#toggles viewing the mask directly.
+Щелчок на изображении маски слоя в диалоге "Слои" при удержанной клавише Alt
+переключает вид непосредственно маски слоя.
+
+#You can use Alt-Tab to cycle through all layers in an image 
+#(if your window manager doesn't trap those keys...).
+Вы можете использовать Alt-Tab для циклического перемещения по всем слоям
+в изображении (если Ваш диспетчер окон не перехватывает это сочетание клавиш...)
+
+#Shift-click with the Bucket Fill tool to have it use 
+#the background color instead of the foreground color.
+Если при использовании "Заливки" щелкнуть клавишей мыши удерживая Shift, то
+заливка будет производиться цветом фона, а не переднего плана.
+
+#Control-drag with the Transform tool in rotation mode 
+#will constrain the rotation to 15 degree angles.
+Перемещение при нажатой клавише Ctrl при использовании инструмента "Вращатель"
+позволяет осуществлять вращение на 15 градусные углы.
+
+#You can adjust and re-place a selection by using Alt-drag.
+Перемещая курсор удерживая нажатой клавишу Alt, вы можете перемещать границу
+выделенной области относительно изображения, чтобы выбрать участок для
+выделения.
+
+#If your fonts turn out blocky, that's because they're not scalable
+#fonts.  Most X servers support scalable Type 1 Postscript fonts.
+#Download and install them.
+Если ваши шрифты выглядяь блочными, это значит, что они не масштабируемые.
+Большинство X-серверов поддерживают масштабируемые шрифты Type 1 Postscript.
+Скачайте и установите их.
+
+#Using Edit->Stroke allows you to draw simple squares or circles by
+#painting the edge of your current selection with the active brush.
+#More complex shapes can be drawn with Filters->Render->Gfig.
+Выбор меню "Правка->Обвести", позволяет нарисовать простые квадраты или
+круги обводкой контура текущей выделенной области действующей кистью.
+Более сложные формы можно нарисовать с помощью "Фильтры->Визуализация->Gfig".
+
+#To create a perfect circle, hold Shift while doing an ellipse select. To 
+#place a circle precisely, drag horizontal and vertical guides tangent to 
+#the circle you want to select, place your cursor at the intersection
+#of the guides, and the resulting selection will just touch the guides.
+Чтобы создать точный круг, нажмите клавишу Shift, пока делаете выделение эллипса.
+Чтобы точно разместить круг, установите горизонтальную и вертикальную направляющие,
+так чтобы они были касательными к выделяемому кругу. Поместите курсор на
+пересечении направляющих и результирующее выделение будет их касаться.
+
+# (end of tips)
