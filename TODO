@@ -1,5 +1,5 @@
 Please add things to this file when the need to do them is
-discovered.  
+discovered.
 
 gui/functionality seperation
 	both file scope wise and in use, particulay so that
@@ -37,7 +37,7 @@ flip horiz normal, and shift+click to shift vertically)
 
 curve deal in the gradient editor?
 
-some degree of drawing tools, straight line, etc... 
+some degree of drawing tools, straight line, etc...
 
 paths, and better beziers would be a nice toch
 
@@ -100,7 +100,7 @@ Quickmask/paintable selections
 
 let pdb stuff register under the layers_dialog menu
 
-some sort of mdi for dialogs so you could tab them together or 
+some sort of mdi for dialogs so you could tab them together or
 pull them apart?
 
 make color picker able to choose from any color on the screen
@@ -122,3 +122,7 @@ more info available to the user in general (current brush, etc)
 
 some sort of image locking, so we don't munge images by doing >1 ops
 on them at once
+
+
+Suggestions from Ville Hautamaki (CW):
+Pattern groups
