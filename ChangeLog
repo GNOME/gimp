@@ -1,5 +1,10 @@
 2003-07-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcontainertreeview.c: removed some old #if 0'ed
+	code.
+
+2003-07-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/image-menu.c: renamed "Edit/Stroke" to "Edit/Stroke
 	Selection" and added "Edit/Stroke Active Path". Added some missing
 	mnemonics to the "Edit" menu.

@@ -129,7 +129,7 @@ gimp_container_tree_view_class_init (GimpContainerTreeViewClass *klass)
 
   object_class         = G_OBJECT_CLASS (klass);
   container_view_class = GIMP_CONTAINER_VIEW_CLASS (klass);
-  
+
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->constructor              = gimp_container_tree_view_constructor;
@@ -167,7 +167,7 @@ gimp_container_tree_view_init (GimpContainerTreeView *tree_view)
 
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (view->scrolled_win),
                                        GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view->scrolled_win), 
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (view->scrolled_win),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 }
 
@@ -513,28 +513,6 @@ gimp_container_tree_view_select_item (GimpContainerView *view,
     {
       GtkTreePath *path;
 
-#if 0
-      GtkTreeIter  selected_iter;
-
-      if (gtk_tree_selection_get_selected (tree_view->selection, NULL,
-                                           &selected_iter))
-        {
-          GimpPreviewRenderer *renderer;
-          gboolean             equal;
-
-          gtk_tree_model_get (tree_view->model, &selected_iter,
-                              COLUMN_RENDERER, &renderer,
-                              -1);
-
-          equal = (renderer->viewable == viewable);
-
-          g_object_unref (renderer);
-
-          if (equal)
-            return TRUE;
-        }
-#endif
-
       path = gtk_tree_model_get_path (tree_view->model, iter);
 
       g_signal_handlers_block_by_func (tree_view->selection,
@@ -803,7 +781,7 @@ gimp_container_tree_view_button_press (GtkWidget             *widget,
                       gchar *path_str;
 
                       path_str = gtk_tree_path_to_string (path);
- 
+
                       if (toggled_cell)
                         {
                           gimp_cell_renderer_toggle_clicked (toggled_cell,
