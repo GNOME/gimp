@@ -1,5 +1,10 @@
 2003-09-03  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpclonetool.c: Ctrl only sets the clone source when
+	Shift isn't pressed at the same time (fixes bug #121324).
+
+2003-09-03  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs-generic.h (dissolve_pixels)
 	* app/composite/gimp-composite-generic.c	
 	(gimp_composite_dissolve_any_any_any_generic): fixed a bug in the

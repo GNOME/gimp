@@ -205,7 +205,7 @@ gimp_clone_tool_button_press (GimpTool        *tool,
 
   paint_tool = GIMP_PAINT_TOOL (tool);
 
-  if (state & GDK_CONTROL_MASK)
+  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     GIMP_CLONE (paint_tool->core)->set_source = TRUE;
   else
     GIMP_CLONE (paint_tool->core)->set_source = FALSE;
@@ -225,7 +225,7 @@ gimp_clone_tool_motion (GimpTool        *tool,
 
   paint_tool = GIMP_PAINT_TOOL (tool);
 
-  if (state & GDK_CONTROL_MASK)
+  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
     GIMP_CLONE (paint_tool->core)->set_source = TRUE;
   else
     GIMP_CLONE (paint_tool->core)->set_source = FALSE;
@@ -259,7 +259,7 @@ gimp_clone_tool_cursor_update (GimpTool        *tool,
 
   if (options->clone_type == GIMP_IMAGE_CLONE)
     {
-      if (state & GDK_CONTROL_MASK)
+      if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
 	ctype = GIMP_CROSSHAIR_SMALL_CURSOR;
       else if (! GIMP_CLONE (GIMP_PAINT_TOOL (tool)->core)->src_drawable)
 	ctype = GIMP_BAD_CURSOR;
