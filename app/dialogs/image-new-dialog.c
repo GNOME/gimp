@@ -39,6 +39,8 @@
 #include "widgets/gimpcontainercombobox.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 #include "widgets/gimptemplateeditor.h"
 
 #include "image-new-dialog.h"
@@ -233,63 +235,67 @@ image_new_template_select (GimpContainerView  *view,
 /*  the confirm dialog  */
 
 static void
-image_new_confirm_dialog_callback (GtkWidget *widget,
-                                   gboolean   create,
-                                   gpointer   data)
+image_new_confirm_response (GtkWidget      *dialog,
+                            gint            response_id,
+                            ImageNewDialog *data)
 {
-  ImageNewDialog *dialog = data;
+  gtk_widget_destroy (dialog);
 
-  dialog->confirm_dialog = NULL;
+  data->confirm_dialog = NULL;
 
-  if (create)
-    image_new_create_image (dialog);
+  if (response_id == GTK_RESPONSE_OK)
+    image_new_create_image (data);
   else
-    gtk_widget_set_sensitive (dialog->dialog, TRUE);
+    gtk_widget_set_sensitive (data->dialog, TRUE);
 }
 
 static void
-image_new_confirm_dialog (ImageNewDialog *dialog)
+image_new_confirm_dialog (ImageNewDialog *data)
 {
-  gchar *size_str;
-  gchar *max_size_str;
-  gchar *text;
+  GimpGuiConfig *config;
+  GtkWidget     *dialog;
+  gchar         *size;
 
-  size_str     = gimp_memsize_to_string (dialog->template->initial_size);
-  max_size_str = gimp_memsize_to_string (GIMP_GUI_CONFIG (dialog->gimp->config)->max_new_image_size);
+  if (data->confirm_dialog)
+    {
+      gtk_window_present (GTK_WINDOW (data->confirm_dialog));
+      return;
+    }
 
-  text = g_strdup_printf (_("You are trying to create an image with "
-			    "an initial size of %s.\n\n"
-			    "Choose OK to create this image anyway.\n"
-			    "Choose Cancel if you did not intend to "
-			    "create such a large image.\n\n"
-			    "To prevent this dialog from appearing, "
-			    "increase the \"Maximum Image Size\" "
-			    "setting (currently %s) in the "
-			    "Preferences dialog."),
-                          size_str, max_size_str);
+  data->confirm_dialog =
+    dialog = gimp_message_dialog_new (_("Confirm Image Size"),
+                                      GIMP_STOCK_WARNING,
+                                      data->dialog,
+                                      GTK_DIALOG_DESTROY_WITH_PARENT,
+                                      gimp_standard_help_func, NULL,
 
-  g_free (size_str);
-  g_free (max_size_str);
+                                      GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                      GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-  dialog->confirm_dialog =
-    gimp_query_boolean_box (_("Confirm Image Size"),
-                            dialog->dialog,
-			    gimp_standard_help_func, NULL,
-			    GIMP_STOCK_INFO,
-			    text,
-			    GTK_STOCK_OK, GTK_STOCK_CANCEL,
-			    NULL, NULL,
-			    image_new_confirm_dialog_callback,
-			    dialog);
+                                      NULL);
 
-  g_free (text);
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (image_new_confirm_response),
+                    data);
 
-  gtk_window_set_transient_for (GTK_WINDOW (dialog->confirm_dialog),
-				GTK_WINDOW (dialog->dialog));
+  size = gimp_memsize_to_string (data->template->initial_size);
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("You are trying to create an image "
+                                       "with a size of %s."), size);
+  g_free (size);
 
-  gtk_widget_set_sensitive (dialog->dialog, FALSE);
+  config = GIMP_GUI_CONFIG (data->gimp->config);
+  size = gimp_memsize_to_string (config->max_new_image_size);
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                              _("An image of the choosen size will use more "
+                                "memory than what is configured as "
+                                "\"Maximum Image Size\" in the Preferences "
+                                "dialog (currently %s)."), size);
+  g_free (size);
 
-  gtk_widget_show (dialog->confirm_dialog);
+  gtk_widget_set_sensitive (data->dialog, FALSE);
+
+  gtk_widget_show (dialog);
 }
 
 static void

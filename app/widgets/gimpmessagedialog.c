@@ -77,12 +77,6 @@ gimp_message_dialog_new (const gchar    *title,
   g_return_val_if_fail (title != NULL, NULL);
   g_return_val_if_fail (parent == NULL || GTK_IS_WIDGET (parent), NULL);
 
-  if (parent)
-    {
-      if (! GTK_IS_WINDOW (parent))
-        parent = gtk_widget_get_toplevel (parent);
-    }
-
   dialog = g_object_new (GIMP_TYPE_MESSAGE_DIALOG,
                          "title",     title,
                          "role",      "gimp-message-dialog",
@@ -93,10 +87,22 @@ gimp_message_dialog_new (const gchar    *title,
 
   if (parent)
     {
-      gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+      if (! GTK_IS_WINDOW (parent))
+        parent = gtk_widget_get_toplevel (parent);
 
-      if (flags & GTK_DIALOG_DESTROY_WITH_PARENT)
-        gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
+      if (GTK_IS_WINDOW (parent))
+        {
+          gtk_window_set_transient_for (GTK_WINDOW (dialog),
+                                        GTK_WINDOW (parent));
+
+          if (flags & GTK_DIALOG_DESTROY_WITH_PARENT)
+            gtk_window_set_destroy_with_parent (GTK_WINDOW (dialog), TRUE);
+        }
+      else
+        {
+          gtk_window_set_screen (GTK_WINDOW (dialog),
+                                 gtk_widget_get_screen (parent));
+        }
     }
 
   va_start (args, help_id);

@@ -1,3 +1,12 @@
+2004-10-13  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpmessagedialog.c: improved handling of parent
+	widget; probably just being paranoid here.
+
+	* app/actions/image-commands.c
+	* app/dialogs/image-new-dialog.c: ported memory size confirmation
+	dialogs to GimpMessageDialog.
+
 2004-10-13  DindinX  <dindinx@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: added a new function to set the

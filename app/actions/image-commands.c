@@ -46,6 +46,8 @@
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimpdock.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpmessagebox.h"
+#include "widgets/gimpmessagedialog.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
@@ -79,8 +81,6 @@ typedef struct _LayerMergeOptions LayerMergeOptions;
 
 struct _LayerMergeOptions
 {
-  GtkWidget     *query_box;
-
   GimpContext   *context;
   GimpImage     *gimage;
   GimpMergeType  merge_type;
@@ -89,20 +89,21 @@ struct _LayerMergeOptions
 
 /*  local function prototypes  */
 
-static void   image_resize_callback       (GtkWidget          *widget,
-                                           gpointer            data);
-static void   image_scale_callback        (GtkWidget          *widget,
-                                           gpointer            data);
-static void   image_scale_warn            (ImageResizeOptions *options,
-                                           const gchar        *warning_title,
-                                           const gchar        *warning_message);
-static void   image_scale_warn_callback   (GtkWidget          *widget,
-                                           gboolean            do_scale,
-                                           gpointer            data);
-static void   image_scale_implement       (ImageResizeOptions *options);
-static void   image_merge_layers_response (GtkWidget          *widget,
-                                           gint                response_id,
-                                           LayerMergeOptions  *options);
+static void   image_resize_callback        (GtkWidget          *widget,
+                                            gpointer            data);
+static void   image_scale_callback         (GtkWidget          *widget,
+                                            gpointer            data);
+static void   image_scale_confirm_large    (ImageResizeOptions *options,
+                                            gint64              new_memsize,
+                                            gint64              max_memsize);
+static void   image_scale_confirm_small    (ImageResizeOptions *options);
+static void   image_scale_confirm_response (GtkWidget          *widget,
+                                            gint                response_id,
+                                            ImageResizeOptions *options);
+static void   image_scale_implement        (ImageResizeOptions *options);
+static void   image_merge_layers_response  (GtkWidget          *dialog,
+                                            gint                response_id,
+                                            LayerMergeOptions  *options);
 
 
 /*  public functions  */
@@ -370,6 +371,7 @@ image_merge_layers_cmd_callback (GtkAction *action,
 {
   LayerMergeOptions *options;
   GimpImage         *gimage;
+  GtkWidget         *dialog;
   GtkWidget         *widget;
   GtkWidget         *frame;
   return_if_no_image (gimage, data);
@@ -381,27 +383,23 @@ image_merge_layers_cmd_callback (GtkAction *action,
   options->gimage     = gimage;
   options->merge_type = GIMP_EXPAND_AS_NECESSARY;
 
-  options->query_box =
-    gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
-                              _("Merge Layers"), "gimp-image-merge-layers",
-                              GIMP_STOCK_MERGE_DOWN,
-                              _("Layers Merge Options"),
-                              widget,
-                              gimp_standard_help_func,
-                              GIMP_HELP_IMAGE_MERGE_LAYERS,
+  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (gimage),
+                                     _("Merge Layers"),
+                                     "gimp-image-merge-layers",
+                                     GIMP_STOCK_MERGE_DOWN,
+                                     _("Layers Merge Options"),
+                                     widget,
+                                     gimp_standard_help_func,
+                                     GIMP_HELP_IMAGE_MERGE_LAYERS,
 
-                              GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                              GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                                     GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                     GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-                              NULL);
+                                     NULL);
 
-  g_signal_connect (options->query_box, "response",
+  g_signal_connect (dialog, "response",
                     G_CALLBACK (image_merge_layers_response),
                     options);
-
-  g_object_weak_ref (G_OBJECT (options->query_box),
-		     (GWeakNotify) g_free,
-		     options);
 
   frame = gimp_int_radio_group_new (TRUE, _("Final, Merged Layer should be:"),
                                     G_CALLBACK (gimp_radio_button_update),
@@ -419,11 +417,10 @@ image_merge_layers_cmd_callback (GtkAction *action,
                                     NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (options->query_box)->vbox),
-		     frame);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), frame);
   gtk_widget_show (frame);
 
-  gtk_widget_show (options->query_box);
+  gtk_widget_show (dialog);
 }
 
 void
@@ -528,38 +525,11 @@ image_scale_callback (GtkWidget *widget,
   switch (scale_check)
     {
     case GIMP_IMAGE_SCALE_TOO_BIG:
-      {
-        gchar *size_str;
-        gchar *max_size_str;
-        gchar *warning_message;
-
-        size_str     = gimp_memsize_to_string (new_memsize);
-        max_size_str = gimp_memsize_to_string (max_memsize);
-
-        warning_message = g_strdup_printf
-          (_("You are trying to create an image with a size of %s.\n\n"
-             "Choose OK to create this image anyway.\n"
-             "Choose Cancel if you did not intend to create such a "
-             "large image.\n\n"
-             "To prevent this dialog from appearing, increase the "
-             "\"Maximum Image Size\" setting (currently %s) in the "
-             "Preferences dialog."),
-           size_str, max_size_str);
-
-        g_free (size_str);
-        g_free (max_size_str);
-
-        image_scale_warn (options, _("Image exceeds maximum image size"),
-                          warning_message);
-
-        g_free (warning_message);
-      }
+      image_scale_confirm_large (options, new_memsize, max_memsize);
       break;
 
     case GIMP_IMAGE_SCALE_TOO_SMALL:
-      image_scale_warn (options, _("Layer Too Small"),
-                        _("The chosen image size will shrink some layers "
-                          "completely away. Is this what you want?"));
+      image_scale_confirm_small (options);
       break;
 
     case GIMP_IMAGE_SCALE_OK:
@@ -570,35 +540,78 @@ image_scale_callback (GtkWidget *widget,
     }
 }
 
-static void
-image_scale_warn (ImageResizeOptions *options,
-                  const gchar        *warning_title,
-                  const gchar        *warning_message)
+static GtkWidget *
+image_scale_confirm_dialog (ImageResizeOptions *options)
 {
   GtkWidget *dialog;
 
-  dialog = gimp_query_boolean_box (warning_title,
-                                   options->dialog->shell,
-                                   gimp_standard_help_func,
-                                   GIMP_HELP_IMAGE_SCALE_WARNING,
-                                   GTK_STOCK_DIALOG_QUESTION,
-                                   warning_message,
-                                   GTK_STOCK_OK, GTK_STOCK_CANCEL,
-                                   G_OBJECT (options->dialog->shell),
-                                   "destroy",
-                                   image_scale_warn_callback,
-                                   options);
+  dialog = gimp_message_dialog_new (_("Confirm Scaling"),
+                                    GIMP_STOCK_WARNING,
+                                    options->dialog->shell,
+                                    GTK_DIALOG_DESTROY_WITH_PARENT,
+                                    gimp_standard_help_func,
+                                    GIMP_HELP_IMAGE_SCALE_WARNING,
+
+                                    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                    GIMP_STOCK_SCALE, GTK_RESPONSE_OK,
+
+                                    NULL);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (image_scale_confirm_response),
+                    options);
+
+  return dialog;
+}
+
+static void
+image_scale_confirm_large (ImageResizeOptions *options,
+                           gint64              new_memsize,
+                           gint64              max_memsize)
+{
+  GtkWidget *dialog = image_scale_confirm_dialog (options);
+  gchar     *size;
+
+  size = gimp_memsize_to_string (new_memsize);
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("You are trying to create an image "
+                                       "with a size of %s."), size);
+  g_free (size);
+
+  size = gimp_memsize_to_string (max_memsize);
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("Scaling the image to the choosen size will "
+                               "make it use more memory than what is "
+                               "configured as \"Maximum Image Size\" in the "
+                               "Preferences dialog (currently %s)."), size);
+  g_free (size);
+
   gtk_widget_show (dialog);
 }
 
 static void
-image_scale_warn_callback (GtkWidget *widget,
-			   gboolean   do_scale,
-			   gpointer   data)
+image_scale_confirm_small (ImageResizeOptions *options)
 {
-  ImageResizeOptions *options = data;
+  GtkWidget *dialog = image_scale_confirm_dialog (options);
 
-  if (do_scale)
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     _("Scaling the image to the choosen size "
+                                       "will shrink some layers completely "
+                                       "away."));
+  gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                             _("Is this what you want to do?"));
+
+  gtk_widget_show (dialog);
+}
+
+static void
+image_scale_confirm_response (GtkWidget          *dialog,
+                              gint                response_id,
+                              ImageResizeOptions *options)
+{
+  gtk_widget_destroy (dialog);
+
+  if (response_id == GTK_RESPONSE_OK)
     {
       image_scale_implement (options);
       gtk_widget_destroy (options->dialog->shell);
@@ -663,10 +676,12 @@ image_scale_implement (ImageResizeOptions *options)
 }
 
 static void
-image_merge_layers_response (GtkWidget         *widget,
+image_merge_layers_response (GtkWidget         *dialog,
                              gint               response_id,
                              LayerMergeOptions *options)
 {
+  gtk_widget_destroy (dialog);
+
   if (response_id == GTK_RESPONSE_OK)
     {
       gimp_image_merge_visible_layers (options->gimage,
@@ -675,5 +690,5 @@ image_merge_layers_response (GtkWidget         *widget,
       gimp_image_flush (options->gimage);
     }
 
-  gtk_widget_destroy (options->query_box);
+  g_free (options);
 }
