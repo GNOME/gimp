@@ -1,3 +1,9 @@
+1999-06-26  Sven Neumann <sven@gimp.org>
+	    Michael Natterer  <mitschel@cs.tu-berlin.de>
+
+	* app/app_procs.c
+	* pixmap/eek.xpm: EEK. Some files unsaved. Quit the GIMP?
+
 Fri Jun 25 22:09:04 BST 1999 Andy Thomas <alt@gimp.org>
 
 	* lc_dialog.c

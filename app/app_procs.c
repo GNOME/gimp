@@ -91,6 +91,8 @@
 #include "libgimp/gimplimits.h"
 #include "libgimp/gimpintl.h"
 
+#include "pixmaps/eek.xpm"
+
 #define LOGO_WIDTH_MIN 300
 #define LOGO_HEIGHT_MIN 110
 #define NAME "The GIMP"
@@ -716,6 +718,11 @@ really_quit_dialog (void)
 {
   GtkWidget *dialog;
   GtkWidget *button;
+  GtkWidget *hbox;
+  GtkWidget *pixmap_widget;
+  GdkPixmap *pixmap;
+  GdkBitmap *mask;
+  GtkStyle  *style;
   GtkWidget *label;
 
   menus_set_sensitive_locale ("<Toolbox>", N_("/File/Quit"), FALSE);
@@ -748,9 +755,27 @@ really_quit_dialog (void)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->action_area), button, TRUE, TRUE, 0);
   gtk_widget_show (button);
 
-  label = gtk_label_new (_("Some files unsaved.  Quit the GIMP?"));
-  gtk_misc_set_padding (GTK_MISC (label), 10, 1);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), label, TRUE, TRUE, 0);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox, TRUE, TRUE, 0);
+  gtk_widget_show (hbox);
+
+  gtk_widget_realize (dialog);
+  style = gtk_widget_get_style (dialog);
+
+  pixmap = gdk_pixmap_create_from_xpm_d (dialog->window,
+					 &mask,
+					 &style->bg[GTK_STATE_NORMAL],
+					 eek_xpm);
+  pixmap_widget = gtk_pixmap_new (pixmap, mask);
+  gtk_box_pack_start (GTK_BOX (hbox), pixmap_widget, FALSE, FALSE, 10);
+  gtk_widget_show (pixmap_widget);
+
+  gdk_pixmap_unref (pixmap);
+
+  label = gtk_label_new (_("Some files unsaved.\n\nQuit the GIMP?"));
+  gtk_misc_set_padding (GTK_MISC (label), 10, 10);
+  gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
   gtk_widget_show (label);
 
   gtk_widget_show (dialog);
