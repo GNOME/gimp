@@ -27,7 +27,6 @@
 #endif
 #include "config.h"
 #include "libgimp/gimp.h"
-#include "libgimp/stdplugins-intl.h"
 
 /* Author: Josh MacDonald. */
 
@@ -66,8 +65,6 @@ query (void)
   static gint nload_args = sizeof (load_args) / sizeof (load_args[0]);
   static gint nload_return_vals = (sizeof (load_return_vals) /
 				   sizeof (load_return_vals[0]));
-
-  INIT_I18N();
 
   gimp_install_procedure ("file_url_load",
                           "loads files given a URL",

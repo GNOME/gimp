@@ -67,8 +67,6 @@ query (void)
   };
   static gint nsave_args = sizeof (save_args) / sizeof (save_args[0]);
 
-  INIT_I18N();
-
   gimp_install_procedure ("file_header_save",
                           "saves files as C unsigned character array",
                           "FIXME: write help",

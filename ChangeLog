@@ -1,3 +1,15 @@
+Tue Feb  1 11:57:47 CET 2000  Sven Neumann <sven@gimp.org>
+
+	* app/gimpdrawable.c: check that the passed pointer is indeed a
+	drawable in a few more places
+
+	* plug-ins/common/header.c
+	* plug-ins/common/url.c
+	* plug-ins/script-fu/regex.c: i18n
+
+	* po-plug-ins/POTFILES.in: only list files that really do contain
+	translatable messages
+
 2000-02-01  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimpwidgets.[ch]: merged the table attach helper

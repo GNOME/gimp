@@ -277,9 +277,13 @@ gimp_drawable_type (GimpDrawable *drawable)
 GimpImageType
 gimp_drawable_type_with_alpha (GimpDrawable *drawable)
 {
-  GimpImageType type = gimp_drawable_type (drawable);
+  GimpImageType type;
+  gboolean has_alpha;
+  
+  g_assert (GIMP_IS_DRAWABLE (drawable));
 
-  gboolean has_alpha = gimp_drawable_has_alpha (drawable);
+  type = gimp_drawable_type (drawable);
+  has_alpha = gimp_drawable_has_alpha (drawable);
 
   if (has_alpha)
     return type;
@@ -302,12 +306,16 @@ gimp_drawable_type_with_alpha (GimpDrawable *drawable)
 gboolean
 gimp_drawable_visible (GimpDrawable *drawable)
 {
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
+
   return drawable->visible;
 }
 
 gchar *
 gimp_drawable_get_name (GimpDrawable *drawable)
 {
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
   return drawable->name;
 }
 
@@ -436,6 +444,8 @@ Parasite *
 gimp_drawable_parasite_find (const GimpDrawable *drawable,
 			     const gchar        *name)
 {
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
+
   return parasite_list_find (drawable->parasites, name);
 }
 
@@ -451,7 +461,10 @@ gchar **
 gimp_drawable_parasite_list (GimpDrawable *drawable,
 			     gint         *count)
 {
-  gchar **list, **cur;
+  gchar **list;
+  gchar **cur;
+
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   *count = parasite_list_length (drawable->parasites);
   cur = list = (gchar **) g_malloc (sizeof (gchar *) * *count);
@@ -465,6 +478,8 @@ void
 gimp_drawable_parasite_attach (GimpDrawable *drawable,
 			       Parasite     *parasite)
 {
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we arn't undoable */
   if (parasite_is_undoable (parasite))
@@ -504,6 +519,8 @@ gimp_drawable_parasite_detach (GimpDrawable *drawable,
 {
   Parasite *p;
 
+  g_return_if_fail (GIMP_IS_DRAWABLE (drawable));
+
   if (!(p = parasite_list_find (drawable->parasites, parasite)))
     return;
 
@@ -519,6 +536,8 @@ gimp_drawable_parasite_detach (GimpDrawable *drawable,
 Tattoo
 gimp_drawable_get_tattoo (const GimpDrawable *drawable)
 {
+  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), 0); 
+
   return drawable->tattoo;
 }
 

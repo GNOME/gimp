@@ -51,18 +51,7 @@ Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.  */
 # include <wctype.h>
 #endif
 
-/* This is for other GNU distributions with internationalized messages.  */
-#if HAVE_LIBINTL_H || defined (_LIBC)
-# include <libintl.h>
-#else
-# define gettext(msgid) (msgid)
-#endif
-
-#ifndef gettext_noop
-/* This define is so xgettext can find the internationalizable
-   strings.  */
-#define gettext_noop(String) String
-#endif
+#include "libgimp/stdplugins-intl.h"
 
 /* The `emacs' switch turns on certain matching commands
    that make sense only in Emacs. */
@@ -973,23 +962,23 @@ re_set_syntax (syntax)
 
 static const char *re_error_msgid[] =
   {
-    gettext_noop ("Success"),	/* REG_NOERROR */
-    gettext_noop ("No match"),	/* REG_NOMATCH */
-    gettext_noop ("Invalid regular expression"), /* REG_BADPAT */
-    gettext_noop ("Invalid collation character"), /* REG_ECOLLATE */
-    gettext_noop ("Invalid character class name"), /* REG_ECTYPE */
-    gettext_noop ("Trailing backslash"), /* REG_EESCAPE */
-    gettext_noop ("Invalid back reference"), /* REG_ESUBREG */
-    gettext_noop ("Unmatched [ or [^"),	/* REG_EBRACK */
-    gettext_noop ("Unmatched ( or \\("), /* REG_EPAREN */
-    gettext_noop ("Unmatched \\{"), /* REG_EBRACE */
-    gettext_noop ("Invalid content of \\{\\}"), /* REG_BADBR */
-    gettext_noop ("Invalid range end"),	/* REG_ERANGE */
-    gettext_noop ("Memory exhausted"), /* REG_ESPACE */
-    gettext_noop ("Invalid preceding regular expression"), /* REG_BADRPT */
-    gettext_noop ("Premature end of regular expression"), /* REG_EEND */
-    gettext_noop ("Regular expression too big"), /* REG_ESIZE */
-    gettext_noop ("Unmatched ) or \\)"), /* REG_ERPAREN */
+    N_("Success"),	/* REG_NOERROR */
+    N_("No match"),	/* REG_NOMATCH */
+    N_("Invalid regular expression"), /* REG_BADPAT */
+    N_("Invalid collation character"), /* REG_ECOLLATE */
+    N_("Invalid character class name"), /* REG_ECTYPE */
+    N_("Trailing backslash"), /* REG_EESCAPE */
+    N_("Invalid back reference"), /* REG_ESUBREG */
+    N_("Unmatched [ or [^"),	/* REG_EBRACK */
+    N_("Unmatched ( or \\("), /* REG_EPAREN */
+    N_("Unmatched \\{"), /* REG_EBRACE */
+    N_("Invalid content of \\{\\}"), /* REG_BADBR */
+    N_("Invalid range end"),	/* REG_ERANGE */
+    N_("Memory exhausted"), /* REG_ESPACE */
+    N_("Invalid preceding regular expression"), /* REG_BADRPT */
+    N_("Premature end of regular expression"), /* REG_EEND */
+    N_("Regular expression too big"), /* REG_ESIZE */
+    N_("Unmatched ) or \\)"), /* REG_ERPAREN */
   };
 
 /* Avoiding alloca during matching, to placate r_alloc.  */
@@ -5439,7 +5428,7 @@ re_comp (s)
   if (!s)
     {
       if (!re_comp_buf.buffer)
-	return gettext ("No previous regular expression");
+	return gettext (_("No previous regular expression"));
       return 0;
     }
 
