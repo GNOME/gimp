@@ -31,7 +31,6 @@
 #include "layer.h"
 #include "paint_core_16.h"
 #include "paint_funcs_area.h"
-#include "paint_funcs_row.h"
 #include "pixelarea.h"
 #include "pixelrow.h"
 #include "tools.h"

@@ -40,7 +40,6 @@
 #include "pixelrow.h"
 #include "canvas.h"
 #include "paint_funcs_area.h"
-#include "paint_funcs_row.h"
 
 
 /*  target size  */
@@ -763,7 +762,7 @@ blend  (
                         (startx - x1), (starty - y1),
                         (endx - x1), (endy - y1), opacity/100, paint_mode);
   
-/*   gimage_apply_painthit (gimage, drawable, NULL, buf, */
+/*   gimage_apply_painthit (gimage, drawable, NULL, &bufPR, */
 /*                          TRUE, opacity / 100, paint_mode, x1, y1); */
   
   drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
@@ -1547,7 +1546,8 @@ gradient_fill_region (GImage       *gimage,
             pixelarea_init (&PRapply, apply, NULL, 0, 0, 0, FOO, TRUE);
             copy_area (&PRrender, &PRapply);
             
-            gimage_apply_painthit (gimage, drawable, NULL, apply,
+            pixelarea_init (&PRapply, apply, NULL, 0, 0, 0, FOO, TRUE);
+            gimage_apply_painthit (gimage, drawable, NULL, &PRapply,
                                    TRUE, opacity, mode, 0, yy);
           }
       }
