@@ -20,6 +20,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <gdk/gdkkeysyms.h>
+
 #include "appenv.h"
 #include "color_select.h"
 #include "colormaps.h"
@@ -156,7 +158,7 @@ static gint color_select_color_events    (GtkWidget *, GdkEvent *);
 static void color_select_slider_update   (GtkAdjustment *, gpointer);
 static void color_select_entry_update    (GtkWidget *, gpointer);
 static void color_select_toggle_update   (GtkWidget *, gpointer);
-static gint color_select_hex_entry_leave (GtkWidget *, GdkEvent *, gpointer);
+static gint color_select_hex_entry_events(GtkWidget *, GdkEvent *, gpointer);
 
 static void color_select_image_fill      (GtkWidget *, ColorSelectFillType,
 					  gint *);
@@ -430,7 +432,10 @@ color_select_widget_new (ColorSelect *csp,
   gtk_widget_set_usize (GTK_WIDGET (csp->hex_entry), 75, 0);
   gtk_box_pack_end (GTK_BOX (hex_hbox), csp->hex_entry, FALSE, FALSE, 2);
   gtk_signal_connect (GTK_OBJECT (csp->hex_entry), "focus_out_event",
-		      (GtkSignalFunc) color_select_hex_entry_leave,
+		      (GtkSignalFunc) color_select_hex_entry_events,
+		      csp);
+  gtk_signal_connect (GTK_OBJECT (csp->hex_entry), "key_press_event",
+		      (GtkSignalFunc) color_select_hex_entry_events,
 		      csp);
   gtk_widget_show (csp->hex_entry);
 
@@ -1339,9 +1344,9 @@ color_select_toggle_update (GtkWidget *widget,
 }
 
 static gint
-color_select_hex_entry_leave (GtkWidget *widget,
-			      GdkEvent  *event,
-			      gpointer   data)
+color_select_hex_entry_events (GtkWidget *widget,
+			       GdkEvent  *event,
+			       gpointer   data)
 {
   ColorSelect *csp;
   gchar  buffer[8];
@@ -1350,15 +1355,24 @@ color_select_hex_entry_leave (GtkWidget *widget,
 
   csp = (ColorSelect *) data;
 
-  if (csp)
+  if (!csp)
+    return FALSE;
+  
+  switch (event->type)
     {
-      hex_color = g_strdup (gtk_entry_get_text (GTK_ENTRY (csp->hex_entry)));
+    case GDK_KEY_PRESS:
+      if (((GdkEventKey *)event)->keyval != GDK_Return)
+	break;
+      /*  else fall through  */
 
+    case GDK_FOCUS_CHANGE:
+      hex_color = g_strdup (gtk_entry_get_text (GTK_ENTRY (csp->hex_entry)));
+      
       g_snprintf(buffer, sizeof (buffer), "#%.2x%.2x%.2x",
 		 csp->values[COLOR_SELECT_RED],
 		 csp->values[COLOR_SELECT_GREEN],
 		 csp->values[COLOR_SELECT_BLUE]);
-
+      
       if ((strlen (hex_color) == 7) &&
 	  (g_strcasecmp (buffer, hex_color) != 0))
 	{
@@ -1370,8 +1384,14 @@ color_select_hex_entry_leave (GtkWidget *widget,
 				    hex_rgb & 0x0000ff,
 				    TRUE);
 	}
-
+      
       g_free (hex_color);
+      
+      break;
+      
+    default:
+      /*  do nothing  */
+      break;
     }
 
   return FALSE;

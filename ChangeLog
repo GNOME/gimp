@@ -1,3 +1,8 @@
+2000-05-25  Sven Neumann  <sven@gimp.org>
+
+	* app/color_select.c: update the color-selector when Return
+	is pressed in the hex-entry.
+
 Thu May 25 00:18:20 BST 2000 Andy Thomas <alt@gimp.org>
 
 	* plug-ins/common/wind.c
