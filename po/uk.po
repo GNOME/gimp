@@ -234,7 +234,7 @@ msgstr "Повтор:"
 
 #: app/blend.c:367
 msgid "Adaptive Supersampling"
-msgstr ""
+msgstr "Адаптивна ╕нтерполяц╕я"
 
 #: app/blend.c:395
 msgid "Max Depth:"
@@ -458,7 +458,7 @@ msgstr "Перетнути"
 
 #: app/by_color_select.c:766
 msgid "Fuzziness Threshold"
-msgstr ""
+msgstr "Пор╕г розпорошення"
 
 #: app/channel.c:187 app/channel.c:189 app/layer.c:310 app/layer.c:312
 msgid "copy"
@@ -492,7 +492,7 @@ msgstr "Y:"
 #. The wrap around option
 #: app/channel_ops.c:164
 msgid "Wrap Around"
-msgstr ""
+msgstr "Завертання"
 
 #: app/channel_ops.c:174 app/image_new.c:70 app/image_new.c:234
 #: app/layers_dialog.c:3422
