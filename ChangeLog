@@ -1,5 +1,10 @@
 2003-02-10  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpinktool.c: take the drawable offset into account
+	when painting (spotted by tigert).
+
+2003-02-10  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimptransformtool.[ch]: connect to GimpTransformOptions'
 	"notify" signal and update grid and path drawing accordingly.
 

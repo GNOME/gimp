@@ -289,6 +289,7 @@ gimp_ink_tool_button_press (GimpTool        *tool,
   GimpInkTool    *ink_tool;
   GimpInkOptions *options;
   GimpDrawable   *drawable;
+  GimpCoords      curr_coords;
   Blob           *b;
 
   ink_tool = GIMP_INK_TOOL (tool);
@@ -296,7 +297,18 @@ gimp_ink_tool_button_press (GimpTool        *tool,
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
 
-  ink_init (ink_tool, drawable, coords->x, coords->y);
+  curr_coords = *coords;
+
+  {
+    gint off_x, off_y;
+
+    gimp_drawable_offsets (drawable, &off_x, &off_y);
+
+    curr_coords.x -= off_x;
+    curr_coords.y -= off_y;
+  }
+
+  ink_init (ink_tool, drawable, curr_coords.x, curr_coords.y);
 
   gimp_tool_control_activate (tool->control);
   tool->gdisp = gdisp; 
@@ -305,11 +317,11 @@ gimp_ink_tool_button_press (GimpTool        *tool,
   gimp_image_selection_control (gdisp->gimage, GIMP_SELECTION_PAUSE);
 
   b = ink_pen_ellipse (options,
-                       coords->x,
-                       coords->y,
-		       coords->pressure,
-                       coords->xtilt,
-                       coords->ytilt,
+                       curr_coords.x,
+                       curr_coords.y,
+		       curr_coords.pressure,
+                       curr_coords.xtilt,
+                       curr_coords.ytilt,
 		       10.0);
 
   ink_paste (ink_tool, drawable, b);
@@ -317,10 +329,12 @@ gimp_ink_tool_button_press (GimpTool        *tool,
 
   time_smoother_init (ink_tool, time);
   ink_tool->last_time = time;
+
   dist_smoother_init (ink_tool, 0.0);
   ink_tool->init_velocity = TRUE;
-  ink_tool->lastx = coords->x;
-  ink_tool->lasty = coords->y;
+
+  ink_tool->lastx = curr_coords.x;
+  ink_tool->lasty = curr_coords.y;
 
   gimp_display_flush_now (gdisp);
 }
@@ -363,16 +377,28 @@ gimp_ink_tool_motion (GimpTool        *tool,
   GimpInkTool    *ink_tool;
   GimpInkOptions *options;
   GimpDrawable   *drawable;
-  Blob           *b, *blob_union;
-
-  gdouble velocity;
-  gdouble dist;
-  gdouble lasttime, thistime;
+  GimpCoords      curr_coords;
+  Blob           *b;
+  Blob           *blob_union;
+  gdouble         velocity;
+  gdouble         dist;
+  gdouble         lasttime, thistime;
 
   ink_tool = GIMP_INK_TOOL (tool);
   options  = GIMP_INK_OPTIONS (tool->tool_info->tool_options);
 
   drawable = gimp_image_active_drawable (gdisp->gimage);
+
+  curr_coords = *coords;
+
+  {
+    gint off_x, off_y;
+
+    gimp_drawable_offsets (drawable, &off_x, &off_y);
+
+    curr_coords.x -= off_x;
+    curr_coords.y -= off_y;
+  }
 
   lasttime = ink_tool->last_time;
 
@@ -392,34 +418,34 @@ gimp_ink_tool_motion (GimpTool        *tool,
   if (ink_tool->init_velocity)
     {
       dist_smoother_init (ink_tool,
-			  dist = sqrt ((ink_tool->lastx - coords->x) *
-                                       (ink_tool->lastx - coords->x) +
-				       (ink_tool->lasty - coords->y) *
-                                       (ink_tool->lasty - coords->y)));
+			  dist = sqrt ((ink_tool->lastx - curr_coords.x) *
+                                       (ink_tool->lastx - curr_coords.x) +
+				       (ink_tool->lasty - curr_coords.y) *
+                                       (ink_tool->lasty - curr_coords.y)));
       ink_tool->init_velocity = FALSE;
     }
   else
     {
       dist_smoother_add (ink_tool,
-			 sqrt ((ink_tool->lastx - coords->x) *
-                               (ink_tool->lastx - coords->x) +
-			       (ink_tool->lasty - coords->y) *
-                               (ink_tool->lasty - coords->y)));
+			 sqrt ((ink_tool->lastx - curr_coords.x) *
+                               (ink_tool->lastx - curr_coords.x) +
+			       (ink_tool->lasty - curr_coords.y) *
+                               (ink_tool->lasty - curr_coords.y)));
 
       dist = dist_smoother_result (ink_tool);
     }
 
-  ink_tool->lastx = coords->x;
-  ink_tool->lasty = coords->y;
+  ink_tool->lastx = curr_coords.x;
+  ink_tool->lasty = curr_coords.y;
 
   velocity = 10.0 * sqrt ((dist) / (gdouble) (thistime - lasttime));
 
   b = ink_pen_ellipse (options,
-                       coords->x,
-                       coords->y,
-                       coords->pressure,
-                       coords->xtilt,
-		       coords->ytilt,
+                       curr_coords.x,
+                       curr_coords.y,
+                       curr_coords.pressure,
+                       curr_coords.xtilt,
+		       curr_coords.ytilt,
                        velocity);
 
   blob_union = blob_convex_union (ink_tool->last_blob, b);
