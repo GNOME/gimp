@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpui.h
- * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
+ * gimpwidgets-utils.h
+ * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,9 +23,6 @@
 #define __GIMP_WIDGETS_UTILS_H__
 
 
-typedef gpointer (* GimpGetAccelContextFunc) (gpointer data);
-
-
 void          gimp_message_box          (const gchar *message,
                                          GtkCallback  callback,
                                          gpointer     data);
@@ -43,6 +40,12 @@ void          gimp_table_attach_stock   (GtkTable    *table,
 					 GtkWidget   *widget,
 					 gint         colspan,
 					 const gchar *stock_id);
+
+GtkIconSize   gimp_get_icon_size        (GtkWidget   *widget,
+                                         const gchar *stock_id,
+                                         GtkIconSize  max_size,
+                                         gint         width,
+                                         gint         height);
 
 const gchar * gimp_get_mod_name_shift   (void);
 const gchar * gimp_get_mod_name_control (void);

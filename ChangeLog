@@ -1,3 +1,23 @@
+2003-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcellrenderertoggle.c: fixed size calculation,
+	removed padding and the spacing between the icon and the frame
+	around it.
+
+	* app/widgets/gimpwidgets-utils.[ch]: added gimp_get_icon_size()
+	which returns the best matching icon size for a given allocation.
+
+	* app/widgets/gimpcomponenteditor.[ch]: adjust the eye icon's
+	size according to the preview_size.
+
+	* app/widgets/gimppreviewrenderer.c
+	(gimp_preview_renderer_default_render_stock): use gimp_get_icon_size()
+
+	* app/widgets/gimpcomponenteditor.c
+	* app/widgets/gimpcontainertreeview.c: iterate the tree model
+	using a for() loop instead of nested if() { do { } while() }
+	stuff.
+
 2003-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/core-enums.h: made the GimpPreviewSize enum values a

@@ -48,6 +48,7 @@ struct _GimpComponentEditor
   GtkTreeSelection  *selection;
 
   GtkTreeViewColumn *eye_column;
+  GtkCellRenderer   *eye_cell;
 
   GimpChannelType    clicked_component;
 };

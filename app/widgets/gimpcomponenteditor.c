@@ -36,6 +36,7 @@
 #include "gimpitemfactory.h"
 #include "gimpmenufactory.h"
 #include "gimppreviewrendererimage.h"
+#include "gimpwidgets-utils.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -157,15 +158,18 @@ gimp_component_editor_init (GimpComponentEditor *editor)
   gtk_tree_view_set_headers_visible (editor->view, FALSE);
 
   editor->eye_column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_sizing (editor->eye_column,
+                                   GTK_TREE_VIEW_COLUMN_AUTOSIZE);
   gtk_tree_view_append_column (editor->view, editor->eye_column);
 
-  cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
-  gtk_tree_view_column_pack_start (editor->eye_column, cell, FALSE);
-  gtk_tree_view_column_set_attributes (editor->eye_column, cell,
+  editor->eye_cell = gimp_cell_renderer_toggle_new (GIMP_STOCK_VISIBLE);
+  gtk_tree_view_column_pack_start (editor->eye_column, editor->eye_cell,
+                                   FALSE);
+  gtk_tree_view_column_set_attributes (editor->eye_column, editor->eye_cell,
                                        "active", COLUMN_VISIBLE,
                                        NULL);
 
-  g_signal_connect (cell, "toggled",
+  g_signal_connect (editor->eye_cell, "toggled",
                     G_CALLBACK (gimp_component_editor_toggled),
                     editor);
 
@@ -275,7 +279,8 @@ gimp_component_editor_new (gint             preview_size,
 
   editor = g_object_new (GIMP_TYPE_COMPONENT_EDITOR, NULL);
 
-  editor->preview_size = preview_size;
+  gimp_component_editor_set_preview_size (editor, preview_size);
+
   editor->item_factory = gimp_menu_factory_menu_new (menu_factory,
                                                      "<Channels>",
                                                      GTK_TYPE_MENU,
@@ -289,30 +294,47 @@ void
 gimp_component_editor_set_preview_size (GimpComponentEditor *editor,
                                         gint                 preview_size)
 {
-  GtkTreeIter iter;
+  GtkWidget   *tree_widget;
+  GtkIconSize  icon_size;
+  GtkTreeIter  iter;
+  gboolean     iter_valid;
 
   g_return_if_fail (GIMP_IS_COMPONENT_EDITOR (editor));
   g_return_if_fail (preview_size > 0 && preview_size <= GIMP_PREVIEW_MAX_SIZE);
 
-  if (gtk_tree_model_get_iter_first (editor->model, &iter))
+  tree_widget = GTK_WIDGET (editor->view);
+
+  icon_size = gimp_get_icon_size (tree_widget,
+                                  GIMP_STOCK_VISIBLE,
+                                  GTK_ICON_SIZE_BUTTON,
+                                  preview_size -
+                                  2 * tree_widget->style->xthickness,
+                                  preview_size -
+                                  2 * tree_widget->style->ythickness);
+
+  g_print ("icon_size = %d\n", icon_size);
+
+  g_object_set (editor->eye_cell,
+                "stock-size", icon_size,
+                NULL);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (editor->model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (editor->model, &iter))
     {
-      do
-        {
-          GimpPreviewRenderer *renderer;
+      GimpPreviewRenderer *renderer;
 
-          gtk_tree_model_get (editor->model, &iter,
-                              COLUMN_RENDERER, &renderer,
-                              -1);
+      gtk_tree_model_get (editor->model, &iter,
+                          COLUMN_RENDERER, &renderer,
+                          -1);
 
-          gimp_preview_renderer_set_size (renderer, preview_size, 1);
+      gimp_preview_renderer_set_size (renderer, preview_size, 1);
 
-          gtk_list_store_set (GTK_LIST_STORE (editor->model), &iter,
-                              COLUMN_RENDERER, renderer,
-                              -1);
+      gtk_list_store_set (GTK_LIST_STORE (editor->model), &iter,
+                          COLUMN_RENDERER, renderer,
+                          -1);
 
-          g_object_unref (renderer);
-        }
-      while (gtk_tree_model_iter_next (editor->model, &iter));
+      g_object_unref (renderer);
     }
 
   editor->preview_size = preview_size;

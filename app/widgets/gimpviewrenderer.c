@@ -46,6 +46,7 @@
 
 #include "gimppreviewrenderer.h"
 #include "gimppreviewrenderer-utils.h"
+#include "gimpwidgets-utils.h"
 
 
 enum
@@ -659,14 +660,8 @@ gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
                                             GtkWidget           *widget,
                                             const gchar         *stock_id)
 {
-  GdkPixbuf    *pixbuf;
-  GtkIconSet   *icon_set;
-  GtkIconSize  *sizes;
-  gint          n_sizes;
-  gint          i;
-  gint          width_diff  = 1024;
-  gint          height_diff = 1024;
-  GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
+  GdkPixbuf   *pixbuf;
+  GtkIconSize  icon_size;
 
   g_return_if_fail (GIMP_IS_PREVIEW_RENDERER (renderer));
   g_return_if_fail (GTK_IS_WIDGET (widget));
@@ -684,31 +679,8 @@ gimp_preview_renderer_default_render_stock (GimpPreviewRenderer *renderer,
       renderer->buffer = NULL;
     }
 
-  icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
-
-  gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
-
-  for (i = 0; i < n_sizes; i++)
-    {
-      gint icon_width;
-      gint icon_height;
-
-      if (gtk_icon_size_lookup (sizes[i], &icon_width, &icon_height))
-        {
-          if (icon_width  <= renderer->width  &&
-              icon_height <= renderer->height &&
-              (ABS (icon_width  - renderer->width)  < width_diff ||
-               ABS (icon_height - renderer->height) < height_diff))
-            {
-              width_diff  = ABS (icon_width  - renderer->width);
-              height_diff = ABS (icon_height - renderer->height);
-
-              icon_size = sizes[i];
-            }
-        }
-    }
-
-  g_free (sizes);
+  icon_size = gimp_get_icon_size (widget, stock_id, GTK_ICON_SIZE_INVALID,
+                                  renderer->width, renderer->height);
 
   pixbuf = gtk_widget_render_icon (widget, stock_id, icon_size, NULL);
 

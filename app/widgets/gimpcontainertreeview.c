@@ -533,29 +533,28 @@ gimp_container_tree_view_set_preview_size (GimpContainerView *view)
   GimpContainerTreeView *tree_view;
   GtkTreeModel          *tree_model;
   GtkTreeIter            iter;
+  gboolean               iter_valid;
 
   tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
   tree_model = GTK_TREE_MODEL (tree_view->list);
 
-  if (gtk_tree_model_get_iter_first (tree_model, &iter))
+  for (iter_valid = gtk_tree_model_get_iter_first (tree_model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (tree_model, &iter))
     {
-      do
-        {
-          GimpPreviewRenderer *renderer;
+      GimpPreviewRenderer *renderer;
 
-          gtk_tree_model_get (GTK_TREE_MODEL (tree_view->list), &iter,
-                              COLUMN_RENDERER, &renderer,
-                              -1);
+      gtk_tree_model_get (GTK_TREE_MODEL (tree_view->list), &iter,
+                          COLUMN_RENDERER, &renderer,
+                          -1);
 
-          gimp_preview_renderer_set_size (renderer, view->preview_size, 1);
+      gimp_preview_renderer_set_size (renderer, view->preview_size, 1);
 
-          gtk_list_store_set (tree_view->list, &iter,
-                              COLUMN_RENDERER, renderer,
-                              -1);
+      gtk_list_store_set (tree_view->list, &iter,
+                          COLUMN_RENDERER, renderer,
+                          -1);
 
-          g_object_unref (renderer);
-        }
-      while (gtk_tree_model_iter_next (tree_model, &iter));
+      g_object_unref (renderer);
     }
 }
 

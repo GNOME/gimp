@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpcellrenderertoggle.h
+ * gimpcellrenderertoggle.c
  * Copyright (C) 2003  Sven Neumann <sven@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -135,6 +135,9 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 static void
 gimp_cell_renderer_toggle_init (GimpCellRendererToggle *cell)
 {
+  GTK_CELL_RENDERER (cell)->xpad = 0;
+  GTK_CELL_RENDERER (cell)->ypad = 0;
+
   cell->stock_id   = NULL;
   cell->stock_size = DEFAULT_ICON_SIZE;
 }
@@ -252,9 +255,9 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
   pixbuf_height = gdk_pixbuf_get_height (toggle->pixbuf);
 
   calc_width  = (pixbuf_width +
-                 (gint) cell->xpad * 2 + widget->style->xthickness * 4);
+                 (gint) cell->xpad * 2 + widget->style->xthickness * 2);
   calc_height = (pixbuf_height +
-                 (gint) cell->ypad * 2 + widget->style->ythickness * 4);
+                 (gint) cell->ypad * 2 + widget->style->ythickness * 2);
 
   if (x_offset) *x_offset = 0;
   if (y_offset) *y_offset = 0;
@@ -263,15 +266,13 @@ gimp_cell_renderer_toggle_get_size (GtkCellRenderer *cell,
     {
       if (x_offset)
 	{
-	  *x_offset = (cell->xalign *
-                       (cell_area->width - calc_width - 2 * cell->xpad));
-	  *x_offset = (MAX (*x_offset, 0) + cell->xpad);
+	  *x_offset = cell->xalign * (cell_area->width - calc_width);
+	  *x_offset = MAX (*x_offset, 0);
 	}
       if (y_offset)
 	{
-	  *y_offset = (cell->yalign *
-                       (cell_area->height - calc_height - 2 * cell->ypad));
-	  *y_offset = (MAX (*y_offset, 0) + cell->ypad);
+	  *y_offset = cell->yalign * (cell_area->height - calc_height);
+	  *y_offset = MAX (*y_offset, 0);
 	}
     }
 
@@ -349,10 +350,10 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
     {
       GdkRectangle  draw_rect;
 
-      toggle_rect.x      += widget->style->xthickness * 2;
-      toggle_rect.y      += widget->style->ythickness * 2;
-      toggle_rect.width  -= widget->style->xthickness * 4;
-      toggle_rect.height -= widget->style->ythickness * 4;  
+      toggle_rect.x      += widget->style->xthickness;
+      toggle_rect.y      += widget->style->ythickness;
+      toggle_rect.width  -= widget->style->xthickness * 2;
+      toggle_rect.height -= widget->style->ythickness * 2;  
       
       if (gdk_rectangle_intersect (cell_area, &toggle_rect, &draw_rect) &&
           gdk_rectangle_intersect (expose_area, &draw_rect, &draw_rect))

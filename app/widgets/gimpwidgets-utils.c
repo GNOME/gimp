@@ -1,8 +1,8 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpui.c
- * Copyright (C) 1999 Michael Natterer <mitch@gimp.org>
+ * gimpwidgets-utils.c
+ * Copyright (C) 1999-2003 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -283,6 +283,65 @@ gimp_table_attach_stock (GtkTable    *table,
 			GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
       gtk_widget_show (image);
     }
+}
+
+GtkIconSize
+gimp_get_icon_size (GtkWidget   *widget,
+                    const gchar *stock_id,
+                    GtkIconSize  max_size,
+                    gint         width,
+                    gint         height)
+{
+  GtkIconSet   *icon_set;
+  GtkIconSize  *sizes;
+  gint          n_sizes;
+  gint          i;
+  gint          width_diff  = 1024;
+  gint          height_diff = 1024;
+  gint          max_width;
+  gint          max_height;
+  GtkIconSize   icon_size = GTK_ICON_SIZE_MENU;
+
+  g_return_val_if_fail (GTK_IS_WIDGET (widget), icon_size);
+  g_return_val_if_fail (stock_id != NULL, icon_size);
+  g_return_val_if_fail (width > 0, icon_size);
+  g_return_val_if_fail (height > 0, icon_size);
+
+  if (! gtk_icon_size_lookup (max_size, &max_width, &max_height))
+    {
+      max_width  = 1024;
+      max_height = 1024;
+    }
+
+  icon_set = gtk_style_lookup_icon_set (widget->style, stock_id);
+
+  gtk_icon_set_get_sizes (icon_set, &sizes, &n_sizes);
+
+  for (i = 0; i < n_sizes; i++)
+    {
+      gint icon_width;
+      gint icon_height;
+
+      if (gtk_icon_size_lookup (sizes[i], &icon_width, &icon_height))
+        {
+          if (icon_width  <= width      &&
+              icon_height <= height     &&
+              icon_width  <= max_width  &&
+              icon_height <= max_height &&
+              ((width  - icon_width)  < width_diff ||
+               (height - icon_height) < height_diff))
+            {
+              width_diff  = width  - icon_width;
+              height_diff = height - icon_height;
+
+              icon_size = sizes[i];
+            }
+        }
+    }
+
+  g_free (sizes);
+
+  return icon_size;
 }
 
 
