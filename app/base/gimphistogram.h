@@ -23,14 +23,13 @@
 
 #include "pixel_region.h"
 #include "gimpdrawable.h"
+#include "gimphistogramF.h"
 
 #define HISTOGRAM_VALUE  0
 #define HISTOGRAM_RED    1
 #define HISTOGRAM_GREEN  2
 #define HISTOGRAM_BLUE   3
 #define HISTOGRAM_ALPHA  4
-
-typedef struct _GimpHistogram GimpHistogram;
 
 
 GimpHistogram *gimp_histogram_new         ();

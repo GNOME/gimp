@@ -1,3 +1,14 @@
+1999-04-09  Jay Cox  <jaycox@earthlink.net>
+
+	* app/gimphistogramF.h: new file containing typedef for
+ 	GimpHistogram.
+
+	* app/gimphistogram.h: moved GimpHistogram typedef to
+ 	gimphistogramF.h
+
+	* app/lut_funcs.h: include gimphistogramF.h again now that the
+ 	file actually exists.
+
 Fri Apr  9 18:58:41 1999  Raph Levien  <raph@gimp.org>
 
 	* app/lut_funcs.h: changed the include to "gimphistogram.h" rather
