@@ -1,3 +1,8 @@
+2004-11-10  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-open.c (file_open_layer): add the image to the
+	list of recently used documents. Fixes bug #157879.
+
 2004-11-10  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/gfig/gfig-dialog.c: moved the tool options closer to the

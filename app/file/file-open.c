@@ -272,8 +272,9 @@ file_open_layer (Gimp               *gimp,
                  GimpPDBStatusType  *status,
                  GError            **error)
 {
-  GimpLayer *new_layer = NULL;
-  GimpImage *new_image;
+  GimpLayer   *new_layer = NULL;
+  GimpImage   *new_image;
+  const gchar *mime_type = NULL;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
@@ -283,9 +284,10 @@ file_open_layer (Gimp               *gimp,
   g_return_val_if_fail (status != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  new_image = file_open_image (gimp, context, progress, uri, uri,
+  new_image = file_open_image (gimp, context, progress,
+                               uri, uri,
                                NULL, GIMP_RUN_NONINTERACTIVE,
-                               status, NULL, error);
+                               status, &mime_type, error);
 
   if (new_image)
     {
@@ -314,21 +316,23 @@ file_open_layer (Gimp               *gimp,
 
       if (layer)
         {
-          GimpItem *new_item;
+          GimpItem *item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
+                                              G_TYPE_FROM_INSTANCE (layer),
+                                              TRUE);
 
-          new_item = gimp_item_convert (GIMP_ITEM (layer), dest_image,
-                                        G_TYPE_FROM_INSTANCE (layer),
-                                        TRUE);
-
-          if (new_item)
+          if (item)
             {
               gchar *basename;
 
-              new_layer = GIMP_LAYER (new_item);
+              new_layer = GIMP_LAYER (item);
 
               basename = file_utils_uri_to_utf8_basename (uri);
               gimp_object_set_name (GIMP_OBJECT (new_layer), basename);
               g_free (basename);
+
+              gimp_document_list_add_uri (GIMP_DOCUMENT_LIST (gimp->documents),
+                                          uri, mime_type);
+              gimp_recent_list_add_uri (uri, mime_type);
             }
         }
       else
