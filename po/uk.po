@@ -2666,7 +2666,7 @@ msgstr "Видалити шар"
 
 #: app/layers_dialog.c:372 app/paint_funcs.c:84 app/tool_options.c:917
 msgid "Normal"
-msgstr "Нормальна"
+msgstr "Нормальний"
 
 #: app/layers_dialog.c:373 app/paint_funcs.c:85 app/tool_options.c:918
 msgid "Dissolve"
@@ -2674,11 +2674,11 @@ msgstr "Розчинення"
 
 #: app/layers_dialog.c:374 app/paint_funcs.c:87 app/tool_options.c:920
 msgid "Multiply (Burn)"
-msgstr "Множення (Затемювач)"
+msgstr "Множення"
 
 #: app/layers_dialog.c:375 app/paint_funcs.c:99 app/tool_options.c:921
 msgid "Divide (Dodge)"
-msgstr "Д╕лення (Осв╕тлювач)"
+msgstr "Д╕лення"
 
 #: app/layers_dialog.c:376 app/paint_funcs.c:88 app/tool_options.c:922
 msgid "Screen"
@@ -2706,7 +2706,7 @@ msgstr "Зам╕на св╕тлим"
 
 #: app/layers_dialog.c:396
 msgid "Keep Trans."
-msgstr "Збер╕гати прозор╕сть"
+msgstr "Лишити прозор╕сть"
 
 #: app/layers_dialog.c:405
 msgid "Keep Transparency"
@@ -2718,7 +2718,7 @@ msgstr "Пуста коп╕я шару"
 
 #: app/layers_dialog.c:2169 app/layers_dialog.c:3326 app/layers_dialog.c:3693
 msgid "Floating Selection"
-msgstr "Плаваючи вид╕лення"
+msgstr "Плаваюче вид╕лення"
 
 #: app/layers_dialog.c:3476
 msgid "New Layer Options"

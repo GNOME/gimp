@@ -6145,7 +6145,7 @@ msgstr "<Image>/Ф╕льтри/Мапа/Без шв╕в"
 
 #: plug-ins/common/tiler.c:185
 msgid "Tiler..."
-msgstr ""
+msgstr "Розтин..."
 
 #: plug-ins/common/uniteditor.c:72
 msgid "<Toolbox>/Xtns/Unit Editor..."
@@ -6153,7 +6153,7 @@ msgstr "<Toolbox>/Розш./Редактор одиниць..."
 
 #: plug-ins/common/uniteditor.c:167 plug-ins/common/uniteditor.c:623
 msgid "New Unit"
-msgstr "Нови одиниця"
+msgstr "Нова одиниця"
 
 #: plug-ins/common/uniteditor.c:195
 msgid "ID:"
@@ -6161,43 +6161,43 @@ msgstr "╤дентиф╕катор:"
 
 #: plug-ins/common/uniteditor.c:207
 msgid "Factor:"
-msgstr ""
+msgstr "Множник:"
 
 #: plug-ins/common/uniteditor.c:218
 msgid "Digits:"
-msgstr ""
+msgstr "Цифри:"
 
 #: plug-ins/common/uniteditor.c:231
 msgid "Symbol:"
-msgstr ""
+msgstr "Позначення:"
 
 #: plug-ins/common/uniteditor.c:244
 msgid "Abbreviation:"
-msgstr ""
+msgstr "Скорочення:"
 
 #: plug-ins/common/uniteditor.c:257
 msgid "Singular:"
-msgstr ""
+msgstr "Однина:"
 
 #: plug-ins/common/uniteditor.c:270
 msgid "Plural:"
-msgstr ""
+msgstr "Множина:"
 
 #: plug-ins/common/uniteditor.c:307
 msgid "Unit factor must not be 0."
-msgstr ""
+msgstr "Множник одиниц╕ не може бути 0."
 
 #: plug-ins/common/uniteditor.c:317
 msgid "All text fields must contain a value."
-msgstr ""
+msgstr "Вс╕ текстов╕ поля мусять м╕стити значення."
 
 #: plug-ins/common/uniteditor.c:518
 msgid "Unit Editor"
-msgstr ""
+msgstr "Редактор одиниць"
 
 #: plug-ins/common/uniteditor.c:523 plug-ins/gimpressionist/presets.c:656
 msgid "Refresh"
-msgstr ""
+msgstr "Оновити"
 
 #: plug-ins/common/uniteditor.c:536
 msgid ""
@@ -6281,11 +6281,11 @@ msgstr "Дублювати одиницю"
 
 #: plug-ins/common/uniteditor.c:639
 msgid "Create a new unit with the currently seleted unit as template."
-msgstr ""
+msgstr "Створити нову одиницю з шаблоном - вибраною одиницею"
 
 #: plug-ins/common/uniteditor.c:642
 msgid "Don't Save Unit"
-msgstr ""
+msgstr "Не збер╕гати одиницю"
 
 #: plug-ins/common/uniteditor.c:649
 msgid "Don't save the currently selected unit before GIMP exits."
@@ -11005,15 +11005,15 @@ msgstr ""
 
 #: plug-ins/gimpressionist/placement.c:112
 msgid "Stroke density:"
-msgstr ""
+msgstr "Щ╕льн╕сть мазк╕в:"
 
 #: plug-ins/gimpressionist/placement.c:123
 msgid "The relative density of the brush strokes"
-msgstr ""
+msgstr "В╕дносна щ╕льн╕ть мазк╕в пензлем"
 
 #: plug-ins/gimpressionist/placement.c:125
 msgid "Centerize"
-msgstr ""
+msgstr "Центруванти"
 
 #: plug-ins/gimpressionist/placement.c:129
 msgid "Focus the brush strokes around the center of the image"
