@@ -49,5 +49,11 @@ Changes in GIMP 2.3
 - speed up burn compositing function
 - added Altivec versions of some compositing functions
 - added PDB API to control the number of columns in a palette
+- allow to control hue overlap in Hue-Saturation tool
+- added a PDB API to register menu branches
+- added missing mnemonics
+- improved Screenshot plug-in
+- allow to drag brushes/patterns/gradients... to the selectors in Script-Fu
+- allow to save images by dragging them to a filemanager that supports the
+  XDS protocol
 - lots of bug-fixes
-
