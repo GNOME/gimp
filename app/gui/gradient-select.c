@@ -34,7 +34,6 @@
 #include "gimpdatafactoryview.h"
 #include "gimpcontext.h"
 #include "gimpdatafactory.h"
-#include "gimpdnd.h"
 #include "gimpgradient.h"
 #include "gradient_editor.h"
 #include "gradient_select.h"
@@ -47,9 +46,6 @@
 
 static void gradient_select_change_callbacks     (GradientSelect *gsp,
 						  gboolean        closing);
-static void gradient_select_drop_gradient        (GtkWidget      *widget,
-						  GimpViewable   *viewable,
-						  gpointer        data);
 static void gradient_select_gradient_changed     (GimpContext    *context,
 						  GimpGradient   *gradient,
 						  GradientSelect *gsp);
@@ -62,10 +58,11 @@ static void gradient_select_edit_gradient        (GimpData        *data);
 GSList *gradient_active_dialogs = NULL;
 
 /*  the main gradient selection dialog  */
-GradientSelect *gradient_select_dialog  = NULL;
+GradientSelect *gradient_select_dialog = NULL;
 
-/*  gradient editor dialog  */
-static GradientEditor *gradient_editor_dialog;
+
+/*  the main gradient editor dialog  */
+static GradientEditor *gradient_editor_dialog = NULL;
 
 
 /*  public functions  */
@@ -178,15 +175,6 @@ gradient_select_new (gchar *title,
 					  10, 10);
   gtk_box_pack_start (GTK_BOX (vbox), gsp->view, TRUE, TRUE, 0);
   gtk_widget_show (gsp->view);
-
-  gimp_gtk_drag_dest_set_by_type (gsp->view,
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GIMP_TYPE_GRADIENT,
-                                  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (gsp->view),
-                              GIMP_TYPE_GRADIENT,
-                              gradient_select_drop_gradient,
-                              gsp);
 
   gtk_widget_show (vbox);
 
@@ -320,18 +308,6 @@ gradient_select_dialogs_check (void)
 	    }
 	}
     }
-}
-
-static void
-gradient_select_drop_gradient (GtkWidget    *widget,
-			       GimpViewable *viewable,
-			       gpointer      data)
-{
-  GradientSelect *gsp;
-
-  gsp = (GradientSelect *) data;
-
-  gimp_context_set_gradient (gsp->context, GIMP_GRADIENT (viewable));
 }
 
 static void

@@ -28,6 +28,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontainerlistview.h"
 #include "gimpcontext.h"
+#include "gimpdnd.h"
 #include "gimplist.h"
 #include "gimppreview.h"
 
@@ -57,6 +58,11 @@ static void     gimp_container_list_view_name_changed (GimpViewable           *v
 static void    gimp_container_list_view_item_selected (GtkWidget              *widget,
 						       GtkWidget              *child,
 						       gpointer                data);
+static gint    gimp_container_list_view_item_activate (GtkWidget              *widget,
+						       GdkEventButton         *bevent,
+						       gpointer                data);
+static GimpViewable * gimp_container_list_view_drag_viewable (GtkWidget       *widget,
+							      gpointer         data);
 
 
 static GimpContainerViewClass *parent_class = NULL;
@@ -235,6 +241,19 @@ gimp_container_list_view_insert_item (GimpContainerView *view,
      GTK_SIGNAL_FUNC (gimp_container_list_view_name_changed),
      label,
      GTK_OBJECT (list_view));
+
+  gtk_signal_connect (GTK_OBJECT (list_item), "button_press_event",
+		      GTK_SIGNAL_FUNC (gimp_container_list_view_item_activate),
+		      list_view);
+
+  gimp_gtk_drag_source_set_by_type (list_item,
+				    GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
+				    view->container->children_type,
+				    GDK_ACTION_COPY);
+  gimp_dnd_viewable_source_set (GTK_WIDGET (list_item),
+				view->container->children_type,
+				gimp_container_list_view_drag_viewable,
+				list_view);
 
   gtk_widget_show (list_item);
 
@@ -417,6 +436,35 @@ gimp_container_list_view_item_selected (GtkWidget *widget,
   viewable = GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (child),
 						"preview"))->viewable;
 
-  gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
-				     viewable);
+  gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data), viewable);
+}
+
+static gint
+gimp_container_list_view_item_activate (GtkWidget      *widget,
+					GdkEventButton *bevent,
+					gpointer        data)
+{
+  if (bevent->type == GDK_2BUTTON_PRESS)
+    {
+      GimpViewable *viewable;
+
+      viewable = GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (widget),
+						    "preview"))->viewable;
+
+      gimp_container_view_item_activate (GIMP_CONTAINER_VIEW (data), viewable);
+    }
+
+  return FALSE;
+}
+
+static GimpViewable *
+gimp_container_list_view_drag_viewable (GtkWidget *widget,
+					gpointer   data)
+{
+  GimpViewable *viewable;
+
+  viewable = GIMP_PREVIEW (gtk_object_get_data (GTK_OBJECT (widget),
+						"preview"))->viewable;
+
+  return viewable;
 }

@@ -25,6 +25,7 @@
 #include "gimpcontainer.h"
 #include "gimpcontainerview.h"
 #include "gimpcontext.h"
+#include "gimpdnd.h"
 #include "gimpmarshal.h"
 #include "gimpviewable.h"
 
@@ -35,6 +36,7 @@ enum
   REMOVE_ITEM,
   REORDER_ITEM,
   SELECT_ITEM,
+  ACTIVATE_ITEM,
   CLEAR_ITEMS,
   SET_PREVIEW_SIZE,
   LAST_SIGNAL
@@ -64,6 +66,9 @@ static void   gimp_container_view_reorder     (GimpContainerView      *view,
 static void   gimp_container_view_context_changed (GimpContext        *context,
 						   GimpViewable       *viewable,
 						   GimpContainerView  *view);
+static void   gimp_container_view_drop_viewable_callback (GtkWidget    *widget,
+							  GimpViewable *viewable,
+							  gpointer      data);
 
 
 static guint  view_signals[LAST_SIGNAL] = { 0 };
@@ -150,6 +155,17 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
                     GIMP_TYPE_OBJECT,
 		    GTK_TYPE_POINTER);
 
+  view_signals[ACTIVATE_ITEM] =
+    gtk_signal_new ("activate_item",
+                    GTK_RUN_FIRST,
+                    object_class->type,
+                    GTK_SIGNAL_OFFSET (GimpContainerViewClass,
+                                       activate_item),
+                    gtk_marshal_NONE__POINTER_POINTER,
+                    GTK_TYPE_NONE, 2,
+                    GIMP_TYPE_OBJECT,
+		    GTK_TYPE_POINTER);
+
   view_signals[CLEAR_ITEMS] =
     gtk_signal_new ("clear_items",
                     GTK_RUN_FIRST,
@@ -176,6 +192,7 @@ gimp_container_view_class_init (GimpContainerViewClass *klass)
   klass->remove_item      = NULL;
   klass->reorder_item     = NULL;
   klass->select_item      = NULL;
+  klass->activate_item    = NULL;
   klass->clear_items      = gimp_container_view_real_clear_items;
   klass->set_preview_size = NULL;
 }
@@ -244,6 +261,10 @@ gimp_container_view_set_container (GimpContainerView *view,
 	  gtk_signal_disconnect_by_func (GTK_OBJECT (view->context),
 					 gimp_container_view_context_changed,
 					 view);
+
+	  gtk_drag_dest_unset (GTK_WIDGET (view));
+	  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
+					view->container->children_type);
 	}
     }
 
@@ -285,6 +306,15 @@ gimp_container_view_set_container (GimpContainerView *view,
 
 	  gimp_container_view_select_item (view,
 					   object ? GIMP_VIEWABLE (object): NULL);
+
+	  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
+					  GTK_DEST_DEFAULT_ALL,
+					  view->container->children_type,
+					  GDK_ACTION_COPY);
+	  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
+				      view->container->children_type,
+				      gimp_container_view_drop_viewable_callback,
+				      NULL);
 	}
     }
 }
@@ -305,6 +335,10 @@ gimp_container_view_set_context (GimpContainerView *view,
       gtk_signal_disconnect_by_func (GTK_OBJECT (view->context),
 				     gimp_container_view_context_changed,
 				     view);
+
+      gtk_drag_dest_unset (GTK_WIDGET (view));
+      gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
+				    view->container->children_type);
     }
 
   view->context = context;
@@ -326,6 +360,15 @@ gimp_container_view_set_context (GimpContainerView *view,
 
       gimp_container_view_select_item (view,
 				       object ? GIMP_VIEWABLE (object) : NULL);
+
+      gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
+				      GTK_DEST_DEFAULT_ALL,
+				      view->container->children_type,
+				      GDK_ACTION_COPY);
+      gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
+				  view->container->children_type,
+				  gimp_container_view_drop_viewable_callback,
+				  NULL);
     }
 }
 
@@ -359,6 +402,23 @@ gimp_container_view_select_item (GimpContainerView *view,
 }
 
 void
+gimp_container_view_activate_item (GimpContainerView *view,
+				   GimpViewable      *viewable)
+{
+  gpointer insert_data;
+
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (viewable != NULL);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  insert_data = g_hash_table_lookup (view->hash_table, viewable);
+
+  gtk_signal_emit (GTK_OBJECT (view), view_signals[ACTIVATE_ITEM],
+		   viewable, insert_data);
+}
+
+void
 gimp_container_view_item_selected (GimpContainerView *view,
 				   GimpViewable      *viewable)
 {
@@ -373,6 +433,18 @@ gimp_container_view_item_selected (GimpContainerView *view,
   gimp_context_set_by_type (view->context,
 			    view->container->children_type,
 			    GIMP_OBJECT (viewable));
+}
+
+void
+gimp_container_view_item_activate (GimpContainerView *view,
+				   GimpViewable      *viewable)
+{
+  g_return_if_fail (view != NULL);
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+  g_return_if_fail (viewable != NULL);
+  g_return_if_fail (GIMP_IS_VIEWABLE (viewable));
+
+  gimp_container_view_activate_item (view, viewable);
 }
 
 static void
@@ -464,4 +536,18 @@ gimp_container_view_context_changed (GimpContext       *context,
 
   gtk_signal_emit (GTK_OBJECT (view), view_signals[SELECT_ITEM],
 		   viewable, insert_data);
+}
+
+static void
+gimp_container_view_drop_viewable_callback (GtkWidget    *widget,
+					    GimpViewable *viewable,
+					    gpointer      data)
+{
+  GimpContainerView *view;
+
+  view = GIMP_CONTAINER_VIEW (widget);
+
+  gimp_context_set_by_type (view->context,
+                            view->container->children_type,
+                            GIMP_OBJECT (viewable));
 }

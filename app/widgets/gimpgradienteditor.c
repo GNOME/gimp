@@ -2933,7 +2933,8 @@ cpopup_adjust_blending_menu (GradientEditor *gradient_editor)
 
   for (i = 0; i < num_items; i++)
     gtk_signal_handler_block_by_data
-      (GTK_OBJECT (gradient_editor->control_blending_items[i]), (gpointer) i);
+      (GTK_OBJECT (gradient_editor->control_blending_items[i]),
+       gradient_editor);
 
   /* Set state */
   if (equal)
@@ -2949,7 +2950,8 @@ cpopup_adjust_blending_menu (GradientEditor *gradient_editor)
 
   /* Unblock signals */
   for (i = 0; i < num_items; i++)
-    gtk_signal_handler_unblock_by_data (GTK_OBJECT (gradient_editor->control_blending_items[i]), (gpointer) i);
+    gtk_signal_handler_unblock_by_data (GTK_OBJECT (gradient_editor->control_blending_items[i]),
+					gradient_editor);
 }
 
 static void
@@ -2968,7 +2970,8 @@ cpopup_adjust_coloring_menu (GradientEditor *gradient_editor)
   coloring = (int) gradient_editor->control_sel_l->color;
 
   for (i = 0; i < num_items; i++)
-    gtk_signal_handler_block_by_data (GTK_OBJECT (gradient_editor->control_coloring_items[i]), (gpointer) i);
+    gtk_signal_handler_block_by_data (GTK_OBJECT (gradient_editor->control_coloring_items[i]),
+				      gradient_editor);
 
   /* Set state */
   if (equal)
@@ -2984,7 +2987,8 @@ cpopup_adjust_coloring_menu (GradientEditor *gradient_editor)
 
   /* Unblock signals */
   for (i = 0; i < num_items; i++)
-    gtk_signal_handler_unblock_by_data (GTK_OBJECT (gradient_editor->control_coloring_items[i]), (gpointer) i);
+    gtk_signal_handler_unblock_by_data (GTK_OBJECT (gradient_editor->control_coloring_items[i]),
+					gradient_editor);
 }
 
 static void

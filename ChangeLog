@@ -1,3 +1,43 @@
+2001-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimpdnd.[ch]: added DND source functions which work by
+	GtkType.
+
+	* app/commands.c
+	* app/brush_select.c
+	* app/gradient_select.[ch]
+	* app/pattern_select.c: removed the DND code here because it's all
+	done by the GimpContainerView now.
+
+	* app/gimpbrushpreview.c
+	* app/gimpgradientpreview.c
+	* app/gimppalettepreview.c
+	* app/gimppatternpreview.c: use the DND by-type connect functions.
+
+	* app/gimpbrushgenerated.c: implemented "duplicate", cleanup.
+
+	* app/gimpcontainergridview.c
+	* app/gimpcontainerlistview.c
+	* app/gimpcontainerview.[ch]: added a "activate_item" signal
+	method which is emitted by the subclasses to indicate double click.
+
+	* app/gimpdatafactoryview.c: connect to "activate_item" and show
+	the editor.
+
+	* app/convert.c
+	* app/gimppalette.[ch]
+	* app/palette.c
+	* app/paletteP.h
+	* app/palette_import.c
+	* app/palette_select.[ch]: major cleanup: Behaves like the other
+	datatypes now: DND, context stuff, GimpContainerListViews in
+	the dialogs etc. Mostly just removal of code.
+
+	* app/gradient_editor.c: fixed signal blocking/unblocking.
+
+	* plug-ins/script-fu/scripts/Makefile.am: install the "Test Sphere"
+	script again.
+
 2001-02-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/gimpcontainer.[ch]

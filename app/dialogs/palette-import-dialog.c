@@ -573,8 +573,6 @@ palette_import_create_from_grad (gchar *name)
 
       gimp_container_add (global_palette_factory->container,
 			  GIMP_OBJECT (palette));
-
-      palette_insert_all (palette);
     }
 }
 
@@ -758,8 +756,6 @@ palette_import_image_make_palette (GHashTable *h_array,
   g_slist_free (sorted_list);
 
   gimp_container_add (global_palette_factory->container, GIMP_OBJECT (palette));
-
-  palette_insert_all (palette);
 }
 
 static void
@@ -874,8 +870,6 @@ palette_import_create_from_indexed (GImage *gimage,
     }
 
   gimp_container_add (global_palette_factory->container, GIMP_OBJECT (palette));
-
-  palette_insert_all (palette);
 }
 
 /*  the palette import action area callbacks  ********************************/

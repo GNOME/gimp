@@ -624,6 +624,79 @@ gimp_dnd_color_dest_unset (GtkWidget *widget)
 /*  GimpViewable (by GtkType) dnd functions  */
 /*********************************************/
 
+static const GtkTargetEntry brush_target_table[] =
+{
+  GIMP_TARGET_BRUSH
+};
+static const guint brush_n_targets = (sizeof (brush_target_table) /
+				      sizeof (brush_target_table[0]));
+
+static const GtkTargetEntry pattern_target_table[] =
+{
+  GIMP_TARGET_PATTERN
+};
+static const guint pattern_n_targets = (sizeof (pattern_target_table) /
+					sizeof (pattern_target_table[0]));
+
+static const GtkTargetEntry gradient_target_table[] =
+{
+  GIMP_TARGET_GRADIENT
+};
+static const guint gradient_n_targets = (sizeof (gradient_target_table) /
+					 sizeof (gradient_target_table[0]));
+
+static const GtkTargetEntry palette_target_table[] =
+{
+  GIMP_TARGET_PALETTE
+};
+static const guint palette_n_targets = (sizeof (palette_target_table) /
+					sizeof (palette_target_table[0]));
+
+
+void
+gimp_gtk_drag_source_set_by_type (GtkWidget               *widget,
+				  GdkModifierType          start_button_mask,
+				  GtkType                  type,
+				  GdkDragAction            actions)
+{
+  const GtkTargetEntry *target_table = NULL;
+  guint                 n_targets    = 0;
+
+  if (type == GIMP_TYPE_BRUSH)
+    {
+      target_table = brush_target_table;
+      n_targets    = brush_n_targets;
+    }
+  else if (type == GIMP_TYPE_PATTERN)
+    {
+      target_table = pattern_target_table;
+      n_targets    = pattern_n_targets;
+    }
+  else if (type == GIMP_TYPE_GRADIENT)
+    {
+      target_table = gradient_target_table;
+      n_targets    = gradient_n_targets;
+    }
+  else if (type == GIMP_TYPE_PALETTE)
+    {
+      target_table = palette_target_table;
+      n_targets    = palette_n_targets;
+    }
+  else
+    {
+      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
+    }
+
+  if (target_table && n_targets)
+    {
+      gtk_drag_source_set (widget, start_button_mask,
+			   target_table,
+			   n_targets,
+			   actions);
+    }
+
+}
+
 void
 gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
 				GtkDestDefaults  flags,
@@ -632,34 +705,6 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
 {
   const GtkTargetEntry *target_table = NULL;
   guint                 n_targets    = 0;
-
-  static const GtkTargetEntry brush_target_table[] =
-  {
-    GIMP_TARGET_BRUSH
-  };
-  static const guint brush_n_targets = (sizeof (brush_target_table) /
-					sizeof (brush_target_table[0]));
-
-  static const GtkTargetEntry pattern_target_table[] =
-  {
-    GIMP_TARGET_PATTERN
-  };
-  static const guint pattern_n_targets = (sizeof (pattern_target_table) /
-					  sizeof (pattern_target_table[0]));
-
-  static const GtkTargetEntry gradient_target_table[] =
-  {
-    GIMP_TARGET_GRADIENT
-  };
-  static const guint gradient_n_targets = (sizeof (gradient_target_table) /
-					   sizeof (gradient_target_table[0]));
-
-  static const GtkTargetEntry palette_target_table[] =
-  {
-    GIMP_TARGET_PALETTE
-  };
-  static const guint palette_n_targets = (sizeof (palette_target_table) /
-					  sizeof (palette_target_table[0]));
 
   if (type == GIMP_TYPE_BRUSH)
     {
@@ -692,6 +737,42 @@ gimp_gtk_drag_dest_set_by_type (GtkWidget       *widget,
 			 target_table,
 			 n_targets,
 			 actions);
+    }
+}
+
+void
+gimp_dnd_viewable_source_set (GtkWidget               *widget,
+			      GtkType                  type,
+			      GimpDndDragViewableFunc  get_viewable_func,
+			      gpointer                 data)
+{
+  if (type == GIMP_TYPE_BRUSH)
+    {
+      gimp_dnd_brush_source_set (widget,
+				 (GimpDndDragBrushFunc) get_viewable_func,
+				 data);
+    }
+  else if (type == GIMP_TYPE_PATTERN)
+    {
+      gimp_dnd_pattern_source_set (widget,
+				   (GimpDndDragPatternFunc) get_viewable_func,
+				   data);
+    }
+  else if (type == GIMP_TYPE_GRADIENT)
+    {
+      gimp_dnd_gradient_source_set (widget,
+				    (GimpDndDragGradientFunc) get_viewable_func,
+				    data);
+    }
+  else if (type == GIMP_TYPE_PALETTE)
+    {
+      gimp_dnd_palette_source_set (widget,
+				   (GimpDndDragPaletteFunc) get_viewable_func,
+				   data);
+    }
+  else
+    {
+      g_warning ("%s(): unsupported GtkType", G_GNUC_FUNCTION);
     }
 }
 

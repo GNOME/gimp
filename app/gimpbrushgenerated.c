@@ -48,12 +48,13 @@
 
 
 /*  local function prototypes  */
-static void     gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass);
-static void       gimp_brush_generated_init     (GimpBrushGenerated *brush);
-static void       gimp_brush_generated_destroy  (GtkObject          *object);
-static gboolean   gimp_brush_generated_save     (GimpData           *data);
-static void       gimp_brush_generated_dirty    (GimpData           *data);
-static gchar    * gimp_brush_generated_get_extension (GimpData      *data);
+static void     gimp_brush_generated_class_init  (GimpBrushGeneratedClass *klass);
+static void       gimp_brush_generated_init      (GimpBrushGenerated *brush);
+static void       gimp_brush_generated_destroy   (GtkObject          *object);
+static gboolean   gimp_brush_generated_save      (GimpData           *data);
+static void       gimp_brush_generated_dirty     (GimpData           *data);
+static gchar    * gimp_brush_generated_get_extension (GimpData       *data);
+static GimpData * gimp_brush_generated_duplicate (GimpData           *data);
 
 
 static GimpBrushClass *parent_class = NULL;
@@ -100,6 +101,7 @@ gimp_brush_generated_class_init (GimpBrushGeneratedClass *klass)
   data_class->save          = gimp_brush_generated_save;
   data_class->dirty         = gimp_brush_generated_dirty;
   data_class->get_extension = gimp_brush_generated_get_extension;
+  data_class->duplicate     = gimp_brush_generated_duplicate;
 }
 
 static void
@@ -170,6 +172,19 @@ static gchar *
 gimp_brush_generated_get_extension (GimpData *data)
 {
   return GIMP_BRUSH_GENERATED_FILE_EXTENSION;
+}
+
+static GimpData *
+gimp_brush_generated_duplicate (GimpData *data)
+{
+  GimpBrushGenerated *brush;
+
+  brush = GIMP_BRUSH_GENERATED (data);
+
+  return gimp_brush_generated_new (brush->radius,
+				   brush->hardness,
+				   brush->angle,
+				   brush->aspect_ratio);
 }
 
 static double

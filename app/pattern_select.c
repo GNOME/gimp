@@ -30,10 +30,9 @@
 #include "context_manager.h"
 #include "dialog_handler.h"
 #include "gimpcontainer.h"
-#include "gimpdatafactoryview.h"
 #include "gimpcontext.h"
+#include "gimpdatafactoryview.h"
 #include "gimpdatafactory.h"
-#include "gimpdnd.h"
 #include "gimppattern.h"
 #include "pattern_select.h"
 #include "session.h"
@@ -53,9 +52,6 @@
 static void     pattern_select_change_callbacks       (PatternSelect *psp,
 						       gboolean       closing);
 
-static void     pattern_select_drop_pattern           (GtkWidget     *widget,
-						       GimpViewable  *viewable,
-						       gpointer       data);
 static void     pattern_select_pattern_changed        (GimpContext   *context,
 						       GimpPattern   *pattern,
 						       PatternSelect *psp);
@@ -209,15 +205,6 @@ pattern_select_new (gchar *title,
   gtk_box_pack_start (GTK_BOX (vbox), psp->view, TRUE, TRUE, 0);
   gtk_widget_show (psp->view);
 
-  gimp_gtk_drag_dest_set_by_type (psp->view,
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GIMP_TYPE_PATTERN,
-                                  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (psp->view),
-			      GIMP_TYPE_PATTERN,
-			      pattern_select_drop_pattern,
-                              psp);
-
   gtk_widget_show (vbox);
 
   /*  add callbacks to keep the display area current  */
@@ -352,19 +339,6 @@ pattern_select_dialogs_check (void)
 /*
  *  Local functions
  */
-
-static void
-pattern_select_drop_pattern (GtkWidget    *widget,
-			     GimpViewable *viewable,
-			     gpointer      data)
-{
-  PatternSelect *psp;
-
-  psp = (PatternSelect *) data;
-
-  gimp_context_set_pattern (psp->context, GIMP_PATTERN (viewable));
-}
-
 
 static void
 pattern_select_pattern_changed (GimpContext   *context,

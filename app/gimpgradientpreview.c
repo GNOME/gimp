@@ -42,7 +42,7 @@ static void          gimp_gradient_preview_get_size     (GimpPreview *preview,
 static gboolean      gimp_gradient_preview_needs_popup  (GimpPreview *preview);
 static GtkWidget   * gimp_gradient_preview_create_popup (GimpPreview *preview);
 
-static GimpGradient * gimp_gradient_preview_drag_gradient (GtkWidget   *widget,
+static GimpViewable * gimp_gradient_preview_drag_viewable (GtkWidget   *widget,
 							   gpointer     data);
 
 
@@ -94,20 +94,14 @@ gimp_gradient_preview_class_init (GimpGradientPreviewClass *klass)
 static void
 gimp_gradient_preview_init (GimpGradientPreview *gradient_preview)
 {
-  static GtkTargetEntry preview_target_table[] =
-  {
-    GIMP_TARGET_GRADIENT
-  };
-  static guint preview_n_targets = (sizeof (preview_target_table) /
-				    sizeof (preview_target_table[0]));
-
-  gtk_drag_source_set (GTK_WIDGET (gradient_preview),
-                       GDK_BUTTON2_MASK,
-                       preview_target_table, preview_n_targets,
-                       GDK_ACTION_COPY);
-  gimp_dnd_gradient_source_set (GTK_WIDGET (gradient_preview),
-				gimp_gradient_preview_drag_gradient,
-				gradient_preview);
+  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (gradient_preview),
+				    GDK_BUTTON2_MASK,
+				    GIMP_TYPE_GRADIENT,
+				    GDK_ACTION_COPY);
+  gimp_dnd_viewable_source_set (GTK_WIDGET (gradient_preview),
+				GIMP_TYPE_GRADIENT,
+				gimp_gradient_preview_drag_viewable,
+				NULL);
 }
 
 static void
@@ -181,13 +175,9 @@ gimp_gradient_preview_create_popup (GimpPreview *preview)
 				TRUE, FALSE, FALSE);
 }
 
-static GimpGradient *
-gimp_gradient_preview_drag_gradient (GtkWidget *widget,
+static GimpViewable *
+gimp_gradient_preview_drag_viewable (GtkWidget *widget,
 				     gpointer   data)
 {
-  GimpPreview *preview;
-
-  preview = GIMP_PREVIEW (data);
-
-  return GIMP_GRADIENT (preview->viewable);
+  return GIMP_PREVIEW (widget)->viewable;
 }

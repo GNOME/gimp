@@ -115,8 +115,6 @@ gimp_palette_init (GimpPalette *palette)
   palette->n_colors  = 0;
 
   palette->n_columns = 0;
-
-  palette->pixmap    = NULL;
 }
 
 static void
@@ -138,9 +136,6 @@ gimp_palette_destroy (GtkObject *object)
     }
 
   g_list_free (palette->colors);
-
-  if (palette->pixmap)
-    gdk_pixmap_unref (palette->pixmap);
 
   if (GTK_OBJECT_CLASS (parent_class)->destroy)
     GTK_OBJECT_CLASS (parent_class)->destroy (object);
@@ -552,70 +547,6 @@ gimp_palette_delete_entry (GimpPalette      *palette,
 	}
 
       gimp_data_dirty (GIMP_DATA (palette));
-    }
-}
-
-void 
-gimp_palette_update_preview (GimpPalette *palette,
-			     GdkGC       *gc)
-{
-  GimpPaletteEntry *entry;
-  guchar            rgb_buf[SM_PREVIEW_WIDTH * SM_PREVIEW_HEIGHT * 3];
-  GList            *list;
-  gint              index;
-
-  g_return_if_fail (palette != NULL);
-  g_return_if_fail (GIMP_IS_PALETTE (palette));
-
-  g_return_if_fail (gc != NULL);
-
-  memset (rgb_buf, 0x0, sizeof (rgb_buf));
-
-  gdk_draw_rgb_image (palette->pixmap,
-		      gc,
-		      0,
-		      0,
-		      SM_PREVIEW_WIDTH,
-		      SM_PREVIEW_HEIGHT,
-		      GDK_RGB_DITHER_NORMAL,
-		      rgb_buf,
-		      SM_PREVIEW_WIDTH * 3);
-
-  index = 0;
-
-  for (list = palette->colors; list; list = g_list_next (list))
-    {
-      guchar cell[3 * 3 * 3];
-      gint   loop;
-
-      entry = (GimpPaletteEntry *) list->data;
-
-      gimp_rgb_get_uchar (&entry->color,
-			  &cell[0],
-			  &cell[1],
-			  &cell[2]);
-
-      for (loop = 3; loop < 27 ; loop += 3)
-	{
-	  cell[0 + loop] = cell[0];
-	  cell[1 + loop] = cell[1];
-	  cell[2 + loop] = cell[2];
-	}
-
-      gdk_draw_rgb_image (palette->pixmap,
-			  gc,
-			  1 + (index % ((SM_PREVIEW_WIDTH-2) / 3)) * 3,
-			  1 + (index / ((SM_PREVIEW_WIDTH-2) / 3)) * 3,
-			  3,
-			  3,
-			  GDK_RGB_DITHER_NORMAL,
-			  cell,
-			  3);
-
-      index++;
-
-      if (index >= (((SM_PREVIEW_WIDTH - 2) * (SM_PREVIEW_HEIGHT - 2)) / 9))
-	break;
     }
 }
 

@@ -113,20 +113,31 @@ void  gimp_dnd_color_dest_unset    (GtkWidget            *widget);
 
 /*  GimpViewable (by GtkType) dnd functions  */
 
-typedef void (* GimpDndDropViewableFunc) (GtkWidget     *widget,
-					  GimpViewable  *viewable,
-					  gpointer       data);
+typedef void           (* GimpDndDropViewableFunc) (GtkWidget     *widget,
+						    GimpViewable  *viewable,
+						    gpointer       data);
+typedef GimpViewable * (* GimpDndDragViewableFunc) (GtkWidget     *widget,
+						    gpointer       data);
 
-void  gimp_gtk_drag_dest_set_by_type (GtkWidget               *widget,
-				      GtkDestDefaults          flags,
-				      GtkType                  type,
-				      GdkDragAction            actions);
-void  gimp_dnd_viewable_dest_set     (GtkWidget               *widget,
-				      GtkType                  type,
-				      GimpDndDropViewableFunc  set_viewable_func,
-				      gpointer                 data);
-void  gimp_dnd_viewable_dest_unset   (GtkWidget               *widget,
-				      GtkType                  type);
+void  gimp_gtk_drag_source_set_by_type (GtkWidget               *widget,
+					GdkModifierType          start_button_mask,
+					GtkType                  type,
+					GdkDragAction            actions);
+void  gimp_gtk_drag_dest_set_by_type   (GtkWidget               *widget,
+					GtkDestDefaults          flags,
+					GtkType                  type,
+					GdkDragAction            actions);
+
+void  gimp_dnd_viewable_source_set     (GtkWidget               *widget,
+					GtkType                  type,
+					GimpDndDragViewableFunc  get_viewable_func,
+					gpointer                 data);
+void  gimp_dnd_viewable_dest_set       (GtkWidget               *widget,
+					GtkType                  type,
+					GimpDndDropViewableFunc  set_viewable_func,
+					gpointer                 data);
+void  gimp_dnd_viewable_dest_unset     (GtkWidget               *widget,
+					GtkType                  type);
 
 
 /*  brush dnd functions  */

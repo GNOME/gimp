@@ -97,10 +97,11 @@ scriptdata_DATA = \
 	unsharp-mask.scm			\
 	waves-anim.scm				\
 	weave.scm				\
-	xach-effect.scm
-
-EXTRA_DIST = $(scriptdata_DATA)			\
+	xach-effect.scm				\
+	\
 	test-sphere.scm
+
+EXTRA_DIST = $(scriptdata_DATA)
 
 files:
 	@files=`ls $(DISTFILES) 2> /dev/null`; for p in $$files; do \

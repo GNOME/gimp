@@ -37,7 +37,6 @@
 #include "gimpcontext.h"
 #include "gimpdata.h"
 #include "gimpdatafactory.h"
-#include "gimpdnd.h"
 #include "gimprc.h"
 #include "session.h"
 #include "temp_buf.h"
@@ -58,9 +57,6 @@
 static void     brush_select_change_callbacks       (BrushSelect      *bsp,
 						     gboolean          closing);
 
-static void     brush_select_drop_brush             (GtkWidget        *widget,
-						     GimpViewable     *viewable,
-						     gpointer          data);
 static void     brush_select_brush_changed          (GimpContext      *context,
 						     GimpBrush        *brush,
 						     BrushSelect      *bsp);
@@ -93,8 +89,9 @@ GSList *brush_active_dialogs = NULL;
 /*  the main brush selection dialog  */
 BrushSelect *brush_select_dialog = NULL;
 
-/*  Brush editor dialog  */
-static BrushEditGeneratedWindow *brush_edit_generated_dialog;
+
+/*  the main brush editor dialog  */
+static BrushEditGeneratedWindow *brush_edit_generated_dialog = NULL;
 
 
 /*  public functions  */
@@ -246,15 +243,6 @@ brush_select_new (gchar   *title,
 		      TRUE, TRUE, 0);
   gtk_widget_show (bsp->view);
 
-  gimp_gtk_drag_dest_set_by_type (bsp->view,
-                                  GTK_DEST_DEFAULT_ALL,
-                                  GIMP_TYPE_BRUSH,
-                                  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (bsp->view),
-                              GIMP_TYPE_BRUSH,
-                              brush_select_drop_brush,
-                              bsp);
-
   gtk_widget_show (bsp->brush_selection_box);
   gtk_widget_show (bsp->left_box);
 
@@ -264,6 +252,7 @@ brush_select_new (gchar   *title,
 
   /*  Create the active brush label  */
   util_box = gtk_hbox_new (FALSE, 0);
+  gtk_container_set_resize_mode (GTK_CONTAINER (util_box), GTK_RESIZE_QUEUE);
   gtk_box_pack_start (GTK_BOX (bsp->options_box), util_box, FALSE, FALSE, 2);
 
   bsp->brush_name = gtk_label_new (_("No Brushes available"));
@@ -536,18 +525,6 @@ brush_select_dialogs_check (void)
  */
 
 static void
-brush_select_drop_brush (GtkWidget    *widget,
-			 GimpViewable *viewable,
-			 gpointer      data)
-{
-  BrushSelect *bsp;
-
-  bsp = (BrushSelect *) data;
-
-  gimp_context_set_brush (bsp->context, GIMP_BRUSH (viewable));
-}
-
-static void
 brush_select_brush_changed (GimpContext *context,
 			    GimpBrush   *brush,
 			    BrushSelect *bsp)
@@ -555,6 +532,9 @@ brush_select_brush_changed (GimpContext *context,
   if (brush)
     {
       brush_select_update_active_brush_field (bsp);
+
+      gtk_widget_set_sensitive (GIMP_DATA_FACTORY_VIEW (bsp->view)->edit_button,
+				GIMP_IS_BRUSH_GENERATED (brush));
 
       if (bsp->callback_name)
 	brush_select_change_callbacks (bsp, FALSE);

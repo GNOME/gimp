@@ -949,28 +949,22 @@ indexed_palette_select_destroy_callback (GtkWidget *widget,
 }
 
 static gint
-indexed_palette_select_row_callback (GtkCList       *clist,
-				     gint            row,
-				     gint            column,
-				     GdkEventButton *event,
-				     gpointer        data)
+indexed_palette_select_palette (GimpContext *context,
+				GimpPalette *palette,
+				gpointer     data)
 {
-  IndexedDialog *dialog = (IndexedDialog *)data;
-  GimpPalette   *palette;
+  IndexedDialog *dialog;
 
-  palette = (GimpPalette *) gtk_clist_get_row_data (clist, row);
+  dialog = (IndexedDialog *) data;
 
   if (palette)
     {
       if (palette->n_colors <= 256)
 	{
 	  theCustomPalette = palette;
+
 	  gtk_label_set_text (GTK_LABEL (GTK_BIN (dialog->custom_palette_button)->child),
 			      GIMP_OBJECT (theCustomPalette)->name);
-	}
-      else
-	{
-	  gtk_clist_unselect_row (clist, row, column);
 	}
     }
 
@@ -993,8 +987,9 @@ indexed_custom_palette_button_callback (GtkWidget *widget,
       gtk_signal_connect (GTK_OBJECT (dialog->palette_select->shell), "destroy", 
 			  GTK_SIGNAL_FUNC (indexed_palette_select_destroy_callback), 
 			  dialog);
-      gtk_signal_connect (GTK_OBJECT (dialog->palette_select->clist), "select_row",
-			  GTK_SIGNAL_FUNC (indexed_palette_select_row_callback),
+      gtk_signal_connect (GTK_OBJECT (dialog->palette_select->context),
+			  "palette_changed",
+			  GTK_SIGNAL_FUNC (indexed_palette_select_palette),
 			  dialog);
     } 
   else

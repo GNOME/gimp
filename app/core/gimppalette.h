@@ -55,9 +55,6 @@ struct _GimpPalette
   gint        n_colors;
 
   gint        n_columns;
-
-  /* EEK */
-  GdkPixmap  *pixmap;
 };
 
 struct _GimpPaletteClass

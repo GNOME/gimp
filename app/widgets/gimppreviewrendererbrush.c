@@ -41,8 +41,8 @@ static GtkWidget * gimp_brush_preview_create_popup        (GimpPreview *preview)
 static gboolean    gimp_brush_preview_needs_popup         (GimpPreview *preview);
 
 static gboolean    gimp_brush_preview_render_timeout_func (GimpBrushPreview *preview);
-static GimpBrush * gimp_brush_preview_drag_brush          (GtkWidget        *widget,
-							   gpointer          data);
+static GimpViewable * gimp_brush_preview_drag_viewable     (GtkWidget  *widget,
+							    gpointer    data);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -94,20 +94,14 @@ gimp_brush_preview_class_init (GimpBrushPreviewClass *klass)
 static void
 gimp_brush_preview_init (GimpBrushPreview *brush_preview)
 {
-  static GtkTargetEntry preview_target_table[] =
-  {
-    GIMP_TARGET_BRUSH
-  };
-  static guint preview_n_targets = (sizeof (preview_target_table) /
-				    sizeof (preview_target_table[0]));
-
-  gtk_drag_source_set (GTK_WIDGET (brush_preview),
-                       GDK_BUTTON2_MASK,
-                       preview_target_table, preview_n_targets,
-                       GDK_ACTION_COPY);
-  gimp_dnd_brush_source_set (GTK_WIDGET (brush_preview),
-			     gimp_brush_preview_drag_brush,
-			     brush_preview);
+  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (brush_preview),
+				    GDK_BUTTON2_MASK,
+				    GIMP_TYPE_BRUSH,
+				    GDK_ACTION_COPY);
+  gimp_dnd_viewable_source_set (GTK_WIDGET (brush_preview),
+				GIMP_TYPE_BRUSH,
+				gimp_brush_preview_drag_viewable,
+				NULL);
 
   brush_preview->pipe_timeout_id      = 0;
   brush_preview->pipe_animation_index = 0;
@@ -379,13 +373,9 @@ gimp_brush_preview_render_timeout_func (GimpBrushPreview *brush_preview)
   return TRUE;
 }
 
-static GimpBrush *
-gimp_brush_preview_drag_brush (GtkWidget *widget,
-			       gpointer   data)
+static GimpViewable *
+gimp_brush_preview_drag_viewable (GtkWidget *widget,
+				  gpointer   data)
 {
-  GimpPreview *preview;
-
-  preview = GIMP_PREVIEW (data);
-
-  return GIMP_BRUSH (preview->viewable);
+  return GIMP_PREVIEW (widget)->viewable;
 }

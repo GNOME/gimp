@@ -38,8 +38,8 @@ static void          gimp_palette_preview_render       (GimpPreview *preview);
 static GtkWidget   * gimp_palette_preview_create_popup (GimpPreview *preview);
 static gboolean      gimp_palette_preview_needs_popup  (GimpPreview *preview);
 
-static GimpPalette * gimp_palette_preview_drag_palette (GtkWidget   *widget,
-							gpointer     data);
+static GimpViewable * gimp_palette_preview_drag_viewable (GtkWidget   *widget,
+							  gpointer     data);
 
 
 static GimpPreviewClass *parent_class = NULL;
@@ -89,20 +89,14 @@ gimp_palette_preview_class_init (GimpPalettePreviewClass *klass)
 static void
 gimp_palette_preview_init (GimpPalettePreview *palette_preview)
 {
-  static GtkTargetEntry preview_target_table[] =
-  {
-    GIMP_TARGET_PALETTE
-  };
-  static guint preview_n_targets = (sizeof (preview_target_table) /
-				    sizeof (preview_target_table[0]));
-
-  gtk_drag_source_set (GTK_WIDGET (palette_preview),
-                       GDK_BUTTON2_MASK,
-                       preview_target_table, preview_n_targets,
-                       GDK_ACTION_COPY);
-  gimp_dnd_palette_source_set (GTK_WIDGET (palette_preview),
-			       gimp_palette_preview_drag_palette,
-			       palette_preview);
+  gimp_gtk_drag_source_set_by_type (GTK_WIDGET (palette_preview),
+				    GDK_BUTTON2_MASK,
+				    GIMP_TYPE_PALETTE,
+				    GDK_ACTION_COPY);
+  gimp_dnd_viewable_source_set (GTK_WIDGET (palette_preview),
+				GIMP_TYPE_PALETTE,
+				gimp_palette_preview_drag_viewable,
+				palette_preview);
 }
 
 static void
@@ -176,13 +170,9 @@ gimp_palette_preview_needs_popup (GimpPreview *preview)
   return FALSE;
 }
 
-static GimpPalette *
-gimp_palette_preview_drag_palette (GtkWidget *widget,
-				   gpointer   data)
+static GimpViewable *
+gimp_palette_preview_drag_viewable (GtkWidget *widget,
+				    gpointer   data)
 {
-  GimpPreview *preview;
-
-  preview = GIMP_PREVIEW (data);
-
-  return GIMP_PALETTE (preview->viewable);
+  return GIMP_PREVIEW (widget)->viewable;
 }

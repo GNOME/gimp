@@ -54,6 +54,8 @@ static void     gimp_container_grid_view_clear_items  (GimpContainerView      *v
 static void gimp_container_grid_view_set_preview_size (GimpContainerView      *view);
 static void    gimp_container_grid_view_item_selected (GtkWidget              *widget,
 						       gpointer                data);
+static void    gimp_container_grid_view_item_activate (GtkWidget              *widget,
+						       gpointer                data);
 static void   gimp_container_grid_view_highlight_item (GimpContainerView      *view,
 						       GimpViewable           *viewable,
 						       gpointer                insert_data);
@@ -237,6 +239,10 @@ gimp_container_grid_view_insert_item (GimpContainerView *view,
 		      GTK_SIGNAL_FUNC (gimp_container_grid_view_item_selected),
 		      view);
 
+  gtk_signal_connect (GTK_OBJECT (preview), "double_clicked",
+		      GTK_SIGNAL_FUNC (gimp_container_grid_view_item_activate),
+		      view);
+
   return (gpointer) preview;
 }
 
@@ -335,6 +341,14 @@ gimp_container_grid_view_item_selected (GtkWidget *widget,
 					   widget);
 
   gimp_container_view_item_selected (GIMP_CONTAINER_VIEW (data),
+				     GIMP_PREVIEW (widget)->viewable);
+}
+
+static void
+gimp_container_grid_view_item_activate (GtkWidget *widget,
+					gpointer   data)
+{
+  gimp_container_view_item_activate (GIMP_CONTAINER_VIEW (data),
 				     GIMP_PREVIEW (widget)->viewable);
 }
 

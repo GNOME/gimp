@@ -37,7 +37,7 @@ struct _GradientSelect
 };
 
 
-/*  list of active dialogs    */
+/*  list of active dialogs  */
 extern GSList *gradient_active_dialogs;
 
 /*  the main gradient selection dialog  */

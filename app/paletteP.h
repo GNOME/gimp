@@ -20,19 +20,8 @@
 #define __PALETTE_P_H__
 
 
-void   palette_clist_init           (GtkWidget      *clist,
-				     GtkWidget      *shell,
-				     GdkGC          *gc);
-void   palette_clist_insert         (GtkWidget      *clist, 
-				     GtkWidget      *shell,
-				     GdkGC          *gc,
-				     GimpPalette    *palette,
-				     gint            pos);
-
 void   palette_select_palette_init  (void);
 void   palette_create_edit          (GimpPalette    *palette);
-
-void   palette_insert_all           (GimpPalette    *palette);
 
 
 #endif /* __PALETTE_P_H__ */

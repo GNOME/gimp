@@ -83,7 +83,6 @@
 #include "gimpcontainergridview.h"
 #include "gimpdatafactory.h"
 #include "gimpdatafactoryview.h"
-#include "gimpdnd.h"
 #include "gimppreview.h"
 
 
@@ -1336,107 +1335,37 @@ container_view_scale_callback (GtkAdjustment     *adj,
 }
 
 static void
-drop_viewable_callback (GtkWidget    *widget,
-			GimpViewable *viewable,
-			gpointer      data)
-{
-  GimpContainerView *view;
-
-  view = GIMP_CONTAINER_VIEW (widget);
-
-  gimp_context_set_by_type (view->context,
-			    view->container->children_type,
-			    GIMP_OBJECT (viewable));
-}
-
-static void
 brushes_callback (GtkWidget         *widget,
 		  GimpContainerView *view)
 {
-  gtk_drag_dest_unset (GTK_WIDGET (view));
-  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
-				view->container->children_type);
-
   gimp_container_view_set_container (view, global_brush_factory->container);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
-				  GTK_DEST_DEFAULT_ALL,
-				  view->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
-			      view->container->children_type,
-			      drop_viewable_callback,
-			      NULL);
 }
 
 static void
 patterns_callback (GtkWidget         *widget,
 		   GimpContainerView *view)
 {
-  gtk_drag_dest_unset (GTK_WIDGET (view));
-  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
-				view->container->children_type);
-
   gimp_container_view_set_container (view, global_pattern_factory->container);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
-				  GTK_DEST_DEFAULT_ALL,
-				  view->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
-			      view->container->children_type,
-			      drop_viewable_callback,
-			      NULL);
 }
 
 static void
 gradients_callback (GtkWidget         *widget,
 		    GimpContainerView *view)
 {
-  gtk_drag_dest_unset (GTK_WIDGET (view));
-  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
-				view->container->children_type);
-
   gimp_container_view_set_container (view, global_gradient_factory->container);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
-				  GTK_DEST_DEFAULT_ALL,
-				  view->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
-			      view->container->children_type,
-			      drop_viewable_callback,
-			      NULL);
 }
 
 static void
 palettes_callback (GtkWidget         *widget,
 		   GimpContainerView *view)
 {
-  gtk_drag_dest_unset (GTK_WIDGET (view));
-  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
-				view->container->children_type);
-
   gimp_container_view_set_container (view, global_palette_factory->container);
-
-  gimp_gtk_drag_dest_set_by_type (GTK_WIDGET (view),
-				  GTK_DEST_DEFAULT_ALL,
-				  view->container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
-			      view->container->children_type,
-			      drop_viewable_callback,
-			      NULL);
 }
 
 static void
 images_callback (GtkWidget         *widget,
 		 GimpContainerView *view)
 {
-  gtk_drag_dest_unset (GTK_WIDGET (view));
-  gimp_dnd_viewable_dest_unset (GTK_WIDGET (view),
-				view->container->children_type);
-
   gimp_container_view_set_container (view, image_context);
 }
 
@@ -1584,15 +1513,6 @@ container_multi_view_new (gboolean       list,
 					   preview_size,
 					   5, 5);
     }
-
-  gimp_gtk_drag_dest_set_by_type (view,
-				  GTK_DEST_DEFAULT_ALL,
-				  container->children_type,
-				  GDK_ACTION_COPY);
-  gimp_dnd_viewable_dest_set (GTK_WIDGET (view),
-			      GIMP_CONTAINER_VIEW (view)->container->children_type,
-			      drop_viewable_callback,
-			      NULL);
 
   dialog = gimp_dialog_new (title, "test",
 			    gimp_standard_help_func,
@@ -1772,7 +1692,7 @@ dialogs_test_gradient_container_list_view_cmd_callback (GtkWidget *widget,
   data_factory_view_new (GIMP_VIEW_TYPE_LIST,
 			 "Gradient List",
 			 global_gradient_factory,
-			 gradient_editor_set_gradient,
+			 NULL,
 			 gimp_context_get_user (),
 			 24);
 }
@@ -1820,7 +1740,7 @@ dialogs_test_gradient_container_grid_view_cmd_callback (GtkWidget *widget,
   data_factory_view_new (GIMP_VIEW_TYPE_GRID,
 			 "Gradient Grid",
 			 global_gradient_factory,
-			 gradient_editor_set_gradient,
+			 NULL,
 			 gimp_context_get_user (),
 			 24);
 }

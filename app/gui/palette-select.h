@@ -28,19 +28,17 @@ typedef struct _PaletteSelect PaletteSelect;
 
 struct _PaletteSelect
 {
-  GtkWidget *shell;
-  GtkWidget *clist;
-  GdkGC     *gc;
-  gchar     *callback_name;
+  GtkWidget   *shell;
+  GtkWidget   *view;
+
+  gchar       *callback_name;
+
+  GimpContext *context;
 };
 
 
 PaletteSelect * palette_select_new              (const gchar *title,
 						 const gchar *initial_palette);
-
-void            palette_select_clist_insert_all (GimpPalette *palette);
-void            palette_select_set_text_all     (GimpPalette *palette);
-void            palette_select_refresh_all      (void);
 
 
 #endif  /* __PALETTE_SELECT_H__ */

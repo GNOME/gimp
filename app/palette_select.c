@@ -27,31 +27,39 @@
 
 #include "apptypes.h"
 
+#include "appenv.h"
 #include "context_manager.h"
+#include "dialog_handler.h"
 #include "gimpcontainer.h"
+#include "gimpcontext.h"
+#include "gimpdatafactoryview.h"
 #include "gimpdatafactory.h"
+#include "gimpdnd.h"
 #include "gimppalette.h"
 #include "palette_select.h"
 #include "palette.h"
 #include "paletteP.h"
+#include "session.h"
 
 #include "libgimp/gimpintl.h"
 
 
+#define STD_PALETTE_COLUMNS  6
+#define STD_PALETTE_ROWS     5 
+
+
 /*  local function prototypes  */
 
-static gint   palette_select_button_press   (GtkWidget      *widget,
-					     GdkEventButton *bevent,
+static void   palette_select_drop_palette   (GtkWidget      *widget,
+					     GimpViewable   *viewable,
 					     gpointer        data);
 static void   palette_select_close_callback (GtkWidget      *widget,
 					     gpointer        data);
-static void   palette_select_edit_callback  (GtkWidget      *widget,
-					     gpointer        data);
+static void   palette_select_edit_palette   (GimpData       *data);
 
 
 /*  list of active dialogs  */
-
-static GSList *active_dialogs = NULL;
+static GSList *palette_active_dialogs = NULL;
 
 
 /*  public functions  */
@@ -60,17 +68,14 @@ PaletteSelect *
 palette_select_new (const gchar *title,
 		    const gchar *initial_palette)
 {
-  GimpPalette   *palette;
   PaletteSelect *psp;
   GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *scrolled_win;
-  gchar         *titles[3];
-  gint           select_pos = -1;
+  GimpPalette   *active = NULL;
 
-  palette_select_palette_init ();
+  static gboolean first_call = TRUE;
 
-  psp = g_new (PaletteSelect, 1);
+  psp = g_new0 (PaletteSelect, 1);
+
   psp->callback_name = NULL;
   
   /*  The shell and main vbox  */
@@ -81,182 +86,99 @@ palette_select_new (const gchar *title,
 				GTK_WIN_POS_MOUSE,
 				FALSE, TRUE, FALSE,
 
-				_("Edit"), palette_select_edit_callback,
-				psp, NULL, NULL, TRUE, FALSE,
-				_("Close"), palette_select_close_callback,
+				"_delete_event_", palette_select_close_callback,
 				psp, NULL, NULL, FALSE, TRUE,
 
 				NULL);
 
-  vbox = gtk_vbox_new (FALSE, 1);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 1);
+  gtk_widget_hide (GTK_WIDGET (g_list_nth_data (gtk_container_children (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox)), 0)));
+
+  gtk_widget_hide (GTK_DIALOG (psp->shell)->action_area);
+
+  if (title)
+    {
+      psp->context = gimp_context_new (title, NULL);
+    }
+  else
+    {
+      psp->context = gimp_context_get_user ();
+
+      /*
+      session_set_window_geometry (psp->shell, &palette_select_session_info,
+				   TRUE);
+      */
+
+      dialog_register (psp->shell);
+    }
+
+  if (no_data && first_call)
+    gimp_data_factory_data_init (global_palette_factory, FALSE);
+
+  first_call = FALSE;
+
+  if (title && initial_palette && strlen (initial_palette))
+    {
+      active = (GimpPalette *)
+	gimp_container_get_child_by_name (global_palette_factory->container,
+					  initial_palette);
+    }
+  else
+    {
+      active = gimp_context_get_palette (gimp_context_get_user ());
+    }
+
+  if (!active)
+    active = gimp_context_get_palette (gimp_context_get_standard ());
+
+  if (title)
+    gimp_context_set_palette (psp->context, active);
+
+  /*  The main vbox  */
+  vbox = gtk_vbox_new (FALSE, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (psp->shell)->vbox), vbox);
 
-  hbox = gtk_hbox_new (FALSE, 8);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
-  gtk_widget_show (hbox);
+  /*  The Palette List  */
+  psp->view = gimp_data_factory_view_new (GIMP_VIEW_TYPE_LIST,
+					  global_palette_factory,
+					  palette_select_edit_palette,
+					  psp->context,
+					  64, /* FIXME: SM_PREVIEW_WIDTH */
+					  3, /* FIXME: STD_PALETTE_COLUMNS */
+					  3); /* FIXME: STD_PALETTE_ROWS */
+  gtk_box_pack_start (GTK_BOX (vbox), psp->view, TRUE, TRUE, 0);
+  gtk_widget_show (psp->view);
 
-  /* clist preview of gradients */
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-				  GTK_POLICY_AUTOMATIC,
-				  GTK_POLICY_ALWAYS);
-  gtk_box_pack_start (GTK_BOX (hbox), scrolled_win, TRUE, TRUE, 0); 
-  gtk_widget_show (scrolled_win);
+  gimp_gtk_drag_dest_set_by_type (psp->view,
+                                  GTK_DEST_DEFAULT_ALL,
+                                  GIMP_TYPE_PALETTE,
+                                  GDK_ACTION_COPY);
+  gimp_dnd_viewable_dest_set (GTK_WIDGET (psp->view),
+			      GIMP_TYPE_PALETTE,
+			      palette_select_drop_palette,
+                              psp);
 
-  titles[0] = _("Palette");
-  titles[1] = _("Ncols");
-  titles[2] = _("Name");
-  psp->clist = gtk_clist_new_with_titles (3, titles);
-  gtk_clist_set_shadow_type (GTK_CLIST (psp->clist), GTK_SHADOW_IN);
-  gtk_clist_set_row_height (GTK_CLIST (psp->clist), SM_PREVIEW_HEIGHT + 2);
-  gtk_clist_set_use_drag_icons (GTK_CLIST (psp->clist), FALSE);
-  gtk_clist_column_titles_passive (GTK_CLIST (psp->clist));
-  gtk_widget_set_usize (psp->clist, 203, 200);
-  gtk_clist_set_column_width (GTK_CLIST (psp->clist), 0, SM_PREVIEW_WIDTH + 2);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), psp->clist);
-  gtk_widget_show (psp->clist);
-
-  palette = (GimpPalette *)
-    gimp_container_get_child_by_name (global_palette_factory->container,
-				      initial_palette);
-
-  if (palette)
-    select_pos = gimp_container_get_child_index (global_palette_factory->container,
-						 GIMP_OBJECT (palette));
-
-  gtk_widget_realize (psp->shell);
-  psp->gc = gdk_gc_new (psp->shell->window);  
-  
-  palette_clist_init (psp->clist, psp->shell, psp->gc);
-  gtk_signal_connect (GTK_OBJECT (psp->clist), "button_press_event",
-		      GTK_SIGNAL_FUNC (palette_select_button_press),
-		      (gpointer) psp);
-
-  /* Now show the dialog */
   gtk_widget_show (vbox);
   gtk_widget_show (psp->shell);
 
-  if (select_pos != -1) 
-    {
-      gtk_clist_select_row (GTK_CLIST (psp->clist), select_pos, -1);
-      gtk_clist_moveto (GTK_CLIST (psp->clist), select_pos, 0, 0.0, 0.0); 
-    }
-  else
-    gtk_clist_select_row (GTK_CLIST (psp->clist), 0, -1);
-
-  active_dialogs = g_slist_append (active_dialogs, psp);
+  palette_active_dialogs = g_slist_append (palette_active_dialogs, psp);
 
   return psp;
 }
 
-void
-palette_select_clist_insert_all (GimpPalette *entries)
-{
-  PaletteSelect *psp; 
-  GSList        *list;
-  gint           pos;
-
-  pos = gimp_container_get_child_index (global_palette_factory->container,
-					GIMP_OBJECT (entries));
-
-  for (list = active_dialogs; list; list = g_slist_next (list))
-    {
-      psp = (PaletteSelect *) list->data;
-
-      gtk_clist_freeze (GTK_CLIST (psp->clist));
-      palette_clist_insert (psp->clist, psp->shell, psp->gc, entries, pos);
-      gtk_clist_thaw (GTK_CLIST (psp->clist));
-    }
-}
-
-void
-palette_select_set_text_all (GimpPalette *entries)
-{
-  PaletteSelect *psp; 
-  GSList        *list;
-  gchar         *num_buf;
-  gint           pos;
-
-  pos = gimp_container_get_child_index (global_palette_factory->container,
-					GIMP_OBJECT (entries));
-
-  num_buf = g_strdup_printf ("%d", entries->n_colors);
-
-  for (list = active_dialogs; list; list = g_slist_next (list))
-    {
-      psp = (PaletteSelect *) list->data;
-
-      gtk_clist_set_text (GTK_CLIST (psp->clist), pos, 1, num_buf);
-    }
-
-  g_free (num_buf);
-}
-
-void
-palette_select_refresh_all (void)
-{
-  PaletteSelect *psp; 
-  GSList        *list;
-
-  for (list = active_dialogs; list; list = g_slist_next (list))
-    {
-      psp = (PaletteSelect *) list->data;
-
-      gtk_clist_freeze (GTK_CLIST (psp->clist));
-      gtk_clist_clear (GTK_CLIST (psp->clist));
-      palette_clist_init (psp->clist, psp->shell, psp->gc);
-      gtk_clist_thaw (GTK_CLIST (psp->clist));
-    }
-}
 
 /*  local functions  */
 
-static gint
-palette_select_button_press (GtkWidget      *widget,
-			     GdkEventButton *bevent,
-			     gpointer        data)
-{
-  PaletteSelect *psp;
-
-  psp = (PaletteSelect *) data;
-
-  if (bevent->button == 1 && bevent->type == GDK_2BUTTON_PRESS)
-    {
-      palette_select_edit_callback (widget, data);
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
 static void
-palette_select_edit_callback (GtkWidget *widget,
-			      gpointer   data)
+palette_select_drop_palette (GtkWidget    *widget,
+			     GimpViewable *viewable,
+			     gpointer      data)
 {
-  GimpPalette   *p_entries = NULL;
   PaletteSelect *psp;
-  GList         *sel_list;
 
   psp = (PaletteSelect *) data;
 
-  sel_list = GTK_CLIST (psp->clist)->selection;
-
-  while (sel_list)
-    {
-      gint row;
-
-      row = GPOINTER_TO_INT (sel_list->data);
-
-      p_entries = 
-	(GimpPalette *) gtk_clist_get_row_data (GTK_CLIST (psp->clist), row);
-
-      palette_create_edit (p_entries);
-
-      /* One only */
-      return;
-    }
+  gimp_context_set_palette (psp->context, GIMP_PALETTE (viewable));
 }
 
 static void
@@ -270,7 +192,7 @@ palette_select_free (PaletteSelect *psp)
       */
 
       /* remove from active list */
-      active_dialogs = g_slist_remove (active_dialogs, psp); 
+      palette_active_dialogs = g_slist_remove (palette_active_dialogs, psp);
 
       g_free (psp);
     }
@@ -289,4 +211,14 @@ palette_select_close_callback (GtkWidget *widget,
 
   gtk_widget_destroy (psp->shell); 
   palette_select_free (psp); 
+}
+
+static void
+palette_select_edit_palette (GimpData *data)
+{
+  GimpPalette *palette;
+
+  palette = GIMP_PALETTE (data);
+
+  palette_create_edit (palette);
 }
