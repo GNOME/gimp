@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
-"POT-Creation-Date: 2002-05-28 02:11+0200\n"
-"PO-Revision-Date: 2002-01-28 02:38+0100\n"
+"POT-Creation-Date: 2002-06-19 19:10+0200\n"
+"PO-Revision-Date: 2002-06-19 19:14+0200\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -84,9 +84,8 @@ msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1403
-#, fuzzy
 msgid "Script-Fu Folder Selection"
-msgstr "Script-Fu-filväljare"
+msgstr "Script-Fu-mappväljare"
 
 #: plug-ins/script-fu/script-fu-scripts.c:1438
 msgid "Script-fu Pattern Selection"
@@ -108,18 +107,18 @@ msgstr ""
 "Åtminstone en av typsnitten du angett är ogiltigt.\n"
 "Var vänlig och kontrollera dina inställningar.\n"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:487
 #: plug-ins/script-fu/script-fu-scripts.c:1961
+#: plug-ins/dbbrowser/dbbrowser_utils.c:481
 msgid "Author:"
 msgstr "Författare:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:503
 #: plug-ins/script-fu/script-fu-scripts.c:1967
+#: plug-ins/dbbrowser/dbbrowser_utils.c:497
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:495
 #: plug-ins/script-fu/script-fu-scripts.c:1973
+#: plug-ins/dbbrowser/dbbrowser_utils.c:489
 msgid "Date:"
 msgstr "Datum:"
 
@@ -142,15 +141,15 @@ msgstr ""
 " %s\n"
 "%s"
 
-#: plug-ins/script-fu/script-fu-server.c:551
+#: plug-ins/script-fu/script-fu-server.c:568
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serveralternativ"
 
-#: plug-ins/script-fu/script-fu-server.c:578
+#: plug-ins/script-fu/script-fu-server.c:595
 msgid "Server Port:"
 msgstr "Serverport:"
 
-#: plug-ins/script-fu/script-fu-server.c:584
+#: plug-ins/script-fu/script-fu-server.c:601
 msgid "Server Logfile:"
 msgstr "Serverloggfil:"
 
@@ -172,58 +171,58 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Uppdatera"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:125
 #: plug-ins/dbbrowser/dbbrowser_utils.c:144
-msgid "DB Browser (init...)"
-msgstr "DB-bläddrare (init...)"
+msgid "DB Browser"
+msgstr "DB-bläddrare"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:130
 #: plug-ins/dbbrowser/dbbrowser_utils.c:149
-msgid "Search by Name"
-msgstr "Sök efter namn"
+msgid "Search by _Name"
+msgstr "Sök efter _namn"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:132
 #: plug-ins/dbbrowser/dbbrowser_utils.c:151
-msgid "Search by Blurb"
-msgstr "Sök efter blurb"
+msgid "Search by _Blurb"
+msgstr "Sök efter _blurb"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:215
-msgid "Search:"
-msgstr "Sök:"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:208
+msgid "_Search:"
+msgstr "_Sök:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:346
+#: plug-ins/dbbrowser/dbbrowser_utils.c:340
 msgid "Name:"
 msgstr "Namn:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:355
+#: plug-ins/dbbrowser/dbbrowser_utils.c:349
 msgid "Blurb:"
 msgstr "Blurb:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:367
+#: plug-ins/dbbrowser/dbbrowser_utils.c:361
 msgid "In:"
 msgstr "In:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:415
+#: plug-ins/dbbrowser/dbbrowser_utils.c:409
 msgid "Out:"
 msgstr "Ut:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:469
+#: plug-ins/dbbrowser/dbbrowser_utils.c:463
 msgid "Help:"
 msgstr "Hjälp:"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:572
-msgid "DB Browser (by name - please wait)"
-msgstr "DB-bläddrare (efter namn - var vänlig vänta)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:599
+msgid "Searching by name - please wait"
+msgstr "Söker efter namn - var vänlig vänta"
 
-#: plug-ins/dbbrowser/dbbrowser_utils.c:596
-msgid "DB Browser (by blurb - please wait)"
-msgstr "DB-bläddrare (efter blurb - var vänlig vänta)"
-
-#: plug-ins/dbbrowser/dbbrowser_utils.c:606
-msgid "DB Browser (please wait)"
-msgstr "DB-bläddrare (var vänlig vänta)"
+#: plug-ins/dbbrowser/dbbrowser_utils.c:622
+msgid "Searching by blurb - please wait"
+msgstr "Söker efter blurb - var vänlig vänta"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:632
-msgid "DB Browser"
-msgstr "DB-bläddrare"
+msgid "Searching - please wait"
+msgstr "Söker - var vänlig vänta"
+
+#: plug-ins/dbbrowser/dbbrowser_utils.c:674
+msgid "No matches"
+msgstr "Inga träffar"
 
 #: plug-ins/gap/sel-to-anim-img.scm.h:1
 msgid "<Image>/Script-Fu/Animators/Selection to AnimImage..."
@@ -528,7 +527,7 @@ msgstr "<Toolbox>/Utökningar/Script-Fu/Webbsideteman/Rymdglöd/Pil..."
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
 msgid "Down"
-msgstr "Ner"
+msgstr "Ned"
 
 #: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
 #: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
@@ -854,7 +853,6 @@ msgid "After Glow"
 msgstr "Efterglöd"
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
-#, fuzzy
 msgid ""
 "Burn-In: Need two layers in total!\n"
 "        A foreground text layer with transparency\n"
@@ -862,7 +860,7 @@ msgid ""
 msgstr ""
 "Inbränning: Behöver totalt två lager!\n"
 "        Ett förgrundstextlager med transparens\n"
-"        och ett bakgrundslager.\n"
+"        och ett bakgrundslager."
 
 #: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Corona Width"
@@ -2285,6 +2283,12 @@ msgstr "<Toolbox>/Utökningar/Webbläsare/Register över insticksmoduler"
 #: plug-ins/webbrowser/web-browser.scm.h:17
 msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
 msgstr "<Toolbox>/Utökningar/Webbläsare/Frågor och svar för användare"
+
+#~ msgid "DB Browser (init...)"
+#~ msgstr "DB-bläddrare (init...)"
+
+#~ msgid "DB Browser (please wait)"
+#~ msgstr "DB-bläddrare (var vänlig vänta)"
 
 #~ msgid "Reset to Defaults"
 #~ msgstr "Återställ till standardvärden"
