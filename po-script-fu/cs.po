@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu 1.1.23\n"
+"Project-Id-Version: gimp-script-fu 1.1.24\n"
 "POT-Creation-Date: 2000-06-09 11:03+0200\n"
-"PO-Revision-Date: 2000-07-10 17:43+02:00\n"
+"PO-Revision-Date: 2000-07-30 13:43+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -557,7 +557,7 @@ msgstr "<Toolbox>/Roz¹./Skript-fu/Rùzné/Koule..."
 
 #: plug-ins/script-fu/scripts/3dTruchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3D Truchet..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Vzorky/3D trychtýø..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Vzorky/3D klikatice..."
 
 #: plug-ins/script-fu/scripts/camo.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Camouflage..."
@@ -589,7 +589,7 @@ msgstr "<Toolbox>/Roz¹./Skript-fu/Vzorky/Kotálnice..."
 
 #: plug-ins/script-fu/scripts/truchet.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Truchet..."
-msgstr "<Toolbox>/Roz¹./Skript-fu/Vzorky/Trychtýø..."
+msgstr "<Toolbox>/Roz¹./Skript-fu/Vzorky/Klikatice..."
 
 #: plug-ins/script-fu/scripts/asc2img.scm:0
 msgid "<Toolbox>/Xtns/Script-Fu/Utils/ASCII to Image..."

@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-std-plugins 1.1.23\n"
-"POT-Creation-Date: 2000-07-10 14:40+0200\n"
-"PO-Revision-Date: 2000-07-10 17:38+02:00\n"
+"Project-Id-Version: gimp-std-plugins 1.1.24\n"
+"POT-Creation-Date: 2000-07-30 14:50+0200\n"
+"PO-Revision-Date: 2000-07-30 14:52+02:00\n"
 "Last-Translator: Stanislav Brabec <utx@k332.feld.cvut.cz>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -60,8 +60,8 @@ msgstr "O programu"
 #: plug-ins/common/fractaltrace.c:725 plug-ins/common/gauss_iir.c:365
 #: plug-ins/common/gauss_iir.c:448 plug-ins/common/gauss_rle.c:360
 #: plug-ins/common/gauss_rle.c:443 plug-ins/common/gbr.c:456
-#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1144
-#: plug-ins/common/gif.c:1215 plug-ins/common/glasstile.c:259
+#: plug-ins/common/gicon.c:441 plug-ins/common/gif.c:1146
+#: plug-ins/common/gif.c:1217 plug-ins/common/glasstile.c:259
 #: plug-ins/common/gpb.c:269 plug-ins/common/gqbist.c:640
 #: plug-ins/common/grid.c:658 plug-ins/common/gtm.c:375
 #: plug-ins/common/hot.c:589 plug-ins/common/illusion.c:560
@@ -73,7 +73,7 @@ msgstr "O programu"
 #: plug-ins/common/noisify.c:488 plug-ins/common/nova.c:465
 #: plug-ins/common/oilify.c:458 plug-ins/common/papertile.c:250
 #: plug-ins/common/pat.c:412 plug-ins/common/pixelize.c:280
-#: plug-ins/common/plasma.c:306 plug-ins/common/png.c:1045
+#: plug-ins/common/plasma.c:307 plug-ins/common/png.c:1045
 #: plug-ins/common/pnm.c:933 plug-ins/common/polar.c:914
 #: plug-ins/common/ps.c:2533 plug-ins/common/ps.c:2714
 #: plug-ins/common/psp.c:428 plug-ins/common/randomize.c:702
@@ -142,7 +142,7 @@ msgstr "OK"
 #: plug-ins/common/gauss_iir.c:367 plug-ins/common/gauss_iir.c:450
 #: plug-ins/common/gauss_rle.c:362 plug-ins/common/gauss_rle.c:445
 #: plug-ins/common/gbr.c:458 plug-ins/common/gicon.c:443
-#: plug-ins/common/gif.c:1146 plug-ins/common/gif.c:1217
+#: plug-ins/common/gif.c:1148 plug-ins/common/gif.c:1219
 #: plug-ins/common/glasstile.c:261 plug-ins/common/gpb.c:271
 #: plug-ins/common/gqbist.c:642 plug-ins/common/grid.c:660
 #: plug-ins/common/gtm.c:377 plug-ins/common/hot.c:591
@@ -154,7 +154,7 @@ msgstr "OK"
 #: plug-ins/common/nlfilt.c:350 plug-ins/common/noisify.c:490
 #: plug-ins/common/nova.c:467 plug-ins/common/oilify.c:460
 #: plug-ins/common/papertile.c:252 plug-ins/common/pat.c:414
-#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:308
+#: plug-ins/common/pixelize.c:282 plug-ins/common/plasma.c:309
 #: plug-ins/common/png.c:1047 plug-ins/common/pnm.c:935
 #: plug-ins/common/polar.c:916 plug-ins/common/ps.c:2535
 #: plug-ins/common/ps.c:2716 plug-ins/common/psp.c:430
@@ -447,7 +447,7 @@ msgstr "O cizím mapování 2"
 #: plug-ins/common/illusion.c:579 plug-ins/common/iwarp.c:1160
 #: plug-ins/common/jigsaw.c:2510 plug-ins/common/mapcolor.c:576
 #: plug-ins/common/max_rgb.c:361 plug-ins/common/nlfilt.c:575
-#: plug-ins/common/noisify.c:505 plug-ins/common/plasma.c:325
+#: plug-ins/common/noisify.c:505 plug-ins/common/plasma.c:326
 #: plug-ins/common/polar.c:935 plug-ins/common/ps.c:2852
 #: plug-ins/common/sharpen.c:550 plug-ins/common/spheredesigner.c:2254
 #: plug-ins/common/tileit.c:407 plug-ins/common/waves.c:576
@@ -1522,7 +1522,7 @@ msgstr "Nelze otevøít %s"
 
 #. init the progress meter
 #: plug-ins/bmp/bmpwrite.c:179 plug-ins/common/CEL.c:510
-#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:940
+#: plug-ins/common/gbr.c:387 plug-ins/common/gif.c:942
 #: plug-ins/common/gpb.c:768 plug-ins/common/gpb.c:808
 #: plug-ins/common/gtm.c:247 plug-ins/common/hrz.c:476
 #: plug-ins/common/jpeg.c:1196 plug-ins/common/pat.c:343
@@ -2099,7 +2099,7 @@ msgstr "Zarovnání viditelných vrstev"
 #: plug-ins/common/lic.c:1090 plug-ins/common/max_rgb.c:378
 #: plug-ins/common/nlfilt.c:389 plug-ins/common/noisify.c:523
 #: plug-ins/common/nova.c:477 plug-ins/common/oilify.c:470
-#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:343
+#: plug-ins/common/pixelize.c:292 plug-ins/common/plasma.c:344
 #: plug-ins/common/png.c:1056 plug-ins/common/polar.c:955
 #: plug-ins/common/randomize.c:720 plug-ins/common/ripple.c:676
 #: plug-ins/common/scatter_hsv.c:426 plug-ins/common/sel_gauss.c:254
@@ -2194,7 +2194,7 @@ msgid "Animation Playback: "
 msgstr "Pøehrátí animace: "
 
 #. if no buttons are specified use one CLOSE button per default
-#: plug-ins/common/animationplay.c:673 plug-ins/common/plugindetails.c:996
+#: plug-ins/common/animationplay.c:673 plug-ins/common/plugindetails.c:1005
 #: plug-ins/common/sample_colorize.c:1373 plug-ins/common/uniteditor.c:525
 #: plug-ins/dbbrowser/dbbrowser_utils.c:158
 #: plug-ins/dbbrowser/dbbrowser_utils.c:175 plug-ins/gap/gap_arr_dialog.c:783
@@ -2340,7 +2340,7 @@ msgstr "Poèet segmentù:"
 msgid "<Image>/Filters/Blur/Blur..."
 msgstr "<Image>/Filtry/Rozostøení/Rozostøení..."
 
-#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:358
+#: plug-ins/common/blur.c:648 plug-ins/common/plasma.c:359
 #: plug-ins/common/randomize.c:737 plug-ins/common/snoise.c:542
 #: plug-ins/gflare/gflare.c:4100 plug-ins/sinus/sinus.c:855
 msgid "Random Seed:"
@@ -3639,7 +3639,7 @@ msgstr ""
 "GIF: Nelze jednodu¹e dále sní¾it barvy.\n"
 "Zapisuje se jako neprùhledné.\n"
 
-#: plug-ins/common/gif.c:932
+#: plug-ins/common/gif.c:934
 msgid ""
 "GIF: Sorry, can't save RGB images as GIFs - convert to INDEXED\n"
 "or GRAY first.\n"
@@ -3647,16 +3647,16 @@ msgstr ""
 "GIF: Bohu¾el, RGB obrázky nelze zapsat jako GIF - je nutné je nejdøíve\n"
 "pøevést do INDEXOVANÉHO nebo do ©EDÍ.\n"
 
-#: plug-ins/common/gif.c:950
+#: plug-ins/common/gif.c:952
 #, c-format
 msgid "GIF: can't open %s\n"
 msgstr "GIF: nelze otevøít %s\n"
 
-#: plug-ins/common/gif.c:1139
+#: plug-ins/common/gif.c:1141
 msgid "GIF Warning"
 msgstr "GIF varování"
 
-#: plug-ins/common/gif.c:1165
+#: plug-ins/common/gif.c:1167
 msgid ""
 "The image which you are trying to save as a GIF\n"
 "contains layers which extend beyond the actual\n"
@@ -3673,61 +3673,61 @@ msgstr ""
 "Lze si zvolit oøez v¹ech vrstev obrázku nebo\n"
 "zru¹it zápis."
 
-#: plug-ins/common/gif.c:1210
+#: plug-ins/common/gif.c:1212
 msgid "Save as GIF"
 msgstr "Zapsat jako GIF"
 
 #. regular gif parameter settings
-#: plug-ins/common/gif.c:1232
+#: plug-ins/common/gif.c:1234
 msgid "GIF Options"
 msgstr "Volby GIF"
 
-#: plug-ins/common/gif.c:1240
+#: plug-ins/common/gif.c:1242
 msgid "Interlace"
 msgstr "Prokládané øádkování"
 
-#: plug-ins/common/gif.c:1251
+#: plug-ins/common/gif.c:1253
 msgid "GIF Comment:"
 msgstr "Komentáø GIF:"
 
 #. additional animated gif parameter settings
-#: plug-ins/common/gif.c:1311
+#: plug-ins/common/gif.c:1313
 msgid "Animated GIF Options"
 msgstr "Volby GIF animace"
 
-#: plug-ins/common/gif.c:1319
+#: plug-ins/common/gif.c:1321
 msgid "Loop forever"
 msgstr "Trvalé cyklování"
 
-#: plug-ins/common/gif.c:1331
+#: plug-ins/common/gif.c:1333
 msgid "Delay between Frames where Unspecified:"
 msgstr "Prodleva mezi políèky, není-li urèena:"
 
-#: plug-ins/common/gif.c:1343
+#: plug-ins/common/gif.c:1345
 msgid "Milliseconds"
 msgstr "milisekundy"
 
-#: plug-ins/common/gif.c:1353
+#: plug-ins/common/gif.c:1355
 msgid "Frame Disposal where Unspecified: "
 msgstr "Dispozice políèka, nejsou-li specifikovány: "
 
-#: plug-ins/common/gif.c:1362
+#: plug-ins/common/gif.c:1364
 msgid "I don't Care"
 msgstr "Nestarám se"
 
-#: plug-ins/common/gif.c:1364
+#: plug-ins/common/gif.c:1366
 msgid "Cumulative Layers (Combine)"
 msgstr "Souhrnné vrstvy (kombinace)"
 
-#: plug-ins/common/gif.c:1366
+#: plug-ins/common/gif.c:1368
 msgid "One Frame per Layer (Replace)"
 msgstr "Jedno políèko na vrstvu (nahradit)"
 
-#: plug-ins/common/gif.c:2350
+#: plug-ins/common/gif.c:2352
 msgid "GIF: error writing output file\n"
 msgstr "GIF: chyba pøi zápisu výstupního souboru\n"
 
-#: plug-ins/common/gif.c:2441
+#: plug-ins/common/gif.c:2443
 msgid "GIF save: Your comment string is too long.\n"
 msgstr "GIF zápis: Øetìzec s komentáøem je pøíli¹ dlouhý.\n"
 
@@ -4277,8 +4277,8 @@ msgid "Size: unknown"
 msgstr "Velikost: neznámá"
 
 #: plug-ins/common/jpeg.c:1590
-msgid "Save as Jpeg"
-msgstr "Zapsat jako Jpeg"
+msgid "Save as JPEG"
+msgstr "Zapsat jako JPEG"
 
 #. sg - preview
 #: plug-ins/common/jpeg.c:1613
@@ -4286,7 +4286,7 @@ msgid "Image Preview"
 msgstr "Náhled obrázku"
 
 #: plug-ins/common/jpeg.c:1622
-msgid "Preview (in Image Window)"
+msgid "Preview (in image window)"
 msgstr "Náhled (v oknì obrázku)"
 
 #: plug-ins/common/jpeg.c:1653 plug-ins/xjt/xjt.c:836
@@ -4298,11 +4298,11 @@ msgid "Smoothing:"
 msgstr "Vyhlazování:"
 
 #: plug-ins/common/jpeg.c:1702
-msgid "Restart Markers"
+msgid "Restart markers"
 msgstr "Restartovací znaèky"
 
 #: plug-ins/common/jpeg.c:1710
-msgid "Restart Frequency (Rows):"
+msgid "Restart frequency (rows):"
 msgstr "Èetnost restartovacích znaèek (øádky):"
 
 #: plug-ins/common/jpeg.c:1739 plug-ins/xjt/xjt.c:816
@@ -4314,7 +4314,7 @@ msgid "Progressive"
 msgstr "Progresivní"
 
 #: plug-ins/common/jpeg.c:1768
-msgid "Force Baseline JPEG (Readable by all Decoders)"
+msgid "Force baseline JPEG (Readable by all decoders)"
 msgstr "Vnutit øádkovaný JPEG (èitelný v¹emi dekodéry)"
 
 #: plug-ins/common/jpeg.c:1790
@@ -4334,12 +4334,12 @@ msgid "Floating-point"
 msgstr "V plovoucí øádové èárce"
 
 #: plug-ins/common/jpeg.c:1809
-msgid "DCT Method (Speed/Quality Tradeoff):"
-msgstr "Metoda DCT (øídí rychlost/kvalitu):"
+msgid "DCT method (Speed/quality tradeoff):"
+msgstr "Metoda DCT (kompromis rychlost/kvalita):"
 
 #: plug-ins/common/jpeg.c:1826
-msgid "Image Comments"
-msgstr "Komentáø obrázku"
+msgid "Image comments"
+msgstr "Komentáøe obrázku"
 
 #: plug-ins/common/laplace.c:91
 msgid "<Image>/Filters/Edge-Detect/Laplace"
@@ -4870,15 +4870,15 @@ msgstr "©íøka pixelu:"
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
 msgstr "<Image>/Filtry/Vyobrazení/Mraky/Plazma..."
 
-#: plug-ins/common/plasma.c:264
+#: plug-ins/common/plasma.c:265
 msgid "Plasma..."
 msgstr "Plazma..."
 
-#: plug-ins/common/plasma.c:301
+#: plug-ins/common/plasma.c:302
 msgid "Plasma"
 msgstr "Plazma"
 
-#: plug-ins/common/plasma.c:370 plug-ins/common/spheredesigner.c:2425
+#: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2425
 msgid "Turbulence:"
 msgstr "Turbulence:"
 
@@ -4898,60 +4898,60 @@ msgstr "GIMP roz¹íøení"
 msgid "Temporary Procedure"
 msgstr "Pomocná procedura"
 
-#: plug-ins/common/plugindetails.c:99
+#: plug-ins/common/plugindetails.c:104
 msgid "<Toolbox>/Xtns/Plugin Details..."
 msgstr "<Toolbox>/Roz¹./Podrobnosti o modulech..."
 
-#: plug-ins/common/plugindetails.c:214
+#: plug-ins/common/plugindetails.c:219
 msgid "Details <<"
 msgstr "Podrobnosti <<"
 
-#: plug-ins/common/plugindetails.c:225 plug-ins/common/plugindetails.c:1103
+#: plug-ins/common/plugindetails.c:230 plug-ins/common/plugindetails.c:1116
 msgid "Details >>"
 msgstr " Podrobnosti >>"
 
 #. Number of plugins
-#: plug-ins/common/plugindetails.c:313
+#: plug-ins/common/plugindetails.c:318
 #, c-format
 msgid "Number of Plugin Interfaces: %d"
 msgstr "Poèet rozhraní modulù: %d"
 
 #. menu path
-#: plug-ins/common/plugindetails.c:331
+#: plug-ins/common/plugindetails.c:336
 msgid "Menu Path:"
 msgstr "Cesta k menu:"
 
 #. show the name
-#: plug-ins/common/plugindetails.c:352
+#: plug-ins/common/plugindetails.c:357
 #: plug-ins/dbbrowser/dbbrowser_utils.c:343
 #: plug-ins/gap/gap_dbbrowser_utils.c:325
 msgid "Name:"
 msgstr "Jméno:"
 
 #. show the description
-#: plug-ins/common/plugindetails.c:374
+#: plug-ins/common/plugindetails.c:379
 #: plug-ins/dbbrowser/dbbrowser_utils.c:359
 #: plug-ins/gap/gap_dbbrowser_utils.c:342
 msgid "Blurb:"
 msgstr "Popis:"
 
-#: plug-ins/common/plugindetails.c:396
+#: plug-ins/common/plugindetails.c:401
 #: plug-ins/dbbrowser/dbbrowser_utils.c:478
 #: plug-ins/gap/gap_dbbrowser_utils.c:459
 msgid "Help:"
 msgstr "Nápovìda:"
 
 #. show the type
-#: plug-ins/common/plugindetails.c:440 plug-ins/common/spheredesigner.c:2357
+#: plug-ins/common/plugindetails.c:445 plug-ins/common/spheredesigner.c:2357
 #: plug-ins/gimpressionist/orientmap.c:580
 msgid "Type:"
 msgstr "Typ:"
 
-#: plug-ins/common/plugindetails.c:989
+#: plug-ins/common/plugindetails.c:998
 msgid "Plugin Descriptions"
 msgstr "Popis modulu"
 
-#: plug-ins/common/plugindetails.c:994
+#: plug-ins/common/plugindetails.c:1003
 #: plug-ins/dbbrowser/dbbrowser_utils.c:152
 #: plug-ins/dbbrowser/dbbrowser_utils.c:171
 #: plug-ins/gap/gap_dbbrowser_utils.c:175
@@ -4959,36 +4959,36 @@ msgid "Search by Name"
 msgstr "Hledat podle jména"
 
 #. list : list in a scrolled_win
-#: plug-ins/common/plugindetails.c:1031
+#: plug-ins/common/plugindetails.c:1040
 msgid "Name"
 msgstr "Jméno"
 
-#: plug-ins/common/plugindetails.c:1032 plug-ins/common/plugindetails.c:1059
+#: plug-ins/common/plugindetails.c:1041 plug-ins/common/plugindetails.c:1069
 msgid "Ins Date"
 msgstr "Datum vlo¾ení"
 
-#: plug-ins/common/plugindetails.c:1033
+#: plug-ins/common/plugindetails.c:1042
 msgid "Menu Path"
 msgstr "Cesta k menu"
 
-#: plug-ins/common/plugindetails.c:1034 plug-ins/common/plugindetails.c:1060
+#: plug-ins/common/plugindetails.c:1043 plug-ins/common/plugindetails.c:1070
 msgid "Image Types"
 msgstr "Typy obrázku"
 
-#: plug-ins/common/plugindetails.c:1051
+#: plug-ins/common/plugindetails.c:1061
 msgid "List View"
 msgstr "Vypsat seznam"
 
 #. notebook->ctree
-#: plug-ins/common/plugindetails.c:1058
+#: plug-ins/common/plugindetails.c:1068
 msgid "Menu Path/Name"
 msgstr "Cesta k menu/jméno"
 
-#: plug-ins/common/plugindetails.c:1070
+#: plug-ins/common/plugindetails.c:1085
 msgid "Tree View"
 msgstr "Pohled pøes strom"
 
-#: plug-ins/common/plugindetails.c:1092
+#: plug-ins/common/plugindetails.c:1105
 #: plug-ins/dbbrowser/dbbrowser_utils.c:225
 #: plug-ins/gap/gap_dbbrowser_utils.c:137
 msgid "Search:"
@@ -8161,17 +8161,8 @@ msgstr ""
 msgid "From Frame:"
 msgstr "Výchozí políèko:"
 
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mov_dialog.c:568
-#: plug-ins/gap/gap_mpege.c:259 plug-ins/gap/gap_range_ops.c:443
-#: plug-ins/gap/gap_range_ops.c:602
+#: plug-ins/gap/gap_mod_layer.c:156 plug-ins/gap/gap_mpege.c:259
+#: plug-ins/gap/gap_range_ops.c:443 plug-ins/gap/gap_range_ops.c:602
 msgid "first handled frame"
 msgstr "první zpracované políèko"
 
@@ -8179,17 +8170,8 @@ msgstr "první zpracované políèko"
 msgid "To Frame:"
 msgstr "Koncové políèko:"
 
-#. label text
-#. scalesize spinsize
-#. value
-#. lower, upper
-#. step, page
-#. digits
-#. constrain
-#. lower, upper (unconstrained)
-#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mov_dialog.c:583
-#: plug-ins/gap/gap_mpege.c:267 plug-ins/gap/gap_range_ops.c:451
-#: plug-ins/gap/gap_range_ops.c:610
+#: plug-ins/gap/gap_mod_layer.c:164 plug-ins/gap/gap_mpege.c:267
+#: plug-ins/gap/gap_range_ops.c:451 plug-ins/gap/gap_range_ops.c:610
 msgid "last handled frame"
 msgstr "poslední zpracované políèko"
 
@@ -8324,19 +8306,19 @@ msgstr "Pouze zesvìtlení"
 
 #: plug-ins/gap/gap_mov_dialog.c:284
 msgid "Left  Top"
-msgstr "Levý  Horní"
+msgstr "Levý  horní"
 
 #: plug-ins/gap/gap_mov_dialog.c:285
 msgid "Left  Bottom"
-msgstr "Levý  Dolní"
+msgstr "Levý  dolní"
 
 #: plug-ins/gap/gap_mov_dialog.c:286
 msgid "Right Top"
-msgstr "Pravý Horní"
+msgstr "Pravý horní"
 
 #: plug-ins/gap/gap_mov_dialog.c:287
 msgid "Right Bottom"
-msgstr "Pravý Dolní"
+msgstr "Pravý dolní"
 
 #: plug-ins/gap/gap_mov_dialog.c:296
 msgid "Loop"
@@ -8363,29 +8345,23 @@ msgid "Move Path"
 msgstr "Cesta pøesunu"
 
 #: plug-ins/gap/gap_mov_dialog.c:503
-msgid ""
-"Show PreviewFrame with Selected       \n"
-"SrcLayer at current Controlpoint"
+msgid "Show PreviewFrame with Selected SrcLayer at current Controlpoint"
 msgstr ""
-"Zobrazení náhledového políèka se zvolenou       \n"
-"zdrojovou vrstvou a øídícím bodem"
+"Zobrazit náhledové políèko se zvolenou zdrojovou vrstvou v aktuálním øídícím "
+"bodì"
 
 #: plug-ins/gap/gap_mov_dialog.c:507
 msgid "Anim Preview"
 msgstr "Animovaný náhled"
 
 #: plug-ins/gap/gap_mov_dialog.c:514
-msgid ""
-"Generate Animated Preview\n"
-"as multilayer image"
-msgstr ""
-"Generovat animovaný náhled\n"
-"jako vícevrstevný obrázek"
+msgid "Generate Animated Preview as multilayer image"
+msgstr "Generovat animovaný náhled jako vícevrstevný obrázek"
 
 #. parameter settings
 #: plug-ins/gap/gap_mov_dialog.c:527
 msgid "Copy moving source-layer(s) into frames"
-msgstr "Pøená¹ejí se zdrojové vrstvy do políèek"
+msgstr "Kopírování pøesunu zdrojové vrstvy do políèek"
 
 #. the start frame scale_entry
 #. table col, row
@@ -8393,11 +8369,35 @@ msgstr "Pøená¹ejí se zdrojové vrstvy do políèek"
 msgid "Start Frame:"
 msgstr "Poèáteèní políèko:"
 
+#. label text
+#. scalesize spinsize
+#. value
+#. lower, upper
+#. step, page
+#. digits
+#. constrain
+#. lower, upper (unconstrained)
+#: plug-ins/gap/gap_mov_dialog.c:568
+msgid "First handled frame"
+msgstr "První zpracované políèko"
+
 #. the end frame scale_entry
 #. table col, row
 #: plug-ins/gap/gap_mov_dialog.c:575
 msgid "End Frame:"
 msgstr "Koncové políèko:"
+
+#. label text
+#. scalesize spinsize
+#. value
+#. lower, upper
+#. step, page
+#. digits
+#. constrain
+#. lower, upper (unconstrained)
+#: plug-ins/gap/gap_mov_dialog.c:583
+msgid "Last handled frame"
+msgstr "Poslední zpracované políèko"
 
 #. the Preview Frame scale_entry
 #. table col, row
@@ -8414,12 +8414,8 @@ msgstr "Náhledové políèko:"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:598
-msgid ""
-"frame to show when UpdPreview\n"
-"button is pressed"
-msgstr ""
-"políèko, které bude ukázáno, je-li\n"
-"stisknuta aktualizace náhledu"
+msgid "Frame to show when UpdPreview button is pressed"
+msgstr "Políèko, které bude ukázáno, je-li stisknuta aktualizace náhledu"
 
 #. the Layerstack scale_entry
 #. table col, row
@@ -8437,12 +8433,10 @@ msgstr "Zásobník vrstev:"
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:614
 msgid ""
-"How to insert SrcLayer into the\n"
-"Dst. Frame's Layerstack\n"
+"How to insert SrcLayer into the Dst. Frame's Layerstack\n"
 "0 means on top i.e. in front"
 msgstr ""
-"Zpùsob vlo¾ení zdrojové vrstvy\n"
-"do zásobníku vrstev cíle\n"
+"Zpùsob vlo¾ení zdrojové vrstvy do zásobníku vrstev cíle\n"
 "0 znamená navrch, tj. dopøedu"
 
 #. toggle force visibility
@@ -8460,12 +8454,8 @@ msgid "Clip To Frame"
 msgstr "Oøíznout dle políèka"
 
 #: plug-ins/gap/gap_mov_dialog.c:644
-msgid ""
-"Clip all copied Src-Layers\n"
-"at Frame Boundaries"
-msgstr ""
-"Oøíznout v¹echny kopírované zdrojové vrstvy\n"
-"na hranicích políèek"
+msgid "Clip all copied Src-Layers at Frame Boundaries"
+msgstr "Oøíznout v¹echny kopírované zdrojové vrstvy na hranicích políèek"
 
 #: plug-ins/gap/gap_mov_dialog.c:692
 msgid ""
@@ -8485,7 +8475,7 @@ msgstr "Objekt na jednom políèku"
 
 #: plug-ins/gap/gap_mov_dialog.c:790
 msgid "Exact Object on frames"
-msgstr "Pøesnì objekty na políèkách"
+msgstr "Pøesné objekty na políèkách"
 
 #: plug-ins/gap/gap_mov_dialog.c:820
 msgid "Anim Preview Mode"
@@ -8570,12 +8560,10 @@ msgid "Stepmode:"
 msgstr "Re¾im krokování:"
 
 #: plug-ins/gap/gap_mov_dialog.c:1999
-msgid ""
-"How to fetch the next SrcLayer   \n"
-"at the next handled frame"
+msgid "How to fetch the next SrcLayer at the next handled frame"
 msgstr ""
-"Zpùsob vyvolání následující zdrojové vrstvy   \n"
-"na následujícím zpracovaném políèku"
+"Zpùsob vyvolání následující zdrojové vrstvy na následujícím zpracovaném "
+"políèku"
 
 #. Source Image Handle menu
 #: plug-ins/gap/gap_mov_dialog.c:2005
@@ -8583,12 +8571,8 @@ msgid "Handle:"
 msgstr "Ovládání:"
 
 #: plug-ins/gap/gap_mov_dialog.c:2023
-msgid ""
-"How to place the SrcLayer at   \n"
-"Controlpoint Coordinates"
-msgstr ""
-"Zpùsob umístìní zdrojové vrstvy   \n"
-"na souøadnice øídícího bodu"
+msgid "How to place the SrcLayer at Controlpoint Coordinates"
+msgstr "Zpùsob umístìní zdrojové vrstvy na souøadnice øídícího bodu"
 
 #. to avoid side effects while initialization
 #. the frame
@@ -8627,12 +8611,8 @@ msgstr "Pøepoèet ¹íøky zdrojové vrstvy v procentech"
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2161
-msgid ""
-"Scale SrcLayer's Height\n"
-"in percent"
-msgstr ""
-"Vý¹ka zdrojové vrstvy\n"
-"v procentech"
+msgid "Scale SrcLayer's Height in percent"
+msgstr "Pøepoèet vý¹ky zdrojové vrstvy v procentech"
 
 #. label text
 #. scalesize spinsize
@@ -8643,12 +8623,8 @@ msgstr ""
 #. constrain
 #. lower, upper (unconstrained)
 #: plug-ins/gap/gap_mov_dialog.c:2178
-msgid ""
-"SrcLayer's Opacity\n"
-"in percent"
-msgstr ""
-"Krytí zdrojové vrstvy\n"
-"v procentech<"
+msgid "SrcLayer's Opacity in percent"
+msgstr "Krytí zdrojové vrstvy v procentech"
 
 #. Rotation
 #. table col, row
@@ -8687,7 +8663,7 @@ msgid ""
 "Fix Controlpoint to Keyframe number\n"
 "(0 == No Keyframe)"
 msgstr ""
-"Upevnit øídící bod dle èísla klíèového políèka\n"
+"Upevnìní øídícího bodu dle èísla klíèového políèka\n"
 "(0 == ¾ádné klíèové políèko)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2289
@@ -8696,10 +8672,10 @@ msgstr "Pøidat bod"
 
 #: plug-ins/gap/gap_mov_dialog.c:2297
 msgid ""
-"Add Controlpoint at end        \n"
+"Add Controlpoint at end\n"
 "(the last Point is duplicated)"
 msgstr ""
-"Pøidat øídící bod na konec        \n"
+"Pøidá øídící bod na konec\n"
 "(poslední bod je zduplikován)"
 
 #. toggle clip_to_image
@@ -8709,13 +8685,11 @@ msgstr "Zobrazit cestu"
 
 #: plug-ins/gap/gap_mov_dialog.c:2308
 msgid ""
-"Show Path Lines and enable\n"
-"pick/drag with left button\n"
-"or move with right button"
+"Show Path Lines and enable pick/drag with left button or move with right "
+"button"
 msgstr ""
-"Zobrazit cestu a povolit\n"
-"chycení/potáhnutí levým tlaèítkem\n"
-"nebo pøesun pravým tlaèítkem"
+"Zobrazit cestu a povolit chycení/potáhnutí levým tlaèítkem nebo pøesun "
+"pravým tlaèítkem"
 
 #: plug-ins/gap/gap_mov_dialog.c:2318
 #: plug-ins/imagemap/imap_cmd_insert_point.c:57
@@ -8725,10 +8699,10 @@ msgstr "Vlo¾it bod"
 
 #: plug-ins/gap/gap_mov_dialog.c:2326
 msgid ""
-"Insert Controlpoint          \n"
+"Insert Controlpoint\n"
 "(the current Point is duplicated)"
 msgstr ""
-"Vlo¾it øídící bod\n"
+"Vlo¾í øídící bod\n"
 "(aktuální bod je zduplikován)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2330
@@ -8739,7 +8713,7 @@ msgstr "Smazat bod"
 
 #: plug-ins/gap/gap_mov_dialog.c:2338
 msgid "Delete current Controlpoint"
-msgstr "Smazat souèasný øídící bod"
+msgstr "Sma¾e souèasný øídící bod"
 
 #: plug-ins/gap/gap_mov_dialog.c:2344
 msgid "Prev Point"
@@ -8778,12 +8752,8 @@ msgid "Clear Point"
 msgstr "Smazat bod"
 
 #: plug-ins/gap/gap_mov_dialog.c:2404
-msgid ""
-"Reset the current Controlpoint\n"
-"to default Values"
-msgstr ""
-"Nastaví aktuální øídící bod\n"
-"na implicitní hodnody"
+msgid "Reset the current Controlpoint to default Values"
+msgstr "Nastaví aktuální øídící bod na implicitní hodnody"
 
 #: plug-ins/gap/gap_mov_dialog.c:2408
 msgid "Clear All Points"
@@ -8791,25 +8761,23 @@ msgstr "Smazat v¹echny body"
 
 #: plug-ins/gap/gap_mov_dialog.c:2416
 msgid ""
-"Reset all Controlpoints to default Values\n"
-"but dont change the path (X/Y Values)"
+"Reset all Controlpoints to default Values but dont change the path (X/Y "
+"Values)"
 msgstr ""
-"Nastaví v¹echny øídící body na implicitní\n"
-"hodnoty, ale nemìní cestu (hodnoty X/Y)"
+"Nastaví v¹echny øídící body na implicitní hodnoty, ale nemìní cestu (hodnoty "
+"X/Y)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2423
 msgid "Rotate Follow"
-msgstr "Následování rotace"
+msgstr "Sledovat rotací"
 
 #: plug-ins/gap/gap_mov_dialog.c:2434
 msgid ""
-"Set Rotation for all Controlpoints\n"
-"to follow the shape of the path.\n"
+"Set Rotation for all Controlpoints to follow the shape of the path.\n"
 "(Shift: use Rotation of contolpoint 1 as offset)"
 msgstr ""
-"Nastavení rotace pro v¹echný øídící\n"
-"body, aby sledovaly tvar cesty.\n"
-"(Pøeøaïovaè: pou¾ít rotaci øídícího bodu 1 jako posun)"
+"Nastaví rotaci pro v¹echny øídící body, aby sledovaly tvar cesty.\n"
+"(Pøeøaïovaè: pou¾ije rotaci øídícího bodu 1 jako posun)"
 
 #: plug-ins/gap/gap_mov_dialog.c:2441
 msgid "Delete All Points"
@@ -8817,7 +8785,7 @@ msgstr "Smazat v¹echny body"
 
 #: plug-ins/gap/gap_mov_dialog.c:2449
 msgid "Delete all Controlpoints"
-msgstr "Smazat v¹echny øídící body"
+msgstr "Sma¾e v¹echny øídící body"
 
 #: plug-ins/gap/gap_mov_dialog.c:2456
 msgid "Load Points"
@@ -8825,7 +8793,7 @@ msgstr "Naèíst body"
 
 #: plug-ins/gap/gap_mov_dialog.c:2464
 msgid "Load Controlpoints from file"
-msgstr "Ètení øídících bodù ze souboru"
+msgstr "Ète øídící body ze souboru"
 
 #: plug-ins/gap/gap_mov_dialog.c:2468
 msgid "Save Points"
@@ -8833,7 +8801,7 @@ msgstr "Zapsat body"
 
 #: plug-ins/gap/gap_mov_dialog.c:2476
 msgid "Save Controlpoints to file"
-msgstr "Zápis øídících bodù do souboru"
+msgstr "Zapí¹e øídící body do souboru"
 
 #: plug-ins/gap/gap_mov_dialog.c:2947
 #, c-format
@@ -8888,7 +8856,7 @@ msgstr ""
 
 #: plug-ins/gap/gap_mov_dialog.c:3010
 msgid ""
-"Cant operate with current Controlpoint\n"
+"Can't operate with current Controlpoint\n"
 "or Keyframe settings"
 msgstr ""
 "Nelze pracovat s aktuálním øídícím bodem\n"
@@ -9080,7 +9048,8 @@ msgstr "Pevná bitová rychlost:"
 
 #: plug-ins/gap/gap_mpege.c:325
 msgid "Iqnore I/P/QSCALE values and use constant bit-rate)"
-msgstr "Ignorovat hodnoty I/P/QSCALE a pou¾ít konstatní hodnotu bitové frekvence)"
+msgstr ""
+"Ignorovat hodnoty I/P/QSCALE a pou¾ít konstatní hodnotu bitové frekvence)"
 
 #: plug-ins/gap/gap_mpege.c:330
 msgid "Pattern:"
@@ -10168,7 +10137,10 @@ msgid ""
 "Use the brush/pencil or the airbrush when drawing on the image. Pattern "
 "paints with currently selected brush with a pattern. Only applies to "
 "circles/ellipses if Approx. Circles/Ellipses toggle is set."
-msgstr "Pøi kreslení obrázku rozpra¹ovaèem pou¾ít ¹tìtec/tu¾ku. Vzorek kreslí právì zvolenou stopou se vzorkem. U¾ije se pouze na kru¾nicích/elipsách, je-li nastaven pøepínaè Pøibli¾né kru¾nice/elipsy."
+msgstr ""
+"Pøi kreslení obrázku rozpra¹ovaèem pou¾ít ¹tìtec/tu¾ku. Vzorek kreslí právì "
+"zvolenou stopou se vzorkem. U¾ije se pouze na kru¾nicích/elipsách, je-li "
+"nastaven pøepínaè Pøibli¾né kru¾nice/elipsy."
 
 #: plug-ins/gfig/gfig.c:2806 plug-ins/rcm/rcm_dialog.c:121
 msgid "Original"
@@ -10251,7 +10223,9 @@ msgstr "Pøibli¾né kru¾nice/elipsy"
 msgid ""
 "Approx. circles & ellipses using lines. Allows the use of brush fading with "
 "these types of objects."
-msgstr "Pøibli¾né kru¾nice a elipsy pou¾ívají èar. Umo¾òuje u tohoto typu objektù pou¾ít dobìh ¹tìtce."
+msgstr ""
+"Pøibli¾né kru¾nice a elipsy pou¾ívají èar. Umo¾òuje u tohoto typu objektù "
+"pou¾ít dobìh ¹tìtce."
 
 #: plug-ins/gfig/gfig.c:3008
 msgid "Fade out:"
