@@ -38,8 +38,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "libgimpthumb/gimpthumb.h"
 
 #include "pdb-types.h"

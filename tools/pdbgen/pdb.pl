@@ -84,7 +84,7 @@ package Gimp::CodeGen::pdb;
 		    check_func => '(GIMP_IS_VECTORS ($var) && ! gimp_item_is_removed (GIMP_ITEM ($var)))' },
     parasite   => { name => 'PARASITE',
 		    type => 'GimpParasite *',
-		    headers => [ qw("libgimpbase/gimpparasite.h") ] },
+		    headers => [ qw("libgimpbase/gimpbase.h") ] },
 
     boundary => { name => 'BOUNDARY', type => 'gpointer ' }, # ??? FIXME
     path     => { name => 'PATH'    , type => 'gpointer ' }, # ??? FIXME

@@ -744,8 +744,6 @@ GPL
 		$headers .= "\n";
 		$headers .= '#include <glib-object.h>';
 		$headers .= "\n\n";
-		$headers .= '#include "libgimpbase/gimpbasetypes.h"';
-		$headers .= "\n\n";
 	    }
 
 	    $seen = 0 if !/^</;

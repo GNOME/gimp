@@ -69,16 +69,15 @@ HELP
     );
 
     %invoke = (
-	success => 'FALSE',
 	code => <<'CODE'
 {
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      success = TRUE;
-
       if (! gimp->no_interface)
 	plug_in_progress_update (gimp->current_plug_in, percentage);
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -252,7 +251,6 @@ HELP
     );
 
     %invoke = (
-	success => 'TRUE',
 	code => <<'CODE',
 {
   if (gimp->current_plug_in && gimp->current_plug_in->query)
@@ -262,6 +260,8 @@ HELP
       plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
 	                                  domain_path);
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -287,7 +287,6 @@ HELP
     );
 
     %invoke = (
-        success => 'TRUE',
         code => <<'CODE',
 {
   if (gimp->current_plug_in && gimp->current_plug_in->query)
@@ -297,6 +296,8 @@ HELP
       plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
                                        domain_uri);
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -321,7 +322,6 @@ HELP
     );
 
     %invoke = (
-        success => 'TRUE',
         code => <<'CODE',
 {
   if (gimp->current_plug_in && gimp->current_plug_in->query)
@@ -384,6 +384,8 @@ HELP
       if (! list)
         success = FALSE;
     }
+  else
+    success = FALSE;
 }
 CODE
     );
@@ -412,7 +414,6 @@ HELP
     );
 
     %invoke = (
-        success => 'TRUE',
         code => <<'CODE',
 {
   if (gimp->current_plug_in && gimp->current_plug_in->query)
@@ -458,6 +459,8 @@ HELP
       if (! list)
         success = FALSE;
     }
+  else
+    success = FALSE;
 }
 CODE
     );

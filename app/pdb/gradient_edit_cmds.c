@@ -24,8 +24,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"

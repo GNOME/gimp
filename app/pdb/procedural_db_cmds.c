@@ -26,8 +26,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "pdb-types.h"
 #include "procedural_db.h"
 

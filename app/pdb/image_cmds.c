@@ -20,11 +20,8 @@
 
 #include "config.h"
 
-#include <string.h>
 
 #include <glib-object.h>
-
-#include "libgimpbase/gimpbasetypes.h"
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -37,7 +34,6 @@
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-crop.h"
@@ -53,7 +49,6 @@
 #include "core/gimplayermask.h"
 #include "core/gimplist.h"
 #include "core/gimpunit.h"
-#include "core/gimpviewable.h"
 #include "gimp-intl.h"
 
 static ProcRecord image_list_proc;

@@ -23,15 +23,12 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimpimage-guides.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
-#include "gimp-intl.h"
 
 static ProcRecord image_add_hguide_proc;
 static ProcRecord image_add_vguide_proc;

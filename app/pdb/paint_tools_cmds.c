@@ -23,8 +23,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "libgimpmath/gimpmath.h"
 
 #include "pdb-types.h"

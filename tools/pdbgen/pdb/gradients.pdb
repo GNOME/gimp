@@ -507,9 +507,8 @@ CODE
 }
 
 
-@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h"
-              "core/gimpcontainer.h" "core/gimpdatafactory.h"
-              "core/gimplist.h" "core/gimpgradient.h");
+@headers = qw(<string.h> "core/gimp.h" "core/gimpcontext.h" "core/gimplist.h"
+              "core/gimpdatafactory.h" "core/gimpgradient.h");
 
 @procs = qw(gradients_refresh gradients_get_list
             gradients_get_gradient gradients_set_gradient

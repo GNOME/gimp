@@ -180,7 +180,7 @@ HELP
 	  desc => 'Push merge to undo stack?' }
     );
 
-    %invoke = ( headers => [ qw("core/gimp.h" "plug-in/plug-in.h") ],
+    %invoke = ( headers => [ qw("plug-in/plug-in.h") ],
                 vars => [ 'gchar *undo_desc = NULL' ],
                 code => <<CODE
 {
@@ -702,9 +702,8 @@ CODE
 }
 
 @headers = qw("base/tile.h" "base/tile-manager.h" "base/temp-buf.h"
-              "config/gimpcoreconfig.h" 
+              "config/gimpcoreconfig.h"
               "core/gimp.h" "core/gimplayer.h" "core/gimplayermask.h"
-              "core/gimpchannel.h" "core/gimpdrawable.h"
               "core/gimpdrawable-offset.h" "gimp-intl.h");
 
 @procs = qw(drawable_delete

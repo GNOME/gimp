@@ -23,8 +23,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "pdb-types.h"
 #include "procedural_db.h"
 
@@ -33,7 +31,6 @@
 #include "base/tile.h"
 #include "config/gimpcoreconfig.h"
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpdrawable-offset.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"

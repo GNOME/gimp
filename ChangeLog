@@ -1,5 +1,22 @@
 2004-07-16  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb.pl: include "libgimpbase/gimpbase.h" instead of
+	"libgimpbase/gimpparasite.h" for getting the GimpParasite type.
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/guides.pdb
+	* tools/pdbgen/pdb/image.pdb: removed redundant #includes.
+
+	* tools/pdbgen/pdb/plug_in.pdb: standardized "success" logic.
+	Consistetly fail if there is no currently queried plugin.
+
+	* app/pdb/*.c: regenerated.
+
+2004-07-16  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-transform.c: made gtk-doc even
 	happier; clarified meaning of the "use_offsets" parameter.
 

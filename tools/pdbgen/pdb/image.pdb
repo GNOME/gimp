@@ -1444,7 +1444,6 @@ HELP
     $outargs[0]->{void_ret} = 1;
 
     %invoke = (
-	headers => [ qw(<string.h> "core/gimpviewable.h") ],
 	code => <<'CODE'
 {
   TempBuf *buf;
@@ -1490,12 +1489,9 @@ CODE
 }
 
 
-@headers = qw(<string.h>
-              "core/gimp.h" "core/gimpcontainer.h"
-              "core/gimplist.h" "core/gimpunit.h"
+@headers = qw("core/gimp.h" "core/gimplist.h" "core/gimpunit.h"
               "base/temp-buf.h" "libgimpmath/gimpmath.h"
-              "libgimpbase/gimpbase.h"
-              "gimp-intl.h");
+              "libgimpbase/gimpbase.h" "gimp-intl.h");
 
 $extra{app}->{code} = <<'CODE';
 #if defined (HAVE_FINITE)

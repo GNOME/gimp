@@ -47,7 +47,6 @@ sub sample_merged_arg () {{
 # Common invoker for checking for image/drawable consistency
 sub invoke {
     %invoke = (
-	headers => [ qw("core/gimp.h") ],
 	vars => [ 'GimpImage *gimage' ],
 	code => <<CODE
 {
@@ -125,7 +124,6 @@ HELP
     );
 
     %invoke = (
-	headers => [ qw("core/gimp.h") ],
 	code => <<CODE
 {
   success = (gimp_item_is_attached (GIMP_ITEM (drawable)) &&
@@ -369,7 +367,7 @@ CODE
     );
 }
 
-@headers = qw("core/gimpimage.h" "core/gimp-edit.h");
+@headers = qw("core/gimp.h" "core/gimpimage.h" "core/gimp-edit.h");
 
 @procs = qw(edit_cut edit_copy edit_paste edit_clear
             edit_fill edit_bucket_fill edit_blend edit_stroke);

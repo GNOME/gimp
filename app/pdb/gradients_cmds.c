@@ -24,14 +24,11 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "pdb-types.h"
 #include "procedural_db.h"
 
 #include "core/gimp.h"
 #include "core/gimpcontainer-filter.h"
-#include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpgradient.h"

@@ -25,8 +25,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbasetypes.h"
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpbase/gimpprotocol.h"
 
@@ -138,18 +136,18 @@ progress_update_invoker (Gimp        *gimp,
                          GimpContext *context,
                          Argument    *args)
 {
-  gboolean success = FALSE;
+  gboolean success = TRUE;
   gdouble percentage;
 
   percentage = args[0].value.pdb_float;
 
   if (gimp->current_plug_in && gimp->current_plug_in->open)
     {
-      success = TRUE;
-
       if (! gimp->no_interface)
         plug_in_progress_update (gimp->current_plug_in, percentage);
     }
+  else
+    success = FALSE;
 
   return procedural_db_return_args (&progress_update_proc, success);
 }
@@ -418,6 +416,8 @@ plugin_domain_register_invoker (Gimp        *gimp,
           plug_in_def_set_locale_domain_path (gimp->current_plug_in->plug_in_def,
                                               domain_path);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&plugin_domain_register_proc, success);
@@ -479,6 +479,8 @@ plugin_help_register_invoker (Gimp        *gimp,
           plug_in_def_set_help_domain_uri (gimp->current_plug_in->plug_in_def,
                                            domain_uri);
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&plugin_help_register_proc, success);
@@ -593,6 +595,8 @@ plugin_menu_register_invoker (Gimp        *gimp,
           if (! list)
             success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&plugin_menu_register_proc, success);
@@ -698,6 +702,8 @@ plugin_icon_register_invoker (Gimp        *gimp,
           if (! list)
             success = FALSE;
         }
+      else
+        success = FALSE;
     }
 
   return procedural_db_return_args (&plugin_icon_register_proc, success);
