@@ -1,13 +1,14 @@
 2001-08-14  Michael Natterer  <mitch@gimp.org>
 
-	* app/gdisplay.h: an evil temp_hack which lets GimpContext managing
-	the active display withoug including "gdisplay.h". Will go away as
-	soon ad context properties are registered dynamically.
+	* app/gdisplay.h: an evil temp_hack which lets GimpContext manage
+	the active display without including "gdisplay.h". Will go away as
+	soon as context properties are registered dynamically.
 
 	* app/module_db.c: cleaned up the object code in preparation of
 	moving it to core/.
 
-	* app/path.c: connect to GimpImage's 
+	* app/path.c: connect to GimpImage's "disconnect" signal instead
+	of "destroy".
 
 	* app/core/gimpobject.[ch]: derive it from GObject, not from
 	GtkObject any more (yeah :-)
