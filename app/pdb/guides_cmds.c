@@ -298,36 +298,39 @@ image_find_next_guide_invoker (Gimp     *gimp,
 
   if (success)
     {
-      success     = (gimage->guides == NULL);
-      guide_found = FALSE;
-    
-      for (guides = gimage->guides; guides; guides = g_list_next (guides))
+      if (gimage->guides != NULL)
 	{
-	  GimpGuide *g = (GimpGuide *) guides->data;
+	  success     = FALSE;
+	  guide_found = FALSE;
     
-	  if (g->position < 0)
-	    continue;
-    
-	  if (guide == 0)  /* init - Return first guide ID in list */
+	  for (guides = gimage->guides; guides; guides = g_list_next (guides))
 	    {
-	      next_guide = g->guide_ID;
+	      GimpGuide *g = (GimpGuide *) guides->data;
     
-	      success = TRUE;
-	      break;
+	      if (g->position < 0)
+		continue;
+    
+	      if (guide == 0)  /* init - Return first guide ID in list */
+		{
+		  next_guide = g->guide_ID;
+    
+		  guide_found = TRUE;
+		  break;
+		}
+    
+	      if (! guide_found)
+		{
+		  if (g->guide_ID == guide)
+		    guide_found = TRUE;
+		}
+	      else
+		{
+		  next_guide = g->guide_ID;
+		}
 	    }
     
-	  if (! guide_found)
-	    {
-	      if (g->guide_ID == guide)
-		guide_found = TRUE;
-	    }
-	  else
-	    {
-	      next_guide = g->guide_ID;
-    
-	      success = TRUE;
-	      break;
-	    }
+	  if (guide_found)
+	    success = TRUE;
 	}
     }
 

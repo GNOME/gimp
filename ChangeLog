@@ -1,3 +1,10 @@
+2003-03-06  Manish Sing  <yosh@gimp.org>
+
+	* tools/pdbgen/pdb/guides.pdb: fix find_next_guide to return 0 on
+	the last guide as documented, instead of failing.
+
+	* app/pdb/guides_cmds.c: regenerated
+
 2003-03-06  Michael Natterer  <mitch@gimp.org>
 
 	* themes/Default/images/stock-delete-16.png
