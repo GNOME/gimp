@@ -644,8 +644,8 @@ static int find_unused_ia_colour (guchar *pixels,
   gboolean ix_used[256];
 
 #ifdef GIFDEBUG
-  g_print ("GIF: fuiac: Image claims to use %d/%d indices - finding free "
-	   "index...\n", (int)(*colors),(int)num_indices);
+  g_printerr ("GIF: fuiac: Image claims to use %d/%d indices - finding free "
+              "index...\n", (int)(*colors),(int)num_indices);
 #endif
 
   for (i=0; i<256; i++)
@@ -655,7 +655,7 @@ static int find_unused_ia_colour (guchar *pixels,
 
   for (i=0; i<numpixels; i++)
     {
-      if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean)TRUE;
+      if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean) TRUE;
     }
   
   for (i=num_indices-1; i>=0; i--)
@@ -663,7 +663,7 @@ static int find_unused_ia_colour (guchar *pixels,
       if (ix_used[i] == (gboolean)FALSE)
 	{
 #ifdef GIFDEBUG
-	  g_print ("GIF: Found unused colour index %d.\n",(int)i);
+	  g_printerr ("GIF: Found unused colour index %d.\n", (int) i);
 #endif
 	  return i;
 	}
@@ -675,8 +675,9 @@ static int find_unused_ia_colour (guchar *pixels,
   if ((*colors) < 256)
     {
       (*colors)++;
-      g_print ("GIF: 2nd pass - Increasing bounds and using colour index %d.\n"
-	       , (int) (*colors)-1);
+      g_printerr ("GIF: 2nd pass "
+                  "- Increasing bounds and using colour index %d.\n",
+                  (int) (*colors)-1);
       return ((*colors)-1);
     }
   
@@ -942,9 +943,9 @@ save_image (gchar  *filename,
       break;
 
     default:
-      g_message (_("Sorry, can't save RGB images as GIFs - convert to INDEXED\nor GRAY first."));
+      g_message (_("Sorry, can't save RGB images as GIFs. "
+                   "Convert to Indexed or Grayscale first."));
       return FALSE;
-      break;
     }
   
 
@@ -995,7 +996,7 @@ save_image (gchar  *filename,
 
       if (drawable_type==GIMP_INDEXEDA_IMAGE)
 	{
-	  g_print ("GIF: Too many colours?\n");
+	  g_printerr ("GIF: Too many colours?\n");
 	}
     }
 
@@ -1081,15 +1082,14 @@ save_image (gchar  *filename,
 	  if (!onceonly)
 	    {
 #ifdef GIFDEBUG
-	      g_warning("Promised %d bpp, pondered writing chunk with %d bpp!",
-			liberalBPP, BitsPerPixel);
+	      g_warning ("Promised %d bpp, pondered writing chunk with %d bpp!",
+                         liberalBPP, BitsPerPixel);
 #endif
-	      g_message ("GIF plugin: "
-			 "Warning: "
-			 "Transparent colour in written file *might* be "
-			 "incorrect on viewers which don't support "
-			 "transparency.");
-	      onceonly = TRUE;
+	      g_message (_("Warning:\n"
+                           "Transparent color in written file might be "
+                           "incorrect on viewers which don't support "
+                           "transparency."));
+              onceonly = TRUE;
 	    }
 	}
       useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
@@ -1124,8 +1124,8 @@ save_image (gchar  *filename,
 
 	      if (!onceonly)
 		{
-		  g_message("GIF plugin: Delay inserted to prevent evil "
-			    "CPU-sucking anim.\n");
+		  g_message (_("Delay inserted to prevent evil "
+                               "CPU-sucking anim."));
 		  onceonly = TRUE;
 		}
 	      Delay89 = 1;
@@ -1970,7 +1970,8 @@ static void GIFEncodeCommentExt (FILE *fp, char *comment)
 
   if (strlen(comment)>240)
     {
-      g_print ("GIF: warning: comment too large - comment block not written.\n");
+      g_printerr ("GIF: warning:"
+                  "comment too large - comment block not written.\n");
       return;
     }
 
