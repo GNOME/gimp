@@ -609,7 +609,9 @@ paths_add_path (Path *bzp,
 					 &paths_dialog->vbox->style->fg[GTK_STATE_NORMAL],
 					 &paths_dialog->vbox->style->bg[GTK_STATE_SELECTED]);
 	}
+
        pwidget->paths_pixmap = paths_dialog->pixmap_normal;
+       gdk_pixmap_ref (pwidget->paths_pixmap);
     }
 
   if (!paths_dialog->pixmap_locked_normal)
