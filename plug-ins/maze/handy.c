@@ -60,8 +60,13 @@ get_colors (GDrawable *drawable,
       gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
       break;
     case GRAYA_IMAGE:       /* and again */
+      gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
+      gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
+      fg[0] = INTENSITY (fg[0], fg[1], fg[2]);
+      bg[0] = INTENSITY (bg[0], bg[1], bg[2]);
       fg[1] = 255;
       bg[1] = 255;
+      break;
     case GRAY_IMAGE:
       gimp_palette_get_foreground (&fg[0], &fg[1], &fg[2]);
       gimp_palette_get_background (&bg[0], &bg[1], &bg[2]);
@@ -133,7 +138,7 @@ drawbox( GPixelRgn *dest_rgn,
      if (high_size == 0) {
 	  rowbuf = g_new(guint8, rowsize);
      } else if (rowsize > high_size) {
-	  g_realloc(rowbuf, rowsize * sizeof(guint8) );
+	  rowbuf = g_renew(guint8, rowbuf, rowsize);
      }
      
      high_size = MAX(high_size, rowsize);

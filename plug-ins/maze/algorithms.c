@@ -59,7 +59,7 @@ void      mazegen_tileable(gint     pos,
 			   gint     x,
 			   gint     y,
 			   gint     rnd);
-void      prim(guint pos,
+void      prim(gint pos,
 	       gchar *maz, 
 	       guint x, 
 	       guint y, 
@@ -273,7 +273,7 @@ print_glist(gpointer data, gpointer user_data)
    does break, let me know, and I'll go cry in a corner for a while
    before I get up the strength to re-code it. */
 void
-prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
+prim(gint pos, gchar *maz, guint x, guint y, gint rnd)
 {
      GSList *front_cells=NULL;
      guint current;
@@ -303,19 +303,19 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 
      if (up >= 0) {
 	  maz[up]=FRONTIER;
-	  front_cells=g_slist_append(front_cells,(gpointer)up);
+	  front_cells=g_slist_append(front_cells,GINT_TO_POINTER(up));
      }
      if (down >= 0) {
-	  maz[up]=FRONTIER;
-	  front_cells=g_slist_append(front_cells,(gpointer)down);
+	  maz[down]=FRONTIER;
+	  front_cells=g_slist_append(front_cells,GINT_TO_POINTER(down));
      }
      if (left >= 0) {
-	  maz[up]=FRONTIER;
-	  front_cells=g_slist_append(front_cells,(gpointer)left);
+	  maz[left]=FRONTIER;
+	  front_cells=g_slist_append(front_cells,GINT_TO_POINTER(left));
      }
      if (right >= 0) {
-	  maz[up]=FRONTIER;
-	  front_cells=g_slist_append(front_cells,(gpointer)right);
+	  maz[right]=FRONTIER;
+	  front_cells=g_slist_append(front_cells,GINT_TO_POINTER(right));
      }
 
      /* While frontier is not empty do the following... */
@@ -323,9 +323,9 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 
 	  /* Remove one cell at random from frontier and place it in IN. */
 	  current = rand() % g_slist_length(front_cells);
-	  pos = (guint)g_slist_nth(front_cells,current)->data;
+	  pos = GPOINTER_TO_INT(g_slist_nth(front_cells,current)->data);
 
-	  front_cells=g_slist_remove(front_cells,(gpointer)pos);
+	  front_cells=g_slist_remove(front_cells,GINT_TO_POINTER(pos));
 	  maz[pos]=IN;
 
 	  /* If the cell has any neighbors in OUT, remove them from
@@ -341,7 +341,8 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[up]) {
 	       case OUT:
 		    maz[up]=FRONTIER;
-		    front_cells=g_slist_prepend(front_cells,(gpointer)up); 
+		    front_cells=g_slist_prepend(front_cells,
+						GINT_TO_POINTER(up)); 
 	       break;
 	       case IN:
 		    d=1;
@@ -354,7 +355,8 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[down]) {
 	       case OUT:
 		    maz[down]=FRONTIER;
-		    front_cells=g_slist_prepend(front_cells,(gpointer)down); 
+		    front_cells=g_slist_prepend(front_cells,
+						GINT_TO_POINTER(down)); 
 		    break;
 	       case IN:
 		    d=d|2;
@@ -367,7 +369,8 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[left]) {
 	       case OUT:
 		    maz[left]=FRONTIER;
-		    front_cells=g_slist_prepend(front_cells,(gpointer)left); 
+		    front_cells=g_slist_prepend(front_cells,
+						GINT_TO_POINTER(left)); 
 		    break;
 	       case IN:
 		    d=d|4;
@@ -380,7 +383,8 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	       switch (maz[right]) {
 	       case OUT:
 		    maz[right]=FRONTIER;
-		    front_cells=g_slist_prepend(front_cells,(gpointer)right); 
+		    front_cells=g_slist_prepend(front_cells,
+						GINT_TO_POINTER(right)); 
 		    break;
 	       case IN:
 		    d=d|8;
@@ -414,16 +418,16 @@ prim(guint pos, gchar *maz, guint x, guint y, gint rnd)
 	  
 	  switch (i) {
 	  case 0:
-	       maz[WALL_UP(pos)]=1;
+	       maz[WALL_UP(pos)]=IN;
 	       break;
 	  case 1:
-	       maz[WALL_DOWN(pos)]=1;
+	       maz[WALL_DOWN(pos)]=IN;
 	       break;
 	  case 2:
-	       maz[WALL_LEFT(pos)]=1;
+	       maz[WALL_LEFT(pos)]=IN;
 	       break;
 	  case 3:
-	       maz[WALL_RIGHT(pos)]=1;
+	       maz[WALL_RIGHT(pos)]=IN;
 	       break;
 	  case 99:
 	       break;
@@ -564,16 +568,16 @@ prim_tileable(gchar *maz, guint x, guint y, gint rnd)
 	  
 	  switch (i) {
 	  case 0:
-	       maz[WALL_UP_TILEABLE(pos)]=1;
+	       maz[WALL_UP_TILEABLE(pos)]=IN;
 	       break;
 	  case 1:
-	       maz[WALL_DOWN_TILEABLE(pos)]=1;
+	       maz[WALL_DOWN_TILEABLE(pos)]=IN;
 	       break;
 	  case 2:
-	       maz[WALL_LEFT_TILEABLE(pos)]=1;
+	       maz[WALL_LEFT_TILEABLE(pos)]=IN;
 	       break;
 	  case 3:
-	       maz[WALL_RIGHT_TILEABLE(pos)]=1;
+	       maz[WALL_RIGHT_TILEABLE(pos)]=IN;
 	       break;
 	  case 99:
 	       break;

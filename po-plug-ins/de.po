@@ -7,9 +7,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 1.1.18\n"
+"Project-Id-Version: GIMP 1.1.19\n"
 "POT-Creation-Date: 2000-04-12 16:36+0200\n"
-"PO-Revision-Date: 2000-04-12 16:37+02:00\n"
+"PO-Revision-Date: 2000-04-13 12:15+02:00\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4497,7 +4497,7 @@ msgstr "Zweite Zielfarbe"
 
 #: plug-ins/common/mapcolor.c:348
 msgid "<Image>/Filters/Colors/Map/Adjust FG-BG"
-msgstr "<Image>/Filter/Farben/Abbilden/VG-HG regeln"
+msgstr "<Image>/Filter/Farben/Abbilden/VG-HG anpassen"
 
 #: plug-ins/common/mapcolor.c:363
 msgid "<Image>/Filters/Colors/Map/Color Range Mapping..."
@@ -4508,12 +4508,12 @@ msgid ""
 "Color Mapping / Adjust FG/BG:\n"
 "Cannot operate on gray/indexed images"
 msgstr ""
-"Farben vertauschen / VG/HG anpassen:\n"
+"Farben abbilden / VG/HG anpassen:\n"
 "Kann diesen Filter nicht auf Graustufenbilder / indizierte Bilder anwenden"
 
 #: plug-ins/common/mapcolor.c:436
 msgid "Adjusting Foreground/Background"
-msgstr "Ersetze Hintergrund-/Vordergrundfarbe"
+msgstr "Vordergrund-/Hintergrundfarbe anpassen"
 
 #: plug-ins/common/mapcolor.c:484
 msgid "Mapping colors"

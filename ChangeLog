@@ -1,3 +1,14 @@
+2000-04-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/maze/algorithms.c
+	* plug-ins/maze/handy.c: applied gimp-kevint-000413-0 which
+	promises to really close #8568 this time
+
+	* plug-ins/common/xpm.c: applied gimp-mattias-000414-0, which
+	makes XPM saving work in noninteractive mode. It also changes
+	the PDB call, but since it has never worked before, that should
+	be ok.
+	
 2000-04-13  Matt Wilson  <msw@redhat.com>
 
 	* gimp.spec: updated for 1.1.19, reworked filespec generation
