@@ -495,7 +495,7 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
    GParam          *return_vals;
    int              nreturn_vals;
 
-   if(orientation == 0 )  /* in GIMP 1.1 we could use (orientation == ORIENTATION_VERTICAL) */
+   if(orientation != 1 )  /* in GIMP 1.1 we could use (orientation != ORIENTATION_HORIZONTAL) */
    {
       l_add_guide_proc = "gimp_image_add_vguide";
    }
@@ -543,7 +543,7 @@ gint32   p_gimp_image_add_guide(gint32 image_id, gint32 position, gint32 orienta
 
 gint32   p_gimp_image_findnext_guide(gint32 image_id, gint32 guide_id)
 {
-   static char     *l_findnext_guide_proc = "gimp_image_findnext_guide";
+   static char     *l_findnext_guide_proc = "gimp_image_find_next_guide";
    GParam          *return_vals;
    int              nreturn_vals;
 
@@ -630,6 +630,10 @@ gint  p_gimp_image_get_guide_orientation(gint32 image_id, gint32 guide_id)
                                     
       if (return_vals[0].data.d_status == STATUS_SUCCESS)
       {
+         if(return_vals[1].data.d_int32 != 1)  /* in GIMP 1.1 we could use (orientation != ORIENTATION_HORIZONTAL) */
+         {
+           return(0);
+         }
          return(return_vals[1].data.d_int32);  /* return the guide orientation */
       }
       printf("XJT: Error: PDB call of %s failed\n", l_get_guide_pos_orient);

@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include "appenv.h"
 #include "actionarea.h"
 #include "app_procs.h"
@@ -30,6 +31,7 @@
 #include "dialog_handler.h"
 #include "disp_callbacks.h"
 #include "errors.h"
+#include "fileops.h"
 #include "gdisplay.h"
 #include "gdisplay_ops.h"
 #include "gimage.h"
@@ -73,6 +75,15 @@ static GdkPixmap *create_pixmap    (GdkWindow  *parent,
 				    char      **data,
 				    int         width,
 				    int         height);
+static void gimp_set_drop_open     (GtkWidget *);
+static void gimp_dnd_data_received (GtkWidget *,
+				    GdkDragContext *,
+				    gint,
+				    gint,
+				    GtkSelectionData *,
+				    guint,
+				    guint);
+static gint gimp_dnd_open_files    (gchar *);
 
 static int pixmap_colors[8][3] =
 {
@@ -100,6 +111,21 @@ GtkTooltips * tool_tips;
 
 static GdkColor    colors[12];
 static GtkWidget * toolbox_shell = NULL;
+
+enum {
+  TARGET_URI_LIST,
+  TARGET_TEXT_PLAIN,
+} TargetType;
+
+static
+GtkTargetEntry dnd_target_table[] =
+{
+  { "text/uri-list", 0, TARGET_URI_LIST },
+  { "text/plain", 0, TARGET_TEXT_PLAIN }
+};
+
+static guint
+dnd_n_targets = sizeof(dnd_target_table) / sizeof(dnd_target_table[0]);
 
 static void
 tools_select_update (GtkWidget *w,
@@ -549,7 +575,7 @@ create_toolbox ()
   if (show_indicators && (!no_data) )
       create_indicator_area (vbox);
   gtk_widget_show (window);
-
+  gimp_set_drop_open (window);
 
   toolbox_shell = window;
 }
@@ -1331,4 +1357,75 @@ message_box_close_callback (GtkWidget *w,
   gtk_widget_destroy (msg_box->mbox);
 
   g_free (msg_box);
+}
+
+/* DnD functions */ 
+static void
+gimp_set_drop_open (GtkWidget *object)
+{
+  gtk_drag_dest_set (object,
+		     GTK_DEST_DEFAULT_ALL,
+		     dnd_target_table, dnd_n_targets,
+		     GDK_ACTION_COPY);
+  gtk_signal_connect (GTK_OBJECT (object),
+		      "drag_data_received",
+		      GTK_SIGNAL_FUNC (gimp_dnd_data_received),
+		      object);
+}
+
+static void
+gimp_dnd_data_received (GtkWidget          *widget,
+			GdkDragContext     *context,
+			gint                x,
+			gint                y,
+			GtkSelectionData   *data,
+			guint               info,
+			guint               time)
+{
+  switch (context->action)
+    {
+    case GDK_ACTION_DEFAULT:
+    case GDK_ACTION_COPY:
+    case GDK_ACTION_MOVE:
+    case GDK_ACTION_LINK:
+    case GDK_ACTION_ASK:
+    default:
+      gimp_dnd_open_files ((gchar *) data->data);
+      gtk_drag_finish (context, TRUE, FALSE, time);
+      break;
+    }
+  return;
+}
+
+static gint
+gimp_dnd_open_files (gchar *buffer)
+{
+  gchar	 name_buffer[1024];
+  const gchar *data_type = "file:";
+  const gint sig_len = strlen (data_type);
+
+  while (*buffer)
+    {
+      gchar *name = name_buffer;
+      gint len = 0;
+
+      while ((*buffer != 0) && (*buffer != '\n'))
+	{
+	  *name++ = *buffer++;
+	  len++;
+	}
+      if (len == 0)
+	break;
+      if (*(name - 1) == 0xd)
+	*(name - 1) = 0;
+      name = name_buffer;
+      if ((sig_len < len) && (! strncmp (name, data_type, sig_len)))
+	name += sig_len;
+
+      file_open (name, name);
+
+      if (*buffer)
+	buffer++;
+    }
+  return TRUE;
 }

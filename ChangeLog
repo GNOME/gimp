@@ -1,3 +1,14 @@
+Thu Jul  1 10:29:44 MEST 1999 Sven Neumann <sven@gimp.org>
+
+	* tools/pdbgen/pdb/guides.pdb
+	* app/guides_cmds.c: fixed a bug in image_find_next_guide
+
+	* plug-ins/xjt: reflect the name change of gimp_image_find_next_guide
+
+	* app/interface.c: applied the patch from 
+	Shuji Narazaki <narazaki@gimp.org> that allows to open images by 
+	dropping them onto the toolbar
+	
 1999-06-30  Tuomas Kuosmanen  <tigert@gimp.org>
 
 	* gimp1_1_splash.ppm: Dont even ask what this is :)

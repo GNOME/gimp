@@ -319,8 +319,10 @@ image_find_next_guide_invoker (Argument *args)
 		      while (tmplist && (((Guide *) tmplist->data)->position < 0))
 			tmplist = tmplist->next;
     
-		      if (tmplist);
-			 next_guide = ((Guide *) tmplist->data)->guide_ID;
+		      if (tmplist)
+			next_guide = ((Guide *) tmplist->data)->guide_ID;
+		      else
+			next_guide = 0;
     
 		      break;
 		    }
