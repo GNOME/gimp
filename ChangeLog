@@ -1,3 +1,9 @@
+2004-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpactiongroup.c (gimp_action_group_add_*_actions):
+	do the workaround for "" accelerators only if the GTK+ version
+	is smaller than 2.4.3. Fixes bug #144342 for GTK+ >= 2.4.3.
+
 2004-06-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-transform.c: declared

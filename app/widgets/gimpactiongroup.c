@@ -312,7 +312,11 @@ gimp_action_group_add_actions (GimpActionGroup *group,
                           entries[i].callback,
                           group->user_data);
 
-      if (entries[i].accelerator && ! entries[i].accelerator[0])
+#ifdef __GNUC__
+#warning FIXME: remove this has as soon as we depend on GTK+ 2.4.3
+#endif
+      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
+          gtk_check_version (2, 4, 3))
         gtk_action_group_add_action (GTK_ACTION_GROUP (group),
                                      GTK_ACTION (action));
       else
@@ -357,7 +361,11 @@ gimp_action_group_add_toggle_actions (GimpActionGroup       *group,
                           entries[i].callback,
                           group->user_data);
 
-      if (entries[i].accelerator && ! entries[i].accelerator[0])
+#ifdef __GNUC__
+#warning FIXME: remove this has as soon as we depend on GTK+ 2.4.3
+#endif
+      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
+          gtk_check_version (2, 4, 3))
         gtk_action_group_add_action (GTK_ACTION_GROUP (group),
                                      GTK_ACTION (action));
       else
@@ -409,7 +417,11 @@ gimp_action_group_add_radio_actions (GimpActionGroup      *group,
       if (value == entries[i].value)
 	gtk_toggle_action_set_active (GTK_TOGGLE_ACTION (action), TRUE);
 
-      if (entries[i].accelerator && ! entries[i].accelerator[0])
+#ifdef __GNUC__
+#warning FIXME: remove this has as soon as we depend on GTK+ 2.4.3
+#endif
+      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
+          gtk_check_version (2, 4, 3))
         gtk_action_group_add_action (GTK_ACTION_GROUP (group),
                                      GTK_ACTION (action));
       else
@@ -459,7 +471,11 @@ gimp_action_group_add_enum_actions (GimpActionGroup     *group,
                           callback,
                           group->user_data);
 
-      if (entries[i].accelerator && ! entries[i].accelerator[0])
+#ifdef __GNUC__
+#warning FIXME: remove this has as soon as we depend on GTK+ 2.4.3
+#endif
+      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
+          gtk_check_version (2, 4, 3))
         gtk_action_group_add_action (GTK_ACTION_GROUP (group),
                                      GTK_ACTION (action));
       else
@@ -504,7 +520,11 @@ gimp_action_group_add_string_actions (GimpActionGroup       *group,
                           callback,
                           group->user_data);
 
-      if (entries[i].accelerator && ! entries[i].accelerator[0])
+#ifdef __GNUC__
+#warning FIXME: remove this has as soon as we depend on GTK+ 2.4.3
+#endif
+      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
+          gtk_check_version (2, 4, 3))
         gtk_action_group_add_action (GTK_ACTION_GROUP (group),
                                      GTK_ACTION (action));
       else
@@ -546,7 +566,11 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup       *group,
                           callback,
                           group->user_data);
 
-      if (entries[i].accelerator && ! entries[i].accelerator[0])
+#ifdef __GNUC__
+#warning FIXME: remove this has as soon as we depend on GTK+ 2.4.3
+#endif
+      if (entries[i].accelerator && ! entries[i].accelerator[0] &&
+          gtk_check_version (2, 4, 3))
         gtk_action_group_add_action (GTK_ACTION_GROUP (group),
                                      GTK_ACTION (action));
       else
