@@ -35,8 +35,8 @@ sanity_check (gboolean no_interface)
       const gchar *mismatch;
 
 #define GTK_REQUIRED_MAJOR 2
-#define GTK_REQUIRED_MINOR 2
-#define GTK_REQUIRED_MICRO 2
+#define GTK_REQUIRED_MINOR 4
+#define GTK_REQUIRED_MICRO 0
 
       mismatch = gtk_check_version (GTK_REQUIRED_MAJOR,
                                     GTK_REQUIRED_MINOR,
