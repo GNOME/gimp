@@ -1,3 +1,10 @@
+2000-07-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/helpbrowser/helpbrowser.c: activate the help page 
+	when clicking into the combo-box displaying the title and use 
+	the webbrowser plug-in (which should call Netscape) to handle
+	non-local links.
+
 2000-07-30  Tor Lillqvist  <tml@iki.fi>
 
 	* libgimp/gimp.c

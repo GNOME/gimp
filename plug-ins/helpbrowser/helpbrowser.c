@@ -310,6 +310,17 @@ entry_changed_callback (GtkWidget *widget,
     }
 }
 
+static gint
+entry_button_press_callback (GtkWidget      *widget,
+			     GdkEventButton *bevent,
+			     gpointer        data)
+{
+  if (current_page != &pages[HELP])
+    gtk_notebook_set_page (GTK_NOTEBOOK (notebook), HELP);
+
+  return FALSE;
+}
+
 static void
 history_add (gchar *ref,
 	     gchar *title)
@@ -332,8 +343,7 @@ history_add (gchar *ref,
 	      continue;
 	    }
 
-	  found = list;
-	}
+	  found = list;	}
     }
 
   if (found)
@@ -520,6 +530,8 @@ xmhtml_activate (GtkWidget *html,
 		 gpointer   data)
 {
   XmHTMLAnchorCallbackStruct *cbs = (XmHTMLAnchorCallbackStruct *) data;
+  GimpParam *return_vals;
+  gint       nreturn_vals;
 
   switch (cbs->url_type)
     {
@@ -532,7 +544,14 @@ xmhtml_activate (GtkWidget *html,
       break;
 
     default:
-      /* should handle http request here (e.g. pass them to netscape) */
+      /*  try to call netscape through the web_browser interface */
+      return_vals = gimp_run_procedure ("extension_web_browser",
+					&nreturn_vals,
+					PARAM_INT32,  RUN_NONINTERACTIVE,
+					PARAM_STRING, cbs->href,
+					PARAM_INT32,  FALSE,
+					PARAM_END);
+       gimp_destroy_params (return_vals, nreturn_vals);
       break;
     }
 }
@@ -605,7 +624,7 @@ notebook_label_button_press_callback (GtkWidget *widget,
   if (current_page != &pages[i])
     gtk_notebook_set_page (GTK_NOTEBOOK (notebook), i);
   
-  return (TRUE);
+  return TRUE;
 }
 
 static void
@@ -857,6 +876,10 @@ open_browser_dialog (gchar *help_path,
 			      "changed",
 			      GTK_SIGNAL_FUNC (entry_changed_callback), 
 			      combo);
+	  gtk_signal_connect (GTK_OBJECT (GTK_WIDGET (GTK_COMBO (combo)->entry)), 
+			      "button-press-event",
+			      GTK_SIGNAL_FUNC (entry_button_press_callback), 
+			      NULL);
 	  gtk_widget_show (combo);
 	  break;
 	default:
