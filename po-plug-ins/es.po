@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-08-05 12:01+0200\n"
-"PO-Revision-Date: 2003-08-05 10:56-0300\n"
+"POT-Creation-Date: 2003-08-07 11:49+0200\n"
+"PO-Revision-Date: 2003-08-07 10:17-0300\n"
 "Last-Translator: Pablo G. del Campo <pablodc@bigfoot.com>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -245,8 +245,7 @@ msgstr "Densidad de color"
 #. to figure out which button the user pushed, etc.
 #. Not my design, please don't blame me -- njl
 #: plug-ins/FractalExplorer/Dialogs.c:695 plug-ins/common/compose.c:138
-#: plug-ins/common/compose.c:148 plug-ins/common/exchange.c:419
-#: plug-ins/fp/fp_gtk.c:25
+#: plug-ins/common/compose.c:148 plug-ins/fp/fp_gtk.c:25
 msgid "Red:"
 msgstr "Rojo:"
 
@@ -255,8 +254,7 @@ msgid "Change the intensity of the red channel"
 msgstr "Cambiar la intensidad del canal rojo"
 
 #: plug-ins/FractalExplorer/Dialogs.c:705 plug-ins/common/compose.c:139
-#: plug-ins/common/compose.c:149 plug-ins/common/exchange.c:463
-#: plug-ins/fp/fp_gtk.c:26
+#: plug-ins/common/compose.c:149 plug-ins/fp/fp_gtk.c:26
 msgid "Green:"
 msgstr "Verde:"
 
@@ -265,8 +263,7 @@ msgid "Change the intensity of the green channel"
 msgstr "Cambiar la intensidad del canal verde"
 
 #: plug-ins/FractalExplorer/Dialogs.c:715 plug-ins/common/compose.c:140
-#: plug-ins/common/compose.c:150 plug-ins/common/exchange.c:507
-#: plug-ins/fp/fp_gtk.c:27
+#: plug-ins/common/compose.c:150 plug-ins/fp/fp_gtk.c:27
 msgid "Blue:"
 msgstr "Azul:"
 
@@ -280,7 +277,7 @@ msgid "Color Function"
 msgstr "Función de color"
 
 #. Redmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:735 plug-ins/common/AlienMap.c:1229
+#: plug-ins/FractalExplorer/Dialogs.c:735 plug-ins/common/AlienMap.c:1230
 #: plug-ins/common/decompose.c:121
 msgid "Red"
 msgstr "Rojo"
@@ -346,13 +343,13 @@ msgstr ""
 "viceversa."
 
 #. Greenmode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:776 plug-ins/common/AlienMap.c:1252
+#: plug-ins/FractalExplorer/Dialogs.c:776 plug-ins/common/AlienMap.c:1253
 #: plug-ins/common/decompose.c:122
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
-#: plug-ins/FractalExplorer/Dialogs.c:817 plug-ins/common/AlienMap.c:1275
+#: plug-ins/FractalExplorer/Dialogs.c:817 plug-ins/common/AlienMap.c:1276
 #: plug-ins/common/decompose.c:127
 msgid "Blue"
 msgstr "Azul"
@@ -1284,7 +1281,8 @@ msgstr "Acerca de..."
 
 #: plug-ins/common/AlienMap.c:1202 plug-ins/common/diffraction.c:601
 #: plug-ins/common/diffraction.c:639 plug-ins/common/diffraction.c:677
-#: plug-ins/common/noisify.c:374 plug-ins/common/noisify.c:381
+#: plug-ins/common/exchange.c:419 plug-ins/common/noisify.c:374
+#: plug-ins/common/noisify.c:381
 msgid "_Red:"
 msgstr "_Rojo:"
 
@@ -1292,80 +1290,82 @@ msgstr "_Rojo:"
 msgid "Change intensity of the red channel"
 msgstr "Cambiar intensidad del canal rojo"
 
-#: plug-ins/common/AlienMap.c:1211 plug-ins/common/diffraction.c:610
+#: plug-ins/common/AlienMap.c:1212 plug-ins/common/diffraction.c:610
 #: plug-ins/common/diffraction.c:648 plug-ins/common/diffraction.c:686
-#: plug-ins/common/noisify.c:375 plug-ins/common/noisify.c:382
+#: plug-ins/common/exchange.c:463 plug-ins/common/noisify.c:375
+#: plug-ins/common/noisify.c:382
 msgid "_Green:"
 msgstr "_Verde:"
 
-#: plug-ins/common/AlienMap.c:1214
+#: plug-ins/common/AlienMap.c:1215
 msgid "Change intensity of the green channel"
 msgstr "Cambiar intensidad del canal verde"
 
-#: plug-ins/common/AlienMap.c:1220 plug-ins/common/diffraction.c:619
+#: plug-ins/common/AlienMap.c:1221 plug-ins/common/diffraction.c:619
 #: plug-ins/common/diffraction.c:657 plug-ins/common/diffraction.c:695
-#: plug-ins/common/noisify.c:376 plug-ins/common/noisify.c:383
+#: plug-ins/common/exchange.c:507 plug-ins/common/noisify.c:376
+#: plug-ins/common/noisify.c:383
 msgid "_Blue:"
 msgstr "_Azul:"
 
-#: plug-ins/common/AlienMap.c:1223
+#: plug-ins/common/AlienMap.c:1224
 msgid "Change intensity of the blue channel"
 msgstr "Cambiar intensidad del canal azul"
 
-#: plug-ins/common/AlienMap.c:1233 plug-ins/common/AlienMap.c:1256
-#: plug-ins/common/AlienMap.c:1279
+#: plug-ins/common/AlienMap.c:1234 plug-ins/common/AlienMap.c:1257
+#: plug-ins/common/AlienMap.c:1280
 msgid "_Sine"
 msgstr "_Seno"
 
-#: plug-ins/common/AlienMap.c:1234 plug-ins/common/AlienMap.c:1257
-#: plug-ins/common/AlienMap.c:1280
+#: plug-ins/common/AlienMap.c:1235 plug-ins/common/AlienMap.c:1258
+#: plug-ins/common/AlienMap.c:1281
 msgid "Cos_ine"
 msgstr "Co_seno"
 
-#: plug-ins/common/AlienMap.c:1235 plug-ins/common/AlienMap.c:1258
-#: plug-ins/common/AlienMap.c:1281 plug-ins/common/tiff.c:1805
+#: plug-ins/common/AlienMap.c:1236 plug-ins/common/AlienMap.c:1259
+#: plug-ins/common/AlienMap.c:1282 plug-ins/common/tiff.c:1805
 msgid "_None"
 msgstr "_Ninguno"
 
-#: plug-ins/common/AlienMap.c:1240
+#: plug-ins/common/AlienMap.c:1241
 msgid "Use sine-function for red component."
 msgstr "Usar función seno para componente roja."
 
-#: plug-ins/common/AlienMap.c:1242
+#: plug-ins/common/AlienMap.c:1243
 msgid "Use cosine-function for red component."
 msgstr "Usar función coseno para componente roja."
 
-#: plug-ins/common/AlienMap.c:1244
+#: plug-ins/common/AlienMap.c:1245
 msgid "Red channel: use linear mapping instead of any trigonometrical function"
 msgstr "Canal rojo: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
-#: plug-ins/common/AlienMap.c:1263
+#: plug-ins/common/AlienMap.c:1264
 msgid "Use sine-function for green component."
 msgstr "Usar función seno para componente verde."
 
-#: plug-ins/common/AlienMap.c:1265
+#: plug-ins/common/AlienMap.c:1266
 msgid "Use cosine-function for green component."
 msgstr "Usar función coseno para componente verde."
 
-#: plug-ins/common/AlienMap.c:1267
+#: plug-ins/common/AlienMap.c:1268
 msgid "Green channel: use linear mapping instead of any trigonometrical function"
 msgstr ""
 "Canal verde: usar un mapeo lineal en lugar de cualquier función "
 "trigonométrica"
 
-#: plug-ins/common/AlienMap.c:1286
+#: plug-ins/common/AlienMap.c:1287
 msgid "Use sine-function for blue component."
 msgstr "Usar función seno para componente azul."
 
-#: plug-ins/common/AlienMap.c:1288
+#: plug-ins/common/AlienMap.c:1289
 msgid "Use cosine-function for blue component."
 msgstr "Usar función coseno para componente azul."
 
-#: plug-ins/common/AlienMap.c:1290
+#: plug-ins/common/AlienMap.c:1291
 msgid "Blue channel: use linear mapping instead of any trigonometrical function"
 msgstr "Canal azul: usar un mapeo lineal en lugar de cualquier función trigonométrica"
 
-#: plug-ins/common/AlienMap.c:1356
+#: plug-ins/common/AlienMap.c:1357
 msgid "About AlienMap"
 msgstr "Acerca del mapa alienigena"
 
@@ -1682,20 +1682,17 @@ msgid "Randoms from seed (shared)"
 msgstr "Aleatorizar desde semilla (compartido)"
 
 #: plug-ins/common/CML_explorer.c:302 plug-ins/common/decompose.c:131
-#: plug-ins/fp/fp_gtk.c:292 plug-ins/fp/fp_gtk.c:426
 #: plug-ins/gimpressionist/orientation.c:167
 #: plug-ins/gimpressionist/size.c:145
 msgid "Hue"
 msgstr "Tono"
 
 #: plug-ins/common/CML_explorer.c:303 plug-ins/common/decompose.c:132
-#: plug-ins/fp/fp_gtk.c:296 plug-ins/fp/fp_gtk.c:430 plug-ins/fp/fp_gtk.c:494
-#: plug-ins/rcm/rcm_dialog.c:543
+#: plug-ins/fp/fp_gtk.c:494 plug-ins/rcm/rcm_dialog.c:543
 msgid "Saturation"
 msgstr "Saturación"
 
 #: plug-ins/common/CML_explorer.c:304 plug-ins/common/decompose.c:133
-#: plug-ins/fp/fp_gtk.c:300 plug-ins/fp/fp_gtk.c:434
 #: plug-ins/gimpressionist/orientation.c:108
 #: plug-ins/gimpressionist/size.c:106
 msgid "Value"
@@ -1727,6 +1724,7 @@ msgid "New Seed"
 msgstr "Nueva semilla"
 
 #: plug-ins/common/CML_explorer.c:1275 plug-ins/common/lic.c:739
+#: plug-ins/fp/fp_gtk.c:292
 msgid "_Hue"
 msgstr "T_ono"
 
@@ -1734,7 +1732,7 @@ msgstr "T_ono"
 msgid "Sat_uration"
 msgstr "Sat_uración"
 
-#: plug-ins/common/CML_explorer.c:1283
+#: plug-ins/common/CML_explorer.c:1283 plug-ins/fp/fp_gtk.c:300
 msgid "_Value"
 msgstr "_Valor:"
 
@@ -3432,20 +3430,20 @@ msgid "Color Exchange: From Color"
 msgstr "Intercambio de color: del color"
 
 #: plug-ins/common/exchange.c:441
-msgid "Red Threshold:"
-msgstr "Umbral de rojo:"
+msgid "R_ed Threshold:"
+msgstr "Umbral d_e rojo:"
 
 #: plug-ins/common/exchange.c:485
-msgid "Green Threshold:"
-msgstr "Umbral de verde:"
+msgid "G_reen Threshold:"
+msgstr "Umbral de ve_rde:"
 
 #: plug-ins/common/exchange.c:529
-msgid "Blue Threshold:"
-msgstr "Umbral de azul:"
+msgid "B_lue Threshold:"
+msgstr "Umbra_l de azul:"
 
 #: plug-ins/common/exchange.c:553
-msgid "Lock Thresholds"
-msgstr "Fijar umbrales"
+msgid "Lock _Thresholds"
+msgstr "Fi_jar umbrales"
 
 #: plug-ins/common/film.c:252
 msgid "<Image>/Filters/Combine/_Film..."
@@ -4553,7 +4551,7 @@ msgstr "Van Gogh (LIC)"
 msgid "Effect Channel"
 msgstr "Canal de efecto"
 
-#: plug-ins/common/lic.c:740
+#: plug-ins/common/lic.c:740 plug-ins/fp/fp_gtk.c:296
 msgid "_Saturation"
 msgstr "_Saturación:"
 
@@ -7866,24 +7864,24 @@ msgid "Affected Range"
 msgstr "Rango afectado"
 
 #: plug-ins/fp/fp_gtk.c:261
-msgid "Shadows"
-msgstr "Sombras"
+msgid "Sha_dows"
+msgstr "Somb_ras"
 
 #: plug-ins/fp/fp_gtk.c:265
-msgid "Midtones"
-msgstr "Tonos medios"
+msgid "_Midtones"
+msgstr "Tonos _medios"
 
 #: plug-ins/fp/fp_gtk.c:269
-msgid "Highlights"
-msgstr "Puntos de luz"
+msgid "H_ighlights"
+msgstr "P_untos de luz"
 
 #: plug-ins/fp/fp_gtk.c:282
 msgid "Windows"
 msgstr "Ventanas"
 
 #: plug-ins/fp/fp_gtk.c:304
-msgid "Advanced"
-msgstr "Avanzado"
+msgid "A_dvanced"
+msgstr "A_vanzado"
 
 #: plug-ins/fp/fp_gtk.c:352
 msgid "Value Variations"
@@ -7897,21 +7895,33 @@ msgstr "Variaciones de saturación"
 msgid "Select Pixels by"
 msgstr "Seleccionar píxeles por"
 
+#: plug-ins/fp/fp_gtk.c:426
+msgid "H_ue"
+msgstr "T_ono"
+
+#: plug-ins/fp/fp_gtk.c:430
+msgid "Satu_ration"
+msgstr "Satu_ración"
+
+#: plug-ins/fp/fp_gtk.c:434
+msgid "V_alue"
+msgstr "V_alor"
+
 #: plug-ins/fp/fp_gtk.c:447
 msgid "Show"
 msgstr "Mostrar"
 
 #: plug-ins/fp/fp_gtk.c:455
-msgid "Entire Image"
-msgstr "Imagen completa"
+msgid "_Entire Image"
+msgstr "Imagen c_ompleta"
 
 #: plug-ins/fp/fp_gtk.c:460
-msgid "Selection Only"
-msgstr "Sólo selección"
+msgid "Se_lection Only"
+msgstr "Só_lo la selección"
 
 #: plug-ins/fp/fp_gtk.c:465
-msgid "Selection In Context"
-msgstr "Selección en su contexto"
+msgid "Selec_tion In Context"
+msgstr "Selecc_ión en su contexto"
 
 #: plug-ins/fp/fp_gtk.c:479
 msgid "Display"
@@ -7931,36 +7941,36 @@ msgstr "Más claro y más oscuro"
 msgid "Filter Pack Simulation"
 msgstr "Simulación de paquete de filtros"
 
-#: plug-ins/fp/fp_gtk.c:1038
+#: plug-ins/fp/fp_gtk.c:1036
 msgid "Shadows:"
 msgstr "Sombras:"
 
-#: plug-ins/fp/fp_gtk.c:1039
+#: plug-ins/fp/fp_gtk.c:1037
 msgid "Midtones:"
 msgstr "Tonos medios:"
 
-#: plug-ins/fp/fp_gtk.c:1040
+#: plug-ins/fp/fp_gtk.c:1038
 msgid "Highlights:"
 msgstr "Puntos de luz:"
 
-#: plug-ins/fp/fp_gtk.c:1054
+#: plug-ins/fp/fp_gtk.c:1052
 msgid "Advanced Filter Pack Options"
 msgstr "Opciones avanzadas del paquete de filtros"
 
-#: plug-ins/fp/fp_gtk.c:1065
+#: plug-ins/fp/fp_gtk.c:1063
 msgid "Smoothness of Aliasing"
 msgstr "Suavidad del efecto escalera"
 
 #. ****************** MISC OPTIONS **************************
-#: plug-ins/fp/fp_gtk.c:1154
+#: plug-ins/fp/fp_gtk.c:1152
 msgid "Miscellaneous Options"
 msgstr "Opciones varias"
 
-#: plug-ins/fp/fp_gtk.c:1165
+#: plug-ins/fp/fp_gtk.c:1163
 msgid "Preview as You Drag"
 msgstr "Previsualizar mientras arrastra"
 
-#: plug-ins/fp/fp_gtk.c:1169
+#: plug-ins/fp/fp_gtk.c:1167
 msgid "Preview Size"
 msgstr "Tamaño de vista previa"
 
