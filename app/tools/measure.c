@@ -1,6 +1,9 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Measure tool
+ * Copyright (C) 1999 Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -15,6 +18,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #include <math.h>
 #include "appenv.h"
 #include "draw_core.h"
@@ -23,37 +27,34 @@
 #include "libgimp/gimpintl.h"
 
 
-/*  target size  */
-#define  TARGET_HEIGHT  15
-#define  TARGET_WIDTH   15
-
-/*  handle size (actually half of TARGET_[WIDTH|HEIGHT])  */
-#define  HANDLE_SIZE    7
-
-#define  ARC_RADIUS     40
-
+/*  definitions  */
+#define  TARGET         8
+#define  ARC_RADIUS     30
+#define  ARC_RADIUS_2   1100
 #define  STATUSBAR_SIZE 128
 
 /*  possible measure functions  */
-#define CREATING        0
-#define MOVING_START    1
-#define MOVING_END      2
-#define FINISHED        4
+typedef enum 
+{
+  CREATING,
+  ADDING,
+  MOVING,
+  FINISHED
+} MeasureFunction;
 
 /*  the measure structure  */
 typedef struct _MeasureTool MeasureTool;
 struct _MeasureTool
 {
-  DrawCore *core;        /*  Core select object   */
-
-  int       startx;      /*  starting x coord     */
-  int       starty;      /*  starting y coord     */
-  int       endx;        /*  ending x coord       */
-  int       endy;        /*  ending y coord       */
-  double    angle;       /*  angle                */
-
-  int       function;    /*  moving or resizing   */
-  guint     context_id;  /*  for the statusbar    */
+  DrawCore        *core;        /*  draw core                  */
+  MeasureFunction  function;    /*  what are we doing?         */
+  int              point;       /*  what are we manipulating?  */
+  int              num_points;  /*  how many points?           */
+  int              x[3];        /*  three x coordinates        */
+  int              y[3];        /*  three y coordinates        */
+  double           angle1;      /*  first angle                */
+  double           angle2;      /*  second angle               */
+  guint            context_id;  /*  for the statusbar          */
 };
 
 /*  the measure tool options  */
@@ -67,6 +68,33 @@ static void   measure_tool_cursor_update  (Tool *, GdkEventMotion *, gpointer);
 static void   measure_tool_control	  (Tool *, ToolAction,       gpointer);
 
 
+static double
+measure_get_angle (int    dx,
+		   int    dy,
+		   double xres,
+		   double yres)
+{
+  double angle;
+
+  if (dx)
+    angle = 180.0 / G_PI * atan (((double)(dy) / yres) / ((double)(dx) / xres));
+  else if (dy)
+    angle = dy > 0 ? 270.0 : 90.0;
+  else
+    angle = 180.0;
+  
+  if (dx > 0)
+    {
+      if (dy > 0)
+	angle = 360.0 - angle;
+      else
+	angle = -angle;
+    }
+  else
+    angle = 180.0 - angle;
+
+  return (angle);
+}
 
 static void
 measure_tool_button_press (Tool           *tool,
@@ -75,48 +103,53 @@ measure_tool_button_press (Tool           *tool,
 {
   GDisplay * gdisp;
   MeasureTool * measure_tool;
-  int x1, x2, y1, y2;
+  int x[3];
+  int y[3];
+  int i;
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
 
-  /*  if we are changing displays, pop the statusbar on the old one  */ 
+  /*  if we are changing displays, pop the statusbar of the old one  */ 
   if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
     {
       GDisplay *old_gdisp = tool->gdisp_ptr;
       gtk_statusbar_pop (GTK_STATUSBAR (old_gdisp->statusbar), measure_tool->context_id);
     }
 
-  if (tool->state == INACTIVE || gdisp_ptr != tool->gdisp_ptr)
-    {
-      measure_tool->function = CREATING;
-    }  
-  else
-    {
-      /*  if the cursor is in one of the handles, the new function will be moving  */
-      gdisplay_transform_coords (gdisp, measure_tool->startx, measure_tool->starty, &x1, &y1, TRUE);
-      gdisplay_transform_coords (gdisp, measure_tool->endx, measure_tool->endy, &x2, &y2, TRUE);      
+  measure_tool->function = CREATING;
 
-      if (bevent->x == BOUNDS (bevent->x, x1 - HANDLE_SIZE, x1 + HANDLE_SIZE) &&
-	  bevent->y == BOUNDS (bevent->y, y1 - HANDLE_SIZE, y1 + HANDLE_SIZE))
-	measure_tool->function = MOVING_START;
-      else if (bevent->x == BOUNDS (bevent->x, x2 - HANDLE_SIZE, x2 + HANDLE_SIZE) &&
-	       bevent->y == BOUNDS (bevent->y, y2 - HANDLE_SIZE, y2 + HANDLE_SIZE))
-	measure_tool->function = MOVING_END;
-      /*  otherwise, the new function will be creating  */
-      else
-	measure_tool->function = CREATING;
+  if (tool->state == ACTIVE && gdisp_ptr == tool->gdisp_ptr)
+    {
+      /*  if the cursor is in one of the handles, the new function will be moving or adding */
+      for (i=0; i < measure_tool->num_points; i++)
+	{
+	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
+				     &x[i], &y[i], TRUE);      
+	  if (bevent->x == BOUNDS (bevent->x, x[i] - TARGET, x[i] + TARGET) &&
+	      bevent->y == BOUNDS (bevent->y, y[i] - TARGET, y[i] + TARGET))
+	    {
+	      measure_tool->function = (bevent->state & GDK_SHIFT_MASK) ? ADDING : MOVING;
+	      measure_tool->point = i;
+	      break;
+	    }
+	}
+      /*  adding to the middle point makes no sense  */
+      if (i == 0 && measure_tool->function == ADDING && measure_tool->num_points == 3)
+	measure_tool->function = MOVING;
     }
-
+  
   if (measure_tool->function == CREATING)
     {
       if (tool->state == ACTIVE)
 	draw_core_stop (measure_tool->core, tool);
       
+      /*  set the first point and go into ADDING mode  */
       gdisplay_untransform_coords (gdisp,  bevent->x, bevent->y, 
-				   &measure_tool->startx, &measure_tool->starty, TRUE, TRUE);
-      measure_tool->endx = measure_tool->startx;
-      measure_tool->endy = measure_tool->starty;
+				   &measure_tool->x[0], &measure_tool->y[0], TRUE, TRUE);
+      measure_tool->point = 0;
+      measure_tool->num_points = 1;
+      measure_tool->function = ADDING;
 
       /*  set the gdisplay  */
       tool->gdisp_ptr = gdisp_ptr;
@@ -130,7 +163,6 @@ measure_tool_button_press (Tool           *tool,
       /*  start drawing the measure tool  */
       draw_core_start (measure_tool->core, gdisp->canvas->window, tool);
     }
-
   gdk_pointer_grab (gdisp->canvas->window, FALSE,
 		    GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
 		    NULL, NULL, bevent->time);
@@ -160,13 +192,17 @@ measure_tool_motion (Tool           *tool,
 		     GdkEventMotion *mevent,
 		     gpointer        gdisp_ptr)
 {
-
   GDisplay * gdisp;
   MeasureTool * measure_tool;
   int x, y;
+  int ax, ay;
+  int bx, by;
   int dx, dy;
+  int i;
+  int tmp;
+  double angle;
+  double distance;
   gchar distance_str[STATUSBAR_SIZE];
-  gdouble distance;
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
@@ -177,12 +213,59 @@ measure_tool_motion (Tool           *tool,
   /*  get the coordinates  */
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, FALSE, TRUE);
 
+  /*  
+   *  A few comments here, because this routine looks quite weird at first ...
+   *
+   *  The goal is to keep point 0, called the start point, to be always the one 
+   *  in the middle or, if there are only two points, the one that is fixed.
+   *  The angle is then always measured at this point.
+   */
+
   switch (measure_tool->function)
     {
-    case CREATING:
-    case MOVING_END:
-      measure_tool->endx = x;
-      measure_tool->endy = y;
+    case ADDING:
+      switch (measure_tool->point)
+	{
+	case 0:  /*  we are adding to the start point  */  
+	  break;
+	case 1:  /*  we are adding to the end point, make it the new start point  */
+	  tmp = measure_tool->x[0];
+	  measure_tool->x[0] = measure_tool->x[1];
+	  measure_tool->x[1] = tmp;
+	  tmp = measure_tool->y[0];
+	  measure_tool->y[0] = measure_tool->y[1];
+	  measure_tool->y[1] = tmp;
+	  break;
+	case 2:  /*  we are adding to the third point, make it the new start point  */
+	  measure_tool->x[1] = measure_tool->x[0];
+	  measure_tool->y[1] = measure_tool->y[0];
+	  measure_tool->x[0] = measure_tool->x[2];
+	  measure_tool->y[0] = measure_tool->y[2];
+	  break;
+	default:
+	  break;
+	}
+      measure_tool->num_points = MIN (measure_tool->num_points + 1, 3);
+      measure_tool->point = measure_tool->num_points - 1;
+      measure_tool->function = MOVING;
+      /*  no, don't break here!  */
+ 
+    case MOVING: 
+      /*  if we are moving the start point and only have two, make it the end point  */
+      if (measure_tool->num_points == 2 && measure_tool->point == 0)
+	{
+	  tmp = measure_tool->x[0];
+	  measure_tool->x[0] = measure_tool->x[1];
+	  measure_tool->x[1] = tmp;
+	  tmp = measure_tool->y[0];
+	  measure_tool->y[0] = measure_tool->y[1];
+	  measure_tool->y[1] = tmp;
+	  measure_tool->point = 1;
+	}
+      i = measure_tool->point;
+
+      measure_tool->x[i] = x;
+      measure_tool->y[i] = y;
 
       /*  restrict to horizontal/vertical movements, if modifiers are pressed */
       if (mevent->state & GDK_MOD1_MASK)
@@ -191,66 +274,50 @@ measure_tool_motion (Tool           *tool,
 	    {
 	      int d;
 	      
-	      dx = measure_tool->endx - measure_tool->startx;
-	      dy = measure_tool->endy - measure_tool->starty;
+	      dx = measure_tool->x[i] - measure_tool->x[0];
+	      dy = measure_tool->y[i] - measure_tool->y[0];
 	      d  = (abs(dx) + abs(dy)) >> 1;
       
-	      measure_tool->endx = measure_tool->startx + ((dx < 0) ? -d : d);
-	      measure_tool->endy = measure_tool->starty + ((dy < 0) ? -d : d);
+	      measure_tool->x[i] = measure_tool->x[0] + ((dx < 0) ? -d : d);
+	      measure_tool->y[i] = measure_tool->y[0] + ((dy < 0) ? -d : d);
 	    }
 	  else
-	    measure_tool->endx = measure_tool->startx;
+	    measure_tool->x[i] = measure_tool->x[0];
 	}
       else if (mevent->state & GDK_CONTROL_MASK)
-	measure_tool->endy = measure_tool->starty;
+	measure_tool->y[i] = measure_tool->y[0];
       break;
-
-    case MOVING_START:
-      measure_tool->startx = x;
-      measure_tool->starty = y;
-
-      /*  restrict to horizontal/vertical movements, if modifiers are pressed */
-      if (mevent->state & GDK_MOD1_MASK)
-	{
-	  if (mevent->state & GDK_CONTROL_MASK)
-	    {
-	      int d;
-
-	      dx = measure_tool->endx - measure_tool->startx;
-	      dy = measure_tool->endy - measure_tool->starty;
-	      d  = (abs(dx) + abs(dy)) >> 1;
-	      
-	      measure_tool->startx = measure_tool->endx - ((dx < 0) ? -d : d);
-	      measure_tool->starty = measure_tool->endy - ((dy < 0) ? -d : d);
-	    }
-	  else
-	    measure_tool->startx = measure_tool->endx;
-	}
-      else if (mevent->state & GDK_CONTROL_MASK)
-	measure_tool->starty = measure_tool->endy;
-      break;
-
     default:
       break;
     }
 
-  dx = measure_tool->endx - measure_tool->startx;
-  dy = measure_tool->endy - measure_tool->starty;
 
-  /*  show info in statusbar  */
+  /*  calculate distance and angle  */
+  ax = measure_tool->x[1] - measure_tool->x[0];
+  ay = measure_tool->y[1] - measure_tool->y[0];
+
+  if (measure_tool->num_points == 3)
+    {
+      bx = measure_tool->x[2] - measure_tool->x[0];
+      by = measure_tool->y[2] - measure_tool->y[0];
+    }
+  else
+    {
+      bx = ax < 0 ? -1 : 1;
+      by = 0;
+    }
+
   if (gdisp->dot_for_dot)
     {
-      distance = sqrt (SQR (dx) + SQR (dy));
-      if (dx)
-	measure_tool->angle = 180.0 / G_PI * atan ((double)(dy) / (double)(dx));
-      else if (dy)
-	measure_tool->angle = 90.0;
-      else
-	measure_tool->angle = 0.0;
+      distance = sqrt (SQR (ax - bx) + SQR (ay - by));
+      measure_tool->angle1 = measure_get_angle (ax, ay, 1.0, 1.0);
+      measure_tool->angle2 = measure_get_angle (bx, by, 1.0, 1.0);
+      angle = fabs (measure_tool->angle1 - measure_tool->angle2);
+      if (angle > 180.0)
+	angle = 360.0 - angle;
 
       g_snprintf (distance_str, sizeof (distance_str), "%s %.1f %s, %s %.2f %s",
-		  _("Distance:"), distance, _("pixels"), _("Angle:"), 
-		  fabs(measure_tool->angle), _("degrees"));
+		  _("Distance:"), distance, _("pixels"), _("Angle:"), angle, _("degrees"));
     }
   else /* show real world units */
     {
@@ -260,22 +327,24 @@ measure_tool_motion (Tool           *tool,
 					   gimp_unit_get_symbol (gdisp->gimage->unit),
 					   _("Angle:"), _("degrees"));
       
-      distance = sqrt (SQR ((double)dx / gdisp->gimage->xresolution) +
-		       SQR ((double)dy / gdisp->gimage->yresolution));
-      if (dx)
-	 measure_tool->angle = 180.0 / G_PI * 
-	   atan (((double)(dy) / gdisp->gimage->xresolution) /
-		 ((double)(dx) / gdisp->gimage->yresolution)); 
-      else if (dy)
-	measure_tool->angle = 90.0;
-      else
-	measure_tool->angle = 0.0;
-
+      distance = sqrt (SQR ((double)(ax - bx) / gdisp->gimage->xresolution) +
+		       SQR ((double)(ay - by) / gdisp->gimage->yresolution));
+      measure_tool->angle1 = measure_get_angle (ax, ay, 
+						gdisp->gimage->xresolution, 
+						gdisp->gimage->yresolution); 
+      measure_tool->angle2 = measure_get_angle (bx, by,
+						gdisp->gimage->xresolution, 
+						gdisp->gimage->yresolution);
+      angle = fabs (measure_tool->angle1 - measure_tool->angle2);     
+      if (angle > 180.0)
+	angle = 360.0 - angle;
+ 
       g_snprintf (distance_str, sizeof (distance_str), format_str,
-		  distance * gimp_unit_get_factor (gdisp->gimage->unit), fabs (measure_tool->angle));
+		  distance * gimp_unit_get_factor (gdisp->gimage->unit), angle);
       g_free (format_str);
     }
   
+  /*  show info in statusbar  */
   gtk_statusbar_pop (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id);
   gtk_statusbar_push (GTK_STATUSBAR (gdisp->statusbar), measure_tool->context_id,
 		      distance_str);
@@ -292,24 +361,27 @@ measure_tool_cursor_update (Tool           *tool,
   GdkCursorType  ctype = GDK_TCROSS;
   MeasureTool   *measure_tool;
   GDisplay      *gdisp;
-  int            x1, x2, y1, y2;
+  int            x[3];
+  int            y[3];
+  int            i;
 
   gdisp = (GDisplay *) gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
 
-  gdisplay_transform_coords (gdisp, measure_tool->startx, measure_tool->starty, &x1, &y1, TRUE);
-  gdisplay_transform_coords (gdisp, measure_tool->endx, measure_tool->endy, &x2, &y2, TRUE);      
-
   if (tool->state == ACTIVE && tool->gdisp_ptr == gdisp_ptr)
     {
-      if (mevent->x == BOUNDS (mevent->x, x1 - HANDLE_SIZE, x1 + HANDLE_SIZE) &&
-	  mevent->y == BOUNDS (mevent->y, y1 - HANDLE_SIZE, y1 + HANDLE_SIZE))
-	ctype = GDK_FLEUR;
-      else if (mevent->x == BOUNDS (mevent->x, x2 - HANDLE_SIZE, x2 + HANDLE_SIZE) &&
-	  mevent->y == BOUNDS (mevent->y, y2 - HANDLE_SIZE, y2 + HANDLE_SIZE))
-	ctype = GDK_FLEUR;
+      for (i=0; i<measure_tool->num_points; i++)
+	{
+	  gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i], 
+				     &x[i], &y[i], TRUE);      
+	  
+	  if (mevent->x == BOUNDS (mevent->x, x[i] - TARGET, x[i] + TARGET) &&
+	      mevent->y == BOUNDS (mevent->y, y[i] - TARGET, y[i] + TARGET))
+	    ctype = (mevent->state & GDK_SHIFT_MASK) ? GDK_EXCHANGE : GDK_FLEUR;
+	  if (i == 0 && measure_tool->num_points == 3 && ctype == GDK_EXCHANGE)
+	    ctype = GDK_FLEUR;
+	}
     }
-
   gdisplay_install_tool_cursor (gdisp, ctype);
 }
 
@@ -318,103 +390,70 @@ measure_tool_draw (Tool *tool)
 {
   GDisplay * gdisp;
   MeasureTool * measure_tool;
-  int anglex, angley;
-  int x1, x2, y1, y2;
+  int x[3];
+  int y[3];
+  int i;
+  int angle1, angle2;
+  int draw_arc = 0;
 
   gdisp = (GDisplay *) tool->gdisp_ptr;
   measure_tool = (MeasureTool *) tool->private;
 
-  gdisplay_transform_coords (gdisp, measure_tool->startx, measure_tool->starty,
-			     &x1, &y1, TRUE);
-  gdisplay_transform_coords (gdisp, measure_tool->endx, measure_tool->endy,
-			     &x2, &y2, TRUE);
-
-  /*  Draw start target  */
-  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-		 x1 - (TARGET_WIDTH >> 1), y1, 
-		 x1 + (TARGET_WIDTH >> 1), y1);
-  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-		 x1, y1 - (TARGET_HEIGHT >> 1), 
-		 x1, y1 + (TARGET_HEIGHT >> 1));
-
-  /*  Draw end target  */
-  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-		 x2 - (TARGET_WIDTH >> 1), y2, 
-		 x2 + (TARGET_WIDTH >> 1), y2);
-  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-		 x2, y2 - (TARGET_HEIGHT >> 1), 
-		 x2, y2 + (TARGET_HEIGHT >> 1));
-
-  /*  Draw an arc to indicate where the angle is measured  */
-  if (measure_tool->angle != 0.0)
+  for (i = 0; i < measure_tool->num_points; i++)
     {
-      if (x2 == x1)
-	{
-	  if (y2 > y1)
-	    {
-	      gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
-			    x1 - ARC_RADIUS, y1 - ARC_RADIUS,
-			    2 * ARC_RADIUS, 2 * ARC_RADIUS, 
-			    0, -5760);
-	      anglex = x2;
-	      angley = y1 + ARC_RADIUS + 4;
-	    }
-	  else
-	    {
-	      gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
-			    x1 - ARC_RADIUS, y1 - ARC_RADIUS,
-			    2 * ARC_RADIUS, 2 * ARC_RADIUS, 
-			    0, 5760);
-	      
-	      anglex = x2;
-	      angley = y1 - ARC_RADIUS - 4;
-	    }
-	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-			 x1, y1,
-			 x1 + ARC_RADIUS + 4, y1);
-	}
-      else if (x2 > x1)
+      gdisplay_transform_coords (gdisp, measure_tool->x[i], measure_tool->y[i],
+				 &x[i], &y[i], TRUE);
+      if (i == 0 && measure_tool->num_points == 3)
 	{
 	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
-			x1 - ARC_RADIUS, y1 - ARC_RADIUS,
-			2 * ARC_RADIUS, 2 * ARC_RADIUS, 
-			0, measure_tool->angle * -64.0);
-	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-			 x1, y1,
-			 x1 + ARC_RADIUS + 4, y1);
-	  anglex = x1 + (double)(ARC_RADIUS + 4) * cos (measure_tool->angle / 180.0 * G_PI);
-	  angley = y1 + (double)(ARC_RADIUS + 4) * sin (measure_tool->angle / 180.0 * G_PI);
+			x[i] - (TARGET >> 1), y[i] - (TARGET >> 1),
+			TARGET, TARGET, 0, 23040);
 	}
       else
 	{
-	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
-			x1 - ARC_RADIUS, y1 - ARC_RADIUS,
-			2 * ARC_RADIUS, 2 * ARC_RADIUS, 
-			11520, measure_tool->angle * -64.0);
 	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-			 x1, y1,
-			 x1 - ARC_RADIUS - 4, y1);
-	  anglex = x1 - (double)(ARC_RADIUS + 4) * cos (measure_tool->angle / 180.0 * G_PI);
-	  angley = y1 - (double)(ARC_RADIUS + 4) * sin (measure_tool->angle / 180.0 * G_PI);
+			 x[i] - TARGET, y[i], 
+			 x[i] + TARGET, y[i]);
+	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+			 x[i], y[i] - TARGET, 
+			 x[i], y[i] + TARGET);
+	}
+      if (i > 0)
+	{
+	  gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+			 x[0], y[0],
+			 x[i], y[i]);
+	  /*  only draw the arc if the lines are long enough  */
+	  if ((SQR (x[i] - x[0]) + SQR (y[i] - y[0])) > ARC_RADIUS_2)
+	    draw_arc++;
 	}
     }
-  else
+  
+  if (measure_tool->num_points > 1 && draw_arc == measure_tool->num_points - 1)
     {
-      anglex = x2;
-      angley = y2;
+      angle1 = measure_tool->angle2 * 64.0;
+      angle2 = (measure_tool->angle1 - measure_tool->angle2) * 64.0;
+  
+      if (angle2 > 11520)
+	  angle2 -= 23040;
+      if (angle2 < -11520)
+	  angle2 += 23040;
+     
+      if (angle2 != 0)
+	{
+	  gdk_draw_arc (measure_tool->core->win, measure_tool->core->gc, FALSE,
+			x[0] - ARC_RADIUS, y[0] - ARC_RADIUS,
+			2 * ARC_RADIUS, 2 * ARC_RADIUS, 
+			angle1, angle2); 
+	  
+	  if (measure_tool->num_points == 2)
+	    gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
+			   x[0], y[0],
+			   x[1] - x[0] < 0 ? x[0] - ARC_RADIUS - 4 : x[0] + ARC_RADIUS + 4, 
+			   y[0]);
+	}
     }
-
-  /*  Draw the line between the start and end coords  */
-  if ((SQR (x1 - x2) + SQR (y1 - y2)) > (SQR (x1 - anglex) + SQR (y1 - angley)))
-     gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-		    x1, y1,
-		    x2, y2);
-  else
-    gdk_draw_line (measure_tool->core->win, measure_tool->core->gc,
-		   x1, y1,
-		   anglex, angley);
 }
-
 
 static void
 measure_tool_control (Tool       *tool,
@@ -464,10 +503,9 @@ tools_new_measure_tool (void)
   tool = tools_new_tool (MEASURE);
   private = g_new (MeasureTool, 1);
 
-  private->core = draw_core_new (measure_tool_draw);
-  private->startx = private->starty = 0;
-  private->angle  = 0.0;
-   private->function = CREATING;
+  private->core       = draw_core_new (measure_tool_draw);
+  private->num_points = 0;
+  private->function   = CREATING;
 
   tool->private = (void *) private;
  
@@ -499,6 +537,3 @@ tools_free_measure_tool (Tool *tool)
 
   g_free (measure_tool);
 }
-
-
-
