@@ -48,6 +48,7 @@ SUBDIRS = 			\
 	gap			\
 	gdyntext		\
 	gfig			\
+        gflare			\
 	gfli			\
 	gimpressionist		\
 	ifscompose		\

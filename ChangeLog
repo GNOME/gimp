@@ -1,3 +1,8 @@
+Tue Sep  7 00:35:19 CEST 1999  Marc Lehmann <pcg@goof.com>
+
+	* plug-ins/gflare: new directory, lotsa files!
+	* configure.in, plug-ins/Makefile.am, re-added gflare plug-in.
+
 Mon Sep  6 23:35:18 CEST 1999  Marc Lehmann <pcg@goof.com>
 
 	* plug-ins/common/sel_gauss.c: new plug-in.

@@ -692,6 +692,7 @@ plug-ins/gap/Makefile
 plug-ins/gdyntext/Makefile
 plug-ins/gfig/Makefile
 plug-ins/gfig/gfig-examples/Makefile
+plug-ins/gflare/Makefile
 plug-ins/gfli/Makefile
 plug-ins/gimpressionist/Makefile
 plug-ins/gimpressionist/Brushes/Makefile

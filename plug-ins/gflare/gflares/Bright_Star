@@ -1,0 +1,18 @@
+GIMP GFlare 0.25
+100.000000 NORMAL
+100.000000 NORMAL
+75.000000 SCREEN
+Flare_Glow_Radial_1
+%white
+%white
+75.000000 0.000000 0.000000
+Flare_Rays_Radial_1
+%white
+Flare_Rays_Size_1
+100.000000 -75.000000 0.000000
+16 20.000000
+%blue_grad
+%random
+%random
+16.000000 0.000000 13.600000
+POLYGON 6 1
