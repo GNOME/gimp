@@ -30,6 +30,7 @@
 #include "widgets-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpbrush.h"
 #include "core/gimpbuffer.h"
 #include "core/gimpchannel.h"
@@ -1197,7 +1198,11 @@ gimp_dnd_open_files (GtkWidget *widget,
 		     GList     *files,
 		     gpointer   data)
 {
-  GList *list;
+  GList    *list;
+  gboolean  file_uris_are_utf8;
+
+  file_uris_are_utf8 = (gimp_check_glib_version (2, 2, 0) == NULL &&
+                        gimp_check_glib_version (2, 4, 4) != NULL);
 
   for (list = files; list; list = g_list_next (list))
     {
@@ -1210,12 +1215,18 @@ gimp_dnd_open_files (GtkWidget *widget,
         continue;
 
       D (g_print ("gimp_dnd_open_files: trying to convert "
-                  \"%s\" to an uri.\n", dnd_crap));
+                  "\"%s\" to an uri.\n", dnd_crap));
 
       filename = g_filename_from_uri (dnd_crap, NULL, NULL);
 
-      if (filename) /*  if we got a correctly encoded "file:" uri  */
+      if (filename)
         {
+          /*  if we got a correctly encoded "file:" uri...
+           *
+           *  (for GLib < 2.4.4, this is escaped UTF-8,
+           *   for GLib > 2.4.4, this is escaped local filename encoding)
+           */
+
           uri = g_filename_to_uri (filename, NULL, NULL);
 
           g_free (filename);
@@ -1235,13 +1246,36 @@ gimp_dnd_open_files (GtkWidget *widget,
 
           if (start != dnd_crap)
             {
-              /*  try if we got a "file:" uri in the local filename encoding  */
-              gchar  *unescaped_filename;
+              /*  try if we got a "file:" uri in the wrong encoding...
+               *
+               *  (for GLib < 2.4.4, this is escaped local filename encoding,
+               *   for GLib > 2.4.4, this is escaped UTF-8)
+               */
+              gchar *unescaped_filename;
 
               if (strstr (dnd_crap, "%"))
                 {
                   unescaped_filename = gimp_unescape_uri_string (start, -1,
                                                                  "/", FALSE);
+
+                  if (! file_uris_are_utf8)
+                    {
+                      /*  if we run with a GLib that correctly encodes
+                       *  file: URIs, we still may get a drop from an
+                       *  application that encodes file: URIs as UTF-8
+                       */
+                      gchar *local_filename;
+
+                      local_filename = g_filename_from_utf8 (unescaped_filename,
+                                                             -1, NULL, NULL,
+                                                             NULL);
+
+                      if (local_filename)
+                        {
+                          g_free (unescaped_filename);
+                          unescaped_filename = local_filename;
+                        }
+                    }
                 }
               else
                 {

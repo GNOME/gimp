@@ -1,3 +1,21 @@
+2004-08-04  Michael Natterer  <mitch@gimp.org>
+
+	Merged from HEAD:
+
+	Allow URI drops from apps linked against GLib < 2.4.4 to GIMP
+	linked against GLib >= 2.4.5. Fixes bug #148140.
+
+	* app/core/gimp-utils.[ch]: added gimp_check_glib_version().
+
+	* app/widgets/gimpdnd.c: added runtime check for GLib versions
+	that encode file:// URIs correctly (>= 2.4.5). For older
+	(broken) GLibs, leave the code path as is, for newer (fixed) ones,
+	perform an additional check if the dropped URI is in the (broken)
+	escaped-UTF-8 format and convert it to local filename encoding.
+
+	* app/gui/gui.c: warn the user that non-ASCII filenames can't
+	be used when linked against GLib 2.4.4.
+
 2004-08-03  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD:

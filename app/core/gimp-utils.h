@@ -42,5 +42,9 @@ gint64     gimp_g_list_get_memsize       (GList       *list,
 
 gchar    * gimp_get_default_language     (const gchar *category);
 
+const gchar * gimp_check_glib_version    (guint        required_major,
+                                          guint        required_minor,
+                                          guint        required_micro);
+
 
 #endif /* __APP_GIMP_UTILS_H__ */
