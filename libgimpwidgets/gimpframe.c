@@ -103,12 +103,12 @@ gimp_frame_class_init (GimpFrameClass *klass)
   frame_class->compute_child_allocation = gimp_frame_child_allocate;
 
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_boolean ("label_bold",
+                                           g_param_spec_boolean ("label-bold",
                                                                  NULL, NULL,
                                                                  DEFAULT_LABEL_BOLD,
                                                                  G_PARAM_READABLE));
   gtk_widget_class_install_style_property (widget_class,
-                                           g_param_spec_int ("label_spacing",
+                                           g_param_spec_int ("label-spacing",
                                                              NULL, NULL,
                                                              0,
                                                              G_MAXINT,

@@ -145,14 +145,14 @@ gimp_cell_renderer_toggle_class_init (GimpCellRendererToggleClass *klass)
 
   g_object_class_install_property (object_class,
                                    PROP_STOCK_ID,
-                                   g_param_spec_string ("stock_id",
+                                   g_param_spec_string ("stock-id",
                                                         NULL, NULL,
                                                         NULL,
                                                         G_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
                                    PROP_STOCK_SIZE,
-                                   g_param_spec_int ("stock_size",
+                                   g_param_spec_int ("stock-size",
                                                      NULL, NULL,
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,

@@ -173,14 +173,14 @@ gimp_toolbox_class_init (GimpToolboxClass *klass)
   dock_class->ui_manager_name = "<Toolbox>";
 
   gtk_widget_class_install_style_property
-    (widget_class, g_param_spec_enum ("tool_icon_size",
+    (widget_class, g_param_spec_enum ("tool-icon-size",
                                       NULL, NULL,
                                       GTK_TYPE_ICON_SIZE,
                                       DEFAULT_TOOL_ICON_SIZE,
                                       G_PARAM_READABLE));
 
   gtk_widget_class_install_style_property
-    (widget_class, g_param_spec_enum ("button_relief",
+    (widget_class, g_param_spec_enum ("button-relief",
                                       NULL, NULL,
                                       GTK_TYPE_RELIEF_STYLE,
                                       DEFAULT_BUTTON_RELIEF,

@@ -224,7 +224,7 @@ gimp_container_view_iface_base_init (GimpContainerViewInterface *view_iface)
                                                          G_PARAM_READWRITE));
 
   g_object_interface_install_property (view_iface,
-                                       g_param_spec_int ("preview-border_width",
+                                       g_param_spec_int ("preview-border-width",
                                                          NULL, NULL,
                                                          0, GIMP_VIEW_MAX_BORDER_WIDTH,
                                                          1,

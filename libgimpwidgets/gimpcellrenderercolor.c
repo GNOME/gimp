@@ -129,7 +129,7 @@ gimp_cell_renderer_color_class_init (GimpCellRendererColorClass *klass)
                                                          G_PARAM_CONSTRUCT));
   g_object_class_install_property (object_class,
 				   PROP_SIZE,
-                                   g_param_spec_int ("icon_size", NULL, NULL,
+                                   g_param_spec_int ("icon-size", NULL, NULL,
                                                      0, G_MAXINT,
                                                      DEFAULT_ICON_SIZE,
                                                      G_PARAM_READWRITE |

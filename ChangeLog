@@ -1,7 +1,18 @@
+2005-03-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gtkwrapbox.c
+	* libgimpwidgets/gimpcellrenderercolor.c
+	* libgimpwidgets/gimpcellrenderertoggle.c
+	* libgimpwidgets/gimpframe.c: use canonical names when registering
+	param specs.
+
 2005-03-09  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/vectors/gimpvectors-warp.c
-	* app/vectors/gimpvectors-warp.h: new files implmenting
+	* app/vectors/gimpvectors-warp.h: new files implementing
 	"path along a path" functionality.
 
 	* app/vectors/Makefile.am: new stuff added
@@ -36,7 +47,7 @@
 
 	* app/core/gimpimage-sample-points.c
 	* app/core/gimpimage-undo-push.c: append, not prepend the sample
-	paints to the image's list because their index matters. Update
+	points to the image's list because their index matters. Update
 	sample points when their index changes.
 
 	* app/display/gimpcanvas.[ch]: added own sytles for the sample
@@ -151,7 +162,7 @@
 2005-03-07  Kevin Cozens  <kcozens@cvs.gimp.org>
 
 	* plug-ins/script-fu/scripts/perspective-shadow.scm: Fixed the options
-	for SF-ENUM in the register block which were changed (read broken) when
+	for SF-ENU	* in the register block which were changed (read broken) when
 	the entry was changed from SF-OPTION.
 
 2005-03-07  Raphaël Quinet  <raphael@gimp.org>

@@ -183,7 +183,7 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
 
   g_object_class_install_property (object_class,
 				   PROP_LINE_JUSTIFY,
-				   g_param_spec_enum ("line_justify",
+				   g_param_spec_enum ("line-justify",
 						      NULL,
 						      NULL,
 						      GTK_TYPE_JUSTIFICATION,
@@ -192,7 +192,7 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
 
   g_object_class_install_property (object_class,
 				   PROP_ASPECT_RATIO,
-				   g_param_spec_float ("aspect_ratio",
+				   g_param_spec_float ("aspect-ratio",
 						       NULL,
 						       NULL,
 						       0.0,
@@ -202,7 +202,7 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
 
   g_object_class_install_property (object_class,
 				   PROP_CURRENT_RATIO,
-				   g_param_spec_float ("current_ratio",
+				   g_param_spec_float ("current-ratio",
 						       NULL,
 						       NULL,
 						       0.0,
@@ -212,7 +212,7 @@ gtk_wrap_box_class_init (GtkWrapBoxClass *class)
 
   g_object_class_install_property (object_class,
 				   PROP_CHILD_LIMIT,
-				   g_param_spec_uint ("max_children_per_line",
+				   g_param_spec_uint ("max-children-per-line",
 						      NULL,
 						      NULL,
 						      1,
