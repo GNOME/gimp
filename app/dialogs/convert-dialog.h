@@ -20,8 +20,9 @@
 #define __CONVERT_DIALOG_H__
 
 
-GtkWidget * convert_dialog_new (GimpImage *gimage,
-                                GtkWidget *parent);
+GtkWidget * convert_dialog_new (GimpImage   *gimage,
+                                GtkWidget   *parent,
+                                GimpDisplay *gdisp);
 
 
 #endif  /*  __CONVERT_DIALOG_H__  */

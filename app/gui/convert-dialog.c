@@ -36,10 +36,11 @@
 #include "widgets/gimppaletteselect.h"
 #include "widgets/gimpviewabledialog.h"
 
+#include "display/gimpprogress.h"
+
 #include "menus/menus.h"
 
 #include "gimp-intl.h"
-
 
 typedef struct
 {
@@ -53,6 +54,9 @@ typedef struct
   gint                    num_colors;
   gint                    palette;
   GimpConvertPaletteType  palette_type;
+  GimpDisplay            *gdisp;
+  GimpProgress           *progress;
+  gint                    current_stage;
 } IndexedDialog;
 
 
@@ -85,8 +89,9 @@ static GimpConvertPaletteType  saved_palette_type = GIMP_MAKE_PALETTE;
 
 
 GtkWidget *
-convert_dialog_new (GimpImage *gimage,
-                    GtkWidget *parent)
+convert_dialog_new (GimpImage   *gimage,
+                    GtkWidget   *parent,
+                    GimpDisplay *gdisp)
 {
   IndexedDialog *dialog;
   GtkWidget     *main_vbox;
@@ -105,6 +110,7 @@ convert_dialog_new (GimpImage *gimage,
   dialog = g_new0 (IndexedDialog, 1);
 
   dialog->gimage = gimage;
+  dialog->gdisp  = gdisp;
 
   dialog->custom_palette_button = build_palette_button (gimage->gimp);
   dialog->dither_type           = saved_dither_type;
@@ -408,12 +414,36 @@ build_palette_button (Gimp *gimp)
 
 
 static void
+progress_callback (gint     stage,
+                   gdouble  percentage,
+                   gpointer data)
+{
+  IndexedDialog *dialog = data;
+
+  if (stage != dialog->current_stage)
+    {
+      gchar buffer[1024];
+
+      g_snprintf (buffer, sizeof (buffer), _("Stage %d"), stage);
+
+      dialog->current_stage = stage;
+      dialog->progress      = gimp_progress_restart (dialog->progress,
+                                                     buffer, NULL, NULL);
+    }
+
+  gimp_progress_update (dialog->progress, percentage);
+}
+
+static void
 indexed_response (GtkWidget     *widget,
                   gint           response_id,
                   IndexedDialog *dialog)
 {
   if (response_id == GTK_RESPONSE_OK)
     {
+      dialog->current_stage = 1;
+      dialog->progress      = gimp_progress_start (dialog->gdisp, _("Stage 1"),
+                                                   FALSE, NULL, NULL);
       /*  Convert the image to indexed color  */
       gimp_image_convert (dialog->gimage,
                           GIMP_INDEXED,
@@ -422,7 +452,11 @@ indexed_response (GtkWidget     *widget,
                           dialog->alpha_dither,
                           dialog->remove_dups,
                           dialog->palette_type,
-                          theCustomPalette);
+                          theCustomPalette,
+                          progress_callback,
+                          dialog);
+
+      gimp_progress_end (dialog->progress);
       gimp_image_flush (dialog->gimage);
 
       /* Save defaults for next time */

@@ -148,22 +148,24 @@ image_convert_cmd_callback (GtkAction *action,
                             gint       value,
                             gpointer   data)
 {
-  GimpImage *gimage;
-  GtkWidget *widget;
+  GimpImage   *gimage;
+  GtkWidget   *widget;
+  GimpDisplay *gdisp;
   return_if_no_image (gimage, data);
   return_if_no_widget (widget, data);
+  return_if_no_display (gdisp, data);
 
   switch ((GimpImageBaseType) value)
     {
     case GIMP_RGB:
     case GIMP_GRAY:
       gimp_image_convert (gimage, (GimpImageBaseType) value,
-                          0, 0, FALSE, FALSE, 0, NULL);
+                          0, 0, FALSE, FALSE, 0, NULL, NULL, NULL);
       gimp_image_flush (gimage);
       break;
 
     case GIMP_INDEXED:
-      gtk_widget_show (convert_dialog_new (gimage, widget));
+      gtk_widget_show (convert_dialog_new (gimage, widget, gdisp));
       break;
     }
 }

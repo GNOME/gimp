@@ -1,3 +1,23 @@
+2004-08-09  Michael Natterer  <mitch@gimp.org>
+
+	Applied (slightly modified) patch from Shlomi Fish which adds a
+	progress bar to the RGB -> INDEXED conversion. Fixes bug #145274
+	and shows that we really really need a GimpProgressInterface in
+	the core to give progress users full access to the progress API.
+
+	* app/core/gimpimage-convert.[ch]: added special
+	GimpImageConvertProgress function typedef to cope with the
+	different stages of converting.  Support passing such a callback &
+	data to gimp_image_convert() and update the progress accordingly.
+
+	* app/gui/convert-dialog.[ch]: added a convert progress callback
+	and pass it to gimp_image_convert().
+
+	* app/actions/image-commands.c
+	* tools/pdbgen/pdb/convert.pdb: changed accordingly.
+
+	* app/pdb/convert_cmds.c: regenerated.
+
 2004-08-09  Sven Neumann  <sven@gimp.org>
 
 	* data/misc/gimp.desktop.in.in: added GenericName and Version,

@@ -477,6 +477,12 @@ struct _QuantizeObj
 
   gboolean want_alpha_dither;
   int      error_freedom;           /* 0=much bleed, 1=controlled bleed */
+
+  GimpImageConvertProgressCallback progress_callback;
+  gpointer                         progress_data;
+
+  gint nth_layer;
+  gint n_layers;
 };
 
 typedef struct
@@ -520,13 +526,21 @@ static void generate_histogram_gray (CFHistogram  hostogram,
 static void generate_histogram_rgb  (CFHistogram  histogram,
                                      GimpLayer   *layer,
                                      gint         col_limit,
-                                     gboolean     alpha_dither);
+                                     gboolean     alpha_dither,
+                                     GimpImageConvertProgressCallback
+                                     progress_callback,
+                                     gpointer     progress_data,
+                                     gint         nth_layer,
+                                     gint         n_layers);
 
 static QuantizeObj* initialize_median_cut (GimpImageBaseType      old_type,
                                            gint                   num_cols,
                                            GimpConvertDitherType  dither_type,
 					   GimpConvertPaletteType palette_type,
-                                           gboolean               alpha_dither);
+                                           gboolean               alpha_dither,
+                                           GimpImageConvertProgressCallback
+                                           progress_callback,
+                                           gpointer               progress_data);
 
 static void
 compute_color_lin8 (QuantizeObj *quantobj,
@@ -744,7 +758,9 @@ gimp_image_convert (GimpImage              *gimage,
 		    gboolean                alpha_dither,
 		    gboolean                remove_dups,
 		    GimpConvertPaletteType  palette_type,
-		    GimpPalette            *custom_palette)
+		    GimpPalette            *custom_palette,
+                    GimpImageConvertProgressCallback progress_callback,
+                    gpointer                progress_data)
 {
   QuantizeObj       *quantobj = NULL;
   GimpLayer         *layer;
@@ -753,6 +769,7 @@ gimp_image_convert (GimpImage              *gimage,
   GimpImageType      new_layer_type;
   TileManager       *new_tiles;
   const gchar       *undo_desc = NULL;
+  gint               nth_layer, n_layers;
 
   g_return_if_fail (GIMP_IS_IMAGE (gimage));
   g_return_if_fail (new_type != gimp_image_base_type (gimage));
@@ -760,6 +777,8 @@ gimp_image_convert (GimpImage              *gimage,
   theCustomPalette = custom_palette;
 
   gimp_set_busy (gimage->gimp);
+
+  n_layers = g_list_length (GIMP_LIST (gimage->layers)->list);
 
   switch (new_type)
     {
@@ -810,7 +829,9 @@ gimp_image_convert (GimpImage              *gimage,
         }
 
       quantobj = initialize_median_cut (old_type, num_cols, dither,
-					palette_type, alpha_dither);
+					palette_type, alpha_dither,
+                                        progress_callback,
+                                        progress_data);
 
       if (palette_type == GIMP_MAKE_PALETTE)
 	{
@@ -827,9 +848,9 @@ gimp_image_convert (GimpImage              *gimage,
 	  num_found_cols = 0;
 
 	  /*  Build the histogram  */
-	  for (list = GIMP_LIST (gimage->layers)->list;
+	  for (list = GIMP_LIST (gimage->layers)->list, nth_layer = 0;
 	       list;
-	       list = g_list_next (list))
+	       list = g_list_next (list), nth_layer++)
 	    {
 	      layer = (GimpLayer *) list->data;
 
@@ -838,7 +859,10 @@ gimp_image_convert (GimpImage              *gimage,
                                          layer, alpha_dither);
 	      else
 		generate_histogram_rgb (quantobj->histogram,
-                                        layer, num_cols, alpha_dither);
+                                        layer, num_cols, alpha_dither,
+                                        progress_callback,
+                                        progress_data,
+                                        nth_layer, n_layers);
 	      /*
 	       * Note: generate_histogram_rgb may set needs_quantize if
 	       *  the image contains more colours than the limit specified
@@ -865,7 +889,9 @@ gimp_image_convert (GimpImage              *gimage,
 	  quantobj = initialize_median_cut (old_type, num_cols,
 					    GIMP_NODESTRUCT_DITHER,
                                             palette_type,
-					    alpha_dither);
+					    alpha_dither,
+                                            progress_callback,
+                                            progress_data);
 	  /* We can skip the first pass (palette creation) */
 
 	  quantobj->actual_number_of_colors = num_found_cols;
@@ -898,9 +924,12 @@ gimp_image_convert (GimpImage              *gimage,
     }
 
   /*  Convert all layers  */
-  for (list = GIMP_LIST (gimage->layers)->list;
+  if (quantobj)
+    quantobj->n_layers = n_layers;
+
+  for (list = GIMP_LIST (gimage->layers)->list, nth_layer = 0;
        list;
-       list = g_list_next (list))
+       list = g_list_next (list), nth_layer++)
     {
       layer = (GimpLayer *) list->data;
 
@@ -926,6 +955,7 @@ gimp_image_convert (GimpImage              *gimage,
 					   old_type);
 	  break;
 	case GIMP_INDEXED:
+          quantobj->nth_layer = nth_layer;
 	  (* quantobj->second_pass) (quantobj,
 				     layer,
 				     new_tiles);
@@ -1274,7 +1304,11 @@ static void
 generate_histogram_rgb (CFHistogram  histogram,
 			GimpLayer   *layer,
 			gint         col_limit,
-			gboolean     alpha_dither)
+			gboolean     alpha_dither,
+                        GimpImageConvertProgressCallback progress_callback,
+                        gpointer     progress_data,
+                        gint         nth_layer,
+                        gint         n_layers)
 {
   PixelRegion  srcPR;
   guchar      *data;
@@ -1285,6 +1319,7 @@ generate_histogram_rgb (CFHistogram  histogram,
   gint         nfc_iter;
   gint         row, col, coledge;
   gint         offsetx, offsety;
+  glong        total_size = 0, layer_size;
 
   has_alpha = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
@@ -1298,12 +1333,19 @@ generate_histogram_rgb (CFHistogram  histogram,
 		     GIMP_ITEM (layer)->height,
 		     FALSE);
 
+  layer_size = GIMP_ITEM (layer)->width * GIMP_ITEM (layer)->height;
+
+  if (progress_callback)
+    progress_callback (1, 0.0, progress_data);
+
   for (pr = pixel_regions_register (1, &srcPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       data = srcPR.data;
       size = srcPR.w * srcPR.h;
+
+      total_size += size;
 
       /*fprintf(stderr, " [%d,%d - %d,%d]", srcPR.x, srcPR.y, offsetx, offsety);*/
 
@@ -1440,6 +1482,12 @@ generate_histogram_rgb (CFHistogram  histogram,
 	      data += srcPR.bytes;
 	    }
 	}
+
+      if (progress_callback)
+        progress_callback (1,
+                           (nth_layer + ((gdouble) total_size)/
+                            layer_size) / (gdouble) n_layers,
+                           progress_data);
     }
 
 /*  g_print ("O: col_limit = %d, nfc = %d\n", col_limit, num_found_cols);*/
@@ -2078,59 +2126,68 @@ static int
 median_cut_rgb (CFHistogram histogram,
 		boxptr      boxlist,
 		int         numboxes,
-		int         desired_colors)
+		int         desired_colors,
+                GimpImageConvertProgressCallback progress_callback,
+                gpointer                         progress_data)
 /* Repeatedly select and split the largest box until we have enough boxes */
 {
   int lb;
   boxptr b1,b2;
   axisType which_axis;
 
-  while (numboxes < desired_colors) {
+  while (numboxes < desired_colors)
+    {
+      b1 = find_split_candidate (boxlist, numboxes, &which_axis, desired_colors);
 
-    b1 = find_split_candidate (boxlist, numboxes, &which_axis, desired_colors);
+      if (b1 == NULL)		/* no splittable boxes left! */
+        break;
 
-    if (b1 == NULL)		/* no splittable boxes left! */
-      break;
-    b2 = boxlist + numboxes;	/* where new box will go */
-    /* Copy the color bounds to the new box. */
-    b2->Rmax = b1->Rmax; b2->Gmax = b1->Gmax; b2->Bmax = b1->Bmax;
-    b2->Rmin = b1->Rmin; b2->Gmin = b1->Gmin; b2->Bmin = b1->Bmin;
+      b2 = boxlist + numboxes;	/* where new box will go */
+      /* Copy the color bounds to the new box. */
+      b2->Rmax = b1->Rmax; b2->Gmax = b1->Gmax; b2->Bmax = b1->Bmax;
+      b2->Rmin = b1->Rmin; b2->Gmin = b1->Gmin; b2->Bmin = b1->Bmin;
 
 
-    /* Choose split point along selected axis, and update box bounds.
-     * Note that lb value is max for lower box, so must be < old max.
-     */
-    switch (which_axis)
-      {
-      case AXIS_RED:
-	lb = b1->Rhalferror;/* *0 + (b1->Rmax + b1->Rmin) / 2; */
-	b1->Rmax = lb;
-	b2->Rmin = lb+1;
-	g_assert(b1->Rmax >= b1->Rmin);
-	g_assert(b2->Rmax >= b2->Rmin);
-	break;
-      case AXIS_GREEN:
-	lb = b1->Ghalferror;/* *0 + (b1->Gmax + b1->Gmin) / 2; */
-	b1->Gmax = lb;
-	b2->Gmin = lb+1;
-	g_assert(b1->Gmax >= b1->Gmin);
-	g_assert(b2->Gmax >= b2->Gmin);
-	break;
-      case AXIS_BLUE:
-	lb = b1->Bhalferror;/* *0 + (b1->Bmax + b1->Bmin) / 2; */
-	b1->Bmax = lb;
-	b2->Bmin = lb+1;
-	g_assert(b1->Bmax >= b1->Bmin);
-	g_assert(b2->Bmax >= b2->Bmin);
-	break;
-      default:
-	g_error("Uh-oh.");
-      }
-    /* Update stats for boxes */
-    numboxes++;
-    update_box_rgb (histogram, b1, desired_colors - numboxes);
-    update_box_rgb (histogram, b2, desired_colors - numboxes);
-  }
+      /* Choose split point along selected axis, and update box bounds.
+       * Note that lb value is max for lower box, so must be < old max.
+       */
+      switch (which_axis)
+        {
+        case AXIS_RED:
+          lb = b1->Rhalferror;/* *0 + (b1->Rmax + b1->Rmin) / 2; */
+          b1->Rmax = lb;
+          b2->Rmin = lb+1;
+          g_assert(b1->Rmax >= b1->Rmin);
+          g_assert(b2->Rmax >= b2->Rmin);
+          break;
+        case AXIS_GREEN:
+          lb = b1->Ghalferror;/* *0 + (b1->Gmax + b1->Gmin) / 2; */
+          b1->Gmax = lb;
+          b2->Gmin = lb+1;
+          g_assert(b1->Gmax >= b1->Gmin);
+          g_assert(b2->Gmax >= b2->Gmin);
+          break;
+        case AXIS_BLUE:
+          lb = b1->Bhalferror;/* *0 + (b1->Bmax + b1->Bmin) / 2; */
+          b1->Bmax = lb;
+          b2->Bmin = lb+1;
+          g_assert(b1->Bmax >= b1->Bmin);
+          g_assert(b2->Bmax >= b2->Bmin);
+          break;
+        default:
+          g_error("Uh-oh.");
+        }
+      /* Update stats for boxes */
+      numboxes++;
+
+      if (progress_callback)
+        progress_callback (2, ((gdouble) numboxes) / desired_colors,
+                           progress_data);
+
+      update_box_rgb (histogram, b1, desired_colors - numboxes);
+      update_box_rgb (histogram, b2, desired_colors - numboxes);
+    }
+
   return numboxes;
 }
 
@@ -2355,7 +2412,9 @@ select_colors_rgb (QuantizeObj *quantobj,
   /* Shrink it to actually-used volume and set its statistics */
   update_box_rgb (histogram, &boxlist[0], quantobj->desired_number_of_colors);
   /* Perform median-cut to produce final box list */
-  numboxes = median_cut_rgb (histogram, boxlist, numboxes, desired);
+  numboxes = median_cut_rgb (histogram, boxlist, numboxes, desired,
+                             quantobj->progress_callback,
+                             quantobj->progress_data);
 
   quantobj->actual_number_of_colors = numboxes;
   /* Compute the representative color for each box, fill colormap */
@@ -3019,6 +3078,10 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   gboolean     alpha_dither     = quantobj->want_alpha_dither;
   gint         offsetx, offsety;
   gulong      *index_used_count = quantobj->index_used_count;
+  glong        total_size       = 0;
+  glong        layer_size;
+  gint         nth_layer        = quantobj->nth_layer;
+  gint         n_layers         = quantobj->n_layers;
 
   gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
 
@@ -3044,12 +3107,16 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
                      GIMP_ITEM (layer)->height,
                      TRUE);
 
+  layer_size = GIMP_ITEM (layer)->width * GIMP_ITEM (layer)->height;
+
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
+
+      total_size += srcPR.h * srcPR.w;
 
       for (row = 0; row < srcPR.h; row++)
 	{
@@ -3086,6 +3153,12 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 	      dest += destPR.bytes;
 	    }
 	}
+
+       if (quantobj->progress_callback)
+         quantobj->progress_callback (3,
+                                      (nth_layer + ((gdouble) total_size)/
+                                       layer_size) / (gdouble) n_layers,
+                                      quantobj->progress_data);
     }
 }
 
@@ -3111,6 +3184,10 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   gboolean     alpha_dither     = quantobj->want_alpha_dither;
   gint         offsetx, offsety;
   gulong      *index_used_count = quantobj->index_used_count;
+  glong        total_size       = 0;
+  glong        layer_size;
+  gint         nth_layer        = quantobj->nth_layer;
+  gint         n_layers         = quantobj->n_layers;
 
   gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
 
@@ -3136,12 +3213,16 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
                      GIMP_ITEM (layer)->height,
                      TRUE);
 
+  layer_size = GIMP_ITEM (layer)->width * GIMP_ITEM (layer)->height;
+
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
        pr = pixel_regions_process (pr))
     {
       src = srcPR.data;
       dest = destPR.data;
+
+      total_size += srcPR.h * srcPR.w;
 
       for (row = 0; row < srcPR.h; row++)
 	{
@@ -3207,6 +3288,12 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 	      dest += destPR.bytes;
 	    }
 	}
+
+      if (quantobj->progress_callback)
+        quantobj->progress_callback (3,
+                                     (nth_layer + ((gdouble) total_size)/
+                                      layer_size) / (gdouble) n_layers,
+                                     quantobj->progress_data);
     }
 }
 
@@ -3655,6 +3742,8 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
   gint          global_rmax = 0, global_rmin = G_MAXINT;
   gint          global_gmax = 0, global_gmin = G_MAXINT;
   gint          global_bmax = 0, global_bmin = G_MAXINT;
+  gint          nth_layer = quantobj->nth_layer;
+  gint          n_layers  = quantobj->n_layers;
 
   gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
 
@@ -3939,6 +4028,12 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
       odd_row = !odd_row;
 
       pixel_region_set_row (&destPR, 0, row, width, dest_buf);
+
+      if (quantobj->progress_callback)
+        quantobj->progress_callback (3,
+                                     (nth_layer + ((gdouble) row) /
+                                      height) / (gdouble) n_layers,
+                                     quantobj->progress_data);
     }
 
   g_free (error_limiter - 255);
@@ -3962,14 +4057,15 @@ delete_median_cut (QuantizeObj *quantobj)
 
 
 /**************************************************************/
-
-
 static QuantizeObj *
 initialize_median_cut (GimpImageBaseType       type,
 		       gint                    num_colors,
 		       GimpConvertDitherType   dither_type,
 		       GimpConvertPaletteType  palette_type,
-		       gboolean                want_alpha_dither)
+		       gboolean                want_alpha_dither,
+                       GimpImageConvertProgressCallback progress_callback,
+                       gpointer               progress_data
+                      )
 {
   QuantizeObj * quantobj;
 
@@ -3986,6 +4082,9 @@ initialize_median_cut (GimpImageBaseType       type,
 
   quantobj->desired_number_of_colors = num_colors;
   quantobj->want_alpha_dither        = want_alpha_dither;
+
+  quantobj->progress_callback        = progress_callback;
+  quantobj->progress_data            = progress_data;
 
   switch (type)
     {

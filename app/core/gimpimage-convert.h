@@ -22,6 +22,10 @@
 
 #define MAXNUMCOLORS 256
 
+typedef void (* GimpImageConvertProgressCallback) (gint     stage,
+                                                   gdouble  progress,
+                                                   gpointer data);
+
 
 void   gimp_image_convert          (GimpImage              *gimage,
                                     GimpImageBaseType       new_type,
@@ -33,7 +37,9 @@ void   gimp_image_convert          (GimpImage              *gimage,
                                     gboolean                alpha_dither,
                                     gboolean                remove_dups,
                                     GimpConvertPaletteType  palette_type,
-                                    GimpPalette            *custom_palette);
+                                    GimpPalette            *custom_palette,
+                                    GimpImageConvertProgressCallback progress_callback,
+                                    gpointer                progress_data);
 
 void   gimp_drawable_convert_rgb       (GimpDrawable       *drawable,
                                         TileManager        *new_tiles,
