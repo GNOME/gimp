@@ -9,38 +9,13 @@
 #
 # widget <widget_set>       style <style_name>
 # class  <widget_class_set> style <style_name>
-
+#
 # You can add your own GIMP-specific GTK styles here.
 
 
-# Example style for small screens:
-
-style "gimp-small-style"
-{
-  GtkWidget::focus_padding         = 0
-  GtkOptionMenu::indicator_size    = { 4, 7 }
-  GtkOptionMenu::indicator_spacing = { 4, 3, 1, 1 }
-
-  GtkPaned::handle_size            = 5
-  GimpDock::separator_height       = 5
-  GimpImageDock::minimal_width     = 200
-  GimpImageDock::menu_preview_size = small-toolbar
-  GimpToolbox::tool_icon_size      = menu
-  GimpDockbook::tab_border         = 0
-  GimpDockbook::tab_icon_size      = menu
-  GimpColorNotebook::tab_border    = 0
-  GimpColorNotebook::tab_icon_size = menu
-  GimpDockable::content_border     = 1
-  GimpEditor::content_spacing      = 1
-  GimpEditor::button_spacing       = 1
-  GimpEditor::button_icon_size     = menu
-}
-
-# class "GtkWidget" style   "gimp-small-style"
-
-
+#
 # Example keybinding to remap Help to F2
-
+#
 binding "gimp-help-binding"
 {
   bind "F2"           { "show-help" (255)        }
@@ -54,11 +29,12 @@ binding "gimp-help-binding"
 # class "GtkWidget" binding "gimp-help-binding"
 
 
+#
 # The dock separator DND highlight color is configurable.
-
+#
 style "gimp-red-separator-style"
 {
   bg[SELECTED] = "#aa2448"
 }
 
-# widget "*dock-separator*" style "gimp-red-separator-style"
+# widget "*gimp-dock-separator*" style "gimp-red-separator-style"

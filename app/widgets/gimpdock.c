@@ -278,7 +278,7 @@ gimp_dock_separator_new (GimpDock *dock)
 
   event_box = gtk_event_box_new ();
 
-  gtk_widget_set_name (event_box, "dock-separator");
+  gtk_widget_set_name (event_box, "gimp-dock-separator");
 
   gtk_widget_style_get (GTK_WIDGET (dock),
                         "separator_height", &separator_height,

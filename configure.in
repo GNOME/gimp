@@ -1438,6 +1438,7 @@ themes/Makefile
 themes/Default/Makefile
 themes/Default/images/Makefile
 themes/Default/images/preferences/Makefile
+themes/Small/Makefile
 data/Makefile
 data/environ/Makefile
 data/misc/Makefile
