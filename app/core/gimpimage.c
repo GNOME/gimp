@@ -2439,66 +2439,30 @@ GimpLayer *
 gimp_image_get_layer_by_name (const GimpImage *gimage,
                               const gchar     *name)
 {
-  GimpLayer *layer;
-  GList     *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  for (list = GIMP_LIST (gimage->layers)->list;
-       list;
-       list = g_list_next (list))
-    {
-      layer = (GimpLayer *) list->data;
-
-      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (layer)), name))
-        return layer;
-    }
-
-  return NULL;
+  return (GimpLayer *) gimp_container_get_child_by_name (gimage->layers,
+                                                         name);
 }
 
 GimpChannel *
 gimp_image_get_channel_by_name (const GimpImage *gimage,
 				const gchar     *name)
 {
-  GimpChannel *channel;
-  GList       *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  for (list = GIMP_LIST (gimage->channels)->list;
-       list;
-       list = g_list_next (list))
-    {
-      channel = (GimpChannel *) list->data;
-
-      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (channel)), name))
-        return channel;
-    }
-
-  return NULL;
+  return (GimpChannel *) gimp_container_get_child_by_name (gimage->channels,
+                                                           name);
 }
 
 GimpVectors *
 gimp_image_get_vectors_by_name (const GimpImage *gimage,
 				const gchar     *name)
 {
-  GimpVectors *vectors;
-  GList       *list;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (gimage), NULL);
 
-  for (list = GIMP_LIST (gimage->vectors)->list;
-       list;
-       list = g_list_next (list))
-    {
-      vectors = (GimpVectors *) list->data;
-
-      if (! strcmp (gimp_object_get_name (GIMP_OBJECT (vectors)), name))
-        return vectors;
-    }
-
-  return NULL;
+  return (GimpVectors *) gimp_container_get_child_by_name (gimage->vectors,
+                                                           name);
 }
 
 gboolean

@@ -305,8 +305,7 @@ path_delete_invoker (Gimp     *gimp,
 
   if (success)
     {
-      vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, name);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	gimp_image_remove_vectors (gimage, vectors);
@@ -371,7 +370,7 @@ path_get_points_invoker (Gimp     *gimp,
 
   if (success)
     {
-      vectors = gimp_image_get_active_vectors (gimage);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	{
@@ -763,8 +762,7 @@ path_get_tattoo_invoker (Gimp     *gimp,
 
   if (success)
     {
-      vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, name);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -841,8 +839,7 @@ path_set_tattoo_invoker (Gimp     *gimp,
 
   if (success)
     {
-      vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, name);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -983,8 +980,7 @@ path_get_locked_invoker (Gimp     *gimp,
 
   if (success)
     {
-      vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, name);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -1061,8 +1057,7 @@ path_set_locked_invoker (Gimp     *gimp,
 
   if (success)
     {
-      vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, name);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
@@ -1144,8 +1139,7 @@ path_to_selection_invoker (Gimp     *gimp,
 
   if (success)
     {
-      vectors = (GimpVectors *)
-	gimp_container_get_child_by_name (gimage->vectors, name);
+      vectors = gimp_image_get_vectors_by_name (gimage, name);
     
       if (vectors)
 	gimp_image_mask_select_vectors (gimage,

@@ -109,7 +109,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = gimp_image_get_active_vectors (gimage);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     {
@@ -409,8 +409,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, name);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     tattoo = gimp_item_get_tattoo (GIMP_ITEM (vectors));
@@ -442,8 +441,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, name);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_item_set_tattoo (GIMP_ITEM (vectors), tattovalue);
@@ -510,8 +508,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, name);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_image_remove_vectors (gimage, vectors);
@@ -547,8 +544,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, name);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     lockstatus = gimp_item_get_linked (GIMP_ITEM (vectors));
@@ -582,8 +578,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, name);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_item_set_linked (GIMP_ITEM (vectors), lockstatus, TRUE);
@@ -625,8 +620,7 @@ HELP
 	vars => [ 'GimpVectors *vectors' ],
 	code => <<'CODE'
 {
-  vectors = (GimpVectors *)
-    gimp_container_get_child_by_name (gimage->vectors, name);
+  vectors = gimp_image_get_vectors_by_name (gimage, name);
 
   if (vectors)
     gimp_image_mask_select_vectors (gimage,
