@@ -26,6 +26,7 @@ intltool-modules
 intltool-update
 intltool-update.in
 libtool
+mkinstalldirs
 stamp-h
 stamp-h1
 stamp-h.in
