@@ -10,16 +10,13 @@ make test TEST_VERBOSE=1
 
 bugs
 
-  * MJH: glib-config(!!!)
+[DONE]  * MJH: glib-config(!!!)
   * replöace examples/pixemap pod by (.*) and watch it die!
   * empty desfiption -> no display in PDB?`
   * make uninstall is actually a concern: make it work
-[DONE]  * PF_TEXT has no Load/Save buttons
-[DONE]  * Christian Soeller told me its easy: apply the affine transformation from C
   * podestions are not expanded in dialog help strings etc..
-  * Document spawn_options in Gimp::Net.
+{DONE] * Document spawn_options in Gimp::Net.
   * Selection => To Brush.
-[DONE]  * --enable-perl=/tmp/leckmich
   * Kommandozeilenmodus(!).
   * don't start gimp in cmdline mode and error.
   * KILL :auto from default(!)
@@ -27,14 +24,11 @@ bugs
   * gimp-piddle must be written back automatically on destroy, if changed
   * possibly rename "Brush Selection" to "Paint Settings"
   * gimp-tile set dirty automatically(!)
-  * fatal errors in config.pl (!)
-[DONE]  * disable module build (EMBEDMYALLOC)
-[DONE]  * turn -1 into undef and vice versa.
+[KILL] * fatal errors in config.pl (!)
   * perl module install dependency
-  * not calling unload -> coredump
+[DONE}  * not calling unload -> coredump
   * $Config{cc} might not understand Gimps CFLAGS (-mpentium).
-[DONE]  * do NOT modinstall with older gimp versions (!!!!!!!!!)
-  * improve examples/example-*.pl
+[KILL}  * improve examples/example-*.pl
   * wait for working gimp_file_load (or do it myself?)
   * get rid of xs_exit. please please fuck me plenty.
   * create gimpstyle.pod
@@ -42,12 +36,10 @@ bugs
 important issues
 
   * migrate BOOT: into INIT()
-  * gimp_progress_done
-  * gimp_progress_close
+  * gimp_progress_done, gimp_progress_close
   * maybe implement --enable-perl=runtime-only?
-  * --ui and --noui for Gimp::Fu
+[KILL]  * --ui and --noui for Gimp::Fu
   * pdb_proc_renameto
-[DONE]  * gimp_progress_init (1 & 2 args)
   * gimp_default_display (...) for libgimp
   * Gimp::Module for modules (!)
   * PerlCC configurable options for Perl-Server startup, Gipm_host etc.
@@ -56,7 +48,7 @@ important issues
   * PF_PREVIEW(!)
   * change set_usize to something else..
   * Gimp::IO (?)
-  * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??
+[KILL]  * Gimp::Fu import after Gimp? use Gimp::main for Gimp::Fu??
   * install scripts in share/
   * register dummy function to calm gimp down (really??)
   * gimp->object_id, drawable_object_id remove!
@@ -65,7 +57,7 @@ important issues
   * allow plug-ins to register with only a drawable argument(!)
   * gradient button
   * implement Perl-Server RSET and shared lock(!)
-  * use Gimp qw(GIMP_HOST=jfjf)???
+[KILL}  * use Gimp qw(GIMP_HOST=jfjf)???
 [DONE]  * zero-copy PDL support
   * weighted movement in drawing tools
 [KILL]  * -DMIN_PERL_DEFINE
@@ -79,6 +71,7 @@ important issues
 
 long term issues and ideas
 
+  * rewrite interact() in pure C, gets rid of most gtk dependencies.
   * default function parameters (with hash %defaults?)
   * gimp_text(text => "hallo", family => "engraver", size => 20);
   

@@ -1,6 +1,10 @@
 Revision history for Gimp-Perl extension.
 
+1.098 Wed Jul 21 20:57:12 CEST 1999
 	- do not try to compile personal_rc_file without gimp-1.1.
+        - fixed old prefix detection.
+        - get rid of "glib-config" dependency and use AM_PATH_GLIB instead.
+        - do not install examples/magick until it is repeaired.
 
 1.097 Wed Jul 14 22:55:24 CEST 1999
 	- updated perlotine.

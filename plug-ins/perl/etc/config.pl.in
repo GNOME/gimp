@@ -25,6 +25,9 @@ $^W=0;
    _GIMP_LIBS		=> q[@GIMP_LIBS@],
    _GIMP_LIBS_NOUI	=> q[@GIMP_LIBS_NOUI@],
 
+   GLIB_CFLAGS		=> q[@GLIB_CFLAGS@],
+   GLIB_LIBS		=> q[@GLIB_LIBS@],
+
    INSTALL		=> q[@INSTALL@],
    INSTALL_PROGRAM	=> q[@INSTALL_PROGRAM@],
    gimpplugindir	=> q[@gimpplugindir@],
@@ -69,6 +72,7 @@ if ($IN_GIMP) {
    $GIMP = expand($GIMP);
 }
 
+$cfg{GIMP_PREFIX} = $GIMP_PREFIX;
 
 $GIMP_INC	=~ s%\$topdir%$topdir%g;
 $GIMP_INC_NOUI	=~ s%\$topdir%$topdir%g;

@@ -5,9 +5,10 @@ use Config;
 $|=1;
 
 @examples =
+   # not yet: magick
    qw(windy.pl prep4gif.pl webify.pl PDB alpha2color.pl tex-to-float ditherize.pl
       border.pl view3d.pl feedback.pl xachlego.pl xachshadow.pl parasite-editor
-      scratches.pl blowinout.pl terral_text xachvision.pl gimpmagick perlcc
+      scratches.pl blowinout.pl terral_text xachvision.pl perlcc
       sethspin.pl animate_cells image_tile yinyang stamps font_table
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle billboard mirrorsplit
@@ -88,8 +89,8 @@ eval "use Parse::RecDescent;"; $PRD = $@ eq "";
 
 $] >= 5.005 or print <<EOF;
 
-NOTICE:  You are using a version of perl older than 5.005. This will reduce
-         the features available to the Gimp-Perl extension.
+NOTICE:  You are using a version of perl older than 5.005. This will slightly
+         reduce the features available to the Gimp-Perl extension.
 
 EOF
 

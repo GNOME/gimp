@@ -1,11 +1,13 @@
 =head1 NAME
 
-Gimp::Pixel - how to operate on raw pixels
+Gimp::Pixel - how to operate on raw pixels.
+
+***WARNING*** this manpage is no longer up-to-date. See C<examples/colourtoalpha>
+for a simple raw-piyxel-manipulating plug-in.
 
 =head1 SYNOPSIS
 
   use Gimp;
-  use Gimp::PDL;	# you need Gimp::PDL for pixel access
   use PDL;		# to make sensible things with the pixels
 
   # Gimp::GDrawable	- The GDrawable structure

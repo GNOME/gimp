@@ -26,6 +26,12 @@ ac_help="$ac_help
   --with-gimp-exec-prefix=PFX Exec prefix where GIMP is installed (optional)"
 ac_help="$ac_help
   --disable-gimptest       Do not try to compile and run a test GIMP program"
+ac_help="$ac_help
+  --with-glib-prefix=PFX   Prefix where GLIB is installed (optional)"
+ac_help="$ac_help
+  --with-glib-exec-prefix=PFX Exec prefix where GLIB is installed (optional)"
+ac_help="$ac_help
+  --disable-glibtest       Do not try to compile and run a test GLIB program"
 
 # Initialize some variables set by options.
 # The variables have the same names as the options, with
@@ -573,7 +579,7 @@ do
 # Extract the first word of "$ac_prog", so it can be a program name with args.
 set dummy $ac_prog; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:577: checking for $ac_word" >&5
+echo "configure:583: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_GIMP'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -650,7 +656,7 @@ fi
   # Extract the first word of "gimptool", so it can be a program name with args.
 set dummy gimptool; ac_word=$2
 echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
-echo "configure:654: checking for $ac_word" >&5
+echo "configure:660: checking for $ac_word" >&5
 if eval "test \"`echo '$''{'ac_cv_path_GIMPTOOL'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
@@ -683,9 +689,9 @@ else
   echo "$ac_t""no" 1>&6
 fi
 
-  min_gimp_version=1.0.2
+  min_gimp_version=1.0.4
   echo $ac_n "checking for GIMP - version >= $min_gimp_version""... $ac_c" 1>&6
-echo "configure:689: checking for GIMP - version >= $min_gimp_version" >&5
+echo "configure:695: checking for GIMP - version >= $min_gimp_version" >&5
   no_gimp=""
   if test "$GIMPTOOL" = "no" ; then
     no_gimp=yes
@@ -718,7 +724,7 @@ echo "configure:689: checking for GIMP - version >= $min_gimp_version" >&5
   echo $ac_n "cross compiling; assumed OK... $ac_c"
 else
   cat > conftest.$ac_ext <<EOF
-#line 722 "configure"
+#line 728 "configure"
 #include "confdefs.h"
 
 #include <stdio.h>
@@ -767,7 +773,7 @@ int main ()
 
 
 EOF
-if { (eval echo configure:771: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+if { (eval echo configure:777: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
 then
   :
 else
@@ -801,7 +807,7 @@ fi
           CFLAGS="$CFLAGS $GIMP_CFLAGS"
           LIBS="$LIBS $GIMP_LIBS"
           cat > conftest.$ac_ext <<EOF
-#line 805 "configure"
+#line 811 "configure"
 #include "confdefs.h"
 
 #include <stdio.h>
@@ -811,7 +817,7 @@ int main() {
  return 0; 
 ; return 0; }
 EOF
-if { (eval echo configure:815: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:821: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
    echo "*** The test program compiled, but did not run. This usually means"
           echo "*** that the run-time linker is not finding GIMP or finding the wrong"
@@ -849,10 +855,280 @@ rm -f conftest*
   rm -f conf.gimptest
 
 
+# Check whether --with-glib-prefix or --without-glib-prefix was given.
+if test "${with_glib_prefix+set}" = set; then
+  withval="$with_glib_prefix"
+  glib_config_prefix="$withval"
+else
+  glib_config_prefix=""
+fi
+
+# Check whether --with-glib-exec-prefix or --without-glib-exec-prefix was given.
+if test "${with_glib_exec_prefix+set}" = set; then
+  withval="$with_glib_exec_prefix"
+  glib_config_exec_prefix="$withval"
+else
+  glib_config_exec_prefix=""
+fi
+
+# Check whether --enable-glibtest or --disable-glibtest was given.
+if test "${enable_glibtest+set}" = set; then
+  enableval="$enable_glibtest"
+  :
+else
+  enable_glibtest=yes
+fi
+
+
+  if test x$glib_config_exec_prefix != x ; then
+     glib_config_args="$glib_config_args --exec-prefix=$glib_config_exec_prefix"
+     if test x${GLIB_CONFIG+set} != xset ; then
+        GLIB_CONFIG=$glib_config_exec_prefix/bin/glib-config
+     fi
+  fi
+  if test x$glib_config_prefix != x ; then
+     glib_config_args="$glib_config_args --prefix=$glib_config_prefix"
+     if test x${GLIB_CONFIG+set} != xset ; then
+        GLIB_CONFIG=$glib_config_prefix/bin/glib-config
+     fi
+  fi
+
+  for module in . 
+  do
+      case "$module" in
+         gmodule) 
+             glib_config_args="$glib_config_args gmodule"
+         ;;
+         gthread) 
+             glib_config_args="$glib_config_args gthread"
+         ;;
+      esac
+  done
+
+  # Extract the first word of "glib-config", so it can be a program name with args.
+set dummy glib-config; ac_word=$2
+echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+echo "configure:912: checking for $ac_word" >&5
+if eval "test \"`echo '$''{'ac_cv_path_GLIB_CONFIG'+set}'`\" = set"; then
+  echo $ac_n "(cached) $ac_c" 1>&6
+else
+  case "$GLIB_CONFIG" in
+  /*)
+  ac_cv_path_GLIB_CONFIG="$GLIB_CONFIG" # Let the user override the test with a path.
+  ;;
+  ?:/*)			 
+  ac_cv_path_GLIB_CONFIG="$GLIB_CONFIG" # Let the user override the test with a dos path.
+  ;;
+  *)
+  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS=":"
+  ac_dummy="$PATH"
+  for ac_dir in $ac_dummy; do 
+    test -z "$ac_dir" && ac_dir=.
+    if test -f $ac_dir/$ac_word; then
+      ac_cv_path_GLIB_CONFIG="$ac_dir/$ac_word"
+      break
+    fi
+  done
+  IFS="$ac_save_ifs"
+  test -z "$ac_cv_path_GLIB_CONFIG" && ac_cv_path_GLIB_CONFIG="no"
+  ;;
+esac
+fi
+GLIB_CONFIG="$ac_cv_path_GLIB_CONFIG"
+if test -n "$GLIB_CONFIG"; then
+  echo "$ac_t""$GLIB_CONFIG" 1>&6
+else
+  echo "$ac_t""no" 1>&6
+fi
+
+  min_glib_version=1.2.0
+  echo $ac_n "checking for GLIB - version >= $min_glib_version""... $ac_c" 1>&6
+echo "configure:947: checking for GLIB - version >= $min_glib_version" >&5
+  no_glib=""
+  if test "$GLIB_CONFIG" = "no" ; then
+    no_glib=yes
+  else
+    GLIB_CFLAGS=`$GLIB_CONFIG $glib_config_args --cflags`
+    GLIB_LIBS=`$GLIB_CONFIG $glib_config_args --libs`
+    glib_config_major_version=`$GLIB_CONFIG $glib_config_args --version | \
+           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\1/'`
+    glib_config_minor_version=`$GLIB_CONFIG $glib_config_args --version | \
+           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\2/'`
+    glib_config_micro_version=`$GLIB_CONFIG $glib_config_args --version | \
+           sed 's/\([0-9]*\).\([0-9]*\).\([0-9]*\)/\3/'`
+    if test "x$enable_glibtest" = "xyes" ; then
+      ac_save_CFLAGS="$CFLAGS"
+      ac_save_LIBS="$LIBS"
+      CFLAGS="$CFLAGS $GLIB_CFLAGS"
+      LIBS="$GLIB_LIBS $LIBS"
+      rm -f conf.glibtest
+      if test "$cross_compiling" = yes; then
+  echo $ac_n "cross compiling; assumed OK... $ac_c"
+else
+  cat > conftest.$ac_ext <<EOF
+#line 970 "configure"
+#include "confdefs.h"
+
+#include <glib.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+int 
+main ()
+{
+  int major, minor, micro;
+  char *tmp_version;
+
+  system ("touch conf.glibtest");
+
+  /* HP/UX 9 (%@#!) writes to sscanf strings */
+  tmp_version = g_strdup("$min_glib_version");
+  if (sscanf(tmp_version, "%d.%d.%d", &major, &minor, &micro) != 3) {
+     printf("%s, bad version string\n", "$min_glib_version");
+     exit(1);
+   }
+
+  if ((glib_major_version != $glib_config_major_version) ||
+      (glib_minor_version != $glib_config_minor_version) ||
+      (glib_micro_version != $glib_config_micro_version))
+    {
+      printf("\n*** 'glib-config --version' returned %d.%d.%d, but GLIB (%d.%d.%d)\n", 
+             $glib_config_major_version, $glib_config_minor_version, $glib_config_micro_version,
+             glib_major_version, glib_minor_version, glib_micro_version);
+      printf ("*** was found! If glib-config was correct, then it is best\n");
+      printf ("*** to remove the old version of GLIB. You may also be able to fix the error\n");
+      printf("*** by modifying your LD_LIBRARY_PATH enviroment variable, or by editing\n");
+      printf("*** /etc/ld.so.conf. Make sure you have run ldconfig if that is\n");
+      printf("*** required on your system.\n");
+      printf("*** If glib-config was wrong, set the environment variable GLIB_CONFIG\n");
+      printf("*** to point to the correct copy of glib-config, and remove the file config.cache\n");
+      printf("*** before re-running configure\n");
+    } 
+  else if ((glib_major_version != GLIB_MAJOR_VERSION) ||
+	   (glib_minor_version != GLIB_MINOR_VERSION) ||
+           (glib_micro_version != GLIB_MICRO_VERSION))
+    {
+      printf("*** GLIB header files (version %d.%d.%d) do not match\n",
+	     GLIB_MAJOR_VERSION, GLIB_MINOR_VERSION, GLIB_MICRO_VERSION);
+      printf("*** library (version %d.%d.%d)\n",
+	     glib_major_version, glib_minor_version, glib_micro_version);
+    }
+  else
+    {
+      if ((glib_major_version > major) ||
+        ((glib_major_version == major) && (glib_minor_version > minor)) ||
+        ((glib_major_version == major) && (glib_minor_version == minor) && (glib_micro_version >= micro)))
+      {
+        return 0;
+       }
+     else
+      {
+        printf("\n*** An old version of GLIB (%d.%d.%d) was found.\n",
+               glib_major_version, glib_minor_version, glib_micro_version);
+        printf("*** You need a version of GLIB newer than %d.%d.%d. The latest version of\n",
+	       major, minor, micro);
+        printf("*** GLIB is always available from ftp://ftp.gtk.org.\n");
+        printf("***\n");
+        printf("*** If you have already installed a sufficiently new version, this error\n");
+        printf("*** probably means that the wrong copy of the glib-config shell script is\n");
+        printf("*** being found. The easiest way to fix this is to remove the old version\n");
+        printf("*** of GLIB, but you can also set the GLIB_CONFIG environment to point to the\n");
+        printf("*** correct copy of glib-config. (In this case, you will have to\n");
+        printf("*** modify your LD_LIBRARY_PATH enviroment variable, or edit /etc/ld.so.conf\n");
+        printf("*** so that the correct libraries are found at run-time))\n");
+      }
+    }
+  return 1;
+}
+
+EOF
+if { (eval echo configure:1046: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+then
+  :
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -fr conftest*
+  no_glib=yes
+fi
+rm -fr conftest*
+fi
+
+       CFLAGS="$ac_save_CFLAGS"
+       LIBS="$ac_save_LIBS"
+     fi
+  fi
+  if test "x$no_glib" = x ; then
+     echo "$ac_t""yes" 1>&6
+     :     
+  else
+     echo "$ac_t""no" 1>&6
+     if test "$GLIB_CONFIG" = "no" ; then
+       echo "*** The glib-config script installed by GLIB could not be found"
+       echo "*** If GLIB was installed in PREFIX, make sure PREFIX/bin is in"
+       echo "*** your path, or set the GLIB_CONFIG environment variable to the"
+       echo "*** full path to glib-config."
+     else
+       if test -f conf.glibtest ; then
+        :
+       else
+          echo "*** Could not run GLIB test program, checking why..."
+          CFLAGS="$CFLAGS $GLIB_CFLAGS"
+          LIBS="$LIBS $GLIB_LIBS"
+          cat > conftest.$ac_ext <<EOF
+#line 1080 "configure"
+#include "confdefs.h"
+
+#include <glib.h>
+#include <stdio.h>
+
+int main() {
+ return ((glib_major_version) || (glib_minor_version) || (glib_micro_version)); 
+; return 0; }
+EOF
+if { (eval echo configure:1090: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+  rm -rf conftest*
+   echo "*** The test program compiled, but did not run. This usually means"
+          echo "*** that the run-time linker is not finding GLIB or finding the wrong"
+          echo "*** version of GLIB. If it is not finding GLIB, you'll need to set your"
+          echo "*** LD_LIBRARY_PATH environment variable, or edit /etc/ld.so.conf to point"
+          echo "*** to the installed location  Also, make sure you have run ldconfig if that"
+          echo "*** is required on your system"
+	  echo "***"
+          echo "*** If you have an old version installed, it is best to remove it, although"
+          echo "*** you may also be able to get things to work by modifying LD_LIBRARY_PATH"
+          echo "***"
+          echo "*** If you have a RedHat 5.0 system, you should remove the GTK package that"
+          echo "*** came with the system with the command"
+          echo "***"
+          echo "***    rpm --erase --nodeps gtk gtk-devel" 
+else
+  echo "configure: failed program was:" >&5
+  cat conftest.$ac_ext >&5
+  rm -rf conftest*
+   echo "*** The test program failed to compile or link. See the file config.log for the"
+          echo "*** exact error that occured. This usually means GLIB was incorrectly installed"
+          echo "*** or that you have moved GLIB since it was installed. In the latter case, you"
+          echo "*** may want to edit the glib-config script: $GLIB_CONFIG" 
+fi
+rm -f conftest*
+          CFLAGS="$ac_save_CFLAGS"
+          LIBS="$ac_save_LIBS"
+       fi
+     fi
+     GLIB_CFLAGS=""
+     GLIB_LIBS=""
+     { echo "configure: error: ** unable to find glib" 1>&2; exit 1; }
+  fi
+  
+  
+  rm -f conf.glibtest
+
+
 ac_gimp_save_CPPFLAGS="$CPPFLAGS"
 CPPFLAGS="$CPPFLAGS $GIMP_CFLAGS"
 echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
-echo "configure:856: checking how to run the C preprocessor" >&5
+echo "configure:1132: checking how to run the C preprocessor" >&5
 # On Suns, sometimes $CPP names a directory.
 if test -n "$CPP" && test -d "$CPP"; then
   CPP=
@@ -867,13 +1143,13 @@ else
   # On the NeXT, cc -E runs the code through the compiler's parser,
   # not just through cpp.
   cat > conftest.$ac_ext <<EOF
-#line 871 "configure"
+#line 1147 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:877: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1153: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -884,13 +1160,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -E -traditional-cpp"
   cat > conftest.$ac_ext <<EOF
-#line 888 "configure"
+#line 1164 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:894: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1170: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -901,13 +1177,13 @@ else
   rm -rf conftest*
   CPP="${CC-cc} -nologo -E"
   cat > conftest.$ac_ext <<EOF
-#line 905 "configure"
+#line 1181 "configure"
 #include "confdefs.h"
 #include <assert.h>
 Syntax Error
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:911: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1187: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   :
@@ -932,7 +1208,7 @@ fi
 echo "$ac_t""$CPP" 1>&6
 
 cat > conftest.$ac_ext <<EOF
-#line 936 "configure"
+#line 1212 "configure"
 #include "confdefs.h"
 #include <libgimp/gimp.h>
 EOF
@@ -950,17 +1226,17 @@ for ac_hdr in libgimp/gimpmodule.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:954: checking for $ac_hdr" >&5
+echo "configure:1230: checking for $ac_hdr" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 959 "configure"
+#line 1235 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:964: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1240: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -992,17 +1268,17 @@ for ac_hdr in unistd.h
 do
 ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
 echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
-echo "configure:996: checking for $ac_hdr" >&5
+echo "configure:1272: checking for $ac_hdr" >&5
 if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1001 "configure"
+#line 1277 "configure"
 #include "confdefs.h"
 #include <$ac_hdr>
 EOF
 ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
-{ (eval echo configure:1006: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+{ (eval echo configure:1282: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
 ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
 if test -z "$ac_err"; then
   rm -rf conftest*
@@ -1034,12 +1310,12 @@ CONFIG_H="config.h"
 for ac_func in vsnprintf
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:1038: checking for $ac_func" >&5
+echo "configure:1314: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1043 "configure"
+#line 1319 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -1062,7 +1338,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:1066: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1342: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else
@@ -1118,12 +1394,12 @@ fi
 for ac_func in _exit
 do
 echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
-echo "configure:1122: checking for $ac_func" >&5
+echo "configure:1398: checking for $ac_func" >&5
 if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
   echo $ac_n "(cached) $ac_c" 1>&6
 else
   cat > conftest.$ac_ext <<EOF
-#line 1127 "configure"
+#line 1403 "configure"
 #include "confdefs.h"
 /* System header to define __stub macros and hopefully few prototypes,
     which can conflict with char $ac_func(); below.  */
@@ -1146,7 +1422,7 @@ $ac_func();
 
 ; return 0; }
 EOF
-if { (eval echo configure:1150: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+if { (eval echo configure:1426: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
   rm -rf conftest*
   eval "ac_cv_func_$ac_func=yes"
 else
@@ -1312,6 +1588,9 @@ s%@GIMP_CFLAGS@%$GIMP_CFLAGS%g
 s%@GIMP_LIBS@%$GIMP_LIBS%g
 s%@GIMP_CFLAGS_NOUI@%$GIMP_CFLAGS_NOUI%g
 s%@GIMP_LIBS_NOUI@%$GIMP_LIBS_NOUI%g
+s%@GLIB_CONFIG@%$GLIB_CONFIG%g
+s%@GLIB_CFLAGS@%$GLIB_CFLAGS%g
+s%@GLIB_LIBS@%$GLIB_LIBS%g
 s%@CPP@%$CPP%g
 s%@EXTENSIVE_TESTS@%$EXTENSIVE_TESTS%g
 s%@IN_GIMP@%$IN_GIMP%g

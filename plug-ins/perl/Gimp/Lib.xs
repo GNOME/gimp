@@ -1751,6 +1751,7 @@ gimp_personal_rc_file(basename)
         g_free (basename);
         OUTPUT:
         RETVAL
+
 #endif
 
 guint

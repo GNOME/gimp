@@ -20,7 +20,12 @@ AC_PATH_PROGS(GIMP,gimp)
 
 AM_PATH_GIMP(1.0.4,, AC_MSG_ERROR(
 ** unable to find gimp, make sure it's in your path (version 1.0.4+ required!)
-** You can get the Gimp from ftp://ftp.gimp.org/pub/gimp.
+** You can get the gimp from ftp://ftp.gimp.org/pub/gimp.
+))
+
+AM_PATH_GLIB(1.2.0,, AC_MSG_ERROR(
+** unable to find glib, make sure it's in your path (version 1.2.0+ required!)
+** You can get glib from ftp://ftp.gtk.org/pub/glib.
 ))
 
 ac_gimp_save_CPPFLAGS="$CPPFLAGS"
