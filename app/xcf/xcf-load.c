@@ -46,6 +46,9 @@
 #include "core/gimpparasitelist.h"
 #include "core/gimpunit.h"
 
+#include "vectors/gimpbezierstroke.h"
+#include "vectors/gimpvectors.h"
+
 #include "xcf-private.h"
 #include "xcf-load.h"
 #include "xcf-read.h"
@@ -57,35 +60,45 @@
 #include "gimp-intl.h"
 
 
-static gboolean        xcf_load_image_props   (XcfInfo     *info,
-					       GimpImage   *gimage);
-static gboolean        xcf_load_layer_props   (XcfInfo     *info,
-					       GimpImage   *gimage,
-					       GimpLayer   *layer,
-                                               gboolean    *apply_mask,
-                                               gboolean    *edit_mask,
-                                               gboolean    *show_mask);
-static gboolean        xcf_load_channel_props (XcfInfo     *info,
-					       GimpImage   *gimage,
-					       GimpChannel *channel);
-static gboolean        xcf_load_prop          (XcfInfo     *info,
-					       PropType    *prop_type,
-					       guint32     *prop_size);
-static GimpLayer     * xcf_load_layer         (XcfInfo     *info,
-					       GimpImage   *gimage);
-static GimpChannel   * xcf_load_channel       (XcfInfo     *info,
-					       GimpImage   *gimage);
-static GimpLayerMask * xcf_load_layer_mask    (XcfInfo     *info,
-					       GimpImage   *gimage);
-static gboolean        xcf_load_hierarchy     (XcfInfo     *info,
-					       TileManager *tiles);
-static gboolean        xcf_load_level         (XcfInfo     *info,
-					       TileManager *tiles);
-static gboolean        xcf_load_tile          (XcfInfo     *info,
-					       Tile        *tile);
-static gboolean        xcf_load_tile_rle      (XcfInfo     *info,
-					       Tile        *tile,
-					       gint         data_length);
+static gboolean        xcf_load_image_props     (XcfInfo     *info,
+                                                 GimpImage   *gimage);
+static gboolean        xcf_load_layer_props     (XcfInfo     *info,
+                                                 GimpImage   *gimage,
+                                                 GimpLayer   *layer,
+                                                 gboolean    *apply_mask,
+                                                 gboolean    *edit_mask,
+                                                 gboolean    *show_mask);
+static gboolean        xcf_load_channel_props   (XcfInfo     *info,
+                                                 GimpImage   *gimage,
+                                                 GimpChannel *channel);
+static gboolean        xcf_load_prop            (XcfInfo     *info,
+                                                 PropType    *prop_type,
+                                                 guint32     *prop_size);
+static GimpLayer     * xcf_load_layer           (XcfInfo     *info,
+                                                 GimpImage   *gimage);
+static GimpChannel   * xcf_load_channel         (XcfInfo     *info,
+                                                 GimpImage   *gimage);
+static GimpLayerMask * xcf_load_layer_mask      (XcfInfo     *info,
+                                                 GimpImage   *gimage);
+static gboolean        xcf_load_hierarchy       (XcfInfo     *info,
+                                                 TileManager *tiles);
+static gboolean        xcf_load_level           (XcfInfo     *info,
+                                                 TileManager *tiles);
+static gboolean        xcf_load_tile            (XcfInfo     *info,
+                                                 Tile        *tile);
+static gboolean        xcf_load_tile_rle        (XcfInfo     *info,
+                                                 Tile        *tile,
+                                                 gint         data_length);
+static GimpParasite  * xcf_load_parasite        (XcfInfo     *info);
+static PathList      * xcf_load_old_paths       (XcfInfo     *info,
+                                                 GimpImage   *gimage);
+static Path          * xcf_load_old_path        (XcfInfo     *info,
+                                                 GimpImage   *gimage);
+static PathPoint     * xcf_load_old_path_point1 (XcfInfo    *info,
+                                                 GimpCoords *coords);
+static PathPoint     * xcf_load_old_path_point  (XcfInfo    *info,
+                                                 GimpCoords *coords);
+
 
 #ifdef SWAP_FROM_FILE
 static gboolean        xcf_swap_func          (gint         fd,
@@ -94,149 +107,6 @@ static gboolean        xcf_swap_func          (gint         fd,
 					       gpointer     user_data);
 #endif
 
-
-static GimpParasite *
-xcf_load_parasite (XcfInfo *info)
-{
-  GimpParasite *p;
-
-  p = g_new (GimpParasite, 1);
-  info->cp += xcf_read_string (info->fp, &p->name, 1);
-  info->cp += xcf_read_int32 (info->fp, &p->flags, 1);
-  info->cp += xcf_read_int32 (info->fp, &p->size, 1);
-  p->data = g_new (gchar, p->size);
-  info->cp += xcf_read_int8 (info->fp, p->data, p->size);
-
-  return p;
-}
-
-static PathPoint* 
-xcf_load_bz_point_version1 (XcfInfo *info)
-{
-  PathPoint *ptr;
-  guint32    type;
-  gint32     x;
-  gint32     y;
-
-  info->cp += xcf_read_int32 (info->fp, &type, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
-
-  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
-
-  return ptr;
-}
-
-static PathPoint * 
-xcf_load_bz_point (XcfInfo *info)
-{
-  PathPoint *ptr;
-  guint32    type;
-  gfloat     x;
-  gfloat     y;
- 
-  info->cp += xcf_read_int32 (info->fp, &type, 1);
-  info->cp += xcf_read_float (info->fp, &x, 1);
-  info->cp += xcf_read_float (info->fp, &y, 1);
- 
-  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
-
-  return ptr;
-}
-
-static Path *
-xcf_load_path (GimpImage *gimage,
-	       XcfInfo   *info)
-{
-  Path       *bzp;
-  gchar      *name;
-  guint32     locked;
-  guint8      state;
-  guint32     closed;
-  guint32     num_points;
-  guint32     version; /* changed from num_paths */
-  GimpTattoo  tattoo = 0;
-  GSList     *pts_list = NULL;
-  PathType    ptype;
-
-  info->cp += xcf_read_string (info->fp, &name, 1);
-  info->cp += xcf_read_int32 (info->fp, &locked, 1);
-  info->cp += xcf_read_int8 (info->fp, &state, 1);
-  info->cp += xcf_read_int32 (info->fp, &closed, 1);
-  info->cp += xcf_read_int32 (info->fp, &num_points, 1);
-  info->cp += xcf_read_int32 (info->fp, &version, 1);
-
-  if (version == 1)
-    {
-      ptype = BEZIER;
-      while (num_points-- > 0)
-      {
-        PathPoint *bpt;
-        /* Read in a path */
-        bpt = xcf_load_bz_point_version1 (info);
-        pts_list = g_slist_append (pts_list, bpt);
-      }
-    }
-  else if (version == 2)
-    {
-      /* Had extra type field and points are stored as doubles */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
-      while(num_points-- > 0)
-      {
-        PathPoint *bpt;
-        /* Read in a path */
-        bpt = xcf_load_bz_point (info);
-        pts_list = g_slist_append (pts_list, bpt);
-      }
-    }
-  else if (version == 3)
-    {
-      /* Has extra tatto field */
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
-      info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
-      while (num_points-- > 0)
-	{
-	  PathPoint *bpt;
-	  /* Read in a path */
-	  bpt = xcf_load_bz_point (info);
-	  pts_list = g_slist_append (pts_list, bpt);
-	}
-    }
-  else
-    {
-      g_warning ("Unknown path type. Possibly corrupt XCF file");
-    }
-  
-  bzp = path_new (gimage, 
-                  ptype, pts_list, closed, (gint) state, locked, tattoo, name);
-
-  return bzp;
-}
-
-static PathList *
-xcf_load_bzpaths (GimpImage *gimage, 
-                  XcfInfo   *info)
-{
-  guint32   num_paths;
-  guint32   last_selected_row;
-  PathList *paths;
-  GSList   *bzp_list = NULL;
-
-  info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
-  info->cp += xcf_read_int32 (info->fp, &num_paths, 1);
-
-  while(num_paths-- > 0)
-    {
-      Path *bzp;
-      /* Read in a path */
-      bzp = xcf_load_path (gimage, info);
-      bzp_list = g_slist_append (bzp_list, bzp);
-    }
-
-  paths = path_list_new (gimage, last_selected_row, bzp_list);
-
-  return paths;
-}
 
 GimpImage *
 xcf_load_image (Gimp    *gimp,
@@ -539,7 +409,7 @@ xcf_load_image_props (XcfInfo   *info,
 
 	case PROP_PATHS:
 	  {
-	    PathList *paths = xcf_load_bzpaths (gimage, info);
+	    PathList *paths = xcf_load_old_paths (info, gimage);
 	    /* add to gimage */
 	    gimp_image_set_paths (gimage, paths);
 	  }
@@ -1411,6 +1281,211 @@ xcf_load_tile_rle (XcfInfo *info,
   if (xcfodata)
     g_free (xcfodata);
   return FALSE;
+}
+
+static GimpParasite *
+xcf_load_parasite (XcfInfo *info)
+{
+  GimpParasite *p;
+
+  p = g_new (GimpParasite, 1);
+  info->cp += xcf_read_string (info->fp, &p->name, 1);
+  info->cp += xcf_read_int32 (info->fp, &p->flags, 1);
+  info->cp += xcf_read_int32 (info->fp, &p->size, 1);
+  p->data = g_new (gchar, p->size);
+  info->cp += xcf_read_int8 (info->fp, p->data, p->size);
+
+  return p;
+}
+
+static PathList *
+xcf_load_old_paths (XcfInfo   *info,
+                    GimpImage *gimage)
+{
+  guint32   num_paths;
+  guint32   last_selected_row;
+  PathList *paths;
+  GSList   *bzp_list = NULL;
+
+  GimpVectors *active_vectors;
+
+  info->cp += xcf_read_int32 (info->fp, &last_selected_row, 1);
+  info->cp += xcf_read_int32 (info->fp, &num_paths, 1);
+
+  g_print ("num_paths: %d  selected_row: %d\n", num_paths, last_selected_row);
+
+  while (num_paths-- > 0)
+    {
+      Path *bzp;
+      /* Read in a path */
+      bzp = xcf_load_old_path (info, gimage);
+      bzp_list = g_slist_append (bzp_list, bzp);
+    }
+
+  paths = path_list_new (gimage, last_selected_row, bzp_list);
+
+  active_vectors = (GimpVectors *)
+    gimp_container_get_child_by_index (gimage->vectors, last_selected_row);
+
+  if (active_vectors)
+    gimp_image_set_active_vectors (gimage, active_vectors);
+
+  return paths;
+}
+
+static Path *
+xcf_load_old_path (XcfInfo   *info,
+                   GimpImage *gimage)
+{
+  Path       *bzp;
+  gchar      *name;
+  guint32     locked;
+  guint8      state;
+  guint32     closed;
+  guint32     num_points;
+  guint32     version; /* changed from num_paths */
+  GimpTattoo  tattoo = 0;
+  GSList     *pts_list = NULL;
+  PathType    ptype;
+
+  GimpVectors *vectors;
+  GimpStroke  *stroke;
+  GimpCoords  *coords;
+  GimpCoords  *curr_coord;
+  gint         num_coords;
+
+  info->cp += xcf_read_string (info->fp, &name, 1);
+  info->cp += xcf_read_int32  (info->fp, &locked, 1);
+  info->cp += xcf_read_int8   (info->fp, &state, 1);
+  info->cp += xcf_read_int32  (info->fp, &closed, 1);
+  info->cp += xcf_read_int32  (info->fp, &num_points, 1);
+  info->cp += xcf_read_int32  (info->fp, &version, 1);
+
+  g_print ("num_points: %d  closed: %d\n", num_points, closed);
+
+  vectors = gimp_vectors_new (gimage, name);
+
+  GIMP_ITEM (vectors)->linked = locked;
+
+  coords     = g_new0 (GimpCoords, num_points);
+  num_coords = num_points;
+
+  curr_coord = coords;
+
+  if (version == 1)
+    {
+      ptype = BEZIER;
+      while (num_points-- > 0)
+        {
+          PathPoint *bpt;
+          /* Read in a path */
+          bpt = xcf_load_old_path_point1 (info, curr_coord++);
+          pts_list = g_slist_append (pts_list, bpt);
+        }
+    }
+  else if (version == 2)
+    {
+      /* Had extra type field and points are stored as doubles */
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
+      while(num_points-- > 0)
+        {
+          PathPoint *bpt;
+          /* Read in a path */
+          bpt = xcf_load_old_path_point (info, curr_coord++);
+          pts_list = g_slist_append (pts_list, bpt);
+        }
+    }
+  else if (version == 3)
+    {
+      /* Has extra tatto field */
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &ptype, 1);
+      info->cp += xcf_read_int32 (info->fp, (guint32 *) &tattoo, 1);
+      while (num_points-- > 0)
+	{
+	  PathPoint *bpt;
+	  /* Read in a path */
+	  bpt = xcf_load_old_path_point (info, curr_coord++);
+	  pts_list = g_slist_append (pts_list, bpt);
+	}
+    }
+  else
+    {
+      g_warning ("Unknown path type. Possibly corrupt XCF file");
+    }
+
+  g_print ("\n");
+  
+  bzp = path_new (gimage, 
+                  ptype, pts_list, closed, (gint) state, locked, tattoo, name);
+
+  if (tattoo)
+    GIMP_ITEM (vectors)->tattoo = tattoo;
+
+  if (closed)
+    num_coords--;
+
+  stroke = gimp_bezier_stroke_new_from_coords (coords, num_coords);
+  g_free (coords);
+
+  gimp_vectors_stroke_add (vectors, stroke);
+  g_object_unref (stroke);
+
+  gimp_image_add_vectors (gimage, vectors,
+                          gimp_container_num_children (gimage->vectors));
+
+  return bzp;
+}
+
+static PathPoint* 
+xcf_load_old_path_point1 (XcfInfo    *info,
+                          GimpCoords *coords)
+{
+  PathPoint *ptr;
+  guint32    type;
+  gint32     x;
+  gint32     y;
+
+  info->cp += xcf_read_int32 (info->fp, &type, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &x, 1);
+  info->cp += xcf_read_int32 (info->fp, (guint32 *) &y, 1);
+
+  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
+
+  coords->x        = x;
+  coords->y        = y;
+  coords->pressure = 1.0;
+  coords->xtilt    = 0.5;
+  coords->ytilt    = 0.5;
+  coords->wheel    = 0.5;
+
+  return ptr;
+}
+
+static PathPoint * 
+xcf_load_old_path_point (XcfInfo    *info,
+                         GimpCoords *coords)
+{
+  PathPoint *ptr;
+  guint32    type;
+  gfloat     x;
+  gfloat     y;
+ 
+  info->cp += xcf_read_int32 (info->fp, &type, 1);
+  info->cp += xcf_read_float (info->fp, &x, 1);
+  info->cp += xcf_read_float (info->fp, &y, 1);
+
+  g_print ("path point type: %d   (at %f, %f)\n", type, x, y);
+ 
+  ptr = path_point_new (type, (gdouble) x, (gdouble) y);
+
+  coords->x        = x;
+  coords->y        = y;
+  coords->pressure = 1.0;
+  coords->xtilt    = 0.5;
+  coords->ytilt    = 0.5;
+  coords->wheel    = 0.5;
+
+  return ptr;
 }
 
 

@@ -1,3 +1,12 @@
+2003-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/xcf/xcf-load.c: load the old paths into new GimpVectors
+	objects. Old paths are still created because new vectors can't be
+	saved yet. Renamed all old path loading functions to
+	xcf_load_old_path*(). Added prototypes for them and reordered them
+	to match the order of the rest of the file. Changed their
+	signatures to match the rest of the file and indented them.
+
 2003-05-14  Dave Neary  <bolsh@gimp.org>
 
 	* plug-ins/common/screenshot.c: Attach default comment to
