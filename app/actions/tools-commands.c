@@ -28,6 +28,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "tools/gimp-tools.h"
+#include "tools/gimpcoloroptions.h"
 #include "tools/gimpimagemaptool.h"
 #include "tools/tool_manager.h"
 
@@ -214,5 +215,37 @@ tools_reset_cmd_callback (GtkAction *action,
 
           i++;
         }
+    }
+}
+
+void
+tools_color_average_radius_cmd_callback (GtkAction *action,
+                                         gint       value,
+                                         gpointer   data)
+{
+  GimpContext  *context;
+  GimpToolInfo *tool_info;
+  return_if_no_context (context, data);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_COLOR_OPTIONS (tool_info->tool_options))
+    {
+      GimpToolOptions *options = tool_info->tool_options;
+      GParamSpec      *pspec;
+      gdouble          radius;
+
+      g_object_get (options, "average-radius", &radius, NULL);
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (options),
+                                            "average-radius");
+
+      radius = action_select_value ((GimpActionSelectType) value,
+                                    radius,
+                                    G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                                    G_PARAM_SPEC_DOUBLE (pspec)->maximum,
+                                    1.0, 10.0, FALSE);
+
+      g_object_set (options, "average-radius", radius, NULL);
     }
 }

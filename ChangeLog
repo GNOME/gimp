@@ -1,3 +1,12 @@
+2005-02-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/context-actions.c
+	* app/actions/context-commands.[ch]: removed the newly added color
+	picker radius actions...
+
+	* app/actions/tools-actions.c
+	* app/actions/tools-commands.[ch]: ...and added them here.
+
 2005-02-20  Manish Singh  <yosh@gimp.org>
 
 	Support for custom plug-in interpreters, independent of OS support.

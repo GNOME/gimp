@@ -106,6 +106,40 @@ static GimpStringActionEntry tools_alternative_actions[] =
     GIMP_HELP_TOOL_ROTATE }
 };
 
+static GimpEnumActionEntry tools_color_average_radius_actions[] =
+{
+  { "tools-color-average-radius-set", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Set Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_SET, TRUE,
+    NULL },
+  { "tools-color-average-radius-minimum", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Minumum Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_FIRST, FALSE,
+    NULL },
+  { "tools-color-average-radius-maximum", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Maximum Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_LAST, FALSE,
+    NULL },
+  { "tools-color-average-radius-decrease", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Decrease Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_PREVIOUS, FALSE,
+    NULL },
+  { "tools-color-average-radius-increase", GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Increase Color Picker Radius", NULL, NULL,
+    GIMP_ACTION_SELECT_NEXT, FALSE,
+    NULL },
+  { "tools-color-average-radius-decrease-skip",
+    GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Decrease Color Picker Radius More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_PREVIOUS, FALSE,
+    NULL },
+  { "tools-color-average-radius-increase-skip",
+    GIMP_STOCK_TOOL_COLOR_PICKER,
+    "Increase Color Picker Radius More", NULL, NULL,
+    GIMP_ACTION_SELECT_SKIP_NEXT, FALSE,
+    NULL },
+};
+
 
 void
 tools_actions_setup (GimpActionGroup *group)
@@ -133,6 +167,11 @@ tools_actions_setup (GimpActionGroup *group)
   action = gtk_action_group_get_action (GTK_ACTION_GROUP (group),
                                         "tools-rotate-arbitrary");
   gtk_action_set_accel_path (action, "<Actions>/tools/tools-rotate");
+
+  gimp_action_group_add_enum_actions (group,
+                                      tools_color_average_radius_actions,
+                                      G_N_ELEMENTS (tools_color_average_radius_actions),
+                                      G_CALLBACK (tools_color_average_radius_cmd_callback));
 
   for (list = GIMP_LIST (group->gimp->tool_info_list)->list;
        list;
