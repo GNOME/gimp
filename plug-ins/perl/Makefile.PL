@@ -29,13 +29,13 @@ if ($ARGV[0] ne "--writemakefile") {
 @pins =
    qw(windify prep4gif webify PDB tex-to-float ditherize
       feedback xachlego xachshadow parasite-editor roundsel
-      scratches blowinout terral_text xachvision perlcc
-      animate_cells image_tile yinyang stamps font_table
+      scratches blowinout terral_text xachvision perlcc giflogo
+      animate_cells image_tile yinyang stamps font_table sethspin
       perlotine randomblends innerbevel fit-text guidegrid roundrectsel
       repdup centerguide stampify goldenmean triangle mirrorsplit
       layerfuncs randomart1 glowing_steel frame_reshuffle frame_filter
       logulator miff gimpmagick guide_remove guides_to_selection burst
-      fire povray avi layerfuncs bricks dataurl colorhtml gap-vcr
+      fire povray avi layerfuncs bricks dataurl colorhtml
    );
 @pdl_pins =
    qw(

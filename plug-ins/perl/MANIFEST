@@ -122,6 +122,8 @@ examples/bricks
 examples/dataurl
 examples/colorhtml
 examples/gap-vcr
+examples/giflogo
+examples/sethspin
 pxgettext
 po/ChangeLog
 po/gimp-perl.pot

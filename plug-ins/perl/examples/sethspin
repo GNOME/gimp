@@ -1,0 +1,203 @@
+#!/usr/bin/perl
+
+# This one's all mine.  Well, its GPL/Artisitic but I"m the author and creator. 
+# You need gimp 1.1 or better for this; too much has changed, and I don't think
+# 1.0.x had a perspective PDB function anyway 
+
+# Here's the working theory on this:
+#  There's a function called spinlayer which will spin from a spinlayer to a
+#  destlayer.  It won't touch those 2 layers at all, and will leave its results
+#  on the top of the layer stack.
+#
+#  If the user wants to spin back, it will take 1/2 the layers otherwise required
+#  per call to the spin_layer, so that the number of total layers comes out the
+#  same.  
+#
+#  The main function makes a new image, copies the source and destination onto it
+#  with appropriate offsets, and passes this image with the bottom 2 layers to
+#  spin_layer.  At the end, remove the original 2 layers, since they won't be 
+#  needed, and add in some Layer comments for timing your gif.
+#
+################################################################################
+#  Many thanks to Steinar and Marc, for expressing an intrest in the script that
+#  kept me going, and to Steinar in particular for helping me track down why the
+#  script was crashing gimp (hint - don't make layers of height=0, and if you do
+#  make sure you're logging to console since the Gtk messagebox will never show
+#  up due to a rapid segfault).
+#
+# Revision History:
+# 1.0 - Initial (too early) release
+# 1.1 - Second (still ugly) release: Made the perspective setting actually do
+#       something
+# 1.2 - Used some of the convienence functions, and made things a little eaiser
+#       from the user's standpoint too.  Also moved it from the 
+#       Filters->Animations-> menu to Xtns->Animations.  I think its 
+#       clearer whats going on this way.  It also works w/ any 2 layers now.
+# 1.5 - Some debugging by Steinar and myself to make it work again.
+#
+# TODO: Clean it up; allow for other effects (skewing, ripples?) while spinning;        
+
+# Seth Burgess
+# <sjburges@gimp.org>
+
+use Gimp;  # No qw(:auto) - Trying to use all OO-styling
+use Gimp::Fu;
+use Gimp::Util;
+
+# Gimp::set_trace(TRACE_ALL);
+
+sub saw {  # a sawtooth function on PI
+    ($val) = @_;
+    if ($val < 3.14159/2.0) {
+        return ($val/3.14159) ;
+    }
+    elsif ($val < 3.14159) {
+        return (-1+$val/3.14159); 
+    }
+    elsif ($val < 3.14159+3.14159/2.0) {
+        return    ($val/3.14159) ;
+    }
+    else {
+        return (-1+$val/3.14159); 
+    }
+} 
+
+sub spin_layer { # the function for actually spinning the layer
+    my ($img, $spin, $dest, $numframes, $prp) = @_;
+
+    my $floater,  # The transformed image
+       $framelay; # The background color
+
+    # Now lets spin it!
+    $stepsize = 3.14159/$numframes; # in radians 
+    for ($i=0; $i<=3.14159; $i+=$stepsize) {
+        Gimp->progress_update ($i/3.14159);
+        # create a new layer for spinning
+        $framelay = ($i < 3.14159/2.0) ?  $spin->copy(1) : $dest->copy(1);
+        $img->add_layer($framelay, 0);
+        $floater = $framelay->copy(1);
+        $img->add_layer($floater, 0);
+        # spin it a step
+        $img->selection_all();
+        @x = $img->selection_bounds();
+        $img->selection_none();
+ 
+        # x[1],x[2]                  x[3],x[2]
+        # x[1],x[4]                  x[3],x[4]
+        my($y1, $y3);
+        $y1 = int($x[2]+$spin->height *sin($i)/2);
+        $y3 = int($x[4]-$spin->height *sin($i)/2);
+
+        $y3++ if ($y1 == $y3);
+
+        $floater->set_name("First-floater $i");
+        $floater = Gimp->perspective($floater, 1,
+                       $x[1]+saw($i)*$prp*$framelay->width,$y1,  
+                       $x[3]-saw($i)*$prp*$framelay->width,$y1,
+                       $x[1]-saw($i)*$prp*$framelay->width,$y3,  
+                       $x[3]+saw($i)*$prp*$framelay->width,$y3);
+        $framelay->fill(1); # BG-IMAGE-FILL
+
+        $img->set_visible($floater, $framelay);
+
+        $floater->set_name("Floater $i");
+        $framelay->set_name("Framelay $i");
+        $img->merge_visible_layers(0);
+    }
+}
+
+register "seth_spin",
+         "Seth Spin",
+         "Take one image.  Spin it about the horizontal axis, and end up with another image.  I made it for easy web buttons.",
+         "Seth Burgess",
+         "Seth Burgess <sjburges\@gimp.org>",
+         "1.5",
+         N_"<Toolbox>/Xtns/Animation/Seth Spin...",
+         "*",
+         [
+          [PF_DRAWABLE, "source", "What drawable to spin from?"],
+          [PF_DRAWABLE, "destination","What drawable to spin to?"],
+          [PF_INT8, "frames", "How many frames to use?", 16],
+          [PF_COLOR, "background", "What color to use for background if not transparent", [0,0,0]],
+          [PF_SLIDER, "perspective", "How much perspective effect to get", 40, [0,255,5]],
+          [PF_TOGGLE, "spin_back", "Also spin back?" , 1],
+          [PF_TOGGLE, "convert_indexed", "Convert to indexed?", 1],
+         ],
+         [],
+         ['gimp-1.1'],
+         sub {
+  my($src,$dest,$frames,$color,$perspective,$spinback,$indexed) = @_;
+    
+    $oldbackground = Gimp->palette_get_background();
+    Gimp->palette_set_background($color);
+
+    $perspective = $perspective/255.0; # PF_SLIDER doesn't work right for < 1
+
+    Gimp->progress_init("Seth Spin...",-1);
+
+    # Copy souce and destination to new image
+    
+    $maxwide = ($src->width > $dest->width) ? $src->width : $dest->width;
+    $maxhigh = ($src->height > $dest->height) ? $src->height: $dest->height;
+
+    $img = Gimp->image_new($maxwide, $maxhigh, RGB);
+    $tmpimglayer = $img->add_new_layer(0,3,1); # have to have a layer before displaying
+    $img->display_new;
+
+    $src->edit_copy();
+    $spinlayer = $tmpimglayer->edit_paste(1);
+    $spinlayer->floating_sel_to_layer();
+
+    $dest->edit_copy();
+    $destlayer = $tmpimglayer->edit_paste(1);
+    $destlayer->floating_sel_to_layer();
+
+    $tmpimglayer->remove_layer;                # remove temporary layer.
+
+    # set the layer size to be the full layer for each copied layer
+    $spinlayer->resize($maxwide, $maxhigh, $spinlayer->offsets);
+    $destlayer->resize($maxwide, $maxhigh, $destlayer->offsets);
+
+    # need an even number of frames for spinback
+    if ($frames%2 && $spinback) {
+        $frames++;
+        gimp_message("An even number of frames is needed for spin back.\nAdjusted frames up to $frames");
+    }
+
+    spin_layer($img, $spinlayer, $destlayer, $spinback ? $frames/2 : $frames, $perspective);
+   
+    # go back from destination to spinlayer if spinning back 
+    if ($spinback) { 
+        @layerlist = $img->get_layers();
+        spin_layer($img, $destlayer, $spinlayer, $frames/2, $perspective);
+        }    
+ 
+    # remove the original 2 pasted layers
+    $img->remove_layer($destlayer);
+    $img->remove_layer($spinlayer);
+
+    # unhide and name layers (Give timings)
+    @all_layers = $img->get_layers;
+    $img->set_visible(@all_layers);
+
+    for ($i=1; $i<=$frames ; $i++) {
+        $all_layers[$i-1]->set_name("Spin Layer $i (50ms)");
+        }
+    $all_layers[$frames-1]->set_name("Spin Layer SRC (250ms)");  
+    
+    if ($spinback) {
+        $all_layers[$frames/2-1]->set_name("Spin Layer DEST (250ms)"); 
+        }
+    else { $all_layers[0]->set_name("Spin Layer DEST (250ms)")}
+    
+
+    # indexed conversion wants a display for some reason
+    if ($indexed) { 
+      $img->convert_indexed(1,MAKE_PALETTE,255,0,1,"buffy" ); 
+    } 
+
+    Gimp->palette_set_background($oldbackground);
+    return();
+};
+
+exit main;

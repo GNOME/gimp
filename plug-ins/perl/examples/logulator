@@ -103,7 +103,7 @@ sub gimp_text_fontname {
    $newlay;
 }
 
-# script-fu convinience fucntions
+# script-fu convenience functions
 
 sub cdr {
    my(@x)=@{$_[0]};
@@ -1503,16 +1503,21 @@ sub script_fu_glossy_logo {
             gimp_selection_none ($img);
          };
       }
-      if ($shadow_toggle) {
-         do {
-            gimp_selection_layer_alpha ($text_layer);
-            $dont_drop_me = script_fu_drop_shadow(RUN_NONINTERACTIVE, $img, $text_layer, $s_offset_x, $s_offset_y, 15, [0, 0, 0], 80, 1);
-            $width = gimp_image_width ($img);
-            $height = gimp_image_height ($img);
-            gimp_selection_none ($img);
-         };
+       if ($shadow_toggle == 1) {
+          do {
+             $drop_sh_layer = gimp_layer_copy ($text_layer, 1);
+             gimp_layer_set_mode ($drop_sh_layer, NORMAL_MODE);
+             gimp_image_add_layer ($img, $drop_sh_layer, 2);
+             gimp_selection_layer_alpha ($drop_sh_layer);
+             gimp_palette_set_background ([0, 0, 0]);
+             gimp_edit_fill ($drop_sh_layer);
+             gimp_selection_none ($img);
+             plug_in_gauss_rle ($drop_sh_layer, 15, 1, 1);
+             gimp_layer_set_offsets ($drop_sh_layer, $s_offset_x, $s_offset_y);
+             gimp_layer_set_opacity ($drop_sh_layer, 80);
+          };
       }
-      if ($flatten_toggle) {
+      if ($flatten_toggle == 1) {
          do {
             $final = gimp_image_flatten ($img);
          };
@@ -1547,11 +1552,10 @@ register "perl_fu_glossy_logo",
       [PF_PATTERN,   'pattern_outline',  "Pattern (outline)", "Electric Blue"],
       [PF_TOGGLE,    'use_pattern_overlay',"Use pattern overlay", 0],
       [PF_PATTERN,   'pattern_overlay',  "Pattern (overlay)", "Parque #1"],
-      [PF_TOGGLE,    'default_bumpmap_settings',"Default bump-map settings", 1],
-      [PF_TOGGLE,    'shadow',           "Shadow?", 1],
-      [PF_VALUE,     'shadow_x_offset',  "Shadow X offset", "8"],
-      [PF_VALUE,     'shadow_y_offset',  "Shadow Y offset", "8"],
-      [PF_TOGGLE,    'flatten_image',    "Flatten image?", 0],
+      [PF_TOGGLE,    'shadow_toggle', "Shadow?", 1],
+      [PF_VALUE,     's_offset_x',  "Shadow X offset", "8"],
+      [PF_VALUE,     's_offset_y',  "Shadow Y offset", "8"],
+      [PF_TOGGLE,    'flatten_toggle',    "Flatten image?", 0],
    ],
    \&script_fu_glossy_logo;
 sub script_fu_glowing_logo {
@@ -1866,6 +1870,11 @@ sub script_fu_neon_logo {
       my $shadow_offx = $size / 10;
       my $shadow_offy = $size / 10;
       my $tube_layer = gimp_text_fontname ($img, -1, 0, 0, $text, $border, 1, $size, PIXELS, $font);
+      #get the actual height of the text the user has in the drawable
+      gimp_selection_layer_alpha ($tube_layer);
+      $float_layer = gimp_selection_float ($tube_layer, 0, 0);
+      $float_height = $float_layer->height;
+      gimp_floating_sel_anchor ($float_layer);
       my $width = gimp_drawable_width ($tube_layer);
       my $height = gimp_drawable_height ($tube_layer);
       my $glow_layer = gimp_layer_new ($img, $width, $height, RGBA_IMAGE, "Neon Glow", 100, NORMAL_MODE);
@@ -1899,7 +1908,9 @@ sub script_fu_neon_logo {
       gimp_selection_shrink ($img, $shrink);
       gimp_palette_set_background ([0, 0, 0]);
       gimp_edit_fill ($selection);
-      gimp_edit_fill ($tube_layer);
+      if ($float_height >= 100) {
+          gimp_edit_fill ($tube_layer); #this way the user has to choose a REAL big font
+      }					#in order to get the original effect!!
       gimp_selection_none ($img);
       if (not ($feather1 == 0)) {
          plug_in_gauss_rle ($img, $tube_layer, $feather1, 1, 1);
@@ -1913,7 +1924,11 @@ sub script_fu_neon_logo {
       gimp_hue_saturation ($tube_layer, 0, $tube_hue, -15, 70);
       gimp_selection_load ($selection);
       gimp_selection_feather ($img, $inc_shrink);
-      gimp_selection_shrink ($img, $inc_shrink);
+      if ($size < 100) {
+      	gimp_selection_shrink ($img, $inc_shrink * 2); #this is to avoid the strange error if
+      } else {					       #gimp_selection_shrink is called with 0
+      	gimp_selection_shrink ($img, $inc_shrink);
+      }	
       gimp_curves_spline ($tube_layer, 0, 6, neon_spline1 ());
       gimp_selection_load ($selection);
       gimp_selection_feather ($img, $inc_shrink);
@@ -2752,7 +2767,7 @@ sub script_fu_title_header {
       gimp_palette_set_background ([0, 0, 0]);
       gimp_edit_fill ($bg_layer);
       gimp_ellipse_select ($img, 0, 0, $text_height, $text_height, REPLACE, 1, 0, 0);
-      gimp_palette_set_background (gimp_color_picker ($text_layer, $text_layers_offset, 0, 1, 0, 2, 0));
+      gimp_palette_set_background (gimp_color_picker ($text_layer, $text_layers_offset, 0, 1, 0, 6, 0));
       gimp_edit_fill ($bg_layer);
       gimp_rect_select ($img, ($img_width - $fade_width), 0, $fade_width, $text_height, REPLACE, 0, 0);
       gimp_palette_set_foreground (gimp_palette_get_background ());

@@ -600,7 +600,9 @@ sub interact($$$$@) {
         }
         
         $value=$default unless defined $value;
+        # massage label text a small bit (works only for english)
         $label="$name: ";
+        $label =~ y/_/ /; $label =~ s/^(\w)/\U$1/g;
         
         if($type == PF_INT8		# perl just maps
         || $type == PF_INT16		# all this crap

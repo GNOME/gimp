@@ -5,6 +5,10 @@ Revision history for Gimp-Perl extension.
         - updated perlotine.
         - fixed logulator (bugs are actually in the script-fu parts).
         - moved gimp_drawable_bounds from Gimp::Util to Gimp.
+        - applied patch to logulator by <mikem@enet.it>.
+        - added examples/giflogo.
+        - do not install examples/gap-vcr.
+        - added new sethspin, with slight changes.
 
 1.19  Thu Jan  6 00:21:58 CET 2000
         - used N_ to mark all the menu paths, since gimp now tries to

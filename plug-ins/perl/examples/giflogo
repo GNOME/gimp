@@ -1,0 +1,79 @@
+#!/usr/bin/perl
+
+use Gimp qw(:auto __ N_);
+use Gimp::Fu;
+use Gimp::Util;
+#Gimp::set_trace(TRACE_CALL);
+
+sub my_code {
+        my ($image, $drawable, $rad_tog, $pattern, $txt_col) = @_;
+	$drawable->has_alpha or die "Must have alpha";
+	my $img = gimp_image_new (100, 100, RGB_IMAGE);
+	$drawable->image->selection_all;
+	$drawable->edit_copy;
+	gimp_selection_none ($image);
+	my $layer;
+	$layer=$img->layer_new($drawable->width,$drawable->height,$image->layertype(1), "Text", 100, NORMAL_MODE);
+	$layer->drawable_fill(TRANS_IMAGE_FILL);
+	$img->add_layer($layer,0);
+	$layer->edit_paste(0)->floating_sel_anchor;
+	$img->resize($drawable->width,$drawable->height, 0, 0);
+	gimp_selection_layer_alpha ($layer);
+	gimp_selection_invert ($img);
+	gimp_palette_set_background ([255, 255, 255]);
+	gimp_edit_fill ($layer);
+	gimp_selection_none ($img);
+	gimp_invert ($layer);
+	plug_in_gauss_rle ($layer, 2.0, 1, 1);	
+	my $bump_lay;
+        $bump_lay = $img->layer_new($img->width,$img->height, RGBA_IMAGE, "Bumpmap", 100, NORMAL_MODE);
+        $bump_lay->drawable_fill(BG_IMAGE_FILL);
+        $img->add_layer($bump_lay,0);
+        if ($rad_tog == 1) {
+        	gimp_patterns_set_pattern ($pattern);
+        	gimp_bucket_fill ($bump_lay, PATTERN_BUCKET_FILL, NORMAL_MODE, 100, 0, 0, 0, 0);
+        } else {
+        	gimp_palette_set_background ($txt_col);
+        	gimp_edit_fill ($bump_lay);
+        }
+        plug_in_bump_map ($img, $bump_lay, $layer, 110.0, 45.0, 4, 0, 0, 0, 0, 1, 0, 0);
+        $pattern_mask = gimp_layer_create_mask ($bump_lay, ALPHA_MASK);
+        $img->add_layer_mask($bump_lay,$pattern_mask);
+        gimp_selection_all ($img);
+        gimp_edit_copy ($layer);
+        $float = gimp_edit_paste ($pattern_mask, 0);
+        gimp_floating_sel_anchor ($float);
+        gimp_levels ($pattern_mask, 0, 0, 77, 0.91, 0, 255);
+        gimp_image_remove_layer_mask ($img, $bump_lay, APPLY);
+        gimp_invert ($layer);
+        gimp_image_flatten ($img);
+        gimp_convert_indexed ($img, 0, MAKE_PALETTE, 256, 0, 0, "");
+        my $new = gimp_image_active_drawable ($img);
+        gimp_layer_add_alpha ($new);
+        gimp_by_color_select ($new, [255, 255, 255], 55, ADD, 0, 0, 0.0, 0);
+        gimp_edit_clear ($new);
+        gimp_selection_none ($img);
+        return ($img);
+}
+
+register "make_trans_logos",
+         "A script to get .GIF beveled logos",
+         "Very handy to get perfectly looking ".
+         "transparent logos for web purposes ".
+         "You must use an initial drawable ".
+         "with an alpha channel, or the script will stop ".
+         "Try it out!!",
+         "Michele Gherlone <mikem\@enet.it>",
+         "(c) 2000 M. Gherlone",
+         "20000123",
+         N_"<Image>/Filters/Render/GIFLogo",
+         "*",
+         [
+           [PF_RADIO	, 'use_a_colour_or_a_pattern_for_text', "The user's choice", 0, [Colour => 0, Pattern => 1]],
+           [PF_PATTERN	, 'choose_a_pattern', "Choose the text Pattern", "Wood #1"],
+           [PF_COLOUR	, 'choose_a_colour',  "Choose the text Color", [69, 88, 211]],
+         ],
+         \&my_code;
+
+exit main;
+
