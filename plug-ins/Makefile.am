@@ -14,10 +14,6 @@ EXTRA_DIST = \
 if OS_WIN32
 TWAIN = twain
 WINSNAP = winsnap
-XJT =
-else
-PRINT = print
-XJT = xjt
 endif
 
 SUBDIRS = 			\
@@ -45,14 +41,14 @@ SUBDIRS = 			\
 	maze			\
 	mosaic			\
 	pagecurl		\
-	$(PRINT)		\
+	print			\
 	rcm			\
 	sgi			\
 	sel2path		\
 	$(TWAIN)		\
 	$(WEBBROWSER)		\
 	$(WINSNAP)		\
-	$(XJT)			\
+	xjt			\
 	common
 
 .PHONY: files

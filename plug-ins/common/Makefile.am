@@ -4,14 +4,6 @@ if OS_WIN32
 mwindows = -mwindows
 endif
 
-if OS_WIN32
-else
-BZ2 = bz2
-MAIL = mail
-SCREENSHOT = screenshot
-URL = url
-endif
-
 LDFLAGS = $(mwindows)
 
 libexecdir = $(gimpplugindir)/plug-ins
@@ -47,7 +39,7 @@ libexec_PROGRAMS = \
 	blur \
 	borderaverage \
 	bumpmap \
-	$(BZ2) \
+	bz2 \
 	c_astretch \
 	checkerboard \
 	color_enhance \
@@ -97,7 +89,7 @@ libexec_PROGRAMS = \
 	$(JPEG) \
 	laplace \
 	lic \
-	$(MAIL) \
+	mail \
 	mapcolor \
 	max_rgb \
 	mblur \
@@ -126,7 +118,7 @@ libexec_PROGRAMS = \
 	rotate \
 	sample_colorize \
 	scatter_hsv \
-	$(SCREENSHOT) \
+	screenshot \
 	sel_gauss \
 	semiflatten \
 	sharpen \
@@ -147,7 +139,7 @@ libexec_PROGRAMS = \
 	tiler \
 	uniteditor \
 	unsharp \
-	$(URL) \
+	url \
 	video \
 	vinvert \
 	vpropagate \
@@ -163,14 +155,11 @@ libexec_PROGRAMS = \
 
 EXTRA_PROGRAMS = \
 	aa \
-	bz2 \
 	jpeg \
 	mpeg \
 	png \
 	psp \
-	screenshot \
 	tiff \
-	url \
 	xpm
 
 install-%: %

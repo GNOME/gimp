@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-perl 1\n"
-"POT-Creation-Date: Mon Jul 23 12:28:39 2001\n"
+"POT-Creation-Date: Sun Jan 20 10:39:21 2002\n"
 "PO-Revision-Date: 1999-09-16 21:28-0200\n"
 "Last-Translator: Daniele Medri <madrid@linux.it>\n"
 "Language-Team: http://gimp.linux.it\n"
@@ -831,7 +831,8 @@ msgstr "ATTENZIONE: richiesta condivisa di lock, ma non implementata"
 
 #: examples/translogo:0
 msgid "You can't run this script with an INDEXED image!!"
-msgstr "Non è possibile eseguire lo script su una immagine in scala di colore!!"
+msgstr ""
+"Non è possibile eseguire lo script su una immagine in scala di colore!!"
 
 #: examples/translogo:0
 msgid "You can't run this script without an ALPHA CHANNEL!!"

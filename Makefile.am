@@ -1,15 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-if OS_WIN32
-gimptool_win32_program = gimptool-win32
-
-gimptool_win32_CFLAGS = @GLIB_CFLAGS@
-gimptool_win32_LDADD = @GLIB_LIBS@
-else
-gimptool_script = gimptool-1.2
-user_install = user_install
-endif
-
 SUBDIRS = \
 	tools		\
 	intl		\
@@ -29,13 +19,9 @@ SUBDIRS = \
 	devel-docs	\
 	build
 
-bin_SCRIPTS = $(gimptool_script) @GIMPINSTALL@
-
-noinst_PROGRAMS = $(gimptool_win32_program)
+bin_SCRIPTS = gimptool-1.2 @GIMPINSTALL@
 
 EXTRA_SCRIPTS = gimptool-1.2 gimpinstall-1.2
-
-EXTRA_PROGRAMS = gimptool-win32
 
 EXTRA_DIST = \
 	cursors/mouse.xbm			\
@@ -221,7 +207,7 @@ gimpsysconf_DATA = \
 	unitrc			\
 	ps-menurc
 
-gimpdata_SCRIPTS = $(user_install)
+gimpdata_SCRIPTS = user_install
 
 man_MANS = gimp-1.2.1 gimptool-1.2.1 gimp-remote-1.2.1 gimprc-1.2.5
 
@@ -234,9 +220,6 @@ gimpinstall-1.2:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-1.2
 
 install-exec-hook:
-if OS_WIN32
-	$(INSTALL) gimptool-win32.exe $(DESTDIR)$(bindir)/gimptool.exe
-else
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimp-config \
 	&& $(LN_S) gimptool-1.2 gimp-config
@@ -244,7 +227,6 @@ if DEFAULT_BINARY
 	cd $(DESTDIR)$(bindir) \
 	&& rm -f gimptool \
 	&& $(LN_S) gimptool-1.2 gimptool
-endif
 endif
 
 install-data-hook:
@@ -264,10 +246,6 @@ if DEFAULT_BINARY
 endif
 
 uninstall-local:
-if OS_WIN32
-	@echo " rm -f $(DESTDIR)$(bindir)/gimptool.exe"; \
-	rm -f $(DESTDIR)$(bindir)/gimptool.exe
-else
 	@echo " rm -f $(DESTDIR)$(bindir)/gimp-config"; \
 	rm -f $(DESTDIR)$(bindir)/gimp-config
 if DEFAULT_BINARY
@@ -281,7 +259,6 @@ if DEFAULT_BINARY
 	  echo " rm -f $(DESTDIR)$(mandir)/man$$s/$$f"; \
 	  rm -f $(DESTDIR)$(mandir)/man$$s/$$f; \
 	done
-endif
 endif
 
 .PHONY: files populate checkin release
