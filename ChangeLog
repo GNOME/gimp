@@ -1,5 +1,10 @@
 2000-08-08  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c: added command-line option --new that starts
+	a new gimp if no suitable gimp-window is found.
+
+2000-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/palette.c: don't crash when no palettes are available
 	(thanks to Daniel for pointing me to this), but allow to open
 	the Palette Editor so you can refresh or create a new one.

@@ -55,14 +55,26 @@
  *                                                Simon
  */
 
-#include <gtk/gtk.h>
-#include <gdk/gdkx.h>
+/* TODO:
+ *
+ * Should try to execv the gimp in the same path as the gimp-remote executable,
+ * then fall back to execvp ("gimp", argv).
+ */
+
+#include "config.h"
+
+#include <errno.h>
 #include <unistd.h>
 
-#include <X11/Xmu/WinUtil.h>    /*  for XmuClientWindow ()  */
+#include <gdk/gdkx.h>
+#include <gtk/gtk.h>
 
-#define OLD_GIMP_COMPATIBILITY
+#include <X11/Xmu/WinUtil.h>       /*  for XmuClientWindow ()  */
 
+#include "libgimp/gimpfeatures.h"  /*  for GIMP_VERSION        */
+
+
+static gboolean  start_new = FALSE;
 
 
 static Window
@@ -71,13 +83,8 @@ gimp_remote_find_window (Display *display)
     Window root_window;
     Window root, parent, *children;
     Window result = None;
-#ifdef OLD_GIMP_COMPATIBILITY
     Atom WM_CLASS;
     Atom WM_STRING;
-#else
-    Atom XA_GIMP_VERSION;
-    Atom XA_GIMP_STRING;
-#endif
     guint nchildren;
     gint i;
   
@@ -92,13 +99,8 @@ gimp_remote_find_window (Display *display)
     if (! (children && nchildren))
         return None;
 
-#ifdef OLD_GIMP_COMPATIBILITY
     WM_CLASS  = XInternAtom (display, "WM_CLASS", False);
     WM_STRING = XInternAtom (display, "STRING", False);
-#else
-    XA_GIMP_VERSION = XInternAtom (display, "_GIMP_VERSION", False);
-    XA_GIMP_STRING  = XInternAtom (display, "_GIMP_STRING", False);
-#endif
 
     for (i = nchildren - 1; i >= 0; i--)
       {
@@ -109,7 +111,6 @@ gimp_remote_find_window (Display *display)
         Window window = XmuClientWindow (display, children[i]);
         gint status = 0;
 
-#ifdef OLD_GIMP_COMPATIBILITY
         /*  We are searching the Gimp toolbox: Its WM_CLASS Property
          *  has the values "toolbox\0Gimp\0". This is pretty relieable,
          *  it is more reliable when we ask a special property, explicitely
@@ -131,31 +132,6 @@ gimp_remote_find_window (Display *display)
 	      }
             XFree (version);
 	  }
-
-#else
-
-        /*  This is more accurate for identifying the Gimp Toolbox, however
-         *  it needs Gimp to set the _GIMP_VERSION property to e.g. the Gimp
-         *  version. I dont think this is necessary...
-         */
-
-        status = XGetWindowProperty (display, window, XA_GIMP_VERSION,
-                                     0, (128 / sizeof (long)),
-                                     False, XA_GIMP_STRING,
-                                     &type, &format, &nitems, &bytesafter,
-                                     &version);
-        if (! version)
-            continue;
-
-        if (status == Success && type != None)
-	  {
-            result = window;
-            break;
-	  }
-
-        XFree (version);
-#endif
-
       }
   
     XFree (children);
@@ -163,9 +139,7 @@ gimp_remote_find_window (Display *display)
     return result;
 }
 
-
-
-void  
+static void  
 source_selection_get (GtkWidget          *widget,
 		      GtkSelectionData   *selection_data,
 		      guint               info,
@@ -180,9 +154,7 @@ source_selection_get (GtkWidget          *widget,
     gtk_main_quit ();
 }
 
-
-
-int
+static int
 toolbox_hidden (gpointer data)
 {
     g_printerr ("Could not connect to the Gimp.\n"
@@ -191,11 +163,75 @@ toolbox_hidden (gpointer data)
     return 0;
 }
   
+static void
+usage (void)
+{
+  g_print ("gimp-remote version %s\n", GIMP_VERSION);
+  g_print ("Tells a running Gimp to open a (local or remote) image file.\n\n"
+	   "Usage: gimp-remote [options] [FILE|URI]...\n"
+	   "Valid options are:\n" 
+	   "  -h --help       Output this help.\n"
+	   "  -v --version    Output version info.\n"
+	   "  -n --new        Start gimp if no active gimp window was found.\n\n"
+	   "Example:  gimp-remote http://www.gimp.org/icons/frontpage-small.gif\n"
+	   "     or:  gimp-remote localfile.png\n");
+}
 
+static void
+start_new_gimp (GString *file_list)
+{     
+  gint    i;
+  gchar **argv;
+  
+  file_list = g_string_prepend (file_list, "gimp\n");
+  argv = g_strsplit (file_list->str, "\n", 0);
+  g_string_free (file_list, TRUE);
 
-int 
-main (int    argc, 
-      char **argv)
+  for (i = 1; argv[i]; i++)
+    {
+      if (g_strncasecmp ("file:", argv[i], 5) == 0)
+	argv[i] += 5;
+    }
+  execvp ("gimp", argv);
+	  
+  /*  if execvp returns, there was an arror  */
+  g_printerr ("Couldn't start gimp for the following reason: %s\n", g_strerror (errno));
+  exit (-1);
+}
+
+static void
+parse_option (gchar *arg)
+{
+  if (strcmp (arg, "-v") == 0 || 
+      strcmp (arg, "--version") == 0)
+    {
+      g_print ("gimp-remote version %s\n", GIMP_VERSION);
+      exit (0);
+    }
+  else if (strcmp (arg, "-h") == 0 || 
+	   strcmp (arg, "-?") == 0 || 
+	   strcmp (arg, "--help") == 0 || 
+	   strcmp (arg, "--usage") == 0)
+    {
+      usage ();
+      exit (0);
+    }
+  else if (strcmp (arg, "-n") == 0 ||
+	   strcmp (arg, "--new") == 0)
+    {
+      start_new = TRUE;
+    }
+  else
+    {
+      g_print ("Unknown option %s\n", arg);
+      g_print ("Try gimp-remote --help to get detailed usage instructions.\n");
+      exit (0);
+    }
+}
+
+gint 
+main (gint    argc, 
+      gchar **argv)
 {
     GtkWidget *source;
     GdkWindow *gimp_window;
@@ -204,26 +240,36 @@ main (int    argc,
     GdkDragContext  *context;
     GdkDragProtocol  protocol;
 
-    GdkAtom  sel_type;
-    GdkAtom  sel_id;
-    GList   *targetlist;
-    guint    timeout;
+    GdkAtom   sel_type;
+    GdkAtom   sel_id;
+    GList    *targetlist;
+    guint     timeout;
+    gboolean  options = TRUE;
 
-    /*  multiple files are separated by "\n"
-     *  obviously this should be set from the commandline...
-     */
-    /* gchar *filename = "file:/tmp/dnd-test.gif"; */
-
-    gchar *cwd       = g_get_current_dir();
-    gchar *file_list = "";
-    gchar *file_uri  = "";
-    gchar *tmp       = NULL;
-    guint i;
+    GString  *file_list = g_string_new ("");
+    gchar    *cwd       = g_get_current_dir();
+    gchar    *file_uri  = "";
+    guint    i;
 
     for (i = 1; i < argc; i++)
       {
 	if (strlen (argv[i]) == 0)
 	  continue;
+
+	if (options && *argv[i] == '-')
+	  {
+	    if (strcmp (argv[i], "--"))
+	      {
+		parse_option (argv[i]);
+		continue;
+	      }
+	    else
+	      {
+		/*  everything following a -- is interpreted as arguments  */
+		options = FALSE;
+		continue;
+	      }
+	  }
 
 	/* If not already a valid URI */
         if (g_strncasecmp ("file:", argv[i], 5) &&
@@ -238,26 +284,17 @@ main (int    argc,
 	else
 	  file_uri = g_strdup (argv[i]);
 
-	if (strlen (file_list) > 0)
-	  {
-	    tmp = g_strconcat (file_list, "\n", file_uri, NULL);
-	    g_free (file_list);
-	  }
-	else
-	  tmp = g_strdup (file_uri);
+	if (file_list->len > 0)
+	  file_list = g_string_append_c (file_list, '\n');
 
+	file_list = g_string_append (file_list, file_uri);
 	g_free (file_uri);
-
-	file_list = tmp;
       }
 
-    if (strlen (file_list) == 0) 
+    if (file_list->len == 0) 
       {
-	g_print ("Usage: gimp-remote [FILE|URI]...\n"
-		 "Tell a running Gimp to open a (local or remote) image file\n"
-		 "Example:  gimp-remote http://www.gimp.org/icons/frontpage-small.gif\n"
-		 "     or:  gimp-remote localfile.png\n");
-        exit(0);
+	usage ();
+        exit (0);
       }
 
     gtk_init (&argc, &argv); 
@@ -266,6 +303,9 @@ main (int    argc,
     gimp_x_window = gimp_remote_find_window (gdk_display);
     if (gimp_x_window == None)
       {
+	if (start_new)
+	  start_new_gimp (file_list);
+
 	g_printerr ("No gimp window found on display %s\n", gdk_get_display ());
 	exit (-1);
       }
@@ -273,7 +313,7 @@ main (int    argc,
     gdk_drag_get_protocol (gimp_x_window, &protocol);
     if (protocol != GDK_DRAG_PROTO_XDND)
       {
-        g_printerr ("Gimp-Window doesnt use Xdnd-Protocol - huh?\n");
+       g_printerr ("Gimp-Window doesnt use Xdnd-Protocol - huh?\n");
 	exit (-1);
       }	
 
@@ -297,7 +337,7 @@ main (int    argc,
     /*  set up an DND-source  */
     source = gtk_window_new (GTK_WINDOW_TOPLEVEL);
     gtk_signal_connect (GTK_OBJECT (source), "selection_get",
-		        GTK_SIGNAL_FUNC (source_selection_get), file_list);
+		        GTK_SIGNAL_FUNC (source_selection_get), file_list->str);
     gtk_widget_realize (source);
 
 
@@ -326,8 +366,7 @@ main (int    argc,
     gtk_main ();
 
     gtk_timeout_remove (timeout);
+    g_string_free (file_list, TRUE);
 
-    return 0;
-
+    exit (0);
 }
-
