@@ -1,5 +1,15 @@
 2004-04-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpdnd.c (gimp_dnd_data_source_add)
+	(gimp_dnd_data_source_remove): use the new dynamic GtkTargetList
+	based API for changing the widget's drag source types.
+
+	* app/widgets/gimpdocumentview.c (gimp_document_view_new): simply
+	call gimp_dnd_file_source_add() instead of duplicating the whole
+	GtkTargetEntry array insanity just for adding one source type.
+
+2004-04-15  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/FractalExplorer/Dialogs.c
 	* plug-ins/flame/flame.c
 	* plug-ins/gfig/gfig.c: first plug-ins ported to GtkFileChooser.

@@ -218,22 +218,9 @@ gimp_document_view_new (GimpViewType            view_type,
 				  GIMP_TYPE_IMAGEFILE);
 
   if (view_type == GIMP_VIEW_TYPE_LIST)
-    {
-      static const GtkTargetEntry document_view_target_entries[] =
-      {
-        GIMP_TARGET_IMAGEFILE,
-        GIMP_TARGET_URI_LIST
-      };
-
-      gtk_drag_source_set (editor->view->dnd_widget,
-                           GDK_BUTTON1_MASK | GDK_BUTTON2_MASK,
-                           document_view_target_entries,
-                           G_N_ELEMENTS (document_view_target_entries),
-                           GDK_ACTION_COPY | GDK_ACTION_MOVE);
-      gimp_dnd_file_source_add (editor->view->dnd_widget,
-                                gimp_document_view_drag_file,
-                                editor);
-    }
+    gimp_dnd_file_source_add (editor->view->dnd_widget,
+                              gimp_document_view_drag_file,
+                              editor);
 
   return GTK_WIDGET (document_view);
 }

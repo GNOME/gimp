@@ -768,6 +768,7 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
                           gpointer     get_data_data)
 {
   GimpDndDataDef *dnd_data;
+  GtkTargetList  *target_list;
   gboolean        drag_connected;
 
   dnd_data = dnd_data_defs + data_type;
@@ -808,10 +809,6 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
     g_object_set_data (G_OBJECT (widget), "gimp-dnd-get-data-type",
                        GINT_TO_POINTER (data_type));
 
-#ifdef __GNUC__
-#warning FIXME: missing GTK+ dnd API
-#endif
-#if 0
   target_list = gtk_drag_source_get_target_list (widget);
 
   if (target_list)
@@ -825,7 +822,6 @@ gimp_dnd_data_source_add (GimpDndType  data_type,
       gtk_drag_source_set_target_list (widget, target_list);
       gtk_target_list_unref (target_list);
     }
-#endif
 }
 
 static void
@@ -833,6 +829,7 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
                              GtkWidget   *widget)
 {
   GimpDndDataDef *dnd_data;
+  GtkTargetList  *target_list;
   gboolean        drag_connected;
 
   drag_connected =
@@ -853,10 +850,6 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
                                           "gimp-dnd-get-data-type")))
     g_object_set_data (G_OBJECT (widget), "gimp-dnd-get-data-type", NULL);
 
-#ifdef __GNUC__
-#warning FIXME: missing GTK+ dnd API
-#endif
-#if 0
   target_list = gtk_drag_source_get_target_list (widget);
 
   if (target_list)
@@ -868,7 +861,6 @@ gimp_dnd_data_source_remove (GimpDndType  data_type,
       if (atom != GDK_NONE)
         gtk_target_list_remove (target_list, atom);
     }
-#endif
 }
 
 static void
