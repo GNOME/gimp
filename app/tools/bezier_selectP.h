@@ -15,6 +15,7 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
+
 #ifndef __BEZIER_SELECTP_H__
 #define __BEZIER_SELECTP_H__
 
@@ -65,7 +66,7 @@ struct _BezierSelect
   GSList      **scanlines;    /* used in converting a curve        */
 };
 
-/* All udata that are passed to the bezier_draw_curve must
+/* All data that are passed to the bezier_draw_curve must
  * have this structure as the first element.
  */
 
@@ -74,39 +75,42 @@ typedef struct
   gint count;
 } CountCurves;
 
-typedef void (* BezierPointsFunc) (BezierSelect *, GdkPoint *, int,gpointer);
+typedef void (* BezierPointsFunc) (BezierSelect *bezier_sel,
+				   GdkPoint     *points,
+				   gint          n_points,
+				   gpointer      data);
 
 /*  Functions  */
-int   bezier_select_load                   (void *,
-					    BezierPoint *,
-					    gint,
-					    gint);
-void  bezier_draw_curve                    (BezierSelect *,
-					    BezierPointsFunc,
-					    gint,
-					    gpointer);
-void  bezier_select_reset                  (BezierSelect *bezier_sel);
-void  bezier_select_free                   (BezierSelect *bezier_sel);
-void  bezier_add_point                     (BezierSelect *,
-					    gint,
-					    gdouble,
-					    gdouble);
-void  bezier_paste_bezierselect_to_current (GDisplay     *gdisp,
-					    BezierSelect *bezier_sel);
+gint  bezier_select_load                   (void             *gdisp_ptr,
+					    BezierPoint      *points,
+					    gint              n_points,
+					    gint              closed);
+void  bezier_draw_curve                    (BezierSelect     *bezier_sel,
+					    BezierPointsFunc  func,
+					    gint              coord,
+					    gpointer          data);
+void  bezier_select_reset                  (BezierSelect     *bezier_sel);
+void  bezier_select_free                   (BezierSelect     *bezier_sel);
+void  bezier_add_point                     (BezierSelect     *bezier_sel,
+					    gint              type,
+					    gdouble           x,
+					    gdouble           y);
+void  bezier_paste_bezierselect_to_current (GDisplay         *gdisp,
+					    BezierSelect     *bezier_sel);
 void  bezier_select_mode                   (gint);
-void  bezier_stroke 		           (BezierSelect *bezier_sel,
-					    GDisplay     *gdisp,
-					    gint,
-					    gint);
-void  bezier_to_selection                  (BezierSelect *bezier_sel,
-					    GDisplay     *gdisp);
-gint  bezier_distance_along                (BezierSelect *bezier_sel,
-					    gint,
-					    gdouble,
-					    gint *,
-					    gint *,
-					    gdouble *);
-void  bezier_draw                          (GDisplay     *gdisp,
-					    BezierSelect *bezier_sel);
+void  bezier_stroke 		           (BezierSelect     *bezier_sel,
+					    GDisplay         *gdisp,
+					    gint              subdivisions,
+					    gint              open_path);
+void  bezier_to_selection                  (BezierSelect     *bezier_sel,
+					    GDisplay         *gdisp);
+gint  bezier_distance_along                (BezierSelect     *bezier_sel,
+					    gint              open_path,
+					    gdouble           dist,
+					    gint             *x,
+					    gint             *y,
+					    gdouble          *gradient);
+void  bezier_draw                          (GDisplay         *gdisp,
+					    BezierSelect     *bezier_sel);
 
 #endif /* __BEZIER_SELECTP_H__ */

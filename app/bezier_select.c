@@ -24,7 +24,6 @@
 
 #include "apptypes.h"
 
-#include "appenv.h"
 #include "cursorutil.h"
 #include "draw_core.h"
 #include "edit_selection.h"
@@ -41,6 +40,7 @@
 #include "libgimp/gimpmath.h"
 
 #include "libgimp/gimpintl.h"
+
 
 /* Bezier extensions made by Raphael FRANCOIS (fraph@ibm.net)
 
@@ -67,61 +67,141 @@
 #define SUPERSAMPLE   3
 #define SUPERSAMPLE2  9
 
-#define NO  0
-#define YES 1
 
 /*  the bezier select structures  */
 
-typedef double BezierMatrix[4][4];
+typedef gdouble BezierMatrix[4][4];
 
-/*  The named paste dialog  */
-typedef struct _PasteNamedDlg PasteNamedDlg;
-struct _PasteNamedDlg
+typedef struct
 {
-  GtkWidget   *shell;
-  GtkWidget   *list;
-  GDisplay    *gdisp; 
-};
-
-/*  The named buffer structure...  */
-typedef struct _named_buffer BezierNamedBuffer;
-struct _named_buffer
-{
-  BezierSelect *sel;
-  char *        name;
-};
-
-
-typedef struct {
   CountCurves  curve_count;         /* Must be the first element */
-  gdouble *stroke_points;
-  gint	   num_stroke_points;	/* num of valid points */
-  gint	   len_stroke_points;	/* allocated length */
-  void    *next_curve;          /* Next curve in list -- we draw all curves 
-				 * separately.
-				 */
+  gdouble     *stroke_points;
+  gint	       num_stroke_points;   /* num of valid points */
+  gint	       len_stroke_points;   /* allocated length */
+  gpointer     next_curve;          /* Next curve in list -- we draw all curves 
+				     * separately.
+				     */
 } BezierRenderPnts;
 
-typedef struct {
+typedef struct
+{
   CountCurves  curve_count;         /* Must be the first element */
-  gboolean firstpnt;
-  gdouble  curdist;
-  gdouble  dist;
-  gdouble  *gradient;
-  gint     *x;
-  gint     *y;
-  gdouble  lastx;
-  gdouble  lasty;
-  gboolean found;
+  gboolean     firstpnt;
+  gdouble      curdist;
+  gdouble      dist;
+  gdouble     *gradient;
+  gint        *x;
+  gint        *y;
+  gdouble      lastx;
+  gdouble      lasty;
+  gboolean     found;
 } BezierDistance;
 
-typedef struct {
+typedef struct
+{
   CountCurves  curve_count;         /* Must be the first element */
   gint         x;
   gint         y;
   gint         halfwidth;
   gint         found;
 } BezierCheckPnts;
+
+
+/*  local function prototypes  */
+
+static void       bezier_select_button_press    (Tool             *tool,
+						 GdkEventButton   *bevent,
+						 gpointer          gdisp_ptr);
+static void       bezier_select_button_release  (Tool             *tool,
+						 GdkEventButton   *bevent,
+						 gpointer          gdisp_ptr);
+static void       bezier_select_motion          (Tool             *tool,
+						 GdkEventMotion   *mevent,
+						 gpointer          gdisp_ptr);
+static void       bezier_select_control         (Tool             *tool,
+						 ToolAction        action,
+						 gpointer          gdisp_ptr);
+static void       bezier_select_cursor_update   (Tool             *tool,
+						 GdkEventMotion   *mevent,
+						 gpointer          gdisp_ptr);
+static void       bezier_select_draw            (Tool             *tool);
+
+static void       bezier_offset_point           (BezierPoint      *pt,
+						 gint              x,
+						 gint              y);
+static gint       bezier_check_point            (BezierPoint      *pt,
+						 gint              x,
+						 gint              y,
+						 gint              halfwidth);
+static void       bezier_draw_handles           (BezierSelect     *bezier_sel,
+						 gboolean          do_all);
+static void       bezier_draw_current           (BezierSelect     *bezier_sel);
+static void       bezier_draw_point             (BezierSelect     *bezier_sel,
+						 BezierPoint      *pt,
+						 gboolean          fill);
+static void       bezier_draw_line              (BezierSelect     *bezier_sel,
+						 BezierPoint      *pt1,
+						 BezierPoint      *pt2);
+static void       bezier_draw_segment           (BezierSelect     *bezier_sel,
+						 BezierPoint      *points,
+						 gint              subdivisions,
+						 gint              space,
+						 BezierPointsFunc  points_func,
+						 gpointer          data);
+static void       bezier_draw_segment_points    (BezierSelect     *bezier_sel,
+						 GdkPoint         *points,
+						 gint              n_points,
+						 gpointer          data);
+static void       bezier_compose                (BezierMatrix      a,
+						 BezierMatrix      b,
+						 BezierMatrix      ab);
+
+static void       bezier_convert                (BezierSelect     *bezier_sel,
+						 GDisplay         *gdisp,
+						 gint              subdivisions,
+						 gboolean          antialias);
+static void       bezier_convert_points         (BezierSelect     *bezier_sel,
+						 GdkPoint         *points,
+						 gint              n_points,
+						 gpointer          data);
+static void       bezier_convert_line           (GSList          **scanlines,
+						 gint              x1,
+						 gint              y1,
+						 gint              x2,
+						 gint              y2);
+static GSList   * bezier_insert_in_list         (GSList           *list,
+						 gint              x);
+
+static gboolean   test_add_point_on_segment     (BezierSelect     *bezier_sel,
+						 BezierPoint      *pt,
+						 gint              subdivisions,
+						 gint              space,
+						 gint              xpos,
+						 gint              ypos,
+						 gint              halfwidth);
+static void       bezier_to_sel_internal        (BezierSelect     *bezier_sel,
+						 Tool             *tool,
+						 GDisplay         *gdisp,
+						 gint              op,
+						 gboolean          replace);
+static void       bezier_stack_points_aux       (GdkPoint         *points,
+						 gint              start,
+						 gint              end,
+						 gdouble           error,
+						 BezierRenderPnts *rpnts);
+static void       bezier_stack_points	        (BezierSelect     *bezier_sel,
+						 GdkPoint         *points,
+						 gint              n_points,
+						 gpointer          data);
+static gboolean   stroke_interpolatable         (gint              offx,
+						 gint              offy,
+						 gint              l_offx,
+						 gint              l_offy,
+						 gdouble           error);
+static gint       count_points_on_curve         (BezierPoint      *points);
+
+
+/*  private variables  */
 
 /*  the bezier selection tool options  */ 
 static SelectionOptions *bezier_options = NULL;
@@ -145,61 +225,27 @@ static BezierMatrix basis =
 };
 */
 
-/*  The named buffer list  */
-GSList *bezier_named_buffers = NULL;
-
 /*  Global Static Variable to maintain informations about the "contexte"  */
-static BezierSelect * curSel;
-static Tool * curTool;
-static GDisplay * curGdisp;
-static DrawCore * curCore;
-static int ModeEdit = EXTEND_NEW;
-
-
-/*  local function prototypes  */
-static void  bezier_select_button_press    (Tool *, GdkEventButton *, gpointer);
-static void  bezier_select_button_release  (Tool *, GdkEventButton *, gpointer);
-static void  bezier_select_motion          (Tool *, GdkEventMotion *, gpointer);
-static void  bezier_select_control         (Tool *, ToolAction,       gpointer);
-static void  bezier_select_cursor_update   (Tool *, GdkEventMotion *, gpointer);
-static void  bezier_select_draw            (Tool *);
-
-static void  bezier_offset_point           (BezierPoint *, int, int);
-static int   bezier_check_point            (BezierPoint *, int, int, int);
-static void  bezier_draw_handles           (BezierSelect *, gint);
-static void  bezier_draw_current           (BezierSelect *);
-static void  bezier_draw_point             (BezierSelect *, BezierPoint *, int);
-static void  bezier_draw_line              (BezierSelect *, BezierPoint *, BezierPoint *);
-static void  bezier_draw_segment           (BezierSelect *, BezierPoint *, int, int, BezierPointsFunc,gpointer);
-static void  bezier_draw_segment_points    (BezierSelect *, GdkPoint *, int, gpointer);
-static void  bezier_compose                (BezierMatrix, BezierMatrix, BezierMatrix);
-
-static void  bezier_convert                (BezierSelect *, GDisplay *, int, int);
-static void  bezier_convert_points         (BezierSelect *, GdkPoint *, int, gpointer);
-static void  bezier_convert_line           (GSList **, int, int, int, int);
-static GSList * bezier_insert_in_list      (GSList *, int);
-
-static int   test_add_point_on_segment     (BezierSelect *, BezierPoint *, int, int, int, int, int);
-static void  bezier_to_sel_internal        (BezierSelect *, Tool *, GDisplay *, gint, gint);
-static void  bezier_stack_points	   (BezierSelect *, GdkPoint *, int, gpointer);
-static gboolean stroke_interpolatable    (int, int, int, int, gdouble);
-static void bezier_stack_points_aux      (GdkPoint *, int, int, gdouble, BezierRenderPnts *);
-static gint count_points_on_curve(BezierPoint *);
+static BezierSelect *curSel   = NULL;
+static Tool         *curTool  = NULL;
+static GDisplay     *curGdisp = NULL;
+static DrawCore     *curCore  = NULL;
+static gint          ModeEdit = EXTEND_NEW;
 
 
 /*  functions  */
 
 static void
-bezier_select_options_reset ()
+bezier_select_options_reset (void)
 {
   selection_options_reset (bezier_options);
 }
 
-Tool*
-tools_new_bezier_select ()
+Tool *
+tools_new_bezier_select (void)
 {
-  Tool * tool;
-  BezierSelect * private;
+  Tool         *tool;
+  BezierSelect *private;
 
   /*  The tool options  */
   if (! bezier_options)
@@ -209,13 +255,12 @@ tools_new_bezier_select ()
       tools_register (BEZIER_SELECT, (ToolOptions *) bezier_options);
     }
 
-
   tool = tools_new_tool (BEZIER_SELECT);
   private = g_new0 (BezierSelect, 1);
 
   private->num_points = 0;
-  private->mask = NULL;
-  private->core = draw_core_new (bezier_select_draw);
+  private->mask       = NULL;
+  private->core       = draw_core_new (bezier_select_draw);
   bezier_select_reset (private);
 
   tool->scroll_lock = TRUE;   /*  Disallow scrolling  */
@@ -241,7 +286,7 @@ tools_new_bezier_select ()
 void
 tools_free_bezier_select (Tool *tool)
 {
-  BezierSelect * bezier_sel;
+  BezierSelect *bezier_sel;
 
   bezier_sel = tool->private;
 
@@ -254,33 +299,33 @@ tools_free_bezier_select (Tool *tool)
   g_free (bezier_sel);
 }
 
-int
+gint
 bezier_select_load (void        *gdisp_ptr,
 		    BezierPoint *pts,
-		    int          num_pts,
-		    int          closed)
+		    gint         num_pts,
+		    gint         closed)
 {
-  GDisplay * gdisp;
-  Tool * tool;
-  BezierSelect * bezier_sel;
+  GDisplay     *gdisp;
+  Tool         *tool;
+  BezierSelect *bezier_sel;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
   /*  select the bezier tool  */
   gimp_context_set_tool (gimp_context_get_user (), BEZIER_SELECT);
-  tool = active_tool;
-  tool->state = ACTIVE;
+  tool            = active_tool;
+  tool->state     = ACTIVE;
   tool->gdisp_ptr = gdisp_ptr;
   bezier_sel = (BezierSelect *) tool->private;
 
-  bezier_sel->points = pts;
+  bezier_sel->points     = pts;
   bezier_sel->last_point = pts->prev;
   bezier_sel->num_points = num_pts;
-  bezier_sel->closed = closed;
-  bezier_sel->state = BEZIER_EDIT;
-  bezier_sel->draw = BEZIER_DRAW_ALL;
+  bezier_sel->closed     = closed;
+  bezier_sel->state      = BEZIER_EDIT;
+  bezier_sel->draw       = BEZIER_DRAW_ALL;
 
-  bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, NO);
+  bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, FALSE);
 
   draw_core_start (bezier_sel->core, gdisp->canvas->window, tool);
 
@@ -288,130 +333,152 @@ bezier_select_load (void        *gdisp_ptr,
 }
 
 static BezierPoint *
-valid_curve_segment(BezierPoint *points)
+valid_curve_segment (BezierPoint *points)
 {
   /* Valid curve segment is made up of four points */
-  if(points && 
-     points->next && 
-     points->next->next && 
-     points->next->next->next )
-    return(points);
+  if (points && 
+      points->next && 
+      points->next->next && 
+      points->next->next->next)
+    {
+      return points;
+    }
 
-  return (NULL);
+  return NULL;
 }
 
 static BezierPoint *
-next_anchor(BezierPoint *points,BezierPoint **next_curve)
+next_anchor (BezierPoint  *points,
+	     BezierPoint **next_curve)
 {
-  int loop;
+  gint loop;
 
   *next_curve = NULL;
  
-  if(!points)
-    return (NULL);
+  if (!points)
+    return NULL;
 
-  for(loop = 0; loop < 3; loop++)
-  {
-   	points = points->next; 
-   	if (!points) 
-	  return (NULL);
-   	if(points->next_curve)
+  for (loop = 0; loop < 3; loop++)
+    {
+      points = points->next; 
+
+      if (!points) 
+	return NULL;
+
+      if (points->next_curve)
    	{
 	  *next_curve = points->next_curve;
    	}
-  }
-  return valid_curve_segment(points);
+    }
+
+  return valid_curve_segment (points);
 }
 
 void
 bezier_draw_curve (BezierSelect    *bezier_sel,
 		   BezierPointsFunc func, 
 		   gint             coord,
-		   gpointer         udata)
+		   gpointer         data)
 {
-  BezierPoint * points;
-  BezierPoint * start_pt;
-  BezierPoint * next_curve;
-  CountCurves * cnt = (CountCurves *)udata;
-  gint point_counts = 0;
+  BezierPoint *points;
+  BezierPoint *start_pt;
+  BezierPoint *next_curve;
+  CountCurves *cnt          = (CountCurves *) data;
+  gint         point_counts = 0;
 
 /*   printSel(bezier_sel); */
 
-  if(cnt)
+  if (cnt)
     cnt->count = 0;
-  points = bezier_sel->points;
+
+  points   = bezier_sel->points;
   start_pt = bezier_sel->points;
 
-  if(bezier_sel->num_points >= 4)
+  if (bezier_sel->num_points >= 4)
     {
-      do {
-	point_counts = count_points_on_curve(points);
-	if(point_counts >= 4)
-	  {
-	    do {
-	      bezier_draw_segment (bezier_sel, points,
-				   SUBDIVIDE, coord,
-				   func,
-				   udata);
-	      
-	      points = next_anchor(points,&next_curve);
-	      /* 	  g_print ("next_anchor = %p\n",points); */
-	    } while (points != start_pt && points);
-	    if(cnt)
-	      cnt->count++;
-	    start_pt = next_curve;
-	    points = next_curve;
-	  }
-	else
-	  break; /* must be last curve since only this one is allowed < 4
-		  * points.
-		  */
-      } while(next_curve);
+      do
+	{
+	  point_counts = count_points_on_curve (points);
+
+	  if (point_counts >= 4)
+	    {
+	      do
+		{
+		  bezier_draw_segment (bezier_sel, points,
+				       SUBDIVIDE, coord,
+				       func,
+				       data);
+
+		  points = next_anchor (points,&next_curve);
+		  /* 	  g_print ("next_anchor = %p\n",points); */
+		}
+	      while (points != start_pt && points);
+
+	      if (cnt)
+		cnt->count++;
+
+	      start_pt = next_curve;
+	      points   = next_curve;
+	    }
+	  else
+	    {
+	      break; /* must be last curve since only this one is allowed < 4
+		      * points.
+		      */
+	    }
+	}
+      while (next_curve);
     }
 }
 
 void
 bezier_select_reset (BezierSelect *bezier_sel)
 {
-  BezierPoint * points;
-  BezierPoint * start_pt;
-  BezierPoint * temp_pt;
-  BezierPoint * next_curve;
+  BezierPoint *points;
+  BezierPoint *start_pt;
+  BezierPoint *temp_pt;
+  BezierPoint *next_curve;
 
   if (bezier_sel->num_points > 0)
     {
-      points = bezier_sel->points;
+      points   = bezier_sel->points;
       start_pt = bezier_sel->points;
 
-      do {
-	do {
-	  temp_pt = points;
-	  next_curve = points->next_curve;
-	  points = points->next;
-	  if(points != start_pt && next_curve)
+      do
+	{
+	  do
 	    {
-	      g_warning("Curve points out of sync");
+	      temp_pt    = points;
+	      next_curve = points->next_curve;
+	      points     = points->next;
+
+	      if (points != start_pt && next_curve)
+		{
+		  g_warning ("Curve points out of sync");
+		}
+	      g_free (temp_pt);
 	    }
-	  g_free (temp_pt);
-	} while (points != start_pt && points);
-	points = next_curve;
-	start_pt = next_curve;
-      } while (next_curve);
+	  while (points != start_pt && points);
+
+	  points   = next_curve;
+	  start_pt = next_curve;
+	}
+      while (next_curve);
     }
 
   if (bezier_sel->mask)
     channel_delete (bezier_sel->mask);
 
-  bezier_sel->state = BEZIER_START;    /* we are starting the curve */
-  bezier_sel->draw = BEZIER_DRAW_ALL;  /* draw everything by default */
-  bezier_sel->closed = 0;              /* the curve is initally open */
-  bezier_sel->points = NULL;           /* initially there are no points */
-  bezier_sel->cur_anchor = NULL;
+  bezier_sel->state       = BEZIER_START;     /* we are starting the curve */
+  bezier_sel->draw        = BEZIER_DRAW_ALL;  /* draw everything by default */
+  bezier_sel->closed      = 0;                /* the curve is initally open */
+  bezier_sel->points      = NULL;             /* initially there are no points */
+  bezier_sel->cur_anchor  = NULL;
   bezier_sel->cur_control = NULL;
-  bezier_sel->last_point = NULL;
-  bezier_sel->num_points = 0;          /* intially there are no points */
-  bezier_sel->mask = NULL;             /* empty mask */
-  bezier_sel->scanlines = NULL;
+  bezier_sel->last_point  = NULL;
+  bezier_sel->num_points  = 0;                /* intially there are no points */
+  bezier_sel->mask        = NULL;             /* empty mask */
+  bezier_sel->scanlines   = NULL;
 }
 
 void
@@ -425,39 +492,41 @@ bezier_select_free (BezierSelect *bezier_sel)
  * the start of a curve. 
  */
 static BezierPoint * 
-check_for_next_curve(BezierSelect *bezier_sel,
-		     BezierPoint  *to_check)
+check_for_next_curve (BezierSelect *bezier_sel,
+		      BezierPoint  *to_check)
 {
-  BezierPoint *points = bezier_sel->points;
-  gint num_points = bezier_sel->num_points;
+  BezierPoint *points     = bezier_sel->points;
+  gint         num_points = bezier_sel->num_points;
 
   while (points && num_points)
    {
-     if(points->next_curve == to_check)
-       return (points);
+     if (points->next_curve == to_check)
+       return points;
 
-     if(points->next_curve)
+     if (points->next_curve)
        points = points->next_curve;
      else
        points = points->next;
+
      num_points--;
    }
-  return (NULL);
+
+  return NULL;
 }
 
 static gint 
-count_points_on_curve(BezierPoint *points)
+count_points_on_curve (BezierPoint *points)
 {
   BezierPoint *start = points;
-  gint count = 0;
-  
-  while(points && points->next != start)
+  gint         count = 0;
+
+  while (points && points->next != start)
     {
       points = points->next;
       count++;
     }
 
-  return (count);
+  return count;
 }
 
 /* Find the start of the last open curve, if curve already closed
@@ -465,20 +534,18 @@ count_points_on_curve(BezierPoint *points)
  */
 
 static BezierPoint *
-find_start_open_curve(BezierSelect *bsel)
+find_start_open_curve (BezierSelect *bsel)
 {
   BezierPoint *start_pnt = NULL;
-  BezierPoint *this_pnt = bsel->last_point;
+  BezierPoint *this_pnt  = bsel->last_point;
 
   /* Could be one of the first points */
-  if(!bsel->last_point)
-    {
-      return NULL;
-    }
+  if (! bsel->last_point)
+    return NULL;
 
-  if(bsel->closed)
+  if (bsel->closed)
     {
-      g_message(_("Bezier path already closed."));
+      g_message (_("Bezier path already closed."));
       return NULL;
     }
 
@@ -489,22 +556,23 @@ find_start_open_curve(BezierSelect *bsel)
    * trouble.
    */
 
-  while(this_pnt->prev && start_pnt != this_pnt)
+  while (this_pnt->prev && start_pnt != this_pnt)
     {
-      if(!start_pnt)
+      if (!start_pnt)
 	start_pnt = this_pnt;
+
       this_pnt = this_pnt->prev;
     }
 
   /* Must be an anchor to be the start */
-  if(start_pnt == this_pnt || this_pnt->type != BEZIER_ANCHOR)
+  if (start_pnt == this_pnt || this_pnt->type != BEZIER_ANCHOR)
     {
-      g_message(_("Corrupt curve"));
+      g_message (_("Corrupt curve"));
       return NULL;
     }
 
 /*   g_print ("Returned start pnt of curve %p is %p\n",bsel->last_point,this_pnt); */
-  return (this_pnt);
+  return this_pnt;
 }
 
 /* Delete a whole curve. Watch out for special cases.
@@ -512,16 +580,16 @@ find_start_open_curve(BezierSelect *bsel)
  */
 
 static void
-delete_whole_curve(BezierSelect   *bezier_sel,
-		   BezierPoint    *start_pnt)
+delete_whole_curve (BezierSelect *bezier_sel,
+		    BezierPoint  *start_pnt)
 {
-  BezierPoint    *tmppnt;
-  BezierPoint    *next_curve = NULL; /* Next curve this one 
-				      * points at (if any) 
-				      */
-  BezierPoint    *prev_curve; /* Does a curve point to this one? */
-  gint            cnt_pnts = 0; /* Count how many pnts deleted */
-  gint            reset_last = FALSE;
+  BezierPoint *tmppnt;
+  BezierPoint *next_curve = NULL; /* Next curve this one 
+				   * points at (if any) 
+				   */
+  BezierPoint *prev_curve;        /* Does a curve point to this one? */
+  gint         cnt_pnts   = 0;    /* Count how many pnts deleted */
+  gint         reset_last = FALSE;
 
   /* shift and del means delete whole curve */
   /* Three cases, this is first curve, middle curve 
@@ -535,20 +603,24 @@ delete_whole_curve(BezierSelect   *bezier_sel,
 /*   g_print ("delete_whole_curve::\n"); */
 
   tmppnt = start_pnt;
-  do {
-    if(tmppnt->next_curve)
-      {
-	next_curve = tmppnt->next_curve;
-	break;
-      }
-    tmppnt = tmppnt->next;
-  } while (tmppnt != start_pnt && tmppnt);
+  do
+    {
+      if (tmppnt->next_curve)
+	{
+	  next_curve = tmppnt->next_curve;
+	  break;
+	}
+      tmppnt = tmppnt->next;
+    }
+  while (tmppnt != start_pnt && tmppnt);
 
-  prev_curve = check_for_next_curve(bezier_sel,start_pnt);
-  
+  prev_curve = check_for_next_curve (bezier_sel, start_pnt);
+
   /* First curve ?*/
-  if(bezier_sel->points == start_pnt)
-    bezier_sel->points = next_curve;
+  if (bezier_sel->points == start_pnt)
+    {
+      bezier_sel->points = next_curve;
+    }
   else 
     {
       /* better have a previous curve else how did we get here? */
@@ -558,196 +630,207 @@ delete_whole_curve(BezierSelect   *bezier_sel,
   /* start_pnt points to the curve we should free .. ignoring the next_curve */
 
   tmppnt = start_pnt;
-  do {
-    BezierPoint *fpnt;
-    fpnt = tmppnt;
-    tmppnt = tmppnt->next;
-    if(fpnt == bezier_sel->last_point)
-      reset_last = TRUE;
-    g_free (fpnt);
-    cnt_pnts++;
-  } while (tmppnt != start_pnt && tmppnt);
+  do
+    {
+      BezierPoint *fpnt;
+
+      fpnt   = tmppnt;
+      tmppnt = tmppnt->next;
+
+      if (fpnt == bezier_sel->last_point)
+	reset_last = TRUE;
+
+      g_free (fpnt);
+      cnt_pnts++;
+    }
+  while (tmppnt != start_pnt && tmppnt);
 
   bezier_sel->num_points -= cnt_pnts;
-  
+
   /* if deleted curve was unclosed then must have been the last curve 
    * and thus this curve becomes closed.
    */
-  if(!tmppnt && bezier_sel->num_points > 0)
+  if (!tmppnt && bezier_sel->num_points > 0)
     {
       bezier_sel->closed = 1;
       bezier_sel->state = BEZIER_EDIT;
     }
 
-  if(bezier_sel->num_points <= 0)
+  if (bezier_sel->num_points <= 0)
     {
       bezier_select_reset(bezier_sel);
     }
 
-  bezier_sel->cur_anchor = NULL;
+  bezier_sel->cur_anchor  = NULL;
   bezier_sel->cur_control = NULL;
 
   /* The last point could have been on this curve as well... */
-  if(reset_last)
+  if (reset_last)
     {
-      BezierPoint *points = bezier_sel->points;
-      BezierPoint *l_pnt = NULL;
-      gint num_points = bezier_sel->num_points;
-      
+      BezierPoint *points     = bezier_sel->points;
+      BezierPoint *l_pnt      = NULL;
+      gint         num_points = bezier_sel->num_points;
+
       while (points && num_points)
 	{
 	  l_pnt = points;
+
 	  if(points->next_curve)
 	    points = points->next_curve;
 	  else
 	    points = points->next;
+
 	  num_points--;
 	}
+
       bezier_sel->last_point = l_pnt;
     }
 }
 
-static gint
-bezier_edit_point_on_curve(int             x,
-			   int             y,
-			   int             halfwidth,
-			   GDisplay       *gdisp,
-			   BezierSelect   *bezier_sel,
-			   Tool           *tool,
-			   GdkEventButton *bevent)
+static gboolean
+bezier_edit_point_on_curve (gint            x,
+			    gint            y,
+			    gint            halfwidth,
+			    GDisplay       *gdisp,
+			    BezierSelect   *bezier_sel,
+			    Tool           *tool,
+			    GdkEventButton *bevent)
 {
-  gint grab_pointer = 0;
-  BezierPoint  *next_curve;
-  BezierPoint  *points = bezier_sel->points;
-  BezierPoint  *start_pt = bezier_sel->points;
-  BezierPoint  *last_curve = NULL;
-  gint point_counts = 0;
+  gboolean     grab_pointer = FALSE;
+  BezierPoint *next_curve;
+  BezierPoint *points       = bezier_sel->points;
+  BezierPoint *start_pt     = bezier_sel->points;
+  BezierPoint *last_curve   = NULL;
+  gint         point_counts = 0;
 
   /* find if the button press occurred on a point */
-  do {
-    point_counts = count_points_on_curve(points);
-    do {
-      if (bezier_check_point (points, x, y, halfwidth))
+  do
+    {
+      point_counts = count_points_on_curve (points);
+
+      do
 	{
-	  BezierPoint *finded=points;
-	  BezierPoint *start_op; 
-	  BezierPoint *end_op; 
-	  
-	  if (ModeEdit== EXTEND_REMOVE)
+	  if (bezier_check_point (points, x, y, halfwidth))
 	    {
+	      BezierPoint *finded=points;
+	      BezierPoint *start_op; 
+	      BezierPoint *end_op; 
 
-	      if((bevent->state & GDK_SHIFT_MASK) || (point_counts <= 7))
+	      if (ModeEdit== EXTEND_REMOVE)
 		{
-		  /* Case 1: GDK_SHIFT_MASK - The user explicitly wishes the present 
-                     curve to go away.
-                     Case 2: The current implementation cannot cope with less than
-                     7 points ie: 2 anchors points and 4 controls: the minimal closed curve.
-                     Since the user wishes less than this implementation minimum,
-                     we take this for an implicit wish that the entire curve go away.
-                     G'bye dear curve. 
-		  */
-
-		  delete_whole_curve(bezier_sel,start_pt);
-		  return (1);
-		}
-	      else if(!finded->prev || !finded->prev->prev) 
-		{
-		  /* This is the first point on the curve */
-		  /* Clear current anchor and control */
-		  bezier_sel->cur_anchor = NULL;
-		  bezier_sel->cur_control = NULL;
-		  /* Where are we?  reset to first point... */
-		  /*if(last_curve == NULL)*/
-		  if(start_pt == bezier_sel->points)
+		  if ((bevent->state & GDK_SHIFT_MASK) || (point_counts <= 7))
 		    {
-		      finded = bezier_sel->points;
-		      bezier_sel->points = finded->next->next->next;
-		      bezier_sel->points->prev = NULL;
+		      /* Case 1: GDK_SHIFT_MASK - The user explicitly wishes
+			 the present curve to go away.
+
+			 Case 2: The current implementation cannot cope with
+			 less than 7 points ie: 2 anchors points and
+			 4 controls: the minimal closed curve.
+			 Since the user wishes less than this implementation
+			 minimum, we take this for an implicit wish that
+			 the entire curve go away. G'bye dear curve. 
+		      */
+
+		      delete_whole_curve (bezier_sel,start_pt);
+
+		      return TRUE;
+		    }
+		  else if (!finded->prev || !finded->prev->prev) 
+		    {
+		      /* This is the first point on the curve */
+		      /* Clear current anchor and control */
+		      bezier_sel->cur_anchor  = NULL;
+		      bezier_sel->cur_control = NULL;
+		      /* Where are we?  reset to first point... */
+		      /*if(last_curve == NULL)*/
+		      if (start_pt == bezier_sel->points)
+			{
+			  finded = bezier_sel->points;
+			  bezier_sel->points = finded->next->next->next;
+			  bezier_sel->points->prev = NULL;
+			}
+		      else
+			{
+			  finded = last_curve->next_curve; 
+			  last_curve->next_curve = finded->next->next->next; 
+			  last_curve->next_curve->prev = NULL; 
+			}
+
+		      bezier_sel->num_points -= 3;
+
+		      g_free (finded->next->next);
+		      g_free (finded->next);
+		      g_free (finded);
+		    }
+		  else if (!bezier_sel->closed && 
+			   (finded == bezier_sel->last_point ||
+			    finded == bezier_sel->last_point->prev || 
+			    finded == bezier_sel->last_point->prev->prev))
+		    {
+		      /* This is the last point on the curve */
+		      /* Clear current anchor and control */
+		      /* Where are we?  reset to last point... */
+		      finded =  bezier_sel->last_point->prev;
+		      bezier_sel->last_point = finded->prev->prev;
+		      bezier_sel->last_point->next = NULL;
+
+		      bezier_sel->cur_anchor = NULL;
+		      bezier_sel->cur_control = NULL;
+
+		      bezier_sel->num_points -= 3;
+
+		      g_free (finded->prev);
+		      g_free (finded->next);
+		      g_free (finded);
 		    }
 		  else
 		    {
- 		      finded = last_curve->next_curve; 
- 		      last_curve->next_curve = finded->next->next->next; 
- 		      last_curve->next_curve->prev = NULL; 
-		    }
-		  
-		  bezier_sel->num_points -= 3;
-		  
-		  g_free( finded->next->next );
-		  g_free( finded->next );
-		  g_free( finded );
-		}
-	      else if(!bezier_sel->closed && 
-		      (finded == bezier_sel->last_point ||
-		       finded == bezier_sel->last_point->prev || 
-		       finded == bezier_sel->last_point->prev->prev))
-		{
-		  /* This is the last point on the curve */
-		  /* Clear current anchor and control */
-		  /* Where are we?  reset to last point... */
-		  finded =  bezier_sel->last_point->prev;
-		  bezier_sel->last_point = finded->prev->prev;
-		  bezier_sel->last_point->next = NULL;
-		  
-		  bezier_sel->cur_anchor = NULL;
-		  bezier_sel->cur_control = NULL;
-		 
-
-		  bezier_sel->num_points -= 3;
-		  
-		  g_free( finded->prev );
-		  g_free( finded->next );
-		  g_free( finded );
-		}
-	      else
-		{
-		  if ( finded->type == BEZIER_CONTROL )
-		    {
-		      if (finded->next->type == BEZIER_CONTROL)
-			finded = finded->prev;
-		      else
-			finded = finded->next;
-		    }
-		  
-		  start_op = finded->prev->prev;
-		  end_op = finded->next->next;
-
-		  /* we can use next_curve here since we are going to 
-		   * drop out the bottom anyways.
-		   */
-		  next_curve = 
-		    check_for_next_curve(bezier_sel,finded);
-
-		  if(next_curve)
-		    {
-		      /* Deleteing first point of next curve*/
-		      next_curve->next_curve = finded->prev->prev->prev;
-		    }
-		  else /* Can't be both first and a next curve!*/
-		    {
-		      if (bezier_sel->points == finded)
+		      if (finded->type == BEZIER_CONTROL)
 			{
-/* 			  g_print ("Deleting first point %p\n",finded); */
-			  bezier_sel->points = finded->prev->prev->prev;
+			  if (finded->next->type == BEZIER_CONTROL)
+			    finded = finded->prev;
+			  else
+			    finded = finded->next;
 			}
-		    }
 
-		  /* Make sure the chain of curves is preserved */
-		  if(finded->prev->next_curve)
-		    {
-/* 		      g_print ("Moving curve on next_curve %p\n",finded->prev->next_curve); */
-		      /* last point on closed multi-path */
-		      finded->prev->prev->prev->prev->next_curve = finded->prev->next_curve;
-		    }
-		  
-		  if(bezier_sel->last_point == finded->prev)
-		    {
-/* 		      g_print ("Deleting last point %p\n",finded->prev); */
-		      bezier_sel->last_point = bezier_sel->last_point->prev->prev->prev;
-		    }
+		      start_op = finded->prev->prev;
+		      end_op = finded->next->next;
 
-		  start_op->next = end_op;
-		  end_op->prev = start_op;
+		      /* we can use next_curve here since we are going to 
+		       * drop out the bottom anyways.
+		       */
+		      next_curve = check_for_next_curve (bezier_sel,finded);
+
+		      if (next_curve)
+			{
+			  /* Deleteing first point of next curve*/
+			  next_curve->next_curve = finded->prev->prev->prev;
+			}
+		      else /* Can't be both first and a next curve!*/
+			{
+			  if (bezier_sel->points == finded)
+			    {
+			      /* g_print ("Deleting first point %p\n",finded); */
+			      bezier_sel->points = finded->prev->prev->prev;
+			    }
+			}
+
+		      /* Make sure the chain of curves is preserved */
+		      if (finded->prev->next_curve)
+			{
+			  /* g_print ("Moving curve on next_curve %p\n",finded->prev->next_curve); */
+			  /* last point on closed multi-path */
+			  finded->prev->prev->prev->prev->next_curve = finded->prev->next_curve;
+			}
+
+		      if (bezier_sel->last_point == finded->prev)
+			{
+			  /* g_print ("Deleting last point %p\n",finded->prev); */
+			  bezier_sel->last_point = bezier_sel->last_point->prev->prev->prev;
+			}
+
+		      start_op->next = end_op;
+		      end_op->prev   = start_op;
 
 /* 		  if ( (bezier_sel->last_point == finded) ||  */
 /* 		       (bezier_sel->last_point == finded->next) ||  */
@@ -757,104 +840,119 @@ bezier_edit_point_on_curve(int             x,
 /* 		      bezier_sel->points = start_op->prev; */
 /* 		    } */
 		  
-		  bezier_sel->num_points -= 3;
-		  
-		  g_free( finded->prev );
-		  g_free( finded->next );
-		  g_free( finded );
-		  /* Clear current anchor and control */
-		  bezier_sel->cur_anchor = NULL;
-		  bezier_sel->cur_control = NULL;
-		}
-	    }
-	  else
-	    {
-	      /* set the current anchor and control points */
-	      switch (points->type)
-		{
-		case BEZIER_ANCHOR:
-		  bezier_sel->cur_anchor = points;
-		  bezier_sel->cur_control = bezier_sel->cur_anchor->next;
-		  break;
-		case BEZIER_CONTROL:
-		  bezier_sel->cur_control = points;
-		  if (bezier_sel->cur_control->next &&
-		      bezier_sel->cur_control->next->type == BEZIER_ANCHOR)
-		    bezier_sel->cur_anchor = bezier_sel->cur_control->next;
-		  else
-		    bezier_sel->cur_anchor = bezier_sel->cur_control->prev;
-		  break;
-		}
-	    }
-	  return(1);
-	}
+		      bezier_sel->num_points -= 3;
 
-      next_curve = points->next_curve;
-      if(next_curve)
-	last_curve = points;
-      points = points->next;
-    } while (points != start_pt && points);
-    start_pt = next_curve;
-    points = next_curve;
-  } while (next_curve);
-    
+		      g_free (finded->prev);
+		      g_free (finded->next);
+		      g_free (finded);
+
+		      /* Clear current anchor and control */
+		      bezier_sel->cur_anchor  = NULL;
+		      bezier_sel->cur_control = NULL;
+		    }
+		}
+	      else
+		{
+		  /* set the current anchor and control points */
+		  switch (points->type)
+		    {
+		    case BEZIER_ANCHOR:
+		      bezier_sel->cur_anchor = points;
+		      bezier_sel->cur_control = bezier_sel->cur_anchor->next;
+		      break;
+		    case BEZIER_CONTROL:
+		      bezier_sel->cur_control = points;
+		      if (bezier_sel->cur_control->next &&
+			  bezier_sel->cur_control->next->type == BEZIER_ANCHOR)
+			bezier_sel->cur_anchor = bezier_sel->cur_control->next;
+		      else
+			bezier_sel->cur_anchor = bezier_sel->cur_control->prev;
+		      break;
+		    }
+		}
+
+	      return TRUE;
+	    }
+
+	  next_curve = points->next_curve;
+	  if (next_curve)
+	    last_curve = points;
+	  points = points->next;
+	}
+      while (points != start_pt && points);
+
+      start_pt = next_curve;
+      points = next_curve;
+    }
+  while (next_curve);
+
   return grab_pointer;
 }
 
-static gint
-bezier_add_point_on_segment(int           x,
-			    int           y,
-			    int           halfwidth,
-			    GDisplay     *gdisp,
-			    BezierSelect *bezier_sel,
-			    Tool         *tool)
+static gboolean
+bezier_add_point_on_segment (gint          x,
+			     gint          y,
+			     gint          halfwidth,
+			     GDisplay     *gdisp,
+			     BezierSelect *bezier_sel,
+			     Tool         *tool)
 {
-  BezierPoint  *points = bezier_sel->points;
-  BezierPoint  *start_pt = bezier_sel->points;
-  BezierPoint  *next_curve;
+  BezierPoint *points   = bezier_sel->points;
+  BezierPoint *start_pt = bezier_sel->points;
+  BezierPoint *next_curve;
 
-  do {
-    do {
-      if (test_add_point_on_segment (bezier_sel,       
-				     points,
-				     SUBDIVIDE, 
-				     IMAGE_COORDS,
-				     x, y,
-				     halfwidth))
+  do
+    {
+      do
 	{
-	  return 1;
+	  if (test_add_point_on_segment (bezier_sel,       
+					 points,
+					 SUBDIVIDE, 
+					 IMAGE_COORDS,
+					 x, y,
+					 halfwidth))
+	    {
+	      return TRUE;
+	    }
+
+	  points = points->next;
+
+	  if (!points)
+	    return FALSE;
+
+	  points = points->next;
+
+	  if (!points)
+	    return FALSE;
+
+	  next_curve = points->next_curve;
+	  points = points->next;
 	}
-      
-      points = points->next;
-      
-      if(!points)
-	return 0;
-      
-      points = points->next;
-      
-      if(!points)
-	return 0;
-      
-      next_curve = points->next_curve;
-      points = points->next;
-    } while (points != start_pt && points);
-    start_pt = next_curve;
-    points = next_curve;
-  } while (next_curve);
-  return 0;
+      while (points != start_pt && points);
+
+      start_pt = next_curve;
+      points = next_curve;
+    }
+  while (next_curve);
+
+  return FALSE;
 }
 
 
 static void
-bezier_start_new_segment(BezierSelect *bezier_sel,gint x,gint y)
+bezier_start_new_segment (BezierSelect *bezier_sel,
+			  gint          x,
+			  gint          y)
 {
   /* Must be closed to do this! */
-  if(!bezier_sel->closed)
+  if (!bezier_sel->closed)
     return;
+
   bezier_sel->closed = 0; /* End is no longer closed !*/
-  bezier_sel->state = BEZIER_ADD;
-  bezier_add_point (bezier_sel, BEZIER_MOVE, (gdouble)x, (gdouble)y);
-  bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble)x, (gdouble)y);
+  bezier_sel->state  = BEZIER_ADD;
+
+  bezier_add_point (bezier_sel, BEZIER_MOVE,    (gdouble) x, (gdouble) y);
+  bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble) x, (gdouble) y);
 }
 
 static void
@@ -862,22 +960,22 @@ bezier_select_button_press (Tool           *tool,
 			    GdkEventButton *bevent,
 			    gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
+  GDisplay     *gdisp;
   BezierSelect *bezier_sel;
-  BezierPoint *points;
-  BezierPoint *start_pt;
-  BezierPoint *curve_start;
-  int grab_pointer;
-  int op, replace;
-  int x, y;
-  int halfwidth, dummy;
+  BezierPoint  *points;
+  BezierPoint  *start_pt;
+  BezierPoint  *curve_start;
+  gboolean      grab_pointer;
+  gint          op;
+  gint          x, y;
+  gint          halfwidth, dummy;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
   tool->drawable = gimage_active_drawable (gdisp->gimage);
 
   bezier_sel = tool->private;
-  grab_pointer = 0;
+  grab_pointer = FALSE;
 
   if (bezier_options->extend)
     {
@@ -886,16 +984,18 @@ bezier_select_button_press (Tool           *tool,
   else
     {
       /*  If the tool was being used in another image...reset it  */
-      if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr) {
-        draw_core_stop(bezier_sel->core, tool);
-        bezier_select_reset (bezier_sel);
-      }
+      if (tool->state == ACTIVE && gdisp_ptr != tool->gdisp_ptr)
+	{
+	  draw_core_stop (bezier_sel->core, tool);
+	  bezier_select_reset (bezier_sel);
+	}
     }
 
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, TRUE, 0);
 
   /* get halfwidth in image coord */
-  gdisplay_untransform_coords (gdisp, bevent->x + BEZIER_HALFWIDTH, 0, &halfwidth, &dummy, TRUE, 0);
+  gdisplay_untransform_coords (gdisp, bevent->x + BEZIER_HALFWIDTH, 0,
+			       &halfwidth, &dummy, TRUE, 0);
   halfwidth -= x;
 
   curTool = active_tool;
@@ -907,9 +1007,10 @@ bezier_select_button_press (Tool           *tool,
   switch (bezier_sel->state)
     {
     case BEZIER_START:
-      if(ModeEdit != EXTEND_NEW)
+      if (ModeEdit != EXTEND_NEW)
 	break;
-      grab_pointer = 1;
+
+      grab_pointer = TRUE;
       tool->state = ACTIVE;
       tool->gdisp_ptr = gdisp_ptr;
 
@@ -935,11 +1036,11 @@ bezier_select_button_press (Tool           *tool,
 
       draw_core_start (bezier_sel->core, gdisp->canvas->window, tool);
       break;
+
     case BEZIER_ADD:
+      grab_pointer = TRUE;
 
-      grab_pointer = 1;
-
-      if(ModeEdit == EXTEND_EDIT)
+      if (ModeEdit == EXTEND_EDIT)
 	{ 
 	  /* erase the handles */
 	  if(bezier_sel->closed)
@@ -951,25 +1052,31 @@ bezier_select_button_press (Tool           *tool,
 	  bezier_sel->cur_anchor = NULL;
 	  bezier_sel->cur_control = NULL;
 
-	  grab_pointer = bezier_edit_point_on_curve(x,y,halfwidth,gdisp,bezier_sel,tool,bevent);
+	  grab_pointer = bezier_edit_point_on_curve (x, y, halfwidth,
+						     gdisp, bezier_sel,
+						     tool, bevent);
 
 	  bezier_sel->draw = BEZIER_DRAW_ALL;  
 	  draw_core_resume (bezier_sel->core, tool);
 
 	  if (grab_pointer)
-	    gdk_pointer_grab (gdisp->canvas->window, FALSE,
-			      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
-			      NULL, NULL, bevent->time);
+	    {
+	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+				GDK_POINTER_MOTION_HINT_MASK |
+				GDK_BUTTON1_MOTION_MASK |
+				GDK_BUTTON_RELEASE_MASK,
+				NULL, NULL, bevent->time);
+	    }
 	  else
 	    {
-	      paths_dialog_set_default_op();
+	      paths_dialog_set_default_op ();
 	      /* recursive call */
-	      bezier_select_button_press(tool,bevent,gdisp_ptr);
+	      bezier_select_button_press (tool, bevent, gdisp_ptr);
 	    }
 	  return;
 	}
 
-      if(ModeEdit == EXTEND_REMOVE)
+      if (ModeEdit == EXTEND_REMOVE)
 	{ 
 /* 	  if(bezier_sel->num_points < 6) */
 /* 	    return; */
@@ -988,56 +1095,65 @@ bezier_select_button_press (Tool           *tool,
 	  draw_core_pause (bezier_sel->core, tool);
 	  /*kkk*/
 
-	  grab_pointer = bezier_edit_point_on_curve(x,y,halfwidth,gdisp,bezier_sel,tool,bevent);
+	  grab_pointer = bezier_edit_point_on_curve (x, y, halfwidth,
+						     gdisp, bezier_sel,
+						     tool, bevent);
 
-	  bezier_sel->draw = BEZIER_DRAW_ALL; 
+	  bezier_sel->draw = BEZIER_DRAW_ALL;
 	  draw_core_resume (bezier_sel->core, tool);
-	  if(bezier_sel->num_points == 0)
+
+	  if (bezier_sel->num_points == 0)
 	    {
-	      draw_core_pause(bezier_sel->core, tool);
-	      paths_dialog_set_default_op();
+	      draw_core_pause (bezier_sel->core, tool);
+	      paths_dialog_set_default_op ();
 	    }
 
-	  if(!grab_pointer)
+	  if (!grab_pointer)
 	    {
-	      paths_dialog_set_default_op();
+	      paths_dialog_set_default_op ();
 	      /* recursive call */
-	      bezier_select_button_press(tool,bevent,gdisp_ptr);
+	      bezier_select_button_press (tool, bevent, gdisp_ptr);
 	    }
 	  return;
 	}
 
-      if(ModeEdit == EXTEND_ADD)
+      if (ModeEdit == EXTEND_ADD)
 	{
-	  if(bezier_sel->num_points < 5)
+	  if (bezier_sel->num_points < 5)
 	    return;
+
 	  bezier_sel->draw = BEZIER_DRAW_ALL; 
 	  draw_core_pause (bezier_sel->core, tool); 
 
-	  grab_pointer = bezier_add_point_on_segment(x,y,halfwidth,gdisp,bezier_sel,tool);
+	  grab_pointer = bezier_add_point_on_segment (x, y, halfwidth,
+						      gdisp, bezier_sel, tool);
 
 	  bezier_sel->draw = BEZIER_DRAW_ALL;
 	  draw_core_resume (bezier_sel->core, tool);
 	  if (grab_pointer)
-	    gdk_pointer_grab (gdisp->canvas->window, FALSE,
-			      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
-			      NULL, NULL, bevent->time);
+	    {
+	      gdk_pointer_grab (gdisp->canvas->window, FALSE,
+				GDK_POINTER_MOTION_HINT_MASK |
+				GDK_BUTTON1_MOTION_MASK |
+				GDK_BUTTON_RELEASE_MASK,
+				NULL, NULL, bevent->time);
+	    }
 	  else
 	    {
-	      paths_dialog_set_default_op();
+	      paths_dialog_set_default_op ();
 	      /* recursive call */
-	      bezier_select_button_press(tool,bevent,gdisp_ptr);
+	      bezier_select_button_press (tool, bevent, gdisp_ptr);
 	    }
 	  return;
 	}
 
-      if(bezier_sel->cur_anchor)
+      if (bezier_sel->cur_anchor)
 	{
 	  if (bezier_check_point (bezier_sel->cur_anchor, x, y, halfwidth))
 	    {
 	      break;
 	    }
-	  
+
 	  if (bezier_sel->cur_anchor->next &&
 	      bezier_check_point (bezier_sel->cur_anchor->next, x, y, halfwidth))
 	    {
@@ -1080,7 +1196,7 @@ bezier_select_button_press (Tool           *tool,
  	  draw_core_pause (bezier_sel->core, tool); 
 
 	  bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble)x, (gdouble)y);
-	  bezier_add_point (bezier_sel, BEZIER_ANCHOR, (gdouble)x, (gdouble)y);
+	  bezier_add_point (bezier_sel, BEZIER_ANCHOR,  (gdouble)x, (gdouble)y);
 	  bezier_add_point (bezier_sel, BEZIER_CONTROL, (gdouble)x, (gdouble)y);
 
 	  bezier_sel->draw = BEZIER_DRAW_CURRENT | BEZIER_DRAW_HANDLES;
@@ -1088,9 +1204,11 @@ bezier_select_button_press (Tool           *tool,
 	  draw_core_resume (bezier_sel->core, tool);
 	}
       break;
+
     case BEZIER_EDIT:
       if (!bezier_sel->closed)
-	gimp_fatal_error ("bezier_select_button_press(): Tried to edit on open bezier curve in edit selection");
+	gimp_fatal_error ("bezier_select_button_press(): Tried to edit "
+			  "on open bezier curve in edit selection");
 
       /* erase the handles */
       bezier_sel->draw = BEZIER_DRAW_ALL; 
@@ -1107,45 +1225,55 @@ bezier_select_button_press (Tool           *tool,
 	{
 	  if (bezier_sel->closed)
 	    {
-	      grab_pointer = bezier_add_point_on_segment(x,y,halfwidth,gdisp,bezier_sel,tool);
+	      grab_pointer = bezier_add_point_on_segment (x, y, halfwidth,
+							  gdisp, bezier_sel,
+							  tool);
 	    }
 	}
       else
 	{
-	  grab_pointer = bezier_edit_point_on_curve(x,y,halfwidth,gdisp,bezier_sel,tool,bevent);
-	  if(grab_pointer && bezier_sel->num_points == 0)
+	  grab_pointer = bezier_edit_point_on_curve (x, y, halfwidth,
+						     gdisp, bezier_sel,
+						     tool, bevent);
+
+	  if (grab_pointer && bezier_sel->num_points == 0)
 	    {
-	      draw_core_pause(bezier_sel->core, tool);
-	      paths_dialog_set_default_op();
+	      draw_core_pause (bezier_sel->core, tool);
+	      paths_dialog_set_default_op ();
 	    }
 	}
 
       if (!grab_pointer && channel_value (bezier_sel->mask, x, y))
 	{
-	  replace = 0;
-	  if ((bevent->state & GDK_SHIFT_MASK) && !(bevent->state & GDK_CONTROL_MASK))
+	  gboolean replace = FALSE;
+
+	  if ((bevent->state & GDK_SHIFT_MASK) &&
+	      !(bevent->state & GDK_CONTROL_MASK))
 	    op = ADD;
-	  else if ((bevent->state & GDK_CONTROL_MASK) && !(bevent->state & GDK_SHIFT_MASK))
+	  else if ((bevent->state & GDK_CONTROL_MASK) &&
+		   !(bevent->state & GDK_SHIFT_MASK))
 	    op = SUB;
-	  else if ((bevent->state & GDK_CONTROL_MASK) && (bevent->state & GDK_SHIFT_MASK))
+	  else if ((bevent->state & GDK_CONTROL_MASK) &&
+		   (bevent->state & GDK_SHIFT_MASK))
 	    op = INTERSECT;
 	  else
 	    {
 	      op = ADD;
-	      replace = 1;
+	      replace = TRUE;
 	    }
-	  bezier_to_sel_internal(bezier_sel,tool,gdisp,op,replace);
+
+	  bezier_to_sel_internal (bezier_sel, tool, gdisp, op, replace);
 	  draw_core_resume (bezier_sel->core, tool);
 	}
       else
 	{
 	  /* draw the handles */
-	  if(!grab_pointer)
+	  if (!grab_pointer)
 	    {
-	      paths_dialog_set_default_op();
-	      bezier_start_new_segment(bezier_sel,x,y);
+	      paths_dialog_set_default_op ();
+	      bezier_start_new_segment (bezier_sel, x, y);
 	    }
- 	  bezier_sel->draw = BEZIER_DRAW_ALL; 
+ 	  bezier_sel->draw = BEZIER_DRAW_ALL;
 
 	  draw_core_resume (bezier_sel->core, tool);
 	}
@@ -1154,12 +1282,14 @@ bezier_select_button_press (Tool           *tool,
 
   if (grab_pointer)
     gdk_pointer_grab (gdisp->canvas->window, FALSE,
-		      GDK_POINTER_MOTION_HINT_MASK | GDK_BUTTON1_MOTION_MASK | GDK_BUTTON_RELEASE_MASK,
+		      GDK_POINTER_MOTION_HINT_MASK |
+		      GDK_BUTTON1_MOTION_MASK |
+		      GDK_BUTTON_RELEASE_MASK,
 		      NULL, NULL, bevent->time);
 
   /* Don't bother doing this if we don't have any points */
-  if(bezier_sel->num_points > 0)
-    paths_first_button_press(bezier_sel,gdisp);
+  if (bezier_sel->num_points > 0)
+    paths_first_button_press(bezier_sel, gdisp);
 }
 
 static void
@@ -1167,7 +1297,7 @@ bezier_select_button_release (Tool           *tool,
 			      GdkEventButton *bevent,
 			      gpointer        gdisp_ptr)
 {
-  GDisplay * gdisp;
+  GDisplay     *gdisp;
   BezierSelect *bezier_sel;
 
   gdisp = tool->gdisp_ptr;
@@ -1178,49 +1308,51 @@ bezier_select_button_release (Tool           *tool,
   gdk_flush ();
 
   if (bezier_sel->closed)
-    bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, NO);
+    bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, FALSE);
 
   /* Here ?*/
-  paths_newpoint_current(bezier_sel,gdisp);
+  paths_newpoint_current (bezier_sel,gdisp);
 }
 
 
 /* unused
 static void
-bez_copy_points(BezierSelect *tobez,
-		BezierSelect *frombez)
+bez_copy_points (BezierSelect *tobez,
+		 BezierSelect *frombez)
 {
-  BezierPoint *pts;
-  gint i;
-  BezierPoint  *bpnt = NULL;
-  int need_move = 0;
+  BezierPoint  *pts;
+  gint          i;
+  BezierPoint  *bpnt      = NULL;
+  gboolean      need_move = FALSE;
 
   pts = (BezierPoint *) frombez->points;
 
-  for (i=0; i< frombez->num_points; i++)
+  for (i = 0; i < frombez->num_points; i++)
     {
-      if(need_move)
+      if (need_move)
 	{
-	  bezier_add_point( tobez, BEZIER_MOVE, pts->x, pts->y);
-	  need_move = 0;
+	  bezier_add_point (tobez, BEZIER_MOVE, pts->x, pts->y);
+	  need_move = FALSE;
 	}
       else
-	bezier_add_point( tobez, pts->type, pts->x, pts->y);
+        {
+	  bezier_add_point (tobez, pts->type, pts->x, pts->y);
+        }
 
-      if(pts == frombez->cur_anchor)
+      if (pts == frombez->cur_anchor)
 	tobez->cur_anchor = tobez->last_point;
-      else if(pts == frombez->cur_control)
+      else if (pts == frombez->cur_control)
 	tobez->cur_control = tobez->last_point;
 
-      if(bpnt == NULL)
+      if (bpnt == NULL)
 	bpnt = tobez->last_point;
 
-      if(pts->next_curve)
+      if (pts->next_curve)
 	{
 	  tobez->last_point->next = bpnt;
 	  bpnt->prev = tobez->last_point;
 	  bpnt = NULL;
-	  need_move = 1;
+	  need_move = TRUE;
 	  pts = pts->next_curve;
 	}
       else
@@ -1229,11 +1361,11 @@ bez_copy_points(BezierSelect *tobez,
 	}
     }
       
-  if ( frombez->closed )
+  if (frombez->closed)
     {
       tobez->last_point->next = bpnt;
       bpnt->prev = tobez->last_point;
-      tobez->closed = 1;
+      tobez->closed = TRUE;
     }
 }
 */
@@ -1243,15 +1375,15 @@ bezier_select_motion (Tool           *tool,
 		      GdkEventMotion *mevent,
 		      gpointer        gdisp_ptr)
 {
-  static int lastx, lasty;
+  static gint lastx, lasty;
 
-  GDisplay * gdisp;
-  BezierSelect * bezier_sel;
-  BezierPoint * anchor;
-  BezierPoint * opposite_control;
-  int offsetx;
-  int offsety;
-  int x, y;
+  GDisplay     *gdisp;
+  BezierSelect *bezier_sel;
+  BezierPoint  *anchor;
+  BezierPoint  *opposite_control;
+  gint          offsetx;
+  gint          offsety;
+  gint          x, y;
 
   if (tool->state != ACTIVE)
     return;
@@ -1271,7 +1403,6 @@ bezier_select_motion (Tool           *tool,
       bezier_sel->draw = BEZIER_DRAW_CURRENT | BEZIER_DRAW_HANDLES;
     }
 
-
   draw_core_pause (bezier_sel->core, tool); 
 
   gdisplay_untransform_coords (gdisp, mevent->x, mevent->y, &x, &y, TRUE, 0);
@@ -1289,34 +1420,41 @@ bezier_select_motion (Tool           *tool,
 
   if (mevent->state & GDK_MOD1_MASK)
     {
-      BezierPoint *tmp = bezier_sel->points;
-      gint num_points = bezier_sel->num_points;
+      BezierPoint *tmp        = bezier_sel->points;
+      gint         num_points = bezier_sel->num_points;
+
       offsetx = x - lastx;
       offsety = y - lasty;
 
-      if(mevent->state & GDK_SHIFT_MASK)
+      if (mevent->state & GDK_SHIFT_MASK)
 	{
 	  /* Only move this curve */
 	  BezierPoint *start_pt = bezier_sel->cur_anchor;
 
-/* 	  g_print ("moving only one curve\n"); */
+	  /* g_print ("moving only one curve\n"); */
 
 	  tmp = start_pt;
 	  
-	  do {
-	    bezier_offset_point (tmp, offsetx, offsety);
-	    tmp = tmp->next;
-	  } while (tmp != start_pt && tmp);
+	  do
+	    {
+	      bezier_offset_point (tmp, offsetx, offsety);
+	      tmp = tmp->next;
+	    }
+	  while (tmp != start_pt && tmp);
+
 	  /* Check if need to go backwards because curve is open */
-	  if(!tmp && bezier_sel->cur_anchor->prev)
+	  if (!tmp && bezier_sel->cur_anchor->prev)
 	    {
 	      BezierPoint *start_pt = bezier_sel->cur_anchor->prev;
+
 	      tmp = start_pt;
-	      
-	      do {
-		bezier_offset_point (tmp, offsetx, offsety);
-		tmp = tmp->prev;
-	      } while (tmp != start_pt && tmp);
+
+	      do
+		{
+		  bezier_offset_point (tmp, offsetx, offsety);
+		  tmp = tmp->prev;
+		}
+	      while (tmp != start_pt && tmp);
 	    }
 	}
       else
@@ -1324,16 +1462,17 @@ bezier_select_motion (Tool           *tool,
 	  while (tmp && num_points)
 	    {
 	      bezier_offset_point (tmp, offsetx, offsety);
+
 	      if(tmp->next_curve)
 		tmp = tmp->next_curve;
 	      else
 		tmp = tmp->next;
+
 	      num_points--;
 	    }
 	}
     }
-  else
-  if (mevent->state & GDK_CONTROL_MASK)
+  else if (mevent->state & GDK_CONTROL_MASK)
     {
       /* the control key is down ... move the current anchor point */
       /* we must also move the neighboring control points appropriately */
@@ -1381,7 +1520,8 @@ bezier_select_motion (Tool           *tool,
 	    }
 
 	  if (!anchor)
-	    gimp_fatal_error ("bezier_select_motion(): Encountered orphaned bezier control point");
+	    gimp_fatal_error ("bezier_select_motion(): Encountered orphaned "
+			      "bezier control point");
 
 	  if (opposite_control)
 	    {
@@ -1411,14 +1551,14 @@ bezier_select_motion (Tool           *tool,
 
 /* returns 0 if not on control point, else BEZIER_ANCHOR or BEZIER_CONTROL */
 static gint
-bezier_on_control_point(GDisplay     *gdisp,
-			BezierSelect *bezier_sel,
-			gint         x,
-			gint         y,
-			gint         halfwidth)
+bezier_on_control_point (GDisplay     *gdisp,
+			 BezierSelect *bezier_sel,
+			 gint          x,
+			 gint          y,
+			 gint          halfwidth)
 {
-  BezierPoint * points;
-  gint num_points;
+  BezierPoint *points;
+  gint         num_points;
 
   /* transform the points from image space to screen space */
   points = bezier_sel->points;
@@ -1426,13 +1566,14 @@ bezier_on_control_point(GDisplay     *gdisp,
 
   while (points && num_points)
    {
-     if(bezier_check_point(points,x,y,halfwidth))
+     if (bezier_check_point (points, x, y, halfwidth))
        return points->type;
 
      if(points->next_curve)
        points = points->next_curve;
      else
        points = points->next;
+
      num_points--;
     }
 
@@ -1442,20 +1583,20 @@ bezier_on_control_point(GDisplay     *gdisp,
 static void
 bezier_check_points (BezierSelect *bezier_sel,
 		     GdkPoint     *points,
-		     int           npoints,
-		     gpointer      udata)
+		     gint          n_points,
+		     gpointer      data)
 {
-  gint loop;
-  int l, r, t, b;
-  BezierCheckPnts *chkpnts = udata;
-  gint halfwidth = chkpnts->halfwidth;
+  BezierCheckPnts *chkpnts   = data;
+  gint             halfwidth = chkpnts->halfwidth;
+  gint             loop;
+  gint             l, r, t, b;
 
   /* Quick exit if already found */
 
-  if(chkpnts->found)
+  if (chkpnts->found)
     return;
 
-  for(loop = 0 ; loop < npoints; loop++)
+  for (loop = 0 ; loop < n_points; loop++)
     {
       l = points[loop].x - halfwidth;
       r = points[loop].x + halfwidth;
@@ -1479,14 +1620,16 @@ bezier_check_points (BezierSelect *bezier_sel,
 }
 
 static gboolean 
-points_in_box(BezierPoint *points,
-	      gint         x,
-	      gint         y)
+points_in_box (BezierPoint *points,
+	       gint         x,
+	       gint         y)
 {
   /* below code adapted from Wm. Randolph Franklin <wrf@ecse.rpi.edu>
    */
-  int i, j, c = 0;
-  double yp[4],xp[4];
+  gint    i, j;
+  gint    c = 0;
+  gdouble yp[4];
+  gdouble xp[4];
 
   for (i = 0; i < 4; i++)
     {
@@ -1500,12 +1643,13 @@ points_in_box(BezierPoint *points,
      (xp[2] == xp[3] && yp[0] == yp[1]))
     return TRUE;
 
-  for (i = 0, j = 3; i < 4; j = i++) {
-    if ((((yp[i]<=y) && (y<yp[j])) ||
-	 ((yp[j]<=y) && (y<yp[i]))) &&
-	(x < (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i]))
-      c = !c;
-  }
+  for (i = 0, j = 3; i < 4; j = i++)
+    {
+      if ((((yp[i]<=y) && (y<yp[j])) ||
+	   ((yp[j]<=y) && (y<yp[i]))) &&
+	  (x < (xp[j] - xp[i]) * (y - yp[i]) / (yp[j] - yp[i]) + xp[i]))
+	c = !c;
+    }
 
   return c;
 }
@@ -1517,12 +1661,12 @@ bezier_point_on_curve (GDisplay     *gdisp,
 		       gint          y,
 		       gint          halfwidth)
 {
-  BezierCheckPnts chkpnts;
-  BezierPoint * points;
-  BezierPoint * start_pt;
-  BezierPoint * next_curve;
-  CountCurves * cnt = (CountCurves *)&chkpnts;
-  gint point_counts = 0;
+  BezierCheckPnts  chkpnts;
+  BezierPoint     *points;
+  BezierPoint     *start_pt;
+  BezierPoint     *next_curve;
+  CountCurves     *cnt = (CountCurves *) &chkpnts;
+  gint             point_counts = 0;
 
   chkpnts.x = x;
   chkpnts.y = y;
@@ -1531,6 +1675,7 @@ bezier_point_on_curve (GDisplay     *gdisp,
 
   if (cnt)
     cnt->count = 0;
+
   points = bezier_sel->points;
   start_pt = bezier_sel->points;
 
@@ -1575,13 +1720,13 @@ bezier_select_cursor_update (Tool           *tool,
 			     GdkEventMotion *mevent,
 			     gpointer        gdisp_ptr)
 {
-  GDisplay *gdisp;
-  BezierSelect * bezier_sel;
-  gboolean on_curve;
-  gboolean on_control_pnt;
-  gboolean in_selection_area;
-  gint halfwidth,dummy;
-  gint x,y;
+  GDisplay     *gdisp;
+  BezierSelect *bezier_sel;
+  gboolean      on_curve;
+  gboolean      on_control_pnt;
+  gboolean      in_selection_area;
+  gint          halfwidth, dummy;
+  gint          x, y;
 
   gdisp = (GDisplay *) gdisp_ptr;
 
@@ -1613,6 +1758,7 @@ bezier_select_cursor_update (Tool           *tool,
       (!on_curve || ModeEdit != EXTEND_ADD))
     {
       in_selection_area = TRUE;
+
       if ((mevent->state & GDK_SHIFT_MASK) &&
 	  !(mevent->state & GDK_CONTROL_MASK))
 	{
@@ -1695,6 +1841,7 @@ bezier_select_cursor_update (Tool           *tool,
 					    FALSE);
 	    }
 	  break;
+
 	case EXTEND_ADD:
 	  if (on_curve)
 	    {
@@ -1713,6 +1860,7 @@ bezier_select_cursor_update (Tool           *tool,
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
+
 	case EXTEND_EDIT:
 	  if (on_control_pnt)
 	    {
@@ -1731,6 +1879,7 @@ bezier_select_cursor_update (Tool           *tool,
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
+
 	case EXTEND_REMOVE:
 	  if (on_control_pnt && mevent->state & GDK_SHIFT_MASK)
 	    {
@@ -1757,6 +1906,7 @@ bezier_select_cursor_update (Tool           *tool,
 /* 	      g_print ("default no action cursor\n"); */
 	    }
 	  break;
+
 	default:
 	  g_print ("In default\n");
 	  gdisplay_install_tool_cursor (gdisp, GIMP_MOUSE_CURSOR,
@@ -1798,19 +1948,19 @@ bezier_select_control (Tool       *tool,
 }
 
 void 
-bezier_draw(GDisplay * gdisp,BezierSelect * bezier_sel)
+bezier_draw (GDisplay     *gdisp,
+	     BezierSelect *bezier_sel)
 {
-  BezierPoint * points;
-  int num_points;
-  int draw_curve;
-  int draw_handles;
-  int draw_current;
-
+  BezierPoint *points;
+  gint         num_points;
+  gint         draw_curve;
+  gint         draw_handles;
+  gint         draw_current;
 
   if (!bezier_sel->draw)
     return;
 
-  draw_curve = bezier_sel->draw & BEZIER_DRAW_CURVE;
+  draw_curve   = bezier_sel->draw & BEZIER_DRAW_CURVE;
   draw_current = bezier_sel->draw & BEZIER_DRAW_CURRENT;
   draw_handles = bezier_sel->draw & BEZIER_DRAW_HANDLES;
 
@@ -1818,33 +1968,36 @@ bezier_draw(GDisplay * gdisp,BezierSelect * bezier_sel)
   bezier_sel->draw = BEZIER_DRAW_ALL;
 
   /* transform the points from image space to screen space */
-  points = bezier_sel->points;
+  points     = bezier_sel->points;
   num_points = bezier_sel->num_points;
 
   while (points && num_points)
-   {
+    {
       gdisplay_transform_coords (gdisp, points->x, points->y,
 				 &points->sx, &points->sy, 0);
-      if(points->next_curve)
+
+      if (points->next_curve)
 	points = points->next_curve;
       else
 	points = points->next;
+
       num_points--;
     }
 
   if (draw_curve)
     {
-      bezier_draw_curve (bezier_sel,bezier_draw_segment_points,SCREEN_COORDS,NULL);
-      bezier_draw_handles (bezier_sel,1);
+      bezier_draw_curve (bezier_sel, bezier_draw_segment_points, 
+			 SCREEN_COORDS, NULL);
+      bezier_draw_handles (bezier_sel, TRUE);
     }
   else if (draw_current)
     {
       bezier_draw_current (bezier_sel);
-      bezier_draw_handles (bezier_sel,0);
+      bezier_draw_handles (bezier_sel, FALSE);
     }
   else if (draw_handles) 
     {
-      bezier_draw_handles (bezier_sel,0); 
+      bezier_draw_handles (bezier_sel, FALSE);
     }
 
 }
@@ -1852,8 +2005,8 @@ bezier_draw(GDisplay * gdisp,BezierSelect * bezier_sel)
 static void
 bezier_select_draw (Tool *tool)
 {
-  GDisplay * gdisp;
-  BezierSelect * bezier_sel;
+  GDisplay     *gdisp;
+  BezierSelect *bezier_sel;
 
   gdisp = tool->gdisp_ptr;
   bezier_sel = tool->private;
@@ -1865,7 +2018,7 @@ bezier_select_draw (Tool *tool)
 
 void
 bezier_add_point (BezierSelect *bezier_sel,
-		  int           type,
+		  gint          type,
 		  gdouble       x,
 		  gdouble       y)
 {
@@ -1880,8 +2033,8 @@ bezier_add_point (BezierSelect *bezier_sel,
   newpt->prev = NULL;
   newpt->next_curve = NULL;
 
-  if(type == BEZIER_MOVE &&
-     bezier_sel->last_point)
+  if (type == BEZIER_MOVE &&
+      bezier_sel->last_point)
     {
 /*       g_print ("Adding move point\n"); */
       newpt->type = BEZIER_ANCHOR;
@@ -1894,7 +2047,7 @@ bezier_add_point (BezierSelect *bezier_sel,
       if(type == BEZIER_MOVE) 
 	{
 	  newpt->type = BEZIER_ANCHOR;
-/* 	  g_print ("Adding MOVE point to null curve\n"); */
+	  /* 	  g_print ("Adding MOVE point to null curve\n"); */
 	}
 
       if (bezier_sel->last_point)
@@ -1908,7 +2061,7 @@ bezier_add_point (BezierSelect *bezier_sel,
 	  bezier_sel->points = newpt;
 	  bezier_sel->last_point = newpt;
 	}
-      
+
       switch (type)
 	{
 	case BEZIER_ANCHOR:
@@ -1925,8 +2078,8 @@ bezier_add_point (BezierSelect *bezier_sel,
 
 static void
 bezier_offset_point (BezierPoint *pt,
-		     int          x,
-		     int          y)
+		     gint         x,
+		     gint         y)
 {
   if (pt)
     {
@@ -1937,11 +2090,11 @@ bezier_offset_point (BezierPoint *pt,
 
 static int
 bezier_check_point (BezierPoint *pt,
-		    int          x,
-		    int          y,
-		    int		 halfwidth)
+		    gint         x,
+		    gint         y,
+		    gint         halfwidth)
 {
-  int l, r, t, b;
+  gint l, r, t, b;
 
   if (pt)
     {
@@ -1958,70 +2111,71 @@ bezier_check_point (BezierPoint *pt,
 
 
 static void
-bezier_draw_handles (BezierSelect *bezier_sel,gint doAll)
+bezier_draw_handles (BezierSelect *bezier_sel,
+		     gboolean      do_all)
 {
-  BezierPoint * points;
-  int num_points;
+  BezierPoint *points;
+  gint         num_points;
 
-  points = bezier_sel->points;
+  points     = bezier_sel->points;
   num_points = bezier_sel->num_points;
 
   if (num_points <= 0)
     return;
 
   while (num_points && num_points > 0)
-  {
+    {
       if (points == bezier_sel->cur_anchor)
 	{
 /* 	g_print ("bezier_draw_handles:: found cur_anchor %p\n",points); */
-	  bezier_draw_point (bezier_sel, points, 0);
-	  bezier_draw_point (bezier_sel, points->next, 0);
-	  bezier_draw_point (bezier_sel, points->prev, 0);
+	  bezier_draw_point (bezier_sel, points, FALSE);
+	  bezier_draw_point (bezier_sel, points->next, FALSE);
+	  bezier_draw_point (bezier_sel, points->prev, FALSE);
 	  bezier_draw_line (bezier_sel, points, points->next);
 	  bezier_draw_line (bezier_sel, points, points->prev);
 	}
       else
 	{
-/* 	g_print ("bezier_draw_handles:: not found cur_anchor %p\n",points); */
-	  if(doAll || points->pointflags == 1)
+	  /* 	g_print ("bezier_draw_handles:: not found cur_anchor %p\n",points); */
+	  if (do_all || points->pointflags == 1)
 	    {
-	      bezier_draw_point (bezier_sel, points, 1);
+	      bezier_draw_point (bezier_sel, points, TRUE);
 	      points->pointflags = 0;
 	    }
 	}
 
-      if(points)
-      {
-        if(points->next_curve)
+      if (points)
+	{
+        if (points->next_curve)
           points = points->next_curve;
         else
           points = points->next;
-      }
+	}
 
-      if(points)
-      {
-        if(points->next_curve)
-          points = points->next_curve;
-        else
-          points = points->next;
-      }
+      if (points)
+	{
+	  if (points->next_curve)
+	    points = points->next_curve;
+	  else
+	    points = points->next;
+	}
 
-      if(points)
-      {
-        if(points->next_curve)
-          points = points->next_curve;
-        else
-          points = points->next;
-      }
+      if (points)
+	{
+	  if (points->next_curve)
+	    points = points->next_curve;
+	  else
+	    points = points->next;
+	}
 
       num_points -= 3;
-   }
+    }
 }
 
 static void
 bezier_draw_current (BezierSelect *bezier_sel)
 {
-  BezierPoint * points;
+  BezierPoint *points;
 
   points = bezier_sel->cur_anchor;
 
@@ -2054,7 +2208,7 @@ bezier_draw_current (BezierSelect *bezier_sel)
 static void
 bezier_draw_point (BezierSelect *bezier_sel,
 		   BezierPoint  *pt,
-		   int           fill)
+		   gboolean      fill)
 {
   if (pt)
     {
@@ -2063,27 +2217,32 @@ bezier_draw_point (BezierSelect *bezier_sel,
 	case BEZIER_ANCHOR:
 	  if (fill)
 	    {
-	      gdk_draw_arc (bezier_sel->core->win, bezier_sel->core->gc, 1,
+	      gdk_draw_arc (bezier_sel->core->win, bezier_sel->core->gc,
+			    TRUE,
 			    pt->sx - BEZIER_HALFWIDTH, pt->sy - BEZIER_HALFWIDTH,
 			    BEZIER_WIDTH, BEZIER_WIDTH, 0, 23040);
 	    }
 	  else
 	    {
-	      gdk_draw_arc (bezier_sel->core->win, bezier_sel->core->gc, 0,
+	      gdk_draw_arc (bezier_sel->core->win, bezier_sel->core->gc,
+			    FALSE,
 			    pt->sx - BEZIER_HALFWIDTH, pt->sy - BEZIER_HALFWIDTH,
 			    BEZIER_WIDTH, BEZIER_WIDTH, 0, 23040);
 	    }
 	  break;
+
 	case BEZIER_CONTROL:
 	  if (fill)
 	    {
-	      gdk_draw_rectangle (bezier_sel->core->win, bezier_sel->core->gc, 1,
+	      gdk_draw_rectangle (bezier_sel->core->win, bezier_sel->core->gc,
+				  TRUE,
 				  pt->sx - BEZIER_HALFWIDTH, pt->sy - BEZIER_HALFWIDTH,
 				  BEZIER_WIDTH, BEZIER_WIDTH);
 	    }
 	  else
 	    {
-	      gdk_draw_rectangle (bezier_sel->core->win, bezier_sel->core->gc, 0,
+	      gdk_draw_rectangle (bezier_sel->core->win, bezier_sel->core->gc,
+				  FALSE,
 				  pt->sx - BEZIER_HALFWIDTH, pt->sy - BEZIER_HALFWIDTH,
 				  BEZIER_WIDTH, BEZIER_WIDTH);
 	    }
@@ -2108,24 +2267,24 @@ bezier_draw_line (BezierSelect *bezier_sel,
 static void
 bezier_draw_segment (BezierSelect     *bezier_sel,
 		     BezierPoint      *points,
-		     int               subdivisions,
-		     int               space,
+		     gint              subdivisions,
+		     gint              space,
 		     BezierPointsFunc  points_func,
-		     gpointer          udata)
+		     gpointer          data)
 {
   static GdkPoint gdk_points[256];
-  static int npoints = 256;
+  static gint     n_points = 256;
 
   BezierMatrix geometry;
   BezierMatrix tmp1, tmp2;
   BezierMatrix deltas;
-  double x, dx, dx2, dx3;
-  double y, dy, dy2, dy3;
-  double d, d2, d3;
-  int lastx, lasty; 
-  int newx, newy;   
-  int index;
-  int i;
+  gdouble      x, dx, dx2, dx3;
+  gdouble      y, dy, dy2, dy3;
+  gdouble      d, d2, d3;
+  gint         lastx, lasty; 
+  gint         newx, newy;   
+  gint         index;
+  gint         i;
 
   /* construct the geometry matrix from the segment */
   /* assumes that a valid segment containing 4 points is passed in */
@@ -2224,9 +2383,9 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
 	  index++;
 
 	  /* if the point buffer is full put it to the screen and zero it out */
-	  if (index >= npoints)
+	  if (index >= n_points)
 	    {
-	      (* points_func) (bezier_sel, gdk_points, index, udata);
+	      (* points_func) (bezier_sel, gdk_points, index, data);
 	      index = 0;
 	    }
 	}
@@ -2237,17 +2396,17 @@ bezier_draw_segment (BezierSelect     *bezier_sel,
 
   /* if there are points in the buffer, then put them on the screen */
   if (index)
-    (* points_func) (bezier_sel, gdk_points, index, udata);
+    (* points_func) (bezier_sel, gdk_points, index, data);
 }
 
 static void
 bezier_draw_segment_points (BezierSelect *bezier_sel,
 			    GdkPoint     *points,
-			    int           npoints,
-			    gpointer      udata)
+			    gint          n_points,
+			    gpointer      data)
 {
   gdk_draw_points (bezier_sel->core->win,
-		   bezier_sel->core->gc, points, npoints);
+		   bezier_sel->core->gc, points, n_points);
 }
 
 static void
@@ -2277,8 +2436,8 @@ static int lasty;
 static void
 bezier_convert (BezierSelect *bezier_sel,
 		GDisplay     *gdisp,
-		int           subdivisions,
-		int           antialias)
+		gint          subdivisions,
+		gboolean      antialias)
 {
   PixelRegion maskPR;
   BezierPoint * points;
@@ -2426,25 +2585,26 @@ bezier_convert (BezierSelect *bezier_sel,
 static void
 bezier_convert_points (BezierSelect *bezier_sel,
 		       GdkPoint     *points,
-		       int           npoints,
-		       gpointer      udata)
+		       gint          n_points,
+		       gpointer      data)
 {
-  int i;
+  gint i;
 
   if (start_convert)
     start_convert = 0;
   else
-    bezier_convert_line (bezier_sel->scanlines, lastx, lasty, points[0].x, points[0].y);
+    bezier_convert_line (bezier_sel->scanlines,
+			 lastx, lasty, points[0].x, points[0].y);
 
-  for (i = 0; i < (npoints - 1); i++)
+  for (i = 0; i < (n_points - 1); i++)
     {
       bezier_convert_line (bezier_sel->scanlines,
 			   points[i].x, points[i].y,
 			   points[i+1].x, points[i+1].y);
     }
 
-  lastx = points[npoints-1].x;
-  lasty = points[npoints-1].y;
+  lastx = points[n_points - 1].x;
+  lasty = points[n_points - 1].y;
 }
 
 static void
@@ -2681,7 +2841,7 @@ bezier_paste_bezierselect_to_current(GDisplay *gdisp,BezierSelect *bsel)
       curSel->cur_control = curSel->points->next;
       curSel->closed = 1;
       if (curTool->gdisp_ptr)
-	bezier_convert(curSel, curTool->gdisp_ptr, SUBDIVIDE, NO);
+	bezier_convert(curSel, curTool->gdisp_ptr, SUBDIVIDE, FALSE);
     }
 
 /*   g_print ("After pasting...\n"); */
@@ -2712,7 +2872,7 @@ bezier_to_sel_internal(BezierSelect  *bezier_sel,
    *  mask...
    */
   if (bezier_options->antialias)
-    bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, YES);
+    bezier_convert (bezier_sel, tool->gdisp_ptr, SUBDIVIDE, TRUE);
   
 /*   if (!bezier_options->extend) */
 /*     { */
@@ -2743,27 +2903,27 @@ bezier_to_sel_internal(BezierSelect  *bezier_sel,
   gdisplays_flush ();
 }
 
-static int
-test_add_point_on_segment (BezierSelect     *bezier_sel,
-			    BezierPoint      *pt,
-			    int               subdivisions,
-			    int               space,
-			    int xpos, 
-			    int ypos, 
-			    int halfwidth)
+static gboolean
+test_add_point_on_segment (BezierSelect *bezier_sel,
+			   BezierPoint  *pt,
+			   gint          subdivisions,
+			   gint          space,
+			   gint          xpos, 
+			   gint          ypos, 
+			   gint          halfwidth)
 
 {
-  BezierPoint *points;
-  BezierMatrix geometry;
-  BezierMatrix tmp1, tmp2;
-  BezierMatrix deltas;
-  double x, dx, dx2, dx3;
-  double y, dy, dy2, dy3;
-  double d, d2, d3;
-  int lastx, lasty;
-  int newx, newy;
-  int i;
-  double ratio;
+  BezierPoint  *points;
+  BezierMatrix  geometry;
+  BezierMatrix  tmp1, tmp2;
+  BezierMatrix  deltas;
+  gdouble       x, dx, dx2, dx3;
+  gdouble       y, dy, dy2, dy3;
+  gdouble       d, d2, d3;
+  gint          lastx, lasty;
+  gint          newx, newy;
+  gint          i;
+  gdouble       ratio;
 
   /* construct the geometry matrix from the segment */
   /* assumes that a valid segment containing 4 points is passed in */
@@ -2776,7 +2936,7 @@ test_add_point_on_segment (BezierSelect     *bezier_sel,
   for (i = 0; i < 4; i++)
     {
       if (!points)
-	return 0;
+	return FALSE;
 
       switch (space)
 	{
@@ -2976,11 +3136,10 @@ test_add_point_on_segment (BezierSelect     *bezier_sel,
       bezier_sel->cur_anchor = pt2;
       bezier_sel->cur_control = pt1;
 
-      return 1;
+      return TRUE;
     }
 
-  return 0;
-  
+  return FALSE;
 }
 
 void bezier_select_mode(gint mode)
@@ -2991,45 +3150,53 @@ void bezier_select_mode(gint mode)
 /* The curve has to be closed to do a selection. */
 
 void
-bezier_to_selection(BezierSelect *bezier_sel,
-		    GDisplay     *gdisp)
+bezier_to_selection (BezierSelect *bezier_sel,
+		     GDisplay     *gdisp)
 {
   /* Call the internal function */
-  if(!bezier_sel->closed)
+  if (!bezier_sel->closed)
     {
-      g_message(_("Curve not closed!"));
+      g_message (_("Curve not closed!"));
       return;
     }
 
-  /* force the passed selection to be the current selection..*/
-  /* This loads it into curSel for this image */
-  bezier_paste_bezierselect_to_current(gdisp,bezier_sel);
-  bezier_to_sel_internal(curSel,curTool,gdisp,ADD,1);
+  /* force the passed selection to be the current selection...
+   * This loads it into curSel for this image
+   */
+  bezier_paste_bezierselect_to_current (gdisp, bezier_sel);
+  bezier_to_sel_internal (curSel, curTool, gdisp, ADD, TRUE);
 }
 
-void printSel( BezierSelect *sel)
+/* unused
+static void
+printSel (BezierSelect *sel)
 {
   BezierPoint *pt;
   BezierPoint *start_pt;
-  int i;
+  gint         i;
 
   pt = sel->points;
   start_pt = pt;
 
   g_print ("\n");
 
-  for(i=0; i<sel->num_points; i++)
+  for (i = 0; i < sel->num_points; i++)
     {
-      g_print ("%d(%p) x,y=%f,%f type=%d next=%p prev=%p next_curve=%p\n", i,pt, pt->x, pt->y,pt->type,pt->next,pt->prev,pt->next_curve);
-      if(pt->next != start_pt && pt->next_curve)
+      g_print ("%d(%p) x,y=%f,%f type=%d next=%p prev=%p next_curve=%p\n",
+	       i,pt, pt->x, pt->y,pt->type,pt->next,pt->prev,pt->next_curve);
+
+      if (pt->next != start_pt && pt->next_curve)
 	g_print ("Curve out a sync!!\n");
+
       if(pt->next_curve)
 	{
 	  pt = pt->next_curve;
 	  start_pt = pt;
 	}
       else
-	pt = pt->next;
+	{
+	  pt = pt->next;
+	}
     }
 
   g_print ("core : %p\n", sel->core);
@@ -3037,27 +3204,38 @@ void printSel( BezierSelect *sel)
   g_print ("draw : %d\n", sel->draw);
   g_print ("state: %d\n", sel->state);
 }
+*/
 
 /* check whether vectors (offx, offy), (l_offx, l_offy) have the same angle. */
 static gboolean
-stroke_interpolatable (int offx, int offy, int l_offx, int l_offy, gdouble error)
+stroke_interpolatable (gint     offx,
+		       gint     offy,
+		       gint     l_offx,
+		       gint     l_offy,
+		       gdouble  error)
 {
-  if      ((offx == l_offx) & (offy == l_offy))
-    return TRUE;
+  if ((offx == l_offx) & (offy == l_offy))
+    {
+      return TRUE;
+    }
   else if ((offx == 0) | (l_offx == 0))
-    if (offx == l_offx)
-      return ((0 <= offy) & (0 <= offy)) | ((offy < 0) & (l_offy < 0));
-    else
-      return FALSE;
+    {
+      if (offx == l_offx)
+	return ((0 <= offy) & (0 <= offy)) | ((offy < 0) & (l_offy < 0));
+      else
+	return FALSE;
+    }
   else if ((offy == 0) | (l_offy == 0))
-    if (offy == l_offy)
-      return ((0 < offx) & (0 < l_offx)) | ((offx < 0) & (l_offx < 0));
-    else
-      return FALSE;
+    {
+      if (offy == l_offy)
+	return ((0 < offx) & (0 < l_offx)) | ((offx < 0) & (l_offx < 0));
+      else
+	return FALSE;
+    }
   /* At this point, we can assert: offx, offy, l_offx, l_offy != 0 */
   else if (((0 < offx) & (0 < l_offx)) | ((offx < 0) & (l_offx < 0)))
     {
-      gdouble	grad1, grad2;
+      gdouble grad1, grad2;
 
       if (ABS (offy) < ABS (offx))
 	{
@@ -3069,11 +3247,12 @@ stroke_interpolatable (int offx, int offy, int l_offx, int l_offy, gdouble error
 	  grad1 = (gdouble) offx / (gdouble) offy;
 	  grad2 = (gdouble) l_offx / (gdouble) l_offy;
 	}
+
       /* printf ("error: %f / %f\n", ABS (grad1 - grad2), error); */
-      return (ABS (grad1 - grad2) <= error);
+      return ABS (grad1 - grad2) <= error;
     }
-  else
-    return FALSE;
+
+  return FALSE;
 }
 
 static void
@@ -3153,28 +3332,28 @@ bezier_stack_points_aux (GdkPoint *points,
 static void
 bezier_stack_points (BezierSelect *bezier_sel,
 		     GdkPoint     *points,
-		     int           npoints,
-		     gpointer      udata)
+		     gint          n_points,
+		     gpointer      data)
 {
-  gint	i;
-  gint	expand_size = 32;
-  gint	minx, maxx, miny, maxy;
-  gdouble error;
-  BezierRenderPnts *rpnts = udata;
+  BezierRenderPnts *rpnts = data;
+  gint	            i;
+  gint	            expand_size = 32;
+  gint	            minx, maxx, miny, maxy;
+  gdouble           error;
 
-  if (npoints < 2)		/* Does this happen? */
+  if (n_points < 2)		/* Does this happen? */
     return;
 
   if (rpnts->stroke_points == NULL)	/*  initialize it here */
     {
       rpnts->num_stroke_points = 0;
       rpnts->len_stroke_points = expand_size;
-      rpnts->stroke_points = g_new (double, 2 * rpnts->len_stroke_points);
+      rpnts->stroke_points = g_new (gdouble, 2 * rpnts->len_stroke_points);
     }
 
   maxx = minx = points[0].x;
   maxy = miny = points[0].y;
-  for (i = 1; i < npoints; i++)
+  for (i = 1; i < n_points; i++)
     {
       if (points[i].x < minx)
 	minx = points[i].x;
@@ -3186,116 +3365,131 @@ bezier_stack_points (BezierSelect *bezier_sel,
 	maxy = points[i].y;
     }
   /* allow one pixel fluctuation */
-  error = 2.0 / MAX(maxx - minx, maxy - miny);
+  error = 2.0 / MAX (maxx - minx, maxy - miny);
   error = 0.0; /* ALT */
 
   /* add the start point */
   bezier_stack_points_aux (points, 0, 0, 0, rpnts);
 
   /* divide segments recursively */
-  bezier_stack_points_aux (points, 0, npoints - 1, error, rpnts);
+  bezier_stack_points_aux (points, 0, n_points - 1, error, rpnts);
 
-  /* printf ("npoints: %d\n", npoints); */
+  /* printf ("n_points: %d\n", n_points); */
 }
 
 static gint
-bezier_gen_points(BezierSelect     *bezier_sel,
-		  int	            open_path,
-		  BezierRenderPnts *rpnts)
+bezier_gen_points (BezierSelect     *bezier_sel,
+		   gint	             open_path,
+		   BezierRenderPnts *rpnts)
 {
-  BezierPoint * points;
-  BezierPoint * start_pt;
-  BezierPoint * next_curve;
-  BezierRenderPnts *next_rpnts = rpnts;
-  gint point_counts = 0; 
+  BezierPoint      *points;
+  BezierPoint      *start_pt;
+  BezierPoint      *next_curve;
+  BezierRenderPnts *next_rpnts   = rpnts;
+  gint              point_counts = 0; 
 
   /* stack points */
   points = bezier_sel->points;
   start_pt = bezier_sel->points;
-      
-  if(bezier_sel->num_points >= 4)
+
+  if (bezier_sel->num_points >= 4)
     {
-      do {
- 	point_counts = count_points_on_curve(points); 
-	if(point_counts < 4)
-	  return(TRUE);
-	do {
-	  bezier_draw_segment (bezier_sel, points,
-			       SUBDIVIDE, AA_IMAGE_COORDS,
-			       bezier_stack_points,
-			       (gpointer)next_rpnts);
-	  
-	  points = next_anchor(points,&next_curve);
-	} while (points != start_pt && points);
-	start_pt = next_curve;
-	points = next_curve;
-	if(next_curve)
-	  {
-	    next_rpnts->next_curve = g_new0(BezierRenderPnts,1);
-	    next_rpnts = next_rpnts->next_curve;
-	  }
-      } while (next_curve);
+      do
+	{
+	  point_counts = count_points_on_curve (points); 
+
+	  if (point_counts < 4)
+	    return TRUE;
+
+	  do
+	    {
+	      bezier_draw_segment (bezier_sel, points,
+				   SUBDIVIDE, AA_IMAGE_COORDS,
+				   bezier_stack_points,
+				   (gpointer) next_rpnts);
+
+	      points = next_anchor (points, &next_curve);
+	    }
+	  while (points != start_pt && points);
+
+	  start_pt = next_curve;
+	  points   = next_curve;
+
+	  if (next_curve)
+	    {
+	      next_rpnts->next_curve = g_new0 (BezierRenderPnts, 1);
+	      next_rpnts             = next_rpnts->next_curve;
+	    }
+	}
+      while (next_curve);
     }
-  
-  return (TRUE);
+
+  return TRUE;
 }
 
 void
 bezier_stroke (BezierSelect *bezier_sel,
 	       GDisplay     *gdisp,
-	       int          subdivisions,
-	       int	    open_path)
+	       gint          subdivisions,
+	       gint          open_path)
 {
-  Argument *return_vals;
-  int nreturn_vals;
+  Argument         *return_vals;
+  gint              nreturn_vals;
   BezierRenderPnts *next_rpnts;
-  BezierRenderPnts *rpnts = g_new0(BezierRenderPnts,1);
+  BezierRenderPnts *rpnts;
+
+  rpnts = g_new0 (BezierRenderPnts, 1);
 
   /*  Start an undo group  */
   undo_push_group_start (gdisp->gimage, PAINT_CORE_UNDO);
 
-  bezier_gen_points(bezier_sel,open_path,rpnts);
+  bezier_gen_points (bezier_sel,open_path,rpnts);
+
   do
     {
-  if (rpnts->stroke_points)
-    {
-      GimpDrawable *drawable;
-      int offset_x, offset_y;
-      gdouble *ptr;
-    
-      drawable = gimage_active_drawable (gdisp->gimage);
-      gimp_drawable_offsets (drawable, &offset_x, &offset_y);
-
-      ptr = rpnts->stroke_points;
-      while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))
+      if (rpnts->stroke_points)
 	{
-	  *ptr /= SUPERSAMPLE;
-	  *ptr++ -= offset_x;
-	  *ptr /= SUPERSAMPLE;
-	  *ptr++ -= offset_y;
+	  GimpDrawable *drawable;
+	  gint          offset_x, offset_y;
+	  gdouble      *ptr;
+
+	  drawable = gimage_active_drawable (gdisp->gimage);
+	  gimp_drawable_offsets (drawable, &offset_x, &offset_y);
+
+	  ptr = rpnts->stroke_points;
+	  while (ptr < rpnts->stroke_points + (rpnts->num_stroke_points * 2))
+	    {
+	      *ptr /= SUPERSAMPLE;
+	      *ptr++ -= offset_x;
+	      *ptr /= SUPERSAMPLE;
+	      *ptr++ -= offset_y;
+	    }
+
+	  /* Stroke with the correct tool */
+	  return_vals =
+	    procedural_db_run_proc (tool_active_PDB_string (),
+				    &nreturn_vals,
+				    PDB_DRAWABLE, drawable_ID (drawable),
+				    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
+				    PDB_FLOATARRAY, rpnts->stroke_points,
+				    PDB_END);
+
+	  if (return_vals && return_vals[0].value.pdb_int != PDB_SUCCESS)
+	    g_message (_("Paintbrush operation failed."));
+
+	  procedural_db_destroy_args (return_vals, nreturn_vals);
+
+	  g_free (rpnts->stroke_points);
 	}
 
-      /* Stroke with the correct tool */
-      return_vals = procedural_db_run_proc (tool_active_PDB_string(),
-					    &nreturn_vals,
-					    PDB_DRAWABLE, drawable_ID (drawable),
-					    PDB_INT32, (gint32) rpnts->num_stroke_points * 2,
-					    PDB_FLOATARRAY, rpnts->stroke_points,
-					    PDB_END);
-
-      if (return_vals && return_vals[0].value.pdb_int != PDB_SUCCESS)
-	g_message (_("Paintbrush operation failed."));
-
-      procedural_db_destroy_args (return_vals, nreturn_vals);
-
-      g_free (rpnts->stroke_points);
+      next_rpnts = rpnts->next_curve;
+      rpnts->stroke_points = NULL;
+      rpnts->len_stroke_points = rpnts->num_stroke_points = 0;
+      g_free(rpnts);
+      rpnts = next_rpnts;
     }
-    next_rpnts = rpnts->next_curve;
-    rpnts->stroke_points = NULL;
-    rpnts->len_stroke_points = rpnts->num_stroke_points = 0;
-    g_free(rpnts);
-    rpnts = next_rpnts;
-    } while (rpnts);
+  while (rpnts);
+
   /*  End an undo group  */
   undo_push_group_end (gdisp->gimage);
   gdisplays_flush ();
@@ -3304,22 +3498,22 @@ bezier_stroke (BezierSelect *bezier_sel,
 static void
 bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
 				  BezierPoint      *points,
-				  int               subdivisions,
+				  gint              subdivisions,
 				  BezierDistance   *bdist)
 {
   BezierMatrix geometry;
   BezierMatrix tmp1, tmp2;
   BezierMatrix deltas;
-  double x, dx, dx2, dx3;
-  double y, dy, dy2, dy3;
-  double d, d2, d3;
-  int index;
-  int i;
+  gdouble      x, dx, dx2, dx3;
+  gdouble      y, dy, dy2, dy3;
+  gdouble      d, d2, d3;
+  gint         index;
+  gint         i;
 
   /* construct the geometry matrix from the segment */
   /* assumes that a valid segment containing 4 points is passed in */
 
-  if(bdist->found)
+  if (bdist->found)
     return;
 
   for (i = 0; i < 4; i++)
@@ -3356,14 +3550,14 @@ bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
   bezier_compose (tmp2, tmp1, deltas);
 
   /* extract the x deltas */
-  x = deltas[0][0];
-  dx = deltas[1][0];
+  x   = deltas[0][0];
+  dx  = deltas[1][0];
   dx2 = deltas[2][0];
   dx3 = deltas[3][0];
 
   /* extract the y deltas */
-  y = deltas[0][1];
-  dy = deltas[1][1];
+  y   = deltas[0][1];
+  dy  = deltas[1][1];
   dy2 = deltas[2][1];
   dy3 = deltas[3][1];
 
@@ -3373,20 +3567,20 @@ bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
   for (i = 0; i < subdivisions; i++)
     {
       /* increment the x values */
-      x += dx;
-      dx += dx2;
+      x   += dx;
+      dx  += dx2;
       dx2 += dx3;
 
       /* increment the y values */
-      y += dy;
-      dy += dy2;
+      y   += dy;
+      dy  += dy2;
       dy2 += dy3;
 
 /*       g_print ("x = %g, y = %g\n",x,y); */
 
       /* if this point is different than the last one...then draw it */
       /* Note :
-       * It assumes the udata is the place we want the 
+       * It assumes the data is the place we want the 
        * floating version of the coords to be stuffed.
        * These are needed when we calculate the gradient of the 
        * curve.
@@ -3399,15 +3593,16 @@ bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
  	  gdouble dx = bdist->lastx - rx; 
  	  gdouble dy = bdist->lasty - ry; 
 
- 	  bdist->curdist += sqrt((dx*dx)+(dy*dy)); 
+ 	  bdist->curdist += sqrt ((dx * dx) + (dy * dy)); 
  	  if(bdist->curdist >= bdist->dist) 
  	    { 
- 	      *(bdist->x) = ROUND((rx + dx/2)); 
- 	      *(bdist->y) = ROUND((ry + dy/2)); 
- 	      if(dx == 0.0) 
+ 	      *(bdist->x) = ROUND ((rx + dx / 2)); 
+ 	      *(bdist->y) = ROUND ((ry + dy / 2)); 
+
+ 	      if (dx == 0.0) 
  		*(bdist->gradient) = G_MAXDOUBLE; 
  	      else 
- 		*(bdist->gradient) = dy/dx; 
+ 		*(bdist->gradient) = dy / dx; 
 
 /* 	      g_print ("found x = %d, y = %d\n",*(bdist->x),*(bdist->y)); */
 	      bdist->found = TRUE;
@@ -3419,63 +3614,71 @@ bezier_draw_segment_for_distance (BezierSelect     *bezier_sel,
       else
 	{
 	  bdist->firstpnt = FALSE;
-	  bdist->lastx = x;
-	  bdist->lasty = y;
+	  bdist->lastx    = x;
+	  bdist->lasty    = y;
 	}
     }
 }
 
 static void
-bezier_draw_curve_for_distance (BezierSelect    *bezier_sel,
-				BezierDistance  *udata)
+bezier_draw_curve_for_distance (BezierSelect   *bezier_sel,
+				BezierDistance *distance)
 {
-  BezierPoint * points;
-  BezierPoint * start_pt;
-  BezierPoint * next_curve;
+  BezierPoint *points;
+  BezierPoint *start_pt;
+  BezierPoint *next_curve;
 
-  points = bezier_sel->points;
+  points   = bezier_sel->points;
   start_pt = bezier_sel->points;
 
-  if(bezier_sel->num_points >= 4)
+  if (bezier_sel->num_points >= 4)
     {
-      do {
-	do {
-	  bezier_draw_segment_for_distance (bezier_sel, points,
-					    SUBDIVIDE, 
-					    udata);
-	  points = next_anchor(points,&next_curve);
-	} while (points != start_pt && points);
-	start_pt = next_curve;
-	points = next_curve;
-      } while (next_curve);
+      do
+	{
+	  do
+	    {
+	      bezier_draw_segment_for_distance (bezier_sel, points,
+						SUBDIVIDE, 
+						distance);
+	      points = next_anchor (points, &next_curve);
+	    }
+	  while (points != start_pt && points);
+
+	  start_pt = next_curve;
+	  points   = next_curve;
+	}
+      while (next_curve);
     }
 }
 
 gint
-bezier_distance_along(BezierSelect *bezier_sel,
-		      int	    open_path,
-		      gdouble       dist,
-		      gint         *x,
-		      gint         *y,
-		      gdouble      *gradient)
+bezier_distance_along (BezierSelect *bezier_sel,
+		       gint          open_path,
+		       gdouble       dist,
+		       gint         *x,
+		       gint         *y,
+		       gdouble      *gradient)
 {
   /* Render the curve as points then walk along it... */
-  BezierDistance *bdist = g_new0(BezierDistance,1);
-  gint ret;
+  BezierDistance *bdist;
+  gint            ret;
+
+  bdist = g_new0 (BezierDistance, 1);
 
   bdist->firstpnt = TRUE;
-  bdist->curdist = 0.0;
-  bdist->lastx = 0.0;
-  bdist->lasty = 0.0;
-  bdist->dist = dist;
-  bdist->x = x;
-  bdist->y = y;
+  bdist->curdist  = 0.0;
+  bdist->lastx    = 0.0;
+  bdist->lasty    = 0.0;
+  bdist->dist     = dist;
+  bdist->x        = x;
+  bdist->y        = y;
   bdist->gradient = gradient;
-  bdist->found = FALSE;
+  bdist->found    = FALSE;
 
-  bezier_draw_curve_for_distance (bezier_sel,bdist);
+  bezier_draw_curve_for_distance (bezier_sel, bdist);
   ret = bdist->found;
 
   g_free(bdist);
-  return (ret);
+
+  return ret;
 }

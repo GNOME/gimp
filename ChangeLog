@@ -1,5 +1,10 @@
 2000-12-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/bezier_select.[ch]
+	* app/bezier_selectP.h: massive cleanup (prototypes, indentation, ...)
+
+2000-12-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/measure.c: cleanup, proper prototypes, ...
 
 2000-12-27  Michael Natterer  <mitch@gimp.org>
