@@ -79,7 +79,7 @@
 			     0.25
 			               ; unused parameters
 			     1.0 1.0 1.0 1.0
-			     0 0 0 0 0 0 0 0)
+			     -1 -1 -1 -1 -1 -1 -1 -1)
 	 ; end while: 
 	 )
   (gimp-image-remove-layer theImage theLayer)

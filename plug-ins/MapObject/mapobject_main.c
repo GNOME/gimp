@@ -310,12 +310,10 @@ run (const gchar      *name,
             mapvals.cylinder_length         = param[40].data.d_float;
 
             for (i = 0; i < 6; i++)
-              mapvals.boxmap_id[i] =
-		gimp_drawable_get (param[41+i].data.d_drawable)->drawable_id;
+              mapvals.boxmap_id[i] = param[41+i].data.d_drawable;
 
             for (i = 0; i < 2; i++)
-              mapvals.cylindermap_id[i] =
-		gimp_drawable_get (param[47+i].data.d_drawable)->drawable_id;
+              mapvals.cylindermap_id[i] = param[47+i].data.d_drawable;
 
             check_drawables (drawable);
             image_setup (drawable, FALSE);
