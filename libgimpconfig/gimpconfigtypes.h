@@ -27,8 +27,13 @@
 #include <libgimpbase/gimpbasetypes.h>
 
 
-typedef struct _GimpConfig       GimpConfig; /* dummy typedef */
-typedef struct _GimpConfigWriter GimpConfigWriter;
+typedef struct _GimpConfig        GimpConfig; /* dummy typedef */
+typedef struct _GimpConfigWriter  GimpConfigWriter;
+
+
+#include <libgimpconfig/gimpcolorconfig-enums.h>
+
+typedef struct _GimpColorConfig   GimpColorConfig;
 
 
 #endif  /* __GIMP_CONFIG_TYPES_H__ */

@@ -40,21 +40,24 @@
 
 static void  gimp_core_config_class_init   (GimpCoreConfigClass *klass);
 static void  gimp_core_config_init         (GimpCoreConfig      *config);
-static void  gimp_core_config_finalize            (GObject      *object);
-static void  gimp_core_config_set_property        (GObject      *object,
-                                                   guint         property_id,
-                                                   const GValue *value,
-                                                   GParamSpec   *pspec);
-static void  gimp_core_config_get_property        (GObject      *object,
-                                                   guint         property_id,
-                                                   GValue       *value,
-                                                   GParamSpec   *pspec);
-static void gimp_core_config_default_image_notify (GObject      *object,
-                                                   GParamSpec   *pspec,
-                                                   gpointer      data);
-static void gimp_core_config_default_grid_notify  (GObject      *object,
-                                                   GParamSpec   *pspec,
-                                                   gpointer      data);
+static void  gimp_core_config_finalize               (GObject      *object);
+static void  gimp_core_config_set_property           (GObject      *object,
+                                                      guint         property_id,
+                                                      const GValue *value,
+                                                      GParamSpec   *pspec);
+static void  gimp_core_config_get_property           (GObject      *object,
+                                                      guint         property_id,
+                                                      GValue       *value,
+                                                      GParamSpec   *pspec);
+static void gimp_core_config_default_image_notify    (GObject      *object,
+                                                      GParamSpec   *pspec,
+                                                      gpointer      data);
+static void gimp_core_config_default_grid_notify     (GObject      *object,
+                                                      GParamSpec   *pspec,
+                                                      gpointer      data);
+static void gimp_core_config_color_management_notify (GObject      *object,
+                                                      GParamSpec   *pspec,
+                                                      gpointer      data);
 
 
 #define DEFAULT_BRUSH     "Circle (11)"
@@ -102,7 +105,8 @@ enum
   PROP_THUMBNAIL_SIZE,
   PROP_THUMBNAIL_FILESIZE_LIMIT,
   PROP_INSTALL_COLORMAP,
-  PROP_MIN_COLORS
+  PROP_MIN_COLORS,
+  PROP_COLOR_MANAGEMENT
 };
 
 static GObjectClass *parent_class = NULL;
@@ -319,6 +323,10 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                 "min-colors", MIN_COLORS_BLURB,
                                 27, 256, 144,
                                 GIMP_CONFIG_PARAM_RESTART);
+  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_COLOR_MANAGEMENT,
+                                   "color-management", COLOR_MANAGEMENT_BLURB,
+                                   GIMP_TYPE_COLOR_CONFIG,
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
 }
 
 static void
@@ -334,6 +342,11 @@ gimp_core_config_init (GimpCoreConfig *config)
   config->default_grid = g_object_new (GIMP_TYPE_GRID, NULL);
   g_signal_connect (config->default_grid, "notify",
                     G_CALLBACK (gimp_core_config_default_grid_notify),
+                    config);
+
+  config->color_management = g_object_new (GIMP_TYPE_COLOR_CONFIG, NULL);
+  g_signal_connect (config->color_management, "notify",
+                    G_CALLBACK (gimp_core_config_color_management_notify),
                     config);
 }
 
@@ -367,6 +380,9 @@ gimp_core_config_finalize (GObject *object)
 
   if (core_config->default_grid)
     g_object_unref (core_config->default_grid);
+
+  if (core_config->color_management)
+    g_object_unref (core_config->color_management);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -512,6 +528,11 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_MIN_COLORS:
       core_config->min_colors = g_value_get_int (value);
       break;
+    case PROP_COLOR_MANAGEMENT:
+      if (g_value_get_object (value))
+        gimp_config_sync (GIMP_CONFIG (g_value_get_object (value)),
+                          GIMP_CONFIG (core_config->color_management), 0);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -637,6 +658,9 @@ gimp_core_config_get_property (GObject    *object,
     case PROP_MIN_COLORS:
       g_value_set_int (value, core_config->min_colors);
       break;
+    case PROP_COLOR_MANAGEMENT:
+      g_value_set_object (value, core_config->color_management);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -658,4 +682,12 @@ gimp_core_config_default_grid_notify (GObject    *object,
                                       gpointer    data)
 {
   g_object_notify (G_OBJECT (data), "default-grid");
+}
+
+static void
+gimp_core_config_color_management_notify (GObject    *object,
+                                          GParamSpec *pspec,
+                                          gpointer    data)
+{
+  g_object_notify (G_OBJECT (data), "color-management");
 }

@@ -32,7 +32,6 @@
 
 
 typedef struct _GimpColorConfigClass GimpColorConfigClass;
-typedef struct _GimpColorConfig      GimpColorConfig;
 
 struct _GimpColorConfig
 {
@@ -44,11 +43,8 @@ struct _GimpColorConfig
   gchar                      *cmyk_profile;
   gchar                      *display_profile;
   gchar                      *printer_profile;
-  GimpColorRenderingIntent    display_rendering_intent;
-  GimpColorRenderingIntent    simulation_rendering_intent;
-  GimpColorFileOpenBehaviour  open_behaviour_no_profile;
-  GimpColorFileOpenBehaviour  open_behaviour_rgb_profile;
-  GimpColorFileOpenBehaviour  open_behaviour_cmyk_profile;
+  GimpColorRenderingIntent    display_intent;
+  GimpColorRenderingIntent    simulation_intent;
 };
 
 struct _GimpColorConfigClass

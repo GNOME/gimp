@@ -33,5 +33,7 @@
 #include <libgimpconfig/gimpconfig-path.h>
 #include <libgimpconfig/gimpscanner.h>
 
+#include <libgimpconfig/gimpcolorconfig.h>
+
 
 #endif  /* __GIMP_CONFIG_H__ */

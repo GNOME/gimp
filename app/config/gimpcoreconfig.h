@@ -76,6 +76,7 @@ struct _GimpCoreConfig
   guint64                thumbnail_filesize_limit;
   gboolean               install_cmap;
   gint                   min_colors;
+  GimpColorConfig       *color_management;
 };
 
 struct _GimpCoreConfigClass

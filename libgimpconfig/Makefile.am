@@ -100,7 +100,9 @@ libgimpconfiginclude_HEADERS = \
 	gimpconfig-serialize.h		\
 	gimpconfig-utils.h		\
 	gimpconfigwriter.h		\
-	gimpscanner.h
+	gimpscanner.h			\
+	gimpcolorconfig.h		\
+	gimpcolorconfig-enums.h
 
 
 libgimpconfig_2_0_la_LDFLAGS = \

@@ -54,13 +54,13 @@
 #define DISPLAY_RENDERING_INTENT_BLURB \
   N_("Sets how colors are mapped for your display.")
 #define SIMULATION_RENDERING_INTENT_BLURB \
-  N_("Sets how colors from workspace to simulation device are converted.")
+  N_("Sets how colors are converted from workspace to simulation device.")
 #define OPEN_BEHAVIOUR_NO_PROFILE_BLURB \
-  N_("Defines what will be done if no color profile is available.")
+  "Defines what will be done if no color profile is available."
 #define OPEN_BEHAVIOUR_RGB_PROFILE_BLURB \
-  N_("Defines what will be done if an RGB profile is available.")
+  "Defines what will be done if an RGB profile is available."
 #define OPEN_BEHAVIOUR_CMYK_PROFILE_BLURB \
-  N_("Defines what will be done if a CMYK profile is available.")
+  "Defines what will be done if a CMYK profile is available."
 
 
 enum
@@ -183,6 +183,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                  0);
+#if 0
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_OPEN_BEHAVIOUR_NO_PROFILE,
                                  "open-behaviour-no-profile",
                                  OPEN_BEHAVIOUR_NO_PROFILE_BLURB,
@@ -201,6 +202,7 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  GIMP_TYPE_COLOR_FILE_OPEN_BEHAVIOUR,
                                  GIMP_COLOR_FILE_OPEN_ASK,
                                  0);
+#endif
 }
 
 static void
@@ -251,11 +253,12 @@ gimp_color_config_set_property (GObject      *object,
       color_config->printer_profile = g_value_dup_string (value);
       break;
     case PROP_DISPLAY_RENDERING_INTENT:
-      color_config->display_rendering_intent = g_value_get_enum (value);
+      color_config->display_intent = g_value_get_enum (value);
       break;
     case PROP_SIMULATION_RENDERING_INTENT:
-      color_config->simulation_rendering_intent = g_value_get_enum (value);
+      color_config->simulation_intent = g_value_get_enum (value);
       break;
+#if 0
     case PROP_OPEN_BEHAVIOUR_NO_PROFILE:
       color_config->open_behaviour_no_profile = g_value_get_enum (value);
       break;
@@ -265,6 +268,7 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_OPEN_BEHAVIOUR_CMYK_PROFILE:
       color_config->open_behaviour_cmyk_profile = g_value_get_enum (value);
       break;
+#endif
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -300,11 +304,12 @@ gimp_color_config_get_property (GObject    *object,
       g_value_set_string (value, color_config->printer_profile);
       break;
     case PROP_DISPLAY_RENDERING_INTENT:
-      g_value_set_enum (value, color_config->display_rendering_intent);
+      g_value_set_enum (value, color_config->display_intent);
       break;
     case PROP_SIMULATION_RENDERING_INTENT:
-      g_value_set_enum (value, color_config->simulation_rendering_intent);
+      g_value_set_enum (value, color_config->simulation_intent);
       break;
+#if 0
     case PROP_OPEN_BEHAVIOUR_NO_PROFILE:
       g_value_set_enum (value, color_config->open_behaviour_no_profile);
       break;
@@ -314,6 +319,7 @@ gimp_color_config_get_property (GObject    *object,
     case PROP_OPEN_BEHAVIOUR_CMYK_PROFILE:
       g_value_set_enum (value, color_config->open_behaviour_cmyk_profile);
       break;
+#endif
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
