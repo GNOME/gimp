@@ -63,8 +63,8 @@
 
 /*  local function prototypes  */
 
-static void         gui_main                        (Gimp        *gimp);
-static void         gui_main_quit                   (Gimp        *gimp);
+static void         gui_threads_enter               (Gimp        *gimp);
+static void         gui_threads_leave               (Gimp        *gimp);
 static void         gui_set_busy                    (Gimp        *gimp);
 static void         gui_unset_busy                  (Gimp        *gimp);
 static void         gui_message                     (Gimp        *gimp,
@@ -239,8 +239,8 @@ gui_init (Gimp *gimp)
   display_config = GIMP_DISPLAY_CONFIG (gimp->config);
   gui_config     = GIMP_GUI_CONFIG (gimp->config);
 
-  gimp->gui_main_loop_func      = gui_main;
-  gimp->gui_main_loop_quit_func = gui_main_quit;
+  gimp->gui_threads_enter_func  = gui_threads_enter;
+  gimp->gui_threads_leave_func  = gui_threads_leave;
   gimp->gui_set_busy_func       = gui_set_busy;
   gimp->gui_unset_busy_func     = gui_unset_busy;
   gimp->gui_message_func        = gui_message;
@@ -386,15 +386,15 @@ gui_get_screen_resolution (gdouble *xres,
 /*  private functions  */
 
 static void
-gui_main (Gimp *gimp)
+gui_threads_enter (Gimp *gimp)
 {
-  gtk_main ();
+  GDK_THREADS_ENTER ();
 }
 
 static void
-gui_main_quit (Gimp *gimp)
+gui_threads_leave (Gimp *gimp)
 {
-  gtk_main_quit ();
+  GDK_THREADS_LEAVE ();
 }
 
 static void

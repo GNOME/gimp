@@ -182,10 +182,8 @@ gimp_init (Gimp *gimp)
   gimp->message_handler         = GIMP_CONSOLE;
   gimp->stack_trace_mode        = GIMP_STACK_TRACE_NEVER;
 
-  gimp->main_loops              = NULL;
-
-  gimp->gui_main_loop_func      = NULL;
-  gimp->gui_main_loop_quit_func = NULL;
+  gimp->gui_threads_enter_func  = NULL;
+  gimp->gui_threads_leave_func  = NULL;
   gimp->gui_create_display_func = NULL;
   gimp->gui_set_busy_func       = NULL;
   gimp->gui_unset_busy_func     = NULL;
@@ -769,47 +767,21 @@ gimp_exit (Gimp     *gimp,
 }
 
 void
-gimp_main_loop (Gimp *gimp)
+gimp_threads_enter (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimp->gui_main_loop_func)
-    {
-      gimp->gui_main_loop_func (gimp);
-    }
-  else
-    {
-      GMainLoop *loop;
-
-      loop = g_main_loop_new (NULL, TRUE);
-
-      gimp->main_loops = g_list_prepend (gimp->main_loops, loop);
-
-      g_main_loop_run (loop);
-
-      gimp->main_loops = g_list_remove (gimp->main_loops, loop);
-
-      g_main_loop_unref (loop);
-    }
+  if (gimp->gui_threads_enter_func)
+    gimp->gui_threads_enter_func (gimp);
 }
 
 void
-gimp_main_loop_quit (Gimp *gimp)
+gimp_threads_leave (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  if (gimp->gui_main_loop_func)
-    {
-      gimp->gui_main_loop_quit_func (gimp);
-    }
-  else
-    {
-      GMainLoop *loop;
-
-      loop = (GMainLoop *) gimp->main_loops->data;
-
-      g_main_loop_quit (loop);
-    }
+  if (gimp->gui_threads_leave_func)
+    gimp->gui_threads_leave_func (gimp);
 }
 
 void

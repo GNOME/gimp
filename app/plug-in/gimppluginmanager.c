@@ -75,9 +75,9 @@ struct _PlugInHelpPathDef
 };
 
 
-static void            plug_ins_init_file       (GimpDatafileData  *file_data);
-static void            plug_ins_add_to_db       (Gimp              *gimp);
-static PlugInProcDef * plug_ins_proc_def_insert (PlugInProcDef     *proc_def);
+static void            plug_ins_init_file       (GimpDatafileData *file_data);
+static void            plug_ins_add_to_db       (Gimp             *gimp);
+static PlugInProcDef * plug_ins_proc_def_insert (PlugInProcDef    *proc_def);
 
 
 GSList      *proc_defs          = NULL;
@@ -779,8 +779,6 @@ static void
 plug_ins_add_to_db (Gimp *gimp)
 {
   PlugInProcDef *proc_def;
-  Argument       args[4];
-  Argument      *return_vals;
   GSList        *list;
 
   for (list = proc_defs; list; list = g_slist_next (list))
@@ -800,6 +798,9 @@ plug_ins_add_to_db (Gimp *gimp)
 
       if (proc_def->extensions || proc_def->prefixes || proc_def->magics)
         {
+          Argument  args[4];
+          Argument *return_vals;
+
           args[0].arg_type          = GIMP_PDB_STRING;
           args[0].value.pdb_pointer = proc_def->db_info.name;
 

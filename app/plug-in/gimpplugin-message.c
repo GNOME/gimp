@@ -337,19 +337,14 @@ plug_in_handle_proc_run (PlugIn    *plug_in,
   args = plug_in_params_to_args (proc_run->params, proc_run->nparams, FALSE);
   proc_rec = procedural_db_lookup (plug_in->gimp, proc_run->name);
 
-  if (proc_rec)
-    {
-      return_vals = procedural_db_execute (plug_in->gimp, proc_run->name, args);
-    }
-  else
-    {
-      /*  if the name lookup failed, construct a 
-       *  dummy "executiuon error" return value --Michael
-       */
-      return_vals = g_new (Argument, 1);
-      return_vals[0].arg_type      = GIMP_PDB_STATUS;
-      return_vals[0].value.pdb_int = GIMP_PDB_EXECUTION_ERROR;
-    }
+  plug_in_push (plug_in);
+
+  /*  Execute the procedure even if procedural_db_lookup() returned NULL,
+   *  procedural_db_execute() will return appropriate error return_vals.
+   */
+  return_vals = procedural_db_execute (plug_in->gimp, proc_run->name, args);
+
+  plug_in_pop ();
 
   if (return_vals)
     {
@@ -423,8 +418,6 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
 	  if (blocked->proc_name && proc_return->name && 
 	      strcmp (blocked->proc_name, proc_return->name) == 0)
 	    {
-	      plug_in_push (blocked->plug_in);
-
 	      if (! gp_proc_return_write (blocked->plug_in->my_write,
                                           proc_return,
                                           blocked->plug_in))
@@ -433,8 +426,6 @@ plug_in_handle_proc_return_priv (PlugIn       *plug_in,
 		  plug_in_close (blocked->plug_in, TRUE);
 		  return;
 		}
-
-	      plug_in_pop ();
 
 	      blocked_plug_ins = g_slist_remove (blocked_plug_ins, blocked);
 	      g_free (blocked->proc_name);
@@ -462,17 +453,19 @@ static void
 plug_in_handle_temp_proc_return (PlugIn       *plug_in,
                                  GPProcReturn *proc_return)
 {
-  if (! plug_in->in_temp_proc)
+  if (plug_in->in_temp_proc)
+    {
+      plug_in_handle_proc_return_priv (plug_in, proc_return);
+
+      plug_in_main_loop_quit (plug_in);
+    }
+  else
     {
       g_warning ("plug_in_handle_temp_proc_return: "
-                 "received TEMP_PROC_RETURN while not in temp proc");
+                 "received a temp_proc_return mesage while not running "
+                 "a temp proc (should not happen)");
       plug_in_close (plug_in, TRUE);
-      return;
     }
-
-  plug_in_handle_proc_return_priv (plug_in, proc_return);
-
-  plug_in_main_loop_quit (plug_in);
 }
 #endif
 
@@ -665,19 +658,20 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
       if (strcmp (proc_def->db_info.name, proc_install->name) == 0)
 	{
-	  if (proc_install->type == GIMP_TEMPORARY)
+          switch (proc_install->type)
             {
-              plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
-                                                        proc_def);
-
-              plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
-            }
-	  else
-            {
+            case GIMP_PLUGIN:
+            case GIMP_EXTENSION:
               plug_in_def->proc_defs = g_slist_remove (plug_in_def->proc_defs,
                                                        proc_def);
-
               plug_in_proc_def_free (proc_def);
+              break;
+
+            case GIMP_TEMPORARY:
+              plug_in->temp_proc_defs = g_slist_remove (plug_in->temp_proc_defs,
+                                                        proc_def);
+              plug_ins_temp_proc_def_remove (plug_in->gimp, proc_def);
+              break;
             }
 
 	  break;
@@ -686,8 +680,7 @@ plug_in_handle_proc_install (PlugIn        *plug_in,
 
   proc_def = plug_in_proc_def_new ();
 
-  proc_def->prog = g_strdup (prog);
-
+  proc_def->prog            = g_strdup (prog);
   proc_def->menu_path       = g_strdup (proc_install->menu_path);
   proc_def->accelerator     = NULL;
   proc_def->extensions      = NULL;
@@ -779,12 +772,31 @@ plug_in_handle_proc_uninstall (PlugIn          *plug_in,
 static void
 plug_in_handle_extension_ack (PlugIn *plug_in)
 {
-  plug_in_main_loop_quit (plug_in);
+  if (plug_in->starting_ext)
+    {
+      plug_in_main_loop_quit (plug_in);
+    }
+  else
+    {
+      g_warning ("plug_in_handle_extension_ack: "
+		 "received an extension_ack message while not starting "
+                 "an extension (should not happen)");
+      plug_in_close (plug_in, TRUE);
+    }
 }
 
 static void
 plug_in_handle_has_init (PlugIn *plug_in)
 {
   if (plug_in->query)
-    plug_in_def_set_has_init (plug_in->plug_in_def, TRUE);
+    {
+      plug_in_def_set_has_init (plug_in->plug_in_def, TRUE);
+    }
+  else
+    {
+      g_warning ("plug_in_handle_has_init: "
+		 "received a has_init message while not in query() "
+                 "(should not happen)");
+      plug_in_close (plug_in, TRUE);
+    }
 }

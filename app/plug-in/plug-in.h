@@ -30,12 +30,15 @@ struct _PlugIn
 {
   Gimp         *gimp;
 
+  gint          ref_count;
+
   guint         open : 1;         /*  Is the plug-in open?                    */
   guint         query : 1;        /*  Are we querying the plug-in?            */
   guint         init : 1;         /*  Are we initialing the plug-in?          */
   guint         synchronous : 1;  /*  Is the plug-in running synchronously?   */
   guint         recurse : 1;      /*  Do we have an own GMainLoop?            */
   guint         in_temp_proc : 1; /*  Is the plug-in busy with a temp proc?   */
+  guint         starting_ext : 1; /*  Does the plug-in wait for extension_ack?*/
   pid_t         pid;              /*  Plug-ins process id                     */
   gchar        *args[7];          /*  Plug-ins command line arguments         */
 
@@ -44,7 +47,7 @@ struct _PlugIn
   GIOChannel   *his_read;         /*  Plug-in's read and write channels       */
   GIOChannel   *his_write;
 
-  guint32       input_id;         /*  Id of input proc                        */
+  guint         input_id;         /*  Id of input proc                        */
 
   gchar         write_buffer[WRITE_BUFFER_SIZE]; /*  Buffer for writing       */
   gint          write_buffer_index;              /*  Buffer index for writing */
@@ -61,41 +64,29 @@ struct _PlugIn
 };
 
 
-void       plug_in_init       (Gimp       *gimp);
-void       plug_in_exit       (Gimp       *gimp);
+void       plug_in_init           (Gimp      *gimp);
+void       plug_in_exit           (Gimp      *gimp);
 
-void       plug_in_call_query (Gimp       *gimp,
-                               PlugInDef  *plug_in_def);
-void       plug_in_call_init  (Gimp       *gimp,
-                               PlugInDef  *plug_in_def);
+void       plug_in_call_query     (Gimp      *gimp,
+                                   PlugInDef *plug_in_def);
+void       plug_in_call_init      (Gimp      *gimp,
+                                   PlugInDef *plug_in_def);
 
-/*  Create a new plug-in structure
- */
-PlugIn   * plug_in_new        (Gimp       *gimp,
-                               gchar      *name);
+PlugIn   * plug_in_new            (Gimp      *gimp,
+                                   gchar     *name);
 
-/*  Destroy a plug-in structure.
- *  This will close the plug-in first if necessary.
- */
-void       plug_in_destroy    (PlugIn     *plug_in);
+void       plug_in_ref            (PlugIn    *plug_in);
+void       plug_in_unref          (PlugIn    *plug_in);
 
+gboolean   plug_in_open           (PlugIn    *plug_in);
+void       plug_in_close          (PlugIn    *plug_in,
+                                   gboolean   kill_it);
 
-/*  Open a plug-in. This cause the plug-in to run.
- *  If returns TRUE, you must destroy the plugin.
- *  If returns FALSE, you must not destroy the plugin.
- */
-gboolean   plug_in_open       (PlugIn     *plug_in);
-
-/*  Close a plug-in. This kills the plug-in and releases its resources.
- */
-void       plug_in_close      (PlugIn     *plug_in,
-                               gboolean    kill_it);
-
-void       plug_in_push           (PlugIn          *plug_in);
+void       plug_in_push           (PlugIn    *plug_in);
 void       plug_in_pop            (void);
 
-void       plug_in_main_loop      (PlugIn          *plug_in);
-void       plug_in_main_loop_quit (PlugIn          *plug_in);
+void       plug_in_main_loop      (PlugIn    *plug_in);
+void       plug_in_main_loop_quit (PlugIn    *plug_in);
 
 
 extern PlugIn *current_plug_in;

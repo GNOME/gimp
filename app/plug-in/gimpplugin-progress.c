@@ -27,6 +27,8 @@
 #endif
 #include "display/display-types.h"
 
+#include "pdb/procedural_db.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpprogress.h"
 
@@ -98,5 +100,15 @@ static void
 plug_in_progress_cancel (GtkWidget *widget,
 			 PlugIn    *plug_in)
 {
-  plug_in_destroy (plug_in);
+  if (plug_in->recurse)
+    {
+      plug_in->return_vals   = g_new (Argument, 1);
+      plug_in->n_return_vals = 1;
+
+      plug_in->return_vals->arg_type      = GIMP_PDB_STATUS;
+      plug_in->return_vals->value.pdb_int = GIMP_PDB_CANCEL;
+    }
+
+  plug_in_close (plug_in, TRUE);
+  plug_in_unref (plug_in);
 }

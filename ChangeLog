@@ -1,3 +1,48 @@
+2003-02-03  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp.[ch]: removed gimp_main_loop() and
+	gimp_main_loop_quit() because they were a temp_hack until plug-ins
+	have their own main loops. Added gimp_threads_enter() and
+	gimp_threads_leave() instead.
+
+	* app/gui/gui.c: ditto: removed the main loop stuff and added
+	functions which call GDK_THREADS_ENTER() and GDK_THREADS_LEAVE()
+	instead.
+
+	* app/app_procs.c: create the main GMainLoop here and use
+	gimp_threads_enter,leave().
+
+	* app/plug-in/plug-in.[ch]: added a ref_count per plug-in so the
+	plug-in is not destroyed under our feet while running a recursive
+	main loop. Added plug_in_ref(). Changed plug_in_destroy() to
+	plug_in_unref(). Don't destroy the plug-in if plug_in_open()
+	fails. Call gimp_threads_enter,leave() around g_main_loop_run().
+	Changed the way plug_in_push,pop() are used: "current_plug_in" is
+	no longer the plug-in which currently uses the wire, but the
+	plug-in which currently preforms a PDB call (the former meaning
+	was needed when wire callbacks had no plug-in context but needed
+	to get the plug-in from the global "current_plug_in" variable).
+	Removed all calls to plug_in_push,pop() from this file.
+
+	* app/plug-in/plug-in-message.c (plug_in_handle_proc_run): added
+	plug_in_push,pop() around procedural_db_execute(). No need
+	to construct an error return value if the procedure was not found
+	because procedural_db_execute() already does this.
+
+	Removed all other plug_in_push,pop(). Added more checks to plug-in
+	message handlers and kill the plug-in if it misbehaves. Cleanup.
+
+	* app/plug-in/plug-in-progress.c (plug_in_progress_cancel): if the
+	plug-in runs synchronous, provide a GIMP_PDB_CANCEL return value
+	so we don't see error messages about the "failed" procedure.
+
+	* app/plug-in/plug-in-run.c: removed plug_in_push,pop() stuff.
+	Set the new plug_in->starting_ext boolean while starting an
+	extension so the extension_ack handler knows that it wasn't called
+	from a buggy plug-in. Cleanup.
+
+	* app/plug-in/plug-ins.c: Cleanup.
+
 2003-02-03  Sven Neumann  <neo@wintermute>
 
 	Some code cleanup while trying to fix bug #105062:

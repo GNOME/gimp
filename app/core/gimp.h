@@ -24,7 +24,7 @@
 #include "gimpimage-new.h"
 
 
-typedef void         (* GimpMainLoopFunc)      (Gimp        *gimp);
+typedef void         (* GimpThreadFunc)        (Gimp        *gimp);
 typedef GimpObject * (* GimpCreateDisplayFunc) (GimpImage   *gimage,
                                                 guint        scale);
 typedef void         (* GimpSetBusyFunc)       (Gimp        *gimp);
@@ -58,10 +58,8 @@ struct _Gimp
   GimpMessageHandlerType message_handler;
   GimpStackTraceMode     stack_trace_mode;
 
-  GList                 *main_loops;
-
-  GimpMainLoopFunc       gui_main_loop_func;
-  GimpMainLoopFunc       gui_main_loop_quit_func;
+  GimpThreadFunc         gui_threads_enter_func;
+  GimpThreadFunc         gui_threads_leave_func;
   GimpCreateDisplayFunc  gui_create_display_func;
   GimpSetBusyFunc        gui_set_busy_func;
   GimpUnsetBusyFunc      gui_unset_busy_func;
@@ -161,8 +159,8 @@ void          gimp_restore              (Gimp               *gimp,
 void          gimp_exit                 (Gimp               *gimp,
                                          gboolean            kill_it);
 
-void          gimp_main_loop            (Gimp               *gimp);
-void          gimp_main_loop_quit       (Gimp               *gimp);
+void          gimp_threads_enter        (Gimp               *gimp);
+void          gimp_threads_leave        (Gimp               *gimp);
 
 void          gimp_set_busy             (Gimp               *gimp);
 void          gimp_set_busy_until_idle  (Gimp               *gimp);

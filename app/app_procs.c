@@ -246,7 +246,22 @@ app_init (gint    gimp_argc,
       gui_post_init (the_gimp);
     }
 
-  gimp_main_loop (the_gimp);
+  if (no_interface)
+    {
+      GMainLoop *loop;
+
+      loop = g_main_loop_new (NULL, FALSE);
+
+      gimp_threads_leave (the_gimp);
+      g_main_loop_run (loop);
+      gimp_threads_enter (the_gimp);
+
+      g_main_loop_unref (loop);
+    }
+  else
+    {
+      gtk_main ();
+    }
 }
 
 

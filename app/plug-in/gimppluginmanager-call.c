@@ -82,60 +82,66 @@ plug_in_run (Gimp       *gimp,
 
   if (plug_in)
     {
-      if (plug_in_open (plug_in))
+      GPConfig  config;
+      GPProcRun proc_run;
+
+      if (! plug_in_open (plug_in))
 	{
-          GPConfig  config;
-          GPProcRun proc_run;
+          plug_in_unref (plug_in);
+          goto done;
+        }
 
-	  plug_in->recurse = synchronous;
+      plug_in->recurse = synchronous;
 
-	  plug_in_push (plug_in);
+      config.version        = GP_VERSION;
+      config.tile_width     = TILE_WIDTH;
+      config.tile_height    = TILE_HEIGHT;
+      config.shm_ID         = plug_in_shm_get_ID (gimp);
+      config.gamma          = gimp->config->gamma_val;
+      config.install_cmap   = gimp->config->install_cmap;
+      config.show_tool_tips = GIMP_GUI_CONFIG (gimp->config)->show_tool_tips;
+      config.min_colors     = CLAMP (gimp->config->min_colors, 27, 256);
+      config.gdisp_ID       = gdisp_ID;
 
-	  config.version        = GP_VERSION;
-	  config.tile_width     = TILE_WIDTH;
-	  config.tile_height    = TILE_HEIGHT;
-	  config.shm_ID         = plug_in_shm_get_ID (gimp);
-	  config.gamma          = gimp->config->gamma_val;
-	  config.install_cmap   = gimp->config->install_cmap;
-          config.show_tool_tips = GIMP_GUI_CONFIG (gimp->config)->show_tool_tips;
-          config.min_colors     = CLAMP (gimp->config->min_colors, 27, 256);
-	  config.gdisp_ID       = gdisp_ID;
+      proc_run.name    = proc_rec->name;
+      proc_run.nparams = argc;
+      proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
 
-	  proc_run.name    = proc_rec->name;
-	  proc_run.nparams = argc;
-	  proc_run.params  = plug_in_args_to_params (args, argc, FALSE);
+      if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
+          ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
+          ! wire_flush (plug_in->my_write, plug_in))
+        {
+          return_vals = procedural_db_return_args (proc_rec, FALSE);
+          goto done;
+        }
 
-	  if (! gp_config_write (plug_in->my_write, &config, plug_in)     ||
-	      ! gp_proc_run_write (plug_in->my_write, &proc_run, plug_in) ||
-	      ! wire_flush (plug_in->my_write, plug_in))
-	    {
-	      return_vals = procedural_db_return_args (proc_rec, FALSE);
-	      goto done;
-	    }
+      plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
-	  plug_in_pop ();
+      plug_in_ref (plug_in);
 
-	  plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
+      /* If this is an automatically installed extension, wait for an
+       * installation-confirmation message
+       */
+      if ((proc_rec->proc_type == GIMP_EXTENSION) && (proc_rec->num_args == 0))
+        {
+          plug_in->starting_ext = TRUE;
 
-	  /*  If this is an automatically installed extension, wait for an
-	   *  installation-confirmation message
-	   */
-	  if ((proc_rec->proc_type == GIMP_EXTENSION) &&
-	      (proc_rec->num_args == 0))
-            {
-              plug_in_main_loop (plug_in);
-            }
+          plug_in_main_loop (plug_in);
 
-          /*  If this plug-in is requested to run synchronously, wait for
-           *  its return values
-           */
-	  if (plug_in->recurse)
-	    {
-              plug_in_main_loop (plug_in);
+          plug_in->starting_ext = FALSE;
+        }
 
-	      return_vals = plug_in_get_return_vals (plug_in, proc_rec);
-	    }
-	}
+      /* If this plug-in is requested to run synchronously, wait for
+       * it's return values
+       */
+      if (plug_in->recurse)
+        {
+          plug_in_main_loop (plug_in);
+
+          return_vals = plug_in_get_return_vals (plug_in, proc_rec);
+        }
+
+      plug_in_unref (plug_in);
     }
 
  done:
@@ -188,17 +194,16 @@ plug_in_temp_run (ProcRecord *proc_rec,
 		  Argument   *args,
 		  gint        argc)
 {
-  Argument  *return_vals;
-  PlugIn    *plug_in;
-  GPProcRun  proc_run;
-  gint       old_recurse;
-
-  return_vals = NULL;
+  Argument *return_vals = NULL;
+  PlugIn   *plug_in;
 
   plug_in = (PlugIn *) proc_rec->exec_method.temporary.plug_in;
 
   if (plug_in)
     {
+      GPProcRun proc_run;
+      gboolean  old_recurse;
+
       if (plug_in->in_temp_proc)
 	{
 	  return_vals = procedural_db_return_args (proc_rec, FALSE);
@@ -206,8 +211,6 @@ plug_in_temp_run (ProcRecord *proc_rec,
 	}
 
       plug_in->in_temp_proc = TRUE;
-
-      plug_in_push (plug_in);
 
       proc_run.name    = proc_rec->name;
       proc_run.nparams = argc;
@@ -220,16 +223,16 @@ plug_in_temp_run (ProcRecord *proc_rec,
 	  goto done;
 	}
 
-      plug_in_pop ();
-
       plug_in_params_destroy (proc_run.params, proc_run.nparams, FALSE);
 
       old_recurse = plug_in->recurse;
       plug_in->recurse = TRUE;
 
 #ifdef ENABLE_TEMP_RETURN
+      plug_in_ref (plug_in);
+
       plug_in_main_loop (plug_in);
-      
+
       return_vals = plug_in_get_return_vals (proc_rec);
 #else
       return_vals = procedural_db_return_args (proc_rec, TRUE);
@@ -238,6 +241,10 @@ plug_in_temp_run (ProcRecord *proc_rec,
       plug_in->recurse = old_recurse;
 
       plug_in->in_temp_proc = FALSE;
+
+#ifdef ENABLE_TEMP_RETURN
+      plug_in_unref (plug_in);
+#endif
     }
 
  done:
@@ -256,6 +263,7 @@ plug_in_get_return_vals (PlugIn     *plug_in,
 
   /* Return the status code plus the current return values. */
   nargs = proc_rec->num_values + 1;
+
   if (plug_in->return_vals && plug_in->n_return_vals == nargs)
     {
       return_vals = plug_in->return_vals;
@@ -270,8 +278,9 @@ plug_in_get_return_vals (PlugIn     *plug_in,
 	      sizeof (Argument) * MIN (plug_in->n_return_vals, nargs));
 
       /* Free the old argument pointer.  This will cause a memory leak
-	 only if there were more values returned than we need (which
-	 shouldn't ever happen). */
+       * only if there were more values returned than we need (which
+       * shouldn't ever happen).
+       */
       g_free (plug_in->return_vals);
     }
   else

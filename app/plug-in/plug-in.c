@@ -171,7 +171,10 @@ plug_in_exit (Gimp *gimp)
 
       list = list->next;
 
-      plug_in_destroy (plug_in);
+      if (plug_in->open)
+        plug_in_close (plug_in, TRUE);
+
+      plug_in_unref (plug_in);
     }
 }
 
@@ -194,8 +197,6 @@ plug_in_call_query (Gimp      *gimp,
 
       if (plug_in_open (plug_in))
 	{
-	  plug_in_push (plug_in);
-
 	  while (plug_in->open)
 	    {
               WireMessage msg;
@@ -210,11 +211,9 @@ plug_in_call_query (Gimp      *gimp,
 		  wire_destroy (&msg);
 		}
 	    }
-
-	  plug_in_pop ();
 	}
 
-      plug_in_destroy (plug_in);
+      plug_in_unref (plug_in);
     }
 }
 
@@ -237,8 +236,6 @@ plug_in_call_init (Gimp      *gimp,
 
       if (plug_in_open (plug_in))
 	{
-	  plug_in_push (plug_in);
-
 	  while (plug_in->open)
 	    {
               WireMessage msg;
@@ -253,11 +250,9 @@ plug_in_call_init (Gimp      *gimp,
 		  wire_destroy (&msg);
 		}
 	    }
-
-	  plug_in_pop ();
 	}
 
-      plug_in_destroy (plug_in);
+      plug_in_unref (plug_in);
     }
 }
 
@@ -275,12 +270,15 @@ plug_in_new (Gimp  *gimp,
 
   plug_in->gimp               = gimp;
 
+  plug_in->ref_count          = 1;
+
   plug_in->open               = FALSE;
   plug_in->query              = FALSE;
   plug_in->init               = FALSE;
   plug_in->synchronous        = FALSE;
   plug_in->recurse            = FALSE;
   plug_in->in_temp_proc       = FALSE;
+  plug_in->starting_ext       = FALSE;
   plug_in->pid                = 0;
 
   plug_in->args[0]            = g_strdup (name);
@@ -312,33 +310,43 @@ plug_in_new (Gimp  *gimp,
 }
 
 void
-plug_in_destroy (PlugIn *plug_in)
+plug_in_ref (PlugIn *plug_in)
 {
   g_return_if_fail (plug_in != NULL);
 
-  if (plug_in->open)
-    plug_in_close (plug_in, TRUE);
+  plug_in->ref_count++;
+}
 
-  if (plug_in->args[0])
-    g_free (plug_in->args[0]);
-  if (plug_in->args[1])
-    g_free (plug_in->args[1]);
-  if (plug_in->args[2])
-    g_free (plug_in->args[2]);
-  if (plug_in->args[3])
-    g_free (plug_in->args[3]);
-  if (plug_in->args[4])
-    g_free (plug_in->args[4]);
-  if (plug_in->args[5])
-    g_free (plug_in->args[5]);
+void
+plug_in_unref (PlugIn *plug_in)
+{
+  g_return_if_fail (plug_in != NULL);
 
-  if (plug_in->progress)
-    plug_in_progress_end (plug_in);
+  plug_in->ref_count--;
 
-  if (plug_in == current_plug_in)
-    plug_in_pop ();
+  if (plug_in->ref_count < 1)
+    {
+      if (plug_in->open)
+        plug_in_close (plug_in, TRUE);
 
-  g_free (plug_in);
+      if (plug_in->args[0])
+        g_free (plug_in->args[0]);
+      if (plug_in->args[1])
+        g_free (plug_in->args[1]);
+      if (plug_in->args[2])
+        g_free (plug_in->args[2]);
+      if (plug_in->args[3])
+        g_free (plug_in->args[3]);
+      if (plug_in->args[4])
+        g_free (plug_in->args[4]);
+      if (plug_in->args[5])
+        g_free (plug_in->args[5]);
+
+      if (plug_in->progress)
+        plug_in_progress_end (plug_in);
+
+      g_free (plug_in);
+    }
 }
 
 static void
@@ -433,9 +441,8 @@ plug_in_open (PlugIn *plug_in)
   fcntl (my_write[1], F_SETFD, 1);
 #endif
 
-  /* Fork another process. We'll remember the process id
-   *  so that we can later use it to kill the filter if
-   *  necessary.
+  /* Fork another process. We'll remember the process id so that we
+   * can later use it to kill the filter if necessary.
    */
   envp = gimp_environ_table_get_envp (plug_in->gimp->environ_table);
   if (! g_spawn_async (NULL, plug_in->args, envp,
@@ -450,8 +457,6 @@ plug_in_open (PlugIn *plug_in)
                  plug_in->args[0],
                  error->message);
       g_error_free (error);
-
-      plug_in_destroy (plug_in);
       return FALSE;
     }
 
@@ -496,9 +501,7 @@ plug_in_close (PlugIn   *plug_in,
   /*  Ask the filter to exit gracefully  */
   if (kill_it && plug_in->pid)
     {
-      plug_in_push (plug_in);
       gp_quit_write (plug_in->my_write, plug_in);
-      plug_in_pop ();
 
       /*  give the plug-in some time (10 ms)  */
 #ifndef G_OS_WIN32
@@ -625,9 +628,6 @@ plug_in_recv_message (GIOChannel   *channel,
 
   plug_in = (PlugIn *) data;
 
-  if (plug_in != current_plug_in)
-    plug_in_push (plug_in);
-
   if (plug_in->my_read == NULL)
     return TRUE;
 
@@ -666,9 +666,7 @@ plug_in_recv_message (GIOChannel   *channel,
 	       plug_in->args[0]);
 
   if (! plug_in->open)
-    plug_in_destroy (plug_in);
-  else
-    plug_in_pop ();
+    plug_in_unref (plug_in);
 
   return TRUE;
 }
@@ -809,9 +807,9 @@ plug_in_main_loop (PlugIn *plug_in)
 
   plug_in->main_loops = g_list_prepend (plug_in->main_loops, main_loop);
 
-  GDK_THREADS_LEAVE();
+  gimp_threads_leave (plug_in->gimp);
   g_main_loop_run (main_loop);
-  GDK_THREADS_ENTER ();
+  gimp_threads_enter (plug_in->gimp);
 
   g_main_loop_unref (main_loop);
 }
