@@ -44,9 +44,4 @@ GtkWidget *  message_box (char *, GtkCallback, gpointer);
 void tools_push_label (char *label);
 void tools_pop_label (void);
 
-void progress_start (void);
-void progress_update (float);
-void progress_step (void);
-void progress_end (void);
-
 #endif /* INTERFACE_H */

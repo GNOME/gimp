@@ -21,6 +21,7 @@
 
 #include "gtk/gtk.h"
 #include "procedural_db.h"
+#include "gimpprogress.h"
 
 
 #define WRITE_BUFFER_SIZE  512
@@ -58,11 +59,7 @@ struct _PlugIn
 
   GSList *temp_proc_defs;                /* Temporary procedures  */
 
-  GtkWidget *progress;                   /* Progress dialog */
-  GtkWidget *progress_label;
-  GtkWidget *progress_bar;
-
-  gint8 progress_gdisp_ID;               /* gdisp_ID of progress */ 
+  gimp_progress *progress;               /* Progress dialog */
 
   gpointer user_data;                    /* Handle for hanging data onto */
 };

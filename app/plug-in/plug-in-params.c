@@ -30,6 +30,7 @@
 #include <unistd.h>
 #include "libgimp/parasite.h"
 #include "libgimp/parasiteP.h" /* ick */
+#include "libgimp/gimpmodule.h"
 
 #ifdef HAVE_IPC_H
 #include <sys/ipc.h>
@@ -62,7 +63,7 @@
 
 #include "libgimp/gimpintl.h"
 
-#define SEPARATE_PROGRESS_BAR
+
 
 
 typedef struct _PlugInBlocked  PlugInBlocked;
@@ -126,8 +127,6 @@ static void      plug_in_args_destroy   (Argument  *args,
   					 int        nargs,
   					 int        full_destroy);
 
-static void      plug_in_disconnect_cancel (PlugIn *plug_in);
-
 static Argument* progress_init_invoker   (Argument *args);
 static Argument* progress_update_invoker (Argument *args);
 
@@ -137,6 +136,8 @@ static Argument* message_handler_get_invoker (Argument *args);
 static Argument* message_handler_set_invoker (Argument *args);
 
 static Argument* plugin_temp_PDB_name_invoker (Argument *args);
+
+static void module_initialize (char *filename);
 
 
 static GSList *plug_in_defs = NULL;
@@ -481,7 +482,78 @@ plug_in_init ()
       g_free (plug_in_def);
     }
   g_slist_free (plug_in_defs);
+
+
+  /* Load and initialize gimp modules */
+
+  if (g_module_supported ())
+    datafiles_read_directories (module_path,
+				module_initialize, 0 /* no flags */);
 }
+
+
+/* name must be of the form lib*.so */
+/* TODO: need support for WIN32-style dll names.  Maybe this function
+ * should live in libgmodule? */
+static gboolean
+valid_module_name (const char *filename)
+{
+  const char *basename;
+  int len;
+
+  basename = strrchr (filename, '/');
+  if (basename)
+    basename++;
+  else
+    basename = filename;
+
+  len = strlen (basename);
+
+  if (len < 3 + 1 + 3)
+    return FALSE;
+
+  if (strncmp (basename, "lib", 3))
+    return FALSE;
+
+  if (strcmp (basename + len - 3, ".so"))
+    return FALSE;
+
+  return TRUE;
+}
+
+static void
+module_initialize (char *filename)
+{
+  GModule *mod;
+  GimpModuleInitFunc init;
+  gpointer symbol;
+
+  if (!valid_module_name (filename))
+    return;
+
+  if ((be_verbose == TRUE) || (no_splash == TRUE))
+    g_print (_("load module: \"%s\"\n"), filename);
+
+  mod = g_module_open (filename, G_MODULE_BIND_LAZY);
+  if (!mod)
+    {
+      g_warning (_("module load error: %s: %s"), filename, g_module_error ());
+      return;
+    }
+
+  if (g_module_symbol (mod, "module_init", &symbol))
+    {
+      init = symbol;
+      if (init () == GIMP_MODULE_UNLOAD)
+	g_module_close (mod);
+    }
+  else
+    {
+      g_warning (_("%s: module_init() symbol not found"), filename);
+      g_module_close (mod);
+    }
+}
+
 
 void
 plug_in_kill ()
@@ -818,9 +890,6 @@ plug_in_new (char *name)
   plug_in->write_buffer_index = 0;
   plug_in->temp_proc_defs = NULL;
   plug_in->progress = NULL;
-  plug_in->progress_label = NULL;
-  plug_in->progress_bar = NULL;
-  plug_in->progress_gdisp_ID = -1;
   plug_in->user_data = NULL;
 
   return plug_in;
@@ -829,9 +898,6 @@ plug_in_new (char *name)
 void
 plug_in_destroy (PlugIn *plug_in)
 {
-  GDisplay *gdisp;
-  guint c_id;
-
   if (plug_in)
     {
       plug_in_close (plug_in, TRUE);
@@ -849,18 +915,9 @@ plug_in_destroy (PlugIn *plug_in)
       if (plug_in->args[5])
 	g_free (plug_in->args[5]);
 
-      if (plug_in->progress_gdisp_ID > 0) 
-	{
-	  gdisp = gdisplay_get_ID(plug_in->progress_gdisp_ID);
-	  c_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
-						    "progress");
-	  gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), c_id);
-	  gtk_progress_bar_update(GTK_PROGRESS_BAR(gdisp->progressbar), 0.0);
-	  
-	  plug_in_disconnect_cancel (plug_in);
-
-	  gdisp->progressid = 0;
-	}
+      if (plug_in->progress)
+	progress_end (plug_in->progress);
+      plug_in->progress = NULL;
 
       if (plug_in == current_plug_in)
 	plug_in_pop ();
@@ -1011,23 +1068,9 @@ plug_in_close (PlugIn *plug_in,
 
       /* Destroy the progress dialog if it exists
        */
-#ifdef SEPARATE_PROGRESS_BAR
       if (plug_in->progress)
-	{
-	  gtk_signal_disconnect_by_data (GTK_OBJECT (plug_in->progress), plug_in);
-	  gtk_widget_destroy (plug_in->progress);
-
-	  plug_in->progress = NULL;
-	  plug_in->progress_label = NULL;
-	  plug_in->progress_bar = NULL;
-	}
-#else
-      if (plug_in->progress)
-	{
-	  progress_end ();
-	  plug_in->progress = NULL;
-	}
-#endif
+	progress_end (plug_in->progress);
+      plug_in->progress = NULL;
 
       /* Set the fields to null values.
        */
@@ -3089,21 +3132,7 @@ static void
 plug_in_progress_cancel (GtkWidget *widget,
 			 PlugIn    *plug_in)
 {
-  plug_in->progress = NULL;
   plug_in_destroy (plug_in);
-}
-
-static void
-plug_in_disconnect_cancel (PlugIn    *plug_in)
-{
-  GDisplay *gdisp = NULL;
-  
-  gdisp = gdisplay_get_ID (plug_in->progress_gdisp_ID);
-  gtk_widget_set_sensitive (gdisp->cancelbutton, FALSE);
-  
-  gtk_signal_disconnect_by_func (GTK_OBJECT (gdisp->cancelbutton),
-				 (GtkSignalFunc) plug_in_progress_cancel,
-				 plug_in);
 }
 
 static void
@@ -3111,10 +3140,7 @@ plug_in_progress_init (PlugIn *plug_in,
 		       char   *message,
 		       gint   gdisp_ID)
 {
-  GtkWidget *vbox;
-  GtkWidget *button;
   GDisplay *gdisp = NULL;
-  guint context_id;
 
   if (!message)
     message = plug_in->args[0];
@@ -3122,100 +3148,22 @@ plug_in_progress_init (PlugIn *plug_in,
   if (gdisp_ID > 0) 
       gdisp = gdisplay_get_ID(gdisp_ID);
 
-  if (gdisp_ID > 0 && GTK_WIDGET_VISIBLE (gdisp->statusarea)
-		   && (gdisp->progressid == 0 || plug_in->progress_gdisp_ID > 0))
-    {
-      context_id = gtk_statusbar_get_context_id(GTK_STATUSBAR(gdisp->statusbar),
-						"progress");
-  
-      if (plug_in->progress_gdisp_ID > 0)
-	gtk_statusbar_pop(GTK_STATUSBAR(gdisp->statusbar), context_id);
-
-      gdisp->progressid = gtk_statusbar_push(GTK_STATUSBAR(gdisp->statusbar), 
-					     context_id, message);
-      plug_in->progress_gdisp_ID = gdisp_ID;
-
-      gtk_signal_connect (GTK_OBJECT (gdisp->cancelbutton), "clicked",
-			  (GtkSignalFunc) plug_in_progress_cancel,
-			  plug_in);
-      gtk_widget_set_sensitive (gdisp->cancelbutton, TRUE);
-    } 
-#ifdef SEPARATE_PROGRESS_BAR
-  else if (!plug_in->progress)
-    {
-      plug_in->progress = gtk_dialog_new ();
-      gtk_window_set_wmclass (GTK_WINDOW (plug_in->progress), "plug_in_progress", "Gimp");
-      gtk_window_set_title (GTK_WINDOW (plug_in->progress), prune_filename (plug_in->args[0]));
-
-      gtk_signal_connect (GTK_OBJECT (plug_in->progress), "destroy",
-			  (GtkSignalFunc) plug_in_progress_cancel,
-			  plug_in);
-      gtk_container_set_border_width (GTK_CONTAINER (GTK_DIALOG (plug_in->progress)->action_area), 2);
-
-      vbox = gtk_vbox_new (FALSE, 2);
-      gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plug_in->progress)->vbox), vbox, TRUE, TRUE, 0);
-      gtk_widget_show (vbox);
-
-      plug_in->progress_label = gtk_label_new (message);
-      gtk_misc_set_alignment (GTK_MISC (plug_in->progress_label), 0.0, 0.5);
-      gtk_box_pack_start (GTK_BOX (vbox), plug_in->progress_label, FALSE, TRUE, 0);
-      gtk_widget_show (plug_in->progress_label);
-
-      plug_in->progress_bar = gtk_progress_bar_new ();
-      gtk_widget_set_usize (plug_in->progress_bar, 150, 20);
-      gtk_box_pack_start (GTK_BOX (vbox), plug_in->progress_bar, TRUE, TRUE, 0);
-      gtk_widget_show (plug_in->progress_bar);
-
-      button = gtk_button_new_with_label (_("Cancel"));
-      gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
-                                 (GtkSignalFunc) gtk_widget_destroy,
-                                 GTK_OBJECT (plug_in->progress));
-      GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-      gtk_box_pack_start (GTK_BOX (GTK_DIALOG (plug_in->progress)->action_area), button, TRUE, TRUE, 0);
-      gtk_widget_grab_default (button);
-      gtk_widget_show (button);
-
-      gtk_widget_show (plug_in->progress);
-    }
+  if (plug_in->progress)
+    plug_in->progress = progress_restart (plug_in->progress, message,
+					  plug_in_progress_cancel, plug_in);
   else
-    {
-      gtk_label_set (GTK_LABEL (plug_in->progress_label), message);
-    }
-#else
-  else if (!plug_in->progress)
-    {
-      plug_in->progress = 0x1;
-      progress_update (0.0);
-      progress_start ();
-    }
-#endif
+    plug_in->progress = progress_start (gdisp, message, TRUE,
+					plug_in_progress_cancel, plug_in);
 }
 
 static void
 plug_in_progress_update (PlugIn *plug_in,
 			 double  percentage)
 {
-  GDisplay *gdisp;
-
-  if (plug_in->progress_gdisp_ID > 0)
-    {
-      gdisp = gdisplay_get_ID(plug_in->progress_gdisp_ID);
-      if (percentage >= 0.0 && percentage <= 1.0)
-	gtk_progress_bar_update( GTK_PROGRESS_BAR (gdisp->progressbar), percentage);
-    }
-  else
-    {
-#ifdef SEPARATE_PROGRESS_BAR
-      if (!plug_in->progress)
-	plug_in_progress_init (plug_in, NULL, -1);
-
-      if (percentage >= 0.0 && percentage <= 1.0)
-	gtk_progress_bar_update (GTK_PROGRESS_BAR (plug_in->progress_bar), percentage);
-#else
-      progress_update (percentage);
-#endif
-    }
+  if (!plug_in->progress)
+    plug_in_progress_init (plug_in, NULL, -1);
+  
+  progress_update (plug_in->progress, percentage);
 }
 
 static Argument*

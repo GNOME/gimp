@@ -311,8 +311,7 @@ oilify_rgb (GDrawable *drawable)
 	}
       
       progress += dest_rgn.w * dest_rgn.h;
-      if ((progress % 5) == 0)
-	gimp_progress_update ((double) progress / (double) max_progress);
+      gimp_progress_update ((double) progress / (double) max_progress);
     }
   
   /*  update the oil-painted region  */

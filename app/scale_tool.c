@@ -47,7 +47,7 @@ char          x_ratio_buf     [MAX_INFO_BUF];
 char          y_ratio_buf     [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      scale_tool_scale   (GImage *, GimpDrawable *, double *, TileManager *, int, GimpMatrix);
+static void *      scale_tool_scale   (GImage *, GimpDrawable *, GDisplay *, double *, TileManager *, int, GimpMatrix);
 static void *      scale_tool_recalc  (Tool *, void *);
 static void        scale_tool_motion  (Tool *, void *);
 static void        scale_info_update  (Tool *);
@@ -82,6 +82,7 @@ scale_tool_transform (tool, gdisp_ptr, state)
 	  info_dialog_add_field (transform_info, _("X Scale Ratio: "), x_ratio_buf, NULL, NULL);
 	  info_dialog_add_field (transform_info, _("Y Scale Ratio: "), y_ratio_buf, NULL, NULL);
 	}
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
 
       transform_core->trans_info [X1] = (double) transform_core->x1;
       transform_core->trans_info [Y1] = (double) transform_core->y1;
@@ -102,7 +103,8 @@ scale_tool_transform (tool, gdisp_ptr, state)
       break;
 
     case FINISH :
-      return scale_tool_scale (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
+      return scale_tool_scale (gdisp->gimage, gimage_active_drawable (gdisp->gimage), gdisp,
 			       transform_core->trans_info, transform_core->original,
 			       transform_tool_smoothing (), transform_core->transform);
       break;
@@ -423,15 +425,27 @@ scale_tool_recalc (tool, gdisp_ptr)
 }
 
 static void *
-scale_tool_scale (gimage, drawable, trans_info, float_tiles, interpolation, matrix)
+scale_tool_scale (gimage, drawable, gdisp, trans_info, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
+     GDisplay *gdisp;
      double *trans_info;
      TileManager *float_tiles;
      int interpolation;
      GimpMatrix matrix;
 {
-  return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
+  void *ret;
+  gimp_progress *progress;
+
+  progress = progress_start (gdisp, _("Scaling..."), FALSE, NULL, NULL);
+
+  ret = transform_core_do (gimage, drawable, float_tiles,
+			   interpolation, matrix,
+			   progress? progress_update_and_flush:NULL, progress);
+  if (progress)
+    progress_end (progress);
+
+  return ret;
 }
 
 
@@ -568,7 +582,7 @@ scale_invoker (args)
       gimp_matrix_translate (matrix, trans_info[X1], trans_info[Y1]);
 
       /*  scale the buffer  */
-      new_tiles = scale_tool_scale (gimage, drawable, trans_info,
+      new_tiles = scale_tool_scale (gimage, drawable, NULL, trans_info,
 				    float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */

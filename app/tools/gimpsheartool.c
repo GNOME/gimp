@@ -53,7 +53,7 @@ static char        xshear_buf  [MAX_INFO_BUF];
 static char        yshear_buf  [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      shear_tool_shear   (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix);
+static void *      shear_tool_shear   (GImage *, GimpDrawable *, GDisplay *, TileManager *, int, GimpMatrix);
 static void *      shear_tool_recalc  (Tool *, void *);
 static void        shear_tool_motion  (Tool *, void *);
 static void        shear_info_update  (Tool *);
@@ -84,6 +84,7 @@ shear_tool_transform (tool, gdisp_ptr, state)
 	  info_dialog_add_field (transform_info, _("X Shear Magnitude: "), xshear_buf, shear_x_mag_changed, tool);
 	  info_dialog_add_field (transform_info, _("Y Shear Magnitude: "), yshear_buf, shear_y_mag_changed, tool);
 	}
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
       direction_unknown = 1;
       transform_core->trans_info[HORZ_OR_VERT] = HORZ;
       transform_core->trans_info[XSHEAR] = 0.0;
@@ -103,8 +104,9 @@ shear_tool_transform (tool, gdisp_ptr, state)
       break;
 
     case FINISH :
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
       direction_unknown = 1;
-      return shear_tool_shear (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+      return shear_tool_shear (gdisp->gimage, gimage_active_drawable (gdisp->gimage), gdisp,
 			       transform_core->original, transform_tool_smoothing (),
 			       transform_core->transform);
       break;
@@ -349,14 +351,26 @@ shear_tool_recalc (tool, gdisp_ptr)
 
 
 static void *
-shear_tool_shear (gimage, drawable, float_tiles, interpolation, matrix)
+shear_tool_shear (gimage, drawable, gdisp, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
+     GDisplay *gdisp;
      TileManager *float_tiles;
      int interpolation;
      GimpMatrix matrix;
 {
-  return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
+  void *ret;
+  gimp_progress *progress;
+
+  progress = progress_start (gdisp, _("Shearing..."), FALSE, NULL, NULL);
+
+  ret = transform_core_do (gimage, drawable, float_tiles,
+			   interpolation, matrix,
+			   progress? progress_update_and_flush:NULL, progress);
+  if (progress)
+    progress_end (progress);
+
+  return ret;
 }
 
 
@@ -491,7 +505,7 @@ shear_invoker (args)
       gimp_matrix_translate (matrix, +cx, +cy);
 
       /*  shear the buffer  */
-      new_tiles = shear_tool_shear (gimage, drawable, float_tiles, interpolation, matrix);
+      new_tiles = shear_tool_shear (gimage, drawable, NULL, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
       tile_manager_destroy (float_tiles);

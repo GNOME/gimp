@@ -73,6 +73,8 @@
 #  the GIMP if the script-fu plug-in is never run.
 (script-fu-path "${gimp_dir}/scripts:${gimp_data_dir}/scripts")
 
+# Set the path to modules that are to be initialized at startup
+(module-path "${gimp_dir}/modules:${gimp_plugin_dir}/modules")
 
 # The tile cache is used to make sure the gimp doesn't thrash
 # tiles between memory and disk. Setting this value higher will

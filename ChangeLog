@@ -1,3 +1,85 @@
+Sun Jan 11 00:24:21 GMT 1999  Austin Donnelly  <austin@greenend.org.uk>
+
+	Bit of a large checkin this - it's basically three things:
+	  1 - GimpModules using gmodules to dynamically load and
+	       initialise modules at gimp start of day.
+	  2 - Color selectors now register themselves with a color
+	       notebook.
+	  3 - progress bars have been cleaned up a bit, so now have
+	       progress indictations on all transform tool and gradient
+	       fill operations.  Not done bucket fill, but that seems to
+	       be the next candidate.
+
+	New directories:
+	* modules/: new directory for dynamically loadable modules.
+
+	New files:
+	* modules/.cvsignore
+	* modules/Makefile.am
+	* modules/colorsel_gtk.c: GTK color selector wrapped up as a
+	    color selector the gimp can use.
+
+	* app/gimpprogress.[ch]: progress bars within gimp core, either as
+	    popups, or in the status bar.  This is mainly code moved out
+	    of plug-in.c
+
+	* app/color_notebook.[ch]: color selector notebook, implementing
+	    very similar interface to color_select.h so it can be used as
+	    a drop-in replacement for it.
+
+	* libgimp/color_selector.h: API color selectors need to implement
+	    to become a page in the color_notebook.
+
+	* libgimp/gimpmodule.h: API gimp modules need to implement to be
+	    initialised by gimp at start of day.
+
+	Modified files:
+	* Makefile.am: add modules/ to SUBDIRS
+	* libgimp/Makefile.am: install gimpmodule.h and color_selector.h
+	* app/gimprc.[ch]: recognise module-path variable.
+	* gimprc.in: set module-path variable to something sensible
+	    (currently "${gimp_dir}/modules:${gimp_plugin_dir}/modules").
+	* app/Makefile.am: build color notebook and gimpprogress
+	* app/app_procs.c: register internal GIMP color selector with
+	    color notebook.
+	* app/asupsample.c: call progress function less frequently for
+	    better performance.
+	* app/asupsample.h: progress_func_t typedef moved to gimpprogress.h
+	* app/blend.c: make callbacks to a progress function
+	* app/color_area.c: use a color notebook rather than a color selector
+	* app/color_panel.c: ditto
+	* app/color_select.c: export color selector interface for notebook
+	* app/color_select.h: color_select_init() prototype
+	* app/flip_tool.c: flip the image every time, rather than every
+	    second click.
+	* app/interface.c: move progress bar stuff out to
+	    gimpprogress.c.  Make the code actually work while we're at it.
+	* app/interface.h: move prototypes for progress functions out to
+	    gimpprogress.h
+	* app/plug_in.c: load and initialise modules (if possible). Move
+	    progress bar handling code out to gimpprogress.c
+	* app/plug_in.h: keep only a gimp_progress * for each plugin, not
+	    a whole bunch of GtkWidgets.
+	* app/scale_tool.c
+	* app/rotate_tool.c
+	* app/shear_tool.c
+	* app/perspective_tool.c: progress bar during operation.
+	    De-sensitise the dialog to discourage the user from running
+	    two transforms in parallel.
+	* app/transform_core.c: recalculate grid coords when bounding box
+	    changes.  Only initialise the action area of the dialog once,
+	    to avoid multiple "ok" / "reset" buttons appearing.  Undraw
+	    transform tool with correct matrix to get rid of handle
+	    remains on screen.  Call a progress function as we apply the
+	    transform matrix.  A few new i18n markups.  Invalidate
+	    floating selection marching ants after applying matrix.
+	* app/transform_core.h: transform_core_do() takes an optional
+	    progress callback argument (and data).
+	* plug-ins/oilify/oilify.c: send progress bar updates after every
+	    pixel region, not only if they processed a multiple of 5
+	    pixels (which was quite unlikely, and therefore gave a jerky
+	    progress indication).
+
 Sun Jan 10 23:31:45 GMT 1999 Adam D. Moss <adam@gimp.org>
 
 	* app/blend.c app/bucket_fill.c app/convert.c app/crop.c

@@ -98,8 +98,6 @@ GtkTooltips *tool_tips;
 GtkWidget *popup_shell = NULL;
 
 
-static GtkWidget *tool_label_area = NULL;
-static GtkWidget *progress_area = NULL;
 static GdkColor colors[12];
 static GtkWidget *toolbox_shell = NULL;
 
@@ -1040,58 +1038,3 @@ message_box_close_callback (GtkWidget *w,
 }
 
 
-void
-progress_start ()
-{
-  if (!GTK_WIDGET_VISIBLE (progress_area))
-    {
-      gtk_widget_set_usize (progress_area,
-			    tool_label_area->allocation.width,
-			    tool_label_area->allocation.height);
-
-      gtk_widget_hide (tool_label_area);
-      gtk_widget_show (progress_area);
-    }
-}
-
-void
-progress_update (float percentage)
-{
-  gtk_progress_bar_update (GTK_PROGRESS_BAR (progress_area), percentage);
-
-  if (GTK_WIDGET_VISIBLE (progress_area))
-    gdk_flush ();
-}
-
-void
-progress_step ()
-{
-  float val;
-
-  if (GTK_WIDGET_VISIBLE (progress_area))
-    {
-      val = gtk_progress_get_current_percentage(GTK_PROGRESS(progress_area))
-	+ 0.01;
-      /*
-      val = GTK_PROGRESS_BAR (progress_area)->percentage + 0.01;
-      */
-      if (val > 1.0)
-	val = 0.0;
-
-      progress_update (val);
-    }
-}
-
-void
-progress_end ()
-{
-  if (GTK_WIDGET_VISIBLE (progress_area))
-    {
-      gtk_widget_hide (progress_area);
-      gtk_widget_show (tool_label_area);
-
-      gdk_flush ();
-
-      gtk_progress_bar_update (GTK_PROGRESS_BAR (progress_area), 0.0);
-    }
-}

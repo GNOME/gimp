@@ -22,6 +22,7 @@
 #include "draw_core.h"
 #include "temp_buf.h"
 #include "libgimp/gimpmatrix.h"
+#include "gimpprogress.h"
 
 /* possible scaling functions */
 #define CREATING        0
@@ -136,7 +137,7 @@ void          transform_core_reset        (Tool *, void *);
 void	      transform_core_grid_density_changed (void);
 
 /*  transform functions  */
-TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix);
+TileManager * transform_core_do           (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix, progress_func_t, gpointer);
 TileManager * transform_core_cut          (GImage *, GimpDrawable *, int *);
 Layer *       transform_core_paste        (GImage *, GimpDrawable *, TileManager *, int);
 void          transform_bounding_box (Tool*);

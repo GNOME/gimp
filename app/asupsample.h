@@ -24,6 +24,7 @@
 #ifndef __ASUPSAMPLE_H__
 #define __ASUPSAMPLE_H__
 
+#include "gimpprogress.h"
 
 /***** Types *****/
 
@@ -33,7 +34,6 @@ typedef struct {
 
 typedef void (*render_func_t) (double x, double y, color_t *color, void *render_data);
 typedef void (*put_pixel_func_t) (int x, int y, color_t color, void *put_pixel_data);
-typedef void (*progress_func_t) (int y1, int y2, int curr_y, void *progress_data);
 
 
 /***** Functions *****/

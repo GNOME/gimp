@@ -48,6 +48,8 @@ struct _ColorSelect {
   GdkGC *gc;
 };
 
+void color_select_init (void);
+
 ColorSelectP color_select_new (int, int, int, ColorSelectCallback, void *, int);
 void color_select_show (ColorSelectP);
 void color_select_hide (ColorSelectP);

@@ -161,7 +161,9 @@ static void   blend                         (GImage *gimage, GimpDrawable *drawa
 					     RepeatMode repeat,
 					     int supersample, int max_depth, double threshold,
 					     double startx, double starty,
-					     double endx, double endy);
+					     double endx, double endy,
+					     progress_func_t progress_callback,
+					     void *progress_data);
 
 static double gradient_calc_conical_sym_factor           (double dist, double *axis, double offset,
 							  double x, double y);
@@ -195,7 +197,9 @@ static void   gradient_fill_region          (GImage *gimage, GimpDrawable *drawa
 					     BlendMode blend_mode, GradientType gradient_type,
 					     double offset, RepeatMode repeat,
 					     int supersample, int max_depth, double threshold,
-					     double sx, double sy, double ex, double ey);
+					     double sx, double sy, double ex, double ey,
+					     progress_func_t progress_callback,
+					     void *progress_data);
 
 static void calc_rgb_to_hsv(double *r, double *g, double *b);
 static void calc_hsv_to_rgb(double *h, double *s, double *v);
@@ -606,8 +610,12 @@ blend_button_release (Tool           *tool,
   GDisplay * gdisp;
   GImage * gimage;
   BlendTool * blend_tool;
+#ifdef BLEND_UI_CALLS_VIA_PDB
   Argument *return_vals;
   int nreturn_vals;
+#else
+  gimp_progress *progress;
+#endif
 
   gdisp = (GDisplay *) gdisp_ptr;
   gimage = gdisp->gimage;
@@ -626,6 +634,9 @@ blend_button_release (Tool           *tool,
       ((blend_tool->startx != blend_tool->endx) ||
        (blend_tool->starty != blend_tool->endy)))
     {
+      /* we can't do callbacks easily with the PDB, so this UI/backend
+       * separation (though good) is ignored for the moment */
+#ifdef BLEND_UI_CALLS_VIA_PDB
       return_vals = procedural_db_run_proc ("gimp_blend",
 					    &nreturn_vals,
 					    PDB_DRAWABLE, drawable_ID (gimage_active_drawable (gimage)),
@@ -650,6 +661,33 @@ blend_button_release (Tool           *tool,
 	g_message (_("Blend operation failed."));
 
       procedural_db_destroy_args (return_vals, nreturn_vals);
+
+#else /* ! BLEND_UI_CALLS_VIA_PDB */
+
+      progress = progress_start (gdisp, _("Blending..."), FALSE, NULL, NULL);
+
+      blend (gimage,
+	     gimage_active_drawable (gimage),
+	     blend_options->blend_mode,
+	     blend_options->paint_mode,
+	     blend_options->gradient_type,
+	     blend_options->opacity,
+	     blend_options->offset,
+	     blend_options->repeat,
+	     blend_options->supersample,
+	     blend_options->max_depth,
+	     blend_options->threshold,
+	     blend_tool->startx,
+	     blend_tool->starty,
+	     blend_tool->endx,
+	     blend_tool->endy,
+	     progress? progress_update_and_flush : NULL, progress);
+
+      if (progress)
+	progress_end (progress);
+
+      gdisplays_flush ();
+#endif /* ! BLEND_UI_CALLS_VIA_PDB */
     }
 }
 
@@ -766,21 +804,23 @@ blend_control (Tool     *tool,
 
 /*  The actual blending procedure  */
 static void
-blend (GImage       *gimage,
-       GimpDrawable *drawable,
-       BlendMode     blend_mode,
-       int           paint_mode,
-       GradientType  gradient_type,
-       double        opacity,
-       double        offset,
-       RepeatMode    repeat,
-       int           supersample,
-       int           max_depth,
-       double        threshold,
-       double        startx,
-       double        starty,
-       double        endx,
-       double        endy)
+blend (GImage          *gimage,
+       GimpDrawable    *drawable,
+       BlendMode        blend_mode,
+       int              paint_mode,
+       GradientType     gradient_type,
+       double           opacity,
+       double           offset,
+       RepeatMode       repeat,
+       int              supersample,
+       int              max_depth,
+       double           threshold,
+       double           startx,
+       double           starty,
+       double           endx,
+       double           endy,
+       progress_func_t  progress_callback,
+       void            *progress_data)
 {
   TileManager *buf_tiles;
   PixelRegion bufPR;
@@ -811,7 +851,8 @@ blend (GImage       *gimage,
 			blend_mode, gradient_type, offset, repeat,
 			supersample, max_depth, threshold,
 			(startx - x1), (starty - y1),
-			(endx - x1), (endy - y1));
+			(endx - x1), (endy - y1),
+			progress_callback, progress_data);
 
   pixel_region_init (&bufPR, buf_tiles, 0, 0, (x2 - x1), (y2 - y1), FALSE);
   gimage_apply_image (gimage, drawable, &bufPR, TRUE,
@@ -1375,23 +1416,26 @@ gradient_put_pixel(int x, int y, color_t color, void *put_pixel_data)
 }
 
 
+
 static void
-gradient_fill_region (GImage       *gimage,
-		      GimpDrawable *drawable,
-		      PixelRegion  *PR,
-		      int           width,
-		      int           height,
-		      BlendMode     blend_mode,
-		      GradientType  gradient_type,
-		      double        offset,
-		      RepeatMode    repeat,
-		      int           supersample,
-		      int           max_depth,
-		      double        threshold,
-		      double        sx,
-		      double        sy,
-		      double        ex,
-		      double        ey)
+gradient_fill_region (GImage          *gimage,
+		      GimpDrawable    *drawable,
+		      PixelRegion     *PR,
+		      int              width,
+		      int              height,
+		      BlendMode        blend_mode,
+		      GradientType     gradient_type,
+		      double           offset,
+		      RepeatMode       repeat,
+		      int              supersample,
+		      int              max_depth,
+		      double           threshold,
+		      double           sx,
+		      double           sy,
+		      double           ex,
+		      double           ey,
+		      progress_func_t  progress_callback,
+		      void            *progress_data)
 {
   RenderBlendData  rbd;
   PutPixelData     ppd;
@@ -1536,7 +1580,7 @@ gradient_fill_region (GImage       *gimage,
 				max_depth, threshold,
 				gradient_render_pixel, &rbd,
 				gradient_put_pixel, &ppd,
-				NULL, NULL);
+				progress_callback, progress_data);
 
       /* Clean up */
 
@@ -1544,6 +1588,9 @@ gradient_fill_region (GImage       *gimage,
     }
   else
     {
+      int max_progress = PR->w * PR->h;
+      int progress = 0;
+
       for (pr = pixel_regions_register(1, PR); pr != NULL; pr = pixel_regions_process(pr))
 	{
 	  data = PR->data;
@@ -1572,6 +1619,10 @@ gradient_fill_region (GImage       *gimage,
 		    *data++ = color.a * 255.0;
 		  }
 	      }
+
+	  progress += PR->w * PR->h;
+	  if (progress_callback)
+	    (*progress_callback) (0, max_progress, progress, progress_data);
 	}
     }
 }
@@ -1992,7 +2043,8 @@ blend_invoker (Argument *args)
   if (success)
     {
       blend (gimage, drawable, blend_mode, paint_mode, gradient_type,
-	     opacity, offset, repeat, supersample, max_depth, threshold, x1, y1, x2, y2);
+	     opacity, offset, repeat, supersample, max_depth, threshold,
+	     x1, y1, x2, y2, NULL, NULL);
     }
 
   return procedural_db_return_args (&blend_proc, success);

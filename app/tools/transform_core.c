@@ -52,6 +52,7 @@
 /*  variables  */
 static TranInfo    old_trans_info;
 InfoDialog *       transform_info = NULL;
+static gboolean    transform_info_inited = FALSE;
 
 /*  forward function declarations  */
 static int         transform_core_bounds     (Tool *, void *);
@@ -59,6 +60,8 @@ static void *      transform_core_recalc     (Tool *, void *);
 static void        transform_core_doit       (Tool *, gpointer);
 static double      cubic                     (double, int, int, int, int);
 static void        transform_core_setup_grid (Tool *);
+static void        transform_core_grid_recalc (TransformCore *);
+
 
 #define BILINEAR(jk,j1k,jk1,j1k1,dx,dy) \
                 ((1-dy) * ((1-dx)*jk + dx*j1k) + \
@@ -146,14 +149,12 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
       for (i = 0; i < TRAN_INFO_SIZE; i++)
 	old_trans_info [i] = transform_core->trans_info [i];
     }
-  
 
   /*  if we have already displayed the bounding box and handles,
    *  check to make sure that the display which currently owns the
    *  tool is the one which just received the button pressed event
    */
-  if ((transform_core->function >= CREATING) && (gdisp_ptr == tool->gdisp_ptr) &&
-      transform_core->interactive)
+  if ((gdisp_ptr == tool->gdisp_ptr) && transform_core->interactive)
     {
       /*  start drawing the bounding box and handles...  */
       draw_core_start (transform_core->core, gdisp->canvas->window, tool);
@@ -207,9 +208,9 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
       return;
     }
 
-  /*  if the cursor is clicked inside the current selection, show the
-   *  bounding box and handles...
-   */
+
+  /* Initialisation stuff: if the cursor is clicked inside the current
+   * selection, show the bounding box and handles...  */
   gdisplay_untransform_coords (gdisp, bevent->x, bevent->y, &x, &y, FALSE, FALSE);
   if ((layer = gimage_get_active_layer (gdisp->gimage))) 
     {
@@ -227,7 +228,8 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 		return;
 	      }
 	    
-	    /*  If the tool is already active, clear the current state and reset  */
+	    /* If the tool is already active, clear the current state
+             * and reset */
 	    if (tool->state == ACTIVE)
 	      transform_core_reset (tool, gdisp_ptr);
 	    
@@ -243,9 +245,9 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 				 GDK_BUTTON_RELEASE_MASK),
 				NULL, NULL, bevent->time);
 	    
-	    /*  Find the transform bounds for some tools (like scale, perspective)
-	     *  that actually need the bounds for initializing
-	     */
+	    /* Find the transform bounds for some tools (like scale,
+	     * perspective) that actually need the bounds for
+	     * initializing */
 	    transform_core_bounds (tool, gdisp_ptr);
 
 	    /*  Calculate the grid line endpoints  */
@@ -255,13 +257,14 @@ transform_core_button_press (tool, bevent, gdisp_ptr)
 	    /*  Initialize the transform tool  */
 	    (* transform_core->trans_func) (tool, gdisp_ptr, INIT);
 	    
-	    if (transform_info != NULL)
+	    if (transform_info != NULL && !transform_info_inited)
 	      {
 		action_items[0].label = action_labels[tool->type - ROTATE];
 		action_items[0].user_data = tool;
 		action_items[1].user_data = tool;
 		build_action_area (GTK_DIALOG (transform_info->shell),
 				   action_items, 2, 0);
+		transform_info_inited = TRUE;
 	      }
 
 	    /*  Recalculate the transform tool  */
@@ -348,6 +351,9 @@ transform_core_doit (tool, gdisp_ptr)
 
   gdisp = (GDisplay *) gdisp_ptr;
   transform_core = (TransformCore *) tool->private;
+
+  /* undraw the tool before we muck around with the transform matrix */
+  draw_core_pause (transform_core->core, tool);
 
   /*  We're going to dirty this image, but we want to keep the tool
       around
@@ -730,6 +736,7 @@ transform_core_free (tool)
   if (transform_info)
     info_dialog_free (transform_info);
   transform_info = NULL;
+  transform_info_inited = FALSE;
 
   /*  Free the grid line endpoint arrays if they exist */ 
   if (transform_core->grid_coords != NULL)
@@ -806,6 +813,7 @@ transform_core_reset(tool, gdisp_ptr)
   draw_core_stop (transform_core->core, tool);
   info_dialog_popdown (transform_info);
   tool->state = INACTIVE;
+  tool->gdisp_ptr = NULL;
 }
 
 static int
@@ -846,6 +854,9 @@ transform_core_bounds (tool, gdisp_ptr)
   transform_core->cx = (transform_core->x1 + transform_core->x2) / 2;
   transform_core->cy = (transform_core->y1 + transform_core->y2) / 2;
 
+  /* changing the bounds invalidates any grid we may have */
+  transform_core_grid_recalc (transform_core);
+
   return TRUE;
 }
 
@@ -860,6 +871,14 @@ transform_core_grid_density_changed ()
     return;
 
   draw_core_pause (transform_core->core, active_tool);
+  transform_core_grid_recalc (transform_core);
+  transform_bounding_box (active_tool);
+  draw_core_resume (transform_core->core, active_tool);
+}
+
+static void
+transform_core_grid_recalc (TransformCore *transform_core)
+{
   if (transform_core->grid_coords != NULL)
     {
       g_free (transform_core->grid_coords);
@@ -872,8 +891,6 @@ transform_core_grid_density_changed ()
     }
   if (transform_tool_show_grid())
     transform_core_setup_grid (active_tool);
-  transform_bounding_box (active_tool);
-  draw_core_resume (transform_core->core, active_tool);
 }
 
 static void
@@ -943,12 +960,15 @@ transform_core_recalc (tool, gdisp_ptr)
 
 /*  Actually carry out a transformation  */
 TileManager *
-transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
+transform_core_do (gimage, drawable, float_tiles, interpolation, matrix,
+		   progress_callback, progress_data)
      GImage *gimage;
      GimpDrawable *drawable;
      TileManager *float_tiles;
      int interpolation;
      GimpMatrix matrix;
+     progress_func_t progress_callback;
+     gpointer progress_data;
 {
   PixelRegion destPR;
   TileManager *tiles;
@@ -1070,6 +1090,9 @@ transform_core_do (gimage, drawable, float_tiles, interpolation, matrix)
 
   for (y = ty1; y < ty2; y++)
     {
+      if (progress_callback && !(y & 0xf))
+	(*progress_callback)(ty1, ty2, y, progress_data);
+
       /*  When we calculate the inverse transformation, we should transform
        *  the center of each destination pixel...
        */
@@ -1338,7 +1361,8 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 
   if (new_layer)
     {
-      layer = layer_from_tiles (gimage, drawable, tiles, "Transformation", OPAQUE_OPACITY, NORMAL_MODE);
+      layer = layer_from_tiles (gimage, drawable, tiles, _("Transformation"),
+				OPAQUE_OPACITY, NORMAL_MODE);
       GIMP_DRAWABLE(layer)->offset_x = tiles->x;
       GIMP_DRAWABLE(layer)->offset_y = tiles->y;
 
@@ -1391,6 +1415,11 @@ transform_core_paste (gimage, drawable, tiles, new_layer)
 	floating_sel_rigor (floating_layer, TRUE);
 
       drawable_update (GIMP_DRAWABLE(layer), 0, 0, GIMP_DRAWABLE(layer)->width, GIMP_DRAWABLE(layer)->height);
+
+      /* if we were operating on the floating selection, then it's boundary 
+       * and previews need invalidating */
+      if (layer == floating_layer)
+	floating_sel_invalidate (floating_layer);
 
       return layer;
     }

@@ -61,17 +61,19 @@ libgimpui_la_SOURCES = \
 	gimppatternmenu.c
 
 gimpinclude_HEADERS = \
-	gimp.h		\
-	gimpentry.h	\
-	gimpenums.h	\
-	gimpfeatures.h	\
-	gimpmatrix.h	\
-	gimpmenu.h	\
-	gimpui.h	\
-	gimpintl.h	\
-	gserialize.h	\
-	parasite.h	\
-	parasiteF.h	\
+	color_selector.h	\
+	gimp.h			\
+	gimpentry.h		\
+	gimpenums.h		\
+	gimpfeatures.h		\
+	gimpmatrix.h		\
+	gimpmenu.h		\
+	gimpmodule.h		\
+	gimpui.h		\
+	gimpintl.h		\
+	gserialize.h		\
+	parasite.h		\
+	parasiteF.h		\
 	parasiteP.h
 
 libgimp_la_LDFLAGS = \

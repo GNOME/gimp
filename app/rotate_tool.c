@@ -54,7 +54,7 @@ static char	center_x_buf [MAX_INFO_BUF];
 static char	center_y_buf [MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, double, TileManager *, int, GimpMatrix);
+static void *      rotate_tool_rotate  (GImage *, GimpDrawable *, GDisplay *, double, TileManager *, int, GimpMatrix);
 static void *      rotate_tool_recalc  (Tool *, void *);
 static void        rotate_tool_motion  (Tool *, void *);
 static void        rotate_info_update  (Tool *);
@@ -88,6 +88,7 @@ rotate_tool_transform (tool, gdisp_ptr, state)
 	  info_dialog_add_field (transform_info, _("Center X: "), center_x_buf, (GtkSignalFunc) rotate_center_x_changed, tool);
 	  info_dialog_add_field (transform_info, _("Center Y: "), center_y_buf, (GtkSignalFunc) rotate_center_y_changed, tool);
 	}
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
 
       transform_core->trans_info[ANGLE]      = 0.0;
       transform_core->trans_info[REAL_ANGLE] = 0.0;
@@ -110,7 +111,8 @@ rotate_tool_transform (tool, gdisp_ptr, state)
       break;
 
     case FINISH :
-      return rotate_tool_rotate (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
+      return rotate_tool_rotate (gdisp->gimage, gimage_active_drawable (gdisp->gimage), gdisp,
 				 transform_core->trans_info[ANGLE], transform_core->original,
 				 transform_tool_smoothing (), transform_core->transform);
       break;
@@ -361,15 +363,27 @@ rotate_tool_recalc (tool, gdisp_ptr)
  */
 
 static void *
-rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix)
+rotate_tool_rotate (gimage, drawable, gdisp, angle, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
+     GDisplay *gdisp;
      double angle;
      TileManager *float_tiles;
      int interpolation;
      GimpMatrix matrix;
 {
-  return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
+  void *ret;
+  gimp_progress *progress;
+
+  progress = progress_start (gdisp, _("Rotating..."), FALSE, NULL, NULL);
+
+  ret = transform_core_do (gimage, drawable, float_tiles,
+			   interpolation, matrix,
+			   progress? progress_update_and_flush:NULL, progress);
+  if (progress)
+    progress_end (progress);
+
+  return ret;
 }
 
 
@@ -482,7 +496,7 @@ rotate_invoker (args)
       gimp_matrix_translate (matrix, +cx, +cy);
 
       /*  rotate the buffer  */
-      new_tiles = rotate_tool_rotate (gimage, drawable, angle, float_tiles, interpolation, matrix);
+      new_tiles = rotate_tool_rotate (gimage, drawable, NULL, angle, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
       tile_manager_destroy (float_tiles);

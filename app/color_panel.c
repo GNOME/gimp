@@ -20,7 +20,7 @@
 #include <stdlib.h>
 #include "appenv.h"
 #include "color_panel.h"
-#include "color_select.h"
+#include "color_notebook.h"
 #include "colormaps.h"
 
 #define EVENT_MASK  GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK
@@ -32,13 +32,13 @@ struct _ColorPanelPrivate
   GtkWidget *drawing_area;
   GdkGC *gc;
 
-  ColorSelectP color_select;
-  int color_select_active;
+  ColorNotebookP color_notebook;
+  int color_notebook_active;
 };
 
 static void color_panel_draw (ColorPanel *);
 static gint color_panel_events (GtkWidget *area, GdkEvent *event);
-static void color_panel_select_callback (int, int, int, ColorSelectState, void *);
+static void color_panel_select_callback (int, int, int, ColorNotebookState, void *);
 
 
 ColorPanel *
@@ -52,8 +52,8 @@ color_panel_new (unsigned char *initial,
 
   color_panel = g_new (ColorPanel, 1);
   private = g_new (ColorPanelPrivate, 1);
-  private->color_select = NULL;
-  private->color_select_active = 0;
+  private->color_notebook = NULL;
+  private->color_notebook_active = 0;
   private->gc = NULL;
   color_panel->private_part = private;
 
@@ -85,11 +85,11 @@ color_panel_free (ColorPanel *color_panel)
 
   private = (ColorPanelPrivate *) color_panel->private_part;
   
-  /* make sure we hide and free color_select */
-  if (private->color_select)
+  /* make sure we hide and free color_notebook */
+  if (private->color_notebook)
     {
-      color_select_hide (private->color_select);
-      color_select_free (private->color_select);
+      color_notebook_hide (private->color_notebook);
+      color_notebook_free (private->color_notebook);
     }
   
   if (private->gc)
@@ -144,24 +144,24 @@ color_panel_events (GtkWidget *widget,
 
       if (bevent->button == 1)
 	{
-	  if (! private->color_select)
+	  if (! private->color_notebook)
 	    {
-	      private->color_select = color_select_new (color_panel->color[0],
+	      private->color_notebook = color_notebook_new (color_panel->color[0],
 							color_panel->color[1],
 							color_panel->color[2],
 							color_panel_select_callback,
 							color_panel,
 							FALSE);
-	      private->color_select_active = 1;
+	      private->color_notebook_active = 1;
 	    }
 	  else
 	    {
-	      if (! private->color_select_active)
-		color_select_show (private->color_select);
-	      color_select_set_color (private->color_select,
-				      color_panel->color[0],
-				      color_panel->color[1],
-				      color_panel->color[2], 1);
+	      if (! private->color_notebook_active)
+		color_notebook_show (private->color_notebook);
+	      color_notebook_set_color (private->color_notebook,
+					color_panel->color[0],
+					color_panel->color[1],
+					color_panel->color[2], 1);
 	    }
 	}
       break;
@@ -177,7 +177,7 @@ static void
 color_panel_select_callback (int   r,
 			     int   g,
 			     int   b,
-			     ColorSelectState state,
+			     ColorNotebookState state,
 			     void *client_data)
 {
   ColorPanel *color_panel;
@@ -186,21 +186,21 @@ color_panel_select_callback (int   r,
   color_panel = (ColorPanel *) client_data;
   private = (ColorPanelPrivate *) color_panel->private_part;
 
-  if (private->color_select)
+  if (private->color_notebook)
     {
       switch (state) {
-      case COLOR_SELECT_UPDATE:
+      case COLOR_NOTEBOOK_UPDATE:
 	break;
-      case COLOR_SELECT_OK:
+      case COLOR_NOTEBOOK_OK:
 	color_panel->color[0] = r;
 	color_panel->color[1] = g;
 	color_panel->color[2] = b;
 	
 	color_panel_draw (color_panel);
 	/* Fallthrough */
-      case COLOR_SELECT_CANCEL:
-	color_select_hide (private->color_select);
-	private->color_select_active = 0;
+      case COLOR_NOTEBOOK_CANCEL:
+	color_notebook_hide (private->color_notebook);
+	private->color_notebook_active = 0;
       }
     }
 }

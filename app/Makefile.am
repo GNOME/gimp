@@ -77,6 +77,8 @@ gimp_SOURCES = \
 	color_area.h		\
 	color_balance.c		\
 	color_balance.h		\
+	color_notebook.c	\
+	color_notebook.h	\
 	color_panel.c		\
 	color_panel.h		\
 	color_picker.c		\
@@ -186,6 +188,8 @@ gimp_SOURCES = \
 	gimplistP.h		\
 	gimpparasite.c		\
 	gimpparasite.h		\
+	gimpprogress.c		\
+	gimpprogress.h		\
 	gimprc.c		\
 	gimprc.h		\
 	global_edit.c		\
@@ -370,8 +374,8 @@ LDADD = \
 	libgimpim.a \
 	$(top_builddir)/libgimp/libgimpi.a	\
 	$(GTK_LIBS)				\
-	$(GIMP_THREAD_LIBS)			\
-	$(INTLLIBS)
+	$(GIMP_THREAD_LIBS)	#		\
+#	$(INTLLIBS)
 
 DEPS = \
 	libgimpim.a \

@@ -46,7 +46,7 @@
 static char        matrix_row_buf [3][MAX_INFO_BUF];
 
 /*  forward function declarations  */
-static void *      perspective_tool_perspective (GImage *, GimpDrawable *, TileManager *, int, GimpMatrix);
+static void *      perspective_tool_perspective (GImage *, GimpDrawable *, GDisplay *, TileManager *, int, GimpMatrix);
 static void        perspective_find_transform   (double *, GimpMatrix);
 static void *      perspective_tool_recalc      (Tool *, void *);
 static void        perspective_tool_motion      (Tool *, void *);
@@ -78,6 +78,7 @@ perspective_tool_transform (tool, gdisp_ptr, state)
 	  info_dialog_add_field (transform_info, "        ",
 				 matrix_row_buf[2], NULL, NULL);
 	}
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), TRUE);
 
       transform_core->trans_info [X0] = (double) transform_core->x1;
       transform_core->trans_info [Y0] = (double) transform_core->y1;
@@ -103,7 +104,8 @@ perspective_tool_transform (tool, gdisp_ptr, state)
 
     case FINISH :
       /*  Let the transform core handle the inverse mapping  */
-      return perspective_tool_perspective (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
+      gtk_widget_set_sensitive (GTK_WIDGET (transform_info->shell), FALSE);
+      return perspective_tool_perspective (gdisp->gimage, gimage_active_drawable (gdisp->gimage), gdisp,
 					   transform_core->original, transform_tool_smoothing (),
 					   transform_core->transform);
       break;
@@ -309,14 +311,26 @@ perspective_find_transform (coords, m)
 
 
 static void *
-perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matrix)
+perspective_tool_perspective (gimage, drawable, gdisp, float_tiles, interpolation, matrix)
      GImage *gimage;
      GimpDrawable *drawable;
+     GDisplay *gdisp;
      TileManager *float_tiles;
      int interpolation;
      GimpMatrix matrix;
 {
-  return transform_core_do (gimage, drawable, float_tiles, interpolation, matrix);
+  void *ret;
+  gimp_progress *progress;
+
+  progress = progress_start (gdisp, _("Perspective..."), FALSE, NULL, NULL);
+
+  ret = transform_core_do (gimage, drawable, float_tiles,
+			   interpolation, matrix,
+			   progress? progress_update_and_flush:NULL, progress);
+  if (progress)
+    progress_end (progress);
+
+  return ret;
 }
 
 
@@ -479,7 +493,7 @@ perspective_invoker (args)
       gimp_matrix_mult      (m, matrix);
 
       /*  perspective the buffer  */
-      new_tiles = perspective_tool_perspective (gimage, drawable, float_tiles, interpolation, matrix);
+      new_tiles = perspective_tool_perspective (gimage, drawable, NULL, float_tiles, interpolation, matrix);
 
       /*  free the cut/copied buffer  */
       tile_manager_destroy (float_tiles);

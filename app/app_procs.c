@@ -67,6 +67,9 @@
 #include "docindex.h"
 #include "colormap_dialog.h"
 
+#include "color_notebook.h"
+#include "color_select.h"
+
 #include "config.h"
 
 #include "libgimp/gimpintl.h"
@@ -553,6 +556,9 @@ app_init (void)
   get_active_brush ();
   get_active_pattern ();
   paint_funcs_setup ();
+
+  /* register internal color selectors */
+  color_select_init ();
 
   if (no_interface == FALSE)
     {

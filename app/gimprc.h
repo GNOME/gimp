@@ -34,6 +34,7 @@ extern char *    default_palette;
 extern char *    gradient_path;
 extern char *    default_gradient;
 extern char *    pluginrc_path;
+extern char *    module_path;
 extern int       tile_cache_size;
 extern int       marching_speed;
 extern int       last_opened_size;

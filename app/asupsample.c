@@ -193,7 +193,7 @@ adaptive_supersample_area(int x1, int y1, int x2, int y2, int max_depth, double 
 
 		/* Call progress display function */
 
-		if (progress_func)
+		if (progress_func && !(y & 0xf))
 			(*progress_func)(y1, y2, y, progress_data);
 	} /* for */
 

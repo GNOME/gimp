@@ -20,6 +20,7 @@
 #include "appenv.h"
 #include "actionarea.h"
 #include "color_select.h"
+#include "libgimp/color_selector.h"
 #include "colormaps.h"
 #include "errors.h"
 #include "gimprc.h"
@@ -76,6 +77,8 @@ struct _ColorSelectFill {
   ColorSelectFillUpdateProc update;
 };
 
+static GtkWidget * color_select_widget_new (ColorSelectP, int, int, int);
+
 static void color_select_update (ColorSelectP, ColorSelectUpdateType);
 static void color_select_update_caller (ColorSelectP);
 static void color_select_update_values (ColorSelectP);
@@ -117,6 +120,18 @@ static void color_select_update_hue_saturation (ColorSelectFill *);
 static void color_select_update_hue_value (ColorSelectFill *);
 static void color_select_update_saturation_value (ColorSelectFill *);
 
+static GtkWidget * color_select_notebook_new (int, int, int,
+					      GimpColorSelector_Callback,
+					      void *, void **);
+static void color_select_notebook_free (void *);
+static void color_select_notebook_setcolor (void *, int, int, int, int);
+static void color_select_notebook_update_callback (int, int, int,
+						   ColorSelectState, void *);
+
+
+
+
+
 static ColorSelectFillUpdateProc update_procs[] =
 {
   color_select_update_hue,
@@ -147,26 +162,8 @@ color_select_new (int                  r,
 		  void                *client_data,
 		  int                  wants_updates)
 {
-  /*  static char *toggle_titles[6] = { "Hue", "Saturation", "Value", "Red", "Green", "Blue" }; */
-  static char *toggle_titles[6] = { "H", "S", "V", "R", "G", "B" };
-  static gfloat slider_max_vals[6] = { 360, 100, 100, 255, 255, 255 };
-  static gfloat slider_incs[6] = { 0.1, 0.1, 0.1, 1.0, 1.0, 1.0 };
-
   ColorSelectP csp;
   GtkWidget *main_vbox;
-  GtkWidget *main_hbox;
-  GtkWidget *xy_frame;
-  GtkWidget *z_frame;
-  GtkWidget *colors_frame;
-  GtkWidget *colors_hbox;
-  GtkWidget *right_vbox;
-  GtkWidget *table;
-  GtkWidget *slider;
-  GtkWidget *hex_hbox;
-  GtkWidget *label;
-  GSList *group;
-  char buffer[16];
-  int i;
 
   csp = g_malloc (sizeof (_ColorSelect));
 
@@ -193,10 +190,58 @@ color_select_new (int                  r,
   gtk_signal_connect (GTK_OBJECT (csp->shell), "delete_event",
 		      (GtkSignalFunc) color_select_delete_callback, csp);
   
+  main_vbox = color_select_widget_new (csp, r, g, b);
+  gtk_widget_show (main_vbox);
+
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (csp->shell)->vbox), main_vbox, TRUE, TRUE, 0);
+
+  /*  The action area  */
+  action_items[0].user_data = csp;
+  action_items[1].user_data = csp;
+  if (csp->wants_updates)
+    {
+      action_items[0].label = _("Close");
+      action_items[1].label = _("Revert to Old Color");
+    }
+  else
+    {
+      action_items[0].label = _("OK");
+      action_items[1].label = _("Cancel");
+    }
+  build_action_area (GTK_DIALOG (csp->shell), action_items, 2, 0);
+
+  color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
+  color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
+
+  gtk_widget_show (csp->shell);
+
+  return csp;
+}
+
+static GtkWidget *
+color_select_widget_new (ColorSelectP csp, int r, int g, int b)
+{
+  static char *toggle_titles[6] = { "H", "S", "V", "R", "G", "B" };
+  static gfloat slider_max_vals[6] = { 360, 100, 100, 255, 255, 255 };
+  static gfloat slider_incs[6] = { 0.1, 0.1, 0.1, 1.0, 1.0, 1.0 };
+
+  GtkWidget *main_vbox;
+  GtkWidget *main_hbox;
+  GtkWidget *xy_frame;
+  GtkWidget *z_frame;
+  GtkWidget *colors_frame;
+  GtkWidget *colors_hbox;
+  GtkWidget *right_vbox;
+  GtkWidget *table;
+  GtkWidget *slider;
+  GtkWidget *hex_hbox;
+  GtkWidget *label;
+  GSList *group;
+  char buffer[16];
+  int i;
+
   main_vbox = gtk_vbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 2);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (csp->shell)->vbox), main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
 
   main_hbox = gtk_hbox_new (FALSE, 2);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 0);
@@ -341,28 +386,24 @@ color_select_new (int                  r,
   gtk_box_pack_end (GTK_BOX (hex_hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  /*  The action area  */
-  action_items[0].user_data = csp;
-  action_items[1].user_data = csp;
-  if (csp->wants_updates)
-    {
-      action_items[0].label = _("Close");
-      action_items[1].label = _("Revert to Old Color");
-    }
-  else
-    {
-      action_items[0].label = _("OK");
-      action_items[1].label = _("Cancel");
-    }
-  build_action_area (GTK_DIALOG (csp->shell), action_items, 2, 0);
-
-  color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
-  color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
-
-  gtk_widget_show (csp->shell);
-
-  return csp;
+  return main_vbox;
 }
+
+
+/* Register the GIMP colour selector with the color notebook */
+void
+color_select_init (void)
+{
+  GimpColorSelectorMethods methods =
+  {
+    color_select_notebook_new,
+    color_select_notebook_free,
+    color_select_notebook_setcolor
+  };
+
+  gimp_color_selector_register ("GIMP", &methods);
+}
+
 
 void
 color_select_show (ColorSelectP csp)
@@ -383,7 +424,8 @@ color_select_free (ColorSelectP csp)
 {
   if (csp)
     {
-      gtk_widget_destroy (csp->shell);
+      if (csp->shell)
+	gtk_widget_destroy (csp->shell);
       gdk_gc_destroy (csp->gc);
       g_free (csp);
     }
@@ -1972,4 +2014,97 @@ color_select_update_saturation_value (ColorSelectFill *csf)
 	}
       break;
     }
+}
+
+
+/*****************************/
+/* Colour notebook glue      */
+
+typedef struct {
+  GimpColorSelector_Callback      callback;
+  void                           *client_data;
+  ColorSelectP                    csp;
+  GtkWidget                      *main_vbox;
+} notebook_glue;
+
+
+static GtkWidget *
+color_select_notebook_new (int r, int g, int b,
+	      GimpColorSelector_Callback callback,  void *client_data,
+	      /* RETURNS: */
+	      void **selector_data)
+{
+  ColorSelectP csp;
+  notebook_glue *glue;
+
+  glue = g_malloc (sizeof (notebook_glue));
+
+  csp = g_malloc (sizeof (_ColorSelect));
+
+  glue->csp = csp;
+  glue->callback = callback;
+  glue->client_data = client_data;
+
+  csp->callback = color_select_notebook_update_callback;
+  csp->client_data = glue;
+  csp->z_color_fill = HUE;
+  csp->xy_color_fill = SATURATION_VALUE;
+  csp->gc = NULL;
+  csp->wants_updates = TRUE;
+
+  csp->values[RED] = csp->orig_values[0] = r;
+  csp->values[GREEN] = csp->orig_values[1] = g;
+  csp->values[BLUE] = csp->orig_values[2] = b;
+  color_select_update_hsv_values (csp);
+  color_select_update_pos (csp);
+
+  glue->main_vbox = color_select_widget_new (csp, r, g, b);
+
+  /* the shell is provided by the notebook */
+  csp->shell = NULL;
+
+  color_select_image_fill (csp->z_color, csp->z_color_fill, csp->values);
+  color_select_image_fill (csp->xy_color, csp->xy_color_fill, csp->values);
+
+  (*selector_data) = glue;
+  return glue->main_vbox;
+}
+
+
+static void
+color_select_notebook_free (void *data)
+{
+  notebook_glue *glue = data;
+
+  color_select_free (glue->csp);
+  /* don't need to destroy the widget, since it's done by the caller
+   * of this function */
+  g_free (glue);
+}
+
+
+static void
+color_select_notebook_setcolor (void *data,
+				int r, int g, int b, int set_current)
+{
+  notebook_glue *glue = data;
+
+  color_select_set_color (glue->csp, r, g, b, set_current);
+}
+
+static void
+color_select_notebook_update_callback (int r, int g, int b,
+				       ColorSelectState state, void *data)
+{
+  notebook_glue *glue = data;
+
+  switch (state) { 
+  case COLOR_SELECT_UPDATE:
+    glue->callback (glue->client_data, r, g, b);
+    break;
+
+  default:
+    g_warning ("state %d can't happen!", state);
+    break;
+  }
 }

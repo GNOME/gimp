@@ -133,7 +133,7 @@ flip_tool_transform_horz (Tool     *tool,
       break;
 
     case FINISH :
-      transform_core->trans_info[FLIP] *= -1.0;
+      /*      transform_core->trans_info[FLIP] *= -1.0;*/
       return flip_tool_flip_horz (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
 				  transform_core->original, transform_core->trans_info[FLIP]);
       break;
@@ -166,7 +166,7 @@ flip_tool_transform_vert (Tool     *tool,
       break;
 
     case FINISH :
-      transform_core->trans_info[FLIP] *= -1.0;
+      /*transform_core->trans_info[FLIP] *= -1.0;*/
       return flip_tool_flip_vert (gdisp->gimage, gimage_active_drawable (gdisp->gimage),
 				  transform_core->original, transform_core->trans_info[FLIP]);
       break;
@@ -213,7 +213,7 @@ tools_new_flip_horz ()
 
   /*  set the rotation specific transformation attributes  */
   private->trans_func = flip_tool_transform_horz;
-  private->trans_info[FLIP] = 1.0;
+  private->trans_info[FLIP] = -1.0;
 
   return tool;
 }
@@ -230,7 +230,7 @@ tools_new_flip_vert ()
 
   /*  set the rotation specific transformation attributes  */
   private->trans_func = flip_tool_transform_vert;
-  private->trans_info[FLIP] = 1.0;
+  private->trans_info[FLIP] = -1.0;
 
   return tool;
 }

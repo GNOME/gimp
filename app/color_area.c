@@ -19,7 +19,7 @@
 #include <stdlib.h>
 #include "appenv.h"
 #include "color_area.h"
-#include "color_select.h"
+#include "color_notebook.h"
 #include "colormaps.h"
 #include "palette.h"
 
@@ -37,8 +37,8 @@ static GtkWidget *color_area = NULL;
 static GdkPixmap *color_area_pixmap = NULL;
 static GdkPixmap *default_pixmap = NULL;
 static GdkPixmap *swap_pixmap = NULL;
-static ColorSelectP color_select = NULL;
-static int color_select_active = 0;
+static ColorNotebookP color_notebook = NULL;
+static int color_notebook_active = 0;
 static int edit_color;
 static unsigned char revert_fg_r, revert_fg_g, revert_fg_b;
 static unsigned char revert_bg_r, revert_bg_g, revert_bg_b;
@@ -195,25 +195,25 @@ static void
 color_area_select_callback (int   r,
 			    int   g,
 			    int   b,
-			    ColorSelectState state,
+			    ColorNotebookState state,
 			    void *client_data)
 {
-  if (color_select)
+  if (color_notebook)
     {
       switch (state) {
-      case COLOR_SELECT_OK:
-	color_select_hide (color_select);
-	color_select_active = 0;
+      case COLOR_NOTEBOOK_OK:
+	color_notebook_hide (color_notebook);
+	color_notebook_active = 0;
 	/* Fallthrough */
-      case COLOR_SELECT_UPDATE:
+      case COLOR_NOTEBOOK_UPDATE:
 	if (edit_color == FOREGROUND)
 	  palette_set_foreground (r, g, b);
 	else
 	  palette_set_background (r, g, b);
 	break;
-      case COLOR_SELECT_CANCEL:
-	color_select_hide (color_select);
-	color_select_active = 0;
+      case COLOR_NOTEBOOK_CANCEL:
+	color_notebook_hide (color_notebook);
+	color_notebook_active = 0;
 	palette_set_foreground (revert_fg_r, revert_fg_g, revert_fg_b);
 	palette_set_background (revert_bg_r, revert_bg_g, revert_bg_b);
       }
@@ -225,7 +225,7 @@ color_area_edit (void)
 {
   unsigned char r, g, b;
 
-  if (!color_select_active)
+  if (!color_notebook_active)
     {
       palette_get_foreground (&revert_fg_r, &revert_fg_g, &revert_fg_b);
       palette_get_background (&revert_bg_r, &revert_bg_g, &revert_bg_b);
@@ -241,19 +241,19 @@ color_area_edit (void)
       edit_color = BACKGROUND;
     }
 
-  if (! color_select)
+  if (! color_notebook)
     {
-      color_select = color_select_new (r, g, b, color_area_select_callback, NULL, TRUE);
-      color_select_active = 1;
+      color_notebook = color_notebook_new (r, g, b, color_area_select_callback, NULL, TRUE);
+      color_notebook_active = 1;
     }
   else
     {
-      if (! color_select_active)
-	color_select_show (color_select);
+      if (! color_notebook_active)
+	color_notebook_show (color_notebook);
       else 
-	gdk_window_raise (color_select->shell->window);
+	gdk_window_raise (color_notebook->shell->window);
 
-      color_select_set_color (color_select, r, g, b, 1);
+      color_notebook_set_color (color_notebook, r, g, b, 1);
     }
 }
 
