@@ -6,7 +6,8 @@ EXTRA_DIST = \
 	cheat_sheet.txt		keybindings.txt	\
 	texinfo.tex 		script-fu.tex \
 	architecture.eps 	logo.eps \
-	net-fu.eps 		timeline.eps
+	net-fu.eps 		timeline.eps \
+	gimp-white-paper.tex
 
 info_TEXINFOS = pdb.texi
 

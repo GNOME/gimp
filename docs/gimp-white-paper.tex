@@ -1,0 +1,141 @@
+\documentclass[12pt]{article}
+
+\usepackage{times}
+
+\def\gimp{{\sc gimp}}
+\def\gnu{{\sc gnu}}
+\def\gpl{{\sc gpl}}
+
+\newcommand{\FIXME}[1]{\emph{*** FIXME: #1 ***}}
+
+\begin{document}
+
+\title{GNU Image Manipulation Program\\
+	Technology White Paper}
+\date{}
+\maketitle
+
+\part{Introduction}
+
+The {\bf G}NU\footnote{Please see http://www.gnu.org for information
+on the \gnu\ Project.} {\bf I}mage {\bf M}anipulation {\bf P}rogram
+(\gimp) is a powerful tool for the preparation and manipulation of
+digital images.  The \gimp\ provides the user with a wide variety of
+image manipulation, painting, processing, and rendering tools.  The
+key to the \gimp's power lies in its flexible core and easily
+extensible design.  The \gimp's open design and extensible
+architecture make for a very powerful end product which can continue
+to be extended to meet the needs of the photo compositor, image
+retoucher, web graphics designer, or digital illustrator for a very
+long time.
+
+The \gimp's extensible plug-in architecture allows for image
+manipulation procedures and other functionality to be easily added
+without requiring any change to the application core.  A plug-in can
+provide functionality as simple as rotating an image, or as
+complicated as rendering iterated function system fractals.  There are
+nearly 150 plug-ins available in version 1.0, and more are sure to
+follow.
+
+The plug-in architecture also allows the \gimp\ to support a wide
+variety of file formats.  File operations are implemented by special
+``file plug-ins'', allowing additional file formats to be added
+without modification to the core.  File formats supported in version
+1.0 include the popular GIF and JPEG standards, as well as PNG, TIFF,
+XPM, SGI, PCX, and Windows BMP.
+
+An innovative tile management system allows the \gimp\ to be used to
+edit images much larger than can be stored in system memory; the
+user's available disk space is the only real limit to the size of the
+image a user can edit.
+
+While the \gimp's primary emphasis is on image manipulation, it also
+offers a complete set of painting tools for use in image creation.
+Version 1.0 offers pencil, paintbrush, eraser, airbrush, and cloning
+tools, as well as a variable-strength convolver.  All of these tools
+(except the eraser) can be operated in any of the \gimp's 15 painting
+modes.  A powerful gradient generator, with a very versatile custom
+gradient editor, makes colored blends easy.
+
+A full battery of image manipulators are available, including
+rotation, scaling, translation, color, brightness, and contrast
+adjustment, and gamma correction.  In addition, a great many other
+useful transformations are available as plug-ins, and the ease of
+extensibility here means that new capabilities are being added all the
+time.
+
+Finally, the most impressive feature of the \gimp\ is that it is
+available under the terms of the GNU General Public License
+(\gpl).\footnote{Please see \FIXME{http://what?} for the full text of
+the \gpl.}  The entire source code is freely available and
+distributed.  This openness has fostered a very active development
+community and large user base, out of which a superior product has
+arisen.
+
+\part{Core architecture}
+
+\FIXME{General overview}
+
+\section{Tools}
+
+\FIXME{overview, architecture}
+
+\subsection{Gradient tool}
+
+The gradient tool lets the user easily create color gradients.  It
+supports several gradient types: linear, bilinear, radial, square,
+conical, and the special ``shapeburst'' mode, which makes the gradient
+follow the shape of the active selection.
+
+Normally, the blend tool creates color gradients between the current
+foreground and background colors.  It supports three blending modes:
+linear interpolation between the RGB components, linear interpolation
+between the HSV versions of the colors (for rainbow effects), and
+blending from the foreground color to transparent.
+
+Gradients are calculated with respect to a direction vector.  The user
+can specify whether the gradient is to be rendered normally, or
+repeated along the direction vector using a sawtooth or triangular
+wave pattern.
+
+A unique feature of the \gimp's gradient tool is its support for
+user-defined, custom color gradients.  The \gimp\ sports a
+fully-featured color gradient editor that lets the user create color
+gradients with an arbitrary number of color transitions.
+
+A custom gradient is represented internally as a list of contiguous,
+non overlapping segments that define a partition of the range $[0, 1]$.  
+Each segment has the following properties:
+
+\begin{itemize}
+
+\item Left and right colors that blend smoothly inside the segment.
+
+\item An off-center midpoint, which can be used to bias the color
+blend to the left or to the right.
+
+\item A blending function, which can be linear, curved (with an
+exponent), sinuosidal, or spherical (increasing and decreasing).
+
+\item A coloring type, which can be RGB interpolation, clockwise or
+couterclockwise HSV interpolation.
+
+\end{itemize}
+
+The user can drag the segments' endpoints left and right.  Segments
+can be inserted and deleted at any time.  The gradient editor provides
+several useful functions for manipulating segments (split, flip,
+replicate) that make creation of custom gradients easy and convenient.
+The color segments support full transparency information, making for
+even more flexible gradients.
+
+The gradient rendering engine supports adaptive supersampling with
+customizable threshold and recursion depth parameters.  Using adaptive
+supersampling means that even the most complex custom gradients will
+be rendered without artifacts or ``jaggies''.
+
+\FIXME{drawing or screenshot?}
+
+
+
+\end{document}
