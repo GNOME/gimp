@@ -824,16 +824,19 @@ edge_preview_update (GimpPreview *preview)
           {
             guchar kernel[9];
 
-#define SRC(X,Y) src[bytes * ( CLAMP((X),0,width) + width * CLAMP((Y),0,height) )+chan]
-            kernel[0] = SRC(x-1, y-1);
-            kernel[1] = SRC(x-1, y  );
-            kernel[2] = SRC(x-1, y+1);
-            kernel[3] = SRC(x  , y-1);
-            kernel[4] = SRC(x  , y  );
-            kernel[5] = SRC(x  , y+1);
-            kernel[6] = SRC(x+1, y-1);
-            kernel[7] = SRC(x+1, y  );
-            kernel[8] = SRC(x+1, y+1);
+#define SRC(X,Y) src[bytes * (CLAMP((X), 0, width-1) + \
+                              width * CLAMP((Y), 0, height-1)) + chan]
+
+            kernel[0] = SRC (x - 1, y - 1);
+            kernel[1] = SRC (x - 1, y    );
+            kernel[2] = SRC (x - 1, y + 1);
+            kernel[3] = SRC (x    , y - 1);
+            kernel[4] = SRC (x    , y    );
+            kernel[5] = SRC (x    , y + 1);
+            kernel[6] = SRC (x + 1, y - 1);
+            kernel[7] = SRC (x + 1, y    );
+            kernel[8] = SRC (x + 1, y + 1);
+
 #undef SRC
             dest[chan] = edge_detect (kernel);
           }
