@@ -1,62 +1,87 @@
-The GIMP: the GNU Image Manipulation Program
---------------------------------------------
+The GIMP: The GNU Image Manipulation Program
+============================================
 
 This is an unstable release of the GIMP, intended for developers only.
 For production use, please use the 1.0.x series.
 
-The GIMP's home page is at 
+The GIMP is designed to be a professional image manipulation program 
+for both print and on-line based outputs.
 
-	http://www.gimp.org
+For installation instructions, see the file INSTALL.
+
+1. Web Resources
+================
+
+The GIMP's home page is at:
+
+	http://www.gimp.org/
 
 Please be sure to visit this site for information, documentation,
 tutorials, news, etc.  All things GIMP-ish are available from there.
 
-The automated plug-in registry is located at
+The automated plug-in registry is located at:
 
-	http://registry.gimp.org
+	http://registry.gimp.org/
 
 There you can get the latest versions of plug-ins using a convenient
 forms-based interface.
 
+The latest version of The GIMP can be found at:
+
+	http://www.gimp.org/download/
+
+2. Mailing Lists
+================
+
 We have several mailing lists dedicated to GIMP user and development
-discussion.  To subscribe, send mail to
+discussion.  To subscribe, send an empty message to
 
-	majordomo@scam.xcf.berkeley.edu
+	     <listname>-subscribe@xcf.berkeley.edu
 
-and in the body of the message put
+substituting <list-name> for "gimp-user", "gimp-win-user", "gimp-announce" or
+"gimp-developer" (without the quotes, of course) depending on the list you 
+want to subscribe to.  The mailing list archives can be found at:
 
-	subscribe <list-name> your@email.address
-
-substituting <list-name> for "gimp-user" or "gimp-developer" (without
-the quotes, of course) depending on the list you want to subscribe
-to.  The mailing list archives can be found at
-
-        http://www.findmail.com/listsaver/gimp-developer/
-        http://www.findmail.com/listsaver/gimp-user/
+        http://www.egroups.com/messages/gimp-developer/
+        http://www.egroups.com/messages/gimp-user/
 
 Gimp-user is a mailing list dedicated to user problems, hints and
-tips, discussion of cool effects, etc.  Gimp-developer is oriented to
-GIMP core and plug-in developers.  Most people will only want to be
-subscribed to gimp-user.
+tips, discussion of cool effects, etc.  Gimp-win-user is a list to discuss 
+user problems specific to the Win32 port.  Gimp-announce is a low-traffic list
+with announcements about new releases of GIMP and plug-ins.  Gimp-developer is 
+oriented to GIMP core and plug-in developers.  Most people will only want to 
+be subscribed to gimp-user. If you want to help develop The GIMP, the
+gimp-developer mailing list is a good starting point.
+
+3. IRC
+======
 
 And finally, for the real junkies, there is an IRC channel devoted to
-the GIMP :-) On Byxnet (a private mostly-GIMP network) there is #gimp.
-Many of the developers hang out there.  Some of the Byxnet servers are:
+the GIMP. On Byxnet (a private mostly-GIMP network) there is #gimp.
+Many of the developers hang out there.  One of the Byxnet servers are:
 
 	irc.gimp.org:6667
 
+4. Customizing
+==============
+
 The look of GIMP's interface can be customized like any other GTK app
-by editing the ~/.gtkrc file. Additionally GIMP reads ~/.gimp/gtkrc
-so you can have settings that only apply to The GIMP. 
+by editing the ~/.gtkrc file or by using "themes" (ready-made 
+customizations). For downloadable themes and further details, see
+http://gtk.themes.org. Additionally GIMP reads ~/.gimp-1.1/gtkrc so you 
+can have settings that only apply to The GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop (tm).
 You can find them in the ps-menurc file.  To use them, copy this file to
-~/.gimp/menurc
+~/.gimp-1.1/menurc. You can also manually change the keybindings to any of
+your choice by editing ~/.gimp-1.1/menurc.
+
+5. Bugs
+=======
 
 We sincerely hope you enjoy the program.  Please report problems to
 bugs@gimp.org.  Before reporting a problem, you may want to see if someone
-else has already did (check http://bugs.gnome.org/db/pa/lgimp.html for
-this).
+else did already - check http://bugs.gnome.org/db/pa/lgimp.html for this.
 
 Have fun,
 
@@ -64,3 +89,11 @@ Have fun,
   Peter Mattis
   Federico Mena
   Manish Singh
+
+
+
+
+
+
+
+

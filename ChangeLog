@@ -1,5 +1,10 @@
 2000-04-10  Sven Neumann  <sven@gimp.org>
 
+	* README: applied a modified version of gimp-cornwell-000408-0, 
+	a patch by <piers.cornwell@usa.net> to bring the README uptodate.
+
+2000-04-10  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpexport.c: use "Flatten Image" instead of simply
 	"Flatten" for our new alternative to "Save As Animation".
 
