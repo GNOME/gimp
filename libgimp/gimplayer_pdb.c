@@ -451,6 +451,43 @@ gimp_layer_is_floating_sel (gint32 layer_ID)
 }
 
 /**
+ * gimp_layer_new_from_drawable:
+ * @drawable_ID: The source drawable from where the new layer is copied.
+ * @dest_image_ID: The destination image to which to add the layer.
+ *
+ * Create a new layer by copying an existing drawable.
+ *
+ * This procedure creates a new layer as a copy of the specified
+ * drawable. The new layer still needs to be added to the image, as
+ * this is not automatic. Add the new layer with the
+ * 'gimp_image_add_layer' command. Other attributes such as layer mask
+ * modes, and offsets should be set with explicit procedure calls.
+ *
+ * Returns: The newly copied layer.
+ */
+gint32
+gimp_layer_new_from_drawable (gint32 drawable_ID,
+			      gint32 dest_image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gint32 layer_copy_ID = -1;
+
+  return_vals = gimp_run_procedure ("gimp_layer_new_from_drawable",
+				    &nreturn_vals,
+				    GIMP_PDB_DRAWABLE, drawable_ID,
+				    GIMP_PDB_IMAGE, dest_image_ID,
+				    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    layer_copy_ID = return_vals[1].data.d_layer;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return layer_copy_ID;
+}
+
+/**
  * gimp_layer_get_name:
  * @layer_ID: The layer.
  *

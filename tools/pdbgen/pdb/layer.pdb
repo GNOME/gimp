@@ -490,6 +490,39 @@ HELP
     );
 }
 
+sub layer_new_from_drawable {
+    $blurb = 'Create a new layer by copying an existing drawable.';
+
+    $help = <<'HELP';
+This procedure creates a new layer as a copy of the specified drawable.  The
+new layer still needs to be added to the image, as this is not automatic.  Add
+the new layer with the 'gimp_image_add_layer' command. Other attributes such
+as layer mask modes, and offsets should be set with explicit procedure calls.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( 
+	{ name => 'drawable', type => 'drawable',
+	  desc => 'The source drawable from where the new layer is copied',
+          alias => 'drawable' },
+	{ name => 'dest_image', type => 'image',
+	  desc => 'The destination image to which to add the layer',
+          alias => 'gimage' }
+     );
+
+    @outargs = (
+	{ name => 'layer_copy', type => 'layer', init => 1,
+	  desc => 'The newly copied layer', alias => 'copy' }
+    );
+
+    %invoke = (
+	code => 'success = (copy = gimp_layer_new_from_drawable (drawable,
+                                                                 gimage)) != NULL;'
+    );
+
+}
+
 &layer_accessors('name', 'string', 'name', 1, 0, undef,
                  'object', 'GIMP_OBJECT (layer)');
 
@@ -574,7 +607,8 @@ CODE
 
 unshift @procs, qw(layer_new layer_copy layer_create_mask layer_scale
 		   layer_resize layer_delete layer_translate layer_add_alpha
-		   layer_set_offsets layer_mask layer_is_floating_sel);
+		   layer_set_offsets layer_mask layer_is_floating_sel
+                   layer_new_from_drawable);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Layer';

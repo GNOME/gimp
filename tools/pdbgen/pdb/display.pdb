@@ -86,10 +86,35 @@ HELP
     %invoke = ( code => 'gimp_displays_flush (gimp);' );
 }
 
+
+sub displays_reconnect {
+    $blurb = 'Reconnect displays from one image to another image.';
+
+    $help = <<'HELP';
+This procedure connects all displays of the old_image to the new_image.
+If the new_image already has a display the reconnect is not performed and the
+procedure returns without success.  You should rarely need to use this
+function.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = ( 
+	{ name => 'old_image', type => 'image',
+	  desc => 'The old image (should have at least one display)',
+          alias => 'gimage_old' },
+	{ name => 'new_image', type => 'image',
+	  desc => 'The new image (must not have a display)',
+          alias => 'gimage_new' }
+     );
+
+   %invoke = ( code => 'gdisplays_reconnect(gimage_old, gimage_new);' );
+}
+
 @headers = qw("core/gimp.h" "display/display-types.h" "display/gimpdisplay.h"
 	      "display/gimpdisplay-foreach.h");
 
-@procs = qw(display_new display_delete displays_flush);
+@procs = qw(display_new display_delete displays_flush displays_reconnect);
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'GimpDisplay procedures';

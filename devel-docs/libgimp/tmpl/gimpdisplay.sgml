@@ -41,3 +41,13 @@ Functions to create, delete and flush new displays (views) on an image.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_displays_reconnect ##### -->
+<para>
+
+</para>
+
+@old_image_ID: 
+@new_image_ID: 
+@Returns: 
+
+

@@ -1,5 +1,19 @@
 2002-12-03  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/layer.pdb: applied a modified version of a
+	patch from Wolfgang Hofer <hof@gimp.org> that adds two new PDB
+	functions needed for GAP: gimp_displays_reconnect() and
+	gimp_layer_new_from_drawable() (bug #77508).
+
+	* app/pdb/display_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimpdisplay_pdb.[ch]
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+
+2002-12-03  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/tool_manager.c (tool_manager_control_active): check
 	for gdisp != NULL to avoid to crash when being called from
 	indexed_ok_callback().

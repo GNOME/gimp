@@ -59,6 +59,8 @@ gboolean             gimp_layer_set_offsets        (gint32                layer_
 						    gint                  offy);
 gint32               gimp_layer_mask               (gint32                layer_ID);
 gboolean             gimp_layer_is_floating_sel    (gint32                layer_ID);
+gint32               gimp_layer_new_from_drawable  (gint32                drawable_ID,
+						    gint32                dest_image_ID);
 gchar*               gimp_layer_get_name           (gint32                layer_ID);
 gboolean             gimp_layer_set_name           (gint32                layer_ID,
 						    gchar                *name);

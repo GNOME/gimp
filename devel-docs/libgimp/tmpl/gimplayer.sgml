@@ -132,12 +132,13 @@ Operations on single layers.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_layer_is_floating_sel ##### -->
+<!-- ##### FUNCTION gimp_layer_new_from_drawable ##### -->
 <para>
 
 </para>
 
-@layer_ID: 
+@drawable_ID: 
+@dest_image_ID: 
 @Returns: 
 
 
@@ -349,6 +350,15 @@ Operations on single layers.
 @Returns: 
 <!-- # Unused Parameters # -->
 @layer_ID: 
+
+
+<!-- ##### FUNCTION gimp_layer_is_floating_sel ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
 
 
 <!-- ##### MACRO gimp_layer_is_floating_selection ##### -->

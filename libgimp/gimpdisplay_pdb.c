@@ -119,3 +119,38 @@ gimp_displays_flush (void)
 
   return success;
 }
+
+/**
+ * gimp_displays_reconnect:
+ * @old_image_ID: The old image (should have at least one display).
+ * @new_image_ID: The new image (must not have a display).
+ *
+ * Reconnect displays from one image to another image.
+ *
+ * This procedure connects all displays of the old_image to the
+ * new_image. If the new_image already has a display the reconnect is
+ * not performed and the procedure returns without success. You should
+ * rarely need to use this function.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_displays_reconnect (gint32 old_image_ID,
+			 gint32 new_image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp_displays_reconnect",
+				    &nreturn_vals,
+				    GIMP_PDB_IMAGE, old_image_ID,
+				    GIMP_PDB_IMAGE, new_image_ID,
+				    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}

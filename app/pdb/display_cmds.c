@@ -37,6 +37,7 @@
 static ProcRecord display_new_proc;
 static ProcRecord display_delete_proc;
 static ProcRecord displays_flush_proc;
+static ProcRecord displays_reconnect_proc;
 
 void
 register_display_procs (Gimp *gimp)
@@ -44,6 +45,7 @@ register_display_procs (Gimp *gimp)
   procedural_db_register (gimp, &display_new_proc);
   procedural_db_register (gimp, &display_delete_proc);
   procedural_db_register (gimp, &displays_flush_proc);
+  procedural_db_register (gimp, &displays_reconnect_proc);
 }
 
 static Argument *
@@ -176,4 +178,56 @@ static ProcRecord displays_flush_proc =
   0,
   NULL,
   { { displays_flush_invoker } }
+};
+
+static Argument *
+displays_reconnect_invoker (Gimp     *gimp,
+                            Argument *args)
+{
+  gboolean success = TRUE;
+  GimpImage *gimage_old;
+  GimpImage *gimage_new;
+
+  gimage_old = gimp_image_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage_old))
+    success = FALSE;
+
+  gimage_new = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage_new))
+    success = FALSE;
+
+  if (success)
+    gdisplays_reconnect(gimage_old, gimage_new);
+
+  return procedural_db_return_args (&displays_reconnect_proc, success);
+}
+
+static ProcArg displays_reconnect_inargs[] =
+{
+  {
+    GIMP_PDB_IMAGE,
+    "old_image",
+    "The old image (should have at least one display)"
+  },
+  {
+    GIMP_PDB_IMAGE,
+    "new_image",
+    "The new image (must not have a display)"
+  }
+};
+
+static ProcRecord displays_reconnect_proc =
+{
+  "gimp_displays_reconnect",
+  "Reconnect displays from one image to another image.",
+  "This procedure connects all displays of the old_image to the new_image. If the new_image already has a display the reconnect is not performed and the procedure returns without success. You should rarely need to use this function.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  displays_reconnect_inargs,
+  0,
+  NULL,
+  { { displays_reconnect_invoker } }
 };

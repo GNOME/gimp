@@ -1,5 +1,12 @@
 2002-12-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpdisplay.sgml
+	* libgimp/tmpl/gimplayer.sgml: updated after addition of two new
+	PDB functions.
+
+2002-12-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/tmpl/*.sgml: applied a patch from Akkana that adds short
 	descriptions to all libgimp pages (#100187).
 

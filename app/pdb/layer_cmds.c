@@ -32,6 +32,7 @@
 #include "config/gimpcoreconfig.h"
 #include "core/core-enums.h"
 #include "core/gimp.h"
+#include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplayer.h"
@@ -51,6 +52,7 @@ static ProcRecord layer_add_alpha_proc;
 static ProcRecord layer_set_offsets_proc;
 static ProcRecord layer_mask_proc;
 static ProcRecord layer_is_floating_sel_proc;
+static ProcRecord layer_new_from_drawable_proc;
 static ProcRecord layer_get_name_proc;
 static ProcRecord layer_set_name_proc;
 static ProcRecord layer_get_visible_proc;
@@ -86,6 +88,7 @@ register_layer_procs (Gimp *gimp)
   procedural_db_register (gimp, &layer_set_offsets_proc);
   procedural_db_register (gimp, &layer_mask_proc);
   procedural_db_register (gimp, &layer_is_floating_sel_proc);
+  procedural_db_register (gimp, &layer_new_from_drawable_proc);
   procedural_db_register (gimp, &layer_get_name_proc);
   procedural_db_register (gimp, &layer_set_name_proc);
   procedural_db_register (gimp, &layer_get_visible_proc);
@@ -931,6 +934,75 @@ static ProcRecord layer_is_floating_sel_proc =
   1,
   layer_is_floating_sel_outargs,
   { { layer_is_floating_sel_invoker } }
+};
+
+static Argument *
+layer_new_from_drawable_invoker (Gimp     *gimp,
+                                 Argument *args)
+{
+  gboolean success = TRUE;
+  Argument *return_args;
+  GimpDrawable *drawable;
+  GimpImage *gimage;
+  GimpLayer *copy = NULL;
+
+  drawable = (GimpDrawable *) gimp_item_get_by_ID (gimp, args[0].value.pdb_int);
+  if (! GIMP_IS_DRAWABLE (drawable))
+    success = FALSE;
+
+  gimage = gimp_image_get_by_ID (gimp, args[1].value.pdb_int);
+  if (! GIMP_IS_IMAGE (gimage))
+    success = FALSE;
+
+  if (success)
+    success = (copy = gimp_layer_new_from_drawable (drawable,
+								     gimage)) != NULL;
+
+  return_args = procedural_db_return_args (&layer_new_from_drawable_proc, success);
+
+  if (success)
+    return_args[1].value.pdb_int = gimp_item_get_ID (GIMP_ITEM (copy));
+
+  return return_args;
+}
+
+static ProcArg layer_new_from_drawable_inargs[] =
+{
+  {
+    GIMP_PDB_DRAWABLE,
+    "drawable",
+    "The source drawable from where the new layer is copied"
+  },
+  {
+    GIMP_PDB_IMAGE,
+    "dest_image",
+    "The destination image to which to add the layer"
+  }
+};
+
+static ProcArg layer_new_from_drawable_outargs[] =
+{
+  {
+    GIMP_PDB_LAYER,
+    "layer_copy",
+    "The newly copied layer"
+  }
+};
+
+static ProcRecord layer_new_from_drawable_proc =
+{
+  "gimp_layer_new_from_drawable",
+  "Create a new layer by copying an existing drawable.",
+  "This procedure creates a new layer as a copy of the specified drawable. The new layer still needs to be added to the image, as this is not automatic. Add the new layer with the 'gimp_image_add_layer' command. Other attributes such as layer mask modes, and offsets should be set with explicit procedure calls.",
+  "Spencer Kimball & Peter Mattis",
+  "Spencer Kimball & Peter Mattis",
+  "1995-1996",
+  GIMP_INTERNAL,
+  2,
+  layer_new_from_drawable_inargs,
+  1,
+  layer_new_from_drawable_outargs,
+  { { layer_new_from_drawable_invoker } }
 };
 
 static Argument *

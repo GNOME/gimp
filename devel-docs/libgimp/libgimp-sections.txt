@@ -161,6 +161,7 @@ gimp_convert_indexed
 gimp_display_new
 gimp_display_delete
 gimp_displays_flush
+gimp_displays_reconnect
 </SECTION>
 
 <SECTION>
@@ -358,7 +359,7 @@ gimp_layer_translate
 gimp_layer_add_alpha
 gimp_layer_set_offsets
 gimp_layer_mask
-gimp_layer_is_floating_sel
+gimp_layer_new_from_drawable
 gimp_layer_get_name
 gimp_layer_set_name
 gimp_layer_get_visible
@@ -381,6 +382,7 @@ gimp_layer_get_tattoo
 gimp_layer_set_tattoo
 gimp_layer_get_mask_id
 gimp_layer_get_image_id
+gimp_layer_is_floating_sel
 gimp_layer_is_floating_selection
 gimp_layer_get_preserve_transparency
 gimp_layer_set_preserve_transparency
