@@ -440,7 +440,7 @@ EXTRA_DIST = \
 	wilber.ico
 
 
-gimp_LDFLAGS = -export-symbols $(srcdir)/gimp.sym
+gimp_LDFLAGS = -export-dynamic -export-symbols $(srcdir)/gimp.sym
 
 AM_CPPFLAGS = \
 	-DLIBDIR=\""$(gimpplugindir)"\"	\
