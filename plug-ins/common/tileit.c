@@ -576,7 +576,7 @@ tileit_dialog (void)
                     &opacity);
 
   /* Lower frame saying howmany segments */
-  frame = gimp_frame_new (_("Numer of Segments"));
+  frame = gimp_frame_new (_("Number of Segments"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 

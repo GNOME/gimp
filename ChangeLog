@@ -1,5 +1,9 @@
 2004-06-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tileit.c (tileit_dialog): fixed a typo.
+
+2004-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/menus/plug-in-menus.c (plug_in_menus_setup): sort the menus
 	by the translated menu path stripped from underscores.
 
