@@ -119,9 +119,13 @@
 			       gradient-reverse
 			       font
 			       size
-			       filename
-			       orientation
-			       dirname)
+			       unused-filename
+			       unused-orientation
+			       unused-dirname
+			       unused-image
+			       unused-layer
+			       unused-channel
+			       unused-drawable)
   (let* ((width (* radius 3.75))
 	 (height (* radius 2.5))
 	 (img (car (gimp-image-new width height RGB)))
@@ -224,4 +228,8 @@
 		    SF-ADJUSTMENT "Font Size (pixels)" '(50 1 1000 1 10 0 1)
 		    SF-FILENAME   "Environment Map"    (string-append "" gimp-data-dir "/scripts/beavis.jpg")
 		    SF-OPTION     "Orientation"        '("Horizontal" "Vertical")
-		    SF-DIRNAME    "Output Directory"   "/var/tmp/")
+		    SF-DIRNAME    "Output Directory"   "/var/tmp/"
+		    SF-IMAGE      "Image"              -1
+		    SF-LAYER      "Layer"              -1
+		    SF-CHANNEL    "Channel"            -1
+		    SF-DRAWABLE   "Drawable"           -1)
