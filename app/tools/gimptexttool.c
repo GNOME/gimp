@@ -84,8 +84,9 @@ static void      gimp_text_tool_cursor_update  (GimpTool          *tool,
 
 static void      gimp_text_tool_connect        (GimpTextTool      *text_tool,
                                                 GimpText          *text);
-static void      gimp_text_tool_notify         (GimpTextTool      *text_tool,
-                                                GParamSpec        *pspec);
+static void      gimp_text_tool_proxy_notify   (GimpText          *text,
+                                                GParamSpec        *pspec,
+                                                GimpTextTool      *text_tool);
 static void      gimp_text_tool_text_notify    (GimpText          *text,
                                                 GParamSpec        *pspec,
                                                 GimpTextTool      *text_tool);
@@ -216,8 +217,8 @@ gimp_text_tool_constructor (GType                  type,
   gimp_text_options_connect_text (options, text_tool->proxy);
 
   g_signal_connect_object (text_tool->proxy, "notify",
-                           G_CALLBACK (gimp_text_tool_notify),
-                           text_tool, G_CONNECT_SWAPPED);
+                           G_CALLBACK (gimp_text_tool_proxy_notify),
+                           text_tool, 0);
 
   return object;
 }
@@ -394,8 +395,9 @@ gimp_text_tool_connect (GimpTextTool *text_tool,
 }
 
 static void
-gimp_text_tool_notify (GimpTextTool *text_tool,
-                       GParamSpec   *pspec)
+gimp_text_tool_proxy_notify (GimpText     *text,
+                             GParamSpec   *pspec,
+                             GimpTextTool *text_tool)
 {
   if (! text_tool->text)
     return;
@@ -430,14 +432,38 @@ gimp_text_tool_text_notify (GimpText     *text,
        g_object_get_property (G_OBJECT (text), pspec->name, &value);
 
        g_signal_handlers_block_by_func (text_tool->proxy,
-                                        gimp_text_tool_notify, text_tool);
+                                        gimp_text_tool_proxy_notify,
+                                        text_tool);
+
        g_object_set_property (G_OBJECT (text_tool->proxy),
                               pspec->name, &value);
+
        g_signal_handlers_unblock_by_func (text_tool->proxy,
-                                          gimp_text_tool_notify, text_tool);
+                                          gimp_text_tool_proxy_notify,
+                                          text_tool);
 
        g_value_unset (&value);
      }
+
+  if (text_tool->editor && strcmp (pspec->name, "text") == 0)
+    {
+      gchar *str;
+
+      g_object_get (text, "text", &str, NULL);
+
+      g_signal_handlers_block_by_func (text_tool->editor,
+                                       gimp_text_tool_text_changed,
+                                       text_tool);
+
+      gimp_text_editor_set_text (GIMP_TEXT_EDITOR (text_tool->editor),
+                                 str, -1);
+
+      g_signal_handlers_unblock_by_func (text_tool->editor,
+                                         gimp_text_tool_text_changed,
+                                         text_tool);
+
+      g_free (str);
+    }
 }
 
 static gboolean
@@ -458,6 +484,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   GObject       *src;
   GObject       *dest;
   GList         *list;
+  gboolean       undo_group;
 
   if (text_tool->idle_id)
     {
@@ -478,8 +505,13 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   /*  If the layer contains a mask,
    *  gimp_text_layer_render() might have to resize it.
    */
-  if (text_tool->layer->mask)
+  undo_group = ((text_tool->layer->mask != NULL) || text_layer->modified);
+  if (undo_group)
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_TEXT, NULL);
+
+  if (text_layer->modified)
+    gimp_image_undo_push_drawable_mod (image, NULL,
+                                       GIMP_DRAWABLE (text_layer));
 
   gimp_image_undo_push_text_layer (image, NULL, text_layer);
 
@@ -516,7 +548,7 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
   g_signal_handlers_unblock_by_func (dest,
                                      gimp_text_tool_text_notify, text_tool);
 
-  if (text_tool->layer->mask)
+  if (undo_group)
     gimp_image_undo_group_end (image);
 
   gimp_tool_control_set_preserve (GIMP_TOOL (text_tool)->control, FALSE);
