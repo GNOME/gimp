@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.9\n"
-"POT-Creation-Date: 2000-09-26 12:17+0300\n"
+"POT-Creation-Date: 2000-09-29 13:05+0300\n"
 "PO-Revision-Date: 2000-02-08 16:11+0200\n"
 "Last-Translator: Yuri Syrota <rasta@renome.rovno.ua>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
@@ -3314,15 +3314,15 @@ msgstr "Чорний"
 
 #: plug-ins/common/edge.c:168
 msgid "<Image>/Filters/Edge-Detect/Edge..."
-msgstr "<Image>/Ф╕льтри/В╕д╕лення краю/Край..."
+msgstr "<Image>/Ф╕льтри/Виявлення граней/Гран╕..."
 
 #: plug-ins/common/edge.c:236
 msgid "Edge Detection..."
-msgstr ""
+msgstr "Виявлення граней..."
 
 #: plug-ins/common/edge.c:645
 msgid "Edge Detection"
-msgstr ""
+msgstr "Виявлення граней"
 
 #: plug-ins/common/edge.c:675 plug-ins/common/spheredesigner.c:2633
 #: plug-ins/common/unsharp.c:820
@@ -4369,7 +4369,7 @@ msgstr "Коментар╕ до зображення"
 
 #: plug-ins/common/laplace.c:91
 msgid "<Image>/Filters/Edge-Detect/Laplace"
-msgstr "<Image>/Ф╕льтри/В╕д╕лення краю/Лаплас"
+msgstr "<Image>/Ф╕льтри/Виявленя граней/Лаплас"
 
 #: plug-ins/common/laplace.c:221
 msgid "Laplace..."
@@ -4554,27 +4554,27 @@ msgstr "До:"
 
 #: plug-ins/common/max_rgb.c:128
 msgid "<Image>/Filters/Colors/Max RGB..."
-msgstr "<Image>/Ф╕льтри/Кольори/Max RGB..."
+msgstr "<Image>/Ф╕льтри/Кольори/Максимум RGB..."
 
 #: plug-ins/common/max_rgb.c:164
 msgid "Max RGB: Can only operate on RGB drawables."
-msgstr ""
+msgstr "Максимум RGB працю╓ лише на RGB-зображеннях."
 
 #: plug-ins/common/max_rgb.c:225
 msgid "Max RGB: Scanning..."
-msgstr ""
+msgstr "Миксимум RGB: Сканування..."
 
 #: plug-ins/common/max_rgb.c:342
 msgid "Max RGB"
-msgstr ""
+msgstr "Максимум RGB"
 
 #: plug-ins/common/max_rgb.c:384
 msgid "Hold the Maximal Channels"
-msgstr ""
+msgstr "Збер╕гати максимальн╕ канали"
 
 #: plug-ins/common/max_rgb.c:386
 msgid "Hold the Minimal Channels"
-msgstr ""
+msgstr "Збер╕гати м╕н╕мальн╕ канали"
 
 #: plug-ins/common/mblur.c:167
 msgid "<Image>/Filters/Blur/Motion Blur..."
@@ -4783,7 +4783,7 @@ msgstr ""
 
 #: plug-ins/common/oilify.c:119
 msgid "<Image>/Filters/Artistic/Oilify..."
-msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/Oilify..."
+msgstr "<Image>/Ф╕льтри/╤м╕тац╕я/Ол╕йна фарба..."
 
 #: plug-ins/common/oilify.c:194
 msgid "Oil Painting..."
@@ -4791,15 +4791,15 @@ msgstr "Малювання ол╕╓ю..."
 
 #: plug-ins/common/oilify.c:453
 msgid "Oilify"
-msgstr ""
+msgstr "Ол╕йна фарба"
 
 #: plug-ins/common/oilify.c:481
 msgid "Use Intensity Algorithm"
-msgstr ""
+msgstr "Використовувати ал╜оритм ╕нтенсивност╕"
 
 #: plug-ins/common/oilify.c:490
 msgid "Mask Size:"
-msgstr ""
+msgstr "Розм╕р маски:"
 
 #: plug-ins/common/papertile.c:245
 msgid "Paper Tile"
@@ -4848,7 +4848,7 @@ msgstr "Тип тла"
 
 #: plug-ins/common/papertile.c:382
 msgid "Inverted Image"
-msgstr ""
+msgstr "╤нвертоване зображення"
 
 #: plug-ins/common/papertile.c:384
 msgid "Image"
@@ -4889,7 +4889,7 @@ msgstr "П╕ксел╕зац╕я"
 
 #: plug-ins/common/pixelize.c:304
 msgid "Pixel Width:"
-msgstr ""
+msgstr "Ширина п╕кселя:"
 
 #: plug-ins/common/plasma.c:187
 msgid "<Image>/Filters/Render/Clouds/Plasma..."
@@ -4905,7 +4905,7 @@ msgstr "Плазма"
 
 #: plug-ins/common/plasma.c:371 plug-ins/common/spheredesigner.c:2425
 msgid "Turbulence:"
-msgstr ""
+msgstr "Бурхлив╕ть:"
 
 #: plug-ins/common/plugindetails.c:45
 msgid "Internal GIMP procedure"
@@ -5820,27 +5820,27 @@ msgstr "Розм╕р по Y:"
 
 #: plug-ins/common/sobel.c:142
 msgid "<Image>/Filters/Edge-Detect/Sobel..."
-msgstr "<Image>/Ф╕льтри/Вид╕лення краю/Sobel..."
+msgstr "<Image>/Ф╕льтри/Виявлення граней/Собель..."
 
 #: plug-ins/common/sobel.c:246
 msgid "Sobel Edge Detection"
-msgstr ""
+msgstr "Собельне виявлення граней"
 
 #: plug-ins/common/sobel.c:272
 msgid "Sobel Horizontally"
-msgstr ""
+msgstr "Горизонтальне виявлення"
 
 #: plug-ins/common/sobel.c:280
 msgid "Sobel Vertically"
-msgstr ""
+msgstr "Вертикальне виявлення"
 
 #: plug-ins/common/sobel.c:288
 msgid "Keep Sign of Result (one Direction only)"
-msgstr ""
+msgstr "Збер╕гати знак результату (лише один напрямок)"
 
 #: plug-ins/common/sobel.c:361
 msgid "Sobel Edge Detecting..."
-msgstr ""
+msgstr "Собельне виявлення граней..."
 
 #: plug-ins/common/sparkle.c:191
 msgid "<Image>/Filters/Light Effects/Sparkle..."
@@ -9761,7 +9761,7 @@ msgstr "точки"
 
 #: plug-ins/gdyntext/gdyntext.c:94
 msgid "<Image>/Filters/Render/Dynamic Text..."
-msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Dynamic Text..."
+msgstr "<Image>/Ф╕льтри/В╕зуал╕зац╕я/Динам╕чний текст..."
 
 #: plug-ins/gdyntext/gdyntext.c:231
 msgid ""
@@ -9890,19 +9890,19 @@ msgstr ""
 
 #: plug-ins/gdyntext/gdyntext_ui.c:479
 msgid "Set text rotation (degrees)"
-msgstr ""
+msgstr "Встановити поворот тексту (╜радуси)"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:511
 msgid "Editable text sample"
-msgstr ""
+msgstr "Приклад тексту"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:524
 msgid "Clear preview"
-msgstr ""
+msgstr "Очистити перегляд"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:531
 msgid "Preview default text sample"
-msgstr ""
+msgstr "Показати типовий приклад тексту"
 
 #: plug-ins/gdyntext/gdyntext_ui.c:583
 msgid ""
@@ -11144,9 +11144,7 @@ msgstr "Вороной"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr ""
-"В режим╕ \"Вороной\" лише найближчий до задано╖ точки вектор ма╓ "
-"вплив"
+msgstr "В режим╕ \"Вороной\" лише найближчий до задано╖ точки вектор ма╓ вплив"
 
 #: plug-ins/gimpressionist/paper.c:89 plug-ins/gimpressionist/paper.c:94
 msgid "Paper"
