@@ -1,5 +1,10 @@
 2004-04-13  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c: reverted last change and go back to the
+	solution using fork(). Hopefully fixes bug #139158 this time.
+
+2004-04-13  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-utils.[ch] (gimp_get_default_language): added a
 	category parameter to make this function more flexible.
 

@@ -56,8 +56,7 @@
 #define GIMP_BINARY "gimp-" GIMP_APP_VERSION
 
 
-static void start_new_gimp (GdkDisplay  *display,
-                            GdkScreen   *screen,
+static void start_new_gimp (GdkScreen   *screen,
                             const gchar *argv0,
                             const gchar *startup_id,
                             GString     *file_list) G_GNUC_NORETURN;
@@ -183,8 +182,7 @@ usage (const gchar *name)
 }
 
 static void
-start_new_gimp (GdkDisplay  *display,
-                GdkScreen   *screen,
+start_new_gimp (GdkScreen   *screen,
                 const gchar *argv0,
                 const gchar *startup_id,
                 GString     *file_list)
@@ -261,19 +259,30 @@ start_new_gimp (GdkDisplay  *display,
         break;
     }
 
-  /*  Close the display so that gimp can reopen it later without getting
-   *  into authentification problems with the X server (see bug #139158).
-   */
-  XCloseDisplay (gdk_x11_display_get_xdisplay (display));
+  /* We must ensure that gimp is started with a different PID.
+     Otherwise it could happen that (when it opens it's display) it sends
+     the same auth token again (because that one is uniquified with PID
+     and time()), which the server would deny.  */
+  switch (fork ())
+    {
+    case -1:
+      exit (EXIT_FAILURE);
 
-  execv (gimp, argv);
-  execvp (GIMP_BINARY, argv);
+    case 0: /* child */
+      execv (gimp, argv);
+      execvp (GIMP_BINARY, argv);
 
-  /*  if execv and execvp return, there was an arror  */
-  g_printerr ("Couldn't start %s for the following reason: %s\n",
-              GIMP_BINARY, g_strerror (errno));
+      /*  if execv and execvp return, there was an error  */
+      g_printerr ("Couldn't start %s for the following reason: %s\n",
+		      GIMP_BINARY, g_strerror (errno));
 
-  exit (EXIT_FAILURE);
+      exit (EXIT_FAILURE);
+
+    default: /* parent */
+      break;
+    }
+
+  exit (EXIT_SUCCESS);
 }
 
 static void
@@ -398,8 +407,7 @@ main (gint    argc,
   /*  if called without any filenames, always start a new GIMP  */
   if (file_list->len == 0 && !query && !existing)
     {
-      start_new_gimp (display, screen,
-                      argv[0], desktop_startup_id, file_list);
+      start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
     }
 
   gimp_window = gimp_remote_find_window (display, screen);
@@ -469,8 +477,7 @@ main (gint    argc,
         }
       else if (! existing)
         {
-          start_new_gimp (display, screen,
-                          argv[0], desktop_startup_id, file_list);
+          start_new_gimp (screen, argv[0], desktop_startup_id, file_list);
         }
     }
 
