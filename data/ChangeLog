@@ -1,3 +1,7 @@
+2000-12-29  Sven Neumann  <sven@gimp.org>
+
+	* brushes/Makefile.am: added confetti.gih and hsparks.gih
+
 Fri Dec 29 18:14:46 CET 2000  Simon Budig  <simon@gimp.org>
 
         * brushes/confetti.gih:  New brushpipe: basically the
