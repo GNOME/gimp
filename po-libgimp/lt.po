@@ -1,17 +1,18 @@
 # Lithuanian translation of GIMP (libgimp).
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2001.
-# Žygimantas Beručka <uid0@akl.lt>, 2004-2005.
+# Žygimantas Beručka <uid0@akl.lt>, 2004.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
-# Giedrius Naud#i#nas <gimp@projektas.lt>, 2004-2005.
+# Giedrius Naudžiūnas <gimpng@gmail.com>, 2005.
+# 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-22 17:33+0100\n"
-"PO-Revision-Date: 2005-01-18 21:01+0200\n"
-"Last-Translator: Giedrius Naudžiūnas <gimp@projektas.lt>\n"
+"POT-Creation-Date: 2005-02-02 22:30+0200\n"
+"PO-Revision-Date: 2005-02-02 22:30+0200\n"
+"Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
