@@ -104,12 +104,17 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <sys/types.h>
 #include <sys/param.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
 #include <string.h>
 #include <unistd.h>
 #include <errno.h>
+#ifdef __EMX__
+#include <fcntl.h>
+#include <process.h>
+#endif
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
 
@@ -320,7 +325,11 @@ save_image (char *filename,
   strcat (mailcmdline, mail_info.receipt);
 
   /* create a pipe to sendmail */
+#ifndef __EMX__
   mailpipe = popen (mailcmdline, "w");
+#else
+  mailpipe = popen (mailcmdline, "wb");
+#endif
   create_headers (mailpipe);
   
   /* This is necessary to make the comments and headers work correctly. Not real sure why */
@@ -347,6 +356,7 @@ save_image (char *filename,
     }
 
   if( mail_info.encapsulation == ENCAPSULATION_UUENCODE ) {
+#ifndef __EMX__
       /* fork off a uuencode process */
       if ((pid = fork ()) < 0)
 	  {
@@ -370,6 +380,27 @@ save_image (char *filename,
 	      _exit (127);
 	  }
       else
+#else /* __EMX__ */
+      int tfd;
+      /* save fileno(stdout) */
+      tfd = dup (fileno (stdout));
+      if (dup2 (fileno (mailpipe), fileno (stdout)) == -1)
+	{
+	  g_message ("mail: dup2 failed: %s\n", g_strerror (errno));
+	  close(tfd);
+	  return -1;
+	}
+      fcntl(tfd, F_SETFD, FD_CLOEXEC);
+      pid = spawnlp (P_NOWAIT, UUENCODE, UUENCODE, tmpname, filename, NULL);
+      /* restore fileno(stdout) */
+      dup2 (tfd, fileno (stdout));
+      close(tfd);
+      if (pid == -1)
+	{
+	  g_message ("mail: spawn failed: %s\n", g_strerror (errno));
+	  return -1;
+	}
+#endif
 	  {
 	      waitpid (pid, &status, 0);
 	      

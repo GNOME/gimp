@@ -1,3 +1,7 @@
+Mon May 17 14:25:11 1999  ape@lrdpf.spacetec.no  (Asbjorn Pettersen)
+
+	* plug-ins/mail/mail.c (save_image): Add OS/2 patches. popen(),spawnl,,
+	
 1999-05-17  Jay Cox  <jaycox@earthlink.net>
 
 	* app/xcf.c: fixed bogus computation of the maximum size
