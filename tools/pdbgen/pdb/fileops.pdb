@@ -128,7 +128,7 @@ HELP
 	vars => [ 'PlugInProcDef *file_proc', 'ProcRecord *proc' ],
 	code => <<'CODE'
 {
-  file_proc = file_proc_find (load_procs, %%raw_filename%%);
+  file_proc = file_proc_find (save_procs, %%raw_filename%%);
   if (!file_proc) 
     return %%fail%%;
 

@@ -119,7 +119,7 @@ file_save_invoker (Argument *args)
   PlugInProcDef *file_proc;
   ProcRecord *proc;
 
-  file_proc = file_proc_find (load_procs, (gchar *) args[4].value.pdb_pointer);
+  file_proc = file_proc_find (save_procs, (gchar *) args[4].value.pdb_pointer);
   if (!file_proc) 
     return procedural_db_return_args (&file_save_proc, FALSE);
 
