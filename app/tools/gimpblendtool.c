@@ -65,7 +65,10 @@ typedef enum
   ConicalAsymmetric,
   ShapeburstAngular,
   ShapeburstSpherical,
-  ShapeburstDimpled
+  ShapeburstDimpled,
+  SpiralClockwise,
+  SpiralAntiClockwise,
+  GradientTypeLast
 } GradientType;
 
 typedef enum
@@ -73,14 +76,16 @@ typedef enum
   FG_BG_RGB_MODE,
   FG_BG_HSV_MODE,
   FG_TRANS_MODE,
-  CUSTOM_MODE
+  CUSTOM_MODE,
+  BLEND_MODE_LAST
 } BlendMode;
 
 typedef enum
 {
   REPEAT_NONE,
   REPEAT_SAWTOOTH,
-  REPEAT_TRIANGULAR
+  REPEAT_TRIANGULAR,
+  REPEAT_LAST
 } RepeatMode;
 
 typedef double (*RepeatFunc)(double);
@@ -169,6 +174,8 @@ static double gradient_calc_linear_factor   	         (double dist, double *vec,
 							  double x, double y);
 static double gradient_calc_bilinear_factor 	         (double dist, double *vec, double offset,
 							  double x, double y);
+static double gradient_calc_spiral_factor                (double dist, double *axis, double offset,
+							  double x, double y,gint cwise);
 static double gradient_calc_shapeburst_angular_factor    (double x, double y);
 static double gradient_calc_shapeburst_spherical_factor  (double x, double y);
 static double gradient_calc_shapeburst_dimpled_factor    (double x, double y);
@@ -229,6 +236,8 @@ static MenuItem gradient_option_items[] =
   { N_("Shapeburst (angular)"), 0, 0, gradient_type_callback, (gpointer) ShapeburstAngular, NULL, NULL },
   { N_("Shapeburst (spherical)"), 0, 0, gradient_type_callback, (gpointer) ShapeburstSpherical, NULL, NULL },
   { N_("Shapeburst (dimpled)"), 0, 0, gradient_type_callback, (gpointer) ShapeburstDimpled, NULL, NULL },
+  { N_("Spiral (clockwise)"), 0, 0, gradient_type_callback, (gpointer) SpiralClockwise, NULL, NULL },
+  { N_("Spiral (anticlockwise)"), 0, 0, gradient_type_callback, (gpointer) SpiralAntiClockwise, NULL, NULL },
   { NULL, 0, 0, NULL, NULL, NULL, NULL }
 };
 
@@ -1023,6 +1032,44 @@ gradient_calc_bilinear_factor (double  dist,
   return rat;
 } /* gradient_calc_bilinear_factor */
 
+static double
+gradient_calc_spiral_factor (double  dist,
+			     double *axis,
+			     double  offset,
+			     double  x,
+			     double  y,
+			     gint cwise)
+{
+  double ang0, ang1;
+  double ang, r;
+  double rat;
+
+  if (dist == 0.0)
+    rat = 0.0;
+  else
+    {
+      if (x != 0.0 || y != 0.0)
+	{
+	  ang0 = atan2 (axis[0], axis[1]) + M_PI;
+	  ang1 = atan2 (x, y) + M_PI;
+	  if(!cwise)
+	    ang = ang0 - ang1;
+	  else
+	    ang = ang1 - ang0;
+
+	  if (ang < 0.0)
+	    ang += (2.0 * M_PI);
+
+	  r = sqrt (x * x + y * y) / dist;
+	  rat = ang / (2.0 * M_PI) + r + offset;
+	  rat = fmod (rat, 1.0);
+	}
+      else
+	rat = 0.5 ; /* We are on the middle point */
+    }
+
+  return rat;
+}
 
 static double
 gradient_calc_shapeburst_angular_factor (double x,
@@ -1248,6 +1295,16 @@ gradient_render_pixel(double x, double y, color_t *color, void *render_data)
       factor = gradient_calc_shapeburst_dimpled_factor(x, y);
       break;
 
+    case SpiralClockwise:
+      factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
+					    x - rbd->sx, y - rbd->sy,TRUE);
+      break;
+
+    case SpiralAntiClockwise:
+      factor = gradient_calc_spiral_factor (rbd->dist, rbd->vec, rbd->offset,
+					    x - rbd->sx, y - rbd->sy,FALSE);
+      break;
+
     default:
       fatal_error(_("gradient_render_pixel(): unknown gradient type %d"),
 		  (int) rbd->gradient_type);
@@ -1400,6 +1457,8 @@ gradient_fill_region (GImage       *gimage,
 
     case ConicalSymmetric:
     case ConicalAsymmetric:
+    case SpiralClockwise:
+    case SpiralAntiClockwise:
     case Linear:
     case BiLinear:
       rbd.dist = sqrt(SQR(ex - sx) + SQR(ey - sy));
@@ -1724,7 +1783,7 @@ ProcArg blend_args[] =
   },
   { PDB_INT32,
     "gradient_type",
-    "The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL-SYMMETRIC (4), CONICAL-ASYMMETRIC (5), SHAPEBURST-ANGULAR (6), SHAPEBURST-SPHERICAL (7), SHAPEBURST-DIMPLED (8) }"
+    "The type of gradient: { LINEAR (0), BILINEAR (1), RADIAL (2), SQUARE (3), CONICAL-SYMMETRIC (4), CONICAL-ASYMMETRIC (5), SHAPEBURST-ANGULAR (6), SHAPEBURST-SPHERICAL (7), SHAPEBURST-DIMPLED (8), SPIRAL-CLOCKWISE(9), SPRIAL-ANTICLOCKWISE(10) }"
   },
   { PDB_FLOAT,
     "opacity",
@@ -1835,14 +1894,11 @@ blend_invoker (Argument *args)
   if (success)
     {
       int_value = args[1].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: blend_mode = FG_BG_RGB_MODE; break;
-	case 1: blend_mode = FG_BG_HSV_MODE; break;
-	case 2: blend_mode = FG_TRANS_MODE; break;
-	case 3: blend_mode = CUSTOM_MODE; break;
-	default: success = FALSE;
-	}
+
+      if (int_value >= 0 && int_value < BLEND_MODE_LAST)
+	blend_mode = (BlendMode) int_value;
+      else
+	success = FALSE;
     }
   /*  paint mode  */
   if (success)
@@ -1857,19 +1913,11 @@ blend_invoker (Argument *args)
   if (success)
     {
       int_value = args[3].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: gradient_type = Linear; break;
-	case 1: gradient_type = BiLinear; break;
-	case 2: gradient_type = Radial; break;
-	case 3: gradient_type = Square; break;
-	case 4: gradient_type = ConicalSymmetric; break;
-	case 5: gradient_type = ConicalAsymmetric; break;
-	case 6: gradient_type = ShapeburstAngular; break;
-	case 7: gradient_type = ShapeburstSpherical; break;
-	case 8: gradient_type = ShapeburstDimpled; break;
-	default: success = FALSE;
-	}
+
+      if (int_value >= 0 && int_value < GradientTypeLast)
+	gradient_type = (GradientType) int_value;
+      else
+	success = FALSE;
     }
   /*  opacity  */
   if (success)
@@ -1893,13 +1941,11 @@ blend_invoker (Argument *args)
   if (success)
     {
       int_value = args[6].value.pdb_int;
-      switch (int_value)
-	{
-	case 0: repeat = REPEAT_NONE; break;
-	case 1: repeat = REPEAT_SAWTOOTH; break;
-	case 2: repeat = REPEAT_TRIANGULAR; break;
-	default: success = FALSE;
-	}
+
+      if (int_value >= 0 && int_value < REPEAT_LAST)
+	repeat = (RepeatMode) int_value;
+      else
+	success = FALSE;
     }
   /* supersampling */
   if (success)

@@ -1,3 +1,14 @@
+Mon Jan  4 23:21:56 GMT 1999 Andy Thomas <alt@picnic.demon.co.uk>
+
+	* app/blend.c
+	* plug-ins/script-fu/script-fu.c
+
+	A patch from Federico to add a spiral gradient type. The patch
+	has been slightly modified to allow both clockwise and anticlockwise
+	spirals and the numbers used to represent these types of gradients
+	have been made to follow on from currently allocated numbers (I hope
+	this will not break any scripts). 
+
 Sun Jan  3 14:40:27 PST 1999 Manish Singh <yosh@gimp.org>
 
 	* plug-ins/ps/ps.c: new version
