@@ -1,3 +1,10 @@
+2002-11-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpselectioneditor.c
+	* app/widgets/gimpvectorslistview.c: don't undefine
+	GTK_DISABLE_DEPRECATED here, since these files don't use any
+	deprecated functions.
+
 2002-11-09  Maurits Rijk  <lpeek.mrijk@consunet.nl>
 
 	* plug-ins/common/sinus.c (sinus_dialog): applied a patch from Yeti to
