@@ -678,7 +678,7 @@ file_open_image (gchar       *filename,
   procedural_db_destroy_args (return_vals, proc->num_values);
   g_free (args);
 
-  if (*status == PDB_SUCCESS)
+  if (*status == PDB_SUCCESS && gimage_id != -1)
     {
       layer_invalidate_previews (gimage_get_ID (gimage_id));
       channel_invalidate_previews (gimage_get_ID (gimage_id));
