@@ -1,3 +1,8 @@
+2004-03-17  Gustavo Noronha Silva  <kov@debian.org>
+
+	* pt_BR.po: updated translation, by
+	  Leandro Pereira <leandro@linuxmag.com.br>
+
 2004-03-15  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.am (tips_POFILES): added nl.po (Dutch).
