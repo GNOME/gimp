@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-02-20 06:17+0100\n"
-"PO-Revision-Date: 2004-02-20 06:24+0100\n"
+"POT-Creation-Date: 2004-02-26 21:49+0100\n"
+"PO-Revision-Date: 2004-02-26 21:50+0100\n"
 "Last-Translator: Бранко Ивановић <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -240,17 +240,17 @@ msgid "Value"
 msgstr "Вредност"
 
 #: app/base/base-enums.c:76 app/core/core-enums.c:98
-#: app/tools/gimpcolorbalancetool.c:304
+#: app/tools/gimpcolorbalancetool.c:303
 msgid "Red"
 msgstr "Црвена"
 
 #: app/base/base-enums.c:77 app/core/core-enums.c:99
-#: app/tools/gimpcolorbalancetool.c:311
+#: app/tools/gimpcolorbalancetool.c:310
 msgid "Green"
 msgstr "Зелена"
 
 #: app/base/base-enums.c:78 app/core/core-enums.c:100
-#: app/tools/gimpcolorbalancetool.c:318
+#: app/tools/gimpcolorbalancetool.c:317
 msgid "Blue"
 msgstr "Плава"
 
@@ -327,8 +327,8 @@ msgstr "Не могу да повећам ${%s}"
 #: app/core/gimpbrush.c:396 app/core/gimpbrushgenerated.c:379
 #: app/core/gimpbrushpipe.c:349 app/core/gimpgradient.c:352
 #: app/core/gimppalette.c:369 app/core/gimppattern.c:328
-#: app/tools/gimpcurvestool.c:1257 app/tools/gimplevelstool.c:1462
-#: app/widgets/gimptexteditor.c:373 app/xcf/xcf.c:273
+#: app/tools/gimpimagemaptool.c:546 app/widgets/gimptexteditor.c:374
+#: app/xcf/xcf.c:273
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Нисам могао да отворим „%s“ за читање: %s"
@@ -336,8 +336,8 @@ msgstr "Нисам могао да отворим „%s“ за читање: %s
 #: app/config/gimpconfig-utils.c:487 app/config/gimpconfigwriter.c:120
 #: app/core/gimpbrushgenerated.c:130 app/core/gimpgradient.c:498
 #: app/core/gimpgradient.c:584 app/core/gimppalette.c:567 app/gui/themes.c:238
-#: app/tools/gimpcurvestool.c:1256 app/tools/gimplevelstool.c:1461
-#: app/vectors/gimpvectors-export.c:83 app/xcf/xcf.c:330
+#: app/tools/gimpimagemaptool.c:545 app/vectors/gimpvectors-export.c:83
+#: app/xcf/xcf.c:330
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Нисам могао да отворим „%s“ за упис: %s"
@@ -455,7 +455,8 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:70
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
-msgstr "Ово је растојање у тачкама на којем се користи пријањање уз вођице и мрежу."
+msgstr ""
+"Ово је растојање у тачкама на којем се користи пријањање уз вођице и мрежу."
 
 #: app/config/gimprc-blurbs.h:74
 msgid ""
@@ -1476,74 +1477,74 @@ msgid "FG to BG (HSV clockwise hue)"
 msgstr "Боја четке у боју позадине (HSV смер казаљки на сату)"
 
 #. register all internal procedures
-#: app/core/gimp.c:675
+#: app/core/gimp.c:664
 msgid "Procedural Database"
 msgstr "База процедура"
 
-#: app/core/gimp.c:678
+#: app/core/gimp.c:667
 msgid "Plug-In Environment"
 msgstr "Окружење за додатке"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:889
+#: app/core/gimp.c:878
 msgid "Looking for data files"
 msgstr "Тражим датотеке са подацима"
 
-#: app/core/gimp.c:889
+#: app/core/gimp.c:878
 msgid "Parasites"
 msgstr "Паразити"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:893 app/gui/dialogs-constructors.c:278
+#: app/core/gimp.c:882 app/gui/dialogs-constructors.c:278
 #: app/gui/dialogs-constructors.c:485 app/gui/preferences-dialog.c:2057
 #: app/pdb/internal_procs.c:83
 msgid "Brushes"
 msgstr "Четке"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:897 app/gui/dialogs-constructors.c:298
+#: app/core/gimp.c:886 app/gui/dialogs-constructors.c:298
 #: app/gui/dialogs-constructors.c:505 app/gui/preferences-dialog.c:2061
 #: app/pdb/internal_procs.c:164
 msgid "Patterns"
 msgstr "Мустре"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:901 app/gui/dialogs-constructors.c:338
+#: app/core/gimp.c:890 app/gui/dialogs-constructors.c:338
 #: app/gui/dialogs-constructors.c:545 app/gui/preferences-dialog.c:2065
 #: app/pdb/internal_procs.c:152
 msgid "Palettes"
 msgstr "Палете"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:905 app/gui/dialogs-constructors.c:318
+#: app/core/gimp.c:894 app/gui/dialogs-constructors.c:318
 #: app/gui/dialogs-constructors.c:525 app/gui/preferences-dialog.c:2069
 #: app/pdb/internal_procs.c:122
 msgid "Gradients"
 msgstr "Преливи"
 
 #. initialize the list of gimp fonts
-#: app/core/gimp.c:909 app/gui/dialogs-constructors.c:357
+#: app/core/gimp.c:898 app/gui/dialogs-constructors.c:357
 #: app/gui/dialogs-constructors.c:564 app/gui/preferences-dialog.c:2073
 #: app/pdb/internal_procs.c:113
 msgid "Fonts"
 msgstr "Писма"
 
 #. initialize the document history
-#: app/core/gimp.c:913
+#: app/core/gimp.c:902
 msgid "Documents"
 msgstr "Документа"
 
 #. initialize the template list
-#: app/core/gimp.c:917 app/gui/dialogs-constructors.c:440
+#: app/core/gimp.c:906 app/gui/dialogs-constructors.c:440
 msgid "Templates"
 msgstr "Мустре"
 
 #. initialize the module list
-#: app/core/gimp.c:921 app/gui/preferences-dialog.c:2085
+#: app/core/gimp.c:910 app/gui/preferences-dialog.c:2085
 msgid "Modules"
 msgstr "Модули"
 
-#: app/core/gimp.c:1075 app/widgets/gimperrorconsole.c:260
+#: app/core/gimp.c:1064 app/widgets/gimperrorconsole.c:260
 #: app/widgets/gimpwidgets-utils.c:93
 msgid "GIMP"
 msgstr "ГИМП"
@@ -1621,7 +1622,7 @@ msgid "Rename Channel"
 msgstr "Промени назив канала"
 
 #: app/core/gimpchannel.c:264 app/tools/gimpeditselectiontool.c:251
-#: app/tools/gimpeditselectiontool.c:1215
+#: app/tools/gimpeditselectiontool.c:1218
 msgid "Move Channel"
 msgstr "Помери канал"
 
@@ -2071,48 +2072,56 @@ msgstr "Путања се не може спустити ниже."
 msgid "Lower Path"
 msgstr "Спусти путању"
 
-#: app/core/gimpimagefile.c:458
+#: app/core/gimpimagefile.c:478
 msgid "Remote image"
 msgstr "Удаљена слика"
 
+#: app/core/gimpimagefile.c:483 app/gui/preferences-dialog.c:1244
+msgid "Folder"
+msgstr "Директоријуми"
+
+#: app/core/gimpimagefile.c:488
+msgid "Special File"
+msgstr "Нарочита датотека"
+
 # Данило каже: „Мало аориста не шкоди“ :-)
-#: app/core/gimpimagefile.c:463
+#: app/core/gimpimagefile.c:493
 msgid "Could not open"
 msgstr "Не могох да отворим"
 
-#: app/core/gimpimagefile.c:484
+#: app/core/gimpimagefile.c:514
 msgid "No preview available"
 msgstr "Преглед није доступан"
 
-#: app/core/gimpimagefile.c:488
+#: app/core/gimpimagefile.c:518
 msgid "Loading preview ..."
 msgstr "Учитавам преглед ..."
 
-#: app/core/gimpimagefile.c:492
+#: app/core/gimpimagefile.c:522
 msgid "Preview is out of date"
 msgstr "Преглед је застарео"
 
-#: app/core/gimpimagefile.c:496
+#: app/core/gimpimagefile.c:526
 msgid "Cannot create preview"
 msgstr "Не могу да направим преглед"
 
-#: app/core/gimpimagefile.c:503 app/gui/info-window.c:503
+#: app/core/gimpimagefile.c:533 app/gui/info-window.c:503
 #, c-format
 msgid "%d x %d pixels"
 msgstr "%d x %d тачака"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:518
+#: app/core/gimpimagefile.c:548
 msgid "1 Layer"
 msgstr "1 слој"
 
 # bug: plural-forms
-#: app/core/gimpimagefile.c:520
+#: app/core/gimpimagefile.c:550
 #, c-format
 msgid "%d Layers"
 msgstr "Слојева: %d"
 
-#: app/core/gimpimagefile.c:557
+#: app/core/gimpimagefile.c:587
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Нисам могао да отворим умањени приказ „%s“: %s"
@@ -2153,7 +2162,7 @@ msgstr "%s маска"
 
 #: app/core/gimplayer.c:580 app/pdb/layer_cmds.c:685 app/pdb/layer_cmds.c:774
 #: app/tools/gimpeditselectiontool.c:263
-#: app/tools/gimpeditselectiontool.c:1225
+#: app/tools/gimpeditselectiontool.c:1228
 msgid "Move Layer"
 msgstr "Помери слој"
 
@@ -2288,7 +2297,7 @@ msgid "Invalid UTF-8 string in pattern file '%s'."
 msgstr "Неисправна УТФ-8 ниска у датотеци са мустром „%s“."
 
 #: app/core/gimpselection.c:201 app/tools/gimpeditselectiontool.c:259
-#: app/tools/gimpeditselectiontool.c:1127 app/tools/gimpmoveoptions.c:184
+#: app/tools/gimpeditselectiontool.c:1130 app/tools/gimpmoveoptions.c:184
 #: app/tools/gimpmoveoptions.c:185
 msgid "Move Selection"
 msgstr "Помери селекцију"
@@ -2370,7 +2379,7 @@ msgid "pixel"
 msgstr "тачка"
 
 #: app/core/gimpunit.c:55 app/tools/gimpmeasuretool.c:868
-#: app/tools/gimppainttool.c:710
+#: app/tools/gimppainttool.c:707
 msgid "pixels"
 msgstr "тачака"
 
@@ -2473,12 +2482,12 @@ msgstr "/Као међу _поставкама"
 msgid "Toggle QuickMask"
 msgstr "Укључи-искључи БрзуМаску"
 
-#: app/display/gimpdisplayshell.c:1385
+#: app/display/gimpdisplayshell.c:1388
 #, c-format
 msgid "Close %s?"
 msgstr "Затворити %s?"
 
-#: app/display/gimpdisplayshell.c:1387
+#: app/display/gimpdisplayshell.c:1390
 #, c-format
 msgid "Changes were made to '%s'. Close anyway?"
 msgstr "Дошло је до промена у „%s“. Да ипак затворим?"
@@ -2579,7 +2588,7 @@ msgstr "Прозор у складу са размером"
 msgid "Progress"
 msgstr "Напредак"
 
-#: app/display/gimpprogress.c:157 app/display/gimpprogress.c:219
+#: app/display/gimpprogress.c:157 app/display/gimpprogress.c:217
 msgid "Please wait..."
 msgstr "Молим Вас сачекајте..."
 
@@ -2595,11 +2604,11 @@ msgstr "Непознат тип датотеке"
 msgid "Not a regular file"
 msgstr "Није исправна датотека"
 
-#: app/file/file-open.c:156
+#: app/file/file-open.c:157
 msgid "Plug-In returned SUCCESS but did not return an image"
 msgstr "Додатак је пријавио УСПЕХ али није вратио слику"
 
-#: app/file/file-open.c:164
+#: app/file/file-open.c:165
 msgid "Plug-In could not open image"
 msgstr "Додатак није могао да отвори слику"
 
@@ -3228,7 +3237,7 @@ msgstr "/_Сачувај све грешке у датотеку..."
 msgid "/Save _Selection to File..."
 msgstr "/Сачувај селекцију у датотеку..."
 
-#: app/gui/file-commands.c:194 app/gui/file-open-dialog.c:692
+#: app/gui/file-commands.c:194 app/gui/file-open-dialog.c:389
 #: app/widgets/gimpdnd.c:1286 app/widgets/gimpdocumentview.c:468
 #, c-format
 msgid ""
@@ -3337,32 +3346,9 @@ msgstr ""
 msgid "Confirm Image Size"
 msgstr "Потврди величину слику"
 
-#: app/gui/file-open-dialog.c:160 app/gui/file-open-dialog.c:187
+#: app/gui/file-open-dialog.c:146 app/gui/file-open-dialog.c:172
 msgid "Open Image"
 msgstr "Отвори слику"
-
-#: app/gui/file-open-dialog.c:237
-#, c-format
-msgid ""
-"Click to update preview\n"
-"%s  Click to force update even if preview is up-to-date"
-msgstr ""
-"Кликните да ажурирате приказ\n"
-"%s  Кликните да ажурирате иако је приказ ажуриран"
-
-#. The preview toggle
-#: app/gui/file-open-dialog.c:254 app/tools/gimpimagemaptool.c:234
-msgid "_Preview"
-msgstr "_Приказ"
-
-#: app/gui/file-open-dialog.c:304 app/gui/file-open-dialog.c:412
-msgid "No Selection"
-msgstr "Нема селекције"
-
-#: app/gui/file-open-dialog.c:488 app/gui/file-open-dialog.c:519
-#, c-format
-msgid "Thumbnail %d of %d"
-msgstr "Умањени приказ %d од %d"
 
 #: app/gui/file-open-menu.c:46
 msgid "/Automatic"
@@ -5513,10 +5499,6 @@ msgstr "Изаберите тему"
 msgid "Theme"
 msgstr "Тема"
 
-#: app/gui/preferences-dialog.c:1244
-msgid "Folder"
-msgstr "Директоријуми"
-
 #: app/gui/preferences-dialog.c:1282
 msgid "Reload C_urrent Theme"
 msgstr "Освежите _текућу тему"
@@ -7057,29 +7039,29 @@ msgstr "Константно"
 msgid "Incremental"
 msgstr "Инкрементално"
 
-#: app/pdb/color_cmds.c:134 app/tools/gimpbrightnesscontrasttool.c:84
+#: app/pdb/color_cmds.c:134 app/tools/gimpbrightnesscontrasttool.c:85
 msgid "Brightness-Contrast"
 msgstr "Осветљење-Контраст"
 
 #: app/pdb/color_cmds.c:266 app/pdb/color_cmds.c:384
-#: app/tools/gimplevelstool.c:166
+#: app/tools/gimplevelstool.c:155
 msgid "Levels"
 msgstr "Нивои"
 
-#: app/pdb/color_cmds.c:461 app/tools/gimpposterizetool.c:77
+#: app/pdb/color_cmds.c:461 app/tools/gimpposterizetool.c:78
 msgid "Posterize"
 msgstr "Смањи број боја"
 
 #: app/pdb/color_cmds.c:722 app/pdb/color_cmds.c:839
-#: app/tools/gimpcurvestool.c:161
+#: app/tools/gimpcurvestool.c:137
 msgid "Curves"
 msgstr "Кривине"
 
-#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:95
+#: app/pdb/color_cmds.c:957 app/tools/gimpcolorbalancetool.c:96
 msgid "Color Balance"
 msgstr "Баланс боја"
 
-#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:109
+#: app/pdb/color_cmds.c:1235 app/tools/gimphuesaturationtool.c:110
 msgid "Hue-Saturation"
 msgstr "Тип-засићеност"
 
@@ -7533,27 +7515,27 @@ msgstr "Стапање:"
 msgid "Blending..."
 msgstr "Стапам..."
 
-#: app/tools/gimpbrightnesscontrasttool.c:85
+#: app/tools/gimpbrightnesscontrasttool.c:86
 msgid "Adjust brightness and contrast"
 msgstr "Подесите осветљење и контраст"
 
-#: app/tools/gimpbrightnesscontrasttool.c:86
+#: app/tools/gimpbrightnesscontrasttool.c:87
 msgid "/Tools/Color Tools/B_rightness-Contrast..."
 msgstr "/Алати/Алатке за боје/Осветљење-контраст..."
 
-#: app/tools/gimpbrightnesscontrasttool.c:147
+#: app/tools/gimpbrightnesscontrasttool.c:138
 msgid "Adjust Brightness and Contrast"
 msgstr "Подесите осветљење и контраст"
 
-#: app/tools/gimpbrightnesscontrasttool.c:182
+#: app/tools/gimpbrightnesscontrasttool.c:181
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Осветљење-контраст се не подешава за индексиране слојеве."
 
-#: app/tools/gimpbrightnesscontrasttool.c:237
+#: app/tools/gimpbrightnesscontrasttool.c:236
 msgid "_Brightness:"
 msgstr "_Осветљење:"
 
-#: app/tools/gimpbrightnesscontrasttool.c:252
+#: app/tools/gimpbrightnesscontrasttool.c:251
 msgid "Con_trast:"
 msgstr "Кон_траст:"
 
@@ -7639,91 +7621,91 @@ msgstr "Извор"
 msgid "Alignment"
 msgstr "Поравнатост"
 
-#: app/tools/gimpcolorbalancetool.c:96
+#: app/tools/gimpcolorbalancetool.c:97
 msgid "Adjust color balance"
 msgstr "Подеси баланс боја"
 
-#: app/tools/gimpcolorbalancetool.c:97
+#: app/tools/gimpcolorbalancetool.c:98
 msgid "/Tools/Color Tools/Color _Balance..."
 msgstr "/Алати//Алатке за боје/Баланс боја..."
 
-#: app/tools/gimpcolorbalancetool.c:158
+#: app/tools/gimpcolorbalancetool.c:149
 msgid "Adjust Color Balance"
 msgstr "Подеси Баланс Боја"
 
-#: app/tools/gimpcolorbalancetool.c:194
+#: app/tools/gimpcolorbalancetool.c:193
 msgid "Color balance operates only on RGB color layers."
 msgstr "Балансирање боја ради само за слојеве у RGB бојама."
 
-#: app/tools/gimpcolorbalancetool.c:277
+#: app/tools/gimpcolorbalancetool.c:276
 msgid "Select Range to Modify"
 msgstr "Изабери распон за измену"
 
-#: app/tools/gimpcolorbalancetool.c:286
+#: app/tools/gimpcolorbalancetool.c:285
 msgid "Modify Selected Range's Color Levels"
 msgstr "Измени нивое изабраног распона боја"
 
-#: app/tools/gimpcolorbalancetool.c:304
+#: app/tools/gimpcolorbalancetool.c:303
 msgid "Cyan"
 msgstr "Цијан"
 
-#: app/tools/gimpcolorbalancetool.c:311
+#: app/tools/gimpcolorbalancetool.c:310
 msgid "Magenta"
 msgstr "Магента"
 
-#: app/tools/gimpcolorbalancetool.c:318
+#: app/tools/gimpcolorbalancetool.c:317
 msgid "Yellow"
 msgstr "Жута"
 
-#: app/tools/gimpcolorbalancetool.c:328
+#: app/tools/gimpcolorbalancetool.c:327
 msgid "R_eset Range"
 msgstr "Поново постави распон"
 
-#: app/tools/gimpcolorbalancetool.c:337
+#: app/tools/gimpcolorbalancetool.c:336
 msgid "Preserve _Luminosity"
 msgstr "Очувај осветљеност"
 
-#: app/tools/gimpcolorizetool.c:95
+#: app/tools/gimpcolorizetool.c:96
 msgid "Colorize"
 msgstr "Обоји"
 
-#: app/tools/gimpcolorizetool.c:96
+#: app/tools/gimpcolorizetool.c:97
 msgid "Colorize the image"
 msgstr "Обоји слику"
 
-#: app/tools/gimpcolorizetool.c:97
+#: app/tools/gimpcolorizetool.c:98
 msgid "/Tools/Color Tools/Colori_ze..."
 msgstr "/Алати/Алатке за боје/Обоји..."
 
-#: app/tools/gimpcolorizetool.c:161
+#: app/tools/gimpcolorizetool.c:152
 msgid "Colorize the Image"
 msgstr "Обоји слику"
 
-#: app/tools/gimpcolorizetool.c:196
+#: app/tools/gimpcolorizetool.c:195
 msgid "Colorize operates only on RGB color layers."
 msgstr "Бојење ради само за слојеве у RGB бојама."
 
-#: app/tools/gimpcolorizetool.c:236
+#: app/tools/gimpcolorizetool.c:235
 msgid "Select Color"
 msgstr "Изабери боју"
 
-#: app/tools/gimpcolorizetool.c:255 app/tools/gimphuesaturationtool.c:364
+#: app/tools/gimpcolorizetool.c:254 app/tools/gimphuesaturationtool.c:363
 msgid "_Hue:"
 msgstr "_Тип:"
 
-#: app/tools/gimpcolorizetool.c:269 app/tools/gimphuesaturationtool.c:392
+#: app/tools/gimpcolorizetool.c:268 app/tools/gimphuesaturationtool.c:391
 msgid "_Saturation:"
 msgstr "_Засићеност:"
 
-#: app/tools/gimpcolorizetool.c:283 app/tools/gimphuesaturationtool.c:378
+#: app/tools/gimpcolorizetool.c:282 app/tools/gimphuesaturationtool.c:377
 msgid "_Lightness:"
 msgstr "_Светлина:"
 
-#: app/tools/gimpcoloroptions.c:190
+#: app/tools/gimpcoloroptions.c:185
 msgid "Sample Average"
 msgstr "Просечни узорак"
 
-#: app/tools/gimpcoloroptions.c:200 app/tools/gimpselectionoptions.c:436
+#: app/tools/gimpcoloroptions.c:195 app/tools/gimpselectionoptions.c:436
 #: app/widgets/gimpbrusheditor.c:130
 msgid "Radius:"
 msgstr "Пречник:"
@@ -7821,56 +7803,56 @@ msgstr "Из селекције"
 msgid "Auto Shrink"
 msgstr "Аутоматски смањи"
 
-#: app/tools/gimpcurvestool.c:162
+#: app/tools/gimpcurvestool.c:138
 msgid "Adjust color curves"
 msgstr "Подеси кривине боја"
 
-#: app/tools/gimpcurvestool.c:163
+#: app/tools/gimpcurvestool.c:139
 msgid "/Tools/Color Tools/_Curves..."
 msgstr "/Алати/Алати за боје/Кривине..."
 
-#: app/tools/gimpcurvestool.c:233
+#: app/tools/gimpcurvestool.c:198
 msgid "Adjust Color Curves"
 msgstr "Подеси Кривине Боја"
 
-#: app/tools/gimpcurvestool.c:296
+#: app/tools/gimpcurvestool.c:200
+msgid "Load Curves"
+msgstr "Учитај кривине"
+
+#: app/tools/gimpcurvestool.c:201
+msgid "Save Curves"
+msgstr "Сачувај кривине"
+
+#: app/tools/gimpcurvestool.c:277
 msgid "Curves for indexed layers cannot be adjusted."
 msgstr "Кривине за индексиране слојеве се не могу подесити."
 
-#: app/tools/gimpcurvestool.c:509 app/tools/gimplevelstool.c:432
-msgid "R_eset Channel"
-msgstr "Поново постави канал"
-
-#: app/tools/gimpcurvestool.c:518 app/tools/gimplevelstool.c:418
+#: app/tools/gimpcurvestool.c:473 app/tools/gimplevelstool.c:408
 #: app/widgets/gimphistogrameditor.c:148
 msgid "Channel:"
 msgstr "Канал:"
 
+#: app/tools/gimpcurvestool.c:487 app/tools/gimplevelstool.c:422
+msgid "R_eset Channel"
+msgstr "Поново постави канал"
+
 #. Horizontal button box for load / save
-#: app/tools/gimpcurvestool.c:603 app/tools/gimplevelstool.c:656
+#: app/tools/gimpcurvestool.c:585 app/tools/gimplevelstool.c:630
 msgid "All Channels"
 msgstr "Сви канали"
 
-#: app/tools/gimpcurvestool.c:617
+#: app/tools/gimpcurvestool.c:599
 msgid "Read curves settings from file"
 msgstr "Прочитај подешавања кривина из датотеке"
 
-#: app/tools/gimpcurvestool.c:627
+#: app/tools/gimpcurvestool.c:605
 msgid "Save curves settings to file"
 msgstr "Сачувај подешавања кривина у датотеку"
 
 #. The radio box for selecting the curve type
-#: app/tools/gimpcurvestool.c:635
+#: app/tools/gimpcurvestool.c:609
 msgid "Curve Type"
 msgstr "Тип кривине"
-
-#: app/tools/gimpcurvestool.c:1181
-msgid "Load Curves"
-msgstr "Учитај кривине"
-
-#: app/tools/gimpcurvestool.c:1200
-msgid "Save Curves"
-msgstr "Сачувај кривине"
 
 #: app/tools/gimpdodgeburntool.c:71
 msgid "Dodge or Burn strokes"
@@ -7895,17 +7877,17 @@ msgid "Exposure:"
 msgstr "Изложеност:"
 
 #: app/tools/gimpeditselectiontool.c:247
-#: app/tools/gimpeditselectiontool.c:1167 app/vectors/gimpvectors.c:364
+#: app/tools/gimpeditselectiontool.c:1170 app/vectors/gimpvectors.c:364
 msgid "Move Path"
 msgstr "Помери путању"
 
 #: app/tools/gimpeditselectiontool.c:255
-#: app/tools/gimpeditselectiontool.c:1210
+#: app/tools/gimpeditselectiontool.c:1213
 msgid "Move Layer Mask"
 msgstr "Помери маску слоја"
 
 #: app/tools/gimpeditselectiontool.c:267
-#: app/tools/gimpeditselectiontool.c:1220
+#: app/tools/gimpeditselectiontool.c:1223
 msgid "Move Floating Layer"
 msgstr "Помери плутајући слој"
 
@@ -7974,65 +7956,69 @@ msgstr "/Алати/Алатке за селекцију/Нејасна селе
 msgid "Histogram Scale"
 msgstr "Размера хистограма"
 
-#: app/tools/gimphuesaturationtool.c:110
+#: app/tools/gimphuesaturationtool.c:111
 msgid "Adjust hue and saturation"
 msgstr "Подеси тип и засићеност:"
 
-#: app/tools/gimphuesaturationtool.c:111
+#: app/tools/gimphuesaturationtool.c:112
 msgid "/Tools/Color Tools/Hue-_Saturation..."
 msgstr "/Алати/Алатке за боје/Тип-Засићеност..."
 
-#: app/tools/gimphuesaturationtool.c:175
+#: app/tools/gimphuesaturationtool.c:166
 msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Подеси Тип / Осветљење / Засићеност"
 
-#: app/tools/gimphuesaturationtool.c:211
+#: app/tools/gimphuesaturationtool.c:210
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Тип-засићеност раде само на слојевима у RGB бојама."
 
-#: app/tools/gimphuesaturationtool.c:264
+#: app/tools/gimphuesaturationtool.c:263
 msgid "_Master"
 msgstr "_Главни"
 
-#: app/tools/gimphuesaturationtool.c:265
+#: app/tools/gimphuesaturationtool.c:264
 msgid "_R"
 msgstr "_R"
 
-#: app/tools/gimphuesaturationtool.c:266
+#: app/tools/gimphuesaturationtool.c:265
 msgid "_Y"
 msgstr "_Y"
 
-#: app/tools/gimphuesaturationtool.c:267
+#: app/tools/gimphuesaturationtool.c:266
 msgid "_G"
 msgstr "_G"
 
-#: app/tools/gimphuesaturationtool.c:268
+#: app/tools/gimphuesaturationtool.c:267
 msgid "_C"
 msgstr "_C"
 
-#: app/tools/gimphuesaturationtool.c:269
+#: app/tools/gimphuesaturationtool.c:268
 msgid "_B"
 msgstr "_B"
 
-#: app/tools/gimphuesaturationtool.c:270
+#: app/tools/gimphuesaturationtool.c:269
 msgid "_M"
 msgstr "_M"
 
-#: app/tools/gimphuesaturationtool.c:273
+#: app/tools/gimphuesaturationtool.c:272
 msgid "Select Primary Color to Modify"
 msgstr "Изаберите примарну боју за измену"
 
-#: app/tools/gimphuesaturationtool.c:302
+#: app/tools/gimphuesaturationtool.c:301
 msgid "Modify all colors"
 msgstr "Измени све боје"
 
-#: app/tools/gimphuesaturationtool.c:345
+#: app/tools/gimphuesaturationtool.c:344
 msgid "Modify Selected Color"
 msgstr "Измени изабрану боју"
 
-#: app/tools/gimphuesaturationtool.c:408
+#: app/tools/gimphuesaturationtool.c:407
 msgid "R_eset Color"
 msgstr "Поново постави боју"
+
+#: app/tools/gimpimagemaptool.c:242
+msgid "_Preview"
+msgstr "_Приказ"
 
 #. adjust sliders
 #: app/tools/gimpinkoptions.c:257
@@ -8094,71 +8080,71 @@ msgstr "Изабери облике са слике"
 msgid "/Tools/Selection Tools/_Intelligent Scissors"
 msgstr "/Алати/Алатке за селекције/Паметне маказе"
 
-#: app/tools/gimplevelstool.c:167
+#: app/tools/gimplevelstool.c:156
 msgid "Adjust color levels"
 msgstr "Подеси нивое боја"
 
-#: app/tools/gimplevelstool.c:168
+#: app/tools/gimplevelstool.c:157
 msgid "/Tools/Color Tools/_Levels..."
 msgstr "/Алати/Алатке за боје/Нивои..."
 
-#: app/tools/gimplevelstool.c:236
+#: app/tools/gimplevelstool.c:215
 msgid "Adjust Color Levels"
 msgstr "Подеси Нивое Боја"
 
-#: app/tools/gimplevelstool.c:287
+#: app/tools/gimplevelstool.c:217
+msgid "Load Levels"
+msgstr "Учитај нивое"
+
+#: app/tools/gimplevelstool.c:218
+msgid "Save Levels"
+msgstr "Сачувај нивое"
+
+#: app/tools/gimplevelstool.c:278
 msgid "Levels for indexed layers cannot be adjusted."
 msgstr "Не могу се прилагодити нивои индексираних слојева."
 
-#: app/tools/gimplevelstool.c:359
+#: app/tools/gimplevelstool.c:350
 msgid "Pick Black Point"
 msgstr "Изабери црну тачку"
 
-#: app/tools/gimplevelstool.c:363
+#: app/tools/gimplevelstool.c:354
 msgid "Pick Gray Point"
 msgstr "Изабери сиву тачку"
 
-#: app/tools/gimplevelstool.c:367
+#: app/tools/gimplevelstool.c:358
 msgid "Pick White Point"
 msgstr "Изабери белу тачку"
 
 #. Input levels frame
-#: app/tools/gimplevelstool.c:442
+#: app/tools/gimplevelstool.c:432
 msgid "Input Levels"
 msgstr "Улазни нивои"
 
-#: app/tools/gimplevelstool.c:549
+#: app/tools/gimplevelstool.c:528
 msgid "Gamma"
 msgstr "Гама"
 
 #. Output levels frame
-#: app/tools/gimplevelstool.c:579
+#: app/tools/gimplevelstool.c:558
 msgid "Output Levels"
 msgstr "Излазни нивои"
 
-#: app/tools/gimplevelstool.c:675
+#: app/tools/gimplevelstool.c:649
 msgid "Read levels settings from file"
 msgstr "Прочитај подешавања нивоа из датотеке"
 
-#: app/tools/gimplevelstool.c:685
+#: app/tools/gimplevelstool.c:655
 msgid "Save levels settings to file"
 msgstr "Сачувај подешавања нивоа у датотеку"
 
-#: app/tools/gimplevelstool.c:698
+#: app/tools/gimplevelstool.c:663
 msgid "_Auto"
 msgstr "_Ауто"
 
-#: app/tools/gimplevelstool.c:700
+#: app/tools/gimplevelstool.c:665
 msgid "Adjust levels automatically"
 msgstr "Подеси нивое аутоматски"
-
-#: app/tools/gimplevelstool.c:1386
-msgid "Load Levels"
-msgstr "Учитај нивое"
-
-#: app/tools/gimplevelstool.c:1405
-msgid "Save Levels"
-msgstr "Сачувај нивое"
 
 #: app/tools/gimpmagnifyoptions.c:225
 msgid "Allow Window Resizing"
@@ -8328,23 +8314,23 @@ msgstr "Перспектива..."
 msgid "Matrix:"
 msgstr "Матрица:"
 
-#: app/tools/gimpposterizetool.c:78
+#: app/tools/gimpposterizetool.c:79
 msgid "Reduce image to a fixed number of colors"
 msgstr "Сведи слику на одређен број боја"
 
-#: app/tools/gimpposterizetool.c:79
+#: app/tools/gimpposterizetool.c:80
 msgid "/Tools/Color Tools/_Posterize..."
 msgstr "/Алати/Алатке за сликање/Смањи број боја..."
 
-#: app/tools/gimpposterizetool.c:140
+#: app/tools/gimpposterizetool.c:131
 msgid "Posterize (Reduce Number of Colors)"
 msgstr "Смањивање броја боја"
 
-#: app/tools/gimpposterizetool.c:174
+#: app/tools/gimpposterizetool.c:173
 msgid "Posterize does not operate on indexed layers."
 msgstr "Смањивање боја не ради за индексиране слојеве."
 
-#: app/tools/gimpposterizetool.c:224
+#: app/tools/gimpposterizetool.c:223
 msgid "Posterize _Levels:"
 msgstr "Смањи број боја нивоа:"
 
@@ -8552,15 +8538,15 @@ msgstr "Сведи слику на две боје користећи толер
 msgid "/Tools/Color Tools/_Threshold..."
 msgstr "/Алати/Алатке за боје/Осетљивост..."
 
-#: app/tools/gimpthresholdtool.c:157
+#: app/tools/gimpthresholdtool.c:147
 msgid "Apply Threshold"
 msgstr "Примени осетљивост"
 
-#: app/tools/gimpthresholdtool.c:200
+#: app/tools/gimpthresholdtool.c:198
 msgid "Threshold does not operate on indexed layers."
 msgstr "Осетљивост не ради за индексиране слојеве."
 
-#: app/tools/gimpthresholdtool.c:258
+#: app/tools/gimpthresholdtool.c:256
 msgid "Threshold Range:"
 msgstr "Распон осетљивости:"
 
@@ -9536,7 +9522,7 @@ msgstr "Очисти цео текст"
 msgid "Open Text File (UTF-8)"
 msgstr "Отвори текстуалну датотеку (УТФ-8)"
 
-#: app/widgets/gimptexteditor.c:402
+#: app/widgets/gimptexteditor.c:403
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Неисправни УТФ-8 подаци у датотеци „%s“"
@@ -9878,6 +9864,19 @@ msgstr "XCF грешка: сусрео сам се са неподржаном X
 #: data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
 msgstr "Направи и уреди слике или фотографије"
+
+#~ msgid ""
+#~ "Click to update preview\n"
+#~ "%s  Click to force update even if preview is up-to-date"
+#~ msgstr ""
+#~ "Кликните да ажурирате приказ\n"
+#~ "%s  Кликните да ажурирате иако је приказ ажуриран"
+
+#~ msgid "No Selection"
+#~ msgstr "Нема селекције"
+
+#~ msgid "Thumbnail %d of %d"
+#~ msgstr "Умањени приказ %d од %d"
 
 #~ msgid "Modify Curves for Channel:"
 #~ msgstr "Измени кривине за канал:"
