@@ -1,5 +1,9 @@
 1999-02-16  Jay Cox  <jaycox@earthlink.net>
 
+	* app/gimplutP.h: fixed error in struct declaration
+	
+1999-02-16  Jay Cox  <jaycox@earthlink.net>
+
 	* app/gimplut[FP].h: oops, these should have been added with the
  	last commit.
 

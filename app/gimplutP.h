@@ -21,10 +21,10 @@
 #ifndef __GIMPLUT_P_H__
 #define __GIMPLUT_P_H__
 
-typedef struct _GimpLut
+struct _GimpLut
 {
   unsigned char **luts;
   int nchannels;
-} GimpLut;
+};
 
 #endif /* __GIMPLUT_P_H__ */
