@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2003-09-27 11:59+0200\n"
-"PO-Revision-Date: 2003-09-27 11:48+0200\n"
+"POT-Creation-Date: 2003-10-04 13:48+0200\n"
+"PO-Revision-Date: 2003-10-04 13:49+0200\n"
 "Last-Translator: Branko Ivanović <popeye@one.ekof.bg.ac.yu>\n"
 "Language-Team: Serbian (sr) <serbiangnome-lista@bogus.example.com>\n"
 "MIME-Version: 1.0\n"
@@ -152,20 +152,20 @@ msgid "Server Logfile:"
 msgstr "Dnevnik servera:"
 
 #: plug-ins/script-fu/script-fu.c:120
-msgid "<Toolbox>/Xtns/Script-Fu/_Console..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Konzola..."
+msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Skript-Fu _konzola"
 
 #: plug-ins/script-fu/script-fu.c:145
-msgid "<Toolbox>/Xtns/Script-Fu/_Server..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Server..."
+msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Pokreni _server..."
 
 #: plug-ins/script-fu/script-fu.c:269 plug-ins/script-fu/script-fu.c:270
 msgid "Re-read all available scripts"
 msgstr "Ponovo učitaj sve dostupne skripte"
 
 #: plug-ins/script-fu/script-fu.c:274
-msgid "<Toolbox>/Xtns/Script-Fu/_Refresh"
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Osveži"
+msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
+msgstr "<Toolbox>/Proširenja/Skript-Fu/_Osveži skripte"
 
 #: plug-ins/dbbrowser/dbbrowser_utils.c:119
 #: plug-ins/dbbrowser/dbbrowser_utils.c:138
@@ -2151,8 +2151,8 @@ msgid "Whirl Amount"
 msgstr "Vrednost zavijanja"
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
-msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
-msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Uvojci (rastavljivo)..."
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/_Zavijutak..."
 
 #: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of Times to Whirl"
@@ -2381,6 +2381,9 @@ msgstr "X odstupanje osvetljenosti"
 #: plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight Y Offset"
 msgstr "Y odstupanje osvetljenosti"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Proširenja/Skript-Fu/Isečci/Uvojci (rastavljivo)..."
 
 #~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
 #~ msgstr "<Toolbox>/Proširenja/Čitač veba/Česta pitanja programera"
