@@ -1,4 +1,18 @@
-2000-10-17  Sven Neumann  <sven@gimp.org>
+2000-10-17  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.c: gimp_uninstall_temp_proc(): free the original
+	hash key _after_ removing the procedure from the hash table.
+
+	I didn't observe any crash from this bug, but as the function
+	is called *only* from
+
+	- plug-ins/perl/Gimp/Lib.c and
+	- plug-ins/script-fu/script-fu-scripts.c
+
+	it may have been the reason for various reported perl<->script-fu
+	problems. Bug reporters, please check your bugs.
+
+x2000-10-17  Sven Neumann  <sven@gimp.org>
 
 	* app/paint_funcs.c
 	* app/pixel_processor.c

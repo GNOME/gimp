@@ -276,7 +276,7 @@ gimp_main (int   argc,
       return 0;
     }
 
-  temp_proc_ht = g_hash_table_new (&g_str_hash, &g_str_equal);
+  temp_proc_ht = g_hash_table_new (g_str_hash, g_str_equal);
 
   g_io_add_watch (_readchannel,
 		  G_IO_ERR | G_IO_HUP,
@@ -406,8 +406,8 @@ gimp_uninstall_temp_proc (gchar *name)
   found = g_hash_table_lookup_extended (temp_proc_ht, name, &hash_name, NULL);
   if (found)
     {
-      g_free (hash_name);
       g_hash_table_remove (temp_proc_ht, (gpointer) name);
+      g_free (hash_name);
     }
 }
 
