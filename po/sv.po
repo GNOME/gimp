@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
-"POT-Creation-Date: 2002-12-21 20:25+0100\n"
-"PO-Revision-Date: 2002-12-21 20:26+0100\n"
+"POT-Creation-Date: 2002-12-27 00:32+0100\n"
+"PO-Revision-Date: 2002-12-27 00:33+0100\n"
 "Last-Translator: Christian Rose <menthos@menthos.com>\n"
 "Language-Team: Swedish <sv@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2085,7 +2085,7 @@ msgid "Height:"
 msgstr "Höjd:"
 
 #: app/gui/file-new-dialog.c:225 app/gui/preferences-dialog.c:1014
-#: app/gui/preferences-dialog.c:1027 app/gui/user-install-dialog.c:1247
+#: app/gui/preferences-dialog.c:1027 app/gui/user-install-dialog.c:1352
 msgid "Pixels"
 msgstr "Bildpunkter"
 
@@ -4272,17 +4272,17 @@ msgid "Default Image Resolution and Resolution Unit"
 msgstr "Standardbildstorlek och -måttenhet"
 
 #: app/gui/preferences-dialog.c:1042 app/gui/preferences-dialog.c:1612
-#: app/gui/user-install-dialog.c:1260 app/tools/gimpfliptool.c:297
+#: app/gui/user-install-dialog.c:1365 app/tools/gimpfliptool.c:297
 msgid "Horizontal"
 msgstr "Horisontell"
 
 #: app/gui/preferences-dialog.c:1044 app/gui/preferences-dialog.c:1614
-#: app/gui/user-install-dialog.c:1262 app/tools/gimpfliptool.c:301
+#: app/gui/user-install-dialog.c:1367 app/tools/gimpfliptool.c:301
 msgid "Vertical"
 msgstr "Vertikal"
 
 #: app/gui/preferences-dialog.c:1046 app/gui/preferences-dialog.c:1616
-#: app/gui/user-install-dialog.c:1264
+#: app/gui/user-install-dialog.c:1369
 msgid "dpi"
 msgstr "punkter/tum"
 
@@ -4607,7 +4607,7 @@ msgstr "Konservativ minnesanvändning"
 msgid "Levels of Undo:"
 msgstr "Ångrasteg:"
 
-#: app/gui/preferences-dialog.c:1711 app/gui/user-install-dialog.c:1142
+#: app/gui/preferences-dialog.c:1711 app/gui/user-install-dialog.c:1247
 msgid "Tile Cache Size:"
 msgstr "Bildblockscachestorlek:"
 
@@ -4652,7 +4652,7 @@ msgstr "Välj tempkatalog"
 msgid "Swap Dir:"
 msgstr "Växlingskatalog:"
 
-#: app/gui/preferences-dialog.c:1758 app/gui/user-install-dialog.c:1163
+#: app/gui/preferences-dialog.c:1758 app/gui/user-install-dialog.c:1268
 msgid "Select Swap Dir"
 msgstr "Välj växlingskatalog"
 
@@ -4934,7 +4934,7 @@ msgstr "Återställ sparade inställningar"
 msgid "Reset"
 msgstr "Återställ"
 
-#: app/gui/user-install-dialog.c:123
+#: app/gui/user-install-dialog.c:131
 msgid ""
 "The gimprc is used to store personal preferences\n"
 "that affect GIMP's default behavior.\n"
@@ -4947,7 +4947,7 @@ msgstr ""
 "Sökvägar till penslar, färgkartor, färgskalor, mönster,\n"
 "insticksmoduler och moduler konfigureras även här."
 
-#: app/gui/user-install-dialog.c:131
+#: app/gui/user-install-dialog.c:140
 msgid ""
 "GIMP uses an additional gtkrc file so you can\n"
 "configure it to look differently than other GTK apps."
@@ -4956,7 +4956,7 @@ msgstr ""
 "kan få den att se annorlunda ut jämfört med andra\n"
 "GTK-program."
 
-#: app/gui/user-install-dialog.c:136
+#: app/gui/user-install-dialog.c:146
 msgid ""
 "Plug-ins and extensions are external programs run\n"
 "by the GIMP which provide additional functionality.\n"
@@ -4972,7 +4972,7 @@ msgstr ""
 "i denna fil.  Denna fil är endast avsedd för GIMP och bör\n"
 "inte modifieras."
 
-#: app/gui/user-install-dialog.c:145
+#: app/gui/user-install-dialog.c:156
 msgid ""
 "Key shortcuts can be dynamically redefined in The GIMP.\n"
 "The menurc is a dump of your configuration so it can.\n"
@@ -4987,7 +4987,7 @@ msgstr ""
 "om du vill, men det är mycket enklare att ändra det inifrån\n"
 "GIMP. Om du tar bort denna fil så återställs standardvärdena."
 
-#: app/gui/user-install-dialog.c:154
+#: app/gui/user-install-dialog.c:166
 msgid ""
 "The sessionrc is used to store what dialog windows were\n"
 "open the last time you quit The GIMP.  You can configure\n"
@@ -4997,7 +4997,7 @@ msgstr ""
 "placerade på skärmen när du senast använde GIMP. Du kan\n"
 "konfigurera GIMP att öppna dessa dialoger på samma ställe."
 
-#: app/gui/user-install-dialog.c:160
+#: app/gui/user-install-dialog.c:173
 msgid ""
 "The unitrc is used to store your user units database.\n"
 "You can define additional units and use them just\n"
@@ -5011,7 +5011,7 @@ msgstr ""
 "punkter och picas. Denna fil skrivs över varje gång du\n"
 "avslutar GIMP."
 
-#: app/gui/user-install-dialog.c:168
+#: app/gui/user-install-dialog.c:182
 msgid ""
 "This folder is used to store user defined brushes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5022,7 +5022,7 @@ msgstr ""
 "penslar. GIMP kontrollerar denna mapp utöver systemets\n"
 "instalation av GIMP-penslar när den söker efter penslar."
 
-#: app/gui/user-install-dialog.c:175
+#: app/gui/user-install-dialog.c:190
 msgid ""
 "This folder is used to store brushes that are created\n"
 "with the brush editor."
@@ -5030,7 +5030,7 @@ msgstr ""
 "Denna mapp används för att lagra penslar som skapas med\n"
 "penselredigeraren."
 
-#: app/gui/user-install-dialog.c:180
+#: app/gui/user-install-dialog.c:196
 msgid ""
 "This folder is used to store user defined gradients\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5042,7 +5042,7 @@ msgstr ""
 "installation av GIMP-färgskalor när den söker efter\n"
 "färgskalor."
 
-#: app/gui/user-install-dialog.c:187
+#: app/gui/user-install-dialog.c:204
 msgid ""
 "This folder is used to store user defined palettes.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5054,7 +5054,7 @@ msgstr ""
 "installation av GIMP-paletter när den söker efter\n"
 "paletter."
 
-#: app/gui/user-install-dialog.c:194
+#: app/gui/user-install-dialog.c:212
 msgid ""
 "This folder is used to store user defined patterns.\n"
 "The GIMP checks this folder in addition to the system-\n"
@@ -5066,7 +5066,7 @@ msgstr ""
 "installation av GIMP-mönster när den söker efter\n"
 "mönster."
 
-#: app/gui/user-install-dialog.c:201
+#: app/gui/user-install-dialog.c:220
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported plug-ins.  The GIMP\n"
@@ -5079,7 +5079,7 @@ msgstr ""
 "systemets mapp för insticksmoduler när den söker\n"
 "efter insticksmoduler."
 
-#: app/gui/user-install-dialog.c:208
+#: app/gui/user-install-dialog.c:228
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported DLL modules.  The\n"
@@ -5093,7 +5093,7 @@ msgstr ""
 "GIMP-modulmapp när den söker efter moduler att läsa in\n"
 "vid start."
 
-#: app/gui/user-install-dialog.c:216
+#: app/gui/user-install-dialog.c:237
 msgid ""
 "This folder is used to store user created, temporary,\n"
 "or otherwise non-system-supported additions to the\n"
@@ -5108,7 +5108,7 @@ msgstr ""
 "mapp utöver systemets GIMP-miljömapp när den söker\n"
 "efter modifieringsfiler till insticksmodulmiljön."
 
-#: app/gui/user-install-dialog.c:225
+#: app/gui/user-install-dialog.c:247
 msgid ""
 "This folder is used to store user created and installed\n"
 "scripts.  The GIMP checks this folder in addition to\n"
@@ -5119,7 +5119,7 @@ msgstr ""
 "installerade skript. GIMP söker i denna mapp utöver\n"
 "systemets GIMP-skriptmapp när den söker efter skript."
 
-#: app/gui/user-install-dialog.c:232
+#: app/gui/user-install-dialog.c:255
 msgid ""
 "This folder is used to temporarily store undo buffers\n"
 "to reduce memory usage.  If The GIMP is unceremoniously\n"
@@ -5133,7 +5133,7 @@ msgstr ""
 "gimp<#>.<#>. Dessa filer är värdelösa mellan olika\n"
 "GIMP-sessioner och kan tas bort."
 
-#: app/gui/user-install-dialog.c:240
+#: app/gui/user-install-dialog.c:264
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Curves tool."
@@ -5141,7 +5141,7 @@ msgstr ""
 "Denna mapp används för att lagra parameterfiler för\n"
 "kurvverktyget."
 
-#: app/gui/user-install-dialog.c:245
+#: app/gui/user-install-dialog.c:270
 msgid ""
 "This folder is used to store parameter files for the\n"
 "Levels tool."
@@ -5149,7 +5149,7 @@ msgstr ""
 "Denna mapp används för att lagra parameterfiler för\n"
 "nivåverktyget."
 
-#: app/gui/user-install-dialog.c:250
+#: app/gui/user-install-dialog.c:276
 msgid ""
 "This is folder used to store user defined fractals to\n"
 "be used by the FractalExplorer plug-in.  The GIMP\n"
@@ -5162,7 +5162,7 @@ msgstr ""
 "mapp utöver systemets FractalExplorer-installation när\n"
 "den söker efter fraktaler."
 
-#: app/gui/user-install-dialog.c:257
+#: app/gui/user-install-dialog.c:284
 msgid ""
 "This folder is used to store user defined figures to\n"
 "be used by the GFig plug-in.  The GIMP checks this\n"
@@ -5174,7 +5174,7 @@ msgstr ""
 "GIMP söker i denna mapp utöver systemets\n"
 "GFig-installation när den söker efter GFig-figurer."
 
-#: app/gui/user-install-dialog.c:264
+#: app/gui/user-install-dialog.c:292
 msgid ""
 "This folder is used to store user defined gflares to\n"
 "be used by the GFlare plug-in.  The GIMP checks this\n"
@@ -5186,7 +5186,7 @@ msgstr ""
 "GIMP söker i denna mapp utöver systemets\n"
 "GFlarea-installation när den söker efter gflares."
 
-#: app/gui/user-install-dialog.c:271
+#: app/gui/user-install-dialog.c:300
 msgid ""
 "This folder is used to store user defined data to be\n"
 "used by the Gimpressionist plug-in.  The GIMP checks\n"
@@ -5198,7 +5198,7 @@ msgstr ""
 "söker i denna mapp utöver systemets\n"
 "Gimpressionist-installation när den söker efter data."
 
-#: app/gui/user-install-dialog.c:334
+#: app/gui/user-install-dialog.c:364
 msgid ""
 "Please wait while your personal\n"
 "GIMP folder is being created..."
@@ -5206,15 +5206,15 @@ msgstr ""
 "Var god vänta medans din personliga\n"
 "GIMP-mapp skapas..."
 
-#: app/gui/user-install-dialog.c:537
+#: app/gui/user-install-dialog.c:564
 msgid "GIMP User Installation"
 msgstr "Användarinstallation av GIMP"
 
-#: app/gui/user-install-dialog.c:545
+#: app/gui/user-install-dialog.c:572
 msgid "Continue"
 msgstr "Fortsätt"
 
-#: app/gui/user-install-dialog.c:695
+#: app/gui/user-install-dialog.c:722
 msgid ""
 "Welcome to\n"
 "The GIMP User Installation"
@@ -5222,11 +5222,11 @@ msgstr ""
 "Välkommen till\n"
 "GIMPs användarinstallation"
 
-#: app/gui/user-install-dialog.c:697
+#: app/gui/user-install-dialog.c:724
 msgid "Click \"Continue\" to enter the GIMP user installation."
 msgstr "Tryck på \"Fortsätt\" för att starta GIMPs användarinstallation."
 
-#: app/gui/user-install-dialog.c:701
+#: app/gui/user-install-dialog.c:728
 msgid ""
 "The GIMP - GNU Image Manipulation Program\n"
 "Copyright (C) 1995-2002\n"
@@ -5236,7 +5236,7 @@ msgstr ""
 "Copyright © 1995-2002\n"
 "Spencer Kimball, Peter Mattis och GIMPs utvecklingsteam."
 
-#: app/gui/user-install-dialog.c:711
+#: app/gui/user-install-dialog.c:738
 msgid ""
 "This program is free software; you can redistribute it and/or modify\n"
 "it under the terms of the GNU General Public License as published by\n"
@@ -5248,7 +5248,7 @@ msgstr ""
 "av Free Software Foundation, antingen version 2 eller (om du så vill)\n"
 "någon senare version."
 
-#: app/gui/user-install-dialog.c:717
+#: app/gui/user-install-dialog.c:744
 msgid ""
 "This program is distributed in the hope that it will be useful,\n"
 "but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
@@ -5260,7 +5260,7 @@ msgstr ""
 "om SÄLJBARHET eller LÄMPLIGHET FÖR NÅGOT SPECIELLT ÄNDAMÅL.\n"
 "Se GNU General Public License för ytterligare information."
 
-#: app/gui/user-install-dialog.c:723
+#: app/gui/user-install-dialog.c:750
 msgid ""
 "You should have received a copy of the GNU General Public License\n"
 "along with this program; if not, write to the Free Software\n"
@@ -5271,15 +5271,15 @@ msgstr ""
 "med detta program. Om inte, skriv till Free Software Foundation,\n"
 "Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: app/gui/user-install-dialog.c:747
+#: app/gui/user-install-dialog.c:774
 msgid "Personal GIMP Folder"
 msgstr "Personlig GIMP-mapp"
 
-#: app/gui/user-install-dialog.c:748
+#: app/gui/user-install-dialog.c:775
 msgid "Click \"Continue\" to create your personal GIMP folder."
 msgstr "Tryck på \"Fortsätt\" för att skapa din personliga GIMP-mapp."
 
-#: app/gui/user-install-dialog.c:785
+#: app/gui/user-install-dialog.c:812
 #, c-format
 msgid ""
 "For a proper GIMP installation, a folder named\n"
@@ -5288,7 +5288,7 @@ msgstr ""
 "För att kunna installera GIMP korrekt måste mappen\n"
 "%s skapas."
 
-#: app/gui/user-install-dialog.c:791
+#: app/gui/user-install-dialog.c:818
 msgid ""
 "This folder will contain a number of important files.\n"
 "Click on one of the files or folders in the tree\n"
@@ -5298,31 +5298,31 @@ msgstr ""
 "Klicka på någon av filerna eller mapparna i trädet för\n"
 "att få mer information om det valda objektet."
 
-#: app/gui/user-install-dialog.c:862
+#: app/gui/user-install-dialog.c:889
 msgid "User Installation Log"
 msgstr "Logg över användarinstallation"
 
-#: app/gui/user-install-dialog.c:868
+#: app/gui/user-install-dialog.c:895
 msgid "GIMP Performance Tuning"
 msgstr "Prestandaavstämning av GIMP"
 
-#: app/gui/user-install-dialog.c:869
+#: app/gui/user-install-dialog.c:896
 msgid "Click \"Continue\" to accept the settings above."
 msgstr "Tryck på \"Fortsätt\" för att acceptera inställningarna ovan."
 
-#: app/gui/user-install-dialog.c:872
+#: app/gui/user-install-dialog.c:899
 msgid "For optimal GIMP performance, some settings may have to be adjusted."
 msgstr "För optimal prestanda i GIMP måste du kanske förändra vissa saker."
 
-#: app/gui/user-install-dialog.c:881
+#: app/gui/user-install-dialog.c:908
 msgid "Monitor Resolution"
 msgstr "Bildskärmsupplösning"
 
-#: app/gui/user-install-dialog.c:882
+#: app/gui/user-install-dialog.c:909
 msgid "Click \"Continue\" to start The GIMP."
 msgstr "Tryck på \"Fortsätt\" för att starta GIMP."
 
-#: app/gui/user-install-dialog.c:885
+#: app/gui/user-install-dialog.c:912
 msgid ""
 "To display images in their natural size, GIMP needs to know your monitor "
 "resolution."
@@ -5330,29 +5330,39 @@ msgstr ""
 "För att kunna visa bilder i sin naturliga storlek måste GIMP känna till "
 "upplösningen på din bildskärm."
 
-#: app/gui/user-install-dialog.c:894
+#: app/gui/user-install-dialog.c:921
 msgid "Aborting Installation..."
 msgstr "Avbryter installation..."
 
-#: app/gui/user-install-dialog.c:968
+#: app/gui/user-install-dialog.c:951
+#, c-format
+msgid "Cannot open %s for reading"
+msgstr "Kan inte öppna %s för läsning"
+
+#: app/gui/user-install-dialog.c:959
+#, c-format
+msgid "Cannot open %s for writing"
+msgstr "Kan inte öppna %s för skrivning"
+
+#: app/gui/user-install-dialog.c:969
+#, c-format
+msgid "Error while writing %s"
+msgstr "Fel vid skrivande av %s"
+
+#: app/gui/user-install-dialog.c:979
+#, c-format
+msgid "Error while reading %s"
+msgstr "Fel vid läsning av %s"
+
+#: app/gui/user-install-dialog.c:1012
 msgid "does not exist.  Cannot install."
 msgstr "finns inte. Kan inte installera."
 
-#: app/gui/user-install-dialog.c:980
+#: app/gui/user-install-dialog.c:1024
 msgid "has invalid permissions.  Cannot install."
 msgstr "har ogiltiga rättigheter. Kan inte installera."
 
-#: app/gui/user-install-dialog.c:1029
-msgid ""
-"Did you notice any error messages in the console window?\n"
-"If not, installation was successful!\n"
-"Otherwise, quit and investigate the possible reason..."
-msgstr ""
-"Såg du några felmeddelanden i konsollfönstret?\n"
-"Om inte så lyckades installationen! Annars, avsluta\n"
-"och undersök vad som kan ha gått fel..."
-
-#: app/gui/user-install-dialog.c:1093
+#: app/gui/user-install-dialog.c:1094
 msgid ""
 "Did you notice any error messages in the lines above?\n"
 "If not, installation was successful!\n"
@@ -5370,7 +5380,35 @@ msgstr "Tryck på \"Fortsätt\" för att slutföra GIMP-installationen."
 msgid "Installation failed.  Contact your system administrator."
 msgstr "Installationen misslyckades. Kontakta din systemadministratör."
 
-#: app/gui/user-install-dialog.c:1130
+#: app/gui/user-install-dialog.c:1150 app/gui/user-install-dialog.c:1169
+#, c-format
+msgid "Creating directory %s\n"
+msgstr "Skapar katalogen %s\n"
+
+#: app/gui/user-install-dialog.c:1155 app/gui/user-install-dialog.c:1174
+#, c-format
+msgid "Cannot create directory -- %s"
+msgstr "Kan inte skapa katalog -- %s"
+
+#: app/gui/user-install-dialog.c:1159 app/gui/user-install-dialog.c:1206
+msgid "  Success\n"
+msgstr "  Lyckades\n"
+
+#: app/gui/user-install-dialog.c:1194
+#, c-format
+msgid "Copying file %s from %s\n"
+msgstr "Kopierar filen %s från %s\n"
+
+#: app/gui/user-install-dialog.c:1213
+#, c-format
+msgid "  Failure -- %s\n"
+msgstr "  Misslyckades -- %s\n"
+
+#: app/gui/user-install-dialog.c:1217
+msgid "Installation failed.  Contact system administrator."
+msgstr "Installationen misslyckades. Kontakta systemadministratör."
+
+#: app/gui/user-install-dialog.c:1235
 msgid ""
 "GIMP uses a limited amount of memory to store image data, the so-called\n"
 "\"Tile Cache\". You should adjust its size to fit into memory. Consider\n"
@@ -5380,7 +5418,7 @@ msgstr ""
 "\"block-cache\". Du bör justera det så det får plats i minnet. Tänk\n"
 "på mängden minne som används av andra körande program."
 
-#: app/gui/user-install-dialog.c:1153
+#: app/gui/user-install-dialog.c:1258
 msgid ""
 "All image and undo data which doesn't fit into the Tile Cache will be\n"
 "written to a swap file. This file should be located on a local filesystem\n"
@@ -5392,11 +5430,11 @@ msgstr ""
 "tillräckligt mycket ledigt utrymme (flera 100 MB). På ett UNIX-system så\n"
 "kan du vilja ställa in systemets tempkatalog (\"/tmp\" eller \"/var/tmp\")."
 
-#: app/gui/user-install-dialog.c:1168
+#: app/gui/user-install-dialog.c:1273
 msgid "Swap Folder:"
 msgstr "Växlingsmapp:"
 
-#: app/gui/user-install-dialog.c:1215
+#: app/gui/user-install-dialog.c:1320
 msgid ""
 "GIMP can obtain this information from the windowing system.\n"
 "However, usually this does not give useful values."
@@ -5404,17 +5442,17 @@ msgstr ""
 "GIMP kan hämta den här informationen från fönstersystemet.\n"
 "Normalt returneras dock inga vettiga värden."
 
-#: app/gui/user-install-dialog.c:1223
+#: app/gui/user-install-dialog.c:1328
 #, c-format
 msgid "Get Resolution from windowing system (Currently %d x %d dpi)"
 msgstr ""
 "Hämta upplösning från fönstersystem (För tillfället %d × %d punkter/tum)"
 
-#: app/gui/user-install-dialog.c:1241
+#: app/gui/user-install-dialog.c:1346
 msgid "Alternatively, you can set the monitor resolution manually."
 msgstr "Alternativt kan du ställa in upplösningen manuellt."
 
-#: app/gui/user-install-dialog.c:1287
+#: app/gui/user-install-dialog.c:1392
 msgid ""
 "You can also press the \"Calibrate\" button to open a window\n"
 "which lets you determine your monitor resolution interactively."
@@ -5422,7 +5460,7 @@ msgstr ""
 "Du kan även trycka på \"Kalibrera\" nedan för att öppna ett\n"
 "fönster som låter dig kalibrera bildskärmsupplösningen interaktivt."
 
-#: app/gui/user-install-dialog.c:1294
+#: app/gui/user-install-dialog.c:1399
 msgid "Calibrate"
 msgstr "Kalibrera"
 
@@ -7669,6 +7707,15 @@ msgstr "Beskär"
 #: libgimptool/gimptoolenums.c:15
 msgid "Resize"
 msgstr "Ändra storlek"
+
+#~ msgid ""
+#~ "Did you notice any error messages in the console window?\n"
+#~ "If not, installation was successful!\n"
+#~ "Otherwise, quit and investigate the possible reason..."
+#~ msgstr ""
+#~ "Såg du några felmeddelanden i konsollfönstret?\n"
+#~ "Om inte så lyckades installationen! Annars, avsluta\n"
+#~ "och undersök vad som kan ha gått fel..."
 
 #~ msgid "Convolve Type"
 #~ msgstr "Konvolveringstyp"
