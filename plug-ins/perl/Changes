@@ -12,6 +12,8 @@ Revision history for Gimp-Perl extension.
         - improved avi hunk skipping and 24 bit handling.
         - realclean now also removes the Makefile (just to be sure)
 	- only install pdl plug-ins when pdl is available.
+        - gimp_directory is 1.1-only.
+        - more warnings on people insisting on using broken perls.
 
 1.14  Mon Oct 11 03:23:13 CEST 1999
 	- set the version of all modules explicitly (for the benefit of CPAN).

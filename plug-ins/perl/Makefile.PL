@@ -47,6 +47,28 @@ push @pins, @pdl_pins if $PDL;
 require ExtUtils::MakeMaker;
 import ExtUtils::MakeMaker;
 
+$MICRO = int ($] * 100000 % 100);
+
+if ($MICRO > 49) {
+   print <<EOF;
+
+WARNING: You are using perl version $]. This is an *ALPHA* version that is
+         very likely to have serious bugs that keep gimp-perl from working
+         properly. Please upgrade/downgrade to a stable release.
+
+EOF
+}
+
+if ($] < 5.006 && $Config{usethreads}) {
+   print <<EOF;
+
+WARNING: You are using the experimental (and very broken) multithread support.
+         While gimp-perl might seem to work, it is very likely to not work
+         properly (or at all). Please use a *stable* version of perl.
+            
+EOF
+}
+
 @INC = grep /^\//,@INC;
 eval { $Gimp::no_SIG=1; require Gimp };
 unless($@) {

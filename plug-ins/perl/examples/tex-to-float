@@ -6,7 +6,7 @@
 #  Version: 0.12
 ######################################################################
 
-use Gimp;
+use Gimp ':auto';
 use Gimp::Fu;
 
 my $fn_base = "/tmp/ttf$$";

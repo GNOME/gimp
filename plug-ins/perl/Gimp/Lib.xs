@@ -1701,12 +1701,12 @@ gimp_color_cube()
 	
 
 char *
-gimp_directory()
-
-char *
 gimp_gtkrc()
 
 #ifdef GIMP11
+char *
+gimp_directory()
+
 char *
 gimp_data_directory()
 

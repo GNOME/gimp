@@ -144,7 +144,8 @@ sub import($;@) {
          *{"$up\::AUTOLOAD"} = sub {
             croak "Cannot call '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
-            *{$AUTOLOAD} = sub { Gimp->$name(@_) };
+            *{$AUTOLOAD} = sub { unshift @_, 'Gimp'; goto &$name };
+            #*{$AUTOLOAD} = sub { Gimp->$name(@_) }; # old version
             goto &$AUTOLOAD;
          };
       } elsif ($_ eq ":_auto2") {
@@ -153,7 +154,8 @@ sub import($;@) {
             warn __"$function: calling $AUTOLOAD without specifying the :auto import tag is deprecated!\n";
             croak __"Cannot call '$AUTOLOAD' at this time" unless initialized();
             my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
-            *{$AUTOLOAD} = sub { Gimp->$name(@_) };
+            *{$AUTOLOAD} = sub { unshift @_, 'Gimp'; goto &$name };
+            #*{$AUTOLOAD} = sub { Gimp->$name(@_) }; # old version
             goto &$AUTOLOAD;
          };
       } elsif ($_ eq ":consts") {
@@ -461,18 +463,6 @@ sub _croak($) {
   croak($_[0]);
 }
 
-sub build_thunk($) {
-   my $sub = $_[0];
-   sub {
-      shift unless ref $_[0];
-      unshift @_,$sub;
-      #goto &gimp_call_procedure; # does not always work, PERLBUG! #FIXME
-      my @r=eval { gimp_call_procedure (@_) };
-      _croak $@ if $@;
-      wantarray ? @r : $r[0];
-   };
-}
-
 sub AUTOLOAD {
    my ($class,$name) = $AUTOLOAD =~ /^(.*)::(.*?)$/;
    for(@{"$class\::PREFIXES"}) {
@@ -484,24 +474,31 @@ sub AUTOLOAD {
          my $ref = \&{"Gimp::Util::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-            #goto &$ref; # does not always work, PERLBUG! #FIXME
-            my @r = eval { &$ref };
-            _croak $@ if $@;
-            wantarray ? @r : $r[0];
+            goto &$ref; # does not always work, PERLBUG! #FIXME
+            #my @r = eval { &$ref };
+            #_croak $@ if $@;
+            #wantarray ? @r : $r[0];
          };
          goto &$AUTOLOAD;
       } elsif (UNIVERSAL::can($interface_pkg,$sub)) {
          my $ref = \&{"$interface_pkg\::$sub"};
          *{$AUTOLOAD} = sub {
             shift unless ref $_[0];
-            #goto &$ref;	# does not always work, PERLBUG! #FIXME
-            my @r = eval { &$ref };
-            _croak $@ if $@;
-            wantarray ? @r : $r[0];
+            goto &$ref;	# does not always work, PERLBUG! #FIXME
+            #my @r = eval { &$ref };
+            #_croak $@ if $@;
+            #wantarray ? @r : $r[0];
          };
          goto &$AUTOLOAD;
       } elsif (_gimp_procedure_available ($sub)) {
-         *{$AUTOLOAD} = build_thunk ($sub);
+         *{$AUTOLOAD} = sub {
+            shift unless ref $_[0];
+            unshift @_, $sub;
+            goto &gimp_call_procedure; # does not always work, PERLBUG! #FIXME
+            #my @r=eval { gimp_call_procedure (@_) };
+            #_croak $@ if $@;
+            #wantarray ? @r : $r[0];
+         };
          goto &$AUTOLOAD;
       }
    }
