@@ -1,3 +1,7 @@
+2003-05-30  Miloslav Trmac  <mitr@volny.cz>
+
+	* cs.po: Updated Czech translation.
+
 2003-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.in: removed app/gui/palette-editor-commands.c
