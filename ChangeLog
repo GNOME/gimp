@@ -2,6 +2,7 @@
 
 	* app/core/gimpgradient-load.c (gimp_gradient_load_svg): improved
 	error message.
+	(svg_parser_end_element): don't crash on empty gradient definitions.
 
 2004-07-23  Sven Neumann  <sven@gimp.org>
 

@@ -364,7 +364,8 @@ svg_parser_end_element (GMarkupParseContext  *context,
     {
       parser->state = SVG_STATE_OUT;
     }
-  else if (parser->gradient && strcmp (element_name, "linearGradient") == 0)
+  else if (parser->gradient && parser->stops &&
+           strcmp (element_name, "linearGradient") == 0)
     {
       GimpGradientSegment *seg  = gimp_gradient_segment_new ();
       GimpGradientSegment *next = NULL;
