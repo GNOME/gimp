@@ -76,16 +76,16 @@ gimp_rc_serialize_properties_diff (GimpConfig       *config,
 
   klass = G_OBJECT_GET_CLASS (config);
 
-  diff = gimp_config_diff (config, compare, GIMP_PARAM_SERIALIZE);
+  diff = gimp_config_diff (config, compare, GIMP_CONFIG_PARAM_SERIALIZE);
 
   if (! diff)
     return TRUE;
 
   for (list = diff; list; list = g_list_next (list))
     {
-      GParamSpec *prop_spec = (GParamSpec *) list->data;
+      GParamSpec *prop_spec = list->data;
 
-      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
 
       if (! gimp_config_serialize_property (config, prop_spec, writer))

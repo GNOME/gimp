@@ -35,6 +35,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmodule/gimpmodule.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -241,9 +242,7 @@ midi_class_init (ControllerMidiClass *klass)
                                                         _("Device:"),
                                                         blurb,
                                                         NULL,
-                                                        G_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT |
-                                                        GIMP_MODULE_PARAM_SERIALIZE));
+                                                        GIMP_CONFIG_PARAM_FLAGS));
 
   g_free (blurb);
 
@@ -252,9 +251,7 @@ midi_class_init (ControllerMidiClass *klass)
                                                      _("Channel:"),
                                                      _("The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."),
                                                      -1, 15, -1,
-                                                     G_PARAM_READWRITE |
-                                                     G_PARAM_CONSTRUCT |
-                                                     GIMP_MODULE_PARAM_SERIALIZE));
+                                                     GIMP_CONFIG_PARAM_FLAGS));
 
   controller_class->name            = _("MIDI");
   controller_class->help_id         = "gimp-controller-midi";

@@ -756,7 +756,7 @@ gimp_edit_config_notify (GObject    *edit_config,
 
   if (g_param_values_cmp (param_spec, &edit_value, &global_value))
     {
-      if (param_spec->flags & GIMP_PARAM_RESTART)
+      if (param_spec->flags & GIMP_CONFIG_PARAM_RESTART)
         {
 #ifdef GIMP_CONFIG_DEBUG
           g_print ("NOT Applying edit_config change of '%s' to global_config "

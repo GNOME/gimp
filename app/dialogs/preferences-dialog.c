@@ -198,7 +198,7 @@ prefs_config_copy_notify (GObject    *config_copy,
 
   if (g_param_values_cmp (param_spec, &copy_value, &global_value))
     {
-      if (param_spec->flags & GIMP_PARAM_CONFIRM)
+      if (param_spec->flags & GIMP_CONFIG_PARAM_CONFIRM)
         {
 #ifdef GIMP_CONFIG_DEBUG
           g_print ("NOT Applying prefs change of '%s' to edit_config "
@@ -251,7 +251,7 @@ prefs_response (GtkWidget *widget,
 
       confirm_diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config),
                                        config_copy,
-                                       GIMP_PARAM_CONFIRM);
+                                       GIMP_CONFIG_PARAM_CONFIRM);
 
       g_object_freeze_notify (G_OBJECT (gimp->edit_config));
 
@@ -283,7 +283,7 @@ prefs_response (GtkWidget *widget,
        */
       restart_diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config),
                                        GIMP_CONFIG (gimp->config),
-                                       GIMP_PARAM_RESTART);
+                                       GIMP_CONFIG_PARAM_RESTART);
 
       if (restart_diff)
         {
@@ -321,7 +321,7 @@ prefs_response (GtkWidget *widget,
       gtk_widget_set_sensitive (GTK_WIDGET (dialog), FALSE);
 
       diff = gimp_config_diff (GIMP_CONFIG (gimp->edit_config), config_orig,
-                               GIMP_PARAM_SERIALIZE);
+                               GIMP_CONFIG_PARAM_SERIALIZE);
 
       g_object_freeze_notify (G_OBJECT (gimp->edit_config));
 

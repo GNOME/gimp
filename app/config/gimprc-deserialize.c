@@ -69,7 +69,7 @@ gimp_rc_deserialize (GimpConfig *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (prop_spec->flags & GIMP_PARAM_SERIALIZE)
+      if (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE)
         {
           g_scanner_scope_add_symbol (scanner, scope_id,
                                       prop_spec->name, prop_spec);

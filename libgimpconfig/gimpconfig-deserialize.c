@@ -139,7 +139,7 @@ gimp_config_deserialize_properties (GimpConfig *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (prop_spec->flags & GIMP_PARAM_SERIALIZE)
+      if (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE)
         {
           g_scanner_scope_add_symbol (scanner, scope_id,
                                       prop_spec->name, prop_spec);
@@ -277,7 +277,7 @@ gimp_config_deserialize_property (GimpConfig *config,
       g_scanner_peek_next_token (scanner) == token)
     {
       if (! (G_VALUE_HOLDS_OBJECT (&value) &&
-             (prop_spec->flags & GIMP_PARAM_AGGREGATE)))
+             (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE)))
         g_object_set_property (G_OBJECT (config), prop_spec->name, &value);
     }
 #ifdef CONFIG_DEBUG
@@ -639,10 +639,10 @@ gimp_config_deserialize_object (GValue     *value,
 
   if (! prop_object)
     {
-      /*  if the object property is not GIMP_PARAM_AGGREGATE, read
+      /*  if the object property is not GIMP_CONFIG_PARAM_AGGREGATE, read
        *  the type of the object and create it
        */
-      if (! (prop_spec->flags & GIMP_PARAM_AGGREGATE))
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE))
         {
           gchar *type_name;
           GType  type;

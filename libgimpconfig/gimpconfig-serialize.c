@@ -69,7 +69,7 @@ gimp_config_serialize_properties (GimpConfig       *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
 
       if (! gimp_config_serialize_property (config, prop_spec, writer))
@@ -116,7 +116,7 @@ gimp_config_serialize_changed_properties (GimpConfig       *config,
     {
       GParamSpec *prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
 
       g_value_init (&value, prop_spec->value_type);
@@ -158,16 +158,16 @@ gimp_config_serialize_property (GimpConfig       *config,
   GValue               value   = { 0, };
   gboolean             success = FALSE;
 
-  if (! (param_spec->flags & GIMP_PARAM_SERIALIZE))
+  if (! (param_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
     return FALSE;
 
-  if (param_spec->flags & GIMP_PARAM_IGNORE)
+  if (param_spec->flags & GIMP_CONFIG_PARAM_IGNORE)
     return TRUE;
 
   g_value_init (&value, param_spec->value_type);
   g_object_get_property (G_OBJECT (config), param_spec->name, &value);
 
-  if (param_spec->flags & GIMP_PARAM_DEFAULTS &&
+  if (param_spec->flags & GIMP_CONFIG_PARAM_DEFAULTS &&
       g_param_value_defaults (param_spec, &value))
     {
       g_value_unset (&value);
@@ -232,11 +232,11 @@ gimp_config_serialize_property (GimpConfig       *config,
             {
               gimp_config_writer_open (writer, param_spec->name);
 
-              /*  if the object property is not GIMP_PARAM_AGGREGATE,
+              /*  if the object property is not GIMP_CONFIG_PARAM_AGGREGATE,
                *  deserializing will need to know the exact type
                *  in order to create the object
                */
-              if (! (param_spec->flags & GIMP_PARAM_AGGREGATE))
+              if (! (param_spec->flags & GIMP_CONFIG_PARAM_AGGREGATE))
                 {
                   GType object_type = G_TYPE_FROM_INSTANCE (prop_object);
 

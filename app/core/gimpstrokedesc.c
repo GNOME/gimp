@@ -136,7 +136,7 @@ gimp_stroke_desc_class_init (GimpStrokeDescClass *klass)
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_STROKE_OPTIONS,
                                    "stroke-options", NULL,
                                    GIMP_TYPE_STROKE_OPTIONS,
-                                   GIMP_PARAM_AGGREGATE);
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_PAINT_INFO,
                                    "paint-info", NULL,
                                    GIMP_TYPE_PAINT_INFO,

@@ -129,7 +129,7 @@ dump_gimprc_system (GimpConfig       *rc,
       GParamSpec *prop_spec = property_specs[i];
       gchar      *comment;
 
-      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
 
       comment = dump_describe_param (prop_spec);
@@ -258,7 +258,7 @@ dump_gimprc_manpage (GimpConfig       *rc,
       GParamSpec *prop_spec = property_specs[i];
       gchar      *desc;
 
-      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE))
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE))
         continue;
 
       write (fd, ".TP\n", strlen (".TP\n"));

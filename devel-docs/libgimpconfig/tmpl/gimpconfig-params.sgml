@@ -14,42 +14,42 @@ gimpconfig-params
 
 </para>
 
-<!-- ##### MACRO GIMP_PARAM_SERIALIZE ##### -->
+<!-- ##### MACRO GIMP_CONFIG_PARAM_SERIALIZE ##### -->
 <para>
 
 </para>
 
 
 
-<!-- ##### MACRO GIMP_PARAM_AGGREGATE ##### -->
+<!-- ##### MACRO GIMP_CONFIG_PARAM_AGGREGATE ##### -->
 <para>
 
 </para>
 
 
 
-<!-- ##### MACRO GIMP_PARAM_RESTART ##### -->
+<!-- ##### MACRO GIMP_CONFIG_PARAM_RESTART ##### -->
 <para>
 
 </para>
 
 
 
-<!-- ##### MACRO GIMP_PARAM_CONFIRM ##### -->
+<!-- ##### MACRO GIMP_CONFIG_PARAM_CONFIRM ##### -->
 <para>
 
 </para>
 
 
 
-<!-- ##### MACRO GIMP_PARAM_DEFAULTS ##### -->
+<!-- ##### MACRO GIMP_CONFIG_PARAM_DEFAULTS ##### -->
 <para>
 
 </para>
 
 
 
-<!-- ##### MACRO GIMP_PARAM_IGNORE ##### -->
+<!-- ##### MACRO GIMP_CONFIG_PARAM_IGNORE ##### -->
 <para>
 
 </para>
@@ -70,6 +70,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                         name:
 @\
                                          name:
 @\
@@ -105,6 +107,8 @@ gimpconfig-params
 @\
                                      name:
 @\
+                                     name:
+@\
                                      name: 
 @blurb: 
 @default: 
@@ -118,6 +122,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                        name:
 @\
                                         name:
 @\
@@ -155,6 +161,8 @@ gimpconfig-params
 @\
                                             name:
 @\
+                                            name:
+@\
                                             name: 
 @blurb: 
 @default: 
@@ -168,6 +176,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                      name:
 @\
                                       name:
 @\
@@ -193,6 +203,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                     name:
 @\
                                      name:
 @\
@@ -230,6 +242,8 @@ gimpconfig-params
 @\
                                         name:
 @\
+                                        name:
+@\
                                         name: 
 @blurb: 
 @default: 
@@ -243,6 +257,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                         name:
 @\
                                          name:
 @\
@@ -269,6 +285,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                      name:
 @\
                                       name:
 @\
@@ -307,6 +325,8 @@ gimpconfig-params
 @\
                                         name:
 @\
+                                        name:
+@\
                                         name: 
 @blurb: 
 @default: 
@@ -320,6 +340,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                      name:
 @\
                                       name:
 @\
@@ -357,6 +379,8 @@ gimpconfig-params
 @\
                                       name:
 @\
+                                      name:
+@\
                                       name: 
 @blurb: 
 @pixels: 
@@ -383,6 +407,8 @@ gimpconfig-params
 @\
                                         name:
 @\
+                                        name:
+@\
                                         name: 
 @blurb: 
 @object_type: 
@@ -396,6 +422,8 @@ gimpconfig-params
 
 @class: 
 @id: 
+@\
+                                         name:
 @\
                                          name:
 @\

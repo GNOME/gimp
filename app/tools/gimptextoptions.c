@@ -176,12 +176,12 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                                    "indent",
                                    N_("Indentation of the first line"),
                                    -8192.0, 8192.0, 0.0,
-                                   GIMP_PARAM_DEFAULTS);
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
                                    "line-spacing",
                                    N_("Modify line spacing"),
                                    -8192.0, 8192.0, 0.0,
-                                   GIMP_PARAM_DEFAULTS);
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
 }
 
 static void

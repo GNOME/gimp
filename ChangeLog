@@ -1,5 +1,35 @@
 2005-02-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfig-params.h: renamed GIMP_PARAM_ #defines
+	to GIMP_CONFIG_PARAM_.
+
+	* app/config/gimpbaseconfig.c
+	* app/config/gimpconfig-dump.c
+	* app/config/gimpcoreconfig.c
+	* app/config/gimpdisplayconfig.c
+	* app/config/gimpguiconfig.c
+	* app/config/gimprc-deserialize.c
+	* app/config/gimprc-serialize.c
+	* app/config/gimprc.c
+	* app/core/gimp.c
+	* app/core/gimpstrokedesc.c
+	* app/dialogs/preferences-dialog.c
+	* app/text/gimptext.c
+	* app/tools/gimptextoptions.c
+	* libgimpconfig/gimpconfig-deserialize.c
+	* libgimpconfig/gimpconfig-iface.c
+	* libgimpconfig/gimpconfig-serialize.c
+	* libgimpconfig/gimpconfig-utils.c: changed accordingly.
+
+	* libgimpmodule/gimpmoduletypes.h: deprecate the
+	GIMP_MODULE_PARAM_SERIALIZE #define, GIMP_CONFIG_PARAM_SERIALIZE
+	should be used instead.
+
+	* modules/controller_linux_input.c
+	* modules/controller_midi.c: changed accordingly.
+
+2005-02-05  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_colorblind.c
 	* modules/cdisplay_gamma.c
 	* modules/cdisplay_highcontrast.c

@@ -240,12 +240,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                    "default-view",
                                    DEFAULT_VIEW_BLURB,
                                    GIMP_TYPE_DISPLAY_OPTIONS,
-                                   GIMP_PARAM_AGGREGATE);
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_DEFAULT_FULLSCREEN_VIEW,
                                    "default-fullscreen-view",
                                    DEFAULT_FULLSCREEN_VIEW_BLURB,
                                    GIMP_TYPE_DISPLAY_OPTIONS,
-                                   GIMP_PARAM_AGGREGATE);
+                                   GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ACTIVATE_ON_FOCUS,
                                     "activate-on-focus",
                                     ACTIVATE_ON_FOCUS_BLURB,

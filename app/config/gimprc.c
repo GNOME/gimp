@@ -435,7 +435,7 @@ gimp_rc_query (GimpRc      *rc,
     {
       prop_spec = property_specs[i];
 
-      if (! (prop_spec->flags & GIMP_PARAM_SERIALIZE) ||
+      if (! (prop_spec->flags & GIMP_CONFIG_PARAM_SERIALIZE) ||
           strcmp (prop_spec->name, key))
         {
           prop_spec = NULL;

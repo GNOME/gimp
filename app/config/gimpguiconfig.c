@@ -147,7 +147,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                     "info-window-per-display",
                                     INFO_WINDOW_PER_DISPLAY_BLURB,
                                     FALSE,
-                                    GIMP_PARAM_RESTART);
+                                    GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TRUST_DIRTY_FLAG,
                                     "trust-dirty-flag",
                                     TRUST_DIRTY_FLAG_BLURB,
@@ -194,11 +194,11 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MENU_MNEMONICS,
                                     "menu-mnemonics", MENU_MNEMONICS_BLURB,
                                     TRUE,
-                                    GIMP_PARAM_RESTART);
+                                    GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_LAST_OPENED_SIZE,
                                 "last-opened-size", LAST_OPENED_SIZE_BLURB,
                                 0, 1024, 10,
-                                GIMP_PARAM_RESTART);
+                                GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                     "max-new-image-size",
                                     MAX_NEW_IMAGE_SIZE_BLURB,
@@ -223,7 +223,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  "theme-path", THEME_PATH_BLURB,
 				 GIMP_CONFIG_PATH_DIR_LIST,
                                  gimp_config_build_data_path ("themes"),
-                                 GIMP_PARAM_RESTART);
+                                 GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_THEME,
                                    "theme", THEME_BLURB,
                                    DEFAULT_THEME,
@@ -255,13 +255,13 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
                                  TOOLBOX_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
                                  GIMP_WINDOW_HINT_NORMAL,
-                                 GIMP_PARAM_RESTART);
+                                 GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_DOCK_WINDOW_HINT,
                                  "dock-window-hint",
                                  DOCK_WINDOW_HINT_BLURB,
                                  GIMP_TYPE_WINDOW_HINT,
                                  GIMP_WINDOW_HINT_NORMAL,
-                                 GIMP_PARAM_RESTART);
+                                 GIMP_CONFIG_PARAM_RESTART);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_CURSOR_FORMAT,
                                  "cursor-format", CURSOR_FORMAT_BLURB,
                                  GIMP_TYPE_CURSOR_FORMAT,

@@ -173,7 +173,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_AUTOHINT,
                                     "autohint", NULL,
                                     FALSE,
-                                    GIMP_PARAM_DEFAULTS);
+                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
                                     "antialias", NULL,
                                     TRUE,
@@ -181,7 +181,7 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_KERNING,
                                     "kerning", NULL,
                                     FALSE,
-                                    GIMP_PARAM_DEFAULTS);
+                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_LANGUAGE,
 				   "language", NULL,
 				   language,
@@ -199,7 +199,7 @@ gimp_text_class_init (GimpTextClass *klass)
                                 "outline", NULL,
                                  GIMP_TYPE_TEXT_OUTLINE,
                                  GIMP_TEXT_OUTLINE_NONE,
-                                 GIMP_PARAM_DEFAULTS);
+                                 GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_JUSTIFICATION,
                                 "justify", NULL,
                                  GIMP_TYPE_TEXT_JUSTIFICATION,
@@ -208,15 +208,15 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_INDENTATION,
 				   "indent", NULL,
 				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_DEFAULTS);
+				   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LINE_SPACING,
 				   "line-spacing", NULL,
 				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_DEFAULTS);
+				   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_LETTER_SPACING,
 				   "letter-spacing", NULL,
 				   -8192.0, 8192.0, 0.0,
-				   GIMP_PARAM_DEFAULTS);
+				   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_BOX_MODE,
                                 "box-mode",
                                  NULL,
@@ -226,11 +226,11 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_WIDTH,
                                    "box-width", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
-                                   GIMP_PARAM_DEFAULTS);
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BOX_HEIGHT,
                                    "box-height", NULL,
                                    0.0, GIMP_MAX_IMAGE_SIZE, 0.0,
-                                   GIMP_PARAM_DEFAULTS);
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_BOX_UNIT,
 				 "box-unit", NULL,
 				 TRUE, FALSE, GIMP_UNIT_PIXEL,
@@ -238,15 +238,15 @@ gimp_text_class_init (GimpTextClass *klass)
   GIMP_CONFIG_INSTALL_PROP_MATRIX2 (object_class, PROP_TRANSFORMATION,
                                     "transformation", NULL,
                                     &identity,
-                                    GIMP_PARAM_DEFAULTS);
+                                    GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_X,
                                    "offset-x", NULL,
                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                                   GIMP_PARAM_DEFAULTS);
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
                                    "offset-y", NULL,
                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0.0,
-                                   GIMP_PARAM_DEFAULTS);
+                                   GIMP_CONFIG_PARAM_DEFAULTS);
 
   /*  border does only exist to implement the old text API  */
   param_spec = g_param_spec_int ("border", NULL, NULL,
