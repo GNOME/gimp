@@ -1,12 +1,12 @@
 # libgimp's Portuguese Translation
 # Copyright (C) 2002 Free Software Foundation, Inc.
-# Duarte Loreto <happyguy_pt@hotmail.com>, 2002
+# Duarte Loreto <happyguy_pt@hotmail.com>, 2002, 2003
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.4.1\n"
-"POT-Creation-Date: 2003-02-18 00:43+0100\n"
-"PO-Revision-Date: 2002-06-16 21:15+0000\n"
+"Project-Id-Version: 2.2\n"
+"POT-Creation-Date: 2003-03-02 01:58+0000\n"
+"PO-Revision-Date: 2003-03-02 02:15+0000\n"
 "Last-Translator: Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Language-Team: Portuguese <gnome_pt@yahoogroups.com>\n"
 "MIME-Version: 1.0\n"
@@ -14,23 +14,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: libgimp/gimpexport.c:170 libgimp/gimpexport.c:206
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layers"
-msgstr "incapaz gerir camadas"
+msgstr "%s incapaz gerir camadas"
 
 #: libgimp/gimpexport.c:171 libgimp/gimpexport.c:180 libgimp/gimpexport.c:189
 msgid "Merge Visible Layers"
 msgstr "Juntar Camadas Visíveis"
 
 #: libgimp/gimpexport.c:179
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle layer offsets, size or opacity"
-msgstr "incapaz de gerir deslocamento, tamanho ou opacidade das camadas"
+msgstr "%s incapaz de gerir deslocamento, tamanho ou opacidade das camadas"
 
 #: libgimp/gimpexport.c:188 libgimp/gimpexport.c:197
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle layers as animation frames"
-msgstr "apenas é possível gerir camadas como molduras animadas"
+msgstr "%s apenas pode gerir camadas como molduras animadas"
 
 #: libgimp/gimpexport.c:189 libgimp/gimpexport.c:198
 msgid "Save as Animation"
@@ -41,32 +41,32 @@ msgid "Flatten Image"
 msgstr "Alisar Imagem"
 
 #: libgimp/gimpexport.c:215
-#, fuzzy, c-format
+#, c-format
 msgid "%s can't handle transparency"
-msgstr "incapaz de gerir transparência"
+msgstr "%s incapaz de gerir transparência"
 
 #: libgimp/gimpexport.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB images"
-msgstr "apenas é possível gerir imagens RGB"
+msgstr "%s apenas pode gerir imagens RGB"
 
 #: libgimp/gimpexport.c:225 libgimp/gimpexport.c:253 libgimp/gimpexport.c:262
 msgid "Convert to RGB"
 msgstr "Converter em RGB"
 
 #: libgimp/gimpexport.c:233
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale images"
-msgstr "apenas é possível gerir imagens em escalas de cinza"
+msgstr "%s apenas pode gerir imagens em escalas de cinza"
 
 #: libgimp/gimpexport.c:234 libgimp/gimpexport.c:253 libgimp/gimpexport.c:274
 msgid "Convert to Grayscale"
 msgstr "Converter em Escalas Cinza"
 
 #: libgimp/gimpexport.c:242
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle indexed images"
-msgstr "apenas é possível gerir imagens indexadas"
+msgstr "%s apenas pode gerir imagens indexadas"
 
 #: libgimp/gimpexport.c:243 libgimp/gimpexport.c:262 libgimp/gimpexport.c:272
 msgid ""
@@ -77,24 +77,24 @@ msgstr ""
 "(Faça-o manualmente para ajustar o resultado)"
 
 #: libgimp/gimpexport.c:252
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or grayscale images"
-msgstr "apenas é possível gerir imagens RGB ou em escalas cinza"
+msgstr "%s apenas pode gerir imagens RGB ou em escalas cinza"
 
 #: libgimp/gimpexport.c:261
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle RGB or indexed images"
-msgstr "apenas é possível gerir imagens RGB ou indexadas"
+msgstr "%s apenas pode gerir imagens RGB ou indexadas"
 
 #: libgimp/gimpexport.c:271
-#, fuzzy, c-format
+#, c-format
 msgid "%s can only handle grayscale or indexed images"
-msgstr "apenas é possível gerir imagens em escalas cinza ou indexadas"
+msgstr "%s apenas pode gerir imagens em escalas cinza ou indexadas"
 
 #: libgimp/gimpexport.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "%s needs an alpha channel"
-msgstr "necessita de canal alfa"
+msgstr "%s necessita de canal alfa"
 
 #: libgimp/gimpexport.c:283
 msgid "Add Alpha Channel"
@@ -148,21 +148,21 @@ msgid "The export conversion won't modify your original image."
 msgstr "A conversão de exportação não modificará a sua imagem original."
 
 #: libgimp/gimpexport.c:595
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Está prestes a gravar %s como %s.\n"
+"Está prestes a gravar uma máscara de camada como %s.\n"
 "Isto não irá gravar as camadas visíveis."
 
 #: libgimp/gimpexport.c:600
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Está prestes a gravar %s como %s.\n"
+"Está prestes a gravar um canal (selecção gravada) como %s.\n"
 "Isto não irá gravar as camadas visíveis."
 
 #: libgimp/gimpmenu.c:163 libgimp/gimpmenu.c:283 libgimp/gimpmenu.c:398
@@ -177,7 +177,7 @@ msgstr "percentagem"
 #: libgimpmodule/gimpmodule.c:174
 #, c-format
 msgid "Loading module: '%s'\n"
-msgstr ""
+msgstr "A ler módulo: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:189 libgimpmodule/gimpmodule.c:206
 #: libgimpmodule/gimpmodule.c:312 libgimpmodule/gimpmodule.c:339
@@ -187,27 +187,29 @@ msgid ""
 "Module '%s' load error:\n"
 "%s"
 msgstr ""
+"Erro de leitura módulo '%s':\n"
+"%s"
 
 #: libgimpmodule/gimpmodule.c:270
 #, c-format
 msgid "Skipping module: '%s'\n"
-msgstr ""
+msgstr "A ignorar módulo: '%s'\n"
 
 #: libgimpmodule/gimpmodule.c:406
 msgid "Module error"
-msgstr ""
+msgstr "Erro módulo"
 
 #: libgimpmodule/gimpmodule.c:407
 msgid "Loaded"
-msgstr ""
+msgstr "Lido"
 
 #: libgimpmodule/gimpmodule.c:408
 msgid "Load failed"
-msgstr ""
+msgstr "Falha leitura"
 
 #: libgimpmodule/gimpmodule.c:409
 msgid "Not loaded"
-msgstr ""
+msgstr "Não lido"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -226,73 +228,72 @@ msgid "/White"
 msgstr "/Branco"
 
 #: libgimpwidgets/gimpcolorscales.c:141
-#, fuzzy
 msgid "Scales"
-msgstr "Escalar"
+msgstr "Escalas"
 
 #: libgimpwidgets/gimpcolorscales.c:163 libgimpwidgets/gimpcolorselect.c:353
 msgid "_H"
-msgstr ""
+msgstr "_H"
 
 #: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:353
 msgid "_S"
-msgstr ""
+msgstr "_S"
 
 #: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:353
 msgid "_V"
-msgstr ""
+msgstr "_V"
 
 #: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:353
 msgid "_R"
-msgstr ""
+msgstr "_R"
 
 #: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:353
 msgid "_G"
-msgstr ""
+msgstr "_G"
 
 #: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:353
 msgid "_B"
-msgstr ""
+msgstr "_B"
 
 #: libgimpwidgets/gimpcolorscales.c:169
 msgid "_A"
-msgstr ""
+msgstr "_A"
 
 #: libgimpwidgets/gimpcolorscales.c:173 libgimpwidgets/gimpcolorselect.c:357
 msgid "Hue"
-msgstr ""
+msgstr "Matiz"
 
 #: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
 msgid "Saturation"
-msgstr ""
+msgstr "Saturação"
 
 #: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
 msgid "Value"
-msgstr ""
+msgstr "Valor"
 
 #: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
 msgid "Red"
-msgstr ""
+msgstr "Vermelho"
 
 #: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
 msgid "Green"
-msgstr ""
+msgstr "Verde"
 
 #: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
 msgid "Blue"
-msgstr ""
+msgstr "Azul"
 
 #: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
 msgid "Alpha"
-msgstr ""
+msgstr "Alfa"
 
 #: libgimpwidgets/gimpcolorscales.c:253
 msgid "Hexadecimal color notation as used in HTML"
-msgstr ""
+msgstr "Notação de cor hexadecimal como utilizado em HTML"
 
 #: libgimpwidgets/gimpcolorscales.c:267
 msgid "He_x Triplet:"
-msgstr ""
+msgstr "Tripla He_x:"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"
@@ -319,20 +320,20 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
+"Clique na pipeta, depois numa cor em qualquer ponto do ecrã para seleccionar "
+"essa cor."
 
 #: libgimpwidgets/gimpstock.c:91
 msgid "Anchor"
 msgstr "Âncora"
 
 #: libgimpwidgets/gimpstock.c:92
-#, fuzzy
 msgid "_Duplicate"
-msgstr "Duplicar"
+msgstr "_Duplicar"
 
 #: libgimpwidgets/gimpstock.c:93
-#, fuzzy
 msgid "_Edit"
-msgstr "Editar"
+msgstr "_Editar"
 
 #: libgimpwidgets/gimpstock.c:94
 msgid "Linked"
@@ -355,41 +356,36 @@ msgid "Visible"
 msgstr "Visível"
 
 #: libgimpwidgets/gimpstock.c:140
-#, fuzzy
 msgid "_Resize"
-msgstr "_Reiniciar"
+msgstr "_Redimensionar"
 
 #: libgimpwidgets/gimpstock.c:141 libgimpwidgets/gimpstock.c:193
-#, fuzzy
 msgid "_Scale"
-msgstr "Escalar"
+msgstr "E_scala"
 
 #: libgimpwidgets/gimpstock.c:149
 msgid "L_etter Spacing"
-msgstr ""
+msgstr "Espaçamento L_etras"
 
 #: libgimpwidgets/gimpstock.c:150
 msgid "L_ine Spacing"
-msgstr ""
+msgstr "Espaçamento L_inhas"
 
 #: libgimpwidgets/gimpstock.c:171
 msgid "Crop"
-msgstr ""
+msgstr "Cortar"
 
 #: libgimpwidgets/gimpstock.c:189
-#, fuzzy
 msgid "_Transform"
-msgstr "Transformar"
+msgstr "_Transformar"
 
 #: libgimpwidgets/gimpstock.c:192
-#, fuzzy
 msgid "_Rotate"
-msgstr "Rodar"
+msgstr "_Rodar"
 
 #: libgimpwidgets/gimpstock.c:194
-#, fuzzy
 msgid "_Shear"
-msgstr "Cortar Rente"
+msgstr "Retal_har"
 
 #: libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
@@ -408,97 +404,92 @@ msgid "Factor"
 msgstr "Factor"
 
 #: libgimpwidgets/gimpwidgets.c:984
-#, fuzzy
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Se o botão \"Hora\" não estiver primido, utilize este valor para a semente "
-"da geração de números aleatórios - isto permite-lhe repetir uma dada "
-"operação \"aleatória\""
+"Utilize este valor para a semente da geração de números aleatórios - isto "
+"permite-lhe repetir uma dada operação \"aleatória\""
 
 #: libgimpwidgets/gimpwidgets.c:988
 msgid "_Randomize"
-msgstr ""
+msgstr "Aleató_rio"
 
 #: libgimpwidgets/gimpwidgets.c:999
-#, fuzzy
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Criar semente de geração aleatória de números a partir da hora actual - isto "
-"garante-lhe uma aleatoriedade razoável"
+msgstr "Semente de geração aleatória com número gerado aleatoriamente"
 
 #: modules/cdisplay_colorblind.c:122
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
+msgstr "Filtro de simulação de déficit de cor (algorítmo Brettel-Vienot-Mollon)"
 
 #: modules/cdisplay_colorblind.c:188
 msgid "Color Deficient Vision"
-msgstr ""
+msgstr "Visão Deficiente Cor"
 
 #: modules/cdisplay_colorblind.c:473
 msgid "Color Deficiency Type:"
-msgstr ""
+msgstr "Tipo Deficiência Cor:"
 
 #: modules/cdisplay_colorblind.c:483
 msgid "None (normal vision)"
-msgstr ""
+msgstr "Nenhuma (visão normal)"
 
 #: modules/cdisplay_colorblind.c:487
 msgid "Protanopia (insensitivity to red)"
-msgstr ""
+msgstr "Protanopia (insensibilidade ao vermelho)"
 
 #: modules/cdisplay_colorblind.c:491
 msgid "Deuteranopia (insensitivity to green)"
-msgstr ""
+msgstr "Deuteranopia (insensibilidade ao verde)"
 
 #: modules/cdisplay_colorblind.c:495
 msgid "Tritanopia (insensitivity to blue)"
-msgstr ""
+msgstr "Trinatopia (insensibilidade ao azul)"
 
 #: modules/cdisplay_gamma.c:90
 msgid "Gamma color display filter"
-msgstr ""
+msgstr "Filtro de visualização gama de cor"
 
 #: modules/cdisplay_gamma.c:156
 msgid "Gamma"
-msgstr ""
+msgstr "Gama"
 
 #: modules/cdisplay_gamma.c:317
 msgid "Gamma:"
-msgstr ""
+msgstr "Gama:"
 
 #: modules/cdisplay_highcontrast.c:90
 msgid "High Contrast color display filter"
-msgstr ""
+msgstr "Filtro de visualização de Alto Contraste de cor"
 
 #: modules/cdisplay_highcontrast.c:156
 msgid "Contrast"
-msgstr ""
+msgstr "Contraste"
 
 #: modules/cdisplay_highcontrast.c:315
 msgid "Contrast Cycles:"
-msgstr ""
+msgstr "Cíclos Contraste:"
 
 #: modules/colorsel_triangle.c:110
 msgid "Painter-style triangle color selector"
-msgstr ""
+msgstr "Selector triangular estilo-pintor de cor"
 
 #: modules/colorsel_triangle.c:182
 msgid "_Triangle"
-msgstr ""
+msgstr "_Triângulo"
 
 #: modules/colorsel_water.c:104
 msgid "Watercolor style color selector"
-msgstr ""
+msgstr "Selector de cor estilo aguarela"
 
 #: modules/colorsel_water.c:176
 msgid "_Watercolor"
-msgstr ""
+msgstr "_Aguarela"
 
 #: modules/colorsel_water.c:251
 msgid "Pressure"
-msgstr ""
+msgstr "Pressão"
 
 #~ msgid "a layer mask"
 #~ msgstr "uma máscara de camada"
