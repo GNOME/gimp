@@ -1488,8 +1488,8 @@ layer_list_events (GtkWidget *widget,
 	case GDK_BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
 
-	  if (bevent->button == 3)
-	    gtk_menu_popup (GTK_MENU (layersD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	  if (bevent->button == 3 || bevent->button == 2)
+	    gtk_menu_popup (GTK_MENU (layersD->ops_menu), NULL, NULL, NULL, NULL, bevent->button, bevent->time);
 	  break;
 
 	case GDK_2BUTTON_PRESS:

@@ -771,9 +771,9 @@ channel_list_events (GtkWidget *widget,
 	case GDK_BUTTON_PRESS:
 	  bevent = (GdkEventButton *) event;
 
-	  if (bevent->button == 3)
+	  if (bevent->button == 3 || bevent->button == 2)
 	    {
-	      gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, 3, bevent->time);
+	      gtk_menu_popup (GTK_MENU (channelsD->ops_menu), NULL, NULL, NULL, NULL, bevent->button, bevent->time);
 	      return TRUE;
 	    }
 	  /* Grumble - we have to handle double clicks ourselves because channels_dialog_flush is broken */

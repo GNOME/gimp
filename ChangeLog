@@ -1,3 +1,10 @@
+Thu Jun 18 00:56:41 MEST 1998 Sven Neumann <sven@gimp.org>
+
+	* channels_dialog.c
+	* layers_dialog.c: the middle mouse button now pops up the menu
+	as well as the third when clicking on the layer/channel. This should
+	help users that use a tablet and don't have a right mouse button.
+
 Wed Jun 17 17:47:30 MEST 1998 Sven Neumann <sven@gimp.org>
 
 	* app/preferences_dialog.c: fixed a bug I introduced with the 
