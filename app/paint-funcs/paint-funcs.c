@@ -88,7 +88,7 @@ static const LayerMode layer_modes[] =
   { TRUE,  FALSE, TRUE,  },  /*  COLOR_ERASE_MODE   */
   { TRUE,  FALSE, TRUE,  },  /*  ERASE_MODE         */
   { TRUE,  TRUE,  TRUE,  },  /*  REPLACE_MODE       */
-  { TRUE,  FALSE, TRUE,  }   /*  ANTI_ERASE_MODE    */
+  { TRUE,  TRUE,  FALSE, }   /*  ANTI_ERASE_MODE    */
 };
 
 typedef void (* LayerModeFunc) (struct apply_layer_mode_struct *);
