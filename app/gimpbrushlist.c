@@ -21,6 +21,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctype.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 #ifdef HAVE_UNISTD_H
@@ -258,39 +259,50 @@ brushes_free (void)
 
       if (GIMP_IS_BRUSH_GENERATED (brush) && vbr_dir)
 	{
-	  gchar *filename = g_strdup (brush->filename);
-
-	  if (!filename)
+	  gchar *filename = NULL;
+	  if (!brush->filename)
 	    {
 	      FILE *tmp_fp;
 	      gint  unum = 0;
 
-	      filename = g_strconcat (vbr_dir,
-				      brush->name, ".vbr",
-				      NULL);
+	      if (vbr_dir)
+	        {
+		  char *safe_name;
+		  int i;
+		  /* make sure we don't create a naughty filename */
+		  safe_name = g_strdup(brush->name);
+		  if (safe_name[0] == '.')
+		    safe_name[0] = '_';
+		  for (i = 0; safe_name[i]; i++)
+		    if (safe_name[i] == G_DIR_SEPARATOR || isspace(safe_name[i]))
+		      safe_name[i] = '_';
 
-	      /* make sure we don't overwrite an existing brush */
-	      while ((tmp_fp = fopen (filename, "r")))
-		{
-		  fclose (tmp_fp);
-		  g_free (filename);
-		  filename = g_strdup_printf ("%s%s_%d.vbr",
+		  filename = g_strdup_printf ("%s%s.vbr",
 					      vbr_dir,
-					      brush->name,
-					      unum);
-		  unum++;
+					      safe_name);
+		  while ((tmp_fp = fopen (filename, "r")))
+		  { /* make sure we don't overite an existing brush */
+		    fclose (tmp_fp);
+		    g_free (filename);
+		    filename = g_strdup_printf ("%s%s_%d.vbr", 
+						vbr_dir, safe_name, unum);
+		    unum++;
+		  }
+		  g_free (safe_name);
 		}
 	    }
 	  else
 	    {
-	      if (strcmp (&filename[strlen (filename) - 4], ".vbr"))
-		{
+	      filename = g_strdup (brush->filename);
+	      if (strlen(filename) < 4 || strcmp (&filename[strlen (filename) - 4],
+						  ".vbr"))
+	        { /* we only want to save .vbr files, so set filename to null
+		     if this isn't a .vbr file */
 		  g_free (filename);
 		  filename = NULL;
 		}
 	    }
-
-	  /*  okay we are ready to try to save the generated file  */
+	  /*  we are (finaly) ready to try to save the generated brush file  */
 	  if (filename)
 	    {
 	      gimp_brush_generated_save (GIMP_BRUSH_GENERATED (brush),
