@@ -7,7 +7,7 @@
  *      Based around original GIF code by David Koblas.
  *
  *
- * Version 2.0.3 - 98/05/18
+ * Version 2.0.4 - 98/09/15
  *                        Adam D. Moss - <adam@gimp.org> <adam@foxbox.org>
  */
 /*
@@ -23,6 +23,25 @@
 /*
  * REVISION HISTORY
  *
+ *
+ * 98/09/15
+ * 2.00.04 - The facility to specify the background colour of
+ *           a transparent/animated GIF for non-transparent
+ *           viewers now works very much more consistantly.
+ *
+ *           The only situations in which it will fail to work
+ *           as expected now are those where file size can be reduced
+ *           (abeit not by much, as the plugin is sometimes more pessimistic
+ *           than it need be) by re-using an existing unused colour
+ *           index rather than using another bit per pixel in the
+ *           encoded file.  That will never be an issue with an image
+ *           which was freshly converted from RGB to INDEXED with the
+ *           Quantize option, as that option removes any unused colours
+ *           from the image.
+ *
+ *           Let me know if you find the consistancy/size tradeoff more
+ *           annoying than helpful and I can adjust it.  IMHO it is too
+ *           arcane a feature to present to any user as a runtime option.
  *
  * 98/05/18
  * 2.00.03 - If we did manage to decode at least one frame of a
@@ -184,8 +203,6 @@
 /*
  * TODO (more *'s means more important!)
  *
- * - animated GIF optimization routines (seperate plugin)
- *
  * - Show GIF comments in a popup window?
  *
  * - PDB stuff for comments
@@ -201,11 +218,8 @@
  *
  * - Remove unused colourmap entries for GRAYSCALE images.
  *
- * - All the warning messages etc. which the plugin prints to STDOUT should
- *   pop up in windows.
- *
- * - * Button to activate the animation preview plugin from the GIF-save
- *     dialog.
+ * - Button to activate the animation preview plugin from the GIF-save
+ *   dialog.
  *
  */
 
@@ -1378,13 +1392,16 @@ typedef long int count_int;
 
 
 static int find_unused_ia_colour (guchar *pixels,
-				  int numpixels);
+				  int numpixels,
+				  int num_indices,
+				  int* colors);
 
 void special_flatten_indexed_alpha (guchar *pixels,
 				    int *transparent,
 				    int *colors,
 				    int numpixels);
 static int colorstobpp (int);
+static int bpptocolors (int);
 static int GetPixel (int, int);
 static void BumpPixel (void);
 static int GIFNextPixel (ifunptr);
@@ -1420,30 +1437,46 @@ static void flush_char (void);
 
 
 static int find_unused_ia_colour (guchar *pixels,
-				  int numpixels)
+				  int numpixels,
+				  int num_indices,
+				  int* colors)
 {
   int i;
   gboolean ix_used[256];
 
-  /*
-  g_message ("GIF: Image has >=256 colors - attempting to reduce...\n");
-  */
+  g_print ("GIF: fuiac: Image claims to use %d/%d indices - finding free "
+	   "index...\n", (int)(*colors),(int)num_indices);
 
-  for (i=0;i<256;i++)
-    ix_used[i] = (gboolean)FALSE;
+  for (i=0; i<256; i++)
+    {
+      ix_used[i] = (gboolean)FALSE;
+    }
 
-  for (i=0;i<numpixels;i++)
-    if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean)TRUE;
+  for (i=0; i<numpixels; i++)
+    {
+      if (pixels[i*2+1]) ix_used[pixels[i*2]] = (gboolean)TRUE;
+    }
   
-  for (i=0;i<256;i++)
-    if (ix_used[i] == (gboolean)FALSE)
-      {
+  for (i=num_indices-1; i>=0; i--)
+    {
+      if (ix_used[i] == (gboolean)FALSE)
+	{
+	  g_print ("GIF: Found unused colour index %d.\n",(int)i);
+	  return i;
+	}
+    }
 
-	g_print ("GIF: Found unused colour index %d.\n",(int)i);
-
-	return i;
-      }
-
+  /* Couldn't find an unused colour index within the number of
+     bits per pixel we wanted.  Will have to increment the number
+     of colours in the image and assign a transparent pixel there. */
+  if ((*colors) < 256)
+    {
+      (*colors)++;
+      g_print ("GIF: 2nd pass - Increasing bounds and using colour index %d.\n"
+	       , (int) (*colors)-1);
+      return ((*colors)-1);
+    }
+  
   g_message ("GIF: Couldn't simply reduce colours further.  Saving as opaque.\n");
   return (-1);
 }
@@ -1478,14 +1511,15 @@ special_flatten_indexed_alpha (guchar *pixels,
 	      pixels[i] = pixels[i*2];
 	    }
 	}
-      if ((*colors) < 256)
-	(*colors) += 1;
+      /* commented out - this is now done in find_unused.. where neces. */
+      /*  if ((*colors) < 256)
+	  (*colors) += 1; */
     }
 
 
   /* Pixel data now takes half as much space (the alpha data has been
      discarded) */
-	  /*  pixels = g_realloc (pixels, numpixels);*/
+  /*  pixels = g_realloc (pixels, numpixels);*/
 }
 
 
@@ -1620,7 +1654,7 @@ save_image (char   *filename,
   int Blue[MAXCOLORS];
   guchar *cmap;
   guint rows, cols;
-  int BitsPerPixel;
+  int BitsPerPixel, liberalBPP, useBPP;
   int colors;
   char *temp_buf;
   int i;
@@ -1714,13 +1748,19 @@ save_image (char   *filename,
 
   if (colors < 256)
     {
-      BitsPerPixel = colorstobpp (colors +
-				  ((drawable_type==INDEXEDA_IMAGE) ? 1 : 0));
+      /* we keep track of how many bits we promised to have in liberalBPP,
+	 so that we don't accidentally come under this when doing
+	 clever transparency stuff where we can re-use wasted indices. */
+      liberalBPP = BitsPerPixel =
+	colorstobpp (colors + ((drawable_type==INDEXEDA_IMAGE) ? 1 : 0));
     }
   else
     {
       BitsPerPixel = colorstobpp (256);
-      g_print ("GIF: Too many colours?\n");
+      if (drawable_type==INDEXEDA_IMAGE)
+	{
+	  g_print ("GIF: Too many colours?\n");
+	}
     }
 
   cols = gimp_image_width(image_ID);
@@ -1780,7 +1820,9 @@ save_image (char   *filename,
 	  
 	  transparent =
 	    find_unused_ia_colour(pixels,
-				  drawable->width * drawable->height);
+				  drawable->width * drawable->height,
+				  bpptocolors(colorstobpp(colors)),
+				  &colors);
 
 	  special_flatten_indexed_alpha (pixels,
 					 &transparent,
@@ -1792,6 +1834,18 @@ save_image (char   *filename,
       
       
       BitsPerPixel = colorstobpp (colors);
+
+      if (BitsPerPixel != liberalBPP)
+	{
+	  /* We were able to re-use an index within the existing bitspace,
+	     whereas the estimate in the header was pessimistic but still
+	     needs to be upheld... */
+	  g_warning("Promised %d bpp, pondered writing chunk with %d bpp!\n"
+		    "Transparent colour may be incorrect on viewers which"
+		    " don't support transparency.\n",
+		    liberalBPP, BitsPerPixel);
+	}
+      useBPP = (BitsPerPixel > liberalBPP) ? BitsPerPixel : liberalBPP;
 
       
       if (is_gif89)
@@ -1816,13 +1870,16 @@ save_image (char   *filename,
 
 	  GIFEncodeGraphicControlExt (outfile, Disposal, Delay89, nlayers,
 				      cols, rows, gsvals.interlace, 0,
-				      transparent, BitsPerPixel, Red, Green,
+				      transparent,
+				      useBPP,
+				      Red, Green,
 				      Blue, GetPixel);
 	}
 
       GIFEncodeImageData (outfile, cols, rows, gsvals.interlace, 0,
 			  transparent,
-			  BitsPerPixel, Red, Green, Blue, GetPixel,
+			  useBPP,
+			  Red, Green, Blue, GetPixel,
 			  offset_x, offset_y);
 
       
@@ -1837,7 +1894,7 @@ save_image (char   *filename,
   g_free(layers);
 
   GIFEncodeClose (outfile, cols, rows, gsvals.interlace, 0, transparent,
-		  BitsPerPixel, Red, Green, Blue, GetPixel);
+		  useBPP, Red, Green, Blue, GetPixel);
 
   return TRUE;
 }
@@ -2157,12 +2214,32 @@ colorstobpp (int colors)
     bpp = 8;
   else
     {
-      g_message ("GIF: too many colors: %d\n", colors);
+      g_warning ("GIF: colorstobpp - Eep! too many colors: %d\n", colors);
       return 8;
     }
 
   return bpp;
 }
+
+
+
+static int
+bpptocolors (int bpp)
+{
+  int colors;
+
+  if (bpp>8)
+    {
+      g_warning ("GIF: bpptocolors - Eep! bpp==%d !\n", bpp);
+      return 256;
+    }
+  
+  colors = 1 << bpp;
+  /*  printf(">> %dbpp is %d colours <<\n", bpp, colors); */
+
+  return (colors);
+}
+
 
 
 static int
