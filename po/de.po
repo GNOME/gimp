@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-10-21 16:40+0200\n"
-"PO-Revision-Date: 2002-10-21 17:09+0200\n"
+"POT-Creation-Date: 2002-10-29 11:35+0100\n"
+"PO-Revision-Date: 2002-10-29 11:43+0100\n"
 "Last-Translator: Christian Neumair <chris@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -470,32 +470,27 @@ msgstr "Nur Grau"
 msgid "Black Only"
 msgstr "Nur Schwarz"
 
-#: app/base/base-enums.c:113 app/gui/color-notebook.c:267
-#: app/widgets/gimpwidgets-constructors.c:68
+#: app/base/base-enums.c:113 app/widgets/gimpwidgets-constructors.c:68
 #: app/widgets/gimpwidgets-constructors.c:98
 msgid "Value"
 msgstr "Wert"
 
-#: app/base/base-enums.c:114 app/gui/color-notebook.c:268
-#: app/tools/gimpcolorbalancetool.c:306
+#: app/base/base-enums.c:114 app/tools/gimpcolorbalancetool.c:306
 #: app/widgets/gimpcomponentlistitem.c:481
 msgid "Red"
 msgstr "Rot"
 
-#: app/base/base-enums.c:115 app/gui/color-notebook.c:269
-#: app/tools/gimpcolorbalancetool.c:313
+#: app/base/base-enums.c:115 app/tools/gimpcolorbalancetool.c:313
 #: app/widgets/gimpcomponentlistitem.c:482
 msgid "Green"
 msgstr "Grün"
 
-#: app/base/base-enums.c:116 app/gui/color-notebook.c:270
-#: app/tools/gimpcolorbalancetool.c:320
+#: app/base/base-enums.c:116 app/tools/gimpcolorbalancetool.c:320
 #: app/widgets/gimpcomponentlistitem.c:483
 msgid "Blue"
 msgstr "Blau"
 
-#: app/base/base-enums.c:117 app/gui/color-notebook.c:271
-#: app/widgets/gimpcomponentlistitem.c:486
+#: app/base/base-enums.c:117 app/widgets/gimpcomponentlistitem.c:486
 msgid "Alpha"
 msgstr "Alpha"
 
@@ -766,49 +761,49 @@ msgid "Backward (Corrective)"
 msgstr "Rückwärts (Korrigierend)"
 
 #. register all internal procedures
-#: app/core/gimp.c:522
+#: app/core/gimp.c:523
 msgid "Procedural Database"
 msgstr "Prozedurdatenbank"
 
 #. initialize  the global parasite table
-#: app/core/gimp.c:535
+#: app/core/gimp.c:536
 msgid "Looking for data files"
 msgstr "Suche nach Arbeitsdaten"
 
-#: app/core/gimp.c:535
+#: app/core/gimp.c:536
 msgid "Parasites"
 msgstr "Parasiten"
 
 #. initialize the list of gimp brushes
-#: app/core/gimp.c:539 app/gui/dialogs-constructors.c:370
+#: app/core/gimp.c:540 app/gui/dialogs-constructors.c:370
 #: app/gui/dialogs-constructors.c:518 app/gui/preferences-dialog.c:2771
 #: app/pdb/internal_procs.c:82
 msgid "Brushes"
 msgstr "Pinsel"
 
 #. initialize the list of gimp patterns
-#: app/core/gimp.c:543 app/gui/dialogs-constructors.c:391
+#: app/core/gimp.c:544 app/gui/dialogs-constructors.c:391
 #: app/gui/dialogs-constructors.c:539 app/gui/preferences-dialog.c:2775
 #: app/pdb/internal_procs.c:160
 msgid "Patterns"
 msgstr "Muster"
 
 #. initialize the list of gimp palettes
-#: app/core/gimp.c:547 app/gui/dialogs-constructors.c:433
+#: app/core/gimp.c:548 app/gui/dialogs-constructors.c:433
 #: app/gui/dialogs-constructors.c:581 app/gui/preferences-dialog.c:2779
 #: app/pdb/internal_procs.c:148
 msgid "Palettes"
 msgstr "Farbpaletten"
 
 #. initialize the list of gimp gradients
-#: app/core/gimp.c:551 app/gui/dialogs-constructors.c:412
+#: app/core/gimp.c:552 app/gui/dialogs-constructors.c:412
 #: app/gui/dialogs-constructors.c:560 app/gui/preferences-dialog.c:2783
 #: app/pdb/internal_procs.c:115
 msgid "Gradients"
 msgstr "Farbverläufe"
 
 #. initialize the document history
-#: app/core/gimp.c:555
+#: app/core/gimp.c:556
 msgid "Documents"
 msgstr "Dokumente"
 
@@ -1015,7 +1010,7 @@ msgid "Text Layer"
 msgstr "Textebene"
 
 #: app/core/gimpimage.c:1040 app/core/gimppalette-import.c:203
-#: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:598
+#: app/core/gimppalette.c:536 app/gui/palette-import-dialog.c:591
 #: app/pdb/image_cmds.c:3632 app/widgets/gimpdatafactoryview.c:260
 msgid "Untitled"
 msgstr "Unbenannt"
@@ -1456,37 +1451,50 @@ msgstr ""
 "An %s wurden Veränderungen vorgenommen.\n"
 "Trotzdem schließen?"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:115
+#: app/display/gimpdisplayshell-filter-dialog.c:125
 msgid "Color Display Filters"
 msgstr "Anzeigenfarbfilter"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:151
+#: app/display/gimpdisplayshell-filter-dialog.c:165
 msgid "Available Filters"
 msgstr "Verfügbare Filter"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:177
+#: app/display/gimpdisplayshell-filter-dialog.c:191
 msgid "Add the selected filter to the list of active filters."
 msgstr "Den gewählten Filter zur Liste aktiver Filter hinzufügen."
 
-#: app/display/gimpdisplayshell-filter-dialog.c:194
+#: app/display/gimpdisplayshell-filter-dialog.c:208
 msgid "Remove the selected filter from the list of active filters."
 msgstr "Den gewählten Filter aus der Liste aktiver Filter entfernen."
 
-#: app/display/gimpdisplayshell-filter-dialog.c:208
+#: app/display/gimpdisplayshell-filter-dialog.c:222
 msgid "Move the selected filter up"
 msgstr "Den gewählten Filter nach oben verschieben"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:217
+#: app/display/gimpdisplayshell-filter-dialog.c:231
 msgid "Move the selected filter down"
 msgstr "Den gewählten Filter nach unten verschieben"
 
-#: app/display/gimpdisplayshell-filter-dialog.c:226
-msgid "Configure the selected filter"
-msgstr "Den gewählten Filter konfigurieren"
-
-#: app/display/gimpdisplayshell-filter-dialog.c:253
+#: app/display/gimpdisplayshell-filter-dialog.c:257
 msgid "Active Filters"
 msgstr "Aktive Filter"
+
+#: app/display/gimpdisplayshell-filter-dialog.c:289
+msgid "Reset the selected filter to default values"
+msgstr "Den gewählten Filter auf Standard-Werte zurücksetzen."
+
+#: app/display/gimpdisplayshell-filter-dialog.c:661
+#, c-format
+msgid "Configure Selected Filter: %s"
+msgstr "Den gewählten Filter konfigurieren: %s"
+
+#: app/display/gimpdisplayshell-filter-dialog.c:668
+msgid "No Filter Selected"
+msgstr "Kein Filter ausgewählt"
+
+#: app/display/gimpdisplayshell-filter-dialog.c:672
+msgid "Configure Selected Filter"
+msgstr "Den gewählten Filter konfigurieren"
 
 #: app/display/gimpdisplayshell-layer-select.c:106
 msgid "Layer Select"
@@ -1634,70 +1642,21 @@ msgstr "Kanaleigenschaften"
 msgid "Edit Channel Attributes"
 msgstr "Kanaleigenschaften ändern"
 
-#. Hue
-#: app/gui/color-notebook.c:249
-msgid "H"
-msgstr "H"
-
-#. Saturation
-#: app/gui/color-notebook.c:251
-msgid "S"
-msgstr "S"
-
-#. Value
-#: app/gui/color-notebook.c:253
-msgid "V"
-msgstr "V"
-
-#. Red
-#: app/gui/color-notebook.c:255
-msgid "R"
-msgstr "R"
-
-#. Green
-#: app/gui/color-notebook.c:257
-msgid "G"
-msgstr "G"
-
-#. Blue
-#: app/gui/color-notebook.c:259
-msgid "B"
-msgstr "B"
-
-#. Alpha
-#: app/gui/color-notebook.c:261
-msgid "A"
-msgstr "A"
-
-#: app/gui/color-notebook.c:265 app/widgets/gimpwidgets-constructors.c:65
-#: app/widgets/gimpwidgets-constructors.c:95
-msgid "Hue"
-msgstr "Farbton"
-
-#: app/gui/color-notebook.c:266 app/widgets/gimpwidgets-constructors.c:66
-#: app/widgets/gimpwidgets-constructors.c:96
-msgid "Saturation"
-msgstr "Sättigung"
-
-#: app/gui/color-notebook.c:431
+#: app/gui/color-notebook.c:399
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: app/gui/color-notebook.c:452
+#: app/gui/color-notebook.c:420
 msgid "Old:"
 msgstr "Alt:"
 
-#: app/gui/color-notebook.c:474
+#: app/gui/color-notebook.c:442
 msgid "Revert to old color"
 msgstr "Zurück zur alten Farbe"
 
-#: app/gui/color-notebook.c:578
+#: app/gui/color-notebook.c:516
 msgid "Add the current color to the color history"
 msgstr "Die aktuelle Farbe der Farbliste hinzufügen"
-
-#: app/gui/color-notebook.c:638
-msgid "He_x Triplet:"
-msgstr "He_x Triplet:"
 
 #: app/gui/colormap-editor-commands.c:108
 msgid "Edit Indexed Color"
@@ -2348,16 +2307,16 @@ msgstr ""
 msgid "Save \"%s\" as POV-Ray"
 msgstr "»%s« Als POV-Ray Datei speichern"
 
-#: app/gui/gui.c:158 app/gui/gui.c:169
+#: app/gui/gui.c:156 app/gui/gui.c:167
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "Lese '%s'\n"
 
-#: app/gui/gui.c:371
+#: app/gui/gui.c:369
 msgid "Quit The GIMP?"
 msgstr "GIMP beenden?"
 
-#: app/gui/gui.c:375
+#: app/gui/gui.c:373
 msgid ""
 "Some files are unsaved.\n"
 "\n"
@@ -2367,7 +2326,7 @@ msgstr ""
 "\n"
 "GIMP wirklich beenden?"
 
-#: app/gui/gui.c:477
+#: app/gui/gui.c:474
 #, c-format
 msgid "Adding theme '%s' (%s)\n"
 msgstr "Thema »%s« (%s) wird hinzugefügt\n"
@@ -3886,89 +3845,85 @@ msgstr "/Maske aus invertierter Auswahl"
 msgid "/Configure Color and Opacity..."
 msgstr "/Farbe und Deckkraft einstellen..."
 
-#: app/gui/module-browser.c:112
-msgid "Module DB"
-msgstr "Modul-DB"
+#: app/gui/module-browser.c:121
+msgid "Module Browser"
+msgstr "Modul-Browser"
 
-#: app/gui/module-browser.c:170 app/widgets/gimpdatafactoryview.c:227
-msgid "Refresh"
-msgstr "Auffrischen"
+#: app/gui/module-browser.c:123
+msgid "Browse & Manage Loadable Modules"
+msgstr "Ladbare Module verwalten"
 
-#: app/gui/module-browser.c:370
-msgid "Module error"
-msgstr "Modul-Fehler"
+#: app/gui/module-browser.c:165
+msgid "Autoload"
+msgstr "Autom. laden"
 
-#: app/gui/module-browser.c:371
-msgid "Loaded OK"
-msgstr "Erfolgreich geladen"
+#: app/gui/module-browser.c:172
+msgid "Module Path"
+msgstr "Modulpfad"
 
-#: app/gui/module-browser.c:372
-msgid "Load failed"
-msgstr "Fehler beim Laden"
-
-#: app/gui/module-browser.c:373
-msgid "Unloaded OK"
-msgstr "Erfolgreich entladen"
-
-#: app/gui/module-browser.c:384
+#: app/gui/module-browser.c:419
 msgid "<No modules>"
 msgstr "<Keine Module>"
 
-#: app/gui/module-browser.c:397 app/gui/module-browser.c:406
+#: app/gui/module-browser.c:431 app/gui/module-browser.c:440
 msgid "On disk"
 msgstr "Auf Festplatte"
 
-#: app/gui/module-browser.c:397
+#: app/gui/module-browser.c:431
 msgid "Only in memory"
 msgstr "Nur im Speicher"
 
-#: app/gui/module-browser.c:406
+#: app/gui/module-browser.c:440
 msgid "No longer available"
 msgstr "Nicht mehr verfügbar"
 
-#: app/gui/module-browser.c:429
+#: app/gui/module-browser.c:476
 msgid "Load"
 msgstr "Öffnen"
 
-#: app/gui/module-browser.c:434
+#: app/gui/module-browser.c:478
+msgid "Query"
+msgstr "Erkunden"
+
+#: app/gui/module-browser.c:485
 msgid "Unload"
 msgstr "Entladen"
 
-#: app/gui/module-browser.c:449
+#: app/gui/module-browser.c:500
 msgid "Purpose:"
 msgstr "Zweck:"
 
-#: app/gui/module-browser.c:450
+#: app/gui/module-browser.c:501
 msgid "Author:"
 msgstr "Autor:"
 
-#: app/gui/module-browser.c:451
+#: app/gui/module-browser.c:502
 msgid "Version:"
 msgstr "Version:"
 
-#: app/gui/module-browser.c:452
+#: app/gui/module-browser.c:503
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: app/gui/module-browser.c:453
+#: app/gui/module-browser.c:504
 msgid "Date:"
 msgstr "Datum:"
 
-#: app/gui/module-browser.c:454
+#: app/gui/module-browser.c:505
 msgid "Location:"
 msgstr "Ort:"
 
-#: app/gui/module-browser.c:455
+#: app/gui/module-browser.c:506
 msgid "State:"
 msgstr "Status:"
 
-#: app/gui/module-browser.c:456
+#: app/gui/module-browser.c:507
 msgid "Last Error:"
 msgstr "Letzter Fehler:"
 
-#: app/gui/module-browser.c:476
-msgid "Autoload during start-up"
-msgstr "Automatisch beim Start laden"
+#: app/gui/module-browser.c:508
+msgid "Available Types:"
+msgstr "Verfügbare Typen:"
 
 #: app/gui/offset-dialog.c:92
 msgid "Offset Layer"
@@ -4020,58 +3975,58 @@ msgstr "Paletten-Farbe bearbeiten"
 msgid "Edit Color Palette Entry"
 msgstr "Paletten-Farbeintrag bearbeiten"
 
-#: app/gui/palette-import-dialog.c:173
+#: app/gui/palette-import-dialog.c:166
 msgid "Import Palette"
 msgstr "Farbpalette importieren"
 
-#: app/gui/palette-import-dialog.c:175
+#: app/gui/palette-import-dialog.c:168
 msgid "Import a New Palette"
 msgstr "Farbpalette importieren"
 
-#: app/gui/palette-import-dialog.c:182
+#: app/gui/palette-import-dialog.c:175
 msgid "_Import"
 msgstr "_Importieren"
 
 #. The "Source" frame
-#: app/gui/palette-import-dialog.c:208
+#: app/gui/palette-import-dialog.c:201
 msgid "Select Source"
 msgstr "Quelle auswählen"
 
-#: app/gui/palette-import-dialog.c:220
+#: app/gui/palette-import-dialog.c:213
 msgid "_Gradient"
 msgstr "_Farbverlauf"
 
-#: app/gui/palette-import-dialog.c:232
+#: app/gui/palette-import-dialog.c:225
 msgid "I_mage"
 msgstr "_Bild"
 
 #. The "Import" frame
-#: app/gui/palette-import-dialog.c:290
+#: app/gui/palette-import-dialog.c:283
 msgid "Import Options"
 msgstr "Importeinstellungen"
 
-#: app/gui/palette-import-dialog.c:304
+#: app/gui/palette-import-dialog.c:297
 msgid "New Import"
 msgstr "Neu importiert"
 
-#: app/gui/palette-import-dialog.c:306
+#: app/gui/palette-import-dialog.c:299
 msgid "Palette _Name:"
 msgstr "Paletten_name:"
 
-#: app/gui/palette-import-dialog.c:312
+#: app/gui/palette-import-dialog.c:305
 msgid "N_umber of Colors:"
 msgstr "_Anzahl Farben:"
 
-#: app/gui/palette-import-dialog.c:325
+#: app/gui/palette-import-dialog.c:318
 msgid "C_olumns:"
 msgstr "_Spalten:"
 
-#: app/gui/palette-import-dialog.c:337
+#: app/gui/palette-import-dialog.c:330
 msgid "I_nterval:"
 msgstr "I_ntervall:"
 
 #. The "Preview" frame
-#: app/gui/palette-import-dialog.c:349
+#: app/gui/palette-import-dialog.c:342
 msgid "Preview"
 msgstr "Vorschau"
 
@@ -4813,7 +4768,7 @@ msgstr "Neue Auswahl größer um:"
 msgid "GIMP Startup"
 msgstr "GIMP Start"
 
-#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:173
+#: app/gui/splash.c:96 app/widgets/gimptoolbox.c:183
 msgid "The GIMP"
 msgstr "GIMP"
 
@@ -5597,12 +5552,12 @@ msgstr "GIMP Erweiterung"
 msgid "Temporary Procedure"
 msgstr "Vorläufige Prozedur"
 
-#: app/plug-in/plug-in.c:403
+#: app/plug-in/plug-in.c:402
 #, c-format
 msgid "Unable to locate Plug-In: \"%s\""
 msgstr "Plugin »%s« konnte nicht gefinden werden"
 
-#: app/plug-in/plug-in.c:995
+#: app/plug-in/plug-in.c:994
 #, c-format
 msgid ""
 "Plug-In crashed: \"%s\"\n"
@@ -5619,52 +5574,44 @@ msgstr ""
 "durcheinander gebracht. Am besten speichern Sie\n"
 "Ihre Bilder jetzt ab und starten GIMP neu."
 
-#: app/plug-in/plug-ins.c:116
+#: app/plug-in/plug-ins.c:114
 msgid "Resource configuration"
 msgstr "Ressourcen Konfiguration"
 
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file.
 #.
-#: app/plug-in/plug-ins.c:122
+#: app/plug-in/plug-ins.c:120
 msgid "Querying new Plug-ins"
 msgstr "Neue Plugins werden abgefragt"
 
-#: app/plug-in/plug-ins.c:134
+#: app/plug-in/plug-ins.c:132
 #, c-format
 msgid "querying plug-in: \"%s\"\n"
 msgstr "Frage Plugin \"%s\" ab\n"
 
-#: app/plug-in/plug-ins.c:169
+#: app/plug-in/plug-ins.c:167
 #, c-format
 msgid "writing \"%s\"\n"
 msgstr "schreibe \"%s\"\n"
 
 #. initial the plug-ins
-#: app/plug-in/plug-ins.c:186
+#: app/plug-in/plug-ins.c:184
 msgid "Initializing Plug-ins"
 msgstr "Plugins werden initialisiert"
 
-#: app/plug-in/plug-ins.c:195
+#: app/plug-in/plug-ins.c:193
 #, c-format
 msgid "initializing plug-in: \"%s\"\n"
 msgstr "Initialisiere Plugin \"%s\"\n"
 
-#: app/plug-in/plug-ins.c:207
+#: app/plug-in/plug-ins.c:205
 msgid "Starting extensions: "
 msgstr "Erweiterungen werden gestartet: "
 
-#: app/plug-in/plug-ins.c:209
+#: app/plug-in/plug-ins.c:207
 msgid "Starting Extensions"
 msgstr "Erweiterungen werden gestartet"
-
-#: app/tools/tools-enums.c:13
-msgid "Crop"
-msgstr "Zuschneiden"
-
-#: app/tools/tools-enums.c:14
-msgid "Resize"
-msgstr "Größe ändern"
 
 #: app/tools/gimpairbrushtool.c:63
 msgid "Airbrush"
@@ -6436,20 +6383,19 @@ msgstr "Quellwerte"
 
 #: app/tools/gimplevelstool.c:479
 msgid "Pick Black Point"
-msgstr ""
+msgstr "Schwarz-Punkt wählen"
 
 #: app/tools/gimplevelstool.c:511
 msgid "Pick Gray Point"
-msgstr ""
+msgstr "Grau-Punkt wählen"
 
-#: app/tools/gimplevelstool.c:527 modules/cdisplay_gamma.c:163
-#: modules/cdisplay_gamma.c:334
+#: app/tools/gimplevelstool.c:527 modules/cdisplay_gamma.c:155
 msgid "Gamma"
 msgstr "Gamma"
 
 #: app/tools/gimplevelstool.c:544
 msgid "Pick White Point"
-msgstr ""
+msgstr "Weiß-Punkt wählen"
 
 #. Output levels frame
 #: app/tools/gimplevelstool.c:568
@@ -6802,28 +6748,28 @@ msgstr "_Rand:"
 msgid "Unit:"
 msgstr "Einheit:"
 
-#: app/tools/gimptexttool.c:565
+#: app/tools/gimptexttool.c:563
 msgid "GIMP Text Editor"
 msgstr "GIMP Text Editor"
 
-#: app/tools/gimptexttool.c:590
+#: app/tools/gimptexttool.c:588
 msgid "Load Text from File"
 msgstr "Text aus Datei laden"
 
-#: app/tools/gimptexttool.c:594
+#: app/tools/gimptexttool.c:592
 msgid "Clear all Text"
-msgstr ""
+msgstr "Allen Text löschen"
 
-#: app/tools/gimptexttool.c:637
+#: app/tools/gimptexttool.c:633
 msgid "Open Text File (UTF-8)"
-msgstr ""
+msgstr "Text-Datei (UTF-8) öffnen"
 
-#: app/tools/gimptexttool.c:687
+#: app/tools/gimptexttool.c:683
 #, c-format
 msgid "Error opening file '%s': %s"
 msgstr "Kann Datei '%s' nicht öffnen: %s"
 
-#: app/tools/gimptexttool.c:716
+#: app/tools/gimptexttool.c:712
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Ungültiger UTF-8 Text in Datei '%s'."
@@ -7103,6 +7049,10 @@ msgstr "Duplizieren"
 msgid "Edit"
 msgstr "Bearbeiten"
 
+#: app/widgets/gimpdatafactoryview.c:227
+msgid "Refresh"
+msgstr "Auffrischen"
+
 #: app/widgets/gimpdatafactoryview.c:402
 #, c-format
 msgid ""
@@ -7260,12 +7210,12 @@ msgstr ""
 msgid "Use Netscape instead"
 msgstr "Stattdessen Netscape verwenden"
 
-#: app/widgets/gimpimagedock.c:164
+#: app/widgets/gimpimagedock.c:158
 msgid "Auto"
 msgstr "Auto"
 
 # CHECK
-#: app/widgets/gimpimagedock.c:263
+#: app/widgets/gimpimagedock.c:257
 #, c-format
 msgid "Gimp Dock #%d"
 msgstr "GIMP Dock %d"
@@ -7371,7 +7321,7 @@ msgstr ""
 "Der aktive Farbverlauf.\n"
 "Klick öffnet die Farbverlaufsauswahl."
 
-#: app/widgets/gimptoolbox.c:685
+#: app/widgets/gimptoolbox.c:723
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Double click to open the color selection dialog."
@@ -7460,16 +7410,26 @@ msgstr "Nur Abdunkeln"
 msgid "Lighten Only"
 msgstr "Nur Aufhellen"
 
+#: app/widgets/gimpwidgets-constructors.c:65
+#: app/widgets/gimpwidgets-constructors.c:95
+msgid "Hue"
+msgstr "Farbton"
+
+#: app/widgets/gimpwidgets-constructors.c:66
+#: app/widgets/gimpwidgets-constructors.c:96
+msgid "Saturation"
+msgstr "Sättigung"
+
 #: app/widgets/gimpwidgets-utils.c:95
 #, c-format
 msgid "Message repeated %d times."
 msgstr "Meldung %d mal wiederholt."
 
-#: app/widgets/gimpwidgets-utils.c:105
+#: app/widgets/gimpwidgets-utils.c:104
 msgid "Message repeated once."
 msgstr "Meldung einmal wiederholt."
 
-#: app/widgets/gimpwidgets-utils.c:122
+#: app/widgets/gimpwidgets-utils.c:121
 msgid ""
 "WARNING:\n"
 "Too many open message dialogs.\n"
@@ -7479,7 +7439,7 @@ msgstr ""
 "Es sind zu viele Dialoge mit Fehlermeldungen geöffnet.\n"
 "Ausgabe erfolgt jetzt auf der Standard-Fehlerausgabe."
 
-#: app/widgets/gimpwidgets-utils.c:130
+#: app/widgets/gimpwidgets-utils.c:129
 msgid "GIMP Message"
 msgstr "GIMP Meldung"
 
@@ -7507,47 +7467,43 @@ msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 msgid "open failed on %s: %s\n"
 msgstr "%s konnte nicht geöffnet werden: %s\n"
 
-#: modules/cdisplay_gamma.c:97
+#: modules/cdisplay_gamma.c:89
 msgid "Gamma color display filter"
 msgstr "Gamma Anzeigenfarbfilter"
 
-#: modules/cdisplay_gamma.c:352
+#: modules/cdisplay_gamma.c:316
 msgid "Gamma:"
 msgstr "Gamma:"
 
-#: modules/cdisplay_highcontrast.c:97
+#: modules/cdisplay_highcontrast.c:89
 msgid "High Contrast color display filter"
 msgstr "Hochkontrast Anzeigenfarbfilter"
 
-#: modules/cdisplay_highcontrast.c:163
+#: modules/cdisplay_highcontrast.c:155
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: modules/cdisplay_highcontrast.c:331
-msgid "High Contrast"
-msgstr "Hochkontrast"
-
-#: modules/cdisplay_highcontrast.c:349
+#: modules/cdisplay_highcontrast.c:314
 msgid "Contrast Cycles:"
 msgstr "Kontrastverstärkung:"
 
-#: modules/colorsel_triangle.c:110
-msgid "Painter-style color selector as a pluggable color selector"
-msgstr "Farbauswahl im Stil von Painter als ladbares Modul"
+#: modules/colorsel_triangle.c:107
+msgid "Painter-style triangle color selector"
+msgstr "Dreiecks-Farbauswahl im Stil von Painter"
 
-#: modules/colorsel_triangle.c:182
+#: modules/colorsel_triangle.c:179
 msgid "Triangle"
 msgstr "Dreieck"
 
-#: modules/colorsel_water.c:107
-msgid "Watercolor style color selector as a pluggable module"
-msgstr "Farbauswahl im Stil von Wasserfarben als ladbares Modul"
+#: modules/colorsel_water.c:103
+msgid "Watercolor style color selector"
+msgstr "Wasserfarben Farbmischer"
 
-#: modules/colorsel_water.c:179
+#: modules/colorsel_water.c:175
 msgid "Watercolor"
 msgstr "Wasserfarbe"
 
-#: modules/colorsel_water.c:253
+#: modules/colorsel_water.c:249
 msgid "Pressure"
 msgstr "Druck"
 
@@ -7558,3 +7514,11 @@ msgstr "Bilder und Photos bearbeiten und erstellen"
 #: data/misc/gimp.desktop.in.in.h:2
 msgid "The GIMP (unstable)"
 msgstr "GIMP (instabil)"
+
+#: libgimptool/gimptoolenums.c:14
+msgid "Crop"
+msgstr "Zuschneiden"
+
+#: libgimptool/gimptoolenums.c:15
+msgid "Resize"
+msgstr "Größe ändern"

@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.3.9\n"
-"POT-Creation-Date: 2002-10-21 17:10+0200\n"
-"PO-Revision-Date: 2002-10-21 17:10+0200\n"
+"POT-Creation-Date: 2002-10-29 11:31+0100\n"
+"PO-Revision-Date: 2002-10-29 11:35+0100\n"
 "Last-Translator: Christian Neumair <christian-neumair@web.de>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -162,13 +162,13 @@ msgstr "Keine"
 msgid "percent"
 msgstr "Prozent"
 
-#: libgimpmodule/gimpmodule.c:174
+#: libgimpmodule/gimpmodule.c:175
 #, c-format
 msgid "Loading module: '%s'\n"
 msgstr "Lade Modul: '%s'\n"
 
-#: libgimpmodule/gimpmodule.c:185 libgimpmodule/gimpmodule.c:199
-#: libgimpmodule/gimpmodule.c:224 libgimpmodule/gimpmodule.c:243
+#: libgimpmodule/gimpmodule.c:192 libgimpmodule/gimpmodule.c:285
+#: libgimpmodule/gimpmodule.c:310 libgimpmodule/gimpmodule.c:378
 #, c-format
 msgid ""
 "Module '%s' load error:\n"
@@ -177,10 +177,26 @@ msgstr ""
 "Fehler beim Laden von Modul '%s':\n"
 "%s"
 
-#: libgimpmodule/gimpmodule.c:306
+#: libgimpmodule/gimpmodule.c:252
 #, c-format
 msgid "Skipping module: '%s'\n"
 msgstr "Ignoriere Modul: '%s'\n"
+
+#: libgimpmodule/gimpmodule.c:355
+msgid "Module error"
+msgstr "Modul Fehler"
+
+#: libgimpmodule/gimpmodule.c:356
+msgid "Loaded OK"
+msgstr "Geladen"
+
+#: libgimpmodule/gimpmodule.c:357
+msgid "Load failed"
+msgstr "Laden fehlgeschlagen"
+
+#: libgimpmodule/gimpmodule.c:358
+msgid "Unloaded OK"
+msgstr "Entladen"
 
 #: libgimpwidgets/gimpcolorbutton.c:85
 msgid "/Foreground Color"
@@ -197,6 +213,73 @@ msgstr "/Schwarz"
 #: libgimpwidgets/gimpcolorbutton.c:92
 msgid "/White"
 msgstr "/Weiss"
+
+#. Hue
+#: libgimpwidgets/gimpcolorscales.c:152
+msgid "H"
+msgstr "H"
+
+#. Saturation
+#: libgimpwidgets/gimpcolorscales.c:154
+msgid "S"
+msgstr "S"
+
+#. Value
+#: libgimpwidgets/gimpcolorscales.c:156
+msgid "V"
+msgstr "V"
+
+#. Red
+#: libgimpwidgets/gimpcolorscales.c:158
+msgid "R"
+msgstr "R"
+
+#. Green
+#: libgimpwidgets/gimpcolorscales.c:160
+msgid "G"
+msgstr "G"
+
+#. Blue
+#: libgimpwidgets/gimpcolorscales.c:162
+msgid "B"
+msgstr "B"
+
+#. Alpha
+#: libgimpwidgets/gimpcolorscales.c:164
+msgid "A"
+msgstr "A"
+
+#: libgimpwidgets/gimpcolorscales.c:168
+msgid "Hue"
+msgstr "Farbton"
+
+#: libgimpwidgets/gimpcolorscales.c:169
+msgid "Saturation"
+msgstr "Sättigung"
+
+#: libgimpwidgets/gimpcolorscales.c:170
+msgid "Value"
+msgstr "Wert"
+
+#: libgimpwidgets/gimpcolorscales.c:171
+msgid "Red"
+msgstr "Rot"
+
+#: libgimpwidgets/gimpcolorscales.c:172
+msgid "Green"
+msgstr "Grün"
+
+#: libgimpwidgets/gimpcolorscales.c:173
+msgid "Blue"
+msgstr "Blau"
+
+#: libgimpwidgets/gimpcolorscales.c:174
+msgid "Alpha"
+msgstr "Deckung"
+
+#: libgimpwidgets/gimpcolorscales.c:243
+msgid "He_x Triplet:"
+msgstr "He_xadezimal:"
 
 #: libgimpwidgets/gimpfileselection.c:352
 msgid "Select Folder"

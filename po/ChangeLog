@@ -1,3 +1,10 @@
+2002-10-29  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/tools/tools-enums.c, added
+	libgimptool/gimptoolenums.c.
+
+	* de.po: updated german translation.
+
 2002-10-29  Christian Rose  <menthos@menthos.com>
 
 	* sv.po: Updated Swedish translation.

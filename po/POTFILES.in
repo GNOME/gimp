@@ -119,7 +119,6 @@ app/plug-in/plug-in.c
 app/plug-in/plug-in-rc.c
 app/plug-in/plug-ins.c
 
-app/tools/tools-enums.c
 app/tools/gimpairbrushtool.c
 app/tools/gimpbezierselecttool.c
 app/tools/gimpblendtool.c
@@ -209,3 +208,5 @@ modules/colorsel_triangle.c
 modules/colorsel_water.c
 
 data/misc/gimp.desktop.in.in
+
+libgimptool/gimptoolenums.c
