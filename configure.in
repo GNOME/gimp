@@ -411,7 +411,7 @@ if test "$ac_cv_header_sys_shm_h" = "yes"; then
 	{
 	  int id;
 	  char *shmaddr;
-	id = shmget (IPC_PRIVATE, 4, IPC_CREAT | 0777);
+	id = shmget (IPC_PRIVATE, 4, IPC_CREAT | 0600);
 	if (id == -1)
 	  exit (2);
 	  shmaddr = shmat (id, 0, 0);

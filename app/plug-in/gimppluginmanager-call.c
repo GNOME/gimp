@@ -192,8 +192,10 @@ plug_in_init_shm (void)
    */
   
 #ifdef HAVE_SHM_H
-  shm_ID = shmget (IPC_PRIVATE, TILE_WIDTH * TILE_HEIGHT * 4, IPC_CREAT | 0777);
-  
+  shm_ID = shmget (IPC_PRIVATE,
+                   TILE_WIDTH * TILE_HEIGHT * 4,
+                   IPC_CREAT | 0600);
+
   if (shm_ID == -1)
     g_message ("shmget() failed: Disabling shared memory tile transport.");
   else
