@@ -1,5 +1,15 @@
 2004-07-21  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/preferences-dialog.c: remember the keyboard shortcut
+	dialog and show it only once.
+
+	* app/widgets/gimpactionview.c
+	* app/widgets/gimpcellrendereraccel.c: minor cleanups.
+
+	Seems to work pretty well now and thus fixes bug #142922.
+
+2004-07-21  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpmarshal.list
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
@@ -52,7 +62,7 @@
 	up the controller mapping dialog.
 
 	* app/gui/preferences-dialog.c: added a "Configure Keyboard
-	Shortcuts" button which pops up a GimpControllerView. Work in
+	Shortcuts" button which pops up a GimpActionView. Work in
 	progress...
 
 2004-07-20  Michael Natterer  <mitch@gimp.org>

@@ -554,7 +554,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                   confirm_data->accel_mask = accel_mask;
 
                   query_box =
-                    gimp_query_boolean_box (_("Conflicting shortcuts"),
+                    gimp_query_boolean_box (_("Conflicting Shortcuts"),
                                             gtk_widget_get_toplevel (GTK_WIDGET (view)),
                                             gimp_standard_help_func,
                                             NULL,
@@ -562,7 +562,7 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
                                             message,
                                             _("Delete Old Shortcut"),
                                             GTK_STOCK_CANCEL,
-                                            G_OBJECT (view), "unmap",
+                                            G_OBJECT (view), "destroy",
                                             gimp_action_view_accel_confirm,
                                             confirm_data);
 

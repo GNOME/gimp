@@ -459,12 +459,28 @@ prefs_input_dialog_able_callback (GtkWidget *widget,
 }
 
 static void
+prefs_keyboard_shortcuts_destroy (GtkWidget *widget,
+                                  GtkWidget *prefs)
+{
+  g_object_set_data (G_OBJECT (prefs), "gimp-keyboard-shortcuts-dialog", NULL);
+}
+
+static void
 prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
                                  Gimp      *gimp)
 {
   GtkWidget *dialog;
   GtkWidget *scrolled_window;
   GtkWidget *view;
+
+  dialog = g_object_get_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
+                              "gimp-keyboard-shortcuts-dialog");
+
+  if (dialog)
+    {
+      gtk_window_present (GTK_WINDOW (dialog));
+      return;
+    }
 
   dialog = gimp_dialog_new (_("Configure Keyboard Shortcuts"),
                             "gimp-keyboard-shortcuts-dialog",
@@ -477,9 +493,15 @@ prefs_keyboard_shortcuts_dialog (GtkWidget *widget,
 
                             NULL);
 
+  g_object_set_data (G_OBJECT (gtk_widget_get_toplevel (widget)),
+                     "gimp-keyboard-shortcuts-dialog", dialog);
+
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
+  g_signal_connect_object (dialog, "destroy",
+                           G_CALLBACK (prefs_keyboard_shortcuts_destroy),
+                           gtk_widget_get_toplevel (widget), 0);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),

@@ -99,11 +99,11 @@ gimp_cell_renderer_accel_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GimpCellRendererAccelClass),
-        NULL,                /* base_init */
-        NULL,                /* base_finalize */
-        (GClassInitFunc)gimp_cell_renderer_accel_class_init,
-        NULL,                /* class_finalize */
-        NULL,                /* class_data */
+        NULL,           /* base_init */
+        NULL,           /* base_finalize */
+        (GClassInitFunc) gimp_cell_renderer_accel_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data */
         sizeof (GimpCellRendererAccel),
         0,              /* n_preallocs */
         (GInstanceInitFunc) gimp_cell_renderer_accel_init
@@ -373,13 +373,13 @@ pointless_eventbox_subclass_get_type (void)
       static const GTypeInfo info =
       {
         sizeof (GtkEventBoxClass),
-        NULL,                /* base_init */
-        NULL,                /* base_finalize */
-        NULL,
-        NULL,                /* class_finalize */
-        NULL,                /* class_data */
+        NULL,           /* base_init      */
+        NULL,           /* base_finalize  */
+        NULL,           /* class_init     */
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
         sizeof (GtkEventBox),
-        0,              /* n_preallocs */
+        0,              /* n_preallocs    */
         (GInstanceInitFunc) NULL,
       };
 
