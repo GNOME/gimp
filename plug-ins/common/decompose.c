@@ -1,7 +1,7 @@
 /* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Decompose plug-in (C) 1997 Peter Kirchgessner
- * e-mail: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg
+ * e-mail: peter@kirchgessner.net, WWW: http://www.kirchgessner.net
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,15 @@
 
 /* Event history:
  * V 1.00, PK, 29-Jul-97, Creation
+ * V 1.01, PK, 19-Mar-99, Update for GIMP V1.1.3
+ *                        Prepare for localization
+ *                        Use g_message() in interactive mode
  */
-static char ident[] = "@(#) GIMP Decompose plug-in v1.00 29-Jul-97";
+static char ident[] = "@(#) GIMP Decompose plug-in v1.01 19-Mar-99";
+
+#ifdef HAVE_CONFIG_H
+#include "config.h"
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,6 +40,7 @@ static char ident[] = "@(#) GIMP Decompose plug-in v1.00 29-Jul-97";
 #include <ctype.h>
 #include "gtk/gtk.h"
 #include "libgimp/gimp.h"
+#include "libgimp/stdplugins-intl.h"
 
 /* Declare local functions
  */
@@ -52,6 +60,7 @@ static gint32 create_new_image (char *filename, guint width, guint height,
                 GImageType type, gint32 *layer_ID, GDrawable **drawable,
                 GPixelRgn *pixel_rgn);
 
+static void show_message (const char *msg);
 static int cmp_icase (char *s1, char *s2);
 static void rgb_to_hsv (unsigned char *r, unsigned char *g, unsigned char *b,
                         unsigned char *h, unsigned char *s, unsigned char *v);
@@ -117,23 +126,26 @@ typedef struct {
 } EXTRACT;
 
 static EXTRACT extract[] = {
-  { "RGB",     1,  3, { "red", "green", "blue"            }, extract_rgb },
-  { "Red",     0,  1, { "red"                             }, extract_red },
-  { "Green",   0,  1, { "green"                           }, extract_green },
-  { "Blue",    0,  1, { "blue"                            }, extract_blue },
-  { "HSV",     1,  3, { "hue", "saturation", "value",     }, extract_hsv },
-  { "Hue",     0,  1, { "hue"                             }, extract_hue },
-  { "Saturation",0,1, { "saturation",                     }, extract_sat },
-  { "Value",   0,  1, { "value",                          }, extract_val },
-  { "CMY",     1,  3, { "cyan", "magenta", "yellow"       }, extract_cmy },
-  { "Cyan",    0,  1, { "cyan",                           }, extract_cyan },
-  { "Magenta", 0,  1, { "magenta",                        }, extract_magenta },
-  { "Yellow",  0,  1, { "yellow",                         }, extract_yellow },
-  { "CMYK",    1,  4, { "cyan_k", "magenta_k", "yellow_k", "black" }, extract_cmyk },
-  { "Cyan_K",  0,  1, { "cyan_k",                         }, extract_cyank },
-  { "Magenta_K", 0,1, { "magenta_k",                      }, extract_magentak },
-  { "Yellow_K", 0, 1, { "yellow_k",                       }, extract_yellowk },
-  { "Alpha",   1,  1, { "alpha"                           }, extract_alpha }
+  { N_("RGB"),     1,  3, { N_("red"), N_("green"), N_("blue") }, extract_rgb },
+  { N_("Red"),     0,  1, { N_("red") }, extract_red },
+  { N_("Green"),   0,  1, { N_("green") }, extract_green },
+  { N_("Blue"),    0,  1, { N_("blue") }, extract_blue },
+  { N_("HSV"),     1,  3, { N_("hue"), N_("saturation"), N_("value") },
+                          extract_hsv },
+  { N_("Hue"),     0,  1, { N_("hue") }, extract_hue },
+  { N_("Saturation"),0,1, { N_("saturation") }, extract_sat },
+  { N_("Value"),   0,  1, { N_("value") }, extract_val },
+  { N_("CMY"),     1,  3, { N_("cyan"), N_("magenta"), N_("yellow") },
+                          extract_cmy },
+  { N_("Cyan"),    0,  1, { N_("cyan") }, extract_cyan },
+  { N_("Magenta"), 0,  1, { N_("magenta") }, extract_magenta },
+  { N_("Yellow"),  0,  1, { N_("yellow") }, extract_yellow },
+  { N_("CMYK"),    1,  4, { N_("cyan_k"), N_("magenta_k"), N_("yellow_k"),
+                            N_("black") }, extract_cmyk },
+  { N_("Cyan_K"),  0,  1, { N_("cyan_k") }, extract_cyank },
+  { N_("Magenta_K"), 0,1, { N_("magenta_k") }, extract_magentak },
+  { N_("Yellow_K"), 0, 1, { N_("yellow_k") }, extract_yellowk },
+  { N_("Alpha"),   1,  1, { N_("alpha") }, extract_alpha }
 };
 
 /* Number of types of extractions */
@@ -188,26 +200,40 @@ query ()
   static GParamDef return_vals[] =
   {
     { PARAM_IMAGE, "new_image", "Output gray image" },
-    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
-    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
-    { PARAM_IMAGE, "new_image", "Output gray image (N/A for single channel extract)" },
+    { PARAM_IMAGE, "new_image",
+        "Output gray image (N/A for single channel extract)" },
+    { PARAM_IMAGE, "new_image",
+        "Output gray image (N/A for single channel extract)" },
+    { PARAM_IMAGE, "new_image",
+        "Output gray image (N/A for single channel extract)" },
   };
   static int nargs = sizeof (args) / sizeof (args[0]);
   static int nreturn_vals = sizeof (return_vals) / sizeof (return_vals[0]);
 
+  INIT_I18N ();
+
   gimp_install_procedure ("plug_in_decompose",
-			  "Decompose an image into different types of channels",
-			  "This function creates new gray images with\
- different channel information in each of them",
+			  _("Decompose an image into different types of channels"),
+			  _("This function creates new gray images with\
+ different channel information in each of them"),
 			  "Peter Kirchgessner",
-			  "Peter Kirchgessner (pkirchg@aol.com)",
+			  "Peter Kirchgessner (peter@kirchgessner.net)",
 			  "1997",
-			  "<Image>/Image/Channel Ops/Decompose",
+			  _("<Image>/Image/Channel Ops/Decompose"),
 			  "RGB*",
 			  PROC_PLUG_IN,
 			  nargs, nreturn_vals,
 			  args, return_vals);
 }
+
+static void show_message (const char *message)
+{
+ if (run_mode == RUN_INTERACTIVE)
+   g_message (message);
+ else
+   printf ("%s\n", message);
+}
+
 
 static void
 run (char    *name,
@@ -222,6 +248,8 @@ run (char    *name,
   gint32 num_images;
   gint32 image_ID_extract[MAX_EXTRACT_IMAGES];
   gint j;
+
+  INIT_I18N ();
 
   run_mode = param[0].data.d_int32;
 
@@ -272,13 +300,13 @@ run (char    *name,
   drawable_type = gimp_drawable_type (param[2].data.d_drawable);
   if ((drawable_type != RGB_IMAGE) && (drawable_type != RGBA_IMAGE))
   {
-    printf ("plug_in_decompose: Can only work on RGB*_IMAGE\n");
+    show_message (_("plug_in_decompose: Can only work on RGB*_IMAGE"));
     status = STATUS_CALLING_ERROR;
   }
   if (status == STATUS_SUCCESS)
     {
       if (run_mode != RUN_NONINTERACTIVE)
-        gimp_progress_init ("Decomposing...");
+        gimp_progress_init (_("Decomposing..."));
 
       num_images = decompose (param[1].data.d_image, param[2].data.d_drawable,
                               decovals.extract_type, image_ID_extract);
@@ -343,13 +371,13 @@ decompose (gint32 image_ID,
   drawable_src = gimp_drawable_get (drawable_ID);
   if (drawable_src->bpp < 3)
   {
-    printf ("decompose: not an RGB image\n");
+    show_message (_("decompose: not an RGB image"));
     return (-1);
   }
   if (   (extract[extract_idx].extract_fun == extract_alpha)
       && (!gimp_drawable_has_alpha (drawable_ID)))
   {
-    printf ("decompose: No alpha channel available\n");
+    show_message (_("decompose: No alpha channel available"));
     return (-1);
   }
 
@@ -378,7 +406,7 @@ decompose (gint32 image_ID,
   }
   if (dst[num_images-1] == NULL)
   {
-    printf ("decompose: out of memory\n");
+    show_message (_("decompose: out of memory"));
     for (j = 0; j < num_images; j++)
     {
       if (dst[j] != NULL) g_free (dst[j]);
@@ -441,7 +469,7 @@ create_new_image (char *filename,
  image_ID = gimp_image_new (width, height, type);
  gimp_image_set_filename (image_ID, filename);
 
- *layer_ID = gimp_layer_new (image_ID, "Background", width, height,
+ *layer_ID = gimp_layer_new (image_ID, _("Background"), width, height,
                             gdtype, 100, NORMAL_MODE);
  gimp_image_add_layer (image_ID, *layer_ID, 0);
 
@@ -870,44 +898,46 @@ decompose_dialog (void)
 
   argc = 1;
   argv = g_new (gchar *, 1);
-  argv[0] = g_strdup ("Decompose");
+  argv[0] = g_strdup (_("Decompose"));
 
   gtk_init (&argc, &argv);
   gtk_rc_parse (gimp_gtkrc ());
 
   dlg = gtk_dialog_new ();
-  gtk_window_set_title (GTK_WINDOW (dlg), "Decompose");
-  gtk_window_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
+  gtk_window_set_title (GTK_WINDOW (dlg), _("Decompose"));
+  gtk_window_set_position (GTK_WINDOW (dlg), GTK_WIN_POS_MOUSE);
   gtk_signal_connect (GTK_OBJECT (dlg), "destroy",
 		      (GtkSignalFunc) decompose_close_callback,
 		      NULL);
 
   /*  Action area  */
-  button = gtk_button_new_with_label ("OK");
+  button = gtk_button_new_with_label (_("OK"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect (GTK_OBJECT (button), "clicked",
                       (GtkSignalFunc) decompose_ok_callback,
                       dlg);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
+                      TRUE, TRUE, 0);
   gtk_widget_grab_default (button);
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_label ("Cancel");
+  button = gtk_button_new_with_label (_("Cancel"));
   GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_signal_connect_object (GTK_OBJECT (button), "clicked",
 			     (GtkSignalFunc) gtk_widget_destroy,
 			     GTK_OBJECT (dlg));
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->action_area), button,
+                      TRUE, TRUE, 0);
   gtk_widget_show (button);
 
   /*  parameter settings  */
-  frame = gtk_frame_new ("Extract channels:");
+  frame = gtk_frame_new (_("Extract channels:"));
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_ETCHED_IN);
-  gtk_container_border_width (GTK_CONTAINER (frame), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (frame), 5);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), frame, TRUE, TRUE, 0);
 
   vbox = gtk_vbox_new (FALSE, 5);
-  gtk_container_border_width (GTK_CONTAINER (vbox), 10);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 5);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
 
   group = NULL;

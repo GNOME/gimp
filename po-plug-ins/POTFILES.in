@@ -19,6 +19,7 @@ plug-ins/colorify/colorify.c
 plug-ins/compose/compose.c
 plug-ins/convmatrix/convmatrix.c
 plug-ins/cubism/cubism.c
+plug-ins/decompose/decompose.c
 plug-ins/depthmerge/depthmerge.c
 plug-ins/destripe/destripe.c
 plug-ins/gif/gif.c
