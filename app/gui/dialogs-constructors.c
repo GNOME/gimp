@@ -69,7 +69,6 @@
 #include "gradient-editor.h"
 #include "gradient-select.h"
 #include "gradients-commands.h"
-#include "input-dialog.h"
 #include "layers-commands.h"
 #include "menus.h"
 #include "module-browser.h"
@@ -208,14 +207,6 @@ dialogs_preferences_get (GimpDialogFactory *factory,
                          gint               preview_size)
 {
   return preferences_dialog_create (context->gimp);
-}
-
-GtkWidget *
-dialogs_input_devices_get (GimpDialogFactory *factory,
-			   GimpContext       *context,
-                           gint               preview_size)
-{
-  return input_dialog_create (context->gimp);
 }
 
 GtkWidget *

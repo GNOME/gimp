@@ -1,3 +1,26 @@
+2002-02-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/gimprc.[ch]
+	* app/config/gimpguiconfig.[ch]
+	* app/gui/toolbox.c: removed the "show_indicators" gimprc option.
+	The toolbox layout will change and thus obsolete it anyway.
+
+	* app/gui/Makefile.am
+	* app/gui/input-dialog.[ch]: removed.
+
+	* app/gui/dialogs-constructors.[ch]
+	* app/gui/dialogs.c
+	* app/gui/menus.c: changed accordingly.
+
+	* app/gui/preferences-dialog.c: Added an "Input Devices" page and
+	embed the input_dialog stuff there. Put "Display" and "Monitor"
+	under "Interface". Removed the "Session" page. Lots of cleanup and
+	reordering of options.  Please comment...
+
+	* themes/Default/images/preferences/Makefile.am
+	* themes/Default/images/preferences/input-devices.png: new icon.
+	* themes/Default/images/preferences/session.png: removed.
+
 2002-02-28  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/resolution-calibrate-dialog.[ch]: take an optional pixbuf

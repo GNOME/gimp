@@ -42,6 +42,9 @@
 #include "core/gimpcoreconfig.h"
 #include "core/gimpimage.h"
 
+#include "widgets/gimpdeviceinfo.h"
+#include "widgets/gimpdevices.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplay-foreach.h"
 #include "display/gimpdisplayshell-render.h"
@@ -106,6 +109,11 @@ static void  prefs_monitor_resolution_callback   (GtkWidget     *widget,
 						  gpointer       data);
 static void  prefs_resolution_calibrate_callback (GtkWidget     *widget,
 						  gpointer       data);
+static void  prefs_input_dialog_able_callback    (GtkWidget     *widget,
+                                                  GdkDevice     *device,
+                                                  gpointer       data);
+static void  prefs_input_dialog_save_callback    (GtkWidget     *widget,
+                                                  gpointer       data);
 static void  prefs_restart_notification          (void);
 
 
@@ -163,7 +171,6 @@ static gchar            * old_image_status_format;
 static gboolean           old_global_paint_options;
 static guint              old_max_new_image_size;
 static gboolean           old_write_thumbnails;
-static gboolean           old_show_indicators;
 static gboolean	          old_trust_dirty_flag;
 static gboolean           old_use_help;
 static gboolean           old_nav_window_per_display;
@@ -179,7 +186,6 @@ static gint               edit_min_colors;
 static gboolean           edit_install_cmap;
 static gboolean           edit_cycled_marching_ants;
 static gint               edit_last_opened_size;
-static gboolean           edit_show_indicators;
 static gboolean           edit_nav_window_per_display;
 static gboolean           edit_info_window_follows_mouse;
 static gboolean           edit_disable_tearoff_menus;
@@ -363,7 +369,6 @@ prefs_check_settings (Gimp *gimp)
       edit_install_cmap              != old_install_cmap              ||
       edit_cycled_marching_ants      != old_cycled_marching_ants      ||
       edit_last_opened_size          != old_last_opened_size          ||
-      edit_show_indicators           != old_show_indicators           ||
       edit_nav_window_per_display    != old_nav_window_per_display    ||
       edit_info_window_follows_mouse != old_info_window_follows_mouse ||
       edit_disable_tearoff_menus     != old_disable_tearoff_menus     ||
@@ -502,7 +507,6 @@ prefs_save_callback (GtkWidget *widget,
   gboolean    save_install_cmap;
   gboolean    save_cycled_marching_ants;
   gint        save_last_opened_size;
-  gboolean    save_show_indicators;
   gboolean    save_nav_window_per_display;
   gboolean    save_info_window_follows_mouse;
   gchar      *save_temp_path;
@@ -554,7 +558,6 @@ prefs_save_callback (GtkWidget *widget,
   save_install_cmap              = gimprc.install_cmap;
   save_cycled_marching_ants      = gimprc.cycled_marching_ants;
   save_last_opened_size          = gimprc.last_opened_size;
-  save_show_indicators           = gimprc.show_indicators;
   save_nav_window_per_display    = gimprc.nav_window_per_display;
   save_info_window_follows_mouse = gimprc.info_window_follows_mouse;
 
@@ -782,12 +785,6 @@ prefs_save_callback (GtkWidget *widget,
       gimprc.last_opened_size = edit_last_opened_size;
       update = g_list_append (update, "last-opened-size");
     }
-  if (edit_show_indicators != old_show_indicators)
-    {
-      gimprc.show_indicators = edit_show_indicators;
-      update = g_list_append (update, "show-indicators");
-      remove = g_list_append (remove, "dont-show-indicators");
-    }
   if (edit_nav_window_per_display != old_nav_window_per_display)
     {
       gimprc.nav_window_per_display = edit_nav_window_per_display;
@@ -878,7 +875,6 @@ prefs_save_callback (GtkWidget *widget,
   gimprc.install_cmap                   = save_install_cmap;
   gimprc.cycled_marching_ants           = save_cycled_marching_ants;
   gimprc.last_opened_size               = save_last_opened_size;
-  gimprc.show_indicators                = save_show_indicators;
   gimprc.nav_window_per_display         = save_nav_window_per_display;
   gimprc.info_window_follows_mouse      = save_info_window_follows_mouse;
 
@@ -991,7 +987,6 @@ prefs_cancel_callback (GtkWidget *widget,
   edit_install_cmap              = old_install_cmap;
   edit_cycled_marching_ants      = old_cycled_marching_ants;
   edit_last_opened_size          = old_last_opened_size;
-  edit_show_indicators           = old_show_indicators;
   edit_nav_window_per_display    = old_nav_window_per_display;
   edit_info_window_follows_mouse = old_info_window_follows_mouse;
   edit_disable_tearoff_menus     = old_disable_tearoff_menus;
@@ -1053,7 +1048,6 @@ prefs_toggle_callback (GtkWidget *widget,
       data == &edit_stingy_memory_use          ||
       data == &edit_install_cmap               ||
       data == &edit_cycled_marching_ants       ||
-      data == &edit_show_indicators            ||
       data == &edit_nav_window_per_display     ||
       data == &edit_info_window_follows_mouse  ||
       data == &edit_disable_tearoff_menus)
@@ -1367,6 +1361,21 @@ prefs_resolution_calibrate_callback (GtkWidget *widget,
   resolution_calibrate_dialog (GTK_WIDGET (data), NULL, NULL, NULL, NULL);
 }
 
+static void
+prefs_input_dialog_able_callback (GtkWidget *widget,
+                                  GdkDevice *device,
+                                  gpointer   data)
+{
+  gimp_device_info_changed_by_device (device);
+}
+
+static void
+prefs_input_dialog_save_callback (GtkWidget *widget,
+                                  gpointer   data)
+{
+  gimp_devices_save (GIMP (data));
+}
+
 /*  create a new notebook page  */
 static GtkWidget *
 prefs_notebook_append_page (Gimp          *gimp,
@@ -1640,7 +1649,6 @@ preferences_dialog_create (Gimp *gimp)
       edit_install_cmap              = gimprc.install_cmap;
       edit_cycled_marching_ants      = gimprc.cycled_marching_ants;
       edit_last_opened_size          = gimprc.last_opened_size;
-      edit_show_indicators           = gimprc.show_indicators;
       edit_nav_window_per_display    = gimprc.nav_window_per_display;
       edit_info_window_follows_mouse = gimprc.info_window_follows_mouse;
       edit_disable_tearoff_menus     = gimprc.disable_tearoff_menus;
@@ -1717,7 +1725,6 @@ preferences_dialog_create (Gimp *gimp)
   old_install_cmap              = edit_install_cmap;
   old_cycled_marching_ants      = edit_cycled_marching_ants;
   old_last_opened_size          = edit_last_opened_size;
-  old_show_indicators           = edit_show_indicators;
   old_nav_window_per_display    = edit_nav_window_per_display;
   old_info_window_follows_mouse = edit_info_window_follows_mouse;
   old_disable_tearoff_menus     = edit_disable_tearoff_menus;
@@ -1809,7 +1816,9 @@ preferences_dialog_create (Gimp *gimp)
 
   page_index = 0;
 
-  /* New Image page */
+  /***************/
+  /*  New Image  */
+  /***************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("New Image"),
@@ -1958,7 +1967,10 @@ preferences_dialog_create (Gimp *gimp)
 		    G_CALLBACK (gimp_uint_adjustment_update),
 		    &gimprc.max_new_image_size);
 
-  /* Default Comment page */
+
+  /*********************************/
+  /*  New Image / Default Comment  */
+  /*********************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Default Comment"),
@@ -1996,89 +2008,10 @@ preferences_dialog_create (Gimp *gimp)
 		    G_CALLBACK (prefs_text_callback),
 		    &gimp->config->default_comment);
 
-  /* Display page */
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Display"),
-                                     "display.png",
-				     GTK_TREE_STORE (tree),
-				     _("Display"),
-				     "dialogs/preferences/display.html",
-				     NULL,
-				     &top_iter,
-				     page_index++);
 
-  frame = gtk_frame_new (_("Transparency")); 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  table = prefs_table_new (2, GTK_CONTAINER (frame), TRUE);
-
-  optionmenu = gimp_option_menu_new2
-    (FALSE,
-     G_CALLBACK (prefs_toggle_callback),
-     &gimprc.transparency_type,
-     GINT_TO_POINTER (gimprc.transparency_type),
-
-     _("Light Checks"),    GINT_TO_POINTER (GIMP_LIGHT_CHECKS), NULL,
-     _("Mid-Tone Checks"), GINT_TO_POINTER (GIMP_GRAY_CHECKS),  NULL,
-     _("Dark Checks"),     GINT_TO_POINTER (GIMP_DARK_CHECKS),  NULL,
-     _("White Only"),      GINT_TO_POINTER (GIMP_WHITE_ONLY),   NULL,
-     _("Gray Only"),       GINT_TO_POINTER (GIMP_GRAY_ONLY),    NULL,
-     _("Black Only"),      GINT_TO_POINTER (GIMP_BLACK_ONLY),   NULL,
-
-     NULL);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Transparency Type:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
-
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimprc.transparency_size,
-			   GINT_TO_POINTER (gimprc.transparency_size),
-
-			   _("Small"),  
-                           GINT_TO_POINTER (GIMP_SMALL_CHECKS),  NULL,
-			   _("Medium"), 
-                           GINT_TO_POINTER (GIMP_MEDIUM_CHECKS), NULL,
-			   _("Large"),  
-                           GINT_TO_POINTER (GIMP_LARGE_CHECKS),  NULL,
-
-			   NULL);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Check Size:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
-
-  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox));
-
-  if (gdk_rgb_get_visual ()->depth != 8)
-    gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
-
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
-
-  spinbutton =
-    gimp_spin_button_new (&adjustment, edit_min_colors,
-			  27.0,
-			  gtk_check_version (1, 2, 8) ? 216.0 : 256.0,
-			  1.0, 8.0, 0.0, 1.0, 0.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Minimum Number of Colors:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
-
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &edit_min_colors);
-
-  prefs_check_button_new (_("Install Colormap"),
-                          &edit_install_cmap, GTK_BOX (vbox2));
-  prefs_check_button_new (_("Colormap Cycling"),
-                          &edit_cycled_marching_ants, GTK_BOX (vbox2));
-
-
-  /* Interface */
+  /***************/
+  /*  Interface  */
+  /***************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Interface"),
@@ -2093,15 +2026,6 @@ preferences_dialog_create (Gimp *gimp)
   vbox2 = prefs_frame_new (_("General"), GTK_CONTAINER (vbox));
 
   table = prefs_table_new (4, GTK_CONTAINER (vbox2), FALSE);
-
-#if 0
-  /*  Don't show the Auto-save button until we really 
-   *  have auto-saving in the gimp.
-   */
-  prefs_check_button (_("Auto Save"),
-                      &auto_save,
-                      vbox2);
-#endif
 
   optionmenu =
     gimp_option_menu_new2 (FALSE,
@@ -2160,12 +2084,7 @@ preferences_dialog_create (Gimp *gimp)
 		    G_CALLBACK (gimp_int_adjustment_update),
 		    &edit_last_opened_size);
 
-  /* Indicators */
-  vbox2 = prefs_frame_new (_("Toolbox"), GTK_CONTAINER (vbox));
-
-  prefs_check_button_new (_("Display Brush, Pattern and Gradient Indicators"),
-                          &edit_show_indicators, GTK_BOX (vbox2));
-
+  /* Dialog Bahaviour */
   vbox2 = prefs_frame_new (_("Dialog Behaviour"), GTK_CONTAINER (vbox));
 
   prefs_check_button_new (_("Navigation Window per Display"),
@@ -2173,12 +2092,38 @@ preferences_dialog_create (Gimp *gimp)
   prefs_check_button_new (_("Info Window Follows Mouse"),
                           &edit_info_window_follows_mouse, GTK_BOX (vbox2));
 
+  /* Menus */
   vbox2 = prefs_frame_new (_("Menus"), GTK_CONTAINER (vbox));
 
   prefs_check_button_new (_("Disable Tearoff Menus"),
                           &edit_disable_tearoff_menus, GTK_BOX (vbox2));
 
-  /* Interface / Help System */
+  /* Window Positions */
+  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox));
+
+  prefs_check_button_new (_("Save Window Positions on Exit"),
+                          &gimprc.save_session_info, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Restore Saved Window Positions on Startup"),
+                          &gimprc.always_restore_session, GTK_BOX (vbox2));
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+      
+  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (prefs_clear_session_info_callback),
+                    NULL);
+
+
+  /*****************************/
+  /*  Interface / Help System  */
+  /*****************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Help System"),
@@ -2216,7 +2161,140 @@ preferences_dialog_create (Gimp *gimp)
 			     _("Help Browser to Use:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
-  /* Interface / Image Windows */
+
+  /******************************/
+  /*  Interface / Tool Options  */
+  /******************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Tool Options"),
+                                     "tool-options.png",
+				     GTK_TREE_STORE (tree),
+				     _("Tool Options"),
+				     "dialogs/preferences/interface.html#tool_options",
+				     &top_iter,
+				     &child_iter,
+				     page_index++);
+
+  vbox2 = prefs_frame_new (_("Paint Options"), GTK_CONTAINER (vbox));
+
+  prefs_check_button_new (_("Use Global Paint Options"),
+                          &gimprc.global_paint_options, GTK_BOX (vbox2));
+
+  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_CONTAINER (vbox));
+
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
+
+  /*  Default threshold  */
+  spinbutton = gimp_spin_button_new (&adjustment, gimprc.default_threshold,
+				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Default Threshold:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &gimprc.default_threshold);
+
+
+  frame = gtk_frame_new (_("Scaling")); 
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  table = prefs_table_new (1, GTK_CONTAINER (frame), TRUE);
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
+			   &gimp->config->interpolation_type,
+			   GINT_TO_POINTER (gimp->config->interpolation_type),
+
+			   _("None (Fastest)"),
+			   GINT_TO_POINTER (GIMP_INTERPOLATION_NONE), NULL,
+
+			   _("Linear"),
+			   GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR), NULL,
+
+			   _("Cubic (Slowest & Best)"),
+			   GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC), NULL,
+
+			   NULL);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Default Interpolation:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
+
+
+  /*******************************/
+  /*  Interface / Input Devices  */
+  /*******************************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Input Devices"),
+                                     "input-devices.png",
+				     GTK_TREE_STORE (tree),
+				     _("Input Devices"),
+				     "dialogs/preferences/input-devices.html",
+				     &top_iter,
+				     &child_iter,
+				     page_index++);
+
+  vbox2 = prefs_frame_new (_("Input Device Settings"), GTK_CONTAINER (vbox));
+
+  {
+    GtkWidget *input_dialog;
+    GtkWidget *input_vbox;
+    GList     *input_children;
+
+    input_dialog = gtk_input_dialog_new ();
+
+    input_children = gtk_container_get_children (GTK_CONTAINER (GTK_DIALOG (input_dialog)->vbox));
+
+    input_vbox = GTK_WIDGET (input_children->data);
+
+    g_list_free (input_children);
+
+    g_object_ref (G_OBJECT (input_vbox));
+
+    gtk_container_remove (GTK_CONTAINER (GTK_DIALOG (input_dialog)->vbox),
+                          input_vbox);
+    gtk_box_pack_start (GTK_BOX (vbox2), input_vbox, TRUE, TRUE, 0);
+
+    g_object_unref (G_OBJECT (input_vbox));
+
+    g_object_weak_ref (G_OBJECT (input_vbox),
+                       (GWeakNotify) gtk_widget_destroy,
+                       input_dialog);
+
+    g_signal_connect (G_OBJECT (input_dialog), "enable_device",
+                      G_CALLBACK (prefs_input_dialog_able_callback),
+                      gimp);
+    g_signal_connect (G_OBJECT (input_dialog), "disable_device",
+                      G_CALLBACK (prefs_input_dialog_able_callback),
+                      gimp);
+  }
+
+  prefs_check_button_new (_("Save Input Device Settings on Exit"),
+                          &gimprc.save_device_status, GTK_BOX (vbox));
+
+  hbox = gtk_hbox_new (FALSE, 2);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+      
+  button = gtk_button_new_with_label (_("Save Input Device Settings Now"));
+  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (prefs_input_dialog_save_callback),
+                    gimp);
+
+
+  /*******************************/
+  /*  Interface / Image Windows  */
+  /*******************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Image Windows"),
@@ -2356,202 +2434,93 @@ preferences_dialog_create (Gimp *gimp)
 			     optionmenu, 1, TRUE);
 
 
-  /* Interface / Tool Options */
+  /*************************/
+  /*  Interface / Display  */
+  /*************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
-				     _("Tool Options"),
-                                     "tool-options.png",
+				     _("Display"),
+                                     "display.png",
 				     GTK_TREE_STORE (tree),
-				     _("Tool Options"),
-				     "dialogs/preferences/interface.html#tool_options",
+				     _("Display"),
+				     "dialogs/preferences/display.html",
 				     &top_iter,
 				     &child_iter,
 				     page_index++);
 
-  vbox2 = prefs_frame_new (_("Paint Options"), GTK_CONTAINER (vbox));
-
-  prefs_check_button_new (_("Use Global Paint Options"),
-                          &gimprc.global_paint_options, GTK_BOX (vbox2));
-
-  vbox2 = prefs_frame_new (_("Finding Contiguous Regions"), GTK_CONTAINER (vbox));
-
-  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
-
-  /*  Default threshold  */
-  spinbutton = gimp_spin_button_new (&adjustment, gimprc.default_threshold,
-				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Default Threshold:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
-
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &gimprc.default_threshold);
-
-
-  /* Environment */
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Environment"),
-                                     "environment.png",
-				     GTK_TREE_STORE (tree),
-				     _("Environment"),
-				     "dialogs/preferences/environment.html",
-				     NULL,
-				     &top_iter,
-				     page_index++);
-
-  vbox2 = prefs_frame_new (_("Resource Consumption"), GTK_CONTAINER (vbox));
-
-  prefs_check_button_new (_("Conservative Memory Usage"),
-                          &edit_stingy_memory_use, GTK_BOX (vbox2));
-
-#ifdef ENABLE_MP
-  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
-#else
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
-#endif /* ENABLE_MP */
-
-  /*  Levels of Undo  */
-  spinbutton = gimp_spin_button_new (&adjustment,
-				     gimp->config->levels_of_undo,
-				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Levels of Undo:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
-
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &gimp->config->levels_of_undo);
-
-  /*  The tile cache size  */
-  adjustment = gtk_adjustment_new (edit_tile_cache_size, 
-				   0, (4069.0 * 1024 * 1024 - 1), 
-				   1.0, 1.0, 0.0);
-  hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("Tile Cache Size:"), 1.0, 0.5,
-			     hbox, 1, TRUE);
-
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		    G_CALLBACK (gimp_uint_adjustment_update),
-		    &edit_tile_cache_size);
-
-#ifdef ENABLE_MP
-  spinbutton =
-    gimp_spin_button_new (&adjustment, base_config->num_processors,
-			  1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("Number of Processors to Use:"), 1.0, 0.5,
-			     spinbutton, 1, TRUE);
-
-  g_signal_connect (G_OBJECT (adjustment), "value_changed",
-		    G_CALLBACK (gimp_int_adjustment_update),
-		    &base_config->num_processors);
-#endif /* ENABLE_MP */
-
-  frame = gtk_frame_new (_("Scaling")); 
+  frame = gtk_frame_new (_("Transparency")); 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = prefs_table_new (1, GTK_CONTAINER (frame), TRUE);
+  table = prefs_table_new (2, GTK_CONTAINER (frame), TRUE);
 
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimp->config->interpolation_type,
-			   GINT_TO_POINTER (gimp->config->interpolation_type),
+  optionmenu = gimp_option_menu_new2
+    (FALSE,
+     G_CALLBACK (prefs_toggle_callback),
+     &gimprc.transparency_type,
+     GINT_TO_POINTER (gimprc.transparency_type),
 
-			   _("None (Fastest)"),
-			   GINT_TO_POINTER (GIMP_INTERPOLATION_NONE), NULL,
+     _("Light Checks"),    GINT_TO_POINTER (GIMP_LIGHT_CHECKS), NULL,
+     _("Mid-Tone Checks"), GINT_TO_POINTER (GIMP_GRAY_CHECKS),  NULL,
+     _("Dark Checks"),     GINT_TO_POINTER (GIMP_DARK_CHECKS),  NULL,
+     _("White Only"),      GINT_TO_POINTER (GIMP_WHITE_ONLY),   NULL,
+     _("Gray Only"),       GINT_TO_POINTER (GIMP_GRAY_ONLY),    NULL,
+     _("Black Only"),      GINT_TO_POINTER (GIMP_BLACK_ONLY),   NULL,
 
-			   _("Linear"),
-			   GINT_TO_POINTER (GIMP_INTERPOLATION_LINEAR), NULL,
-
-			   _("Cubic (Slowest & Best)"),
-			   GINT_TO_POINTER (GIMP_INTERPOLATION_CUBIC), NULL,
-
-			   NULL);
+     NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Default Interpolation:"), 1.0, 0.5,
-			     optionmenu, 1, TRUE);
-
-  vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox));
-
-  table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
-
-  optionmenu =
-    gimp_option_menu_new2 (FALSE,
-			   G_CALLBACK (prefs_toggle_callback),
-			   &gimp->config->write_thumbnails,
-			   GINT_TO_POINTER (gimp->config->write_thumbnails),
-
-			   _("Always"), GINT_TO_POINTER (TRUE),  NULL,
-			   _("Never"),  GINT_TO_POINTER (FALSE), NULL,
-
-			   NULL);
-
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
+			     _("Transparency Type:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
 
   optionmenu =
     gimp_option_menu_new2 (FALSE,
 			   G_CALLBACK (prefs_toggle_callback),
-			   &gimprc.trust_dirty_flag,
-			   GINT_TO_POINTER (gimprc.trust_dirty_flag),
+			   &gimprc.transparency_size,
+			   GINT_TO_POINTER (gimprc.transparency_size),
 
-			   _("Only when Modified"), GINT_TO_POINTER (TRUE),  NULL,
-			   _("Always"),             GINT_TO_POINTER (FALSE), NULL,
+			   _("Small"),  
+                           GINT_TO_POINTER (GIMP_SMALL_CHECKS),  NULL,
+			   _("Medium"), 
+                           GINT_TO_POINTER (GIMP_MEDIUM_CHECKS), NULL,
+			   _("Large"),  
+                           GINT_TO_POINTER (GIMP_LARGE_CHECKS),  NULL,
 
 			   NULL);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("\"File > Save\" Saves the Image:"), 1.0, 0.5,
+			     _("Check Size:"), 1.0, 0.5,
 			     optionmenu, 1, TRUE);
-                                     
 
-  /* Session Management */
-  vbox = prefs_notebook_append_page (gimp,
-                                     GTK_NOTEBOOK (notebook),
-				     _("Session Management"),
-                                     "session.png",
-				     GTK_TREE_STORE (tree),
-				     _("Session"),
-				     "dialogs/preferences/session.html",
-				     NULL,
-				     &top_iter,
-				     page_index++);
+  vbox2 = prefs_frame_new (_("8-Bit Displays"), GTK_CONTAINER (vbox));
 
-  vbox2 = prefs_frame_new (_("Window Positions"), GTK_CONTAINER (vbox));
+  if (gdk_rgb_get_visual ()->depth != 8)
+    gtk_widget_set_sensitive (GTK_WIDGET (vbox2->parent), FALSE);
 
-  prefs_check_button_new (_("Save Window Positions on Exit"),
-                          &gimprc.save_session_info, GTK_BOX (vbox2));
+  table = prefs_table_new (1, GTK_CONTAINER (vbox2), FALSE);
 
-  hbox = gtk_hbox_new (FALSE, 2);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 4);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-      
-  button = gtk_button_new_with_label (_("Clear Saved Window Positions Now"));
-  gtk_misc_set_padding (GTK_MISC (GTK_BIN (button)->child), 2, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
+  spinbutton =
+    gimp_spin_button_new (&adjustment, edit_min_colors,
+			  27.0,
+			  gtk_check_version (1, 2, 8) ? 216.0 : 256.0,
+			  1.0, 8.0, 0.0, 1.0, 0.0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Minimum Number of Colors:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
 
-  g_signal_connect (G_OBJECT (button), "clicked",
-		    G_CALLBACK (prefs_clear_session_info_callback),
-		    NULL);
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &edit_min_colors);
 
-  prefs_check_button_new (_("Always Try to Restore Session"),
-                          &gimprc.always_restore_session, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Install Colormap"),
+                          &edit_install_cmap, GTK_BOX (vbox2));
+  prefs_check_button_new (_("Colormap Cycling"),
+                          &edit_cycled_marching_ants, GTK_BOX (vbox2));
 
-  vbox2 = prefs_frame_new (_("Devices"), GTK_CONTAINER (vbox));
 
-  prefs_check_button_new (_("Save Device Status on Exit"),
-                          &gimprc.save_device_status, GTK_BOX (vbox2));
-
-  /* Monitor */
+  /*************************/
+  /*  Interface / Monitor  */
+  /*************************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Monitor"),
@@ -2559,8 +2528,8 @@ preferences_dialog_create (Gimp *gimp)
 				     GTK_TREE_STORE (tree),
 				     _("Monitor"),
 				     "dialogs/preferences/monitor.html",
-				     NULL,
 				     &top_iter,
+				     &child_iter,
 				     page_index++);
 
   vbox2 = prefs_frame_new (_("Get Monitor Resolution"), GTK_CONTAINER (vbox));
@@ -2638,7 +2607,7 @@ preferences_dialog_create (Gimp *gimp)
 		    sizeentry);
 
   group = NULL;
-  button = gtk_radio_button_new_with_label (group, _("From windowing system"));
+  button = gtk_radio_button_new_with_label (group, _("From Windowing System"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   g_signal_connect (G_OBJECT (button), "toggled",
 		    G_CALLBACK (prefs_res_source_callback),
@@ -2655,16 +2624,16 @@ preferences_dialog_create (Gimp *gimp)
   gtk_widget_show (button);
   gtk_box_pack_start (GTK_BOX (vbox2), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-  
+
   separator = gtk_hseparator_new ();
   gtk_box_pack_start (GTK_BOX (vbox2), separator, FALSE, FALSE, 0);
   gtk_widget_show (separator);
-  
+
   button = gtk_radio_button_new_with_label (group, _("Manually:"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-  
+
   gtk_box_pack_start (GTK_BOX (vbox2), abox, FALSE, FALSE, 0);
   gtk_widget_show (abox);
 
@@ -2674,7 +2643,117 @@ preferences_dialog_create (Gimp *gimp)
   if (! gimprc.using_xserver_resolution)
     gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), TRUE);
 
-  /* Folders */
+
+  /*****************/
+  /*  Environment  */
+  /*****************/
+  vbox = prefs_notebook_append_page (gimp,
+                                     GTK_NOTEBOOK (notebook),
+				     _("Environment"),
+                                     "environment.png",
+				     GTK_TREE_STORE (tree),
+				     _("Environment"),
+				     "dialogs/preferences/environment.html",
+				     NULL,
+				     &top_iter,
+				     page_index++);
+
+  vbox2 = prefs_frame_new (_("Resource Consumption"), GTK_CONTAINER (vbox));
+
+  prefs_check_button_new (_("Conservative Memory Usage"),
+                          &edit_stingy_memory_use, GTK_BOX (vbox2));
+
+#ifdef ENABLE_MP
+  table = prefs_table_new (3, GTK_CONTAINER (vbox2), FALSE);
+#else
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), FALSE);
+#endif /* ENABLE_MP */
+
+  /*  Levels of Undo  */
+  spinbutton = gimp_spin_button_new (&adjustment,
+				     gimp->config->levels_of_undo,
+				     0.0, 255.0, 1.0, 5.0, 0.0, 1.0, 0.0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+			     _("Levels of Undo:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &gimp->config->levels_of_undo);
+
+  /*  The tile cache size  */
+  adjustment = gtk_adjustment_new (edit_tile_cache_size, 
+				   0, (4069.0 * 1024 * 1024 - 1), 
+				   1.0, 1.0, 0.0);
+  hbox = gimp_mem_size_entry_new (GTK_ADJUSTMENT (adjustment));
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Tile Cache Size:"), 1.0, 0.5,
+			     hbox, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_uint_adjustment_update),
+		    &edit_tile_cache_size);
+
+#ifdef ENABLE_MP
+  spinbutton =
+    gimp_spin_button_new (&adjustment, base_config->num_processors,
+			  1, 30, 1.0, 2.0, 0.0, 1.0, 0.0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
+			     _("Number of Processors to Use:"), 1.0, 0.5,
+			     spinbutton, 1, TRUE);
+
+  g_signal_connect (G_OBJECT (adjustment), "value_changed",
+		    G_CALLBACK (gimp_int_adjustment_update),
+		    &base_config->num_processors);
+#endif /* ENABLE_MP */
+
+  vbox2 = prefs_frame_new (_("File Saving"), GTK_CONTAINER (vbox));
+
+  table = prefs_table_new (2, GTK_CONTAINER (vbox2), TRUE);
+
+#if 0
+  /*  Don't show the Auto-save button until we really 
+   *  have auto-saving in the gimp.
+   */
+  prefs_check_button (_("Auto Save"),
+                      &auto_save,
+                      vbox2);
+#endif
+
+  optionmenu =
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
+			   &gimprc.trust_dirty_flag,
+			   GINT_TO_POINTER (gimprc.trust_dirty_flag),
+
+			   _("Only when Modified"), GINT_TO_POINTER (TRUE),  NULL,
+			   _("Always"),             GINT_TO_POINTER (FALSE), NULL,
+
+			   NULL);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
+                             _("\"File > Save\" Saves the Image:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
+                                     
+  optionmenu =
+    gimp_option_menu_new2 (FALSE,
+			   G_CALLBACK (prefs_toggle_callback),
+			   &gimp->config->write_thumbnails,
+			   GINT_TO_POINTER (gimp->config->write_thumbnails),
+
+			   _("Always"), GINT_TO_POINTER (TRUE),  NULL,
+			   _("Never"),  GINT_TO_POINTER (FALSE), NULL,
+
+			   NULL);
+
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
+			     _("Try to Write a Thumbnail File:"), 1.0, 0.5,
+			     optionmenu, 1, TRUE);
+
+
+  /*************/
+  /*  Folders  */
+  /*************/
   vbox = prefs_notebook_append_page (gimp,
                                      GTK_NOTEBOOK (notebook),
 				     _("Folders"),

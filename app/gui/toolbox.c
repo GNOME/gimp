@@ -48,7 +48,6 @@
 #include "indicator-area.h"
 
 #include "app_procs.h"
-#include "gimprc.h"
 
 #include "libgimp/gimpintl.h"
 
@@ -199,9 +198,7 @@ toolbox_create (Gimp *gimp)
 			   0);
 
   toolbox_create_color_area (wbox, context);
-
-  if (gimprc.show_indicators)
-    toolbox_create_indicator_area (wbox, context);
+  toolbox_create_indicator_area (wbox, context);
 
   gtk_drag_dest_set (window,
 		     GTK_DEST_DEFAULT_ALL,

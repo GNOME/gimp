@@ -157,6 +157,10 @@ static GimpItemFactoryEntry toolbox_entries[] =
       dialogs_create_toplevel_cmd_callback, 0 },
     "gimp:tool-options-dialog",
     "file/dialogs/tool_options.html", NULL },
+  { { N_("/File/Dialogs/Device Status..."), NULL,
+      dialogs_create_toplevel_cmd_callback, 0 },
+    "gimp:device-status-dialog",
+    "file/dialogs/device_status.html", NULL },
 
   SEPARATOR ("/File/Dialogs/---"),
 
@@ -218,17 +222,6 @@ static GimpItemFactoryEntry toolbox_entries[] =
       dialogs_create_dockable_cmd_callback, 0 },
     "gimp:image-list",
     NULL, NULL },
-
-  SEPARATOR ("/File/Dialogs/---"),
-
-  { { N_("/File/Dialogs/Input Devices..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:input-devices-dialog",
-    "file/dialogs/input_devices.html", NULL },
-  { { N_("/File/Dialogs/Device Status..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:device-status-dialog",
-    "file/dialogs/device_status.html", NULL },
 
   SEPARATOR ("/File/Dialogs/---"),
 
@@ -857,6 +850,10 @@ static GimpItemFactoryEntry image_entries[] =
       dialogs_create_toplevel_cmd_callback, 0 },
     "gimp:tool-options-dialog",
     "dialogs/tool_options.html", NULL },
+  { { N_("/Dialogs/Device Status..."), NULL,
+      dialogs_create_toplevel_cmd_callback, 0 },
+    "gimp:device-status-dialog",
+    "dialogs/device_status.html", NULL },
 
   SEPARATOR ("/Dialogs/---"),
 
@@ -890,17 +887,6 @@ static GimpItemFactoryEntry image_entries[] =
       dialogs_create_dockable_cmd_callback, 0 },
     "gimp:image-list",
     NULL, NULL },
-
-  SEPARATOR ("/Dialogs/---"),
-
-  { { N_("/Dialogs/Input Devices..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:input-devices-dialog",
-    "dialogs/input_devices.html", NULL },
-  { { N_("/Dialogs/Device Status..."), NULL,
-      dialogs_create_toplevel_cmd_callback, 0 },
-    "gimp:device-status-dialog",
-    "dialogs/device_status.html", NULL },
 
   SEPARATOR ("/Dialogs/---"),
 

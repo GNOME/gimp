@@ -216,7 +216,6 @@ GimpRc gimprc =
   /* image_title_format        */  NULL,
   /* image_status_format       */  NULL,
   /* global_paint_options      */  FALSE,
-  /* show_indicators           */  TRUE,
   /* max_new_image_size        */  33554432,  /* 32 MB */
   /* trust_dirty_flag          */  FALSE,
   /* use_help                  */  TRUE,
@@ -276,8 +275,6 @@ static ParseFunc funcs[] =
   { "image-title-format",            TT_STRING,        &gimprc.image_title_format, NULL        },
   { "image-status-format",           TT_STRING,        &gimprc.image_status_format, NULL       },
   { "global-paint-options",          TT_BOOLEAN,       &gimprc.global_paint_options, NULL      },
-  { "show-indicators",               TT_BOOLEAN,       &gimprc.show_indicators, NULL           },
-  { "dont-show-indicators",          TT_BOOLEAN,       NULL, &gimprc.show_indicators           },
   { "no-global-paint-options",       TT_BOOLEAN,       NULL, &gimprc.global_paint_options      },
   { "max-new-image-size",            TT_MEMSIZE,       &gimprc.max_new_image_size, NULL        },
   { "trust-dirty-flag",		     TT_BOOLEAN,       &gimprc.trust_dirty_flag, NULL          },

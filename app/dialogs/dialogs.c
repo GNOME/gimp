@@ -46,7 +46,6 @@ static const GimpDialogFactoryEntry toplevel_entries[] =
   { "gimp:gradient-select-dialog", dialogs_gradient_select_get, 32, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:palette-select-dialog",  dialogs_palette_select_get,  32, TRUE,  TRUE,  FALSE, TRUE  },
   { "gimp:preferences-dialog",     dialogs_preferences_get,     32, TRUE,  FALSE, FALSE, TRUE  },
-  { "gimp:input-devices-dialog",   dialogs_input_devices_get,   32, TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:module-browser-dialog",  dialogs_module_browser_get,  32, TRUE,  FALSE, FALSE, TRUE  },
   { "gimp:undo-history-dialog",    dialogs_undo_history_get,    32, FALSE, FALSE, FALSE, TRUE  },
   { "gimp:display-filters-dialog", dialogs_display_filters_get, 32, FALSE, FALSE, FALSE, TRUE  },

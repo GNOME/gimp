@@ -9,10 +9,10 @@ PREFS_IMAGES = @STRIP_BEGIN@ \
 	folders.png		\
 	help-system.png		\
 	image-windows.png	\
+	input-devices.png	\
 	interface.png		\
 	monitor.png		\
 	new-image.png		\
-	session.png		\
 	tool-options.png	\
 @STRIP_END@
 

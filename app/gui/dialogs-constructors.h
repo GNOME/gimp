@@ -44,9 +44,6 @@ GtkWidget * dialogs_palette_select_get     (GimpDialogFactory *factory,
 GtkWidget * dialogs_preferences_get        (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);
-GtkWidget * dialogs_input_devices_get      (GimpDialogFactory *factory,
-					    GimpContext       *context,
-                                            gint               preview_size);
 GtkWidget * dialogs_module_browser_get     (GimpDialogFactory *factory,
 					    GimpContext       *context,
                                             gint               preview_size);

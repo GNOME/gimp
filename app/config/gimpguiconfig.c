@@ -62,7 +62,6 @@ enum
   PROP_SHOW_TIPS,
   PROP_SHOW_TOOL_TIPS,
   PROP_TEAROFF_MENUS,
-  PROP_SHOW_INDICATORS,
   PROP_MAX_NEW_IMAGE_SIZE,
   PROP_THEME_PATH,
   PROP_THEME,
@@ -161,9 +160,6 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TEAROFF_MENUS,
                                     "tearoff-menus",
                                     TRUE);
-  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SHOW_INDICATORS,
-                                    "show-indicators",
-                                    TRUE);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                    "max-new-image-size",
                                    0, G_MAXUINT, 1 << 25);
@@ -251,9 +247,6 @@ gimp_gui_config_set_property (GObject      *object,
     case PROP_TEAROFF_MENUS:
       gui_config->tearoff_menus = g_value_get_boolean (value);
       break;
-    case PROP_SHOW_INDICATORS:
-      gui_config->show_indicators = g_value_get_boolean (value);
-      break;
     case PROP_MAX_NEW_IMAGE_SIZE:
       gui_config->max_new_image_size = g_value_get_uint (value);
       break;
@@ -334,9 +327,6 @@ gimp_gui_config_get_property (GObject    *object,
       break;
     case PROP_TEAROFF_MENUS:
       g_value_set_boolean (value, gui_config->tearoff_menus);
-      break;
-    case PROP_SHOW_INDICATORS:
-      g_value_set_boolean (value, gui_config->show_indicators);
       break;
     case PROP_MAX_NEW_IMAGE_SIZE:
       g_value_set_uint (value, gui_config->max_new_image_size);

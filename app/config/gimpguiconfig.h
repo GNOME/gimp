@@ -55,7 +55,6 @@ struct _GimpGuiConfig
   gboolean             show_tips;
   gboolean             show_tool_tips;
   gboolean             tearoff_menus;
-  gboolean             show_indicators;
   guint                max_new_image_size;
   gchar               *theme_path;
   gchar               *theme;

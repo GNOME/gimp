@@ -75,8 +75,6 @@ libappgui_a_SOURCES = @STRIP_BEGIN@ \
 	info-dialog.h			\
 	info-window.c			\
 	info-window.h			\
-	input-dialog.c			\
-	input-dialog.h			\
 	layers-commands.c		\
 	layers-commands.h		\
 	menus.c				\
