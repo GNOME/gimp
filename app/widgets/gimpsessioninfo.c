@@ -59,6 +59,8 @@ enum
   SESSION_INFO_DOCKABLE_AUX
 };
 
+#define DEFAULT_SCREEN  -1
+
 
 /*  local function prototypes  */
 
@@ -201,7 +203,10 @@ gimp_session_info_save (GimpSessionInfo  *info,
   if (info->open)
     {
       gimp_config_writer_open (writer, "open-on-exit");
-      gimp_config_writer_printf (writer, "%d", info->screen);
+
+      if (info->screen != DEFAULT_SCREEN)
+        gimp_config_writer_printf (writer, "%d", info->screen);
+
       gimp_config_writer_close (writer);
     }
 
@@ -411,6 +416,8 @@ gimp_session_info_deserialize (GScanner *scanner,
 
   info = g_new0 (GimpSessionInfo, 1);
 
+  info->screen = DEFAULT_SCREEN;
+
   if (strcmp (entry_name, "dock"))
     {
       info->toplevel_entry = gimp_dialog_factory_find_entry (factory,
@@ -540,20 +547,21 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                            GimpDialogFactory *factory)
 {
   GdkDisplay *display;
-  GdkScreen  *screen;
+  GdkScreen  *screen = NULL;
 
   g_return_if_fail (info != NULL);
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
 
   display = gdk_display_get_default ();
 
-  screen = gdk_display_get_screen (display, info->screen);
+  if (info->screen != DEFAULT_SCREEN)
+    screen = gdk_display_get_screen (display, info->screen);
 
   if (! screen)
     screen = gdk_display_get_default_screen (display);
 
   info->open   = FALSE;
-  info->screen = 0;
+  info->screen = DEFAULT_SCREEN;
 
   if (info->toplevel_entry)
     {
@@ -727,14 +735,19 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
     }
 
   if (! info->toplevel_entry || info->toplevel_entry->remember_if_open)
-    {
-      info->open   = GTK_WIDGET_VISIBLE (info->widget);
-      info->screen = gdk_screen_get_number (gtk_widget_get_screen (info->widget));
-    }
+    info->open = GTK_WIDGET_VISIBLE (info->widget);
   else
+    info->open = FALSE;
+
+  info->screen = DEFAULT_SCREEN;
+
+  if (info->open)
     {
-      info->open   = FALSE;
-      info->screen = 0;
+      GdkDisplay *display = gtk_widget_get_display (info->widget);
+      GdkScreen  *screen  = gtk_widget_get_screen (info->widget);
+
+      if (screen != gdk_display_get_default_screen (display))
+        info->screen = gdk_screen_get_number (screen);
     }
 }
 

@@ -7,6 +7,11 @@
 
 2003-11-13  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpsessioninfo.c: only save the screen number to
+	the sessionrc if the screen is not the default screen.
+
+2003-11-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsessioninfo.c (gimp_session_info_deserialize): 
 	restore compatibility with older sessionrc format. No need to
 	break everyone's sessionrc again.
