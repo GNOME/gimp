@@ -4,7 +4,7 @@
 	* app/tools/gimptransformtool.c:
 	* app/tools/tools-enums.[ch]: Replaced "Preview" checkbutton with
 	a combobox with options "Outline", "Grid", "Image", and
-	"Image + Grid".
+	"Image + Grid". Addresses bug #108172.
 
 2004-07-02  Sven Neumann  <sven@gimp.org>
 
