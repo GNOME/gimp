@@ -5876,135 +5876,135 @@ msgstr "<Image>/Ф╕льтри/Св╕тлов╕ ефекти/╤скра..."
 
 #: plug-ins/common/sparkle.c:295
 msgid "Sparkling..."
-msgstr ""
+msgstr "Створення ╕скр..."
 
 #: plug-ins/common/sparkle.c:344
 msgid "Sparkle"
-msgstr ""
+msgstr "╤скра"
 
 #: plug-ins/common/sparkle.c:382
 msgid "Luminosity Threshold:"
-msgstr ""
+msgstr "Пор╕г яскравост╕:"
 
 #: plug-ins/common/sparkle.c:385
 msgid "Adjust the Luminosity Threshold"
-msgstr ""
+msgstr "П╕дб╕р порогу яскравост╕"
 
 #: plug-ins/common/sparkle.c:392
 msgid "Flare Intensity:"
-msgstr ""
+msgstr "╤нтенсивн╕сть спалаху:"
 
 #: plug-ins/common/sparkle.c:395
 msgid "Adjust the Flare Intensity"
-msgstr ""
+msgstr "П╕дб╕р ╕нтенсивност╕ спалаху"
 
 #: plug-ins/common/sparkle.c:402
 msgid "Spike Length:"
-msgstr ""
+msgstr "Довжина променя:"
 
 #: plug-ins/common/sparkle.c:405
 msgid "Adjust the Spike Length"
-msgstr ""
+msgstr "П╕дб╕р довжини променя"
 
 #: plug-ins/common/sparkle.c:412
 msgid "Spike Points:"
-msgstr ""
+msgstr "Точки промент╕в:"
 
 #: plug-ins/common/sparkle.c:415
 msgid "Adjust the Number of Spikes"
-msgstr ""
+msgstr "П╕дб╕р к╕лькост╕ промен╕в"
 
 #: plug-ins/common/sparkle.c:422
 msgid "Spike Angle (-1: Random):"
-msgstr ""
+msgstr "Кут променя (-1 - випадковий):"
 
 #: plug-ins/common/sparkle.c:425
 msgid "Adjust the Spike Angle (-1 means a Random Angle is choosen)"
-msgstr ""
+msgstr "П╕дб╕р кута променя (-1 означа╓ виб╕р випадкового кута)"
 
 #: plug-ins/common/sparkle.c:433
 msgid "Spike Density:"
-msgstr ""
+msgstr "Щ╕льн╕сть променя:"
 
 #: plug-ins/common/sparkle.c:436
 msgid "Adjust the Spike Density"
-msgstr ""
+msgstr "П╕дб╕р щ╕льност╕ променя"
 
 #: plug-ins/common/sparkle.c:446
 msgid "Adjust the Opacity of the Spikes"
-msgstr ""
+msgstr "П╕дб╕р непрозорост╕ променя"
 
 #: plug-ins/common/sparkle.c:456
 msgid "Adjust the Value how much the Hue should be changed randomly"
-msgstr ""
+msgstr "П╕дб╕р степен╕ того як багато в╕дт╕нку буде зм╕нюватись випадково"
 
 #: plug-ins/common/sparkle.c:464
 msgid "Random Saturation:"
-msgstr ""
+msgstr "Випадкова насичен╕сть:"
 
 #: plug-ins/common/sparkle.c:467
 msgid "Adjust the Value how much the Saturation should be changed randomly"
-msgstr ""
+msgstr "П╕дб╕р степен╕ того як багато насиченост╕ буде зм╕нюватись випадково"
 
 #: plug-ins/common/sparkle.c:485
 msgid "Preserve Luminosity"
-msgstr ""
+msgstr "Збер╕гати яскрав╕сть"
 
 #: plug-ins/common/sparkle.c:493
 msgid "Should the Luminosity be preserved?"
-msgstr ""
+msgstr "Чи потр╕бно збер╕гати яскрав╕сть?"
 
 #: plug-ins/common/sparkle.c:496
 msgid "Inverse"
-msgstr ""
+msgstr "╤нверс╕я"
 
 #: plug-ins/common/sparkle.c:503
 msgid "Should an Inverse Effect be done?"
-msgstr ""
+msgstr "Чи потр╕бно робити ╕нверс╕ю ефекту?"
 
 #: plug-ins/common/sparkle.c:505
 msgid "Add Border"
-msgstr ""
+msgstr "Додати рамку"
 
 #: plug-ins/common/sparkle.c:513
 msgid "Draw a Border of Spikes around the Image"
-msgstr ""
+msgstr "Намалювати рамку з промен╕в навколо зображення"
 
 #: plug-ins/common/sparkle.c:526
 msgid "Natural Color"
-msgstr ""
+msgstr "Природн╕й кол╕р"
 
 #: plug-ins/common/sparkle.c:535
 msgid "Use the Color of the Image"
-msgstr ""
+msgstr "Використовувати кол╕р зображення"
 
 #: plug-ins/common/sparkle.c:536
 msgid "Use the Foreground Color"
-msgstr ""
+msgstr "Використовувати кол╕р переднього плану"
 
 #: plug-ins/common/sparkle.c:537
 msgid "Use the Background Color"
-msgstr ""
+msgstr "Використовувати кол╕р тла"
 
 #: plug-ins/common/spheredesigner.c:247 plug-ins/gimpressionist/general.c:217
 msgid "Solid"
-msgstr ""
+msgstr "Суц╕льне"
 
 #: plug-ins/common/spheredesigner.c:248
 msgid "Checker"
-msgstr ""
+msgstr "Шах╕вниця"
 
 #: plug-ins/common/spheredesigner.c:249
 msgid "Marble"
-msgstr ""
+msgstr "Мармур"
 
 #: plug-ins/common/spheredesigner.c:250
 msgid "Lizard"
-msgstr ""
+msgstr "Ящ╕рка"
 
 #: plug-ins/common/spheredesigner.c:251
 msgid "Phong"
-msgstr ""
+msgstr "Фон╜"
 
 #: plug-ins/common/spheredesigner.c:252
 msgid "Noise"
@@ -6016,7 +6016,7 @@ msgstr "Дерево"
 
 #: plug-ins/common/spheredesigner.c:254
 msgid "Spiral"
-msgstr ""
+msgstr "Сп╕раль"
 
 #: plug-ins/common/spheredesigner.c:255
 msgid "Spots"
@@ -6028,7 +6028,7 @@ msgstr "Текстура"
 
 #: plug-ins/common/spheredesigner.c:1576
 msgid "(unknown!?)"
-msgstr ""
+msgstr "(нев╕доме!?)"
 
 #: plug-ins/common/spheredesigner.c:1850
 msgid "Open file"
@@ -6045,7 +6045,7 @@ msgstr "Д╕алог вибору кольору"
 
 #: plug-ins/common/spheredesigner.c:2227
 msgid "Sphere Designer"
-msgstr ""
+msgstr "Конструктор сфери"
 
 #: plug-ins/common/spheredesigner.c:2268 plug-ins/gimpressionist/preview.c:117
 #: plug-ins/gimpressionist/repaint.c:874 plug-ins/gimpressionist/repaint.c:876
@@ -6087,47 +6087,47 @@ msgstr "Кольори:"
 #: plug-ins/common/spheredesigner.c:2408 plug-ins/gimpressionist/paper.c:169
 #: plug-ins/ifscompose/ifscompose.c:546
 msgid "Scale:"
-msgstr ""
+msgstr "Масштаб:"
 
 #: plug-ins/common/spheredesigner.c:2459
 msgid "Scale Y:"
-msgstr ""
+msgstr "Масштаб по Y:"
 
 #: plug-ins/common/spheredesigner.c:2476
 msgid "Scale Z:"
-msgstr ""
+msgstr "Масштаб по Z:"
 
 #: plug-ins/common/spheredesigner.c:2494
 msgid "Rotate X:"
-msgstr ""
+msgstr "Поворот по X:"
 
 #: plug-ins/common/spheredesigner.c:2511
 msgid "Rotate Y:"
-msgstr ""
+msgstr "Поворот по Y:"
 
 #: plug-ins/common/spheredesigner.c:2528
 msgid "Rotate Z:"
-msgstr ""
+msgstr "Поворот по Z:"
 
 #: plug-ins/common/spheredesigner.c:2545
 msgid "Pos X:"
-msgstr ""
+msgstr "Позиц╕я по X:"
 
 #: plug-ins/common/spheredesigner.c:2562
 msgid "Pos Y:"
-msgstr ""
+msgstr "Позиц╕я по Y:"
 
 #: plug-ins/common/spheredesigner.c:2579
 msgid "Pos Z:"
-msgstr ""
+msgstr "Позиц╕я по Z:"
 
 #: plug-ins/common/spheredesigner.c:2608
 msgid "Bump"
-msgstr ""
+msgstr "Шорстк╕сть"
 
 #: plug-ins/common/spheredesigner.c:2650
 msgid "Exp:"
-msgstr ""
+msgstr "Експорт:"
 
 #: plug-ins/common/spheredesigner.c:2667
 msgid ""
